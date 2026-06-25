@@ -4,114 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6EEECDE000
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 13:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0533FCDE000
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 13:31:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wck3R-0005sY-Vd; Thu, 25 Jun 2026 09:23:42 -0400
+	id 1wckAl-0007bj-81; Thu, 25 Jun 2026 09:31:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wck3M-0005s2-JF
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 09:23:36 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wckAj-0007bb-Nm
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 09:31:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wck3K-0003Si-EA
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 09:23:36 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wckAh-0007G2-2k
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 09:31:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782393813;
+ s=mimecast20190719; t=1782394269;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=wMY9lMDBnjSffkY0dB2lI6teviTlM5DqXq9Zm4u/Fio=;
- b=XYLHLWAz2C4XNimNXNHu3eSIhFR+Agg3+jGV16rbTKcB5akCOsLeD7weR+NDKRhzDFVZQJ
- Q6JpE/45XLq0sD0bHscuXGVY2YmqGti+fnj/P6cnFrXX4CgeugPfcZgUvdc55HwxAvMJdB
- zdB2g2aI7r+Ejim/D4gTXWw3DDPiAP8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-1-MYApQFWGN624tIqQ8s4qyA-1; Thu, 25 Jun 2026 09:23:32 -0400
-X-MC-Unique: MYApQFWGN624tIqQ8s4qyA-1
-X-Mimecast-MFC-AGG-ID: MYApQFWGN624tIqQ8s4qyA_1782393811
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4639f122c38so1941292f8f.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 06:23:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782393811; x=1782998611; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=wMY9lMDBnjSffkY0dB2lI6teviTlM5DqXq9Zm4u/Fio=;
- b=bg+sENqXQ7sB/ZGkciKVbimyoImUIZFgdz1NblMC/GYzIPSjXQ7VT8n3+pa1W7vkvK
- hdxGB9dbgwQuox3ZrJEJuSR84VL/9Ur19ZFoK99WN8bfyk+myR6/LIZ5wtODXgXysYgS
- WsjMqIEKrzRw9GgiECrxLcEAUb3QTroMKosnwehBBo9Jl3EPngS4SB6+S7JZ+V9qrhEH
- RB2KSP3gZOawFNcANMBiGPsQZ2/ghBpDUIMA8KfK2nbKYaV7g0KCniCtI5oFJP2MO7mI
- QSUGq6RCIW1gO3MTLFdgV+DOli8w8YGLGotSj5yhmJKx8cxXEMwORp7fLvfzw6jxX9WX
- 7kkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782393811; x=1782998611;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wMY9lMDBnjSffkY0dB2lI6teviTlM5DqXq9Zm4u/Fio=;
- b=YtQZM7JIpswMh4c+vp5RSQ2ly6bg3ToBM7e87NDgT0w6wDipuSwMMwDsIgJYplE74c
- qdMvqcG2LErK5InEHEjRI7DbN8H4lS4QGRkU8o5Nea8guPRM5DUMHwVgmoJrDT1SNiWI
- cQvN1CAK8tmdeH+RTONRpeyQ9CDSeFq6r2vVSKJPi2qy5jXxo4oBiIzv+B89nfkBmVBQ
- znZdQTtme83mLxUUG9wWZFHTf45t76sl5TwVsc7SQDFA2KlmImv1t86PtTH5uaXBPR7V
- L5nvwjzPUIDdUaeRKcMuaMotprNjbVfhwOImb7w5ZSz2tazESADoYME9luvP6HP5RO6W
- sDSg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rol3Oc5V1hUSvM108VJwch1bBSH+cs+6YDG/Fy3cu3yCZvsGEhsHrEWAgnFEk6n7d4gjSULSull6ZjO@nongnu.org
-X-Gm-Message-State: AOJu0YxtLF88qDUSC/MqHufZFBtIo0ewzGhYYacduP1Kb2LcxU0afmMt
- XM2CWzUD3qVqtmfaj2kMfzMfjmQl0mOlWtjFQeOeKVqzSsCuwFO+M5umIFUzWVGy2GmfgNqzCzM
- UO7OK7vuuCyCPcPTPM4+ORM1qR9uu9eQcUPtYk4Pe0ecQV4Ha1Sg8KChk
-X-Gm-Gg: AfdE7cmmpgROCVMHiX/jOpJCbjRyVOrSLzbw4fYZvXFuPEXIgH93XmQxWeM1LPTgaaB
- otO7kw+MubSPo5X15jpyxeSKn7xMjUyBmQOpCfU90M6gPWg+zGSyGjVdV+jf7UgAqqBFbrA+oNO
- rsgaCtbZiBgSLJovrE1FaXtFP37AdkuMjaEnryVrVpuwMxmc08cvJ/H7beMwhDT6uZ1xY7gckTg
- eMevBex3Lz28daCPvi5IXVxhRGUY8UyXtR9p8wOEuGCuMgmUUjHmcR7BfnyCd6B2joz8XZe+tln
- 6MSIyN6UpcsyE7ActvxK0TFXfLSww3PKrRYPR/EIE3fmEOTa5WCcrJo5UWCoazCbqP3a5Us0Om0
- pYZpVOdrPD4b2vJCSJWNXOBOKFwgbwjMr
-X-Received: by 2002:a5d:5f56:0:b0:460:3a90:b2b6 with SMTP id
- ffacd0b85a97d-46dbf1199e5mr4556870f8f.11.1782393811105; 
- Thu, 25 Jun 2026 06:23:31 -0700 (PDT)
-X-Received: by 2002:a5d:5f56:0:b0:460:3a90:b2b6 with SMTP id
- ffacd0b85a97d-46dbf1199e5mr4556811f8f.11.1782393810507; 
- Thu, 25 Jun 2026 06:23:30 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c22c68239sm18940073f8f.36.2026.06.25.06.23.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jun 2026 06:23:29 -0700 (PDT)
-Date: Thu, 25 Jun 2026 09:23:26 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, peterx@redhat.com, alex@shazbot.org,
- richard.henderson@linaro.org, berrange@redhat.com,
- philmd@oss.qualcomm.com, philmd@mailo.com, david@kernel.org,
- clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
- jugraham@redhat.com, liugang24219@sangfor.com.cn,
- dinghui@sangfor.com.cn, shan.gavin@gmail.com
-Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
- device region accessors
-Message-ID: <20260625091334-mutt-send-email-mst@kernel.org>
-References: <20260616052552.389021-1-gshan@redhat.com>
- <20260616052552.389021-2-gshan@redhat.com>
- <CAFEAcA-mf14=jpRFHarAbN6AbQwvW=Yu6WB1JiNMsECEdaxD3A@mail.gmail.com>
- <20260625070551-mutt-send-email-mst@kernel.org>
- <CAFEAcA8YJZq9TqrUd0zTnewAdVDm5y6UV7BJQZ0C60TZ=RT98Q@mail.gmail.com>
+ bh=G8qfn1oKOjkgto7sZhNm764YsGcjOBZo3rCciDpPVZQ=;
+ b=bdAK9IkMlBn+LQSYB50sK24dhy96/d3OjNePcjbI/4Hva6W7qHHkdxevwbYr4P1+N0qnSo
+ E2LS1Pf0bpM4I+BGB44YJiASNlXGrBGtVeL2baAijVvk0i8XjyVnEr71asYKspYkvOxDA6
+ rRVzowrfd7zijk5KKzcDYDRn2wB10rk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-NiwqrGrNNVugvPco0AudZA-1; Thu,
+ 25 Jun 2026 09:31:04 -0400
+X-MC-Unique: NiwqrGrNNVugvPco0AudZA-1
+X-Mimecast-MFC-AGG-ID: NiwqrGrNNVugvPco0AudZA_1782394263
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A2A2719775E0; Thu, 25 Jun 2026 13:31:02 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.69])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 90AC41771; Thu, 25 Jun 2026 13:31:01 +0000 (UTC)
+Date: Thu, 25 Jun 2026 09:31:00 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>
+Subject: Re: [PATCH V9 05/17] block/export: track IOThread reference in
+ BlockExport
+Message-ID: <20260625133100.GA148001@fedora>
+References: <20260624070851.13342-1-zhangckid@gmail.com>
+ <20260624070851.13342-6-zhangckid@gmail.com>
+ <20260624175143.GD109308@fedora>
+ <CAK3tnvLhx9HipFENkMm-pdOqvLZUYDdF=VuFzQ=gyD4TV__eSw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="sqLJG18q53CvhdQE"
 Content-Disposition: inline
-In-Reply-To: <CAFEAcA8YJZq9TqrUd0zTnewAdVDm5y6UV7BJQZ0C60TZ=RT98Q@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <CAK3tnvLhx9HipFENkMm-pdOqvLZUYDdF=VuFzQ=gyD4TV__eSw@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,59 +93,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 25, 2026 at 01:48:11PM +0100, Peter Maydell wrote:
-> On Thu, 25 Jun 2026 at 12:07, Michael S. Tsirkin <mst@redhat.com> wrote:
+
+--sqLJG18q53CvhdQE
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Jun 25, 2026 at 07:06:26AM +0800, Zhang Chen wrote:
+> On Thu, Jun 25, 2026 at 2:33=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.=
+com> wrote:
 > >
-> > On Thu, Jun 25, 2026 at 11:09:26AM +0100, Peter Maydell wrote:
-> > > This is still wrong. We should not have "x86 magically works
-> > > and all other hosts do something different" ifdefs. Define what
-> > > semantics you need and then we can figure out how to
-> > > implement them.
+> > On Wed, Jun 24, 2026 at 03:08:39PM +0800, Zhang Chen wrote:
+> > > Users currently lack visibility into which block exports
+> > > are utilizing specific IOThreads. This patch integrates IOThread
+> > > referencing into the BlockExport lifecycle.
 > > >
-> > > My current thought is that we need to handle accesses of
-> > > 1, 2, 4 and 8 bytes that are naturally aligned by ensuring that we
-> > > do exactly one host load/store of that type, and that anything else
-> > > is "the guest isn't relying on specific semantics here, we can just
-> > > assume it's plain old RAM and do whatever". That would not
-> > > require any architecture specific ifdefs.
-> 
-> > Well. X86 is special, as usual. It allows unaligned mmio so
-> > we really have no way to know an x86 guest does not intend
-> > just that. That can only be emulated perfectly on x86
-> > which is sad but I see no reason to actively break it.
-> 
-> What actual hardware will rely on unaligned accesses
-> appearing to it as single unaligned accesses?
+> > > - Add iothreads array and holder_name to BlockExport struct.
+> > > - Use iothread_ref_and_get_aio_context during export creation.
+> > > - Implement proper cleanup in blk_exp_add fail path and blk_exp_delet=
+e_bh.
+> > > - Support both single and multi-iothread export configurations.
+> > >
+> > > This ensures IOThread 'holders' status correctly reflects active block
+> > > exports for better debugging and resource tracking.
+> > >
+> > > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> > > ---
+> > >  block/export/export.c  | 63 ++++++++++++++++++++++++++++++++++++----=
+--
+> > >  include/block/export.h |  6 ++++
+> > >  2 files changed, 60 insertions(+), 9 deletions(-)
+> >
+> > If AI was used to generate this patch series, please see QEMU's AI
+> > policy:
+> > https://www.qemu.org/docs/master/devel/code-provenance.html#use-of-ai-g=
+enerated-content
+> >
+> > This feels like AI generated code in that it is verbose and has lots of
+> > structure (e.g. commit messages that look like an AI summary of the code
+> > change), but the details are not correct (misleading comments, leaks,
+> > etc).
+> >
+> > I will pause my review at this patch and wait for your response.
+>=20
+> I used the AI for parts of commit messages.
+> Please continue to review code parts and skip the commit message parts,
+> I will remove all AI-generated commit messages in next version.
 
-/me shrugs
-any hardware that was only tested under windows?
+Okay, thanks. There is no need to enumerate the code changes in the
+commit message unless there is some rationale or commentary you want to
+share so that people understand why you did things in a certain way.
 
-> And if we do need this, we need to specify:
-> - what are the semantics we need to provide?
+> Sorry, I just noticed the discussion:
+> [PATCH v2] docs/devel: relax policy on AI-generated contributions
 
-match what happens on bare metal
+The new policy will allow some use of AI generated content when the
+policy comes into effect. For now we still have to follow the existing
+policy.
 
-> - what is the use case that relies on these?
-> Then we can see how closely we can match that.
+>=20
+>=20
+> >
+> > >
+> > > diff --git a/block/export/export.c b/block/export/export.c
+> > > index b733f269f3..b6c07f69b5 100644
+> > > --- a/block/export/export.c
+> > > +++ b/block/export/export.c
+> > > @@ -15,7 +15,6 @@
+> > >
+> > >  #include "block/block.h"
+> > >  #include "system/block-backend.h"
+> > > -#include "system/iothread.h"
+> > >  #include "block/export.h"
+> > >  #include "block/fuse.h"
+> > >  #include "block/nbd.h"
+> > > @@ -85,6 +84,8 @@ BlockExport *blk_exp_add(BlockExportOptions *export=
+, Error **errp)
+> > >      AioContext *ctx;
+> > >      AioContext **multithread_ctxs =3D NULL;
+> > >      size_t multithread_count =3D 0;
+> > > +    g_autofree IOThread **local_iothreads =3D NULL;
+> > > +    const char *holder_name =3D NULL;
+> > >      uint64_t perm;
+> > >      int ret;
+> > >
+> > > @@ -139,7 +140,16 @@ BlockExport *blk_exp_add(BlockExportOptions *exp=
+ort, Error **errp)
+> > >              goto fail;
+> > >          }
+> > >
+> > > -        new_ctx =3D iothread_get_aio_context(iothread);
+> > > +        holder_name =3D bdrv_get_node_name(bs);
+> > > +        IOThreadHolder holder =3D {
+> > > +            .type =3D IO_THREAD_HOLDER_KIND_BLOCK_NODE,
+> >
+> > This is not a block node, this is a block export (a separate type of
+> > object). Reporting the export as a node is confusing because users will
+> > not know which block export id is assigned using this IOThread, they
+> > will only know the block node (which could be doing other things too).
+>=20
+> OK, it looks need to change the type name from:
+> IO_THREAD_HOLDER_KIND_BLOCK_NODE
+> to:
+> IO_THREAD_HOLDER_KIND_BLOCK_EXPORT
 
-passhtrough of weird devices, first of all.
+Yes.
 
-> 
-> There's a lot of extra complexity added in here for
-> something it I don't think is ever going to matter,
-> and having the most common host architecture take a
-> totally different codepath from everything else is
-> a recipe for that other codepath breaking.
-> 
-> -- PMM
+--sqLJG18q53CvhdQE
+Content-Type: application/pgp-signature; name=signature.asc
 
-Not sure we have to be pedantic. We have arch specific code and the
-world did not end.  It's not a lot of code, it's just for unaligned
-accesses on MMIO, which might or might not be broken anyway.
-And it worked already, so it's more about going back to what we
-did earlier.
+-----BEGIN PGP SIGNATURE-----
 
--- 
-MST
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmo9LZQACgkQnKSrs4Gr
+c8gLdAf7BMwaQTa5Gv6NAXNWcd7UnY0jBtsZWRN9SLmgFI+AQOJEX0xBaThm0YXw
+DtrAkLLsl3DPrTScEszk7Ybn3ZvWwCpv7vBkevTE/xyIDq+m3PisUb6yGgO/ovUs
+Y2dwZOgiMHC8KoL03s01fvvNYeY+vj7At4cgQvgOKQ23T0eTljrHJavqQQD7MCrC
+3Wvl1ybfCS0y/L7tWYYYxewDiNqwr76LQM4pNl+CwNqUh8zKwNTwRTfw5UmIwGTH
+nQGt5mUyDKtRxVfGXI4F3BrHyoTF2AZGaq/9j3nDpf87OMvmPn/OyRicqAJFB9aj
+IMafkoouD+j3Ym3jLbW3Rs6fNngXDg==
+=o84t
+-----END PGP SIGNATURE-----
+
+--sqLJG18q53CvhdQE--
 
 
