@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DA50CDE00B
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 21:23:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 375FDCDE00B
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 21:23:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcrVe-0001VK-7c; Thu, 25 Jun 2026 17:21:18 -0400
+	id 1wcrXS-0008IV-Lj; Thu, 25 Jun 2026 17:23:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcrVT-000128-Pk
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:21:07 -0400
+ id 1wcrXR-0008D0-0M
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:23:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcrVR-0003jY-HY
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:21:07 -0400
+ id 1wcrXP-00048k-DF
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:23:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782422464;
+ s=mimecast20190719; t=1782422586;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/KXrbaP0o204oy3ffVboRa53QerResEIbZt37fxqg80=;
- b=TqxHYpNfbRCPxD6St16kBTN7CvCjNtM7VuAYbdtcRJDxi/DEedUDljP/8zfl56z2MAEM4T
- b24cEeN4twafcoos6zL6QKn/yL6BUJsfIMwRC7znxo4m2tc+jvfvBrnvzQebAT/MLwUa6O
- HjeLW0wsfkZWn8mw65HXgRWJhk1ATJE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=t80BfEWkfSGFH37H9VOynd9pfUSEwTWajT3v7BkCWk8=;
+ b=fMsOS2e/b7pKp+7eJU5Q6dA4Eui27BFYTHVlCamH5Sf07vqa02CVql8+XfmHWPAUv+hCdh
+ maukEbp1s8c8jq/jRsCGJosJKLKHPrB5D8KSsB1YHU7hWD3Z/g37nYJag8zGX86KnIeIo+
+ p8wRGDhRd5lSHk2nDS04UkGXKyMDqFk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-232-dLYVSm25PdO-8thD1xIxgQ-1; Thu,
- 25 Jun 2026 17:21:00 -0400
-X-MC-Unique: dLYVSm25PdO-8thD1xIxgQ-1
-X-Mimecast-MFC-AGG-ID: dLYVSm25PdO-8thD1xIxgQ_1782422459
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-488-7Fej8yNOOjm3Voa4CyR4oQ-1; Thu,
+ 25 Jun 2026 17:23:03 -0400
+X-MC-Unique: 7Fej8yNOOjm3Voa4CyR4oQ-1
+X-Mimecast-MFC-AGG-ID: 7Fej8yNOOjm3Voa4CyR4oQ_1782422582
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 319DA1806C99; Thu, 25 Jun 2026 21:20:59 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7504F1873C12; Thu, 25 Jun 2026 21:23:02 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.16])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F13AC195608D; Thu, 25 Jun 2026 21:20:57 +0000 (UTC)
+ id 2CF82195608D; Thu, 25 Jun 2026 21:23:00 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 26 Jun 2026 01:19:17 +0400
-Subject: [PATCH v2 16/39] tests/qtest/numa-test: replace HMP "info numa"
- with QMP query-cpus-fast
+Date: Fri, 26 Jun 2026 01:19:40 +0400
+Subject: [PATCH v2 39/39] monitor: guard HMP monitor API with CONFIG_HMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260626-qemu-no-hmp-v2-16-8af31bc54c61@redhat.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260626-qemu-no-hmp-v2-39-8af31bc54c61@redhat.com>
 References: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
 In-Reply-To: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
 To: qemu-devel@nongnu.org
@@ -62,21 +61,21 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Markus Armbruster <armbru@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3965;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4284;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=OFBar7k9p+yqwjSsR5ORXDxBcPwhkg3T4bV1GvhPOiU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqPZtdmie45qhLGeZ3UmonR6JOCl9AdcrTVf4fX
- 2xkeh9b39+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaj2bXQAKCRDa6OEJdZac
- 5RJkD/9luw9R0Vxe2UQR+VJ9Su0Ek28OlZ4qTimTgKN3BH3pSbJmOoazC7xQcZYLR5szZCSSPKL
- 57ye/dU8WWVxkpesBcSyw3IpFEFxcsP1MMY2LKXHu3eJgCuRz+XGCPdFxZt8OYJIRU1um5BGyti
- uPljuNktcVlFkviGYFifFGZbzCLxVf5Tj92uxGecr6dCGIjZpR/HcD34ApzL6rjBDqo+r0777Dl
- jXtL9pLCr0e/wtYIIjqZV3kjUXfTT5G59PEl+y9vh/WZ8YZKXiAoSlaXBbzKXxHwScfwHw4c2zr
- UeGmVkvmsyRdOevsHQhcN53uUQH125CFtxPRI2jIQ57rxBrFTTbQ3PMDYBCnq/SPvqspxVlaqnD
- PbhvReNIbm+40QnIIhUBY9RYvY7CGVoClUcICB9j8xWroIZQDEjhUVI7Ep3hnXQiEtZ+bAmlnIp
- X7ek7arKCwj10jrMam8/gPwitrL8avxCWaY/90K4Wh/wSOUyt71ACyqyMOWv1fa7xtFnGmZrsjm
- YA/AeikJmm8MhWQp9s2fgJY9cvfbQWLsogpDGkO+6VkDFzQN55ko09GOqnPUXQb+nJStuMwTG43
- SnkJkBlG2HfG777l9A3okEvx/Ibt++8Dzo5TKHCSm8XVY6+u7J9obi6gpn0V1U2eu45vTnXN9Gx
- HRMoAUIkazpynVw==
+ bh=BaSExTs++36GT2j1R0szz6+T1BCUasqyW+Wnzi0jGlI=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqPZtep+bmJC85TeMfyIvXA1oVaUC2gKnkqcuYk
+ uQ1SlC14M+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaj2bXgAKCRDa6OEJdZac
+ 5WNpEACRTk7iwPlFLTY4fVGDHfe4twkM0TTME7eQT/cjo0hnhzAdCSvEHrYOHSAhQgc6GafreRS
+ kL5eUhD4fk9Ui8Is6fst/4tBzwmhNSGKqIp4lYtKIqSN7E+XV1iApldp9ym4UUuoEESS7O84Aa2
+ POUbdUla944ZWJlPWqDE8JUl+7NA5WsCQAP4LeZQW80T2ReHXHtcC2aXj0RRjNQUpOguKxAq8Lc
+ TghnaSNqrFxB2hZE9u1kJAUqlDsyRvd0KEXAWp8Aj7drNlMZ+drqZT1bjGC3GpwCqmt+Y/KqZ33
+ uo7MlKUGLnTZdn7LEGMHpDcustY1A3DPeebC9vTUJqRuLl1QQG1xLEbw2GAbirbqC0HOPHsAqiY
+ ekohYupbgcwF7hVopeY+bDpANyaTTHc7XwIMx1ybIDTbKqlFYtJ1tccm5+gOOIqVVyLvimttXit
+ RyVPb3+02MOzn0lsAwc2wrBdhGJ1hfMVXY3UoyBgjdggPilGnzWG9EFfWKaV/R8hidKNS0RZJiy
+ Am7zWcopp/16hcmofRpD+2d5rTg9ux1KdR1xm9v6jkqBtFAhYVDN+iCapDoaS6NQADooUGa2GrA
+ ZiLw5Yh/5097W0BHDERbvcTZnGJKZerQ1gfYLlhZPYirhtpM+lm4hwT+vpqhQbGGXJ+FMfgujJu
+ 1f4k+OBJB8ywpqw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
@@ -105,126 +104,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the three test functions that relied on HMP "info numa" to use
-QMP "query-cpus-fast" instead, verifying each CPU's node-id through the
-structured response. Add a check_cpu_node() helper for the per-CPU
-assertions.
+Now that all callers of HMP-specific monitor APIs have been guarded
+by prior patches, wrap the public declarations and their definitions
+with CONFIG_HMP:
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+- monitor.h: guard monitor_vprintf/printf/printc,
+  monitor_init_hmp, monitor_read_command/password, and
+  monitor_register_hmp*
+- monitor.c: guard monitor_vprintf/printf/printc definitions
+- stubs/monitor-core.c: guard monitor_vprintf stub
+- stubs/monitor-internal.c: guard monitor_init_hmp stub
+
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
 ---
- tests/qtest/numa-test.c | 63 +++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 51 insertions(+), 12 deletions(-)
+ include/monitor/monitor.h | 11 +++++++++++
+ monitor/monitor.c         |  2 ++
+ stubs/monitor-core.c      |  2 ++
+ stubs/monitor-internal.c  |  2 ++
+ 4 files changed, 17 insertions(+)
 
-diff --git a/tests/qtest/numa-test.c b/tests/qtest/numa-test.c
-index d657f389474..8f563c079f6 100644
---- a/tests/qtest/numa-test.c
-+++ b/tests/qtest/numa-test.c
-@@ -19,19 +19,50 @@ static char *make_cli(const GString *generic_cli, const char *test_cli)
-     return g_strdup_printf("%s %s", generic_cli->str, test_cli);
- }
+diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+index 17182e626a7..3457f4a7f88 100644
+--- a/include/monitor/monitor.h
++++ b/include/monitor/monitor.h
+@@ -20,7 +20,9 @@ bool monitor_cur_is_qmp(void);
+ void monitor_init_globals(void);
+ void monitor_init_globals_core(void);
+ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp);
++#ifdef CONFIG_HMP
+ void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp);
++#endif
+ int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp);
+ int monitor_init_opts(QemuOpts *opts, Error **errp);
+ void monitor_cleanup(void);
+@@ -32,28 +34,37 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp);
+ int monitor_fd_param(Monitor *mon, const char *fdname, Error **errp);
  
-+static void check_cpu_node(QTestState *qts, int cpu_idx, int expected_node)
-+{
-+    QDict *resp;
-+    QList *cpus;
-+    QListEntry *e;
-+    bool found = false;
+ int monitor_puts(Monitor *mon, const char *str);
 +
-+    resp = qtest_qmp(qts, "{ 'execute': 'query-cpus-fast' }");
-+    g_assert(resp);
-+    g_assert(qdict_haskey(resp, "return"));
-+    cpus = qdict_get_qlist(resp, "return");
-+    g_assert(cpus);
++#ifdef CONFIG_HMP
+ int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
+     G_GNUC_PRINTF(2, 0);
+ int monitor_printf(Monitor *mon, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
+ void monitor_printc(Monitor *mon, int ch);
++#endif
 +
-+    QLIST_FOREACH_ENTRY(cpus, e) {
-+        QDict *cpu = qobject_to(QDict, qlist_entry_obj(e));
-+        int64_t idx = qdict_get_int(cpu, "cpu-index");
-+        if (idx == cpu_idx) {
-+            QDict *props = qdict_get_qdict(cpu, "props");
-+            g_assert(qdict_haskey(props, "node-id"));
-+            g_assert_cmpint(qdict_get_int(props, "node-id"), ==, expected_node);
-+            found = true;
-+            break;
-+        }
-+    }
-+    g_assert(found);
-+    qobject_unref(resp);
-+}
+ void monitor_flush(Monitor *mon);
+ int monitor_get_cpu_index(Monitor *mon);
+ 
+ int monitor_puts_locked(Monitor *mon, const char *str);
+ void monitor_flush_locked(Monitor *mon);
+ 
 +
- static void test_mon_explicit(const void *data)
- {
-     QTestState *qts;
--    g_autofree char *s = NULL;
-     g_autofree char *cli = NULL;
-+    int i;
++#ifdef CONFIG_HMP
+ void monitor_read_command(MonitorHMP *mon, int show_prompt);
+ int monitor_read_password(MonitorHMP *mon, ReadLineFunc *readline_func,
+                           void *opaque);
++#endif
  
-     cli = make_cli(data, "-machine smp.cpus=8 -numa node,nodeid=0,memdev=ram,cpus=0-3 "
-                          "-numa node,nodeid=1,cpus=4-7");
-     qts = qtest_init(cli);
+ AddfdInfo *monitor_fdset_add_fd(int fd, bool has_fdset_id, int64_t fdset_id,
+                                 const char *opaque, Error **errp);
+ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags, Error **errp);
+ void monitor_fdset_dup_fd_remove(int dup_fd);
  
--    s = qtest_hmp(qts, "info numa");
--    g_assert(strstr(s, "node 0 cpus: 0 1 2 3"));
--    g_assert(strstr(s, "node 1 cpus: 4 5 6 7"));
-+    for (i = 0; i < 4; i++) {
-+        check_cpu_node(qts, i, 0);
-+    }
-+    for (i = 4; i < 8; i++) {
-+        check_cpu_node(qts, i, 1);
-+    }
++#ifdef CONFIG_HMP
+ void monitor_register_hmp(const char *name, bool info,
+                           void (*cmd)(Monitor *mon, const QDict *qdict));
+ void monitor_register_hmp_info_hrt(const char *name,
+                                    HumanReadableText *(*handler)(Error **errp));
++#endif
  
-     qtest_quit(qts);
+ #endif /* MONITOR_H */
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index c8207af57ec..8ea1bafd99e 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -218,6 +218,7 @@ int monitor_puts(Monitor *mon, const char *str)
+     return monitor_puts_locked(mon, str);
  }
-@@ -39,16 +70,19 @@ static void test_mon_explicit(const void *data)
- static void test_def_cpu_split(const void *data)
+ 
++#ifdef CONFIG_HMP
+ int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
  {
-     QTestState *qts;
--    g_autofree char *s = NULL;
-     g_autofree char *cli = NULL;
-+    int even_cpus[] = {0, 2, 4, 6};
-+    int odd_cpus[] = {1, 3, 5, 7};
-+    int i;
- 
-     cli = make_cli(data, "-machine smp.cpus=8,smp.sockets=8 "
-                          "-numa node,memdev=ram -numa node");
-     qts = qtest_init(cli);
- 
--    s = qtest_hmp(qts, "info numa");
--    g_assert(strstr(s, "node 0 cpus: 0 2 4 6"));
--    g_assert(strstr(s, "node 1 cpus: 1 3 5 7"));
-+    for (i = 0; i < 4; i++) {
-+        check_cpu_node(qts, even_cpus[i], 0);
-+        check_cpu_node(qts, odd_cpus[i], 1);
-+    }
- 
-     qtest_quit(qts);
+     char *buf;
+@@ -274,6 +275,7 @@ void monitor_printc(Monitor *mon, int c)
+     }
+     monitor_printf(mon, "'");
  }
-@@ -56,17 +90,22 @@ static void test_def_cpu_split(const void *data)
- static void test_mon_partial(const void *data)
++#endif
+ 
+ static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
+     /* Limit guest-triggerable events to 1 per second */
+diff --git a/stubs/monitor-core.c b/stubs/monitor-core.c
+index 078a5012e9b..b4a4de41aa2 100644
+--- a/stubs/monitor-core.c
++++ b/stubs/monitor-core.c
+@@ -21,6 +21,7 @@ void qapi_event_emit(QAPIEvent event, QDict *qdict)
  {
-     QTestState *qts;
--    g_autofree char *s = NULL;
-     g_autofree char *cli = NULL;
-+    int node0_cpus[] = {0, 1, 2, 3, 6, 7};
-+    int node1_cpus[] = {4, 5};
-+    int i;
- 
-     cli = make_cli(data, "-machine smp.cpus=8 "
-                    "-numa node,nodeid=0,memdev=ram,cpus=0-1 "
-                    "-numa node,nodeid=1,cpus=4-5 ");
-     qts = qtest_init(cli);
- 
--    s = qtest_hmp(qts, "info numa");
--    g_assert(strstr(s, "node 0 cpus: 0 1 2 3 6 7"));
--    g_assert(strstr(s, "node 1 cpus: 4 5"));
-+    for (i = 0; i < 6; i++) {
-+        check_cpu_node(qts, node0_cpus[i], 0);
-+    }
-+    for (i = 0; i < 2; i++) {
-+        check_cpu_node(qts, node1_cpus[i], 1);
-+    }
- 
-     qtest_quit(qts);
  }
+ 
++#ifdef CONFIG_HMP
+ int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
+ {
+     /*
+@@ -37,3 +38,4 @@ int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
+     }
+     return -1;
+ }
++#endif
+diff --git a/stubs/monitor-internal.c b/stubs/monitor-internal.c
+index 4fece49d531..29274bd2b4a 100644
+--- a/stubs/monitor-internal.c
++++ b/stubs/monitor-internal.c
+@@ -8,6 +8,8 @@ int monitor_get_fd(Monitor *mon, const char *name, Error **errp)
+     return -1;
+ }
+ 
++#ifdef CONFIG_HMP
+ void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
+ {
+ }
++#endif
 
 -- 
 2.54.0
