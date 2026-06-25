@@ -4,115 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 550C4CDB479
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 15:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9608CDB479
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 15:57:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wclvy-0005Mm-5t; Thu, 25 Jun 2026 11:24:06 -0400
+	id 1wcmRL-0005lD-Rv; Thu, 25 Jun 2026 11:56:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wclvw-0005LX-D4
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 11:24:04 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
+ id 1wcmRK-0005kz-BW
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 11:56:30 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wclvt-0008BC-7l
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 11:24:03 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-6611669cd16so2788637d50.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 08:24:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782401040; cv=none;
- d=google.com; s=arc-20260327;
- b=XUT6quptwDTvuM06TAVjcC/tq6WoNT0m8uhBAzF4WSXkOm7glZItLXjtCpjrL2S3fD
- /U2RD4ndzgmf92I8juhoKO+JmmC6QybeBPOly3EH0AaTPtGIf4tsic9SxukHm42gfhJf
- 3ABWksLf4Vzvp44mlhDvVVjKatCbHmLrG2/epBC/MXWhgfyDjTbz9jt1ahTD3KZVI7T3
- 9lKdi4izwcxmNI3uTqezXsCwvQ5qnPW2kQLxv1/0COhHUq5+SHnKDa+TNvbN2WBaS9gq
- ja6xVTiIduxg+EOQ8Yh4zQCXHkkH6c00Qr9h6H7SQlo8EhGsAT/MGtuDgSDAIlX1kAQK
- gALw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=bqc5Wouj3/R29KoIGjvPJ9rd3M6o/N3gDiPFOQAvYeE=;
- fh=80K8lxDFWp1OiDpet2Wi000I+i/nnWvH4zSMND7Oguw=;
- b=KPyOoQ/xsZLF4tZmGuUMaEf65eATcT+1MZpPHr+RP3LsUKI7rZNnmtbBDmsYzRoj0h
- UpcYCvzOjf7+2AwrwGzZH8XVyndjyO1gP+DtFZUc7QBv4VOlKNPqnxuOWF5JZLqE3lAf
- 2HxGKwISdH2j4FDHFB8rAntwt72jcQ2k93A0FIhjP9yBLvVvS5mIImshHDJfrpuNTaMP
- FFNxJSdc8TaETZhodbcs+oDIaG26GI1DQEtIz/6to+SrIsyq8DN87Bj0BusrrDKCxUF4
- zH9pjWI3Hsa97oghCQKKxMWHyFEd3AuKImWcghF35m0V4zQ0rUH4XWmgmA9xXjAqWFPE
- Dn8w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
+ id 1wcmRI-0005Jb-PX
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 11:56:30 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-490b64c8311so119415e9.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 08:56:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782401040; x=1783005840; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=bqc5Wouj3/R29KoIGjvPJ9rd3M6o/N3gDiPFOQAvYeE=;
- b=HqmM7kjqf0fGpwOYLZn3lqFhWkKp8xhVhkPcVkmBcdyrWkbqycTInQYO+mLzUx9cS4
- N/GiuR7hqdXM5vlC+jXeIiQO0qzFSCDRUGL2avMTzxWVTPz6QqBawJ4RgnR0OOhTR8zq
- RP3QAL2ZqYSLz8H7iIFbr7rlaoOOyQ3vkkfSY1YCUvgRAqY6tnOYCTcA43fx/3iIxKzs
- fevwFFkxPYCedSMPDMDfmipnMoFKiR0nBX3Jx9SNRO4R9ilSCnnnMDkfp99M+5VE+5Ps
- rC3B4X5PY+R3q2f96ojPgonayryrBf91Hw/zI9AQbhfkzVn/t4XFRpDZSO43zNRPTlFg
- N6EQ==
+ d=gmail.com; s=20251104; t=1782402985; x=1783007785; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=eoJASh8MaR4nfptlyCYZGqvvY11skCxIUb+Conb7Z80=;
+ b=Yb360k0nMNiANa9Ob43WOlJZS03Gjjy5ATNT7257Drg/i2PvnKBWEWUqddpouq94tb
+ nepC6pfnIz8MbFhlxioHZqUh40UAjF8JdGdsqgonKutfhGDLGIiQT/uDi96ar4sSPe18
+ 16myfzJYwr+6WLHI6d7pqIK0UJ7csvxZLHpD3mLZVdDNGaFVRtFmrbmXkbcZXbEPxxSb
+ rLDXGpzUamjByLetjKLEPjv8mDupfp79+7yT060Eio8z95wI9uo1lSFUOhUJhuzdhyua
+ ts9dmNvFpM/BOONBxytO3eVZPWTDEm7s+yHmpe5DzOvbshPgSEftLjoOT4gSoJ8+18Wg
+ 5egw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782401040; x=1783005840;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1782402985; x=1783007785;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bqc5Wouj3/R29KoIGjvPJ9rd3M6o/N3gDiPFOQAvYeE=;
- b=AlrGyuT/vKHjnwxjcmaeVDebL6RzrHmNO8rZo/Z62e3UFfUiwuo/HbYZojsdN500LA
- dnZ1r1u/sfPjPvAlXLQHM9IXgNkAk/heRmTRlbRPdiip3rIbx47n4qTbv1cboSwmv+1y
- TiaCQ6yi5CKMiWrbyHf1L4pr3i4fncJthYpaWDEQsc9uQeVbCnm4KEhNJYatE+WXEcIF
- 4E1r+MjIJCEhfqQJVTfdDAhSo0yi3/6YYZDcgywYQjFvMYj1K7HUjgKh381ZrozLHvfu
- 6W/C3tfbb4vxy26G04ByRwHg7H7a4WXMSj6JnFivj43bSQMVvKpsuwYXRihNecr6Vku1
- Yzrg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpvVk1NLl0KnelY95ui/Wl4PPD3E31GqKHbFDjyTPYfOzApZhum0Ujpdcbiz7ZwBAOnKfhfurwL/D5Y@nongnu.org
-X-Gm-Message-State: AOJu0YxwStAcAMEoYoGEBn/Jdrg09l2AGpV/1/O/N9EXVmR0zGRz9oj0
- RGKcmuiJ5dqlSqZd95rtOhKv9NvAyYNuzY0novu4XoNPtSPrV3mlz0L4H+unsoLIAL10f8d0qxt
- DB6tYZx96WF31GG82RoVp/LBZyLUkuUzPBtE9mXf/5g==
-X-Gm-Gg: AfdE7cnfuaITSGwappEeiIsnMC178KUBVOvuVJRpYX+62wkblp/wVqgLtotsaGWzjsq
- CM/HoRj6n3xXUmiBYIIYp5eY25D90gjVeC/GPhyVkGpvDnbdnF+UK8O0fSDvFQvWi/S5qnT5uOC
- krPJFnER13yfYOqOHdNZGYYkvyNUuClFexqD9NdPEvqJs1fryjwv8cRNzfsjwhLTkeR7r+VxC5Z
- SPRaqF4R77eVIEsZHOG4w32GgJVUPNH4itXs/mIiueLSSKKmDKkGQkGXAVI44+VxQQWL1ci07cL
- +MBUzkE1bayG2/74kp9HodNuSvt1p3ZptmWh4m386BBDHIx7867KRo0x
-X-Received: by 2002:a05:690e:13c8:b0:656:30a1:70e2 with SMTP id
- 956f58d0204a3-66487b36261mr2298408d50.6.1782401039812; Thu, 25 Jun 2026
- 08:23:59 -0700 (PDT)
+ bh=eoJASh8MaR4nfptlyCYZGqvvY11skCxIUb+Conb7Z80=;
+ b=m556sPNai2sOwJi40D++mRlscq87NYiX2cKhJsxhkOXu1QyFb9xal14Vse72tSnO/z
+ F6mOJEuEfWdQr6b5Q2kBkHSCBSBag0E8YpgFps011K5rhzEi+7nNvT5VOxW7Ip48mq8h
+ R2uk3LH7X+SmKaHfeDBK5QAK7eD0xXpRIRnAuhg9ltqIY8XdjXo5AZQfBt5tdMChpp05
+ 9U7G33tmdTOdqGmPFqyyPoEqolkFpk6GzHGd9566lCMUGEKZqg0ZWMieCNVURf3wDiQO
+ U7hoeujfaR1mvyPAgsnRqbtmJz4FcxevEhzR1u2CJ8m/mkm1T08BwF1WucSdIrOBhw3i
+ mGNg==
+X-Gm-Message-State: AOJu0YzgCZNBSzTmtkg/XVcpVCzNkx2RHl96f0hmZQxuhEuyrOlY6aSQ
+ ahuijZm25oyihYcUKN94rg0J0UQxygA92US1D9C52mtSRSgSXLeihaffxPPKv5D0Brs=
+X-Gm-Gg: AfdE7cnv/0R3G7i6fNLEUdMeA8p5HDwR60FxxjhIKwWZwcP6dJi50shwO9bcKaWO6Ta
+ vAcrbejSBN/HajDuvGNRxYVzaTXjLXPp+Xk2WsjHk0S5jMw7moH5Ag32RT3MLnUL5El+2XHuyfJ
+ S5CuP6l/KwY1S4+5sDRtp+49eP2LMXMDuHw17pUMoFVoRrRj1heANVG5xvQhQJGYc3DXVsbk6Gq
+ TWGYJ4suxrjJtEZAZFrhPrgcETOfKbaA7Y3XPIh4OxYiq2iSYrd1zkXDFNkb6NOaJS5HVL/x119
+ Ko72HiZupAzH8wX3M2aUC0oEG1Y+mnekdJx4dKIkxQkLIfkyQJyMZMIuheLJN/3M7CCB1PYjoRM
+ 7H12JT8CjbkrvWlJcNEB6wTJE89kjB2xDyfmVStKtdY4/9GGQ+8mOfHA/ksKbyPodSWyIKJ89P6
+ gvqHTx0/5eoBCyTKGhgtEGYwIjs7Pgqax0iWnjBhlIMrzZYf/OvFHyeZbHMHvL6I/zWGk=
+X-Received: by 2002:a05:600c:810c:b0:492:2ffd:8f8 with SMTP id
+ 5b1f17b1804b1-49266873f6amr40203965e9.15.1782402985132; 
+ Thu, 25 Jun 2026 08:56:25 -0700 (PDT)
+Received: from simon-macbookpro.tugraz.local (nt-e167.wlcli.tugraz.at.
+ [129.27.244.167]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49269005626sm6549435e9.10.2026.06.25.08.56.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Jun 2026 08:56:24 -0700 (PDT)
+From: Simon Scherer <scherer.simon89@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
+ Simon Scherer <scherer.simon89@gmail.com>
+Subject: [PATCH] target/i386: fix incorrect decoding of EXTRQ_i
+Date: Thu, 25 Jun 2026 17:56:13 +0200
+Message-ID: <20260625155613.192643-1-scherer.simon89@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260616052552.389021-1-gshan@redhat.com>
- <20260616052552.389021-2-gshan@redhat.com>
- <CAFEAcA-mf14=jpRFHarAbN6AbQwvW=Yu6WB1JiNMsECEdaxD3A@mail.gmail.com>
- <20260625070551-mutt-send-email-mst@kernel.org>
- <CAFEAcA8YJZq9TqrUd0zTnewAdVDm5y6UV7BJQZ0C60TZ=RT98Q@mail.gmail.com>
- <20260625091334-mutt-send-email-mst@kernel.org>
- <CAFEAcA8xK+t3-prEphtkq-o9UY2mgS6cowhs880GOaxL9dKSGw@mail.gmail.com>
- <20260625101817-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260625101817-mutt-send-email-mst@kernel.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 25 Jun 2026 16:23:47 +0100
-X-Gm-Features: AVVi8CcTfQ8bSXrsW_GWrobYdcAF931uZMAOr09cHRp0s4EaJ7pMxXFgpbvs2PQ
-Message-ID: <CAFEAcA8-Un+Q1yBDqLWCLPRwtgTA_VhJqGobgZChrFhAeVfG8A@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
- device region accessors
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- peterx@redhat.com, alex@shazbot.org, richard.henderson@linaro.org, 
- berrange@redhat.com, philmd@oss.qualcomm.com, philmd@mailo.com, 
- david@kernel.org, clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com, 
- jugraham@redhat.com, liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn, 
- shan.gavin@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=scherer.simon89@gmail.com; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,56 +98,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 25 Jun 2026 at 15:52, Michael S. Tsirkin <mst@redhat.com> wrote:
-> I think there is exactly 1 kinda reasonable case. A 2 byte read/write at
-> offset 0x1 within a dword. This maps nicely to even classical PCI byte
-> enable mechanism and so yes it works if your CPU can initiate these
-> things, and it's atomic.
->
-> I tried reading LEDCTL on e1000e:
->
->        byte  @ 0xe00: 0x64
->        byte  @ 0xe01: 0x2a
->        byte  @ 0xe02: 0x00
->        byte  @ 0xe03: 0x00
->        word  @ 0xe00: 0x2a64
->        word  @ 0xe01: 0x002a
->
-> Works fine.
+The decoding of the extrq instruction with an immediate operand (EXTRQ_i) is
+incorrect. Per the AMD manual the instruction encoding looks as follows:
 
-The e1000e datasheet actually documents what it does in this
-case (slightly surprising, since hardware engineers love to
-leave this kind of corner case undocumented):
+EXTRQ xmm1, imm8, imm8   66 0F 78 /0 ib ib
 
-# For registers that should be accessed as 32-bit double words,
-# partial writes (less than a 32-bit double word) does not take
-# effect (such as, the write is ignored). Partial reads
-# return all 32 bits of data regardless of the byte enables.
-#
-# Note: Partial reads to clear-by-read registers (such as, ICR)
-# can have unexpected results since all 32 bits are actually read
-# regardless of the byte enables. Partial reads should not be done.
+The /0 indicates that the "Reg" field of the ModR/M byte must be equal
+to 0 and the XMM register operand is specified by the "R/M" field.
+However, qemu incorrectly uses the "Reg" field to extract the register operand.
 
-So for this specific device that access is out-of-spec.
+This patch instead extracts the XMM register operand from the "R/M"
+field.
 
-I guess what I'm wondering is: can we just have code
-that does an aligned exact-width access in the 1/2/4/8
-byte aligned case, and the host's best approximation to
-an unaligned exact-width access for the 2/4/8 byte
-unaligned case? (so on sparc you get multiple smaller
-accesses, and on most archs including x86 and arm you
-get an unaligned load). That would mean the guest could
-potentially provoke a fault on the load/store on an
-access to a passthrough device, but if you give the
-guest passthrough access it can very likely provoke
-a fault anyway, depending on exactly what the device is.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3611
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+---
+ target/i386/tcg/decode-new.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I think the most likely reason for an unaligned access
-in this codepath is "it's actually RAM, either really
-host RAM or else something memory-like in a BAR", and
-either way if the guest does a 4-byte unaligned access
-then doing a 4-byte unaligned access seems better than
-second-guessing it, even on non-x86.
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index ac181308ca..acb300457c 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -605,7 +605,7 @@ static void decode_0F78(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
+ {
+     static const X86OpEntry opcodes_0F78[4] = {
+         {},
+-        X86_OP_ENTRY3(EXTRQ_i,       V,x, None,None, I,w,  cpuid(SSE4A)), /* AMD extension */
++        X86_OP_ENTRY3(EXTRQ_i,       U,x, None,None, I,w,  cpuid(SSE4A)), /* AMD extension */
+         {},
+         X86_OP_ENTRY3(INSERTQ_i,     V,x, U,x, I,w,        cpuid(SSE4A)), /* AMD extension */
+     };
+-- 
+2.53.0
 
--- PMM
 
