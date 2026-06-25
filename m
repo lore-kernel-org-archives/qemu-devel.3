@@ -4,103 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5E7CCDE00B
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 22:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24434CDE00C
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 22:48:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcsli-0003W4-BI; Thu, 25 Jun 2026 18:41:58 -0400
+	id 1wcsr7-0006e7-1N; Thu, 25 Jun 2026 18:47:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wcslg-0003Vh-T1
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:41:56 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wcsr2-0006a3-HY
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:47:30 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wcslf-0004EG-0p
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:41:56 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-662c360aa73so422305d50.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 15:41:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782427314; cv=none;
- d=google.com; s=arc-20260327;
- b=HQhnPE4SihqaaqOkG2WjUgpg9gwxuNoA34/9AePiLflfPZIfW5BQe++AqTyUPnXIqq
- mkiL+KHi45N4kQhDKEaekzIyWFoBLQFu3Cd/Ix2QA6CEcgrZgOtaNFJwWG5u0mRTSluw
- flEj2A+Tg9U/QSW0elQpdbIRcSGtGDZR19Woj/hHfWsp+7irxhF7Uo7nMUevc/mowEAF
- wLP26vzEyZvcQ8FxKeOyogUPHHYQrgZpoP/CYBOni5U/BnnuC1Dbd+kI9P/fEP3CFPtQ
- eOrLr0RE7/mBTOeSqicETXNFmyjt36V63twE9Pj4ZwESvPCByCzwgZtl/QFX0fiZODh7
- L/Bg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=rOaDFJEnxQBazw0f8pswD1hRNZjvne7Cou16zAZh0po=;
- fh=gvDt/l0NjtJ7j6fPXI/3OX6LFkyzsAIAGRoWta4PwBc=;
- b=BxIiSldpmEtoufUisu6KN5xwppjjR5y4VWddzTLZf4KLvB+9a0/kQDxx8TEuLfna5b
- q73EZjVL7mZdBxiDYVRa5ebdirYsInJ7cX6j75Ziy8tQMOG1OGsacjdxiU8jlSggB4WN
- u7vUbNzrUq8Jh11L8kChTKE9Osvf1wcc5UBtNzS2j3fycWCxl+X4rfRDMZkCYlIDU7jh
- IuV0xllxC3uT0AFSeLN6LTaqgaNkDG2NcdjtZStp/0Yc5pLKSNVY8MxChG1IKhjRiyMd
- AMr+T6cBx+zanPKrn4uXXINHXXbCss+WqQq4JBcgi4jtdqDB3ObcR8Ff+Zpn8ldN3Q9R
- +Gfw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wcsr0-0005zq-QO
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:47:28 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-37e0d09be07so228688a91.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 15:47:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782427314; x=1783032114; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rOaDFJEnxQBazw0f8pswD1hRNZjvne7Cou16zAZh0po=;
- b=RKeNLz6ygYjBjSqf0Bd4CnmGCtDUliWgDDENbFg3gszXQIAPbjKz12348zxVdXrs4H
- i/Iq/Pj82IGnFEC91XSxL4VSOcmpVLXKXHxgFngcMGCn6tV/2S64XI3h21T7As/EOymr
- Beb7xsaNKUbVQRW7hYNUzuC0Q+DcWctn47UaQTNIQet6pLFHDu2Zx3+tXqE/11H/b4ol
- RmKZW0/0p+Vka1a8y8Q3MvLeyNzhuoH2W1Z/KXfAh0KQwjgHOLje6swcWugUyeEsmuiM
- oypfWqU13okorAIjgu3ezgp5f4q/fqG9ao60MtSQG+lSIFS3bHyF2kHSZOX3woz1eBaP
- K5Xw==
+ d=linaro.org; s=google; t=1782427645; x=1783032445; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xAFphcdMcc4nMg6ZvlPlH0PadArCbX+n0WGGKJ8VtZY=;
+ b=eLSBnmSfFftejt4DwznZ9PxpilUpKdvktQa7H3JqdnbOuZe3LfoVgwjhkWvV59sU7M
+ TotslOJeSki6zhHu2M0pk8qk2MYeTn4545jfFDrx9tH1I7CwdBfU3zOjj8FkdCxtK+db
+ EA3kGXmRk9UHXpYsFON9oVzdJWlCtitY4w36TK3Ke4/LTKJHhvWMi6Loj168ZwRHyw7A
+ hXknD9QdcK+lhCA6I5TCStPFVpQpjNdif468/gz5lYBobnr9jS/X/hWlkUkqXoOVBF2W
+ Hrm5wiU5FPkrOB6+AaFU36skmJgHU3+q++z5umZjsE65Os7cdOLkBWhwgwFNfEmx6J6f
+ 7tzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782427314; x=1783032114;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=rOaDFJEnxQBazw0f8pswD1hRNZjvne7Cou16zAZh0po=;
- b=VfgCW5wWUgFtn5uVAgLdFe8EHYZnO0U3RCAlqYlELlAi4kgkkNVuztW+45mDQ9ZRXU
- Xr8NA9BiAcpIysoyH3GH3i59NxJ1/knz9lY1aiSfIfDrmElgN93TCMdkqiCv36N8pplu
- dvtXRcemZZYe/annfuafth9kszUPeOHtHzq/AGCTKLQCzqgORAYO/vb3DwNFo1QCe6vy
- o2GKGmiZpq8c0P3Y+sZ9CxmacFObTlWPASyYu+1QQvWOICs19TV7RYoYIDMDFXgkTqHT
- rYfs1OjLgrrfLNNjYeedm6hMjBS/lwFwo8ely6WRNCj4lnBJ6PR2KUly36LHvFIrK8IM
- 9sHQ==
-X-Gm-Message-State: AOJu0YzuTk15+9Kxk1Da6TzKnEeOe9y6O/ZW/I9rD4toKXxx7JGbQWie
- 9MIikbT78P+5+5HLFFpbAjXWH7hWdZxlC9eRd8gOgWkCu5k0uYVKpmB3+naXzpQPIwFdbSG6ibo
- yjDCbp1WsUKl9nOsG/V6rtBl8+OIqOg4=
-X-Gm-Gg: AfdE7cmn1x28Dhm2Cufn4jcq/idFyxb6bm/sV3hZeWCBwa9/55GU4efJwNncIf4KfFG
- /AEaTQi4SOk0HoP57BnaMcG8iqXco1WptoCVBbwQVErXS0CrpbNibSUCa4RMgzhpXZ4oh0qXjOq
- mjdmC2KNg+GluHfXjarAniIsN4k6Wod3dYdqorR09+hYMu+ATFnlZAF8QF3uKOLc13uxogSgX9S
- 6Ip6Tlqu61FEGbCN1igQUAxSVi/OPaoybr03wRmwWXdEKQGKh6VU2uKw1vzCcFz0sd5WYgoliG0
- /SEH2x8jqzY=
-X-Received: by 2002:a05:690e:12c4:b0:664:8f11:6f32 with SMTP id
- 956f58d0204a3-6648f118f48mr2999256d50.48.1782427313640; Thu, 25 Jun 2026
- 15:41:53 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782427645; x=1783032445;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xAFphcdMcc4nMg6ZvlPlH0PadArCbX+n0WGGKJ8VtZY=;
+ b=aLb11XWMLOISx4jhswDYROcuA1sAfe5vSp24XYstcUumHVDLAVbWIPQyERN/FLHaKh
+ CLVB0zp/1Un+yKBDM1ywEbPfrQA0HMCzI+hr6rKCMI0SInSUP/9o6p2r6hbcbX9s8zb6
+ kJbmaRlwdglu+y6ww7qDsCuL6R7XDNH0GanfQiums3va0JCY8IIqyhEvn4UW92ABnOWt
+ qCOM11obYuMDZrkMRRVdeo/s3bsq9Q0xWxYRouBfSLROxKiK90iwR5rOc0HUoedfJBeb
+ aX2kr3LCtSFdFcTTTAhD6skt9UUy4Li9wonbsBvi4svb4si/GMsHDg9Ej/fq+3Uf0wi7
+ TFMw==
+X-Gm-Message-State: AOJu0YxteYRB0frjLhv65ksKaRQUOwD0l4h51vADJrhx6K9Ym+untsN4
+ SJQaqrz88fr3oB+ow34WMphbUaF5FuT/XtwMD1xSLJl/dh+67ViA6sgaKGTJViZqaSLjjYBjT24
+ 8Lw+J
+X-Gm-Gg: AfdE7cnNqTca+kK6Hdgu7/Ab+Vk4AcskVBPs5POmWHu9kCJl2DUy+Qv4C+CnaFiB2Xc
+ C4k1RNThu93UNnrhg3QVKEuhWBRXAgL8kZNr3GcSULA39X2Nw9cuB+BiTzz/gLabUp4eVtHbCnr
+ IuPJIkAcDlX+cZjuognA03Yb6ckBSIgcqscHzEGNw8hAtw33JcxaDTFXs2QxSI3F2v+cQds5vJG
+ +sC0J50h1VyllI5bBCWauPPzPKuxdG0cnIA+Po83eMN4s6E1AGL3GOs/JPylA8u/mQ9Feg0YhFy
+ Waf4Tx/ora06FLf+QqumxxAFCJz5BhHzixI/7bTQ2Y9DvZyawOp4fMzWuRKIzToErCGETTPu/If
+ JxOf/g6Cg7b+9HVkVTL2JI6fYfc3heTXLrX6GjBnGnLyndDz1M2jNtG4aQu8xAhh4rSiqsqngy8
+ 44dL4G7ekj7EwbO0HZGHF2ElH6TpDFiGNeAomlJxyczzReCDFzQg==
+X-Received: by 2002:a17:90b:1fc4:b0:36d:63cb:cf63 with SMTP id
+ 98e67ed59e1d1-37dfa2551b9mr4278523a91.20.1782427644959; 
+ Thu, 25 Jun 2026 15:47:24 -0700 (PDT)
+Received: from stoup.. (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-37df400ba0bsm2762834a91.15.2026.06.25.15.47.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Jun 2026 15:47:24 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH] target/arm: Implement and enable FEAT_SSVE_FEXPA for -cpu max
+Date: Thu, 25 Jun 2026 15:47:23 -0700
+Message-ID: <20260625224723.766270-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260617155857.7451-1-dingtao0430@163.com>
- <20260617155857.7451-2-dingtao0430@163.com>
-In-Reply-To: <20260617155857.7451-2-dingtao0430@163.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Fri, 26 Jun 2026 06:41:41 +0800
-X-Gm-Features: AVVi8CcrVoPA9v8jRCgRbubFAwkXLXdMgQrv51TJIw1Jf2uZvmSoJz3qB0J3Iuw
-Message-ID: <CAEUhbmVPJ_cAUQbTo0C_4swXUmL-DV0OwR6ZcMhgCUhXAP0QEA@mail.gmail.com>
-Subject: Re: [PATCH 1/1] fixed sdma boundary bug
-To: Tao Ding <dingtao0430@163.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb129.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -118,138 +97,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 18, 2026 at 12:01=E2=80=AFAM Tao Ding <dingtao0430@163.com> wro=
-te:
->
-> During SDMA transfers, the controller raises an interrupt at buffer bound=
-aries
-> to request a system address update. But the emulation fails to clear the
-> SDHC_DOING_READ/WRITE flags after DMA completion, so writes to SDHC_SYSAD=
- are
-> ignored. Clear these flags when the transfer ends.
-> (according to PartA2_SD_Host_Controller_Simplified_Specification_Ver2.00.=
-pdf section 2.2.1)
->
-> This is a QTest in npcm7xx_sdhci-test that exercises this boundary condit=
-ion and
-> validates the fix.
->
-> QTest steps:
->   1. Replace npcm7xx_sdhci-test.c with the updated version (full code
->      available at: https://pastebin.com/AWVp2wFi).
->   2. Build with:
->        ../configure --target-list=3D"arm-softmmu,aarch64-softmmu" \
->                     --disable-slirp --enable-debug --disable-werror
->        ninja qemu-system-arm tests/qtest/npcm7xx_sdhci-test
->   3. Run the specific test case:
->        QTEST_QEMU_BINARY=3D./qemu-system-arm \
->          ./tests/qtest/npcm7xx_sdhci-test \
->          -p /arm/npcm7xx_sdhci/read_sd_sdma_boundary_continue
->
-> Before the fix, the test fails with a BLKCNT assertion:
->   ERROR:...wait_for_block_count: assertion failed (qtest_readw(...) =3D=
-=3D expected): (1 =3D=3D 0)
->
-> After applying the fix, the test passes:
->   ok 1 /arm/npcm7xx_sdhci/read_sd_sdma_boundary_continue
->
-> The new test case ensures the SDMA boundary handling works correctly and
-> prevents future regressions.
->
->
-> Uboot test:
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/cpu-features.h      | 5 +++++
+ linux-user/aarch64/elfload.c   | 1 +
+ target/arm/tcg/cpu64.c         | 1 +
+ target/arm/tcg/translate-sve.c | 2 +-
+ docs/system/arm/emulation.rst  | 1 +
+ 5 files changed, 9 insertions(+), 1 deletion(-)
 
-U-Boot
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index c3eeecbea9..bdeb72bd77 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1580,6 +1580,11 @@ static inline bool isar_feature_aa64_sme_mop4(const ARMISARegisters *id)
+     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SMOP4);
+ }
+ 
++static inline bool isar_feature_aa64_ssve_fexpa(const ARMISARegisters *id)
++{
++    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SFEXPA);
++}
++
+ static inline bool isar_feature_aa64_ssve_aes(const ARMISARegisters *id)
+ {
+     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, AES);
+diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
+index 9b93969850..cea286cce0 100644
+--- a/linux-user/aarch64/elfload.c
++++ b/linux-user/aarch64/elfload.c
+@@ -174,6 +174,7 @@ abi_ulong get_elf_hwcap(CPUState *cs)
+     GET_FEATURE_ID(aa64_f8mm8, ARM_HWCAP_A64_F8MM8);
+     GET_FEATURE_ID(aa64_f8mm4, ARM_HWCAP_A64_F8MM4);
+     GET_FEATURE_ID(aa64_ssve_aes, ARM_HWCAP_A64_SME_AES);
++    GET_FEATURE_ID(aa64_ssve_fexpa, ARM_HWCAP_A64_SME_SFEXPA);
+     GET_FEATURE_ID(aa64_sme_mop4, ARM_HWCAP_A64_SME_SMOP4);
+     GET_FEATURE_ID(aa64_sve2p2, ARM_HWCAP_A64_SVE2P2);
+ 
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 2cf335c956..7151c509f9 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1384,6 +1384,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+ 
+     t = GET_IDREG(isar, ID_AA64SMFR0);
+     t = FIELD_DP64(t, ID_AA64SMFR0, SMOP4, 1);    /* FEAT_SME_MOP4 */
++    t = FIELD_DP64(t, ID_AA64SMFR0, SFEXPA, 1);   /* FEAT_SSVE_FEXPA */
+     t = FIELD_DP64(t, ID_AA64SMFR0, AES, 1);      /* FEAT_SSVE_AES */
+     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP2, 1);   /* FEAT_SSVE_FP8DOT2 */
+     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP4, 1);   /* FEAT_SSVE_FP8DOT4 */
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 79e8e16b24..5de9ee7d4f 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -1373,7 +1373,7 @@ static gen_helper_gvec_2 * const fexpa_fns[4] = {
+     NULL,                   gen_helper_sve_fexpa_h,
+     gen_helper_sve_fexpa_s, gen_helper_sve_fexpa_d,
+ };
+-TRANS_FEAT_NONSTREAMING(FEXPA, aa64_sve, gen_gvec_ool_zz,
++TRANS_FEAT_STREAMING_IF(FEXPA, aa64_sve, aa64_ssve_fexpa, gen_gvec_ool_zz,
+                         fexpa_fns[a->esz], a->rd, a->rn, s->fpcr_ah)
+ 
+ static gen_helper_gvec_3 * const ftssel_fns[4] = {
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 3ef5b53e8a..a12471aafe 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -175,6 +175,7 @@ the following architecture extensions:
+ - FEAT_SME_LUTv2 (Lookup table instructions with 4-bit indices and 8-bit elements)
+ - FEAT_SME_MOP4 (Quarter-tile outer product instructions)
+ - FEAT_SSVE_AES (Streaming SVE Mode Advanced Encryption Standard and 128-bit polynomial multiply long instructions)
++- FEAT_SSVE_FEXPA (Streaming FEXPA instruction)
+ - FEAT_SSVE_FP8DOT2 (SVE2 FP8 2-way dot product to half-precision instructions in Streaming SVE mode)
+ - FEAT_SSVE_FP8DOT4 (SVE2 FP8 4-way dot product to single-precision instructions in Streaming SVE mode)
+ - FEAT_SSVE_FP8FMA (SVE2 FP8 multiply-accumulate to half-precision and single-precision instructions in Streaming SVE mode)
+-- 
+2.43.0
 
->     1. Prepare zImage, uboot and rootfs.cpio.gz, make sure uboot config (=
-MMC_SDHCI_SDMA=3Dy).
-
-Please specify which U-Boot defconfig you used for testing and how
-zynq-sd.img was generated.
-
->     2. ./qemu-system-aarch64 -M xilinx-zynq-a9 -machine boot-mode=3Dsd -m=
- 1024 -display none -serial null -serial stdio -monitor none \
->         -device loader,file=3Du-boot-dtb.bin,addr=3D0x04000000,cpu-num=3D=
-0  \
->         -drive file=3Dzynq-sd.img,format=3Draw,if=3Dsd -D qemu.log
->
->
-> After applying the fix, success load sd card:
->
-> U-Boot 2026.07-rc4-g1e80ee41441c (Jun 15 2026 - 19:05:05 +0800)
->
-> Model: Xilinx ZC702 board
-> DRAM:  ECC disabled 1 GiB
-> Core:  33 devices, 21 uclasses, devicetree: board
-> Flash: 0 Bytes
-> NAND:  0 MiB
-> MMC:   mmc@e0100000: 0
-> Loading Environment from FAT... *** Error - No Valid Environment Area fou=
-nd
-> *** Warning - bad env area, using default environment
->
-> In:    serial@e0001000
-> Out:   serial@e0001000
-> Err:   serial@e0001000
-> Net:
-> ZYNQ GEM: e000b000, mdio bus e000b000, phyaddr 7, interface rgmii-id
->
-> Warning: ethernet@e000b000 (eth0) using random MAC address - 4a:63:5a:a4:=
-d3:6b
-> eth0: ethernet@e000b000
-> Hit any key to stop autoboot: 0
-> Zynq> fatload mmc 0 ${kernel_addr_r} zImage
-> 10838528 bytes read in 4316 ms (2.4 MiB/s)
-> Zynq> fatload mmc 0 ${ramdisk_addr_r} rootfs-arm32.cpio.gz
-> 406531 bytes read in 199 ms (1.9 MiB/s)
-> Zynq> setenv ramdisk_size ${filesize}
-> Zynq> fatload mmc 0 ${fdt_addr_r} zynq-zc702.dtb
-> 15754 bytes read in 21 ms (732.4 KiB/s)
-> Zynq> setenv bootargs console=3DttyPS0,115200 earlycon ignore_loglevel rd=
-init=3D/init
-> Zynq> bootz ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_addr=
-_r}
-> Kernel image @ 0x2000000 [ 0x000000 - 0xa56200 ]
-> ## Flattened Device Tree blob at 01f00000
->    Booting using the fdt blob at 0x1f00000
-> Working FDT set to 1f00000
->    Loading Ramdisk to 2ff9c000, end 2ffff403 ... OK
->    Loading Device Tree to 2ff95000, end 2ff9bd89 ... OK
-> Working FDT set to 2ff95000
->
-> Starting kernel ...
->
->
->
-> Signed-off-by: Tao Ding <dingtao0430@163.com>
-> ---
->  hw/sd/sdhci.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> index c86dfa281f..0d87289ca4 100644
-> --- a/hw/sd/sdhci.c
-> +++ b/hw/sd/sdhci.c
-> @@ -644,6 +644,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCISta=
-te *s)
->                  s->data_count =3D 0;
->              }
->              if (page_aligned && boundary_count =3D=3D 0) {
-> +                s->prnsts &=3D ~SDHC_DOING_READ;
->                  break;
->              }
->          }
-> @@ -669,6 +670,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCISta=
-te *s)
->                  }
->              }
->              if (page_aligned && boundary_count =3D=3D 0) {
-> +                s->prnsts &=3D ~SDHC_DOING_WRITE;
->                  break;
->              }
->          }
-> --
-
-Regards,
-Bin
 
