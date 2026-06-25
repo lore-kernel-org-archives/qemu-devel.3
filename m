@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0DEFCDE00B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A2CECDE00E
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 21:23:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcrXA-0007kk-7X; Thu, 25 Jun 2026 17:22:52 -0400
+	id 1wcrXH-0007uD-3D; Thu, 25 Jun 2026 17:22:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcrX9-0007kM-3c
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:22:51 -0400
+ id 1wcrXF-0007mO-4a
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:22:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcrX7-00046M-51
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:22:50 -0400
+ id 1wcrXC-00047N-NI
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:22:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782422568;
+ s=mimecast20190719; t=1782422574;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=q8yNuPkSRmwG2FtTaJ9taZvjiz2bPiOWU/0IOstoqqY=;
- b=PiVq47+qrQ/l3qox13F/WpddEFiulMDSyCI6KXgmOZtukihpT2nrG5TbEQ3JfrXlsavt9d
- 7LmjAUPfAsGoaqVxWBdBUGdpPaM8cZ/OYslgGHPj4kwGqiNxLBMFu48C3hqt9irSC6CgK7
- /cTX8BunLvwAAdgOYpNEJ4ZN5aO1U2k=
+ bh=29Z3rBfPd1tCZESqoKoleKg6oLMW7kB/G4ySrNtwxvo=;
+ b=DSGp+eW3R3qsCDNOB8/zLP563WQ1222VHCUCpNfxvwmYmz+wAAzYpbDKNA83gwt6Ah8Hcj
+ YxELRd6bfOjxftw6CXZhDYou1PfStikfikW+/8WXoRFwtXSn9M3jsjrr5BGNz6ZsZRTWSR
+ r11CxAdwTM/qA7nsRT1l3sSHSjPgGlM=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-588-pIhRMi1OMGaqRIkP0mVfRQ-1; Thu,
- 25 Jun 2026 17:22:47 -0400
-X-MC-Unique: pIhRMi1OMGaqRIkP0mVfRQ-1
-X-Mimecast-MFC-AGG-ID: pIhRMi1OMGaqRIkP0mVfRQ_1782422566
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-I_KXnCMKOuWr6OwPvOk5-w-1; Thu,
+ 25 Jun 2026 17:22:52 -0400
+X-MC-Unique: I_KXnCMKOuWr6OwPvOk5-w-1
+X-Mimecast-MFC-AGG-ID: I_KXnCMKOuWr6OwPvOk5-w_1782422571
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D2691955F18; Thu, 25 Jun 2026 21:22:46 +0000 (UTC)
+ id C486D1955E75; Thu, 25 Jun 2026 21:22:51 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.16])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 28B7E30A8; Thu, 25 Jun 2026 21:22:44 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 34DD61800347; Thu, 25 Jun 2026 21:22:49 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 26 Jun 2026 01:19:37 +0400
-Subject: [PATCH v2 36/39] hw: guard BusClass::print_dev with CONFIG_HMP
+Date: Fri, 26 Jun 2026 01:19:38 +0400
+Subject: [PATCH v2 37/39] build-sys: make HMP source files conditional on
+ have_hmp
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260626-qemu-no-hmp-v2-36-8af31bc54c61@redhat.com>
+Message-Id: <20260626-qemu-no-hmp-v2-37-8af31bc54c61@redhat.com>
 References: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
 In-Reply-To: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
 To: qemu-devel@nongnu.org
@@ -61,24 +62,24 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Markus Armbruster <armbru@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9322;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=13380;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=2CsYO/ueypyjal1LK5FE8EKb7V0DI5Zh8hvtTU3txZk=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqPZte3PPLIyIOvPXiTtikIMDZAf2Ihn0VRpJNs
- LAhIqe6aPKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaj2bXgAKCRDa6OEJdZac
- 5QALD/9+dIghBocYlvhfNQZw/gN0cNJ5aXrllSQ8eOxOEZkw8Ci7ji51ojaSnzhqDnqKk3bMPwi
- xfwhuGpUSKyzopGBBKfxRQGojZMFIjplA64F20pj84MwHWq7k0Bb3XEr0iBCdhbbnu5J9JSj30e
- xHtN52h0XG5IL80SZ/Sf/mHBNMlBEsAIegBdFwPThUMHFRfWSBNSqea044oCxC5Uj/dZ7YGu7ei
- UrdyvQv89U0bz10Icmn7QlMox+/44tGgRB0mG4YRQ3eyU0PN3wtEM+crHKvsEreTIs6apUtF3lE
- atqfaZFh62eJp71JyRApQ2UJCe/BzioBng/I5Z0Y1xJd0usr1kkcZv+2XP5/BMxqN/BjTrKxB2A
- SfFCQf5qn/OsE3YuZYpP7X7Y64UXDb+18FVNnjTYPkDrlac51lYVtRtW6uDNMESHTHG6b85Aceb
- oBAw0YQaMl6EoUm5eNnTBBwIXHdxj4WWx+rpZqd0184VNS6a9GPrN9t6WxhdNXDlq2jyFp/WYfX
- 7U5PEg75sqT2+8W++KUEYO5zoyQbmgtIjm/r8uiT9PevddKmosimap23wo5nMYXJtmgsXaCRZxB
- SWZz8OlMEAKrtq3XeJGs+VkRglzU17HILg+ZFWajXwtyVIVhPkNixrF+46MawynEiViIcKOkvq8
- qp9E7ecI8LCQ9MQ==
+ bh=2JAfSLU5I4P1cKSyjKnc5riI/bxpf8qr0sQZXLFVhc4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqPZte23FKJP0Ukn0mATJSaYhKsWUbzZhPyH+Kp
+ xBpnUCPvMCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaj2bXgAKCRDa6OEJdZac
+ 5bpbEACnG69rxtx7ir0E45pV+2uhBTRSMWAKCw1NFRUhzNd4UvyjbiAp0PMUwCxGGKACTkCH+2O
+ dw4hn2jUeNwErJMi+SWDsgZxR4rM6nc0tdu88ukJwZutiBemYR/k1w+NSyaizTjycSKEtCk8hvl
+ cEzeU1RIXVY32xwu/9/2+hn+PmNAaJnCA77QNFO3n30Mh5tXeeym/JxoQvFVihsvcyUctDTP/6F
+ X9eIsQGZWWZIbhNt+hg6BwPRWsHWRYZJwpLcuaBFJzIESRHO8iel9yD4KPgME3s+J6gNxDZu+9x
+ 6IblYiyBZyeYTsN26HJMu4B8FREqBU/vzSxokDEHkd9JR7mPo38ksIF0cpkzgJcm0I2jiEf7VAV
+ YsRwjEjAW2rHu/w+U0Ex5qrZuslBycBeTiOkTZLxirG+UMGiE+vSlKRF4uu/Bxg4FJkWYUrlxsh
+ Y5DRUbUFXNMFvrn1bKqQL4X9f5BBm8y8pheZcNkTke4MYDu4U6vTEaItxdQcBhbLUYaLzOudWs0
+ Muha9zPstUApvQunf4aRkwryeq+6CBgx5bpE+KQKM5NnEKgKk27EhiBeRbsCVYiYPM/2NOC6FoG
+ CmpeSTglYnoaXmrItpEhgQCkpGchzeZISJlUaPvCh8Z92yzA/deaEW0i9Rvx7922C+2cHQHBJhl
+ NUxnYzRBjbNVVMw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -105,281 +106,449 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The print_dev callback is only used by HMP 'info qtree'. Guard the field
-in BusClass, all implementations, and the caller with CONFIG_HMP.
+Exclude all *-hmp-cmds.c files and HMP-only source files from the
+build when HMP is disabled.
+
+Also conditionalise the hmp-commands.hx header generation and the
+test-hmp qtest.
+
+Drop the transient #ifdef CONFIG_HMP, no longer needed.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/hw/core/qdev.h      |  2 ++
- hw/char/virtio-serial-bus.c |  6 ++++++
- hw/core/sysbus.c            |  6 ++++++
- hw/misc/auxbus.c            | 16 +++++++++++-----
- hw/pci/pci-hmp-cmds.c       |  2 ++
- hw/pci/pci.c                |  2 ++
- hw/usb/bus.c                |  6 ++++++
- hw/xen/xen-bus.c            |  4 ++++
- 8 files changed, 39 insertions(+), 5 deletions(-)
+ meson.build               |  2 +-
+ hw/pci/pci-hmp-cmds.c     |  2 --
+ monitor/hmp.c             |  2 --
+ audio/meson.build         |  4 +++-
+ backends/meson.build      |  5 ++++-
+ block/monitor/meson.build |  4 +++-
+ chardev/meson.build       |  5 ++++-
+ disas/meson.build         |  4 +++-
+ dump/meson.build          |  5 ++++-
+ hw/core/meson.build       |  5 +++--
+ hw/i386/meson.build       |  4 +++-
+ hw/net/meson.build        |  4 +++-
+ hw/pci/meson.build        |  4 +++-
+ hw/virtio/meson.build     |  4 +++-
+ migration/meson.build     |  4 +++-
+ monitor/meson.build       |  9 +++++++--
+ net/meson.build           |  4 +++-
+ qom/meson.build           |  4 +++-
+ stats/meson.build         |  5 ++++-
+ stubs/meson.build         | 12 +++++++-----
+ system/meson.build        |  9 +++++++--
+ tests/qtest/meson.build   |  8 +++++++-
+ trace/meson.build         |  5 ++++-
+ ui/meson.build            |  4 +++-
+ 24 files changed, 85 insertions(+), 33 deletions(-)
 
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index e1476223411..22dd143acf0 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -322,8 +322,10 @@ DECLARE_OBJ_CHECKERS(BusState, BusClass,
- struct BusClass {
-     ObjectClass parent_class;
- 
-+#ifdef CONFIG_HMP
-     /* FIXME first arg should be BusState */
-     void (*print_dev)(Monitor *mon, DeviceState *dev, int indent);
-+#endif
-     /*
-      * Return a newly allocated string containing the path of the
-      * device on this bus.
-diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-index cd234dc6db1..34a723a8715 100644
---- a/hw/char/virtio-serial-bus.c
-+++ b/hw/char/virtio-serial-bus.c
-@@ -833,7 +833,9 @@ static int virtio_serial_load_device(VirtIODevice *vdev, QEMUFile *f,
-     return 0;
- }
- 
-+#ifdef CONFIG_HMP
- static void virtser_bus_dev_print(Monitor *mon, DeviceState *qdev, int indent);
-+#endif
- 
- static const Property virtser_props[] = {
-     DEFINE_PROP_UINT32("nr", VirtIOSerialPort, id, VIRTIO_CONSOLE_BAD_ID),
-@@ -842,8 +844,10 @@ static const Property virtser_props[] = {
- 
- static void virtser_bus_class_init(ObjectClass *klass, const void *data)
- {
-+#ifdef CONFIG_HMP
-     BusClass *k = BUS_CLASS(klass);
-     k->print_dev = virtser_bus_dev_print;
-+#endif
- }
- 
- static const TypeInfo virtser_bus_info = {
-@@ -853,6 +857,7 @@ static const TypeInfo virtser_bus_info = {
-     .class_init = virtser_bus_class_init,
- };
- 
-+#ifdef CONFIG_HMP
- static void virtser_bus_dev_print(Monitor *mon, DeviceState *qdev, int indent)
- {
-     VirtIOSerialPort *port = VIRTIO_SERIAL_PORT(qdev);
-@@ -863,6 +868,7 @@ static void virtser_bus_dev_print(Monitor *mon, DeviceState *qdev, int indent)
-                    port->host_connected ? "on" : "off",
-                    port->throttled ? "on" : "off");
- }
-+#endif
- 
- /* This function is only used if a port id is not provided by the user */
- static uint32_t find_free_port_id(VirtIOSerial *vser)
-diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
-index 3e1160ee921..0b970d6b64f 100644
---- a/hw/core/sysbus.c
-+++ b/hw/core/sysbus.c
-@@ -23,7 +23,9 @@
- #include "monitor/monitor.h"
- #include "system/address-spaces.h"
- 
-+#ifdef CONFIG_HMP
- static void sysbus_dev_print(Monitor *mon, DeviceState *dev, int indent);
-+#endif
- static char *sysbus_get_fw_dev_path(DeviceState *dev);
- 
- typedef struct SysBusFind {
-@@ -75,7 +77,9 @@ static void system_bus_class_init(ObjectClass *klass, const void *data)
- {
-     BusClass *k = BUS_CLASS(klass);
- 
-+#ifdef CONFIG_HMP
-     k->print_dev = sysbus_dev_print;
-+#endif
-     k->get_fw_dev_path = sysbus_get_fw_dev_path;
- }
- 
-@@ -248,6 +252,7 @@ bool sysbus_realize_and_unref(SysBusDevice *dev, Error **errp)
-     return qdev_realize_and_unref(DEVICE(dev), sysbus_get_default(), errp);
- }
- 
-+#ifdef CONFIG_HMP
- static void sysbus_dev_print(Monitor *mon, DeviceState *dev, int indent)
- {
-     SysBusDevice *s = SYS_BUS_DEVICE(dev);
-@@ -260,6 +265,7 @@ static void sysbus_dev_print(Monitor *mon, DeviceState *dev, int indent)
-                        indent, "", s->mmio[i].addr, size);
-     }
- }
-+#endif
- 
- static char *sysbus_get_fw_dev_path(DeviceState *dev)
- {
-diff --git a/hw/misc/auxbus.c b/hw/misc/auxbus.c
-index 877f3456062..dd0629620ac 100644
---- a/hw/misc/auxbus.c
-+++ b/hw/misc/auxbus.c
-@@ -46,18 +46,22 @@
- } while (0)
- 
- 
-+#ifdef CONFIG_HMP
- static void aux_slave_dev_print(Monitor *mon, DeviceState *dev, int indent);
-+#endif
- static inline I2CBus *aux_bridge_get_i2c_bus(AUXTOI2CState *bridge);
- 
- /* aux-bus implementation (internal not public) */
- static void aux_bus_class_init(ObjectClass *klass, const void *data)
- {
-+#ifdef CONFIG_HMP
-     BusClass *k = BUS_CLASS(klass);
- 
-     /* AUXSlave has an MMIO so we need to change the way we print information
-      * in monitor.
-      */
-     k->print_dev = aux_slave_dev_print;
-+#endif
- }
- 
- AUXBus *aux_bus_init(DeviceState *parent, const char *name)
-@@ -90,11 +94,6 @@ void aux_map_slave(AUXSlave *aux_dev, hwaddr addr)
-     memory_region_add_subregion(bus->aux_io, addr, aux_dev->mmio);
- }
- 
--static bool aux_bus_is_bridge(AUXBus *bus, DeviceState *dev)
--{
--    return (dev == DEVICE(bus->bridge));
--}
--
- I2CBus *aux_get_i2c_bus(AUXBus *bus)
- {
-     return aux_bridge_get_i2c_bus(bus->bridge);
-@@ -287,6 +286,12 @@ static const TypeInfo aux_to_i2c_type_info = {
- };
- 
- /* aux-slave implementation */
-+#ifdef CONFIG_HMP
-+static bool aux_bus_is_bridge(AUXBus *bus, DeviceState *dev)
-+{
-+    return (dev == DEVICE(bus->bridge));
-+}
-+
- static void aux_slave_dev_print(Monitor *mon, DeviceState *dev, int indent)
- {
-     AUXBus *bus = AUX_BUS(qdev_get_parent_bus(dev));
-@@ -304,6 +309,7 @@ static void aux_slave_dev_print(Monitor *mon, DeviceState *dev, int indent)
-                    object_property_get_uint(OBJECT(s->mmio), "addr", NULL),
-                    memory_region_size(s->mmio));
- }
-+#endif
- 
- void aux_init_mmio(AUXSlave *aux_slave, MemoryRegion *mmio)
- {
+diff --git a/meson.build b/meson.build
+index 824ba695801..4b208a2c56e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3536,7 +3536,7 @@ hx_headers = [
+   ['qemu-options.hx', 'qemu-options.def'],
+   ['qemu-img-cmds.hx', 'qemu-img-cmds.h'],
+ ]
+-if have_system
++if have_system and have_hmp
+   hx_headers += [
+     ['hmp-commands.hx', 'hmp-commands.h'],
+     ['hmp-commands-info.hx', 'hmp-commands-info.h'],
 diff --git a/hw/pci/pci-hmp-cmds.c b/hw/pci/pci-hmp-cmds.c
-index a5f6483cc3d..3e378eadfaa 100644
+index 3e378eadfaa..a5f6483cc3d 100644
 --- a/hw/pci/pci-hmp-cmds.c
 +++ b/hw/pci/pci-hmp-cmds.c
-@@ -134,6 +134,7 @@ void hmp_info_pci(Monitor *mon, const QDict *qdict)
+@@ -134,7 +134,6 @@ void hmp_info_pci(Monitor *mon, const QDict *qdict)
      qapi_free_PciInfoList(info_list);
  }
  
-+#ifdef CONFIG_HMP
+-#ifdef CONFIG_HMP
  void pcibus_dev_print(Monitor *mon, DeviceState *dev, int indent)
  {
      PCIDevice *d = (PCIDevice *)dev;
-@@ -169,6 +170,7 @@ void pcibus_dev_print(Monitor *mon, DeviceState *dev, int indent)
+@@ -170,7 +169,6 @@ void pcibus_dev_print(Monitor *mon, DeviceState *dev, int indent)
                         r->addr, r->addr + r->size - 1);
      }
  }
-+#endif
+-#endif
  
  void hmp_pcie_aer_inject_error(Monitor *mon, const QDict *qdict)
  {
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index d3191609e28..9e5db952937 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -290,7 +290,9 @@ static void pci_bus_class_init(ObjectClass *klass, const void *data)
-     ResettableClass *rc = RESETTABLE_CLASS(klass);
-     FWCfgDataGeneratorClass *fwgc = FW_CFG_DATA_GENERATOR_CLASS(klass);
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index c9e207c7a30..4926972a3fb 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -1616,9 +1616,7 @@ static int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+     if (cs == NULL) {
+         return -1;
+     }
+-#ifdef CONFIG_HMP
+     md = cs->cc->sysemu_ops->monitor_defs;
+-#endif
+     if (md == NULL) {
+         return -1;
+     }
+diff --git a/audio/meson.build b/audio/meson.build
+index 0e33b6f9836..6655f601b11 100644
+--- a/audio/meson.build
++++ b/audio/meson.build
+@@ -9,7 +9,9 @@ audio_ss.add(files(
+ ))
  
-+#ifdef CONFIG_HMP
-     k->print_dev = pcibus_dev_print;
-+#endif
-     k->get_dev_path = pcibus_get_dev_path;
-     k->get_fw_dev_path = pcibus_get_fw_dev_path;
-     k->realize = pci_bus_realize;
-diff --git a/hw/usb/bus.c b/hw/usb/bus.c
-index 3b6fbd46ac3..753f2d9be56 100644
---- a/hw/usb/bus.c
-+++ b/hw/usb/bus.c
-@@ -12,7 +12,9 @@
- #include "trace.h"
- #include "qemu/cutils.h"
+ # deprecated since v10.2, to be removed
+-system_ss.add(files('audio-hmp-cmds.c', 'wavcapture.c'))
++if have_hmp
++  system_ss.add(files('audio-hmp-cmds.c', 'wavcapture.c'))
++endif
  
-+#ifdef CONFIG_HMP
- static void usb_bus_dev_print(Monitor *mon, DeviceState *qdev, int indent);
-+#endif
+ audio_modules = {}
+ foreach m : [
+diff --git a/backends/meson.build b/backends/meson.build
+index 60021f45d12..a59729f56fe 100644
+--- a/backends/meson.build
++++ b/backends/meson.build
+@@ -1,6 +1,5 @@
+ system_ss.add([files(
+   'cryptodev-builtin.c',
+-  'cryptodev-hmp-cmds.c',
+   'cryptodev.c',
+   'hostmem-ram.c',
+   'hostmem.c',
+@@ -10,6 +9,10 @@ system_ss.add([files(
+   'confidential-guest-support.c',
+ ), numa])
  
- static char *usb_get_dev_path(DeviceState *dev);
- static char *usb_get_fw_dev_path(DeviceState *qdev);
-@@ -31,7 +33,9 @@ static void usb_bus_class_init(ObjectClass *klass, const void *data)
-     BusClass *k = BUS_CLASS(klass);
-     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
++if have_hmp
++  system_ss.add(files('cryptodev-hmp-cmds.c'))
++endif
++
+ if host_os != 'windows'
+   system_ss.add(files('rng-random.c'))
+   if host_os != 'emscripten'
+diff --git a/block/monitor/meson.build b/block/monitor/meson.build
+index 74faced9e17..2d5c157a739 100644
+--- a/block/monitor/meson.build
++++ b/block/monitor/meson.build
+@@ -1,3 +1,5 @@
+-system_ss.add(files('block-hmp-cmds.c'))
++if have_hmp
++  system_ss.add(files('block-hmp-cmds.c'))
++endif
+ block_ss.add(files('bitmap-qmp-cmds.c'))
+ system_ss.add(files('qmp-cmds.c'))
+diff --git a/chardev/meson.build b/chardev/meson.build
+index 56ee39ac0b0..031b6d7238c 100644
+--- a/chardev/meson.build
++++ b/chardev/meson.build
+@@ -30,11 +30,14 @@ endif
+ chardev_ss = chardev_ss.apply({})
  
-+#ifdef CONFIG_HMP
-     k->print_dev = usb_bus_dev_print;
-+#endif
-     k->get_dev_path = usb_get_dev_path;
-     k->get_fw_dev_path = usb_get_fw_dev_path;
-     hc->unplug = qdev_simple_device_unplug_cb;
-@@ -543,6 +547,7 @@ static const char *usb_speed(unsigned int speed)
-     return txt[speed];
- }
+ system_ss.add(files(
+-    'char-hmp-cmds.c',
+     'msmouse.c',
+     'wctablet.c',
+     'testdev.c'))
  
-+#ifdef CONFIG_HMP
- static void usb_bus_dev_print(Monitor *mon, DeviceState *qdev, int indent)
- {
-     USBDevice *dev = USB_DEVICE(qdev);
-@@ -554,6 +559,7 @@ static void usb_bus_dev_print(Monitor *mon, DeviceState *qdev, int indent)
-                    usb_speed(dev->speed), dev->product_desc,
-                    dev->attached ? ", attached" : "");
- }
-+#endif
++if have_hmp
++    system_ss.add(files('char-hmp-cmds.c'))
++endif
++
+ chardev_modules = {}
  
- static char *usb_get_dev_path(DeviceState *qdev)
- {
-diff --git a/hw/xen/xen-bus.c b/hw/xen/xen-bus.c
-index dfad2bc5085..439cd47e849 100644
---- a/hw/xen/xen-bus.c
-+++ b/hw/xen/xen-bus.c
-@@ -100,6 +100,7 @@ abort:
-     qemu_xen_xs_transaction_end(xenbus->xsh, tid, true);
- }
+ if brlapi.found()
+diff --git a/disas/meson.build b/disas/meson.build
+index 42977a1f74d..b382550e41f 100644
+--- a/disas/meson.build
++++ b/disas/meson.build
+@@ -20,5 +20,7 @@ common_ss.add(when: 'CONFIG_TCG', if_true: files(
+     'objdump.c'
+ ))
+ common_ss.add(files('disas-common.c'))
+-system_ss.add(files('disas-mon.c'))
++if have_hmp
++  system_ss.add(files('disas-mon.c'))
++endif
+ specific_ss.add(capstone)
+diff --git a/dump/meson.build b/dump/meson.build
+index 26e1561ed48..bef8276aa5a 100644
+--- a/dump/meson.build
++++ b/dump/meson.build
+@@ -1,3 +1,6 @@
+-system_ss.add([files('dump.c', 'dump-hmp-cmds.c'), snappy, lzo])
++system_ss.add([files('dump.c'), snappy, lzo])
++if have_hmp
++  system_ss.add(files('dump-hmp-cmds.c'))
++endif
+ specific_ss.add(when: 'CONFIG_WINDUMP', if_true: files('win_dump-x86.c'))
+ system_ss.add(when: 'CONFIG_WINDUMP', if_false: files('win_dump-stubs.c'))
+diff --git a/hw/core/meson.build b/hw/core/meson.build
+index 8a96567de8f..8fe776d2c86 100644
+--- a/hw/core/meson.build
++++ b/hw/core/meson.build
+@@ -26,13 +26,11 @@ system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c'))
+ system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
+ system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.c'))
+ system_ss.add(when: 'CONFIG_EIF', if_true: [files('eif.c'), zlib, libcbor, gnutls])
+-
+ system_ss.add(files(
+   'cpu-system.c',
+   'fw-path-provider.c',
+   'hotplug.c',
+   'loader.c',
+-  'machine-hmp-cmds.c',
+   'machine-qmp-cmds.c',
+   'machine.c',
+   'nmi.c',
+@@ -46,6 +44,9 @@ system_ss.add(files(
+   'vm-change-state-handler.c',
+   'clock-vmstate.c',
+ ))
++if have_hmp
++  system_ss.add(files('machine-hmp-cmds.c'))
++endif
+ user_ss.add(files(
+   'cpu-user.c',
+   'qdev-user.c',
+diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+index b611fbb5a7f..125f4ce894c 100644
+--- a/hw/i386/meson.build
++++ b/hw/i386/meson.build
+@@ -24,7 +24,9 @@ i386_ss.add(when: 'CONFIG_VTD', if_true: files('intel_iommu.c'))
+ i386_ss.add(when: 'CONFIG_VTD_ACCEL', if_true: files('intel_iommu_accel.c'))
+ i386_ss.add(when: 'CONFIG_SGX', if_true: files('sgx-epc.c','sgx.c'),
+                                 if_false: files('sgx-stub.c'))
+-stub_ss.add(files('sgx-hmp-stub.c'))
++if have_hmp
++  stub_ss.add(files('sgx-hmp-stub.c'))
++endif
  
-+#ifdef CONFIG_HMP
- static void xen_bus_print_dev(Monitor *mon, DeviceState *dev, int indent)
- {
-     XenDevice *xendev = XEN_DEVICE(dev);
-@@ -107,6 +108,7 @@ static void xen_bus_print_dev(Monitor *mon, DeviceState *dev, int indent)
-     monitor_printf(mon, "%*sname = '%s' frontend_id = %u\n",
-                    indent, "", xendev->name, xendev->frontend_id);
- }
-+#endif
+ i386_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-common.c'))
+ i386_ss.add(when: 'CONFIG_PC', if_true: files(
+diff --git a/hw/net/meson.build b/hw/net/meson.build
+index 84f142df222..df3373be03b 100644
+--- a/hw/net/meson.build
++++ b/hw/net/meson.build
+@@ -67,6 +67,8 @@ system_ss.add(when: 'CONFIG_ROCKER', if_true: files(
+   'rocker/rocker_world.c',
+ ))
+ stub_ss.add(files('rocker/rocker-stubs.c'))
+-system_ss.add(files('rocker/rocker-hmp-cmds.c'))
++if have_hmp
++  system_ss.add(files('rocker/rocker-hmp-cmds.c'))
++endif
  
- static char *xen_bus_get_dev_path(DeviceState *dev)
- {
-@@ -385,7 +387,9 @@ static void xen_bus_class_init(ObjectClass *class, const void *data)
-     BusClass *bus_class = BUS_CLASS(class);
-     HotplugHandlerClass *hotplug_class = HOTPLUG_HANDLER_CLASS(class);
+ subdir('can')
+diff --git a/hw/pci/meson.build b/hw/pci/meson.build
+index a6cbd89c0a3..984c7327e5d 100644
+--- a/hw/pci/meson.build
++++ b/hw/pci/meson.build
+@@ -5,12 +5,14 @@ pci_ss.add(files(
+   'pci.c',
+   'pci_bridge.c',
+   'pci_host.c',
+-  'pci-hmp-cmds.c',
+   'pci-qmp-cmds.c',
+   'pcie_sriov.c',
+   'shpc.c',
+   'slotid_cap.c'
+ ))
++if have_hmp
++  pci_ss.add(files('pci-hmp-cmds.c'))
++endif
+ # The functions in these modules can be used by devices too.  Since we
+ # allow plugging PCIe devices into PCI buses, include them even if
+ # CONFIG_PCI_EXPRESS=n.
+diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+index 0e023235164..b59f455a511 100644
+--- a/hw/virtio/meson.build
++++ b/hw/virtio/meson.build
+@@ -100,6 +100,8 @@ stub_ss.add(files('vhost-user-stub.c'))
+ stub_ss.add(files('virtio-stub.c'))
+ stub_ss.add(files('virtio-md-stubs.c'))
  
-+#ifdef CONFIG_HMP
-     bus_class->print_dev = xen_bus_print_dev;
-+#endif
-     bus_class->get_dev_path = xen_bus_get_dev_path;
-     bus_class->realize = xen_bus_realize;
-     bus_class->unrealize = xen_bus_unrealize;
+-system_ss.add(files('virtio-hmp-cmds.c'))
++if have_hmp
++  system_ss.add(files('virtio-hmp-cmds.c'))
++endif
+ 
+ system_ss.add(when: 'CONFIG_ACPI', if_true: files('virtio-acpi.c'))
+diff --git a/migration/meson.build b/migration/meson.build
+index 0a9a5d0d374..4ab9d99cea6 100644
+--- a/migration/meson.build
++++ b/migration/meson.build
+@@ -36,7 +36,9 @@ system_ss.add(files(
+   'socket.c',
+   'tls.c',
+ ), gnutls, zlib)
+-system_ss.add([spice_headers, files('migration-hmp-cmds.c'), spice])
++if have_hmp
++  system_ss.add([spice_headers, files('migration-hmp-cmds.c'), spice])
++endif
+ 
+ if get_option('replication').allowed()
+   system_ss.add(files('colo-failover.c', 'colo.c', 'multifd-colo.c'))
+diff --git a/monitor/meson.build b/monitor/meson.build
+index 4c58dd148c0..f67e0291a42 100644
+--- a/monitor/meson.build
++++ b/monitor/meson.build
+@@ -2,8 +2,13 @@ qmp_ss.add(files('monitor.c', 'qmp.c', 'qmp-cmds-control.c'))
+ 
+ system_ss.add(files(
+   'fds.c',
+-  'hmp-cmds.c',
+-  'hmp.c',
+   'qemu-config-qmp.c',
+   'qmp-cmds.c',
+ ))
++
++if have_hmp
++  system_ss.add(files(
++    'hmp-cmds.c',
++    'hmp.c',
++  ))
++endif
+diff --git a/net/meson.build b/net/meson.build
+index 9c8068b06d1..5bb76d13649 100644
+--- a/net/meson.build
++++ b/net/meson.build
+@@ -8,7 +8,6 @@ system_ss.add(files(
+   'filter-mirror.c',
+   'filter.c',
+   'hub.c',
+-  'net-hmp-cmds.c',
+   'net.c',
+   'queue.c',
+   'socket.c',
+@@ -16,6 +15,9 @@ system_ss.add(files(
+   'stream_data.c',
+   'util.c',
+ ))
++if have_hmp
++  system_ss.add(files('net-hmp-cmds.c'))
++endif
+ 
+ if get_option('replication').allowed() or \
+     get_option('colo_proxy').allowed()
+diff --git a/qom/meson.build b/qom/meson.build
+index bd6f4aadd78..022d3ad5c8f 100644
+--- a/qom/meson.build
++++ b/qom/meson.build
+@@ -10,4 +10,6 @@ if have_system
+ endif
+ 
+ qmp_ss.add(files('qom-qmp-cmds.c'))
+-system_ss.add(files('qom-hmp-cmds.c'))
++if have_hmp
++  system_ss.add(files('qom-hmp-cmds.c'))
++endif
+diff --git a/stats/meson.build b/stats/meson.build
+index 0728dafcd1c..b5f68a94052 100644
+--- a/stats/meson.build
++++ b/stats/meson.build
+@@ -1 +1,4 @@
+-system_ss.add(files('stats-hmp-cmds.c', 'stats-qmp-cmds.c'))
++system_ss.add(files('stats-qmp-cmds.c'))
++if have_hmp
++  system_ss.add(files('stats-hmp-cmds.c'))
++endif
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 3b2f2680b19..fe77107cc86 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -85,11 +85,13 @@ if have_system
+   stub_ss.add(files('qmp-cpu.c'))
+   stub_ss.add(files('qmp-cpu-s390x.c'))
+   stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
+-  stub_ss.add(files('hmp-cmd-info_mem.c'))
+-  stub_ss.add(files('hmp-cmd-info_sev.c'))
+-  stub_ss.add(files('hmp-cmd-info_tlb.c'))
+-  stub_ss.add(files('hmp-cmds-hw-s390x.c'))
+-  stub_ss.add(files('hmp-cmds-target-i386.c'))
++  if have_hmp
++    stub_ss.add(files('hmp-cmd-info_mem.c'))
++    stub_ss.add(files('hmp-cmd-info_sev.c'))
++    stub_ss.add(files('hmp-cmd-info_tlb.c'))
++    stub_ss.add(files('hmp-cmds-hw-s390x.c'))
++    stub_ss.add(files('hmp-cmds-target-i386.c'))
++  endif
+ endif
+ 
+ if have_system or have_user
+diff --git a/system/meson.build b/system/meson.build
+index cd3193d170b..da4d4fe1f6c 100644
+--- a/system/meson.build
++++ b/system/meson.build
+@@ -22,12 +22,17 @@ system_ss.add(files(
+   'qtest.c',
+   'rtc.c',
+   'runstate-action.c',
+-  'runstate-hmp-cmds.c',
+   'runstate.c',
+-  'tpm-hmp-cmds.c',
+   'watchpoint.c',
+ ))
+ 
++if have_hmp
++  system_ss.add(files(
++    'runstate-hmp-cmds.c',
++    'tpm-hmp-cmds.c',
++  ))
++endif
++
+ if have_tpm
+   system_ss.add(files('tpm.c'))
+ endif
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index e154abb05d2..c00a53b2bba 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -26,7 +26,13 @@ qtests_generic = [
+   'qmp-test',
+   'qmp-cmd-test',
+   'qom-test',
+-  'test-hmp',
++]
++if have_hmp
++  qtests_generic += [
++    'test-hmp',
++  ]
++endif
++qtests_generic += [
+   'qos-test',
+   'readconfig-test',
+   'netdev-socket',
+diff --git a/trace/meson.build b/trace/meson.build
+index d89a0db82a1..4e5681c44ca 100644
+--- a/trace/meson.build
++++ b/trace/meson.build
+@@ -1,4 +1,7 @@
+-system_ss.add(files('control-target.c', 'trace-hmp-cmds.c'))
++system_ss.add(files('control-target.c'))
++if have_hmp
++  system_ss.add(files('trace-hmp-cmds.c'))
++endif
+ trace_rs_targets = []
+ trace_events_files = []
+ foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
+diff --git a/ui/meson.build b/ui/meson.build
+index 0c6a432948c..433b3b9118c 100644
+--- a/ui/meson.build
++++ b/ui/meson.build
+@@ -55,10 +55,12 @@ system_ss.add(png)
+ system_ss.add(files(
+   'input-barrier.c',
+   'input.c',
+-  'ui-hmp-cmds.c',
+   'ui-qmp-cmds.c',
+   'util.c',
+ ))
++if have_hmp
++  system_ss.add(files('ui-hmp-cmds.c'))
++endif
+ system_ss.add(ui)
+ system_ss.add(when: pixman, if_true: files('console-vc.c'), if_false: files('console-vc-stubs.c'))
+ if dbus_display
 
 -- 
 2.54.0
