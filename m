@@ -4,139 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCD5CCDE00C
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 22:22:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD02CDE00C
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 22:22:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcsS6-0000iD-16; Thu, 25 Jun 2026 18:21:42 -0400
+	id 1wcsS4-0000hD-Aa; Thu, 25 Jun 2026 18:21:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wcsS4-0000hh-PY
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:21:40 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wcsS3-0000gw-D8
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:21:39 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wcsS2-0001MU-QP
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:21:40 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1wcsS1-0001ML-KF
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:21:39 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65PFdq2f3872213
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 22:21:37 GMT
+ 65PFeMT82737434
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 22:21:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 6j1DTm5aR0pAY6j0yRN5Jbnom5C6VnfQNBoX/+MX9BU=; b=T0ozDwquElD4+w/p
- zxHLJF+wGkN6+OW5bYwIvTrWwZdf5wcdqbB9vDf2ajnBiuLjIibfHvFCErdniQrq
- eYtgUcEhvG5HlaMY0O2t9PDvzpfQ1HqjVOi5b4P72TQZqgCL7AY3PtC/HiRsqlj6
- kpRtocZyB1hK935+uaci1DIZ6A+96dWMt7VlUaib66P3A7OCg5HXk/wZOpGfPPr3
- Na7yFb1zjb7j0/HGBYMv3tZPhIEg2EaPGTP3XeCcvR3b398b1Yl1nSqKE20imEb0
- kqoW3GxtF3+I1JxI0Oi/LFe21mChIu4l6X3XmC4viigo6QRcLT1t05AGdkv3HolJ
- i3u+jQ==
+ e725vr2aW7giwWDjY5SN0qVsPJjMTRk2LjBaNB1knyM=; b=lUxKwMJ1gmE3jswr
+ PcPmhkEWiv9guzkXBGhqiNZQyoFbW14Heyy5JEeTNI7rr2w4lnAmTXLLtQjX+WKP
+ QpsawnOwWC1x/rmK41C7xfnn7Z7AolEBcpfDetsMRGWXnDKXKY8+IqJT5ucciUa+
+ tH6rmB2FtagGRadKWE3E01aYUBFKZN5Zy3alN7KDNZPwQGNRkndxgCZj0NQkf5dY
+ gWSPs+qa3Xg8WouE5o/y0OdXLNafqG2+i2bEF6sgBm8de2AmbnweC4uB9k6vopT5
+ B8FTkBWl7O9ihcN2xVUYNVk66mlJ4O+IYtX1jrUYVliUKqhM+rOjf86HLD4jyZF4
+ tP1ZrQ==
 Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0yynuet3-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0ya8umc2-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 22:21:37 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 22:21:36 +0000 (GMT)
 Received: by mail-dl1-f69.google.com with SMTP id
- a92af1059eb24-139ca26403fso732790c88.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 15:21:37 -0700 (PDT)
+ a92af1059eb24-139b62317d0so646215c88.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 15:21:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782426097; x=1783030897; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1782426095; x=1783030895; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6j1DTm5aR0pAY6j0yRN5Jbnom5C6VnfQNBoX/+MX9BU=;
- b=J677PVApec/87E1tJ5F2GqnQJJho5sxM4qVagCqCu3PCgPHkYKasSvX09D5AV5rKA0
- LL+kTP1UQ8Q1bJWQqsNI/gr1J3Q/tEYnQ+2X+7cLCXoNGij0BV67NaixcDmwwZrTKPlw
- DXkpniulmSiQ00kKMqarJ4ttL6OMbS6wUhgYZJTfuBK0gHiuplUEvorZr5pb0Fwi3XlN
- 5XsuTVYb+3TnDIH+qQX6jLiUCrxJH/uuMKLCQ6RQo+33AZ9MVk2OR4y+fkRyN9Ksh+R/
- lFrJYodWRKvZWkwZSDVwRhv1glZl2ZmhrU6q+w2MIQpImWXSu9xFW+MY1a0q2V2DU472
- SYCw==
+ bh=e725vr2aW7giwWDjY5SN0qVsPJjMTRk2LjBaNB1knyM=;
+ b=abRYpCA+w1wz8cZqXHTrlA6UBqSmQa+i5LgEp7W926I0C6V3qhFu37D8ytFLwXTjB/
+ P6rx8KHiYzw79IZj+/qQZsu+un6596F2PlxRpuOfywOONzndNL+EgYvn8Ick5LCJKzEC
+ YRDTMQOGGPiWCHz95N+3nKYfmMimM4Q2nAEhDGnvuXhFJuiei0Rpm8Yl9uFz7TwtLDg+
+ KS3U2E1VRw/+IctJAoYvtJjuMCo2T5BjSQdyDmLTvb/ny3GdrooirsNe0CGsKOBjPKgo
+ RqS979eXvus4rkyKBSRnMvvg3emLLhgUhSTtdQBrxY2qX61FUP4lJ/Vg8Eqd9IbvIawn
+ CxOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782426097; x=1783030897;
+ d=1e100.net; s=20251104; t=1782426095; x=1783030895;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=6j1DTm5aR0pAY6j0yRN5Jbnom5C6VnfQNBoX/+MX9BU=;
- b=erhdYUdCR6tos/g3+OP2AhKiLnGWHdeFuXig4wltNSbiBc9UygR0zKRFUPsP9w8Qe8
- ZyBX+4j/OUWFWxs9wSlm++w1Hdq7Xdn0s0X6OXOdMS+gzrWzW81xJHf/zAe1HLDOiQbH
- qzqRNTrTp3zFIZCRcHqMN/k28iaqgtAWWcn2T3tbkpNnEtggBx3q9FugUWgQqxFMh69u
- CWDaKkJ+GvxlgTEBSQB5SFKDa7sppDvhCfPfpQe4zVBf/imBwFmjkGcmHJO4Gqu8dNqp
- ESuqr4vby9B55gXA0kKvUKzvcDUE7/K6eWRXSwX0EITpaPpB7tKLxrqMd77+bFgsa5WL
- W57A==
-X-Gm-Message-State: AOJu0YydvKk+KDjHYznHCSIOyZaWwXTrkjVGWghVAiF+enbaaofxhHgI
- JiKZKX3oN8gi6KBhj2doNUNCiY2uRlJvZyNgB3r2EK9+jjQdWlwY0gm5S9RLvIFHL7pB/GxmAss
- cAvktj+b8I2DBxvFibULm7H1r/4E2fyoaxeWcyqIHTv3uWfDjpRTrBg6L3GHxbLb1Qg==
-X-Gm-Gg: AfdE7ckl6SBvU5DUVNS6RB8g1mOgBVhjqEY/3GDNPm3mHQovwg6fX+pbyDGHa5b6lzb
- Bk6OAeMo4EKuPHf0hC1rWD4/nQaDynBvRxmy0UU6SJUkrs4+bkeThZjIvVV7Wec2s5C2SGvdJK/
- JJLXKmRDOZC8JzorYp1vJ11iUrHn1el9Rh+I2yhoPZKqHUsTJyTGUnMKvwQaS67HTAYdoj7HXoz
- PhfrI5Q+rlbXJG7CyVA6D+kYGSBoyA6b7b1xe15nY47KwbhjxA3wRQgbe4FLXHrQKt7qT45NH3a
- TeV9hl6uy9SX4ns3OKJAXEiY+MQXCbxuUqZv2qz/4dkAKFhEJtDMOL4as4XhrgwfDGA6H6uiPzF
- T2srBmgN+cOTfRR/zoF5W3HUUDXsZFkeA0sFvZ/WWGudTBD0xPI2LhiLPtQpLaEmdGQ+PvDhG9X
- o8xLbTTw==
-X-Received: by 2002:a05:7023:b0b:b0:138:4e43:6399 with SMTP id
- a92af1059eb24-139dba390d3mr3712827c88.11.1782426096782; 
- Thu, 25 Jun 2026 15:21:36 -0700 (PDT)
-X-Received: by 2002:a05:7023:b0b:b0:138:4e43:6399 with SMTP id
- a92af1059eb24-139dba390d3mr3712807c88.11.1782426096266; 
- Thu, 25 Jun 2026 15:21:36 -0700 (PDT)
+ bh=e725vr2aW7giwWDjY5SN0qVsPJjMTRk2LjBaNB1knyM=;
+ b=nKjNoqd7SebHvD6okqyG+5HPPMm/EJQYTwFElhGJm6DF/s9ayLmFFkIpz0dFQKy3mT
+ JVnRMIR/nA3j0D2YRE41YyKjoBw9VC/V594B/OQbgOxvhAsQL+PPtQZ/f2rMitv8PUu9
+ Pt3LXZL2vEyA0lOdCGCgtzRsHYkvmhWV6WsqV3VQ2oRSSZhINSeFw+gLMcQpxaN0c2D+
+ 85yyQJ1Gprj+tET49DD/AT1xIfYfnMmJzhFCZ4XZGm3LXL9IyPBE1zZv2ouwYY97Qdjx
+ fX99BzoOa5Tk+wMx9Hic83I3tUsoibtj13lzXljRzXtDRq5DGLrEqVByQ3U21OnxFKy0
+ Auww==
+X-Gm-Message-State: AOJu0YzPpRw3jOBtwcvI2CHNg2toW+HMzm/6CoyfGiNL/H+OozU/YGrx
+ JkzP6FxFQORCtQZK/5QB7WlN87fONVi1wKPO6AgY5e8WwNPVwAvDogO5I1OFlGN89KrKT09G6oy
+ FGEgQhKqYwzpJWj9pjrdKd2G1n3o9bo1FgIAzTyUGwu5NQEZ3cOCxarv8yEaS1sb0Mg==
+X-Gm-Gg: AfdE7cnTENftIxntpvstXfwbw20+nLfmPiTlm7x08rMjRLTkEsU6bZIPkzXIyCznuKq
+ +5Xf9PQBSdTaWtkxnN1synD5BXnKAXVDN5HhmzO36IexkRk6wBe4xTbmtEArcT2q66tt5kENjR1
+ AWJBxZl5Q3ZTkT/+xGCdrLKmKRBGCvUgnr3+yVcHvK1QxLabp3bQnV/qLxYQOSsFWTqPJMcS5mJ
+ 1Z+Vsah3IU0Th7nIiBQt06yHBjF80HlBR1eZjTKFjnWsGdfrJddPuhRBt6e1lKHY2PRVWNKt7EB
+ +ls6Ef6ZWRxKEOCZrY8uHHpnRhQcr5gXrV0D/PZfD0Vho/Ahkq6rvRhVicwdTX8DuuqUUks7EtG
+ a+71h4jYFrlQNXQfZTgoRIIqBr2pbznkCTemIijOtKvS6uAI9BzrrObhlAR5DfIguxGfBo4+pdJ
+ lzMA+YDw==
+X-Received: by 2002:a05:7022:f512:b0:139:beb9:fccc with SMTP id
+ a92af1059eb24-139dbb49550mr2488892c88.26.1782426095539; 
+ Thu, 25 Jun 2026 15:21:35 -0700 (PDT)
+X-Received: by 2002:a05:7022:f512:b0:139:beb9:fccc with SMTP id
+ a92af1059eb24-139dbb49550mr2488882c88.26.1782426094999; 
+ Thu, 25 Jun 2026 15:21:34 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-139d8f318e7sm11538477c88.3.2026.06.25.15.21.35
+ a92af1059eb24-139d8f318e7sm11538477c88.3.2026.06.25.15.21.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jun 2026 15:21:35 -0700 (PDT)
+ Thu, 25 Jun 2026 15:21:34 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 6/6] gitlab: greatly expand captured info about CI runner
- environment
-Date: Thu, 25 Jun 2026 15:21:11 -0700
-Message-ID: <20260625222111.1761-7-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 5/6] gitlab: pull before_script logic into
+ .base_meson_job_template
+Date: Thu, 25 Jun 2026 15:21:10 -0700
+Message-ID: <20260625222111.1761-6-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260625222111.1761-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260625222111.1761-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDE5MyBTYWx0ZWRfX0hMlFQN7dQTc
- pmyqhGEapXWeqLi5oEQuOHSD8dJx6lB53NM6PlM7kwNvEBmdPM4GKrV88V5Y8r/Yj6RdoYkYYcr
- DK2C3MeG4juaAdX79OzhimQCzg65xCG4HkuGuXATWWugpUP8aO62tMHZe9yl6TUoEXBfSW03r3n
- SXTzSkFSo2BDWV4pxVgvlMSqd65RXUlVycNlg42dHp87I/iMv0/exEyXNBlpyl1EaFNCEjohdsz
- IapMpBCAboXCdDWVItUAzp3e5YWOEz87hTzN6wAeOuMpijVRQTXAdvkVesfMMC2prrvrHKAMtGq
- gH+r3lpc+JrR/kTZMiw8yrDxzTZyKIf5AAYfrYYUIvtoQEj3TW3oSQB1NCUaSoyygeCuutvxrFQ
- 6jzCdSugqjypxDAKN39TFYtt0/vm52VX/CosD3iHh+jcmO7LXRa2259qaOBaOK6s/1yac5VnKss
- ZmGCRYIPN6EYMq39CUQ==
-X-Authority-Analysis: v=2.4 cv=aoyCzyZV c=1 sm=1 tr=0 ts=6a3da9f1 cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDE5MyBTYWx0ZWRfX/KG5RouXf3hy
+ k1fos5czBR+BVwfKvJtiN2dDrflNhsryTQ1IJYN9cRjb2qQqumnaj90BOI6/cIXLT++Oo7syJlb
+ DtMru1n/Za0SZd2pOXutI32huUNpY2c=
+X-Proofpoint-GUID: OwP4Xu7QVsmUWhoS1q4UEBRLqqOPU31M
+X-Proofpoint-ORIG-GUID: OwP4Xu7QVsmUWhoS1q4UEBRLqqOPU31M
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDE5MyBTYWx0ZWRfX2rQxqS+CJ7Ij
+ rRZun4yPiRIcoroFcMmqe/zS+VrFGwQZiaytsgjMW4GlBBZtQ2G7M9CHPVbYBD+hlGYpjZv4T2O
+ Jn91mEzxxSqDbnjVR5WFYny/+V/4ukZ0IGLeWvkNLy9q8dz0Sw6Bof8JGC8eRDK/r6qh+8KdIOk
+ e9f/UG3+12kTI5uHRzxQexm6iY3hiE7aqEVONVj6xTi2FFnXBLBv7cJ/n4GmZJFGL11aYxj1FJi
+ Ow5t8sW1iavIErNJGTTTzBl1EZx2Sx9BpVEwmtTgPxgsxDBIuXiVVDn9RRfYXfk5dRdnJrTADTi
+ pUo5lGEaBk+PEttm+50x70/SD7igUsZtEWuvEfNqyIrkVOl073dfoUCucz9tCKOFKAlgm8EqlYw
+ uuCeqxjFtKGknd0eOYtMB0f+fChqrshFizwcfq80kMkHb8NK8crh4xZCaY3oofxgEWfhgtEtdmi
+ jJdJ5xmqV6C2IQiz64w==
+X-Authority-Analysis: v=2.4 cv=Z+Xc2nRA c=1 sm=1 tr=0 ts=6a3da9f0 cx=c_pps
  a=kVLUcbK0zfr7ocalXnG1qA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=ZzUb408nXwOd_ZFe-RQA:9
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=OotkPD_eqh6jdMuQoDsA:9
  a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=vr4QvYf-bLy2KjpDp97w:22
-X-Proofpoint-ORIG-GUID: K6AxXdD0_3Ib6C3PtHV7nOOz-u1oY5SU
-X-Proofpoint-GUID: K6AxXdD0_3Ib6C3PtHV7nOOz-u1oY5SU
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDE5MyBTYWx0ZWRfXzkyOU/byOXFc
- JbZ2ymE2RhrxAvXW9JmqMVCbQ4CS67KPjcvdZRlUWQglvyGNEUJdcB4e1hJrVpNI1B8coXjk1xO
- 1BXJj/ZYWql8Jg4gsUEwZtTPpm4p9f0=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-25_02,2026-06-24_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 spamscore=0 priorityscore=1501
- clxscore=1015 adultscore=0 malwarescore=0 phishscore=0 bulkscore=0
+ clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0 phishscore=0
+ spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
  impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2606250193
-Received-SPF: pass client-ip=205.220.168.131;
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,77 +155,136 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-To aid in debugging wierd CI failures we need greater information
-about the CI runner environment. It is usually container based
-and can have some unexpected characteristics that significantly
-differ from a developer's local environment.
-
-This captures the mount list, CPU model, memory information,
-device node lists, kernel info, user identity and all environment
-variables.
-
-Since this information can get quite large it is not emitted
-directly in the logs, rather it is exposed in job artifacts
-under the "ci-runner-env" directory.
+This ensures that all jobs have the $JOBS env set and capture the
+packages.txt content (where available) in their logs, and all use
+the job section headers.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20260624124657.2725376-7-berrange@redhat.com
+Link: https://lore.kernel.org/qemu-devel/20260624124657.2725376-6-berrange@redhat.com
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- .gitlab-ci.d/base.yml               | 11 ++++++++++-
- .gitlab-ci.d/buildtest-template.yml |  2 ++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ .gitlab-ci.d/base.yml                |  9 +++++++++
+ .gitlab-ci.d/buildtest-template.yml  | 24 ++----------------------
+ .gitlab-ci.d/crossbuild-template.yml | 12 ------------
+ 3 files changed, 11 insertions(+), 34 deletions(-)
 
 diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
-index fa0ca940481..8fe00809357 100644
+index 366e654bcb9..fa0ca940481 100644
 --- a/.gitlab-ci.d/base.yml
 +++ b/.gitlab-ci.d/base.yml
-@@ -146,6 +146,7 @@ variables:
-     expire_in: 7 days
-     paths:
+@@ -148,6 +148,15 @@ variables:
        - build/meson-logs
-+      - ci-runner-env
      reports:
        junit: build/meson-logs/*.junit.xml
-   before_script:
-@@ -155,7 +156,15 @@ variables:
-     # Prevent logs (if any) from prior build job artifacts
-     # from being duplicated in the new job artifacts
-     - rm -f build/meson-logs/*
--    - test -f /packages.txt && cat /packages.txt
-+    - mkdir -p ci-runner-env
-+    - test -f /packages.txt && cp /packages.txt ci-runner-env/packages.txt
-+    - cp /proc/mounts ci-runner-env/mounts.txt
-+    - cp /proc/cpuinfo ci-runner-env/cpuinfo.txt
-+    - cp /proc/meminfo ci-runner-env/meminfo.txt
-+    - ls -l /dev > ci-runner-env/devices.txt
-+    - uname -a > ci-runner-env/kernel.txt
-+    - id -a > ci-runner-env/user.txt
-+    - printenv | sort > ci-runner-env/environ.txt
-     - section_end setup
++  before_script:
++    - source scripts/ci/gitlab-ci-section
++    - section_start setup "Pre-script setup"
++    - JOBS=$(expr $(nproc) + 1)
++    # Prevent logs (if any) from prior build job artifacts
++    # from being duplicated in the new job artifacts
++    - rm -f build/meson-logs/*
++    - test -f /packages.txt && cat /packages.txt
++    - section_end setup
  
  .base_meson_ccache_job_template:
+   extends: .base_meson_job_template
 diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
-index 11d7a756678..e62b3f21239 100644
+index 8dfd17a0b5e..11d7a756678 100644
 --- a/.gitlab-ci.d/buildtest-template.yml
 +++ b/.gitlab-ci.d/buildtest-template.yml
-@@ -38,6 +38,7 @@
-     paths:
-       - build
-       - .git-submodule-status
-+      - ci-runner-env
-     exclude:
-       - build/**/*.p
-       - build/**/*.a.p
-@@ -83,6 +84,7 @@
-     paths:
-       - build/meson-logs
+@@ -3,12 +3,6 @@
+   extends: .base_meson_ccache_job_template
+   stage: build
+   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+-  before_script:
+-    - source scripts/ci/gitlab-ci-section
+-    - section_start setup "Pre-script setup"
+-    - JOBS=$(expr $(nproc) + 1)
+-    - cat /packages.txt
+-    - section_end setup
+   script:
+     - !reference [.base_meson_ccache_job_template, script]
+     - du -sh .git
+@@ -74,11 +68,6 @@
+ 
+ .native_test_job_template:
+   extends: .common_test_job_template
+-  before_script:
+-    # Prevent logs from the build job that run earlier
+-    # from being duplicated in the test job artifacts
+-    - rm -f build/meson-logs/*
+-
+ 
+ .functional_test_job_template:
+   extends: .common_test_job_template
+@@ -96,27 +85,18 @@
        - build/tests/functional/*/*/*.log
-+      - ci-runner-env
      reports:
        junit: build/meson-logs/*.junit.xml
+-  before_script:
+-    - export QEMU_TEST_ALLOW_UNTRUSTED_CODE=1
+-    - export QEMU_TEST_CACHE_DIR=${CI_PROJECT_DIR}/functional-cache
+-    # Prevent logs from the build job that run earlier
+-    # from being duplicated in the test job artifacts
+-    - rm -f build/meson-logs/*
    after_script:
+     - cd build
+     - du -chs ${CI_PROJECT_DIR}/*-cache
+   variables:
+     QEMU_JOB_FUNCTIONAL: 1
++    QEMU_TEST_ALLOW_UNTRUSTED_CODE: 1
++    QEMU_TEST_CACHE_DIR: ${CI_PROJECT_DIR}/functional-cache
+ 
+ .wasm_build_job_template:
+   extends: .base_meson_job_template
+   stage: build
+   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+-  before_script:
+-    - source scripts/ci/gitlab-ci-section
+-    - section_start setup "Pre-script setup"
+-    - JOBS=$(expr $(nproc) + 1)
+-    - section_end setup
+   script:
+     - du -sh .git
+     - mkdir build
+diff --git a/.gitlab-ci.d/crossbuild-template.yml b/.gitlab-ci.d/crossbuild-template.yml
+index aadae26844b..94423814a75 100644
+--- a/.gitlab-ci.d/crossbuild-template.yml
++++ b/.gitlab-ci.d/crossbuild-template.yml
+@@ -3,12 +3,6 @@
+   stage: build
+   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+   timeout: 80m
+-  before_script:
+-    - source scripts/ci/gitlab-ci-section
+-    - section_start setup "Pre-script setup"
+-    - JOBS=$(expr $(nproc) + 1)
+-    - cat /packages.txt
+-    - section_end setup
+   script:
+     - !reference [.base_meson_ccache_job_template, script]
+     - mkdir build
+@@ -48,9 +42,6 @@
+   stage: build
+   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+   timeout: 60m
+-  before_script:
+-    - source scripts/ci/gitlab-ci-section
+-    - JOBS=$(expr $(nproc) + 1)
+   script:
+     - !reference [.base_meson_ccache_job_template, script]
+     - mkdir build
+@@ -73,9 +64,6 @@
+   extends: .base_meson_ccache_job_template
+   stage: build
+   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+-  before_script:
+-    - source scripts/ci/gitlab-ci-section
+-    - JOBS=$(expr $(nproc) + 1)
+   script:
+     - !reference [.base_meson_ccache_job_template, script]
+     - mkdir build
 -- 
 2.47.3
 
