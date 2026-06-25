@@ -4,103 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F5BCCDE001
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 15:00:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D0D1CDE001
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 15:00:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wclYB-0001fQ-1s; Thu, 25 Jun 2026 10:59:31 -0400
+	id 1wclYc-0001rl-ES; Thu, 25 Jun 2026 10:59:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wclY6-0001eH-Mm
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 10:59:27 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wclY5-0003y3-34
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 10:59:26 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-663167a3ba2so2607761d50.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 07:59:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782399564; cv=none;
- d=google.com; s=arc-20260327;
- b=j24fJtmeTZ0nEYzBov1sSc9l7QLxwqzZerHi+9OfTUen1CFhMJlRLbPao/aUmHvszT
- yZXUipIWJPQQ2X3YqG4WuMXd3+Zsz5lKp+ajh36OdhUEmzo4JBwShZXTYDwW8zlrAAVI
- 4UQTfZNxyxdEyrF7K+Aeh8gtxGBKIfpFChtPrkYthAQIDUal2n5xCmnNujEzVNeqXcgz
- x9TJ+kDGNcn1RwiqpVWRmM1JoO2hlMJrtQbgYFYgmfFB+7tWQO5YJ61hp7Dm/OMvCw5z
- qoVzf7nCTALXJQuEYsWcHKj5I1+EpoMhcJN2uioFazCRemUzCpUZge9EcUauF/LfeEdP
- 7rAQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=HzdtMgVwHzlp/WK8F9dbK0OiTLbLnYpCESvD8iz7rCw=;
- fh=aFvIJ4ygZFxdcCpuPOlGUskz99qfqRBDfvhpWs3RARI=;
- b=ML5YB1sHaEM4BQKjt5t/SLJPA6q0MPHyqrah9MLJr+QSq+30hVPg3TIuuIRnkExAMg
- 9opezsiL8ksN56NCNQKZw6Wlf11lecOz96pQJ69REySW9vbkbJO+qgnbXt3t2d5nmKS5
- jRFISsWfgjnlv+K/Sg1k4xFkLk1cDrXiRZ5zJnFpAzHIZLYSvjYf16t56SgkIMJeGw6a
- Mrdagt8FvuBlSjzl70FJytegB4ibnj3LsFu5ar60EdkgvgCx2fpQ8w5TkcEPf1tauax7
- A/uo/4JG6IqDC4SRt8PsJrdD80MXUCtQE/G14zxAcGYOk+6p8gFD5pe8VG8mTsW5bPcO
- ptKw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782399564; x=1783004364; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=HzdtMgVwHzlp/WK8F9dbK0OiTLbLnYpCESvD8iz7rCw=;
- b=SU754vQmGoh0iy53qcCGbBJXZPf4vMfYtIeUVK829/ZQzzw4/JTRFAiP1ljbj1IHTo
- UHThxp1pXlmj3wWTAUlkxQFEit83CKfcxhmSkvle+NaPKQq0Vb32Eq/V5obL/ScQFgUr
- WegUWiB6Z5eoCyDhUFVz2j0elSy8ptsnD3gOTdplNaERLQjVV4r5HLuWr/T5Ry7RoVcr
- 4LfIC+rL8lGN1tmTkLkdDd8GugORtnl5QlyHdAJnbREki2F7LWhrZLaqbiD8YelA+tWR
- anowsumTkJx4T5WVhsLWbeSIhFjhZ57PwMSUl3iK6uLTOo4Jq2AYZ2HU8rKekPYMFU3p
- unug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782399564; x=1783004364;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HzdtMgVwHzlp/WK8F9dbK0OiTLbLnYpCESvD8iz7rCw=;
- b=Oa8YmpyZleTz8EAIj2fswrAF5W/7VcKwjomDdEuRK2vgamSo9k4438G45+Rp5rlMDR
- i6r+FZVzl6ronaLWeSMBXP+CTNPXis5eoULZVQaRZ+zuoAXNbFHy5f7RQU/gWZ0EPnPx
- +YBTEVbp2r9dP7cvgz3OaxYx8wzUUi4w8HnJp/FCQNIjB+DjlYB6LGIRlEHLlwkiuut4
- znGrn5+C2BtEMbjjltwgYGz1eTBF8heJUmcg0KIWf3DiLE4iYhrvHZ8OgDpN/ZP1AwlU
- i73xTDfrQ4xxhqMkpuVFLK61NFhwkUT4hxC+SU74UvKcC6WUjm+dxm5oNahVKnsiVfbI
- PECg==
-X-Gm-Message-State: AOJu0YySxZHaklQ50aAweJ1Ids+ZzbBticROS0Fye2YJnXI4k0eMf+46
- ciP7nxrEljfdxSCsUOjOixIb7gGBmmY6TFJKt2fthscaDO+rQGiR1tHKkCjHiCWxeJklaW+w9gB
- Zsn/HEt/dKc/Y1TGQoDivRSsG2mTpKiOZ4k4PDDwBgg==
-X-Gm-Gg: AfdE7ckMCNX+es6Hex7W7FZPPu2ITbcpIcOdXoWnuq/BqxfjlUv8rg7IO6MQ73RwrYa
- 7ZLy/jGabrAiegm4suJ16TnfZAz7GW10FQKKf/XVFcI+B2pv8ujdY2wZBEA+Bh2nAXm+tJe9kfX
- xxuC7cRHb3JFGXFhILmSoKV4WLCF5lOqYrC0td7lGM+2nakbfth6XNTV0v02mAhcLJBTNl9Ac5p
- S818/euil+X63KCatAPSHHGQSdW08VjJsLE+X0Q/+ogDX+6LfZNfXqYyStl0id1OLWgJzcZx8Nw
- 1d01LwY9GY/qx0i213vCQcsT9fRH9BonM9t2umf4xb+pCI2LweaTEydbk5AGsb5gCac=
-X-Received: by 2002:a05:690e:4386:b0:662:8a91:f034 with SMTP id
- 956f58d0204a3-66487d83b10mr1656826d50.38.1782399563852; Thu, 25 Jun 2026
- 07:59:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wclYZ-0001r1-NJ
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 10:59:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wclYY-000413-AZ
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 10:59:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782399592;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uo+3Xc23Htz0d0eVJD1JByoGG4wdHA2WB67o8Rltz20=;
+ b=OTbtaMijBLzP911XDaCF7QlkmThTwFhhgnmXP3i3s8uEVc1vzw2OW7uU2n3PtSjdLGqzNX
+ HicpzPFU4sSyj4/f4yVjCyLsdN21jQFLqK5e6clNlz+Cwd9a7BddkDihUL+JE8GxFexD/r
+ ImDonRmIoJ4p0l2jmHmdrYsp2Dk6UPk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-JycHB8_iOh6PUtz-HzuJ6g-1; Thu,
+ 25 Jun 2026 10:59:48 -0400
+X-MC-Unique: JycHB8_iOh6PUtz-HzuJ6g-1
+X-Mimecast-MFC-AGG-ID: JycHB8_iOh6PUtz-HzuJ6g_1782399587
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 51B4F19774FE; Thu, 25 Jun 2026 14:59:47 +0000 (UTC)
+Received: from localhost (unknown [10.44.24.16])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4107E18005B6; Thu, 25 Jun 2026 14:59:44 +0000 (UTC)
 MIME-Version: 1.0
-References: <20260623170354.43981-1-163wangjack@gmail.com>
- <20260623170354.43981-3-163wangjack@gmail.com>
-In-Reply-To: <20260623170354.43981-3-163wangjack@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 25 Jun 2026 15:59:12 +0100
-X-Gm-Features: AVVi8CcAN68-jUD6W6jP4xsWl5dBErSXJVYSI8N79sP_1tddjMvjBV9yVsO1IIY
-Message-ID: <CAFEAcA-XeUSW5h9ATR196uTMXVr6OXtfgXjpCFNv5p3yArtcUw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] hw/misc/imx25_ccm: Replace DPRINTF with trace events
-To: jack wang <163wangjack@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- "open list:i.MX25 PDK" <qemu-arm@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2 1/9] hw/audio/virtio-sound: remove command and
+ stream mutexes
+From: marcandre.lureau@redhat.com
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?utf-8?q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
+ =?utf-8?q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+In-Reply-To: <20260625095250.65073-2-alexander@mihalicyn.com>
+References: <20260625095250.65073-1-alexander@mihalicyn.com>
+ <20260625095250.65073-2-alexander@mihalicyn.com>
+Date: Thu, 25 Jun 2026 18:59:34 +0400
+Message-Id: <178239957437.405566.331597169630851919.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=521;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=K2uhxBIK0x98x/AwPSa4PaRCPnDz4S3dXBo0NF+cuFc=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqPUJZPb4tojNZJrVB+FrGUb8aQY74SUUx6wbWa
+ C9KFSHpCSqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaj1CWQAKCRDa6OEJdZac
+ 5dhRD/9H95V7lPheHr/4sS+QAquJt62bCZF2WIwjtT77vDSXfJxtEz3wF1QcEHYoT6lzggZ2E7K
+ 2H8Wv3w1XYrhi5pJsuOVTnDxAbayC6W4pHVaZgtH1Uotq4V4PDuDEpHtaQR+gi2X7Uq/iAHthSW
+ 8a1tlDgoffTb7o6G1C849PtdLn8on0E8FEv5lH42Jzqt8vj7rT2XVoWxdGVHuyUd03+9yDHgdBU
+ ToxY+XGFkPQwOFD8W+U0CzCD3xmjQIvwRpFrbzSRj8sSAegHShj29QiffmNyx+aGNp6O5+8v66C
+ gUscCU2bviGFBfmWzzkGj6/KaDfKHAXltUfCwR493phnPRwRErXUYDYi8fbJ51aweNa/OPpxi2r
+ /D9v+UMIS4pYflD5N6t2NMUiBgcCdwUjPfz0NaUXO4MsP1KCEnlYcQ8PKJI7oJwkRixN600zlay
+ 0mDPxSypPl8zd7RI3E/TC5I9sIvMZqHwO/FUK+a1tKJ6qZn3NLYi3QeiVM54+OWfpSdZC0yqE/J
+ 4X1vH32s7nDHT+7MxKzqdqidXHCDzQTxwTMytFRj2gWFE5v5Es6k8D4TxUalpLLv4EFwgX2w5hn
+ o0XP7PXhswlXvRoltHv+C8OeniOIQybd7+ovcFQoi0METG6FMUadpA5NlEv9HsJkPp4eoQ2Z72U
+ /N++4wqaVkgQJeQ==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,29 +111,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 23 Jun 2026 at 18:04, jack wang <163wangjack@gmail.com> wrote:
->
-> ---
->  hw/misc/imx25_ccm.c  | 34 ++++++++++------------------------
->  hw/misc/trace-events |  9 +++++++++
->  2 files changed, 19 insertions(+), 24 deletions(-)
+On Thu, 25 Jun 2026 11:52:41 +0200, Alexander Mikhalitsyn <alexander@mihalicyn.com> wrote:
+> All code in virtio-snd.c runs with the BQL held. Remove the
+> command queue mutex and the stream queue mutexes. The qatomic
+> functions are also not needed.
+> 
+> [AM: there were too many conflicts, I did `git checkout --ours -- <.>`
+>      and then reimplemented the patch idea
+> /AM]
+> 
+> [...]
 
-This patch and patch 3 are missing your Signed-off-by:
-line; we can't take them without it.
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
-> -    DPRINTF("reg[%s] <= 0x%" PRIx32 "\n", imx25_ccm_reg_name(offset >> 2),
-> -            (uint32_t)value);
-> +    trace_imx25_ccm_write(imx25_ccm_reg_name(offset >> 2), (uint32_t)value);
-
-You can drop the uint32_t cast here. We needed it with DPRINTF
-because that's a variadic function. But the trace version
-is a normal function and because the argument's type there
-is uint32_t C will do the conversion for us automatically.
-
-Otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
 
