@@ -4,81 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 114D1CDE00F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AA28CDE00D
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 16:02:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcmWr-0007Rk-Bh; Thu, 25 Jun 2026 12:02:13 -0400
+	id 1wcmWp-0007LF-RE; Thu, 25 Jun 2026 12:02:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wcmWo-0007LC-Ol
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:02:10 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1wcmWl-0007FQ-Ja
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:02:09 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wcmWn-0006YA-0r
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:02:10 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c85b73ffb52so11322a12.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 09:02:07 -0700 (PDT)
+ id 1wcmWi-0006WM-7d
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:02:05 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-c8b49639fbaso38656a12.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 09:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782403327; x=1783008127; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PDhXOI1Vjxfmo7Q3X1FJCZ1/5NbFYlpsfWgi5kj/YBk=;
- b=RelxD403XNqJO1BdahJAWVqHUEsCrmcjiDX1cOFy5aMY6xCqCeK1x31gKI144Wjo7i
- xpH7rak5fVZMLxRGKRqjqMNbEp35V1gQlav3lWxGxuiLDtvwTo+W/YivYeDjHikH991p
- vn50hdHtSJUWn7netd8+eDVh6knKygYwmJNZ5I77ETuDLhhfm93Ip1udgFf84GazP0Gr
- jaMKtJERwbKScI6/c8lF2F3OnONEEB46OKQXE2HVcWvpY2y68u/2dsg5kE50cKs0txhp
- 02Zk6AfYsQBvHfB/niUDNES8qE4iqzRRbtN7AehyeAOPxF1NuUyRTvzQzSxKjOujVdgK
- Xbwg==
+ d=gmail.com; s=20251104; t=1782403321; x=1783008121; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=tc/f91PWZlqsfBeEM3Km9wlL0qu0XJxsf8go0p8m1h4=;
+ b=jh+Pm8vG3+PzbmISTYO+6336ESxgKBg7T7KGEaRdHsDXBufJ9ymtmcQ5dnURE/aXM5
+ /+kFHx54aAGaP3UbWmKBmqHN5t0UhDnH0GdcmorZ30RNg6TelygR6sFXXOtvTZi92NFh
+ Mqs5Troa4oS8OmyTiXXQ12S6vaxNqcEV6KxnQCye//Rem3qSDLq0OuLvAM/FmRmSBuQn
+ CuQfxiz+9MFP8CY6iHicB0cXeJZnTxjE2ZE4haT6INNpCuEJTKnkrHR9cbQ3pNrByZln
+ o+L+b4qHwf8WuyCe1r9pqXN85CBf+yyeTBLmCctGI3h2mYtBUuzS8HZ64z6H/3X1eImI
+ u9jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782403327; x=1783008127;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=PDhXOI1Vjxfmo7Q3X1FJCZ1/5NbFYlpsfWgi5kj/YBk=;
- b=kwPHx/EflDX+Yh0B3n1Xpv3wtrow3IvmtBMdN2347gGzLKX9DyvaRyXp3fw7cEjdqB
- 53RCna1P4IUHEP/h/Kr4aQgRngsAZWWeYonSUHhZFIveIf+Rrv4LSuUZC/0eImC+0P9o
- Hg0zB8+4V8p9AUytZikHqb9yj5/NMZbWG9EVHIe6N0EUD20TCgU+cO1yzIQ2ZejvywoT
- qnWSdtNhjChDziCFqExQr8fc3iCpQoPT8IjO7EpMJlznNd6x8DqY45pL1vD6JD//nJ4W
- BLKfyVeJ25mS3yAqmCqcB30Qy+MR/f+eqOHVO6GtsH9OBdrdtlV37DFVFJV+pfs/Mjx4
- Lxmw==
-X-Gm-Message-State: AOJu0Yyv3STygw3IAwJpgz276pSMbtZavgXVjE0l5z9i7K12dMNDVGS3
- x8TcipmtCKHu62FSFc/KZMbIvHNxnUxUJkvwRgXnq5cb1yA+BY5Vb+ntw6j1hnxaOsM=
-X-Gm-Gg: AfdE7cn+4lxJTZeGcOBMQ5+QJNKvyq53yf3Y/cw/4KJ7/Yz/yImjtk+NeF2RVQVX8zt
- 2Z4ikFIl9Kh7LxTQkyMsKfAjQ4IXkgSztdw3RP4hiXy/kKYdvjwHoqDInwhFBpYdO16F+jEiaRr
- 5bYmMfj8NCXoieJHI4Sa7DuajhnbZMu0g/HBQchhynROHa9SttLu4PUxXR+/JJAEU1aofQVdR21
- 0qrzVVq0Xg/UPypi6c7zn1tA5dnqToXvD9NsRKxzfwIPla0Juqe/eJRzTVB5aem9BHOxxbDyFhG
- OlTRAejDnLab35ZemrmxfwE+kHWDQ8SKKE0EiL8QvCmaDXMe4+2nyR9iD4sRhvMxDASr1HvFFou
- JDDr6Z5ElCS13QWzrERdUPRrjweZuZXEBJ7ZTd+PB8gFfcsCf9W2nqLBCs5jXPabmeEupIT4VCM
- d7RvQ7+YzuvlALdQ3OV/RIrIJ1hww=
-X-Received: by 2002:a05:6a20:e613:b0:3b4:b276:c5dc with SMTP id
- adf61e73a8af0-3bd4ac817e3mr3980706637.3.1782403326602; 
- Thu, 25 Jun 2026 09:02:06 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782403321; x=1783008121;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tc/f91PWZlqsfBeEM3Km9wlL0qu0XJxsf8go0p8m1h4=;
+ b=Q9taACPvcFghaIHfb61ERye7jaKIJypjfOcQJQCSY7/pvcI6zxBxbCjA6iG/A/8hlj
+ DyWARUqCO8hTzH5ID+yjQN9c2MJbFiACWlK8Iuv0j100cpsHnEaL/9SMrt6nYxV9mYjp
+ hGkvSrnb0Vi7T3khuE3pbKc6mtQ0m7mSwECcgXKJ5VrTm0ounrdwuSZUTyPzyUG1HPoA
+ SOWIJB5s+sIyEPUv9sFvrbkyAoGAP3t2+6OFyYr/+9vR3cGCfu9q2zyuH6aeA96XDI/R
+ 6+VGiUgnMQa4cvjcU1BbKswjRZc0mMYIhQr1SZcZi6IHw4AmVv5jHwfZ86o5x/MFSmz6
+ XJfg==
+X-Gm-Message-State: AOJu0Ywt57zg6XbinYS210CQ0srNZc7X4U5KJsurGQW3nppIE8yf/bkZ
+ g+cj4kuFGxtyKgMQlQg474O0I+XZ/9E47nYHH9YimOTs6v6JGV+XqVinYrUH7+TFxYI=
+X-Gm-Gg: AfdE7ck8pi0EBC0fh7/6CXI6q33G7Ew876G3KEj7FuQ0Shrn+VgLILNzr8gJdmZ0jKc
+ mtwI7FQD6YMF2sh8ZF1YmqJx+1aO85yDBd4JT8r14fAPoz9mjfaU6nTobvS5rM5csptV1Czcoug
+ sal5af6cMLfDOUSd+JPRBrbgvsHd9u13waTsqueiCPZvkixKOELCwcfsuymA0xlncPdWoV9PWU6
+ Z6CHahoZKR3ekMFTfMFVa3vEnHnzl1mtDlulu7a+0ANEn+JnwB9CBw3QyX/A8C/AwhIv3r1C3WO
+ T/VxQdL89LK01Y87lYRWCkPYVyuuKIIHNoZvM1w6EhFZCG26w4MTMtbYx2doy1qcIiMFrkY+w5U
+ aESofAL6QRNN6LHGYRuwGAIeQcmwwAn1jsk+jG0xkyKifazrukwrHSFD7Lse/3cnRzXjqf2FgrT
+ Xh9EVe9+jKpC99EjPZkWHPA3u3jKE=
+X-Received: by 2002:a05:6a20:b786:b0:3b4:81b4:9b74 with SMTP id
+ adf61e73a8af0-3bd4af8c67bmr3954626637.42.1782403320698; 
+ Thu, 25 Jun 2026 09:02:00 -0700 (PDT)
 Received: from localhost.localdomain ([212.135.211.99])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c92bcb9c14asm1924522a12.24.2026.06.25.09.02.04
+ 41be03b00d2f7-c92bcb9c14asm1924522a12.24.2026.06.25.09.01.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 25 Jun 2026 09:02:06 -0700 (PDT)
+ Thu, 25 Jun 2026 09:02:00 -0700 (PDT)
 From: jack wang <163wangjack@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: jack wang <163wangjack@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:i.MX31 (kzm))
-Subject: [PATCH v2 1/3] hw/misc/imx_ccm: Replace DPRINTF with trace events
-Date: Fri, 26 Jun 2026 00:01:42 +0800
-Message-ID: <20260625160144.94565-2-163wangjack@gmail.com>
+Cc: jack wang <163wangjack@gmail.com>
+Subject: [PATCH v2 0/3] hw/misc: Replace DPRINTF with trace events for imx_ccm
+Date: Fri, 26 Jun 2026 00:01:41 +0800
+Message-ID: <20260625160144.94565-1-163wangjack@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260625160144.94565-1-163wangjack@gmail.com>
-References: <20260625160144.94565-1-163wangjack@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=163wangjack@gmail.com; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=163wangjack@gmail.com; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -13
 X-Spam_score: -1.4
 X-Spam_bar: -
@@ -101,70 +96,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: jack wang <163wangjack@gmail.com>
----
- hw/misc/imx_ccm.c    | 18 +++---------------
- hw/misc/trace-events |  4 ++++
- 2 files changed, 7 insertions(+), 15 deletions(-)
+This series replaces DPRINTF macros with trace events for imx_ccm, imx25_ccm and imx31_ccm.
 
-diff --git a/hw/misc/imx_ccm.c b/hw/misc/imx_ccm.c
-index 9403c5daa3..b77e9561bb 100644
---- a/hw/misc/imx_ccm.c
-+++ b/hw/misc/imx_ccm.c
-@@ -14,18 +14,7 @@
- #include "qemu/osdep.h"
- #include "hw/misc/imx_ccm.h"
- #include "qemu/module.h"
--
--#ifndef DEBUG_IMX_CCM
--#define DEBUG_IMX_CCM 0
--#endif
--
--#define DPRINTF(fmt, args...) \
--    do { \
--        if (DEBUG_IMX_CCM) { \
--            fprintf(stderr, "[%s]%s: " fmt , TYPE_IMX_CCM, \
--                                             __func__, ##args); \
--        } \
--    } while (0)
-+#include "hw/misc/trace.h"
- 
- 
- uint32_t imx_ccm_get_clock_frequency(IMXCCMState *dev, IMXClk clock)
-@@ -37,7 +26,7 @@ uint32_t imx_ccm_get_clock_frequency(IMXCCMState *dev, IMXClk clock)
-         freq = klass->get_clock_frequency(dev, clock);
-     }
- 
--    DPRINTF("(clock = %d) = %u\n", clock, freq);
-+    trace_imx_ccm_get_clock_frequency(clock, freq);
- 
-     return freq;
- }
-@@ -64,8 +53,7 @@ uint32_t imx_ccm_calc_pll(uint32_t pllreg, uint32_t base_freq)
-     freq = ((2 * (base_freq >> 10) * (mfi * mfd + mfn)) /
-             (mfd * pd)) << 10;
- 
--    DPRINTF("(pllreg = 0x%08x, base_freq = %u) = %d\n", pllreg, base_freq,
--            freq);
-+    trace_imx_ccm_calc_pll(pllreg, base_freq, freq);
- 
-     return freq;
- }
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index b88accc437..fdb4844045 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -237,6 +237,10 @@ iotkit_secctl_s_write(uint32_t offset, uint64_t data, unsigned size) "IoTKit Sec
- iotkit_secctl_ns_read(uint32_t offset, uint64_t data, unsigned size) "IoTKit SecCtl NS regs read: offset 0x%x data 0x%" PRIx64 " size %u"
- iotkit_secctl_ns_write(uint32_t offset, uint64_t data, unsigned size) "IoTKit SecCtl NS regs write: offset 0x%x data 0x%" PRIx64 " size %u"
- 
-+# imx_ccm.c
-+imx_ccm_get_clock_frequency(uint32_t clock, uint32_t freq) "(clock = %u) = %u"
-+imx_ccm_calc_pll(uint32_t pllreq, uint32_t base_freq, uint32_t freq) "(pllreg = 0x%08x, base_freq = %u) = %u"
-+
- # imx6_ccm.c
- imx6_analog_get_periph_clk(uint32_t freq) "freq = %u Hz"
- imx6_analog_get_pll2_clk(uint32_t freq) "freq = %u Hz"
+v2 changes(based on feedback from v1 reviewer):
+- Added missing Signed-off-by tags.
+- Fixed code style space issue in imx_ccm.
+- Dropped unnecessary uint32_t cast in imx25_ccm.
+
+
+jack wang (3):
+  hw/misc/imx_ccm: Replace DPRINTF with trace events
+  hw/misc/imx25_ccm: Replace DPRINTF with trace events
+  hw/misc/imx31_ccm: Replace DPRINTF with trace events
+
+ hw/misc/imx25_ccm.c  | 36 +++++++++++-------------------------
+ hw/misc/imx31_ccm.c  | 33 ++++++++++-----------------------
+ hw/misc/imx_ccm.c    | 18 +++---------------
+ hw/misc/trace-events | 23 +++++++++++++++++++++++
+ 4 files changed, 47 insertions(+), 63 deletions(-)
+
 -- 
 2.53.0
 
