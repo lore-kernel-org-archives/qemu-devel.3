@@ -4,113 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59930CDB466
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 07:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4541BCDB47F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 07:56:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wceuj-000420-CH; Thu, 25 Jun 2026 03:54:21 -0400
+	id 1wcewt-0005ec-2H; Thu, 25 Jun 2026 03:56:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wceuh-00041Y-DS; Thu, 25 Jun 2026 03:54:19 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wcewq-0005du-Rq
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 03:56:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wceuf-0003B5-Kg; Thu, 25 Jun 2026 03:54:18 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65P3mgbk2889642; Thu, 25 Jun 2026 07:54:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=eVtzcN
- WYEQsItyEw6TapXtbcVRcGZYzHT+YEt+16lQw=; b=UwCyYge1uwpr5klH4tfA9I
- 1qPAJmVS/sOHz3UQCOXTuEO2oF+UumG316CO/OrTWFZFZHN+kzMcDUpwXQ9adjFJ
- hZmkO5hpixLV3ovmS9mN8NPwWv4zf/Ey0Lv9lJK9yCZWLSKzcZflnILg+Ylfbmum
- qoblDRwgHf1Oxjbw4ZKyEULyojS5r5X++FcCRxrepGld717zgIC8jChKVnQ7wPAM
- 6ofKRaim+yJFQ1FIe/m5jcCpRzeoY5fmTiUMX9/ok0hG67l9XdP0n1ljAGUlVbDa
- XCIQv4eIXHWIeXO/oBojizpm2AQOSS/dvuBGTgWRffpC0Fajy4y/f7zwEpXkOGGw
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjgt085y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Jun 2026 07:54:15 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65P7nfM5022381;
- Thu, 25 Jun 2026 07:54:14 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7vyvs10-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Jun 2026 07:54:14 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65P7sB4M54198686
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 25 Jun 2026 07:54:11 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1B6A020043;
- Thu, 25 Jun 2026 07:54:11 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BFCE020040;
- Thu, 25 Jun 2026 07:54:08 +0000 (GMT)
-Received: from shivang.upadyay (unknown [9.124.222.12])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 25 Jun 2026 07:54:08 +0000 (GMT)
-Message-ID: <d8bad3e84d427b6626a7e197bff8a048777c0460.camel@linux.ibm.com>
-Subject: Re: [PATCH 1/2] ppc/pnv: avoid regenerating DTB if external DTB is
- present
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: Aditya Gupta <adityag@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- npiggin@gmail.com, milesg@linux.ibm.com
-Date: Thu, 25 Jun 2026 13:24:07 +0530
-In-Reply-To: <ajzdgJ_PzoHE7VSj@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260623063156.1110370-1-shivangu@linux.ibm.com>
- <20260623063156.1110370-2-shivangu@linux.ibm.com>
- <ajzdgJ_PzoHE7VSj@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wcewo-0003pm-V9
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 03:56:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782374189;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bixA52GU/9JmhiaZNEoKJbpEC2AbtCO8l58z9HHgeQc=;
+ b=SR+NMtlOqcz7SMDMPumv9j14uh7CJQqhDaACHZWRJUR8b4eH8KGEjc8P6qd/mh9mUDV/3R
+ CdGadXnnQ7TvpaekKDEbaftnLm9wfp3f4zyAN/7goB19M8CS249K7VRDd1oLGgOrhS4+g6
+ 0UBdbd4GT7LNAdwlRvPvUkZRc1pCK3w=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-519-NN5bZSrFN9mqqNTX3UG_ig-1; Thu, 25 Jun 2026 03:56:28 -0400
+X-MC-Unique: NN5bZSrFN9mqqNTX3UG_ig-1
+X-Mimecast-MFC-AGG-ID: NN5bZSrFN9mqqNTX3UG_ig_1782374187
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-46315372c3eso1464609f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 00:56:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782374187; x=1782978987; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=bixA52GU/9JmhiaZNEoKJbpEC2AbtCO8l58z9HHgeQc=;
+ b=cerPzBvLFYd/jLLe8O9fObNdRFkDSFuzV37f48buKAHTmODbiJkmVwFUmAtkhgNoDw
+ V1iOQkqPiFUXRQrw2snR/pGFSGt1YeaicsITKAf7iHBZz5X6+RZ5yqCGUGsDt4WybV57
+ htUj5/amdhYvm7dixsp3lG+2h0QqMAg4N6CwkEjeSJhRfJeB4gXJwC0/Hr3vr8OYnXmW
+ J7UlKMoYgvBPaqq4/tVabwc1Yrxae8olWvDV0IuXfBQukXqkzqWyjA19HyzWKA+uGMJa
+ +GF2sNMu21onsOONSQ66X1vBGNfT9iRc6KLlvfP3UmTSQ60Pbioz8DiJz11gG8/UKAIJ
+ eMpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782374187; x=1782978987;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=bixA52GU/9JmhiaZNEoKJbpEC2AbtCO8l58z9HHgeQc=;
+ b=RIadqBtcI83ekX/N1ywEhp0hpVgr7FP0D6FuiQDBtjs/s7tVySPRLaDFL5EJZsSkWp
+ qj785BaLvtXIg8wphpOvjsMF5XffT22/JkIumqkJuf+ivqKrCpvZgNuKAKCKxCe5Ao9H
+ ZsNN2fO2lPZ8HVKL8x0GpDhlH3Ji3RYio0S/vGosJHGIF5nxNc9oXiUXNG0qoDboQLE8
+ e+zDvHUMi6XJxa/PzxW7xe/n65Aypwe6N91EqURQOcXQJ6gssfv4vki0Tecope1AcXrz
+ I4mPfjdsrD+9SWtbknazgssxsSkk3u3KAHz0cv58TiRPbkveN1y1Y9QUy2YcaM+U9b66
+ OieQ==
+X-Gm-Message-State: AOJu0YxuGUfBsRb10yHQPiFqJnGHElxBMIpmKBDKaYpALFzaKEeqYeR/
+ zOz598OuGMhC3rL3Ex1efoZ8PmeUnyIWOEYuQvt8r5bb06RcXZg4A/dMqUISpRoRubtVmrGZaKu
+ zNH4xypaiLNvSebZHag1yOqZCxgOPjSg+84vPP8t/dK+xAZNtO3NbOJIq4tJ6xwZVgf742OQgt5
+ eAOG73XXPdmt/PMdw9+ZSwKw9jR8wMI8FVj/o/Jo6G
+X-Gm-Gg: AfdE7ckGng+ZxBQWQhIBDB8s1Oy8qZNri+lEJLxcZWgPGolSchh2ZAnw8VPPJznKpGy
+ NGBDPXx39Wk18s6cBk2Nk2YxVGz63UquTtT5GtC3GORb5iMJMMxAY8b/HWsVI3/4EVIlV1oPooH
+ FnRClxXQ0Np0r2eBVStSR1q+8foIK3/JQN4mvFRc7reCo9j4Av/ee8uf+KgykqtxCo7li/xarLF
+ RVjbbAKHiRu2mhvALsCSulf6b+qgIFt6DyYisNdJ9r4zW/GbkIdBpka2WC+N9Ku9UiuaUs0X0zy
+ Q5qgLhMh4hQ0iCgLL7WgmrzFjcCrhYFIUZ/94orUGq+7zgIkRMNuSq+p2j6xcSagt7ZHWo9S+oN
+ NUPqtXAiyWKLAacC4vUN1q+AyKdZMaOatWjpJLfaCpb4BRxkzTMaIFq3VZngSHrioPMSew5oXyF
+ eL+YuO
+X-Received: by 2002:a5d:584e:0:b0:46d:a16b:d1d with SMTP id
+ ffacd0b85a97d-46dc1e82acemr1973692f8f.43.1782374186803; 
+ Thu, 25 Jun 2026 00:56:26 -0700 (PDT)
+X-Received: by 2002:a5d:584e:0:b0:46d:a16b:d1d with SMTP id
+ ffacd0b85a97d-46dc1e82acemr1973620f8f.43.1782374186343; 
+ Thu, 25 Jun 2026 00:56:26 -0700 (PDT)
+Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([151.29.41.106])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-46de7effe5bsm1899390f8f.5.2026.06.25.00.56.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Jun 2026 00:56:25 -0700 (PDT)
+From: Luigi Leonardi <leonardi@redhat.com>
+Date: Thu, 25 Jun 2026 09:56:20 +0200
+Subject: [PATCH v5 2/2] igvm: add device tree parameter support
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDA2NiBTYWx0ZWRfX9NGTKNnkfctN
- GH0MO5CuAicDUtdXKq/A+ZueXyzSc5/BdApMTvISkT6brL8OO3NR+2gd05tF0yNG2m1WAkAC5nV
- ZYu+WZ9IrFaEGEJA1hsrsQw+0KXCdc/Fz16hgY/z77cfg2rgRXfwrKyE9HJViLINBeoGQmPHI5M
- US/9OR51st6XfMAeDhe8HsYDMhJ436xKH55AtIQ53v2nrsdSLFlg4p/hOT8gZHGZ5pGmF9ZQB6u
- ybs2y7eoXgPOT4zp3SdporvVLlU8koFct3v4MjiqK10i+Ca9f9sTgf0FfBpDlZzl89qzCseDd9O
- tsSDMj+jDDTT74XLGiV7UNofFbcC1ARcMjsYl7bQNuSBxO8e3dWwSomyaTF/oFySRXIeArTSeWX
- fnr5jtNk2MhaQ9SYMBbTuOp2dGivJp7GnhrdSdnWVxYzbumacYv3lAIOZDPMSZ5MdwjydQ9+ajR
- 2cZrNRrBz+Q0GCe4jHg==
-X-Proofpoint-GUID: PR1iEl6_f4pC_0-lkBrtnwvrxmj5AdWO
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDA2NiBTYWx0ZWRfX7wDOp/HjUPDl
- Z4KkRfP0H1KDTqcytFy/eur37HRwRC+X2U3CYaSDXmM3pJo2ro3l/+B3BOkOTwidFwxHkaz3W5r
- Wiec8NbPIP1Ode9qGODH2YApSQzStqU=
-X-Authority-Analysis: v=2.4 cv=I/lVgtgg c=1 sm=1 tr=0 ts=6a3cdea8 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=eQpERYQK_Wsg7VwN8_8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: FfMXbLOycuQmu4caAU72uOePg0MMEC9H
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-25_01,2026-06-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 spamscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- adultscore=0 impostorscore=0 bulkscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606250066
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260625-microvm_device_tree-v5-2-bcff11fd6d1c@redhat.com>
+References: <20260625-microvm_device_tree-v5-0-bcff11fd6d1c@redhat.com>
+In-Reply-To: <20260625-microvm_device_tree-v5-0-bcff11fd6d1c@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ Oliver Steffen <osteffen@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Luigi Leonardi <leonardi@redhat.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,53 +123,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2026-06-25 at 13:21 +0530, Aditya Gupta wrote:
-> On 26/06/23 12:01PM, Shivang Upadhyay wrote:
-> > Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-> > ---
-> > =C2=A0hw/ppc/pnv.c | 10 ++++++++--
-> > =C2=A01 file changed, 8 insertions(+), 2 deletions(-)
-> >=20
-> > diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> > index 62812f22f8..6a636b5192 100644
-> > --- a/hw/ppc/pnv.c
-> > +++ b/hw/ppc/pnv.c
-> > @@ -803,8 +803,14 @@ static void pnv_reset(MachineState *machine,
-> > ResetType type)
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 mpipl_write_succeeded =
-=3D do_mpipl_write(pnv);
-> > =C2=A0=C2=A0=C2=A0=C2=A0 }
-> > =C2=A0
-> > -=C2=A0=C2=A0=C2=A0 /* Regenerate device tree */
-> > -=C2=A0=C2=A0=C2=A0 fdt =3D pnv_dt_create(machine);
-> > +=C2=A0=C2=A0=C2=A0 if (machine->dtb) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int file_size; /* discard *=
-/
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fdt =3D load_device_tree(ma=
-chine->dtb, &file_size);
-> > +=C2=A0=C2=A0=C2=A0 } else {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Regenerate device tree *=
-/
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fdt =3D pnv_dt_create(machi=
-ne);
-> > +=C2=A0=C2=A0=C2=A0 }
-> > +
->=20
-> load_device_tree is being done in pnv_init also, how about this ?
->=20
-> 	/* only create new dt if -dtb wasn't explicity passed */
-> 	if (!machine->dtb) {
-> 		pnv_dt_create
-> 		fdt_pack
-> 	}
->=20
-> also, keep this before the mpipl block, ie. after qemu_devices_reset
-> ?
-Yea, That makes sense.=20
-ill fix this in v2.
->=20
-> Thanks,
-> - Aditya G
+Coconut SVSM, with the upcoming device tree support [1], will use
+the IGVM device tree parameter to discover virtio-mmio and ISA serial
+devices instead of relying on the fw_cfg interface, which is
+QEMU-specific.
 
-~Shivang.
+The device tree is packed before copying into the IGVM parameter area
+to reduce its size, since IGVM files can define tighter memory
+constraints for parameter areas. Packing is done in the generic IGVM
+backend rather than in per-architecture device tree setup code, so
+that each architecture does not need to handle it individually.
+
+[1] https://github.com/coconut-svsm/svsm/pull/1006
+
+Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+
+---
+
+Error handling on qigvm_find_param_entry will change once [2] is
+merged. I am already using the new approach here.
+
+[2] https://lore.kernel.org/qemu-devel/20260618-igvm_error-v2-1-2b03f4790e4f@redhat.com/
+---
+ backends/igvm.c      | 55 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ backends/meson.build |  2 +-
+ 2 files changed, 56 insertions(+), 1 deletion(-)
+
+diff --git a/backends/igvm.c b/backends/igvm.c
+index 3f4b97a5d4..53e96fae25 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -26,6 +26,10 @@
+ #include <igvm/igvm.h>
+ #include <igvm/igvm_defs.h>
+ 
++#ifdef CONFIG_FDT
++#include <libfdt.h>
++#endif
++
+ #ifndef IGVM_VHT_OPTIONAL_BIT
+ #define IGVM_VHT_OPTIONAL_BIT (1U << 31)
+ #endif
+@@ -119,6 +123,10 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
+ static int qigvm_initialization_guest_policy(QIgvm *ctx,
+                                        const uint8_t *header_data,
+                                        Error **errp);
++#ifdef CONFIG_FDT
++static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
++                                       Error **errp);
++#endif
+ 
+ struct QIGVMHandler {
+     IgvmVariableHeaderType type;
+@@ -149,6 +157,10 @@ static struct QIGVMHandler handlers[] = {
+       qigvm_initialization_guest_policy },
+     { IGVM_VHT_MADT, IGVM_HEADER_SECTION_DIRECTIVE,
+       qigvm_directive_madt },
++#ifdef CONFIG_FDT
++    { IGVM_VHT_DEVICE_TREE, IGVM_HEADER_SECTION_DIRECTIVE,
++      qigvm_directive_device_tree },
++#endif
+ };
+ 
+ static int qigvm_handler(QIgvm *ctx, IgvmVariableHeaderType raw_type,
+@@ -780,6 +792,49 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
+     return 0;
+ }
+ 
++#ifdef CONFIG_FDT
++static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
++                                       Error **errp)
++{
++    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
++    g_autofree void *fdt_packed = NULL;
++    QIgvmParameterData *param_entry;
++    uint32_t fdt_size;
++
++    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
++    if (param_entry == NULL) {
++        error_setg(errp, "IGVM: parameter area index %u not found",
++                   param->parameter_area_index);
++        return -1;
++    }
++
++    if (ctx->machine_state->fdt == NULL) {
++        error_setg(errp, "IGVM: device tree not available");
++        return -1;
++    }
++
++    fdt_size = fdt_totalsize(ctx->machine_state->fdt);
++    fdt_packed = g_memdup2(ctx->machine_state->fdt, fdt_size);
++
++    if (fdt_pack(fdt_packed)) {
++        error_setg(errp, "IGVM: failed to pack device tree");
++        return -1;
++    }
++
++    fdt_size = fdt_totalsize(fdt_packed);
++    if (fdt_size > param_entry->size) {
++        error_setg(errp,
++                   "IGVM: device tree size exceeds parameter area"
++                   " defined in IGVM file");
++        return -1;
++    }
++
++    memcpy(param_entry->data, fdt_packed, fdt_size);
++
++    return 0;
++}
++#endif
++
+ static int qigvm_initialization_guest_policy(QIgvm *ctx,
+                                        const uint8_t *header_data, Error **errp)
+ {
+diff --git a/backends/meson.build b/backends/meson.build
+index aabfaea5fd..8792c58c36 100644
+--- a/backends/meson.build
++++ b/backends/meson.build
+@@ -35,7 +35,7 @@ endif
+ system_ss.add(when: gio, if_true: files('dbus-vmstate.c'))
+ system_ss.add(when: 'CONFIG_SGX', if_true: files('hostmem-epc.c'))
+ 
+-system_ss.add(when: igvm, if_true: [files('igvm-cfg.c', 'igvm.c')])
++system_ss.add(when: igvm, if_true: [files('igvm-cfg.c', 'igvm.c'), fdt])
+ 
+ system_ss.add(when: 'CONFIG_SPDM_SOCKET', if_true: files('spdm-socket.c'))
+ 
+
+-- 
+2.54.0
+
 
