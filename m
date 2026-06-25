@@ -4,93 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68CEDCDE001
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 14:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72720CDE001
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 14:57:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wclSW-0007lE-5K; Thu, 25 Jun 2026 10:53:40 -0400
+	id 1wclVf-0000f5-HI; Thu, 25 Jun 2026 10:56:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wclST-0007kq-QZ
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 10:53:38 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wclVd-0000eH-GS
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 10:56:53 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wclSQ-0002Wf-TC
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 10:53:37 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-84536e2857eso1578165b3a.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 07:53:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wclVc-0003F9-4a
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 10:56:53 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-664801de06aso1404499d50.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 07:56:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782399411; cv=none;
+ d=google.com; s=arc-20260327;
+ b=SOA2km1kF5vTrsqehrDvSXiKPHcBggTmedfXty1j9HEhxB3Av8GMQASaEhJGbginnc
+ /fAd7Ih0iwqUIyjATLBwCShVNk5b69bvY6gvlFY6iCOVgTJGNWJ7CSOyyGSYIHGnvKG8
+ dWttcDBx/QE/DDFCCJH5HffZ8YYa4m0nOb+wu4B2F51SKV7Df5ePKWkGwvgUsWnuwYDM
+ WqV5gx3Xu4ipZLsEj1vhhycp7nkA7tdJYbTn4Tv9gowuU8J/q+tmT5LoKvsUW1Z2Gc3i
+ rvM9fbojYbR/ol7GD/N5tLNi90OWFLnQdlwSWZYhM9xtVk2qRcjAmsivvrz+makIdLf0
+ ZY4w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=i/zCXl+P6RPAZgR9hjF7z+0cuHq30SL+nR/NueNuT6E=;
+ fh=Y/+yWNElImv7sjUmsr9J/66ymQrTph2UwmhC37llMDM=;
+ b=OGrKQbr0aL2XCwreY40ThFsjPL0cjyLNcHbXCjrWZcXO3BiuKDENHTW0Gi3F4rwjsE
+ zTvfu7ocvPq5UOrKk+ccKgJl/NlmSbM+VxermQSnz+304V0jMZAQmQo9cCwQeUXEov3I
+ KusdpUhyK0ZlUngyOv9je6tGUAta4Ji0qB8o/Nw1Y4XK4gOL0kITCF2Sg2B0YzVxtUbX
+ oCfm3JWNXH9YQd6LhfMgT9CT9qt766NfNSEIq6BBsKsZRCdcY5KPGjm8/iAgcW86JMIG
+ Z8kKUQxf017w0rRI/AsNLJ7h6BtGukVY0narwHdumkiYgsltVxOthvu9XzvnlezRz+Vj
+ uowQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782399213; x=1783004013; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pe8nWvLBfzygNZPWMRaT+tp07NOPD0PfoMgkrq0GbTg=;
- b=t3CsBC0iA6nCt2ZpXwN4RtEfRtJAhTb5DhI0rQKQoid9AbHx6WkaeI04IcTqapSPIk
- TNFLbBVlsuJeFVRJCXLYPj3GqfQBO0D5kUy8QtEp4Rv7vx5FbLZUCHRNsPVOgwjZ7cSU
- KLEclDd3YMe+Vgj71MLLfA3oXEFzY6vc7IFsXMZYf9zcKhF5heAtryvVp+esuAyWeUYv
- /7JKxubPTfBpOFfpUArZV6UqxB08LWGhjwPtOrf+Wyn9wh9DLZMeeQQUDl0eC3RTwv7Y
- HWJ8vdkJF7aaToF/pqIfPCIubLoMSzxqNYArLLIbtz2JRR9X0ltqZgXaP37ZlVMvSW+N
- 0fMg==
+ d=linaro.org; s=google; t=1782399411; x=1783004211; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=i/zCXl+P6RPAZgR9hjF7z+0cuHq30SL+nR/NueNuT6E=;
+ b=pK/gQQN8fDxAhZyyPkVEF2JQboL2qad1F2wtlFq8STeoXW5FLOo7Pl1q9UWc/ziy2Z
+ g0LGSrfZtheai5yGEhRUqwhDuTG3cQKIYxs+J1gV0CXAb+huKMs4hbNIToVIF0ag3TOp
+ YJp9e51XQAgY/H84PE8n0NBGOnHz0nC/v0G/YQ21Rsi0siRPRAdtU8cstvgWNde6uveJ
+ q4xsBBF+4UVVVdEuEQjCeH2WmH4FILNkW3MLPvHobOvmgU8JTTrQcWToZgFlZZz8TGgl
+ PVYIFJsNt/joRK1dN10et8i7oVaJcczgmebR/ot5aG9qSkI+SLfKZSq64fy8r5AolbFO
+ kOpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782399213; x=1783004013;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pe8nWvLBfzygNZPWMRaT+tp07NOPD0PfoMgkrq0GbTg=;
- b=BQjezbbZ+kbYh3/T425CwHuY55UTBCm8SrOGWevOgszMuj1dy6hLMbJE8BDMWX2iYV
- +Wbt7DKXJYDsVhYSHk/NG0ZWle8zAyrPoSbiPQXA+vTtl/JqTc7Xj0Ot60aSAlXkOVvL
- u5x9RQgYZnTg9YkvXVBgzay0bjSdgc5H6K11DQRz2C2uJQnNxQc7PMC6WXR2j6uQH0ru
- yrhlRI2X/TjG2oX4E/xHe2DjmkyveNITozOB8euQ2kk/D8uAtT6FeWjpu4KP5PhgRQ03
- l6j5rpz5xBhR4gPPbWw2G6r6mt+Lc4ljCgIupF5NqNPKSaeSLp6QpE7jLHg77jq8aCUT
- iyeg==
-X-Gm-Message-State: AOJu0Yyl9vDHVjpAGAfjTM8+ptLNCD7/gM6S3uqPx5OUH7s7Kcn9vPXu
- rNMB3R7Qdmzqo4euv8bfK01sLe0+v0esuKUMF+2aO3VgPXq/CmLBpBYDtHhcIww5Cjc=
-X-Gm-Gg: AfdE7cmxGIcUYa36dMH/+3flZ8CIyjtC39KiFikEGEnqKaFiwwp32/iwENTG2eqcYYV
- 4x8PGSm7Vo6FKR/K+VBC+bywNgznNSlSDwbrCXCUF2dMVY+tmJR2gNfawp6sm/e1UV2tmTgSNgL
- zVDtvJXaMQn/qdP4bipUQAwjARZBKUqc2dxDVipySy/HyhpjXZrDB7AWAj+B2+S7Ph3uefkpZNl
- vTZ6CgDrkTA7SU3ceyEqq+Y6HEOxV/CxN9J8W6LPpPmWeZn/II+X5H8hPJ4CU9uKMGt+UYUKD7g
- gSTXibx4CfzAaDYyTpgeu11kud3dN25lZO59cSqTFIF4t6bfX41sTE8anx9WyrpaA9IyUKVgvC1
- w4KSWBNfwR3dsWxPYUPUBqCX6eGjJ5KZyMcY71Sky0bKnbegCGAcxZfd/rA1iyQVScbmt3nSDVd
- 5kk81YyVypdp+Km3VnmDiyZeQupptndtFRQ/rmq+CT9YueOz+wn3V5y9qUyA==
-X-Received: by 2002:a05:6a00:1989:b0:845:bf3f:48de with SMTP id
- d2e1a72fcca58-845bf3f4983mr868469b3a.8.1782399213278; 
- Thu, 25 Jun 2026 07:53:33 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-845bda73914sm621887b3a.10.2026.06.25.07.53.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Jun 2026 07:53:32 -0700 (PDT)
-Message-ID: <5e16178d-a65d-4606-91fa-1a4700fd1ba3@linaro.org>
-Date: Thu, 25 Jun 2026 07:53:30 -0700
+ d=1e100.net; s=20251104; t=1782399411; x=1783004211;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i/zCXl+P6RPAZgR9hjF7z+0cuHq30SL+nR/NueNuT6E=;
+ b=PUS0HaD0FW2y1ary9a/KuHGWVadKLpiiCIaeN+iuC10/Aa0odQqkH2ylwIxytcINcM
+ UiXBDH0EIhse2fo1Khl40fJnltz1uisLTYMh1gsd+YU7/5Yrrx81eQVl1wxaxs3uQgwy
+ ntWlCB+WTB2u5vVB261AWB+yonTfgjnp3ZRbimZUme9/Fsytsrgv1wKsFP6UdrYg+wpN
+ f+za7BBshECW/yJsiEnptjlvao+vkSaTxDU1Yt76o0mZx7Lsw4RT/sVJuIUnnsMgGy+U
+ rg0OAFpj+ZuG/N46VMeAiGTChTTArmi/A9dFQ6WxGAdkheNSp1d1ipnZcrM8/r5uI19h
+ 38Bg==
+X-Gm-Message-State: AOJu0YyPMAMtEppt385hmLpHJCXbiovHGzFCzM3f58OPCCoyvC3zCk3k
+ vU8v5FIGYgHsQej2zDrv30vmyUxqonwpjzAx+wc7VBMbSANrscs2l0xCllW/9k6lCz5fubw2gLv
+ V4IAhMIAcn4aOUXdYvP4H7unJhdwhP7ySZwpGftJRww==
+X-Gm-Gg: AfdE7cllL5U6DGppE9Oq8DxFqfjiYOU4uh/o1lcd6aw9tIa3kY24fH10kT4NDxRf22U
+ W9Xc4JhiDkaw40EWsN+11HXDiucRqVly2WI6eKxVskhAnARvyvv1eHpj5+jVH5fXlnw9sxqToGg
+ tzj7GAK1pE+Oesj58T0I5GN26wOgOkifZ9EGqvyCnOF84DfiEldviGbZ3ykx0zASiSteM1r8ezi
+ x5b7qWVNUl7DPicMOb7En+tc9WwGBeqj0daW4VlIms6ygnC3uOH6jvhY4Gb3L5Qon1t9tJVn2iw
+ PGDD6/N5wNVQJ1BPmN1nXdGTyasdpN1fNSAr9AfHxQjPOnTuq08KB3+I
+X-Received: by 2002:a05:690e:bc6:b0:662:cf48:c1b2 with SMTP id
+ 956f58d0204a3-66487dd13ccmr2185702d50.36.1782399410875; Thu, 25 Jun 2026
+ 07:56:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/6] tests/tcg/arm: Tests for new FPRCVT instructions
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Jim MacArthur <jim.macarthur@linaro.org>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org
-References: <20260624-jmac-fprcvt-v2-0-dc6cf8e512b6@linaro.org>
- <20260624-jmac-fprcvt-v2-6-dc6cf8e512b6@linaro.org>
- <87qzlvhued.fsf@draig.linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <87qzlvhued.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+References: <20260623170354.43981-1-163wangjack@gmail.com>
+ <20260623170354.43981-2-163wangjack@gmail.com>
+In-Reply-To: <20260623170354.43981-2-163wangjack@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 25 Jun 2026 15:56:39 +0100
+X-Gm-Features: AVVi8Cf0SnjwXIQ1CTkOCAcv4qg3CRrPYKhZ3pvioTVadpdCugm7dlv0EnTdG9g
+Message-ID: <CAFEAcA9fS9v-=BTSVM+BJg8V3hbFf7q9xaP3MMVFC04cFJ7HVw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] hw/misc/imx_ccm: Replace DPRINTF with trace events
+To: jack wang <163wangjack@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
+ "open list:i.MX31 (kzm)" <qemu-arm@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,17 +115,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/25/26 01:54, Alex Bennée wrote:
->> +ifneq ($(CROSS_CC_HAS_ARMV9_FPRCVT),)
->> +AARCH64_TESTS += fcvt-fprcvt
->> +fcvt-fprcvt: LDFLAGS += -lm
->> +fcvt-fprcvt: CFLAGS += $(CROSS_CC_HAS_ARMV9_FPRCVT) -DFPRCVT
-> 
-> Do you actually need $(CROSS_CC_HAS_ARMV9_FPRCVT) in the compile?
-> -DFPRCVT handles the compilation.
+On Tue, 23 Jun 2026 at 18:04, jack wang <163wangjack@gmail.com> wrote:
+>
+> ---
+>  hw/misc/imx_ccm.c    | 18 +++---------------
+>  hw/misc/trace-events |  4 ++++
+>  2 files changed, 7 insertions(+), 15 deletions(-)
 
-We should need the flag.  If we don't, then we're assembling the wrong insn.
+>  uint32_t imx_ccm_get_clock_frequency(IMXCCMState *dev, IMXClk clock)
+> @@ -37,7 +26,7 @@ uint32_t imx_ccm_get_clock_frequency(IMXCCMState *dev, IMXClk clock)
+>          freq = klass->get_clock_frequency(dev, clock);
+>      }
+>
+> -    DPRINTF("(clock = %d) = %u\n", clock, freq);
+> +    trace_imx_ccm_get_clock_frequency(clock,freq);
 
+Our coding style wants a space after this comma.
+(Running your patches through scripts/checkpatch.pl can
+catch this kind of style nit, though it sometimes has
+false positives.)
 
-r~
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
