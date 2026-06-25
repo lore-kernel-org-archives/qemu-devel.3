@@ -4,113 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6EBECDB47F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 07:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14833CDB47F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 08:03:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcewr-0005ds-8o; Thu, 25 Jun 2026 03:56:33 -0400
+	id 1wcf2p-0000BK-CW; Thu, 25 Jun 2026 04:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wcewp-0005dX-Ck
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 03:56:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wcf2l-0000A9-JB; Thu, 25 Jun 2026 04:02:41 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wcewn-0003pM-Qm
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 03:56:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782374187;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=nd8AB2Dkqjkbk387LSpdDKafgypWUqUMWLkthYqiSuk=;
- b=UmxFCmUXPvmtnoYe2QhDuWOfKzZcLbJiHjBa4+P+ADvrpusNuzSl4DCQOuUVPRbUCeU6g1
- qLVDiMT7pYzRXAvXEzNMTC/ioSICp8zcaReFIIwxXi1k8h0GWZLEeuamFbGurY7v0lm4NC
- qONK5DJBj9HdQX1TPhG4Yd4Ho1ZY2Ds=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-574-TOc5e0AqN96hPvfLOKxpTg-1; Thu, 25 Jun 2026 03:56:26 -0400
-X-MC-Unique: TOc5e0AqN96hPvfLOKxpTg-1
-X-Mimecast-MFC-AGG-ID: TOc5e0AqN96hPvfLOKxpTg_1782374185
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-46c90c8fd42so1066806f8f.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 00:56:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782374185; x=1782978985; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=nd8AB2Dkqjkbk387LSpdDKafgypWUqUMWLkthYqiSuk=;
- b=b+LaTODU1e0NH84Haa03guHtMNJda4+9827q6Tve0XMsrZ6c6hGMZAkG9XhgjWQGp+
- BlhR/vYMm8ADPgyIXM7fMFAsWU7A3g1Ji52vM+Pxm+P1uVaRG/mgk/DKvODrXtk20gML
- uIYTTOFh96fyUGzx8bcnEBhjCTlPtk/5+/MS/NtSDAyMXr/V8nE/kyddeyo4f/V3vIRq
- aKGCr01CwvVKK5S9ESQR1XQ/l7y20n/dO5emZYeOK1PSrxFREe6cHKg94y2fB181QpCB
- /Y2FYr4w0agpd8aHj3iqbJplLouV0a1UocPBhRfjXM7yZJZ+Mcn3I0kDPY3PZacFWN7l
- comQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782374185; x=1782978985;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nd8AB2Dkqjkbk387LSpdDKafgypWUqUMWLkthYqiSuk=;
- b=Yse3CiDROEWC9w5mcaAowgn72fwewQjA1Xm3hJFFwsPvLb4J0mQYlomOB9Jv3x73i1
- i+9ZWlhbxy1CNyl5t6+3AWIooA6QASl9goVg8QJUJMXlOwroBq5J4Tib9pXWO5x4B9C9
- NLWNp1nJIjbbdC3Hw+FglsUQASF6H4IkIb41dhaLz+okFWHpzJG5aS0Wor4AVEoJ9SBd
- AnSh25YB2eDuxPB0AVo20e4XdTMqw9n7J+/Gub7QELVywYqyowFPxmNYBkxWjS+gOfTv
- T7KJbbd6OQ7ea8tyToIA674Ua6hkBKo5nMWEVMBskJGS4juRSuKDA5ark9c7aQe9byBb
- /aaw==
-X-Gm-Message-State: AOJu0YzLigspoitIfK8KuWcmeWxitxS7BZEGcfTfb97HfuHY7V6JMDxW
- G9DBFU96tsDFZuJR0dSOqDNTTFdd77Wkezrd82TqIns04wMrkyeciWbJbH+JD4Ff6E+fUBOHA5t
- oTKPs7hwl12Es1663hVgGrcu7SHvffplock2O64M+VPes8vozzNNslwoLAIdICiIor5MDoqaE7V
- MAswAlvf80dKWfUGgLtgsQuiUevBesD9/nDhhszWtj
-X-Gm-Gg: AfdE7ckZ7YIqfHrAsoegHbJ56P47wuy1b4DvH7OG8X3NEggmy5JrjaWSEk+jLkNAYG/
- Nw/PJxx7xAiX3euUhYek+jJu21cCtq6SLciQ37klNRAAUm8nvn+qbPBx4lwKG/q+p9Lo2BaB+wj
- 6pw7yWN+o5yaw73b/N7wBenwJYRxgsiGaxhSUIC8K4a0j1slGvAvIUCmZHv+rdWqysbbM74/0xz
- RyTbvCgq4jdRhgg+JVTPooyMdHzeTI8w39nDIzU2MDbrQNYXMWHmZir4cV61AYkKKYKx1j108d6
- TiBC8Hgjr/Ux9e/frA76oHQLEJ4CVSwkpml0HjNBn4gRCcml47LoZGxkKC+ozYYSIHSM0WpAU+t
- IYbs6SsBjYrSfABZgx+zIepAiiHoFPqgrWuA8arNEcor+el8RYPDzl+UMn5LzZOhZfFxUhvpVJT
- Y9m3yB
-X-Received: by 2002:a05:6000:386:b0:46d:7c5a:e9b8 with SMTP id
- ffacd0b85a97d-46dc18a50eamr2356050f8f.36.1782374184811; 
- Thu, 25 Jun 2026 00:56:24 -0700 (PDT)
-X-Received: by 2002:a05:6000:386:b0:46d:7c5a:e9b8 with SMTP id
- ffacd0b85a97d-46dc18a50eamr2355973f8f.36.1782374184226; 
- Thu, 25 Jun 2026 00:56:24 -0700 (PDT)
-Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([151.29.41.106])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46de7effe5bsm1899390f8f.5.2026.06.25.00.56.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jun 2026 00:56:23 -0700 (PDT)
-From: Luigi Leonardi <leonardi@redhat.com>
-Subject: [PATCH v5 0/2] igvm: device tree support
-Date: Thu, 25 Jun 2026 09:56:18 +0200
-Message-Id: <20260625-microvm_device_tree-v5-0-bcff11fd6d1c@redhat.com>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wcf2j-0005xy-Oe; Thu, 25 Jun 2026 04:02:39 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65P3nsVO3188232; Thu, 25 Jun 2026 08:02:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=8Aycy+D2uE1hS4xmDoymm8urCLCU/E
+ B08P4Rasr1joM=; b=gk+cFADgaaAzyoANqduAKbyLw87cjtkbxJIapf3jAG3obp
+ 9s9rfWMLCYdYDdj5nCmPSu5VBPvPwmgORxYtYCOmXcrHxeAqnEXSRU46moKyx7DN
+ HPFZYThhI3roKcDSHWi5YQNbbIgkmrEcc2y7ZNRfdzOf8OY6yh8Y/BlChoYXT6ma
+ bsE/GYw/12F9bt1Z1SFNKieQ6vB23Yimfelwtpc7D5zpiFff5edGn5QnT74b2oBi
+ CsF80yRdnSP41+7XcPXxWFloqZq1U+jf1SghwEVcXzM4T66aaoRrbL71cOpXz1vk
+ jJCUJaKr4tps6PBA4w5FZ/hab+bQDdcSnlbOby1w==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjhr0jb2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 25 Jun 2026 08:02:27 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65P7ngB4011106;
+ Thu, 25 Jun 2026 08:02:25 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex6phn1x3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 25 Jun 2026 08:02:25 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65P82L7g46727480
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 25 Jun 2026 08:02:21 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D070A20043;
+ Thu, 25 Jun 2026 08:02:21 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8C61D2004B;
+ Thu, 25 Jun 2026 08:02:15 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.39.22.178]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 25 Jun 2026 08:02:15 +0000 (GMT)
+Date: Thu, 25 Jun 2026 13:32:12 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Saif Abrar <saif.abrar@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, harshpb@linux.ibm.com,
+ clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
+ kowal@linux.ibm.com, chalapathi.v@linux.ibm.com, calebs@linux.ibm.com,
+ milesg@linux.ibm.com, jishnuvw@linux.ibm.com, amachhiw@linux.ibm.com
+Subject: Re: [PATCH v5 0/9] pnv/phb5: Update PHB4 to the latest PHB5 spec
+Message-ID: <ajzesh0mi46P8xyL@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/33OSw6CMBAG4KuQrq2ZPoDiynsYY2g7lS4QU0ijM
- dzd0RUG4vKfxzfzYiOmiCM7FC+WMMcxDjcK5a5grmtvV+TRU2YSZAUVGN5Hl4bcXzwNO7xMCZF
- TTzllhUVTMdq8Jwzx8VVPZ8pdHKchPb9HsvhU/3tZcOC1AlPr1gOAOSb0XTvt3dCzD5jlAhGwj
- UhCdLBak+R0E1aIWiJiG1FccB9s4wL9AXb9iV4i5TaiCRHStGUTvAz1LzLP8xtHhIRMhgEAAA=
- =
-X-Change-ID: 20260608-microvm_device_tree-0263c3b1be86
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- Oliver Steffen <osteffen@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Luigi Leonardi <leonardi@redhat.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=I4VVgtgg c=1 sm=1 tr=0 ts=6a3ce093 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=ID6ng7r3AAAA:8 a=d17XFfZyTC1U6MJi_PwA:9 a=CjuIK1q_8ugA:10
+ a=AkheI1RvQwOzcTXhi5f4:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDA2NiBTYWx0ZWRfX70cxWOEAXkwb
+ MXW417G8Eh/CRFb7Xp99gcdk1LDPDjc8Ik5DIRoHPD3bNnfbJ65Rwo6x5Bm9LZ88oVqeZSdzccO
+ lbjbf3WfKkUCvnLz4n8ioYLk932u66+QvFlMWtrqz9tLWlKvPSphAf1W/1KSBBFlHtw5mIXdtKQ
+ zefJ2rhfDeAecR+kKUn4VgeFRuGeWb+PKfXpqYe4NK3p+oF7rG4m+XqSvhzFQqPCzM4v55eWXTO
+ 2bUhKB2aBEoibKMI/M7wK8bhSuR6vF6afBGZFbFjppAnPiOy7KV7u+CbAFMMePkKXK1zJifT4n7
+ u7OKNGX5bAjptdDlmW0n86ODVtEreA7WoQosqbWQ8Z4P7uqvURx1A++kLshfn2pZZdstsGeqXvQ
+ eg9SJCSVgMoxqcC+GuROQKCAfN6tFXhZbdqQG3Jzx46SIEdSTwUHywTANXQRiUqDY+XvPeN+7L4
+ PRIV/H+jsZSXhBea86Q==
+X-Proofpoint-GUID: NjtrDFiYsxH9hBndFZuRtJaG61xuIkqF
+X-Proofpoint-ORIG-GUID: d4XiJ8fxdDnmkkmH4Wwg6Op_6kMixptP
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDA2NiBTYWx0ZWRfX0nDmyfI6UQlV
+ X64Hm53fHD3yjfMp+eUTBnSTz5KtCb5rki3sBW7DVBFOEU2OQXy+c9L+RNBgLpTcBRJ0YHVvJfP
+ Cy07UBOV2TLK8+8+4tcfVySZivc66Fo=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-25_01,2026-06-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 impostorscore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 priorityscore=1501
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606250066
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,55 +127,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This device tree will be consumed by Coconut SVSM with the upcoming device
-tree support [1]. This will allow SVSM to run on a normal CPU
-(not AMD SEV-SNP) and execute all its tests using upstream QEMU.
+On 26/06/17 04:50AM, Saif Abrar wrote:
+> Hello,
+> This patchset resolves the review comments for v4:
+> https://lore.kernel.org/qemu-devel/20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com/
+> 
+> Thanks to all the reviewers for their efforts.
+> 
+> Major updates include the following:
+> - Rename to phb5.
+> - New file for common definitions used in tests/qtest/pnv-* files.
+> - Initializing PnvPHB4Class members within class_init method.
+> - Updated IODA3 PCT table max size to 128, each with 2 entries.
+> - Multiple general cleanups.
+> 
+> Tested with 'make check-qtest' , 'make check-functional-ppc64' and 'make check'.
 
-Eventually edk2 will also be able to consume DT via IGVM, but the work
-has not started yet.
+Please don't keep Rbs of people unless explicitly given by them, see:
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html#proper-use-of-reviewed-by-tags-can-aid-review
 
-In this v5, I'm adding a patch that simplifies meson logic. Adding it
-here to avoid conflicts with patch 2, that needs to modify the same line.
+Generally two things:
+1. Rbs are explicitly given (replied to your patch) by person reviewing
+it. If they reply with Rb on your cover letter, saying it's for the
+whole series, that Rb can be kept on all patches in the series
+2. If you feel your patch has significant changes, generally Rbs are to
+be removed. Reviewers will be happy to send the Rbs again. I will let
+other reviewers respond if they disagree.
 
-[1] https://github.com/coconut-svsm/svsm/pull/1006
+As suggested by Harsh, would be good to rebase it on top of PHB5 patch
+from jishnu, will help keep PHB5 (P10) and PHB4 (P9) separate.
 
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
----
-Changes in v5:
-- Added a patch, suggested by Paolo, to simplify current igvm meson config
-- Added missing fdt dependency for igvm in meson.
-- Link to v4: https://lore.kernel.org/qemu-devel/20260615-microvm_device_tree-v4-1-128a59fd2f78@redhat.com
+Will be going through the patches.
 
-Changes in v4:
-- Using g_memdup2 [Stefano]
-- madt directive is now protected by CONFIG_FDT [Stefano]
-- Link to v3: https://lore.kernel.org/qemu-devel/20260611-microvm_device_tree-v3-1-dfb9cf0000b8@redhat.com
-
-Changes in v3:
-- Device tree is packed in igvm core code. [Gerd]
-- Dropped microvm patch.
-- Link to v2: https://lore.kernel.org/qemu-devel/20260610-microvm_device_tree-v2-0-4fb44730c49f@redhat.com
-
-Changes in v2:
-- First patch introduced a shadowed variable, fixed.
-- When parameter area is not found return -1.
-- Moved `qigvm_directive_device_tree` to backends/igvm.c
-- Link to v1: https://lore.kernel.org/qemu-devel/20260608-microvm_device_tree-v1-0-730874ad0008@redhat.com
-
----
-Luigi Leonardi (2):
-      igvm: use idiomatic meson conditional for IGVM build files
-      igvm: add device tree parameter support
-
- backends/igvm.c      | 55 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- backends/meson.build |  7 ++-----
- 2 files changed, 57 insertions(+), 5 deletions(-)
----
-base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
-change-id: 20260608-microvm_device_tree-0263c3b1be86
-
-Best regards,
--- 
-Luigi Leonardi <leonardi@redhat.com>
+Thanks,
+- Aditya G
 
 
