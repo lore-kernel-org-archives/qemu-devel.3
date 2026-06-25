@@ -4,130 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEED7CDB479
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 10:33:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 087EBCDB479
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 10:37:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wchOV-0002CF-EI; Thu, 25 Jun 2026 06:33:15 -0400
+	id 1wchSH-0003Ky-Iv; Thu, 25 Jun 2026 06:37:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wchOQ-00024y-1d
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 06:33:11 -0400
+ id 1wchSF-0003KT-GA
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 06:37:07 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wchOO-00040M-Bw
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 06:33:09 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1wchSD-00057q-Ll
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 06:37:07 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65P9juCG1723061
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 10:33:05 GMT
+ 65P9jsA82009320
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 10:37:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- BwonDuDvUTqzbD2hzdFQS/YLiP+C8wMvWlHld2exySw=; b=Sf4s0AoVfn42CpQf
- AAElrPkejsdvWM+X6i5Kp21ApW8s0aFBf6IQpzjPDPcy0Rier+wSTGmb4m4YDvb+
- 4WrJZjdfPD8pO7/BYgDsH5+EChg79Wq/LvcuwlD87b1vnPWA8kJOvq7/yPQj6IJz
- 2Vwo75lSLVPe7+H1xD8jtAlelRxGs2SCKS7qd4b3d+e/ogaqMi+RtgIfWOXs9GD/
- 65s51ygp6g4S+RdOvIvjlJwwZbJj1OOkDxaOy4fwtyjP6MpXwU//6gyVaKUPRKcC
- 66e0SzBYDSw2tnXE0RY4Z69cru2qjfUQYZhSgDJZTYxFjFjm0N8wyu/iHyd0mF2t
- /dY/Rw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0j7duv5p-1
+ MZUMH+vxSZcEObYxO4IpOT2cwzk2xrnGaFHrz5b8v60=; b=BzpQRSXkeLQMZrci
+ 3zfkpUZ08awnUtU2vKHCBR89XvqSK+DVYlwsjM73GFvNRiksWTzkeIErhub5Pcnf
+ Sf5ud5i2kPJxcYQXD33oIrBKW93Q8+AjpA8wvuqr3GLeBhmT/VwAxRLp/RZjSWHD
+ MJDqAIaRfJCvJ/FtT/YkOBovn2ZnWmICMgQ9bzyTXnyKW8K3kzxwGvcUs8zYmvB4
+ a/O4WdBSTv/zs96ezJTXr5/aStuDtGRmqS3LqooyEFTqW64z4rYVHMhweZWXPgWK
+ E8E4pRM/XLtkbl6XrYqXqZEJB/4e+IsvOLS5SgZPUA0/YaLUko6fXyTJGO7BNDuj
+ ktUc1Q==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0uhmhs63-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 10:33:04 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-91931144870so394304785a.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 03:33:04 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 10:37:03 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8de60a7a813so51449206d6.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 03:37:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782383584; x=1782988384; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1782383823; x=1782988623; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=BwonDuDvUTqzbD2hzdFQS/YLiP+C8wMvWlHld2exySw=;
- b=e0WCHjn1AGzNNoZ2S2sADPCvocQXG1TlqmFStsczXWkKLilqQDf+M8vWsrLYn4TyAQ
- DdQvcrhlmr7uB7l6FMpgg7aCPES0pvXLD8oiCFcl5IfezrU24ImoKw/yBM7QjUFh+D8B
- 2xk3MhIP4kQAsPgYbCPo4m5wtPi4KRiKL/lh2MmnJ6y3ilmaKdkuzPpLBA9thp6JYpA8
- hjqlhu9Wv4B6ibCqULDwspSqVmqW8w+Nz5PF2sHMgI3OtAk+6Is47OPrcmMfxLBSJHfX
- qn0rCJwJ63fMAzZau6xCBDbMmDv6lxPIam3REYgiXAiBrlDWaSjbhVUAVTPDpczpzxYc
- OvYA==
+ bh=MZUMH+vxSZcEObYxO4IpOT2cwzk2xrnGaFHrz5b8v60=;
+ b=HcDom7jBkAbsPOclqJIRHSQXnRkPx4/7wLck8NuaDyzFs7whfFNpnFyEaqRVRIoHkE
+ HoMVBFA4C43fqksu8hz8bUKj4xXur6tC7DwMaHUGCezBqIFeGI1rWA8K4VuYAUOmIkUu
+ WyTrYDzrPva68Dqux39AovleL5cvwdJgXFyz5LEPZthgN+oELKXlssWFE6Q8ZyPNTGa1
+ hi0RRrZaR3rES00/jU4G8yOVcyaetrrjvMPSneLTzz2vmoAwEM1TueAJFPTcULXNl8h3
+ 7GVUykyfuR/CaT6c3po17UFuloa2uoBeaRbcLsaY4GG7ZIYVaqQBTjHpiqwbEdGieDgZ
+ 6zLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782383584; x=1782988384;
+ d=1e100.net; s=20251104; t=1782383823; x=1782988623;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=BwonDuDvUTqzbD2hzdFQS/YLiP+C8wMvWlHld2exySw=;
- b=N+C6Yw2pAdtO558JQh7uA8O4EaFybtEkUyFV7bnFWznbzs68wIJfbJNhC98AR2qA7K
- Gtpx0OKgNZcAhz3xNCqyOx1g/YLEq4hP6KXjRxnlP6HWlkBCsldIopxxgXaLJKVma+Gq
- hmJIG6WaZ9ekenh76yKPwsp3TQ4RUJGTHxfYXfnv57+8RVqBVW91wBT7Nwv8x2CbTfv3
- +EHVH5yDuSSqqzLPwHMQzAMw89RK4J/q2J4/Lvv8iZWEXFWI8WD94PUXpDfdNe6IbsoX
- UmpYDYgylKnUwg8R52txPlL5ltQ3gFqdaziO+Fi1QV38SLtMZmC6PrlBIHEiH2evrE+a
- powg==
+ bh=MZUMH+vxSZcEObYxO4IpOT2cwzk2xrnGaFHrz5b8v60=;
+ b=UpkU3SG0KGOAgVDgBHEsxa0MBqrqo2aGBGJkB4EtGv7pl2mCm/AJ9zWR8CpwdvxVwt
+ VNE3+e5n2N+1pE8C3bSIuT43A3enUs1S67QsBNr+HNLbCXEIC9/gbgrM3nth2rgnqo19
+ cG19/s2I3K5Y/MfddqkCMqBDZQHZdFxsm4Tb5WAr64TDFE86ODIi89gWkg2arAgJHmlk
+ tzhFpAUhZL1yN9aQx2ryZdwUtHRBDMdikim8kNoJDwmai+cBKrMd9z12kBiszuEFkVAQ
+ /DS3t0OZHPwF7FO90xLL3vYawx8Vww2qziYZeXWO4h0TYT9XAmfDpxMDL+/gW6H8rk1r
+ 1RMQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9ilgFVxXeVxqUPaBREgSYhd4syXMnXkL0fy9vzaoxQcwUVG4Qy5l34kjOXRB8ASx9V86Zkn9Dik5CM@nongnu.org
-X-Gm-Message-State: AOJu0Yw/LaVGQyfLMGxRf+dqk7NnR6nifQbw3iohuANmDeurN/F2Gzxp
- 0LkjU+jy3ooc+TnsR3RxGSEHcXi9nn8ycpKYgrY4svuWegwMQ2fnBFPU1bCepgiA/f9gwfwY/IM
- 6zOMxRIoMiv1ntWsdmIQBevWPMBODMOBIc8NdY4Ag5prPSZ5kB8UPFRftiw==
-X-Gm-Gg: AfdE7clt3LUnrIXJjMr17vYKU7mRgSLI5OSDrm/a+dgCs8N7i2iPbHoyfmgeHfBjgL0
- XF3sk97EHsMu6v5aK+WGQlo1X1gPoKjCJR1FwE3YfyvsM9t6L9NBeA1x1O9HeeR89hngUv1KXR8
- LRZt1sH/fcdJ7Y494T6q/8Eld23dhzKaQvpz5wYCnCnKEdMWHDWVO3ZoKlzpi8FArXOAU//xD07
- lWEMRemAwIp/v9lHfhbjzw0mFFUjUBNpNrC/HyOBma4I3Hj7FE0Z9xBh0Ov/H53Tajw0IDFKUp6
- bDtEeJ9gioj2ipivx6rHgsjuVEoNDjkmuRUjQaClMPp9Iv5PI9BYUjMz3XycoH+y8mkJMn8euEH
- HZ2tLhDbfk0pZaq8ERpqPHsVPyw0OWNln1+vfgYiIMKuai6SFrofqnl6sKraBmQ==
-X-Received: by 2002:a05:620a:84ca:b0:915:a953:4b93 with SMTP id
- af79cd13be357-9293a2cd5f3mr251325385a.3.1782383584300; 
- Thu, 25 Jun 2026 03:33:04 -0700 (PDT)
-X-Received: by 2002:a05:620a:84ca:b0:915:a953:4b93 with SMTP id
- af79cd13be357-9293a2cd5f3mr251319685a.3.1782383583608; 
- Thu, 25 Jun 2026 03:33:03 -0700 (PDT)
+ AFNElJ/snNUyB2JORGmvo4W99T63die2XOeF95GALxXdMtrh8FddvVoS/3soAOXFJfOmjb8clAjxbD37LKW1@nongnu.org
+X-Gm-Message-State: AOJu0Yy518MHCtUStR/yRNR/05UgwI3FUpt9QoNp8PABf9/yq7veVzJk
+ +kBnLEqtxPWGEVE73QgYKOwyvf+4PQzfopqf6X+ZAQizJGrnAHBHk5zRmyid2fAxz+D8QJ6h+AN
+ gOC8/ODsofO+YbS9CLiIK3gVRXe18PrmkQgqDTV1p+l91A2D91r8xEJ3zmA==
+X-Gm-Gg: AfdE7cl2UBNoYTreKNxlabl2atCJiicKuJucdkXqWD8kCrLGu8FfGhMseRMZjtfVYDF
+ lu7VnGTXFrNs84f0WBMyMyXGg17GwpT6bqJ3kFQabQp5/9mrIBBOvVvaqX/omEl3YUHhNi7gmj3
+ ryLqnWAIyaXqG2JA02F7AvqLfGem108otgciEYbweKR/nFxq05s1uwkeNDK3WC+nKTRzuDZG9RW
+ xsIFXx5+GWOGP0e+ko59ltsqHs8/J6ujbf9Z7W2rv5J+ic+PhE/5rkUgapU/JH5CCPniTo/Vg7J
+ 1NwuHh83pq4wFLBwg7sTJFMqbn+9kINbetLcT4pdpzF+mkDTgzOMyc2HlM4B3tbO7UveYAm/bIv
+ A/D/hX9t/etqestgtofgih3kdTPclfK9L/KFQLTxi6kb9g0i1btDNpkHN5GifIA==
+X-Received: by 2002:a05:620a:46a0:b0:914:7e9a:2716 with SMTP id
+ af79cd13be357-9293c506503mr270635285a.38.1782383823310; 
+ Thu, 25 Jun 2026 03:37:03 -0700 (PDT)
+X-Received: by 2002:a05:620a:46a0:b0:914:7e9a:2716 with SMTP id
+ af79cd13be357-9293c506503mr270631085a.38.1782383822848; 
+ Thu, 25 Jun 2026 03:37:02 -0700 (PDT)
 Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c1ee01c3bsm15735187f8f.10.2026.06.25.03.33.02
+ ffacd0b85a97d-46c2279b7d7sm14073249f8f.31.2026.06.25.03.37.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Jun 2026 03:33:02 -0700 (PDT)
-Message-ID: <a24e7a14-c37a-4d6f-93e1-6af3ba07fb25@oss.qualcomm.com>
-Date: Thu, 25 Jun 2026 12:33:01 +0200
+ Thu, 25 Jun 2026 03:37:02 -0700 (PDT)
+Message-ID: <e217579b-50be-431d-8703-a19b3058f90b@oss.qualcomm.com>
+Date: Thu, 25 Jun 2026 12:37:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] vfio/pci: Propagate errors in vfio_pci_load_rom()
- using Error API
+Subject: Re: [PATCH v8 01/18] target/s390x: Fix wrong address handling in
+ address loops
 Content-Language: en-US
-To: Mario Casquero <mcasquer@redhat.com>, qemu-devel@nongnu.org
-Cc: clg@redhat.com, alex@shazbot.org, philmd@mailo.com
-References: <20260625094307.148542-1-mcasquer@redhat.com>
+To: freude@linux.ibm.com
+Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ thuth@redhat.com, berrange@redhat.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, linux390-list@tuxmaker.boeblingen.de.ibm.com,
+ linux-s390@vger.kernel.org, dengler@linux.ibm.com,
+ borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
+References: <20260624081029.23815-1-freude@linux.ibm.com>
+ <20260624081029.23815-2-freude@linux.ibm.com>
+ <29ecbee8-2452-47cc-89cb-7d7a26abb685@oss.qualcomm.com>
+ <1fdb2816ac1592b4d08bc0060927bfeb@linux.ibm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260625094307.148542-1-mcasquer@redhat.com>
+In-Reply-To: <1fdb2816ac1592b4d08bc0060927bfeb@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 9CK59bEd6suNxXsWrOUJkOa9DMlZMVGO
-X-Authority-Analysis: v=2.4 cv=NvHhtcdJ c=1 sm=1 tr=0 ts=6a3d03e0 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Authority-Analysis: v=2.4 cv=cqerVV4i c=1 sm=1 tr=0 ts=6a3d04cf cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=JgGFZziSFi4rzet4RtMA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDA5MCBTYWx0ZWRfX3BJLHGxwkkrr
- 9rI7UxRFyNOv+7dvh5KzN/UsD5k/Eitj5M46aIiVcxhHT9TigFSMHQFBLCLiylNH9+GcXJaHaL+
- +jkhSoVc2aMYnkzTSoZlXcbknfbnzkg=
-X-Proofpoint-ORIG-GUID: 9CK59bEd6suNxXsWrOUJkOa9DMlZMVGO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDA5MCBTYWx0ZWRfX2IBBWjDbXxAq
- q9G26KNQMtEiThXcAVjROcoFaCo2KtWzSGLeap8zJ1L3arg031/vNDR8DGZkiOSvDP0lsqMif1W
- ODjY4sMPweXClxzomGY9mbULcTzv+CzzM8eMBfCo5ShKpz6sDCE59XigxWfD3QLV5qgoALzb0ta
- FRZoEsQMt6/nxai4llKVS5IXUX9zTi2tvmfdsaKtHkcCWIWsyoS2NXyICLvsTHDKawJKg1Q83yC
- EsxpdRKl7rrShRBhf8XjGrz49a8r/YzCCxJKi/NP1LUAkXqOU9gN6qh6zualmY3O4XcFdsYv3Xp
- 2W6oCbCo74PynQP3SZ/l5HYaf4RKpJd8gKFNIAA497AND3Iw3o7MShmiq8AIpNG25Z/wmje8GTV
- wUeU9N4BP7ajJmO1a0cZLlfx7oGJ8LtQgc7uvnipDA5Ao0IqgzPTyrhkdq1g+9oHFi1HB+FMrru
- zV5a3P9VUM9RVKfDeZQ==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=VnNF1IyMAAAA:8 a=yFRDIQdNgmOVVyJK8FYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDA5MCBTYWx0ZWRfX2AqLvPXl3ehk
+ o0L+a8r1k9nYRPBda7/Xgf3s2wZId2d8IflE1MQldeJIVWEi8VmAKw5rkYDcLL8r7Sn6A4Qbb2x
+ /WaNaYKgzajnFXHa3XXV3abvaVfqm+MeF0Is1IlzwhRPaBuJmPCRGnb6lrbuDQPWfL1vJshbn1Y
+ kn035ztxnRMQq3zmgrsOMnmDa4jcULWNmqy+o8iX2KaRZz19FKnLhCLdT7WeMRfBf3HvjH1SQuZ
+ vl2sBxhA/+g4ZsixuTuB8lNI5wgIpEQWWI8NPYCXNBk125J1G1/fDWFw661ThvuAy4l0/UAyQdS
+ H8GjeLXMhuEtq5FZLDG7G81sHqo5Bm4mdywsqzig9PUBmop3nLadMdWPuRmlhHrNhDNgY0OHL1R
+ zXvNLsjxKuLvKbcoDFipqdTfgYyyN8riEdxEDNURIL98snTlzpoUvUmMR6KwYW7rFSZId00lzHp
+ 5T8jm0qTVv02ReIi43A==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDA5MCBTYWx0ZWRfX/f/nHRs0+kMw
+ XzbAt5kHOJDoIVYzVkLW2prFpblmwVbCSDc60vFvialGTOxwglzMNQKD551129NTQQ70d60Tyrv
+ GC+5Wvlvh6mT+Ui9xg3qfrJJpJa2ErI=
+X-Proofpoint-GUID: GoXlTgm6i8NkfK1dfVVOtQlD8tFRg_TX
+X-Proofpoint-ORIG-GUID: GoXlTgm6i8NkfK1dfVVOtQlD8tFRg_TX
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-25_01,2026-06-24_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 suspectscore=0 adultscore=0 impostorscore=0
- phishscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0
+ lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0 priorityscore=1501
+ malwarescore=0 suspectscore=0 impostorscore=0 spamscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606250090
 Received-SPF: pass client-ip=205.220.180.131;
@@ -154,92 +161,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/6/26 11:43, Mario Casquero wrote:
-> Updates vfio_pci_load_rom() to use Error API for error propagation
-> instead of error_report(), improving error handling consistency.
+On 25/6/26 09:31, Harald Freudenberger wrote:
+> On 2026-06-24 12:05, Philippe Mathieu-Daudé wrote:
+>> Hi Harald,
+>>
+>> On 24/6/26 10:09, Harald Freudenberger wrote:
+>>> With the introduction of the address wrapping function
+>>> wrap_address() the result can't be used to walk the
+>>> source address any more. So introduce a new local variable
+>>> to hold the wrapped address to avoid mixing source and
+>>> wrapped address value.
+>>>
+>>> Fixes: fcc2699d41 ("target/s390x: Have MSA helper pass a mmu_idx 
+>>> argument")
+>>
+>> This commit merely added an argument. I suppose you meant
+>> 9f17bfdab42 ("target/s390x: support SHA-512 extensions").
+>>
 > 
-> Signed-off-by: Mario Casquero <mcasquer@redhat.com>
-> ---
-> v4:
->    - Use error_append_hint() instead of error_printf()
->    - Reset rom_size and rom_offset to 0 in the error case
->    - Update error message to "Device ROM size is zero", different from read errors
-> v3:
->    - Use error_setg_errno() instead of error_setg() with strerror()
->    - Reset rom_size and rom_offset to 0 when freeing rom on error
->    - Use local_err with error_report_err() instead of passing NULL errp
+> No. Commit fcc2699d41 ("target/s390x: Have MSA helper pass a mmu_idx 
+> argument")
+> introduces the mmu_idx with the wrap_address() function or macro.
+
+You are saying the same, not really explaining, I'm not following...
+
+> And the result was something like this:
 > 
->   hw/vfio/pci.c | 32 +++++++++++++++++++++-----------
->   1 file changed, 21 insertions(+), 11 deletions(-)
+>    for (int i = 0; i < 8; i++, addr += 8) {
+>      addr = wrap_address(env, addr);
+>      a[i] = cpu_ldq_mmu(env, addr, oi, ra);
+>    }
 > 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 9df04fa2d7..61b4a6a5a3 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -1027,7 +1027,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
->       }
->   }
->   
-> -static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
-> +static bool vfio_pci_load_rom(VFIOPCIDevice *vdev, Error **errp)
->   {
->       VFIODevice *vbasedev = &vdev->vbasedev;
->       struct vfio_region_info *reg_info = NULL;
-> @@ -1040,7 +1040,7 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
->                                         &reg_info);
->   
->       if (ret != 0) {
-> -        error_report("vfio: Error getting ROM info: %s", strerror(-ret));
-> +        error_setg_errno(errp, -ret, "vfio: Error getting ROM info");
->           return false;
->       }
->   
-> @@ -1052,10 +1052,13 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
->       vdev->rom_offset = reg_info->offset;
->   
->       if (!vdev->rom_size) {
-> -        error_report("vfio-pci: Cannot read device rom at %s", vbasedev->name);
-> -        error_printf("Device option ROM contents are probably invalid "
-> -                    "(check dmesg).\nSkip option ROM probe with rombar=0, "
-> -                    "or load from file with romfile=\n");
-> +        vdev->rom_size = 0;
-> +        vdev->rom_offset = 0;
-
-Alternatively use reg_info->size & reg_info->offset in place,
-and set vdev->rom_size & vdev->rom_offset once at the end [*]
-of the function when we know no error is pending. Being at v4
-could mean this function is doing too many things and should be
-split.
-
-> +        error_setg(errp, "vfio-pci: Device ROM size is zero at %s",
-> +                   vbasedev->name);
-> +        error_append_hint(errp, "Device option ROM contents are probably "
-> +                          "invalid (check dmesg).\nSkip option ROM probe "
-> +                          "with rombar=0, or load from file with romfile=\n");
->           return false;
->       }
->   
-> @@ -1076,10 +1079,12 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
->               if (bytes == -EINTR || bytes == -EAGAIN) {
->                   continue;
->               }
-> -            error_report("vfio: Error reading device ROM: %s",
-> -                         strreaderror(bytes));
-> -
-> -            break;
-> +            error_setg_errno(errp, -bytes, "vfio: Error reading device ROM");
-> +            g_free(vdev->rom);
-> +            vdev->rom = NULL;
-> +            vdev->rom_size = 0;
-> +            vdev->rom_offset = 0;
-> +            return false;
->           }
-
-[*]
-
->       }
-
-Current patch looks good enough, so:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> This code reuses the addr variable in the loop
+> by setting addr to the wrapped address but after
+> that the loop adds +8 to this wrapped address.
+> This code only works as long as the wrapped address
+> is equal to the address put put in.
+> Thus introduce another intermediate variable which
+> holds the wrapped address:
+> 
+>    for (int i = 0; i < 8; i++, addr += 8) {
+>      uint64_t _addr = wrap_address(env, addr);
+>      a[i] = cpu_ldq_mmu(env, _addr, oi, ra);
+>    }
+> 
+> Of course it would also work with a direct replacement:
+> 
+>    for (int i = 0; i < 8; i++, addr += 8) {
+>      a[i] = cpu_ldq_mmu(env, wrap_address(env, addr), oi, ra);
+>    }
+> 
+> but this isn't that readable.
+> 
+>>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+>>> ---
+>>>   target/s390x/tcg/crypto_helper.c | 16 ++++++++--------
+>>>   1 file changed, 8 insertions(+), 8 deletions(-)
+>>>
+>>> diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/ 
+>>> crypto_helper.c
+>>> index ae392bce0e..29ad2aff43 100644
+>>> --- a/target/s390x/tcg/crypto_helper.c
+>>> +++ b/target/s390x/tcg/crypto_helper.c
+>>> @@ -126,8 +126,8 @@ static void sha512_read_icv(CPUS390XState *env, 
+>>> const int mmu_idx,
+>>>       const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, 
+>>> mmu_idx);
+>>>         for (int i = 0; i < 8; i++, addr += 8) {
+>>> -        addr = wrap_address(env, addr);
+>>> -        a[i] = cpu_ldq_mmu(env, addr, oi, ra);
+>>> +        uint64_t _addr = wrap_address(env, addr);
+>>
+>> s/_addr/wa/ or even directly inline?
+>>
+>>            a[i] = cpu_ldq_mmu(env, wrap_address(env, addr), oi, ra);
+>>
+>>> +        a[i] = cpu_ldq_mmu(env, _addr, oi, ra);
+>>>       }
+>>>   }
+> 
 
 
