@@ -4,110 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F0FECDE000
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 12:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1C74CDE001
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 12:59:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcjVN-0001ts-ID; Thu, 25 Jun 2026 08:48:29 -0400
+	id 1wcjfP-0007Qn-5Y; Thu, 25 Jun 2026 08:58:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wcjVL-0001sP-Vn
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 08:48:27 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wcjVJ-0000ST-BV
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 08:48:27 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-66421007afeso393363d50.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 05:48:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782391704; cv=none;
- d=google.com; s=arc-20260327;
- b=aWvG2lt46cUmc6tU/WmVayMRMxlYSmIUWsm8XlpgMD8kOe4KKPWU7owF6rHLwLy4rO
- RNBt6l7MNm5asmk0pConkM4oay3jxtCxENZEL7YEulYhS2c3gmSSd1NUmu41iL9WSSTZ
- ks162qEFwoBWbRjDUKHgatz3Qzl8c7gskG1ZzE66uNpWN3kLGq5k9Hv1LTouArv2i80d
- fF7GB/lOtpwUWcSe+WykHwWwb4rQNlkJb2OIrbqCaD6MVYg/3zhNjB8RSW60iSTjj9uR
- k3Q0VOnq25UrSenFJLba+gkzgCXksHYb/bftxhwTJfc8Ck/ztpLYtOSy5XQeHoxLjIBY
- Ddxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=2M8Prvp9m3uVSFa8NYFepSbJtbl5vqEVMu3cpQDBjR4=;
- fh=fwToTDh3FCR+4280u2ma+OVkzzhDdisGJFuCLIGUH30=;
- b=iqHmHzTO+Y36GGBwFuGEzSZ/MQ7HWtJnMxLArRZ7d4qpidbmd/Al1wxH5ZcXahF0bM
- Q71INrMgpr0COVsyXkeeByPlAx5NYvBZfpSJcIFzYQfHNkD/9WAdZysgNinDFrTGA8d/
- ++FZ/hGvyTwMkTpAfaOkIzSWjJOf5GnweOP1cj3TUinlFHgSDGgZWWljJ4cn3DtRDJF6
- u04eI4CIWIbHRBPTXxBGLiZNDPFb8/KldM3xNF/KfCxL5gB3C/m0rS3rKan6PRfUUcI9
- FjbTVEvuBdnzTuAZfeMnVsPpahvD6KyDxvUgGTN8WPJNKtlEJHgzk87noObNkd/pvQV0
- 0YzA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wcjfJ-0007QO-OH
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 08:58:46 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wcjfH-0002eJ-5h
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 08:58:44 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65P9jt5a3077514
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 12:58:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ ikbKE+vlbbxpnCSIcd2Fa2ckqoLTv6S/5Hio0SFcqeo=; b=T//u/comf6dw3Gn1
+ dzOwP+nSKrSq5onDFAiRFxZAdT+aY+Q7rR4ief8bCPlu2jpijUak3+eAeVn6m4t4
+ lEb0TXS8YpAVYeID6ltosNhGuAHNLshmEbsPy8zyt0BhV/8AD5sgvfipnLpveyjR
+ 4Ov/7gwPq8KSnJKDH2GSK7oYnPGbbYTY+Q/dfkK/An2KuPUJcMkUQPWDEUwNq/1c
+ yZDjOl7xnQ5vpo0UTxJXpWLP+Xkhd9j/fxKCxOYYsMznX4sqdeK4Om4yThJ+9bZv
+ KQjdd/haeFEh/KfViVwsnAcM0IesDmuTY1shCqKgrumkJiaSpxjHwvHpMYEQion+
+ mG8Czw==
+Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
+ [209.85.160.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0yyns761-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 12:58:39 +0000 (GMT)
+Received: by mail-oa1-f70.google.com with SMTP id
+ 586e51a60fabf-44801afec53so1296386fac.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 05:58:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782391704; x=1782996504; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2M8Prvp9m3uVSFa8NYFepSbJtbl5vqEVMu3cpQDBjR4=;
- b=mPWQlUgAkjFxGFDLC8sN7EnwLyUMpNaqN3HqRpw8yQcxmAfRfEDLxy67GqpEa+ryWO
- EXnc51u0RfzmIGls7LH70ZTrrm1CgrysCEzGLqGiox69ncbllNEJsSe9WPCgdCNhUjaU
- cVL07UZGIDDY4CqodUapdZH2R1DqOPBidq5gjCdhnWEa0Ez3Qvph02ahmfbhh7V5T1aw
- mTVjKGYvms8wUvTz2O/3Z0i/BzPNfiTgqK69kVxs+Of1q1MLNASJgywWMw6eQwtWbHjK
- P09TyhAMoNM3KwlEE4KNcrtv7uvWbf2Nw+H2gSegsvZzsc7HG7Kj9bHdY9Ws1p7Cx65P
- danw==
+ d=oss.qualcomm.com; s=google; t=1782392319; x=1782997119; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ikbKE+vlbbxpnCSIcd2Fa2ckqoLTv6S/5Hio0SFcqeo=;
+ b=EOYwDJyDgU0FytBnLEadAi0QT6jk+ZoQt25eSK0ZRUlT3arE6ekw1CsyfEVT4m5+eB
+ zdGfJbcTsI2oEHv3B9/brujVaQtAvTaLKoJ+YP0vDTnq1kvj4EteNCHZHOxMICUzaAm7
+ xPO5FVaBOx9/Uvjc0LNyMO/g7TxJnzS9Exk0vzcwikKXnZfIaG1GKRUbd0/xB/+fIWX0
+ 65ZM6vL3q81UCWF77v622WGXBWqt+uvQroIL/Ab1DWNeN5r76Zf2t+uHmR1Y6QxAhBRP
+ Bgo6f0AoZFluYit8anYhiJibQkd8mVOQkEoAFhbNbwAZ35qErZZE9mf7oQsuAuBkTrQ9
+ zAow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782391704; x=1782996504;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2M8Prvp9m3uVSFa8NYFepSbJtbl5vqEVMu3cpQDBjR4=;
- b=QvlmcxNCYFUlIlDYIs5cn7XNvb8cJh8oMEA77mgkiuItz86lGQstscn67OeBHCMLe6
- 98MAUELAYmYpvx2elKlMC4X+KRdT9adDfe2dHMUKKYqTLwKI5R1RNDNEfkvNCuZcRxAM
- n0DLLPn+t3kGCiQaOcMCfajwMIgvmpMMI6RSmq02AHoIT43vKuf0c81OQEd2wWXQuT2k
- Mlogt74ZNNJ5+jqjZhruwtAFjN+rNR/IwN3vg5jB+6tqM6hxROtvbBpYLpsoII8eQ/IU
- rvxpD1bnokeH8MzV9o6cH0GGLp/YKCWe6FgVZns8Fn3FSCnWWFj9B7crYTfczplp5+lM
- 3Qvw==
+ d=1e100.net; s=20251104; t=1782392319; x=1782997119;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ikbKE+vlbbxpnCSIcd2Fa2ckqoLTv6S/5Hio0SFcqeo=;
+ b=Qg++1+F+JDbyXDn2Uo/DiHFPCxmXsYy0Cvi0SoDdeZ4Gjh+SIgLS3ckhEV0W/HGm2t
+ CNGN3RAw6XFaw3WsOnNX1khXvQlZeNSArRPi8pndsLptDAJLYXgC5zR/fyAa+11ej354
+ XEth5cx8+JrR1Vx8XFt8LsD3wIQ3Ua7/Zi8/pwOZDJhoZJRi6gCtmBb+/LUR1wep5vi3
+ k4KNUNATz2aZjf1fiWePWla/JDI4FevaJf3Z+QTePCdVz79gkkZqNEMizBKIuF1rigMR
+ OY9X0/lejy6tMyCFc1gERmIn6HQt6/76Y+edqmaAfE7g2nfcZTD55iTqALYgc1JkjXgT
+ zTqQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rp/eFEwe6DQ+m+UNXDVMAK7FBhFcgQ4PVEHyyCJoCR3yoTDx1cf1j6v+lvs8R9lnEQQsdR/JA1nG5ix@nongnu.org
-X-Gm-Message-State: AOJu0YwJMbE/Qv0mnZiBBvvr6Axk2U0NHJMKQwBr5ngutt1qfkOm2/A/
- tpJbiSVJwGohU/aam63Yvh9i6vSZI1a9B+PwF+3Ow96lSQszuUYbpifZbZQOLD/gpVUb4n0Y+LP
- jWKK4KeqRYcn4Dj+HY1qRB8NddDfA9xHOwQl+4halDw==
-X-Gm-Gg: AfdE7ckFZJJUYzM2+6eZ9VHAGfUonKbQzeb40IsJ77aMKLYktCzlNTccpxD/6cvCVEc
- LkMat1fXJz0rq/VXl9fPi/cg7fEICb0tHJUJC8bAihGp7+dkOwhZ/vXtkm23BUSFYXWCr8Hp5lU
- PDJVBt2kVWgh8liC70aC1YNPn6LPYpf0s4bjgRKwfLfAd/Vl8/Qyy8kyyXVTeKPv8hUsTs1+RcD
- Mh9RpHn2yAqTglSVPlAqlMbl9e2pF2gLQwk1u67L0OVpTUZ7fLEVYhGsaoyqEI4HaZAP3A38ajJ
- OfW//SDZAuiKbwd5idPbMfyocGg9lUx15B1Pgl6kE5mwvHWo1oLjN48J
-X-Received: by 2002:a05:690e:1343:b0:660:5ce2:58e6 with SMTP id
- 956f58d0204a3-66487da95b9mr1771538d50.21.1782391703646; Thu, 25 Jun 2026
- 05:48:23 -0700 (PDT)
+ AFNElJ+ygEJWzYoezvlKBKU2T9H8JNxyr1mVBW2040MrAzdXtFJ7Z9hjIrCw/CpiR2NpvkilyWEG4I24z3D7@nongnu.org
+X-Gm-Message-State: AOJu0Yy8idh47Z0xcU5xNlfMvZgF3LRDQ2JlPlLLbQC6ulXWOiuUzqNj
+ Lz5e71nzxYpqcnO0gPMREvZTbTisOrcHV9ek8nU/r33tSX3/G78qNO2yw/u8JrXCTy9aqH3z8QG
+ 5pVgauWEUmD0PTZg3ZPv/768Kq58rc/7z81P3gHDzOmfKGNkV7bbUclrgiw==
+X-Gm-Gg: AfdE7cndaj+1lts5sFwvNuqfxR3DPOF2zsE6s9Bfh2EgQjV3/Im0Z/Z5j334eVDH7kL
+ vn3BpmBLoknlr7ZiunZLdBYUTE04F6/NPmSOASD77H0pblnudRce1U5GOBlo9+qY0Ea+hgALeNX
+ otfPXF2aFHSE1zRbuqXUBe3tbFebhI5FwvydKJuPiL2I6C55Vpzdmeh97c/aPqRWu/OY6c/zTtm
+ 8oRiukcDl/ga+W8vkEPgfH61BKnv6mFKcppR7SVybzJB9R++AxTkBEpMESt8MlzXLHscVTQxlaU
+ SYbNrUtG7NxIVxblbYDZaeljKu8CkWYFlWDAbGQVlUlMAKIgZ2nq8cBIPP+7EwlI13Mx/LanYad
+ 3bBOIKtyqha07bsuWtewDZHO2MJGTro3FCkCkyfLo+1Et7Mh/0H/SLW+hjRsIVTsjopjggS0KH8
+ zDY/w=
+X-Received: by 2002:a05:6870:d415:b0:423:9219:4c6 with SMTP id
+ 586e51a60fabf-448119ab40bmr2042209fac.13.1782392318941; 
+ Thu, 25 Jun 2026 05:58:38 -0700 (PDT)
+X-Received: by 2002:a05:6870:d415:b0:423:9219:4c6 with SMTP id
+ 586e51a60fabf-448119ab40bmr2042189fac.13.1782392318543; 
+ Thu, 25 Jun 2026 05:58:38 -0700 (PDT)
+Received: from ?IPV6:2804:7f0:bcc2:6962:5520:30ca:9e66:df39?
+ ([2804:7f0:bcc2:6962:5520:30ca:9e66:df39])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-4472eccfa68sm11665147fac.5.2026.06.25.05.58.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Jun 2026 05:58:38 -0700 (PDT)
+Message-ID: <644195e9-ad3e-4f68-af43-0fb98668ac59@oss.qualcomm.com>
+Date: Thu, 25 Jun 2026 09:58:33 -0300
 MIME-Version: 1.0
-References: <20260616052552.389021-1-gshan@redhat.com>
- <20260616052552.389021-2-gshan@redhat.com>
- <CAFEAcA-mf14=jpRFHarAbN6AbQwvW=Yu6WB1JiNMsECEdaxD3A@mail.gmail.com>
- <20260625070551-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260625070551-mutt-send-email-mst@kernel.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 25 Jun 2026 13:48:11 +0100
-X-Gm-Features: AVVi8CeCovs8jAjvqsIXu3fx-PR-A4o2gQNd6t3Lr2Uz3uu4t4hZRrtwTkB5EkQ
-Message-ID: <CAFEAcA8YJZq9TqrUd0zTnewAdVDm5y6UV7BJQZ0C60TZ=RT98Q@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
- device region accessors
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- peterx@redhat.com, alex@shazbot.org, richard.henderson@linaro.org, 
- berrange@redhat.com, philmd@oss.qualcomm.com, philmd@mailo.com, 
- david@kernel.org, clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com, 
- jugraham@redhat.com, liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn, 
- shan.gavin@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] target/riscv: Apply UXL WARL handling to vsstatus
+To: SeungJu Cheon <suunj1331@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com
+References: <20260625081521.595683-1-suunj1331@gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260625081521.595683-1-suunj1331@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDExMSBTYWx0ZWRfXwEJByeQxE+hS
+ men9QA65PJBx+u8A/pwJS5I2zBEmDQgjVurRZhooyH5LjotJk995hstY6JSBBdplQ53JMTdZr0D
+ CTOCUJoG+x6IHVqvKyg7723Cqter424vmm1dgEg7T7ep6h1pBI5A2MoruftuXRtRlePxUju320Z
+ ZxPr/Rzt3uUpwzzdxWqqlyWGoN0oRLU4fiaXVuaA6OrKNM95VYYYZxVoHMK/D7pixF39/MkHQ0k
+ Vxs8iQ+CHP8DobGsEXFR4C85VZURkv4bLkXKQIgf/CNnxD+voPEKrfASnx9lauzV04Rf6hhiBll
+ fzWwHaddG0EWrHEeXBR/S7f9khNeKYBSj13gcThtDv339ETGjR7w+24RxpCQNuM3dLZuBlj4Jt2
+ MZBF+d16BuACdnqpjDykZuta6dihEZtoTvnWWAZbMVlU2swjZ1s+EDI6FhgxOq/LBq7qBMtv4WI
+ OxIA9Z9kWBObUNAaNoA==
+X-Authority-Analysis: v=2.4 cv=aoyCzyZV c=1 sm=1 tr=0 ts=6a3d25ff cx=c_pps
+ a=nSjmGuzVYOmhOUYzIAhsAg==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
+ a=pGLkceISAAAA:8 a=Eyf7DqpKdIDjvx2et8kA:9 a=QEXdDO2ut3YA:10
+ a=1zu1i0D7hVQfj8NKfPKu:22
+X-Proofpoint-ORIG-GUID: IgRFemq30eYICubO-HMg2okiWKAQ9l9h
+X-Proofpoint-GUID: IgRFemq30eYICubO-HMg2okiWKAQ9l9h
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDExMSBTYWx0ZWRfXzsiasDM9Y45G
+ Mu4jIWR+03gyClOd6r/EcmCzN9yFaSZnFYjXuvvRRLoERyw+FzgKNtUNYzxdWfd+esvrPiWjliX
+ 1rhXQYvvu/LTgQ2FaRY32ASJxn5fYWM=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-25_01,2026-06-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 suspectscore=0 spamscore=0 priorityscore=1501
+ clxscore=1015 adultscore=0 malwarescore=0 phishscore=0 bulkscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606250111
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,39 +158,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 25 Jun 2026 at 12:07, Michael S. Tsirkin <mst@redhat.com> wrote:
->
-> On Thu, Jun 25, 2026 at 11:09:26AM +0100, Peter Maydell wrote:
-> > This is still wrong. We should not have "x86 magically works
-> > and all other hosts do something different" ifdefs. Define what
-> > semantics you need and then we can figure out how to
-> > implement them.
-> >
-> > My current thought is that we need to handle accesses of
-> > 1, 2, 4 and 8 bytes that are naturally aligned by ensuring that we
-> > do exactly one host load/store of that type, and that anything else
-> > is "the guest isn't relying on specific semantics here, we can just
-> > assume it's plain old RAM and do whatever". That would not
-> > require any architecture specific ifdefs.
 
-> Well. X86 is special, as usual. It allows unaligned mmio so
-> we really have no way to know an x86 guest does not intend
-> just that. That can only be emulated perfectly on x86
-> which is sad but I see no reason to actively break it.
 
-What actual hardware will rely on unaligned accesses
-appearing to it as single unaligned accesses?
+On 6/25/2026 5:15 AM, SeungJu Cheon wrote:
+> write_mstatus() already handles the reserved UXL value by writing a
+> legal value instead.
+> 
+> Apply the same handling when writing vsstatus so that reserved UXL
+> values follow the same WARL behavior.
+> 
+> Factor the common logic into a local helper riscv_write_uxl() and use
+> it for both mstatus and vsstatus.
+> 
+> Suggested-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Fixes: f310df58bd2 ("target/riscv: Enable uxl field write")
+> Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
+> ---
 
-And if we do need this, we need to specify:
-- what are the semantics we need to provide?
-- what is the use case that relies on these?
-Then we can see how closely we can match that.
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-There's a lot of extra complexity added in here for
-something it I don't think is ever going to matter,
-and having the most common host architecture take a
-totally different codepath from everything else is
-a recipe for that other codepath breaking.
+>   target/riscv/csr.c | 27 +++++++++++++++++----------
+>   1 file changed, 17 insertions(+), 10 deletions(-)
+> 
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index dd9726fcf4..12f1ce5180 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -2012,6 +2012,20 @@ static target_ulong legalize_mpp(CPURISCVState *env, target_ulong old_mpp,
+>       return val;
+>   }
+>   
+> +static uint64_t riscv_write_uxl(CPURISCVState *env, uint64_t val,
+> +                                uint64_t field)
+> +{
+> +    RISCVMXL xl = riscv_cpu_mxl(env);
+> +    uint64_t uxl = get_field(val, field);
+> +
+> +    if (uxl == MXL_RV128) {
+> +        uxl = xl == MXL_RV128 ? MXL_RV64 : xl;
+> +        val = set_field(val, field, uxl);
+> +    }
+> +
+> +    return val;
+> +}
+> +
+>   static RISCVException write_mstatus(CPURISCVState *env, int csrno,
+>                                       target_ulong val, uintptr_t ra)
+>   {
+> @@ -2058,17 +2072,8 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
+>   
+>       if (xl != MXL_RV32 || env->debugger) {
+>           if ((val & MSTATUS64_UXL) != 0) {
+> -            uint64_t uxl = val & MSTATUS64_UXL >> 32;
+>               mask |= MSTATUS64_UXL;
+> -
+> -            /*
+> -             * uxl = 3 is reserved so write the current xl instead.
+> -             * In case xl = MXL_RV128 (3) write MXL_RV64.
+> -             */
+> -            if (uxl == 3) {
+> -                uxl = xl == MXL_RV128 ? MXL_RV64 : xl;
+> -                val = deposit64(val, 32, 2, uxl);
+> -            }
+> +            val = riscv_write_uxl(env, val, MSTATUS64_UXL);
+>           }
+>       }
+>   
+> @@ -5226,6 +5231,8 @@ static RISCVException write_vsstatus(CPURISCVState *env, int csrno,
+>       uint64_t mask = (target_ulong)-1;
+>       if ((val & VSSTATUS64_UXL) == 0) {
+>           mask &= ~VSSTATUS64_UXL;
+> +    } else {
+> +        val = riscv_write_uxl(env, val, VSSTATUS64_UXL);
+>       }
+>       if ((env->henvcfg & HENVCFG_DTE)) {
+>           if ((val & SSTATUS_SDT) != 0) {
 
--- PMM
 
