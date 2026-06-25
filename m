@@ -4,73 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C23CBCDB479
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 04:03:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDB58CDB479
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 04:53:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcbIO-0005B5-5Z; Thu, 25 Jun 2026 00:02:32 -0400
+	id 1wcc58-0002fF-KF; Thu, 25 Jun 2026 00:52:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wcbID-0005AE-Pz
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 00:02:22 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wcbI9-0001T5-Lr
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 00:02:20 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8BxDupAqDxqxbEXAA--.60303S3;
- Thu, 25 Jun 2026 12:02:08 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxC8I9qDxqT1yyAA--.10011S3;
- Thu, 25 Jun 2026 12:02:08 +0800 (CST)
-Subject: Re: [PATCH 3/4] target/loongarch/kvm: remove redundant cpucfg failure
- traces
-To: Tao Cui <cui.tao@linux.dev>, qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@mailo.com>,
- Qiang Ma <maqianga@uniontech.com>, Tao Cui <cuitao@kylinos.cn>
-References: <20260625015835.678819-1-cui.tao@linux.dev>
- <20260625015835.678819-4-cui.tao@linux.dev>
- <19b9d5f5-1304-6500-23d5-225f3c021422@loongson.cn>
- <f26f5a87-f60d-4dd7-9e6c-270ea9de7ad4@linux.dev>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <be3f669c-7cbc-19dd-1546-a047a3f2011a@loongson.cn>
-Date: Thu, 25 Jun 2026 11:58:52 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wcc52-0002ey-21
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 00:52:49 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wcc4z-0000Kj-BE
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 00:52:47 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65P4qWg1011845
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 25 Jun 2026 13:52:32 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=tO0jZhoPymB+OU+bpha3nswoqqwV54fKv18oRdnn9jo=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1782363152; v=1;
+ b=ANzLStMlqEQx2ynDWv0AmsJGNmZLC2zszVMcC0Ttn35GCJY/R0vxo8Q4VBmB3mL9
+ I3aIk3MFg15Ua9Oft/h0gRJZq6YENG+K7m/voMDkUBofjPTKPvysXyOoYxElUntG
+ LXdlAPqGw8DRf86P4drsBkzKLj5StvVBwPEeCYYZj5Qk6JkBWmkc9d1Nk744fAO6
+ 79WLLOVwF93bH6aabOfXtHCrdQmnvA5oXzmNFnZn7Ia0NgIatKw5SkmAbt3Vo0j4
+ FE9RxWxpMqb5Ruy8+kBB9V9GQqRcb9I4Lrq1hPZpc5AUE52mwvPU+/heI8t2SfcW
+ 2Dugd22M1gbl/GFimpZcbg==
+Message-ID: <34d263ce-863f-4509-a2a0-55ac1d47da7a@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 25 Jun 2026 13:52:31 +0900
 MIME-Version: 1.0
-In-Reply-To: <f26f5a87-f60d-4dd7-9e6c-270ea9de7ad4@linux.dev>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/net/net_tx_pkt: clamp payload_len to IP header length
+ for padded frames
+To: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>, qemu-devel@nongnu.org
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Jason Wang <jasowang@redhat.com>
+References: <20260624-net-tx-pkt-ip-length-padding-v1-1-7a22fe9b4e40@gmail.com>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxC8I9qDxqT1yyAA--.10011S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxCF4kKr4kKF1fXF4kJFWrJFc_yoW5Kr17pr
- n2yF98KryUArWkJw1qq34DXryUJr17Gw47Z3WxJFyxAr43tr12qF40qrsIgF4rG3ykXas0
- qFW5urZxZFy5X3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Sb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
- 67AKxVWUtVW8ZwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
- 8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
- CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
- 1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
- daVFxhVjvjDU0xZFpf9x07jYSoJUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260624-net-tx-pkt-ip-length-padding-v1-1-7a22fe9b4e40@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,91 +74,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2026/06/25 6:45, Sanjeeva Yerrapureddy wrote:
+> When a guest transmits a short Ethernet frame, iov_size() returns the
+> wire length including any Ethernet padding bytes added to reach the
+> minimum 60-byte frame size.  net_tx_pkt_rebuild_payload() used that
+> inflated size directly as payload_len.  net_tx_pkt_update_ip_hdr_
+> checksum() then rewrites the IP Total Length (IPv4) or Payload Length
+> (IPv6) field using this value, producing a malformed packet on the
+> wire: the receiver interprets Ethernet padding bytes as IP payload.
+> 
+> In practice this breaks protocol stacks that validate IP lengths
+> strictly.  A nested ESXi host running on OpenStack using the e1000e
+> emulation sends short TCP ACK packets in response to a Windows guest's
+> virtio TLS client hello, which get padded to 60 bytes; the inflated IP
+> Total Length corrupts the IP header seen by Windows, causing TLS
+> handshakes and TCP connections to fail.
+> 
+> Fix net_tx_pkt_rebuild_payload() to read the IP header's declared
+> length and clamp payload_len accordingly:
+> 
+>    IPv4: ip_total_len - l3_hdr_len
+>    IPv6: ip6_plen adjusted for parsed extension headers
+> 
+> Guard both paths against malformed guest packets where the header-
+> declared length is shorter than the IP header itself; without the
+> guard the unsigned subtraction would underflow, producing a huge
+> payload_len.  Fall back to the raw iov_size() value in that case.
 
+This breaks net_tx_pkt_get_total_len(), which also uses payload_len and 
+expects pkt->hdr_len + pkt->payload_len produces the size of the entire 
+packet. It is also unclear whether fall back to the raw iov_size() makes 
+sense. I think we need to define what payload_len should represent to 
+figure out a correct solution.
 
-On 2026/6/25 上午11:33, Tao Cui wrote:
-> 
-> 
-> 在 2026/6/25 10:38, Bibo Mao 写道:
->>
->>
->> On 2026/6/25 上午9:58, Tao Cui wrote:
->>> From: Tao Cui <cuitao@kylinos.cn>
->>>
->>> kvm_get_one_reg() and kvm_set_one_reg() already trace on failure, so the
->>> trace_kvm_failed_get_cpucfg()/trace_kvm_failed_put_cpucfg() calls in
->>> kvm_loongarch_get_cpucfg() and kvm_loongarch_put_cpucfg() duplicate that.
->>> Remove the calls and the now-unused trace events.
->>>
->>> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
->>> ---
->>>    target/loongarch/kvm/kvm.c    | 6 ------
->>>    target/loongarch/trace-events | 2 --
->>>    2 files changed, 8 deletions(-)
->>>
->>> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
->>> index fffb2d431a..6c3eea87b0 100644
->>> --- a/target/loongarch/kvm/kvm.c
->>> +++ b/target/loongarch/kvm/kvm.c
->>> @@ -714,9 +714,6 @@ static int kvm_loongarch_get_cpucfg(CPUState *cs)
->>>          for (i = 0; i < 21; i++) {
->>>            ret = kvm_get_one_reg(cs, KVM_IOC_CPUCFG(i), &val);
->>> -        if (ret < 0) {
->>> -            trace_kvm_failed_get_cpucfg(strerror(errno));
->> yeap, the trace is unnecessary, should we return immediately if there is error? otherwise the previous error will be overwritten.
->>
-> 
-> You're right that the per-iteration ret assignmentoverwrites earlier errors. That's addressed in patch 4/4 ("fix cpucfg sync
-> error handling") of this series:
-> 
->      int r = kvm_get_one_reg(cs, KVM_IOC_CPUCFG(i), &val);
->      ret |= r;
->      if (!r) {
->          env->cpucfg[i] = (uint32_t)val;
->      }
-> 
-> I went with ret |= (accumulate) rather than returning immediately, to match
-> the existing kvm_loongarch_get_csr()/put_csr() loops in the same file which
-> also accumulate; it additionally skips storing cpucfg[i] on a failed read.
-> 
-> Happy to switch to an early return if you prefer that style.
-Both are ok for me, no special points here :)
+Regards,
+Akihiko Odaki
 
-Regards
-Bibo Mao
 > 
-> Thanks,
-> Tao
+> Signed-off-by: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
+> ---
+>   hw/net/net_tx_pkt.c | 55 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 54 insertions(+), 1 deletion(-)
 > 
->>
->>> -        }
->>>            env->cpucfg[i] = (uint32_t)val;
->>>        }
->>>        return ret;
->>> @@ -772,9 +769,6 @@ static int kvm_loongarch_put_cpucfg(CPUState *cs)
->>>        }
->>>            val = env->cpucfg[i];
->>>            ret = kvm_set_one_reg(cs, KVM_IOC_CPUCFG(i), &val);
->>> -        if (ret < 0) {
->>> -            trace_kvm_failed_put_cpucfg(strerror(errno));
->>> -        }
->>>        }
->>>        return ret;
->>>    }
->>> diff --git a/target/loongarch/trace-events b/target/loongarch/trace-events
->>> index dea11edc0f..829d8e0f53 100644
->>> --- a/target/loongarch/trace-events
->>> +++ b/target/loongarch/trace-events
->>> @@ -9,7 +9,5 @@ kvm_failed_get_mpstate(const char *msg) "Failed to get mp_state from KVM: %s"
->>>    kvm_failed_put_mpstate(const char *msg) "Failed to put mp_state into KVM: %s"
->>>    kvm_failed_get_counter(const char *msg) "Failed to get counter from KVM: %s"
->>>    kvm_failed_put_counter(const char *msg) "Failed to put counter into KVM: %s"
->>> -kvm_failed_get_cpucfg(const char *msg) "Failed to get cpucfg from KVM: %s"
->>> -kvm_failed_put_cpucfg(const char *msg) "Failed to put cpucfg into KVM: %s"
->>>    kvm_arch_handle_exit(int num) "kvm arch handle exit, the reason number: %d"
->>>    kvm_set_intr(int irq, int level) "kvm set interrupt, irq num: %d, level: %d"
->>>
->>
+> diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
+> index 903238dca2..d3549a4378 100644
+> --- a/hw/net/net_tx_pkt.c
+> +++ b/hw/net/net_tx_pkt.c
+> @@ -274,7 +274,60 @@ static bool net_tx_pkt_parse_headers(struct NetTxPkt *pkt)
+>   
+>   static void net_tx_pkt_rebuild_payload(struct NetTxPkt *pkt)
+>   {
+> -    pkt->payload_len = iov_size(pkt->raw, pkt->raw_frags) - pkt->hdr_len;
+> +    size_t raw_payload_len = iov_size(pkt->raw, pkt->raw_frags) - pkt->hdr_len;
+> +    struct iovec *l2hdr = &pkt->vec[NET_TX_PKT_L2HDR_FRAG];
+> +    uint16_t l3_proto = eth_get_l3_proto(l2hdr, 1, l2hdr->iov_len);
+> +
+> +    /*
+> +     * Clamp payload_len to what the IP header says, not what iov_size()
+> +     * returns. When a short frame is padded to the Ethernet minimum of 60
+> +     * bytes, iov_size() includes the padding. Using that inflated size as
+> +     * payload_len causes net_tx_pkt_update_ip_hdr_checksum() to rewrite the
+> +     * IP total/payload length to include Ethernet padding, making the packet
+> +     * malformed (receiver may treat padding as payload or miscalculate
+> +     * checksums). Clamp to the guest-provided IP length instead.
+> +     *
+> +     * IPv4: ip_len is the total length including the IP header.
+> +     * IPv6: ip6_plen is the payload length after the base 40-byte header
+> +     *       (extension headers are included in ip6_plen but also in
+> +     *       l3_hdr_len, so subtract them out).
+> +     */
+> +    if (l3_proto == ETH_P_IP) {
+> +        uint16_t ip_total_len = be16_to_cpu(pkt->l3_hdr.ip.ip_len);
+> +        size_t l3_hdr_len = pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len;
+> +        /*
+> +         * Guard against malformed packets where ip_total_len is zero or
+> +         * smaller than the IP header itself. Without this check, the
+> +         * subtraction (ip_total_len - l3_hdr_len) would underflow (both
+> +         * types are unsigned), producing a huge payload_len and corrupting
+> +         * the packet. Fall back to the raw iov_size value in that case.
+> +         */
+> +        if (ip_total_len > l3_hdr_len) {
+> +            pkt->payload_len = MIN(raw_payload_len, ip_total_len - l3_hdr_len);
+> +        } else {
+> +            pkt->payload_len = raw_payload_len;
+> +        }
+> +    } else if (l3_proto == ETH_P_IPV6) {
+> +        uint16_t ip6_payload_len = be16_to_cpu(pkt->l3_hdr.ip6.ip6_plen);
+> +        size_t l3_hdr_len = pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len;
+> +        size_t ext_hdr_len = l3_hdr_len - sizeof(struct ip6_header);
+> +        /*
+> +         * Guard against malformed packets where ip6_plen is zero or does
+> +         * not cover the extension headers that were already parsed. Without
+> +         * this check, the subtraction (ip6_payload_len - ext_hdr_len) would
+> +         * underflow (unsigned), producing a huge payload_len. Fall back to
+> +         * the raw iov_size value in that case.
+> +         */
+> +        if (ip6_payload_len > ext_hdr_len) {
+> +            pkt->payload_len = MIN(raw_payload_len,
+> +                                   ip6_payload_len - ext_hdr_len);
+> +        } else {
+> +            pkt->payload_len = raw_payload_len;
+> +        }
+> +    } else {
+> +        pkt->payload_len = raw_payload_len;
+> +    }
+> +
+>       pkt->payload_frags = iov_copy(&pkt->vec[NET_TX_PKT_PL_START_FRAG],
+>                                   pkt->max_payload_frags,
+>                                   pkt->raw, pkt->raw_frags,
+> 
+> ---
+> base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
+> change-id: 20260624-net-tx-pkt-ip-length-padding-5a8f358933fc
+> 
+> Best regards,
+> --
+> Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
 > 
 
 
