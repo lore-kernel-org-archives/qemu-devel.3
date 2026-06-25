@@ -4,69 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 225B9CDB47F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 09:44:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AA68CDB47F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 09:50:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcgcV-0003WA-Ez; Thu, 25 Jun 2026 05:43:39 -0400
+	id 1wcghq-0004rY-Mx; Thu, 25 Jun 2026 05:49:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1wcgcQ-0003UU-Up
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 05:43:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wcghp-0004r1-6X; Thu, 25 Jun 2026 05:49:09 -0400
+Received: from fout-b6-smtp.messagingengine.com ([202.12.124.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1wcgcO-00025w-6H
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 05:43:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782380609;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=/ORMVcRbXRgGLTIEDc67S+U5Utcp5RY403tsUApMa1w=;
- b=WQjBKGzx8W7i9XHfBcyEHXiBxBuIm9tJLupMVJwOFH7GRQX9cDPkv5XhKbQSjLpx3ESTbP
- 0H0kktAJx8Y5ld9ljU3QZX82qM/S9mxhwzMMECuU7hqzTXjs4lvYIpG87sJllbaYz/T8zn
- CHvoAokOfzxYkCsgW13rdW8AJHzIbls=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-321-ajCGSq5YN16lloXEwedkjA-1; Thu,
- 25 Jun 2026 05:43:27 -0400
-X-MC-Unique: ajCGSq5YN16lloXEwedkjA-1
-X-Mimecast-MFC-AGG-ID: ajCGSq5YN16lloXEwedkjA_1782380606
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 275D419560AA; Thu, 25 Jun 2026 09:43:26 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.44.49.185])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1101B1956040; Thu, 25 Jun 2026 09:43:22 +0000 (UTC)
-From: Mario Casquero <mcasquer@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: clg@redhat.com, alex@shazbot.org, philmd@mailo.com,
- Mario Casquero <mcasquer@redhat.com>
-Subject: [PATCH v4] vfio/pci: Propagate errors in vfio_pci_load_rom() using
- Error API
-Date: Thu, 25 Jun 2026 11:43:07 +0200
-Message-ID: <20260625094307.148542-1-mcasquer@redhat.com>
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wcghn-00037l-AW; Thu, 25 Jun 2026 05:49:08 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfout.stl.internal (Postfix) with ESMTP id 15B891D0012D;
+ Thu, 25 Jun 2026 05:49:04 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-02.internal (MEProxy); Thu, 25 Jun 2026 05:49:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1782380943; x=
+ 1782467343; bh=stgugfb6aWOrZCaoOg91KE/7B8CpJr+RBROGiaTHL8I=; b=Z
+ A3HrTCvjF80FY0AnCB80y6lMDiyYGijoMjm9QHYD+6mLgQ0iq0Q0z5b/pvbXOiah
+ OdrVfLYcznkKXMLxgGZ9Da7y3qTKW/QQhUcoUWcsgP0mzBXm4H2UJAacCKgooYa7
+ Lt90cmUVBQexB5iFMembuRL+2XahJDurnhqU4Ioh9YE0IBfSa4DEyg/R8uCByKpm
+ sUWrhi+2QAzasMmY4Gea+rXgUVEDWyg51aM53S1YQvR1gRMp4yXyTDICArC1ggez
+ u1VK5ANjuegdtTcfUAjrDCX2G2yYCmZ+ZF7cFRotQ67mSlnYXP/cF+H9Kti1uZbr
+ 7lTeWLUU5tA4sTIVPb1xA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+ 1782380943; x=1782467343; bh=stgugfb6aWOrZCaoOg91KE/7B8CpJr+RBRO
+ GiaTHL8I=; b=kbGdYKziHqa6hlMw1x193ADjIMVT1ysuxJEHwyjGim552zQuk7M
+ xgg7UtUBL5j8Dh+1cIKJtcilNr9Qx0tqCCspfcosmGRTy63q7wkswF4s8tFk9piW
+ hJ7O1WcBsRi6MqBfwnVC/xQTi/RdbM6RGud9jcuYLJbz76omnO1j7cxY6mEWcb/o
+ aJ9Axs0Q2ijoLmRiD5CpETOBFTGj4+1W3ZIIpGxmP3R6wr1QJbq3I8L9m/PmhkI3
+ D3wJk6aWKIHuYSZaY5rzGQ+jzPyGh88u95wVXr2NGuxMpZHhvyZ9u1RBDmjY2gzm
+ CSbn1yHHtD6wcdJ+/DcXtWDoqdM5IT4uDhg==
+X-ME-Sender: <xms:jvk8aqB1c1W0OU2eHYgRjbLRSnE6M68xopDTkBwRZ4tHUugghhk5GQ>
+ <xme:jvk8aqhMWSbo8k0sD8wRRAyawG3qVyEQX2Iy3C06d-GH_xE4jlAEqqROAhjdvNP9T
+ IWvTLjZb3FuUwnLUx0r4uFrqwhyeuVxfd0PjVahIvELuS_UrOMFr3it>
+X-ME-Received: <xmr:jvk8aob8hH2hmVjp46Ijm2QGPlS5-6ask5Pdxbku2zPPdfU6a260pzDRYLZDGA>
+X-ME-Proxy-Cause: dmFkZTFHyfei6RAPUUekzOV4XE1HvQXw09QhGnaJ0kYaYfQIlYcSqe2IJ22fJ8aZ1YiEq3
+ IwIjVlmmLNL98k9xRblu5WRyZwIHsREJ6RlKV+0VghoxT2peIcOOKom3SGYzmYGLVkLrRy
+ YzWraQ4dyU63AP+tjCMCd0Ih7i86faU/43i2bnEoQiiioKFZTgpOASha1YYGtXzwbAeqwN
+ Rcv/0lo271ImZBCXpLxr4PTAiGlPtB9OOPdk8Ab8PpMV/M2CghTTt1zgSBL2Vu+PBiR/w7
+ mOcPtTZnEO0K3UAT9R+AA0BSN1fnda5QIVo50xbsLUOGcJBKOdbbESOVKbIdwsx04ZqKpq
+ DmaDsfbM36UO7TJhXs1r6gJg/XlXEFFZEhvDNzXiw0W+uq1csiIKYHmfHh3p06MBiq+TUL
+ S1ZdBsR6JNCkVKnH2eCfX9PQZFlzBQ6OUczTnGErDYs8YX4VGLs+1fLrrb7o0dlKdclUGF
+ 2UkV7MdZr39CaTIXifXM6J71QkFcBW0CjyRfiOP355QuOXaOHFReoVxCkLWsbBq8IoZSNr
+ 9Nu9RACRcOxLJdgXJaT0b2urpEL4Rzj8gnAkv8g5aJ28v8LwD5loEJP/52q6RmCAWGsxoi
+ f4muyw4zhEjMJmwzWpaLXP6JhZSi8spQ+Vf666CQP1D9mtkyKQHMwUaXSv/Q
+X-ME-Proxy: <xmx:jvk8arn5ea6TDi8e-lqrx8MZrvghe4emn3dPtllJn9ZvoYO5MwR4BQ>
+ <xmx:jvk8auhLUg66Ci3NC5at3MCybSkSf8fcsaXqryyhrHtzsRVo43ND5w>
+ <xmx:jvk8atRHlZVgiYbOQzMe7rSWJLtJ6arZ_j9QbFxQ7QrW88MQgrHM2A>
+ <xmx:jvk8avZQ1tX-Bjtmj1AG6tGvqEgdkTPzbBW0H5WVuwf1_6REZH1DeA>
+ <xmx:j_k8aqtsjJydUiLH26ELyHdJZxADzWPD5eOgHo8W1GvhJlAIStLiGtIQ>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 25 Jun 2026 05:49:02 -0400 (EDT)
+Date: Thu, 25 Jun 2026 11:49:01 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Mateusz Nowicki <mateusz.nowicki@posteo.net>
+Cc: qemu-devel@nongnu.org, "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-block@nongnu.org
+Subject: Re: [PATCH v3 0/2] hw/nvme: HMP commands for inspecting emulated
+ controllers
+Message-ID: <ajz5jeAm8Ts2PWyu@AALNPWKJENSEN.aal.scsc.local>
+References: <20260522102821.16766-1-mateusz.nowicki@posteo.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mcasquer@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="DBw/3o+teOWIAoey"
+Content-Disposition: inline
+In-Reply-To: <20260522102821.16766-1-mateusz.nowicki@posteo.net>
+Received-SPF: pass client-ip=202.12.124.149; envelope-from=its@irrelevant.dk;
+ helo=fout-b6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,95 +109,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Updates vfio_pci_load_rom() to use Error API for error propagation
-instead of error_report(), improving error handling consistency.
 
-Signed-off-by: Mario Casquero <mcasquer@redhat.com>
----
-v4:
-  - Use error_append_hint() instead of error_printf()
-  - Reset rom_size and rom_offset to 0 in the error case
-  - Update error message to "Device ROM size is zero", different from read errors
-v3:
-  - Use error_setg_errno() instead of error_setg() with strerror()
-  - Reset rom_size and rom_offset to 0 when freeing rom on error
-  - Use local_err with error_report_err() instead of passing NULL errp
+--DBw/3o+teOWIAoey
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- hw/vfio/pci.c | 32 +++++++++++++++++++++-----------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+On May 22 10:29, Mateusz Nowicki wrote:
+> Add two HMP commands for inspecting emulated NVMe controllers from
+> the QEMU monitor without attaching gdb to the QEMU process:
+>=20
+>   - 'info nvme'        - per-controller summary (PCI, identify
+>                          fields, CC/CSTS/AQA, queue counts)
+>   - 'info nvme-queues' - per-queue listing of admin and I/O SQ/CQ
+>                          (size, head/tail, PRP1, doorbell offset,
+>                          phase tag)
+>=20
+> Useful for verifying queue setup, doorbell rings, AERs held in the
+> admin SQ and similar driver/controller interaction details from a
+> running QEMU monitor.
+>=20
+> Changes in v3:
+>   - Iterate on n->conf_ioqpairs instead of n->params.max_ioqpairs so
+>     the listing reflects what the guest driver actually sees,
+>     including SR-IOV VFs where conf_ioqpairs is the negotiated subset
+>     (not max).  Same fix in both patches.  (Klaus)
+>=20
+> Changes in v2:
+>   - hw/nvme/meson.build: add the missing trailing newline (Markus).
+>   - Pick up Acked-by tags from Dr. David Alan Gilbert and Markus
+>     Armbruster on both patches.
+>=20
+> v2: https://lore.kernel.org/qemu-devel/cover.1778694320.git.mateusz.nowic=
+ki@posteo.net/
+> v1: https://lore.kernel.org/qemu-devel/cover.1778409416.git.mateusz.nowic=
+ki@posteo.net/
+>=20
+> Mateusz Nowicki (2):
+>   hw/nvme: add 'info nvme' HMP command
+>   hw/nvme: add 'info nvme-queues' HMP command
+>=20
+>  hmp-commands-info.hx |  28 +++++++++
+>  hw/nvme/meson.build  |   2 +-
+>  hw/nvme/monitor.c    | 139 +++++++++++++++++++++++++++++++++++++++++++
+>  qapi/machine.json    |  34 +++++++++++
+>  4 files changed, 202 insertions(+), 1 deletion(-)
+>  create mode 100644 hw/nvme/monitor.c
+>=20
+> --=20
+> 2.53.0
+>=20
+>=20
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 9df04fa2d7..61b4a6a5a3 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -1027,7 +1027,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
-     }
- }
- 
--static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
-+static bool vfio_pci_load_rom(VFIOPCIDevice *vdev, Error **errp)
- {
-     VFIODevice *vbasedev = &vdev->vbasedev;
-     struct vfio_region_info *reg_info = NULL;
-@@ -1040,7 +1040,7 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
-                                       &reg_info);
- 
-     if (ret != 0) {
--        error_report("vfio: Error getting ROM info: %s", strerror(-ret));
-+        error_setg_errno(errp, -ret, "vfio: Error getting ROM info");
-         return false;
-     }
- 
-@@ -1052,10 +1052,13 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
-     vdev->rom_offset = reg_info->offset;
- 
-     if (!vdev->rom_size) {
--        error_report("vfio-pci: Cannot read device rom at %s", vbasedev->name);
--        error_printf("Device option ROM contents are probably invalid "
--                    "(check dmesg).\nSkip option ROM probe with rombar=0, "
--                    "or load from file with romfile=\n");
-+        vdev->rom_size = 0;
-+        vdev->rom_offset = 0;
-+        error_setg(errp, "vfio-pci: Device ROM size is zero at %s",
-+                   vbasedev->name);
-+        error_append_hint(errp, "Device option ROM contents are probably "
-+                          "invalid (check dmesg).\nSkip option ROM probe "
-+                          "with rombar=0, or load from file with romfile=\n");
-         return false;
-     }
- 
-@@ -1076,10 +1079,12 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
-             if (bytes == -EINTR || bytes == -EAGAIN) {
-                 continue;
-             }
--            error_report("vfio: Error reading device ROM: %s",
--                         strreaderror(bytes));
--
--            break;
-+            error_setg_errno(errp, -bytes, "vfio: Error reading device ROM");
-+            g_free(vdev->rom);
-+            vdev->rom = NULL;
-+            vdev->rom_size = 0;
-+            vdev->rom_offset = 0;
-+            return false;
-         }
-     }
- 
-@@ -1147,7 +1152,12 @@ static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
- 
-     /* Load the ROM lazily when the guest tries to read it */
-     if (unlikely(!vdev->rom && !vdev->rom_read_failed)) {
--        vdev->rom_read_failed = !vfio_pci_load_rom(vdev);
-+        Error *local_err = NULL;
-+
-+        vdev->rom_read_failed = !vfio_pci_load_rom(vdev, &local_err);
-+        if (vdev->rom_read_failed) {
-+            error_report_err(local_err);
-+        }
-     }
- 
-     memcpy(&val, vdev->rom + addr,
--- 
-2.54.0
+Thanks, applied to nvme.next.
 
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+
+--DBw/3o+teOWIAoey
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmo8+YoACgkQTeGvMW1P
+Dekvjwf8CmN6zc3ob6xNogJCD3+BwfhqGnZSt/yAl3m5DKzZd29/N4MCLSTrdol/
+ijuQvPvf0bk++VA7cBOhOL0HZ00gUWPtiCHzM/iPXoEC5Bwm8HMIbyNxJL+mULzD
+Qctw+tTDkpdnX0J2Dl6r+vT25Dd7nv4pmDWu2/YJnTZXEa+qUdqwxiS14OqrU6sU
+r9XnvLVZkkeO3YISB2R7fDnSUIN0JdoAAral2/25xj/gPzoUpUu/MXRbnYdjJwKm
+tU00kkRZ5+tbC21U0ueC0oY/W/E9pKQOGMqaXZnOH6r8nUe12pAlubo5xkTXGl12
+qMyeI23QXOmoYvYmbiHH8+zOFVD+Vw==
+=cZJ9
+-----END PGP SIGNATURE-----
+
+--DBw/3o+teOWIAoey--
 
