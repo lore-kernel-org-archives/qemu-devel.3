@@ -4,116 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B23CDE00C
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 22:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC6B4CDE00E
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 22:22:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcsS0-0000f3-4V; Thu, 25 Jun 2026 18:21:36 -0400
+	id 1wcsS0-0000fb-Sq; Thu, 25 Jun 2026 18:21:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wcsRy-0000eg-KY
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:21:34 -0400
+ id 1wcsS0-0000f4-3n
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:21:36 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wcsRw-0001J0-Jl
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:21:34 -0400
+ id 1wcsRx-0001JE-Rj
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:21:35 -0400
 Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65PFe4Ow2161554
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 22:21:30 GMT
+ 65PFdxwg2160353
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 22:21:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=w5/miaETc/JJxbFZ+/LnWy
- TXlLyc5jSBXdEMFm/FzvU=; b=SGOJiQIvV/LMrlQenZwkJjU4zbV8dW/j4LLuPl
- hMRVKfZoX5hgSd+LgmOTswxJIuVV6iwJ9b6W51Ao20pJHyfy59nADRxhlTzUjy95
- +7sCIbYNybUjnTMxxh0OhTNUtW5eBvqz3hhfJONjDrpKGVm0l0o7NajmjdrRDYN1
- QIX11Q/JTxtZZwGeJvmHUF/6eSF+To/ee7GCdLAL8KdnQqSfHY9ELNPl4MuuPyn/
- pARW3vWt5pE9EX6l43o9nWP4gbKqkzWTAjpTasUUw7z6XxFoqnqRU8qynE/Xa1S1
- C9YebK+f6KUIZmmWeS1IuXDYM0mGFHtn5Tb7kiP7zI0pgQRg==
-Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0ymv3f8v-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ fpjnokISaspkLyURW/cb1stM82MNs2pYXO5RJwrKBZc=; b=hugYubXEu5GHBTEp
+ gYDy0pP+2uu+48xaxkj7tO41ojjNKEZClLLbfDZM2yOSIFGReGFFMA67NJrEFFhF
+ zqP/bhw2UPzrKUxf6ZBNZL8HjyNm3D9cxZ09dcafmn5SGZw0460QJtMaYFWzLbY1
+ /0PLqbDsoiVFJqDUnUp0qGW5MGTerMk9KjoZ69RDxnV5biAD9A9FpP4iiKtZ8jL+
+ YEW5acjUjjjn3OW5msbnabT6aHBliCekaHD62sXZxeZSVksqb3S0yPajGU0waSmk
+ kYfvb1QCkd/5jDJmVOkx2OO/TaoryLObis2djPsP2tAaGGf5Vp6hfqiAV3DXeyqf
+ D/8ubQ==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0ymv3f91-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 22:21:30 +0000 (GMT)
-Received: by mail-dl1-f71.google.com with SMTP id
- a92af1059eb24-1370417c0bfso365973c88.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 15:21:29 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 22:21:32 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-139553dd8acso56715c88.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 15:21:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782426089; x=1783030889; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=w5/miaETc/JJxbFZ+/LnWyTXlLyc5jSBXdEMFm/FzvU=;
- b=Esv8rnUH7lA35ZcBNzStkR0RtAauM6YhA5Emn9WPxWSi4jWlkCsI3kvcsIK9prIakN
- aUzwO2i7a/Jgd78/lxDABm+ci02ADVFD71GdhGbdNrdWxIj3qX6zm24P6KcCgG/JOC3E
- jdtKTnLWTAOPwRiUqailyHkaa1p6weU48b+TXdtwwsnrHSf4XhP/aimUMb5ok84ZZvxZ
- fgq9xbzVC7l2JbhlvhwjhDE9B9k1cYQwJPezciCBWkCuzmVKjkpoVsTofGQokMtKJjYk
- lEm4B5ISIARgr7K4Fv7fui0b5ev4+Ralm3wg5G6fiNtZCjYZhYWYeqEs8ONJLcjkgO6R
- IZBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782426089; x=1783030889;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1782426092; x=1783030892; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w5/miaETc/JJxbFZ+/LnWyTXlLyc5jSBXdEMFm/FzvU=;
- b=VdcOjK4V1ReYhmQDCa+7fI+kGOgmHOYXikx96/I4Bdo2tVRF3qiha3SwKaB9xkXDl8
- W40ynrjeN0Qu6cBQ/cOWj9Ffye5o5tTMv0aKFwbiBXiVtMYmCLVeNSyyULcjJU7XGEvx
- n0WfX3m455LIemzsuG82+/m78odYsIMR1ITMKvhCxgRg4pmho3pORIonBKt4jrgY0/OO
- EN+qRqbL8tYbKcIm3HtvK7RIbmCB1XzjpzK9Bd6nQ2cRubM/0cnd9JDhf5dWyt/AFE5Q
- rQgz7o0hh5mwIiq80w4/04ETqjvTrm0mRXJ+sj4mJTG5zRIbTcvJhDxzuvxqyKo+TNRX
- Os1A==
-X-Gm-Message-State: AOJu0YzlXuF5IBHQaXenVIth/EnoLZO8DNQIPufJhxncuuXoJyEsn1AF
- k7TWw0VWYnHX9g7V0Bv+58rxUS49SNL9ErqTDq7DhvblvID5TrY9Ua2CFyn7auQeTNt+9067+/2
- xrnAsUjWVAILACaT4ZYRE79+iX/QkDoP7UT0hXe2Q+iVCAxHOo7hDOR3Y5BHSZ4X4kA==
-X-Gm-Gg: AfdE7ck7Gp5Nhs3t9gCBWqrOCqHpuKcarylJN/WMpei9dRhYox6ngDgmB198buhaTNA
- agLK3QLvnYu1Vs2b30XOqzSacCyzx0VZgjXqiEoHTVQWXNKpeQNT3JrHAhXnGG7Od8v7jCfTfAk
- IQII4zVMDlOh733jRedlQ4SIdazM1gl3vX7o4K7Vs7f/JgUoLuuXxclqlTVM+hPdgEES75x653z
- ujJkD9xUsQm3JpGWWR2XXjt+6OvJRZCmpIEf5si5HxvwxNKtODX71Rpcw+oYTI9c8WLhF2HdWGY
- sCC+xGH4I6XYuqa4f1POkO1HcfYYvpTcAo2PlispI4A4R/gR+zR4fF4+yiTuR9R7XaFRGafiKOp
- xwxmAgW4laKLDh/l9m1HwmX5YsBXXdSMaUavNizLyX+YAMAsWJXPIFBuXvfteaoDnk6Qv5IsGMm
- 8Dh9YQCA==
-X-Received: by 2002:a05:7022:61e:b0:138:59d:e1 with SMTP id
- a92af1059eb24-139c3d145c3mr11474400c88.24.1782426089296; 
- Thu, 25 Jun 2026 15:21:29 -0700 (PDT)
-X-Received: by 2002:a05:7022:61e:b0:138:59d:e1 with SMTP id
- a92af1059eb24-139c3d145c3mr11474382c88.24.1782426088777; 
- Thu, 25 Jun 2026 15:21:28 -0700 (PDT)
+ bh=fpjnokISaspkLyURW/cb1stM82MNs2pYXO5RJwrKBZc=;
+ b=aZhaNa+wKiBr1VFPL9UexVGKN24EqdqWjEHiZtHzs4dJRQuVaz+sqLQlEyqc3PpSHm
+ 4KWn48p0dS3QKZdKEZBlozQ8WRTw4k8lD5gcROCx29mXyHC1BKaaMLE74BI/9yDRI3ZN
+ LxEEnfuSc2D52EsAOMppcL78/dSKgAW1a6G6d6GdHKrVz0evKSgYv/w57NoMoyc2occE
+ 235m5s2IM8kstIMj7mKMBYjlMHIQuRRzGbxG2zhhE3Xux+5nYbQG8kr3CyPBl5/uaexi
+ 1OFpxuF7PCoUGAGqrTtL1CqDq41vJOWGtwxlOlVL2EjZwzF3YhVp0o1i1lwxJpJSBgky
+ 7Qmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782426092; x=1783030892;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=fpjnokISaspkLyURW/cb1stM82MNs2pYXO5RJwrKBZc=;
+ b=dAkvKxE2TXHFHre9Y0X8AdLSQs5T6ipJQZy4qH6uVhigZZHeCCKygD5geUZML9LSCD
+ ibIxAUAkk0OcDvJztK9OS0dN1CiWsGqoOxKixpWYDHQeQNtzsL2em2KIH6u95YFn+vIC
+ YUH4UDQIXJ3NhWkPmfg/S8Ol9L0yaXLjGn/MKHzmQkwdrL5X6omLemnYbOH7PTPROKFn
+ xNpAalfmRYQU9rGAr7xeHsRUcOFP2GqkaGlaJZaYlFb7ulpbK2yDE38NtpoblAid/aQG
+ wPuhb1nHBdYQXKQJR4rQRfmoMvvilLYXEOddJ0eHyMAAVHheWlT3nZNxvgxrAEEtpXzt
+ WjSw==
+X-Gm-Message-State: AOJu0YxYd5QkQPE3chtfg1r8V5anrSoTKELmp5H27oqak5NkBSArs+DR
+ 7dIixsTTrTF4KIWtJe8mzsjFTemO77e1ybXH/LIeDe885OlEjvIr718J5At3nvZ1G3NV5xtuhag
+ 8vTS5kF1+fKf5GyQeF+e/MGLaiBMGDbhJlBU5c7y9LrhvImtP4tGAABYH9cJCqnk9dw==
+X-Gm-Gg: AfdE7cmesgPE8kdtoVR9CDg8AfmUvmag2jZ4fWp+tVwVvf1eMSYM1ZlK8m5Z6rz3p0K
+ 3+NhcYTBEVJSrHmbPsxcENIEmTi2zRJqJqsDTDqr//T4GKYm3Q5Cgd+T8D484QWtM4UGVpW3q0j
+ S5g0D+ChPJHqLbXkgex9e7txgvu19FSRYJm+gT4inuQlygP379kIc/VapMnyWak5Lb0ynyVgeEy
+ tAd7LARmfk9yuxHTuwAFCUJThO6ficPfARSmWe7F2iJbsDhuLN9Y+ZLwWk0slL6jZ4meitcvly0
+ 9eu/nL8m4mRf+RP+a0orMwPHrok1067JXhlfWwauUuJ3t4+MQQo2+uWFUvN8Xz8TgWQU9Fjdvvc
+ M9gIBCqx9iJMqmwVI8XjwCuNKs0ZQVFGqjOWwu1uBBmE12cHdpMEbZN0juL4MRKUZO7nTqsPMvS
+ TQjoxpHQ==
+X-Received: by 2002:a05:7022:ec89:b0:138:37a4:fcc1 with SMTP id
+ a92af1059eb24-139dba1e126mr4574569c88.12.1782426091806; 
+ Thu, 25 Jun 2026 15:21:31 -0700 (PDT)
+X-Received: by 2002:a05:7022:ec89:b0:138:37a4:fcc1 with SMTP id
+ a92af1059eb24-139dba1e126mr4574547c88.12.1782426091237; 
+ Thu, 25 Jun 2026 15:21:31 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-139d8f318e7sm11538477c88.3.2026.06.25.15.21.27
+ a92af1059eb24-139d8f318e7sm11538477c88.3.2026.06.25.15.21.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jun 2026 15:21:28 -0700 (PDT)
+ Thu, 25 Jun 2026 15:21:30 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 0/6] CI update for 2026-06-25
-Date: Thu, 25 Jun 2026 15:21:05 -0700
-Message-ID: <20260625222111.1761-1-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 2/6] gitlab: move .meson_job_template into base.yaml
+Date: Thu, 25 Jun 2026 15:21:07 -0700
+Message-ID: <20260625222111.1761-3-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260625222111.1761-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260625222111.1761-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=DqBmPm/+ c=1 sm=1 tr=0 ts=6a3da9ea cx=c_pps
- a=JYo30EpNSr/tUYqK9jHPoA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Authority-Analysis: v=2.4 cv=DqBmPm/+ c=1 sm=1 tr=0 ts=6a3da9ec cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=EUzuhcyP3g1cI6dsK4sA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDE5MyBTYWx0ZWRfXzr9TRDNcjgyv
- BejWLM6ADTnO/kOyN3XQhQ6+UtM9tvn3G1g6brSzs1HuKguGR8ovgUkiJOnzKkpnf9L4iD9ma88
- naVK2aEKRMpwMWYo4Q1Xjh87zkl9DGA=
-X-Proofpoint-ORIG-GUID: ohQ02AKrsaxAtC0Wv8YUQhy5Ziw9IvCf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDE5MyBTYWx0ZWRfXwqrBCDZWHLaA
- ndnXDA55WBcI4frAQlqo6i3Qe80wOzAOJGpIcWh0D+q58ig27yXQgV6BA/coo5+rDx4WTUe5/Vx
- coZceh1eBLHKjtaMqecDU7LSUE4FoSkYb3w6YpWjy4AecH5sLBCVmo5rC7QUN6byZkYv+2fktTT
- Rz5JTnX/JvvC8Hig6XoWGsBubNKd5kV0deV8VNwzHfRKtl+fu4BCR6IgSonv3W5CTzSCGjMYVhM
- 611K5aCAWARjJITZYA5XawejAuaJBgShOIjuFACHv88nw0nvk8B6yGm1QWeN7hGWxNVGUd4eafb
- Ctz4SHnCep2YG8IrwGXIKhD5jZSwBPHXdrBeuA9zYq3j3ECGpSLppoE2UQDMqrtwEBDuNLqMVOL
- mAXYOuvkyc+Wai2mz0HikVkK3IQCtJrYn2QgPhZ9LndkTLyZxm2C8sliQJcwW2Qsrn+nstjyAEW
- y/VJys1bV6yJyRhMcsA==
-X-Proofpoint-GUID: ohQ02AKrsaxAtC0Wv8YUQhy5Ziw9IvCf
+ a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=29VL0hIdhPriTrIy8fAA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=vBUdepa8ALXHeOFLBtFW:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDE5MyBTYWx0ZWRfX8G+8tshRB0X+
+ r9YYlqPEPX8dwa61bA9tACMSgk2knwnDRnLXp/vHGmHpOyfqHYn0ckWk17z8DUpMirz5uKPSrbD
+ GvniEbBJIRKZ1OOWDHm4hkYVHxly4zs=
+X-Proofpoint-ORIG-GUID: 8iWLLqBOrqHwLWUQWXKxNvZk4TElC5Yl
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDE5MyBTYWx0ZWRfX7NIhG69WKS0z
+ MBB7pcUaD9Zug/OOY+nOltzR+EV9NngR9mgRZre+a5hiB7MmExUyH5FZghXu2I7W4SEUZxDP0Rz
+ Sr4wnffpe3LDQOCNSSbadNUtAWW4SOwGyuib/IQwz6OKqod5W8ln9N9zgmAw0r0I5vvbS3Njwz3
+ H8hFWpwbEe35DTBFmAvQEr1GYy1XnDkV5BShdlYf04FB+dOBhJEcv4el7EEosffrwmkid52lWCG
+ Hv8OPS8kdchIdtoFINJMXPvRiIil/Vw2rCTaBL5x8iGcNPxMEzSvJsPApHdGAB5VTKuKOQACpLj
+ N8E1GK9bkewHzJs5laEwf+vQM1IxGfT97P15eOs95Y9nGwHjqVHZItG7ozL6H809WGID8umr454
+ qJNleQYWb8q7YEzJY6zSqOeF7e6vm8QMubcipGnzGoy1Gpxtvf9fuZWDBGf+3oV1DKQZKqsfm//
+ 4kQ7AvUHulhqkg2gkmA==
+X-Proofpoint-GUID: 8iWLLqBOrqHwLWUQWXKxNvZk4TElC5Yl
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-25_02,2026-06-24_01,2025-10-01_01
@@ -148,34 +152,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 1b4d5bb3e233c9fc84663be28635d122c9a2b81e:
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-  Merge tag 'pbouvier/pr/gitlab_ci-20260623' of https://gitlab.com/p-b-o/qemu into staging (2026-06-25 15:34:37 -0400)
+Rename .meson_job_template to .base_meson_job_template and move
+it into base.yml, in prep for wider reuse.
 
-are available in the Git repository at:
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Link: https://lore.kernel.org/qemu-devel/20260624124657.2725376-3-berrange@redhat.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ .gitlab-ci.d/base.yml               | 14 ++++++++++++++
+ .gitlab-ci.d/buildtest-template.yml | 20 +++-----------------
+ 2 files changed, 17 insertions(+), 17 deletions(-)
 
-  https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/ci-20260625
+diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
+index 714d2ed8a6b..94107579fe3 100644
+--- a/.gitlab-ci.d/base.yml
++++ b/.gitlab-ci.d/base.yml
+@@ -134,3 +134,17 @@ variables:
+         QEMU_CI_CONTAINER_TAG: $CI_COMMIT_REF_SLUG
+ 
+     - when: on_success
++
++# Any job running meson should capture meson logs
++# by default. Some jobs might override the artifacts
++# to capture further files
++.base_meson_job_template:
++  extends: .base_job_template
++  artifacts:
++    name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
++    when: always
++    expire_in: 7 days
++    paths:
++      - build/meson-logs
++    reports:
++      junit: build/meson-logs/*.junit.xml
+diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
+index 005058625eb..0fa2351d877 100644
+--- a/.gitlab-ci.d/buildtest-template.yml
++++ b/.gitlab-ci.d/buildtest-template.yml
+@@ -1,20 +1,6 @@
+ 
+-# Any job running meson should capture meson logs
+-# by default. Some jobs might override the artifacts
+-# to capture further files
+-.meson_job_template:
+-  extends: .base_job_template
+-  artifacts:
+-    name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+-    when: always
+-    expire_in: 7 days
+-    paths:
+-      - build/meson-logs
+-    reports:
+-      junit: build/meson-logs/*.junit.xml
+-
+ .native_build_job_template:
+-  extends: .meson_job_template
++  extends: .base_meson_job_template
+   stage: build
+   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+   cache:
+@@ -75,7 +61,7 @@
+       - build/**/*.c.o.d
+ 
+ .common_test_job_template:
+-  extends: .meson_job_template
++  extends: .base_meson_job_template
+   stage: test
+   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+   script:
+@@ -133,7 +119,7 @@
+     QEMU_JOB_FUNCTIONAL: 1
+ 
+ .wasm_build_job_template:
+-  extends: .meson_job_template
++  extends: .base_meson_job_template
+   stage: build
+   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+   before_script:
+-- 
+2.47.3
 
-for you to fetch changes up to 94809d5d9b71fd3217e5587282563681f8233723:
-
-  gitlab: greatly expand captured info about CI runner environment (2026-06-25 14:31:41 -0700)
-
-----------------------------------------------------------------
-Changes:
-- [PATCH v2 0/6] gitlab: expose more info about CI runner environment (=?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>)
-  Link: https://lore.kernel.org/qemu-devel/20260624124657.2725376-1-berrange@redhat.com
-
-----------------------------------------------------------------
-Daniel P. Berrangé (6):
-      gitlab: remove unused .cross_test_artifacts template
-      gitlab: move .meson_job_template into base.yaml
-      gitlab: use .base_meson_job_template from crossbuild jobs
-      gitlab: pull ccache setup into .base_meson_ccache_job_template
-      gitlab: pull before_script logic into .base_meson_job_template
-      gitlab: greatly expand captured info about CI runner environment
-
- .gitlab-ci.d/base.yml                | 48 +++++++++++++++++++++++++++++
- .gitlab-ci.d/buildtest-template.yml  | 58 +++++------------------------------
- .gitlab-ci.d/crossbuild-template.yml | 59 ++++--------------------------------
- 3 files changed, 62 insertions(+), 103 deletions(-)
 
