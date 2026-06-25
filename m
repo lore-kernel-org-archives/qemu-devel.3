@@ -4,144 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1128CDE001
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 14:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1A6FCDE001
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 14:52:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wclOC-0003c3-75; Thu, 25 Jun 2026 10:49:12 -0400
+	id 1wclRh-0007Fa-5x; Thu, 25 Jun 2026 10:52:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wclO6-0002zI-VN
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 10:49:07 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wclRV-0007D9-AT
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 10:52:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wclO4-0000DE-6e
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 10:49:06 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65P9k9TJ1948000
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 14:48:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:content-type:date:from
- :in-reply-to:message-id:mime-version:references:subject:to; s=
- qcppdkim1; bh=WuFcXxSP9Fzp6C31qhgOnqeUQp9/ystWflMVHLK8WCY=; b=Jz
- dmL9RiJ08HdC6yBPndUy3LFuCddkIJnazr/+esNHg6oXa/P+61QPI95GCnMzXJS9
- eTYKQx1hfUKDg/FNTj6wEyGa7sYHPK8K8tZvjXKVA4wkxoSv26co6oMpVSmroZYR
- Iv5XUx1lZY0rh5Gu5bwSy/84nDTmvAUFzMAKjzfbEk96vghhTGQxD+GqX42Ovq0s
- +rO+7I76WIyDRePNzxTKTzvtT2TuujMeC7Utdxuwb8FezyTXbsLQ7YpeoHJfOiOw
- jk6Ev1jR3AhvaZ2jDRozu48ZB1uNmhL6zNiMXxs5bW3sOybaChpgT4jG0K2RzxPM
- wifPCLcRcOYR13VQTCig==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0ya8su79-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 14:48:53 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-30bcb065bfdso2721629eec.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 07:48:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wclRT-0002Gj-HX
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 10:52:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782399154;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=b03ny8I3CECy/Mhh5LizKVfN8XCPRPuhJjOU+XekIzk=;
+ b=JlqRgmuFTnR72GITsETRPny2VgHujE+y89rJbAfTlLh2o9RXrh8L4ZDVaF5F3BxlbNy9aY
+ SQjY+cVk6wD/HjFc5mNgc0FBMbrheEPy4EWPz7glIgVq5oqLBUzOQu9b6X8qCTWiGnGeci
+ ZBjjM5qvI4LeUIO408VFI3Njz/U2rrs=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-511-FSLxn_bQOg2sgRd69Mj3bw-1; Thu, 25 Jun 2026 10:52:33 -0400
+X-MC-Unique: FSLxn_bQOg2sgRd69Mj3bw-1
+X-Mimecast-MFC-AGG-ID: FSLxn_bQOg2sgRd69Mj3bw_1782399152
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4924e099a17so14849895e9.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 07:52:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782398932; x=1783003732; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WuFcXxSP9Fzp6C31qhgOnqeUQp9/ystWflMVHLK8WCY=;
- b=CR0lAyIYmfN4EPilG83ah2F9vJsADMjFB+zOQ2K+RdYL9OYerTLrDvUO0N87YOBVCK
- yyL/8NDRkKjF/04txzQEMR0vMbffcyPi81pNAH2oOIY1fdFTUUbhrjGPdV1gt1fWMlU7
- FNLxVwG5RZyk56VFCBjTHuR5b/k+usuFHquwRaibl7XQEGagadf5BVdwaNHjMzfXKD0t
- id0IQn9oy4kKg4Zxp+ZsfR9YGJvtumPyYXYJqCVM9QC8MqR6zLyrLW9sP/1pw/2Z3WU+
- 2QqMTsk3+7kd3ZWHIXFi8kg+XPrG1GHdVa9cOhbBZj/L1p36Hbd56xRIyAERM7JxFnIt
- 0l5A==
+ d=redhat.com; s=google; t=1782399152; x=1783003952; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=b03ny8I3CECy/Mhh5LizKVfN8XCPRPuhJjOU+XekIzk=;
+ b=NqpTlM36WX7i6OQFk1kWMttbKzDAoUjQTPwE3UEbyR/9/PSTzdfsn/SjnfEuaFxi5E
+ drvB77rGn9LxoNl/hJGkG+g0arpVDdziRw+hufRmnVpCOU2ZZX7/eMRd0fUa8hiK2fGp
+ 13Wv0QpCgbue/upEaF0mCwRJgq5tW3hG/NHpvneHFkPFQ8wt443O20I62bdSL4UFm9/1
+ S2MEWjp7pId7V9xYg0DW87CzED8xgQMBf+g8CHj+ZWMF4RKHKNWjl5r85X/37T76K/UJ
+ S6Mncr4De3QtOh9EIE68n1B/cLb4ovjaYQ+A9hrjwSU+cU+oVMgDBH/+LocIjM0QNYJ9
+ KkoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782398932; x=1783003732;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=WuFcXxSP9Fzp6C31qhgOnqeUQp9/ystWflMVHLK8WCY=;
- b=fi9gLkWDfQWa6QhOagnYtlNXDsiPwzuXJkHpyjjtOtsNrwoAkmSzZmXJ75vBcCYwVE
- ndOGIPddIxQbOTBrShnV1gEyshpUz/1Gc7JdcReh41CEZZ/9oqV90rYspzLpnXZaLAIG
- 5NNEmv1lR8Glrnc0eFu7IEjX3LirV+zlNaHrXll5/gGdfNRM3tZ4MIOktF9xhoMwHD+A
- K21N6Hyz7YlQZpKPIgpnLA9yxOC196jiO+TNAdU2V8ogi8CeNaGVQIjZ2xllCi+wguAg
- ivzF7AJY2mmc6097Wstv4O871H/3WO22TJvXLdrzyR/8w728S5n4oEseAVQU79CVaXbw
- Uonw==
-X-Gm-Message-State: AOJu0YzX4xd+1ksqzlDkDOMTabB53ZZt3BKQysJlX3SzxYvocJGqRxx2
- LEhK0ow20o8H8Kmy6uR6oDxanoJCsQPzIgFnjjq2EamsTRfyOJLNN2P5xnbx26yevI3jzpP5D3i
- jyuGtaRa0Bky6CaMifsabTb1XjsuTgnNIa8VzmSDbvLZsfgtlMwrOPO/Pplv8+r3LfQ==
-X-Gm-Gg: AfdE7clBbsMWdnJjJjnL6j2ka46mX7QZ15VlqqPwnRyO8RHGyaLoYGulEsGfA8l+/Ty
- YKCKgE83g0rW3IQbQAV8OQgqqPqpJ3+8TO2Wrl8E4PU0haC5Haay73ryYlKD2RVUxkvfavE0P5n
- ragN6l9rEL5LeTDHq5RNAPl56yIjzsDwe6UJK3KAvMMs7aZJWWOOuZ+jHDhl8E5v+/TTfIqKvwV
- zdrLJbWCpe53O2LVJoj6yJh9ft3aF8HDPh8esLNBQHBJrKo1/ciMPcu7/PT9zDCaXYmWxiR9x37
- cHV2AogpvokNGuc8XgtUkwz3USD03zXLDi49orwFo47V7+5HT313pyeJYkH0SKpsuEupewpmMrk
- xGPFBh0tNWHWjS42BDNeEcOR3kkPddh+2cBLLk+j7Gzl2bGliDsXXRDfView=
-X-Received: by 2002:a05:693c:6383:10b0:30c:9051:e4be with SMTP id
- 5a478bee46e88-30c9051f8ecmr817133eec.35.1782398932127; 
- Thu, 25 Jun 2026 07:48:52 -0700 (PDT)
-X-Received: by 2002:a05:693c:6383:10b0:30c:9051:e4be with SMTP id
- 5a478bee46e88-30c9051f8ecmr817090eec.35.1782398931375; 
- Thu, 25 Jun 2026 07:48:51 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30c7c8afca8sm8999209eec.17.2026.06.25.07.48.50
+ d=1e100.net; s=20251104; t=1782399152; x=1783003952;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=b03ny8I3CECy/Mhh5LizKVfN8XCPRPuhJjOU+XekIzk=;
+ b=JmNBN50SPdwWAaPYbk3G2EKbX9cskkxTisP3EkWVQMgk3yd6F2haA4RwN74XT7eE6C
+ iBzX7DebYt8PysrRrfm5gU4MPfnIb0cloPOSshnO8TDwosPvCwTFOCETIzRkFJQNg9y3
+ 0L7e2Bzu+EI5sIaOTIFHUIbWBYj1FOOcLoXRShVOm5uQ+iBAMfKbjg2fgTzKhnejo138
+ N7bIGDhJIFy3LQ8M5Pb8r5H2GpxP3qJIsSx86JDRMoW8JGDCUCh3MZ/sJ1CUVQXrS7f+
+ P0Mkn5l/0w9KF0XzoBBSKL8u+0K7gUIKqWsra/zy59Gi7qGrr2/YmYhJnqWL+55Mkm82
+ 091w==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+nL5CbjlyhiD2AfD6Z/nljckqLn70NPyqs2JRfPY2gyIszF8yTWXLjVRsT4BMRomTF8SigkaSOtEz5@nongnu.org
+X-Gm-Message-State: AOJu0YyLY2QqbBfbctVC1iSPDEjTGZhIuyeKTMhUEoKohYS98lC818b2
+ /Re/aDw4fcImvDbdfluf8UZIsNB/Lsnyl0IPMw8uQyoioFeXNA9OsBht/0VPCT+Q0nREM6en6Hc
+ 4bV1wXFKWDFGGjdvIUYzEfiiInHgWk2KHEQeoKoLEJMikMk4jn2f5fdti
+X-Gm-Gg: AfdE7ck6rbr5yAAOBfqc6w8etBO9I1zlyAbW+va+pSKCy//pcUD5SPNzdgglIn7PKuX
+ CvmW9ZASqCPuwFik+6bzlnBj8BL4f/viG8nebRzYutXue6qqyt7JQKH2fMqNUvYDp9SaPw82LdZ
+ MOx1HXesL959Sng8nfYxOhi/2zP+e3/a1+T1MxJDZSFhoFuVeNdp3UHZpZHAoQwb6IkW5YrOf3O
+ uDe5hCnsZ8FO5wqHhTX6iO1X7HF914A1r5R8vinmEhfu+4QkeWDMJBX/CeZja+lolBtPCHNr2b3
+ DIE0Xvhl8AHMZGMGOZp6fZbXhL3o5JdGIJNJpBPs3IlDafindS1rEYQMOOb9wRCF3WzBuE9uDVo
+ ZbPeGQuQxVLMUy65F4I5m+zeDmVdulA+0
+X-Received: by 2002:a05:600c:820d:b0:490:bcc1:4edb with SMTP id
+ 5b1f17b1804b1-49266884b7emr39945365e9.27.1782399151677; 
+ Thu, 25 Jun 2026 07:52:31 -0700 (PDT)
+X-Received: by 2002:a05:600c:820d:b0:490:bcc1:4edb with SMTP id
+ 5b1f17b1804b1-49266884b7emr39944835e9.27.1782399151131; 
+ Thu, 25 Jun 2026 07:52:31 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-492690100c7sm2889135e9.12.2026.06.25.07.52.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jun 2026 07:48:50 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, stefanha@redhat.com
-Cc: brian.cain@oss.qualcomm.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PULL v3 69/76] hw/hexagon: Add global register tracing
-Date: Thu, 25 Jun 2026 07:16:26 -0700
-Message-Id: <20260625141633.449487-70-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260625141633.449487-1-brian.cain@oss.qualcomm.com>
-References: <20260625141633.449487-1-brian.cain@oss.qualcomm.com>
+ Thu, 25 Jun 2026 07:52:30 -0700 (PDT)
+Date: Thu, 25 Jun 2026 10:52:27 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, peterx@redhat.com, alex@shazbot.org,
+ richard.henderson@linaro.org, berrange@redhat.com,
+ philmd@oss.qualcomm.com, philmd@mailo.com, david@kernel.org,
+ clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
+ jugraham@redhat.com, liugang24219@sangfor.com.cn,
+ dinghui@sangfor.com.cn, shan.gavin@gmail.com
+Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
+ device region accessors
+Message-ID: <20260625101817-mutt-send-email-mst@kernel.org>
+References: <20260616052552.389021-1-gshan@redhat.com>
+ <20260616052552.389021-2-gshan@redhat.com>
+ <CAFEAcA-mf14=jpRFHarAbN6AbQwvW=Yu6WB1JiNMsECEdaxD3A@mail.gmail.com>
+ <20260625070551-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8YJZq9TqrUd0zTnewAdVDm5y6UV7BJQZ0C60TZ=RT98Q@mail.gmail.com>
+ <20260625091334-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8xK+t3-prEphtkq-o9UY2mgS6cowhs880GOaxL9dKSGw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDEyNyBTYWx0ZWRfX8ZR+Sot3yeuW
- pz8Txxbn8ScRevowvV/VaQMIG7V0gu+JBctH3dq6p9BqAH0svqn/eoIHcBsR3Ebpy63y+uEWvsq
- xZ18AkY2ljNVLjcIR++snX9FGK20BSU=
-X-Proofpoint-GUID: KzIIMy9r56BPx9Szj7nv-_--Bsnbojp4
-X-Proofpoint-ORIG-GUID: KzIIMy9r56BPx9Szj7nv-_--Bsnbojp4
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDEyNyBTYWx0ZWRfX5RhJEWz6IFf7
- +B0NiILQ4xwzXD4PHn465yN7UcyG+a9fxBoWXFNRROkkV5E5ySUbzoBn0E5CfDiEMtMOGFPFmYo
- fk9P863Br2oxFoR900dJ9id+ZddJay+cyrgedJBk3sFaAEwE3QUVF0rc1MPw2uFPXwMU0/0XwdF
- E8VU5QNAelKwti4E13oPzDXsHKKRrh8KknrhYkSYJEXL2c6B7PIzLTd0FH6Asw73DdNUmcTGzG7
- dZrWyPRdcWH4sSlOkPnzDoEO6p+wFOWLAE0UynBAftEl00wW/YkwDq7q4rqbzeY0FsiD8Pk1VIa
- l3PSBFMtlGpmi2AEpc6PPgUGKJkhT895g6aYiD97O/YPgQnZT9O/cgNUR6j5cJMpIKBTXQzTqH8
- 47E3P4yilT8zU4/yNdH1EGPRse38/dkQWnA8Zy8YH/wDgQ7+G4RYQDevgzK6aKKQ2XPbfXS9n19
- loSE1n2SEpwcPvUFeuw==
-X-Authority-Analysis: v=2.4 cv=Z+Xc2nRA c=1 sm=1 tr=0 ts=6a3d3fd5 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=8QmChvNvioVktlEtA_0A:9 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-25_01,2026-06-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0 phishscore=0
- spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606250127
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA8xK+t3-prEphtkq-o9UY2mgS6cowhs880GOaxL9dKSGw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,89 +129,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-UmV2aWV3ZWQtYnk6IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9yZz4K
-U2lnbmVkLW9mZi1ieTogQnJpYW4gQ2FpbiA8YnJpYW4uY2FpbkBvc3MucXVhbGNvbW0uY29tPgot
-LS0KIG1lc29uLmJ1aWxkICAgICAgICAgICAgICAgICAgICB8ICAxICsKIGh3L2hleGFnb24vdHJh
-Y2UuaCAgICAgICAgICAgICB8ICAyICsKIGh3L2hleGFnb24vaGV4YWdvbl9nbG9iYWxyZWcuYyB8
-IDczICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysKIGh3L2hleGFnb24vdHJhY2Ut
-ZXZlbnRzICAgICAgICB8ICAzICsrCiA0IGZpbGVzIGNoYW5nZWQsIDc5IGluc2VydGlvbnMoKykK
-IGNyZWF0ZSBtb2RlIDEwMDY0NCBody9oZXhhZ29uL3RyYWNlLmgKIGNyZWF0ZSBtb2RlIDEwMDY0
-NCBody9oZXhhZ29uL3RyYWNlLWV2ZW50cwoKZGlmZiAtLWdpdCBhL21lc29uLmJ1aWxkIGIvbWVz
-b24uYnVpbGQKaW5kZXggZTAyNjg1MTMwOWUuLmQ0MjA2YTVkM2Y4IDEwMDY0NAotLS0gYS9tZXNv
-bi5idWlsZAorKysgYi9tZXNvbi5idWlsZApAQCAtMzU5OSw2ICszNTk5LDcgQEAgaWYgaGF2ZV9z
-eXN0ZW0KICAgICAnaHcvZGlzcGxheScsCiAgICAgJ2h3L2RtYScsCiAgICAgJ2h3L2ZzaScsCisg
-ICAgJ2h3L2hleGFnb24nLAogICAgICdody9oeXBlcnYnLAogICAgICdody9pMmMnLAogICAgICdo
-dy9pM2MnLApkaWZmIC0tZ2l0IGEvaHcvaGV4YWdvbi90cmFjZS5oIGIvaHcvaGV4YWdvbi90cmFj
-ZS5oCm5ldyBmaWxlIG1vZGUgMTAwNjQ0CmluZGV4IDAwMDAwMDAwMDAwLi45ZTBiMzlmM2M2Ngot
-LS0gL2Rldi9udWxsCisrKyBiL2h3L2hleGFnb24vdHJhY2UuaApAQCAtMCwwICsxLDIgQEAKKy8q
-IFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wLW9yLWxhdGVyICovCisjaW5jbHVkZSAi
-dHJhY2UvdHJhY2UtaHdfaGV4YWdvbi5oIgpkaWZmIC0tZ2l0IGEvaHcvaGV4YWdvbi9oZXhhZ29u
-X2dsb2JhbHJlZy5jIGIvaHcvaGV4YWdvbi9oZXhhZ29uX2dsb2JhbHJlZy5jCmluZGV4IDI4Y2I1
-YTQxNThkLi5iNWU1OTEzNTA3ZSAxMDA2NDQKLS0tIGEvaHcvaGV4YWdvbi9oZXhhZ29uX2dsb2Jh
-bHJlZy5jCisrKyBiL2h3L2hleGFnb24vaGV4YWdvbl9nbG9iYWxyZWcuYwpAQCAtMTYsMTEgKzE2
-LDgyIEBACiAjaW5jbHVkZSAidGFyZ2V0L2hleGFnb24vY3B1LmgiCiAjaW5jbHVkZSAidGFyZ2V0
-L2hleGFnb24vaGV4X3JlZ3MuaCIKICNpbmNsdWRlICJxZW11L2xvZy5oIgorI2luY2x1ZGUgInRy
-YWNlLmgiCiAjaW5jbHVkZSAicWFwaS9lcnJvci5oIgogCiAjZGVmaW5lIElNTVVUQUJMRSAofjAp
-CiAjZGVmaW5lIElOVkFMSURfUkVHX1ZBTCAweGRlYWRiZWVmCiAKK3N0YXRpYyBjb25zdCBjaGFy
-ICpoZXhfc3JlZ19uYW1lc1tdID0geworICAgIFtIRVhfU1JFR19TR1AwXSA9ICJzZ3AwIiwKKyAg
-ICBbSEVYX1NSRUdfU0dQMV0gPSAic2dwMSIsCisgICAgW0hFWF9TUkVHX1NUSURdID0gInN0aWQi
-LAorICAgIFtIRVhfU1JFR19FTFJdID0gImVsciIsCisgICAgW0hFWF9TUkVHX0JBRFZBMF0gPSAi
-YmFkdmEwIiwKKyAgICBbSEVYX1NSRUdfQkFEVkExXSA9ICJiYWR2YTEiLAorICAgIFtIRVhfU1JF
-R19TU1JdID0gInNzciIsCisgICAgW0hFWF9TUkVHX0NDUl0gPSAiY2NyIiwKKyAgICBbSEVYX1NS
-RUdfSFRJRF0gPSAiaHRpZCIsCisgICAgW0hFWF9TUkVHX0JBRFZBXSA9ICJiYWR2YSIsCisgICAg
-W0hFWF9TUkVHX0lNQVNLXSA9ICJpbWFzayIsCisgICAgW0hFWF9TUkVHX0dFVkJdID0gImdldmIi
-LAorICAgIFtIRVhfU1JFR19FVkJdID0gImV2YiIsCisgICAgW0hFWF9TUkVHX01PREVDVExdID0g
-Im1vZGVjdGwiLAorICAgIFtIRVhfU1JFR19TWVNDRkddID0gInN5c2NmZyIsCisgICAgW0hFWF9T
-UkVHX0lQRU5EQURdID0gImlwZW5kYWQiLAorICAgIFtIRVhfU1JFR19WSURdID0gInZpZCIsCisg
-ICAgW0hFWF9TUkVHX1ZJRDFdID0gInZpZDEiLAorICAgIFtIRVhfU1JFR19CRVNUV0FJVF0gPSAi
-YmVzdHdhaXQiLAorICAgIFtIRVhfU1JFR19JRUxdID0gImllbCIsCisgICAgW0hFWF9TUkVHX1ND
-SEVEQ0ZHXSA9ICJzY2hlZGNmZyIsCisgICAgW0hFWF9TUkVHX0lBSExdID0gImlhaGwiLAorICAg
-IFtIRVhfU1JFR19DRkdCQVNFXSA9ICJjZmdiYXNlIiwKKyAgICBbSEVYX1NSRUdfRElBR10gPSAi
-ZGlhZyIsCisgICAgW0hFWF9TUkVHX1JFVl0gPSAicmV2IiwKKyAgICBbSEVYX1NSRUdfUENZQ0xF
-TE9dID0gInBjeWNsZWxvIiwKKyAgICBbSEVYX1NSRUdfUENZQ0xFSEldID0gInBjeWNsZWhpIiwK
-KyAgICBbSEVYX1NSRUdfSVNEQlNUXSA9ICJpc2Ric3QiLAorICAgIFtIRVhfU1JFR19JU0RCQ0ZH
-MF0gPSAiaXNkYmNmZzAiLAorICAgIFtIRVhfU1JFR19JU0RCQ0ZHMV0gPSAiaXNkYmNmZzEiLAor
-ICAgIFtIRVhfU1JFR19MSVZFTE9DS10gPSAibGl2ZWxvY2siLAorICAgIFtIRVhfU1JFR19CUktQ
-VFBDMF0gPSAiYnJrcHRwYzAiLAorICAgIFtIRVhfU1JFR19CUktQVENGRzBdID0gImJya3B0Y2Zn
-MCIsCisgICAgW0hFWF9TUkVHX0JSS1BUUEMxXSA9ICJicmtwdHBjMSIsCisgICAgW0hFWF9TUkVH
-X0JSS1BUQ0ZHMV0gPSAiYnJrcHRjZmcxIiwKKyAgICBbSEVYX1NSRUdfSVNEQk1CWElOXSA9ICJp
-c2RibWJ4aW4iLAorICAgIFtIRVhfU1JFR19JU0RCTUJYT1VUXSA9ICJpc2RibWJ4b3V0IiwKKyAg
-ICBbSEVYX1NSRUdfSVNEQkVOXSA9ICJpc2RiZW4iLAorICAgIFtIRVhfU1JFR19JU0RCR1BSXSA9
-ICJpc2RiZ3ByIiwKKyAgICBbSEVYX1NSRUdfUE1VQ05UNF0gPSAicG11Y250NCIsCisgICAgW0hF
-WF9TUkVHX1BNVUNOVDVdID0gInBtdWNudDUiLAorICAgIFtIRVhfU1JFR19QTVVDTlQ2XSA9ICJw
-bXVjbnQ2IiwKKyAgICBbSEVYX1NSRUdfUE1VQ05UN10gPSAicG11Y250NyIsCisgICAgW0hFWF9T
-UkVHX1BNVUNOVDBdID0gInBtdWNudDAiLAorICAgIFtIRVhfU1JFR19QTVVDTlQxXSA9ICJwbXVj
-bnQxIiwKKyAgICBbSEVYX1NSRUdfUE1VQ05UMl0gPSAicG11Y250MiIsCisgICAgW0hFWF9TUkVH
-X1BNVUNOVDNdID0gInBtdWNudDMiLAorICAgIFtIRVhfU1JFR19QTVVFVlRDRkddID0gInBtdWV2
-dGNmZyIsCisgICAgW0hFWF9TUkVHX1BNVVNUSUQwXSA9ICJwbXVzdGlkMCIsCisgICAgW0hFWF9T
-UkVHX1BNVUVWVENGRzFdID0gInBtdWV2dGNmZzEiLAorICAgIFtIRVhfU1JFR19QTVVTVElEMV0g
-PSAicG11c3RpZDEiLAorICAgIFtIRVhfU1JFR19USU1FUkxPXSA9ICJ0aW1lcmxvIiwKKyAgICBb
-SEVYX1NSRUdfVElNRVJISV0gPSAidGltZXJoaSIsCisgICAgW0hFWF9TUkVHX1BNVUNGR10gPSAi
-cG11Y2ZnIiwKKyAgICBbSEVYX1NSRUdfUzU5XSA9ICJzNTkiLAorICAgIFtIRVhfU1JFR19TNjBd
-ID0gInM2MCIsCisgICAgW0hFWF9TUkVHX1M2MV0gPSAiczYxIiwKKyAgICBbSEVYX1NSRUdfUzYy
-XSA9ICJzNjIiLAorICAgIFtIRVhfU1JFR19TNjNdID0gInM2MyIsCit9OworCitzdGF0aWMgY29u
-c3QgY2hhciAqZ2V0X3NyZWdfbmFtZSh1aW50MzJfdCByZWcpCit7CisgICAgaWYgKHJlZyA8IEFS
-UkFZX1NJWkUoaGV4X3NyZWdfbmFtZXMpICYmIGhleF9zcmVnX25hbWVzW3JlZ10pIHsKKyAgICAg
-ICAgcmV0dXJuIGhleF9zcmVnX25hbWVzW3JlZ107CisgICAgfQorICAgIHJldHVybiAiVU5LTk9X
-TiI7Cit9CisKIC8qIEdsb2JhbCBzeXN0ZW0gcmVnaXN0ZXIgbXV0YWJpbGl0eSBtYXNrcyAqLwog
-c3RhdGljIGNvbnN0IHVpbnQzMl90IGdsb2JhbF9zcmVnX2ltbXV0X21hc2tzW05VTV9TUkVHU10g
-PSB7CiAgICAgW0hFWF9TUkVHX0VWQl0gPSAweDAwMDAwMGZmLApAQCAtNzcsNiArMTQ4LDcgQEAg
-dWludDMyX3QgaGV4YWdvbl9nbG9iYWxyZWdfcmVhZChIZXhhZ29uR2xvYmFsUmVnU3RhdGUgKnMs
-IHVpbnQzMl90IHJlZywKIAogICAgIHZhbHVlID0gcy0+cmVnc1tyZWddOwogCisgICAgdHJhY2Vf
-aGV4YWdvbl9nbG9iYWxyZWdfcmVhZChodGlkLCBnZXRfc3JlZ19uYW1lKHJlZyksIHZhbHVlKTsK
-ICAgICByZXR1cm4gdmFsdWU7CiB9CiAKQEAgLTg5LDYgKzE2MSw3IEBAIHZvaWQgaGV4YWdvbl9n
-bG9iYWxyZWdfd3JpdGUoSGV4YWdvbkdsb2JhbFJlZ1N0YXRlICpzLCB1aW50MzJfdCByZWcsCiAg
-ICAgZ19hc3NlcnQocmVnIDwgTlVNX1NSRUdTKTsKICAgICBnX2Fzc2VydChyZWcgPj0gSEVYX1NS
-RUdfR0xCX1NUQVJUKTsKICAgICBzLT5yZWdzW3JlZ10gPSB2YWx1ZTsKKyAgICB0cmFjZV9oZXhh
-Z29uX2dsb2JhbHJlZ193cml0ZShodGlkLCBnZXRfc3JlZ19uYW1lKHJlZyksIHZhbHVlKTsKIH0K
-IAogdWludDMyX3QgaGV4YWdvbl9nbG9iYWxyZWdfbWFza2VkX3ZhbHVlKEhleGFnb25HbG9iYWxS
-ZWdTdGF0ZSAqcywgdWludDMyX3QgcmVnLApkaWZmIC0tZ2l0IGEvaHcvaGV4YWdvbi90cmFjZS1l
-dmVudHMgYi9ody9oZXhhZ29uL3RyYWNlLWV2ZW50cwpuZXcgZmlsZSBtb2RlIDEwMDY0NAppbmRl
-eCAwMDAwMDAwMDAwMC4uNWQ2MjNlZDI1MTYKLS0tIC9kZXYvbnVsbAorKysgYi9ody9oZXhhZ29u
-L3RyYWNlLWV2ZW50cwpAQCAtMCwwICsxLDMgQEAKKyMgSGV4YWdvbiBnbG9iYWwgcmVnaXN0ZXIg
-YWNjZXNzCitoZXhhZ29uX2dsb2JhbHJlZ19yZWFkKHVpbnQzMl90IGh0aWQsIGNvbnN0IGNoYXIg
-KnJlZ19uYW1lLCB1aW50MzJfdCB2YWx1ZSkgImh0aWQ9JXUgcmVnPSVzIHZhbHVlPTB4JXgiCito
-ZXhhZ29uX2dsb2JhbHJlZ193cml0ZSh1aW50MzJfdCBodGlkLCBjb25zdCBjaGFyICpyZWdfbmFt
-ZSwgdWludDMyX3QgdmFsdWUpICJodGlkPSV1IHJlZz0lcyB2YWx1ZT0weCV4IgotLSAKMi4zNC4x
-Cgo=
+On Thu, Jun 25, 2026 at 03:02:42PM +0100, Peter Maydell wrote:
+> On Thu, 25 Jun 2026 at 14:23, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > On Thu, Jun 25, 2026 at 01:48:11PM +0100, Peter Maydell wrote:
+> > > On Thu, 25 Jun 2026 at 12:07, Michael S. Tsirkin <mst@redhat.com> wrote:
+> > > >
+> > > > On Thu, Jun 25, 2026 at 11:09:26AM +0100, Peter Maydell wrote:
+> > > > > This is still wrong. We should not have "x86 magically works
+> > > > > and all other hosts do something different" ifdefs. Define what
+> > > > > semantics you need and then we can figure out how to
+> > > > > implement them.
+> > > > >
+> > > > > My current thought is that we need to handle accesses of
+> > > > > 1, 2, 4 and 8 bytes that are naturally aligned by ensuring that we
+> > > > > do exactly one host load/store of that type, and that anything else
+> > > > > is "the guest isn't relying on specific semantics here, we can just
+> > > > > assume it's plain old RAM and do whatever". That would not
+> > > > > require any architecture specific ifdefs.
+> > >
+> > > > Well. X86 is special, as usual. It allows unaligned mmio so
+> > > > we really have no way to know an x86 guest does not intend
+> > > > just that. That can only be emulated perfectly on x86
+> > > > which is sad but I see no reason to actively break it.
+> > >
+> > > What actual hardware will rely on unaligned accesses
+> > > appearing to it as single unaligned accesses?
+> >
+> > /me shrugs
+> > any hardware that was only tested under windows?
+> 
+> I seriously doubt any hardware designer implements
+> registers that are not aligned, especially on PCI devices.
+> "Only tested under Windows" doesn't imply "hardware
+> designer did something nuts".
+
+Well I worry.
+
+> > > And if we do need this, we need to specify:
+> > > - what are the semantics we need to provide?
+> >
+> > match what happens on bare metal
+> 
+> This is too vague. We need to write down what we mean,
+> in enough specifics that we can then say "OK, we can
+> do this this way", or "we can do this this way on
+> some hosts, and these corner cases are not covered
+> on other hosts".
+
+I think there is exactly 1 kinda reasonable case. A 2 byte read/write at
+offset 0x1 within a dword. This maps nicely to even classical PCI byte
+enable mechanism and so yes it works if your CPU can initiate these
+things, and it's atomic.
+
+I tried reading LEDCTL on e1000e:
+
+       byte  @ 0xe00: 0x64
+       byte  @ 0xe01: 0x2a
+       byte  @ 0xe02: 0x00
+       byte  @ 0xe03: 0x00
+       word  @ 0xe00: 0x2a64
+       word  @ 0xe01: 0x002a
+
+Works fine.
+
+How important is it to have a script like this to work
+correctly? I don't know.
+
+
+> > > - what is the use case that relies on these?
+> > > Then we can see how closely we can match that.
+> >
+> > passhtrough of weird devices, first of all.
+> 
+> This isn't a use case, it's a vague hypothetical.
+
+True.
+
+> > > There's a lot of extra complexity added in here for
+> > > something it I don't think is ever going to matter,
+> > > and having the most common host architecture take a
+> > > totally different codepath from everything else is
+> > > a recipe for that other codepath breaking.
+> 
+> > Not sure we have to be pedantic. We have arch specific code and the
+> > world did not end.  It's not a lot of code, it's just for unaligned
+> > accesses on MMIO, which might or might not be broken anyway.
+> > And it worked already, so it's more about going back to what we
+> > did earlier.
+> 
+> But we should not have arch specific code unless we
+> have a reason to do it. And if we have a reason to do
+> it then we should say what that reason is and what the
+> cases the host has to cover are, so that when we can
+> implement it correctly we do that.
+> 
+> -- PMM
+
+I just like it when we implement whatever host does, qemu being a
+hardware emulator, after all.
+
+If you feel it's nonsense, I'm not gonnu fight.
+
+-- 
+MST
+
 
