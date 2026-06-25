@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D170CDB479
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 13:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3225CDE000
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 13:59:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wckZz-0008RU-KL; Thu, 25 Jun 2026 09:57:19 -0400
+	id 1wckba-000148-9A; Thu, 25 Jun 2026 09:58:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wckZx-0008R6-8Q
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 09:57:17 -0400
+ id 1wckbX-00013L-MO
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 09:58:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wckZv-0005B6-NH
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 09:57:16 -0400
+ id 1wckbV-0005Ja-Se
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 09:58:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782395835;
+ s=mimecast20190719; t=1782395933;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xPMbObWU+nhoaLgOIxtUyCS7Xrg/XO0y6Dh0FRrOJjE=;
- b=Vx7HEGYM6juWfEjwOrxI4hv9AZ0tzUYtNRlCKdDgX5EAJbR0zrLptS3FKlvw5po3daiVAv
- X+FkXeaktOvMu2sv39NgGqg/rgz8kisDx4Tv4MGamkVA6npApW8EzTnMS39NCZ/fpGfHcl
- r7LqevnK/YGgY+ED2HItjzZQsDzpYxs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=k69rVLYTqvPp53oHrDkwMTtdMyr7/XVrSRWobg809T4=;
+ b=erWbynZMUXeCevCIjkZGXRj5ki1smEaUUYofFdYuf/hFXSW25QIVY9qh+miugPYkxl5e81
+ xRoGKHClBBcEZsKk4/pjSPJ8lh/FTrxx9LH7kQO1luP1QWAjf/vwEvIwTq8XG41ZZuAf7j
+ 83pQe7HQ2Mi0OzVC2yePjViC0Z/2Ql4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-132-uCtTRrsMMsiT7LWmNo_uxQ-1; Thu,
- 25 Jun 2026 09:57:11 -0400
-X-MC-Unique: uCtTRrsMMsiT7LWmNo_uxQ-1
-X-Mimecast-MFC-AGG-ID: uCtTRrsMMsiT7LWmNo_uxQ_1782395830
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-dQ2FQLnZNGmafBe8UndW3Q-1; Thu,
+ 25 Jun 2026 09:58:51 -0400
+X-MC-Unique: dQ2FQLnZNGmafBe8UndW3Q-1
+X-Mimecast-MFC-AGG-ID: dQ2FQLnZNGmafBe8UndW3Q_1782395929
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 46446195FCCE; Thu, 25 Jun 2026 13:57:10 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4FBB61977515; Thu, 25 Jun 2026 13:58:49 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.50.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4154918005B7; Thu, 25 Jun 2026 13:57:06 +0000 (UTC)
-Date: Thu, 25 Jun 2026 14:57:02 +0100
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BCD0C3189; Thu, 25 Jun 2026 13:58:45 +0000 (UTC)
+Date: Thu, 25 Jun 2026 14:58:42 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Cc: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
  philmd@mailo.com, aurelien@aurel32.net, peter.maydell@linaro.org,
  pbonzini@redhat.com, richard.henderson@linaro.org,
  qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Subject: Re: [PATCH 3/7] hw/acpi/ich9.c: don't pass ICH9LPCPMRegs via opaque
- for ACPI_PM_PROP_GPE0_BLK prop
-Message-ID: <aj0zrmYDH_KQ4OGZ@redhat.com>
+Subject: Re: [PATCH 4/7] hw/acpi/ich9.c: convert object props in
+ ICH9_LPC_DEVICE to class props
+Message-ID: <aj00EjnzpkghS97L@redhat.com>
 References: <20260622112403.928954-1-mark.caveayland@nutanix.com>
- <20260622112403.928954-4-mark.caveayland@nutanix.com>
+ <20260622112403.928954-5-mark.caveayland@nutanix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260622112403.928954-4-mark.caveayland@nutanix.com>
+In-Reply-To: <20260622112403.928954-5-mark.caveayland@nutanix.com>
 User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -93,16 +93,16 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 22, 2026 at 12:22:35PM +0100, Mark Cave-Ayland wrote:
-> In order to convert to a class property, the ICH9LPCPMRegs instance must be
-> resolved by the getter/setter instead of being passed directly as an opaque.
-> 
+On Mon, Jun 22, 2026 at 12:22:36PM +0100, Mark Cave-Ayland wrote:
 > Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 > ---
->  hw/acpi/ich9.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+>  include/hw/acpi/ich9.h |   2 +-
+>  hw/acpi/ich9.c         | 153 +++++++++++++++++++++++++++++++++--------
+>  hw/isa/lpc_ich9.c      |   3 +-
+>  3 files changed, 129 insertions(+), 29 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
 
 With regards,
 Daniel
