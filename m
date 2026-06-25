@@ -4,106 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD331CDB479
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 13:17:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF363CDB479
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 13:22:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcjxC-0002rC-QU; Thu, 25 Jun 2026 09:17:14 -0400
+	id 1wck1Z-0004on-Ql; Thu, 25 Jun 2026 09:21:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wcjws-0002nE-Ht
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 09:16:55 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wcjwo-0000jy-Op
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 09:16:53 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-bec49f7e35eso486727566b.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 06:16:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782393405; cv=none;
- d=google.com; s=arc-20260327;
- b=Mxr8l9IKifgAjyi+cJLxTx+bkmW2pCDRSSiSsmwETK+ASNzx38XUzoXP/ftuyLzfBc
- 4H2yGLbkq3WjH52xrmOioZ8C6/zc/UZcjO1sZJh57ajyxoVr8hYFzz5fGeWGmMG0fpQ/
- pu3wBUuMGa1lFqg+6i+oKSbkINMnK65dsfx3fmFY8655tCiYWzYpPVZC2SAtG4Se4TOE
- eCPvUgEmxePeqViFnrtuhg6drS68dnoJfdfDtwWJmM4//B84DznE9lH7X2zKOhNVGDJF
- lfW56X+zOIY0J5VeWNEyB7tcjpSZ1m1Nur2kdG3DnrvZj5tYzWEcOBEADjeuw+2wJIAT
- VPGg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=aJhk0/wgZkJARwBT8D1LrlVOSWWW0BQtu1pE/GofGKE=;
- fh=PeFbVosthX3orXrj21AtkAF2HOBB2ebCVbnK8SPgbQA=;
- b=PfgXX7E8i6unjZs3dAewu9shDO7TUlJOLnkoDnDpy5ECAWWrbSMuYGi7JEjdMd8/bP
- VLbNLdX1ckENd7hO2pFWo6flcfmorMhZLMoN50Parg5uEOmXwuOij1l4OCL5DW/+5C/S
- ejQGXFR0sYSUAhQLdjpF2Sze9l73imnMt9a4RNTBOoTcQh6vy5h9Z9A66902qjQIuIyu
- HKTO+tGTMRTgXRP2unxLm2idBZpA1wZw4sQYL8PNkgaEJtyt0mJP+RTkZ5OLqyiqWYgI
- 6GkCy0KlnLHwRSUm6PhK+eoQRkZQmmX00I9T5b9UuA7hJFF7IWR8ccfRpplcZw8uiwbV
- SSGQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wck1W-0004lo-9l
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 09:21:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wck1U-0002b2-2c
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 09:21:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782393691;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=9DdIai4zPf2aIPEZVVqYPoG5jEqeVllw2Rz0f/Mspbg=;
+ b=KiSF8YyK0Z19fmHYvN4LSecOsKo32TIprL3CIFhCFULj65OcDHnYU4CT/IT5iDQmcHxvVm
+ jUY7IAHixP1gin9ftWGcffROmYgp9bjsBkuXVB8jRAfeXBAGU+yblmAVQOkGjhi0NziLyn
+ ICcuyTKWnsFprNhCf7CsNePNzShBM8k=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-489-KCnjhZqSOW6B-bHzAHnTWg-1; Thu, 25 Jun 2026 09:21:29 -0400
+X-MC-Unique: KCnjhZqSOW6B-bHzAHnTWg-1
+X-Mimecast-MFC-AGG-ID: KCnjhZqSOW6B-bHzAHnTWg_1782393688
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-c0db30ce19aso5067966b.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 06:21:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1782393405; x=1782998205; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aJhk0/wgZkJARwBT8D1LrlVOSWWW0BQtu1pE/GofGKE=;
- b=C05irAYqGNQXH4KnuCNzqqC9/U76fwsAQoGlcpxdO/45x6ai4r4g8VBycPBZGPXvTW
- JA0kh3PKzbLSD3h/UstoJ//rm26IanziAuo0bpnV3XaINoON6DcEe/CN6R/VvYoUgfT3
- KcDh52mQeB2e0OqpyaO1HhsuqZ/WYyj8JDevc=
+ d=redhat.com; s=google; t=1782393688; x=1782998488; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=9DdIai4zPf2aIPEZVVqYPoG5jEqeVllw2Rz0f/Mspbg=;
+ b=iOQR2oDU29MK/nhRcaZImOaDEvm5MgU/IpWduNAMhyHHINFFzXJWQIZRbk93mSz+bv
+ ELm1B0cbX4eykoz5D2Ru60u4iZW2AmLMgxNhsV01zqflp8LY4X2/3oECetw0H8gfiRIM
+ W26xvSlAF8QlMjvaYMHkgu+fpM7oUFUqnUAcyW0KPir8jfkT7CoMfQd9QY+4YtfNFxZp
+ 5s0eeFNWWUMnQ6tEAumrXibKeEZ35vbAQddqiNfGBUmetx03HqCTibpTAkFCIS9f2ycS
+ sFmJqYT7BfhtBwEBiFCbcLm5w9uPpIxfXL7YSSHlmGKIlYh6Td0ZU7VT9VeQ7TajBJ1B
+ 3+bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782393405; x=1782998205;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=aJhk0/wgZkJARwBT8D1LrlVOSWWW0BQtu1pE/GofGKE=;
- b=COyBhQVopQ9r7VGyDys4lodrgOri2i75csvROHZ0sSV+ktO/WUdTUx35zckQwICBha
- fb3KkIylHwkz2lGQJ9/byv4QeUIZwEhHSOyXPlHCGwlVrDqeD8paBHRtC5Cp/AzX9Bat
- n0E+wXw+evYYxpy5CZ4COo525izUxMMZofEsmV2HC/yYhcdDmeBisO9AU//VTP5M+iDX
- I9E9gMNvFx+RiqfGmk9CwdhbzYcE3/+0+VMHBxYxfBY5zsjg9PuL22yVZDu2tR9sUkxj
- wcdCf3u/z7Jo/qotQJ3vmrhls5W7D9Z5jxLlyFniw9rKefRr7lP0ga9LbYxKrjE9Vs3Q
- yqfQ==
-X-Gm-Message-State: AOJu0YyV0W1ZNa9rPk7ugRwO0xtBwM9mMzpooH9fYfj4vJlwElZi9MkK
- V54KQUo2Ucnuf1te23AfyJFEnpZ41rQzkahRPCP0fCO4GdAMj+tjFV4Op57459mPFh1gnlK8Equ
- nsD3QDx49TshVm7us+gj+N3PPDvQG7jxhg3ogrOzc+w==
-X-Gm-Gg: AfdE7cnkmxxVK7E4ynvj1jNe362LBzpCsd151oUADqq21BagcLc+ngUs6dJt59H5XeY
- q9Fa7t7hzFhMSmv9db/hpAKtjrNrTJh0tomp8lL4j6Ekl6swF0avn4CzJ54LP4+NkjODkVxtKUh
- fr1XlXnmPqB2imOaJW/gTt/bQWGsGjqwykK48ZPEQGOPTHS6ksbbuaTGid1bkGTVRxRzw/FVtgp
- Gby3rsVab5ofAMO9qsfE3Y7FXKLZp2l0zh5AlbZuBx9bSKUQL8d+8wKX3t6TiyBLZucH1U7H/q3
- mwF44POK/GE2upluf5mtjWELhgqQ
-X-Received: by 2002:a17:907:7285:b0:bec:a96b:75b8 with SMTP id
- a640c23a62f3a-c1205ef0cbfmr173024966b.32.1782393404381; Thu, 25 Jun 2026
- 06:16:44 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782393688; x=1782998488;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9DdIai4zPf2aIPEZVVqYPoG5jEqeVllw2Rz0f/Mspbg=;
+ b=TBksKZ2fHr8e4h//4l05/myjAC5b4Mp1NDZGM1Xf8/rBrcEvX38LBkW/wEJsTOmRlY
+ w3jqrnA/lDoST/2iu32SlCw52daRwyXZ2ItS7w1M9hX0Agkat67xBpX6GI+SfT7CnI0o
+ wamkazjJWXzoen8VmNqU6oplyMSd1mD4PFD76VKn6bE+OAwAAXLl6ESbb6K+p2uPTRxo
+ h0fkzorkntFxy1WRrnbneLAVTOPeq5TXSUh24L95gfrxCdUShymoaxe9HzlJ6msbpd6h
+ ddUN6ckPYfOvcLqcPKXF8wnbHQUhbbAup2oM4B2bf0pe9fOftXfrfl6UQ1fWHC5PEPza
+ Uzvw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rr+wCaU1kEnCl1x0xPxItqXaLJz2QkyYLyPyAnHQ52e3SQ89TH0fk1ovgwXLsky+94mEfzorgCyBqXx@nongnu.org
+X-Gm-Message-State: AOJu0YwN9eTv9zwl5URsrxbqFqt+YNVbjj2zuAjmXwEebMS1tPxfrz7O
+ swRxvpEj6RFquWW9a2mcP1XPbKo7iftSazXsNG7dKVI72ALN9MvV9VoMz9ZngtcUDi2Wc4d3hP5
+ pB5W+ca9Giv4raddJPfESSiJzs+opyi5ATCz4DdubBbO+tjASFKiUeB5PQt2XIZi4
+X-Gm-Gg: AfdE7clQ6cFgUCt2pGrKhmx8kTRrb6iKxNWzpbPosh8rEvAxZgwdmkbU3VM856DbGV8
+ 95F+QovempZL9H6lLQx2OGrQUqe3KMox2KyJ2ooROrAvHJWMTBztkJTOr6X6MUzCzD8bGtJVmkq
+ aTr/5xPKJnZFuEEB1vVvcCas7cFXwrQtmsYOofjt08JlCWCsora7pcvLycIFnH+lZcbSsAfgLny
+ kH0FliBgArDOyU7FPDR93ERwXDcAmchY+aryKEeObbbNaSj0luTgatA1IYhzAYnemxkXPGL7lNI
+ keDk/jry00zqJkInpYJEpde1lJsNDdFDwbGVjKp72HuoJXcIbN7ngGaU2ASOEfNY5bJIsI11Uuj
+ tBRchHNPy56zSwgB3S3jkqols2HH1ZY41Up7wPQmZP4KqfsxPVnZTe7U=
+X-Received: by 2002:a17:907:3f8e:b0:c07:c08f:9e45 with SMTP id
+ a640c23a62f3a-c1205dbafacmr178688066b.17.1782393687765; 
+ Thu, 25 Jun 2026 06:21:27 -0700 (PDT)
+X-Received: by 2002:a17:907:3f8e:b0:c07:c08f:9e45 with SMTP id
+ a640c23a62f3a-c1205dbafacmr178684266b.17.1782393687296; 
+ Thu, 25 Jun 2026 06:21:27 -0700 (PDT)
+Received: from ?IPV6:2a01:cb19:8426:ae00:2b21:b1ac:81f4:97b6?
+ ([2a01:cb19:8426:ae00:2b21:b1ac:81f4:97b6])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c11fbe5e5a7sm184055166b.52.2026.06.25.06.21.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Jun 2026 06:21:26 -0700 (PDT)
+Message-ID: <0f164a7d-cf9f-4728-89c7-7e862a165ad4@redhat.com>
+Date: Thu, 25 Jun 2026 15:21:24 +0200
 MIME-Version: 1.0
-References: <20260625080910.30569-1-alexander@mihalicyn.com>
- <ajzoxZr4g0Xsr_4p@redhat.com>
-In-Reply-To: <ajzoxZr4g0Xsr_4p@redhat.com>
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Date: Thu, 25 Jun 2026 15:16:32 +0200
-X-Gm-Features: AVVi8CdF8WIKGJgCRCjflAtC_3S1dcIaakjlplesXqFfNWi07JOqnI0OcGq_w9Y
-Message-ID: <CAJqdLrpfefPpU+QB6-4YXoHxhx+nMyZO5d6RBHxTOc=yU-fq9g@mail.gmail.com>
-Subject: Re: [PATCH 0/9] hw/audio/virtio-sound: basic migration support
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
- Gerd Hoffmann <kraxel@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alexander@mihalicyn.com; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] vfio/pci: Propagate errors in vfio_pci_load_rom()
+ using Error API
+To: Mario Casquero <mcasquer@redhat.com>, qemu-devel@nongnu.org
+Cc: alex@shazbot.org, philmd@mailo.com
+References: <20260625094307.148542-1-mcasquer@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260625094307.148542-1-mcasquer@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,98 +166,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Do., 25. Juni 2026 um 10:37 Uhr schrieb Daniel P. Berrang=C3=A9
-<berrange@redhat.com>:
->
-> On Thu, Jun 25, 2026 at 10:09:01AM +0200, Alexander Mikhalitsyn wrote:
-> > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-> >
-> > Dear friends,
-> >
-> > This patchset is aimed to support virtio-sound live migration and based=
- on
-> > pre-existing Volker R=C3=BCmelin's patches from qemu-devel lists [1]. I=
- tried
-> > to ask (https://lore.kernel.org/qemu-devel/9d7ea128c711c201688a4716f53b=
-8a335fc53569.camel@mihalicyn.com/)
-> > if Volker is going to continue his work on this, but received no reply =
-so I
-> > just decided to go forward: take his patches, rebase and resend. Of cou=
-rse,
-> > I kept all authorship/tags so I hope that it is fine.
->
-> Yes, that's the right way to approach it, you waited a decently long
-> time for any response to your query.
->
-> My only suggestion, in the commit messages, if you made any non-trivial
-> changes to Volker's functional code, then just put a single sentence
-> inbetween the two S-o-B lines to highlight it, eg
->
->   Signed-off-by: Volker R=C3=BCmelin <vr_qemu@t-online.de>
->   [AM:  changed blah, blah & blah because blah]
->   Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion=
-.io>
->
-> if you didn't make any non-trivial changes, then what you've done is fine=
-.
+On 6/25/26 11:43, Mario Casquero wrote:
+> Updates vfio_pci_load_rom() to use Error API for error propagation
+> instead of error_report(), improving error handling consistency.
+> 
+> Signed-off-by: Mario Casquero <mcasquer@redhat.com>
+> ---
+> v4:
+>    - Use error_append_hint() instead of error_printf()
+>    - Reset rom_size and rom_offset to 0 in the error case
+>    - Update error message to "Device ROM size is zero", different from read errors
+> v3:
+>    - Use error_setg_errno() instead of error_setg() with strerror()
+>    - Reset rom_size and rom_offset to 0 when freeing rom on error
+>    - Use local_err with error_report_err() instead of passing NULL errp
+> 
+>   hw/vfio/pci.c | 32 +++++++++++++++++++++-----------
+>   1 file changed, 21 insertions(+), 11 deletions(-)
+> 
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 9df04fa2d7..61b4a6a5a3 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -1027,7 +1027,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
+>       }
+>   }
+>   
+> -static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
+> +static bool vfio_pci_load_rom(VFIOPCIDevice *vdev, Error **errp)
+>   {
+>       VFIODevice *vbasedev = &vdev->vbasedev;
+>       struct vfio_region_info *reg_info = NULL;
+> @@ -1040,7 +1040,7 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
+>                                         &reg_info);
+>   
+>       if (ret != 0) {
+> -        error_report("vfio: Error getting ROM info: %s", strerror(-ret));
+> +        error_setg_errno(errp, -ret, "vfio: Error getting ROM info");
+>           return false;
+>       }
+>   
+> @@ -1052,10 +1052,13 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
+>       vdev->rom_offset = reg_info->offset;
+>   
+>       if (!vdev->rom_size) {
+> -        error_report("vfio-pci: Cannot read device rom at %s", vbasedev->name);
+> -        error_printf("Device option ROM contents are probably invalid "
+> -                    "(check dmesg).\nSkip option ROM probe with rombar=0, "
+> -                    "or load from file with romfile=\n");
+> +        vdev->rom_size = 0;
+> +        vdev->rom_offset = 0;
+> +        error_setg(errp, "vfio-pci: Device ROM size is zero at %s",
+> +                   vbasedev->name);
+> +        error_append_hint(errp, "Device option ROM contents are probably "
+> +                          "invalid (check dmesg).\nSkip option ROM probe "
+> +                          "with rombar=0, or load from file with romfile=\n");
+>           return false;
+>       }
+>   
+> @@ -1076,10 +1079,12 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
+>               if (bytes == -EINTR || bytes == -EAGAIN) {
+>                   continue;
+>               }
+> -            error_report("vfio: Error reading device ROM: %s",
+> -                         strreaderror(bytes));
+> -
+> -            break;
+> +            error_setg_errno(errp, -bytes, "vfio: Error reading device ROM");
+> +            g_free(vdev->rom);
+> +            vdev->rom = NULL;
+> +            vdev->rom_size = 0;
+> +            vdev->rom_offset = 0;
+> +            return false;
+>           }
+>       }
+>   
+> @@ -1147,7 +1152,12 @@ static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
+>   
+>       /* Load the ROM lazily when the guest tries to read it */
+>       if (unlikely(!vdev->rom && !vdev->rom_read_failed)) {
+> -        vdev->rom_read_failed = !vfio_pci_load_rom(vdev);
+> +        Error *local_err = NULL;
+> +
+> +        vdev->rom_read_failed = !vfio_pci_load_rom(vdev, &local_err);
+> +        if (vdev->rom_read_failed) {
+> +            error_report_err(local_err);
+> +        }
+>       }
+>   
+>       memcpy(&val, vdev->rom + addr,
 
-Hi Daniel,
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-thank you for such a fast reaction on my patch submission ;-)
+Thanks,
 
-I've addressed this in -v2 and sent it.
+C.
 
-Kind regards,
-Alex
 
->
-> > Changelog relative to the original Volker R=C3=BCmelin's submission:
-> > - rebased:
-> >       - "hw/audio/virtio-sound: return correct command response size"
-> >               was dropped as it was already merged
-> >       - "hw/audio/virtio-sound: fix segmentation fault in tx/rx xfer ha=
-ndler"
-> >               was dropped as it seems to be replaced with another fix
-> >               https://github.com/qemu/qemu/commit/731655f87f319fd06f272=
-82c6cafbc2467ac8045
-> >       - I had to drop all pre-existing Reviewed-by tags cause it was 2 =
-years since
-> >         this patchset was sent and reviewed and I did a quite significa=
-nt code changes
-> >         during rebase
->
-> No problem.
->
-> >
-> > Kind regards,
-> > Alex
-> >
-> > Volker R=C3=BCmelin (9):
-> >   hw/audio/virtio-sound: remove command and stream mutexes
-> >   hw/audio/virtio-sound: allocate an array of streams
-> >   hw/audio/virtio-sound: free all stream buffers on reset
-> >   hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
-> >   hw/audio/virtio-sound: add stream state variable
-> >   hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
-> >   hw/audio/virtio-sound: introduce virtio_snd_set_active()
-> >   hw/audio/virtio-sound: add missing vmstate fields
-> >   hw/audio/virtio-sound: add placeholder for buffer write position
-> >
-> >  hw/audio/trace-events         |   3 +-
-> >  hw/audio/virtio-snd.c         | 685 ++++++++++++++++++++--------------
-> >  include/hw/audio/virtio-snd.h |  25 +-
-> >  3 files changed, 407 insertions(+), 306 deletions(-)
-> >
-> > --
-> > 2.47.3
-> >
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
 
