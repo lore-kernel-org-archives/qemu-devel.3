@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 801D0CDE010
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6F94CDE00E
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 21:21:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcrUX-0007Eq-T8; Thu, 25 Jun 2026 17:20:09 -0400
+	id 1wcrVT-0000tH-4V; Thu, 25 Jun 2026 17:21:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcrUV-0007AB-DF
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:20:07 -0400
+ id 1wcrVM-0000cV-Iv
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:21:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcrUT-0003Y8-Ud
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:20:07 -0400
+ id 1wcrVK-0003hX-3X
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:21:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782422405;
+ s=mimecast20190719; t=1782422452;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1ZVJSLuYC67R7uydR6aDnrGkLmhgIMa9GeQ+BIvj5s8=;
- b=cMmXTJXjXMqd7J1F6dnt6bExO5we8X2bqaQa4NhCm7izg8U4ha/XGmYNfg9F4TnN38mTwy
- Lvnj4rilJnTnSnhxQ88qpjY8ADcwuxwws+nfcVgnMRiCZFalEgYc2vB+knuYcYc5Sq6DJi
- 8TrmLL1vw4Yi9yB4NlnIQ5x2nVyPqmQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=OSY4Du+wThReu2l3luDB3PBkWNSPdVplZPiWAY+h5N0=;
+ b=TQdayiZ+UmtNGPmq2cVNfe7V48LxV9qmXk0Y4A/vA3C3Zr1f4LADA+Oq9MUFlebyioDDd/
+ KIphEyGi7DFlMoFr9SZAfy5O4I/WjipEan8/2+NLpHYzKT6KllWYXAAdhQlS63bSztrFav
+ 1qudvXYtB0ndEgUppsHbyiNHxNGiM+c=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-459-moBKdVgTPvKIv5fab8AZ0Q-1; Thu,
- 25 Jun 2026 17:20:02 -0400
-X-MC-Unique: moBKdVgTPvKIv5fab8AZ0Q-1
-X-Mimecast-MFC-AGG-ID: moBKdVgTPvKIv5fab8AZ0Q_1782422401
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-507-_oY5XN5AMbGW1FXRjkpKkw-1; Thu,
+ 25 Jun 2026 17:20:49 -0400
+X-MC-Unique: _oY5XN5AMbGW1FXRjkpKkw-1
+X-Mimecast-MFC-AGG-ID: _oY5XN5AMbGW1FXRjkpKkw_1782422448
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1EEEE186BF3F; Thu, 25 Jun 2026 21:20:01 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 77F671800366; Thu, 25 Jun 2026 21:20:48 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.16])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DC83B1800370; Thu, 25 Jun 2026 21:19:59 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 36E5F414; Thu, 25 Jun 2026 21:20:46 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 26 Jun 2026 01:19:06 +0400
-Subject: [PATCH v2 05/39] target/i386: return an error for invalid CPU in
- hmp_mce()
+Date: Fri, 26 Jun 2026 01:19:15 +0400
+Subject: [PATCH v2 14/39] tests/qtest/pnv: drop unnecessary -serial mon:stdio
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260626-qemu-no-hmp-v2-5-8af31bc54c61@redhat.com>
+Message-Id: <20260626-qemu-no-hmp-v2-14-8af31bc54c61@redhat.com>
 References: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
 In-Reply-To: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
 To: qemu-devel@nongnu.org
@@ -63,24 +62,24 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Markus Armbruster <armbru@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=922;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1682;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=H8fyqVWjZ5ZUdHKFdi/uAxwk9XqORp2OV/LppjqTpm4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqPZtcGKOJtbyurPliXIN15bNh78IFupowNsKw+
- TBbfaEeqUiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaj2bXAAKCRDa6OEJdZac
- 5R1WD/9QYU0Uubnb1BlzmUTe3cbz3Ei4U2fsv2Jh2DRVkFSXSADZaKottyOff8+vcv/TUc+Wyzv
- MqGTKtvUIvQJzuu1EWLUJLqc+cW11uSi2/MttpO6EltswNhKjzyd5RImoMBDbOYrOfkeezKjIIm
- rVmGmeT0Pa1hDWSQ6MbYWhbPca2A/si1uLdJWstyun3dMzx+ruVJokdo1/aheyx+swp3QCNkaMR
- KCCTO3FN8QCgpnQz+sNomX1nDemWDRl8WJ8OsPydHWo+SrQGWS4f1xkIeSQN+GlXYOSNJZwWHJe
- Ni5gYPrf5zKshe5OMFHTT/H0SJlm0Gs04liobhAfGJ91M0poAW7dwYrPSstd2JJGdGVBTPf1bVk
- XISR1Ph7zqJiE0jMqzYNwB4485Ll40Z6petcqGEU664SED2uJy1cNmBKJW+I0noQtfcCWW2cSWo
- XEPOCb/+ckWwJhWBTcuPteISwyT+NuAxu5PG5ns3uBxbaIZb3/cUjZD9DvVLIFDE+ZKo8JRpnjG
- uWgXNprt1ZxFHo3nr+o/OHjQ1d8DArgZ98zgtIdTPoRpT64/keNmXoxP8RxG3fUq6EowD4fw48W
- 2FH2EGveIzeaSolXpnceChPGHD8dXDqJGao4xl46xUYrWfAz4aq23qlTCrsidUYg++flbH9unkB
- RoqDch6PIkyF+rg==
+ bh=AvhBD7LC8S+UUVLOR6honVVMWXRDaIcekyjM+15DjDg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqPZtdDPaAkj72s+CTx+lAtUfGpo/5ERUKWCTXd
+ n++zzewLTOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaj2bXQAKCRDa6OEJdZac
+ 5RskEACWNGAJDsnrcCnremHbffnlY5u5gjDFMgQpYMzQ48XqvO8Ehml4Hn8y9BwZWoaHL6lJ79s
+ OBtkT+TC6wfNXlmskUt75eRS1R5e76tf60ajImv03n4i/KkFQZX00433dmWzhhlftAoZyqtldOV
+ Fjk/bnd5hOmhilfBxyEEFqZokYVo3D7LZnD4KzzXasZlNQ6qQh8JaMumOtQU3k5M2mhY0Cy11Po
+ AohsX0726l0Jzq52myjUdUaptmZ9fcXvTmsEGLdIU6CJpGrUoElNj5TIeWxEEADLHudm0vQoNs9
+ v/Vq2nqVRUpuK1pj/Ztanmi9CD5w/SoYuddTWEUBJnhCarxNtYo1XDdTTy4FWgwM1UgxRpIEqlq
+ sRNFYLf7to97FRhR5HzaQ5H4Vx2/Hi7Vvp41nti+oYBg1IZ/XlEQU+JSdiChG94fbIBTCsrpuTN
+ mUBBdcDayZfUOMH9He9FikpghgOUCGjYco+s1YRYRqiWpR4qatwbgs+MKTdHPT/ffFmdNPrb7cB
+ NwCG07eE0Arc+/dkoLQ+qXy86RdqpV6xdgkR0k68v8D2q6sZcCdKXlD0Ak8fhNzX++qbyEL7KuY
+ WUgGu2VVhQHcyyfumV0j7EQzKMHp5TQRidt0rarWfbHujwtCVhA+NFoNXazbzINpOSnxluTfWVw
+ +5egzcM9PyDiaqA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -106,33 +105,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than silently doing nothing.
+The pnv-xive2-test and pnv-host-i2c-test pass "-serial mon:stdio"
+but never use HMP commands. The "mon:" chardev prefix creates an
+HMP monitor mux, which fails when HMP is disabled. Other pnv tests
+(e.g. pnv-spi-seeprom-test) don't specify -serial at all.
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Drop the unnecessary -serial mon:stdio option.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/i386/monitor.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tests/qtest/pnv-host-i2c-test.c | 2 +-
+ tests/qtest/pnv-xive2-test.c    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/monitor.c b/target/i386/monitor.c
-index 785a13dd710..9ed772e6d7f 100644
---- a/target/i386/monitor.c
-+++ b/target/i386/monitor.c
-@@ -586,10 +586,12 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
-         flags |= MCE_INJECT_BROADCAST;
+diff --git a/tests/qtest/pnv-host-i2c-test.c b/tests/qtest/pnv-host-i2c-test.c
+index 51e613ebdcb..368d1a91401 100644
+--- a/tests/qtest/pnv-host-i2c-test.c
++++ b/tests/qtest/pnv-host-i2c-test.c
+@@ -415,7 +415,7 @@ static void test_host_i2c(const void *data)
      }
-     cs = qemu_get_cpu(cpu_index);
--    if (cs != NULL) {
-+    if (cs) {
-         cpu = X86_CPU(cs);
-         cpu_x86_inject_mce(cpu, bank, status, mcg_status, addr, misc,
-                            flags, &err);
--        hmp_handle_error(mon, err);
-+    } else {
-+        error_setg(&err, "Invalid CPU %d", cpu_index);
-     }
-+    hmp_handle_error(mon, err);
- }
+ 
+     qts = qtest_initf("-M %s -smp %d,cores=1,threads=%d -nographic "
+-                      "-nodefaults -serial mon:stdio -S "
++                      "-nodefaults -S "
+                       "-d guest_errors",
+                       machine, SMT, SMT);
+ 
+diff --git a/tests/qtest/pnv-xive2-test.c b/tests/qtest/pnv-xive2-test.c
+index 5313d4ef18b..b4f4b601c2a 100644
+--- a/tests/qtest/pnv-xive2-test.c
++++ b/tests/qtest/pnv-xive2-test.c
+@@ -549,7 +549,7 @@ static void test_xive(void)
+     QTestState *qts;
+ 
+     qts = qtest_initf("-M powernv10 -smp %d,cores=1,threads=%d -nographic "
+-                      "-nodefaults -serial mon:stdio -S "
++                      "-nodefaults -S "
+                       "-d guest_errors -trace '*xive*'",
+                       SMT, SMT);
+     init_xive(qts);
 
 -- 
 2.54.0
