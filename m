@@ -4,139 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD02CDE00C
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 22:22:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D14F5CDE00B
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 22:35:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcsS4-0000hD-Aa; Thu, 25 Jun 2026 18:21:40 -0400
+	id 1wcsf8-0004a9-L8; Thu, 25 Jun 2026 18:35:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wcsS3-0000gw-D8
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:21:39 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wcsS1-0001ML-KF
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:21:39 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65PFeMT82737434
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 22:21:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- e725vr2aW7giwWDjY5SN0qVsPJjMTRk2LjBaNB1knyM=; b=lUxKwMJ1gmE3jswr
- PcPmhkEWiv9guzkXBGhqiNZQyoFbW14Heyy5JEeTNI7rr2w4lnAmTXLLtQjX+WKP
- QpsawnOwWC1x/rmK41C7xfnn7Z7AolEBcpfDetsMRGWXnDKXKY8+IqJT5ucciUa+
- tH6rmB2FtagGRadKWE3E01aYUBFKZN5Zy3alN7KDNZPwQGNRkndxgCZj0NQkf5dY
- gWSPs+qa3Xg8WouE5o/y0OdXLNafqG2+i2bEF6sgBm8de2AmbnweC4uB9k6vopT5
- B8FTkBWl7O9ihcN2xVUYNVk66mlJ4O+IYtX1jrUYVliUKqhM+rOjf86HLD4jyZF4
- tP1ZrQ==
-Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0ya8umc2-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 22:21:36 +0000 (GMT)
-Received: by mail-dl1-f69.google.com with SMTP id
- a92af1059eb24-139b62317d0so646215c88.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 15:21:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wcsel-0004X7-Ni
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:34:49 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wcsed-0002K2-6N
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:34:42 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-8424b00710aso190665b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 15:32:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782426095; x=1783030895; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782426724; x=1783031524; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=e725vr2aW7giwWDjY5SN0qVsPJjMTRk2LjBaNB1knyM=;
- b=abRYpCA+w1wz8cZqXHTrlA6UBqSmQa+i5LgEp7W926I0C6V3qhFu37D8ytFLwXTjB/
- P6rx8KHiYzw79IZj+/qQZsu+un6596F2PlxRpuOfywOONzndNL+EgYvn8Ick5LCJKzEC
- YRDTMQOGGPiWCHz95N+3nKYfmMimM4Q2nAEhDGnvuXhFJuiei0Rpm8Yl9uFz7TwtLDg+
- KS3U2E1VRw/+IctJAoYvtJjuMCo2T5BjSQdyDmLTvb/ny3GdrooirsNe0CGsKOBjPKgo
- RqS979eXvus4rkyKBSRnMvvg3emLLhgUhSTtdQBrxY2qX61FUP4lJ/Vg8Eqd9IbvIawn
- CxOA==
+ bh=tMMaiSxuvvK/MMllu8ARtJOHHm1Tfb2hW3iiR5BWhXI=;
+ b=krVhDUCWoZAHv5SzLA+d0y8yGX4sujWpPkwKeT0apfXKo78AOgP3W/wYo0332R82mM
+ gJq1qB2Y+4w/LgUkas9D+MAM9zxT32aqEBksEvrGptjCJXWsWvYQJcnHyHHngl5J4HEM
+ RRTH9ASInxKPQDoq/AVtA7VcpoAc/n6jKIl5mbkCe1zmTu3//5paJJ4pIiVUbflsLxtY
+ M1tHhIs2S65hfAYuDXLSTv1C3bcye5h7pXNa1sN4WoShQXKRyHyg9NKq7/x4oii5w58j
+ ZoTDg3WMbf6xzT1tlnsIAZPKtbaDK38acZDF2eytFt46B+GHKxgoALnroYaaJlcPBtlw
+ qoIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782426095; x=1783030895;
+ d=1e100.net; s=20251104; t=1782426724; x=1783031524;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=e725vr2aW7giwWDjY5SN0qVsPJjMTRk2LjBaNB1knyM=;
- b=nKjNoqd7SebHvD6okqyG+5HPPMm/EJQYTwFElhGJm6DF/s9ayLmFFkIpz0dFQKy3mT
- JVnRMIR/nA3j0D2YRE41YyKjoBw9VC/V594B/OQbgOxvhAsQL+PPtQZ/f2rMitv8PUu9
- Pt3LXZL2vEyA0lOdCGCgtzRsHYkvmhWV6WsqV3VQ2oRSSZhINSeFw+gLMcQpxaN0c2D+
- 85yyQJ1Gprj+tET49DD/AT1xIfYfnMmJzhFCZ4XZGm3LXL9IyPBE1zZv2ouwYY97Qdjx
- fX99BzoOa5Tk+wMx9Hic83I3tUsoibtj13lzXljRzXtDRq5DGLrEqVByQ3U21OnxFKy0
- Auww==
-X-Gm-Message-State: AOJu0YzPpRw3jOBtwcvI2CHNg2toW+HMzm/6CoyfGiNL/H+OozU/YGrx
- JkzP6FxFQORCtQZK/5QB7WlN87fONVi1wKPO6AgY5e8WwNPVwAvDogO5I1OFlGN89KrKT09G6oy
- FGEgQhKqYwzpJWj9pjrdKd2G1n3o9bo1FgIAzTyUGwu5NQEZ3cOCxarv8yEaS1sb0Mg==
-X-Gm-Gg: AfdE7cnTENftIxntpvstXfwbw20+nLfmPiTlm7x08rMjRLTkEsU6bZIPkzXIyCznuKq
- +5Xf9PQBSdTaWtkxnN1synD5BXnKAXVDN5HhmzO36IexkRk6wBe4xTbmtEArcT2q66tt5kENjR1
- AWJBxZl5Q3ZTkT/+xGCdrLKmKRBGCvUgnr3+yVcHvK1QxLabp3bQnV/qLxYQOSsFWTqPJMcS5mJ
- 1Z+Vsah3IU0Th7nIiBQt06yHBjF80HlBR1eZjTKFjnWsGdfrJddPuhRBt6e1lKHY2PRVWNKt7EB
- +ls6Ef6ZWRxKEOCZrY8uHHpnRhQcr5gXrV0D/PZfD0Vho/Ahkq6rvRhVicwdTX8DuuqUUks7EtG
- a+71h4jYFrlQNXQfZTgoRIIqBr2pbznkCTemIijOtKvS6uAI9BzrrObhlAR5DfIguxGfBo4+pdJ
- lzMA+YDw==
-X-Received: by 2002:a05:7022:f512:b0:139:beb9:fccc with SMTP id
- a92af1059eb24-139dbb49550mr2488892c88.26.1782426095539; 
- Thu, 25 Jun 2026 15:21:35 -0700 (PDT)
-X-Received: by 2002:a05:7022:f512:b0:139:beb9:fccc with SMTP id
- a92af1059eb24-139dbb49550mr2488882c88.26.1782426094999; 
- Thu, 25 Jun 2026 15:21:34 -0700 (PDT)
-Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-139d8f318e7sm11538477c88.3.2026.06.25.15.21.34
+ bh=tMMaiSxuvvK/MMllu8ARtJOHHm1Tfb2hW3iiR5BWhXI=;
+ b=hdautZHG3PoM0v2NPOF+GVaIdB5mOMwSEWpuJmMRPvLiJvEwEmOAgr2jjkuNTg8KuC
+ gLVyRwlHQanr2y1FLQK21t/WKHvF4gvwWMuJtAOYvQAoqwbHhui0yZX1k4Jv9Nvqu28A
+ tWRzl0XX8R6bDh2pc+2xfCezuB6nNycRGvRr7zj1J3HWZ1oAv8fuY7i2+n2AAgGmr5/u
+ Ryj3uLmT88N9TPyBdwvj9nUWUPf26cv7g4V4o2musbEyeI1n+GR6s3hvXQT5Ra+hdmKs
+ CZgB6nNiTHKcAUdOvAwcxijRpyGRXHZl15I60a6MmAFxtr0CjBAUQfkh0SmpiVxDPW2x
+ AqOA==
+X-Gm-Message-State: AOJu0YyHi9y6cpmQ4O7kZxJBw78wPznUkhEi+593FE7TAR6ZiHGmuOGv
+ NPCw619Tg4iytNlyuJ0zYYUO8qM/8EZm8ou/Fqiq6ZATZpx1F23RnO/8eBiN3njAkpIrWg5kwMC
+ nrdeF
+X-Gm-Gg: AfdE7cmDdiGJQnvSyvxpbjsaDoCSRAUXI9RDrKeRnOWDxZpH451XVOFTil3VeHNx1NF
+ gZ5wyRLEOWNBg2jWnVrh56/glmW7KL/52skn83LEq/a04dQO6dD40h+WwZwhJFPVlz/2wV9KMOp
+ ffb0XHIDdehE7l8oTYMbzk0+sx2CrKtsCqCJ5uSRY/ggrKVxhyp3rHWN1RBUwKK1AnFRz+qAmaw
+ BpveqWqPP3+xuGlJIrnyZmF8AMQtszCmR+wVAmDcnCJgOz+iWj/y9XHLSMRWoWOKz7rnhR7VTuN
+ AJIym4TTlWV44IUWvdCiIzIGqD6iLxvRV0VQKizGFwRDjHMVfBQaRLBTT3CmLttmXW/hJITFDZS
+ oz726JZdSVFgROXyf61w3gtmL55H8ffsaSb7PdPH1M9IxkuZUJ2D+Z4bTjdHCzD9yD5P6yevqBV
+ GRRqJQj7hBbhXlZfKHa0jtom4BC4vUjaHI9UJf1wE47CwWfZnWgQ==
+X-Received: by 2002:a05:6a00:988:b0:845:4d71:8d15 with SMTP id
+ d2e1a72fcca58-845b3b88d14mr5410271b3a.37.1782426724459; 
+ Thu, 25 Jun 2026 15:32:04 -0700 (PDT)
+Received: from stoup.. (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-845a412e5e9sm5450139b3a.54.2026.06.25.15.32.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jun 2026 15:21:34 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 5/6] gitlab: pull before_script logic into
- .base_meson_job_template
-Date: Thu, 25 Jun 2026 15:21:10 -0700
-Message-ID: <20260625222111.1761-6-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260625222111.1761-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20260625222111.1761-1-pierrick.bouvier@oss.qualcomm.com>
+ Thu, 25 Jun 2026 15:32:04 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH 04/15] target/arm: Implement BFMOP4 (non-widening)
+Date: Thu, 25 Jun 2026 15:31:49 -0700
+Message-ID: <20260625223200.763198-5-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260625223200.763198-1-richard.henderson@linaro.org>
+References: <20260625223200.763198-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDE5MyBTYWx0ZWRfX/KG5RouXf3hy
- k1fos5czBR+BVwfKvJtiN2dDrflNhsryTQ1IJYN9cRjb2qQqumnaj90BOI6/cIXLT++Oo7syJlb
- DtMru1n/Za0SZd2pOXutI32huUNpY2c=
-X-Proofpoint-GUID: OwP4Xu7QVsmUWhoS1q4UEBRLqqOPU31M
-X-Proofpoint-ORIG-GUID: OwP4Xu7QVsmUWhoS1q4UEBRLqqOPU31M
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDE5MyBTYWx0ZWRfX2rQxqS+CJ7Ij
- rRZun4yPiRIcoroFcMmqe/zS+VrFGwQZiaytsgjMW4GlBBZtQ2G7M9CHPVbYBD+hlGYpjZv4T2O
- Jn91mEzxxSqDbnjVR5WFYny/+V/4ukZ0IGLeWvkNLy9q8dz0Sw6Bof8JGC8eRDK/r6qh+8KdIOk
- e9f/UG3+12kTI5uHRzxQexm6iY3hiE7aqEVONVj6xTi2FFnXBLBv7cJ/n4GmZJFGL11aYxj1FJi
- Ow5t8sW1iavIErNJGTTTzBl1EZx2Sx9BpVEwmtTgPxgsxDBIuXiVVDn9RRfYXfk5dRdnJrTADTi
- pUo5lGEaBk+PEttm+50x70/SD7igUsZtEWuvEfNqyIrkVOl073dfoUCucz9tCKOFKAlgm8EqlYw
- uuCeqxjFtKGknd0eOYtMB0f+fChqrshFizwcfq80kMkHb8NK8crh4xZCaY3oofxgEWfhgtEtdmi
- jJdJ5xmqV6C2IQiz64w==
-X-Authority-Analysis: v=2.4 cv=Z+Xc2nRA c=1 sm=1 tr=0 ts=6a3da9f0 cx=c_pps
- a=kVLUcbK0zfr7ocalXnG1qA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=OotkPD_eqh6jdMuQoDsA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=vr4QvYf-bLy2KjpDp97w:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-25_02,2026-06-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0 phishscore=0
- spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606250193
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,139 +100,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
-
-This ensures that all jobs have the $JOBS env set and capture the
-packages.txt content (where available) in their logs, and all use
-the job section headers.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20260624124657.2725376-6-berrange@redhat.com
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- .gitlab-ci.d/base.yml                |  9 +++++++++
- .gitlab-ci.d/buildtest-template.yml  | 24 ++----------------------
- .gitlab-ci.d/crossbuild-template.yml | 12 ------------
- 3 files changed, 11 insertions(+), 34 deletions(-)
+ target/arm/cpu-features.h        |  5 ++++
+ target/arm/tcg/helper-sme-defs.h |  4 +++
+ target/arm/tcg/sme_helper.c      | 42 ++++++++++++++++++++++++++++++++
+ target/arm/tcg/translate-sme.c   |  8 ++++++
+ target/arm/tcg/sme.decode        |  1 +
+ 5 files changed, 60 insertions(+)
 
-diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
-index 366e654bcb9..fa0ca940481 100644
---- a/.gitlab-ci.d/base.yml
-+++ b/.gitlab-ci.d/base.yml
-@@ -148,6 +148,15 @@ variables:
-       - build/meson-logs
-     reports:
-       junit: build/meson-logs/*.junit.xml
-+  before_script:
-+    - source scripts/ci/gitlab-ci-section
-+    - section_start setup "Pre-script setup"
-+    - JOBS=$(expr $(nproc) + 1)
-+    # Prevent logs (if any) from prior build job artifacts
-+    # from being duplicated in the new job artifacts
-+    - rm -f build/meson-logs/*
-+    - test -f /packages.txt && cat /packages.txt
-+    - section_end setup
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index cfa97023a1..06fb96d0af 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1792,6 +1792,11 @@ isar_feature_aa64_sme_f16f16_or_f8f16(const ARMISARegisters *id)
+     return isar_feature_aa64_sme_f16f16(id) && isar_feature_aa64_sme_f8f16(id);
+ }
  
- .base_meson_ccache_job_template:
-   extends: .base_meson_job_template
-diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
-index 8dfd17a0b5e..11d7a756678 100644
---- a/.gitlab-ci.d/buildtest-template.yml
-+++ b/.gitlab-ci.d/buildtest-template.yml
-@@ -3,12 +3,6 @@
-   extends: .base_meson_ccache_job_template
-   stage: build
-   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
--  before_script:
--    - source scripts/ci/gitlab-ci-section
--    - section_start setup "Pre-script setup"
--    - JOBS=$(expr $(nproc) + 1)
--    - cat /packages.txt
--    - section_end setup
-   script:
-     - !reference [.base_meson_ccache_job_template, script]
-     - du -sh .git
-@@ -74,11 +68,6 @@
++static inline bool isar_feature_aa64_sme_mop4_b16b16(const ARMISARegisters *id)
++{
++    return isar_feature_aa64_sme_mop4(id) && isar_feature_aa64_sme_b16b16(id);
++}
++
+ static inline bool isar_feature_aa64_sme_mop4_f16f16(const ARMISARegisters *id)
+ {
+     return isar_feature_aa64_sme_mop4(id) && isar_feature_aa64_sme_f16f16(id);
+diff --git a/target/arm/tcg/helper-sme-defs.h b/target/arm/tcg/helper-sme-defs.h
+index 8a2ff88d49..05ccb0d1e2 100644
+--- a/target/arm/tcg/helper-sme-defs.h
++++ b/target/arm/tcg/helper-sme-defs.h
+@@ -367,3 +367,7 @@ DEF_HELPER_FLAGS_5(sme_ah_fmop4s_ss, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst,
+ DEF_HELPER_FLAGS_5(sme_fmop4a_dd, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(sme_fmop4s_dd, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(sme_ah_fmop4s_dd, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
++
++DEF_HELPER_FLAGS_5(sme_bfmop4a_hh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_5(sme_bfmop4s_hh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_5(sme_ah_bfmop4s_hh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 81ec7ccfa1..0de7dd84e5 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -2761,3 +2761,45 @@ void HELPER(sme_ah_fmop4s_dd)(void *vza, void *vzn, void *vzm,
+ {
+     sme_mop4(vza, vzn, vzm, fpst, desc, sizeof(float64), inner_ah_fmop4s_dd);
+ }
++
++static void inner_bfmop4a_hh(void *vd, void *vn, void *vm, void *vinfo)
++{
++    bfloat16 *d = vd, *n = vn, *m = vm;
++    float_status *fpst = vinfo;
++
++    *d = bfloat16_muladd(*n, *m, *d, 0, fpst);
++}
++
++void HELPER(sme_bfmop4a_hh)(void *vza, void *vzn, void *vzm,
++                            float_status *fpst, uint32_t desc)
++{
++    sme_mop4(vza, vzn, vzm, fpst, desc, sizeof(bfloat16), inner_bfmop4a_hh);
++}
++
++static void inner_bfmop4s_hh(void *vd, void *vn, void *vm, void *vinfo)
++{
++    bfloat16 *d = vd, *n = vn, *m = vm;
++    float_status *fpst = vinfo;
++
++    *d = bfloat16_muladd(bfloat16_chs(*n), *m, *d, 0, fpst);
++}
++
++void HELPER(sme_bfmop4s_hh)(void *vza, void *vzn, void *vzm,
++                            float_status *fpst, uint32_t desc)
++{
++    sme_mop4(vza, vzn, vzm, fpst, desc, sizeof(bfloat16), inner_bfmop4s_hh);
++}
++
++static void inner_ah_bfmop4s_hh(void *vd, void *vn, void *vm, void *vinfo)
++{
++    bfloat16 *d = vd, *n = vn, *m = vm;
++    float_status *fpst = vinfo;
++
++    *d = bfloat16_muladd(*n, *m, *d, float_muladd_negate_product, fpst);
++}
++
++void HELPER(sme_ah_bfmop4s_hh)(void *vza, void *vzn, void *vzm,
++                               float_status *fpst, uint32_t desc)
++{
++    sme_mop4(vza, vzn, vzm, fpst, desc, sizeof(bfloat16), inner_ah_bfmop4s_hh);
++}
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index b6c49b9993..f833975875 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -2025,6 +2025,14 @@ static bool do_mop4_fp(DisasContext *s, arg_mop4 *a, MemOp esz,
+     return true;
+ }
  
- .native_test_job_template:
-   extends: .common_test_job_template
--  before_script:
--    # Prevent logs from the build job that run earlier
--    # from being duplicated in the test job artifacts
--    - rm -f build/meson-logs/*
--
++static gen_helper_gvec_3_ptr * const bfmop4_hh[3] = {
++    gen_helper_sme_bfmop4a_hh,
++    gen_helper_sme_bfmop4s_hh,
++    gen_helper_sme_ah_bfmop4s_hh
++};
++TRANS_FEAT(BFMOP4_hh, aa64_sme_mop4_b16b16,
++           do_mop4_fp, a, MO_16, FPST_ZA, bfmop4_hh)
++
+ static gen_helper_gvec_3_ptr * const fmop4_hh[3] = {
+     gen_helper_sme_fmop4a_hh,
+     gen_helper_sme_fmop4s_hh,
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index 3b7d8e9430..6021803ca0 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -1101,6 +1101,7 @@ LUTI4_s_4b      1100 0000 1001 101     1 00 00 00 ....0 zd:5    \
+ @mop4_o3        .... .... ... m:1 .... .... .. n:1 ... . s:1 . zad:3 \
+                 &mop4 zm=%mop4_zm zn=%mop4_zn
  
- .functional_test_job_template:
-   extends: .common_test_job_template
-@@ -96,27 +85,18 @@
-       - build/tests/functional/*/*/*.log
-     reports:
-       junit: build/meson-logs/*.junit.xml
--  before_script:
--    - export QEMU_TEST_ALLOW_UNTRUSTED_CODE=1
--    - export QEMU_TEST_CACHE_DIR=${CI_PROJECT_DIR}/functional-cache
--    # Prevent logs from the build job that run earlier
--    # from being duplicated in the test job artifacts
--    - rm -f build/meson-logs/*
-   after_script:
-     - cd build
-     - du -chs ${CI_PROJECT_DIR}/*-cache
-   variables:
-     QEMU_JOB_FUNCTIONAL: 1
-+    QEMU_TEST_ALLOW_UNTRUSTED_CODE: 1
-+    QEMU_TEST_CACHE_DIR: ${CI_PROJECT_DIR}/functional-cache
- 
- .wasm_build_job_template:
-   extends: .base_meson_job_template
-   stage: build
-   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
--  before_script:
--    - source scripts/ci/gitlab-ci-section
--    - section_start setup "Pre-script setup"
--    - JOBS=$(expr $(nproc) + 1)
--    - section_end setup
-   script:
-     - du -sh .git
-     - mkdir build
-diff --git a/.gitlab-ci.d/crossbuild-template.yml b/.gitlab-ci.d/crossbuild-template.yml
-index aadae26844b..94423814a75 100644
---- a/.gitlab-ci.d/crossbuild-template.yml
-+++ b/.gitlab-ci.d/crossbuild-template.yml
-@@ -3,12 +3,6 @@
-   stage: build
-   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
-   timeout: 80m
--  before_script:
--    - source scripts/ci/gitlab-ci-section
--    - section_start setup "Pre-script setup"
--    - JOBS=$(expr $(nproc) + 1)
--    - cat /packages.txt
--    - section_end setup
-   script:
-     - !reference [.base_meson_ccache_job_template, script]
-     - mkdir build
-@@ -48,9 +42,6 @@
-   stage: build
-   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
-   timeout: 60m
--  before_script:
--    - source scripts/ci/gitlab-ci-section
--    - JOBS=$(expr $(nproc) + 1)
-   script:
-     - !reference [.base_meson_ccache_job_template, script]
-     - mkdir build
-@@ -73,9 +64,6 @@
-   extends: .base_meson_ccache_job_template
-   stage: build
-   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
--  before_script:
--    - source scripts/ci/gitlab-ci-section
--    - JOBS=$(expr $(nproc) + 1)
-   script:
-     - !reference [.base_meson_ccache_job_template, script]
-     - mkdir build
++BFMOP4_hh       1000 0001 001. ...0 0000 00.. ..0. 100.         @mop4_o1
+ FMOP4_hh        1000 0001 000. ...0 0000 00.. ..0. 100.         @mop4_o1
+ FMOP4_ss        1000 0000 000. ...0 0000 00.. ..0. 00..         @mop4_o2
+ FMOP4_dd        1000 0000 110. ...0 0000 00.. ..0. 1...         @mop4_o3
 -- 
-2.47.3
+2.43.0
 
 
