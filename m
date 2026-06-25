@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63259CDE002
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 08:10:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58F54CDB47F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 08:10:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcf9O-0001oh-3m; Thu, 25 Jun 2026 04:09:30 -0400
+	id 1wcf9K-0001hR-N3; Thu, 25 Jun 2026 04:09:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wcf9D-0001eA-Pg
+ id 1wcf9E-0001eD-F6
  for qemu-devel@nongnu.org; Thu, 25 Jun 2026 04:09:20 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wcf9B-0007tG-3E
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 04:09:19 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-4629051c9d1so1288805f8f.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 01:09:16 -0700 (PDT)
+ id 1wcf9C-0007tZ-Kc
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 04:09:20 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-490cdae130cso10798155e9.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 01:09:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1782374956; x=1782979756; darn=nongnu.org;
+ d=mihalicyn.com; s=mihalicyn; t=1782374957; x=1782979757; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=t9V/M8CX+OrnyuBfipEW1rSJ951L/45RTb80YytIYUU=;
- b=KUlC6uNMq2MA1wEDC+D+BeDFucc6gLhD5vYINpb+9cD7gRL2sWa811SfqgJFknAd8V
- 4+QkHHLVWvGgzYMZqVXkLCFTG0EAyx8xxgEXWTrW9QBP/FTjXWRCMVEMimiH59rXhgE2
- rHGIS7WfgOiE3n3IZgxKkvkQtROy42jPsihX4=
+ bh=d/H9uvczVpJc8OvqtpTYZitKsAwfCq5q6IkCevVlJBc=;
+ b=bOnhxUBfcYEB+jZT9XtrpnkBJ+KHEF9UF+knh1Mr6wnlfnMswGo+p/nRggrOnjGf2w
+ 4k6LIjgxxYz1g7xYNeGN947Qoqkv0fZ0HP2eokLb0zu/rJSCNmgolgDzcqmAOfTGKi+u
+ 8PqehWZTOijcuTCwlPwNuLkMABZ2BKYSGPFxw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782374956; x=1782979756;
+ d=1e100.net; s=20251104; t=1782374957; x=1782979757;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=t9V/M8CX+OrnyuBfipEW1rSJ951L/45RTb80YytIYUU=;
- b=dory66F1WoUO/uI1nQ5jkp9xNhQINK/EL06+SmTaUIviAaapYi2lbVrTJiMJf/4eQl
- csIsR0bugb9v3nIIyCXH4qnIBEOcXEpAKBrVNNwKoaabfashKUHU8b0JRYA7d81rNdFO
- EiqPAwy9SIQHxOSvHpOVKbm+RGEJvat+2KIF45fXjxZJVPN8yioRdR9XGP9IlbI4urKm
- OX8hXaG5tfDD4cdX7EvLrClSggnvYiOA9BczElu5OYMlaVSytrV+nS3P3c4ffGXm2bN6
- SiRMP7Fl+j123DDO5nfluTyR38B8EZS0xEbQJOHr2zB26+gxwf0FUjpcQ9oz0ZX+BJVg
- 9V3A==
-X-Gm-Message-State: AOJu0YxynnaIPedYiSZ576u6Por1HoRqMcC9s6IYTR+F3GJY9voQQmOk
- LqSj+txXlq+C/qrqCfRh1OpCRA4/SnMjtzUSjzIGrR6pS2/uiAVpVfXC43pQ/xUT2pq5TSMnumw
- eZyhOmqz0ag==
-X-Gm-Gg: AfdE7clYRBSXfGfyblF6F68YuPxtcv6mHP118PXLClpdTLqU/q3tCdiWyfQDTJCLwVA
- EyP6321Tgqv6foN6ZTtmm6fc1ndsbL4+nvKRBQYp4PG/nby8AIRfBSSyFyRkXQ8fhUumhhZn+XR
- nqkO8lumTGxJqVQNttRdu0dwBWgAptmVj/upBvvEjDUJyYy9NIRSDILAHWjXkfA0nFiaLUXKO0X
- DWPUx5xi6HFzQz0FjeGatvxxOr8EomjMy7qAtN1eua0gvCymkvPtAUOL0oN1ECxnY02O5C7s+6c
- gpdnWnHChiLHHn7569XF8nvxfhuv5SZYdb2uejgI4NkXMk3EhA+0x8kXNpEXRvnruFYuGMzdKbG
- eDCxFH4uD7nQ5IbH7WjY6M9I5yuGtTUNss0QkgvRGH0EY4/raP7Rqcqso53+8OOrKYgUV8RfSZz
- vjHvYGUcJTwL7MsK9vLffFU7rFoOIXS0ubx9/bwrSpetTN0Z4VM2WStFH0d7+5rANxrCKGbRlM5
- J4/Atsoo2YT
-X-Received: by 2002:a05:6000:2c0e:b0:43f:e2b7:7160 with SMTP id
- ffacd0b85a97d-46dbed35f0amr2047308f8f.4.1782374955561; 
- Thu, 25 Jun 2026 01:09:15 -0700 (PDT)
+ bh=d/H9uvczVpJc8OvqtpTYZitKsAwfCq5q6IkCevVlJBc=;
+ b=iwvwY2DUF8qL1mcCPRrLXELIKLZXt3IKwyIy7Y6gG4XytW4cuEozZ5l5vm7rzFBgDf
+ t4j9CeNb5J/Nqi4C7PjxUUAFcGgIS9wRWQWUfsh5TWzE1hY4koJb72hMaTqudf3TGRXK
+ +54gqJMCzwrq+tc6jIIbjx+R5rJNVe+UEUHyOm00W5RDYGmYP+lm94ekkN3N//5NI84I
+ AuuJ/RNLyRvJVUYZySjca8LsIxAOtwJzWct4ii+zdleXHAsAJVNYPWL3luDC4c5aqxhf
+ GJTRBPUswDM9SDhEk3daC5FDJKnlsDoI32aG4I37pIowkucoFbG/7/m9fj0QyfGrQ6kI
+ Y3Aw==
+X-Gm-Message-State: AOJu0YxA6uyqtsOIzcw9gTM8gNLR6BIQTS8xUrAtFMzlzS8yeUTNSO1F
+ wPVyBnALzC++7vbO1/0+kNB8uQJyTvcNHV2vYuE9WinfT6u745t9M/XtsNwus1XPVuFu2x8DTR6
+ 7BU8qXBAlOw==
+X-Gm-Gg: AfdE7clv/fGlWfFqd4/O+gObV6xtcJ3PmVXqSIXeRrkZNtLZe13n5X5xZuQAGGpHwz8
+ etnorpqDgTaM4kxKu2/mGWM7qZliU5K24BM2PqbI8d+AL2af0uwNDxY3YNXmWZnjivTklO6Et09
+ +F+vih1W5BhEOTaKuBfrsFsAmBrhdmeTIfZEIe/cn9OcuDn1AoCaCV6mW7w6zQ0AnE93te1Y/rC
+ iE2ZeGITtDV4ZKsykMHSi5uvg6WbE//suORID87YPpeP/zgSK7Rbm4KrWzUi1rnqyt8tqLVyXaL
+ bsN49hmpAS3nJBWM4cUbH1eQZPKXNUZR5+zVN7j/iknWB9JMFRdXy7LJoDCcHbDaU2FHzs/i4X9
+ nSFTokB0oW+f8ymjf+dI6t3FkVp8VvkMz9TNFRpSgF5PkN823kh/jkRu4kScLgL6EUUzsiGd0Bw
+ LpCj1NK7Ja6q0Cyt2Abjxje5AUtLDmz3F46QY14QIcLv2SA2bpa8yfrwC3FG/Fi74W+UqCL5oJC
+ /N81MVgaP4w
+X-Received: by 2002:a05:600c:6215:b0:492:348:ba08 with SMTP id
+ 5b1f17b1804b1-4926686259cmr17287135e9.16.1782374956756; 
+ Thu, 25 Jun 2026 01:09:16 -0700 (PDT)
 Received: from alex-laptop.lan
  (p200300cf574a720090e98b0d86cf6583.dip0.t-ipconnect.de.
  [2003:cf:574a:7200:90e9:8b0d:86cf:6583])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46dcbac0c9dsm3086950f8f.19.2026.06.25.01.09.14
+ ffacd0b85a97d-46dcbac0c9dsm3086950f8f.19.2026.06.25.01.09.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jun 2026 01:09:14 -0700 (PDT)
+ Thu, 25 Jun 2026 01:09:16 -0700 (PDT)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
@@ -75,17 +75,18 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH 3/9] hw/audio/virtio-sound: free all stream buffers on reset
-Date: Thu, 25 Jun 2026 10:09:04 +0200
-Message-ID: <20260625080910.30569-4-alexander@mihalicyn.com>
+Subject: [PATCH 4/9] hw/audio/virtio-sound: split out
+ virtio_snd_pcm_start_stop()
+Date: Thu, 25 Jun 2026 10:09:05 +0200
+Message-ID: <20260625080910.30569-5-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260625080910.30569-1-alexander@mihalicyn.com>
 References: <20260625080910.30569-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,45 +111,112 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Volker Rümelin <vr_qemu@t-online.de>
 
-All remaining stream buffers in the stream queues must
-be freed after a reset. This is the initial state of the
-virtio-sound device.
+Split out virtio_snd_pcm_start_stop(). This is a preparation
+for the next patch so that it doesn't become too big.
 
 Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
 Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 ---
- hw/audio/virtio-snd.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ hw/audio/trace-events |  3 ++-
+ hw/audio/virtio-snd.c | 57 ++++++++++++++++++++++++++++---------------
+ 2 files changed, 39 insertions(+), 21 deletions(-)
 
+diff --git a/hw/audio/trace-events b/hw/audio/trace-events
+index 30f59215453..75d1fb37bd9 100644
+--- a/hw/audio/trace-events
++++ b/hw/audio/trace-events
+@@ -53,7 +53,8 @@ virtio_snd_unrealize(void *snd) "snd %p: unrealize"
+ virtio_snd_handle_pcm_set_params(uint32_t stream) "VIRTIO_SND_PCM_SET_PARAMS called for stream %"PRIu32
+ virtio_snd_handle_ctrl(void *vdev, void *vq) "snd %p: handle ctrl event for queue %p"
+ virtio_snd_handle_pcm_info(uint32_t stream) "VIRTIO_SND_R_PCM_INFO called for stream %"PRIu32
+-virtio_snd_handle_pcm_start_stop(const char *code, uint32_t stream) "%s called for stream %"PRIu32
++virtio_snd_handle_pcm_start(uint32_t stream) "VIRTIO_SND_R_PCM_START called for stream %"PRIu32
++virtio_snd_handle_pcm_stop(uint32_t stream) "VIRTIO_SND_R_PCM_STOP called for stream %"PRIu32
+ virtio_snd_handle_pcm_release(uint32_t stream) "VIRTIO_SND_PCM_RELEASE called for stream %"PRIu32
+ virtio_snd_handle_code(uint32_t val, const char *code) "ctrl code msg val = %"PRIu32" == %s"
+ virtio_snd_handle_chmap_info(void) "VIRTIO_SND_CHMAP_INFO called"
 diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index ebf2ec4b3f6..7687261192d 100644
+index 7687261192d..80dc13318af 100644
 --- a/hw/audio/virtio-snd.c
 +++ b/hw/audio/virtio-snd.c
-@@ -1341,6 +1341,7 @@ static void virtio_snd_reset(VirtIODevice *vdev)
- {
-     VirtIOSound *vsnd = VIRTIO_SND(vdev);
-     virtio_snd_ctrl_command *cmd;
-+    uint32_t i;
- 
-     /*
-      * Sanity check that the invalid buffer message queue is emptied at the end
-@@ -1354,6 +1355,16 @@ static void virtio_snd_reset(VirtIODevice *vdev)
-         QTAILQ_REMOVE(&vsnd->cmdq, cmd, next);
-         virtio_snd_ctrl_cmd_free(cmd);
-     }
-+
-+    for (i = 0; i < vsnd->snd_conf.streams; i++) {
-+        VirtIOSoundPCMStream *stream = &vsnd->streams[i];
-+        VirtIOSoundPCMBuffer *buffer;
-+
-+        while ((buffer = QSIMPLEQ_FIRST(&stream->queue))) {
-+            QSIMPLEQ_REMOVE_HEAD(&stream->queue, entry);
-+            virtio_snd_pcm_buffer_free(buffer);
-+        }
-+    }
+@@ -521,7 +521,42 @@ static void virtio_snd_handle_pcm_prepare(VirtIOSound *s,
  }
  
- static void virtio_snd_class_init(ObjectClass *klass, const void *data)
+ /*
+- * Handles VIRTIO_SND_R_PCM_START.
++ * Starts/Stops a VirtIOSound card stream.
++ * Returns the response status code. (VIRTIO_SND_S_*).
++ *
++ * @s: VirtIOSound device
++ * @stream_id: stream id
++ * @start: whether to start or stop the stream
++ */
++static uint32_t virtio_snd_pcm_start_stop(VirtIOSound *s,
++                                          uint32_t stream_id,
++                                          bool start)
++{
++    VirtIOSoundPCMStream *stream;
++
++    stream = virtio_snd_pcm_get_stream(s, stream_id);
++    if (!stream) {
++        return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
++    }
++
++    if (start) {
++        trace_virtio_snd_handle_pcm_start(stream_id);
++    } else {
++        trace_virtio_snd_handle_pcm_stop(stream_id);
++    }
++
++    stream->active = start;
++    if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
++        audio_be_set_active_out(s->audio_be, stream->voice.out, start);
++    } else {
++        audio_be_set_active_in(s->audio_be, stream->voice.in, start);
++    }
++
++    return cpu_to_le32(VIRTIO_SND_S_OK);
++}
++
++/*
++ * Handles VIRTIO_SND_R_PCM_START and VIRTIO_SND_R_PCM_STOP.
+  *
+  * @s: VirtIOSound device
+  * @cmd: The request command queue element from VirtIOSound cmdq field
+@@ -531,7 +566,6 @@ static void virtio_snd_handle_pcm_start_stop(VirtIOSound *s,
+                                              virtio_snd_ctrl_command *cmd,
+                                              bool start)
+ {
+-    VirtIOSoundPCMStream *stream;
+     virtio_snd_pcm_hdr req;
+     uint32_t stream_id;
+     size_t msg_sz = iov_to_buf(cmd->elem->out_sg,
+@@ -549,24 +583,7 @@ static void virtio_snd_handle_pcm_start_stop(VirtIOSound *s,
+     }
+ 
+     stream_id = le32_to_cpu(req.stream_id);
+-    cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_OK);
+-    trace_virtio_snd_handle_pcm_start_stop(start ? "VIRTIO_SND_R_PCM_START" :
+-            "VIRTIO_SND_R_PCM_STOP", stream_id);
+-
+-    stream = virtio_snd_pcm_get_stream(s, stream_id);
+-    if (stream) {
+-        stream->active = start;
+-        if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
+-            audio_be_set_active_out(s->audio_be, stream->voice.out, start);
+-        } else {
+-            audio_be_set_active_in(s->audio_be, stream->voice.in, start);
+-        }
+-    } else {
+-        error_report("Invalid stream id: %"PRIu32, stream_id);
+-        cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
+-        return;
+-    }
+-    stream->active = start;
++    cmd->resp.code = virtio_snd_pcm_start_stop(s, stream_id, start);
+ }
+ 
+ /*
 -- 
 2.47.3
 
