@@ -4,62 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DE4BC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 14:04:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 567E3C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 14:04:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd79U-00059p-EQ; Fri, 26 Jun 2026 10:03:28 -0400
+	id 1wd79Z-0005Af-Fh; Fri, 26 Jun 2026 10:03:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wd79T-00059P-C4
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 10:03:27 -0400
+ id 1wd79W-0005AR-2U
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 10:03:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wd79R-0006w6-8j
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 10:03:27 -0400
+ id 1wd79U-0006x2-EK
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 10:03:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782482602;
+ s=mimecast20190719; t=1782482607;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=v1hzG2KBGvobW0DOiL09chPyvUxTNVFjeABERQ8QDdE=;
- b=WeYnI8C8bC0z3slj2wew4sRNVeCHjtU/oTLg2lNT9xTxyTXhnvk/RcUZ4zFi5eheiWaaNY
- 7ahZ1ZbEBKv7uKFi0TyChTnEaaC6oQZmE1JOgQS/v/VwwN5gPs1Wfi5zkduSToGXBEHuKr
- 8lUIAo+NAbdkvQCk6JW2REXNcWLCuDg=
+ bh=BlnmO0n2Jc6BZuVFz+69sxbi2XAVcE7eTuHnatwl8og=;
+ b=HJWQHvnuGBcsRdd/AuYiuizB3t4EBK9Uc53qsoE22Lco8OmuedrSktqKzlwu2doMjDwLWF
+ 1QKY6KJk5QFFvq6xB6jySD851khc1ceXZLc//ptaEajQB3MkxYczrxbAu37Kt/Ld/3FyIJ
+ P3oSFfTDZWekWxhJvjK15Xir2uWWYX4=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-209-2g1QV8DzMYSVlkmCm1sy6g-1; Fri,
- 26 Jun 2026 10:03:20 -0400
-X-MC-Unique: 2g1QV8DzMYSVlkmCm1sy6g-1
-X-Mimecast-MFC-AGG-ID: 2g1QV8DzMYSVlkmCm1sy6g_1782482599
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-295-v1RQ9aNCPim_UG95AzkwmQ-1; Fri,
+ 26 Jun 2026 10:03:24 -0400
+X-MC-Unique: v1RQ9aNCPim_UG95AzkwmQ-1
+X-Mimecast-MFC-AGG-ID: v1RQ9aNCPim_UG95AzkwmQ_1782482602
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6225B1805C14
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 14:03:19 +0000 (UTC)
+ id A6BA4180ACDB; Fri, 26 Jun 2026 14:03:22 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.186])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AB818180049F; Fri, 26 Jun 2026 14:03:18 +0000 (UTC)
-Date: Thu, 25 Jun 2026 18:53:39 -0400
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 44FF130001A7; Fri, 26 Jun 2026 14:03:22 +0000 (UTC)
+Date: Thu, 25 Jun 2026 19:00:16 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
-To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [GIT PULL 00/35] UI patches
-Message-ID: <20260625225339.GA278650@fedora>
-References: <20260624-ui-v1-0-482147b0a7af@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+Subject: Re: [PATCH] tests/docker: bump emsdk-wasm64-cross zlib version to
+ 1.3.2
+Message-ID: <20260625230016.GA279735@fedora>
+References: <20260625193320.260312-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="mjhpPNnpvLaR9rNC"
+ protocol="application/pgp-signature"; boundary="rEj79LXoP2OJ8naR"
 Content-Disposition: inline
-In-Reply-To: <20260624-ui-v1-0-482147b0a7af@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+In-Reply-To: <20260625193320.260312-1-stefanha@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -14
@@ -86,29 +89,59 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---mjhpPNnpvLaR9rNC
+--rEj79LXoP2OJ8naR
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Applied, thanks.
+On Thu, Jun 25, 2026 at 03:33:20PM -0400, Stefan Hajnoczi wrote:
+> Container image builds have started failing because zlib.net no longer
+> hosts the 1.3.1 tarball. Move to the 1.3.2 release from February 17,
+> 2026.
+>=20
+>   $ make docker-image-emsdk-wasm64-cross
+>   changing dir to build for make "docker-image-emsdk-wasm64-cross"...
+>   make[1]: Entering directory 'qemu/build'
+>     BUILD   emsdk-wasm64-cross
+>   ...
+>   xz: (stdin): File format not recognized
+>   tar: Child returned status 1
+>   tar: Error is not recoverable: exiting now
+>   Error: building at STEP "RUN curl -Ls https://zlib.net/zlib-$ZLIB_VERSI=
+ON.tar.xz |     tar xJC /zlib --strip-components=3D1": while running runtim=
+e: exit status 2
+>   make[1]: *** [qemu/tests/docker/Makefile.include:43: docker-image-emsdk=
+-wasm64-cross] Error 2
+>   make[1]: Leaving directory 'qemu/build'
+>   make: *** [GNUmakefile:6: build] Error 2
+>=20
+> Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+> Cc: Brian Cain <brian.cain@oss.qualcomm.com>
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>  tests/docker/dockerfiles/emsdk-wasm64-cross.docker | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
+Thanks, applied:
+https://gitlab.com/stefanha/qemu/commits/master
 
---mjhpPNnpvLaR9rNC
+Stefan
+
+--rEj79LXoP2OJ8naR
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmo9sXMACgkQnKSrs4Gr
-c8hKwwf/YebYb+dTlC9mp6bLwkyDh/6Wrj/N6XiCBSy+oqna4QzMhZ5U3Z5G5x9Z
-5O0CTfkIVPiug32RUFISjGYYEf1ZZhzwjwv4U2hBZh6MNmVrOUBC+Gno/NmgCGED
-15qL4d71ejejV13renFPYEt21bNSg2885ebF2L/iAynoZHdccTMolYdqQCy2FjYI
-4X5xyRV6zbmwsU69qzH11WKYxjGaKZSftfplbucnByKHLGvExU9tWNam2+myBUD2
-IzhvJp/OmeEG7XGfVCarUGTIMTDq1qiCS15wf3V3qxZKYl8QPvbvTecGmQr2Yv2v
-QmRfnKKF0g+96BeRXF/aqYP8nQIHSA==
-=+iSC
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmo9swAACgkQnKSrs4Gr
+c8i0TAf/ZoREL+Xf/xd2VzvHyCD92i0Fas2XP9oJZxRyU0k93/2wG3G1gi2XWyuI
+2eD0Ivp1OyLjXXHVUrjEZQw0bvE/oArt3f55CN5OgoPX8ZWaQckgl2i+OJsPWnQo
+d9ReAGLjf6xD+XrH+ji2YvBHDGuupQ+aud+D4/ReV3DhXYYoq3NsyXVfU6VQSL8F
+e+M/3/bzRwrgAZv7QS4nXBp3QDoonz4OQOH595nYXFzIvgHo7AEdrNoDMTv6Nl6g
+PHVN0EpQh7ylO7szNVQWneSr6tfXeAXijAPr7BtnslP9z0PFGEb5EzyY1lMoFPB3
+gjdQFikeRLdoLfQbnYXli7VnHFaaNQ==
+=+8f7
 -----END PGP SIGNATURE-----
 
---mjhpPNnpvLaR9rNC--
+--rEj79LXoP2OJ8naR--
 
 
