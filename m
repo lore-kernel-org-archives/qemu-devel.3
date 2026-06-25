@@ -4,112 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBBAACDE009
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 11:08:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94EC9CDB479
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 11:12:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wchvX-0002Ul-3Z; Thu, 25 Jun 2026 07:07:23 -0400
+	id 1wci0H-0003bG-CQ; Thu, 25 Jun 2026 07:12:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wchvU-0002Tp-Qc
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 07:07:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wci0F-0003b3-UT; Thu, 25 Jun 2026 07:12:16 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wchvS-0003C9-L2
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 07:07:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782385637;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FATEn9IvSP3MQ1Fjm9Coqc+dZt8lLEF7L1VVxIDM9qs=;
- b=A/csQadJZlj2evI5gs4UnTPLUfFby98/uALbnYEI+UMwZIOCVI1NItL/mraQ35YV9Io92g
- rmHJmPG9rIad3JBI5JeukhEyRMYr84wIIeDVRm8J/AT8c2wsYFk2IYb6l4z3aGGZKqpTir
- fW7zOiqh8HnH+1zd5qjx20dM+KjCOog=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-244-spJQE1YVNmSP9ZyScvLPaQ-1; Thu, 25 Jun 2026 07:07:13 -0400
-X-MC-Unique: spJQE1YVNmSP9ZyScvLPaQ-1
-X-Mimecast-MFC-AGG-ID: spJQE1YVNmSP9ZyScvLPaQ_1782385632
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-46d71a1791fso824966f8f.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 04:07:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782385632; x=1782990432; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=FATEn9IvSP3MQ1Fjm9Coqc+dZt8lLEF7L1VVxIDM9qs=;
- b=pj6kshgEUfc+y0k43OtcJ2IpY5ldF65t2NKBIpHURY+Lpfy5+z29FVS5ha0P1K/6BS
- jFPSzMm2whY5s170Qr3vQjRGXn2pP1ZtJ46/RNn+LotOP3+2qkofIlEXoxXrQB2mHXLn
- 31Fv/g/YKZ21f29+2LIbNsNi+caYndnrMUBWrWNIEKyN915k2f5sl6qyR9XJe1dWPXHu
- wmFQZ98alrhZCOsp5AaKYi0OmLUBmECiMzQUogzoF2TZ9V9p35cJ1SP4Cu55kCRtn2JU
- 7jgUqvAk+r7PWx1bdorQezfQjcyMxnBVXNvmtlmGncH61ojxWAtlsWUkD71m9yaCs51b
- jfAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782385632; x=1782990432;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FATEn9IvSP3MQ1Fjm9Coqc+dZt8lLEF7L1VVxIDM9qs=;
- b=WHaIukxHnNe+VEYro8Z7IahdMVgZC0KoSE+VS895hVm1yzD2cKSsQfg1ywamhsrRof
- Jlw/GaSR22PHKClxFeEMX9QMC0zZl5MkROstL0Wukhsr+Qv8r4jhAOhoOR6KFbZT0hZs
- Wi8OWOUs1Jx+M1JcjDFC7wO/uWQTmwZ24eZZ6KATPtFgO0R1G7SoUqGUWYog/cxnilV5
- 6zby7TJrw0R9X/0lyT5GNf6A33J6trRekUQAe4Ooj6qCkUycxQenwqYrxbM1YsanV4hj
- /btTIjH5wdYAbR9x7saPcjWiHIsEpVRrltUHhW0RXNWEgMQj/amt9KXyxLkSdKDd1r3+
- bldg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8trbIG4rNh/sLh8RCcsmTSAzStn2BJkOv2ksc1CRsma5kqEoAOzwPNbJlxsEvm2go3kP/aniW5GcSe@nongnu.org
-X-Gm-Message-State: AOJu0YyqFBh8gAcE//lb+q4GDZeIbEE8kueoTWWVGVOLCydCsc3BN0Mp
- niyRsHdHdL8OqXz4qwzFE2L4KAORibOb7hFHz6hoybcRSKLZ6MtiBN5OLblH8HuHjzjP2wEI6Ip
- crEKIVY5uSYw9EAz8oHZTZUolqWPV2oOK7i0aP3JNo8qFB9xUc5gmv9l7
-X-Gm-Gg: AfdE7ck5YkEFKYTj1Cpb72eIFHJ7tqR4YiYqWsF2+4mc5qHOaZdd2vi8JkxONtP/MKR
- 7KuG/vVLOVjLkwy7F35NHd447+TgDKgPw3RakJIRYxVRuekbVb5sUq8P9WlSD8UTIrCNDdd+87+
- DMle5Npgmmbhwj74H2Gpx5GHhKDuWOSyTnHBXnDmEPg507Ch65+c04LMCJb+qLs9VImFlZB96sN
- ypM0V2co/m71iiOgDGZSara86V0HfZBZnT2EXqyyPwLtdZwu6P8FaaEcwzOG6SFVQqSyewMBE4J
- ZChoaVSUawXGJugAd6wbMxsFyUC8w+djq57nM7xQYqVTGltGh3Jnxli10bBiU/vGtCLpW3iVf3R
- wMEjnHq3XQNHJqZwEOeriwKEdzdX6m2+V
-X-Received: by 2002:a05:600c:8b25:b0:492:40a1:1e16 with SMTP id
- 5b1f17b1804b1-4926684a70bmr27927965e9.8.1782385632259; 
- Thu, 25 Jun 2026 04:07:12 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b25:b0:492:40a1:1e16 with SMTP id
- 5b1f17b1804b1-4926684a70bmr27927245e9.8.1782385631687; 
- Thu, 25 Jun 2026 04:07:11 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c1e840eefsm18098222f8f.1.2026.06.25.04.07.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jun 2026 04:07:11 -0700 (PDT)
-Date: Thu, 25 Jun 2026 07:07:07 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, peterx@redhat.com, alex@shazbot.org,
- richard.henderson@linaro.org, berrange@redhat.com,
- philmd@oss.qualcomm.com, philmd@mailo.com, david@kernel.org,
- clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
- jugraham@redhat.com, liugang24219@sangfor.com.cn,
- dinghui@sangfor.com.cn, shan.gavin@gmail.com
-Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
- device region accessors
-Message-ID: <20260625070551-mutt-send-email-mst@kernel.org>
-References: <20260616052552.389021-1-gshan@redhat.com>
- <20260616052552.389021-2-gshan@redhat.com>
- <CAFEAcA-mf14=jpRFHarAbN6AbQwvW=Yu6WB1JiNMsECEdaxD3A@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wci0E-00046q-0x; Thu, 25 Jun 2026 07:12:15 -0400
+Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65P3cpID019879; Thu, 25 Jun 2026 04:12:08 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=proofpoint20171006; bh=cS0c4VzjyzxQH
+ o0zbw7qvV/ImolFtCNB5oYxuL7I9wo=; b=s9C8l1C9JOLpwCwV6lzP80D196SqF
+ BRJEQcXvqkNr0SyWAA4wVp0XYgYTmFUouOvcSa6Z/g7RGCGB1DwotIVWxPj9xYle
+ iz1wfbRV0metcN3eVydK9hrlBTLqDPkRa9rLB/WtGU6NrT9EbFPXOOyGq2mh2Jy4
+ 1biNqmuV5DSqKiRc4deTGYZxMH2ZuEt95UfUgkIRk94KJZjFhilIiMQFQXrPRYN+
+ D80v7d1dvOaAzDs78VclVgV8tnB+r8aZDz/GTjK3PGPLlSsjzD3Q+iGDzQPuZpwz
+ H+cqGR0ZSa/ve+kcMKwSEHtpwk1oy5Ygh51Qiht8Qh37GP0IaXR90/dCw==
+Received: from ph0pr06cu001.outbound.protection.outlook.com
+ (mail-westus3azon11021104.outbound.protection.outlook.com [40.107.208.104])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4f0ce935r5-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 25 Jun 2026 04:12:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dkQKea2zNaMWVY5J7NrVPUbUL/H9LugiQHl2wFloV4bHz0rYAeOc5eTsLBshd64AEKFDEWttaXg+4X/F/2ZejVNcOGcexWLIq14CjQw9lraFaRexuw5O5b9UUNbXtvpo3BO05pMxmgyx48GuteIIoUOXzXKAjB22FD1zkUzaZDJGKshdccYRS9pKq3+BxDubeFdQQDBex2T23RJs1QNIeQwRF2WSC04jwD94AE2wcIG9uzOi+BzUQjqstx7fXWs8XAHOVaJ291gneVNXDxZDJkx+R3NAcoa5oMyCZu1qHhcQmZiOtxxtEn4X0SuFDf7m8ScSOSqguzDOI114vUXVjA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cS0c4VzjyzxQHo0zbw7qvV/ImolFtCNB5oYxuL7I9wo=;
+ b=sR3GkePkoqt5wAE3+eQs+mI/+y/OxgPEno1ecaiwOtg1MGuZNHCEgcfPQpBx9PoPzvj3C6EUa6fBKcbzk3OOtTBNP0UeMZmMulRSFAJG1t0/r3f00Lx9yfgwnXhdJRsANwIGVCrQi+vM30191V7x80bUo+bqz3zve4oNweOrMEFwy7yvp8pGYFTveajh/qF4oldVTxM7Skaj6UpwOtlz8fdjCf0VnDr7x7kXdb5OegDU5lPwsGi3jOxQlD+s6JM4amCvJNeFHITbz26dx/pKaFhgKcWUl1IsOt28x2ZwP5/ePrw8YybOD6iQohOG+JwRC4GOR+JCwz+3DIP1Xh3eeA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cS0c4VzjyzxQHo0zbw7qvV/ImolFtCNB5oYxuL7I9wo=;
+ b=PsZII5pBA5R75CecDNLBNmfJtoWQWizi9qGI4y9XTFl9fImlKhFwHeX6m72bLCFzVTrKwU3EeAaU6HibblsygwQ6WNc46MPCUaiJ/PpSPNr0kIAAlRuFPhoxhkTKNEOhgANyY2pe9yhKTadHd4g1OBgAhmbPi3zE7WivI0hrHd7Z/SpKt7r1I/aVbvsFGZCv+H/gwwQ6JZpqB1w1gmATHFoP45Bmm6migKP8En+kb9oAZ2HLwjuRI/4Sljam2tKqzlyYY1FudAkYt046YgQNESLaWE21pBCFiQoz1H2i7z3bSuEiOl7GJxdiRfOCtj39KdKdmOxn/dMBtEasji72pw==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by BN0PR02MB7869.namprd02.prod.outlook.com (2603:10b6:408:148::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.16; Thu, 25 Jun
+ 2026 11:12:05 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0159.016; Thu, 25 Jun 2026
+ 11:12:04 +0000
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+To: kfting@nuvoton.com, wuhaotsh@google.com, alistair@alistair23.me,
+ peter.maydell@linaro.org, berrange@redhat.com, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH v2 0/1] hw/adc: convert object props to class props
+Date: Thu, 25 Jun 2026 12:11:16 +0100
+Message-ID: <20260625111201.1645847-1-mark.caveayland@nutanix.com>
+X-Mailer: git-send-email 2.43.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: CYXPR03CA0089.namprd03.prod.outlook.com
+ (2603:10b6:930:d3::25) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA-mf14=jpRFHarAbN6AbQwvW=Yu6WB1JiNMsECEdaxD3A@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|BN0PR02MB7869:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7a1ce1ef-62a2-47f1-bb6f-08ded2aa96bb
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|23010399003|376014|18002099003|56012099006; 
+X-Microsoft-Antispam-Message-Info: YM5IBJiwLHitOM5Nle7YpsJJomn3Zii0xUtZNMeJOZhOMHl3fzE8H42sXgoNRXyjy4dfaKAG2DfF2AxyPaPqgi9o+dquwQ9nTkJxzNJCyh6PrbQTJU4/3S97B8LpBt31U+GM3cSPnJBfc8neisRj7R9KF/NLVwJLNLLY/tO0JqAHRQPr1gA3yARFnCRPLeDdEdtHGcrMtqWqAXasBuP0gKZs68Ov0boJbnoqu0Hp+1r/kru5H2Ala0TbQc6T73qlIEIt1+ytMytkVhERtTDqeEWOw3zPw17yqzEBQetyrqbt0DKIzFVOx+aI9utRfHA0l+4cL2dZzmzkNuov0UMDwwRyElFDHuYmLxjzWtQMLLEGEnyvCUCSjVwfAB1gOJJu2VPS8aDU8dWM2NTRU6KOyvx7O9Q2pSOO7gSJvu6NX/dhMbUPkzFmnF9Pxwq7gZM1vZRwDWRBlO3IkWHgaQWfDx4EVIjhUbwKE0igg/+WLqcvMnGjsa0h6L7fGydAOth0abYGEgejoWGEZM10dKPZJn38druS1avfE47HC+uk+f83dS2gjExpnwQxronGaVIS/HyFoLJtz2yMIj8gQliCFQNzeuY6Gb1fV+SYD+ci9f1DKk9LtQGTzJltRWkRlOhr1B1MXT3LOJxHEjgRXUWSlhPEWIARrXr/pvGkuFwmkTM=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(18002099003)(56012099006);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?WHwiMLXryojbkoY6FbkWc9TbhypJTwR4WR9pA5dLUXVEzPUMtWOUTQs7bMQN?=
+ =?us-ascii?Q?cssUeiPhtvW4xUVMiMuNdNdroUZmB/4X+F8S/5bh+e2eA4RJguVA9YFaXfhp?=
+ =?us-ascii?Q?hhhBWr99d0ampFzouAn3DVYiZDXtFNiURJYVmSs8kTj1lCPlx1m6Go3ZmMUI?=
+ =?us-ascii?Q?1GhrLG9bzSlwoQrUrw2k+qpFZ0Z6UnaFPboa8dJdkCdKxWIJo8kp3s0wMf41?=
+ =?us-ascii?Q?L3k6Tf04RtiLoJdhr3CkGax2VqvngZjxZ1/ctqVnbz2e+Wji9gujPX5q4KUq?=
+ =?us-ascii?Q?yvJUD6fDzTs0I+2wGHlTiKOkuh90eAyntsVk0wQ1ak4Ijkm2KJA6ZynBHQaY?=
+ =?us-ascii?Q?dtHVQWJup/jwFlkV2H/icb2NgBh00Xn7e8gl7qpq0ajmU1unkYtMHwrOiSVZ?=
+ =?us-ascii?Q?KBSspc822yjExqcIo5AEk5Rla8amEufjpO8T+ulVghEeArdNWGCAO0YmHG1x?=
+ =?us-ascii?Q?F5CXOj19v5mhMSHMmV4+mfD8TuVLwlLqNr/02P0cKAN7fxUHX9FB6l4Yz0Ex?=
+ =?us-ascii?Q?WowlHP6Caz5sW6GnjFMlbZXn+zcGXcsTX8goiBPA+dDN2QFaNAu4CxOnqisy?=
+ =?us-ascii?Q?gNpBjtU4IfZ3dJPxcv+5quHtculYdU8Oc4tzl6zr45QktnZBI6NFNx5wDFn+?=
+ =?us-ascii?Q?eVco8GYiqNoOMv4jdVVRWYT2HVjJWRxoGboMNHF/oVxBeOAVp0ltOnQNlfsf?=
+ =?us-ascii?Q?9XeUTBESE6nHSCghj6Ti50A6Sx+Y5wPksqkvzSSLPRHhyOBZWzTrtMbfA4yI?=
+ =?us-ascii?Q?TZR6KvP3ixj8gflpoW12B4VZdoWcrtsKU/3dKohVBKklSFsmNr4qwjP0DeME?=
+ =?us-ascii?Q?LkAuAlmqWVThmfIx7e6tu2EhyPzKLqT1nDjlAp477nHj4IX8MO0He+M3ogxj?=
+ =?us-ascii?Q?zGxOSfWv6OEam2Lv4ERWOAK/fAQgWC0zWyjayqY0adSKdP/7bV7U+Ennq/zF?=
+ =?us-ascii?Q?aKulCOzlyynxtpg+xN4R4uJLG3lo0FH6gykWTAq402ID/PPQiHg2DId2sZaW?=
+ =?us-ascii?Q?6xRXBQEGPfh9vIlmMoUktchGBjV+IHuQ5XFeGuWdNc/oNZs6vBNn958CeX5l?=
+ =?us-ascii?Q?lEDDs3UHncMPvffepafry7m78R6VEy6/XXVy36Blba5uZYGhQEiRfqSLwUuI?=
+ =?us-ascii?Q?/77MEl0avnf8+Ue7N9jBrDouitvb3xYfZ765LSdJT1ILILCGNLqXDVpyZ1i3?=
+ =?us-ascii?Q?hGpjeLbxmdR5RL0+ruQPR1JHIJ9GBkZOQOiDcG6oMXpy1zJpmWJ6qHwszsxK?=
+ =?us-ascii?Q?wyv/fnJS15IZn0YBO6olnc6TP8Kp6xhznO7eCuDAY+DGbYRWnsx/HgowZGsY?=
+ =?us-ascii?Q?PfTUhNpeBfy/z69WTHvAacZ61vQs/WBOvDs+GkiwqF69CkOYBnsP7ndeQODZ?=
+ =?us-ascii?Q?jW6KIiPHw3uXEzT4Ami1nM7twKcl4J6Dg8FS4HGTeYoWF8UWVjwSskbcRw+l?=
+ =?us-ascii?Q?tZFM8Shxqt7zayUnizuIvvJjI6xGXmjD0UQsvBdIToXjQiLTWVyHgTZ9V+8V?=
+ =?us-ascii?Q?k4HnpuckmzhgLyXvQm8scv+Z9c0xAtp/x+hsfG5QqtzqN23jaX5cUVUIjzXc?=
+ =?us-ascii?Q?BbMwbNuDTL3ckkuxk10LRY0KzkiLXkMqIMLdk2pzyhzKCYNnhGBP0VO9pS2F?=
+ =?us-ascii?Q?vHZ56jWZWAhBsVYMRWNHnj9vJxKqZDG0UHWSFLEo6TiNTXGCsS5g45Djse0G?=
+ =?us-ascii?Q?CHl2Pu0Cr+QdfwkTlRwMVQg1IIPyBBQIkSVYAoSG8tlby36Q5Q9Uu59r45o7?=
+ =?us-ascii?Q?huDjcT5kRdPapwfUBPyXpGqCUO1E8/s=3D?=
+X-Exchange-RoutingPolicyChecked: nyQmiHPYBo6Zyb+bCpuIrWWdYhnYieXOfKoKELQxw7BKaAjGMd9TJXMPrBSu+9slCJujG3Esg1mOvdruV1XLaEDscTaY92tJVztgJVdwN+TYQFr/jQydVWkk28rvhdAG7U2zzINtpZByjde93p0YyJIHJ4ksu2rhcm++uPofvr01cMs4Gx6fYAqJ083wGGxHvOc/1IAEYGknc2ov38s+chFLrbTGX9wA9MI9gPdcuzIQBxfzJ/NZkRXYe3TJL1in6G/1PY9UZgYetTO7jtgIWJGiazyXc+yQ3xFMYIKDO/oxGbgPpkiMN0xJ562T8VtLOU/Hu4BFLIJKSMmI/zUk9A==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7a1ce1ef-62a2-47f1-bb6f-08ded2aa96bb
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jun 2026 11:12:04.9339 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: l4O/XmWdYjkI86w/xvFJBF8FPfebiA6ontK5hlEL5fy+gTUN/If9CtZfIVxP/mW2ttHaPrmrXnQBsYzeQtpcWH18jXK5qXIUAunllq5DTGw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN0PR02MB7869
+X-Authority-Analysis: v=2.4 cv=RO6D2Yi+ c=1 sm=1 tr=0 ts=6a3d0d07 cx=c_pps
+ a=jSq2D0RH6kfjLa8OhrZnlw==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=FelO9ux0wxsA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=dEe9Ve2bX-KnNSUMM2s9:22
+ a=64Cc0HZtAAAA:8 a=Oov7GBWg82k6lRvLM3MA:9
+X-Proofpoint-GUID: HKB8yNTNnfifersS9DXaTfZG5JXx-GlB
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDA5NiBTYWx0ZWRfXwHfU04e92+aR
+ TS4uROUylo2QLuBXgcEntHn4KmPdgtKhnsvcZOmUh4boTc4BKS7pNUGw+p+/8UyoFcaubut5pW/
+ 1Uq7pDK2+tJImiXJHqMu3AsTvb7rXZo=
+X-Proofpoint-ORIG-GUID: HKB8yNTNnfifersS9DXaTfZG5JXx-GlB
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDA5NiBTYWx0ZWRfX0eEjFew7J/OI
+ f0lVtkg5WLpQsBpCL4pWOKLlvvLHXFxPvffVIN0xN++5z717rhENoT82XC6Unb6/vsnSA6SJBdP
+ n7syKIrhHSJugTg54wQ09BkjIjWK+P55qA99al3EhjlaZiVMBZ2kbgA/HQgHg4ZfUo9tbU2hhps
+ /7UGZT0TRzmjKT/SEI1cB1/BZzWmzddtb/eUZrdNCzevRohFloJ4ykKR7z+6USL+jDdSuY4Qr8T
+ hkmnexniGFW8e5s6OWRA3OTFIy3bL/54iWA1rhxqGWxL1+9KaSbMetGzX5iaIhDt/GzAeuqKzYI
+ miiz1UvqwRp7+yiuSPc8dOyr91XcnNbMN1PxmSRZ9AcrSo3IPYKfyvHg7bP8L7hVkG5l1Vcr6Ln
+ edBiGetYBWcCdJjlCJEB3J4hkceZsBZVwqWcQwoIZZxnfx8OX5mo8rc79gbBKXJrsEMWQwVVmKF
+ ISCXaxNi6Uqa2/eSIZw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-25_01,2026-06-24_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,160 +175,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 25, 2026 at 11:09:26AM +0100, Peter Maydell wrote:
-> On Tue, 16 Jun 2026 at 06:26, Gavin Shan <gshan@redhat.com> wrote:
-> >
-> > All ram device regions were turned to be indirectly accessible by commit
-> > 4a2e242bbb ("memory: Don't use memcpy for ram_device regions"). This leads
-> > to guest hang on attempt to build 'cuda-samples' as reported by Julia. The
-> > guest is started by the following command lines, with GH100 GPU card passed
-> > from the host.
-> >
-> >    host$ lspci | grep GH100
-> >    0009:01:00.0 3D controller: NVIDIA Corporation GH100 [GH200 120GB / 480GB] (rev a1)
-> >    host$ /home/sandbox/gavin/qemu.main/build/qemu-system-aarch64            \
-> >          -machine virt,gic-version=host,ras=on,highmem-mmio-size=4T         \
-> >          -accel kvm -cpu host -smp cpus=48 -m size=8G                       \
-> >          -drive file=/home/gavin/sandbox/images/disk.qcow2,if=none,id=d0    \
-> >          -device virtio-blk-pci,id=vb0,bus=pcie.0,drive=d0,num-queues=4     \
-> >          -device vfio-pci-nohotplug,host=0009:01:00.0,bus=pcie.1.0
-> >            :
-> >    guest$ cd cuda-samples/build
-> >    guest$ make -j 20 clean
-> >    guest$ make -j 20
-> >            :
-> >    [ 54%] Linking CUDA executable graphMemoryNodes
-> >    [ 54%] Built target graphMemoryNodes
-> >    <no more output afterwards, guest becomes frozen here>
-> >
-> >    guest$ qemu-system-aarch64: virtio: bogus descriptor or out of resources
-> >    [  555.814025] virtio_blk virtio0: [vda] new size: 268435456 512-byte logical blocks (137 GB/128 GiB)
-> >
-> > When the GPU's driver (NVidia open driver) is loaded on guest bootup,
-> > the memory blocks residing in the PCI BAR#4 of the GH100 GPU card can
-> > be presented to the guest through memory hot-add. The page cache can
-> > then be allocated from the hot added memory blocks when cuda-samples
-> > is being built. Afterwards, the page cache is sent to QEMU's virtio-blk
-> > device as part of the DMA request, the bounce buffer has to be used to
-> > accomodate the request as the corresponding memory region (MemoryRegion)
-> > is an indirectly accessible ram device region in qemu. However, the max
-> > bounce bufer size is only 4096 bytes by default and that is exhausted
-> > quickly, leading to a reset on the virtio-blk device and frozen guest
-> > eventually.
-> >
-> >   QEMU
-> >   ====
-> >   virtio_blk_handle_output
-> >     virtio_blk_handle_vq
-> >       virtio_blk_get_request
-> >         virtqueue_pop
-> >           virtqueue_split_pop
-> >             virtqueue_map_desc
-> >               address_space_map
-> >                 memory_access_is_direct         # Return false
-> >                   memory_region_supports_direct_access
-> >
-> >   (qemu) info mtree
-> >   memory-region: pci_bridge_pci
-> >     0000000000000000-ffffffffffffffff (prio 0, container): pci_bridge_pci
-> >       0000042000000000-0000043fffffffff (prio 1, i/o): 0009:01:00.0 base BAR 4
-> >         0000042000000000-0000043fffffffff (prio 0, i/o): 0009:01:00.0 BAR 4
-> >           0000042000000000-000004379fffffff (prio 0, ramd): 0009:01:00.0 BAR 4 mmaps[0]
-> >
-> > This adds qemu_ram_{copy, move}() and replaces {memcpy, memmove}() with
-> > them in the ram device memory region accessors, similar to what's done
-> > in commit 4a2e242bbb so that the issue (MMIO access instructions were
-> > optimized to SSE instructions) covered by that commit is fixed. This
-> > makes 'ram_device_mem_ops' redundant, paving the way to revert that
-> > commit to make ram device region directly accessible again in the next
-> > patch.
-> >
-> > Reported-by: Julia Graham <jugraham@redhat.com>
-> > Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-> > Suggested-by: Peter Xu <peterx@redhat.com>
-> > Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > Signed-off-by: Gavin Shan <gshan@redhat.com>
-> > ---
-> > v3: Documentation for qemu_ram_{copy, move}           (Peter/Michael)
-> >     Support qemu_ram_move() for overlapped src/dest   (Richard)
-> >     Use {memcpy, memmove} if step is 16-bytes or more (Michael)
-> >     Code improvements                                 (Richard/Michael)
-> > ---
-> >  hw/remote/vfio-user-obj.c |   4 +-
-> >  include/system/memory.h   |  32 ++++++-
-> >  system/physmem.c          | 178 +++++++++++++++++++++++++++++++++++++-
-> >  3 files changed, 207 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
-> > index 87fa7b6572..97a6c88780 100644
-> > --- a/hw/remote/vfio-user-obj.c
-> > +++ b/hw/remote/vfio-user-obj.c
-> > @@ -375,9 +375,9 @@ static int vfu_object_mr_rw(MemoryRegion *mr, uint8_t *buf, hwaddr offset,
-> >          ram_ptr = memory_region_get_ram_ptr(mr);
-> >
-> >          if (is_write) {
-> > -            memcpy((ram_ptr + offset), buf, size);
-> > +            qemu_ram_copy(ram_ptr + offset, buf, size);
-> >          } else {
-> > -            memcpy(buf, (ram_ptr + offset), size);
-> > +            qemu_ram_copy(buf, ram_ptr + offset, size);
-> >          }
-> >
-> >          return 0;
-> > diff --git a/include/system/memory.h b/include/system/memory.h
-> > index 1417132f6d..84203c312d 100644
-> > --- a/include/system/memory.h
-> > +++ b/include/system/memory.h
-> > @@ -2897,6 +2897,36 @@ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh);
-> >  void address_space_unregister_map_client(AddressSpace *as, QEMUBH *bh);
-> >
-> >  /* Internal functions, part of the implementation of address_space_read.  */
-> > +
-> > +/**
-> > + * qemu_ram_copy: copy data to ramblock
-> > + *
-> > + * @dst: destination where the data is copied to
-> > + * @src: source where the data is copied from
-> > + * @n: length of data to be copied
-> > + *
-> > + *
-> > + * Copy @n bytes from @src to @dst with the assumption that @src and @dst
-> > + * do not overlap. Handles special cases such as uncacheable ramblocks
-> > + * correctly. Use this for accessing ramblock in response to DMA/VCPU IO,
-> > + * in preference to memcpy().
-> > + */
-> 
-> The documentation for these functions needs to say what semantics
-> the function is providing (e.g. can I rely on it to do a 4 byte aligned
-> load as a single 4 byte read?). This does not.
-> 
-> > +/* x86 should work with __builtin_{memcpy, memmove}() for IO access */
-> > +#if defined(__i386__) || defined(__x86_64__)
-> > +#define HOST_UNALIGNED_MMIO_OK 1
-> > +#else
-> > +#define HOST_UNALIGNED_MMIO_OK 0
-> > +#endif
-> 
-> This is still wrong. We should not have "x86 magically works
-> and all other hosts do something different" ifdefs. Define what
-> semantics you need and then we can figure out how to
-> implement them.
-> 
-> My current thought is that we need to handle accesses of
-> 1, 2, 4 and 8 bytes that are naturally aligned by ensuring that we
-> do exactly one host load/store of that type, and that anything else
-> is "the guest isn't relying on specific semantics here, we can just
-> assume it's plain old RAM and do whatever". That would not
-> require any architecture specific ifdefs.
-> 
-> thanks
-> -- PMM
+Since the use of object props is effectively deprecated, here is an attempt
+to convert all use of object props in hw/adc to class props. The eventual
+aim is to continue working through the codebase, removing all remaining uses
+of object props.
+
+The series is lightly tested: it passes "make check", GitLab CI and some
+simple local tests. I'm mostly interested for feedback on the conversion
+strategy, and to get a feel for the best way to merge this series since once
+the basic conversion patterns are in place, the same patterns can be applied
+elsewhere and it would be good to minimise the merge window for such changes.
+
+Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
 
-Well. X86 is special, as usual. It allows unaligned mmio so
-we really have no way to know an x86 guest does not intend
-just that. That can only be emulated perfectly on x86
-which is sad but I see no reason to actively break it.
+v2:
+- Drop support for "foo[*]" notation, and generate the array property name
+  directly as suggested by Daniel
+
+
+Mark Cave-Ayland (1):
+  hw/adc/npcm7xx_adc.c: convert NPCM7XX_ADC object props to class props
+
+ hw/adc/npcm7xx_adc.c | 77 ++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 70 insertions(+), 7 deletions(-)
+
+-- 
+2.43.0
 
 
