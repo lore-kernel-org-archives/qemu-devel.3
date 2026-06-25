@@ -4,93 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A2CECDE00E
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 21:23:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7FDACDE00B
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 21:28:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcrXH-0007uD-3D; Thu, 25 Jun 2026 17:22:59 -0400
+	id 1wcrbi-0005rW-Cz; Thu, 25 Jun 2026 17:27:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcrXF-0007mO-4a
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:22:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wcrbg-0005qu-Gc
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:27:32 -0400
+Received: from mail-centralusazon11010006.outbound.protection.outlook.com
+ ([52.101.61.6] helo=DM1PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcrXC-00047N-NI
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:22:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782422574;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=29Z3rBfPd1tCZESqoKoleKg6oLMW7kB/G4ySrNtwxvo=;
- b=DSGp+eW3R3qsCDNOB8/zLP563WQ1222VHCUCpNfxvwmYmz+wAAzYpbDKNA83gwt6Ah8Hcj
- YxELRd6bfOjxftw6CXZhDYou1PfStikfikW+/8WXoRFwtXSn9M3jsjrr5BGNz6ZsZRTWSR
- r11CxAdwTM/qA7nsRT1l3sSHSjPgGlM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-I_KXnCMKOuWr6OwPvOk5-w-1; Thu,
- 25 Jun 2026 17:22:52 -0400
-X-MC-Unique: I_KXnCMKOuWr6OwPvOk5-w-1
-X-Mimecast-MFC-AGG-ID: I_KXnCMKOuWr6OwPvOk5-w_1782422571
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C486D1955E75; Thu, 25 Jun 2026 21:22:51 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.16])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 34DD61800347; Thu, 25 Jun 2026 21:22:49 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 26 Jun 2026 01:19:38 +0400
-Subject: [PATCH v2 37/39] build-sys: make HMP source files conditional on
- have_hmp
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wcrbc-00051D-JT
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:27:32 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yaE6HGc4A7mgcbSoH4voHNrBSBCF5y59blmb4tjOUliKd5ZvHhqA5c9AfXZe2w0I13mDvVl1eQj4kd8qHeWAuLME802mT7JxHgbbBB51VUwKS2uu50rs2bo0swjmeHsFt4x4iB3rhlTKd86zITa0PWf2d/yd1MQkWUmbx1GRDOGxUhn1sLmASJ3A/sBMekxfMMt5j5sgkantQ56AfeRg04sMJA2LX95yM2R8NJwaV35fLrL8OeXNjW2Hnt1HbCuC44Sx3C7UP0IVXVAh5RAthCtUUnVopMCuUcTWVQXM5LLaryLYL4Qe3TWS18JPqMsSwbrbzi21W95wiVlNiy4W0g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hk3t522edh3FWAUrMTCmDOhujQ16KakiireDHV6V50g=;
+ b=XUAnxp+mxhrweX/C5LFxuR0JQ+++gEqU9UrfmpYsmTLpGsKXNCUJUKY8h4/tBVRPV28EgP2HOJEi/aey4lKX4EOIn2WaxCgf1CrbV8jDpPcFdScIcbgXCpVDsgWP2+6uFuqG6ELqQ0LmG4HW9YZh3H3ChQ0GztI7LHH+Z83JbNz5eFv9nO2rMyHlUD93GZc+oPqspH0Ds2raKLLnrQrjMgzjQAnEr6eMat8C1ypzbEnN66vcf94TDS3VD9RntD5uJIzVzWJJaSOP1hKRFNboM9IBP4tMNKP4esi36ZCHqcVqlBNvLuOi7KtA6UuYLdeIMBc51PadQmcpO4FxTS9Glg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hk3t522edh3FWAUrMTCmDOhujQ16KakiireDHV6V50g=;
+ b=Fh5uJWA01xT4A5IJPeiknOH/oPnB3Bw9bdI4OFsmv+ZFY0fYvEwu1VQABg4xWX7dah0K4KmaYUREeHOphbN9bx5iMTnt96BSbL9YE27nwBeeOhQBTKte1Ovm2T692K2yri0uof18tilrcHw4vLS8Mec0OX34IE0KJES4LGjuwjQ=
+Received: from MW4PR03CA0074.namprd03.prod.outlook.com (2603:10b6:303:b6::19)
+ by SJ2PR12MB8036.namprd12.prod.outlook.com (2603:10b6:a03:4c1::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.14; Thu, 25 Jun
+ 2026 21:22:16 +0000
+Received: from CO1PEPF00012E80.namprd03.prod.outlook.com
+ (2603:10b6:303:b6:cafe::63) by MW4PR03CA0074.outlook.office365.com
+ (2603:10b6:303:b6::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.159.16 via Frontend Transport; Thu,
+ 25 Jun 2026 21:22:16 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ CO1PEPF00012E80.mail.protection.outlook.com (10.167.249.55) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.181.6 via Frontend Transport; Thu, 25 Jun 2026 21:22:16 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Thu, 25 Jun
+ 2026 16:22:10 -0500
+Date: Thu, 25 Jun 2026 16:21:52 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>
+CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, <pbonzini@redhat.com>,
+ <berrange@redhat.com>, <armbru@redhat.com>, <pankaj.gupta@amd.com>,
+ <isaku.yamahata@intel.com>, <xiaoyao.li@intel.com>,
+ <chao.p.peng@linux.intel.com>, <david@kernel.org>, <ashish.kalra@amd.com>,
+ <ackerleytng@google.com>
+Subject: Re: [PATCH RFC 00/12] guest_memfd: support in-place memory conversion
+Message-ID: <bdg5gb5m4tnm5pmq54vafyykbegefsrz4qupn44ofwfiwkpwk4@zwg7e35l5zps>
+References: <20260528000416.8161-1-michael.roth@amd.com>
+ <ajkrWSfmODM8NTZ5@lpieralisi>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260626-qemu-no-hmp-v2-37-8af31bc54c61@redhat.com>
-References: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
-In-Reply-To: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=13380;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=2JAfSLU5I4P1cKSyjKnc5riI/bxpf8qr0sQZXLFVhc4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqPZte23FKJP0Ukn0mATJSaYhKsWUbzZhPyH+Kp
- xBpnUCPvMCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaj2bXgAKCRDa6OEJdZac
- 5bpbEACnG69rxtx7ir0E45pV+2uhBTRSMWAKCw1NFRUhzNd4UvyjbiAp0PMUwCxGGKACTkCH+2O
- dw4hn2jUeNwErJMi+SWDsgZxR4rM6nc0tdu88ukJwZutiBemYR/k1w+NSyaizTjycSKEtCk8hvl
- cEzeU1RIXVY32xwu/9/2+hn+PmNAaJnCA77QNFO3n30Mh5tXeeym/JxoQvFVihsvcyUctDTP/6F
- X9eIsQGZWWZIbhNt+hg6BwPRWsHWRYZJwpLcuaBFJzIESRHO8iel9yD4KPgME3s+J6gNxDZu+9x
- 6IblYiyBZyeYTsN26HJMu4B8FREqBU/vzSxokDEHkd9JR7mPo38ksIF0cpkzgJcm0I2jiEf7VAV
- YsRwjEjAW2rHu/w+U0Ex5qrZuslBycBeTiOkTZLxirG+UMGiE+vSlKRF4uu/Bxg4FJkWYUrlxsh
- Y5DRUbUFXNMFvrn1bKqQL4X9f5BBm8y8pheZcNkTke4MYDu4U6vTEaItxdQcBhbLUYaLzOudWs0
- Muha9zPstUApvQunf4aRkwryeq+6CBgx5bpE+KQKM5NnEKgKk27EhiBeRbsCVYiYPM/2NOC6FoG
- CmpeSTglYnoaXmrItpEhgQCkpGchzeZISJlUaPvCh8Z92yzA/deaEW0i9Rvx7922C+2cHQHBJhl
- NUxnYzRBjbNVVMw==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ajkrWSfmODM8NTZ5@lpieralisi>
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF00012E80:EE_|SJ2PR12MB8036:EE_
+X-MS-Office365-Filtering-Correlation-Id: 527618c8-16c0-42c6-2df2-08ded2ffd507
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|1800799024|36860700016|23010399003|376014|82310400026|18002099003|22082099003|13003099007|6133799003|56012099006|4143699003|11063799006;
+X-Microsoft-Antispam-Message-Info: 8yjWAUQ1Qg9e+E+LgUp0Ud+Y3I/sSTfUaHHdA/MyXGaXxlyUV1mcF6gTQPjkhE+vNCd4gTHAqfyx9x+03k4uxg9lhk/Y1pJgoXi5jjr/sJ8Eu1hQAeYgvaiQOILwGwSybnPHnDHDR8LxGSeh4rgAL/vrjn2IWj2sYNTbVvMsFyMeSR/vWHgqWDW6CgZU/4DItKF2ghkRGPRS/FMzZfCTLV344b7kuO6scp8EBiOg/z2qyM4zHU2wlpisMxkan89TG+y4zNgvk4Z8HbpbIMv19hXoXMJkikSeSgP4BDHAgaosQnK2vy11oCHmymizODMLd5NclyBieGw3wL0NEsTBuSFYWtZw1n27YuTcjLLYCHlGHEB4YxK9TQqXzen5g6bW9tBYuBjmE5Tb1gTXcKUfUegk5bhmKeDIAe64/tGU85eBKvyW40NLhEj9VMfr+v98Piu9PiD9KB5Y67Yzgzc6WQvkZh/BL1y27k11HiVWGONnYZG/F+xAz60pMrFVwdLyho20dFs/j8ID5/tYy8xrPQC3zJp9WlDoTHuK5vkS9W6opnDIB4tzA3fnN37GTHqTG6cVcARk78O+XH8g4nqEvcrJtdVqCZvAuS/IeMjNaMI/Du1Oc9mRm8AE8+tMvoupfDh9XH8+IJ2vvemR4WZHGaroOGwmQCkgHhUFxBOSE+4x6g2oV6FOpZsXfCmUfy5OP3HOhcBB05RRDqcYNnCJ5w==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(7416014)(1800799024)(36860700016)(23010399003)(376014)(82310400026)(18002099003)(22082099003)(13003099007)(6133799003)(56012099006)(4143699003)(11063799006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: yQDgAvC3Xpt608C1a5Lk210q4ijCd8Rmt5wv5jlAujdBVKMiZc/NtkKs55oDcJhmtf17uhq1MdVeC1Hrluw8BuF1EAw8Yr/Z0zCLSXWGxN96AVlghvo1GtY0V9YlMZMmyXIZjJ8813zYhhm+A/cUXIKXIMgrQCU8cZcoFR81vXvkWFSuvt59IKfaXOywlkJ9yexWK1xKIyb8UW/dLvAPzzXqZ7RrArutX530mjsQH8VU9f7GD9lMFEJ85stJhUhOKdAWIevcZzFQQBwZPh5ZTYlOY0fLsLUQyUVp6eEJ0d32C+/Q6R8vuAj8gBQAESHp5t6pUUpnOxXt19QJUlQUvMG37SXsv/s/RiYzHBvDXBI95/41FEez4sCSU0pPxxFRujCIQn8F4VPatOP5J/0NjhO8oonIGA7oaxrArjDbQoxyHXGgnO/xwIaT8Y1jGtQ2
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jun 2026 21:22:16.4351 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 527618c8-16c0-42c6-2df2-08ded2ffd507
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF00012E80.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8036
+Received-SPF: permerror client-ip=52.101.61.6;
+ envelope-from=Michael.Roth@amd.com;
+ helo=DM1PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,451 +129,309 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Exclude all *-hmp-cmds.c files and HMP-only source files from the
-build when HMP is disabled.
+On Mon, Jun 22, 2026 at 02:32:25PM +0200, Lorenzo Pieralisi wrote:
+> On Wed, May 27, 2026 at 07:03:25PM -0500, Michael Roth wrote:
+> > This patchset is also available at:
+> > 
+> >   https://github.com/amdese/qemu/commits/snp-inplace-rfc1
+> > 
+> > which is in turn based on the following series:
+> > 
+> >   [PATCH 0/4] "guest_memfd: Fix handling for conversions of MMIO ranges"
+> >   https://lists.gnu.org/archive/html/qemu-devel/2026-05/msg07547.html
+> > 
+> > 
+> > OVERVIEW
+> > --------
+> > 
+> > This series adds guest_memfd support for in-place conversion of memory
+> > between private/shared, and enables it for SEV-SNP guests. It is based
+> > on recently-added kernel support for mmap()-able guest_memfd
+> > instances[1], which allow it to be used for shared memory, and the
+> > following patchset[2], which adds additional guest_memfd interfaces to
+> > allow it to be used to perform in-place conversion:
+> > 
+> >   "[PATCH v7 00/42] guest_memfd: In-place conversion support"
+> >   https://lore.kernel.org/kvm/20260522-gmem-inplace-conversion-v7-0-2f0fae496530@google.com/
+> > 
+> > That series also introduces a new 'vm_memory_attributes' KVM
+> > module option, which sets whether memory attributes are tracked
+> > VM-wide by KVM (vm_memory_attributes=1: the existing 'legacy' mode),
+> > or per-guest_memfd instance (vm_memory_attributes=0: the new mode
+> > which allows for in-place conversion). The latter is intended to
+> > eventually deprecate the legacy mode, at which point in-place
+> > conversion would become the primarily-supported mode.
+> > 
+> > 
+> > MOTIVATION
+> > ----------
+> > 
+> > Today, SEV-SNP guests (and other CoCo VM types using guest_memfd) keep
+> > shared and private memory on separate physical backings: a userspace
+> > memory-backend object for shared pages, and a kernel-allocated
+> > guest_memfd file descriptor for private pages. KVM_SET_MEMORY_ATTRIBUTES
+> > flips which backing the guest sees for a given GPA range, and the old
+> > backing is typically discarded / hole-punched on conversion to avoid
+> > doubled memory usage.
+> 
+> Hi Michael,
 
-Also conditionalise the hmp-commands.hx header generation and the
-test-hmp qtest.
+Hi Lorenzo,
 
-Drop the transient #ifdef CONFIG_HMP, no longer needed.
+> 
+> I am giving this a go on Arm CCA on top of Ackerley's KVM patches.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- meson.build               |  2 +-
- hw/pci/pci-hmp-cmds.c     |  2 --
- monitor/hmp.c             |  2 --
- audio/meson.build         |  4 +++-
- backends/meson.build      |  5 ++++-
- block/monitor/meson.build |  4 +++-
- chardev/meson.build       |  5 ++++-
- disas/meson.build         |  4 +++-
- dump/meson.build          |  5 ++++-
- hw/core/meson.build       |  5 +++--
- hw/i386/meson.build       |  4 +++-
- hw/net/meson.build        |  4 +++-
- hw/pci/meson.build        |  4 +++-
- hw/virtio/meson.build     |  4 +++-
- migration/meson.build     |  4 +++-
- monitor/meson.build       |  9 +++++++--
- net/meson.build           |  4 +++-
- qom/meson.build           |  4 +++-
- stats/meson.build         |  5 ++++-
- stubs/meson.build         | 12 +++++++-----
- system/meson.build        |  9 +++++++--
- tests/qtest/meson.build   |  8 +++++++-
- trace/meson.build         |  5 ++++-
- ui/meson.build            |  4 +++-
- 24 files changed, 85 insertions(+), 33 deletions(-)
+Nice!
 
-diff --git a/meson.build b/meson.build
-index 824ba695801..4b208a2c56e 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3536,7 +3536,7 @@ hx_headers = [
-   ['qemu-options.hx', 'qemu-options.def'],
-   ['qemu-img-cmds.hx', 'qemu-img-cmds.h'],
- ]
--if have_system
-+if have_system and have_hmp
-   hx_headers += [
-     ['hmp-commands.hx', 'hmp-commands.h'],
-     ['hmp-commands-info.hx', 'hmp-commands-info.h'],
-diff --git a/hw/pci/pci-hmp-cmds.c b/hw/pci/pci-hmp-cmds.c
-index 3e378eadfaa..a5f6483cc3d 100644
---- a/hw/pci/pci-hmp-cmds.c
-+++ b/hw/pci/pci-hmp-cmds.c
-@@ -134,7 +134,6 @@ void hmp_info_pci(Monitor *mon, const QDict *qdict)
-     qapi_free_PciInfoList(info_list);
- }
- 
--#ifdef CONFIG_HMP
- void pcibus_dev_print(Monitor *mon, DeviceState *dev, int indent)
- {
-     PCIDevice *d = (PCIDevice *)dev;
-@@ -170,7 +169,6 @@ void pcibus_dev_print(Monitor *mon, DeviceState *dev, int indent)
-                        r->addr, r->addr + r->size - 1);
-     }
- }
--#endif
- 
- void hmp_pcie_aer_inject_error(Monitor *mon, const QDict *qdict)
- {
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index c9e207c7a30..4926972a3fb 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -1616,9 +1616,7 @@ static int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
-     if (cs == NULL) {
-         return -1;
-     }
--#ifdef CONFIG_HMP
-     md = cs->cc->sysemu_ops->monitor_defs;
--#endif
-     if (md == NULL) {
-         return -1;
-     }
-diff --git a/audio/meson.build b/audio/meson.build
-index 0e33b6f9836..6655f601b11 100644
---- a/audio/meson.build
-+++ b/audio/meson.build
-@@ -9,7 +9,9 @@ audio_ss.add(files(
- ))
- 
- # deprecated since v10.2, to be removed
--system_ss.add(files('audio-hmp-cmds.c', 'wavcapture.c'))
-+if have_hmp
-+  system_ss.add(files('audio-hmp-cmds.c', 'wavcapture.c'))
-+endif
- 
- audio_modules = {}
- foreach m : [
-diff --git a/backends/meson.build b/backends/meson.build
-index 60021f45d12..a59729f56fe 100644
---- a/backends/meson.build
-+++ b/backends/meson.build
-@@ -1,6 +1,5 @@
- system_ss.add([files(
-   'cryptodev-builtin.c',
--  'cryptodev-hmp-cmds.c',
-   'cryptodev.c',
-   'hostmem-ram.c',
-   'hostmem.c',
-@@ -10,6 +9,10 @@ system_ss.add([files(
-   'confidential-guest-support.c',
- ), numa])
- 
-+if have_hmp
-+  system_ss.add(files('cryptodev-hmp-cmds.c'))
-+endif
-+
- if host_os != 'windows'
-   system_ss.add(files('rng-random.c'))
-   if host_os != 'emscripten'
-diff --git a/block/monitor/meson.build b/block/monitor/meson.build
-index 74faced9e17..2d5c157a739 100644
---- a/block/monitor/meson.build
-+++ b/block/monitor/meson.build
-@@ -1,3 +1,5 @@
--system_ss.add(files('block-hmp-cmds.c'))
-+if have_hmp
-+  system_ss.add(files('block-hmp-cmds.c'))
-+endif
- block_ss.add(files('bitmap-qmp-cmds.c'))
- system_ss.add(files('qmp-cmds.c'))
-diff --git a/chardev/meson.build b/chardev/meson.build
-index 56ee39ac0b0..031b6d7238c 100644
---- a/chardev/meson.build
-+++ b/chardev/meson.build
-@@ -30,11 +30,14 @@ endif
- chardev_ss = chardev_ss.apply({})
- 
- system_ss.add(files(
--    'char-hmp-cmds.c',
-     'msmouse.c',
-     'wctablet.c',
-     'testdev.c'))
- 
-+if have_hmp
-+    system_ss.add(files('char-hmp-cmds.c'))
-+endif
-+
- chardev_modules = {}
- 
- if brlapi.found()
-diff --git a/disas/meson.build b/disas/meson.build
-index 42977a1f74d..b382550e41f 100644
---- a/disas/meson.build
-+++ b/disas/meson.build
-@@ -20,5 +20,7 @@ common_ss.add(when: 'CONFIG_TCG', if_true: files(
-     'objdump.c'
- ))
- common_ss.add(files('disas-common.c'))
--system_ss.add(files('disas-mon.c'))
-+if have_hmp
-+  system_ss.add(files('disas-mon.c'))
-+endif
- specific_ss.add(capstone)
-diff --git a/dump/meson.build b/dump/meson.build
-index 26e1561ed48..bef8276aa5a 100644
---- a/dump/meson.build
-+++ b/dump/meson.build
-@@ -1,3 +1,6 @@
--system_ss.add([files('dump.c', 'dump-hmp-cmds.c'), snappy, lzo])
-+system_ss.add([files('dump.c'), snappy, lzo])
-+if have_hmp
-+  system_ss.add(files('dump-hmp-cmds.c'))
-+endif
- specific_ss.add(when: 'CONFIG_WINDUMP', if_true: files('win_dump-x86.c'))
- system_ss.add(when: 'CONFIG_WINDUMP', if_false: files('win_dump-stubs.c'))
-diff --git a/hw/core/meson.build b/hw/core/meson.build
-index 8a96567de8f..8fe776d2c86 100644
---- a/hw/core/meson.build
-+++ b/hw/core/meson.build
-@@ -26,13 +26,11 @@ system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c'))
- system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
- system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.c'))
- system_ss.add(when: 'CONFIG_EIF', if_true: [files('eif.c'), zlib, libcbor, gnutls])
--
- system_ss.add(files(
-   'cpu-system.c',
-   'fw-path-provider.c',
-   'hotplug.c',
-   'loader.c',
--  'machine-hmp-cmds.c',
-   'machine-qmp-cmds.c',
-   'machine.c',
-   'nmi.c',
-@@ -46,6 +44,9 @@ system_ss.add(files(
-   'vm-change-state-handler.c',
-   'clock-vmstate.c',
- ))
-+if have_hmp
-+  system_ss.add(files('machine-hmp-cmds.c'))
-+endif
- user_ss.add(files(
-   'cpu-user.c',
-   'qdev-user.c',
-diff --git a/hw/i386/meson.build b/hw/i386/meson.build
-index b611fbb5a7f..125f4ce894c 100644
---- a/hw/i386/meson.build
-+++ b/hw/i386/meson.build
-@@ -24,7 +24,9 @@ i386_ss.add(when: 'CONFIG_VTD', if_true: files('intel_iommu.c'))
- i386_ss.add(when: 'CONFIG_VTD_ACCEL', if_true: files('intel_iommu_accel.c'))
- i386_ss.add(when: 'CONFIG_SGX', if_true: files('sgx-epc.c','sgx.c'),
-                                 if_false: files('sgx-stub.c'))
--stub_ss.add(files('sgx-hmp-stub.c'))
-+if have_hmp
-+  stub_ss.add(files('sgx-hmp-stub.c'))
-+endif
- 
- i386_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-common.c'))
- i386_ss.add(when: 'CONFIG_PC', if_true: files(
-diff --git a/hw/net/meson.build b/hw/net/meson.build
-index 84f142df222..df3373be03b 100644
---- a/hw/net/meson.build
-+++ b/hw/net/meson.build
-@@ -67,6 +67,8 @@ system_ss.add(when: 'CONFIG_ROCKER', if_true: files(
-   'rocker/rocker_world.c',
- ))
- stub_ss.add(files('rocker/rocker-stubs.c'))
--system_ss.add(files('rocker/rocker-hmp-cmds.c'))
-+if have_hmp
-+  system_ss.add(files('rocker/rocker-hmp-cmds.c'))
-+endif
- 
- subdir('can')
-diff --git a/hw/pci/meson.build b/hw/pci/meson.build
-index a6cbd89c0a3..984c7327e5d 100644
---- a/hw/pci/meson.build
-+++ b/hw/pci/meson.build
-@@ -5,12 +5,14 @@ pci_ss.add(files(
-   'pci.c',
-   'pci_bridge.c',
-   'pci_host.c',
--  'pci-hmp-cmds.c',
-   'pci-qmp-cmds.c',
-   'pcie_sriov.c',
-   'shpc.c',
-   'slotid_cap.c'
- ))
-+if have_hmp
-+  pci_ss.add(files('pci-hmp-cmds.c'))
-+endif
- # The functions in these modules can be used by devices too.  Since we
- # allow plugging PCIe devices into PCI buses, include them even if
- # CONFIG_PCI_EXPRESS=n.
-diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-index 0e023235164..b59f455a511 100644
---- a/hw/virtio/meson.build
-+++ b/hw/virtio/meson.build
-@@ -100,6 +100,8 @@ stub_ss.add(files('vhost-user-stub.c'))
- stub_ss.add(files('virtio-stub.c'))
- stub_ss.add(files('virtio-md-stubs.c'))
- 
--system_ss.add(files('virtio-hmp-cmds.c'))
-+if have_hmp
-+  system_ss.add(files('virtio-hmp-cmds.c'))
-+endif
- 
- system_ss.add(when: 'CONFIG_ACPI', if_true: files('virtio-acpi.c'))
-diff --git a/migration/meson.build b/migration/meson.build
-index 0a9a5d0d374..4ab9d99cea6 100644
---- a/migration/meson.build
-+++ b/migration/meson.build
-@@ -36,7 +36,9 @@ system_ss.add(files(
-   'socket.c',
-   'tls.c',
- ), gnutls, zlib)
--system_ss.add([spice_headers, files('migration-hmp-cmds.c'), spice])
-+if have_hmp
-+  system_ss.add([spice_headers, files('migration-hmp-cmds.c'), spice])
-+endif
- 
- if get_option('replication').allowed()
-   system_ss.add(files('colo-failover.c', 'colo.c', 'multifd-colo.c'))
-diff --git a/monitor/meson.build b/monitor/meson.build
-index 4c58dd148c0..f67e0291a42 100644
---- a/monitor/meson.build
-+++ b/monitor/meson.build
-@@ -2,8 +2,13 @@ qmp_ss.add(files('monitor.c', 'qmp.c', 'qmp-cmds-control.c'))
- 
- system_ss.add(files(
-   'fds.c',
--  'hmp-cmds.c',
--  'hmp.c',
-   'qemu-config-qmp.c',
-   'qmp-cmds.c',
- ))
-+
-+if have_hmp
-+  system_ss.add(files(
-+    'hmp-cmds.c',
-+    'hmp.c',
-+  ))
-+endif
-diff --git a/net/meson.build b/net/meson.build
-index 9c8068b06d1..5bb76d13649 100644
---- a/net/meson.build
-+++ b/net/meson.build
-@@ -8,7 +8,6 @@ system_ss.add(files(
-   'filter-mirror.c',
-   'filter.c',
-   'hub.c',
--  'net-hmp-cmds.c',
-   'net.c',
-   'queue.c',
-   'socket.c',
-@@ -16,6 +15,9 @@ system_ss.add(files(
-   'stream_data.c',
-   'util.c',
- ))
-+if have_hmp
-+  system_ss.add(files('net-hmp-cmds.c'))
-+endif
- 
- if get_option('replication').allowed() or \
-     get_option('colo_proxy').allowed()
-diff --git a/qom/meson.build b/qom/meson.build
-index bd6f4aadd78..022d3ad5c8f 100644
---- a/qom/meson.build
-+++ b/qom/meson.build
-@@ -10,4 +10,6 @@ if have_system
- endif
- 
- qmp_ss.add(files('qom-qmp-cmds.c'))
--system_ss.add(files('qom-hmp-cmds.c'))
-+if have_hmp
-+  system_ss.add(files('qom-hmp-cmds.c'))
-+endif
-diff --git a/stats/meson.build b/stats/meson.build
-index 0728dafcd1c..b5f68a94052 100644
---- a/stats/meson.build
-+++ b/stats/meson.build
-@@ -1 +1,4 @@
--system_ss.add(files('stats-hmp-cmds.c', 'stats-qmp-cmds.c'))
-+system_ss.add(files('stats-qmp-cmds.c'))
-+if have_hmp
-+  system_ss.add(files('stats-hmp-cmds.c'))
-+endif
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 3b2f2680b19..fe77107cc86 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -85,11 +85,13 @@ if have_system
-   stub_ss.add(files('qmp-cpu.c'))
-   stub_ss.add(files('qmp-cpu-s390x.c'))
-   stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
--  stub_ss.add(files('hmp-cmd-info_mem.c'))
--  stub_ss.add(files('hmp-cmd-info_sev.c'))
--  stub_ss.add(files('hmp-cmd-info_tlb.c'))
--  stub_ss.add(files('hmp-cmds-hw-s390x.c'))
--  stub_ss.add(files('hmp-cmds-target-i386.c'))
-+  if have_hmp
-+    stub_ss.add(files('hmp-cmd-info_mem.c'))
-+    stub_ss.add(files('hmp-cmd-info_sev.c'))
-+    stub_ss.add(files('hmp-cmd-info_tlb.c'))
-+    stub_ss.add(files('hmp-cmds-hw-s390x.c'))
-+    stub_ss.add(files('hmp-cmds-target-i386.c'))
-+  endif
- endif
- 
- if have_system or have_user
-diff --git a/system/meson.build b/system/meson.build
-index cd3193d170b..da4d4fe1f6c 100644
---- a/system/meson.build
-+++ b/system/meson.build
-@@ -22,12 +22,17 @@ system_ss.add(files(
-   'qtest.c',
-   'rtc.c',
-   'runstate-action.c',
--  'runstate-hmp-cmds.c',
-   'runstate.c',
--  'tpm-hmp-cmds.c',
-   'watchpoint.c',
- ))
- 
-+if have_hmp
-+  system_ss.add(files(
-+    'runstate-hmp-cmds.c',
-+    'tpm-hmp-cmds.c',
-+  ))
-+endif
-+
- if have_tpm
-   system_ss.add(files('tpm.c'))
- endif
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index e154abb05d2..c00a53b2bba 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -26,7 +26,13 @@ qtests_generic = [
-   'qmp-test',
-   'qmp-cmd-test',
-   'qom-test',
--  'test-hmp',
-+]
-+if have_hmp
-+  qtests_generic += [
-+    'test-hmp',
-+  ]
-+endif
-+qtests_generic += [
-   'qos-test',
-   'readconfig-test',
-   'netdev-socket',
-diff --git a/trace/meson.build b/trace/meson.build
-index d89a0db82a1..4e5681c44ca 100644
---- a/trace/meson.build
-+++ b/trace/meson.build
-@@ -1,4 +1,7 @@
--system_ss.add(files('control-target.c', 'trace-hmp-cmds.c'))
-+system_ss.add(files('control-target.c'))
-+if have_hmp
-+  system_ss.add(files('trace-hmp-cmds.c'))
-+endif
- trace_rs_targets = []
- trace_events_files = []
- foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
-diff --git a/ui/meson.build b/ui/meson.build
-index 0c6a432948c..433b3b9118c 100644
---- a/ui/meson.build
-+++ b/ui/meson.build
-@@ -55,10 +55,12 @@ system_ss.add(png)
- system_ss.add(files(
-   'input-barrier.c',
-   'input.c',
--  'ui-hmp-cmds.c',
-   'ui-qmp-cmds.c',
-   'util.c',
- ))
-+if have_hmp
-+  system_ss.add(files('ui-hmp-cmds.c'))
-+endif
- system_ss.add(ui)
- system_ss.add(when: pixman, if_true: files('console-vc.c'), if_false: files('console-vc-stubs.c'))
- if dbus_display
+> 
+> When convert-in-place is switched on I think that the post conversion
+> hook should not trigger discard+hole-punch since now guest-memfd _is_
+> the memory back-end but it looks like there is no guard in place against
+> that (I noticed that ram_block_discard_range() triggers a hole-punch in
+> kvm_post_convert_section() - when the CCA guest first requests a
+> KVM_EXIT_MEMORY_FAULT to convert to private).
+> 
+> It is a question really.
 
--- 
-2.54.0
+Yes, I agree that it does not make much sense to try to hole-punch for
+in-place conversion, it's just uncessary churn on the gmem side. In my
+internal branches I generally disabled this path but for some reason
+left that out of this series. I've tested with the below change and it
+should do the trick though; I'll roll something similar into v2 of the
+series.
 
+  diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+  index 5840daa7c8..2faec929b5 100644
+  --- a/accel/kvm/kvm-all.c
+  +++ b/accel/kvm/kvm-all.c
+  @@ -3619,17 +3619,19 @@ static int kvm_post_convert_section(MemoryRegionSection *section, bool to_privat
+           }
+       }
+   
+  -    if (to_private) {
+  -        if (rb->page_size != qemu_real_host_page_size()) {
+  -            /*
+  -             * shared memory is backed by hugetlb, which is supposed to be
+  -             * pre-allocated and doesn't need to be discarded
+  -             */
+  -            return 0;
+  +    if (current_machine->cgs && current_machine->cgs->convert_in_place) {
+  +        if (to_private) {
+  +            if (rb->page_size != qemu_real_host_page_size()) {
+  +                /*
+  +                 * shared memory is backed by hugetlb, which is supposed to be
+  +                 * pre-allocated and doesn't need to be discarded
+  +                 */
+  +                return 0;
+  +            }
+  +            ret = ram_block_discard_range(rb, offset, size);
+  +        } else {
+  +            ret = ram_block_discard_guest_memfd_range(rb, offset, size);
+           }
+  -        ret = ram_block_discard_range(rb, offset, size);
+  -    } else {
+  -        ret = ram_block_discard_guest_memfd_range(rb, offset, size);
+       }
+   
+       return 0;
+
+Thanks!
+
+-Mike
+
+> 
+> Thanks,
+> Lorenzo
+> 
+> > That model works, but has a number of downsides that impact certain
+> > use-cases:
+> > 
+> >   - Each conversion involves discarding pages on one side and faulting
+> >     them in on the other, which incurs allocation overheads in the
+> >     host kernel for every conversion.
+> > 
+> >   - Some use-cases, like pKVM[3], rely on memory isolation rather than
+> >     encryption and rely on in-place conversion to pass through things
+> >     like secured framebuffer memory without needing to bounce data
+> >     through separate shared/private HPAs, which would introduce
+> >     unacceptable latency for that sort of workload.
+> > 
+> >   - Hugetlb support[4] for guest_memfd will rely on it, since things like
+> >     1GB hugepages with a mix of shared/private sub-ranges would generally
+> >     require 2 1GB hugetlb pages to remain available to handle shared vs.
+> >     private accesses, which quickly causes doubling of guest memory usage.
+> > 
+> > Recent kernel work[2] makes guest_memfd mmap()-able and lets the *same*
+> > physical pages be used for both shared and private states for a given
+> > GPA range, allowing the above pitfalls to be naturally avoided.
+> > 
+> > This series wires that support up in QEMU.
+> > 
+> > 
+> > DESIGN
+> > ------
+> > 
+> > A new dedicated memory backend, memory-backend-guest-memfd, allocates
+> > its memory via a guest_memfd file descriptor obtained from KVM with
+> > the GUEST_MEMFD_FLAG_MMAP | GUEST_MEMFD_FLAG_INIT_SHARED flags. The fd
+> > is mmap()ed so userspace can access pages directly while they are in
+> > the shared state. For a normal/non-confidential VM, this backend can
+> > be used in a similar fashion as the existing memory-backend-memfd.
+> > 
+> > For confidential VMs, a new 'convert-in-place' flag is added to switch
+> > on in-place conversion support. When running in this mode, the user
+> > *MUST* use memory-backend-guest-memfd for backing guest RAM. A new
+> > RAM_GUEST_MEMFD_SHARED RAMBlock flag is added to track/enforce the
+> > dependency. Additionally, QEMU is modified to use mmap()-able
+> > guest_memfd and set this flag for other cases where it allocates RAM
+> > internally. As a result, block->fd will generally always a guest_memfd,
+> > and when RAM_GUEST_MEMFD_SHARED is set then that block->fd will be
+> > qemu_dup()'d as the FD handle for private memory is well (which is
+> > currently what block->guest_memfd point to). This allows the prior
+> > non-in-place handling around block->guest_memfd to be kept mostly
+> > unchanged.
+> > 
+> > When running with convert-in-place=true, shared/private conversions
+> > are no longer handled directly by KVM, but instead by a new guest_memfd
+> > ioctl, KVM_SET_MEMORY_ATTRIBUTES2, which purposely provides similar
+> > naming/implementation to the KVM_SET_MEMORY_ATTRIBUTES KVM ioctl that
+> > it replaces. This series adds handling to route conversion requests to
+> > the appropriate ioctls based on whether or not in-place conversion is
+> > enabled.
+> > 
+> > Since guest_memfd ioctls need to be called against the specific
+> > guest_memfd inode associated with each memory slot/region, some
+> > refactoring is needed to handle conversions on a per-section. Much of
+> > that is inherited from the bugfix series this patchset is based on top
+> > of, which adds the initial logic for handling multiple sections within
+> > a range that gets heavily re-used here.
+> > 
+> > 
+> > USAGE
+> > -----
+> > 
+> > After applying this series against a kernel with the RFC patches above
+> > present, an SEV-SNP guest can be started with in-place conversion via:
+> > 
+> >     qemu-system-x86_64 \
+> >         -machine q35,confidential-guest-support=sev0,memory-backend=ram0 \
+> >         -object memory-backend-guest-memfd,id=ram0,size=8G,share=on \
+> >         -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,\
+> >                 convert-in-place=on \
+> >         ...
+> > 
+> > The new memory-backend-guest-memfd can also be used by normal VMs:
+> > 
+> >     qemu-system-x86_64 \
+> >         -machine q35,memory-backend=ram0 \
+> >         -object memory-backend-guest-memfd,id=ram0,size=8G,share=on \
+> >         ...
+> > 
+> > This is mainly only useful atm for testing, but in the future there may
+> > be more use-cases around using guest_memfd as a general-purpose backend
+> > for non-confidential VMs, so it is intended to work in this manner as
+> > well.
+> > 
+> > 
+> > NOTES/TODO
+> > ----------
+> > 
+> >   - the CPR handling to support resetting of confidential VMs is
+> >     currently disabled when in-place conversion is enabled.
+> >   - TDX testing would be great, in theory it can be enabled with this
+> >     series (similarly to the top patch) but I'm not sure if there are
+> >     other special requirements before we can switch it on.
+> >   - kernel patches are still in-flight, but fairly mature at this point
+> >     and nearing upstream
+> > 
+> > 
+> > REFERENCES
+> > ----------
+> > 
+> > [1] https://lore.kernel.org/kvm/20250729225455.670324-1-seanjc@google.com/
+> > [2] https://lore.kernel.org/kvm/20260522-gmem-inplace-conversion-v7-0-2f0fae496530@google.com/
+> > [3] https://www.youtube.com/watch?v=MMfAGNW9RVg
+> > [4] 1GB hugetlb v2
+> > 
+> > 
+> > Thoughts, feedback, and testing are very much appreciated.
+> > 
+> > Thanks,
+> > 
+> > Mike
+> > 
+> > 
+> > ----------------------------------------------------------------
+> > Michael Roth (12):
+> >       accel/kvm: Decouple guest_memfd checks from memory attribute checks
+> >       hostmem: Introduce dedicated memory backend for guest_memfd
+> >       linux-headers: Update headers for v7 of in-place conversion kernel support
+> >       accel/kvm: Add CGS option to control in-place conversion support
+> >       system/memory: Re-use memory-backend-guest-memfd inode for private memory
+> >       system/memory: Default to guest_memfd for RAM for in-place conversion
+> >       accel/kvm: Move post-conversion updates to a separate helper
+> >       accel/kvm: Re-order attribute notifications for in-place conversion
+> >       accel/kvm: Support shared/private conversions via guest_memfd ioctls
+> >       accel/kvm: Don't default to private attributes for in-place conversion
+> >       i386/sev: Update SNP_LAUNCH_UPDATE for in-place conversion
+> >       i386/sev: Allow in-place conversion for SEV-SNP guests
+> > 
+> >  accel/kvm/kvm-all.c                                | 286 +++++++++++--
+> >  accel/stubs/kvm-stub.c                             |   9 +-
+> >  backends/confidential-guest-support.c              |  25 ++
+> >  backends/hostmem-guest-memfd.c                     |  93 +++++
+> >  backends/meson.build                               |   1 +
+> >  include/standard-headers/drm/drm_fourcc.h          |  28 +-
+> >  include/standard-headers/linux/const.h             |  18 +
+> >  include/standard-headers/linux/ethtool.h           |  28 +-
+> >  include/standard-headers/linux/input-event-codes.h |  13 +
+> >  include/standard-headers/linux/pci_regs.h          |  71 +++-
+> >  include/standard-headers/linux/typelimits.h        |   8 +
+> >  include/standard-headers/linux/virtio_ring.h       |   5 +-
+> >  include/standard-headers/linux/virtio_rtc.h        | 237 +++++++++++
+> >  include/standard-headers/linux/vmclock-abi.h       |  20 +
+> >  include/system/confidential-guest-support.h        |  14 +
+> >  include/system/hostmem.h                           |   1 +
+> >  include/system/kvm.h                               |   3 +-
+> >  include/system/memory.h                            |   8 +-
+> >  linux-headers/asm-arm64/kvm.h                      |   1 +
+> >  linux-headers/asm-arm64/unistd_64.h                |   1 +
+> >  linux-headers/asm-generic/unistd.h                 |   5 +-
+> >  linux-headers/asm-loongarch/kvm.h                  |   5 +
+> >  linux-headers/asm-loongarch/kvm_para.h             |   1 +
+> >  linux-headers/asm-loongarch/unistd_64.h            |   2 +
+> >  linux-headers/asm-mips/unistd_n32.h                |   1 +
+> >  linux-headers/asm-mips/unistd_n64.h                |   1 +
+> >  linux-headers/asm-mips/unistd_o32.h                |   1 +
+> >  linux-headers/asm-powerpc/unistd_32.h              |   1 +
+> >  linux-headers/asm-powerpc/unistd_64.h              |   1 +
+> >  linux-headers/asm-riscv/kvm.h                      |  11 +-
+> >  linux-headers/asm-riscv/ptrace.h                   |  37 ++
+> >  linux-headers/asm-riscv/unistd_32.h                |   1 +
+> >  linux-headers/asm-riscv/unistd_64.h                |   1 +
+> >  linux-headers/asm-s390/unistd_32.h                 | 446 ---------------------
+> >  linux-headers/asm-s390/unistd_64.h                 |   1 +
+> >  linux-headers/asm-x86/kvm.h                        |  21 +-
+> >  linux-headers/asm-x86/unistd_32.h                  |   1 +
+> >  linux-headers/asm-x86/unistd_64.h                  |   1 +
+> >  linux-headers/asm-x86/unistd_x32.h                 |   1 +
+> >  linux-headers/linux/const.h                        |  18 +
+> >  linux-headers/linux/iommufd.h                      |  48 +++
+> >  linux-headers/linux/kvm.h                          |  62 ++-
+> >  linux-headers/linux/mshv.h                         |   4 +-
+> >  linux-headers/linux/psp-sev.h                      |   2 +-
+> >  linux-headers/linux/stddef.h                       |   4 +
+> >  linux-headers/linux/vduse.h                        |  85 +++-
+> >  linux-headers/linux/vfio.h                         |  30 +-
+> >  qapi/qom.json                                      |  35 +-
+> >  qemu-options.hx                                    |   5 +
+> >  system/memory.c                                    |  22 +-
+> >  system/physmem.c                                   |  50 ++-
+> >  target/i386/sev.c                                  |  12 +-
+> >  52 files changed, 1253 insertions(+), 533 deletions(-)
+> >  create mode 100644 backends/hostmem-guest-memfd.c
+> >  create mode 100644 include/standard-headers/linux/typelimits.h
+> >  create mode 100644 include/standard-headers/linux/virtio_rtc.h
+> >  delete mode 100644 linux-headers/asm-s390/unistd_32.h
+> > 
 
