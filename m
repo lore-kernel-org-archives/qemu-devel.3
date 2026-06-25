@@ -4,128 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBC65CDE001
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 16:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50332CDE000
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 16:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcnNe-0005cW-7m; Thu, 25 Jun 2026 12:56:46 -0400
+	id 1wcnOi-00068C-VA; Thu, 25 Jun 2026 12:57:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcascell@redhat.com>)
- id 1wcnNH-0005bp-3n
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:56:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wcnOe-00067r-3h
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:57:48 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcascell@redhat.com>)
- id 1wcnNF-0000e1-5y
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:56:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782406579;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gNy3HAdSiOgrRl/nawawEJ1z90Vjuw9QjhpJlYeBLPk=;
- b=R5vcKDTrbe61vj82/zmNhx5zwQm3GHzQQh8ObvXDgy/Hd2dnUwffvSVoLGx8FxJdmvuM4k
- nOK2QRf5oPs0ZeaLPGlGqnBeddCFCOlkt6Ygt5aVaQWFgZAn2W8UAIwKQc9DD/exF7nIkR
- 3knutFZfNMfS2NY7Qp7o/GFD2YNRtpU=
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-683-AfTPczKaPZe-qaC7wkOctA-1; Thu, 25 Jun 2026 12:56:18 -0400
-X-MC-Unique: AfTPczKaPZe-qaC7wkOctA-1
-X-Mimecast-MFC-AGG-ID: AfTPczKaPZe-qaC7wkOctA_1782406577
-Received: by mail-pf1-f199.google.com with SMTP id
- d2e1a72fcca58-84531eaf8a8so3610417b3a.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 09:56:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782406577; cv=none;
- d=google.com; s=arc-20260327;
- b=AoZ/u8449RooaHU28hq8S7pAbnI0ujeAicI98KcOK7HiyHFN6TONjZxlrjFkDwOfDS
- NhNa6XM3FUieh/+P7DywJXvyvzBuBHBDtfzEBeTSS2w7wi1ysUHf/IM17rD7iM+i/7E6
- jC5Ty8rSwQrtVAxB0qkcaXAQ5nio0Lcvr+kW2scrZStZRDkL8cwIqXORFDlMoHCtqB3y
- pfBQuzQXYQn6YDRTyTKAJCcHEdE91MDUlHK1sVy7Q+PEih/wh+bbEmzxkR2hUWs+5YAD
- jXnHgXj1aowsKba/XUQwIqHqUKEEbx0ZKZ2dC/j4yUvkKPBP6pV0E4BamyS93+Hj7tGh
- C6cw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=gNy3HAdSiOgrRl/nawawEJ1z90Vjuw9QjhpJlYeBLPk=;
- fh=OYDRjMZhGsb5AY/vlEaloJh7mxCoqYR8Z60TM+ctMhw=;
- b=OWAF0yLQGqziQQGeRKG8EZtgSxwb0eLImrYHCWDnbcEzO/9yvC3Eee8dBuMF63afcf
- fXiocFjLskdJPf5Fi8nwlRvmsbpDXqsuwSoAWypPRxiciqUdK2vRx4BsO5scLy2DYBg3
- L8QCpIyU3Cgs1mh55VsqNRh2Osm/gfmglym15ujLoXh3U58io4+e0GgXCG7k6lBT+urn
- uSTBkJV4tBE1oICC/bzpROhLRU1D+vLS/fhaWzMfhNh1cG6IbrLD+/Rh60zDlb0flELq
- syd+TQ4c2eMVQk6NAH5eNRTzkfL7lGhd1ZmxLFcew97EMmEgJsnVk56Ah8qh+mBc51Mc
- eR/A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782406577; x=1783011377; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gNy3HAdSiOgrRl/nawawEJ1z90Vjuw9QjhpJlYeBLPk=;
- b=bduW2boJFdwXbcify97TSF40QFOqeljaDx/Ylc4Zkii+RZ9qCG+zzdobSZp6QCHvBk
- Nu5j1bA1PgACOw2h8gMsrfBQWldu5lI9i22KtHhIytppZv2qpE9+gQBawCJTtMNJSf0E
- Kh3Aja9fJsnKngdzujVEZef5tybsxbTeqEWuBe2zKvyDi4aqXiBX1ThUPGHLMJFcgl44
- cZZzQAB/i9ozogzFqOoqQiJLqHjJ7IMyvfQdMOabmxuiIPjZ5nOaoOGTA60+WlCk3h4V
- oepACS3anwVscuy38YFMnRvheG0Hhs1dj/zOSBKpm7uKyeM5mOSWAWuy5uPXSAjjmFx0
- FAiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782406577; x=1783011377;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=gNy3HAdSiOgrRl/nawawEJ1z90Vjuw9QjhpJlYeBLPk=;
- b=hx2d9gGKvGuDPICTyAwyESxYHBfWmjg+tYzHWOiWBAOcoLTWHGowC/vwJvkapo+E22
- CrmBU2nYjPSpAKE2ZWFJB4KA4V7FTfQqDE94PVcYc2yZR/uSQeFki7hIfKUXsksE+2QK
- 8v2KkpXOZsz5CswxUdxcekCpbfZmujOPgmT+XqjxZwb2FEk3rIqMLLV/7xT9pFwFhnjW
- C5J2++ySlirh0xUXxXRFBvwEUDYx/IHhvNuPlunCFC0D3Pu0KdaIXgnPfiKcX8VO/SAB
- bW6n2ak6SXgDeOZEINpwcUi9tCJ2s24cUo1auAwmwzHS2fYUgeeQUiCCk04/CGGQDAx/
- Rk7g==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqyDhj9Nv48PcCmMEcn1ShIEbWTgrFvzUo83g9H2THbTMC5E0X7WAvkleRRWTbcx3S0i9/5Gx/W9vHJ@nongnu.org
-X-Gm-Message-State: AOJu0Yxw0i4kezxSiqlC3BIK00oF4Zg4EUIXDq+2iNraRP9waMqUEoVJ
- 8LNg32mDAdPV4K7H755uVhlzLEWgj2R8cIyY2ce3KLhq/WM8stm6WyeLvRcalGJcVryqx45AJSC
- KB694SZv/qfzBBRFMl9chJxP4iGqluJyEim6ta1bAR8iGgT3/S2nbesDJWE8yqwvfQVZ27T14hX
- P2aaPJsIti7prLFaYaRvlkvYoyww0mVbI=
-X-Gm-Gg: AfdE7cliqv6Yi4Z+zgI2icKdmmtpuPHa3kXb2sq2ixbOugxzUBoKlfcrlaPO69/9AmQ
- 2qD1DUEaRilO09uTnGDZvYu0bVJZC4wOGrK1iMAFuvpCS3cuj67ATX8BxdnrSQr4Hb4jwyCRtdj
- d3rK91scV1bwsXOAP60m5lql+xAkiKrfoIlCCVGckNRxVpiA0DuT8RToBFkZmsn5U4/g==
-X-Received: by 2002:a05:6a00:189c:b0:842:5d9b:d590 with SMTP id
- d2e1a72fcca58-845b3af7dc9mr4027635b3a.30.1782406576785; 
- Thu, 25 Jun 2026 09:56:16 -0700 (PDT)
-X-Received: by 2002:a05:6a00:189c:b0:842:5d9b:d590 with SMTP id
- d2e1a72fcca58-845b3af7dc9mr4027605b3a.30.1782406576260; Thu, 25 Jun 2026
- 09:56:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wcnOZ-0000jq-2r
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:57:47 -0400
+Received: from [192.168.10.145] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65PGux83056874
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 26 Jun 2026 01:57:00 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=e7MN2dMxhBS2jLCUqS8CKAT71Nyo5zCVq7GFMguQQSE=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1782406620; v=1;
+ b=dY5FIITBRiFVhZJse2IBqWUcT04uENAJDCEBPVxq2T0JBhlUcV8UHMYlOB0k1l+T
+ 9liiGDUMvJBVTpFicNWfGBUpDTz2jFH0vOBrHcgRjG56TijD+rQcvY7eyxOLil4+
+ NMrN8s+qJceT+sDclpywoBVmSe1G6ZOc4xKbho3UuoUYXUBy5zRlPMODu6AYPEG8
+ SbwUdxOJPPdAc5GjHKbhSsb7pMLKG3UuG3vPXof6qg6rqmjTGBTkor1Tvinf622U
+ G+9BrzSBEZ7CuCoRMujAa4DKxwANptv90JMJGLVYqqNPfsLdGe+EpZeOWp53rK49
+ 9NZvZj9/EhGT4JYJYDyzrQ==
+Message-ID: <573ed754-6e39-4932-bccf-e0ed497b9d83@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 26 Jun 2026 01:56:59 +0900
 MIME-Version: 1.0
-References: <20260622161144.2883799-1-lvivier@redhat.com>
- <ajljKftAKpkoiN7w@redhat.com>
-In-Reply-To: <ajljKftAKpkoiN7w@redhat.com>
-From: Mauro Matteo Cascella <mcascell@redhat.com>
-Date: Thu, 25 Jun 2026 18:56:05 +0200
-X-Gm-Features: AVVi8Cep5a-WWUkeSPmx41u5LWUYNK-YmdaDWBjSqB0o5J9K_mlKep3-uUxLaDA
-Message-ID: <CAA8xKjXARvc3m7F30Us-57BMqaCo1qqZMp8c_wBzMAs_cvFj=Q@mail.gmail.com>
-Subject: Re: [PATCH] hw/char/virtio-serial-bus: fix guest-triggerable OOM in
- control_out()
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Amit Shah <amit@kernel.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mcascell@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 4/7] system: add memory_region_new / memory_region_new_io
+To: Thanos Makatos <thanos.makatos@nutanix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
+ <hpoussin@reactos.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ John Levon <john.levon@nutanix.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>
+References: <20260616155554.264412-1-berrange@redhat.com>
+ <20260616155554.264412-5-berrange@redhat.com>
+ <aa4d417e-2e61-44ef-a695-31bc19dbafd1@redhat.com>
+ <9976f829-7c33-7dce-b38e-aa6f04d6ec9d@eik.bme.hu>
+ <78798c63-5ca9-4acc-a878-8638724d487c@redhat.com>
+ <2660c118-474e-4160-9b26-25694d02d676@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR02MB94625343624EEBC89B3AE86F8BEF2@IA0PR02MB9462.namprd02.prod.outlook.com>
+ <20d873d8-035b-4661-b8af-76e0d7bc8ed5@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR02MB946281669C362A6AE31991D78BEE2@IA0PR02MB9462.namprd02.prod.outlook.com>
+ <a759b430-4657-4ebe-82dc-6914b39f1254@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR02MB946252A25B7AEED946D05F028BEC2@IA0PR02MB9462.namprd02.prod.outlook.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <IA0PR02MB946252A25B7AEED946D05F028BEC2@IA0PR02MB9462.namprd02.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,153 +94,381 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 22, 2026 at 6:30=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> On Mon, Jun 22, 2026 at 06:11:44PM +0200, Laurent Vivier wrote:
-> > A malicious guest can craft virtqueue descriptors with arbitrary length=
-s.
-> > control_out() calls iov_size() on the guest-supplied scatter-gather lis=
-t
-> > and passes the result directly to g_malloc(), allowing a guest to force
-> > QEMU to attempt multi-gigabyte allocations and crash the host process.
-> >
-> > Fix this by copying at most sizeof(struct virtio_console_control) into =
-a
-> > stack-local variable instead of allocating a buffer sized by the guest.
-> > handle_control_message() only accesses the fixed-size id, event, and
-> > value fields, so no data beyond the struct was ever needed.
->
-> Does anyone have thoughts on whether we should treat guest initiated
-> unbounded allocs as a security issue ?
->
-> IIUC, this flaw would require root in the guest OS in order to craft
-> the malicious virtqueue descriptors.
->
-> A self-initiated crash triggered by root would not historically
-> be enough justification for CVE. We would require it to be triggered
-> by unprivileged user.
->
-> Nested virt with device assignment could change that equation though
-> as the L2 guest could be considered an unpriv user from the L1 POV.
->
-> Also in theory the large alloc might be large enough to consume all
-> host RAM but not large enough to trigger OOM kill of QEMU. This might
-> impact operation of other co-located VMs on the same host.
->
-> Anyone think this is bad enough to justify a CVE ? Or should we treat
-> these OOM scenarios maerely as "hardening" bugs, where they require
-> 'root' in the L1 guest ?
+On 2026/06/25 23:37, Thanos Makatos wrote:
+>> -----Original Message-----
+>> From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>> Sent: 23 June 2026 15:04
+>> To: Thanos Makatos <thanos.makatos@nutanix.com>; Paolo Bonzini
+>> <pbonzini@redhat.com>; BALATON Zoltan <balaton@eik.bme.hu>
+>> Cc: Daniel P. Berrangé <berrange@redhat.com>; qemu-devel@nongnu.org;
+>> Philippe Mathieu-Daudé <philmd@mailo.com>; Pierrick Bouvier
+>> <pierrick.bouvier@oss.qualcomm.com>; Peter Xu <peterx@redhat.com>;
+>> Hervé Poussineau <hpoussin@reactos.org>; Alex Bennée
+>> <alex.bennee@linaro.org>; Michael S. Tsirkin <mst@redhat.com>; Aurelien
+>> Jarno <aurelien@aurel32.net>; Fabiano Rosas <farosas@suse.de>; Mark Cave-
+>> Ayland <mark.cave-ayland@ilande.co.uk>; Marc-André Lureau
+>> <marcandre.lureau@redhat.com>; John Levon <john.levon@nutanix.com>;
+>> Cédric Le Goater <clg@redhat.com>
+>> Subject: Re: [RFC 4/7] system: add memory_region_new /
+>> memory_region_new_io
+>>
+>> !-------------------------------------------------------------------|
+>>    CAUTION: External Email
+>>
+>> |-------------------------------------------------------------------!
+>>
+>> On 2026/06/23 21:58, Thanos Makatos wrote:
+>>>> -----Original Message-----
+>>>> From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>> Sent: 23 June 2026 06:42
+>>>> To: Thanos Makatos <thanos.makatos@nutanix.com>; Paolo Bonzini
+>>>> <pbonzini@redhat.com>; BALATON Zoltan <balaton@eik.bme.hu>
+>>>> Cc: Daniel P. Berrangé <berrange@redhat.com>; qemu-devel@nongnu.org;
+>>>> Philippe Mathieu-Daudé <philmd@mailo.com>; Pierrick Bouvier
+>>>> <pierrick.bouvier@oss.qualcomm.com>; Peter Xu <peterx@redhat.com>;
+>>>> Hervé Poussineau <hpoussin@reactos.org>; Alex Bennée
+>>>> <alex.bennee@linaro.org>; Michael S. Tsirkin <mst@redhat.com>; Aurelien
+>>>> Jarno <aurelien@aurel32.net>; Fabiano Rosas <farosas@suse.de>; Mark
+>> Cave-
+>>>> Ayland <mark.cave-ayland@ilande.co.uk>; Marc-André Lureau
+>>>> <marcandre.lureau@redhat.com>; John Levon <john.levon@nutanix.com>;
+>>>> Cédric Le Goater <clg@redhat.com>
+>>>> Subject: Re: [RFC 4/7] system: add memory_region_new /
+>>>> memory_region_new_io
+>>>>
+>>>> !-------------------------------------------------------------------|
+>>>>     CAUTION: External Email
+>>>>
+>>>> |-------------------------------------------------------------------!
+>>>>
+>>>> On 2026/06/23 6:24, Thanos Makatos wrote:
+>>>>>> -----Original Message-----
+>>>>>> From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>>>> Sent: 22 June 2026 15:37
+>>>>>> To: Paolo Bonzini <pbonzini@redhat.com>; BALATON Zoltan
+>>>>>> <balaton@eik.bme.hu>
+>>>>>> Cc: Daniel P. Berrangé <berrange@redhat.com>; qemu-
+>> devel@nongnu.org;
+>>>>>> Philippe Mathieu-Daudé <philmd@mailo.com>; Pierrick Bouvier
+>>>>>> <pierrick.bouvier@oss.qualcomm.com>; Peter Xu <peterx@redhat.com>;
+>>>>>> Hervé Poussineau <hpoussin@reactos.org>; Alex Bennée
+>>>>>> <alex.bennee@linaro.org>; Michael S. Tsirkin <mst@redhat.com>;
+>> Aurelien
+>>>>>> Jarno <aurelien@aurel32.net>; Fabiano Rosas <farosas@suse.de>; Mark
+>>>> Cave-
+>>>>>> Ayland <mark.cave-ayland@ilande.co.uk>; Marc-André Lureau
+>>>>>> <marcandre.lureau@redhat.com>; John Levon
+>> <john.levon@nutanix.com>;
+>>>>>> Thanos Makatos <thanos.makatos@nutanix.com>; Cédric Le Goater
+>>>>>> <clg@redhat.com>
+>>>>>> Subject: Re: [RFC 4/7] system: add memory_region_new /
+>>>>>> memory_region_new_io
+>>>>>>
+>>>>>> !-------------------------------------------------------------------|
+>>>>>>      CAUTION: External Email
+>>>>>>
+>>>>>> |-------------------------------------------------------------------!
+>>>>>>
+>>>>>> On 2026/06/20 1:32, Paolo Bonzini wrote:
+>>>>>>> On 6/18/26 00:44, BALATON Zoltan wrote:
+>>>>>>>> On Wed, 17 Jun 2026, Paolo Bonzini wrote:
+>>>>>>>>> On 6/16/26 17:55, Daniel P. Berrangé wrote:
+>>>>>>>>>> Prepare for the move to dynamically allocated memory regions by
+>>>>>>>>>> introducing memory_region_new and memory_region_new_io
+>>>> functions
+>>>>>>>>>> which call through to object_new instead of object_initialize.
+>>>>>>>>>
+>>>>>>>>> MemoryRegionOps callback will certainly access fields in the parent.
+>>>>>>>>> Having a separate object gives you no benefit because you still have
+>>>>>>>>> the same use-after-free if the MemoryRegion outlives the device.
+>>>>>>>>> Likewise for buses.
+>>>>>>>>>
+>>>>>>>>> If the device itself is embedded, then all the invariants must hold
+>>>>>>>>> recursively:
+>>>>>>>>>
+>>>>>>>>> - the device must be kept alive by mutual references between the
+>>>>>>>>> device itself and its parent;
+>>>>>>>>>
+>>>>>>>>> - unparent for the device should wait for all guest memory accesses
+>>>>>>>>> to be either completed or cancelled.
+>>>>>>>>>
+>>>>>>>>> So, the problem is that "QEMU automatically references the owning
+>>>>>>>>> Device to keep the MemoryRegion alive" is a hack that should die.
+>>>>>>>>> [...] I disagree that removing embedding will fix any bugs
+>>>>>>>>
+>>>>>>>> I'm trying to understand this better. The way it originally meant to
+>>>>>>>> work according to the memory region docs and implementation is that
+>>>>>>>> memory region is added to an owner as a child which takes a reference
+>>>>>>>> and when the owner is freed it will unparent its children which will
+>>>>>>>> then get unrefed and freed as well if nothing else increased their ref
+>>>>>>>> count.
+>>>>>>>
+>>>>>>> Yes, and that's broken.
+>>>>>>>
+>>>>>>>> The problem is that when something accesses the memory region it
+>> has
+>>>>>>>> to keep the owner alive as well so instead of referencing the memory
+>>>>>>>> region it references the owner (not directly but using
+>>>>>>>> memory_region_ref which does this).
+>>>>>>>
+>>>>>>> A mechanism to keep the owner alive exists, and it is mutual references
+>>>>>>> (so that neither owner nor MR die) + unparent of owner (which should
+>>>>>>> wait for pending users to complete before returning).
+>>>>>>>
+>>>>>>> The fact that this mechanism is not used, i.e. unparent of a PCIDevice
+>>>>>>> does not wait for pending BAR accesses to complete, is a bug.
+>>>>>>>
+>>>>>>>> So embedding seems unrelated to this passing refs on
+>>>>>>>> memory regions to owner and could be fixed separately that my
+>> patches
+>>>>>>>> attempted.
+>>>>>>>
+>>>>>>> Your patches add the possibility of not embedding; I don't like having
+>>>>>>> two separate API, but I think we only have a disagreement on
+>> aesthetics.
+>>>>>>>
+>>>>>>> This is different for Daniel's patches, which try to fix something by
+>>>>>>> not embedding, and I don't think they do.  Currently, if the owner dies,
+>>>>>>> the MemoryRegion dies with it while it shouldn't (which is a problem,
+>>>>>>> absolutely).  But these patches, while preventing the MR from dying,
+>>>>>>> still leave around a dangling pointer to the owner from the MR, so
+>>>>>>> there's not much gained if anything.
+>>>>>>
+>>>>>> I think we can stack follow-up patches that reject accesses to
+>>>>>> MemoryRegions owned by unrealized devices. That would make this a
+>>>> more
+>>>>>> complete solution. Accessing an unrealized device is an unsafe corner
+>>>>>> case anyway, so it is better to close it explicitly.
+>>>>>>
+>>>>>> memory_region_init_ram_ptr() and
+>> memory_region_init_ram_device_ptr()
+>>>>>> are
+>>>>>> a little more complicated, because direct accesses to those regions can
+>>>>>> happen outside the BQL. Still, we can unmap the memory when the
+>>>>>> MemoryRegion is finalized, as memory_region_init_ram() already does.
+>>>>>>
+>>>>>> However, after looking into this further, I found one complication:
+>>>>>> x-vfio-user-server. In that case, the unmap timing is controlled by
+>>>>>> libvfio-user, so QEMU cannot keep the memory mapped until the
+>>>>>> MemoryRegion reference is dropped. This is not a new issue; it is a
+>>>>>> pre-existing use-after-free hazard. I think a practical fix would be to
+>>>>>> extend the libvfio-user API to support asynchronous unmapping.
+>>>>>>
+>>>>>> Cc'ing the vfio-user maintainers.
+>>>>>
+>>>>> VFIO_USER_DMA_UNMAP is already asynchronous, it sends the response
+>>>> only after it's done unmapping. What would that asynchronous unmapping
+>>>> API look like? VFIO_USER_DMA_UNMAP would send a respond that it
+>>>> received the operation and started unmapping, and then another one to
+>> say
+>>>> it's done unmapping?
+>>>>
+>>>> The problem is of libvfio-user's API, not the vfio-user protocol.
+>>>> vfu_setup_device_dma() takes a DMA region unregistration callback, which
+>>>> is expected to synchronously unmap the region from the guest, and
+>>>> x-vfio-user-server attempts to do so by calling object_unparent().
+>>>
+>>> I misunderstood.
+>>>
+>>> libvfio-user provides an optional mechanism where the device is asked to
+>> quiesce for certain operations, including VFIO_USER_DMA_UNMAP. Once
+>> quiesced, the device must not modify state. If the device cannot quiesce
+>> immediately it can continue operating and once ready to quiesce it can call a
+>> libvfio-user function to tell the library it's quiesced. Would that solve the
+>> problem?
+>>
+>> I don't think that solves this specific problem.
+>>
+>> The quiesce callback would let QEMU explicitly tell libvfio-user when it
+>> is safe to proceed with the unmap. For example, QEMU could register a
+>> quiesce callback with:
+>>
+>>       vfu_setup_device_quiesce_cb(o->vfu_ctx, quiesce_cb);
+>>
+>> Then quiesce_cb() could return -EBUSY while QEMU prepares for the unmap,
+>> and later call:
+>>
+>>       vfu_device_quiesced(vfu_ctx, 0);
+>>
+>> At that point, libvfio-user would call dma_unregister(), and
+>> dma_unregister() would be expected to synchronously unmap the memory.
+>>
+>> The difficulty is that this assumes QEMU has a primitive that can
+>> prepare the guest memory mapping so that `dma_unregister()` can later
+>> complete the unmap synchronously. I don't think we have such a
+>> primitive, and I don't think it can be implemented cleanly with the
+>> current memory API.
+>>
+>> If this were protected by a conventional lock, QEMU could acquire the
+>> lock in quiesce_cb() and use the resulting critical section in
+>> dma_unregister() to update the guest memory mapping synchronously. But
+>> the memory API uses RCU instead. RCU does not give the updater an
+>> exclusive critical section where old readers are blocked and the old
+>> mapping is guaranteed to be gone before the function returns. Instead,
+>> the update completes asynchronously after a grace period. That is the
+>> point of RCU: readers avoid blocking, while updates complete later.
+>>
+>> So I think the quiesce mechanism is not enough here, but its API shape
+>> is still useful. Concretely, libvfio-user could provide a variant of the
+>> DMA unregister callback that may complete asynchronously. QEMU would
+>> start the guest memory mapping update, return -1 with errno set to
+>> EBUSY, and then call something like vfu_device_unmapped() once the RCU
+>> grace period has elapsed.
+> 
+> To me it seems that the vfu_device_unmapped() callback you propose is functionally equivalent to the existing vfu_device_quiesced().
+> Am I missing something?
 
-I'd lean toward classifying these as hardening bugs. I don't see the
-point in assigning Low CVEs to these kinds of issues nowadays. Under
-current vulnerability management standards, they would definitely be
-pushed down the priority list and likely skipped or deferred.
+I think the difference is visible if we write both approaches as
+pseudo-code.
 
-> > Cc: qemu-stable@nongnu.org
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3585
-> > Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-> > ---
-> >  hw/char/virtio-serial-bus.c | 34 +++++++---------------------------
-> >  1 file changed, 7 insertions(+), 27 deletions(-)
-> >
-> > diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-> > index cd234dc6db1d..c1973f0248fc 100644
-> > --- a/hw/char/virtio-serial-bus.c
-> > +++ b/hw/char/virtio-serial-bus.c
-> > @@ -344,22 +344,16 @@ void virtio_serial_throttle_port(VirtIOSerialPort=
- *port, bool throttle)
-> >  }
-> >
-> >  /* Guest wants to notify us of some event */
-> > -static void handle_control_message(VirtIOSerial *vser, void *buf, size=
-_t len)
-> > +static void handle_control_message(VirtIOSerial *vser,
-> > +                                   struct virtio_console_control *gcpk=
-t)
-> >  {
-> >      VirtIODevice *vdev =3D VIRTIO_DEVICE(vser);
-> >      struct VirtIOSerialPort *port;
-> >      VirtIOSerialPortClass *vsc;
-> > -    struct virtio_console_control cpkt, *gcpkt;
-> > +    struct virtio_console_control cpkt;
-> >      uint8_t *buffer;
-> >      size_t buffer_len;
-> >
-> > -    gcpkt =3D buf;
-> > -
-> > -    if (len < sizeof(cpkt)) {
-> > -        /* The guest sent an invalid control packet */
-> > -        return;
-> > -    }
-> > -
-> >      cpkt.event =3D virtio_lduw_p(vdev, &gcpkt->event);
-> >      cpkt.value =3D virtio_lduw_p(vdev, &gcpkt->value);
-> >
-> > @@ -457,41 +451,27 @@ static void control_in(VirtIODevice *vdev, VirtQu=
-eue *vq)
-> >
-> >  static void control_out(VirtIODevice *vdev, VirtQueue *vq)
-> >  {
-> > +    struct virtio_console_control cpkt;
-> >      VirtQueueElement *elem;
-> >      VirtIOSerial *vser;
-> > -    uint8_t *buf;
-> >      size_t len;
-> >
-> >      vser =3D VIRTIO_SERIAL(vdev);
-> >
-> > -    len =3D 0;
-> > -    buf =3D NULL;
-> >      for (;;) {
-> > -        size_t cur_len;
-> > -
-> >          elem =3D virtqueue_pop(vq, sizeof(VirtQueueElement));
-> >          if (!elem) {
-> >              break;
-> >          }
-> >
-> > -        cur_len =3D iov_size(elem->out_sg, elem->out_num);
-> > -        /*
-> > -         * Allocate a new buf only if we didn't have one previously or
-> > -         * if the size of the buf differs
-> > -         */
-> > -        if (cur_len > len) {
-> > -            g_free(buf);
-> > -
-> > -            buf =3D g_malloc(cur_len);
-> > -            len =3D cur_len;
-> > +        len =3D iov_to_buf(elem->out_sg, elem->out_num, 0, &cpkt, size=
-of(cpkt));
-> > +        if (len =3D=3D sizeof(cpkt)) {
-> > +            handle_control_message(vser, &cpkt);
-> >          }
-> > -        iov_to_buf(elem->out_sg, elem->out_num, 0, buf, cur_len);
-> >
-> > -        handle_control_message(vser, buf, cur_len);
-> >          virtqueue_push(vq, elem, 0);
-> >          g_free(elem);
-> >      }
-> > -    g_free(buf);
-> >      virtio_notify(vdev, vq);
-> >  }
-> >
-> > --
-> > 2.54.0
-> >
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
+First, trying to use the existing quiesce mechanism:
 
---=20
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
+     static void dma_register(vfu_ctx_t *vfu_ctx,
+                              vfu_dma_info_t *info)
+     {
+         MemoryRegion *mr = g_new0(MemoryRegion, 1);
+
+         memory_region_init_ram_ptr(mr, NULL, name, size,
+                                    info->vaddr,
+                                    qemu_unmap_done, vfu_ctx);
+         memory_region_add_subregion(dma_as->root, iova, mr);
+     }
+
+     static int quiesce_cb(vfu_ctx_t *vfu_ctx)
+     {
+         errno = EBUSY;
+         return -1;
+     }
+
+     static void dma_unregister(vfu_ctx_t *vfu_ctx,
+                                vfu_dma_info_t *info)
+     {
+         MemoryRegion *mr;
+
+         mr = memory_region_from_host(info->vaddr, &offset);
+
+         memory_region_del_subregion(dma_as->root, mr);
+         object_unparent(OBJECT(mr));
+     }
+
+     static void qemu_unmap_done(void *opaque)
+     {
+         vfu_ctx_t *vfu_ctx = opaque;
+
+         vfu_device_quiesced(vfu_ctx, 0);
+     }
+
+     vfu_setup_device_quiesce_cb(vfu_ctx, quiesce_cb);
+     vfu_setup_device_dma(vfu_ctx, dma_register, dma_unregister);
+
+This does not work. For VFIO_USER_DMA_UNMAP, libvfio-user calls
+quiesce_cb() before it calls dma_unregister(). quiesce_cb() returns
+EBUSY, so libvfio-user waits for vfu_device_quiesced() before
+continuing with the pending DMA_UNMAP.
+
+But qemu_unmap_done() is only scheduled after object_unparent(), and
+object_unparent() is called from dma_unregister(), not from quiesce_cb().
+So dma_unregister() is never reached, object_unparent() is never called,
+and qemu_unmap_done() is never scheduled.
+
+The proposed mechanism would instead make the DMA unregister operation
+itself asynchronous:
+
+     static void dma_register(vfu_ctx_t *vfu_ctx,
+                              vfu_dma_info_t *info)
+     {
+         MemoryRegion *mr = g_new0(MemoryRegion, 1);
+
+         memory_region_init_ram_ptr(mr, NULL, name, size,
+                                    info->vaddr,
+                                    qemu_unmap_done, vfu_ctx);
+         memory_region_add_subregion(dma_as->root, iova, mr);
+     }
+
+     static int dma_unregister(vfu_ctx_t *vfu_ctx,
+                               vfu_dma_info_t *info)
+     {
+         MemoryRegion *mr;
+
+         mr = memory_region_from_host(info->vaddr, &offset);
+
+         memory_region_del_subregion(dma_as->root, mr);
+         object_unparent(OBJECT(mr));
+
+         errno = EBUSY;
+         return -1;
+     }
+
+     static void qemu_unmap_done(void *opaque)
+     {
+         vfu_ctx_t *vfu_ctx = opaque;
+
+         vfu_device_unmapped(vfu_ctx, 0);
+     }
+
+     vfu_setup_device_dma(vfu_ctx, dma_register, dma_unregister);
+
+Here libvfio-user has already entered dma_unregister(). QEMU can remove
+the MemoryRegion, call object_unparent(), and arrange for
+qemu_unmap_done() to run after the RCU-delayed memory teardown is really
+complete. Returning EBUSY from dma_unregister() tells libvfio-user not
+to free or reuse the mapping yet. vfu_device_unmapped() then completes
+the pending DMA_UNMAP once QEMU knows the old mapping is gone.
+
+So vfu_device_quiesced() completes the precondition for calling
+dma_unregister(); it cannot also be the completion notification for the
+asynchronous work started by dma_unregister().
+
+Regards,
+Akihiko Odaki
+
+> 
+>> libvfio-user would free or reuse the memory
+>> only after that completion notification.
+>>
+>> Regards,
+>> Akihiko Odaki
+>>>
+>>>>
+>>>> However, object_unparent() does not actually synchronously unmap the
+>>>> region from the guest so it results in a use-after-free hazard. A
+>>>> possible solution is to have the following three changes in combination:
+>>>> - This series, ensuring the MemoryRegion stays alive
+>>>> - A change of memory_region_init_ram_ptr() to add a callback for
+>>>>      asynchronous unmapping
+>>>> - A libvfio-user API change to asynchronously complete unmapping
+>>>>
+>>>>> Also, since (AFAIK) x-vfio-user-server is orphaned is it worth putting the
+>>>> effort in this?
+>>>>
+>>>> I rechecked MAINTAINERS and found its status is Odd Fixes, not Orphan.
+>>>> That said, it is possible to leave a FIXME comment instead of fixing it
+>>>> right now, as it's already done by virtio-gpu-rutabaga:
+>>>>
+>>>>    > There is small risk of the MemoryRegion dereferencing the pointer
+>>>>    > after rutabaga unmaps it. Please see discussion here:
+>>>>    >
+>>>>    > https://urldefense.proofpoint.com/v2/url?u=https-
+>>>> 3A__lists.gnu.org_archive_html_qemu-2Ddevel_2023-
+>>>>
+>> 2D09_msg05141.html&d=DwIDaQ&c=s883GpUCOChKOHiocYtGcg&r=XTpYsh
+>>>>
+>> 5Ps2zJvtw6ogtti46atk736SI4vgsJiUKIyDE&m=t9M_TxgBz_6K8y6rUD0ypaL_El
+>>>> PVMTV5GPtiCVHrHb9BMKzTkgWiOKmcvA812-
+>>>> 5H&s=4N2t0WV5D358WZZsjHWVvc6CwQrYydmofzhTAlZ4eVM&e=
+>>>>    >
+>>>>    > It is highly unlikely to happen in practice and doesn't affect known
+>>>>    > use cases. However, it should be fixed and is noted here for
+>>>>    > posterity.
+>>>>
+>>>> A difference from virtio-gpu-rutabaga is that the Rutabaga library API
+>>>> does not interfere with asynchronous unmapping so it can be fixed
+>>>> entirely on the QEMU side. On contrary, anyone who would want to fix
+>>>> x-vfio-user-server would need to change the libvfio-user API because its
+>>>> current form is too restrictive.
+>>>>
+>>>> Regards,
+>>>> Akihiko Odaki
+> 
 
 
