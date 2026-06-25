@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33F07CDB466
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 09:54:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D5FCDB479
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 09:54:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcglY-0005lN-8T; Thu, 25 Jun 2026 05:53:00 -0400
+	id 1wcgll-0005ns-KF; Thu, 25 Jun 2026 05:53:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wcglU-0005l1-Fn
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 05:52:57 -0400
+ id 1wcglb-0005mI-VE
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 05:53:05 -0400
 Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wcglS-0003jU-7c
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 05:52:55 -0400
+ id 1wcglZ-0003ka-TV
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 05:53:03 -0400
 Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-490c0c92cffso14343885e9.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 02:52:53 -0700 (PDT)
+ 5b1f17b1804b1-490cf322ed0so20013785e9.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 02:53:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1782381172; x=1782985972; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YLFPplBpJbQNoJ2TFh04ZV1b6QOT8aj6bxnWSJ6Uveo=;
- b=f7wV4Kh3T4DTxuL/dYVbAnVnYba9F4F7LpoI+q2/aDN5VfB5YXd4rAgM4RU9sEzkM0
- /FEFdCdWmf/p6VFbRBf9MG/eXMDC2+3c9qyo2mgXkGOFrEdmUAzwoSCR34FChgXN0tHT
- 54hzr3QldkbKuBVPDjXwPVHt15KG5jU30suyg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782381172; x=1782985972;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=mihalicyn.com; s=mihalicyn; t=1782381180; x=1782985980; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YLFPplBpJbQNoJ2TFh04ZV1b6QOT8aj6bxnWSJ6Uveo=;
- b=Sd94u3hcP3S/6waKmSUZ33+wkAHSj2TCHDasfjSxkOn65oEwGesIxigGrCvIIS5qUN
- W83oGrY5UJVkwexiYqnCfuQ6qnqp4BK+D/9tVpvx6gL6JXp2pALDGF7bWt/XifQ+vfD0
- Uwhn12BnP4ak2seHY1o+bMM4m2PeR4pH1N6VF6crepfylZ1r/RrVmmZtusqxwk4SmyV2
- Vl5DIxBj4K3e9FMafz3gnkSnzVNZX+E+DIlQcIJuFOgifU2BH/pIohg1e0wrvYaoOJlt
- 06z07Vzx9j4Cr6Ei3erZAhRNaEsJFJtbEeJ+Ka+PtLui71eP186k7/XiDS1NyAkXKR9m
- v9ug==
-X-Gm-Message-State: AOJu0YwoDwGRlrnIyRo5f93nMYC1cYnu1UtFy3rMMwblm+T1hUJaHRf8
- 4vyyiBiPksOXu4rg2Mnun9Fu3jWJ1K6Ey5UBKdrxI0UyEkA+mSki/nk5YfOJ3NEi+djBhpKRSAC
- +PoyLVRq4OA==
-X-Gm-Gg: AfdE7cm+d1ajJEfuBFNKI/aXElNJtwxfPSAyrEDDtGTzWOulKqjasrmzrtJUUVuE/rE
- gRMdpyVW97ZhEq5m/tnG9z1sUs+gMAqTK9uRwr5oKLyu6J4HoubPcYjEbU3FIPiD1B+uQAHPxTZ
- /UtFAoAvrK+JGbpkPoo8CqFcFeRBxqKFpxS0OYiFZydobjq/iIXu3Y1Qc67S0uk7liEnaxODbY0
- 4yc7NHCGLJt94eDU5NkZw8dc5hmQMRALcYD4myQgIEQ2KzFkpB5G8dE1sx6fxVp97mJ+JeHbDgz
- LaWiD+sEvVeQ+HabVDiAUGem8pYmquCxzU2woSVsbOQclfkcExOyStknZz63dM0ZI9qjoKdp7dd
- wSvc+Lm5B4/PiS1iggm5QBd1U+2g8JgTiHD9S7ZkObRoj/vdNsZPXh64y1/zgDfs7HBk+EMALDg
- uXW4xigL2C0v5UnPIq+yLwl1ezDIapflJeqtnFIfvPIJnFIT16P9RRFJpEqHW3KaFg+2iIsR1Qv
- RGcnLPTpuu0
-X-Received: by 2002:a05:600c:8b0d:b0:490:bf1a:ed04 with SMTP id
- 5b1f17b1804b1-49266838794mr23239065e9.1.1782381172190; 
- Thu, 25 Jun 2026 02:52:52 -0700 (PDT)
+ bh=IKuIg4zbqYwV4S76dTptYDjrz/DIacx24m9jlVXUL40=;
+ b=hSYqJdIpVZehUI0jc5EcuPxAImDERsC+tkJzCh6g91xcrvAZMfpg/kK9Tswu+jeB6f
+ /8dGVQ/EshygzAAkXj15LQnT4KO7h0QULOVRMsM1Gi4+WzrPELKcAKlwYF6QEskbag1T
+ hN5eeR4UdEtqAX2z7IGtBnF30IlEjv8JdNoIU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782381180; x=1782985980;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=IKuIg4zbqYwV4S76dTptYDjrz/DIacx24m9jlVXUL40=;
+ b=cwIkIY5Z/uZEhU9c6XmG4YjVyq+Ulf/bodMcW4ApMnaPpY17CaJvXyMaVIDMFOpTEH
+ JYcCyikHHEx0cykvkDEca5yQS68dQ1qMAobbm9FYv/9dPUldBH44GWi1csweQKFvapsG
+ GWrywByx6aXWzWQUp4cx/djfaFydnYjbk0GGSjQcCMCB4MT/DrTO90eqIocKk3wVoV4/
+ r9k9z6vPTx7c+q0JibONz0KUimO6gTCFu/Y07wWaJr87KB6Zvo+w5uNaSakIVrzD8Sl8
+ vYHLoOhVex2tI0s/aTCLEwuW+BDZN73IIIpf3Qm060p4pt/55PZVKFSxXs6LAai9qpJc
+ Z9YQ==
+X-Gm-Message-State: AOJu0YzK3A0HhYzW1tQuUMXU9k2N/KldpRVGVjab/rItadMbfBWChVrb
+ VUXvPuFAajkTOcvg2XoxgcTpjAEwoKNGzpmIOmDQR0iKwdnieMAspd74V2bNLzzVO441TlpM1hp
+ di2WqptNABw==
+X-Gm-Gg: AfdE7clSskxHtR6A8FJJUXRjEJMUOqN5Y2CXJmpCkGFCL/CqPxq8Ydyd8QhkP9YgPmb
+ 9UqIFd3Xx+Sqsg7GDqLxxAzY4R9os9OIyJB7eYuX14bMWy4bnzX1avySqUIASWoHb9YkOHaQ4by
+ 0qac3gIRMUD18FljVpGyYfDlCYtGw0myTGbZMN+YqZqLuM/OAbjBWBnzKrSjCWzbIif17AO3IAw
+ RUaCWSa13M+zIFAdQ6I30N/1Tx4FUktghruG9dqw9XymDP3DtSUhSEJHX5Ykf15rzjJCWYzz9E/
+ uP1eZ+W6oGw5F6RChuvtq9XUajjr5UeTfEPs14KD4AiN4OeghNkc6cb/3K+xkr/xbI0eqpp9j+w
+ 2kZ60n7+bY2DRvHLpa12GQ+tqYGDhABJoizwDdmqN5FpeZgAMWM44aU3kFd8pu0x06o8kqVMq3w
+ D8bJTFZOc9U+K+dQ1nKDeRTy4gv55DuKX6UBMW4P5JFtJIDkzhaSR+2h2ICvc/YD3EgJB3WHAJT
+ yqo7aENdSc2ICNvzirJkt8=
+X-Received: by 2002:a05:600c:4e4b:b0:490:b724:5085 with SMTP id
+ 5b1f17b1804b1-4926689ab05mr23788205e9.33.1782381180409; 
+ Thu, 25 Jun 2026 02:53:00 -0700 (PDT)
 Received: from alex-laptop.lan
  (p200300cf574a720090e98b0d86cf6583.dip0.t-ipconnect.de.
  [2003:cf:574a:7200:90e9:8b0d:86cf:6583])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49266102bcfsm53562105e9.15.2026.06.25.02.52.50
+ 5b1f17b1804b1-49266102bcfsm53562105e9.15.2026.06.25.02.52.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jun 2026 02:52:51 -0700 (PDT)
+ Thu, 25 Jun 2026 02:52:59 -0700 (PDT)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>,
@@ -75,12 +76,14 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v2 0/9] hw/audio/virtio-sound: basic migration support
-Date: Thu, 25 Jun 2026 11:52:40 +0200
-Message-ID: <20260625095250.65073-1-alexander@mihalicyn.com>
+Subject: [PATCH v2 6/9] hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
+Date: Thu, 25 Jun 2026 11:52:46 +0200
+Message-ID: <20260625095250.65073-7-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260625095250.65073-1-alexander@mihalicyn.com>
+References: <20260625095250.65073-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
  envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x32c.google.com
@@ -106,67 +109,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+From: Volker Rümelin <vr_qemu@t-online.de>
 
-Dear friends,
+Split out the function virtio_snd_pcm_open() from
+virtio_snd_pcm_prepare(). A later patch also needs
+the new function. There is no functional change.
 
-This patchset is aimed to support virtio-sound live migration and based on
-pre-existing Volker Rümelin's patches from qemu-devel lists [1]. I tried
-to ask (https://lore.kernel.org/qemu-devel/9d7ea128c711c201688a4716f53b8a335fc53569.camel@mihalicyn.com/)
-if Volker is going to continue his work on this, but received no reply so I
-just decided to go forward: take his patches, rebase and resend. Of course,
-I kept all authorship/tags so I hope that it is fine.
+Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+[AM: trivial rebase changes]
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+---
+ hw/audio/virtio-snd.c | 60 ++++++++++++++++++++++++-------------------
+ 1 file changed, 33 insertions(+), 27 deletions(-)
 
-Testing.
-
-I manually validated this with Ubuntu 24.04 Desktop VM and found no issues.
-Also, it was validated with CI (https://gitlab.com/mihalicyn/qemu/-/pipelines/2626702088).
-
-Original patchset:
-https://lore.kernel.org/qemu-devel/a289a081-9a61-4bcb-b693-bf6cd7768c0e@t-online.de [1]
-
-Git tree:
-https://gitlab.com/mihalicyn/qemu/-/commits/virtio-sound-migration
-
-Changelog for version 2:
-- no code changes (only commit messages)
-  followed suggestions from Daniel P. Berrangé (thanks, Daniel!)
-  https://lore.kernel.org/qemu-devel/ajzoxZr4g0Xsr_4p@redhat.com/
-  and added some extra details about what I did with the original
-  patches during rebase (for some of them it was simpler and less error
-  prone to just drop changes and reimplement them by following the idea
-  of the patch, cause base code has changed significantly).
-
-Changelog relative to the original Volker Rümelin's submission:
-- rebased:
-	- "hw/audio/virtio-sound: return correct command response size"
-		was dropped as it was already merged
-	- "hw/audio/virtio-sound: fix segmentation fault in tx/rx xfer handler"
-		was dropped as it seems to be replaced with another fix
-		https://github.com/qemu/qemu/commit/731655f87f319fd06f27282c6cafbc2467ac8045
-	- I had to drop all pre-existing Reviewed-by tags cause it was 2 years since
-	  this patchset was sent and reviewed and I did a quite significant code changes
-	  during rebase
-
-Kind regards,
-Alex
-
-Volker Rümelin (9):
-  hw/audio/virtio-sound: remove command and stream mutexes
-  hw/audio/virtio-sound: allocate an array of streams
-  hw/audio/virtio-sound: free all stream buffers on reset
-  hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
-  hw/audio/virtio-sound: add stream state variable
-  hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
-  hw/audio/virtio-sound: introduce virtio_snd_set_active()
-  hw/audio/virtio-sound: add missing vmstate fields
-  hw/audio/virtio-sound: add placeholder for buffer write position
-
- hw/audio/trace-events         |   3 +-
- hw/audio/virtio-snd.c         | 685 ++++++++++++++++++++--------------
- include/hw/audio/virtio-snd.h |  25 +-
- 3 files changed, 407 insertions(+), 306 deletions(-)
-
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 388a302255a..48a6ca9f09c 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -429,6 +429,38 @@ static void virtio_snd_get_qemu_audsettings(audsettings *as,
+     as->big_endian = false; /* Conforming to VIRTIO 1.0: always little endian. */
+ }
+ 
++/*
++ * Open a stream.
++ *
++ * @stream: VirtIOSoundPCMStream *stream
++ */
++static void virtio_snd_pcm_open(VirtIOSoundPCMStream *stream)
++{
++    virtio_snd_get_qemu_audsettings(&stream->as, &stream->params);
++    stream->positions[0] = VIRTIO_SND_CHMAP_FL;
++    stream->positions[1] = VIRTIO_SND_CHMAP_FR;
++
++    if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
++        stream->voice.out = audio_be_open_out(stream->s->audio_be,
++                                         stream->voice.out,
++                                         "virtio-sound.out",
++                                         stream,
++                                         virtio_snd_pcm_out_cb,
++                                         &stream->as);
++        audio_be_set_volume_out_lr(stream->s->audio_be,
++                                   stream->voice.out, 0, 255, 255);
++    } else {
++        stream->voice.in = audio_be_open_in(stream->s->audio_be,
++                                        stream->voice.in,
++                                        "virtio-sound.in",
++                                        stream,
++                                        virtio_snd_pcm_in_cb,
++                                        &stream->as);
++        audio_be_set_volume_in_lr(stream->s->audio_be,
++                                  stream->voice.in, 0, 255, 255);
++    }
++}
++
+ /*
+  * Close a stream and free all its resources.
+  *
+@@ -455,8 +487,6 @@ static void virtio_snd_pcm_close(VirtIOSoundPCMStream *stream)
+  */
+ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
+ {
+-    audsettings as;
+-    virtio_snd_pcm_set_params *params;
+     VirtIOSoundPCMStream *stream;
+ 
+     stream = virtio_snd_pcm_get_stream(s, stream_id);
+@@ -473,31 +503,7 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
+         return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
+     }
+ 
+-    params = virtio_snd_pcm_get_params(s, stream_id);
+-
+-    virtio_snd_get_qemu_audsettings(&as, params);
+-
+-    stream->positions[0] = VIRTIO_SND_CHMAP_FL;
+-    stream->positions[1] = VIRTIO_SND_CHMAP_FR;
+-    stream->as = as;
+-
+-    if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
+-        stream->voice.out = audio_be_open_out(s->audio_be,
+-                                         stream->voice.out,
+-                                         "virtio-sound.out",
+-                                         stream,
+-                                         virtio_snd_pcm_out_cb,
+-                                         &as);
+-        audio_be_set_volume_out_lr(s->audio_be, stream->voice.out, 0, 255, 255);
+-    } else {
+-        stream->voice.in = audio_be_open_in(s->audio_be,
+-                                        stream->voice.in,
+-                                        "virtio-sound.in",
+-                                        stream,
+-                                        virtio_snd_pcm_in_cb,
+-                                        &as);
+-        audio_be_set_volume_in_lr(s->audio_be, stream->voice.in, 0, 255, 255);
+-    }
++    virtio_snd_pcm_open(stream);
+ 
+     stream->state = VSND_PCMSTREAM_STATE_PREPARED;
+ 
 -- 
 2.47.3
 
