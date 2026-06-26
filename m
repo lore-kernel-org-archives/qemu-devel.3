@@ -4,98 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0ABAC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 18:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E61DDC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 18:43:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdBVZ-0003LO-7G; Fri, 26 Jun 2026 14:42:35 -0400
+	id 1wdBVt-0003vN-3S; Fri, 26 Jun 2026 14:42:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wdBVR-0003IS-O6
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:42:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wdBVr-0003jA-4n
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:42:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wdBVP-0002NG-7g
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:42:24 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wdBVo-0002bG-Uj
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:42:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782499342;
+ s=mimecast20190719; t=1782499364;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=sKCoOHuUxkjUUkw5CtzU+kRPB7ZyObrW+LkV5z7rkTs=;
- b=E5N0oockTSHVcPMHWIIUjhg/jqVBExSN4FE8xYl5NF3YmmC73yMidHHwEtc1MWFXHTp4b5
- CAM9XwBQJR6qlc8D9sBncL9IjMaNV1koF8XV9mjMR3qCUwiF7FBHD+QLeF2/jQXTFd9qs+
- fvBt5OBSUJ+tQIBkoqufInh4La6a5EQ=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=berPH/TKVNYHF5lUYi0bNqIJRxg9lJU7fevz+SJjH6U=;
+ b=fbxvpZAW6OZziLVmZYuAwpzOZfdGqeOWDqrRMLbUoQieJpavsbqttJuLoUPHtmS3j43pd8
+ 5eiJObGZRwPEmVWk/V6sp4P/HcFAuUPsgzkZHXNz7MM5gLfW7q3DtyBEDHA/PhOrryVWIy
+ v8jx4Q6qqbQ7lVJhnTdEr28Zm66Yyl8=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-1aYZEfM7NWWC7iINJEDMGA-1; Fri, 26 Jun 2026 14:42:21 -0400
-X-MC-Unique: 1aYZEfM7NWWC7iINJEDMGA-1
-X-Mimecast-MFC-AGG-ID: 1aYZEfM7NWWC7iINJEDMGA_1782499340
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-46315372c3eso950693f8f.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 11:42:21 -0700 (PDT)
+ us-mta-404-9AD9edbMNHSmX2GvYId0ZA-1; Fri, 26 Jun 2026 14:42:42 -0400
+X-MC-Unique: 9AD9edbMNHSmX2GvYId0ZA-1
+X-Mimecast-MFC-AGG-ID: 9AD9edbMNHSmX2GvYId0ZA_1782499361
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-46c90c8fd42so909346f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 11:42:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782499340; x=1783104140; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782499361; x=1783104161; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=sKCoOHuUxkjUUkw5CtzU+kRPB7ZyObrW+LkV5z7rkTs=;
- b=tgXI02CO+GYp6EByR/e68ezFMlaYAIdjxXVR2XqoyUgf4I5TPkYb6ccLP30W15EafS
- MW3cBK2idJYXIEUOMXhrppFoXjXRucoNiAkMsDgazTo7MFUx+mz08sHrrwGUdTML+JPT
- In/Pcouv3U375cV0rePZRLY1MWpiE1cXAMroOkbZndEdggpdaQwbQ0zzcRy1t2uSctiP
- CF0YV05ZS1WyDKIN6/DJTpyXgY+XGiJNKAcOjRS6Cx7u+HgKEKlJszgHVC0vYFDHkccB
- KvW5z1EQPfczDbpSmrWrcXwdjSlV9uep2gnqZkYr14JYkT+Z+iGlJVebke8H3Uf4JYQi
- Injg==
+ bh=berPH/TKVNYHF5lUYi0bNqIJRxg9lJU7fevz+SJjH6U=;
+ b=kKKGvq56rfxvEe+aFAqf6qJlmHpCjSgFrUsW+kH89mIK6XJGoVx3QnnAagfi+9nG08
+ DdqX9FyGfzNbodzLXECGFW23hj+wIUdfgPKekxhRx1k/p6s0eCQsPDHrFftZPog4h12/
+ JWtFpMU/z3FCE6J4a4k6lwCA7FNHDyoWUcOVNVohMxgbvHrWzSzJ8qkoM4XdxmDLBDqu
+ pTS0BRS2W9uLolixi8Nz2f0xBFonWBhcO0gBqzeCWMStPRRDAbPn8rvs15GOeMh7bwes
+ N2cJk2MmY220bauODq7jlAe/1DwlCeW5qpIClzU3sXjQ6funhJvOqkHRJi3Rn7b3YLWe
+ CwFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782499340; x=1783104140;
+ d=1e100.net; s=20251104; t=1782499361; x=1783104161;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sKCoOHuUxkjUUkw5CtzU+kRPB7ZyObrW+LkV5z7rkTs=;
- b=dEiNgdmCO4v2dM3eMexo689gP4QcVcFNclTkylVUnmgFRsGzdcdtjuSwrLapGJ680d
- ZzNY/1RXCShpBr2QfpISNpV+3et2X1ikghZNPt8JMvhBctFnYnqn3ySsTDuC8UbzzCco
- vsdBHhM/PXhCNFbWnsRp2kAdgKUsgwKaw4KMZOFY5vXxF6HkpW7ig0eOoKByElTYzu1Q
- 2ezfDumgQelnpsS72XipEihN7DaK3sInKYzmQ1XyYB/ylYyp3ycVmgqBYc2FSvP/Th5V
- w0+Oyty21RA7LaBh8p34v0hueRtkM/g0hEoYGsA34LWj6YxMuc+sGzguJfpdiRM3Ey7S
- NLqA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rp4I6Q0L7Zyy1ESxczQ3JQ4leZ0z7gYzNpilYyAxH3whhZIflYS/MzHQITatShzIWNuKPMdUsUsk56l@nongnu.org
-X-Gm-Message-State: AOJu0Yzaoj5gjA56wRZIUkOTXmThFDNiRoSwj3ggdEJ0KM06AWchGmPo
- v9VmixtHEkAQT4Z/jh3bAJBTIZjUTptoSMMFrlbDXTldqBk3nR59pbZ9Y1BFEpQmFEzKY6KVFtH
- lk5ttv4eOrRfpcLHYDmxjGyPvSumf5GXqsNqJ4MnjS2zQo8B2DiJGqBeC
-X-Gm-Gg: AfdE7cmOZM8hi9JImF5lnTUS+8yX2gEnKwDw06ruUPJJXAQuwJ0CE+b53y9Lh8TsYwi
- 4949Kwr5JiYMaLmtMQQcHMaDTw3VuWMzrGulUZHOdCcCe4c6qwf5c/ZgaJSywiEHXwYJ+47mKJS
- ZHnNCFV9Ps8MVon1o+NuCDVnN34vYvxK7yo4uRJKxr6qIhXSRKxeTVg4WfWudDf9qCYDmPO1zJe
- ZFwsKiCO+NinU7/bYpgIF6vh9VtPbfsKTpqZrAH5xYV8QLsXL3s3nQIIyeWb3jTjCPTL+KT3pEL
- xKULUAWOYds/2pMdMDyhtmMRY9c1Yrm7Fe4ELFdgcPiFZBKIZNwU9GTcvOK4ga2Ze5W49Pfgpmo
- tjY7zPUabYSrL7i+viW7qxy3/l7ZnmXCJYvXc0RuNBWbv5gbWKdSL
-X-Received: by 2002:a5d:5f4c:0:b0:441:1e8e:d8fd with SMTP id
- ffacd0b85a97d-46dc12dfa46mr11775163f8f.29.1782499339942; 
- Fri, 26 Jun 2026 11:42:19 -0700 (PDT)
-X-Received: by 2002:a5d:5f4c:0:b0:441:1e8e:d8fd with SMTP id
- ffacd0b85a97d-46dc12dfa46mr11775137f8f.29.1782499339522; 
- Fri, 26 Jun 2026 11:42:19 -0700 (PDT)
+ bh=berPH/TKVNYHF5lUYi0bNqIJRxg9lJU7fevz+SJjH6U=;
+ b=aJ2fqUcHJJYJmQS3tnZRlNjL5zFcUQt7px8o3taxGhvH6qniwljlpEkC1YD//6x6xp
+ gKyTVr5YX/LEFouWKzR3k+IpeOACU6ekBvVLqkwdx5FO1mhWbYTOg1zdIrisEVMGvZR3
+ JP+/YDfRWpiEvuEYcvYJ2989aucup2TsWaFGJ5+QhI1DPHRndrKnCTWkzJ1vOeCQW+wf
+ Q10/zaWddorAsouSoNDd8m3S8l2Fqbb1bK4CSWveumbTPya7kBubhj97WYNTNphbexzd
+ POFmraNYzbxSt/ljOSgCRuDYDg0pS9wHExea6wV9y7cZt4DR68eC4yG6VfAHc1UgbPh+
+ r2kQ==
+X-Gm-Message-State: AOJu0YzzWbf+j0+6a036wsibf9VAFcIE4IPokApWoVr1deL/Y5FMvBZ1
+ Sa7sm8M3bPvznaxKymRoaTCSjIYpJlcJpd2QVab/emWK55VkdLerrZa4KhWEYAXG+ier8IA5Li6
+ SkKDyp50KYiZ0f9OnKi81Il/hEUcnVK9KUQmg1nfvlHAl9kN+uVXq4rcMbBwrtV4nC74ONsu52C
+ S9oX+4GzR616VzfOdCkQ/r3H9DXbANF7FKpw==
+X-Gm-Gg: AfdE7clUaeHGWiBKrSMTGD3FGf7exMYl7a4xbxnG0XssOJGTDAfskWm46SQWxSWy0+A
+ DoAa2ZOTMMzBWhyPkjWIXuZ9mJ9ZhYLv4Bw6A6sYogucv2i6w99kaIKOSDjpmdoVh7s3uw5OwJw
+ t5h7GabaEXT257YmhTb5u9X2sA3F9WWbutp8OXUWoVRpZ1feoKaUU1bQwKyc313eEq4ekhcEf+n
+ fMFFAhGcH3y4sHYzaMBDvAyz7IQ5Sh6rFz+EeYaTO30l3CMIxWpdS0AUQ3k5ac6O1bw3t9Nb1HT
+ wUEjkwpRpCC8nYjXpaCQZg7Vq/95TrWQA16QNzlLysmSPEHI8KWTF2pzBbGRrDBNPIIAsHsIUOt
+ b4aE2H4Myb3y1m/KUak0TnENxWkTBIQB8E+Qo1KwEDtvT8fsDWiDm
+X-Received: by 2002:a5d:64e4:0:b0:468:b71a:6efe with SMTP id
+ ffacd0b85a97d-46dbf117b6fmr13190274f8f.6.1782499361331; 
+ Fri, 26 Jun 2026 11:42:41 -0700 (PDT)
+X-Received: by 2002:a5d:64e4:0:b0:468:b71a:6efe with SMTP id
+ ffacd0b85a97d-46dbf117b6fmr13190209f8f.6.1782499360668; 
+ Fri, 26 Jun 2026 11:42:40 -0700 (PDT)
 Received: from ?IPV6:2a01:cb19:8426:ae00:a924:b4e0:1ee:f5c5?
  ([2a01:cb19:8426:ae00:a924:b4e0:1ee:f5c5])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46fc2ff9aaesm2916782f8f.26.2026.06.26.11.42.18
+ ffacd0b85a97d-46f9db29a94sm4085984f8f.22.2026.06.26.11.42.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jun 2026 11:42:19 -0700 (PDT)
-Message-ID: <aaae35f5-7d00-4c52-b680-5a51254286b3@redhat.com>
-Date: Fri, 26 Jun 2026 20:42:18 +0200
+ Fri, 26 Jun 2026 11:42:40 -0700 (PDT)
+Message-ID: <4a980fdc-e037-47fd-9522-a8fea261e6a6@redhat.com>
+Date: Fri, 26 Jun 2026 20:42:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs: Update vfio-user spec to describe DMA access mode
- bits
-To: Mattias Nissler <mnissler@meta.com>, qemu-devel@nongnu.org
-Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- John Levon <john.levon@nutanix.com>
-References: <20260602133829.305842-1-mnissler@meta.com>
+Subject: Re: [PATCH] vfio/iommufd: Merge .dma_map_file() into .dma_map()
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>
+References: <20260608055758.359002-1-clg@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -141,19 +137,18 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260602133829.305842-1-mnissler@meta.com>
+In-Reply-To: <20260608055758.359002-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- TVD_PH_SUBJ_META1=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,124 +164,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/2/26 15:38, Mattias Nissler wrote:
-> This makes the intended access mode explicit when registering DMA
-> regions with the server. A new "file I/O" access mode is defined, which
-> can be used if the file descriptor provided by the client doesn't
-> support `mmap()`.
+On 6/8/26 07:57, Cédric Le Goater wrote:
+> Simplify the VFIOIOMMUClass interface by removing the dma_map_file
+> handler. Move the logic to decide between the standard virtual and
+> file-backed mapping into the IOMMUFD backend, utilizing the
+> MemoryRegion already passed to the dma_map handler.
 > 
-> Signed-off-by: Mattias Nissler <mnissler@meta.com>
+> This removes redundant dispatch logic from the generic container layer
+> and let backends to manage their own mapping strategies. This is
+> similar to the vfio-user implementation.
+> 
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   docs/interop/vfio-user.rst | 82 ++++++++++++++++++++++++--------------
->   1 file changed, 51 insertions(+), 31 deletions(-)
+>   include/hw/vfio/vfio-container.h | 15 ----------
+>   hw/vfio/container.c              | 38 ------------------------
+>   hw/vfio/iommufd.c                | 50 +++++++++++++++++++++++---------
+>   3 files changed, 37 insertions(+), 66 deletions(-)
 > 
-> diff --git a/docs/interop/vfio-user.rst b/docs/interop/vfio-user.rst
-> index 12deb25102..1c92f442d2 100644
-> --- a/docs/interop/vfio-user.rst
-> +++ b/docs/interop/vfio-user.rst
-> @@ -604,27 +604,31 @@ Request
+> diff --git a/include/hw/vfio/vfio-container.h b/include/hw/vfio/vfio-container.h
+> index a7d5c5ed679a0338937ae02f37140d94720f6f11..c70828a0529cb2b41162a8bd452da1d9c20bc08f 100644
+> --- a/include/hw/vfio/vfio-container.h
+> +++ b/include/hw/vfio/vfio-container.h
+> @@ -172,21 +172,6 @@ struct VFIOIOMMUClass {
+>       int (*dma_map)(const VFIOContainer *bcontainer,
+>                      hwaddr iova, uint64_t size,
+>                      void *vaddr, bool readonly, MemoryRegion *mr);
+> -    /**
+> -     * @dma_map_file
+> -     *
+> -     * Map a file range for the container.
+> -     *
+> -     * @bcontainer: #VFIOContainer to use for map
+> -     * @iova: start address to map
+> -     * @size: size of the range to map
+> -     * @fd: descriptor of the file to map
+> -     * @start: starting file offset of the range to map
+> -     * @readonly: map read only if true
+> -     */
+> -    int (*dma_map_file)(const VFIOContainer *bcontainer,
+> -                        hwaddr iova, uint64_t size,
+> -                        int fd, unsigned long start, bool readonly);
+>       /**
+>        * @dma_unmap
+>        *
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 56bd9ac0095df7b0f4da85f1d8dcb8d571fa9f2a..d09a6637324c6bf29b2fe22369082f87e280c98f 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -15,7 +15,6 @@
+>   #include <linux/vfio.h>
 >   
->   The request payload for this message is a structure of the following format:
+>   #include "system/tcg.h"
+> -#include "system/ramblock.h"
+>   #include "qapi/error.h"
+>   #include "qemu/error-report.h"
+>   #include "hw/vfio/vfio-container.h"
+> @@ -74,49 +73,12 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
+>       bcontainer->space = space;
+>   }
 >   
-> -+-------------+--------+-------------+
-> -| Name        | Offset | Size        |
-> -+=============+========+=============+
-> -| argsz       | 0      | 4           |
-> -+-------------+--------+-------------+
-> -| flags       | 4      | 4           |
-> -+-------------+--------+-------------+
-> -|             | +-----+------------+ |
-> -|             | | Bit | Definition | |
-> -|             | +=====+============+ |
-> -|             | | 0   | readable   | |
-> -|             | +-----+------------+ |
-> -|             | | 1   | writeable  | |
-> -|             | +-----+------------+ |
-> -+-------------+--------+-------------+
-> -| offset      | 8      | 8           |
-> -+-------------+--------+-------------+
-> -| address     | 16     | 8           |
-> -+-------------+--------+-------------+
-> -| size        | 24     | 8           |
-> -+-------------+--------+-------------+
-> ++-------------+--------+------------------------+
-> +| Name        | Offset | Size                   |
-> ++=============+========+========================+
-> +| argsz       | 0      | 4                      |
-> ++-------------+--------+------------------------+
-> +| flags       | 4      | 4                      |
-> ++-------------+--------+------------------------+
-> +|             | +-----+-----------------------+ |
-> +|             | | Bit | Definition            | |
-> +|             | +=====+=======================+ |
-> +|             | | 0   | readable              | |
-> +|             | +-----+-----------------------+ |
-> +|             | | 1   | writeable             | |
-> +|             | +-----+-----------------------+ |
-> +|             | | 2   | access mode: mmap     | |
-> +|             | +-----+-----------------------+ |
-> +|             | | 3   | access mode: file I/O | |
-> +|             | +-----+-----------------------+ |
-> ++-------------+--------+------------------------+
-> +| offset      | 8      | 8                      |
-> ++-------------+--------+------------------------+
-> +| address     | 16     | 8                      |
-> ++-------------+--------+------------------------+
-> +| size        | 24     | 8                      |
-> ++-------------+--------+------------------------+
+> -static bool vfio_container_can_dma_map_file(VFIOContainer *bcontainer,
+> -                                            MemoryRegion *mr, int *fd)
+> -{
+> -    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+> -    RAMBlock *rb = mr->ram_block;
+> -
+> -    if (!vioc->dma_map_file || !rb) {
+> -        return false;
+> -    }
+> -
+> -    *fd = qemu_ram_get_fd(rb);
+> -    if (*fd < 0) {
+> -        return false;
+> -    }
+> -
+> -    /*
+> -     * We can use IOMMU DMA mapping (IOMMU_IOAS_MAP_FILE) for :
+> -     *
+> -     * 1) Guest RAM blocks explicitly configured as shared (MAP_SHARED)
+> -     * 2) RAM device sub-regions (MMIO BARs)
+> -     *
+> -     * Private RAM mappings (MAP_PRIVATE) are strictly excluded. Because
+> -     * they are subject to copy-on-write (COW) anomalies, their underlying
+> -     * PFNs can permanently diverge from the backing file
+> -     */
+> -    return qemu_ram_is_shared(rb) || memory_region_is_ram_device(mr);
+> -}
+> -
+>   int vfio_container_dma_map(VFIOContainer *bcontainer,
+>                              hwaddr iova, uint64_t size,
+>                              void *vaddr, bool readonly, MemoryRegion *mr)
+>   {
+>       VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+> -    int mfd;
 >   
->   * *argsz* is the size of the above structure. Note there is no reply payload,
->     so this field differs from other message types.
-> @@ -634,6 +638,8 @@ The request payload for this message is a structure of the following format:
+> -    if (vfio_container_can_dma_map_file(bcontainer, mr, &mfd)) {
+> -        RAMBlock *rb = mr->ram_block;
+> -        unsigned long start = vaddr - qemu_ram_get_host_addr(rb);
+> -        unsigned long offset = qemu_ram_get_fd_offset(rb);
+> -
+> -        return vioc->dma_map_file(bcontainer, iova, size, mfd, start + offset,
+> -                                  readonly);
+> -    }
+>       g_assert(vioc->dma_map);
+>       return vioc->dma_map(bcontainer, iova, size, vaddr, readonly, mr);
+>   }
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 68f2ae6f9f667bb05c20e452e8c5b43da6558098..6ff668d2597e07c6953cf0f1997514aec199642c 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -20,6 +20,7 @@
+>   #include "trace.h"
+>   #include "qapi/error.h"
+>   #include "system/iommufd.h"
+> +#include "system/ramblock.h"
+>   #include "hw/core/iommu.h"
+>   #include "hw/core/qdev.h"
+>   #include "hw/vfio/vfio-cpr.h"
+> @@ -35,26 +36,50 @@
+>   #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO             \
+>               TYPE_HOST_IOMMU_DEVICE_IOMMUFD "-vfio"
 >   
->     * *writeable* indicates that the region can be written to.
->   
-> +  * *access mode* bits indicate how the region is to be accessed by the server.
+> +static bool iommufd_cdev_can_map_file_dma(MemoryRegion *mr, int *fd)
+> +{
+> +    RAMBlock *rb = mr ? mr->ram_block : NULL;
 > +
->   * *offset* is the file offset of the region with respect to the associated file
->     descriptor, or zero if the region is not mappable
->   * *address* is the base DMA address of the region.
-> @@ -641,16 +647,30 @@ The request payload for this message is a structure of the following format:
+> +    if (!rb) {
+> +        return false;
+> +    }
+> +
+> +    *fd = qemu_ram_get_fd(rb);
+> +    if (*fd < 0) {
+> +        return false;
+> +    }
+> +
+> +    /*
+> +     * Use iommufd_backend_map_file_dma() (IOMMU_IOAS_MAP_FILE) for:
+> +     * 1) Guest RAM blocks explicitly configured as shared (MAP_SHARED)
+> +     * 2) RAM device sub-regions (MMIO BARs)
+> +     *
+> +     * Private RAM mappings (MAP_PRIVATE) are excluded: copy-on-write
+> +     * semantics can cause their underlying PFNs to permanently diverge
+> +     * from the backing file.
+> +     */
+> +    return qemu_ram_is_shared(rb) || memory_region_is_ram_device(mr);
+> +}
+> +
+>   static int iommufd_cdev_map(const VFIOContainer *bcontainer, hwaddr iova,
+>                               uint64_t size, void *vaddr, bool readonly,
+>                               MemoryRegion *mr)
+>   {
+>       const VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
+> +    int fd;
 >   
->   This structure is 32 bytes in size, so the message size is 16 + 32 bytes.
+> -    return iommufd_backend_map_dma(container->be,
+> -                                   container->ioas_id,
+> -                                   iova, size, vaddr, readonly);
+> -}
+> +    if (iommufd_cdev_can_map_file_dma(mr, &fd)) {
+> +        RAMBlock *rb = mr->ram_block;
+> +        unsigned long start = vaddr - qemu_ram_get_host_addr(rb);
+> +        unsigned long offset = qemu_ram_get_fd_offset(rb);
 >   
-> -If the DMA region being added can be directly mapped by the server, a file
-> -descriptor must be sent as part of the message meta-data. The region can be
-> -mapped via the mmap() system call. On ``AF_UNIX`` sockets, the file descriptor
-> -must be passed as ``SCM_RIGHTS`` type ancillary data.  Otherwise, if the DMA
-> -region cannot be directly mapped by the server, no file descriptor must be sent
-> -as part of the message meta-data and the DMA region can be accessed by the
-> -server using ``VFIO_USER_DMA_READ`` and ``VFIO_USER_DMA_WRITE`` messages,
-> -explained in `Read and Write Operations`_. A command to map over an existing
-> -region must be failed by the server with ``EEXIST`` set in error field in the
-> -reply.
-> +There are several alternative access modes for the server to use when accessing
-> +the region:
-> +
-> +* ``VFIO_USER_DMA_READ`` and ``VFIO_USER_DMA_WRITE`` messages, explained in
-> +  `Read and Write Operations`_.
-> +
-> +* ``mmap()`` a client-provided file descriptor, then perform direct accesses to
-> +  the underlying memory.
-> +
-> +* File I/O system calls (such as ``pread()`` / ``pwrite()``) against a
-> +  client-provided file descriptor.
-> +
-> +The access mode bits in the flags field indicate which access mode to use. If
-> +an access mode requiring a file descriptor is specified, but the client does
-> +not provide a file descriptor, the server must fail the request with
-> +``EINVAL``. If no access mode flag bit is set, the server should use ``mmap()``
-> +based access if the client provided a file descriptor and message-based access
-> +otherwise.
-> +
-> +On ``AF_UNIX`` sockets, the file descriptor must be passed as ``SCM_RIGHTS``
-> +type ancillary data.
-> +
-> +A command to map over an existing region must be failed by the server with
-> +``EEXIST`` set in the error field in the reply.
+> -static int iommufd_cdev_map_file(const VFIOContainer *bcontainer,
+> -                                 hwaddr iova, uint64_t size,
+> -                                 int fd, unsigned long start, bool readonly)
+> -{
+> -    const VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
+> +        return iommufd_backend_map_file_dma(container->be, container->ioas_id,
+> +                                            iova, size, fd,
+> +                                            start + offset, readonly);
+> +    }
 >   
->   Reply
->   ^^^^^
+> -    return iommufd_backend_map_file_dma(container->be,
+> -                                        container->ioas_id,
+> -                                        iova, size, fd, start, readonly);
+> +    return iommufd_backend_map_dma(container->be, container->ioas_id,
+> +                                   iova, size, vaddr, readonly);
+>   }
+>   
+>   static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
+> @@ -929,7 +954,6 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, const void *data)
+>       VFIOIOMMUClass *vioc = VFIO_IOMMU_CLASS(klass);
+>   
+>       vioc->dma_map = iommufd_cdev_map;
+> -    vioc->dma_map_file = iommufd_cdev_map_file;
+>       vioc->dma_unmap = iommufd_cdev_unmap;
+>       vioc->attach_device = iommufd_cdev_attach;
+>       vioc->detach_device = iommufd_cdev_detach;
+
 
 Applied to
 
