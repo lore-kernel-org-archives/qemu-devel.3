@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50210CDE008
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18BFCD4F26
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:19:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3ea-0000ts-UZ; Fri, 26 Jun 2026 06:19:21 -0400
+	id 1wd3d6-0006Fq-Ek; Fri, 26 Jun 2026 06:17:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3eT-0000Sc-8S
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:13 -0400
+ id 1wd3d5-0006FT-DF
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:17:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3eR-0005Mj-6w
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:12 -0400
+ id 1wd3d3-00055V-HO
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:17:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469150;
+ s=mimecast20190719; t=1782469065;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hWzuLmfM5mOqM+9k40W+ZwF1xU/OB7680Gl9q1U09qY=;
- b=W5vZKDJLk7IB3ppiGD3Y+Vd1L6axU1tibn2k3VQCbytazhRl9a5/g04ZAsBsdVQwWokAGg
- m0PJS3kDoxtkIRCA1Oiuc9cBCsN4jXHNGgGQ40X+iOMv7V9nAA3ROa32bAyu5tAC1uRWPH
- 1EPyalJZ4AdY8Ct4TxkqNJ9u/sCm6Lw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hXJQgLsRLvqft6rTlkd6uJkNVGDg/FaswUbPamdfO7g=;
+ b=TwzaGWVmiTfrWEYY15bxPa5fDJFkQjfu5yG5FynzZufVQFYTDD6kXjvp+DCz6FNPACiyuL
+ uXvbZ3skFrEYjWrxJWDy82p7AzXKtcYu6Dub0OrM/TW5Ah5+iS60HID9PaS57tqq0OMaAC
+ a4K1tm2uEFpf+m5wLUr4lcaGZtr+IiQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-SbyUcD7OMqye3qL-If5fVw-1; Fri, 26 Jun 2026 06:19:09 -0400
-X-MC-Unique: SbyUcD7OMqye3qL-If5fVw-1
-X-Mimecast-MFC-AGG-ID: SbyUcD7OMqye3qL-If5fVw_1782469148
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-492488f8583so8532025e9.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:19:09 -0700 (PDT)
+ us-mta-516-CZZesMOCNJWgeFAdBbAwAg-1; Fri, 26 Jun 2026 06:17:43 -0400
+X-MC-Unique: CZZesMOCNJWgeFAdBbAwAg-1
+X-Mimecast-MFC-AGG-ID: CZZesMOCNJWgeFAdBbAwAg_1782469062
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-46dc84ca722so464997f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:17:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469148; x=1783073948; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469062; x=1783073862; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hWzuLmfM5mOqM+9k40W+ZwF1xU/OB7680Gl9q1U09qY=;
- b=ZthsGFDPc2OLTQqzpAOnGkoUV3LQ4Rkk4n3MCoLbfAh0m4RJ9Y1bWQPz8eTCQEp0yo
- g3y1oXnhxyyPmhkE84LBN206RERsW6o4UpF0pRAHZarny3JNrhsa6AD6bGYlEtV9JT2c
- 89MzCuUx1lgVerkw4HX1uJmCauOZB7qX5KPJSA4MJ+Gc5Dl5EeN5T9+yVR4DOa/pfTvM
- zhS1UTjqgLhPtvSGCUErxLNniCSdf7K8eGcTI7hkgc4mgKLjUqoLbeBkBXgJOWKqG6Yl
- k25lMFwwn4v64PKixs8sRaAsZDOaiR0k5znLSZDwyK+gpu8e4SdX6cnsGIk4hXjBZJcI
- PGJw==
+ bh=hXJQgLsRLvqft6rTlkd6uJkNVGDg/FaswUbPamdfO7g=;
+ b=CCDdQWMV6aDwtLcZpK3Z8LoJ/BRI/k4cYueKRktqsHdYZZItIq/kT3duOFe2UBONwK
+ NPSYzNYWgvtFC+MjPHuoBdTi5JbjG1rphiNARiB1Pzui58b4gAoEQCoGGAmFRN+qJCVm
+ VhSoZYiNDKbj36ZNX00Tgl4V+hzKpgwLTqU4a1N0cUAm35FxXF/z7nxkYHTZFzFZ4232
+ gQErNUX7LnGEQ5VlvrhzJmeE/vEbcqpaQ1YcMoG2fbmeIMUQ1QQT7Lha7mc3dzMt73Sb
+ /xDn5wbFURKmM/PegSCULB8rjVdDXD4okzoAjiAyNPW9Ivs/WjyY45eOgUwDv/ZbXq0I
+ 0pLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469148; x=1783073948;
+ d=1e100.net; s=20251104; t=1782469062; x=1783073862;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hWzuLmfM5mOqM+9k40W+ZwF1xU/OB7680Gl9q1U09qY=;
- b=aisZo/4glAA/VzUxJMg0/3yH5/T5rHizz/VL1JHlKx5ZnNSz9s7nqRHBKRIv44KSN3
- CVcuzlE1UG7iEqUvoB6uQqdjR8eo1SynQ2OkbEiXo5YjybAAntHSG8U28wwTYHiuvG+n
- GQ13xZGeKB/O+mdVAJNuvUEL5fd5GV63sXR7bZxFjZv+oXxMEtmLI3IJ0MRn4RkuD3vV
- GWYq/Ina5xN2iN1OnGReWtTq+iNShfTwMCYwTlSlAZVkMSdL5keiwkIxsCdvzsUmNW9Q
- AJlXFuo73Hnzhs6SoSKVkHG90g/85HF99/uHrZhG/DHp+q5a0Ol/9vUfty3LSlhn3tua
- joOw==
-X-Gm-Message-State: AOJu0YzYKIOYrraNNq/bAkXMaXyXrMrUK2OtLfidm0fU4cKhcUAwLsgd
- wONv2en3kOZmmKoXqKk2e9dPQBASYq5wybmrSb2Y60RuTBJZDT+62tl4tX/eA3Kohy64oudWItK
- OJ5QWxZXRCmuHaaJtA5n2/bUkUXZtpZM8tOMMt3KEws2rkgDQCOvRjDJj19PMjVmHjbuOdXMtrx
- yj9z9um+Uv2JkTh3kBMSSBVqrXOUqZTebAnQSvw/Lk
-X-Gm-Gg: AfdE7cljZlJo0Zm6IH35eB1sQsuSe2NjzUsqWy6RxkfL7Cg3lEXUqWsV4KdX2dGEXGr
- Kng3WaEXwILbMd0nefp/6uSq4GdXE9lkBAuiuYUJVMqPfNegNC9Uo78msgSxQIon+KfddrLoHza
- beLH8i7NiaZa63hjQutr8XOK8eNDyyz2AolbpS/SoN1IIcB6QCSCp0tRoZ+ecrXd5gfi/8aohE1
- jaA6fZpb+Sue73DplgeZhWmJRX8/AgZHu11JK2D/AOagTSy881yxFr5m/1ghOeQLBmkstsJJ4RP
- zv1gdN5U4BTZjCyetJAkiyvaPsGpRqlOut7W9ieuUDanowuedtQYaTjeU5MWqUHDa/gLrog9Cqk
- lZLAIQXDZnyKoo4jsD0CQcvCdpvrKAGGM2n+aHTEJgK32V/UZk1+Pn7QJ0qk1j+JgFfYVedVGne
- g70Pb0qM3EhNkc08f2
-X-Received: by 2002:a05:600c:c4aa:b0:492:3445:ecf8 with SMTP id
- 5b1f17b1804b1-4926685fe2dmr88348825e9.3.1782469147940; 
- Fri, 26 Jun 2026 03:19:07 -0700 (PDT)
-X-Received: by 2002:a05:600c:c4aa:b0:492:3445:ecf8 with SMTP id
- 5b1f17b1804b1-4926685fe2dmr88348105e9.3.1782469147339; 
- Fri, 26 Jun 2026 03:19:07 -0700 (PDT)
+ bh=hXJQgLsRLvqft6rTlkd6uJkNVGDg/FaswUbPamdfO7g=;
+ b=opqLYglYtyLwDsBhPAGZL3Aw252/Tkm+MK+fbjIdeD5UrhUv+rJiQWu6a9XMziRqge
+ ixDsN3ROdlGkKA5l4Ka8GAe/qT+GrjW2IA7L56b6CYE5iV+VzTCXFfn7WCkNbrUYi7Rf
+ qx8KqjBLUVDIF8KMnMQpfZqagwiVFBEWp9aT+X6N2TWKYLxmTecipvbrsfFKTULS8Tof
+ kxwkvgQM/+EyXK+ygo1LhSJ0n9ppe+B34Ur8nflg2224ZuFPM2+BGUU1X5SFowtQSB/j
+ MUbVP2CvXocnD3O5ciiK0f/KOci24GApAym3BSQCHgduzd4sZoNgP9Vmz/pJJW7fLnPZ
+ m54A==
+X-Gm-Message-State: AOJu0YwkbIReNtaFLB93xMzK56naUcZcUZYJPnsJOtoKXQiUX3/4V9I+
+ Pnu26+L9ehpNGtUXNjA9AXf3a/15btVgv3pSs6LCOPSWNwI5/TL6R7aXYY2oVhXqb6A7YeKzaAU
+ Q3CwEO/ktDrpf4vHfUyN4DCPjJTziTAiPu4u4iSkyCyu53YN7dyTkwZNBnZlZgJsIArdJfisPP6
+ 4j1QDaryeGwLB/5IgqLvBXFv0x/IdhhNn1dg85SKlQ
+X-Gm-Gg: AfdE7cmwBdjJ2uRyrQB54g0i4nMjb2kcr7yurFfR4wauMezHFTNQmsCjtz1NxEN4qXt
+ KgG15uYc8wdkv04PexeiyIVYuFL1UqmXT4TQYQt1uvXZeoqwDh/bYY/0e1ZxEVyxnhaJw805jCX
+ Eu8ReGFbCZi+8OGiomq/W80H/4sUja1CEoQMcBo9pPbPdwmwJUSGD3ckz0RLbPqQhA/9n5WrqDT
+ Rb2WsNDsv1CEN/I3EYOMxmAF88Mc96Gd7pjXFj9mnYBR5TNklxNYP/14e0u57crOmFh9rjKWo6N
+ jyPIMVK8fwu+m8DgHDuyqh9NYfnt51xGcwvPap0ztoGSxc5jkYdo8a0HRySm1kbbDGQEdfuQbrx
+ luK0M/F66jmHRK1IJ6O18jakND/FDhoMLKfFjpXOOrk6u2uLSWU8kkVdO4DNQDlC6I5a3JC6b0S
+ 72PwnaTs9z7o1HHyGW
+X-Received: by 2002:a05:600d:644e:20b0:492:3fc4:bd6b with SMTP id
+ 5b1f17b1804b1-49266862939mr69554505e9.7.1782469061844; 
+ Fri, 26 Jun 2026 03:17:41 -0700 (PDT)
+X-Received: by 2002:a05:600d:644e:20b0:492:3fc4:bd6b with SMTP id
+ 5b1f17b1804b1-49266862939mr69554125e9.7.1782469061317; 
+ Fri, 26 Jun 2026 03:17:41 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49268fce5a8sm66578015e9.3.2026.06.26.03.19.05
+ 5b1f17b1804b1-4926c286442sm23524675e9.1.2026.06.26.03.17.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:19:06 -0700 (PDT)
+ Fri, 26 Jun 2026 03:17:40 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PULL 28/45] target/i386/mshv: migrate XSAVE state
-Date: Fri, 26 Jun 2026 12:17:31 +0200
-Message-ID: <20260626101748.1728079-29-pbonzini@redhat.com>
+Cc: armbru@redhat.com
+Subject: [PATCH 5/6] json-streamer: do not heap-allocate JSONToken
+Date: Fri, 26 Jun 2026 12:17:25 +0200
+Message-ID: <20260626101727.1727389-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
-References: <20260626101748.1728079-1-pbonzini@redhat.com>
+In-Reply-To: <20260626101727.1727389-1-pbonzini@redhat.com>
+References: <20260626101727.1727389-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -120,185 +120,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+This is not needed with a push parser.  Since it processes tokens
+immediately, the JSONToken can be created directly on the stack
+and does not need to copy the lexer's string data.
 
-We implement fn's that roundtrip XSAVE state in migration. We are using
-the xsave_helper routines to move individual components from CPUX86State
-to an xsave_buf and then we have to compact the buffer to XSAVEC format,
-which is what the hypervisor expects.
-
-And the same applies in the other direction for restoring state from the
-hypervisor.
-
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260417105618.3621-32-magnuskulke@linux.microsoft.com
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/mshv/mshv-cpu.c | 100 +++++++++++++++++++++++++++++++++++-
- target/i386/meson.build     |   2 +-
- 2 files changed, 100 insertions(+), 2 deletions(-)
+ qobject/json-parser-int.h |  8 ++++++--
+ qobject/json-parser.c     | 18 ------------------
+ qobject/json-streamer.c   |  9 +++++++--
+ 3 files changed, 13 insertions(+), 22 deletions(-)
 
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 9f513a0e436..bbf874f6413 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -112,6 +112,78 @@ static enum hv_register_name FPU_REGISTER_NAMES[26] = {
+diff --git a/qobject/json-parser-int.h b/qobject/json-parser-int.h
+index 1f435cb8eb2..5a6b5c9af90 100644
+--- a/qobject/json-parser-int.h
++++ b/qobject/json-parser-int.h
+@@ -35,7 +35,12 @@ typedef enum json_token_type {
+     JSON_MAX = JSON_END_OF_INPUT
+ } JSONTokenType;
  
- static int set_special_regs(const CPUState *cpu);
+-typedef struct JSONToken JSONToken;
++typedef struct JSONToken {
++    JSONTokenType type;
++    int x;
++    int y;
++    char *str;
++} JSONToken;
  
-+static int get_xsave_state(CPUState *cpu)
-+{
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-+    int cpu_fd = mshv_vcpufd(cpu);
-+    int ret;
-+    void *xsavec_buf;
-+    const size_t page = HV_HYP_PAGE_SIZE;
-+    size_t xsavec_buf_len = page;
-+
-+    /* TODO: should properly determine xsavec size based on CPUID */
-+    xsavec_buf = qemu_memalign(page, xsavec_buf_len);
-+    memset(xsavec_buf, 0, xsavec_buf_len);
-+
-+    struct mshv_get_set_vp_state args = {
-+        .type = MSHV_VP_STATE_XSAVE,
-+        .buf_sz = xsavec_buf_len,
-+        .buf_ptr = (uintptr_t)xsavec_buf,
-+    };
-+
-+    ret = ioctl(cpu_fd, MSHV_GET_VP_STATE, &args);
-+    if (ret < 0) {
-+        error_report("failed to get xsave state: %s", strerror(errno));
-+        return -errno;
-+    }
-+
-+    ret = decompact_xsave_area(xsavec_buf, xsavec_buf_len, env);
-+    g_free(xsavec_buf);
-+    if (ret < 0) {
-+        error_report("failed to decompact xsave area");
-+        return ret;
-+    }
-+    x86_cpu_xrstor_all_areas(x86cpu, env->xsave_buf, env->xsave_buf_len);
-+
-+    return 0;
-+}
-+
-+static int set_xsave_state(const CPUState *cpu)
-+{
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-+    int cpu_fd = mshv_vcpufd(cpu);
-+    int ret;
-+    void *xsavec_buf;
-+    size_t page = HV_HYP_PAGE_SIZE, xsavec_buf_len;
-+
-+    /* allocate and populate compacted buffer */
-+    xsavec_buf = qemu_memalign(page, page);
-+    xsavec_buf_len = page;
-+
-+    /* save registers to standard format buffer */
-+    x86_cpu_xsave_all_areas(x86cpu, env->xsave_buf, env->xsave_buf_len);
-+
-+    /* store compacted version of xsave area in xsavec_buf */
-+    compact_xsave_area(env, xsavec_buf, xsavec_buf_len);
-+
-+    struct mshv_get_set_vp_state args = {
-+        .type = MSHV_VP_STATE_XSAVE,
-+        .buf_sz = xsavec_buf_len,
-+        .buf_ptr = (uintptr_t)xsavec_buf,
-+    };
-+
-+    ret = ioctl(cpu_fd, MSHV_SET_VP_STATE, &args);
-+    g_free(xsavec_buf);
-+    if (ret < 0) {
-+        error_report("failed to set xsave state: %s", strerror(errno));
-+        return -errno;
-+    }
-+
-+    return 0;
-+}
-+
- static void populate_fpu(const hv_register_assoc *assocs, X86CPU *x86cpu)
- {
-     union hv_register_value value;
-@@ -717,6 +789,11 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
-         return ret;
-     }
+ /* json-lexer.c */
+ void json_lexer_init(JSONLexer *lexer, bool enable_interpolation);
+@@ -48,7 +53,6 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
+                                 JSONTokenType type, int x, int y);
  
-+    ret = get_xsave_state(cpu);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-     ret = get_vcpu_events(cpu);
-     if (ret < 0) {
-         return ret;
-@@ -1263,6 +1340,11 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
-         return ret;
-     }
+ /* json-parser.c */
+-JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr);
+ void json_parser_init(JSONParserContext *ctxt, va_list *ap);
+ void json_parser_reset(JSONParserContext *ctxt);
+ QObject *json_parser_feed(JSONParserContext *ctxt, const JSONToken *token, Error **errp);
+diff --git a/qobject/json-parser.c b/qobject/json-parser.c
+index 484956deae4..4a3f5866129 100644
+--- a/qobject/json-parser.c
++++ b/qobject/json-parser.c
+@@ -24,13 +24,6 @@
+ #include "qobject/qstring.h"
+ #include "json-parser-int.h"
  
-+    ret = set_xsave_state(cpu);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-     ret = set_vcpu_events(cpu);
-     if (ret < 0) {
-         return ret;
-@@ -1817,9 +1899,10 @@ void mshv_arch_init_vcpu(CPUState *cpu)
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86_cpu->env;
-     AccelCPUState *state = cpu->accel;
--    size_t page = HV_HYP_PAGE_SIZE;
-+    size_t page = HV_HYP_PAGE_SIZE, xsave_len;
-     void *mem = qemu_memalign(page, 2 * page);
-     int ret;
-+    X86XSaveHeader *header;
- 
-     /* sanity check, to make sure we don't overflow the page */
-     QEMU_BUILD_BUG_ON((MAX_REGISTER_COUNT
-@@ -1833,6 +1916,17 @@ void mshv_arch_init_vcpu(CPUState *cpu)
- 
-     env->emu_mmio_buf = g_new(char, 4096);
- 
-+    /* Initialize XSAVE buffer page-aligned */
-+    /* TODO: pick proper size based on CPUID */
-+    xsave_len = page;
-+    env->xsave_buf = qemu_memalign(page, xsave_len);
-+    env->xsave_buf_len = xsave_len;
-+    memset(env->xsave_buf, 0, env->xsave_buf_len);
-+
-+    /* we need to set the compacted format bit in xsave header for mshv */
-+    header = (X86XSaveHeader *)(env->xsave_buf + sizeof(X86LegacyXSaveArea));
-+    header->xcomp_bv = header->xstate_bv | (1ULL << 63);
-+
-     /*
-      * TODO: populate topology info:
-      * X86CPUTopoInfo *topo_info = &env->topo_info;
-@@ -1857,6 +1951,10 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
-     g_free(state->hvcall_args.base);
-     state->hvcall_args = (MshvHvCallArgs){0};
-     g_clear_pointer(&env->emu_mmio_buf, g_free);
-+
-+    qemu_vfree(env->xsave_buf);
-+    env->xsave_buf = NULL;
-+    env->xsave_buf_len = 0;
+-struct JSONToken {
+-    JSONTokenType type;
+-    int x;
+-    int y;
+-    char str[];
+-};
+-
+ /*
+  * The JSON parser is a push parser, returning to the caller after every
+  * token.  Therefore it has an explicit representation of its parser
+@@ -623,17 +616,6 @@ static QObject *parse_token(JSONParserContext *ctxt, const JSONToken *token)
+     return NULL;
  }
  
- uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
-diff --git a/target/i386/meson.build b/target/i386/meson.build
-index 80062d1d0d8..b4fbf8a5374 100644
---- a/target/i386/meson.build
-+++ b/target/i386/meson.build
-@@ -12,7 +12,7 @@ i386_ss.add(when: 'CONFIG_KVM', if_true: files('xsave_helper.c', 'host-cpu.c'))
- i386_ss.add(when: 'CONFIG_HVF', if_true: files('xsave_helper.c', 'host-cpu.c'))
- i386_ss.add(when: 'CONFIG_WHPX', if_true: files('xsave_helper.c', 'host-cpu.c'))
- i386_ss.add(when: 'CONFIG_NVMM', if_true: files('host-cpu.c'))
--i386_ss.add(when: 'CONFIG_MSHV', if_true: files('host-cpu.c'))
-+i386_ss.add(when: 'CONFIG_MSHV', if_true: files('xsave_helper.c', 'host-cpu.c'))
+-JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr)
+-{
+-    JSONToken *token = g_malloc(sizeof(JSONToken) + tokstr->len + 1);
+-
+-    token->type = type;
+-    memcpy(token->str, tokstr->str, tokstr->len);
+-    token->str[tokstr->len] = 0;
+-    token->x = x;
+-    token->y = y;
+-    return token;
+-}
  
- i386_system_ss = ss.source_set()
- i386_system_ss.add(files(
+ void json_parser_reset(JSONParserContext *ctxt)
+ {
+diff --git a/qobject/json-streamer.c b/qobject/json-streamer.c
+index 9526f815f00..6d7c947f94a 100644
+--- a/qobject/json-streamer.c
++++ b/qobject/json-streamer.c
+@@ -78,8 +78,13 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
+         } else if (parser->bracket_count + parser->brace_count > MAX_NESTING) {
+             error_setg(&err, "JSON nesting depth limit exceeded");
+         } else {
+-            g_autofree JSONToken *token = json_token(type, x, y, input);
+-            QObject *json = json_parser_feed(&parser->parser, token, &err);
++            JSONToken token = (JSONToken) {
++                .type = type,
++                .x = x,
++                .y = y,
++                .str = input->str
++            };
++            QObject *json = json_parser_feed(&parser->parser, &token, &err);
+             if (json) {
+                 parser->emit(parser->opaque, json, NULL);
+             }
 -- 
 2.54.0
 
