@@ -4,86 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B9A3CDE002
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 12:37:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44D28CDE00E
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 12:39:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd5mt-0004XC-6N; Fri, 26 Jun 2026 08:36:03 -0400
+	id 1wd5po-0001ro-Ig; Fri, 26 Jun 2026 08:39:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wd5mT-0004Tf-Pd
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 08:35:43 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1wd5pm-0001qh-RZ
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 08:39:02 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wd5mR-0002vs-Gu
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 08:35:37 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-46f3ca3c598so688193f8f.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 05:35:34 -0700 (PDT)
+ id 1wd5pk-0003p7-RX
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 08:39:02 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-bdb3fd39045so124686966b.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 05:39:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782477539; cv=none;
+ d=google.com; s=arc-20260327;
+ b=JkgWyjzXZvc5p+qLdY6uXz0MYB64popMtn+q9dgUgimJn2ncgnBBFp6I65L9Ysb26V
+ LFPLasteqqTvHHFEDG6/nTx/ZQu5J49fJ9SqYux/x0zh3zNip6X+NeRM6n8/uUlN+u74
+ g0yG/pVclYvtlgji/KG6fWn6I/L72pI8ZIAHJHuMW3NojWeUgHTSCilAodXJbmH2DD8X
+ 26UlEW4iUYKOKaju0hiGlLE25HHFGjsM+8zxQf7sZO9d7lRkIydNxe5LzL88NRcmTgPs
+ YZpLpfQdKJ4HFBn2acU0U3MDDDwFx+LSwZnvixFIRF1yHBRgGDobRvdvYJYVrf/Mekuj
+ lLew==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Ntai7gYoTVsMBeoXA5ozrWU9QrtxlQkjhUHU84wVLjk=;
+ fh=WTMaVroxeFO+odfNo/HlSXKoRZAjtoqL4+bW6Ec/xOQ=;
+ b=oPGrjzLRd17dNZt9x8WiGh06NWgcMricV5IO2dFLqclMwK9zz6uO7SAk08WxGbJ4EV
+ kvDHYR0ye7Nt5SkJWYt+gMQzJAUrjD3YgE8fFvqjPW1NlK++3r51y4t+7BedCmp3FFdI
+ E0PDL7XsNJZT47RHqMgsGl2DloTSS39n2vVNpFhPNJqnYaQjz4GHg73rOvgJuUI1bY4Z
+ M5hUVvXuOGEGBcg6LwE3wb53iat+bvkM1o33ANfzstp8qq0qqgZMD5p2EOXCufINInkI
+ cRw8aYgnpMtOszsU3Dz0AVElht6u1zA+kBql/K5TfsIcRgFFzku1ew4WDn66tEfCEYVQ
+ BuJw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1782477333; x=1783082133; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=MquNqe18DPhVhW+OqRiNtfS8g3epc7GXA4QXS+eLsH0=;
- b=NeOaIEwpuFovKWAsYW7DVRabbn1vR/vXJ2z3qT0DT4mRmSE/vmMJ0UHU4iMjE/HDUp
- IllYqzNY0w+2BAy4FRzg3WRRhr60Zu9d23DnevfWMrglzp5Ww2nFVG8ta5yCtm6JJYgc
- yIwn7YW6BfUh+WRUbLjFOuJCXJjH6ssxW+/0c=
+ d=mihalicyn.com; s=mihalicyn; t=1782477539; x=1783082339; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Ntai7gYoTVsMBeoXA5ozrWU9QrtxlQkjhUHU84wVLjk=;
+ b=Q80QI18Ln4kG0dqSFBMsuDUg6vi3eupPAzeMjVFWTFvQNAIbitPtbiG8BeJQM5uOLo
+ aQ0jOrmJWs0X1f4T40JdkUATFyYGlWG6QKP2qhYWyS0gHuH0VJjnhWjXYLY2VOyZ6Unr
+ uRnU4aSE6Y41mvNDe5CfYjPqUzwRiaOecSLYc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782477333; x=1783082133;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MquNqe18DPhVhW+OqRiNtfS8g3epc7GXA4QXS+eLsH0=;
- b=mHGuG6wnuPEBgtsTfHcWuveB4PoI6ahQ6kn5RBALb8RLuGK5x3UCVHwuaCinSo2hLn
- WgJ1Zkcze24mNwbeFSEC4m03nVx+gsudlhMY/PpMnC/FPZSmJmNh0qRLcj2RCUWgdiqA
- a0P7Fv7aqCJ6APyYLvVp8m63/k68KUgxcvPlz6394vzry8x8NqGnDDd1m7AQSuKV6Nna
- 25dQPy2IPO1oWO9Dp5UkaoIZYVZ6stCa3iNo5f91P6hzVexh+ARyLm7DsV72B3nOahav
- ziPBJD35G+L6FbXLU8hydoGCbhfP3mQ6PvY0cby1EQa/A2rOW2oN+l50Eo47ejicoI5N
- HEhA==
-X-Gm-Message-State: AOJu0YwvFzibUkIlSkOS3lQ2kpqbU3tv81tpgpYHsSNg+jFgSrrIUYOq
- KQD23HCmIe0R2dm0eedCPKgWcVcRS31vovxhGt0GKvTQVi7Zuo3HTT0JQtIfKlpTaZGBGVSUIl3
- OlTUaxVg=
-X-Gm-Gg: AfdE7cnOxQ0fFjJkfkxr/3u5+6HeeE5pgI0MFiKY4VYTL/PQstW2QSzeTR9fz89R5gq
- /X4i7JXKnltRaTOSrkSq/l8sOUFx3jV5ZJNyMqhfNUhIY1zHFy8MDh+lgjgiMeNDDR1Bjlegp0n
- gKQxu2jBjSVSJiK7DP8ybm+nUgHI7/Hr3rL9n6A+lQyCEESUqGKJa129gg5p66APZlTADfSujni
- CmGFTCqycTG/CWdIR3UZg6aABb5Jf8wrbxSQRKlhdI+UWO7YFGMyNnLTpMKClUUNmE9pUIm7CfD
- NWBbYahXnDTMuOkk5hvT9NGB3AW2IliU439S2arRwHWiZGb73QAm/vWLa1cYkUOA8H+0INV2GQF
- jg4xWJC70A5JZd33K6mu3rANpw97+DiIQs+iib/l8eXqJb/rmYhi6x4N3TTclfzrb0ccCf27gga
- hppDPaFtbtJM1msXeu1mxmaSsN2L+cO43mq2XcP/mu8iNr1vc16mG/WxWEF+5bE4e0xa0zNua9D
- FWO7OQJp9fiR72wSNI51Kc=
-X-Received: by 2002:a05:6000:2207:b0:46f:960b:b711 with SMTP id
- ffacd0b85a97d-46f960bb850mr1732810f8f.45.1782477333276; 
- Fri, 26 Jun 2026 05:35:33 -0700 (PDT)
-Received: from alex-laptop.lan
- (p200300cf574a7200aa896c1ac04cb1b2.dip0.t-ipconnect.de.
- [2003:cf:574a:7200:aa89:6c1a:c04c:b1b2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46efd7ee1c7sm7373757f8f.14.2026.06.26.05.35.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 05:35:32 -0700 (PDT)
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Alexander Mikhalitsyn <alexander@mihalicyn.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v3 0/9] hw/audio/virtio-sound: basic migration support
-Date: Fri, 26 Jun 2026 14:35:22 +0200
-Message-ID: <20260626123531.132078-1-alexander@mihalicyn.com>
-X-Mailer: git-send-email 2.47.3
+ d=1e100.net; s=20251104; t=1782477539; x=1783082339;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Ntai7gYoTVsMBeoXA5ozrWU9QrtxlQkjhUHU84wVLjk=;
+ b=MAOQrqTcQb2CJTQNZzzxGKSe1yyTW/jtDUByAojq6k9sIEPJXaoqX73aqBO3Rl496Y
+ WGqlwoBWDWblrbt4pl1ZlBvntQ7MApoN/INP7asC2O0Ic7NST9FHLX8CXmm6Wh5Prl9e
+ U+XnA6kl1txYGghOdx8ed+kv8kHW0Nz2Ju8geKdR060wQQkovUjxDCDDUcr0GCZIFnRN
+ AFy0rfasPKaQyLLdzEo5Y9zr5YmizEdaUqz6tamhUYta4L9CwnnSvnSu8zbEzGNGEOcQ
+ pFusXlYCwQDjlYGAmNlWIKiRuPWbZdqDX6yVb4x57N9vRjfEV232PzDhtwLme0/B28Iu
+ gM8A==
+X-Gm-Message-State: AOJu0Yyhi4HiNxwDBFnCwmSUyTjnP05SxUyz6JFucQ5+954juC5YR25c
+ srlH2PiTOAo3VOvElNLBRuOClVNFwe4BQWxJGgwwx3VqhEznzROPR1gdoqUIp8nzhe11x4unnc9
+ z4TRrD1njtsjeCAETfaVNDrjLHMpCu0P20bmnVeyvbQ==
+X-Gm-Gg: AfdE7ckD68wXq9YEyUuZrS26XS9gxUXpVuO+YuPzP8WrRH3DvSP1KgezgF7Ebb96d3c
+ 0OD/ayyKxEpb/xpyylT8Riv+fIP/8Uf2sDMJqctELl8NkqGrbPvEh3ZIiF/rKqBLnJnY3zaWAUE
+ vaY8V0zCM+si3ynGKbSnlElPPOuPKJ3M3Lm+/dXjaSI63b0nIkegisjffN/W51tEGHMRAOhJ3bA
+ R+nhyYf2ictBv/bjAo7sGlQSoNmo42fwDz1Qwagdqt2AIolKAzQqnVsqGa8Lw0aAOBiJjURoima
+ 8LIcXNmJVCqVY0qXXoEN+tgFEvzM
+X-Received: by 2002:a17:907:940a:b0:be2:36d7:573b with SMTP id
+ a640c23a62f3a-c1205e6d939mr448268766b.12.1782477539029; Fri, 26 Jun 2026
+ 05:38:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x433.google.com
+References: <20260625095250.65073-1-alexander@mihalicyn.com>
+ <20260625095250.65073-9-alexander@mihalicyn.com>
+ <178239957439.405566.14149573819359101904.b4-review@b4>
+In-Reply-To: <178239957439.405566.14149573819359101904.b4-review@b4>
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Date: Fri, 26 Jun 2026 14:38:47 +0200
+X-Gm-Features: AVVi8CcJSRx6U78TyRmOYvVcjMkrbcIoNbx3S0t1-pmMs5AZT_xs9C_EvC9mQiE
+Message-ID: <CAJqdLroxhRbrKBw=8pgV0WWPzC53jX6gjHsey380ZdPWOJ6cTw@mail.gmail.com>
+Subject: Re: [PATCH v2 8/9] hw/audio/virtio-sound: add missing vmstate fields
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
+ =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alexander@mihalicyn.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,82 +121,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Am Do., 25. Juni 2026 um 17:00 Uhr schrieb <marcandre.lureau@redhat.com>:
+>
+> > The virtio-sound device is currently not migratable. Add the
+> > missing VMSTATE fields, enable migration and reconnect the audio
+> > streams after migration.
+> >
+> > The queue_inuse[] array variables mimic the inuse variable in
+> > struct VirtQueue which is private. They are needed to restart
+> > the virtio queues after migration.
+> >
+> > Signed-off-by: Volker R=C3=BCmelin <vr_qemu@t-online.de>
+> > [AM: trivial rebase changes]
+> > Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion=
+.io>
+> > Message-ID: <20260625095250.65073-9-alexander@mihalicyn.com>
+> >
+> > diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-sn=
+d.h
+> > index 28d0322b979..523c456436b 100644
+> > --- a/include/hw/audio/virtio-snd.h
+> > +++ b/include/hw/audio/virtio-snd.h
+> > @@ -197,6 +197,7 @@ struct VirtIOSound {
+> >      VirtIODevice parent_obj;
+> >
+> >      VirtQueue *queues[VIRTIO_SND_VQ_MAX];
+> > +    uint32_t queue_inuse[VIRTIO_SND_VQ_MAX];
+> >      uint64_t features;
+> >      VirtIOSoundPCMStream *streams;
+> >      AudioBackend *audio_be;
+> > diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+> > index 53f9066ab24..b3de8abcb61 100644
+> > --- a/hw/audio/virtio-snd.c
+> > +++ b/hw/audio/virtio-snd.c
+> > @@ -24,7 +24,6 @@
+> >  #include "qapi/error.h"
+> >  #include "hw/audio/virtio-snd.h"
+> >
+> > -#define VIRTIO_SOUND_VM_VERSION 1
+> >  #define VIRTIO_SOUND_JACK_DEFAULT 0
+> >  #define VIRTIO_SOUND_STREAM_DEFAULT 2
+> >  #define VIRTIO_SOUND_CHMAP_DEFAULT 0
+> > @@ -78,17 +77,40 @@ static uint32_t supported_rates =3D BIT(VIRTIO_SND_=
+PCM_RATE_5512)
+> >                                  | BIT(VIRTIO_SND_PCM_RATE_192000)
+> >                                  | BIT(VIRTIO_SND_PCM_RATE_384000);
+> >
+> > +static const VMStateDescription vmstate_virtio_snd_stream =3D {
+> > +    .name =3D "virtio-sound-stream",
+> > +    .fields =3D (const VMStateField[]) {
+> > +        VMSTATE_UINT32(state, VirtIOSoundPCMStream),
+> > +        VMSTATE_UINT32(info.hdr.hda_fn_nid, VirtIOSoundPCMStream),
+> > +        VMSTATE_UINT32(info.features, VirtIOSoundPCMStream),
+> > +        VMSTATE_UINT64(info.formats, VirtIOSoundPCMStream),
+> > +        VMSTATE_UINT64(info.rates, VirtIOSoundPCMStream),
+> > +        VMSTATE_UINT8(info.direction, VirtIOSoundPCMStream),
+> > +        VMSTATE_UINT8(info.channels_min, VirtIOSoundPCMStream),
+> > +        VMSTATE_UINT8(info.channels_max, VirtIOSoundPCMStream),
+> > +        VMSTATE_UINT32(params.buffer_bytes, VirtIOSoundPCMStream),
+> > +        VMSTATE_UINT32(params.period_bytes, VirtIOSoundPCMStream),
+> > +        VMSTATE_UINT32(params.features, VirtIOSoundPCMStream),
+> > +        VMSTATE_UINT8(params.channels, VirtIOSoundPCMStream),
+> > +        VMSTATE_UINT8(params.format, VirtIOSoundPCMStream),
+> > +        VMSTATE_UINT8(params.rate, VirtIOSoundPCMStream),
+> > +        VMSTATE_END_OF_LIST()
+>
+> While reviewing the VirtIOSoundPCMStream state:
+>
+> - "id" field should be removed after or with "allocate an array of stream=
+s"
+> - "buf_wpos" seems dead code, drop it?
+> - "info" seems immutable from the guest side, I don't think we should mig=
+rate it
+> - "positions" seems to be dead code. Drop it?
+>
+> Otherwise, the patch looks ok to me
 
-Dear friends,
+Dear Marc-Andr=C3=A9,
 
-This patchset is aimed to support virtio-sound live migration and based on
-pre-existing Volker Rümelin's patches from qemu-devel lists [1]. I tried
-to ask (https://lore.kernel.org/qemu-devel/9d7ea128c711c201688a4716f53b8a335fc53569.camel@mihalicyn.com/)
-if Volker is going to continue his work on this, but received no reply so I
-just decided to go forward: take his patches, rebase and resend. Of course,
-I kept all authorship/tags so I hope that it is fine.
-
-Testing.
-
-I manually validated this with Ubuntu 24.04 Desktop VM and found no issues.
-Also, it was validated with CI (https://gitlab.com/mihalicyn/qemu/-/pipelines/2626702088).
-
-Original patchset:
-https://lore.kernel.org/qemu-devel/a289a081-9a61-4bcb-b693-bf6cd7768c0e@t-online.de [1]
-
-Git tree:
-https://gitlab.com/mihalicyn/qemu/-/commits/virtio-sound-migration
-
-Changelog for version 3:
-- addressed review feedback from Marc-André Lureau:
-	- drop VirtIOSoundPCMStream's id field (unused)
-	- resurrected error_report(..) in virtio_snd_pcm_start_stop()
-	- fixes in "hw/audio/virtio-sound: add stream state variable"
-	  [ please, look in commit message for details ]
-	- added "hw/audio/virtio-sound: remove channel positions field
-	  from VirtIOSoundPCMStream"
-	- fixes in "hw/audio/virtio-sound: add missing vmstate fields"
-	  [ details in commit message ]
-
-Changelog for version 2:
-- no code changes (only commit messages)
-  followed suggestions from Daniel P. Berrangé (thanks, Daniel!)
-  https://lore.kernel.org/qemu-devel/ajzoxZr4g0Xsr_4p@redhat.com/
-  and added some extra details about what I did with the original
-  patches during rebase (for some of them it was simpler and less error
-  prone to just drop changes and reimplement them by following the idea
-  of the patch, cause base code has changed significantly).
-
-Changelog relative to the original Volker Rümelin's submission:
-- rebased:
-	- "hw/audio/virtio-sound: return correct command response size"
-		was dropped as it was already merged
-	- "hw/audio/virtio-sound: fix segmentation fault in tx/rx xfer handler"
-		was dropped as it seems to be replaced with another fix
-		https://github.com/qemu/qemu/commit/731655f87f319fd06f27282c6cafbc2467ac8045
-	- I had to drop all pre-existing Reviewed-by tags cause it was 2 years since
-	  this patchset was sent and reviewed and I did a quite significant code changes
-	  during rebase
+thank you again for such a detailed review comments. I have addressed all
+these suggestions in -v3 (have just sent). And also, it looks like
+previously I missed
+latency_bytes field too (it was added in upstream QEMU after the
+original patches were published).
 
 Kind regards,
 Alex
 
-Alexander Mikhalitsyn (1):
-  hw/audio/virtio-sound: remove channel positions field from
-    VirtIOSoundPCMStream
+>
+> > +    },
+> > +};
+> > +
+> >  static const VMStateDescription vmstate_virtio_snd_device =3D {
+> > -    .name =3D TYPE_VIRTIO_SND,
+> > -    .version_id =3D VIRTIO_SOUND_VM_VERSION,
+> > -    .minimum_version_id =3D VIRTIO_SOUND_VM_VERSION,
+> > +    .name =3D "virtio-sound-device",
+> > +    .fields =3D (const VMStateField[]) {
+> > +        VMSTATE_UINT32_ARRAY(queue_inuse, VirtIOSound, VIRTIO_SND_VQ_M=
+AX),
+> > +        VMSTATE_STRUCT_VARRAY_POINTER_UINT32(streams, VirtIOSound,
+> > +            snd_conf.streams,
+> > +            vmstate_virtio_snd_stream, VirtIOSoundPCMStream),
+> > +        VMSTATE_END_OF_LIST()
+> > +    },
+> >  };
+> >
+> >  static const VMStateDescription vmstate_virtio_snd =3D {
+> > -    .name =3D TYPE_VIRTIO_SND,
+> > -    .unmigratable =3D 1,
+> > -    .minimum_version_id =3D VIRTIO_SOUND_VM_VERSION,
+> > -    .version_id =3D VIRTIO_SOUND_VM_VERSION,
+> > +    .name =3D "virtio-sound",
+> >      .fields =3D (const VMStateField[]) {
+> >          VMSTATE_VIRTIO_DEVICE,
+> >          VMSTATE_END_OF_LIST()
+> > @@ -800,6 +822,7 @@ process_cmd(VirtIOSound *s, virtio_snd_ctrl_command=
+ *cmd)
+> >                   sizeof(virtio_snd_hdr));
+> >      virtqueue_push(cmd->vq, cmd->elem,
+> >                     sizeof(virtio_snd_hdr) + cmd->payload_size);
+> > +    s->queue_inuse[VIRTIO_SND_VQ_CONTROL] -=3D 1;
+> >      virtio_notify(VIRTIO_DEVICE(s), cmd->vq);
+> >  }
+> >
+> > @@ -846,6 +869,7 @@ static void virtio_snd_handle_ctrl(VirtIODevice *vd=
+ev, VirtQueue *vq)
+> >
+> >      elem =3D virtqueue_pop(vq, sizeof(VirtQueueElement));
+> >      while (elem) {
+> > +        s->queue_inuse[VIRTIO_SND_VQ_CONTROL] +=3D 1;
+> >          cmd =3D g_new0(virtio_snd_ctrl_command, 1);
+> >          cmd->elem =3D elem;
+> >          cmd->vq =3D vq;
+> > @@ -956,6 +980,7 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice =
+*vdev, VirtQueue *vq)
+> >              goto tx_err;
+> >          }
+> >
+> > +        vsnd->queue_inuse[VIRTIO_SND_VQ_TX] +=3D 1;
+> >          size =3D iov_size(elem->out_sg, elem->out_num) - msg_sz;
+> >
+> >          buffer =3D g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
+> > @@ -1035,6 +1060,7 @@ static void virtio_snd_handle_rx_xfer(VirtIODevic=
+e *vdev, VirtQueue *vq)
+> >              goto rx_err;
+> >          }
+> >
+> > +        vsnd->queue_inuse[VIRTIO_SND_VQ_RX] +=3D 1;
+> >          size =3D iov_size(elem->in_sg, elem->in_num) -
+> >              sizeof(virtio_snd_pcm_status);
+> >          buffer =3D g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
+> > @@ -1177,6 +1203,7 @@ static inline void return_tx_buffer(VirtIOSoundPC=
+MStream *stream,
+> >      virtqueue_push(buffer->vq,
+> >                     buffer->elem,
+> >                     sizeof(virtio_snd_pcm_status));
+> > +    stream->s->queue_inuse[VIRTIO_SND_VQ_TX] -=3D 1;
+> >      virtio_notify(VIRTIO_DEVICE(stream->s), buffer->vq);
+> >      QSIMPLEQ_REMOVE(&stream->queue,
+> >                      buffer,
+> > @@ -1270,6 +1297,7 @@ static inline void return_rx_buffer(VirtIOSoundPC=
+MStream *stream,
+> >      virtqueue_push(buffer->vq,
+> >                     buffer->elem,
+> >                     sizeof(virtio_snd_pcm_status) + buffer->size);
+> > +    stream->s->queue_inuse[VIRTIO_SND_VQ_RX] -=3D 1;
+> >      virtio_notify(VIRTIO_DEVICE(stream->s), buffer->vq);
+> >      QSIMPLEQ_REMOVE(&stream->queue,
+> >                      buffer,
+> > @@ -1387,6 +1415,40 @@ static void virtio_snd_unrealize(DeviceState *de=
+v)
+> >      virtio_cleanup(vdev);
+> >  }
+> >
+> > +static int virtio_snd_post_load(VirtIODevice *vdev)
+> > +{
+> > +    VirtIOSound *s =3D VIRTIO_SND(vdev);
+> > +    uint32_t i;
+> > +
+> > +    for (i =3D 0; i < s->snd_conf.streams; i++) {
+> > +        struct VirtIOSoundPCMStream *stream;
+> > +
+> > +        stream =3D virtio_snd_pcm_get_stream(s, i);
+> > +        if (stream->state & VSND_PCMSTREAM_STATE_F_PREPARED) {
+> > +            virtio_snd_pcm_open(stream);
+> > +
+> > +            if (stream->state & VSND_PCMSTREAM_STATE_F_ACTIVE) {
+> > +                virtio_snd_pcm_set_active(stream, true);
+> > +            }
+> > +        }
+> > +    }
+> > +
+> > +    for (i =3D 0; i < VIRTIO_SND_VQ_MAX; i++) {
+> > +        if (s->queue_inuse[i]) {
+> > +            bool rc;
+>
+> I would just drop the variable ("rc" is rather for int in general)
 
-Volker Rümelin (8):
-  hw/audio/virtio-sound: remove command and stream mutexes
-  hw/audio/virtio-sound: allocate an array of streams
-  hw/audio/virtio-sound: free all stream buffers on reset
-  hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
-  hw/audio/virtio-sound: add stream state variable
-  hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
-  hw/audio/virtio-sound: introduce virtio_snd_set_active()
-  hw/audio/virtio-sound: add missing vmstate fields
++
 
- hw/audio/trace-events         |   3 +-
- hw/audio/virtio-snd.c         | 679 ++++++++++++++++++++--------------
- include/hw/audio/virtio-snd.h |  26 +-
- 3 files changed, 399 insertions(+), 309 deletions(-)
-
--- 
-2.47.3
-
+>
+> --
+> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
 
