@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB44CDE00C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9327CDE014
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:23:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3eN-0008DB-P1; Fri, 26 Jun 2026 06:19:07 -0400
+	id 1wd3eP-0008SJ-Tz; Fri, 26 Jun 2026 06:19:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3e2-0007UN-O6
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:47 -0400
+ id 1wd3eE-0007j0-FH
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3dz-0005Cy-Bx
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:45 -0400
+ id 1wd3eC-0005J5-KT
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469121;
+ s=mimecast20190719; t=1782469136;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mhiC52oMwva++W28QseFLMsKqB/LHrv1Okp1RGXU2gI=;
- b=DrnhxLCEUm15/gzHrokWu84sZL730NiW07MT5fTmh+TdI7MXUehvg1xBAxELLQ8Hlacu6D
- p/LLuhR9PeroMnQT+DJhdT8H82CTOSfadIG2Xb2P0xshGSSUfZjyI3MEPH4h+/XHVdKgt8
- KsKgzpLR1onAX8lWN7rtnK4T2VXV+jQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OvQe6R2LGaw8AiLW+OHgbam2GHSnybOj9jdYYtFJyIg=;
+ b=UCg0mKheWAwgxGZuqvmlmxK0P18tiR292M3yWdvFhn5DrMT9wHzzezkJVoTbx/gyJs1luO
+ BiJsWC5Ov3m/LPCeGvsEuP1vdSpo+nivI/0kqiA+Y+m9kqyAnQLPoi7nqoM6LfgRPDpbbD
+ hv9v7LZl4PQrTAS7PZmeAPHySyZFusU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-U0aWHmHUPFODR76_zNbZPA-1; Fri, 26 Jun 2026 06:18:39 -0400
-X-MC-Unique: U0aWHmHUPFODR76_zNbZPA-1
-X-Mimecast-MFC-AGG-ID: U0aWHmHUPFODR76_zNbZPA_1782469118
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4924207e640so5998235e9.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:18:39 -0700 (PDT)
+ us-mta-662-2aY4LuXsPuaj3gevvPAnKA-1; Fri, 26 Jun 2026 06:18:54 -0400
+X-MC-Unique: 2aY4LuXsPuaj3gevvPAnKA-1
+X-Mimecast-MFC-AGG-ID: 2aY4LuXsPuaj3gevvPAnKA_1782469133
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-490b2f22ea2so6712375e9.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:18:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469118; x=1783073918; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469133; x=1783073933; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mhiC52oMwva++W28QseFLMsKqB/LHrv1Okp1RGXU2gI=;
- b=e+AjS5deDWKtzn0uVuCQQRc+xH7JqaT/NWYKlqT6fqLn0Q24/O0vJSea34KSYVKHWU
- EXl51Td8g2XyktaiH+pWj9TxFEDg2RrEq4LQRYoYvIWiP82mU7ZJQPLm9HvoUzLB0ejf
- 1iQT0d3VK+xGn0gQ91dflSwoAzuSzj3gRHCljqzWIW5FUkDYe5zO/GKfyqJoK9K8rSAU
- 43nwEYXAg96TpneZ1ghInEA7CO7LpVV46VAAUvYsZIFxffqyYJLbTGPbEi1tOhCJKhOv
- iAQkSJv/lflGnddp+GHoU96O36Xs4xQhkAmb+A8+sx8W3fidZJQjSsZRjYkD4oeygBJa
- at0Q==
+ bh=OvQe6R2LGaw8AiLW+OHgbam2GHSnybOj9jdYYtFJyIg=;
+ b=pkXY86aRW7CoA9oWQlQiWWzXhCsT+aWoCWaHkPdzWJeWLfLeaDudATG5TvlE+Y9ULn
+ Ei/D0m+m63zZqMCEnfu9K1zJ1C1n514Do7+u7TZMii3KWUoqKbTxJ8q701yqv9qXCmML
+ DMcyt6WQsBHVmKZc6Ri1/7e4COVXgu6aam1rGw1Uxp/B+EPc73y8qsWXBX1U0RzbTzuU
+ mR48TMzKeWfJZ06dS90Cg0QahGhTEsvwtjxcuWwgOKSe5dR4gGfYQBNGKG0a7LSxNp9P
+ blZgPUylLJ5hw/LzVJphcCWGO0ZQOrQXuX5W6KxbuV8OsNeuhhdKPlFxiPs/Pt5XD4wy
+ UrLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469118; x=1783073918;
+ d=1e100.net; s=20251104; t=1782469133; x=1783073933;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=mhiC52oMwva++W28QseFLMsKqB/LHrv1Okp1RGXU2gI=;
- b=lh44vD9JJ/7Ia2KLiVk+RMvRYl3obKrgC1uMjPQay2jsT/mRsqQ7DrLw81FrTN8ejq
- KG5Uw/KzGHIJkizEu1cy9j8JtHUTMohzz6BZO7RA1zKuC2hoWRhhXRR9rIE0fq7Rwn3Z
- zSiybqMuBkiXubbr/lvFkKqfN0jLADrk4r0b5fNuQYkbvRKeSgg35TCgIQnS1k9rKu9t
- EUKNn5CA8hVKVjib4UvIRSzS8/z1oBZR6Kqekw2j1uVVXDHhyONe43FBheYS/7HPPlgH
- rsJCCHbDT7QyBwVSIN5zz+jlK+5NGZukrZPRK6lfJTr1r3d5NEK2DvkAxs2gJkaj6L4u
- QLBg==
-X-Gm-Message-State: AOJu0YzLrLRLd6XUwZcQ/3/HxQVrtUUTKHgBoPlQG11vK5/5WT95CFDF
- 1R3qXt209dL+4cdpMaQzlYMYq26U7ww64ef/T4J1WSIYcr/94UKmm5k4BucctYZd6iuTV+r0nEa
- MYMNr3SXRIYgZfurT0HD6jGFVww/yL7ABPY7LpuoIUr7ZZsWE+4wKo9fGeRMR5P4lgXtLKmjJPY
- h9ewUmcxDy7XWZvslXrDROcpaGmLwVsXN4WycZWIXI
-X-Gm-Gg: AfdE7cm3ze2z8XDHJoDXLOPe+p0mrdOObYESjzr2IZbbIy1MOJWIZW427+fCgWuO4KU
- aetRf9KyD0fmrB8tHTXqdbWBsyeGOVmGv9kCe9jS8vlCROMMpvYwwruU1H3hNAam2+NuY48b151
- AsJsKLGIE/COXplhfr3VrwthF+8+XrbF2FeXofxvTnwrl1GKLUy4kmBfDBd5Lo2TPThZ2wgqOkw
- KQgCYZGKicy8kTRPT/vTfH3xDADXalWC0cf/yUUeSChpJzvUlaFoLZhPw9YNj5hTW07PoCLUHEf
- DSlM5xoZp6RfdxuKSS0J0SYu3e0zD+lFHd2mHjR6wyrBxE9F3kQvMBpSJvU/aAzcw+JJJHINZZ6
- f4VRzloIlS/WNCkKxCicNUIXcx1JPuVc5AHdSMiTmBBAqx0iyZn3iG76rm/NSXxnTNIcdfuEtNf
- JavlerkRIJ7fSILmDY
-X-Received: by 2002:a05:600c:a05:b0:492:2c87:3d4b with SMTP id
- 5b1f17b1804b1-4926fc3a645mr2130865e9.12.1782469118265; 
- Fri, 26 Jun 2026 03:18:38 -0700 (PDT)
-X-Received: by 2002:a05:600c:a05:b0:492:2c87:3d4b with SMTP id
- 5b1f17b1804b1-4926fc3a645mr2130295e9.12.1782469117813; 
- Fri, 26 Jun 2026 03:18:37 -0700 (PDT)
+ bh=OvQe6R2LGaw8AiLW+OHgbam2GHSnybOj9jdYYtFJyIg=;
+ b=VIZUOgmMJegD9zuEeuSl22HOKX6y5FJDN5fRQ+P3NbNp3xRMX9tKFqKvGVPpN6EO90
+ elBUHFjVo1XwXvl4nWZM1FI38K6NYT3OStKRtNOPI9Nu5dx/az01CZgXvvDtu5xjMB61
+ QPW9P2iq8ehNfoMHKlzZvWQdymA1CWZS4O3CDVTg04gURRiOpyCGv2P4Wsc94NK5fGLm
+ qnabtYfw7E+cmrQ1hZpKvz0UOux/9GlILPyvwfLH2FqtTxudZAXeWYE72oQ+nXt6ibSu
+ lMQT+lQw7k/CuvSh8VCGo5fC2+GQ3XKY0n+yA+XnLSz/dHACYVk/mle/VDcqULf6l5TM
+ 2E/A==
+X-Gm-Message-State: AOJu0YyGuUJckI9vDOX/rOzrst6YiUBut/yY1Zf6JrJUNEr0N9rggzij
+ mRCZnDIAJtp0uSTelriQFj5LsSbkJaL3wYJQMtPD0lgquclhsl7PkDdoC9p3fLZLuhL/Sd32LCm
+ D7e4cbd8NbTvhzBVwuInMtdC1Y87J6rRxXVFqnYjkmP4AbDma9Up48X40CvQ3tGcT8rDHzjeLL7
+ ktzfXzGJEzDFoK8nekTNZbFQNcRmgNVsGgbODIE8Jp
+X-Gm-Gg: AfdE7clwBTY3Jh5GgbA+95/ObEDD67K0b4dmUUWOordDe4EdNUis/SM8RpHtNAgPVhG
+ jffP8HDEOJikDgBv0A1aeDyt13j3gOPVOYQfLpZRnS1UV+vdYkPy3Q9I/+QFDJ1axgllnpWh8ed
+ XWvGM6yBp3JeJcIQHVQ2osZWpq1b6W2EKgw9B3KYrVPW74ahxOasE6e7yBKpP3aAblAuTGChsNw
+ R0qaFWZo5zU8Ds9t2S1znzjy231ck1PHcEzPjpGjT//x6I8GdIM/Zg7HEkz6ZTdGpSQ/939wgZK
+ PD4XhXIdSmIYCY1IdeEfvL/ld9k9xILawMO9zVttVYRyyamyc6fi5aTuGobNgvXfuyM731k+ait
+ aO1flAyw7F3PXDbzAMoYTbFQkLvQT56p3wttHscJrW5wSh3ZjJtefe2HpTGQtvhIJ6VtzQ8DO6R
+ /FMcR2kBQ21XNe6JEj
+X-Received: by 2002:a05:600d:8653:10b0:492:4e09:9fc1 with SMTP id
+ 5b1f17b1804b1-4926684c8c0mr71441145e9.15.1782469133453; 
+ Fri, 26 Jun 2026 03:18:53 -0700 (PDT)
+X-Received: by 2002:a05:600d:8653:10b0:492:4e09:9fc1 with SMTP id
+ 5b1f17b1804b1-4926684c8c0mr71440665e9.15.1782469132910; 
+ Fri, 26 Jun 2026 03:18:52 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49268fe949csm79304185e9.5.2026.06.26.03.18.35
+ ffacd0b85a97d-46c1b754471sm22956676f8f.0.2026.06.26.03.18.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:18:36 -0700 (PDT)
+ Fri, 26 Jun 2026 03:18:51 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PULL 17/45] accel/mshv: update s->irq_routes in add_msi_route
-Date: Fri, 26 Jun 2026 12:17:20 +0200
-Message-ID: <20260626101748.1728079-18-pbonzini@redhat.com>
+Subject: [PULL 23/45] accel/mshv: store partition proc features
+Date: Fri, 26 Jun 2026 12:17:26 +0200
+Message-ID: <20260626101748.1728079-24-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
 References: <20260626101748.1728079-1-pbonzini@redhat.com>
@@ -122,175 +122,127 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-The irq_routes field of the state is populated with native mshv irq
-route entries. The allocation logic is modelled after the KVM
-implementation: we will always allocate a minumum of 64 entries and use
-a bitmask to find/set/clear GSIs.
-
-The old implementation of add_msi_routes will be removed in a subsequent
-commit.
+We retrieve and store processor features on the state, so we can query
+them later when deciding which MSRs to migrate.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260417105618.3621-9-magnuskulke@linux.microsoft.com
+Link: https://lore.kernel.org/r/20260417105618.3621-19-magnuskulke@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/mshv.h   |  3 +-
- accel/accel-irq.c       |  2 +-
- accel/mshv/irq.c        | 89 +++++++++++++++++++++++++++++++++++++----
- accel/stubs/mshv-stub.c |  2 +-
- 4 files changed, 85 insertions(+), 11 deletions(-)
+ include/hw/hyperv/hvhdk.h |  2 +-
+ include/system/mshv_int.h |  3 +++
+ accel/mshv/mshv-all.c     | 57 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 61 insertions(+), 1 deletion(-)
 
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 1e9bcc1b0b6..d22f82982d0 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -33,6 +33,7 @@
- #endif
+diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
+index 9ad16c47da9..9e6dcb22f61 100644
+--- a/include/hw/hyperv/hvhdk.h
++++ b/include/hw/hyperv/hvhdk.h
+@@ -353,7 +353,7 @@ union hv_partition_processor_features {
+         uint64_t lass_support:1;
+         uint64_t idle_hlt_intercept_support:1;
+         uint64_t msr_list_support:1;
+-    };
++    } QEMU_PACKED;
+ };
  
- #define MSHV_MAX_MSI_ROUTES 4096
-+#define MSHV_MIN_ALLOCATED_MSI_ROUTES 64
+ enum hv_translate_gva_result_code {
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 5eef2e6e2cb..0cf68d2879e 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -14,6 +14,8 @@
+ #ifndef QEMU_MSHV_INT_H
+ #define QEMU_MSHV_INT_H
  
- #define MSHV_PAGE_SHIFT 12
++#include "hw/hyperv/hvhdk.h"
++
+ #define MSHV_MSR_ENTRIES_COUNT 64
  
-@@ -59,7 +60,7 @@ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint3
-                            uint32_t vp_index, bool logical_destination_mode,
-                            bool level_triggered);
+ typedef struct hyperv_message hv_message;
+@@ -53,6 +55,7 @@ struct MshvState {
+     int nr_allocated_irq_routes;
+     unsigned long *used_gsi_bitmap;
+     unsigned int gsi_count;
++    union hv_partition_processor_features processor_features;
+ };
  
--int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev);
-+int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev);
- int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
- void mshv_irqchip_commit_routes(void);
- void mshv_irqchip_release_virq(int virq);
-diff --git a/accel/accel-irq.c b/accel/accel-irq.c
-index 7e71b525557..5a97a345b23 100644
---- a/accel/accel-irq.c
-+++ b/accel/accel-irq.c
-@@ -21,7 +21,7 @@ int accel_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- {
- #ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
--        return mshv_irqchip_add_msi_route(vector, dev);
-+        return mshv_irqchip_add_msi_route(c, vector, dev);
-     }
- #endif
-     if (kvm_enabled()) {
-diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
-index 82f2022c7c3..9d6bdde27ac 100644
---- a/accel/mshv/irq.c
-+++ b/accel/mshv/irq.c
-@@ -278,18 +278,91 @@ static int irqchip_update_irqfd_notifier_gsi(const EventNotifier *event,
-     return register_irqfd(vm_fd, fd, virq);
+ typedef struct MshvMsiControl {
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index b06eea2a5e9..d939982eb79 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -133,6 +133,57 @@ static int get_host_partition_property(int mshv_fd, uint32_t property_code,
+     return 0;
  }
  
--
--int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev)
-+static int irqchip_allocate_gsi(MshvState *s, int *gsi)
- {
--    MSIMessage msg = { 0, 0 };
--    int virq = 0;
-+    int next_gsi;
- 
--    if (pci_available && dev) {
--        msg = pci_get_msi_message(dev, vector);
--        virq = add_msi_routing(msg.address, le32_to_cpu(msg.data));
-+    /* Return the lowest unused GSI in the bitmap */
-+    next_gsi = find_first_zero_bit(s->used_gsi_bitmap, s->gsi_count);
-+    if (next_gsi >= s->gsi_count) {
-+        return -ENOSPC;
-     }
- 
--    return virq;
-+    *gsi = next_gsi;
++static int get_partition_property(int vm_fd, uint32_t feature_bank,
++                                  uint64_t *value)
++{
++    struct hv_input_get_partition_property in = {0};
++    struct hv_output_get_partition_property out = {0};
++    struct mshv_root_hvcall args = {0};
++    int ret;
++
++    in.property_code = feature_bank;
++
++    args.code    = HVCALL_GET_PARTITION_PROPERTY;
++    args.in_sz   = sizeof(in);
++    args.in_ptr  = (uint64_t)&in;
++    args.out_sz  = sizeof(out);
++    args.out_ptr = (uint64_t)&out;
++
++    ret = ioctl(vm_fd, MSHV_ROOT_HVCALL, &args);
++    if (ret < 0) {
++        error_report("Failed to get guest partition property bank: %s",
++                     strerror(errno));
++        return -1;
++    }
++
++    *value = out.property_value;
++    return 0;
++}
++
++static int get_proc_features(int vm_fd,
++                             union hv_partition_processor_features *features)
++{
++    int ret;
++
++    ret = get_partition_property(vm_fd,
++                                 HV_PARTITION_PROPERTY_PROCESSOR_FEATURES0,
++                                 features[0].as_uint64);
++    if (ret < 0) {
++        error_report("Failed to get processor features bank 0");
++        return -1;
++    }
++
++    ret = get_partition_property(vm_fd,
++                                 HV_PARTITION_PROPERTY_PROCESSOR_FEATURES1,
++                                 features[1].as_uint64);
++    if (ret < 0) {
++        error_report("Failed to get processor features bank 1");
++        return -1;
++    }
 +
 +    return 0;
 +}
 +
-+static void irqchip_release_gsi(MshvState *s, int gsi)
-+{
-+    clear_bit(gsi, s->used_gsi_bitmap);
-+}
+ static int create_partition(int mshv_fd, int *vm_fd)
+ {
+     int ret;
+@@ -520,6 +571,12 @@ static int mshv_init(AccelState *as, MachineState *ms)
+ 
+     s->vm = vm_fd;
+     s->fd = mshv_fd;
 +
-+static void add_routing_entry(MshvState *s, struct mshv_user_irq_entry *entry)
-+{
-+    struct mshv_user_irq_entry *new;
-+    int n, size;
-+
-+    if (s->irq_routes->nr == s->nr_allocated_irq_routes) {
-+        n = s->nr_allocated_irq_routes * 2;
-+        if (n < MSHV_MIN_ALLOCATED_MSI_ROUTES) {
-+            n = MSHV_MIN_ALLOCATED_MSI_ROUTES;
-+        }
-+        size = sizeof(struct mshv_user_irq_table);
-+        size += n * sizeof(*new);
-+        s->irq_routes = g_realloc(s->irq_routes, size);
-+        s->nr_allocated_irq_routes = n;
-+    }
-+
-+    n = s->irq_routes->nr;
-+    s->irq_routes->nr++;
-+    new = &s->irq_routes->entries[n];
-+
-+    *new = *entry;
-+
-+    set_bit(entry->gsi, s->used_gsi_bitmap);
-+
-+    trace_mshv_add_msi_routing(entry->address_lo | entry->address_hi,
-+                               entry->data);
-+}
-+
-+int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
-+{
-+    struct mshv_user_irq_entry entry = { 0 };
-+    MSIMessage msg = { 0 };
-+    uint32_t data, high_addr, low_addr;
-+    int gsi, ret;
-+    MshvState *s = MSHV_STATE(c->accel);
-+
-+    if (!pci_available || !dev) {
-+        return 0;
-+    }
-+
-+    msg = pci_get_msi_message(dev, vector);
-+
-+    ret = irqchip_allocate_gsi(mshv_state, &gsi);
++    ret = get_proc_features(vm_fd, &s->processor_features);
 +    if (ret < 0) {
-+        error_report("Could not allocate GSI for MSI route");
 +        return -1;
 +    }
-+    high_addr = msg.address >> 32;
-+    low_addr = msg.address & 0xFFFFFFFF;
-+    data = le32_to_cpu(msg.data);
 +
-+    entry.gsi = gsi;
-+    entry.address_hi = high_addr;
-+    entry.address_lo = low_addr;
-+    entry.data = data;
-+
-+    if (s->irq_routes->nr < s->gsi_count) {
-+        add_routing_entry(s, &entry);
-+        c->changes++;
-+    } else {
-+        irqchip_release_gsi(s, gsi);
-+        return -ENOSPC;
-+    }
-+
-+    return gsi;
- }
+     s->nr_as = 1;
+     s->as = g_new0(MshvAddressSpace, s->nr_as);
  
- void mshv_irqchip_release_virq(int virq)
-diff --git a/accel/stubs/mshv-stub.c b/accel/stubs/mshv-stub.c
-index e499b199d9d..998c9e2fc6c 100644
---- a/accel/stubs/mshv-stub.c
-+++ b/accel/stubs/mshv-stub.c
-@@ -14,7 +14,7 @@
- 
- bool mshv_allowed;
- 
--int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev)
-+int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- {
-     return -ENOSYS;
- }
 -- 
 2.54.0
 
