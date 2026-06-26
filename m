@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE9B9CDE008
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:06:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5FFDCDE008
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:06:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3R9-0001L0-9v; Fri, 26 Jun 2026 06:05:27 -0400
+	id 1wd3RK-0001M9-BF; Fri, 26 Jun 2026 06:05:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wd3R6-0001KY-Ti
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:05:24 -0400
+ id 1wd3R9-0001LO-HT
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:05:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wd3Qs-0001x8-He
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:05:24 -0400
+ id 1wd3R7-00028s-Jk
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:05:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782468309;
+ s=mimecast20190719; t=1782468314;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=m2+gt3kOaDWnp3CfzIOR5olodVGZ2w4YtxgxJ3MeOrM=;
- b=Q9anrMfOVyTXLGKVPibnP1m4vER4M+d+rk3ABDjplNDbEGwU7unBOFx9kI0DQtZDfuMFsY
- eHTeBnRmVPzOFVObkPEDzuN99+f18UG0KW2cqgiBzUlpR5hrGhtLXSsd+iiVqotBOADhnL
- E7OONy8+coRKVDcsRHOPCTYfHc0nTOw=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XnKvASURvZWU24SqTGG/iiMBQh4O8gIlXQs5/0TWch0=;
+ b=IOZ8M/PgVpikomiYmaDqYzrnqTOtklcfC03JMn3vb7gLnlLN3sTnSEVyyZP3Q7aqZ4XwIc
+ snsztmCuoHv+iUqhyaGQTC8TY540Zdbs+a58XrYwFlD0uklPOvDS6C6ARz0SJf0j+N9B8T
+ 85Kc9ruaaZRmYtGLmkhMORLwVnN+TGI=
+Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com
+ [209.85.221.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-310-aQHGH912MUatwRmn76pVrg-1; Fri, 26 Jun 2026 06:05:08 -0400
-X-MC-Unique: aQHGH912MUatwRmn76pVrg-1
-X-Mimecast-MFC-AGG-ID: aQHGH912MUatwRmn76pVrg_1782468308
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-9254309dfd4so161404785a.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:05:08 -0700 (PDT)
+ us-mta-570-5EcbY8rGOK-7-ls355U0xA-1; Fri, 26 Jun 2026 06:05:13 -0400
+X-MC-Unique: 5EcbY8rGOK-7-ls355U0xA-1
+X-Mimecast-MFC-AGG-ID: 5EcbY8rGOK-7-ls355U0xA_1782468312
+Received: by mail-vk1-f200.google.com with SMTP id
+ 71dfb90a1353d-5bd797e447cso746627e0c.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:05:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782468308; x=1783073108; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782468312; x=1783073112; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=m2+gt3kOaDWnp3CfzIOR5olodVGZ2w4YtxgxJ3MeOrM=;
- b=Apgq99dxh3H3njD/ZR9UaruL/NoXU+CPbKDrPFx6T8sDo5nkswsh09tpn8Ny68eikc
- Gnwmn/RrSRmv707D6YBmBwM8Ss02dWxyQroPnyg7tG66sEXYfkXrCgBy5+jLJlN6Iw5V
- ZJ/lrFYylRBzEI7QDQUB/SxYgQJewszTPa2Gi3q2YkaB7hnU0hzS6F26zb7GtFbjSQ52
- LZ90Cvar2JMSNC422qwgDU+yQ6RB5KILzje++esrF9MhjsQOcRH9tOc24fRBs+7Qpr12
- 15Wpk02bTR/YUdiOMcuj/C9QQirWIAfTeKGKN3xrf/u+HkQea3L749l/aSKWcND7FLML
- a4Eg==
+ :reply-to; bh=XnKvASURvZWU24SqTGG/iiMBQh4O8gIlXQs5/0TWch0=;
+ b=bazYaztZZqna/XVjCmdewCsF6CJoEhru7tyI2uYdx27XtQPlPAqb0tW1Ku/Qvb7bDr
+ 5f+dyjtbQgdyaLjgp0lqpGnzsTS7ypB8DvmvpGCaEitkoYO5ezps9Lb95MByDS2lHSCD
+ WrS4BmkQVUANObmpLsVCOnB867RxrJinnYa1zU6uIk6JcBm6LDlRubWK7u/+Gxy0ZEmi
+ xEJ63zA3Y7T5RzS21s8CQ4Hm592nUQ1tqxledIZ1KSFt2F6MUcJU7DNm32Prb985yJOG
+ AkBQTJUxiAqE/bhr4F3YSsPfs9Eh2TABCXTD8dQvF54iy084bLWPyaoxrBknMRT6KIM0
+ 6PQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782468308; x=1783073108;
+ d=1e100.net; s=20251104; t=1782468312; x=1783073112;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=m2+gt3kOaDWnp3CfzIOR5olodVGZ2w4YtxgxJ3MeOrM=;
- b=YX1bhbopqB5lqfxmyqdOe9c/XZip/cWQSXUYv3f10DXEMVdvImpSDmRHNb1K5cvgS/
- HEMic8ceWJQe/kek4Qq0z1XKrB9PwzH7YG8Xu8TzlweFkXvvo0rDipmqPqjONY6GdUS+
- IAwf+CqZE59nwmYCBV6wzkZPNG8rN2bVmvWnJFsLoBrG+pjyIpVWYIGToZGQ2Vf02KB1
- 6+Le0rGZzujqrfPjo6lLOxabmqn0jddupsFSlg11VMdGk7srHVEtqqGi6ybLPH7YYciW
- cNqmcLl5s5xEIJJFwSKd264v3U6zaaJtg28iKP8+Ii+mlIRoMbQSbziduYyYNG2P2FPz
- yNNg==
-X-Gm-Message-State: AOJu0Yyr4iL1vEQCpueHmvSOeehfzxDCxrwzQ7c3R+6cYo5+iCyBuLfy
- dPobpAdZ3KSvmt7/whOi9xhycCKbY8s9ccwLQJi73HSVVr5LQhBLqS1CHY7ICchRzVopcPp+xsc
- XVUrhH9WKri32ScmC8MSP/760zD32wb4UEqeNDtSDY7hrZRLAuf1Wzi8EnozE/Abm
-X-Gm-Gg: AfdE7clf+Z5LvPUfzjQ7v3R/7mAbvka3880Irny74M2hVwXCmH8DobuZi7U0XJXzjB4
- CvGtZXFcb1qAelIFLmxzSHMYpqASSs9r4s2aX0jBsgRHHdhR73j370uuerV7lS/UXwv1oovoocB
- m3wqFHriU5OuXb9zXSrHmf+ppkmFFf9XPF25/tpTCz66oROW26HBECNaye0sMTwCADiti1IQ+wT
- EMiPEiiZR3Ve5PM8Q6j+Tu7iXCpMOhrq1kSEkJRpVLxwAHFFqYKZHG3HlS3X+k5KmlLBCvSM9o+
- ga5SYayHh0eHkKB1Ybv8Q1YoPpthk/0fyKhid+RP3x4q3yG8PTYoiBj3iw0zGk4upKKJjVuAqNr
- 8v80+Yxp/vBHSP7cmaLDnOBA9z8/r7VpLlPNAol33iTq5PQsPYMih7sj3oD2P3hG8tNRqGgvocb
- AJecmt
-X-Received: by 2002:a05:620a:2727:b0:915:c615:388 with SMTP id
- af79cd13be357-9293d5b583bmr878359285a.55.1782468307970; 
- Fri, 26 Jun 2026 03:05:07 -0700 (PDT)
-X-Received: by 2002:a05:620a:2727:b0:915:c615:388 with SMTP id
- af79cd13be357-9293d5b583bmr878353885a.55.1782468307466; 
- Fri, 26 Jun 2026 03:05:07 -0700 (PDT)
+ bh=XnKvASURvZWU24SqTGG/iiMBQh4O8gIlXQs5/0TWch0=;
+ b=jZrkGVz5xUEyFJit95A5AaJPVEDnGutaoOBwXSNOcjcaLj/7zU0RzwU3q4twik0dj1
+ 24oHuLSQmnleOEhcJ55rVsXSAkE3AUeky1zGzET7vPZSQZOF+V+DTHTiaelvY3j0HPgo
+ 9ZAvfamoAyskV9Bkh0B1TycbYsS7P87Yjb951Z9dG+jE9vSAnwKSX6g22ReqjiRaZlGJ
+ n3awwmpaGE/1FMHvDwJBpAsKpdO+VneulgfZrVyPJqOO1O5Or3OYBzGU7OYEgDrb5KIm
+ v+G0Cxk2oClhCVc6/C9a/FeBlkj8pq4cdHUvfwUQrkX8p7sVLdiUFDXIvzdu1phtFDcE
+ 7Aiw==
+X-Gm-Message-State: AOJu0Yw6vaGPuCC1OAAOX34AGy6jLgsa5jL/a0UHhTcZU2vRxF1xVnQT
+ wvgAHkR5Xr8hTUhN/YG06PL5ivqky6bjXb1zSNUR5pNQbNNFvjsmdaHbZeJF2t6yM0+w9pD0JWp
+ lDjSaq9ozypAsbFYxa1WDqXDhtFSZkufBaGMlPbLark0VdAWlzGRcdgxS
+X-Gm-Gg: AfdE7cn/meK5JzlTNH81+JGaQNt9LmP2sEzujG8gwt+eZHZ8RHifnTM9+bv1NY3dYHn
+ rrqrNHondrEWP5MGr2nvDqC9DuYEXsdDZxRwGwZ1E5DrauhqyGXptSJU3QRIgPVIBZHWN9uNz1R
+ tgX5XiUY89uT7IGAUSlYFyHXDfdP3osDuMpTrqRyJ7/bUjgAnfIXd3RCSzH1yzkwP9EW5tKhcS4
+ 9ukb0Yyu7B6hIuJJUJXHcg/BdxBD0H9PT3+6z7n6KDRQ+oQncgkMpz8RZnsto9YojsS0Xl0f5wK
+ PJH2vibrwbAwTH5tregHuz9aP0D78UALuXFqPWAXTVM8QAFCCDetcJBv5oAQQSdZ5yT100PzPM2
+ Sfgp06HQb5Tltpkg42KacOWSAumeOBZrwntJq58ho5zgfsKMqpONw5SE8Ytpyj8OlYYQ5ejYJu1
+ KBncHi
+X-Received: by 2002:a05:6102:2c0e:b0:727:48aa:f604 with SMTP id
+ ada2fe7eead31-73436e001a2mr3251512137.28.1782468312399; 
+ Fri, 26 Jun 2026 03:05:12 -0700 (PDT)
+X-Received: by 2002:a05:6102:2c0e:b0:727:48aa:f604 with SMTP id
+ ada2fe7eead31-73436e001a2mr3251462137.28.1782468311946; 
+ Fri, 26 Jun 2026 03:05:11 -0700 (PDT)
 Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([151.29.41.106])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-925fd390e76sm1122716485a.3.2026.06.26.03.05.05
+ af79cd13be357-925fd390e76sm1122716485a.3.2026.06.26.03.05.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:05:06 -0700 (PDT)
+ Fri, 26 Jun 2026 03:05:10 -0700 (PDT)
 From: Luigi Leonardi <leonardi@redhat.com>
-Date: Fri, 26 Jun 2026 12:04:01 +0200
-Subject: [PATCH v6 1/3] igvm: Report error on missing parameter area in
- directive handlers
+Date: Fri, 26 Jun 2026 12:04:03 +0200
+Subject: [PATCH v6 3/3] igvm: add device tree parameter support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260626-microvm_device_tree-v6-1-9cd13cf057e2@redhat.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260626-microvm_device_tree-v6-3-9cd13cf057e2@redhat.com>
 References: <20260626-microvm_device_tree-v6-0-9cd13cf057e2@redhat.com>
 In-Reply-To: <20260626-microvm_device_tree-v6-0-9cd13cf057e2@redhat.com>
 To: qemu-devel@nongnu.org
@@ -123,137 +122,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Parameter areas are how an IGVM file tells QEMU to allocate buffers
-for runtime information the guest needs — VP count, memory map,
-MADT and so on. Usage directives reference a parameter area by index
-to tell QEMU where to write each piece of data. If the index doesn't
-match any declared parameter area, the data has nowhere to go and
-should be treated as an error.
+Coconut SVSM, with the upcoming device tree support [1], will use
+the IGVM device tree parameter to discover virtio-mmio and ISA serial
+devices instead of relying on the fw_cfg interface, which is
+QEMU-specific.
 
-The directive handlers that look up a parameter area all return 0
-(success) when `qigvm_find_param_entry()` can't find it. Therefore,
-the load succeeds but the guest never gets the expected parameters.
+The device tree is packed before copying into the IGVM parameter area
+to reduce its size, since IGVM files can define tighter memory
+constraints for parameter areas. Packing is done in the generic IGVM
+backend rather than in per-architecture device tree setup code, so
+that each architecture does not need to handle it individually.
 
-Note that the IGVM library already validates parameter area indices
-when the file is loaded, so this path should only be reachable with
-a malformed file that bypassed library validation. This is defensive
-programming against that case.
-
-Report the error with error_setg() and return -1 instead.
+[1] https://github.com/coconut-svsm/svsm/pull/1006
 
 Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
 ---
- backends/igvm.c                | 26 ++++++++++++++++----------
- include/system/igvm-internal.h |  3 ++-
- target/i386/igvm.c             |  5 +++--
- 3 files changed, 21 insertions(+), 13 deletions(-)
+ backends/igvm.c      | 54 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ backends/meson.build |  2 +-
+ 2 files changed, 55 insertions(+), 1 deletion(-)
 
 diff --git a/backends/igvm.c b/backends/igvm.c
-index 3f4b97a5d4..a5a2a4eccc 100644
+index a5a2a4eccc..80e87fe602 100644
 --- a/backends/igvm.c
 +++ b/backends/igvm.c
-@@ -81,7 +81,8 @@ struct QEMU_PACKED sev_id_authentication {
- #define IGVM_SEV_ID_BLOCK_VERSION 1
+@@ -26,6 +26,10 @@
+ #include <igvm/igvm.h>
+ #include <igvm/igvm_defs.h>
  
- QIgvmParameterData*
--qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index)
-+qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index,
-+                       Error **errp)
- {
-     QIgvmParameterData *param_entry;
-     QTAILQ_FOREACH(param_entry, &igvm->parameter_data, next)
-@@ -90,7 +91,8 @@ qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index)
-             return param_entry;
-         }
-     }
--    warn_report("IGVM: No parameter area for index %u", parameter_area_index);
-+    error_setg(errp, "IGVM: parameter area index %u not found",
-+                   parameter_area_index);
-     return NULL;
++#ifdef CONFIG_FDT
++#include <libfdt.h>
++#endif
++
+ #ifndef IGVM_VHT_OPTIONAL_BIT
+ #define IGVM_VHT_OPTIONAL_BIT (1U << 31)
+ #endif
+@@ -121,6 +125,10 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
+ static int qigvm_initialization_guest_policy(QIgvm *ctx,
+                                        const uint8_t *header_data,
+                                        Error **errp);
++#ifdef CONFIG_FDT
++static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
++                                       Error **errp);
++#endif
+ 
+ struct QIGVMHandler {
+     IgvmVariableHeaderType type;
+@@ -151,6 +159,10 @@ static struct QIGVMHandler handlers[] = {
+       qigvm_initialization_guest_policy },
+     { IGVM_VHT_MADT, IGVM_HEADER_SECTION_DIRECTIVE,
+       qigvm_directive_madt },
++#ifdef CONFIG_FDT
++    { IGVM_VHT_DEVICE_TREE, IGVM_HEADER_SECTION_DIRECTIVE,
++      qigvm_directive_device_tree },
++#endif
+ };
+ 
+ static int qigvm_handler(QIgvm *ctx, IgvmVariableHeaderType raw_type,
+@@ -786,6 +798,48 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
+     return 0;
  }
  
-@@ -528,9 +530,10 @@ static int qigvm_directive_parameter_insert(QIgvm *ctx,
-         return 0;
-     }
- 
--    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
++#ifdef CONFIG_FDT
++static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
++                                       Error **errp)
++{
++    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
++    g_autofree void *fdt_packed = NULL;
++    QIgvmParameterData *param_entry;
++    uint32_t fdt_size;
++
 +    param_entry = qigvm_find_param_entry(ctx,
 +                                         param->parameter_area_index, errp);
-     if (param_entry == NULL) {
--        return 0;
++    if (param_entry == NULL) {
 +        return -1;
-     }
- 
-     region = qigvm_prepare_memory(ctx, param->gpa, param_entry->size,
-@@ -601,9 +604,10 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
-     }
- 
-     /* Find the parameter area that should hold the memory map */
--    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
-+    param_entry = qigvm_find_param_entry(ctx,
-+                                         param->parameter_area_index, errp);
-     if (param_entry == NULL) {
--        return 0;
++    }
++
++    if (ctx->machine_state->fdt == NULL) {
++        error_setg(errp, "IGVM: device tree not available");
 +        return -1;
-     }
- 
-     max_entry_count = param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
-@@ -660,9 +664,10 @@ static int qigvm_directive_vp_count(QIgvm *ctx, const uint8_t *header_data,
-     uint32_t *vp_count;
-     CPUState *cpu;
- 
--    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
-+    param_entry = qigvm_find_param_entry(ctx,
-+                                         param->parameter_area_index, errp);
-     if (param_entry == NULL) {
--        return 0;
++    }
++
++    fdt_size = fdt_totalsize(ctx->machine_state->fdt);
++    fdt_packed = g_memdup2(ctx->machine_state->fdt, fdt_size);
++
++    if (fdt_pack(fdt_packed)) {
++        error_setg(errp, "IGVM: failed to pack device tree");
 +        return -1;
-     }
- 
-     vp_count = (uint32_t *)(param_entry->data + param->byte_offset);
-@@ -683,9 +688,10 @@ static int qigvm_directive_environment_info(QIgvm *ctx,
-     QIgvmParameterData *param_entry;
-     IgvmEnvironmentInfo *environmental_state;
- 
--    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
-+    param_entry = qigvm_find_param_entry(ctx,
-+                                         param->parameter_area_index, errp);
-     if (param_entry == NULL) {
--        return 0;
++    }
++
++    fdt_size = fdt_totalsize(fdt_packed);
++    if (fdt_size > param_entry->size) {
++        error_setg(errp,
++                   "IGVM: device tree size exceeds parameter area"
++                   " defined in IGVM file");
 +        return -1;
-     }
++    }
++
++    memcpy(param_entry->data, fdt_packed, fdt_size);
++
++    return 0;
++}
++#endif
++
+ static int qigvm_initialization_guest_policy(QIgvm *ctx,
+                                        const uint8_t *header_data, Error **errp)
+ {
+diff --git a/backends/meson.build b/backends/meson.build
+index aabfaea5fd..8792c58c36 100644
+--- a/backends/meson.build
++++ b/backends/meson.build
+@@ -35,7 +35,7 @@ endif
+ system_ss.add(when: gio, if_true: files('dbus-vmstate.c'))
+ system_ss.add(when: 'CONFIG_SGX', if_true: files('hostmem-epc.c'))
  
-     environmental_state =
-diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
-index 7f131c4d03..7eb3792ed8 100644
---- a/include/system/igvm-internal.h
-+++ b/include/system/igvm-internal.h
-@@ -72,6 +72,7 @@ struct QIgvm {
- IgvmHandle qigvm_file_init(char *filename, Error **errp);
+-system_ss.add(when: igvm, if_true: [files('igvm-cfg.c', 'igvm.c')])
++system_ss.add(when: igvm, if_true: [files('igvm-cfg.c', 'igvm.c'), fdt])
  
- QIgvmParameterData*
--qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index);
-+qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index,
-+                       Error **errp);
+ system_ss.add(when: 'CONFIG_SPDM_SOCKET', if_true: files('spdm-socket.c'))
  
- #endif
-diff --git a/target/i386/igvm.c b/target/i386/igvm.c
-index f41b498b89..ad9bf87761 100644
---- a/target/i386/igvm.c
-+++ b/target/i386/igvm.c
-@@ -191,9 +191,10 @@ int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp)
-     int result = 0;
- 
-     /* Find the parameter area that should hold the MADT data */
--    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
-+    param_entry = qigvm_find_param_entry(ctx,
-+                                         param->parameter_area_index, errp);
-     if (param_entry == NULL) {
--        return 0;
-+        return -1;
-     }
- 
-     GArray *madt = acpi_build_madt_standalone(ctx->machine_state);
 
 -- 
 2.54.0
