@@ -4,62 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B41CCDE00E
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 12:27:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A30CDE00E
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 12:33:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd5eW-00027Y-09; Fri, 26 Jun 2026 08:27:24 -0400
+	id 1wd5jl-0003h4-Qa; Fri, 26 Jun 2026 08:32:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1wd5eP-00025v-Lw; Fri, 26 Jun 2026 08:27:18 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wd5jj-0003gA-IV
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 08:32:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1wd5eC-000876-BJ; Fri, 26 Jun 2026 08:27:17 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 5A1A24345A;
- Fri, 26 Jun 2026 12:26:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47711F000E9;
- Fri, 26 Jun 2026 12:26:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1782476801;
- bh=0w+UV/aJcbeAChLuaIHR+ffrOkNsj6ZX4J/nnxrxrR8=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=CY/ALllivROSG1iFlZBdZyGSAD7RAmyM4fZlhOvuFRFsqy/jejd+pK0IXaT3DgOqv
- 75AluDbNKTF7edoSPoSkj7ArWh0hjh7uPAF1jq+oNW+TMaZKWDYjozdBvmVWHR5b+1
- a/WJfwknHS6bzFivdzr5CAbwGoVJFt85d+2seAvOJOrlCu6aX7ek5PBOQTKfcZUD/2
- hvtT902e1/c6EvsXLAK+ZRDg3ufLcgktX6K/uIjwqJbhfq6KmMoqqhLlvVJZWm75WG
- qvAIdh9qmF6EP5aEH0rOH9DcCvjuIA6Q9RKHlCHPYmgKpImOrOnFSxFdA78J1IH8pd
- vGCiol7LKVIJg==
-Date: Fri, 26 Jun 2026 14:26:36 +0200
-From: Niklas Cassel <cassel@kernel.org>
-To: Sam Li <faithilikerun@gmail.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- dlemoal@kernel.org, qemu-block@nongnu.org, dmitry.fomichev@wdc.com,
- Markus Armbruster <armbru@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v12 2/5] qcow2: add configurations for zoned format
- extension
-Message-ID: <aj5v_GsZyzPSwlPR@ryzen>
-References: <20260623184830.373232-1-faithilikerun@gmail.com>
- <20260623184830.373232-3-faithilikerun@gmail.com>
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wd5ji-0001kG-3W
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 08:32:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782477163;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kNmn/6SWrgMGiPzNjDy/BJmFTw1kdLlOJQb/zd79yuU=;
+ b=VGQK6qzd8AhbprA7U2IDU9d+kq2eE1ul/ZHhzDMd68BEgXQmgS3EZow3oNJDJn0MSXA14Q
+ uMkpKeHKHCtRFCKKUgY1lMd5FR9ZNpdktKSVI6posayX7AMGrUaInhBlbuN6IBGzKMi5N7
+ QylqwNrLvd5f3KEzK2ltDMz7JcpgAdU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-vK2B8adQPrmSaoCeQVNg-w-1; Fri,
+ 26 Jun 2026 08:32:40 -0400
+X-MC-Unique: vK2B8adQPrmSaoCeQVNg-w-1
+X-Mimecast-MFC-AGG-ID: vK2B8adQPrmSaoCeQVNg-w_1782477158
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 554791955F5A; Fri, 26 Jun 2026 12:32:38 +0000 (UTC)
+Received: from localhost (unknown [10.44.32.244])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C50191800662; Fri, 26 Jun 2026 12:32:36 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-devel
+ <qemu-devel@nongnu.org>
+Cc: qemu-s390x <qemu-s390x@nongnu.org>, Halil Pasic <pasic@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman
+ <farman@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH] s390x/kvm: clamp stsi 3.2.2 size
+In-Reply-To: <20260622092035.400959-1-borntraeger@linux.ibm.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20260622092035.400959-1-borntraeger@linux.ibm.com>
+User-Agent: Notmuch/0.40 (https://notmuchmail.org)
+Date: Fri, 26 Jun 2026 14:32:34 +0200
+Message-ID: <87o6gxlbx9.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260623184830.373232-3-faithilikerun@gmail.com>
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,62 +90,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 23, 2026 at 08:48:27PM +0200, Sam Li wrote:
-> To configure the zoned format feature on the qcow2 driver, it
-> requires settings as: the device size, zone model, zone size,
-> zone capacity, number of conventional zones, limits on zone
-> resources (max append bytes, max open zones, and max_active_zones).
-> 
-> To create a qcow2 image with zoned format feature, use command like
-> this:
-> qemu-img create -f qcow2 zbc.qcow2 -o size=768M \
-> -o zone.size=64M -o zone.capacity=64M -o zone.conventional_zones=0 \
-> -o zone.max_append_bytes=4096 -o zone.max_open_zones=6 \
-> -o zone.max_active_zones=8 -o zone.mode=host-managed
-> 
-> Signed-off-by: Sam Li <faithilikerun@gmail.com>
-> Acked-by: Markus Armbruster <armbru@redhat.com> # QAPI schema
+On Mon, Jun 22 2026, Christian Borntraeger <borntraeger@linux.ibm.com> wrote:
+
+> The stsi 3.2.2 page is being prepared by the kvm module and the size is
+> clamped by the kernel. As the memory is mapped in the guest, another
+> guest VCPU could race and overwrite the count and messing up the move
+> operation. For any out of bound count, fall back to the kernel buffer.
+>
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 > ---
->  block/file-posix.c               |   2 +-
->  block/qcow2.c                    | 335 ++++++++++++++++++++++++++++++-
->  block/qcow2.h                    |  83 +++++++-
->  docs/interop/qcow2.rst           | 120 ++++++++++-
->  include/block/block_int-common.h |  15 +-
->  qapi/block-core.json             |  91 ++++++++-
->  tests/qemu-iotests/082.out       | 126 ++++++++++++
->  7 files changed, 763 insertions(+), 9 deletions(-)
-> 
-> diff --git a/block/file-posix.c b/block/file-posix.c
-> index 3c985da94f..ddb159c58b 100644
-> --- a/block/file-posix.c
-> +++ b/block/file-posix.c
-> @@ -3600,7 +3600,7 @@ raw_co_zone_append(BlockDriverState *bs,
->  
->      if (*offset & zone_size_mask) {
->          error_report("sector offset %" PRId64 " is not aligned to zone size "
-> -                     "%" PRId32 "", *offset / 512, bs->bl.zone_size / 512);
-> +                     "%" PRId64 "", *offset / 512, bs->bl.zone_size / 512);
->          return -EINVAL;
->      }
+>  target/s390x/kvm/kvm.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
 
-I think it would be easier if this change, together with:
+Thanks, applied.
 
-> @@ -901,7 +908,13 @@ typedef struct BlockLimits {
->      BlockZoneModel zoned;
->  
->      /* zone size expressed in bytes */
-> -    uint32_t zone_size;
-> +    uint64_t zone_size;
-
-was in a separate prep patch earlier in this series.
-
-While I understand the logic behind increasing the zone_size to uint64_t
-(i.e. to match "struct blk_zone" struct member "len" (representing
-zone size) in Linux include/uapi/linux/blkzoned.h), this seems like an
-independent change that should be done to the QEMU block layer, that
-does not really have anything to do with adding qcow2 zoned support.
-
-
-Kind regards,
-Niklas
 
