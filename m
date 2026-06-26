@@ -4,100 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F720CDE008
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C070CDE008
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:22:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3ev-0002to-4p; Fri, 26 Jun 2026 06:19:41 -0400
+	id 1wd3eM-00083W-Dx; Fri, 26 Jun 2026 06:19:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3er-0002ZM-D7
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:37 -0400
+ id 1wd3e2-0007UM-Nd
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3ep-0005Pg-H9
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:37 -0400
+ id 1wd3dz-0005D9-D6
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469174;
+ s=mimecast20190719; t=1782469122;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3y6MpIRsqSm+hRQ0htHk7PXvzfcAGWEttHbyWAVRX6E=;
- b=MWotOpB/ddtmCUysJwyjndZV+eDXkvGxvqt8VFEpViVbWK2GJBXXxwwX1eRL+lUNSVLmav
- pj+OCmtKC8LO7shJZ4nRFfeaWVLBiGC3pjX+9DDzyEdK+WN6jIn5pDQcc/DPu/8p5iKGSu
- gaGWnmc5kFes8+cgpSsgxHEC0n8ZoPs=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vGBTAmxVNFMohgUHn4BgV598/C/xE9KDsqsNliQz3JU=;
+ b=a1WIBnBzwyBqmmJoZrCZRBT88+hOqd7DslaPujhRDW2ZowY+HOOcUA84YHMKHkMb/xM7jY
+ aH1XabkeXHrvMsFZXQq05s1ACq7zMN1qMoUjeMFV8RCfLbHRu8QOkfqqf2bRkqdmFmoSMq
+ VRT7yTky/t4CRZ8BRhppe634pxWzoyg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-676-q_L5pJ-gNJqAPhzwpvtDrQ-1; Fri, 26 Jun 2026 06:19:31 -0400
-X-MC-Unique: q_L5pJ-gNJqAPhzwpvtDrQ-1
-X-Mimecast-MFC-AGG-ID: q_L5pJ-gNJqAPhzwpvtDrQ_1782469170
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-490afe64f26so4034825e9.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:19:31 -0700 (PDT)
+ us-mta-656-UgqN0ma4O-e8-rbYqJ4MmA-1; Fri, 26 Jun 2026 06:18:41 -0400
+X-MC-Unique: UgqN0ma4O-e8-rbYqJ4MmA-1
+X-Mimecast-MFC-AGG-ID: UgqN0ma4O-e8-rbYqJ4MmA_1782469120
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4926fa2cb17so464855e9.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:18:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469170; x=1783073970; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469120; x=1783073920; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3y6MpIRsqSm+hRQ0htHk7PXvzfcAGWEttHbyWAVRX6E=;
- b=gsjNBa6gyHhs9LW9TJn54xyXGMuRRLl78z7mBtzsbTEAb/C97KBbm6HipnQnd4qv/C
- UriQd1QwreXZ0CzHGXMkTsdiqKdOo+UMtvdyC7GNVeu+jjE2M3jB3Vbg5lh3HQTI8KvF
- BEzuMj/+YOjpN78irbLJl/euxKpGI2ajupNcJUcKN9OIOkgSu+hhHJr8wAfjzIEe0EML
- Xqj5nUS5RR/6uO7P95twqpuUTtJ2Xkl70eIwN0bf2ExHGUw90HY3CMhz4evnfcU7k50p
- 0jkQ3QdZ9psX3uqJl2kYpyDJOBVey7koGpdV0LMGuhO+67SksAnip1IbKPyvPC09OOyy
- GxPw==
+ bh=vGBTAmxVNFMohgUHn4BgV598/C/xE9KDsqsNliQz3JU=;
+ b=SOZOxtOW7RQjlWomW5cf/vMyLGYfoHTpQaAwvpCvz440DERC8TmlMksaKMAgnFnhru
+ 5iUB2JiTirRHSRh8rnTkPo0+AmwrUAXoDTFdWAvJcSlAFHR/dvlAFT+xhOOW2e+R9wA8
+ GRBj883tqaglXClk6DvlWH1mj3e/1ql7b68gjZl7JZFPiUVwuHApNp3w0JP9LJA9sU32
+ L67vwdVWYYRS2ZHprJr65mz6dY4MJUBg8Y+ajpiL5smI5lY6esJYJ7CRJNyPlMB7Ys01
+ U7N6wHgGLTFtJz554ACMS6tcjeQ8Ejd4j3CgfOni6hs4BGMaBy1uSTWsG+k8pnFesozh
+ xJig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469170; x=1783073970;
+ d=1e100.net; s=20251104; t=1782469120; x=1783073920;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=3y6MpIRsqSm+hRQ0htHk7PXvzfcAGWEttHbyWAVRX6E=;
- b=Ud9esy0bR+Ioh2uAq9t3pPAR3NBiztgvp3VINYZxwIddz2p3I6NvSb1oDwIAD91WdA
- Lk45wF6EksDPhDxZwjOtZ99mkKBgjLz6i+Zws2spkg7nxmWq82FdRbUIWpjFFeEypnPo
- fGJI7c3VULJ+r35qIHR+DojXYWHBg8BLM4SG+gXKzY85LGeyictviM/mhnb1xojGwsD1
- F+Zjer8dtSuK9bbwJTrCfTiFjhGCPr11sTWsX4KrxjHOpsjbEWTbm22rGlP2zZLNjFhA
- NIyu3w5NuuZlCm9Ptqs2vF5U9UfD1pULKw9nKOv1yVAFBPT3ULQ1J/1hjy4BlyeLrcUq
- ti9w==
-X-Gm-Message-State: AOJu0YyN+ENOj7TKURGdWEEduUxX08x7+CWRE1+SpaE6hCg4VyR51nvQ
- RiTGvNh7LVjF3DYaFxm+gbsoeOYtwx9hkxQJP6Db+urgHdXcWY5rS6/fZBsRYQnMDaiCuOGag4y
- OvWE2vXfoPgLjTPqbu+OrZDswQk/uHZoZ5dXn/PYCBiM18vGurBRyA7CV016dkkvzJGUjTPBkki
- eecoMegEgG+o15Rtc4y/LWd1x4zgKur/xJODnDHkQR
-X-Gm-Gg: AfdE7cmLFd0lglGjq4KFkeglXjBQ0O9VcJTVuO6krZi/TQ+9Sydr+vz1YCgrCDnJoLG
- Bgs8tr4o6+PUecd2mOr7TFZVHvQZW0jVvi5LTtE+/VBXpL1v4X35S+xAHjWkxLal3R9aVF5Ozx1
- ailW3M0DFvvXy2IJV+lCit60fvSwaZVFDseUCjoz5sBZ7QpV9o6tlF7lUZh3h5V24+rKSdCSPu+
- 9RAxpOJbM7stwmULxjSl1IbjZCaWr7c8n+VscTSiDbc1DUBmOQsx+cbqvOanIy50Y6YEQr++p5/
- peHZRGUFAaiORO1RWDlt7DV1qNKypOSpd8JcKTJO5X+zsn6+ddaWv9R260b9WxjwtCtaEugcxMh
- dh0Yq0lP0IGVQKb6kY+0d6fn1ekGMv3FhbM0oyzcwhVY8kSTA9G1rCYHTrFDIx/uP2/OmOos/lX
- NcAXkYK50gGO7p3ZJL
-X-Received: by 2002:a05:600c:a00f:b0:490:b26c:64ad with SMTP id
- 5b1f17b1804b1-492663e185dmr85546795e9.5.1782469170367; 
- Fri, 26 Jun 2026 03:19:30 -0700 (PDT)
-X-Received: by 2002:a05:600c:a00f:b0:490:b26c:64ad with SMTP id
- 5b1f17b1804b1-492663e185dmr85546305e9.5.1782469169851; 
- Fri, 26 Jun 2026 03:19:29 -0700 (PDT)
+ bh=vGBTAmxVNFMohgUHn4BgV598/C/xE9KDsqsNliQz3JU=;
+ b=tGR7+SxBTUK7Se8GNf+tHtNIBvQogLpZF/i9ZREqBDCwHFq6nmXr2hslTYy76kYR4p
+ VIB88ENKA8Vrf3GiVX4JC0oUOgfqJ8WFqDMV34BoccJN69yw6gp/Mrc3RMFt1IyR2ppa
+ EAgUhlmuWbVfd9Gw1pIrUBxW/g2g6itjfK+pmbjIeQwS7leclVgXCMV7USpXIizmudEH
+ JA5K0+jrrtRkpbIJPMURG8QeD2X0oyrXgGw9F5my06DlBWB1SDsKc8IDT9hCT7yuVkLN
+ v4viupwLzHyu4CuL5/PXqp7fFskNAYjBorn+zf3+Nws9siiOrzuzTNjprdhjnTLuRaEy
+ Oy0A==
+X-Gm-Message-State: AOJu0YzQLgYnpl+8UZy+tZP5FBFItFY47uUe0I7iEl9Oi3J3CXxT28iD
+ O9BEUvbMP/JFPcTfJhTkoIOTiRDCMHWm8eLfHfMvnOI91Hw76PIfKXUB/8S6Vsub9KEfyhw9J5M
+ 08HBhcG4UaKSBgJQpF/H56HDdMv/MQmpCTVuWm+0cDwGpUJvAo7oEDmaURD8UdqFfYSzesTCkXx
+ LxvPBjyNXYxGpe51IQBLBZLItmLfPNmulRN94Cv0zB
+X-Gm-Gg: AfdE7ckCktHwonXwiUqWjp4+kVlxODv5Dgia88WaUN+q0SLyq51qEFqZCdyeiqroX2Z
+ qvLmVhmzaUNTEh3yTXU4J1Z477zSy5BX+wPDRQjHCi18FpUISk0U67eBCWZnpBx4ZCGe9CG4CXX
+ c8BxXAhqb5IN+uLY9URlWiOCeGmtU/3UIF/yn+D/pwg4oMHwT3JUazoS2Sxi+gQKtAxnW4iSfuo
+ L9s47pVLGIQ2njKX2M3fYWaqEQ1eNQX9g2nVjd0grPj9zjRjJjo/mLxL09f+buVk2WecLaWDvcU
+ OLdNWGUaNNN1fZhbAP1bv2k4DvjOdUqM/X5sVFexxj4plv/UQNCUYPcir5RnNjMm7ny3NJjAQ7V
+ JicGbZirBUpxkbzt3qqDy2qH7INEfDSz3O4gytj99eo+YpABGLDGT9mjJwB4mcI8xjugZK1FHic
+ UWW07rlaNi//W7034y
+X-Received: by 2002:a05:600c:1551:b0:490:3cf0:8d81 with SMTP id
+ 5b1f17b1804b1-492664241a4mr79272165e9.13.1782469120062; 
+ Fri, 26 Jun 2026 03:18:40 -0700 (PDT)
+X-Received: by 2002:a05:600c:1551:b0:490:3cf0:8d81 with SMTP id
+ 5b1f17b1804b1-492664241a4mr79271685e9.13.1782469119488; 
+ Fri, 26 Jun 2026 03:18:39 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49268fef710sm119444625e9.7.2026.06.26.03.19.28
+ 5b1f17b1804b1-49268fcee16sm74119075e9.2.2026.06.26.03.18.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:19:28 -0700 (PDT)
+ Fri, 26 Jun 2026 03:18:38 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PULL 37/45] target/i386/mshv: use the register page to set registers
-Date: Fri, 26 Jun 2026 12:17:40 +0200
-Message-ID: <20260626101748.1728079-38-pbonzini@redhat.com>
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Subject: [PULL 18/45] accel/mshv: update s->irq_routes in update_msi_route
+Date: Fri, 26 Jun 2026 12:17:21 +0200
+Message-ID: <20260626101748.1728079-19-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
 References: <20260626101748.1728079-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -123,80 +120,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-Update mshv_store_regs to use the register page when it is mmapped and
-valid to set registers.
-Otherwise use the ioctls to set the registers.
+The state's irq_routes field will be updated when an irqchip's gsi
+is requested to be updated with a new dest/vector.
 
-Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
-Reviewed-By: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Link: https://lore.kernel.org/r/20260428135053.251200-7-dblanzeanu@linux.microsoft.com
+The old set_msi_routing() fn is redundant and can be removed.
+
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20260417105618.3621-10-magnuskulke@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/mshv/mshv-cpu.c | 44 +++++++++++++++++++++++++++++++++----
- 1 file changed, 40 insertions(+), 4 deletions(-)
+ accel/mshv/irq.c | 87 +++++++++++++++++++++---------------------------
+ 1 file changed, 38 insertions(+), 49 deletions(-)
 
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index ed78fa09934..126ca40b481 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -457,14 +457,50 @@ static int set_standard_regs(const CPUState *cpu)
+diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
+index 9d6bdde27ac..b5a047b3672 100644
+--- a/accel/mshv/irq.c
++++ b/accel/mshv/irq.c
+@@ -36,52 +36,6 @@ void mshv_init_msicontrol(void)
+     msi_control->updated = false;
+ }
+ 
+-static int set_msi_routing(uint32_t gsi, uint64_t addr, uint32_t data)
+-{
+-    struct mshv_user_irq_entry *entry;
+-    uint32_t high_addr = addr >> 32;
+-    uint32_t low_addr = addr & 0xFFFFFFFF;
+-    GHashTable *gsi_routes;
+-
+-    trace_mshv_set_msi_routing(gsi, addr, data);
+-
+-    if (gsi >= MSHV_MAX_MSI_ROUTES) {
+-        error_report("gsi >= MSHV_MAX_MSI_ROUTES");
+-        return -1;
+-    }
+-
+-    assert(msi_control);
+-
+-    WITH_QEMU_LOCK_GUARD(&msi_control_mutex) {
+-        gsi_routes = msi_control->gsi_routes;
+-        entry = g_hash_table_lookup(gsi_routes, GINT_TO_POINTER(gsi));
+-
+-        if (entry
+-            && entry->address_hi == high_addr
+-            && entry->address_lo == low_addr
+-            && entry->data == data)
+-        {
+-            /* nothing to update */
+-            return 0;
+-        }
+-
+-        /* free old entry */
+-        g_free(entry);
+-
+-        /* create new entry */
+-        entry = g_new0(struct mshv_user_irq_entry, 1);
+-        entry->gsi = gsi;
+-        entry->address_hi = high_addr;
+-        entry->address_lo = low_addr;
+-        entry->data = data;
+-
+-        g_hash_table_insert(gsi_routes, GINT_TO_POINTER(gsi), entry);
+-        msi_control->updated = true;
+-    }
+-
+-    return 0;
+-}
+-
+ static int add_msi_routing(uint64_t addr, uint32_t data)
+ {
+     struct mshv_user_irq_entry *route_entry;
+@@ -370,16 +324,51 @@ void mshv_irqchip_release_virq(int virq)
+     remove_msi_routing(virq);
+ }
+ 
++static int update_routing_entry(MshvState *s,
++                                struct mshv_user_irq_entry *new_entry)
++{
++    struct mshv_user_irq_entry *entry;
++    int n;
++
++    for (n = 0; n < s->irq_routes->nr; n++) {
++        entry = &s->irq_routes->entries[n];
++        if (entry->gsi != new_entry->gsi) {
++            continue;
++        }
++
++        if (!memcmp(entry, new_entry, sizeof *entry)) {
++            return 0;
++        }
++
++        *entry = *new_entry;
++
++        return 0;
++    }
++
++    return -ESRCH;
++}
++
+ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev)
+ {
++    uint32_t addr_hi = msg.address >> 32;
++    uint32_t addr_lo = msg.address & 0xFFFFFFFF;
++    uint32_t data = le32_to_cpu(msg.data);
++    struct mshv_user_irq_entry entry = {
++        .gsi = virq,
++        .address_hi = addr_hi,
++        .address_lo = addr_lo,
++        .data = data,
++    };
+     int ret;
+ 
+-    ret = set_msi_routing(virq, msg.address, le32_to_cpu(msg.data));
++    ret = update_routing_entry(mshv_state, &entry);
+     if (ret < 0) {
+-        error_report("Failed to set msi routing");
+-        return -1;
++        error_report("Failed to set msi routing for gsi %d", virq);
++        abort();
+     }
+ 
++    trace_mshv_set_msi_routing(virq, msg.address, data);
++
      return 0;
  }
  
-+static void mshv_set_standard_regs_vp_page(CPUState *cpu)
-+{
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-+
-+    env->regs_page->rax = env->regs[R_EAX];
-+    env->regs_page->rbx = env->regs[R_EBX];
-+    env->regs_page->rcx = env->regs[R_ECX];
-+    env->regs_page->rdx = env->regs[R_EDX];
-+    env->regs_page->rsi = env->regs[R_ESI];
-+    env->regs_page->rdi = env->regs[R_EDI];
-+    env->regs_page->rsp = env->regs[R_ESP];
-+    env->regs_page->rbp = env->regs[R_EBP];
-+    env->regs_page->r8  = env->regs[R_R8];
-+    env->regs_page->r9  = env->regs[R_R9];
-+    env->regs_page->r10 = env->regs[R_R10];
-+    env->regs_page->r11 = env->regs[R_R11];
-+    env->regs_page->r12 = env->regs[R_R12];
-+    env->regs_page->r13 = env->regs[R_R13];
-+    env->regs_page->r14 = env->regs[R_R14];
-+    env->regs_page->r15 = env->regs[R_R15];
-+    env->regs_page->rip = env->eip;
-+    lflags_to_rflags(env);
-+    env->regs_page->rflags = env->eflags;
-+
-+    env->regs_page->dirty |= (1u << HV_X64_REGISTER_CLASS_GENERAL)
-+                                | (1u << HV_X64_REGISTER_CLASS_IP)
-+                                | (1u << HV_X64_REGISTER_CLASS_FLAGS);
-+}
-+
- static int store_regs(CPUState *cpu)
- {
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-     int ret;
- 
--    ret = set_standard_regs(cpu);
--    if (ret < 0) {
--        error_report("Failed to store standard registers");
--        return -1;
-+    /* Use register vp page to optimize registers access */
-+    if (env->regs_page && env->regs_page->isvalid != 0) {
-+        mshv_set_standard_regs_vp_page(cpu);
-+    } else {
-+        ret = set_standard_regs(cpu);
-+        if (ret < 0) {
-+            return ret;
-+        }
-     }
- 
-     ret = set_special_regs(cpu);
 -- 
 2.54.0
 
