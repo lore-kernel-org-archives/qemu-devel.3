@@ -4,68 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E745CDE008
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 03:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F6B2CDE008
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 04:40:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcx75-0005bg-Lq; Thu, 25 Jun 2026 23:20:19 -0400
+	id 1wcyMU-0003og-E2; Fri, 26 Jun 2026 00:40:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1wcx6M-0005TR-5l; Thu, 25 Jun 2026 23:19:34 -0400
-Received: from [115.124.30.130] (helo=out30-130.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wcyMI-0003gh-98; Fri, 26 Jun 2026 00:40:10 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1wcx6I-0000wh-JJ; Thu, 25 Jun 2026 23:19:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1782443951; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=y0Pkf9yKOYz2bsN3TfmNmboIGPkXX+mGR+BIQbY7MVA=;
- b=wYaijzZZHcAYexMa3OSohCIZaB+WVFyDEDLLREVIUfEYHJztAXlSHvNeKwQY6o1stJSfHAfVohq9h0uKVdH84zfkJYGposvENVKZSDwYi1clBPQsUaB22wSOp8yqTFB/ffsAymNz0voZIDsiGXUUZOzZ4fqNc1FN+kRYJ3HT9pw=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R681e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
- MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
- TI=SMTPD_---0X5dK-cI_1782443639; 
-Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0X5dK-cI_1782443639 cluster:ay36) by smtp.aliyun-inc.com;
- Fri, 26 Jun 2026 11:13:59 +0800
-From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Fri, 26 Jun 2026 11:13:23 +0800
-Subject: [PATCH 2/2] disas/riscv: Fix 6-bit immediate extraction
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wcyMA-0008Hk-99; Fri, 26 Jun 2026 00:40:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1782448775; bh=TZ+aVoIkEJJoVcjiO3lKcj+Mi0eREwHsrF86jnXOvdk=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=c99XtgS9DTsAy7tyYUMkwMRvycNn+9sKy7YlwTAFYXVJcXwrMDZAeLvealvz2n/tS
+ H8bj3a2vO26KzqrlBZ6Szu+SndnqAO0PhrVSRHBYN2ryG4vYZxfg8BdV/qLOy2hZ8b
+ Dd3P42Wcd65bhb9zZZQidiXk8HkelPDqwnToyBlEK0Vc9mLrMBdrSf+I2qvB1Mrppz
+ XWPYSGvqPwVBwOqIxs+/idCMTAg0OqGoeEhtyHStWIUQCVk7IzbECgJjtp9a5EEt22
+ iLwXwApmiPkMzKDPyz/IzTYN2U/U4sEQfWbrqIb0jdRtnFMiuY9Yx6ZuIqBNyezaZz
+ //seUJ4/rmmwQ==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 515771BB31F;
+ Fri, 26 Jun 2026 07:39:35 +0300 (MSK)
+Message-ID: <b6a3bef4-00f8-4fbf-9763-8fb6c5ec8b91@tls.msk.ru>
+Date: Fri, 26 Jun 2026 07:39:43 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260626-b4-disas-xthead-fix-riscv-next-v1-2-74228a3c1b21@linux.alibaba.com>
-References: <20260626-b4-disas-xthead-fix-riscv-next-v1-0-74228a3c1b21@linux.alibaba.com>
-In-Reply-To: <20260626-b4-disas-xthead-fix-riscv-next-v1-0-74228a3c1b21@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: Christoph Muellner <christoph.muellner@vrull.eu>, 
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <Alistair.Francis@wdc.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- qemu-riscv@nongnu.org, TANG Tiancheng <lyndra@linux.alibaba.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1782443638; l=1082;
- i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=LlmMmYSqut4xC58h9yg2Vpe1qa9KR/FQMBK2qSzqNyE=;
- b=SRSl312cXgtH99XCHjfGslei5xCf3BRWqNMGRpytviQlMYnfdj/VUXYkyJ7+KoPIgunGOfcYq
- c5ka7C5nRh3Bv+Kcj26IYE2eXoqkdesQSnzxWBcjPDsBkhOnD4fVb9n
-X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
- pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.130 (deferred)
-Received-SPF: pass client-ip=115.124.30.130;
- envelope-from=lyndra@linux.alibaba.com;
- helo=out30-130.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GIT PULL 01/35] ui/gtk: fix bad widget realize on non-GFX VC
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20260624-ui-v1-0-482147b0a7af@redhat.com>
+ <20260624-ui-v1-1-482147b0a7af@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260624-ui-v1-1-482147b0a7af@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,37 +111,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-rv_codec_r2_imm6 is used for XThead instructions whose 6-bit
-immediate field is encoded in bits 25:20. The old expression
-left-shifted by 38 and then right-shifted by 60, so it kept only
-bits 25:22.
+On 24.06.2026 14:41, Marc-André Lureau wrote:
+> The GTK VirtualConsole is a union, it may be .gfx or .vte depending on
+> the type.
+> 
+> Fixes: 565f85a9c2 ("ui/gtk: force realization of drawing area")
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Message-ID: <20260623-b4-ui-v4-1-4656aec3398d@redhat.com>
+> ---
+>   ui/gtk.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 
-Shift right by 58 instead, keeping the existing extraction style while
-retaining the full bits 25:20 field. This fixes the immediate printed
-for th.srri and th.tst.
+Is it a qemu-stable material?  It feels that way, I'm picking it up,
+please let me know if I shouldn't.
 
-Fixes: 318df7238b9f ("disas/riscv: Add support for XThead* instructions")
-Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
----
- disas/riscv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks,
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 7f1b26277378c225c963d8f435cc7a2fc6e4a0b8..400a57083f90be18ccd12415797bce0df974784b 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -4546,7 +4546,7 @@ static uint32_t operand_zcmp_rlist(rv_inst inst)
- 
- static uint32_t operand_imm6(rv_inst inst)
- {
--    return (inst << 38) >> 60;
-+    return (inst << 38) >> 58;
- }
- 
- static uint32_t operand_imm2(rv_inst inst)
+/mjt
 
--- 
-2.43.0
+> diff --git a/ui/gtk.c b/ui/gtk.c
+> index 4f706c6bbb2..2ee826b56fb 100644
+> --- a/ui/gtk.c
+> +++ b/ui/gtk.c
+> @@ -2585,7 +2585,9 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
+>           if (!con) {
+>               break;
+>           }
+> -        gtk_widget_realize(s->vc[idx].gfx.drawing_area);
+> +        if (s->vc[idx].type == GD_VC_GFX) {
+> +            gtk_widget_realize(s->vc[idx].gfx.drawing_area);
+> +        }
+>       }
+>   
+>       if (opts->u.gtk.has_show_menubar &&
+> 
 
 
