@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97A22CDE008
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D4A6CDE00C
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:30:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3j3-0007lh-33; Fri, 26 Jun 2026 06:23:57 -0400
+	id 1wd3pA-0001uC-3D; Fri, 26 Jun 2026 06:30:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wd3iy-0007lR-6P
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:23:52 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wd3p9-0001tp-2l
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:30:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wd3iw-00061B-MP
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:23:51 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wd3p7-0007W5-Jz
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:30:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469428;
+ s=mimecast20190719; t=1782469812;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=u9YIyqFrkv0d2IGlXZEOTHX7qMOBttJwoIjnhpWtz6c=;
- b=GzTm3hXri1GMKwkiKvEWZe8hteof4PQmow+XejRRFH7h2w1DCJ9QYcux4xwDlv7X4u/Alg
- LiwAN+H8nRyPb0GZG5QuWvcxPqspNqNLnSk5Cu87CAEVyUl3/fJa56UsWk/dkQGwH7ZnlG
- XC3R1B61oe0bUUtZsHaWxFrQb6G12B4=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hdCjlxiFBx9/zc+80TcpxnpCdt7PrSwe3SjHpkdscPM=;
+ b=Z/0gHocNx2Y1TlGlf1i6GJvyoGn3FWBTnfCv3pcXUA5x+Pi+e/h57hvkN3/vwvWU12mKKo
+ M5Y+io/fCNtFOhJsyHO1/tLrbQb6hKJVydL+V9S9EKk5dbumh9MY3fammukR4R69PdzFko
+ zovJTntPUEEAVH0xo1I2dzGU4Aa5EEE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-330-tJXJwmk9N56es8ErC3sesA-1; Fri, 26 Jun 2026 06:23:47 -0400
-X-MC-Unique: tJXJwmk9N56es8ErC3sesA-1
-X-Mimecast-MFC-AGG-ID: tJXJwmk9N56es8ErC3sesA_1782469426
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-490a060eb84so5412325e9.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:23:46 -0700 (PDT)
+ us-mta-528-72k-OtP8NFyhJGq6aldbdg-1; Fri, 26 Jun 2026 06:30:09 -0400
+X-MC-Unique: 72k-OtP8NFyhJGq6aldbdg-1
+X-Mimecast-MFC-AGG-ID: 72k-OtP8NFyhJGq6aldbdg_1782469808
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4924583c7baso9582065e9.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:30:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469426; x=1783074226; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469808; x=1783074608; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=u9YIyqFrkv0d2IGlXZEOTHX7qMOBttJwoIjnhpWtz6c=;
- b=FZ9QYGWqXjLvkX/jVK+fIsbNNORTqOAHf2IDH87c0yBgk9J0ssu1W/CPEUUHFUECQ1
- q9/Pc7oVfW8IHTQuOzh+XXmdCKnvoYKrX6aNT8RLMMZtyfq3JFVEIPgn5RAEWIMeMuGP
- xhNPlcvaPi0MX4EVmA9JlhHxx9OWezHO7tD4egf45u4fUpvo+6Y6pU9nu/Cfg3CL4GOJ
- Ad2HIua5dWsQEEQJaBg9VUazIgPwYD19YBW23N8drSr91O2KR/hW63Ps+uI8v64rqYyU
- TiTw23GalcPcw3JnJig4DdPlw198pFxvclPF3s4TUwMujD7A95Bm1vms9jeIdt0FvC+W
- gphg==
+ bh=hdCjlxiFBx9/zc+80TcpxnpCdt7PrSwe3SjHpkdscPM=;
+ b=GhKfxNytHZ5KJeeL6cNSKxPX43i/AABr9B/6P1IBMjq4m1l//mnxwCbGBkxeLGlBCV
+ apEXgQZzpMimxIGc/2CJEE6qvY36fE4y8utk2Eyq4md+0p5CKlyskQ09tWBgWVbSxryH
+ fX/AC6xBFUW7SKodEoMBv7tpEOdfH91M3iwwbFsCVGBoi52X9f8kJWYY46PSKvR4l9Yt
+ pCIMLw131q3EN/qFRrM0bmX3qhAX4WhVwYm20A65ovmd+OliAZFOVR7lGXHNyXFUQCMk
+ OD9ylJgdO29HUeZ6PIy3liwjtD+Wixj+lYzKtjqqdbWIMVnFyGAZUW8oCVzIawbmECCa
+ mzTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469426; x=1783074226;
+ d=1e100.net; s=20251104; t=1782469808; x=1783074608;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=u9YIyqFrkv0d2IGlXZEOTHX7qMOBttJwoIjnhpWtz6c=;
- b=iPOqDfiOjXL43tmLfhLoP4xXiyEF6AGtGPBDRea5w6nNH2znjveYoeql1s8a+5xAq6
- eYDx/omayzfg3hqax63lDHFZLQRwh7hy84IEKFAqiVHN1Or47oi0XbuOUaxFyF1zZ0+B
- VBJgcp8UgtMB2344uen8n38eYAnpi0Rj7LYIsd/yzIsQoQcDCNiCWSnt7v6kh1U348Hk
- Le90nfK8Vp3Fkk152hZ3otdoMPJmbwZfJ5sfYzkSNYHBF5cSFO6uDoK8MpJ71fEEtYpF
- Y1BIGsIqEBVnZJ9PGkJ5HKadIBTYXmx9pi+/0CKR2EMBSIt/Ojb+jkQHmmFLYaNQGX5E
- fPrA==
-X-Gm-Message-State: AOJu0YwYlwKTcl7PdflyPms/car6d2z4eavVl5l5SoTSQv0BPPS4tLfv
- IoA8fC+h4dr6D2GfOxM0bxY5OQRjXANlV0q3XC8Yl4eGDuMrch2Qnnl2W/W6BHNNbIlFQ5O3bhA
- L1cBiWgtS/4BXxeMszNf/Fip1Kxn9pomMzoCJk8uD8B93wpaH3VtJcEv0
-X-Gm-Gg: AfdE7ckKTklOs5Ut/M1X85+uD9dSQGKJN/ABUb3azKbSZbTEGeA2PwjGuq7s/Nn+/qS
- yBSpXfNCf/LOCzMUNqXIn0M83Hec982c9yJPpjJXOTIoRDzydvp6yHYHjJEtATp8QrxXKPRNoJ6
- Ly8W+efRuaK3JmnqgFOSi2HFp2LGzNNWfZ3sFKMxNdbfgmf4ZX5B5Kh6HXmqHc97WEnUCoEZn0h
- UTe6s5HE8N45EbrCj4FY2GCau6UCqBQZ2IcDnpl/rs1G/JnJqeDFhnWNNbJia4xmGFyJmAgYM4V
- oR60q05li77siPtLBoeoO2neiOI7Uwpfn4jrKnak6sSEop+IL98N9HWr0WzvaZFWU57DPUWn8UN
- Sjng0DRylyT0Yxvmhfa/TMIFVYgzJVUWFPSE5/i0Kmg==
-X-Received: by 2002:a05:600c:4692:b0:490:4b89:535d with SMTP id
- 5b1f17b1804b1-492668677ebmr97019665e9.1.1782469425530; 
- Fri, 26 Jun 2026 03:23:45 -0700 (PDT)
-X-Received: by 2002:a05:600c:4692:b0:490:4b89:535d with SMTP id
- 5b1f17b1804b1-492668677ebmr97018985e9.1.1782469424909; 
- Fri, 26 Jun 2026 03:23:44 -0700 (PDT)
+ bh=hdCjlxiFBx9/zc+80TcpxnpCdt7PrSwe3SjHpkdscPM=;
+ b=I4mq/KS7WbLe7dRZjmtZxCapG5Mw4WsN/IHHUQCdQcmkcqijGfOoCtuEXZz9oeevDN
+ 1jdl1vQdgvhNGOxJdIPA9Lt3EAKuRzV5v99GnlME+/tvAygd4T5zyb3mmplpB5ADFFTH
+ W3uN5FGru2hgtPqDi0BCU2P4ubyJH3u/cOeXRHa9+E1QMyD3DN+4YI7Y7DN0ko//2hGZ
+ 9rLcYK8KJ9V0MUdb+0qcCSmsapbbuO81iWbQNH/n4Yg+40GzNQ6ZFMfkGCzR5PCSyOxC
+ LK+W7wbm+CLB+nL0tOsz/UjLMlbpMxcZ18C088YvWTMVUhsEYdH83R6ZWINpBpvRC6tz
+ s+8w==
+X-Gm-Message-State: AOJu0YwPLgDmsGzddEyayc5A13h0NbFi+bRpqnJhMF4912rhRWeq6Uty
+ eBieQVtkO91Y1pcy+WB87yDB+fb2MOJWxtHIkmWboUG81tLQQLgqJzdBv+kW0Cx5dPLMfnyXMmT
+ yQepdjXl4VyKDUYPsrTNnuBCovMUFxuHrgS+heGCobUO2ioWjtG4bQgwx
+X-Gm-Gg: AfdE7clKh9iYYFuaMeNgSSfcAp8AkyyqsfCEJU/v80eHLHrjLlxelFocrj+sM8a+Llm
+ le6ZnrBu47mY3XodmIVJtbJUXKSwixTTbrMJ6M3Iwl4bDJAV21zl/CSdW9f6TaoFoJcm8Cj3PDL
+ 2lOYNy1ZRpqUPC9p7DVzi6/yQ9tgxmG+TE/KmvFNwJqSY8LoiftW8YhyFZkHC5DcxkcgVFJ5vKG
+ GZO+lI2q6xavVnMSq8dT2tMZ1m4TTRWStF/2KHw97xleA0TpvrCaKeGqT1m0OgsKubxGomvGWLU
+ tvyMiODF0/e/OvJ9iIukjIxuBU6IuLB3MeO9GvwmVvyi5qfUOfVZPoHdCwo0T9RCBxOap+WWJRP
+ QBeuZcSDb0pAXtS8q8vhll803kNHg+Q8xMp1Gt3ta/Q==
+X-Received: by 2002:a05:600c:4e0b:b0:490:b0e0:3de2 with SMTP id
+ 5b1f17b1804b1-492668933d8mr92968515e9.33.1782469807759; 
+ Fri, 26 Jun 2026 03:30:07 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e0b:b0:490:b0e0:3de2 with SMTP id
+ 5b1f17b1804b1-492668933d8mr92967615e9.33.1782469806964; 
+ Fri, 26 Jun 2026 03:30:06 -0700 (PDT)
 Received: from redhat.com (bzq-79-177-145-168.red.bezeqint.net.
  [79.177.145.168]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49268fde98csm72947955e9.6.2026.06.26.03.23.43
+ 5b1f17b1804b1-49268fce5a8sm67222015e9.3.2026.06.26.03.30.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:23:44 -0700 (PDT)
-Date: Fri, 26 Jun 2026 06:23:41 -0400
+ Fri, 26 Jun 2026 03:30:06 -0700 (PDT)
+Date: Fri, 26 Jun 2026 06:30:03 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: Tomita Moeko <tomitamoeko@gmail.com>
 Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
  =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
  K S Maan <kirandeepmaan45@gmail.com>
-Subject: Re: [PATCH v3 1/7] hw/pci: Recalculate option ROM checksum before
- patching ID
-Message-ID: <20260626062248-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH v3 3/7] hw/pci: Introduce rom_need_patch_id flag in
+ PCIDevice
+Message-ID: <20260626062957-mutt-send-email-mst@kernel.org>
 References: <20260617100646.28326-1-tomitamoeko@gmail.com>
- <20260617100646.28326-2-tomitamoeko@gmail.com>
+ <20260617100646.28326-4-tomitamoeko@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260617100646.28326-2-tomitamoeko@gmail.com>
+In-Reply-To: <20260617100646.28326-4-tomitamoeko@gmail.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -119,104 +119,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 17, 2026 at 06:06:38PM +0800, Tomita Moeko wrote:
-> pci_patch_ids() only adjusts checksum based on the new IDs. For an
-> option ROM with invalid checksum, the patched one will still have
-> an invalid checksum. Always calculate the checksum and patch it if
-> necessary to ensure the option ROM is valid.
-> 
-> This is intended for fixing the romfile used in IGD passthrough as
-> multiple IGD devices share the same rom with possible non-matching
-> device ID, and its checksum is known to be bogus [1].
-> 
-> A helper function pci_rom_calculate_checksum() is added and exported
-> for reusing in IGD-specific quirk later.
-> 
-> [1] hw/vfio/pci.c:1090
+On Wed, Jun 17, 2026 at 06:06:40PM +0800, Tomita Moeko wrote:
+> Allow external code (e.g., VFIO IGD passthrough) to request PCI ID
+> patching for a custom romfile, replacing the existing is_default_rom
+> flag for this purpose.
 > 
 > Reported-by: K S Maan <kirandeepmaan45@gmail.com>
 > Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 
-This seems very aggressive.
-Why not recalculate in vfio then?
-It has a chance to do a targeted fix.
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 
 > ---
->  hw/pci/pci.c         | 32 +++++++++++++++++++++++---------
->  include/hw/pci/pci.h |  2 ++
->  2 files changed, 25 insertions(+), 9 deletions(-)
+>  hw/pci/pci.c                | 14 ++++++--------
+>  include/hw/pci/pci_device.h |  1 +
+>  2 files changed, 7 insertions(+), 8 deletions(-)
 > 
 > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index cec065d108..601d65aef3 100644
+> index 8e7872523a..b4235834a0 100644
 > --- a/hw/pci/pci.c
 > +++ b/hw/pci/pci.c
-> @@ -2479,6 +2479,18 @@ static uint8_t pci_find_capability_at_offset(PCIDevice *pdev, uint8_t offset)
->      return found;
->  }
+> @@ -352,7 +352,7 @@ static const TypeInfo cxl_bus_info = {
 >  
-> +uint8_t pci_rom_calculate_checksum(const uint8_t *ptr, uint32_t size)
-> +{
-> +    uint8_t checksum = 0;
-> +    uint32_t i;
-> +
-> +    for (i = 0; i < size; i++) {
-> +        checksum += ptr[i];
-> +    }
-> +
-> +    return checksum;
-> +}
-> +
->  /* Patch the PCI vendor and device ids in a PCI rom image if necessary.
->     This is needed for an option rom which is used for more than one device. */
->  static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
-> @@ -2514,25 +2526,27 @@ static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
->      trace_pci_rom_and_pci_ids(pdev->romfile, vendor_id, device_id,
->                                rom_vendor_id, rom_device_id);
+>  static void pci_update_mappings(PCIDevice *d);
+>  static void pci_irq_handler(void *opaque, int irq_num, int level);
+> -static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom, Error **);
+> +static void pci_add_option_rom(PCIDevice *pdev, Error **);
+>  static void pci_del_option_rom(PCIDevice *pdev);
 >  
-> -    checksum = ptr[6];
-> +    /* In case the checksum is bogus */
-> +    checksum = pci_rom_calculate_checksum(ptr, size);
+>  static uint16_t pci_default_sub_vendor_id = PCI_SUBVENDOR_ID_REDHAT_QUMRANET;
+> @@ -2257,7 +2257,6 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
+>      PCIDeviceClass *pc = PCI_DEVICE_GET_CLASS(pci_dev);
+>      ObjectClass *klass = OBJECT_CLASS(pc);
+>      Error *local_err = NULL;
+> -    bool is_default_rom;
+>      uint16_t class_id;
 >  
->      if (vendor_id != rom_vendor_id) {
->          /* Patch vendor id and checksum (at offset 6 for etherboot roms). */
-> -        checksum += (uint8_t)rom_vendor_id + (uint8_t)(rom_vendor_id >> 8);
-> -        checksum -= (uint8_t)vendor_id + (uint8_t)(vendor_id >> 8);
-> -        trace_pci_rom_checksum_change(ptr[6], checksum);
-> -        ptr[6] = checksum;
-> +        checksum += (uint8_t)vendor_id + (uint8_t)(vendor_id >> 8);
-> +        checksum -= (uint8_t)rom_vendor_id + (uint8_t)(rom_vendor_id >> 8);
->          pci_set_word(ptr + pcir_offset + 4, vendor_id);
+>      /*
+> @@ -2370,13 +2369,13 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
 >      }
 >  
->      if (device_id != rom_device_id) {
->          /* Patch device id and checksum (at offset 6 for etherboot roms). */
-> -        checksum += (uint8_t)rom_device_id + (uint8_t)(rom_device_id >> 8);
-> -        checksum -= (uint8_t)device_id + (uint8_t)(device_id >> 8);
-> -        trace_pci_rom_checksum_change(ptr[6], checksum);
-> -        ptr[6] = checksum;
-> +        checksum += (uint8_t)device_id + (uint8_t)(device_id >> 8);
-> +        checksum -= (uint8_t)rom_device_id + (uint8_t)(rom_device_id >> 8);
->          pci_set_word(ptr + pcir_offset + 6, device_id);
+>      /* rom loading */
+> -    is_default_rom = false;
+>      if (pci_dev->romfile == NULL && pc->romfile != NULL) {
+> +        /* using a built-in default rom */
+>          pci_dev->romfile = g_strdup(pc->romfile);
+> -        is_default_rom = true;
+> +        pci_dev->rom_need_patch_id = true;
 >      }
-> +
-> +    if (checksum) {
-> +        trace_pci_rom_checksum_change(ptr[6], ptr[6] - checksum);
-> +        ptr[6] -= checksum;
-> +    }
+>  
+> -    pci_add_option_rom(pci_dev, is_default_rom, &local_err);
+> +    pci_add_option_rom(pci_dev, &local_err);
+>      if (local_err) {
+>          error_propagate(errp, local_err);
+>          pci_qdev_unrealize(DEVICE(pci_dev));
+> @@ -2555,8 +2554,7 @@ static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
 >  }
 >  
 >  /* Add an option rom for the device */
-> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> index 5b179091de..2d8a4ad0eb 100644
-> --- a/include/hw/pci/pci.h
-> +++ b/include/hw/pci/pci.h
-> @@ -1103,4 +1103,6 @@ void pci_set_enabled(PCIDevice *pci_dev, bool state);
->  void pci_set_power(PCIDevice *pci_dev, bool state);
->  int pci_pm_init(PCIDevice *pci_dev, uint8_t offset, Error **errp);
+> -static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
+> -                               Error **errp)
+> +static void pci_add_option_rom(PCIDevice *pdev, Error **errp)
+>  {
+>      int64_t size = 0;
+>      g_autofree char *path = NULL;
+> @@ -2654,7 +2652,7 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
+>              return;
+>          }
 >  
-> +uint8_t pci_rom_calculate_checksum(const uint8_t *ptr, uint32_t size);
-> +
->  #endif
+> -        if (is_default_rom) {
+> +        if (pdev->rom_need_patch_id) {
+>              /* Only the default rom images will be patched (if needed). */
+>              pci_patch_ids(pdev, ptr, size);
+>          }
+> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+> index 5cac6e1688..8b9b6470e9 100644
+> --- a/include/hw/pci/pci_device.h
+> +++ b/include/hw/pci/pci_device.h
+> @@ -157,6 +157,7 @@ struct PCIDevice {
+>      char *romfile;
+>      uint32_t romsize;
+>      bool has_rom;
+> +    bool rom_need_patch_id;
+>      MemoryRegion rom;
+>      int32_t rom_bar;
+>  
 > -- 
 > 2.53.0
 
