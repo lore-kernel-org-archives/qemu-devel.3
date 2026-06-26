@@ -4,119 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9F52C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 19:36:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B12BFC43211
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 20:05:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdCL8-0003Pu-Ou; Fri, 26 Jun 2026 15:35:50 -0400
+	id 1wdCnc-0000HP-Nq; Fri, 26 Jun 2026 16:05:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <linisha232@gmail.com>)
- id 1wdCL5-0003PW-De
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 15:35:49 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <linisha232@gmail.com>)
- id 1wdCL3-0004qf-9Q
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 15:35:47 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-46e4764ca48so1218287f8f.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 12:35:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782502543; cv=none;
- d=google.com; s=arc-20260327;
- b=IR7Vg5eqDG06TTJqcIJpfwQx7MgKg41lvenEoUmMp5kozOMOOtP3mreY/A64Padvq2
- PSVuwiFODqjmrM5FzlBYWAkPEyHBahd00LQPHzRc9rS8tz4q+z6tbQAsWMfk2FTqhi4H
- Uqpki+7teNUd/vij1hK/YbJxardMvb1gXFuowkrkElXhHn92lgw2M5rDezwZaMmVNF2u
- f3s3FVo2Sckd3zLl2/HXftSiY8zbX+sSCfrq30dcwUSjUvRIT1R3ASbjlRukoPbAV1TO
- 1NzYYM+t7pxDRLBF6AG6aZh3vBCIDvWB7+oU+Sb5N+v3DcMltw4rbec4+QDRn32rEHr5
- szYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=JK+lWSyVRUyCrlfLsjIr0+vRLBR8ajW0zxpJLEvMn/4=;
- fh=sPQOHDVPXjYDb+6GXmgTsCvlUSpmTcOwqHTBDGFwkPU=;
- b=X1QDcTfb0cS2DntsZZzW+RVir02tSpmLNCG7kLKWXtwEN6LvXvK2tHC15rTXCh2gs5
- lIjnzb57V/1qWVCE4kKUYhtp5pmtfKbFSTYV/hapO9etbi+IiaP/34nl8RRk7IBIBNr1
- 0azQ/cEQyiv897/3Z3NgjU3H/AAWgOhy71jfgRpE+F1RMAvWxPpRrleD5bzbqr0fsya4
- v/MPIU1AytE/DWntvniDHuTMVCwzEY5Z2r38AArgNH8xDmV7yL7XYEY2UiSWTh0N0jmn
- SABbF5m8tVPn9b7u9oIjlz9a4R/vMUSP6cHHfaHkXy0Wf5Ke0USl0X0rgI6N+5TwO8dI
- qwmw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wdCnH-0000AZ-Aa
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 16:04:55 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wdCnF-0001I7-ME
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 16:04:55 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65QJahHm2324890
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 20:04:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ A2/FU1xLbkYV+voT8ssCBTyWdlAce5DEF6tSBKrrm58=; b=LGRZruV9yePqZDOs
+ ZF6ReJFumsKC3VP7OkcxcZhkCaTu313AMvP10SBkN40/k3b/dWS+0NSFlBRhsGdb
+ J2973F/vPHrzcAoDx9VImWyFpBaeCLkRmqay7fazprlmwNsVbmehZTQbgf7/5+b3
+ O0C28rVJ8TkREvTbbe83E+dt1TCnkkbXtpnqQ4EKx2FKyYuJktwLFXMPz8naplUe
+ J+4a2PLwJWkEe+bXgSJabnVfu7NKf8HCuwn/rFDi0lwssuC3kVu4aveHsXUnE5IA
+ hSHenjHJzjjdFvFmbOGYpE6Z2ZZhvCrSMubLq3oEFMfTrK2ywrqlwbyIw+ZSrZz7
+ RBVdaw==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f1yqv02m3-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 20:04:51 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51a87264ea5so13396231cf.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 13:04:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782502543; x=1783107343; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JK+lWSyVRUyCrlfLsjIr0+vRLBR8ajW0zxpJLEvMn/4=;
- b=JNAfMRT+ZrvDlROjYVYx7v2RvNjFR204i90cWi9zBi089EMEb+TIjsTNf7uMHrit22
- mILMbWXRYAPLcVoQF5Y90NJ3sJmjn5jEXV9fhgHpGtEDqZWSH/ym2vtnTLNljSHoIC33
- RpAjztFmuWnMssLLnBkR5zMYI7W7OzhMD2uJ7jE1tJcpoWSsQRYD/E1b5L9bg7qAWBDs
- CKFAH8lr8eEdE6glphvouiCzKlnvii2EWu+JAs7IROnJ4HK5T4CX+CpYnlmQ4y7I2rNd
- lDygK7pbC+9h/H9hDVLoaHpAZoTUsgi0OhNqJma4xaVwx61yIdJch45QCkK8Ctx/rskY
- KjSQ==
+ d=oss.qualcomm.com; s=google; t=1782504290; x=1783109090; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=A2/FU1xLbkYV+voT8ssCBTyWdlAce5DEF6tSBKrrm58=;
+ b=SvdJacSWirwmn1LIIbOJPznco5AW7qCEvZrRLL5uaJMZtBQPuJUt/8ZlsMAsq4UJ4u
+ dtqD7zpVwYp7K+lt0GaZ62O+nQHs3HyiYsmjBTGTdi2YB58cYdWMFt8fURtL07Hwd+DY
+ YNbeX5d7Zm3VXHcfctQpO7V8ceNFjZDobw8BeLAtHXlgmBXxBdjlGH1jTo8UGwt1Kz77
+ rYf7KIojBFn+8LAkI7VQbr5xc6+DvF/L9h23cGMmU6W6OMBU9M30sbpsjVb3lUfjPBSo
+ lsEi7W2a8HMy2DCv6Fs6P4joBs0c2+WINmc2I5J9ccMgH3ad1sKFxCV3aj5kBuYzXEs9
+ p7Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782502543; x=1783107343;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=JK+lWSyVRUyCrlfLsjIr0+vRLBR8ajW0zxpJLEvMn/4=;
- b=OTZvptRzkYuoDTvE+pBq4aWZvet1jYVtZ+lcMEHA5caBpveotyZ66BLg0zglNz033q
- 95YTa9uyJcb/xGc4z4nkYZ8RMjQW+/mnmJDbKqL9l7Mh/pVPL3HKOeH+oMXmBME7l1Fa
- DGtZ6QEAcFIWoOSdUMDV+VDsU1UAN5tlKmjFsQBUigbOhTlF5BkEdkD9OyVscqUdc7/4
- n6OtJNm/IG1F3KuHqwQc2uTV183cFRTW4s3P5viI6GW56cTlLJ/Y6tf7wbMx8sl4z3iy
- 3g4uMM6e9E3qwnBYMKLMldZFcjt5URxWlEj4DQqW8fj8d6kBTxqILwcO7xKNdxkz0zK0
- Yoxw==
+ d=1e100.net; s=20251104; t=1782504290; x=1783109090;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=A2/FU1xLbkYV+voT8ssCBTyWdlAce5DEF6tSBKrrm58=;
+ b=pJrZ3h1K4s89jz2FbbvfMbLKw1GbsnGdQnjHTMVoxkpAU1xt/WljgDUJNmVCEc1EeS
+ 3MceX0liIonpQdyRyQDHbrzQbSUiPQGV5Re2ZGVyAPQOw1NUvJFCDSRrwnqsngTzkz6T
+ joIJSNHzDKHmUWDF7ieBHZ4nAL8AJ0Q4+kGWN+2SURufrvSCbn/d82RtAHGXzcUKVnA1
+ 1gqO6YBrzIM7chU5qYYmIrnu2raCXLc0CkFssCxJpD5WO+aDCOv22Ukd+c+VvLoPV9TO
+ Hh6BFGv9PqmjX3pzjN2cIqObZ3ObUDQdG84ONuDsyBG8xCELUNBwcZLba70OubGzYe8M
+ DKQw==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rp1snmNE/kZIimgv9+TvP/G+pKRNRNqEURlD1yyringZBAuFUxgw7Yir5WRKyP67fAlCRlyaWwTKBCN@nongnu.org
-X-Gm-Message-State: AOJu0YxzrsgFx8H+0th/fA+6hai23wn3u2Nxe8XbDqOr096mMwZtTxxC
- ToNIWWQyIo3DS5x0SC86s46KuKzdnyrnz8zfI5XODlMMuFkUxibie2J/wnJHRB4lPmevJAfzo1N
- lEcRb+HRwe4fAxotQjOuBwpY8ByoJAw8=
-X-Gm-Gg: AfdE7ck2kZbIAztUrVpX1ZhZR0dA72IluUfuwvNODQQwNMdnfOOjaehvWe3OcmQdrDb
- EoA8CBY2jo78JHHxonLDskrs/2rLPyVnZdcC20Ch0jMtW5J3MHwrDUUSoZptOXDJ4MlBb7eC3FZ
- uKPb7zEmHNiktsrrXVtmwTkgp3p5ffA76Ym4n3l1KNd+9Od0EtLUBRExbssrp7Z7/EmO0h7L0KU
- XxESdwhI3ro0LIAgTma1SYJye0jDJqNUkrQ35WPoe2ujwnRsTLh1+LSWjciuAn01GA5ZRoK14Po
- V7/sNWzn2A==
-X-Received: by 2002:a05:6000:41ed:b0:46f:fcf5:59a5 with SMTP id
- ffacd0b85a97d-46ffd049e4fmr1693771f8f.28.1782502543187; Fri, 26 Jun 2026
- 12:35:43 -0700 (PDT)
+ AFNElJ9vvN8UQfnWEEYsYgoa7aaxJYeoSGsWO/S+tGeUyVh9BEW94wMdQ3THg2gXJRlWJI7GOmC6Lr/El+6U@nongnu.org
+X-Gm-Message-State: AOJu0Yw1Bo1x+opsP8B7+DH5Elg/V/DA1Gypeg29rBSFPtpODWcf+mfN
+ FMNM1eAXLLK1rQGxYh0xmEPHanC8mLGftFRw77XfV+AJJtg/JMTVXC03zB34iBV/M29PSZttGzz
+ 4yIPeMYagO9z8dX0rVHsDe9//sCGBDAbIhOMgCdzqgrRXAUpGr000aiy7zw==
+X-Gm-Gg: AfdE7cmERq8d7Md4TQoJhjITmWtF8PJeQ/sX0nBKt14msCLrYDWiq48bGSv1FNi3Y3L
+ ejSbgeIUR5+eHHqpdTsyXwtSNgo7Od7FUw3OBT25DTa5Qey/9S1Cytp/2pYg35RGyZEWeomQg4v
+ xkcorh/LZZDrgN6Rx1LOfN6kZnm25PwKLhQpRmcWl8OFw6Ma7g3o6s9SYE/t6sHOUrmP+2G052y
+ EHnqVAJ9L+v5CDKaFhhBDtz7D0x2gJ85TbbSvDvjviuaSAasw/WCUJZ/YJZ5Bx1MAVq/4kTlGbF
+ E6flIeQPLrWtJRBOWuY0tPgjIj6Cwgywd1sORxE459Qb5Zxf4s3Q2WpI4rm4v9woRQE78X6QTNG
+ 49oCOBe2VDGHL90z57PKawk8Z5m+xJcDwFm9uWKCMlR6i
+X-Received: by 2002:ac8:7f8c:0:b0:517:5b22:f4ac with SMTP id
+ d75a77b69052e-51a72758a91mr114057301cf.5.1782504290347; 
+ Fri, 26 Jun 2026 13:04:50 -0700 (PDT)
+X-Received: by 2002:ac8:7f8c:0:b0:517:5b22:f4ac with SMTP id
+ d75a77b69052e-51a72758a91mr114056561cf.5.1782504289763; 
+ Fri, 26 Jun 2026 13:04:49 -0700 (PDT)
+Received: from [192.168.68.106] ([189.79.21.40])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-51a51b0cc9csm102941891cf.31.2026.06.26.13.04.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Jun 2026 13:04:49 -0700 (PDT)
+Message-ID: <1d9f53ca-4dbc-4d64-9811-17bf0328cb3a@oss.qualcomm.com>
+Date: Fri, 26 Jun 2026 17:04:46 -0300
 MIME-Version: 1.0
-References: <20260623205839.1294-1-linisha232@gmail.com>
- <20260625192121.1887-1-linisha232@gmail.com>
- <aj5P0n03aKv93uci@redhat.com>
- <9d695c7f-bb02-44bd-8e1c-f8bdbf3bbbf7@oss.qualcomm.com>
- <CAGKMO+VCZ_3cPWx000N_+REsEK+gQg8RCWJcx7YEchUcy20V-Q@mail.gmail.com>
- <c0292d61-3915-416f-a6e1-d8498dcd42e9@oss.qualcomm.com>
- <CAGKMO+XpdeOQwqqp6sq+q2gbGBkH-inBU0B49buohQ6OWhOxUA@mail.gmail.com>
- <CAGKMO+XRcM86qk_X3qaWeYjvxnHWj-jsyWC-FoBLkYBemHJgtA@mail.gmail.com>
- <CAGKMO+VVgV_qx9rwz7XQQhW5y9GzjuZJcGfd9ucTGx=Y58pPUg@mail.gmail.com>
- <fe22c259-195c-4032-94dc-7b62fe3f25e3@oss.qualcomm.com>
- <CAGKMO+VzDjFZj_TDwrSPqL3vMaqwy9gEh6GA3Jxst59AJpxRxg@mail.gmail.com>
- <3eeed5ef-792b-40db-a49f-8fdf904664cc@oss.qualcomm.com>
-In-Reply-To: <3eeed5ef-792b-40db-a49f-8fdf904664cc@oss.qualcomm.com>
-From: linisha <linisha232@gmail.com>
-Date: Sat, 27 Jun 2026 01:05:30 +0530
-X-Gm-Features: AVVi8Cd-AaOEUslMepbxHJMgZ07mwbgGwaydFCCaQs4UUIVNl5hRqjhypDiSxh0
-Message-ID: <CAGKMO+X=6xYfsW+o1Vppk-cP4eFywwZdOBmHpfJEitvnqJ=FQA@mail.gmail.com>
-Subject: Re: [PATCH v2] docs/system: add general note about architecture and
- machine differences
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org, 
- pbonzini@redhat.com, mjt@tls.msk.ru, philmd@mailo.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=linisha232@gmail.com; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] disas/riscv: Fix 6-bit immediate extraction
+To: TANG Tiancheng <lyndra@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: Christoph Muellner <christoph.muellner@vrull.eu>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, qemu-riscv@nongnu.org
+References: <20260626-b4-disas-xthead-fix-riscv-next-v1-0-74228a3c1b21@linux.alibaba.com>
+ <20260626-b4-disas-xthead-fix-riscv-next-v1-2-74228a3c1b21@linux.alibaba.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260626-b4-disas-xthead-fix-riscv-next-v1-2-74228a3c1b21@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=aoiCzyZV c=1 sm=1 tr=0 ts=6a3edb63 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=SRrdq9N9AAAA:8 a=EUspDBNiAAAA:8 a=7u43oJkrPVBKl2x3A14A:9 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-GUID: wfy751D9nUHc0ERMFcFXbpzRYvpB35Ib
+X-Proofpoint-ORIG-GUID: wfy751D9nUHc0ERMFcFXbpzRYvpB35Ib
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI2MDE2NiBTYWx0ZWRfX/V8y0E9oMN26
+ qA3LpvsIK5P6bYQAx5XEtZ3it8B+fePFd8WTHug2sgiAmA1rJSj2toWJ9Qihjqnzv5uGCuKRlWr
+ e21uE7v4bt8ZzRGbmMS5A0xm3sYMo/g=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI2MDE2NiBTYWx0ZWRfX3Op0T4+kYTg/
+ XRj9ikILn6fzc6rfpjf+133XncGxY4nNJL+SQu6VTqeedzxur0J/V1/J1cHHL1btJuavwDNc6BJ
+ +6lnT+JzzjGzn/Mooq3OUIkIt6aY8ItxOZGx//mUXFb6Nyj+cAJkWsrYAonkQvDcW0mSi1IFi5i
+ J3zC8NA/yQEkPB+KF1KSRB0xzmefETjXlJoOEH4lsX3WsL68Y+2kHS+hjQgSWD35LkLppuoOFaJ
+ a5kt+42r0LElDNOr7Pcs6/bSk0shQZ2Z+BoCVWjR1Eqi5Ka+qB/vEUp5QK+LwreyL4jTjSRPQU7
+ 0LfeFy2Ue0w3LWpZNujHLN0oAO53M9xneFPSOQodbZX47MS3dpR8ZKsYNcM4Fy0oXEOPqpn4lwP
+ PNYgD/DJiVrWinsY0mjku1PkmiwTA2+nAjWM+EwRHu1Ew23nfTZoZl4w0uHHkHDV//g3PAQGcDz
+ pErCqeNiI++6Te9rUkg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-26_05,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
+ impostorscore=0 bulkscore=0 malwarescore=0 spamscore=0 adultscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606260166
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,204 +158,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for the tip!
 
-On Sat, Jun 27, 2026 at 12:43=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On 6/26/2026 11:58 AM, linisha wrote:
-> > Hmm that would explain it! I'm on Git Bash / MinGW on Windows, so
-> > there may indeed be a line-ending or Perl quirk affecting how the
-> > script parses MAINTAINERS. Good to know, I'll keep this in mind and
-> > double-check the MAINTAINERS file directly when picking CCs in the
-> > future, rather than relying solely on the script's output.
-> >
->
-> In case your (corporate) machine allows it, you can also use WSL to have
-> a native Linux env instead of using MSYS2.
-> In my experience it works very well.
->
-> > On Sat, Jun 27, 2026 at 12:19=E2=80=AFAM Pierrick Bouvier
-> > <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>
-> >> On 6/26/2026 11:44 AM, linisha wrote:
-> >>> Just to clear the confusion, attached the screenshot.
-> >>>
-> >>
-> >> Hum interesting.
-> >>
-> >> On my side, reproduced on a clean debian container:
-> >>
-> >> $ git clone https://gitlab.com/qemu-project/qemu --depth=3D1 &&
-> >> cd qemu && ./scripts/get_maintainer.pl -f docs/
-> >> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> (maintainer:Gener=
-al
-> >> Documenta...)
-> >> qemu-devel@nongnu.org (open list:All patches CC here)
-> >>
-> >> Maybe we have a funny joke hiding there with mingw/windows.
-> >>
-> >>> Best regards,
-> >>> Linisha
-> >>>
-> >>> On Sat, Jun 27, 2026 at 12:10=E2=80=AFAM linisha <linisha232@gmail.co=
-m> wrote:
-> >>>>
-> >>>> Hi Pierrick,
-> >>>>
-> >>>> Quick correction to my last reply =E2=80=94 I checked again more car=
-efully and
-> >>>> get_maintainer.pl -f docs/ still says "No maintainers found" on my
-> >>>> tree (origin/master), even after git pull. It only lists recent
-> >>>> contributors. So whatever change adds you to MAINTAINERS isn't in my
-> >>>> tree yet =E2=80=94 could you point me to the commit/branch?
-> >>>>
-> >>>> Apologies for the confusion.
-> >>>>
-> >>>> Best regards,
-> >>>> Linisha
-> >>>>
-> >>>> On Sat, Jun 27, 2026 at 12:08=E2=80=AFAM linisha <linisha232@gmail.c=
-om> wrote:
-> >>>>>
-> >>>>> Hi Pierrick,
-> >>>>>
-> >>>>> You're right =E2=80=94 my tree was outdated. I just ran git pull an=
-d now
-> >>>>> scripts/get_maintainer.pl -f docs/ does show you as maintainer for
-> >>>>> General Documentation. Sorry for the miss; I'll make sure to pull a=
-nd
-> >>>>> re-check maintainers before sending future versions.
-> >>>>>
-> >>>>> Best regards,
-> >>>>> Linisha
-> >>>>>
-> >>>>> On Fri, Jun 26, 2026 at 11:58=E2=80=AFPM Pierrick Bouvier
-> >>>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>>>>>
-> >>>>>> On 6/26/2026 10:44 AM, linisha wrote:
-> >>>>>>> Hi Daniel, Pierrick,
-> >>>>>>>
-> >>>>>>> Thank you, Daniel, for the Reviewed-by tag and the wrapping feedb=
-ack.
-> >>>>>>>
-> >>>>>>> Pierrick =E2=80=94 I didn't intentionally remove anyone. I used
-> >>>>>>> scripts/get_maintainer.pl -f docs/ which returned Peter Maydell,
-> >>>>>>> Philippe Mathieu-Daud=C3=A9, Richard Henderson, Alex Benn=C3=A9e,=
- and C=C3=A9dric Le
-> >>>>>>> Goater, and I picked CCs from that list along with people who
-> >>>>>>> responded to v1. You weren't in the script's output, so I didn't =
-know
-> >>>>>>> to include you. Apologies for the miss =E2=80=94 I'll CC you on a=
-ny future v3.
-> >>>>>>>
-> >>>>>>
-> >>>>>> Thanks for your answer.
-> >>>>>>
-> >>>>>> Just to dig this further, is your tree up to date?
-> >>>>>>
-> >>>>>> When running it on my side (from upstream/master), I get:
-> >>>>>> $ scripts/get_maintainer.pl -f docs/
-> >>>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> (maintainer:G=
-eneral
-> >>>>>> Documenta...)
-> >>>>>> qemu-devel@nongnu.org (open list:All patches CC here)
-> >>>>>>
-> >>>>>>> Daniel =E2=80=94 I'll send a v3 with the commit message body prop=
-erly
-> >>>>>>> line-wrapped to 76 characters. Let me know if there are other cha=
-nges
-> >>>>>>> you'd like at the same time.
-> >>>>>>>
-> >>>>>>> Best regards, Linisha
-> >>>>>>>
-> >>>>>>> On Fri, Jun 26, 2026 at 9:09=E2=80=AFPM Pierrick Bouvier
-> >>>>>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>>>>>>>
-> >>>>>>>> On 6/26/2026 3:09 AM, Daniel P. Berrang=C3=A9 wrote:
-> >>>>>>>>> CC Pierrick as docs maintainer.
-> >>>>>>>>>
-> >>>>>>>>
-> >>>>>>>> Thanks Daniel.
-> >>>>>>>>
-> >>>>>>>> I wonder how I was not in original recipients for this patch.
-> >>>>>>>> @Linisha: did you explicitly set list of recipients, or remove s=
-ome people?
-> >>>>>>>>
-> >>>>>>>>> On Fri, Jun 26, 2026 at 12:51:19AM +0530, Linisha wrote:
-> >>>>>>>>>> Add a note near the start of the introduction explaining that =
-QEMU options, properties, and command lines may differ between target archi=
-tectures and machine types. This helps prevent confusion when examples show=
-n for one architecture do not work for another, such as the pflash0/pflash1=
- options visible in -machine help on some machines but not others.
-> >>>>>>>>>
-> >>>>>>>>> Please ensure commit messages are line wrapped.
-> >>>>>>>>>
-> >>>>>>>>>>
-> >>>>>>>>>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> >>>>>>>>>>
-> >>>>>>>>>> Buglink: https://gitlab.com/qemu-project/qemu/-/issues/3254
-> >>>>>>>>>> Signed-off-by: Linisha <linisha232@gmail.com>
-> >>>>>>>>>> ---
-> >>>>>>>>>>
-> >>>>>>>>>> v2: Take a different approach based on review feedback from Da=
-niel
-> >>>>>>>>>>     Berrang=C3=A9 and Peter Maydell. Instead of incorrectly cl=
-aiming
-> >>>>>>>>>>     pflash0/pflash1 are virt-only (they actually work on x86 p=
-c/q35
-> >>>>>>>>>>     machines too), add a general note near the start of the in=
-troduction
-> >>>>>>>>>>     about how options, properties, and command lines may diffe=
-r between
-> >>>>>>>>>>     target architectures and machine types.
-> >>>>>>>>>>
-> >>>>>>>>>>
-> >>>>>>>>>>  docs/system/introduction.rst | 9 +++++++++
-> >>>>>>>>>>  1 file changed, 9 insertions(+)
-> >>>>>>>>>>
-> >>>>>>>>>> diff --git a/docs/system/introduction.rst b/docs/system/introd=
-uction.rst
-> >>>>>>>>>> index bec7291e47..8d9ef61d26 100644
-> >>>>>>>>>> --- a/docs/system/introduction.rst
-> >>>>>>>>>> +++ b/docs/system/introduction.rst
-> >>>>>>>>>> @@ -1,6 +1,15 @@
-> >>>>>>>>>>  Introduction
-> >>>>>>>>>>  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >>>>>>>>>>
-> >>>>>>>>>> +.. note::
-> >>>>>>>>>> +   QEMU supports many different target CPU architectures and =
-many
-> >>>>>>>>>> +   different machine types for each architecture. Options, pr=
-operties,
-> >>>>>>>>>> +   and command lines that work for one architecture or machin=
-e type
-> >>>>>>>>>> +   will not necessarily work on another. The examples shown i=
-n this
-> >>>>>>>>>> +   manual are specific to the architecture and machine type b=
-eing
-> >>>>>>>>>> +   demonstrated. When in doubt, consult the documentation for=
- your
-> >>>>>>>>>> +   specific target architecture and machine type.
-> >>>>>>>>>> +
-> >>>>>>>>>
-> >>>>>>>>> Not convinced many people will read this, but I gues it doesn't
-> >>>>>>>>> hurt.
-> >>>>>>>>>
-> >>>>>>>>> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> >>>>>>>>>
-> >>>>>>>>>
-> >>>>>>>>>>  .. _Accelerators:
-> >>>>>>>>>>
-> >>>>>>>>>>  Virtualisation Accelerators
-> >>>>>>>>>> --
-> >>>>>>>>>> 2.47.0.windows.1
-> >>>>>>>>>>
-> >>>>>>>>>
-> >>>>>>>>> With regards,
-> >>>>>>>>> Daniel
-> >>>>>>>>
-> >>>>>>
-> >>
->
+
+On 6/26/2026 12:13 AM, TANG Tiancheng wrote:
+> rv_codec_r2_imm6 is used for XThead instructions whose 6-bit
+> immediate field is encoded in bits 25:20. The old expression
+> left-shifted by 38 and then right-shifted by 60, so it kept only
+> bits 25:22.
+> 
+> Shift right by 58 instead, keeping the existing extraction style while
+> retaining the full bits 25:20 field. This fixes the immediate printed
+> for th.srri and th.tst.
+> 
+> Fixes: 318df7238b9f ("disas/riscv: Add support for XThead* instructions")
+> Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+> Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+> ---
+
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+>   disas/riscv.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/disas/riscv.c b/disas/riscv.c
+> index 7f1b26277378c225c963d8f435cc7a2fc6e4a0b8..400a57083f90be18ccd12415797bce0df974784b 100644
+> --- a/disas/riscv.c
+> +++ b/disas/riscv.c
+> @@ -4546,7 +4546,7 @@ static uint32_t operand_zcmp_rlist(rv_inst inst)
+>   
+>   static uint32_t operand_imm6(rv_inst inst)
+>   {
+> -    return (inst << 38) >> 60;
+> +    return (inst << 38) >> 58;
+>   }
+>   
+>   static uint32_t operand_imm2(rv_inst inst)
+> 
+
 
