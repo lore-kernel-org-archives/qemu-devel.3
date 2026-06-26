@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7398DCDE008
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:22:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30A04CDE00C
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:22:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3fA-0004C0-Oj; Fri, 26 Jun 2026 06:19:56 -0400
+	id 1wd3eZ-0000lI-2m; Fri, 26 Jun 2026 06:19:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3f9-00040z-En
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:55 -0400
+ id 1wd3eQ-0000BB-W4
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3f7-0005Sr-IP
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:55 -0400
+ id 1wd3eO-0005MP-NA
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469193;
+ s=mimecast20190719; t=1782469148;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jSRwuOc010Ufku1OU9TvA9RlMNaejs2seQxcYG23jkU=;
- b=IJAEQz5nsdZrQgXqSLbjofBy0vSqgEQ0M/GttN84xtyLV3okAkEkaTRzgioIAyI9LzCdgo
- P+5Aaj0Rk+UfWT5fTvoTB85aNlMawvx4tmISEJfCLBY1F4V3wJNLCfUyo2lbMfCVMDjNWz
- 4Xb8vrfoazjxVD5ASdG7hygdr4F+Rso=
+ bh=Dz1pu6mWfW58JROqNGnbicb8BcOiLwuqIScXaYTXhqU=;
+ b=GNSY8CVy4ATqtpO48BWuhR81V51gRW8MKCSNnmVDzXK4FnhclBkaZc17zoTG5WDusqmOPl
+ ma3fHYevwvpbwxzFcfdfuvdnVcKpKSMk10f8MYGdrpdRhj/idNAG9DubEfFaeUqhj67iY0
+ nQdLcJEhEZ4ijkpeGyyAtdT/5huT0y0=
 Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
  [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-18-nxIJZnLKMYyUbF6eUxCsoQ-1; Fri, 26 Jun 2026 06:19:51 -0400
-X-MC-Unique: nxIJZnLKMYyUbF6eUxCsoQ-1
-X-Mimecast-MFC-AGG-ID: nxIJZnLKMYyUbF6eUxCsoQ_1782469190
+ us-mta-454-MbhXTfb8NfiQANkN0o2l1w-1; Fri, 26 Jun 2026 06:19:06 -0400
+X-MC-Unique: MbhXTfb8NfiQANkN0o2l1w-1
+X-Mimecast-MFC-AGG-ID: MbhXTfb8NfiQANkN0o2l1w_1782469146
 Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-463aaa77ffeso442076f8f.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:19:51 -0700 (PDT)
+ ffacd0b85a97d-46fb9079a04so901f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:19:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469190; x=1783073990; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469145; x=1783073945; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jSRwuOc010Ufku1OU9TvA9RlMNaejs2seQxcYG23jkU=;
- b=bMdLc809ZbIu0qfurfx60TjExs1GAHVPCHaxOXoF7GWw2VzFPSlcp/QaHBvq2xeoDD
- 0GZZbDPq1iTGII/BtbuTPrNcdX3fA5ntf5edMzK/MmHey5d9U1GZ0tZsqZfEdBTIxo7I
- 2cvQr/BDBH/iaBRaIa6Y0T4HRd9q2qPfhHakqZn8htAwgkw9pYp+2dGrZiQK9swstj+g
- Go3KxwwU5kh8Snasp1pwXSxVNb4Al0Ob+lgKl1HSnU2cbxQo7P4RX1lP1yKAOpQOpONc
- ywU+Lnsm9nq6LWFq6IpFusdoIc6ZjOSJpRQInB7dEwY/+SX57Zt0+mRNpgiQ0JtGwckm
- wE8Q==
+ bh=Dz1pu6mWfW58JROqNGnbicb8BcOiLwuqIScXaYTXhqU=;
+ b=li2eQVVd0tst6vqugC6KFnxpOTpTGdA9MKm9z6qwBI2FK3eHZqhJXaP4Ttp8IJ4KUI
+ pQ2jTF80K6sKnpjbSnoAd7LtcnABdtxEQUG31KGZ19E43PpEJvN7oNKtz+wxnrcJTRLu
+ 4XI1jBM0/w7YXB9m60l0fbf02lxgougiKTbHsS7gQEsH79xmSczrKprCGckD1bmwWutb
+ uT3fECf91d3MNKijwKcFYqurMyO+togdtpZLgdMO6tgnXSGJi2wD06HRoiTKKzhy2khH
+ 3QZ6wxZlmukE20vP3hfVXDUUeCAluhNMobpCPoNlWikPR18U7jS1AKapJ4ZtV/J6PLf4
+ UXDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469190; x=1783073990;
+ d=1e100.net; s=20251104; t=1782469145; x=1783073945;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=jSRwuOc010Ufku1OU9TvA9RlMNaejs2seQxcYG23jkU=;
- b=d2BRuY8I7iZ2th/A+CQy3v6JhHxEkQe5/RdQeCwS63d7bBvILYiite9nWQKjKnSIBT
- dxmftiUVU+mn+9vFYmBa7T4fNKQl+6XjpRa+xuWEuDumofRa4dEuFRzU1appfr9Ht1Wc
- oep4y/l4gtmFSWAMeA8Di1gfUbJ2RqetiV8HhlBdy8R3mmtIw+nQCw00gjwyTbXa24yl
- W8IvFrigc4TFAHdtALV2oL5Z1y31UTbZvUN1MdrI8N7DFB1Tvuj0xPjxEMj+w6DrG1iR
- 3Fq1GVdAyWXTRKNhe/DPXZ3G9xMqMgIdKfLhqlIBre+I8xgfBO9/qgnSMUjY5SaRvXiY
- WO4Q==
-X-Gm-Message-State: AOJu0Yw02Ty9X2oNfhosEhJws0xXF8LF77MXTMw5NUfNK6aGPWHnL2sw
- EjkusQbCZ+spRDAr+UlTsSVbBFvOomEkUZeAdbQ5bmO25IgNl5v2GvNTjCmGeedK+qClaLAwkYJ
- p6Q+AqCRK2QknKaqo22Bvt6JGbOW7Asa1VPndfo9zSj/UwuL3vXs5fSTgPg3Zj0REjhgYmOV113
- FT9GHwOCVR1ydMlYiBrQRCbW6ERTZTve6KxheQiWe6
-X-Gm-Gg: AfdE7clgYFTet2HWO3AW3wscbU+ceJ5pkpRJVMAP5Rld/nQlezgfOAs4kLuVs4tUNYG
- KGN1N+II0i3bXA+aEab3FZYqKRAXkRLpEa/tiMJP++sJkQvl9pvzfRly685xEhd/p5TthQ6sPBo
- qD8eO/U/uKIK1vyHeTurDuwfysCXPv7ircmjixVWwtvIU78hgBaAwrIO4VWKEJGg4pdvHCK392K
- uiB4lmF2GTb6gfS03VcgvaL4B6czAWO3uOgqwabIuQTO1mtp7ZuEA1vC74ozX7dKX5uzQRQRLvJ
- wtquSBwAKc/aKAIvIXqwJUa4I4kEcuWHPDJUFycX88q2DWahU9W5Wge3BYcPVf9Rw5/BGLJa9hF
- +XW0FR5SuucQQlI+lVPo2W4TUZsKggsICQUubfQt1dKPwGUeFlmmfd/6CQKK9EtotNjy+mJMwwd
- rsknjrhKQY82nHK5S4
-X-Received: by 2002:a5d:5f8e:0:b0:45e:64b3:af44 with SMTP id
- ffacd0b85a97d-46dc18a4a8fmr9740120f8f.36.1782469190349; 
- Fri, 26 Jun 2026 03:19:50 -0700 (PDT)
-X-Received: by 2002:a5d:5f8e:0:b0:45e:64b3:af44 with SMTP id
- ffacd0b85a97d-46dc18a4a8fmr9740071f8f.36.1782469189905; 
- Fri, 26 Jun 2026 03:19:49 -0700 (PDT)
+ bh=Dz1pu6mWfW58JROqNGnbicb8BcOiLwuqIScXaYTXhqU=;
+ b=YpNLsDgP7M7d/5SkDwkzye2Lw/f09/iOECeM7n9CaMovHtR/J5+WJmzJaY0DC8wWF7
+ +mtWalVIRlgQW8BaxpdPtfusSQ5DVXoQcVwtmjuYwB/pelk4M3t2B6rPQZMienJysFcH
+ 3sIQX5LNrOFZH7e8MlPX4ZsRn3xsbZGwi7SjBzJup2fyxiHGxL7iKbSOU26mdXitL5eh
+ RJpF4TC+2lAb5Bvu2r3loAJHVBkGPgUHaiCCiAPo/E1NnUeSAODZwCRYdWulc4IJ525g
+ kdo5Vc63pEXHKLfX324uE23Qkmiea4Lyq+X/WneFSSfCIoATENVeuYx6vx8aDE1aeKwE
+ M48g==
+X-Gm-Message-State: AOJu0YwRuPqNU/Oi1g8JkchTpxFMGUiPtwLZdV7/vqzarEzVYuZJ8fJh
+ UflA+XeOxe7D1H7LhrJRcld+Pd+3A2PjUKygejl4ZRtKLcr2X+RRpEWkXZDjsSKFScOFck5m2cF
+ l7AFmlN8B+eT5EQWpzBYWVzphH3XIfWY6WZnZpTV9eldK/nKPMAF0e031qWtuNTsyyeF5iWDbNJ
+ SAlyavr459auwE2sFFYC9JsaPV2BFnHQDxKCLTz/0C
+X-Gm-Gg: AfdE7clgFxwvhqijC657p0MXV73m7fOQccdtkW6Aj/wTTIh9HVJgfbOroHxaZiqzA+V
+ lqBbCGRwaDb7QZBa8yls+jeLUpu7oiImHe5te5hlzPQvlvaQsq5ttLi+hGHGU5UWHcneaS9sXbK
+ Jdss+HlfwiGSRh0Ju5ExV38GSJSAY70GhHTqJ4YeAENxF2xVdXYjC8WQYR797S056MfZUVNlQR3
+ GlTPKdxqn+BSmomih8S9O80miYe7Xr/rESvrhDEC8PscEb8B/KR+Rm3rcgtyh1w79FOzij5n/eZ
+ noIn5KqF3ED6TdJi2ACxAEJlHWGmj3QvCKE8phJe0MXL6FytxOgLWF8bo0yT4Yvc2I7BHQmZsCR
+ 9JDfVydydLjxY2skB1/pqDomlSPqFBxljSTgn6hBaAQmSicn4Wxf/iyu3zvxm4sOhVe1YljUkF+
+ QGtqI3/CufbGq5GVK4
+X-Received: by 2002:a5d:6e54:0:b0:46f:558:a43e with SMTP id
+ ffacd0b85a97d-46fb6bf2e92mr50999f8f.9.1782469145434; 
+ Fri, 26 Jun 2026 03:19:05 -0700 (PDT)
+X-Received: by 2002:a5d:6e54:0:b0:46f:558:a43e with SMTP id
+ ffacd0b85a97d-46fb6bf2e92mr50934f8f.9.1782469144793; 
+ Fri, 26 Jun 2026 03:19:04 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c221d998esm22922825f8f.24.2026.06.26.03.19.48
+ ffacd0b85a97d-46e3d6ba143sm10718446f8f.33.2026.06.26.03.19.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:19:48 -0700 (PDT)
+ Fri, 26 Jun 2026 03:19:04 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
-	Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PULL 45/45] i386/tdx: Add CPUID_24_0_EBX_AVX10_VL_MASK as supported
-Date: Fri, 26 Jun 2026 12:17:48 +0200
-Message-ID: <20260626101748.1728079-46-pbonzini@redhat.com>
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Subject: [PULL 27/45] target/i386/mshv: migrate pending ints/excs
+Date: Fri, 26 Jun 2026 12:17:30 +0200
+Message-ID: <20260626101748.1728079-28-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
 References: <20260626101748.1728079-1-pbonzini@redhat.com>
@@ -121,51 +120,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-AVX10 depends on CPUID_24_0_EBX_AVX10_VL_MASK as defined in
-feature_dependencies[]. Currently CPUID_24_0_EBX_AVX10_VL_MASK is always
-not supported for TDX, so AVX10 cannot be exposed to TD guest.
+We use PENDING_INTERRUPTION, INTERRUPT_STATE, PENDING_EVENT hv registers
+to map and roundtrip from/to CPUX86State.
 
-The TDX virtualization type of these bits is "XFAM & CPUID_Enabled &
-Native": their value is determined by XFAM[5:7], the AVX10 CPUID bit,
-and the native hardware value.
+We ignore HV_REGISTER_PENDING_EVENT1 which represent events for nested
+virt contexts, as we don't support nested virt with MSHV currently.
 
-For simplicity, add CPUID_24_0_EBX_AVX10_VL_MASK to tdx_xfam_deps[]
-under the AVX512/XFAM dependency, without separately checking the AVX10
-bit. It's safe because any invalid combination supplied by the user will
-be caught by tdx_check_features().
-
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Tested-by: Chenyi Qiang <chenyi.qiang@intel.com>
-Link: https://lore.kernel.org/r/20260512082108.621596-4-xiaoyao.li@intel.com
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20260417105618.3621-30-magnuskulke@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/tdx.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/hw/hyperv/hvgdk_mini.h |   3 +
+ include/system/mshv_int.h      |  14 +++
+ target/i386/mshv/mshv-cpu.c    | 168 +++++++++++++++++++++++++++++++++
+ 3 files changed, 185 insertions(+)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index e3c5eb99842..f882578c707 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -571,6 +571,9 @@ typedef struct TdxXFAMDep {
-  * - AMX alias bits, their type is "CPUID_Enabled & Native" which means their
-  * value is determined by the CPUID bit they are aliased to.
-  *
-+ * - AVX10_VL_MASK, their type is "XFAM & CPUID_Enabled & Native" which means
-+ * their value is determined by both the corresponding XFAM bit and CPUID bit.
-+ *
-  * For simplicity, relax the dependency to related XFAM bit.
-  * tdx_check_features() will eventually catch the unsupported configurations.
-  */
-@@ -579,6 +582,7 @@ TdxXFAMDep tdx_xfam_deps[] = {
-     { XSTATE_YMM_BIT,       { FEAT_7_0_EBX, CPUID_7_0_EBX_AVX2 } },
-     { XSTATE_OPMASK_BIT,    { FEAT_7_0_ECX, CPUID_7_0_ECX_AVX512_VBMI } },
-     { XSTATE_OPMASK_BIT,    { FEAT_7_0_EDX, CPUID_7_0_EDX_AVX512_FP16 } },
-+    { XSTATE_OPMASK_BIT,    { FEAT_24_0_EBX, CPUID_24_0_EBX_AVX10_VL_MASK } },
-     { XSTATE_PT_BIT,        { FEAT_7_0_EBX, CPUID_7_0_EBX_INTEL_PT } },
-     { XSTATE_PKRU_BIT,      { FEAT_7_0_ECX, CPUID_7_0_ECX_PKU } },
-     { XSTATE_CET_U_BIT,     { FEAT_7_0_ECX, CPUID_7_0_ECX_CET_SHSTK } },
+diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+index 367519143e2..81fe7f7efb0 100644
+--- a/include/hw/hyperv/hvgdk_mini.h
++++ b/include/hw/hyperv/hvgdk_mini.h
+@@ -12,6 +12,9 @@
+ typedef enum hv_register_name {
+     /* Pending Interruption Register */
+     HV_REGISTER_PENDING_INTERRUPTION = 0x00010002,
++    HV_REGISTER_INTERRUPT_STATE      = 0x00010003,
++    HV_REGISTER_PENDING_EVENT0       = 0x00010004,
++    HV_REGISTER_PENDING_EVENT1       = 0x00010005,
+ 
+     /* X64 User-Mode Registers */
+     HV_X64_REGISTER_RAX     = 0x00020000,
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 3bdf16ecd35..5a30dceeea8 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -17,6 +17,20 @@
+ #include "hw/hyperv/hvhdk.h"
+ 
+ #define MSHV_MSR_ENTRIES_COUNT 64
++
++/*
++ * Interruption-type encoding, used by the hypervisor in
++ * hv_x64_pending_interruption_register.interruption_type
++ * See TLFS 6.0 section 7.9.2, p55
++ * https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/tlfs/tlfs
++ */
++#define MSHV_HV_INTERRUPTION_TYPE_EXT_INT     0
++#define MSHV_HV_INTERRUPTION_TYPE_NMI         2
++#define MSHV_HV_INTERRUPTION_TYPE_HW_EXC      3
++#define MSHV_HV_INTERRUPTION_TYPE_SW_INT      4
++#define MSHV_HV_INTERRUPTION_TYPE_PRIV_SW_EXC 5
++#define MSHV_HV_INTERRUPTION_TYPE_SW_EXC      6
++
+ #define MSHV_DIRTY_PAGES_BATCH_SIZE 0x10000
+ 
+ typedef struct hyperv_message hv_message;
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index a0a25cd2c05..9f513a0e436 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -535,6 +535,164 @@ static int load_regs(CPUState *cpu)
+     return 0;
+ }
+ 
++static int get_vcpu_events(CPUState *cpu)
++{
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++    struct hv_register_assoc assocs[] = {
++        { .name = HV_REGISTER_PENDING_INTERRUPTION },
++        { .name = HV_REGISTER_INTERRUPT_STATE },
++        { .name = HV_REGISTER_PENDING_EVENT0 },
++    };
++    union hv_x64_pending_interruption_register pending_int;
++    union hv_x64_interrupt_state_register int_state;
++    union hv_x64_pending_exception_event pending_exc;
++    int ret;
++
++    ret = mshv_get_generic_regs(cpu, assocs, ARRAY_SIZE(assocs));
++    if (ret < 0) {
++        error_report("failed to get vcpu event registers");
++        return -1;
++    }
++
++    pending_int.as_uint64 = assocs[0].value.reg64;
++    int_state.as_uint64 = assocs[1].value.reg64;
++    pending_exc = assocs[2].value.pending_exception_event;
++
++    /* Clear previous state. injected ints/excs are blanked w/ -1 */
++    env->interrupt_injected    = -1;
++    env->soft_interrupt        = 0;
++    env->exception_injected    = 0;
++    env->exception_pending     = 0;
++    env->exception_nr          = -1;
++    env->has_error_code        = 0;
++    env->error_code            = 0;
++    env->exception_has_payload = 0;
++    env->exception_payload     = 0;
++    env->nmi_injected          = 0;
++
++    if (pending_int.interruption_pending) {
++        switch (pending_int.interruption_type) {
++        case MSHV_HV_INTERRUPTION_TYPE_EXT_INT:
++            env->interrupt_injected = pending_int.interruption_vector;
++            break;
++        case MSHV_HV_INTERRUPTION_TYPE_NMI:
++            env->nmi_injected = 1;
++            break;
++        case MSHV_HV_INTERRUPTION_TYPE_HW_EXC:
++            env->exception_injected = 1;
++            env->exception_nr       = pending_int.interruption_vector;
++            env->has_error_code     = pending_int.deliver_error_code;
++            env->error_code         = pending_int.error_code;
++            break;
++        case MSHV_HV_INTERRUPTION_TYPE_SW_INT:
++            env->interrupt_injected = pending_int.interruption_vector;
++            env->soft_interrupt     = 1;
++            break;
++        case MSHV_HV_INTERRUPTION_TYPE_SW_EXC:
++        case MSHV_HV_INTERRUPTION_TYPE_PRIV_SW_EXC:
++            env->exception_injected = 1;
++            env->exception_nr       = pending_int.interruption_vector;
++            env->has_error_code     = pending_int.deliver_error_code;
++            env->error_code         = pending_int.error_code;
++            break;
++        default:
++            error_report("unknown interruption type %u",
++                         pending_int.interruption_type);
++            return -EINVAL;
++        }
++    }
++
++    /* disabled for one instr after STI, MOV/POP SS, see hvf_store_events() */
++    if (int_state.interrupt_shadow) {
++        env->hflags |= HF_INHIBIT_IRQ_MASK;
++    } else {
++        env->hflags &= ~HF_INHIBIT_IRQ_MASK;
++    }
++
++    /* see kvm_get_vcpu_events(), hvf_store_events() */
++    if (int_state.nmi_masked) {
++        env->hflags2 |= HF2_NMI_MASK;
++    } else {
++        env->hflags2 &= ~HF2_NMI_MASK;
++    }
++
++    /* HV_REGISTER_PENDING_EVENT0: pending exception not yet injected */
++    if (pending_exc.event_pending) {
++        env->exception_pending     = 1;
++        env->exception_nr          = pending_exc.vector;
++        env->has_error_code        = pending_exc.deliver_error_code;
++        env->error_code            = pending_exc.error_code;
++        env->exception_has_payload = (pending_exc.exception_parameter != 0);
++        env->exception_payload     = pending_exc.exception_parameter;
++    }
++
++    /*
++     * Ignoring HV_REGISTER_PENDING_EVENT1, virtualization fault events, MSHV
++     * does not support nested virtualization.
++     */
++
++    return 0;
++}
++
++static int set_vcpu_events(const CPUState *cpu)
++{
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++    union hv_x64_pending_interruption_register pending_int = { 0 };
++    union hv_x64_interrupt_state_register int_state = { 0 };
++    union hv_x64_pending_exception_event pending_exc = { 0 };
++    struct hv_register_assoc assocs[3];
++    int ret;
++
++    /* build pending_int from CPUX86State */
++    if (env->exception_injected) {
++        pending_int.interruption_pending = 1;
++        pending_int.interruption_type    = MSHV_HV_INTERRUPTION_TYPE_HW_EXC;
++        pending_int.interruption_vector  = env->exception_nr;
++        pending_int.deliver_error_code   = env->has_error_code;
++        pending_int.error_code           = env->error_code;
++    } else if (env->nmi_injected) {
++        pending_int.interruption_pending = 1;
++        pending_int.interruption_type    = MSHV_HV_INTERRUPTION_TYPE_NMI;
++        pending_int.interruption_vector  = EXCP02_NMI;
++    } else if (env->interrupt_injected >= 0) {
++        pending_int.interruption_pending = 1;
++        pending_int.interruption_type    = env->soft_interrupt
++            ? MSHV_HV_INTERRUPTION_TYPE_SW_INT
++            : MSHV_HV_INTERRUPTION_TYPE_EXT_INT;
++        pending_int.interruption_vector  = env->interrupt_injected;
++    }
++
++    /* build int_state, normalize to bool */
++    int_state.interrupt_shadow = !!(env->hflags  & HF_INHIBIT_IRQ_MASK);
++    int_state.nmi_masked       = !!(env->hflags2 & HF2_NMI_MASK);
++
++    /* build pending_exc */
++    if (env->exception_pending) {
++        pending_exc.event_pending       = 1;
++        pending_exc.vector              = env->exception_nr;
++        pending_exc.deliver_error_code  = env->has_error_code;
++        pending_exc.error_code          = env->error_code;
++        pending_exc.exception_parameter = env->exception_payload;
++    }
++
++    assocs[0].name = HV_REGISTER_PENDING_INTERRUPTION;
++    assocs[0].value.reg64 = pending_int.as_uint64;
++    assocs[1].name = HV_REGISTER_INTERRUPT_STATE;
++    assocs[1].value.reg64 = int_state.as_uint64;
++    assocs[2].name = HV_REGISTER_PENDING_EVENT0;
++    assocs[2].value.pending_exception_event = pending_exc;
++
++    ret = mshv_set_generic_regs(cpu, assocs, ARRAY_SIZE(assocs));
++    if (ret < 0) {
++        error_report("failed to set vcpu event registers");
++        return -1;
++    }
++
++    return 0;
++}
++
+ int mshv_arch_load_vcpu_state(CPUState *cpu)
+ {
+     int ret;
+@@ -559,6 +717,11 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
+         return ret;
+     }
+ 
++    ret = get_vcpu_events(cpu);
++    if (ret < 0) {
++        return ret;
++    }
++
+     return 0;
+ }
+ 
+@@ -1100,6 +1263,11 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
+         return ret;
+     }
+ 
++    ret = set_vcpu_events(cpu);
++    if (ret < 0) {
++        return ret;
++    }
++
+     return 0;
+ }
+ 
 -- 
 2.54.0
 
