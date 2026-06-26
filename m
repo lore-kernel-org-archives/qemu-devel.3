@@ -4,97 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B300FCDE008
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8A9ACDE008
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:22:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3eR-0000Dh-8d; Fri, 26 Jun 2026 06:19:11 -0400
+	id 1wd3ez-0003FC-09; Fri, 26 Jun 2026 06:19:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3eL-0007uo-Fz
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:05 -0400
+ id 1wd3ew-000365-Tq
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3eJ-0005Ly-Dq
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:05 -0400
+ id 1wd3ev-0005QI-2v
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469142;
+ s=mimecast20190719; t=1782469180;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0u6ciU5ce4UtTHQKayfuwLUVLLB0WirqzZ3GmCWZzlE=;
- b=Qs+XDaKjM4luc/hIAhoKKVNBkMZU5qgULliVTgFk+IH0SV3oIYy8F2nRtzDXbocz8tfEWx
- N87UQeBoflp4LOHqcr7aMSywDaNp0nb4oaJNdhPKkAdx22LtLD3zuOZ5blk9IxLcl5XyfK
- bmpo+N7/4+MVHFDSoCK0+6SevL1iZcg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jDJzWr4DPm70qXaqFLhNskSOs+Tj3s84msP9xo6bd4U=;
+ b=Ye2SFDiK6atcZEoph9p3eejBcIH1ikXhieDD1M8Zw3HyM2iWUtoCO8/VRKc9+9IOfWQ4bx
+ k2WIvnq5vJwenU7jctgSd1na6dYXvVUvGf/zaf0xe3tmxYUhcosjz2M0XzJ7ES7k1ot1c/
+ 2LOj8/I0Y0vwjvUXSinXMqaYWq5cWBQ=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-218-tvjc_KBRM4aBdWoqIbpd-A-1; Fri, 26 Jun 2026 06:19:01 -0400
-X-MC-Unique: tvjc_KBRM4aBdWoqIbpd-A-1
-X-Mimecast-MFC-AGG-ID: tvjc_KBRM4aBdWoqIbpd-A_1782469140
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-490b61243easo9180635e9.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:19:01 -0700 (PDT)
+ us-mta-582-dstnw27lP7ON8iN9-i7rgA-1; Fri, 26 Jun 2026 06:19:39 -0400
+X-MC-Unique: dstnw27lP7ON8iN9-i7rgA-1
+X-Mimecast-MFC-AGG-ID: dstnw27lP7ON8iN9-i7rgA_1782469178
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4924d5231daso6080065e9.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:19:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469140; x=1783073940; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469178; x=1783073978; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0u6ciU5ce4UtTHQKayfuwLUVLLB0WirqzZ3GmCWZzlE=;
- b=I/BNsW3pNc2TB0YREV2qBMazWGv+7emE7HiRLE7c1kAVhcMfXMMoH4UtIniWxCy7Cq
- R6JG1tOvXGoN6LmqaBxSQyz8ScpNvasbJHVVL1uJ0Ha9DbtvJ78kIzEbjIB4CUP9v7bh
- ZPfAEkS3th/+IA7xND+Z+JawcAVUQrxcypB0erqrtGtDYyuHrzAhA7aDHNCHcUhMdmGF
- cW5MCBMHEIr4n/zTWJkWdxLlydVsOpU2bNGOZgTbeYmACOqy4dRuVpUG49F7bIIafknG
- PML4QM5nDJgX2HeqSHTri6hJpT/sB2FihUokl+RasTRT0hvCTWFteQfC52BSADFWDjlo
- mW0A==
+ bh=jDJzWr4DPm70qXaqFLhNskSOs+Tj3s84msP9xo6bd4U=;
+ b=r5Y6rxJkLplO3gmTgiCmrI6SlmLNhEMgOuyt/hunf9XlWB5de5DnlfzamRNeT3eg5y
+ vHLd6bwr33Tviu41VQfsvValUDHmRyZ6qsrZR4lxsFNSFbm5xoIhFkUc+cP625VvcE7h
+ Qi6jX/TGdW7Wr17mnhqFxKRzzwUO+jrfRkhSE6BI3tG0bL7f9AJbHFojNTzUXDKgG49A
+ vCMNB9KLe2Gz7/LhO/pIl7bNRO7Q+cdk14nsB0tSv9TIeEXUlVzeViYFyeXF5YUy/9of
+ 4MXgryKeTNV2qUDHXrSJXS+p0C3HazdxjibnJRHvVnT/zBP5TY69rTHZV6AEm8AiuQJC
+ Eekw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469140; x=1783073940;
+ d=1e100.net; s=20251104; t=1782469178; x=1783073978;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=0u6ciU5ce4UtTHQKayfuwLUVLLB0WirqzZ3GmCWZzlE=;
- b=tER9VI4skLiOCtk5XsLqmySMcXb5IgljwVHM7FspAY4rhEk9WnDc7Ma/c83SgGP/6l
- p4H6KoFxgMwp71SyCzGyUvQJa9yNTCakPsWLUEouqPvbAiapBK1UZONTN3VC5hEa6es7
- poJEHxs3hDNan17WF9aEF2pPun98QJ1jADYEs3gVz/ZrX7VaEoHppjbQSWESo6Dp6EXp
- KuoINgQWfpmUv/tkYkj1PPf3/b2lPqRypaCl7SXbllhP55PgMxEu9NuVTPN9Xf9wksPf
- GgmrvOmx8n3rQQ9cz/eHvOisobONjY5gMlgHlIGkl+izst0f/2o1sGN16kXb7RngHyuZ
- KyTg==
-X-Gm-Message-State: AOJu0YyJuejjY3oXg+BoCRft/xCZvA/6utLP5aBo9+aqJHnsGh0sxOcA
- 5Jg8VElKBo7/AVDargOfsC/p4J70mGDcojaGssMD/FAsQheDuMp4BmvEJ7iX2zNbaaayl6cfSjS
- ShMHX3vI48FHYc28vVbsL2QJxckE2b2GF9j/hD6xCbPHDCP+Psmb71iFljsg9zEk8tuU4yf4ka/
- ClMgW6QOBO3Sx+AfIy/s6s8vuPtBo/tVMQtH/fa5Hl
-X-Gm-Gg: AfdE7cm0SNe2G95MdWtdjDvcz2l+F1sV5Hxwpj+8FQmAzsLypyk3UIjUxemsVz/7nBK
- WQeXxtd1nQ2ZHc0ifvG575HnYukuFBfagqt6V1Z8U+APkdRXKjVlqTh2mGTvxTQa5LIKwukJgRU
- iFA8lO6Al3Wt2VMz0zKybn9KqaDQ3m0jLKBpXIKlLo8AVAuS/Yw4sVjrRhz9cz4eh2YWX4H+som
- 0+A47Qo5VkGMi8K4BJJSpHKLO+yj+XklXAwOXNjtDr/e+Ua1JCQ/nMs5134eDY1ckN5Q1bacKQJ
- y2wct7WD/aARxHvs2YTqy3DW69qsQywZ+aMEI60y/aSTqKABzr9z51pABGJcoyGzYXwkU/0YbOA
- iFLNLnFSiXApZzW5V9cSUYmFg5sITn7Moa52RsW68RysrhyaTPa9cxxigDeSgF2YBu0eIB5fbI6
- 8K64b9u8Jte1xsljvs
-X-Received: by 2002:a05:600c:3f06:b0:492:33a8:5499 with SMTP id
- 5b1f17b1804b1-492668858a8mr93112855e9.17.1782469139907; 
- Fri, 26 Jun 2026 03:18:59 -0700 (PDT)
-X-Received: by 2002:a05:600c:3f06:b0:492:33a8:5499 with SMTP id
- 5b1f17b1804b1-492668858a8mr93112185e9.17.1782469139279; 
- Fri, 26 Jun 2026 03:18:59 -0700 (PDT)
+ bh=jDJzWr4DPm70qXaqFLhNskSOs+Tj3s84msP9xo6bd4U=;
+ b=o8yY+gK8swcC07KUXK7yO68rDDpcOYObaMAOS263nnMYGHf5LOiQNcBdPokOL7VKK6
+ LrjlzZbAKVrnuWzvcLLkDHEdUQup5vB9Yu38LcI5fLAuVjEhZrsPCVvmes6c1gf/DIyW
+ Jo981vYyxxUv/VhZ+/bM4vB3BnUtPYzyMOJ82TY+XS6G4qOGmj4eWG5qgTid+8ChuaHX
+ 5DloAhQaLlJjT/1Yo2vUNle+p5SAcR11LqNCaicsSTiqB0ihnisiNiRve1OVytYtLUEt
+ L319rlJyzlgFHbCR4IX58H2uQKEw9MSZ8j6e21ebYb44004PYwwLaOuFFthrK3/0wYmV
+ /KKQ==
+X-Gm-Message-State: AOJu0YxtL2n49XShaAfcQ2aQ69wLcYgQ+gci1Ha9UG47bCDAF58FV7W6
+ XOBbgcEyfDT0qQdMgYhjBjj71s1q7gA3otE1GgrQdBTsn+HlJ9cxshSOFvsDMvOaW9glS9X+pYo
+ zvW55y51YDv1h1mhyohSxmXDffXKVm7MED8BM1tBV0/tPjlErFsirgTtyhtFMkTBI12ANCNHOGk
+ dsW3DyDhKQWuRkg2XEV/3PxpKfoID7yCc59V59R2BB
+X-Gm-Gg: AfdE7cnwYWUzYqTm8XBE93DVV67onVF/15xZlK+qo+qPGiNQpctPWCsO9XMs96DyhXd
+ 2oOZUtTOInxD8WPopNJmj+qwhZutMB7iB3/CNV+1XRlTGyiEvp4yWzctG+LuGqNV/Ak7VhJ+xT6
+ HfRlk0UbHx2mY/1mi6aHwCwuYrt5zzU+g17FA2koLhTKZNB9ExosrGlYZ4LtqUA/Nn7DEm0Lz2y
+ B7BTq3w1Tva1xNsYXODFBZJZoKedOOApYwo0Bbi1GFCnD48QZsZheISHIrFa+rAuVMEpUWLLsLV
+ lZ8HloWmPCVJOlgT6IQvRt5OerhzDn9VC9OsEVpwJ3WNKk5u6XNGzJNJ/5N5bgl/gmvvPC2gIP6
+ x9SkvmndX9EPdDNIu4B5/3ZXPu8CxacwvpkhIC7/Nc40Vnfz+SlvT0YUE8xsOmapcGq1HG86pML
+ Eaeg1FFlaP6pMwiT79
+X-Received: by 2002:a05:600c:3b17:b0:490:b7e6:bd1d with SMTP id
+ 5b1f17b1804b1-49266874055mr95173075e9.16.1782469177868; 
+ Fri, 26 Jun 2026 03:19:37 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b17:b0:490:b7e6:bd1d with SMTP id
+ 5b1f17b1804b1-49266874055mr95172445e9.16.1782469177285; 
+ Fri, 26 Jun 2026 03:19:37 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49269086ab7sm96897515e9.13.2026.06.26.03.18.58
+ 5b1f17b1804b1-49268fe949csm79379145e9.5.2026.06.26.03.19.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:18:58 -0700 (PDT)
+ Fri, 26 Jun 2026 03:19:35 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PULL 25/45] accel/mshv: enable dirty page tracking
-Date: Fri, 26 Jun 2026 12:17:28 +0200
-Message-ID: <20260626101748.1728079-26-pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 40/45] qemu-options: Add confidential-guest-support to machine
+ options
+Date: Fri, 26 Jun 2026 12:17:43 +0200
+Message-ID: <20260626101748.1728079-41-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
 References: <20260626101748.1728079-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -120,291 +123,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-This change introduces the functions required to perform dirty page
-tracking to speed up migrations. We are using the sync, global_start,
-and global_stop hooks.
+"confidential-guest-support" is the recommended property to configure
+machine with confidential computing technology instead of
+"memory-encryption".
 
-The sync is implemented in batches.
+Add "confidential-guest-support" to machine options and call out
+explicitly "memory-encryption" is the alias of it and not recommended.
 
-Before we can disable the dirty page tracking we have to set all dirty bits.
-
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260417105618.3621-35-magnuskulke@linux.microsoft.com
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://lore.kernel.org/r/20260512084458.622465-4-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/mshv_int.h |   4 +
- accel/mshv/mem.c          | 211 ++++++++++++++++++++++++++++++++++++++
- accel/mshv/mshv-all.c     |   3 +
- 3 files changed, 218 insertions(+)
+ qemu-options.hx | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index ac26bfafe48..3bdf16ecd35 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -17,6 +17,7 @@
- #include "hw/hyperv/hvhdk.h"
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 03456527910..a8ee5d14e14 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -36,7 +36,8 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+     "                dea-key-wrap=on|off controls support for DEA key wrapping (default=on)\n"
+     "                suppress-vmdesc=on|off disables self-describing migration (default=off)\n"
+     "                nvdimm=on|off controls NVDIMM support (default=off)\n"
+-    "                memory-encryption=<id> memory encryption object to use (default=none)\n"
++    "                confidential-guest-support=<id> specifies confidential guest support object (default=none)\n"
++    "                memory-encryption=<id> (memory-encryption is the alias of confidential-guest-support, recommend to use confidential-guest-support)\n"
+     "                hmat=on|off controls ACPI HMAT support (default=off)\n"
+     "                spcr=on|off controls ACPI SPCR support (default=on)\n"
+ #ifdef CONFIG_POSIX
+@@ -100,8 +101,12 @@ SRST
+     ``nvdimm=on|off``
+         Enables or disables NVDIMM support. The default is off.
  
- #define MSHV_MSR_ENTRIES_COUNT 64
-+#define MSHV_DIRTY_PAGES_BATCH_SIZE 0x10000
++    ``confidential-guest-support=<id>``
++        confidential guest support object to use. The default is none.
++
+     ``memory-encryption=<id>``
+-        Memory encryption object to use. The default is none.
++        The alias of ``confidential-guest-support``. Recommend to use
++        confidential-guest-support.
  
- typedef struct hyperv_message hv_message;
- 
-@@ -109,6 +110,9 @@ int mshv_guest_mem_write(uint64_t gpa, const uint8_t *data, uintptr_t size,
-                          bool is_secure_mode);
- void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-                        bool add);
-+void mshv_log_sync(MemoryListener *listener, MemoryRegionSection *section);
-+bool mshv_log_global_start(MemoryListener *listener, Error **errp);
-+void mshv_log_global_stop(MemoryListener *listener);
- 
- /* msr */
- typedef struct MshvMsrEntry {
-diff --git a/accel/mshv/mem.c b/accel/mshv/mem.c
-index e55c38d4db9..820f87ef0c9 100644
---- a/accel/mshv/mem.c
-+++ b/accel/mshv/mem.c
-@@ -12,10 +12,13 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
-+#include "qapi/error.h"
- #include "linux/mshv.h"
- #include "system/address-spaces.h"
- #include "system/mshv.h"
- #include "system/mshv_int.h"
-+#include "hw/hyperv/hvhdk_mini.h"
-+#include "system/physmem.h"
- #include "exec/memattrs.h"
- #include <sys/ioctl.h>
- #include "trace.h"
-@@ -211,3 +214,211 @@ void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-         abort();
-     }
- }
-+
-+static int enable_dirty_page_tracking(int vm_fd)
-+{
-+    int ret;
-+    struct hv_input_set_partition_property in = {0};
-+    struct mshv_root_hvcall args = {0};
-+
-+    in.property_code = HV_PARTITION_PROPERTY_GPA_PAGE_ACCESS_TRACKING;
-+    in.property_value = 1;
-+
-+    args.code = HVCALL_SET_PARTITION_PROPERTY;
-+    args.in_sz = sizeof(in);
-+    args.in_ptr = (uint64_t)&in;
-+
-+    ret = mshv_hvcall(vm_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to enable dirty page tracking: %s",
-+                     strerror(errno));
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+/*
-+ * Retrieve dirty page bitmap for a GPA range, clearing the dirty bits
-+ * atomically. Large ranges are handled in batches.
-+ */
-+static int get_dirty_log(int vm_fd, uint64_t base_pfn, uint64_t page_count,
-+                         unsigned long *bitmap, size_t bitmap_size)
-+{
-+    uint64_t batch, bitmap_offset, completed = 0;
-+    struct mshv_gpap_access_bitmap args = {0};
-+    int ret;
-+
-+    QEMU_BUILD_BUG_ON(MSHV_DIRTY_PAGES_BATCH_SIZE % BITS_PER_LONG != 0);
-+    assert(bitmap_size >= ROUND_UP(page_count, BITS_PER_LONG) / 8);
-+
-+    while (completed < page_count) {
-+        batch = MIN(MSHV_DIRTY_PAGES_BATCH_SIZE, page_count - completed);
-+        bitmap_offset = completed / BITS_PER_LONG;
-+
-+        args.access_type = MSHV_GPAP_ACCESS_TYPE_DIRTY;
-+        args.access_op   = MSHV_GPAP_ACCESS_OP_CLEAR;
-+        args.page_count  = batch;
-+        args.gpap_base   = base_pfn + completed;
-+        args.bitmap_ptr  = (uint64_t)(bitmap + bitmap_offset);
-+
-+        ret = ioctl(vm_fd, MSHV_GET_GPAP_ACCESS_BITMAP, &args);
-+        if (ret < 0) {
-+            error_report("Failed to get dirty log (base_pfn=0x%" PRIx64
-+                         " batch=%" PRIu64 "): %s",
-+                         base_pfn + completed, batch, strerror(errno));
-+            return -1;
-+        }
-+        completed += batch;
-+    }
-+
-+    return 0;
-+}
-+
-+bool mshv_log_global_start(MemoryListener *listener, Error **errp)
-+{
-+    int ret;
-+
-+    ret = enable_dirty_page_tracking(mshv_state->vm);
-+    if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to enable dirty page tracking");
-+        return false;
-+    }
-+    return true;
-+}
-+
-+static int disable_dirty_page_tracking(int vm_fd)
-+{
-+    int ret;
-+    struct hv_input_set_partition_property in = {0};
-+    struct mshv_root_hvcall args = {0};
-+
-+    in.property_code = HV_PARTITION_PROPERTY_GPA_PAGE_ACCESS_TRACKING;
-+    in.property_value = 0;
-+
-+    args.code = HVCALL_SET_PARTITION_PROPERTY;
-+    args.in_sz = sizeof(in);
-+    args.in_ptr = (uint64_t)&in;
-+
-+    ret = mshv_hvcall(vm_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to disable dirty page tracking: %s",
-+                     strerror(errno));
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static int set_dirty_pages(int vm_fd, uint64_t base_pfn, uint64_t page_count)
-+{
-+    uint64_t batch, completed = 0;
-+    unsigned long bitmap[MSHV_DIRTY_PAGES_BATCH_SIZE / BITS_PER_LONG];
-+    struct mshv_gpap_access_bitmap args = {0};
-+    int ret;
-+
-+    while (completed < page_count) {
-+        batch = MIN(MSHV_DIRTY_PAGES_BATCH_SIZE, page_count - completed);
-+
-+        args.access_type = MSHV_GPAP_ACCESS_TYPE_DIRTY;
-+        args.access_op   = MSHV_GPAP_ACCESS_OP_SET;
-+        args.page_count  = batch;
-+        args.gpap_base   = base_pfn + completed;
-+        args.bitmap_ptr  = (uint64_t)bitmap;
-+
-+        ret = ioctl(vm_fd, MSHV_GET_GPAP_ACCESS_BITMAP, &args);
-+        if (ret < 0) {
-+            error_report("Failed to set dirty pages (base_pfn=0x%" PRIx64
-+                         " batch=%" PRIu64 "): %s",
-+                         base_pfn + completed, batch, strerror(errno));
-+            return -1;
-+        }
-+        completed += batch;
-+    }
-+
-+    return 0;
-+}
-+
-+static bool set_dirty_bits_cb(Int128 start, Int128 len, const MemoryRegion *mr,
-+                              hwaddr offset_in_region, void *opaque)
-+{
-+    int ret, *errp = opaque;
-+    hwaddr gpa, size;
-+    uint64_t page_count, base_pfn;
-+
-+    gpa = int128_get64(start);
-+    size = int128_get64(len);
-+    page_count = size >> MSHV_PAGE_SHIFT;
-+    base_pfn = gpa >> MSHV_PAGE_SHIFT;
-+
-+    if (!mr->ram || mr->readonly) {
-+        return false;
-+    }
-+
-+    if (page_count == 0) {
-+        return false;
-+    }
-+
-+    ret = set_dirty_pages(mshv_state->vm, base_pfn, page_count);
-+
-+    /* true aborts the iteration, which is what we want if there's an error */
-+    if (ret < 0) {
-+        *errp = ret;
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
-+void mshv_log_global_stop(MemoryListener *listener)
-+{
-+    int err = 0;
-+    /* MSHV requires all dirty bits to be set before disabling tracking. */
-+    FlatView *fv = address_space_to_flatview(&address_space_memory);
-+    flatview_for_each_range(fv, set_dirty_bits_cb, &err);
-+
-+    if (err < 0) {
-+        error_report("Failed to set dirty bits before disabling tracking");
-+    }
-+
-+    disable_dirty_page_tracking(mshv_state->vm);
-+}
-+
-+void mshv_log_sync(MemoryListener *listener, MemoryRegionSection *section)
-+{
-+    hwaddr size, start_addr, mr_offset;
-+    uint64_t page_count, base_pfn;
-+    size_t bitmap_size;
-+    unsigned long *bitmap;
-+    ram_addr_t ram_addr;
-+    int ret;
-+    MemoryRegion *mr = section->mr;
-+
-+    if (!memory_region_is_ram(mr) || memory_region_is_rom(mr)) {
-+        return;
-+    }
-+
-+    size = align_section(section, &start_addr);
-+    if (!size) {
-+        return;
-+    }
-+
-+    page_count = size >> MSHV_PAGE_SHIFT;
-+    base_pfn = start_addr >> MSHV_PAGE_SHIFT;
-+    bitmap_size = ROUND_UP(page_count, BITS_PER_LONG) / 8;
-+    bitmap = g_malloc0(bitmap_size);
-+
-+    ret = get_dirty_log(mshv_state->vm, base_pfn, page_count, bitmap,
-+                        bitmap_size);
-+    if (ret < 0) {
-+        g_free(bitmap);
-+        return;
-+    }
-+
-+    mr_offset = section->offset_within_region + start_addr -
-+                section->offset_within_address_space;
-+    ram_addr = memory_region_get_ram_addr(mr) + mr_offset;
-+
-+    physical_memory_set_dirty_lebitmap(bitmap, ram_addr, page_count);
-+    g_free(bitmap);
-+}
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index d939982eb79..9452504ac28 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -477,6 +477,9 @@ static MemoryListener mshv_memory_listener = {
-     .region_del = mem_region_del,
-     .eventfd_add = mem_ioeventfd_add,
-     .eventfd_del = mem_ioeventfd_del,
-+    .log_sync = mshv_log_sync,
-+    .log_global_start = mshv_log_global_start,
-+    .log_global_stop = mshv_log_global_stop,
- };
- 
- static MemoryListener mshv_io_listener = {
+     ``hmat=on|off``
+         Enables or disables ACPI Heterogeneous Memory Attribute Table
 -- 
 2.54.0
 
