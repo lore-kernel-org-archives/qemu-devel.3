@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A11A4CD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75F6DCDE008
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:19:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3eO-0008Fx-1u; Fri, 26 Jun 2026 06:19:08 -0400
+	id 1wd3d6-0006Fb-1N; Fri, 26 Jun 2026 06:17:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3e1-0007Qf-7j
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:46 -0400
+ id 1wd3d4-0006FK-H9
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:17:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3dz-0005Cf-BD
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:44 -0400
+ id 1wd3d1-00054R-On
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:17:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469118;
+ s=mimecast20190719; t=1782469062;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PUsDLLw3f+BtqliRgCOEc8pOa9czxBjabKlNn2cuJDs=;
- b=cnn5DaqXQXilmmXekeVD+YW/yEdw+xwrjFIG9s9UX0qtLzYpvlitubLNM9Socxs4AwWQeF
- I//wQwyAaBLP4rZdldPuxAYS1dxxGZb6Rddw47VEMsFy9eX+KO49ah4xZr1C0kIe2MJhb7
- K+jj+Ou6GDS6+u+4Blf9Df9EJybZH+M=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OXLdP7Z/ImFU396DY/eG/3Y3KVTSa70n4PlfMSVXj5A=;
+ b=gTQVmP+0tT26FqFDTLWvGuXPCqw3XfpybuRp7fZCKkfyIiMb/EoYOrmynCerc19PnsCUCJ
+ bts5XL0Eb5hOFZAMFkZZzSgGZzP50jiRgEHfIXogc+0uRnyFyeO1dmAOPiQOcFOndrJSoS
+ iwiNbVHl19D4SA1wSdnLDLzm2jDbTic=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-WiQRO7l_P-SaTGhnwYSHtQ-1; Fri, 26 Jun 2026 06:18:37 -0400
-X-MC-Unique: WiQRO7l_P-SaTGhnwYSHtQ-1
-X-Mimecast-MFC-AGG-ID: WiQRO7l_P-SaTGhnwYSHtQ_1782469116
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-490b7959b9fso6343145e9.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:18:37 -0700 (PDT)
+ us-mta-556-_8ylBa-YMlS7vEz_0eF0Jg-1; Fri, 26 Jun 2026 06:17:40 -0400
+X-MC-Unique: _8ylBa-YMlS7vEz_0eF0Jg-1
+X-Mimecast-MFC-AGG-ID: _8ylBa-YMlS7vEz_0eF0Jg_1782469060
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4923411f041so8754865e9.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:17:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469116; x=1783073916; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469060; x=1783073860; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PUsDLLw3f+BtqliRgCOEc8pOa9czxBjabKlNn2cuJDs=;
- b=UKL3mqKtiBrtbPZjicxJ1uQlt8sXGUXzEcutOeuMSlaaQ/h3n194Jcu79NpQPmnVNi
- YSpQBabD3lPS6YI0/h0ugKRg5EdTNakGeehFXnhC+LuahghDWWUb2CgDJvm3HCXsbq/o
- IlR1mWPVoPiVD9tZRp0FSd0hB3lPIRsJOeQYX9iHONi2J/TnrGFT9JgddiZlZ4H/SPEs
- da9rcaI+QntYv9oReIn3SyE7M0gPjpXQlqL3wlAJkAgSLR/r9OpBV7LGnq2wVzLAFqw6
- QHjVjhiiyQBifloRZHa+BN2PNIpSCaq/B9O4pgn5vRmNCrhquLsJgTa36zstdwt1aHEz
- oO4Q==
+ bh=OXLdP7Z/ImFU396DY/eG/3Y3KVTSa70n4PlfMSVXj5A=;
+ b=NPZs/KFUOejvXsJHXNQ22+3Fyq51PjBGdgtnYgJNJhJisXU/+d4EHAwbhsZYBlu747
+ VM94wTFbT0g6ahhmmkru17jQwKfi7jHYHQNxTTCwEEZ/PQDlyVexUmfOrzHxv721WlrR
+ T4wIjFUvKs4h+Zfd78un0wBrVijwVwouah30IkM0lKhCdXZt5mOi4zrDV86+YSyEEcqz
+ TWFIaIKbMDpXFYP141F1N8YwgBK/dCEht+yTkoyLTPVQJj+uVA3z9CUdU1U+tsbD3/8r
+ gYnnR06ztzDJxwAWvTRkaJL/D/CEtkKExMqVlWDi4vCZja3jJ36PCwm49V1Jg4mN2aPx
+ QduA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469116; x=1783073916;
+ d=1e100.net; s=20251104; t=1782469060; x=1783073860;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=PUsDLLw3f+BtqliRgCOEc8pOa9czxBjabKlNn2cuJDs=;
- b=KxztAbWArcl7sH3NODvcrnACPKk11racgn+H5MgulLN0BsQWZUjYK+XGCwyS6zK4SY
- qRjf/+/LiYBfx511d+oVhqsoT/e5E3sUu3h8QP0xOERAF1nQWMwPMw+zHBzGGR9leXk8
- sEXLj29gfT5UeQn9Lzrr7z+qx3olUx++d8R5L0MJQwWtlALhhdcv9Fzk0UBrYURRokNq
- frfbcRqe40O5OXQDR1KMIDBoAD+k/fvgaC8FYIuUTalvolO28Pmomup55He8PdDCgkCJ
- rVXumthhzjNHFVN2L2lTlEluCivbg/UQ1M9jKId/6DOoWtHCQGNsKHyUbyLZBpFWNyKX
- H0Mw==
-X-Gm-Message-State: AOJu0YwPHn9QsBFL5S/7mFhNVmZ4jvt0f1oVricFEtminUeuOFARMyym
- b+65T/SbTpsJ/ZBk4+pWkEAGmqfjxXV++Qbegghv+56JRBGIl5MOXeRDZHzW+mC2MXzpEWBXe/8
- VOTOKi2bzoH/x9we2c5rdESHW3zijvFOuqYYusBwkQf273OUVzzeQqvDUrUZh6NDfs4Lf5EiWR4
- 9WibLu/9L1YfKZpfKwojYDG55s7oJC/7TZglt0HijI
-X-Gm-Gg: AfdE7cnDA2yEK2wnkJwnnHgMOaGxWaRyqjn0fhh3+paj0vvfWZ6pPBANuaSUwscrTr5
- Q16dQT4cuP3QUZ4PGcEmzcxZc2Cc2kYdPbWrAZYgaQuLZWFWdXaoDpt79FKWwkNYq0LmXkjE4py
- +XsWA+Lv/K1+EU/Pdl6kNQu8/W4+0BgW/AWWPNzqfM4hDsHuXNjkGIrY47fi1NXBsCf5+PpdsaL
- fpAIS/TfqzTwINucZANrV4splDKCCriLkHLkEQR+z5K4r7oCjeL3F9OcC+Xywmu0ZIYMSX9Lv2C
- qjCLQoInZ2lLCFE4p1R8AWmr20VN2wOIDQ2ifUfrQwbMzqpzgZyr7eKYlGZ6GH6AnSQh7gYMEGY
- t4UgdKdSUpsiFiDWM8NTHNVDWJgQ9Zzss5pkcShFG/8l4PSshLmfqLfQgxJVAqAkzocEKQysiQP
- Nu8rAuw/1ldrpY0Mm7
-X-Received: by 2002:a05:600c:3f18:b0:490:c6c2:52 with SMTP id
- 5b1f17b1804b1-4926686b4c0mr91158765e9.3.1782469115641; 
- Fri, 26 Jun 2026 03:18:35 -0700 (PDT)
-X-Received: by 2002:a05:600c:3f18:b0:490:c6c2:52 with SMTP id
- 5b1f17b1804b1-4926686b4c0mr91158325e9.3.1782469115147; 
- Fri, 26 Jun 2026 03:18:35 -0700 (PDT)
+ bh=OXLdP7Z/ImFU396DY/eG/3Y3KVTSa70n4PlfMSVXj5A=;
+ b=Ex7+J5CcyHz7mqfwvSFy3jH+OhXzKFbN3YhjrIaf0bdxP0HhdCirEngYF57g9QNySx
+ 5F5AlKUwJ/tYsit0s4iHov3sZC+fIPzx612Px8l2HUT1/5Jhj6izmP2MxlU2qsEUDBAg
+ xuJYbSxuBedzyWUn/3hht92PYrAlVi4tK56OgjHOABQwP08hDIZuj3/hYwdCnU4ANxU2
+ D66mxidpPox1HxkkwuR0nDCldPaC2qUijOLArdA1ax7ZHzl0fAveKQrtyyWLBLra1afG
+ 9zAtMcBy/Ysj17gh4mtd9DQ1ySVVsBUwi5XzTuJAhQTlb3gEMxoOneyw9bXvorAWC1b6
+ 5eeQ==
+X-Gm-Message-State: AOJu0Yy1tDtMMtVpU0GyFOIqT1TfvODtrL6ypzpLkYbVF3xohKFAP0a/
+ u9K5oWRPY3wgJYvB5fI5Ub9jYv/n32tHxu2M7w7nHig8wP2B2dR6W9d0Pyj+2e9vjfL3L26kR0Y
+ Cb0QJBgMmGwO9hbFHAR+OFfycMfcCoCT4upMj8R+uLZ7O4lM6e/Ns7/Xyntn77spnYNRRwjpi6y
+ xIXOwwO7f5HIgK+ALyTAZpkKAji6QOhQLoRnd+usTs
+X-Gm-Gg: AfdE7cmGiPbc3yae+HY56MSB6hTqr4HVatM8ixack9Vz136/mTI8H1VJwF5ETsqldOb
+ LQaoKb5ZmOYcYCMRcgxYyxynO/96VrNwOy7LLabi8rkviI4OUMG2bF+fo9R+h51/wLuGdgOd7aU
+ FxflvblIcisJw02GMuOv91JYCay5VE09tfgwapfP0FL6Vo3qemkbWHUN0e2TzDuzeJQps6dq6ab
+ IaLxRD+/jdfpul48ep4POfxMHTKpcRiJWeMRgc2nz9XJigLuMZIc2xR3BBt1weqSFTvrN2PRCJN
+ iNEMyGrV3FPiCdhJgeuLfBXg4wn0W+gCIu6mJwCJXw5ySN7mUoTkKn0pVI9fV8cqw24sWsO5VSk
+ kVaaVftkdmb4AOX8fgqkbRaOmWgvry8h6PcfxTNCXVDPT/LmwdKWqqsNtbbozaeHIcUjFeWYRZ1
+ 1KivTwdKXRYfmU9Tjf
+X-Received: by 2002:a05:600c:6309:b0:490:bd1d:4732 with SMTP id
+ 5b1f17b1804b1-4926687e7a7mr82981005e9.23.1782469059534; 
+ Fri, 26 Jun 2026 03:17:39 -0700 (PDT)
+X-Received: by 2002:a05:600c:6309:b0:490:bd1d:4732 with SMTP id
+ 5b1f17b1804b1-4926687e7a7mr82980425e9.23.1782469058929; 
+ Fri, 26 Jun 2026 03:17:38 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492690168d5sm92157205e9.14.2026.06.26.03.18.34
+ 5b1f17b1804b1-49268fc0d36sm112576045e9.2.2026.06.26.03.17.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:18:34 -0700 (PDT)
+ Fri, 26 Jun 2026 03:17:37 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PULL 16/45] accel/mshv: add irq_routes to state
-Date: Fri, 26 Jun 2026 12:17:19 +0200
-Message-ID: <20260626101748.1728079-17-pbonzini@redhat.com>
+Cc: armbru@redhat.com
+Subject: [PATCH 4/6] json-streamer: remove token queue
+Date: Fri, 26 Jun 2026 12:17:24 +0200
+Message-ID: <20260626101727.1727389-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
-References: <20260626101748.1728079-1-pbonzini@redhat.com>
+In-Reply-To: <20260626101727.1727389-1-pbonzini@redhat.com>
+References: <20260626101727.1727389-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -120,110 +120,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Now fully exploit the push parser, feeding it one token at a time
+without having to wait until braces and brackets are balanced.
 
-This change adds fields related to irq routing to the MSHV state, following
-similar fields in the KVM implementation.
+While the nesting counts are retained for error recovery purposes,
+the system can now report the first parsing error without waiting
+for parentheses to be balanced.  This also means that JSON_ERROR
+can be handled in json-parser.c, not json-streamer.c.
 
-So far the fields are only initialized, they will be used in subsequent
-commits for bookkeeping purposes and storing uncommitted interrupt routes.
+After reporting the error, json-streamer.c then enters an error recovery
+mode where subsequent errors are suppressed.  This mimics the previous
+error reporting behavior, but it provides prompt feedback on parsing
+errors.  As an example, here is an example interaction with qemu-ga.
 
-The TYPE_MSHV_ACCEL defines have been moved to the header.
+BEFORE (error reported only once braces are balanced):
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260417105618.3621-8-magnuskulke@linux.microsoft.com
+   >> {"execute":foo
+   >> }
+   << {"error": {"class": "GenericError", "desc": "JSON parse error, invalid keyword 'foo'"}}
+   >> {"execute":"somecommand"}
+   << {"error": {"class": "CommandNotFound", "desc": "The command somecommand has not been found"}}
+
+AFTER (error reported immediately, but similar error recovery as before):
+
+   >> {"execute":foo
+   << {"error": {"class": "GenericError", "desc": "JSON parse error, invalid keyword 'foo'"}}
+   >> }
+   >> {"execute":"somecommand"}
+   << {"error": {"class": "CommandNotFound", "desc": "The command somecommand has not been found"}}
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/mshv.h     |  7 +++++++
- include/system/mshv_int.h |  5 +++++
- accel/mshv/irq.c          | 10 ++++++++++
- accel/mshv/mshv-all.c     |  6 ++----
- 4 files changed, 24 insertions(+), 4 deletions(-)
+ include/qobject/json-parser.h |   3 +-
+ qobject/json-parser.c         |   4 ++
+ qobject/json-streamer.c       | 106 +++++++++++++---------------------
+ 3 files changed, 47 insertions(+), 66 deletions(-)
 
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 8dd77a76241..1e9bcc1b0b6 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -45,7 +45,13 @@ extern bool mshv_allowed;
- #define mshv_msi_via_irqfd_enabled() mshv_enabled()
- #endif
+diff --git a/include/qobject/json-parser.h b/include/qobject/json-parser.h
+index 0cf6932ecdc..3479e637588 100644
+--- a/include/qobject/json-parser.h
++++ b/include/qobject/json-parser.h
+@@ -33,7 +33,8 @@ typedef struct JSONMessageParser {
+     JSONParserContext parser;
+     unsigned int brace_count;
+     unsigned int bracket_count;
+-    GQueue tokens;
++    unsigned int token_count;
++    bool error;
+     uint64_t token_size;
+ } JSONMessageParser;
  
-+#define TYPE_MSHV_ACCEL ACCEL_CLASS_NAME("mshv")
+diff --git a/qobject/json-parser.c b/qobject/json-parser.c
+index 845da3699aa..484956deae4 100644
+--- a/qobject/json-parser.c
++++ b/qobject/json-parser.c
+@@ -673,6 +673,10 @@ QObject *json_parser_feed(JSONParserContext *ctxt, const JSONToken *token,
+ 
+     assert(!ctxt->err);
+     switch (token->type) {
++    case JSON_ERROR:
++        parse_error(ctxt, token, "stray '%s'", token->str);
++        break;
 +
- typedef struct MshvState MshvState;
+     case JSON_END_OF_INPUT:
+         /* Check for premature end of input */
+         if (!g_queue_is_empty(ctxt->stack)) {
+diff --git a/qobject/json-streamer.c b/qobject/json-streamer.c
+index 9e1f650bad8..9526f815f00 100644
+--- a/qobject/json-streamer.c
++++ b/qobject/json-streamer.c
+@@ -1,5 +1,5 @@
+ /*
+- * JSON streaming support
++ * JSON parser - callback interface and error recovery
+  *
+  * Copyright IBM, Corp. 2009
+  *
+@@ -19,23 +19,16 @@
+ #define MAX_TOKEN_COUNT (2ULL << 20)
+ #define MAX_NESTING (1 << 10)
+ 
+-static void json_message_free_tokens(JSONMessageParser *parser)
+-{
+-    JSONToken *token;
+-
+-    while ((token = g_queue_pop_head(&parser->tokens))) {
+-        g_free(token);
+-    }
+-}
+-
+ void json_message_process_token(JSONLexer *lexer, GString *input,
+                                 JSONTokenType type, int x, int y)
+ {
+     JSONMessageParser *parser = container_of(lexer, JSONMessageParser, lexer);
+-    QObject *json = NULL;
+     Error *err = NULL;
+-    JSONToken *token;
+ 
++    parser->token_size += input->len;
++    parser->token_count++;
 +
-+DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE,
-+                         TYPE_MSHV_ACCEL)
-+
- extern MshvState *mshv_state;
++    /* Detect message boundaries for error recovery purposes.  */
+     switch (type) {
+     case JSON_LCURLY:
+         parser->brace_count++;
+@@ -56,19 +49,9 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
+         parser->bracket_count--;
+         break;
+     case JSON_ERROR:
+-        error_setg(&err, "JSON parse error, stray '%s'", input->str);
+-        goto out_emit;
+-    case JSON_END_OF_INPUT:
+-        /*
+-         * Force the parentheses to appear balanced and the queue
+-         * to be emptied, causing a parse error if it wasn't.
+-         */
+-        if (g_queue_is_empty(&parser->tokens)) {
+-            return;
+-        }
+     end_error_recovery:
+         /*
+-         * We goto here due to receiving either JSON_ERROR or a
++         * We come here due to receiving either JSON_ERROR or a
+          * JSON_R{CURLY,SQUARE}) that is known to be unbalanced.
+          * If in error recovery, end it immediately.  If not in
+          * error recovery, json_parser_feed() will raise an error
+@@ -81,49 +64,43 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
+         break;
+     }
  
- /* interrupt */
-@@ -60,6 +66,7 @@ void mshv_irqchip_release_virq(int virq);
- int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
-                                         const EventNotifier *rn, int virq);
- int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
-+void mshv_init_irq_routing(MshvState *s);
+-    /*
+-     * Security consideration, we limit total memory allocated per object
+-     * and the maximum recursion depth that a message can force.
+-     */
+-    if (parser->token_size + input->len + 1 > MAX_TOKEN_SIZE) {
+-        error_setg(&err, "JSON token size limit exceeded");
+-        goto out_emit;
+-    }
+-    if (g_queue_get_length(&parser->tokens) + 1 > MAX_TOKEN_COUNT) {
+-        error_setg(&err, "JSON token count limit exceeded");
+-        goto out_emit;
+-    }
+-    if (parser->bracket_count + parser->brace_count > MAX_NESTING) {
+-        error_setg(&err, "JSON nesting depth limit exceeded");
+-        goto out_emit;
+-    }
++    if (parser->error) {
++        /* error recovery, eat tokens until parentheses balance */
++    } else {
++        /*
++         * Safety consideration, we limit total memory allocated per object
++         * and the maximum nesting depth that a message can force.
++         */
++        if (parser->token_size > MAX_TOKEN_SIZE) {
++            error_setg(&err, "JSON token size limit exceeded");
++        } else if (parser->token_count > MAX_TOKEN_COUNT) {
++            error_setg(&err, "JSON token count limit exceeded");
++        } else if (parser->bracket_count + parser->brace_count > MAX_NESTING) {
++            error_setg(&err, "JSON nesting depth limit exceeded");
++        } else {
++            g_autofree JSONToken *token = json_token(type, x, y, input);
++            QObject *json = json_parser_feed(&parser->parser, token, &err);
++            if (json) {
++                parser->emit(parser->opaque, json, NULL);
++            }
++        }
  
- /* cpuid */
- uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg);
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 1d9902c9bbe..a0fa9a50f76 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -48,6 +48,11 @@ struct MshvState {
-     int nr_as;
-     MshvAddressSpace *as;
-     int fd;
-+    /* irqchip routing */
-+    struct mshv_user_irq_table *irq_routes;
-+    int nr_allocated_irq_routes;
-+    unsigned long *used_gsi_bitmap;
-+    unsigned int gsi_count;
- };
+-    token = json_token(type, x, y, input);
+-    parser->token_size += input->len;
+-
+-    g_queue_push_tail(&parser->tokens, token);
+-
+-    if (parser->brace_count > 0 || parser->bracket_count > 0) {
+-        return;
+-    }
+-
+-    /* Process all tokens in the queue */
+-    while (!g_queue_is_empty(&parser->tokens)) {
+-        token = g_queue_pop_head(&parser->tokens);
+-        json = json_parser_feed(&parser->parser, token, &err);
+-        g_free(token);
+-        if (json || err) {
+-            break;
++        if (err) {
++            parser->emit(parser->opaque, NULL, err);
++            /* start recovery */
++            parser->error = true;
+         }
+     }
  
- typedef struct MshvMsiControl {
-diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
-index 3c238c33c33..82f2022c7c3 100644
---- a/accel/mshv/irq.c
-+++ b/accel/mshv/irq.c
-@@ -396,3 +396,13 @@ int mshv_reserve_ioapic_msi_routes(int vm_fd)
- 
-     return 0;
+-out_emit:
+-    json_parser_reset(&parser->parser);
+-    parser->brace_count = 0;
+-    parser->bracket_count = 0;
+-    json_message_free_tokens(parser);
+-    parser->token_size = 0;
+-    parser->emit(parser->opaque, json, err);
++    if ((parser->brace_count == 0 && parser->bracket_count == 0)
++        || type == JSON_END_OF_INPUT) {
++        json_parser_reset(&parser->parser);
++        parser->error = false;
++        parser->brace_count = 0;
++        parser->bracket_count = 0;
++        parser->token_count = 0;
++        parser->token_size = 0;
++    }
  }
-+
-+void mshv_init_irq_routing(MshvState *s)
-+{
-+    int gsi_count = MSHV_MAX_MSI_ROUTES;
-+
-+    s->irq_routes = g_malloc0(sizeof(*s->irq_routes));
-+    s->nr_allocated_irq_routes = 0;
-+    s->gsi_count = gsi_count;
-+    s->used_gsi_bitmap = bitmap_new(gsi_count);
-+}
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index a6263effa41..2ed3ef4b841 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -43,10 +43,6 @@
- #include <err.h>
- #include <sys/ioctl.h>
  
--#define TYPE_MSHV_ACCEL ACCEL_CLASS_NAME("mshv")
--
--DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE, TYPE_MSHV_ACCEL)
--
- bool mshv_allowed;
+ void json_message_parser_init(JSONMessageParser *parser,
+@@ -133,9 +110,10 @@ void json_message_parser_init(JSONMessageParser *parser,
+ {
+     parser->emit = emit;
+     parser->opaque = opaque;
++    parser->error = false;
+     parser->brace_count = 0;
+     parser->bracket_count = 0;
+-    g_queue_init(&parser->tokens);
++    parser->token_count = 0;
+     parser->token_size = 0;
  
- MshvState *mshv_state;
-@@ -536,6 +532,8 @@ static int mshv_init(AccelState *as, MachineState *ms)
+     json_parser_init(&parser->parser, ap);
+@@ -151,12 +129,10 @@ void json_message_parser_feed(JSONMessageParser *parser,
+ void json_message_parser_flush(JSONMessageParser *parser)
+ {
+     json_lexer_flush(&parser->lexer);
+-    assert(g_queue_is_empty(&parser->tokens));
+ }
  
-     mshv_state = s;
- 
-+    mshv_init_irq_routing(s);
-+
-     register_mshv_memory_listener(s, &s->memory_listener, &address_space_memory,
-                                   0, "mshv-memory");
-     memory_listener_register(&mshv_io_listener, &address_space_io);
+ void json_message_parser_destroy(JSONMessageParser *parser)
+ {
+     json_lexer_destroy(&parser->lexer);
+-    json_message_free_tokens(parser);
+     json_parser_destroy(&parser->parser);
+ }
 -- 
 2.54.0
 
