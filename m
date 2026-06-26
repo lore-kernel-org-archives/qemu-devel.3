@@ -4,97 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40701CDE013
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:18:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8E9DCDE008
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:18:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3d3-0006F6-Uh; Fri, 26 Jun 2026 06:17:45 -0400
+	id 1wd3dQ-0006fO-8u; Fri, 26 Jun 2026 06:18:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3d0-0006EV-06
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:17:42 -0400
+ id 1wd3dK-0006bb-3E
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3cy-00054G-CS
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:17:41 -0400
+ id 1wd3dG-00056T-Jy
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469059;
+ s=mimecast20190719; t=1782469078;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=byDGriG36cugk0iUUjibQB2wOLS/oNL2G+fOn7UmSQs=;
- b=VU4WL31Wkc7E5RGsvyeNc0Rqaexq6NG7yhhoDHNb4HcZy6cNLMTAC+GVdcyjxsSOjuLj5y
- 8hNJffl+6a67ygRk+d5kKuQ/XxtOdHGj8HsTkMogWuQDU+RgyRxzTECPWKIGPQkZXjtvuK
- sezaK00qQNcSzHtNt9WcZ6slAg9BPJk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ThgqOymbZD2sNEeS7GzI8rxbBAg23a2WJXA/vUiJ6AU=;
+ b=DqoVzMvEoSouSnR+kfkPKSiaw46fEJnCO5FdYMSnTx6MmdHyQ3DTwg6RHAleCzNRk9/qvu
+ CvNVgDIMompFtc9ruE41A95kCywrNoS8zV68QDxeCyWakMkg2uIh65vAl1F2/V7YQXUaAO
+ k+qQbeL1m7UYAymLs+jJbQhjMpMWWBc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-384-8_eRVnhbM8urCiXdnTllYw-1; Fri, 26 Jun 2026 06:17:38 -0400
-X-MC-Unique: 8_eRVnhbM8urCiXdnTllYw-1
-X-Mimecast-MFC-AGG-ID: 8_eRVnhbM8urCiXdnTllYw_1782469057
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490b7959b9fso6333565e9.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:17:37 -0700 (PDT)
+ us-mta-176-5LeMvdqpORepGqppNAA5sQ-1; Fri, 26 Jun 2026 06:17:56 -0400
+X-MC-Unique: 5LeMvdqpORepGqppNAA5sQ-1
+X-Mimecast-MFC-AGG-ID: 5LeMvdqpORepGqppNAA5sQ_1782469075
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-490a767b782so6137375e9.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:17:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469057; x=1783073857; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469075; x=1783073875; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=byDGriG36cugk0iUUjibQB2wOLS/oNL2G+fOn7UmSQs=;
- b=RfQcMKVkUlZZygDVQlDCXRtoqz8XtJesjR1/L9EFuauJZlO838d2Bu5fw76fNTzUjG
- FjdV5pCAO3euC/N+offqZrh6hpiIiARNDGcWpqaSQd++ppJGj2yX0z2dc72QRyAQ0KrD
- grDbeNT8yrHCYJe/od3lIPaNBjp2Oy9i5pXHIgHGrTD64vMgKkqKelWJ2Ln1IYEBktrP
- EUIarE/8bnqgB14tXf02CTVi50kfTLzTMnle2nUJm7WX8zQwckUQl7X8gBM2TbWeXgMz
- U3G+p8JgpJB/Y/6dFo8323Gwksj2Hmlx4c5hrph8F0Ib7lZ2Ln3B9V6OvffL1Cklj5IB
- oxuA==
+ bh=ThgqOymbZD2sNEeS7GzI8rxbBAg23a2WJXA/vUiJ6AU=;
+ b=dLajj9ZPiLF7yf9iZ2WIWuAOHtyqStiqCcYyzPLLCZ31LoKVV9WD5imiKazMGzXPfy
+ i5ugHvR3HW6Tnpjos5wLo/ZJsvF/x+6hqqc2GZxb2kz07aDJwMqYyXTeYRK5C1Sg0QSm
+ XaQ9tQmzCUivxbLOfUDNtFuDs38MepuToRTY6KIuS0KxEXzw/RflMARt3aFyO3dgbcFz
+ 5gD1xq3uxqeSETVMgOXf5w6zLLQyKANH1+L+D6e1+PFeQzyUdL1H4o+YZv+hhmNBLapW
+ DJhLx4kSGLakr7rNGqe0VHeI8m0nJ6/V8tBwgRylmOpkVkx3H1HKkdu/pEzHsOlBBF1R
+ eJ9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469057; x=1783073857;
+ d=1e100.net; s=20251104; t=1782469075; x=1783073875;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=byDGriG36cugk0iUUjibQB2wOLS/oNL2G+fOn7UmSQs=;
- b=np0qz9evFof/k/WylFRmDDsKdBJN9rSPiqYMzBAn/frezMKBRpJYWnEadzTDplMSb9
- UcAYFNLwAqckXEerFwGlOAm8nyboyMeArbvWs8BspMYVCpEty77fQZ26vwJtWnKzSTn8
- zWYT/QCn4D0yQa2bqb+58T8G7Hkk8+8QzriHQDD5tihaD9w4ZZZlUEOv2KkYqflwEAp8
- p5VuRpsmSSQLdzv4p5FKw57mkQvZeSqtwiuObagOzmHnLwLQmnWgx1SbLx6KlBUaUC8f
- 0CHmaS5cBII36REJhxIQDDM7SUNg7gr+WqdTISxIIaffzXmdXbQfgkwVhBUtSqNId5K7
- NMwQ==
-X-Gm-Message-State: AOJu0Yz+KZBlrdeb3ALt9OppsEkMvB1qoI1TlkrW/TIDRc4LB8j734d+
- DRc4TTwaAotKZ99g5YkOQH7NTzAaKXCzcpZKYDAQHIsEP3HZSAUBdJASi+WyCLv1Kx68T2dL0/V
- BSHujYoby9WRPyX+5mnlvZNCXE9CBMCrtIxtx7ZhcRAIEp6p8jWNoPiEgnB8pHyY7DUOrvVm4jQ
- 9/M/g9cac1/OO1S5mCQaHFHxk8KchWx+vyj3xUwcoW
-X-Gm-Gg: AfdE7cnw+41i9T/P0PekH9KzyF6OC6EW3j8Ov3kJ2/bUZcppuOn32OikJyPRVn42duq
- Ndw+BgMoJF07SQiJ9rVGGCDxo1LEcZ4fxul9RH5LYu8PFmcwJSnthY826ICAJYfFp901M28y/9Y
- V+U5BxC+Wcl0XMtraAa0e+PbyiRQhB2Q52vPT5taiCehe5wONcnFRU38cnWeWoN0DeKApz27ETN
- YAsV+WYcTg6YhkecuwrF+CJvQSKY4qGkFVEwKfA+J/fHFiWolGqbcCpvO4OmGdzJPNtCMd9vj8e
- TLRe2Unafzmd3V0r6+svNz8RrJt2jZAoBj4mhgJdEbBnwiqB7dpvlVJaBS/lxSe+MSPeJPpeupH
- vVhtDqFacdJHcPmGaTbrMR9xen6DIC2fx5c8U16iXdCdZj7YPPYjMkEjxc9rGOu7Xq+5MQ4jaBL
- tsoWyB5NEmtiv4KgTe
-X-Received: by 2002:a05:600c:c059:20b0:490:adb6:793d with SMTP id
- 5b1f17b1804b1-4926689fb12mr73048235e9.26.1782469056856; 
- Fri, 26 Jun 2026 03:17:36 -0700 (PDT)
-X-Received: by 2002:a05:600c:c059:20b0:490:adb6:793d with SMTP id
- 5b1f17b1804b1-4926689fb12mr73047775e9.26.1782469056328; 
- Fri, 26 Jun 2026 03:17:36 -0700 (PDT)
+ bh=ThgqOymbZD2sNEeS7GzI8rxbBAg23a2WJXA/vUiJ6AU=;
+ b=kdPiseEjiReyWRdSKvfKxyFJeRpuwxrOt+W1znF4irPBGZjqhlaA80vF798ZRqGjh/
+ mYuggSuNtuX4hTq7/t3uIp9JPCEiLjbtCKlV+navxcD5U3BmxjPrxtjzBVoZ1/HKa3Ev
+ m/zagrvv8H2Zd6kBzOCiGzSmTThC96SowsW0OhnoTLvVE6gNKFy9X1vPCEfIe2m0lvSM
+ PaoAec/YClJIiGsos49a9WDLBlZwKXcVmZKTr6sIM+PPFVizZvct1lpDkh59TXXAqBdt
+ QfKMAg43DLiwKuSD8rfScmNj2W/4d9yYx1KMHoP/BiDQ4XXArHkj6d5/Wn19yhUKsUhO
+ 2/ZA==
+X-Gm-Message-State: AOJu0YxLw6garzn907kmsu/u/cs340niQGFZweaYIoueDexM1Nrpq5h0
+ +Tl0EA6Zvu+5WAs8xDYbIgH/OINJTxgJevufpDFCskekTAsQ3hpqwM3Jp83NmsGM2I0UpHxd9Yd
+ Ai80BPbt4I4BYa5I7biIpDU4zFSOd8uV+jdCfDzNH9h/31jbn2YWU/RWoYaqnWwj132I1JwPwkq
+ Gw6BSFJWusSNSedXFspgUxYm1c884jyRQ21jnMYXFr
+X-Gm-Gg: AfdE7cnbqWaXxiYwP9Dlgf1ygk0qGcb0K2Tr17pfcGgxCVEb1wG9YWFUliQLHIfMpVV
+ EsOEXmEOVnFAMqhmo9UPH2vdWQIdBilFFv118Ti3l1w8o0OEWoOS0CH2s+FSuOQ/YDBfYaXEgoM
+ 8mrcgpWqiyVLB7R4eBu8lkH0FdI/kVLZQBfUQFBLRTjLs12fWDJfOR9gam3lBvwWnGgYrhTFCQe
+ 9lsk6rytBIqzz6dq0mQ9aMj9Ge9suLrz7VWF2n1lr6r2kmwG29BKiSiqCUVE2eRyPHgPo5fvN7e
+ 3BLMfq46q1bwZIt8gekghLrEItKjbitv67EuWatwXBXp3bte6Pus3U8Izg8OYqigX4vEcycGrqE
+ PF9u3p9fJQh8jYTC1L5qPBLeU//MuhF3uIJLcdX5blrnZ9Bk0ZtjTc8IHLD0dVVhkf8RWkk7C8I
+ XGF2dWcoRVHs7HRUDQ
+X-Received: by 2002:a05:600c:a013:b0:490:c032:ae92 with SMTP id
+ 5b1f17b1804b1-49266892207mr92940175e9.33.1782469075465; 
+ Fri, 26 Jun 2026 03:17:55 -0700 (PDT)
+X-Received: by 2002:a05:600c:a013:b0:490:c032:ae92 with SMTP id
+ 5b1f17b1804b1-49266892207mr92939755e9.33.1782469075047; 
+ Fri, 26 Jun 2026 03:17:55 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49269020266sm65293625e9.15.2026.06.26.03.17.34
+ ffacd0b85a97d-46c1ee018e8sm26100926f8f.11.2026.06.26.03.17.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:17:34 -0700 (PDT)
+ Fri, 26 Jun 2026 03:17:53 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: armbru@redhat.com
-Subject: [PATCH 3/6] json-streamer: make brace/bracket count unsigned
-Date: Fri, 26 Jun 2026 12:17:23 +0200
-Message-ID: <20260626101727.1727389-4-pbonzini@redhat.com>
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>,
+ =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
+Subject: [PULL 02/45] target/i386/mshv: fix cpuid propagation bug
+Date: Fri, 26 Jun 2026 12:17:05 +0200
+Message-ID: <20260626101748.1728079-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260626101727.1727389-1-pbonzini@redhat.com>
-References: <20260626101727.1727389-1-pbonzini@redhat.com>
+In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
+References: <20260626101748.1728079-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -120,94 +124,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It makes no sense to let brace_count and bracket_count go negative,
-also because it immediately ends error recovery and sets them both
-back to zero.  Instead set them to zero *before* choosing
-whether to process the token queue; this makes it possible to
-have the fields as unsigned.
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-Note that JSON_END_OF_INPUT now forces the parentheses to appear
-balanced, so that the queue is emptied and an error is reported;
-hence, the "type != JSON_END_OF_INPUT" condition can be removed.
+The list argument was missing a pointer and hence e.g. -cpu qemu64 and
+-cpu EPYC would produce the same of cpuid leaves.
 
+Fixes: 4fa04dd1621 ("target/i386: Register CPUID entries with MSHV")
+
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+Reviewed-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20260416121116.527927-3-magnuskulke@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/qobject/json-parser.h |  4 ++--
- qobject/json-streamer.c       | 24 +++++++++++++++++++++---
- 2 files changed, 23 insertions(+), 5 deletions(-)
+ target/i386/mshv/mshv-cpu.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/qobject/json-parser.h b/include/qobject/json-parser.h
-index 4c3d89f751f..0cf6932ecdc 100644
---- a/include/qobject/json-parser.h
-+++ b/include/qobject/json-parser.h
-@@ -31,8 +31,8 @@ typedef struct JSONMessageParser {
-     void *opaque;
-     JSONLexer lexer;
-     JSONParserContext parser;
--    int brace_count;
--    int bracket_count;
-+    unsigned int brace_count;
-+    unsigned int bracket_count;
-     GQueue tokens;
-     uint64_t token_size;
- } JSONMessageParser;
-diff --git a/qobject/json-streamer.c b/qobject/json-streamer.c
-index 6c4f99b3e7f..9e1f650bad8 100644
---- a/qobject/json-streamer.c
-+++ b/qobject/json-streamer.c
-@@ -41,21 +41,41 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
-         parser->brace_count++;
-         break;
-     case JSON_RCURLY:
-+        if (!parser->brace_count) {
-+            goto end_error_recovery;
-+        }
-         parser->brace_count--;
-         break;
-     case JSON_LSQUARE:
-         parser->bracket_count++;
-         break;
-     case JSON_RSQUARE:
-+        if (!parser->bracket_count) {
-+            goto end_error_recovery;
-+        }
-         parser->bracket_count--;
-         break;
-     case JSON_ERROR:
-         error_setg(&err, "JSON parse error, stray '%s'", input->str);
-         goto out_emit;
-     case JSON_END_OF_INPUT:
-+        /*
-+         * Force the parentheses to appear balanced and the queue
-+         * to be emptied, causing a parse error if it wasn't.
-+         */
-         if (g_queue_is_empty(&parser->tokens)) {
-             return;
-         }
-+    end_error_recovery:
-+        /*
-+         * We goto here due to receiving either JSON_ERROR or a
-+         * JSON_R{CURLY,SQUARE}) that is known to be unbalanced.
-+         * If in error recovery, end it immediately.  If not in
-+         * error recovery, json_parser_feed() will raise an error
-+         * but error recovery won't be entered at all.
-+         */
-+        parser->brace_count = 0;
-+        parser->bracket_count = 0;
-         break;
-     default:
-         break;
-@@ -83,9 +103,7 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 4ed6e7548f6..38994ed6cfd 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -441,7 +441,7 @@ int mshv_load_regs(CPUState *cpu)
+     return 0;
+ }
  
-     g_queue_push_tail(&parser->tokens, token);
+-static void add_cpuid_entry(GList *cpuid_entries,
++static void add_cpuid_entry(GList **cpuid_entries,
+                             uint32_t function, uint32_t index,
+                             uint32_t eax, uint32_t ebx,
+                             uint32_t ecx, uint32_t edx)
+@@ -456,10 +456,10 @@ static void add_cpuid_entry(GList *cpuid_entries,
+     entry->ecx = ecx;
+     entry->edx = edx;
  
--    if ((parser->brace_count > 0 || parser->bracket_count > 0)
--        && parser->brace_count >= 0 && parser->bracket_count >= 0
--        && type != JSON_END_OF_INPUT) {
-+    if (parser->brace_count > 0 || parser->bracket_count > 0) {
-         return;
-     }
+-    cpuid_entries = g_list_append(cpuid_entries, entry);
++    *cpuid_entries = g_list_append(*cpuid_entries, entry);
+ }
  
+-static void collect_cpuid_entries(const CPUState *cpu, GList *cpuid_entries)
++static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
+ {
+     X86CPU *x86_cpu = X86_CPU(cpu);
+     CPUX86State *env = &x86_cpu->env;
+@@ -615,7 +615,7 @@ static int set_cpuid2(const CPUState *cpu)
+     struct hv_cpuid_entry *entry;
+     GList *entries = NULL;
+ 
+-    collect_cpuid_entries(cpu, entries);
++    collect_cpuid_entries(cpu, &entries);
+     n_entries = g_list_length(entries);
+ 
+     cpuid_size = sizeof(struct hv_cpuid)
 -- 
 2.54.0
 
