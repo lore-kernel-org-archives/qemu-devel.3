@@ -4,92 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE4C1C43327
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 13:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0F9DC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 13:28:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd6Pm-0008Ck-RH; Fri, 26 Jun 2026 09:16:14 -0400
+	id 1wd6b8-000857-1C; Fri, 26 Jun 2026 09:27:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
- id 1wd6Pf-0008BC-7q
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 09:16:08 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wd6b6-00084o-P8
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 09:27:56 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
- id 1wd6Pd-0000zG-Bj
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 09:16:06 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-45fd464d51fso507231f8f.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 06:16:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wd6b5-0004T3-0b
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 09:27:56 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-662bf1dab83so1515926d50.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 06:27:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782480473; cv=none;
+ d=google.com; s=arc-20260327;
+ b=RDBOjGSzdh1s3fvd3UTJT2597yad0e85VHEZlsOvfYFFZLT0RL7z6pw3dg0aOeCitV
+ FRxxffE5XbA/snPnhCDoyGviLBrctQUAiDnznfAdDy8MTBMBiIPPqQ1Em/wgdfvqx72/
+ M/TWqQBs2HWme50nTaUbUAgc1vDXiwt9TcSXJRnuxRRT85c9NyNRJJlk2dEEnD4Ck91n
+ 8qJPGBAvpRuUwR6pOyA5zE64SIctMU1CfxC9yKHtkkZNlcoraG7w6EB3601Bg0MRP9aP
+ bQW8KvVASfXccLq6F/aBTCwx2trr3c3X1II8jxUmA2dLXwvM2DYNnTZceSE+mO0cSFh0
+ R0dw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=8VwcliHq8xl464nnWTtg3JJJwkYrSrQwNu9NWItGi6w=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=FvcFBAlvkZnz1L4n1RO+biOYZdyyMzT/RN97osbvNlbyqbBNmDRLM+wixWPhUnjWsb
+ 5A9WKt8s7iYRx+9fyUJLVpZ3ffPmD4TTVc4ORaFIQvxU3RQaD52wIP9brpTRUX5FvbSR
+ R8bXd4ghAjL5O5JatF0b8SF386XEXZ6ykX9pXtaUEO0gy/rt9LZIIlBcIpW2y8inhhg0
+ cfQZFp0i977kxZSLkqVGqQfmAqt5l7+7O8MuXJ5RxC1MO1aB2k0nhbHAuFj3yuECSGpB
+ WN4/hoUZT4O+5WVykywBkNMLC5GRZGy4Ucrm/txjpI3sychX0uZXdLrd4bJlijk2KYg3
+ xDuA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782479764; x=1783084564; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9ThB6GTLIkB2LxwLs/Jboo1V2nmPNwlN/KgRc5rVPHo=;
- b=XMNByCZszYxmNSAZfGz0sY+bI1IFrhgorPpppVdz56RVwlZohcrwuPq6wuv45O1Nf9
- +5Ze6TnhExCBYo9Q9xSKnfs+momUMn/SI4FkgYeHx0Ut/UlPXQn42QQaGS0LKH9cr65J
- UjKBsYFpxLn/Z9ZSFLzau00lJBs0+vAE9lgc6la3Q4FdehdiMPIGx2l2lSnoNALTy170
- /c+putOsosfm0O0nSN8plJjAdyWK6wbsuec1oGfLckHMk3HUdOMov96fo3tM+/VRXwKb
- 4fnR9QBWfXBMDljbBd1SMdN3PAKFfc8vgVig7Bkfw3WeIN0QKfNCil/oBeO23AdyJI5N
- LC0Q==
+ d=linaro.org; s=google; t=1782480473; x=1783085273; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8VwcliHq8xl464nnWTtg3JJJwkYrSrQwNu9NWItGi6w=;
+ b=OZf8fLOiXlenzl2YhUBApvyVPJQmUIcCTTJgFFxQuqzUTG6Rj8TLw45mo0RUlH7ohv
+ ygLRmYkYG3ks/07yaejtvHGVKaSG58qjps3up+xcc2UXvi/YCF3uPwcVPpmmI24xpqEb
+ nlc7yiz0P86RBBUFjGTCkLWXBzOL139CGnC6rZEQAQkLd9xtkntw91cJSlAxvoOFUvB+
+ IVPvqzxy/g6vXLLCi8sQ7zl6EjaTqOoRm8cE47AtwGAQjlTsNfOwDFTq7nvyH/35NeqA
+ ukuI781msV8v5OJhh9zrkdKrcaZA5Aq/0NoKZWNZY9Jjx+anOf2A5vC5HUvX8qwePjdC
+ H4Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782479764; x=1783084564;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9ThB6GTLIkB2LxwLs/Jboo1V2nmPNwlN/KgRc5rVPHo=;
- b=GVGpL14R8hU1kv7diCmOxZIHHumD1NbXHCuUBlajjZJB7gjTFApLDOenMbeTA/eZCQ
- QBJqKb8FPus2FuJsVI+dOnHnJXOgCMjbsK4q9QB++i2RrI7qUPgMnig7PPolPHiNigYJ
- OiJC3q6v3wMKouJ5DaLP+JCFSjzpUKnobcKAjyCm8PeJ1m9Y+MjphfUPyhjP6Bzcho7R
- HLBZNVr/1hERItd+xE2yyFzAqXjJP0a+isaZ1k7C31i2rsoUdL/PJsQOp/kGesz3VdR9
- fDdRr564L3bf9Zc/gjBihh00bWTgI5jrmqsYCFKBN6RJlSWmNtCG7V+WdG1eCrV7S1QO
- KAgw==
-X-Gm-Message-State: AOJu0Yw3eT/ue14cKMEKVdyDIRl2+kegkjyFwvm3FJJGSxtytepjfVj7
- LlIrufZ0nDhHUsO9nhgldCKcuVyvITs8A+6g6goH2K+GYrj227f0BJmp6f4VMg==
-X-Gm-Gg: AfdE7ck/QuS7koTpkTGUolo5MeL9D91TnNwPIx4TkdmV9wxhVHTcVVMEt/x17wYkDrq
- GxgTThA8I5tKeaVW7Dl1ZIi+wsxMYtoCZfrNPaOfAwhZLyHfOY4eEzuq07GgnJomPYUbndh8zRh
- 2S7q26l0SD7yED6G3zdFu/PPAybthqZ0p2YsZ3PSGBhtmjm5BRTcJwoM8BcYmaRXHYK6sSeYGTu
- aZGuPNsGDwvtUdHZNwESSE6LWWTgWWwK3gce7S0hLmXwCq6lFJhHDrD4MLIyuzaSc4SWcOS0dtq
- lcbHa0H3mhRzzyCSOm3Wny9iT0AXXonlN1en8yJc0VRiUyS9OpDYZbJVf/+pPzG5YkQn5jnpt3l
- n/VKycCYUmbK9XWJ/FAmRsBimiUPUIy/swEc40jdOI1rkr8SzSTVgCG5uBBHodb0tDS5IFM3i1b
- 8o85akbwvrQrkfefQG+q4dQjqQzztQqUiqiJRBwMP8xCuStA==
-X-Received: by 2002:a05:6000:2c0f:b0:46b:ea12:2912 with SMTP id
- ffacd0b85a97d-46dc05553f8mr11618756f8f.5.1782479762730; 
- Fri, 26 Jun 2026 06:16:02 -0700 (PDT)
-Received: from dobby ([2a02:8109:a394:4800:b369:c9c1:81a0:4afc])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c2279b83fsm26093756f8f.29.2026.06.26.06.16.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 06:16:02 -0700 (PDT)
-From: Sam Li <faithilikerun@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- cassel@kernel.org, dlemoal@kernel.org, qemu-block@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Eric Blake <eblake@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Sam Li <faithilikerun@gmail.com>
-Subject: [PATCH v13 2/6] block: widen BlockLimits.zone_size to uint64_t
-Date: Fri, 26 Jun 2026 15:15:51 +0200
-Message-ID: <20260626131555.459792-3-faithilikerun@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260626131555.459792-1-faithilikerun@gmail.com>
-References: <20260626131555.459792-1-faithilikerun@gmail.com>
+ d=1e100.net; s=20251104; t=1782480473; x=1783085273;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8VwcliHq8xl464nnWTtg3JJJwkYrSrQwNu9NWItGi6w=;
+ b=TKCkUlAxa/UemUPEXIC3g9JEtfiuB6bcvSpwuTM/yZqOXbFYYsCzufOITgFlbJxMpv
+ WKSZfRyn35mqRSuyyuRCxTO7KBwU0Dga5aJH17hV9bHn/4lbSg+AZhy4Eg55D6DFqDg4
+ qKjWOmUvWeY5uB/9FdPHARZfB5VX6vCRaO3qLRfgoxUzntRccP2veYqXXUlJFTFgRT4P
+ CW6o6qBopC368jvijk/QGB2iCtukZ+Njl5FCKklPma7AKbjRvXLB4ksTN3F9yPO+2cm/
+ EQU7AVG7ag5+UgL7D75kEe/Og31KkH0n5UBDqVrQdqipgKj8zxQbhtjJU0jwmOTpWxdy
+ 7KYw==
+X-Gm-Message-State: AOJu0YxIygsZCsReLsRUM0Rx7rqqt7FbwcWY5WGJR2dYJ90fKsWcArXd
+ 6bFLgtCpGlaVldR7oGX9K5Srdd44cSgqRqBdFfkBOwTMXD2hRmNy+hxTNDR+Lj6Ke0o1d2R0n71
+ w60ayOCkGB7rbZYAOB67RZMUXUyo02XWP5dvNTDuzOw==
+X-Gm-Gg: AfdE7clu5nzi7hot8RXzUF4ZcXNNpCSgiMsMXuGzEsEnpxbn6eKCAhZ2W61YFDArjeT
+ 60SCMLo5/0ZCvCq7QV97Dj8oDthx85pStr9LOubup0JxuM1oCz5pU8v1x64k1i0V7HGXFuIXlUo
+ URiE6oR1+68BPQ7yWQFz82T1lri3ld29olpTKxSPgOLj4sCov2nAKuQH4tEtqYd3lIanTSP/Tdw
+ cVwX717F42D6GD1YkpY6oBiQ5RY0cqBIKn1kte1rXoZG9gWSD6dxRbDDKGtI112OlO8E9G7ncEJ
+ 795ipKqlgWNuu9fEngQKZ2CnCYRmxIN7m8k3Hgo2W8JjSNft6oJICJ+0
+X-Received: by 2002:a05:690e:1304:b0:664:9bf9:3dbc with SMTP id
+ 956f58d0204a3-6649bf944d7mr2183759d50.33.1782480473338; Fri, 26 Jun 2026
+ 06:27:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=faithilikerun@gmail.com; helo=mail-wr1-x434.google.com
+References: <20260625223200.763198-1-richard.henderson@linaro.org>
+ <20260625223200.763198-15-richard.henderson@linaro.org>
+In-Reply-To: <20260625223200.763198-15-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 26 Jun 2026 14:27:40 +0100
+X-Gm-Features: AVVi8Ce-yCl951hmDpeLYpY6CU-Tt2DRGkd_qxEQpl952alAI1jO0rygJ1LfstY
+Message-ID: <CAFEAcA_i9JLDPaRmjyyONAhQWknZK5jexGXnZu6MdpF7XJbY6Q@mail.gmail.com>
+Subject: Re: [PATCH 14/15] target/arm: Implement USMOP4[AS]
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,44 +114,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The zone-size field in BlockLimits is currently uint32_t, capping
-expressible zone sizes at 4 GiB. Real zoned-device protocols
-like NVMe ZNS allow larger zones. Widen BlockLimits.zone_size to
-uint64_t to match.
+On Thu, 25 Jun 2026 at 23:35, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Signed-off-by: Sam Li <faithilikerun@gmail.com>
----
- block/file-posix.c               | 2 +-
- include/block/block_int-common.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 3c985da94f..ddb159c58b 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -3600,7 +3600,7 @@ raw_co_zone_append(BlockDriverState *bs,
- 
-     if (*offset & zone_size_mask) {
-         error_report("sector offset %" PRId64 " is not aligned to zone size "
--                     "%" PRId32 "", *offset / 512, bs->bl.zone_size / 512);
-+                     "%" PRId64 "", *offset / 512, bs->bl.zone_size / 512);
-         return -EINVAL;
-     }
- 
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 147c08155f..7571ed9968 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -901,7 +901,7 @@ typedef struct BlockLimits {
-     BlockZoneModel zoned;
- 
-     /* zone size expressed in bytes */
--    uint32_t zone_size;
-+    uint64_t zone_size;
- 
-     /* total number of zones */
-     uint32_t nr_zones;
--- 
-2.53.0
-
+thanks
+-- PMM
 
