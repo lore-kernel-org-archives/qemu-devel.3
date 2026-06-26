@@ -4,113 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0BCDC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 18:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E711C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 18:42:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdBUJ-0002n4-J5; Fri, 26 Jun 2026 14:41:15 -0400
+	id 1wdBV4-0003BB-Od; Fri, 26 Jun 2026 14:42:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <linisha232@gmail.com>)
- id 1wdBUI-0002mu-5J
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:41:14 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <linisha232@gmail.com>)
- id 1wdBUG-0002Ci-4G
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:41:13 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-46e4764ca48so1177400f8f.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 11:41:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782499270; cv=none;
- d=google.com; s=arc-20260327;
- b=gJVpJP0ZpzrOlxTd9o2JM4VtA74wdNHl2vS+3DoXB/9CmZNtHBiTKK1pPmq49oCXri
- 2+Ii7qJoOhNtLYn/ZTznWmQnS7kJ1FRtUGfdG+8dyGSLytqRnyZH+ZjtFaDO2oOsuGbn
- WjR4Wtonao6d3OJdZNpOWX+DgEu7fCtGVO7/8nVK81fXBvQIPwj1oAtIY0a1BJl6wZ3o
- u/kmvfBC2RaCWaBBWY8ouYhDrW2SS6fXmVZ+C6oY+HZSlv0VZ/Pa9d2yPIna4KPxBZ7m
- 6IWbz1Tq2Ey9tcWMcHVP+1UTeyGmBT3YkS99YNpsRUBydWAcu2CrctWylW4B7o8afEkH
- pnlw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=/LeUqTMJS1kiMr9bEKxgIbK1sp00CFOMPDSDD1afFcQ=;
- fh=BNKbJlGvtgl8FWXL/pUPQTsTja38AQEjX3jVqov4anc=;
- b=YtqBqWd66wytPriMQ3HdPU1Ss0mGNphYSm0eJdhcNqOhRiwK14BD4uDuVXCiR0SG//
- ETeUJdLoYwbU9bG3n/+fvu2iorTpGe7IhWwC+v7Wah2ij1i0J7tCs7h+75XNEAUidooa
- kZNsAxTldz6Scuz0mv5iCxp3szSXYt2/GqP6YWZyeAkUbqaspPlyfDNNNaAW2hu7LvsW
- 9TCw7hcF1nRMTY7wvgUm58XNs19ZGj6rBfe3aZsfBFB4SpntX/MmfipgTKFkDB/wRsSE
- LUvU3nQVD/SEH9Xu0p2sE+36+c7neNXrD0gyh+IOtOdnvpfTMOq7u0P12h23ZrToe6Lt
- llEg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wdBUz-0003Ae-R0
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:41:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wdBUy-0002JC-6i
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:41:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782499313;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=FmNj1WmEmAwRhq/a26fEtDH3y29gcjt0IVbyfDHmEiw=;
+ b=FzcHOxJjvuhonOC77MIqX4scJeSpKzgV6nhFYM3uzQM8gY8tCcbUyTdtkSi3Fjb8VShmQT
+ /hFfRaD5KNfCq+ga+RHY7/6HhXrNtuvQJ7dvjX0pgYvrDsQ5IOPM3io/azZNnLFmub/RMj
+ nFHpOJhT87UN0SXRz5Iz9SifCiJ3wOU=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-595-8WqBRaO_N_GXPR0E_xBd2w-1; Fri, 26 Jun 2026 14:41:51 -0400
+X-MC-Unique: 8WqBRaO_N_GXPR0E_xBd2w-1
+X-Mimecast-MFC-AGG-ID: 8WqBRaO_N_GXPR0E_xBd2w_1782499310
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-4629f312a67so1055273f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 11:41:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782499270; x=1783104070; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/LeUqTMJS1kiMr9bEKxgIbK1sp00CFOMPDSDD1afFcQ=;
- b=ET+4w+xV50prnPgfQheSgIXMzBITuFsWLazw0CsW6m1WfdM/rrqvCHZQl+k+DQgh3U
- TwvO3yu59iIGcY7yVo0riuA8vtxJ2P0PnUBq94MSeLpNaqxuK6/FVBypms3OE1emCD2Y
- oHAAhFAfKdWg6wk4laSwCykVtuuumskKp9zdev0UuAylQIxBwTINRt9vD0wOeIL27ilt
- hAM+93Y1t0A3ESwWbPCkQ/LT1i24YOUKpqvBLPliH/LsENs3Eud7ZDT2zUNtxQAbvH63
- 07xALVp9HRgZom7IfVe4Z30oY5bm+CxpW6n0PHcll6yZmh7Ya6jzUefqqmhS+Xl//fD9
- J8JA==
+ d=redhat.com; s=google; t=1782499310; x=1783104110; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=FmNj1WmEmAwRhq/a26fEtDH3y29gcjt0IVbyfDHmEiw=;
+ b=hL4exQcDrOYR/tRp5r9Ae8eO9APL5IGzKdC8HVxMkMfdRqCCcZYTybvnwSsSuhKgBN
+ LUICZ8m2/2bX/9R+nhCWTzWgKvbQmMQOVUWZ85erbkcItoSxrV8SnRsRIraUG4YiBHxM
+ jcZWnTsk6DfJDyID47UQnTegN/FP/xSxQJkk/NPYY+P63tJcSx/6BAC8dUFlk7g2A8oB
+ /giliwhXGP/fgnfXybiFlgMVHt/lTfONWc6Vs5kIrSACtv2pAJ5KKWZEtdxkVaJ6pgLn
+ 34EtHY8p7SWbOHZFBTHt19Gu0/bfj3Y4pcwxQ/l7it0jR0eLRy9gWmhpo6uuQMfrj2iD
+ mrDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782499270; x=1783104070;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/LeUqTMJS1kiMr9bEKxgIbK1sp00CFOMPDSDD1afFcQ=;
- b=WGeBrRDePriSaBovgz8c0OMWbSrQ4jFQdEXC/oBlRrI92Xt3GKaTJka74t3TvVum3R
- lpXtyLNMuJlfUC13a8fz1DwXhhFzluap9nHnCK1u+NdnFStwqzYgkLDgUD5lXGvRGz4E
- 6cPpvzllRDlnVOQ78m9vq/XnovQlx42KbAAydmvJzW6Nko0jurJhK3CUuuJfeJKPJryW
- WqrkK25Y7V69BSEvuNB9WKIdfhgb7RuGUGNEAz5CEvdE5v5rTzzwz86sorrzolrNetyu
- r8vlaOyr+TWQ9ajLP2DRGKAI0X2o/Sy/m/TQq+q35GUQWxIRTmjmT1zQ7Wlb2FiCO7s4
- wmHA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rre6TqV9Drz/x1isT5Vh1dlQDaWlxpwVIw7MtGanRN7vrEhl5oqT/TyjR/uHznD0aT/c8D5usmoLuI0@nongnu.org
-X-Gm-Message-State: AOJu0YxpW9PLnA+pNHW0bTDW7WLuW4SEH8b388KtRR99UVnh/56GRdUr
- WBJne68FXQD7m57VBdfPSGnq6pKOytTnNQRzgrRBHgKeXBOf6fC5FraWOsYRtaVSjIaNUJFZtfW
- 7a3rE1moLfjWTYec/FSH7/3JjWbs4Isw=
-X-Gm-Gg: AfdE7clkwtO0X1zW0Q1oTyZoA5g/W+rPsJluuqbBHKJ0KEv0sHKPCRW5lwyfmcyAXAH
- omfqWcJcQGS1cOOBoSasuNOclNFFA6VMKbuoDHET8V2+kD6ylici8bqUZ4D/3qFP0EoFN2h/Oef
- miDesz9ol9ZqaSKXCJ4VJyz7K/5QZ7S2sMBqvbY8SlY0f6uRnCYQ2NmzCgPBrM9Faj7rARkUDGy
- P3Y6TwZWXTaK5ZWpS2gmMMcEP6JleCS81nip6G3tRwfNpdh98dMHQ3erhcL0JR+WwEnYGRsF6g=
-X-Received: by 2002:a05:6000:60c:b0:460:38ee:9469 with SMTP id
- ffacd0b85a97d-46dbfca2635mr13547075f8f.7.1782499270294; Fri, 26 Jun 2026
- 11:41:10 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782499310; x=1783104110;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FmNj1WmEmAwRhq/a26fEtDH3y29gcjt0IVbyfDHmEiw=;
+ b=YfShAdTXEcmrKlEnH6MsJyxcO48OnPQZDZ5gWUCmS+Dc6Tm2VFs1XwZzaxicKx9U68
+ PzZ4IbKmvQAxWwMv/xxgmgM59ugshQza5jNZXCXAGgV+5BvsofmEvzkq0o9erFe5DrAv
+ KaGxyAA57+6R5+HS4GpQLAig83nNcwkZJvvUw02cFImPJA37V3am/1r2liZJyC9aD/ZJ
+ YRyj3zf7q+jYGyjGiumaIxT8i3VnDzBRGOhf7HYcJ2Yvp7QiJjX1YFnXnGtRUrzIgGdw
+ IUkfuoQd8Yl6ItdZ2Jo6S4Xnnn4JJDtWg8kBL65WdtXBbuJhxmvguzFcr3JWYqFxElbV
+ +suw==
+X-Gm-Message-State: AOJu0YyZ/7IOO/vAR1xxuYkmLzc+JEFR2wcFH8JQwTNjsJTXPXGCVZUt
+ TLnSGxNdgy1ghlqNegpA2tMVpmNq7EE4sZL4yH2uV9wUBcUHMgAcZK90ZNGJoxKVXQLthxB/w8l
+ u37ffxO4g8e6xrq3PiI6dAVhfmbWtN3iFiSLyuYe7dot11CPdBTUL8CydUS5CQk+eehrHqMuIb8
+ lhkVmZBOAPL89yqaTCmJCdNvLciQdCWOXQgw==
+X-Gm-Gg: AfdE7cmCUjP0XSs+hi00KH0GD292hdgBboo7SbtxivEDC1kEtKOvglblNcgxg4V476K
+ LGrn1twyxCDDcEzcX56pbbGPvw0p5sJZLSjUYLt04x8MvsABTaUhtV1Ca0ps/keAj+jMWoKFEtj
+ MZPq694hZNDtMZUrBn6ITjJ4ojLdQupSE4ILOXuoqp4B65pV/08IDYLUwxWO84pa4wDjojDb+P4
+ lkw+1FbzQJt1NkDamcKuCzY8dvHnkorsQL+MABM6U3sGtluoxOYtTNLaHvtGNK2XyEUJeuKwXbW
+ qULwtcKornuS378rPCz57RyPkw38gLS5ezT+1D6zbHP6SOAKNvsoFF7/Jc5xwBELS0dwwzCy+R6
+ XMdXR8Za3fID7YplIatRDvbly1iw2BngJ2Ls5IW80eq9wqtMxs8Hu
+X-Received: by 2002:adf:e002:0:10b0:46d:d6e0:9cc8 with SMTP id
+ ffacd0b85a97d-46dd6e09e23mr9318788f8f.46.1782499310427; 
+ Fri, 26 Jun 2026 11:41:50 -0700 (PDT)
+X-Received: by 2002:adf:e002:0:10b0:46d:d6e0:9cc8 with SMTP id
+ ffacd0b85a97d-46dd6e09e23mr9318763f8f.46.1782499309933; 
+ Fri, 26 Jun 2026 11:41:49 -0700 (PDT)
+Received: from ?IPV6:2a01:cb19:8426:ae00:a924:b4e0:1ee:f5c5?
+ ([2a01:cb19:8426:ae00:a924:b4e0:1ee:f5c5])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-46c221d93eesm25826573f8f.20.2026.06.26.11.41.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Jun 2026 11:41:49 -0700 (PDT)
+Message-ID: <6ce9de1f-de0e-4ed6-a008-3caf0f29d304@redhat.com>
+Date: Fri, 26 Jun 2026 20:41:48 +0200
 MIME-Version: 1.0
-References: <20260623205839.1294-1-linisha232@gmail.com>
- <20260625192121.1887-1-linisha232@gmail.com>
- <aj5P0n03aKv93uci@redhat.com>
- <9d695c7f-bb02-44bd-8e1c-f8bdbf3bbbf7@oss.qualcomm.com>
- <CAGKMO+VCZ_3cPWx000N_+REsEK+gQg8RCWJcx7YEchUcy20V-Q@mail.gmail.com>
- <c0292d61-3915-416f-a6e1-d8498dcd42e9@oss.qualcomm.com>
- <CAGKMO+XpdeOQwqqp6sq+q2gbGBkH-inBU0B49buohQ6OWhOxUA@mail.gmail.com>
-In-Reply-To: <CAGKMO+XpdeOQwqqp6sq+q2gbGBkH-inBU0B49buohQ6OWhOxUA@mail.gmail.com>
-From: linisha <linisha232@gmail.com>
-Date: Sat, 27 Jun 2026 00:10:57 +0530
-X-Gm-Features: AVVi8Cct7PUI_6Qp2KYZrnrPR-zY0pjpz27ptYfS1JtlgYy_KVvtGDUn0ym9SB0
-Message-ID: <CAGKMO+XRcM86qk_X3qaWeYjvxnHWj-jsyWC-FoBLkYBemHJgtA@mail.gmail.com>
-Subject: Re: [PATCH v2] docs/system: add general note about architecture and
- machine differences
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org, 
- pbonzini@redhat.com, mjt@tls.msk.ru, philmd@mailo.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=linisha232@gmail.com; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio/pci: Fix information leak in vfio_rom_read()
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>, Mario Casquero <mcasquer@redhat.com>
+References: <20260602074446.1206892-1-clg@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260602074446.1206892-1-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,150 +164,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick,
+On 6/2/26 09:44, Cédric Le Goater wrote:
+> vfio_rom_read() can leak uninitialized stack data to the guest when a
+> read occurs at the end boundary of the ROM BAR.
+> 
+> Fix this by initializing the val union to 0xff, matching the ROM
+> initialization pattern used in vfio_pci_load_rom().
+> 
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   hw/vfio/pci.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 9df04fa2d76b1a78ee884d915f5a0c3c5fdb6115..de28e72519326741295c19f4a07208b95861f2ce 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -1142,7 +1142,7 @@ static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
+>           uint16_t word;
+>           uint32_t dword;
+>           uint64_t qword;
+> -    } val;
+> +    } val = { .qword = ~0ULL };
+>       uint64_t data = 0;
+>   
+>       /* Load the ROM lazily when the guest tries to read it */
 
-Quick correction to my last reply =E2=80=94 I checked again more carefully =
-and
-get_maintainer.pl -f docs/ still says "No maintainers found" on my
-tree (origin/master), even after git pull. It only lists recent
-contributors. So whatever change adds you to MAINTAINERS isn't in my
-tree yet =E2=80=94 could you point me to the commit/branch?
+Applied to
 
-Apologies for the confusion.
+     https://github.com/legoater/qemu vfio-next
 
-Best regards,
-Linisha
+Thanks,
 
-On Sat, Jun 27, 2026 at 12:08=E2=80=AFAM linisha <linisha232@gmail.com> wro=
-te:
->
-> Hi Pierrick,
->
-> You're right =E2=80=94 my tree was outdated. I just ran git pull and now
-> scripts/get_maintainer.pl -f docs/ does show you as maintainer for
-> General Documentation. Sorry for the miss; I'll make sure to pull and
-> re-check maintainers before sending future versions.
->
-> Best regards,
-> Linisha
->
-> On Fri, Jun 26, 2026 at 11:58=E2=80=AFPM Pierrick Bouvier
-> <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >
-> > On 6/26/2026 10:44 AM, linisha wrote:
-> > > Hi Daniel, Pierrick,
-> > >
-> > > Thank you, Daniel, for the Reviewed-by tag and the wrapping feedback.
-> > >
-> > > Pierrick =E2=80=94 I didn't intentionally remove anyone. I used
-> > > scripts/get_maintainer.pl -f docs/ which returned Peter Maydell,
-> > > Philippe Mathieu-Daud=C3=A9, Richard Henderson, Alex Benn=C3=A9e, and=
- C=C3=A9dric Le
-> > > Goater, and I picked CCs from that list along with people who
-> > > responded to v1. You weren't in the script's output, so I didn't know
-> > > to include you. Apologies for the miss =E2=80=94 I'll CC you on any f=
-uture v3.
-> > >
-> >
-> > Thanks for your answer.
-> >
-> > Just to dig this further, is your tree up to date?
-> >
-> > When running it on my side (from upstream/master), I get:
-> > $ scripts/get_maintainer.pl -f docs/
-> > Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> (maintainer:Genera=
-l
-> > Documenta...)
-> > qemu-devel@nongnu.org (open list:All patches CC here)
-> >
-> > > Daniel =E2=80=94 I'll send a v3 with the commit message body properly
-> > > line-wrapped to 76 characters. Let me know if there are other changes
-> > > you'd like at the same time.
-> > >
-> > > Best regards, Linisha
-> > >
-> > > On Fri, Jun 26, 2026 at 9:09=E2=80=AFPM Pierrick Bouvier
-> > > <pierrick.bouvier@oss.qualcomm.com> wrote:
-> > >>
-> > >> On 6/26/2026 3:09 AM, Daniel P. Berrang=C3=A9 wrote:
-> > >>> CC Pierrick as docs maintainer.
-> > >>>
-> > >>
-> > >> Thanks Daniel.
-> > >>
-> > >> I wonder how I was not in original recipients for this patch.
-> > >> @Linisha: did you explicitly set list of recipients, or remove some =
-people?
-> > >>
-> > >>> On Fri, Jun 26, 2026 at 12:51:19AM +0530, Linisha wrote:
-> > >>>> Add a note near the start of the introduction explaining that QEMU=
- options, properties, and command lines may differ between target architect=
-ures and machine types. This helps prevent confusion when examples shown fo=
-r one architecture do not work for another, such as the pflash0/pflash1 opt=
-ions visible in -machine help on some machines but not others.
-> > >>>
-> > >>> Please ensure commit messages are line wrapped.
-> > >>>
-> > >>>>
-> > >>>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > >>>>
-> > >>>> Buglink: https://gitlab.com/qemu-project/qemu/-/issues/3254
-> > >>>> Signed-off-by: Linisha <linisha232@gmail.com>
-> > >>>> ---
-> > >>>>
-> > >>>> v2: Take a different approach based on review feedback from Daniel
-> > >>>>     Berrang=C3=A9 and Peter Maydell. Instead of incorrectly claimi=
-ng
-> > >>>>     pflash0/pflash1 are virt-only (they actually work on x86 pc/q3=
-5
-> > >>>>     machines too), add a general note near the start of the introd=
-uction
-> > >>>>     about how options, properties, and command lines may differ be=
-tween
-> > >>>>     target architectures and machine types.
-> > >>>>
-> > >>>>
-> > >>>>  docs/system/introduction.rst | 9 +++++++++
-> > >>>>  1 file changed, 9 insertions(+)
-> > >>>>
-> > >>>> diff --git a/docs/system/introduction.rst b/docs/system/introducti=
-on.rst
-> > >>>> index bec7291e47..8d9ef61d26 100644
-> > >>>> --- a/docs/system/introduction.rst
-> > >>>> +++ b/docs/system/introduction.rst
-> > >>>> @@ -1,6 +1,15 @@
-> > >>>>  Introduction
-> > >>>>  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > >>>>
-> > >>>> +.. note::
-> > >>>> +   QEMU supports many different target CPU architectures and many
-> > >>>> +   different machine types for each architecture. Options, proper=
-ties,
-> > >>>> +   and command lines that work for one architecture or machine ty=
-pe
-> > >>>> +   will not necessarily work on another. The examples shown in th=
-is
-> > >>>> +   manual are specific to the architecture and machine type being
-> > >>>> +   demonstrated. When in doubt, consult the documentation for you=
-r
-> > >>>> +   specific target architecture and machine type.
-> > >>>> +
-> > >>>
-> > >>> Not convinced many people will read this, but I gues it doesn't
-> > >>> hurt.
-> > >>>
-> > >>> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> > >>>
-> > >>>
-> > >>>>  .. _Accelerators:
-> > >>>>
-> > >>>>  Virtualisation Accelerators
-> > >>>> --
-> > >>>> 2.47.0.windows.1
-> > >>>>
-> > >>>
-> > >>> With regards,
-> > >>> Daniel
-> > >>
-> >
+C.
+
 
