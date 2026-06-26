@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 464AFC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 16:47:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F542C43327
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 16:48:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd9i9-0001Px-3p; Fri, 26 Jun 2026 12:47:25 -0400
+	id 1wd9iI-0001SA-6W; Fri, 26 Jun 2026 12:47:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1wd9hz-0001Oq-Hu
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 12:47:21 -0400
+ id 1wd9iC-0001RV-UJ
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 12:47:28 -0400
 Received: from mail-northeuropeazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c200::5] helo=DUZPR83CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1wd9hw-0007dq-S1
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 12:47:14 -0400
+ id 1wd9iA-0007dq-Or
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 12:47:28 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TOsfNB8Gnu+anBntxLgZXJm31P+NyyrPZnPAllyTTXDVJAgAd7SYFlBtPoB6hYzY0/EupDKwNbjbd1J6bCSGCcJQgSOTzwWkX7AkswUcIwtpJ6CRf8FiLYo9RSULSLgfwui9+2yh/K4jcI5xAvt/f9foHYT5AnjEotdKGjSmqnmQn7g2n7WiBfOwYBEzKVRk1QjIcovFfHw20agGq7cLc671B+5ePAZxXHQxi57T7d4QFgViOzu20RWGFy6pC+1gKX8K9qjqJrB+7R9zkNlM87rIDkG69wtNWfEnMRE5/UX7N+0dB/0RIKbNlR6bwvDDkoRL43UsHv7Icm6iJW46WQ==
+ b=ggqANCVBsCJ2MpyAES2erCClu3mE+H8cmb8lUSGzlGQz/1eHr4ZWjN1ujwohb2ovxO8mR5F5idnuSEMHD441DXvwShxi5paNJVT8t/OCX3t6jjU/RYwBOsaLNWoKb9qLcal1RA1UjizXBM4FvG7oNioh9vyejIZDxCMKPK51wbdfSSsLozALqQN9YMrPJHT5y8eegWmXU6PH2fCDeuWei/YLCH7PwbjXvt4FQlOqdOIMvTAOfD9VRpwsNECvjRa9BgTBSRvOyuyBf1cHHXwCh39wrK5cL6fGE7KHSG/LmdQLPKV7UfJUg0L/oPH+Vw+289ESRgfme8ZH0/RLVDrGiA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vo1RST5p98XYTNeKj7dqkBfNk3/RdmsWpteWXRjOsmQ=;
- b=H/97AnF3CDCty4e5KiWU7aJSnUgAtm5fA4uYRQnNH2QWXemtLWZ6UBv1k7eVsGGvtmyTsI7Oi0a1x9xoAKkbd1avSYVi6r6lJbxjiMWGzxipYSn64JnLef4E2IgPKFdOztiU2GRoZDElffC4lPfpciySZL4dwJJppeaDkEOaSrsOpNlBI71r9qASVV5msqnZYwcdcjzQBWb7nQmI3Lr4Og5G1uFwbaEBk0c/fb3au3eTSm5ANpNZHWmTJrA8J+/9y1tiS6BDLY8ke1vYIxhU/3QrJhOQPlKZZaDRTUb8sL1j48ns16BaTKVPYrJBTej8Bg7JAQisBM0emnOfvVBogg==
+ bh=xof2VDEtBz2bmBuMETloPnrQZJmaKtafo9dLFC9qPgM=;
+ b=nhyCW7KMz2SkzbAZVCWZV2Dx5iFaCdbXlOjNuKnW9covDA45YSyunej6YbLoAN8S91VRbMw3qVU8WmcSD4kbL05AAWRunIK4MedcNHuEWIkstbDJGAMiv8P8HxBMFuyNPGJhU6MlxeNiwIr4Unx8+HIgZSKNTyEmQlmocJAbhWFiPn3MR86y7NcLspnlNqyvg3HHfatLaGDjccWxAN6FGoD+6dzCYdrdclt04kNsGNZg7zK6kqOoXOSNjQrfNl44IZTP+XTyupkZAtjxLr9lrnQXiwNRcfGMxxhHPYbpgcDf6fBybwf8cd+BoxIVPmABlXWreGjTGXylRLZvd1/qLA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vo1RST5p98XYTNeKj7dqkBfNk3/RdmsWpteWXRjOsmQ=;
- b=haxySnVTYq60iJaF23cVSzvJesrE1+uKYaw3HaG2NfeUiJKanMYnE2Q9KHjKNz+x5DJ6p10ENFXg1pcSCyW3wzGEt5TClZAOwyMdVxtF+n/IHIsAwnqbcceaFLvDeEOf+CLQcc3WBOnGEyiuQO4kChlCB5+J7SBlgCNUnSrJOBiFJeUd7yu9jLhlO9GfPZq70K0ML9Zy+roel65UGAZ9gesARLZhebRv9db6fiF+Xbl3UHv7AACn1yQVCMXf0BRBQJoxW/O5mJ4FH7B9QBPsoDVUUOmVEvohYUeGWU85iAOmraiDozJE5L/S5FiaowR8doXrf/710E+ec+7tr5Ibsw==
+ bh=xof2VDEtBz2bmBuMETloPnrQZJmaKtafo9dLFC9qPgM=;
+ b=kYnTxf9h2WathhpLLZ8B0QGBMS8o7Vtzexozh6VBQ0mGqas420/tzkJGqEjgIXpqTNFxdO/Br1D7qWH2sS2ow1cJ3J7XUCLrUXyBKPFBg5OUu0LMpK5qrI9qTdhTZi8zDIhdJ6uBvFCNIXns1uguCm7a37HE3fAXhSHDHtfrUNFRMbCpXk05dA/IizB1UH8s/kVyKe/bQPMpsrnKFifOKGDnIHvh2v++Uz3xTPA5XMxr3fCskRGCEM8ELowLDCfHsCXTD9GKN0wDV8syaU6pjQjsMCaNeBqLV2xAJYr1RZI5ZrdiWCFdG1sycBKuh20MjDfEhEL84YZmJjFEXMHRyw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  (2603:10a6:800:20a::12) by DB9PR08MB6347.eurprd08.prod.outlook.com
  (2603:10a6:10:253::14) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.17; Fri, 26 Jun
- 2026 16:47:02 +0000
+ 2026 16:47:05 +0000
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8%5]) with mapi id 15.21.0159.013; Fri, 26 Jun 2026
- 16:47:02 +0000
+ 16:47:05 +0000
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de, peterx@redhat.com,
  dongli.zhang@oracle.com, maciej.szmigiero@oracle.com, bchaney@akamai.com,
  mark.kanda@oracle.com, den@openvz.org, andrey.drobyshev@virtuozzo.com
-Subject: [PATCH v3 2/7] vhost-vsock: don't reset connections during CPR
-Date: Fri, 26 Jun 2026 19:46:38 +0300
-Message-ID: <20260626164643.2526-3-andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v3 7/7] vhost-vsock: hand off device ownership across CPR
+Date: Fri, 26 Jun 2026 19:46:43 +0300
+Message-ID: <20260626164643.2526-8-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260626164643.2526-1-andrey.drobyshev@virtuozzo.com>
 References: <20260626164643.2526-1-andrey.drobyshev@virtuozzo.com>
@@ -66,56 +66,56 @@ X-ClientProxiedBy: VIUP296CA0088.AUTP296.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|DB9PR08MB6347:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6c9beeb1-c541-47f1-3b66-08ded3a28c2a
+X-MS-Office365-Filtering-Correlation-Id: b093abdd-6634-469d-4336-08ded3a28dd5
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|7416014|366016|52116014|23010399003|376014|38350700014|22082099003|18002099003|56012099006;
-X-Microsoft-Antispam-Message-Info: sAXJvPNOHmdrE0M7S/yUw+owavPJEi8bDdDwpTdB3GEihmqioubhQkJCHu6QfGC3jEBWA2YCt62Gj4LleVNGLdgHLVjshAjLpLwA4LYLNa7e8VetgDIyCWpssjtaa22RBQIou1Vaf458i+2r9tWeq2YgMZjmfnw4oHRtucULemvN38l8THjSHNOE+jAAP5kWRVAifssLQU47HTJGOkjN8hi2lKnqkMqA7jRdfdBtWNQmBmNz0U7UKM5es4PtXHkPO+Wfmgbc90oPM53rP3bin/mmAwylGlJgnJKoGF4BInzdh8zK76LcrwXxQA5IBrBB9oW2YZiVX5nFS57bsWTCkVJnevOZ69O08yRmEcNn6k5Yn6hL9rVKYbu6530uLhogkCBcGS25oqBLwoLH0eLEbmu79LRGQVDHhjUHUHIzc8mocrDqSckvboN+X6EERs+4LilyEcmNUtEE4TaHLV8LJD7470/BTVaT1V6LXzxuCO13ZLV2oCvp55vhmxW3egzRkLSDErite7euBro9CAxkQx2v8hLaL9m9ZyE6Z49l4/V4jn94JVAoiquGTsoylOwsBGYuwH5icQtU0VQ8Iioif9xBVq3A5Zq8VsiSX5xrZzeIDqfC5xanQAuoDi8Q91WI4cyYZGbvKyuuDMLKHKY4mil/od4lJ0nN7C8FkEshYOZ8vb13tazEFr4tKRUfcIM5/VGwA2M9xoYdZfgrjeLf7r8UkAirwQKIoqu9cCe+Dfo=
+ ARA:13230040|1800799024|7416014|366016|52116014|23010399003|376014|38350700014|22082099003|18002099003|6133799003|56012099006;
+X-Microsoft-Antispam-Message-Info: rCYBgOowk0akoQ9AozCq2xMf+bbLy4hTkplxZcavrmU7hfR0IJKfW2CJmtDJ6ibcQ7FLM/x+fQ0x0+btqg2NLZgYy2g8vpVG+h5qXiU9fnzb2jmX2alg7h7IRInAkvFm07ja3nDI9Wuc/o4ZmhCU3SN+AiwKwMxQu6TkuG44M48DwnTcs1GQTZGYvY5HsQ/UIeNqBvPHAV8mCHNYOoPfhJVLFfb3GKNjgV1LhLYDgTsvCXoB1U96aysLm+/vb5krwAqnni3CGN+ImZG1C4M11bSxbRzUphQ8svHn59RdstEo2THePR9FayTxKYeMFYLlWL2V031Qh1QZCZnmTpubO7clyu+loJiW3AiUqhXNkuNcXQdp15epNLUnseb36+ZnvDLJjmzuXGqFm+ecxYwyhV18YJoNAC6UQcHHxFl2BQxOJpkOUyDaCSC1HWl5Hg05jf8SE2oYHmXaSDeT/m+JqzRnX3xV71FmX976bOq1kXhdxRF76w3oQWV3mqeaNagWcVa+v6D3CHEbK2TUO3sjur1Pysmyf7QcRz2CPMi8Xw/vDw8g0VZ44VJLrLdFVlVGRrhFZ4xtC1FKt9ElYxXuB+VXWXZz26t8n5UbVQBsZU1JB7FOSzCOM3+/hisWmHPbJ6fgbtYjZq2XxuJc4wHUdr9RQC4Zjl1eyqHKiRpXbUZYhAhvcwwaDTOX5L6QeBn4gdJ8U7cu1ncFGZreO2oQDUuMjDPYTbZPG5dK2gEmaSc=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(366016)(52116014)(23010399003)(376014)(38350700014)(22082099003)(18002099003)(56012099006);
+ SFS:(13230040)(1800799024)(7416014)(366016)(52116014)(23010399003)(376014)(38350700014)(22082099003)(18002099003)(6133799003)(56012099006);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?LJouuFiHLeKrhGSSABVTv/b2HK5a/rD22s+E8F3p1Rkf/bCoOwK26qfdmeC0?=
- =?us-ascii?Q?HcxkSHmDRHXgoVwbIn+dULH7D2Nk6tChbVweEWQ8D6CTXQTkGT/iz5H4/F3I?=
- =?us-ascii?Q?f++X2nBlcitXRTPuEMa77s7y44zA6gn+RXk5V9HKrrFJU3Wf9ErNzAexJBsm?=
- =?us-ascii?Q?YHPserMlOhyVEER4yGD+kOmHht9hlBqOIu10ZGfastMumbgkeFRdgRcaOFot?=
- =?us-ascii?Q?LIUy2zd+UJZvV+I1DmI4vnfpfP3TPjqA7wneNEtbDCmnHLbOV4qFVqbMnHlr?=
- =?us-ascii?Q?PJ7tMo6JEmfPTNojP8Ush/T7kEo6OYMDNh9myV/hDiS+OqNqGbhtcuTD6ZO9?=
- =?us-ascii?Q?YkaJudVE0wkLWQseDnCNlJFPEke28Va6Ji/GIfiwdQPWNnA0hb470AJ4vDPo?=
- =?us-ascii?Q?UH/RREzDSrNHAefSyKtoF23MkRigcCRJFIDlUCCEZvKj0skxHgFmENi6nhcf?=
- =?us-ascii?Q?68yqk04g/vXPJecSzdoc79E9YTjbNByf2Al4LL+BtpXOPtG8owWysJ11xMQ2?=
- =?us-ascii?Q?P7+RtPQVVdMyTLrSrtbhI/CNqrBKE/UiJBD7xBdR0tvTuU0D0vpGCAZTeA1h?=
- =?us-ascii?Q?4Uz0uzr+p3L1R9fpm4VUV9V8TyDiDO6AVf6tAe8NVRtzNNKkFhZEOSZUe5+b?=
- =?us-ascii?Q?ucsELxyOLqHP7DmNIPUSqabvMOEwOUAEm0fdaSUcfvQNK+H5LEmo7gmbXCrL?=
- =?us-ascii?Q?+o3EhipHWU+ttioLjeQIVcganUc+P0mQMJJx6YIvmae/7pg1tNuzpdwYCrBa?=
- =?us-ascii?Q?6UtbMGI5g2khyxzr33fooajgHuKJ0OxdLoCGowxigsxENVvaWu33+Tx/z+5L?=
- =?us-ascii?Q?zjvsvnrwzpa8VVgFOhgG/FGoUS81+VXUoihF2uVx7g3E8i44d8REt1Yitut4?=
- =?us-ascii?Q?ZUvck0ElaC2hc4iSxkF30HFSFJY1eM/K3JWfLZHy25orSwxidkyGwFMUf/62?=
- =?us-ascii?Q?e/QafqVvuslgU5PCDXG1L7W70CoW51osrcej3ksgcGR73aIJmnQTHno8SiCc?=
- =?us-ascii?Q?1pGQa4KgcaV4Fgl3Ukqxj6zWMY9L9pe1whUUV/zqRZdfd1LW+iLQBFRmp0Om?=
- =?us-ascii?Q?lunTDMc1xja3lzuSMMJLBpBxHI/48t4r1Jr1TXu3b7anSX6nxxqMDnREl8iv?=
- =?us-ascii?Q?b/bss9Da5u//3lbCGYHKS0cOZkNsggFQMYSx7NeWsBD4YCh8wWGo7TevN8xW?=
- =?us-ascii?Q?uaYM/CrH6rKSmZIknmk1sEEMmh61EJnb6kJUlNQF+GSwSAX4/kx54nLsphgj?=
- =?us-ascii?Q?qtVe81bMkhxnPHVSGnYvzYFk+UVo2oYZ5CDC/nMGoHaFMtyRVmlnBE03XhSh?=
- =?us-ascii?Q?AqBnzaDHrqno30n8X4CyjOjnVHg9KSnbfpfom8ZpZRzMfz4rPRnR7win+rzK?=
- =?us-ascii?Q?QmoJSWUeWVxzDLj3ynv/9WtrcMI8CN/M2HMxitKdOf519MCI1C8X9qm5Maw3?=
- =?us-ascii?Q?1gKZtcDkloYVQ1AGasdR60JBlk/qRB2DLXfyAmeM56c9f+du2/Xb400NMp9q?=
- =?us-ascii?Q?36NIbkw+22+moyGQN4Mh1nsuvl4Ub3aUuZel5U05Lqcf6i/f1Vz1A0jxuMzL?=
- =?us-ascii?Q?tZl5G+ejuHazBFhzmbcknA2D0u7cPYhI9uhAovkvIBQInY32h1alktgsav9G?=
- =?us-ascii?Q?VffCWrdzt89pG2OJd3fU/Bxf+nKvfQqqdeQoXlgxRCbmp4dZUdlS6BiWwwQD?=
- =?us-ascii?Q?PkvddtT0U09bladVs7QFEHxp3fIl1K+Q8qMNPRhrSEWmNux9w/sJbIM6YJzM?=
- =?us-ascii?Q?PxD1v3Z30CIjbsevszAdWMZ/TyhjiXw=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ERQnaA8VcCzDZ+eqGqLSWXUckyv7DXbOl+WDx6MTUk010EDQwUyQKkykrDgG?=
+ =?us-ascii?Q?xj0vF07bqASVaRPszkcD5CFOdEiaIDKqK9lIy9RP8iocMrN/A7UOfDa3HMd8?=
+ =?us-ascii?Q?TVm4h5Zss7g4QSRV+r1uULxzIUAoHJC3ARlJ/VDDUjAibs+WoO2A7q3ruXmC?=
+ =?us-ascii?Q?6qbLP4lJ0iLTJobEah5A7Cw3RNObH1anyFAWVYbUnyzY5cIdbSmJpRYAWmPO?=
+ =?us-ascii?Q?JH3fWco0zy9IHvGejk6ZQEVnshDJDmKSzY6wwqrgO4oyoYY54+YZzx/dpzXf?=
+ =?us-ascii?Q?PVeqaA9AtXITr496iFN/4XWpKbHiPgDdVNqnpmHlAHiMHnF1OGOlqjq9SSjS?=
+ =?us-ascii?Q?JdWjWFHuvO0vxD5hPrZ8MqyyLDMUqNisBhfrnbfanjSPSVx9w9xfRrVyLU3c?=
+ =?us-ascii?Q?MBIirZGixT4Vhc44J3CkIrSgevKmU1OjHK/Pf8N8roQjP8tjNW49aC1KAtSV?=
+ =?us-ascii?Q?Ry4tZ0JID8V87E9nwSho0/2J/9zZTADIDTdp1iRU69d4YhmKrxAmQEaPEuhv?=
+ =?us-ascii?Q?Fn2BMhhfWdAn4ogPAsuEJsr+Uc3bxyPWIQCJtBlwjy6BalbpiQL3MqVaZcam?=
+ =?us-ascii?Q?P/yokrVPh6EYjQsm9cEpvgmLOYGeSNtZaucVXaRckW61hkGu15CPuWBa3KTd?=
+ =?us-ascii?Q?+aozfpHdwLlrVajAnDBv3mlpBWT/8WVZPo4at0tF+PT1bzZJcMlGuQwyYeOK?=
+ =?us-ascii?Q?gUjfyDQxBSoxyHCSxz2JNY3kjq7Mz4mFVB7M0CZrm+lsxnplZV6fHcfaVXT3?=
+ =?us-ascii?Q?NpPpGIhbgv8/m6n06DhbRxxB9+BbQobw3Qgi3az1rdaq1WAB3QWGrgSN+NCL?=
+ =?us-ascii?Q?RMH5rkzUKE9AsOP5YQ9FPw2wAubo8rjFUY/efYTvwaLcJh2o5L8dji6M6KwT?=
+ =?us-ascii?Q?wnxZYeyRxTyTq6/bQ8m47O592iNdl6yaNloAjKvuj648OV7HVjjMZ+rvJ52G?=
+ =?us-ascii?Q?O3s9lfcAHi5QuLwo4LniR2drYiiVhE1xAOb7a8GHtUztWkpPK0dW2cFX2DwW?=
+ =?us-ascii?Q?4bMPyPwLFPqjwSk5wAeIpbiNnIQwxIfXJEE1T4l8IjPfmELJEviRBVaxorK+?=
+ =?us-ascii?Q?TICcNxk0jmYBmu7EwnhK0T4Pvi0x5CMhxmqZBtDni6jF3+1ZzDg2Om1xsCcJ?=
+ =?us-ascii?Q?lHDjNJjYKXD0oiuaR4pb12KbBMK1nb1KynXL2blLJs8B0M5HxN2xRU7fqQKg?=
+ =?us-ascii?Q?SliOArNRsrW0SqJf+ykbi0CZIYxB0Qd0NVbGiXL2lQ9FW5JKzq6o4Ro8lFUU?=
+ =?us-ascii?Q?zqeF3SPGCucVnjZDi+em8ksmnkNb11NB7SfovcEJWCzBSs22B7sNqSJU5709?=
+ =?us-ascii?Q?z2UPHBycgNp09qsGEGjj3hUReTuLryx44QMhvLghlt5JWMsp45S6tseuQ+EG?=
+ =?us-ascii?Q?CeohdQKpD0eBOZDQDtjzW0WnOXO9Z7QD9MIRafGGMQ9v06KYc/CR+eaBCzyg?=
+ =?us-ascii?Q?+94ZNjCNKWRsF/U5k4AQDiVTfmLN1269tzykgffiSu/x1PxFcgewqHIsi2fE?=
+ =?us-ascii?Q?mjIQRzoOUPV0NeG3LOPntvuKxYyyq6TTRXzWNn8V9XI0JlOg/PF1qwqzyNy/?=
+ =?us-ascii?Q?Ep1lely/2JJGMuJT7eX/kFOUfQUhmGU/hhGzXAGqKHQ1usAQuTLm+SnOgSC2?=
+ =?us-ascii?Q?F9fbtElWX5P000A/3qO1UlcrvRWYbuvENMNjynGMFQdik+eYXEGrOMaMFWPi?=
+ =?us-ascii?Q?vzArJlWi1n7rNCqlgQzpvlniSpdOcZ2pRu6mLnrNcd/TLFFbTgKL2if3l7cj?=
+ =?us-ascii?Q?s3OUSgbDCxdYgjbwit/aXUrHvHdCaew=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6c9beeb1-c541-47f1-3b66-08ded3a28c2a
+X-MS-Exchange-CrossTenant-Network-Message-Id: b093abdd-6634-469d-4336-08ded3a28dd5
 X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2026 16:47:02.4834 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2026 16:47:05.2098 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yw4jTYaIYf6NtPdQ9GpH1/yZHGiqUn2RqcpJUXEP9hPKRZo3y1K3SLAQBLTOEU55CjZQ9+7H8h5kJP2KkrzGjS4qJSImf++7SW/zKOi/RwA=
+X-MS-Exchange-CrossTenant-UserPrincipalName: Z5bnheJ/e1tsSMs8g6ZrQhp5vpfkcKDoGtJdiPXxnO5538T9wbXEapRXnGfMwxPsL/pbAf32+is8V1KXlJ5Q0SBPVInL1s93QcWvWBpMGjs=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB6347
 Received-SPF: pass client-ip=2a01:111:f403:c200::5;
  envelope-from=andrey.drobyshev@virtuozzo.com;
@@ -142,62 +142,296 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migration target with a vhost-vsock device in the .post_load() hook issues
-VIRTIO_VSOCK_EVENT_TRANSPORT_RESET event to the guest.  This results into
-the guest tearing down all its vsock connections.  That reset exists
-because after a normal migration the cid may change.
+The previous patches reuse the source vhost FD on the destination,
+however both source and targe still call vhost_dev_init() (VHOST_SET_OWNER)
+in realize().  For cpr-transfer the destination realizes while the source
+still owns the shared FD, so its SET_OWNER would fail - ownership has to be
+handed over explicitly.
 
-However it's not true for CPR-style migration.  In this case cid remains
-the same, and we want the connections to persist.  Thus, let's customize
-the .post_load() hook to skip the common transport reset part in this case.
+Do this through the device's CPR vmstate hooks.  Namely, release device
+ownership in pre_save, reclaim in post_load, re-acquire on failure:
 
+  - .pre_save() releases ownership on the source (VHOST_RESET_OWNER) once
+    the VM is stopped, for the FD-preserving CPR modes (cpr-transfer and
+    cpr-exec).
+
+  - .realize(), for an incoming CPR, only sets up the virtio device and
+    queries the backend features by calling vhost_dev_init_backend().
+    It doesn't take device ownership and doesn't touch the VQs which
+    still-running source might use.  The full init is deferred to
+    .post_load().
+
+  - .post_load() reclaims it on the destination: the full vhost_dev_init()
+    (VHOST_SET_OWNER) on the preserved FD, plus sets the guest cid, before
+    the device is started at vm_start.
+
+  - A MIG_EVENT_FAILED notifier re-acquires ownership if the migration
+    fails after pre_save released it and the source VM is resumed.
+
+Also harden vhost_virtqueue_cleanup() against a NULL vq->dev which can
+now happen if an incoming CPR is aborted after realize set up the backend
+but before post_load initialised the VQs.
+
+Suggested-by: Dongli Zhang <dongli.zhang@oracle.com>
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- hw/virtio/vhost-vsock.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ hw/virtio/vhost-vsock.c         | 147 +++++++++++++++++++++++++++++---
+ hw/virtio/vhost.c               |   2 +-
+ include/hw/virtio/vhost-vsock.h |   3 +
+ 3 files changed, 140 insertions(+), 12 deletions(-)
 
 diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
-index da244eb1657..cdc58d58790 100644
+index 7eacb608d07..b02b3f9cc03 100644
 --- a/hw/virtio/vhost-vsock.c
 +++ b/hw/virtio/vhost-vsock.c
-@@ -20,6 +20,7 @@
- #include "hw/core/qdev-properties.h"
- #include "hw/virtio/vhost-vsock.h"
- #include "monitor/monitor.h"
-+#include "migration/cpr.h"
+@@ -76,6 +76,17 @@ static int vhost_vsock_set_status(VirtIODevice *vdev, uint8_t status)
+     bool should_start = virtio_device_should_start(vdev, status);
+     int ret;
  
- static void vhost_vsock_get_config(VirtIODevice *vdev, uint8_t *config)
- {
-@@ -108,6 +109,20 @@ static uint64_t vhost_vsock_get_features(VirtIODevice *vdev,
-     return vhost_vsock_common_get_features(vdev, requested_features, errp);
- }
- 
-+static int vhost_vsock_post_load(void *opaque, int version_id)
-+{
 +    /*
-+     * Only reset vsock connections for non-CPR migration.  For CPR the
-+     * guest cid is unchanged, and the cid-change reset would otherwise
-+     * tear the vsock connections down.
++     * On an incoming CPR the full vhost_dev_init() is deferred to post_load
++     * (realize only ran vhost_dev_init_backend()).  hdev->mem is set only by
++     * the full init, so refuse to start a device whose handoff never
++     * completed rather than dereference a half-initialised vhost_dev.
 +     */
-+    if (cpr_is_incoming()) {
++    if (should_start && !vvc->vhost_dev.mem) {
++        error_report("vhost-vsock: refusing to start, device init incomplete");
 +        return 0;
 +    }
 +
-+    return vhost_vsock_common_post_load(opaque, version_id);
+     if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
+         return 0;
+     }
+@@ -111,18 +122,102 @@ static uint64_t vhost_vsock_get_features(VirtIODevice *vdev,
+     return vhost_vsock_common_get_features(vdev, requested_features, errp);
+ }
+ 
++/*
++ * Re-acquire device ownership if a CPR migration that released it (in
++ * vhost_vsock_cpr_pre_save()) failed and the source VM is about to resume.
++ * This runs before vm_start(), so the device is owned again before it is
++ * restarted.
++ */
++static int vhost_vsock_cpr_notifier(NotifierWithReturn *notifier,
++                                    MigrationEvent *e, Error **errp)
++{
++    VHostVSock *vsock = container_of(notifier, VHostVSock, cpr_notifier);
++    VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(vsock);
++    int ret;
++
++    if (e->type == MIG_EVENT_FAILED && vsock->owner_reset) {
++        ret = vhost_dev_set_owner(&vvc->vhost_dev);
++        if (ret < 0) {
++            error_report("vhost-vsock: failed to re-acquire owner: %d", ret);
++        } else {
++            vsock->owner_reset = false;
++        }
++    }
++
++    return 0;
 +}
 +
++static int vhost_vsock_pre_save(void *opaque)
++{
++    VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(opaque);
++    VHostVSock *vsock = VHOST_VSOCK(opaque);
++    int ret;
++
++    ret = vhost_vsock_common_pre_save(opaque);
++    if (ret) {
++        return ret;
++    }
++
++    /*
++     * Release the device ownership now for CPR migration.  The device is
++     * already stopped at pre_save, and destination reclaims it by calling
++     * VHOST_SET_OWNER in post_load.
++     */
++    if (cpr_incoming_needed(NULL)) {
++        ret = vhost_dev_reset_owner(&vvc->vhost_dev);
++        if (ret < 0) {
++            error_report("vhost-vsock: vhost_reset_owner failed: %d", ret);
++            return ret;
++        }
++        vsock->owner_reset = true;
++    }
++
++    return 0;
++}
++
+ static int vhost_vsock_post_load(void *opaque, int version_id)
+ {
++    VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(opaque);
++    VirtIODevice *vdev = VIRTIO_DEVICE(opaque);
++    DeviceState *proxy = qdev_get_parent_bus(DEVICE(vdev))->parent;
++    Error *local_err = NULL;
++    int vhostfd, ret;
++
+     /*
+      * Only reset vsock connections for non-CPR migration.  For CPR the
+      * guest cid is unchanged, and the cid-change reset would otherwise
+      * tear the vsock connections down.
+      */
+-    if (cpr_is_incoming()) {
+-        return 0;
++    if (!cpr_is_incoming()) {
++        return vhost_vsock_common_post_load(opaque, version_id);
++    }
++
++    /*
++     * CPR restore case.  The source released device ownership in its
++     * pre_save.  Complete the handoff here, before the device is started
++     * at vm_start.  Init vhost device on preserved FD, issue
++     * VHOST_SET_OWNER on it, and restore the guest cid.
++     */
++    vhostfd = cpr_find_fd(proxy->id, 0);
++    if (vhostfd < 0) {
++        error_report("vhost-vsock: could not find restored vhost FD");
++        return -1;
+     }
+ 
+-    return vhost_vsock_common_post_load(opaque, version_id);
++    ret = vhost_dev_init(&vvc->vhost_dev, (void *)(uintptr_t)vhostfd,
++                         VHOST_BACKEND_TYPE_KERNEL, 0, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++        return ret;
++    }
++
++    ret = vhost_vsock_set_guest_cid(vdev);
++    if (ret < 0) {
++        error_report("vhost-vsock: unable to set guest cid: %d", ret);
++        return ret;
++    }
++
++    return 0;
+ }
+ 
  static const VMStateDescription vmstate_virtio_vhost_vsock = {
-     .name = "virtio-vhost_vsock",
-     .minimum_version_id = VHOST_VSOCK_SAVEVM_VERSION,
-@@ -117,7 +132,7 @@ static const VMStateDescription vmstate_virtio_vhost_vsock = {
+@@ -133,7 +228,7 @@ static const VMStateDescription vmstate_virtio_vhost_vsock = {
+         VMSTATE_VIRTIO_DEVICE,
          VMSTATE_END_OF_LIST()
      },
-     .pre_save = vhost_vsock_common_pre_save,
--    .post_load = vhost_vsock_common_post_load,
-+    .post_load = vhost_vsock_post_load,
+-    .pre_save = vhost_vsock_common_pre_save,
++    .pre_save = vhost_vsock_pre_save,
+     .post_load = vhost_vsock_post_load,
  };
  
- static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+@@ -144,6 +239,7 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VHostVSock *vsock = VHOST_VSOCK(dev);
+     DeviceState *proxy = qdev_get_parent_bus(DEVICE(vsock))->parent;
++    bool cpr_incoming = cpr_is_incoming();
+     int vhostfd;
+     int ret;
+ 
+@@ -172,7 +268,16 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+         }
+     }
+ 
+-    if (cpr_is_incoming()) {
++    /*
++     * Re-acquire ownership if a CPR migration releases it (in pre_save) but
++     * then fails.
++     */
++    migration_add_notifier_modes(&vsock->cpr_notifier,
++                                 vhost_vsock_cpr_notifier,
++                                 BIT(MIG_MODE_CPR_TRANSFER) |
++                                 BIT(MIG_MODE_CPR_EXEC));
++
++    if (cpr_incoming) {
+         /* Reuse the fd handed over from the source QEMU. */
+         if (!proxy->id) {
+             error_setg(errp, "vhost-vsock: device ID is required for "
+@@ -205,14 +310,32 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+ 
+     vhost_vsock_common_realize(vdev);
+ 
+-    ret = vhost_dev_init(&vvc->vhost_dev, (void *)(uintptr_t)vhostfd,
+-                         VHOST_BACKEND_TYPE_KERNEL, 0, errp);
+-    if (ret < 0) {
++    if (!cpr_incoming) {
++        ret = vhost_dev_init(&vvc->vhost_dev, (void *)(uintptr_t)vhostfd,
++                             VHOST_BACKEND_TYPE_KERNEL, 0, errp);
++        if (ret < 0) {
++            /*
++             * vhostfd is closed by vhost_dev_cleanup, which is called
++             * by vhost_dev_init on initialization error.
++             */
++            goto err_virtio;
++        }
++    } else {
+         /*
+-         * vhostfd is closed by vhost_dev_cleanup, which is called
+-         * by vhost_dev_init on initialization error.
++         * CPR restore case: only learn the backend feature set now, but
++         * defer taking ownership or touching VQs (the still-running source
++         * might be using them).  The full vhost_dev_init()/VHOST_SET_OWNER
++         * is done later in post_load.
+          */
+-        goto err_virtio;
++        ret = vhost_dev_init_backend(&vvc->vhost_dev,
++                                     (void *)(uintptr_t)vhostfd,
++                                     VHOST_BACKEND_TYPE_KERNEL, errp);
++        if (ret < 0) {
++            /* vhost_dev_init_backend() does not close the fd on error */
++            goto err_vhost_dev;
++        }
++
++        return;
+     }
+ 
+     ret = vhost_vsock_set_guest_cid(vdev);
+@@ -234,6 +357,7 @@ err_vhost_dev:
+ err_virtio:
+     vhost_vsock_common_unrealize(vdev);
+ err_blocker:
++    migration_remove_notifier(&vsock->cpr_notifier);
+     migrate_del_blocker(&vsock->migration_blocker);
+ }
+ 
+@@ -250,6 +374,7 @@ static void vhost_vsock_device_unrealize(DeviceState *dev)
+     if (proxy->id) {
+         cpr_delete_fd(proxy->id, 0);
+     }
++    migration_remove_notifier(&vsock->cpr_notifier);
+     migrate_del_blocker(&vsock->migration_blocker);
+     vhost_dev_cleanup(&vvc->vhost_dev);
+     vhost_vsock_common_unrealize(vdev);
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 7ae2abe33cd..3734e3f20b5 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1647,7 +1647,7 @@ fail_call:
+ static void vhost_virtqueue_cleanup(struct vhost_virtqueue *vq)
+ {
+     event_notifier_cleanup(&vq->masked_notifier);
+-    if (vq->dev->vhost_ops->vhost_set_vring_err) {
++    if (vq->dev && vq->dev->vhost_ops->vhost_set_vring_err) {
+         event_notifier_set_handler(&vq->error_notifier, NULL);
+         event_notifier_cleanup(&vq->error_notifier);
+     }
+diff --git a/include/hw/virtio/vhost-vsock.h b/include/hw/virtio/vhost-vsock.h
+index 5ebc63afc5a..6d0cff4fb93 100644
+--- a/include/hw/virtio/vhost-vsock.h
++++ b/include/hw/virtio/vhost-vsock.h
+@@ -15,6 +15,7 @@
+ #define QEMU_VHOST_VSOCK_H
+ 
+ #include "hw/virtio/vhost-vsock-common.h"
++#include "qemu/notify.h"
+ #include "qom/object.h"
+ 
+ #define TYPE_VHOST_VSOCK "vhost-vsock-device"
+@@ -30,6 +31,8 @@ struct VHostVSock {
+     VHostVSockCommon parent;
+     VHostVSockConf conf;
+     Error *migration_blocker;   /* set when the device has no ID */
++    bool owner_reset;           /* CPR released ownership; needs re-acquire */
++    NotifierWithReturn cpr_notifier;   /* re-acquires ownership if CPR fails */
+ 
+     /*< public >*/
+ };
 -- 
 2.47.1
 
