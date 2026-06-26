@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEE1BCD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 06:57:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B910CDE008
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 06:57:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd0UB-0008Rc-4V; Fri, 26 Jun 2026 02:56:23 -0400
+	id 1wd0Tu-0008Np-UO; Fri, 26 Jun 2026 02:56:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wd0UA-0008RT-Gd
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 02:56:22 -0400
+ id 1wd0Ts-0008N3-Lo
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 02:56:04 -0400
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wd0U8-0007vz-Ub
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 02:56:22 -0400
+ id 1wd0Tq-0007uw-Ki
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 02:56:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1782456981; x=1813992981;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=LFZDeluVb0jYrFBCNzRihUZyA/8sIedwSTGxxS78Gns=;
- b=hfxUme5r6748hnqci+D158gDWHlh87s27xFtXbNI4ixYyobejJucwCq0
- M44tQE15PxVEtiAyHIPW3dWGZO9nOX9cUBmZU9IvSYUu4aoB86hMv2s4c
- 2OP18mPlNEQW0X2Raz8IMeODbEaiZSWRQyCxZlc9JTJV2Jd8BhcvlmgTe
- /fm9yeK3tG/aqg+CmoX5uRFLoKLcn2h0eyR9koJyYwd0whwzNJUf0evyn
- ifcgzJ4JT4w9kr8bFws8WEh780YpITJDMmpT4M2E9L1urrEWUxLquB5I6
- 39l7zm6EldLfSw3SdPfrUXKtGHFNHWlkfVB/KASwiWgEAKyaoWPtJU04c w==;
-X-CSE-ConnectionGUID: 17KyRSkXQw6pjZ//4Kc7Dg==
-X-CSE-MsgGUID: xQhcrnp7SFamS70Lf2GmXg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11828"; a="85802355"
-X-IronPort-AV: E=Sophos;i="6.24,226,1774335600"; d="scan'208";a="85802355"
+ t=1782456963; x=1813992963;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=iARy3cRYNassfTGD4WkDMHzE6Bdi/ddDojiWpPiYACA=;
+ b=BgAIeRdJIHMtrf+l7hOdRP+QUnE10KxjDgeK6VlJ6GoXRNG48vo5H5SA
+ 2kwTL9tZggy/P6JMhc6oIgPzOlrZEt3GRQRDpYPvH/DsnylFYz5T9Ld59
+ 3flu2BrK/6D6t27civGSfiNC31SfgPJlS5k4sidytsmDWHTl+gA6iUFCl
+ St4xC7SyhAsPd7QW1Qe0DnU5vkdnvmz1tfuv1jgmyi4I+WN4pGi4XqJEP
+ IjsGZHtA+cqv824/KaIVUp5YhD1oY5VYg/LRXoM18LmkEqcA20QLODlCZ
+ vEDjSTUOkQZcsNCLIZRAgryk+8DP9Hm/Wipk+b67pD42Uso/MCNp1LxBi Q==;
+X-CSE-ConnectionGUID: VBKK+DFBSO2cMJxoYwwlFQ==
+X-CSE-MsgGUID: cI3Pc7PvTi608jxLMoPizA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11828"; a="85802324"
+X-IronPort-AV: E=Sophos;i="6.24,226,1774335600"; d="scan'208";a="85802324"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jun 2026 23:56:20 -0700
-X-CSE-ConnectionGUID: ZsEt5uf4TjWAgb5WATCW/g==
-X-CSE-MsgGUID: xxUVM1IpSFaUxXRvE21K9Q==
+ 25 Jun 2026 23:55:58 -0700
+X-CSE-ConnectionGUID: eTBD9Fi/RIS+SZEmscM+1g==
+X-CSE-MsgGUID: yF5XFUvrS3SubeOL5hvcsQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,226,1774335600"; d="scan'208";a="244865896"
+X-IronPort-AV: E=Sophos;i="6.24,226,1774335600"; d="scan'208";a="244865865"
 Received: from junjie-desk-dev.bj.intel.com ([10.238.152.71])
  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jun 2026 23:56:18 -0700
+ 25 Jun 2026 23:55:56 -0700
 From: Junjie Cao <junjie.cao@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Jonathan Cameron <jic23@kernel.org>, linux-cxl@vger.kernel.org,
  junjie.cao@intel.com
-Subject: [PATCH 5/6] hw/cxl: clear event logs,
- scan media and interrupt policy on reset
-Date: Fri, 26 Jun 2026 14:21:48 +0800
-Message-ID: <20260626062149.1844334-6-junjie.cao@intel.com>
+Subject: [PATCH 0/6] hw/cxl: fix Type-3 device reset resource leaks and
+ convert to three-phase
+Date: Fri, 26 Jun 2026 14:21:43 +0800
+Message-ID: <20260626062149.1844334-1-junjie.cao@intel.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260626062149.1844334-1-junjie.cao@intel.com>
-References: <20260626062149.1844334-1-junjie.cao@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.13; envelope-from=junjie.cao@intel.com;
  helo=mgamail.intel.com
@@ -83,73 +82,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Event records, scan media results and event interrupt settings are
-device-internal dynamic state that should not survive a device reset.
+The CXL Type-3 device reset path (ct3d_reset) has several issues:
 
-Per CXL r4.0 Section 8.2.10.9.4.6 (Get Scan Media Results), "If the
-Scan Media command has not been called since the last Conventional
-Reset, the device shall return the Unsupported return code."  This
-explicitly invalidates scan media results across reset, so clear the
-scan_media_hasrun flag.
+1) Resource leaks:
+   - cxl_destroy_cci() never frees the QEMUTimer allocated by
+     cxl_init_cci(), leaking a timer on each destroy/reinit cycle.
+   - The primary CCI (ct3d->cci) is re-initialized through
+     cxl_device_register_init_t3() without being destroyed first,
+     leaking the timer and leaving the mutex undestroyed on every
+     reset.
+   - The secondary CCIs are never destroyed at device exit time,
+     leaking their timers and mutexes on device removal.
 
-Per CXL r4.0 Section 8.2.10.2.5 (Set Event Interrupt Policy), "All
-event log interrupt settings shall be reset to 00b (No Interrupts) by
-the device on Conventional Reset."  Clear irq_enabled for every event
-log accordingly.
+2) Incomplete state cleanup:
+   - Background commands do not survive Conventional Resets (CXL r4.0
+     Section 8.2.9.4), yet the in-flight sanitize state is never freed.
+   - Scan media results are explicitly invalidated after reset (Section
+     8.2.10.9.4.6), yet scan_media_hasrun is never cleared.
+   - Event interrupt settings shall be reset to 00b on Conventional
+     Reset (Section 8.2.10.2.5), yet irq_enabled is never cleared.
+   - When "Injects Persistent Poison" is 0 (the QEMU default), injected
+     poison shall be automatically cleared on reset (Table 8-309), yet
+     the poison lists are never drained.
+   - Stale event records remain in the queues across reset even though
+     the Event Status register (Table 8-203) is non-sticky.
 
-For the event records there is no direct spec mandate to drop the
-stored records on reset; the Event Status register (Table 8-203) is
-non-sticky and resets to zero per Section 9.7, and no reset flavor
-requires the already-reported records to persist.  Draining the queues
-is therefore a reasonable modelling choice that keeps the records
-consistent with the freshly-reset status register, rather than a spec
-requirement.  Call the existing cxl_discard_all_event_records() helper
-to drain all event queues.  The event log infrastructure itself
-(mutexes, IRQ vectors) remains intact as it is initialized once during
-device realize.
+3) Deprecated API usage:
+   - Uses device_class_set_legacy_reset() instead of the three-phase
+     resettable interface, preventing reset-type-aware behavior.
 
-This is also where reset-type gating begins: a wakeup from suspend-to-RAM
-(RESET_TYPE_WAKEUP) is not a Conventional or CXL Reset and must retain
-device-internal state, so the hold phase returns early for that type
-before discarding any records.  This mirrors the RESET_TYPE_WAKEUP
-shortcut in virtio-mem and virtio-balloon.  Only the unconditional
-mailbox interface re-initialization and the in-flight sanitize free
-(whose backing timer was already destroyed) run on a wakeup.
+This series fixes the issues incrementally:
+  - Patches 1-2: fix resource leaks (deterministic bugs)
+  - Patch 3: mechanical conversion to three-phase reset
+  - Patches 4-6: clean up device state on reset
 
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
----
- hw/mem/cxl_type3.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+The state cleanup in patches 4-6 is gated on reset type:
+RESET_TYPE_WAKEUP returns early (patch 5) since a resume from S3 is
+not a Conventional or CXL Reset.  The CCI re-initialization and the
+in-flight sanitize free run unconditionally regardless of type.
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index a5e6df3033..5bf0cffb72 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1371,6 +1371,23 @@ static void ct3d_reset_hold(Object *obj, ResetType type)
-      */
-     g_free(ct3d->media_op_sanitize);
-     ct3d->media_op_sanitize = NULL;
-+
-+    /*
-+     * A wakeup from suspend-to-RAM is not a Conventional or CXL Reset.  The
-+     * device-internal dynamic state cleared below (event logs, scan media
-+     * results, and the poison/feature-transfer state cleared in subsequent
-+     * patches) must be preserved across resume, so stop here for a wakeup.
-+     * virtio-mem and virtio-balloon take the same RESET_TYPE_WAKEUP shortcut.
-+     */
-+    if (type == RESET_TYPE_WAKEUP) {
-+        return;
-+    }
-+
-+    cxl_discard_all_event_records(&ct3d->cxl_dstate);
-+    for (int i = 0; i < CXL_EVENT_TYPE_MAX; i++) {
-+        ct3d->cxl_dstate.event_logs[i].irq_enabled = false;
-+    }
-+    ct3d->scan_media_hasrun = false;
- }
- 
- static const Property ct3_props[] = {
--- 
+Not addressed here:
+
+  - Committed Feature attributes and alert thresholds (Table 8-276
+    Deepest Reset Persistence = None) are not reverted to defaults.
+    Factoring the realize-time defaults into a reset helper is left
+    for a follow-up.
+
+  - Dynamic Capacity extent lifecycle across reset.
+
+  - The Media Disabled latch after an interrupted Sanitize (Section
+    8.2.10.9.5.1); patch 4 addresses only the resource leak.
+
+Tested: per-commit build clean; qtest passes.  Differential
+LeakSanitizer (5x system_reset): pre-series leaks 720 B / 15 allocs
+in cxl_init_cci -> timer_new_ms; post-series zero.  Poison inject ->
+reset -> re-inject same DPAs succeeds (no stale "Overlap" rejection).
+20x inject+reset stress cycles with no crash.
+
+Junjie Cao (6):
+  hw/cxl: fix timer leak in cxl_destroy_cci()
+  hw/cxl: destroy primary CCI before re-initialization on reset
+  hw/cxl: convert cxl-type3 to three-phase reset
+  hw/cxl: free in-flight sanitize state on reset
+  hw/cxl: clear event logs, scan media and interrupt policy on reset
+  hw/cxl: clear poison lists and feature transfer state on reset
+
+ hw/cxl/cxl-mailbox-utils.c  |  2 +
+ hw/mem/cxl_type3.c          | 74 ++++++++++++++++++++++++++++++++++---
+ include/hw/cxl/cxl_device.h |  2 +
+ 3 files changed, 73 insertions(+), 5 deletions(-)
+
+--
 2.43.0
 
 
