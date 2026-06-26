@@ -4,98 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95D02C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 14:13:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5472C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 14:29:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd7IV-0002If-Ah; Fri, 26 Jun 2026 10:12:47 -0400
+	id 1wd7YS-000523-Hy; Fri, 26 Jun 2026 10:29:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wd7IT-0002IB-BV
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 10:12:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wd7IS-0001Hf-2a
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 10:12:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782483162;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=i5uyi1eXJ7KZEgS2qEkLKhkYYRNmeWQ7dSE5IVz0CQA=;
- b=C5NA5ToGPfAN0hPV82xvPLGu//09odXD+2jIExmgENqzFsidSso+4OGbSkJXBBVCUMeb6B
- b0W8Mca0nDtCGAoJuInTVwt4buydXK/CxNacIsbLaoNckTwLXmJgipm0gQlAJOz0Ady7fJ
- 5urtAtVNJJjUbsg7ABnltY1jJARI6Gc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-125-TaogeuXIOYKcWW3a7UTT6Q-1; Fri,
- 26 Jun 2026 10:12:39 -0400
-X-MC-Unique: TaogeuXIOYKcWW3a7UTT6Q-1
-X-Mimecast-MFC-AGG-ID: TaogeuXIOYKcWW3a7UTT6Q_1782483158
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 41ABC1956049; Fri, 26 Jun 2026 14:12:38 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.16])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9C2E21800661; Fri, 26 Jun 2026 14:12:35 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1wd7YQ-00051f-Ga
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 10:29:14 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1wd7YO-0005b7-P2
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 10:29:14 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-39ad188f6d8so10974801fa.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 07:29:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782484150; cv=none;
+ d=google.com; s=arc-20260327;
+ b=E2vuXtnsM6iG9NlIANI5qUBbHHjXQ3KI1SOQIcXWsZehc2+H+ZXK1qPm3rsgWxQ+VJ
+ DSdzKFIcQFpAIUxsi4wNmuLCsh/2NgdjunX/1S1d8w3mFSbmXABxcftQfZTHS4Be4/eY
+ /sIwhOuxGJNhU8CY99dgjAh6ZEe/WyK5mQukj18xdNXejjBPXE/QuXlm5Xq0tl7rtPks
+ zhaVGml0PdUvrWZ7b1kvw6Rni4ZodrjLBJS6tKJCq/t47yT0HGmX/OXEYYfVHNRZKA15
+ sVK1+jPsMtgvM55g1QW6IpSFg27WvuuVVT/HHQOFyaylgn0/pJEMtTZgMmPAzSH5U22k
+ syLg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=fTcRzdBHr9iCYU03/M7eGozHOShewHXCaAybGINyLc0=;
+ fh=M53F9OyMyXaprNYz5ycy0QOslAkZgr8cpZk3PVQ0YK0=;
+ b=U1rj4+ErMNoUGXJfytqcMioDya9O1Re5xKfvMBSqdoozpqX2SNL0NERbtat3XU8NKD
+ tH/gvEWbHtdslL2C+XzU6kuYVNfIDz64kNQ1tfcsPiy/q7xnXMKTcNjS637VBUwA7xVy
+ XyMGbzomOos8h0S0nLbDieMrrzo7qv4GFB2LfJIDnqJiT/yG+jM6WkD4awZdBEdbki0h
+ AMmEiMOvOqMTxC6LJwBusnt9dU9fNbT/K7J/dCicDAXXR2/as1QmwUX1LptFNoqD689b
+ GYBglnb4AjOShIFZAomEpu4DxzOz8QqSZcTFQlIs1BEPJfzlU1WcSl66d7T4gxIgNnBq
+ EOdg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1782484150; x=1783088950; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fTcRzdBHr9iCYU03/M7eGozHOShewHXCaAybGINyLc0=;
+ b=LmP1cPpHDzfsrnC8TSrZCg180aLXSFv3I9dj6yLgzCEKVVSfFN424qlaKKr9YJlEd+
+ htFeAqxJHeL+lJ4EQfCRUSFjeycfDHLiX+ZFzY2NsfB6rr1oKIF0xlnZg9e29EGs+45H
+ M9My9z75ooKe8TsOjcBoN81az7785Gqcr9UJcoGgyqZFPu3Jy4ElBlCoK4yIhk9PlhMp
+ I/K8dabi1bCKkSM0hvnbc1jUvDyuR8Z5cf5TF1g43mpgY+VNwT1TY7Mb9hDenhIVivIO
+ wFTTBdvN0M6dgMER30Nb/Zu4MquC1CV2boJGjUdFN3D3C+uaAqPH01WNmuOixjQqjmb6
+ 3YZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782484150; x=1783088950;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=fTcRzdBHr9iCYU03/M7eGozHOShewHXCaAybGINyLc0=;
+ b=aDNn6V28IKW/yk/km2OvNVLLDDqK/oFBD9szBi9bSVIzmekXuVgxsfAD3BLlvDzl/f
+ njickyirlnUBh3nwB2wTPrHHpaGRPXlJCaiAqoYFlF5YbaHQbthWcLiPRZY1vUH5/gVV
+ ds/WbKPlomSy743f9K1e+uxgDNs4K5Sgzc8raJuV5hhcXuga+KVnhhgk/pH/Zso8ETDp
+ yCatTMIR4iWBdvWelO/oq6q1nPrrrMnGxeW0Jiat+F6HLEWDpMNQOpCraHpmWbRUfpMf
+ Mi5tvHs+J0j9Gt/MWCvGCkW6VUCPMdjCBEd13tshNdkq86p2uz1ifcDvjM5uvotkcCOj
+ XJnw==
+X-Gm-Message-State: AOJu0YzoGz5ocoKj5zwuGdHQdB8ftlCyp2W/lb7XgLZDHxB/XFxmft28
+ xXSi64J5fWHmrlwysvpc3rvv7euaVYMxIhrVdYqmnujj9OIk6WbanDbEjbflOh1Inacs7UQ1B0s
+ 1jHLx5o7XLzytb/MMn/XXARUDYOcrtSU=
+X-Gm-Gg: AfdE7cnRYTYcfII6GR4OTwnQN0WsRgqVPnlrcujMNDNNDvEsAvAxpfYqDBuES4GNwRx
+ MPulVhkq4NYEwMdOB+/nbOPYhruGSymwAv/1wcY4uklMtoGD8u02PEFQQeZ3tvH5FAKC/T4SOD1
+ YxbmeEISigcXvx7qVSRRhPUyQkx5qZxD+lfjU7ge8zRgNR/6x3mbk5vlH9QrOnn9p6f/Xxus3Tq
+ raye4R34ilYmxNq0JHGrOyVDBgtYnwcnHPO7+RLly5T41BWZ/wIubvoAg8WS5n0bnDUc5xFTewv
+ 1BAJ9PNwFSQ2P0UzDknAzzlJ+VzCd/IfQnb2CA==
+X-Received: by 2002:a05:6512:3983:b0:5aa:6e86:55e5 with SMTP id
+ 2adb3069b0e04-5aea945b98emr199400e87.13.1782484149900; Fri, 26 Jun 2026
+ 07:29:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 8/9] hw/audio/virtio-sound: remove channel positions
- field from VirtIOSoundPCMStream
-From: marcandre.lureau@redhat.com
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: qemu-devel@nongnu.org, 
- =?utf-8?q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- =?utf-8?q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
- =?utf-8?q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-In-Reply-To: <20260626123531.132078-9-alexander@mihalicyn.com>
-References: <20260626123531.132078-1-alexander@mihalicyn.com>
- <20260626123531.132078-9-alexander@mihalicyn.com>
-Date: Fri, 26 Jun 2026 18:12:23 +0400
-Message-Id: <178248314307.2718091.17411171533577710568.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=309;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=yOXp/R87Fu7wr51Mm8H6KeGLwu38Bh2BLiS+x+CAKlc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqPojKdbYPDN13z1+O3ZUgpoNjp6RQG7d8suGXH
- nyKE0YbMjeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaj6IygAKCRDa6OEJdZac
- 5cikEACs5DH+w1j4WrCPfOadizO/ydFD91QDiBGvH83ZijZs0l6QI3QGLGxb5PH5VpbvPfm/j0a
- N+e17BYZgHApZHxg6W9HvAaLWj8ya77scwNEbIv4RtDteglrXl+y7JVVdJmCUjCSRjiRr0WJvik
- EIC3bDJ6jIwI7duXGuLhA/CAou1oeFcCXzFboLDCDqHY6hDkg+YeX7DvHci6aBdzc5vnxR6WSn/
- LBR1i/A0ZZf7cfWt4mtmy9be3wLTocrYrItv/mJvnLDsq4JgvY1ECCf1yh6cfOPQ90t5tae1HUN
- 40QfWDFSH9cOi2QgrjDyWBvvPfWPnPxzMz+1PbJw8b9zLWW85gp29IJwBPw2Es4Sd4CJA9L5oZo
- 0TbTV8i5LraEyDZSV1OnVc6irnnKK8pN/kpJPy+YIHzXAhFJZSXvXMz6oPsHgrLR8JzclCpHsnP
- Y8D3imMjkS6Ry/DWZnKe9rqVb+HXu3gSz51Wtn/MBx9YaJayGHPBwPc03QH/u0w91g64HFtsyEj
- lGTEbKWm7A7mcrOU/0+Bfia7W5JYvk+IESvwGwUDmveATyqZGPRwsGOKp4263Xc2KmymBSvtq4s
- 2n0pG3v4GOFvNqufsiUnfTG/vjJPx9JdQxoTiTHAqvXisJb/W3VS2AlssH4xdRQ5IHpK2nOyoLk
- OJJXSCcplU+Pe3w==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260618032010.88755-1-aadeshveer07@gmail.com>
+ <878q84owlq.fsf@suse.de>
+In-Reply-To: <878q84owlq.fsf@suse.de>
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
+Date: Fri, 26 Jun 2026 19:58:55 +0530
+X-Gm-Features: AVVi8CekDCB1KIK9qL6z0wbhRzpVExKPpsPbEdURroNW444pdNn5Pba4plyY7gM
+Message-ID: <CA++cPvLDjpsdmhfz4Z1FmgGZp48T99jrTD0d0b0ET5n_6SRvmA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/5] migration: fast snapshot load
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, pbonzini@redhat.com, 
+ philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-lj1-x22b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,13 +118,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 26 Jun 2026 14:35:30 +0200, Alexander Mikhalitsyn <alexander@mihalicyn.com> wrote:
-> This field seems to be useless currently, as we
-> don't implement VIRTIO_SND_R_CHMAP_INFO.
+On Wed, Jun 24, 2026 at 7:43=E2=80=AFPM Fabiano Rosas <farosas@suse.de> wro=
+te:
+>
+> Aadeshveer Singh <aadeshveer07@gmail.com> writes:
+>
+> > This RFC implements a "fast snapshot load" mechanism to significantly
+> > reduce the perceived resume time of a VM from a snapshot file.
+> >
+> > Currently, resuming a VM from a snapshot file requires loading all RAM
+> > pages into the QEMU instance before execution begins. This extension
+> > allows the user to run the VM nearly instantly by loading only the
+> > required device states up front and loading RAM pages lazily, by
+> > trapping access to pages that have not yet been loaded.
+> >
+> > Using the Linux userfaultfd syscall, a fault thread catches all page
+> > faults caused by the guest and loads in the pages required to keep
+> > the VM running. Concurrently, an eager background thread iteratively
+> > loads all remaining pages into RAM so the guest does not have to
+> > depend on the fault thread indefinitely.
+> >
+> > Much of code is reused from postcopy for fault handling and precopy
+> > for reading mapped ram file. Implementation revolves around two
+> > threads named the fault thread and eager load thread. Fault thread as
+> > name suggests catches page faults by the guest and serves them using
+> > userfaultfd. Postcopy fault thread is reused but instead of requesting
+> > source for a page it loads the page directly by reading form file. In
+> > order to remove the dependency of guest on fault thread indefinitely
+> > the eager load thread loads in the entire RAM sequentially, and after
+> > iterating through the entire RAM signals fault thread to exit and
+> > calls cleanup.
+> >
+> > In order to prevent the case of a page being loaded twice(in the
+> > case when eager load thread is loading it and fault thread also
+> > tries to serve fault on same page) a bitmap called pending_bmap is
+> > used to track pages which are pending and not being loaded by any
+> > thread. Atomic operations on this bitmap allows coordination between
+> > threads to prevent any unwanted behaviours
+> >
+>
+> How does it work if a second savevm happens while the RAM has not been
+> yet entirely loaded?
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Hi Fabiano,
+Thanks for the review across the series.
 
--- 
-Marc-André Lureau <marcandre.lureau@redhat.com>
+To answer this: If a second savevm is issued before the RAM is fully
+loaded, it will be blocked. Because the migration state remains
+MIGRATION_STATUS_POSTCOPY_ACTIVE until the eager thread finishes
+reading the last page from disk, standard QEMU migration checks will
+reject any new savevm or migration requests.
 
+>
+> > This patch was tested using a Debian 13 bare minimum system and Fedora
+> > 44 KDE, snapshots for both are loaded successfully with no error.
+> >
+> > Next Steps:
+> > - Add testing framework, in qtest and unit tests
+> > - Add support for postcopy-blocktime
+> > - Update documentation
+> >
+> > Future direction:
+> > - Add support for hugepages
+> > - Add support for multifd
+> > - Add support for vhost-user
+> >
+> > Aadeshveer Singh (5):
+> >   migration: add RAM Block fields and helpers for fast snapshot load
+> >   migration: add support for fault thread to load pages from disk
+> >   migration: add eager load thread for fast snapshot load
+> >   migration: write up code to run fast snapshot load in
+> >     qemu_loadvm_state
+> >   migration/tests: remove capability conflict test
+> >     postcopy-ram+mapped-ram
+> >
+> >  include/system/ramblock.h          |   8 ++
+> >  migration/migration.c              |  10 +-
+> >  migration/migration.h              |   5 +
+> >  migration/options.c                |  11 +-
+> >  migration/options.h                |   1 +
+> >  migration/postcopy-ram.c           | 167 ++++++++++++++++++++++++++---
+> >  migration/postcopy-ram.h           |   2 +
+> >  migration/qemu-file.c              |  10 +-
+> >  migration/ram.c                    |  61 +++++++++--
+> >  migration/savevm.c                 |  52 ++++++++-
+> >  migration/savevm.h                 |   2 +
+> >  migration/trace-events             |   2 +
+> >  tests/qtest/migration/misc-tests.c |  52 ---------
+> >  13 files changed, 283 insertions(+), 100 deletions(-)
 
