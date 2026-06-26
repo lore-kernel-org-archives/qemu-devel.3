@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1CDFCDE010
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 05:28:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DDD3CDE008
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 05:28:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcz6j-0004eT-M6; Fri, 26 Jun 2026 01:28:05 -0400
+	id 1wcz6m-0004ex-IA; Fri, 26 Jun 2026 01:28:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wcz6i-0004e5-Hy
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 01:28:04 -0400
+ (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wcz6l-0004ep-6X
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 01:28:07 -0400
 Received: from out-179.mta0.migadu.com ([2001:41d0:1004:224b::b3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wcz6g-0005rk-St
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 01:28:04 -0400
+ (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wcz6j-0005ub-Oi
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 01:28:06 -0400
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1782451680;
+ t=1782451684;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9BoiSycFuCoOKAkQfGbs2PFQAnjPqz4ydnB0FhHeozw=;
- b=mHZPz3JY4nX+6TgQJ6bok4vM++lHU9pkEo6jqQwnrs+kCXB+gRSTVDftDgbHo3KCk0GR6o
- XfQivc6A4Xue4TjwtOQsvy5ni68H6te8EJO10+LMt4F81vOBqmj0et+QbIehXQJJXE9BUk
- kuHCdszNz2Ry/6D7BIkke28kV2ZoBjM=
+ bh=TxTZUdCW6q4WC90uZ3+/hnAWbIGD9ch+ubW2pdJ3x0c=;
+ b=Fe6RATKTV8hyGoveRiyE8al9eBuYGKG0V1GLu6P0ftyKEO7cLM3TdmEEv/aHYwGNIvF9la
+ /Tx1MdMn7tiyADe9xhrXIFFsfsN/Nm4PqSHOId+2CJ2vGU+N+yOOwqGaMZjG15AQnTlWH4
+ sxN9W94XL1u3jFhuFqieFW/xdExP4ns=
 From: Tao Cui <cui.tao@linux.dev>
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Qiang Ma <maqianga@uniontech.com>, Tao Cui <cuitao@kylinos.cn>
-Subject: [PATCH v2 2/4] target/loongarch/kvm: pass device attr by reference to
- kvm_vcpu_ioctl
-Date: Fri, 26 Jun 2026 13:27:40 +0800
-Message-ID: <20260626052742.810726-3-cui.tao@linux.dev>
+Subject: [PATCH v2 3/4] target/loongarch/kvm: remove redundant cpucfg failure
+ traces
+Date: Fri, 26 Jun 2026 13:27:41 +0800
+Message-ID: <20260626052742.810726-4-cui.tao@linux.dev>
 In-Reply-To: <20260626052742.810726-1-cui.tao@linux.dev>
 References: <20260626052742.810726-1-cui.tao@linux.dev>
 MIME-Version: 1.0
@@ -70,68 +70,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Tao Cui <cuitao@kylinos.cn>
 
-kvm_vcpu_ioctl() is variadic and reads its argument as a pointer, but
-kvm_get_stealtime(), kvm_set_stealtime() and kvm_set_pv_features() pass
-the local struct kvm_device_attr by value. It currently works because of
-how the calling convention passes large structs; pass &attr so the
-argument is passed as intended.
+kvm_get_one_reg() and kvm_set_one_reg() already trace on failure, so the
+trace_kvm_failed_get_cpucfg()/trace_kvm_failed_put_cpucfg() calls in
+kvm_loongarch_get_cpucfg() and kvm_loongarch_put_cpucfg() duplicate that.
+Remove the calls and the now-unused trace events.
 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 ---
- target/loongarch/kvm/kvm.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ target/loongarch/kvm/kvm.c    | 6 ------
+ target/loongarch/trace-events | 2 --
+ 2 files changed, 8 deletions(-)
 
 diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 5bd5e268b9..4bb5be6864 100644
+index 4bb5be6864..a504cfaaf7 100644
 --- a/target/loongarch/kvm/kvm.c
 +++ b/target/loongarch/kvm/kvm.c
-@@ -46,12 +46,12 @@ static int kvm_get_stealtime(CPUState *cs)
-         .addr = (uint64_t)&env->stealtime.guest_addr,
-     };
+@@ -714,9 +714,6 @@ static int kvm_loongarch_get_cpucfg(CPUState *cs)
  
--    err = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, attr);
-+    err = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, &attr);
-     if (err) {
-         return 0;
+     for (i = 0; i < 21; i++) {
+         ret = kvm_get_one_reg(cs, KVM_IOC_CPUCFG(i), &val);
+-        if (ret < 0) {
+-            trace_kvm_failed_get_cpucfg(strerror(errno));
+-        }
+         env->cpucfg[i] = (uint32_t)val;
      }
- 
--    err = kvm_vcpu_ioctl(cs, KVM_GET_DEVICE_ATTR, attr);
-+    err = kvm_vcpu_ioctl(cs, KVM_GET_DEVICE_ATTR, &attr);
-     if (err) {
-         error_report("PVTIME: KVM_GET_DEVICE_ATTR: %s", strerror(errno));
-         return err;
-@@ -70,12 +70,12 @@ static int kvm_set_stealtime(CPUState *cs)
-         .addr = (uint64_t)&env->stealtime.guest_addr,
-     };
- 
--    err = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, attr);
-+    err = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, &attr);
-     if (err) {
-         return 0;
+     return ret;
+@@ -777,9 +774,6 @@ static int kvm_loongarch_put_cpucfg(CPUState *cs)
+ 	}
+         val = env->cpucfg[i];
+         ret = kvm_set_one_reg(cs, KVM_IOC_CPUCFG(i), &val);
+-        if (ret < 0) {
+-            trace_kvm_failed_put_cpucfg(strerror(errno));
+-        }
      }
- 
--    err = kvm_vcpu_ioctl(cs, KVM_SET_DEVICE_ATTR, attr);
-+    err = kvm_vcpu_ioctl(cs, KVM_SET_DEVICE_ATTR, &attr);
-     if (err) {
-         error_report("PVTIME: KVM_SET_DEVICE_ATTR %s with gpa "TARGET_FMT_lx,
-                       strerror(errno), env->stealtime.guest_addr);
-@@ -96,13 +96,13 @@ static int kvm_set_pv_features(CPUState *cs)
-         .addr = (uint64_t)&val,
-     };
- 
--    err = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, attr);
-+    err = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, &attr);
-     if (err) {
-         return 0;
-     }
- 
-     val = env->pv_features;
--    err = kvm_vcpu_ioctl(cs, KVM_SET_DEVICE_ATTR, attr);
-+    err = kvm_vcpu_ioctl(cs, KVM_SET_DEVICE_ATTR, &attr);
-     if (err) {
-         error_report("Fail to set pv feature "TARGET_FMT_lx " with error %s",
-                       val, strerror(errno));
+     return ret;
+ }
+diff --git a/target/loongarch/trace-events b/target/loongarch/trace-events
+index dea11edc0f..829d8e0f53 100644
+--- a/target/loongarch/trace-events
++++ b/target/loongarch/trace-events
+@@ -9,7 +9,5 @@ kvm_failed_get_mpstate(const char *msg) "Failed to get mp_state from KVM: %s"
+ kvm_failed_put_mpstate(const char *msg) "Failed to put mp_state into KVM: %s"
+ kvm_failed_get_counter(const char *msg) "Failed to get counter from KVM: %s"
+ kvm_failed_put_counter(const char *msg) "Failed to put counter into KVM: %s"
+-kvm_failed_get_cpucfg(const char *msg) "Failed to get cpucfg from KVM: %s"
+-kvm_failed_put_cpucfg(const char *msg) "Failed to put cpucfg into KVM: %s"
+ kvm_arch_handle_exit(int num) "kvm arch handle exit, the reason number: %d"
+ kvm_set_intr(int irq, int level) "kvm set interrupt, irq num: %d, level: %d"
 -- 
 2.43.0
 
