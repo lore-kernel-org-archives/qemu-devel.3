@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF5E8C43327
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 23:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF6C5C43327
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 23:40:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdG8w-0003Ig-Vy; Fri, 26 Jun 2026 19:39:31 -0400
+	id 1wdG9S-0003Zv-Ve; Fri, 26 Jun 2026 19:40:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wdG8w-0003IF-Bu
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 19:39:30 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wdG9R-0003YY-FT
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 19:40:01 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wdG8t-0003w8-VV
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 19:39:29 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1wdG9P-00043Z-LE
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 19:40:01 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65QMxHii2746548
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 23:39:27 GMT
+ 65QMxo1Y3844801
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 23:39:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- sU1ZEpbtsPiTi3Z1jYI9sf2PH/WmQ1kJvaxyrijgup0=; b=aU5rvE1lZaMqJjIk
- CNkKbaJtD5X87KcOjA5z/eFLcPVaJYP3WsDaTMVwd9niH4Ydol6hAXgIOMDmCR4J
- lR8dTr7R3E/jiJVfTJfc8IMiCGIdU8fJomd1jmo/wvXp5Cz5NVCDwZo8xnsLDxbf
- Ck64VvYYtXubr0VUdWhVzWWi1Qej8j1anmtXhp/ipJHT9IALh+eItWWnteDh7DeL
- aahxicHUcCPki7xgTFLPYOyPQxV8DHHwmSeIC6QQicLWjm9Ju6dLLriXeSo+vV72
- x3zbMes+TNcoYG7MWYSifFE41+cgeqroGTRtS+f/7CC7vuusA0ZB09nFCJJ8+8KD
- uPxQvA==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f1yqv0mvx-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=G4I/lx0WkC3
+ n0Bu26oW6ayHVqjbHuBk7Z59IPQ1LOSg=; b=Bdiu+nww/Gl4QDLcgaXzSeUuLmp
+ BA2LU0IqSBLIC3zBCu7P7okRmPPcEiRyh1BusvkwbWXNKQIX8Wgh7eQ+5UHOV/zc
+ 1EhQvd5JFLYJYYHWkcrGP9OoOeC6QdZnrdbcpgQiTpWD9UDQ41FhZfEgaLTpiGU8
+ tJ0mnD4BwqwpgoXJD5nVTjvvploN/gKBUhGBlOSWmDHamcsKqHSbUu84xZn+MEDg
+ j6UzGe8/x1AgN8nwlCBY+BaTEgqB2W8EzJUNERhktHFZ2YyAyBaFp9uZz/osHUX7
+ Pt+4ZAVuB0HOv/rwJJe1848gKV6pZiHyxLdS3yKWta6g5KjlZchHDw+KFWw==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f21wvg77e-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 23:39:26 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-30ca1f74cacso1162866eec.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 16:39:26 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 23:39:48 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-30c8722a4easo2382818eec.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 16:39:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782517166; x=1783121966; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1782517188; x=1783121988; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sU1ZEpbtsPiTi3Z1jYI9sf2PH/WmQ1kJvaxyrijgup0=;
- b=eCIj4SKtLytRGCaZ/jSrA+Guf/5lZB33F1yV+6jklbC9a8nSdLewdrMn3vHpy0c4JJ
- sCJWVlzt65F8WIr9yT6z+9RyrOIyRhs1cG/jou5qfQAXYu1yYY3iki/yW9qf+ghU6Bxg
- vVdZMPJjA41uYvRwILSNJhgs2AgPFgDsfCU3d6kE9f5TztSVRsoyv9aZBIa9ScYYFsOE
- UNIFCiNN15CA93cgaUW4+KV5apfUt26EZP6zGm9aMI33bKLi84lBBkyR3CzuA1aDpTlI
- 5Yt7pO9WTxi9L/D/6QTQUJdHnTwWQa6Tf3GhodT0HR3TV61Ff1un63Nk+b5rRvI+szLs
- fAzg==
+ bh=G4I/lx0WkC3n0Bu26oW6ayHVqjbHuBk7Z59IPQ1LOSg=;
+ b=TtIVoNniqtvVBsyghgK4lq4O4jfBeQ0CGNkaLqCviyBCnncRwpL5aeeDzZR9Y+s6QO
+ IkuNJjmbmpDpKBSKfMA+rcoVeWE5EpHlIeCeqrE6ct1BGthde8lor1+cnkL+4d8qTEe6
+ U2KN1M4ekWrV04bFZEjhMlaErxuhz2BC/Yv48q2ucWI7xKJ1bcWzIOR4PIXrp3iEW7gR
+ AcCJ/mNK7xYgVk22MXGRfnU6n+Bm4qf/qYmyhBcLBtHoq/EyjmRMljb2BTVExMANUz4y
+ 59aNRcGPeghmR697+UN5DDNBWFMlz+VXf2VKzxZcCH5p8lL+ZWmUUnxoW2adtw26mw2q
+ oBpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782517166; x=1783121966;
+ d=1e100.net; s=20251104; t=1782517188; x=1783121988;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=sU1ZEpbtsPiTi3Z1jYI9sf2PH/WmQ1kJvaxyrijgup0=;
- b=SMBjyMZaAGKItg4oZu7E+fFXn6+n6E5faPkDFVEurNBk5wWfLZYojDZmZAqhJrHa/F
- 5Spnp9qAtMuWMWCvl0/EH/7aK6f7678dzXYXPm9G00k/1HAI/WdsPxs2ABuYK0aM7HxQ
- 4fNN52ml2skuMR8DiQnE3t4hKWK92J8endizblx6WZ3TxcqJT4L4nyoDMq/qkAKMLO7A
- NoydKl7HRAdKci1M6a7E8fvdCqn4BlOVPkKSx4EzzEX7YhokZelAtTxkbAuDjT8E+Lep
- SLDHGBOx/KAHRb6SVMQ135mEk/gN+hEKtVpObkQ3diz6VrbFJHEc8pi5ob4h6k8tEZld
- z9Iw==
-X-Gm-Message-State: AOJu0YzRPEKKdCRD0QOzbef1QlMwYsvw9KJTUWeyrvSxnn7u3RNjddX5
- mrj8+PLfcstyLUfzOYVly57+BxBzDCr5sQERV0YWAV++lEFFGffKxfyGAy/8nGCoyIstXT+PVbR
- fD9rgiIZTyIocdMHMh5PvJ+TkQXe7SzCVe9qPXBMW7Wzu7cmS3/3Y/DDmmEdrxS8WYA==
-X-Gm-Gg: AfdE7cl26En4O+/tfh7fzL/GC6U3UdRtnavO/Y7FK0Amszi9HcP0Ar/KEwnqN4CMLdn
- y3494FpsBhJAps1XO+arXoVph41DPjNN/EBm7gPCBx8gPkt7NVdGouhQl1mA6t0bJXSdd+QO4eg
- ApoN0Xz9SNzgKeihogKpaXBUaLpuwLACG87FGxG2aW/CIV9goqJ6m5vfz4VvM/FFvGU4PvcTwSM
- GNZUvEjb5NoJhdd1oOXdgo2YNSMLdGD5s3pjWeHElQGCQbUAK0JdNl7ekCXM+v1Snid3FFHF3ZF
- 6nkEwgFVIKRCLMbCSWUmn+zv3G95suOvvb+gGSXE9csamLcES0Ga19ehi14xG4xtdHM3vyP84Q4
- ycTaLn7GxrdFQTXe/PS+G2CvD7GznRlcuJPWil1yOOi0p/IxCdmS0hTuRUv8/5lHDchAIqt+wAr
- JrDSnCNA==
-X-Received: by 2002:a05:7301:644c:b0:2ea:e93a:ff9b with SMTP id
- 5a478bee46e88-30c84bcdacfmr8052562eec.13.1782517165971; 
- Fri, 26 Jun 2026 16:39:25 -0700 (PDT)
-X-Received: by 2002:a05:7301:644c:b0:2ea:e93a:ff9b with SMTP id
- 5a478bee46e88-30c84bcdacfmr8052543eec.13.1782517165450; 
- Fri, 26 Jun 2026 16:39:25 -0700 (PDT)
+ bh=G4I/lx0WkC3n0Bu26oW6ayHVqjbHuBk7Z59IPQ1LOSg=;
+ b=m3L6+tCXXK5IqfIBjGEiW11qqXl94ieO/1t5T/kenC0qLIK/Ds0uIimlJSoXVMiXDd
+ Up7a+yw+0W9LO7/1z2ql/zQKwJr4VXSuOZu+zh/JeMglqPR6ej1MJLHZCLRZbuR9UQGs
+ 2b3/tuQI4r3cgbYetDJnDa/wRaCkKx7A5CfBfcorqA2Cvz4fmsGsjN2oi5HRcmO1c+dL
+ YMB2otH3S2Y+oUiL1wNhD/sCqAzUE/IKAdHggjE8simdk6b/3T5MOZknJcgXNBNmx45I
+ 92wQhZwo64mXoVP5WKeyIMUMRzJIfCHDgrag1dH+jMJn9TEgzrk9Z6dYS9CiFL0TxrFa
+ zAYg==
+X-Gm-Message-State: AOJu0YxOAxQ8Tkw5iItjPtOz0X+jTD07txzyIqIb7ZqLk8tLuIky7W+j
+ 0WzSSJsOrla8p5u3MiG8/nr98IAzEd5A+4l/LSIXmoj9PR8LUo4uRjIFuouj/OrSUsE9ngxLMwe
+ 4QCl7Dn46JsZk9YAEF1rFflgqn1rraiZ+XY9BZCHkho9s9lNNdx4ljmr0HMVo9AmeSw==
+X-Gm-Gg: AfdE7cmbJZvPuymEKN9GCk1mrRyL2UTW1qb0fjN8y/7vN63ckupWotOOGloYamWzfQ0
+ MkeJB4lHVWMOdQcZSRSRHaQlJdY7g5+Mn98BRI63wFMBDrxcHW0YbW92cgd6SYAvNagXytjzK/k
+ T5vgHFLkSkLU7plab4dHHgfTidFdkYDRD6ftYTWk+vptmM+D6Lf6yH5Q/XdRDFHcaYOkuTfiZvg
+ KDyHfheZ3VNwGDsTadbsfxixl3bFjsV0ck3s0lE3C7jX2VO31V7ebad+o/ieKYTLhFU93KC7vOQ
+ zk8lvx29Adsj+pNdaCOOm0YKSSGv62UfQeUzGb5B0pu50aBxFFsw6WwG0XBscnKGJFd+QXbANJF
+ kkY6bczlEY385mTfWoBZ4WoRDAA5qvmj6br2SK1rlwksF9a8dAoR3IXUSVIJGkSfIddhgdFPseU
+ U2E2VOVA==
+X-Received: by 2002:a05:7300:6902:b0:2e0:1f09:d924 with SMTP id
+ 5a478bee46e88-30c84cf3f8cmr9178764eec.5.1782517187715; 
+ Fri, 26 Jun 2026 16:39:47 -0700 (PDT)
+X-Received: by 2002:a05:7300:6902:b0:2e0:1f09:d924 with SMTP id
+ 5a478bee46e88-30c84cf3f8cmr9178742eec.5.1782517187182; 
+ Fri, 26 Jun 2026 16:39:47 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30c7c52c591sm29369756eec.7.2026.06.26.16.39.24
+ 5a478bee46e88-30c7c52c591sm29369756eec.7.2026.06.26.16.39.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 16:39:24 -0700 (PDT)
+ Fri, 26 Jun 2026 16:39:46 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -100,54 +99,52 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-arm@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>
-Subject: [PATCH v2 02/37] tests/tcg/multiarch/plugin/check-plugin-output.sh:
- take test output as input
-Date: Fri, 26 Jun 2026 16:38:43 -0700
-Message-ID: <20260626233918.158740-3-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v2 17/37] tests/tcg/meson.build: add wrapper
+ run_and_check_forbidden_output
+Date: Fri, 26 Jun 2026 16:38:58 -0700
+Message-ID: <20260626233918.158740-18-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260626233918.158740-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260626233918.158740-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=aoiCzyZV c=1 sm=1 tr=0 ts=6a3f0dae cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=BJ7t3AzVVyt49CR6OUkA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: 1nAYMaIFilY67gu1o-kLlHlV1SyLppGw
-X-Proofpoint-ORIG-GUID: 1nAYMaIFilY67gu1o-kLlHlV1SyLppGw
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI2MDE5NyBTYWx0ZWRfX0N78sNArWDkT
- hSu4dC20e/0TKbSBtLnd3trIDl4QocN81hWhoGjyOIl5gd+vhgC533aFkAZbSqIP6qjPOAKFnQf
- 4pY2qK/455uRhF3D38l0L/sf1hhsEiw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI2MDE5NyBTYWx0ZWRfXwLjBrhHU8eV1
- fKJa9Uk1RwZraPBrUDUTGdo18B/lz0Zvv7AS8Rc/baAcwqTG6mV+0XiWqA0+agkZuujkMeTaYCf
- wK1Nxlw2wndRts5vVF5X9vs84Csl0JgqW9Sna6IFQc+pxMXS2KXg9kGqgQM1wqkCJvqt660pdKc
- zIRYybXWr8cO5GFF3u2pCXhBSTdWMs5a1DqdH8QyINQqiX9pLykIeQNT8zkPpkLpku6ptizt69r
- TuB1ZZshN4GeiuaQuFa9qzCRtD+JSEnGFOM6ZlrdpA6tPPCVwC3uDgKriYCFItiJQQbcjilbO/l
- 20xZZjazFfpicDxxdv9/fdWt5z+DnaC/7rcmI5dqCnyKrzHH7f5GbrOYXLt2eB6jyYih2WBzsck
- xvGggSMNzwCMIvyo/dMpsZdlisQo7XlFoJmPjqZ1JLdB61lBBSzdLX8c2hvRFLHU8ReXsXW5qiB
- U++a5eKBAA69PiNmG8Q==
+X-Authority-Analysis: v=2.4 cv=eszvCIpX c=1 sm=1 tr=0 ts=6a3f0dc4 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
+ a=fCjPhq1eeATGNm5uL08A:9 a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-GUID: XQBVO9UfOB2VYKYhuRj8hhue0nqATjy5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI2MDE5NyBTYWx0ZWRfX066E/jWdJuEL
+ XNNaz3ha6R1oHfjhjYFB2otZmwQpY5sVGDQFUskWcNGZBp8MxD/najNsAZ5oqCudt4W6qAPPZiZ
+ FeSNCLuQks7hIhkYLJcr1jtwHBrkJ3EcmHr/C7oDw69QaMxZ5y50essfuSuxYDpAhKmjgtDw9cx
+ sSRPck7OPycATlTOZ8+FXvnP38sFS469YA18RxjW26c8teo6Pr3y+TBK+/PP+8ZTfpx/Z2HTtzQ
+ xgjPbs9lp6BDP39wbFyLWrDvcSX31BuPosJgOGhoT2ozYoFFdKaMbDwxbRr08Zuyk3k4btC0Z3l
+ VMRk9Kg+FstIh6AL7R9+gtfjmipa7vjfOfVyZTJ2tbapjkyPeggAgfjBoLth5q0x/XxJu7OTv+1
+ QbgbZfoMi+MTRBhRnplIRSGaDTA7C75BWZG82WFeVD+TpuJwlJDNO7bqasKyWFqLn9O+MJ4N8mN
+ z5ZBYLcrbnaWG1EdxLg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI2MDE5NyBTYWx0ZWRfX/Y/9QH3xJv+4
+ qhIyps7+DKE2HUILPfu340RdhpgnIL3D0XhbhT7vur63k79RSv8JTVuFOBeEGSAiNs6v5UegEdb
+ esJJBL/1PL6hr0EqVf+12Jl3vqajWsc=
+X-Proofpoint-ORIG-GUID: XQBVO9UfOB2VYKYhuRj8hhue0nqATjy5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-26_06,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- impostorscore=0 bulkscore=0 malwarescore=0 spamscore=0 adultscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ malwarescore=0 spamscore=0 phishscore=0 impostorscore=0 adultscore=0
+ bulkscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2606260197
-Received-SPF: pass client-ip=205.220.180.131;
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,70 +160,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of executing test, just read it's output from a file. This
-allows to standardize how to call check plugins scripts.
+One of our test requires to make sure output does not contain a specific
+string. An example is system multiarch test run-gdbstub-untimely-packet.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/multiarch/Makefile.target           |  3 +--
- .../multiarch/plugin/check-plugin-output.sh   | 22 ++++++-------------
- 2 files changed, 8 insertions(+), 17 deletions(-)
+ tests/tcg/meson.build                         |  3 +++
+ .../scripts/run_and_check_forbidden_output.sh | 19 +++++++++++++++++++
+ 2 files changed, 22 insertions(+)
+ create mode 100755 tests/tcg/scripts/run_and_check_forbidden_output.sh
 
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-index 508149d57bd..f46983cc76e 100644
---- a/tests/tcg/multiarch/Makefile.target
-+++ b/tests/tcg/multiarch/Makefile.target
-@@ -211,8 +211,7 @@ run-plugin-test-plugin-mem-access-with-libmem.so: \
- 	PLUGIN_ARGS=$(COMMA)print-accesses=true
- run-plugin-test-plugin-mem-access-with-libmem.so: \
- 	CHECK_PLUGIN_OUTPUT_COMMAND= \
--	$(SRC_PATH)/tests/tcg/multiarch/plugin/check-plugin-output.sh \
--	$(QEMU) $<
-+	$(SRC_PATH)/tests/tcg/multiarch/plugin/check-plugin-output.sh $@.out
- run-plugin-test-plugin-syscall-filter-with-libsyscall.so:
- run-plugin-test-plugin-set-pc-with-libsetpc.so:
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index f052e731de6..130f8a83c54 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -8,6 +8,9 @@ endif
+ gdb = find_program(gdb_progs, required: false)
+ prog_gdb_test = find_program('../guest-debug/run-test.py')
+ prog_run_and_diff = find_program('./scripts/run_and_diff.sh')
++prog_run_and_check_forbidden_output = find_program(
++  './scripts/run_and_check_forbidden_output.sh'
++)
  
-diff --git a/tests/tcg/multiarch/plugin/check-plugin-output.sh b/tests/tcg/multiarch/plugin/check-plugin-output.sh
-index 80607f04b5d..338c9ced23e 100755
---- a/tests/tcg/multiarch/plugin/check-plugin-output.sh
-+++ b/tests/tcg/multiarch/plugin/check-plugin-output.sh
-@@ -1,8 +1,7 @@
- #!/usr/bin/env bash
- 
--# This script runs a given executable using qemu, and compare its standard
--# output with an expected plugin output.
--# Each line of output is searched (as a regexp) in the expected plugin output.
-+# This script checks that plugin_output contains line from test_output.
-+# Each line of output is searched (as a regexp) in plugin_output.
- 
- set -euo pipefail
- 
-@@ -19,18 +18,11 @@ check()
-     grep "$pattern" "$file" > /dev/null || die "\"$pattern\" not found in $file"
- }
- 
--[ $# -eq 3 ] || die "usage: qemu_bin exe plugin_out_file"
-+[ $# -eq 2 ] || die "usage: test_output plugin_out"
- 
--qemu_bin=$1; shift
--exe=$1;shift
--plugin_out=$1; shift
-+test_output=$1;shift
-+plugin_output=$1;shift
- 
--expected()
--{
--    $qemu_bin $exe ||
--        die "running $exe failed"
--}
--
--expected | while read line; do
--    check "$plugin_out" "$line"
-+cat $test_output | while read line; do
-+    check "$plugin_output" "$line"
- done
+ tcg_tests = {}
+ # tcg_tests is a dictionary with following structure:
+diff --git a/tests/tcg/scripts/run_and_check_forbidden_output.sh b/tests/tcg/scripts/run_and_check_forbidden_output.sh
+new file mode 100755
+index 00000000000..4486ca8ef83
+--- /dev/null
++++ b/tests/tcg/scripts/run_and_check_forbidden_output.sh
+@@ -0,0 +1,19 @@
++#!/usr/bin/env bash
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++set -euo pipefail
++
++if [ $# -lt 2 ]; then
++    echo "run_and_check_forbidden_output: 'forbidden string' cmd [args]..." 1>&2
++    exit 1
++fi
++forbidden="$1";shift
++output=$("$@" 2>&1)
++set -x
++if ! echo "$output" | grep -Fi "$forbidden"
++then
++    echo "output does not contain forbidden string: $forbidden"
++    exit 0
++fi
++echo "found forbidden string: $forbidden" 1>&2
++exit 1
 -- 
 2.47.3
 
