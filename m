@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E61DDC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 18:43:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21A7FC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 18:43:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdBVt-0003vN-3S; Fri, 26 Jun 2026 14:42:53 -0400
+	id 1wdBWR-0004PG-A6; Fri, 26 Jun 2026 14:43:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wdBVr-0003jA-4n
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:42:51 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wdBW6-0004Kv-U3
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:43:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wdBVo-0002bG-Uj
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:42:50 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wdBW3-0002kZ-NP
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:43:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782499364;
+ s=mimecast20190719; t=1782499382;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=berPH/TKVNYHF5lUYi0bNqIJRxg9lJU7fevz+SJjH6U=;
- b=fbxvpZAW6OZziLVmZYuAwpzOZfdGqeOWDqrRMLbUoQieJpavsbqttJuLoUPHtmS3j43pd8
- 5eiJObGZRwPEmVWk/V6sp4P/HcFAuUPsgzkZHXNz7MM5gLfW7q3DtyBEDHA/PhOrryVWIy
- v8jx4Q6qqbQ7lVJhnTdEr28Zm66Yyl8=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1m08xl5zj2iO0x6HrTgIsPIoRO2MXBBRZkFG3G9+fcQ=;
+ b=QK+qOqfwFOOT0Jcv34zCnKZ82/0cL66VFNPSuPEFqh9J6kYwpOc7En8AUiTqrwaIqyuJ36
+ cdLXc8++pEaFwb+1KrHIJpsr8vrisSAhDjwYfESs3VENdcUH17A3qkxb8jhkNAU5ShnpcD
+ UCjyNguvzclEHnCAzG0AhBcHYodt1/0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-404-9AD9edbMNHSmX2GvYId0ZA-1; Fri, 26 Jun 2026 14:42:42 -0400
-X-MC-Unique: 9AD9edbMNHSmX2GvYId0ZA-1
-X-Mimecast-MFC-AGG-ID: 9AD9edbMNHSmX2GvYId0ZA_1782499361
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-46c90c8fd42so909346f8f.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 11:42:42 -0700 (PDT)
+ us-mta-574-Q89MxEM5PJyuayndj3GqKg-1; Fri, 26 Jun 2026 14:43:01 -0400
+X-MC-Unique: Q89MxEM5PJyuayndj3GqKg-1
+X-Mimecast-MFC-AGG-ID: Q89MxEM5PJyuayndj3GqKg_1782499380
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-490b37e1f48so8087865e9.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 11:43:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782499361; x=1783104161; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782499380; x=1783104180; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=berPH/TKVNYHF5lUYi0bNqIJRxg9lJU7fevz+SJjH6U=;
- b=kKKGvq56rfxvEe+aFAqf6qJlmHpCjSgFrUsW+kH89mIK6XJGoVx3QnnAagfi+9nG08
- DdqX9FyGfzNbodzLXECGFW23hj+wIUdfgPKekxhRx1k/p6s0eCQsPDHrFftZPog4h12/
- JWtFpMU/z3FCE6J4a4k6lwCA7FNHDyoWUcOVNVohMxgbvHrWzSzJ8qkoM4XdxmDLBDqu
- pTS0BRS2W9uLolixi8Nz2f0xBFonWBhcO0gBqzeCWMStPRRDAbPn8rvs15GOeMh7bwes
- N2cJk2MmY220bauODq7jlAe/1DwlCeW5qpIClzU3sXjQ6funhJvOqkHRJi3Rn7b3YLWe
- CwFw==
+ bh=1m08xl5zj2iO0x6HrTgIsPIoRO2MXBBRZkFG3G9+fcQ=;
+ b=ZnG+ipNtr2JGEx8tGKPkKgNXuXkdhjumOPKrSq8Fl581cFQGTZ19Vbkbv/H61K6c+v
+ nXGsOzM/2wPXPNv073HWY+w0wVCie0y8mk2UOtLKwAUoskrvSGoU5qD4pcc3+nen4T4J
+ cVtZs3z63j7WNRWul9P7oetHTlCyr713Zs3Gku4WuD6gAF9bVOwBBvIn9vYJ6fGuZXKO
+ KbOmSHoLJ1ZX9NDIcYsjuFKgReRmEkoNe79pLIt43aWlAiOPqVtg22c8BsOGaMrElql+
+ tbk70TBFN3oIZEf59ItYBG20gajnaBD6kBvKvNYm9Ke10LQFP1zkgCt28wy+Fk5SKPb+
+ xD4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782499361; x=1783104161;
+ d=1e100.net; s=20251104; t=1782499380; x=1783104180;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=berPH/TKVNYHF5lUYi0bNqIJRxg9lJU7fevz+SJjH6U=;
- b=aJ2fqUcHJJYJmQS3tnZRlNjL5zFcUQt7px8o3taxGhvH6qniwljlpEkC1YD//6x6xp
- gKyTVr5YX/LEFouWKzR3k+IpeOACU6ekBvVLqkwdx5FO1mhWbYTOg1zdIrisEVMGvZR3
- JP+/YDfRWpiEvuEYcvYJ2989aucup2TsWaFGJ5+QhI1DPHRndrKnCTWkzJ1vOeCQW+wf
- Q10/zaWddorAsouSoNDd8m3S8l2Fqbb1bK4CSWveumbTPya7kBubhj97WYNTNphbexzd
- POFmraNYzbxSt/ljOSgCRuDYDg0pS9wHExea6wV9y7cZt4DR68eC4yG6VfAHc1UgbPh+
- r2kQ==
-X-Gm-Message-State: AOJu0YzzWbf+j0+6a036wsibf9VAFcIE4IPokApWoVr1deL/Y5FMvBZ1
- Sa7sm8M3bPvznaxKymRoaTCSjIYpJlcJpd2QVab/emWK55VkdLerrZa4KhWEYAXG+ier8IA5Li6
- SkKDyp50KYiZ0f9OnKi81Il/hEUcnVK9KUQmg1nfvlHAl9kN+uVXq4rcMbBwrtV4nC74ONsu52C
- S9oX+4GzR616VzfOdCkQ/r3H9DXbANF7FKpw==
-X-Gm-Gg: AfdE7clUaeHGWiBKrSMTGD3FGf7exMYl7a4xbxnG0XssOJGTDAfskWm46SQWxSWy0+A
- DoAa2ZOTMMzBWhyPkjWIXuZ9mJ9ZhYLv4Bw6A6sYogucv2i6w99kaIKOSDjpmdoVh7s3uw5OwJw
- t5h7GabaEXT257YmhTb5u9X2sA3F9WWbutp8OXUWoVRpZ1feoKaUU1bQwKyc313eEq4ekhcEf+n
- fMFFAhGcH3y4sHYzaMBDvAyz7IQ5Sh6rFz+EeYaTO30l3CMIxWpdS0AUQ3k5ac6O1bw3t9Nb1HT
- wUEjkwpRpCC8nYjXpaCQZg7Vq/95TrWQA16QNzlLysmSPEHI8KWTF2pzBbGRrDBNPIIAsHsIUOt
- b4aE2H4Myb3y1m/KUak0TnENxWkTBIQB8E+Qo1KwEDtvT8fsDWiDm
-X-Received: by 2002:a5d:64e4:0:b0:468:b71a:6efe with SMTP id
- ffacd0b85a97d-46dbf117b6fmr13190274f8f.6.1782499361331; 
- Fri, 26 Jun 2026 11:42:41 -0700 (PDT)
-X-Received: by 2002:a5d:64e4:0:b0:468:b71a:6efe with SMTP id
- ffacd0b85a97d-46dbf117b6fmr13190209f8f.6.1782499360668; 
- Fri, 26 Jun 2026 11:42:40 -0700 (PDT)
+ bh=1m08xl5zj2iO0x6HrTgIsPIoRO2MXBBRZkFG3G9+fcQ=;
+ b=oD7OMzJb9bzXw3lhD1x/JSW/npO/fPuAwxzp6USpBmCu8fA773h0VNmJzfnV0ioQf/
+ BvsTHSWAGqTdaCzPqUb1USBHL3/SjTBOe4qlDi8ZentV89jMPIYETcztXttNNQGHWyg+
+ qe4S6Khb6zWdsfRHpWB0mMl6rJfeHNicIUF3/tEsV32rggK785m2Ke4/GOIjAPmksXEt
+ C/X67cxjXR0nweKnYaWUSR9sgInye0XcqUethoThHbS6OwCynfmLHCX74MeK04ohVLsR
+ 7qSrb+oKzLMBIwKo4l1R8Mb7rDCztxbFEsRG96RcAw7M/CdqFp7N48H+nwv0FqeyGbUk
+ 5/3Q==
+X-Gm-Message-State: AOJu0YzOj8lxPHXzgKrNHvFa93x/NZzcgbLjmihVYobJgu3RxUwcdhOy
+ zGjfaIkLKZHfimqCiQYQHgBbOhBhpuB7ZztClwxGDVuhORdojPhCM0qVv7GgICFjd64IIacC2W0
+ hvn1dTj9qAZMwTzygtZTjUFI8CYW1QXrRIfhE0GXFas1WHwn8artjCYqi
+X-Gm-Gg: AfdE7cm/pu5SF7CHWFU5D52uZHb865JK+FVtmmdyc1RCoh/YtfvItiAVxL7vT6dpR5o
+ Y/CFlNtxf8NwaLXbfZzzHCvxvwPVP1VjS58C8LUMFqnN+raXbfKtFPWyk50tkPuPsTCDuRzP8x0
+ q43dEviF29Kg9hjWD5rM5VPE1/fqFETIjku0Ry6O0gTbeTt+8hgVl+4Doe7BGnk2ILKprzlI+vr
+ xde7UmwI382727bBM94HCm4oqC/EiRPFyvfcw8xFLF6mfN7tRPYKZ+cFF59gVKehA23B49yNhRW
+ j1Q5BqGXWbMqOgf+5FK1jZLAZPAZR0eCT3YGbZhhZFnbzCf4Roa4y/iAG1TyD/DsPFXl6Q8c/ct
+ WKVupRdOUWre14C+7j+ZkBapni0iZVcytUH4HNuHzlkzu6twW5dZ+
+X-Received: by 2002:a05:600c:6211:b0:485:9a50:3370 with SMTP id
+ 5b1f17b1804b1-4926683b1f4mr117480445e9.8.1782499380145; 
+ Fri, 26 Jun 2026 11:43:00 -0700 (PDT)
+X-Received: by 2002:a05:600c:6211:b0:485:9a50:3370 with SMTP id
+ 5b1f17b1804b1-4926683b1f4mr117480255e9.8.1782499379765; 
+ Fri, 26 Jun 2026 11:42:59 -0700 (PDT)
 Received: from ?IPV6:2a01:cb19:8426:ae00:a924:b4e0:1ee:f5c5?
  ([2a01:cb19:8426:ae00:a924:b4e0:1ee:f5c5])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46f9db29a94sm4085984f8f.22.2026.06.26.11.42.39
+ 5b1f17b1804b1-4926c28c51asm41218585e9.2.2026.06.26.11.42.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jun 2026 11:42:40 -0700 (PDT)
-Message-ID: <4a980fdc-e037-47fd-9522-a8fea261e6a6@redhat.com>
-Date: Fri, 26 Jun 2026 20:42:39 +0200
+ Fri, 26 Jun 2026 11:42:58 -0700 (PDT)
+Message-ID: <73387efa-deeb-433d-85bc-08cc292624b8@redhat.com>
+Date: Fri, 26 Jun 2026 20:42:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/iommufd: Merge .dma_map_file() into .dma_map()
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>
-References: <20260608055758.359002-1-clg@redhat.com>
+Subject: Re: [PATCH] vfio-user: validate VERSION replies
+To: zhaoguohan@kylinos.cn, John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>
+Cc: qemu-devel@nongnu.org
+References: <20260603062138.4008583-1-zhaoguohan@kylinos.cn>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -137,9 +137,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260608055758.359002-1-clg@redhat.com>
+In-Reply-To: <20260603062138.4008583-1-zhaoguohan@kylinos.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -164,194 +164,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/8/26 07:57, Cédric Le Goater wrote:
-> Simplify the VFIOIOMMUClass interface by removing the dma_map_file
-> handler. Move the logic to decide between the standard virtual and
-> file-backed mapping into the IOMMUFD backend, utilizing the
-> MemoryRegion already passed to the dma_map handler.
+On 6/3/26 08:21, zhaoguohan@kylinos.cn wrote:
+> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 > 
-> This removes redundant dispatch logic from the generic container layer
-> and let backends to manage their own mapping strategies. This is
-> similar to the vfio-user implementation.
+> The vfio-user protocol makes the VERSION payload optional, so a
+> reply may legally stop after the major and minor fields.
 > 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> vfio_user_validate_version() currently assumes a capabilities string is
+> always present and NUL-terminated. When the server replies without
+> version data, QEMU ends up reusing the request-side capabilities buffer
+> and the terminating-NUL check underflows. Replies shorter than the fixed
+> VERSION header are also accessed before they are validated.
+> 
+> Reject replies shorter than the fixed VERSION header and only parse
+> capabilities when the reply actually carries version data.
+> 
+> Fixes: 36227628d824 (vfio-user: implement message send infrastructure)
+> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
 > ---
->   include/hw/vfio/vfio-container.h | 15 ----------
->   hw/vfio/container.c              | 38 ------------------------
->   hw/vfio/iommufd.c                | 50 +++++++++++++++++++++++---------
->   3 files changed, 37 insertions(+), 66 deletions(-)
+>   hw/vfio-user/proxy.c | 21 ++++++++++++++-------
+>   1 file changed, 14 insertions(+), 7 deletions(-)
 > 
-> diff --git a/include/hw/vfio/vfio-container.h b/include/hw/vfio/vfio-container.h
-> index a7d5c5ed679a0338937ae02f37140d94720f6f11..c70828a0529cb2b41162a8bd452da1d9c20bc08f 100644
-> --- a/include/hw/vfio/vfio-container.h
-> +++ b/include/hw/vfio/vfio-container.h
-> @@ -172,21 +172,6 @@ struct VFIOIOMMUClass {
->       int (*dma_map)(const VFIOContainer *bcontainer,
->                      hwaddr iova, uint64_t size,
->                      void *vaddr, bool readonly, MemoryRegion *mr);
-> -    /**
-> -     * @dma_map_file
-> -     *
-> -     * Map a file range for the container.
-> -     *
-> -     * @bcontainer: #VFIOContainer to use for map
-> -     * @iova: start address to map
-> -     * @size: size of the range to map
-> -     * @fd: descriptor of the file to map
-> -     * @start: starting file offset of the range to map
-> -     * @readonly: map read only if true
-> -     */
-> -    int (*dma_map_file)(const VFIOContainer *bcontainer,
-> -                        hwaddr iova, uint64_t size,
-> -                        int fd, unsigned long start, bool readonly);
->       /**
->        * @dma_unmap
->        *
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 56bd9ac0095df7b0f4da85f1d8dcb8d571fa9f2a..d09a6637324c6bf29b2fe22369082f87e280c98f 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -15,7 +15,6 @@
->   #include <linux/vfio.h>
->   
->   #include "system/tcg.h"
-> -#include "system/ramblock.h"
->   #include "qapi/error.h"
->   #include "qemu/error-report.h"
->   #include "hw/vfio/vfio-container.h"
-> @@ -74,49 +73,12 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
->       bcontainer->space = space;
->   }
->   
-> -static bool vfio_container_can_dma_map_file(VFIOContainer *bcontainer,
-> -                                            MemoryRegion *mr, int *fd)
-> -{
-> -    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-> -    RAMBlock *rb = mr->ram_block;
-> -
-> -    if (!vioc->dma_map_file || !rb) {
-> -        return false;
-> -    }
-> -
-> -    *fd = qemu_ram_get_fd(rb);
-> -    if (*fd < 0) {
-> -        return false;
-> -    }
-> -
-> -    /*
-> -     * We can use IOMMU DMA mapping (IOMMU_IOAS_MAP_FILE) for :
-> -     *
-> -     * 1) Guest RAM blocks explicitly configured as shared (MAP_SHARED)
-> -     * 2) RAM device sub-regions (MMIO BARs)
-> -     *
-> -     * Private RAM mappings (MAP_PRIVATE) are strictly excluded. Because
-> -     * they are subject to copy-on-write (COW) anomalies, their underlying
-> -     * PFNs can permanently diverge from the backing file
-> -     */
-> -    return qemu_ram_is_shared(rb) || memory_region_is_ram_device(mr);
-> -}
-> -
->   int vfio_container_dma_map(VFIOContainer *bcontainer,
->                              hwaddr iova, uint64_t size,
->                              void *vaddr, bool readonly, MemoryRegion *mr)
+> diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+> index 0f7d8425d614..197aee07bf7a 100644
+> --- a/hw/vfio-user/proxy.c
+> +++ b/hw/vfio-user/proxy.c
+> @@ -1292,7 +1292,7 @@ bool vfio_user_validate_version(VFIOUserProxy *proxy, Error **errp)
 >   {
->       VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-> -    int mfd;
+>       g_autofree VFIOUserVersion *msgp = NULL;
+>       GString *caps;
+> -    char *reply;
+> +    const char *reply = "";
+>       int size, caplen;
 >   
-> -    if (vfio_container_can_dma_map_file(bcontainer, mr, &mfd)) {
-> -        RAMBlock *rb = mr->ram_block;
-> -        unsigned long start = vaddr - qemu_ram_get_host_addr(rb);
-> -        unsigned long offset = qemu_ram_get_fd_offset(rb);
-> -
-> -        return vioc->dma_map_file(bcontainer, iova, size, mfd, start + offset,
-> -                                  readonly);
-> -    }
->       g_assert(vioc->dma_map);
->       return vioc->dma_map(bcontainer, iova, size, vaddr, readonly, mr);
->   }
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 68f2ae6f9f667bb05c20e452e8c5b43da6558098..6ff668d2597e07c6953cf0f1997514aec199642c 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -20,6 +20,7 @@
->   #include "trace.h"
->   #include "qapi/error.h"
->   #include "system/iommufd.h"
-> +#include "system/ramblock.h"
->   #include "hw/core/iommu.h"
->   #include "hw/core/qdev.h"
->   #include "hw/vfio/vfio-cpr.h"
-> @@ -35,26 +36,50 @@
->   #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO             \
->               TYPE_HOST_IOMMU_DEVICE_IOMMUFD "-vfio"
+>       caps = caps_json();
+> @@ -1322,17 +1322,24 @@ bool vfio_user_validate_version(VFIOUserProxy *proxy, Error **errp)
+>           return false;
+>       }
 >   
-> +static bool iommufd_cdev_can_map_file_dma(MemoryRegion *mr, int *fd)
-> +{
-> +    RAMBlock *rb = mr ? mr->ram_block : NULL;
+> -    reply = msgp->capabilities;
+> -    if (reply[msgp->hdr.size - sizeof(*msgp) - 1] != '\0') {
+> -        error_setg(errp, "corrupt version reply");
+> +    if (msgp->hdr.size < sizeof(*msgp)) {
+> +        error_setg(errp, "short version reply");
+>           return false;
+>       }
+>   
+> -    if (!caps_check(proxy, msgp->minor, reply, errp)) {
+> -        return false;
+> +    if (msgp->hdr.size > sizeof(*msgp)) {
+> +        reply = msgp->capabilities;
+> +        if (reply[msgp->hdr.size - sizeof(*msgp) - 1] != '\0') {
+> +            error_setg(errp, "corrupt version reply");
+> +            return false;
+> +        }
 > +
-> +    if (!rb) {
-> +        return false;
-> +    }
-> +
-> +    *fd = qemu_ram_get_fd(rb);
-> +    if (*fd < 0) {
-> +        return false;
-> +    }
-> +
-> +    /*
-> +     * Use iommufd_backend_map_file_dma() (IOMMU_IOAS_MAP_FILE) for:
-> +     * 1) Guest RAM blocks explicitly configured as shared (MAP_SHARED)
-> +     * 2) RAM device sub-regions (MMIO BARs)
-> +     *
-> +     * Private RAM mappings (MAP_PRIVATE) are excluded: copy-on-write
-> +     * semantics can cause their underlying PFNs to permanently diverge
-> +     * from the backing file.
-> +     */
-> +    return qemu_ram_is_shared(rb) || memory_region_is_ram_device(mr);
-> +}
-> +
->   static int iommufd_cdev_map(const VFIOContainer *bcontainer, hwaddr iova,
->                               uint64_t size, void *vaddr, bool readonly,
->                               MemoryRegion *mr)
->   {
->       const VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
-> +    int fd;
+> +        if (!caps_check(proxy, msgp->minor, reply, errp)) {
+> +            return false;
+> +        }
+>       }
 >   
-> -    return iommufd_backend_map_dma(container->be,
-> -                                   container->ioas_id,
-> -                                   iova, size, vaddr, readonly);
-> -}
-> +    if (iommufd_cdev_can_map_file_dma(mr, &fd)) {
-> +        RAMBlock *rb = mr->ram_block;
-> +        unsigned long start = vaddr - qemu_ram_get_host_addr(rb);
-> +        unsigned long offset = qemu_ram_get_fd_offset(rb);
->   
-> -static int iommufd_cdev_map_file(const VFIOContainer *bcontainer,
-> -                                 hwaddr iova, uint64_t size,
-> -                                 int fd, unsigned long start, bool readonly)
-> -{
-> -    const VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
-> +        return iommufd_backend_map_file_dma(container->be, container->ioas_id,
-> +                                            iova, size, fd,
-> +                                            start + offset, readonly);
-> +    }
->   
-> -    return iommufd_backend_map_file_dma(container->be,
-> -                                        container->ioas_id,
-> -                                        iova, size, fd, start, readonly);
-> +    return iommufd_backend_map_dma(container->be, container->ioas_id,
-> +                                   iova, size, vaddr, readonly);
+> -    trace_vfio_user_version(msgp->major, msgp->minor, msgp->capabilities);
+> +    trace_vfio_user_version(msgp->major, msgp->minor, reply);
+>       return true;
 >   }
 >   
->   static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
-> @@ -929,7 +954,6 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, const void *data)
->       VFIOIOMMUClass *vioc = VFIO_IOMMU_CLASS(klass);
->   
->       vioc->dma_map = iommufd_cdev_map;
-> -    vioc->dma_map_file = iommufd_cdev_map_file;
->       vioc->dma_unmap = iommufd_cdev_unmap;
->       vioc->attach_device = iommufd_cdev_attach;
->       vioc->detach_device = iommufd_cdev_detach;
 
 
 Applied to
