@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C23F1CDE00B
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 01:05:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2E3ECDE008
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 01:08:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcv0M-0003ub-QM; Thu, 25 Jun 2026 21:05:14 -0400
+	id 1wcv2p-0004li-8U; Thu, 25 Jun 2026 21:07:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wcv0L-0003uK-Gb
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 21:05:13 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1wcv2n-0004lJ-HB
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 21:07:45 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wcv0J-0002Jh-Pt
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 21:05:13 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-68852b58d87so830759a12.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 18:05:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782435910; cv=none;
+ id 1wcv2m-0002xf-45
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 21:07:45 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-693c51a8a19so727712a12.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 18:07:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782436062; cv=none;
  d=google.com; s=arc-20260327;
- b=FGOh8V5zJPhuOifr2V9rxvekmnLkG8U+AeAyMJjArdErIuNiM/5KveM2LeoDIOWSwe
- zQrfzrBLCoS5Eg6IhgZxJB4CGjPb8NmSxwSyK5OwHhj3Q9VFFSmjJod+tBbwexB0JfpI
- lKd3TxodJ4keds7YrafkXr5AteAeWCHOQqUcSeEpsaw6ryKyKHzBMkEdmpSlhscwcPrr
- l2IEv9su6PMpN0z0owxuhn6vWeAtArWIAAeq78o5xgZZJRF7l32aFxTS6uF/12CF/2ld
- xJc6u8v1aySCC+An0Hip9+SUIUNoQZYAiOhW1uti5QYV9LliyPzeefNn0BL1T96q96sT
- Fsuw==
+ b=gpLOX/yWckiqIcuHSgGkPw3qDgsa70iOcKasAoUetDOykLOq2lmwxR4TpLWKJGoY/3
+ bWRYtaFSVDqaNmE8heSPaJSy2TN5uN+izoZPvPSRV4FAh387hhKzIryy8NDPIpWxqYf7
+ lt2DQf9lcJMAu5GiXqH7RlQmnns+UIxnXDatiCISU68xT4g1nQh1fro0CUEfpLfvSQDT
+ EChn5DZemBoKmAKhMrd9WK8e4H/SgKMcRXsCYDCrRnBr5h7uDFrw/fikkVsQWweTuqz0
+ 0SUUO8dRsq8TJ1sdy9mi8aNCD62g3+LuGPZBpzb/PpVMk6fXwikWF6w05JPmVXJgxKz1
+ HzkQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=vXrGs4zWxmGP3iIBXlLeu0ELJc4kvryidUP/YjP+LbU=;
+ bh=vCU7BdPY5bJKN5lUioYYQWbcbu6zFkl3Hsl3Kn70JF8=;
  fh=9/4tzqKjgzJcjmYJcCvfm+LbcgW0ATp/rdwAYjKmbVo=;
- b=hjTz+1/yFI+T3OzZLSZ+O97Yt2P2Bj8ond46gwB84AygN+bzbToOvVFYq257mMMzFQ
- mXJ3MGTQqToL0PCiaSix3pO9RtNWqpWMbs1szfuTp51C5m9KzU5X3HmTwjD5VuAOT76x
- UFmmdqEFzg24PS02DW7qD7wcRaAgO20U/yi3Gj9nuE3vYYf8nVLEKj8STv5mXYoMOwYn
- rn+des4iWDvO5sX1+TTgZZkv5bi0fxcR8kpy4/wLUDMGHKzxu6Ka2ioFAWcFia2Je3Q7
- KrDPNEnywCGmaCKpxTz+qp4v94SEt9XqcHlc0DOkUbVzR7Xit8znQRMHZvOUYerhIV7W
- 83zA==; darn=nongnu.org
+ b=rgjm52tgA/gba/1znqcbGdIu7c5ywvB7xXiGyKAOK2vqVnCkpmAHAlyNMn5+FJPUqw
+ WXNOk7kDNttIw80Qi+xH8IP2+y0KSxmhl2dZhhHS1zkfUaBU2tE14ONCJegVTii56tAC
+ WxS2D5AecYPQ/YPWszlKKHlB+1nSO6EkeXlKW3pLwjfJOyCOnsC4IlM9W+C+5M0i+EmE
+ JV1MA7QlKkIK6AMpcFZjjjGdj/OyX3OyNrx78nsdthlG6jz02fAntgI46HakxylkT0An
+ 4gPSOzWp3kXSm0GKwxL/FjRKKEZLExDpFAv50+DuyS2d51t1dPOaqRgOtReJsek83VAr
+ gqOw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782435910; x=1783040710; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782436062; x=1783040862; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vXrGs4zWxmGP3iIBXlLeu0ELJc4kvryidUP/YjP+LbU=;
- b=Ch+VW3O8ETRkx0HrxpsGT0xMBO1YreS6yTQhIrZ+Zffg/Wh/TWjV7U5vo92m2oc8d/
- ZDXZrLKnxa1P3OJLjWJ5yVTjNORi2VKCXmPu5K4zppyvGEcfSYUxtrKjKTJBoUDwzy0I
- TEId6LgMIG9+jOJKUg1ZLKs+HrG+o0tbC+MCG2qrirAQ9JvxusB1GB+QnP0rMf4M4sqB
- w/Sd7vNQEVwqX3I/s0yzu0dEVw9ATLeXlJAU6l6NadJhdXmOb7rxeHPgM/ppeKuD8Mpq
- 3rDYRjXQ4Vjw3AhmAas8KoRmtHUZ2nxp2Nz1/Zr0W69JDTmHs4aUE+IwybawAv+yqWBC
- mdHA==
+ bh=vCU7BdPY5bJKN5lUioYYQWbcbu6zFkl3Hsl3Kn70JF8=;
+ b=cWd6d7ORixSh730y49N56L6Sj3boVLCFVD4Eote7Vlq0BINkw+abjxBlkre1rT6lb/
+ HAeEyEDorZ4UZlsAbGKRtGch8L3uELZBMR1nwNqiHsbQ9yG2JV5c8RnTjtOZp+AWLcSf
+ I33LFuQSHUg6v6PsApWFoXskXE7GB7EWpakcFRsKN0ipQGTHRoaUwSD/nfk03NXSNKzO
+ daB1YLXqWREw8AtL/x84cyFTiPtbABcm0q4oVoYGayH5LWIY3CKie1IYt5YkPk+6xtKZ
+ r6nJsMjKK+smS/RpJgk26kxwtVrrHYML8xUXSAiFGRbjxqDG2Cav27Iod3+xLqJrG0p6
+ /05Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782435910; x=1783040710;
+ d=1e100.net; s=20251104; t=1782436062; x=1783040862;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vXrGs4zWxmGP3iIBXlLeu0ELJc4kvryidUP/YjP+LbU=;
- b=CPNvAkNuo4PgdL52Q8JgxJYiEprLxQATmcuopLFD9f7nET5rhN8jqhb9Oli4Fn1/EA
- FgY+jyEqgQMv4SwrfMi5X5dp5xTEaA9DSDOlAVI6GE0PotmHPQ76czckrEErT/3lHScp
- gcdmBB27ze4vcsQiFxhg8GaLj2MgNYPY/dxP4BJYFqPaQh+y89M8gxjg9pqh8gy/Oyz5
- Wb46Vgi4V7Ep3s1Rrs1J6ddebJlU30YZ9hxWkw3pxBFNT6+uJMmyuYozmE6Fa96v4IdM
- N5ujO1AG9NXEeoHZelm2f3cR8s6N3e3joxd2aqdnPxpwFw6bhPPJsEdC+sosQbhTxI0f
- w24w==
-X-Gm-Message-State: AOJu0YyyyKTquRPtHKU1MqU38sIGvA+w14bYIP7mMKgw3+iU+kRocQrN
- 3iG7yrBOVgLy9i8XMIuUiRxEic1ncMK29eKeBL8zmFxJffPA3kTgtljHG2Jr/hTD2LrWQt1rHT2
- tKohtJmYlIjMLEq4cSLYfubAcgdR3J/M=
-X-Gm-Gg: AfdE7cmXF34qFV29cYnxqtrf7f8RAxDGq09P9Amb9wU2DvoPQ6v5I00O5X/IDOPdmdt
- TgpAuoCtdzikZTjQyBRQ/o9VGXBxu5NzHH2Y6BGVM1CGGjnfKjV4qHvri+ocBYMyoxEjJvV9Ube
- zIGMstPP9yjrnI/U7kaaB5pozijr0fhXDT/CmXiZppuIFH+8+OQYG6N1xnShnw5zJjTwocmzSgn
- VIWQfycYhjfTVu5SNOZsfeuof9KI7zlR0mXEE8UWlh2KiWts+A3rFJ7x/9po76/mW07BkAJzNf+
- V3JFjsa0pRQxeRsd5yxlS0s9H2E=
-X-Received: by 2002:a05:6402:a29b:10b0:698:1504:e3db with SMTP id
- 4fb4d7f45d1cf-6981504e48fmr544336a12.29.1782435910251; Thu, 25 Jun 2026
- 18:05:10 -0700 (PDT)
+ bh=vCU7BdPY5bJKN5lUioYYQWbcbu6zFkl3Hsl3Kn70JF8=;
+ b=isa0jrpGaQ1xA92hNaU90S/6QK6TE9RDLu58Btxu5tUB/S3w4TplU5Jz8TyoTPPXCS
+ ppSBFj68VtGiCFwCQn12dJWfXGGTSZR9otN5UfLhXHIWEWlcA+CnxFleaPJyWh4l0SAZ
+ cKXbJqadKyevt4tmii8leL3SU/mva6Qn/rIC1k5uSeBiadeGp+HNkyUAmBSDlPkqGBKn
+ NssYBMbtNPA2wBRE+7HE7LO3nPKGTrylQL901HjXuA71/MCYfMUsdeHYkIwJFgAvwmIg
+ RafQz4DWDkwl0+r3jYq+ZIVZROOiNZ/y91wmXwdcM0NJ+eHTIJRXD3DZjjFonou+INod
+ BLtQ==
+X-Gm-Message-State: AOJu0YzRP6NCDuzkLrkHOscCs7LrtDBc0DJEPAozw1T5Bb0aMHFzuZqO
+ ADmrrOdwHYNFl7d4blP9FGgDVpsqW/jhaWpzE68UrOmG/tpxf9gHUroxUP6LZgp3IN5wLmc7xsX
+ uzXNiHU0pVNcxlFU5MDZkHseXfdgfoDE=
+X-Gm-Gg: AfdE7cmxUftoNJ9exRQuIiiaghKoH8EQa0jJm3Zntrf5aNbaDLDS65AMIpXzNbHiwSn
+ KZhqWvLIZXLatM8Gwt1cw0rDAL2+/5fdsyY7kSJ5l5whnZsttL4B8ZF3n+SAukAPMqL7It3aRKt
+ BC4o7pj0nVpL2U1DgpcTKnrPjXNCS47AHRhnV1kTRnC5fK/fHjwrYd85BeVyXvI2Uv2cJ3TRc3u
+ 9SPyEe0937O5HC1z3A4vbBRmTgep+Jnoks/hdaG53k5HrU6pl2ynVdXHIxp3TvMebFX0XNIEsHw
+ O0f9syNZk4dbVUM9KUTRqIT4pqY=
+X-Received: by 2002:aa7:c30a:0:b0:697:edf5:20d0 with SMTP id
+ 4fb4d7f45d1cf-69810adbe61mr569540a12.17.1782436062531; Thu, 25 Jun 2026
+ 18:07:42 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260624000632.2149359-1-daniel.barboza@oss.qualcomm.com>
- <20260624000632.2149359-15-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260624000632.2149359-15-daniel.barboza@oss.qualcomm.com>
+ <20260624000632.2149359-16-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260624000632.2149359-16-daniel.barboza@oss.qualcomm.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 26 Jun 2026 11:04:41 +1000
-X-Gm-Features: AVVi8CflFzKOdpfz0-uJ9mdqyR9-xQ925vMRsOUAjCCs9EDcYcxjkfjIen9EBVI
-Message-ID: <CAKmqyKMKTZu4oufGM+KLJ8ZktvwPrRPW=ztZJsfm=kd+irDGEA@mail.gmail.com>
-Subject: Re: [PATCH v2 14/24] target/riscv: move riscv_cpu_claim_interrupts to
- cpu.c
+Date: Fri, 26 Jun 2026 11:07:15 +1000
+X-Gm-Features: AVVi8CfRsdeHyNZVcTUVAVEUzPJjiVCQERbzi2YE15CumrpA7TT9Eerd0hFduPI
+Message-ID: <CAKmqyKPzg6bb4Av17vRTB1AjnBusx6O3hBPMwn1zNiqcUwnHDg@mail.gmail.com>
+Subject: Re: [PATCH v2 15/24] target/riscv/cpu.c: handle TCG bits of
+ riscv_cpu_dump_state
 To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
@@ -96,16 +96,16 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
  fritchleybohrer@gmail.com, Palmer Dabbelt <palmer@dabbelt.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,75 +121,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 24, 2026 at 10:10=E2=80=AFAM Daniel Henrique Barboza
+On Wed, Jun 24, 2026 at 10:09=E2=80=AFAM Daniel Henrique Barboza
 <daniel.barboza@oss.qualcomm.com> wrote:
 >
-> The function is used by hw/intc/ files that KVM cares about like
-> riscv_aplic.c.  Move it to cpu.c to be accessible for --disable-tcg
-> builds.
+> riscv_dump_csr() is a TCG only function but we'll have to implement it
+> at some capacity for KVM eventually, therefore put it under a CONFIG_TCG
+> ifdef while making a note that this function is unimplemented in KVM.
+>
+> The csr_ops array is also TCG specific, thus the for loop inside
+> dump_state that iterates it is also TCG only business.
 >
 > Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/cpu.c            | 14 ++++++++++++++
->  target/riscv/tcg/cpu_helper.c | 11 -----------
->  2 files changed, 14 insertions(+), 11 deletions(-)
+>  target/riscv/cpu.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 >
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 483ac2e0d0..4fc0ee2823 100644
+> index 4fc0ee2823..7bd5bc0fc1 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
-> @@ -566,6 +566,20 @@ target_ulong riscv_new_csr_seed(target_ulong new_val=
-ue,
->      return rval;
+> @@ -605,8 +605,10 @@ char *riscv_cpu_get_name(RISCVCPU *cpu)
+>      return cpu_model_from_type(typename);
 >  }
 >
-> +#ifndef CONFIG_USER_ONLY
-> +/* Used by lots of folks in hw/intc */
-> +int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts)
-> +{
-> +    CPURISCVState *env =3D &cpu->env;
-> +    if (env->miclaim & interrupts) {
-> +        return -1;
-> +    } else {
-> +        env->miclaim |=3D interrupts;
-> +        return 0;
-> +    }
-> +}
-> +#endif
-> +
->  static ObjectClass *riscv_cpu_class_by_name(const char *cpu_model)
+> +/* Note: this function needs a KVM implementation.  */
+>  static void riscv_dump_csr(CPURISCVState *env, int csrno, FILE *f)
 >  {
->      ObjectClass *oc;
-> diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.=
-c
-> index b38f639dae..9237d2129b 100644
-> --- a/target/riscv/tcg/cpu_helper.c
-> +++ b/target/riscv/tcg/cpu_helper.c
-> @@ -572,17 +572,6 @@ void riscv_cpu_set_rnmi(RISCVCPU *cpu, uint32_t irq,=
- bool level)
+> +#ifdef CONFIG_TCG
+>      target_ulong val =3D 0;
+>      RISCVException res =3D riscv_csrrw_debug(env, csrno, &val, 0, 0);
+>
+> @@ -618,6 +620,7 @@ static void riscv_dump_csr(CPURISCVState *env, int cs=
+rno, FILE *f)
+>          qemu_fprintf(f, " %-13s " TARGET_FMT_lx "\n",
+>                       csr_ops[csrno].name, val);
 >      }
+> +#endif
 >  }
 >
-> -int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts)
-> -{
-> -    CPURISCVState *env =3D &cpu->env;
-> -    if (env->miclaim & interrupts) {
-> -        return -1;
-> -    } else {
-> -        env->miclaim |=3D interrupts;
-> -        return 0;
-> -    }
-> -}
-> -
->  void riscv_cpu_interrupt(CPURISCVState *env)
->  {
->      uint64_t gein, vsgein =3D 0, vstip =3D 0, irqf =3D 0;
+>  #if !defined(CONFIG_USER_ONLY)
+> @@ -655,7 +658,7 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *=
+f, int flags)
+>      }
+>  #endif
+>      qemu_fprintf(f, " %-13s %" PRIx64 "\n", "pc", env->pc);
+> -#ifndef CONFIG_USER_ONLY
+> +#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+>      for (i =3D 0; i < ARRAY_SIZE(csr_ops); i++) {
+>          int csrno =3D i;
+>
 > --
 > 2.43.0
 >
