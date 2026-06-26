@@ -4,60 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53AAECDE012
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 06:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6030FCDE008
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 06:57:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd0U3-0008QV-DC; Fri, 26 Jun 2026 02:56:15 -0400
+	id 1wd0Tv-0008Om-Pq; Fri, 26 Jun 2026 02:56:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wd0U2-0008QL-J5
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 02:56:14 -0400
+ id 1wd0Tu-0008Nd-8y; Fri, 26 Jun 2026 02:56:06 -0400
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wd0U1-0007vz-2i
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 02:56:14 -0400
+ id 1wd0Ts-0007vL-H1; Fri, 26 Jun 2026 02:56:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1782456973; x=1813992973;
+ t=1782456965; x=1813992965;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=/QW+6bMVfdc3+/VQ5V93oBga9b/YPL0PkvFyIV5avEA=;
- b=NdAV3Z1kd0DYkGDDUfKaxiBhGo+jA0q6hRT/Yvxzi6C40XzPrx6BHJj/
- cvhEFfO96wtLopw4dsRxfgse5Yms5DA+ZtXcc3cxNKufQWL1Ws2FriTzN
- GQtyAwcfAUg6Yt1Dvb9y/hlw3DfbqsoCQx2jNf3O5L0TiwZH0HmtvJnI2
- YSNRiVNFzKx8wwDZZBSXLvomdMwQMfYB/FKX4wKIq2hCKeeVeIyUkAfn2
- lbQ0lhzgVBRwtEdiXi/+QPmKg8GRfbPBIi3wol8UfYlbE2+K+qOriv7du
- vxiJ2jKemCxKvlq2iJrHc5vDKMmB10OLuwm/BtTUHbCWx9UWwjcFkZKRc Q==;
-X-CSE-ConnectionGUID: Jajs3V6qRSu5MH5ecmhtWQ==
-X-CSE-MsgGUID: lnDcoXNtQ0aUaD7Sk/GMOA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11828"; a="85802341"
-X-IronPort-AV: E=Sophos;i="6.24,226,1774335600"; d="scan'208";a="85802341"
+ bh=KBu100xg1Txpv8RJacu5T0T7HrIl9c2cdIu5LTVA4PE=;
+ b=DMlTfPCNkLH0D6sGqLKdx9iqplVDnGxOFK8JAonmymxrcynGj4pIyz98
+ hp0HvzhwbLKuMUJP959+xiq0G4TsBqbPII/zCpzNShJw3AN9wJTJ01k4z
+ hJy2hmNHvHU3Ay0cHrrxk/9pw93f/bB2PgfBwTNEJa4I/iXo+jdtUTqZt
+ TrkNqXAeOEbATI8kE9oHWd4LPDxxCSmUjX+aKjdCaTivkQqvCC6BUdJaK
+ 8caVpizP5HZrjaqg2C0gmNE74T0L51Mzrdneq2iHybFevBiZ7UJnhoxSS
+ Gk99VBNfdwC3SkofPqHQmeQ/rPP+NvPylBTMrLplKHXSDmZJLfVKVKRs+ g==;
+X-CSE-ConnectionGUID: HffyPbHeSA+sss1n+ky1pQ==
+X-CSE-MsgGUID: s33ghX1FSfGrxrd08zfTLg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11828"; a="85802330"
+X-IronPort-AV: E=Sophos;i="6.24,226,1774335600"; d="scan'208";a="85802330"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jun 2026 23:56:13 -0700
-X-CSE-ConnectionGUID: TMJuD2DVTay8RCjH+dRcFQ==
-X-CSE-MsgGUID: lqAPK2OSS+OLTDQPKsm1Mw==
+ 25 Jun 2026 23:56:02 -0700
+X-CSE-ConnectionGUID: Anq9gpsGSSiR2V1+eDjgnQ==
+X-CSE-MsgGUID: 4iJqnzP2T7WXbdJTS1ZPRA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,226,1774335600"; d="scan'208";a="244865881"
+X-IronPort-AV: E=Sophos;i="6.24,226,1774335600"; d="scan'208";a="244865870"
 Received: from junjie-desk-dev.bj.intel.com ([10.238.152.71])
  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jun 2026 23:56:11 -0700
+ 25 Jun 2026 23:56:00 -0700
 From: Junjie Cao <junjie.cao@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Jonathan Cameron <jic23@kernel.org>, linux-cxl@vger.kernel.org,
- junjie.cao@intel.com
-Subject: [PATCH 3/6] hw/cxl: convert cxl-type3 to three-phase reset
-Date: Fri, 26 Jun 2026 14:21:46 +0800
-Message-ID: <20260626062149.1844334-4-junjie.cao@intel.com>
+ junjie.cao@intel.com, qemu-stable@nongnu.org
+Subject: [PATCH 1/6] hw/cxl: fix timer leak in cxl_destroy_cci()
+Date: Fri, 26 Jun 2026 14:21:44 +0800
+Message-ID: <20260626062149.1844334-2-junjie.cao@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260626062149.1844334-1-junjie.cao@intel.com>
 References: <20260626062149.1844334-1-junjie.cao@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.13; envelope-from=junjie.cao@intel.com;
  helo=mgamail.intel.com
@@ -83,85 +80,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the deprecated device_class_set_legacy_reset() registration
-with the three-phase resettable interface, following the pattern
-already established by the CXL root port (cxl_rp_reset_hold).
+cxl_init_cci() allocates a QEMUTimer via timer_new_ms() but
+cxl_destroy_cci() never frees it.  This leaks a timer object on every
+device exit path and, more critically, on every device reset cycle since
+the secondary CCIs (vdm_fm_owned_ld_mctp_cci, ld0_cci) are destroyed
+and re-initialized each time ct3d_reset() runs.
 
-Only the hold phase is needed; enter and exit are left NULL.  The
-parent hold phase is chained for correctness: TYPE_PCI_DEVICE installs
-no hold phase today, so parent_phases.hold is currently NULL and the
-chained call is a no-op, but capturing and invoking it is the correct
-forward-compatible pattern and mirrors cxl_rp_reset_hold().
+Free the timer with timer_free(), which cancels any pending expiry via
+timer_del() internally and tolerates a NULL pointer, then clear the
+field so that a repeated timer_free() on the same CCI is a safe no-op.
+(The function as a whole is not idempotent: it also calls
+qemu_mutex_destroy(), which asserts on an already-destroyed mutex.
+Callers must not invoke cxl_destroy_cci() twice; the .initialized guard
+added in the next patch enforces that.)
 
-No functional change — the reset body is identical; only the
-registration path and function signature change.
-
+Fixes: 98cbac128f1c ("hw/cxl: Support aborting background commands")
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 ---
- hw/mem/cxl_type3.c          | 16 ++++++++++++----
- include/hw/cxl/cxl_device.h |  2 ++
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ hw/cxl/cxl-mailbox-utils.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 4ac6eaa950..b842e71c66 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1326,13 +1326,18 @@ MemTxResult cxl_type3_write(PCIDevice *d, hwaddr host_addr, uint64_t data,
-     return address_space_write(as, dpa_offset, attrs, &data, size);
- }
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 20e0b7e476..18a455e89c 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -4770,6 +4770,8 @@ void cxl_init_cci(CXLCCI *cci, size_t payload_max)
  
--static void ct3d_reset(DeviceState *dev)
-+static void ct3d_reset_hold(Object *obj, ResetType type)
+ void cxl_destroy_cci(CXLCCI *cci)
  {
--    CXLType3Dev *ct3d = CXL_TYPE3(dev);
-+    CXLType3Dev *ct3d = CXL_TYPE3(obj);
-+    CXLType3Class *cvc = CXL_TYPE3_GET_CLASS(obj);
-     uint32_t *reg_state = ct3d->cxl_cstate.crb.cache_mem_registers;
-     uint32_t *write_msk = ct3d->cxl_cstate.crb.cache_mem_regs_write_mask;
- 
--    pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed,
-+    if (cvc->parent_phases.hold) {
-+        cvc->parent_phases.hold(obj, type);
-+    }
-+
-+    pcie_cap_fill_link_ep_usp(PCI_DEVICE(obj), ct3d->width, ct3d->speed,
-                               ct3d->flitmode);
-     cxl_component_register_init_common(reg_state, write_msk,
-                                        CXL2_TYPE3_DEVICE, ct3d->hdmdb);
-@@ -2464,6 +2469,7 @@ static void ct3_class_init(ObjectClass *oc, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(oc);
-     PCIDeviceClass *pc = PCI_DEVICE_CLASS(oc);
-     CXLType3Class *cvc = CXL_TYPE3_CLASS(oc);
-+    ResettableClass *rc = RESETTABLE_CLASS(oc);
- 
-     pc->realize = ct3_realize;
-     pc->exit = ct3_exit;
-@@ -2477,9 +2483,11 @@ static void ct3_class_init(ObjectClass *oc, const void *data)
- 
-     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
-     dc->desc = "CXL Memory Device (Type 3)";
--    device_class_set_legacy_reset(dc, ct3d_reset);
-     device_class_set_props(dc, ct3_props);
- 
-+    resettable_class_set_parent_phases(rc, NULL, ct3d_reset_hold, NULL,
-+                                       &cvc->parent_phases);
-+
-     cvc->get_lsa_size = get_lsa_size;
-     cvc->get_lsa = get_lsa;
-     cvc->set_lsa = set_lsa;
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index ba551fa5f9..b7e20e3fe4 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -805,6 +805,8 @@ struct CXLType3Class {
-     /* Private */
-     PCIDeviceClass parent_class;
- 
-+    ResettablePhases parent_phases;
-+
-     /* public */
-     uint64_t (*get_lsa_size)(CXLType3Dev *ct3d);
- 
++    timer_free(cci->bg.timer);
++    cci->bg.timer = NULL;
+     qemu_mutex_destroy(&cci->bg.lock);
+     cci->initialized = false;
+ }
 -- 
 2.43.0
 
