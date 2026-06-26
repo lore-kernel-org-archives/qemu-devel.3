@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7B4DCDE008
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:30:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 187BACD4F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:30:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3p1-0001kE-BG; Fri, 26 Jun 2026 06:30:07 -0400
+	id 1wd3pd-00021q-Ng; Fri, 26 Jun 2026 06:30:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wd3ox-0001iv-5v
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:30:03 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wd3pb-000204-Ay
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:30:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wd3ou-0007H4-Am
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:30:02 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wd3pY-0007cX-K1
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:30:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469798;
+ s=mimecast20190719; t=1782469840;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ND4zOm/5bmQl4bcmBHmG2VHK3pqfekC3lcEb4oPH36o=;
- b=FHyj0JtzITINESuaT5MH8HS2tK7+fryRqejq5Tw3LGhoyT+VIm7uF0dOkUgLmhiP+qQgOo
- zxq/I7Px6ElDwlFvHQNqWxNwZVwWb1cBXBxOwGExLupjJrGlxZ0q9s0QT/K9ph9LNkjl9n
- PX7AOg7ENg/OL/vo5BueWLSgp/J1kyM=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=C1Djf3EcwAN9Do0rul/OjRYpxU1vnTsyHTIkOoXG8Zo=;
+ b=GbFSASKhisDI3pVZC6Tws5OwSe2zvgq3qPdJXb8zH8ktmSQznPu9RG3X/p6mPgHE3UaMgr
+ XRm2HBynJM0gh+bb3+1asmnoRQfaHUr9lb13LzFseE9evW+WTjkL0ffEKEC/tFybDYZfxk
+ vuGFqvaWI+6hkAc44D4760bKy8GkGlg=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-448-3p9oGA9tMUqI7S9Nlgp3Ng-1; Fri, 26 Jun 2026 06:29:56 -0400
-X-MC-Unique: 3p9oGA9tMUqI7S9Nlgp3Ng-1
-X-Mimecast-MFC-AGG-ID: 3p9oGA9tMUqI7S9Nlgp3Ng_1782469795
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-49221de4ed4so5632375e9.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:29:56 -0700 (PDT)
+ us-mta-356-QffTPGYVPXqDialKw4LM4A-1; Fri, 26 Jun 2026 06:30:38 -0400
+X-MC-Unique: QffTPGYVPXqDialKw4LM4A-1
+X-Mimecast-MFC-AGG-ID: QffTPGYVPXqDialKw4LM4A_1782469837
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-46d71a1791fso519121f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:30:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469795; x=1783074595; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469837; x=1783074637; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ND4zOm/5bmQl4bcmBHmG2VHK3pqfekC3lcEb4oPH36o=;
- b=kQtouPr93B467dVQDPGvKiSpYlJr7HC5swAD38qXYBCjZz67GTwtg2gFHpPpaEJ9AN
- 0eJreHYHQzgWqGCpGy0mhYhTjEPBHhvWsDby/fu1R22vSZcN/bcl+evwxze5rBmPKBhJ
- WG+6l4KXc40JPYsQ2X4Bwcv1ow1yMWgLwT0oXYpTD0Nqezo0is7HksleghSrpoKgANle
- rqfLyCFBZoUQyv/dnQ4QYruXHZ3eb4IvjubajjjOON/XL3M78Ncr3Ys1tE4GA4Mahs1j
- 63kMl7p1nr5eWb++qE4d1ys4thBIXD4qNPKtAWT+tnrYPS9U5wrf6ASCFcRYTi16fl0k
- Bqqw==
+ bh=C1Djf3EcwAN9Do0rul/OjRYpxU1vnTsyHTIkOoXG8Zo=;
+ b=X8GCty5TYhVrODi2+wfjLmnFF9L1loqYpQDuZ71YoZti/4lJKLu3QHL4ELW2tkCaaz
+ y+QL0lDZuz4BLV3xZ3nGsVo8CZgEg9qPO1QezjSxLMZK/8z3CKHrOJDabEXtFh13Q4w0
+ eoFyPiRyRpOB1kpM4gWibt4ir3Ib4G1UtM9PPSg+hOMsCXBKlZdBOZZkWDgNagOVoejJ
+ gKpRWo2goCYFVTcGgSWqAmC9y6BFcQi31+6xiXa8hO4uCx5Nb3eBPr0O101hq8jcs/Nw
+ ip94s8SLZcqFHKWZT+JhfShM7EIq4spiVNB9s7CUap/Cg/6PgYVhpB8JIDr/OVG58e3/
+ 1UpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469795; x=1783074595;
+ d=1e100.net; s=20251104; t=1782469837; x=1783074637;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ND4zOm/5bmQl4bcmBHmG2VHK3pqfekC3lcEb4oPH36o=;
- b=dln1akMWbxyL0hL0vVNVzZILrMYlktKz8Hnv8VL1gkmS1Z/VT0pOz2TOISEgoYkA8T
- /uL9OewhTr3JtnydYVgHv7Mg02WsK+ZFA2Hb0DKG8qFmz0ru/ydzsHJspD3yaoTs31yX
- F30TeTKIs4g+sLwxQ9e3W78c+qEF58G4A8YEdpQoQyu0bcdnApuVSfW6sWa9MZv4XTUo
- l4UFT0IRRcUAHkCaHTe5Tu/dHpius1LAcamiJpFwNQeggyAWbKZ5xKQrrC8Wlw/08+RU
- gkiwYhFC6hG/1O9+Ix1fBelLFNczHVjMCprVcvtvZ/Bk2K16EWJEBR8qf1oR69M5h56K
- Wrhg==
-X-Gm-Message-State: AOJu0Yy7yiIQcbSpvilbREvplYOymW8wsNLmLHwytoUWI6Apvo6xCj37
- NA8LOPv2gKqM2sf5y+L4qZtz4c9od9eR7f/AIMqOUZhSOADmpxP+xgu6j1B2/aPdmCFo3yVKqYi
- zy8UE8nkVdhRic61H/SIOttwzX5gZMLtITdG0aF7m0WzbnKXcxNVyFDLj
-X-Gm-Gg: AfdE7clMikuF1GzRRSPglTs+nTZKhdtucC9H6LpbZRBKydk7Gz1g2RAqk5TlSRkAkRY
- mtC2EtYDchue3v4RzPYbI0c2rGEsWk35TwQs1uKmO+1r/9EUGxJYLH42X84cSaKVb4h4ya8FwcD
- L0R6Lh6Xhlp+qOYFxO1C6Vge6eQFEnzhQcagSuALPEiPNuu9wfbdBgKuVhYMGx1z/aAde/dycNq
- 1fGHKI2XKGfzsKwJ/ybzB2gaaShHpm6w/xpHVwAVrFJgVb30DLoBN1jwKOFoVpi0d6jFFqJ3SKB
- qTIM0w4agjs7UwsVHY9nh/9OK859M/MpU5Khoy1M2XKnAMciolja1qyF71GO0D32RRJPkpityzV
- ZUwPv9eWh7KOtMiFZAP164e9FULGyCDI4IxeGm5B12w==
-X-Received: by 2002:a05:600c:3483:b0:490:3f7a:108b with SMTP id
- 5b1f17b1804b1-492668561d8mr94475605e9.16.1782469795284; 
- Fri, 26 Jun 2026 03:29:55 -0700 (PDT)
-X-Received: by 2002:a05:600c:3483:b0:490:3f7a:108b with SMTP id
- 5b1f17b1804b1-492668561d8mr94474925e9.16.1782469794734; 
- Fri, 26 Jun 2026 03:29:54 -0700 (PDT)
+ bh=C1Djf3EcwAN9Do0rul/OjRYpxU1vnTsyHTIkOoXG8Zo=;
+ b=Hlua/VOY9NeSdPU5yX6hqpJs41JI7b0PRwk9tcXwiykU7Oe0Dc6mOi3VQWhitTs1AE
+ TkTNF32jBOfyslbYOqi38ZgR9xP0YGUze8Cgk0v5BkWlY051txonCI8M9+svI3/0Repp
+ qqtLW8QMznOwKdvqB7ZQ3BgIW1ubNJGh0c63PRPUot3rYpPolRmhrXSX5X0kXVEob5rm
+ vBVvD5fEG2sgqBArccD7TvpHA0rGL2f1rqts1kCBmmn/lpXvmw9Zlf5z53skfrkysOL1
+ HaDWLrY1x3ULAGjEN/+v4GbS2bdxcmxuMCRrb2JqqhYK7PakZPbHlQs/+knmHOjqQXJ4
+ AinQ==
+X-Gm-Message-State: AOJu0Yz5qFmXA6nt5rm3Nkecaxz9POEHDdRvTZ+/EDfQoD5uhhM5Vt3f
+ 2kfqlLbYH0tkTDBlPZhHkw8vpvciKSY7uwXu6itgQeBfClmJUGKe66QW0sntmQ5n+PCmdm3nSir
+ YuS68wh3hhm4Nh6YmgKfsXNzllbKInWa7vCM807M5dDM01BRAkv09nII0
+X-Gm-Gg: AfdE7cl8OjuABVVPz9yV/Rq6SudIsnmv0CHY/h45sMf3gCYktFfyMTal9S+oPfJnH/l
+ YwTPcSaaFSPslPi1Dd57tL13Eoso6zzItUmA+XoihSjhGvXat1hQIS57GfwTCZWlzExLCa79GdA
+ wrV0BbFWs5LqLHBWC31qZdlMDc8udsrN5RwrDqAekUlNDVDOrbNQxZ3YhAZIY3L5HRJwU5FpFsi
+ hTtXdOX2c8/LHNlpN+kicZPUsMlvBUcnbTiAL6Jh/sAK5RindMv+5KnNvnJwwYjxpB2o51JLHJR
+ GnjtPZHHJ+R7ucwXjU41o0Lxa1lg7bbVZtcMV2K584tv7UF3hAGXJyf3kmKiL2UywdIj/WUFxNa
+ C+tzjKAuSFHYrpY2jONL13ds99iHrzK+XyeHJQScHhg==
+X-Received: by 2002:a05:6000:4901:b0:46d:2c51:63d4 with SMTP id
+ ffacd0b85a97d-46dc398a28dmr10562357f8f.41.1782469837154; 
+ Fri, 26 Jun 2026 03:30:37 -0700 (PDT)
+X-Received: by 2002:a05:6000:4901:b0:46d:2c51:63d4 with SMTP id
+ ffacd0b85a97d-46dc398a28dmr10562307f8f.41.1782469836643; 
+ Fri, 26 Jun 2026 03:30:36 -0700 (PDT)
 Received: from redhat.com (bzq-79-177-145-168.red.bezeqint.net.
  [79.177.145.168]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46e95f3d71fsm7388264f8f.12.2026.06.26.03.29.53
+ ffacd0b85a97d-46c1ee01d46sm22096732f8f.13.2026.06.26.03.30.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:29:54 -0700 (PDT)
-Date: Fri, 26 Jun 2026 06:29:51 -0400
+ Fri, 26 Jun 2026 03:30:35 -0700 (PDT)
+Date: Fri, 26 Jun 2026 06:30:32 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: Tomita Moeko <tomitamoeko@gmail.com>
 Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
  =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
  K S Maan <kirandeepmaan45@gmail.com>
-Subject: Re: [PATCH v3 2/7] hw/pci: Skip EFI option ROM in pci_patch_ids()
-Message-ID: <20260626062946-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH v3 4/7] hw/pci: Promote pci_patch_ids() to public
+ pci_rom_patch_ids()
+Message-ID: <20260626063026-mutt-send-email-mst@kernel.org>
 References: <20260617100646.28326-1-tomitamoeko@gmail.com>
- <20260617100646.28326-3-tomitamoeko@gmail.com>
+ <20260617100646.28326-5-tomitamoeko@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260617100646.28326-3-tomitamoeko@gmail.com>
+In-Reply-To: <20260617100646.28326-5-tomitamoeko@gmail.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -118,43 +119,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 17, 2026 at 06:06:39PM +0800, Tomita Moeko wrote:
-> pci_patch_ids() patches the checksum at the reserved 0x06 byte, but
-> for EFI option ROMs the 32 bits at 0x04 are the EFI signature and
-> must be 0x00000EF1. Since OVMF does not check vendor/device IDs in
-> the PCIR header or the checksum, skip patching for EFI ROMs.
+On Wed, Jun 17, 2026 at 06:06:41PM +0800, Tomita Moeko wrote:
+> Remove the static qualifier from pci_patch_ids() and rename it to
+> pci_rom_patch_ids(), adding a declaration in include/hw/pci/pci.h so
+> external callers can reuse it.
 > 
 > Reported-by: K S Maan <kirandeepmaan45@gmail.com>
 > Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 
+
 Acked-by: Michael S. Tsirkin <mst@redhat.com>
 
 > ---
->  hw/pci/pci.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
+>  hw/pci/pci.c         | 4 ++--
+>  include/hw/pci/pci.h | 1 +
+>  2 files changed, 3 insertions(+), 2 deletions(-)
 > 
 > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index 601d65aef3..8e7872523a 100644
+> index b4235834a0..92d4e71c04 100644
 > --- a/hw/pci/pci.c
 > +++ b/hw/pci/pci.c
-> @@ -2513,11 +2513,16 @@ static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
->          return;
->      }
->      pcir_offset = pci_get_word(ptr + 0x18);
-> -    if (pcir_offset + 8 >= size || memcmp(ptr + pcir_offset, "PCIR", 4)) {
-> +    if (pcir_offset + 0x14 >= size || memcmp(ptr + pcir_offset, "PCIR", 4)) {
->          trace_pci_bad_pcir_offset(pcir_offset);
->          return;
+> @@ -2492,7 +2492,7 @@ uint8_t pci_rom_calculate_checksum(const uint8_t *ptr, uint32_t size)
+>  
+>  /* Patch the PCI vendor and device ids in a PCI rom image if necessary.
+>     This is needed for an option rom which is used for more than one device. */
+> -static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
+> +void pci_rom_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
+>  {
+>      uint16_t vendor_id;
+>      uint16_t device_id;
+> @@ -2654,7 +2654,7 @@ static void pci_add_option_rom(PCIDevice *pdev, Error **errp)
+>  
+>          if (pdev->rom_need_patch_id) {
+>              /* Only the default rom images will be patched (if needed). */
+> -            pci_patch_ids(pdev, ptr, size);
+> +            pci_rom_patch_ids(pdev, ptr, size);
+>          }
 >      }
 >  
-> +    /* OVMF won't check IDs in PCIR header, skip EFI roms */
-> +    if (pci_get_byte(ptr + pcir_offset + 0x14) == 0x03) {
-> +        return;
-> +    }
-> +
->      vendor_id = pci_get_word(pdev->config + PCI_VENDOR_ID);
->      device_id = pci_get_word(pdev->config + PCI_DEVICE_ID);
->      rom_vendor_id = pci_get_word(ptr + pcir_offset + 4);
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index 2d8a4ad0eb..298e0e6c31 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -1104,5 +1104,6 @@ void pci_set_power(PCIDevice *pci_dev, bool state);
+>  int pci_pm_init(PCIDevice *pci_dev, uint8_t offset, Error **errp);
+>  
+>  uint8_t pci_rom_calculate_checksum(const uint8_t *ptr, uint32_t size);
+> +void pci_rom_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size);
+>  
+>  #endif
 > -- 
 > 2.53.0
 
