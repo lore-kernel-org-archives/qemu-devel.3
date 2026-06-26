@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 933FDC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 18:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3BF6C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 18:44:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdBX2-0004lv-R7; Fri, 26 Jun 2026 14:44:04 -0400
+	id 1wdBXP-0005Bk-NO; Fri, 26 Jun 2026 14:44:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wdBWw-0004gR-Ul
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:43:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wdBXD-0004xc-KM
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:44:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wdBWv-00035F-8E
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:43:58 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wdBXA-0003Et-GT
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:44:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782499436;
+ s=mimecast20190719; t=1782499451;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=vO4hv1A6DGjPK9XmLKWac6zUyAZxsIFFNGecu4fSg3Y=;
- b=Gysz6qdbM2dM+M2QWFNUCjQxSYX1Og7H7A4kcFpsMwWNYSD2YpLR+GOfrpox2npDw2Tn4w
- 7H47eijKimrAH+tuQ7GsNL7bl9y5SSC1Kw2yD8BvMf2mqkJkPpUpWycyGMx0Zm98EMlA8v
- 9X+i1vsAQA4/Pyezu9+dPSkleNBSfdw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ghj/xOg/E0yHFDgkCHpp4r2601tf0dBSnaAs4XEnKzE=;
+ b=SxhC8ziC3THz1iQFTy3E1CayYJv5CweHT2IuPxOapeYbwX0Fqhbder/u8i/eFWlvRsM6gL
+ 90ErBZD/xefAMsqRXptK9Ak4bczzAxLq9nk6k+XYs57wRh6okn1DCtjam5lgOb2w0Wk7SZ
+ EzxYAQ6eELJ9khZ5xhCJsW1zGVrf1l0=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-413-Ryllf21bNjmX9QQEpbBpYg-1; Fri, 26 Jun 2026 14:43:55 -0400
-X-MC-Unique: Ryllf21bNjmX9QQEpbBpYg-1
-X-Mimecast-MFC-AGG-ID: Ryllf21bNjmX9QQEpbBpYg_1782499434
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490b2f22ea2so10479745e9.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 11:43:54 -0700 (PDT)
+ us-mta-534-dSjL_oLPM5OKrcB-kzR1HA-1; Fri, 26 Jun 2026 14:44:10 -0400
+X-MC-Unique: dSjL_oLPM5OKrcB-kzR1HA-1
+X-Mimecast-MFC-AGG-ID: dSjL_oLPM5OKrcB-kzR1HA_1782499449
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-46f48f2d9cbso571014f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 11:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782499434; x=1783104234; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782499449; x=1783104249; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=vO4hv1A6DGjPK9XmLKWac6zUyAZxsIFFNGecu4fSg3Y=;
- b=bp3oPepcEmpbqeRdHE030bT0oTQ73r8K+4cXctkI0Rt4H0Q98ShdVUMb6FgDdpFSe6
- eWwipAIAznRUXuHzE7uZWlNWn4N8Rz4ALwX5KqSuA0aDQhe/kuaxae2DTQOjs5RIFGfw
- KmXW1RSjcoqKWk9TTc5XZ00j34qlbkz0SOHIggpWZtbeVZ5/CSjQZ0fyjDKxsKyWPoWn
- PxAKntVfnHm9it3TapH7ym62A7XGlP0a5yh+gQNxl3eeXClGlPVLCvsq1H3sg62nqfxO
- lMfj3KHwPtNgyvoT3khFM5hJuDVYoe4OJdJQvwVSZh5dwOFy31xyPWxQ7oY7IXQe2qid
- DUiw==
+ bh=ghj/xOg/E0yHFDgkCHpp4r2601tf0dBSnaAs4XEnKzE=;
+ b=MF6NOgrKQvefcTwwpDXCI0RPzA9alEW6w5gMym7PFnmVz5qUnPuVeUB0loXE5/TIqX
+ Cr6yHRVkrDVbl4nHjH3CJuXCp6Xpea7JfqDDPekZ2Fb/Eqj+JjwhpF1oIub+mMURXYNX
+ H52uzLE5LmCTUb5eDj4VsfXLkZ8t88K1cTtq96Pcpj0sU/pOlu33x0JQZZKzUt/BCv8S
+ ltHZAMApR9q567kGPd4nN7Iuou3/hFkZP7c3b/sDtKd252QLAUmN29Nmh2lj4BmtlgG/
+ JgJl+AN5y9MyodqHxmlI5pve06xhdXYBDAp1V0W59IPSD2kJsvjFc2iKIcYQXbAS8w3k
+ VwyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782499434; x=1783104234;
+ d=1e100.net; s=20251104; t=1782499449; x=1783104249;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vO4hv1A6DGjPK9XmLKWac6zUyAZxsIFFNGecu4fSg3Y=;
- b=LM5jEUteK+dNvtvJ+POnMdw3zO+hxGAtnGgRDQMiQfQ2JAiCVMov7L89+oJju/+4Tk
- mHCJlSr++NXwLDYE224xFCyeO9X7IkXRg8KDQxtOHzMfbE3In/wtEwRnveL0AkxDyNg4
- 7Cid5hLb7c84i5NzXYyYY8wINMsIQGn/wiMLAUlbltgSt5bPRADV0Towt2kxd7qMlW8j
- nCajne6qq/RoHagFf2HwbKx5+aMpn+Y6qRbe/nwN8EBkc1b4RAQu5bm2zyC6zyOXDHYF
- hZjiJnct+FBMmkkwVzORl1r3qSABPdDMNQdQgBlRp6AUPfEo3oSX8jg9oPLR2gLeQrpk
- iKzA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+ftLv3y/FZNwOa6Ltu69QBSO6wBbq17dZbq1HpxfpOQkvv2fpoQDW17auafT0/+4ycalQj7Qe2379d@nongnu.org
-X-Gm-Message-State: AOJu0YxLm74P1o5IefiIefXvqwAi0VIFIKdHIxBRfi4iYYhvjyPZ4Cr6
- BJDb1hDImW5fJ7QyodA72FODHHCjxVpyrJytw8PLc3mGrJZQlGyvLKrnb3fBXlKz4hbSMG8X3Wt
- LF5oxRI+Zr1TfkiwGWqZTrX0NAu5eD36mmAMVpwRsiN2xj3EQXl1bN35+
-X-Gm-Gg: AfdE7cnqdQcM4uCnnKk1+ImTwVLx3owa0YVyV7j6E1EP6uHgJP1nVFSQSrIB3l7eJTV
- 9l7mMbz/w4ny3T41QgQ1Fm9MLfTRSLJAODWyJdCquXBlEWPxzV4rJwHSjgcPFR3DQ+IvAhaQSkH
- zTZb+XzvIEbM7N7Z2CgrR7J+Mfak+mLGhUa252lEkmmSKdwP43ZLtlmGVqywawICOW+RWNnM+U/
- 4P7XLLM2NCSP03sl0JCy/HY2HEgDT8YmfFwibdx9i0ouH8dDG+6ySsC4hrmP+1vmLjNShn6ErdQ
- 4/Y74TTbDFScnGECrc6rue6LBGQyXFEO7Q9QsLe9qMi1VcKRcJ0Ovqx6+fP8Ki+pAEgUudwQEVd
- F/MKn44T0ervzJbnjv4OOFZ0itn68tTqX2hK3HjjitLghhug0joxZ
-X-Received: by 2002:a05:600d:8445:10b0:492:649d:9b96 with SMTP id
- 5b1f17b1804b1-4926683fb58mr97111825e9.9.1782499433851; 
- Fri, 26 Jun 2026 11:43:53 -0700 (PDT)
-X-Received: by 2002:a05:600d:8445:10b0:492:649d:9b96 with SMTP id
- 5b1f17b1804b1-4926683fb58mr97111585e9.9.1782499433412; 
- Fri, 26 Jun 2026 11:43:53 -0700 (PDT)
+ bh=ghj/xOg/E0yHFDgkCHpp4r2601tf0dBSnaAs4XEnKzE=;
+ b=G/aFZ6UawLgasyKE+yc+Vuzt3vV73OvQtiV6xSgVW1Hnyv5yk7kkNCZw8I71zXcMyS
+ KlaleGr3j1Z0/ysc0N/HV0lDyoEel+6KdKsja0bLZrCVGL8qCFsVZKJ4I3i/rnMxf/M7
+ rG1UmHHtX89PhF46uhnnZ9J7/rk58FvkrYJChuUqZ4M/C0g+zlGX19Ts+5fsMCWaWUeI
+ dn/TJSPnLU0EWKmEhEngVDk7RiEH64crpGXQKSipdbdR8tWOfoxaPH58FMc6ILO0i08c
+ sQHKdkf93Gb0e6STf5zjl/oOsMx7Y3QL86lSA8K1RjyEcDYfQpcZZchzN1JC+EPnr8jA
+ 42VA==
+X-Gm-Message-State: AOJu0YzQzSCgWyfCQHtun8isoNEdBV5VgVdjxsoA3fbg8oMgsoqLFz78
+ blIYXkD6XaNBVQPQyQfJwXMyJjYb1Sf0X1OrBdjv8v66m2+7qy30vvJdvzUWNb+/veqfA6C4qwh
+ Rds1mxa9NuoG9Meh0a7DzDNiA/ioLX6E2riN2Es+TOD91gFDgyuBr1zAQAbUSOsdkSD7Fe0xwpP
+ uciges2JGCwJW5oKUm1O4fWEu5uSH8EEDgmA==
+X-Gm-Gg: AfdE7ckfoB/i8cM81E8utOcWLqYLuBAmMe3E/I4DJlRsKl9fZ0wZKxmCkMxNH90wNig
+ OILwN4+QjvrwTyZtGgykvVCGgb5Rwfr0xLXa0RhYN6b0xYKDolNRVOnX1WZn/fCH1lK1nLZrlAJ
+ zyuxBhNQt8ACxeviGI5SjKL3QpVLXRjkbFs3WeoVSbez0NZ/wR49U19veHELFOtn24eHhO31i+L
+ AfKYk0RQnMxvR5encQISDSBbDd0m0VYuDaoUvt3REiSaQG2ygSiWcdx7tIkuSr79OmSD6SLnnP8
+ F7oziXzQRpbj720EkOwoDDUP8Mx1grg1NkCQz04eNiL/ZK3TE/bdHQoR9OXdh4sOJPZ7iFhLq/a
+ R6ap8n/qjZXpJAofnGImvkbr+CYE7b8FigUHPhiW2yLHxM8yEqRxB
+X-Received: by 2002:a05:6000:460d:b0:462:e086:35f with SMTP id
+ ffacd0b85a97d-46dc2075df6mr12576844f8f.21.1782499448856; 
+ Fri, 26 Jun 2026 11:44:08 -0700 (PDT)
+X-Received: by 2002:a05:6000:460d:b0:462:e086:35f with SMTP id
+ ffacd0b85a97d-46dc2075df6mr12576805f8f.21.1782499448248; 
+ Fri, 26 Jun 2026 11:44:08 -0700 (PDT)
 Received: from ?IPV6:2a01:cb19:8426:ae00:a924:b4e0:1ee:f5c5?
  ([2a01:cb19:8426:ae00:a924:b4e0:1ee:f5c5])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49269020266sm95023555e9.15.2026.06.26.11.43.51
+ ffacd0b85a97d-46c1ee0189esm28102155f8f.9.2026.06.26.11.44.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jun 2026 11:43:52 -0700 (PDT)
-Message-ID: <07b33ce7-d73e-4d9a-adae-6cd3f4d03615@redhat.com>
-Date: Fri, 26 Jun 2026 20:43:51 +0200
+ Fri, 26 Jun 2026 11:44:07 -0700 (PDT)
+Message-ID: <bdd7da0a-27e3-432d-935e-e3f435f19b4c@redhat.com>
+Date: Fri, 26 Jun 2026 20:44:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] vfio/pci: Propagate errors in vfio_pci_load_rom()
- using Error API
-To: Mario Casquero <mcasquer@redhat.com>, qemu-devel@nongnu.org
-Cc: alex@shazbot.org, philmd@mailo.com
-References: <20260625094307.148542-1-mcasquer@redhat.com>
+Subject: Re: [PATCH] vfio/listener: Fix translated_addr for
+ non-identity-mapped RAM sections
+To: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>,
+ Giovannio Cabiddu <giovanni.cabiddu@intel.com>,
+ Alex Williamson <alex@shazbot.org>, Zhenzhong Duan <zhenzhong.duan@intel.com>
+References: <20260625134352.3122572-1-clg@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -139,18 +140,18 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260625094307.148542-1-mcasquer@redhat.com>
+In-Reply-To: <20260625134352.3122572-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,95 +167,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/25/26 11:43, Mario Casquero wrote:
-> Updates vfio_pci_load_rom() to use Error API for error propagation
-> instead of error_report(), improving error handling consistency.
+On 6/25/26 15:43, Cédric Le Goater wrote:
+> In vfio_listener_region_del(), when dirty tracking is active and a
+> writable RAM section is deleted, a synthetic IOMMUTLBEntry is built to
+> flush dirty pages. Setting translated_addr to the IOVA (GPA) is only
+> correct for identity-mapped regions where GPA == ram_addr_t.
 > 
-> Signed-off-by: Mario Casquero <mcasquer@redhat.com>
+> For RAM sections with GPA far above main RAM (e.g., nested VT-d interrupt
+> remapping table at 58 TB), translated_addr is too large, causing a crash
+> in physical_memory_set_dirty_lebitmap() when indexing beyond the allocated
+> dirty memory blocks array :
+> 
+>    bitmap_set_atomic(map=NULL, start=1, nr=1)
+>    physical_memory_set_dirty_range(start=0x380004040000, length=4096)
+>    physical_memory_set_dirty_lebitmap(start=0x380004040000, pages=3)
+>    vfio_container_query_dirty_bitmap(translated_addr=0x380004040000)
+>    vfio_legacy_dma_unmap_one(iova=0x380004040000, size=12288)
+>    vfio_listener_region_del()
+> 
+> Fix this by setting translated_addr to the ram_addr_t of the section, which
+> is consistent with other vfio dirty tracking code:
+> 
+>    translated_addr = memory_region_get_ram_addr(section->mr) +
+>                      section->offset_within_region;
+> 
+> Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Fixes: 6e360c06176c ("vfio/listener: Add missing dirty tracking in region_del")
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
-> v4:
->    - Use error_append_hint() instead of error_printf()
->    - Reset rom_size and rom_offset to 0 in the error case
->    - Update error message to "Device ROM size is zero", different from read errors
-> v3:
->    - Use error_setg_errno() instead of error_setg() with strerror()
->    - Reset rom_size and rom_offset to 0 when freeing rom on error
->    - Use local_err with error_report_err() instead of passing NULL errp
+>   hw/vfio/listener.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 > 
->   hw/vfio/pci.c | 32 +++++++++++++++++++++-----------
->   1 file changed, 21 insertions(+), 11 deletions(-)
-> 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 9df04fa2d7..61b4a6a5a3 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -1027,7 +1027,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
->       }
->   }
->   
-> -static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
-> +static bool vfio_pci_load_rom(VFIOPCIDevice *vdev, Error **errp)
->   {
->       VFIODevice *vbasedev = &vdev->vbasedev;
->       struct vfio_region_info *reg_info = NULL;
-> @@ -1040,7 +1040,7 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
->                                         &reg_info);
->   
->       if (ret != 0) {
-> -        error_report("vfio: Error getting ROM info: %s", strerror(-ret));
-> +        error_setg_errno(errp, -ret, "vfio: Error getting ROM info");
->           return false;
->       }
->   
-> @@ -1052,10 +1052,13 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
->       vdev->rom_offset = reg_info->offset;
->   
->       if (!vdev->rom_size) {
-> -        error_report("vfio-pci: Cannot read device rom at %s", vbasedev->name);
-> -        error_printf("Device option ROM contents are probably invalid "
-> -                    "(check dmesg).\nSkip option ROM probe with rombar=0, "
-> -                    "or load from file with romfile=\n");
-> +        vdev->rom_size = 0;
-> +        vdev->rom_offset = 0;
-> +        error_setg(errp, "vfio-pci: Device ROM size is zero at %s",
-> +                   vbasedev->name);
-> +        error_append_hint(errp, "Device option ROM contents are probably "
-> +                          "invalid (check dmesg).\nSkip option ROM probe "
-> +                          "with rombar=0, or load from file with romfile=\n");
->           return false;
->       }
->   
-> @@ -1076,10 +1079,12 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
->               if (bytes == -EINTR || bytes == -EAGAIN) {
->                   continue;
->               }
-> -            error_report("vfio: Error reading device ROM: %s",
-> -                         strreaderror(bytes));
-> -
-> -            break;
-> +            error_setg_errno(errp, -bytes, "vfio: Error reading device ROM");
-> +            g_free(vdev->rom);
-> +            vdev->rom = NULL;
-> +            vdev->rom_size = 0;
-> +            vdev->rom_offset = 0;
-> +            return false;
+> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+> index 14cca678aea788c23ea5c6ed4a3aceec5fe21484..785a6eef8d812123fcecf82e3716f5577d7c61e1 100644
+> --- a/hw/vfio/listener.c
+> +++ b/hw/vfio/listener.c
+> @@ -731,7 +731,7 @@ static void vfio_listener_region_del(MemoryListener *listener,
 >           }
->       }
 >   
-> @@ -1147,7 +1152,12 @@ static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
+>           /*
+> -         * Fake an IOTLB entry for writable identity mapping which is needed
+> +         * Fake an IOTLB entry for writable RAM sections which is needed
+>            * by dirty tracking when switch out of PT domain. In fact, in
+>            * unmap_bitmap, only translated_addr field is used to set dirty
+>            * bitmap.
+> @@ -746,7 +746,8 @@ static void vfio_listener_region_del(MemoryListener *listener,
+>           if (global_dirty_tracking && memory_region_is_ram(section->mr) &&
+>               !section->readonly) {
+>               entry.iova = iova;
+> -            entry.translated_addr = iova;
+> +            entry.translated_addr = memory_region_get_ram_addr(section->mr) +
+> +                                    section->offset_within_region;
+>               iotlb = &entry;
+>           }
 >   
->       /* Load the ROM lazily when the guest tries to read it */
->       if (unlikely(!vdev->rom && !vdev->rom_read_failed)) {
-> -        vdev->rom_read_failed = !vfio_pci_load_rom(vdev);
-> +        Error *local_err = NULL;
-> +
-> +        vdev->rom_read_failed = !vfio_pci_load_rom(vdev, &local_err);
-> +        if (vdev->rom_read_failed) {
-> +            error_report_err(local_err);
-> +        }
->       }
->   
->       memcpy(&val, vdev->rom + addr,
 
 
 Applied to
