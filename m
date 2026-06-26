@@ -4,84 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A8DFC43211
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 16:49:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2093EC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 16:52:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd9jO-0003Ie-EE; Fri, 26 Jun 2026 12:48:48 -0400
+	id 1wd9mp-00053e-KV; Fri, 26 Jun 2026 12:52:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wd9jA-00038k-Qo
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 12:48:30 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wd9j5-00086C-2N
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 12:48:26 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-37cae11ba85so1082351a91.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 09:48:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782492501; x=1783097301; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=bbeQ4XtAXcgQ2gdqbNRCKayzWt8LQO4Nyk9/MULghts=;
- b=If7W0xp1JHrsk+ITrBRLyaOM2BDK4daU/UascCCLR0RNBhW9rpBvmhoexE2zJMcUoP
- o6xjBK60JAHrLuj4Twy++iG2RfGysac1aZNk/8Pdt3FQvlZAjVnxOmtZQj/V/PAhBqXS
- Ir8sY4357GBvjWVeYUee1//Q9YgzEte4fMrF2R9Z0bc8y/HU+VhfWYTgHwj9uVNGrUzq
- FTYozrBEBbHn/VLRRfTzJpbfFDU737DDVLvcQ1NUykVKyjd4lvDjdW7SnG6Lo1BCNcj9
- jUswZau2ek4vviiH63+5UOPduBGxNF+9Tn1y+L/K9XhN/P0IkRsU8JM38WjUK272fxdp
- OqRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782492501; x=1783097301;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bbeQ4XtAXcgQ2gdqbNRCKayzWt8LQO4Nyk9/MULghts=;
- b=HsvWSHkVvIxWyzB2JqOFHLXIolkZrAR8VYPxUSqNZjqtSCJ96mDq/e8ohr11r9pwey
- P/gZqjNwhkYfY1PMLDkeLZZN9aVQDGdPa2qHMlfvBv2/9IWPgWE7xu4v4afEtYYhCJ/j
- YQtb40QacY6uKe5PribgmXx7F26IbR++qhY3Yy3vTS7AuN270D5i7uU5XPRY8EW5L/0O
- 5YYXH1mP7B6E9AtA+lzYzJzzV1GJJ2WmJ19rLJ6FV+5h0sleh6PkSO5SCITpt/A/brt5
- +EHw7IPPss70hhAdlu/UMBZXC95KeUdeS1BqKjp2r1Yl9Y54HT8QK09pJIZTL7Exk0mG
- tINA==
-X-Gm-Message-State: AOJu0YyK5Rn2Q3zGyOiMCByc3vMaIZiEpdpEc3QmsR97N4xmkYdUXElq
- fiZYYh+pmcY3U/ej0DFHjboQtIHpxQM8UwxLrLykSGO/BC84jU26wn5T2nWxZETsEXzE7Cu3doN
- utfIk
-X-Gm-Gg: AfdE7cmOTLDq2la0p+jt5zkxFpwunNvpRA8glhyF/kP4EGLDHUBBXcIWHQGcU1FnOXz
- vX5j2xrMIvCU0bReKSE54ko1wURaNGsY0DRwecbetrb4XA1Um67PxcrUFR/Z+X4w17rmi7zQdr4
- a7buU8i20YCwzhQvw9GQmV5MDarm4wBHt5bRFGqiD9azzDxFUZAZ3lw0xQnn1RdkZH98hcDNUqZ
- GtrhHAQDQLYekaXr5SDdsREoDLXuQVxcg8afyfLZftyLwY9Vs+Qzgv6CHJq1QTwgSuXctszSyRd
- rJWASBJuNHjXE6aS5L7KFBYqnaOQxhbp0m/KLV3NoIAv/teWuPDEq0mwOi2Wx9ejUirv9vFTjQs
- wsgsfGzAqF02Oo6xsSMOHIYdBsmYmIhs6JQdn6+x789ixKXyEp5OihEtjZFFfQVL8EAfrE1wIxg
- 8AUpR2YlJJc6r6ZDl5tWUQrXfkGagZ+xR8OqGzleMK4oPY7d+L1r9soX2Le+eA
-X-Received: by 2002:a17:90a:9f89:b0:37f:9ce1:cdaa with SMTP id
- 98e67ed59e1d1-37f9ce22201mr572541a91.32.1782492500924; 
- Fri, 26 Jun 2026 09:48:20 -0700 (PDT)
-Received: from stoup.. (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-37e1c93272fsm1138520a91.14.2026.06.26.09.48.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 09:48:20 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wd9mk-00053C-0e
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 12:52:11 -0400
+Received: from mail-francesouthazon11021084.outbound.protection.outlook.com
+ ([40.107.130.84] helo=MRWPR03CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wd9mh-0000XZ-Ni
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 12:52:09 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Epv1GoLTQ6ehb/2rsacHZ+u5yx7KsZTym6wPQe9Jqn33Izyt8FnSOZEEi4dGWBU1UM9qy7uU/R1qltcBM7YQbhOu2pWEhoywFp0jdRz680UQubDWpJ+B5/VDd8slGZ1Y0OkP0jt8F3Fzmkc6PcCX0DFGwEy6Yfwsz83vq5RYVTlCMB0eT3wJqw8u+r6ILXr3JMRZgn79zWi4NRu6kFHi0MhJFiDbaxlP/5JKo2kLo/p4SMcufxtxLTspJb5M8sLsHsxhsRRWyDnxBDeECBBa8sttkcUatOKR1rC8ftxaycogDCVxa3jCrDfL6Pqwyra/tnGantgIbAIv7XoofeD0vQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=68+a8HDLKKMa0Pi9XFtlGx+7enOOX2j9Fc5VAyYn4v4=;
+ b=MT5IItziLTEKfBDLWoNGhwWlwA29VMtXwSU2+uq9opgLOH6cB+RsJb8PlkOxhJTbt/anaW6LeFoEvBpsw5MGa0QKEo9nZyibOr3Qp99vkTf4Qyrd8zx/yoMoYnRCso5gOcbyD9+9+TFlpzyNpQnRYMtzlLDWTXi7uMx+XhLvcgjp9dQXKRCYbw2ZmmpkZi+1crJADJoa5jQXo80aO+GMT9YP8ciBgUTmpoSO+vkwrhaFlI3WfLSdNCDPsZmvUAT5U3R2VhXIdQBfHZ0vQh66zUxYL1ThDL6EsvFtN/Q0DKe5oJQZxa8z6YaW2dEjX/V/fMpLrLxljv/hYGM0t1w9Fg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=68+a8HDLKKMa0Pi9XFtlGx+7enOOX2j9Fc5VAyYn4v4=;
+ b=tp4NLlAfuRBNjy/h9ZwL32MOFQnphs+SfRUqFp2Hv1WZgkT0Vu1r424EzZVsVm5BNAhv06EYDJAYde3HcuQGdO2woLZTOYvDs72i5giPO56dBuf7c+t61vOsM1OqWUEfekHtpwQRY3jbU59vfwfQiMluLMS+cSKGxbdC9G8j4kMMcFJYetBnrq2tRap0nEghVyBVh2trHlx4O2qJU/IEq1MMx5vle+411egiOTwHlwOlu/xIiIs77qCkGBX2l+jl+uk++gomJd5P7Dly2e33fT4geDBBp/lSTSduWa4YCJ0Bpo+SPQBvo6oFs7shX/hrGgmoZdZx7pRjuMl/kNzhKg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by DB9PR08MB6347.eurprd08.prod.outlook.com
+ (2603:10a6:10:253::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.17; Fri, 26 Jun
+ 2026 16:47:01 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%5]) with mapi id 15.21.0159.013; Fri, 26 Jun 2026
+ 16:47:01 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH v2] target/arm: Implement and enable FEAT_SSVE_FEXPA for -cpu
- max
-Date: Fri, 26 Jun 2026 09:48:19 -0700
-Message-ID: <20260626164819.770787-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-MIME-Version: 1.0
+Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de, peterx@redhat.com,
+ dongli.zhang@oracle.com, maciej.szmigiero@oracle.com, bchaney@akamai.com,
+ mark.kanda@oracle.com, den@openvz.org, andrey.drobyshev@virtuozzo.com
+Subject: [PATCH v3 0/7] migration/cpr: support vhost-vsock devices
+Date: Fri, 26 Jun 2026 19:46:36 +0300
+Message-ID: <20260626164643.2526-1-andrey.drobyshev@virtuozzo.com>
+X-Mailer: git-send-email 2.47.1
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Content-Type: text/plain
+X-ClientProxiedBy: VIUP296CA0088.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:35c::12) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|DB9PR08MB6347:EE_
+X-MS-Office365-Filtering-Correlation-Id: 13f8c647-29a6-4b6b-7a25-08ded3a28b77
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|7416014|366016|52116014|23010399003|376014|38350700014|18002099003|56012099006;
+X-Microsoft-Antispam-Message-Info: jJ8fAdmWoDlLOaRPCFlXFTYRiQPmPxf9/oobasxbJzhOi4zsU20Wp4ngOyb8Fq7LDuuB1HvEN8bOLMPtS5PnWYewI1mP8ZSqzKx1wiKiYL0uXryUlg0jj/1l+VJwoU2rMoT/ANL7nUPOKDXxiXaVh3x33PhaT4PziD0ZtDRUxDkfwQA5I4/jH7L6wXmCbXHE/vKyp15q/XgOU9owfEoJQ/7h14mTNo5OTkObf6j9sSfxnb6/hbgS3+D8WW6mOtrmJWaduVuppTXtG7OZxGfBVMoCHU/my7qYwUh1dYfng9Wd6UKzApbIuCV1RqMvnBtT7y/VZKb5rbsejko2lrBAwT/lNJy2NlAsvS4nzCevHGxmcYhUNLtvwz6On6yO554gaEXxeNRB9oBe0dIhFwFXF6SWalNW6pbJnlFDkX2HHB56sPC+JE08HFe2+a/BLy5ARD4dN3m1ihArZGop3Bv7nO3TyyxNemwc2ZJ2CS9Q/5SKatrvIXPL3/wUoocZ858vsHVmnEoPjgPDP6raoBtnPC1YWeqbGH7+0Tut0PEiV57/6A0JVKIiH0Bc+510ytSdUXbeWRM+ruY00SBTDqY7ID8uJ4DJt/xqlacyea8d90lUHsNfcMGvG0MPLXnwqW2WLilv63SRHyGxtcAIupOLT/NlVP+1dMkraeqjju1mvLTPhsqncWZaIVm53CEGOri6+FAsG4T9mP1ymMxphUK5qycZKgmajehI30sRX3HOfv8=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(7416014)(366016)(52116014)(23010399003)(376014)(38350700014)(18002099003)(56012099006);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?E/YyobwqICuBqcADdhr0GHUtQh9QQnqSJvCnyQenUqFDBB3HI4bzILxtkN13?=
+ =?us-ascii?Q?7ScFS9kw9UMruLMQEBoaQAxvW08PD6tWbIc5mdYvc0dPe7wkwiNs5jFOodYD?=
+ =?us-ascii?Q?wIwkMZbFyfWuVK3BlhNeYTs0XLDhhT90NmaOwf8bqK3VPJBdv+iywTIwIwP9?=
+ =?us-ascii?Q?Th7kv8hhdH3AcvQLFBuKZDsJz5PqAK2wfCALezHEEYNwIa2ptNDTFgy4QuV7?=
+ =?us-ascii?Q?lMeVA/JTIzdSqagRwViPFx+xv77lNgit0aYWuBREwfspXNZlob1aK8N4OgXP?=
+ =?us-ascii?Q?bJ2pU52S2yNQ4SxAzy3k3huiCIsP5+ZwL+S6UW+XBvLFkBU0M3zfSIxvGEmc?=
+ =?us-ascii?Q?+I/5QhD9UV1riM0v+6Opw0n9ddJDmanLRNJmkfLw3zZmMn69FHie2VDi/FG7?=
+ =?us-ascii?Q?7PTqOZqwxXtDtb7KCrjUkk5AN6wGXXfoT17vE3ghKu66lOQdrXQDAXpivZMP?=
+ =?us-ascii?Q?gzHvKqvWmtXIhFSKl1Mrv7Neq5tveniU4he/dlpIAg7+iXfxZwIzmXFwDA9o?=
+ =?us-ascii?Q?rI2s3CrtuQEHhOwoEzCkd/9EbPoTHjoXid7hQYMbRgGqoFHUsgSXMQp8rGuB?=
+ =?us-ascii?Q?qxClciuJb0JGt0aXE7ASIfUV3YszUaFa5l8+mloM9X77UcC3z0wu0yRXxOis?=
+ =?us-ascii?Q?jeBO6WxdFQDI714CUxzHSufHOPOYHYxDgkFHisf6ElM8KyZhRVnoX1xty3CY?=
+ =?us-ascii?Q?ejC5uEKmVdem3m0gBtYff2BlxS7J1nPQx+nIrA+kO4ySdWE7aB0Tb2rNKxb2?=
+ =?us-ascii?Q?O3oViKQN+S8OSuX74Dkx9OKb3/lp72cu2a6AHrAyk6v+quwyjuxFRm0Fu3Zh?=
+ =?us-ascii?Q?sMrhfA68cKDF4KVbKpRPruvx97+houojljENqTT7if3hndZugeGitVehkLTV?=
+ =?us-ascii?Q?I17F59Ww26tksFVVeLzKqicZVWXg4x1FqiyhXVIs8SxpWq4/Pu+qOHz3nqnM?=
+ =?us-ascii?Q?whAsjzdfZ8wD57kE2/A2yNR1tXuIiXMuJDTKK7YEVtcodtBfJ0Fc6P7Eijnb?=
+ =?us-ascii?Q?GcN21rvNGs3Yt7+vlb6VaoNoBBqXPGwXOt6RnWLUyXswAhYfHUmmtoumm269?=
+ =?us-ascii?Q?EimyQRt/+Nf16RgvqdG4GTE3Vwgs3ivE80WQN/a2abq0carhCmMl/d/0y+vv?=
+ =?us-ascii?Q?AMEuI6/7+ztS5wDWlQbPAHWgcumNnHEd5Pq6zIG/jIcBk/XygGA3/QtNyOp3?=
+ =?us-ascii?Q?ga/iVfWx7aWqHunUTucphFqGzrlkJaQ7ETIMTZ8KyxZoXG57YmeaI7HucyY9?=
+ =?us-ascii?Q?Bi6b/v+glVNmzDl0i4WO/bmhgJxuk5iUnqnataG5Dxm3PiANSHoq9Eu7sx7N?=
+ =?us-ascii?Q?+r+XN1hHje527aOb4TQuUvW2YG0wuYAoV4En8NlmILCfh7+sUulrKfHdYq1/?=
+ =?us-ascii?Q?v+CvrvB3EKVcm9mODUYEzq0IIduKmw92UCaqzT6nvrz13yy3A0+RdK1nwvSq?=
+ =?us-ascii?Q?1Y75a+Ww/DyspQZq0+ySJTK/dtoATnqZWCAqpKs5VHK9d2QscVnCnEnLpyOP?=
+ =?us-ascii?Q?YB8IudDMQ7JeAlhmNX9z5ZDWnMgtCoBkXb57xDeKKGxolQM15u1wO0N8f1zo?=
+ =?us-ascii?Q?nNxR317e4paYvrK3ESu1Dl7Up9kg5oCMW0kaAuM3+L/OVSuyLoNQSiHfbVXJ?=
+ =?us-ascii?Q?lmmMI+ykVnbtxYaOKh/zyVXiXnYsCojmVdNjRGedvzzQ6sR1NzLvrHR/ddFZ?=
+ =?us-ascii?Q?b17OTsUKZnajmnRR1nuN+PPdFy3pniUgUrdwuSIKQMIt69pISSmXVwmikqoR?=
+ =?us-ascii?Q?cRnHdpT4O1y9IWWxKt/ngcAUyMNu3SY=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 13f8c647-29a6-4b6b-7a25-08ded3a28b77
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2026 16:47:01.3139 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: +msO5jv4pW5CHD0LyuHhwjIkFiCwP5oUhAp676QvrkS4lY1ObnypO54aGbmp5xKDfZCM8MWWvLSZsQ/GIwXYXD0s8Jzg4o36yGt4F0UW5A8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB6347
+Received-SPF: pass client-ip=40.107.130.84;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=MRWPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,109 +140,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
+v2 -> v3:
 
-v2: The enable test for this is (FEAT_SVE || FEAT_SSVE_FEXPA).
-    I thought maybe writing it all out like this is clearer than using
-    TRANS_FEAT_STREAMING_IF with a one-off combination feature test.
+Re-design device ownership hand-off (suggested by Dongli).  Do not rely
+on SETUP migration notifiers, as this approach forces us to reorder
+generic migration code (see v2 discussion).  Instead:
 
+  * .pre_save() releases ownership on the source (RESET_OWNER) once VM
+    is stopped;
+  * .realize() is adjusted to defer device ownership acquisition for an
+    incoming CPR;
+  * .post_load() actually claims the device (VHOST_SET_OWNER);
+  * FAILED migration event callback re-aquires the ownership on the
+    source after re_save released it.
 
-r~
+v2: https://lore.kernel.org/qemu-devel/57c9c9b3-d758-489b-95b8-d16c258b9b0c@virtuozzo.com
 
----
- target/arm/cpu-features.h      |  5 +++++
- linux-user/aarch64/elfload.c   |  1 +
- target/arm/tcg/cpu64.c         |  1 +
- target/arm/tcg/translate-sve.c | 21 +++++++++++++++------
- docs/system/arm/emulation.rst  |  1 +
- 5 files changed, 23 insertions(+), 6 deletions(-)
+Andrey Drobyshev (7):
+  vhost: add vhost_reset_owner op
+  vhost-vsock: don't reset connections during CPR
+  vhost-vsock: fix FD leak in realize()
+  vhost-vsock: preserve vhost FD during CPR
+  vhost: factor out vhost_dev_init_backend()
+  vhost: add vhost_dev_set_owner() / vhost_dev_reset_owner() helpers
+  vhost-vsock: hand off device ownership across CPR
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index c3eeecbea9..bdeb72bd77 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1580,6 +1580,11 @@ static inline bool isar_feature_aa64_sme_mop4(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SMOP4);
- }
- 
-+static inline bool isar_feature_aa64_ssve_fexpa(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SFEXPA);
-+}
-+
- static inline bool isar_feature_aa64_ssve_aes(const ARMISARegisters *id)
- {
-     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, AES);
-diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
-index 9b93969850..cea286cce0 100644
---- a/linux-user/aarch64/elfload.c
-+++ b/linux-user/aarch64/elfload.c
-@@ -174,6 +174,7 @@ abi_ulong get_elf_hwcap(CPUState *cs)
-     GET_FEATURE_ID(aa64_f8mm8, ARM_HWCAP_A64_F8MM8);
-     GET_FEATURE_ID(aa64_f8mm4, ARM_HWCAP_A64_F8MM4);
-     GET_FEATURE_ID(aa64_ssve_aes, ARM_HWCAP_A64_SME_AES);
-+    GET_FEATURE_ID(aa64_ssve_fexpa, ARM_HWCAP_A64_SME_SFEXPA);
-     GET_FEATURE_ID(aa64_sme_mop4, ARM_HWCAP_A64_SME_SMOP4);
-     GET_FEATURE_ID(aa64_sve2p2, ARM_HWCAP_A64_SVE2P2);
- 
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 2cf335c956..7151c509f9 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1384,6 +1384,7 @@ void aarch64_max_tcg_initfn(Object *obj)
- 
-     t = GET_IDREG(isar, ID_AA64SMFR0);
-     t = FIELD_DP64(t, ID_AA64SMFR0, SMOP4, 1);    /* FEAT_SME_MOP4 */
-+    t = FIELD_DP64(t, ID_AA64SMFR0, SFEXPA, 1);   /* FEAT_SSVE_FEXPA */
-     t = FIELD_DP64(t, ID_AA64SMFR0, AES, 1);      /* FEAT_SSVE_AES */
-     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP2, 1);   /* FEAT_SSVE_FP8DOT2 */
-     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP4, 1);   /* FEAT_SSVE_FP8DOT4 */
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 79e8e16b24..fc4cc8c479 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -1369,12 +1369,21 @@ TRANS_FEAT_NONSTREAMING(ADR_u32, aa64_sve, do_adr, a, gen_helper_sve_adr_u32)
-  *** SVE Integer Misc - Unpredicated Group
-  */
- 
--static gen_helper_gvec_2 * const fexpa_fns[4] = {
--    NULL,                   gen_helper_sve_fexpa_h,
--    gen_helper_sve_fexpa_s, gen_helper_sve_fexpa_d,
--};
--TRANS_FEAT_NONSTREAMING(FEXPA, aa64_sve, gen_gvec_ool_zz,
--                        fexpa_fns[a->esz], a->rd, a->rn, s->fpcr_ah)
-+static bool trans_FEXPA(DisasContext *s, arg_FEXPA *a)
-+{
-+    static gen_helper_gvec_2 * const fexpa_fns[4] = {
-+        NULL,                   gen_helper_sve_fexpa_h,
-+        gen_helper_sve_fexpa_s, gen_helper_sve_fexpa_d,
-+    };
-+
-+    if (!dc_isar_feature(aa64_ssve_fexpa, s)) {
-+        if (!dc_isar_feature(aa64_sve, s)) {
-+            return false;
-+        }
-+        s->is_nonstreaming = true;
-+    }
-+    return gen_gvec_ool_zz(s, fexpa_fns[a->esz], a->rd, a->rn, s->fpcr_ah);
-+}
- 
- static gen_helper_gvec_3 * const ftssel_fns[4] = {
-     NULL,                    gen_helper_sve_ftssel_h,
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 3ef5b53e8a..a12471aafe 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -175,6 +175,7 @@ the following architecture extensions:
- - FEAT_SME_LUTv2 (Lookup table instructions with 4-bit indices and 8-bit elements)
- - FEAT_SME_MOP4 (Quarter-tile outer product instructions)
- - FEAT_SSVE_AES (Streaming SVE Mode Advanced Encryption Standard and 128-bit polynomial multiply long instructions)
-+- FEAT_SSVE_FEXPA (Streaming FEXPA instruction)
- - FEAT_SSVE_FP8DOT2 (SVE2 FP8 2-way dot product to half-precision instructions in Streaming SVE mode)
- - FEAT_SSVE_FP8DOT4 (SVE2 FP8 4-way dot product to single-precision instructions in Streaming SVE mode)
- - FEAT_SSVE_FP8FMA (SVE2 FP8 multiply-accumulate to half-precision and single-precision instructions in Streaming SVE mode)
+ hw/virtio/vhost-kernel.c          |   6 +
+ hw/virtio/vhost-vsock.c           | 208 +++++++++++++++++++++++++++---
+ hw/virtio/vhost.c                 |  55 ++++++--
+ include/hw/virtio/vhost-backend.h |   1 +
+ include/hw/virtio/vhost-vsock.h   |   4 +
+ include/hw/virtio/vhost.h         |  32 +++++
+ 6 files changed, 275 insertions(+), 31 deletions(-)
+
 -- 
-2.43.0
+2.47.1
 
 
