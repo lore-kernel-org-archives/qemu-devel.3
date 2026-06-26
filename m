@@ -4,92 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2323FCDE014
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40701CDE013
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:18:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3cu-00069t-8G; Fri, 26 Jun 2026 06:17:36 -0400
+	id 1wd3d3-0006F6-Uh; Fri, 26 Jun 2026 06:17:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3cs-00069h-TR
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:17:34 -0400
+ id 1wd3d0-0006EV-06
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:17:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3cr-00051K-68
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:17:34 -0400
+ id 1wd3cy-00054G-CS
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:17:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469051;
+ s=mimecast20190719; t=1782469059;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=xreIHyY5+7ya4HHSXUscLpuskjdoKxa3izYUHOYUGLw=;
- b=HH6c8n8FvMImP1YhEyRUx5VC1Fj9lHyWWOumeN/8tnRHj5Oc5I5xOP28by9kBpzUAwmfxL
- 6PbeOllyLg0AQRvR7n/32x8y2rZ0MvmLJ7/MuCFN4emi4IBunjwGEnwPmG9oCEhvyne6lw
- V9YvlJwXEd0TknRmwYX4MASbXd27hOA=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=byDGriG36cugk0iUUjibQB2wOLS/oNL2G+fOn7UmSQs=;
+ b=VU4WL31Wkc7E5RGsvyeNc0Rqaexq6NG7yhhoDHNb4HcZy6cNLMTAC+GVdcyjxsSOjuLj5y
+ 8hNJffl+6a67ygRk+d5kKuQ/XxtOdHGj8HsTkMogWuQDU+RgyRxzTECPWKIGPQkZXjtvuK
+ sezaK00qQNcSzHtNt9WcZ6slAg9BPJk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-438-JD0O533NMXaHrP4M7tHBhA-1; Fri, 26 Jun 2026 06:17:30 -0400
-X-MC-Unique: JD0O533NMXaHrP4M7tHBhA-1
-X-Mimecast-MFC-AGG-ID: JD0O533NMXaHrP4M7tHBhA_1782469049
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-46fa65abd21so41192f8f.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:17:30 -0700 (PDT)
+ us-mta-384-8_eRVnhbM8urCiXdnTllYw-1; Fri, 26 Jun 2026 06:17:38 -0400
+X-MC-Unique: 8_eRVnhbM8urCiXdnTllYw-1
+X-Mimecast-MFC-AGG-ID: 8_eRVnhbM8urCiXdnTllYw_1782469057
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-490b7959b9fso6333565e9.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:17:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469049; x=1783073849; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=xreIHyY5+7ya4HHSXUscLpuskjdoKxa3izYUHOYUGLw=;
- b=l8DQ3IGQiKE0zRvJbhpDywxjxqf6e8cLniEhr4JgCvW1kXR03sfKqO5gfD+b+GH+x0
- ACKb1PJLBiaWOrNXXckjZNZ+SOYduKvfM/icnkOYlBobyQSQ4hh5O6QO6Rw4OE89wKu7
- 5qKE1+RnYSPt54eVffRCCJdIogdFUfscXp99t16TotwZZS6UQZgGLaRcDQFv45kbTetr
- ceM3DWN4SMTxc84e/OwfZtPu3/wjGXDVfqQKASBTd+OvVsr+/zWLQNydUTo6++SWADBg
- v9LwI9BcBc+2RW4aDvvyPbTWnRLaLHK+Gsd+RR7RCyeEckJtp30Gk2/BIFXT2C95ntPT
- GAlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469049; x=1783073849;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1782469057; x=1783073857; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xreIHyY5+7ya4HHSXUscLpuskjdoKxa3izYUHOYUGLw=;
- b=EaYWHObVbYxrLqzfg/hFHJsmyuh94dAUO/kbUC8AqLUFDEoziuX6rppgiqK4VVgHQ/
- Zi3ubS3+DOZdwWCossQONlPLdNPq6Td6EOy+7fRz+PJAtPysnId/iVqS4fwTLoSCXkSE
- 92qsS6EPTL06aXl+y6TulfaFdSxYL0qvFyNK7hy/EHL/AU1uH2xeToeeEJ20nVgsO9AP
- yM6NXch3Lwyst73YjoyT16vWn0cqbAyGA5hUrNV70siuPjxYRtOViZSrsUdofJYhFW5n
- tPsFpEGwycouso9QQeFflAsKrbHDLL6+rhXC1Xw9FftkFE+oC3sK4RuS44igrngi+qbs
- eZnQ==
-X-Gm-Message-State: AOJu0YyWNTSu77tQW69hwwFZmZcbJBKcseqOMi/7JcAf/hB59jq4TShh
- DJ2/kO2TqtiRoAsEu6yaQIZkWAab6BygsmEgMYoH9vXDnRrelMfSUwywkgc3Z/ljf/TDfR070f+
- +FjRcAGQg5tNMB+17frYcby2dep2hzn0vx7erE4mapvU3hGlcYw7FvgYc2gYa//IOHaTJTblXTa
- +PxN4VR1zPjwsq08+cgXBIAznun19FNZam4aKyqOyt
-X-Gm-Gg: AfdE7cl/33kqiHzBdaZRSS8Kw+PHTTD87fe1j4yzijIRLtjoHYYrRyayr+/xXAr1gtA
- AwzH0uMzm8vPQk5MNQA7ilHKF3zg3SpXNo3mZslibQzpaE0alZ9p0HAom4ym4u1y9KFdpXZ5yqs
- NV65PjFkYDNBH/+8wBN3eMlTN109oI1VzcW9ckBUaNX+o36jj8/C05Qh5gHPwsL5otJpbwFB/8U
- YNhrx209p4SMOvnQ50+tzvPFt7dUioTLNG6V/ZaNNFnpGdq5t8E8d9Fy6VeeKONDu9dgG+MCCiJ
- JBE3x6AlvNEuHBzCzUsJHW98kpgyR85G0B4hL3GFPCsgSwfRJifJHwXtBZrmQK55z/47Hpa+WXd
- gKfroroHMk0Q6Hd7r5BPQo7Hvul8jUj0PuValuTGHCZTBG4P0Uh+FjprRJoDsZMpWRBNql65j6e
- ehk1/hkZ4Mw1xh77a0
-X-Received: by 2002:a05:6000:454a:b0:46d:d5f9:d170 with SMTP id
- ffacd0b85a97d-46dd5f9d3a6mr6805389f8f.46.1782469049435; 
- Fri, 26 Jun 2026 03:17:29 -0700 (PDT)
-X-Received: by 2002:a05:6000:454a:b0:46d:d5f9:d170 with SMTP id
- ffacd0b85a97d-46dd5f9d3a6mr6805351f8f.46.1782469049026; 
- Fri, 26 Jun 2026 03:17:29 -0700 (PDT)
+ bh=byDGriG36cugk0iUUjibQB2wOLS/oNL2G+fOn7UmSQs=;
+ b=RfQcMKVkUlZZygDVQlDCXRtoqz8XtJesjR1/L9EFuauJZlO838d2Bu5fw76fNTzUjG
+ FjdV5pCAO3euC/N+offqZrh6hpiIiARNDGcWpqaSQd++ppJGj2yX0z2dc72QRyAQ0KrD
+ grDbeNT8yrHCYJe/od3lIPaNBjp2Oy9i5pXHIgHGrTD64vMgKkqKelWJ2Ln1IYEBktrP
+ EUIarE/8bnqgB14tXf02CTVi50kfTLzTMnle2nUJm7WX8zQwckUQl7X8gBM2TbWeXgMz
+ U3G+p8JgpJB/Y/6dFo8323Gwksj2Hmlx4c5hrph8F0Ib7lZ2Ln3B9V6OvffL1Cklj5IB
+ oxuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782469057; x=1783073857;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=byDGriG36cugk0iUUjibQB2wOLS/oNL2G+fOn7UmSQs=;
+ b=np0qz9evFof/k/WylFRmDDsKdBJN9rSPiqYMzBAn/frezMKBRpJYWnEadzTDplMSb9
+ UcAYFNLwAqckXEerFwGlOAm8nyboyMeArbvWs8BspMYVCpEty77fQZ26vwJtWnKzSTn8
+ zWYT/QCn4D0yQa2bqb+58T8G7Hkk8+8QzriHQDD5tihaD9w4ZZZlUEOv2KkYqflwEAp8
+ p5VuRpsmSSQLdzv4p5FKw57mkQvZeSqtwiuObagOzmHnLwLQmnWgx1SbLx6KlBUaUC8f
+ 0CHmaS5cBII36REJhxIQDDM7SUNg7gr+WqdTISxIIaffzXmdXbQfgkwVhBUtSqNId5K7
+ NMwQ==
+X-Gm-Message-State: AOJu0Yz+KZBlrdeb3ALt9OppsEkMvB1qoI1TlkrW/TIDRc4LB8j734d+
+ DRc4TTwaAotKZ99g5YkOQH7NTzAaKXCzcpZKYDAQHIsEP3HZSAUBdJASi+WyCLv1Kx68T2dL0/V
+ BSHujYoby9WRPyX+5mnlvZNCXE9CBMCrtIxtx7ZhcRAIEp6p8jWNoPiEgnB8pHyY7DUOrvVm4jQ
+ 9/M/g9cac1/OO1S5mCQaHFHxk8KchWx+vyj3xUwcoW
+X-Gm-Gg: AfdE7cnw+41i9T/P0PekH9KzyF6OC6EW3j8Ov3kJ2/bUZcppuOn32OikJyPRVn42duq
+ Ndw+BgMoJF07SQiJ9rVGGCDxo1LEcZ4fxul9RH5LYu8PFmcwJSnthY826ICAJYfFp901M28y/9Y
+ V+U5BxC+Wcl0XMtraAa0e+PbyiRQhB2Q52vPT5taiCehe5wONcnFRU38cnWeWoN0DeKApz27ETN
+ YAsV+WYcTg6YhkecuwrF+CJvQSKY4qGkFVEwKfA+J/fHFiWolGqbcCpvO4OmGdzJPNtCMd9vj8e
+ TLRe2Unafzmd3V0r6+svNz8RrJt2jZAoBj4mhgJdEbBnwiqB7dpvlVJaBS/lxSe+MSPeJPpeupH
+ vVhtDqFacdJHcPmGaTbrMR9xen6DIC2fx5c8U16iXdCdZj7YPPYjMkEjxc9rGOu7Xq+5MQ4jaBL
+ tsoWyB5NEmtiv4KgTe
+X-Received: by 2002:a05:600c:c059:20b0:490:adb6:793d with SMTP id
+ 5b1f17b1804b1-4926689fb12mr73048235e9.26.1782469056856; 
+ Fri, 26 Jun 2026 03:17:36 -0700 (PDT)
+X-Received: by 2002:a05:600c:c059:20b0:490:adb6:793d with SMTP id
+ 5b1f17b1804b1-4926689fb12mr73047775e9.26.1782469056328; 
+ Fri, 26 Jun 2026 03:17:36 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c1ee0189esm24559489f8f.9.2026.06.26.03.17.27
+ 5b1f17b1804b1-49269020266sm65293625e9.15.2026.06.26.03.17.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:17:27 -0700 (PDT)
+ Fri, 26 Jun 2026 03:17:34 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com
-Subject: [PATCH v4 0/6] qobject: switch JSON parser to push
-Date: Fri, 26 Jun 2026 12:17:20 +0200
-Message-ID: <20260626101727.1727389-1-pbonzini@redhat.com>
+Subject: [PATCH 3/6] json-streamer: make brace/bracket count unsigned
+Date: Fri, 26 Jun 2026 12:17:23 +0200
+Message-ID: <20260626101727.1727389-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260626101727.1727389-1-pbonzini@redhat.com>
+References: <20260626101727.1727389-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -116,64 +120,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This rewrites the json-parser to use a push parser aka state machine.
-While push parsers are inherently more complex than recursive descent,
-the grammar for JSON is simple enough that the parser remains readable.
-There is therefore no need to use e.g. QEMU coroutines.
+It makes no sense to let brace_count and bracket_count go negative,
+also because it immediately ends error recovery and sets them both
+back to zero.  Instead set them to zero *before* choosing
+whether to process the token queue; this makes it possible to
+have the fields as unsigned.
 
-Unlike the suggestion in commit 62815d85aed ("json: Redesign the callback
-to consume JSON values", 2018-08-24), I kept the json-streamer concept.
-It helps in handling input limits, it performs error recovery, and it
-converts the token-at-a-time push interface to callbacks---all things
-that are more easily done in a separate layer to keep the parser clean.
-However, there is no need anymore for it to store partial JSON objects
-in tokenized form, because the current state is stored in the push
-parser's stack.
+Note that JSON_END_OF_INPUT now forces the parentheses to appear
+balanced, so that the queue is emptied and an error is reported;
+hence, the "type != JSON_END_OF_INPUT" condition can be removed.
 
-Another benefit is that QEMU can report the first parsing error
-immediately, without waiting for parentheses to be balanced or for a
-lexing error.  Error recovery then proceeds as before (i.e., the next
-parse still starts after balanced parentheses or a lexing error).
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ include/qobject/json-parser.h |  4 ++--
+ qobject/json-streamer.c       | 24 +++++++++++++++++++++---
+ 2 files changed, 23 insertions(+), 5 deletions(-)
 
-On top of the benefits intrinsic in the push architecture, it so happens
-that it's really easy to add a location to JSON parsing errors now, so
-do that as well.
-
-The diffstat is unfavorable, but most of the new lines delta is really
-new comments explaining the grammar and state machines.
-
-Almost the same as v3, the only substantial change being to
-restore the "expecting value" (actually now "expecting key") error
-for not having a string or interpolation where a key is expected.
-
-Other changes:
-- Add some extra comments to json-parser.c
-- Consistently use "top-level"
-- Move json_parser_reset() right after the out_emit label
-- Avoid <= comparisons for unsigned variables
-- Add extra comments about error recovery situations in json-streamer.c
-- Avoid double "JSON parser error, JSON parser error, stray '%s'"
-- Spell location as %d:%d rather than "at line %d, column %d"
-
-Thanks,
-
-Paolo
-
-Paolo Bonzini (6):
-  json-parser: replace with a push parser
-  json-streamer: reuse parser
-  json-streamer: make brace/bracket count unsigned
-  json-streamer: remove token queue
-  json-streamer: do not heap-allocate JSONToken
-  json-parser: add location to JSON parsing errors
-
- include/qobject/json-parser.h |  16 +-
- qobject/json-parser-int.h     |  13 +-
- qobject/json-lexer.c          |  11 +-
- qobject/json-parser.c         | 589 +++++++++++++++++++---------------
- qobject/json-streamer.c       | 121 +++----
- 5 files changed, 427 insertions(+), 323 deletions(-)
-
+diff --git a/include/qobject/json-parser.h b/include/qobject/json-parser.h
+index 4c3d89f751f..0cf6932ecdc 100644
+--- a/include/qobject/json-parser.h
++++ b/include/qobject/json-parser.h
+@@ -31,8 +31,8 @@ typedef struct JSONMessageParser {
+     void *opaque;
+     JSONLexer lexer;
+     JSONParserContext parser;
+-    int brace_count;
+-    int bracket_count;
++    unsigned int brace_count;
++    unsigned int bracket_count;
+     GQueue tokens;
+     uint64_t token_size;
+ } JSONMessageParser;
+diff --git a/qobject/json-streamer.c b/qobject/json-streamer.c
+index 6c4f99b3e7f..9e1f650bad8 100644
+--- a/qobject/json-streamer.c
++++ b/qobject/json-streamer.c
+@@ -41,21 +41,41 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
+         parser->brace_count++;
+         break;
+     case JSON_RCURLY:
++        if (!parser->brace_count) {
++            goto end_error_recovery;
++        }
+         parser->brace_count--;
+         break;
+     case JSON_LSQUARE:
+         parser->bracket_count++;
+         break;
+     case JSON_RSQUARE:
++        if (!parser->bracket_count) {
++            goto end_error_recovery;
++        }
+         parser->bracket_count--;
+         break;
+     case JSON_ERROR:
+         error_setg(&err, "JSON parse error, stray '%s'", input->str);
+         goto out_emit;
+     case JSON_END_OF_INPUT:
++        /*
++         * Force the parentheses to appear balanced and the queue
++         * to be emptied, causing a parse error if it wasn't.
++         */
+         if (g_queue_is_empty(&parser->tokens)) {
+             return;
+         }
++    end_error_recovery:
++        /*
++         * We goto here due to receiving either JSON_ERROR or a
++         * JSON_R{CURLY,SQUARE}) that is known to be unbalanced.
++         * If in error recovery, end it immediately.  If not in
++         * error recovery, json_parser_feed() will raise an error
++         * but error recovery won't be entered at all.
++         */
++        parser->brace_count = 0;
++        parser->bracket_count = 0;
+         break;
+     default:
+         break;
+@@ -83,9 +103,7 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
+ 
+     g_queue_push_tail(&parser->tokens, token);
+ 
+-    if ((parser->brace_count > 0 || parser->bracket_count > 0)
+-        && parser->brace_count >= 0 && parser->bracket_count >= 0
+-        && type != JSON_END_OF_INPUT) {
++    if (parser->brace_count > 0 || parser->bracket_count > 0) {
+         return;
+     }
+ 
 -- 
 2.54.0
 
