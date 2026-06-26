@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A868DCD4F26
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB44CDE00C
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:23:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3eN-0008Bb-Gy; Fri, 26 Jun 2026 06:19:07 -0400
+	id 1wd3eN-0008DB-P1; Fri, 26 Jun 2026 06:19:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3eJ-0007su-7I
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:04 -0400
+ id 1wd3e2-0007UN-O6
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3eH-0005Lk-Gp
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:02 -0400
+ id 1wd3dz-0005Cy-Bx
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469140;
+ s=mimecast20190719; t=1782469121;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+kj0eRBswti/AsFqB8XmuAgtDzPuzUfAZcA79+C8npY=;
- b=RfhijZnBMtRzcguImaWxRgCYWsMljrsSIgj2Ym1o8kpmcg4Lca6l2ifntzc+iCCURBJuWP
- j4CzyNovxMUk+0GlgBfQVojElXv2T5rCH8jc12PssTTqHQAi7iJ8uC1YPX1cNmI33iEse5
- AMOOj6DZSmO/yOGL57/mSrd+Hy2KN10=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mhiC52oMwva++W28QseFLMsKqB/LHrv1Okp1RGXU2gI=;
+ b=DrnhxLCEUm15/gzHrokWu84sZL730NiW07MT5fTmh+TdI7MXUehvg1xBAxELLQ8Hlacu6D
+ p/LLuhR9PeroMnQT+DJhdT8H82CTOSfadIG2Xb2P0xshGSSUfZjyI3MEPH4h+/XHVdKgt8
+ KsKgzpLR1onAX8lWN7rtnK4T2VXV+jQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-150-o0mm5g9QNNm-QGfV1eFRqA-1; Fri, 26 Jun 2026 06:18:59 -0400
-X-MC-Unique: o0mm5g9QNNm-QGfV1eFRqA-1
-X-Mimecast-MFC-AGG-ID: o0mm5g9QNNm-QGfV1eFRqA_1782469138
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-490c56e2576so5481065e9.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:18:59 -0700 (PDT)
+ us-mta-692-U0aWHmHUPFODR76_zNbZPA-1; Fri, 26 Jun 2026 06:18:39 -0400
+X-MC-Unique: U0aWHmHUPFODR76_zNbZPA-1
+X-Mimecast-MFC-AGG-ID: U0aWHmHUPFODR76_zNbZPA_1782469118
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4924207e640so5998235e9.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:18:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469138; x=1783073938; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469118; x=1783073918; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+kj0eRBswti/AsFqB8XmuAgtDzPuzUfAZcA79+C8npY=;
- b=JGDjok6DSMtw9yDsF141VeS0ubEyQy3Tn+gHmn5XZsPDiSu/Tsdk8aoZlbfy5ZjjWH
- KuFoKqfb80DuPzWC7KpJ+PYYsn3GZN5S2UQBOASSMAKtweFnUY5l1HDSsdbonBooKY74
- ROtW3ueL/HGKVPfCmKuCbJsodZZDEXQegD7G/202w79SROcq1Eb/DwOmjZpDs264GYi8
- 9z0bwrBt6pxFmQUeKQqaLP4fayB5wM4ESS8gQ8a26Y/OS1vPysCDx0NZb1Wl6ATYovPE
- aOgnZ+ZB5iPHf8510oi5IEQ4oguceycv7YaJHkryOXBAOa7USc9KFfGkdXXnnDUtGDD/
- 4iLA==
+ bh=mhiC52oMwva++W28QseFLMsKqB/LHrv1Okp1RGXU2gI=;
+ b=e+AjS5deDWKtzn0uVuCQQRc+xH7JqaT/NWYKlqT6fqLn0Q24/O0vJSea34KSYVKHWU
+ EXl51Td8g2XyktaiH+pWj9TxFEDg2RrEq4LQRYoYvIWiP82mU7ZJQPLm9HvoUzLB0ejf
+ 1iQT0d3VK+xGn0gQ91dflSwoAzuSzj3gRHCljqzWIW5FUkDYe5zO/GKfyqJoK9K8rSAU
+ 43nwEYXAg96TpneZ1ghInEA7CO7LpVV46VAAUvYsZIFxffqyYJLbTGPbEi1tOhCJKhOv
+ iAQkSJv/lflGnddp+GHoU96O36Xs4xQhkAmb+A8+sx8W3fidZJQjSsZRjYkD4oeygBJa
+ at0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469138; x=1783073938;
+ d=1e100.net; s=20251104; t=1782469118; x=1783073918;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+kj0eRBswti/AsFqB8XmuAgtDzPuzUfAZcA79+C8npY=;
- b=H6H3LC6p7HpOPOJOxnA8yay5z87bkvZlOJYfKUkLWm//UZI8lEUy3jErybCo5jVAh/
- YsikiZf9fVS0cZbAJue4mG8CodLpo/VVjuS/AEWyi6aytnkc7FFjBVY/0vlMQ5ZovLPg
- HWPtgdvoOlf+b5iPqVL6WCOQf0hoGXoxbZtF6sezgo4Dxn37ml5DM3vWeJcGLpUPHE+K
- kEOVQK2LynoUcccvmdtxwQ/HngCaJI5P8/+mN8B/HYlsvtOQbtuTalcTGNbsXsoJCcXg
- dpnRPDL6gDLWTHu/3yKOQJW9bwKuGAE+VIsDONNqUW9zx1FgQoElmoVfu1VX1ZAdbrB2
- 5g+A==
-X-Gm-Message-State: AOJu0YwVDU8br9N/2lD5i/E2AkLorWS3qKFGoBlUQKAeKgogc2LQvpR+
- KBkVts/MswWTvmu28MZAxcMy8YEFXs5gqsx78ys0VNP79uDDdXQKmw9WsQXC94I4jViSsaxS//6
- 8cvTgYfD7VNrGAHlWAVsw3YPovE+iMrOONvkZAcVgsD1kdj+2mDPvIt6HEwj0xzxd2mQaCm3cZG
- aRcWJJ2SZNwEJ5fyJ1VH216b8KPrlLXSQUYeGwtamA
-X-Gm-Gg: AfdE7cnoSo8PMRNk1PICJwIQYJYWJ7HmDIHqoRxVbdz/6ADTgFRlnH716YHvTuE1jDn
- OfPSSC1yYUOVStx8jEcm7omuQ6bMJOiUHPw8m2/zvfysjp1MsqrYrxFjmkvIRGfzoE4HJF50nE9
- 59/D5UbQdnDbNCXA+YJFPJsuVFeGPaGoB1lH00z+42guM4zQ+EePaAcNWKC4Mjnk1dIIO57hCPR
- F+/8s/ROW3hBPb9qFNp81Bk38APImQNcjoP3Y+YjhwKyL1+MENU3DBjLqhMtgh13nO/47x82VTk
- ItDcRLBTgbB5Lz89Ao2TBWCDemlWAg1mq1Vh+hN4BM+XgcWFMs0smn3PFq3kS5yjobJL7i6WNlB
- /Afs+D2OAHFiBPIUG35Wbj0WKz166FLVCY7nnbMsWd1UbvkWfrXITFHO1HzK6+BTpgBJOMxCJLu
- 0A/PLOikMdY4rAuOVr
-X-Received: by 2002:a05:600c:6748:b0:490:c024:2eba with SMTP id
- 5b1f17b1804b1-4926688598fmr86669495e9.22.1782469138144; 
- Fri, 26 Jun 2026 03:18:58 -0700 (PDT)
-X-Received: by 2002:a05:600c:6748:b0:490:c024:2eba with SMTP id
- 5b1f17b1804b1-4926688598fmr86668875e9.22.1782469137590; 
- Fri, 26 Jun 2026 03:18:57 -0700 (PDT)
+ bh=mhiC52oMwva++W28QseFLMsKqB/LHrv1Okp1RGXU2gI=;
+ b=lh44vD9JJ/7Ia2KLiVk+RMvRYl3obKrgC1uMjPQay2jsT/mRsqQ7DrLw81FrTN8ejq
+ KG5Uw/KzGHIJkizEu1cy9j8JtHUTMohzz6BZO7RA1zKuC2hoWRhhXRR9rIE0fq7Rwn3Z
+ zSiybqMuBkiXubbr/lvFkKqfN0jLADrk4r0b5fNuQYkbvRKeSgg35TCgIQnS1k9rKu9t
+ EUKNn5CA8hVKVjib4UvIRSzS8/z1oBZR6Kqekw2j1uVVXDHhyONe43FBheYS/7HPPlgH
+ rsJCCHbDT7QyBwVSIN5zz+jlK+5NGZukrZPRK6lfJTr1r3d5NEK2DvkAxs2gJkaj6L4u
+ QLBg==
+X-Gm-Message-State: AOJu0YzLrLRLd6XUwZcQ/3/HxQVrtUUTKHgBoPlQG11vK5/5WT95CFDF
+ 1R3qXt209dL+4cdpMaQzlYMYq26U7ww64ef/T4J1WSIYcr/94UKmm5k4BucctYZd6iuTV+r0nEa
+ MYMNr3SXRIYgZfurT0HD6jGFVww/yL7ABPY7LpuoIUr7ZZsWE+4wKo9fGeRMR5P4lgXtLKmjJPY
+ h9ewUmcxDy7XWZvslXrDROcpaGmLwVsXN4WycZWIXI
+X-Gm-Gg: AfdE7cm3ze2z8XDHJoDXLOPe+p0mrdOObYESjzr2IZbbIy1MOJWIZW427+fCgWuO4KU
+ aetRf9KyD0fmrB8tHTXqdbWBsyeGOVmGv9kCe9jS8vlCROMMpvYwwruU1H3hNAam2+NuY48b151
+ AsJsKLGIE/COXplhfr3VrwthF+8+XrbF2FeXofxvTnwrl1GKLUy4kmBfDBd5Lo2TPThZ2wgqOkw
+ KQgCYZGKicy8kTRPT/vTfH3xDADXalWC0cf/yUUeSChpJzvUlaFoLZhPw9YNj5hTW07PoCLUHEf
+ DSlM5xoZp6RfdxuKSS0J0SYu3e0zD+lFHd2mHjR6wyrBxE9F3kQvMBpSJvU/aAzcw+JJJHINZZ6
+ f4VRzloIlS/WNCkKxCicNUIXcx1JPuVc5AHdSMiTmBBAqx0iyZn3iG76rm/NSXxnTNIcdfuEtNf
+ JavlerkRIJ7fSILmDY
+X-Received: by 2002:a05:600c:a05:b0:492:2c87:3d4b with SMTP id
+ 5b1f17b1804b1-4926fc3a645mr2130865e9.12.1782469118265; 
+ Fri, 26 Jun 2026 03:18:38 -0700 (PDT)
+X-Received: by 2002:a05:600c:a05:b0:492:2c87:3d4b with SMTP id
+ 5b1f17b1804b1-4926fc3a645mr2130295e9.12.1782469117813; 
+ Fri, 26 Jun 2026 03:18:37 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46f8d6f10absm1739431f8f.5.2026.06.26.03.18.53
+ 5b1f17b1804b1-49268fe949csm79304185e9.5.2026.06.26.03.18.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:18:53 -0700 (PDT)
+ Fri, 26 Jun 2026 03:18:36 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PULL 24/45] target/i386/mshv: expose mshv_get_generic_regs
-Date: Fri, 26 Jun 2026 12:17:27 +0200
-Message-ID: <20260626101748.1728079-25-pbonzini@redhat.com>
+Subject: [PULL 17/45] accel/mshv: update s->irq_routes in add_msi_route
+Date: Fri, 26 Jun 2026 12:17:20 +0200
+Message-ID: <20260626101748.1728079-18-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
 References: <20260626101748.1728079-1-pbonzini@redhat.com>
@@ -122,91 +122,175 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-We expose the fn, so we can call them from the other source files
-(msr.c).
+The irq_routes field of the state is populated with native mshv irq
+route entries. The allocation logic is modelled after the KVM
+implementation: we will always allocate a minumum of 64 entries and use
+a bitmask to find/set/clear GSIs.
+
+The old implementation of add_msi_routes will be removed in a subsequent
+commit.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260417105618.3621-20-magnuskulke@linux.microsoft.com
+Link: https://lore.kernel.org/r/20260417105618.3621-9-magnuskulke@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/mshv_int.h   |  2 ++
- target/i386/mshv/mshv-cpu.c | 15 ++++++---------
- 2 files changed, 8 insertions(+), 9 deletions(-)
+ include/system/mshv.h   |  3 +-
+ accel/accel-irq.c       |  2 +-
+ accel/mshv/irq.c        | 89 +++++++++++++++++++++++++++++++++++++----
+ accel/stubs/mshv-stub.c |  2 +-
+ 4 files changed, 85 insertions(+), 11 deletions(-)
 
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 0cf68d2879e..ac26bfafe48 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -80,6 +80,8 @@ int mshv_configure_vcpu(const CPUState *cpu);
- int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
- int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-                           size_t n_regs);
-+int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
-+                          size_t n_regs);
- int mshv_arch_store_vcpu_state(const CPUState *cpu);
- int mshv_arch_load_vcpu_state(CPUState *cpu);
- void mshv_arch_init_vcpu(CPUState *cpu);
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index e3f163ef630..a0a25cd2c05 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -111,9 +111,6 @@ static enum hv_register_name FPU_REGISTER_NAMES[26] = {
- };
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 1e9bcc1b0b6..d22f82982d0 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -33,6 +33,7 @@
+ #endif
  
- static int set_special_regs(const CPUState *cpu);
--static int get_generic_regs(CPUState *cpu,
--                            struct hv_register_assoc *assocs,
--                            size_t n_regs);
+ #define MSHV_MAX_MSI_ROUTES 4096
++#define MSHV_MIN_ALLOCATED_MSI_ROUTES 64
  
- static void populate_fpu(const hv_register_assoc *assocs, X86CPU *x86cpu)
+ #define MSHV_PAGE_SHIFT 12
+ 
+@@ -59,7 +60,7 @@ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint3
+                            uint32_t vp_index, bool logical_destination_mode,
+                            bool level_triggered);
+ 
+-int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev);
++int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev);
+ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
+ void mshv_irqchip_commit_routes(void);
+ void mshv_irqchip_release_virq(int virq);
+diff --git a/accel/accel-irq.c b/accel/accel-irq.c
+index 7e71b525557..5a97a345b23 100644
+--- a/accel/accel-irq.c
++++ b/accel/accel-irq.c
+@@ -21,7 +21,7 @@ int accel_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
  {
-@@ -171,7 +168,7 @@ static int get_fpu(CPUState *cpu)
-     for (size_t i = 0; i < n_regs; i++) {
-         assocs[i].name = FPU_REGISTER_NAMES[i];
+ #ifdef CONFIG_MSHV_IS_POSSIBLE
+     if (mshv_msi_via_irqfd_enabled()) {
+-        return mshv_irqchip_add_msi_route(vector, dev);
++        return mshv_irqchip_add_msi_route(c, vector, dev);
      }
--    ret = get_generic_regs(cpu, assocs, n_regs);
-+    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
-     if (ret < 0) {
-         error_report("failed to get special registers");
-         return -errno;
-@@ -191,7 +188,7 @@ static int get_xc_reg(CPUState *cpu)
- 
-     assocs[0].name = HV_X64_REGISTER_XFEM;
- 
--    ret = get_generic_regs(cpu, assocs, 1);
-+    ret = mshv_get_generic_regs(cpu, assocs, 1);
-     if (ret < 0) {
-         error_report("failed to get xcr0");
-         return -1;
-@@ -284,8 +281,8 @@ int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-     return 0;
+ #endif
+     if (kvm_enabled()) {
+diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
+index 82f2022c7c3..9d6bdde27ac 100644
+--- a/accel/mshv/irq.c
++++ b/accel/mshv/irq.c
+@@ -278,18 +278,91 @@ static int irqchip_update_irqfd_notifier_gsi(const EventNotifier *event,
+     return register_irqfd(vm_fd, fd, virq);
  }
  
--static int get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
--                            size_t n_regs)
-+int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
-+                          size_t n_regs)
+-
+-int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev)
++static int irqchip_allocate_gsi(MshvState *s, int *gsi)
  {
-     int cpu_fd = mshv_vcpufd(cpu);
-     int vp_index = cpu->cpu_index;
-@@ -434,7 +431,7 @@ static int get_standard_regs(CPUState *cpu)
-     for (size_t i = 0; i < n_regs; i++) {
-         assocs[i].name = STANDARD_REGISTER_NAMES[i];
+-    MSIMessage msg = { 0, 0 };
+-    int virq = 0;
++    int next_gsi;
+ 
+-    if (pci_available && dev) {
+-        msg = pci_get_msi_message(dev, vector);
+-        virq = add_msi_routing(msg.address, le32_to_cpu(msg.data));
++    /* Return the lowest unused GSI in the bitmap */
++    next_gsi = find_first_zero_bit(s->used_gsi_bitmap, s->gsi_count);
++    if (next_gsi >= s->gsi_count) {
++        return -ENOSPC;
      }
--    ret = get_generic_regs(cpu, assocs, n_regs);
-+    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
-     if (ret < 0) {
-         error_report("failed to get standard registers");
-         return -1;
-@@ -511,7 +508,7 @@ static int get_special_regs(CPUState *cpu)
-     for (size_t i = 0; i < n_regs; i++) {
-         assocs[i].name = SPECIAL_REGISTER_NAMES[i];
-     }
--    ret = get_generic_regs(cpu, assocs, n_regs);
-+    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
-     if (ret < 0) {
-         error_report("failed to get special registers");
-         return -errno;
+ 
+-    return virq;
++    *gsi = next_gsi;
++
++    return 0;
++}
++
++static void irqchip_release_gsi(MshvState *s, int gsi)
++{
++    clear_bit(gsi, s->used_gsi_bitmap);
++}
++
++static void add_routing_entry(MshvState *s, struct mshv_user_irq_entry *entry)
++{
++    struct mshv_user_irq_entry *new;
++    int n, size;
++
++    if (s->irq_routes->nr == s->nr_allocated_irq_routes) {
++        n = s->nr_allocated_irq_routes * 2;
++        if (n < MSHV_MIN_ALLOCATED_MSI_ROUTES) {
++            n = MSHV_MIN_ALLOCATED_MSI_ROUTES;
++        }
++        size = sizeof(struct mshv_user_irq_table);
++        size += n * sizeof(*new);
++        s->irq_routes = g_realloc(s->irq_routes, size);
++        s->nr_allocated_irq_routes = n;
++    }
++
++    n = s->irq_routes->nr;
++    s->irq_routes->nr++;
++    new = &s->irq_routes->entries[n];
++
++    *new = *entry;
++
++    set_bit(entry->gsi, s->used_gsi_bitmap);
++
++    trace_mshv_add_msi_routing(entry->address_lo | entry->address_hi,
++                               entry->data);
++}
++
++int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
++{
++    struct mshv_user_irq_entry entry = { 0 };
++    MSIMessage msg = { 0 };
++    uint32_t data, high_addr, low_addr;
++    int gsi, ret;
++    MshvState *s = MSHV_STATE(c->accel);
++
++    if (!pci_available || !dev) {
++        return 0;
++    }
++
++    msg = pci_get_msi_message(dev, vector);
++
++    ret = irqchip_allocate_gsi(mshv_state, &gsi);
++    if (ret < 0) {
++        error_report("Could not allocate GSI for MSI route");
++        return -1;
++    }
++    high_addr = msg.address >> 32;
++    low_addr = msg.address & 0xFFFFFFFF;
++    data = le32_to_cpu(msg.data);
++
++    entry.gsi = gsi;
++    entry.address_hi = high_addr;
++    entry.address_lo = low_addr;
++    entry.data = data;
++
++    if (s->irq_routes->nr < s->gsi_count) {
++        add_routing_entry(s, &entry);
++        c->changes++;
++    } else {
++        irqchip_release_gsi(s, gsi);
++        return -ENOSPC;
++    }
++
++    return gsi;
+ }
+ 
+ void mshv_irqchip_release_virq(int virq)
+diff --git a/accel/stubs/mshv-stub.c b/accel/stubs/mshv-stub.c
+index e499b199d9d..998c9e2fc6c 100644
+--- a/accel/stubs/mshv-stub.c
++++ b/accel/stubs/mshv-stub.c
+@@ -14,7 +14,7 @@
+ 
+ bool mshv_allowed;
+ 
+-int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev)
++int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
+ {
+     return -ENOSYS;
+ }
 -- 
 2.54.0
 
