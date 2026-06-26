@@ -4,144 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE2BC43327
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 15:30:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5175DC43211
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 15:32:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd8V6-00045A-W2; Fri, 26 Jun 2026 11:29:53 -0400
+	id 1wd8XC-0004jC-9s; Fri, 26 Jun 2026 11:32:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wd8V4-00044Q-Vg
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 11:29:51 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wd8V3-0001p3-Dt
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 11:29:50 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65QF44kb1778585
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 15:29:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- /Mt9hFtwPTr0LdIXbJIGTvpEqMeI5bFCXbQcnpNX2PI=; b=pntkHo+orSjX2LEw
- Gku9lsFj0vqMgYyPhaMtjgw3LuM8I6+903Y+r5Oq/07diS0ozlvXbhsWR66wxb9Q
- /6IQJ4Bop4uv0WYwDZwWnLbZAG8OOnXVQ8txBvDArzVIjTxR7UH63NVqvhQDqQfs
- E0fOGPqirdegc4NNxtGmwIFBfpWtA6n9x2YBSKmUGEVatz2FFy+7ChUnCbNT9Nan
- JwTVUr5XAYVvC2PzppsJV1Csm+DMlCMVHXVFs3Ri6S6/WPbLaAyqZHYt3PaOWrKm
- 80Yq+t3TB3+hP+nUrdrhOM1lx3/OZEEqO59NWuYh83UNVVTf8OHy0KSxAEyJiLrC
- A70ifA==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f1tc3ge35-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 15:29:47 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-30c42d96713so829388eec.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 08:29:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wd8XA-0004i5-6o
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 11:32:00 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wd8X8-0002T9-Oo
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 11:31:59 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-845c92bc464so520831b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 08:31:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782487787; x=1783092587; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782487917; x=1783092717; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/Mt9hFtwPTr0LdIXbJIGTvpEqMeI5bFCXbQcnpNX2PI=;
- b=ES1TGYLY22Kj13BPyM2YpMvTFl9twGPOCF4erTAHOPauQjwxvdE57FY53GaM7XWCZE
- McGniwrES30NY0tG4y7oYfeAG/dtOvZH98yS4FSNf/4NN0yh6sfNU3G2sBKWEkK8Q+lm
- q8jALHLOwugJ8fqDr7z4Z4c7byZDKxcTTCvqt7SingI+cUiT3Uey6nEgXYPqS4GTvh3K
- Cd2kB9I5o9QKqj0mZ49QRYd8Wz6RDBlMp8DxjSY3ME56tiGaFYg7tVvdem/3zLzwVFpX
- du2YoK7pMn2wyqkYrXk8fBY8WGJN+wPc+85NtYiqf3IS0bkKM3SCcictZNMTe4aEH7E0
- H9Hg==
+ bh=SIwa7oCaPMrO6inDR3f78bRtgOOwmwY26YIu8SifTbQ=;
+ b=IGrB6nUcM1BU/oar9/U/NXCKfw4uMh5/W7heViuTTiMU1yMo1o70LJJyAV7fAl9xS4
+ hs3M8TlE/PQjRUosPJIZ2gIjvF6v7RgIwIWu1YUQkHHytuqt9hbdV9/h7yJB0T6q9TKx
+ meJn4jJ8WrfkfjPP4oTI7SNWC6/8TKC6X0PVwCDQ8s6hazrBvHTLjkF3IZ5N+FPhnafB
+ RPhssfOZ6PWfJgL8Hkziexw9+6sCpTJV9Fl5Bd3/bSUjXhu99adMg1Ucl6hgfYKL0H5C
+ CgH+B9PvapG2WOzkP7XXmZj8Q9B/biahixgbn0yegPzEESdG2U5ceozLxpVUAEQh3Ll5
+ bvXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782487787; x=1783092587;
+ d=1e100.net; s=20251104; t=1782487917; x=1783092717;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=/Mt9hFtwPTr0LdIXbJIGTvpEqMeI5bFCXbQcnpNX2PI=;
- b=Zq0xSxUixhXmVuFZ/y+4w3Il5Fr4vAhQBfouD/J13EsX4VvUTPsATLs1tu3xcadbhU
- 6oeYdc7g+61hkotiTbQ723jSfhbu1DHWI7d49ioPpOv2dHKVtcatpVeed87B9701V1NN
- dfOKEUgor/A9ywPOt1LgXosWK/yhM9zIXaPx59VwlaL8DAwEF7tIC+SLzp1vKluO3iz6
- 8kdR1YGlT0CFCpcDgJFrbFCOQuU48A579gYAZ783y5OK4FmdmdSA9OiQ4mwodjr3cQA+
- kmUqWz6tqTXgKM/tp6gegZL8AtChozlpPjjrrHe5sLA9Qqn0XVIUxp8YvL9UL55NFK/y
- 0oYg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rq8S4sSvnMl714cYhdULJtpI3eFkKHv8RupA9RxJl8m+aVwCY8mUCJq7werR9py3fbQs74irUVmmNe1@nongnu.org
-X-Gm-Message-State: AOJu0YzhZxjCMS9f8S9eW7qHdw3RftjAZAcNkEMJ81G/47tSxl9rp+la
- x+LrI2NxhPi+zuU1p1USHiAqX0+J7M8Y2u148r9MWToLxKS9SwT08SdlwyIxaLkKS8fu23QBPc0
- eNMWSIyxmqlJDPjvYcqKTlDKMlOItiJptlp0unO/xOSUtzdCzauRuWIMrIQ==
-X-Gm-Gg: AfdE7clp/Zfn86MAOMdDJO1XiumoD/CuvpYxEGI2xWen7CywnVzauVRaQVWY19EywxB
- trQv7ftYTj8a1ISb4du1tDyoGf0YcAz7V2lJKqUkJeY64FEUwzeZu3+upsZakYPQmzkmnjMT9Ss
- M9Htr8dULA2SzgUCu2gEqYSE1laH633/8+0EDNmYdx/x3PLF4Y5+VprOBpQ7Mvq3L+7mIyml1gt
- jNVbd5m5mn9RW+kSrPFj+L9z47cJj1hI6lmS3yRUFB6+XmfHc0RlvvaMO6FwmXOTuR3apx+I2TF
- bqHvmrpREwoFW6kPzt7sVbhfJCCBMuqDkKVHg3mp+8exFZUQTg1r44qcPNi9WnpMiIJmHqMTD4h
- 4tSA8IcDrye6F9X6tZsQTCqcMrCVgnHvGoaPj6yF/dO+Sh2szLZpSC+6SnEFGp26J4de08M9r1A
- KlJ88=
-X-Received: by 2002:a05:7300:c8d:b0:30c:ab4f:9ba4 with SMTP id
- 5a478bee46e88-30cab4f9f96mr607597eec.44.1782487786627; 
- Fri, 26 Jun 2026 08:29:46 -0700 (PDT)
-X-Received: by 2002:a05:7300:c8d:b0:30c:ab4f:9ba4 with SMTP id
- 5a478bee46e88-30cab4f9f96mr607572eec.44.1782487785929; 
- Fri, 26 Jun 2026 08:29:45 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30c7c8b1ae5sm21211581eec.16.2026.06.26.08.29.44
+ bh=SIwa7oCaPMrO6inDR3f78bRtgOOwmwY26YIu8SifTbQ=;
+ b=Uf2rRSaDwOVyQiDTRUky0Ys8ZzepItfgNrwMBcT2LV3zJ/RFXsNmw0/+HnvF8iUN2o
+ 7iOwwvDY3/W7ACC28JT+DCiTIGw2S3hg7TxkK/6yr0Wl9wQQYKJmgrOF3+IA4FxixvK+
+ benN+sNSZz2npECleYTxl0Sun/sZQTgd5pOZjswbUQHjQ7oadpGym9vuhKQ6GxvRpLQq
+ 2TWRgnHYcZwa1geGEKqtmbkX1g1xurFmGZMVRhjP5U/wC9eg08iIs8TnPc71+PpNWXeb
+ UOC06+TFbYeB0gobYHlVAvgShHeKn1+q50Uxg4pQOygav1Y75v14yR1PsfoMBw0E9plE
+ +N/Q==
+X-Gm-Message-State: AOJu0YwMI74rDttzO7wT/RgRfpL8OLh6EGJjk1A2MEP4qX/ZFUjTAXfa
+ 0i9reJJzPK3frCHvho6OovddJXruAXA9JkpjcWaYbj4H8L94+Xsr32Q19f+l8Bg0a+0=
+X-Gm-Gg: AfdE7ckI/xIvQm78e3aAAnUX5IkZqF95OwvkL57sAyq3nOdKEglee5x7ttBst4deefm
+ 6Jl432aDK9+HqIn/iOzyIeqTjatfPjvYKVLA/KcG5iaezdDgBX/2D31zQ0uqS+clgg+jqF45dpp
+ 97TM0itwrF5v7SA2Nol38dgxDfwZ+9YNV3cv8a2wI3sRVPNi3uYbGNQCsEuuvA+fHMyebsTZ11u
+ r0peW32XH5UNQIOHSM37m5hAZo89s/rEkyWGTRIaKimWQWO9H6mPyIYIqdOEmP9kneIhanPt4pf
+ I3+VQ1wGaijrUYlkm63RFqf1ZwWDibASGB4/Iym6c1dF2GZh9XCe8fwdxJy9sh2TMREeYzFdbdt
+ vFIo2bleEBx4huV8CUaXfBgNTmsdbvaXjKRALfeEV/rTq4XjMaIaQ7udlCtBDnA3uYhzNarBGsd
+ qw4hqtZlU4/lr7bdqDUoOk/SJ6ZMgRl6wzGMfy26h6zZDMnLY2o2HcK3it+Q==
+X-Received: by 2002:a05:6a00:181d:b0:842:21f0:5113 with SMTP id
+ d2e1a72fcca58-845b3b8e2ebmr8206397b3a.24.1782487916725; 
+ Fri, 26 Jun 2026 08:31:56 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-845a3ec0ec9sm6900385b3a.0.2026.06.26.08.31.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jun 2026 08:29:45 -0700 (PDT)
-Message-ID: <7b30ce63-6387-4e0c-a883-ffd56eca032e@oss.qualcomm.com>
-Date: Fri, 26 Jun 2026 08:29:44 -0700
+ Fri, 26 Jun 2026 08:31:56 -0700 (PDT)
+Message-ID: <9d819962-caf2-4ebd-a72c-84c83c68b7e5@linaro.org>
+Date: Fri, 26 Jun 2026 08:31:54 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/6] gitlab: expose more info about CI runner
- environment as artifacts
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260624124657.2725376-1-berrange@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH] target/arm: Implement and enable FEAT_SSVE_FEXPA for -cpu
+ max
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20260625224723.766270-1-richard.henderson@linaro.org>
+ <CAFEAcA_LE9O0Ax0AKnsJi-7FAxfmcLxxSYrOTUU-VYmgJEaKEA@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260624124657.2725376-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: tMOEVoMuKHe0WlwVpfiLe9_73mGa5yQt
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI2MDEyOCBTYWx0ZWRfX/A+d2XByz8JR
- jswabjeMdQZxkSlnyfqL9cnpVg83cgviq9apxUDpSa7pxrWNk5T+SHqyB7PgaM5SiQ/SYOoSFJ+
- j4M6UxEUOhFWnNdX6gi0oQvpgTmlf64=
-X-Proofpoint-ORIG-GUID: tMOEVoMuKHe0WlwVpfiLe9_73mGa5yQt
-X-Authority-Analysis: v=2.4 cv=T4m8ifKQ c=1 sm=1 tr=0 ts=6a3e9aeb cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=p0WdMEafAAAA:8 a=E-M4pueumD7XbDzm_F8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI2MDEyOCBTYWx0ZWRfX6ZlNWqhQVvYE
- //6WeKPCVtgXriXKde2LN1Rnn6UGcn+05FitGHeRIfiYjjeMno1IiABvrwmUmnBbYE0rP6gO8d2
- h2orY8nw/BqEJoLP8rzOOFHI2ktWTEV0YNQByH9Ec3dNrDcMiXevYJ4JKTw6WpVLhSL/XeP9O4I
- uo4vuD2QPzSfZAoTfPhol8W/FW7V22UHEV4u5rsk+ecF7vSoS3SyZVAP4/Kg8aW1xcuGhXV80bG
- /oZJNp8SWrVvsap4rVVps9OoWkbpEce7vI1B2+zWBSTzoqLswQC2pFvFVw/gm1I2gP2pCt5mZ5+
- Z+46LWgZ40kB5Q5l0T8Al369bJV+KgNWZbxgdjdp+hSgoCVshI4Mg+ixmbcxNGDM3lXi0RnWTJ3
- 49Ud9/OoqAUt7WtfS5VlQB2DDfQQScCgh/zkAiytllrtOLXJM35mU3pHtUGqx9ZWTezIPWuasAA
- e/xu1a2Wiqddi3wK5zA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-26_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 impostorscore=0 suspectscore=0 lowpriorityscore=0
- spamscore=0 malwarescore=0 priorityscore=1501 bulkscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606260128
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <CAFEAcA_LE9O0Ax0AKnsJi-7FAxfmcLxxSYrOTUU-VYmgJEaKEA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,38 +104,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/24/2026 5:46 AM, Daniel P. Berrangé wrote:
-> To repeat the commit message from patch 6..
+On 6/26/26 02:31, Peter Maydell wrote:
+> On Thu, 25 Jun 2026 at 23:48, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > 
-> This captures the mount list, CPU model, memory information,
-> device node lists, kernel info, user identity and all environment
-> variables. For more details see patch 6.
 > 
-> The first 5 patches are all refactoring of the job templates to
-> reduce redundancy, so we have more consistency across jobs with
-> less code.
+>> --- a/target/arm/tcg/translate-sve.c
+>> +++ b/target/arm/tcg/translate-sve.c
+>> @@ -1373,7 +1373,7 @@ static gen_helper_gvec_2 * const fexpa_fns[4] = {
+>>       NULL,                   gen_helper_sve_fexpa_h,
+>>       gen_helper_sve_fexpa_s, gen_helper_sve_fexpa_d,
+>>   };
+>> -TRANS_FEAT_NONSTREAMING(FEXPA, aa64_sve, gen_gvec_ool_zz,
+>> +TRANS_FEAT_STREAMING_IF(FEXPA, aa64_sve, aa64_ssve_fexpa, gen_gvec_ool_zz,
+>>                           fexpa_fns[a->esz], a->rd, a->rn, s->fpcr_ah)
 > 
-> Sample pipeline showing the new 'ci-runner-env' artifacts in jobs:
-> 
->   https://gitlab.com/berrange/qemu/-/pipelines/2626072516
-> 
-> Daniel P. Berrangé (6):
->   gitlab: remove unused .cross_test_artifacts template
->   gitlab: move .meson_job_template into base.yaml
->   gitlab: use .base_meson_job_template from crossbuild jobs
->   gitlab: pull ccache setup into .base_meson_ccache_job_template
->   gitlab: pull before_script logic into .base_meson_job_template
->   gitlab: greatly expand captured info about CI runner environment
-> 
->  .gitlab-ci.d/base.yml                | 48 ++++++++++++++++++++++
->  .gitlab-ci.d/buildtest-template.yml  | 58 ++++-----------------------
->  .gitlab-ci.d/crossbuild-template.yml | 59 +++-------------------------
->  3 files changed, 62 insertions(+), 103 deletions(-)
-> 
+> The FEXPA feature gate also changes to FEAT_SVE || FEAT_SSVE_FEXPA,
+> so I think we need the second argument to be a new feature
+> check function aa64_sve_or_ssve_fexpa.
 
-This was merged into master (8f1d3b586f1265023f75ea9c227c35d463321aef).
-Thank you for your contribution!
+Oh, right, for the !SVE case.  Thanks.
 
-Regards,
-Pierrick
+
+r~
 
