@@ -4,97 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F6B2CDE008
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 04:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AE4ECDE010
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 04:42:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcyMU-0003og-E2; Fri, 26 Jun 2026 00:40:18 -0400
+	id 1wcyOr-0004Mp-Jw; Fri, 26 Jun 2026 00:42:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcyMI-0003gh-98; Fri, 26 Jun 2026 00:40:10 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcyMA-0008Hk-99; Fri, 26 Jun 2026 00:40:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782448775; bh=TZ+aVoIkEJJoVcjiO3lKcj+Mi0eREwHsrF86jnXOvdk=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=c99XtgS9DTsAy7tyYUMkwMRvycNn+9sKy7YlwTAFYXVJcXwrMDZAeLvealvz2n/tS
- H8bj3a2vO26KzqrlBZ6Szu+SndnqAO0PhrVSRHBYN2ryG4vYZxfg8BdV/qLOy2hZ8b
- Dd3P42Wcd65bhb9zZZQidiXk8HkelPDqwnToyBlEK0Vc9mLrMBdrSf+I2qvB1Mrppz
- XWPYSGvqPwVBwOqIxs+/idCMTAg0OqGoeEhtyHStWIUQCVk7IzbECgJjtp9a5EEt22
- iLwXwApmiPkMzKDPyz/IzTYN2U/U4sEQfWbrqIb0jdRtnFMiuY9Yx6ZuIqBNyezaZz
- //seUJ4/rmmwQ==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 515771BB31F;
- Fri, 26 Jun 2026 07:39:35 +0300 (MSK)
-Message-ID: <b6a3bef4-00f8-4fbf-9763-8fb6c5ec8b91@tls.msk.ru>
-Date: Fri, 26 Jun 2026 07:39:43 +0300
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wcyOn-0004Jj-SN
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 00:42:42 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wcyOm-0002Nj-AT
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 00:42:41 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-69531108f25so933418a12.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 21:42:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782448959; cv=none;
+ d=google.com; s=arc-20260327;
+ b=j5kD8AHybBJfIa66iBu/uglHyPQ21L9+UqsbFScmF36DaNdbJ7JtXiVW9zgmNdHOzr
+ FTLVOnkCfs7kXWAkZ4LevcyDEcfxGZz3ojIWJ8WYqAtrrQ5PrXlPSaYfl6AjRSxs973H
+ md9ul2kpRVm6vYekIX6jZOtNDCiEAoyh4rTQ54qL79UnSoJ+lunw3VZ5mr5erJMIkU2B
+ 05jE3jxdsBZAhjPB9bGMrEsjnsjhXR27HniUZ7G423Hkxp8EXOGnfJSj2Iwf/hAFCmun
+ DYdvtX036EfNtja/V8Oacagk6gjeCbXnsOl6voIwbE4e4Fyn7Jx9VA/304FSOq8b4vg5
+ Zhuw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=YgUtXqNn5UCD0dFZ+zBsrLNWHo7j6OwA5fqXZ0ecAJU=;
+ fh=2s0MttjKBC7//6BVZfOXp5B7TsNCE9/dD5tTB67EQLU=;
+ b=svlIerQOV4NoK+0Fj2Bs0V8sciTHm5Hh1sPo9goculkEEmY86cPecBljBtqJ8Hig4/
+ Yng6bAWTPep0RjHpNT3oOJl5qHnfG+6hfj83cbFQJSitVwjDeULhw+PF56hwwAnwDYBx
+ sXrERPutjxWtft9NG/MW9g1UUEyZFjAe0j9/8FYpiWdKYbfON+pPDfkqo6T39BUl9uZW
+ 120RwXqDDCgxBDpGG8YXtSoizSj5Z3LPQDDzy4t8uimDHzL8h4obzBcjhLIjGLMNUN2L
+ nepOFOSe79I6+0x09zPaIrXF0KuzuDu8cQZO2ZbjKmyMusXNdDz/J50mK0S3Ij5/VW39
+ JbPw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1782448959; x=1783053759; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YgUtXqNn5UCD0dFZ+zBsrLNWHo7j6OwA5fqXZ0ecAJU=;
+ b=l/EcMb3O7FcNWADYEt0j8m+qmEYI1w0uUi1tJg0ts0fw96f6Ji03sSTfVdJ7Hnzvtq
+ lCHLQvEE2Th97TXZudswgdPI5cYukeY8h3eTL+fsNWuNnOgnigA192Rw9eihI0n8KVgP
+ lA7pVDQ8+XRK1l/P+8/ocVVC7OAUHDV33vHtibmdrnDVkqL7mN+joo86lE7dDAUFpvMV
+ +Vs5HEkh9J5wSQIxv4p/Mw9t43in90fdHnaqhXjPUU3RMpiFgXdLfMNF3PsWr1s8htPZ
+ EN7UE4hH14zZi/h+IzbYMIc8aW4v62TbaSWA/gKVxbtfAD7Rub9npGY2j+9/U/R3jYXV
+ 5l+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782448959; x=1783053759;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=YgUtXqNn5UCD0dFZ+zBsrLNWHo7j6OwA5fqXZ0ecAJU=;
+ b=MqxRr+dZaF4kQefg39x5QOgdVsah/fisgK/onSU41K2UDhMGgkrhhSrlYstisbIuHv
+ q2odOyHKNZduFH9pc2nYMIoVA70eXpFi7dN5ahOJT7dVOcLef2omhd1pVUAzCjbKSsgo
+ lqTAfZTNfLfMSWoVtvRFjnu/dSq7/+R4NJbkFhEsUc2r+oKhxaNJqsMC9TeLpqmeBdZN
+ 7gyLnoHbMPwL3aXBVq7SVXxF/IFYRD0C3uJ3C4jtixHDZLBk9FFkQGKu9OMmpi0wC9op
+ RmCtxkQ30krp+knin/Y9tCS/u7yRw0E6LuAbmIhkpvj8AUHXZmhn828T2nPYHk6UYQZ6
+ MbUw==
+X-Gm-Message-State: AOJu0YwxYMvQCH61ysOUOngyCCI5BjxqE3zMEbm+ddLxRcZO4uUllsAA
+ Mze/XPgMINuQyWqfVzHA4hTs0U2ryHiy5hCXEdEuO1yE/E9SVdrTm6joyUj00trwfT3AR0abAUj
+ 2PlqAXOPJ9PYw/GLFy6Ghu59Y1xkIy8Y=
+X-Gm-Gg: AfdE7cmQ+mFLbmKnCnuIsK1iLBp8t1W6qaUjz5bpOPfLmTIMipYR5zC1jRJM/ocb+IP
+ 2W3xI80LNkWR5gHQ2XiNG/LVffDH1jP968LeYYUWx6vYi8cpB9usRWD195AFffFoKB8Rdbt1ufw
+ ajFUaO/jsqNCq5Abf3Ioe5Kk/HZXDe0J30DMhuyh+YOlf25SIYBHovUpxgyk2sYejIgK5wtVR7q
+ Sv9kwZIDIsJXlEdIMgUW/LcJzcmyRTXmO9tO++C55f2NttgHAgAM5ELbkeFvGJkPZFhyQag7CoC
+ 7DfotRjbEjX+1nygSUFa5xmCzatZ5vapMJKrDQ==
+X-Received: by 2002:a05:6402:254e:b0:697:ee73:386d with SMTP id
+ 4fb4d7f45d1cf-69810b60d79mr1130107a12.17.1782448958508; Thu, 25 Jun 2026
+ 21:42:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GIT PULL 01/35] ui/gtk: fix bad widget realize on non-GFX VC
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20260624-ui-v1-0-482147b0a7af@redhat.com>
- <20260624-ui-v1-1-482147b0a7af@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260624-ui-v1-1-482147b0a7af@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+References: <20260625210833.3294437-1-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260625210833.3294437-1-daniel.barboza@oss.qualcomm.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 26 Jun 2026 14:42:11 +1000
+X-Gm-Features: AVVi8CcTm76-40JVciQA92N6dGHHvc6Nnsl8teDObFsoLkQhja312ips0xMeMug
+Message-ID: <CAKmqyKNNXAX4itYHg5fkeahHDBWJfEfJsYf8BU68x4oJ+rLm+Q@mail.gmail.com>
+Subject: Re: [PATCH 0/2] hw/riscv/riscv-iommu: gitlab3576 fix
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
+ andrew.jones@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,41 +118,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.06.2026 14:41, Marc-André Lureau wrote:
-> The GTK VirtualConsole is a union, it may be .gfx or .vte depending on
-> the type.
-> 
-> Fixes: 565f85a9c2 ("ui/gtk: force realization of drawing area")
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Message-ID: <20260623-b4-ui-v4-1-4656aec3398d@redhat.com>
-> ---
->   ui/gtk.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
+On Fri, Jun 26, 2026 at 7:09=E2=80=AFAM Daniel Henrique Barboza
+<daniel.barboza@oss.qualcomm.com> wrote:
+>
+> Hi,
+>
+> Here's a somewhat trivial fix for gitlab3576.  Patch 1 is something I
+> decided to send because I got misled by regs_rw.
+>
+>
+> Daniel Henrique Barboza (2):
+>   hw/riscv/riscv-iommu: rename regs_rw to regs
+>   hw/riscv/riscv-iommu.c: make FCTL.BE read only 0
 
-Is it a qemu-stable material?  It feels that way, I'm picking it up,
-please let me know if I shouldn't.
+Thanks!
 
-Thanks,
+Applied to riscv-to-apply.next
 
-/mjt
+Alistair
 
-> diff --git a/ui/gtk.c b/ui/gtk.c
-> index 4f706c6bbb2..2ee826b56fb 100644
-> --- a/ui/gtk.c
-> +++ b/ui/gtk.c
-> @@ -2585,7 +2585,9 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
->           if (!con) {
->               break;
->           }
-> -        gtk_widget_realize(s->vc[idx].gfx.drawing_area);
-> +        if (s->vc[idx].type == GD_VC_GFX) {
-> +            gtk_widget_realize(s->vc[idx].gfx.drawing_area);
-> +        }
->       }
->   
->       if (opts->u.gtk.has_show_menubar &&
-> 
-
+>
+>  hw/riscv/riscv-iommu-hpm.c |  4 ++--
+>  hw/riscv/riscv-iommu.c     | 40 ++++++++++++++++++++------------------
+>  hw/riscv/riscv-iommu.h     | 26 ++++++++++++++-----------
+>  3 files changed, 38 insertions(+), 32 deletions(-)
+>
+> --
+> 2.43.0
+>
+>
 
