@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5175DC43211
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 15:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD4DDC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 15:33:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd8XC-0004jC-9s; Fri, 26 Jun 2026 11:32:02 -0400
+	id 1wd8Yb-0005Bl-K6; Fri, 26 Jun 2026 11:33:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wd8XA-0004i5-6o
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 11:32:00 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1wd8YZ-0005BR-Rl
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 11:33:27 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wd8X8-0002T9-Oo
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 11:31:59 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-845c92bc464so520831b3a.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 08:31:58 -0700 (PDT)
+ id 1wd8YY-0002c7-F1
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 11:33:27 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-37f816d01e3so311177a91.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 08:33:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782487917; x=1783092717; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782488005; x=1783092805; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SIwa7oCaPMrO6inDR3f78bRtgOOwmwY26YIu8SifTbQ=;
- b=IGrB6nUcM1BU/oar9/U/NXCKfw4uMh5/W7heViuTTiMU1yMo1o70LJJyAV7fAl9xS4
- hs3M8TlE/PQjRUosPJIZ2gIjvF6v7RgIwIWu1YUQkHHytuqt9hbdV9/h7yJB0T6q9TKx
- meJn4jJ8WrfkfjPP4oTI7SNWC6/8TKC6X0PVwCDQ8s6hazrBvHTLjkF3IZ5N+FPhnafB
- RPhssfOZ6PWfJgL8Hkziexw9+6sCpTJV9Fl5Bd3/bSUjXhu99adMg1Ucl6hgfYKL0H5C
- CgH+B9PvapG2WOzkP7XXmZj8Q9B/biahixgbn0yegPzEESdG2U5ceozLxpVUAEQh3Ll5
- bvXw==
+ bh=TY4VJnVWbgwM9PZOPKlVWdkQ9UB0qMHBSCt7DLzJlVA=;
+ b=sHFih14lRrV3WT3TG7ORAd41R0eFtNebzriB/HOCI8WGoW0gGReLtfRogkDdX+orsJ
+ +8EzEb48cGNTbcQaYzut/xfdCDhAYIFrIqhWhdoSHFFkiHNd1UG1v2M6wCBcjPrf0j8q
+ J8qeVs99jrV5nAgNZko1hrawB1oYQ22LqxKyD3h5dV/NECqX76442jlmtu+DSgPzBs1H
+ z7/+wv8i1iAL2B0jUlH9p/KAgQh3bjylsw4xG3GxeVNECPGB2DLhw/qH2TpJn0m2xrgK
+ w/A/XvvdkBxFnV0nuQPRCHYox8i4pQqZfHyGAPRMlECXSfWr2siICK2mPbotXqXZf8TM
+ ++0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782487917; x=1783092717;
+ d=1e100.net; s=20251104; t=1782488005; x=1783092805;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=SIwa7oCaPMrO6inDR3f78bRtgOOwmwY26YIu8SifTbQ=;
- b=Uf2rRSaDwOVyQiDTRUky0Ys8ZzepItfgNrwMBcT2LV3zJ/RFXsNmw0/+HnvF8iUN2o
- 7iOwwvDY3/W7ACC28JT+DCiTIGw2S3hg7TxkK/6yr0Wl9wQQYKJmgrOF3+IA4FxixvK+
- benN+sNSZz2npECleYTxl0Sun/sZQTgd5pOZjswbUQHjQ7oadpGym9vuhKQ6GxvRpLQq
- 2TWRgnHYcZwa1geGEKqtmbkX1g1xurFmGZMVRhjP5U/wC9eg08iIs8TnPc71+PpNWXeb
- UOC06+TFbYeB0gobYHlVAvgShHeKn1+q50Uxg4pQOygav1Y75v14yR1PsfoMBw0E9plE
- +N/Q==
-X-Gm-Message-State: AOJu0YwMI74rDttzO7wT/RgRfpL8OLh6EGJjk1A2MEP4qX/ZFUjTAXfa
- 0i9reJJzPK3frCHvho6OovddJXruAXA9JkpjcWaYbj4H8L94+Xsr32Q19f+l8Bg0a+0=
-X-Gm-Gg: AfdE7ckI/xIvQm78e3aAAnUX5IkZqF95OwvkL57sAyq3nOdKEglee5x7ttBst4deefm
- 6Jl432aDK9+HqIn/iOzyIeqTjatfPjvYKVLA/KcG5iaezdDgBX/2D31zQ0uqS+clgg+jqF45dpp
- 97TM0itwrF5v7SA2Nol38dgxDfwZ+9YNV3cv8a2wI3sRVPNi3uYbGNQCsEuuvA+fHMyebsTZ11u
- r0peW32XH5UNQIOHSM37m5hAZo89s/rEkyWGTRIaKimWQWO9H6mPyIYIqdOEmP9kneIhanPt4pf
- I3+VQ1wGaijrUYlkm63RFqf1ZwWDibASGB4/Iym6c1dF2GZh9XCe8fwdxJy9sh2TMREeYzFdbdt
- vFIo2bleEBx4huV8CUaXfBgNTmsdbvaXjKRALfeEV/rTq4XjMaIaQ7udlCtBDnA3uYhzNarBGsd
- qw4hqtZlU4/lr7bdqDUoOk/SJ6ZMgRl6wzGMfy26h6zZDMnLY2o2HcK3it+Q==
-X-Received: by 2002:a05:6a00:181d:b0:842:21f0:5113 with SMTP id
- d2e1a72fcca58-845b3b8e2ebmr8206397b3a.24.1782487916725; 
- Fri, 26 Jun 2026 08:31:56 -0700 (PDT)
+ bh=TY4VJnVWbgwM9PZOPKlVWdkQ9UB0qMHBSCt7DLzJlVA=;
+ b=QD5rpqYMDWx1sUkGOBTJJgftPlyRUwmpA1QUrdRL+TLXCUjHiFATIghHgTjUaO0mEq
+ 0m4E2eITRtl/hiBQQuUT9vvUn22AANbAxweeXdsCe5HLo9Qq+HHmSwNo+YBxR1BuXbFV
+ GuHPioD6nEmOmMP3EMzL0MSm+E2uaPziCJRKS06q0Amwl8y42J6Q/Hhl+M/iNPXUtI4A
+ 6owrq6zYAGWI/E1hzkABgfE0XUJZQuVZLhYR/d3kk/LXlpyswR8jq+DCItUWbbR5hTKg
+ LkLjN3wLGt9t6yaTwjgXK2QnXeKQStwTHrA9JbRODpo15FYELJrEO7UTr/rMq2arH52w
+ LoLg==
+X-Gm-Message-State: AOJu0YxLkmZqoS4Vo64wOngBTgOLI1TvTLv+yT4YqwBBgt5U+Svz6T8D
+ /cG0JMgluWvaEcswfQaWnUvfbHazSXSJ7ywrPf5kN6yDe0t3GEuJcxAHv7JlXE+isdk=
+X-Gm-Gg: AfdE7ckEgwM8pBh3clF0jaOeRLpd7yaFl6sNy/j4DGOTymUHcqtnBXkrodf45AupSoL
+ EwhSFHGtODlVID8HEkETlsEB8yGqKvuJPHQ7Qo+lKDfgFsj5VhoX7mtBDJMLyinlgD/Qlhkon3P
+ k65U+OIQmmOdG2enn4cbHD3URavIsVVB0vPQPfSjkiXz2K0gowQsnQiP2XSS0CgLq+nWgxjf9jk
+ LkYguaA/rjPPvETokJ1vWH77I+lxRIXsIpvpXMtkK7jyiavlPPBGZju59bQIRg2PZkCgrBvmVdc
+ LCZJ415RS+asX84CWHloti2mcDhdoOt+FMEG0Udyp3v8Cs6SuhNL8DhrboJoENLs6OoS8zX/0vj
+ 1/NLQ2UW/57OwMEABd3vJUz+mj9cR0kAZx9VTm4RMA1WX8Xy4xxoE+ePjJVbRv+wIbe7qmXckce
+ mZbRZdLhIySZgxXyWSJqOYMVTkrXZLSV3QC16uX7Hqw0AZVj+RwuxW7q0uwA==
+X-Received: by 2002:a17:90b:134c:b0:37c:e729:27ce with SMTP id
+ 98e67ed59e1d1-37dfa1bca8amr6903400a91.10.1782488004532; 
+ Fri, 26 Jun 2026 08:33:24 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-845a3ec0ec9sm6900385b3a.0.2026.06.26.08.31.56
+ 98e67ed59e1d1-37e12c9229dsm772117a91.1.2026.06.26.08.33.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jun 2026 08:31:56 -0700 (PDT)
-Message-ID: <9d819962-caf2-4ebd-a72c-84c83c68b7e5@linaro.org>
-Date: Fri, 26 Jun 2026 08:31:54 -0700
+ Fri, 26 Jun 2026 08:33:24 -0700 (PDT)
+Message-ID: <ba12bbcc-5801-40ad-b710-f834128816c7@linaro.org>
+Date: Fri, 26 Jun 2026 08:33:21 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Implement and enable FEAT_SSVE_FEXPA for -cpu
- max
+Subject: Re: [PATCH 09/10] target/arm: Implement FVDOT (FP8 to FP16)
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20260625224723.766270-1-richard.henderson@linaro.org>
- <CAFEAcA_LE9O0Ax0AKnsJi-7FAxfmcLxxSYrOTUU-VYmgJEaKEA@mail.gmail.com>
+References: <20260625015159.719300-1-richard.henderson@linaro.org>
+ <20260625015159.719300-10-richard.henderson@linaro.org>
+ <CAFEAcA9fCEyLoDvYA2JR30+7ZGaN_t_taRK01gb9y4k4NNe8HA@mail.gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <CAFEAcA_LE9O0Ax0AKnsJi-7FAxfmcLxxSYrOTUU-VYmgJEaKEA@mail.gmail.com>
+In-Reply-To: <CAFEAcA9fCEyLoDvYA2JR30+7ZGaN_t_taRK01gb9y4k4NNe8HA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,28 +104,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/26/26 02:31, Peter Maydell wrote:
-> On Thu, 25 Jun 2026 at 23:48, Richard Henderson
+On 6/26/26 02:27, Peter Maydell wrote:
+> On Thu, 25 Jun 2026 at 02:52, Richard Henderson
 > <richard.henderson@linaro.org> wrote:
 >>
 >> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
 > 
 > 
->> --- a/target/arm/tcg/translate-sve.c
->> +++ b/target/arm/tcg/translate-sve.c
->> @@ -1373,7 +1373,7 @@ static gen_helper_gvec_2 * const fexpa_fns[4] = {
->>       NULL,                   gen_helper_sve_fexpa_h,
->>       gen_helper_sve_fexpa_s, gen_helper_sve_fexpa_d,
->>   };
->> -TRANS_FEAT_NONSTREAMING(FEXPA, aa64_sve, gen_gvec_ool_zz,
->> +TRANS_FEAT_STREAMING_IF(FEXPA, aa64_sve, aa64_ssve_fexpa, gen_gvec_ool_zz,
->>                           fexpa_fns[a->esz], a->rd, a->rn, s->fpcr_ah)
+>> +void HELPER(sme_fvdot_idx_hb)(void *vd, void *vn, void *vm,
+>> +                              CPUARMState *env, uint32_t desc)
+>> +{
+>> +    FP8MulContext ctx = fp8_mul_start(env, 0xf);
+>> +    intptr_t oprsz = simd_maxsz(desc);
+>> +    intptr_t elements = oprsz / sizeof(float32);
 > 
-> The FEXPA feature gate also changes to FEAT_SVE || FEAT_SSVE_FEXPA,
-> so I think we need the second argument to be a new feature
-> check function aa64_sve_or_ssve_fexpa.
+> Shouldn't this be sizeof(float16) since the output elements
+> are halfprec ?
 
-Oh, right, for the !SVE case.  Thanks.
+Oops, yes.  Thanks.
 
 
 r~
