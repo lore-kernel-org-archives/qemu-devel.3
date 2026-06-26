@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2026DCDE002
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 12:36:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2549CDE00E
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 12:36:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd5mw-0004fw-4w; Fri, 26 Jun 2026 08:36:06 -0400
+	id 1wd5mt-0004ZK-TZ; Fri, 26 Jun 2026 08:36:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wd5mW-0004Tl-T8
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 08:35:43 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1wd5mZ-0004U0-G5
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 08:35:47 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wd5mR-0002vw-PC
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 08:35:37 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-49230a567a9so4472605e9.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 05:35:35 -0700 (PDT)
+ id 1wd5mV-0002xi-7h
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 08:35:43 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-49249707788so7941045e9.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 05:35:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1782477334; x=1783082134; darn=nongnu.org;
+ d=mihalicyn.com; s=mihalicyn; t=1782477337; x=1783082137; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TxKGG99F3kpEiAK6b6KQoztUgSPaiwGgj+Li4S2uywI=;
- b=f5//vZrUictvLJipmRaDBghlyminxSSDtHpG798AO3dtKivziuaJEB3FvFVmyJ63ip
- R9hIgrIyV9puzGNoW1spG2XPQgbrenYTYorVgOGcTskyHK8JnGNAshraBPJBCOG5eGZh
- OSVdNtiWjulKUB2shpIfipJ9qknmT4yktdPMY=
+ bh=8iZSMtc0RgKNXn8BitINnU0mBhe2/PdpCTuCtrafEh0=;
+ b=hGCCgk27PVNscs1ZFTB1B3zU9dq3GRqcUiR2237eEUQZwSBD6UmcgNRbBxVf1Ezk2c
+ gaQhJF3kh2b8T3mzfjY+5ctA+dQufFUBaT4lV3NBMmngJxlB47E+wvuMdlFA4hcXqE7N
+ wibqRXLRsLuTLapDInjnqXBG0zYx58fYr2LQw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782477334; x=1783082134;
+ d=1e100.net; s=20251104; t=1782477337; x=1783082137;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TxKGG99F3kpEiAK6b6KQoztUgSPaiwGgj+Li4S2uywI=;
- b=e3kPrXlIAzDpZMmNtk+qFOXFiYAfOs+5hj1OvFSN7sJvPcg+cn/nNe/aZPQAlSN/o5
- vp10sKL2CCKJT5b3T8nEhCGyFv36cVRtJ4G5UeBxEDxLwiu4SfSEtDbkRYfmlUsLIQkN
- rYwMMHLY8CT99UE0jlR/iul/WgBlGt7VyXUXUvxm4uWlSb3RO3dtyhF5Bvk1Tt66gEde
- 2e6RDsmc4nfthfI9OEqdQePRzAZSETY7bZXjQ3IXcILCZsZ2qx9RQwjquyXNNyWewdrn
- BxLi1PqAetQo/0SJQwmgT6qiUU3cYCWZluELplEoLi2YBci9GWq03CA1+247KTLFCsZA
- fDUQ==
-X-Gm-Message-State: AOJu0YxAedS9qOl+p6QSnXrrMn8ei8LaqU98iL/6OWNr1ZYfU2yAl2bZ
- Y/UH4bDQkPz49g1tyaotRMIUqZlWXoSsbcptLbh5fAxxEMX7wq+UO5JHCy9FXy3iNs+HN5qihFT
- QmFrYCe0=
-X-Gm-Gg: AfdE7cncDZ1GYG/lZB4ojwLtoE8tzZrBCQwx+6C7W/NexMvGoCWMXNfbpG5o44/Ca9c
- mKBRgDuOlgtjtd0lwYSNnGXRsXtzZOIRiOjYREJqdhM3IlMkDY9eKhhj08qF2X92D8tNtszQlyy
- F9NyOIjFGZolmwGt0o/NvI1Meqid2kaPGfPrwz87yvlmdrBqDMBKTEqg7eiX785avJA29F01WWg
- FzD8MbaifM/k871qSKCuYbwkPnafLf/EgvkX4XO8iq/445Cthigv1++u1OfjvH/d7+FBJrCzKbL
- TTIcQKZWXDwAOYWCcNbsEZ9g15fys8pe4DAc+bSHVDRDNpT7vs2k2kqDlpP7glumw31LJvOajTd
- jE08q8nESarb2DRTWrhE16rJfDI1NPj2Wck0iSdO4Lk5vxmjGPt1hjLqrMO10JsEBf5ydsXn6IB
- aSGiJTPm+iXRegUdriPEgrebg+qvl4nFiuLpWEzgtPP0PbyAN8pf33rvawDN5LepmXxAypqd0Yf
- MenmdUjq5yU
-X-Received: by 2002:a05:600c:3b9f:b0:492:6d16:6317 with SMTP id
- 5b1f17b1804b1-4926d166478mr29432165e9.1.1782477334185; 
- Fri, 26 Jun 2026 05:35:34 -0700 (PDT)
+ bh=8iZSMtc0RgKNXn8BitINnU0mBhe2/PdpCTuCtrafEh0=;
+ b=DOR+F1soY+99GANKdXLHIDf8DDg+RxKUTC7nlECQBCP5v69ipEptg2df0EVOyDO394
+ SEOTyDTYUwFUkbISbRBFwrFWcY/KiSBZ7CLVIjot50+La5BOuFGp/SHkufyLg8yMoQiY
+ ERx5CbhV3vGmQJKvy3F7vFEILpiBbKveQPDh3bWPhEU8N2WaUt3F6TMY3rHrzPk7z2cn
+ 9qiRvj2vwmNWn2rJapSq7VM1txLJrwFjI+jL32EVqIBQx5NqCKlZD+3O7NCb3KMQoEvG
+ w1fsQ9iwhgXfd+ogPFHtTFW5VTRIMC+WJ/rb4SgXXERi2BoCtP+vvU6wwsVbR4jeLFg+
+ eMyQ==
+X-Gm-Message-State: AOJu0YxVKz8EzeavoyFyeXlb7qEkriRZVh4CHYJK0BvDlZIMdCcmHg7D
+ O3RNNymyHrmArE/CiET76U1EVl/exvRTZpP1McbMn4jhJgC0fi0CXx5AwH0BxvSa7soEaGhj08V
+ SGoZoOsU=
+X-Gm-Gg: AfdE7ckE2PQlcW64kTnmRSWIs5BOmBIhyata6Ujzx4H1kYRDDGV4kN7t+BrTgPX+w0f
+ GMHfw1hSKQXdGofGZ7Z/6Rm9GSV67mhLPKR8eeoLmj0FHu5mB/UoVUD/ZcG+ct6jvPjite5xp0q
+ XkKwIM6feWF97IyR0bYW/PfCmNewOyyQ5M6BoUX7mhyXz6ii6CPJzYPYYq8r2FL8QlNjwGpuRlS
+ CfrUi/sxUkMg+XLTelffe5h5QXSSKemcnpd7l6cM0hf35EHwjw0QT+kZ//aDLwwo6pK7Ir1NFzC
+ A6tdv0YzNNDeJ/LiUifIMKaGXW5bHTjgab5b+UWdrugUmg9hY0uWG/yq58fR+NlmAiZTVnmI/4Z
+ yQdLN7iBbvTayr2VNsDBuPoZVG3VLXdeoF2j8qYqFqNg9hQoKwpVCwMuhvbAj/1TsgVrS0ai1XJ
+ RHHGwow/CPEGhJW6+rUsE5O105G1tpfWfBuKHlkhZE1hI2a42myUHdoS90pRkDk+XnaFxZYg0jQ
+ GEkmokurngc+XSvNB86FUo=
+X-Received: by 2002:a05:600c:8211:b0:490:b189:212d with SMTP id
+ 5b1f17b1804b1-4926fc9cc36mr8558515e9.33.1782477336825; 
+ Fri, 26 Jun 2026 05:35:36 -0700 (PDT)
 Received: from alex-laptop.lan
  (p200300cf574a7200aa896c1ac04cb1b2.dip0.t-ipconnect.de.
  [2003:cf:574a:7200:aa89:6c1a:c04c:b1b2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46efd7ee1c7sm7373757f8f.14.2026.06.26.05.35.33
+ ffacd0b85a97d-46efd7ee1c7sm7373757f8f.14.2026.06.26.05.35.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 05:35:33 -0700 (PDT)
+ Fri, 26 Jun 2026 05:35:36 -0700 (PDT)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
@@ -76,18 +76,18 @@ Cc: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
  Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v3 1/9] hw/audio/virtio-sound: remove command and stream
- mutexes
-Date: Fri, 26 Jun 2026 14:35:23 +0200
-Message-ID: <20260626123531.132078-2-alexander@mihalicyn.com>
+Subject: [PATCH v3 4/9] hw/audio/virtio-sound: split out
+ virtio_snd_pcm_start_stop()
+Date: Fri, 26 Jun 2026 14:35:26 +0200
+Message-ID: <20260626123531.132078-5-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260626123531.132078-1-alexander@mihalicyn.com>
 References: <20260626123531.132078-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,9 +112,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Volker Rümelin <vr_qemu@t-online.de>
 
-All code in virtio-snd.c runs with the BQL held. Remove the
-command queue mutex and the stream queue mutexes. The qatomic
-functions are also not needed.
+Split out virtio_snd_pcm_start_stop(). This is a preparation
+for the next patch so that it doesn't become too big.
 
 Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
 [AM: there were too many conflicts, I did `git checkout --ours -- <.>`
@@ -123,401 +122,111 @@ Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
 Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/audio/virtio-snd.c         | 248 +++++++++++++++-------------------
- include/hw/audio/virtio-snd.h |   3 -
- 2 files changed, 110 insertions(+), 141 deletions(-)
+v3:
+	- resurrected error_report(..) as suggested by Marc-André Lureau
+---
+ hw/audio/trace-events |  3 ++-
+ hw/audio/virtio-snd.c | 59 ++++++++++++++++++++++++++++---------------
+ 2 files changed, 41 insertions(+), 21 deletions(-)
 
+diff --git a/hw/audio/trace-events b/hw/audio/trace-events
+index 30f59215453..75d1fb37bd9 100644
+--- a/hw/audio/trace-events
++++ b/hw/audio/trace-events
+@@ -53,7 +53,8 @@ virtio_snd_unrealize(void *snd) "snd %p: unrealize"
+ virtio_snd_handle_pcm_set_params(uint32_t stream) "VIRTIO_SND_PCM_SET_PARAMS called for stream %"PRIu32
+ virtio_snd_handle_ctrl(void *vdev, void *vq) "snd %p: handle ctrl event for queue %p"
+ virtio_snd_handle_pcm_info(uint32_t stream) "VIRTIO_SND_R_PCM_INFO called for stream %"PRIu32
+-virtio_snd_handle_pcm_start_stop(const char *code, uint32_t stream) "%s called for stream %"PRIu32
++virtio_snd_handle_pcm_start(uint32_t stream) "VIRTIO_SND_R_PCM_START called for stream %"PRIu32
++virtio_snd_handle_pcm_stop(uint32_t stream) "VIRTIO_SND_R_PCM_STOP called for stream %"PRIu32
+ virtio_snd_handle_pcm_release(uint32_t stream) "VIRTIO_SND_PCM_RELEASE called for stream %"PRIu32
+ virtio_snd_handle_code(uint32_t val, const char *code) "ctrl code msg val = %"PRIu32" == %s"
+ virtio_snd_handle_chmap_info(void) "VIRTIO_SND_CHMAP_INFO called"
 diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index fb5cff38660..6eb31e2838e 100644
+index 8f4421ba844..300ba13ffeb 100644
 --- a/hw/audio/virtio-snd.c
 +++ b/hw/audio/virtio-snd.c
-@@ -19,7 +19,6 @@
- #include "qemu/iov.h"
- #include "qemu/log.h"
- #include "qemu/error-report.h"
--#include "qemu/lockable.h"
- #include "system/runstate.h"
- #include "trace.h"
- #include "qapi/error.h"
-@@ -442,7 +441,6 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
-         stream->id = stream_id;
-         stream->s = s;
-         stream->latency_bytes = 0;
--        qemu_mutex_init(&stream->queue_mutex);
-         QSIMPLEQ_INIT(&stream->queue);
- 
-         /*
-@@ -568,9 +566,7 @@ static void virtio_snd_handle_pcm_start_stop(VirtIOSound *s,
- 
-     stream = virtio_snd_pcm_get_stream(s, stream_id);
-     if (stream) {
--        WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--            stream->active = start;
--        }
-+        stream->active = start;
-         if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
-             audio_be_set_active_out(s->audio_be, stream->voice.out, start);
-         } else {
-@@ -594,10 +590,8 @@ static size_t virtio_snd_pcm_get_io_msgs_count(VirtIOSoundPCMStream *stream)
-     VirtIOSoundPCMBuffer *buffer, *next;
-     size_t count = 0;
- 
--    WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--        QSIMPLEQ_FOREACH_SAFE(buffer, &stream->queue, entry, next) {
--            count += 1;
--        }
-+    QSIMPLEQ_FOREACH_SAFE(buffer, &stream->queue, entry, next) {
-+        count += 1;
-     }
-     return count;
+@@ -521,7 +521,44 @@ static void virtio_snd_handle_pcm_prepare(VirtIOSound *s,
  }
-@@ -739,23 +733,15 @@ static void virtio_snd_process_cmdq(VirtIOSound *s)
- {
-     virtio_snd_ctrl_command *cmd;
  
--    if (unlikely(qatomic_read(&s->processing_cmdq))) {
+ /*
+- * Handles VIRTIO_SND_R_PCM_START.
++ * Starts/Stops a VirtIOSound card stream.
++ * Returns the response status code. (VIRTIO_SND_S_*).
++ *
++ * @s: VirtIOSound device
++ * @stream_id: stream id
++ * @start: whether to start or stop the stream
++ */
++static uint32_t virtio_snd_pcm_start_stop(VirtIOSound *s,
++                                          uint32_t stream_id,
++                                          bool start)
++{
++    VirtIOSoundPCMStream *stream;
++
++    stream = virtio_snd_pcm_get_stream(s, stream_id);
++    if (!stream) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++            "%s: Invalid stream id: %"PRIu32 "\n", __func__, stream_id);
++        return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
++    }
++
++    if (start) {
++        trace_virtio_snd_handle_pcm_start(stream_id);
++    } else {
++        trace_virtio_snd_handle_pcm_stop(stream_id);
++    }
++
++    stream->active = start;
++    if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
++        audio_be_set_active_out(s->audio_be, stream->voice.out, start);
++    } else {
++        audio_be_set_active_in(s->audio_be, stream->voice.in, start);
++    }
++
++    return cpu_to_le32(VIRTIO_SND_S_OK);
++}
++
++/*
++ * Handles VIRTIO_SND_R_PCM_START and VIRTIO_SND_R_PCM_STOP.
+  *
+  * @s: VirtIOSound device
+  * @cmd: The request command queue element from VirtIOSound cmdq field
+@@ -531,7 +568,6 @@ static void virtio_snd_handle_pcm_start_stop(VirtIOSound *s,
+                                              virtio_snd_ctrl_command *cmd,
+                                              bool start)
+ {
+-    VirtIOSoundPCMStream *stream;
+     virtio_snd_pcm_hdr req;
+     uint32_t stream_id;
+     size_t msg_sz = iov_to_buf(cmd->elem->out_sg,
+@@ -549,24 +585,7 @@ static void virtio_snd_handle_pcm_start_stop(VirtIOSound *s,
+     }
+ 
+     stream_id = le32_to_cpu(req.stream_id);
+-    cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_OK);
+-    trace_virtio_snd_handle_pcm_start_stop(start ? "VIRTIO_SND_R_PCM_START" :
+-            "VIRTIO_SND_R_PCM_STOP", stream_id);
+-
+-    stream = virtio_snd_pcm_get_stream(s, stream_id);
+-    if (stream) {
+-        stream->active = start;
+-        if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
+-            audio_be_set_active_out(s->audio_be, stream->voice.out, start);
+-        } else {
+-            audio_be_set_active_in(s->audio_be, stream->voice.in, start);
+-        }
+-    } else {
+-        error_report("Invalid stream id: %"PRIu32, stream_id);
+-        cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
 -        return;
 -    }
--
--    WITH_QEMU_LOCK_GUARD(&s->cmdq_mutex) {
--        qatomic_set(&s->processing_cmdq, true);
--        while (!QTAILQ_EMPTY(&s->cmdq)) {
--            cmd = QTAILQ_FIRST(&s->cmdq);
-+    while (!QTAILQ_EMPTY(&s->cmdq)) {
-+        cmd = QTAILQ_FIRST(&s->cmdq);
- 
--            /* process command */
--            process_cmd(s, cmd);
-+        /* process command */
-+        process_cmd(s, cmd);
- 
--            QTAILQ_REMOVE(&s->cmdq, cmd, next);
-+        QTAILQ_REMOVE(&s->cmdq, cmd, next);
- 
--            virtio_snd_ctrl_cmd_free(cmd);
--        }
--        qatomic_set(&s->processing_cmdq, false);
-+        virtio_snd_ctrl_cmd_free(cmd);
-     }
+-    stream->active = start;
++    cmd->resp.code = virtio_snd_pcm_start_stop(s, stream_id, start);
  }
  
-@@ -892,19 +878,17 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
-             goto tx_err;
-         }
- 
--        WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--            size = iov_size(elem->out_sg, elem->out_num) - msg_sz;
-+        size = iov_size(elem->out_sg, elem->out_num) - msg_sz;
- 
--            buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
--            buffer->elem = elem;
--            buffer->populated = false;
--            buffer->vq = vq;
--            buffer->size = size;
--            buffer->offset = 0;
--            stream->latency_bytes += size;
-+        buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
-+        buffer->elem = elem;
-+        buffer->populated = false;
-+        buffer->vq = vq;
-+        buffer->size = size;
-+        buffer->offset = 0;
-+        stream->latency_bytes += size;
- 
--            QSIMPLEQ_INSERT_TAIL(&stream->queue, buffer, entry);
--        }
-+        QSIMPLEQ_INSERT_TAIL(&stream->queue, buffer, entry);
-         continue;
- 
- tx_err:
-@@ -973,16 +957,15 @@ static void virtio_snd_handle_rx_xfer(VirtIODevice *vdev, VirtQueue *vq)
-         if (stream == NULL || stream->info.direction != VIRTIO_SND_D_INPUT) {
-             goto rx_err;
-         }
--        WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--            size = iov_size(elem->in_sg, elem->in_num) -
--                sizeof(virtio_snd_pcm_status);
--            buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
--            buffer->elem = elem;
--            buffer->vq = vq;
--            buffer->size = 0;
--            buffer->offset = 0;
--            QSIMPLEQ_INSERT_TAIL(&stream->queue, buffer, entry);
--        }
-+
-+        size = iov_size(elem->in_sg, elem->in_num) -
-+            sizeof(virtio_snd_pcm_status);
-+        buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
-+        buffer->elem = elem;
-+        buffer->vq = vq;
-+        buffer->size = 0;
-+        buffer->offset = 0;
-+        QSIMPLEQ_INSERT_TAIL(&stream->queue, buffer, entry);
-         continue;
- 
- rx_err:
-@@ -1086,7 +1069,6 @@ static void virtio_snd_realize(DeviceState *dev, Error **errp)
-         virtio_add_queue(vdev, 64, virtio_snd_handle_tx_xfer);
-     vsnd->queues[VIRTIO_SND_VQ_RX] =
-         virtio_add_queue(vdev, 64, virtio_snd_handle_rx_xfer);
--    qemu_mutex_init(&vsnd->cmdq_mutex);
-     QTAILQ_INIT(&vsnd->cmdq);
-     QSIMPLEQ_INIT(&vsnd->invalid);
- 
-@@ -1154,52 +1136,50 @@ static void virtio_snd_pcm_out_cb(void *data, int available)
-     VirtIOSoundPCMBuffer *buffer;
-     size_t size;
- 
--    WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--        while (!QSIMPLEQ_EMPTY(&stream->queue)) {
--            buffer = QSIMPLEQ_FIRST(&stream->queue);
--            if (!virtio_queue_ready(buffer->vq)) {
--                return;
-+    while (!QSIMPLEQ_EMPTY(&stream->queue)) {
-+        buffer = QSIMPLEQ_FIRST(&stream->queue);
-+        if (!virtio_queue_ready(buffer->vq)) {
-+            return;
-+        }
-+        if (!stream->active) {
-+            /* Stream has stopped, so do not perform audio_be_write. */
-+            return_tx_buffer(stream, buffer);
-+            continue;
-+        }
-+        if (!buffer->populated) {
-+            iov_to_buf(buffer->elem->out_sg,
-+                        buffer->elem->out_num,
-+                        sizeof(virtio_snd_pcm_xfer),
-+                        buffer->data,
-+                        buffer->size);
-+            buffer->populated = true;
-+        }
-+        for (;;) {
-+            size = audio_be_write(stream->s->audio_be,
-+                                stream->voice.out,
-+                                buffer->data + buffer->offset,
-+                                MIN(buffer->size, available));
-+            assert(size <= MIN(buffer->size, available));
-+            if (size == 0) {
-+                /* break out of both loops */
-+                available = 0;
-+                break;
-             }
--            if (!stream->active) {
--                /* Stream has stopped, so do not perform audio_be_write. */
-+            buffer->size -= size;
-+            buffer->offset += size;
-+            available -= size;
-+            update_latency(stream, size);
-+            if (buffer->size < 1) {
-                 return_tx_buffer(stream, buffer);
--                continue;
--            }
--            if (!buffer->populated) {
--                iov_to_buf(buffer->elem->out_sg,
--                           buffer->elem->out_num,
--                           sizeof(virtio_snd_pcm_xfer),
--                           buffer->data,
--                           buffer->size);
--                buffer->populated = true;
--            }
--            for (;;) {
--                size = audio_be_write(stream->s->audio_be,
--                                 stream->voice.out,
--                                 buffer->data + buffer->offset,
--                                 MIN(buffer->size, available));
--                assert(size <= MIN(buffer->size, available));
--                if (size == 0) {
--                    /* break out of both loops */
--                    available = 0;
--                    break;
--                }
--                buffer->size -= size;
--                buffer->offset += size;
--                available -= size;
--                update_latency(stream, size);
--                if (buffer->size < 1) {
--                    return_tx_buffer(stream, buffer);
--                    break;
--                }
--                if (!available) {
--                    break;
--                }
-+                break;
-             }
-             if (!available) {
-                 break;
-             }
-         }
-+        if (!available) {
-+            break;
-+        }
-     }
- }
- 
-@@ -1250,55 +1230,53 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
-     VirtIOSoundPCMBuffer *buffer;
-     size_t size, max_size, to_read;
- 
--    WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--        while (!QSIMPLEQ_EMPTY(&stream->queue)) {
--            buffer = QSIMPLEQ_FIRST(&stream->queue);
--            if (!virtio_queue_ready(buffer->vq)) {
--                return;
--            }
--            if (!stream->active) {
--                /* Stream has stopped, so do not perform audio_be_read. */
--                return_rx_buffer(stream, buffer);
--                continue;
--            }
-+    while (!QSIMPLEQ_EMPTY(&stream->queue)) {
-+        buffer = QSIMPLEQ_FIRST(&stream->queue);
-+        if (!virtio_queue_ready(buffer->vq)) {
-+            return;
-+        }
-+        if (!stream->active) {
-+            /* Stream has stopped, so do not perform audio_be_read. */
-+            return_rx_buffer(stream, buffer);
-+            continue;
-+        }
-+
-+        max_size = iov_size(buffer->elem->in_sg, buffer->elem->in_num);
-+        if (max_size <= sizeof(virtio_snd_pcm_status)) {
-+            return_rx_buffer(stream, buffer);
-+            continue;
-+        }
-+        max_size -= sizeof(virtio_snd_pcm_status);
- 
--            max_size = iov_size(buffer->elem->in_sg, buffer->elem->in_num);
--            if (max_size <= sizeof(virtio_snd_pcm_status)) {
-+        for (;;) {
-+            if (buffer->size >= max_size) {
-                 return_rx_buffer(stream, buffer);
--                continue;
-+                break;
-             }
--            max_size -= sizeof(virtio_snd_pcm_status);
--
--            for (;;) {
--                if (buffer->size >= max_size) {
--                    return_rx_buffer(stream, buffer);
--                    break;
--                }
--                to_read = stream->params.period_bytes - buffer->size;
--                to_read = MIN(to_read, available);
--                to_read = MIN(to_read, max_size - buffer->size);
--                size = audio_be_read(stream->s->audio_be,
--                                     stream->voice.in,
--                                     buffer->data + buffer->size,
--                                     to_read);
--                if (!size) {
--                    available = 0;
--                    break;
--                }
--                buffer->size += size;
--                available -= size;
--                if (buffer->size >= stream->params.period_bytes) {
--                    return_rx_buffer(stream, buffer);
--                    break;
--                }
--                if (!available) {
--                    break;
--                }
-+            to_read = stream->params.period_bytes - buffer->size;
-+            to_read = MIN(to_read, available);
-+            to_read = MIN(to_read, max_size - buffer->size);
-+            size = audio_be_read(stream->s->audio_be,
-+                                    stream->voice.in,
-+                                    buffer->data + buffer->size,
-+                                    to_read);
-+            if (!size) {
-+                available = 0;
-+                break;
-+            }
-+            buffer->size += size;
-+            available -= size;
-+            if (buffer->size >= stream->params.period_bytes) {
-+                return_rx_buffer(stream, buffer);
-+                break;
-             }
-             if (!available) {
-                 break;
-             }
-         }
-+        if (!available) {
-+            break;
-+        }
-     }
- }
- 
-@@ -1315,11 +1293,9 @@ static inline void virtio_snd_pcm_flush(VirtIOSoundPCMStream *stream)
-         (stream->info.direction == VIRTIO_SND_D_OUTPUT) ? return_tx_buffer :
-         return_rx_buffer;
- 
--    WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--        while (!QSIMPLEQ_EMPTY(&stream->queue)) {
--            buffer = QSIMPLEQ_FIRST(&stream->queue);
--            cb(stream, buffer);
--        }
-+    while (!QSIMPLEQ_EMPTY(&stream->queue)) {
-+        buffer = QSIMPLEQ_FIRST(&stream->queue);
-+        cb(stream, buffer);
-     }
- }
- 
-@@ -1338,14 +1314,12 @@ static void virtio_snd_unrealize(DeviceState *dev)
-             if (stream) {
-                 virtio_snd_process_cmdq(stream->s);
-                 virtio_snd_pcm_close(stream);
--                qemu_mutex_destroy(&stream->queue_mutex);
-                 g_free(stream);
-             }
-         }
-         g_free(vsnd->pcm.streams);
-     }
-     g_free(vsnd->pcm.pcm_params);
--    qemu_mutex_destroy(&vsnd->cmdq_mutex);
-     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_CONTROL]);
-     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_EVENT]);
-     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_TX]);
-@@ -1366,12 +1340,10 @@ static void virtio_snd_reset(VirtIODevice *vdev)
-      */
-     g_assert(QSIMPLEQ_EMPTY(&vsnd->invalid));
- 
--    WITH_QEMU_LOCK_GUARD(&vsnd->cmdq_mutex) {
--        while (!QTAILQ_EMPTY(&vsnd->cmdq)) {
--            cmd = QTAILQ_FIRST(&vsnd->cmdq);
--            QTAILQ_REMOVE(&vsnd->cmdq, cmd, next);
--            virtio_snd_ctrl_cmd_free(cmd);
--        }
-+    while (!QTAILQ_EMPTY(&vsnd->cmdq)) {
-+        cmd = QTAILQ_FIRST(&vsnd->cmdq);
-+        QTAILQ_REMOVE(&vsnd->cmdq, cmd, next);
-+        virtio_snd_ctrl_cmd_free(cmd);
-     }
- }
- 
-diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd.h
-index e28f1be5db9..fce7d1feea2 100644
---- a/include/hw/audio/virtio-snd.h
-+++ b/include/hw/audio/virtio-snd.h
-@@ -146,7 +146,6 @@ struct VirtIOSoundPCMStream {
-         SWVoiceIn *in;
-         SWVoiceOut *out;
-     } voice;
--    QemuMutex queue_mutex;
-     bool active;
-     uint32_t latency_bytes;
-     QSIMPLEQ_HEAD(, VirtIOSoundPCMBuffer) queue;
-@@ -218,9 +217,7 @@ struct VirtIOSound {
-     AudioBackend *audio_be;
-     VMChangeStateEntry *vmstate;
-     virtio_snd_config snd_conf;
--    QemuMutex cmdq_mutex;
-     QTAILQ_HEAD(, virtio_snd_ctrl_command) cmdq;
--    bool processing_cmdq;
-     /*
-      * Convenience queue to keep track of invalid tx/rx queue messages inside
-      * the tx/rx callbacks.
+ /*
 -- 
 2.47.3
 
