@@ -4,61 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF90BC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 16:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D72DC43211
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 16:47:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd9dQ-0000XP-31; Fri, 26 Jun 2026 12:42:33 -0400
+	id 1wd9hy-0001ON-5Q; Fri, 26 Jun 2026 12:47:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1wd9ct-0000WD-Ts; Fri, 26 Jun 2026 12:42:02 -0400
-Received: from m16.mail.163.com ([117.135.210.3])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wd9hw-0001OB-AC
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 12:47:12 -0400
+Received: from mail-northeuropeazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c200::5] helo=DUZPR83CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1wd9co-0006ip-V8; Fri, 26 Jun 2026 12:41:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Content-Type:Message-ID:Date:MIME-Version:Subject:
- To:From; bh=EiAF24o1m+B5EgKpyLVIgBxiDo2MDQsC6aWpdvU8T8Q=; b=SZ/i
- XiTNvDog2jXMIyJ8tYtOj5wJSyRRlVQZ2IZU7natjmDUihoTo0b3+MYwVseyLCwn
- NauNMeooW/0RMXEpBhAuYTckPlVEjsEVzWay1dOkxUtGY9+8NIBVlFHb68NKSkGq
- Nun4TimFGEBRVGtvlGQTVliVxpLlrAYrQuN+i7I=
-Received: from [IPV6:2408:8266:ba01:4163:f0d1:b36d:a9c8:e8d0] (unknown [])
- by gzsmtp2 (Coremail) with SMTP id PSgvCgAnvwPLqj5qWN+nDw--.26422S2;
- Sat, 27 Jun 2026 00:37:31 +0800 (CST)
-Content-Type: multipart/alternative;
- boundary="------------QkAUkN0bjVvzynh7hF0pYfYY"
-Message-ID: <a4652ee7-ba62-4cb2-bd7e-78b54ef86160@163.com>
-Date: Sat, 27 Jun 2026 00:37:32 +0800
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wd9hu-0007dq-96
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 12:47:11 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=OyTOepvSl5B6t5Pf/oMf9QLpwUumV3nRYaJJJ7B68wDmdhT9wCUO2C+uZ2rvXYMcdBgJuwixHfxyB5O9JmM5oCtZYwmoyYeDvjR5Jps9jzjQSdAC3H1EJVkXfB4Pwd6kbTrhV92Vg3iTdJ0YDQ/K/v0O0i2nhhOCC9lyyUjVj6hmFMldeh4Yq3z2w8vMogKXGEmY/mGNro2NTS2Wt70zTRUcSWBy1icipy6AH6WiSlaS/HEksYMUXZLvsfgQUtmrfq9baT+XiJUWxBDYemc2TPmy3jV/33z2ldQeDKCUQQdS0l1ftD8BupluEvdmxCxlI/LXReZrkSOMOY9wQzTgDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=npRP9gTgJjV9KV93DFJ3LdmwFuvgUWpk6hh4lgfcpQ0=;
+ b=cT30607mc9usICFXePWlxTN9XVi7TZNZDeR+j1MPE4luSpiNpiyRcvziYOP5fp84JxcFXQZe1WuQzYauDkp8/YD20r+a00C/S6khWokHxb1LtT8nbmEqLMdwviCS8qER1d+0eeQdcAruEtr8eZ3toHgMasKFK1cBJjgxCacef4yd94q8blMrBBvD10Jddxy/yszo3I1Q6alMNrdK5ZpJFTWBMUiH98nGXaUceErVVAdLNCPneflon1LeN+43rYtv0jX8hSvKLK5qhU34C8kAqqS+ZOtk8zq6AUaJg7njOrX1U/16RqcboYgVdz/JhwuH2RYfXPKtcCc2I7aZ/ILf0w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=npRP9gTgJjV9KV93DFJ3LdmwFuvgUWpk6hh4lgfcpQ0=;
+ b=McmGYf9n8lzMLQ5Cxd800R1X7rVbeEBZz4ZEFGF9xKCVNZ4qsg/a0ANx7zHRBxW4PE7+YsL4PBgZycxHMPr/eUx4aOzsg/1TMkgFrRtrXBw2DZpwsQqOk8y8iJJnXnxHRVweeznKkXalfBqA64awrs97E2gv3ucvQkuqysU3t8fUvJ9KfMqpIEg3vEBZIP3U2hLQh+4iBFIHGdKpWZriaHnvZmNTSNjxbQvJbbPYi/PepDLngSM53F4mY0DSBxSb4xIXZGC5S3uxb5+0/S0sw9bsVzQYhsmyjV55DPIsxeZvCBNkeRjJfQFiNpKthWnkn0FCSMr/O87bOqG1ClPIow==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by DB9PR08MB6347.eurprd08.prod.outlook.com
+ (2603:10a6:10:253::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.17; Fri, 26 Jun
+ 2026 16:47:02 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%5]) with mapi id 15.21.0159.013; Fri, 26 Jun 2026
+ 16:47:02 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de, peterx@redhat.com,
+ dongli.zhang@oracle.com, maciej.szmigiero@oracle.com, bchaney@akamai.com,
+ mark.kanda@oracle.com, den@openvz.org, andrey.drobyshev@virtuozzo.com
+Subject: [PATCH v3 1/7] vhost: add vhost_reset_owner op
+Date: Fri, 26 Jun 2026 19:46:37 +0300
+Message-ID: <20260626164643.2526-2-andrey.drobyshev@virtuozzo.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20260626164643.2526-1-andrey.drobyshev@virtuozzo.com>
+References: <20260626164643.2526-1-andrey.drobyshev@virtuozzo.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: VIUP296CA0088.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:35c::12) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] fixed sdma boundary bug
-To: Bin Meng <bmeng.cn@gmail.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, qemu-block@nongnu.org
-References: <20260617155857.7451-1-dingtao0430@163.com>
- <20260617155857.7451-2-dingtao0430@163.com>
- <CAEUhbmVPJ_cAUQbTo0C_4swXUmL-DV0OwR6ZcMhgCUhXAP0QEA@mail.gmail.com>
-From: Tao Ding <dingtao0430@163.com>
-In-Reply-To: <CAEUhbmVPJ_cAUQbTo0C_4swXUmL-DV0OwR6ZcMhgCUhXAP0QEA@mail.gmail.com>
-X-CM-TRANSID: PSgvCgAnvwPLqj5qWN+nDw--.26422S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW3Wr43uF4kXF1UAryrAF18Krg_yoWxAryDpa
- sFyrs8Kr4kCF1rZry8Ca18XryYvws3Za4ayr1FgrnYyF4YyFyvvwnIkasa9FWjqrWxXry3
- Zrn3Xr9093WUAaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRVbyNUUUUU=
-X-Originating-IP: [2408:8266:ba01:4163:f0d1:b36d:a9c8:e8d0]
-X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC-Q0IRmo+qs3t9QAA3V
-Received-SPF: pass client-ip=117.135.210.3; envelope-from=dingtao0430@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|DB9PR08MB6347:EE_
+X-MS-Office365-Filtering-Correlation-Id: 271e0f5e-2fd6-4b23-b137-08ded3a28bd8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|7416014|366016|52116014|23010399003|376014|38350700014|22082099003|18002099003|56012099006;
+X-Microsoft-Antispam-Message-Info: vhbCo9eyHsPw/As+jB6uCeZJy297VvY7vUevAK0bxwjpt60obXQoRjGtbl0kLPiOrXUZWs9PhT8w7NCbEGBvUdoJgMUoqUonkm1gEnG4EU38aVWV7dvnQyo2If2Ypvb3vwtEKs4p2eO6t8DcCN2CfJRkngxaEP97YPnACsJUh3fLs6fpv731HnxEmwqbOgwbDkK3Nj3Gp2md/93FqPi2zpQFoXcbL67qWPPFkA7V0AWnk0usH/yKJYw0QKKRoLJ2VQFHICT6iw65p85CzA3C9C/A4jtcPrCM001Ass7nT3ebC107B0GcNxOjyeQZ+JokiYmMt4mIHgkI85sCwcAnhH4SB3PxII6Jui1RsXK2WM2xlX9lUbJUwwyl3VWGY0sHiegVjckHaquBKiMXo3ND3GxkmYb93z6e14dl+FfmRvzo1PzxoOFfVQGlx1eBGPYMuxKh4Agi6jxRa8kg9MMoccV7mhTJ5KMF3/st2Z+qERyP5mkkYnPbj8dJmE1/NQ/uOu2F3X26UUgAwF6v97tChm3GwPW0CyW0UrSHnoSSdRzElSnGrzqYd8rhkuI5CsUgMDg0AG1CBLSTF/fEP7wNch0JAvC/17nSXQlRqTPgIJT88OvxXLnWFxgoTgYfPnvJ/p6TB8t86ORWLCrPrizaGe4Usz1aorR5ZCqe1Tl43ND8yIbT9a8vRc/1b5fYKh3qnhwcPoc5GEOxYl6oAC/ryw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(7416014)(366016)(52116014)(23010399003)(376014)(38350700014)(22082099003)(18002099003)(56012099006);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?6qQLSKqpBTBVs2RdK5fUTJ4Ctuu5KBN20FsQGsptSpCw6gmBu+Nt1aDHIYeg?=
+ =?us-ascii?Q?2VK9DFfSeIMoTqkCDcw4pwAc97oqLnuTC3gj6KbqecwvixCod5jgOcENNbT/?=
+ =?us-ascii?Q?GCVLapBHk1QZ+LhhP9RyMvPAhwYbH0TwKfcXTzP3GNN7cUMF1avsQIqj3Yis?=
+ =?us-ascii?Q?Cb9M/9+qCIsRb19bE/75GUfq+Hb7FARHttkhKCEwLHCRyjvMFI2KKtex87ao?=
+ =?us-ascii?Q?bix1vIufUPwvLiYvD7cZQ5DXfwK3L4K9Ch4bn21/OtyHkjcSOpQ/+qa9c59Y?=
+ =?us-ascii?Q?pfjSMk1gLW5EiQE3n0ML17OIyz9FvUaoEF7myD7/khe3PNZ2qY5x4MZ+oALI?=
+ =?us-ascii?Q?XyR0cSf5MRjvAAob68bufsWnaYeXPsX2fGPoxBzY5Eou/xl4QUs8Fg59K4zA?=
+ =?us-ascii?Q?lcE50Na6qZFmNuKoW/Luv3u3aiqyGk9lVT/EJ4Hspo5kapGLBWTtpkXns2qv?=
+ =?us-ascii?Q?uudh3I8zauMi7XQZtlvE62p5MdbS3N5/hyZBKFpAfRfFcGg69Tf2seXod4ph?=
+ =?us-ascii?Q?jj7t2qvh+H8UAzfl4gTXw2KAd8PyWhukZ7xI2uLF5dF5QQusav258zugOjOc?=
+ =?us-ascii?Q?4rvjegTxIF9qbigsCUdakYhTfP9ud9Mqul/sy0b+96FhbGr7Nhw09H4Iymco?=
+ =?us-ascii?Q?QZk5accNgEwayXlqMlHot5McRCEUt38hF+MX21a0ImHac40rYT4D70zbL7VL?=
+ =?us-ascii?Q?B907JMHXxNXfX+dDjWmR1/xcSrzNU8LP6qNWNqGiBMxVOPRqM4LQEiqlNEBV?=
+ =?us-ascii?Q?j0MOga/VVZmDtrK4nAREI8nTf+SYRUg2Wxr/oBYbbHJQSUF3yj/yG2tMgLMA?=
+ =?us-ascii?Q?WU0WUmfzrh4mN9e/lWXtjpzA0c8VF1m//WrFjcAd/1g73Xw/630hN1I7I2n2?=
+ =?us-ascii?Q?MejP8oOVfajB3I/vz2V9nDRMtvbimrN6DhFBqgKsab72a78+UYccoIkUk47s?=
+ =?us-ascii?Q?l2frzBC9ReBabB+wkzlVBxhVUOsqUY6wfz0U0RZvzrDA/bWXT7857wWlCKKv?=
+ =?us-ascii?Q?QfRXRgiYTw+dlul7z8WcKX0ID433RYLN395zCTLphSGCoZa5HwvuAyPKS+lE?=
+ =?us-ascii?Q?Kmtnl500yoVcRDTeuzKKbtLw5wykdXYGFgvIX6MqKqWWOi34BXgAY82V2ppK?=
+ =?us-ascii?Q?wLOjiZhUOwptnuaNhUS4/lSM5GeL4ytFqyk4ttS8BRiSnkAPv3PFfxCpcMPq?=
+ =?us-ascii?Q?Sgr/8AagvLhwjFT+4ZVSRq1kbCP7nwANRunVBKEF+ed0zEQPp4A9en2sQheU?=
+ =?us-ascii?Q?7qr6GvoVzq6VJ5zUdRpS0GmWw531i8v4+bArXbQne+dsEtYBeWqxu2QFYZo9?=
+ =?us-ascii?Q?A3KWgQQp3zrGhvRuKwJbt8TxzzMTKnOdJDaSLl3+O9p8PQ8bxmyavn5YQCTN?=
+ =?us-ascii?Q?WUQqr8klOSU+kiFy8GZ9nJEUrTPVVmm94nu+uZKNUR3j3ngIGpFO2lhgslvJ?=
+ =?us-ascii?Q?qK8gUUdgMc6EalEKHvPMwdA5aq8QiPiCyYtqfbCgMkkXWWGRoBDhWEvzI5nf?=
+ =?us-ascii?Q?ITm96MnWx27AC9xqT5bnXsJJBZqn0s63pf6waeMu/fHhZ/I+94c3Iu1OXgek?=
+ =?us-ascii?Q?TIL5dYo6m37TILLmStKCS3YMU6GgwSibLhUdoSueXvA6ilPIMJoHQx5UEnfB?=
+ =?us-ascii?Q?fAH59+NkhLpgZeZ6kFq+m5+V9JsvQZtfVipRwFutghP5eDIYdPyv5lV0cwRE?=
+ =?us-ascii?Q?MSt0SzB2Lo4gLySnPq1HF95k6rVEnL+4vkvtEL4Xn2yhNMIwN+Cq7HBrSxXq?=
+ =?us-ascii?Q?QxcyrGfyYIgVBL497WIbBcNJnRRVzvg=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 271e0f5e-2fd6-4b23-b137-08ded3a28bd8
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2026 16:47:01.8838 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: iVfwMi5plium/3rqGSZ+cWVsMx5d3rRSMvVMumsvPJEL4BfnfoN0TqUBvWnml/t7yAlHwol9NbgJU2b75Hp9oBkPyzVveDeolPAZ3ceGpJU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB6347
+Received-SPF: pass client-ip=2a01:111:f403:c200::5;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=DUZPR83CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,416 +142,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------QkAUkN0bjVvzynh7hF0pYfYY
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Add a VhostOps callback issuing VHOST_RESET_OWNER, wired up for the kernel
+backend.  The CPR (checkpoint-restore) path uses it to release device
+ownership on the source so the destination can reclaim it later with
+VHOST_SET_OWNER.
 
-1. u-boot
-
-I used the u-boot obtained fromhttps://github.com/u-boot/u-boot,
-specifically the commit 1e80ee41441c612f05787a93bbef4e6e422e29d1.
-
-When compiling uboot, I used xilinx_zynq_virt_defconfig and enabled the SDHCI_SDMA function.
-This can be set through scripts or in manuconfig.
-
-Below is the command I used for local compilation:
-
-$ export ARCH=arm
-$ export CROSS_COMPILE=/home/taoding/arm/gcc-arm-11.2-2022.02-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-
-$ make O=/home/taoding/arm/u-boot-build-zynq xilinx_zynq_virt_defconfig
-     
-$ /home/taoding/arm/u-boot/scripts/config \
-     --file /home/taoding/arm/u-boot-build-zynq/.config \
-     --enable MMC_SDHCI_SDMA
-     
-$ make O=/home/taoding/arm/u-boot-build-zynq olddefconfig
-$ make O=/home/taoding/arm/u-boot-build-zynq DEVICE_TREE=zynq-zc702 -j$(nproc)
-
-The U-Boot binary used by QEMU was:
-/home/taoding/arm/u-boot-build-zynq/u-boot-dtb.bin
-
-2. linux image
-I used Linux 6.6.
-Below is the command I used:
-
-$ export ARCH=arm
-$ export CROSS_COMPILE=/home/taoding/arm/gcc-arm-11.2-2022.02-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-
-$ make multi_v7_defconfig
-$ make -j$(nproc) zImage dtbs
-
-The resulting files were:
-/home/taoding/arm/linux-6.6/arch/arm/boot/zImage
-/home/taoding/arm/linux-6.6/arch/arm/boot/dts/xilinx/zynq-zc702.dtb
-
-3. rootfs
-
-I utilized the defconfig and enable static binary to compile and generate rootfs-arm32.cpio.gz
-
-4. zynq-sd.img
-The SD image used for testing was a FAT16 image containing:
-
-- zImage
-- zynq-zc702.dtb
-- rootfs-arm32.cpio.gz
-
-Below is the command I used:
-
-$ truncate -s 128M /home/taoding/arm/zynq-sd.img
-$ mkfs.vfat -F 16 /home/taoding/arm/zynq-sd.img
-
-$ mcopy -i /home/taoding/arm/zynq-sd.img \
-   /home/taoding/arm/linux-6.6/arch/arm/boot/zImage ::zImage
-
-$ mcopy -i /home/taoding/arm/zynq-sd.img \
-   /home/taoding/arm/linux-6.6/arch/arm/boot/dts/xilinx/zynq-zc702.dtb ::zynq-zc702.dtb
-
-$ mcopy -i /home/taoding/arm/zynq-sd.img \
-   /home/taoding/arm/rootfs-arm32.cpio.gz ::rootfs-arm32.cpio.gz
-
-If only want to verify the issues fixed in this patch, step 3 can be ignored.
-After starting qemu and entering uboot, we can manually load a file.
-Please note that the driver will only actually use SDMA when the file size is greater than 0.5MB.
-It is recommended to load zImage from sd instead of dtb.
-
-Thanks,
-Tao
-
-On 6/26/2026 6:41 AM, Bin Meng wrote:
-
-> On Thu, Jun 18, 2026 at 12:01 AM Tao Ding<dingtao0430@163.com> wrote:
->> During SDMA transfers, the controller raises an interrupt at buffer boundaries
->> to request a system address update. But the emulation fails to clear the
->> SDHC_DOING_READ/WRITE flags after DMA completion, so writes to SDHC_SYSAD are
->> ignored. Clear these flags when the transfer ends.
->> (according to PartA2_SD_Host_Controller_Simplified_Specification_Ver2.00.pdf section 2.2.1)
->>
->> This is a QTest in npcm7xx_sdhci-test that exercises this boundary condition and
->> validates the fix.
->>
->> QTest steps:
->>    1. Replace npcm7xx_sdhci-test.c with the updated version (full code
->>       available at:https://pastebin.com/AWVp2wFi).
->>    2. Build with:
->>         ../configure --target-list="arm-softmmu,aarch64-softmmu" \
->>                      --disable-slirp --enable-debug --disable-werror
->>         ninja qemu-system-arm tests/qtest/npcm7xx_sdhci-test
->>    3. Run the specific test case:
->>         QTEST_QEMU_BINARY=./qemu-system-arm \
->>           ./tests/qtest/npcm7xx_sdhci-test \
->>           -p /arm/npcm7xx_sdhci/read_sd_sdma_boundary_continue
->>
->> Before the fix, the test fails with a BLKCNT assertion:
->>    ERROR:...wait_for_block_count: assertion failed (qtest_readw(...) == expected): (1 == 0)
->>
->> After applying the fix, the test passes:
->>    ok 1 /arm/npcm7xx_sdhci/read_sd_sdma_boundary_continue
->>
->> The new test case ensures the SDMA boundary handling works correctly and
->> prevents future regressions.
->>
->>
->> Uboot test:
-> U-Boot
->
->>      1. Prepare zImage, uboot and rootfs.cpio.gz, make sure uboot config (MMC_SDHCI_SDMA=y).
-> Please specify which U-Boot defconfig you used for testing and how
-> zynq-sd.img was generated.
->
->>      2. ./qemu-system-aarch64 -M xilinx-zynq-a9 -machine boot-mode=sd -m 1024 -display none -serial null -serial stdio -monitor none \
->>          -device loader,file=u-boot-dtb.bin,addr=0x04000000,cpu-num=0  \
->>          -drive file=zynq-sd.img,format=raw,if=sd -D qemu.log
->>
->>
->> After applying the fix, success load sd card:
->>
->> U-Boot 2026.07-rc4-g1e80ee41441c (Jun 15 2026 - 19:05:05 +0800)
->>
->> Model: Xilinx ZC702 board
->> DRAM:  ECC disabled 1 GiB
->> Core:  33 devices, 21 uclasses, devicetree: board
->> Flash: 0 Bytes
->> NAND:  0 MiB
->> MMC:   mmc@e0100000: 0
->> Loading Environment from FAT... *** Error - No Valid Environment Area found
->> *** Warning - bad env area, using default environment
->>
->> In:    serial@e0001000
->> Out:   serial@e0001000
->> Err:   serial@e0001000
->> Net:
->> ZYNQ GEM: e000b000, mdio bus e000b000, phyaddr 7, interface rgmii-id
->>
->> Warning: ethernet@e000b000 (eth0) using random MAC address - 4a:63:5a:a4:d3:6b
->> eth0: ethernet@e000b000
->> Hit any key to stop autoboot: 0
->> Zynq> fatload mmc 0 ${kernel_addr_r} zImage
->> 10838528 bytes read in 4316 ms (2.4 MiB/s)
->> Zynq> fatload mmc 0 ${ramdisk_addr_r} rootfs-arm32.cpio.gz
->> 406531 bytes read in 199 ms (1.9 MiB/s)
->> Zynq> setenv ramdisk_size ${filesize}
->> Zynq> fatload mmc 0 ${fdt_addr_r} zynq-zc702.dtb
->> 15754 bytes read in 21 ms (732.4 KiB/s)
->> Zynq> setenv bootargs console=ttyPS0,115200 earlycon ignore_loglevel rdinit=/init
->> Zynq> bootz ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_addr_r}
->> Kernel image @ 0x2000000 [ 0x000000 - 0xa56200 ]
->> ## Flattened Device Tree blob at 01f00000
->>     Booting using the fdt blob at 0x1f00000
->> Working FDT set to 1f00000
->>     Loading Ramdisk to 2ff9c000, end 2ffff403 ... OK
->>     Loading Device Tree to 2ff95000, end 2ff9bd89 ... OK
->> Working FDT set to 2ff95000
->>
->> Starting kernel ...
->>
->>
->>
->> Signed-off-by: Tao Ding<dingtao0430@163.com>
->> ---
->>   hw/sd/sdhci.c | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
->> index c86dfa281f..0d87289ca4 100644
->> --- a/hw/sd/sdhci.c
->> +++ b/hw/sd/sdhci.c
->> @@ -644,6 +644,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
->>                   s->data_count = 0;
->>               }
->>               if (page_aligned && boundary_count == 0) {
->> +                s->prnsts &= ~SDHC_DOING_READ;
->>                   break;
->>               }
->>           }
->> @@ -669,6 +670,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
->>                   }
->>               }
->>               if (page_aligned && boundary_count == 0) {
->> +                s->prnsts &= ~SDHC_DOING_WRITE;
->>                   break;
->>               }
->>           }
->> --
-> Regards,
-> Bin
---------------QkAUkN0bjVvzynh7hF0pYfYY
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <pre>1. u-boot</pre>
-    <pre>I used the u-boot obtained from <a class="moz-txt-link-freetext" href="https://github.com/u-boot/u-boot">https://github.com/u-boot/u-boot</a>, 
-specifically the commit 1e80ee41441c612f05787a93bbef4e6e422e29d1.
-
-When compiling uboot, I used xilinx_zynq_virt_defconfig and enabled the SDHCI_SDMA function. 
-This can be set through scripts or in manuconfig.
-
-Below is the command I used for local compilation:
-
-$ export ARCH=arm
-$ export CROSS_COMPILE=/home/taoding/arm/gcc-arm-11.2-2022.02-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-
-$ make O=/home/taoding/arm/u-boot-build-zynq xilinx_zynq_virt_defconfig
-    
-$ /home/taoding/arm/u-boot/scripts/config \
-    --file /home/taoding/arm/u-boot-build-zynq/.config \
-    --enable MMC_SDHCI_SDMA
-    
-$ make O=/home/taoding/arm/u-boot-build-zynq olddefconfig
-$ make O=/home/taoding/arm/u-boot-build-zynq DEVICE_TREE=zynq-zc702 -j$(nproc)
-
-The U-Boot binary used by QEMU was:
-/home/taoding/arm/u-boot-build-zynq/u-boot-dtb.bin
-
-2. linux image
-I used Linux 6.6.
-Below is the command I used:
-
-$ export ARCH=arm
-$ export CROSS_COMPILE=/home/taoding/arm/gcc-arm-11.2-2022.02-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-
-$ make multi_v7_defconfig
-$ make -j$(nproc) zImage dtbs
-
-The resulting files were:
-/home/taoding/arm/linux-6.6/arch/arm/boot/zImage
-/home/taoding/arm/linux-6.6/arch/arm/boot/dts/xilinx/zynq-zc702.dtb
-
-3. rootfs</pre>
-    <pre>I utilized the defconfig and enable static binary to compile and generate rootfs-arm32.cpio.gz</pre>
-    <pre>4. zynq-sd.img
-The SD image used for testing was a FAT16 image containing:
-
-- zImage
-- zynq-zc702.dtb
-- rootfs-arm32.cpio.gz
-
-Below is the command I used:
-
-$ truncate -s 128M /home/taoding/arm/zynq-sd.img
-$ mkfs.vfat -F 16 /home/taoding/arm/zynq-sd.img
-
-$ mcopy -i /home/taoding/arm/zynq-sd.img \
-  /home/taoding/arm/linux-6.6/arch/arm/boot/zImage ::zImage
-
-$ mcopy -i /home/taoding/arm/zynq-sd.img \
-  /home/taoding/arm/linux-6.6/arch/arm/boot/dts/xilinx/zynq-zc702.dtb ::zynq-zc702.dtb
-
-$ mcopy -i /home/taoding/arm/zynq-sd.img \
-  /home/taoding/arm/rootfs-arm32.cpio.gz ::rootfs-arm32.cpio.gz
-
-If only want to verify the issues fixed in this patch, step 3 can be ignored. 
-After starting qemu and entering uboot, we can manually load a file. 
-Please note that the driver will only actually use SDMA when the file size is greater than 0.5MB. 
-It is recommended to load zImage from sd instead of dtb.
-
-Thanks,
-Tao
-
-</pre>
-    <pre class="moz-cite-prefix">On 6/26/2026 6:41 AM, Bin Meng wrote:
-</pre>
-    <blockquote type="cite"
-cite="mid:CAEUhbmVPJ_cAUQbTo0C_4swXUmL-DV0OwR6ZcMhgCUhXAP0QEA@mail.gmail.com">
-      <pre wrap="" class="moz-quote-pre">On Thu, Jun 18, 2026 at 12:01 AM Tao Ding <a class="moz-txt-link-rfc2396E" href="mailto:dingtao0430@163.com">&lt;dingtao0430@163.com&gt;</a> wrote:
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">
-During SDMA transfers, the controller raises an interrupt at buffer boundaries
-to request a system address update. But the emulation fails to clear the
-SDHC_DOING_READ/WRITE flags after DMA completion, so writes to SDHC_SYSAD are
-ignored. Clear these flags when the transfer ends.
-(according to PartA2_SD_Host_Controller_Simplified_Specification_Ver2.00.pdf section 2.2.1)
-
-This is a QTest in npcm7xx_sdhci-test that exercises this boundary condition and
-validates the fix.
-
-QTest steps:
-  1. Replace npcm7xx_sdhci-test.c with the updated version (full code
-     available at: <a class="moz-txt-link-freetext" href="https://pastebin.com/AWVp2wFi">https://pastebin.com/AWVp2wFi</a>).
-  2. Build with:
-       ../configure --target-list="arm-softmmu,aarch64-softmmu" \
-                    --disable-slirp --enable-debug --disable-werror
-       ninja qemu-system-arm tests/qtest/npcm7xx_sdhci-test
-  3. Run the specific test case:
-       QTEST_QEMU_BINARY=./qemu-system-arm \
-         ./tests/qtest/npcm7xx_sdhci-test \
-         -p /arm/npcm7xx_sdhci/read_sd_sdma_boundary_continue
-
-Before the fix, the test fails with a BLKCNT assertion:
-  ERROR:...wait_for_block_count: assertion failed (qtest_readw(...) == expected): (1 == 0)
-
-After applying the fix, the test passes:
-  ok 1 /arm/npcm7xx_sdhci/read_sd_sdma_boundary_continue
-
-The new test case ensures the SDMA boundary handling works correctly and
-prevents future regressions.
-
-
-Uboot test:
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-U-Boot
-
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">    1. Prepare zImage, uboot and rootfs.cpio.gz, make sure uboot config (MMC_SDHCI_SDMA=y).
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-Please specify which U-Boot defconfig you used for testing and how
-zynq-sd.img was generated.
-
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">    2. ./qemu-system-aarch64 -M xilinx-zynq-a9 -machine boot-mode=sd -m 1024 -display none -serial null -serial stdio -monitor none \
-        -device loader,file=u-boot-dtb.bin,addr=0x04000000,cpu-num=0  \
-        -drive file=zynq-sd.img,format=raw,if=sd -D qemu.log
-
-
-After applying the fix, success load sd card:
-
-U-Boot 2026.07-rc4-g1e80ee41441c (Jun 15 2026 - 19:05:05 +0800)
-
-Model: Xilinx ZC702 board
-DRAM:  ECC disabled 1 GiB
-Core:  33 devices, 21 uclasses, devicetree: board
-Flash: 0 Bytes
-NAND:  0 MiB
-MMC:   mmc@e0100000: 0
-Loading Environment from FAT... *** Error - No Valid Environment Area found
-*** Warning - bad env area, using default environment
-
-In:    serial@e0001000
-Out:   serial@e0001000
-Err:   serial@e0001000
-Net:
-ZYNQ GEM: e000b000, mdio bus e000b000, phyaddr 7, interface rgmii-id
-
-Warning: ethernet@e000b000 (eth0) using random MAC address - 4a:63:5a:a4:d3:6b
-eth0: ethernet@e000b000
-Hit any key to stop autoboot: 0
-Zynq&gt; fatload mmc 0 ${kernel_addr_r} zImage
-10838528 bytes read in 4316 ms (2.4 MiB/s)
-Zynq&gt; fatload mmc 0 ${ramdisk_addr_r} rootfs-arm32.cpio.gz
-406531 bytes read in 199 ms (1.9 MiB/s)
-Zynq&gt; setenv ramdisk_size ${filesize}
-Zynq&gt; fatload mmc 0 ${fdt_addr_r} zynq-zc702.dtb
-15754 bytes read in 21 ms (732.4 KiB/s)
-Zynq&gt; setenv bootargs console=ttyPS0,115200 earlycon ignore_loglevel rdinit=/init
-Zynq&gt; bootz ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_addr_r}
-Kernel image @ 0x2000000 [ 0x000000 - 0xa56200 ]
-## Flattened Device Tree blob at 01f00000
-   Booting using the fdt blob at 0x1f00000
-Working FDT set to 1f00000
-   Loading Ramdisk to 2ff9c000, end 2ffff403 ... OK
-   Loading Device Tree to 2ff95000, end 2ff9bd89 ... OK
-Working FDT set to 2ff95000
-
-Starting kernel ...
-
-
-
-Signed-off-by: Tao Ding <a class="moz-txt-link-rfc2396E" href="mailto:dingtao0430@163.com">&lt;dingtao0430@163.com&gt;</a>
+Originally-by: Mark Kanda <mark.kanda@oracle.com>
+Originally-by: Steve Sistare <steven.sistare@oracle.com>
+Originally-by: Ben Chaney <bchaney@akamai.com>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- hw/sd/sdhci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/virtio/vhost-kernel.c          | 6 ++++++
+ include/hw/virtio/vhost-backend.h | 1 +
+ 2 files changed, 7 insertions(+)
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index c86dfa281f..0d87289ca4 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -644,6 +644,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
-                 s-&gt;data_count = 0;
-             }
-             if (page_aligned &amp;&amp; boundary_count == 0) {
-+                s-&gt;prnsts &amp;= ~SDHC_DOING_READ;
-                 break;
-             }
-         }
-@@ -669,6 +670,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
-                 }
-             }
-             if (page_aligned &amp;&amp; boundary_count == 0) {
-+                s-&gt;prnsts &amp;= ~SDHC_DOING_WRITE;
-                 break;
-             }
-         }
---
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-Regards,
-Bin
-</pre>
-    </blockquote>
-  </body>
-</html>
-
---------------QkAUkN0bjVvzynh7hF0pYfYY--
+diff --git a/hw/virtio/vhost-kernel.c b/hw/virtio/vhost-kernel.c
+index 3390b48c6f1..55d316b88e9 100644
+--- a/hw/virtio/vhost-kernel.c
++++ b/hw/virtio/vhost-kernel.c
+@@ -261,6 +261,11 @@ static int vhost_kernel_set_owner(struct vhost_dev *dev)
+     return vhost_kernel_call(dev, VHOST_SET_OWNER, NULL);
+ }
+ 
++static int vhost_kernel_reset_owner(struct vhost_dev *dev)
++{
++    return vhost_kernel_call(dev, VHOST_RESET_OWNER, NULL);
++}
++
+ static int vhost_kernel_get_vq_index(struct vhost_dev *dev, int idx)
+ {
+     assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
+@@ -385,6 +390,7 @@ const VhostOps kernel_ops = {
+         .vhost_get_features_ex = vhost_kernel_get_features,
+         .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
+         .vhost_set_owner = vhost_kernel_set_owner,
++        .vhost_reset_owner = vhost_kernel_reset_owner,
+         .vhost_get_vq_index = vhost_kernel_get_vq_index,
+         .vhost_vsock_set_guest_cid = vhost_kernel_vsock_set_guest_cid,
+         .vhost_vsock_set_running = vhost_kernel_vsock_set_running,
+diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
+index d878d7b733a..6c949e6a38d 100644
+--- a/include/hw/virtio/vhost-backend.h
++++ b/include/hw/virtio/vhost-backend.h
+@@ -204,6 +204,7 @@ typedef struct VhostOps {
+     vhost_get_features_op vhost_get_features;
+     vhost_set_backend_cap_op vhost_set_backend_cap;
+     vhost_set_owner_op vhost_set_owner;
++    vhost_set_owner_op vhost_reset_owner;
+     vhost_reset_device_op vhost_reset_device;
+     vhost_get_vq_index_op vhost_get_vq_index;
+     vhost_set_vring_enable_op vhost_set_vring_enable;
+-- 
+2.47.1
 
 
