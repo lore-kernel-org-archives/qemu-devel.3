@@ -4,98 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C187CDE008
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 00:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11C41CDE008
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 00:54:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcum1-0005tI-06; Thu, 25 Jun 2026 20:50:25 -0400
+	id 1wcupZ-0006ZU-3T; Thu, 25 Jun 2026 20:54:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anderson@allelesecurity.com>)
- id 1wcum0-0005t9-3K
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 20:50:24 -0400
-Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wcupX-0006Yr-4T
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 20:54:03 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <anderson@allelesecurity.com>)
- id 1wculy-00073h-7C
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 20:50:23 -0400
-Received: by mail-vk1-xa29.google.com with SMTP id
- 71dfb90a1353d-5bd745cf7c7so172512e0c.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 17:50:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782435021; cv=none;
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wcupV-0007ka-9C
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 20:54:02 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-697564cb69eso738737a12.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 17:54:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782435240; cv=none;
  d=google.com; s=arc-20260327;
- b=IqVHNSmsHJuKrO/ith58Ktl5q7O2A7U6mQuSpcVtIO4dej6EUARf1JkkOt3XfVc3Dj
- KIcCLp8BuJPFTPgjqFYi+nqMKbkrN7tAvOsfg1LbEJhivlILUgCO9w6fJZGnfMx+ILyY
- aZ9vaHx1Y8EwPQ/IZcv2FiJ6/XEGi1coRt18k3YrXwY902iFLOQWwoYAV2hujCe1/cRu
- sFXcSAnrTohY559joosaydzf/bRmrhy9HWhVui/cH5f+MpngTuqZczwMN66UEZqBSuFz
- k6WnEMgn/bsuHL3ElHEBHf5rFYmHzJxM2BZciHRkQsAzHked3vCqRKaRfsDy/ksPod8Y
- GMEQ==
+ b=UbBolbU7bxRPCCgNPGg8wKXtm/el+jgOUisUwjGledAsjVMF4O791peGW2I0fctFS3
+ 1O+DnYB4gGMVXQ6xxckMNBrFdpxDcNQAAp9L3wtzH+3FaYegaXAnooWr6l+tBpM07gQH
+ R/z3E5RHy7+shkKzOhOiKxwzrxelJOLCgSR/fRVEYEPemXn9Ax9TidSXIePIzowo375W
+ us0SFRTUCL4NAymGFaIykX/RWR30MahxT21NqQtXnEH+bWFtkuX0zFxmYkPdXtQKUrn9
+ leacsJDXZVczzIvqrblWdgP/wBndta5ai5AJD3P7mdnmuGATMIXqWi3IxlvLsz8rqscf
+ gx7w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:to:subject:message-id:date:from
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=BqQCfvlMdspaXATh6pvzxGuSsYISWZsRSeThdGphm0U=;
- fh=dv8mTi9+qPmyO1fqk2LagI0qj6Vd/IYVckCgPdJ8JxM=;
- b=A6rZiN/p/feq1FfAmTPeP55SuIv/ouhcJxqvuycBp+owFYvrs2CN0JmJHMuzic7OAG
- A0LdsOnhcywYpqOk/MGLgHys6n/gcW0JRf1q2XDc9oDVsroq98EjUmxRjQuQYrti/oxK
- tm+4zreyVU3gO9u6B6guCO+bAb/XzF3j66sPHkDNcq7pwdxRnu4JumSeGYXzkssgBMqt
- eIXWpS0m021Oyl3O9W1uCYIyDtTLFnpbXtlNzTjkTpycy3BWn3BQq3+WhPH6d7+3vwSD
- RkATI8DS3bdr9FAmmn5Noo9/91gOIiV+ScCQwLLQlGOoDt7soO5ZEqABMBGiGgtEd2Fq
- gFDg==; darn=nongnu.org
+ bh=rOdMdfXQPoci905bSj2iPr8W+p1mL0QD37a9hNQws1M=;
+ fh=9/4tzqKjgzJcjmYJcCvfm+LbcgW0ATp/rdwAYjKmbVo=;
+ b=lpUKuljUgYG5ZkKNxeb7J/WKfTYCP8/U7A9H7YfGZr01rHMT9dDelhkDt/UVvUx0rh
+ AYvcilXfjjIoAyRnDK8HIRl2syzZYwUl/rUY/54cBisi86bC8kIRoyRlRhlmrUfwpl3J
+ mwRHEq4iXRJLLQjWplflyobJ/41lc4X3BaBtIWbt34MLdn84FghE9oHdC1xG170H54Sg
+ 0Scfxgaj2BDGrklCIqsW7KQl6dZvfXvEEv8/xO5y4oSQWx2v0PtQajoK2XL/SOz1Ow6i
+ +opLe1szCZxg33sw9+Y71famvQP+b8rHN9kv9yWShWaiYnmSk0jnakVtBmkFCoDQ8GMS
+ pj5g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=allelesecurity.com; s=google; t=1782435021; x=1783039821; darn=nongnu.org;
- h=content-transfer-encoding:to:subject:message-id:date:from
+ d=gmail.com; s=20251104; t=1782435240; x=1783040040; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BqQCfvlMdspaXATh6pvzxGuSsYISWZsRSeThdGphm0U=;
- b=M/efzXyGSPrlBXQlrD9tDms1Jsju6MzQ/8X6uSWC5OC3t4jZ0K4JkrXTyIGVqml+3n
- 2m9zYNebSmAp//mhceVTJLU8V09um/emQlPXd7S9UBWO7+csxrBaI2NtrtkicE44B4Th
- Z+oXP7nAzxK2e5g2sd0h7rMc5LLNqxQYv0X8o=
+ bh=rOdMdfXQPoci905bSj2iPr8W+p1mL0QD37a9hNQws1M=;
+ b=GslkxSFX9VPupN4qMxmn/9wvJTi8aznDqGpH2Xe0MurhMoxzgFVna575op0ZhkqWWQ
+ gT5LWtV1tHi+Uf50haq8h+C1Lw7vij9pRwDrOXCljJ+YegOlZCtNRafAB74yg2pHg+8Z
+ MX2826FMo26XZT1ItCWfmIGbX+JZjBBrahYkAjQy9IfI7a/RNwBRcJcv9yZTVyx9F66z
+ s5axstBg0Rsnz2WVdCLR8e/svVhYX1c1vP0qTszGahdSwQH/hK2wwj1O+9vHxtlV604n
+ vZ5so9jyzoiw30ZNtRhonllL78Iy8rh8c06/v8O/x41cv9O4T889Tm3++M34twco0+l3
+ pcEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782435021; x=1783039821;
- h=content-transfer-encoding:to:subject:message-id:date:from
+ d=1e100.net; s=20251104; t=1782435240; x=1783040040;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=BqQCfvlMdspaXATh6pvzxGuSsYISWZsRSeThdGphm0U=;
- b=M3jElCvGIv2vg/nv7H5+wiLYgBBbmhEHeForknDnwhaAnBtM74d1xWT5FiirykPoTR
- FEH/Qwgd75bbdymxgO5ToMdg7y/cwp9rU6X03Hga3Wlo3TRK64zNC2HHL5Oww6BZ00V4
- DfwOojKjsSeRRH7beA1FSbcjxlRP3+8GKtW6qQiJRXqe2+WHX+cpIdDDr3GHwFTjBYH6
- 6vIm+mouWCAcK0veFUx9uAb5k4sZY/kQdvvrCi2NuesEHklBv1Iz+1/VcoJHweODxMgJ
- 3gooMruzzEgxGCXBpOTmBCbIiI5m8tlISyEAi+oYklQKegONW7GsShmlBESW5eLrpJrn
- L2xg==
-X-Gm-Message-State: AOJu0YyfotljFhpLKVQtQvDi1VDndNg9gt6aivbjGEVHUFs0gUG3rqAY
- BeqLSGtI/aPfIZEPG5GqA5edDk3WAx4xyoyuWSeDU1h0HSA0Ap0kbBHPhiCirLuvtcunC3cWCE0
- vgSaEA8qgpV7FiEQxKflyGHGuV/yC2BrmOOElP4hwx8pxE2ZWDHe/F2P2mQ==
-X-Gm-Gg: AfdE7clK6CncN6t00NtUor9UXbbNLkanbkmNq6RFuro8VW9tAJvMo+kOxdgnNO1nsKe
- tTPM7KBXCA66OnR7+KsvEOYuPtzaUxkHOJqfhSYBMUhdEV/VxnX64patQjuuYZafcBQbbrGq75u
- qk6NQw23ijpBFpDGKsd4YP2brgVoWIxG7y7zhqzD56lmxflLZDWRoMZafzsaKuXqCsq1fE++UC3
- EMP6AWULYwBI3GjIfPh88nRvGTzG35GaegR8d1rCt8fKkSjFfYp5EcpyUIxMxmwMtdCBsW7QQ==
-X-Received: by 2002:a05:6122:7d0:b0:56a:fff5:b4d6 with SMTP id
- 71dfb90a1353d-5bd69dc5b2fmr2355161e0c.4.1782435020693; Thu, 25 Jun 2026
- 17:50:20 -0700 (PDT)
+ bh=rOdMdfXQPoci905bSj2iPr8W+p1mL0QD37a9hNQws1M=;
+ b=jhk4PaZEXDcKdx5b5sONGJKgBcX6+FgaLa/ofPyWaKH1qiAH6L83xdKAdZyRtCpqhr
+ JTOEQ8Mrf5O+PI/UAuyI6pe37+BPyXUghXOelgDNz/3O9XBsYFjt1lj5AXXrLhGMKaKO
+ U0w+n9quA7b37ltNFkQCJLLEnu8844g6MCSswgvXKb6PGeo70QGb9TZ7CowTuqb+Tj2F
+ Uw9rp2AKFDaDgRl48DLaZkLpRaejUF4znpq2nVFBM1x7sKqg3rCbosBeG00SF0qX+TJ/
+ b2e3k8D8MqyauuYfeNVdf5OqtlT3vWKHcOZbBQmcWdY8IxVHNMqqZ8bHyRjOHdI5OjwY
+ u0eA==
+X-Gm-Message-State: AOJu0YzTjT/QmrJtcpGpgCJvy8SBMn7uDcwwrT0IBvegrLiatIv64Mt5
+ gF7D0omTEKEMEqmaQm3jsf7lCfKYF92DvyIVUsRWRvrqfMAM2QbOnG/hAvT52K2+nsAg5P5TxPe
+ 4AIyiDhAXCRiMSi+IqNILl20L63v6vEY=
+X-Gm-Gg: AfdE7cmV3CyDwcqml1UTrmFFp9PcSbhuOxJIsPqZi4pIFrIA0yFYPgapFbCla5m/xOQ
+ QbxVQTFh0lTexVk60SfCRibC/Sl6cGrhjOov9VO4mKciP/fZYHN2ieXW8b7xar8LJrHVzg9dnt/
+ Rao1sOu2KOIObzeczv7H8g+U9Jr1kCT103EdNcF+6ftH3eHjOYbni4XFGJmg5Tx2owLorgDA5yM
+ nb9ba6MsI5w3hM0TYBnA0qkLEaLA5bl+xt9dswNFCaETxNu/ZwdTxHjWsaUq2CPGh2RAgRPIfkf
+ wRPBbPV+gPSYWU3ZptC5hVXUC7s=
+X-Received: by 2002:a05:6402:2551:b0:697:f2e4:3ef2 with SMTP id
+ 4fb4d7f45d1cf-69810aefab3mr764099a12.14.1782435239578; Thu, 25 Jun 2026
+ 17:53:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260602140348.774203-1-anderson@allelesecurity.com>
- <20260602140348.774203-2-anderson@allelesecurity.com>
-In-Reply-To: <20260602140348.774203-2-anderson@allelesecurity.com>
-From: Anderson Nascimento <anderson@allelesecurity.com>
-Date: Thu, 25 Jun 2026 21:50:05 -0300
-X-Gm-Features: AVVi8CeJehDJerDlbCkjrru-3HwZDmENMGLl3AYEjyWjtgkFiQESrM4n-Vq5pNI
-Message-ID: <CAPhRvkygtCgfHaD5eHT-aFKSnQ1OA9-YBDOFNNwX+SukYFrhPA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] target/i386: Add support for KVM APERF/MPERF
- passthrough
-To: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com, 
- zhao1.liu@intel.com, mtosatti@redhat.com
+References: <20260624000632.2149359-1-daniel.barboza@oss.qualcomm.com>
+ <20260624000632.2149359-6-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260624000632.2149359-6-daniel.barboza@oss.qualcomm.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 26 Jun 2026 10:53:32 +1000
+X-Gm-Features: AVVi8Cdu66_1Xo6lhtzJ3mOcm1eTly6jlox8qMG8eSOrL3_CsX0GRSA6qI4iMdU
+Message-ID: <CAKmqyKN7gnDnGpudLUtfZUwAOe+dGWR2Ufti=0YpL9MHJZ4JcQ@mail.gmail.com>
+Subject: Re: [PATCH v2 05/24] target/riscv: tidy up riscv_sysemu_ops
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
+ pierrick.bouvier@oss.qualcomm.com, philmd@oss.qualcomm.com, 
+ fritchleybohrer@gmail.com, Palmer Dabbelt <palmer@dabbelt.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
- envelope-from=anderson@allelesecurity.com; helo=mail-vk1-xa29.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,138 +120,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 2, 2026 at 11:05=E2=80=AFAM Anderson Nascimento
-<anderson@allelesecurity.com> wrote:
+On Wed, Jun 24, 2026 at 10:08=E2=80=AFAM Daniel Henrique Barboza
+<daniel.barboza@oss.qualcomm.com> wrote:
 >
-> Introduce support for exposing and enabling APERF/MPERF MSR passthrough
-> for x86 QEMU guests when running under KVM.
+> monitor_get_register at this moment has a TCG exclusive implementation
+> for RISC-V, even though the callback is supposed to be arch independent.
+> Until we address how KVM is going to implement it we need to filter it ou=
+t
+> in cpu.c.v
 >
-> The Linux kernel supports a KVM capability allowing the hypervisor to
-> disable read intercepts on the IA32_APERF and IA32_MPERF MSRs, enabling
-> guests to track effective frequency directly without VM-exits. QEMU
-> currently lacks a native way to request this capability or expose the
-> corresponding feature bit to the guest.
+> Same goes for get_phys_addr_debug - it has a TCG only implementation and
+> KVM can't use it for now.  It would also need to be filtered out, but
+> since we're at it, let's convert it to the newer 'translate_for_debug'
+> API too.  Same restrictions apply.
 >
-> This patch adds the `aperfmperf` feature flag via `FEAT_6_ECX`
-> (CPUID.06H:ECX[bit 0]). To ensure safe tracking across power states,
-> the flag ties into QEMU's existing host power management framework.
-> When host CPU power management is explicitly requested by the user
-> (via `-overcommit cpu-pm=3Don`) and the `+aperfmperf` flag is provided
-> to the CPU, QEMU will invoke the KVM ioctl to drop the APERF/MPERF
-> MSR read intercepts.
->
-> This implementation allows guest operating systems (such as FreeBSD
-> or Linux) to dynamically calculate CPU utilization and turbo-boost
-> metrics without incurring performance overhead from hypervisor trap-and-
-> emulate loops.
->
-> Signed-off-by: Anderson Nascimento <anderson@allelesecurity.com>
+> Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
 > ---
-> Changes in v2
-> - Added migration flags
-> - Link to v1: https://lore.kernel.org/all/20260602022048.752453-1-anderso=
-n@allelesecurity.com/
+>  target/riscv/cpu.c            |  6 ++++--
+>  target/riscv/cpu.h            |  3 ++-
+>  target/riscv/monitor.c        |  2 ++
+>  target/riscv/tcg/cpu_helper.c | 14 ++++++++++----
+>  4 files changed, 18 insertions(+), 7 deletions(-)
 >
->  target/i386/cpu.c     | 18 +++++++++++++++++-
->  target/i386/cpu.h     |  2 ++
->  target/i386/kvm/kvm.c |  5 ++++-
->  3 files changed, 23 insertions(+), 2 deletions(-)
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 4e96bbeb60..319825882a 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2669,11 +2669,13 @@ static int64_t riscv_get_arch_id(CPUState *cs)
 >
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 8929a75c7c..544738d406 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -1544,6 +1544,22 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] =
-=3D {
->          .cpuid =3D { .eax =3D 6, .reg =3D R_EAX, },
->          .tcg_features =3D TCG_6_EAX_FEATURES,
->      },
-> +    [FEAT_6_ECX] =3D {
-> +        .type =3D CPUID_FEATURE_WORD,
-> +        .feat_names =3D {
-> +            "aperfmperf", NULL, NULL, NULL,
-> +            NULL, NULL, NULL, NULL,
-> +            NULL, NULL, NULL, NULL,
-> +            NULL, NULL, NULL, NULL,
-> +            NULL, NULL, NULL, NULL,
-> +            NULL, NULL, NULL, NULL,
-> +            NULL, NULL, NULL, NULL,
-> +            NULL, NULL, NULL, NULL,
-> +        },
-> +        .cpuid =3D { .eax =3D 6, .reg =3D R_ECX, },
-> +        .tcg_features =3D 0,
-> +        .unmigratable_flags =3D CPUID_6_ECX_APERFMPERF,
-> +    },
->      [FEAT_XSAVE_XCR0_LO] =3D {
->          .type =3D CPUID_FEATURE_WORD,
->          .cpuid =3D {
-> @@ -8770,7 +8786,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index=
-, uint32_t count,
->          /* Thermal and Power Leaf */
->          *eax =3D env->features[FEAT_6_EAX];
->          *ebx =3D 0;
-> -        *ecx =3D 0;
-> +        *ecx =3D env->features[FEAT_6_ECX];
->          *edx =3D 0;
->          break;
->      case 7:
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 67e2ecf325..87864969c7 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -700,6 +700,7 @@ typedef enum FeatureWord {
->      FEAT_SVM,           /* CPUID[8000_000A].EDX */
->      FEAT_XSAVE,         /* CPUID[EAX=3D0xd,ECX=3D1].EAX */
->      FEAT_6_EAX,         /* CPUID[6].EAX */
-> +    FEAT_6_ECX,         /* CPUID[6].ECX */
->      FEAT_XSAVE_XCR0_LO, /* CPUID[EAX=3D0xd,ECX=3D0].EAX */
->      FEAT_XSAVE_XCR0_HI, /* CPUID[EAX=3D0xd,ECX=3D0].EDX */
->      FEAT_ARCH_CAPABILITIES,
-> @@ -1232,6 +1233,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU =
-*cpu, FeatureWord w);
->  #define CPUID_XSAVE_XFD        (1U << 4)
+>  static const struct SysemuCPUOps riscv_sysemu_ops =3D {
+>      .has_work =3D riscv_cpu_has_work,
+> -    .get_phys_addr_debug =3D riscv_cpu_get_phys_addr_debug,
+>      .write_elf64_note =3D riscv_cpu_write_elf64_note,
+>      .write_elf32_note =3D riscv_cpu_write_elf32_note,
+> -    .monitor_get_register =3D riscv_monitor_get_register_legacy,
+>      .legacy_vmsd =3D &vmstate_riscv_cpu,
+> +#ifdef CONFIG_TCG
+> +    .translate_for_debug =3D riscv_cpu_translate_for_debug,
+> +    .monitor_get_register =3D riscv_monitor_get_register_legacy,
+> +#endif
+>  };
+>  #endif
 >
->  #define CPUID_6_EAX_ARAT       (1U << 2)
-> +#define CPUID_6_ECX_APERFMPERF (1U << 0)
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index f0c78c1474..70b8729bd7 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -665,7 +665,8 @@ void riscv_cpu_do_transaction_failed(CPUState *cs, hw=
+addr physaddr,
+>                                       MMUAccessType access_type,
+>                                       int mmu_idx, MemTxAttrs attrs,
+>                                       MemTxResult response, uintptr_t ret=
+addr);
+> -hwaddr riscv_cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
+> +bool riscv_cpu_translate_for_debug(CPUState *cs, vaddr addr,
+> +                                   TranslateForDebugResult *result);
+>  bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_request);
+>  void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env);
+>  int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts);
+> diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
+> index 3e89dcaf7c..7aacd1d89c 100644
+> --- a/target/riscv/monitor.c
+> +++ b/target/riscv/monitor.c
+> @@ -245,6 +245,7 @@ void hmp_info_mem(Monitor *mon, const QDict *qdict)
+>      mem_info_svxx(mon, env);
+>  }
 >
->  /* CPUID[0x80000007].EDX flags: */
->  #define CPUID_APM_INVTSC       (1U << 8)
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 9e352882c8..ca722ff9e9 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -498,6 +498,8 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, ui=
-nt32_t function,
->          }
->      } else if (function =3D=3D 6 && reg =3D=3D R_EAX) {
->          ret |=3D CPUID_6_EAX_ARAT; /* safe to allow because of emulated =
-APIC */
-> +    } else if (function =3D=3D 6 && reg =3D=3D R_ECX) {
-> +        ret |=3D CPUID_6_ECX_APERFMPERF;
->      } else if (function =3D=3D 7 && index =3D=3D 0 && reg =3D=3D R_EBX) =
-{
->          /* Not new instructions, just an optimization.  */
->          uint32_t ebx;
-> @@ -3291,7 +3293,8 @@ static int kvm_vm_enable_disable_exits(KVMState *s)
->          disable_exits &=3D (KVM_X86_DISABLE_EXITS_MWAIT |
->                            KVM_X86_DISABLE_EXITS_HLT |
->                            KVM_X86_DISABLE_EXITS_PAUSE |
-> -                          KVM_X86_DISABLE_EXITS_CSTATE);
-> +                          KVM_X86_DISABLE_EXITS_CSTATE |
-> +                          KVM_X86_DISABLE_EXITS_APERFMPERF);
+> +#ifdef CONFIG_TCG
+>  static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
+>                                   target_ulong *val, bool is_gprh)
+>  {
+> @@ -379,3 +380,4 @@ int riscv_monitor_get_register_legacy(CPUState *cs, c=
+onst char *name,
+>
+>      return -EINVAL;
+>  }
+> +#endif
+> diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.=
+c
+> index 59edcdd370..a893472c4e 100644
+> --- a/target/riscv/tcg/cpu_helper.c
+> +++ b/target/riscv/tcg/cpu_helper.c
+> @@ -1771,7 +1771,8 @@ static void raise_mmu_exception(CPURISCVState *env,=
+ target_ulong address,
+>      env->two_stage_indirect_lookup =3D two_stage_indirect;
+>  }
+>
+> -hwaddr riscv_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
+> +bool riscv_cpu_translate_for_debug(CPUState *cs, vaddr addr,
+> +                                   TranslateForDebugResult *result)
+>  {
+>      RISCVCPU *cpu =3D RISCV_CPU(cs);
+>      CPURISCVState *env =3D &cpu->env;
+> @@ -1781,17 +1782,22 @@ hwaddr riscv_cpu_get_phys_addr_debug(CPUState *cs=
+, vaddr addr)
+>
+>      if (get_physical_address(env, &phys_addr, &prot, addr, NULL, 0, mmu_=
+idx,
+>                               true, env->virt_enabled, true, false)) {
+> -        return -1;
+> +        return false;
 >      }
 >
->      return kvm_vm_enable_cap(s, KVM_CAP_X86_DISABLE_EXITS, 0,
-> --
-> 2.54.0
+>      if (env->virt_enabled) {
+>          if (get_physical_address(env, &phys_addr, &prot, phys_addr, NULL=
+,
+>                                   0, MMUIdx_U, false, true, true, false))=
+ {
+> -            return -1;
+> +            return false;
+>          }
+>      }
 >
-
-ping
-
-Is there anything I should do to get this patch applied?
-
---=20
-Anderson Nascimento
-Allele Security Intelligence
-https://www.allelesecurity.com
+> -    return phys_addr;
+> +    *result =3D (TranslateForDebugResult) {
+> +        .physaddr =3D phys_addr,
+> +        .lg_page_size =3D TARGET_PAGE_BITS,
+> +        .attrs.debug =3D 1,
+> +    };
+> +    return true;
+>  }
+>
+>  void riscv_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+> --
+> 2.43.0
+>
+>
 
