@@ -4,90 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9B28CD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 12:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B41CCDE00E
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 12:27:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd5Hc-0005iX-T1; Fri, 26 Jun 2026 08:03:44 -0400
+	id 1wd5eW-00027Y-09; Fri, 26 Jun 2026 08:27:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ziyifu970225@gmail.com>)
- id 1wd1Zt-0000rl-NN
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 04:06:21 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ziyifu970225@gmail.com>)
- id 1wd1Zs-0002Es-5N
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 04:06:21 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-463f1165e16so637722f8f.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 01:06:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782461178; x=1783065978; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=KHWAytSHm3rZiuxyO5V2zu9TvkYZv4XaAdR3/Rzb+d0=;
- b=eMDEaPnZUR93cNZ7Qh2A18I6Hm3vBAkgGiLjVvSma0361sxHUB8IcZXIoEzFo8TMY0
- fu40WszlT9sEPNFUDNygoxUSlN3Y6Mw5DccMCEU7gMDbZWeS3Ld/68v7t2OY6ox6Kqe1
- 8dVjy1uE6WgZptWxO4fpLZr6yXsDO+TAHqy7/GTVeFC9yWeO7ZzgDEqXq3UPXGl0xWyJ
- sb/702wy95P/fsSO6av6OWMemPTYHNxLkfoYpLKg58V5o6znmiVjNRNdk87aP3G1C3fs
- pawkTzID/mX4j5FtjFb//7qu6UboWq9ycO85D/kdoV4gYzNguOstgQVUdRw4x5V284gO
- vGSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782461178; x=1783065978;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KHWAytSHm3rZiuxyO5V2zu9TvkYZv4XaAdR3/Rzb+d0=;
- b=TPVKROo6bXlgXrhha8UnM/8De05ym31bwoNVJp3exW7TPD2qtXfKPy+2/L40xLnDkq
- Tryj/gwA70HusZDje6Eml2a2ocdqdjoQKj6qfMsOZwFajWyaM3ZtWj00CWjSl+aAHcuv
- VoGZP/1tUKo7XbF59ToctuV/oYTmqqvR+5aGch/DGHFnuILAYV1tDIkDKca85sWul75Y
- ap2jViOu6WM2mIIILZdyDEiUorD4SQ6QaRg9Ak3/AxyOdb/nPkoPykrdCc/UpEigzXyN
- EIuo13zsJkz4z8RpfO6A2/AgZsRjM5W2lbhW4iXLsXtLSve672Dt9VJbtfxYc1xZhIBB
- kDTw==
-X-Gm-Message-State: AOJu0YzDipZJlx+9LkEQOta4TKJuiTWMMzDLyezEj5AHFYJc7lEPWR2P
- zJzckQf17mvXxOz0w8GrsNU7eJLN5Re0SukZwtX3MKg7I+zrpSgDQMnoklWVTWYa
-X-Gm-Gg: AfdE7cljyBUERtJGzI6+0nYHOtEX2RP0jsLo4zB3WQyPCWloKitsnKRFajprApxQuxU
- G0aMB1Z/8vvn2E84YU9IvH/8Ar8iFGtqTkrXP5ff6Enz6VpS1fcHPlJCDk474+Q3RAFLiS4GGHq
- n3ZDe4yqy9+p+EMy7UKcOzy3O0yaXYuPFvczde2IniZWkl3zOc6WNT1E6A9PHjzHS0fuGu97epE
- ZEMBI/aD5hHjf+yOnDdDOg0jcsY7cJrvPYjN1N51gvMdBKmqg5MQLRqG3AVpUP3LMZsBEM5m/YA
- xpBv3re23Ot8qjWH73aumBSqH/gMAyd/xujCcJuUwjhmpOgduMajsY8W2R89ynZmE06A/uRat4C
- kEE+BbLEUHi8Tmloz4MzQGoczutHILtC2PtYkdlE9vM7LotqIpwSRP/t1CqCxUyvQkQpLO6CRHK
- 184ctBc+gdzsI=
-X-Received: by 2002:a05:600c:4745:b0:490:b355:9c70 with SMTP id
- 5b1f17b1804b1-49266873f5bmr79323925e9.11.1782461177871; 
- Fri, 26 Jun 2026 01:06:17 -0700 (PDT)
-Received: from nixos ([2a00:8180:2004:e00:d275:2473:944c:1937])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46d3ba68d8dsm16777514f8f.27.2026.06.26.01.06.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 01:06:17 -0700 (PDT)
-From: Ziyi Fu <ziyifu970225@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- Laurent Vivier <laurent@vivier.eu>,
- BU Embedded <bu-embedded@cyberus-technology.de>,
- Ziyi Fu <ziyi.fu@cyberus-technology.de>
-Subject: [PATCH] hw/usb: record async control completion for parameter
- transfers
-Date: Fri, 26 Jun 2026 10:05:53 +0200
-Message-ID: <20260626080554.1656771-1-ziyifu970225@gmail.com>
-X-Mailer: git-send-email 2.51.2
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1wd5eP-00025v-Lw; Fri, 26 Jun 2026 08:27:18 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1wd5eC-000876-BJ; Fri, 26 Jun 2026 08:27:17 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id 5A1A24345A;
+ Fri, 26 Jun 2026 12:26:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47711F000E9;
+ Fri, 26 Jun 2026 12:26:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1782476801;
+ bh=0w+UV/aJcbeAChLuaIHR+ffrOkNsj6ZX4J/nnxrxrR8=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=CY/ALllivROSG1iFlZBdZyGSAD7RAmyM4fZlhOvuFRFsqy/jejd+pK0IXaT3DgOqv
+ 75AluDbNKTF7edoSPoSkj7ArWh0hjh7uPAF1jq+oNW+TMaZKWDYjozdBvmVWHR5b+1
+ a/WJfwknHS6bzFivdzr5CAbwGoVJFt85d+2seAvOJOrlCu6aX7ek5PBOQTKfcZUD/2
+ hvtT902e1/c6EvsXLAK+ZRDg3ufLcgktX6K/uIjwqJbhfq6KmMoqqhLlvVJZWm75WG
+ qvAIdh9qmF6EP5aEH0rOH9DcCvjuIA6Q9RKHlCHPYmgKpImOrOnFSxFdA78J1IH8pd
+ vGCiol7LKVIJg==
+Date: Fri, 26 Jun 2026 14:26:36 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Sam Li <faithilikerun@gmail.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ dlemoal@kernel.org, qemu-block@nongnu.org, dmitry.fomichev@wdc.com,
+ Markus Armbruster <armbru@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v12 2/5] qcow2: add configurations for zoned format
+ extension
+Message-ID: <aj5v_GsZyzPSwlPR@ryzen>
+References: <20260623184830.373232-1-faithilikerun@gmail.com>
+ <20260623184830.373232-3-faithilikerun@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=ziyifu970225@gmail.com; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260623184830.373232-3-faithilikerun@gmail.com>
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 26 Jun 2026 08:03:41 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,37 +75,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ziyi Fu <ziyi.fu@cyberus-technology.de>
+On Tue, Jun 23, 2026 at 08:48:27PM +0200, Sam Li wrote:
+> To configure the zoned format feature on the qcow2 driver, it
+> requires settings as: the device size, zone model, zone size,
+> zone capacity, number of conventional zones, limits on zone
+> resources (max append bytes, max open zones, and max_active_zones).
+> 
+> To create a qcow2 image with zoned format feature, use command like
+> this:
+> qemu-img create -f qcow2 zbc.qcow2 -o size=768M \
+> -o zone.size=64M -o zone.capacity=64M -o zone.conventional_zones=0 \
+> -o zone.max_append_bytes=4096 -o zone.max_open_zones=6 \
+> -o zone.max_active_zones=8 -o zone.mode=host-managed
+> 
+> Signed-off-by: Sam Li <faithilikerun@gmail.com>
+> Acked-by: Markus Armbruster <armbru@redhat.com> # QAPI schema
+> ---
+>  block/file-posix.c               |   2 +-
+>  block/qcow2.c                    | 335 ++++++++++++++++++++++++++++++-
+>  block/qcow2.h                    |  83 +++++++-
+>  docs/interop/qcow2.rst           | 120 ++++++++++-
+>  include/block/block_int-common.h |  15 +-
+>  qapi/block-core.json             |  91 ++++++++-
+>  tests/qemu-iotests/082.out       | 126 ++++++++++++
+>  7 files changed, 763 insertions(+), 9 deletions(-)
+> 
+> diff --git a/block/file-posix.c b/block/file-posix.c
+> index 3c985da94f..ddb159c58b 100644
+> --- a/block/file-posix.c
+> +++ b/block/file-posix.c
+> @@ -3600,7 +3600,7 @@ raw_co_zone_append(BlockDriverState *bs,
+>  
+>      if (*offset & zone_size_mask) {
+>          error_report("sector offset %" PRId64 " is not aligned to zone size "
+> -                     "%" PRId32 "", *offset / 512, bs->bl.zone_size / 512);
+> +                     "%" PRId64 "", *offset / 512, bs->bl.zone_size / 512);
+>          return -EINVAL;
+>      }
 
-Record the completion side of parameter-based control transfers when they
-complete asynchronously. This lets pcap captures include descriptor
-response data for requests such as GET_DESCRIPTOR from usb-host devices.
+I think it would be easier if this change, together with:
 
-The synchronous path already recorded the completion, but the async
-SETUP_STATE_PARAM path was missing it.
+> @@ -901,7 +908,13 @@ typedef struct BlockLimits {
+>      BlockZoneModel zoned;
+>  
+>      /* zone size expressed in bytes */
+> -    uint32_t zone_size;
+> +    uint64_t zone_size;
 
-Signed-off-by: Ziyi Fu <ziyi.fu@cyberus-technology.de>
----
-Tested with a usb-host HID keyboard on qemu-xhci. Before this change, the
-generated pcap contained GET_DESCRIPTOR submissions but not the corresponding
-completion payloads. After this change, the pcap contains the descriptor
-payloads and Wireshark can associate endpoint 0x81 with the HID interface.
+was in a separate prep patch earlier in this series.
 
- hw/usb/core.c | 1 +
- 1 file changed, 1 insertion(+)
+While I understand the logic behind increasing the zone_size to uint64_t
+(i.e. to match "struct blk_zone" struct member "len" (representing
+zone size) in Linux include/uapi/linux/blkzoned.h), this seems like an
+independent change that should be done to the QEMU block layer, that
+does not really have anything to do with adding qcow2 zoned support.
 
-diff --git a/hw/usb/core.c b/hw/usb/core.c
-index 9572a870cc..d71204c5c8 100644
---- a/hw/usb/core.c
-+++ b/hw/usb/core.c
-@@ -345,6 +345,7 @@ void usb_generic_async_ctrl_complete(USBDevice *s, USBPacket *p)
-             p->actual_length = 0;
-             usb_packet_copy(p, s->data_buf, s->setup_len);
-         }
-+        usb_pcap_ctrl(p, false);
-         break;
- 
-     default:
--- 
-2.51.2
+
+Kind regards,
+Niklas
 
