@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E45BCDE008
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 01:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87153CDE008
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 01:22:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcvEM-0007cX-19; Thu, 25 Jun 2026 21:19:42 -0400
+	id 1wcvGZ-0000FR-Ji; Thu, 25 Jun 2026 21:21:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wcvEK-0007cH-9k
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 21:19:40 -0400
+ id 1wcvGY-0000Eg-4U
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 21:21:58 -0400
 Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wcvEH-0005R7-Ee
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 21:19:40 -0400
+ id 1wcvGW-000613-K3
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 21:21:57 -0400
 Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-69532288224so878758a12.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 18:19:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782436776; cv=none;
+ 4fb4d7f45d1cf-6974ef0c3b1so482079a12.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 18:21:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782436915; cv=none;
  d=google.com; s=arc-20260327;
- b=miho7GfPHEsExXPn90DD7zkAOs5m4hNWHSpTi/Gt++ffBGMWauShFP0VbO9nWDzLJU
- pSxTt06nHQ1xAmqEnZCjoaMKm/qFK7k6ujdjrxopWAhfgyazucBOE43O9/ETY7s9OYqY
- uJhEDybO034dQK0NuiBNyOAW+NyqOZQpI4ad60ulV9Eo8wtLgSWTq9iQ41u5HLTz3V/X
- j4R/TbiF5ryJ7+6QizcjsXhx2xtf/a+VT3UStaPbj+ILBwy9Nk9EuKbUQDaU9lWkoM+r
- w1JBQWnV1aW0rinr4HCnvZ0R2z0JYUmuAxencpmOQIw8e8aMQ1/BDCfQST9pGfCHdOrW
- 9Waw==
+ b=Ml9UEHQ3leBWf6DEuwToSdYzN893AG6FoKy1jjw6Qu3LSb/uu9FxvXyIHfcO0Y/LWa
+ q+5NPplp4SG+7MIx/KOlVMoKtWHfhiPImZv/BglajN7jezoIaDy060GsbvtpZKtLynKF
+ QYMvKJsVl88CouaflQ+EqiWouwXwQP0vQ78vzQrbZlVTKNV4tn7nZbUheBFwDAFH1fJF
+ B02Ktun+7rn1GOZK87Qcyb4m0ydS84CYu+1oGGmjoVrZYiO5UwSenBschVR5J2F6efTh
+ i4d2QMPNKliSnqGpzAw9+kje+rG71ZkV+UgO9GnFNZSY1Dbt+KpJOX3td9yiov3JzHfj
+ 1uMg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=WrGnpYL99r6KB3L4qRmfenqUH5OVxv5FZZI52Lxenfg=;
+ bh=zw6Spuw9dXNiOJVxyPosYsHQlTBndA5vPnf161OzyX0=;
  fh=9/4tzqKjgzJcjmYJcCvfm+LbcgW0ATp/rdwAYjKmbVo=;
- b=ItaSfGKoyeu6ijRRSXS5Ho3HXsuqrjkXHIrO391Wo6ECXAuE74WMbcUVSpJ+qWqJ+d
- BTmNYhtHNNOTrHB03uv6o3spoCTsa1zi3irD3Neu/H+pNjAXvjRsa9kA0nj6fRrrfrdR
- +pm4HCM+IQCItbSfMie4u70N9azezaHnon7fZfSGSXvULPDwXBvEcMe5qUGpqeIbX7LE
- Dh04WyS//rYFDtC2vumpUBOaBzNunYhRljVa7mo3c+QIGltszIK7H0viqpZrBGvweFec
- QyCzpBzPJVabjx30vQC+9kZ1E4eDfjEa7fNw15AI7TwF5aIzbvNGFbxLY7xyLdUAXn0x
- M05w==; darn=nongnu.org
+ b=GH4J9D+GTEIvR2w089XP0j/6pfDn4vGOferoDQM+zrZwbZtyJ/1SjdgBewTvKfyx17
+ 3CWm+qiwogqqygBV1Ou2PtJPnUgQWqjObFGIWTh4hrpszRFc/X+lwCr6dye7MamYUro0
+ xWzn2YBx8bffDaKHoczV45R793joBHxj6YMc1Oz2N+C1Tb2InZY3ksbc2vBYrItu+0Zu
+ oMq9/bhBvWh6lKzVNhZdbHWD3Sbh/FD80hCxcgJ2aSqHHbrU4a8mALW+Yrw6kFTUlL0H
+ Q+Sh3xXZyGEnzQv+FRu13oghUCm0u98Wcob/c01OnPaQnKWsJ1rsjwAZsAiN9xbHdPmb
+ m1wA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782436776; x=1783041576; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782436915; x=1783041715; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WrGnpYL99r6KB3L4qRmfenqUH5OVxv5FZZI52Lxenfg=;
- b=UWk3KXLnO+oUS1awvJO1BR9wu2dz6FVigCcVt7jxvGA1SF+mf1/60amIzUOIItBqF5
- 6GEzXGBtfcMjX6W4a6o0Uq86NeafsSJFwNd+Vn4jw6RUAjQbalUy3cJi2H5IPZM2Wqy0
- YSUP36x8YTXxDHZ8xUaxJOy6V+HoKjj8ZnP34Xo8A6CBb2lx2JbCUICuK1hCryuIEo62
- xBnbWSm2We5JiAanq7I4BCpcwQtslDdDeA+yOosdtKlrcN/em/9iGVzbuJq+j7nrdpdl
- +YVu6zqrNksy53+f4UL4S2ywAtf4DQlXwqYg3CNwiyvb4j03OFxoKKxorMXw8y+SnuQd
- 8ifA==
+ bh=zw6Spuw9dXNiOJVxyPosYsHQlTBndA5vPnf161OzyX0=;
+ b=phk+cLNZ9s3n6hYMbmaFKdYS/7XY407imPrX/2n1IwFL5tgBOxctD2sk5Yg/OpApuh
+ 07Xhz5/8zhHdAIt2URpHlgFbYVPyoJOx/NOKthwdqFGlBG1RxEJU/CXb+WQpPWWXNZ5b
+ DrGc3RWjByUdukocXLqLNA8t87FfB4MfqpOB6AF7rUag2KPKnpJ4S7OQTGusa17zvuNw
+ +DSxFe+mPIFqQ9UqHyLnV7ntGdvvzbMzXkVyp2rKtmpIH3hFPZ7EFAKiWDhTOY0SFxHb
+ OhddjOM9m0R/kXDLTgObUutV84z3md9uuBct0k44f15KQQ6eJaCqPLFZvZLGbbcWMmAx
+ 8svg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782436776; x=1783041576;
+ d=1e100.net; s=20251104; t=1782436915; x=1783041715;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=WrGnpYL99r6KB3L4qRmfenqUH5OVxv5FZZI52Lxenfg=;
- b=sfDBeSPazI81v/jyWlhIYzgk2pUTwsS8IOI4tmlURYN8KLFWDu+d06db6AocRmv413
- 9RpwmDWkFAbMN5fbcYaovnzdAkQFeW/+vuS2+czTFY/R+jgX/d16xSItqLVKUk4k5mqN
- wuktttlX/MYkNPZEy43BtP3QWthLAbAz5y+H3IVTOU/xyyT9ZaFWQ6g3dXBDf5MauFJe
- lT5DTnoKqr9YZnB9P4bxWrKycJcKCWq+ZcdVD/qNqFdf4iNjAGHlxESXKqJkfbY/0eUm
- /SOrUo+lRGzQNBdaZTS/18U6DpjFxH0fKH5Y50n2kAZTAn6YWDEPSHoMHAJntZWpBq3/
- rlxg==
-X-Gm-Message-State: AOJu0YwEm3H+GqjzXW9neZMVHkmjkDrJp9mFTlCYD5+7W9hLS9btP88g
- 1a9fh/N833z+WmVxA9n8vZSHAsGeuAuVVbp9ZWSSHLd8xJXE3kHylc27zWzUUvho0ZWep2c8CnZ
- yJvmI+PchxeMhK6rG9bfhNXYuliwnH/c=
-X-Gm-Gg: AfdE7cmKT77iBGCLZ1LsDDRujCnX2izIU1FhDUNTHL7CvxxUZAhlMJWFpZCsiAsleFH
- ntZmy8SJVQvyCxffIhLz3O9182LIpNnK21i2K010OQyi26GvUcK915OaAjVOmrIX3QeeUWO8jZy
- LKkCXCWZV4KOKLzEmdwla1VSIjOT8/YQ0eQo1BawX1/yAnS2bzMSLv6LxDP0AYD6PbmrYR8EbGI
- rWRXI5lnUgcUMWfCCqiA8NhhYG2fjuIoj+NDhSD80idAWpBxNfFruJY5GW3f/MjRnSq58hybKYJ
- RoC6y+y+BC+w+kaYURalSM5nZZzVjFxlRk7ukQ==
-X-Received: by 2002:a05:6402:510a:b0:697:de29:c802 with SMTP id
- 4fb4d7f45d1cf-69810ab88f9mr852104a12.18.1782436775661; Thu, 25 Jun 2026
- 18:19:35 -0700 (PDT)
+ bh=zw6Spuw9dXNiOJVxyPosYsHQlTBndA5vPnf161OzyX0=;
+ b=JSIyURBapHuv5x1x3Tu7rLM5tUFOdP/xon63NoJYAQvE9t+FDkZY6RYR4lAfKan7MQ
+ C5v9kulJXlgmTRVNUAYcFSL9c48nvo+6sGWEeHL8MCpNBA9LA5ercmY22DYnPJIu+eih
+ BKXkO+f+/lWmQZVLKGZ5W8cHr2OVpZwUA4V6g/dP5R/5cu2+X/RCO6Clrwem7VP/Pc1P
+ Zb/x7NBUAG+GRCx3mu65Knowwj4aVQaQZicVyrKzSRH183iLafpFURzJs0CQT6ppgIIG
+ 8Aqdzc/ppVarE8i/m3royLaK8eDMjF3yhNepY+ikNt/t/MjvJStx9im+GDq6xyRo+h4y
+ Gc0Q==
+X-Gm-Message-State: AOJu0Yz1njCx8Bxz21fLZl8wLzvg3Fs5SAukUMpi5JN7MVNDWUGrf9lI
+ qX9kIw5iF4LDaDyKPZHegBM8EcMURPDHFU7N4h+k87haffrpzvH1rx5Pae0kexJM6TQ1t9w98iU
+ /r8L8C+XP09V6aVFbHWFgMKslFb868gk=
+X-Gm-Gg: AfdE7cndw74AyxIU2lwwOlX85cpkiyVRUFnucDH6v4w9zwHUgOT2p4s0Ux2udEjQufL
+ AFsssXz/JZcOjb2jTwMgKGYf/4vEBiSh6w35Czt1ZbY7okKVU5iNsIcEj2X06+MieZTCjOdysNB
+ XMrAyqEWqlWV+vdkBZP0EBXKsqIBV95Qp9nwPSySN/shcX1g70rfiJCDWuEbvMjva4+aZfxBlRG
+ ndUybzbYC5dNKCyAr/cIpJ7L10+J41ns5/jDxWKX59jhJ+68CWxZ5c9O+YKB8ZylSOpUMEglAiD
+ OeX+QTkvznGKDlsQGSEPHPeLrz0=
+X-Received: by 2002:a17:906:eec9:b0:c05:b9db:68cc with SMTP id
+ a640c23a62f3a-c1205b386famr324570566b.0.1782436915242; Thu, 25 Jun 2026
+ 18:21:55 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260624000632.2149359-1-daniel.barboza@oss.qualcomm.com>
- <20260624000632.2149359-20-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260624000632.2149359-20-daniel.barboza@oss.qualcomm.com>
+ <20260624000632.2149359-21-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260624000632.2149359-21-daniel.barboza@oss.qualcomm.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 26 Jun 2026 11:19:09 +1000
-X-Gm-Features: AVVi8CeX2mVfx3VCgo4AH6ROhtrZybeQ43EtKKrEuhInt6CNi60s2S38GgpyTDY
-Message-ID: <CAKmqyKO=1f66bC20+z8c1B4+xdnQz1po3yKq08txrMGE8-ZXSA@mail.gmail.com>
-Subject: Re: [PATCH v2 19/24] target/riscv/gdbstub.c: isolate TCG only checks
+Date: Fri, 26 Jun 2026 11:21:28 +1000
+X-Gm-Features: AVVi8Cegl5rOnU3eMP4xPgZmYsDhKR3OFn6GqymDSY_YZZtSURClYUe2E7C7_cg
+Message-ID: <CAKmqyKPxmjpC6Ey+5cGB=SHCjuAagGTb+cFXo_kiB5ehPJSjUg@mail.gmail.com>
+Subject: Re: [PATCH v2 20/24] target/riscv: move riscv_cpu_set_rdtime_fn to
+ riscv_aclint
 To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
@@ -120,86 +121,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 24, 2026 at 10:10=E2=80=AFAM Daniel Henrique Barboza
+On Wed, Jun 24, 2026 at 10:09=E2=80=AFAM Daniel Henrique Barboza
 <daniel.barboza@oss.qualcomm.com> wrote:
 >
-> The following functions are TCG only and are broken, if they were ever
-> usable in the first place, with KVM:
->
-> - riscv_gdb_(get|se)t_csr
-> - riscv_gdb_(get|set)_virtual
-> - riscv_gen_dynamic_csr_feature
->
-> Gate everything with TCG enabled to at least get them out of the way to
-> enable --disable-tcg.
->
-> As a note for the future: other archs have distincts gdbstub files for
-> each accelerator.  There's a strong case for RISC-V to do the same.
+> There's no need for it to be in cpu_helper since riscv_aclint is the
+> only caller.
 >
 > Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/gdbstub.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
+>  hw/intc/riscv_aclint.c        | 8 ++++++++
+>  target/riscv/cpu.h            | 2 --
+>  target/riscv/tcg/cpu_helper.c | 7 -------
+>  3 files changed, 8 insertions(+), 9 deletions(-)
 >
-> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-> index f0a5e0d86f..9abbf5bcdf 100644
-> --- a/target/riscv/gdbstub.c
-> +++ b/target/riscv/gdbstub.c
-> @@ -164,6 +164,7 @@ static int riscv_gdb_set_vector(CPUState *cs, uint8_t=
- *mem_buf, int n)
->      return 0;
->  }
+> diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
+> index e27e5fb394..361a8d1bcb 100644
+> --- a/hw/intc/riscv_aclint.c
+> +++ b/hw/intc/riscv_aclint.c
+> @@ -40,6 +40,14 @@ typedef struct riscv_aclint_mtimer_callback {
+>      int num;
+>  } riscv_aclint_mtimer_callback;
 >
-> +#ifdef CONFIG_TCG
->  static int riscv_gdb_get_csr(CPUState *cs, GByteArray *buf, int n)
->  {
->      RISCVCPU *cpu =3D RISCV_CPU(cs);
-> @@ -294,6 +295,7 @@ static GDBFeature *riscv_gen_dynamic_csr_feature(CPUS=
-tate *cs, int base_reg)
->
->      return &cpu->dyn_csr_feature;
->  }
-> +#endif /* CONFIG_TCG */
->
->  static GDBFeature *ricsv_gen_dynamic_vector_feature(CPUState *cs, int ba=
-se_reg)
->  {
-> @@ -336,7 +338,6 @@ static GDBFeature *ricsv_gen_dynamic_vector_feature(C=
-PUState *cs, int base_reg)
->
->  void riscv_cpu_register_gdb_regs_for_features(CPUState *cs)
->  {
-> -    RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(cs);
->      RISCVCPU *cpu =3D RISCV_CPU(cs);
->      CPURISCVState *env =3D &cpu->env;
->      if (env->misa_ext & RVD) {
-> @@ -351,6 +352,10 @@ void riscv_cpu_register_gdb_regs_for_features(CPUSta=
-te *cs)
->                                   riscv_gdb_set_vector,
->                                   ricsv_gen_dynamic_vector_feature(cs, cs=
-->gdb_num_regs));
->      }
+> +static void riscv_cpu_set_rdtime_fn(CPURISCVState *env,
+> +                                    uint64_t (*fn)(void *),
+> +                                    void *arg)
+> +{
+> +    env->rdtime_fn =3D fn;
+> +    env->rdtime_fn_arg =3D arg;
+> +}
 > +
-> +#ifdef CONFIG_TCG
-> +    RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(cs);
-> +
->      switch (mcc->def->misa_mxl_max) {
->      case MXL_RV32:
->          gdb_register_coprocessor(cs, riscv_gdb_get_virtual,
-> @@ -371,4 +376,5 @@ void riscv_cpu_register_gdb_regs_for_features(CPUStat=
-e *cs)
->          gdb_register_coprocessor(cs, riscv_gdb_get_csr, riscv_gdb_set_cs=
-r,
->                                   riscv_gen_dynamic_csr_feature(cs, cs->g=
-db_num_regs));
->      }
-> +#endif
+>  static uint64_t cpu_riscv_read_rtc_raw(uint32_t timebase_freq)
+>  {
+>      return muldiv64(qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL),
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 396d9253e6..d6c5d6c1db 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -682,8 +682,6 @@ uint64_t riscv_cpu_update_mip(CPURISCVState *env, uin=
+t64_t mask,
+>  void riscv_cpu_set_rnmi(RISCVCPU *cpu, uint32_t irq, bool level);
+>  void riscv_cpu_interrupt(CPURISCVState *env);
+>  #define BOOL_TO_MASK(x) (-!!(x)) /* helper for riscv_cpu_update_mip valu=
+e */
+> -void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
+> -                             void *arg);
+>  void riscv_cpu_set_aia_ireg_rmw_cb(CPURISCVState *env, privilege_mode_t =
+priv,
+>                                     aia_ireg_rmw_fn rmw_fn,
+>                                     void *rmw_fn_arg);
+> diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.=
+c
+> index 9237d2129b..822c9fe483 100644
+> --- a/target/riscv/tcg/cpu_helper.c
+> +++ b/target/riscv/tcg/cpu_helper.c
+> @@ -612,13 +612,6 @@ uint64_t riscv_cpu_update_mip(CPURISCVState *env, ui=
+nt64_t mask, uint64_t value)
+>      return old;
 >  }
+>
+> -void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
+> -                             void *arg)
+> -{
+> -    env->rdtime_fn =3D fn;
+> -    env->rdtime_fn_arg =3D arg;
+> -}
+> -
+>  void riscv_cpu_set_aia_ireg_rmw_cb(CPURISCVState *env, privilege_mode_t =
+priv,
+>                                     aia_ireg_rmw_fn rmw_fn,
+>                                     void *rmw_fn_arg)
 > --
 > 2.43.0
 >
