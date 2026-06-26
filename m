@@ -4,90 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F5A5C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 23:09:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7929BC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 23:15:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdFf1-0005hX-VT; Fri, 26 Jun 2026 19:08:36 -0400
+	id 1wdFkL-0006qq-2K; Fri, 26 Jun 2026 19:14:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wdFew-0005gm-RY
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 19:08:31 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wdFev-0004HW-Bd
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 19:08:30 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2c821a50615so6283805ad.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 16:08:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782515307; x=1783120107; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9WIZfLLhWYb9SQTpBX6BM5UEofWXV62lx1mbCdmlDWU=;
- b=oVVepT/RxKZT8V2WcQrt62nHHJ3m4bQBVjGJZjdHzMJbr8GhdnlwxWP73s+vEu4Goo
- Ci6csWzrHZ88fTAaJ0ntwr2YSd3Cy1DkIdvNlibHs1CFRtxGIUe7gDQXIf16ypHb/+d8
- gaOwa1NpqBG48tPIoUSUMsGts3E9oeGq1Cqzml+qhhqP//RoV99XGLk0d0GULp3XKzac
- um5JfWKJyrtubS5BqMPCBuElvBrAz5VTfnPU34iqsSGpgMkph6dos2RhV6+DF3Dv/9HU
- uY9AcB/Zb9k+r+mEuIvqRGddua/J8zgccHEK5pbTOJXTT8wnyRudNrfT/9QUH6Dqwt5B
- f2NA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782515307; x=1783120107;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9WIZfLLhWYb9SQTpBX6BM5UEofWXV62lx1mbCdmlDWU=;
- b=rm4M5uCH4+ywg/QwC2o6NAeHvEm5Q022FikivyR5yTh+NXE8ogH368S3QbaID6ef5I
- d7IMlPK+92Eb+25513W37YnP+Dr5t8PLwj7E7Fwb9iVUZD0lmLvohLsFwYr50XfeG9y6
- O2mHBH1R7dpeTuHRxBSaYDdH6X3dOSPwcR9ZwEo9cNOMeCW6nEPi6z8HX+pKjf36OTIf
- YfXNWzC2HJ32ooH1jparjCjyBQetrWH1FoT3AvlM19vZH87CsTTyeSfV8jgEs6i45MHm
- p+rcgKPBXtRNzw6GVdFRtB9o2eLEK76z2Io6E7FAjWGuTwtMugBH/9mPKE4HjmAvH3Xi
- H1Mw==
-X-Gm-Message-State: AOJu0YyAXs5N6TaMMEy5FgITazWwhqj4nRUxlqRKGnISz96SoE4Itr4f
- xt6moaXbG10dFhxqPCF5m7P1X4hKw6wNL6kUXS2pWmiM46KNPb/3hj9uIlwhj+H8Jpo0crYawht
- PLRL2
-X-Gm-Gg: AfdE7ckDgg6MonHc0Im+rA4rgaNJk9ZHA5Gr4qs8I0i16559OTNmzrXtgI4EniNYL5p
- F8RSfGZgism67ieVpCxBb7uPUqbF06cOWKdUXtWaoMg/0dw+ZloK4pd8loljGxa8A/AN/70pSMg
- GGub9LABJ2H5lbynLQjt0bQuI3P8ths/JXMQyAmlTBKTz3QgpcRJmgM6MdceToYu2tmxZgUFhfp
- EjNg+UtFSFbQEIQXKJWDn+QW7ET8P5cv1yGuffWJZRnfV+b8lyDj5psMNQMlhljAjNc3B7wJxv2
- lG6F5Om67vadJwBm/CNDyaD/oTbGwpidAQUGGHaNbpwokJK5kbjTdG81idRRnBpjUaZKgQQuJTj
- qTQvYq8G9SS7TVSyHD5LO0FUEYptO5h91JVWz+onpOV6apF7/5/TVxrvzbWMgUi/T61GEzr21Us
- Zwtdgx86KOOsbFCoGkFGsILyOlCfLQJ3vWOL+/fKgaNX28hYMEoAMxCjh0SIgIyQLruqd5
-X-Received: by 2002:a17:903:943:b0:2c0:cb0e:ac3a with SMTP id
- d9443c01a7336-2c7fca1576amr82105865ad.23.1782515306372; 
- Fri, 26 Jun 2026 16:08:26 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c9a93d5ebdsm2410235ad.74.2026.06.26.16.08.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jun 2026 16:08:26 -0700 (PDT)
-Message-ID: <7dddc0cf-afc1-4afd-9fb4-6d3f2349a0ec@linaro.org>
-Date: Fri, 26 Jun 2026 16:08:24 -0700
+ (Exim 4.90_1) (envelope-from <oupton@kernel.org>)
+ id 1wdFkJ-0006qJ-1Y; Fri, 26 Jun 2026 19:14:03 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <oupton@kernel.org>)
+ id 1wdFkH-0005ny-IC; Fri, 26 Jun 2026 19:14:02 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id 9F7F140B21;
+ Fri, 26 Jun 2026 23:13:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780FD1F000E9;
+ Fri, 26 Jun 2026 23:13:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1782515638;
+ bh=yl8+LuCMuLG3/XVsdQ4YgbB0rlUGhos48P/KRlhVows=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=KHIuhYavF7K/ba06HdItjpkUppQrQvf6CUM4RK5q3jEU/ZSTJTNDkN5r27WT983oA
+ oyd9H/z/ZBIk60+QVencNRfTLv7R4CS8mMxa//OZC8MvBUgYEbmha05Ej2j/wkvZ4H
+ j5VhOq/8evPA8sMwKz7nPQgQetMFbfn24qYeh5xN9uR5lEri/eY+lrCswCI7qiEzn7
+ EEYoRVhJbskxL2ubbvIkkteTmd3pVchEK1H1Ar18MDZebqWhsT0/p7w9tarqSuKu/9
+ nKbEgHyWexwMiZ7edwuWb3Kx1XvNGjr+mtQSwiDshV0zoudDLQtyGkECFdIP/oZhFg
+ cgZNAEOxnf9Pg==
+Date: Fri, 26 Jun 2026 16:13:57 -0700
+From: Oliver Upton <oupton@kernel.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] target/arm: Only evaluate SCR_EL3.PIEN if
+ ARM_FEATURE_EL3 is present
+Message-ID: <aj8HtXA7G_EFSrsL@kernel.org>
+References: <20260626203639.431191-1-oupton@kernel.org>
+ <854ffb2f-a363-4c69-9a51-95151dfff517@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/15] target/arm: Implement FMOP4 (non-widening) for
- float32
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20260625223200.763198-1-richard.henderson@linaro.org>
- <20260625223200.763198-2-richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260625223200.763198-2-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <854ffb2f-a363-4c69-9a51-95151dfff517@linaro.org>
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=oupton@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,21 +70,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/25/26 15:31, Richard Henderson wrote:
-> +++ b/target/arm/tcg/vec_internal.h
-> @@ -547,4 +547,12 @@ void HELPER(NAME)(void *vd, void *vn, void *vm,                            \
->       clear_tail(d, oprsz, simd_maxsz(desc));                                \
->   }
->   
-> +/*
-> + * Perform SME2p2 quarter-tile outer product.
-> + * Iterate over ZAtile[] for esize, calling fn for each element.
-> + */
-> +void sme_mop4(void *vza, void *vzn, void *vzm, void *fn_opaque,
+On Fri, Jun 26, 2026 at 03:55:22PM -0700, Richard Henderson wrote:
+> On 6/26/26 13:36, Oliver Upton wrote:
+> > Running KVM with (as of writing, out-of-tree) support for FEAT_S2PIE
+> > on -cpu max gets stuck in an infinite loop of stage-2 permission faults
+> > due to the PTW incorrectly using an effective value of 0 for S2PIR_EL2.
+> > 
+> > Similar to how S1PIE is handled, only use the IMPLEMENTATION SPECIFIC
+> > value of 0 for S2PIR_EL2 if EL3 is implemented and PIEN=0.
+> > 
+> > Fixes: a811c5dafb ("target/arm: Implement get_S2prot_indirect")
+> > Signed-off-by: Oliver Upton <oupton@kernel.org>
+> > ---
+> >   target/arm/ptw.c | 8 ++++++--
+> >   1 file changed, 6 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+> > index 1470de3010..4a7aeb140c 100644
+> > --- a/target/arm/ptw.c
+> > +++ b/target/arm/ptw.c
+> > @@ -1414,9 +1414,13 @@ static int get_S2prot_indirect(CPUARMState *env, GetPhysAddrResult *result,
+> >                     PAGE_READ | PAGE_WRITE },
+> >       };
+> > -    uint64_t pir = (env->cp15.scr_el3 & SCR_PIEN ? env->cp15.s2pir_el2 : 0);
+> > -    int s2pi = extract64(pir, pi_index * 4, 4);
+> > +    uint64_t pir = env->cp15.s2pir_el2;
+> > +    int s2pi;
+> > +    if (arm_feature(env, ARM_FEATURE_EL3) && !(env->cp15.scr_el3 & SCR_PIEN))
+> > +	pir = 0;
+> > +
+> > +    s2pi = extract64(pir, pi_index * 4, 4);
+> >       result->f.prot = perm_table[s2pi][2];
+> >       return perm_table[s2pi][s1_is_el0];
+> >   }
+> > 
+> > base-commit: 8f1d3b586f1265023f75ea9c227c35d463321aef
+> 
+> Braces required for the IF.  Otherwise,
 
-Nit: FEAT_SME_MOP4 requires SME2.1 not 2.2.
-Alternately, drop the version number entirely.
+Kernel style, my bad.
 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-r~
+thanks!
+
+-- 
+Best,
+Oliver
 
