@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCCD4CDE013
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:19:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B486BCD4F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:19:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3dV-0006hN-Fj; Fri, 26 Jun 2026 06:18:13 -0400
+	id 1wd3e0-0007GN-Pj; Fri, 26 Jun 2026 06:18:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3dP-0006fS-PT
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:08 -0400
+ id 1wd3dd-00074X-2n
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3dL-00056r-Nn
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:06 -0400
+ id 1wd3db-0005AR-3h
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469081;
+ s=mimecast20190719; t=1782469098;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=13JInuR6vvT0uFXBtxBuI63SjRg5X86Fy21E7KX97Ic=;
- b=b4ys5Xre7lt1krkEZoME/VXsqxbWkp1q8oAWfK6wanZX4XWsgcSk41776XJtnWWcsUOL7z
- tBcFMO3kM6Q9ryoJEQCZVt92mum3tknt+gS88HHdCRjwnIhmRYP1dL91LT4S4bQB2oZjQu
- d9AmIRiphCtvrjfLkgPm8KHsQ9d25q0=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9jpxIFYk+jJh1Eu2hO0yA4J0IN9FE9t7jWDg+Y5ix4I=;
+ b=eDIxtzd4EQYCEV7nhJ2eUSGUq22hGwMMjdGK/3f3GG9Ow6a11+7yym3usyt2D2VWfwA7wP
+ T9/r92++A04eF38XcpCwAeLVzTL9qpzLXVHcF71Qp4cDDUmM58DUE7luP1h+A5a9Z8zzEP
+ 4nUXnHdpDNJB63DQWdiCQOmIrtTp8Ow=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500-QJXxaww7MnOEmNPkqA50Aw-1; Fri, 26 Jun 2026 06:17:59 -0400
-X-MC-Unique: QJXxaww7MnOEmNPkqA50Aw-1
-X-Mimecast-MFC-AGG-ID: QJXxaww7MnOEmNPkqA50Aw_1782469078
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-490aadb1386so11095305e9.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:17:59 -0700 (PDT)
+ us-mta-556-X4K65HJCM0eOyqamf_Jm6Q-1; Fri, 26 Jun 2026 06:18:16 -0400
+X-MC-Unique: X4K65HJCM0eOyqamf_Jm6Q-1
+X-Mimecast-MFC-AGG-ID: X4K65HJCM0eOyqamf_Jm6Q_1782469095
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-46e4153b193so861107f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:18:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469078; x=1783073878; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469095; x=1783073895; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=13JInuR6vvT0uFXBtxBuI63SjRg5X86Fy21E7KX97Ic=;
- b=TSM5GbB8ca/ikDVYE3Wy/lxIIT/EE0ZEmy/EAUIF5Uc/Hadjeygk5g7MVeCSxpusUB
- t66uqqJsah/H0j3AmwpMePvYR3RU1hcOHhZVE6qi4ialGz5a0yXdJttk2kaVAJCBTFDu
- 3ahOVfJ4vgBpyynDF9bzChcfJFkykFSfM1ODsIngn/cMbRMPvc+A6Kv6JTi1lfuRViT4
- gMyryLTmjcBPrgzub6l1ptF46/43KAUBRc9SA6lLYfisAfnXlPU638LXjPrOuSnAZM3h
- ydgfdUavmoKYbpDt5WhLxV6lcrh1nuKYishkcIuPZ8PXDkZM5J2D8nBtI5p2iZUnwE+0
- X2Og==
+ bh=9jpxIFYk+jJh1Eu2hO0yA4J0IN9FE9t7jWDg+Y5ix4I=;
+ b=Yv1I2EunWtiNX9PLmr7iI4FjyOdPfwI2qtOWQgmEqUveiTXfECDN64st+p7zoq/yBX
+ +EVvd/DkMFyUhqiQS7W3h6M8y4iQzX0m3sEz4sQT2Z2P9WNnaUnB25AatqLH7w+lpfEt
+ bk85IcOgUrbL1aNP72Bcj5WzgVat0mM/b2VzX1/BEVH7xFkUN1SUR/JMAMN/VyqRz4a0
+ kdl/h4qTRfXf0sSHqQKKNRtTeA7f5kW9wCSGVsZ6fHPJK3l9vYsh85QZG+KuiWubg7mq
+ N+v+aR5UkhyIJpvUTX3ZRiRhGG7gUk0b7QuyDWkpRAfQONGZJ8aQbS/abds/P+sOYvRZ
+ kSaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469078; x=1783073878;
+ d=1e100.net; s=20251104; t=1782469095; x=1783073895;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=13JInuR6vvT0uFXBtxBuI63SjRg5X86Fy21E7KX97Ic=;
- b=kghd7ecWcJ7WpAvynS6xMidUb/pTt+1ZPOL4IZRl6Kwh9ID+EYgYl3C5gviuc+9hPv
- ZjvvYyJgXeEl3kMlfGaZb10/NMCao24aWnWtP/r9pYO/SUdKzT77unlNdI1FYQVFwSjg
- 3Qvuh85/x8PdOgS972JQTXThBOo7ca2QKw4o7K2NCY8T33p/S0L2XS56L6cb0Gu+Jy9h
- 0Wb4caPzimuY1rNgdtYFrsY0WylZZU+i2fRl60Ba8sByIVALOPNcKZnz0i5SDYBC9sSU
- HI3jw/+WoyiqbeBTJOf90GzU3+39i0KUamvEy0K9aPl0jE3bWkPasA+eO1brdYue2cC+
- wQsQ==
-X-Gm-Message-State: AOJu0Ywd0QkFo/OL40WuyBKGVsvlOT/1v6TtbnO+YLLamCkVIG/Sbcaw
- 3Y2x0Hu0OCtG4DSVcVpQ0gms/GAHis4fhyyB+mu1l6+p+5mbadYtsUa6FwDDlAqjmWO1FLK2nhy
- 9A0VvfZdhmZnpPZLrtFxkALJX9803FVkFrkyhhRg2M3TDMwk3LO/AnGINvVbYGJc7Vct+w8eFOi
- mt+q64O9tznzFKhFj2O6QoVE6Bf6eXoc7c0qRA3QL3
-X-Gm-Gg: AfdE7clv1AQvdZk/LODUS4YlhhrqdBzBuqgRkUu+03oxveUam33J2XT3E9GFdn4QMBd
- BnxGjSjbJd1Pd99FfWlaTYSkw9N1rEWOvhUKkMWqTAb3sYaAPucHxrngk3yLJ5C6o06KMxhj4gr
- Orglwwa/ugCwk+F63o56ELyzVQYC1IR2SI5uecOiqqBYfaIV53a8Jo0kHyeD1YLt+D4KFbwEiXI
- 5EsyXtiP8R3qWdaIQcF+Ogdj4VUTbbmOyKoDMvwndtYCjFZTIOK00Z5nPK9Hvx3GOvnC1Wq1/4R
- I1BHuwUVFc+0IP/tUSL73eqtOBNypuFuhR9amoRD0r3FcncAAWbdaPahPGqcFdjeyeW7EW40lIi
- PK3fVYOBvBh5mQ3Yp6ZtXkJbITr5XsF88BbU11B2FNsA2JxWBsJoqSWLEL8cod6iKXKeX/HP2ym
- QkUPXI5AOgG+41PBYg
-X-Received: by 2002:a05:600c:638e:b0:490:7df7:9190 with SMTP id
- 5b1f17b1804b1-492663ea3d3mr71783945e9.8.1782469078110; 
- Fri, 26 Jun 2026 03:17:58 -0700 (PDT)
-X-Received: by 2002:a05:600c:638e:b0:490:7df7:9190 with SMTP id
- 5b1f17b1804b1-492663ea3d3mr71783335e9.8.1782469077561; 
- Fri, 26 Jun 2026 03:17:57 -0700 (PDT)
+ bh=9jpxIFYk+jJh1Eu2hO0yA4J0IN9FE9t7jWDg+Y5ix4I=;
+ b=hwIQAXAvy+TKD5Qt1cDC4/Ky9e+0G5NsPnrgZa9q+D7MhEoGXCA6vWEtGdPtyrxG8Y
+ vBN5HSCmbONMAAK1E+tSj+zwaY/sfzLB7FHdsCWfYnI6SCDg9VOQFkTkfTPhsDrBuaXR
+ X6okqecB/XEzxoRxwQf3NTYxhN2xaUtsdTdNenaUNAF0wZkoeNlG+mlEc8Jb0Y4785j6
+ it0ArxEED/WWputZIDOYABZpaOp50lOh/gG0zzGsHyEU7XQdmUsveY7fS+Luh35f3Sh3
+ 22cK/sgWGXY4oZPvGQm2Qia3yYBW+XGcHa3okCR6O9Gosc9t5cU3oyDj18kLcY7i4cS6
+ OHlg==
+X-Gm-Message-State: AOJu0Yyy0OYYwamlizqwCrOrkA6bZ66KZHh4Tgs/Lt9+cJDRkDPzw84K
+ mz/q1dW+rXGq9Aty5q05CCbSxbgRMl43A8pwC95cBqPrNPOaQdl/qz6RF5ueHn3nSw5YBqpjXMl
+ GI1WiE+V1qjAOCUyL5iMnNIYx7Wa/q8PNufMG/bMSvWPt4uBJZ2HL/+dtP3fDj8yEO+9Ec1/uop
+ eDdY3fjUOTXt9dU+ICgH9S91lBES2q0ikx2EpyFjtL
+X-Gm-Gg: AfdE7cnbWd26ePk1LUSrJn11b0PWrNJ2Jmg5KcXOAnH16Zdz3wg+T3GR4t/gFhWwcor
+ a7TaB1Uw0xCan8KHTyr8HZAg9xhbkGhgTCsnq9t4yFIB40jY4PuuV0oNE0sqWcnVQt/Xvzz7LCM
+ HvAIhbjWO0XQRtch37TQrfW+Zfq/KEYfiFnjkhouSSulIKKhRJ3iZnJr9A12vaK1xQm7a99Cy03
+ 4izICy+Mvglds72bLa4KEXLqnEEWU25PLjBT8PKtLcrE3yx3gOyOdxPGvLMC84ak3xAV6hexh2X
+ pGqavaKD8o1ZE+NSsGPkpHYvyOD6ZbNg+OUAVqSYodGyXuflIDynsZORIGvK4fAioEHzDA5jpCL
+ EGTc0ZnfUVJcXeIjReYMXEq/Gzwpli1ViUHOOMkU+/SDl3d6+PD/zkMJ2F4PCOEv6tM14tQOn1u
+ h+bOMKUa2wrGnVetrh
+X-Received: by 2002:a05:6000:2489:b0:460:10f6:a554 with SMTP id
+ ffacd0b85a97d-46a806bc9e7mr27745607f8f.14.1782469094962; 
+ Fri, 26 Jun 2026 03:18:14 -0700 (PDT)
+X-Received: by 2002:a05:6000:2489:b0:460:10f6:a554 with SMTP id
+ ffacd0b85a97d-46a806bc9e7mr27745531f8f.14.1782469094409; 
+ Fri, 26 Jun 2026 03:18:14 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492690988e0sm71791375e9.14.2026.06.26.03.17.56
+ ffacd0b85a97d-46c1ee01c3bsm25046563f8f.10.2026.06.26.03.18.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:17:56 -0700 (PDT)
+ Fri, 26 Jun 2026 03:18:13 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>,
  Wei Liu <wei.liu@kernel.org>,
  =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
-Subject: [PULL 03/45] target/i386/mshv: fix various cpuid traversal bugs
-Date: Fri, 26 Jun 2026 12:17:06 +0200
-Message-ID: <20260626101748.1728079-4-pbonzini@redhat.com>
+Subject: [PULL 09/45] accel/mshv: disable la57 (5lvl paging)
+Date: Fri, 26 Jun 2026 12:17:12 +0200
+Message-ID: <20260626101748.1728079-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
 References: <20260626101748.1728079-1-pbonzini@redhat.com>
@@ -125,161 +126,97 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-- Hardcoded max_leaf was not accurate. We query leaf 0x0 and 0x80000000 to
-  get the actual max leaves
+This change disable la57 paging on the mshv hypervisor on both the
+mshv processor feature bitmap and mask the cpuid feature leaf to the
+guest.
 
-- On all 0 zeroes on leaf 0x0d, we register 0-63 subleaves with zeros
-  indicating XSAVE is disabled
-
-- Subleaf 0 was hardcoded, so the Hypervisor returned defaults for other
-  subleaves
-
-- Subleaf 0 was hardcoded, so we were passing 0 instead of actual subleaf
-  when adding entries. We now pass the correct subleaf value to
-  add_cpuid_entry()
-
-- Leaves 0x04,0x07,0d,0f,10 weren't marked as subleaf-specific
+Since the removal of hypervisor-assisted gva=>gpa translation in
+1c85a4a3d7 we have seen MMIO errors in guests on la57-enabled hw. We
+will have to investigate and test this further.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Acked-by: Wei Liu <wei.liu@kernel.org>
+Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+Reviewed-by: Wei Liu <wei.liu@kernel.org>
 Reviewed-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260416121116.527927-4-magnuskulke@linux.microsoft.com
+Link: https://lore.kernel.org/r/20260416121116.527927-10-magnuskulke@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/mshv/mshv-cpu.c | 88 +++++++++++++++++++++++++------------
- 1 file changed, 61 insertions(+), 27 deletions(-)
+ include/system/mshv_int.h   |  2 ++
+ accel/mshv/mshv-all.c       |  7 +++++++
+ target/i386/mshv/mshv-cpu.c | 15 +++++++++++++++
+ 3 files changed, 24 insertions(+)
 
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 35386c422fa..ca156cdf4be 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -94,6 +94,8 @@ void mshv_arch_init_vcpu(CPUState *cpu);
+ void mshv_arch_destroy_vcpu(CPUState *cpu);
+ void mshv_arch_amend_proc_features(
+     union hv_partition_synthetic_processor_features *features);
++void mshv_arch_disable_partition_proc_features(
++     union hv_partition_processor_features *disabled_features);
+ int mshv_arch_post_init_vm(int vm_fd);
+ 
+ typedef struct mshv_root_hvcall mshv_root_hvcall;
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 0f65b65d9ca..52623be5d93 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -142,6 +142,8 @@ static int create_partition(int mshv_fd, int *vm_fd)
+     int ret;
+     uint64_t pt_flags, host_proc_features;
+     union hv_partition_processor_xsave_features disabled_xsave_features;
++    union hv_partition_processor_features disabled_partition_features = {0};
++
+     struct mshv_create_partition_v2 args = {0};
+ 
+     QEMU_BUILD_BUG_ON(MSHV_NUM_CPU_FEATURES_BANKS != 2);
+@@ -177,6 +179,11 @@ static int create_partition(int mshv_fd, int *vm_fd)
+     }
+     args.pt_cpu_fbanks[1] = ~host_proc_features;
+ 
++    /* arch-specific features we disable regardless of host support */
++    mshv_arch_disable_partition_proc_features(&disabled_partition_features);
++    args.pt_cpu_fbanks[0] |= disabled_partition_features.as_uint64[0];
++    args.pt_cpu_fbanks[1] |= disabled_partition_features.as_uint64[1];
++
+     /* populate args structure */
+     args.pt_flags = pt_flags;
+     args.pt_isolation = MSHV_PT_ISOLATION_NONE;
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 38994ed6cfd..bfcccd19916 100644
+index e85311af2af..3523cfcb70c 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -465,14 +465,17 @@ static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
-     CPUX86State *env = &x86_cpu->env;
-     uint32_t eax, ebx, ecx, edx;
-     uint32_t leaf, subleaf;
--    size_t max_leaf = 0x1F;
--    size_t max_subleaf = 0x20;
--
--    uint32_t leaves_with_subleaves[] = {0x4, 0x7, 0xD, 0xF, 0x10};
-+    uint32_t max_basic_leaf, max_extended_leaf;
-+    uint32_t max_subleaf = 0x20;
-+    uint32_t leaves_with_subleaves[] = {0x04, 0x07, 0x0d, 0x0f, 0x10};
-     int n_subleaf_leaves = ARRAY_SIZE(leaves_with_subleaves);
- 
--    /* Regular leaves without subleaves */
--    for (leaf = 0; leaf <= max_leaf; leaf++) {
-+    /* Get maximum basic and and extended CPUID leaves */
-+    cpu_x86_cpuid(env, 0, 0, &max_basic_leaf, &ebx, &ecx, &edx);
-+    cpu_x86_cpuid(env, 0x80000000, 0, &max_extended_leaf, &ebx, &ecx, &edx);
-+
-+    /* Collect basic leaves (0x0 to max_basic_leaf) */
-+    for (leaf = 0; leaf <= max_basic_leaf; leaf++) {
-         bool has_subleaves = false;
-         for (int i = 0; i < n_subleaf_leaves; i++) {
-             if (leaf == leaves_with_subleaves[i]) {
-@@ -483,27 +486,40 @@ static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
- 
-         if (!has_subleaves) {
-             cpu_x86_cpuid(env, leaf, 0, &eax, &ebx, &ecx, &edx);
--            if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
--                /* all zeroes indicates no more leaves */
--                continue;
--            }
--
-             add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
-             continue;
-         }
- 
-+        /*
-+         * Valid XSAVE components can exist at a higher index se we need to set
-+         * all subleaves for leaf 0x0d, even if we encounter an empty one.
-+         */
-+        if (leaf == 0x0d) {
-+            for (subleaf = 0; subleaf <= 63; subleaf++) {
-+                cpu_x86_cpuid(env, leaf, subleaf, &eax, &ebx, &ecx, &edx);
-+                add_cpuid_entry(cpuid_entries, leaf, subleaf,
-+                                eax, ebx, ecx, edx);
-+            }
-+            continue;
-+        }
-+
-         subleaf = 0;
-         while (subleaf < max_subleaf) {
-             cpu_x86_cpuid(env, leaf, subleaf, &eax, &ebx, &ecx, &edx);
- 
-             if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
--                /* all zeroes indicates no more leaves */
-                 break;
-             }
--            add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
-+            add_cpuid_entry(cpuid_entries, leaf, subleaf, eax, ebx, ecx, edx);
-             subleaf++;
-         }
-     }
-+
-+    /* Collect extended leaves (0x80000000 to max_extended_leaf) */
-+    for (leaf = 0x80000000; leaf <= max_extended_leaf; leaf++) {
-+        cpu_x86_cpuid(env, leaf, 0, &eax, &ebx, &ecx, &edx);
-+        add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
-+    }
+@@ -1129,6 +1129,12 @@ void mshv_arch_amend_proc_features(
+     features->access_guest_idle_reg = 1;
  }
  
- static int register_intercept_result_cpuid_entry(const CPUState *cpu,
-@@ -576,22 +592,40 @@ static int register_intercept_result_cpuid(const CPUState *cpu,
-         subleaf_specific = 0;
-         always_override = 1;
++void mshv_arch_disable_partition_proc_features(
++     union hv_partition_processor_features *disabled_features)
++{
++    disabled_features->la57_support = 1;
++}
++
+ static int set_memory_info(const struct hyperv_message *msg,
+                            struct hv_x64_memory_intercept_message *info)
+ {
+@@ -1707,6 +1713,15 @@ uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
+         ret &= ~CPUID_EXT_VMX;
+     }
  
--        /* Intel */
--        /* 0xb - Extended Topology Enumeration Leaf */
--        /* 0x1f - V2 Extended Topology Enumeration Leaf */
--        /* AMD */
--        /* 0x8000_001e - Processor Topology Information */
--        /* 0x8000_0026 - Extended CPU Topology */
--        if (entry->function == 0xb
--            || entry->function == 0x1f
--            || entry->function == 0x8000001e
--            || entry->function == 0x80000026) {
++    if (func == 0x07 && idx == 0 && reg == R_ECX) {
 +        /*
-+         * Intel
-+         * 0xb - Extended Topology Enumeration Leaf
-+         * 0x1f - V2 Extended Topology Enumeration Leaf
-+         * AMD
-+         * 0x8000_001e - Processor Topology Information
-+         * 0x8000_0026 - Extended CPU Topology
++         * LA57 (5-level paging) causes incorrect GVA=>GPA translations
++         * in the instruction decoder/emulator. Disable until page table
++         * walk in x86_mmu.c works w/ 5-level paging.
 +         */
-+        if (entry->function == 0xb ||
-+            entry->function == 0x1f ||
-+            entry->function == 0x8000001e ||
-+            entry->function == 0x80000026) {
-             subleaf_specific = 1;
-             always_override = 1;
--        } else if (entry->function == 0x00000001
--            || entry->function == 0x80000000
--            || entry->function == 0x80000001
--            || entry->function == 0x80000008) {
-+        /*
-+         * Feature enumeration leaves (subleaf-specific)
-+         * 0x04: Deterministic Cache Parameters
-+         * 0x07: Structured Extended Feature Flags
-+         * 0x0D: Processor Extended State Enumeration
-+         * 0x0F: Platform QoS Monitoring
-+         * 0x10: Platform QoS Enforcement
-+         */
-+        } else if (entry->function == 0x04 ||
-+                   entry->function == 0x07 ||
-+                   entry->function == 0x0d ||
-+                   entry->function == 0x0f ||
-+                   entry->function == 0x10) {
-+            subleaf_specific = 1;
-+            always_override = 1;
-+        /* Basic feature leaves (no subleaves) */
-+        } else if (entry->function == 0x00000001 ||
-+                   entry->function == 0x80000000 ||
-+                   entry->function == 0x80000001 ||
-+                   entry->function == 0x80000008) {
-             subleaf_specific = 0;
-             always_override = 1;
-         }
++        ret &= ~CPUID_7_0_ECX_LA57;
++    }
++
+     return ret;
+ }
+ 
 -- 
 2.54.0
 
