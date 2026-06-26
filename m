@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3769C43211
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 23:40:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79B93C43211
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 23:40:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdG99-0003PR-NT; Fri, 26 Jun 2026 19:39:43 -0400
+	id 1wdG9S-0003ZO-56; Fri, 26 Jun 2026 19:40:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wdG97-0003OM-Ut
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 19:39:42 -0400
+ id 1wdG9Q-0003Xq-DZ
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 19:40:00 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wdG90-0003yi-Uq
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 19:39:38 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1wdG9O-00043N-BC
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 19:39:59 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65QMx3VL3843139
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 23:39:33 GMT
+ 65QMwp0i2164215
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 23:39:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=bDcdYwgNzTh
- XsgxHH3XFPnMChdpFPwOSyZqvf1aj5R4=; b=OWNJPkKHn/o7nUsUkaqMMlgUipY
- pDNjWg8xaEijvQNmjWXm9IAV9b4ypOyPWJag8VyC9haNJhr6/PqLnpHzAt7ZZ4fv
- HF6JWkslkeB13XPg4EIGcLus1jSAlYeYhUJg/pnCVjXTDyN4XbDxAnEI0VJcxoGy
- BX+JGUWzHrkoc+UHAKyxecqrfMqIfYDb5mXZSsnyYxJ3ItkbCb+pvXHJUSBdW81I
- A4/IBEtQYlZbf9s8w1RoEMubSW4fqKeuiksozF6OdvhvUO9QixOOJbV+Ujqbpzof
- Yv0hFPI4YaaxZ4tO21LOsCxcO9kVNOi+hknHGlaSaFkBhiMjA5pkpzlUafQ==
+ :mime-version:references:subject:to; s=qcppdkim1; bh=+CV9S9WNGYc
+ RNWLvEvUepwgDecUeeo2WQvt9uLyU6wE=; b=ktZo0JuCr/OWj/RBLH1bPQSe8+W
+ 5msLBG7YUsBhwNQviZVDWhCNz9t0SChCsK0iepGcatc4BRt5WfgAWyKNJP2WyRzs
+ VNY8rM4nxCrqxM0ZaGLRBNLpZ1FCU1DVx3J04uanKuUEBdWtNe5Nk0EpE/8ZFw/p
+ oXJh86LGl5Pcq8BvxloImqZhNW6//QgPUklOGSDgV9gI4G6YQZPwrgYH3b+W5OG6
+ RB07FgUMbiJbeq9eqV9tCVp8QzuEsLgUFAo8i4bFiwjXZKB4EnQSDDCI6Vqdr1em
+ FuGFQwkwnWQvcNzKv9AMDvwoPFbXwjWsLdJh6ZhxKE4PYhap3gvan4MZ3lA==
 Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
  [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f21wvg76f-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f1fgdvkq4-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 23:39:33 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 23:39:46 +0000 (GMT)
 Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-30bccca5620so2091235eec.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 16:39:33 -0700 (PDT)
+ 5a478bee46e88-30bccca5620so2091364eec.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 16:39:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782517173; x=1783121973; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1782517186; x=1783121986; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bDcdYwgNzThXsgxHH3XFPnMChdpFPwOSyZqvf1aj5R4=;
- b=LR+Ks3hQLs6QZ7qYC/NqkJ5abzGO3ADQMUT9B24IyIndWZToeinKbSnzo4JMzDlXpE
- RFYFA6Bau3q9b8t0ZYs1TjU+g/vIzvAtbg+Jfeq/dVMDBlaify/xjUlAjfFegmFAiKsU
- BY497yGcC0jx0yTdAMuecDAfy1l4JxhIn1/DQUr82Uy3CBKkVHUrLPjgrCEdPeHOf/gR
- jHTaFWMUBidWUNZ7pm/XjTo0Bnr4AnoMkGDJWk35lXztmprQnRlG1zoCbT2NFcDniFvv
- vGGPmfw69y5ctnfIxk2PQ+cRAXHDRf5hl8P8icM2kIaMKiCTGFAkfSccqWSJClOmW5S9
- JmlQ==
+ bh=+CV9S9WNGYcRNWLvEvUepwgDecUeeo2WQvt9uLyU6wE=;
+ b=Lhushp4478A72PnYsI4fomPN7uvf+aE0ekyvi3PdsC+qL0vj0Q8+yw+vlw+k8NV7Zr
+ nMmYQvZwFXtaTK3hd6UzGm3YhHwYTF9iBf+43DDmXILWNGY627u7VwnraWz5bTnR9vL6
+ F0Of4YleIBo+GzJdilj+T+7iWf7k0lsnOgukablLZGlNuQ925/kTVegTOUHeC4lDe+D7
+ jR5foNM/d3MgXV7pQwYgQYsEn4h2RJPy6Dz2b4gFy/eJZKs35BmZ3BlII3QEpaMLcy1z
+ oteNnz46LEl+XeqhVj0asS5uKA3bwP5Z/fi+oLrQpjqvtvWuioP4/MPFlzfoH3dasJx5
+ hCbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782517173; x=1783121973;
+ d=1e100.net; s=20251104; t=1782517186; x=1783121986;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bDcdYwgNzThXsgxHH3XFPnMChdpFPwOSyZqvf1aj5R4=;
- b=MipmnDm47hmNWOKWf8zvR+UMPF5qgMsOdB4mX0oRriIzDILgW+nydDY6FvjvQVdJlJ
- cVoo4LFkkArAc7MFLVvYsYGd0ZZHNS4Av0AqpgPQlrI1t16Z8QlW6Hp8SfdkQN0IhiOW
- C7LP1FdEbFp5v1GWsSSYj+j2Hj9vk/Ye57MLMBpQOl/OofJ/vcEUUxbJNei+SUEKl5eN
- JqB7b4sv2lm5qHrUPFrqWTadgHDrSkC2bmhQzeOTeG6VQdHa8gPjxqIaHVGdQSTzGGy1
- /FbYSE878iMxgj2CGq0QBhb5gRKDDQwCoowI2YuEFkMMD96n8DeD3GGM73aHRotYo2i7
- 8Rhw==
-X-Gm-Message-State: AOJu0Yy00wgk9Mvda3bYZVdbxhnnkrMRGo+sT2S+TVIk+CubKE4ut4Ju
- CcTPvHWPVHsJYBErOuprNXHVg5H3zp2bCqQL8isT3bV7AgACMZLzrd9Vv+Sp+5TOvAFOIULja/a
- wyZguDjdPCilUCgAhr7c6c6tOc5b1Xy52wQHk5cPA1RlLsIvV4OHH6Lv5hYyk4zSazw==
-X-Gm-Gg: AfdE7cnhzF1X35FA5G5byud8oNBRkfuWirEZuOwwXXFKIhzwd666eFvxqp5lW60DYFq
- VtbmJbx5o1n7bmfARaaDmpbKA9cfOLBO8eEWe6QgvBiZknVnXmYZfDJ26zf9d9cDTzBaQNXvy9q
- G+WfQDyyEHObqPZSrz2EFBUvpr+IkKrl9qYt9Erx/tnH0iAsHnUIjQuhVy+ssCtXBqb/Eu1suz4
- gbAZgGL3JBMfnpHA4ivkyF7TQvWiLM78Xmfp2v5YKVMwHoFuMovISp5owH/OuuOlmdZ6aPpONOr
- pHYKH6dVNdOstTmfr6D8Kf417hzpn8ORM4nE10hBJArFHnx84DaUbTwZsPZ+EL8qvlp37XGrvJU
- YN3vqaQGyhRy56YFPWle1w8K3flIl/AYWCpyXzwA49JkNec8A6Z8SYzmgeO7hF0u2hpiWRwY6RZ
- uvEc+WQg==
-X-Received: by 2002:a05:7300:c8d:b0:30c:1b70:896d with SMTP id
- 5a478bee46e88-30c84fc39eemr7057070eec.31.1782517172873; 
- Fri, 26 Jun 2026 16:39:32 -0700 (PDT)
-X-Received: by 2002:a05:7300:c8d:b0:30c:1b70:896d with SMTP id
- 5a478bee46e88-30c84fc39eemr7057052eec.31.1782517172286; 
- Fri, 26 Jun 2026 16:39:32 -0700 (PDT)
+ bh=+CV9S9WNGYcRNWLvEvUepwgDecUeeo2WQvt9uLyU6wE=;
+ b=L6M/KAEk2iNJ4LPtXziYnWDHfsKXqKdluNwYcFfb3FGIYEidJafOBDquQn922iOAkc
+ vgxD53lwHLaTAScrfr5X0tZc4sh7Tyfx8s+6CD9z47mtYuY+1gtkU8D9vqC7Vcvya/XQ
+ 3e2JdtTNG2TYPgDmD8vQ9x3LN9xO6po3jtBq9jpBFIYDiwpga7X17AUJY39jR5kpsbLK
+ 4mR4ls+DiXGpbicr+PoLNnfWi0gRbC87E1P1PTun+M0RyqlUa+tU8hPyNEIexDZaa/7F
+ OVZ4EC0ox23WRb+1iL57N1MeZoNpqjQMBkCAC+Uc8nncbAHAwZ9URBGS04mFjO/QSW1H
+ WLGQ==
+X-Gm-Message-State: AOJu0YzPHerKrofUqcVNoVLtoQXbwndSP+r/BCsv9kSeOEV6orC8TeyP
+ O7k1As0wkQh9VhNR+I1QexT+5SClzs1GBCZVOGJP4KlCq2SUbTBLwomqcdnzyeyDdjSzvVpw4hy
+ 58t6JVmZ1YnurTeaG1Y5hZ6WtoUOVAA/chr5bQINIlhJAhMmSCN4kRkk3Bk9lPubcXg==
+X-Gm-Gg: AfdE7ck1LtwSQVZydPKTrcAmHDK3LfwuSzpHJwaqzKQ8mr8PSg66qhcRkhvdeI7mZ8t
+ r8NBIqMl0gWWyOPqRQjgZDPPJAEb973oYtQAScO9jXrYu3GA/n8QgGZghNLR85aaMYWKk/+vnI8
+ G5zMqVQHWdjvJNcNbzg75z5ytU49+E0dGTCBcPBAova7+kL8Gc6ZPMOI8aCAhFCQlufE9wrqiGu
+ VN5J9BZf8+P6A2qAqDlOx1HxEy9FFUAyDO824uOfcA65KX00qgvQWbY5XIBLX7Khw8feyV+InG7
+ Fhgg4LHtr7+5p6P5m+D/c1CjA7kYY2hOFSHt5fUaSudyJ+mSJtj9Ix5/7UPl356vLDLx5SNXYul
+ uQRmIzddaLtRpVtut7W1SbgoHPKrAd6zhrICyj/qYztfQLBZwmdzrjlv9scfJrEyxfCqGC55i2X
+ BvbHxAcA==
+X-Received: by 2002:a05:7300:3202:b0:30c:ab4d:3823 with SMTP id
+ 5a478bee46e88-30cab4d3cffmr2085626eec.37.1782517186241; 
+ Fri, 26 Jun 2026 16:39:46 -0700 (PDT)
+X-Received: by 2002:a05:7300:3202:b0:30c:ab4d:3823 with SMTP id
+ 5a478bee46e88-30cab4d3cffmr2085606eec.37.1782517185740; 
+ Fri, 26 Jun 2026 16:39:45 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30c7c52c591sm29369756eec.7.2026.06.26.16.39.31
+ 5a478bee46e88-30c7c52c591sm29369756eec.7.2026.06.26.16.39.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 16:39:31 -0700 (PDT)
+ Fri, 26 Jun 2026 16:39:45 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -99,42 +99,40 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-arm@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>
-Subject: [PATCH v2 07/37] tests/tcg/meson.build: introduce cflags
-Date: Fri, 26 Jun 2026 16:38:48 -0700
-Message-ID: <20260626233918.158740-8-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v2 16/37] tests/tcg/meson.build: introduce expected_output
+Date: Fri, 26 Jun 2026 16:38:57 -0700
+Message-ID: <20260626233918.158740-17-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260626233918.158740-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260626233918.158740-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=eszvCIpX c=1 sm=1 tr=0 ts=6a3f0db5 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=API5kwXb c=1 sm=1 tr=0 ts=6a3f0dc2 cx=c_pps
  a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=KKAkSRfTAAAA:8
- a=EUspDBNiAAAA:8 a=xYeKZKBo3MRtsS0M5EUA:9 a=bBxd6f-gb0O0v-kibOvt:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: 2zvj3Hcm5m6gQ5EFxnj2nbaoHr8ur2p7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI2MDE5NyBTYWx0ZWRfXxbUsTXXAg6Tr
- Iw3tjgZmt7qLdpwEwQCGIi7dYh5TmYFjU2JBEuUiFulXHwst/zyb1pZqkKiHT+WNN3cwveGkWT0
- Cumulw/krn41hKjn+Q/ZEVHdth412mPspXbG0vqAk95WDIblGr4j5RtyY0F+33H3OtopJYRU7u4
- 3gzB7iF3k7lOw5ThtQdTpurszxKj+4s1VSHeWKEhTXi0+Z4iUw8qfPGpV7+mTidXoHkNxVNmIkj
- ZjF8hXPithL/BrD75n4rrH7gF6U1KY1S5Pcp48jFKOWh2qRkrMabcN32bqLy2bXwqspDqKVNoRH
- h4Mcz0K2thrcjeFs+vA1ZwkAnH4AVwsDP3GZIlTCTSF95xy57zegFAHpdx4KlvzxvVmHLvBmA0a
- dY8Oz6jE+mgN8HGj8FK0o1nWnN7/goCV/qefEzArvo9FxNENo+UwdAj5ovoAaAI8i+cJauphmlQ
- 5vTS5Z1xV/WxhHrSLIw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI2MDE5NyBTYWx0ZWRfXxl6Omb/xA2vZ
- 86I8HvFIhicsvZ/CtRq4Z4uK9oxWoYBjF6C9B4xWEUUulEpy1YLFcctqrgJp9wUihNv2k8uvvC/
- gwuq+A5wflw5h1+C9jZ/x1nFp9RfSeM=
-X-Proofpoint-ORIG-GUID: 2zvj3Hcm5m6gQ5EFxnj2nbaoHr8ur2p7
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
+ a=twXvQjPDpJ6hybaE9wIA:9 a=bBxd6f-gb0O0v-kibOvt:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI2MDE5NyBTYWx0ZWRfX/jtSVt1k23f4
+ IY07N3r+cMrL9WIlTapY5abafPdSpd+h3x8asDWG7EbdGdm7mOqnl6Jj7AM35bXeL5urT0pDM+v
+ pKBJSZr1q8HZP8zmp/JR2oR5pC6gH/uCO9X59/pd2n3ku/e4AfiSGHTwOQY3hl/8ckgARHjAVyp
+ C6Q/v1M8t6efDs9EBhGForWehiMh9Kh7pfGVp6pwYBsM7Mnywtjy7/fJUcvcGBOAVy3ma8GGi36
+ uI/6/KJ9ovJ0EXQek1LBjIh91pGVw3kqtDSQ8Yf1g0AHcdkNmOVkwH/iHHZdi2Zfp39W73iCklq
+ 0VDmSQ49AN0V2CMyY91pZeAW3ZZMODw5Qtee3b3qloSmey2/Vm7quH7ELh8ofy/JrFisj25M2gx
+ 5qX2zTacUem8jzvx4RuhL/NllV1iZlMmizP9h7lI7SS0aPRvgHaDcsVvQX/ZlZeYi+kOh716FDD
+ eIT1uJQ02OZuUUb6EMA==
+X-Proofpoint-ORIG-GUID: eZ74oS5PaNYbHeqiUkJGBM4CzG80fYO8
+X-Proofpoint-GUID: eZ74oS5PaNYbHeqiUkJGBM4CzG80fYO8
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI2MDE5NyBTYWx0ZWRfX4lJ7fqyEz45K
+ sf0bAG1Rcb+UwYxdhtF6qWuWbEEAjTfqDkbf7JVoYs1rXM045Z+J5iVyt3UB8igd2cIu6b1YzZB
+ nnJymOfmZLkDImRVjl8/vAB8xZruob8=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-26_06,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 phishscore=0 impostorscore=0 adultscore=0
- bulkscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606260197
+ suspectscore=0 clxscore=1015 bulkscore=0 impostorscore=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606260197
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -160,75 +158,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We add possibility to declare cflags for a given test. Since we want to
-preserve the uniqueness of test binaries, we prevent repeating those
-cflags later, for an existing binary.
+A test can declare it expects a specific output on stdout. In this case,
+we compare it to a reference file. We implement this instead of relying
+on a wrapper because we need the flexibility to resolve name of
+reference file per target.
 
-This ensures one executable == one set of cflags, and if dev needs
-duplication, they can use a custom 'exe_name' to override this.
+For instance, multiarch float tests expect different ref files for each
+target, which is something we can't express with a test wrapper.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/meson.build | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ tests/tcg/meson.build             | 12 ++++++++++--
+ tests/tcg/scripts/run_and_diff.sh | 15 +++++++++++++++
+ 2 files changed, 25 insertions(+), 2 deletions(-)
+ create mode 100755 tests/tcg/scripts/run_and_diff.sh
 
 diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 49c8681e53e..47a600e4bd6 100644
+index ad4024f793b..f052e731de6 100644
 --- a/tests/tcg/meson.build
 +++ b/tests/tcg/meson.build
-@@ -13,6 +13,7 @@ tcg_tests = {}
- #         'src_file': {
- #           'exe_name': ['provide an alternative binary name'],
+@@ -7,6 +7,7 @@ if config_host.has_key('GDB')
+ endif
+ gdb = find_program(gdb_progs, required: false)
+ prog_gdb_test = find_program('../guest-debug/run-test.py')
++prog_run_and_diff = find_program('./scripts/run_and_diff.sh')
+ 
+ tcg_tests = {}
+ # tcg_tests is a dictionary with following structure:
+@@ -24,6 +25,7 @@ tcg_tests = {}
  #           'test_name': ['provide an alternative test name'],
-+#           'cflags': ['additional cflags to compile test', ...],
- #         }
- #       },
- #       ...
-@@ -20,7 +21,8 @@ tcg_tests = {}
- #   }
- # }
- #
--# Every test executable, identified by 'exe_name' is built only once.
-+# Every test executable, identified by 'exe_name' is built only once, and we
-+# ensure cflags are specified only once, on first declaration.
- # Tests for a given src use the same executable by default, and their definition
- # is guaranteed to be unique also. Several tests for the same executable can
- # declared using 'test_name'.
-@@ -54,7 +56,7 @@ foreach target, plan: tcg_tests
+ #           'cflags': ['additional cflags to compile test', ...],
+ #           'qemu_args': ['qemu command line flags', ...],
++#           'expected_output': 'file_to_compare_output',
+ #           'gdb_test': ['gdb test args'],
+ #           'env_var': ['VAR=value', ...],
+ #           'wrapper': [program_to_launch_test, 'args'...],
+@@ -87,8 +89,9 @@ foreach target, plan: tcg_tests
      foreach src, setup: t
        # return a clear error if user misspell a setup entry
        foreach key, _ : setup
--        allowed = ['exe_name', 'test_name']
-+        allowed = ['exe_name', 'cflags', 'test_name']
+-        allowed = ['exe_name', 'env_var', 'cflags', 'gdb_test', 'plugin_test',
+-                   'qemu_args', 'test_name', 'wrapper']
++        allowed = ['exe_name', 'env_var', 'expected_output', 'cflags',
++                   'gdb_test', 'plugin_test', 'qemu_args', 'test_name',
++                   'wrapper']
          if key not in allowed
            error('unknown tcg setup entry \'' + key + '\' for test ' + src +
                  ' (possible: [' + ', '.join(allowed) + '])')
-@@ -82,6 +84,15 @@ foreach target, plan: tcg_tests
-               'specify a different \'test_name\'')
+@@ -202,6 +205,11 @@ foreach target, plan: tcg_tests
+               ]
        endif
  
-+      cflags = []
-+      if 'cflags' in setup
-+        if exe_name in built_tests
-+          error('test ' + exe_name + ' was already built with cflags: ' +
-+                'remove cflags or set \'exe_name\' (if cflags are different)')
-+        endif
-+        cflags = setup['cflags']
++      if 'expected_output' in setup
++        expected = files(folder / setup['expected_output'])
++        cmd = [prog_run_and_diff, expected, cmd]
 +      endif
 +
-       # build executable if needed
-       if exe_name not in built_tests
-         exe = custom_target(exe_name,
-@@ -91,7 +102,7 @@ foreach target, plan: tcg_tests
-                                       '-MMD', '-MF', '@DEPFILE@',
-                                       '-Wall', '-Werror',
-                                       '-O0', '-g', '-fno-strict-aliasing',
--                                      ],
-+                                      cflags],
-                             depfile: exe_name + '.d',
-                             output: exe_name + '.test',
-                             build_by_default: true)
+       if 'wrapper' in setup
+         cmd = [setup['wrapper'], cmd]
+       endif
+diff --git a/tests/tcg/scripts/run_and_diff.sh b/tests/tcg/scripts/run_and_diff.sh
+new file mode 100755
+index 00000000000..3e51cdc9663
+--- /dev/null
++++ b/tests/tcg/scripts/run_and_diff.sh
+@@ -0,0 +1,15 @@
++#!/usr/bin/env bash
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++set -euo pipefail
++
++if [ $# -lt 2 ]; then
++    echo "run_and_diff: expected_output_file cmd [args]..." 1>&2
++    exit 1
++fi
++expected="$1";shift
++output=$(mktemp)
++trap "rm -rf $output" EXIT
++set -x
++"$@" |& tee $output
++diff $output $expected
 -- 
 2.47.3
 
