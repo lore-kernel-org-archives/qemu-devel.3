@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A712CDE008
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEF01CD4F26
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:23:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3el-0001mC-8s; Fri, 26 Jun 2026 06:19:31 -0400
+	id 1wd3f0-0003IB-2y; Fri, 26 Jun 2026 06:19:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3ef-0001DB-4g
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:27 -0400
+ id 1wd3ey-0003E5-Jo
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3ed-0005O6-Gh
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:24 -0400
+ id 1wd3ew-0005QR-Qj
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469162;
+ s=mimecast20190719; t=1782469182;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=q+xth3zJnJDFs6lGu71xiSdWTKM4W7NCVGErv5m3aMI=;
- b=GjKrPqbp4ehvkLAE/nWNftzUkJIxX3488kc4nakUWSZyGVcmglygJVv/KvheRjBQDFlaez
- mynIN66HwzlbbRyFDmGKN+A7PsFLLprk693mlPXJD/rBW8VmBIqjeUTm69GDaOhZahpKoY
- dcbyi1MRtyMql4j4bh4RbQNwBIw6rsE=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9MvxJQhtTKs4rTFMQQCaiswmThg2o/sTBst6a0P6uok=;
+ b=Xmx7yklMS4s+8/nxV1dyqp/BhyLliNv8kuVtcNxVJKSDH9XMzFGfMNeIBeSLNFEczAhnQW
+ ++QjoIfMOK2pp+qEZaIxCI+MDnM+Pem5dNzWsUZf72XIBqhI58L5pzYSPSPtbws3L4p4bn
+ TBt7uhMUFrKagVfkvQraPSlW8+0DMB8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-qzDUd8QGO3WdKt5Rh4B96w-1; Fri, 26 Jun 2026 06:19:21 -0400
-X-MC-Unique: qzDUd8QGO3WdKt5Rh4B96w-1
-X-Mimecast-MFC-AGG-ID: qzDUd8QGO3WdKt5Rh4B96w_1782469160
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-46fa65abd21so42036f8f.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:19:21 -0700 (PDT)
+ us-mta-194-ATu-asW7OUCX6nrMuZZbdg-1; Fri, 26 Jun 2026 06:19:40 -0400
+X-MC-Unique: ATu-asW7OUCX6nrMuZZbdg-1
+X-Mimecast-MFC-AGG-ID: ATu-asW7OUCX6nrMuZZbdg_1782469180
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4924314568cso7123065e9.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:19:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469160; x=1783073960; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469179; x=1783073979; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=q+xth3zJnJDFs6lGu71xiSdWTKM4W7NCVGErv5m3aMI=;
- b=icudgYHaoItoMI86Qw4tdZTBXIxYeki7I0CrqBnZO+I0CTEjkhRWEsxvy1pH1Qapa9
- h/4JZNvnE7y6skoUck8eUX02lOS1kUSBHcsbJCVlhnfEZwglce7D9xregxLi4wzBU/IP
- Vrxxj2/IoZ8KXKlnJ7wd8zj0iAgvzM9LZHdsOavoMEqrprZu7LrCN8XuhjDYs5CAPSdb
- tbp+8qfzgo+mOXbSv2yp6kdwUtXTc39uWTMmOCVgMLKTM1UtLG4Ap65pukbJpBy5AsQ/
- wamJMRIPeM2j0xA7D16/R/sIeXFrtPi5Qh3LTIRuP5PM6msTFrEaGhWZL2Op8oPmg0x4
- Q8tQ==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9MvxJQhtTKs4rTFMQQCaiswmThg2o/sTBst6a0P6uok=;
+ b=T2mo8kaakr0A5VWFKZWon8m5JFGgn/L7RaV1bHIr2ijK0c6dViV78CgDXgC9M0JW3P
+ CjZNvsOdk5Fx79gp7E7cXm4WgrEBZvfyRNGgRyuCQhyvej0T/06+f2+v9u5A3ILdIyqI
+ OJllLxbEZJEFSgpPatWdLWgG8bOuO8Qq0oNRzR7yKfpGOChN+tFtwSJFpZWo100ex84K
+ HBLdHtzURCJLcbLuLqoR94iJkdXLI03Jt3TdOiAqRmDbVgQzv7Z0mA6ZBw17GQfmrbBU
+ WEJyfknCVa2FK/Qx4E/3AZ2a1/DkSszxQA77UaKzU3fIGQU6vC1vHtq4hHIk39J0hUDV
+ 8tyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469160; x=1783073960;
+ d=1e100.net; s=20251104; t=1782469179; x=1783073979;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=q+xth3zJnJDFs6lGu71xiSdWTKM4W7NCVGErv5m3aMI=;
- b=oVofNQWN/4bQnAuJlZn8eblDFEV2rzZtbzGBe794nmJK7nYOy+Hmkf8Gc97sTwlhhS
- M0dxpBi3U9v0s5Tp6tosG32j78qwgDiJ2oiX4m+/8aYOqPAUsjo2zUr+PIgO3Na1Wi9H
- aeY7Cw+kKe1gpX+cTso1dcLztxIQL1Bo+uFNvDBhy2Cmbg9JBlU0USx7qZsi2ijM8t51
- xaLmsnqb5eqCdebwSdLMHpQtvgg6BlQQpinogLSY7E2jqMpvusO8p3G17d1FtyJl2rRN
- 242cGVkYPa4P7Kp6HhHzFSURVWBJvmHAJu3/LKlF5/do5n8vRxUGm7OrMhIt2f2D+hNe
- SiUQ==
-X-Gm-Message-State: AOJu0YxzilwiCnn1l+kwEssXVzD0gI8N+c552PCF22536RQiN0Ucdd73
- sQqiW294B+uWfnrE2ohg0+azIOhG3wr6T6ufeWhKoCFexT6XsxiDC1LISBiZK6pCDi78BnZyzaY
- YHw9RwyFtpV5wSAsWqps/0ucLn1Wsar+fXX4MT3jYVo5voeVIeLgRrBvSIcb4aPDhXKbmiWSARm
- +AqjoJOvt1aiCu3TZLRkGImx5gpCPWo004qZmvfvqg
-X-Gm-Gg: AfdE7cmLF0807llI/+UmQtJpWVRbCZGDS+zUS7NJDpjJ6/rXY6s/BFnksa4ivJejldw
- fmjevkBHPk0Xt0wU9t0g/Nm8Ds3BUpxeRIZreDYKiKysDimuNtoseiOboMUtP5xNj9ENXzhwgaE
- awdmJZJSPsxgOWMzVCu3PR53aawtcdj+XsWGeWbNLj1sGgQJ0TwaVAv3P1rFEudxG0RIuMrN70w
- lBNAyCGSDPW0ci16obgGJHgdWe3M8Xs8jMNoAgGQUtiYBLHVMs46EML3FQMZHNt+sFiDlYITna6
- /ZzZ7MScKAv7vRXAPf1Su9nQ5KvnSo1VOADaopI/Y45rD30YJoMaTpOOqZRxNRa7Noi4nF7clCe
- elFApW5kZzWAx/JYyKsn44IJFIti/gRN+pKtGZx92nhvde2kJ7TfslIIhjw5uG5qXGL702uhI71
- 7vJ+juN/JXPpiDlr3e
-X-Received: by 2002:a05:6000:2c0f:b0:46b:ea12:2912 with SMTP id
- ffacd0b85a97d-46dc05553f8mr10474554f8f.5.1782469160395; 
- Fri, 26 Jun 2026 03:19:20 -0700 (PDT)
-X-Received: by 2002:a05:6000:2c0f:b0:46b:ea12:2912 with SMTP id
- ffacd0b85a97d-46dc05553f8mr10474494f8f.5.1782469159960; 
- Fri, 26 Jun 2026 03:19:19 -0700 (PDT)
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=9MvxJQhtTKs4rTFMQQCaiswmThg2o/sTBst6a0P6uok=;
+ b=O4q5HcNEYUAw4gGu5mnM61LIHmDvQdxG8gOFZo3m3tY7ucMEuQ/2HWS/H3CtjmYzqb
+ ++4W5j5zmYcACNJizGSagOpCKoAc5rTzMbD2Z9Yp/XgzHuN133O4lSDLzVJJ+t+6vQgY
+ G1abjoQdmX9FHIx7KPhDgs6mDx/7N4vRlmzYcUUkdPcy5+4ujTzLZrg3LkaT+j2ZdzUP
+ xnNrIsntJiS1+ApOtDr8lbQj+guRm3AIe+7it+GUbBMvovwfyLFnbx0ZYYqZp6XlSpkM
+ 9ZKH3RNLswbGjsQQnuXzyFiyRpNe00FdjPdUfyasnJU2JqLSrwAsE5ijCuMnxMODyUMs
+ xknA==
+X-Gm-Message-State: AOJu0YyN4zmsPs3MQ0BjMN1IZgQVv1uNRG90Sxxi1BgzFerYjKXAe3bW
+ ipJmcIdmi3SIrR5Sbm7MFwwO9wto8xLdjUjskaYgVmao90H7pklAwE3mHiSoYj4eThWspPiPrO1
+ FPq8yOwf84bj2y2Q9dEUFrq9VB563QBan/GvXrcRxDxgtls6/czPuIgtwqb/0H8xKBZp/MDF0oH
+ NbDWdW9PT5j8vWMaNI0yufjumNOImifm4AOTA//4mS
+X-Gm-Gg: AfdE7cmxDaSHAPdrWEa9X1ckRw8Hw9gwD2tqu5Q+AftQWTBKLU9KX1nSAGJnG1X+Z+P
+ Z0T+vVaxb4UGHY90Zf3tX7Qum6uvmZzO8pcPRu9jiqApie5cBTV+7zeDXdD6ZFmHSB0OuOxQtu3
+ 1eg9ib4tEJqaB8KYeXT+9jbCut3ITxJWZHqUThWRyT/wvHH9OtO8o8ijh4q49a1O14/we8jhmSF
+ WUoXLBIvD+NgI69Scd5GMzJO2S4KMcQF3qN0SPdL7eZpN+GdqtUkYemfq/TdyM5gOuQnsgTfH3D
+ mjfn9CdW3iYGlvw5SRRKbEln7/H3mb5P62mMjAhA2L1GL/1D9wTNxhl1FR0lH6rIXGignDjTMEv
+ a/bJMMn6HjqA7KaTMmhK83PxuTQC7TKHD9JD80nQaXLq2Yh/Y4i4DQRlOqJEHKg95Rg+VyVi0k9
+ mJFbSlotKKt8vX7VZk
+X-Received: by 2002:a05:600c:c3c1:20b0:492:4335:4d4c with SMTP id
+ 5b1f17b1804b1-492668833c0mr72293695e9.30.1782469179596; 
+ Fri, 26 Jun 2026 03:19:39 -0700 (PDT)
+X-Received: by 2002:a05:600c:c3c1:20b0:492:4335:4d4c with SMTP id
+ 5b1f17b1804b1-492668833c0mr72293175e9.30.1782469179012; 
+ Fri, 26 Jun 2026 03:19:39 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46d3b59cef1sm16715500f8f.26.2026.06.26.03.19.19
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-49269071c9esm64501155e9.9.2026.06.26.03.19.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:19:19 -0700 (PDT)
+ Fri, 26 Jun 2026 03:19:38 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 33/45] accel: remove unnecessary #ifdefs
-Date: Fri, 26 Jun 2026 12:17:36 +0200
-Message-ID: <20260626101748.1728079-34-pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 41/45] qemu-options: Add description of tdx-guest object
+Date: Fri, 26 Jun 2026 12:17:44 +0200
+Message-ID: <20260626101748.1728079-42-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
 References: <20260626101748.1728079-1-pbonzini@redhat.com>
@@ -119,115 +120,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+
+Add description of tdx-guest object so that QEMU doc page can have the
+description.
+
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://lore.kernel.org/r/20260512084458.622465-5-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- accel/accel-irq.c       | 14 --------------
- accel/stubs/mshv-stub.c |  1 +
- 2 files changed, 1 insertion(+), 14 deletions(-)
+ qemu-options.hx | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-diff --git a/accel/accel-irq.c b/accel/accel-irq.c
-index 4303e10e408..830be27c7f9 100644
---- a/accel/accel-irq.c
-+++ b/accel/accel-irq.c
-@@ -19,11 +19,9 @@
+diff --git a/qemu-options.hx b/qemu-options.hx
+index a8ee5d14e14..f1874a05915 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -6372,6 +6372,47 @@ SRST
+                  -machine ...,confidential-guest-support=sev0 \\
+                  .....
  
- int accel_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- {
--#ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
-         return mshv_irqchip_add_msi_route(c, vector, dev);
-     }
--#endif
-     if (kvm_enabled()) {
-         return kvm_irqchip_add_msi_route(c, vector, dev);
-     }
-@@ -32,11 +30,9 @@ int accel_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- 
- int accel_irqchip_update_msi_route(int vector, MSIMessage msg, PCIDevice *dev)
- {
--#ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
-         return mshv_irqchip_update_msi_route(vector, msg, dev);
-     }
--#endif
-     if (kvm_enabled()) {
-         return kvm_irqchip_update_msi_route(kvm_state, vector, msg, dev);
-     }
-@@ -53,11 +49,9 @@ void accel_irqchip_commit_route_changes(AccelRouteChange *c)
- 
- void accel_irqchip_commit_routes(void)
- {
--#ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
-         mshv_irqchip_commit_routes(mshv_state);
-     }
--#endif
-     if (kvm_enabled()) {
-         kvm_irqchip_commit_routes(kvm_state);
-     }
-@@ -65,11 +59,9 @@ void accel_irqchip_commit_routes(void)
- 
- void accel_irqchip_release_virq(int virq)
- {
--#ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
-         mshv_irqchip_release_virq(mshv_state, virq);
-     }
--#endif
-     if (kvm_enabled()) {
-         kvm_irqchip_release_virq(kvm_state, virq);
-     }
-@@ -78,11 +70,9 @@ void accel_irqchip_release_virq(int virq)
- int accel_irqchip_add_irqfd_notifier_gsi(EventNotifier *n, EventNotifier *rn,
-                                          int virq)
- {
--#ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
-         return mshv_irqchip_add_irqfd_notifier_gsi(n, rn, virq);
-     }
--#endif
-     if (kvm_enabled()) {
-         return kvm_irqchip_add_irqfd_notifier_gsi(kvm_state, n, rn, virq);
-     }
-@@ -91,11 +81,9 @@ int accel_irqchip_add_irqfd_notifier_gsi(EventNotifier *n, EventNotifier *rn,
- 
- int accel_irqchip_remove_irqfd_notifier_gsi(EventNotifier *n, int virq)
- {
--#ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
-         return mshv_irqchip_remove_irqfd_notifier_gsi(n, virq);
-     }
--#endif
-     if (kvm_enabled()) {
-         return kvm_irqchip_remove_irqfd_notifier_gsi(kvm_state, n, virq);
-     }
-@@ -104,14 +92,12 @@ int accel_irqchip_remove_irqfd_notifier_gsi(EventNotifier *n, int virq)
- 
- inline AccelRouteChange accel_irqchip_begin_route_changes(void)
- {
--#ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
-         return (AccelRouteChange) {
-             .accel = ACCEL(mshv_state),
-             .changes = 0,
-         };
-     }
--#endif
-     if (kvm_enabled()) {
-         return (AccelRouteChange) {
-             .accel = ACCEL(kvm_state),
-diff --git a/accel/stubs/mshv-stub.c b/accel/stubs/mshv-stub.c
-index 8b69539a85a..566a17ff9e4 100644
---- a/accel/stubs/mshv-stub.c
-+++ b/accel/stubs/mshv-stub.c
-@@ -13,6 +13,7 @@
- #include "system/mshv.h"
- 
- bool mshv_allowed;
-+MshvState *mshv_state;
- 
- int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- {
++    ``-object tdx-guest,id=id,[attributes=attrs,sept-ve-disable=on|off,mrconfigid=sha384_digest,mrowner=sha384_digest,mrownerconfig=sha384_digest,quote-generation-socket=socketaddr]``
++        Create an Intel Trusted Domain eXtensions (TDX) guest object, which is
++        the type of ``confidential-guest-support`` object. When pass the object
++        ID to machine's ``confidential-guest-support`` property, it can create
++        a TDX guest.
++
++        The ``attributes`` property is a 64-bit integer, which specifies the
++        TD attributes of the TD.
++
++        The ``sept-ve-disable`` property controls the bit 28 of TD attributes
++        specifically. When it's on, the EPT violation conversion to #VE on
++        guest access of PENDING pages is disabled. Some guest OS (e.g., Linux
++        TD guest) may require this to be set, otherwise they refuse to boot.
++        The default value is on.
++
++        The ``mrconfigid`` property is base64 encoded SHA384 digest, which
++        provides the ID for non-owner-defined configuration of the guest TD,
++        e.g., run-time or OS configuration. The default value is all zeros.
++
++        The ``mrowner`` property is base64 encoded SHA384 digest, which
++        provides the ID for guest TD's owner. The default value is all zeros.
++
++        The ``mrownerconfig`` property is base64 encoded SHA384 digest, which
++        provides the ID for owner-defined configuration of the guest TD, e.g.,
++        the configuration specific to the workload rather than the run-time of
++        OS. The default value is all zeros.
++
++        The ``quote-generation-socket`` property specifies the socket address
++        of the Quote Generation Service (QGS). QGS is a daemon running on the
++        host. QEMU forwards the <GetQuote> request from TD guest to QGS and
++        sents the reply (which contains generated QUOTE on success) from QGS
++        to guest TD.
++
++        .. parsed-literal::
++
++             # |qemu_system_x86| \\
++                 ...... \\
++                 -object '{"qom-type":"tdx-guest","id":"tdx","quote-generation-socket":{"type":"unix","path":"/var/run/qgs.socket"}}' \\
++                 -machine ...,confidential-guest-support=tdx \\
++                 ......
++
+     ``-object igvm-cfg,file=file``
+         Create an IGVM configuration object that defines the initial state
+         of the guest using a file in that conforms to the Independent Guest
 -- 
 2.54.0
 
