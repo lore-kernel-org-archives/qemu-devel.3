@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E292CDE002
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 12:36:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B9A3CDE002
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 12:37:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd5mt-0004Yu-R7; Fri, 26 Jun 2026 08:36:03 -0400
+	id 1wd5mt-0004XC-6N; Fri, 26 Jun 2026 08:36:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wd5mX-0004To-CL
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 08:35:45 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1wd5mT-0004Tf-Pd
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 08:35:43 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wd5mT-0002wA-Lj
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 08:35:40 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-46caaa805b2so567739f8f.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 05:35:37 -0700 (PDT)
+ id 1wd5mR-0002vs-Gu
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 08:35:37 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-46f3ca3c598so688193f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 05:35:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1782477336; x=1783082136; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vk22Jj3EifnDGUBBY5mcZdeXYuB5UW1kA8dVKyl8j9Y=;
- b=ejxJxfHwc0/vcNG3RKgZrduxqCxnH/EUJ7Fpryqr9xV7qPazP3T6MuPvp+9otHxzZK
- 8ZyzcgGYRI0ucFZjlc2g9c/8KPlZl1sHvNeUs0lV0nLu/L7sct6TLk9R/zGpwSFDdM7a
- dle+69WfAU7iKUzl0Du4C7ePApMpxqVuC6240=
+ d=mihalicyn.com; s=mihalicyn; t=1782477333; x=1783082133; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=MquNqe18DPhVhW+OqRiNtfS8g3epc7GXA4QXS+eLsH0=;
+ b=NeOaIEwpuFovKWAsYW7DVRabbn1vR/vXJ2z3qT0DT4mRmSE/vmMJ0UHU4iMjE/HDUp
+ IllYqzNY0w+2BAy4FRzg3WRRhr60Zu9d23DnevfWMrglzp5Ww2nFVG8ta5yCtm6JJYgc
+ yIwn7YW6BfUh+WRUbLjFOuJCXJjH6ssxW+/0c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782477336; x=1783082136;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vk22Jj3EifnDGUBBY5mcZdeXYuB5UW1kA8dVKyl8j9Y=;
- b=cIvoqLcPnwjFOT7i3aSCoydOi+EVm6qA7XqL2Ka1oVDvpBelap3XcND6CZAGD/N3f3
- Zu5v/4A56SxQYJZ/U/E/+S/nkQSZwncOEuV7zawm980eEiz+Y/xil+HKjbzzYhte/3Xk
- m0GCOy56txdWSyt2Vq7/xRLRFKPpBP3RnTaiheB8DQqiBngZbzeLH0Au8PH/FFWK4Ypp
- dOwetMm9n6uTu1JhkosReHXYCzf+GOvr5CzYB3zZaiAbrQ22CO90cx1wYtqRm5Rqn+Ny
- JCLdBaO/Jz4GH48sGBZavhhKouFb0Z4J4zpZW++u2eU9oSMQ/K+sXKoqqu3oTwj/U6m8
- Cpuw==
-X-Gm-Message-State: AOJu0YyzdKVEaq26n2UQU+SphE6LOsAFlkSUDFZVLaN4WkjIi6n5hSs5
- 28v26e49/KskTCwrnCHw5Cj+2PKzC/DjKik3HWboXrV/GJT/PwPbpfcoLeKpOvac4nzRbe0HADz
- 7imqM/qE=
-X-Gm-Gg: AfdE7ckOZcZw79NHayRUV6aN9pynW8Ap/Rdk7oJBbDKA6tMZ0SLEHb4Tk6ojkJ/yCnU
- gpaOlmtoP6Fy4j1Mh5ObTZr78JPPTRPLycKJKqru1l5PzvnS+x5dsUVFv3rug1FpBreatBq2DqP
- jykbekNHZZht7279Do810B+LagTJOA9Y6rhHUMKTvXYPRF49LdPvCejAiGu8JZKIuW9bc0/nLLq
- xatIY4KuEs2HLi66F7hRiGeXeb5I9xUY1jGkTDwlHn1XkUjEztqd+hBqy77ETZpcptNTmBzlywx
- sx7cE0qyUn1AiKl+sGEkfUCFnK8gqHvkwt1dyJmdWd8Moy8A42ogwtDM4qNhyB14/HiaVqfCrLW
- nWTf3R0XjZ39AcSRWp9ROm5YIvcP58ddoNfX2LKALgaavK2lKDZ2zDzW+IMeJZtAjWmjFZXhyM2
- ttg2F3rGB6RxFxDIz3Ru3gpx51n0/xtRdeYhmpz2dBcmvqmbQy2eabwLUggPmNuL0kLNJ9/ic5N
- vJrB5WJxgy2
-X-Received: by 2002:a05:6000:460f:b0:45e:eaed:afd2 with SMTP id
- ffacd0b85a97d-46dbc1bc950mr10686768f8f.0.1782477335972; 
- Fri, 26 Jun 2026 05:35:35 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782477333; x=1783082133;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MquNqe18DPhVhW+OqRiNtfS8g3epc7GXA4QXS+eLsH0=;
+ b=mHGuG6wnuPEBgtsTfHcWuveB4PoI6ahQ6kn5RBALb8RLuGK5x3UCVHwuaCinSo2hLn
+ WgJ1Zkcze24mNwbeFSEC4m03nVx+gsudlhMY/PpMnC/FPZSmJmNh0qRLcj2RCUWgdiqA
+ a0P7Fv7aqCJ6APyYLvVp8m63/k68KUgxcvPlz6394vzry8x8NqGnDDd1m7AQSuKV6Nna
+ 25dQPy2IPO1oWO9Dp5UkaoIZYVZ6stCa3iNo5f91P6hzVexh+ARyLm7DsV72B3nOahav
+ ziPBJD35G+L6FbXLU8hydoGCbhfP3mQ6PvY0cby1EQa/A2rOW2oN+l50Eo47ejicoI5N
+ HEhA==
+X-Gm-Message-State: AOJu0YwvFzibUkIlSkOS3lQ2kpqbU3tv81tpgpYHsSNg+jFgSrrIUYOq
+ KQD23HCmIe0R2dm0eedCPKgWcVcRS31vovxhGt0GKvTQVi7Zuo3HTT0JQtIfKlpTaZGBGVSUIl3
+ OlTUaxVg=
+X-Gm-Gg: AfdE7cnOxQ0fFjJkfkxr/3u5+6HeeE5pgI0MFiKY4VYTL/PQstW2QSzeTR9fz89R5gq
+ /X4i7JXKnltRaTOSrkSq/l8sOUFx3jV5ZJNyMqhfNUhIY1zHFy8MDh+lgjgiMeNDDR1Bjlegp0n
+ gKQxu2jBjSVSJiK7DP8ybm+nUgHI7/Hr3rL9n6A+lQyCEESUqGKJa129gg5p66APZlTADfSujni
+ CmGFTCqycTG/CWdIR3UZg6aABb5Jf8wrbxSQRKlhdI+UWO7YFGMyNnLTpMKClUUNmE9pUIm7CfD
+ NWBbYahXnDTMuOkk5hvT9NGB3AW2IliU439S2arRwHWiZGb73QAm/vWLa1cYkUOA8H+0INV2GQF
+ jg4xWJC70A5JZd33K6mu3rANpw97+DiIQs+iib/l8eXqJb/rmYhi6x4N3TTclfzrb0ccCf27gga
+ hppDPaFtbtJM1msXeu1mxmaSsN2L+cO43mq2XcP/mu8iNr1vc16mG/WxWEF+5bE4e0xa0zNua9D
+ FWO7OQJp9fiR72wSNI51Kc=
+X-Received: by 2002:a05:6000:2207:b0:46f:960b:b711 with SMTP id
+ ffacd0b85a97d-46f960bb850mr1732810f8f.45.1782477333276; 
+ Fri, 26 Jun 2026 05:35:33 -0700 (PDT)
 Received: from alex-laptop.lan
  (p200300cf574a7200aa896c1ac04cb1b2.dip0.t-ipconnect.de.
  [2003:cf:574a:7200:aa89:6c1a:c04c:b1b2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46efd7ee1c7sm7373757f8f.14.2026.06.26.05.35.35
+ ffacd0b85a97d-46efd7ee1c7sm7373757f8f.14.2026.06.26.05.35.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 05:35:35 -0700 (PDT)
+ Fri, 26 Jun 2026 05:35:32 -0700 (PDT)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
@@ -76,17 +75,15 @@ Cc: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
  Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v3 3/9] hw/audio/virtio-sound: free all stream buffers on reset
-Date: Fri, 26 Jun 2026 14:35:25 +0200
-Message-ID: <20260626123531.132078-4-alexander@mihalicyn.com>
+Subject: [PATCH v3 0/9] hw/audio/virtio-sound: basic migration support
+Date: Fri, 26 Jun 2026 14:35:22 +0200
+Message-ID: <20260626123531.132078-1-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260626123531.132078-1-alexander@mihalicyn.com>
-References: <20260626123531.132078-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,49 +106,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Volker Rümelin <vr_qemu@t-online.de>
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-All remaining stream buffers in the stream queues must
-be freed after a reset. This is the initial state of the
-virtio-sound device.
+Dear friends,
 
-Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
-[AM: trivial variable rename s -> vsnd]
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- hw/audio/virtio-snd.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+This patchset is aimed to support virtio-sound live migration and based on
+pre-existing Volker Rümelin's patches from qemu-devel lists [1]. I tried
+to ask (https://lore.kernel.org/qemu-devel/9d7ea128c711c201688a4716f53b8a335fc53569.camel@mihalicyn.com/)
+if Volker is going to continue his work on this, but received no reply so I
+just decided to go forward: take his patches, rebase and resend. Of course,
+I kept all authorship/tags so I hope that it is fine.
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index 859c2770195..8f4421ba844 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -1340,6 +1340,7 @@ static void virtio_snd_reset(VirtIODevice *vdev)
- {
-     VirtIOSound *vsnd = VIRTIO_SND(vdev);
-     virtio_snd_ctrl_command *cmd;
-+    uint32_t i;
- 
-     /*
-      * Sanity check that the invalid buffer message queue is emptied at the end
-@@ -1353,6 +1354,16 @@ static void virtio_snd_reset(VirtIODevice *vdev)
-         QTAILQ_REMOVE(&vsnd->cmdq, cmd, next);
-         virtio_snd_ctrl_cmd_free(cmd);
-     }
-+
-+    for (i = 0; i < vsnd->snd_conf.streams; i++) {
-+        VirtIOSoundPCMStream *stream = &vsnd->streams[i];
-+        VirtIOSoundPCMBuffer *buffer;
-+
-+        while ((buffer = QSIMPLEQ_FIRST(&stream->queue))) {
-+            QSIMPLEQ_REMOVE_HEAD(&stream->queue, entry);
-+            virtio_snd_pcm_buffer_free(buffer);
-+        }
-+    }
- }
- 
- static void virtio_snd_class_init(ObjectClass *klass, const void *data)
+Testing.
+
+I manually validated this with Ubuntu 24.04 Desktop VM and found no issues.
+Also, it was validated with CI (https://gitlab.com/mihalicyn/qemu/-/pipelines/2626702088).
+
+Original patchset:
+https://lore.kernel.org/qemu-devel/a289a081-9a61-4bcb-b693-bf6cd7768c0e@t-online.de [1]
+
+Git tree:
+https://gitlab.com/mihalicyn/qemu/-/commits/virtio-sound-migration
+
+Changelog for version 3:
+- addressed review feedback from Marc-André Lureau:
+	- drop VirtIOSoundPCMStream's id field (unused)
+	- resurrected error_report(..) in virtio_snd_pcm_start_stop()
+	- fixes in "hw/audio/virtio-sound: add stream state variable"
+	  [ please, look in commit message for details ]
+	- added "hw/audio/virtio-sound: remove channel positions field
+	  from VirtIOSoundPCMStream"
+	- fixes in "hw/audio/virtio-sound: add missing vmstate fields"
+	  [ details in commit message ]
+
+Changelog for version 2:
+- no code changes (only commit messages)
+  followed suggestions from Daniel P. Berrangé (thanks, Daniel!)
+  https://lore.kernel.org/qemu-devel/ajzoxZr4g0Xsr_4p@redhat.com/
+  and added some extra details about what I did with the original
+  patches during rebase (for some of them it was simpler and less error
+  prone to just drop changes and reimplement them by following the idea
+  of the patch, cause base code has changed significantly).
+
+Changelog relative to the original Volker Rümelin's submission:
+- rebased:
+	- "hw/audio/virtio-sound: return correct command response size"
+		was dropped as it was already merged
+	- "hw/audio/virtio-sound: fix segmentation fault in tx/rx xfer handler"
+		was dropped as it seems to be replaced with another fix
+		https://github.com/qemu/qemu/commit/731655f87f319fd06f27282c6cafbc2467ac8045
+	- I had to drop all pre-existing Reviewed-by tags cause it was 2 years since
+	  this patchset was sent and reviewed and I did a quite significant code changes
+	  during rebase
+
+Kind regards,
+Alex
+
+Alexander Mikhalitsyn (1):
+  hw/audio/virtio-sound: remove channel positions field from
+    VirtIOSoundPCMStream
+
+Volker Rümelin (8):
+  hw/audio/virtio-sound: remove command and stream mutexes
+  hw/audio/virtio-sound: allocate an array of streams
+  hw/audio/virtio-sound: free all stream buffers on reset
+  hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
+  hw/audio/virtio-sound: add stream state variable
+  hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
+  hw/audio/virtio-sound: introduce virtio_snd_set_active()
+  hw/audio/virtio-sound: add missing vmstate fields
+
+ hw/audio/trace-events         |   3 +-
+ hw/audio/virtio-snd.c         | 679 ++++++++++++++++++++--------------
+ include/hw/audio/virtio-snd.h |  26 +-
+ 3 files changed, 399 insertions(+), 309 deletions(-)
+
 -- 
 2.47.3
 
