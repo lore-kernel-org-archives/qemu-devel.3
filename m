@@ -4,55 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D66D2C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 13:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD758C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 13:39:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd6ki-0005Pu-4G; Fri, 26 Jun 2026 09:37:52 -0400
+	id 1wd6m4-00064B-Kd; Fri, 26 Jun 2026 09:39:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wd6kh-0005Pl-Bj
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 09:37:51 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wd6kf-0007af-Qw
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 09:37:51 -0400
-Received: from example.com (unknown [167.220.208.70])
- by linux.microsoft.com (Postfix) with ESMTPSA id 4690720B7169;
- Fri, 26 Jun 2026 06:37:40 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4690720B7169
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1782481061;
- bh=5XW7153AjlPKkYtZNaeOQDjxAAYp2scX56Fba5biufo=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=E0mplN5cXZzhaCDGg8+nwdCGYJdya1MwgrbEz4ubfNjAjkTU19DfCi3SAvDrZ8YZ2
- 9ugVyy9FMkLz1IlixMm1S3b4rKchn8gK5ITN4HyTvrTI26PAclNHKIzmeROGcRiwht
- n1xrpO2YDATgOh3WnLF98W2ZM9ONqRic1f8KFdLk=
-Date: Fri, 26 Jun 2026 15:37:41 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- Zhao Liu <zhao1.liu@intel.com>, Wei Liu <liuwe@microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>
-Subject: Re: [PATCH v6 6/9] target/i386: query mshv accel for supported cpuids
-Message-ID: <aj6ApQooh1CPff1T@example.com>
-References: <20260416121116.527927-1-magnuskulke@linux.microsoft.com>
- <20260416121116.527927-7-magnuskulke@linux.microsoft.com>
- <db21ca7e-de25-46f3-b1a3-b199d35a7bcb@redhat.com>
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1wd6lv-00063L-RG; Fri, 26 Jun 2026 09:39:08 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1wd6lu-0008H4-CD; Fri, 26 Jun 2026 09:39:07 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id DD6C1600C8;
+ Fri, 26 Jun 2026 13:39:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5248A1F000E9;
+ Fri, 26 Jun 2026 13:39:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1782481144;
+ bh=IM0wyjgxirhlIUp9ukLrBcj+QOsI08JiFKa72GH7xdI=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=CVUDSNIq3WXHkt1xK5DYE4ZdomA7TsxaOAGb+3ABB0s+Wkl6lYKqK9DkNO7qCWnpK
+ 0+pyXPWBKNZpgm3FQtKkqkl87YB/JSQOXL63GHDros1cmZCt4kF4l5+5WmhFtsy6x0
+ gExs9fV67SvcH3Wnh4cQyJDfc02EZi5WPifJFzkbHfYTX3M2uUdW8ahBfKPoxD6EaX
+ MTYJ+sGpf1Nz0Y93M0lMLmg59EWVMRGv7T5OfOTrNJHqmT3myHi6m3rYUHsMZn3pUI
+ axgGvYahdSqF94E+3NLTcXn4il/fjuQ5uwTtD70vxu29Iq2Y7nORV5g7EhKfOiElIQ
+ NMXEPHlLI9L8g==
+Date: Fri, 26 Jun 2026 15:38:59 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Sam Li <faithilikerun@gmail.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, dlemoal@kernel.org,
+ qemu-block@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Eric Blake <eblake@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH v13 4/6] virtio-blk: do not merge writes across a zone
+ boundary
+Message-ID: <aj6A86GgoeOePQGW@ryzen>
+References: <20260626131555.459792-1-faithilikerun@gmail.com>
+ <20260626131555.459792-5-faithilikerun@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <db21ca7e-de25-46f3-b1a3-b199d35a7bcb@redhat.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+In-Reply-To: <20260626131555.459792-5-faithilikerun@gmail.com>
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=cassel@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,35 +74,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 25, 2026 at 05:16:44PM +0200, Paolo Bonzini wrote:
-> On 4/16/26 14:11, Magnus Kulke wrote:
-> > We implement mshv_get_supported_cpuid() and invoke it in
-> > x86_cpu_get_supported_feature_word() retrieve the cpu features that the
-> > host is supporting. Initially we mask the virtualization capabilitities
-> > potentially we might need to mask more in the future.
+On Fri, Jun 26, 2026 at 03:15:53PM +0200, Sam Li wrote:
+> virtio_blk_submit_multireq() fuses adjacent in-zone requests into a
+> single request. On a zoned backend, a merged zone append request
+> that straddles a zone boundary is rejected by the device because
+> each write must stay within a single zone.
 > 
-> Hopefully not - the difference between what the host and the guest support
-> is not something that QEMU can know.
+> Add a bail condition to the merge coalescer: if combining the
+> candidate request into the current batch would cross a zone
+> boundary, flush the current batch and start a new one.
 > 
-> Apart from that, there's nothing that stands out so I'm applying the series.
-> 
-> Paolo
+> Signed-off-by: Sam Li <faithilikerun@gmail.com>
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
 
-I think that is something that we will probably have to refine more.
-Intuitively I would also say that the VMM shouldn't be concerned much about
-host capabilities, however -cpu host has some interesting implications for a
-VMM that is driving msft hypervisor. I understand some features (CET I think?)
-would have an impact the instruction emulator. For KVM that would be in the
-kernel, but for MSHV (and HVF, WHPX I think) that's userland.
-
-We're still discussing with the hypervisor and kernel team what the proper
-approach is, how we can reconcile cpuids with the flags that we pass at
-partition creation and how much awareness should exist in the VMM. I can
-imagine that we'll take a conservative approach and end up enumerating
-the features that we support in QEMU (and extend them in future releases
-if required).
-
-thx,
-
-magnus
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
 
