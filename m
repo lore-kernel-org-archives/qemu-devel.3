@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B486BCD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:19:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BB71CDE008
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:19:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3e0-0007GN-Pj; Fri, 26 Jun 2026 06:18:45 -0400
+	id 1wd3dV-0006hM-Ep; Fri, 26 Jun 2026 06:18:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3dd-00074X-2n
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:21 -0400
+ id 1wd3dP-0006fT-PU
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3db-0005AR-3h
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:20 -0400
+ id 1wd3dL-00057u-Nv
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469098;
+ s=mimecast20190719; t=1782469083;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9jpxIFYk+jJh1Eu2hO0yA4J0IN9FE9t7jWDg+Y5ix4I=;
- b=eDIxtzd4EQYCEV7nhJ2eUSGUq22hGwMMjdGK/3f3GG9Ow6a11+7yym3usyt2D2VWfwA7wP
- T9/r92++A04eF38XcpCwAeLVzTL9qpzLXVHcF71Qp4cDDUmM58DUE7luP1h+A5a9Z8zzEP
- 4nUXnHdpDNJB63DQWdiCQOmIrtTp8Ow=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nEwm3fgpo3qUaz+yBGQLuR4QP9rx2aWp+MStI39TbBA=;
+ b=S+XiqHhuPHp43ewldYaYOhsPAeqiQfD2bH6M0yqj7Y+efaifXIYh44dM0zxotVEokJH1ck
+ +o08UjAj+cT7c9GvZUFhOaNNn0gR47UCuxeztrapxlB94ZT7XC2xUJG/F7D4k/lCi6/wZY
+ cXsoFt7LX12GA0jjVSyHYZEJloFfKSY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-X4K65HJCM0eOyqamf_Jm6Q-1; Fri, 26 Jun 2026 06:18:16 -0400
-X-MC-Unique: X4K65HJCM0eOyqamf_Jm6Q-1
-X-Mimecast-MFC-AGG-ID: X4K65HJCM0eOyqamf_Jm6Q_1782469095
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-46e4153b193so861107f8f.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:18:16 -0700 (PDT)
+ us-mta-536-_iE0Ade_Oiio7PGtYhV26Q-1; Fri, 26 Jun 2026 06:18:01 -0400
+X-MC-Unique: _iE0Ade_Oiio7PGtYhV26Q-1
+X-Mimecast-MFC-AGG-ID: _iE0Ade_Oiio7PGtYhV26Q_1782469080
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-490b2f22ea2so6705585e9.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:18:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469095; x=1783073895; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469080; x=1783073880; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9jpxIFYk+jJh1Eu2hO0yA4J0IN9FE9t7jWDg+Y5ix4I=;
- b=Yv1I2EunWtiNX9PLmr7iI4FjyOdPfwI2qtOWQgmEqUveiTXfECDN64st+p7zoq/yBX
- +EVvd/DkMFyUhqiQS7W3h6M8y4iQzX0m3sEz4sQT2Z2P9WNnaUnB25AatqLH7w+lpfEt
- bk85IcOgUrbL1aNP72Bcj5WzgVat0mM/b2VzX1/BEVH7xFkUN1SUR/JMAMN/VyqRz4a0
- kdl/h4qTRfXf0sSHqQKKNRtTeA7f5kW9wCSGVsZ6fHPJK3l9vYsh85QZG+KuiWubg7mq
- N+v+aR5UkhyIJpvUTX3ZRiRhGG7gUk0b7QuyDWkpRAfQONGZJ8aQbS/abds/P+sOYvRZ
- kSaw==
+ bh=nEwm3fgpo3qUaz+yBGQLuR4QP9rx2aWp+MStI39TbBA=;
+ b=JyG1/wYPlLCPG98YfDf+/qgNX0XIxUsfl+diohFKtRbyKEEIxt4rl7wL51fuPH41K9
+ Ef+X198u/Hc3A/JcO5S16o6VYAdFsfyc3l1NHmSKusso+AAQwjntzAfZjo13GYtl48Mq
+ ZCgeD0LL6lOzpsckf5M95tf/BeeoWfPUEt5bEVPcUdrAN1d90JmENX9dQr8uCZgmyzei
+ FGzE8W8tV6ymz5OW3IgNeZXLG3iWrv0i1Ou+77KwZKqjCPBk8bCLheDVwLbjKuRCrqf2
+ 59nrnjFKSkG2uMr+kp8Ff/++atMvMgWHxtNkaWCuQU/ccQZx+ZQCigUedrSNhrfH2uOw
+ KJfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469095; x=1783073895;
+ d=1e100.net; s=20251104; t=1782469080; x=1783073880;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9jpxIFYk+jJh1Eu2hO0yA4J0IN9FE9t7jWDg+Y5ix4I=;
- b=hwIQAXAvy+TKD5Qt1cDC4/Ky9e+0G5NsPnrgZa9q+D7MhEoGXCA6vWEtGdPtyrxG8Y
- vBN5HSCmbONMAAK1E+tSj+zwaY/sfzLB7FHdsCWfYnI6SCDg9VOQFkTkfTPhsDrBuaXR
- X6okqecB/XEzxoRxwQf3NTYxhN2xaUtsdTdNenaUNAF0wZkoeNlG+mlEc8Jb0Y4785j6
- it0ArxEED/WWputZIDOYABZpaOp50lOh/gG0zzGsHyEU7XQdmUsveY7fS+Luh35f3Sh3
- 22cK/sgWGXY4oZPvGQm2Qia3yYBW+XGcHa3okCR6O9Gosc9t5cU3oyDj18kLcY7i4cS6
- OHlg==
-X-Gm-Message-State: AOJu0Yyy0OYYwamlizqwCrOrkA6bZ66KZHh4Tgs/Lt9+cJDRkDPzw84K
- mz/q1dW+rXGq9Aty5q05CCbSxbgRMl43A8pwC95cBqPrNPOaQdl/qz6RF5ueHn3nSw5YBqpjXMl
- GI1WiE+V1qjAOCUyL5iMnNIYx7Wa/q8PNufMG/bMSvWPt4uBJZ2HL/+dtP3fDj8yEO+9Ec1/uop
- eDdY3fjUOTXt9dU+ICgH9S91lBES2q0ikx2EpyFjtL
-X-Gm-Gg: AfdE7cnbWd26ePk1LUSrJn11b0PWrNJ2Jmg5KcXOAnH16Zdz3wg+T3GR4t/gFhWwcor
- a7TaB1Uw0xCan8KHTyr8HZAg9xhbkGhgTCsnq9t4yFIB40jY4PuuV0oNE0sqWcnVQt/Xvzz7LCM
- HvAIhbjWO0XQRtch37TQrfW+Zfq/KEYfiFnjkhouSSulIKKhRJ3iZnJr9A12vaK1xQm7a99Cy03
- 4izICy+Mvglds72bLa4KEXLqnEEWU25PLjBT8PKtLcrE3yx3gOyOdxPGvLMC84ak3xAV6hexh2X
- pGqavaKD8o1ZE+NSsGPkpHYvyOD6ZbNg+OUAVqSYodGyXuflIDynsZORIGvK4fAioEHzDA5jpCL
- EGTc0ZnfUVJcXeIjReYMXEq/Gzwpli1ViUHOOMkU+/SDl3d6+PD/zkMJ2F4PCOEv6tM14tQOn1u
- h+bOMKUa2wrGnVetrh
-X-Received: by 2002:a05:6000:2489:b0:460:10f6:a554 with SMTP id
- ffacd0b85a97d-46a806bc9e7mr27745607f8f.14.1782469094962; 
- Fri, 26 Jun 2026 03:18:14 -0700 (PDT)
-X-Received: by 2002:a05:6000:2489:b0:460:10f6:a554 with SMTP id
- ffacd0b85a97d-46a806bc9e7mr27745531f8f.14.1782469094409; 
- Fri, 26 Jun 2026 03:18:14 -0700 (PDT)
+ bh=nEwm3fgpo3qUaz+yBGQLuR4QP9rx2aWp+MStI39TbBA=;
+ b=pfJ3OCyv7YvRayFNvaOtohX87i/8r5BWS2UD69eYRefPaB8ZtEyoYFpqwNpvDXTASk
+ BdhNchcw8MHnXie/HoU0TUINVpa6pFCCArI+c4DYVZUv645uPndjqEPa1XwQJXO5Tokv
+ rqHB1n0yar1CQ9IaZ8zjzvlQ6Q2gHiMSpnZzrxGaC9n+E3ctNYCTC06OHmbadAjT4jXC
+ 4LMWcjrHJuVpjC93PXJBMGjoE3hGhaMwmna3QOL6MECfPZqKHsb9HhGI1YeYgxm7G/4u
+ 1BMkUwUk3UL/WWJRQ0qvzpdGnVVESvaWOJFEtq+cfbNXJJpeJKZwVVE+9MVbg03TTOGh
+ T9Fg==
+X-Gm-Message-State: AOJu0YxMsAROpih61WjWyxCrOtooed3LjGawjEAZkSvXhPRfds5ktfCW
+ 3MXbu81YuUwllruh0plvsy4F5QtSyh+4fmrYNy7AorgUM60MRGaYEvTYg2zyH3HkEsmfpjDfUUc
+ wIsVybrfSiesSrJtWvE4m4zGyMFkkm2bm3l6AnNxDpKesbazXfuPDluyUd7H1Jtt25Y/mBQcmIX
+ nZ2nUqrNuZkeUtgGa3Z6Bf1vBx1MNCuWJjTT43dQS0
+X-Gm-Gg: AfdE7cmmDHPE+9caUf9kmVeYtGI5eMD5OltxCgwb3FTw759lRBfreL5JUHkX/N1EgDL
+ ak+zBO7hHqmIPvTAzPRFiah04jpixEY/2ZrUQJSSQuTM9NxmhCQ5fLYqiBG9MV7id96Mnxx+CJe
+ h9UFb2eDNRIwM97e8eF6/3muMW7zHR+c1pAXl9P7s+1WxZkTPBIU37Tts9qc/XzOCmbfRoGuMgk
+ Z/jNa9qZtjH9duoxpClgOJfUFQa/kcqF2keJWvNBIK2ITD+GXqLTx98JGI0H/hPxrDOjh3JAK/N
+ XXRH9tBgt1eEa0UCRnKlZLADrcSvlaBAsfYzFttY2XQB6in+4/BDMhFF9ne4sGL/aUc2FkGNMCb
+ zSN8jfxMGbgUWfazNqXKztIHBbjbJTAgXbYcjKHRvSLaTejPgdL+QzwwcsWlT0xprxUFKJHmtAi
+ 4JM9WzE0xaFCzqH55V
+X-Received: by 2002:a05:600c:3b28:b0:48a:906b:14ca with SMTP id
+ 5b1f17b1804b1-4926687e77emr84931805e9.20.1782469080261; 
+ Fri, 26 Jun 2026 03:18:00 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b28:b0:48a:906b:14ca with SMTP id
+ 5b1f17b1804b1-4926687e77emr84931195e9.20.1782469079749; 
+ Fri, 26 Jun 2026 03:17:59 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c1ee01c3bsm25046563f8f.10.2026.06.26.03.18.13
+ ffacd0b85a97d-46c221d93eesm22896620f8f.20.2026.06.26.03.17.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:18:13 -0700 (PDT)
+ Fri, 26 Jun 2026 03:17:58 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
- "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>,
  Wei Liu <wei.liu@kernel.org>,
  =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
-Subject: [PULL 09/45] accel/mshv: disable la57 (5lvl paging)
-Date: Fri, 26 Jun 2026 12:17:12 +0200
-Message-ID: <20260626101748.1728079-10-pbonzini@redhat.com>
+Subject: [PULL 04/45] target/i386/mshv: change cpuid mask to UINT32_MAX
+Date: Fri, 26 Jun 2026 12:17:07 +0200
+Message-ID: <20260626101748.1728079-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
 References: <20260626101748.1728079-1-pbonzini@redhat.com>
@@ -126,97 +125,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-This change disable la57 paging on the mshv hypervisor on both the
-mshv processor feature bitmap and mask the cpuid feature leaf to the
-guest.
-
-Since the removal of hypervisor-assisted gva=>gpa translation in
-1c85a4a3d7 we have seen MMIO errors in guests on la57-enabled hw. We
-will have to investigate and test this further.
+The current implementation would only override the feature bits that are
+enabled, however we also want to consider disabled features, hence all
+bits are set on the masks in the hypercall argument.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
-Reviewed-by: Wei Liu <wei.liu@kernel.org>
+Acked-by: Wei Liu <wei.liu@kernel.org>
 Reviewed-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260416121116.527927-10-magnuskulke@linux.microsoft.com
+Link: https://lore.kernel.org/r/20260416121116.527927-5-magnuskulke@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/mshv_int.h   |  2 ++
- accel/mshv/mshv-all.c       |  7 +++++++
- target/i386/mshv/mshv-cpu.c | 15 +++++++++++++++
- 3 files changed, 24 insertions(+)
+ target/i386/mshv/mshv-cpu.c | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 35386c422fa..ca156cdf4be 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -94,6 +94,8 @@ void mshv_arch_init_vcpu(CPUState *cpu);
- void mshv_arch_destroy_vcpu(CPUState *cpu);
- void mshv_arch_amend_proc_features(
-     union hv_partition_synthetic_processor_features *features);
-+void mshv_arch_disable_partition_proc_features(
-+     union hv_partition_processor_features *disabled_features);
- int mshv_arch_post_init_vm(int vm_fd);
- 
- typedef struct mshv_root_hvcall mshv_root_hvcall;
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 0f65b65d9ca..52623be5d93 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -142,6 +142,8 @@ static int create_partition(int mshv_fd, int *vm_fd)
-     int ret;
-     uint64_t pt_flags, host_proc_features;
-     union hv_partition_processor_xsave_features disabled_xsave_features;
-+    union hv_partition_processor_features disabled_partition_features = {0};
-+
-     struct mshv_create_partition_v2 args = {0};
- 
-     QEMU_BUILD_BUG_ON(MSHV_NUM_CPU_FEATURES_BANKS != 2);
-@@ -177,6 +179,11 @@ static int create_partition(int mshv_fd, int *vm_fd)
-     }
-     args.pt_cpu_fbanks[1] = ~host_proc_features;
- 
-+    /* arch-specific features we disable regardless of host support */
-+    mshv_arch_disable_partition_proc_features(&disabled_partition_features);
-+    args.pt_cpu_fbanks[0] |= disabled_partition_features.as_uint64[0];
-+    args.pt_cpu_fbanks[1] |= disabled_partition_features.as_uint64[1];
-+
-     /* populate args structure */
-     args.pt_flags = pt_flags;
-     args.pt_isolation = MSHV_PT_ISOLATION_NONE;
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index e85311af2af..3523cfcb70c 100644
+index bfcccd19916..2ee46bd7025 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -1129,6 +1129,12 @@ void mshv_arch_amend_proc_features(
-     features->access_guest_idle_reg = 1;
- }
- 
-+void mshv_arch_disable_partition_proc_features(
-+     union hv_partition_processor_features *disabled_features)
-+{
-+    disabled_features->la57_support = 1;
-+}
-+
- static int set_memory_info(const struct hyperv_message *msg,
-                            struct hv_x64_memory_intercept_message *info)
- {
-@@ -1707,6 +1713,15 @@ uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
-         ret &= ~CPUID_EXT_VMX;
-     }
- 
-+    if (func == 0x07 && idx == 0 && reg == R_ECX) {
-+        /*
-+         * LA57 (5-level paging) causes incorrect GVA=>GPA translations
-+         * in the instruction decoder/emulator. Disable until page table
-+         * walk in x86_mmu.c works w/ 5-level paging.
-+         */
-+        ret &= ~CPUID_7_0_ECX_LA57;
-+    }
-+
-     return ret;
- }
- 
+@@ -538,22 +538,17 @@ static int register_intercept_result_cpuid_entry(const CPUState *cpu,
+         .input.always_override = always_override,
+         .input.padding = 0,
+         /*
+-         * With regard to masks - these are to specify bits to be overwritten
+-         * The current CpuidEntry structure wouldn't allow to carry the masks
+-         * in addition to the actual register values. For this reason, the
+-         * masks are set to the exact values of the corresponding register bits
+-         * to be registered for an overwrite. To view resulting values the
+-         * hypervisor would return, HvCallGetVpCpuidValues hypercall can be
+-         * used.
++         * Masks specify which bits to override. Set to 0xFFFFFFFF to
++         * override all bits with the values from the QEMU CPU model.
+          */
+         .result.eax = entry->eax,
+-        .result.eax_mask = entry->eax,
++        .result.eax_mask = 0xFFFFFFFF,
+         .result.ebx = entry->ebx,
+-        .result.ebx_mask = entry->ebx,
++        .result.ebx_mask = 0xFFFFFFFF,
+         .result.ecx = entry->ecx,
+-        .result.ecx_mask = entry->ecx,
++        .result.ecx_mask = 0xFFFFFFFF,
+         .result.edx = entry->edx,
+-        .result.edx_mask = entry->edx,
++        .result.edx_mask = 0xFFFFFFFF,
+     };
+     union hv_register_intercept_result_parameters parameters = {
+         .cpuid = cpuid_params,
 -- 
 2.54.0
 
