@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB2FCDE00C
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:19:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A11A4CD4F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3eU-0000Uu-IQ; Fri, 26 Jun 2026 06:19:14 -0400
+	id 1wd3eO-0008Fx-1u; Fri, 26 Jun 2026 06:19:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3eC-0007iR-Kz
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:58 -0400
+ id 1wd3e1-0007Qf-7j
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3eA-0005ID-OR
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:56 -0400
+ id 1wd3dz-0005Cf-BD
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469134;
+ s=mimecast20190719; t=1782469118;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6CzWwZ3dSbLJuGwdtwknO1r7WLWkHJidTJ1w1I1/ImI=;
- b=FKOEe/fYs0zo7xDbU7yYFP5ZZWPTwIiTNfpOdQa4NVPuCAUz9fl0fDrrdfq4xuYgPn07qq
- hyq+VJ7Gg0Tc/k4O8KTe6OYXkxR9ONgNEu+vsO3rZvbVzs39PMxnzUr9BLarZ6Vmrt7Q3L
- v9/vV11GKm11hbyJfjxmAfzBaOT4ld8=
+ bh=PUsDLLw3f+BtqliRgCOEc8pOa9czxBjabKlNn2cuJDs=;
+ b=cnn5DaqXQXilmmXekeVD+YW/yEdw+xwrjFIG9s9UX0qtLzYpvlitubLNM9Socxs4AwWQeF
+ I//wQwyAaBLP4rZdldPuxAYS1dxxGZb6Rddw47VEMsFy9eX+KO49ah4xZr1C0kIe2MJhb7
+ K+jj+Ou6GDS6+u+4Blf9Df9EJybZH+M=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-178-l3zoOEJiMpe3s2R2Ct8EYw-1; Fri, 26 Jun 2026 06:18:50 -0400
-X-MC-Unique: l3zoOEJiMpe3s2R2Ct8EYw-1
-X-Mimecast-MFC-AGG-ID: l3zoOEJiMpe3s2R2Ct8EYw_1782469130
+ us-mta-650-WiQRO7l_P-SaTGhnwYSHtQ-1; Fri, 26 Jun 2026 06:18:37 -0400
+X-MC-Unique: WiQRO7l_P-SaTGhnwYSHtQ-1
+X-Mimecast-MFC-AGG-ID: WiQRO7l_P-SaTGhnwYSHtQ_1782469116
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-490ab3f6e55so3791655e9.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:18:50 -0700 (PDT)
+ 5b1f17b1804b1-490b7959b9fso6343145e9.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:18:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469129; x=1783073929; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469116; x=1783073916; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6CzWwZ3dSbLJuGwdtwknO1r7WLWkHJidTJ1w1I1/ImI=;
- b=RLG23Zmj32wKpb88xyH0DsFtvyV2ewg73AKCjhLvfDNOkwkJOG9XT1TepUBSyctJfo
- Wn6YNNmdsIfrJsyyuosFKTIa4n7IbMTcleOyjUkn4Hjb9FQqWTqcZ9eIVU8pwr7gtthN
- FgWcoCV9tF39WvLKDcnjUIiApNO+Wg0fsT/nnI7E7zxnS0QntIkvlF0tkUNjVS47tpF3
- WC4r2+2SeMJrLD37d2MlB+1wZ4yNxuDa3CJVMQCOGdh/vNmHxWzbhWU18vm8JGl5eg1v
- ipsN3XFLyY1XnGD8SxeahPq8AUvrimWKYgDqR0CwL7zenabPdUzoY+9gf5L0jzl9IjF3
- GBPA==
+ bh=PUsDLLw3f+BtqliRgCOEc8pOa9czxBjabKlNn2cuJDs=;
+ b=UKL3mqKtiBrtbPZjicxJ1uQlt8sXGUXzEcutOeuMSlaaQ/h3n194Jcu79NpQPmnVNi
+ YSpQBabD3lPS6YI0/h0ugKRg5EdTNakGeehFXnhC+LuahghDWWUb2CgDJvm3HCXsbq/o
+ IlR1mWPVoPiVD9tZRp0FSd0hB3lPIRsJOeQYX9iHONi2J/TnrGFT9JgddiZlZ4H/SPEs
+ da9rcaI+QntYv9oReIn3SyE7M0gPjpXQlqL3wlAJkAgSLR/r9OpBV7LGnq2wVzLAFqw6
+ QHjVjhiiyQBifloRZHa+BN2PNIpSCaq/B9O4pgn5vRmNCrhquLsJgTa36zstdwt1aHEz
+ oO4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469129; x=1783073929;
+ d=1e100.net; s=20251104; t=1782469116; x=1783073916;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=6CzWwZ3dSbLJuGwdtwknO1r7WLWkHJidTJ1w1I1/ImI=;
- b=nn/qxjeHCMyi9YvtZM1hMmRcXs6O+aszL1QOKqXTcAfvsoRlPbU43+O16/ux3/wNha
- 7vB/yjAKWr2f5kITlqPElzSUsj+SMKMeZUPzkB6rxva1sbM5zQbHpmFsR/uWmE4TsqLN
- xCqYhHn0drCP6NZWVbfiv354mjbchV5ZpdruFkQNCM7x1DphfilhsiY6ZkKH/b35ojtV
- gSprSDSVHnk1dDegbLonWNKOOTtsmvd0PBHeGZg1EC+/ChFFr4WqkfEtcLqj9UiLI4Ja
- 7f9kJRIlvzjHRCiuNmkqlHMjebhRYmyoGePrGfdZuuGwoJxP60sQ5acP5jlgmznDftb0
- tIfA==
-X-Gm-Message-State: AOJu0YwAYo+lWIyRcBN9Q1cRJsA4pS0F9hDpbOJF52pnWKXHODSvFGXP
- Gk/uPzJRY88F+4GESmRMwbDW76x2xgOE7NPHhdVz3YT9I6O1UhQhjkR64y1SwKuZNtc8RtZFL9h
- 7gjY0T1au26OqiojOkbydGgAr6QV58qRHHLkazAYplNVSZlzPxqU4OkShxtKByxODfAw84A4I2m
- 94Ame3FV5QVkfPiuNmrydKoptU0tnQ0zN1Cl8Jw0hn
-X-Gm-Gg: AfdE7cnbENh5/29YdHqjYeq+MiuC64ytgS4HVQ7j4LHVIUjHHoFw4N/bmACKQu38E58
- AFdK/WAE4i+mIGPmpdNcvKGCBwXhJczCPxTYIzzyQ2/gAEGDJnCyJk8rh7wNnpt5CdkSVtRBnVW
- QEcW1DMDxr6fIElllKa4D7NafauD3KS4XBUF5dmL+fTdlh49Jg6C9tE7F3g0kxU0W6pSPXL8tm2
- l5bYyWrNMG6y2k05Qa3Bc/hOUbTRzVxywfc7r0cMV2HWQ9vZcfHS6dv/9Nb+ZvoCdG00sfULlzk
- K6+nI5GVMqkG7FI1V29V6dqHwGQ9T0/KMe6JfYgAlf04tPH7KuoW/HfOPp0FT5H9nj8cQ8ktIVz
- CRjPdaptnf8bczpsv1pxhsxepDVfvvLBgKfHNGHoEs3Spy9MLa008RHezgJp6nnch7tT8rpbJId
- VD3q/D8iNq1mn1nTw1
-X-Received: by 2002:a05:600c:4e45:b0:492:6f6f:fa42 with SMTP id
- 5b1f17b1804b1-4926f6ffa8emr7319445e9.37.1782469129567; 
- Fri, 26 Jun 2026 03:18:49 -0700 (PDT)
-X-Received: by 2002:a05:600c:4e45:b0:492:6f6f:fa42 with SMTP id
- 5b1f17b1804b1-4926f6ffa8emr7318835e9.37.1782469129127; 
- Fri, 26 Jun 2026 03:18:49 -0700 (PDT)
+ bh=PUsDLLw3f+BtqliRgCOEc8pOa9czxBjabKlNn2cuJDs=;
+ b=KxztAbWArcl7sH3NODvcrnACPKk11racgn+H5MgulLN0BsQWZUjYK+XGCwyS6zK4SY
+ qRjf/+/LiYBfx511d+oVhqsoT/e5E3sUu3h8QP0xOERAF1nQWMwPMw+zHBzGGR9leXk8
+ sEXLj29gfT5UeQn9Lzrr7z+qx3olUx++d8R5L0MJQwWtlALhhdcv9Fzk0UBrYURRokNq
+ frfbcRqe40O5OXQDR1KMIDBoAD+k/fvgaC8FYIuUTalvolO28Pmomup55He8PdDCgkCJ
+ rVXumthhzjNHFVN2L2lTlEluCivbg/UQ1M9jKId/6DOoWtHCQGNsKHyUbyLZBpFWNyKX
+ H0Mw==
+X-Gm-Message-State: AOJu0YwPHn9QsBFL5S/7mFhNVmZ4jvt0f1oVricFEtminUeuOFARMyym
+ b+65T/SbTpsJ/ZBk4+pWkEAGmqfjxXV++Qbegghv+56JRBGIl5MOXeRDZHzW+mC2MXzpEWBXe/8
+ VOTOKi2bzoH/x9we2c5rdESHW3zijvFOuqYYusBwkQf273OUVzzeQqvDUrUZh6NDfs4Lf5EiWR4
+ 9WibLu/9L1YfKZpfKwojYDG55s7oJC/7TZglt0HijI
+X-Gm-Gg: AfdE7cnDA2yEK2wnkJwnnHgMOaGxWaRyqjn0fhh3+paj0vvfWZ6pPBANuaSUwscrTr5
+ Q16dQT4cuP3QUZ4PGcEmzcxZc2Cc2kYdPbWrAZYgaQuLZWFWdXaoDpt79FKWwkNYq0LmXkjE4py
+ +XsWA+Lv/K1+EU/Pdl6kNQu8/W4+0BgW/AWWPNzqfM4hDsHuXNjkGIrY47fi1NXBsCf5+PpdsaL
+ fpAIS/TfqzTwINucZANrV4splDKCCriLkHLkEQR+z5K4r7oCjeL3F9OcC+Xywmu0ZIYMSX9Lv2C
+ qjCLQoInZ2lLCFE4p1R8AWmr20VN2wOIDQ2ifUfrQwbMzqpzgZyr7eKYlGZ6GH6AnSQh7gYMEGY
+ t4UgdKdSUpsiFiDWM8NTHNVDWJgQ9Zzss5pkcShFG/8l4PSshLmfqLfQgxJVAqAkzocEKQysiQP
+ Nu8rAuw/1ldrpY0Mm7
+X-Received: by 2002:a05:600c:3f18:b0:490:c6c2:52 with SMTP id
+ 5b1f17b1804b1-4926686b4c0mr91158765e9.3.1782469115641; 
+ Fri, 26 Jun 2026 03:18:35 -0700 (PDT)
+X-Received: by 2002:a05:600c:3f18:b0:490:c6c2:52 with SMTP id
+ 5b1f17b1804b1-4926686b4c0mr91158325e9.3.1782469115147; 
+ Fri, 26 Jun 2026 03:18:35 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4926c02081bsm33033005e9.0.2026.06.26.03.18.46
+ 5b1f17b1804b1-492690168d5sm92157205e9.14.2026.06.26.03.18.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:18:46 -0700 (PDT)
+ Fri, 26 Jun 2026 03:18:34 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PULL 21/45] accel/mshv: reserve ioapic routes on s->irq_routes
-Date: Fri, 26 Jun 2026 12:17:24 +0200
-Message-ID: <20260626101748.1728079-22-pbonzini@redhat.com>
+Subject: [PULL 16/45] accel/mshv: add irq_routes to state
+Date: Fri, 26 Jun 2026 12:17:19 +0200
+Message-ID: <20260626101748.1728079-17-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
 References: <20260626101748.1728079-1-pbonzini@redhat.com>
@@ -122,201 +122,108 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-We reserve 24 ioapic routes using the new functions that operate on the
-mshv apic state.
+This change adds fields related to irq routing to the MSHV state, following
+similar fields in the KVM implementation.
 
-commit/add_msi_routing() fn's can be removed now.
+So far the fields are only initialized, they will be used in subsequent
+commits for bookkeeping purposes and storing uncommitted interrupt routes.
+
+The TYPE_MSHV_ACCEL defines have been moved to the header.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260417105618.3621-13-magnuskulke@linux.microsoft.com
+Link: https://lore.kernel.org/r/20260417105618.3621-8-magnuskulke@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/mshv_int.h |   1 -
- accel/mshv/irq.c          | 115 ++++++--------------------------------
- accel/mshv/mshv-all.c     |   5 --
- 3 files changed, 18 insertions(+), 103 deletions(-)
+ include/system/mshv.h     |  7 +++++++
+ include/system/mshv_int.h |  5 +++++
+ accel/mshv/irq.c          | 10 ++++++++++
+ accel/mshv/mshv-all.c     |  6 ++----
+ 4 files changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index a0fa9a50f76..68b84ce2c8d 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -122,6 +122,5 @@ int mshv_configure_msr(const CPUState *cpu, const MshvMsrEntry *msrs,
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 8dd77a76241..1e9bcc1b0b6 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -45,7 +45,13 @@ extern bool mshv_allowed;
+ #define mshv_msi_via_irqfd_enabled() mshv_enabled()
+ #endif
+ 
++#define TYPE_MSHV_ACCEL ACCEL_CLASS_NAME("mshv")
++
+ typedef struct MshvState MshvState;
++
++DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE,
++                         TYPE_MSHV_ACCEL)
++
+ extern MshvState *mshv_state;
  
  /* interrupt */
- void mshv_init_msicontrol(void);
--int mshv_reserve_ioapic_msi_routes(int vm_fd);
+@@ -60,6 +66,7 @@ void mshv_irqchip_release_virq(int virq);
+ int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
+                                         const EventNotifier *rn, int virq);
+ int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
++void mshv_init_irq_routing(MshvState *s);
  
- #endif
+ /* cpuid */
+ uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg);
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 1d9902c9bbe..a0fa9a50f76 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -48,6 +48,11 @@ struct MshvState {
+     int nr_as;
+     MshvAddressSpace *as;
+     int fd;
++    /* irqchip routing */
++    struct mshv_user_irq_table *irq_routes;
++    int nr_allocated_irq_routes;
++    unsigned long *used_gsi_bitmap;
++    unsigned int gsi_count;
+ };
+ 
+ typedef struct MshvMsiControl {
 diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
-index 9ba837f0e2e..52b8ac94790 100644
+index 3c238c33c33..82f2022c7c3 100644
 --- a/accel/mshv/irq.c
 +++ b/accel/mshv/irq.c
-@@ -36,93 +36,6 @@ void mshv_init_msicontrol(void)
-     msi_control->updated = false;
- }
- 
--static int add_msi_routing(uint64_t addr, uint32_t data)
--{
--    struct mshv_user_irq_entry *route_entry;
--    uint32_t high_addr = addr >> 32;
--    uint32_t low_addr = addr & 0xFFFFFFFF;
--    int gsi;
--    GHashTable *gsi_routes;
--
--    trace_mshv_add_msi_routing(addr, data);
--
--    assert(msi_control);
--
--    WITH_QEMU_LOCK_GUARD(&msi_control_mutex) {
--        /* find an empty slot */
--        gsi = 0;
--        gsi_routes = msi_control->gsi_routes;
--        while (gsi < MSHV_MAX_MSI_ROUTES) {
--            route_entry = g_hash_table_lookup(gsi_routes, GINT_TO_POINTER(gsi));
--            if (!route_entry) {
--                break;
--            }
--            gsi++;
--        }
--        if (gsi >= MSHV_MAX_MSI_ROUTES) {
--            error_report("No empty gsi slot available");
--            return -1;
--        }
--
--        /* create new entry */
--        route_entry = g_new0(struct mshv_user_irq_entry, 1);
--        route_entry->gsi = gsi;
--        route_entry->address_hi = high_addr;
--        route_entry->address_lo = low_addr;
--        route_entry->data = data;
--
--        g_hash_table_insert(gsi_routes, GINT_TO_POINTER(gsi), route_entry);
--        msi_control->updated = true;
--    }
--
--    return gsi;
--}
--
--static int commit_msi_routing_table(int vm_fd)
--{
--    guint len;
--    int i, ret;
--    size_t table_size;
--    struct mshv_user_irq_table *table;
--    GHashTableIter iter;
--    gpointer key, value;
--
--    assert(msi_control);
--
--    WITH_QEMU_LOCK_GUARD(&msi_control_mutex) {
--        if (!msi_control->updated) {
--            /* nothing to update */
--            return 0;
--        }
--
--        /* Calculate the size of the table */
--        len = g_hash_table_size(msi_control->gsi_routes);
--        table_size = sizeof(struct mshv_user_irq_table)
--                     + len * sizeof(struct mshv_user_irq_entry);
--        table = g_malloc0(table_size);
--
--        g_hash_table_iter_init(&iter, msi_control->gsi_routes);
--        i = 0;
--        while (g_hash_table_iter_next(&iter, &key, &value)) {
--            struct mshv_user_irq_entry *entry = value;
--            table->entries[i] = *entry;
--            i++;
--        }
--        table->nr = i;
--
--        trace_mshv_commit_msi_routing_table(vm_fd, len);
--
--        ret = ioctl(vm_fd, MSHV_SET_MSI_ROUTING, table);
--        g_free(table);
--        if (ret < 0) {
--            error_report("Failed to commit msi routing table");
--            return -1;
--        }
--        msi_control->updated = false;
--    }
--    return 0;
--}
--
- /* Pass an eventfd which is to be used for injecting interrupts from userland */
- static int irqfd(int vm_fd, int fd, int resample_fd, uint32_t gsi,
-                  uint32_t flags)
-@@ -420,37 +333,45 @@ int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *event,
-     return irqchip_update_irqfd_notifier_gsi(event, NULL, virq, false);
- }
- 
--int mshv_reserve_ioapic_msi_routes(int vm_fd)
-+static int mshv_reserve_ioapic_msi_routes(MshvState *s)
- {
--    int ret, gsi;
-+    int ret, i;
-+    int gsi = 0;
-+    struct mshv_user_irq_entry blank_entry = { 0 };
- 
-     /*
-      * Reserve GSI 0-23 for IOAPIC pins, to avoid conflicts of legacy
-      * peripherals with MSI-X devices
-      */
--    for (gsi = 0; gsi < IOAPIC_NUM_PINS; gsi++) {
--        ret = add_msi_routing(0, 0);
-+    for (i = 0; i < IOAPIC_NUM_PINS; i++) {
-+        /* ret = add_msi_routing(0, 0); */
-+        ret = irqchip_allocate_gsi(s, &gsi);
-         if (ret < 0) {
--            error_report("Failed to reserve GSI %d", gsi);
-+            error_report("Failed to reserve GSI %d: %s", gsi, strerror(-ret));
-             return -1;
-         }
-+        blank_entry.gsi = gsi;
-+        add_routing_entry(s, &blank_entry);
-     }
- 
--    ret = commit_msi_routing_table(vm_fd);
--    if (ret < 0) {
--        error_report("Failed to commit reserved IOAPIC MSI routes");
--        return -1;
--    }
-+    mshv_irqchip_commit_routes(s);
+@@ -396,3 +396,13 @@ int mshv_reserve_ioapic_msi_routes(int vm_fd)
  
      return 0;
  }
- 
- void mshv_init_irq_routing(MshvState *s)
- {
-+    int ret;
-     int gsi_count = MSHV_MAX_MSI_ROUTES;
- 
-     s->irq_routes = g_malloc0(sizeof(*s->irq_routes));
-     s->nr_allocated_irq_routes = 0;
-     s->gsi_count = gsi_count;
-     s->used_gsi_bitmap = bitmap_new(gsi_count);
 +
-+    ret = mshv_reserve_ioapic_msi_routes(s);
-+    if (ret < 0) {
-+        error_report("Failed to reserve IOAPIC MSI routes");
-+        abort();
-+    }
- }
++void mshv_init_irq_routing(MshvState *s)
++{
++    int gsi_count = MSHV_MAX_MSI_ROUTES;
++
++    s->irq_routes = g_malloc0(sizeof(*s->irq_routes));
++    s->nr_allocated_irq_routes = 0;
++    s->gsi_count = gsi_count;
++    s->used_gsi_bitmap = bitmap_new(gsi_count);
++}
 diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 2ed3ef4b841..19a44bb13de 100644
+index a6263effa41..2ed3ef4b841 100644
 --- a/accel/mshv/mshv-all.c
 +++ b/accel/mshv/mshv-all.c
-@@ -264,11 +264,6 @@ static int create_vm(int mshv_fd, int *vm_fd)
-         return -1;
-     }
+@@ -43,10 +43,6 @@
+ #include <err.h>
+ #include <sys/ioctl.h>
  
--    ret = mshv_reserve_ioapic_msi_routes(*vm_fd);
--    if (ret < 0) {
--        return -1;
--    }
+-#define TYPE_MSHV_ACCEL ACCEL_CLASS_NAME("mshv")
 -
-     ret = mshv_arch_post_init_vm(*vm_fd);
-     if (ret < 0) {
-         return -1;
+-DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE, TYPE_MSHV_ACCEL)
+-
+ bool mshv_allowed;
+ 
+ MshvState *mshv_state;
+@@ -536,6 +532,8 @@ static int mshv_init(AccelState *as, MachineState *ms)
+ 
+     mshv_state = s;
+ 
++    mshv_init_irq_routing(s);
++
+     register_mshv_memory_listener(s, &s->memory_listener, &address_space_memory,
+                                   0, "mshv-memory");
+     memory_listener_register(&mshv_io_listener, &address_space_io);
 -- 
 2.54.0
 
