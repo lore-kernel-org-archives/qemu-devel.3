@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0454CDE008
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 11:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64404CD4F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 11:22:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd4cu-0006a9-Q6; Fri, 26 Jun 2026 07:21:40 -0400
+	id 1wd4cv-0006aC-CG; Fri, 26 Jun 2026 07:21:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mateusz.nowicki@posteo.net>)
- id 1wd4cm-0006YH-6l
+ id 1wd4cm-0006YI-7Z
  for qemu-devel@nongnu.org; Fri, 26 Jun 2026 07:21:32 -0400
-Received: from mout02.posteo.de ([185.67.36.66])
+Received: from mout01.posteo.de ([185.67.36.65])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mateusz.nowicki@posteo.net>)
- id 1wd4cj-0007ha-KI
+ id 1wd4cj-0007hW-I7
  for qemu-devel@nongnu.org; Fri, 26 Jun 2026 07:21:31 -0400
 Received: from submission (posteo.de [185.67.36.169]) 
- by mout02.posteo.de (Postfix) with ESMTPS id 3F3BA240101
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 13:21:28 +0200 (CEST)
+ by mout01.posteo.de (Postfix) with ESMTPS id 9D6A324002B
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 13:21:27 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.net; s=2017;
- t=1782472888; bh=3emTVulVVhCe5GiZfFLkFRagl9I6cYkLZ3AYjbx8j+s=;
+ t=1782472887; bh=q7susRhhQnQCDaxcc3Llh204x+fBSknDmH84e4MZlmU=;
  h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
  Content-Transfer-Encoding:From;
- b=hdtyGzgC5jcLIOLVOJM4PaOU/FTQuCkGGTdd084bEtKynCoagPAWwj3A0aJYmgyjs
- GCY2Lt3mmdeToNrC4ZUSU8g86X7J+1d6LFB9kR9XDhMYEOHxCpEGCtDMXNqZ7ZA6IR
- F+ZuHNHgIVU4qj0imXWlZhvjV/3tLPbx9HwlhpmSGo3VXlxBrml9ETg30inkDnMdk9
- /iXgyE0lAozwyfY+5ReQ58h1ZdL7gWp10UOTqypYNsQIb2xdlDmMvdV9z4sEuJcbjm
- 96iQCLvokD7oOsF88poyELSYpvJLpXVf/37gi3Z7fvHEBIKIaffKk2bU1fx+uD/1lK
- wu5K+sQtMFXVg==
+ b=KChrknIp1A4E8jqpKC1fx9Iho87J5XWsnnFO9OLXTNYJluvo5K773oEb8d/ekBPN1
+ M941Oz+yS1JZrRykmbY8sDd+sTjl/VoAamnxu7nEvYHL1NUOdU1NwNj8R4cltV1Jwp
+ LR8FRz7BH9sWN4xvYo9ITBqJMGS9cmqiV/59VfET0rI3zpI+pLMkCqBwKN9+aZxmj6
+ Byc9N8HtN71wCiQkZJD1FurmXp0tIrx8Ofo66GUjHD0IXEH2B/+0gw3kq7PJ/jAu3b
+ E1R7t50FsgHPkBfCCJhu8eII4LuD6SAS+j+ai6KYQV1a7Y6LAPZidaYzUV9omT+mme
+ HKAgwycF1HnrA==
 Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4gmtXl1BJ6z6twr;
- Fri, 26 Jun 2026 13:21:27 +0200 (CEST)
+ by submission (posteo.de) with ESMTPSA id 4gmtXk1fBnz6twg;
+ Fri, 26 Jun 2026 13:21:26 +0200 (CEST)
 From: Mateusz Nowicki <mateusz.nowicki@posteo.net>
 To: qemu-devel@nongnu.org
 Cc: Mateusz Nowicki <mateusz.nowicki@posteo.net>,
@@ -45,22 +45,22 @@ Cc: Mateusz Nowicki <mateusz.nowicki@posteo.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>, Eric Blake <eblake@redhat.com>,
  qemu-block@nongnu.org
-Subject: [PATCH v3 2/2] hw/nvme: add 'info nvme-queues' HMP command
+Subject: [PATCH v3 1/2] hw/nvme: add 'info nvme' HMP command
 Date: Fri, 26 Jun 2026 11:21:27 +0000
-Message-ID: <20260626112116.7621-3-mateusz.nowicki@posteo.net>
+Message-ID: <20260626112116.7621-2-mateusz.nowicki@posteo.net>
 In-Reply-To: <20260626112116.7621-1-mateusz.nowicki@posteo.net>
 References: <20260626112116.7621-1-mateusz.nowicki@posteo.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.67.36.66;
- envelope-from=mateusz.nowicki@posteo.net; helo=mout02.posteo.de
+Received-SPF: pass client-ip=185.67.36.65;
+ envelope-from=mateusz.nowicki@posteo.net; helo=mout01.posteo.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,135 +76,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an 'info nvme-queues' HMP command that lists, for every emulated
-NVMe controller, the admin SQ/CQ and every active I/O SQ/CQ.
+Add an 'info nvme' HMP command for inspecting emulated NVMe
+controllers from the QEMU monitor.
 
-For each queue the command prints:
+For each NVMe controller in the QOM tree the command prints:
 
-  - the ring size, head and tail indices;
-  - the associated CQ id (for SQ) or interrupt vector (for CQ);
-  - the queue's PRP1 (DMA base address of the ring);
-  - the BAR0-relative doorbell offset (SQyTDBL / CQyHDBL);
-  - the current CQ phase tag.
+  - PCI BDF, vendor/device ID and BAR0 base address;
+  - Identify Controller fields visible to the host driver: SN, MN, FR
+    and CNTLID;
+  - the CC, CSTS and AQA registers (raw 32-bit values);
+  - the number of admin and active I/O submission/completion queues.
 
-The doorbell offsets are computed from CAP.DSTRD so they remain
-correct if the emulation ever exposes a non-zero stride.
+Useful when debugging the Linux NVMe driver against the QEMU emulation
+without attaching gdb to the QEMU process.
 
-Useful when debugging the Linux NVMe driver against the QEMU
-emulation - queue setup, doorbell rings, AERs held in the admin SQ
-etc. - without attaching gdb to the QEMU process.
+Example:
 
-Example, with the long PRP1 ring address and BAR0-relative doorbell
-offset replaced by '...'; phase tag column omitted for brevity:
-
-  (qemu) info nvme-queues
+  (qemu) info nvme
   /machine/peripheral-anon/device[0]
-  SQ 0  size=32    head=9     tail=9     cqid=0    prp1=...  SQTDBL=...
-  CQ 0  size=32    head=8     tail=8     iv=0      prp1=...  CQHDBL=...
-  SQ 1  size=1024  head=2     tail=2     cqid=1    prp1=...  SQTDBL=...
-  CQ 1  size=1024  head=2     tail=2     iv=1      prp1=...  CQHDBL=...
+    PCI:    BDF 00:04.0  VID=8086 DID=5845  BAR0=0x00000000feb50000
+    ID:     SN=NVME0001  MN=QEMU NVMe Ctrl  FR=...  CNTLID=0x0000
+    CC:     0x00460001
+    CSTS:   0x00000001
+    AQA:    0x001f001f
+    Queues: 1 admin + 4 IO SQ / 4 IO CQ
 
 Signed-off-by: Mateusz Nowicki <mateusz.nowicki@posteo.net>
 Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
 Acked-by: Markus Armbruster <armbru@redhat.com>
 ---
- hmp-commands-info.hx | 17 ++++++++++++
- hw/nvme/monitor.c    | 63 ++++++++++++++++++++++++++++++++++++++++++++
- qapi/machine.json    | 18 +++++++++++++
- 3 files changed, 98 insertions(+)
+ hmp-commands-info.hx | 15 +++++++++
+ hw/nvme/meson.build  |  2 +-
+ hw/nvme/monitor.c    | 76 ++++++++++++++++++++++++++++++++++++++++++++
+ qapi/machine.json    | 18 +++++++++++
+ 4 files changed, 110 insertions(+), 1 deletion(-)
+ create mode 100644 hw/nvme/monitor.c
 
 diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index c3456e1b65..1880e482ab 100644
+index 82134eb6c2..c3456e1b65 100644
 --- a/hmp-commands-info.hx
 +++ b/hmp-commands-info.hx
-@@ -355,6 +355,23 @@ SRST
-     Show emulated NVMe controllers.
+@@ -340,6 +340,21 @@ SRST
+     Show guest USB devices.
  ERST
  
 +#if defined(CONFIG_NVME_PCI)
 +    {
-+        .name       = "nvme-queues",
++        .name       = "nvme",
 +        .args_type  = "",
 +        .params     = "",
-+        .help       = "show active NVMe queues and their doorbells",
-+        .cmd_info_hrt = qmp_x_query_nvme_queues,
++        .help       = "show emulated NVMe controllers",
++        .cmd_info_hrt = qmp_x_query_nvme,
 +    },
 +#endif
 +
 +SRST
-+  ``info nvme-queues``
-+    Show all active NVMe submission and completion queues, including
-+    head/tail, DMA address of the ring and BAR0-relative doorbell
-+    offset.
++  ``info nvme``
++    Show emulated NVMe controllers.
 +ERST
 +
      {
          .name       = "usbhost",
          .args_type  = "",
+diff --git a/hw/nvme/meson.build b/hw/nvme/meson.build
+index 7d5caa53c2..6c57f14930 100644
+--- a/hw/nvme/meson.build
++++ b/hw/nvme/meson.build
+@@ -1 +1 @@
+-system_ss.add(when: 'CONFIG_NVME_PCI', if_true: files('ctrl.c', 'dif.c', 'ns.c', 'subsys.c', 'nguid.c'))
+\ No newline at end of file
++system_ss.add(when: 'CONFIG_NVME_PCI', if_true: files('ctrl.c', 'dif.c', 'monitor.c', 'nguid.c', 'ns.c', 'subsys.c'))
 diff --git a/hw/nvme/monitor.c b/hw/nvme/monitor.c
-index 95a6754437..c8161943c0 100644
---- a/hw/nvme/monitor.c
+new file mode 100644
+index 0000000000..95a6754437
+--- /dev/null
 +++ b/hw/nvme/monitor.c
-@@ -74,3 +74,66 @@ HumanReadableText *qmp_x_query_nvme(Error **errp)
- 
-     return human_readable_text_from_str(buf);
- }
+@@ -0,0 +1,76 @@
++/*
++ * QEMU NVMe Controller monitor commands
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+static void append_sq(GString *buf, NvmeSQueue *sq, unsigned stride)
-+{
-+    hwaddr db_off = 0x1000 + 2 * sq->sqid * stride;
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qapi/qapi-commands-machine.h"
++#include "qapi/type-helpers.h"
++#include "hw/pci/pci.h"
 +
-+    g_string_append_printf(buf,
-+        "  SQ %u  size=%-5u head=%-5u tail=%-5u cqid=%-3u  "
-+        "prp1=0x%016" PRIx64 "  SQTDBL=BAR0+0x%03" HWADDR_PRIx "\n",
-+        sq->sqid, sq->size, sq->head, sq->tail, sq->cqid,
-+        sq->dma_addr, db_off);
-+}
++#include "nvme.h"
 +
-+static void append_cq(GString *buf, NvmeCQueue *cq, unsigned stride)
-+{
-+    hwaddr db_off = 0x1000 + (2 * cq->cqid + 1) * stride;
-+
-+    g_string_append_printf(buf,
-+        "  CQ %u  size=%-5u head=%-5u tail=%-5u iv=%-5u  "
-+        "prp1=0x%016" PRIx64 "  CQHDBL=BAR0+0x%03" HWADDR_PRIx
-+        "  phaseTag=%u\n",
-+        cq->cqid, cq->size, cq->head, cq->tail, cq->vector,
-+        cq->dma_addr, db_off, cq->phase);
-+}
-+
-+static int collect_queues(Object *obj, void *opaque)
++static int collect_one(Object *obj, void *opaque)
 +{
 +    GString *buf = opaque;
 +    NvmeCtrl *n;
-+    unsigned stride;
++    PCIDevice *pci;
++    pcibus_t bar0;
++    unsigned io_sq = 0, io_cq = 0;
 +
 +    if (!object_dynamic_cast(obj, TYPE_NVME)) {
 +        return 0;
 +    }
 +    n = NVME(obj);
-+    stride = 4u << NVME_CAP_DSTRD(ldq_le_p(&n->bar.cap));
-+
-+    g_string_append_printf(buf, "%s\n", object_get_canonical_path(obj));
-+    append_sq(buf, &n->admin_sq, stride);
-+    append_cq(buf, &n->admin_cq, stride);
++    pci = PCI_DEVICE(n);
++    bar0 = pci_get_bar_addr(pci, 0);
 +
 +    for (unsigned i = 1; i <= n->params.max_ioqpairs; i++) {
 +        if (n->sq && n->sq[i]) {
-+            append_sq(buf, n->sq[i], stride);
++            io_sq++;
 +        }
 +        if (n->cq && n->cq[i]) {
-+            append_cq(buf, n->cq[i], stride);
++            io_cq++;
 +        }
 +    }
++
++    g_string_append_printf(buf, "%s\n", object_get_canonical_path(obj));
++    g_string_append_printf(buf,
++        "  PCI:    BDF %02x:%02x.%x  VID=%04x DID=%04x  ",
++        pci_dev_bus_num(pci), PCI_SLOT(pci->devfn), PCI_FUNC(pci->devfn),
++        pci_get_word(pci->config + PCI_VENDOR_ID),
++        pci_get_word(pci->config + PCI_DEVICE_ID));
++    if (bar0 == PCI_BAR_UNMAPPED) {
++        g_string_append(buf, "BAR0=unmapped\n");
++    } else {
++        g_string_append_printf(buf, "BAR0=0x%016" PRIx64 "\n",
++                               (uint64_t)bar0);
++    }
++    g_string_append_printf(buf,
++        "  ID:     SN=%.20s  MN=%.40s  FR=%.8s  CNTLID=0x%04x\n",
++        n->id_ctrl.sn, n->id_ctrl.mn, n->id_ctrl.fr, n->cntlid);
++    g_string_append_printf(buf, "  CC:     0x%08x\n",
++                           ldl_le_p(&n->bar.cc));
++    g_string_append_printf(buf, "  CSTS:   0x%08x\n",
++                           ldl_le_p(&n->bar.csts));
++    g_string_append_printf(buf, "  AQA:    0x%08x\n",
++                           ldl_le_p(&n->bar.aqa));
++    g_string_append_printf(buf,
++        "  Queues: 1 admin + %u IO SQ / %u IO CQ\n", io_sq, io_cq);
 +    return 0;
 +}
 +
-+HumanReadableText *qmp_x_query_nvme_queues(Error **errp)
++HumanReadableText *qmp_x_query_nvme(Error **errp)
 +{
 +    g_autoptr(GString) buf = g_string_new("");
 +
-+    object_child_foreach_recursive(object_get_root(), collect_queues, buf);
++    object_child_foreach_recursive(object_get_root(), collect_one, buf);
 +
 +    if (buf->len == 0) {
 +        g_string_append(buf, "no NVMe controllers\n");
@@ -213,27 +229,27 @@ index 95a6754437..c8161943c0 100644
 +    return human_readable_text_from_str(buf);
 +}
 diff --git a/qapi/machine.json b/qapi/machine.json
-index 5f75341438..d3d2768e48 100644
+index 685e4e29b8..5f75341438 100644
 --- a/qapi/machine.json
 +++ b/qapi/machine.json
-@@ -1790,6 +1790,24 @@
-   'if': 'CONFIG_NVME_PCI',
+@@ -1772,6 +1772,24 @@
+   'returns': 'HumanReadableText',
    'features': [ 'unstable' ] }
  
 +##
-+# @x-query-nvme-queues:
++# @x-query-nvme:
 +#
-+# Query state of all active SQ/CQ for emulated NVMe controllers.
++# Query state of emulated NVMe controllers.
 +#
 +# Features:
 +#
 +# @unstable: This command is meant for debugging.
 +#
-+# Returns: per-queue state as human-readable text
++# Returns: NVMe controller state as human-readable text
 +#
 +# Since: 11.1
 +##
-+{ 'command': 'x-query-nvme-queues',
++{ 'command': 'x-query-nvme',
 +  'returns': 'HumanReadableText',
 +  'if': 'CONFIG_NVME_PCI',
 +  'features': [ 'unstable' ] }
