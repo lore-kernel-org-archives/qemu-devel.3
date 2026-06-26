@@ -4,141 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7943DC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 13:04:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE99EC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 13:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd6E2-0003f1-2k; Fri, 26 Jun 2026 09:04:07 -0400
+	id 1wd6Ey-0004cs-RV; Fri, 26 Jun 2026 09:05:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wd6Cx-0003Hf-JG
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 09:03:07 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wd6EI-0004Of-Tc
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 09:04:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wd6Cu-0002VH-La
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 09:02:57 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65QAcshf1069928
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 13:02:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 62QqorZf9k5bB1/qGoYocrY+3B4FU/2oGXwz4JUfF14=; b=j6yD4rqcc1qKxS/F
- t2bXxzY/PSWaJ14S3RBt75Gkp8iDLVEM1SdaBi9L+kycZF71HRBnE/xSjmwrb5Qk
- xVFCbf/lkbRUOlN/BJuuzTkU3vgQfJMvcZhTXoiP1A4rfKnM4QJuxtnqApmifDkd
- Tg5XTPeBS7/t1hsChJoxanrocx3pdcbOgkLdoJimnJJkmmFIjBxMTDuUan+uXQL1
- plNDe4zayzgh+UjmEGJbCE17kSiBMHg5aJ8eMBeFGtZy5muYXMaA6PTdOnwUnZ1f
- L9PLcuPwJaDfKoTAhYyMlDljNkZ6JMvOyCUhCIVoxSsROBvKN2/zN2jC47hwyo3X
- lgHtjQ==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f1fctafq0-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 13:02:52 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c89704da8c7so1176301a12.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 06:02:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782478971; x=1783083771; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=62QqorZf9k5bB1/qGoYocrY+3B4FU/2oGXwz4JUfF14=;
- b=gfrUk2+eaB82tAyhNn8x9qm/naVV5bcgtFXlUPJT766Rmq5hOo+mBMe3tkFrgIpw86
- zUmWQmu4nXvP+1sM4oqWpo65zligOMYfJaIZYV2ujFxYtF28rchbbDvn5m+D0WU2Xsx2
- ZJGJFB9XhC/4EYWDszUWox9D/EB29wKlgZ704o8PYd1VNebYvhibFDVtV1OJ0SkMtVg5
- 6ngbuHklALdrh+fDknjbi8XWaOMSmlBwua+vTpVtcEL+oLvR0L9Ao2NRvvU1yjdVoSJy
- MSLJHEVOvkYOytVzXh96kQdGH/Hsi+tK06UTOQMyqnLYj9tIEiYzWBWYEmq52HFJGZ7C
- afSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782478971; x=1783083771;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=62QqorZf9k5bB1/qGoYocrY+3B4FU/2oGXwz4JUfF14=;
- b=h+/ScTiXOOSi8x4pDJ3S9M7UHfkaKc7kjJUtPrhdshU4Kb3D1CYoBF08KQzx1L2yJk
- /Tm/Mx/bMRdKgCdUVICiqPQXJVEwVK/WKscvYMDQIid7DINX3Vk1kvOxLI2d7ap8UZzn
- UkXKQ9D+mOD7rTI7d08NGkoS2OzMqjlgs7o6LFOpQaVO0c7852jq1nmz6WLXya8OegpQ
- Vy7eke3QhR/f6k1YaQy3+31RbMmKNE0cJ2rE6DCA0kaOYdvU0+bgenvsuIjNHCkSGfw5
- EltRZE47yYt+REDi5IpD0YsbOaVdEOZGSQk1Z5g1xl6Oh1oPGUsuLCXr/LH0zzoMSFdp
- iRxA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9dEfiyIpKQV9PtMPSh8T0OdcVlAANLX3gP5pGeYacjXNpuoE8jnvNMDjSMAL+gwCwNDc0Yuj0ea1DH@nongnu.org
-X-Gm-Message-State: AOJu0Yxvi+Fsc8aq9JltTY8E+ZofzF9temxW9dQoaF3zKqBtRC5y8FJ0
- W7Nn/c2LzmPF/8lKJhmMYPIq+eeCXETO7XjPLRzXPWdKH7/2Ej4LwcgOlBib8ajGrgXCbyRn5ZB
- 9aMaZqlPCxEuFS5PJP+OQ7WZs/u/HLrFkPA/8CFS71qHq8VcxDKAQL/tndg==
-X-Gm-Gg: AfdE7cmbN7O6ILK2LuOOpsQ0qT8Ztt1DvK3qBAsBc2xF6+oAsqFqbZkQJUbPOMDOgbm
- DXY+r+MMIQjziawCZ0iGEv/HA4IDa0N6ZSyFosTIXkeqgnZHBPHROGsD5WWihkHZVcYNr2NILIG
- hNJZsrArkvLhPshYC/P9wH41Bpn693bpuU/206ZHHgmCATefWHyzq+YMaxG6UCGk/tRXi7SXLd+
- Gaan+YmHg6uFY5lGuh7Ys/gEauBANCOMLxBMB3KaaIUqXniywUB3Vm4cnsKKv+bkB4902FeEnyL
- hCLwQnP3rJCBmVBhm/9xj7KK6CiblSMlPFT+SnyQT2AKKpY90+A9Q75n0JWL5pr+5p/kF0PjRX1
- B/PzeqdI24XJ507yX3TeZ+UFIGcZ0hbKrcIBKrbwRBGn6BWDGR84zuIjE5/PLHw==
-X-Received: by 2002:a05:6a21:3d87:b0:3bf:5b7a:fc8b with SMTP id
- adf61e73a8af0-3bf5b7b0530mr1809764637.0.1782478970542; 
- Fri, 26 Jun 2026 06:02:50 -0700 (PDT)
-X-Received: by 2002:a05:6a21:3d87:b0:3bf:5b7a:fc8b with SMTP id
- adf61e73a8af0-3bf5b7b0530mr1809346637.0.1782478965822; 
- Fri, 26 Jun 2026 06:02:45 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49269009163sm86111485e9.11.2026.06.26.06.02.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jun 2026 06:02:44 -0700 (PDT)
-Message-ID: <ae7712ad-450a-43d5-982b-07e26bf675c5@oss.qualcomm.com>
-Date: Fri, 26 Jun 2026 15:02:43 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wd6EG-0002ok-UM
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 09:04:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782479059;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gWMmHIQ+PfLNRSnqyiWrL40qLebGHII79BNduoR9hIU=;
+ b=TOGfnkUFqIZFjp9eH6R8qzl6xVTXtRt1FOBnfJipuCJZhvlGF7foUILX3FYKrio1T+98I8
+ qRu8Km6mwo9tEbFT6UtIaQeKZFeBT0PkrgSUgDkjLG4MIA+IsDkfm55ZwGmG1tGAeT1NWl
+ 8NKY3XA2tQ71wQRMeV2mq4D/TTxmXh0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-453-D3VMrCa2Po-EMdQN_DFk2w-1; Fri,
+ 26 Jun 2026 09:04:15 -0400
+X-MC-Unique: D3VMrCa2Po-EMdQN_DFk2w-1
+X-Mimecast-MFC-AGG-ID: D3VMrCa2Po-EMdQN_DFk2w_1782479054
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E508C1955DCF; Fri, 26 Jun 2026 13:04:13 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 390A918005B2; Fri, 26 Jun 2026 13:04:13 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B154021E6920; Fri, 26 Jun 2026 15:04:10 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
+ <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  "Michael S .
+ Tsirkin" <mst@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  Jason Wang
+ <jasowang@redhat.com>,  Fam Zheng <fam@euphon.net>
+Subject: Re: [PATCH V9 06/17] monitor: refactor monitor_data_init() to pass ID
+In-Reply-To: <20260624070851.13342-7-zhangckid@gmail.com> (Zhang Chen's
+ message of "Wed, 24 Jun 2026 15:08:40 +0800")
+References: <20260624070851.13342-1-zhangckid@gmail.com>
+ <20260624070851.13342-7-zhangckid@gmail.com>
+Date: Fri, 26 Jun 2026 15:04:10 +0200
+Message-ID: <87fr29zc51.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] json-streamer: reuse parser
-Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: armbru@redhat.com
-References: <20260626101727.1727389-1-pbonzini@redhat.com>
- <20260626101727.1727389-3-pbonzini@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260626101727.1727389-3-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: IWE4lSwZOXj4-rFNr1yJBEhJmFE04lA6
-X-Proofpoint-ORIG-GUID: IWE4lSwZOXj4-rFNr1yJBEhJmFE04lA6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI2MDEwNiBTYWx0ZWRfXw9fPAOxvMVoD
- CN9FHRM5gk+343TxpMkAO3z5q2rM3K72/sgBWld0JKli/aWzT12P0uHQV/UUz3IHGQ0KwnvTYCg
- EaNNzLDXbXU1qJ26gBhCgEUI2AOYFsJvXekzyqFHkQUHeozAXw0MfkFIJl/XSvZH2E0dytLLaGA
- PU9/5IEfR2C8wohcsnaJF4Nn8Dj+iyw17r6nFDDdyNJnRMgbCU2CPYsa6bJb/zAISguFNSO9uPE
- YFMRgogmkerIFrsUHS2+ptXkCCSwvh201NIhpSYLhkglyda/Y7hnaz6UnfDjsNWPz/5vW9MHRY3
- OYSFC301PKheLqPSfTr5/CsSGA9SAQHiAx7Gj+7fp398/R6/lgos80RFTshbezmi91o3RwXeM26
- Cnw95LsvVk/l0eMyxDw3MydKCdmoaM451XZyZ/8aFgg5BH5x6F1DVoBujRhsl8odQbFVbgSivKc
- 9Dd+PtorkATj6Cph9kA==
-X-Authority-Analysis: v=2.4 cv=FPkrAeos c=1 sm=1 tr=0 ts=6a3e787c cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI2MDEwNiBTYWx0ZWRfX9txw795dc933
- cE32dqwI8R+WaMsiRr93KKq40Mee3nncJQtoNNTc5gq4lydFO6ZqScFrYZauku/6GTt4P5G8SMO
- LGE3j/EwJpY8uIeq2hBUJmC1ugtjfs4=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-26_03,2026-06-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 priorityscore=1501 malwarescore=0 adultscore=0
- bulkscore=0 impostorscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606260106
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,16 +89,269 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/6/26 12:17, Paolo Bonzini wrote:
-> The push parser can be reset, so reuse it when the json-streamer
-> detects a completed toplevel object.
-> 
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   include/qobject/json-parser.h |  2 +-
->   qobject/json-streamer.c       | 11 ++++-------
->   2 files changed, 5 insertions(+), 8 deletions(-)
+Zhang Chen <zhangckid@gmail.com> writes:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Anonymous monitors (e.g., '-monitor stdio' or GDB stub) leave their 'id'
+> field as NULL.
+
+What "'id' field" do you mean here?
+
+>                To allow downstream subsystems (like iothread tracking) to
+> identify these instances later, the initialization paths must propagate
+> the context.
+>
+> Refactor monitor_data_init() to accept the 'id' parameters, and
+> update all internal QMP/HMP paths to pass these identifiers.
+>
+> For anonymous monitors, 'mon->id' remains NULL at this stage to avoid
+> namespace pollution, setting up infrastructure for subsequent patches.
+
+What's an "anonymous monitor"?
+
+If it's a monitor without an ID, the sentence is a tautology.  What
+information are you trying to convey?  That the new @id member may be
+null?
+
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> ---
+>  chardev/char.c             | 2 +-
+>  gdbstub/system.c           | 3 ++-
+>  include/monitor/monitor.h  | 5 +++--
+>  monitor/hmp.c              | 5 +++--
+>  monitor/monitor-internal.h | 4 +++-
+>  monitor/monitor.c          | 9 ++++++---
+>  monitor/qmp-cmds.c         | 2 +-
+>  monitor/qmp.c              | 5 +++--
+>  stubs/monitor-internal.c   | 3 ++-
+>  9 files changed, 24 insertions(+), 14 deletions(-)
+>
+> diff --git a/chardev/char.c b/chardev/char.c
+> index ca8b37ed8d..f057247001 100644
+> --- a/chardev/char.c
+> +++ b/chardev/char.c
+> @@ -805,7 +805,7 @@ static Chardev *qemu_chr_new_from_name(const char *label, const char *filename,
+>  
+>      if (qemu_opt_get_bool(opts, "mux", 0)) {
+>          assert(permit_mux_mon);
+> -        monitor_init_hmp(chr, true, &err);
+> +        monitor_init_hmp(chr, true, NULL, &err);
+
+This creates an HMP monitor connected to a "multiplexed" character
+device ("mux=on").  This is an old, poorly documented feature.
+
+>          if (err) {
+>              error_report_err(err);
+>              object_unparent(OBJECT(chr));
+> diff --git a/gdbstub/system.c b/gdbstub/system.c
+> index e86c5870ab..50f934fde3 100644
+> --- a/gdbstub/system.c
+> +++ b/gdbstub/system.c
+> @@ -388,7 +388,8 @@ bool gdbserver_start(const char *device, Error **errp)
+>          /* Initialize a monitor terminal for gdb */
+>          mon_chr = qemu_chardev_new(NULL, TYPE_CHARDEV_GDB,
+>                                     NULL, NULL, &error_abort);
+> -        monitor_init_hmp(mon_chr, false, &error_abort);
+> +
+> +        monitor_init_hmp(mon_chr, false, NULL, &error_abort);
+
+This creates a monitor connected to gdbstub's "chardev-gdb" character
+device.  I'm not sure this is actually an HMP monitor.
+
+>      } else {
+>          qemu_chr_fe_deinit(&gdbserver_system_state.chr, true);
+>          mon_chr = gdbserver_system_state.mon_chr;
+> diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+> index 55649a8664..4a5eb20bea 100644
+> --- a/include/monitor/monitor.h
+> +++ b/include/monitor/monitor.h
+> @@ -19,8 +19,9 @@ bool monitor_cur_is_qmp(void);
+>  
+>  void monitor_init_globals(void);
+>  void monitor_init_globals_core(void);
+> -void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp);
+> -void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp);
+> +void monitor_init_qmp(Chardev *chr, bool pretty, const char *id, Error **errp);
+
+Break the line before Error, please.
+
+> +void monitor_init_hmp(Chardev *chr, bool use_readline, const char *id,
+> +                      Error **errp);
+
+I'd add the @id parameter before the flags.  Same for
+monitor_data_init().
+
+>  int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp);
+>  int monitor_init_opts(QemuOpts *opts, Error **errp);
+>  void monitor_cleanup(void);
+> diff --git a/monitor/hmp.c b/monitor/hmp.c
+> index cc4390486e..4ee8cb58d1 100644
+> --- a/monitor/hmp.c
+> +++ b/monitor/hmp.c
+> @@ -1522,7 +1522,8 @@ static void monitor_readline_flush(void *opaque)
+>      monitor_flush(&mon->common);
+>  }
+>  
+> -void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
+> +void monitor_init_hmp(Chardev *chr, bool use_readline, const char *id,
+> +                      Error **errp)
+>  {
+>      MonitorHMP *mon = g_new0(MonitorHMP, 1);
+>  
+> @@ -1531,7 +1532,7 @@ void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
+>          return;
+>      }
+>  
+> -    monitor_data_init(&mon->common, false, false, false);
+> +    monitor_data_init(&mon->common, false, false, false, id);
+>  
+>      mon->use_readline = use_readline;
+>      if (mon->use_readline) {
+> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+> index a5c4aba306..f651ba6a90 100644
+> --- a/monitor/monitor-internal.h
+> +++ b/monitor/monitor-internal.h
+> @@ -108,6 +108,8 @@ struct Monitor {
+>      bool skip_flush;
+>      bool use_io_thread;
+>  
+> +    char *id;
+> +
+>      char *mon_cpu_path;
+>      QTAILQ_ENTRY(Monitor) entry;
+>  
+> @@ -179,7 +181,7 @@ extern QemuMutex monitor_lock;
+>  extern MonitorList mon_list;
+>  
+>  void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+> -                       bool use_io_thread);
+> +                       bool use_io_thread, const char *id);
+>  void monitor_data_destroy(Monitor *mon);
+>  int monitor_can_read(void *opaque);
+>  void monitor_list_append(Monitor *mon);
+> diff --git a/monitor/monitor.c b/monitor/monitor.c
+> index 00b93ed612..65749f931e 100644
+> --- a/monitor/monitor.c
+> +++ b/monitor/monitor.c
+> @@ -608,8 +608,10 @@ static void monitor_iothread_init(void)
+>  }
+>  
+>  void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+> -                       bool use_io_thread)
+> +                       bool use_io_thread, const char *id)
+>  {
+> +    mon->id = id ? g_strdup(id) : NULL;
+
+g_strdup(NULL) returns NULL.  Simplify:
+
+       mon->id = g_strdup(id);
+
+> +
+>      if (use_io_thread && !mon_iothread) {
+>          monitor_iothread_init();
+>      }
+> @@ -629,6 +631,7 @@ void monitor_data_destroy(Monitor *mon)
+>      } else {
+>          readline_free(container_of(mon, MonitorHMP, common)->rs);
+>      }
+> +    g_free(mon->id);
+>      g_string_free(mon->outbuf, true);
+>      qemu_mutex_destroy(&mon->mon_lock);
+>  }
+> @@ -732,7 +735,7 @@ int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp)
+>  
+>      switch (opts->mode) {
+>      case MONITOR_MODE_CONTROL:
+> -        monitor_init_qmp(chr, opts->pretty, errp);
+> +        monitor_init_qmp(chr, opts->pretty, opts->id, errp);
+
+This creates a QMP monitor on behalf of -mon or one of the convenience
+options.
+
+For -mon, opts->id comes from the command line, and may be null.
+
+For the convenience options, opts->id is made up by the system.
+
+>          break;
+>      case MONITOR_MODE_READLINE:
+>          if (!allow_hmp) {
+> @@ -743,7 +746,7 @@ int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp)
+>              error_setg(errp, "'pretty' is not compatible with HMP monitors");
+>              return -1;
+>          }
+> -        monitor_init_hmp(chr, true, errp);
+> +        monitor_init_hmp(chr, true, opts->id, errp);
+
+Likewise, HMP.
+
+>          break;
+>      default:
+>          g_assert_not_reached();
+> diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
+> index 0c409c27dc..e49b9cbf8b 100644
+> --- a/monitor/qmp-cmds.c
+> +++ b/monitor/qmp-cmds.c
+> @@ -168,7 +168,7 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
+>      char *output = NULL;
+>      MonitorHMP hmp = {};
+>  
+> -    monitor_data_init(&hmp.common, false, true, false);
+> +    monitor_data_init(&hmp.common, false, true, false, NULL);
+
+This sets up a dummy HMP monitor not connected to anything.
+
+>  
+>      if (has_cpu_index) {
+>          int ret = monitor_set_cpu(&hmp.common, cpu_index);
+> diff --git a/monitor/qmp.c b/monitor/qmp.c
+> index 687019811f..8fd71386e8 100644
+> --- a/monitor/qmp.c
+> +++ b/monitor/qmp.c
+> @@ -513,7 +513,7 @@ static void monitor_qmp_setup_handlers_bh(void *opaque)
+>      monitor_list_append(&mon->common);
+>  }
+>  
+> -void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
+> +void monitor_init_qmp(Chardev *chr, bool pretty, const char *id, Error **errp)
+>  {
+>      MonitorQMP *mon = g_new0(MonitorQMP, 1);
+>  
+> @@ -525,7 +525,8 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
+>  
+>      /* Note: we run QMP monitor in I/O thread when @chr supports that */
+>      monitor_data_init(&mon->common, true, false,
+> -                      qemu_chr_has_feature(chr, QEMU_CHAR_FEATURE_GCONTEXT));
+> +                      qemu_chr_has_feature(chr, QEMU_CHAR_FEATURE_GCONTEXT),
+> +                      id);
+>  
+>      mon->pretty = pretty;
+>  
+> diff --git a/stubs/monitor-internal.c b/stubs/monitor-internal.c
+> index 4fece49d53..325a559e62 100644
+> --- a/stubs/monitor-internal.c
+> +++ b/stubs/monitor-internal.c
+> @@ -8,6 +8,7 @@ int monitor_get_fd(Monitor *mon, const char *name, Error **errp)
+>      return -1;
+>  }
+>  
+> -void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
+> +void monitor_init_hmp(Chardev *chr, bool use_readline, const char *id,
+> +                      Error **errp)
+>  {
+>  }
+
+Things the commit message should make clear, but doesn't:
+
+* This patch adds member @id to struct Monitor.  It is initialized, but
+  not yet used.
+
+* If the monitor is created on behalf of CLI option -mon, then @id is
+  the value of -mon's parameter "id" if present, null if absent.
+
+* If the monitor is created on behalf of CLI convenience options, then
+  @id is some made-up string.
+
+* If the monitor is created in any other way, then @id is null.
+
+Please rework your commit message accordingly.
+
 
