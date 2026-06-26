@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8A9ACDE008
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED9AACDE00C
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:22:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3ez-0003FC-09; Fri, 26 Jun 2026 06:19:45 -0400
+	id 1wd3f5-0003dO-Rp; Fri, 26 Jun 2026 06:19:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3ew-000365-Tq
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:42 -0400
+ id 1wd3f5-0003ai-07
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3ev-0005QI-2v
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:42 -0400
+ id 1wd3f3-0005ST-6n
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469180;
+ s=mimecast20190719; t=1782469188;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jDJzWr4DPm70qXaqFLhNskSOs+Tj3s84msP9xo6bd4U=;
- b=Ye2SFDiK6atcZEoph9p3eejBcIH1ikXhieDD1M8Zw3HyM2iWUtoCO8/VRKc9+9IOfWQ4bx
- k2WIvnq5vJwenU7jctgSd1na6dYXvVUvGf/zaf0xe3tmxYUhcosjz2M0XzJ7ES7k1ot1c/
- 2LOj8/I0Y0vwjvUXSinXMqaYWq5cWBQ=
+ bh=VgCjIZjGwX7SpaWajCTdC373pSdn6nF6m99W2fnMJbo=;
+ b=FQeko2rUs1X5Q7OiY4j/rX7HA3LZDSiBKof2W64KSb7/fuqnmptzrl4lc9a7jNayJsxLg3
+ cToyFNO4F68lliqlvn0jIQRo5PWZIovOR8MZihyD/x/LojQfT97Hp+4fHaLMjmePU6tgv4
+ Rjn/Unyg4dp+in3C/hYkDhUr/GM2MQ8=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-582-dstnw27lP7ON8iN9-i7rgA-1; Fri, 26 Jun 2026 06:19:39 -0400
-X-MC-Unique: dstnw27lP7ON8iN9-i7rgA-1
-X-Mimecast-MFC-AGG-ID: dstnw27lP7ON8iN9-i7rgA_1782469178
+ us-mta-434-smGT3y6pPY-7Q1bHB0Zk_Q-1; Fri, 26 Jun 2026 06:19:47 -0400
+X-MC-Unique: smGT3y6pPY-7Q1bHB0Zk_Q-1
+X-Mimecast-MFC-AGG-ID: smGT3y6pPY-7Q1bHB0Zk_Q_1782469186
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4924d5231daso6080065e9.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:19:39 -0700 (PDT)
+ 5b1f17b1804b1-490e547f3cfso11331215e9.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:19:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469178; x=1783073978; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469186; x=1783073986; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jDJzWr4DPm70qXaqFLhNskSOs+Tj3s84msP9xo6bd4U=;
- b=r5Y6rxJkLplO3gmTgiCmrI6SlmLNhEMgOuyt/hunf9XlWB5de5DnlfzamRNeT3eg5y
- vHLd6bwr33Tviu41VQfsvValUDHmRyZ6qsrZR4lxsFNSFbm5xoIhFkUc+cP625VvcE7h
- Qi6jX/TGdW7Wr17mnhqFxKRzzwUO+jrfRkhSE6BI3tG0bL7f9AJbHFojNTzUXDKgG49A
- vCMNB9KLe2Gz7/LhO/pIl7bNRO7Q+cdk14nsB0tSv9TIeEXUlVzeViYFyeXF5YUy/9of
- 4MXgryKeTNV2qUDHXrSJXS+p0C3HazdxjibnJRHvVnT/zBP5TY69rTHZV6AEm8AiuQJC
- Eekw==
+ bh=VgCjIZjGwX7SpaWajCTdC373pSdn6nF6m99W2fnMJbo=;
+ b=fNYdPf49ex9eZZXQ6uFuM7T5FsH5DRsIb47+zwdZoadX/hzSQ7mvoEpjvo2A2t+ViO
+ v5djJng8yAA+HJQRlmcM1EYK7auB+jkWS58slYlRmc69n9+M97ZwicCcUQBXX1mCrp82
+ LjxJhKmiWjm+i+1MemcIzpVGWik1IXGMyeX2E/aaxnRVb5dY5k1xK3ze9WSJ5WeoHzdp
+ 2XrkfQJmY2kmyioOeBiRPvt9MsUEFZou3EpK85oI2Fw9NR3I9Ql6uAYENY56JqVVJiTs
+ h9AjkuMGv5gtDe4jpWtM92lJnImm0y42FIu0bNXhDFF6ke9BLMTTO7n5vbzbtZBAbtit
+ UTwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469178; x=1783073978;
+ d=1e100.net; s=20251104; t=1782469186; x=1783073986;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=jDJzWr4DPm70qXaqFLhNskSOs+Tj3s84msP9xo6bd4U=;
- b=o8yY+gK8swcC07KUXK7yO68rDDpcOYObaMAOS263nnMYGHf5LOiQNcBdPokOL7VKK6
- LrjlzZbAKVrnuWzvcLLkDHEdUQup5vB9Yu38LcI5fLAuVjEhZrsPCVvmes6c1gf/DIyW
- Jo981vYyxxUv/VhZ+/bM4vB3BnUtPYzyMOJ82TY+XS6G4qOGmj4eWG5qgTid+8ChuaHX
- 5DloAhQaLlJjT/1Yo2vUNle+p5SAcR11LqNCaicsSTiqB0ihnisiNiRve1OVytYtLUEt
- L319rlJyzlgFHbCR4IX58H2uQKEw9MSZ8j6e21ebYb44004PYwwLaOuFFthrK3/0wYmV
- /KKQ==
-X-Gm-Message-State: AOJu0YxtL2n49XShaAfcQ2aQ69wLcYgQ+gci1Ha9UG47bCDAF58FV7W6
- XOBbgcEyfDT0qQdMgYhjBjj71s1q7gA3otE1GgrQdBTsn+HlJ9cxshSOFvsDMvOaW9glS9X+pYo
- zvW55y51YDv1h1mhyohSxmXDffXKVm7MED8BM1tBV0/tPjlErFsirgTtyhtFMkTBI12ANCNHOGk
- dsW3DyDhKQWuRkg2XEV/3PxpKfoID7yCc59V59R2BB
-X-Gm-Gg: AfdE7cnwYWUzYqTm8XBE93DVV67onVF/15xZlK+qo+qPGiNQpctPWCsO9XMs96DyhXd
- 2oOZUtTOInxD8WPopNJmj+qwhZutMB7iB3/CNV+1XRlTGyiEvp4yWzctG+LuGqNV/Ak7VhJ+xT6
- HfRlk0UbHx2mY/1mi6aHwCwuYrt5zzU+g17FA2koLhTKZNB9ExosrGlYZ4LtqUA/Nn7DEm0Lz2y
- B7BTq3w1Tva1xNsYXODFBZJZoKedOOApYwo0Bbi1GFCnD48QZsZheISHIrFa+rAuVMEpUWLLsLV
- lZ8HloWmPCVJOlgT6IQvRt5OerhzDn9VC9OsEVpwJ3WNKk5u6XNGzJNJ/5N5bgl/gmvvPC2gIP6
- x9SkvmndX9EPdDNIu4B5/3ZXPu8CxacwvpkhIC7/Nc40Vnfz+SlvT0YUE8xsOmapcGq1HG86pML
- Eaeg1FFlaP6pMwiT79
-X-Received: by 2002:a05:600c:3b17:b0:490:b7e6:bd1d with SMTP id
- 5b1f17b1804b1-49266874055mr95173075e9.16.1782469177868; 
- Fri, 26 Jun 2026 03:19:37 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b17:b0:490:b7e6:bd1d with SMTP id
- 5b1f17b1804b1-49266874055mr95172445e9.16.1782469177285; 
- Fri, 26 Jun 2026 03:19:37 -0700 (PDT)
+ bh=VgCjIZjGwX7SpaWajCTdC373pSdn6nF6m99W2fnMJbo=;
+ b=fVD16DO7p8Y2H/594+cskAhQbtDs4leAPn7XFzZJuv0xNAxt8ijLijP8mGFyMSW9Me
+ N8wU3eT2E9fabOh04tjoyNPujoFit2aIu5+BZJE4YilKXkSyQdO4pPUJNRJiqJs6Lmk/
+ YLdtxzmwzolJkb9oiu6JvdzOVnmgvVRTUnSpJtyTOyKoRHdljA6L50YJqj3+/QLrDRBN
+ DSh8LjGvDdP+Cli5sP1Z9Et59n3MIMYK9EYgbM4WnwR95/rYD6YEf5HsJCxEV1+6H4zy
+ socze3xktlND8iMFLsYoAvRuAUl3l4eBkytAcZZ1CYhg5n0SLdL3wW/VgYEJvUWOuaat
+ 6A1A==
+X-Gm-Message-State: AOJu0Yy+odOMyDMRVW8VT8efKQR1Byr66y2V6ph2s+11h1hkQ+pdLKW4
+ IpZKd3RzHF6h1sBuTx+svsx1FJ9GtCIwANhnn6GoD8A7mEGU2vu7Su2gIsGTEBz6lb+HUE0mzpe
+ f73yqyxzBZ6Xn/NPHCLZt4DcM8FhNgIfg4U/ORQqagQ0za3GU68loJVT7m4OCoukaghdEcm7S5S
+ qErpvO1cPCfMXIJ+ydt65Qa1OTyfksN5VHnDfG17l+
+X-Gm-Gg: AfdE7cmBU5fumJJR7fipY3VhT12Ygasl0bWoICxqxEW8lF4i3MNMlf4AM4WYVoi1P9R
+ VaI01h2yUKb63sZjOS+6NC+W45REYxCSBXXy5FEXSfbk60M6TQEqV8uqhHYUwqvyaPLmJrEzJTM
+ TvQQPIg/+Cj2Q/xK0i2j2KJWAF9avI+qHir4N/DVhwEe18sngeZzJsAiYUBYV89CW9ua9Dhk2fe
+ Gnjh7/Dowi/fMY5lurKy0Elr9M7D4YV2AbTvIAUl6Vybim/hbbncns01+Gv872MrWGsI1z+lm5o
+ 7+ggPVlPkXh/geBTkuJzZ7cH7UWKLpmyRMDOQDOiRiK1GM9F8FFxwASdtiOJMtNymEMihc7rlG7
+ fGMaM0Lpln9BfinpmxccKBKM3D5YWQIVedZ1mIYuYEbX1lgCstbdsKvnscikbeHEP79f6uvGYZ8
+ DINEOdY34XSWPLINdO
+X-Received: by 2002:a05:600c:524c:b0:492:4d52:315f with SMTP id
+ 5b1f17b1804b1-492667e864dmr87631605e9.0.1782469185976; 
+ Fri, 26 Jun 2026 03:19:45 -0700 (PDT)
+X-Received: by 2002:a05:600c:524c:b0:492:4d52:315f with SMTP id
+ 5b1f17b1804b1-492667e864dmr87631015e9.0.1782469185453; 
+ Fri, 26 Jun 2026 03:19:45 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49268fe949csm79379145e9.5.2026.06.26.03.19.35
+ 5b1f17b1804b1-492690a1a85sm116074675e9.15.2026.06.26.03.19.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:19:35 -0700 (PDT)
+ Fri, 26 Jun 2026 03:19:44 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 40/45] qemu-options: Add confidential-guest-support to machine
- options
-Date: Fri, 26 Jun 2026 12:17:43 +0200
-Message-ID: <20260626101748.1728079-41-pbonzini@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PULL 43/45] i386/tdx: Use .has_gpa field to check if the gpa is valid
+Date: Fri, 26 Jun 2026 12:17:46 +0200
+Message-ID: <20260626101748.1728079-44-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
 References: <20260626101748.1728079-1-pbonzini@redhat.com>
@@ -125,49 +125,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-"confidential-guest-support" is the recommended property to configure
-machine with confidential computing technology instead of
-"memory-encryption".
+When translating the QAPI type GuestPanicInformationTdx into its C
+struct, the generated code provides a .has_gpa boolean field to indicate
+whether the optional gpa field is present.
 
-Add "confidential-guest-support" to machine options and call out
-explicitly "memory-encryption" is the alias of it and not recommended.
+Replace the magic sentinel value -1ULL, previously used to signal "no
+valid GPA", with the idiomatic .has_gpa field.  This removes the
+implicit sentinel coupling and makes the validity check self-documenting.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://lore.kernel.org/r/20260512084458.622465-4-xiaoyao.li@intel.com
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Link: https://lore.kernel.org/r/20260512082108.621596-2-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- qemu-options.hx | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ system/runstate.c     | 2 +-
+ target/i386/kvm/tdx.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 03456527910..a8ee5d14e14 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -36,7 +36,8 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
-     "                dea-key-wrap=on|off controls support for DEA key wrapping (default=on)\n"
-     "                suppress-vmdesc=on|off disables self-describing migration (default=off)\n"
-     "                nvdimm=on|off controls NVDIMM support (default=off)\n"
--    "                memory-encryption=<id> memory encryption object to use (default=none)\n"
-+    "                confidential-guest-support=<id> specifies confidential guest support object (default=none)\n"
-+    "                memory-encryption=<id> (memory-encryption is the alias of confidential-guest-support, recommend to use confidential-guest-support)\n"
-     "                hmat=on|off controls ACPI HMAT support (default=off)\n"
-     "                spcr=on|off controls ACPI SPCR support (default=on)\n"
- #ifdef CONFIG_POSIX
-@@ -100,8 +101,12 @@ SRST
-     ``nvdimm=on|off``
-         Enables or disables NVDIMM support. The default is off.
+diff --git a/system/runstate.c b/system/runstate.c
+index 0e1cb3b4e67..09be7c8d202 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -706,7 +706,7 @@ void qemu_system_guest_panicked(GuestPanicInformation *info)
+                           " error code: 0x%" PRIx32 " error message:\"%s\"\n",
+                           info->u.tdx.error_code, message);
+             g_free(message);
+-            if (info->u.tdx.gpa != -1ull) {
++            if (info->u.tdx.has_gpa) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "Additional error information "
+                               "can be found at gpa page: 0x%" PRIx64 "\n",
+                               info->u.tdx.gpa);
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index df46fce7693..da4478cb21f 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -1403,7 +1403,7 @@ int tdx_handle_report_fatal_error(X86CPU *cpu, struct kvm_run *run)
+     uint64_t reg_mask = run->system_event.data[R_ECX];
+     char *message = NULL;
+     uint64_t *tmp;
+-    uint64_t gpa = -1ull;
++    uint64_t gpa = 0;
+     bool has_gpa = false;
  
-+    ``confidential-guest-support=<id>``
-+        confidential guest support object to use. The default is none.
-+
-     ``memory-encryption=<id>``
--        Memory encryption object to use. The default is none.
-+        The alias of ``confidential-guest-support``. Recommend to use
-+        confidential-guest-support.
- 
-     ``hmat=on|off``
-         Enables or disables ACPI Heterogeneous Memory Attribute Table
+     if (error_code & 0xffff) {
 -- 
 2.54.0
 
