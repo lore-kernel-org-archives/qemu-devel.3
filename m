@@ -4,97 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C0C9CDE00C
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:23:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBD5FCD4F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:23:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3eM-00086Z-RL; Fri, 26 Jun 2026 06:19:06 -0400
+	id 1wd3f4-0003Yd-MS; Fri, 26 Jun 2026 06:19:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3dz-0007Ov-KM
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:44 -0400
+ id 1wd3f3-0003Rq-7L
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3dt-0005CU-Ch
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:42 -0400
+ id 1wd3f1-0005SI-F1
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469116;
+ s=mimecast20190719; t=1782469186;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=p+gLFg/KCZl9YS09p+/cGqgOKgC1kYOxDJsSPMp/QV8=;
- b=H9cDAxREEIAAe3omPFBqtCXbze/zMR773boslNAAsQP+odWfZzTBDzyxNyhpq+1Cg2XWiE
- fvpsp63yjn/5h7yC6LMR7YnIrBShG+cUYbIidghr4vt+O6LgTSUSncbxIZHUnFTNks7P/t
- tWfZlNqT2Dv+YXYo7if5kbfIa5JmHtk=
+ bh=h42x0Bdf/i8YC+kFDGxCSDxey27JESfBshEXAUKWWpA=;
+ b=WMw+Qt81oArV9XbfpoFbu0gz0L0IoO471y31/mFSnUjGvM7h8dX0DfVIjroM1MB2shfZUr
+ 9QZWCDwMHVhqAGTIdX1kY3y1Isad1VbmrgbtgFm5YHHVU728p3trWSjljDPm6uUaibaD2b
+ AVa/ILgYYMS5iW4fX6A+edtVjRcXQdE=
 Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
  [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-mzbtAGYsOxGJWMPbTVfMCw-1; Fri, 26 Jun 2026 06:18:35 -0400
-X-MC-Unique: mzbtAGYsOxGJWMPbTVfMCw-1
-X-Mimecast-MFC-AGG-ID: mzbtAGYsOxGJWMPbTVfMCw_1782469114
+ us-mta-296-tAV4qKoCOcyA_HrqSu66sA-1; Fri, 26 Jun 2026 06:19:45 -0400
+X-MC-Unique: tAV4qKoCOcyA_HrqSu66sA-1
+X-Mimecast-MFC-AGG-ID: tAV4qKoCOcyA_HrqSu66sA_1782469184
 Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-46f5d62dd1cso79426f8f.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:18:35 -0700 (PDT)
+ ffacd0b85a97d-463aaa77ffeso442030f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:19:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469114; x=1783073914; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469184; x=1783073984; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=p+gLFg/KCZl9YS09p+/cGqgOKgC1kYOxDJsSPMp/QV8=;
- b=K+P80yZ2CkwBUJ6eCxuUNW+NTAkMSVxnY220b35ah0RL9K9Vfz+9VVzxvtnS1Fw7Gp
- zyFE9kFqOV1IidpRsYrMQMg0bXdW7vMWs+5afD+N70spjX6SbieKWVNZRax/Ndt12mqT
- sclXFWD+6svl1GZL2FMgkwgcwrRu08kLPihWhKjynj31MklYQQBVrq+tQXv7RAQiMN+F
- GuUIyYYRQfX3pTWDS+2zKKOwiWiUBHj5rslW7p0q+q797lZIO3xxbVIvbeWksihw+w0i
- 7AgpmefqnFv8ME+ZHuqlBuV7qo8/2/EBFQguasko/sTJ5Z3pTV/7CijaJ3x13tF5NZnK
- W7Mw==
+ bh=h42x0Bdf/i8YC+kFDGxCSDxey27JESfBshEXAUKWWpA=;
+ b=OoDk3tp9DJyjC1sSibtq2J0xQf0JrjwjtMfVquffFrYFp9WFDfS2+800ho3GMbs7mW
+ j6GegXGqK2DrMK+j46E55OhY7B+qQm/WVmq7mEABREo69yf998LXXkf/9AhgUrcEblId
+ P/1U2l5ejSSqjrm0ic8aqrcleJCg7aBavtpOo0pchvORt4HQGBMpQy7leln7hoZqrhHO
+ snM4CtOzJUQ3ixsDOQY9nKpHUbNYSRrKcjlwspdVUgWqbHGicVT5YgLGe3SMJLKRj4x+
+ kEbwa64GcON/wl3k3M0g1v/c0Tbi4Hi4080ffqEUUhYjQYoChI5NZ1FyR3+jJqwKdu3F
+ iXBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469114; x=1783073914;
+ d=1e100.net; s=20251104; t=1782469184; x=1783073984;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=p+gLFg/KCZl9YS09p+/cGqgOKgC1kYOxDJsSPMp/QV8=;
- b=M/c+KSfBPt40QqnXGXbVIS85FaTN+LwOn1L1DFXchfL6MUrwBw+5Su2JHMOw2G9ntc
- dy9nvsXohaWfCs35lF8WjjvLRncAYB2wi0h4ZOhUW7NPUB7vevvJJzmgQeVmBfUi8C6t
- So0p/uKIJoBsuyY4jJZGRCP8McLvTSU2VHMVJn0Rsy7VmfilPPHnc7/GpvkGlPoWErP/
- VhnldLF3OWV+Magkew9Q0e7lqbq+NzF9q17aOymyhSvggNXxEBWXxnojng3U2cV7uiIK
- jkeCuL/UIf/9PeQJoSUqIyxMEd1WCJEIH1PfTbN0aqMtC83GW7/EMQItqRWVxJ8AWT6H
- e03g==
-X-Gm-Message-State: AOJu0YxKNsmq1xMqW6Ko90sB/UIqgIHLhfftlg3xlFC+dO6r2q5KgCWj
- gY7B3cjzjsriuMfdJY0ISqqSPMN+crja/3kCNmLdNg5JLWUD1Ul5egAeZTgPh3I5CM7Lo2VDtB0
- LXq+xQ9q+sTVsvKHXE+nzHw+QkF5aZFXThQIi2IHn3C5eS8Uwy1M3aAKKCiCFgn77Le59Lz/qyq
- 2dSYYA4Xfn3GRlt0cqFmoY6UNiZy16Ls/RRR7xbAor
-X-Gm-Gg: AfdE7cmd2X0KHfjRBuc7G58ZSsJjAioGYJbzzEm0xa1Tl0UWB48wTwf96IbB3Kbb8ga
- w99P7/iB3NfNPB0bIJrjAHruufge1K0ZEfEYm1KX1+PyLii7lTLUQ1CahYZAP0Ve4674jBipLUm
- A6UauiCeiVuCbmTU28XCvbeSAhwQprGIs+S6tHRBTDG8hoeYyO7OmX0rSvhE3L6ppHNCDDdgB2C
- n8IWUQaGGZjkGiYoNyK8TzUu6JVqP79g50mLyj8PtPtCNA8N2IBtTEl4MC7/3Ux4Z8zOhkK9OSp
- tD0On/I6ajxF61PkFJws9PTrqaSTlFH9vVBgJwlTwzA7frWp1k2rucpZo8lKMh5yV4lu2/vfGDW
- XoK9LPZ19s6qnkYhXMYqBx/6xwTsBMUHb8KfIB2MyWP26WmfG2XFbx4PW5RSy4cAHSJs3sPksYl
- 7A75XFQKB2DB3BmzNT
-X-Received: by 2002:a05:6000:46d8:b0:46e:7f72:b6fe with SMTP id
- ffacd0b85a97d-46e7f72b845mr3905819f8f.19.1782469114212; 
- Fri, 26 Jun 2026 03:18:34 -0700 (PDT)
-X-Received: by 2002:a05:6000:46d8:b0:46e:7f72:b6fe with SMTP id
- ffacd0b85a97d-46e7f72b845mr3905760f8f.19.1782469113615; 
- Fri, 26 Jun 2026 03:18:33 -0700 (PDT)
+ bh=h42x0Bdf/i8YC+kFDGxCSDxey27JESfBshEXAUKWWpA=;
+ b=OEiQ0er8pnLvAuexB8F8fB0acizVGo6i1qaqEodkJbbgow/D9yafqz6bisCmoI2Dt9
+ Ph2iT6wU9WuGimScg3Y8zWtT75GCkPdUEk1p8sjuZtzraSqlziIurR8ds+SRjH/uwVlQ
+ Z28EZ01fbWyIg4VCGn/Z2RZj0QakgGo/g48UdWMnya3wtlR31yFQzfCQAttW2ZE2TV8S
+ zfiZ03nIus/fJZXqTN+lEBlhs43fOkAhbHo3s7kSkEWjFxi0i5a4CO72EaOaAKzZP2GO
+ 3NC+ddCZjWdW2vHQwoHlI+h75hDol7ZEqtBtcy7gR197cWIbQhLIcYxtP8Xq7lk/G2rU
+ yPzQ==
+X-Gm-Message-State: AOJu0YyJejST51Qpov/QbxL4Z9amCUf8cUkG0twAtOIIvW1cw3SMtvw4
+ Mq9TUFLgVhAkclOyuez4WiABcqkEMUHVACp5dBiChdNS5Jeacb0bYi4yvjTGUb2dkz9r2zWO0m+
+ u/jZ0lXSRsU65EJXyZBQzJnfE18/H+hzmtqmkMx8FXynf4yAjxZYm++xSvZ5/c+qyN2hmCt0NXi
+ VGfH5zqLCZ5tl2pVld8QUQLIdLF21LOI1lq1n3o3XC
+X-Gm-Gg: AfdE7cnh61nMNtIuswu/x3x8WBdmAwRKUGaY4LXkq7jNS+5OnBf3zQu+4Kiitbjcy1P
+ ni0h5F+ALtk5kE6P67b28pZQ10b0y98fIVC+P0aql0HhZRWK5+EyedfgVbSvt/D1+ZA2kgJvYNz
+ sbRHiSJILUb+04Fc+FHfQOLuLQV2qY3RN8FJQ1MmLZzsDXBAdJy/394kLMsSV3BEVSyKlrkfXvn
+ nJVpX2VB+x6EjonJg7Ocu70xb91PsRC2Mi6cdaGGu//7UFzvatKlqbSs2qVN7TnMjok6zE5nbWC
+ /J5S1YZbDwgpSVrKQAAjHq0RexxkL6wRLL+SnQCjBCxXPu2JNkY6RL0DgqausyCkowMeybVe4SD
+ CUwVT9gkNpT70O4MvrBS2YfgPH3CwNlAExUnWO6y1eE46M/cPH62pP07uBoSE5WQysZRW6LiM+c
+ C0++UCH6IcZiTrtgr8
+X-Received: by 2002:a05:6000:2c0e:b0:43f:e2b7:7160 with SMTP id
+ ffacd0b85a97d-46dbed35f0amr10059228f8f.4.1782469184120; 
+ Fri, 26 Jun 2026 03:19:44 -0700 (PDT)
+X-Received: by 2002:a05:6000:2c0e:b0:43f:e2b7:7160 with SMTP id
+ ffacd0b85a97d-46dbed35f0amr10059181f8f.4.1782469183685; 
+ Fri, 26 Jun 2026 03:19:43 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46f978dc0a9sm936421f8f.15.2026.06.26.03.18.30
+ ffacd0b85a97d-46e3d6ba143sm10723272f8f.33.2026.06.26.03.19.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:18:30 -0700 (PDT)
+ Fri, 26 Jun 2026 03:19:40 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PULL 15/45] accel/accel-irq: add generic commit_route_changes
-Date: Fri, 26 Jun 2026 12:17:18 +0200
-Message-ID: <20260626101748.1728079-16-pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 42/45] machine: Deprecate memory-encryption
+Date: Fri, 26 Jun 2026 12:17:45 +0200
+Message-ID: <20260626101748.1728079-43-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
 References: <20260626101748.1728079-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -120,111 +122,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-A generic accel_irqchip_commit_route_changes() fn has been introduced for
-usage in the MSHV accelerator. The respective kvm_ fn can be removed
-since we handle the commit op in a generic way.
+We've had 'confidential-guest-support' for long enough that no one should
+be using 'memory-encryption' anymore.
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260417105618.3621-7-magnuskulke@linux.microsoft.com
+Deprecate 'memory-encryption' by adding notes in docs/about/deprecated.rst
+and print a warning when 'memory-encryptio' is used.
+
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://lore.kernel.org/qemu-devel/aMPYkUsytGxLPIM7@redhat.com/
+Link: https://lore.kernel.org/r/20260512084458.622465-6-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/kvm.h  |  8 --------
- accel/accel-irq.c     | 10 +++-------
- hw/misc/ivshmem-pci.c |  2 +-
- hw/vfio/pci.c         |  4 ++--
- target/i386/kvm/kvm.c |  2 +-
- 5 files changed, 7 insertions(+), 19 deletions(-)
+ docs/about/deprecated.rst | 7 +++++++
+ hw/core/machine.c         | 2 ++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index fec24d2135a..cdd1856ac5f 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -476,14 +476,6 @@ int kvm_irqchip_update_msi_route(KVMState *s, int virq, MSIMessage msg,
-                                  PCIDevice *dev);
- void kvm_irqchip_commit_routes(KVMState *s);
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 97750f5edc9..cf3e1a007c7 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -249,6 +249,13 @@ The RISC-V ``shakti_c`` machine hasn't had meaningful contributions since 2021
+ and is currently unmaintained. The machine is scheduled to be removed as it
+ appears to have no users.
  
--static inline void kvm_irqchip_commit_route_changes(AccelRouteChange *c)
--{
--    if (c->changes) {
--        kvm_irqchip_commit_routes(KVM_STATE(c->accel));
--        c->changes = 0;
--    }
--}
--
- int kvm_irqchip_get_virq(KVMState *s);
- void kvm_irqchip_release_virq(KVMState *s, int virq);
++``memory-encryption`` machine property (since 11.1)
++'''''''''''''''''''''''''''''''''''''''''''''''''''
++
++Use ``confidential-guest-support`` instead. The ``memory-encryption`` object
++was an early implementation of memory encryption support in QEMU, but it has
++been superseded by the more comprehensive ``confidential-guest-support``
++object.
  
-diff --git a/accel/accel-irq.c b/accel/accel-irq.c
-index 3815f6727c6..7e71b525557 100644
---- a/accel/accel-irq.c
-+++ b/accel/accel-irq.c
-@@ -45,13 +45,9 @@ int accel_irqchip_update_msi_route(int vector, MSIMessage msg, PCIDevice *dev)
+ Backend options
+ ---------------
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 9a10e45aabd..5b97df6db96 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -497,6 +497,8 @@ static void machine_set_memory_encryption(Object *obj, const char *value,
+     Object *cgs =
+         object_resolve_path_component(object_get_objects_root(), value);
  
- void accel_irqchip_commit_route_changes(AccelRouteChange *c)
- {
--#ifdef CONFIG_MSHV_IS_POSSIBLE
--    if (mshv_msi_via_irqfd_enabled()) {
--        mshv_irqchip_commit_routes();
--    }
--#endif
--    if (kvm_enabled()) {
--        kvm_irqchip_commit_route_changes(c);
-+    if (c->changes) {
-+        accel_irqchip_commit_routes();
-+        c->changes = 0;
-     }
- }
- 
-diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
-index fa23562886b..536475e9de8 100644
---- a/hw/misc/ivshmem-pci.c
-+++ b/hw/misc/ivshmem-pci.c
-@@ -436,7 +436,7 @@ static void ivshmem_add_kvm_msi_virq(IVShmemState *s, int vector,
-         error_setg(errp, "kvm_irqchip_add_msi_route failed");
++    warn_report("memory-encryption is deprecated, use confidential-guest-support instead");
++
+     if (!cgs) {
+         error_setg(errp, "No such memory encryption object '%s'", value);
          return;
-     }
--    kvm_irqchip_commit_route_changes(&c);
-+    accel_irqchip_commit_route_changes(&c);
- 
-     s->msi_vectors[vector].virq = ret;
-     s->msi_vectors[vector].pdev = pdev;
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 3a6e17c9d77..d2aba8aaf50 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -691,7 +691,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
-             } else {
-                 vfio_route_change = accel_irqchip_begin_route_changes();
-                 vfio_pci_add_kvm_msi_virq(vdev, vector, nr, true);
--                kvm_irqchip_commit_route_changes(&vfio_route_change);
-+                accel_irqchip_commit_route_changes(&vfio_route_change);
-                 vfio_connect_kvm_msi_virq(vector, nr);
-             }
-         }
-@@ -800,7 +800,7 @@ void vfio_pci_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
-     assert(vdev->defer_kvm_irq_routing);
-     vdev->defer_kvm_irq_routing = false;
- 
--    kvm_irqchip_commit_route_changes(&vfio_route_change);
-+    accel_irqchip_commit_route_changes(&vfio_route_change);
- 
-     for (i = 0; i < vdev->nr_vectors; i++) {
-         vfio_connect_kvm_msi_virq(&vdev->msi_vectors[i], i);
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 03312922d50..64cc421abe6 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -6690,7 +6690,7 @@ void kvm_arch_init_irq_routing(KVMState *s)
-                 exit(1);
-             }
-         }
--        kvm_irqchip_commit_route_changes(&c);
-+        accel_irqchip_commit_route_changes(&c);
-     }
- }
- 
 -- 
 2.54.0
 
