@@ -4,97 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 335FFCDE008
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:19:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D81EFCD4F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:19:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3eL-0007sr-5Z; Fri, 26 Jun 2026 06:19:05 -0400
+	id 1wd3em-0001v8-8s; Fri, 26 Jun 2026 06:19:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3dq-0007LS-Bc
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:37 -0400
+ id 1wd3ei-0001T4-W1
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wd3dn-0005BY-01
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:18:33 -0400
+ id 1wd3eg-0005Og-QM
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:19:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782469110;
+ s=mimecast20190719; t=1782469166;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yRDoIIHI0iG+p6GAMRLZ6L4UMThvOSl8GSRYPnDHN5g=;
- b=aciaGw08d80AnUh+/1NGaOALCgYwAVc4Divpdf0wgr+7OVW8c0ZwWppiAGgNrardCNSJ2D
- vc3ZwK/VfREV3rk5XmJvGmqBt+rL7WTWOsD+4hLgVfT9+kYylnwaL4lAdxHlj1RFl4A1wY
- y1wIvNOTpgcsWghZR65u3L1SwG65iD0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qkoE8S6UBX3o+N0SXfwXHK1tv2NXu1sYxgKB0nzO2dY=;
+ b=AM+6EizPIaebpKmkinlZ7YQ1vSQCCf3TtRGGS9y53fgFRuuh0q3ZmUpgVvnRLuQA52ptYg
+ fW9297KisD/tcljt5M641rUAJM/eoDNcpZMQ6t981pOpu11JvMFQTEPXLprnkpVxOLG6f/
+ dd2ifNpcZyKBQSgqjgHXWv3xoCdkquw=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-532-BllTUYpMPNeh94R935q4iQ-1; Fri, 26 Jun 2026 06:18:29 -0400
-X-MC-Unique: BllTUYpMPNeh94R935q4iQ-1
-X-Mimecast-MFC-AGG-ID: BllTUYpMPNeh94R935q4iQ_1782469108
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-490aadb1386so11098055e9.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:18:28 -0700 (PDT)
+ us-mta-414--jMyWzUkPu6zOWyE8wK2kA-1; Fri, 26 Jun 2026 06:19:25 -0400
+X-MC-Unique: -jMyWzUkPu6zOWyE8wK2kA-1
+X-Mimecast-MFC-AGG-ID: -jMyWzUkPu6zOWyE8wK2kA_1782469164
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49243626f15so6948955e9.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:19:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782469108; x=1783073908; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782469164; x=1783073964; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yRDoIIHI0iG+p6GAMRLZ6L4UMThvOSl8GSRYPnDHN5g=;
- b=nT2EeY7TBL+YrnO8kNe/AWFftiCpX6SebZH/IhgfUlFBcoBJglgExmfqwQRk/f9W3l
- mX30lfklz9/iXMjlboO6U8sS/WULDDNvLu9FTrtZcUEfw4nT/G9nbINhDF5V2uCN/MUX
- 6U37uuRxU4iJgnkTWYjTYJFirI3AeeVcj8YGzQj71X7fwbUSVUvFjKw9e8mqpy5WnI0t
- bITBiTfAAr6nQ4Uj+IdpVOPdbimCylguPi/whDWCb/EKsUGmAremOPArJuykainOz+xT
- yfS53AdqchjU61WrWK/q5luE7tHecCC9UPbILwnuvdFGc0WUPrqweE9sXDfqkWQ/4Urb
- tezw==
+ bh=qkoE8S6UBX3o+N0SXfwXHK1tv2NXu1sYxgKB0nzO2dY=;
+ b=blLisRH+q8PnXkpbtzKHUve5cT5zqinE3aqgBiiwnjKikvSDsO5RQQWP30p4BSh+q6
+ W3CBjxYIhben6QXsc8R4meOsOgRkR7wijHBePYZDuquNVo0IDHdeQi/VcSVngb78RnMt
+ QsBHyeyFjW3Vzne9cDdp/3GOi6SodH+4qQXPDFH+I4wEdsINa6HN+gZ56RoBVvh+LosA
+ TKbjtX/LWuSfXv8IaExUQsRvK1YcgpERRvopiY/CEUANzCGJ0GigTLl20EAZ++OzAxCK
+ pcNDIlqoaB1XVzEL20HV7ratgAL6Ri9azavRn7eAzh2gMrEQiopXLinbALpiN6Lf1y1r
+ eHlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782469108; x=1783073908;
+ d=1e100.net; s=20251104; t=1782469164; x=1783073964;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=yRDoIIHI0iG+p6GAMRLZ6L4UMThvOSl8GSRYPnDHN5g=;
- b=P4D2IdOKBJkoMOh9OLTSNcvHRvkirLEPGcPgATtbEUNqvlTzF1F9tvn0arnEx5GKxl
- EYYcngSorzWv8p32Y8ifZICmM4drv62s4fTyeNtJh8NuZQc9aPZAQ6YUyamT5L21uXS2
- cGguL3KNDGkLSUIkfGdzxJ1KMp+ZfRE3pLv3/B1yfH7ixQ3OaQGWNcYKB04Rdsm5zWZJ
- RNI9Vl+c7hJdNlVVUO9SlAe8je+A8XRzqIdX4Jasz+FhgO3v7AoIxCeGaI80xfRIU4HG
- hoNTsU71rmx98RCsSVg24LXFSZ1uY7HHQYJeT3ThaP9mP5ue94l0zYeoZV/IWbq7hYu2
- /Tgg==
-X-Gm-Message-State: AOJu0Yxna6gEJSczKyWMgwSdmmdcZCrpUcET9V9/d3cPHs4enUeiI9e9
- qWjMuV3yLjHs5GwOQrGzUdkRXXabwjPW/6Tn5YFoEU9YWVPvUIXtod5p+qrOEZlwqhPUh0q+mtH
- znU831WLC95v52Z4ilB8pRnvlFGhLSEScokmmIqQr2YJgaSwuCUujNwM2JpF1YUk8we5mKgMkzN
- zmOLuGyXSAEO6BAYpXsRiw59lu09bVFOt6JxTVWNlh
-X-Gm-Gg: AfdE7ck7dW1xKv1wDCUNCZAd2LgDklKKT+Bvk1DKkrYlDQb7ZTUoaV5TM/iXqvys3+K
- 4uNU0hBBEuyyueVyTqThHMeMy4Qvm9VJSwfDoGnivxkjs00rBs4Ao/VXuWJmRtXpaZ6jbpSh8xG
- UN48SNhTds7w9rBnwwpNKzf8mzzCYH+3QCfAW+cPBMo/nTz1NtJd4vdgC7d0dT2z12C1Aa4KWRH
- 2/ff80zZYlo0AMTjvhZuThwsfJWO7dXtcJ1FPhEy9ymVSmIJvmJik/dpTB+0q1Bk/OtH80/aJL4
- S7VEcTLFcz8Nw1lD4/ciU8ounfi6yBIbiX1XmSB+CdYm35X3c9jHuMOIyef0C7PHcraYiFhDHW5
- XKC4mWFn2O9GflsIshyjek14Y6To7czNBI3U6KUu/dIKVHzvQ0zPwvcoo0gCwgBK/+DfpTY2okB
- qX9OfCwyEWNbjVmemV
-X-Received: by 2002:a05:600c:1551:b0:490:3cf0:8d81 with SMTP id
- 5b1f17b1804b1-492664241a4mr79260215e9.13.1782469107673; 
- Fri, 26 Jun 2026 03:18:27 -0700 (PDT)
-X-Received: by 2002:a05:600c:1551:b0:490:3cf0:8d81 with SMTP id
- 5b1f17b1804b1-492664241a4mr79259525e9.13.1782469107027; 
- Fri, 26 Jun 2026 03:18:27 -0700 (PDT)
+ bh=qkoE8S6UBX3o+N0SXfwXHK1tv2NXu1sYxgKB0nzO2dY=;
+ b=tTuvpt31BC1zJFW8VqeqGxn1tCK6HiFhXH5DvGWeDNk0bm4axFgR7aBOFfzs8EVxKy
+ dmhEpT6Gs/roWrZ1RVaHfcdeOabO02eNXWthvbmv1AiU4W4c8rBUbhfFjBNk76IFADVb
+ 6X/9J4tNnXXw4IpeQlZnmplbGfYGzO/jqI0ghvFn9kVYT8AFLNWFKjnxGh0dcTfZh8fu
+ MU+zby/sePtKMSkBctJ3J5gGf+ZQ5LzNvu8dA2q1MG+HBUOTOlBtkHBQU7JwGa1E3mt+
+ zCm8XkLzVoMj8zcKvUo4O10v6INqxkt9DJ1Mi0Td8x98ByiwO1QhOHzFGPhlR6j/oIDD
+ rFLw==
+X-Gm-Message-State: AOJu0Ywwu+Elj3jkFz/FfibQLqyOczXcywhBPD5qF+Qopd0OBIPd5zWb
+ OgjPW0qIYmGz9F7nHAixevF8vQObe2DJn7gEvCYhF2U7PNex8ysDrU6Cp8SABbSxtUmB+keVF5K
+ 5nqNhqTIrX2Xgu5Ix1abVuul356RtM5xmWgOnSHAa2xwTWePJ44E0lFeJscRO7XEux0E2E08an7
+ 3Guw+fZTWX6DwB1+igoSb88lwieceF4dPrk6+HUmMx
+X-Gm-Gg: AfdE7cmG57C4Xv422YYPxYADG4PpBdDeZF5MBB6hh5QDFB0Qqv4zXIMOhqEii8J1EIL
+ OzvZ/KbmVOb+zAO/kUj9rlpZ+2AclB6NKVHPxVn84rL1Gqgx4sl6CpkzdlHo2LbiRxnLnG2kmg+
+ ZoJY3dwHejqsDHlYiFxroTVH92cRa2nCH5A75yrz6qkLpURDvSqdky7CeKziLEwSN1r9vsZYDtC
+ SyGF81CIWUuYl6Lfco7lfYWejhfGQWQIVJ7fWK45FpKqZsqMS2z5Ws0eBNRk+uIrFCcc5HK1lKa
+ JdtIBu9rZs+TVReCdg50yjTB62yNpiRlurkmD/BGMbjf52cn6DR0wOGO8Kis9QCmFbs3IBZX1+H
+ Dcdv7+kylbW9TNc2Wd6sgXyHk17eIUE/AViiIlsuAf92C7LvaK5KRbwIDz27zV18d8K8IO1UXr2
+ jn55v5W2qqi/2vYEOT
+X-Received: by 2002:a05:600c:4745:b0:490:b355:9c70 with SMTP id
+ 5b1f17b1804b1-49266873f5bmr86529425e9.11.1782469163648; 
+ Fri, 26 Jun 2026 03:19:23 -0700 (PDT)
+X-Received: by 2002:a05:600c:4745:b0:490:b355:9c70 with SMTP id
+ 5b1f17b1804b1-49266873f5bmr86528915e9.11.1782469163154; 
+ Fri, 26 Jun 2026 03:19:23 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.124.208])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492690988e0sm71825775e9.14.2026.06.26.03.18.25
+ 5b1f17b1804b1-492690168d5sm92222235e9.14.2026.06.26.03.19.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:18:25 -0700 (PDT)
+ Fri, 26 Jun 2026 03:19:22 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PULL 13/45] accel/accel-irq: add AccelRouteChange abstraction
-Date: Fri, 26 Jun 2026 12:17:16 +0200
-Message-ID: <20260626101748.1728079-14-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PULL 34/45] include/hw/hyperv: add hv_vp_register_page struct
+ definition
+Date: Fri, 26 Jun 2026 12:17:37 +0200
+Message-ID: <20260626101748.1728079-35-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
 References: <20260626101748.1728079-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -120,271 +123,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+From: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 
-The accelerated irqchip routines use a record of changes to batch
-changes when programming routes.
+Define the `hv_vp_register_page` structure that the linux kernel uses
+to allow access to vcpu registers.
 
-Currently this mechanism is coupled to the KVM accelerator, this change
-introduces an abstraction that replaces KVMRouteChange and keeps a
-pointer to an abstract AccelState instead of the concrete type,
-converting the state where necessary.
+This structure is going to be used in later patches to access vcpu
+registers.
 
-This is done to further align the irqchip programming in the MSHV
-accelerator with the existing KVM code in QEMU. Subsequent commits will
-introduce AccelRouteChange to the MSHV accelerator code.
-
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260417105618.3621-5-magnuskulke@linux.microsoft.com
+Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Link: https://lore.kernel.org/r/20260428135053.251200-4-dblanzeanu@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/accel/accel-route.h | 17 +++++++++++++++++
- include/system/accel-irq.h  |  5 +++--
- include/system/kvm.h        | 21 ++++++++++-----------
- include/system/mshv.h       |  1 +
- accel/accel-irq.c           |  4 ++--
- accel/kvm/kvm-all.c         |  6 +++---
- accel/stubs/kvm-stub.c      |  2 +-
- hw/misc/ivshmem-pci.c       |  2 +-
- hw/vfio/pci.c               |  2 +-
- hw/virtio/virtio-pci.c      |  3 +--
- target/i386/kvm/kvm.c       |  2 +-
- 11 files changed, 41 insertions(+), 24 deletions(-)
- create mode 100644 include/accel/accel-route.h
+ include/hw/hyperv/hvgdk_mini.h | 103 +++++++++++++++++++++++++++++++++
+ 1 file changed, 103 insertions(+)
 
-diff --git a/include/accel/accel-route.h b/include/accel/accel-route.h
-new file mode 100644
-index 00000000000..07fac27e2a7
---- /dev/null
-+++ b/include/accel/accel-route.h
-@@ -0,0 +1,17 @@
-+/*
-+ * Accelerator MSI route change tracking
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+index c6749a95255..f8838a31bbe 100644
+--- a/include/hw/hyperv/hvgdk_mini.h
++++ b/include/hw/hyperv/hvgdk_mini.h
+@@ -504,6 +504,109 @@ struct hv_input_assert_virtual_interrupt {
+     uint16_t rsvd_z1;
+ } QEMU_PACKED;
+ 
++/* Flags for dirty mask of hv_vp_register_page */
++enum hv_x64_register_class_type {
++    HV_X64_REGISTER_CLASS_GENERAL = 0,
++    HV_X64_REGISTER_CLASS_IP = 1,
++    HV_X64_REGISTER_CLASS_XMM = 2,
++    HV_X64_REGISTER_CLASS_SEGMENT = 3,
++    HV_X64_REGISTER_CLASS_FLAGS = 4,
++};
 +
-+#ifndef ACCEL_ROUTE_H
-+#define ACCEL_ROUTE_H
++#define HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT  7
 +
-+#include "qemu/accel.h"
-+
-+typedef struct AccelRouteChange {
-+    AccelState *accel;
-+    int changes;
-+} AccelRouteChange;
-+
-+#endif /* ACCEL_ROUTE_H */
-diff --git a/include/system/accel-irq.h b/include/system/accel-irq.h
-index a2caa06f547..a1489207113 100644
---- a/include/system/accel-irq.h
-+++ b/include/system/accel-irq.h
-@@ -25,9 +25,10 @@ static inline bool accel_irqchip_is_split(void)
-     return mshv_msi_via_irqfd_enabled() || kvm_irqchip_is_split();
- }
- 
--int accel_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev);
-+int accel_irqchip_add_msi_route(AccelRouteChange *c, int vector,
-+                                PCIDevice *dev);
- int accel_irqchip_update_msi_route(int vector, MSIMessage msg, PCIDevice *dev);
--void accel_irqchip_commit_route_changes(KVMRouteChange *c);
-+void accel_irqchip_commit_route_changes(AccelRouteChange *c);
- void accel_irqchip_commit_routes(void);
- void accel_irqchip_release_virq(int virq);
- int accel_irqchip_add_irqfd_notifier_gsi(EventNotifier *n, EventNotifier *rn,
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index 5fa33eddda3..ccf90b83416 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -18,6 +18,7 @@
- 
- #include "exec/memattrs.h"
- #include "qemu/accel.h"
-+#include "accel/accel-route.h"
- #include "qom/object.h"
- 
- #ifdef COMPILING_PER_TARGET
-@@ -183,11 +184,6 @@ extern KVMState *kvm_state;
- typedef struct Notifier Notifier;
- typedef struct NotifierWithReturn NotifierWithReturn;
- 
--typedef struct KVMRouteChange {
--     KVMState *s;
--     int changes;
--} KVMRouteChange;
--
- /* external API */
- 
- unsigned int kvm_get_max_memslots(void);
-@@ -466,7 +462,7 @@ void kvm_init_cpu_signals(CPUState *cpu);
- 
- /**
-  * kvm_irqchip_add_msi_route - Add MSI route for specific vector
-- * @c:      KVMRouteChange instance.
-+ * @c:      AccelRouteChange instance.
-  * @vector: which vector to add. This can be either MSI/MSIX
-  *          vector. The function will automatically detect whether
-  *          MSI/MSIX is enabled, and fetch corresponding MSI
-@@ -475,20 +471,23 @@ void kvm_init_cpu_signals(CPUState *cpu);
-  *          as @NULL, an empty MSI message will be inited.
-  * @return: virq (>=0) when success, errno (<0) when failed.
-  */
--int kvm_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev);
-+int kvm_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev);
- int kvm_irqchip_update_msi_route(KVMState *s, int virq, MSIMessage msg,
-                                  PCIDevice *dev);
- void kvm_irqchip_commit_routes(KVMState *s);
- 
--static inline KVMRouteChange kvm_irqchip_begin_route_changes(KVMState *s)
-+static inline AccelRouteChange kvm_irqchip_begin_route_changes(KVMState *s)
- {
--    return (KVMRouteChange) { .s = s, .changes = 0 };
-+    return (AccelRouteChange) {
-+        .accel = ACCEL(s),
-+        .changes = 0,
++union hv_vp_register_page_interrupt_vectors {
++    uint64_t as_uint64;
++    struct {
++        uint8_t vector_count;
++        uint8_t vector[HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT];
 +    };
- }
- 
--static inline void kvm_irqchip_commit_route_changes(KVMRouteChange *c)
-+static inline void kvm_irqchip_commit_route_changes(AccelRouteChange *c)
- {
-     if (c->changes) {
--        kvm_irqchip_commit_routes(c->s);
-+        kvm_irqchip_commit_routes(KVM_STATE(c->accel));
-         c->changes = 0;
-     }
- }
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 51b04207358..8dd77a76241 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -21,6 +21,7 @@
- #include "qapi/qapi-types-common.h"
- #include "system/memory.h"
- #include "accel/accel-ops.h"
-+#include "accel/accel-route.h"
- 
- #ifdef COMPILING_PER_TARGET
- #ifdef CONFIG_MSHV
-diff --git a/accel/accel-irq.c b/accel/accel-irq.c
-index 7f864e35c4e..0aa04c033d4 100644
---- a/accel/accel-irq.c
-+++ b/accel/accel-irq.c
-@@ -16,7 +16,7 @@
- #include "system/mshv.h"
- #include "system/accel-irq.h"
- 
--int accel_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev)
-+int accel_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- {
- #ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
-@@ -42,7 +42,7 @@ int accel_irqchip_update_msi_route(int vector, MSIMessage msg, PCIDevice *dev)
-     return -ENOSYS;
- }
- 
--void accel_irqchip_commit_route_changes(KVMRouteChange *c)
-+void accel_irqchip_commit_route_changes(AccelRouteChange *c)
- {
- #ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index f4f0e64fbd0..7217baf8d40 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2359,11 +2359,11 @@ int kvm_irqchip_send_msi(KVMState *s, MSIMessage msg)
-     return kvm_vm_ioctl(s, KVM_SIGNAL_MSI, &msi);
- }
- 
--int kvm_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev)
-+int kvm_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- {
-     struct kvm_irq_routing_entry kroute = {};
-     int virq;
--    KVMState *s = c->s;
-+    KVMState *s = KVM_STATE(c->accel);
-     MSIMessage msg = {0, 0};
- 
-     if (pci_available && dev) {
-@@ -2506,7 +2506,7 @@ int kvm_irqchip_send_msi(KVMState *s, MSIMessage msg)
-     abort();
- }
- 
--int kvm_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev)
-+int kvm_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- {
-     return -ENOSYS;
- }
-diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
-index c4617caac6b..32b4b074035 100644
---- a/accel/stubs/kvm-stub.c
-+++ b/accel/stubs/kvm-stub.c
-@@ -44,7 +44,7 @@ int kvm_on_sigbus(int code, void *addr)
-     return 1;
- }
- 
--int kvm_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev)
-+int kvm_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- {
-     return -ENOSYS;
- }
-diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
-index c987eebb983..aa8f2717555 100644
---- a/hw/misc/ivshmem-pci.c
-+++ b/hw/misc/ivshmem-pci.c
-@@ -424,7 +424,7 @@ static void ivshmem_add_kvm_msi_virq(IVShmemState *s, int vector,
-                                      Error **errp)
- {
-     PCIDevice *pdev = PCI_DEVICE(s);
--    KVMRouteChange c;
-+    AccelRouteChange c;
-     int ret;
- 
-     IVSHMEM_DPRINTF("ivshmem_add_kvm_msi_virq vector:%d\n", vector);
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 9c06b25e637..1817f39cde7 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -50,7 +50,7 @@
- #include "vfio-helpers.h"
- 
- /* Protected by BQL */
--static KVMRouteChange vfio_route_change;
-+static AccelRouteChange vfio_route_change;
- 
- static void vfio_disable_interrupts(VFIOPCIDevice *vdev);
- static void vfio_mmap_set_enabled(VFIOPCIDevice *vdev, bool enabled);
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index fd9719547f9..90df7bf3a1a 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -869,7 +869,7 @@ static int kvm_virtio_pci_vq_vector_use(VirtIOPCIProxy *proxy,
-     int ret;
- 
-     if (irqfd->users == 0) {
--        KVMRouteChange c = kvm_irqchip_begin_route_changes(kvm_state);
-+        AccelRouteChange c = kvm_irqchip_begin_route_changes(kvm_state);
-         ret = accel_irqchip_add_msi_route(&c, vector, &proxy->pci_dev);
-         if (ret < 0) {
-             return ret;
-@@ -2669,4 +2669,3 @@ static void virtio_pci_register_types(void)
- }
- 
- type_init(virtio_pci_register_types)
--
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 9e352882c8c..478a5573cd2 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -6678,7 +6678,7 @@ void kvm_arch_init_irq_routing(KVMState *s)
-     kvm_gsi_routing_allowed = true;
- 
-     if (kvm_irqchip_is_split()) {
--        KVMRouteChange c = kvm_irqchip_begin_route_changes(s);
-+        AccelRouteChange c = kvm_irqchip_begin_route_changes(s);
-         int i;
- 
-         /* If the ioapic is in QEMU and the lapics are in KVM, reserve
++};
++
++struct hv_vp_register_page {
++    uint16_t version;
++    uint8_t isvalid;
++    uint8_t rsvdz;
++    uint32_t dirty;
++
++    union {
++        struct {
++            /* General purpose registers (HV_X64_REGISTER_CLASS_GENERAL) */
++            union {
++                struct {
++                    uint64_t rax;
++                    uint64_t rcx;
++                    uint64_t rdx;
++                    uint64_t rbx;
++                    uint64_t rsp;
++                    uint64_t rbp;
++                    uint64_t rsi;
++                    uint64_t rdi;
++                    uint64_t r8;
++                    uint64_t r9;
++                    uint64_t r10;
++                    uint64_t r11;
++                    uint64_t r12;
++                    uint64_t r13;
++                    uint64_t r14;
++                    uint64_t r15;
++                } QEMU_PACKED;
++
++                uint64_t gp_registers[16];
++            };
++            /* Instruction pointer (HV_X64_REGISTER_CLASS_IP) */
++            uint64_t rip;
++            /* Flags (HV_X64_REGISTER_CLASS_FLAGS) */
++            uint64_t rflags;
++        } QEMU_PACKED;
++
++        uint64_t registers[18];
++    };
++    uint8_t reserved[8];
++    /* Volatile XMM registers (HV_X64_REGISTER_CLASS_XMM) */
++    union {
++        struct {
++            struct hv_u128 xmm0;
++            struct hv_u128 xmm1;
++            struct hv_u128 xmm2;
++            struct hv_u128 xmm3;
++            struct hv_u128 xmm4;
++            struct hv_u128 xmm5;
++        } QEMU_PACKED;
++
++        struct hv_u128 xmm_registers[6];
++    };
++    /* Segment registers (HV_X64_REGISTER_CLASS_SEGMENT) */
++    union {
++        struct {
++            struct hv_x64_segment_register es;
++            struct hv_x64_segment_register cs;
++            struct hv_x64_segment_register ss;
++            struct hv_x64_segment_register ds;
++            struct hv_x64_segment_register fs;
++            struct hv_x64_segment_register gs;
++        } QEMU_PACKED;
++
++        struct hv_x64_segment_register segment_registers[6];
++    };
++    /* Misc. control registers (cannot be set via this interface) */
++    uint64_t cr0;
++    uint64_t cr3;
++    uint64_t cr4;
++    uint64_t cr8;
++    uint64_t efer;
++    uint64_t dr7;
++    union hv_x64_pending_interruption_register pending_interruption;
++    union hv_x64_interrupt_state_register interrupt_state;
++    uint64_t instruction_emulation_hints;
++    uint64_t xfem;
++
++    uint8_t reserved1[0x100];
++
++    /* Interrupts injected as part of HvCallDispatchVp. */
++    union hv_vp_register_page_interrupt_vectors interrupt_vectors;
++} QEMU_PACKED;
++
+ /* /dev/mshv */
+ #define MSHV_CREATE_PARTITION   _IOW(MSHV_IOCTL, 0x00, struct mshv_create_partition)
+ #define MSHV_CREATE_VP          _IOW(MSHV_IOCTL, 0x01, struct mshv_create_vp)
 -- 
 2.54.0
 
