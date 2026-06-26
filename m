@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11C41CDE008
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 00:54:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DE50CDE00B
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 00:56:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcupZ-0006ZU-3T; Thu, 25 Jun 2026 20:54:05 -0400
+	id 1wcuqs-0007ET-0q; Thu, 25 Jun 2026 20:55:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wcupX-0006Yr-4T
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 20:54:03 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1wcuqp-0007DY-R9
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 20:55:23 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wcupV-0007ka-9C
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 20:54:02 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-697564cb69eso738737a12.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 17:54:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782435240; cv=none;
+ id 1wcuqm-0008H4-86
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 20:55:23 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-697764213d6so669288a12.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 17:55:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782435318; cv=none;
  d=google.com; s=arc-20260327;
- b=UbBolbU7bxRPCCgNPGg8wKXtm/el+jgOUisUwjGledAsjVMF4O791peGW2I0fctFS3
- 1O+DnYB4gGMVXQ6xxckMNBrFdpxDcNQAAp9L3wtzH+3FaYegaXAnooWr6l+tBpM07gQH
- R/z3E5RHy7+shkKzOhOiKxwzrxelJOLCgSR/fRVEYEPemXn9Ax9TidSXIePIzowo375W
- us0SFRTUCL4NAymGFaIykX/RWR30MahxT21NqQtXnEH+bWFtkuX0zFxmYkPdXtQKUrn9
- leacsJDXZVczzIvqrblWdgP/wBndta5ai5AJD3P7mdnmuGATMIXqWi3IxlvLsz8rqscf
- gx7w==
+ b=FPLQTLYwgJXGXoBdxLbwbDj+lkyUxZhLl3U+zpAWiPJUF+pLm0EnPvxnRBa1yNBgAT
+ 5D5vwaueN7mcIhzYWiV7Rvf/PiTLgUMbor6pTYtAtDOq2Yw1i1h4z55swMiYPr8ZhKTh
+ DKW4Dm94aj1ab0QBGS6rJa3ZTv+Kx3s462JKIFJGb6lAf7gBT2RbrCf6gtgSSk0fsPf3
+ +ItxJXqk7r0hz5sTmfoUqryiNk5x0okKwKN1rqnltZsZmtaNAnS9fEXfqLeass/CKkrC
+ eBQSEuIxi1iE35PngSMHy75AlGXxKQa7k44DWkyYn82u+pRzNp4eJyULGBbJVAFpEmyW
+ JpzQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=rOdMdfXQPoci905bSj2iPr8W+p1mL0QD37a9hNQws1M=;
+ bh=gV2A7wi6u7yKWq4sqT/fmmtK7jhIrvVIPKAWCcV+j6Q=;
  fh=9/4tzqKjgzJcjmYJcCvfm+LbcgW0ATp/rdwAYjKmbVo=;
- b=lpUKuljUgYG5ZkKNxeb7J/WKfTYCP8/U7A9H7YfGZr01rHMT9dDelhkDt/UVvUx0rh
- AYvcilXfjjIoAyRnDK8HIRl2syzZYwUl/rUY/54cBisi86bC8kIRoyRlRhlmrUfwpl3J
- mwRHEq4iXRJLLQjWplflyobJ/41lc4X3BaBtIWbt34MLdn84FghE9oHdC1xG170H54Sg
- 0Scfxgaj2BDGrklCIqsW7KQl6dZvfXvEEv8/xO5y4oSQWx2v0PtQajoK2XL/SOz1Ow6i
- +opLe1szCZxg33sw9+Y71famvQP+b8rHN9kv9yWShWaiYnmSk0jnakVtBmkFCoDQ8GMS
- pj5g==; darn=nongnu.org
+ b=Xxefzp2Gg4u7uS3uzrjVJhz4kossp0pdkUOtvflOYDsAruFla//RRvvJ4NwlNGJzmq
+ xVyT+KRwNMcez2vKWtAy61qYqrsRIDCH20hM1nFGxDtNhb7zeqFx4WMgFKGdT1StjvQQ
+ ZHduqi+tAHi2mAHDx6KM7VRhvupcrjeytFGpgA/WGvTkuP62KyL6PLkOPRYmWrKp2ksF
+ 2GgBDmbgJKTnMdHA4M8euAO3o1QojaviEm7YHHnmcPxfFHT4YR3Qlx89W0vxm/UFrLoB
+ xl/SLEIBdvuULB4ykjukXqKM/y2nIJ0mnojcTx18+iRBhQejKDdJDI8UyD8wVmSs4cpH
+ 882A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782435240; x=1783040040; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782435318; x=1783040118; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rOdMdfXQPoci905bSj2iPr8W+p1mL0QD37a9hNQws1M=;
- b=GslkxSFX9VPupN4qMxmn/9wvJTi8aznDqGpH2Xe0MurhMoxzgFVna575op0ZhkqWWQ
- gT5LWtV1tHi+Uf50haq8h+C1Lw7vij9pRwDrOXCljJ+YegOlZCtNRafAB74yg2pHg+8Z
- MX2826FMo26XZT1ItCWfmIGbX+JZjBBrahYkAjQy9IfI7a/RNwBRcJcv9yZTVyx9F66z
- s5axstBg0Rsnz2WVdCLR8e/svVhYX1c1vP0qTszGahdSwQH/hK2wwj1O+9vHxtlV604n
- vZ5so9jyzoiw30ZNtRhonllL78Iy8rh8c06/v8O/x41cv9O4T889Tm3++M34twco0+l3
- pcEQ==
+ bh=gV2A7wi6u7yKWq4sqT/fmmtK7jhIrvVIPKAWCcV+j6Q=;
+ b=WhR2XcAW5oe5geeUiPBwhk8LB6o7fsg4cJQqzF//K5VmRV7UjWpmtGZBgD0r07vxKa
+ CsyrkRBwnRkzqDDhtfxZY9PREYGUxH7l/dtwTbNy9veuL3opKLXvOw6CSJP0AcUT+YuA
+ qVA/C6R+TGE23oI7Our7ITrBFG0YAuRbD4XNTmzRK5MjP7orqrM4xJR1MUbYkQap9CEH
+ LYJSOAQ0UWZSzZ0fZcZOdxBwf9nqPo8RMJrdjC63yn0SukUeAh+UyRpKhJRXKkS6nJOv
+ 3IN54nY0ZbDxsZcaQeTo3gxrOScvKokPH558TaaKJYzT94mriS+AydgTcP6nj6x77BED
+ Vn0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782435240; x=1783040040;
+ d=1e100.net; s=20251104; t=1782435318; x=1783040118;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=rOdMdfXQPoci905bSj2iPr8W+p1mL0QD37a9hNQws1M=;
- b=jhk4PaZEXDcKdx5b5sONGJKgBcX6+FgaLa/ofPyWaKH1qiAH6L83xdKAdZyRtCpqhr
- JTOEQ8Mrf5O+PI/UAuyI6pe37+BPyXUghXOelgDNz/3O9XBsYFjt1lj5AXXrLhGMKaKO
- U0w+n9quA7b37ltNFkQCJLLEnu8844g6MCSswgvXKb6PGeo70QGb9TZ7CowTuqb+Tj2F
- Uw9rp2AKFDaDgRl48DLaZkLpRaejUF4znpq2nVFBM1x7sKqg3rCbosBeG00SF0qX+TJ/
- b2e3k8D8MqyauuYfeNVdf5OqtlT3vWKHcOZbBQmcWdY8IxVHNMqqZ8bHyRjOHdI5OjwY
- u0eA==
-X-Gm-Message-State: AOJu0YzTjT/QmrJtcpGpgCJvy8SBMn7uDcwwrT0IBvegrLiatIv64Mt5
- gF7D0omTEKEMEqmaQm3jsf7lCfKYF92DvyIVUsRWRvrqfMAM2QbOnG/hAvT52K2+nsAg5P5TxPe
- 4AIyiDhAXCRiMSi+IqNILl20L63v6vEY=
-X-Gm-Gg: AfdE7cmV3CyDwcqml1UTrmFFp9PcSbhuOxJIsPqZi4pIFrIA0yFYPgapFbCla5m/xOQ
- QbxVQTFh0lTexVk60SfCRibC/Sl6cGrhjOov9VO4mKciP/fZYHN2ieXW8b7xar8LJrHVzg9dnt/
- Rao1sOu2KOIObzeczv7H8g+U9Jr1kCT103EdNcF+6ftH3eHjOYbni4XFGJmg5Tx2owLorgDA5yM
- nb9ba6MsI5w3hM0TYBnA0qkLEaLA5bl+xt9dswNFCaETxNu/ZwdTxHjWsaUq2CPGh2RAgRPIfkf
- wRPBbPV+gPSYWU3ZptC5hVXUC7s=
-X-Received: by 2002:a05:6402:2551:b0:697:f2e4:3ef2 with SMTP id
- 4fb4d7f45d1cf-69810aefab3mr764099a12.14.1782435239578; Thu, 25 Jun 2026
- 17:53:59 -0700 (PDT)
+ bh=gV2A7wi6u7yKWq4sqT/fmmtK7jhIrvVIPKAWCcV+j6Q=;
+ b=GUqs0ahM8sS4uqlDhb4a1u2h8clr2qXRB0NEwe5NTLug1Y5BhEh2zfv/doRFfaFy8J
+ sWBTtHY2Vs0WXAwZDeMu3iqrHQhRuwSmO8XFIE2F9FO6o/mv7K0Tcs9p7orce1+tQ8I2
+ C2Y2Y4EEz9E46/X1+xGi1R75lRi4QtPgnVvOUZaev1ABe3bXfPa/BckeBeEuSmIOYp58
+ WzDItJOhlcichqMpn+JjMb/FCiE2GGMo9TzdBTCOdwCtkxnSfNiFWKUixVarVZV8Zi+/
+ nJaqBtiqdWzyu+lwIuf1I7iKcpZtVNUf6tbpH9Cyr2RTzD17/5AKm41XoygiU9knxKF3
+ mpaw==
+X-Gm-Message-State: AOJu0YxEMPxVacIhWL+46MfIyDnFuvk0mV7gcou69I09C5kgffEz3zOZ
+ njTk5dLRdKUC5eygwW8YwDHqqUPCrukK3/93zPScLreq2/5l6V7I4TsFB7IbNusgOHNQv8sDh4P
+ VZfVlWpsF0FqBhnnqLevq9SBPThKKDj5+6/aMlbbwpw==
+X-Gm-Gg: AfdE7cnJI4JFpFD3CQ+DitpvyAFKq7belEre4CviYQAT4wq6WB4E/nqoyqHG+bKhZ1g
+ kuHIJxsWR+w8Cl8cNpWzSDAQvV8zOJzJb3QkHEPapbACwUldu+35cyTyUi4Cs3dY995cCyMkv4P
+ RRF4GdgkRc8QZ85U0d/t4uMTbdh69HmUmWgd+Jjoz61GjJ8ciuKO8M1Fdjb8Eryveex3uaBD3ci
+ fbb3UTxdJPmc20++dT9jzd2IPh8fgJWw1kqQSNMJMDk53m+eIBjrmR79Rs9sweUxzjdYjIUwfgb
+ CNZpgGcmX6BjKI0CVw4V4u0a9xI=
+X-Received: by 2002:a05:6402:3219:b0:697:ea41:97af with SMTP id
+ 4fb4d7f45d1cf-69810b85640mr868698a12.28.1782435318230; Thu, 25 Jun 2026
+ 17:55:18 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260624000632.2149359-1-daniel.barboza@oss.qualcomm.com>
- <20260624000632.2149359-6-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260624000632.2149359-6-daniel.barboza@oss.qualcomm.com>
+ <20260624000632.2149359-7-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260624000632.2149359-7-daniel.barboza@oss.qualcomm.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 26 Jun 2026 10:53:32 +1000
-X-Gm-Features: AVVi8Cdu66_1Xo6lhtzJ3mOcm1eTly6jlox8qMG8eSOrL3_CsX0GRSA6qI4iMdU
-Message-ID: <CAKmqyKN7gnDnGpudLUtfZUwAOe+dGWR2Ufti=0YpL9MHJZ4JcQ@mail.gmail.com>
-Subject: Re: [PATCH v2 05/24] target/riscv: tidy up riscv_sysemu_ops
+Date: Fri, 26 Jun 2026 10:54:51 +1000
+X-Gm-Features: AVVi8Cf7ZCfvWgyCT6tpuhT3h1cSZYCbIcFuYUMCHH_RrZTJYIWa4B78wKykU7s
+Message-ID: <CAKmqyKPKdEmpsacvbybB3iKhEVjfAsuuo87QHGFOtYSfeWgNoQ@mail.gmail.com>
+Subject: Re: [PATCH v2 06/24] target/riscv: move pmu.h to tcg subdir
 To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
@@ -95,8 +95,8 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
  fritchleybohrer@gmail.com, Palmer Dabbelt <palmer@dabbelt.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -123,18 +123,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Jun 24, 2026 at 10:08=E2=80=AFAM Daniel Henrique Barboza
 <daniel.barboza@oss.qualcomm.com> wrote:
 >
-> monitor_get_register at this moment has a TCG exclusive implementation
-> for RISC-V, even though the callback is supposed to be arch independent.
-> Until we address how KVM is going to implement it we need to filter it ou=
-t
-> in cpu.c.v
+> riscv_pmu_generate_fdt_node() can be moved to fdt_common.c since it has
+> no PMU TCG internals.
 >
-> Same goes for get_phys_addr_debug - it has a TCG only implementation and
-> KVM can't use it for now.  It would also need to be filtered out, but
-> since we're at it, let's convert it to the newer 'translate_for_debug'
-> API too.  Same restrictions apply.
+> With this change we can remove pmu.h from 'virt.c', which is now
+> becoming a tcg header since we're moving it to the tcg subdir.
 >
-> Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 > Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
@@ -142,112 +136,193 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu.c            |  6 ++++--
->  target/riscv/cpu.h            |  3 ++-
->  target/riscv/monitor.c        |  2 ++
->  target/riscv/tcg/cpu_helper.c | 14 ++++++++++----
->  4 files changed, 18 insertions(+), 7 deletions(-)
+>  hw/riscv/fdt-common.c         | 52 +++++++++++++++++++++++++++++++++++
+>  hw/riscv/virt.c               |  1 -
+>  include/hw/riscv/fdt-common.h |  1 +
+>  target/riscv/tcg/pmu.c        | 52 -----------------------------------
+>  target/riscv/{ =3D> tcg}/pmu.h  |  1 -
+>  5 files changed, 53 insertions(+), 54 deletions(-)
+>  rename target/riscv/{ =3D> tcg}/pmu.h (95%)
 >
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 4e96bbeb60..319825882a 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2669,11 +2669,13 @@ static int64_t riscv_get_arch_id(CPUState *cs)
->
->  static const struct SysemuCPUOps riscv_sysemu_ops =3D {
->      .has_work =3D riscv_cpu_has_work,
-> -    .get_phys_addr_debug =3D riscv_cpu_get_phys_addr_debug,
->      .write_elf64_note =3D riscv_cpu_write_elf64_note,
->      .write_elf32_note =3D riscv_cpu_write_elf32_note,
-> -    .monitor_get_register =3D riscv_monitor_get_register_legacy,
->      .legacy_vmsd =3D &vmstate_riscv_cpu,
-> +#ifdef CONFIG_TCG
-> +    .translate_for_debug =3D riscv_cpu_translate_for_debug,
-> +    .monitor_get_register =3D riscv_monitor_get_register_legacy,
-> +#endif
->  };
+> diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
+> index e0e31af09b..aa143a618b 100644
+> --- a/hw/riscv/fdt-common.c
+> +++ b/hw/riscv/fdt-common.c
+> @@ -230,3 +230,55 @@ void create_fdt_plic(void *fdt, hwaddr addr, uint64_=
+t size,
+>      }
+>      qemu_fdt_setprop_cell(fdt, nodename, "phandle", plic_phandle);
+>  }
+> +
+> +/*
+> + * To keep it simple, any event can be mapped to any programmable counte=
+rs in
+> + * QEMU. The generic cycle & instruction count events can also be monito=
+red
+> + * using programmable counters. In that case, mcycle & minstret must con=
+tinue
+> + * to provide the correct value as well. Heterogeneous PMU per hart is n=
+ot
+> + * supported yet. Thus, number of counters are same across all harts.
+> + */
+> +void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_na=
+me)
+> +{
+> +    uint32_t fdt_event_ctr_map[15] =3D {};
+> +
+> +   /*
+> +    * The event encoding is specified in the SBI specification
+> +    * Event idx is a 20bits wide number encoded as follows:
+> +    * event_idx[19:16] =3D type
+> +    * event_idx[15:0] =3D code
+> +    * The code field in cache events are encoded as follows:
+> +    * event_idx.code[15:3] =3D cache_id
+> +    * event_idx.code[2:1] =3D op_id
+> +    * event_idx.code[0:0] =3D result_id
+> +    */
+> +
+> +   /* SBI_PMU_HW_CPU_CYCLES: 0x01 : type(0x00) */
+> +   fdt_event_ctr_map[0] =3D cpu_to_be32(0x00000001);
+> +   fdt_event_ctr_map[1] =3D cpu_to_be32(0x00000001);
+> +   fdt_event_ctr_map[2] =3D cpu_to_be32(cmask | 1 << 0);
+> +
+> +   /* SBI_PMU_HW_INSTRUCTIONS: 0x02 : type(0x00) */
+> +   fdt_event_ctr_map[3] =3D cpu_to_be32(0x00000002);
+> +   fdt_event_ctr_map[4] =3D cpu_to_be32(0x00000002);
+> +   fdt_event_ctr_map[5] =3D cpu_to_be32(cmask | 1 << 2);
+> +
+> +   /* SBI_PMU_HW_CACHE_DTLB : 0x03 READ : 0x00 MISS : 0x00 type(0x01) */
+> +   fdt_event_ctr_map[6] =3D cpu_to_be32(0x00010019);
+> +   fdt_event_ctr_map[7] =3D cpu_to_be32(0x00010019);
+> +   fdt_event_ctr_map[8] =3D cpu_to_be32(cmask);
+> +
+> +   /* SBI_PMU_HW_CACHE_DTLB : 0x03 WRITE : 0x01 MISS : 0x00 type(0x01) *=
+/
+> +   fdt_event_ctr_map[9] =3D cpu_to_be32(0x0001001B);
+> +   fdt_event_ctr_map[10] =3D cpu_to_be32(0x0001001B);
+> +   fdt_event_ctr_map[11] =3D cpu_to_be32(cmask);
+> +
+> +   /* SBI_PMU_HW_CACHE_ITLB : 0x04 READ : 0x00 MISS : 0x00 type(0x01) */
+> +   fdt_event_ctr_map[12] =3D cpu_to_be32(0x00010021);
+> +   fdt_event_ctr_map[13] =3D cpu_to_be32(0x00010021);
+> +   fdt_event_ctr_map[14] =3D cpu_to_be32(cmask);
+> +
+> +   /* This a OpenSBI specific DT property documented in OpenSBI docs */
+> +   qemu_fdt_setprop(fdt, pmu_name, "riscv,event-to-mhpmcounters",
+> +                    fdt_event_ctr_map, sizeof(fdt_event_ctr_map));
+> +}
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index 92c30a6f4c..a1cf8210be 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -30,7 +30,6 @@
+>  #include "hw/char/serial-mm.h"
+>  #include "target/riscv/cpu.h"
+>  #include "hw/core/sysbus-fdt.h"
+> -#include "target/riscv/pmu.h"
+>  #include "hw/riscv/riscv_hart.h"
+>  #include "hw/riscv/iommu.h"
+>  #include "hw/riscv/riscv-iommu-bits.h"
+> diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.=
+h
+> index 017278b611..1729a6abc6 100644
+> --- a/include/hw/riscv/fdt-common.h
+> +++ b/include/hw/riscv/fdt-common.h
+> @@ -35,4 +35,5 @@ void create_fdt_plic(void *fdt, hwaddr addr, uint64_t s=
+ize,
+>                       uint32_t addr_cells, uint32_t *plic_cells,
+>                       uint32_t cells_size, uint32_t ndev_sources,
+>                       bool numa_enabled, int socket);
+> +void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_na=
+me);
 >  #endif
+> diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
+> index 3444400bd2..38ad2737e1 100644
+> --- a/target/riscv/tcg/pmu.c
+> +++ b/target/riscv/tcg/pmu.c
+> @@ -27,58 +27,6 @@
 >
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index f0c78c1474..70b8729bd7 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -665,7 +665,8 @@ void riscv_cpu_do_transaction_failed(CPUState *cs, hw=
-addr physaddr,
->                                       MMUAccessType access_type,
->                                       int mmu_idx, MemTxAttrs attrs,
->                                       MemTxResult response, uintptr_t ret=
-addr);
-> -hwaddr riscv_cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
-> +bool riscv_cpu_translate_for_debug(CPUState *cs, vaddr addr,
-> +                                   TranslateForDebugResult *result);
->  bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_request);
->  void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env);
->  int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts);
-> diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
-> index 3e89dcaf7c..7aacd1d89c 100644
-> --- a/target/riscv/monitor.c
-> +++ b/target/riscv/monitor.c
-> @@ -245,6 +245,7 @@ void hmp_info_mem(Monitor *mon, const QDict *qdict)
->      mem_info_svxx(mon, env);
->  }
+>  #define RISCV_TIMEBASE_FREQ 1000000000 /* 1Ghz */
 >
-> +#ifdef CONFIG_TCG
->  static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
->                                   target_ulong *val, bool is_gprh)
+> -/*
+> - * To keep it simple, any event can be mapped to any programmable counte=
+rs in
+> - * QEMU. The generic cycle & instruction count events can also be monito=
+red
+> - * using programmable counters. In that case, mcycle & minstret must con=
+tinue
+> - * to provide the correct value as well. Heterogeneous PMU per hart is n=
+ot
+> - * supported yet. Thus, number of counters are same across all harts.
+> - */
+> -void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_na=
+me)
+> -{
+> -    uint32_t fdt_event_ctr_map[15] =3D {};
+> -
+> -   /*
+> -    * The event encoding is specified in the SBI specification
+> -    * Event idx is a 20bits wide number encoded as follows:
+> -    * event_idx[19:16] =3D type
+> -    * event_idx[15:0] =3D code
+> -    * The code field in cache events are encoded as follows:
+> -    * event_idx.code[15:3] =3D cache_id
+> -    * event_idx.code[2:1] =3D op_id
+> -    * event_idx.code[0:0] =3D result_id
+> -    */
+> -
+> -   /* SBI_PMU_HW_CPU_CYCLES: 0x01 : type(0x00) */
+> -   fdt_event_ctr_map[0] =3D cpu_to_be32(0x00000001);
+> -   fdt_event_ctr_map[1] =3D cpu_to_be32(0x00000001);
+> -   fdt_event_ctr_map[2] =3D cpu_to_be32(cmask | 1 << 0);
+> -
+> -   /* SBI_PMU_HW_INSTRUCTIONS: 0x02 : type(0x00) */
+> -   fdt_event_ctr_map[3] =3D cpu_to_be32(0x00000002);
+> -   fdt_event_ctr_map[4] =3D cpu_to_be32(0x00000002);
+> -   fdt_event_ctr_map[5] =3D cpu_to_be32(cmask | 1 << 2);
+> -
+> -   /* SBI_PMU_HW_CACHE_DTLB : 0x03 READ : 0x00 MISS : 0x00 type(0x01) */
+> -   fdt_event_ctr_map[6] =3D cpu_to_be32(0x00010019);
+> -   fdt_event_ctr_map[7] =3D cpu_to_be32(0x00010019);
+> -   fdt_event_ctr_map[8] =3D cpu_to_be32(cmask);
+> -
+> -   /* SBI_PMU_HW_CACHE_DTLB : 0x03 WRITE : 0x01 MISS : 0x00 type(0x01) *=
+/
+> -   fdt_event_ctr_map[9] =3D cpu_to_be32(0x0001001B);
+> -   fdt_event_ctr_map[10] =3D cpu_to_be32(0x0001001B);
+> -   fdt_event_ctr_map[11] =3D cpu_to_be32(cmask);
+> -
+> -   /* SBI_PMU_HW_CACHE_ITLB : 0x04 READ : 0x00 MISS : 0x00 type(0x01) */
+> -   fdt_event_ctr_map[12] =3D cpu_to_be32(0x00010021);
+> -   fdt_event_ctr_map[13] =3D cpu_to_be32(0x00010021);
+> -   fdt_event_ctr_map[14] =3D cpu_to_be32(cmask);
+> -
+> -   /* This a OpenSBI specific DT property documented in OpenSBI docs */
+> -   qemu_fdt_setprop(fdt, pmu_name, "riscv,event-to-mhpmcounters",
+> -                    fdt_event_ctr_map, sizeof(fdt_event_ctr_map));
+> -}
+> -
+>  static bool riscv_pmu_counter_valid(RISCVCPU *cpu, uint32_t ctr_idx)
 >  {
-> @@ -379,3 +380,4 @@ int riscv_monitor_get_register_legacy(CPUState *cs, c=
-onst char *name,
->
->      return -EINVAL;
->  }
-> +#endif
-> diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.=
-c
-> index 59edcdd370..a893472c4e 100644
-> --- a/target/riscv/tcg/cpu_helper.c
-> +++ b/target/riscv/tcg/cpu_helper.c
-> @@ -1771,7 +1771,8 @@ static void raise_mmu_exception(CPURISCVState *env,=
- target_ulong address,
->      env->two_stage_indirect_lookup =3D two_stage_indirect;
->  }
->
-> -hwaddr riscv_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
-> +bool riscv_cpu_translate_for_debug(CPUState *cs, vaddr addr,
-> +                                   TranslateForDebugResult *result)
->  {
->      RISCVCPU *cpu =3D RISCV_CPU(cs);
->      CPURISCVState *env =3D &cpu->env;
-> @@ -1781,17 +1782,22 @@ hwaddr riscv_cpu_get_phys_addr_debug(CPUState *cs=
-, vaddr addr)
->
->      if (get_physical_address(env, &phys_addr, &prot, addr, NULL, 0, mmu_=
-idx,
->                               true, env->virt_enabled, true, false)) {
-> -        return -1;
-> +        return false;
->      }
->
->      if (env->virt_enabled) {
->          if (get_physical_address(env, &phys_addr, &prot, phys_addr, NULL=
-,
->                                   0, MMUIdx_U, false, true, true, false))=
- {
-> -            return -1;
-> +            return false;
->          }
->      }
->
-> -    return phys_addr;
-> +    *result =3D (TranslateForDebugResult) {
-> +        .physaddr =3D phys_addr,
-> +        .lg_page_size =3D TARGET_PAGE_BITS,
-> +        .attrs.debug =3D 1,
-> +    };
-> +    return true;
->  }
->
->  void riscv_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+>      if (ctr_idx < 3 || ctr_idx >=3D RV_MAX_MHPMCOUNTERS ||
+> diff --git a/target/riscv/pmu.h b/target/riscv/tcg/pmu.h
+> similarity index 95%
+> rename from target/riscv/pmu.h
+> rename to target/riscv/tcg/pmu.h
+> index b4f1e469a2..de2fae1fb4 100644
+> --- a/target/riscv/pmu.h
+> +++ b/target/riscv/tcg/pmu.h
+> @@ -31,7 +31,6 @@ void riscv_pmu_init(RISCVCPU *cpu, Error **errp);
+>  int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
+>                                 uint32_t ctr_idx);
+>  int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx=
+);
+> -void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_na=
+me);
+>  int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
+>                            uint32_t ctr_idx);
+>  void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t ne=
+wpriv,
 > --
 > 2.43.0
 >
