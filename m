@@ -4,115 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A553C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 18:59:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A554BC43327
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 19:12:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdBlS-0002aH-10; Fri, 26 Jun 2026 14:59:00 -0400
+	id 1wdByA-0006QH-BC; Fri, 26 Jun 2026 15:12:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <linisha232@gmail.com>)
- id 1wdBlM-0002ZC-3t
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:58:53 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <linisha232@gmail.com>)
- id 1wdBlJ-00083i-RN
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 14:58:51 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-490b64c8311so15196395e9.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 11:58:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782500328; cv=none;
- d=google.com; s=arc-20260327;
- b=mXD93g4dFwxWYkq97jPEqwYukhbEEhOjrIU3W2rqQt4XcEHpBetZsAj7n4CDIBeUEE
- l566QU0w7el4Ych8F442jXbffGtLwzE9gsDwQw87LhrW5Rdj1lQ+MwOL9kooxWckhQ1g
- tCBEvK+dUF9UiMXcic4dkj1j9gKuvPf2J0fpdq+zJpFCE13Vucr4J7SI1PhokxrfwIHz
- 3sA8/lhZTyFkFpQOz0rnV6zcvDp/DKQR/V6t7Irmt55lC0qXw6DZIo2tD/OCcp5NzJGd
- 0+djjcMydi2HnJOWI+3Tw05Om81XgbxhVrIW47crtcLbPWlaOATksshd9LPn3B8Pe/JL
- i8FQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=QVovn2eI0oqBbH09lMrfmlLDZSJoooELepuKz1ZlmFg=;
- fh=r3BcR13fMoDVYE3ZDXHxmfMgt7OQ8Y/yN7kOeiQ9B1M=;
- b=qBZXXjqcX92ajeIDRAyw/vbekYOV0kuB19vad/Zh8S0wvbv5OKPe1QIAgMN1Jkj4Wx
- l+fEhFzIky1YXjf3Gkhk1+YrqCCqn0ywhR1NfwtevM9IOazJyW5FFf8dWw4ClmLqepbu
- LJZbdbAXcTdbtyIPhQwvPYVahis/jHy6BvDIMZIDZ68KfY+Vv29DewV9nCd/7DXFUAC9
- qhXvSV+JgvIlOWBKDp+8YTCUqPQD0snXG8bceqEj5JhuOj7yZ7/l6Z40o032cWGeOYKH
- kLk/4TGOEIgkjOSZG2LZb91zukHfy1AqvsyUBUzwSRkT8nrLTJF+mXnjaUktJY3tIEQu
- FZ2g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wdBy8-0006Pj-HA
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 15:12:04 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wdBy5-0003oL-VU
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 15:12:04 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65QJ8gW72265112
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 19:12:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ El9MGaq/BueehQv3m3y3zOrb24GUWxlNxrJjeJ2pFjg=; b=WHGfYunSUDyj0d6H
+ IQZlR672AEIrDm/mj6uFTttZxVvsuIHKSXb6dVQVxQdqkvRRvsKCNchMTtmIC1ZW
+ /b99zmGdddemGiJzZep0QUv8zNe3hr2UxgCRSzrDTML7iV6CpFPt+jHQn0oDK6SS
+ XwqRZFFz+V2Vch2gzBIDa8y11u+yxkgKIGBOrhRhQzOy5xbRQuJiEqNbhQCZQbwV
+ HfJhnn34wJfTyVDFL8SB9DcVQxUBfT8RvpYogj6FzYUxrBTuPhW8rEYFJ/mBg5iy
+ XJBLleL+jjc+pPsEEciFLv/qVfU5Yi7hD9tOPnV8hgF/Izjn6ucmjvl6FmZ3Jb14
+ eyAwkA==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f1eewc5nh-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 19:12:00 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-30bf794ce48so2230552eec.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 12:12:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782500328; x=1783105128; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1782501120; x=1783105920; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QVovn2eI0oqBbH09lMrfmlLDZSJoooELepuKz1ZlmFg=;
- b=ZW8aXbCdvFb5q3fGWA0PwE9x90xcrLCiOH2hDqiTVLvGBFQ+onK29UOTWn1Wdr6hjA
- ZGInesuP/DLay8eTMAMDtu+GEZRPE5sseU2z6+Tujx9MuJ4h9Q4js0dF0D9DtY6+E+Lb
- xM0gpEPTYYYE+b7zNxufh07FAIOm/xgp10sLNaAIF4Dll5TUbd2yJDiK/pwDRI3Aj4mt
- FllpcV3ZKJ9d8xEyhci6PvHwzY2NHZLZhXOzDbphUClNZjq4OBYkeVxZLOMfW9xdKi+F
- CqrPpoVfPJOhCglO32akQqbjLgJTkzX6/9IzTrl8sI6z2wSw8oBefxTi7wDC6Pc1FFP6
- vrww==
+ bh=El9MGaq/BueehQv3m3y3zOrb24GUWxlNxrJjeJ2pFjg=;
+ b=Z/Wbo34O3ZaueaeR4w53Btstdn13FpfiB5TKypRTtLX4aEWp7y6KafgYoO0bGqOk8I
+ wjenSuz0UflQoitJYap5q0UnUkKHMP+XCJmiv6cN1nY+JwDj6pJxZ1e89urpZUUJnOor
+ rz6dVKs+ZOeSp0fmF6QzGngY2CYtVNrll5XZdj6M+U29IgSJhvqtKp8icy3eLf2mbCzj
+ rMeyQDEOT7Pjr7CsaQehYTzvo2euXE3qSZ2eb2cc4lZjpmzDhKHCioNf0hJclfrpB89o
+ RC6mCgulGLiTw6FdyyPuupnXmFHE1q/tQgORuCE1Oj/5dE8sqKKueJsS7CpBlKdvaJVN
+ 8qzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782500328; x=1783105128;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1782501120; x=1783105920;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=QVovn2eI0oqBbH09lMrfmlLDZSJoooELepuKz1ZlmFg=;
- b=XbbIQlE5b4+4Tg1cBmAisiu4oM5BLY+4OCJvprNO9bJ+iqGBvMqD6N3fTw9bM6rwlL
- tPAwgdI3o9quV/DoqLci0Y4muV0abAf2mh2IznjtDIRA6vZ0wP37qZj+yfe+U3uTYJU4
- olKdHeY8hLKl7BDDsUDKYypXH/KICWHpIzn4IzCvwTJDhOKWmxxPMOVkYMAlalor1TmP
- nWWhnJ5rAyQS0ph0JjJE3AL2LL1et9mGBxwO0FjTN7FouCsA8GYO3sGnP7YEUzYxFBiB
- vbyP4CFGk9bZgpWWLGxgP22gSFjwTlCsTnc31z/Ays6Poy5zuH3Y+Q30P5GPzVADOa3Z
- VH3A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+EqVgYTv9TnT6BZAvRkRSlOD1Jh1gc4ukdA0NVYngqTF97kRBNXANpPrbbJ3tezCXg6oLY/agS/qLI@nongnu.org
-X-Gm-Message-State: AOJu0YztQYLXa+z9sFgOYgx+HRfRL3QwjH7uX4TdRrybNoPcxf48+sYQ
- oSu+EPZbUTqFRNIJ2Z6XWiyTz5+lWanYNksvsmfy9zNYBJ9zTnx0xE3ysiMKOco6SLxZkO3iIxc
- JCoILC8ucW4MlVgUd8u/WIoKrk0Ja2/o=
-X-Gm-Gg: AfdE7cm2PMLNDysgJwHZlvp48DO/beICgLYAm9f3sg3tSVii0sDPddGsdYDUD038aZx
- 99UVNtaXB6/OYmGvn3W63PLVC7VjpWiL8Qakfn1e6Vp40HElfgy5ciEHOGP7oAweTsz4Q4B2cO/
- NtFWWjckfEMfdRTej7/lpIHpO4Uj/22QWuM4BtTWNaYED/laxrOujVZI84Jb/3QMVF7Ckho3MG5
- MPbsIhFpQeyb2w+mSMYyTPqe91jSciS9PSLG7bkiUCdm2UNbdz+u6GhTvMzgS3Md0nQBWHxxX4=
-X-Received: by 2002:a05:600c:a111:b0:492:68bc:3237 with SMTP id
- 5b1f17b1804b1-49268bc34e3mr66424255e9.32.1782500327401; Fri, 26 Jun 2026
- 11:58:47 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260623205839.1294-1-linisha232@gmail.com>
- <20260625192121.1887-1-linisha232@gmail.com>
- <aj5P0n03aKv93uci@redhat.com>
- <9d695c7f-bb02-44bd-8e1c-f8bdbf3bbbf7@oss.qualcomm.com>
- <CAGKMO+VCZ_3cPWx000N_+REsEK+gQg8RCWJcx7YEchUcy20V-Q@mail.gmail.com>
- <c0292d61-3915-416f-a6e1-d8498dcd42e9@oss.qualcomm.com>
- <CAGKMO+XpdeOQwqqp6sq+q2gbGBkH-inBU0B49buohQ6OWhOxUA@mail.gmail.com>
- <CAGKMO+XRcM86qk_X3qaWeYjvxnHWj-jsyWC-FoBLkYBemHJgtA@mail.gmail.com>
- <CAGKMO+VVgV_qx9rwz7XQQhW5y9GzjuZJcGfd9ucTGx=Y58pPUg@mail.gmail.com>
- <fe22c259-195c-4032-94dc-7b62fe3f25e3@oss.qualcomm.com>
-In-Reply-To: <fe22c259-195c-4032-94dc-7b62fe3f25e3@oss.qualcomm.com>
-From: linisha <linisha232@gmail.com>
-Date: Sat, 27 Jun 2026 00:28:34 +0530
-X-Gm-Features: AVVi8CfxqqWj4IwEdktiq8nBOTpkVXoEdi0__ayulvTrl-D89-PhPCU6WxMuRqw
-Message-ID: <CAGKMO+VzDjFZj_TDwrSPqL3vMaqwy9gEh6GA3Jxst59AJpxRxg@mail.gmail.com>
-Subject: Re: [PATCH v2] docs/system: add general note about architecture and
+ bh=El9MGaq/BueehQv3m3y3zOrb24GUWxlNxrJjeJ2pFjg=;
+ b=jCdjlcgkumgvY+BtreVG52v/l6/S/pEX1J7/HQ8iMe0zebUjra5Zyk4x45PPmP0rO2
+ ekMWhRcFe0xUVw0PMsrEobErW1Nl1U+lBZUJKp3P08Co7tPnyA/bCGbopkeBxdUYi7V0
+ KlDXkaTqjl00CQItx/+XujKe40K+N84d1mT+Gow2Q+ATkmXL2yhQmYdhRgpoMsdlmQ4k
+ nDjAMZTFiag6mB7Hhp71mbQYMd2OURFkI6QDiouajRSv5hxaHTz132YjrHlEpBuofBE8
+ FAJy0XEcUpxBonJtWmn7JV8FtQwGbvfKuHyUMP2fEmrumdn9twms8mTeElS5Vnauit+X
+ jiVw==
+X-Gm-Message-State: AOJu0Yzy4tq3LDGepS7KOaomIEgUFFwFozd9zStLDTWdXKQQNXVaAL6a
+ KMI2GYs9L5z0NWwpY+qJLGxJhISHBe361uBvcOOe6NwIzSXWd4oSp1uyLWzmRC9E3xVOtZeYyZZ
+ OKEVEvyRmOcWItb52H/qlvMKBnJ6pr8s0so74yUkwdBRp1ms1+nesduJVe2Jd5Y5tow==
+X-Gm-Gg: AfdE7cm1Iw7bbjGAFlCBwAgQakLq84iO0z0JCLP9n5/Lp7o/OKyMv1VgjE/QLsXah+F
+ ZKiivO6BWs6ehz/n40P4OpsrYCQUqKsKxiNe+Mgnn3DUnA+EfxZJY9ZvmtmUOqCL/bN5UsklSus
+ ShMHfoVgV2y0ElLWnNBmxNQsf3FgFiNcgt26WY0TfEZccQY1YucHXcU2T0uUqLqui22JX+cqUWc
+ omjECYeL7z2eieAO2j7IPdZxAFQy9JKMs3jVOOwvqD463olzRnJIuBo9Lq/Y84vwAvO50RdscDs
+ DAcraZCEwrh9u37/gLBifJcRyn0CLIuPP/MdUpdIDHZ+WKeKMW7VIPcG6bZWJm4VTY0gqlXUP/M
+ XwhXz1DddgBG5SEHNFsr38VmDaEw4rIj5WHVKDybHgOMATCLV8jonFhLM5Fj7DhdgnBR2jcnqLQ
+ nR9UdaLg==
+X-Received: by 2002:a05:7022:ff4b:b0:139:b0a7:9e0c with SMTP id
+ a92af1059eb24-139c3cbcb12mr12353938c88.14.1782501119576; 
+ Fri, 26 Jun 2026 12:11:59 -0700 (PDT)
+X-Received: by 2002:a05:7022:ff4b:b0:139:b0a7:9e0c with SMTP id
+ a92af1059eb24-139c3cbcb12mr12353923c88.14.1782501119018; 
+ Fri, 26 Jun 2026 12:11:59 -0700 (PDT)
+Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-139d90e95c6sm30071950c88.11.2026.06.26.12.11.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 26 Jun 2026 12:11:58 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@oss.qualcomm.com
+Subject: [PULL 1/1] docs/system: add general note about architecture and
  machine differences
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org, 
- pbonzini@redhat.com, mjt@tls.msk.ru, philmd@mailo.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=linisha232@gmail.com; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Date: Fri, 26 Jun 2026 12:11:48 -0700
+Message-ID: <20260626191148.107354-2-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260626191148.107354-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260626191148.107354-1-pierrick.bouvier@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI2MDE1OCBTYWx0ZWRfX+5m0ugZBmB2L
+ y3uRsCVIbemzjSSO5hG5byjSwuS9qINAsfiNR/xARXjpeFuM3dEkNpggYagt9wvA0ocgXc6e/jz
+ W2mjCcGA7DGh43XjbGX5cb1xYDMCJW4=
+X-Proofpoint-GUID: qBhRkXNWKSvoGu-uwBkcxC93XeRa1oL5
+X-Proofpoint-ORIG-GUID: qBhRkXNWKSvoGu-uwBkcxC93XeRa1oL5
+X-Authority-Analysis: v=2.4 cv=P7UKQCAu c=1 sm=1 tr=0 ts=6a3ecf00 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=3U3sWcpejSb_yR5VqPsA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI2MDE1OCBTYWx0ZWRfXzOhJd+aWia03
+ XCBWm4uXEKNxxnwWHWqQl7t7E7689TX9MO3Xj6gATL08zu9yrXTxvnwVoUOILUsLUuXI9e3rkiz
+ jLlFXagaP5wWOeyOI0y1f3ZyuALGeso+x7q5gHdxD72wbkYY9ifdbCR3keKly4vioV9PvyPkBkz
+ AgX6RMrblDQnsfnfemqZROc3dzmOK0Su7z64oWGGmePlSuJGs6abEvEgDxg+dcDI9IBhNRVZjCp
+ rUhpHDUH7vLYsPrTxrnXhj8oUGwI3RU+ys5yNGZHe7FxysnR6UJuOD8eHLcC4w4Or34cc1MWUTi
+ 8D++6kMj8e9oyx+YVktWEI3Mjzpi/dKEfLlV8ugCLWbl/xaovVa+wNcxPtnProjlsue8dlP3wCa
+ OJ1G7v3nP4HFfB/cGor/U3H8OkfNDDxrAxJuHezCWhHEHcY5bsjxAmaMD2hEEzM3HOwrGSDKoVx
+ cDPGtrxUe5tZggNx4fQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-26_05,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 phishscore=0 bulkscore=0 spamscore=0
+ impostorscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606260158
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,190 +155,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hmm that would explain it! I'm on Git Bash / MinGW on Windows, so
-there may indeed be a line-ending or Perl quirk affecting how the
-script parses MAINTAINERS. Good to know, I'll keep this in mind and
-double-check the MAINTAINERS file directly when picking CCs in the
-future, rather than relying solely on the script's output.
+From: Linisha <linisha232@gmail.com>
 
-On Sat, Jun 27, 2026 at 12:19=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On 6/26/2026 11:44 AM, linisha wrote:
-> > Just to clear the confusion, attached the screenshot.
-> >
->
-> Hum interesting.
->
-> On my side, reproduced on a clean debian container:
->
-> $ git clone https://gitlab.com/qemu-project/qemu --depth=3D1 &&
-> cd qemu && ./scripts/get_maintainer.pl -f docs/
-> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> (maintainer:General
-> Documenta...)
-> qemu-devel@nongnu.org (open list:All patches CC here)
->
-> Maybe we have a funny joke hiding there with mingw/windows.
->
-> > Best regards,
-> > Linisha
-> >
-> > On Sat, Jun 27, 2026 at 12:10=E2=80=AFAM linisha <linisha232@gmail.com>=
- wrote:
-> >>
-> >> Hi Pierrick,
-> >>
-> >> Quick correction to my last reply =E2=80=94 I checked again more caref=
-ully and
-> >> get_maintainer.pl -f docs/ still says "No maintainers found" on my
-> >> tree (origin/master), even after git pull. It only lists recent
-> >> contributors. So whatever change adds you to MAINTAINERS isn't in my
-> >> tree yet =E2=80=94 could you point me to the commit/branch?
-> >>
-> >> Apologies for the confusion.
-> >>
-> >> Best regards,
-> >> Linisha
-> >>
-> >> On Sat, Jun 27, 2026 at 12:08=E2=80=AFAM linisha <linisha232@gmail.com=
-> wrote:
-> >>>
-> >>> Hi Pierrick,
-> >>>
-> >>> You're right =E2=80=94 my tree was outdated. I just ran git pull and =
-now
-> >>> scripts/get_maintainer.pl -f docs/ does show you as maintainer for
-> >>> General Documentation. Sorry for the miss; I'll make sure to pull and
-> >>> re-check maintainers before sending future versions.
-> >>>
-> >>> Best regards,
-> >>> Linisha
-> >>>
-> >>> On Fri, Jun 26, 2026 at 11:58=E2=80=AFPM Pierrick Bouvier
-> >>> <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>>>
-> >>>> On 6/26/2026 10:44 AM, linisha wrote:
-> >>>>> Hi Daniel, Pierrick,
-> >>>>>
-> >>>>> Thank you, Daniel, for the Reviewed-by tag and the wrapping feedbac=
-k.
-> >>>>>
-> >>>>> Pierrick =E2=80=94 I didn't intentionally remove anyone. I used
-> >>>>> scripts/get_maintainer.pl -f docs/ which returned Peter Maydell,
-> >>>>> Philippe Mathieu-Daud=C3=A9, Richard Henderson, Alex Benn=C3=A9e, a=
-nd C=C3=A9dric Le
-> >>>>> Goater, and I picked CCs from that list along with people who
-> >>>>> responded to v1. You weren't in the script's output, so I didn't kn=
-ow
-> >>>>> to include you. Apologies for the miss =E2=80=94 I'll CC you on any=
- future v3.
-> >>>>>
-> >>>>
-> >>>> Thanks for your answer.
-> >>>>
-> >>>> Just to dig this further, is your tree up to date?
-> >>>>
-> >>>> When running it on my side (from upstream/master), I get:
-> >>>> $ scripts/get_maintainer.pl -f docs/
-> >>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> (maintainer:Gen=
-eral
-> >>>> Documenta...)
-> >>>> qemu-devel@nongnu.org (open list:All patches CC here)
-> >>>>
-> >>>>> Daniel =E2=80=94 I'll send a v3 with the commit message body proper=
-ly
-> >>>>> line-wrapped to 76 characters. Let me know if there are other chang=
-es
-> >>>>> you'd like at the same time.
-> >>>>>
-> >>>>> Best regards, Linisha
-> >>>>>
-> >>>>> On Fri, Jun 26, 2026 at 9:09=E2=80=AFPM Pierrick Bouvier
-> >>>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>>>>>
-> >>>>>> On 6/26/2026 3:09 AM, Daniel P. Berrang=C3=A9 wrote:
-> >>>>>>> CC Pierrick as docs maintainer.
-> >>>>>>>
-> >>>>>>
-> >>>>>> Thanks Daniel.
-> >>>>>>
-> >>>>>> I wonder how I was not in original recipients for this patch.
-> >>>>>> @Linisha: did you explicitly set list of recipients, or remove som=
-e people?
-> >>>>>>
-> >>>>>>> On Fri, Jun 26, 2026 at 12:51:19AM +0530, Linisha wrote:
-> >>>>>>>> Add a note near the start of the introduction explaining that QE=
-MU options, properties, and command lines may differ between target archite=
-ctures and machine types. This helps prevent confusion when examples shown =
-for one architecture do not work for another, such as the pflash0/pflash1 o=
-ptions visible in -machine help on some machines but not others.
-> >>>>>>>
-> >>>>>>> Please ensure commit messages are line wrapped.
-> >>>>>>>
-> >>>>>>>>
-> >>>>>>>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> >>>>>>>>
-> >>>>>>>> Buglink: https://gitlab.com/qemu-project/qemu/-/issues/3254
-> >>>>>>>> Signed-off-by: Linisha <linisha232@gmail.com>
-> >>>>>>>> ---
-> >>>>>>>>
-> >>>>>>>> v2: Take a different approach based on review feedback from Dani=
-el
-> >>>>>>>>     Berrang=C3=A9 and Peter Maydell. Instead of incorrectly clai=
-ming
-> >>>>>>>>     pflash0/pflash1 are virt-only (they actually work on x86 pc/=
-q35
-> >>>>>>>>     machines too), add a general note near the start of the intr=
-oduction
-> >>>>>>>>     about how options, properties, and command lines may differ =
-between
-> >>>>>>>>     target architectures and machine types.
-> >>>>>>>>
-> >>>>>>>>
-> >>>>>>>>  docs/system/introduction.rst | 9 +++++++++
-> >>>>>>>>  1 file changed, 9 insertions(+)
-> >>>>>>>>
-> >>>>>>>> diff --git a/docs/system/introduction.rst b/docs/system/introduc=
-tion.rst
-> >>>>>>>> index bec7291e47..8d9ef61d26 100644
-> >>>>>>>> --- a/docs/system/introduction.rst
-> >>>>>>>> +++ b/docs/system/introduction.rst
-> >>>>>>>> @@ -1,6 +1,15 @@
-> >>>>>>>>  Introduction
-> >>>>>>>>  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >>>>>>>>
-> >>>>>>>> +.. note::
-> >>>>>>>> +   QEMU supports many different target CPU architectures and ma=
-ny
-> >>>>>>>> +   different machine types for each architecture. Options, prop=
-erties,
-> >>>>>>>> +   and command lines that work for one architecture or machine =
-type
-> >>>>>>>> +   will not necessarily work on another. The examples shown in =
-this
-> >>>>>>>> +   manual are specific to the architecture and machine type bei=
-ng
-> >>>>>>>> +   demonstrated. When in doubt, consult the documentation for y=
-our
-> >>>>>>>> +   specific target architecture and machine type.
-> >>>>>>>> +
-> >>>>>>>
-> >>>>>>> Not convinced many people will read this, but I gues it doesn't
-> >>>>>>> hurt.
-> >>>>>>>
-> >>>>>>> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> >>>>>>>
-> >>>>>>>
-> >>>>>>>>  .. _Accelerators:
-> >>>>>>>>
-> >>>>>>>>  Virtualisation Accelerators
-> >>>>>>>> --
-> >>>>>>>> 2.47.0.windows.1
-> >>>>>>>>
-> >>>>>>>
-> >>>>>>> With regards,
-> >>>>>>> Daniel
-> >>>>>>
-> >>>>
->
+Add a note near the start of the introduction explaining that QEMU
+options, properties, and command lines may differ between target
+architectures and machine types. This helps prevent confusion when
+examples shown for one architecture do not work for another, such as
+the pflash0/pflash1 options visible in -machine help on some machines
+but not others.
+
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Buglink: https://gitlab.com/qemu-project/qemu/-/issues/3254
+Signed-off-by: Linisha <linisha232@gmail.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Link: https://lore.kernel.org/qemu-devel/20260626181118.1136-1-linisha232@gmail.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ docs/system/introduction.rst | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/docs/system/introduction.rst b/docs/system/introduction.rst
+index bec7291e476..8d9ef61d262 100644
+--- a/docs/system/introduction.rst
++++ b/docs/system/introduction.rst
+@@ -1,6 +1,15 @@
+ Introduction
+ ============
+ 
++.. note::
++   QEMU supports many different target CPU architectures and many
++   different machine types for each architecture. Options, properties,
++   and command lines that work for one architecture or machine type
++   will not necessarily work on another. The examples shown in this
++   manual are specific to the architecture and machine type being
++   demonstrated. When in doubt, consult the documentation for your
++   specific target architecture and machine type.
++
+ .. _Accelerators:
+ 
+ Virtualisation Accelerators
+-- 
+2.47.3
+
 
