@@ -4,64 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 314D0CD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 06:12:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEE1BCD4F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 06:57:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcznC-0007i8-PR; Fri, 26 Jun 2026 02:11:58 -0400
+	id 1wd0UB-0008Rc-4V; Fri, 26 Jun 2026 02:56:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wcznA-0007hy-2U
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 02:11:56 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
+ id 1wd0UA-0008RT-Gd
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 02:56:22 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wczn8-0008Id-7E
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 02:11:55 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 30C3C43F69;
- Fri, 26 Jun 2026 06:11:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D88B1F00A3D;
- Fri, 26 Jun 2026 06:11:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1782454305;
- bh=cHpPxak8ar0tO5SS2LI5zB4TQj0hoiurPZWrQ6MM8RA=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=ASjDxDMwJ4y03PSIVnFGqFc25S4P8Hen9Dkemejv5fu7hYqy4ybj1wemgXAsivS0k
- jgh/1YrEsC0/eeUk7RUJ4FepnXgd9X4nPR0nRB+dUwVT4D/uxCeW8Cw6SidqNwcLaD
- a+F/0+JqVO6V/X780/VTS07lHp1rMcnECcLbIohZfN1dpF8MsKHvw4PteX9zPgjx2d
- PjX4MYwaNEuaYdtkyt+7p4CrXM4jGmZF95UjsvCcRU4ukqfPavqt6VPrn0FmYwKQjl
- DyzDgSeOtEchMltPzwYEsKPAwpRwPGrFrM5mTt4Dt40kWOXUvsY4HidJhdgdqUURij
- 17e8AzdJaLH8Q==
-Date: Fri, 26 Jun 2026 11:39:59 +0530
-From: Naveen N Rao <naveen@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>, 
-	qemu-devel <qemu-devel@nongnu.org>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Nikunj A Dadhania <nikunj@amd.com>, 
- Tom Lendacky <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>, 
- Roy Hopkins <roy.hopkins@randomman.co.uk>,
- Srikanth Aithal <srikanth.aithal@amd.com>, 
- Kim Phillips <kim.phillips@amd.com>, Joerg Roedel <joro@8bytes.org>
-Subject: Re: [PATCH v4 0/9] target/i386: SEV: Add support for enabling VMSA
- SEV features
-Message-ID: <aj4XGXdOqxM1TYnQ@blrnaveerao1>
-References: <cover.1779281646.git.naveen@kernel.org>
- <aifFPGfS8sv9WPgk@blrnaveerao1>
+ (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
+ id 1wd0U8-0007vz-Ub
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 02:56:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1782456981; x=1813992981;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=LFZDeluVb0jYrFBCNzRihUZyA/8sIedwSTGxxS78Gns=;
+ b=hfxUme5r6748hnqci+D158gDWHlh87s27xFtXbNI4ixYyobejJucwCq0
+ M44tQE15PxVEtiAyHIPW3dWGZO9nOX9cUBmZU9IvSYUu4aoB86hMv2s4c
+ 2OP18mPlNEQW0X2Raz8IMeODbEaiZSWRQyCxZlc9JTJV2Jd8BhcvlmgTe
+ /fm9yeK3tG/aqg+CmoX5uRFLoKLcn2h0eyR9koJyYwd0whwzNJUf0evyn
+ ifcgzJ4JT4w9kr8bFws8WEh780YpITJDMmpT4M2E9L1urrEWUxLquB5I6
+ 39l7zm6EldLfSw3SdPfrUXKtGHFNHWlkfVB/KASwiWgEAKyaoWPtJU04c w==;
+X-CSE-ConnectionGUID: 17KyRSkXQw6pjZ//4Kc7Dg==
+X-CSE-MsgGUID: xQhcrnp7SFamS70Lf2GmXg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11828"; a="85802355"
+X-IronPort-AV: E=Sophos;i="6.24,226,1774335600"; d="scan'208";a="85802355"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Jun 2026 23:56:20 -0700
+X-CSE-ConnectionGUID: ZsEt5uf4TjWAgb5WATCW/g==
+X-CSE-MsgGUID: xxUVM1IpSFaUxXRvE21K9Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,226,1774335600"; d="scan'208";a="244865896"
+Received: from junjie-desk-dev.bj.intel.com ([10.238.152.71])
+ by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Jun 2026 23:56:18 -0700
+From: Junjie Cao <junjie.cao@intel.com>
+To: qemu-devel@nongnu.org
+Cc: Jonathan Cameron <jic23@kernel.org>, linux-cxl@vger.kernel.org,
+ junjie.cao@intel.com
+Subject: [PATCH 5/6] hw/cxl: clear event logs,
+ scan media and interrupt policy on reset
+Date: Fri, 26 Jun 2026 14:21:48 +0800
+Message-ID: <20260626062149.1844334-6-junjie.cao@intel.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260626062149.1844334-1-junjie.cao@intel.com>
+References: <20260626062149.1844334-1-junjie.cao@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aifFPGfS8sv9WPgk@blrnaveerao1>
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=naveen@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=junjie.cao@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,39 +83,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+Event records, scan media results and event interrupt settings are
+device-internal dynamic state that should not survive a device reset.
 
-On Tue, Jun 09, 2026 at 01:20:58PM +0530, Naveen N Rao wrote:
-> Hi Paolo,
-> 
-> On Wed, May 20, 2026 at 06:57:53PM +0530, Naveen N Rao (AMD) wrote:
-> > This series adds support for enabling VMSA SEV features for SEV-SNP 
-> > guests through the Qemu command line. This is already supported for IGVM 
-> > files, so some of that code has been generalized and reused.
-> > 
-> > The primary change w.r.t v3 (apart from rebasing and targeting v11.1) is 
-> > a change to patch 6/9 to restrict debug-swap to SEV-SNP guests due to a 
-> > compatibility issue with SEV-ES guests and pflash, discussed here:
-> > http://lore.kernel.org/r/fcqjl5a7m27f2mfpblnhgmozbipdjmvpdyk3m5hhzwcenp4cpg@m2ooa7ykrcvs
-> > 
-> > I plan to post a workaround for that separately. For that reason, I have 
-> > retained patch 5/9 so that enabling debug-swap for SEV-ES guests will be 
-> > a simpler subsequent change.
-> > 
-> > The only other concern has been around patch 8/9 adding a new 
-> > tsc-frequency property on sev-snp-guest object (and not re-using the one 
-> > on the cpu object). If that's required/possible, I would appreciate some 
-> > help since I've been unable to get that working.
-> 
-> Can you please review and let me know if you have any concerns with this 
-> series?
+Per CXL r4.0 Section 8.2.10.9.4.6 (Get Scan Media Results), "If the
+Scan Media command has not been called since the last Conventional
+Reset, the device shall return the Unsupported return code."  This
+explicitly invalidates scan media results across reset, so clear the
+scan_media_hasrun flag.
 
-There has only been a small change suggested on patch 2/9 from Daniel so 
-far. Assuming no other concerns with this series, please let me know if 
-you can squash that change in, or if you want me to re-post this series.
+Per CXL r4.0 Section 8.2.10.2.5 (Set Event Interrupt Policy), "All
+event log interrupt settings shall be reset to 00b (No Interrupts) by
+the device on Conventional Reset."  Clear irq_enabled for every event
+log accordingly.
 
+For the event records there is no direct spec mandate to drop the
+stored records on reset; the Event Status register (Table 8-203) is
+non-sticky and resets to zero per Section 9.7, and no reset flavor
+requires the already-reported records to persist.  Draining the queues
+is therefore a reasonable modelling choice that keeps the records
+consistent with the freshly-reset status register, rather than a spec
+requirement.  Call the existing cxl_discard_all_event_records() helper
+to drain all event queues.  The event log infrastructure itself
+(mutexes, IRQ vectors) remains intact as it is initialized once during
+device realize.
 
-Thanks,
-Naveen
+This is also where reset-type gating begins: a wakeup from suspend-to-RAM
+(RESET_TYPE_WAKEUP) is not a Conventional or CXL Reset and must retain
+device-internal state, so the hold phase returns early for that type
+before discarding any records.  This mirrors the RESET_TYPE_WAKEUP
+shortcut in virtio-mem and virtio-balloon.  Only the unconditional
+mailbox interface re-initialization and the in-flight sanitize free
+(whose backing timer was already destroyed) run on a wakeup.
+
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+---
+ hw/mem/cxl_type3.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index a5e6df3033..5bf0cffb72 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1371,6 +1371,23 @@ static void ct3d_reset_hold(Object *obj, ResetType type)
+      */
+     g_free(ct3d->media_op_sanitize);
+     ct3d->media_op_sanitize = NULL;
++
++    /*
++     * A wakeup from suspend-to-RAM is not a Conventional or CXL Reset.  The
++     * device-internal dynamic state cleared below (event logs, scan media
++     * results, and the poison/feature-transfer state cleared in subsequent
++     * patches) must be preserved across resume, so stop here for a wakeup.
++     * virtio-mem and virtio-balloon take the same RESET_TYPE_WAKEUP shortcut.
++     */
++    if (type == RESET_TYPE_WAKEUP) {
++        return;
++    }
++
++    cxl_discard_all_event_records(&ct3d->cxl_dstate);
++    for (int i = 0; i < CXL_EVENT_TYPE_MAX; i++) {
++        ct3d->cxl_dstate.event_logs[i].irq_enabled = false;
++    }
++    ct3d->scan_media_hasrun = false;
+ }
+ 
+ static const Property ct3_props[] = {
+-- 
+2.43.0
 
 
