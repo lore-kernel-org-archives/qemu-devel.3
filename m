@@ -4,105 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5472C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 14:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA39CC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 14:38:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd7YS-000523-Hy; Fri, 26 Jun 2026 10:29:16 -0400
+	id 1wd7gw-0006yP-5R; Fri, 26 Jun 2026 10:38:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wd7YQ-00051f-Ga
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 10:29:14 -0400
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ id 1wd7gp-0006xx-6G
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 10:37:55 -0400
+Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wd7YO-0005b7-P2
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 10:29:14 -0400
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-39ad188f6d8so10974801fa.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 07:29:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782484150; cv=none;
+ id 1wd7gn-0000a5-D1
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 10:37:54 -0400
+Received: by mail-oo1-xc2f.google.com with SMTP id
+ 006d021491bc7-6a0ddedcd00so423150eaf.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 07:37:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782484672; cv=none;
  d=google.com; s=arc-20260327;
- b=E2vuXtnsM6iG9NlIANI5qUBbHHjXQ3KI1SOQIcXWsZehc2+H+ZXK1qPm3rsgWxQ+VJ
- DSdzKFIcQFpAIUxsi4wNmuLCsh/2NgdjunX/1S1d8w3mFSbmXABxcftQfZTHS4Be4/eY
- /sIwhOuxGJNhU8CY99dgjAh6ZEe/WyK5mQukj18xdNXejjBPXE/QuXlm5Xq0tl7rtPks
- zhaVGml0PdUvrWZ7b1kvw6Rni4ZodrjLBJS6tKJCq/t47yT0HGmX/OXEYYfVHNRZKA15
- sVK1+jPsMtgvM55g1QW6IpSFg27WvuuVVT/HHQOFyaylgn0/pJEMtTZgMmPAzSH5U22k
- syLg==
+ b=oAGsAdFWzQegrhbqafvMo+ORI1x6+oQEj5rh23qjhGCyL5pNP5Sz28NcN+Pohuayh7
+ /c2PEo9En6jnv5552VU5DpOZyzMAZHbGH3CQpwUdmys8Kw1OSwex94oU15eBBEdpRVVI
+ m4NBI+xCZXQD7+ITdMZNj22UCR9fLFMcLy07oHcnLS4/0YW7PEY8/vtHj/E2gLXrAL9L
+ uTNjj31US627ZtaTGd0JQVR+Yqxcctl33oK/CENe4kJNMnfD3IllH/xkEfQQzUWIxRHi
+ g+EbjZcvcTqEdTXdBB2sMXjERVXifJtK31fnhSIHMSPAJS3gxeMjyvdfMgXCvVjiZHj8
+ cbmA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=fTcRzdBHr9iCYU03/M7eGozHOShewHXCaAybGINyLc0=;
+ bh=BOTY6fZjRlF8un3qj+KD0CYp8+F9w3+UGj0pmLa7LPw=;
  fh=M53F9OyMyXaprNYz5ycy0QOslAkZgr8cpZk3PVQ0YK0=;
- b=U1rj4+ErMNoUGXJfytqcMioDya9O1Re5xKfvMBSqdoozpqX2SNL0NERbtat3XU8NKD
- tH/gvEWbHtdslL2C+XzU6kuYVNfIDz64kNQ1tfcsPiy/q7xnXMKTcNjS637VBUwA7xVy
- XyMGbzomOos8h0S0nLbDieMrrzo7qv4GFB2LfJIDnqJiT/yG+jM6WkD4awZdBEdbki0h
- AMmEiMOvOqMTxC6LJwBusnt9dU9fNbT/K7J/dCicDAXXR2/as1QmwUX1LptFNoqD689b
- GYBglnb4AjOShIFZAomEpu4DxzOz8QqSZcTFQlIs1BEPJfzlU1WcSl66d7T4gxIgNnBq
- EOdg==; darn=nongnu.org
+ b=sIznhECk4SByphL21lr1LTxldOHKClklXjZOJJbfQJJomhGkYjB6Bv4PvHpV6QQefL
+ OlF5cR8+wCyJOM7FBz0RYMdsDhOW6T7ZP9Sst6P67mTuCzRT5w4QtjAzYRkaQXW/LDdF
+ O943hDmI5QUH9gfrx1RatStuLF7b5/tyP1rZOluAVw12BA1KFekXIXOFFQssERvS9eQb
+ JuA/stGJ9euhqoxVyOKDxwMF1i7Pxc6qlZKHcI9h1D5BzB7MwHxCk3HDKFqsrEjFkanF
+ U5LX40vNNnAsaNfXWqcwhf7CNlenrX3ZOZGSamVbT1egHUGa70s0k+DplTPdyIYLsyL8
+ jmKQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782484150; x=1783088950; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782484672; x=1783089472; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fTcRzdBHr9iCYU03/M7eGozHOShewHXCaAybGINyLc0=;
- b=LmP1cPpHDzfsrnC8TSrZCg180aLXSFv3I9dj6yLgzCEKVVSfFN424qlaKKr9YJlEd+
- htFeAqxJHeL+lJ4EQfCRUSFjeycfDHLiX+ZFzY2NsfB6rr1oKIF0xlnZg9e29EGs+45H
- M9My9z75ooKe8TsOjcBoN81az7785Gqcr9UJcoGgyqZFPu3Jy4ElBlCoK4yIhk9PlhMp
- I/K8dabi1bCKkSM0hvnbc1jUvDyuR8Z5cf5TF1g43mpgY+VNwT1TY7Mb9hDenhIVivIO
- wFTTBdvN0M6dgMER30Nb/Zu4MquC1CV2boJGjUdFN3D3C+uaAqPH01WNmuOixjQqjmb6
- 3YZA==
+ bh=BOTY6fZjRlF8un3qj+KD0CYp8+F9w3+UGj0pmLa7LPw=;
+ b=V1IOn+k8su4M03cxhiuCvk5f2ebND1XkGB1Binger6+THjTpCM4sPwgAKoBz1nGInW
+ AdKakWFZh5vQOutiRdkyU3YVarqDQwp8iSoydACHDbTOv3j4cKIXs8b8InQWSwQ5yUnM
+ WMgqfW14ZzsC7wy+UqYBgVKqGADMJdIXWuLZge/WPlZN7cunZLFYogknMOjA1CLcqSh2
+ dHKSRZHtYAW2wDD/ImiWwU1+JYcKdLZsHT+uZKfwQ/Airzc3n5FjqQbQyrg2Z8ShYKRB
+ 1/mTfOuA2/mKLmwFUNrvE2DWUNF5hAVfQgYMYld66l3o5OehxHuwrvgx1a6as11IKaDQ
+ b27w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782484150; x=1783088950;
+ d=1e100.net; s=20251104; t=1782484672; x=1783089472;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=fTcRzdBHr9iCYU03/M7eGozHOShewHXCaAybGINyLc0=;
- b=aDNn6V28IKW/yk/km2OvNVLLDDqK/oFBD9szBi9bSVIzmekXuVgxsfAD3BLlvDzl/f
- njickyirlnUBh3nwB2wTPrHHpaGRPXlJCaiAqoYFlF5YbaHQbthWcLiPRZY1vUH5/gVV
- ds/WbKPlomSy743f9K1e+uxgDNs4K5Sgzc8raJuV5hhcXuga+KVnhhgk/pH/Zso8ETDp
- yCatTMIR4iWBdvWelO/oq6q1nPrrrMnGxeW0Jiat+F6HLEWDpMNQOpCraHpmWbRUfpMf
- Mi5tvHs+J0j9Gt/MWCvGCkW6VUCPMdjCBEd13tshNdkq86p2uz1ifcDvjM5uvotkcCOj
- XJnw==
-X-Gm-Message-State: AOJu0YzoGz5ocoKj5zwuGdHQdB8ftlCyp2W/lb7XgLZDHxB/XFxmft28
- xXSi64J5fWHmrlwysvpc3rvv7euaVYMxIhrVdYqmnujj9OIk6WbanDbEjbflOh1Inacs7UQ1B0s
- 1jHLx5o7XLzytb/MMn/XXARUDYOcrtSU=
-X-Gm-Gg: AfdE7cnRYTYcfII6GR4OTwnQN0WsRgqVPnlrcujMNDNNDvEsAvAxpfYqDBuES4GNwRx
- MPulVhkq4NYEwMdOB+/nbOPYhruGSymwAv/1wcY4uklMtoGD8u02PEFQQeZ3tvH5FAKC/T4SOD1
- YxbmeEISigcXvx7qVSRRhPUyQkx5qZxD+lfjU7ge8zRgNR/6x3mbk5vlH9QrOnn9p6f/Xxus3Tq
- raye4R34ilYmxNq0JHGrOyVDBgtYnwcnHPO7+RLly5T41BWZ/wIubvoAg8WS5n0bnDUc5xFTewv
- 1BAJ9PNwFSQ2P0UzDknAzzlJ+VzCd/IfQnb2CA==
-X-Received: by 2002:a05:6512:3983:b0:5aa:6e86:55e5 with SMTP id
- 2adb3069b0e04-5aea945b98emr199400e87.13.1782484149900; Fri, 26 Jun 2026
- 07:29:09 -0700 (PDT)
+ bh=BOTY6fZjRlF8un3qj+KD0CYp8+F9w3+UGj0pmLa7LPw=;
+ b=eRXWmcEPR2EyyI8710+wnA5YA999uExEl1fO0fVFe6lFub2e/SKUE4f91Z8inoNAcd
+ VKW5T0k1oFvoTnCTc+1oSxo25c+nhpG5W+dvn2gj9Z3dkBWVHWb6J0J4guEJabThvI4g
+ LK8Ot2KsVSYkThwKe1e7rE9ciyHQBJgcjuuC5m1TqaJvZj4chX0J+gC+Kz7up3p43Qa7
+ nnlg8AJ32JFK+BUhdYZCwabVyjkkcf7QK1bZb9eoXEfqj5dO1cO+sCHyHIsH5IR/cvzR
+ 9thb9dOgVIvoluWPMkgRdQzbMxg7enLUBO8REQL8X9CBMN9Hzb+8FxLr2dNoLABhq3tw
+ AsZg==
+X-Gm-Message-State: AOJu0YymGvfhHHPp45wjAxXVM9ZkF097ne9l2J/k/iPJ20HiF6NryNe6
+ j9M5nD7w/fpryBeH5/MALWEaNfoF5HnE81+dXuzVhr6/WIczVdFALxtlRywBRgHPSKL7LoZeHUx
+ 4vERA2ksOVu5b9YRi8MNlFMn83Gjzowg=
+X-Gm-Gg: AfdE7clj7bmxicZYtsjQCHjoj8LmP8e8FCHOpB6sQAPXq9gQXQCTfVhkDqJWJr5dqvI
+ MSPPd3LGgHn7FB/IbGNoRGYJKQhjOg/9hVpiEFYaiAW3XK5u/vDhhKh8rRVHDnKBbjMfgvNcC/t
+ O3QRlw4XUYBvDNoXiu+f6sg+jotDPliK0nbTFEZPKDvKQpFt8Hanc8mygCeSejqm5Bd5f2Zc3T9
+ L5tTnqJ25fwKxfMy8qbbsD7ElG2aSUwe0LjxoQ9Ph7xKroOg7k8uiHHvnRjAews1h8gqRO7NnLp
+ trj1rYtmkrhLp0WbqcfOS0ZmBuk=
+X-Received: by 2002:a05:6820:1625:b0:696:8325:f7f5 with SMTP id
+ 006d021491bc7-6a13514d844mr5506700eaf.4.1782484672064; Fri, 26 Jun 2026
+ 07:37:52 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260618032010.88755-1-aadeshveer07@gmail.com>
- <878q84owlq.fsf@suse.de>
-In-Reply-To: <878q84owlq.fsf@suse.de>
+ <20260618032010.88755-3-aadeshveer07@gmail.com> <874iisoviy.fsf@suse.de>
+In-Reply-To: <874iisoviy.fsf@suse.de>
 From: Aadeshveer Singh <aadeshveer07@gmail.com>
-Date: Fri, 26 Jun 2026 19:58:55 +0530
-X-Gm-Features: AVVi8CekDCB1KIK9qL6z0wbhRzpVExKPpsPbEdURroNW444pdNn5Pba4plyY7gM
-Message-ID: <CA++cPvLDjpsdmhfz4Z1FmgGZp48T99jrTD0d0b0ET5n_6SRvmA@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/5] migration: fast snapshot load
+Date: Fri, 26 Jun 2026 20:07:37 +0530
+X-Gm-Features: AVVi8Cd_SdlamvznCkbz5ufjJDzDQ0W1bBJXY4ut-CWJK4kz0i0C13IvsnSJLso
+Message-ID: <CA++cPvLFggctBwO=KLY-dFWVy6Y4FoqjqWnf4P5Pto-2Oza+gw@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/5] migration: add support for fault thread to load
+ pages from disk
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, peterx@redhat.com, pbonzini@redhat.com, 
  philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=aadeshveer07@gmail.com; helo=mail-lj1-x22b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-oo1-xc2f.google.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URG_BIZ=0.573 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,92 +119,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 24, 2026 at 7:43=E2=80=AFPM Fabiano Rosas <farosas@suse.de> wro=
+On Wed, Jun 24, 2026 at 8:06=E2=80=AFPM Fabiano Rosas <farosas@suse.de> wro=
 te:
 >
 > Aadeshveer Singh <aadeshveer07@gmail.com> writes:
 >
-> > This RFC implements a "fast snapshot load" mechanism to significantly
-> > reduce the perceived resume time of a VM from a snapshot file.
+> > In fast snapshot load, we would like to serve faults as soon as possibl=
+e
+> > hence loading pages directly instead of requesting a source
 > >
-> > Currently, resuming a VM from a snapshot file requires loading all RAM
-> > pages into the QEMU instance before execution begins. This extension
-> > allows the user to run the VM nearly instantly by loading only the
-> > required device states up front and loading RAM pages lazily, by
-> > trapping access to pages that have not yet been loaded.
+> > Add postcopy_mapped_ram_load_page() function which serves single page
+> > fault by reading the snapshot file. It uses bitmap_test_and_clear_atomi=
+c
+> > on pending_bmap to coordinate between threads so each page is loaded
+> > exactly once. Non-zero pages are read using qemu_get_buffer_at into a
+> > temporary page (for loading page atomically), which is then placed usin=
+g
+> > postcopy_place_page. Zero pages are placed directly using
+> > postcopy_place_page_zero.
 > >
-> > Using the Linux userfaultfd syscall, a fault thread catches all page
-> > faults caused by the guest and loads in the pages required to keep
-> > the VM running. Concurrently, an eager background thread iteratively
-> > loads all remaining pages into RAM so the guest does not have to
-> > depend on the fault thread indefinitely.
+> > Update postcopy_ram_fault_thread to call postcopy_mapped_ram_load_page
+> > instead of requesting source in case of fast snapshot load. to_src_file
+> > check is bypassed in fast snapshot load case as there is no source
 > >
-> > Much of code is reused from postcopy for fault handling and precopy
-> > for reading mapped ram file. Implementation revolves around two
-> > threads named the fault thread and eager load thread. Fault thread as
-> > name suggests catches page faults by the guest and serves them using
-> > userfaultfd. Postcopy fault thread is reused but instead of requesting
-> > source for a page it loads the page directly by reading form file. In
-> > order to remove the dependency of guest on fault thread indefinitely
-> > the eager load thread loads in the entire RAM sequentially, and after
-> > iterating through the entire RAM signals fault thread to exit and
-> > calls cleanup.
+> > Allocate another channel in postcopy_temp_pages_setup(like the preempt
+> > case), for both the fault thread and eager thread to load pages
+> > independently.
 > >
-> > In order to prevent the case of a page being loaded twice(in the
-> > case when eager load thread is loading it and fault thread also
-> > tries to serve fault on same page) a bitmap called pending_bmap is
-> > used to track pages which are pending and not being loaded by any
-> > thread. Atomic operations on this bitmap allows coordination between
-> > threads to prevent any unwanted behaviours
+> > In case of failure to read required page crash the system using assert
+> > as disk failure is critical and VM cannot be recovered.
 > >
+> > Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+> > ---
+> >  migration/postcopy-ram.c | 92 ++++++++++++++++++++++++++++++++--------
+> >  1 file changed, 75 insertions(+), 17 deletions(-)
+> >
+> > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+> > index f5ef93f193..1ec20a07dd 100644
+> > --- a/migration/postcopy-ram.c
+> > +++ b/migration/postcopy-ram.c
+> > @@ -949,6 +949,53 @@ int postcopy_wake_shared(struct PostCopyFD *pcfd,
+> >                         pagesize);
+> >  }
+> >
+> > +/*
+> > + * Load a page from RAMBlock at offset at given host address.
+> > + * Used by postcopy ram fault thread and eager thread in fast snapshot=
+ load
+> > + * case. rb_offset: Offset of page in RAMBlock haddr: Base of page whe=
+re to load
+> > + * in page Channel: Used to identify between threads and use correspon=
+ding temp
+> > + * pages Returns 0 on success
+> > + */
+> > +static int postcopy_mapped_ram_load_page(MigrationIncomingState *mis,
+> > +                                         RAMBlock *rb, ram_addr_t rb_o=
+ffset,
+> > +                                         uint64_t haddr, int channel)
+> > +{
+> > +    int ret =3D 0;
+> > +    unsigned long page;
+> > +    void *host =3D (void *)haddr;
+> > +    void *place_source =3D mis->postcopy_tmp_pages[channel].tmp_huge_p=
+age;
+> > +    size_t read;
+> > +
+> > +    page =3D rb_offset >> TARGET_PAGE_BITS;
+> > +
+> > +    if (bitmap_test_and_clear_atomic(rb->pending_bmap, page, 1)) {
+> > +        if (test_bit(page, rb->nonzeropages)) {
+> > +            /*
+> > +             * qemu_get_buffer_at uses preadv which is thread safe we =
+do not
+> > +             * need different channels
+> > +             */
+> > +            read =3D qemu_get_buffer_at(mis->from_src_file, place_sour=
+ce,
+> > +                                      TARGET_PAGE_SIZE,
+> > +                                      rb->pages_offset + rb_offset);
+> > +
+> > +            g_assert(read =3D=3D TARGET_PAGE_SIZE);
+> > +
+> > +            ret =3D postcopy_place_page(mis, host, place_source, rb);
+> > +            if (ret) {
+> > +                return ret;
+> > +            }
+> > +
+> > +        } else {
+> > +            /* zero page */
+> > +            ret =3D postcopy_place_page_zero(mis, host, rb);
+> > +            if (ret) {
+> > +                return ret;
+> > +            }
+> > +        }
+> > +    }
+> > +    return ret;
+> > +}
+> > +
+> >  /*
+> >   * NOTE: @tid is only used when postcopy-blocktime feature is enabled,=
+ and
+> >   * also optional: when zero is provided, the fault accounting will be =
+ignored.
+> > @@ -1320,11 +1367,11 @@ static void *postcopy_ram_fault_thread(void *op=
+aque)
+> >              break;
+> >          }
+> >
+> > -        if (!mis->to_src_file) {
+> > +        if (!migrate_fast_snapshot_load() && !mis->to_src_file) {
+> >              /*
+> > -             * Possibly someone tells us that the return path is
+> > -             * broken already using the event. We should hold until
+> > -             * the channel is rebuilt.
+> > +             * Fast snapshot load has no to src file or in other case =
+someone
+> > +             * possibly tells us that the return path is broken alread=
+y using
+> > +             * the event. We should hold until the channel is rebuilt.
+> >               */
+> >              postcopy_pause_fault_thread(mis);
+> >          }
+> > @@ -1387,18 +1434,26 @@ static void *postcopy_ram_fault_thread(void *op=
+aque)
+> >                                                  qemu_ram_get_idstr(rb)=
+,
+> >                                                  rb_offset,
+> >                                                  msg.arg.pagefault.feat=
+.ptid);
+> > +
+> > +            if (migrate_fast_snapshot_load()) {
 >
-> How does it work if a second savevm happens while the RAM has not been
-> yet entirely loaded?
+> You probably want to check mapped_ram here instead as this is already
+> under the postcopy path.
+>
+> I haven't reviewed the entire series yet, but I'm questioning whether we
+> need the new term (fast snapshot) at all.
 
-Hi Fabiano,
-Thanks for the review across the series.
+You are right. I initially introduced the migrate_fast_snapshot_load()
+wrapper to improve readability, as checking multiple capabilities
+might make it non-trivial for someone new to the codebase to
+understand.
 
-To answer this: If a second savevm is issued before the RAM is fully
-loaded, it will be blocked. Because the migration state remains
-MIGRATION_STATUS_POSTCOPY_ACTIVE until the eager thread finishes
-reading the last page from disk, standard QEMU migration checks will
-reject any new savevm or migration requests.
+However, I agree that introducing a new wrapper unnecessarily
+complicates capabilities. Adding comments around these checks will
+achieve that same readability without increasing the API footprint.
+
+I will drop the custom wrapper and consolidate the checks for v2.
 
 >
-> > This patch was tested using a Debian 13 bare minimum system and Fedora
-> > 44 KDE, snapshots for both are loaded successfully with no error.
+> > +                if (postcopy_mapped_ram_load_page(
+> > +                        mis, rb, rb_offset, msg.arg.pagefault.address,=
+ 1)) {
+> > +                    break;
+> > +                }
+> > +            } else {
+> >  retry:
+> > -            /*
+> > -             * Send the request to the source - we want to request one
+> > -             * of our host page sizes (which is >=3D TPS)
+> > -             */
+> > -            ret =3D postcopy_request_page(mis, rb, rb_offset,
+> > -                                        msg.arg.pagefault.address,
+> > -                                        msg.arg.pagefault.feat.ptid);
+> > -            if (ret) {
+> > -                /* May be network failure, try to wait for recovery */
+> > -                postcopy_pause_fault_thread(mis);
+> > -                goto retry;
+> > +                /*
+> > +                 * Send the request to the source - we want to request=
+ one
+> > +                 * of our host page sizes (which is >=3D TPS)
+> > +                 */
+> > +                ret =3D postcopy_request_page(mis, rb, rb_offset,
+> > +                                            msg.arg.pagefault.address,
+> > +                                            msg.arg.pagefault.feat.pti=
+d);
+> > +                if (ret) {
+> > +                    /* May be network failure, try to wait for recover=
+y */
+> > +                    postcopy_pause_fault_thread(mis);
+> > +                    goto retry;
+> > +                }
+> >              }
+> >          }
 > >
-> > Next Steps:
-> > - Add testing framework, in qtest and unit tests
-> > - Add support for postcopy-blocktime
-> > - Update documentation
+> > @@ -1471,8 +1526,11 @@ static int postcopy_temp_pages_setup(MigrationIn=
+comingState *mis)
+> >      unsigned i, channels;
+> >      void *temp_page;
 > >
-> > Future direction:
-> > - Add support for hugepages
-> > - Add support for multifd
-> > - Add support for vhost-user
-> >
-> > Aadeshveer Singh (5):
-> >   migration: add RAM Block fields and helpers for fast snapshot load
-> >   migration: add support for fault thread to load pages from disk
-> >   migration: add eager load thread for fast snapshot load
-> >   migration: write up code to run fast snapshot load in
-> >     qemu_loadvm_state
-> >   migration/tests: remove capability conflict test
-> >     postcopy-ram+mapped-ram
-> >
-> >  include/system/ramblock.h          |   8 ++
-> >  migration/migration.c              |  10 +-
-> >  migration/migration.h              |   5 +
-> >  migration/options.c                |  11 +-
-> >  migration/options.h                |   1 +
-> >  migration/postcopy-ram.c           | 167 ++++++++++++++++++++++++++---
-> >  migration/postcopy-ram.h           |   2 +
-> >  migration/qemu-file.c              |  10 +-
-> >  migration/ram.c                    |  61 +++++++++--
-> >  migration/savevm.c                 |  52 ++++++++-
-> >  migration/savevm.h                 |   2 +
-> >  migration/trace-events             |   2 +
-> >  tests/qtest/migration/misc-tests.c |  52 ---------
-> >  13 files changed, 283 insertions(+), 100 deletions(-)
+> > -    if (migrate_postcopy_preempt()) {
+> > -        /* If preemption enabled, need extra channel for urgent reques=
+ts */
+> > +    if (migrate_postcopy_preempt() || migrate_fast_snapshot_load()) {
+> > +        /*
+> > +         * If preemption enabled or it is fast snapshot load, need ext=
+ra channel
+> > +         * for urgent requests/faults
+> > +         */
+> >          mis->postcopy_channels =3D RAM_CHANNEL_MAX;
+> >      } else {
+> >          /* Both precopy/postcopy on the same channel */
 
