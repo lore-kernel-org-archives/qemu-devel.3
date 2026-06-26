@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D00CD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:06:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52A98CD4F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jun 2026 10:06:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wd3R6-0001KD-H4; Fri, 26 Jun 2026 06:05:24 -0400
+	id 1wd3RV-0001Ne-SE; Fri, 26 Jun 2026 06:05:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wd3R4-0001K5-K3
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:05:22 -0400
+ id 1wd3RB-0001Lp-Af
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:05:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wd3Qs-0001wv-FI
- for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:05:20 -0400
+ id 1wd3R9-0002Cc-OE
+ for qemu-devel@nongnu.org; Fri, 26 Jun 2026 06:05:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782468308;
+ s=mimecast20190719; t=1782468311;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=RLbVtQGiG4ru3uqhqJzzg4EnwN7QmmNrLJjw8MvZ544=;
- b=IrS5ZCgPH+78MzLPKT56+TxtXRPSHqQVKk8BVUladhceEgGA49JOzDF2mDeZrfI7LEtRN/
- UBulbEcCad7l2USol+zcnIY3iUB9JXhHcaYALS6v6jDep3ku1P/ZTVMnatyF0Mzn8RK2qX
- h9Z/nnTYO4ATy6caJvubFsKO2QWOhew=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dfgp9oF8S6taRG4f0QnXsq+g8DDTcG+ZqKS7UcXhPUs=;
+ b=ITeRYWlkHHZmhKDoR2s8rKmxgOTaG4pNroUEPSCP2hoJ2GY6+h6n/bhdIeZSAD2Yb+4PIC
+ LNhX1kGZgd9aJF3D3b2WOfRiwWWqwMLVGI6TW5AyYeDrzvSQ7gsMtCPCZaHxvoXB1KiVnZ
+ G2I4dchq7V5Iu+Hsf8TDqQFZSGBfPYU=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-324-SfUBlDUtMj6-abVzD6jK1w-1; Fri, 26 Jun 2026 06:05:06 -0400
-X-MC-Unique: SfUBlDUtMj6-abVzD6jK1w-1
-X-Mimecast-MFC-AGG-ID: SfUBlDUtMj6-abVzD6jK1w_1782468306
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-915f6ff639aso198432285a.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:05:06 -0700 (PDT)
+ us-mta-204-pEm2kGStMAGheo8Htv_eFQ-1; Fri, 26 Jun 2026 06:05:10 -0400
+X-MC-Unique: pEm2kGStMAGheo8Htv_eFQ-1
+X-Mimecast-MFC-AGG-ID: pEm2kGStMAGheo8Htv_eFQ_1782468310
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92158791d14so107574285a.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jun 2026 03:05:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782468306; x=1783073106; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=RLbVtQGiG4ru3uqhqJzzg4EnwN7QmmNrLJjw8MvZ544=;
- b=WoL3a44Uqj/CPpzHjECfx53ntbSl2L4M4DhjOD54kDVJ71WHCEkU00ad7F8ZYOiYv4
- h4coEflrDd8qaZqig9gjL9dXESqcW+j6aaDdJ6phllthrkXrxHxC3iEbIXoO4VC4btcT
- xxGUGMgrwzXayAyqCoZe6/Bucn74atarPwkpLJvp0tNm8bgcY/iiWeqwGHriJbtgilS8
- sgh1tYeP6Du8Ang8FxTaID48UqSFtgmUz+fsoXvXegzpn/m55sriSMm+soDyD33F5oMn
- 0x5agoph3CQ2X/rEyBrkwDcSIvYQrN+r9xsRvtIs2+fYc8NpgNBhUhlJnhAaNfLNTgTp
- 7oTg==
+ d=redhat.com; s=google; t=1782468310; x=1783073110; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=dfgp9oF8S6taRG4f0QnXsq+g8DDTcG+ZqKS7UcXhPUs=;
+ b=jD9M7+AJVnzghZxcyEGkxQeTsxdD7MlWJyrDw3BYe6P6uD0aPXq1pDUDmB9EaBAOFK
+ ZISVw4dC0lhB8Kq0XUlabxy1W0eq4KkVp71EI1c3HBGe+mGFGV65DKJbeHanvAj56EoO
+ IZX5ETNXn5zwiECrXVnXuFqfGpSazfKm6PBBeck6Se4d/tbnic4qt6P0/20n4MdiPppp
+ zSafl8VsiJ9rJ48+uFlNx1dhyExA9YOUorvRkNXl46tJLY6Fy/R3UplUgkbyWUICAeNr
+ +sklpDQaJlMw0w4bwh5hcd8pOTKIxevgi716gnLWksnFxxDKDd5K9FGLK8M3S9TBZmdv
+ bRcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782468306; x=1783073106;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RLbVtQGiG4ru3uqhqJzzg4EnwN7QmmNrLJjw8MvZ544=;
- b=JW+NKJZ23Whz0QPLAxobtw71764c4xQneQV/FFfUhpjdBRT2yE8FsaO5LXz/3NcxYG
- MCqzqlZ82D/uNHDLoAFb/6uK8UWzihpou30k9ttztQJTkHFnXjRKR5xECIK5xcXfwGeQ
- Fz0GMa/Zr36TKxhW3j+d7VuHuSwRXZDc4LNACxwefGxRa6X1PkWOdCb13xVluI8XbDy5
- UyqT+gyqYRx8PG6aWRWwvI32zSZ4VQdhWrxD8UU/ingXeTDMlS6DBcjy58SVacKbag0G
- Hv81cVIEvd4JisDXEB/O3EaboRrfsv0h1c1EymhbduXESMnd2pVx1JCxyjH6xDD4CZ2s
- xFIw==
-X-Gm-Message-State: AOJu0YyFFUm/hkTcJYQV1iGiV/O8KgIyZWu7wVSZWQ61JrSj3X61skfI
- vgXLhgRpAwJuvVR8HP7RD3G7lsyXma6OoBd8nx+YBiYyzeFgJVjc6FX1C++QidaTh0RxXLSR8R8
- /MHUjoTRDcZN1OZd5qVjulKteplaSczD8H70Z6LQMl7tKvn+r55+N80HY
-X-Gm-Gg: AfdE7ckvxTJoxlNbQLCh5SMA5DDtGnFfhs7naBUWnSfyXBMiki9/Ch0YwY8g9erBzoP
- mHnwA9sIy3roPGzY+fEkUGvi1k0jZyk0d6eT0QSbo9TP6uzHGVzwi6TRm1qCxdsNDPw1mTN5Kd0
- 3Yov3E84l8QsACJIFwKbHigAVdpUUZHrisBIoirohXOEb6WNLoci3adygL7Hp/uOVs+2+U29UG1
- Dpij43z5Wmp23eGXSAOB1WPNhpNoK5LndTuARw5zb/q4cH8m08y7v9AEJo4QtaBfROw2xgefgt7
- Gpw18yDf1m+9397W5xOHipyVeqd6Aa+UlnhFTfI5m2MkQx99+xqssHa7DSRQ3KzIg4/6631Nsp1
- jIMjDxXF/l4hp4B+IKu00V8GVWsnUUQBPokX9BErkcWke7rzx8ElWPaTarNdvSCvm/kJIUK+vm7
- NjXylu
-X-Received: by 2002:a05:620a:470c:b0:916:1970:5e66 with SMTP id
- af79cd13be357-9293c9e81f2mr920650585a.44.1782468305922; 
- Fri, 26 Jun 2026 03:05:05 -0700 (PDT)
-X-Received: by 2002:a05:620a:470c:b0:916:1970:5e66 with SMTP id
- af79cd13be357-9293c9e81f2mr920643485a.44.1782468305321; 
- Fri, 26 Jun 2026 03:05:05 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782468310; x=1783073110;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=dfgp9oF8S6taRG4f0QnXsq+g8DDTcG+ZqKS7UcXhPUs=;
+ b=jZZkOxMMyx+wcwG89WUNxGse3GYxGspBJYA6TZom/Esd+H+thM7iKCcKVxqUhsmiwP
+ RlBJ0WUCz11zc7hLekMv/6TzLfDyGr7LHvfxe+ILIZ0I6pXmeT1r96fO7O41rdrlOAJe
+ 2mpBh8iLanKrI71xKGA6hcjMw78w/kSRvBKXipGEJ4Cyi66LtSoBFqGvDbuaKcpNQr/J
+ d+ayzKz70d5ltzMLsTk4J+x/W+2B08/NM+dfbj4rDQhOfeE1f4h677hnW00S3CW4dLpE
+ jchCddsEyKnwJ7ZDZD2jrI/O7fKgMojYUxMiu89siHsFOSl1azcljQnuyHwtqZaGwDg5
+ AiXw==
+X-Gm-Message-State: AOJu0YyXtjR0+3dLVKT/qASM87WqNnnJSKHYl9BKvWrM1girmyNAhqVM
+ ohQsUl/RN3PBva0d1EttasXW/h38W69lDg546FEnIbDCVqqXl0RxYFX0YYOstdP/zJXSmw7RLxe
+ O9nXOtwZJ3xewnCKN3HaVSwogL2MhjalaxApXe5APPjIRJ7mDOZN4Dleuo3VEIZGR
+X-Gm-Gg: AfdE7ckDY3OkMWYIyYo/IvsZFzuy/uMY0KMWhYz4AjMBtslBKdty+dJNMVpwZxWbQs2
+ h/3DKVR6ajlfrsa4UDn6cY6OMm4X+r5ZGwP5z9jNWaoZuWGD5XLl5jxBWGbvmf+irfP4BD5Ugq7
+ gF/0wV+Whitzw21bcWs+L73EICBdubJcEbQdLWUxHGodB4RN0WBu7VTLvTafOoeClL09hzDJmIa
+ 4C+0jEDU3HdX7dXgXb9UFr6XQiKtz0raWvjKiaexNvZgzuXMgqEP1HVhEHNYj9cvVBLlXn3l276
+ xEG36dbtk5PutXpSLvfbrxJ6Ne1i2qqcWWZr7BfkUvhfI4aloDvTlPlASSACNPIHJngT5ixzqPU
+ LdgfOoyQXuvT97Tin6s+jZBd5EP+LspKVG1/JWTyxfG1wrpGVZPjILOuIsigL5Nd8r9A22bcSwu
+ aXbEoC
+X-Received: by 2002:a05:620a:1b8b:b0:922:9cd7:897f with SMTP id
+ af79cd13be357-9293b477292mr941065785a.4.1782468309804; 
+ Fri, 26 Jun 2026 03:05:09 -0700 (PDT)
+X-Received: by 2002:a05:620a:1b8b:b0:922:9cd7:897f with SMTP id
+ af79cd13be357-9293b477292mr941061985a.4.1782468309345; 
+ Fri, 26 Jun 2026 03:05:09 -0700 (PDT)
 Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([151.29.41.106])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-925fd390e76sm1122716485a.3.2026.06.26.03.05.03
+ af79cd13be357-925fd390e76sm1122716485a.3.2026.06.26.03.05.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jun 2026 03:05:04 -0700 (PDT)
+ Fri, 26 Jun 2026 03:05:08 -0700 (PDT)
 From: Luigi Leonardi <leonardi@redhat.com>
-Subject: [PATCH v6 0/3] igvm: misc changes and device tree support
-Date: Fri, 26 Jun 2026 12:04:00 +0200
-Message-Id: <20260626-microvm_device_tree-v6-0-9cd13cf057e2@redhat.com>
+Date: Fri, 26 Jun 2026 12:04:02 +0200
+Subject: [PATCH v6 2/3] igvm: use idiomatic meson conditional for IGVM
+ build files
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/33PzW7DIAwH8FepOI/JfISQnfYe01QFsBcOaSYSo
- VZV3n1uT5mS7fg39s/mLmYsGWfxdrqLgjXPebpwcC8nEYf+8oUyJ85Cg3bgwMsxxzLV8Zy4OeJ
- 5KYiS30w0QQX0TvDkd0HK16f68cl5yPMyldtzSVWP6v9eVRJka8C3tk8A4N8LpqFfXuM0igdY9
- QZRcIxoRiwFa1mKtqMdYraIOkaMVDJR6CLxHRD2l9gt0hwjlhGlfd90lDS1e6TZIPoPpOHvhEi
- kFCWXVPyFrOv6A3GQcLjLAQAA
-X-Change-ID: 20260608-microvm_device_tree-0263c3b1be86
+Message-Id: <20260626-microvm_device_tree-v6-2-9cd13cf057e2@redhat.com>
+References: <20260626-microvm_device_tree-v6-0-9cd13cf057e2@redhat.com>
+In-Reply-To: <20260626-microvm_device_tree-v6-0-9cd13cf057e2@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, 
  Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
@@ -125,66 +123,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This device tree will be consumed by Coconut SVSM with the upcoming device
-tree support [1]. This will allow SVSM to run on a normal CPU
-(not AMD SEV-SNP) and execute all its tests using upstream QEMU.
+Replace the explicit igvm.found() check with system_ss.add(when:,
+if_true:), matching the pattern used by all other optional backends.
 
-Eventually edk2 will also be able to consume DT via IGVM, but the work
-has not started yet.
-
-This series contains one patch that simplifies meson logic and another one
-that changes the return behaviour of `qigvm_find_param_entry`.
-
-This is to avoid conflicts with the device tree patch itself, that needs
-to modify the same lines.
-
-[1] https://github.com/coconut-svsm/svsm/pull/1006
-
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
 ---
-Changes in v6:
-- Picked up https://lore.kernel.org/qemu-devel/20260618-igvm_error-v2-1-2b03f4790e4f@redhat.com/
-and fixed conflicts
-- Link to v5: https://lore.kernel.org/qemu-devel/20260625-microvm_device_tree-v5-0-bcff11fd6d1c@redhat.com
+ backends/meson.build | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-Changes in v5:
-- Added a patch, suggested by Paolo, to simplify current igvm meson config
-- Added missing fdt dependency for igvm in meson.
-- Link to v4: https://lore.kernel.org/qemu-devel/20260615-microvm_device_tree-v4-1-128a59fd2f78@redhat.com
+diff --git a/backends/meson.build b/backends/meson.build
+index 60021f45d1..aabfaea5fd 100644
+--- a/backends/meson.build
++++ b/backends/meson.build
+@@ -34,11 +34,8 @@ if have_vhost_user_crypto
+ endif
+ system_ss.add(when: gio, if_true: files('dbus-vmstate.c'))
+ system_ss.add(when: 'CONFIG_SGX', if_true: files('hostmem-epc.c'))
+-if igvm.found()
+-  system_ss.add(igvm)
+-  system_ss.add(files('igvm-cfg.c'), igvm)
+-  system_ss.add(files('igvm.c'), igvm)
+-endif
++
++system_ss.add(when: igvm, if_true: [files('igvm-cfg.c', 'igvm.c')])
+ 
+ system_ss.add(when: 'CONFIG_SPDM_SOCKET', if_true: files('spdm-socket.c'))
+ 
 
-Changes in v4:
-- Using g_memdup2 [Stefano]
-- madt directive is now protected by CONFIG_FDT [Stefano]
-- Link to v3: https://lore.kernel.org/qemu-devel/20260611-microvm_device_tree-v3-1-dfb9cf0000b8@redhat.com
-
-Changes in v3:
-- Device tree is packed in igvm core code. [Gerd]
-- Dropped microvm patch.
-- Link to v2: https://lore.kernel.org/qemu-devel/20260610-microvm_device_tree-v2-0-4fb44730c49f@redhat.com
-
-Changes in v2:
-- First patch introduced a shadowed variable, fixed.
-- When parameter area is not found return -1.
-- Moved `qigvm_directive_device_tree` to backends/igvm.c
-- Link to v1: https://lore.kernel.org/qemu-devel/20260608-microvm_device_tree-v1-0-730874ad0008@redhat.com
-
----
-Luigi Leonardi (3):
-      igvm: Report error on missing parameter area in directive handlers
-      igvm: use idiomatic meson conditional for IGVM build files
-      igvm: add device tree parameter support
-
- backends/igvm.c                | 80 ++++++++++++++++++++++++++++++++++++------
- backends/meson.build           |  7 ++--
- include/system/igvm-internal.h |  3 +-
- target/i386/igvm.c             |  5 +--
- 4 files changed, 77 insertions(+), 18 deletions(-)
----
-base-commit: 60533c6193ede6ce403e82d09d82ae2bc8fb423a
-change-id: 20260608-microvm_device_tree-0263c3b1be86
-
-Best regards,
 -- 
-Luigi Leonardi <leonardi@redhat.com>
+2.54.0
 
 
