@@ -4,61 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB24EC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jun 2026 14:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ECB3C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jun 2026 15:44:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdTdW-0004gZ-V3; Sat, 27 Jun 2026 10:03:59 -0400
+	id 1wdVBn-00066B-HW; Sat, 27 Jun 2026 11:43:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wdTdR-0004gJ-MS
- for qemu-devel@nongnu.org; Sat, 27 Jun 2026 10:03:54 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1wdVBl-00065D-Ih; Sat, 27 Jun 2026 11:43:25 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wdTdN-0002Ie-TR
- for qemu-devel@nongnu.org; Sat, 27 Jun 2026 10:03:53 -0400
-Received: from [192.168.10.145] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65RE3bRj043703
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 27 Jun 2026 23:03:38 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=tNILAHSsxxMfieOD7OAoEAGvi3asFaohRR5gAqk+whQ=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1782569018; v=1;
- b=lI1XuYkVRGXyJ8xfR+dSyjkzUz3laC9s1D0VjW8JQmSCDdJn9RQvGC7WL5K/zJnw
- nYiwryn5sVqG2I5l62J0lGsBJaolFjlDxp9+mQV37xeI8+M7fJ0Qv7DVb0wa5NS0
- l/vqXymDSNu/bREJLC4JWy4j6ZQT40LD8Fv/Rrftiy97ejSfqUVY3+d6xLzX/IIt
- Kb00IgK6xiCUVidZZ++NUsQeddxSre+WcAvQ30NldD8ZHjZP/zFay715c0xeX8wj
- GQ1iOfxQNbpjkmL437ofVMmdQT/iHvFFTtYiMj1rhibVkzg1bJIK7LBhHYNXYuo3
- oCgz32PNk5y/LyZzqHVZGQ==
-Message-ID: <be551cfa-e897-462e-a0db-256834c5a58e@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 27 Jun 2026 23:03:37 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] hw/net/net_tx_pkt: fix payload_len for Ethernet-padded
- short frames
-To: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>, qemu-devel@nongnu.org
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Jason Wang <jasowang@redhat.com>
-References: <20260627-net-tx-pkt-ip-length-padding-v3-1-ff6357d0bd6f@gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260627-net-tx-pkt-ip-length-padding-v3-1-ff6357d0bd6f@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1wdVBi-0005bT-Nv; Sat, 27 Jun 2026 11:43:25 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LIOxIbmm1RILaUFXyttkaanhV2/9bN3eQ3NBh4fBKbI3DDK797q6SjvP1AsC467I5gBBzRp2Z+ku0JwDrz+58wAUGcLxLKUBFsEfP4Cp5udExQKXF1EVbt+LMajmszkwnkfNFJ5r+c36/sOGsWCx2POclvJbGFmEECgnWJI+ZBxTNo3nKc2Wedpf9j9mbGP2R2NdafL7TuQ7Hr8BG4ruvWku02zFKsipzlQr8IBDzn5PiT5ihXys1HQdSsF8OnDY2NIkGw6PMh0Q8ltqz/zURj3MXYd1vavuy/B/LJjf7A5MxlK8Pw5k3HVEx8bimwaXtpdqa5ZnrC0VjVAzWC5nNA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zvsPLgVJQ8hcOtXU/ebNfq6l+E1aNr6NIvI+NtRg0F8=;
+ b=I4nGiEHYlkhXAvXTUhpCiVyzvFvvQNU3+qfA0vQ3c+O64pwsjc6TIJVCNcDgum2Kkj1irskrmNIWks0diMGIXoOewsUZqYdsEfe7MU6FnaBbjIefJ0uRFTM+Z6NBfK2jo/mLHv/K9iYeKHL5MQsd5v/jof85PZ4FjbiWbXtqs4EVwh/XgQi5m0hzvKnoVBkkopf8MVJW1A0Tx3CDUCEHwZGmhxyWiEMOGNnvmeyLoFAmgVDlgDfEQUI8o1U8AOrqZvgkI1zmA78ODclhNmUDJELfcNyk5o6bOFN+W3EXonp0if6rmRL6ikqRWIX2ef13/ew0eVecmVeJRoIYyX5nvA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zvsPLgVJQ8hcOtXU/ebNfq6l+E1aNr6NIvI+NtRg0F8=;
+ b=H2Plt3qhQfb+y7HX9UTU0KHu8bspvB4XoEbK18oyq8N/oKX3FmaeQx9A0yTAkIXVH8xSAG4G6xOJ/2FIU6v/KcD04X1OkSZ5dYo+6BObm/mkZW7dVZllBXSlVvMxYwdYF+/Ck96++GcNthIAn+lqaPZ9CUIfoJSO9iXAOpDnz9oXKwTIrkxXLLGuIdZutfYTBor+ehDwxZQR4pfvjmaEFs7hIY0HuOiIvNIBd+TiIZWWXqVC2dN5QLlf40IdALUtwD+kbVxT2XjxsuBETe4s5oKwWceLh7hVTOJ9RXW9eaUpN62p5XFK8W6kVL3xaj2LbJTH1rhOhNXYZKSbJnleOQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
+ by OSQPR02MB8797.apcprd02.prod.outlook.com (2603:1096:604:429::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.18; Sat, 27 Jun
+ 2026 15:42:43 +0000
+Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
+ ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
+ ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0159.018; Sat, 27 Jun 2026
+ 15:42:43 +0000
+From: Bin Meng <bin.meng@processmission.com>
+To: QEMU <qemu-devel@nongnu.org>
+Cc: Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org
+Subject: [PATCH 1/1] hw/arm: xlnx-zcu102: Fix up DTB for direct Linux boot
+Date: Sat, 27 Jun 2026 23:42:25 +0800
+Message-Id: <20260627154225.863984-2-bin.meng@processmission.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260627154225.863984-1-bin.meng@processmission.com>
+References: <20260627154225.863984-1-bin.meng@processmission.com>
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-ClientProxiedBy: SI3PR03CA0014.apcprd03.prod.outlook.com
+ (2603:1096:4:297::15) To KL1PR02MB4977.apcprd02.prod.outlook.com
+ (2603:1096:820:71::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|OSQPR02MB8797:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3862391c-7803-41b1-b53d-08ded462ba4f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|34096008|1800799024|23010399003|366016|586017|376014|3023799007|5023799004|56012099006|6133799003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: APw31lJj942V8elSPeJXcrVLDOpku7hUjuhqWmFFA+U0ckxMjuvIuX0yFutv2UjO819gZYCws4dGOZqivN/l3sBUOlLlaJMFtzFTD8dvAEEnj5Teel3AFi8m5KZAprG0MxjGWMNKmzi2boB2UJ85dgbomHhraKjiqVFnzDUBNfnX3GGuTP8z0nO5aUnYSlHzwSUpkuu03OnzX9j6s1ZqdjfxJTKK1WWriuA0q6ZjgjQq94SwyKSRcVyi94VPz8VO8bIgNQ/dzdXPTBH2cvdmyoRdEouD11RmJITf+xen9hDJoUlawkOAC2g7yqPNdNrD3HPTvaU78wxVnO6ZAK+KAqmnHlu84YjopPQ45zwHKee3GOWvdQKxy+tON8/8n1SmRRyLg33/4Ksk5Xy/UihkE1aJ6joKgu3W1uPrfs5kyICGpfj8EEuwA95e6UTfUwRDuFFFpmQmKHvt6afJyFHsTVY86dl6PXl8UM/xC2ihRBrjzPpymxKMgGmJRB7H2Z9E9q49CTQSpO0lBtlmhHyySAg4Aub2TIkoltswwAzhSC9cExwcO42acIZ8kdKub5RnSKwjgKcsRfiBWX99Nfg0iPQlggKW7gJAxYYaJ/LkZA5rXB+P3Gd/PNPT67Uy/vB3fU2THFkYYzaRSuowT/S/VoAz/Ylw7B0VM9J7MSck5cI=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(34096008)(1800799024)(23010399003)(366016)(586017)(376014)(3023799007)(5023799004)(56012099006)(6133799003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?6gVv5bzBEuReArOHZXnrqbBMW8l55TgvJ9t/XXekWu4rBsq1m1cMZZVhzabj?=
+ =?us-ascii?Q?tIaRGTqU6uD5pFe4N7dWotQ8yE9nS23Kbm1rc+kqqdLrxbGZ5801LMTF56R5?=
+ =?us-ascii?Q?e6xosgoxXe+L/EdyXFSw6p60miRqA7Fhz5trzJvyw1EfZ0+PPzBL4wryN8MM?=
+ =?us-ascii?Q?vSH4/Nz/NpGfHVzlDU12Wkyac5jcwh2dVnE/iSho3RXBRdff/1WaA3uFlVe6?=
+ =?us-ascii?Q?T5sX1vs2MhDSdYkpE64F0YXypZjUKE+lNsGu+FynyxFjtagTkHam5RfNi9S8?=
+ =?us-ascii?Q?JLEpawpDcQlqhRXF7Hs9Q+ReO+orW5t7Falex9dwzgNz4iJ90q5VRLKIWKFW?=
+ =?us-ascii?Q?ixHelnW3BaR/tEXaWFlmkows59+E9K+1OquaUjNuRjE3osobhRflmemnvb8W?=
+ =?us-ascii?Q?oQImOGz774lxuBX1c7k6zEgkmnLk7mOaeIPNSATfscKr43pG3ArbczUMWYXG?=
+ =?us-ascii?Q?V8vhqzeqQWb1I6HIYxgoFYy43nQE7pPlYicrmtBC2vM65Vl7OH/fpgwQO2lW?=
+ =?us-ascii?Q?WhbvA0MTNrA0Ji6shOH4P/vJQ0IZUhbIVP3QXPajyw6f2lZngheFtdipWDrB?=
+ =?us-ascii?Q?iuW19hxVLD1h/9u7egobRi0wbsmMPUCs8bk3X1jrSZFrDAqPLSVbl0YR0Caf?=
+ =?us-ascii?Q?K0bDBOKqZX42ItjdEeLXebTBSnXmwErs+v6yt2dUDnNqdBIWjsuv6q5zuXZp?=
+ =?us-ascii?Q?h+26QvBIjTY4odPj4f5MRvjRblN4txW8kQIle6DcHQdFtLxmYYSiiVw819eo?=
+ =?us-ascii?Q?+G5CtpmyTPp+5x4dtwHD2BJ7ux2a+ao2HwdIYGthWblFHLOiKJNfJFMyocYD?=
+ =?us-ascii?Q?8TueCFP85eVsKqIsJIyOhW0JhQngov2g8xIgsra4k4ts7Tn1qdgqBRFkabU+?=
+ =?us-ascii?Q?M2CMulxZFD35mdvcc/PImxS18FBsOAo1A0Zpdr/eI6DF7hD+lvyNz9dTL22n?=
+ =?us-ascii?Q?oE8Hzj5lMQtE1y8fsPsad1yS/EkgFkRX6CRYSV1KgSjzsRj836ekb+RciwHI?=
+ =?us-ascii?Q?0rqTbhAFrOY5rC/ulrf6DeTGoXXoS2X1ZsvydY14y8akfdfH1cVD4yyjZZdz?=
+ =?us-ascii?Q?DfUAJ1mHLCF4k3CknmHrqbORHNlLpC+0EO/fkiLh8TZBRbiKZyHLNzFuFRoO?=
+ =?us-ascii?Q?uYhreIcfCrxOGlUDtJby6diiLCwldWG1QAgyfRNza5W8Tl+YwQQ7kacfH3R+?=
+ =?us-ascii?Q?TF2xhuCBSiIJYK0l9+cvPaAN/0wqlpcFm64HN2RrotM46lLh0yiF0LbQNThU?=
+ =?us-ascii?Q?I1AXaUvhdu7GjmXNFnkAsCdW0TBVmLcplbSfjAcf2u7bc+ochmL7JqfB6MHj?=
+ =?us-ascii?Q?aKDkHEeg1cVfLnwTN0wpf0gOZ+nWcA/OjQGuG8sHdT1VlqTsFthpgsW8CriM?=
+ =?us-ascii?Q?0kbqnKP4PTRZ6zC5Li3GuLFJFtg+slm9okHoq0yBB5+QMNbeQfIgmVQQKslM?=
+ =?us-ascii?Q?ozlL3MNQaWSOXq5I74t0rjDIsObcg2b1Zd875M8R2Yy2qMpbuE0HREwAeiiq?=
+ =?us-ascii?Q?6d9T2qybJe9/NcB9aOcEWHPYB6mKNAs8+7pUl6Q9Jg6e6rvRHa7nvC5XXH61?=
+ =?us-ascii?Q?9LgcMrEA9+JgEdoaBbfGyljTppJZQbunuLY0pmi4Ivm9F1IRdyuHC2+22M2r?=
+ =?us-ascii?Q?LxZ7WS1b+8HDril66hNrXQAdiTSNm94SStWml9kM8D1qLhraorsN9otL2ZbD?=
+ =?us-ascii?Q?nBa8lXZtXE0aN5w1XBG/hmGk4mXEeDkDDWS7wYKFsfrpmq1RmAJHB44dqmkA?=
+ =?us-ascii?Q?gAOr4/13DzMoH8nt9qP7isqj6bp6rAg=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3862391c-7803-41b1-b53d-08ded462ba4f
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jun 2026 15:42:43.2085 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ry1zU8rTRCcyOgRBk2Zen282BBxGnYk47uuaGAfz7cdNRKdVIkYau+cYu3ee8G2dCNN8+oxzD/+EXIqvsWfpu80B2UFeW9cecw3NnGaK4aU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSQPR02MB8797
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=bin.meng@processmission.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,295 +142,320 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/06/27 22:18, Sanjeeva Yerrapureddy wrote:
-> When a guest transmits a short Ethernet frame, iov_size() returns the
-> wire length including any Ethernet padding bytes added to reach the
-> minimum 60-byte frame size.  net_tx_pkt_rebuild_payload() used that
-> inflated size directly as payload_len.  net_tx_pkt_update_ip_hdr_
-> checksum() then rewrites the IP Total Length (IPv4) or Payload Length
-> (IPv6) field using this value, producing a malformed packet on the
-> wire: the receiver interprets Ethernet padding bytes as IP payload.
-> 
-> In practice this breaks protocol stacks that validate IP lengths
-> strictly.  A nested ESXi host running on OpenStack using the e1000e
-> emulation sends short TCP ACK packets in response to a Windows guest's
-> virtio TLS client hello, which get padded to 60 bytes; the inflated IP
-> Total Length corrupts the IP header seen by Windows, causing TLS
-> handshakes and TCP connections to fail.
-> 
-> net_tx_pkt_rebuild_payload() now handles three cases:
-> 
-> 1. ip_len is valid (ip_total_len > l3_hdr_len): clamp payload_len to
->     the IP-declared payload length, stripping Ethernet padding.
-> 
-> 2. ip_len is invalid and pkt->payload_len == 0: no authoritative source
->     is available; fall back to raw_payload_len as a safe default.
-> 
-> 3. ip_len is invalid and pkt->payload_len != 0: a device pre-set an
->     authoritative value via net_tx_pkt_set_payload_len() before calling
->     net_tx_pkt_parse(); leave it unchanged.
-> 
-> Add net_tx_pkt_set_payload_len() to the public API so devices that
-> carry the payload length in a hardware context descriptor can provide
-> it before net_tx_pkt_parse() is called (case 3 above).
-> 
-> For e1000e, TSO super-packets have ip_len=0 as a placeholder per the
-> 82574 datasheet §7.3.4.  Use the descriptor fields to compute the
-> correct IP payload length before net_tx_pkt_parse():
-> 
->    payload_len = paylen + (hdr_len - tucss)
->                = L4 data + L4 header length
-> 
-> net_tx_pkt_rebuild_payload() then sees a non-zero payload_len and
-> preserves it, never reaching the raw_payload_len fallback.
-> 
-> Signed-off-by: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
-> ---
-> Thank you Akihiko for your review and for providing detailed guidance on
-> calculating the payload length for e1000e and the relevant sections in
-> the Intel datasheet.
-> 
-> Changes in v3:
-> - Architectural redesign per Akihiko Odaki's review: remove the
->    device-specific ESXi/TSO heuristic from the common
->    net_tx_pkt_rebuild_payload() code.
-> - net_tx_pkt_rebuild_payload() now has three explicit cases: (1) valid
->    ip_len — clamp to it; (2) invalid ip_len and no pre-set value — fall
->    back to raw_payload_len; (3) invalid ip_len but device pre-set an
->    authoritative payload_len before parse — preserve it.
-> - Add net_tx_pkt_set_payload_len() to the public API for devices to
->    supply a context-derived payload length before net_tx_pkt_parse().
-> - Move e1000e TSO logic into e1000e_core.c: per 82574 §7.3.4, compute
->    payload_len = paylen + (hdr_len - tucss) and pre-set it before parse
->    so the common fallback is never reached for TSO super-packets.
-> - Link to v2: https://lore.kernel.org/qemu-devel/20260625-net-tx-pkt-ip-length-padding-v2-1-287d0ba59ec1@gmail.com
-> 
-> Changes in v2:
-> - Fix iov_copy() to use raw_payload_len instead of payload_len so
->    Ethernet padding is preserved in the TAP wire frame.
-> - Fix net_tx_pkt_get_total_len() to return iov_size() instead of
->    hdr_len + payload_len to avoid under-counting short frames.
-> - Link to v1: https://lore.kernel.org/qemu-devel/20260624-net-tx-pkt-ip-length-padding-v1-1-7a22fe9b4e40@gmail.com
-> 
-> On the relationship to the short-packet receive-path discussion
-> (Peter Maydell):
-> https://lore.kernel.org/qemu-devel/CAFEAcA_UhmCxJc16CHE=4ZR1+PA0=4-29=fEe+d+iUmhLTzpuQ@mail.gmail.com/
-> 
-> The linked thread concerns the receive path — whether tap_send is the
-> right place to pad short incoming frames for guest NIC models.  This
-> patch addresses the transmit path: the guest NIC adds Ethernet padding
-> correctly, but net_tx_pkt_rebuild_payload() was using the padded wire
-> size to compute payload_len, causing net_tx_pkt_update_ip_hdr_checksum
-> to rewrite ip_len to include the padding bytes.
+Real-board ZCU102 DTBs describe the UART, SDHCI and GQSPI nodes
+in terms of ZynqMP PM firmware providers for clocks, resets, power
+domains and pin control. QEMU does not model those runtime firmware
+providers, so using such a DTB with -kernel currently requires users
+to edit the DTB before Linux can probe the boot-critical devices.
 
-The padded bytes are already present in the buffer supplied by the
-guest; e1000e is not the component adding them here.
+Add a board DTB fix-up for direct kernel boot that removes those
+provider-only properties from the boot-critical nodes and rewrites
+their clocks to fixed reference clocks already present in the DTB.
+This keeps the user command line using the Buildroot-generated DTB
+while limiting the compatibility adjustment to devices modeled by
+QEMU.
 
-More generally, the packet passed through net_tx_pkt is still in an
-intermediate form. If it were already a fully defined wire packet, QEMU
-would not need to fix up headers and checksums later. Since that
-intermediate form is not defined generically, the common code cannot
-reliably decide whether the authoritative payload length is the raw
-buffer size or the IP header field for every device and offload mode.
+Document the direct boot flow, the SD and QSPI image layout details,
+and the remaining firmware and real-board peripheral limitations.
 
-So I do not think net_tx_pkt_rebuild_payload() should grow a generic
-algorithm for choosing payload_len from the IP header. That choice
-belongs in the device-specific code that understands the descriptor
-format. For e1000e, please determine the payload length from the e1000e
-context descriptor before calling net_tx_pkt_parse(), and keep the
-common net_tx_pkt code unchanged.
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
 
-Regards,
-Akihiko Odaki
+---
 
-> 
-> This fix does not change when or where padding is applied.  It only
-> ensures payload_len reflects the IP-declared length, while the full
-> padded frame continues to be forwarded to TAP via raw_payload_len.
-> ---
->   hw/net/e1000e_core.c | 27 ++++++++++++-----
->   hw/net/net_tx_pkt.c  | 85 ++++++++++++++++++++++++++++++++++++++++++++++++++--
->   hw/net/net_tx_pkt.h  | 14 +++++++++
->   3 files changed, 116 insertions(+), 10 deletions(-)
-> 
-> diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-> index 46e156a5dd..0f0f18c675 100644
-> --- a/hw/net/e1000e_core.c
-> +++ b/hw/net/e1000e_core.c
-> @@ -717,14 +717,27 @@ e1000e_process_tx_desc(E1000ECore *core,
->       }
->   
->       if (eop) {
-> -        if (!tx->skip_cp && net_tx_pkt_parse(tx->tx_pkt)) {
-> -            if (e1000x_vlan_enabled(core->mac) &&
-> -                e1000x_is_vlan_txd(txd_lower)) {
-> -                net_tx_pkt_setup_vlan_header_ex(tx->tx_pkt,
-> -                    le16_to_cpu(dp->upper.fields.special), core->mac[VET]);
-> +        if (!tx->skip_cp) {
-> +            if (tx->props.tse && tx->cptse) {
-> +                /*
-> +                 * Per 82574 §7.3.4, ip_len is zero in TSO super-packets.
-> +                 * Pre-set payload_len before parse so
-> +                 * net_tx_pkt_rebuild_payload() preserves it (case 3).
-> +                 *   L4 header length = hdr_len − tucss
-> +                 *   L4 data          = paylen
-> +                 */
-> +                net_tx_pkt_set_payload_len(tx->tx_pkt,
-> +                    tx->props.paylen + tx->props.hdr_len - tx->props.tucss);
->               }
-> -            if (e1000e_tx_pkt_send(core, tx, queue_index)) {
-> -                e1000e_on_tx_done_update_stats(core, tx->tx_pkt);
-> +            if (net_tx_pkt_parse(tx->tx_pkt)) {
-> +                if (e1000x_vlan_enabled(core->mac) &&
-> +                    e1000x_is_vlan_txd(txd_lower)) {
-> +                    net_tx_pkt_setup_vlan_header_ex(tx->tx_pkt,
-> +                        le16_to_cpu(dp->upper.fields.special), core->mac[VET]);
-> +                }
-> +                if (e1000e_tx_pkt_send(core, tx, queue_index)) {
-> +                    e1000e_on_tx_done_update_stats(core, tx->tx_pkt);
-> +                }
->               }
->           }
->   
-> diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
-> index 903238dca2..be09727ad6 100644
-> --- a/hw/net/net_tx_pkt.c
-> +++ b/hw/net/net_tx_pkt.c
-> @@ -274,11 +274,77 @@ static bool net_tx_pkt_parse_headers(struct NetTxPkt *pkt)
->   
->   static void net_tx_pkt_rebuild_payload(struct NetTxPkt *pkt)
->   {
-> -    pkt->payload_len = iov_size(pkt->raw, pkt->raw_frags) - pkt->hdr_len;
-> +    size_t raw_payload_len = iov_size(pkt->raw, pkt->raw_frags) - pkt->hdr_len;
-> +    struct iovec *l2hdr = &pkt->vec[NET_TX_PKT_L2HDR_FRAG];
-> +    uint16_t l3_proto = eth_get_l3_proto(l2hdr, 1, l2hdr->iov_len);
-> +
-> +    /*
-> +     * payload_len tracks the IP-declared payload size. It is used by
-> +     * net_tx_pkt_update_ip_hdr_checksum() to rewrite ip_len and by the L4
-> +     * pseudo-header checksum helpers. It must NOT include Ethernet
-> +     * minimum-frame padding: if the guest sends a short frame (e.g. a pure
-> +     * TCP ACK of 54 bytes) padded to 60 bytes, iov_size() returns 60 but the
-> +     * IP header still reports the payload as 20 bytes. Using the inflated size
-> +     * would cause ip_len to be rewritten to include the padding, making the
-> +     * packet malformed on the receiver.
-> +     *
-> +     * Note: the actual iov_copy below still copies raw_payload_len bytes
-> +     * (the full wire payload including padding) into the payload fragments so
-> +     * the TAP receives a correctly-sized Ethernet frame. The receiver's IP
-> +     * stack uses ip_len to find the real payload boundary and ignores the
-> +     * trailing padding bytes, which is exactly how a real NIC behaves.
-> +     *
-> +     * IPv4: ip_len is the total length including the IP header.
-> +     * IPv6: ip6_plen is the payload length after the base 40-byte header
-> +     *       (extension headers are included in ip6_plen but also in
-> +     *       l3_hdr_len, so subtract them out).
-> +     */
-> +    if (l3_proto == ETH_P_IP) {
-> +        uint16_t ip_total_len = be16_to_cpu(pkt->l3_hdr.ip.ip_len);
-> +        size_t l3_hdr_len = pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len;
-> +        if (ip_total_len > l3_hdr_len) {
-> +            /*
-> +             * ip_len is valid — clamp to the IP-declared payload length to
-> +             * strip any Ethernet minimum-frame padding appended by the NIC.
-> +             */
-> +            pkt->payload_len = MIN(raw_payload_len, ip_total_len - l3_hdr_len);
-> +        } else if (!pkt->payload_len) {
-> +            /* No valid ip_len and no device-specific value was pre-set. */
-> +            pkt->payload_len = raw_payload_len;
-> +        }
-> +        /* else: device pre-set payload_len before parse; keep it. */
-> +    } else if (l3_proto == ETH_P_IPV6) {
-> +        uint16_t ip6_payload_len = be16_to_cpu(pkt->l3_hdr.ip6.ip6_plen);
-> +        size_t l3_hdr_len = pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len;
-> +        size_t ext_hdr_len = l3_hdr_len - sizeof(struct ip6_header);
-> +        if (ip6_payload_len > ext_hdr_len) {
-> +            /*
-> +             * Clamp to the IPv6-declared payload length minus any extension
-> +             * headers already parsed into l3_hdr_len.
-> +             */
-> +            pkt->payload_len = MIN(raw_payload_len,
-> +                                   ip6_payload_len - ext_hdr_len);
-> +        } else if (!pkt->payload_len) {
-> +            /* ip6_plen is zero (jumbogram) and no pre-set value. */
-> +            pkt->payload_len = raw_payload_len;
-> +        }
-> +        /* else: device pre-set payload_len before parse — keep it. */
-> +    } else {
-> +        if (!pkt->payload_len) {
-> +            pkt->payload_len = raw_payload_len;
-> +        }
-> +    }
-> +
-> +    /*
-> +     * Copy the full raw_payload_len bytes (including any Ethernet padding)
-> +     * so the wire frame sent to the TAP has the correct size.  payload_len
-> +     * (the IP-declared value set above) is used only for header/checksum
-> +     * operations; raw_payload_len preserves the original frame size.
-> +     */
->       pkt->payload_frags = iov_copy(&pkt->vec[NET_TX_PKT_PL_START_FRAG],
->                                   pkt->max_payload_frags,
->                                   pkt->raw, pkt->raw_frags,
-> -                                pkt->hdr_len, pkt->payload_len);
-> +                                pkt->hdr_len, raw_payload_len);
->   }
->   
->   bool net_tx_pkt_parse(struct NetTxPkt *pkt)
-> @@ -428,7 +494,20 @@ size_t net_tx_pkt_get_total_len(struct NetTxPkt *pkt)
->   {
->       assert(pkt);
->   
-> -    return pkt->hdr_len + pkt->payload_len;
-> +    /*
-> +     * Use the raw iov size rather than hdr_len + payload_len.  payload_len
-> +     * reflects the IP-declared payload length (excluding any Ethernet minimum-
-> +     * frame padding), so hdr_len + payload_len would under-count for short
-> +     * frames.  pkt->raw always holds the exact bytes that arrived from the
-> +     * guest TX descriptors, padding included, giving the true wire size.
-> +     */
-> +    return iov_size(pkt->raw, pkt->raw_frags);
-> +}
-> +
-> +void net_tx_pkt_set_payload_len(struct NetTxPkt *pkt, uint32_t payload_len)
-> +{
-> +    assert(pkt);
-> +    pkt->payload_len = payload_len;
->   }
->   
->   void net_tx_pkt_dump(struct NetTxPkt *pkt)
-> diff --git a/hw/net/net_tx_pkt.h b/hw/net/net_tx_pkt.h
-> index 0a716e74a5..1a1c5edc2d 100644
-> --- a/hw/net/net_tx_pkt.h
-> +++ b/hw/net/net_tx_pkt.h
-> @@ -133,6 +133,20 @@ bool net_tx_pkt_update_sctp_checksum(struct NetTxPkt *pkt);
->    */
->   size_t net_tx_pkt_get_total_len(struct NetTxPkt *pkt);
->   
-> +/**
-> + * pre-set the payload length before net_tx_pkt_parse()
-> + *
-> + * Devices that carry an authoritative payload length in a hardware context
-> + * descriptor (e.g. e1000e PAYLEN for TSO) should call this before
-> + * net_tx_pkt_parse().  net_tx_pkt_rebuild_payload() will then skip its
-> + * ip_len=0 fallback and preserve this value.
-> + *
-> + * @pkt:            packet
-> + * @payload_len:    IP payload length (L4 header + L4 data)
-> + *
-> + */
-> +void net_tx_pkt_set_payload_len(struct NetTxPkt *pkt, uint32_t payload_len);
-> +
->   /**
->    * get packet type
->    *
-> 
-> ---
-> base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
-> change-id: 20260624-net-tx-pkt-ip-length-padding-5a8f358933fc
-> 
-> Best regards,
-> --
-> Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
-> 
+ docs/system/arm/xlnx-zcu102.rst | 139 +++++++++++++++++++++++++++++++-
+ hw/arm/xlnx-zcu102.c            | 109 +++++++++++++++++++++++++
+ 2 files changed, 247 insertions(+), 1 deletion(-)
+
+diff --git a/docs/system/arm/xlnx-zcu102.rst b/docs/system/arm/xlnx-zcu102.rst
+index 534cd1dc88..41ddd15592 100644
+--- a/docs/system/arm/xlnx-zcu102.rst
++++ b/docs/system/arm/xlnx-zcu102.rst
+@@ -4,8 +4,30 @@ Xilinx ZynqMP ZCU102 (``xlnx-zcu102``)
+ The ``xlnx-zcu102`` board models the Xilinx ZynqMP ZCU102 board.
+ This board has 4 Cortex-A53 CPUs and 2 Cortex-R5F CPUs.
+ 
++Supported devices
++-----------------
++
++The machine is based on QEMU's Xilinx ZynqMP SoC model and includes
++the following Processing System devices:
++
++ * Cortex-A53 APU and Cortex-R5F RPU CPU cores
++ * Generic Interrupt Controller
++ * DDR memory
++ * On-chip memory
++ * Cadence UARTs
++ * Cadence GEM Ethernet controllers
++ * SDHCI controllers
++ * SPI controllers
++ * GQSPI controller
++ * RTC
++ * CAN controllers
++ * USB controllers
++ * SATA controller
++ * DMA controllers
++ * BBRAM and eFUSE devices
++
+ Machine-specific options
+-""""""""""""""""""""""""
++------------------------
+ 
+ The following machine-specific options are supported:
+ 
+@@ -17,3 +39,118 @@ virtualization
+   Set ``on``/``off`` to enable/disable emulating a guest CPU which implements the
+   Arm Virtualization Extensions. The default is ``off``.
+ 
++Boot options
++------------
++
++The ``xlnx-zcu102`` machine can start a Linux kernel directly with
++``-kernel``. It does not provide a ZynqMP BootROM flow for loading a
++Xilinx boot image from SD or QSPI flash, so images such as ``boot.bin``
++or ``qspi.bin`` cannot be passed alone and expected to boot like they
++would on real hardware.
++
++QEMU does not generate a built-in device tree for this machine. Pass a DTB
++with ``-dtb``. For direct Linux boot with a real-board ZCU102 DTB, QEMU
++applies compatibility adjustments for the boot-critical UART, SDHCI and
++GQSPI nodes so that Linux can use the devices modeled by QEMU without
++requiring user-side DTB edits.
++
++This is not the same as emulating the complete ZynqMP firmware stack. The
++DTB can still contain non-boot devices that depend on board peripherals,
++external clock chips, power domains, pin control, or firmware services
++that QEMU does not model.
++
++Direct Linux boot with Buildroot
++--------------------------------
++
++Buildroot has a ZCU102 defconfig. Buildroot 2026.05 release is tested at the
++time of writing. From the Buildroot source tree:
++
++.. code-block:: bash
++
++  $ make zynqmp_zcu102_defconfig
++  $ make
++
++The generated files are in ``output/images/``. The examples below use:
++
++ * ``Image``
++ * ``zynqmp-zcu102-rev1.0.dtb``
++ * ``sdcard.img``
++ * ``qspi.bin`` if QSPI flash probing is desired
++
++QEMU's SD card model requires a power-of-two image size. Work on a copy
++of the Buildroot SD image and resize the copy, not the original output:
++
++.. code-block:: bash
++
++  $ cp output/images/sdcard.img sdcard-qemu.img
++  $ qemu-img resize -f raw sdcard-qemu.img 128M
++
++The real-board DTB enables the SDHCI controller at ``mmc@ff170000``.
++In QEMU this is SD index 1, so attach the SD card with
++``if=sd,index=1``.
++
++Boot Linux with the Buildroot kernel and the native Buildroot DTB:
++
++.. code-block:: bash
++
++  $ qemu-system-aarch64 -M xlnx-zcu102 -m 2G -nographic \
++      -kernel output/images/Image \
++      -dtb output/images/zynqmp-zcu102-rev1.0.dtb \
++      -append "earlycon=cdns,mmio,0xff000000,115200n8 \
++               console=ttyPS0,115200 root=/dev/mmcblk0p2 rw rootwait" \
++      -drive file=sdcard-qemu.img,if=sd,index=1,format=raw
++
++This should get the kernel booting all the way to the Buildroot login
++prompt on ``ttyPS0``.
++
++QSPI flash
++----------
++
++The board creates two PS SPI NOR flashes first and the ZynqMP GQSPI
++flashes after them. Therefore the first GQSPI flash is
++``if=mtd,index=2``. The remaining GQSPI flash backends use indices 3, 4
++and 5.
++
++The Buildroot ``qspi.bin`` image is smaller than the 64 MiB
++``n25q512a11`` flash model. To attach it as the first GQSPI flash,
++place it in a 64 MiB raw backing file:
++
++.. code-block:: bash
++
++  $ qemu-img create -f raw qspi-cs0.img 64M
++  $ dd if=output/images/qspi.bin of=qspi-cs0.img bs=1M conv=notrunc
++
++Add the following drive to the direct Linux boot command above:
++
++.. code-block:: bash
++
++      -drive file=qspi-cs0.img,if=mtd,index=2,format=raw
++
++With this drive attached, Linux should probe the ZynqMP GQSPI
++controller and register the SPI NOR partitions from the DTB, for
++example ``qspi-fsbl-uboot``, ``qspi-linux``, ``qspi-device-tree`` and
++``qspi-rootfs``.
++
++The default Buildroot ``qspi.bin`` is a boot image, not a root
++filesystem image. The default DTB's ``qspi-rootfs`` partition is also
++too small for Buildroot's ``rootfs.ext2``. Booting with the root
++filesystem in QSPI flash therefore requires a custom image layout and
++matching DTB changes.
++
++Known limitations
++-----------------
++
++The machine does not emulate the complete real-board firmware stack.
++In particular:
++
++ * ZynqMP BootROM boot-mode selection is not modeled.
++ * Passing the Buildroot ``boot.bin`` with ``-bios`` does not boot Linux.
++ * Attaching ``qspi.bin`` as an MTD drive without ``-kernel`` does not
++   boot from QSPI flash.
++ * ZynqMP PM firmware services are not modeled. For direct Linux boot,
++   QEMU adjusts the supplied DTB only for the boot-critical UART, SDHCI
++   and GQSPI nodes.
++ * Other real-board DTB nodes can still defer or fail probing when they
++   depend on devices that are not present in the QEMU model, such as
++   external I2C clock generators, board sensors, some GPIO consumers,
++   PHYs, or non-boot DMA/display paths.
+diff --git a/hw/arm/xlnx-zcu102.c b/hw/arm/xlnx-zcu102.c
+index 4e48970274..839e4e90d5 100644
+--- a/hw/arm/xlnx-zcu102.c
++++ b/hw/arm/xlnx-zcu102.c
+@@ -26,6 +26,7 @@
+ #include "system/device_tree.h"
+ #include "qom/object.h"
+ #include "net/can_emu.h"
++#include <libfdt.h>
+ 
+ struct XlnxZCU102 {
+     MachineState parent_obj;
+@@ -43,6 +44,112 @@ struct XlnxZCU102 {
+ #define TYPE_ZCU102_MACHINE   MACHINE_TYPE_NAME("xlnx-zcu102")
+ OBJECT_DECLARE_SIMPLE_TYPE(XlnxZCU102, ZCU102_MACHINE)
+ 
++static bool zcu102_fdt_get_phandle(void *fdt, const char *node_path,
++                                   uint32_t *phandle)
++{
++    int offset;
++
++    offset = fdt_path_offset(fdt, node_path);
++    if (offset < 0) {
++        return false;
++    }
++
++    *phandle = fdt_get_phandle(fdt, offset);
++    return *phandle != 0;
++}
++
++static void zcu102_fdt_nop_prop(void *fdt, const char *node_path,
++                                const char *prop)
++{
++    int ret;
++    int offset;
++
++    offset = fdt_path_offset(fdt, node_path);
++    if (offset < 0) {
++        return;
++    }
++
++    ret = fdt_nop_property(fdt, offset, prop);
++    if (ret < 0 && ret != -FDT_ERR_NOTFOUND) {
++        error_report("%s: Couldn't nop %s/%s: %s", __func__, node_path,
++                     prop, fdt_strerror(ret));
++        exit(1);
++    }
++}
++
++static void zcu102_fdt_fixup_clocks(void *fdt, const char *node_path,
++                                    uint32_t phandle)
++{
++    if (fdt_path_offset(fdt, node_path) < 0) {
++        return;
++    }
++
++    qemu_fdt_setprop_cells(fdt, node_path, "clocks", phandle, phandle);
++}
++
++static void zcu102_fdt_fixup_qemu_direct_boot_nodes(void *fdt)
++{
++    uint32_t pss_ref_clk;
++    int i, j;
++
++    static const char * const provider_props[] = {
++        "power-domains",
++        "resets",
++        "assigned-clocks",
++        "assigned-clock-rates",
++        "assigned-clock-parents",
++        "pinctrl-names",
++        "pinctrl-0",
++    };
++    static const char * const direct_boot_nodes[] = {
++        "/axi/serial@ff000000",
++        "/axi/serial@ff010000",
++        "/axi/mmc@ff170000",
++        "/axi/spi@ff0f0000",
++    };
++
++    /*
++     * The Linux ZCU102 DTB inherits these boot-critical nodes from
++     * arch/arm64/boot/dts/xilinx/zynqmp.dtsi:
++     *
++     *   uart0: serial@ff000000
++     *   uart1: serial@ff010000
++     *   sdhci1: mmc@ff170000
++     *   qspi: spi@ff0f0000
++     *
++     * zynqmp.dtsi, zynqmp-clk-ccf.dtsi and zynqmp-zcu102-revA.dts
++     * wire them to PM firmware-backed clock, reset and pinctrl providers.
++     * Linux reaches that firmware through zynqmp_pm_invoke_fn() in
++     * drivers/firmware/xilinx/zynqmp-core.c; examples include
++     * zynqmp_pm_query_data() for drivers/clk/zynqmp/clkc.c,
++     * zynqmp_pm_reset_assert() for drivers/reset/reset-zynqmp.c, and
++     * zynqmp_pm_pinctrl_request() for drivers/pinctrl/pinctrl-zynqmp.c.
++     *
++     * Direct kernel boot has no PM firmware stage for those calls. Bypass the
++     * firmware-backed providers for just these nodes and describe their clocks
++     * as fixed inputs, avoiding a QEMU model of the runtime PM firmware.
++     *
++     * The Linux ZynqMP clock description defines pss-ref-clk as a 33.333333 MHz
++     * fixed clock with #clock-cells = <0>. Use it as a conservative direct-boot
++     * fallback for both clock inputs of these devices. That satisfies the
++     * existing two clock-names entries while keeping the DTB independent from
++     * the firmware-backed ZynqMP clock controller.
++     */
++    if (!zcu102_fdt_get_phandle(fdt, "/pss-ref-clk", &pss_ref_clk)) {
++        return;
++    }
++
++    for (i = 0; i < ARRAY_SIZE(direct_boot_nodes); i++) {
++        for (j = 0; j < ARRAY_SIZE(provider_props); j++) {
++            zcu102_fdt_nop_prop(fdt, direct_boot_nodes[i], provider_props[j]);
++        }
++    }
++
++    zcu102_fdt_fixup_clocks(fdt, "/axi/serial@ff000000", pss_ref_clk);
++    zcu102_fdt_fixup_clocks(fdt, "/axi/serial@ff010000", pss_ref_clk);
++    zcu102_fdt_fixup_clocks(fdt, "/axi/mmc@ff170000", pss_ref_clk);
++    zcu102_fdt_fixup_clocks(fdt, "/axi/spi@ff0f0000", pss_ref_clk);
++}
+ 
+ static bool zcu102_get_secure(Object *obj, Error **errp)
+ {
+@@ -98,6 +205,8 @@ static void zcu102_modify_dtb(const struct arm_boot_info *binfo, void *fdt)
+         }
+         g_strfreev(node_path);
+     }
++
++    zcu102_fdt_fixup_qemu_direct_boot_nodes(fdt);
+ }
+ 
+ static void bbram_attach_drive(XlnxBBRam *dev)
+-- 
+2.34.1
 
 
