@@ -4,69 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6193C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jun 2026 03:32:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17506C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jun 2026 05:07:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdJlY-00052B-1y; Fri, 26 Jun 2026 23:31:36 -0400
+	id 1wdLFc-0004H2-2I; Sat, 27 Jun 2026 01:06:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <konstantin@linuxfoundation.org>)
- id 1wdJlW-00051m-Bg; Fri, 26 Jun 2026 23:31:34 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wdLEz-0004Fo-Hb
+ for qemu-devel@nongnu.org; Sat, 27 Jun 2026 01:06:09 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <konstantin@linuxfoundation.org>)
- id 1wdJlU-0004v0-IZ; Fri, 26 Jun 2026 23:31:34 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 2FCC84191A;
- Sat, 27 Jun 2026 03:31:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41301F000E9;
- Sat, 27 Jun 2026 03:31:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1782531090;
- bh=LKpAve4RF1AThYaIj70am/yYEuuIA1/C+IqH2KsO6jM=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=LQJClF9I57M7Je5xaoh4QeFa86Qje9jk2qQws8W0TT86xdPbzK8Q2Rq0yfmCoTm+l
- zCywqLFX7jciRu/OqLuJtwqNhiPAhBQbsfN1yMebWstLeX30+dUPc7kTPYkFasuZnf
- HyJ/CL9a6PdhgUgEzawZsXOmUnQpGjjbIGCuF+L0tqJu5hAHtYf9FdcVd1Q64vxmXg
- g6GhSqsmXDtTSHriv21aPWjy2MmRjl5ORCPdsooSY3L77YAZBvGP+DfPVFOfMHeNHB
- D9gzueTY/KBuA9PZ7reaOYMhBi367xdOsuXpesdFP2uCpuSI3TEurZf7ksEm/drb8K
- 55T5Mru1cIW1A==
-Date: Fri, 26 Jun 2026 23:31:28 -0400
-From: Konstantin Ryabitsev <mricon@kernel.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- chao.liu.zevorn@gmail.com
-Subject: Re: [PATCH 00/24] target/riscv: move TCG files and fix --disable-tcg
-Message-ID: <20260626-mustard-beluga-of-perspective-8dbebe@lemur>
-References: <20260622193141.1449724-1-daniel.barboza@oss.qualcomm.com>
- <52c3605c-345f-43d2-8cc6-794980c805fa@oss.qualcomm.com>
- <50ce1e98-2c1f-4cbd-b191-1eac324b71b6@oss.qualcomm.com>
- <704cfba3-e92a-498d-928b-877f7f7641fe@oss.qualcomm.com>
- <9d2737e3-34f0-4f68-813b-37059615bced@oss.qualcomm.com>
- <CAFEAcA8660BZOmX_KXeF7JJaJwgKO3zSRDEmJURg27FK=tqbZg@mail.gmail.com>
- <df4a5857-ec4f-4d4f-bc08-1a9c5caae100@oss.qualcomm.com>
- <0f2205d0-06b5-40ad-9952-e18a6a951078@oss.qualcomm.com>
- <fe77f7a1-1a31-457c-9dec-e1b49cd35371@oss.qualcomm.com>
- <d83a2e21-403f-4146-b129-4d9ee264282a@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wdLEw-00005f-0F
+ for qemu-devel@nongnu.org; Sat, 27 Jun 2026 01:06:04 -0400
+Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.183]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65R55fSE031006
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sat, 27 Jun 2026 14:05:45 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=5sRHsxkxAtdwE1uaG+IIesix4iCIlG6M2vU+SjT5OdA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1782536745; v=1;
+ b=udM4M7LJHYsWzP2OCgKc/VpAtGskBL12iyVsvdagzOP1IAzUVrlfBrYfKTXxva0Y
+ bMLOUt0KxJPZCT7k7k5eX1baz4ijw4nmok9mGo7OKE5BqwXqmpYrBLJUJ20LbIwL
+ lmtj12xJvbOrE0OWpwnMorETRQmo9ZM2JzSVJbojSkKukELw+gYzAzlyK26plbrM
+ /Tvgfm0SmshF2uHnpzgERW4itboKedNXOZTA6r45u6JbrTVXthmtH0ZzF95n/sYb
+ S5TDVXdvspNYC4vL+91Z0A6q3zVEh/61jU1RZXcmWszgHJFaTt604doVuqeN11IQ
+ kgzF4QTct9jTXnd89lR+YA==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 27 Jun 2026 14:04:14 +0900
+Subject: [PATCH v4] checkpatch: Check .m, .build, .in, .json, .txt and .plist
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <d83a2e21-403f-4146-b129-4d9ee264282a@oss.qualcomm.com>
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=konstantin@linuxfoundation.org; helo=sea.source.kernel.org
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260627-checkpatch-v4-1-f4ef0c1a9fb0@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22MQQ6CMBAAv0J6tg1dsFVP/MN4WJYCK5GSFonE8
+ HeriQcTjzPJzFNEF9hFccqeIriFI/sxQbnLBPU4dk5yk1hADvtcay2pdzRMOFMvwTg8NgdD1qB
+ IwRRcy4/P7HxJ3HOcfVg/7wXe9u9mAallU1uLewCsDVYNriM/FPmbeH+W4tua3OTlT1ukFoqWb
+ K0BrSurEDtFrFjd5eyH1SskdZ3EZdu2F3uh9nztAAAA
+X-Change-ID: 20250111-checkpatch-26ea9d86c76a
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org,
+ devel@daynix.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.16-dev-16047
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1593;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=6FScv53KNQs+4sVQmknoqOVoDlPiJwW4xfVn7MqAt/0=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5Z9lPrcM0f9yj4/XFNhHaLcu5Njd/GKO6ot/TFRr973d
+ G0KqdzSUcrCIMbFICumyJJStJtbI7r2U2FCfAvMHFYmkCEMXJwCMBGjC4wMV/9dXP32wpEvL8pK
+ WN6prXkx5+DBuK1WJavreVuLtRaHVzEyPDrWphz+7ILBmXnMgi6NMRu0zwjHn2TYWRTDt7zzWvs
+ PbgA=
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,32 +87,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 23, 2026 at 12:16:56PM -0700, Pierrick Bouvier wrote:
-> Based-on: is a QEMU specific tag, that is only understood by patchew,
-> and no other tool to my knowledge.
-> b4 has base_commit, which allows to give a specific base, but not a
-> specific repository. I'm not aware of any b4 tag that allows to mention
-> a base series. It makes sense, series are not branches, and stacking
-> them comes with a lot of problems.
-> 
-> So it seems like email workflow is quite limited in this regard, and the
-> only way to deal with it properly is to wait for base patches to be
-> merged, or include them in the series.
+Check more manually-written text files: Objective-C sources, Meson
+build files, templates, JSON, plain text, and property lists. The
+generic text checks apply to these formats.
 
-You *can* specify dependencies with a b4-managed branch, via --edit-deps.
-However, both the contributor and the maintainer have to use b4 to retrieve
-and apply patches for it to really work.
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+Changes in v4:
+- Dropped ".hx" from the checked file suffixes because .hx files contain
+  intentional trailing whitespace. See commit 09ce5f2d6bd6
+  ("qemu-options.hx: Fix up the autogenerated rST") for the context.
+  (Peter Maydell)
+- Expanded the patch message to explain why the newly covered file types
+  are suitable for generic text checks.
+- Link to v3: https://lore.kernel.org/qemu-devel/20260604-checkpatch-v3-1-23fc7b12a7e4@rsg.ci.i.u-tokyo.ac.jp
 
-If the maintainer retrieves the series using "b4 shazam <msgid>" then, if the
-series specifies prerequisites, they will all be retrieved and applied.
+Changes in v3:
+- Rebased.
+- Link to v2: https://lore.kernel.org/r/20250111-checkpatch-v2-1-db77a522ab6a@daynix.com
 
-See https://b4.docs.kernel.org/en/latest/contributor/prep.html#working-with-series-dependencies
+To: qemu-devel@nongnu.org
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>
+---
+ scripts/checkpatch.pl | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-It remains marked as "experimental" simply because not enough people use it
-and therefore there are still many corner-case bugs that exist and just
-haven't been properly discovered.
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 03f35e75012c..3d37e21fb79e 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -12,7 +12,8 @@ use Term::ANSIColor qw(:constants);
+ my $P = $0;
+ $P =~ s@.*/@@g;
+ 
+-our $SrcFile    = qr{\.(?:(h|c)(\.inc)?|cpp|s|S|pl|py|sh)$};
++our $SrcFile =
++	qr{\.(?:(h|c|m)(\.inc)?|cpp|s|S|pl|py|sh|build|in|json|plist|txt)$};
+ 
+ my $V = '0.31';
+ 
 
-HTH!
+---
+base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
+change-id: 20250111-checkpatch-26ea9d86c76a
 
--K
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
 
