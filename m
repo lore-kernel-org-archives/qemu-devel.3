@@ -4,126 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3EFAC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jun 2026 15:48:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35D34C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jun 2026 16:27:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdVG8-0007BH-V6; Sat, 27 Jun 2026 11:47:58 -0400
+	id 1wdVrW-0007PA-6r; Sat, 27 Jun 2026 12:26:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wdVG5-0007Ax-5J; Sat, 27 Jun 2026 11:47:54 -0400
-Received: from mail-japaneastazon11023096.outbound.protection.outlook.com
- ([52.101.127.96] helo=TYDPR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wdVG3-0006ta-ER; Sat, 27 Jun 2026 11:47:52 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vczRgXiqFfVdkFvRtjJwo4hAzx2tVtcldLYeGGyMSjxwOy2cQ7NsvQ2lXYNht0B8khhFT6PjOl5tjBkz24bmI50mfutL4yUuXH7Dew0G3evXneFQ0ZCB3+jXolQkSV4mB4slB0sS/NZp7d/KAtLhQNQSUN9ta0jklad40yC+VKv6I9+3c4uvZG5V38hB2TuswIs4CfbPe2/3errR+zPDFG57uBMbs0IpHdwBUBAINAoX2b3l9W0Qx8qk0y0ZnpOx5QfAwEPciroUd1Ft57+A97nPGPYvHsDH1ERw1jybRAf8LRfNShIBAkzqOg5Lb4VXXQY4Z1W3AqpXChS6QyfYDA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Y1A6ooFDxDsmDBVl7x4X1GLMztYUV7EixW2j1kKSpqM=;
- b=TelS9Hq+p/r7GLzjd0wM4iwaPt1+JzNS+F2fbVSiN4Y1cELByWfYYpHcNdEAo9pJvB+5RKn73edTix7rGoz3UgQMMrAvHM9oo9f5OWN28Mn5GTeBt1Yo9Z4UQWd/9+Lxi4Rz6noKZ0yDJEn8eGGGdqV8CsrrWZwxwgHVqLuZ6lEejUknmqRSx+ZjeB2rxi6ts40Q75XhD+NskZr1Gp9WRRMRbHvpN+BRqVpIfiuL+Iy03AiUD+1l7cPxf/Th5so2YsHahIop/0KNe5gJhbePCQ+M4jfFM7JU5+FsmWGE/Tss1IAAJ9VleQHnTlzxBc9tT79jNFkhMW+5A1l4U3xkLw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Y1A6ooFDxDsmDBVl7x4X1GLMztYUV7EixW2j1kKSpqM=;
- b=mXsiX+jp83rlbHhKqHwjxXvjhwukWFDnDbveotMCynwIPBbdc7+0jhMn1QMBaYCA0F6n7o+vY4XbpNxiv65rJInpsvhXqtehaNe9W1SqRSqZfoSm7759/Dd0p02IKV/ng4cuNHeZcmfs/Q+Vmv8dsChN8uC0wDdsFsGZD6FibhzDYtn0AsEsnxz5OL0FrsPQ/9faVrvqMacPaD2vOlrbnTCaRAuf/BybwPKI9EpUu23yhw6fb7x/Rg78TFLAuhanhb08Knd4C5tS2ufTiNJy99MtaUTBtjxwyPT3iGfaunaugArt41gFwtwnGWG8qz2woRuILWhdnsprU6dE0AuokQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by OSQPR02MB8797.apcprd02.prod.outlook.com (2603:1096:604:429::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.18; Sat, 27 Jun
- 2026 15:42:43 +0000
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0159.018; Sat, 27 Jun 2026
- 15:42:42 +0000
-From: Bin Meng <bin.meng@processmission.com>
-To: QEMU <qemu-devel@nongnu.org>
-Cc: Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org
-Subject: [PATCH 0/1] hw/arm: Make xlnx-zcu102 direct Linux boot usable
-Date: Sat, 27 Jun 2026 23:42:24 +0800
-Message-Id: <20260627154225.863984-1-bin.meng@processmission.com>
-X-Mailer: git-send-email 2.34.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SI3PR03CA0014.apcprd03.prod.outlook.com
- (2603:1096:4:297::15) To KL1PR02MB4977.apcprd02.prod.outlook.com
- (2603:1096:820:71::8)
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1wdVrU-0007Oc-JJ
+ for qemu-devel@nongnu.org; Sat, 27 Jun 2026 12:26:32 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1wdVrS-0003Qb-NC
+ for qemu-devel@nongnu.org; Sat, 27 Jun 2026 12:26:32 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-46f021665c4so123841f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 27 Jun 2026 09:26:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1782577588; x=1783182388; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=OMspnRaD39QB8C2nEdR/tLSw0wI9HyWZuChDsXVONYk=;
+ b=SUWvxyJOg6gTgDWlMIYHH5Spi9mMkd4Jg6TeZn+JJQXUgshYfermtlgAp1tGAe7Pya
+ ln3OL22IZ2nr0+3bhML0SNakvHITOJKqWHetZPcRPFLk2EjDQd53W+gs+kejxsdXLk1J
+ S8yyULa7M/z3OFh5rjDYgAcRsAQtL8WwDgWnyKp74T2eO2RBRj3o98WBU6OzEHPa7Bn+
+ kSVSMzxKqsPn8YWD3CO9S7ZWjEsHD4VNBTFlvoqDzAHRaod6uZaWQdTVln6O7To4spl+
+ ujDYuk+Lwe3R9voizj/0jJjHmIvNh6fC/3Q2kLzb7SfuKrzQtZj6lfhAG2pZtRRHvspe
+ goVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782577588; x=1783182388;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=OMspnRaD39QB8C2nEdR/tLSw0wI9HyWZuChDsXVONYk=;
+ b=izOOqqbsolNBA6S9k1oaF4Apx/XDqgFw2/9TMdLJJGoTV/XlHego1WI41rX0u5OSn8
+ J2oV1G18Tc+VRd7ND3+japcYPtIRW+UqI1L5pu01egIdzLNYkW3Dw/FSFMAtcnPpCHTn
+ MGmqWmDbAGeyDaWVN3sMRK7TFH0WqkHGW+wX6vs3QSDQ4Floxkot6/gkoOOugsyp5HDg
+ On+qpeBCoJbZ1BZtSKGuO+oofY8V+KpdrSnMkn3P5syYraZSZBdx0/JQYk8DSeOPl+M1
+ G3xZnT2B45kRxF4JahQjcGR8NLkVCUpJabBbbJveEE74HWhEWX5YadL7s+tc0bVw3c7n
+ frSg==
+X-Gm-Message-State: AOJu0YxyJ2MFBmubQxz9DRGrBnPD+e5H9VwhOg/LQvf+b1ZYxJt5Uv71
+ 0Msv3p+CH/waY9JiEC7aKcs+4Z7ORJ4/hCiQQ+FYCQctaV1Ktj0Yapja
+X-Gm-Gg: AfdE7ckGiT3hU6gXLO2HICUteKrB03uAm5OfNpxDXFN0VkLgMyQYI5LbPfgRylngtwJ
+ emEBK6Fv45293j3DAAcueh5yrQXTWu2MlaA/SUIi2zx/vbumb1tuZN3yhu2QI11LX2XX25tiGFt
+ JhmfnA60/nAaetYBc2zfK8IsUyNLS9TCIW4Ht0KZ4/xu5Kjas5ChCltrhKv9Gh5FSblc6HGDI0q
+ nXryPBP3LlRY6dKNxFdHfrqi+N/whhYVlvnXK4eqdysMbYfrX1XU1Bl+cz4t6YjD63ttBU6O77B
+ 6Q8Ty/8GMiHreaUnMMAwE0603Pdz17ozIYdXNPEYP+7QQhYjt5vWwJ0q2LPCGOrTfx74+ONvaWy
+ o04eTPJ0IFWy5fq3nLfjwP8OzRrX8PB6QCvPsLi8m7I7wqkjYIUBZ6WDmVIyEErRVCsgFoLuObh
+ kGGyWOckQfEA==
+X-Received: by 2002:a05:600c:a00c:b0:492:6e72:eee with SMTP id
+ 5b1f17b1804b1-4926e720f83mr51334535e9.3.1782577588499; 
+ Sat, 27 Jun 2026 09:26:28 -0700 (PDT)
+Received: from AtiePC ([79.117.54.17]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49268fd9f2esm151032345e9.5.2026.06.27.09.26.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 27 Jun 2026 09:26:28 -0700 (PDT)
+From: Daniel Paziyski <danielpaziyski@gmail.com>
+To: danielpaziyski@gmail.com,
+	mst@redhat.com,
+	pbonzini@redhat.com
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH v3] hw/intc/apic: mask LVTs when software disabling the APIC
+Date: Sat, 27 Jun 2026 18:26:23 +0200
+Message-ID: <20260627162623.57385-1-danielpaziyski@gmail.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|OSQPR02MB8797:EE_
-X-MS-Office365-Filtering-Correlation-Id: b6b6110c-8c48-4ee3-ad91-08ded462b98d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|34096008|1800799024|23010399003|366016|586017|376014|56012099006|18002099003;
-X-Microsoft-Antispam-Message-Info: PdD8XZBwJEyrnVV0fP5g6CyF4HypNi5oO2904ziDffaoi2Mehy8k5BRX/UZMIPlpwY50+8CPbGygJjEaQNcY+mbViZvlPiHipJI5eECTrrYjMf5Sg3r+ZUlUpkgWA0DHW3BxX3r7DmX6L3V98mOYzYfgZFvJfA+UpK3LGU8ggmURaZyfoenmfNfioZDPq7ciquMr1Ejl/AIN7uAScdNS4kyar4Fw0+imffRKGljHfd7odsvxqwNooCNC1Y7fQiIjL+2E8kGFoyJb5Tfx1yxpyL7lgomc7fkfibGGSBNIqJcF+Pu9q8OYpUJ7TB/zxiI/Ltq5urUpgBAJKPNxlCFbo18epOOc9z/Gl7yjnmjTWeIpZ5REg6XEsYQHX+/RqrlBBmtqACgaNWXAWIpBs2+W4pd2YsxQlsKLu6gOpjE8xz0eLXbeSFXF+wNgs1cNX7ArJ1G8KadDFohWMX8l8lHF2ua8ufEKMySHMVqwwr2BVelWwnWpr3pXWvlk9PMx91/4ANPkVWXAipvhdw7TjPJzN+bPUryMNp/jFOYreqIxK6J3BVxB9akCFGjgUy4X3Licn1lNRmjvDAWEH/F4UCiqaU1NTMGZfDwcAb4JZW54I+9A/zw/70Uj0peTVrNRmU5Nr1YlzVrXEVePGFAANyJopq7H2M3GLr/G9u/U7FeC5go=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(34096008)(1800799024)(23010399003)(366016)(586017)(376014)(56012099006)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Z67VScpOS/ogUXAqR7qxjp/Q5uK2TOhjyJq0JPbuJnYLrGKalWfSrRFGL5Ob?=
- =?us-ascii?Q?yHJDrtduJ1RtfzWYsW9Vgn0WCuBzX/UntPHxFYzxgRFpvVr9ECXCYGWxevbq?=
- =?us-ascii?Q?qav/hRN2niA0K9rlz/VGFjgwR8+xzH7QSdQyyINu5f1ckUlcMsdq79d3X5yB?=
- =?us-ascii?Q?13/UI3YvMziAOCRxqfyp3Lp6+ZRl6gjvAaWOHgk+16o8bHld9Qdf3lYqJ9tq?=
- =?us-ascii?Q?tGquXAiSc/QF53J1Qq6G96tJKjuJySKf6w+BMq17RRaUiH8osxuU0opcsjbj?=
- =?us-ascii?Q?BAkQJ/ymAlJB/mFpMx7IkIhO60R7J3wCuoho6ohHKxxOZI9O7P0gpY0uA40r?=
- =?us-ascii?Q?F1+tXDR/QKcKWFoUsSCMsk4NX66nNHdQQf4zhKxxCe4KtKnR1y9EkLJVFQeP?=
- =?us-ascii?Q?7S1V32EtnO07eH79WsEGdsSRYcU/7iARziCGNSk9FO3GXLkC9fRqYWhTHr3B?=
- =?us-ascii?Q?tdLqjA084nmIjgkAa60TqaA7kFz0mZkVSDCuIL2DbcU3eMCzXoZ6ysoVqUSC?=
- =?us-ascii?Q?zEmf0YvZ3rOCGFzWqXMp4tlGWS0CHituv79NX9I6AeGA72FgEAUeOatz2HaZ?=
- =?us-ascii?Q?TSq4FiNrSoDFk9lkxJLR4Mh5MazoSZKUWHqkfoGooeJcJTYJCyptTSdu3ZBl?=
- =?us-ascii?Q?TvmFWidkZ14vXe9pB4QB7VtBUtuYu6k/lA4raaK7uZYpiV07yVY0aUw2C3SQ?=
- =?us-ascii?Q?AVYIwxqwMPJNCERRKRbgYqq6h1/6XLCBt9WBT1S/9Fc7HeItUoauEySgtflr?=
- =?us-ascii?Q?3uq1po/lHST4c0DHSRNTONEfZA2E9AMR+fOLB5tv1WT4H2hKERiRZL3HceZf?=
- =?us-ascii?Q?viI3cH7rPNVyv4vNxu17NMrTLFa1vkqqf+mrnBjBxAw3hn2RpLlil9mEMpPe?=
- =?us-ascii?Q?/0xhHTzX+UGwr8R+WYtq5XXmXCBitAPO8T8ONZVR5qCzoMIEZn7DuoCMBjAz?=
- =?us-ascii?Q?n8oM8D1/d5tGM+jNRNO1y+BavuhEbsGtkHWoEFUTWtelaxplurWxurpX4IBa?=
- =?us-ascii?Q?uL2SAtRxNOjBHh7pbq9+LXbSPz23Jjdizmgy2Rg8pAY42cpK0M3L1S8roIxd?=
- =?us-ascii?Q?9hDiYLKeKx8juEm2UkWLzNwHbQoprhAzG0V7NleNJCPI2cE50xTZhnpziAoj?=
- =?us-ascii?Q?hT2AgwJNaQJwAf2oz3i9no3k1CCE6DEnHjVc9IFd+BZOv2NnLZ4m1oP3PxmT?=
- =?us-ascii?Q?cXknbC62DnytTm1aFCYDLfTAp/eL3RhQn2Gn0+PBVM0cR+AijOY5pyL07e0M?=
- =?us-ascii?Q?ZdedRTAVGrambrbPdHewpwogSi7pLVuJugGs4qtJbxcaD37wVVqZCi0S07I0?=
- =?us-ascii?Q?HE8jdIbIfiYANAkfvCPTW4W+Q5X/eURAjFXMCIW9ktdsL/a8d0R2SACSyxn3?=
- =?us-ascii?Q?30uG6QLgIDviaY2JqhS/rbI5qT+nECTlNNYZnDes5/0twCeZuU4UXSMvJxgY?=
- =?us-ascii?Q?po58fQ3bo+qNIBmU51w/nz33BLJ+IAHint8mg1V0j3n2jEqC8ys4Hp13pJCa?=
- =?us-ascii?Q?ZkhttjegfKu9WUu9x3GbZBVDdz3BHHIQ1313Qu0/Jl2pd9V5mR7DOPCPccGM?=
- =?us-ascii?Q?JNbIaMPMvfxkJHwZ43stmFXzbp3lUOkifo1sJFOLZCDQ4kpa5WeMLLonR+wu?=
- =?us-ascii?Q?VoqbqWxI1RBmSuB3yDgKCFZgazLPScp9Lw8KqrLR+9kFh27eH5bp6FRwh5Fh?=
- =?us-ascii?Q?+JLISj23cyamzOV1994IrFs3ytz7vZCB895nk+3MCkzBMTm5CAia0DjC9KAT?=
- =?us-ascii?Q?UAxhr6gWbzBfNQGGvclqvWxT6QAMT94=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b6b6110c-8c48-4ee3-ad91-08ded462b98d
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jun 2026 15:42:42.0425 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: EL//lI56zX255o4F4GfE5FIWuVlrsBrMDRf9CiglV2a/GjSfhu8u9d0c32cuurWKLjPn/sHH3UmPlPjCV/OL77Dinxjfx1NOdQrZC1YmX3w=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSQPR02MB8797
-Received-SPF: pass client-ip=52.101.127.96;
- envelope-from=bin.meng@processmission.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=danielpaziyski@gmail.com; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -140,47 +97,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+According to the Intel SDM Vol. 3 and the AMD64 Programmer's Manual Vol. 2, when
+the APIC is software disabled, doing so by clearing the software enable bit from
+the spurious interrupt register, the LVT entries must then have their mask bit
+set, and any attempts to clear them must be ignored until the APIC is software
+enabled again. This patch implements that behavior.
 
-The current xlnx-zcu102 system documentation does not provide a practical
-way to boot a real Linux image on the machine. That makes the board hard
-to use as a regression target, especially for changes in devices that are
-already modelled by QEMU but normally depend on the ZynqMP firmware stack
-when described by a real-board DTB.
+Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
+---
+v3:
+ - Ported to the latest revision.
+ - Link to v2: https://patchew.org/QEMU/20260420173816.63673-1-danielpaziyski@gmail.com/
 
-This patch documents a direct Linux boot flow using Buildroot's ZCU102
-defconfig, the generated kernel Image, the generated real-board DTB, an
-SD root filesystem image, and an optional QSPI flash image. It also adds
-a small DTB fix-up for direct kernel boot so that the boot-critical UART,
-SDHCI, and GQSPI nodes do not require the runtime ZynqMP PM firmware
-providers for clocks, resets, power domains, or pin control.
+v2:
+ - Be consistent with the rest of the code, and mask the LVTs before
+   calling apic_update_irq.
+ - Link to v1: https://patchew.org/QEMU/20260225180555.154428-1-danielpaziyski@gmail.com/
 
-The main motivation is to have a reproducible way to validate future
-changes to the ZynqMP GQSPI model. With this flow, Linux can probe the
-GQSPI controller and discover the SPI NOR flash and its fixed partitions
-without requiring a full FSBL/PMUFW/TF-A/U-Boot boot chain. The same
-boot also verifies that the UART console and SD root filesystem path still
-work with the real-board DTB.
+ hw/intc/apic.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-This is intentionally not a complete emulation of the ZynqMP firmware
-environment. Non-boot devices in the ZCU102 DTB may still depend on
-board peripherals, external clock chips, firmware services, or power and
-pin-control providers that QEMU does not model. The fix-up is limited to
-the devices needed for the documented direct boot and GQSPI validation
-path.
-
-Tested with Buildroot 2026.05 release. The guest reaches the Buildroot
-login prompt, probes the SD root filesystem, and detects the GQSPI SPI
-NOR flash and its fixed partitions.
-
-
-Bin Meng (1):
-  hw/arm: xlnx-zcu102: Fix up DTB for direct Linux boot
-
- docs/system/arm/xlnx-zcu102.rst | 139 +++++++++++++++++++++++++++++++-
- hw/arm/xlnx-zcu102.c            | 109 +++++++++++++++++++++++++
- 2 files changed, 247 insertions(+), 1 deletion(-)
-
+diff --git a/hw/intc/apic.c b/hw/intc/apic.c
+index 74e25c6..558c68a 100644
+--- a/hw/intc/apic.c
++++ b/hw/intc/apic.c
+@@ -928,6 +928,13 @@ static void apic_send_msi(MSIMessage *msi)
+     apic_deliver_irq(dest, dest_mode, delivery, vector, trigger_mode);
+ }
+ 
++static void apic_mask_lvts(APICCommonState *s)
++{
++    for (int i = 0; i < APIC_LVT_NB; i++) {
++        s->lvt[i] |= APIC_LVT_MASKED;
++    }
++}
++
+ static int apic_register_write(APICCommonState *s, int index, uint64_t val)
+ {
+     trace_apic_register_write(index, val);
+@@ -972,6 +979,11 @@ static int apic_register_write(APICCommonState *s, int index, uint64_t val)
+         break;
+     case 0x0f:
+         s->spurious_vec = val & 0x1ff;
++
++        if (!(val & APIC_SV_ENABLE)) {
++            apic_mask_lvts(s);
++        }
++
+         apic_update_irq(s);
+         break;
+     case 0x10 ... 0x17:
+@@ -1006,6 +1018,9 @@ static int apic_register_write(APICCommonState *s, int index, uint64_t val)
+         {
+             int n = index - 0x32;
+             s->lvt[n] = val;
++            if (!(s->spurious_vec & APIC_SV_ENABLE)) {
++                s->lvt[n] |= APIC_LVT_MASKED;
++            }
+             if (n == APIC_LVT_TIMER) {
+                 apic_timer_update(s, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
+             } else if (n == APIC_LVT_LINT0 && apic_check_pic(s)) {
 -- 
-2.34.1
+2.54.0
 
 
