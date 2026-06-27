@@ -4,64 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 690ACC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jun 2026 13:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB24EC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jun 2026 14:04:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdTB5-0002Ym-7T; Sat, 27 Jun 2026 09:34:35 -0400
+	id 1wdTdW-0004gZ-V3; Sat, 27 Jun 2026 10:03:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1wdTAp-0002XU-Ve; Sat, 27 Jun 2026 09:34:27 -0400
-Received: from [115.124.30.112] (helo=out30-112.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wdTdR-0004gJ-MS
+ for qemu-devel@nongnu.org; Sat, 27 Jun 2026 10:03:54 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1wdTAi-0007VO-8L; Sat, 27 Jun 2026 09:34:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1782567217; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=2ejNFl09eg25wXLOtXnqOqzhY1La7fFxa8mBuSR+vh8=;
- b=n62tZkOoo02Dpi4BE6/kvFUgR9aUCM3RM1Cr6E/StKXLNQWk9JwHyMYdExlLR96abo+Ntt7WdJKMtCS/FsV0/WYiutO1zYe6PjHqLXd9xpGKR235XsNfItK00Sx11oiWJ5rWzg0lbyVUmlfvOkEjQ9qvLRfOQQaADSO4c2TVI5Q=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
- MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
- TI=SMTPD_---0X5hLGTE_1782567214; 
-Received: from 30.134.91.14(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0X5hLGTE_1782567214 cluster:ay36) by smtp.aliyun-inc.com;
- Sat, 27 Jun 2026 21:33:34 +0800
-Message-ID: <28a2dc5e-36f6-473e-9157-357557bc2e25@linux.alibaba.com>
-Date: Sat, 27 Jun 2026 21:33:32 +0800
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wdTdN-0002Ie-TR
+ for qemu-devel@nongnu.org; Sat, 27 Jun 2026 10:03:53 -0400
+Received: from [192.168.10.145] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65RE3bRj043703
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sat, 27 Jun 2026 23:03:38 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=tNILAHSsxxMfieOD7OAoEAGvi3asFaohRR5gAqk+whQ=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1782569018; v=1;
+ b=lI1XuYkVRGXyJ8xfR+dSyjkzUz3laC9s1D0VjW8JQmSCDdJn9RQvGC7WL5K/zJnw
+ nYiwryn5sVqG2I5l62J0lGsBJaolFjlDxp9+mQV37xeI8+M7fJ0Qv7DVb0wa5NS0
+ l/vqXymDSNu/bREJLC4JWy4j6ZQT40LD8Fv/Rrftiy97ejSfqUVY3+d6xLzX/IIt
+ Kb00IgK6xiCUVidZZ++NUsQeddxSre+WcAvQ30NldD8ZHjZP/zFay715c0xeX8wj
+ GQ1iOfxQNbpjkmL437ofVMmdQT/iHvFFTtYiMj1rhibVkzg1bJIK7LBhHYNXYuo3
+ oCgz32PNk5y/LyZzqHVZGQ==
+Message-ID: <be551cfa-e897-462e-a0db-256834c5a58e@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 27 Jun 2026 23:03:37 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] disas/riscv: Fix 6-bit immediate extraction
-To: Richard Henderson <richard.henderson@linaro.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Christoph Muellner <christoph.muellner@vrull.eu>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, qemu-riscv@nongnu.org
-References: <20260626-b4-disas-xthead-fix-riscv-next-v1-0-74228a3c1b21@linux.alibaba.com>
- <20260626-b4-disas-xthead-fix-riscv-next-v1-2-74228a3c1b21@linux.alibaba.com>
- <1d9f53ca-4dbc-4d64-9811-17bf0328cb3a@oss.qualcomm.com>
- <c25526b6-885f-4c13-b4e2-ef423d2feffe@linaro.org>
-From: TianCheng TANG <lyndra@linux.alibaba.com>
-In-Reply-To: <c25526b6-885f-4c13-b4e2-ef423d2feffe@linaro.org>
+Subject: Re: [PATCH v3] hw/net/net_tx_pkt: fix payload_len for Ethernet-padded
+ short frames
+To: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>, qemu-devel@nongnu.org
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Jason Wang <jasowang@redhat.com>
+References: <20260627-net-tx-pkt-ip-length-padding-v3-1-ff6357d0bd6f@gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260627-net-tx-pkt-ip-length-padding-v3-1-ff6357d0bd6f@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.112 (deferred)
-Received-SPF: pass client-ip=115.124.30.112;
- envelope-from=lyndra@linux.alibaba.com;
- helo=out30-112.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,65 +74,295 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2026/06/27 22:18, Sanjeeva Yerrapureddy wrote:
+> When a guest transmits a short Ethernet frame, iov_size() returns the
+> wire length including any Ethernet padding bytes added to reach the
+> minimum 60-byte frame size.  net_tx_pkt_rebuild_payload() used that
+> inflated size directly as payload_len.  net_tx_pkt_update_ip_hdr_
+> checksum() then rewrites the IP Total Length (IPv4) or Payload Length
+> (IPv6) field using this value, producing a malformed packet on the
+> wire: the receiver interprets Ethernet padding bytes as IP payload.
+> 
+> In practice this breaks protocol stacks that validate IP lengths
+> strictly.  A nested ESXi host running on OpenStack using the e1000e
+> emulation sends short TCP ACK packets in response to a Windows guest's
+> virtio TLS client hello, which get padded to 60 bytes; the inflated IP
+> Total Length corrupts the IP header seen by Windows, causing TLS
+> handshakes and TCP connections to fail.
+> 
+> net_tx_pkt_rebuild_payload() now handles three cases:
+> 
+> 1. ip_len is valid (ip_total_len > l3_hdr_len): clamp payload_len to
+>     the IP-declared payload length, stripping Ethernet padding.
+> 
+> 2. ip_len is invalid and pkt->payload_len == 0: no authoritative source
+>     is available; fall back to raw_payload_len as a safe default.
+> 
+> 3. ip_len is invalid and pkt->payload_len != 0: a device pre-set an
+>     authoritative value via net_tx_pkt_set_payload_len() before calling
+>     net_tx_pkt_parse(); leave it unchanged.
+> 
+> Add net_tx_pkt_set_payload_len() to the public API so devices that
+> carry the payload length in a hardware context descriptor can provide
+> it before net_tx_pkt_parse() is called (case 3 above).
+> 
+> For e1000e, TSO super-packets have ip_len=0 as a placeholder per the
+> 82574 datasheet §7.3.4.  Use the descriptor fields to compute the
+> correct IP payload length before net_tx_pkt_parse():
+> 
+>    payload_len = paylen + (hdr_len - tucss)
+>                = L4 data + L4 header length
+> 
+> net_tx_pkt_rebuild_payload() then sees a non-zero payload_len and
+> preserves it, never reaching the raw_payload_len fallback.
+> 
+> Signed-off-by: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
+> ---
+> Thank you Akihiko for your review and for providing detailed guidance on
+> calculating the payload length for e1000e and the relevant sections in
+> the Intel datasheet.
+> 
+> Changes in v3:
+> - Architectural redesign per Akihiko Odaki's review: remove the
+>    device-specific ESXi/TSO heuristic from the common
+>    net_tx_pkt_rebuild_payload() code.
+> - net_tx_pkt_rebuild_payload() now has three explicit cases: (1) valid
+>    ip_len — clamp to it; (2) invalid ip_len and no pre-set value — fall
+>    back to raw_payload_len; (3) invalid ip_len but device pre-set an
+>    authoritative payload_len before parse — preserve it.
+> - Add net_tx_pkt_set_payload_len() to the public API for devices to
+>    supply a context-derived payload length before net_tx_pkt_parse().
+> - Move e1000e TSO logic into e1000e_core.c: per 82574 §7.3.4, compute
+>    payload_len = paylen + (hdr_len - tucss) and pre-set it before parse
+>    so the common fallback is never reached for TSO super-packets.
+> - Link to v2: https://lore.kernel.org/qemu-devel/20260625-net-tx-pkt-ip-length-padding-v2-1-287d0ba59ec1@gmail.com
+> 
+> Changes in v2:
+> - Fix iov_copy() to use raw_payload_len instead of payload_len so
+>    Ethernet padding is preserved in the TAP wire frame.
+> - Fix net_tx_pkt_get_total_len() to return iov_size() instead of
+>    hdr_len + payload_len to avoid under-counting short frames.
+> - Link to v1: https://lore.kernel.org/qemu-devel/20260624-net-tx-pkt-ip-length-padding-v1-1-7a22fe9b4e40@gmail.com
+> 
+> On the relationship to the short-packet receive-path discussion
+> (Peter Maydell):
+> https://lore.kernel.org/qemu-devel/CAFEAcA_UhmCxJc16CHE=4ZR1+PA0=4-29=fEe+d+iUmhLTzpuQ@mail.gmail.com/
+> 
+> The linked thread concerns the receive path — whether tap_send is the
+> right place to pad short incoming frames for guest NIC models.  This
+> patch addresses the transmit path: the guest NIC adds Ethernet padding
+> correctly, but net_tx_pkt_rebuild_payload() was using the padded wire
+> size to compute payload_len, causing net_tx_pkt_update_ip_hdr_checksum
+> to rewrite ip_len to include the padding bytes.
 
-在 2026/6/27 06:47, Richard Henderson 写道:
-> On 6/26/26 13:04, Daniel Henrique Barboza wrote:
->>
->>
->> On 6/26/2026 12:13 AM, TANG Tiancheng wrote:
->>> rv_codec_r2_imm6 is used for XThead instructions whose 6-bit
->>> immediate field is encoded in bits 25:20. The old expression
->>> left-shifted by 38 and then right-shifted by 60, so it kept only
->>> bits 25:22.
->>>
->>> Shift right by 58 instead, keeping the existing extraction style while
->>> retaining the full bits 25:20 field. This fixes the immediate printed
->>> for th.srri and th.tst.
->>>
->>> Fixes: 318df7238b9f ("disas/riscv: Add support for XThead* 
->>> instructions")
->>> Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
->>> Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
->>> ---
->>
->> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->>
->>>   disas/riscv.c | 2 +-
->>>   1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/disas/riscv.c b/disas/riscv.c
->>> index 
->>> 7f1b26277378c225c963d8f435cc7a2fc6e4a0b8..400a57083f90be18ccd12415797bce0df974784b 
->>> 100644
->>> --- a/disas/riscv.c
->>> +++ b/disas/riscv.c
->>> @@ -4546,7 +4546,7 @@ static uint32_t operand_zcmp_rlist(rv_inst inst)
->>>   static uint32_t operand_imm6(rv_inst inst)
->>>   {
->>> -    return (inst << 38) >> 60;
->>> +    return (inst << 38) >> 58;
->>>   }
->>>   static uint32_t operand_imm2(rv_inst inst)
->>>
->>
->>
->
-> Really, all of these should be using (s)extract32.
->
-Thanks, agreed.
+The padded bytes are already present in the buffer supplied by the
+guest; e1000e is not the component adding them here.
 
-For v2 I will keep the immediate extraction fix as a minimal correctness
-change, and add a separate cleanup patch converting the replaceable operand
-helper bit extraction to extract32()/sextract32(), including split 
-immediates.
+More generally, the packet passed through net_tx_pkt is still in an
+intermediate form. If it were already a fully defined wire packet, QEMU
+would not need to fix up headers and checksums later. Since that
+intermediate form is not defined generically, the common code cannot
+reliably decide whether the authoritative payload length is the raw
+buffer size or the IP header field for every device and offload mode.
 
-I'll credit your suggestion in the cleanup patch with a Suggested-by tag.
-
+So I do not think net_tx_pkt_rebuild_payload() should grow a generic
+algorithm for choosing payload_len from the IP header. That choice
+belongs in the device-specific code that understands the descriptor
+format. For e1000e, please determine the payload length from the e1000e
+context descriptor before calling net_tx_pkt_parse(), and keep the
+common net_tx_pkt code unchanged.
 
 Regards,
+Akihiko Odaki
 
-TianCheng
+> 
+> This fix does not change when or where padding is applied.  It only
+> ensures payload_len reflects the IP-declared length, while the full
+> padded frame continues to be forwarded to TAP via raw_payload_len.
+> ---
+>   hw/net/e1000e_core.c | 27 ++++++++++++-----
+>   hw/net/net_tx_pkt.c  | 85 ++++++++++++++++++++++++++++++++++++++++++++++++++--
+>   hw/net/net_tx_pkt.h  | 14 +++++++++
+>   3 files changed, 116 insertions(+), 10 deletions(-)
+> 
+> diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
+> index 46e156a5dd..0f0f18c675 100644
+> --- a/hw/net/e1000e_core.c
+> +++ b/hw/net/e1000e_core.c
+> @@ -717,14 +717,27 @@ e1000e_process_tx_desc(E1000ECore *core,
+>       }
+>   
+>       if (eop) {
+> -        if (!tx->skip_cp && net_tx_pkt_parse(tx->tx_pkt)) {
+> -            if (e1000x_vlan_enabled(core->mac) &&
+> -                e1000x_is_vlan_txd(txd_lower)) {
+> -                net_tx_pkt_setup_vlan_header_ex(tx->tx_pkt,
+> -                    le16_to_cpu(dp->upper.fields.special), core->mac[VET]);
+> +        if (!tx->skip_cp) {
+> +            if (tx->props.tse && tx->cptse) {
+> +                /*
+> +                 * Per 82574 §7.3.4, ip_len is zero in TSO super-packets.
+> +                 * Pre-set payload_len before parse so
+> +                 * net_tx_pkt_rebuild_payload() preserves it (case 3).
+> +                 *   L4 header length = hdr_len − tucss
+> +                 *   L4 data          = paylen
+> +                 */
+> +                net_tx_pkt_set_payload_len(tx->tx_pkt,
+> +                    tx->props.paylen + tx->props.hdr_len - tx->props.tucss);
+>               }
+> -            if (e1000e_tx_pkt_send(core, tx, queue_index)) {
+> -                e1000e_on_tx_done_update_stats(core, tx->tx_pkt);
+> +            if (net_tx_pkt_parse(tx->tx_pkt)) {
+> +                if (e1000x_vlan_enabled(core->mac) &&
+> +                    e1000x_is_vlan_txd(txd_lower)) {
+> +                    net_tx_pkt_setup_vlan_header_ex(tx->tx_pkt,
+> +                        le16_to_cpu(dp->upper.fields.special), core->mac[VET]);
+> +                }
+> +                if (e1000e_tx_pkt_send(core, tx, queue_index)) {
+> +                    e1000e_on_tx_done_update_stats(core, tx->tx_pkt);
+> +                }
+>               }
+>           }
+>   
+> diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
+> index 903238dca2..be09727ad6 100644
+> --- a/hw/net/net_tx_pkt.c
+> +++ b/hw/net/net_tx_pkt.c
+> @@ -274,11 +274,77 @@ static bool net_tx_pkt_parse_headers(struct NetTxPkt *pkt)
+>   
+>   static void net_tx_pkt_rebuild_payload(struct NetTxPkt *pkt)
+>   {
+> -    pkt->payload_len = iov_size(pkt->raw, pkt->raw_frags) - pkt->hdr_len;
+> +    size_t raw_payload_len = iov_size(pkt->raw, pkt->raw_frags) - pkt->hdr_len;
+> +    struct iovec *l2hdr = &pkt->vec[NET_TX_PKT_L2HDR_FRAG];
+> +    uint16_t l3_proto = eth_get_l3_proto(l2hdr, 1, l2hdr->iov_len);
+> +
+> +    /*
+> +     * payload_len tracks the IP-declared payload size. It is used by
+> +     * net_tx_pkt_update_ip_hdr_checksum() to rewrite ip_len and by the L4
+> +     * pseudo-header checksum helpers. It must NOT include Ethernet
+> +     * minimum-frame padding: if the guest sends a short frame (e.g. a pure
+> +     * TCP ACK of 54 bytes) padded to 60 bytes, iov_size() returns 60 but the
+> +     * IP header still reports the payload as 20 bytes. Using the inflated size
+> +     * would cause ip_len to be rewritten to include the padding, making the
+> +     * packet malformed on the receiver.
+> +     *
+> +     * Note: the actual iov_copy below still copies raw_payload_len bytes
+> +     * (the full wire payload including padding) into the payload fragments so
+> +     * the TAP receives a correctly-sized Ethernet frame. The receiver's IP
+> +     * stack uses ip_len to find the real payload boundary and ignores the
+> +     * trailing padding bytes, which is exactly how a real NIC behaves.
+> +     *
+> +     * IPv4: ip_len is the total length including the IP header.
+> +     * IPv6: ip6_plen is the payload length after the base 40-byte header
+> +     *       (extension headers are included in ip6_plen but also in
+> +     *       l3_hdr_len, so subtract them out).
+> +     */
+> +    if (l3_proto == ETH_P_IP) {
+> +        uint16_t ip_total_len = be16_to_cpu(pkt->l3_hdr.ip.ip_len);
+> +        size_t l3_hdr_len = pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len;
+> +        if (ip_total_len > l3_hdr_len) {
+> +            /*
+> +             * ip_len is valid — clamp to the IP-declared payload length to
+> +             * strip any Ethernet minimum-frame padding appended by the NIC.
+> +             */
+> +            pkt->payload_len = MIN(raw_payload_len, ip_total_len - l3_hdr_len);
+> +        } else if (!pkt->payload_len) {
+> +            /* No valid ip_len and no device-specific value was pre-set. */
+> +            pkt->payload_len = raw_payload_len;
+> +        }
+> +        /* else: device pre-set payload_len before parse; keep it. */
+> +    } else if (l3_proto == ETH_P_IPV6) {
+> +        uint16_t ip6_payload_len = be16_to_cpu(pkt->l3_hdr.ip6.ip6_plen);
+> +        size_t l3_hdr_len = pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len;
+> +        size_t ext_hdr_len = l3_hdr_len - sizeof(struct ip6_header);
+> +        if (ip6_payload_len > ext_hdr_len) {
+> +            /*
+> +             * Clamp to the IPv6-declared payload length minus any extension
+> +             * headers already parsed into l3_hdr_len.
+> +             */
+> +            pkt->payload_len = MIN(raw_payload_len,
+> +                                   ip6_payload_len - ext_hdr_len);
+> +        } else if (!pkt->payload_len) {
+> +            /* ip6_plen is zero (jumbogram) and no pre-set value. */
+> +            pkt->payload_len = raw_payload_len;
+> +        }
+> +        /* else: device pre-set payload_len before parse — keep it. */
+> +    } else {
+> +        if (!pkt->payload_len) {
+> +            pkt->payload_len = raw_payload_len;
+> +        }
+> +    }
+> +
+> +    /*
+> +     * Copy the full raw_payload_len bytes (including any Ethernet padding)
+> +     * so the wire frame sent to the TAP has the correct size.  payload_len
+> +     * (the IP-declared value set above) is used only for header/checksum
+> +     * operations; raw_payload_len preserves the original frame size.
+> +     */
+>       pkt->payload_frags = iov_copy(&pkt->vec[NET_TX_PKT_PL_START_FRAG],
+>                                   pkt->max_payload_frags,
+>                                   pkt->raw, pkt->raw_frags,
+> -                                pkt->hdr_len, pkt->payload_len);
+> +                                pkt->hdr_len, raw_payload_len);
+>   }
+>   
+>   bool net_tx_pkt_parse(struct NetTxPkt *pkt)
+> @@ -428,7 +494,20 @@ size_t net_tx_pkt_get_total_len(struct NetTxPkt *pkt)
+>   {
+>       assert(pkt);
+>   
+> -    return pkt->hdr_len + pkt->payload_len;
+> +    /*
+> +     * Use the raw iov size rather than hdr_len + payload_len.  payload_len
+> +     * reflects the IP-declared payload length (excluding any Ethernet minimum-
+> +     * frame padding), so hdr_len + payload_len would under-count for short
+> +     * frames.  pkt->raw always holds the exact bytes that arrived from the
+> +     * guest TX descriptors, padding included, giving the true wire size.
+> +     */
+> +    return iov_size(pkt->raw, pkt->raw_frags);
+> +}
+> +
+> +void net_tx_pkt_set_payload_len(struct NetTxPkt *pkt, uint32_t payload_len)
+> +{
+> +    assert(pkt);
+> +    pkt->payload_len = payload_len;
+>   }
+>   
+>   void net_tx_pkt_dump(struct NetTxPkt *pkt)
+> diff --git a/hw/net/net_tx_pkt.h b/hw/net/net_tx_pkt.h
+> index 0a716e74a5..1a1c5edc2d 100644
+> --- a/hw/net/net_tx_pkt.h
+> +++ b/hw/net/net_tx_pkt.h
+> @@ -133,6 +133,20 @@ bool net_tx_pkt_update_sctp_checksum(struct NetTxPkt *pkt);
+>    */
+>   size_t net_tx_pkt_get_total_len(struct NetTxPkt *pkt);
+>   
+> +/**
+> + * pre-set the payload length before net_tx_pkt_parse()
+> + *
+> + * Devices that carry an authoritative payload length in a hardware context
+> + * descriptor (e.g. e1000e PAYLEN for TSO) should call this before
+> + * net_tx_pkt_parse().  net_tx_pkt_rebuild_payload() will then skip its
+> + * ip_len=0 fallback and preserve this value.
+> + *
+> + * @pkt:            packet
+> + * @payload_len:    IP payload length (L4 header + L4 data)
+> + *
+> + */
+> +void net_tx_pkt_set_payload_len(struct NetTxPkt *pkt, uint32_t payload_len);
+> +
+>   /**
+>    * get packet type
+>    *
+> 
+> ---
+> base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
+> change-id: 20260624-net-tx-pkt-ip-length-padding-5a8f358933fc
+> 
+> Best regards,
+> --
+> Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
+> 
 
->
-> r~
 
