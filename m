@@ -4,104 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5469CC43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5652CC43327
 	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jun 2026 12:13:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdoNn-0008Ps-9x; Sun, 28 Jun 2026 08:13:08 -0400
+	id 1wdoNt-0008Qp-1U; Sun, 28 Jun 2026 08:13:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wdoNH-0008F4-OW
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 08:12:36 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wdoNF-0001le-NO
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 08:12:35 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-664b3831a20so1502890d50.3
- for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 05:12:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782648752; cv=none;
- d=google.com; s=arc-20260327;
- b=DcgZCeXID85iJpanOc+MUN4UEqk1f7stjOpEgjLfgz958CD1N1rUe4vh05lnOZ+j4o
- m3GTu7FcoBqoqg0EoXHwySNrmDL0MjvKt/Xgd5C10Da0grEcF1HIBouJzE3s5xuUzpeu
- J1DSG2C6NYTCDPC+Sc0koyvyISnk8zgeJQHeFzb1twxVZdiQr6d6xaUf47jK2gvJAtvx
- HI8abf8MY8v7JxtYYQ9k0z+hQTJnst2a8y6xOB+w8vYouXMHx41arZJZRRX4xC1RSixD
- IOq92hWZh2EaPiQ1xB5f1jQIWOq22RX6Y+Us5rp6veR2XnYNBFxX0Ke6Sxt6ONgFgVYs
- BFMg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=f6oCWPCyRjWCk/GzzmEPJ4gdzxTyxuN0j8f2E2jT2d0=;
- fh=gvDt/l0NjtJ7j6fPXI/3OX6LFkyzsAIAGRoWta4PwBc=;
- b=ELSbbt1mw/otKu4N/sDQf/OJhCdmZl982bQq7z8u9L2bd3RH7XN8T5E1qlpwUvlfLq
- pMKz1YwjhoTB7CWFsPYgCjLxaRnBlYKB+72GMP25IVh7akuoOevEEeka0Xi0m5p7UvK8
- Z7iWHpVELp6uzMgaNLa1TMtgdvNWHX/tkAsFR9oinAgnO0+ZO2wieANA1ixExMWTmNkf
- e7RC+ordHyTAROXo/WhKgrJg0TurRkYYny2kbLLaE/iioN+2QdWEcLIvrsB4FExhkT26
- VMIkGsMAUqT2pd84JewmZSFseKYlv9X+2b0Q4BAXmr1wS+raVsUdF7gGrF30bVCCcyA1
- LoNA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782648752; x=1783253552; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f6oCWPCyRjWCk/GzzmEPJ4gdzxTyxuN0j8f2E2jT2d0=;
- b=J6C9NEjgTcUO9TYtrjdpFelzJhSj4ugmXwhaWs82FHhwR0cHdpQaKom7hkX/yGp+9c
- OuNl1lALtY2SkctY18c2HzZcHYIcPwUSuyC3e/IM4cBKsdvA6XHeSZC0ifKZUgy74u61
- FcnA4UewQdLr+Qry4InJ12ZhmVENNb92Bnhclt71Pe76kHW9yDoyqQz0WI4qPnM3F262
- WJER4hOy6lfDV1ZOUtYzzwESglmJPVsyyrxyVAiZf+IyFql2Xm4tyoOGthQ8PyIPRf6a
- x5F6Rrf+CxdyTZ3OJgPXUbJpY37uXLaIZWdwQPfiG/YC+0J6jiQNXF6gyaZfyWXvd6F3
- l7HQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782648752; x=1783253552;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=f6oCWPCyRjWCk/GzzmEPJ4gdzxTyxuN0j8f2E2jT2d0=;
- b=UHV6aaZuXz2ATVsqxsQrn9QXmM5bd2B+dDdaKdlD7otRMX0/DBCsXR0WLEb066Eq8Y
- HJcPs2bRx36U4uzv/pkLCMesNUgkOvyg5o9YoJyzvLuKoXVXrCVyk7A6PpPU3Ve0Cz07
- 7UwqyyZunjNSWbhA2pT1HVPim4Yc2JiycqNCkUFzTH1p+USMNJqvC2b6SwUJINi1WSFU
- Mc7yWIphdjkVI3/bj1IkRJLf5DmHdWK9jat8YwLRQSP5nmbMMN92NQk+2+Ll7L9Jji0Q
- VMdk5J73qZzQcLJDRj9zStEqCj2CnI6oxIqA6MkJrK/rYwXBjqnDGlWtIfLB84R1xyJ6
- ufLw==
-X-Gm-Message-State: AOJu0Yz9Bwhwq9lvX3Nu8P0xssKyKOabCTFL9LJojC11Vz9J5Wg9sDUP
- LNJlAY4VUJSF95N66bawv6U+KbE4stLhQaEQ3X9XUjXC7Tklb9CFRoeNlcDu9SEPR1q2SBIBmXP
- Isx8U0Avl+pC9qNSR02TtNugYMZ0afEo=
-X-Gm-Gg: AfdE7cmxHD2311RwiHe9rAJemBWURcSSlFZJBfmzZXXwHlP8kfpm02+yQbFRXb6wsPO
- 9CTdyzOwsQLjJYx2bPDgVs2+jHYx32eemddJ0rN0D22TbNYk51yO/rF3q0PbAJ76PE5hjWfj3e5
- kqNPs9fjXQsHX5pf+t0cbveP6k3288RuRuqNnWbC/4vPZOOmB7qvG+YkQbRh2C0wKRREF2n9hm0
- 0V+bnVaveS4+aibigRfZZD8hgvRug7+ftqhfbjkhtJ8UlRQJiEUCgj4LT30lN6iJ+dS2ZHqm4MG
-X-Received: by 2002:a05:690e:134a:b0:664:9b83:300a with SMTP id
- 956f58d0204a3-6649b833635mr8202728d50.27.1782648752059; Sun, 28 Jun 2026
- 05:12:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
+ id 1wdoNe-0008Oe-Dy; Sun, 28 Jun 2026 08:12:59 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
+ id 1wdoNb-0001q8-KP; Sun, 28 Jun 2026 08:12:58 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65S9mNKY4170220; Sun, 28 Jun 2026 12:12:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=C/SMHYSm+wnOsMbz6RuGr1mSg+bZ51
+ TdvKZHO/yhFdk=; b=DvlVHOVRXoAKSzbBk0AzAP1fS765cP2Cl1E4cMb5ZIHJPr
+ VPWCpYwqN2W2d44e+lbK8oh7btKQ1Q2E9tS6m4L7dbwaCGUzEJC0FFRayJchKYZu
+ cC7t4hYoIJ0vNS1NXQ9i0Opb/tuTwbgNoikkeFUwsBaSM+bQUxAzE7HwqJ2pELjH
+ 254Ag5JFoq3eznLX8Q9zk+peFpoea80ljmwpwzKVyiKvu/OvvuSH5TmUCctfUhjj
+ AO0YElHmZZoz8+sTrC+8WmfavSiwjCjA2ypIa3/WFnfgXXJTf0co40sAS+9bJK3H
+ +xfLxeozkILtUjQztmEEJG26EMkVG8GUMlXnurUA==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26remue3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 28 Jun 2026 12:12:50 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65SC4ftr029534;
+ Sun, 28 Jun 2026 12:12:50 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbh1c7u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 28 Jun 2026 12:12:50 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65SCCGlr27984458
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sun, 28 Jun 2026 12:12:16 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CD65F5805A;
+ Sun, 28 Jun 2026 12:12:48 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C97B558054;
+ Sun, 28 Jun 2026 12:12:44 +0000 (GMT)
+Received: from vaibhav?linux.ibm.com (unknown [9.39.21.125])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with SMTP;
+ Sun, 28 Jun 2026 12:12:44 +0000 (GMT)
+Received: by vaibhav@linux.ibm.com (sSMTP sendmail emulation);
+ Sun, 28 Jun 2026 17:42:42 +0530
+From: Vaibhav Jain <vaibhav@linux.ibm.com>
+To: Gautam Menghani <gautam@linux.ibm.com>, harshpb@linux.ibm.com,
+ rathc@linux.ibm.com, milesg@linux.ibm.com, npiggin@gmail.com
+Cc: Gautam Menghani <gautam@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] target/ppc: Expose the TB offset of the guest in
+ QEMU monitor
+In-Reply-To: <20260626093554.69966-1-gautam@linux.ibm.com>
+References: <20260626093554.69966-1-gautam@linux.ibm.com>
+Date: Sun, 28 Jun 2026 17:42:42 +0530
+Message-ID: <87zf0ex3r9.fsf@vajain21.in.ibm.com>
 MIME-Version: 1.0
-References: <20260617155857.7451-1-dingtao0430@163.com>
- <20260617155857.7451-2-dingtao0430@163.com>
-In-Reply-To: <20260617155857.7451-2-dingtao0430@163.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Sun, 28 Jun 2026 20:12:20 +0800
-X-Gm-Features: AVVi8CfXLUnSFy93jascvNnjUnYr7uuGsE93z-GDJbADT6HJ7Lv-MOeCPY_ILy4
-Message-ID: <CAEUhbmVGrfD8WndBXNFJhZK3iVug-TXiQ3uQK6PvE0+z_wqqhA@mail.gmail.com>
-Subject: Re: [PATCH 1/1] fixed sdma boundary bug
-To: Tao Ding <dingtao0430@163.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a410fc3 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=pSTbB7s77_JVs2PdU3YA:9
+X-Proofpoint-ORIG-GUID: AgOgshIaic2HTdosUVSaRk4AO9Kqd86g
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI4MDEwMyBTYWx0ZWRfX5sDeiXMLt8/n
+ qkcUMs/6LGJRsAVN4rnQEvgXOwNq7XpA73YDUUyy5//cKk/u2q9/ILrMYyuQ94ucgHJk5Sd4z8s
+ RhlM9Semxw11EP3WTDKaGWcyIh/YITDvdxxj53EvNQ/CdDh+6ci1MNe4DdrrY7vkLOp4uOM0QMh
+ Upvg5LhArBk6S8Jm1TI/2aA74ZttLLIs5g+hlkHG/5l+sJyMvpFZhfVGshn5EgoMMZB+cWyTgLs
+ BNDZV4+GfPmWBMCTje0c29pdy468lu97yNsuXHnjJ/doPEg7VzQxAnb+h9QnDInfksCperRKUwO
+ NHPR8Fvd9xxKScp8CQg3pWRdTPds9JkBDvqaRu2eZSSNH8gm8lgsAqEQxiggzld0Yqt1N7t2upN
+ 5/KmQoLoOaKvxsaSX83/j6q+jPuV66NkLrCkCHVKo2tQTYyvULL706wY0yJ6xZulRBocFPEoofY
+ E8DjnnvO4MGBbMkCKYw==
+X-Proofpoint-GUID: sb-vexTQcdJyChI1CJ_X76bdSwvTE-Zr
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI4MDEwMyBTYWx0ZWRfX5Ins6IKIfQ/F
+ rZ+Xjt9qP4MoB/hVXSdAIzmZ+CngC1DPZjDoBpxxhYLE2UvhxHOByObwyJxEg+wIvsGaLrBrn96
+ H61CjispaQRVtV+GQ02b67n5WAq+QXI=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-28_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
+ spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606280103
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=vaibhav@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,141 +123,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 18, 2026 at 12:01=E2=80=AFAM Tao Ding <dingtao0430@163.com> wro=
-te:
->
-> During SDMA transfers, the controller raises an interrupt at buffer bound=
-aries
-> to request a system address update. But the emulation fails to clear the
-> SDHC_DOING_READ/WRITE flags after DMA completion, so writes to SDHC_SYSAD=
- are
-> ignored. Clear these flags when the transfer ends.
-> (according to PartA2_SD_Host_Controller_Simplified_Specification_Ver2.00.=
-pdf section 2.2.1)
->
+Gautam Menghani <gautam@linux.ibm.com> writes:
 
-The commit message could end here, and the following can be put below
---- so that they don't go into the commit message while it could still
-provide useful information for people to understand the issue.
-
-> This is a QTest in npcm7xx_sdhci-test that exercises this boundary condit=
-ion and
-> validates the fix.
+> When debugging issues in KVM guests, it is sometimes helpful to have a
+> unified trace log of both guest and host to see where things are going
+> wrong. Expose the TB (timebase) offset through QEMU monitor to enable
+> capturing of unified log.
 >
-> QTest steps:
->   1. Replace npcm7xx_sdhci-test.c with the updated version (full code
->      available at: https://pastebin.com/AWVp2wFi).
-
-Please post a qtest patch instead.
-
->   2. Build with:
->        ../configure --target-list=3D"arm-softmmu,aarch64-softmmu" \
->                     --disable-slirp --enable-debug --disable-werror
->        ninja qemu-system-arm tests/qtest/npcm7xx_sdhci-test
->   3. Run the specific test case:
->        QTEST_QEMU_BINARY=3D./qemu-system-arm \
->          ./tests/qtest/npcm7xx_sdhci-test \
->          -p /arm/npcm7xx_sdhci/read_sd_sdma_boundary_continue
+> The below steps can be then used to get a unified log:
+> 1. In host
+> trace-cmd record -e kvm_hv:kvm_guest_enter -e kvm_hv:kvm_guest_exit \
+>     -C ppc-tb -o trace_host.dat
 >
-> Before the fix, the test fails with a BLKCNT assertion:
->   ERROR:...wait_for_block_count: assertion failed (qtest_readw(...) =3D=
-=3D expected): (1 =3D=3D 0)
+> 2. In guest
+> trace-cmd record -e powerpc:hcall_entry -e powerpc:hcall_exit -C ppc-tb \
+>     --ts-offset <TB offset from QEMU monitor> -o trace_guest.dat
 >
-> After applying the fix, the test passes:
->   ok 1 /arm/npcm7xx_sdhci/read_sd_sdma_boundary_continue
+>   NOTE: The TB offset would be reported as a negative number in QEMU
+>   monitor. For this step, the minus sign must be ignored.
 >
-> The new test case ensures the SDMA boundary handling works correctly and
-> prevents future regressions.
+> 3. Transfer the guest logs to the host with scp/rsync
 >
+> 4. Unify the logs
+> trace-cmd report -i trace_host.dat -i trace_guest.dat > combined_log
 >
-> Uboot test:
->     1. Prepare zImage, uboot and rootfs.cpio.gz, make sure uboot config (=
-MMC_SDHCI_SDMA=3Dy).
->     2. ./qemu-system-aarch64 -M xilinx-zynq-a9 -machine boot-mode=3Dsd -m=
- 1024 -display none -serial null -serial stdio -monitor none \
->         -device loader,file=3Du-boot-dtb.bin,addr=3D0x04000000,cpu-num=3D=
-0  \
->         -drive file=3Dzynq-sd.img,format=3Draw,if=3Dsd -D qemu.log
->
->
-> After applying the fix, success load sd card:
->
-> U-Boot 2026.07-rc4-g1e80ee41441c (Jun 15 2026 - 19:05:05 +0800)
->
-> Model: Xilinx ZC702 board
-> DRAM:  ECC disabled 1 GiB
-> Core:  33 devices, 21 uclasses, devicetree: board
-> Flash: 0 Bytes
-> NAND:  0 MiB
-> MMC:   mmc@e0100000: 0
-> Loading Environment from FAT... *** Error - No Valid Environment Area fou=
-nd
-> *** Warning - bad env area, using default environment
->
-> In:    serial@e0001000
-> Out:   serial@e0001000
-> Err:   serial@e0001000
-> Net:
-> ZYNQ GEM: e000b000, mdio bus e000b000, phyaddr 7, interface rgmii-id
->
-> Warning: ethernet@e000b000 (eth0) using random MAC address - 4a:63:5a:a4:=
-d3:6b
-> eth0: ethernet@e000b000
-> Hit any key to stop autoboot: 0
-> Zynq> fatload mmc 0 ${kernel_addr_r} zImage
-> 10838528 bytes read in 4316 ms (2.4 MiB/s)
-> Zynq> fatload mmc 0 ${ramdisk_addr_r} rootfs-arm32.cpio.gz
-> 406531 bytes read in 199 ms (1.9 MiB/s)
-> Zynq> setenv ramdisk_size ${filesize}
-> Zynq> fatload mmc 0 ${fdt_addr_r} zynq-zc702.dtb
-> 15754 bytes read in 21 ms (732.4 KiB/s)
-> Zynq> setenv bootargs console=3DttyPS0,115200 earlycon ignore_loglevel rd=
-init=3D/init
-> Zynq> bootz ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_addr=
-_r}
-> Kernel image @ 0x2000000 [ 0x000000 - 0xa56200 ]
-> ## Flattened Device Tree blob at 01f00000
->    Booting using the fdt blob at 0x1f00000
-> Working FDT set to 1f00000
->    Loading Ramdisk to 2ff9c000, end 2ffff403 ... OK
->    Loading Device Tree to 2ff95000, end 2ff9bd89 ... OK
-> Working FDT set to 2ff95000
->
-> Starting kernel ...
->
->
->
-> Signed-off-by: Tao Ding <dingtao0430@163.com>
+> Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
 > ---
->  hw/sd/sdhci.c | 2 ++
->  1 file changed, 2 insertions(+)
+> v1 -> v2:
+> 1. Remove extra deref and ref code (Vaibhav)
+> 2. Fix the QEMU monitor output to add the new field at the end (Vaibhav)
+Thanks Gautam from addressing V1 review comments. With this feel free to
+add
+
+Reviewed-by: Vaibhav Jain<vaibhav@linux.ibm.com>
+
 >
-> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> index c86dfa281f..0d87289ca4 100644
-> --- a/hw/sd/sdhci.c
-> +++ b/hw/sd/sdhci.c
-> @@ -644,6 +644,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCISta=
-te *s)
->                  s->data_count =3D 0;
->              }
->              if (page_aligned && boundary_count =3D=3D 0) {
-> +                s->prnsts &=3D ~SDHC_DOING_READ;
->                  break;
->              }
->          }
-> @@ -669,6 +670,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCISta=
-te *s)
->                  }
->              }
->              if (page_aligned && boundary_count =3D=3D 0) {
-> +                s->prnsts &=3D ~SDHC_DOING_WRITE;
->                  break;
->              }
->          }
-> --
+>  hw/ppc/ppc.c          | 5 +++++
+>  target/ppc/cpu.h      | 1 +
+>  target/ppc/cpu_init.c | 5 +++--
+>  3 files changed, 9 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+> index a512d4fa64..b123b4cc1c 100644
+> --- a/hw/ppc/ppc.c
+> +++ b/hw/ppc/ppc.c
+> @@ -515,6 +515,11 @@ uint64_t cpu_ppc_get_tb(ppc_tb_t *tb_env, uint64_t vmclk, int64_t tb_offset)
+>      return ns_to_tb(tb_env->tb_freq, vmclk) + tb_offset;
+>  }
+>  
+> +int64_t cpu_ppc_load_tb_offset(CPUPPCState *env)
+> +{
+> +    return env->tb_env->tb_offset;
+> +}
+> +
+>  uint64_t cpu_ppc_load_tbl (CPUPPCState *env)
+>  {
+>      ppc_tb_t *tb_env = env->tb_env;
+> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+> index 057c54bbb8..cbd5964b1a 100644
+> --- a/target/ppc/cpu.h
+> +++ b/target/ppc/cpu.h
+> @@ -1693,6 +1693,7 @@ void cpu_ppc_store_hdecr(CPUPPCState *env, target_ulong value);
+>  void cpu_ppc_store_tbu40(CPUPPCState *env, uint64_t value);
+>  uint64_t cpu_ppc_load_purr(CPUPPCState *env);
+>  void cpu_ppc_store_purr(CPUPPCState *env, uint64_t value);
+> +int64_t cpu_ppc_load_tb_offset(CPUPPCState *env);
+>  #if !defined(CONFIG_USER_ONLY)
+>  target_ulong load_40x_pit(CPUPPCState *env);
+>  void store_40x_pit(CPUPPCState *env, target_ulong val);
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index a02187ce5a..8cab5e12b6 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -7620,8 +7620,9 @@ void ppc_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+>  #if !defined(CONFIG_USER_ONLY)
+>      if (env->tb_env) {
+>          qemu_fprintf(f, "TB %08" PRIu32 " %08" PRIu64
+> -                     " DECR " TARGET_FMT_lu "\n", cpu_ppc_load_tbu(env),
+> -                     cpu_ppc_load_tbl(env), cpu_ppc_load_decr(env));
+> +                     " DECR " TARGET_FMT_lu " TB_OFFSET %016" PRId64 "\n",
+> +                     cpu_ppc_load_tbu(env), cpu_ppc_load_tbl(env),
+> +                     cpu_ppc_load_decr(env), cpu_ppc_load_tb_offset(env));
+>      }
+>  #else
+>      qemu_fprintf(f, "TB %08" PRIu32 " %08" PRIu64 "\n", cpu_ppc_load_tbu(env),
+> -- 
+> 2.54.0
+>
 
-Overall this patch LGTM.
-
-Regards,
-Bin
+-- 
+Cheers
+~ Vaibhav
 
