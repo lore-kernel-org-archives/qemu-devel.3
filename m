@@ -4,67 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 721FEC43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jun 2026 10:34:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DC2BC43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jun 2026 11:03:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdmpd-0008Ax-Mq; Sun, 28 Jun 2026 06:33:46 -0400
+	id 1wdnI6-0005VD-G4; Sun, 28 Jun 2026 07:03:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wdmpb-0008Ao-KM
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 06:33:43 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wdnI2-0005Uj-AN
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 07:03:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wdmpZ-0000Iw-JA
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 06:33:43 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 523B3596952;
- Sun, 28 Jun 2026 12:33:35 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id uU_z76JEoXxL; Sun, 28 Jun 2026 12:33:32 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id DABB7596948; Sun, 28 Jun 2026 12:33:32 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D8C5B5968DE;
- Sun, 28 Jun 2026 12:33:32 +0200 (CEST)
-Date: Sun, 28 Jun 2026 12:33:32 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wdnI0-0003Pp-8G
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 07:03:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782644579;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=e5Ud9dWT5ez1TnJXcx2OMkKfQAQ+FZO2SWXTyd4uZSQ=;
+ b=FCI42DMdPFTDfWZBXNy6Ms/a0pyhwKQpkSFGw6/07nsHlPRCe4/j/RPcfwNjmgN30h4pnT
+ SwdEPLagFYRF06rL2yqqyTsxyVpCdyCd5c5z1VYEGT93cGOWPmZnVQRkIpDB0PA+WYZ8sp
+ rwpCGL4ssPpIG7BRZwSrotqweoXyQYc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-457-gsqiOIkUOj6bjTaZmywT8Q-1; Sun,
+ 28 Jun 2026 07:02:56 -0400
+X-MC-Unique: gsqiOIkUOj6bjTaZmywT8Q-1
+X-Mimecast-MFC-AGG-ID: gsqiOIkUOj6bjTaZmywT8Q_1782644576
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E58091956088
+ for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 11:02:55 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.34])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2D09AD6E; Sun, 28 Jun 2026 11:02:54 +0000 (UTC)
+Date: Sun, 28 Jun 2026 13:01:48 +0200
+From: Stefan Hajnoczi <stefanha@redhat.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@mailo.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Peter Xu <peterx@redhat.com>, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: Re: [RFC 4/7] system: add memory_region_new / memory_region_new_io
-In-Reply-To: <c8002863-d6cf-465d-99f7-3d3917d13d16@redhat.com>
-Message-ID: <bc138fc1-8cdf-2710-540e-89d1119f9ef1@eik.bme.hu>
-References: <20260616155554.264412-1-berrange@redhat.com>
- <20260616155554.264412-5-berrange@redhat.com>
- <aa4d417e-2e61-44ef-a695-31bc19dbafd1@redhat.com>
- <ajpa8kO1bfIhbNAw@redhat.com>
- <c8002863-d6cf-465d-99f7-3d3917d13d16@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PULL 00/45] target/i386, CLI deprecation patches for 2026-06-25
+Message-ID: <20260628110148.GA350800@fedora>
+References: <20260626101748.1728079-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1543300468-1782642812=:11169"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="lx9Z7c0+gaEu2X4P"
+Content-Disposition: inline
+In-Reply-To: <20260626101748.1728079-1-pbonzini@redhat.com>
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,87 +85,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---3866299591-1543300468-1782642812=:11169
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+--lx9Z7c0+gaEu2X4P
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Thu, 25 Jun 2026, Paolo Bonzini wrote:
-> On 6/23/26 12:07, Daniel P. Berrangé wrote:
->> On Wed, Jun 17, 2026 at 02:49:57PM +0200, Paolo Bonzini wrote:
->>> For buses, the fact that the parent and child live at the same time is
->>> explicitly tracked with mutual refcount and unparent.
->> 
->> If we get mutual ref counting correct, then there is not benefit
->> to having 2 different ways of allocating QOM objects. We should
->> eliminate the embedding as pointless extra complexity and focus
->> on getting ref counting done correctly.
->
-> Nobody really *should* notice that there are 2 different ways of allocating 
-> QOM objects, just like you don't think about the difference between:
->
->   char *s = "hello";
->   g_autofree char *t = g_strdup("world")
->
-> The problem is that the mutual ref counting is wrong.  Fix that and you won't 
-> care about init vs. new.
+Applied, thanks.
 
-You can't fix that without more hacks because memory regions cannot be ref 
-counted and freed when their ref count goes to zero without 
-memory_region_new. Currently memory regions cannot be ref counted so we 
-ref count their owners instead which fails if the owners are also owned. 
-Maybe this could be fixed somehow but it may be simpler to allow ref 
-counted memory regions and fix mutual ref count that way.
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
 
-If you want to keep a single version of memory_region_init we'll have to 
-remove object_initialize from it then you could do
+--lx9Z7c0+gaEu2X4P
+Content-Type: application/pgp-signature; name=signature.asc
 
-MemoryRegion mr;
-object_initialize(&mr);
-memory_region_init(&mr);
+-----BEGIN PGP SIGNATURE-----
 
-and
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmpA/xwACgkQnKSrs4Gr
+c8gQmwf9GzkvDfTximBfdzh9mJVyf76TNDAob2woTi26GdhlSHofB7gEsU05d+Kk
+5vMrSOZRRLy1BscI7TT+ymAmO1T98Zrenz0iVJGQhmSv+KD6a1dqoVBmXheZLsEw
+6PdqRf/E0fi7Y+gVIKNvhlHwh3D1c9DwuJnhgiuSQ9lLA2H0J0JZvcJOxbZULXwT
+60ru4yLn1A3YGqM4ACtwZirJzJYpl6gApIw6yhqEB6jCEKY6AKWQ3B1IwEaydvKU
+nYq0mJbZR1P8t5GHLM0MXOFjgc+J0W4lDsTgSU9dWVm7FU4LOsU3S19l4zc8on3B
+bPqRtr1xU0Z0csAPK1zwCpE5MG0R/Q==
+=jhak
+-----END PGP SIGNATURE-----
 
-MemoryRegion *mr = object_new();
-memory_region_init(mr);
+--lx9Z7c0+gaEu2X4P--
 
-which is similiar to your char * example above (you can't simply do 
-allocate and init an object like "hello" does so it will be two lines). 
-But that needs to change every current usage. If you insist I can go that 
-way but just adding memory_region_new would be more convenient with less 
-churn kkeeping the existing lines simple. Wanting to keep the memory API 
-simple means the callers will have to do more work which is not the 
-purpose of an API, it should allow what callers need.
-
->>> the hack that Akihiko mentioned
->>> (https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg03459.html):
->> 
->> That hack is too gross.
->
-> I agree and it's also wrong.
->
->> The relationship between objects does not need to be expressed with
->> embedding one inside another struct. This should be represented at
->> the class level with properties for the child relationships, which
->> would give us introspection via QMP too.  The embedding isn't adding
->> any real value IMHO.
->
-> There is a difference in what the code expresses: you have on one hand an 
-> embedded Foo, which has to be tied to the lifetime of the parent, and on the 
-> other hand a Foo* which can be anywhere and might be provided by an object 
-> property.  One is a child<Foo>, the other is a link<Foo>.
-
-Embedding does not make a child<Foo> relation. object_property_add_child 
-does which is independent of embedding. Embedding does not solve anything 
-just ties the object storage together and frees the embedded object with 
-the owner even if it was not yet finalised or still has refs. 
-MemoryRegions are QOM objects so they should behave like all other QOM 
-objects and not have special memory management as they are forced to have 
-now because of not being able to allocate ref counted memory regions.
-
-Regards,
-BALATON Zoltan
---3866299591-1543300468-1782642812=:11169--
 
