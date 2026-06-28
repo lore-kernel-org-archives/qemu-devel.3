@@ -4,94 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 191D3C43327
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jun 2026 15:34:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6685C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jun 2026 16:13:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdrWH-0003H7-Oa; Sun, 28 Jun 2026 11:34:05 -0400
+	id 1wds7X-0002v6-1w; Sun, 28 Jun 2026 12:12:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <y.sanjeevreddy@gmail.com>)
- id 1wdrWF-0003GR-Ar
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 11:34:03 -0400
-Received: from mail-dy1-x1331.google.com ([2607:f8b0:4864:20::1331])
+ (Exim 4.90_1) (envelope-from <k.kahurani@gmail.com>)
+ id 1wdriQ-0007YM-Ew
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 11:46:38 -0400
+Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <y.sanjeevreddy@gmail.com>)
- id 1wdrWD-0003n6-8K
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 11:34:03 -0400
-Received: by mail-dy1-x1331.google.com with SMTP id
- 5a478bee46e88-30bf132969bso3633710eec.0
- for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 08:33:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <k.kahurani@gmail.com>)
+ id 1wdriO-0008HL-IO
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 11:46:38 -0400
+Received: by mail-oa1-x32.google.com with SMTP id
+ 586e51a60fabf-44856d185bcso757862fac.3
+ for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 08:46:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782661595; cv=none;
+ d=google.com; s=arc-20260327;
+ b=YEhIwb/rNZlYxk9Lybz8PQr5WDhK2xP/x8LF1tCvirRJfSLhqLItSrfCkN52rGrG8y
+ sV50dbQGwreGVR7RdlPychxqc7Np0VdZ5ybWTSevvm9JvHlXu7i7h07eM7tGudPV+ZgL
+ 9Akvqt6VyZN336gReodOl8BtDJx2/SQW7LMC+JjMsNmsAui9MoA37kY7jW4fxzhVjv3Y
+ UuuIJewfMdMpOsgmy2VFGYcsIhTwUEk+8xzJAgms3o6AW3r+T5QfPyRcN45D9D2W4c9o
+ UKKemX2TdwKvwS7sIFgBb7WibPL7f9CGgRSul9+sF+fzMNQ8thtN/BZKGIDp17fgw69l
+ fr9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=TwK/D+sxvlgb/lYLKarrnyvpZOyu6UoNhP89AnfQs5Y=;
+ fh=nbLTHbLAAofBXQ3VtxScTn/oztbvPUsF+2jQ8DfEAmI=;
+ b=D37J5cUSjAkLf42NxzcsuEueQ9xOUtqjEpSh0CHHFuhtfB35PiVMC2+DvMnK8zPZbO
+ YZ/6KCYK82/ygUZ6yVkXRP70XceUpTGexC1H/yAAzCA9g9lOxDq+9o5xEBDJvrGadOKY
+ pSfZfwot2nu6XHv4iJjo9NElT2IPxJPl4Ys+ko+a9sACRTgcF4ntu8gEuoBA9PuoXyoG
+ EI+DJ34ScyfRVnhTqNszf5ZKXCcC/mRYRgZYyvh3vMc6HHI1Lybt8RontFgjMqFjelUN
+ 3nwL7MpF2p01eQvPa89decxBobf6i0Ab2uhVpbp0oUSTQbR1nTbR2i01QiYGqWledgJc
+ QJaQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782660838; x=1783265638; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=TO4OMy13JlcurS/bG9cfFh20FAygOUWwvqQaohzVLBI=;
- b=Ua2rXhCL4xkezaGmg6mtwNqH8uPj88nCtXTFzlFetQEbaydfJpwK8TVL377e8VPpIv
- p5yc0O/YANwB5H9UTAO6g4qVen7zJbG2uuIq+v1kQfIa9wGCdSEcDQH778BJGz6S+rjb
- Pucq/Yhh8we02BIybyJm0Cm0DCSorjkbVxXpOfOCyK1GDafOdTWjznx0DjR+xcsLaXbg
- al22WEj0BMYr6sXMAonFj7REte0NJ/PWtLd5qmpDdHk1TKhUUF/WQ67DzEWagimXIqcD
- /ymXYI/4SwMWrHHJ2Qt3ksZ8TQVpobUv3hVjYXEbTWtGcqwuiHO5ZBTGWV///cLrwCzw
- 2CSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782660838; x=1783265638;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1782661595; x=1783266395; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TO4OMy13JlcurS/bG9cfFh20FAygOUWwvqQaohzVLBI=;
- b=n0NavzBnFaknlfUkOesFyu4DLY+1OsNyE8eNMK7ZOQAYko7sJflBa+RAGRweVf3czH
- sIBh+wNmg9inVUNHsppNJHe7ZIEhRQKQU9CpjVDHJZdLHmV4+2YSjzYLvokTTM/z+HOx
- XeNUKlnJgMq6LY0UUBt84ChqxVj6nzUQVGMtovYAeAdly2pQOsgx1bO2jNU21tnerxOb
- xKpGRcdv91/zqQP4UVxUCCUyZkaNFXLmWCNbw0kR2tVFT57jd634/YDhffrY8lIdwU/9
- 8wKbmZyFzlc1AKbji0jSfP0NIhwnEy6ivIYLA9blljOUcJmIpU3Gyw3rMmzboCilUtnO
- d2Yw==
-X-Gm-Message-State: AOJu0Yydqh1LIlMjnwKrk36zPTfew8K4GJzQK+CBaMekI+8O78YAeDqZ
- d8x02am6qFFrlTh/tE/oDRHnwk3HcUxs2vGeSwxeXcHVJzYLBnhiyvQp
-X-Gm-Gg: AfdE7ckZn2OxJJxiGIMQ+R0ZkkwBeGFo37gdm4BEKbNaWFC7eOIOTgRANll9Qgzv17u
- TCBCmVZq0YltiqQ9z4gNWL+GjcmiwZd4Posmex9yO3ERBqRyxgr91m6jn6yLfND9hQpDA8h+2aU
- dW+P/RrPJ50Xcv94288hG3l2GFdcaq7VbqEgkD5VExTEaY5vDIprzgsPcem9A0t6KjGl3NEEAdt
- PdnWxM7cryw9IwcJhWCl9683VRG4Z9YrdM3vtG1t/PzpZhRSuhWN9gjEVUTjje/9JrgPtr5g8Ss
- S9BfxKLsFKTe58m541zIJm+edIZW2axIvqMI0G9xbXZ+fz21BJsvgBoAK3V6G6CZmj9jRpPYG8v
- GtyfMHR5AgS3nOPRuYhvlU9f3klx9F85jeqp9bfL4s0QzKd9qbiBD0mvVA3T/TL7FI9qKhXa/D9
- fdOYnnchZRAfA0agGi9tVf4E1uE8jxTcYyrDc3DDldfXWG0oK5NfilqfH2
-X-Received: by 2002:a05:7300:e830:b0:30e:cb91:6598 with SMTP id
- 5a478bee46e88-30ecb9168a5mr568519eec.23.1782660838104; 
- Sun, 28 Jun 2026 08:33:58 -0700 (PDT)
-Received: from [127.0.0.1] (67-2-23-151.slkc.qwest.net. [67.2.23.151])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30ea81b39easm9088934eec.31.2026.06.28.08.33.57
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Sun, 28 Jun 2026 08:33:57 -0700 (PDT)
-From: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
-Date: Sun, 28 Jun 2026 09:33:25 -0600
-Subject: [PATCH v4] hw/net: fix e1000e ip_len inflation by Ethernet
- minimum-frame padding
+ bh=TwK/D+sxvlgb/lYLKarrnyvpZOyu6UoNhP89AnfQs5Y=;
+ b=kZ1FC4NYQy65SMIPMA+baeXw3t8jM4zy/0WWf+zexYCLRMMnEwl37dnzGjbWFDdjVD
+ MHvotSy7IX6MDeUxHcI+gl5x/hvSXAi8SvFq2ID+J+Rqr1J7gDRXK6I0YKw+ku9cSb3x
+ +Jx9YG3GhDoOdgMgi1JWr8JhyYlbTSceg5qEtYtZhoGTXri7otQrnbxjqOJFKRKNdDDf
+ c1fMg6tbrl9HkcFHaQTKoovAbyGhAFe0tvDxeo28VpPIFn55C12Z0zTjEDU7S7FY6c2Q
+ 53dOs3BHsrVvK7PKsHCJhRAt5BK0axn7qXBx6U5T1jM/qcSb6xD/7FbSbOZm7vcJB5mo
+ lZwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782661595; x=1783266395;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=TwK/D+sxvlgb/lYLKarrnyvpZOyu6UoNhP89AnfQs5Y=;
+ b=jUX8V82p4hU8w9QgBNCgB7FHXKQ3DBOKXFyXbCxwEeYG5FpSGAwnmgw8Rs+jNrBFI/
+ by3WNKZsSDC6yVQHL5G55u2ih6mfGTAujnDMBNfG1yT7tioTecY6uFISxUq+lh8oSmme
+ qThONXYIe255jEu/3FlXLNabEBwwFqBtZUWjuybuGDvRBkzbzSWA9oFszi2xZD1ExJF8
+ d96U38LXecNpzbi0wiAYblYShb37YbwkpTlHYBW5mG64YmIGJo6l54KCRKZb0pl+BmV5
+ Du/OBD1fwAGnHbGNSQlVUKSFTgR1a1iVc83BFUejOpXHDlfWJ9ctF5fjCI3nwJVYPLwy
+ BQSg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RomoqgNu9L6h1vio2MOyJZAz1Sed1dw591jpc2Yd26vXB3qL18PqdYA4QJOWcFN+S2aNE1ppMnEEiu7@nongnu.org
+X-Gm-Message-State: AOJu0YyAbfOdWddsbrsBOI3TdEh/Cx42u6JF85Jen1K4PVtB99ISdXow
+ IlGyC8A8AjoHV6+c97AQABN3/nj+MQzot2y/h1+L/V+Lb5gm7tXfMY/32UHB7Osjke6/fyjEmco
+ 4wpnvOlUPMDK6DB0YmUXYIiev8lxrvo0=
+X-Gm-Gg: AfdE7clhIEvzVWvv6SH3Cqz/QW6iMocKSq9Xbb+GiSvQbFmNscnjn3hkVENEKe7jYxk
+ ImJMk3nqO+Om0cFZrL80jCwfOV3tTOJszzf0hjRNHI8wjVfRmGtyopCL23Qn1MlKjtyzhIdDjmc
+ FfrmKk0bqjvrdnzzpO33/7/QyuC8kAMRB9KPEFzuzIJYvsVNQGZk5wFoSW01x4Pky//CNxOST7l
+ aHAPDmdw1jPvr0AzSK9M2aMpm1ljdJpwBoAE3TpBbRRiZj+8uMIpb9541Zd5QheeNYAvK/xVzI4
+ Dfcgk1BSKQP9RvYQMk1Jh2z53HSiDYA6/Bu8
+X-Received: by 2002:a05:6870:658e:b0:448:5591:15d9 with SMTP id
+ 586e51a60fabf-448559126f7mr4849762fac.37.1782661594757; Sun, 28 Jun 2026
+ 08:46:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260628-net-tx-pkt-ip-length-padding-v4-1-1794063064fa@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAMU+QWoC/4XQwW6DMBAE0F+JfM5WtjEYcup/VDnYeIFtEoOwg
- 1Ih/r2GKhLKoTnOHN5IM7OAI2Fgp8PMRpwoUO9TUMcDqzvjWwRyKTPJZcELWYLHCPEBwyUCDXB
- F38YOBuMc+RaqXKDOG1Npq1gihhEbemz81znljkLsx59tbRJr+4TV//AkQIA2UjZYWYWKf7Y3Q
- 9ePur+xFZ7kHsvfYDJhstSOW5NXWItXLNtj+g2WJQzLgjtjU5U1e2z5+yDc7TfWcf2RLcsvIh+
- n1XQBAAA=
-X-Change-ID: 20260628-net-tx-pkt-ip-length-padding-951e75fa97b4
-To: qemu-devel@nongnu.org
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Jason Wang <jasowang@redhat.com>, 
- Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1782660837; l=6453;
- i=y.sanjeevreddy@gmail.com; s=20260624-gmail; h=from:subject:message-id;
- bh=XurpwIIi76ZMVaXh1rvRgFxqUn4Xzo4M4BtVMQFml1o=;
- b=RADIOOgcUZGaOfTmvLFAvSkKugC14ac4co1A1YsXHBxz/DpSUtAO4aHDPpMMlHup9XMIoThtb
- iCWi+o15hj9CEolVIrkub0AQbb4HCzZMyUg0ksLWVGFj4OWRdA44ZG9
-X-Developer-Key: i=y.sanjeevreddy@gmail.com; a=ed25519;
- pk=3ELbcw0bH36IEv3JvxqzTAgl5rrkOyv/tQHQzhpObAU=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1331;
- envelope-from=y.sanjeevreddy@gmail.com; helo=mail-dy1-x1331.google.com
+References: <20260628154051.232214-1-megia.oscar@gmail.com>
+In-Reply-To: <20260628154051.232214-1-megia.oscar@gmail.com>
+From: David Kahurani <k.kahurani@gmail.com>
+Date: Sun, 28 Jun 2026 18:46:23 +0300
+X-Gm-Features: AVVi8CeTf6DizADkLm61AypxDKstCAaBxgLYQTdLkrxOaMXxh3_00Jp7bzgcmN8
+Message-ID: <CAAZOf24EO8Aiu=nOzzKCPBzgwvJ+Kw=PaWNyOPP4L1A8PfduMg@mail.gmail.com>
+Subject: Re: [PATCH v2] Memory leak error in qxl unbind
+To: =?UTF-8?B?w5NzY2FyIE1lZ8OtYSBMw7NwZXo=?= <megia.oscar@gmail.com>
+Cc: Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>,
+ Matthew Auld <matthew.auld@intel.com>, Matthew Brost <matthew.brost@intel.com>,
+ dri-devel@lists.freedesktop.org, linux-kernel-mentees@lists.linux.dev, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2001:4860:4864:20::32;
+ envelope-from=k.kahurani@gmail.com; helo=mail-oa1-x32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,6 +106,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 28 Jun 2026 12:12:34 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -114,155 +121,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a guest transmits a short Ethernet frame, iov_size() returns the
-padded wire length including any bytes added to reach the Ethernet
-minimum frame size of 60 bytes.  net_tx_pkt_rebuild_payload() uses
-this inflated size as payload_len.  In the non-TSO IXSM path,
-net_tx_pkt_update_ip_hdr_checksum() then overwrites the IPv4 Total
-Length field with payload_len + l3_hdr_len, inflating it by the
-padding bytes.  The receiver interprets Ethernet padding as IP
-payload, producing a malformed packet.
+On Sun, Jun 28, 2026 at 6:41=E2=80=AFPM =C3=93scar Meg=C3=ADa L=C3=B3pez <m=
+egia.oscar@gmail.com> wrote:
+>
+> I discovered OOM after run script below around two hours in my computer:
+>
+> while :; do
+>     echo [pci qxl id] > /sys/bus/pci/drivers/qxl/unbind
+>     echo [pci qxl id] > /sys/bus/pci/drivers/qxl/bind
+> done
+>
+> If you run 10000 times above script kmemleak does not report any
+> memory leak, but if you run above script about two hours several
+> OOM ocurs and at the end kernel panic.
+>
+> The OOM isn't just a simple leak; it's a refcount corruption that renders
+> the list_lru fix dead code after the first mid-init failure.
+>
+> Here's the chain:
+>
+> Bug 1: ttm_global_init ignores ttm_pool_mgr_init() return
+> If shrinker_alloc() fails under memory pressure, ttm_pool_mgr_init
+> returns -ENOMEM with pool types already initialized (64 list_lru_init
+> calls done). ttm_global_init ignored this and returned 0, leaving orphane=
+d
+> pool types with a NULL mm_shrinker.
+>
+> Fix: Check ret from ttm_pool_mgr_init; if non-zero, goto out cleans up
+> refcount + debugfs.
+>
+> Bug 2: ttm_pool_mgr_init leaks pool types on shrinker_alloc failure
+> If shrinker_alloc fails after all 64 pool types were list_lru_init'd,
+> the function returned -ENOMEM without undoing them. With Bug 1 now
+> triggering proper error handling, this undo is necessary.
+>
+> Fix: err_shrinker: label that finalizes + destroys all 64 pool types
+> before returning.
+>
+> You must apply the patch from the link "[PATCH v2] drm/qxl: fix
+> use-after-free to qxl_irq_handler in PCI mode" before testing.
+> If you don't apply this patch, you will get a UAF error when running
+> the script above.
+>
+> Assisted-by: OpenCode:1.17.8-Big Pickle
+> Link: https://lore.kernel.org/virtualization/20260627105445.89827-2-megia=
+.oscar@gmail.com/T/#u
+> Signed-off-by: =C3=93scar Meg=C3=ADa L=C3=B3pez <megia.oscar@gmail.com>
+> ---
+>  drivers/gpu/drm/ttm/ttm_device.c |  5 ++++-
+>  drivers/gpu/drm/ttm/ttm_pool.c   | 37 ++++++++++++++++++++++++++------
+>  include/drm/ttm/ttm_pool.h       |  2 ++
+>  3 files changed, 37 insertions(+), 7 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/ttm/ttm_device.c b/drivers/gpu/drm/ttm/ttm_d=
+evice.c
+> index d3bfb9a696a7..c880a0430363 100644
+> --- a/drivers/gpu/drm/ttm/ttm_device.c
+> +++ b/drivers/gpu/drm/ttm/ttm_device.c
+> @@ -96,7 +96,10 @@ static int ttm_global_init(void)
+>                 >> PAGE_SHIFT;
+>         num_dma32 =3D min(num_dma32, 2UL << (30 - PAGE_SHIFT));
+>
+> -       ttm_pool_mgr_init(num_pages);
+> +       ret =3D ttm_pool_mgr_init(num_pages);
+> +       if (ret)
+> +               goto out;
+> +
+>         ttm_tt_mgr_init(num_pages, num_dma32);
+>
+>         glob->dummy_read_page =3D alloc_page(__GFP_ZERO | GFP_DMA32 |
+> diff --git a/drivers/gpu/drm/ttm/ttm_pool.c b/drivers/gpu/drm/ttm/ttm_poo=
+l.c
+> index 278bbe7a11ad..e0c82804a07d 100644
+> --- a/drivers/gpu/drm/ttm/ttm_pool.c
+> +++ b/drivers/gpu/drm/ttm/ttm_pool.c
+> @@ -1198,6 +1198,17 @@ void ttm_pool_fini(struct ttm_pool *pool)
+>          * that no shrinker is concurrently freeing pages from the pool.
+>          */
+>         ttm_pool_synchronize_shrinkers();
+> +
+> +       for (i =3D 0; i < TTM_NUM_CACHING_TYPES; ++i) {
+> +               for (j =3D 0; j < NR_PAGE_ORDERS; ++j) {
+> +                       struct ttm_pool_type *pt;
+> +
+> +                       pt =3D ttm_pool_select_type(pool, i, j);
+> +                       if (pt !=3D &pool->caching[i].orders[j])
+> +                               continue;
+> +                       list_lru_destroy(&pt->pages);
+> +               }
+> +       }
+>  }
+>  EXPORT_SYMBOL(ttm_pool_fini);
+>
+> @@ -1386,6 +1397,7 @@ static inline u64 ttm_get_node_memory_size(int nid)
+>  int ttm_pool_mgr_init(unsigned long num_pages)
+>  {
+>         unsigned int i;
+> +       int ret =3D 0;
+>
+>         int nid;
+>         for_each_node(nid) {
+> @@ -1423,8 +1435,10 @@ int ttm_pool_mgr_init(unsigned long num_pages)
+>  #endif
+>
+>         mm_shrinker =3D shrinker_alloc(SHRINKER_NUMA_AWARE, "drm-ttm_pool=
+");
+> -       if (!mm_shrinker)
+> -               return -ENOMEM;
+> +       if (!mm_shrinker) {
+> +               ret =3D -ENOMEM;
+> +               goto err_shrinker;
+> +       }
+>
+>         mm_shrinker->count_objects =3D ttm_pool_shrinker_count;
+>         mm_shrinker->scan_objects =3D ttm_pool_shrinker_scan;
+> @@ -1434,6 +1448,10 @@ int ttm_pool_mgr_init(unsigned long num_pages)
+>         shrinker_register(mm_shrinker);
+>
+>         return 0;
+> +
+> +err_shrinker:
+> +       ttm_pool_type_fini_and_list_lru_destroy();
+> +       return ret;
+>  }
+>
+>  /**
+> @@ -1442,17 +1460,24 @@ int ttm_pool_mgr_init(unsigned long num_pages)
+>   * Cleanup the global pools and unregister the MM shrinker.
+>   */
+>  void ttm_pool_mgr_fini(void)
+> +{
+> +       shrinker_free(mm_shrinker);
+> +       ttm_pool_type_fini_and_list_lru_destroy();
+> +       WARN_ON(!list_empty(&shrinker_list));
+> +}
+> +
+> +void ttm_pool_type_fini_and_list_lru_destroy(void)
+>  {
+>         unsigned int i;
+>
+>         for (i =3D 0; i < NR_PAGE_ORDERS; ++i) {
+>                 ttm_pool_type_fini(&global_write_combined[i]);
+> +               list_lru_destroy(&global_write_combined[i].pages);
+>                 ttm_pool_type_fini(&global_uncached[i]);
+> -
+> +               list_lru_destroy(&global_uncached[i].pages);
+>                 ttm_pool_type_fini(&global_dma32_write_combined[i]);
+> +               list_lru_destroy(&global_dma32_write_combined[i].pages);
+>                 ttm_pool_type_fini(&global_dma32_uncached[i]);
+> +               list_lru_destroy(&global_dma32_uncached[i].pages);
+>         }
+> -
+> -       shrinker_free(mm_shrinker);
+> -       WARN_ON(!list_empty(&shrinker_list));
+>  }
+> diff --git a/include/drm/ttm/ttm_pool.h b/include/drm/ttm/ttm_pool.h
+> index 26ee592e1994..bda8e816a206 100644
+> --- a/include/drm/ttm/ttm_pool.h
+> +++ b/include/drm/ttm/ttm_pool.h
+> @@ -97,4 +97,6 @@ int ttm_pool_restore_and_alloc(struct ttm_pool *pool, s=
+truct ttm_tt *tt,
+>  int ttm_pool_mgr_init(unsigned long num_pages);
+>  void ttm_pool_mgr_fini(void);
+>
+> +void ttm_pool_type_fini_and_list_lru_destroy(void);
+> +
+>  #endif
+> --
+> 2.54.0
+>
+>
 
-Fix the IXSM path in e1000e by adding a new function,
-net_tx_pkt_update_ip_hdr_checksum_only(), that recomputes the IPv4
-header checksum without modifying ip_len.  For non-TSO packets the
-guest has already set ip_len correctly; only the checksum needs to be
-recomputed after the header is reassembled into the linear buffer.
-A new common-layer function is needed because struct NetTxPkt is
-opaque to device code and the IP header bytes required by
-net_raw_checksum() are inaccessible from e1000e_core.c.
-
-The TSO path is unaffected: it continues to call
-net_tx_pkt_update_ip_checksums() which correctly writes ip_len from
-payload_len (ip_len=0 per Intel 82574 datasheet §7.3.4 for TSO
-super-packets that the host must segment).
-
-Signed-off-by: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
----
-Thank you Akihiko for your review. I agree that device-specific logic
-should stay in device code and not in net_tx_pkt_rebuild_payload(). v4
-takes a different approach that avoids any changes to the common
-parsing path.
-
-Changes in v4:
-- Revert all changes to net_tx_pkt_rebuild_payload(); it is unchanged
-  from upstream.
-- Add net_tx_pkt_update_ip_hdr_checksum_only() to the net_tx_pkt
-  common layer: identical to net_tx_pkt_update_ip_hdr_checksum() but
-  skips the ip_len write. A new common-layer function is necessary
-  because struct NetTxPkt is opaque to device code — the IP header
-  bytes needed by net_raw_checksum() are inaccessible from e1000e_core.c.
-- Change the IXSM (non-TSO) path in e1000e_setup_tx_offloads() to call
-  net_tx_pkt_update_ip_hdr_checksum_only(). The guest has already set
-  ip_len correctly; we only need to recompute the checksum.
-- The TSO path is unaffected: it continues to call
-  net_tx_pkt_update_ip_checksums() which correctly writes ip_len from
-  payload_len (ip_len=0 per §7.3.4 for TSO super-packets).
-- Link to v3: https://lore.kernel.org/qemu-devel/20260627-net-tx-pkt-ip-length-padding-v3-1-e860dabadd3f@gmail.com
-
-Changes in v3:
-- Architectural redesign: three-case fallback logic in
-  net_tx_pkt_rebuild_payload() plus net_tx_pkt_set_payload_len() API;
-  e1000e pre-sets payload_len from PAYLEN descriptor field.
-- Link to v2: https://lore.kernel.org/qemu-devel/20260625-net-tx-pkt-ip-length-padding-v2-1-287d0ba59ec1@gmail.com
-
-Changes in v2:
-- Fix iov_copy() to use raw_payload_len and net_tx_pkt_get_total_len()
-  to use iov_size() to preserve correct wire frame size.
-- Link to v1: https://lore.kernel.org/qemu-devel/20260624-net-tx-pkt-ip-length-padding-v1-1-7a22fe9b4e40@gmail.com
-
-On the relationship to the short-packet receive-path discussion
-(Peter Maydell):
-https://lore.kernel.org/qemu-devel/CAFEAcA_UhmCxJc16CHE=4ZR1+PA0=4-29=fEe+d+iUmhLTzpuQ@mail.gmail.com/
-
-The linked thread concerns the receive path. This patch addresses only
-the transmit path: the IXSM offload path was overwriting a correctly
-set guest ip_len with an inflated value that included Ethernet padding.
-No changes to padding behaviour or the receive path are made.
----
- hw/net/e1000e_core.c |  8 +++++++-
- hw/net/net_tx_pkt.c  | 17 +++++++++++++++++
- hw/net/net_tx_pkt.h  | 13 +++++++++++++
- 3 files changed, 37 insertions(+), 1 deletion(-)
-
-diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-index 46e156a5dd..3c0347caf8 100644
---- a/hw/net/e1000e_core.c
-+++ b/hw/net/e1000e_core.c
-@@ -614,7 +614,13 @@ e1000e_setup_tx_offloads(E1000ECore *core, struct e1000e_tx *tx)
-     }
- 
-     if (tx->sum_needed & E1000_TXD_POPTS_IXSM) {
--        net_tx_pkt_update_ip_hdr_checksum(tx->tx_pkt);
-+        /*
-+         * Guest already set ip_len correctly; only recompute the checksum.
-+         * net_tx_pkt_update_ip_hdr_checksum() would overwrite ip_len with
-+         * payload_len + l3_hdr_len, inflating it by any Ethernet
-+         * minimum-frame padding bytes present in payload_len.
-+         */
-+        net_tx_pkt_update_ip_hdr_checksum_only(tx->tx_pkt);
-     }
- 
-     return true;
-diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
-index 903238dca2..c2eae2f74b 100644
---- a/hw/net/net_tx_pkt.c
-+++ b/hw/net/net_tx_pkt.c
-@@ -102,6 +102,23 @@ void net_tx_pkt_update_ip_hdr_checksum(struct NetTxPkt *pkt)
-     pkt->l3_hdr.ip.ip_sum = cpu_to_be16(csum);
- }
- 
-+void net_tx_pkt_update_ip_hdr_checksum_only(struct NetTxPkt *pkt)
-+{
-+    uint16_t csum;
-+    assert(pkt);
-+
-+    /*
-+     * Recompute the IP header checksum without touching ip_len.
-+     * Used for non-TSO packets where the guest already set ip_len
-+     * correctly; overwriting it would inflate it by any Ethernet
-+     * minimum-frame padding present in payload_len.
-+     */
-+    pkt->l3_hdr.ip.ip_sum = 0;
-+    csum = net_raw_checksum(pkt->l3_hdr.octets,
-+        pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len);
-+    pkt->l3_hdr.ip.ip_sum = cpu_to_be16(csum);
-+}
-+
- void net_tx_pkt_update_ip_checksums(struct NetTxPkt *pkt)
- {
-     uint16_t csum;
-diff --git a/hw/net/net_tx_pkt.h b/hw/net/net_tx_pkt.h
-index 0a716e74a5..d2840f38e8 100644
---- a/hw/net/net_tx_pkt.h
-+++ b/hw/net/net_tx_pkt.h
-@@ -133,6 +133,19 @@ bool net_tx_pkt_update_sctp_checksum(struct NetTxPkt *pkt);
-  */
- size_t net_tx_pkt_get_total_len(struct NetTxPkt *pkt);
- 
-+/**
-+ * recompute the IPv4 header checksum without modifying ip_len
-+ *
-+ * Use for non-TSO packets where the guest already set ip_len correctly.
-+ * Calling net_tx_pkt_update_ip_hdr_checksum() instead would overwrite
-+ * ip_len with payload_len + l3_hdr_len, inflating it by any Ethernet
-+ * minimum-frame padding present in payload_len.
-+ *
-+ * @pkt:            packet
-+ *
-+ */
-+void net_tx_pkt_update_ip_hdr_checksum_only(struct NetTxPkt *pkt);
-+
- /**
-  * get packet type
-  *
-
----
-base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
-change-id: 20260628-net-tx-pkt-ip-length-padding-951e75fa97b4
-
-Best regards,
---  
-Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
-
+This bug is specific so Qemu, so...
 
