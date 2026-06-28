@@ -4,104 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33551C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jun 2026 01:55:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90512C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jun 2026 04:16:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdei4-0001Yt-PD; Sat, 27 Jun 2026 21:53:27 -0400
+	id 1wdgvs-0000ZA-Dd; Sun, 28 Jun 2026 00:15:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wdei2-0001YK-5P
- for qemu-devel@nongnu.org; Sat, 27 Jun 2026 21:53:22 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wdei0-00048t-Lt
- for qemu-devel@nongnu.org; Sat, 27 Jun 2026 21:53:21 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-664ce3000e6so131461d50.0
- for <qemu-devel@nongnu.org>; Sat, 27 Jun 2026 18:53:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782611599; cv=none;
- d=google.com; s=arc-20260327;
- b=mVcGR2itJzv6i+i2zdzrSxYOTB9Fw8Ztod8AC2ejV7hn1IeNPeAS0TK4wPdE2Z5c/n
- THzr7D6hu7Kvvh4Fj88qBN5RaWsnoyzggos8WkDzCgrSp5HC24G/ktzsf2J3tVEx5oE9
- pPRWGSvG+CpJK1G6dXdTgfg98fWlMoF0SWOKCfuZesYL4zWxt/mVo4mpGTwsjTvSQk4x
- 2LM9kfw+tG4OhfWK1+7lITMpul2JBqp8avveUtIB+DvGbsDNjQC8x72btodiki0BO/fP
- TD8Sd1USwObfJGboj5bJNO6SMz14laFSioyjnoarfxWqcIpAh3WfKIm2cOWNVu2mQ/3R
- yniw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=oa3EY445Xm3vq1WBLUQ1mJJXFbKUlHgKxrRyZUE2BaQ=;
- fh=f+RMEvWAVQU6OpFxtAqzJ+qKCv5Dm/Od3C2+aQNC4ls=;
- b=DneoEbW+atRtYO6RJ/hp2zIIiJu8gmyl9rrlAbSdqetkLKFOfKQ8gV9DwHVrjVQMPs
- 6DvpwhZ8imtn1tAKLs234U4oy0/0fOLPeizGZR670VLGntt4qp8VeojJS0J3TrJsItbx
- jFbOhjiZBQRa9vYFXPvO1P+kROsE/nNK7Ntjdyws7ujx47CVJJQvVSEdl+5x/v91I+E5
- DOrESmP2/8N45PORXQStJclPah30yKg0nG7pPnfRj+C9fYs4GQu/wxh/gLHOvEh/pNnb
- hldGZL5U3MJP1bo0LBW18V1QjYT3MeY2ylFVYGfNZCP/3XBzLpO7LsxiISbiMjoWE8Vb
- WGEg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782611599; x=1783216399; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oa3EY445Xm3vq1WBLUQ1mJJXFbKUlHgKxrRyZUE2BaQ=;
- b=g9moiV1xIhVNJNF72zY+34kVvKI8i7YmI7lDDEI6X8uo2I17RhhrbBFV7tlyCOzpbK
- 4BKT5p2QdEGNCtnDkgDQGrK6dv8XtUKcrjZz+oQLmDF/J4poT72JjyX61bE94h6MnNkJ
- r8YkiNRNJPeo0LlpkE9J11F7g9HrNVCE7gZVYu7t0DmS6xYlYrad0ZlY1pLT5sZR4fqd
- HUViIvc8yGBbPXKpxnzee2W1uSlEr+gtHfhTH18ghzBWrk7uel7LU/1boai4NjMbAMiL
- LcE3Ysvl9N5GbC0LGZpTVqAKjWvVvjRpNZOUehBkTA0onbUq5P0HFLDtvmdtWVGNx/QT
- DCTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782611599; x=1783216399;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=oa3EY445Xm3vq1WBLUQ1mJJXFbKUlHgKxrRyZUE2BaQ=;
- b=gYjDmwHxKg25p+DFptnln8HGKMcl89iBWbs+ltt8Fq0CAS2fTVQd1mxjDQ+VIHK25A
- oOClLYKA/9zzC6n1KgJ//X4MpeeYT5FR/RJisrufYL6cu44olIXiqtazoqlozPKrOGe+
- g/zOlYVYYD5jytJga8/Ds/sSslRHanzHb4aEBXteE+t3u50NizENucgWBj1Pp1KIv+rA
- U4Y9hnij9lhE2/NVljI/Zec9xMInt546/FhdxTiJ1YV72d+avwAOXg2G9YBhiAbiBlTL
- HPjACdrSrUyDCzvo+GzvB/tOJXyFtcCS2357QGCrzZKJlGP1Po4pB+4WDgEewLTvSGI2
- i7cA==
-X-Gm-Message-State: AOJu0Yyjgv6wrekansuuL9bb7frLBpvZXLK3Y5RgMqN8O9TlJCJjadu8
- WcDjNvWiMXQqTwgrVijEdzCR2Z/ffG10108d7XJEFP18mVlUeTr1fiQ/bmV7GdspUvMV+GF4puI
- bYEHEhavCfWx//9VtuL86rtWRfLzY7/EKSr26bcGkPxfGnVY=
-X-Gm-Gg: AfdE7cl7OQ8uhkkLVnZj0rLKf5iM93R2Tpn6rXjPgUl0rCOl7V+orNCEiWq5CB2HfIb
- uduZvJal35o1cBZuqiI56EQe/D3vCD81SQCaCKsVycq4gvhm7uMi5TJvu/tLI4fBAFX0UZtM0FI
- WqBCySw3Gf3D99NqGChEDGjCbPmUWtO1y2+yU60RV1fhQ7sglLkG4+2wqrMzD6bGgc7FMAOjcno
- Z0sNkKwKvqmTQmdIZwF568KMbGHrdwwfwg5Tc81sMYRjXQpgKgddVeiblnaBiZaVdYE38y99URm
- yw6vlAfKvg==
-X-Received: by 2002:a05:690e:419b:b0:660:eff5:e8e3 with SMTP id
- 956f58d0204a3-66487f419camr10401712d50.2.1782611598076; Sat, 27 Jun 2026
- 18:53:18 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260627055848.28279-1-bin.meng@processmission.com>
-In-Reply-To: <20260627055848.28279-1-bin.meng@processmission.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Sun, 28 Jun 2026 09:53:06 +0800
-X-Gm-Features: AVVi8Cd6KHeCx2COg5v5AYAlEBqCqyNTdt8HlRudpD7ymvk3KME45mdGtlgxK8g
-Message-ID: <CAEUhbmUPpS6VBiCncdKDgr2T+22L2u8Ldz8zVtzDRTBQODeeVw@mail.gmail.com>
-Subject: Re: [PATCH] docs(arm): Update Nuvoton OpenBMC image guidance
-To: qemu-devel@nongnu.org
-Cc: Hao Wu <wuhaotsh@google.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Tyrone Ting <kfting@nuvoton.com>, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1wdgvq-0000Yx-Fu
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 00:15:46 -0400
+Received: from ms-2001g-snip4-8.eps.apple.com ([57.103.73.199]
+ helo=outbound.ms.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1wdgvm-0006Zo-Hq
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 00:15:45 -0400
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-3a-100-percent-6 (Postfix) with ESMTPS id
+ EC5881800127; Sun, 28 Jun 2026 04:15:36 +0000 (UTC)
+X-ICL-RepId: 019f0c70-a5a2-783c-85b8-3e80fad613df
+X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQhPAEMDWhxBD0kdXAFeEhVdRV4FXQpRH1sLXAN3BldeWhdeTVEPDx1cVlACWktAEwRPEwVSB11NVg1HD1geXBQXFUBDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FXggZCF0dGRVaCQpXB0F/QHdfcVofRA1BB0ADWnFDFEEGXgdGC0gLOQpZclgDM308cwBSRVEfVEYTGU4bV01QG18CQg8=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
+ t=1782620139; x=1785212139; bh=TaFuMmZKlH0+z+LNFB485NvaV3VZvduNNbNywBC+Zi8=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=SsZV+s4AHLHeLA8TUpYiS/XdYcAxduXGNvnu+YLud54McVQwD+h4FpaTewJUVmsSXK9GDz+9nSn+KxuyUNnaIqm6Wvo+bFwVJmzMgyh7mRbVETGiSd/X5Y5qBcY+z0JZIsKhrDS1+hNB25BY6FrT2fmu/ijfLf8ZmuG+IMs2ZzK5Sgvzl5hhqg/liRpdEde2HZ/eNuS1/1KuHncQ2oSrU64q3HVA5QcRiwF2sDjoCAQpSB95GX0AHrsINDzkXE4tA8N59UVJfn0WAEMc2VIxddaeAvxXgDMXxYeIDjgbWKnpbIKyurntCT0P5lATD0jCFApik+cOZV/h8nTVohKj7Q==
+Received: from smtpclient.apple (unknown [17.57.154.37])
+ by p00-icloudmta-asmtp-us-west-3a-100-percent-6 (Postfix) with ESMTPSA id
+ 865EC1800123; Sun, 28 Jun 2026 04:15:35 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.10\))
+Subject: Re: [PATCH v2 2/5] fifo32: add fifo32_peek()
+From: Matt Jacobson <mhjacobson@me.com>
+In-Reply-To: <CAFEAcA86dxpB8Tj805e185yiFCp9eE_Y4MeHJAAwdGq+uYP3zw@mail.gmail.com>
+Date: Sun, 28 Jun 2026 00:15:32 -0400
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Laurent Vivier <laurent@vivier.eu>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb133.google.com
+Message-Id: <51F8D2F1-4494-41C3-9530-982A94E31CDD@me.com>
+References: <20260617235032.21491-1-mhjacobson@me.com>
+ <20260617235032.21491-3-mhjacobson@me.com>
+ <CAFEAcA86dxpB8Tj805e185yiFCp9eE_Y4MeHJAAwdGq+uYP3zw@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+X-Mailer: Apple Mail (2.3696.120.41.1.10)
+X-Proofpoint-GUID: 07YN3UPxn9hIJQlFl7wttm7Pm0842iOo
+X-Proofpoint-ORIG-GUID: 07YN3UPxn9hIJQlFl7wttm7Pm0842iOo
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI4MDAzMyBTYWx0ZWRfX/bPDBepehVdA
+ tj9pJMMSAq3BoCE+YgRxkaOr03q9vbChCDaNGKfZ4Kug2zpiJigdEsBzsz5zuitx9nTYv2K/p4X
+ MyohnrJFqITm/0A83AreHzX3YlK2T8WhCjfBCu/NymgjhREkEcdTChETwyvayTnlY8P8tcExWyj
+ XvUy0xvEvs3YXx0PTZ5ZARDTOIStJFul8D9pBR9+tYyzE27TME5dG7/Z1AUmBliCYN5gvWOUNZs
+ 09PeHPcJNoiCtJk+n5SANjLyuhigJpBprw4Jy8xhqcH8r/pQVpdC7V43ZylC9fNF06rkPa3gHVL
+ mC8GSnS6JUI9vd3VpgM
+Received-SPF: pass client-ip=57.103.73.199; envelope-from=mhjacobson@me.com;
+ helo=outbound.ms.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,22 +80,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jun 27, 2026 at 1:58=E2=80=AFPM Bin Meng <bmeng.cn@gmail.com> wrote=
-:
->
-> Describe the current OpenBMC target naming and release status for
-> Nuvoton machines. The latest 2.18.0 release no longer includes GSJ,
-> so point users at older 2.14.0 sources and explain how to find
-> Jenkins MTD artifacts.
->
-> Signed-off-by: Bin Meng <bin.meng@processmission.com>
->
-> ---
->
->  docs/system/arm/nuvoton.rst | 54 +++++++++++++++++++++++++++++++++----
->  1 file changed, 49 insertions(+), 5 deletions(-)
->
+Hi Peter,
 
-Superceded by https://lore.kernel.org/qemu-devel/20260627063208.33642-1-bin=
-.meng@processmission.com/T/#u
+> On Jun 22, 2026, at 12:47 PM, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>=20
+> fifo8_peek() assert()s that we have enough data in the FIFO
+> to peek it. fifo8_peek_buf() doesn't assert anything, it
+> instead returns you the number of bytes actually read. I
+> think to make fifo32_peek() consistent with fifo8_peek() we
+> should here have
+>=20
+>    uint32_t read =3D fifo8_peek_buf(...);
+>    assert(read =3D=3D sizeof(bytes));
+>=20
+> This will also avoid code analyzers like Coverity complaining
+> that we failed to check the return value of fifo8_peek_buf().
+>=20
+> <...>
+>=20
+> This bit can be more simply written as
+>=20
+>       return ldl_le_p(bytes);
+>=20
+> (which says "load a little-endian 32 bit value from this addr").
+
+> On Jun 23, 2026, at 4:54 AM, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>=20
+> Oh, a trivial style nit since this needs respinning anyway:
+> we generally prefer[*] "sizeof(foo)" over "sizeof foo", which
+> also matches the other two uses in the file.
+
+Agreed on all points.  I'll include these fixes in v3.
+
+Thanks for the review.
+
+Matt=
 
