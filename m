@@ -4,110 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5652CC43327
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jun 2026 12:13:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AFF9C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jun 2026 13:59:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdoNt-0008Qp-1U; Sun, 28 Jun 2026 08:13:13 -0400
+	id 1wdq2R-00058n-0d; Sun, 28 Jun 2026 09:59:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
- id 1wdoNe-0008Oe-Dy; Sun, 28 Jun 2026 08:12:59 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wdq2N-00057x-07
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 09:59:07 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
- id 1wdoNb-0001q8-KP; Sun, 28 Jun 2026 08:12:58 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65S9mNKY4170220; Sun, 28 Jun 2026 12:12:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=C/SMHYSm+wnOsMbz6RuGr1mSg+bZ51
- TdvKZHO/yhFdk=; b=DvlVHOVRXoAKSzbBk0AzAP1fS765cP2Cl1E4cMb5ZIHJPr
- VPWCpYwqN2W2d44e+lbK8oh7btKQ1Q2E9tS6m4L7dbwaCGUzEJC0FFRayJchKYZu
- cC7t4hYoIJ0vNS1NXQ9i0Opb/tuTwbgNoikkeFUwsBaSM+bQUxAzE7HwqJ2pELjH
- 254Ag5JFoq3eznLX8Q9zk+peFpoea80ljmwpwzKVyiKvu/OvvuSH5TmUCctfUhjj
- AO0YElHmZZoz8+sTrC+8WmfavSiwjCjA2ypIa3/WFnfgXXJTf0co40sAS+9bJK3H
- +xfLxeozkILtUjQztmEEJG26EMkVG8GUMlXnurUA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26remue3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 28 Jun 2026 12:12:50 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65SC4ftr029534;
- Sun, 28 Jun 2026 12:12:50 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbh1c7u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 28 Jun 2026 12:12:50 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65SCCGlr27984458
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 28 Jun 2026 12:12:16 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CD65F5805A;
- Sun, 28 Jun 2026 12:12:48 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C97B558054;
- Sun, 28 Jun 2026 12:12:44 +0000 (GMT)
-Received: from vaibhav?linux.ibm.com (unknown [9.39.21.125])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with SMTP;
- Sun, 28 Jun 2026 12:12:44 +0000 (GMT)
-Received: by vaibhav@linux.ibm.com (sSMTP sendmail emulation);
- Sun, 28 Jun 2026 17:42:42 +0530
-From: Vaibhav Jain <vaibhav@linux.ibm.com>
-To: Gautam Menghani <gautam@linux.ibm.com>, harshpb@linux.ibm.com,
- rathc@linux.ibm.com, milesg@linux.ibm.com, npiggin@gmail.com
-Cc: Gautam Menghani <gautam@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] target/ppc: Expose the TB offset of the guest in
- QEMU monitor
-In-Reply-To: <20260626093554.69966-1-gautam@linux.ibm.com>
-References: <20260626093554.69966-1-gautam@linux.ibm.com>
-Date: Sun, 28 Jun 2026 17:42:42 +0530
-Message-ID: <87zf0ex3r9.fsf@vajain21.in.ibm.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wdq2K-0001RW-0a
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 09:59:06 -0400
+Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.183]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65SDwjCe009933
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sun, 28 Jun 2026 22:58:56 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=Wfn+1QqEGyb4UTQOAKfa1rLk9JAIIu71oqP1oD3W5yc=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1782655136; v=1;
+ b=Xs0h4LTUiD796CkfW97l965Ep/ZGtzLsgJ4wL9HQohWbwuDes1IMpt9O41QUhpYl
+ yJhPMZZWWAgQdDzf9ShvYrnmdEvk7J2B2fOIMr50SMqH92qNT+M2VUJD3jD1Cx8I
+ Jc1amIxUvzv4mNctx0/6NdkkaFG2inKfDWPAR0qMaUjdH4dYCgJRrUJYuBIrbQRd
+ qKSJVRdEa8MNTOCP+vfHFnT7K2numf53ebbtoc/2UbGtNBY4bdDW1nfmeCGNcW/A
+ OyXkyUiTJLSjcWuqx/6KAVxEeVRDgRaFCvW/xFtPPDYQGpYMVox7jyi0htDU5t7x
+ EQ8PMthsBw16HiBqjRJ/hw==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sun, 28 Jun 2026 22:58:28 +0900
+Subject: [PATCH v2] ui/gtk: Narrow DMA-BUF critical section
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a410fc3 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=pSTbB7s77_JVs2PdU3YA:9
-X-Proofpoint-ORIG-GUID: AgOgshIaic2HTdosUVSaRk4AO9Kqd86g
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI4MDEwMyBTYWx0ZWRfX5sDeiXMLt8/n
- qkcUMs/6LGJRsAVN4rnQEvgXOwNq7XpA73YDUUyy5//cKk/u2q9/ILrMYyuQ94ucgHJk5Sd4z8s
- RhlM9Semxw11EP3WTDKaGWcyIh/YITDvdxxj53EvNQ/CdDh+6ci1MNe4DdrrY7vkLOp4uOM0QMh
- Upvg5LhArBk6S8Jm1TI/2aA74ZttLLIs5g+hlkHG/5l+sJyMvpFZhfVGshn5EgoMMZB+cWyTgLs
- BNDZV4+GfPmWBMCTje0c29pdy468lu97yNsuXHnjJ/doPEg7VzQxAnb+h9QnDInfksCperRKUwO
- NHPR8Fvd9xxKScp8CQg3pWRdTPds9JkBDvqaRu2eZSSNH8gm8lgsAqEQxiggzld0Yqt1N7t2upN
- 5/KmQoLoOaKvxsaSX83/j6q+jPuV66NkLrCkCHVKo2tQTYyvULL706wY0yJ6xZulRBocFPEoofY
- E8DjnnvO4MGBbMkCKYw==
-X-Proofpoint-GUID: sb-vexTQcdJyChI1CJ_X76bdSwvTE-Zr
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI4MDEwMyBTYWx0ZWRfX5Ins6IKIfQ/F
- rZ+Xjt9qP4MoB/hVXSdAIzmZ+CngC1DPZjDoBpxxhYLE2UvhxHOByObwyJxEg+wIvsGaLrBrn96
- H61CjispaQRVtV+GQ02b67n5WAq+QXI=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-28_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
- spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606280103
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=vaibhav@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260628-gtk-v2-1-1e4839012f09@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/1WMwQ6DIBAFf8XsuRAgQLUn/6PxYOmKWxMxQE2N8
+ d9LvfU4L29mh4SRMMGt2iHiSonCXEBdKnBjP3tk9CwMSigrpDTM54lppZ16NFKgNVCeS8SBPmf
+ l3hUeKeUQtzO6yt/676+SSWaug26wNlaLuo3Jc0ec+JvlMG2B946/FuiO4/gC+mfhKKMAAAA=
+X-Change-ID: 20260115-gtk-424c2b910e65
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.16-dev-925f5
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5660;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=u9PNnrGuU9cST5YQYAuYVgWgWK9ItE3ISy/dmOCa4a0=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5ajxvw1wX93fFdav0Tjnukv/zmMSyNslvdzs+woFtDOi
+ ruVLFXeUcrCIMbFICumyJJStJtbI7r2U2FCfAvMHFYmkCEMXJwCMJEuT4Z/2jf+d2s1X2fe4tVr
+ s/nf57tflVb+mVYSoOuh3FjJ/liilOGfjVTYXyGRCYpeirsus56/N9GafcPBPU/TlNJ1G52NF0a
+ zAwA=
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,95 +83,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gautam Menghani <gautam@linux.ibm.com> writes:
+Scanout operations need to be properly ordered to avoid tearing. The
+virtio specification allows the guest to use pageflip. With pageflip,
+the guest only modifies the invisible framebuffer while the host scans
+out the visible framebuffer. The guest may choose not to use pageflip to
+avoid its overhead, accepting the risk of tearing.
 
-> When debugging issues in KVM guests, it is sometimes helpful to have a
-> unified trace log of both guest and host to see where things are going
-> wrong. Expose the TB (timebase) offset through QEMU monitor to enable
-> capturing of unified log.
->
-> The below steps can be then used to get a unified log:
-> 1. In host
-> trace-cmd record -e kvm_hv:kvm_guest_enter -e kvm_hv:kvm_guest_exit \
->     -C ppc-tb -o trace_host.dat
->
-> 2. In guest
-> trace-cmd record -e powerpc:hcall_entry -e powerpc:hcall_exit -C ppc-tb \
->     --ts-offset <TB offset from QEMU monitor> -o trace_guest.dat
->
->   NOTE: The TB offset would be reported as a negative number in QEMU
->   monitor. For this step, the minus sign must be ignored.
->
-> 3. Transfer the guest logs to the host with scp/rsync
->
-> 4. Unify the logs
-> trace-cmd report -i trace_host.dat -i trace_guest.dat > combined_log
->
-> Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
-> ---
-> v1 -> v2:
-> 1. Remove extra deref and ref code (Vaibhav)
-> 2. Fix the QEMU monitor output to add the new field at the end (Vaibhav)
-Thanks Gautam from addressing V1 review comments. With this feel free to
-add
+ui/gtk performs the following procedure to flush a scanout:
+1) Queue a draw event.
+2) The draw event gets triggered.
+3) Blit the guest framebuffer to the host framebuffer.
 
-Reviewed-by: Vaibhav Jain<vaibhav@linux.ibm.com>
+When flushing a DMA-BUF scanout, ui/gtk blocks the device before 2) if
+possible and unblocks it after 3) to enforce proper ordering. However,
+blocking the device before 2) has two problems.
 
->
->  hw/ppc/ppc.c          | 5 +++++
->  target/ppc/cpu.h      | 1 +
->  target/ppc/cpu_init.c | 5 +++--
->  3 files changed, 9 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
-> index a512d4fa64..b123b4cc1c 100644
-> --- a/hw/ppc/ppc.c
-> +++ b/hw/ppc/ppc.c
-> @@ -515,6 +515,11 @@ uint64_t cpu_ppc_get_tb(ppc_tb_t *tb_env, uint64_t vmclk, int64_t tb_offset)
->      return ns_to_tb(tb_env->tb_freq, vmclk) + tb_offset;
->  }
->  
-> +int64_t cpu_ppc_load_tb_offset(CPUPPCState *env)
-> +{
-> +    return env->tb_env->tb_offset;
-> +}
-> +
->  uint64_t cpu_ppc_load_tbl (CPUPPCState *env)
->  {
->      ppc_tb_t *tb_env = env->tb_env;
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index 057c54bbb8..cbd5964b1a 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1693,6 +1693,7 @@ void cpu_ppc_store_hdecr(CPUPPCState *env, target_ulong value);
->  void cpu_ppc_store_tbu40(CPUPPCState *env, uint64_t value);
->  uint64_t cpu_ppc_load_purr(CPUPPCState *env);
->  void cpu_ppc_store_purr(CPUPPCState *env, uint64_t value);
-> +int64_t cpu_ppc_load_tb_offset(CPUPPCState *env);
->  #if !defined(CONFIG_USER_ONLY)
->  target_ulong load_40x_pit(CPUPPCState *env);
->  void store_40x_pit(CPUPPCState *env, target_ulong val);
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index a02187ce5a..8cab5e12b6 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -7620,8 +7620,9 @@ void ppc_cpu_dump_state(CPUState *cs, FILE *f, int flags)
->  #if !defined(CONFIG_USER_ONLY)
->      if (env->tb_env) {
->          qemu_fprintf(f, "TB %08" PRIu32 " %08" PRIu64
-> -                     " DECR " TARGET_FMT_lu "\n", cpu_ppc_load_tbu(env),
-> -                     cpu_ppc_load_tbl(env), cpu_ppc_load_decr(env));
-> +                     " DECR " TARGET_FMT_lu " TB_OFFSET %016" PRId64 "\n",
-> +                     cpu_ppc_load_tbu(env), cpu_ppc_load_tbl(env),
-> +                     cpu_ppc_load_decr(env), cpu_ppc_load_tb_offset(env));
->      }
->  #else
->      qemu_fprintf(f, "TB %08" PRIu32 " %08" PRIu64 "\n", cpu_ppc_load_tbu(env),
-> -- 
-> 2.54.0
->
+First, it can leave the device blocked indefinitely because GTK
+sometimes decides to cancel 2) when the window is not visible for
+example. ui/gtk regularly repeats 1) as a workaround, but it is not
+applicable to GtkGLArea because it causes display corruption.
 
--- 
-Cheers
-~ Vaibhav
+Second, the behavior is inconsistent with the other types of scanout
+that leave the device unblocked between 1) and 2).
+
+To fix these problems, let ui/gtk block the device only when the
+queued draw event runs, immediately before 3). Blocking before that is
+unnecessary since ui/gtk does not access the framebuffer yet. If the
+guest does not use pageflip but instead updates the visible framebuffer
+directly, ui/gtk should not add the overhead of a pre-draw block.
+
+ui/gtk still blocks the device during 3) for DMA-BUF. Unlike the other
+scanout types, 3) can happen asynchronously with the device for a
+DMA-BUF, so ui/gtk needs to keep the visible guest framebuffer stable
+for the blit.
+
+With the problems fixed, the workaround to repeat 1) is no longer
+necessary and is removed.
+
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+Changes in v2:
+- Clarified that guests can use pageflip to avoid tearing while ui/gtk
+  only needs to keep the DMA-BUF stable during the blit.
+- Avoided the unprotected gd_egl_scanout_flush() fallback by queuing
+  redraws through gtk_widget_queue_draw_area().
+- Link to v1: https://lore.kernel.org/qemu-devel/20260115-gtk-v1-1-57f49e856408@rsg.ci.i.u-tokyo.ac.jp
+---
+ ui/gtk-egl.c     |  6 ++----
+ ui/gtk-gl-area.c | 23 +----------------------
+ 2 files changed, 3 insertions(+), 26 deletions(-)
+
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index 7c5c9b2428c2..adc81f34b1c8 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -91,6 +91,7 @@ void gd_egl_draw(VirtualConsole *vc)
+             } else {
+                 qemu_dmabuf_set_draw_submitted(dmabuf, false);
+             }
++            qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
+         }
+ #endif
+         gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0, vc->gfx.w, vc->gfx.h);
+@@ -405,14 +406,11 @@ void gd_egl_flush(DisplayChangeListener *dcl,
+ 
+     if (vc->gfx.guest_fb.dmabuf &&
+         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+-        qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
+         qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+         gtk_egl_set_scanout_mode(vc, true);
+-        gtk_widget_queue_draw_area(area, x, y, w, h);
+-        return;
+     }
+ 
+-    gd_egl_scanout_flush(&vc->gfx.dcl, x, y, w, h);
++    gtk_widget_queue_draw_area(area, x, y, w, h);
+ }
+ 
+ void gtk_egl_init(DisplayGLMode mode)
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index 23806b9d01bb..29497019ee46 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -86,6 +86,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
+             } else {
+                 qemu_dmabuf_set_draw_submitted(dmabuf, false);
+             }
++            qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
+         }
+ #endif
+ 
+@@ -163,27 +164,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+ 
+     gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx.drawing_area);
+ 
+-    if (vc->gfx.guest_fb.dmabuf &&
+-        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+-        /*
+-         * gd_egl_refresh() calls gd_egl_draw() if a DMA-BUF draw has already
+-         * been submitted, but this function does not call gd_gl_area_draw() in
+-         * such a case due to display corruption.
+-         *
+-         * Calling gd_gl_area_draw() is necessary to prevent a situation where
+-         * there is a scheduled draw event but it won't happen bacause the window
+-         * is currently in inactive state (minimized or tabified). If draw is not
+-         * done for a long time, gl_block timeout and/or fence timeout (on the
+-         * guest) will happen eventually.
+-         *
+-         * However, it is found that calling gd_gl_area_draw() here causes guest
+-         * display corruption on a Wayland Compositor. The display corruption is
+-         * more serious than the possible fence timeout so gd_gl_area_draw() is
+-         * omitted for now.
+-         */
+-        return;
+-    }
+-
+     if (!vc->gfx.gls) {
+         if (!gtk_widget_get_realized(vc->gfx.drawing_area)) {
+             return;
+@@ -347,7 +327,6 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
+ 
+     if (vc->gfx.guest_fb.dmabuf &&
+         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+-        qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
+         qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+         gtk_gl_area_set_scanout_mode(vc, true);
+     }
+
+---
+base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
+change-id: 20260115-gtk-424c2b910e65
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
 
