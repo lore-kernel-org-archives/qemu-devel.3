@@ -4,67 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90512C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jun 2026 04:16:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 858FAC43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jun 2026 06:08:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wdgvs-0000ZA-Dd; Sun, 28 Jun 2026 00:15:48 -0400
+	id 1wdig8-00029I-1z; Sun, 28 Jun 2026 02:07:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1wdgvq-0000Yx-Fu
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 00:15:46 -0400
-Received: from ms-2001g-snip4-8.eps.apple.com ([57.103.73.199]
- helo=outbound.ms.icloud.com)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wdifs-00027H-2C; Sun, 28 Jun 2026 02:07:24 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1wdgvm-0006Zo-Hq
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 00:15:45 -0400
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-100-percent-6 (Postfix) with ESMTPS id
- EC5881800127; Sun, 28 Jun 2026 04:15:36 +0000 (UTC)
-X-ICL-RepId: 019f0c70-a5a2-783c-85b8-3e80fad613df
-X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQhPAEMDWhxBD0kdXAFeEhVdRV4FXQpRH1sLXAN3BldeWhdeTVEPDx1cVlACWktAEwRPEwVSB11NVg1HD1geXBQXFUBDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FXggZCF0dGRVaCQpXB0F/QHdfcVofRA1BB0ADWnFDFEEGXgdGC0gLOQpZclgDM308cwBSRVEfVEYTGU4bV01QG18CQg8=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
- t=1782620139; x=1785212139; bh=TaFuMmZKlH0+z+LNFB485NvaV3VZvduNNbNywBC+Zi8=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=SsZV+s4AHLHeLA8TUpYiS/XdYcAxduXGNvnu+YLud54McVQwD+h4FpaTewJUVmsSXK9GDz+9nSn+KxuyUNnaIqm6Wvo+bFwVJmzMgyh7mRbVETGiSd/X5Y5qBcY+z0JZIsKhrDS1+hNB25BY6FrT2fmu/ijfLf8ZmuG+IMs2ZzK5Sgvzl5hhqg/liRpdEde2HZ/eNuS1/1KuHncQ2oSrU64q3HVA5QcRiwF2sDjoCAQpSB95GX0AHrsINDzkXE4tA8N59UVJfn0WAEMc2VIxddaeAvxXgDMXxYeIDjgbWKnpbIKyurntCT0P5lATD0jCFApik+cOZV/h8nTVohKj7Q==
-Received: from smtpclient.apple (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-100-percent-6 (Postfix) with ESMTPSA id
- 865EC1800123; Sun, 28 Jun 2026 04:15:35 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.10\))
-Subject: Re: [PATCH v2 2/5] fifo32: add fifo32_peek()
-From: Matt Jacobson <mhjacobson@me.com>
-In-Reply-To: <CAFEAcA86dxpB8Tj805e185yiFCp9eE_Y4MeHJAAwdGq+uYP3zw@mail.gmail.com>
-Date: Sun, 28 Jun 2026 00:15:32 -0400
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Laurent Vivier <laurent@vivier.eu>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <51F8D2F1-4494-41C3-9530-982A94E31CDD@me.com>
-References: <20260617235032.21491-1-mhjacobson@me.com>
- <20260617235032.21491-3-mhjacobson@me.com>
- <CAFEAcA86dxpB8Tj805e185yiFCp9eE_Y4MeHJAAwdGq+uYP3zw@mail.gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-X-Mailer: Apple Mail (2.3696.120.41.1.10)
-X-Proofpoint-GUID: 07YN3UPxn9hIJQlFl7wttm7Pm0842iOo
-X-Proofpoint-ORIG-GUID: 07YN3UPxn9hIJQlFl7wttm7Pm0842iOo
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI4MDAzMyBTYWx0ZWRfX/bPDBepehVdA
- tj9pJMMSAq3BoCE+YgRxkaOr03q9vbChCDaNGKfZ4Kug2zpiJigdEsBzsz5zuitx9nTYv2K/p4X
- MyohnrJFqITm/0A83AreHzX3YlK2T8WhCjfBCu/NymgjhREkEcdTChETwyvayTnlY8P8tcExWyj
- XvUy0xvEvs3YXx0PTZ5ZARDTOIStJFul8D9pBR9+tYyzE27TME5dG7/Z1AUmBliCYN5gvWOUNZs
- 09PeHPcJNoiCtJk+n5SANjLyuhigJpBprw4Jy8xhqcH8r/pQVpdC7V43ZylC9fNF06rkPa3gHVL
- mC8GSnS6JUI9vd3VpgM
-Received-SPF: pass client-ip=57.103.73.199; envelope-from=mhjacobson@me.com;
- helo=outbound.ms.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wdifp-0000AH-Nt; Sun, 28 Jun 2026 02:07:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1782626824; bh=HSFY+Ubvqj+jy27gnEo0Sv4tossPSHYlVMWeKnNGZYM=;
+ h=Date:Subject:To:References:From:In-Reply-To;
+ b=Q/BIW74HRlj7oliuk80m+pqDoW9oozanwwEbawweshyOj7UHuA/4LDUdheGQI09QY
+ /KhOroHKVdOhTDcySCLUBMWUs70k5ti1eJTmGwQcuGYR4c0v6uQTYolQev0WvqUj8D
+ yD7Eh7grPIRgQjvHoUfyR02hFhAHMs/EGrLz22Lpkk0gEe2Bgm8L+DSjZAPT+k7kv1
+ I9LuIA+/vssOMxt98MmQ1l7C+HVzcpM3AgZxMC7eqI2hM+laEB3nyu0zSsR0gvToe+
+ 2b52RgG8cMJtnlFTRFLhPgdDqUPx8jZ6cS0mnLLEoX5y4a4hql/8klBOvi+/YnBnSO
+ 6eBXZko6bzktg==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 06D101BBE47;
+ Sun, 28 Jun 2026 09:07:04 +0300 (MSK)
+Message-ID: <f966566f-c440-45b6-be37-2200b18d831e@tls.msk.ru>
+Date: Sun, 28 Jun 2026 09:07:16 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [ANNOUNCE] QEMU 11.0.2 Stable released
+To: Helge Konetzka <hk@zapateado.de>, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org
+References: <20260627082913.181C717AB6B@think4mjt.localdomain>
+ <e9aefd25-21e3-427c-b4b6-3aa8be2cd877@zapateado.de>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <e9aefd25-21e3-427c-b4b6-3aa8be2cd877@zapateado.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,41 +110,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+On 27.06.2026 14:20, Helge Konetzka wrote:
+> Hi Michael ,
+> 
+> Am 27.06.26 um 10:29 schrieb Michael Tokarev:
+>> Hi everyone,
+>>
+>> The QEMU v11.0.2 stable release is now available.
+>>
+>> You can grab the tarball from our download page here:
+>>
+>>    https://www.qemu.org/download/#source
+>>
+>>    https://download.qemu.org/qemu-11.0.2.tar.xz
+>>    https://download.qemu.org/qemu-11.0.2.tar.xz.sig (signature)
+> I cannot download the release using this URL:
 
-> On Jun 22, 2026, at 12:47 PM, Peter Maydell <peter.maydell@linaro.org> =
-wrote:
->=20
-> fifo8_peek() assert()s that we have enough data in the FIFO
-> to peek it. fifo8_peek_buf() doesn't assert anything, it
-> instead returns you the number of bytes actually read. I
-> think to make fifo32_peek() consistent with fifo8_peek() we
-> should here have
->=20
->    uint32_t read =3D fifo8_peek_buf(...);
->    assert(read =3D=3D sizeof(bytes));
->=20
-> This will also avoid code analyzers like Coverity complaining
-> that we failed to check the return value of fifo8_peek_buf().
->=20
-> <...>
->=20
-> This bit can be more simply written as
->=20
->       return ldl_le_p(bytes);
->=20
-> (which says "load a little-endian 32 bit value from this addr").
+It's fixed now.
 
-> On Jun 23, 2026, at 4:54 AM, Peter Maydell <peter.maydell@linaro.org> =
-wrote:
->=20
-> Oh, a trivial style nit since this needs respinning anyway:
-> we generally prefer[*] "sizeof(foo)" over "sizeof foo", which
-> also matches the other two uses in the file.
+Thanks,
 
-Agreed on all points.  I'll include these fixes in v3.
-
-Thanks for the review.
-
-Matt=
+/mjt
 
