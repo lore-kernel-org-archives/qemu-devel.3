@@ -4,140 +4,167 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DD47C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 14:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95C89C43602
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 14:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weDPw-0005MP-Im; Mon, 29 Jun 2026 10:57:00 -0400
+	id 1weDR9-0005va-4Y; Mon, 29 Jun 2026 10:58:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1weDPu-0005GY-57
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:56:58 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1weDR2-0005tu-0a
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:58:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1weDPr-0007zZ-HO
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:56:57 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65TATEPU2579076
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 14:56:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- CiH2B0nlKPSBnM3F1KubX/khe5K9fUlYQTsI9uqO43I=; b=DOEUce4a0uwyi10K
- 1rX6DsIw9w2wr4MTOtiAkwQ28F0FL/2Bax3a66k5eSd4G+2F/xeqpOJb/dNP8QKf
- bfjhsTK5i5z5yBxsLAm3VtvV+8PDH3gMuvLu1He9Wa+0TJnH8iKe4cL8xWyuRTqS
- pZm8w9VD8fZH70C8Qv0bld0VB3ERaMfLJRHTylLyX64Cf/LZk0ibWf4401MdsFdm
- Y5ukF7fKQwT31qPiEskd38zeYGIJOYfIh2ncQReuB7U6DHwtfYfE4oiZ9faEM2aB
- YKrycEDeLzAVvibc2H4wtO7+Ivi6pE/d3yVStuCRVf9DTulvBI1Y5Se0jggzE52u
- TgmIAg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3kp7hxw6-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 14:56:53 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-92b4b575561so648272785a.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 07:56:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1weDR0-0008OP-3i
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:58:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782745084;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=wmIJJIPJACNGxnN1w1mXgRPzUFO9zrGx0VHwoj+to/o=;
+ b=UlaV+vAz1uY3yQPLJut1MMaDE6Ii+bJMba9GfrSFE33Nb3w4MJTeK4Wgu6p6VHMH1isWzo
+ cXIQgE1fBk02RYy8RIAl0AA9Ec1tsR96WNh6uswdoTlOQYerTUAk6HusDCYKa3HM3HkDgr
+ KQHjOCMrv/gWL4THB0gBiAkpKNURJcs=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-663-SVdSfS3xNua9fzt8gYGIXw-1; Mon, 29 Jun 2026 10:58:02 -0400
+X-MC-Unique: SVdSfS3xNua9fzt8gYGIXw-1
+X-Mimecast-MFC-AGG-ID: SVdSfS3xNua9fzt8gYGIXw_1782745081
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-493ae33c70eso8902885e9.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 07:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782745013; x=1783349813; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CiH2B0nlKPSBnM3F1KubX/khe5K9fUlYQTsI9uqO43I=;
- b=jx1pyIjF4P94In4ws2+tMMACJCEUTL7EpU9/PdAjup/swY5gGpxkhmPYwZIIC3KoZE
- t087Q6zoCSdGyvDy+/PI0jEROWA9tLFlzUhPrREbnPTErnHJ7m/k1xaEknhNmJh1B9cw
- EEYOrhcQiL1TN1nwOmjagcBeQmpOZ0fDEkyjcbxWI96yi1ZcUdEmYTptgxE4Cf0tOYBu
- t00QpogmfUwu6wdp5t/6xeI6WSva6KhsDAsrH/AbQ0RG+e2uzTqPtr0CLGRs27Cew1cB
- znBOA22DpFxC7L494Np4SaUvWTuQItgtV/s85lj62Yx75qO0bd2WS+sbjUYOTCa33tBa
- TlrA==
+ d=redhat.com; s=google; t=1782745081; x=1783349881; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=wmIJJIPJACNGxnN1w1mXgRPzUFO9zrGx0VHwoj+to/o=;
+ b=WJfVLQTjUmBvMN1IeWJ/8yZSFsGZoC3dFwq2Weyq9Ztl/NsXshXhiWpIecN5+e6Ihj
+ 3r7rw7uSq7ByvZV1S1J88ygmykYiTumDRLupuhIYpTEvE226DZxLiAl7DnbLY2WdeDtB
+ 43AON5+lRmsdDfypbWrPEEMK2HFszHy1Pj/2zfD388DGIRUr2jkBLZrEhMP/IwtNhLYQ
+ qcnPsu/evsJ5YLvP8VIa+DjlbP79sIsrbsSwoGzCKBiMC2hNIlsXvqehJ18JDnOpfqy/
+ 3iEZ3QWCiZ4BapzMdQpLFvicH0YLyrj85qV+4CScuYNT85nrWfyV9Cb9UFNIC/sWRjlK
+ rL4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782745013; x=1783349813;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CiH2B0nlKPSBnM3F1KubX/khe5K9fUlYQTsI9uqO43I=;
- b=J2QoZWW7A0vRMF6ga70rWqmrqLq08b8Xx2zE00G8gwZoaI3nLEpYFB3m+8Qxxc2luQ
- eleaxayKCt7LXpYOB69RFuygvMKmCP29ZwIb7T/YYxeTg1d+A0nHXmvwqmbsQLDwM4tf
- 6Z1OCzo1jlprLQL5UygV5+ckSo0299xDXf1K6/vP1cMRl4SyFVN6Trr3WHxzrUUsnhYw
- F9ekEZNtREPxOy3AXRDZRA4T2oMN5S5wCDk+ZkN6BXAtzU8RBai3AHBX9mtbp4oEiMAz
- Foor25WJVUny+v3jFtndXwcRjgWuZfFew7M76SHAMaKs7IfU0SLi2JWm8H/5p6uyME7n
- p79Q==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9phmfx4HxRoM0BC8SCLzwQZft3DqOgsBJ239agM0KvchXL4qbqjBj9nDu+xnd/8+eDh8/BAGvCQv9B@nongnu.org
-X-Gm-Message-State: AOJu0YySc29fHI7tqVe/WhIua8O3/hEvtlL2TBVx3jY3Xn4NstUKjSXM
- wjl3EEAbC2KLXkB8Fns17S3vsAkgKCv4K5x4/+tY5zCAMVwwaDPqQBlYiUv9ApYbZoHhG2bjTWd
- /C85L8ePOr2JXWonXMni0P6xhUWdDqvun8pPfrwarN+XL0KxF3w06SiVPgw==
-X-Gm-Gg: AfdE7clQc3OiAT4Kuf47IlEw6DvgMsyNNPPex/PyiRyAT4YBnCgsDMGSw5s3yQnpfuy
- cZXN6hVONKsRbM9Jd7EKAc2Iy+0QMyMglNv7v2rc1i7qBF6Y7blQGhaVVf1x/86ZlTdWBnimTSn
- SJxKZ9s1kN6c7IInJmXLGrzhZf1EbVpNbpffQ3n6q0FjT6g01/4QhgrGqUZaJqwCu2fE9CVfZm7
- /u9Zg7sQbCOKCQ42rmk/NehM/CxpYXnlznvMkm3kHqxYXx1QHtSicw0kzW4x5U1/O/x6nRlPUDL
- zKWjWfyXl2YUs05qk5HY7wGOASYCv2ityEfXDq0jDn/VFhUNztKt6Z0akpB4kS0GIu3P7hGUIp6
- IlszcUlJKXHRYyKGWVKyYDsnQL6+GRtwkh7w4XrlfaJZ6A433H5O46cmM4mvB5A==
-X-Received: by 2002:a05:620a:29ca:b0:92e:5b63:224d with SMTP id
- af79cd13be357-92e5b6324fbmr248743485a.26.1782745012628; 
- Mon, 29 Jun 2026 07:56:52 -0700 (PDT)
-X-Received: by 2002:a05:620a:29ca:b0:92e:5b63:224d with SMTP id
- af79cd13be357-92e5b6324fbmr248738485a.26.1782745012119; 
- Mon, 29 Jun 2026 07:56:52 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4730937e18dsm15028101f8f.21.2026.06.29.07.56.51
+ d=1e100.net; s=20251104; t=1782745081; x=1783349881;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wmIJJIPJACNGxnN1w1mXgRPzUFO9zrGx0VHwoj+to/o=;
+ b=OD7ZFBAiWEmhrHSsif+byc+jN6jEqyziVXwKwXu0bJ3h8MuQLJ3oxGgr7ERzHHC5Oa
+ hyryR6PH2Z8WCt0bEZury5Qp2jxBU0e56SiGx+oouicaq0mj0TTYOUjyH9QlF9TkOPdx
+ PV9og8O3ubbOejyYlfWOgFTavMtv6HouLdZVNo58Z4Sl5kN8cPeQM28S/5AGioPZLGK1
+ uGkU5GmKIreDipEaqyVwTBpkG+WNc70pMdUeSHn4Cu/BWNSA97AuCjAHOMN0YX8Dvi1Y
+ zS85A5+LY70UTRZ7Iwx4NjWjItQLg/YF1oi/OK/uDOT6A8jacRPyKDhKcxmOL41/+hoh
+ FKxQ==
+X-Gm-Message-State: AOJu0YxBa05neM9rcYZbqiVLp3PqdGurnv4pgdRsBVywbPJE57gS/QUx
+ p8jeds83FFZ5TmgWNKml0RRwlEgxgbZJQl49v/Xae/EyB+xaMSvQftYqGlXQemgFxoDb1W5nJz2
+ gh8aJMbDxx5+x+Bi72qzf6PWoGfI9YyT5Eb/7UDONq9ZEvn4sqrUVbQ0H
+X-Gm-Gg: AfdE7cmxgZVWarE4SXxWsZdhy28Y3F9ZWFFV4XLRNFsP5Yu+bSBYjKcdlIc4ilvK1eO
+ hag4+LAXtW3L60uywn/WCcMQrTtrkHsKM8E+nwBUuzaEpcVmtZW0MrA873+CtkAvN0dOhC8WbwD
+ 6yV9U7QNVr9q9k8VmdqM8ADzfk+f1+aZBChzPKkzewoSZYGtAZ0iOnnSUzy+DYd3Bc4s9c3YWpe
+ HELw+5QsySkHUIgK0y42J6k+limHNP5p79i+MtGx69HpHt4T2diAlMRO4S/SU54wr5PPCCOJ+eb
+ YJsXe1rlq8vRG/Bp1E12VGN/hx93EalQlI5IlPmb7cGhHAJcnbbP8fK+0ucIy1SLJfnvQ1jN6RK
+ H6r/JW8QJkN+dhsioQqolHeNochlkU9f6ROcsz4cdyYhNOppY7Q==
+X-Received: by 2002:a05:600c:609b:b0:493:a61a:a3bb with SMTP id
+ 5b1f17b1804b1-493b82afa30mr338515e9.22.1782745080797; 
+ Mon, 29 Jun 2026 07:58:00 -0700 (PDT)
+X-Received: by 2002:a05:600c:609b:b0:493:a61a:a3bb with SMTP id
+ 5b1f17b1804b1-493b82afa30mr337925e9.22.1782745080272; 
+ Mon, 29 Jun 2026 07:58:00 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4927038578bsm262457155e9.4.2026.06.29.07.57.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jun 2026 07:56:51 -0700 (PDT)
-Message-ID: <b2eb84d7-b74c-4edf-a4af-df92b4ea2032@oss.qualcomm.com>
-Date: Mon, 29 Jun 2026 16:56:50 +0200
+ Mon, 29 Jun 2026 07:57:59 -0700 (PDT)
+Message-ID: <59fa369a-b5a1-4484-bcb0-93b663fb0c44@redhat.com>
+Date: Mon, 29 Jun 2026 16:57:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/gpio/pca9552: fix off-by-one in QOM led index
- validation
-Content-Language: en-US
-To: yujun <yujun@kylinos.cn>, Glenn Miles <milesg@linux.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20260629074133.187549-1-yujun@kylinos.cn>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260629074133.187549-1-yujun@kylinos.cn>
+Subject: Re: [PATCH v4 07/14] migration: Make switchover-ack re-usable
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>, Maor Gottlieb <maorg@nvidia.com>
+References: <20260622101214.25770-1-avihaih@nvidia.com>
+ <20260622101214.25770-8-avihaih@nvidia.com> <87v7b520uo.fsf@pond.sub.org>
+ <b997b3f7-0a95-4c21-bf18-c19bf8754936@nvidia.com>
+ <9fa2038d-f75b-4d6a-a2fc-1bc871878b74@redhat.com>
+ <675f8d2f-ca22-4b04-bc30-8fa7b6d3a6dd@nvidia.com>
+ <4a3457d3-d892-494b-b8a9-556ad9a7912a@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <4a3457d3-d892-494b-b8a9-556ad9a7912a@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDEyNCBTYWx0ZWRfXyJ1QRqIsLOb6
- Nb90uIp0czxnrjizQy7LjPaDXLncDM2zjg9sK1aynnd1N160YDPEiUOtZ70chpc170NXUgR4Z47
- h8ICkoAlhzAJDYY5Xd4UUbqAasxwvtY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDEyNCBTYWx0ZWRfX2rwIZTq6NX2F
- aXRCkAYh2nY7EyZX+52yppBjo+erFKDRKevlXAy6hcFQ1h/KxbvlE55rk4qIPdBETKyiQyTohH7
- lAfg9DqZa9EapN/rUAb+FRGq2MQr0NEFSBY+anQTtngFcb7rMtdcQP7dJtGsSslJDZifa+Nfgxm
- GMzEeA14Y+3w2wQ8V8Nr0j100Lyrf9ktgSRw68wkkt6Z1a0g8gW7XQdnDLMaATrCmYJ6sbci+hi
- QsUnjqX2lR1PdrO+RnnaLvVzI/HlDd+NRgfWb87NsMhr+ydmFeGaO6m6MMXjFtyPLGidMro66zZ
- tCsZqAcWmUBrh5fuclwuJ+2uWjsZvMsVE/PAIZNEPuHrxj9gTPgIqo8dTc4bnCHblz/m1A2awoo
- Xj7c+v51HpWM30JRbuI0Fxz/D1h6zrd7pdee76c6taUUFFs2FRPXva+7GkD/9TZtnJQko5PhDyv
- ea3FNQYuW51oDdHyQIA==
-X-Proofpoint-ORIG-GUID: POLnNjqvN_cc7gB4hXohJYInBk9D9r3v
-X-Authority-Analysis: v=2.4 cv=MZJcfZ/f c=1 sm=1 tr=0 ts=6a4287b5 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=6CSop681rr5zcgR6WfsA:9 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-GUID: POLnNjqvN_cc7gB4hXohJYInBk9D9r3v
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 adultscore=0 clxscore=1015 phishscore=0
- bulkscore=0 impostorscore=0 spamscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290124
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,23 +180,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/6/26 09:41, yujun wrote:
-> pca955x_get_led() and pca955x_set_led() accept led indices equal to
-> pin_count, but valid indices are 0..pin_count-1.  For a 16-pin device,
-> led16 passes the current check and then accesses an LS register past
-> max_reg.
+Avihai
+
+On 6/28/26 18:29, Cédric Le Goater wrote:
+> On 6/28/26 12:03, Avihai Horon wrote:
+>>
+>> On 6/28/2026 12:00 PM, Cédric Le Goater wrote:
+>>> External email: Use caution opening links or attachments
+>>>
+>>>
+>>> On 6/28/26 10:16, Avihai Horon wrote:
+>>>>
+>>>> On 6/26/2026 10:54 AM, Markus Armbruster wrote:
+>>>>> External email: Use caution opening links or attachments
+>>>>>
+>>>>>
+>>>>> Just spelling nitpickery this time.
+>>>>>
+>>>>> Avihai Horon <avihaih@nvidia.com> writes:
+>>>>>
+>>>>>> Switchover-ack is a mechanism to synchronize between source and
+>>>>>> destination QEMU during migration to prevent the source from switching
+>>>>>> over prematurely.
+>>>>>>
+>>>>>> VFIO uses switchover-ack to ensure switchover happens only after
+>>>>>> destination side has loaded the precopy initial bytes. This is important
+>>>>>> for VFIO, as otherwise downtime could be impacted and be higher.
+>>>>>>
+>>>>>> In its current state, switchover-ack is a one-time mechanism, meaning
+>>>>>> that switchover is acked only once and past that another ACK cannot be
+>>>>>> requested again. This was sufficient until now, as VFIO precopy initial
+>>>>>> bytes was defined to be monotonically decreasing. Thus, when precopy
+>>>>>> initial bytes reached zero for all VFIO devices, a single ACK would be
+>>>>>> sent and its validity would hold.
+>>>>>>
+>>>>>> However, now the new VFIO_PRECOPY_INFO_REINIT feature allows precopy
+>>>>>> initial bytes to be re-initialized during precopy. Specifically, it
+>>>>>> means that initial bytes can grow after reaching zero, which would
+>>>>>> invalidate a previously sent switchover ACK.
+>>>>>>
+>>>>>> To solve this, make switchover-ack reusable and allow devices to request
+>>>>>> switchover ACKs when needed via the save_query_pending SaveVMHandler.
+>>>>>>
+>>>>>> Since now switchover ACK can be requested for a specific device and in
+>>>>>> different times, make switchover ACK per-device (instead of a single ACK
+>>>>>> for all devices) and let source side do the pending ACKs accounting.
+>>>>>>
+>>>>>> Keep the legacy switchover-ack mechanism for backward compatibility and
+>>>>>> turn it on by a compatibility property for older machines. Enable the
+>>>>>> property until VFIO implements the new switchover-ack.
+>>>>>>
+>>>>>> Acked-by: Markus Armbruster <armbru@redhat.com>
+>>>>>> Reviewed-by: Peter Xu <peterx@redhat.com>
+>>>>>> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+>>>>>> ---
+>>>>>>   qapi/migration.json                | 14 ++++----
+>>>>>>   include/migration/client-options.h |  1 +
+>>>>>>   include/migration/register.h       |  2 ++
+>>>>>>   migration/migration.h              | 32 ++++++++++++++++--
+>>>>>>   migration/savevm.h                 |  6 ++--
+>>>>>>   migration/migration.c              | 37 ++++++++++++++-------
+>>>>>>   migration/options.c                | 10 ++++++
+>>>>>>   migration/savevm.c                 | 53 +++++++++++++++++++++++-------
+>>>>>>   migration/trace-events             |  5 +--
+>>>>>>   9 files changed, 123 insertions(+), 37 deletions(-)
+>>>>>>
+>>>>>> diff --git a/qapi/migration.json b/qapi/migration.json
+>>>>>> index 27a7970556..9b3070e494 100644
+>>>>>> --- a/qapi/migration.json
+>>>>>> +++ b/qapi/migration.json
+>>>>>> @@ -508,14 +508,12 @@
+>>>>>>   #     (since 7.1)
+>>>>>>   #
+>>>>>>   # @switchover-ack: If enabled, migration will not stop the source VM
+>>>>>> -#     and complete the migration until an ACK is received from the
+>>>>>> -#     destination that it's OK to do so.  Exactly when this ACK is
+>>>>>> -#     sent depends on the migrated devices that use this feature. For
+>>>>>> -#     example, a device can use it to make sure some of its data is
+>>>>>> -#     sent and loaded in the destination before doing switchover.
+>>>>> Here, "switchover" is used as noun.  My dictionary is happy with that.
+>>>>>
+>>>>>> -#     This can reduce downtime if devices that support this capability
+>>>>>> -#     are present.  'return-path' capability must be enabled to use
+>>>>>> -#     it.  (since 8.1)
+>>>>>> +#     and complete the migration until the destination has
+>>>>>> +#     acknowledged that it is OK to switchover.  The acknowledgement
+>>>>>
+>>>>> Here, it's used as verb.  I think it needs to be spelled "to switch
+>>>>> over".
+>>>>>
+>>>>> Same for code comments etc.
+>>>>
+>>>> Sure, I can send a patch to fix those.
+>>>
+>>> Can you please send the update as a follow up patch ?
+>>
+>> I was planning to send it along with the bool return value refactor in patch #1. Would that be fine?
 > 
-> Use the same >= pin_count bounds check as pca9554_set_pin() and the
-> gpio input handler assert in this file.
-> 
-> Fixes: a90d8f84674 ("misc/pca9552: Add qom set and get")
-> Signed-off-by: yujun <yujun@kylinos.cn>
-> ---
->   hw/gpio/pca9552.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+> OK. Nothing merged yet. Let's have a v5.
 
+FYI, I plan to send vfio-next before the end the week. Initial plan was
+tomorrow.
 
-Queued via hw-misc, thanks!
+Cheers,
 
-Phil.
+C.
+
 
