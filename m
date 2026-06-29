@@ -4,166 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1571C43327
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 14:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43694C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 14:44:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weDCu-0007Zr-M7; Mon, 29 Jun 2026 10:43:32 -0400
+	id 1weDE9-0008TH-3E; Mon, 29 Jun 2026 10:44:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1weDCj-0007U0-7V
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:43:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1weDE7-0008Ma-IZ
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:44:47 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1weDCh-0003we-FR
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:43:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782744193;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Y/BA1zbHhuuh8CjmEucVuFCUPw5lNOCIU8iLZzA+0W0=;
- b=ddl9Ag5gqeUIINpv2HxTKNLYpX3bbeJmcFPM6mDTURea0s0d7qSFPi/slfRxnIrbx72siq
- MBO3kkUrOHt7Yo4sigoznJQ6LOuwozAWKI5dFK5lpmmssUCnNwerGOweGbsSfd+AXHSNiK
- 2UKEJStQBRX/V5/jJddfdqFKwx3KnQ4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-94-k-tMIiEePOuQfOZhLllndQ-1; Mon, 29 Jun 2026 10:43:09 -0400
-X-MC-Unique: k-tMIiEePOuQfOZhLllndQ-1
-X-Mimecast-MFC-AGG-ID: k-tMIiEePOuQfOZhLllndQ_1782744188
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-493a6fe9ebdso8803545e9.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 07:43:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1weDE5-0004DI-4u
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:44:47 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65TATE6n2579108
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 14:44:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ FrFu+6GHWaLu2gSmG9F0VMGRLsWJ2u9eM8qEbiqoz4k=; b=emXaJbjGHrR/yLzz
+ /aoDBgAatDB+BXyvbe/c9Ee2PrvHFg8p7DH1mgWn5olbJPstegfbNyy2O7pZL3mN
+ gUfmbIGOIrvyPV4kvBG26Q4gnxHrKsnttLVYrUqIm9CvlnykPlOmMXf/NtDou44O
+ kVFLDxDXnHChIHtyP7v4A2Muu5fyP+vNgksv25sJh1QIUSzacRLA373FTQkHxkth
+ pc0RpFaFiIhMbotjFr+hhznCTGqx3gqEyhedQDhgy4J4eUqVl1+tJosBiArk4h50
+ Al698vcEzhZK22t53kdf5RQwjKC3OXozwR0O89UhXxIaw8Z015SRA1WIYMd2aNOW
+ qm58hQ==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3kp7hvp6-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 14:44:42 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92e4aeea5c3so175595085a.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 07:44:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782744188; x=1783348988; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=Y/BA1zbHhuuh8CjmEucVuFCUPw5lNOCIU8iLZzA+0W0=;
- b=bJof6+2oBsA8oEBIBqHfaxFooA7IZ8HhFuH5oY4llvz3xU9uu0BxGWKqpyCGN/HDfT
- WqJegrkOccxGht8swq3ADG9AE5LF30RslWowPvbfi601gJMqqnCQet9eWz60sr5euQA9
- JBgJF8wAXwyAiYqJLYSz7Bh3BR2j2rh1jBC3ZWmw66IihDLbn2mWGMNSysZ6UPwSa9ET
- U36BKsUEzayILDrEZEAzPGSbim0PteaLbCVFiugI6PHc/ZvUq5t68v1gyyyQGxh7wzAH
- 84FSFm0kpUoB5/V18mZiHSctSIm21py6NZe6DUxpr78yAn0vBdJcslrR2oO2Bu/8OgOf
- fpwg==
+ d=oss.qualcomm.com; s=google; t=1782744281; x=1783349081; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FrFu+6GHWaLu2gSmG9F0VMGRLsWJ2u9eM8qEbiqoz4k=;
+ b=SK8wsHY2UEOf3/sULiWNDzqe/NEFQEDVb7vTwi1f8+/RoFLgTiKYMaVdpXivqPnVHv
+ gB2DjTdTUJQWEY6cWlyrTNFGyoWRcMNYSly7yMvTa9tG0HxySZbUYqrHW2oDoQFeIYNj
+ XjDdWzZcSSpcNtZSOkDfAa33aPOgmQIiQrST65uihTysaio+OZCpe8YJ39lvigUG2SRo
+ l6KmXDRd0qiX750oqzsc9f9KJQ0ljSLnK6MxBZz9hAh6w37E5P1lI2F7/654PsYalaVe
+ BgGdvDx67LKRot8XcUKJLzbOcmE2bVW5ACP5WyA58bkCyA1tF1GZyRH2vb8iFvIY8/6K
+ 0Y6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782744188; x=1783348988;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y/BA1zbHhuuh8CjmEucVuFCUPw5lNOCIU8iLZzA+0W0=;
- b=YfaEYuUKgBD76dgJyrlgTAXbS7RmQ7iIoI8ZzdK1zVReKaPtfxKfqJ9dltmB9C8OZP
- PrljLabpO13aGas0VoLDgDSoJLYKph5ePnmjN82XNQ5KfdRH7MKbuKXGAYrPF/IhBsqI
- znsSfu7FpbcI5jqwgKBmX3UMZIXJWDR62fSQr48owaGOQbiiH8KE/4C+zeEg3Sb4dpq1
- I8zVFTM1yVfDgg+44nAZQvGewiR5HjefgXVXr2ty3wi5lRI2sBq9VVqdJgYNgORXgfpD
- PKzt+NhgEEaToxMSq4RMYqB6r0+ngoPiw3d0Rg65Y/a1nA0TnzMbU8tshNFYodC26yEU
- 8DMg==
-X-Gm-Message-State: AOJu0YzdQ61VbjMmblxmM6ZLH3G3CseZcUoZML0JD8yp93lrOOq//QlU
- FOkqjvLY1HiUABhwIixBWLP2hX6oCPIL5RsYQ68ngLyNPyoQi45yBdijwSMGY8QR7ohhdbSP695
- nKDGqI3zKNWyuVBk5CXQaiFimQc2DAVt3UZiD0Ah4NjHm1e7d2XqhS8iL
-X-Gm-Gg: AfdE7cnENiiS+uYCAnYoYPLKaFZoKOcbTqT8dvKPiSfn9CE6rb6H7qwsPm7bS4wTBtd
- wpiYKolb++VN3QIwcOXKnA96LGhj3VhKSWyKgelAegugryw0FGBNP5mLSmRHplXle/kfkw75L59
- 2HljsxceuXqoLtMS8um8Te/AqnQqGS8l2xryoidjszTWClKApG8Qyyk+3cWxPGIoVofzbZueXy1
- qReAa03X6SFWbvA56Crx8Ft1qB03HtAUcIEE+TGh1Ae+UiWts5goxCEp38EqlCUNe8N6CC0tIHz
- upw3UOFyHjA25yzMOiROTJrO7I7RI/pFxy4xpBeVyJN2GftPMwbJkTLw5NxXTMELMcqspRxZSY0
- IoFcVxbyEjbbsWEKY1Q/jiy2f54iuGfQvNQARJ4q2fs4UWfIryA==
-X-Received: by 2002:a7b:c7c5:0:b0:492:63c3:8eeb with SMTP id
- 5b1f17b1804b1-4926fca4ce5mr138791145e9.35.1782744188336; 
- Mon, 29 Jun 2026 07:43:08 -0700 (PDT)
-X-Received: by 2002:a7b:c7c5:0:b0:492:63c3:8eeb with SMTP id
- 5b1f17b1804b1-4926fca4ce5mr138790685e9.35.1782744187831; 
- Mon, 29 Jun 2026 07:43:07 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493a7fd1b0fsm123655815e9.1.2026.06.29.07.43.06
+ d=1e100.net; s=20251104; t=1782744281; x=1783349081;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FrFu+6GHWaLu2gSmG9F0VMGRLsWJ2u9eM8qEbiqoz4k=;
+ b=ks578j8tnQ8u+R2KYETYC7mWLXFw0pxbtzynkBOFrw/MIOCl6R6R77CkMrhAAdI/uO
+ VuXEKP4vr+vpIYnAFDDnKSacoVROyTulRjkSsC7D3mUCKxvM3vAwcjgORV/x38LKCQrA
+ dxSWncy5qhcFECIaI5q2LXthshJF45DkmRAMO1sSlpKf3DG26JwLLs8v0cXq7ueX0DE8
+ Lscoz0qSEp+gx8hCH/JxQNpCpdg02/h20aKmXi18JtAAZOh1/hS3pdhGlaDRihUtiwf6
+ JL1rY540d6yPlmik3C3EqsxOZfFsKa43fpzQs3geVutoQNGX1ikX0m3GpsH9RpUV11Ck
+ 4NmQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8R1VulGmScEqd4+iN4CZZQW54GgboiZSJbQmmBthAm6QfoSl6DX7hXg7hKnqLaxxBPlH2901Vvn/27@nongnu.org
+X-Gm-Message-State: AOJu0Ywf35wKChpIzibocOmLupu8RcHNpl5Aa6pLXFplxPBxeYT8z82n
+ vq6zJjwz1oQcDYl1Ju1noxV9ie6igvEN6ma1F505qE8vOIlxAazlfCGjEZoif24p4jeW2fHZhi4
+ LNRIVzMb987U2icMifIN5WfAyJrnQvOR0+tGjUMvm7UEI+khaHVDKxleg9g==
+X-Gm-Gg: AfdE7clTNZUd6s+txkhXHq/6emJ2TOOFuXhe32N+rg5NCu58DSeBVAywt7HrQVz0KvX
+ sIGEwoILrxieixXmLo1Qf/wjrUcTHHglwwG8LYmNVosvOS4RaKn8jfpnGXhe5KV2Ksv5nvFTYiq
+ OkfAuzSCp8lr6sPIpuNOFhc4DfPKStV0d71duvoPB5JZ/XEnPhYcLvhd7VqJXxaUw96KMPjBoaz
+ p/PX6asgwag30I3zNj2NNho2C1R4Kt5ljRlGvfcMGobxe9+vQo6N7D/qNi7HedIAC9MMKJnVpEC
+ rDl1TS2gtCVgXvO6OZKGSzvn+hYgy+GMz91I/80xjqenb4q6d+AeX4/zCRXHkGCbkDAC0MRqi4a
+ BkXTEeEBxIECfDl2l4bfeMY8CxY0QSQ0sFvOvkcaWC60L4FwaRxmzbeTKcesPHA==
+X-Received: by 2002:a05:620a:4086:b0:92e:551d:f1a3 with SMTP id
+ af79cd13be357-92e551df87dmr361782885a.8.1782744281201; 
+ Mon, 29 Jun 2026 07:44:41 -0700 (PDT)
+X-Received: by 2002:a05:620a:4086:b0:92e:551d:f1a3 with SMTP id
+ af79cd13be357-92e551df87dmr361775685a.8.1782744280631; 
+ Mon, 29 Jun 2026 07:44:40 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4927038578bsm261236635e9.4.2026.06.29.07.44.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jun 2026 07:43:07 -0700 (PDT)
-Message-ID: <99726741-229a-4230-b19e-63a7f27ba9f0@redhat.com>
-Date: Mon, 29 Jun 2026 16:43:05 +0200
+ Mon, 29 Jun 2026 07:44:39 -0700 (PDT)
+Message-ID: <c65f6db3-ee77-4a94-b2d3-544816c70b20@oss.qualcomm.com>
+Date: Mon, 29 Jun 2026 16:44:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/8] tests/functional: Add remote interrupts test for
- PowerNV
-To: Aditya Gupta <adityag@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- devel@lists.libvirt.org, Misbah Anjum N <misanjum@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, kvm@vger.kernel.org,
- Gautam Menghani <gautam@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>
-References: <20260629110411.3051274-1-adityag@linux.ibm.com>
- <20260629110411.3051274-2-adityag@linux.ibm.com>
- <71cffeef-3398-44e6-8e13-130266e789c1@redhat.com>
- <akJXAebIn7BHhPRS@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <akJXAebIn7BHhPRS@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Subject: Re: [PATCH v3 1/5] hw/sensor: adc128d818: add 12-bit 8-channel ADC
+ device
+Content-Language: en-US
+To: Emmanuel Blot <eblot@meta.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>,
+ Alexander Hansen <alexander.hansen@9elements.com>,
+ William de Abreu Pinho <williampinho@meta.com>, qemu-arm@nongnu.org,
+ Corey Minyard <cminyard@mvista.com>
+References: <20260627-i2c-adc128d818-anacapa-v3-0-cfb94270a980@meta.com>
+ <20260627-i2c-adc128d818-anacapa-v3-1-cfb94270a980@meta.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260627-i2c-adc128d818-anacapa-v3-1-cfb94270a980@meta.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDEyMiBTYWx0ZWRfX396DRva2oztA
+ dt0h1/7V1AvO/1tUilRzBrKC/St++6v478ZHmOZiYwmwjy5NBfV1AiRPwIOd/gtB8aPvADE72Ne
+ 1RT456NFGRrrUnmdSplmNB8QiCY8jQ0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDEyMiBTYWx0ZWRfXy4godAcQ2eRr
+ VMx+Jtbmg2vNr/hWZMYBp+L123t91d+AxJEzkoIC75CzHHPX0Eauf14/5jetCWt3rLFWLXG+ThE
+ HozBUk1MJLAdoQ5hAatwphNXJyB6e6ZNMepsg6EyTRGUkN+mW4NfTeR93TNXlbWU49oJ+wLLiXQ
+ ChBrfYEn/8Gq149vToGyASF0+yzxbPPtfS78dO9FkTnDeZ/cUb7gUvy73KtQiidCo0g+kKmoLQK
+ QLHQKgObUhoA8enVECAfUD3teAahbHpqpKmbBdlunX75SDzu4rSxlTPNejKyfp+HUj3zSLw8E17
+ szZACvE0mXOBMQcYal9EVGkFZ81S2TB5+d5B+OcSu+EJyAJOe1nCXGS2PSHrL7UR6ClIZRFwnke
+ FwQBgL8FFx36dw37DucD10Pq688BkvDSStrTGLVhKp2++gugSt1vceIicEuI9+jXCDSXw3e0VrO
+ Tx6aAOJ4FRZhJoexkkg==
+X-Proofpoint-ORIG-GUID: vzvVb-VZsvtCraHMWb_mFnCWXpZvyjnu
+X-Authority-Analysis: v=2.4 cv=MZJcfZ/f c=1 sm=1 tr=0 ts=6a4284da cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=PzGKxP3WAAAA:8 a=VabnemYjAAAA:8 a=SFAcpHi7KKgxZ-x-tV0A:9 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=zCCnohV0i-_k6euCn0hJ:22 a=gKebqoRLp9LExxC7YDUY:22
+X-Proofpoint-GUID: vzvVb-VZsvtCraHMWb_mFnCWXpZvyjnu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 adultscore=0 clxscore=1015 phishscore=0
+ bulkscore=0 impostorscore=0 spamscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290122
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -179,42 +165,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/29/26 13:39, Aditya Gupta wrote:
-> On 26/06/29 01:20PM, Cédric Le Goater wrote:
->> On 6/29/26 13:04, Aditya Gupta wrote:
->>> In the past there have been hard to recreate issues where XIVE changes
->>> cause qemu crashes due to multi-socket interrupts such as in [1].
->>>
->>> Add a functional test explicitly to test whether remote interrupts work.
->>>
->>> The test can also work as additional boot test for multi-socket boot,
->>> initrd boot test, as well as a check for e1000e to be working in powernv,
->>
->> you should consider moving to a more modern nic model: igb, which
->> has sr-iov support too.
+Hi Emmanuel,
+
+Minor style comments inlined.
+
+On 28/6/26 02:45, Emmanuel Blot wrote:
+> The ADC128D818 is a TI 12-bit, 8-channel I2C ADC used on several
+> OpenBMC platforms for voltage and temperature monitoring.
 > 
-> yes, can do. with igb i see multiple irqs, so test will have to take sum
-> of all rx irqs, and compare:
+> Implement the device with:
+>   - four operating modes
+>   - 12-bit voltage conversion from QOM inputs
+>   - 9-bit temperature conversion from milli-degree Celsius QOM inputs
+>   - switchable internal or external voltage reference
+>   - per-channel high/low limit registers
+>   - interrupt support
+>   - software reset
+>   - one-shot conversion support in shutdown mode
 > 
-> 	2026-06-29 17:00:46,288: cat /proc/interrupts | grep eth0
-> 	2026-06-29 17:00:46,391: 135:          0          0          0  PNV-PCI-MSI 2416443392 Edge      eth0
-> 	2026-06-29 17:00:46,393: 136:          0          6          0  PNV-PCI-MSI 2416443393 Edge      eth0-rx-0
-> 	2026-06-29 17:00:46,394: 137:          0         14          0  PNV-PCI-MSI 2416443394 Edge      eth0-rx-1
-> 	2026-06-29 17:00:46,395: 138:          0          4          0  PNV-PCI-MSI 2416443395 Edge      eth0-rx-2
-> 	2026-06-29 17:00:46,397: 139:          0          4          0  PNV-PCI-MSI 2416443396 Edge      eth0-rx-3
-> 	2026-06-29 17:00:46,398: 140:          0         16          0  PNV-PCI-MSI 2416443397 Edge      eth0-tx-0
-> 	2026-06-29 17:00:46,399: 141:          0          6          0  PNV-PCI-MSI 2416443398 Edge      eth0-tx-1
-> 	2026-06-29 17:00:46,399: 142:          0          6          0  PNV-PCI-MSI 2416443399 Edge      eth0-tx-2
-> 	2026-06-29 17:00:46,400: 143:          0          4          0  PNV-PCI-MSI 2416443400 Edge      eth0-tx-3
+> Reviewed-by: Alexander Hansen <alexander.hansen@9elements.com>
+> Tested-by: Alexander Hansen <alexander.hansen@9elements.com>
+> Signed-off-by: Emmanuel Blot <eblot@meta.com>
+> ---
+>   hw/sensor/Kconfig              |   4 +
+>   hw/sensor/adc128d818.c         | 697 +++++++++++++++++++++++++++++++++++++++++
+>   hw/sensor/meson.build          |   1 +
+>   hw/sensor/trace-events         |   8 +
+>   include/hw/sensor/adc128d818.h |  14 +
+>   5 files changed, 724 insertions(+)
 > 
-> I feel e1000e suffices for this test, should i stay with e1000e or use
-> igb here ?
+> diff --git a/hw/sensor/Kconfig b/hw/sensor/Kconfig
+> index bc6331b4ab..b459ac2240 100644
+> --- a/hw/sensor/Kconfig
+> +++ b/hw/sensor/Kconfig
+> @@ -1,3 +1,7 @@
+> +config ADC128D818
+> +    bool
+> +    depends on I2C
+> +
+>   config TMP105
+>       bool
+>       depends on I2C
+> diff --git a/hw/sensor/adc128d818.c b/hw/sensor/adc128d818.c
+> new file mode 100644
+> index 0000000000..031c7598ef
+> --- /dev/null
+> +++ b/hw/sensor/adc128d818.c
+> @@ -0,0 +1,697 @@
+> +/*
+> + * Texas Instruments ADC128D818 12-bit 8-channel ADC with I2C interface
+> + *
+> + * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/log.h"
+> +#include "qapi/error.h"
+> +#include "qapi/visitor.h"
+> +#include "qom/object.h"
+> +#include "hw/sensor/adc128d818.h"
+> +#include "hw/core/irq.h"
+> +#include "hw/core/qdev-properties.h"
+> +#include "hw/i2c/i2c.h"
+> +#include "migration/vmstate.h"
+> +#include "trace.h"
+> +
+> +
+> +/* Register addresses */
+> +#define REG_CONFIG              0x00u
+> +#define REG_INT_STATUS          0x01u
+> +#define REG_INT_MASK            0x03u
+> +#define REG_CONV_RATE           0x07u
+> +#define REG_CH_DISABLE          0x08u
+> +#define REG_ONE_SHOT            0x09u
+> +#define REG_DEEP_SHUTDOWN       0x0Au
+> +#define REG_ADV_CONFIG          0x0Bu
+> +#define REG_BUSY_STATUS         0x0Cu
 
-or use a single cpu per socket config. Which seems better for the test.
+QEMU coding style is usually lower case hex values, with no explicit
+unsigned suffix. Not sure this is right, but using distinct style
+make reviews harder.
 
-Thanks,
+> +/* Channel Reading Registers (16-bit, read-only) */
+> +#define REG_CH_READING_BASE     0x20u
+> +#define REG_CH_READING_LAST     0x27u
+> +
+> +/* Limit Registers (8-bit, read/write) */
+> +#define REG_LIMIT_BASE          0x2Au
+> +#define REG_LIMIT_LAST          0x39u
+> +
+> +/* ID Registers (read-only) */
+> +#define REG_MANUFACTURER_ID     0x3Eu
+> +#define REG_REVISION_ID         0x3Fu
+> +
+> +/* Configuration Register (0x00) bitfields */
+> +#define CONFIG_START            BIT(0)
+> +#define CONFIG_INT_ENABLE       BIT(1)
+> +#define CONFIG_INT_CLEAR        BIT(3)
+> +#define CONFIG_INITIALIZATION   BIT(7)
+> +#define CONFIG_WR_MASK \
+> +    (CONFIG_START | CONFIG_INT_ENABLE | CONFIG_INT_CLEAR)
+> +
+> +/* Advanced Configuration Register (0x0B) bitfields */
+> +#define ADV_CONFIG_EXT_REF_EN   BIT(0)
+> +#define ADV_CONFIG_MODE_SHIFT   1u
+> +#define ADV_CONFIG_MODE_MASK    (0x3u << ADV_CONFIG_MODE_SHIFT)
+> +#define ADV_CONFIG_WR_MASK \
+> +    (ADV_CONFIG_EXT_REF_EN | ADV_CONFIG_MODE_MASK)
+> +
+> +/* Busy Status Register (0x0C) bitfields */
+> +#define BUSY_STATUS_NOT_READY   BIT(1)
+> +
+> +/* Conversion Rate Register (0x07) bitfields */
+> +#define CONV_RATE_MASK          0x01u
+> +
+> +/* Deep Shutdown Register (0x0A) bitfields */
+> +#define DEEP_SHUTDOWN_EN        0x01u
+> +
+> +/* Device constants */
+> +#define ADC128D818_NUM_CHANNELS         8u
+> +#define ADC128D818_NUM_REGS             0x40u
+> +
+> +#define ADC128D818_INTERNAL_VREF_MV     2560u
+> +#define ADC128D818_MAX_VDD_MV           5500u
+> +#define ADC128D818_MANUFACTURER_ID_VAL  0x01u
+> +#define ADC128D818_REVISION_ID_VAL      0x09u
+> +
+> +/* ADC resolution */
+> +#define ADC128D818_ADC_RESOLUTION       4096u
+> +#define ADC128D818_ADC_MAX              4095u
+> +
+> +/* Temperature: 0.5 deg C per LSb = 500 milli-degrees per LSb */
+> +#define ADC128D818_TEMP_LSB_MC          500
+> +#define ADC128D818_TEMP_RAW_MIN         (-256)
+> +#define ADC128D818_TEMP_RAW_MAX         255
+> +
+> +
+> +typedef struct ADC128D818State ADC128D818State;
+> +DECLARE_INSTANCE_CHECKER(ADC128D818State, ADC128D818, TYPE_ADC128D818)
 
-C.
+No need to forward declare if you use:
 
+OBJECT_DECLARE_SIMPLE_TYPE(ADC128D818State, ADC128D818)
 
+> +
+> +struct ADC128D818State {
+> +    I2CSlave i2c;
+
+Again, per our coding style:
+
+        I2CSlave parent_obj;
+
+> +
+> +    qemu_irq irq;
+> +
+> +    uint8_t len;
+> +    uint8_t pointer;
+> +    uint8_t rx_byte;
+> +
+> +    uint8_t regs[ADC128D818_NUM_REGS];
+> +    uint16_t channel[ADC128D818_NUM_CHANNELS];
+> +
+> +    int16_t ain[ADC128D818_NUM_CHANNELS]; /* mV */
+> +    int32_t temperature; /* milli-degrees Celsius */
+> +    uint16_t ext_vref; /* mV, 0 means not connected */
+> +    bool temp_alarm; /* temperature high-limit alarm latched */
+> +
+> +    char *description;
+> +};
 
