@@ -4,124 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DFC3C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 04:54:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 939F1C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 05:27:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we40L-00017O-Fh; Mon, 29 Jun 2026 00:53:57 -0400
+	id 1we4Vv-0006Yw-TN; Mon, 29 Jun 2026 01:26:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1we40F-00016q-Tv
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 00:53:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
+ id 1we4Vt-0006YF-7n; Mon, 29 Jun 2026 01:26:33 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1we3zq-0003Sw-O6
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 00:53:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782708804;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tpcP+sGwKYaBepDBJKxraeicU3ElQpCiKSq3wJfZFpM=;
- b=PET7CxUFFyVeoUH0lTk7yKA5fMZPmyCGeCC5hjiz9FNxIJltrQjv13q6rfzvl25M3+9X0+
- OApz7FTpTeJbfNu9TC2aWSD7DMaVrzNn9kRS8Qq1xSHBasLAuOq7Ph4CstjXECUUKTx3/f
- avGpkZCYwvB79btM5PUlqiWu7efaLfQ=
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-541-G-B7BHDsMiyhazTZ50NIGQ-1; Mon, 29 Jun 2026 00:53:17 -0400
-X-MC-Unique: G-B7BHDsMiyhazTZ50NIGQ-1
-X-Mimecast-MFC-AGG-ID: G-B7BHDsMiyhazTZ50NIGQ_1782708797
-Received: by mail-oi1-f199.google.com with SMTP id
- 5614622812f47-48f680bda84so4774257b6e.1
- for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 21:53:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782708797; cv=none;
- d=google.com; s=arc-20260327;
- b=DEp9Odk1+V4aI+mzt1QDxKFvUuAhoijK5w9kJxwrkhI2Elh+ICKuDdQtADfmmVjnkR
- CvolWXPHMDfRk65L/2JuqmSYL4CLfminUkiHPhJhDKFa6PUXaVUk0HTRLaICC5uaeG3U
- qxL+HlYTdcxjfwKEEXZ+oH5MLNWBqWU2E3rCqLafz1dLgyKu2MfNaTlnJUKM5anrtwGb
- 76SPdQ4fgj8hWIGob7DUpNOsIXNl9AYwg73jInRCziq2pIQl2bNkzjV+/AhmH8nXGGID
- SWhsX15bQEYlaS9sHVdaMw220EDfAkwDE198vD2QjzT3lLyExB11zsYskEvLiE7Vl19m
- VlGw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=tpcP+sGwKYaBepDBJKxraeicU3ElQpCiKSq3wJfZFpM=;
- fh=rvP0WXKqeFGsCcy61Ow0iQ5z6XYIhmi8GIpCeOLZ84c=;
- b=BhWXBfygXoBfllMo5ak7raqy7ACp9ZZASAG6fhCuK+V7BKVpd0/iOql0VBVxFViDK1
- GzKwY+Otwrfp4ZFZL7575mxXZHSHX3+1l6xOdq5ONP6zamzSmnRamPjaayU9KLpH5ZOT
- KWrg9l6CzSiMlUyTLdALdG+JKbqqv8zkap5K808iVxejvPup6sKrF0frmj2PiQBv2dKG
- Bc0SEOiqCtMyT/WDcrC/nUK83TMuR+HWT8D8gYni2OOJ33L224qqbQe5DOaH9t8m1ePR
- qOAhw3IneYIDjPfJahH4mDxHHiV93nZ15FDOu8KlIeIJ/cMncm8T+1DOCfcnLh6+Fng/
- bSvA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782708797; x=1783313597; darn=nongnu.org;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tpcP+sGwKYaBepDBJKxraeicU3ElQpCiKSq3wJfZFpM=;
- b=MprmGk9XkfSXJNHgHYwWSWrqfGSv0L/TrpQaeBOsE/SmrwcIB4utjaLkIRWtym0lS3
- YVegLrcpX2W8udSimoUECNo9TLWgKt3oA3ddfkCXzFf/XqbfPS/bnaWFBTGN8mqkPr8o
- WvgS0o76N3S55UjQNRkxeI4T7B2AvuxxPiVAoKh8VuR8UBl6hZ6W9YvodJpOklY9Oto8
- FPLY50ctsdaIBZmqo8c4XHwttlImbQsddNPIlB5ZsRBxWvhY88NnUJ9RA95X4MDfxg2s
- iHoDJLUe9K0DL2qg+74180VW8IP5V17d056N19MdhJ7bKAUwK1QKi54REfCvD0BZVA58
- M5dQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782708797; x=1783313597;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tpcP+sGwKYaBepDBJKxraeicU3ElQpCiKSq3wJfZFpM=;
- b=DbX0je5gHAyu5giAUnDbvgkj0SHpU3dP8qJGJLVlZKmMIjIX+q0lhqPnK2HX1FZeJe
- wxLnY/oZ/qgpHWssCSiq2lo6kKb6SvGBpNA1Mg0pFMNjvdYofzYZM9pNDpO6OBFIElxt
- AH1FW2BMO7SLwe/ISUZd7q0xBytFLDaw07tXGbQdjeqIjX8sePs43e0gl9kjXlyOvvQD
- rO0er2vZD7/DJh0OS7atuksC9CjW6faQfjHe120p+9J6uI8Pvt0CSM/m1G/wlkFpFY6h
- Fg1jxasrfj3EcdpNKZp5drOSh2sE5d5ihqdZfZqMeeHMw6DETfIbIGk4pWsPnn1WSCb/
- GrgQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9j65wxjqh4CP1nrETU5adJXkvQq8O8dRiHqggTmxA7VPg4cKIkAZQ5TY4GZqcRyo2CI9AP8jA0u1HA@nongnu.org
-X-Gm-Message-State: AOJu0Yx1RecA0Alh9d/+bXCZXVVRP1+s1mk15JRWpaZG4GVI+F63qJrS
- umDTsjr8rMVFtMQb302eYDhIb9Lwy2Y0xopmnWu63hAqsZxmEnsbjydwM+gxuDFdNp+SiZn2Wc4
- xdJzKeAW39OSTkbUdFW+AvrMmdCJBnVGd9gFICY6IIqLzOR56i/0FoCFhjP5ueegKdU2rgRKu0a
- mJRzi1DmVg3YNJyDCOLzDB5KhGPc1Pv2k=
-X-Gm-Gg: AfdE7cntXxzGdOYFt02mXQxzp/+UnxrnByyGsxYltSJOxcsz4WpzSXQjelopzORoMmV
- 8QgAhc65JMnIM7gXdhRXsDunFOOTwGbqW8VkBxljLQy2kUT8rN/5R1WQCJl5O0PmCMQaY5Nmtjj
- zc1JMhfNVDmwBfCKICBH7HvUTsTHSPeRsuuGeKqAg7mBtd2Nf9KbTFdkZaK6pDHC+sfq61ugsGX
- eCJAuXbIQB8USfcnB9aW0G41Q==
-X-Received: by 2002:a05:6808:f8b:b0:48a:3f80:ee5c with SMTP id
- 5614622812f47-4921772124fmr11444567b6e.23.1782708796984; 
- Sun, 28 Jun 2026 21:53:16 -0700 (PDT)
-X-Received: by 2002:a05:6808:f8b:b0:48a:3f80:ee5c with SMTP id
- 5614622812f47-4921772124fmr11444553b6e.23.1782708796500; Sun, 28 Jun 2026
- 21:53:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
+ id 1we4Vr-0003Rz-5W; Mon, 29 Jun 2026 01:26:32 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65T3IVZK2099017; Mon, 29 Jun 2026 05:26:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=y9B76BQLWgZkKEVgJvWKZWTjDOV1klvlpTMpw6AMu
+ I0=; b=ClFQl+gEafBgqE8Dgx29TsOoKA3o7svtm3AvPnJ6DvFYXsxiKUzeVD/dH
+ dUbfj5u1TaLeFFbQddaVX60upxiLDwVVNMmm1PrjYd2T1LEWnjikSnnS6mxViDQQ
+ vNhtXrZGinLSymcK4q8Pz+dT66cSS/uI4Y1S2oKPOSIpwyW6tbTsV3Qq8HW8tabD
+ peXTxfn9ac2VW66I7OQ3xtJ53dd8UB259Vq5aa9o5AD8E/YPK5DzjfucygsAZEAL
+ 2IuJg0j3GyOhCOv2W97rxfAva2epdEmIFc1LaY1/U0E3i5LcrOS7serOc/IDcdgS
+ 8oCwSLroTBJV3aeQLsKy+z/UWZ2Bw==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26pdqms1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jun 2026 05:26:27 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65T5K2IU027310;
+ Mon, 29 Jun 2026 05:26:26 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2u2g3t49-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jun 2026 05:26:26 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65T5QMPa48103926
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 29 Jun 2026 05:26:22 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4708C2004B;
+ Mon, 29 Jun 2026 05:26:22 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BE70C20040;
+ Mon, 29 Jun 2026 05:26:19 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.84.253.84])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 29 Jun 2026 05:26:19 +0000 (GMT)
+From: Gautam Menghani <gautam@linux.ibm.com>
+To: harshpb@linux.ibm.com, rathc@linux.ibm.com, milesg@linux.ibm.com,
+ npiggin@gmail.com, vaibhav@linux.ibm.com
+Cc: Gautam Menghani <gautam@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, Amit Machhiwal <amachhiw@linux.ibm.com>
+Subject: [RESEND PATCH v2] target/ppc: Expose the TB offset of the guest in
+ QEMU monitor
+Date: Mon, 29 Jun 2026 10:56:01 +0530
+Message-ID: <20260629052602.78276-1-gautam@linux.ibm.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-References: <20260619093140.832136-1-mbawa@redhat.com>
-In-Reply-To: <20260619093140.832136-1-mbawa@redhat.com>
-From: Mohammadfaiz Bawa <mbawa@redhat.com>
-Date: Mon, 29 Jun 2026 10:23:00 +0530
-X-Gm-Features: AVVi8Cfwes4OvpC3edtf2KIDZcN-dMCMEGKPl5SIFDFG5edS8qCeoHw5IR2_G5I
-Message-ID: <CAJg9KkxHPZnGjFg9CcpB1RGv321OZU3guBGWHZiUqYQhaVG0Lw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] hw/tpm: fix tpm-tis-device backward migration on
- aarch64
-To: Stefan Berger <stefanb@linux.vnet.ibm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mbawa@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: 6tHVcx3JrwcinXeGdQvcRhkiWyRHk1xj
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDA0MyBTYWx0ZWRfXwQG7/Hy9dVzv
+ 4gc5q3mjeMl/A1LVijN+Ctl8iVarsp7R/psKhqXuoxCeNU2DvSz7odnMMK+pIZ2Ffu6+4Tre9Ji
+ E7Ykh9jgrxCifjL5GHrfJDXL08r+g+U=
+X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a420203 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=PgcIA1Eq-JhpffTm8awA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDA0MyBTYWx0ZWRfX6gQvcCACAjal
+ XsV2Tjnz++TJu3KiFhphha+6XmNTHoM5nh7Gdx8fh/MvIC8zTyDStkLqtBXgzjLRuTrbFS9uKnq
+ UX3Pjk1e7JTuMS2a8/wRKyTAkCbehPudD+oxOZQzA/7cgVH5Vdpzf2UYou/xv8pko9M1JUQNRkN
+ 9dfufGOf4/eHmqqRx9mB1JnwDKShXbKyR9xSnCbjVA8H64Yk8ztktz+7lFRmrlneaHyfWuGSL/T
+ BwbvGWE+TTqFnk3+4fJz17+QCO2qyDHlAIQM6KRx15EDPnFV8KwR/LyQG4KTwKF9aFpIwi6pqlf
+ o0ubVAwn8GfwUKPloHZc093V7FL5uQ4GFtkBqlr9CfFSljkSwBmSDUiEIPHHinL2KZm9YaZZSTT
+ Fn3IlNjeCrsPBhbT8r8MRqlUu8LQRvf6cLM51msaLJ7rahC1X0aovesB1hPUSAfaxzZUpUVyCN5
+ OdT0p0h6dJTMluEchnw==
+X-Proofpoint-ORIG-GUID: UW1kEGQNGJSuGbm1MyPANm7phGYDX95i
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-29_01,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
+ spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290043
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=gautam@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,63 +120,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 19, 2026 at 3:01=E2=80=AFPM Mohammadfaiz Bawa <mbawa@redhat.com=
-> wrote:
->
-> 46cd2c1050f0 ("hw/tpm: add PPI support to tpm-tis-device for ARM64
-> virt") unconditionally registers a "tpm-ppi" RAMBlock when the TPM
-> TIS sysbus device is realized.  This breaks backward migration: a
-> QEMU with PPI support cannot migrate to an older QEMU without it:
->
->   Unknown ramblock "tpm-ppi", cannot accept migration
->
-> The failure is 100% reproducible on any aarch64 guest that uses
-> tpm-tis-device when migrating to a host whose QEMU predates the PPI
-> commit.
->
-> Fix by gating the PPI memory region behind a new "ppi" device
-> property, and disabling it via hw_compat_11_0[] for machine types
-> <=3D virt-11.0.  Also move the sysbus_init_mmio() calls from
-> instance_init to realizefn so the memory regions are properly
-> initialized before being registered (Peter).
->
-> Not exposing the 2nd MMIO slot when ppi=3Doff triggers a NULL
-> dereference in platform_bus_get_mmio_addr(), so patch 1 adds a
-> guard first.
->
-> Changes in v3:
-> - Reordered: platform-bus NULL guard is now patch 1 (Peter)
->
-> Changes in v2:
-> - Dropped zero-size memory region hack (Peter)
-> - Moved sysbus_init_mmio() from initfn to realizefn (Peter)
-> - Only expose PPI MMIO region when ppi=3Don (Peter)
-> - Added NULL guard in platform_bus_get_mmio_addr() (found via testing)
-> - v1: https://lore.kernel.org/qemu-devel/20260618123317.633869-1-mbawa@re=
-dhat.com
-> - v2: https://lore.kernel.org/qemu-devel/20260619053623.756021-1-mbawa@re=
-dhat.com
->
-> Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
->
-> Mohammadfaiz Bawa (3):
->   hw/core/platform-bus: guard platform_bus_get_mmio_addr() against NULL
->   hw/tpm: gate PPI support on tpm-tis-device behind a device property
->   hw/core/machine: disable tpm-tis-device PPI for machine type <=3D 11.0
->
->  hw/core/machine.c       |  1 +
->  hw/core/platform-bus.c  |  3 +--
->  hw/tpm/tpm_tis.h        |  1 +
->  hw/tpm/tpm_tis_sysbus.c | 18 +++++++++++-------
->  4 files changed, 14 insertions(+), 9 deletions(-)
->
-> --
-> 2.54.0
->
-Gentle ping.
-Patch 1/3 has Peter's Reviewed-by. Looking for review on the other two.
+When debugging issues in KVM guests, it is sometimes helpful to have a
+unified trace log of both guest and host to see where things are going
+wrong. Expose the TB (timebase) offset through QEMU monitor to enable
+capturing of unified log.
 
-Thanks,
-Faiz
+The below steps can be then used for KVM guests to get a unified log:
+1. In host
+trace-cmd record -e kvm_hv:kvm_guest_enter -e kvm_hv:kvm_guest_exit \
+    -C ppc-tb -o trace_host.dat
+
+2. In guest
+trace-cmd record -e powerpc:hcall_entry -e powerpc:hcall_exit -C ppc-tb \
+    --ts-offset <TB offset from QEMU monitor> -o trace_guest.dat
+
+  NOTE: The TB offset would be reported as a negative number in QEMU
+  monitor. For this step, the minus sign must be ignored.
+
+3. Transfer the guest logs to the host with scp/rsync
+
+4. Unify the logs
+trace-cmd report -i trace_host.dat -i trace_guest.dat > combined_log
+
+In case of TCG guests, the TB offset would be
+reported as 0 since the offset logic is not applicable in this case.
+
+Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Vaibhav Jain<vaibhav@linux.ibm.com>
+Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+---
+v2 -> v2 resend:
+1. Add the tested-by and reviewed-by tags.
+2. Add a small comment in patch description for TB offset in TCG guests.
+
+v1 -> v2:
+1. Remove extra deref and ref code (Vaibhav)
+2. Fix the QEMU monitor output to add the new field at the end (Vaibhav)
+
+ hw/ppc/ppc.c          | 5 +++++
+ target/ppc/cpu.h      | 1 +
+ target/ppc/cpu_init.c | 5 +++--
+ 3 files changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+index a512d4fa64..b123b4cc1c 100644
+--- a/hw/ppc/ppc.c
++++ b/hw/ppc/ppc.c
+@@ -515,6 +515,11 @@ uint64_t cpu_ppc_get_tb(ppc_tb_t *tb_env, uint64_t vmclk, int64_t tb_offset)
+     return ns_to_tb(tb_env->tb_freq, vmclk) + tb_offset;
+ }
+ 
++int64_t cpu_ppc_load_tb_offset(CPUPPCState *env)
++{
++    return env->tb_env->tb_offset;
++}
++
+ uint64_t cpu_ppc_load_tbl (CPUPPCState *env)
+ {
+     ppc_tb_t *tb_env = env->tb_env;
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 057c54bbb8..cbd5964b1a 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -1693,6 +1693,7 @@ void cpu_ppc_store_hdecr(CPUPPCState *env, target_ulong value);
+ void cpu_ppc_store_tbu40(CPUPPCState *env, uint64_t value);
+ uint64_t cpu_ppc_load_purr(CPUPPCState *env);
+ void cpu_ppc_store_purr(CPUPPCState *env, uint64_t value);
++int64_t cpu_ppc_load_tb_offset(CPUPPCState *env);
+ #if !defined(CONFIG_USER_ONLY)
+ target_ulong load_40x_pit(CPUPPCState *env);
+ void store_40x_pit(CPUPPCState *env, target_ulong val);
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index a02187ce5a..8cab5e12b6 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7620,8 +7620,9 @@ void ppc_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+ #if !defined(CONFIG_USER_ONLY)
+     if (env->tb_env) {
+         qemu_fprintf(f, "TB %08" PRIu32 " %08" PRIu64
+-                     " DECR " TARGET_FMT_lu "\n", cpu_ppc_load_tbu(env),
+-                     cpu_ppc_load_tbl(env), cpu_ppc_load_decr(env));
++                     " DECR " TARGET_FMT_lu " TB_OFFSET %016" PRId64 "\n",
++                     cpu_ppc_load_tbu(env), cpu_ppc_load_tbl(env),
++                     cpu_ppc_load_decr(env), cpu_ppc_load_tb_offset(env));
+     }
+ #else
+     qemu_fprintf(f, "TB %08" PRIu32 " %08" PRIu64 "\n", cpu_ppc_load_tbu(env),
+-- 
+2.54.0
 
 
