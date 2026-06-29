@@ -4,86 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6512EC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 14:02:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99D2AC43602
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 14:04:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weCYg-0005J4-Sc; Mon, 29 Jun 2026 10:02:01 -0400
+	id 1weCaP-0005rM-7s; Mon, 29 Jun 2026 10:03:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weCYY-0005I4-CC
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:01:52 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weCYW-0008Sj-Cm
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:01:50 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-493a5d32e8cso17159055e9.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 07:01:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1weCa8-0005k2-P0
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:03:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1weCa7-0000yO-9d
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:03:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782741806;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=89vgmoIDNI6gFhaNxYzIx4OgW9TYHX5IZ9h7MjVh3o4=;
+ b=eAggyG4CeGyEEbZjwZDM36HrgnSpvYZp2jHvv8FDjx16Bg4gw/EHgqXDJ7SxZvqt8Mahw8
+ OjnSGs3lJB2M9FMcyr1cxJhjHcCw15mdh1qXhpqW8uT7wNkWXkM964Bm3DYa1MBmP26nmF
+ W1mdjxK/uFpaS22DSJfhQ4lMQlng5Ig=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-504-xfYT9gBBMmmje5w_sOXipw-1; Mon, 29 Jun 2026 10:03:22 -0400
+X-MC-Unique: xfYT9gBBMmmje5w_sOXipw-1
+X-Mimecast-MFC-AGG-ID: xfYT9gBBMmmje5w_sOXipw_1782741802
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-c1215680359so304977666b.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 07:03:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782741706; x=1783346506; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=+TWHxiw/UhhyLv2Z7QTCjbZXmpvwWXJtjMFmHukF1+w=;
- b=Gkw0hSuXhr+3aaJVSq2ffKsYdWXcT3nW43OqHA1G8gHjsqRgcfUfjWW3pM2Sf1JP4p
- 1RBHer9A01gK3nkJDntZNV0WWC+S7touW7nBjnVHdArBjzp9koaEb6118xEofE4PkSZv
- rInfWknMJp8QMck42swGqiQuqGALc+HrXN3rAY3h2edVG8OPi2D2saD5hRHNBeIDn2/O
- Hfo97hVY1O2PhO2U8iZfiDzBULJakSwvFy3vYlTuDnO83ehFdq6zVv7iC6B/gANqK/Zw
- 7S83uG4RaJG1ACSn3Q4tN5EUO4v+vJzC5lZFfVX9tNuAjk0ndi/UvVF2gxCphj1VunUx
- quDw==
+ d=redhat.com; s=google; t=1782741801; x=1783346601; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=89vgmoIDNI6gFhaNxYzIx4OgW9TYHX5IZ9h7MjVh3o4=;
+ b=IZrs1SqFp22tuj40h6eSXZnDTZ8MD7mnbyqXOOklq9tlVd6PvFAZf6bittAN/cdSO+
+ 9DZ+Zvyme/I6XL/9F7QY81mvdpABKXgSitytA12G9U5zLjEVFpucTq2vjYslIxwW8mur
+ 2+dSGVJ/S1iPLVEh64knVI92c75Pz5q0fHbZy428L0t/2AJJQXtUev2zVT+1UGLhdgZ/
+ EX/XL4OninabS2ChxtIT2zfJAB7CK54boqmqXo2Szi0ScDwLl4Lw/2rkCpAW2cmmz1il
+ ZTmyX6kC8l0ihuhWJ9HHagFLyoYBN64BQDe1CX31FV2bNvsQInNWQrBxeCoF7fRa5VET
+ hyHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782741706; x=1783346506;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+TWHxiw/UhhyLv2Z7QTCjbZXmpvwWXJtjMFmHukF1+w=;
- b=Gl1/AiYtp/X78l2rekCGZl8N5NDrnpdQk5WOXq+b3FdCinIoEZnkTEQ9oQt527uxFG
- dKRVWeksfMXmC73625e90+38VL/pm1xYQIijEi3tVPMMr0ESJneIRXEUl4Cg9uPxai05
- vX/hheoQHoyeAHbESTgNdeIAblRrvEln11mAUsixLbg947cmky+F721/d/uC+6qSOuNx
- kHlCV69iib9TcPD/IvQ5kJxxIA+mfJc362Xikujgr1s81GBB8+Mde1vKBRDMpyVKqS0H
- Ifb5i27omW/z1DnSCo0pk/RuAR92mUQyFfDBmdARQBQX0IcI8025+8RT/KcGmxegZB4n
- EMBQ==
-X-Gm-Message-State: AOJu0Yx0+H4Q7GEabk9HXBN/+HiW4Rv2ZoX2L6FE0yq4VX7JU8If5WPL
- 8fv+HvT4TXF7UDaKS2RGGvadBL6icL7KgHkvvRHOnUJ52tuar+s58ykf68RGrN6OZ6Ot3Rjij7U
- mf0aE
-X-Gm-Gg: AfdE7cmAzaJ5VavCH8N5bM2+UFiQxIPYMTVNVO9baVzQFMs38wox+/TyTgXsNhbZ2RH
- R7DAbgxpZiGOHPaNf/wk+8bBLVc02r70slWZTd53i9vcLq1vK1B+ZPyNRUfbQMYbL1C0j/8zbHF
- CgqTP/mYb1eSkkuKqe5SPSYM/oJufF435A50Va/IRIP7+EdwYI8dvnD0Jk+uBhbYdwhCHm+VNl4
- OXMAYHdzni2UTwz1VZOr+4IbnJY8ETkmoRjOMJy0gf/LFFAjdDtH7D1bktqJJjWzyngMVcidbDo
- LKd1MATvz40018cVTJUN9XI6MmLSuGtbuYWdPMVhdUwJD19hvZWm/Rz5dMOacbYk13aJmeBZfjo
- XZl2I2XWB/FlF3wjrSWfSKHvdKxadZAAC4k+XZ5/MPaCkmuLcUOScvsKqoGwiL4ge9McN5v3XKM
- Uq2EdMOlElFswNTdVwstdrTBM6q4SpW6/G7ZDUlnOMlGtKcwXqV9z7ACqifpGukdSqjSXAkPRwB
- Y1Z8oN2pnUzpmBsDrBFqw==
-X-Received: by 2002:a05:600c:1914:b0:493:a56b:d915 with SMTP id
- 5b1f17b1804b1-493a56bd94amr98823055e9.31.1782741691148; 
- Mon, 29 Jun 2026 07:01:31 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ d=1e100.net; s=20251104; t=1782741801; x=1783346601;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=89vgmoIDNI6gFhaNxYzIx4OgW9TYHX5IZ9h7MjVh3o4=;
+ b=b3lF7fc2cJWaHJv1ODppRQAMF3mXiXXtqT31zvWwQ4S+9mvwUOOrteu0PdgfqYkK6K
+ sTD0UmN95vsobsSkNdD/U0TH31LGSmFnGL+5HXCVGvTqf/w2UfSsouobLaS9Cd5Ga1vE
+ qU33bdCSBImgwgGdUnba8jq2yljEtVoRvX7NyHmpfbEAzryWjAj3WKtDdTLacEW83Zhl
+ n7TVaiB1eukF3NoP0VYYY8DmILVoG68N6+IBOw5BrOUGdqFxgOUFbzk/+hH8Fs5Ms0ys
+ tRTGtBa5JIhAAFgEcbsi7m12ErsI3t6i67KEzuWf0FSNpLwfn6jmoHcB3YtL40pS7itx
+ rAxg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpoSDN6aN5oywguNKtQM89PnzC/bIn1j9hJPV8eIXRBaL5WtTFkXWcdIVL6iOtgQgwv6/1kN5DVT7FH@nongnu.org
+X-Gm-Message-State: AOJu0Yzv+gHviMgvRt+vJQyYSe8rKXnc8B21hadP+larYGh3yatIRlwI
+ 6wxXUEU/9eAev6NxUOgpOV2M40sWVPWWnPgUUrOvtpKcbr9H8+/Aqvf4duToomdtjTdC6DpaReU
+ 5BYWoLFtbIAu2a7nHXYJ2v46WYIrna9Mh/XkT4dNHCA0zmnf04SrTmrnJ
+X-Gm-Gg: AfdE7cmRR2bTzpIVduybc2rH347jTAYwV32ezOJPp3NbTWoEBBAL+yQnpL2Jz8c14Kf
+ 14ebDc+bOaz1eGQJfpgtShjoKGGbzdUcBz6MWxUeqsHYcO/ZtdkpBhoH2O20ctrm197FXzqIdSf
+ BXjexBklaxCvIJIMTE8VOCVvUOCacQzaOHUoXa/eyhA4KeuGqpaGAM7zC7Ujz8BC5MRBReqwPPG
+ pO6iggGr7AM7EJ2zKfPnlPQbPXdTfSZVRPkgf25Sp3b5upbMy1JRLqFp4xXBomWP8xxdAWdS8IL
+ 9I6kL2vURv+4Ee5GUPCHRyaTqITYY2ywzYZdb9m5lBqyWHva+fFXXfoyUCURO0IMMcGVe9TuhGk
+ bYljs66Ul9yDA/mu6kmWbTB49IaoZn3A8il7hfpWPRfkr3r4VRPe21A==
+X-Received: by 2002:a17:907:1ca4:b0:c12:7418:729b with SMTP id
+ a640c23a62f3a-c1274187cf2mr126354666b.14.1782741801388; 
+ Mon, 29 Jun 2026 07:03:21 -0700 (PDT)
+X-Received: by 2002:a17:907:1ca4:b0:c12:7418:729b with SMTP id
+ a640c23a62f3a-c1274187cf2mr126352566b.14.1782741800839; 
+ Mon, 29 Jun 2026 07:03:20 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49268ff9f40sm292848455e9.6.2026.06.29.07.01.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 07:01:29 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] hw/dma/i8257: Return zeroes for read_memory in verify mode
-Date: Mon, 29 Jun 2026 15:01:28 +0100
-Message-ID: <20260629140128.1900095-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ a640c23a62f3a-c12239d9268sm550574166b.61.2026.06.29.07.03.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jun 2026 07:03:20 -0700 (PDT)
+Message-ID: <6c609613-8f32-43df-aac4-790abf2357ad@redhat.com>
+Date: Mon, 29 Jun 2026 16:03:18 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 15/17] sbsa-gwdt: move all foo_REFRESH logic under
+ REFRESH condition
+Content-Language: en-US
+To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
+ rad@semihalf.com, leif.lindholm@oss.qualcomm.com, qemu-arm@nongnu.org
+References: <20260624102830.1355552-1-imammedo@redhat.com>
+ <20260624102830.1355552-16-imammedo@redhat.com>
+From: Eric Auger <eauger@redhat.com>
+In-Reply-To: <20260624102830.1355552-16-imammedo@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eauger@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,71 +125,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The i8257 DMA controller has a "verify" mode, which the datasheet
-describes like this:
+Hi Igor,
 
-> DMA verify, which does not actually involve the transfer of data.
-> When an 8257 channel is in the DMA verify mode, it will respond the
-> same as described for transfer operations, except that no memory or
-> I/O read/write control signals will be generated.  When an 8257
-> channel is in the DMA verify mode, it will respond the same as
-> described for transfer operations, except that no memory or I/O read
-> /write control signals will be generated, thus preventing the
-> transfer of data.  The 8257, however, will gain control of the system
-> bus and will acknowledge the peripheral's DMA request for each DMA
-> cycle.  The perihperal can use these acknowledge signals to enable an
-> internal access of each byte of a data block in order to execute some
-> verification procedure, such as the accumulation of a CRC check word.
+On 6/24/26 12:28 PM, Igor Mammedov wrote:
+> No functional change, just code reorganization to
+> prepare for direct WCV load support in the next commit.
+> 
+> While at it, simplify timeout calculations
+> 
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> ---
+>  hw/watchdog/sbsa_gwdt.c | 16 ++++++----------
+>  1 file changed, 6 insertions(+), 10 deletions(-)
+> 
+> diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
+> index 6113dcd077..5ee0e06af5 100644
+> --- a/hw/watchdog/sbsa_gwdt.c
+> +++ b/hw/watchdog/sbsa_gwdt.c
+> @@ -109,22 +109,18 @@ static void sbsa_gwdt_update_timer(SBSA_GWDTState *s, WdtRefreshType rtype)
+>          return;
+>      }
+>  
+> -    /*
+> -     * Extract the upper 16 bits from woru & 32 bits from worl
+> -     * registers to construct the 48 bit offset value
+> -     */
+> -    timeout = s->woru;
+> -    timeout <<= 32;
+> -    timeout |= s->worl;
+> -    timeout = muldiv64(timeout, NANOSECONDS_PER_SECOND, s->freq);
+> -    timeout += qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+> -
+>      if ((rtype == EXPLICIT_REFRESH) || ((rtype == TIMEOUT_REFRESH) &&
+>              (!(s->wcs & SBSA_GWDT_WCS_WS0)))) {
+> +        uint64_t offset = (uint64_t)s->woru << 32 | s->worl;
+missing extra empty line (or is it no more requested?)
+> +        timeout = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
+> +                      muldiv64(offset, NANOSECONDS_PER_SECOND, s->freq);
+> +
+>          /* store the current timeout value into compare registers */
+>          s->wcvu = timeout >> 32;
+>          s->wcvl = timeout;
+>      }
+> +
+> +    timeout = (uint64_t)s->wcvu << 32 | s->wcvl;
+>      timer_mod(s->timer, timeout);
+wouldn't it be simpler and functionally correct to call timer_del only
+in case of !(s->wcs & SBSA_GWDT_WCS_EN) or actual refresh and let it
+live otherwise?
 
-In practice, for QEMU's purposes the only real user of this is the
-floppy controller, which can be made to perform a "read data from
-floppy disk and check the checksum" by telling the fdc to do a read
-and the DMA controller to do a verify.  This causes the fdc to do all
-the usual read actions including the checksum, but the data is never
-written to memory.  However, it is possible for a guest doing
-something silly to program the DMA controller to do a verify
-operation for a device that wants to read from memory.  Currently we
-simply return early from i8257_dma_read_memory() without writing to
-the buffer.  None of the callers (the GUS, sb16 and cs4231a sound
-cards, plus the fdc) expect this, so they will take the uninitialized
-data as if it were from the guest.  This can cause us to leak host
-data off the stack into the guest.
+Thanks
 
-Make i8257_dma_read_memory() fill the buffer with zeroes rather
-than leaving it untouched for a verify operation.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3487
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/dma/i8257.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git a/hw/dma/i8257.c b/hw/dma/i8257.c
-index 7d7e543427..5771549889 100644
---- a/hw/dma/i8257.c
-+++ b/hw/dma/i8257.c
-@@ -408,6 +408,19 @@ static int i8257_dma_read_memory(IsaDma *obj, int nchan, void *buf, int pos,
-     hwaddr addr = ((r->pageh & 0x7f) << 24) | (r->page << 16) | r->now[ADDR];
- 
-     if (i8257_is_verify_transfer(r)) {
-+        /*
-+         * If the device is expecting this verify operation then
-+         * it won't care about the nonexistent data. But if it
-+         * is expecting a real read (i.e. the guest has misprogrammed
-+         * the DMA controller and the device) it's going to try to do
-+         * something with the buffer contents. Give it zeroes.
-+         * (It's not clear whether this is exactly what happens if
-+         * you do this on real hardware. In practice no device QEMU
-+         * emulates has a use for verify on a memory-read transfer,
-+         * so we don't care beyond avoiding the guest being able to
-+         * trigger the caller reading uninitialized data.)
-+         */
-+        memset(buf, 0, len);
-         return len;
-     }
- 
--- 
-2.43.0
+Eric
+>  }
+>  
 
 
