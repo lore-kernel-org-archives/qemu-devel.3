@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94548C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54A86C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:07:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAgK-0007Ns-2e; Mon, 29 Jun 2026 08:01:44 -0400
+	id 1weAgQ-0007ZM-CJ; Mon, 29 Jun 2026 08:01:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfk-0006xf-RP
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:10 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1weAg1-00073v-E8
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:26 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfh-0007Ri-L0
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:08 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-47362928f65so860115f8f.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:01:03 -0700 (PDT)
+ id 1weAfz-0007bm-OR
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:25 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-493a5392c60so7730165e9.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:01:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782734463; x=1783339263; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782734482; x=1783339282; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=67pmUAGyOu72n9LuXKVvGb2krgLoWbDoGX2iygyfoZ4=;
- b=eu85cG6ppKJ2mwribqln5POAOIvg2dfiYZveVWVjR/3E84PwKz6bqUcNzvdTD0gGbD
- GiP890vKwWN0UANbkSHPlbXQd/N2xk7opfd3+j+iTxSNTidnqAZbJ2moL7fA2yLCvvFx
- eZ4/xO0ow5SrJDppyIfywBi461bdnaqJ9EA/NwurUn1PdNmHEloBZ3OMy+Phr0VXhHcX
- szyT48Mje+XrgY9APuXe9PsYA401Ar4SUormqNQIxh5dDggsCcL+1iRzXmpLuUXhpF4N
- ch94NS9cIUadHcD7bQste+ArcSPmmV4RyGgPUOpWotmljuIHIVogBplq++vUDgahIAwU
- kPbA==
+ :reply-to; bh=euOifZv4zIupbBxnsY/yHZQ8MEsDplE3FddbdiVqJek=;
+ b=llRobJhBiDG9x113lxG0fWcenKsuDG9Uo/GQaY0S9vwctTGgbVcHtGRTUOL5WEVMcX
+ 2z5gbDW3PuhC3ODv269T0LIZaFappsoWKj3qXRSULLoqKUC+u3a/55JVSb8pIwFhnpq8
+ PecofHs5K0auz+YR2ekb7vN7V/hIlss16k8Alm1heV0N3hyArb68URGmPrkNz0ZIsfZc
+ fzwnhGQBobBBg4hKlKNqhTOHQYNVIdU0y1b52vMesi2lxmpen7LCrfaT15rKliJGsJ25
+ rVZJYU3MFXQJfXElyICKuWsdYrg116Ot3DqDxzRuD/qoNAoVIeRRucrKDFLrT9E3cQ2Q
+ U4Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782734463; x=1783339263;
+ d=1e100.net; s=20251104; t=1782734482; x=1783339282;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=67pmUAGyOu72n9LuXKVvGb2krgLoWbDoGX2iygyfoZ4=;
- b=RvEYUG5kcdC4XftXAjF9B1LzTjLaJaU8qt273qJkBFddm6+7brGrQGSZp4BjUe2yV0
- iRSFx8uqG3YzRx8ZUhBRnkxYIYeiyLGBNGVI+Ki7AYiuKzOUuySkTqN+6DoBBpd8mLUC
- PAdoXxJCvyeThrcRBIQ/3a8EJ2kkT7kahJ9xI+CLG/z6rJ9rPE2VoxIXVvYCUMkm6cKW
- mpl7JUkBQpcMMQQITjVktAb0k6i1lJdUgeZxnspH1C+1Uj/NzHq4GPg+Yie8jWbuFyab
- 5hqN4+n7rUa5e4V1Ze5ClEKu4skoSwIyyBCL3UUNpoy96LG7X1cX8aiR1KMWqRs/cAlv
- J+Ng==
-X-Gm-Message-State: AOJu0Yy2U7QBZkKBl82Fe6Y7WNqTsap6kklplRgqMozo18+ZDwe+yk1M
- jUftcP87dGxWsLHhT19XoUcO6h6D4q+CjbWVcyZdClIqykZBTIO1K81VO3Yk0iTarmx4hbgtgdK
- IMudT
-X-Gm-Gg: AfdE7cmzY+OoYkuJs2KiX5SzvowugeVwIHI9TknwVhIpdH1ul8ght4qvsPWOpdEa2L+
- pK+D4yZD520uecfxefvoFOTzyARZ75YlkXAxb8Wt6iyiqGolJZdK1i8maGidcee8xYas4a9LXFm
- RMNuBs5DrAOgljaRZPvlXgWuziE36QWjurICHQPT4qo8yMEX9RhMR8Nov705HfRY7lScwdMheRk
- 6HMxqjpGDwbPbLq83BZOTQHQpuQl2CZPlvwb14A227UzwZ3PeFR1HhNE6tnKcE1sd8JijMbfkS8
- 9rPrIG8OCN8ydUfbtt51yJ7KAzA9auKFmPV+oj33ChDQQicFZRCazrh8oM55wxKfQ+NTNGLDAJy
- 1Lz7WgbV8jsNho/ZfRU6lqZwggBbPhxWtojOLqmRiOQezfd6s5Kkt3I608DmwMfBSTheodxKFla
- 6S3Hvo4FdOYHxxpe0L1kU7SbGb1akK5aP+YAYhqdG9LPTxiJtY01aZ/wbOLc9LitAOMwFOdLM7U
- Fh1jRf6cf+lLYm0PJqRlw==
-X-Received: by 2002:a05:6000:22ca:b0:46e:8226:96b1 with SMTP id
- ffacd0b85a97d-4750123322amr204765f8f.42.1782734461969; 
- Mon, 29 Jun 2026 05:01:01 -0700 (PDT)
+ bh=euOifZv4zIupbBxnsY/yHZQ8MEsDplE3FddbdiVqJek=;
+ b=idpe7pwzv++s937PtjTmF+T0ZGjMJ5GnWmQZZNbnwsATKh/N98WAjVwssWidxcS1DQ
+ R4icMWTqgMipssW8bkPM0u2YMfho6OAu03PqKNu9vQPONoPWu01FL+dhCGuWpX3YG6fW
+ ckbjJ+DZmxQdue5anOGqMFm+1KFKZXME/4Loax6yn1YbtX0Akm7pd+5BGZtFymFW70TE
+ Ci+xu4c2jdJtJA3FIq2veplbzVNh0UyC3g0NdcFbmBJx3+PYyW8Eovj83JqIPhbj69J5
+ X8+V3J/r7TfWyHmt0S8vq9zrHarGoc/zEm91E160/Huw7mqpLGU64KAndCB0HdDV08d9
+ C/YQ==
+X-Gm-Message-State: AOJu0YwMLrhFk0jcpgYgCGH7PAfYXqzyw+48v5zs5nUsJhD9eP5ddYct
+ 8+wLyWhVoG81hpK1s/MwJVr2xfy24EmoKg+pQA9Il5kMI/JFZnXuRPWD09qGfwE6UtaEmtk+b+U
+ UcVqs
+X-Gm-Gg: AfdE7cm11rQbogQLyNEnh/SKeMz80ZC0eozCTxyFEw2/7mhE4NJyqbwi7jbQ3PT8MF9
+ nP7pdcZc5PCJ8+qkYbA7QNi6FY4EPsVZ8S1NE0meFv9r7SVhgpAsc1UrHzY8b2CEbN0JNTgeZGo
+ jQt1m1ArtZ0QTdKwIOu4TcRT/VAjr2YQbHNdeRAOrZ7CTO5Oh6Mka04aCp4DwMycvI9Qbx7mOG9
+ cXcuti69nVQdCOHmIY6iaPuXEf6B97E8V9dViJ1pN3a4ofwdDQm6kIwLNlX6IHKBz42LHKSO21A
+ 1mUfJWW3HgT9DOzYGnCHCc+1POQ+MwWSwF0j6XMkjQR1X+DgyGH2tEGT/Ht+xwETgEO8LYFTryN
+ UxxkWjFCY66nw7OXwrw7omZWUCV630A4lklgrkfBp4urHVhpalVBWyMfX82a4ThezxGlYwqhTYO
+ rQteW7O12jiZy9GD/a8cixce1R/DENMtD+7mOnrz0WTfTGlU5Xy32Nzh23D0otiju8o4humzEGX
+ k3apZajTBB+2zW8njha8w==
+X-Received: by 2002:a05:600c:6385:b0:490:e190:3b50 with SMTP id
+ 5b1f17b1804b1-493b71971e9mr9193475e9.9.1782734481958; 
+ Mon, 29 Jun 2026 05:01:21 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.01.01
+ ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.01.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 05:01:01 -0700 (PDT)
+ Mon, 29 Jun 2026 05:01:21 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 27/54] target/arm/ptw.c: Add Granule Bypass Windows
-Date: Mon, 29 Jun 2026 13:00:05 +0100
-Message-ID: <20260629120032.1645265-28-peter.maydell@linaro.org>
+Subject: [PULL 46/54] target/arm: Implement FMLAL (multiple,
+ multiple and single, FP8 to FP16)
+Date: Mon, 29 Jun 2026 13:00:24 +0100
+Message-ID: <20260629120032.1645265-47-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260629120032.1645265-1-peter.maydell@linaro.org>
 References: <20260629120032.1645265-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,130 +101,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jim MacArthur <jim.macarthur@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260618-jmac-gpc3b-v3-3-353e546067e7@linaro.org
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260625015159.719300-4-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/ptw.c | 77 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 77 insertions(+)
+ target/arm/tcg/sme.decode      | 7 +++++++
+ target/arm/tcg/translate-sme.c | 9 +++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 1470de3010..99295954a1 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -343,11 +343,21 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
-         .space = ARMSS_Root,
-     };
-     const uint64_t gpccr = config.gpccr;
-+    const uint64_t gpcbw = config.gpcbw;
-     unsigned pps, pgs, l0gptsz, level = 0;
-     uint64_t tableaddr, pps_mask, align, entry, index;
-     MemTxResult result;
-     int gpi;
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index 90ee161461..b735f3de82 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -452,6 +452,10 @@ FMLALL_n1_b     11000001 001 1 .... 0 .. 000 ..... 0001 .   @azz_nx1_o1x4 n=4
+ FDOT_n1_sb      11000001 001 0 .... 0 .. 100 ..... 11 ...   @azz_nx1_o3 n=2
+ FDOT_n1_sb      11000001 001 1 .... 0 .. 100 ..... 11 ...   @azz_nx1_o3 n=4
  
-+    const uint64_t BW_ADDR_SHIFT = 30;
-+    const uint64_t BW_SIZE_SHIFT = 30;
-+    const uint64_t BW_STRIDE_SHIFT = 40;
++FMLAL_n1_hb     11000001 001 1 .... 0 .. 011 ..... 00 ...   @azz_nx1_o3x2 n=1
++FMLAL_n1_hb     11000001 001 0 .... 0 .. 010 ..... 001 ..   @azz_nx1_o2x2 n=2
++FMLAL_n1_hb     11000001 001 1 .... 0 .. 010 ..... 001 ..   @azz_nx1_o2x2 n=4
 +
-+    uint64_t bw_size_field = FIELD_EX64(gpcbw, GPCBW, BWSIZE);
-+    uint64_t bw_stride_field = FIELD_EX64(gpcbw, GPCBW, BWSTRIDE);
-+    uint64_t bw_addr = FIELD_EX64(gpcbw, GPCBW, BWADDR) << BW_ADDR_SHIFT;
-+    uint64_t bw_mask = 0;
-+
-     /*
-      * We assume Granule Protection Check is enabled when
-      * calling this function (GPCCR.GPC == 1).
-@@ -399,6 +409,58 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
-         goto fault_walk;
-     }
+ ### SME2 Multi-vector Multiple Array Vectors
  
-+    /* At this point, GPCCR_EL3 is valid */
-+
-+    /*
-+     * GPC Priority 1 (R_GMGRR):
-+     * If GPCCR_EL3.GPCBW is 1 and the configuration GPCBW
-+     * is invalid, the access fails as GPT walk fault at level 0.
-+     */
-+    if (FIELD_EX64(gpccr, GPCCR, GPCBW)) {
-+        uint64_t bw_size = 0;
-+        uint64_t bw_stride = 0;
-+
-+        /* BWSIZE, BWSTRIDE have a limited number of acceptable values. */
-+        switch (bw_size_field) {
-+        case 0b000:
-+        case 0b001:
-+        case 0b010:
-+        case 0b100:
-+        case 0b110:
-+            bw_size = 1ULL << (bw_size_field + BW_SIZE_SHIFT);
-+            break;
-+        default: /* Reserved value */
-+            goto fault_walk;
-+        }
-+        switch (bw_stride_field) {
-+        case 0b00000:
-+        case 0b00010:
-+        case 0b00100:
-+        case 0b00110:
-+        case 0b00111:
-+        case 0b01000:
-+        case 0b01001:
-+        case 0b01010:
-+        case 0b10000:
-+            bw_stride = 1ULL << (bw_stride_field + BW_STRIDE_SHIFT);
-+            break;
-+        default: /* Reserved value */
-+            goto fault_walk;
-+        }
-+        /*
-+         * GPCBW is invalid if the base address is:
-+         * not aligned to the size programmed in BWSIZE, or
-+         * greater than or equal to the stride value configured by BWSTRIDE.
-+         * We can make bw_mask which marks exactly which bits in bw_addr may
-+         * be set (gpcbwu:gpcbwl).
-+         */
-+        bw_mask = bw_stride - bw_size;
-+
-+        if (bw_addr & ~bw_mask) {
-+            goto fault_walk;
-+        }
-+    }
-+
-     /* Note this field is read-only and fixed at reset. */
-     l0gptsz = 30 + FIELD_EX64(gpccr, GPCCR, L0GPTSZ);
+ %zn_ax2         6:4 !function=times_2
+@@ -578,6 +582,9 @@ FMLALL_nn_b     11000001 101 ...01 0 .. 000 ...01 0000 .    @azz_4x4_o1x4
+ FDOT_nn_sb      11000001 101 ....0 0 .. 100 ....1 10 ...    @azz_2x2_o3
+ FDOT_nn_sb      11000001 101 ...01 0 .. 100 ...01 10 ...    @azz_4x4_o3
  
-@@ -433,6 +495,20 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
-         goto fault_fail;
-     }
- 
-+    /*
-+     * Bypass window check.
-+     * I_JJLRM: Granule Protection Table (GPT) lookups can be skipped
-+     * in portions of the memory map by using GPC bypass windows.
-+     * I_XNHTX: The GPC bypass window check (...) is performed
-+     * immediately after priority 3.
-+     * bw_mask from earlier makes this check for us.
-+     */
-+    if (FIELD_EX64(gpccr, GPCCR, GPCBW)) {
-+        if ((paddress & bw_mask) == bw_addr) {
-+            return true;
-+        }
-+    }
++FMLAL_nn_hb     11000001 101 ....0 0 .. 010 ....1 000 ..    @azz_2x2_o2x2
++FMLAL_nn_hb     11000001 101 ...01 0 .. 010 ...01 000 ..    @azz_4x4_o2x2
 +
-     /* GPC Priority 4: the base address of GPTBR_EL3 exceeds PPS. */
-     tableaddr = config.gptbr << 12;
-     if (tableaddr & ~pps_mask) {
-@@ -3879,6 +3955,7 @@ static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
-         };
-         struct ARMGranuleProtectionConfig config = {
-             .gpccr = env->cp15.gpccr_el3,
-+            .gpcbw = env->cp15.gpcbw_el3,
-             .gptbr = env->cp15.gptbr_el3,
-             .parange = FIELD_EX64_IDREG(&cpu->isar, ID_AA64MMFR0, PARANGE),
-             .support_sel2 = cpu_isar_feature(aa64_sel2, cpu),
+ &az_n           n off rv zm
+ @az_2x2_o3      ........ ... ..... . .. ... ..... .. off:3  \
+                 &az_n n=2 rv=%mova_rv zm=%zn_ax2
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index 7aa270d3ec..7cb7b71e74 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -1121,6 +1121,15 @@ static bool do_fmlall_fp8(DisasContext *s, arg_azz_n *a, bool multi)
+ TRANS_FEAT(FMLALL_n1_b, aa64_sme_f8f32, do_fmlall_fp8, a, false)
+ TRANS_FEAT(FMLALL_nn_b, aa64_sme_f8f32, do_fmlall_fp8, a, true)
+ 
++static bool do_fmlal_fp8(DisasContext *s, arg_azz_n *a, bool multi)
++{
++    return do_azz_acc_fp8(s, a->n, 2, a->rv, a->off, a->zn, a->zm,
++                          0, 0, multi, gen_helper_gvec_fmla_hb);
++}
++
++TRANS_FEAT(FMLAL_n1_hb, aa64_sme_f8f16, do_fmlal_fp8, a, false)
++TRANS_FEAT(FMLAL_nn_hb, aa64_sme_f8f16, do_fmlal_fp8, a, true)
++
+ static bool do_fmlal_nx(DisasContext *s, arg_azx_n *a, bool sub)
+ {
+     return do_azz_acc_fp(s, a->n, 2, a->rv, a->off, a->zn, a->zm,
 -- 
 2.43.0
 
