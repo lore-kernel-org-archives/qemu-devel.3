@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0161C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD08DC43327
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 10:49:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we9Xe-0006tj-RK; Mon, 29 Jun 2026 06:48:42 -0400
+	id 1we9Xf-0006uP-Su; Mon, 29 Jun 2026 06:48:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stojkovicdusan555@gmail.com>)
- id 1we9Xd-0006tJ-3k
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 06:48:41 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1we9Xf-0006uA-26
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 06:48:43 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <stojkovicdusan555@gmail.com>)
- id 1we9Xb-0006VT-FP
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 06:48:40 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-46066e640easo1679398f8f.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 03:48:38 -0700 (PDT)
+ id 1we9Xc-0006Vg-3y
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 06:48:42 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-4745492ed3aso353339f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 03:48:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782730117; x=1783334917; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782730119; x=1783334919; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=bwvkO6znXhIa5qM7wiZu9yQsBOrMOtM8ilQjUKeprio=;
- b=RqK5LxZ+pU6WDDxj1YeoIK2aqmeguCKOmI3DlIRecy3p6FQPcxl7OqutG6jTvaHJmn
- q098Q/2RBSIWFOWSM1N5IY/2Bg9sfzbaV5UFJTdhF4P21Eqy46kHbLMLCqeHLXdzmPRq
- P+mstW4hZhlpnwNSst+fRrQIePB7Vzf4+r7EMNJp1gLI7/YQ+rV2CpQwMja4HCZ066o6
- N6S5O2vbh+umz0go7DRrWYKYX1y1QeFeTJ6SYIi/Zb8odkk0oSOpfjZP6GbP05rFepNk
- qI+3h0uHPO857SKtnvw0arRx5uAVYbDU4wmxGmR6lJ+vKhZM2arEj8t2W7k767jiu6Ou
- jHFQ==
+ :reply-to; bh=ylBpQ0bt/QK9zQ9BEMnv21TmNMn+xhUv/pb6/Do4RGs=;
+ b=Oa/PZwPq/Mhyb9azoOfDqu1Y3M4o/2QsKdCU4kJ/MYcfTmOelVcGIB6ljpXHhsV1lf
+ mH+uMUSUg+x7ns5f7rz3bLvJ9RBZe6h84jdMmsJaC5WR3xcwNMeUnJq9GTNPyuZAGBmq
+ TCdabZ1I01sA460fifPjW5jTu3/RCgNxlDOFgpoNEMEodMolBr1dcNCKY7bDUEEgzfzZ
+ cXq7PtfhCXjaZU41+WptlYfSO4/Xsys6izm1yTDJ1gaNR4kknZRI0GI+mhqfoV8p8vbv
+ ttXecvTJSZCzbZigUKyOmX1tQvvjG6zs1TVY0abT40xa+CED669MyW7TKk63HO8gLjmW
+ Siiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782730117; x=1783334917;
+ d=1e100.net; s=20251104; t=1782730119; x=1783334919;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=bwvkO6znXhIa5qM7wiZu9yQsBOrMOtM8ilQjUKeprio=;
- b=rZTE8K2KOmdPFANtqtPjSYe0ktjHQovC8HSv6A+o1ttZH+86nqEHOzV3ee2/tw0KB+
- BL2x2wZ2XfL0RPCXTQLBo4F0Ugc/jvzzon38KORhIy52HOuJu87Jw0HBKCoEfGpmxN43
- qOnqTHapCzGy2VdMpClj7RVdsDgCKMe84kNlKnDvkuvqrb++K+UfOniM0D55ULnREkPh
- G3krJ/QXG8qVJ4IHhu62E8LXmaRH2/bbdOty1cGVUtwrE4vegKZGsKb++fpz/JC4w0wg
- 8n1Y/SbBJRp1LUSp+tu1oPCF4Db7A0gwpmu2WqaT/OZnQIFg5Vt+C3rNEEPk20K3jyuy
- 5KvQ==
-X-Gm-Message-State: AOJu0YyyW9SEPopK8KySbUqjbgODLyeWVzcTQpDqLRTJlYBbVtkg8pxI
- 5JIlCTXEQmLPf+1BTIxDJdv5bjF4rAWYuIg83qSXXKlCSaJpO0tsVe1f
-X-Gm-Gg: AfdE7ckzQMn5geEZeI3ZvJRlTvlZQ/iPs2DvYT13/mcUw2e0OUcpHCOf1i87MRL3CD7
- KH9oIB0YdUk5vNYAEkzgaNptQ5fjNyMEzdW5bk/vaiXSjrduaNgcRA4/fzGam/bJ7yycjmnIAw3
- a0/f+zMdRsoUqQ13Y9OtsB+//IqzmEjfgM0Av/VWiKDAJfR05f1951kd2/zKLLiJvQd4mkKDrM8
- iYhRn3hD8L31ARWw7Duh69Id4yBGbeZwcfigsUY6eIXiTg8VkPovR/9WEZWVDQbVBBV6MIRs6xm
- vj7OZmJK5WOlnkIEeqCXswkPeNX4TAb5xz5jWISiRfoKyQW5VuyQJXwYuiKz8N84Q+syMCHARmW
- RQp/rCG+HX1zutZ8YG6G/caghBflZey490uyr65GWZ/4bDCywRR/3IDgQhfTUciVIIGAmSbCU/8
- 8Ts5VoKVKQ4zbdj/uV+ktciUPxyEAPme+uIirUfLv6RP6RyT/3Trv3IBbsUipIcc+sEyxNclgcD
- e32wa/5+7lGiGOFr4ny
-X-Received: by 2002:a05:6000:18a3:b0:473:975c:4fd1 with SMTP id
- ffacd0b85a97d-473975c51admr5618332f8f.25.1782730117239; 
- Mon, 29 Jun 2026 03:48:37 -0700 (PDT)
+ bh=ylBpQ0bt/QK9zQ9BEMnv21TmNMn+xhUv/pb6/Do4RGs=;
+ b=RojdTxTVcZakQd/CBxo8TMxsLMs5+xOcxOS5dq1/vmqL5LIu5BSJVBbGdJwnJ0obCg
+ WyeTDlrs6IiSInAiPIOQP1wGKPdtapi7IcT4NLeSpA9SHyMnghA6oNBKS2DoiUGZEMWp
+ tAy7mDKnBVzKKpuNtsWVKL5dYVV/5KS7Gq9mNIU0zaKdqzre00LoFyWa2jd4y50SDP7b
+ culYQRSRc4GuO/ioUnIbG/8xZtp0336IlOq9GLus57CAKvctmCUcG07t1SX3x7ufSVWj
+ McN/NQUEbvk+jEBc24F9YISbPDSEwvStiYlM/oio87TZ1DPlIxhxy+Vf71FgTS7cVqjH
+ zUdQ==
+X-Gm-Message-State: AOJu0YzN7MZ/MgzxdIv3R45kavtA66t+ig4f7e0iHxqFdnWS1F81W/Vl
+ Gr/ImEJiyQ6SUsLDw9q83jywgPfE8NQs7JS1gAsQHSGS+I8oAt3pwK9u
+X-Gm-Gg: AfdE7cmXgbJYF8N6KOoS3lmFMiX7ggNMxUdmFbbGeKRAIHwX7Bq6Tj068kzjlNzAccS
+ tvl4j5XJPUeMB2cOIECnjSE9Ywd1W5RYvhOoq/OidqymB0PO/kHtsPipI9yz+OWRkfE+1iXv70Y
+ 1tIFKqqHBp/BXRsg9cUuwUitn9W8LJ0Gf5fRNmOVYvOzXXeT0YKnh25pXFVqNTmV/F/pRPBB042
+ rwJB3Tv4k1mgrQZiIAkradnveD8APSg/tFYn98DeRKdGnl4+7GDdPYVyf5nvnsNf9ieTVdHUvZu
+ dgUllKgJPCTT690pBWCxWR5KGdcrbN0eOyG8S+BkRRTpWaLSKVeuphR/ELVG3DsXq+oxCoWruHE
+ zb8Asxvep1qHscZu+ljSpXHvZbIKA2THuUDcuLygShe5MxOdV1yJ1MDbYhNfyBLov+CbHTP4pWZ
+ vn4PG/mOb3ugYxBjN5fgGe8O1lOi/QtQQXdyMjoLYEWvwHGRErAsFCEQKTa42K9L9zzO0keZHyq
+ KmKVkGscQ==
+X-Received: by 2002:a05:6000:290d:b0:472:6602:3347 with SMTP id
+ ffacd0b85a97d-47266023809mr9813909f8f.43.1782730118404; 
+ Mon, 29 Jun 2026 03:48:38 -0700 (PDT)
 Received: from RTRKN1313-LIN.domain.local
  (cable-89-216-248-190.dynamic.sbb.rs. [89.216.248.190])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46cf775a4f0sm39691675f8f.17.2026.06.29.03.48.36
+ ffacd0b85a97d-46cf775a4f0sm39691675f8f.17.2026.06.29.03.48.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 03:48:37 -0700 (PDT)
+ Mon, 29 Jun 2026 03:48:38 -0700 (PDT)
 From: Dusan Stojkovic <stojkovicdusan555@gmail.com>
-Date: Mon, 29 Jun 2026 12:46:25 +0200
-Subject: [PATCH RFC v2 1/2] vhost: accept Xen guest RAM sections for vhost-user
+Date: Mon, 29 Jun 2026 12:46:26 +0200
+Subject: [PATCH RFC v2 2/2] vhost-user: implement
+ VHOST_USER_PROTOCOL_F_XEN_MMAP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260629-vhost-xen-foreign-mapping-v2-1-19e4685e7575@rt-rk.com>
+Message-Id: <20260629-vhost-xen-foreign-mapping-v2-2-19e4685e7575@rt-rk.com>
 References: <20260629-vhost-xen-foreign-mapping-v2-0-19e4685e7575@rt-rk.com>
 In-Reply-To: <20260629-vhost-xen-foreign-mapping-v2-0-19e4685e7575@rt-rk.com>
 To: qemu-devel@nongnu.org
@@ -84,8 +85,8 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Dusan Stojkovic <Dusan.Stojkovic@rt-rk.com>, 
  Nikola Jelic <Nikola.Jelic@rt-rk.com>
 X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=stojkovicdusan555@gmail.com; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=stojkovicdusan555@gmail.com; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -111,89 +112,283 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Dusan Stojkovic <Dusan.Stojkovic@rt-rk.com>
 
-When QEMU runs as a Xen device model, the guest's RAM is not allocated
-by QEMU and is not backed by a file descriptor that could be shared
-with a vhost-user backend: accesses from QEMU go through the Xen
-mapcache and memory_region_get_fd() returns -1. vhost_section()
-therefore filters out every RAM section, the vhost memory listener
-registers no regions, and starting any vhost-user device fails with
-"Failed initializing vhost-user memory map".
+The vhost-user specification reserves protocol feature bit 17 and
+documents an extended memory region description for backends that map
+guest memory through Xen rather than mapping a file descriptor each
+region carries two extra fields, "xen mmap flags" and "domid" (see
+docs/interop/vhost-user.rst, "Memory region description").
+The layout is implemented by rust-vmm's vhost and vm-memory crates
+and used by Xen vhost-user device backends.
 
-With VHOST_USER_PROTOCOL_F_XEN_MMAP the backend does not need an fd or
-a process-local mapping it maps guest memory itself through the Xen
-foreign mapping interface, using the guest physical address and domain
-id. Accept the Xen RAM region in vhost_section() so that it reaches
-the backend's memory table.
+Implement the front-end side for foreign mappings:
 
-The Xen grant region (xen.grants) must never be accepted: grant
-references can only be mapped individually on demand via
-address_space_map(), and deriving a host pointer for the whole region,
-as vhost_region_add_section() does, aborts in the Xen mapcache. Note
-that xen_mr_is_memory() returns true for both the RAM and the grants
-region, so the grants region is excluded explicitly.
+- negotiate VHOST_USER_PROTOCOL_F_XEN_MMAP
 
-Because of the necessity to exlude xen.grants, the missing stub for
-xen_mr_is_grants is added so that it can be called from common code.
+- when negotiated, build SET_MEM_TABLE payloads from the extended
+  region layout, with xen_mmap_flags = FOREIGN and
+  xen_mmap_data set to the guest's domain id.
+
+- under Xen, do not call vhost_user_get_mr_data(): guest RAM has no fd
+  and its userspace_addr does not correspond to a valid mapping in the
+  address space. Backends map regions through privcmd using the guest
+  physical address and domid; the fd accompanying each region only
+  satisfies the protocol's one-fd-per-region requirement. Pass a
+  /dev/xen/privcmd fd and close it once the message has been sent.
+  Tracepoints for opening and closing xen fds are added as well.
+
+- suppress VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS under Xen:
+  Postcopy is likewise refused.
+
+The userspace_addr field is carried unchanged; Xen backends derive
+mappings from guest_phys_addr and domid and do not interpret it.
 
 Signed-off-by: Dusan Stojkovic <Dusan.Stojkovic@rt-rk.com>
 Signed-off-by: Nikola Jelic <Nikola.Jelic@rt-rk.com>
 ---
- hw/virtio/vhost.c  | 18 ++++++++++++++++++
- hw/xen/xen_stubs.c |  5 +++++
- 2 files changed, 23 insertions(+)
+ hw/virtio/trace-events         |   2 +
+ hw/virtio/vhost-user.c         | 120 +++++++++++++++++++++++++++++++++++++++--
+ include/hw/virtio/vhost-user.h |   2 +-
+ 3 files changed, 120 insertions(+), 4 deletions(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index af41841b52..26770d06d5 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -29,6 +29,7 @@
- #include "system/dma.h"
- #include "system/memory.h"
+diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
+index 2a57edc21e..0f3c58fd78 100644
+--- a/hw/virtio/trace-events
++++ b/hw/virtio/trace-events
+@@ -30,6 +30,8 @@ vhost_user_postcopy_fault_handler_found(int i, uint64_t region_offset, uint64_t
+ vhost_user_postcopy_listen(void) ""
+ vhost_user_set_mem_table_postcopy(uint64_t client_addr, uint64_t qhva, int reply_i, int region_i) "client:0x%"PRIx64" for hva: 0x%"PRIx64" reply %d region %d"
+ vhost_user_set_mem_table_withfd(int index, const char *name, uint64_t memory_size, uint64_t guest_phys_addr, uint64_t userspace_addr, uint64_t offset) "%d:%s: size:0x%"PRIx64" GPA:0x%"PRIx64" QVA/userspace:0x%"PRIx64" RB offset:0x%"PRIx64
++vhost_user_open_region_fd(int index, int fd) "region:%d fd:%d"
++vhost_user_put_region_fds(int index, int fd) "region:%d fd:%d"
+ vhost_user_postcopy_waker(const char *rb, uint64_t rb_offset) "%s + 0x%"PRIx64
+ vhost_user_postcopy_waker_found(uint64_t client_addr) "0x%"PRIx64
+ vhost_user_postcopy_waker_nomatch(const char *rb, uint64_t rb_offset) "%s + 0x%"PRIx64
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index d627351f45..932ead4eeb 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -30,6 +30,8 @@
+ #include "migration/postcopy-ram.h"
+ #include "trace.h"
  #include "system/ramblock.h"
 +#include "system/xen.h"
- #include "trace.h"
++#include "hw/xen/xen.h"
  
- /* enabled until disconnected backend stabilizes */
-@@ -657,6 +658,23 @@ static bool vhost_section(struct vhost_dev *dev, MemoryRegionSection *section)
-             return false;
-         }
+ #include <sys/ioctl.h>
+ #include <sys/socket.h>
+@@ -181,12 +183,36 @@ typedef struct VhostUserMemoryRegion {
+     uint64_t mmap_offset;
+ } VhostUserMemoryRegion;
  
-+        /*
-+         * Under Xen, the guest's RAM is not backed by an fd that
-+         * be passed to a vhost-user backend.  The backend instead
-+         * guest memory through the Xen foreign mapping interface,
-+         * by guest physical address and domain id (see
-+         * VHOST_USER_PROTOCOL_F_XEN_MMAP), so accept the Xen RAM
-+         * region even though it has no fd.
-+         */
-+        if (xen_enabled()) {
-+            if (xen_mr_is_memory(mr) && !xen_mr_is_grants(mr)) {
-+                trace_vhost_section(mr->name);
-+                return true;
-+            }
-+            trace_vhost_reject_section(mr->name, 4);
-+            return false;
-+        }
++/*
++ * Memory region flags for VHOST_USER_PROTOCOL_F_XEN_MMAP, matching the
++ * values used by rust-vmm's vm-memory (MmapXenFlags).
++ */
++#define VHOST_USER_XEN_MMAP_FLAG_FOREIGN    0x1
++#define VHOST_USER_XEN_MMAP_FLAG_GRANT      0x2
 +
-         /*
-          * Some backends (like vhost-user) can only handle memory regions
-          * that have an fd (can be mapped into a different process). Filter
-diff --git a/hw/xen/xen_stubs.c b/hw/xen/xen_stubs.c
-index f830768d99..7af39bceb0 100644
---- a/hw/xen/xen_stubs.c
-+++ b/hw/xen/xen_stubs.c
-@@ -29,6 +29,11 @@ bool xen_mr_is_memory(const MemoryRegion *mr)
-     g_assert_not_reached();
++/*
++ * Extended memory region description, used when
++ * VHOST_USER_PROTOCOL_F_XEN_MMAP has been negotiated.
++ */
++typedef struct VhostUserMemoryRegionXen {
++    VhostUserMemoryRegion region;
++    uint32_t xen_mmap_flags;
++    uint32_t xen_mmap_data; /* domain id for FOREIGN/GRANT mappings */
++} VhostUserMemoryRegionXen;
++
++
+ typedef struct VhostUserMemory {
+     uint32_t nregions;
+     uint32_t padding;
+     VhostUserMemoryRegion regions[VHOST_MEMORY_BASELINE_NREGIONS];
+ } VhostUserMemory;
+ 
++typedef struct VhostUserMemoryXen {
++    uint32_t nregions;
++    uint32_t padding;
++    VhostUserMemoryRegionXen regions[VHOST_MEMORY_BASELINE_NREGIONS];
++} VhostUserMemoryXen;
++
+ typedef struct VhostUserMemRegMsg {
+     uint64_t padding;
+     VhostUserMemoryRegion region;
+@@ -294,6 +320,7 @@ typedef union {
+         struct vhost_vring_state state;
+         struct vhost_vring_addr addr;
+         VhostUserMemory memory;
++        VhostUserMemoryXen memory_xen;
+         VhostUserMemRegMsg mem_reg;
+         VhostUserLog log;
+         struct vhost_iotlb_msg iotlb;
+@@ -594,6 +621,8 @@ static MemoryRegion *vhost_user_get_mr_data(uint64_t addr, ram_addr_t *offset,
+ static bool vhost_user_gpa_addresses(struct vhost_dev *dev)
+ {
+     return vhost_user_has_protocol_feature(
++        dev, VHOST_USER_PROTOCOL_F_XEN_MMAP) ||
++        vhost_user_has_protocol_feature(
+         dev, VHOST_USER_PROTOCOL_F_GPA_ADDRESSES);
  }
  
-+bool xen_mr_is_grants(const MemoryRegion *mr)
+@@ -612,6 +641,23 @@ static void vhost_user_fill_msg_region(struct vhost_dev *dev,
+     dst->mmap_offset = mmap_offset;
+ }
+ 
++/*
++ * With VHOST_USER_PROTOCOL_F_XEN_MMAP the region fds are opened by us
++ * rather than owned by the RAMBlocks, so they must be closed once the
++ * message carrying them has been sent (or on error).
++ */
++static void vhost_user_put_region_fds(struct vhost_dev *dev, int *fds,
++                                      size_t fd_num)
 +{
-+    g_assert_not_reached();
++    if (!vhost_user_has_protocol_feature(dev, VHOST_USER_PROTOCOL_F_XEN_MMAP)) {
++        return;
++    }
++    for (size_t i = 0; i < fd_num; i++) {
++        trace_vhost_user_put_region_fds(i, fds[i]);
++        close(fds[i]);
++    }
 +}
 +
- bool xen_map_cache_enabled(void)
- {
-     return false;
+ static int vhost_user_fill_set_mem_table_msg(struct vhost_user *u,
+                                              struct vhost_dev *dev,
+                                              VhostUserMsg *msg,
+@@ -623,13 +669,41 @@ static int vhost_user_fill_set_mem_table_msg(struct vhost_user *u,
+     MemoryRegion *mr;
+     struct vhost_memory_region *reg;
+     VhostUserMemoryRegion region_buffer;
++    bool xen_mmap = vhost_user_has_protocol_feature(dev,
++            VHOST_USER_PROTOCOL_F_XEN_MMAP);
++
++    if (track_ramblocks && xen_mmap) {
++        error_report("vhost-user: postcopy is not supported under Xen");
++        return -ENOTSUP;
++    }
+ 
+     msg->hdr.request = VHOST_USER_SET_MEM_TABLE;
+ 
+     for (i = 0; i < dev->mem->nregions; ++i) {
+         reg = dev->mem->regions + i;
+ 
+-        mr = vhost_user_get_mr_data(reg->userspace_addr, &offset, &fd);
++        if (xen_mmap) {
++            /*
++             * Under Xen the guest RAM is not mapped into our address
++             * space; the backend maps it through the Xen foreign
++             * mapping interface using the guest physical address and
++             * domain id carried in the region descriptor.  The file
++             * descriptor only satisfies the one-fd-per-region
++             * requirement of the protocol: pass /dev/xen/privcmd and
++             * close it once the message has been sent.
++             */
++            mr = NULL;
++            offset = 0;
++            fd = open("/dev/xen/privcmd", O_RDWR | O_CLOEXEC);
++            if (fd < 0) {
++                error_report("vhost-user: failed to open /dev/xen/privcmd:"
++                             " %s", strerror(errno));
++                return -errno;
++            }
++            trace_vhost_user_open_region_fd(i, fd);
++        } else {
++            mr = vhost_user_get_mr_data(reg->userspace_addr, &offset, &fd);
++        }
+         if (fd > 0) {
+             if (track_ramblocks) {
+                 assert(*fd_num < VHOST_MEMORY_BASELINE_NREGIONS);
+@@ -642,10 +716,21 @@ static int vhost_user_fill_set_mem_table_msg(struct vhost_user *u,
+                 u->region_rb[i] = mr->ram_block;
+             } else if (*fd_num == VHOST_MEMORY_BASELINE_NREGIONS) {
+                 error_report("Failed preparing vhost-user memory table msg");
++                if (xen_mmap) {
++                    close(fd);
++                }
+                 return -ENOBUFS;
+             }
+             vhost_user_fill_msg_region(dev, &region_buffer, reg, offset);
+-            msg->payload.memory.regions[*fd_num] = region_buffer;
++            if (xen_mmap) {
++                msg->payload.memory_xen.regions[*fd_num].region = region_buffer;
++                msg->payload.memory_xen.regions[*fd_num].xen_mmap_flags =
++                    VHOST_USER_XEN_MMAP_FLAG_FOREIGN;
++                msg->payload.memory_xen.regions[*fd_num].xen_mmap_data =
++                    xen_domid;
++            } else {
++                msg->payload.memory.regions[*fd_num] = region_buffer;
++            }
+             fds[(*fd_num)++] = fd;
+         } else if (track_ramblocks) {
+             u->region_rb_offset[i] = 0;
+@@ -663,7 +748,11 @@ static int vhost_user_fill_set_mem_table_msg(struct vhost_user *u,
+ 
+     msg->hdr.size = sizeof(msg->payload.memory.nregions);
+     msg->hdr.size += sizeof(msg->payload.memory.padding);
+-    msg->hdr.size += *fd_num * sizeof(VhostUserMemoryRegion);
++    if (xen_mmap) {
++        msg->hdr.size += *fd_num * sizeof(VhostUserMemoryRegionXen);
++    } else {
++        msg->hdr.size += *fd_num * sizeof(VhostUserMemoryRegion);
++    }
+ 
+     return 0;
+ }
+@@ -1149,10 +1238,12 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
+         ret = vhost_user_fill_set_mem_table_msg(u, dev, &msg, fds, &fd_num,
+                                                 false);
+         if (ret < 0) {
++            vhost_user_put_region_fds(dev, fds, fd_num);
+             return ret;
+         }
+ 
+         ret = vhost_user_write(dev, &msg, fds, fd_num);
++        vhost_user_put_region_fds(dev, fds, fd_num);
+         if (ret < 0) {
+             return ret;
+         }
+@@ -2551,6 +2642,29 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
+                                VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+         }
+ 
++        if (!xen_enabled()) {
++            /*
++             * Xen memory mappings only make sense when QEMU itself runs
++             * as a Xen device model.
++             */
++            protocol_features &= ~(1ULL << VHOST_USER_PROTOCOL_F_XEN_MMAP);
++        } else {
++            if (!virtio_has_feature(protocol_features,
++                                    VHOST_USER_PROTOCOL_F_XEN_MMAP)) {
++                error_setg(errp, "vhost-user backend does not support "
++                           "VHOST_USER_PROTOCOL_F_XEN_MMAP, which is "
++                           "required when running under Xen");
++                return -EPROTO;
++            }
++            /*
++             * The ADD/REM_MEM_REG message path has not been adapted to
++             * the Xen region format.  Xen guests expose a single RAM
++             * region, so fall back to SET_MEM_TABLE.
++             */
++            protocol_features &=
++                ~(1ULL << VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS);
++        }
++
+         /* final set of protocol features */
+         u->protocol_features = protocol_features;
+         err = vhost_user_set_protocol_features(dev, u->protocol_features);
+diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
+index 06c360af18..46be9cd57c 100644
+--- a/include/hw/virtio/vhost-user.h
++++ b/include/hw/virtio/vhost-user.h
+@@ -30,7 +30,7 @@ enum VhostUserProtocolFeature {
+     VHOST_USER_PROTOCOL_F_INBAND_NOTIFICATIONS = 14,
+     VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS = 15,
+     VHOST_USER_PROTOCOL_F_STATUS = 16,
+-    /* Feature 17 reserved for VHOST_USER_PROTOCOL_F_XEN_MMAP. */
++    VHOST_USER_PROTOCOL_F_XEN_MMAP = 17,
+     VHOST_USER_PROTOCOL_F_SHARED_OBJECT = 18,
+     VHOST_USER_PROTOCOL_F_DEVICE_STATE = 19,
+     VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT = 20,
 
 -- 
 2.43.0
