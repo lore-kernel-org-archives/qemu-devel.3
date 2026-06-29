@@ -4,124 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1635FC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:04:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F50CC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:05:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAic-0002FK-G1; Mon, 29 Jun 2026 08:04:06 -0400
+	id 1weAgC-0007Af-0h; Mon, 29 Jun 2026 08:01:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1weAhz-0000pi-GR
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:03:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1weAhx-0000i8-PU
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:03:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782734603;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=d+/7KoDVPZZaADb2hRx7+lPrf05+orc1tOqncW6LS2E=;
- b=NS5dwU2IAMH7CJVN5ICGbwFbcSGGmeMpb9wlZAbzKvpziXhTct7o7Oks/n+LtyNfaebegJ
- W1lH2VsRvVqrHHVHL4IK+8BXZk888320VvEerpcy2F0EZQtxoVhGwsY9QGBVcYf2f77s7X
- rk2060StdBYOkY/5relsAVJ69Qtu4mw=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-421-C5QGgVZgPbOqoL6vDfmzNg-1; Mon, 29 Jun 2026 08:03:22 -0400
-X-MC-Unique: C5QGgVZgPbOqoL6vDfmzNg-1
-X-Mimecast-MFC-AGG-ID: C5QGgVZgPbOqoL6vDfmzNg_1782734601
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c96b4f58ddcso902490a12.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:03:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782734601; cv=none;
- d=google.com; s=arc-20260327;
- b=MiS7V56T2Sx5vsgni3tQJB7NxxegIrYnS7TrSNpYiwnyeyHaW7yoBfKGkLFwdGu0D8
- zdNHQNfbhwwEtaRZwq/oAAcKNiyCWYjiFDI8+wu+AUYSGK9yyo0Oyh8l57lJmf6aKb+W
- 9VmlsegYvg72fdppvH/iP1sMN3qgUs09h673Nmu3Kr19sTP2JHc1f74gd1e6scg54wQP
- atCtwbnGVYly19Z5FvTM6ae7B4GffqKoaNEKUBC2MhJxLdY4EhDhaN0jZTm5HRcRhwlX
- M3nt5+m7Wf4DrTEqkc07jo1hLkZVKRvFuoag0yGx4bF8/QmDkw199CWhwVp/C4cNEXQM
- UpwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=d+/7KoDVPZZaADb2hRx7+lPrf05+orc1tOqncW6LS2E=;
- fh=RG7xCu/caEnr4j5ZoDIWqotdsOabLPr/b93leUKxILQ=;
- b=CXH3bmoedr9DimdYjygfatAwq8LfN9SddZKIpWvMLCnWrapYLsbSSt5tCh9a8tb2P1
- eF3YDcqrEyIeLf/q+EDUrGtvfpl88JAYIAwyWqSDTIOKNUlPkrBmaxWLFLgbmkauoF6b
- pLwj9qQ6kac+LM3lTChGSO3ICmloFUZU1eyGuLlTRIArqwy60jwP3nUdQVdv7nPHWgX/
- UHynXml0XEBZaARc7pBlKxko+u1ttfQ7QlDrLa3rBb9z9YfRFJZshhMfl/uux7oDwpNF
- pTQV26cG+EqYgTz00WDMGFu+CQly3BNZzUVLWyJH7xo03unH+e4uGc2i4cJKdyB2FVn2
- WGrA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1weAfi-0006wS-3e
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:07 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1weAfc-0007Pz-IZ
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:02 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-46ed4f66256so2707145f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:00:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782734601; x=1783339401; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=d+/7KoDVPZZaADb2hRx7+lPrf05+orc1tOqncW6LS2E=;
- b=ePKBe3fNbDs6ghlax+QyGmNO2pgbfdqBS2e6NodjM+2llqL/o0ODc//ZtaSYL9kS6h
- h7kxp0pMRRCK5jpzJoQL5N8c/HospZwbzD9NLdeO1hm7i/eqRepC7TmGDxc9W4hrscqk
- P72bqrBZnfb2IYN+BA0aZ2StcLdm0aSuL/fpb6NqIfiA0WCSWSAZSCeVouBmUzpv/Gk0
- 3bAfW1M+uulMJ/04amyGIZrz1JIflZZkXBE+FwIY/2pOXl3UAy7Z+e6mtSLeXUA1ohrL
- RBK4OQ9qvxT6XRNt48I913ZCHenUDCXEngU4pEO4G0yXgaUVR7SwgaeGsJAZFJYUtlvF
- Ummw==
+ d=linaro.org; s=google; t=1782734457; x=1783339257; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=zvLNc0vzKaBuvu31NLedVEX7bGRGAQf2IsYZSe4AZqo=;
+ b=ts9CCARj2yoSJ4ps05ZryaMquWgtTyqesZFtHV2i+uyliXtfEjZ4N8maN1A1/hlzDv
+ CsdxL63n5hvsg6rUxSUTaaZloQVe6+l2Vr7BeH5ldXRWi9ktPodUxlVoczYsRgBlQ2BU
+ ekDX2nKTRw5BrWuIUn9+/t76bKtwMkaDCWK2NLFPcs/oK0SROhYjn7dHMhCSwRvXYYPV
+ jQ5mljcGo5KCBx++nrOkrD9IE1H4njHLgNq1UhD5kbRVVmgbuf37RIhChxl9HJmHZnAJ
+ ESKiTZBWNy+9lSyZF6AL1mI9Wxy+19IUXwP8ARcehDTETgG7NWCw3dBhUdux4QX4aRKn
+ FyQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782734601; x=1783339401;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=d+/7KoDVPZZaADb2hRx7+lPrf05+orc1tOqncW6LS2E=;
- b=Ocaz7NBOqt9cluqN2f6bDrTcZYdmqAA+XgGbatUtTCNEEVZKFng2Wxk6B5dTuL9PKe
- bLKihYJyLUunPxrXhhsob90gm2vTE1ohGGuEQK+5RuaiTa9ylIL/fzytTVKxrkrnwGZN
- obljdFzLVq/RAy8MA2bIQodnla1gPpVz0xd4n/t7yGErXHHwEQT9E3BCKqFqWu3oOg9/
- X46diEOxoxKT0+m9r28X55xaUC6bP40npZKlarQtpLBh2pwlWLRs/oQ55UguWM2N7GR1
- CrC9ZFHbjt//bH3gRlAQR8MNmz0uSmBfCw3AxeOXZTWmPt5qVkO7e+Op2cO+WynY+KuZ
- XjzA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/39nTBmR+7H4BtiGZ6PxVllc5P6cd16mrDPdg/7K1AHn3IY1xmx8o6iZEIgX5jIKaDERdMRQNtWgAz@nongnu.org
-X-Gm-Message-State: AOJu0YyyFZzhx6P0hoswcYHl2ux5or0+k0RZ9cQbmdPWri+++OCcnPP7
- rIYuNWNpNuYhqJ4LgJOGCfODxjUy+okuho27R2Qpa7zJm+xM4sKuIrV08CNy0zH8+leGTrCmkyC
- Vm75eaAEijmtB7aLdfXhIFs58ruOC8nNWAepFCYIrcHcW4cBatbDlCxYS4LaQEekXiVCU26woAQ
- 8KmVC2mgnMCMJ97tyAGS0GnoyWqa4I9PE=
-X-Gm-Gg: AfdE7cmo8Q/bt/kljvMaNpSynUlZONTTVQqaTLUJwXg9rPkLU4zMtwSURe6BXCsoJKH
- Z9ZwVycDKAIUFKNUC25YFhaMgAwNB1zleGNqO6w+ApAejKqfpR7JGkDXpdT5wun2GLyOBSEQSzO
- +KJrLpqI8+aFFSu79WOGJK5hgHmjTWl6jSyM6a6BqYb47IENZ4fNcJnmMsRCwcmLikRKfV39w+T
- 1x7o6ixkLGkVnhPWsPyN63tjz9dPRQnpDuZRr1A0qncivdZJNA8lB4yDZ6U7i+7kURvmrDDYIXd
- zHqpYaJ+62tR
-X-Received: by 2002:a05:6a21:48a:b0:39c:cdb:5d81 with SMTP id
- adf61e73a8af0-3bd4ae81cd3mr15753851637.32.1782734600867; 
- Mon, 29 Jun 2026 05:03:20 -0700 (PDT)
-X-Received: by 2002:a05:6a21:48a:b0:39c:cdb:5d81 with SMTP id
- adf61e73a8af0-3bd4ae81cd3mr15753816637.32.1782734600345; Mon, 29 Jun 2026
- 05:03:20 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782734457; x=1783339257;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=zvLNc0vzKaBuvu31NLedVEX7bGRGAQf2IsYZSe4AZqo=;
+ b=N8AaudhQ0s1CAm3go8shqelMw2jJOlzjdbKMqGsBm/Dsgp2mw3zNoAQHhWokHSCBI0
+ s3aoo/g0NumH//6+F/NCvzKSjBtxD42uG0AS62161uCEMmJAaF6i+xFoPLHqxfPZJGB/
+ 8nysPZsv/NdP+N8czVVevwJf86+goCy0q/NEU3otygKXcD7Axt5DrXRyOvJJViBfDVWA
+ 5RI1xeZWcECDbCe8TIUzagM29AA4bjs5Am3b09VnN1a4TStuKtXmDxicvUfGjTJYFCNF
+ aJPA2hkg8B6kjt5vhUL024B8fvjd5zYb+IJF1nG8d0KsA1i07NKAyRnd/1u6/0fhI6Iu
+ ATxQ==
+X-Gm-Message-State: AOJu0Yy9mGAU259tjdgRjtzjo2o1nSsbD7fht2808k0sHLqQpJZQLvz6
+ gT03s3+13WDIWw0NlztNXddKJqsxx9II7jaqlft0Y3kelfSfeJeEPHqd9pOHwjQjGkHY6ikBaYj
+ YbSki
+X-Gm-Gg: AfdE7cnffPr+pDRVzF+iKbIldXHm5nHG33I5MEkkdrskyiBvUOtGQ2BlWliMjaaV3DU
+ eFJ0I/pNlXhl0i9Nkwc18OiCEe0VDnYbu7LSqUv18TLjhzTIOHyEm7N+ISZCTGRyfCNOSLHrnia
+ FR+1cqiubR4Ijs/xSmYkQIkXCXX2rOxh5ComRftKQKdBz+dinROqvng16WaNFg1Xd0nSHd41aCk
+ kiOrHFtENJzz3tVy6DG9LU4MPRtRbbHQCDa2wUT5CnYKCpyByiRjaFphnnVOouRgKxZUl+RHKM9
+ H3fwEs9s1zNt/VTwjh8JPjOBYR6LrDxRk1qBm4Fgxocu2/UW3iNc6iezqK6VuhkF33eh3nBxBz7
+ aiXKGBQx6AqL+6B4i5WKqDOK2n+Gl+nK7Ab6y4GmCdt0Nft4DPSgyxtjFCWNs98USHd75UHbHly
+ kK+RzjsJ5GzdFd0xaj7LIBR0Hcvdb1sT3yUqxeCjBgdku6V0jSsvCCuNf98KJZLsaHtU8AScCqO
+ B+03LCvbJt0MOC+TYyMyA==
+X-Received: by 2002:a05:6000:382:b0:471:e4fc:d881 with SMTP id
+ ffacd0b85a97d-4750079f963mr234750f8f.30.1782734457256; 
+ Mon, 29 Jun 2026 05:00:57 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.00.56
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Jun 2026 05:00:56 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 22/54] target/arm: GICv5 cpuif: Tag ICC_PPI_PRIORITYR<n> regs
+ as ARM_CP_NO_RAW
+Date: Mon, 29 Jun 2026 13:00:00 +0100
+Message-ID: <20260629120032.1645265-23-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260629120032.1645265-1-peter.maydell@linaro.org>
+References: <20260629120032.1645265-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-References: <20260629114646.288664-1-yujun@kylinos.cn>
-In-Reply-To: <20260629114646.288664-1-yujun@kylinos.cn>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 29 Jun 2026 16:03:08 +0400
-X-Gm-Features: AVVi8Cf7hA7QMU6JB9LdS30i9IUbK12F9qnvxgWgSXYctNgnFGo6jNV924xUmB4
-Message-ID: <CAMxuvax=G78MALxpqUOdozabj=69H=LNZivBzwFo2_sEHrv0bA@mail.gmail.com>
-Subject: Re: [PATCH] dump: fix misleading VMCOREINFO phys_base parse error
-To: yujun <yujun@kylinos.cn>
-Cc: Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,40 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 29, 2026 at 3:52=E2=80=AFPM yujun <yujun@kylinos.cn> wrote:
->
-> When qemu_strtou64() fails on the value after NUMBER(phys_base)=3D or
-> NUMBER(PHYS_OFFSET)=3D, report a parse failure and include the malformed
-> value.  The previous message suggested the field name itself could not
-> be read.
->
-> Fixes: d9feb51772 ("dump: update phys_base header field based on VMCOREIN=
-FO content")
-> Signed-off-by: yujun <yujun@kylinos.cn>
+The GICv5 system registers are all tagged with ARM_CP_NO_RAW, because
+we don't want them to use the standard mechanisms for migration or
+KVM state synchronization.  (GICv5 handling of both migration and KVM
+support is a "will be implemented later" feature.) We missed this tag
+on the ICC_PPI_PRIORITYR<n>_EL1 registers; add it.
 
-Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+Fixes: ef540c1d301 ("target/arm: GICv5 cpuif: Implement PPI priority registers")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-id: 20260615105029.2898872-4-peter.maydell@linaro.org
+---
+ target/arm/tcg/gicv5-cpuif.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> ---
->  dump/dump.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/dump/dump.c b/dump/dump.c
-> index eb2ee1c10d..f69bc2d138 100644
-> --- a/dump/dump.c
-> +++ b/dump/dump.c
-> @@ -1771,7 +1771,8 @@ static void vmcoreinfo_update_phys_base(DumpState *=
-s)
->          if (prefix && g_str_has_prefix(lines[i], prefix)) {
->              if (qemu_strtou64(lines[i] + strlen(prefix), NULL, 16,
->                                &phys_base) < 0) {
-> -                warn_report("Failed to read %s", prefix);
-> +                warn_report("failed to parse %s in VMCOREINFO: '%s'",
-> +                            prefix, lines[i] + strlen(prefix));
->              } else {
->                  s->dump_info.phys_base =3D phys_base;
->              }
-> --
-> 2.25.1
->
+diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
+index 09c3fdda61..1aa4bde799 100644
+--- a/target/arm/tcg/gicv5-cpuif.c
++++ b/target/arm/tcg/gicv5-cpuif.c
+@@ -950,7 +950,7 @@ void define_gicv5_cpuif_regs(ARMCPU *cpu)
+                 .name = name, .state = ARM_CP_STATE_AA64,
+                 .opc0 = 3, .opc1 = 0, .crn = 12,
+                 .crm = 14 + (i >> 3), .opc2 = i & 7,
+-                .access = PL1_RW, .type = ARM_CP_IO,
++                .access = PL1_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
+                 .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_priority[i]),
+                 .writefn = gic_ppi_priority_write, .raw_writefn = raw_write,
+             };
+-- 
+2.43.0
 
 
