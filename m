@@ -4,45 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 334D4C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64DFBC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:32:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weBvb-0003cN-Nj; Mon, 29 Jun 2026 09:21:35 -0400
+	id 1weC5h-0006LM-BR; Mon, 29 Jun 2026 09:32:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1weBvZ-0003bY-6Q; Mon, 29 Jun 2026 09:21:33 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1weC5b-0006JQ-OA
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 09:31:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1weBvX-0005s6-93; Mon, 29 Jun 2026 09:21:32 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 9BB5744C12;
- Mon, 29 Jun 2026 15:21:28 +0200 (CEST)
-Message-ID: <6cde659c-50fc-49a7-8786-2b3692971b26@proxmox.com>
-Date: Mon, 29 Jun 2026 15:21:27 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] blockdev: mirror: do not require a root block node
-From: Fiona Ebner <f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1weC5a-00016s-7W
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 09:31:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782739913;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rOKwDWzy3UYS3IH5enbyi9f2ZNOL2MZ7dWbCsK5TCR0=;
+ b=F9uUUQquHs58abEquMRUClzzts9nnKFfoLYV7cbEhHFF5fyesEAGpLyN8dI1v9NC2OEhL8
+ 843H1bWyWkmaDSTwXv5M0IL+SbmZE6pvnJEG95pNB7oFW3lvAZKo1v6T1tGHS2Ory5MyCa
+ 2CpJvSOutKX1per5yAOL+9DoqU7vX0g=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-wxc7p7MVNiq_MBRWQPuS_g-1; Mon,
+ 29 Jun 2026 09:31:49 -0400
+X-MC-Unique: wxc7p7MVNiq_MBRWQPuS_g-1
+X-Mimecast-MFC-AGG-ID: wxc7p7MVNiq_MBRWQPuS_g_1782739908
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A7BEA1955F28; Mon, 29 Jun 2026 13:31:47 +0000 (UTC)
+Received: from gondolin.redhat.com (unknown [10.44.49.108])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E56051800662; Mon, 29 Jun 2026 13:31:45 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, kwolf@redhat.com
-References: <20260611102247.622275-1-f.ebner@proxmox.com>
-Content-Language: en-US
-In-Reply-To: <20260611102247.622275-1-f.ebner@proxmox.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1782739277038
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>
+Subject: [PULL 1/1] s390x/kvm: clamp stsi 3.2.2 size
+Date: Mon, 29 Jun 2026 15:31:33 +0200
+Message-ID: <20260629133133.1189753-2-cohuck@redhat.com>
+In-Reply-To: <20260629133133.1189753-1-cohuck@redhat.com>
+References: <20260629133133.1189753-1-cohuck@redhat.com>
+MIME-Version: 1.0
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,29 +84,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-Am 11.06.26 um 5:35 PM schrieb Fiona Ebner:
-> The mirror block job currently only operates on a root block node. It
-> might be desired to use a throttle node as the root node for limiting
-> the guest IO, without also limiting mirror operations.
-> 
-> There is no obvious reason why mirror should only be able to operate
-> on a root block node.
-> 
-> For a related discussion see here:
-> https://lore.kernel.org/qemu-devel/9f516c2f-7dd3-446a-8495-56adac267cfe@proxmox.com/
-> 
-> Fiona Ebner (3):
->   iotests/041: add test for mirror with throttle node as source
->   blockdev: mirror: do not require a root block node
->   iotests/041: add tests for mirroring below throttle node
-> 
->  blockdev.c                 |  20 +++++-
->  tests/qemu-iotests/041     | 128 +++++++++++++++++++++++++++++++++++++
->  tests/qemu-iotests/041.out |   4 +-
->  3 files changed, 147 insertions(+), 5 deletions(-)
-> 
+The stsi 3.2.2 page is being prepared by the kvm module and the size is
+clamped by the kernel. As the memory is mapped in the guest, another
+guest VCPU could race and overwrite the count and messing up the move
+operation. For any out of bound count, fall back to the kernel buffer.
 
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Message-ID: <20260622092035.400959-1-borntraeger@linux.ibm.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+---
+ target/s390x/kvm/kvm.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+index 2e4f435c5371..fdef8f9e8acc 100644
+--- a/target/s390x/kvm/kvm.c
++++ b/target/s390x/kvm/kvm.c
+@@ -1765,6 +1765,15 @@ static void insert_stsi_3_2_2(S390CPU *cpu, __u64 addr, uint8_t ar)
+     } else if (s390_cpu_virt_mem_read(cpu, addr, ar, &sysib, sizeof(sysib))) {
+         return;
+     }
++
++    /*
++     * The memory was filled by the kernel but mapped into the guest.
++     * If something is fishy, do not touch the buffer.
++     */
++    if (sysib.count == 0 || sysib.count > ARRAY_SIZE(sysib.ext_names)) {
++        return;
++    }
++
+     /* Shift the stack of Extended Names to prepare for our own data */
+     memmove(&sysib.ext_names[1], &sysib.ext_names[0],
+             sizeof(sysib.ext_names[0]) * (sysib.count - 1));
+-- 
+2.54.0
 
 
