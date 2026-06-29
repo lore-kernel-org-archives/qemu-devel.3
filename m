@@ -4,125 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0ADFC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 11:29:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5924CC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 11:35:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAAW-0006x3-QD; Mon, 29 Jun 2026 07:28:52 -0400
+	id 1weAFs-0008Ew-E8; Mon, 29 Jun 2026 07:34:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1weAAN-0006vx-SI; Mon, 29 Jun 2026 07:28:45 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1weAFr-0008EK-6q
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 07:34:23 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1weAAI-0006mL-9G; Mon, 29 Jun 2026 07:28:42 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65TAmHhT3181643; Mon, 29 Jun 2026 11:28:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=zDb8aJ
- S9rpe/kG9btdc9b3Blf+e1Jb6pSyjnZmLQ4X0=; b=DkwgYctWRkAyQkxfPFfAfW
- RWISSZ10zXHIxVG4TiB7SKvuXpQ9uR6i6r7GZWgj7sqguvkqx5xdUEBGcXFyHRYl
- vwqAz0ZQixeVYG/vdry+FPG1pOgGn2P/X3TzIr23a4g2QCb4DczblhRs5chzplGj
- ji/LT1I+D2pRVOP+2fVWCm4t1MRft1udfvb5Rq5x5Ju7SOkH0MMraLDz9o2/fj5i
- yd8x8VYL67lu4hooL3LzucP2AiYUFOyAisYSbogVPtwpFJYyFJc3Rre1mA3Eshwc
- 7SK+IowjESSEIdEsSR+sqnWO5Ez/hXzGnzXYwKEUv7AGIdlLRSykAhPjg2+UXkXw
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qfrynd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jun 2026 11:28:33 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65TBJftG010968;
- Mon, 29 Jun 2026 11:28:32 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhy4we3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jun 2026 11:28:32 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65TBSSx336438392
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Jun 2026 11:28:28 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5D05E2004F;
- Mon, 29 Jun 2026 11:28:28 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF50A2004B;
- Mon, 29 Jun 2026 11:28:23 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.123.10.203])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 29 Jun 2026 11:28:23 +0000 (GMT)
-Date: Mon, 29 Jun 2026 16:58:21 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- Misbah Anjum N <misanjum@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>
-Subject: Re: [PATCH v3 3/8] tests/qtest: Add Power11 chip & machine to qtests
-Message-ID: <akJVIvDQ93unGLo5@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260629110411.3051274-1-adityag@linux.ibm.com>
- <20260629110411.3051274-4-adityag@linux.ibm.com>
- <32d7c4b1-dbb9-485b-8feb-df999532de60@redhat.com>
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1weAFp-0000nu-BH
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 07:34:22 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65TATEYC2579129
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 11:34:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ E7dEUYW5YIEKnb2lHcEuTk51u6NvRoisGq+CZn489Ec=; b=k2QUqgm76SDXnG6l
+ 6ZPjBPu/I9KCns4F0OZt/k64pZ0JirXFMxUm6vF2PzQ1qfShcwRfbkWyPQIMy59A
+ 1Y6e7iERBs+BFqBywMjhMhtHmAnzP56sFAaV2XRcsl74tyox32o270dEJv+oBurQ
+ n6xlxTz0EewJ+uoIf5KTt2WkFPBm9AIVtSAFQlMtKQQVZrnAxos2O1svWeWeFPdY
+ eghnLbAaitxJnmRim47hcYIt1uS7ZtFNmoWTNAV2GNHiTA/TwAC2DMDaZnMor2SG
+ zy6RbuZP9w4WP5z+J4i+i3NR5JNu6IWJtZnp87pLK66FxgQ4XBf8lELqVMz1gJBK
+ xzVsow==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3kp7h3u6-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 11:34:18 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-30cb2bcbf7cso2778884eec.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 04:34:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1782732858; x=1783337658; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=E7dEUYW5YIEKnb2lHcEuTk51u6NvRoisGq+CZn489Ec=;
+ b=H1erz9Tg3VTTeKgHXSF81A8O6h67+HdzkRVRZxOAnpk9jOK24etshxdnPGxer0cBLd
+ rZ6EXS99GEGD5QKGh3zLksI77uO7es0br9gs7KRbZE3+WIaon/gaH8m8N/SoEmup4Pp0
+ g+pf7C53i97wGRwfIrFrSWSeC2mKqzWIrQivmoV4T3IpbyF2A61m5wXKFLFLO3UpTMrK
+ Q6npOJw5LnYR6Bg1M1G6h++d9JWM90TRE2EqhCMv1Xym8MxKIIjG2veTCMBHZ4t59oLs
+ F75url2jQqwfRls8f/Z7WABWsig3YIbmt/jPoJqNumr1AfJWzcFpXMKESrlZYV/ZET6u
+ 5DbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782732858; x=1783337658;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=E7dEUYW5YIEKnb2lHcEuTk51u6NvRoisGq+CZn489Ec=;
+ b=HtnLlXgbipyHk/nXeTy2PL/RYIRak0teP5LkNXJPxoLXTSzeqbrztKQdDJK3zfVF5E
+ XsxPQ0p66W0ghWWD8AkHEsqUlJdv+piDCuSBUL1fiKykQ0OvIp0tnH95kyTeXU6vZxnd
+ vWk7XwnZMfTXM2HApAlwBbx54hz06aGEj7d8oaEQ2QsjHGaCxdJkSapu6Ecs2NsT1EaJ
+ F2RIzLBltVCrGzYLttOCrLenxmwTuSblsaWV5WgYV/k15Poe34s1hQUELDBpAHvhNaU0
+ 2AuxsJfzG6KQuMoMgCtH6FUBC8GzxXK5wRGuyLiOTVHNhXn2ns3cdvlNntKBksk8w8zA
+ VHHA==
+X-Gm-Message-State: AOJu0Yy7MCxIREizVBExlLH+ysl2FlxGvafDbGVDdlJkEF7EmHD+2LsC
+ sz+NmMzVmcZ/I6NwE5YYAr8T5MAb8XMrKJtakWdPNlG+YthWZ7gr+4RbeSJJqVoJeFhKW5ROOxU
+ 2Al7Iq3wriAkf7Ptk21MAdzgfFR4KucldDY0dY2AM+6qZYc6QQVw+ldjmbkdaONNeYw==
+X-Gm-Gg: AfdE7cnhVuVRBE27yr8y5q5dcAg48alWh8c9pw8IUqMZBAJ4IL/4UFI40riEokpUiSp
+ 7Y0rxaqEXRjR/8fPb+xPe0XEP6K8hWRSUwzdcfRafkepvATwA31jgeaXuj0XvX+ndd0Zw4XAMDV
+ amZ1fLCfhLW2m5nepkEYCnktYFhJH257K6i8vArVBZPmq16KBmZz9ASunH1LOKgRO0PJuh8RCo7
+ dPbN8BJinUyxqMJ6xIu88r3mzQGpAF4/TBGlXzNhxiWrho32HK0eoF/ixwYCyiSdLS74IY9YIur
+ OOV40VkBp8ZoDUvKVTBLMkQ+lynbaEM6u4EJlVlHHThXFX5Z1akgzDXWjaajrNcdlGOl6f7sA2B
+ MMIoyiAuoOxGeEPy9/+tUXp5HAd5Gq2BVF6yAnVWQjedi
+X-Received: by 2002:a05:7022:ff49:b0:132:ac76:9772 with SMTP id
+ a92af1059eb24-13b2271508cmr224866c88.34.1782732858275; 
+ Mon, 29 Jun 2026 04:34:18 -0700 (PDT)
+X-Received: by 2002:a05:7022:ff49:b0:132:ac76:9772 with SMTP id
+ a92af1059eb24-13b2271508cmr224836c88.34.1782732857698; 
+ Mon, 29 Jun 2026 04:34:17 -0700 (PDT)
+Received: from [192.168.68.106] ([189.79.21.40])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-139d8f6d2e4sm44700495c88.7.2026.06.29.04.34.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jun 2026 04:34:17 -0700 (PDT)
+Message-ID: <b0184774-3449-45b6-831b-de745a4c4d41@oss.qualcomm.com>
+Date: Mon, 29 Jun 2026 08:34:13 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <32d7c4b1-dbb9-485b-8feb-df999532de60@redhat.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=RYqgzVtv c=1 sm=1 tr=0 ts=6a4256e1 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=5Jhv4GUsR7L25ZsIausA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDA5MiBTYWx0ZWRfX1O7iKoxfcBG0
- bGIOc+LSDbh1W855E6YcWExSqMXVw+QWYpu14DrJp/ypim3fR1wSco8G4rXRIc48vYq5pzP4QJY
- QsrFNGsCn+nPyoiWqeWZU0aCndOu9Rc=
-X-Proofpoint-GUID: ev6GHI-Bpo748DLpzD_YgZnndGJc6g5H
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDA5MiBTYWx0ZWRfXxADHdNHETAZY
- bIXtVOvilYvSYFvZ8dAmNqLKdyqqF4wc0xDBipgueCeGxMft8ja7NTKOoYnz3e7uhPglN1PEu5q
- A5MwqmesOfn9acWRNODVqHeLiho8xJ6McTgv6YC7DZ6pPhJGpYxWm6cza0ilHYaZXs2UjxqiwVi
- g24akTbJ0hOsjznK5nZLRblU4UCxFjFilXWFNn4NCgl22aN+wokrmpZnPwBcrId0mZjs7sr2flh
- GVKC8IsnC82R5LQYAePUOzX9uf157QZBJNAKEVtwBZdfW9dW+R81xMfl3JYi7xSfxxJNzSPssCN
- SAxuqeaSfGuKNrdxEosQyZ5WrBMD/2+mYX2bNtoaMimHzLvljD+XGGAjeR1t8agr/nqQSkpv6Km
- gBSKTNtYQDFH4K3vX7OR4KZr+bwpG9C2pRoTIpJRzbpmRR00t2615t8dhkp0StTTsqGxdVnSWJs
- XAarD+Kd32fFiFfuglQ==
-X-Proofpoint-ORIG-GUID: SZy29s1SN9BzXO2VOVrwL8Abq1ZqXq0h
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/riscv/riscv-iommu: fault when !PTE_U and no priv access
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ andrew.jones@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>
+References: <20260629104201.349850-1-daniel.barboza@oss.qualcomm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260629104201.349850-1-daniel.barboza@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDA5NSBTYWx0ZWRfX09T/Mau6Gv12
+ 41U5naeesq3F64Qr5rzZQ5Q7yFgyt1yf/oqE8jQfRm71Oshu3dKBC/0UMpDiULyL67DK9MJx9GJ
+ jRVf35p+BUTdVbxO/36jBUnE/Vt7IrU=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDA5NSBTYWx0ZWRfX/QRWAhMIACIb
+ XK4FtIY8L1Bph637ABdtyxwS6tja/XmqXRi2quydDqsCDW0DJ1pZ7NbDteJdBNrsPMRxz7LBkFw
+ IASotxjYa0vuWJC3xsJDcS5Sq0ipCnztwoDrQrnLtrjb9AbzavQIAknujuMeYq2JzVb7JEO0BRM
+ o4bk01bc0vUgP4HMppOVmJfyyfUZ2bBqM89DTZckzMk+9RBzNu27WPXHEtlua7uReBt7UMeqlZe
+ nkEWvMyxq+Ve28TFE1VVIrf0DJrND9UMX1YelssWaST/T2iBICG/2QZS2EDZB3+QBtWEh3rdN9d
+ 6MlAO3LtD+puepG6otFEKUURp7v2Bfbq/eFt6lxPARS1MWH6F2GK7VqgU5DnyTt1kIKC+u8RTjU
+ 3jJeLQTLf+mzgJk+huXJ449dG5HIX+4F1WCgKlgGU9IOX8EG3XfMx24K+0rytkK1BtuQwE+Ozx8
+ 1NO2/KY0iJDBbWGB/eA==
+X-Proofpoint-ORIG-GUID: TpEqQKFFfUlZmPT8BuCE_ixUtsxa6KCU
+X-Authority-Analysis: v=2.4 cv=MZJcfZ/f c=1 sm=1 tr=0 ts=6a42583a cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=FUlGGrPokrg9S1BtQ9wA:9 a=QEXdDO2ut3YA:10
+ a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-GUID: TpEqQKFFfUlZmPT8BuCE_ixUtsxa6KCU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
- adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 priorityscore=1501 adultscore=0 clxscore=1015 phishscore=0
+ bulkscore=0 impostorscore=0 spamscore=0 suspectscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290092
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290095
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -139,59 +153,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/06/29 01:18PM, Cédric Le Goater wrote:
-> On 6/29/26 13:04, Aditya Gupta wrote:
-> > <...snip...>
-> > --- a/tests/qtest/pnv-host-i2c-test.c
-> > +++ b/tests/qtest/pnv-host-i2c-test.c
-> > @@ -402,15 +402,14 @@ static void reset_all(QTestState *qts, const PnvChip *chip)
-> >   static void test_host_i2c(const void *data)
-> >   {
-> >       const PnvChip *chip = data;
-> > +    const char *machine = pnv_get_machine_type(chip->chip_type);
-> >       QTestState *qts;
-> > -    const char *machine = "powernv8";
-> >       PnvI2cCtlr ctlr;
-> >       PnvI2cDev pca9552;
-> >       PnvI2cDev pca9554;
-> > -    if (chip->chip_type == PNV_CHIP_POWER9) {
-> > -        machine = "powernv9";
-> > -    } else if (chip->chip_type == PNV_CHIP_POWER10) {
-> > +    /* i2c is initialised for rainier in case of P10 */
-> > +    if (chip->chip_type == PNV_CHIP_POWER10) {
-> >           machine = "powernv10-rainier";
-> 
-> Is that true for all tests ? in that case, pnv_get_machine_type()
-> could return "powernv10-rainier".
-> 
+Hello,
 
-No this i2c test is the only test which specifically requires rainier,
-other tests like pnv-spi-seeprom-test and pnv-xscom-test.
+Please disregard this patch.
 
-> > <...snip...>
-> >
-> > diff --git a/tests/qtest/pnv-xscom.h b/tests/qtest/pnv-xscom.h
-> > index 5aa1701ea768..eefe206a2007 100644
-> > --- a/tests/qtest/pnv-xscom.h
-> > +++ b/tests/qtest/pnv-xscom.h
-> > @@ -9,6 +9,9 @@
-> >   #ifndef PNV_XSCOM_H
-> >   #define PNV_XSCOM_H
-> > +#include <stdint.h>
-> > +#include <assert.h>
-> 
-> 
-> Seems unrelated. Why do you need these includes ?
+First because we don't need to explicitly call the fault code like I'm doing
+here - we can just add a 'break' and then we'll have the fault code doing the
+work for us outside of the loop:
 
-Not really cedric, i had added stdint.h since PnvChip used uint64_t, and
-assert.h since i used assert in v1 & v2, which is not the case now.
-I can remove these in v4.
+     } while (1);
 
-Thanks for the reviews Cedric !
+     return (iotlb->perm & IOMMU_WO) ?
+                 (pass ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
+                         RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S) :
+                 (pass ? RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS :
+                         RISCV_IOMMU_FQ_CAUSE_RD_FAULT_S);
 
+
+Second, I just found another bug in the same code area and the patches ended up
+conflicting with one another.  I'll send both together in a short series.
+
+
+Thanks,
+Daniel
+
+
+On 6/29/2026 7:42 AM, Daniel Henrique Barboza wrote:
+> All IOMMU accesses are assumed to be user mode unless told otherwise,
+> i.e. we have a process_id.  In case we have a non-user mode leaf PTE
+> (PTE_U isn't set) and we are running in user mode, we need to throw a
+> fault.
 > 
-> Thanks,
+> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3553
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> ---
+>   hw/riscv/riscv-iommu.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
 > 
-> C.
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index c2c470b5df..2bea770fbc 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -297,6 +297,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>           G_STAGE = 1,
+>       } pass;
+>       MemTxResult ret;
+> +    bool pv = !!ctx->process_id;
+>   
+>       satp = get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
+>       gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
+> @@ -468,6 +469,15 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>   
+>           if (!(pte & PTE_V)) {
+>               break;                /* Invalid PTE */
+> +        } else if (!(pte & PTE_U) && !pv) {
+> +            /*
+> +             * All accesses are assumed to be User mode unless
+> +             * process_id is valid (pv).  In case we have a
+> +             * non-user mode PTE and !pv we need to fault.
+> +             */
+> +            return (iotlb->perm & IOMMU_WO)
+> +                    ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT
+> +                      : RISCV_IOMMU_FQ_CAUSE_RD_FAULT;
+>           } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
+>               base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
+>           } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
 
 
