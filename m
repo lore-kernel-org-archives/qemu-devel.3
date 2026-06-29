@@ -4,53 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 913DDC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:42:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03212C43327
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:42:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weCE5-0007dS-BU; Mon, 29 Jun 2026 09:40:41 -0400
+	id 1weCFH-0000Vu-Er; Mon, 29 Jun 2026 09:41:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <df88255543667e7f14ac34d97e0ced142af18bdf@kylie.crudebyte.com>)
- id 1weCE1-0007Ys-RF; Mon, 29 Jun 2026 09:40:37 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1weCED-0007lL-0V
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 09:40:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <df88255543667e7f14ac34d97e0ced142af18bdf@kylie.crudebyte.com>)
- id 1weCE0-0004tB-0p; Mon, 29 Jun 2026 09:40:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=t4QUJKC3tav/AW1Vk7YSwbFsYkjKNJAkyGxOrWh91zs=; b=lE0jZ
- OZWrdh3Cu6bm2zUwsQu68AAXFtzYCfI7tpx1qNQ9NmSQSj+ORfrT1u65k8n16bpGBzb1cbjNdFOd9
- TV07Oi8uXDb4E2ayoywlpiSL0i7+j/GxdEilpSBLuelpSYWo9jNRYq+0x8XDpQU+dCSBZOp+RzecH
- ISaRHECGfs5bc1y0bPVw8JfJUc/+K8Agv+Jl/KnuzunYbquarx+4qnBCCZYKuzo5Y0fwyDm6CQYQD
- ZMKv1OYz09IVAQlyFXjddbCDxGaOIR8Vf8U93HcMUusapO4kmXrCzpfoQ6NNJPk3TQZSG1YV7A5CO
- r8p3AYFvl4P7CxixF9O/uIFr7GXi4XTgaQ1fouvmJ+CLn6ZSwianEW4Kdae8gIhxEBdzmp6ebR5Pi
- Rey6rJ1DA/TZ9e9WpcSCs/HzYFIdXDmfRVE+WGHLCZNnepyALWnpIgiE+9MXWEVm4kU5ypIFHbX1m
- 5/XtWLxEb8S09pG6zC6L9qhFJL/LWWq4CvUTYARyYUC5LpTbwMzzcWC8XsfTHfeVQyx0LioT66ut2
- +NWtVTeuLPGQEzzPkCVxNhEWAvMHaoNJ2Hmp9jdiNZXlAplEEM0QQdknTgvPsHySdGuVFHg/3Uiwe
- dMNyzWLE3NNcuKF0fbItfK/s7qCTHgaChvqUERn8a0nWRwOtoO8Tfv/BFDWFvs=;
-Message-ID: <df88255543667e7f14ac34d97e0ced142af18bdf.1782739719.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1782739719.git.qemu_oss@crudebyte.com>
-References: <cover.1782739719.git.qemu_oss@crudebyte.com>
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Mon, 29 Jun 2026 15:28:39 +0200
-Subject: [PULL 17/23] tests/9p: increase P9_MAX_SIZE for test client
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1weCEB-00052t-8U
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 09:40:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782740444;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=f7gY6uiOvf9QPtbj2SFoTuWPHgnD0DrSj0sLFmTqn4A=;
+ b=VQi8k9HoD2A/n9P3caC2ue7PD45V2Xmlq11/D2W0G37lde4+9GSEZdGV2czPBK9XEM4GbF
+ F5sC10YJdzjojnqdCyO8tc12nnFzdg733ZNKb/ZIB/BV3yrKrvBM+GHO9pmUGZCztS3wQl
+ 0HU87/mL+A32KoWuMkEHSmc3jdQLyrQ=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-574-U8p-198sPXmTNt3D5WGslQ-1; Mon, 29 Jun 2026 09:40:43 -0400
+X-MC-Unique: U8p-198sPXmTNt3D5WGslQ-1
+X-Mimecast-MFC-AGG-ID: U8p-198sPXmTNt3D5WGslQ_1782740442
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2ca0331d0b1so12328685ad.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 06:40:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782740442; x=1783345242; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=f7gY6uiOvf9QPtbj2SFoTuWPHgnD0DrSj0sLFmTqn4A=;
+ b=gB4DRvvQQTXSwW3UBhQpaxXr8E0OSBtZomMRGB6OJx1QT4yHGq3j0bFrZ3jdWRzFaR
+ NhUhVpogO879q9odR3HHLUNBqNBsSIfzPiIZcEn0qLbUcTkj5rBHcM2QbewQ2nAdMfUp
+ QQoZKUVc/TuhVQ3lM4vyiOyLJnAc8bTWNrD5xfs8MtXNe/rVvFo90+vC19aFBQXKmR5v
+ vEocxEBOcLnWUD3MjLEFGirXUqLG3Be9lyPrkN6YTP9Zht6QnSt6xVrkgjWrTK4aP9Dq
+ tWejmn38tE7W/mVxErx76iHqbqJYmNPpqLeJeuWC8CGnEFS9lpF4diTFkXsFkcRB7E5W
+ jBkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782740442; x=1783345242;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=f7gY6uiOvf9QPtbj2SFoTuWPHgnD0DrSj0sLFmTqn4A=;
+ b=n4kMLRHkKsUO1iWlOk31nHKoahXwaatx71iO1PudeyoZXacOfceMvqRtP0M+T36cLK
+ vBjOCwI8y1vSlMImEMkL25dGR0mdPfqrOAyWOhw1sOkksUdREO27BvCWO/WqEeqxqIZS
+ KQ9yTjxiqU38DLShQF+ReZ4fXe6mS9vv6WMVv4yaWebVBeMHCZ30E4ajrvmleYifPphf
+ EPUv3OIMVLTz8uroYg2bvhSadfpLo7MiAJuViyWucjXWEow7MzLp4UOdVYo/lN35yreE
+ cKdczC/DUF8KIlS4nWuawj0KSBJ5uAPcShzm4242+dNsLZDNteZA6zjyG6xHwU6pTa2Q
+ VRQQ==
+X-Gm-Message-State: AOJu0Yz9YDP2vF8nSpaI02RT0+EHgYUGU7ixNnU30EEENdqtqiH4lA1t
+ NvGnQgIzcqP3JqphL+4ghGxON7yaKoo17pOhZoScck3gMWWvsmQ0L+xdpdanPM0Mf1NUNcq5ZEm
+ n3D5a7EMIVlmVhgpeIpflekOyrJL3eSlNYDj5/wbVYRNfvEIYA07dQYCUMh23ExGdCm1isu34s9
+ yqQl/DAS4MOLvwvoFDVZsaxhr36qZZQNowo0RFyu6t
+X-Gm-Gg: AfdE7cnz7At+2dgvSlOltDtNDLdh8ZNlBUhWulCTr/sjgrUBbqQsnMgJqHB7eYDVJBY
+ 5unkR5bCzCyGPoi4hoDHWmNDOhjtaEbe7fdNI+Cq1CYuPn6uOKXtOsOYx7k0P2l3vq37nTTk+o8
+ +gi1mP6XwF91SEAXPITWQBVF3U+u1UZJds8zULU8K8mEWLPZQIQqCr1vmJ4ySYzB1Oa5mgpLWAs
+ 8/yYLBRxbP3Xp/UxuHrLBNVxITJkUtd5sgrlRqR5/m4uMb1SByn5xTkH+DS0PteoKZOHfGQ9IUf
+ feAUGlclBfygLm1S+CV+8un/6NiRaOi8gvuNWDcE76yHIlARgyC/UE3K4HOkb35wh8tOYo3Yzf4
+ gB5eaVeCjIoadqQqRQUhoRw==
+X-Received: by 2002:a17:903:32c4:b0:2c9:ff83:41e3 with SMTP id
+ d9443c01a7336-2c9ff834537mr27831595ad.21.1782740441824; 
+ Mon, 29 Jun 2026 06:40:41 -0700 (PDT)
+X-Received: by 2002:a17:903:32c4:b0:2c9:ff83:41e3 with SMTP id
+ d9443c01a7336-2c9ff834537mr27831345ad.21.1782740441095; 
+ Mon, 29 Jun 2026 06:40:41 -0700 (PDT)
+Received: from localhost.localdomain ([208.115.228.234])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2c9a93d5ebdsm48626505ad.74.2026.06.29.06.40.39
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 29 Jun 2026 06:40:40 -0700 (PDT)
+From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>, Feifan Qian <bea1e@proton.me>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=df88255543667e7f14ac34d97e0ced142af18bdf@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Cc: jasowangio@gmail.com,
+	Jason Wang <jasowang@redhat.com>
+Subject: [PULL 0/1] Net patches
+Date: Mon, 29 Jun 2026 21:40:31 +0800
+Message-ID: <20260629134033.31893-1-jasowang@redhat.com>
+X-Mailer: git-send-email 2.54.0
+MIME-Version: 1.0
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,38 +117,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Increase the maximum 9P message size ('msize') of 9p test client from
-4k to 32k to support larger messages.
+The following changes since commit 20553466cc47af6a8c95f665b601fce3c852e503:
 
-This is needed for the xattr tests being added with the subsequent
-patches which are going to transmit xattrs of size 8k. It would have
-also been possible to send them in multiple chunks, however let's not
-overcomplicate things.
+  Merge tag 'pbouvier/pr/docs-20260626' of https://gitlab.com/p-b-o/qemu into staging (2026-06-27 23:28:35 -0400)
 
-This new msize is still reasonable small compared to common msize
-values on production systems.
+are available in the Git repository at:
 
-Link: https://lore.kernel.org/qemu-devel/2dcb1243c80ea97d085af5171785850cf012be36.1781361555.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
----
- tests/qtest/libqos/virtio-9p-client.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+  https://github.com/jasowang/qemu.git tags/net-pull-request
 
-diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
-index c432b0daee..4b04324503 100644
---- a/tests/qtest/libqos/virtio-9p-client.h
-+++ b/tests/qtest/libqos/virtio-9p-client.h
-@@ -21,7 +21,8 @@
- #include "qgraph.h"
- #include "tests/qtest/libqtest-single.h"
- 
--#define P9_MAX_SIZE 4096 /* Max size of a T-message or R-message */
-+/* Max size of a T-message or R-message */
-+#define P9_MAX_SIZE (32 * 1024)
- 
- typedef struct {
-     QTestState *qts;
--- 
-2.47.3
+for you to fetch changes up to 08c450d312e73db0bc8b792e604e0f1c49d1bfa8:
+
+  MAINTAINERS: update Jason Wang's email address (2026-06-29 09:52:49 +0800)
+
+----------------------------------------------------------------
+-----BEGIN PGP SIGNATURE-----
+
+iQFJBAABCAAzFiEEIV1G9IJGaJ7HfzVi7wSWWzmNYhEFAmpCdSsVHGphc293YW5n
+aW9AZ21haWwuY29tAAoJEO8Ells5jWIRb+sH/2PLAv0BpViEDy5lL0b+s5yCIdbw
+8XRwVvLk/SXavj/zn+LaWe/DQCdd4MKALvCCuG6WfqfSdF7XWnG4DhSXvnx5MRiW
+um+259bwwAsW2H++Unue6TdkCFvGQQo8TJFP3EV+gibzIaFEXwxHloMgp9y1uQah
+HhAKFr3QJL5zX7YohzuzUSkXQO2yVnEcPCsTuvdnbe9QOrIyKFNOcTQJrtKwSBpm
+YxGJfooOIpimtobecw18B9UJJ4iMN7Sgs80vAeA2PXkrie0KxTwO6FAwyIlaZlUy
+6DSEdsozJoV6TG0dP2pj3Lt6RAbEesvxBI3zYDqgnrKZNL8Etb0gzMS6U4k=
+=3c3b
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------------
+Jason Wang (1):
+      MAINTAINERS: update Jason Wang's email address
+
+ .mailmap    | 3 ++-
+ MAINTAINERS | 8 ++++----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
+
 
 
