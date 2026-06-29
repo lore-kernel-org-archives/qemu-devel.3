@@ -4,134 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C368C43327
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98402C43458
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:58:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weBYT-0008NB-Dd; Mon, 29 Jun 2026 08:57:41 -0400
+	id 1weBYd-0008SF-4E; Mon, 29 Jun 2026 08:57:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1weBYK-0008LV-Rv
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:57:35 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1weBYQ-0008MA-GU; Mon, 29 Jun 2026 08:57:39 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1weBYG-00075m-Qv
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:57:32 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65TAT46G2646947
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 12:57:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=qcppdkim1; bh=BCD+lbTTBcHnrhwfJPIkg0NgvOocxGOdwTv
- wqhDzvak=; b=NLeCEGKIu30niTYRuqYkYkOwWiWAYJL8eMqeBtdaszH+9npmUP1
- qYXAE9oj3lXt6/7X/kEkEaUh9yhOa5tdgwdtFmrdBLzuP3YBKeN13fKU9sa7ixT6
- 83uRgjkGcm29DlelfUsDzffMdXt5UKH2PmGmuRM05CDgMeuqGIKXGPNS3DNtAHar
- tVHRZ9MDkYV1Gh+M7NT0rSwbIaTvWxjH3eI7BnBY9qnBz0BtAyd3+Ku+EzYP4G/u
- DtbOvQOKZPatgxlrRcbEwC7jpqymwSx/HFohPmmrMkAV+Nnb+Z2IjDElt002PKVz
- +GpZg7gUfHGLJVKHkVY2o3zsaKMFjZ6C6Rg==
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3m4tsben-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 12:57:26 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-96925fc24a6so3308439241.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:57:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782737846; x=1783342646; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=BCD+lbTTBcHnrhwfJPIkg0NgvOocxGOdwTvwqhDzvak=;
- b=UVYgHo89ZNVyA/wMmePVAV8m+YE5mvqCKuJhbcsEE11X6guZ/a5TNKg+zzhraPCA2E
- p2+OD+ql8BJHJrV/Oeyvvvx3Kl0p4Du3o2y6LQH1Be2wK1c7Y9V/5i1gWEfwGDtDQZoM
- uTt5ITkRcahNqU8ubBRn0V5/7/jrKsxeyDQ3raKAPTTt5PJGHD7pnVLwqqB9Dc1rStnH
- 6cyjQfJPRhcCULYKMRAzUzVe9wDs+pEsS+X2JzX70Dqu8Qsx/wzymQuNlsCiJqecLWpZ
- XTmyfxCJXxbYObUbji5qpEjlZJZEnauYLOdmS4+V5g6yXExdgClXR1Nu9Xa/qiXZTWLQ
- 3eAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782737846; x=1783342646;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BCD+lbTTBcHnrhwfJPIkg0NgvOocxGOdwTvwqhDzvak=;
- b=VAXtQHSWKGvRYZecH66LF03n0JOOEIyIoqSgTRdqPFbLKjwJsbgQ1hllSiCFCema6I
- Vhtj3woLHNeJuiugAtjws4YI4hdrhOA0xtprU7jEI5ZyaiEvuQzXgL1ZzoY0scbA8BaE
- BpfoxfNKnl5ZsqwMzQQwRutYe69wGXRq/WvQc9XbEk4bMXyCS90iYnQG/q41vk9zN6zH
- fwlPkhSQwiy31IFH/sMNUzAMWqwJ8ZE+yx/Sj+z5wyXwvieUS9Cuol1XnVCwKiB7NvnA
- 3UOeFwlPlsgqdohFMJUGQ2u2Y6cxeY5ITx6aTwoMwV7t6J9s5YKiPYGlrXeeNK9DvYGE
- FBvQ==
-X-Gm-Message-State: AOJu0Yzck/BOrMHgmlK0bWenfRIDuuh/kLLuESE8qk0bvtB7t5ml182m
- UMchj7S2Q8WR8klN3zPgTKDCnDWJQZNKgyhuQqzYure0aV0wXHGw8wLwUDEaFvaOdWorWoyIlCP
- gI5s/TNPgneBR/oAFsF5QjMAcEvdsAEkxwwPL3C0dvZx7JDBTvDaWp5qiUUgytYfwcA==
-X-Gm-Gg: AfdE7ckvCssddezEXM3qJWqrNtMpwVyUUiLt+sCIrDvSpZlcIgqpfgY0i2oeckLP9ul
- Hu9xduQ2z6oxLhXf+e3PO+XLYWxOeyv0Hr5HTgMwfyRS+Bkcx6DMdv9NzS+lSPdbfr4OmFehpIP
- XD8DzNTxE8beUzOlkW1Q6zA3aQEAePlhkTRMhRsaKr6KvZwxiH+fHyeh1CNFhvMObWJIyRSkaCQ
- PEzZlm2uJGuDn8U7rJ8s+F9XCkEN9ngKorNzwl0m75085WPkebjDzkNqp3qkBeUDEdBKXoo96Xq
- 7Xy7dCloEGY/8qrcKTvwuUraJIrXVxBOk90QDttaP4C4MVLU1JxKgfja6fXDiAFq3vUu1/lcUqX
- Hbxoa8yqdZu2TLCuwKpMX0MSeBHm5W6RAkVgeU210u3C4yw==
-X-Received: by 2002:a05:6102:6d3:b0:738:6994:eb8 with SMTP id
- ada2fe7eead31-738699411c6mr1833396137.0.1782737845707; 
- Mon, 29 Jun 2026 05:57:25 -0700 (PDT)
-X-Received: by 2002:a05:6102:6d3:b0:738:6994:eb8 with SMTP id
- ada2fe7eead31-738699411c6mr1833370137.0.1782737845214; 
- Mon, 29 Jun 2026 05:57:25 -0700 (PDT)
-Received: from QCOM-UWl2o8bcGT.qualcomm.com ([189.79.21.40])
- by smtp.gmail.com with ESMTPSA id
- ada2fe7eead31-7356657be2dsm5507595137.2.2026.06.29.05.57.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 05:57:24 -0700 (PDT)
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- andrew.jones@oss.qualcomm.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH] hw/riscv/riscv-iommu.c: check reserved MSI PTE basic bits
-Date: Mon, 29 Jun 2026 09:57:19 -0300
-Message-ID: <20260629125719.679626-1-daniel.barboza@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1weBYO-000770-Qe; Mon, 29 Jun 2026 08:57:38 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65TAmiEJ2921871; Mon, 29 Jun 2026 12:57:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=ztRGkR8tk19o9CH6mEohp1ZLVndi3kFXcPKqtLkyiRg=; b=GpfV269ngloo
+ eXrOEb4pnon/7KtA7G1QW7y7pEjFPUjbJD674GDuzrScp6pg0Y5wYN/qeRx+gZ3a
+ rRy6EU5qwYDdsGWWAy3dCYkK9CWhAjnZiLaSX3tnt2uQIy+J9ynqVF/e/2q+TTUu
+ FY/rBY/9CSOFKu2h0ZY39RzxI6NBmMrR785TXuqK3+saH6GQZ7hxeq/4gzWKXvAw
+ FD4QpIRp5EFeW4Poulgi0rcsSzFNBjs2xke1CEIgreYD7iHJV/qp2raPEEFI20Cz
+ Be/gmInaNWMAv8ajEVik7fBfP8V9dVnBxiPcT5AnPy9VmCO7DJ3tQ/wQY37uQg6r
+ cmqy3B1IUA==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26q9s796-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jun 2026 12:57:32 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65TCnlH5012372;
+ Mon, 29 Jun 2026 12:57:31 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhy58sc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jun 2026 12:57:31 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65TCvUx527394690
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 29 Jun 2026 12:57:30 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D2EC55805E;
+ Mon, 29 Jun 2026 12:57:30 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D8C5858043;
+ Mon, 29 Jun 2026 12:57:29 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 29 Jun 2026 12:57:29 +0000 (GMT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDEwNiBTYWx0ZWRfX6A6bZF65gkCm
- JVPPV86ad0GbDQ1BOMCUUsqTa19AqGWi4EkZh3e2Bz1EFwlPtLsF/SWRWXJhfYwCw1YF0SsAnI1
- vYo7s48uxhokCyPMsKZMijKhIMIvP8y4BJK1jFj+O0oASd8aWDB/WsM+omtmBTLjNAUtla/mMFB
- plBH3S6YLpARDOo5JFPYj6H/AO21C9krc/Sp+okFC+T8k7KTMzKVFb/Z8foWaoE+NFqLNgJDhWe
- gcA2s5NHZ+bAeh7F4qTQH6oegjn+5gqlX56ppDtqwXKkl6oF6GNrebk068B2Qsf3rFrFBnT3Hfp
- GSf8itjvPjh0Ogvw0TMhxNmk13xHi5f1x8V5GaYAr6jff9v5ZES9pzQYsaFYtnpgVKT07Dcy9Wz
- SKAP9uyzuPF6xFPU5ut17WteN1VwlqiXAK+c5W1VW5Hv9T+u56JIdo/GRbObNMkDAkAI7gYDOZ5
- y5cheKL+VpzkXPfsb0Q==
-X-Authority-Analysis: v=2.4 cv=R58z39RX c=1 sm=1 tr=0 ts=6a426bb6 cx=c_pps
- a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=p0WdMEafAAAA:8
- a=EUspDBNiAAAA:8 a=o8AJCCVMZl93uFZnl5wA:9 a=1WsBpfsz9X-RYQiigVTh:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDEwNiBTYWx0ZWRfX+XLJ6FB2Pip5
- hdgWgz24tY2IXuqgmMNQpfgCIvwf5SrrdowEXQoHEYZWawksKKMI19SyrnT2Bpwgg17ToPm7DAX
- OdIa5VAx8z9iT8NrVF3YnXA8Y/xTKL0=
-X-Proofpoint-ORIG-GUID: Y74ljtblbL6yXLrZ2rwkfJnPrBlgNyC1
-X-Proofpoint-GUID: Y74ljtblbL6yXLrZ2rwkfJnPrBlgNyC1
+Date: Mon, 29 Jun 2026 14:57:29 +0200
+From: Harald Freudenberger <freude@linux.ibm.com>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: richard.henderson@linaro.org, david@kernel.org, thuth@redhat.com,
+ berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ linux390-list@tuxmaker.boeblingen.de.ibm.com,
+ linux-s390@vger.kernel.org, dengler@linux.ibm.com,
+ borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
+Subject: Re: [PATCH v8 01/18] target/s390x: Fix wrong address handling in
+ address loops
+Mail-Reply-To: freude@linux.ibm.com
+In-Reply-To: <e516de9c-e9fb-45af-aa5e-8cb9dbf1e3f3@linux.ibm.com>
+References: <20260624081029.23815-1-freude@linux.ibm.com>
+ <20260624081029.23815-2-freude@linux.ibm.com>
+ <e516de9c-e9fb-45af-aa5e-8cb9dbf1e3f3@linux.ibm.com>
+Message-ID: <d55a9d7e7759251c1e75050a9a9ccd6f@linux.ibm.com>
+X-Sender: freude@linux.ibm.com
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDEwNiBTYWx0ZWRfX0tKPxL66K/I8
+ M0tB5NyRsf8/pgE0mYodYYF3V/29+dY/Y9SznEBiblKfp2eT/8MwmciobJQV+LPdcngdyep9szB
+ LAdZp7jSKjjqOvJqscgbZK+f9B4soMhpxLJ01S34fa3+XpBY/rqM2MF7VS5lK3MDsCIH0iKMqIi
+ OQ/9iCrZ8fid8n6A4/zAnCtWOQwyQ8mRN783n3qXirkJmyFWo9TwauqN26nyIUa2NW1bchw8nCR
+ 4HKDn3zE2yrQ0ED9O4C9zFxT8jRQbhMCVg4v91s96PobmAq90Cifryxmj3oytMdGAaqw/EAHJ91
+ USdptUEEEcYjXV2IaJsRNXwG2bAXPywFJ8cndXK969TxnlvxVVPF6BA3myBpp8zV5oa0iAysT/x
+ po+WEi85VGLZS4+NXLz8q74L4id8IleK6sJ8E7gX+h2r/h2K67yGwOWMU5DxYCxdBdOrs31+C0p
+ 4tMckC75YKYBrF3iPew==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDEwNiBTYWx0ZWRfX5IntqDZjTMYq
+ BTfTwZ1RODhljfT0erhsiRh9qAOCTQRz1tyJ9ldgYPpPrlZJ32bCV3lVDR6FQ4a/duzhuNIER3U
+ vdB1Y2bX3xN/SdeCWKNsmKnouftNkgc=
+X-Proofpoint-GUID: 9bk3po2i1DPTTnSXdMPCkKn108xMGY0H
+X-Proofpoint-ORIG-GUID: 9bk3po2i1DPTTnSXdMPCkKn108xMGY0H
+X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a426bbc cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=q-Bucc0gGw48xEf_XpsA:9 a=CjuIK1q_8ugA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 suspectscore=0 phishscore=0 clxscore=1015
- adultscore=0 malwarescore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290106
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ spamscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606290106
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=freude@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,52 +128,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We need to throw an MSI_MISCONFIGURED error when any of the reserved PTE
-bits (first doubleword only) are set.
+On 2026-06-24 14:56, Ilya Leoshkevich wrote:
+> On 6/24/26 10:09, Harald Freudenberger wrote:
+>> With the introduction of the address wrapping function
+>> wrap_address() the result can't be used to walk the
+>> source address any more. So introduce a new local variable
+>> to hold the wrapped address to avoid mixing source and
+>> wrapped address value.
+>> 
+>> Fixes: fcc2699d41 ("target/s390x: Have MSA helper pass a mmu_idx 
+>> argument")
+>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+>> ---
+>>   target/s390x/tcg/crypto_helper.c | 16 ++++++++--------
+>>   1 file changed, 8 insertions(+), 8 deletions(-)
+> 
+> If I take as an example AMODE 24 and look at the third loop iteration,
+> with the current code in master I would get:
+> 
+>     ((((addr & 0xffffff) + 8) & 0xffffff) + 8) & 0xffffff
+> 
+> and with your patch it would be:
+> 
+>     (addr + 8 + 8) & 0xffffff
+> 
+> which is undeniably more elegant, but otherwise looks equivalent to me.
+> 
+> What is the functional issue here?
+> 
+>> diff --git a/target/s390x/tcg/crypto_helper.c 
+>> b/target/s390x/tcg/crypto_helper.c
+>> index ae392bce0e..29ad2aff43 100644
+>> --- a/target/s390x/tcg/crypto_helper.c
+>> +++ b/target/s390x/tcg/crypto_helper.c
+>> @@ -126,8 +126,8 @@ static void sha512_read_icv(CPUS390XState *env, 
+>> const int mmu_idx,
+>>       const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, 
+>> mmu_idx);
+>>         for (int i = 0; i < 8; i++, addr += 8) {
+>> -        addr = wrap_address(env, addr);
+>> -        a[i] = cpu_ldq_mmu(env, addr, oi, ra);
+>> +        uint64_t _addr = wrap_address(env, addr);
+>> +        a[i] = cpu_ldq_mmu(env, _addr, oi, ra);
+>>       }
+>>   }
+> 
+> [...]
 
-Fixes: Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3563
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- hw/riscv/riscv-iommu.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
-
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index c9687e01a8..6828349fe3 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -648,6 +648,27 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
- 
-     switch (get_field(pte[0], RISCV_IOMMU_MSI_PTE_M)) {
-     case RISCV_IOMMU_MSI_PTE_M_BASIC:
-+        /*
-+         * riscv-iommu spec MSI PTE basic translate mode:
-+         * "When an MSI PTE has fields V = 1, C = 0, and M = 3
-+         *  (basic translate mode), the PTE's complete format is:
-+         *  First doubleword:  bit 63      C, = 0
-+         *                     bits 53:10  PPN
-+         *                     bits 2:1    M, = 3
-+         *                     bit 0       V, = 1
-+         *  All other bits of the first doubleword are reserved
-+         *  and must be set to zeros by software.  The second
-+         *  doubleword is ignored by an IOMMU so is free for
-+         *  software to use."
-+         *
-+         * In other words, bits 62:54 and 9:3 of pte[0] are reserved.
-+         */
-+        if (pte[0] & (GENMASK_ULL(62, 54) | GENMASK_ULL(9, 3))) {
-+            res = MEMTX_DECODE_ERROR;
-+            cause = RISCV_IOMMU_FQ_CAUSE_MSI_MISCONFIGURED;
-+            goto err;
-+        }
-+
-         /* MSI Pass-through mode */
-         addr = PPN_PHYS(get_field(pte[0], RISCV_IOMMU_MSI_PTE_PPN));
- 
--- 
-2.43.0
-
+It is a fix, not an improvement. The original code
+used the addr variable to hold the wrapped address.
+But as addr is also used as the loop variable there
+is a mixing between unwrapped and wrapped address here
+and the unfixed code only works when wrap_address does
+return the very same address as output as it became as
+input. My fix corrects this.
 
