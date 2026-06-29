@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30665C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC516C43602
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:11:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAgA-00079D-RT; Mon, 29 Jun 2026 08:01:34 -0400
+	id 1weAg8-00075u-H3; Mon, 29 Jun 2026 08:01:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfj-0006wg-95
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:08 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1weAfP-0006qh-8o
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:00:50 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAff-0007QG-RY
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:07 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-c0c15bd6b8fso327931666b.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:01:00 -0700 (PDT)
+ id 1weAfN-0007Kq-B9
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:00:46 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4938d60c035so16629155e9.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:00:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782734459; x=1783339259; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782734444; x=1783339244; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NE0FUuP3qSW1y1JInNt898EU0WBaDbtQtzuimcKJcCA=;
- b=vCGUqz55TsXWaczdLEvpe5WBnhjv++Cbsr6VhNEQr32v5OI8/k18g2mJQwWWJ5LrM+
- uAcAa2/ovrmsG64a3J8qSHiGF9fDMrSwd2NJQsH3LAz54ywhXy8TUf2iCPyIiEoNMtnx
- bfnpOub2mdXEN013ftRyU+1pMpjUnTsWGUC2dqlryyMF7K6cPUzlG5TDBICB1MRIuySs
- j9vThUsFgHUxAn9nWeNOMVqBWOEFRO6K2rhJ/tZoeewGMAGBeeCngKhFDzPuYlO1LB8V
- O3QFeglqDyEDfkjukqDykya4iUAdVdOSZ2hVxdGtphoavpLvmhlQWg5Bk/9Tlz0U5Mwc
- 1/ig==
+ :reply-to; bh=9GoeIbkfvhhhUXCcpCPbrE2uV96YY8p39ctMuDrsX/E=;
+ b=eQiWHdL++z64hbkpRqzw/P69wDsk88wNbTzdVSP00KDfBfFagtrZoTzI7JHUDWXzJr
+ w8J5g+4fqf+a12j/kG8SxqHB8yqG4GSDc//29936pl4z/1+WA9lR3gPElUTodWohQr39
+ jXNVuEs+5XDp7LoOpz7y5LywQ674ltQPxYRo1FO889JDn6oj6rTDwA0MZ9WPWUHzPmWb
+ ZEapgmFZzHhTdqYL3KdRMa6ULDpYPipvXFbGYq6JPLPu1Ll8y/jlyrGyb9VRTpDNFZ7m
+ yiG5wvzZcWeTgevaNliHlA1ync7SjaJBps2xzakCM0NP1UBVCmEd94Vr4jIRCGFZd1vS
+ 3WbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782734459; x=1783339259;
+ d=1e100.net; s=20251104; t=1782734444; x=1783339244;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=NE0FUuP3qSW1y1JInNt898EU0WBaDbtQtzuimcKJcCA=;
- b=ptnC0r2Yf2RaEsPGTgkZKE9YFNPAP34N6L5RgvLAJJdg1E+Q6C4EQHeCfZe+t4M84n
- UXra4DtpBioynEVLO780FOrX5KwYNr85EA94Par+OXl6K4TMnUSBIIaqwt5wbMySXc9V
- FnbYJJd6rkJfk8Ed87xyOLxfl74r+fM8J3gAI9LJo04a7/EObsOOLXyF+AWOU2+SrSUU
- yh407s1njeiYaaAghmT/norCIWOZCATAUlpqeGgSHeYNHrEwxd+EJuCyhph/+a7ArC97
- DCqTA9rqBTOCLjns+ahAt6BwUkglaetnou0Z3aSZA/NqCWZQY8raTKimNofsXKDkkliD
- NRmA==
-X-Gm-Message-State: AOJu0YzQWzCRh0o14eKZeAO55JUP51GvD/3AO+TN3KbkaOVTRZHD9j92
- adWVXYN7HHlXI8u20Tzni9PdiauzgWHhqtMkHp5c4CTNt2n1JdkeF1JXidly/pqiB40l3GcS55M
- BFsX5
-X-Gm-Gg: AfdE7ckP4ODVZfJHmNmdIfW54FPBq/cCl/VuZD3K7LtK27xy03FYMYhkUGhTNE1Crk3
- Dsn2C+YDf0mOPSWcXub2A54hvsdZZwx5of+6Y2lluPnfN/NLVT12z/UHJ/klENx8pPi3SteMWC3
- YSuIsas8mkog9sdoQCCfDlKTP2cVGFEiwKFAr10ha90BSwpVqgz3ig7SZRGhHABvuqkKnSPUSqk
- 74ZEOqbEhKlUjvehi4SIzJ4yHA3Kssgjqvks4/e+BTreFoNNvsoAz1kVYXT/jUinhNNrUpmEViS
- zX2agVjC01Ui3nCs45R0tFSvjsofsPVDb/ByX86MZj0gIfqrQOpI1DwHz+zyQMNGNkbk+hX5W91
- m8b8NVlqIGjMclvuGG68tfn91O4RNodIwHqZ+y1++BpAUPbzyQoynWPTJ57tI2hyY8anm3oLlA5
- d1fWZ1DQetfYt1pxFBm8+3hQg7G+f92456iOt2E6esZQLWhczjl15Ydia4MxM4EwRJk6nMli2Ia
- NGpJHctskAW4ULTQQRfNA==
-X-Received: by 2002:a17:907:1c84:b0:c12:6f47:1d30 with SMTP id
- a640c23a62f3a-c126f471e3bmr108812166b.65.1782734459218; 
- Mon, 29 Jun 2026 05:00:59 -0700 (PDT)
+ bh=9GoeIbkfvhhhUXCcpCPbrE2uV96YY8p39ctMuDrsX/E=;
+ b=St2PcgJlTfuUzvOjKdEsD6VkIClGFf1GKVdKPjQ6xeC3r7xNPHNLn+KvI9mGelp3EO
+ 2+DzWJLcIAESzsei/x/xiFAM3h3m3doDowd9g4eGj2sybCZsJBmesgdZ99wCZwYhs7sF
+ fpYmuFu0IkQBCQ6a4AKHKAiCnPXakeW9BSyQ+8NbFYeiSGKVXX/r+i+yV0pEp4miJf7d
+ DN6hqu321laya6c075kFve+Z5oEsGT/w3Q3SVOJFc9FzS/a7dBxnLnZwBrYghhd7CJ0b
+ opQy2jHzWG1rxE5PagmtCPm/Q4g1uvtijOBQaW2a7+OsGP46CCJ2xo0ly3R2kum53Ugh
+ eZ7g==
+X-Gm-Message-State: AOJu0YyFOUxtv6UZksrSB2eFFgZ7iAKHZyzULsdsWTdgk/0vOQJ33QMY
+ Q1FLSZqkuid7F7sy9mQ4rvGUe4eWmlFZaJeojGqupem+txY9QDZOor/zD2QhJuIk8Mn+zNPt/vY
+ 6aReJ
+X-Gm-Gg: AfdE7ckMZ6dY5U4jJDPel8HXtMaRs2onL53CbCTSDGg6I5zRTU0VTZKRsoUp+p3XbLx
+ 1cqUHw+N70rBS5FbLhcgtFubsNt0PpJH1kDyicrpnzFm0GkkNdOIpdss9dvd+XBAEZZymlg6YVc
+ OJqHCqlIW1Ig0rLMW4ReNfaRy2IW4Ahy8Dr1cw0NrhnqokTX+CEgMXJvGpqdJX4hDzyb6MbjUZZ
+ 3VhcGSKRCFXg+ATXtDxWtag25f8PrpNcxw5PM9ZRKl19hXOUJCMXGkudkQHHGA+5OsQWfX+rQHK
+ 6pmtZaxvF79rY6VOEwdVYbZFm4hUFXOzt0m70CGzlAEcwnZTUIQC4W7iiNCe3Gn9cRoh0YaSutt
+ G65J5VBBdd8UkxAJvIgKM8o1W2GNJ0MLJmi5ZU0k7rFYhpdFiqw0/cWL68paF4dHfa+ptt4bdl3
+ KKP5ixxK1XXsKG7iQyuydlXPUDvut3TZq7K7dOqvNYapQ89VEj7KqFFQxmRsRKgwJrnmnxh9Z/J
+ S8cWSwI0w/ab+/7ivsK0Q==
+X-Received: by 2002:a05:600c:3513:b0:492:564f:5603 with SMTP id
+ 5b1f17b1804b1-49266850086mr248129725e9.14.1782734443463; 
+ Mon, 29 Jun 2026 05:00:43 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.00.58
+ ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.00.42
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 05:00:58 -0700 (PDT)
+ Mon, 29 Jun 2026 05:00:42 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 24/54] hw/intc/gicv5: Define and use GICV5_PENDING_IRQ_NONE
-Date: Mon, 29 Jun 2026 13:00:02 +0100
-Message-ID: <20260629120032.1645265-25-peter.maydell@linaro.org>
+Subject: [PULL 08/54] target/arm: Implement FEAT_SSVE_AES
+Date: Mon, 29 Jun 2026 12:59:46 +0100
+Message-ID: <20260629120032.1645265-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260629120032.1645265-1-peter.maydell@linaro.org>
 References: <20260629120032.1645265-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,98 +100,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GICv5PendingIrq struct representation of "there is no pending
-interrupt" sets the prio field to PRIO_IDLE, and generally to avoid
-confusion we also set the intid to 0.  We want to return this value
-or initialize some variable to it in several places in the GICv5
-implementation, and the support for the virtual interrupt domain
-introduces more.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Define a convenience macro for this special-case struct value, and
-use it instead of opencoding either the structure initializer or
-explicit assignment to the two fields.
+Enable FEAT_SVE_AES instructions in streaming mode.
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260618040718.572950-8-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260615105029.2898872-6-peter.maydell@linaro.org
 ---
- hw/intc/arm_gicv5.c               | 6 ++----
- include/hw/intc/arm_gicv5_types.h | 4 ++++
- target/arm/tcg/gicv5-cpuif.c      | 7 +++----
- 3 files changed, 9 insertions(+), 8 deletions(-)
+ docs/system/arm/emulation.rst  |  1 +
+ linux-user/aarch64/elfload.c   |  1 +
+ target/arm/cpu-features.h      |  5 +++++
+ target/arm/tcg/cpu64.c         |  1 +
+ target/arm/tcg/translate-sve.c | 20 +++++++++++---------
+ 5 files changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index 0fa3d6b601..08878193df 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -429,8 +429,7 @@ static void irs_recalc_hppi(GICv5 *s, GICv5Domain domain, uint32_t iaffid)
-     ARMCPU *cpu = cpuidx >= 0 ? cs->cpus[cpuidx] : NULL;
-     GICv5PendingIrq best;
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index a8072ddb67..0b4623139a 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -171,6 +171,7 @@ the following architecture extensions:
+ - FEAT_SME_F64F64 (Double-precision floating-point outer product instructions)
+ - FEAT_SME_I16I64 (16-bit to 64-bit integer widening outer product instructions)
+ - FEAT_SME_LUTv2 (Lookup table instructions with 4-bit indices and 8-bit elements)
++- FEAT_SSVE_AES (Streaming SVE Mode Advanced Encryption Standard and 128-bit polynomial multiply long instructions)
+ - FEAT_SSVE_FP8DOT2 (SVE2 FP8 2-way dot product to half-precision instructions in Streaming SVE mode)
+ - FEAT_SSVE_FP8DOT4 (SVE2 FP8 4-way dot product to single-precision instructions in Streaming SVE mode)
+ - FEAT_SSVE_FP8FMA (SVE2 FP8 multiply-accumulate to half-precision and single-precision instructions in Streaming SVE mode)
+diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
+index 3479e61a12..0f96bbe70b 100644
+--- a/linux-user/aarch64/elfload.c
++++ b/linux-user/aarch64/elfload.c
+@@ -173,6 +173,7 @@ abi_ulong get_elf_hwcap(CPUState *cs)
+     GET_FEATURE_ID(aa64_cmpbr, ARM_HWCAP_A64_CMPBR);
+     GET_FEATURE_ID(aa64_f8mm8, ARM_HWCAP_A64_F8MM8);
+     GET_FEATURE_ID(aa64_f8mm4, ARM_HWCAP_A64_F8MM4);
++    GET_FEATURE_ID(aa64_ssve_aes, ARM_HWCAP_A64_SME_AES);
  
--    best.intid = 0;
--    best.prio = PRIO_IDLE;
-+    best = GICV5_PENDING_IRQ_NONE;
- 
-     if (!cpu) {
-         /* Nothing happens for iaffids targeting nonexistent CPUs */
-@@ -526,8 +525,7 @@ static void irs_recall_hppis(GICv5 *s, GICv5Domain domain)
-     GICv5Common *cs = ARM_GICV5_COMMON(s);
- 
-     for (int i = 0; i < cs->num_cpus; i++) {
--        s->hppi[domain][i].intid = 0;
--        s->hppi[domain][i].prio = PRIO_IDLE;
-+        s->hppi[domain][i] = GICV5_PENDING_IRQ_NONE;
-         gicv5_forward_interrupt(cs->cpus[i], domain);
-     }
+     return hwcaps;
  }
-diff --git a/include/hw/intc/arm_gicv5_types.h b/include/hw/intc/arm_gicv5_types.h
-index de4f78a149..851286b1b5 100644
---- a/include/hw/intc/arm_gicv5_types.h
-+++ b/include/hw/intc/arm_gicv5_types.h
-@@ -105,6 +105,10 @@ typedef struct GICv5PendingIrq {
-     uint8_t prio;
- } GICv5PendingIrq;
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index af843b32d3..c07bcb0a73 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1575,6 +1575,11 @@ static inline bool isar_feature_aa64_sve_b16b16(const ARMISARegisters *id)
+     return FIELD_EX64_IDREG(id, ID_AA64ZFR0, B16B16);
+ }
  
-+/* A GICv5PendingIrq struct initializer for "no pending interrupt" */
-+#define GICV5_PENDING_IRQ_NONE \
-+    ((GICv5PendingIrq) { .intid = 0, .prio = PRIO_IDLE })
++static inline bool isar_feature_aa64_ssve_aes(const ARMISARegisters *id)
++{
++    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, AES);
++}
 +
- /* Fields in a generic 32-bit INTID, per R_TJPHS */
- FIELD(INTID, ID, 0, 24)
- FIELD(INTID, TYPE, 29, 3)
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index a868adca66..1cdd4103d0 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -144,7 +144,7 @@ static GICv5PendingIrq gic_hppi(CPUARMState *env, GICv5Domain domain)
+ static inline bool isar_feature_aa64_ssve_f8fma(const ARMISARegisters *id)
+ {
+     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SF8FMA);
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index f7a920a202..e4a8d7a2f6 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1383,6 +1383,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     SET_IDREG(isar, ID_AA64DFR0, t);
  
-     if (!(env->gicv5_cpuif.icc_cr0[domain] & R_ICC_CR0_EN_MASK)) {
-         /* If cpuif is disabled there is no HPPI */
--        return (GICv5PendingIrq) { .intid = 0, .prio = PRIO_IDLE };
-+        return GICV5_PENDING_IRQ_NONE;
+     t = GET_IDREG(isar, ID_AA64SMFR0);
++    t = FIELD_DP64(t, ID_AA64SMFR0, AES, 1);      /* FEAT_SSVE_AES */
+     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP2, 1);   /* FEAT_SSVE_FP8DOT2 */
+     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP4, 1);   /* FEAT_SSVE_FP8DOT4 */
+     t = FIELD_DP64(t, ID_AA64SMFR0, SF8FMA, 1);   /* FEAT_SSVE_FP8FMA */
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 9f0f0e0e12..79e8e16b24 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -7169,7 +7169,7 @@ static bool do_trans_pmull(DisasContext *s, arg_rrr_esz *a, bool sel)
+         if (!dc_isar_feature(aa64_sve2_pmull128, s)) {
+             return false;
+         }
+-        s->is_nonstreaming = true;
++        s->is_nonstreaming = !dc_isar_feature(aa64_ssve_aes, s);
      }
- 
-     irs_hppi = gicv5_get_hppi(gic, domain, env->gicv5_iaffid);
-@@ -168,7 +168,7 @@ static GICv5PendingIrq gic_hppi(CPUARMState *env, GICv5Domain domain)
-     if (best.prio == PRIO_IDLE ||
-         best.prio > env->gicv5_cpuif.icc_pcr[domain] ||
-         best.prio >= gic_running_prio(env, domain)) {
--        return (GICv5PendingIrq) { .intid = 0, .prio = PRIO_IDLE };
-+        return GICV5_PENDING_IRQ_NONE;
-     }
-     return best;
+     return gen_gvec_ool_arg_zzz(s, fns[a->esz], a, sel);
  }
-@@ -258,8 +258,7 @@ static void gic_recalc_ppi_hppi(CPUARMState *env)
-      * enabled, pending and not active.
-      */
-     for (int i = 0; i < ARRAY_SIZE(env->gicv5_cpuif.ppi_hppi); i++) {
--        env->gicv5_cpuif.ppi_hppi[i].intid = 0;
--        env->gicv5_cpuif.ppi_hppi[i].prio = PRIO_IDLE;
-+        env->gicv5_cpuif.ppi_hppi[i] = GICV5_PENDING_IRQ_NONE;
-     };
+@@ -8174,15 +8174,17 @@ TRANS_FEAT(SDOT_zzzz_2s, aa64_sme2_or_sve2p1, gen_gvec_ool_arg_zzzz,
+ TRANS_FEAT(UDOT_zzzz_2s, aa64_sme2_or_sve2p1, gen_gvec_ool_arg_zzzz,
+            gen_helper_gvec_udot_2h, a, 0)
  
-     for (int i = 0; i < ARRAY_SIZE(env->gicv5_cpuif.ppi_active); i++) {
+-TRANS_FEAT_NONSTREAMING(AESMC, aa64_sve_aes, gen_gvec_ool_zz,
+-                        gen_helper_crypto_aesmc, a->rd, a->rd, 0)
+-TRANS_FEAT_NONSTREAMING(AESIMC, aa64_sve_aes, gen_gvec_ool_zz,
+-                        gen_helper_crypto_aesimc, a->rd, a->rd, 0)
++TRANS_FEAT_STREAMING_IF(AESMC, aa64_sve_aes, aa64_ssve_aes,
++                        gen_gvec_ool_zz, gen_helper_crypto_aesmc,
++                        a->rd, a->rd, 0)
++TRANS_FEAT_STREAMING_IF(AESIMC, aa64_sve_aes, aa64_ssve_aes,
++                        gen_gvec_ool_zz, gen_helper_crypto_aesimc,
++                        a->rd, a->rd, 0)
+ 
+-TRANS_FEAT_NONSTREAMING(AESE, aa64_sve_aes, gen_gvec_ool_arg_zzz,
+-                        gen_helper_crypto_aese, a, 0)
+-TRANS_FEAT_NONSTREAMING(AESD, aa64_sve_aes, gen_gvec_ool_arg_zzz,
+-                        gen_helper_crypto_aesd, a, 0)
++TRANS_FEAT_STREAMING_IF(AESE, aa64_sve_aes, aa64_ssve_aes,
++                        gen_gvec_ool_arg_zzz, gen_helper_crypto_aese, a, 0)
++TRANS_FEAT_STREAMING_IF(AESD, aa64_sve_aes, aa64_ssve_aes,
++                        gen_gvec_ool_arg_zzz, gen_helper_crypto_aesd, a, 0)
+ 
+ TRANS_FEAT_NONSTREAMING(SM4E, aa64_sve2_sm4, gen_gvec_ool_arg_zzz,
+                         gen_helper_crypto_sm4e, a, 0)
 -- 
 2.43.0
 
