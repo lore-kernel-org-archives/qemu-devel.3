@@ -4,112 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1766C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 11:41:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E660C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 11:47:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAMq-0001rF-PO; Mon, 29 Jun 2026 07:41:37 -0400
+	id 1weASF-0003Hf-E6; Mon, 29 Jun 2026 07:47:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1weAMo-0001qb-K3; Mon, 29 Jun 2026 07:41:34 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <yujun@kylinos.cn>) id 1weASA-0003HN-3J
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 07:47:06 -0400
+Received: from mailgw.kylinos.cn ([124.126.103.232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1weAMn-00035u-1v; Mon, 29 Jun 2026 07:41:34 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65TAmIDB3030303; Mon, 29 Jun 2026 11:41:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=Z6A71ZNPufFKJkYCMHlGBC6TRnZ0hX
- XY+t7h3Bnbjtk=; b=I+rkKhd6Sja/z1Skhpdgs7RtY31VsHHayv5iHfZ3FpXPeA
- RGmNyogiF/eZLMsY1GKkUdnkIqz78c9wUi3swr+cFaqTFR4jXFxcm7czo8yxM8q/
- rDpxtsSKqWWjupblS6hz8UmGGOCu8zZHYcq7LbBPvXVgTcUp4V3Xvw81vYoNY6u6
- JT0qZhKOTX3bdbqo2TBFOfAxwLenevm5H0nvk+2dSUA9UePEHKRp4zU0XtSYPO4c
- 9BD9t+QfUMiMOqmtdhZ3oiYLishPCufty1DWT2wNi47/C3EWzwkLZEpchZPfUC1Y
- qn3F063Vkwubv+bDno6l4pE+qlp66kuIJpSw4XKA==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26pds2jv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jun 2026 11:41:29 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65TB4fmx001013;
- Mon, 29 Jun 2026 11:41:28 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7vwafb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jun 2026 11:41:28 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65TBfOlM47317368
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Jun 2026 11:41:24 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 983F820043;
- Mon, 29 Jun 2026 11:41:24 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C96C82004B;
- Mon, 29 Jun 2026 11:41:22 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.123.10.203])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 29 Jun 2026 11:41:22 +0000 (GMT)
-Date: Mon, 29 Jun 2026 17:11:20 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Shivang Upadhyay <shivangu@linux.ibm.com>
-Cc: harshpb@linux.ibm.com, milesg@linux.ibm.com, npiggin@gmail.com,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [PATCH v2 1/2] ppc/pnv: avoid regenerating DTB if external DTB
- is present
-Message-ID: <akJSWs7btybHFuMa@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260623063156.1110370-1-shivangu@linux.ibm.com>
- <20260626112239.177191-1-shivangu@linux.ibm.com>
- <20260626112239.177191-2-shivangu@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <yujun@kylinos.cn>) id 1weAS6-0005tC-4S
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 07:47:05 -0400
+X-UUID: 36fb26ae73b011f1aa26b74ffac11d73-20260629
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12, REQID:528ae5d7-10b6-4165-b50d-437f90b07bd4, IP:0,
+ U
+ RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+ release,TS:0
+X-CID-META: VersionHash:e7bac3a, CLOUDID:39c920fbf7a62e5ab243d425f7ec2aba,
+ BulkI
+ D:nil,BulkQuantity:0,Recheck:0,SF:102|136|850|865|898,TC:nil,Content:0|15|
+ 50,EDM:-3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0
+ ,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 36fb26ae73b011f1aa26b74ffac11d73-20260629
+X-User: yujun@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+ (envelope-from <yujun@kylinos.cn>)
+ (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+ with ESMTP id 877768106; Mon, 29 Jun 2026 19:46:49 +0800
+From: yujun <yujun@kylinos.cn>
+To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH] dump: fix misleading VMCOREINFO phys_base parse error
+Date: Mon, 29 Jun 2026 19:46:46 +0800
+Message-Id: <20260629114646.288664-1-yujun@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260626112239.177191-2-shivangu@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: nA2VnuRQnhG6tuorBUt4aTIEVg5LhBOD
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDA5MiBTYWx0ZWRfX9zV5MkcfGDct
- roh4IPeumuzJ9W3xk3N4vUrQuyB4pmBfrU9rqdMVcXTPGXAyyq5/Rp12pKZpOBAUg90XsZAkLhn
- hzCX0jTI+TtmNzYBvWDQ8XCknGzHJOo=
-X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a4259ea cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=Bu0ecm2RSgxt74y_FWUA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDA5MiBTYWx0ZWRfX2Np5YrfCb1Jo
- U/P/73MkEtL9B7rpdYsv+rAJIYvMTBApSNuRoPQhyP+9Jl6jxY0jGFaWkoaooInsPck9ppQEOSe
- 85wtsLCz5jkTPim3m3kkqPt1fS2IGysgEEnjXYK4bHNpsIAhif9bF0ZXdQ9fC1HJYI3DzuAmEj0
- ch561oSj7Ipw65n3KfBhi4YwdL5nETSy6D9zPAaJX5T0GgQyBqET8RjENcZXgCS/IGHYeIFWIpl
- mWV91NNQfRh8uI/cFpDqv03n0p+cYGyo6sdOzC4sYpsaOYUMxpRE8Ins4Ztk6yL8HPHnMXB3jWX
- TervKRoRsWWOQpmT/H9NrW7oc13MWe8+Gu4LEurgpSSY/hKOFKbNETO+w7XojFNbRFtSYVvFWgJ
- TYtCPvkgQnw5Wu8KenZ6q2zdRJassEbFCnu3kPiEIjAv6brbreiVijOO5rq7SzCanBBN6eUsU5S
- wGxj/RnUENFHshAvFjA==
-X-Proofpoint-ORIG-GUID: fdLoAI-qOatew41yv4vme_VR535kA7ET
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
- spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290092
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=124.126.103.232; envelope-from=yujun@kylinos.cn;
+ helo=mailgw.kylinos.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,39 +71,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/06/26 04:52PM, Shivang Upadhyay wrote:
-> Currently externally provided dtb is overwritten in `pnv_reset`.
-> Fix this by only creating dtb if not provided from `-dtb`.
-> 
-> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-> ---
->  hw/ppc/pnv.c | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index 62812f22f8..e44fb7e2dc 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -803,9 +803,13 @@ static void pnv_reset(MachineState *machine, ResetType type)
->          mpipl_write_succeeded = do_mpipl_write(pnv);
->      }
->  
-> -    /* Regenerate device tree */
-> -    fdt = pnv_dt_create(machine);
-> -    _FDT((fdt_pack(fdt)));
-> +    /* Only create new dt if not provided in -dtb */
-> +	if (!machine->dtb) {
-> +		fdt = pnv_dt_create(machine);
-> +        _FDT((fdt_pack(fdt)));
-> +	} else {
-> +	    fdt = machine->fdt;
-> +	}
+When qemu_strtou64() fails on the value after NUMBER(phys_base)= or
+NUMBER(PHYS_OFFSET)=, report a parse failure and include the malformed
+value.  The previous message suggested the field name itself could not
+be read.
 
-nit: indent is wrong
+Fixes: d9feb51772 ("dump: update phys_base header field based on VMCOREINFO content")
+Signed-off-by: yujun <yujun@kylinos.cn>
+---
+ dump/dump.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-with indentation fixed, feel free to add:
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-
-- Aditya G
+diff --git a/dump/dump.c b/dump/dump.c
+index eb2ee1c10d..f69bc2d138 100644
+--- a/dump/dump.c
++++ b/dump/dump.c
+@@ -1771,7 +1771,8 @@ static void vmcoreinfo_update_phys_base(DumpState *s)
+         if (prefix && g_str_has_prefix(lines[i], prefix)) {
+             if (qemu_strtou64(lines[i] + strlen(prefix), NULL, 16,
+                               &phys_base) < 0) {
+-                warn_report("Failed to read %s", prefix);
++                warn_report("failed to parse %s in VMCOREINFO: '%s'",
++                            prefix, lines[i] + strlen(prefix));
+             } else {
+                 s->dump_info.phys_base = phys_base;
+             }
+-- 
+2.25.1
 
 
