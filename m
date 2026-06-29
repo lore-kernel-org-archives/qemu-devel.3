@@ -4,104 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3111C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 09:58:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D29FAC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 10:07:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we8kk-0003Bj-3s; Mon, 29 Jun 2026 05:58:10 -0400
+	id 1we8t7-0004sI-2p; Mon, 29 Jun 2026 06:06:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1we8kh-0003BL-Jp
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 05:58:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1we8ke-0005Nz-Jo
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 05:58:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782727081;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ninfz6lvAJqQy4VgE3w1sHoX0+ZFrradoZpn/C/NBzg=;
- b=aOVL96Kh3Ww9fv0THEqWC0niIsmLgpZUw2gGOPLCSs9igJ71lhct8I0M6AFBtvvE7eypmb
- Ys1aosdqHAlaVp8cQhlxJCmZX2j5zJG6rvMJ87AdxSszUu5JRHltT2ME7u9Oa8Vu1mPGY1
- NlGJuy8YedRYxjyASLUzgSjL5LZLC2E=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-325-EqoqhvgZOPKfPjQU1UQ0LQ-1; Mon, 29 Jun 2026 05:58:00 -0400
-X-MC-Unique: EqoqhvgZOPKfPjQU1UQ0LQ-1
-X-Mimecast-MFC-AGG-ID: EqoqhvgZOPKfPjQU1UQ0LQ_1782727079
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-473f4a48e9aso347707f8f.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 02:57:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1we8sz-0004rf-Pi
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 06:06:43 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1we8sy-00008n-7u
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 06:06:41 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-664ed6f5a48so124160d50.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 03:06:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782727599; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Xan2VeheagfL6V9Sl/5fWnlUllEfGVnm8ALs7GulChUuAZrwUix5KPqCFSQvXlLyWe
+ NIkejxp9GqC1Ycf3yAummeO0Et7Mxz/6+yznJduwA8nrefo6JsfAJn7H8HnC7NRVdocK
+ A6E4/0lKzIgcM968fne0CUbA2jxczf5DsB5ghhO1ythg1mfQAmD1JFcglp9f4AmWpVbe
+ a31FJckk/JSK//RRETEgcwK9cv/H/ZlsqmOrZGXOzbEQeeEZa7//Wdf0hgut8zK2WE3Z
+ MtQqEddpYMn9uyZK3tn3TnwKroxrQAD/kIi1BR/PCTiTskohBGh1kN/1CAZ++iD9RW5h
+ 3EPw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=7ckXbkvmiBBZTMFFMg8C4vhbQU/5Aq5UiYOucG1zO3w=;
+ fh=UuJz1IikU6hzvOR0WthtfU5HVZXWWnfFnZvwpv+hCuQ=;
+ b=mmSJsiS42KFTI7VH+szGaBxDtzvhNuGKr5F7BCmW7D8ES489oBq30rF7fRUrza5lve
+ d7lgCoBRQx1qvqCv7BLdjSZfCdzX8aKJTShCTKpYD5chMcUOqb4AfRKgB2QemPBMgngJ
+ N4+KaF4KXVEhj2ZdZPUTTHfQ/PtDmcTUI73fSscSKFl6hi1gN9YkGweqtlLfjetR2ywU
+ NP/+x9d523R9fEcQ2P73clNQYGpeZ25gZvwMd5ehOJyqEfFQoQ26lvl3WjH//vPuiVqz
+ ZyjGbnHS4AwZKs68AFqoWwnpkpREpcOlWdXkJl4uYWDeEgOgi5maZ+jbDjLHvBc5Z8/i
+ Bnrg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782727079; x=1783331879; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ninfz6lvAJqQy4VgE3w1sHoX0+ZFrradoZpn/C/NBzg=;
- b=VpH9lePaMdkxXniq7KZX3VdKnG+vQRSSny7wSFrQDbAj7WjjJp+dyusYxsaXHI8Dbj
- cWdimQTmC8DWrr3X7lZ5p6MKUhGR4AKJJtt8TiF5Jrkua78nejZJ+FiZgnTCDoHrYaNo
- WWpOhnYflyCakvL5YD6CVBxLVeKva1kZdhtRNTl71PEvamcupwGflp2BUboZeXpHgD/T
- 6oGqtP+Dl5NEGZGMDhPqnmwm1kd5dWXcP1wvlqLytj9kdRFJHZe0vV/NXYKot675BEgk
- wYd1+Nx7LsbVEpKN8sfM3rGcXdRSaN510rkteVZpXDuO5AzhdBxW6EZxyFmb7npwWAOU
- uQEg==
+ d=linaro.org; s=google; t=1782727599; x=1783332399; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=7ckXbkvmiBBZTMFFMg8C4vhbQU/5Aq5UiYOucG1zO3w=;
+ b=fYyBauLgnFEq1MvTchdPngvLfG9GfyFnPOnt57iO5eWKP3CBdFXFfLlKcIpVo94iCP
+ A56tnux8aYnh+G2CQ0NgfNrMSV4XQ0ft3RltatgVRUmvXahYgd8aG37vqW6z8RpdY1c2
+ 0WPo4GgNpvVojZJfeSJi104MwJR3+mFq32Itf9UXCuSh7a0+iXHr+2/za+hKulfcV75k
+ 4mXmaUNUgVZhqP0nSUjsZaK2UO/rTXUVKsf1jTzMFNV+h4gLr5ohpkKvGhEs+dzlgN6H
+ 1jBhuU7hMAaFE/TonC9hJZ3JhKQbEGB56m2iVSivmurttbjAf5ZUaE8jE1MjJJUlvY/1
+ zDhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782727079; x=1783331879;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ninfz6lvAJqQy4VgE3w1sHoX0+ZFrradoZpn/C/NBzg=;
- b=WWSov170ahcGuOTvoB8cCZQyDIEGNJNXU/a7zf3F/pFAOaHQYlb5raYkk4wuhtHqCJ
- ioxn2uYpHb3bOZewf+OK/gxp0BT6kQr5O4Z1Dg1Vo/D5BwhQ54EYMh3gQsMk/TmBG7EG
- 4C4rGuCjNJTyT0WNKjgNdH9315YDnieduMc8/CMqsM+SG7AL/L2FKpPAhSwUBCe5pjNk
- T12yRBwzYuKtYIf0fegHMA3Y20ABrtKMeVbMmWr8b08vL4Cz6HADDIPGBZrtQWI6a3Tl
- 4RZYvy54ElSSO44z2oCtR5csmw4kdMjPiI0j9gymc5Hxnoz1kUl9XEV4kHKMieBznW9M
- 7DyA==
-X-Gm-Message-State: AOJu0YylARw4ACP3o6u78qQpxTwrZwUdDYlwXy8d9m+6ZHKMzTpRpxVq
- 1W9ojj7FThNZg1UXyTPslTR0f4Z0fs3L7d62biM6+GeUHjyBAuBShlmIH6FeH2ysgtD6dwmpCvB
- dSd1zTCoWSXFfTi8xXxjqTixj0Bl9bsmNmoDiSQ+vxSK39a0nnL4wpita
-X-Gm-Gg: AfdE7cmg0y/pP/Dei1qUZ9P3vcEGD4FJGc4j+IKv5432VWlDTIlHDAfkRrzHPRbEkNB
- Cwbke0JhYzKOG1QAR4HwjAUcbtR0fJHA4tR9+FBqY/Z5OcqyD7PGs88CZq1F8RPRhtQbcyo/hRa
- e6JoXdSdziNvjXRU46Lm+PBpTESy26/h1nhgE8JbvF5JrsehpuvzCJPMUZmkvAAqaS25DmpcONV
- MHp8jMk4DhiLe4QGToscmr/NsayMwqZXdu3FHohchQHpkTcgQzlEhlE0M+fhaOzi+O1cRn/UrUf
- DPlSxS3f8UB8g088SRqwfeDc5vvBhGGlzC4rCyJC0WAXnSJrW/v+dYJdvOyVIbuEmoFV8Ho1sFy
- Y0JTJ8DErBEstfU1F0qGXpXFGxvgQ1KQi
-X-Received: by 2002:a05:6000:40c8:b0:473:1ccc:15b9 with SMTP id
- ffacd0b85a97d-4731ccc16dbmr6179811f8f.1.1782727078693; 
- Mon, 29 Jun 2026 02:57:58 -0700 (PDT)
-X-Received: by 2002:a05:6000:40c8:b0:473:1ccc:15b9 with SMTP id
- ffacd0b85a97d-4731ccc16dbmr6179769f8f.1.1782727078155; 
- Mon, 29 Jun 2026 02:57:58 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46f8d6f10absm42034529f8f.5.2026.06.29.02.57.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 02:57:57 -0700 (PDT)
-Date: Mon, 29 Jun 2026 05:57:55 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: zhaoguohan@kylinos.cn
-Cc: qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: Re: [PATCH 2/2] vhost-user-base: clean up vhost_dev on realize failure
-Message-ID: <20260629055709-mutt-send-email-mst@kernel.org>
-References: <20260629092619.2607275-1-zhaoguohan@kylinos.cn>
- <20260629092619.2607275-2-zhaoguohan@kylinos.cn>
+ d=1e100.net; s=20251104; t=1782727599; x=1783332399;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7ckXbkvmiBBZTMFFMg8C4vhbQU/5Aq5UiYOucG1zO3w=;
+ b=oEHyyIxhMWDhlS+twDUNq0iU7q1JSi6C5U6lWl7/EFF8iQb6pRQlIyQg9zTTbKGsDZ
+ nz768UEhMsHA0QIdi6t8DGGReAwWPowzrFVk+jvCSIP6/dp2OB5uFJIQJxXoZzQEb0XU
+ dlNklIrzmMmMDqomqJJOx8BV5eNyXdqRksjlO1gaHE0k/EZfRAzEvgS7ItHRQpcahbGS
+ MQe4cVYFJQu7p78Na3ps/wZqSOiw16j514LDPABJnn8CEC38PGeKa1WzfrdbBE99yLsB
+ uzVlo0iymaTLgMaZeCIuVrL2nytjpnT0PKvaJA5uzf4E71Mo0LI18wCE/NsCVRYtD0FN
+ AWwg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rrrcfi3lM2dmJlDj2PjX6DpLK1Ha+dAKOY7Y36DVQYjs5miEQm7+HPjR8wM/mhkkuYlVtDRgLAi6mvc@nongnu.org
+X-Gm-Message-State: AOJu0Yyf9RbPYmnOEAPRWpbdClYuWLlblopm6j0agyXjLjT2+4taOQeN
+ 7hZ9gmRhbPUnBLA/6lDO0Y1NBuh+Lx2Zd4PbVkiOMglVjyj9XRhyERD6M7ZrzrNeuy/boQ/Jspd
+ VJyGfXZ/tWD2XNgVs+81+dtosdKpKtCQ+8NRiRPFFWA==
+X-Gm-Gg: AfdE7ckKVwUHOOVVDXcIaKTpHNSIWImNEMS/kMK797+UYuUfGRWnGG+3Zgz8fSED1VZ
+ EwV840FsqK3FrWi/zENB/CbRpleloUJavn75YHErzGJZsVZaX+IDiFC7YV1QlGpNudKlK32uec7
+ G8lcuNbs9dkbfNdMA45ffW1dgN1/Bgjt36AkmllBxdPuvukC80d8MdD/1jjm0xTan0l8g8vukFj
+ 6iiq3YeNsjJd1pOtCwOov0qs5gtyQGjKU0aIara8Y1bkuAA6LXG8PUG/erB3+ccXFHJmWHYPLRT
+ 4hRHezpnFB+DMKrjnmUCuXXYvPdXu6EO6nH8aez5j0/ymGTlm5fsu/c+6TCMEJsx1sY=
+X-Received: by 2002:a05:690e:bc6:b0:664:be26:3cf7 with SMTP id
+ 956f58d0204a3-664be263f59mr5955863d50.51.1782727598749; Mon, 29 Jun 2026
+ 03:06:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260629092619.2607275-2-zhaoguohan@kylinos.cn>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260623104003.36590-1-skolothumtho@nvidia.com>
+In-Reply-To: <20260623104003.36590-1-skolothumtho@nvidia.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 29 Jun 2026 11:06:26 +0100
+X-Gm-Features: AVVi8CcwcsdFQpofYenKAbnHdmEQTTxr8mx9HYp6rHaA7K8jEzIGGIwPAOvwC-E
+Message-ID: <CAFEAcA_j2CinOuRpitS4aWe07XNJ7=JRBLAh+mvdqcBWd-iLuA@mail.gmail.com>
+Subject: Re: [PATCH] docs/system/arm/virt: Document accelerated SMMUv3 and
+ Tegra241 CMDQV
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, eric.auger@redhat.com, 
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,69 +117,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 29, 2026 at 05:26:19PM +0800, zhaoguohan@kylinos.cn wrote:
-> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
-> 
-> vhost-user-base queries the backend shared memory configuration after
-> vhost_dev_init() succeeds. If that query fails, or if the shared memory
-> configuration fails validation, realization jumps to the error path
-> without cleaning up the initialized vhost_dev.
-> 
-> Track whether vhost_dev_init() succeeded and call vhost_dev_cleanup()
-> from the error path in that case. Keep a copy of vhost_dev.vqs so the
-> allocation can still be freed after vhost_dev_cleanup() clears struct
-> vhost_dev.
-> 
-> Fixes: 6608dca74ecf (vhost-user-device: Add shared memory BAR)
-> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+On Tue, 23 Jun 2026 at 11:41, Shameer Kolothum <skolothumtho@nvidia.com> wrote:
+>
+> Add subsections for accel=on (nested Stage-1/Stage-2 translation) and
+> cmdqv (Tegra241 CMDQV hardware command queues) under "User-creatable
+> SMMUv3 devices".
+>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 > ---
->  hw/virtio/vhost-user-base.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
-> index 6ac523f9ebef..000e91d50331 100644
-> --- a/hw/virtio/vhost-user-base.c
-> +++ b/hw/virtio/vhost-user-base.c
-> @@ -287,6 +287,8 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
->      VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->      VHostUserBase *vub = VHOST_USER_BASE(dev);
->      uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
-> +    struct vhost_virtqueue *vhost_vqs = NULL;
-> +    bool vhost_dev_initialized = false;
->      int i, ret, nregions, regions_processed = 0;
->  
->      if (!vub->chardev.chr) {
-> @@ -338,6 +340,7 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
->  
->      vub->vhost_dev.nvqs = vub->num_vqs;
->      vub->vhost_dev.vqs = g_new0(struct vhost_virtqueue, vub->vhost_dev.nvqs);
-> +    vhost_vqs = vub->vhost_dev.vqs;
->  
->      /* connect to backend */
->      ret = vhost_dev_init(&vub->vhost_dev, &vub->vhost_user,
-> @@ -346,6 +349,7 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
->      if (ret < 0) {
->          goto err;
->      }
-> +    vhost_dev_initialized = true;
->  
->      ret = vub->vhost_dev.vhost_ops->vhost_get_shmem_config(&vub->vhost_dev,
->                                                             &nregions,
-> @@ -386,6 +390,10 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
->                               dev, NULL, true);
->      return;
->  err:
-> +    if (vhost_dev_initialized) {
-> +        vhost_dev_cleanup(&vub->vhost_dev);
-> +    }
-> +    g_free(vhost_vqs);
->      do_vhost_user_cleanup(vdev, vub);
->  }
-
-Pls just add another label.
 
 
-> -- 
-> 2.43.0
 
+Applied to target-arm.next, thanks.
+
+-- PMM
 
