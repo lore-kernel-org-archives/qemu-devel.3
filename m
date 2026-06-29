@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3D5FC43327
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D626C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:39:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weCBx-00014A-6L; Mon, 29 Jun 2026 09:38:30 -0400
+	id 1weCC5-0001ip-50; Mon, 29 Jun 2026 09:38:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <815d1799c3d3d6cd058cb4634392ca5a34830450@kylie.crudebyte.com>)
- id 1weCBm-0000vn-5D; Mon, 29 Jun 2026 09:38:20 -0400
+ (envelope-from <12bcbdca8ae9fcd5fec093e8ef5e70521e85e889@kylie.crudebyte.com>)
+ id 1weCC3-0001f2-Rv; Mon, 29 Jun 2026 09:38:35 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <815d1799c3d3d6cd058cb4634392ca5a34830450@kylie.crudebyte.com>)
- id 1weCBk-0003pn-M2; Mon, 29 Jun 2026 09:38:17 -0400
+ (envelope-from <12bcbdca8ae9fcd5fec093e8ef5e70521e85e889@kylie.crudebyte.com>)
+ id 1weCC2-0003tk-BA; Mon, 29 Jun 2026 09:38:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=JDJlc7IO//w+TTraQ7wtDmZb2j4bqceOuIKvYV6trOY=; b=s1xEV
- sekCMvkaOP/Y9uFtr9HcwhoM4FENtZWILpUjn0CpAoUpqS0bu7c9wPWc9PaP9VnIFUMfjRRWVzTBP
- HGXGbaaQAk/NVxUnGhR+A3mAcIsFa5zMlk9h2a3Fuxdp+UpY3k1LXmHgKZj/qSQDF+l3gBYUSz9nH
- yW1uq7INuUjW+0KgpYbZswlRwQpYNaLqZSy9da1Fv+d+BwHWM17MiTRYpesvMdHj75oztvgK4FAti
- 8wMrhf1jNxuanB4WRNTPnwfwAMjdVpG9yj7PxGTdqUotP/yFXVTfrboP9bjYb+26UyhTq+jM36FWU
- fBJR0OUtxvGLuokvs5NgxUiTIEzEsQWDw7oSckfBQlt7KMBqd2NQXWrzcZF3a8h96gqwG39r1axcU
- 8XP1Y1iS+K3NlS7FJG6IFJSicrKMfk7OKBILgZEXfJ7hntHRjR89AY4+uvZvtqanbzdRxYzZlCDYm
- 1kMv+GXVq+XfeB68O3SAHn3KEHOOu2HFUt1fOFwdZc4I82p049MlelDdSuJYHosz1rlTb4M/CjdmV
- rCKu9d6l/kLLb2qTXuAHzBHPjjhbqrMWWAU3Kugp4ZsF/VOpBXWMlNyM5QxNi9y7B7CeeLFDEfO6b
- EIyDnhsohyboc7R8mwbRWFF0XbgBlwkh3az8CRPhkj5gCkJNUOYxsbsjcRfXS4=;
-Message-ID: <815d1799c3d3d6cd058cb4634392ca5a34830450.1782739719.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=wA5WgsgKQXyassqJxRXshSb0ETANhXBadc5QCGmjXfc=; b=eFABQ
+ rR3hRakIqvrO+RRoc2U6Bv+Wst6//+VE6aJrUudZz0XBRbu671rP7kkGnSvxdpVOYyf88r0K3uUPn
+ 0QzLvW2JMmfjB8457rf6/nWLYNMcYtIve9yPW0L/d+BJJOvRRIxKubfCAeQf482KyGE64Rhc3eDuG
+ EDCSrT6W3Oqi0RvTfVd+LChW9KT55/ydtxCP38aUEh4/Vj1CBVkuyM5r1hiK/CP9+o94YIjfrDREN
+ GIvH8f6tukZQ8yiMVp2ONUTyfk8cUkVaxoT1GHJ3dNrVuQN2mmNjjkG/ZuZ7X/RLyYwoLsmz8jve0
+ VtbY6kkK97wugcUSQENWix8JiODjBn5uzGoNnDwupKLd4v2JZnC+w9c5beDG52P7tDTj8mVU8xZnU
+ KXYj8jMsNU2imHUCxHzVxALSvOw2/c3RYBYxT5cwES2Tiy77+PWQd+70f/JjhNBYM6IWQVDPmZBhX
+ UgFtcaLu/mfyLab+bRdrXwQsR7LzfU84mDTp/mPKtkcJV3q2uskcni9dRHl4qvsF9MGNCE9Sq+LYY
+ 7R8Q9HyFjfLH7Qi/PkzGyq3Qen8WfxL3cZ/PHS9QHFUFY3XD+2vffA1hbm7txSATLcbwhP115xgn6
+ ygIX2d0QN0BA0NEuROSKxtGNDu2M3U8FoclLm8ogdF8qbPoNuk2jIT4pTgjqxE=;
+Message-ID: <12bcbdca8ae9fcd5fec093e8ef5e70521e85e889.1782739719.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1782739719.git.qemu_oss@crudebyte.com>
 References: <cover.1782739719.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Mon, 29 Jun 2026 15:28:39 +0200
-Subject: [PULL 03/23] 9pfs/xen: implement msize_limit callback
+Subject: [PULL 06/23] 9pfs/virtio: implement response_buffer_size callback
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>, Feifan Qian <bea1e@proton.me>,
- Stefano Stabellini <sstabellini@kernel.org>
+ Peter Maydell <peter.maydell@linaro.org>, Feifan Qian <bea1e@proton.me>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=815d1799c3d3d6cd058cb4634392ca5a34830450@kylie.crudebyte.com;
+ envelope-from=12bcbdca8ae9fcd5fec093e8ef5e70521e85e889@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,58 +66,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add and implement the msize_limit callback for the Xen transport.
+Add and implement the response_buffer_size callback for the virtio
+transport.
 
-The limit is calculated using XEN_FLEX_RING_SIZE() based on the
-negotiated ring_order. For the theoretical maximum ring_order of 9,
-this results in a maximum 'msize' of 1048576 bytes (1 MiB).
+Returns the actual current virtio response buffer size for the supplied
+PDU, which will be used as safety guard for limiting the response size
+when generating a 9p response.
 
-The minimum limit of all rings is picked, because multiple rings
-could theoretically have different ring_orders.
-
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Link: https://lore.kernel.org/qemu-devel/9471786bc47b93e822f6c6233a83f2b9f61e6c82.1781287774.git.qemu_oss@crudebyte.com
+Link: https://lore.kernel.org/qemu-devel/5bbed2768f7a0da8fa2be183e75928c5d1ef691d.1781287774.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- hw/9pfs/xen-9p-backend.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ hw/9pfs/virtio-9p-device.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
-index ca0fff5fa9..e31124bcf5 100644
---- a/hw/9pfs/xen-9p-backend.c
-+++ b/hw/9pfs/xen-9p-backend.c
-@@ -250,12 +250,31 @@ static void xen_9pfs_push_and_notify(V9fsPDU *pdu)
-     qemu_bh_schedule(ring->bh);
+diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
+index 8c5d86cb66..50dc93091d 100644
+--- a/hw/9pfs/virtio-9p-device.c
++++ b/hw/9pfs/virtio-9p-device.c
+@@ -198,6 +198,15 @@ static size_t virtio_9p_msize_limit(V9fsState *s)
+     return (VIRTQUEUE_MAX_SIZE - 2) * guestPageSize;
  }
  
-+static size_t xen_9p_msize_limit(V9fsState *s)
++static size_t virtio_9p_response_buffer_size(V9fsPDU *pdu)
 +{
-+    Xen9pfsDev *xen_9pfs = container_of(s, Xen9pfsDev, state);
-+    size_t limit;
-+    int i;
++    V9fsState *s = pdu->s;
++    V9fsVirtioState *v = container_of(s, V9fsVirtioState, state);
++    VirtQueueElement *elem = v->elems[pdu->idx];
 +
-+    if (!xen_9pfs->num_rings) {
-+        return 0;
-+    }
-+
-+    limit = XEN_FLEX_RING_SIZE(xen_9pfs->rings[0].ring_order);
-+    for (i = 1; i < xen_9pfs->num_rings; i++) {
-+        limit = MIN(limit, XEN_FLEX_RING_SIZE(xen_9pfs->rings[i].ring_order));
-+    }
-+
-+    return limit;
++    return iov_size(elem->in_sg, elem->in_num);
 +}
 +
- static const V9fsTransport xen_9p_transport = {
-     .pdu_vmarshal = xen_9pfs_pdu_vmarshal,
-     .pdu_vunmarshal = xen_9pfs_pdu_vunmarshal,
-     .init_in_iov_from_pdu = xen_9pfs_init_in_iov_from_pdu,
-     .init_out_iov_from_pdu = xen_9pfs_init_out_iov_from_pdu,
-     .push_and_notify = xen_9pfs_push_and_notify,
-+    .msize_limit = xen_9p_msize_limit,
+ static const V9fsTransport virtio_9p_transport = {
+     .pdu_vmarshal = virtio_pdu_vmarshal,
+     .pdu_vunmarshal = virtio_pdu_vunmarshal,
+@@ -205,6 +214,7 @@ static const V9fsTransport virtio_9p_transport = {
+     .init_out_iov_from_pdu = virtio_init_out_iov_from_pdu,
+     .push_and_notify = virtio_9p_push_and_notify,
+     .msize_limit = virtio_9p_msize_limit,
++    .response_buffer_size = virtio_9p_response_buffer_size,
  };
  
- static int xen_9pfs_init(struct XenLegacyDevice *xendev)
+ static void virtio_9p_device_realize(DeviceState *dev, Error **errp)
 -- 
 2.47.3
 
