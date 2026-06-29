@@ -4,58 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1CE2C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 09:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52CADC43327
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 09:09:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we7s5-0004sC-BL; Mon, 29 Jun 2026 05:01:42 -0400
+	id 1we7z6-00061x-4V; Mon, 29 Jun 2026 05:08:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yujun@kylinos.cn>) id 1we7s1-0004s3-HN
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 05:01:37 -0400
-Received: from mailgw.kylinos.cn ([124.126.103.232])
+ (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
+ id 1we7z3-00061b-S1; Mon, 29 Jun 2026 05:08:53 -0400
+Received: from [115.124.30.98] (helo=out30-98.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yujun@kylinos.cn>) id 1we7rv-0002BC-U6
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 05:01:37 -0400
-X-UUID: 17c29018739911f1aa26b74ffac11d73-20260629
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12, REQID:f3a3d7a9-73b0-42d1-864f-b3dc494f2f5f, IP:0,
- U
- RL:0,TC:0,Content:-5,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
- N:release,TS:20
-X-CID-META: VersionHash:e7bac3a, CLOUDID:cc3b54967397f7af63bcf71e7a0b805f,
- BulkI
- D:nil,BulkQuantity:0,Recheck:0,SF:102|850|865|898,TC:nil,Content:0|15|50,E
- DM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:
- 0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 17c29018739911f1aa26b74ffac11d73-20260629
-X-User: yujun@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
- (envelope-from <yujun@kylinos.cn>)
- (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
- with ESMTP id 1671236427; Mon, 29 Jun 2026 17:01:19 +0800
-From: yujun <yujun@kylinos.cn>
-To: Jason Wang <jasowang@redhat.com>
-Cc: Yuri Benditovich <ybendito@redhat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH] ebpf: fix swapped toeplitz/indirection args in set_data trace
-Date: Mon, 29 Jun 2026 17:01:16 +0800
-Message-Id: <20260629090116.266561-1-yujun@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
+ (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
+ id 1we7yw-0004WW-4F; Mon, 29 Jun 2026 05:08:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1782724096; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=sA9OP5Rc4bDJBSMnQRtXfrB+IycsWvdoBnf4BVsHUjM=;
+ b=hztNgKG9tdz4FnFcOURrGvm23x+c0TVzb+JLPfxfeH42H7mPfXq4BNptfhU8B3tst0xU5S7YrEonMNLBuv+l00SsVcDUZU8dktnktwI4YjzpWdkgydejj8plopC/XNTCo8FT/J17YzXT4aZ7/O31OKLZjKlzLsmKi8y2fM9KT5s=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
+ MF=cp0613@linux.alibaba.com; NM=1; PH=DS; RN=17; SR=0;
+ TI=SMTPD_---0X5qEOg5_1782724089; 
+Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com
+ fp:SMTPD_---0X5qEOg5_1782724089 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 29 Jun 2026 17:08:14 +0800
+From: Chen Pei <cp0613@linux.alibaba.com>
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: jic23@kernel.org, pbonzini@redhat.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ sunilvl@ventanamicro.com, dave.jiang@intel.com, alison.schofield@intel.com,
+ imammedo@redhat.com, mst@redhat.com, guoren@kernel.org,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] hw/riscv/virt: Add CXL support to the RISC-V virt
+ machine
+Date: Mon, 29 Jun 2026 17:06:41 +0800
+Message-ID: <20260629090654.70869-1-cp0613@linux.alibaba.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <9279723a-b079-4749-b3a5-e6e7ecfd2121@oss.qualcomm.com>
+References: <20260618093827.3507-1-cp0613@linux.alibaba.com>
+ <20260618093827.3507-2-cp0613@linux.alibaba.com>
+ <9279723a-b079-4749-b3a5-e6e7ecfd2121@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=124.126.103.232; envelope-from=yujun@kylinos.cn;
- helo=mailgw.kylinos.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.98 (deferred)
+Received-SPF: pass client-ip=115.124.30.98;
+ envelope-from=cp0613@linux.alibaba.com; helo=out30-98.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,33 +75,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-trace_ebpf_rss_set_data() passes its third and fourth arguments to
-the toeplitz-ptr and indirection-ptr fields defined in trace-events.
-ebpf_rss_set_all() passed indirections_table and toeplitz_key in the
-opposite order, so tracing mislabeled the two pointers.
+Hi Daniel,
 
-Match the argument order already used by trace_ebpf_rss_mmap().
+On 6/24/2026 1:42 PM, Daniel Henrique Barboza wrote:
+> create_cxl_host_reg_region() is doing the same check:
+>
+>     if (!s->cxl_devices_state.is_enabled) {
+>     (...)
+>
+> Maybe we could squash these update_mmio() lines in the same helper to have
+> everything CXL related in the same place.  The helper would need to be
+> renamed to something more appropriate (e.g. cxl_host_state_init() since we're
+> at init time).
 
-Fixes: f5cae19d10 ("ebpf: improve trace event coverage to all key operations")
-Signed-off-by: yujun <yujun@kylinos.cn>
----
- ebpf/ebpf_rss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks for the review. You are right, the x86 pc_memory_init() path keeps
+the CXL host register region creation and the FMW address programming
+inside a single 'if (is_enabled)' block, and there is no reason for
+RISC-V to split them. I'll fold the cxl_fmws_set_memmap() and
+cxl_fmws_update_mmio() calls into create_cxl_host_reg_region(), rename
+the helper to cxl_host_state_init(), and drop the duplicate guard in
+virt_machine_init() in v3.
 
-diff --git a/ebpf/ebpf_rss.c b/ebpf/ebpf_rss.c
-index 926392b3c5..6650d0daef 100644
---- a/ebpf/ebpf_rss.c
-+++ b/ebpf/ebpf_rss.c
-@@ -270,7 +270,7 @@ bool ebpf_rss_set_all(struct EBPFRSSContext *ctx, struct EBPFRSSConfig *config,
- 
-     ebpf_rss_set_toepliz_key(ctx, toeplitz_key);
- 
--    trace_ebpf_rss_set_data(ctx, config, indirections_table, toeplitz_key);
-+    trace_ebpf_rss_set_data(ctx, config, toeplitz_key, indirections_table);
- 
-     return true;
- }
--- 
-2.25.1
-
+Thanks,
+Pei
 
