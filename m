@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0EE1C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 131A3C43602
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:11:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAgP-0007Y7-NM; Mon, 29 Jun 2026 08:01:50 -0400
+	id 1weAfn-00070L-G0; Mon, 29 Jun 2026 08:01:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAg4-00074X-Aw
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:30 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1weAfF-0006p2-Ug
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:00:40 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAg2-0007cl-LA
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:28 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-6983f8b0aebso2124070a12.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:01:26 -0700 (PDT)
+ id 1weAfD-0007Dj-T7
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:00:37 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-4720d22c94aso1280206f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:00:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782734485; x=1783339285; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lbKUc78SBjPBQDAAy6fbdVLC9pJyuS2mliwq5Equ+IM=;
- b=mIV+qtf6xwfnNn0TiGrcVyAo6DzhJWfHs8lmwH3uVsOzmbUwf5zMei9Bv8SzX4oSVX
- BECHjOg8zBlp9oicZ0YqFnQVfR7nFBZYmVo1grtAyBNo1naiGVsFfe7ATcgTgzV44Dyu
- sYlwwETFFYTgnvGiIck4du+t5BT9ZGPcDOrp6nAmOcm5MD4vlrZv4Y+VZWY6ypenDPOJ
- WndZNpzQbouXtN+RnIRHXTPadEZ5O8TUNWhD+huo+qphZXv3qy48w5GeLZLQ8pnbw/tm
- NYJxTshjDUmWBVo38bvMxhfs1HYSwR33yzbPHfuOlGUTuab3cXEVMXhjEBrs36sROkZG
- Av0w==
+ d=linaro.org; s=google; t=1782734434; x=1783339234; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=L4+oUxHgxKB40cj4ad5076sQjVD+HN+2kPtnRtKd2fM=;
+ b=FnPsqaAX+i86kYyucODiBEwVUos3wGcuxydGQ5MOIGPTC3QOfhxrk5a6X6XJgAXkxK
+ UYNoU0HokBhXCUEjo8yDCuPNUYX1WqrPLma0nQIt6NA2kS4oW/YXDeS5oMO7kSJY7uil
+ 2E50DxHjOw9Iv/40708Xom3vBWqhS36lcuv705xWPCqs39ac+4MVfbIKyS6M0KDGJMsP
+ VD/xwsUF9qqnVOZkYzo/3mh+WoV4S7PrZPhhe6VEcyzaOy0meM/e/Ui5zpP98EcMeSp9
+ 6AhxVGrQtNMllutez53yHTboQW43WSCQhnz4d+UfiVx1PBK3LP9ytnDE8k6eHF5vyEFo
+ ILpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782734485; x=1783339285;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=lbKUc78SBjPBQDAAy6fbdVLC9pJyuS2mliwq5Equ+IM=;
- b=tRAk6+tFKUj3R3r+hvb2qNiP7j/qKYlZZtU8OQTqRBqjFhrGojkVXp/KFrZOCLArA1
- yRjpIQsVF7yJFszctxpT/7lGjGrevu/4gle307bEDIKbEJbWUSqZQMoscPkqiN/qETSx
- 5uDNTJbrjwjOD4a5I+fpGDsmx50z3uty7xBq2Mq9WOq7mALfIfZSDaTaEQzWLlXMWjO+
- YXDAmYt8E+rhQ2vL9nuKkRJKjL/cGpskbZE5ldcNN4UHVm/eAYt3mHCbarCKhexTNnVy
- ytwdt+uxjND3bGTKReYz0qkAMfU3aAnGWzREp1QxOAwpx3kvxci+RSZSDNreYzs45LZt
- 7lVQ==
-X-Gm-Message-State: AOJu0YwF6or53QmXEcRj2uQeb2TPJZsD9D9LqmXmXOjwFNmuHcZn73rv
- gRnvVfeLZEUUVnYff0xABvOGb/lv5CNotSv7jf7zRmC/sOXDGOe8UGpmIj7oaUgSovqdLBVpvBv
- nZg1H
-X-Gm-Gg: AfdE7clyWXHxxo3KE+t9OXFjbkn5xn9MN/iwDAnilTBj3aBSFXNCxunnKETZYrbBRJl
- uHH9asAe7XiGsG38KqjXnM2aVvJabCUbbSLQPZ8+2P75i5w7qh3xyAsnCHbHetfpdlQclG0WacJ
- FJMQoKx79ZN4+raszKM4d4gQGeTBZsqiQVuXXRAVRehBh4BQvIFtfTw7m1F1w1wBxvxNnqX0xAu
- yUwVYj5xlZsuMzQqnRJUTcBi9GIeF4RDxVQ2HhQN9OoQUiJP06IYQU2sofbh7ygZGlRmEg2840m
- ViDzit2E38vCxk0r9e7mO6YlqIUsNOl5eogORJunhJVve/0yhOeWMQdhXEgJqejC2LRLEV31zRA
- Mza4XYSalTm1d5zVbFC8nO6/XDnEu6RFaaX/u16YE+IwTnLwgEREknqlS9AlJ01b1ABxp6YgzMB
- 8Qvbf2ng7o33pU2fjX4C2YK74T7CWCfXNNoEgV83mEN6DIHrXzByUhGL7v4nBvW+QoWEFVFClSO
- lZMmdjV9/GVcq2so7UtXg==
-X-Received: by 2002:a05:6402:6d0:b0:698:3b7b:e487 with SMTP id
- 4fb4d7f45d1cf-6983b7becf8mr3006518a12.19.1782734485039; 
- Mon, 29 Jun 2026 05:01:25 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782734434; x=1783339234;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=L4+oUxHgxKB40cj4ad5076sQjVD+HN+2kPtnRtKd2fM=;
+ b=aNUEjE3lIXXmvsBUa25ganqWbi5nL5sAj7FaNyRr7DrghQlvmQ0cRSEN++Ry6U6t5b
+ ZJvvdHXXPIZx9xBG90u3UEx6W2DiUuYDyKV3utpzyYuEn5XSyZwjF+xHtmpzRyJl1cSw
+ cx6Vwh2TrjaGnX/FGMsXSLQOLvg7OuhSr3zJxNQoakD4CTuOKUZgkDNgRomh4Y/0eF0f
+ 2TRjmXsC1cefsDpBtVnZcd447WHYfJ87oeMbYNKq+P8cHamHdENNKzNYwh5gGuG0+fvh
+ cgcPvWCoPrcRPnhw1MI99nfkDb+AdIZkHPx/8L+oKDoeoHJQ2xcyE6U6VEfooSgV0lEp
+ dS3w==
+X-Gm-Message-State: AOJu0YxaN+UXKGiRXwvvCckoTb9Oce1BeNrKKWHljqdWS43Ncwqh27Kk
+ TfT2Ah/0MvuO6qNg0TFAIBk3cQgUw1kZvOPq25TSWooh+ybsTRD26Vj/R9whRq2vVgaqVq7P/Xo
+ xpVBJ
+X-Gm-Gg: AfdE7ckIU9mJWD7oZ8utS5/ZpWVvWSxcEUuYpnL95U/IkiCP/1my2vOpir3i3xpizBD
+ o7cLcRHauBeoxuSGcI3oTcUnu4LlCOVstYmOdQnRHMaQ2MYND3p+xCef/KgTN9syyCmQ9I0x3xb
+ tXkT+YUGK+VfFOnZfXo9ucyevk3zkeIeZYdEQZXlfYv8WgnJVShHpqfVSFBLkqYEO2HCD7nKxLj
+ kKDuEjerJC4h4YkqXv+RUuZ1y+gPd2WFjXaeHItNOgc9MjOiHnWh0W/JCsC8FVfhqDQuTonY1bk
+ Y/N1d//igKmWvWz60qz4+YH6gnTdH3MQGlnKNlmn8H+5yo/pXs20uzVx8YB/YPYbMI1jiNOA6Fk
+ N1THAF43xL5j1+bkjxlf7prX98mjs9DklnIHa2iMsY750NlypA5YM7ciGPc3YM3KyUymTG6VMZM
+ UaFdABXYmNnEVkkf2eHvwIppjw+YTMw6ut1lIVWajhJv7iZhes1bsKaTzDaJHX0o8JMeJv2Us+o
+ RAch+6x9BY9LROzYV4AmZ35YA/6zt6E
+X-Received: by 2002:a05:6000:2884:b0:44a:be4:d0e4 with SMTP id
+ ffacd0b85a97d-46dc0e05339mr25866945f8f.25.1782734434112; 
+ Mon, 29 Jun 2026 05:00:34 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.01.24
+ ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.00.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 05:01:24 -0700 (PDT)
+ Mon, 29 Jun 2026 05:00:33 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 49/54] target/arm: Implement FDOT (multiple and indexed,
- FP8 to FP16)
-Date: Mon, 29 Jun 2026 13:00:27 +0100
-Message-ID: <20260629120032.1645265-50-peter.maydell@linaro.org>
+Subject: [PULL 00/54] target-arm queue
+Date: Mon, 29 Jun 2026 12:59:38 +0100
+Message-ID: <20260629120032.1645265-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260629120032.1645265-1-peter.maydell@linaro.org>
-References: <20260629120032.1645265-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,48 +99,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Hi; this pullreq has more work from RTH towards emulation of SME2p2,
+support for FlexCAN emulation on sabrelite, RME GPC3, and a scatter
+of other more minor changes.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: fixed subject line]
-Message-id: 20260625015159.719300-7-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/tcg/sme.decode      | 3 +++
- target/arm/tcg/translate-sme.c | 4 ++++
- 2 files changed, 7 insertions(+)
-
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index fbf5f3720d..1dd3b7c8b2 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -810,6 +810,9 @@ FMLAL_nx_hb     11000001 1100 .... . .. 0.. ..... 0. ...    @azx_1x1_i4_o3x2
- FMLAL_nx_hb     11000001 1001 .... 0 .. 1.. ....1 1.. ..    @azx_2x2_i4_o3x2
- FMLAL_nx_hb     11000001 1001 .... 1 .. 1.. ...01 0.. ..    @azx_4x4_i4_o3x2
+thanks
+-- PMM
  
-+FDOT_nx_hb      11000001 1101 .... 0 .. 0.. ....1 0. ...    @azx_2x1_i3_o3
-+FDOT_nx_hb      11000001 0001 .... 1 .. 1.. ...10 0. ...    @azx_4x1_i3_o3
-+
- %idx2_10_3      10:1 3:1
- @azx_4x2_i2_o3  ........ .... zm:4 . .. ... .... ... off:3 \
-                 &azx_n n=4 rv=%mova_rv zn=%zn_ax2 idx=%idx2_10_3
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 3174b10c30..197274d00e 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -1178,6 +1178,10 @@ TRANS_FEAT(FDOT_nx_b, aa64_sme_f8f32, do_azz_acc_fp8,
-            a->n, 1, a->rv, a->off, a->zn, a->zm,
-            a->idx, 0, false, gen_helper_gvec_fdot_idx_sb)
- 
-+TRANS_FEAT(FDOT_nx_hb, aa64_sme_f8f16, do_azz_acc_fp8,
-+           a->n, 1, a->rv, a->off, a->zn, a->zm,
-+           a->idx, 0, false, gen_helper_gvec_fdot_idx_hb)
-+
- static bool do_fdot(DisasContext *s, arg_azz_n *a, bool multi)
- {
-     return do_azz_acc_fp(s, a->n, 1, a->rv, a->off, a->zn, a->zm, 1, 0,
--- 
-2.43.0
+The following changes since commit 20553466cc47af6a8c95f665b601fce3c852e503:
 
+  Merge tag 'pbouvier/pr/docs-20260626' of https://gitlab.com/p-b-o/qemu into staging (2026-06-27 23:28:35 -0400)
+
+are available in the Git repository at:
+
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260629
+
+for you to fetch changes up to 94e3ad78004787b0dea9625544fb45d8cf037147:
+
+  docs/system/arm/virt: Document accelerated SMMUv3 and Tegra241 CMDQV (2026-06-29 11:06:02 +0100)
+
+----------------------------------------------------------------
+target-arm queue:
+ * hw/timer/imx_epit: Replace DPRINTF with trace events
+target/arm: Enable SCTLR_EL1.EnFPM for user-only
+target/arm: Implement FEAT_SME_F8F32
+target/arm: Implement FEAT_SSVE_AES
+target/arm: Implement FEAT_SME_F8F16
+target/arm: GICv5: Fix some minor bugs
+target/arm: Add GPC3 granule bypass windows
+target/arm: Fix some minor timer related bugs
+hw/arm/sabrelite: Add FlexCAN emulation
+docs/system: add FEAT_ECV_POFF to the emulation list
+docs/system/arm/virt: Document accelerated SMMUv3 and Tegra241 CMDQV
+
+----------------------------------------------------------------
+Alex Bennée (6):
+      target/arm: split evaluation of CNTHCTL timer IRQ masks
+      target/arm: trigger timer recalculation when toggling CNTHCTL:ECV
+      target/arm: trigger timer recalc on SCR:ECVEN change
+      target/arm: gate check on scr_el3 behind ARM_FEATURE_EL3 check
+      target/arm: trigger timer recalc on HCR:(E2H|TGE) changes
+      docs/system: add FEAT_ECV_POFF to the emulation list
+
+Jim MacArthur (6):
+      target/arm/tcg/cpu64.c: Extra test for GPC3.
+      target/arm: Setup new registers for GPC3
+      target/arm/ptw.c: Add Granule Bypass Windows
+      target/arm/cpu-features.h: x-rme now means GPC3
+      tests/tcg/aarch64/system: Alternative boot object for exception logging
+      tests/tcg/aarch64/system/gpc-test.c: Basic test for granule protection check
+
+Matyáš Bobek (7):
+      hw/arm/sabrelite: Open code DEFINE_MACHINE_ARM
+      hw/arm/sabrelite: Introduce class SabreliteMachineState
+      hw/misc/imx6_ccm: Add PLL3 and CAN clock
+      hw/net/can/flexcan: NXP FlexCAN core emulation
+      hw/arm: Plug FlexCAN into FSL_IMX6 and Sabrelite
+      tests: Add qtests for FlexCAN
+      docs/arm/sabrelite: Mention FlexCAN support
+
+Peter Maydell (5):
+      arm/gicv5: Add URL to GICv5 specification
+      target/arm: GICv5 cpuif: Recalculate IRQ/FIQ on ICC_PCR_EL1 write
+      target/arm: GICv5 cpuif: Tag ICC_PPI_PRIORITYR<n> regs as ARM_CP_NO_RAW
+      target/arm: GICv5 cpuif: Remove ICC_HAPR_EL1
+      hw/intc/gicv5: Define and use GICV5_PENDING_IRQ_NONE
+
+Richard Henderson (28):
+      target/arm: Enable SCTLR_EL1.EnFPM for user-only
+      target/arm: Implement EXPAND
+      target/arm: Generalize sve_compact_[sd]
+      target/arm: Implement COMPACT for byte/halfword
+      target/arm: Implement FIRSTP, LASTP
+      target/arm: Rename isar_feature_aa64_sve_aes
+      target/arm: Implement FEAT_SSVE_AES
+      target/arm: Use expand_pred_N for helper_sve_not_zpz_N
+      target/arm: Move tile_vslice_{index, offset} to vec_internal.h
+      target/arm: Implement FMOPA (widening, 4-way fp8 to fp32)
+      target/arm: Implement FMLALL (multiple and single vector)
+      target/arm: Implement FMLALL (multiple vector)
+      target/arm: Implement FMLALL (multiple and indexed vector)
+      target/arm: Implement FDOT (multiple and single vector)
+      target/arm: Implement FDOT (multiple vector)
+      target/arm: Implement FDOT (multiple and indexed vector)
+      target/arm: Implement FVDOTB, FVDOTT
+      target/arm: Enable FEAT_SME_F8F32 for -cpu max
+      target/arm: Enable FADD/FSUB (half-precision) with FEAT_SME_F8F16
+      target/arm: Rename SME FMLAL/FMLSL patterns
+      target/arm: Implement FMLAL (multiple, multiple and single, FP8 to FP16)
+      target/arm: Implement FMLAL (multiple and indexed, FP8 to FP16)
+      target/arm: Implement FDOT (multiple, multiple and single, FP8 to FP16)
+      target/arm: Implement FDOT (multiple and indexed, FP8 to FP16)
+      target/arm: Implement FMOPA (widening, 2-way, FP8 to FP16)
+      target/arm: Rename FVDOT pattern
+      target/arm: Implement FVDOT (FP8 to FP16)
+      target/arm: Enable FEAT_SME_F8F16 for -cpu max
+
+Shameer Kolothum (1):
+      docs/system/arm/virt: Document accelerated SMMUv3 and Tegra241 CMDQV
+
+jack wang (1):
+      hw/timer/imx_epit: Replace DPRINTF with trace events
+
+ MAINTAINERS                               |    9 +
+ bsd-user/aarch64/target_arch_elf.h        |    2 +-
+ docs/system/arm/emulation.rst             |    4 +
+ docs/system/arm/sabrelite.rst             |    1 +
+ docs/system/arm/virt.rst                  |   26 +
+ docs/system/devices/can.rst               |   24 +
+ hw/arm/Kconfig                            |    1 +
+ hw/arm/fsl-imx6.c                         |   29 +
+ hw/arm/sabrelite.c                        |   68 +-
+ hw/intc/arm_gicv5.c                       |   11 +-
+ hw/misc/imx6_ccm.c                        |   24 +
+ hw/misc/trace-events                      |    2 +
+ hw/net/Kconfig                            |    5 +
+ hw/net/can/flexcan.c                      | 1396 +++++++++++++++++++++++++++++
+ hw/net/can/flexcan_regs.h                 |  197 ++++
+ hw/net/can/meson.build                    |    1 +
+ hw/net/can/trace-events                   |   18 +
+ hw/timer/imx_epit.c                       |   25 +-
+ hw/timer/trace-events                     |    6 +
+ include/hw/arm/fsl-imx6.h                 |    6 +
+ include/hw/intc/arm_gicv5_types.h         |    4 +
+ include/hw/misc/imx6_ccm.h                |    4 +
+ include/hw/misc/imx_ccm.h                 |    1 +
+ include/hw/net/flexcan.h                  |  145 +++
+ linux-user/aarch64/elfload.c              |    5 +-
+ target/arm/cpu-features.h                 |   28 +-
+ target/arm/cpu.c                          |    4 +
+ target/arm/cpu.h                          |    7 +
+ target/arm/helper.c                       |   52 +-
+ target/arm/ptw.c                          |   77 ++
+ target/arm/tcg/cpu64.c                    |    7 +-
+ target/arm/tcg/fp8_helper.c               |  116 +++
+ target/arm/tcg/gicv5-cpuif.c              |   29 +-
+ target/arm/tcg/helper-fp8-defs.h          |    6 +
+ target/arm/tcg/helper-sve-defs.h          |   10 +
+ target/arm/tcg/sme.decode                 |   95 +-
+ target/arm/tcg/sme_helper.c               |   33 -
+ target/arm/tcg/sve.decode                 |    6 +-
+ target/arm/tcg/sve_helper.c               |  150 +++-
+ target/arm/tcg/translate-sme.c            |  148 ++-
+ target/arm/tcg/translate-sve.c            |  105 ++-
+ target/arm/tcg/vec_internal.h             |   31 +
+ tests/qtest/flexcan-test.c                |  421 +++++++++
+ tests/qtest/meson.build                   |    1 +
+ tests/tcg/aarch64/Makefile.softmmu-target |   22 +-
+ tests/tcg/aarch64/system/boot.S           |   65 ++
+ tests/tcg/aarch64/system/boot.h           |   14 +
+ tests/tcg/aarch64/system/gpc-test.c       |  165 ++++
+ 48 files changed, 3430 insertions(+), 176 deletions(-)
+ create mode 100644 hw/net/can/flexcan.c
+ create mode 100644 hw/net/can/flexcan_regs.h
+ create mode 100644 include/hw/net/flexcan.h
+ create mode 100644 tests/qtest/flexcan-test.c
+ create mode 100644 tests/tcg/aarch64/system/boot.h
+ create mode 100644 tests/tcg/aarch64/system/gpc-test.c
 
