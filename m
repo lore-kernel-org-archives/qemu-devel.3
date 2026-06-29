@@ -4,125 +4,166 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59A91C43638
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 14:42:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1571C43327
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 14:44:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weDBu-0007IN-Tz; Mon, 29 Jun 2026 10:42:30 -0400
+	id 1weDCu-0007Zr-M7; Mon, 29 Jun 2026 10:43:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1weDBl-0007Hj-Jn
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:42:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1weDCj-0007U0-7V
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:43:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1weDBj-0003qb-93
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:42:21 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1weDCh-0003we-FR
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:43:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782744137;
+ s=mimecast20190719; t=1782744193;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=k5ora3C/45hhcBXGB5Cq7sLKi8YXmHjGP//Lj47Qoto=;
- b=IJ2BPL0bInXh+EgnP1Ex6wKyxpCWQ2W72kLAH1Ih69/MrlBp+Sw+lhZyvvzRTAkyAYmEze
- 52RBJcse9RpJ4GhEU7LCSUDWR3j4/8dSfGu0QQMr3O3z/j9UnxLQqfC0VWKFkhMjAaY/H4
- Pn1Z9GycZiqpBNWN1gWqWo97LOjBBHI=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Y/BA1zbHhuuh8CjmEucVuFCUPw5lNOCIU8iLZzA+0W0=;
+ b=ddl9Ag5gqeUIINpv2HxTKNLYpX3bbeJmcFPM6mDTURea0s0d7qSFPi/slfRxnIrbx72siq
+ MBO3kkUrOHt7Yo4sigoznJQ6LOuwozAWKI5dFK5lpmmssUCnNwerGOweGbsSfd+AXHSNiK
+ 2UKEJStQBRX/V5/jJddfdqFKwx3KnQ4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-551-KvqH5WDOMX-DCQERVdiwzQ-1; Mon, 29 Jun 2026 10:42:15 -0400
-X-MC-Unique: KvqH5WDOMX-DCQERVdiwzQ-1
-X-Mimecast-MFC-AGG-ID: KvqH5WDOMX-DCQERVdiwzQ_1782744135
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c98775daee6so980752a12.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 07:42:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782744135; cv=none;
- d=google.com; s=arc-20260327;
- b=fOv4Cmldr3dsJUJGmOEu+1NtOL+dMwPTHf0ydYMBZ4D5tX/0epZsV2XnK3g6uZrkx2
- W3EJvv9nOdQCwZCsZKNwYH0C1xMMWSUfvnuJPpAU2NbS7+/xR0RE/+Z2pkeB6NcDkAWx
- D6AFiVGHAgo6REHp1cY0GpllfR5RB48gdFODmHK+ETJ4SJNXlRrf0eOPHvIccqsGUjOm
- WbtdtyWp2ycu2LidYkT01h+JaahzLyvUdRPMDsp0M/wlfD+El/wAsc3n0zGIF83Da7RX
- UW6TfYmz3QgczlbL/tjRMPsMb4giKV/jjUD1ONdr3+axOP/5S+wtf6SCK2F8T6ykrIUw
- 1H0A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=k5ora3C/45hhcBXGB5Cq7sLKi8YXmHjGP//Lj47Qoto=;
- fh=GIU+FyOM+eiO1tYKbHGSJ9iUu0d9Nn25uUBQaeMGCdg=;
- b=pa+HgDX+9My0BpBOw3Ee55BG8ZUetpiXLZG0rr8OaEo/fv/NRulB54nQL9vbi0GP6/
- NSKVX1v6iMlPET2StfEjMOCKqqOoW3s6El+dMnnyO2/pJ+wLKbJKCNG9+TedElgZXBj6
- r9pVUu7XPdGjuZE+omxEmX3N2v0VHRhs6gGjg32kLnIMdwZJWWL7mWZbP//LJCrTpqA8
- HUU3/2K+RwAmWiPKGSx/R4tqzFLHmYwYkdagpMxVtMrvOCGv5I4Mk1AZr/1zyHK/n4uP
- iyoEK4Oj+EfJgehGOSWgsNZyojLzA9sHOKhiP9rnzFlsFwsQmAiAOWtjCY8i3Vxi4XOv
- ypDg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ us-mta-94-k-tMIiEePOuQfOZhLllndQ-1; Mon, 29 Jun 2026 10:43:09 -0400
+X-MC-Unique: k-tMIiEePOuQfOZhLllndQ-1
+X-Mimecast-MFC-AGG-ID: k-tMIiEePOuQfOZhLllndQ_1782744188
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-493a6fe9ebdso8803545e9.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 07:43:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782744135; x=1783348935; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=k5ora3C/45hhcBXGB5Cq7sLKi8YXmHjGP//Lj47Qoto=;
- b=PbVQ3psm+0E/NcSFihPCtJwghxsDNQC8DXXahAgWDMrTz3S1fsqAAeQ/riJxOiBfUg
- vaGtribtsrAhDzt9f1Mj5NJbhUaDV+SZp9PJoRjk/rIecdDsMhWayHaTRqhpXxOSpGiQ
- KzQV9VlQk00WywHwbDCHW7b9HC0d8DuDR/DiMwaW1WJgRbvmyCIqKybrjPZIlCJEj8aK
- jEiTJyHx6Ct0DNaI7b02dB+Dqru/diRAZSXP+2InIx12pl9Oq5Ke3hVY+FP65FIoWPjZ
- wAJEIgRtHFAmv00XDzlJ3qKc68chpEr3lMVjfv0Zv8cspW1xJIMaWgg4kEyrwxFbG8mD
- 8zfw==
+ d=redhat.com; s=google; t=1782744188; x=1783348988; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=Y/BA1zbHhuuh8CjmEucVuFCUPw5lNOCIU8iLZzA+0W0=;
+ b=bJof6+2oBsA8oEBIBqHfaxFooA7IZ8HhFuH5oY4llvz3xU9uu0BxGWKqpyCGN/HDfT
+ WqJegrkOccxGht8swq3ADG9AE5LF30RslWowPvbfi601gJMqqnCQet9eWz60sr5euQA9
+ JBgJF8wAXwyAiYqJLYSz7Bh3BR2j2rh1jBC3ZWmw66IihDLbn2mWGMNSysZ6UPwSa9ET
+ U36BKsUEzayILDrEZEAzPGSbim0PteaLbCVFiugI6PHc/ZvUq5t68v1gyyyQGxh7wzAH
+ 84FSFm0kpUoB5/V18mZiHSctSIm21py6NZe6DUxpr78yAn0vBdJcslrR2oO2Bu/8OgOf
+ fpwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782744135; x=1783348935;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=k5ora3C/45hhcBXGB5Cq7sLKi8YXmHjGP//Lj47Qoto=;
- b=o0vx9a+Xy+3sJsaPld8nw4gbPEL3jc+WcV9y6Ja6k6LaJnU5WCSLai39PuGYHsJLRW
- OnsIZY7iTb6fAkU9GneL7eS1l85LmwPiODseueI8XbqXj2HpkwD5ASLAPFNLtqAZsMk1
- WELmHk8zGUw79YixkBU55Ytvtljp+ad4oTN9OmsoLVMd7PuDaUf5uCgdbzN/ecLasGov
- ZFQKqRUi1dYWrXnmJ1aaaP4eevv833LbV5Q6qMqb+/kCXw7jFvY+lI2veikPNuIGIBI+
- /kAbTfEhr/5ZwdKZXHpKJQXfzI06lV8XyNmTaqK0cpnKbkBMT5y3bvcARkloUcJCdkrK
- w3mw==
-X-Gm-Message-State: AOJu0YwSAH0AynCs/+nS2g2Fcb+ilpt1ewL7kDSH3ZAG/OpWNLcpNh/4
- QQJ4NZ9JVJfnAT6FcMzOyDhJ6QReLamXDJ/BRnjKwYZJ85WEW28YEfj1SPslBmOn8sMa8HEeVnE
- CBOxSfapr+3BAyOX4fI0NjFZ3SZRkUvfoVYGAkCH6ErArmL3rSsldwXP7Y/POfyKH/aD/rdlEmM
- hTdbxDT2tmJIuCIGkZ6X4KC/xHnS9FmnPVV1jVqvAuYusLavM=
-X-Gm-Gg: AfdE7cnQSih5Yd14hlG/ZM44Auk5YhM2MCVsH2t3I7GmRLjpMbCRrVdY4qAQRCwWoxj
- U9Z9VysGO1QsGX2KQvZGY4KUIZyVDPOPsWHuJbk0Py+R1AKkr6yleAznC744cP6sotF/0gJk9Ry
- FBCe/LCeqvyYy+yc3SFcU+MdzL2oHtzBxWoaR5T8kVb7pytB8ssS9dDUczC+oK6ktvq1iJRg0rU
- V1NcrkitKPqvdX9IQl3WNB1yCTV6kqIRqmtvbjFk+3NLjF5rkB9mRaR
-X-Received: by 2002:a05:6a21:4d8b:b0:3b5:4fff:fa0f with SMTP id
- adf61e73a8af0-3bfc02ca92fmr662145637.14.1782744134314; 
- Mon, 29 Jun 2026 07:42:14 -0700 (PDT)
-X-Received: by 2002:a05:6a21:4d8b:b0:3b5:4fff:fa0f with SMTP id
- adf61e73a8af0-3bfc02ca92fmr662121637.14.1782744133635; Mon, 29 Jun 2026
- 07:42:13 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782744188; x=1783348988;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Y/BA1zbHhuuh8CjmEucVuFCUPw5lNOCIU8iLZzA+0W0=;
+ b=YfaEYuUKgBD76dgJyrlgTAXbS7RmQ7iIoI8ZzdK1zVReKaPtfxKfqJ9dltmB9C8OZP
+ PrljLabpO13aGas0VoLDgDSoJLYKph5ePnmjN82XNQ5KfdRH7MKbuKXGAYrPF/IhBsqI
+ znsSfu7FpbcI5jqwgKBmX3UMZIXJWDR62fSQr48owaGOQbiiH8KE/4C+zeEg3Sb4dpq1
+ I8zVFTM1yVfDgg+44nAZQvGewiR5HjefgXVXr2ty3wi5lRI2sBq9VVqdJgYNgORXgfpD
+ PKzt+NhgEEaToxMSq4RMYqB6r0+ngoPiw3d0Rg65Y/a1nA0TnzMbU8tshNFYodC26yEU
+ 8DMg==
+X-Gm-Message-State: AOJu0YzdQ61VbjMmblxmM6ZLH3G3CseZcUoZML0JD8yp93lrOOq//QlU
+ FOkqjvLY1HiUABhwIixBWLP2hX6oCPIL5RsYQ68ngLyNPyoQi45yBdijwSMGY8QR7ohhdbSP695
+ nKDGqI3zKNWyuVBk5CXQaiFimQc2DAVt3UZiD0Ah4NjHm1e7d2XqhS8iL
+X-Gm-Gg: AfdE7cnENiiS+uYCAnYoYPLKaFZoKOcbTqT8dvKPiSfn9CE6rb6H7qwsPm7bS4wTBtd
+ wpiYKolb++VN3QIwcOXKnA96LGhj3VhKSWyKgelAegugryw0FGBNP5mLSmRHplXle/kfkw75L59
+ 2HljsxceuXqoLtMS8um8Te/AqnQqGS8l2xryoidjszTWClKApG8Qyyk+3cWxPGIoVofzbZueXy1
+ qReAa03X6SFWbvA56Crx8Ft1qB03HtAUcIEE+TGh1Ae+UiWts5goxCEp38EqlCUNe8N6CC0tIHz
+ upw3UOFyHjA25yzMOiROTJrO7I7RI/pFxy4xpBeVyJN2GftPMwbJkTLw5NxXTMELMcqspRxZSY0
+ IoFcVxbyEjbbsWEKY1Q/jiy2f54iuGfQvNQARJ4q2fs4UWfIryA==
+X-Received: by 2002:a7b:c7c5:0:b0:492:63c3:8eeb with SMTP id
+ 5b1f17b1804b1-4926fca4ce5mr138791145e9.35.1782744188336; 
+ Mon, 29 Jun 2026 07:43:08 -0700 (PDT)
+X-Received: by 2002:a7b:c7c5:0:b0:492:63c3:8eeb with SMTP id
+ 5b1f17b1804b1-4926fca4ce5mr138790685e9.35.1782744187831; 
+ Mon, 29 Jun 2026 07:43:07 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493a7fd1b0fsm123655815e9.1.2026.06.29.07.43.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jun 2026 07:43:07 -0700 (PDT)
+Message-ID: <99726741-229a-4230-b19e-63a7f27ba9f0@redhat.com>
+Date: Mon, 29 Jun 2026 16:43:05 +0200
 MIME-Version: 1.0
-References: <20260628-gtk-v2-1-1e4839012f09@rsg.ci.i.u-tokyo.ac.jp>
- <CAMxuvaxrGgD7EAwWdGG0BZgiyXPNrExExTVnANr6M2gw5+DzNQ@mail.gmail.com>
- <b57f9a79-f48d-4fab-a70f-e26f26fcfcbf@rsg.ci.i.u-tokyo.ac.jp>
- <CAJ+F1CJoSn9qaA4JtNz1c3ZoAUJP1dPk58AOF-sQbf-t_YqKTA@mail.gmail.com>
- <470d9fc7-0a54-46b9-a1b9-4428b341b823@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <470d9fc7-0a54-46b9-a1b9-4428b341b823@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 29 Jun 2026 18:42:01 +0400
-X-Gm-Features: AVVi8CefjrMjNRVyU--fg0-c9xmVYb-_U1r_1IxGXDyBTsCMv_sMQAj_aK2tFaE
-Message-ID: <CAMxuvaxoRddRPGZzh+VGdLiiJ3au4P2pBNHPphk5XsR8uYPOjA@mail.gmail.com>
-Subject: Re: [PATCH v2] ui/gtk: Narrow DMA-BUF critical section
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/8] tests/functional: Add remote interrupts test for
+ PowerNV
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ devel@lists.libvirt.org, Misbah Anjum N <misanjum@linux.ibm.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, kvm@vger.kernel.org,
+ Gautam Menghani <gautam@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>
+References: <20260629110411.3051274-1-adityag@linux.ibm.com>
+ <20260629110411.3051274-2-adityag@linux.ibm.com>
+ <71cffeef-3398-44e6-8e13-130266e789c1@redhat.com>
+ <akJXAebIn7BHhPRS@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <akJXAebIn7BHhPRS@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,257 +179,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 6/29/26 13:39, Aditya Gupta wrote:
+> On 26/06/29 01:20PM, Cédric Le Goater wrote:
+>> On 6/29/26 13:04, Aditya Gupta wrote:
+>>> In the past there have been hard to recreate issues where XIVE changes
+>>> cause qemu crashes due to multi-socket interrupts such as in [1].
+>>>
+>>> Add a functional test explicitly to test whether remote interrupts work.
+>>>
+>>> The test can also work as additional boot test for multi-socket boot,
+>>> initrd boot test, as well as a check for e1000e to be working in powernv,
+>>
+>> you should consider moving to a more modern nic model: igb, which
+>> has sr-iov support too.
+> 
+> yes, can do. with igb i see multiple irqs, so test will have to take sum
+> of all rx irqs, and compare:
+> 
+> 	2026-06-29 17:00:46,288: cat /proc/interrupts | grep eth0
+> 	2026-06-29 17:00:46,391: 135:          0          0          0  PNV-PCI-MSI 2416443392 Edge      eth0
+> 	2026-06-29 17:00:46,393: 136:          0          6          0  PNV-PCI-MSI 2416443393 Edge      eth0-rx-0
+> 	2026-06-29 17:00:46,394: 137:          0         14          0  PNV-PCI-MSI 2416443394 Edge      eth0-rx-1
+> 	2026-06-29 17:00:46,395: 138:          0          4          0  PNV-PCI-MSI 2416443395 Edge      eth0-rx-2
+> 	2026-06-29 17:00:46,397: 139:          0          4          0  PNV-PCI-MSI 2416443396 Edge      eth0-rx-3
+> 	2026-06-29 17:00:46,398: 140:          0         16          0  PNV-PCI-MSI 2416443397 Edge      eth0-tx-0
+> 	2026-06-29 17:00:46,399: 141:          0          6          0  PNV-PCI-MSI 2416443398 Edge      eth0-tx-1
+> 	2026-06-29 17:00:46,399: 142:          0          6          0  PNV-PCI-MSI 2416443399 Edge      eth0-tx-2
+> 	2026-06-29 17:00:46,400: 143:          0          4          0  PNV-PCI-MSI 2416443400 Edge      eth0-tx-3
+> 
+> I feel e1000e suffices for this test, should i stay with e1000e or use
+> igb here ?
 
-On Mon, Jun 29, 2026 at 5:13=E2=80=AFPM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> On 2026/06/29 21:46, Marc-Andr=C3=A9 Lureau wrote:
-> > Hi
-> >
-> > On Mon, Jun 29, 2026 at 4:24=E2=80=AFPM Akihiko Odaki
-> > <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
-> >>
-> >> On 2026/06/29 18:20, Marc-Andr=C3=A9 Lureau wrote:
-> >>> Hi Akihiko
-> >>>
-> >>> On Sun, Jun 28, 2026 at 5:59=E2=80=AFPM Akihiko Odaki
-> >>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
-> >>>>
-> >>>> Scanout operations need to be properly ordered to avoid tearing. The
-> >>>> virtio specification allows the guest to use pageflip. With pageflip=
-,
-> >>>> the guest only modifies the invisible framebuffer while the host sca=
-ns
-> >>>> out the visible framebuffer. The guest may choose not to use pagefli=
-p to
-> >>>> avoid its overhead, accepting the risk of tearing.
-> >>>>
-> >>>> ui/gtk performs the following procedure to flush a scanout:
-> >>>> 1) Queue a draw event.
-> >>>> 2) The draw event gets triggered.
-> >>>> 3) Blit the guest framebuffer to the host framebuffer.
-> >>>>
-> >>>> When flushing a DMA-BUF scanout, ui/gtk blocks the device before 2) =
-if
-> >>>> possible and unblocks it after 3) to enforce proper ordering. Howeve=
-r,
-> >>>> blocking the device before 2) has two problems.
-> >>>>
-> >>>> First, it can leave the device blocked indefinitely because GTK
-> >>>> sometimes decides to cancel 2) when the window is not visible for
-> >>>> example. ui/gtk regularly repeats 1) as a workaround, but it is not
-> >>>> applicable to GtkGLArea because it causes display corruption.
-> >>>>
-> >>>> Second, the behavior is inconsistent with the other types of scanout
-> >>>> that leave the device unblocked between 1) and 2).
-> >>>>
-> >>>> To fix these problems, let ui/gtk block the device only when the
-> >>>> queued draw event runs, immediately before 3). Blocking before that =
-is
-> >>>> unnecessary since ui/gtk does not access the framebuffer yet. If the
-> >>>> guest does not use pageflip but instead updates the visible framebuf=
-fer
-> >>>> directly, ui/gtk should not add the overhead of a pre-draw block.
-> >>>>
-> >>>
-> >>> Are you saying this won't create undesired drawing artefacts?
-> >>>
-> >>> I don't see how the guest synchronizes with the display if the gl cmd=
-s
-> >>> keep running.
-> >>
-> >> The point of pageflip is to avoid drawing artifacts when scanout and
-> >> rendering can happen concurrently. The virtio-gpu spec adopts that
-> >> model: the guest can switch the scanout resource with
-> >> VIRTIO_GPU_CMD_SET_SCANOUT instead of rendering into the resource
-> >> currently being scanned out.
-> >>
-> >> So, if a guest chooses not to use pageflip on a system where scanout a=
-nd
-> >> rendering run concurrently, it can get artifacts. This change does not
-> >> try to make that case artifact-free.
-> >>
-> >> What this patch is trying to preserve is the display model already use=
-d
-> >> by the 2D code and by the other display implementations: QEMU keeps th=
-e
-> >> framebuffer stable while it is actually reading/blitting it. The extra
-> >> blocking before the queued draw callback runs does not add
-> >> synchronization for that model, because ui/gtk is not accessing the
-> >> framebuffer yet.
-> >
-> > I am missing some pieces to understand how the guest will be fenced.
-> > How does qemu say: "I have consumed the resource (for the
-> > flush/display), you can reuse it"?
->
-> By blocking VIRTIO_GPU_CMD_SET_SCANOUT: once that command completes, the
-> previous scanout resource is no longer the visible one from the guest's
-> point of view.
->
-> While GTK is actually blitting the current DMA-BUF, QEMU sets
-> renderer_blocked. That stops the virtio-gpu command queue, so a guest's
-> next SET_SCANOUT cannot be processed until the blit has finished and the
-> UI unblocks the device.
->
-> So the ordering is:
->
-> 1. QEMU starts consuming scanout A and blocks the renderer.
+or use a single cpu per socket config. Which seems better for the test.
 
-I see, gtk blocks the rendering before the draw and this should be
-enough to have a correct present scanout drawing.
+Thanks,
 
-lgtm then, thanks for the details
-Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+C.
 
-> 2. The guest may submit SET_SCANOUT for scanout B, but QEMU does not
->     complete it yet.
-> 3. QEMU finishes consuming A and unblocks the renderer.
-> 4. SET_SCANOUT(B) can complete; at that point the guest may reuse A.
->
-> A guest that renders directly into the current scanout still can tear,
-> but a pageflipping guest gets the reuse point from SET_SCANOUT completion=
-.
->
-> Regards,
-> Akihiko Odaki
->
-> >
-> >>
-> >> Regards,
-> >> Akihiko Odaki
-> >>
-> >>>
-> >>>> ui/gtk still blocks the device during 3) for DMA-BUF. Unlike the oth=
-er
-> >>>> scanout types, 3) can happen asynchronously with the device for a
-> >>>> DMA-BUF, so ui/gtk needs to keep the visible guest framebuffer stabl=
-e
-> >>>> for the blit.
-> >>>>
-> >>>> With the problems fixed, the workaround to repeat 1) is no longer
-> >>>> necessary and is removed.
-> >>>>
-> >>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> >>>> ---
-> >>>> Changes in v2:
-> >>>> - Clarified that guests can use pageflip to avoid tearing while ui/g=
-tk
-> >>>>     only needs to keep the DMA-BUF stable during the blit.
-> >>>> - Avoided the unprotected gd_egl_scanout_flush() fallback by queuing
-> >>>>     redraws through gtk_widget_queue_draw_area().
-> >>>> - Link to v1: https://lore.kernel.org/qemu-devel/20260115-gtk-v1-1-5=
-7f49e856408@rsg.ci.i.u-tokyo.ac.jp
-> >>>> ---
-> >>>>    ui/gtk-egl.c     |  6 ++----
-> >>>>    ui/gtk-gl-area.c | 23 +----------------------
-> >>>>    2 files changed, 3 insertions(+), 26 deletions(-)
-> >>>>
-> >>>> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-> >>>> index 7c5c9b2428c2..adc81f34b1c8 100644
-> >>>> --- a/ui/gtk-egl.c
-> >>>> +++ b/ui/gtk-egl.c
-> >>>> @@ -91,6 +91,7 @@ void gd_egl_draw(VirtualConsole *vc)
-> >>>>                } else {
-> >>>>                    qemu_dmabuf_set_draw_submitted(dmabuf, false);
-> >>>>                }
-> >>>> +            qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
-> >>>>            }
-> >>>>    #endif
-> >>>>            gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0, vc->gfx.w, vc->g=
-fx.h);
-> >>>> @@ -405,14 +406,11 @@ void gd_egl_flush(DisplayChangeListener *dcl,
-> >>>>
-> >>>>        if (vc->gfx.guest_fb.dmabuf &&
-> >>>>            !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf))=
- {
-> >>>> -        qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
-> >>>>            qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, t=
-rue);
-> >>>>            gtk_egl_set_scanout_mode(vc, true);
-> >>>> -        gtk_widget_queue_draw_area(area, x, y, w, h);
-> >>>> -        return;
-> >>>>        }
-> >>>>
-> >>>> -    gd_egl_scanout_flush(&vc->gfx.dcl, x, y, w, h);
-> >>>> +    gtk_widget_queue_draw_area(area, x, y, w, h);
-> >>>>    }
-> >>>>
-> >>>>    void gtk_egl_init(DisplayGLMode mode)
-> >>>> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-> >>>> index 23806b9d01bb..29497019ee46 100644
-> >>>> --- a/ui/gtk-gl-area.c
-> >>>> +++ b/ui/gtk-gl-area.c
-> >>>> @@ -86,6 +86,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
-> >>>>                } else {
-> >>>>                    qemu_dmabuf_set_draw_submitted(dmabuf, false);
-> >>>>                }
-> >>>> +            qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
-> >>>>            }
-> >>>>    #endif
-> >>>>
-> >>>> @@ -163,27 +164,6 @@ void gd_gl_area_refresh(DisplayChangeListener *=
-dcl)
-> >>>>
-> >>>>        gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : =
-vc->gfx.drawing_area);
-> >>>>
-> >>>> -    if (vc->gfx.guest_fb.dmabuf &&
-> >>>> -        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
-> >>>> -        /*
-> >>>> -         * gd_egl_refresh() calls gd_egl_draw() if a DMA-BUF draw h=
-as already
-> >>>> -         * been submitted, but this function does not call gd_gl_ar=
-ea_draw() in
-> >>>> -         * such a case due to display corruption.
-> >>>> -         *
-> >>>> -         * Calling gd_gl_area_draw() is necessary to prevent a situ=
-ation where
-> >>>> -         * there is a scheduled draw event but it won't happen baca=
-use the window
-> >>>> -         * is currently in inactive state (minimized or tabified). =
-If draw is not
-> >>>> -         * done for a long time, gl_block timeout and/or fence time=
-out (on the
-> >>>> -         * guest) will happen eventually.
-> >>>> -         *
-> >>>> -         * However, it is found that calling gd_gl_area_draw() here=
- causes guest
-> >>>> -         * display corruption on a Wayland Compositor. The display =
-corruption is
-> >>>> -         * more serious than the possible fence timeout so gd_gl_ar=
-ea_draw() is
-> >>>> -         * omitted for now.
-> >>>> -         */
-> >>>> -        return;
-> >>>> -    }
-> >>>> -
-> >>>>        if (!vc->gfx.gls) {
-> >>>>            if (!gtk_widget_get_realized(vc->gfx.drawing_area)) {
-> >>>>                return;
-> >>>> @@ -347,7 +327,6 @@ void gd_gl_area_scanout_flush(DisplayChangeListe=
-ner *dcl,
-> >>>>
-> >>>>        if (vc->gfx.guest_fb.dmabuf &&
-> >>>>            !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf))=
- {
-> >>>> -        qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
-> >>>>            qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, t=
-rue);
-> >>>>            gtk_gl_area_set_scanout_mode(vc, true);
-> >>>>        }
-> >>>>
-> >>>> ---
-> >>>> base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
-> >>>> change-id: 20260115-gtk-424c2b910e65
-> >>>>
-> >>>> Best regards,
-> >>>> --
-> >>>> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> >>>>
-> >>>
-> >>
-> >>
->
 
 
