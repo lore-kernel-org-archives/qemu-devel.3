@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDCB8C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 16:03:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60BCBC43602
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 16:03:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weERw-0004Hs-P4; Mon, 29 Jun 2026 12:03:08 -0400
+	id 1weERv-0004Ax-Hh; Mon, 29 Jun 2026 12:03:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1weERs-00047x-PL
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 12:03:06 -0400
+ id 1weERd-000433-1J
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 12:02:51 -0400
 Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1weERn-0003PG-Fi
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 12:03:03 -0400
+ id 1weERU-0003Jr-Ob
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 12:02:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
  s=default; t=1782748942;
- bh=WMNzcafKr5kxS8seHExGHssW6g/xT6qtKw1/sGani/g=;
+ bh=yPB+FNojdm3U2DVtVOZaY39u3G+QLSDX/AybuCnKIYA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ksrwwH44FPEQpjS4IuDrfBf3u4mWn4L+xfFaeG/e6TW23MgaF82iJXX5F0jZoSaVW
- CTO3E3JqYsv++6BtcAexx5plIV4PgDhnxwwBQQJiLVgeoPQ3ZbbfNp/nH0uC9bJyCY
- dD3+LBfz9/AMwd//VpszT3V8x052P+mH+I0lxcKHU1CudzMm/Iwzg1lPmcSiYmIcJ2
- HO9mc5Nz1QwlU1kZ5KahwpjLQzZWVqiD5dYleJY1UC7AF+zLP5U64KpEpvq1oFFLGu
- M8Njt+cPZtVgtSVm0wufhNM06G95e9IDnuhhaMNEEyIusJBk0HGzn1mFG4HnMEc23+
- 349iEqE7w22IA==
+ b=N/Nr23FT6KcoH2XBKt6Ijjt8P931bQ4Gu6bBCoi67qgyEj5U79BHzK5k1Ev3LcFfA
+ WmQg3pGmoKRvmbhEd+BQZ3ngtqeWKYFGfpYV7BiJX9F+MnzgPi9zPEa+Qgktgd3MuE
+ IrMYrLrL3EZMDUwFqZR5HbLKjpBJsv1oO/32h0YC/FPQHbb/kCv+9uLcNmn2OTEg0T
+ qhgpVG/w5YI8h+0zxE3ZOw5PgzMrH+9GkT6aPuhoybtBSZ+CtQ657WJOQUE2yWNKpM
+ +21IkgUnXEAym5PCrS+Kq2q1LQW0YvWiDEFem+PRQ2qmVY7nTIgutrmokHZcXEcjXf
+ pOUu+0HRu9SKQ==
 Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 8B57A2FF409;
+ by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 69A752FF367;
  Mon, 29 Jun 2026 16:02:22 +0000 (UTC)
 Received: from pc.. (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 0601937C98C;
- Tue, 30 Jun 2026 00:02:22 +0800 (CST)
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id DCFC637C941;
+ Tue, 30 Jun 2026 00:02:19 +0800 (CST)
 From: Ziyang Zhang <functioner@sjtu.edu.cn>
 To: qemu-devel <qemu-devel@nongnu.org>
 Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
@@ -46,13 +46,13 @@ Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
  Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
  Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>,
  Ziyang Zhang <functioner@sjtu.edu.cn>
-Subject: [PATCH v4 1/1] contrib/plugins: add a minimal dlcall plugin
-Date: Tue, 30 Jun 2026 00:02:17 +0800
-Message-Id: <20260629160217.1637276-2-functioner@sjtu.edu.cn>
+Subject: [PATCH v4 0/1] contrib/plugins: add dlcall to call host functions
+ from a guest
+Date: Tue, 30 Jun 2026 00:02:16 +0800
+Message-Id: <20260629160217.1637276-1-functioner@sjtu.edu.cn>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260629160217.1637276-1-functioner@sjtu.edu.cn>
+In-Reply-To: <20260622163438.130746-1-functioner@sjtu.edu.cn>
 References: <20260622163438.130746-1-functioner@sjtu.edu.cn>
- <20260629160217.1637276-1-functioner@sjtu.edu.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=202.120.2.186;
@@ -78,286 +78,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a minimal dlcall plugin that lets the guest invoke host functions
-through magic system calls. The plugin registers a vCPU syscall filter
-callback that intercepts a reserved syscall number and dispatches a set
-of pass-through operations: querying host attributes, loading and freeing
-shared libraries, resolving symbols, retrieving the last library error,
-and invoking a host function through a common interface.
+Hi,
 
-The magic syscall number defaults to 4096 and can be overridden at load
-time with the "syscall_num=N" argument; values low enough to clash with a
-real syscall are rejected.
+This patch adds a single plugin, contrib/plugins/dlcall.c (~240 lines,
+no changes to QEMU core), that lets a linux-user guest call functions in the
+host's native shared libraries instead of emulating them.
 
-Co-authored-by: Kailiang Xu <xukl2019@sjtu.edu.cn>
-Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
-Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
----
+It is the natural next step on top of the vCPU syscall-filter callback that I
+contributed and that was merged earlier:
+
+  https://lore.kernel.org/qemu-devel/20251214144620.179282-1-functioner@sjtu.edu.cn/
+
+Why bother? Because it turns slow, instruction-by-instruction emulation of a
+library into a native host call. Some results, all on completely unmodified
+guest binaries:
+
+  * minizip (the stock zlib utility) compresses several times faster, because
+    the actual deflate runs natively on the host instead of being translated.
+  * Real OpenGL/Vulkan games run under qemu-user: SuperTuxKart and Hollow
+    Knight are playable, with their graphics calls going straight to the host
+    GPU.
+
+How it works
+============
+
+The guest makes a system call with a reserved number (4096 by default) that no
+real Linux ABI uses. Its first argument selects a pass-through operation, and the
+rest carry operands:
+
+  syscall(4096, op, arg1, arg2, ...)
+          |     |    \............ operands (pointers / values)
+          |     \................. which pass-through operation
+          \....................... the reserved "magic" number
+
+The plugin registers a vCPU syscall filter: before QEMU forwards a syscall to
+the host kernel, the filter runs, sees 4096, performs the operation on the
+host, writes the result back, and tells QEMU the syscall is consumed, so the
+real kernel never sees it.
+
+The whole interface is just a handful of primitives:
+
+  * query a host attribute
+  * dlopen / dlclose a host shared library
+  * dlsym a symbol, and read the last dlerror
+  * invoke a resolved host function with a void(void *, void *) signature
+
+That is all the plugin does. It knows nothing about zlib, X11 or OpenGL, or
+about any library's calling convention.
+
+The same machinery also runs in reverse: when a host function needs to call
+back into the guest (a qsort comparator, an allocator, a GUI or game callback),
+control re-enters the guest to run the callback and then resumes the suspended
+host call. This reentry is what lets stateful, callback-driven APIs work, not
+just leaf functions.
+
+Why the plugin belongs in QEMU, and the rest does not
+=====================================================
+
+Only the plugin lives in the tree. Everything else is ordinary userspace:
+
+  --- userspace (out of tree, not tied to any DBT) -------------
+      guest: unmodified program  ->  guest runtime + thunk libs
+  --------------------------------------------------------------
+                 |  syscall(4096, op, args)   (only crossing point)
+                 v
+  === inside QEMU: THIS PATCH, ~240 lines ======================
+      dlcall plugin:  dlopen / dlsym / invoke a host fn
+  ==============================================================
+                 |
+                 v
+  --- userspace (out of tree) ----------------------------------
+      host: host runtime + thunk libs  ->  real libz / libGL ...
+  --------------------------------------------------------------
+
+The split is deliberate, and it is why only this one file is proposed for the
+tree:
+
+  * This plugin defines the most general interaction interface for native
+    pass-through: the magic-syscall ABI between an emulated guest and its
+    emulator. That contract is what every pass-through implementation builds
+    on, so it belongs in a stable, shared place.
+  * It is also the only piece that is inherently QEMU-specific: it plugs into
+    QEMU's syscall-filter hook and runs inside the QEMU process. The argument
+    marshalling, calling conventions, callbacks/reentry and per-library
+    coverage are not tied to any particular DBT and behave as ordinary
+    userspace, so they should stay out of tree rather than couple QEMU to them.
+
+Background: we presented this approach at KVM Forum 2025, "Lorelei: Enable QEMU
+to Leverage Native Shared Libraries":
+
+  https://www.youtube.com/watch?v=_jioQFm7wyU
+
+The userspace side
+==================
+
+A fair point on v3 was that, on its own, the plugin is only half of an
+interface: useful only if the other half (the guest/host runtimes and the
+per-library thunks) is public and specified, rather than a private demo. That
+half is now available as a standalone, documented, CI-tested project, Lorelei:
+
+  https://github.com/rover2024/lorelei
+
+Lorelei provides the guest and host runtimes and a Thunk Library Compiler
+(TLC, built on Clang LibTooling) that reads a library's headers and generates
+the guest and host thunks automatically, including the awkward cases of
+function-pointer callbacks and variadic functions. It has CI for x86_64, arm64
+and riscv64 hosts. Lorelei and its thunk libraries are MIT-licensed.
+
+Because the plugin is not upstream yet, Lorelei currently builds and tests
+against the QEMU fork that carries it.
+
+The plugin stays deliberately minimal and prescribes nothing about how
+thunking is done. Lorelei is one reference implementation of the userspace
+side. Any toolchain, or another instrumentation framework, can implement the
+same dlcall interface.
+
+A from-scratch walkthrough of the bare mechanism, with the minizip and
+OpenGL/X11 examples above, is also available here:
+
+  https://github.com/rover2024/qemu-passthrough-test
+
+It is fully opt-in (loaded with -plugin) and targets linux-user, where the
+guest and host already share a trust domain. The test cases use x86_64 guests
+and run on x86_64, arm64 and riscv64 Linux hosts.
+
+I have deliberately kept Lorelei out of the patch itself: neither the code
+nor its comments mention it, since I am not sure whether referencing an
+external project from the tree is welcome. I would appreciate guidance on
+where a pointer to the toolchain belongs, if anywhere. For example, would it
+be appropriate to mention it from the documentation patch?
+
+Feedback on the plugin and on the pass-through approach is welcome.
+
+Changes since v3:
+
+  * Lorelei, the userspace toolchain that implements this interface, is now a
+    public, documented, CI-tested project, with a Thunk Library Compiler that
+    generates the guest/host thunks automatically. This addresses the v3
+    feedback that the interface needs a public implementation behind it. The
+    plugin code itself is unchanged.
+  * The documentation patch is held back for now.
+
+Changes since v2:
+
+  * Dropped the RFC tag. The approach was positively received on v2.
+  * Rebased on master and adjusted the syscall-filter callback to its updated
+    signature (int64_t sysret, added userdata, dropped the plugin id
+    argument).
+
+Changes since v1:
+
+  * Renamed the plugin from "passthrough" to "dlcall" (Pierrick Bouvier).
+    The old name was too generic. The name "dlcall" reflects what the plugin actually
+    does (dlopen/dlsym a host symbol and call it) and avoids confusion with
+    QEMU's existing plugin hostcall concept (QEMU_PLUGIN_*_HOSTCALL).
+  * Made the magic syscall number configurable at load time via the
+    "syscall_num=N" argument, defaulting to 4096 and rejecting values low
+    enough to clash with a real syscall (Pierrick Bouvier).
+
+v1: https://lore.kernel.org/qemu-devel/20260617130742.769234-1-functioner@sjtu.edu.cn/
+v2: https://lore.kernel.org/qemu-devel/20260619045404.820960-1-functioner@sjtu.edu.cn/
+v3: https://lore.kernel.org/qemu-devel/20260622163438.130746-1-functioner@sjtu.edu.cn/
+
+Thanks,
+Ziyang Zhang
+
+Ziyang Zhang (1):
+  contrib/plugins: add a minimal dlcall plugin
+
  contrib/plugins/dlcall.c    | 238 ++++++++++++++++++++++++++++++++++++
  contrib/plugins/meson.build |   5 +
  2 files changed, 243 insertions(+)
  create mode 100644 contrib/plugins/dlcall.c
 
-diff --git a/contrib/plugins/dlcall.c b/contrib/plugins/dlcall.c
-new file mode 100644
-index 0000000000..3a8f47cdf8
---- /dev/null
-+++ b/contrib/plugins/dlcall.c
-@@ -0,0 +1,238 @@
-+/*
-+ * Copyright (C) 2026, Ziyang Zhang <functioner@sjtu.edu.cn>
-+ *
-+ * dlcall plugin: lets a linux-user guest invoke host functions by issuing a
-+ * magic system call. The guest can ask QEMU to dlopen() a host shared
-+ * library, dlsym() a symbol, and call it with guest-supplied arguments.
-+ *
-+ * WARNING: trusted guests only. The guest can load arbitrary host libraries
-+ * and execute arbitrary host code with arbitrary arguments, i.e. full code
-+ * execution in the QEMU host process. It is NOT a sandbox and provides no
-+ * isolation; only load it for guests you fully trust.
-+ *
-+ * WARNING: requires guest_base == 0, which is qemu-user's default. Pointer
-+ * operands are dereferenced as host addresses directly, and the invoked host
-+ * functions dereference guest pointers with no address translation, so guest
-+ * and host must share a single address space. A non-zero guest_base (e.g. set
-+ * via -B/-R) would make every pointer off by guest_base and hit unrelated
-+ * host memory.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <assert.h>
-+#include <errno.h>
-+#include <string.h>
-+#include <stdio.h>
-+#include <glib.h>
-+#include <dlfcn.h>
-+
-+#include <qemu-plugin.h>
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-+
-+/*
-+ * The magic system call number for dlcall.
-+ *
-+ * It defaults to DLCALL_SYSCALL_DEFAULT and can be overridden at load time
-+ * with the "syscall_num=N" argument. To avoid hijacking a real syscall the
-+ * guest might issue, N must be at least DLCALL_SYSCALL_MIN: every Linux ABI
-+ * keeps its syscall numbers well below this; numbers from here up are free.
-+ */
-+enum {
-+    DLCALL_SYSCALL_DEFAULT = 4096,
-+    DLCALL_SYSCALL_MIN = 4096,
-+};
-+
-+static int64_t dlcall_syscall_num = DLCALL_SYSCALL_DEFAULT;
-+
-+/*
-+ * dlcall calling convention.
-+ *
-+ * The guest issues the magic system call (dlcall_syscall_num). The first
-+ * argument (a1) is one of the call IDs below; the remaining arguments (a2, a3,
-+ * a4, ...) are that ID's operands. All pointer operands are guest virtual
-+ * addresses that the plugin dereferences as host addresses directly (see the
-+ * guest_base requirement above). Results are written back through
-+ * caller-provided "out" pointers rather than returned in the syscall value.
-+ *
-+ * The syscall return value (*sysret) only reports dispatch status: 0 on a
-+ * recognised ID, -EINVAL for an unknown one. The actual success/failure of an
-+ * operation (e.g. a NULL handle from dlopen) is delivered through its out
-+ * pointer, exactly like the underlying libdl call.
-+ *
-+ * Operands per ID:
-+ *
-+ *   DLCALL_ID_GET_HOST_ATTRIBUTE
-+ *     a2  const char *key        in:  attribute name to query
-+ *     a3  const char **attr_ptr  out: matching value, or NULL if unknown
-+ *
-+ *   DLCALL_ID_LOAD_LIBRARY                            (wraps dlopen)
-+ *     a2  const char *path       in:  library path
-+ *     a3  int flags              in:  dlopen() flags (e.g. RTLD_NOW)
-+ *     a4  void **handle_ptr      out: library handle, or NULL on failure
-+ *
-+ *   DLCALL_ID_GET_PROC_ADDRESS                        (wraps dlsym)
-+ *     a2  void *handle           in:  library handle
-+ *     a3  const char *name       in:  symbol name
-+ *     a4  void **entry_ptr       out: symbol address, or NULL if not found
-+ *
-+ *   DLCALL_ID_FREE_LIBRARY                            (wraps dlclose)
-+ *     a2  void *handle           in:  library handle
-+ *     a3  int *ret_ptr           out: dlclose() return value (0 on success)
-+ *
-+ *   DLCALL_ID_GET_LIBRARY_ERROR                       (wraps dlerror)
-+ *     a2  const char **error_ptr out: last libdl error string, or NULL
-+ *
-+ *   DLCALL_ID_INVOKE_PROC                             (calls the symbol)
-+ *     a2  void *proc             in:  function pointer, signature
-+ *                                     void (*)(void *arg1, void *arg2)
-+ *     a3  void *arg1             in:  first argument forwarded to proc
-+ *     a4  void *arg2             in:  second argument forwarded to proc
-+ */
-+enum DlcallID {
-+    DLCALL_ID_GET_HOST_ATTRIBUTE,
-+    DLCALL_ID_LOAD_LIBRARY,
-+    DLCALL_ID_GET_PROC_ADDRESS,
-+    DLCALL_ID_FREE_LIBRARY,
-+    DLCALL_ID_GET_LIBRARY_ERROR,
-+    DLCALL_ID_INVOKE_PROC,
-+};
-+
-+static inline const char *query_host_attribute(const char *key)
-+{
-+    if (strcmp(key, "emu") == 0) {
-+        return "qemu";
-+    }
-+    return NULL;
-+}
-+
-+static inline void invoke_proc(void *proc, void *arg1, void *arg2)
-+{
-+    typedef void (*Func)(void * /*arg1*/, void * /*arg2*/);
-+    Func func = (Func) proc;
-+    func(arg1, arg2);
-+}
-+
-+static bool vcpu_syscall_filter(unsigned int vcpu_index,
-+                                int64_t num, uint64_t a1, uint64_t a2,
-+                                uint64_t a3, uint64_t a4, uint64_t a5,
-+                                uint64_t a6, uint64_t a7, uint64_t a8,
-+                                int64_t *sysret, void *userdata)
-+{
-+    if (num == dlcall_syscall_num) {
-+        switch (a1) {
-+        /* Query host attribute by a reserved key. */
-+        case DLCALL_ID_GET_HOST_ATTRIBUTE: {
-+            const char *key = (const char *) a2;
-+            const char **attr_ptr = (const char **) a3;
-+            assert(attr_ptr);
-+            *attr_ptr = query_host_attribute(key);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Load a shared library. */
-+        case DLCALL_ID_LOAD_LIBRARY: {
-+            const char *path = (const char *) a2;
-+            int flags = (int) a3;
-+            void **handle_ptr = (void **) a4;
-+            assert(handle_ptr);
-+            *handle_ptr = dlopen(path, flags);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Get the address of a function in a shared library. */
-+        case DLCALL_ID_GET_PROC_ADDRESS: {
-+            void *handle = (void *) a2;
-+            const char *name = (const char *) a3;
-+            void **entry_ptr = (void **) a4;
-+            assert(entry_ptr);
-+            *entry_ptr = dlsym(handle, name);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Free a shared library. */
-+        case DLCALL_ID_FREE_LIBRARY: {
-+            void *handle = (void *) a2;
-+            int *ret_ptr = (int *) a3;
-+            *ret_ptr = dlclose(handle);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Get the last error message for a library event. */
-+        case DLCALL_ID_GET_LIBRARY_ERROR: {
-+            const char **error_ptr = (const char **) a2;
-+            *error_ptr = dlerror();
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Invoke a function of a common interface. */
-+        case DLCALL_ID_INVOKE_PROC: {
-+            void *proc = (void *) a2;
-+            void *arg1 = (void *) a3;
-+            void *arg2 = (void *) a4;
-+            assert(proc);
-+            invoke_proc(proc, arg1, arg2);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        default:
-+            *sysret = -EINVAL;
-+            break;
-+        }
-+        return true;
-+    }
-+    return false;
-+}
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-+                                           const qemu_info_t *info,
-+                                           int argc, char **argv)
-+{
-+    if (info->system_emulation) {
-+        fprintf(stderr, "plugin dlcall: only useful for user emulation\n");
-+        return -1;
-+    }
-+
-+    for (int i = 0; i < argc; i++) {
-+        char *opt = argv[i];
-+        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-+        if (g_strcmp0(tokens[0], "syscall_num") == 0) {
-+            const char *val = tokens[1];
-+            char *endptr = NULL;
-+            guint64 num;
-+            if (!val || *val == '\0') {
-+                fprintf(stderr,
-+                        "plugin dlcall: missing value for syscall_num\n");
-+                return -1;
-+            }
-+            num = g_ascii_strtoull(val, &endptr, 0);
-+            if (*endptr != '\0' || g_strrstr(val, "-") != NULL) {
-+                fprintf(stderr,
-+                        "plugin dlcall: invalid syscall_num '%s'\n", val);
-+                return -1;
-+            }
-+            if (num < DLCALL_SYSCALL_MIN || num > G_MAXINT64) {
-+                fprintf(stderr,
-+                        "plugin dlcall: syscall_num %s is out of range; "
-+                        "it must be >= %d to avoid clashing with a real "
-+                        "syscall\n", val, DLCALL_SYSCALL_MIN);
-+                return -1;
-+            }
-+            dlcall_syscall_num = (int64_t) num;
-+        } else {
-+            fprintf(stderr, "plugin dlcall: unknown option '%s'\n", opt);
-+            return -1;
-+        }
-+    }
-+
-+    qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter, NULL);
-+
-+    return 0;
-+}
-diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-index 099319e7a1..e7fc4d6d8f 100644
---- a/contrib/plugins/meson.build
-+++ b/contrib/plugins/meson.build
-@@ -19,6 +19,11 @@ if host_os != 'windows'
-   contrib_plugins += 'lockstep.c'
- endif
- 
-+if host_os == 'linux'
-+  # dlcall passes guest calls through to host libraries; linux-user only
-+  contrib_plugins += 'dlcall.c'
-+endif
-+
- if 'cpp' in all_languages
-   contrib_plugins += 'cpp.cpp'
- endif
 -- 
 2.34.1
 
