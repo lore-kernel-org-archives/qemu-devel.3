@@ -4,140 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97784C43327
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:15:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A29C8C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:15:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAsN-0002ld-Gx; Mon, 29 Jun 2026 08:14:11 -0400
+	id 1weAtX-0004uT-Iq; Mon, 29 Jun 2026 08:15:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1weAs8-00024F-Nj
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:13:58 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1weAtW-0004sJ-A1
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:15:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1weAs6-0005Mo-8A
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:13:56 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65TASxQH2641491
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 12:13:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=MbGjSXSe/SE
- JVeLI2ltqryQwXs/ej1Lojop1PHAWL2I=; b=KDcxxJuWjELmdLl3Jn6CZ7/CmtW
- 1aJjoD1kxP1YKz3T78zrvhmxpg067mz9Cx/R54PZ1XmD46OgJRviiSmhpDAw/nYh
- XdUHzVVJ9be79PsPN3Wc4nSr05lr1qw3SNyp3ltv1ZRE/qNgYyZ63oOOQnIm3M72
- gtkbaFRk7CCK1aJhH4mEVyqV4d0KMYLoi1NBzKkUXG+XG+Lr+mPZlB1jwRlnapbl
- 3c1VpLhfgdNmMvZG937NctPNluhrgdExyI8izawhELfS7A9GpBdJwSqMr6j2A0bY
- ZshJRuy/m66QniCldBeeoKP4sdTHnMDNQogOdrn0UuMotwHNWKt3IAU5BvA==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3nperqd0-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 12:13:48 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-38010ab3c0bso773834a91.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:13:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1weAtT-0006JM-T3
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:15:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782735318;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NpQPJOYlbKsGqmZzUDVtJ1mJHqH+cuJnb9/K+tTKSsM=;
+ b=ftUz132ihq1x5YihMkpnuCX2gQbsysPtTBMdMMPvDLgPpCrW+suBmgxHdL/EexknYWq96Q
+ LFnKs/OS1MuhAGYFRrPQvVoAumLrITWkHuGoJ49vOPdumvFaCDT1oqBLmuqOTjEolzKxWz
+ VouPjeosH3BFptr8PRFCs6SD3aI6Uec=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-411-TFSghh2jPpqJ5D59oKCUfA-1; Mon, 29 Jun 2026 08:15:16 -0400
+X-MC-Unique: TFSghh2jPpqJ5D59oKCUfA-1
+X-Mimecast-MFC-AGG-ID: TFSghh2jPpqJ5D59oKCUfA_1782735315
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-47407691804so343277f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:15:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782735228; x=1783340028; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MbGjSXSe/SEJVeLI2ltqryQwXs/ej1Lojop1PHAWL2I=;
- b=DqiSBzoGSMWaDx7wY1fT25BVRU0mIJcOC3zsExpmmzJFwxgseRp2z5IB3sGFoSVwyn
- yWFdAYtmA7yYoQsTkszv+/TGrzzXWwMNuV3tJSPI5f+CGq0i8weSKlf7CjWPXtTemsuV
- qwDoCquIMMu+U5UvrVV89wsesuInbeiqdDaBFNt1oMjTKr5ZTbMhn3OriM0N99KF9uCw
- cJCFzfCPyJCsfQjOBhBtJQwCxpCbJiSc0FcUfnR4jvXqnxuFBa5DbwiM8IHjeHIcV0Qh
- Qne59Zx3nDxnxcLkvUoaDnF2FP2IxU517UgQ8772vqzUFXlxXtuaS9WVlZvkHl5NVQiq
- 2wFA==
+ d=redhat.com; s=google; t=1782735315; x=1783340115; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NpQPJOYlbKsGqmZzUDVtJ1mJHqH+cuJnb9/K+tTKSsM=;
+ b=VYyRI/hidFDWMO5nQgg3dHC1X8Sw7nODFnqxRke2kMCjhFum5mUmsHaCYmA6B7h5/p
+ OEWrEbiJp27z41gWtJjEq9m9qiw9aa2u0xqq7BIVdp9SsE9Vznc6li3tOTc+qwea+B1R
+ 4jJRgm/dLOfbarhg9Roa2CT2fmlds7q2pRty/4njT7Yat2LgX24QLA+dg20VG59xdwmI
+ sSY1fhv2C3lj2fMTbdQbUDiLW9bDuEHms0styVC3aw6hDSmO0r2BL2mVRsjversQsdTw
+ haAHX2nBC4iUVgpSuSq0uEMFibXziI+czi7Q9qGDcX5TvtI+4ItSRwEafKNImJLA1Pdk
+ Kgsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782735228; x=1783340028;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=MbGjSXSe/SEJVeLI2ltqryQwXs/ej1Lojop1PHAWL2I=;
- b=X7J1NUBPRoHTZRJPxPxleqeplMQdjAFlygsVbTJyQtIIEAGeYym69HRJnSNOtyE+3P
- QlB0A6J/Eu1TN7Eq6b02Si3x6ozsW3JwRcXMAdd15kUyCNFEjKtfSf0raSDLlZNG2Sf4
- rTXAY9zGd8IFQBkSgrdj/UxJiEY5J0rILO51eVXYbmsmdM/ZJjHspC82MrNsSVd0948p
- 9j/tj4hDhC2GDxCwqYYXzpF7B3aKwi5pKZLY8xZ5X4KLfbgWKkvjMWsPGU1KjHz9hy92
- eMafbXohnSawOtlBBYIQNXV53RyzsEVK9HebY/AZ4xlmQijKs3QhB2lm2Q9AJntQjvNy
- JQgQ==
-X-Gm-Message-State: AOJu0Yzy+e+r9i5XTu27DwmhdNPKJkdEk4JLH7+uIvus5nk5lGYnBe0+
- 97AyHzkVaoa5gfulTzg7ezdNxTfcxM7dQ/V5cfK9rOmGnQgJ2S27G2buR3zu20Saal7vFZ0BFtl
- nnqZm1bzBMbdux64qpQJhi7i7bsdNUDRi7xDQcMQI74GGiaPPW6H38WSVkA1S8Q7M6g==
-X-Gm-Gg: AfdE7ck8ar5LMOAC3hzFzI08j66ULWyv6JVLpQx6vy1splJLXmt14uQ/yVBXE/qNN+M
- QcFVDxAiu5Q+mpMbsngUdKjsPT0BuG8F89CIW3i23sMaNkDP/vDe4raiaAA4P+ocEinD7Q+hkRI
- ybYQ3q88jCA/SJ9p7KqGurmII90wcfx97nWnRx+Etzm/UjUNmhdKdwADwzzxy0EYc9u927lBCnM
- kV5LzodFmy4dix/Lwb/Tr13+F6vq/uEtYS6VBGR+lJT3B7PzgMjJOrcoJQqHmkWlTR7izM8ZMxv
- rW+cq1VL5GHWWwbwkceS2ZJ4idtJ8y87NI6FbCB5+ins6IuAFv7sX5TZEKTwV1HgoyZnhEyIP5A
- xuJR121B2hqHvlgmQb6tcB3T0ZHAnZBogLLgdYPXu3zJFDQ==
-X-Received: by 2002:a17:90b:5826:b0:36b:b4a1:2939 with SMTP id
- 98e67ed59e1d1-37dfa251534mr14654144a91.15.1782735227936; 
- Mon, 29 Jun 2026 05:13:47 -0700 (PDT)
-X-Received: by 2002:a17:90b:5826:b0:36b:b4a1:2939 with SMTP id
- 98e67ed59e1d1-37dfa251534mr14654110a91.15.1782735227518; 
- Mon, 29 Jun 2026 05:13:47 -0700 (PDT)
-Received: from QCOM-UWl2o8bcGT.qualcomm.com ([189.79.21.40])
+ d=1e100.net; s=20251104; t=1782735315; x=1783340115;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NpQPJOYlbKsGqmZzUDVtJ1mJHqH+cuJnb9/K+tTKSsM=;
+ b=GcXUbH5FK07Xz+WZ2y8AYtomr8ZQRQnOt0QwhCIC7nelu27Rk+4qRPBE8AMHW5PXQC
+ alyQWmrlA9dVNrngsqq/mZaL0MaYNSxpshdVZqrAWwPoniYcE/QAoYCXNAWd0iF4sg13
+ ljfsRIX/7UCHGQi0XXWKfmue0QJcKc+NVDcbej1IbCufUZHoUSKSlDwuaHMMvqZoM86Y
+ XjpOJTbJqVhlUx0JFZ78Txi1tQNPqBR+EapnWw/yiL3dB0A4nlRV0pe0+V1V8l5dF+iq
+ fmAH8gnffEZkcAz40PZyqPD2ykuykzUVQWDPlaV3K2QHoU1XxPTBYB5a5m3PEN3zJn2S
+ cG5A==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqHeXM2mfvfwo2GFKGR12zo+nGL3GpDkAj2mQPb6lJIBPsvwA7Bb3TpkBOFv/iYqyEwwUFtA5DZfRcM@nongnu.org
+X-Gm-Message-State: AOJu0Ywr1MwG17PiggUHWYHYa/d4MRnVTb0QI0QVR5hG7lL6eIQsMALZ
+ uoGh4WmkZgZmIDQmQDb75u4pvPOC81upsKK0SLGkHWIUB6JTp8pnbVo/9hWacLLNgLO4SBD1X8Y
+ ERJ35ZoJ2Y2ikXXaLVybhqioDame3KX5l9hy2FxWb3E1sEsu7UGr2smTF
+X-Gm-Gg: AfdE7ck/H96+QIgB0BiJTUe/VB74AL6CcNmLjOOIsl9PydqRw0hqbIIycEOCn1Q251y
+ mJ6qvChl36zEiEhUeZiRzBIMDRc8NzAwu/YIwFrau7oEAS62pWCeJDt1xIy+iqQqouw7Xzv3Lce
+ OGxhjswODzmGBNf4plQ0GVep5Cy/AmmWtmkwJcASaQ0iCZxiZIvkXZSReFjtNE5VguIqTMVITr3
+ NAYmVY5TTiZ5hiFF5EIfJVSUCF/jZun1h5PUE7A1QKpF838/64PaSijxm+Id60fS8KPo5gcVERE
+ ZySHiYOLmHUP1hlTIbBQWgJAAIa3m3ilUjrDoLJeteWervh92UbN5RoGdG49nTeXzG/KLJ4B+3g
+ ez6dPqNd/0P4H5rI7jLtfpCIzuO9NvKBCAp7/BrcdP+EmU1tAGub04A==
+X-Received: by 2002:a05:6000:29db:b0:45d:3aa3:7f76 with SMTP id
+ ffacd0b85a97d-46dc14cbf6emr19408254f8f.33.1782735315438; 
+ Mon, 29 Jun 2026 05:15:15 -0700 (PDT)
+X-Received: by 2002:a05:6000:29db:b0:45d:3aa3:7f76 with SMTP id
+ ffacd0b85a97d-46dc14cbf6emr19408204f8f.33.1782735314996; 
+ Mon, 29 Jun 2026 05:15:14 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-37e1c93272fsm5800179a91.14.2026.06.29.05.13.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 05:13:47 -0700 (PDT)
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- andrew.jones@oss.qualcomm.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Tao Tang <tangtao1634@phytium.com.cn>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 2/2] hw/riscv/riscv-iommu.c: fault when !PTE_U and no priv
- access
-Date: Mon, 29 Jun 2026 09:13:34 -0300
-Message-ID: <20260629121334.567587-3-daniel.barboza@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260629121334.567587-1-daniel.barboza@oss.qualcomm.com>
-References: <20260629121334.567587-1-daniel.barboza@oss.qualcomm.com>
+ ffacd0b85a97d-46f9db29a94sm28598349f8f.22.2026.06.29.05.15.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jun 2026 05:15:14 -0700 (PDT)
+Message-ID: <50466e87-36f6-4462-ac01-dbdcb2745891@redhat.com>
+Date: Mon, 29 Jun 2026 14:15:13 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDEwMCBTYWx0ZWRfX10Tq0cE2pkmd
- yx84/mvPi4LafSUQMrr1GHc/SLoODeIQv3FcdwGevoguQKBBv/KltboHEt3znBiULPoVfF18waI
- 5Xeq2HBXuvtTMmsx19AUlFKs0IO9S0wcXM4+io+oM8KUuZLYt41DA8N0cxbBNh7jRy1/hVJtbRj
- b53mTpI+a5Go7WKN2cweHVntRr61LlJZH3i49N0OO+R0gK3561nNEScL2s6GVXqgtlMOxidBEbR
- ypPAMM7W6aCFmwIrS8sQOtalZJCWplVI0VVCB9cOf2Q74xIew2ATiPjlq3gko3rxsapQ/h47FL+
- o7YekKnGGhDAkuZHhl+KW+Vxwf0RPaG/Z6Z7UlVUq9XtnTylm6d6aJDTrpseKE+exZrR2KrBj29
- EdXJabIpGN5UTdRK57x27dC5gpcOCSpjxh75HffhJfMzfJmjxaCf1qvsOvLDZTvoYPHr7ZN1tr4
- TQ+ymctt7ULfxb+cSpg==
-X-Proofpoint-ORIG-GUID: Vurem6YrSIiZ4LPd2k7so-FVN7UIxWaL
-X-Authority-Analysis: v=2.4 cv=T6q8ifKQ c=1 sm=1 tr=0 ts=6a42617c cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=p0WdMEafAAAA:8
- a=EUspDBNiAAAA:8 a=mpH3L83ql8VJAxoKzUcA:9 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDEwMCBTYWx0ZWRfX9hNWCo2U2hAP
- C7em9JrfRu8BTHDunDtcflDjUwz2ZKA/F4QMGujREJseSccw+wiZx+XHl7kL3rzoSGhjDU77vzg
- s5KoDr7Y7nx2raDyk2FSpOor8TbwPpg=
-X-Proofpoint-GUID: Vurem6YrSIiZ4LPd2k7so-FVN7UIxWaL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 malwarescore=0 impostorscore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290100
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 07/17] arm: virt: add support for WDAT based watchdog
+Content-Language: en-US
+To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
+ rad@semihalf.com, leif.lindholm@oss.qualcomm.com, qemu-arm@nongnu.org
+References: <20260624102830.1355552-1-imammedo@redhat.com>
+ <20260624102830.1355552-8-imammedo@redhat.com>
+From: Eric Auger <eauger@redhat.com>
+In-Reply-To: <20260624102830.1355552-8-imammedo@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eauger@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,64 +124,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All IOMMU accesses are assumed to be user mode unless told otherwise,
-i.e. we have a process_id.  In case we have a non-user mode leaf PTE
-(PTE_U isn't set) and we are running in user mode, we need to throw a
-fault.
 
-This also reflects on qos-riscv-iommu tests: the tests always run in
-user mode so our PTEs must have PTE_U (bit 0x10) set.
 
-Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3553
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- hw/riscv/riscv-iommu.c               | 8 ++++++++
- tests/qtest/libqos/qos-riscv-iommu.h | 4 ++--
- 2 files changed, 10 insertions(+), 2 deletions(-)
+On 6/24/26 12:28 PM, Igor Mammedov wrote:
+> Add WDAT handling for sbsa-gwdt on arm/virt machine.
+> 
+> WDAT mode is enabled by 'wdat' option: ex: "-device sbsa-gwdt,wdat=on"
+> 
+> When WDAT is enabled:
+>  - Build the WDAT ACPI table instead of the GTDT watchdog entry,
+>    since they are mutually exclusive due to different timer
+>    resolution (WDAT uses 1 kHz vs GTDT's system counter frequency).
+>  - Skip FDT watchdog node creation, as the DT-based Linux driver
+>    would use the system counter frequency which doesn't match the
+>    WDAT-mode 1 kHz clock.
+> 
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> ---
+> v3:
+>    - Skip FDT watchdog node creation in wdat mode
+>    (Eric)
+>      - wiring part of larger '[PATCH v2 11/21] arm: virt: add support for WDAT based watchdog'
+> ---
+>  hw/arm/virt-acpi-build.c | 34 ++++++++++++++++++++++++++--------
+>  hw/arm/virt.c            | 10 ++++++----
+>  2 files changed, 32 insertions(+), 12 deletions(-)
+> 
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index f5b3b4ce48..71706b98e6 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -65,6 +65,7 @@
+>  #include "target/arm/cpu.h"
+>  #include "target/arm/multiprocessing.h"
+>  #include "hw/watchdog/sbsa_gwdt.h"
+> +#include "hw/acpi/wdat-gwdt.h"
+>  
+>  #include "smmuv3-accel.h"
+>  #include "tegra241-cmdqv.h"
+> @@ -859,7 +860,8 @@ build_srat(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>   * 5.2.25 Generic Timer Description Table (GTDT)
+>   */
+>  static void
+> -build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+> +build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms,
+> +           Object *wdt, bool add_watchdog)
+wdt is not used anymore
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 453601d7a5..e6d2ca94bc 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -297,6 +297,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-         G_STAGE = 1,
-     } pass;
-     MemTxResult ret;
-+    bool pv = !!ctx->process_id;
- 
-     satp = get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
-     gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
-@@ -470,6 +471,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-             break;                /* Invalid PTE */
-         } else if (pte & PTE_RESERVED(false)) {
-             break;                /* Reserved PTE bits set */
-+        } else if (!(pte & PTE_U) && !pv) {
-+            /*
-+             * All accesses are assumed to be User mode unless
-+             * process_id is valid (pv).  In case we have a
-+             * non-user mode PTE and !pv we need to fault.
-+             */
-+            break;
-         } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
-             base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
-         } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
-diff --git a/tests/qtest/libqos/qos-riscv-iommu.h b/tests/qtest/libqos/qos-riscv-iommu.h
-index 90e69a5d73..c218e9d66d 100644
---- a/tests/qtest/libqos/qos-riscv-iommu.h
-+++ b/tests/qtest/libqos/qos-riscv-iommu.h
-@@ -54,8 +54,8 @@
-  * PTE masks for RISC-V IOMMU page tables.
-  * Values match PTE_V, PTE_R, PTE_W, PTE_A, PTE_D in target/riscv/cpu_bits.h
-  */
--#define QRIOMMU_NON_LEAF_PTE_MASK   0x001  /* PTE_V */
--#define QRIOMMU_LEAF_PTE_RW_MASK    0x0c7  /* V|R|W|A|D */
-+#define QRIOMMU_NON_LEAF_PTE_MASK   0x011  /* PTE_V | PTE_U */
-+#define QRIOMMU_LEAF_PTE_RW_MASK    0x0d7  /* V | R | W | A | D | PTE_U */
- #define QRIOMMU_PTE_PPN_MASK        0x003ffffffffffc00ull
- 
- /* Address-space base offset for test tables */
--- 
-2.43.0
+With that fixed
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+Thanks
+
+Eric
+
+
+>  {
+>      /*
+>       * Table 5-117 Flag Definitions
+> @@ -870,7 +872,6 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>      AcpiTable table = { .sig = "GTDT", .rev = 3, .oem_id = vms->oem_id,
+>                          .oem_table_id = vms->oem_table_id };
+>      uint32_t gtdt_start = table_data->len;
+> -    Object *wdt = object_resolve_type_unambiguous(TYPE_WDT_SBSA, NULL);
+>  
+>      acpi_table_begin(&table, table_data);
+>  
+> @@ -903,12 +904,12 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>      build_append_int_noprefix(table_data, 0xFFFFFFFFFFFFFFFF, 8);
+>  
+>      /* Platform Timer Count */
+> -    build_append_int_noprefix(table_data,  wdt ? 1 : 0, 4);
+> +    build_append_int_noprefix(table_data,  add_watchdog ? 1 : 0, 4);
+>      /* Platform Timer Offset */
+>      build_append_int_noprefix(table_data,
+> -        wdt ? (table_data->len - gtdt_start) +
+> -              4 + 4 + 4 /* len of this & following 2 fields to skip */
+> -            : 0, 4);
+> +        add_watchdog ? (table_data->len - gtdt_start) +
+> +                       4 + 4 + 4 /* len of this & following 2 fields to skip */
+> +                     : 0, 4);
+>  
+>      if (vms->ns_el2_virt_timer_irq) {
+>          /* Virtual EL2 Timer GSIV */
+> @@ -921,7 +922,7 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>      }
+>  
+>      /* ACPI 6.5 spec: 5.2.25.2 ARM Generic Watchdog Structure (Table 5-124) */
+> -    if (wdt) {
+> +    if (add_watchdog) {
+>          hwaddr rbase = vms->memmap[VIRT_GWDT_REFRESH].base;
+>          hwaddr cbase = vms->memmap[VIRT_GWDT_CONTROL].base;
+>          int irq = ARM_SPI_BASE + vms->irqmap[VIRT_GWDT_WS0];
+> @@ -1332,13 +1333,19 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+>      VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+>      GArray *table_offsets;
+>      unsigned dsdt, xsdt;
+> +    bool has_wdat = false;
+>      GArray *tables_blob = tables->table_data;
+>      MachineState *ms = MACHINE(vms);
+>      CPUCoreCaches caches[CPU_MAX_CACHES];
+>      unsigned int num_caches;
+> +    Object *wdt = object_resolve_type_unambiguous(TYPE_WDT_SBSA, NULL);
+>  
+>      num_caches = virt_get_caches(vms, caches);
+>  
+> +    if (wdt) {
+> +        has_wdat = object_property_get_bool(wdt, "wdat", &error_abort);
+> +    }
+> +
+>      table_offsets = g_array_new(false, true /* clear */,
+>                                          sizeof(uint32_t));
+>  
+> @@ -1357,6 +1364,17 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+>      acpi_add_table(table_offsets, tables_blob);
+>      build_madt(tables_blob, tables->linker, vms);
+>  
+> +    acpi_add_table(table_offsets, tables_blob);
+> +    if (wdt && has_wdat) {
+> +        uint64_t freq = object_property_get_uint(wdt, "clock-frequency",
+> +                                                 &error_abort);
+> +        build_gwdt_wdat(tables_blob, tables->linker,
+> +                        vms->oem_id, vms->oem_table_id,
+> +                        vms->memmap[VIRT_GWDT_REFRESH].base,
+> +                        vms->memmap[VIRT_GWDT_CONTROL].base,
+> +                        freq);
+> +    }
+> +
+>      if (!vmc->no_cpu_topology) {
+>          acpi_add_table(table_offsets, tables_blob);
+>          build_pptt(tables_blob, tables->linker, ms, vms->oem_id,
+> @@ -1364,7 +1382,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+>      }
+>  
+>      acpi_add_table(table_offsets, tables_blob);
+> -    build_gtdt(tables_blob, tables->linker, vms);
+> +    build_gtdt(tables_blob, tables->linker, vms, wdt, wdt && !has_wdat);
+>  
+>      acpi_add_table(table_offsets, tables_blob);
+>      {
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index aacf9b7251..35ded6d1d4 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -3825,9 +3825,11 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+>          qdev_prop_set_array(dev, "reserved-regions", reserved_regions);
+>          g_free(resv_prop_str);
+>      } else if (object_dynamic_cast(OBJECT(dev), TYPE_WDT_SBSA)) {
+> -        uint64_t cntfrq = object_property_get_int(OBJECT(qemu_get_cpu(0)),
+> -                                                  "cntfrq", &error_abort);
+> -        qdev_prop_set_uint64(dev, "clock-frequency", cntfrq);
+> +        if (!object_property_get_bool(OBJECT(dev), "wdat", &error_abort)) {
+> +            uint64_t cntfrq = object_property_get_int(OBJECT(qemu_get_cpu(0)),
+> +                                                      "cntfrq", &error_abort);
+> +            qdev_prop_set_uint64(dev, "clock-frequency", cntfrq);
+> +        }
+>      } else if (object_dynamic_cast(OBJECT(dev), TYPE_ARM_SMMUV3)) {
+>          if (vms->legacy_smmuv3_present || vms->iommu == VIRT_IOMMU_VIRTIO) {
+>              error_setg(errp, "virt machine already has %s set. "
+> @@ -3890,7 +3892,7 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+>          sysbus_mmio_map(s, 1, cbase);
+>          sysbus_connect_irq(s, 0, qdev_get_gpio_in(vms->gic, irq));
+>  
+> -        {
+> +        if (!object_property_get_bool(OBJECT(dev), "wdat", &error_abort)) {
+>              char *nodename = g_strdup_printf("/watchdog@%" PRIx64, cbase);
+>  
+>              qemu_fdt_add_subnode(ms->fdt, nodename);
 
 
