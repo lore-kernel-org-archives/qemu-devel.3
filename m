@@ -4,73 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EC96C44501
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 08:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D479C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 08:19:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we7BK-0002j5-SL; Mon, 29 Jun 2026 04:17:31 -0400
+	id 1we7DE-0003Om-As; Mon, 29 Jun 2026 04:19:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1we7BI-0002ib-Jv
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 04:17:28 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1we7BE-0006tR-5d
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 04:17:28 -0400
-Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65T8GxGW085627
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 29 Jun 2026 17:17:03 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=NPDwT4byuEbOwulOXldf0iWOqtzD9TChvi0MlXrznlY=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1782721023; v=1;
- b=MDQG4ePUCXLqvX9WIuanpQoLCvOttE5vA61wDE4sRO7nyPBJQaYmDFv10+vDYGS4
- vouBMxpAi/Dw5mCq8YUJAEyTdiKSii3wOaoHkwMxoBy7cFjSH2Y9BBRgyFSOGpzb
- 1fG6tXDrBUB8MUKbUT1leWnf3nQGhKiGojRlG+e50aJPMQC8iVaclcdN3Q4ZVQgY
- Q3YNzYH9xyDTea2uU1z1gNqXDSWcflJRpWMVsIgXCm/rEfP9pYWDxJY2D6QcWic0
- 0+bcsdu4u3FA+nEHHnG2mJNRlLms4FdDAzESi3SElzR5oLTS0ZyriuEqODob/TOr
- AK+3w/ovihGl+xvLHgQtOQ==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 29 Jun 2026 17:16:59 +0900
-Subject: [PATCH v2] qdev: Clarify instantiation and realization
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1we7DC-0003NR-J9
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 04:19:26 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1we7D9-00089t-S6
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 04:19:26 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-493b1710405so3002695e9.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 01:19:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782721161; x=1783325961; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=bk36v5XSKWkUtr0GLDs5/eLc5q6Uitibxg073bsK4FE=;
+ b=JfnXE+/IQJgNxjdMLxDXXFNt4gOA0cKZcpEXXplCWo+syQTUmv1wOkOh1gavSMBHCe
+ pLSaH6sgwIQrDtY6MLgkBw/oLNJLDvjHASO5lWCMUR36jMgRHEX0Hu+Gs918ca008ziJ
+ YGJNZyrBXNraPekbpqYuysy/eaLxwBl7Dig23mqUwo5uVmRQZh16hYayc/k5ZuGRDuM2
+ B16XKd35qK3NWIL9DXurYvhzz7PnvAIO0b5Ny4wygty9Gzr61i4AAUSUSkN73/FQZqbi
+ kK5wUah3z0o3YWnPJ70jyzlmLkOcJ0/F/UEbn+KvdLdwaeWXqqOjTPNUf/u6xNd2co2a
+ JFRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782721161; x=1783325961;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bk36v5XSKWkUtr0GLDs5/eLc5q6Uitibxg073bsK4FE=;
+ b=YwxOR7up/egTELEecUrIVvefHPAuOb6qnRX55TX3n/k7vW2zvEjk4AkLCN9L7RRYML
+ 7NbPBGLq9HRLSCuVKyniJi8PgJy3sH0rz0y42+JdyTrDeCjQ5LhIBBxYYDsPOer3H0wE
+ baWsKGm7twNnaKt4MSgzJ84JTsops0eEXlfMalH7KnCwav+hAs2z+54bi/T+pDMcsaaq
+ VdiUMB8dJazMYCeLNhkSzTsfDnZiQ50p/nq/1obGVPSj3qO1OWfKwGnww3Wch6gEg9a9
+ q4Hq+n8UHEgVTwsE3MZpGLNDsnk8Gk38nzoJqePQRgrxe1eALGbWzCE+Tu/RDyiqQYLC
+ MnYw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+rpKxILkfHB44uQD2TOlijjwRL69p4z82oqambvcpXlFIyB8PUaC/1G58O0tEWgLXiOdkCNO5dfbuM@nongnu.org
+X-Gm-Message-State: AOJu0Yx387BAVmaiO6comvY2Ja1O72pXSfRnWWkRJ0enpVNxPgqi1Juj
+ qlDlld/rsOPATo/S+5OFFgG89pcBNFCJdbPeT5a4qC8b2OJeq9bvAwIe74kHJCA4XSI=
+X-Gm-Gg: AfdE7ckhR2uflBV9KmM0wxomobc85PWtIT+bX7dJqLG0Wmgad9oipc/plh+y5KPbn1b
+ wyP1A2yg8iKvqEtf1WiZzUKBVymgg2Jk9HgPFNe8EAAm4Dnn71T11wSmvaqHq4XsBsQLqcxT//T
+ oPPh7MCgWflcCMfrbWEDEi5wn8K+YOHQi+YnBiceY35w7NjH967gsa/Vto3P0MNCD3syHr7fM3B
+ Cj0OW/RQLKIOi0ZHRk/SmVmCQ6vxjukWKbxZZwxL7qQclPvnQ90P9n9KOZpIsjxZsaIzL2cFpoa
+ BBXCEf3rYUOoIx65A4C1MVcte0XdRlaW83tlGShL+PSR9545x9w5ZSIKVIjnoB6eQM2bOVl1hsY
+ VZL/X1tnQrNDtB7JOKPZCKMWPOx+kfIDjPNi3wVlr90xAdd+zc3gxR9YAo3NDYth0ZxrlGVoZ8T
+ WjLm1ueyfhTqlo1G7c+4Ri1CxFbvFsFJLkaT3lqXTa3UzhN/T7h7P1jcBio6tdGLAj6x8FQ9IiG
+ 8ksb25JCYViiI+gl1c9hJOZ5rkwY+TbIapQ0TzwSJIQVRbqoLBqcLi1wj8Yuk4mKiORdycKE17e
+ faeYHmaQ6mxr+PNCOVvXRrQ=
+X-Received: by 2002:a05:600c:81c5:b0:490:ea8a:32d0 with SMTP id
+ 5b1f17b1804b1-4926fc78e58mr135448785e9.20.1782721161064; 
+ Mon, 29 Jun 2026 01:19:21 -0700 (PDT)
+Received: from meli-email.org (ppp-2-86-131-154.home.otenet.gr. [2.86.131.154])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493a55be64esm145786555e9.7.2026.06.29.01.19.20
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 29 Jun 2026 01:19:20 -0700 (PDT)
+Date: Mon, 29 Jun 2026 10:58:32 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>, qemu-devel@nongnu.org
+Cc: Volker R=?UTF-8?B?w7xtZWxpbg==?= <vr_qemu@t-online.de>,
+ Marc-Andr=?UTF-8?B?w6k=?= Lureau <marcandre.lureau@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ St=?UTF-8?B?w6lwaGFuZQ==?= Graber <stgraber@stgraber.org>,
+ "Daniel P . Berrang=?UTF-8?B?w6k=?=" <berrange@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: Re: [PATCH v3 5/9] hw/audio/virtio-sound: add stream state variable
+User-Agent: meli/0.8.13
+References: <20260626123531.132078-1-alexander@mihalicyn.com>
+ <20260626123531.132078-6-alexander@mihalicyn.com>
+In-Reply-To: <20260626123531.132078-6-alexander@mihalicyn.com>
+Message-ID: <thdwg7.z2gqqr4zn5aq@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260629-qdev-v2-1-8cd1d9be0d8d@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/zXMQQ6DIBCF4auYWReCNGLtqvdoXCgMOm0iCpbUG
- O5eatPl//Ly7RDQEwa4Fjt4jBTITTnkqQA9dtOAjExukEJWohGKLQYja7DSfa2FsraDfJ09Wno
- fzL3NPVJYnd8ONZbf9Q9cfkAsWcmMlWdla41Vb24+DFwTJ/5iq3tujneaP2ZoU0of2V9ogKUAA
- AA=
-X-Change-ID: 20250906-qdev-9e5cb7c06ffa
-To: qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.16-dev-925f5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4485;
- i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=zqSdAKf7PWEBl3tFs5l9Q5S0Ltvf3y+eRLKnwEcf9wk=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5aT5j8rvqqVLE/vxl1X/dCYKn7Qzic/kDVryt5+LtPoN
- c0HTHZ3lLIwiHExyIopsqQU7ebWiK79VJgQ3wIzh5UJZAgDF6cATKQ8gOF/Xkvh+6j9PHZTJVfb
- ch6/4C7uFrA3UdfjlUkNZ4TQnzOCjAxvY2wjL+Xn/C1feGqOcX2+t53QxT9X9+Q2zzGPulG8aRY
- 3AA==
-X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
- fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,104 +113,535 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The distinction of instantiation and realization was vague in the old
-documentation so this change clarifies it.
+On Fri, 26 Jun 2026 15:35, Alexander Mikhalitsyn <alexander@mihalicyn.com> wrote:
+>From: Volker Rümelin <vr_qemu@t-online.de>
+>
+>So far, only rudimentary checks have been made to ensure that
+>the guest only performs state transitions permitted in
+>virtio-v1.2-csd01 5.14.6.6.1 PCM Command Lifecycle. Add a state
+>variable per audio stream and check all state transitions.
 
-The old documentation said:
-> The former may not fail (and must not abort or exit, since it is
-> called during device introspection already), and the latter may return
-> error information to the caller and must be re-entrant.
-> Trivial field initializations should go into #TypeInfo.instance_init.
-> Operations depending on @props static properties should go into
-> @realize.
 
-The first problem with the old documentation is that it is unclear what
-"trivial field initializations" means and why triviality makes
-initialization appropriate for #TypeInfo.instance_init. Another problem
-is that the documentation is not comprehensive enough; for example, it
-mentions @props static properties, but it does not say anything about
-the other properties.
+This was on purpose: 5.14.6.6.1 is not a Device Requirement / normative 
+statement. (In my opinion it should have been).
 
-The keys to distinguish instantiation and realization are property
-setting and device introspection. The fact that property setting happens
-after #TypeInfo.instance_init and before realization implies that
-operations depending on properties should go into @realize.
+I do not oppose keeping the state though, I chose to do it in the Rust 
+implementation (vhost-device-sound) after I wrote this one as well. It 
+makes sense. But please update the commit message to say that this is 
+not about spec compliance, but simply doing a sanity check following the 
+PCM Command Lifecycle section.
 
-The fact that instantiation happens during device introspection but
-realization does not implies:
-- Instance properties should be added in #TypeInfo.instance_init.
-- Instantiation must not have any side effect not contained in the
-  instance.
-- Any operations without special requirements should go into @realize so
-  that they can be skipped during device introspection.
 
-Note these two facts to guide appropriate instantiation and realization.
+>
+>Because only permitted state transitions are possible, only one
+>copy of the audio stream parameters is required and these do not
+>need to be initialised with default values.
+>
+>The state variable will also make it easier to restore the audio
+>stream after migration.
+>
+>Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+>[AM: there were too many conflicts, I did `git checkout --ours -- <.>`
+>     and then reimplemented the patch idea
+>/AM]
+>Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+>---
+>v3:
+>	- explicitly call virtio_snd_pcm_close() from unrealize
+>	- remove a call to virtio_snd_pcm_flush() from virtio_snd_pcm_close()
+>	[ ^ this was my rebase mistake ]
+>---
+> hw/audio/virtio-snd.c         | 196 +++++++++++++++++++---------------
+> include/hw/audio/virtio-snd.h |  18 +---
+> 2 files changed, 109 insertions(+), 105 deletions(-)
+>
+>diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+>index 300ba13ffeb..68d737478f5 100644
+>--- a/hw/audio/virtio-snd.c
+>+++ b/hw/audio/virtio-snd.c
+>@@ -30,11 +30,30 @@
+> #define VIRTIO_SOUND_CHMAP_DEFAULT 0
+> #define VIRTIO_SOUND_HDA_FN_NID 0
+> 
+>+#define VSND_PCMSTREAM_STATE_F_PARAMS_SET  0x10000
+>+#define VSND_PCMSTREAM_STATE_F_PREPARED    0x20000
+>+#define VSND_PCMSTREAM_STATE_F_ACTIVE      0x40000
+>+
+>+#define VSND_PCMSTREAM_STATE_UNINITIALIZED 0
+>+#define VSND_PCMSTREAM_STATE_PARAMS_SET    (1 \
+>+                                           | VSND_PCMSTREAM_STATE_F_PARAMS_SET)
+>+#define VSND_PCMSTREAM_STATE_PREPARED      (2 \
+>+                                           | VSND_PCMSTREAM_STATE_F_PARAMS_SET \
+>+                                           | VSND_PCMSTREAM_STATE_F_PREPARED)
+>+#define VSND_PCMSTREAM_STATE_STARTED       (4 \
+>+                                           | VSND_PCMSTREAM_STATE_F_PARAMS_SET \
+>+                                           | VSND_PCMSTREAM_STATE_F_PREPARED \
+>+                                           | VSND_PCMSTREAM_STATE_F_ACTIVE)
+>+#define VSND_PCMSTREAM_STATE_STOPPED       (6 \
+>+                                           | VSND_PCMSTREAM_STATE_F_PARAMS_SET \
+>+                                           | VSND_PCMSTREAM_STATE_F_PREPARED)
+>+#define VSND_PCMSTREAM_STATE_RELEASED      (7 \
+>+                                           | VSND_PCMSTREAM_STATE_F_PARAMS_SET)
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
-Changes in v2:
-- Clarified the ordering of #TypeInfo.instance_init, pre-realize
-  property setting, and realization.
-- Clarified that #TypeInfo.instance_init is for per-instance properties,
-  not class properties.
-- Link to v1: https://lore.kernel.org/qemu-devel/20250908-qdev-v1-1-df236f7ce5bd@rsg.ci.i.u-tokyo.ac.jp
----
- include/hw/core/qdev.h | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+Are the VSND_PCMSTREAM_STATE_F_* really needed? Seems excessive.
 
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index e14762234115..55da09934271 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -22,16 +22,19 @@
-  * Realization
-  * -----------
-  *
-- * Devices are constructed in two stages:
-- *
-- * 1) object instantiation via object_initialize() and
-- * 2) device realization via the #DeviceState.realized property
-- *
-- * The former may not fail (and must not abort or exit, since it is called
-- * during device introspection already), and the latter may return error
-- * information to the caller and must be re-entrant.
-- * Trivial field initializations should go into #TypeInfo.instance_init.
-- * Operations depending on @props static properties should go into @realize.
-+ * Devices are constructed in the following order:
-+ *
-+ * 1) #TypeInfo.instance_init
-+ * 2) pre-realize property value setting
-+ * 3) device realization via the #DeviceState.realized property
-+ *
-+ * #TypeInfo.instance_init may not fail, and realization may return
-+ * error information to the caller and must be re-entrant.
-+ * #TypeInfo.instance_init should add instance properties but must not
-+ * have any side effect not contained in the instance, since it happens
-+ * during device introspection already. Any operations without special
-+ * requirements should go @realize so that they can be skipped during
-+ * device introspection.
-  * After successful realization, setting static properties will fail.
-  *
-  * As an interim step, the #DeviceState.realized property can also be
-@@ -40,9 +43,8 @@
-  * point in time will be deferred to machine creation, so that values
-  * set in @realize will not be introspectable beforehand. Therefore
-  * devices must not create children during @realize; they should
-- * initialize them via object_initialize() in their own
-- * #TypeInfo.instance_init and forward the realization events
-- * appropriately.
-+ * initialize them via #TypeInfo.instance_init and forward the
-+ * realization events appropriately.
-  *
-  * Any type may override the @realize and/or @unrealize callbacks but needs
-  * to call the parent type's implementation if keeping their functionality
+I'd do: (did not type check/compile)
 
----
-base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
-change-id: 20250906-qdev-9e5cb7c06ffa
++ enum virtio_snd_pcm_state {
++   VIRTIO_SND_PCM_STATE_UNINIT = 0,
++   VIRTIO_SND_PCM_STATE_PARAMS_SET,
++   VIRTIO_SND_PCM_STATE_PREPARED,
++   VIRTIO_SND_PCM_STATE_STARTED,
++   VIRTIO_SND_PCM_STATE_STOPPED,
++   VIRTIO_SND_PCM_STATE_RELEASED,
++ }
 
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Maybe even write a "method" "macro" for preparedness:
 
++
++ static inline bool virtio_snd_pcm_state_prepared(virtio_snd_pcm_state 
+s) {
++ return s > VIRTIO_SND_PCM_STATE_PARAMS_SET && s < 
+VIRTIO_SND_PCM_STATE_RELEASED
++ }
+
+And "active" flag bit is only in STARTED state, so just check for 
+equality.
+
+This is not a hard request, but it seems simpler to me and would prefer 
+it.
+
+>+
+> static void virtio_snd_pcm_out_cb(void *data, int available);
+> static void virtio_snd_process_cmdq(VirtIOSound *s);
+> static void virtio_snd_pcm_flush(VirtIOSoundPCMStream *stream);
+> static void virtio_snd_pcm_in_cb(void *data, int available);
+>-static void virtio_snd_unrealize(DeviceState *dev);
+> 
+> static uint32_t supported_formats = BIT(VIRTIO_SND_PCM_FMT_S8)
+>                                   | BIT(VIRTIO_SND_PCM_FMT_U8)
+>@@ -129,7 +148,7 @@ static VirtIOSoundPCMStream *virtio_snd_pcm_get_stream(VirtIOSound *s,
+>                                                        uint32_t stream_id)
+> {
+>     return stream_id >= s->snd_conf.streams ? NULL :
+>-        s->pcm.streams[stream_id];
+>+        &s->streams[stream_id];
+> }
+> 
+> /*
+>@@ -141,8 +160,8 @@ static VirtIOSoundPCMStream *virtio_snd_pcm_get_stream(VirtIOSound *s,
+> static virtio_snd_pcm_set_params *virtio_snd_pcm_get_params(VirtIOSound *s,
+>                                                             uint32_t stream_id)
+> {
+>-    return stream_id >= s->snd_conf.streams ? NULL
+>-        : &s->pcm.pcm_params[stream_id];
+>+    return stream_id >= s->snd_conf.streams ? NULL :
+>+        &s->streams[stream_id].params;
+> }
+> 
+> /*
+>@@ -245,11 +264,10 @@ static void virtio_snd_handle_pcm_info(VirtIOSound *s,
+> 
+> /*
+>  * Set the given stream params.
+>- * Called by both virtio_snd_handle_pcm_set_params and during device
+>- * initialization.
+>  * Returns the response status code. (VIRTIO_SND_S_*).
+>  *
+>  * @s: VirtIOSound device
+>+ * @stream_id: stream id
+>  * @params: The PCM params as defined in the virtio specification
+>  */
+> static
+>@@ -257,14 +275,25 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
+>                                    uint32_t stream_id,
+>                                    virtio_snd_pcm_set_params *params)
+> {
+>+    VirtIOSoundPCMStream *stream;
+>     virtio_snd_pcm_set_params *st_params;
+> 
+>-    if (stream_id >= s->snd_conf.streams || s->pcm.pcm_params == NULL) {
+>+    if (stream_id >= s->snd_conf.streams) {
+>         virtio_error(VIRTIO_DEVICE(s), "Streams have not been initialized.\n");
+>         return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
+>     }
+> 
+>-    st_params = virtio_snd_pcm_get_params(s, stream_id);
+>+    stream = virtio_snd_pcm_get_stream(s, stream_id);
+>+
+>+    switch (stream->state) {
+>+    case VSND_PCMSTREAM_STATE_UNINITIALIZED:
+>+    case VSND_PCMSTREAM_STATE_PARAMS_SET:
+>+    case VSND_PCMSTREAM_STATE_PREPARED:
+>+    case VSND_PCMSTREAM_STATE_RELEASED:
+>+        break;
+>+    default:
+>+        return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
+>+    }
+> 
+>     if (params->channels < 1 || params->channels > AUDIO_MAX_CHANNELS) {
+>         error_report("Number of channels is not supported.");
+>@@ -281,6 +310,8 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
+>         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+>     }
+> 
+>+    st_params = virtio_snd_pcm_get_params(s, stream_id);
+>+
+>     st_params->buffer_bytes = le32_to_cpu(params->buffer_bytes);
+>     st_params->period_bytes = le32_to_cpu(params->period_bytes);
+>     st_params->features = le32_to_cpu(params->features);
+>@@ -289,6 +320,13 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
+>     st_params->format = params->format;
+>     st_params->rate = params->rate;
+> 
+>+    if (stream->state & VSND_PCMSTREAM_STATE_F_PREPARED) {
+>+        /* implicit VIRTIO_SND_R_PCM_RELEASE */
+>+        virtio_snd_pcm_flush(stream);
+>+    }
+>+
+>+    stream->state = VSND_PCMSTREAM_STATE_PARAMS_SET;
+>+
+>     return cpu_to_le32(VIRTIO_SND_S_OK);
+> }
+> 
+>@@ -398,15 +436,12 @@ static void virtio_snd_get_qemu_audsettings(audsettings *as,
+>  */
+> static void virtio_snd_pcm_close(VirtIOSoundPCMStream *stream)
+> {
+>-    if (stream) {
+>-        virtio_snd_pcm_flush(stream);
+>-        if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
+>-            audio_be_close_out(stream->s->audio_be, stream->voice.out);
+>-            stream->voice.out = NULL;
+>-        } else if (stream->info.direction == VIRTIO_SND_D_INPUT) {
+>-            audio_be_close_in(stream->s->audio_be, stream->voice.in);
+>-            stream->voice.in = NULL;
+>-        }
+>+    if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
+>+        audio_be_close_out(stream->s->audio_be, stream->voice.out);
+>+        stream->voice.out = NULL;
+>+    } else if (stream->info.direction == VIRTIO_SND_D_INPUT) {
+>+        audio_be_close_in(stream->s->audio_be, stream->voice.in);
+>+        stream->voice.in = NULL;
+>     }
+> }
+> 
+>@@ -423,32 +458,23 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
+>     virtio_snd_pcm_set_params *params;
+>     VirtIOSoundPCMStream *stream;
+> 
+>-    if (s->pcm.streams == NULL ||
+>-        s->pcm.pcm_params == NULL ||
+>-        stream_id >= s->snd_conf.streams) {
+>+    stream = virtio_snd_pcm_get_stream(s, stream_id);
+>+    if (!stream) {
+>         return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
+>     }
+> 
+>-    params = virtio_snd_pcm_get_params(s, stream_id);
+>-    if (params == NULL) {
+>+    switch (stream->state) {
+>+    case VSND_PCMSTREAM_STATE_PARAMS_SET:
+>+    case VSND_PCMSTREAM_STATE_PREPARED:
+>+    case VSND_PCMSTREAM_STATE_RELEASED:
+>+        break;
+>+    default:
+>         return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
+>     }
+> 
+>-    stream = virtio_snd_pcm_get_stream(s, stream_id);
+>-    if (stream == NULL) {
+>-        stream = &s->streams[stream_id];
+>-        stream->active = false;
+>-        stream->latency_bytes = 0;
+>-
+>-        /*
+>-         * stream_id >= s->snd_conf.streams was checked before so this is
+>-         * in-bounds
+>-         */
+>-        s->pcm.streams[stream_id] = stream;
+>-    }
+>+    params = virtio_snd_pcm_get_params(s, stream_id);
+> 
+>     virtio_snd_get_qemu_audsettings(&as, params);
+>-    stream->params = *params;
+> 
+>     stream->positions[0] = VIRTIO_SND_CHMAP_FL;
+>     stream->positions[1] = VIRTIO_SND_CHMAP_FR;
+>@@ -472,6 +498,8 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
+>         audio_be_set_volume_in_lr(s->audio_be, stream->voice.in, 0, 255, 255);
+>     }
+> 
+>+    stream->state = VSND_PCMSTREAM_STATE_PREPARED;
+>+
+>     return cpu_to_le32(VIRTIO_SND_S_OK);
+> }
+> 
+>@@ -542,12 +570,28 @@ static uint32_t virtio_snd_pcm_start_stop(VirtIOSound *s,
+>     }
+> 
+>     if (start) {
+>+        switch (stream->state) {
+>+        case VSND_PCMSTREAM_STATE_PREPARED:
+>+        case VSND_PCMSTREAM_STATE_STOPPED:
+>+            break;
+>+        default:
+>+            return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
+>+        }
+>+
+>         trace_virtio_snd_handle_pcm_start(stream_id);
+>+        stream->state = VSND_PCMSTREAM_STATE_STARTED;
+>     } else {
+>+        switch (stream->state) {
+>+        case VSND_PCMSTREAM_STATE_STARTED:
+>+            break;
+>+        default:
+>+            return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
+>+        }
+>+
+>         trace_virtio_snd_handle_pcm_stop(stream_id);
+>+        stream->state = VSND_PCMSTREAM_STATE_STOPPED;
+>     }
+> 
+>-    stream->active = start;
+>     if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
+>         audio_be_set_active_out(s->audio_be, stream->voice.out, start);
+>     } else {
+>@@ -641,6 +685,15 @@ static void virtio_snd_handle_pcm_release(VirtIOSound *s,
+>         return;
+>     }
+> 
+>+    switch (stream->state) {
+>+    case VSND_PCMSTREAM_STATE_PREPARED:
+>+    case VSND_PCMSTREAM_STATE_STOPPED:
+>+        break;
+>+    default:
+>+        cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
+>+        return;
+>+    }
+>+
+>     if (virtio_snd_pcm_get_io_msgs_count(stream)) {
+>         /*
+>          * virtio-v1.2-csd01, 5.14.6.6.5.1,
+>@@ -655,6 +708,8 @@ static void virtio_snd_handle_pcm_release(VirtIOSound *s,
+>         virtio_snd_pcm_flush(stream);
+>     }
+> 
+>+    stream->state = VSND_PCMSTREAM_STATE_RELEASED;
+>+
+>     cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_OK);
+> }
+> 
+>@@ -876,12 +931,11 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+>         }
+>         stream_id = le32_to_cpu(hdr.stream_id);
+> 
+>-        if (stream_id >= vsnd->snd_conf.streams
+>-            || vsnd->pcm.streams[stream_id] == NULL) {
+>+        if (stream_id >= vsnd->snd_conf.streams) {
+>             goto tx_err;
+>         }
+> 
+>-        stream = vsnd->pcm.streams[stream_id];
+>+        stream = &vsnd->streams[stream_id];
+>         if (stream->info.direction != VIRTIO_SND_D_OUTPUT) {
+>             goto tx_err;
+>         }
+>@@ -956,13 +1010,12 @@ static void virtio_snd_handle_rx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+>         }
+>         stream_id = le32_to_cpu(hdr.stream_id);
+> 
+>-        if (stream_id >= vsnd->snd_conf.streams
+>-            || !vsnd->pcm.streams[stream_id]) {
+>+        if (stream_id >= vsnd->snd_conf.streams) {
+>             goto rx_err;
+>         }
+> 
+>-        stream = vsnd->pcm.streams[stream_id];
+>-        if (stream == NULL || stream->info.direction != VIRTIO_SND_D_INPUT) {
+>+        stream = &vsnd->streams[stream_id];
+>+        if (stream->info.direction != VIRTIO_SND_D_INPUT) {
+>             goto rx_err;
+>         }
+> 
+>@@ -1021,8 +1074,6 @@ static void virtio_snd_realize(DeviceState *dev, Error **errp)
+>     ERRP_GUARD();
+>     VirtIOSound *vsnd = VIRTIO_SND(dev);
+>     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+>-    virtio_snd_pcm_set_params default_params = { 0 };
+>-    uint32_t status;
+> 
+>     trace_virtio_snd_realize(vsnd);
+> 
+>@@ -1059,6 +1110,7 @@ static void virtio_snd_realize(DeviceState *dev, Error **errp)
+>     for (uint32_t i = 0; i < vsnd->snd_conf.streams; i++) {
+>         VirtIOSoundPCMStream *stream = &vsnd->streams[i];
+> 
+>+        stream->state = VSND_PCMSTREAM_STATE_UNINITIALIZED;
+>         stream->s = vsnd;
+>         QSIMPLEQ_INIT(&stream->queue);
+>         stream->info.hdr.hda_fn_nid = VIRTIO_SOUND_HDA_FN_NID;
+>@@ -1072,21 +1124,9 @@ static void virtio_snd_realize(DeviceState *dev, Error **errp)
+>         stream->info.channels_max = 2;
+>     }
+> 
+>-    vsnd->pcm.streams =
+>-        g_new0(VirtIOSoundPCMStream *, vsnd->snd_conf.streams);
+>-    vsnd->pcm.pcm_params =
+>-        g_new0(virtio_snd_pcm_set_params, vsnd->snd_conf.streams);
+>-
+>     virtio_init(vdev, VIRTIO_ID_SOUND, sizeof(virtio_snd_config));
+>     virtio_add_feature(&vsnd->features, VIRTIO_F_VERSION_1);
+> 
+>-    /* set default params for all streams */
+>-    default_params.features = 0;
+>-    default_params.buffer_bytes = cpu_to_le32(8192);
+>-    default_params.period_bytes = cpu_to_le32(2048);
+>-    default_params.channels = 2;
+>-    default_params.format = VIRTIO_SND_PCM_FMT_S16;
+>-    default_params.rate = VIRTIO_SND_PCM_RATE_48000;
+>     vsnd->queues[VIRTIO_SND_VQ_CONTROL] =
+>         virtio_add_queue(vdev, 64, virtio_snd_handle_ctrl);
+>     vsnd->queues[VIRTIO_SND_VQ_EVENT] =
+>@@ -1097,28 +1137,6 @@ static void virtio_snd_realize(DeviceState *dev, Error **errp)
+>         virtio_add_queue(vdev, 64, virtio_snd_handle_rx_xfer);
+>     QTAILQ_INIT(&vsnd->cmdq);
+>     QSIMPLEQ_INIT(&vsnd->invalid);
+>-
+>-    for (uint32_t i = 0; i < vsnd->snd_conf.streams; i++) {
+>-        status = virtio_snd_set_pcm_params(vsnd, i, &default_params);
+>-        if (status != cpu_to_le32(VIRTIO_SND_S_OK)) {
+>-            error_setg(errp,
+>-                       "Can't initialize stream params, device responded with %s.",
+>-                       print_code(status));
+>-            goto error_cleanup;
+>-        }
+>-        status = virtio_snd_pcm_prepare(vsnd, i);
+>-        if (status != cpu_to_le32(VIRTIO_SND_S_OK)) {
+>-            error_setg(errp,
+>-                       "Can't prepare streams, device responded with %s.",
+>-                       print_code(status));
+>-            goto error_cleanup;
+>-        }
+>-    }
+>-
+>-    return;
+>-
+>-error_cleanup:
+>-    virtio_snd_unrealize(dev);
+> }
+> 
+> static inline void update_latency(VirtIOSoundPCMStream *s, size_t used)
+>@@ -1167,7 +1185,7 @@ static void virtio_snd_pcm_out_cb(void *data, int available)
+>         if (!virtio_queue_ready(buffer->vq)) {
+>             return;
+>         }
+>-        if (!stream->active) {
+>+        if (!(stream->state & VSND_PCMSTREAM_STATE_F_ACTIVE)) {
+>             /* Stream has stopped, so do not perform audio_be_write. */
+>             return_tx_buffer(stream, buffer);
+>             continue;
+>@@ -1261,7 +1279,7 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
+>         if (!virtio_queue_ready(buffer->vq)) {
+>             return;
+>         }
+>-        if (!stream->active) {
+>+        if (!(stream->state & VSND_PCMSTREAM_STATE_F_ACTIVE)) {
+>             /* Stream has stopped, so do not perform audio_be_read. */
+>             return_rx_buffer(stream, buffer);
+>             continue;
+>@@ -1334,17 +1352,16 @@ static void virtio_snd_unrealize(DeviceState *dev)
+>     qemu_del_vm_change_state_handler(vsnd->vmstate);
+>     trace_virtio_snd_unrealize(vsnd);
+> 
+>-    if (vsnd->pcm.streams) {
+>+    if (vsnd->streams) {
+>+        virtio_snd_process_cmdq(vsnd);
+>         for (uint32_t i = 0; i < vsnd->snd_conf.streams; i++) {
+>-            stream = vsnd->pcm.streams[i];
+>-            if (stream) {
+>-                virtio_snd_process_cmdq(stream->s);
+>-                virtio_snd_pcm_close(stream);
+>+            stream = &vsnd->streams[i];
+>+            if (stream->state & VSND_PCMSTREAM_STATE_F_PREPARED) {
+>+                virtio_snd_pcm_flush(stream);
+>             }
+>+            virtio_snd_pcm_close(stream);
+>         }
+>-        g_free(vsnd->pcm.streams);
+>     }
+>-    g_free(vsnd->pcm.pcm_params);
+>     g_free(vsnd->streams);
+>     vsnd->streams = NULL;
+>     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_CONTROL]);
+>@@ -1378,6 +1395,9 @@ static void virtio_snd_reset(VirtIODevice *vdev)
+>         VirtIOSoundPCMStream *stream = &vsnd->streams[i];
+>         VirtIOSoundPCMBuffer *buffer;
+> 
+>+        virtio_snd_pcm_close(stream);
+>+        stream->state = VSND_PCMSTREAM_STATE_UNINITIALIZED;
+>+
+>         while ((buffer = QSIMPLEQ_FIRST(&stream->queue))) {
+>             QSIMPLEQ_REMOVE_HEAD(&stream->queue, entry);
+>             virtio_snd_pcm_buffer_free(buffer);
+>diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd.h
+>index 41c63b3f23b..72ef34e0976 100644
+>--- a/include/hw/audio/virtio-snd.h
+>+++ b/include/hw/audio/virtio-snd.h
+>@@ -75,8 +75,6 @@ typedef struct VirtIOSoundPCMStream VirtIOSoundPCMStream;
+> 
+> typedef struct virtio_snd_ctrl_command virtio_snd_ctrl_command;
+> 
+>-typedef struct VirtIOSoundPCM VirtIOSoundPCM;
+>-
+> typedef struct VirtIOSoundPCMBuffer VirtIOSoundPCMBuffer;
+> 
+> /*
+>@@ -121,31 +119,18 @@ struct VirtIOSoundPCMBuffer {
+>     uint8_t data[];
+> };
+> 
+>-struct VirtIOSoundPCM {
+>-    /*
+>-     * PCM parameters are a separate field instead of a VirtIOSoundPCMStream
+>-     * field, because the operation of PCM control requests is first
+>-     * VIRTIO_SND_R_PCM_SET_PARAMS and then VIRTIO_SND_R_PCM_PREPARE; this
+>-     * means that some times we get parameters without having an allocated
+>-     * stream yet.
+>-     */
+>-    virtio_snd_pcm_set_params *pcm_params;
+>-    VirtIOSoundPCMStream **streams;
+>-};
+>-
+> struct VirtIOSoundPCMStream {
+>     virtio_snd_pcm_info info;
+>     virtio_snd_pcm_set_params params;
+>+    uint32_t state;
+>     /* channel position values (VIRTIO_SND_CHMAP_XXX) */
+>     uint8_t positions[VIRTIO_SND_CHMAP_MAX_SIZE];
+>     VirtIOSound *s;
+>-    bool flushing;
+
+Spurious change: this should be a separate patch.
+
+>     audsettings as;
+>     union {
+>         SWVoiceIn *in;
+>         SWVoiceOut *out;
+>     } voice;
+>-    bool active;
+>     uint32_t latency_bytes;
+>     QSIMPLEQ_HEAD(, VirtIOSoundPCMBuffer) queue;
+> };
+>@@ -212,7 +197,6 @@ struct VirtIOSound {
+> 
+>     VirtQueue *queues[VIRTIO_SND_VQ_MAX];
+>     uint64_t features;
+>-    VirtIOSoundPCM pcm;
+>     VirtIOSoundPCMStream *streams;
+>     AudioBackend *audio_be;
+>     VMChangeStateEntry *vmstate;
+>-- 
+>2.47.3
+>
 
