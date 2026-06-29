@@ -4,119 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A5DFC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70F5AC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:47:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weBLT-0004tl-CY; Mon, 29 Jun 2026 08:44:17 -0400
+	id 1weBNq-0005n4-7z; Mon, 29 Jun 2026 08:46:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1weBL4-0004qd-Df; Mon, 29 Jun 2026 08:43:52 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1weBL2-0001S1-74; Mon, 29 Jun 2026 08:43:49 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65TAmTpd3181970; Mon, 29 Jun 2026 12:43:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=dPbdjCwNnK8IOCg8soyyMUy6JflddGGILKq4Bj8rJ6c=; b=rNFGoWkdOX+d
- BQkUb5o8fDEVH0HZat+lOGU3Qr+smJCltZJRcVz9guSkJM4LvCgivt2Up7D+9fF6
- +in2H+JXvssS7o7mUyIY96dtgU1sx3l/Urv8hzNNo5u4fvSniNOmvqEsOWX6BLpf
- k9S/6i0MtE/aKVauBPnC0IPQh3trYzpG9vkyYg8ZnrtqZ/pW3izhHSndJ7FWWcdj
- wF2p+oLryuieTA5EtAIm4N3i4efV5SxdQPgMI3fkzvjC0r/6jamVzFBhoZZp96M2
- VsuCmhhmDLv4OoxHj4WxgteriGs4eh5N8QILwPteL2OdG3xlEfspXPTjkek1V+hC
- tZGOqTB34g==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qfsb0a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jun 2026 12:43:43 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65TCYeCK027559;
- Mon, 29 Jun 2026 12:43:42 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhy5783-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jun 2026 12:43:42 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65TChfld35455248
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Jun 2026 12:43:41 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 662D65803F;
- Mon, 29 Jun 2026 12:43:41 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E949158056;
- Mon, 29 Jun 2026 12:43:39 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 29 Jun 2026 12:43:39 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1weBNo-0005mf-Ey
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:46:40 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1weBNl-000333-Ov
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:46:39 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-80cebd41372so14100107b3.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:46:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782737196; cv=none;
+ d=google.com; s=arc-20260327;
+ b=lKwz9DD9XhNFrA+T+EmLCIfGkl9XX5CgSMVYn6HGTryF0HlSUubT0QYNSAjOwE53r6
+ YJciP/uGfpAx669BZu2kjVRbQGGddXPqXvoXgPF2B57ek3nXC7nw9JJgaDYidjJnkMaT
+ K98wK0mr7ZGVBkh5j0Sk5nV2XHTNUnlDy1WEArycroDoZNjO1F16dLchbEdiN8usgdPd
+ BaI9BzrOS5Vs8DRnonL1X0g875Y2niXePKDmu2Lp6V7mmgP82eRyTJHmHqs/tDy6ox3L
+ Kzev+PBrFzxHohIm4xDgmXJ28wa49PJ3Qn8SLMifrpk9n380/51jyIQVzQB9D7kzI2d9
+ e17w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=vI80sHi/tt8TOPOauDHywy8KK54fitIt0MNEuElYMT4=;
+ fh=GIU+FyOM+eiO1tYKbHGSJ9iUu0d9Nn25uUBQaeMGCdg=;
+ b=UpIgVzK71do0vYMOpAWK78RTIBcUe2kQl1kozkoi+p3umvVe0SSjpmm/d+jmG+Fcvb
+ BOGOi+zzWmrlRdFh/MK0XhI+YQPaaZ7CN+U8P1++c6padY7FHp+ti/c8og6yM11CssTv
+ Kwa9VRHdvVrMeaJ7dVAJdtMGr0dKFljm3gsFTpHz7/9UVCgp/PKvA0RNeSs06chGj9sB
+ gS9vBmsgVLTwj0mPU7YHP4hpJ408zmk9k8r2c8j633aErP3um5c5JIgesud3/vFRdrEu
+ dJf8Si4ML0EQjclaEktBZ/ntd8RzZQHb6QyEYEur+x88KDlGrFWmGdUjoQdIgvk80ySd
+ 6lrg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782737196; x=1783341996; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vI80sHi/tt8TOPOauDHywy8KK54fitIt0MNEuElYMT4=;
+ b=e7YTzcXjcuwV6f/qZQLvAVoRBq/J5jd79+5Zyt7DnWNFJ473KnPsO2SMadyBAphoBt
+ jOSEFcueakRbd1Sv+/PbTC7/UaW3FfDYff398PSqzkWx3NXAtiXX4+RMIPvDsgIQYNgS
+ KwkpnIfdqvk//Q6ffJ1We51VWCoOGC/j3Y7fxCSzcw0yPvsa0UmU/VAthrBYpCAE9Kk6
+ 2yVoYOBaxoI4wez++SDz3jH928+QhAqigdcu8aRGCQDXNWgvl/KNSCjxlJhANuOHakWg
+ zy6FqYNY6G2fRNcD7QduYFmpxvtdVLsmGxr0hE7t1zJ3syQdkj0km5ZJO8mRHTUvNIlI
+ Ghkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782737196; x=1783341996;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=vI80sHi/tt8TOPOauDHywy8KK54fitIt0MNEuElYMT4=;
+ b=mRkSjQjwN3XSI+uKK08hec0wdcgZi6erPdtD4hQzDKCO5632Bvn39NE4GvzW7Xtt/3
+ mdj0Ihy07lYLBQc4GcFkHSILEzVQKJJJOmtwuwNmxCmHCHLEfnqi8LsQEdBuxCVqrNTX
+ jxw5WwUwbgGY4xV0iN5Y/er6BlhpMkS0Fk5/nalqxTnLPHdM6tWxs0ZbXgiqnpfia1Q7
+ pbiflg9LORPHQJ3nId4UTkepOTjRNMNTkeYU+o8W8qEnxJy5sAWaK601Ab0vkcnwWSp4
+ Qj2s7NhVFDlnTKX8C5LSyYjURAVpMaRJMtG9bja+g63cp+xYnK8ENnOKoca9PHVe/xxm
+ hQFA==
+X-Gm-Message-State: AOJu0YzOjZZ7jMdRm1ISzPjF1rO+24M2S12WK83Yj3hGxpiAxmNbF5Bo
+ BCfDFcPDepnME/q6tSlSTiRSKDwhIKS+b0VBTurlWwx4Gm9urfzXgMmfxFBNc6Y2aSCEax3WLk0
+ G1Q0jDK9pl/fsWd/fDp/nkUdy8lzrQPbgfMw/
+X-Gm-Gg: AfdE7cneueRrFBkTXOJ/B2hnqT+pXYH8fjsFx0c/klukBE1MVJ5ZV9Av3JPxyKwEmsi
+ h/Hf9SeXHHweyWNZIJyK3H+lPSbs48mC8iCMT+TLSNJ8aGiA3koP8PfGG7Lzp4LU0JYyi9vphnG
+ 6GORy4egL3aN2hd1VoA7c3D532lWFuosVO/f62gtP3n04vtzdXzj7G1Pry6YJ0ojP9WUZUf9lhx
+ h/O92HVlds8Fy8wjkSGllVLHvJ6yINlwo8+C7gNqYpRcpl8FNp5cseJaogH23gZpwyJ+K3f7gJL
+ qEsyECl8vuGE4xL+1mr71O/JIKFx
+X-Received: by 2002:a05:690c:6185:b0:80c:3b36:2026 with SMTP id
+ 00721157ae682-80c3b3624dfmr95398487b3.25.1782737196382; Mon, 29 Jun 2026
+ 05:46:36 -0700 (PDT)
 MIME-Version: 1.0
-Date: Mon, 29 Jun 2026 14:43:39 +0200
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- thuth@redhat.com, berrange@redhat.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, linux390-list@tuxmaker.boeblingen.de.ibm.com,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
-Subject: Re: [PATCH v8 01/18] target/s390x: Fix wrong address handling in
- address loops
-Mail-Reply-To: freude@linux.ibm.com
-In-Reply-To: <e217579b-50be-431d-8703-a19b3058f90b@oss.qualcomm.com>
-References: <20260624081029.23815-1-freude@linux.ibm.com>
- <20260624081029.23815-2-freude@linux.ibm.com>
- <29ecbee8-2452-47cc-89cb-7d7a26abb685@oss.qualcomm.com>
- <1fdb2816ac1592b4d08bc0060927bfeb@linux.ibm.com>
- <e217579b-50be-431d-8703-a19b3058f90b@oss.qualcomm.com>
-Message-ID: <ddf3dc604cdc0e2d8294166306cb2187@linux.ibm.com>
-X-Sender: freude@linux.ibm.com
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=RYqgzVtv c=1 sm=1 tr=0 ts=6a42687f cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=sAccT5BgK4xihKQz0gUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDEwMSBTYWx0ZWRfX5x81Umsuxjfw
- cmBQc8TMxmVhmCBzS/k6uQ1/9rUt7pRZX/BcAVyrW52kF25JyBVCWuRrruZwN8BCJZ21WnxAJ6P
- nMSK0idP3edgUN2mTkwVcoU5FXwbGb8=
-X-Proofpoint-GUID: k3V7HL9t4sRPd2dL3dJWIPohAWN5ni1l
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDEwMSBTYWx0ZWRfX7aFaX2LSfV1a
- BEkS2SET7m56y46Q7bvRjX7vF4/Jfn6M3uRjLUM3/XTuYzbajfnXVtgiSlDN+JT6M2HLpXS0j0l
- i7ghwwsfX4QW1q2dNCWqNrzAmIfS+BLQFkeK68JCfZvG+r6j/O2zlU0z4Ks/HsDzC5PxnjzCK4H
- gsG0+RqgrN4nJEThRNuqSol/CmvkknClYNP/vutfI/vtMl9kJ3CWdfHcdoLLkN6aooFaDzFYZAj
- KycZhQggWaOxnWeLR/33B/gaiyxUdcA7L1agzj1cYAgf2Ef/A4FnVUvYowPohkaYpBhCtZdWYrV
- DuDzfrR944HwM5vQtZBVQ911+a+MYj8i8cl3pTFJV80x/sIV52cdjrWNElmMVMrd1mNVTJIrsjF
- rgp6oXHbiwWiGMKUTUOqsS5PRxanpvEBvb4XnBFWyKS0/FiF9vF1jp0DHCdc7xZ9GBJYdbqjYRo
- G4tHU5ZvynKfDWfyXZg==
-X-Proofpoint-ORIG-GUID: k3V7HL9t4sRPd2dL3dJWIPohAWN5ni1l
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
- adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290101
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=freude@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260628-gtk-v2-1-1e4839012f09@rsg.ci.i.u-tokyo.ac.jp>
+ <CAMxuvaxrGgD7EAwWdGG0BZgiyXPNrExExTVnANr6M2gw5+DzNQ@mail.gmail.com>
+ <b57f9a79-f48d-4fab-a70f-e26f26fcfcbf@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <b57f9a79-f48d-4fab-a70f-e26f26fcfcbf@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 29 Jun 2026 16:46:23 +0400
+X-Gm-Features: AVVi8CfhDCtq7MmD2wuFflsWMp0XvxY3Sei_8wCgm-vAyimtR5zL0Jun43UZtGE
+Message-ID: <CAJ+F1CJoSn9qaA4JtNz1c3ZoAUJP1dPk58AOF-sQbf-t_YqKTA@mail.gmail.com>
+Subject: Re: [PATCH v2] ui/gtk: Narrow DMA-BUF critical section
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,92 +115,206 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-06-25 12:37, Philippe Mathieu-Daudé wrote:
-> On 25/6/26 09:31, Harald Freudenberger wrote:
->> On 2026-06-24 12:05, Philippe Mathieu-Daudé wrote:
->>> Hi Harald,
->>> 
->>> On 24/6/26 10:09, Harald Freudenberger wrote:
->>>> With the introduction of the address wrapping function
->>>> wrap_address() the result can't be used to walk the
->>>> source address any more. So introduce a new local variable
->>>> to hold the wrapped address to avoid mixing source and
->>>> wrapped address value.
->>>> 
->>>> Fixes: fcc2699d41 ("target/s390x: Have MSA helper pass a mmu_idx 
->>>> argument")
->>> 
->>> This commit merely added an argument. I suppose you meant
->>> 9f17bfdab42 ("target/s390x: support SHA-512 extensions").
->>> 
->> 
->> No. Commit fcc2699d41 ("target/s390x: Have MSA helper pass a mmu_idx 
->> argument")
->> introduces the mmu_idx with the wrap_address() function or macro.
-> 
-> You are saying the same, not really explaining, I'm not following...
-> 
+Hi
 
-I rephrased my wording regarding this fix. Please see v9 coming soon.
+On Mon, Jun 29, 2026 at 4:24=E2=80=AFPM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> On 2026/06/29 18:20, Marc-Andr=C3=A9 Lureau wrote:
+> > Hi Akihiko
+> >
+> > On Sun, Jun 28, 2026 at 5:59=E2=80=AFPM Akihiko Odaki
+> > <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+> >>
+> >> Scanout operations need to be properly ordered to avoid tearing. The
+> >> virtio specification allows the guest to use pageflip. With pageflip,
+> >> the guest only modifies the invisible framebuffer while the host scans
+> >> out the visible framebuffer. The guest may choose not to use pageflip =
+to
+> >> avoid its overhead, accepting the risk of tearing.
+> >>
+> >> ui/gtk performs the following procedure to flush a scanout:
+> >> 1) Queue a draw event.
+> >> 2) The draw event gets triggered.
+> >> 3) Blit the guest framebuffer to the host framebuffer.
+> >>
+> >> When flushing a DMA-BUF scanout, ui/gtk blocks the device before 2) if
+> >> possible and unblocks it after 3) to enforce proper ordering. However,
+> >> blocking the device before 2) has two problems.
+> >>
+> >> First, it can leave the device blocked indefinitely because GTK
+> >> sometimes decides to cancel 2) when the window is not visible for
+> >> example. ui/gtk regularly repeats 1) as a workaround, but it is not
+> >> applicable to GtkGLArea because it causes display corruption.
+> >>
+> >> Second, the behavior is inconsistent with the other types of scanout
+> >> that leave the device unblocked between 1) and 2).
+> >>
+> >> To fix these problems, let ui/gtk block the device only when the
+> >> queued draw event runs, immediately before 3). Blocking before that is
+> >> unnecessary since ui/gtk does not access the framebuffer yet. If the
+> >> guest does not use pageflip but instead updates the visible framebuffe=
+r
+> >> directly, ui/gtk should not add the overhead of a pre-draw block.
+> >>
+> >
+> > Are you saying this won't create undesired drawing artefacts?
+> >
+> > I don't see how the guest synchronizes with the display if the gl cmds
+> > keep running.
+>
+> The point of pageflip is to avoid drawing artifacts when scanout and
+> rendering can happen concurrently. The virtio-gpu spec adopts that
+> model: the guest can switch the scanout resource with
+> VIRTIO_GPU_CMD_SET_SCANOUT instead of rendering into the resource
+> currently being scanned out.
+>
+> So, if a guest chooses not to use pageflip on a system where scanout and
+> rendering run concurrently, it can get artifacts. This change does not
+> try to make that case artifact-free.
+>
+> What this patch is trying to preserve is the display model already used
+> by the 2D code and by the other display implementations: QEMU keeps the
+> framebuffer stable while it is actually reading/blitting it. The extra
+> blocking before the queued draw callback runs does not add
+> synchronization for that model, because ui/gtk is not accessing the
+> framebuffer yet.
 
->> And the result was something like this:
->> 
->>    for (int i = 0; i < 8; i++, addr += 8) {
->>      addr = wrap_address(env, addr);
->>      a[i] = cpu_ldq_mmu(env, addr, oi, ra);
->>    }
->> 
->> This code reuses the addr variable in the loop
->> by setting addr to the wrapped address but after
->> that the loop adds +8 to this wrapped address.
->> This code only works as long as the wrapped address
->> is equal to the address put put in.
->> Thus introduce another intermediate variable which
->> holds the wrapped address:
->> 
->>    for (int i = 0; i < 8; i++, addr += 8) {
->>      uint64_t _addr = wrap_address(env, addr);
->>      a[i] = cpu_ldq_mmu(env, _addr, oi, ra);
->>    }
->> 
->> Of course it would also work with a direct replacement:
->> 
->>    for (int i = 0; i < 8; i++, addr += 8) {
->>      a[i] = cpu_ldq_mmu(env, wrap_address(env, addr), oi, ra);
->>    }
->> 
->> but this isn't that readable.
->> 
->>>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
->>>> ---
->>>>   target/s390x/tcg/crypto_helper.c | 16 ++++++++--------
->>>>   1 file changed, 8 insertions(+), 8 deletions(-)
->>>> 
->>>> diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/ 
->>>> crypto_helper.c
->>>> index ae392bce0e..29ad2aff43 100644
->>>> --- a/target/s390x/tcg/crypto_helper.c
->>>> +++ b/target/s390x/tcg/crypto_helper.c
->>>> @@ -126,8 +126,8 @@ static void sha512_read_icv(CPUS390XState *env, 
->>>> const int mmu_idx,
->>>>       const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, 
->>>> mmu_idx);
->>>>         for (int i = 0; i < 8; i++, addr += 8) {
->>>> -        addr = wrap_address(env, addr);
->>>> -        a[i] = cpu_ldq_mmu(env, addr, oi, ra);
->>>> +        uint64_t _addr = wrap_address(env, addr);
->>> 
->>> s/_addr/wa/ or even directly inline?
->>> 
->>>            a[i] = cpu_ldq_mmu(env, wrap_address(env, addr), oi, ra);
->>> 
->>>> +        a[i] = cpu_ldq_mmu(env, _addr, oi, ra);
->>>>       }
->>>>   }
->> 
+I am missing some pieces to understand how the guest will be fenced.
+How does qemu say: "I have consumed the resource (for the
+flush/display), you can reuse it"?
 
+>
+> Regards,
+> Akihiko Odaki
+>
+> >
+> >> ui/gtk still blocks the device during 3) for DMA-BUF. Unlike the other
+> >> scanout types, 3) can happen asynchronously with the device for a
+> >> DMA-BUF, so ui/gtk needs to keep the visible guest framebuffer stable
+> >> for the blit.
+> >>
+> >> With the problems fixed, the workaround to repeat 1) is no longer
+> >> necessary and is removed.
+> >>
+> >> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> >> ---
+> >> Changes in v2:
+> >> - Clarified that guests can use pageflip to avoid tearing while ui/gtk
+> >>    only needs to keep the DMA-BUF stable during the blit.
+> >> - Avoided the unprotected gd_egl_scanout_flush() fallback by queuing
+> >>    redraws through gtk_widget_queue_draw_area().
+> >> - Link to v1: https://lore.kernel.org/qemu-devel/20260115-gtk-v1-1-57f=
+49e856408@rsg.ci.i.u-tokyo.ac.jp
+> >> ---
+> >>   ui/gtk-egl.c     |  6 ++----
+> >>   ui/gtk-gl-area.c | 23 +----------------------
+> >>   2 files changed, 3 insertions(+), 26 deletions(-)
+> >>
+> >> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+> >> index 7c5c9b2428c2..adc81f34b1c8 100644
+> >> --- a/ui/gtk-egl.c
+> >> +++ b/ui/gtk-egl.c
+> >> @@ -91,6 +91,7 @@ void gd_egl_draw(VirtualConsole *vc)
+> >>               } else {
+> >>                   qemu_dmabuf_set_draw_submitted(dmabuf, false);
+> >>               }
+> >> +            qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
+> >>           }
+> >>   #endif
+> >>           gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0, vc->gfx.w, vc->gfx.=
+h);
+> >> @@ -405,14 +406,11 @@ void gd_egl_flush(DisplayChangeListener *dcl,
+> >>
+> >>       if (vc->gfx.guest_fb.dmabuf &&
+> >>           !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+> >> -        qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
+> >>           qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true=
+);
+> >>           gtk_egl_set_scanout_mode(vc, true);
+> >> -        gtk_widget_queue_draw_area(area, x, y, w, h);
+> >> -        return;
+> >>       }
+> >>
+> >> -    gd_egl_scanout_flush(&vc->gfx.dcl, x, y, w, h);
+> >> +    gtk_widget_queue_draw_area(area, x, y, w, h);
+> >>   }
+> >>
+> >>   void gtk_egl_init(DisplayGLMode mode)
+> >> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+> >> index 23806b9d01bb..29497019ee46 100644
+> >> --- a/ui/gtk-gl-area.c
+> >> +++ b/ui/gtk-gl-area.c
+> >> @@ -86,6 +86,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
+> >>               } else {
+> >>                   qemu_dmabuf_set_draw_submitted(dmabuf, false);
+> >>               }
+> >> +            qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
+> >>           }
+> >>   #endif
+> >>
+> >> @@ -163,27 +164,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dc=
+l)
+> >>
+> >>       gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc-=
+>gfx.drawing_area);
+> >>
+> >> -    if (vc->gfx.guest_fb.dmabuf &&
+> >> -        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+> >> -        /*
+> >> -         * gd_egl_refresh() calls gd_egl_draw() if a DMA-BUF draw has=
+ already
+> >> -         * been submitted, but this function does not call gd_gl_area=
+_draw() in
+> >> -         * such a case due to display corruption.
+> >> -         *
+> >> -         * Calling gd_gl_area_draw() is necessary to prevent a situat=
+ion where
+> >> -         * there is a scheduled draw event but it won't happen bacaus=
+e the window
+> >> -         * is currently in inactive state (minimized or tabified). If=
+ draw is not
+> >> -         * done for a long time, gl_block timeout and/or fence timeou=
+t (on the
+> >> -         * guest) will happen eventually.
+> >> -         *
+> >> -         * However, it is found that calling gd_gl_area_draw() here c=
+auses guest
+> >> -         * display corruption on a Wayland Compositor. The display co=
+rruption is
+> >> -         * more serious than the possible fence timeout so gd_gl_area=
+_draw() is
+> >> -         * omitted for now.
+> >> -         */
+> >> -        return;
+> >> -    }
+> >> -
+> >>       if (!vc->gfx.gls) {
+> >>           if (!gtk_widget_get_realized(vc->gfx.drawing_area)) {
+> >>               return;
+> >> @@ -347,7 +327,6 @@ void gd_gl_area_scanout_flush(DisplayChangeListene=
+r *dcl,
+> >>
+> >>       if (vc->gfx.guest_fb.dmabuf &&
+> >>           !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+> >> -        qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
+> >>           qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true=
+);
+> >>           gtk_gl_area_set_scanout_mode(vc, true);
+> >>       }
+> >>
+> >> ---
+> >> base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
+> >> change-id: 20260115-gtk-424c2b910e65
+> >>
+> >> Best regards,
+> >> --
+> >> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> >>
+> >
+>
+>
 
