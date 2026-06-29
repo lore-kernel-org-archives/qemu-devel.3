@@ -4,111 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E169C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 01:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 738F2C43602
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 01:21:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we0Oy-00042l-Df; Sun, 28 Jun 2026 21:03:11 -0400
+	id 1we0fK-0006PJ-Is; Sun, 28 Jun 2026 21:20:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1we0Oq-00041j-SS
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 21:03:02 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1we0fJ-0006O8-2m
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 21:20:01 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1we0Oo-0008SF-FM
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 21:03:00 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-697de335c18so5317653a12.2
- for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 18:02:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782694976; cv=none;
- d=google.com; s=arc-20260327;
- b=ohtNSb1fXcxdkW46nNnVrqmIqODVtw4DrJl5+emcAvUw0KC+TM7G9RAIwrtUA+s4s9
- xznP77j5u+brjIUXTSXmKgYWCPohQWNLCgx4/zw47Cma/wWWONpGoSj2WWxtxyw6VJS7
- Fbi+Wux91v8308WfcBk2q0xRhfc0WfyYwexJj9ojXS2aTAAqdzp212tIR7lXPn42Qr/i
- YxjMBj2zUQLBAjtBB8es/Mcl6sxA6Kd/Y3Vx/D0JLg2aq3sWkt4iuYPeR6UpWPUKcUMK
- kIrvCuG2ZnIzbzZmfhmfYH9u7FtePradp3WXhSHRnu6MM3UEftCl0CPW3lTdpO6VLhol
- D+FQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=HXeThzPRQlbC7Deg8yJSMmt16h9NKwjC+NX4T58zivM=;
- fh=yQaNYF+Oz7ksFoYGMjQ09yNPixHDFFscKkD1kIOJZgY=;
- b=brngG1JdfVGos11bdzTjP3A18GxVr2gS12EhHdQRSYOa12tlHirj98PTR9Ic99HFjC
- VRtMFzpFo3Hk4fyWAt62NyanwPFCnKiz83FZkRQtL417Fl4i8jV7iQqFQmHaeQdfemFC
- mbl7nswWajvsi/MJrbtSv0cwKybtmaPTHGwxsRz2SY9ZKQIx3Psd3GZqj1Py3+zpxJyl
- 2v3x4ZLsN3KRWbi6dq9lrP4ug8knCTn34NoUu6NIX7ac5q7pYYD4Aot7a1dWoMPhtlVU
- pj4XgkSy3/KUvETYFVvvsxUruT5l1B7PtBeZ4Y8QPHHufXSzxca4f0vH04WcMg2hVnlO
- OFTA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1we0fH-0006xJ-BB
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 21:20:00 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-37defb2f231so1342735a91.2
+ for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 18:19:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782694976; x=1783299776; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1782695998; x=1783300798; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HXeThzPRQlbC7Deg8yJSMmt16h9NKwjC+NX4T58zivM=;
- b=ovCIR8duAqcsM8dOoRACtOcVn2nmNs5WzfSiS/032o/BOvaZGXiwpjEGNCBW+ZitQk
- bB+AGIgu9lovlndfwmG0DVDldqMeO0a4K8nQWkZnUriOOoKEYBL9VCiFvmnsxhKm932l
- 5thPux0azIwQ6WZeF2Xhwmr819qUMp3gPHViv5ZRlpFt/fdNl7UoecVfFpZL3Q8qSQbD
- hirVjN9VOGBOeALFQm+EDyKFSg7emZvNVuAXd8oaL1bpeQBhbr9zoq/Cf1FG7bnoJsd+
- 6I7tXrZrFFiamKVXgKid6NM+BXzCMm1jgy1tw4DLqqtT5HiFEiXQ+OOhWmcgH9QzIvO9
- tO4w==
+ bh=+ylxywxoedFTkpMsEthG2TEK4ilDb79rVUbl9rZrdUM=;
+ b=Bf0b1RNzU93/DA7USHdgG1VKMa+yP7PdsS7BIwJVDgsjtK+yAI+L13swEbwq6tNELV
+ axLEJwFSwezpJY6GGNhaQBBjMPJGtbZxFjFhNwuQCzyIVAomLFHej629rc61VEoFBpXh
+ KvjQ0Y2HLGkuhhGU2B8K7mQ+vpSkvJsqZ3uDcH/aId2qzAz2ijIqAYkoi5aIVjxSyz/Z
+ bu6fyZmXi3JtKO5EamgfKxP/avDqso3TVAVs4ej5Q3BVUfDBP0x7oTHHM23fMdS0IZ9T
+ kC6uNTdXPIL3uF445HwCC6QfYAXTKjmexftz35UjvFcBAckfqtIp7OMgo12+AQV3EQtD
+ mQcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782694976; x=1783299776;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1782695998; x=1783300798;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=HXeThzPRQlbC7Deg8yJSMmt16h9NKwjC+NX4T58zivM=;
- b=TLVn47bkJYTINJHidmbm1w7mAgEIictq7+J9zg44uN0JvsqxHAGxO6JeSTfAYvFm22
- /0RtW4To22PU2VS/jVCBg5MGaJHticpUjAdiuveluZNeJmgjBRNDa1F01RyYC/IMvoVX
- LzmjobFQHPC8lYlj/H/nR9K7VkeiTG26lcE6LVqn4Orrn/g6vZuRFBm3Wn8U0xu1NoDA
- xzSbxH4Lm+uJWBptkMaj1Wn6oKA8Mk/a9zcTlsioKibM+XoztyD15RCNB+wb/2v2Rzkx
- u7mCOY8BKhJdXf7tujlTrsUveDskR7r+4QV7NiMu9nB/BIeoK8aVsU9vqUCkNIBiafyI
- KvFw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqkSa2Pn+PMRcvhBYEpYU9C5atDm3tnY475CbQE7q43a0bzq3DL2qikvDDYqrmMFD+ecJq2RGRYkmB8@nongnu.org
-X-Gm-Message-State: AOJu0YzdvFVIM+U0sy2Ik5YtmbHzRjIoF0TxQW7+4tgS3MYlpCjEhzKu
- U4Gcexm6Tr0Arl9/5hrReMse5WE6x5HJhWAhzjQNz3XHMMn9FSKgdRmOFoUxqBfOgLTV5/r4Tff
- jlRMEN+/H4Cifst9wj2EVavbbyYBvrV8=
-X-Gm-Gg: AfdE7cnqbAiOkT/yZfQNGohJ3lz0hU2Vct04w9FmZKiQgLTWh+I9nnvIUrfwENjb1mf
- T2TEcenIKkHZZnr3A8UAG5x2mD/usBUTBqaNRhFgquhZxcI8lIp651jF+EEOJwBSq11uPO9ZO9v
- eXzg7NCssoOCYE6r2S8tdb5vYQrYnQqySakIOuZ2YzjB52hWTZXqXJJIhjYbvYjmSNacj0vcc3S
- hfcSoCaQN2WbfyJ28oUAMF+d4EojweVaRMfMWxfoNweCEAVXUjqTvZSivaKOcnugkDACcMu3Sq1
- 4Itlk6/poN1f1fm/qTBjnqwM5vTO3s17+FWgZQ==
-X-Received: by 2002:a05:6402:5113:b0:683:e394:cc0c with SMTP id
- 4fb4d7f45d1cf-69810a45891mr5285524a12.4.1782694976070; Sun, 28 Jun 2026
- 18:02:56 -0700 (PDT)
+ bh=+ylxywxoedFTkpMsEthG2TEK4ilDb79rVUbl9rZrdUM=;
+ b=YZg+8kSoYbDh2t32Z59UmVmJnAJbl/wiXUfu/1WNns/0MHmExrlzG+MUjlp+qDy/F0
+ S/AoM6xAjfTxZ7lytY4ciOJBj9jB3XFDjgosrBPw1ENeVEH5vFEy/19LXFj0sDQQ8vj9
+ klvdfBLw4U+xB4YDV9mDPPrbw5lxYLhbhXmxD3OobCX6Kfc51OolDp9UBQThIYaCNpFU
+ fYW0pH3QWts1PEgt94ALTWRF+GFGb9z05qthUN0RM6FtkfwRkdFbRZH0GN9jPb4/XFCB
+ WpxDUialUO4Fmkfh5iRGGQOGxuleqbiShYbHiO2YB1DGa+147RUVtA8luqnZfl4oUpL0
+ +Gbw==
+X-Gm-Message-State: AOJu0YxYwwbrn6iiHG90BkIVPPm+uLORNRW1MOlOYKZi2Oke+f6IcVJJ
+ PU4uK98BDeMqrkPZA2nZZJVxxLp07DCMPbMMIMORm5p9W3QMMEB9P8VB2eDWMA==
+X-Gm-Gg: AfdE7ck+ek/+KfqsAxEuH9zUWKtVNJmXsUAtxIn4n4fnhY+waBIIvNi8NPD2oTbT+tz
+ kocPiYMQsi+RxjLeISE8hLf6hkqLc/F4SP4uEUBTMjfEvHzMB55vOtvlGfpJNTUZWQDONAqZ17r
+ l0qPRY+BvirXNtSir57FfR6Ibv9L8CvFVR+cgowHO3A6KI1ZI721X1lEZJD4xlvfTXCkttPmIDZ
+ sdaytZR9dPTdePLQD/QL7dG/6YYpggDgkaIZbfC7ZyTszbP4Y0SpMXLqKz76K4bgv7FMmifR+eY
+ 18Evh2k2t3+ZBU/JDFd8fnKT2yszO11OYGLO0P0GPthJqRLxCHIF/Us1z5BxDNJhf4bw5so/HsW
+ Avv3wX2D5M77iLn4OSxrlpmohwG21cOsWGlI2GBKadpbeZEtBV5HR3ZIpQt4AOcKYejSZYYtQ4b
+ O8czNJGbwp9CbDx5id8zh0
+X-Received: by 2002:a17:90b:4fc1:b0:37f:d9dc:557 with SMTP id
+ 98e67ed59e1d1-37fd9dc06ffmr4422591a91.16.1782695997639; 
+ Sun, 28 Jun 2026 18:19:57 -0700 (PDT)
+Received: from jeuk-MS-7D42.. ([211.226.54.223])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-37e24b13458sm4614058a91.13.2026.06.28.18.19.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 28 Jun 2026 18:19:57 -0700 (PDT)
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
+To: qemu-devel@nongnu.org
+Cc: jeuk20.kim@samsung.com, kwolf@redhat.com, hreitz@redhat.com,
+ qemu-block@nongnu.org, j-young.choi@samsung.com, jaemyung.lee@samsung.com
+Subject: [PATCH 1/2] hw/ufs: Emulate DME_GET/SET for PA layer attributes
+Date: Mon, 29 Jun 2026 10:19:34 +0900
+Message-ID: <89a53700d3dafa26b0fade96ec139ea4dc42ab5b.1782695631.git.jeuk20.kim@samsung.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1782695631.git.jeuk20.kim@samsung.com>
+References: <cover.1782695631.git.jeuk20.kim@samsung.com>
 MIME-Version: 1.0
-References: <20260622113402.563196-1-inochiama@gmail.com>
-In-Reply-To: <20260622113402.563196-1-inochiama@gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 29 Jun 2026 11:02:29 +1000
-X-Gm-Features: AVVi8CeEJ8aKXqngsxtjy74Tpl-17M24re5WU-YMY3sESK03fk-TjPvK7loMl0o
-Message-ID: <CAKmqyKOaS3rzSmvM0FPkH8uMV441qxes_5-sbQwc8T5J_jsYjw@mail.gmail.com>
-Subject: Re: [PATCH v2] target/riscv: Check PMP before updating PTE
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,55 +101,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 22, 2026 at 9:35=E2=80=AFPM Inochi Amaoto <inochiama@gmail.com>=
- wrote:
->
-> According to the RISC-V spec, the PTE update is a supervisor write
-> operations, and it should also follow the CPU PMP configuration like
-> the PTE read.
->
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+After DME_LINK_STARTUP a UFSHCI host typically negotiates the link power
+mode: it reads PA layer attributes (connected RX/TX data lanes, max RX
+HS/PWM gears) via DME_GET and then issues DME_SET(PA_PWRMODE), waiting for
+the UIC power-mode-change completion (IS.UPMS / HCS.UPMCRS). The device
+only handled DME_LINK_STARTUP and DME_HIBER_{ENTER,EXIT} and returned
+FAILURE for every other DME command, so a host that performs power-mode
+change could never complete it.
 
-Thanks!
+Return canned PA attribute values (1 lane, HS-G4, FAST_MODE) on
+DME_GET/PEER_GET and acknowledge DME_SET/PEER_SET. For DME_SET(PA_PWRMODE)
+also raise IS.UPMS and set HCS.UPMCRS=PWR_LOCAL so the power-mode change
+completes. The emulated link has no PHY, so no state is persisted.
 
-Applied to riscv-to-apply.next
+For example, the Linux ufshcd driver reads these attributes during probe
+and otherwise aborts with "invalid connected lanes value".
 
-Alistair
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+---
+ hw/ufs/ufs.c        | 40 ++++++++++++++++++++++++++++++++++++++++
+ include/block/ufs.h | 12 ++++++++++++
+ 2 files changed, 52 insertions(+)
 
-> ---
-> Changed from v1:
-> 1. Separate code statements and declarations.
-> ---
->  target/riscv/cpu_helper.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 59edcdd370..2db07f5dfb 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1655,10 +1655,18 @@ static int get_physical_address(CPURISCVState *en=
-v, hwaddr *physical,
->
->      /* Page table updates need to be atomic with MTTCG enabled */
->      if (updated_pte !=3D pte && !is_debug) {
-> +        int pmp_prot, pmp_ret;
-> +
->          if (!adue) {
->              return TRANSLATE_FAIL;
->          }
->
-> +        pmp_ret =3D get_physical_address_pmp(env, &pmp_prot, pte_addr,
-> +                                           sxlen_bytes, MMU_DATA_STORE, =
-PRV_S);
-> +        if (pmp_ret !=3D TRANSLATE_SUCCESS) {
-> +            return TRANSLATE_PMP_FAIL;
-> +        }
-> +
->          /*
->           * - if accessed or dirty bits need updating, and the PTE is
->           *   in RAM, then we do so atomically with a compare and swap.
-> --
-> 2.54.0
->
->
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 35c2444385..ee7eba6793 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -363,8 +363,32 @@ static void ufs_process_db(UfsHc *u, uint32_t val)
+     qemu_bh_schedule(u->doorbell_bh);
+ }
+ 
++/*
++ * Return canned PA layer attribute values. The emulated link has no PHY,
++ * so these are purely declarative: a single lane in HS-Gear 4, FAST_MODE.
++ */
++static uint32_t ufs_uic_dme_get_value(uint16_t attr_id)
++{
++    switch (attr_id) {
++    case UFS_ATTR_PA_AVAILTXDATALANES:
++    case UFS_ATTR_PA_AVAILRXDATALANES:
++    case UFS_ATTR_PA_CONNECTEDTXDATALANES:
++    case UFS_ATTR_PA_CONNECTEDRXDATALANES:
++        return 1;
++    case UFS_ATTR_PA_MAXRXHSGEAR:
++    case UFS_ATTR_PA_MAXRXPWMGEAR:
++        return 4;
++    case UFS_ATTR_PA_PWRMODE:
++        return (1 << 4) | 1;
++    default:
++        return 0;
++    }
++}
++
+ static void ufs_process_uiccmd(UfsHc *u, uint32_t val)
+ {
++    uint16_t attr_id;
++
+     trace_ufs_process_uiccmd(val, u->reg.ucmdarg1, u->reg.ucmdarg2,
+                              u->reg.ucmdarg3);
+     /*
+@@ -378,6 +402,22 @@ static void ufs_process_uiccmd(UfsHc *u, uint32_t val)
+         u->reg.hcs = FIELD_DP32(u->reg.hcs, HCS, UTMRLRDY, 1);
+         u->reg.ucmdarg2 = UFS_UIC_CMD_RESULT_SUCCESS;
+         break;
++    case UFS_UIC_CMD_DME_GET:
++    case UFS_UIC_CMD_DME_PEER_GET:
++        attr_id = (u->reg.ucmdarg1 >> 16) & 0xFFFF;
++        u->reg.ucmdarg3 = ufs_uic_dme_get_value(attr_id);
++        u->reg.ucmdarg2 = UFS_UIC_CMD_RESULT_SUCCESS;
++        break;
++    case UFS_UIC_CMD_DME_SET:
++    case UFS_UIC_CMD_DME_PEER_SET:
++        attr_id = (u->reg.ucmdarg1 >> 16) & 0xFFFF;
++        u->reg.ucmdarg2 = UFS_UIC_CMD_RESULT_SUCCESS;
++        /* DME_SET(PA_PWRMODE) is a power-mode-change trigger. */
++        if (val == UFS_UIC_CMD_DME_SET && attr_id == UFS_ATTR_PA_PWRMODE) {
++            u->reg.is = FIELD_DP32(u->reg.is, IS, UPMS, 1);
++            u->reg.hcs = FIELD_DP32(u->reg.hcs, HCS, UPMCRS, UFS_PWR_LOCAL);
++        }
++        break;
+     /*
+      * TODO: Revisit after PM implementation
+      * Power Management is not supported in current QEMU-UFS,
+diff --git a/include/block/ufs.h b/include/block/ufs.h
+index 6dd91181e5..66e8f35c0e 100644
+--- a/include/block/ufs.h
++++ b/include/block/ufs.h
+@@ -628,6 +628,18 @@ enum {
+ 
+ #define UFS_MASK_UIC_COMMAND_RESULT 0xFF
+ 
++/*
++ * MIPI UniPro PHY Adapter (PA) layer attribute IDs accessed via
++ * DME_GET / DME_SET / DME_PEER_{GET,SET} UIC commands.
++ */
++#define UFS_ATTR_PA_AVAILTXDATALANES 0x1520
++#define UFS_ATTR_PA_AVAILRXDATALANES 0x1540
++#define UFS_ATTR_PA_CONNECTEDTXDATALANES 0x1561
++#define UFS_ATTR_PA_PWRMODE 0x1571
++#define UFS_ATTR_PA_CONNECTEDRXDATALANES 0x1581
++#define UFS_ATTR_PA_MAXRXPWMGEAR 0x1586
++#define UFS_ATTR_PA_MAXRXHSGEAR 0x1587
++
+ /*
+  * Request Descriptor Definitions
+  */
+-- 
+2.43.0
+
 
