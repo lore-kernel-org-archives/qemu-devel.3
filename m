@@ -4,110 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E7AC43327
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 14:35:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 685CBC43327
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 14:37:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weD4z-0005Ef-2X; Mon, 29 Jun 2026 10:35:21 -0400
+	id 1weD75-0006EQ-GR; Mon, 29 Jun 2026 10:37:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1weD4Z-0004yn-Uz; Mon, 29 Jun 2026 10:35:01 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1weD4X-0001MX-6s; Mon, 29 Jun 2026 10:34:55 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65TAmF5x3181429; Mon, 29 Jun 2026 14:34:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=I6PvIoTKNCHAoj5y28jgY4fqsLOrU8VqUhtl+cA5bzc=; b=OiK23nzFVCZk
- 1Il2X4EUOiDkcVD0VsSrFS8lTZTRLQaNw44liyoEZQIbux4qaSLzxk/8kaqcOOOj
- t0otOSMO9PkxrOVJUwb/bncbBHlOOZvEvwHWZ0j0XXdYjdXTWutUfZRSD2WET3p+
- yeLvE4ErQhpXkLBdYbXjCHxZOWIohJWHCO6LVEJW0++C58Nm7mnECeH89B1XZoja
- aKTRkqJCIdQLcODi4FEBBXpZeaQTsHD1zz/YySQjw03Ceo0hoaqaa56a4Gs5IbMt
- UE8fCTkDajbxXHttOYaFDCQw/uNYN44Krob7Gba6igQzvYo1jCwbV0QoMNoM0foC
- zjtIBQCgYQ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qfswa2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jun 2026 14:34:33 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65TEJhsH027908;
- Mon, 29 Jun 2026 14:34:32 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbh5wa7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jun 2026 14:34:32 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65TEYV8v61538650
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Jun 2026 14:34:32 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A6A6B5805E;
- Mon, 29 Jun 2026 14:34:31 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5A2075805D;
- Mon, 29 Jun 2026 14:34:31 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 29 Jun 2026 14:34:31 +0000 (GMT)
-Message-ID: <c03cc164b52661b163361dca3a15fc2f5ff09b50.camel@linux.ibm.com>
-Subject: Re: [PATCH] hw/gpio/pca9552: fix off-by-one in QOM led index
- validation
-From: Miles Glenn <milesg@linux.ibm.com>
-To: yujun <yujun@kylinos.cn>
-Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
-Date: Mon, 29 Jun 2026 09:34:31 -0500
-In-Reply-To: <20260629074133.187549-1-yujun@kylinos.cn>
-References: <20260629074133.187549-1-yujun@kylinos.cn>
-Organization: IBM
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1weD72-0006Dt-I6
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:37:29 -0400
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1weD6w-0002MK-6e
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:37:24 -0400
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-6626b5ace23so2516863d50.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 07:37:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782743840; cv=none;
+ d=google.com; s=arc-20260327;
+ b=HrLT2WUPF5t154XEfusqmYfL84KXk/sTq3La9XQARSlJv+6VohWtF3/GTG0+rR7ieV
+ OjUWdOdl5bGqUOwFC0INAUJo/7uwdjZhvngjBJb3118m9GPaJyTUtA+4mSHI7qpiGBNN
+ mdpRXBCnWeP15E74PQEAct0Dy63IsUTob0Xd4kRPHZNrM4MmfIzi3QpJzd8xZJCJxQ7/
+ WHNXGdRpdF1f6waVxI/Wz3zIZ4LPNpPDg8P9MO+92ihudZThM/6fw46r5CWsn/Bwk/OG
+ bLWWYDrdnxf0fKnw6U2VbrBfm9WKWczp1lz4ETZDIMZLRl9lN8Y56qeXZhrNcDsPW8nP
+ TKTg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=xlPH9m/FMS/iTLyriDfHfVmzTRkTQoZqThAVzFKtFl0=;
+ fh=roDjFKv19ZllecJyRRgQ4fMQOxy44Ax9FITRP8Icy8I=;
+ b=m+hGq3lgbBGeMG+0lUHpHyHHnBeavD+1mwdDtlv1qXEDD3EnR1tMxHwuSv3sIBBmsl
+ 4hnPTYqM1tIwmaJpHJdJtKHWWljm6xKyKOtC6TQryW7siqGLRykoyW0RIGGGM+jBUImp
+ /him36tO/OC2g3GKYzf5qnsAQ7zekipWJ4emm84SoyCGMgzIouUORCDCCVtLl/3LNYPl
+ 4MwAEDe+x2iBOp5kmJ9tJyB2uNnmHSc7hHcFKfMLK6dnVZPd5u1ZEDQRhgwCtiQeq2eL
+ SF6/YOrQQr4NDRGCwdRS3RQrbn+ZxyZEDtvEMWb4pp5PR3qke6LmvLGXcHcSsXoZ2L1S
+ /BKA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782743840; x=1783348640; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=xlPH9m/FMS/iTLyriDfHfVmzTRkTQoZqThAVzFKtFl0=;
+ b=bLl32QCmgbqNNY4GldT6rIgvh+0uIpDSeBKIitJs04PCcr2AfBVElbzC78lrBDaeyH
+ JH7BUhQg5qLBSbNN0ANoCrgP7oepqne2tV9Pv5FrYJp/Xvk3MdrC9R6EnB7+MTfo9VqF
+ MABEG7VkqLN6/y5RkuzYTAOkGxq+8O/Awi9P13wscvzt1wr6UdztboZiP5LnW9TnHOcf
+ 69VFhbzFsOKuf4zllIZsG/AhqD9ZAe0EZzIlYUBL+yvW8LhYqwogAylQsVpNLFXuPZGK
+ nv9cLm6gUpmnAxvhMpvhApJSApx5YyYO/Ao1dWga6gIMU3bT6noitg0JJs58dFJ7Pr/U
+ V3Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782743840; x=1783348640;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xlPH9m/FMS/iTLyriDfHfVmzTRkTQoZqThAVzFKtFl0=;
+ b=ci+xwX9JwqSH6/dWBgR/0Pf5j6xouygdrZRP6u+re5e/yQt8QAkhhqxyalBWZw7sPZ
+ imKKD8902oP84t+sRecb0R+n7hwQ/Wy0oHfK3f0sjpXISrjHTX4BF6ZfseOR/fbmaT6a
+ zrlZbwC8czydu0klrQGDxmAeT3OgqXfrEha87QwaWg0U9Itjx7oV/CBda4P/u8GrqacU
+ Dx7MmdenrHx/cpKETAnxM5jPDgrFwIxRv6Q54HIaUrH5q0qhpWL4Mcv4YHpsDWkAUULd
+ fV+8fPcbhsfFZpwF1JJEVIKOFxTa8RJK2QmvFrh+7HHJpw/suCP9ZXAsTIXu5TDHuVN6
+ bfSw==
+X-Gm-Message-State: AOJu0YzvUqCMP1ydlodZ6ck3AhnFdiAHQYCiVwqMkamBYQW+0CPs1o5i
+ Xb9fTHsj6YnFb/9avwvlBBxUFhv2OeNOm5cz0RCFhJWBS/ssbryJfBe7Vdd95MNRQnBEkxbH50U
+ 6mzBTCEfvZ2Rn7ckgfFwQZVWH4XyI8PTJ9oBn/5lWag==
+X-Gm-Gg: AfdE7clMGAnR6mmKtMyFKYAABu9NSDUIgvWJtLCGs95nLotuR8vELWIaeA8DbX0bQ5H
+ HYtPyvFEmvU3iMDrcIKYmAHW3scrBrYrREyx5gV8zpzryGza2ZlHhvUSNea/azvFiVLwSrEKgnc
+ NeDZkIbLD4tGBV+X8kT0RIqw/jlJytFys0ZNNnpi+2OkF7lHWzCgSIDF9+S8qDrkaJoN7cJdBeI
+ Wcg4wlOSIoiIoCm9P6bciDmMhTUmIacMwcYj7oA5cdoFwA+/WQoHlXCh/QtS2WWqwkagSXWVgJ5
+ fyOtgD3uJEywOles6PqWVAXjonWuZHzvrq65rwWnlvHkWpzGzpzcu796MICu0fMpmp8=
+X-Received: by 2002:a05:690e:1242:b0:65c:74c2:31c6 with SMTP id
+ 956f58d0204a3-6648754c4f2mr12707486d50.5.1782743840240; Mon, 29 Jun 2026
+ 07:37:20 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260626101748.1728079-1-pbonzini@redhat.com>
+ <20260626101748.1728079-31-pbonzini@redhat.com>
+In-Reply-To: <20260626101748.1728079-31-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 29 Jun 2026 15:37:08 +0100
+X-Gm-Features: AVVi8CcN0E1u4aQt4iPllWAmtbJmDOEJvqAzNMmXSQaaARLX0T4YXOr5lMn3Zqc
+Message-ID: <CAFEAcA_v4guR1-MchVKoM_tQxW-ECWAvRLLY9MR7qMC0XjOcFA@mail.gmail.com>
+Subject: Re: [PULL 30/45] target/i386/mshv: migrate MSRs
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=RYqgzVtv c=1 sm=1 tr=0 ts=6a428279 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=BAimntSKH6pzpO6s080A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDExOSBTYWx0ZWRfX3o6EnLTQP3Lv
- ZKjCsuhoaB2gcmO3SZiAzzOs8r2mhAxr0i+tcN5RAg3IPGzfHJUi1g2g6aV/C/+C6cPFExu5lHi
- Z7TWdeunjBQQ4DJqfbGKK00Z0REbRxM=
-X-Proofpoint-GUID: kvn2rFMyqVQMzrf4aY1oAoCAg5D0ge6d
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDExOSBTYWx0ZWRfX/RKGWkLURDa5
- yu/DDLfaH4iocC55SUR1G/ryEItZZUeKWg1yg+YyEdFwxkfugk3Tow8H2kiKwcU9x2mQop8SszQ
- 3Mx4qbWwqKJtpF9++zk7GPIhoLa3qM+hhKWoAJwy0ICRCocs44swz9xTlprPVdUlktoxvwEndeN
- PplnH4Gtw5c1r/fY/6ytPEswTwhpKZ2GxtjYYELMnp+zw6UhOiWzeNFiJSuG34kBdAVO4ghx0Q2
- 6uh6DRX9q2f7n/NygM933F+TcWy/XoROmZichYbn/E+n0xMW1gc3DpRTWpuUHdiPd76a7wtgxvd
- I4qqTUFO/k/Yd62nqvdyeMo5aH7qcXDt0O/l6mr5R7cU/k7gD3cdtt4Ip+jkgIszJ6hXTAPrQzm
- Fg0mmS8EVuEuezznZYL8yRy/oHosN7LOoeH7XU9Qsr54IFhz14Rm96EhAO1jdd9hX8C9VkVs4mK
- Fg7Ymx18BwPhd0ZzvFg==
-X-Proofpoint-ORIG-GUID: kvn2rFMyqVQMzrf4aY1oAoCAg5D0ge6d
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
- adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1011
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290119
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,56 +111,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+On Fri, 26 Jun 2026 at 11:22, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+>
+> In this change the we rewrite the existing MSR logic to make MSRs
+> migratable:
+>
+> - we map them on existing QEMU fields in the CPU. A table and a macro
+>   MSHV_ENV_FIELD is used to associate a HV register name to the their msr
+>   index and their offset in the cpu state struct. The list is not
+>   exhaustive and will be extended in follow-up commits.
+> - mshv_set/get_msrs() fns are called in the arch_load/store_vcpu_state()
+>   fns. they use use generic registers ioctl's and map the input/output
+>   via load/store_to/from_env() from/to the hv register content to the
+>   cpu state representation.
+> - init_msrs() has been moved from mshv-vcpu to the msr source file
+> - we need to perform some filtering of MSR because before writing and
+>   reading, because the hvcalls will fail if the partition doesn't
+>   support a given MSRs.
+> - Some MSRs are partition-wide and so we will only write the to on the
+>   BSP.
+>
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> Link: https://lore.kernel.org/r/20260417105618.3621-21-magnuskulke@linux.microsoft.com
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Thanks,
+Hi; Coverity complains about use of an uninitialized struct
+field in this commit (CID 1660875):
 
-Glenn
+> +int mshv_get_msrs(CPUState *cpu)
+> +{
+> +    int ret = 0;
+> +    size_t n_assocs = ARRAY_SIZE(msr_env_map);
+> +    struct hv_register_assoc assocs[ARRAY_SIZE(msr_env_map)];
 
-On Mon, 2026-06-29 at 15:41 +0800, yujun wrote:
-> pca955x_get_led() and pca955x_set_led() accept led indices equal to
-> pin_count, but valid indices are 0..pin_count-1.  For a 16-pin device,
-> led16 passes the current check and then accesses an LS register past
-> max_reg.
-> 
-> Use the same >= pin_count bounds check as pca9554_set_pin() and the
-> gpio input handler assert in this file.
-> 
-> Fixes: a90d8f84674 ("misc/pca9552: Add qom set and get")
-> Signed-off-by: yujun <yujun@kylinos.cn>
-> ---
->  hw/gpio/pca9552.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
-> index 472d8ad957..b13ac9fd9c 100644
-> --- a/hw/gpio/pca9552.c
-> +++ b/hw/gpio/pca9552.c
-> @@ -311,8 +311,8 @@ static void pca955x_get_led(Object *obj, Visitor *v, const char *name,
->          error_setg(errp, "%s: error reading %s", __func__, name);
->          return;
->      }
-> -    if (led < 0 || led > k->pin_count) {
-> -        error_setg(errp, "%s invalid led %s", __func__, name);
-> +    if (led < 0 || led >= k->pin_count) {
-> +        error_setg(errp, "%s: invalid led %s", __func__, name);
->          return;
->      }
->      /*
-> @@ -352,8 +352,8 @@ static void pca955x_set_led(Object *obj, Visitor *v, const char *name,
->          error_setg(errp, "%s: error reading %s", __func__, name);
->          return;
->      }
-> -    if (led < 0 || led > k->pin_count) {
-> -        error_setg(errp, "%s invalid led %s", __func__, name);
-> +    if (led < 0 || led >= k->pin_count) {
-> +        error_setg(errp, "%s: invalid led %s", __func__, name);
->          return;
->      }
->  
+This array has no initializer, so the elements start out
+with no initialized fields.
 
+> +    size_t i, j;
+> +    uint32_t name;
+> +
+> +    set_hv_name_in_assocs(assocs, n_assocs);
+
+This function call (as its name suggests) sets the "name" field
+in each element of the array, but no other fields.
+
+> +
+> +    /* Filter out MSRs that cannot be read */
+> +    for (i = 0, j = 0; i < n_assocs; i++) {
+> +        name = assocs[i].name;
+> +
+> +        if (!msr_supported(name)) {
+> +            continue;
+> +        }
+> +
+> +        if (j != i) {
+> +            assocs[j] = assocs[i];
+
+Here we do a full structure copy, which accesses (copying)
+the uninitialized fields in assocs[i] ("reserved1", "reserved2",
+"value").
+
+Either the function should ensure it's initializing all
+the fields, or else if we know and expect only the "name"
+field to be initialized we should copy only the "name"
+field, not the whole struct.
+
+> +        }
+> +        j++;
+> +    }
+> +    n_assocs = j;
+> +
+> +    ret = mshv_get_generic_regs(cpu, assocs, n_assocs);
+> +    if (ret < 0) {
+> +        error_report("Failed to get MSRs");
+> +        return -errno;
+> +    }
+> +
+> +    store_in_env(cpu, assocs, n_assocs);
+> +
+> +    return 0;
+> +}
+
+thanks
+-- PMM
 
