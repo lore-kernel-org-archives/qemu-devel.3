@@ -4,110 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6DABC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 06:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70117C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 06:13:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we546-0007dP-N9; Mon, 29 Jun 2026 02:01:54 -0400
+	id 1we5EH-0001aF-Kg; Mon, 29 Jun 2026 02:12:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1we53x-0007b1-7c
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 02:01:46 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1we53v-0002UL-GG
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 02:01:44 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-69531108f25so5599720a12.2
- for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 23:01:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782712901; cv=none;
- d=google.com; s=arc-20260327;
- b=CEo4dSkdq11lYC5E8jB2LkpJIJUgwQ7HP5AJ0D8qzVQacqqUGMkcsTPSNeQk1sHerz
- Vdvkaydiey4ORXYBlEWgUllAJobRdSkKs62VHPElO2kfr0Buzikj5yzzF+J1iF0mOUpG
- /6xIh6Cna1kKBLitS6PV+uRrbTonfBsxILLbZAsPfV91VUCx1fGtDwlK74cA7HyOZ6Ei
- 6fcO3c1Gij9FIaVTfFtkm490FKNH5okPTiyjmQsLiBMZstt7DSiDdU0F8zKdaLnzbq8V
- SaXKgxIbW6N3QArfPq8L3FjAukw+sg8AxsFBKOC98XD1Poi3+Lh/XjSpInWxBVTehBH5
- EzvQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ga8NKBvuTurHYZuFFPbMH1yuEaox5Co+PpnVCyXn93w=;
- fh=dEcCJoizW0PIXIsgsrNAtfPedPj0hmKZvH/dXrAI1HE=;
- b=NP+uMcZyEnEQsMtfEtckXDNRihb31YZ997ncKuf7FZOdaKCzp5TNciHrt1NU35Dg4N
- CZCShE+OfxQVi14wYGTpVcMhXWrgqGcgMEZnYPJfvgyPNxjuTiFO4AtlO0oirPpJtmeE
- noBzPbgne+7DCTsKt8DirclLXffvtlXHQ6/PiJvIK9ViD3fYCCdk5CGGcXqGWQpUijnv
- Yuhjrjv195Oi4nHg8Hg1PtXEE8cm0E8FqVQJPeMbWXebQYPmiNlW7CkVMYBBrdXpFY9+
- pypOxpSw93CfDXYDHO6NffRCKo5oln/7cZz59fw7ivBORf623vPP+kY9oZUnhYxPqg4j
- 44uw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782712901; x=1783317701; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ga8NKBvuTurHYZuFFPbMH1yuEaox5Co+PpnVCyXn93w=;
- b=KLxx6URtWG//96vKwtyySpX0lBysLzZt10OdujOhcagprPLR7FOKSvdryYGtIE0cRe
- 7gWRYoS1TWcaEO5PMl/jBYPbAAxsbChLZuO8xosu3H5mVMfhJVTh8Fj2bOaejQahr5HA
- 8E4r9XgRKf9cF3T+ROZkr9ejv3EfxwCfT3JNjqAU42ONgR272mPhw+YKokBGAvfrWXv/
- ty5qmhaQqga0Kd/SOyIctX+JYphyjHoE7qcqhQCx9fUd4SVxwhv+VbIVyPwYv+Ho3f7S
- UmO0YQ4P5segJ/m1PBUbinyTz9Lx0N1T+lcDShNTvWIM1ohXbwvOLVWXjKl9vyEjNABj
- TidQ==
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1we5EE-0001Z2-Jo
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 02:12:22 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1we5EC-0006vT-2U
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 02:12:21 -0400
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 0A8953F468
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 06:12:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1782713536;
+ bh=8W3RzLAM/J7cY41L92q4LdQLYG8Vxh0+7AkVoZMu+GU=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+ In-Reply-To:Content-Type;
+ b=g7o6/0YjWN8H1+OaAEioahm6Zz7LgU8HMqe6xOAz8b3mxX3zmW1tWC6+6Qa1SQLvL
+ gOPmgyz1y0QPqOD8mEhILdVx51e9o+A2eg9a2OtDb0te3DlsZjBb1pQ3f/UGtWa9pI
+ rTBn5pbpPGwPGkLwGqLdn2BZBdKWeh8XFCZHizYcRtyFgYoba9nVYqQcJwJaVBB+v8
+ YNqkjMj8mR4UD8yGbkHkf6eB1NDw3tqYzO7vvfT0gwJ9XPjd1YlvNSy+NY+GJsuiv+
+ 9t9HmyYOHsW5glK7Ilsld3rmhM7BdCpoKpMophL896SDy3+Rr/Nipc0zKW9o35bl7A
+ e4U9wj+yPfuvUmz02E2Ld33TAVpu1eocF/33RXzzoMVFzTkesHYAy2LUwFTVDjeH1Q
+ usAExSFAVaBLPTZV8AnsRLzEWXTYeLLxyjzkC2SNFWQLagAn/Q6BF99Z0Mz0ZW0wea
+ QD8Iib4KPYAM5cTtTV66pbbWzeSrUroG8HDCkBKEF9ONziT1ZPBYJHHpBpJieEoNV0
+ 5guqkDsudWBayEZAbvXhZx66KhLc1mIp8w4S70chV5xaO+dnYjDluWLkTig7KpUFGi
+ I/6ecRFsppJFMRzjt6/wDxsEFhoM7Lv9SRDlM12jg0b7RJ8hram2SI5CGjJLonLOIF
+ dxqTihLF3LjvXzKXjB7aPGPE=
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-469218e618dso1689867f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 23:12:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782712901; x=1783317701;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ga8NKBvuTurHYZuFFPbMH1yuEaox5Co+PpnVCyXn93w=;
- b=r+LuYrzwPok4bQCYEG9bupzbm7hAp+/42usg8nSsvwF2Bwt5KqAGk0mfoCgj3MnAJ7
- e/WZLSOo8b3WkAi9rJR+mpxQF8aNmYX2ZD4gIoYWwpFGWR1DPmvGKTuhr4rvgYmmLEvY
- QtEZIHGwMiwsSruht4f5t4L/zlNVU18pnJt2gXl+vYInu5wTqQkhUgcCCU0fxwnzzfXs
- XoHXJgbYDbJLKr+K9+k/xrIIRSqBuR0FtEoQ2nEjwzUlbW2+UusTT2HoQyHRaHZmwZGq
- IW3W+vOT5e3LXLhdbgduDItJFZ8XRaEi3SV9orjQWFqr31suQAXt4ymDjXzNsSXmy6eA
- 66mw==
-X-Gm-Message-State: AOJu0YyuFOepaRWJKWA4awtO3ZUUeZb9h5bjXQvgGV53mi/PqiaZ/tYN
- xFtW2NapDWuMxNzvjJIeUBWnCzRkqjSKMrQV2IDmEnrJPRkWpx7+dErFjTPitEmnpfkkuZqYhlc
- 0wUW6EhP0ojqVVRI7U7BsVoOMzWjYTY0=
-X-Gm-Gg: AfdE7ckPhdKnbibl6kwA6pZlDw/fzG1uDFTmrfs1c3yFc6Jc7y9lXU1RHEkqAJedopm
- d0yaL/r1mIl4yyknHpmoTYT/OSH304zQagOHJY0JRH9u9WTC2ph/x/B837e77xLHjkHlr3gb3KF
- grkbV15dPUetn/zF229seIvW9Owoc/HPp5Jxw4pZzT69IRBRKilu0YFBhRn5ALtqllg7VmbJA7m
- 2bUAunY9GRYXlFLHF8uY8pNtrrwP3yJkFiWhEdza8IAPA24HneuLdfBrOyr64a0+h9E2TUOXQ==
-X-Received: by 2002:a05:6402:34c9:b0:68d:643d:be37 with SMTP id
- 4fb4d7f45d1cf-69810b7238cmr5583966a12.23.1782712901220; Sun, 28 Jun 2026
- 23:01:41 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782713535; x=1783318335;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8W3RzLAM/J7cY41L92q4LdQLYG8Vxh0+7AkVoZMu+GU=;
+ b=WB2mGt6FOPenPuO0f48ZmrqoaZI/zjLEScSIzyrYWdlFiKxBm7TLwZHKUHYti0tGaj
+ JiUFOMk5DgNTyK6No/ulQByRnu22/8VHOmTxj8DhDLXu1RlT6OtAMemoZlrSsVbM6s0F
+ VkumA0rNWylXOC6oJd+IDNHNXZ+sknsmdhlgisur8ATU1ERNpTJzbIMgzX09u4lBjtLj
+ ctD+BWBs+oVSMn6Aem2GgFJhc1ZcNrBRBk8juHg+OCVw0gUX7dla9fu6/LzddkYOmIvz
+ Vfift0oY3Uflg+01baLKKa1I1kDX0yJDwzccfMv3Xm3LUKgzGJwWBSLT75fRXS4E+ok9
+ pvog==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/9Aw2Tf2ZKYnjfSIRiDCiTWQdkkhESZK5gZZP71xhYPY//eaS6q5Z0qSnMVQ+f9RgO5SHFA1YwMaUZ@nongnu.org
+X-Gm-Message-State: AOJu0YxYGW2UfizqcNFE32c6p1V3kK89oZlnkAVLacda5C0uFRndrwBm
+ iP00KT6aPJzsNkypkWjfdd7ZKDoCKP62nBQYEjxERnRVan9iSFRlOEvXcOF6/3Xh0XaHo3hEmYR
+ U87YT8S5OLEP3PaWCSsQEgyMVg/pxn4+efIMBXBKqpE7vVGI004XUOhZtXsTEoAEuoXa/58WJ
+X-Gm-Gg: AfdE7cl+b8zvsJsnLYhs/VTHXzB883pF/Y0HTnXdUSvaSDZmRTQT9H77UsNSQY4fb4Q
+ n7DF+1GXxsZ0N2Z+G9fJnOsU6yDiJskhN4jmVRH4HGHqZtYcEPDSuTi+D6DrUvbmQuJJu0B/IKm
+ Mvz8O/ybrpc+tXnXhoxPWHFe5sykKXvnxmPUGtWnapt8N19QCf6zEA1PQPHoT6LnxHVu/kzWo24
+ KwLKuxaRUvDMd4F1jZ73C7Ak1w6gC2hmqqURd8BrUmxoTWv0P5JMhhgNpOyDWT+XmMuI/4FwtjF
+ OmuDlm5VRUMFA7d17CYrWTY/zesbEkCPWh0HOHzFccTN1idvxoNYyOlvoCCoCK89oUP9zW7I/NH
+ CnhJicUlAPA/f629w5NCE2VorRwwbRvXPLTYX1vZl15uZOUwPUbTUsx4jHqoR8x+4UqQQpmOyML
+ s3GxUtJnRKgKXZS15byyb/pO2rEyDM2xfAB33ezCC2qHKwFOsWXZ0=
+X-Received: by 2002:a05:600c:3b8a:b0:490:44eb:c1e0 with SMTP id
+ 5b1f17b1804b1-4926fc761ddmr196991295e9.21.1782713535554; 
+ Sun, 28 Jun 2026 23:12:15 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b8a:b0:490:44eb:c1e0 with SMTP id
+ 5b1f17b1804b1-4926fc761ddmr196990905e9.21.1782713535127; 
+ Sun, 28 Jun 2026 23:12:15 -0700 (PDT)
+Received: from [192.168.123.154]
+ (dynamic-046-114-104-147.46.114.pool.telefonica.de. [46.114.104.147])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4726b76e6f8sm16115691f8f.13.2026.06.28.23.12.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 28 Jun 2026 23:12:14 -0700 (PDT)
+Message-ID: <34ffc248-aa4d-4154-bf5d-3b095aff0144@canonical.com>
+Date: Mon, 29 Jun 2026 08:12:12 +0200
 MIME-Version: 1.0
-References: <20260624070851.13342-1-zhangckid@gmail.com>
- <20260624070851.13342-6-zhangckid@gmail.com>
- <20260624175143.GD109308@fedora>
- <CAK3tnvLhx9HipFENkMm-pdOqvLZUYDdF=VuFzQ=gyD4TV__eSw@mail.gmail.com>
- <20260625151608.GA160758@fedora>
-In-Reply-To: <20260625151608.GA160758@fedora>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Mon, 29 Jun 2026 14:01:04 +0800
-X-Gm-Features: AVVi8Cd0N7XzgfaLxhpQsA2h2rNa_rr4jyOzCKbxkTE8uEBL6ZwPhbP2qZ1pgbw
-Message-ID: <CAK3tnvL5=SoBPV-WQ22AM4xaneqBU=BbAAbUyhXodFiFD=dYJQ@mail.gmail.com>
-Subject: Re: [PATCH V9 05/17] block/export: track IOThread reference in
- BlockExport
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, 
- Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] hw/acpi: correct field sequence in SPCR table
+To: Alistair Francis <alistair23@gmail.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+References: <20260622111843.34056-1-heinrich.schuchardt@canonical.com>
+ <20260622111843.34056-2-heinrich.schuchardt@canonical.com>
+ <CAKmqyKPeK-nCsemLAru6nkWP7V8qtA=XgW3ALuOJ5nFegF5F4Q@mail.gmail.com>
+Content-Language: en-US
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+In-Reply-To: <CAKmqyKPeK-nCsemLAru6nkWP7V8qtA=XgW3ALuOJ5nFegF5F4Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=185.125.188.122;
+ envelope-from=heinrich.schuchardt@canonical.com;
+ helo=smtp-relay-internal-0.canonical.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,65 +126,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 25, 2026 at 11:16=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.c=
-om> wrote:
->
-> On Thu, Jun 25, 2026 at 07:06:26AM +0800, Zhang Chen wrote:
-> > On Thu, Jun 25, 2026 at 2:33=E2=80=AFAM Stefan Hajnoczi <stefanha@redha=
-t.com> wrote:
-> > >
-> > > On Wed, Jun 24, 2026 at 03:08:39PM +0800, Zhang Chen wrote:
-> > > > Users currently lack visibility into which block exports
-> > > > are utilizing specific IOThreads. This patch integrates IOThread
-> > > > referencing into the BlockExport lifecycle.
-> > > >
-> > > > - Add iothreads array and holder_name to BlockExport struct.
-> > > > - Use iothread_ref_and_get_aio_context during export creation.
-> > > > - Implement proper cleanup in blk_exp_add fail path and blk_exp_del=
-ete_bh.
-> > > > - Support both single and multi-iothread export configurations.
-> > > >
-> > > > This ensures IOThread 'holders' status correctly reflects active bl=
-ock
-> > > > exports for better debugging and resource tracking.
-> > > >
-> > > > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> > > > ---
-> > > >  block/export/export.c  | 63 ++++++++++++++++++++++++++++++++++++--=
-----
-> > > >  include/block/export.h |  6 ++++
-> > > >  2 files changed, 60 insertions(+), 9 deletions(-)
-> > >
-> > > If AI was used to generate this patch series, please see QEMU's AI
-> > > policy:
-> > > https://www.qemu.org/docs/master/devel/code-provenance.html#use-of-ai=
--generated-content
-> > >
-> > > This feels like AI generated code in that it is verbose and has lots =
-of
-> > > structure (e.g. commit messages that look like an AI summary of the c=
-ode
-> > > change), but the details are not correct (misleading comments, leaks,
-> > > etc).
-> > >
-> > > I will pause my review at this patch and wait for your response.
-> >
-> > I used the AI for parts of commit messages.
-> > Please continue to review code parts and skip the commit message parts,
-> > I will remove all AI-generated commit messages in next version.
-> >
-> > Sorry, I just noticed the discussion:
-> > [PATCH v2] docs/devel: relax policy on AI-generated contributions
->
-> By the way, the existing policy already allows using AI for code review.
-> I recommend doing this before sending patches.
+On 6/29/26 02:58, Alistair Francis wrote:
+> On Mon, Jun 22, 2026 at 9:18 PM Heinrich Schuchardt
+> <heinrich.schuchardt@canonical.com> wrote:
+>>
+>> On LoongArch and RISC-V invalid SPCR tables are created:
+>>
+>>      Terminal Type : 00
+>>      Language : 03
+>>
+>> The correct values are:
+>>
+>>      Terminal Type : 03
+>>      Language : 00
+>>
+>> This is due to commit 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate
+>> SPCR creation to common location") that swapped the fields.
+>>
+>> See the specification of the table in
+>> https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
+>>
+>> This page shows version 1.10. But the sequence of the fields was not changed
+>> since version 1.0.
+>>
+>> Our LoongArch and ARM code uses version 1.07 of the specification.
+>> Our RISC-V code uses version 1.10 of the specification.
+>>
+>> Fixes: 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate SPCR creation to common location")
+>> Origin: https://lore.kernel.org/qemu-devel/20260326121947.51200-1-heinrich.schuchardt@canonical.com/T/#u
+>> Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2146419
+>> Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+>> ---
+>> v4:
+>>          Reproduce the test data changes using rebuild-expected-aml.sh
+>>          creating the same diff as v3 but in two separate patches.
+>> v3:
+>>          Update test data
+>> v2:
+>>          Mention the different specification versions used by our code
+>>          https://lore.kernel.org/qemu-devel/20260326144835.67911-1-heinrich.schuchardt@canonical.com/
+>> v1:
+>>          https://lore.kernel.org/qemu-devel/20260326121947.51200-1-heinrich.schuchardt@canonical.com/T/#u
+>> ---
+>>   hw/acpi/aml-build.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+>> index 9b3cdd3781..990abc64cd 100644
+>> --- a/hw/acpi/aml-build.c
+>> +++ b/hw/acpi/aml-build.c
+>> @@ -2144,10 +2144,10 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
+>>       build_append_int_noprefix(table_data, f->stop_bits, 1);
+>>       /* Flow Control */
+>>       build_append_int_noprefix(table_data, f->flow_control, 1);
+>> -    /* Language */
+>> -    build_append_int_noprefix(table_data, f->language, 1);
+>>       /* Terminal Type */
+>>       build_append_int_noprefix(table_data, f->terminal_type, 1);
+>> +    /* Language */
+>> +    build_append_int_noprefix(table_data, f->language, 1);
+> 
+> Won't this break tests? Don't you need to disable the test first (then
+> re-enable it and fix it in patch 3)
 
-OK, I will use AI for basic code review before sending the next version.
-By the way, do you have any design comments for other patches?
+Hello Alistair,
 
-Thanks
-Chen
+It would be helpful if /tests/qtest/bios-tables-test.c would clearly 
+point out if changes to tests/qtest/bios-tables-test-allowed-diff.h and 
+their reversion should be in the submitted patch series or not and what 
+the acceptance criteria for the patch series are.
 
->
-> Stefan
+I was not able to identify this from the existing text. So I eliminated 
+those redundant changes.
+
+Best regards
+
+Heinrich
+
+> 
+> Alistair
+> 
+>>       /* PCI Device ID  */
+>>       build_append_int_noprefix(table_data, f->pci_device_id, 2);
+>>       /* PCI Vendor ID */
+>> --
+>> 2.53.0
+>>
+
 
