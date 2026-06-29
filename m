@@ -4,108 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 191F7C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 11:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2BF1C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 11:05:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we9nE-0003cr-Gz; Mon, 29 Jun 2026 07:04:48 -0400
+	id 1we9nQ-0003ea-B0; Mon, 29 Jun 2026 07:05:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1we9nD-0003cQ-FB
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 07:04:47 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1we9nB-0002bL-9v
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 07:04:46 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-493b61b52b6so2102505e9.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 04:04:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782731083; cv=none;
- d=google.com; s=arc-20260327;
- b=TrLvhZ6MGGiOpNDQYgGbZOmU4eD4lKwTzdUY7DLZX9lZcF2ap57yIYaoDaomKZW6wK
- /Vvjn+T3yxeZzCrjgyULKNMlf7wBmOEy7dU7GeRnVy25cQURvcsfCYj5bYjgT3LFkb74
- SJiVg0BIdQ+y6X0kKqqAldhLCHF5QB4iiHjH+ejZ2f3LiS0CJG9s5JdqPIjlgCoYoksW
- iInQv+Exp5JfEtq4jGWlqC/IT03/raIQZxkDHrvHxWFabZfcSJ87TleUtAEeLubMyGpZ
- Zk/I3pggPfxt/o1W0q6woZw7TG1w+EZWp/58zQlHUMnjB5yqnpdgGPvBr06LV6DPwLP/
- YGLA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Ode3gc+oa6EJOWIDQa/ErNDO3rOM+s5mh32PACNAPFo=;
- fh=8RUj9I7f+xWGgTMe9QkV6YSB9vzdqYA/iBz75JNnkZI=;
- b=SdNY13iD3lmSmjw4RFvzsBsYeJrm24HkyvuHNXix4qRqGqoL7uOY6ZunIW1+Hnzjrk
- +qy5xoR2UMejqzHkEYhD4A5BU70R2Q+TaU1zb4fGRxFy6WNtl7NvZO6kAa+suYPPh+fY
- e6YZUSVgOOdG06MRy6HZ1qC8TRoJx0s+5BZVgAz7zb8QLBycTja946XCewRMJPf+JyOP
- +l7seBdIC81jDulTE2TSJIs9Gr1Z3jMot43sXOB5DbaOlIv6EEUqwvzbkDcnaAIBheFI
- tRRCw4MqgvHmrYLcpSb56BcgN2dz12Aw29AR4xuXqOtEz1fA2rQdzLRlHZmSYnDHB7Su
- 8Ebg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782731083; x=1783335883; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ode3gc+oa6EJOWIDQa/ErNDO3rOM+s5mh32PACNAPFo=;
- b=A6EY2Eh+wTXneZzZNj1Ly9N8Sa0f75FrI3alWhv5l1DcMbCFO5WaqonnDN3VaeNpYL
- Z0tKuu5NXJ8ncQCezCDP5N/UNlh+i26FNGwWDHEXrvkrePl49OVI5NIs2a3ght/Mr2xK
- okY7KavTvdsgh2emgXPUL+9r3vrOAt8Np7t8GVds1ChHPk9pIVvqYN901ekZNpeUWLwz
- zJPxdq91JFbXBi22dtsKFAY7jLIvXeQlt3ilFsrHrdCII4r6dNQTsmiF+1+KYjTRLoKn
- CwSEEm2AI1KU26s29OyBmyZRDTQKBeGF60BiJ9gW/wN38NXHO4mOXCGjE1T5MvsvuYtR
- MNdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782731083; x=1783335883;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Ode3gc+oa6EJOWIDQa/ErNDO3rOM+s5mh32PACNAPFo=;
- b=SQ3SFBkR3Z+N1fPjOJLv9idP6YTMP8SZKUMP8ZugT6sGEXdLa/qlK9KpHt+Typ/49T
- 9B9ufkZ/l2/ZGvaDwepGo0jph0Cdf3xvAB/as8joW/dLd+AQnOmk3qVj/JF9SWGt56Ao
- cUAwOmuhXLor3t5wsFzt0M5J/k/ioEvnpPCEJtpvz20rzP6eCwxU9zUyZMCLI+VGT+Fm
- hc0ApvFBtsqet1dEoruN2+SHeGCMmNtprUoAOT848HWvCV1pV63Zm2FZAt0GMAdpxzkB
- mbCuwo9rTLqiayooIqZwBgE/HeQKCt3H4Q3mvgozP2M9KhMUIhq++AbaTKmkJucufs+3
- IcSw==
-X-Gm-Message-State: AOJu0YyJY2ehLSGUCgfi1y+V/toZRFxl2PgudCSwIc7+d70YMLF1Umxj
- 1bspQdIfDb1DmTTBYP0mdw+cnUZxh8ijxp68TcCnozCcN8PuoflS4bVIKzLFhLdRdArj0GOIe0b
- ujcRzvvOMpPtFdgihy0/BegyacEMfLSEsMeDuDgvXBw==
-X-Gm-Gg: AfdE7cnI9Y7Ln3v8HajNi1CRJr8bvEKIXMqqDlwAT78jcVQw56/l9+diED87VqvBFMX
- WmrwJXEHDD5/nV0yFRMfSZezZ+7+FYofzU5Et7USCRzUyXqFXZQMjYOjFux8EVeWrDG5zJ9xsma
- j3eCfBpAvMfRI9WUPn/lFyKZbeSVDyaJM6yurBMrbgjHAqfW57V/vtRz5arZRPoyczBnHu7lzK3
- QHcSYjhASPpGlbVJANOfMMe6Ae241aMeExIEGK3hU+GIErd4AOljqBhaL0ocvtqK3RkkT7z1leB
- idad+yReFgOWHeP/t66UxfRNDHbe2Rlcxf1kHPAHTPvAN6JH9ospeqsV07IO8/KFiPRvZ7Jvz7D
- 0AvLa60Ck3CiZGlw6cqE=
-X-Received: by 2002:a05:600c:1908:b0:492:465c:56f6 with SMTP id
- 5b1f17b1804b1-49266873d4emr244320295e9.10.1782731083174; Mon, 29 Jun 2026
- 04:04:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1we9nP-0003e1-16; Mon, 29 Jun 2026 07:04:59 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1we9nN-0002g2-6N; Mon, 29 Jun 2026 07:04:58 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65TAmV4g2921656; Mon, 29 Jun 2026 11:04:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=Scrq/63S7aRsfDjeHiOaXZiZ86NM
+ 68o8r5/1D5MALa8=; b=ZIg63PtvcK+d/yfH2NnCmW7zN69J2/zzjKFfUSjvvbVO
+ yLCK84QthAf0wofNo6DY07m5R3DhoPPBqbsH05mvQe1Yezik0Ri2hCRjlYYP3Eb5
+ 5/OFHc2dEM1oGMKeWZLZvHlYRIdBgXWcutWYLio1lRT+I8I5iODoDuQlBIwBA1aP
+ iWs3JJKl7KhKl0V9L2Q5L+acRGgxYq8GLCHuPNuoXKGYS1Bdx22idFT2OcSJ1kVM
+ aiNalGYxQIg4i1jjeqgFsVn9qrgaiBdUbhjcRjud3YK61UcM0GG/IWAw+dB3goyn
+ KD+rqsqRDOQQ09XdaXgCIQCP/w6irJMka5gLhA5HXg==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26q9rqj6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jun 2026 11:04:53 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65TB4ffx022193;
+ Mon, 29 Jun 2026 11:04:53 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2sujw2ju-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jun 2026 11:04:52 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65TB4mmX50397640
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 29 Jun 2026 11:04:48 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BB1C820043;
+ Mon, 29 Jun 2026 11:04:48 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 34B2C20040;
+ Mon, 29 Jun 2026 11:04:44 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.bl1-in.ibm.com (unknown
+ [9.123.10.203]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 29 Jun 2026 11:04:44 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
+ Misbah Anjum N <misanjum@linux.ibm.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>
+Subject: [PATCH v3 0/8] Testcase improvements and Power8E/NVL removal
+Date: Mon, 29 Jun 2026 16:34:03 +0530
+Message-ID: <20260629110411.3051274-1-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-References: <20260626123531.132078-1-alexander@mihalicyn.com>
-In-Reply-To: <20260626123531.132078-1-alexander@mihalicyn.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 29 Jun 2026 14:04:16 +0300
-X-Gm-Features: AVVi8CcEY52K33GYkfBvpqWFh5hwuh8BR0QOnP0DbZMU_2S4h-kIQvuA9KM5yRY
-Message-ID: <CAAjaMXabXNmh1UZ5wnpX4wucnC+yWvMo2-jr2XBTby4zqf6CTA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/9] hw/audio/virtio-sound: basic migration support
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDA4OCBTYWx0ZWRfXy5R67HyKVeAX
+ ptIBBQHTnoBo/aalJ4x0YlMpTJzNe3Wxl6k9sWMDoGKTlnuZKzUFRhaWYMyJYjcChUZAZ8+PZuG
+ ivqML0TlRPLmKSmWGXhnFdpAUJs/5rBMJOvqGDblDkTTji9z3v4BKpEnQSpyqm0PQi2NrJ9lcsx
+ 6Xo1hHJdjblczi46JxHx8vWpsdNnsWmg54q7JjSZp9tFzkuTJpp5kFRHr/+hDzG85OwA+F23A1e
+ uWgtWgyap7O0QhdDtZLz16yUA2d1WhaZpxDYJCf9Dinxc2DwtTeQ8/MN0E6Q+oJHJKfxgBmMcdk
+ H+CMYzY/0WY7QP64BR8m+qSrr6v0pO9YCxOBChWstwOXITWFshF29PRKtrpnoDid7qPChodfoZg
+ 70auIfXFrLcaKfr4WufhPR3ZmLUtVclZgJfZaKl82Me6OFxkwIMwNRGpDgd4Hh1EGR2CQmKUOWG
+ JlNb86Iv8d/HSMZnEdQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDA4OCBTYWx0ZWRfX6nPXRSMOkm02
+ fSmrLwE9KeBzFfp/bLL11xs/A4rjWhfj4nPKh9u316g9v76AjN2SMSKsUv9haUOQBO24Gu64Ikg
+ A20BXxk6vvDbNMW2REvnYCei/qhSUYo=
+X-Proofpoint-GUID: OVYlOTQnNHP-rlXmFErOUoWT8NwiZOQj
+X-Proofpoint-ORIG-GUID: yriYYOpkGHV1y52NaveYalug9vdJGuaF
+X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a425156 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
+ a=20KFwNOVAAAA:8 a=p0WdMEafAAAA:8 a=MdZrTe2ayghipT-8awEA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606290088
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,114 +134,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alexander,
+Overview
+========
 
-On Fri, Jun 26, 2026 at 3:35=E2=80=AFPM Alexander Mikhalitsyn
-<alexander@mihalicyn.com> wrote:
->
-> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+This patch series merged two patch series sent earlier:
+	"Testcase improvements for PowerNV"
+	"Remove deprecated Power8E and 8NVL CPUs"
+since the Power8E removal series depended on the former due to pnv-spi test
 
-Could you please send your patches from your
-aleksandr.mikhalitsyn@futurfusion.io address for the next revision?
-Replying to review comments with your personal email is fine, but the
-s-o-b should match your sending address. We do not know if the address
-belongs to you otherwise. This is not explicitly stated in our Code
-Provenance documentation but we need a way to verify your S-o-b
-provenance.
+Broadly contains 3 changes:
+1. Testcase improvements:
+    Add a testcase to detect regression in remote interrupts when XIVE changes,
+    since such regression had occurred during Power11 XIVE changes:
+    https://lore.kernel.org/qemu-devel/baf6c854-832b-4a2e-922f-d34e6dadf821@redhat.com/
 
-Thanks,
+    Also add Power11 chip and testcase in qtests, and fadump functional test
 
->
-> Dear friends,
->
-> This patchset is aimed to support virtio-sound live migration and based o=
-n
-> pre-existing Volker R=C3=BCmelin's patches from qemu-devel lists [1]. I t=
-ried
-> to ask (https://lore.kernel.org/qemu-devel/9d7ea128c711c201688a4716f53b8a=
-335fc53569.camel@mihalicyn.com/)
-> if Volker is going to continue his work on this, but received no reply so=
- I
-> just decided to go forward: take his patches, rebase and resend. Of cours=
-e,
-> I kept all authorship/tags so I hope that it is fine.
->
-> Testing.
->
-> I manually validated this with Ubuntu 24.04 Desktop VM and found no issue=
-s.
-> Also, it was validated with CI (https://gitlab.com/mihalicyn/qemu/-/pipel=
-ines/2626702088).
->
-> Original patchset:
-> https://lore.kernel.org/qemu-devel/a289a081-9a61-4bcb-b693-bf6cd7768c0e@t=
--online.de [1]
->
-> Git tree:
-> https://gitlab.com/mihalicyn/qemu/-/commits/virtio-sound-migration
->
-> Changelog for version 3:
-> - addressed review feedback from Marc-Andr=C3=A9 Lureau:
->         - drop VirtIOSoundPCMStream's id field (unused)
->         - resurrected error_report(..) in virtio_snd_pcm_start_stop()
->         - fixes in "hw/audio/virtio-sound: add stream state variable"
->           [ please, look in commit message for details ]
->         - added "hw/audio/virtio-sound: remove channel positions field
->           from VirtIOSoundPCMStream"
->         - fixes in "hw/audio/virtio-sound: add missing vmstate fields"
->           [ details in commit message ]
->
-> Changelog for version 2:
-> - no code changes (only commit messages)
->   followed suggestions from Daniel P. Berrang=C3=A9 (thanks, Daniel!)
->   https://lore.kernel.org/qemu-devel/ajzoxZr4g0Xsr_4p@redhat.com/
->   and added some extra details about what I did with the original
->   patches during rebase (for some of them it was simpler and less error
->   prone to just drop changes and reimplement them by following the idea
->   of the patch, cause base code has changed significantly).
->
-> Changelog relative to the original Volker R=C3=BCmelin's submission:
-> - rebased:
->         - "hw/audio/virtio-sound: return correct command response size"
->                 was dropped as it was already merged
->         - "hw/audio/virtio-sound: fix segmentation fault in tx/rx xfer ha=
-ndler"
->                 was dropped as it seems to be replaced with another fix
->                 https://github.com/qemu/qemu/commit/731655f87f319fd06f272=
-82c6cafbc2467ac8045
->         - I had to drop all pre-existing Reviewed-by tags cause it was 2 =
-years since
->           this patchset was sent and reviewed and I did a quite significa=
-nt code changes
->           during rebase
->
-> Kind regards,
-> Alex
->
-> Alexander Mikhalitsyn (1):
->   hw/audio/virtio-sound: remove channel positions field from
->     VirtIOSoundPCMStream
->
-> Volker R=C3=BCmelin (8):
->   hw/audio/virtio-sound: remove command and stream mutexes
->   hw/audio/virtio-sound: allocate an array of streams
->   hw/audio/virtio-sound: free all stream buffers on reset
->   hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
->   hw/audio/virtio-sound: add stream state variable
->   hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
->   hw/audio/virtio-sound: introduce virtio_snd_set_active()
->   hw/audio/virtio-sound: add missing vmstate fields
->
->  hw/audio/trace-events         |   3 +-
->  hw/audio/virtio-snd.c         | 679 ++++++++++++++++++++--------------
->  include/hw/audio/virtio-snd.h |  26 +-
->  3 files changed, 399 insertions(+), 309 deletions(-)
->
-> --
-> 2.47.3
->
+2. Power8E/Power8NVL removal
+    Power8E and Power8NVL were deprecated since QEMU 10.1, with
+    commit 264a604e7163 ("target/ppc: Deprecate Power8E and Power8NVL")
+    
+    Hence, remove usage (chip and core types) of Power8E and 8NVL from PowerNV,
+    PSeries as well as testcases.
 
---=20
-Manos Pitsidianakis
-Emulation and Virtualization Engineer at Linaro Ltd
+3. Maintainer changes
+    Add myself as maintainer for PowerNV machine
+
+Testing
+=======
+
+* Git tree for testing: https://gitlab.com/adi-g15-ibm/qemu/tree/feat_maintainer-v3
+* Gitlab pipeline: https://gitlab.com/adi-g15-ibm/qemu/-/pipelines/2635562383
+* Successful ppc64 functional tests, qtests, boot tests, builds at all commits
+
+Changelog
+=========
+v3:
++ #3: use machine_type array in pnv_xscom_addr, as suggested by shivang, harsh and balaton 
+
+v2:
++ #1: put e1000e on socket 1, and disable it's cpu, as suggested by cedric
++ #1: pull out command fail checks into a helper, as suggested by shivang
++ #2: use g_autofree, suggested by cedric
++ #3: use g_autofree in tests updated
++ #8: remove G:, as suggested by daniel
++ rebased to upstream
+
+from previous split series:
++ #1: added checks to see if network is up and interrupts happened, based on shivang's review
++ #3: replaced common if-else-if check for machine type with pnv_get_machine_type
++ #7: added doc in removed-features, as suggested by cedric
++ #6,7: added rb from philippe
++ #8: new patch, maintainer change
+
+Aditya Gupta (8):
+  tests/functional: Add remote interrupts test for PowerNV
+  tests/qtest/pnv_spi: Test Power11 PNV_SPI
+  tests/qtest: Add Power11 chip & machine to qtests
+  tests/functional: Use default powernv machine instead of power10
+  ppc/pnv: Replace Power8E with Power11 for 'none' machine test
+  ppc/pnv: Remove Power8E and Power8NVL pnv chips
+  ppc/pnv: Remove Power8E and Power8NVL CPUs
+  MAINTAINERS: Add self as maintainer for PowerNV
+
+ MAINTAINERS                            |  2 +-
+ docs/about/deprecated.rst              |  9 ---
+ docs/about/removed-features.rst        |  8 +++
+ docs/system/ppc/powernv.rst            |  2 +-
+ docs/system/ppc/pseries.rst            |  2 +-
+ hw/ppc/pnv.c                           | 62 -----------------
+ hw/ppc/pnv_core.c                      |  2 -
+ hw/ppc/spapr_cpu_core.c                |  2 -
+ include/hw/ppc/pnv.h                   |  8 ---
+ target/ppc/cpu-models.c                |  6 --
+ target/ppc/cpu-models.h                |  4 --
+ target/ppc/cpu_init.c                  |  6 --
+ target/ppc/kvm.c                       |  4 +-
+ tests/functional/ppc64/test_fadump.py  |  2 +-
+ tests/functional/ppc64/test_powernv.py | 95 ++++++++++++++++++++++++++
+ tests/qtest/machine-none-test.c        |  2 +-
+ tests/qtest/pnv-host-i2c-test.c        | 10 ++-
+ tests/qtest/pnv-spi-seeprom-test.c     | 20 ++++--
+ tests/qtest/pnv-xive2-test.c           |  2 +-
+ tests/qtest/pnv-xscom-test.c           | 22 ++----
+ tests/qtest/pnv-xscom.h                | 41 +++++++----
+ 21 files changed, 162 insertions(+), 149 deletions(-)
+
+
+base-commit: 20553466cc47af6a8c95f665b601fce3c852e503
+-- 
+2.54.0
+
 
