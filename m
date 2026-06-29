@@ -4,165 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C671C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 11:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0ADFC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 11:29:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weA2n-0004l3-1e; Mon, 29 Jun 2026 07:20:53 -0400
+	id 1weAAW-0006x3-QD; Mon, 29 Jun 2026 07:28:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1weA2d-0004gS-3V
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 07:20:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1weAAN-0006vx-SI; Mon, 29 Jun 2026 07:28:45 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1weA2a-00038C-4L
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 07:20:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782732039;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mUoE78uEr8FhHed00+iIsGrol/Mlui/t1hgbZIjGR0A=;
- b=YPAxBqG4596M5rQ8B4VmDMc9OVeopscdr0f5+DwZVRWfpkD9kbEwxYBz/H8tOe+R01ILlF
- fB9301osyegvKrpLmIK/k/JOTh+3r5nh+6U4h5ogiifa93wUbecuiM1nTxdlwdyU4zom7B
- SiAVH6sqcabrKrmsBAAP8xUf4k7vIDk=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-612-z0FgDnFaNtWCEVlCTj58CA-1; Mon, 29 Jun 2026 07:20:38 -0400
-X-MC-Unique: z0FgDnFaNtWCEVlCTj58CA-1
-X-Mimecast-MFC-AGG-ID: z0FgDnFaNtWCEVlCTj58CA_1782732037
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-47499916233so113468f8f.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 04:20:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782732037; x=1783336837; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=mUoE78uEr8FhHed00+iIsGrol/Mlui/t1hgbZIjGR0A=;
- b=tMgekjkVDnpiKrAPG0YvGGhcUtilc0ALw1cndOll51Ha1MGyC/9N9QDhb8nrrj5WHd
- CUG2gXc22cMXTNuc6yn8G7a00zXC+5Cv7CQ6JJLvoFLcLp6oq6f4VGEt7JU7rnqK1SGy
- qaONRripFIAXriRAxM1a2CGwzEAsJEOtPi+6ypUiLemybCpTJ3vmuvhogJq4sloQW4e+
- f6XQ1u2pYVTP5JaHOloHqpCIPt5UzWWWXIZ1SxP6y6PnC6X5E53vGUmdojmHH9HxKf4E
- nONgTEl7LcZWDypzg8yDt3yE0AQClGzMGdz9FCWVdI5I+DFVVgy75hQlJI7IJMxhnQ1i
- +HXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782732037; x=1783336837;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mUoE78uEr8FhHed00+iIsGrol/Mlui/t1hgbZIjGR0A=;
- b=JVmK/kYdPHlNsWMv02sKyer9inXp8Kr0oRcG45YPegcCIV0H+kxQyq8HhZX9gTws6G
- lYn1d0C+syv+TtGqNgqpWQlXVWqkXVmOQO71Qp66QGCoBEy4rO7utimfpZMeybcWAHT1
- zBuRTBZrQABj3ZXA7cSkIzTLmh8Vd8WAJ7OdylpF88J/5k8Z6Gju2hhh+ChphhNHfv78
- U41Ep9Efvctbf5X9ao9p0J5gFO2JcwrYWNByj+GWKeL/womnBOzV2j5ane4JT0piR/ez
- uoeqa1Z3idgaV5z77Y87Lx/a6z7OTlFbpa9+17+//gjhk068c9HCDDUqtFl6fmBgYYbv
- xuFQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrKfy27c486+DpRt1cw5mSC/IZakdPoKtO1bm0HeBj4hEKuRP4USTkQ/o9AXuZAqJF3gpO3s+GdT2ZG@nongnu.org
-X-Gm-Message-State: AOJu0YzHyYSDWj94XPk9V9jhNRB1JyeURtvL7WcfhUkmu6pE3BbrSlas
- kF60B2Pv6sRp9wfp03hpt+76W/FTk1qbADqGcRztrnew3snfsZXZ1Z3UFoRLIlS692b5SRE1sxU
- 2A2BRrz2z7TY1HG9ImNhnWAMr25Dlq7m6mGl61GVThrAaCkWMHVofU4M2
-X-Gm-Gg: AfdE7cl3xty5I0MH9xCp5ATgIxMR7y6bR0OuuzCiH1ZpNF4t2gboLqVibnbYjMgaSYl
- TY0IkGJWjZhQqGZBoMtuiwd0nz3IuQp8MA4OiDQTeKGPICOWT3R55BjTi8SBcCtmSmQqKqF1AsU
- Gc1IB5rZwOcEMsLHsGx0e3zDJpEFDlsMPrdl1MnLzcUSPiBfixer/8QU2xMxa2y0L+QOUYkIlew
- mFvBaJus0RfDPFJR6OAJCP/Na8WgTQX8FuvgT+2D7ox2r9FrioR4R8QwJc9DI2r/Ya/ROxOMeku
- N441j90GCKEzO04N3Mcy5qg/p0VJtoe7yHExgnrhalyxq+8qFpMD3AHMdqfwjxEc5zgxriFRRWn
- m0oE9hKTwu859VHyzJ5ec5wHtH0xdzOJ39sGyesSpH/TOqPN+TA==
-X-Received: by 2002:a05:6000:2dc7:b0:46f:7d90:8128 with SMTP id
- ffacd0b85a97d-474fefa759emr36888f8f.14.1782732036688; 
- Mon, 29 Jun 2026 04:20:36 -0700 (PDT)
-X-Received: by 2002:a05:6000:2dc7:b0:46f:7d90:8128 with SMTP id
- ffacd0b85a97d-474fefa759emr36831f8f.14.1782732036158; 
- Mon, 29 Jun 2026 04:20:36 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c1ee018e8sm55320538f8f.11.2026.06.29.04.20.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jun 2026 04:20:35 -0700 (PDT)
-Message-ID: <71cffeef-3398-44e6-8e13-130266e789c1@redhat.com>
-Date: Mon, 29 Jun 2026 13:20:34 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/8] tests/functional: Add remote interrupts test for
- PowerNV
-To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1weAAI-0006mL-9G; Mon, 29 Jun 2026 07:28:42 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65TAmHhT3181643; Mon, 29 Jun 2026 11:28:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=zDb8aJ
+ S9rpe/kG9btdc9b3Blf+e1Jb6pSyjnZmLQ4X0=; b=DkwgYctWRkAyQkxfPFfAfW
+ RWISSZ10zXHIxVG4TiB7SKvuXpQ9uR6i6r7GZWgj7sqguvkqx5xdUEBGcXFyHRYl
+ vwqAz0ZQixeVYG/vdry+FPG1pOgGn2P/X3TzIr23a4g2QCb4DczblhRs5chzplGj
+ ji/LT1I+D2pRVOP+2fVWCm4t1MRft1udfvb5Rq5x5Ju7SOkH0MMraLDz9o2/fj5i
+ yd8x8VYL67lu4hooL3LzucP2AiYUFOyAisYSbogVPtwpFJYyFJc3Rre1mA3Eshwc
+ 7SK+IowjESSEIdEsSR+sqnWO5Ez/hXzGnzXYwKEUv7AGIdlLRSykAhPjg2+UXkXw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qfrynd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jun 2026 11:28:33 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65TBJftG010968;
+ Mon, 29 Jun 2026 11:28:32 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhy4we3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jun 2026 11:28:32 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65TBSSx336438392
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 29 Jun 2026 11:28:28 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5D05E2004F;
+ Mon, 29 Jun 2026 11:28:28 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AF50A2004B;
+ Mon, 29 Jun 2026 11:28:23 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.123.10.203])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 29 Jun 2026 11:28:23 +0000 (GMT)
+Date: Mon, 29 Jun 2026 16:58:21 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Shivang Upadhyay <shivangu@linux.ibm.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
  Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
  Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- devel@lists.libvirt.org, Misbah Anjum N <misanjum@linux.ibm.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
+ Misbah Anjum N <misanjum@linux.ibm.com>,
  Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, kvm@vger.kernel.org,
- Gautam Menghani <gautam@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>
+Subject: Re: [PATCH v3 3/8] tests/qtest: Add Power11 chip & machine to qtests
+Message-ID: <akJVIvDQ93unGLo5@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 References: <20260629110411.3051274-1-adityag@linux.ibm.com>
- <20260629110411.3051274-2-adityag@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260629110411.3051274-2-adityag@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+ <20260629110411.3051274-4-adityag@linux.ibm.com>
+ <32d7c4b1-dbb9-485b-8feb-df999532de60@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <32d7c4b1-dbb9-485b-8feb-df999532de60@redhat.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=RYqgzVtv c=1 sm=1 tr=0 ts=6a4256e1 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=5Jhv4GUsR7L25ZsIausA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDA5MiBTYWx0ZWRfX1O7iKoxfcBG0
+ bGIOc+LSDbh1W855E6YcWExSqMXVw+QWYpu14DrJp/ypim3fR1wSco8G4rXRIc48vYq5pzP4QJY
+ QsrFNGsCn+nPyoiWqeWZU0aCndOu9Rc=
+X-Proofpoint-GUID: ev6GHI-Bpo748DLpzD_YgZnndGJc6g5H
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDA5MiBTYWx0ZWRfXxADHdNHETAZY
+ bIXtVOvilYvSYFvZ8dAmNqLKdyqqF4wc0xDBipgueCeGxMft8ja7NTKOoYnz3e7uhPglN1PEu5q
+ A5MwqmesOfn9acWRNODVqHeLiho8xJ6McTgv6YC7DZ6pPhJGpYxWm6cza0ilHYaZXs2UjxqiwVi
+ g24akTbJ0hOsjznK5nZLRblU4UCxFjFilXWFNn4NCgl22aN+wokrmpZnPwBcrId0mZjs7sr2flh
+ GVKC8IsnC82R5LQYAePUOzX9uf157QZBJNAKEVtwBZdfW9dW+R81xMfl3JYi7xSfxxJNzSPssCN
+ SAxuqeaSfGuKNrdxEosQyZ5WrBMD/2+mYX2bNtoaMimHzLvljD+XGGAjeR1t8agr/nqQSkpv6Km
+ gBSKTNtYQDFH4K3vX7OR4KZr+bwpG9C2pRoTIpJRzbpmRR00t2615t8dhkp0StTTsqGxdVnSWJs
+ XAarD+Kd32fFiFfuglQ==
+X-Proofpoint-ORIG-GUID: SZy29s1SN9BzXO2VOVrwL8Abq1ZqXq0h
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290092
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,158 +139,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/29/26 13:04, Aditya Gupta wrote:
-> In the past there have been hard to recreate issues where XIVE changes
-> cause qemu crashes due to multi-socket interrupts such as in [1].
+On 26/06/29 01:18PM, Cédric Le Goater wrote:
+> On 6/29/26 13:04, Aditya Gupta wrote:
+> > <...snip...>
+> > --- a/tests/qtest/pnv-host-i2c-test.c
+> > +++ b/tests/qtest/pnv-host-i2c-test.c
+> > @@ -402,15 +402,14 @@ static void reset_all(QTestState *qts, const PnvChip *chip)
+> >   static void test_host_i2c(const void *data)
+> >   {
+> >       const PnvChip *chip = data;
+> > +    const char *machine = pnv_get_machine_type(chip->chip_type);
+> >       QTestState *qts;
+> > -    const char *machine = "powernv8";
+> >       PnvI2cCtlr ctlr;
+> >       PnvI2cDev pca9552;
+> >       PnvI2cDev pca9554;
+> > -    if (chip->chip_type == PNV_CHIP_POWER9) {
+> > -        machine = "powernv9";
+> > -    } else if (chip->chip_type == PNV_CHIP_POWER10) {
+> > +    /* i2c is initialised for rainier in case of P10 */
+> > +    if (chip->chip_type == PNV_CHIP_POWER10) {
+> >           machine = "powernv10-rainier";
 > 
-> Add a functional test explicitly to test whether remote interrupts work.
+> Is that true for all tests ? in that case, pnv_get_machine_type()
+> could return "powernv10-rainier".
 > 
-> The test can also work as additional boot test for multi-socket boot,
-> initrd boot test, as well as a check for e1000e to be working in powernv,
 
-you should consider moving to a more modern nic model: igb, which
-has sr-iov support too.
+No this i2c test is the only test which specifically requires rainier,
+other tests like pnv-spi-seeprom-test and pnv-xscom-test.
 
-C.
+> > <...snip...>
+> >
+> > diff --git a/tests/qtest/pnv-xscom.h b/tests/qtest/pnv-xscom.h
+> > index 5aa1701ea768..eefe206a2007 100644
+> > --- a/tests/qtest/pnv-xscom.h
+> > +++ b/tests/qtest/pnv-xscom.h
+> > @@ -9,6 +9,9 @@
+> >   #ifndef PNV_XSCOM_H
+> >   #define PNV_XSCOM_H
+> > +#include <stdint.h>
+> > +#include <assert.h>
+> 
+> 
+> Seems unrelated. Why do you need these includes ?
 
-> though that's not a target goal, and are additional benefits.
+Not really cedric, i had added stdint.h since PnvChip used uint64_t, and
+assert.h since i used assert in v1 & v2, which is not the case now.
+I can remove these in v4.
+
+Thanks for the reviews Cedric !
+
 > 
->  From docs/system/devices/net.rst:
+> Thanks,
 > 
->    In order to check that the user mode network is working, you can ping
->    the address 10.0.2.2 and verify that you got an address in the range
->    10.0.2.x from the QEMU virtual DHCP server.
-> 
-> Hence use 10.0.2.2 with ping.
-> 
-> [1]: https://lore.kernel.org/qemu-devel/baf6c854-832b-4a2e-922f-d34e6dadf821@redhat.com/
-> 
-> Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-> Reviewed-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> ---
->   tests/functional/ppc64/test_powernv.py | 95 ++++++++++++++++++++++++++
->   1 file changed, 95 insertions(+)
-> 
-> diff --git a/tests/functional/ppc64/test_powernv.py b/tests/functional/ppc64/test_powernv.py
-> index 0ea6c93e4287..9760f58ee41e 100755
-> --- a/tests/functional/ppc64/test_powernv.py
-> +++ b/tests/functional/ppc64/test_powernv.py
-> @@ -9,6 +9,7 @@
->   
->   from qemu_test import LinuxKernelTest, Asset
->   from qemu_test import wait_for_console_pattern
-> +from qemu_test import exec_command_and_wait_for_pattern
->   
->   class PowernvMachine(LinuxKernelTest):
->   
-> @@ -27,6 +28,17 @@ class PowernvMachine(LinuxKernelTest):
->            'buildroot/qemu_ppc64le_powernv8-2025.02/rootfs.ext2'),
->           'aee2192b692077c4bde31cb56ce474424b358f17cec323d5c94af3970c9aada2')
->   
-> +    def shell_exec_command_check_fail(self, command):
-> +        fail_msg="Fail"
-> +        self.shell_exec_command(f"export __FAIL_MSG={fail_msg}")
-> +
-> +        # If the exit code for the command is non 0, print fail message
-> +        command = command + " || echo $__FAIL_MSG"
-> +        exec_command_and_wait_for_pattern(self, command, '#', fail_msg)
-> +
-> +    def shell_exec_command(self, command):
-> +        exec_command_and_wait_for_pattern(self, command, '#', self.panic_message)
-> +
->       def do_test_linux_boot(self, command_line = KERNEL_COMMON_COMMAND_LINE):
->           self.require_accelerator("tcg")
->           kernel_path = self.ASSET_KERNEL.fetch()
-> @@ -71,6 +83,89 @@ def test_linux_smt_boot(self):
->           wait_for_console_pattern(self, console_pattern, self.panic_message)
->           wait_for_console_pattern(self, self.good_message, self.panic_message)
->   
-> +    def test_linux_remote_interrupts(self):
-> +        self.require_accelerator("tcg")
-> +        self.set_machine('powernv')
-> +
-> +        # Have below setup in this test:
-> +        # 1. e1000e attached to pcie.6, which is from 7th PHB, belonging to 2nd
-> +        #    socket (chip 1), in a powernv boot with default 6 PHBs per socket
-> +        # 2. CPU on 2nd socket (chip 1) disabled
-> +        # 3. RX IRQ's affinity to chip 2, and TX IRQ's affinity to chip 3
-> +        #
-> +        # Then ping is done, to generate interrupts from e1000e which should go
-> +        # to IRQ server on the remote sockets
-> +        self.vm.add_args('-smp', '4,sockets=4,threads=1')
-> +        self.vm.add_args('-netdev', 'user,id=net0')
-> +        self.vm.add_args('-device', 'e1000e,netdev=net0,bus=pcie.6')
-> +
-> +        kernel_path = self.ASSET_KERNEL.fetch()
-> +        rootfs_path = self.ASSET_INITRD.fetch()
-> +        self.vm.set_console()
-> +        self.vm.add_args('-kernel', kernel_path,
-> +            '-drive',
-> +            f'file={rootfs_path},format=raw,if=none,id=drive0,readonly=on',
-> +            '-append', 'root=/dev/nvme0n1 console=hvc0',
-> +            '-device', 'nvme,drive=drive0,bus=pcie.2,addr=0x0,serial=1234')
-> +        self.vm.launch()
-> +
-> +        # Wait for boot to complete
-> +        console_pattern = 'CPU maps initialized for 1 thread per core'
-> +        wait_for_console_pattern(self, console_pattern, self.panic_message)
-> +        console_pattern = 'smp: Brought up 4 nodes, 4 CPUs'
-> +        wait_for_console_pattern(self, console_pattern, self.panic_message)
-> +        wait_for_console_pattern(self, 'Run /sbin/init as init process',
-> +                                 self.panic_message)
-> +
-> +        # Wait for login prompt and login as root (no password in buildroot)
-> +        wait_for_console_pattern(self, 'login:', self.panic_message)
-> +        exec_command_and_wait_for_pattern(self, 'root', '#', self.panic_message)
-> +
-> +        # e1000e is connected to socket 1, disable the CPU on socket 1
-> +        self.shell_exec_command("echo 0 > /sys/devices/system/cpu/cpu1/online")
-> +        self.shell_exec_command(
-> +            "export CPU1_STATE=$(cat /sys/devices/system/cpu/cpu1/online)")
-> +        self.shell_exec_command_check_fail("[ $CPU1_STATE -eq 0 ]")
-> +
-> +        # RX, TX interrupts to chip/cpu 2 & 3 respectively
-> +        self.shell_exec_command(
-> +            "export RX_IRQ=$(awk '/eth0-rx/ {print $1}' /proc/interrupts | tr -d ':')")
-> +        self.shell_exec_command(
-> +            "export TX_IRQ=$(awk '/eth0-tx/ {print $1}' /proc/interrupts | tr -d ':')")
-> +        self.shell_exec_command("echo 2 > /proc/irq/$RX_IRQ/smp_affinity_list")
-> +        self.shell_exec_command("echo 3 > /proc/irq/$TX_IRQ/smp_affinity_list")
-> +
-> +        # Capture interrupt counts before generating traffic
-> +        self.shell_exec_command(
-> +            "export RX_BEFORE=$(awk '/eth0-rx/ {print $3}' /proc/interrupts)")
-> +        self.shell_exec_command(
-> +            "export TX_BEFORE=$(awk '/eth0-tx/ {print $4}' /proc/interrupts)")
-> +
-> +        # Wait up to 15 seconds for eth0 link to come up
-> +        self.shell_exec_command(
-> +            "c=0; while ! ip addr show eth0 | grep 'inet 10.0.2'; do "
-> +            "sleep 1; c=$((c+1)); [ $c -gt 15 ] && break; done")
-> +
-> +        self.shell_exec_command_check_fail(
-> +            "ip addr show eth0 | grep 'inet 10.0.2'")
-> +
-> +        # Generate network traffic to trigger remote interrupts
-> +        # Ping QEMU's user-mode network gateway (10.0.2.2)
-> +        self.shell_exec_command("ping -W2 -c5 10.0.2.2")
-> +
-> +        # Show final interrupt counts to verify remote interrupts occurred
-> +        self.shell_exec_command("cat /proc/interrupts | grep eth0")
-> +
-> +        # Verify interrupt counts increased (whether interrupts were delivered)
-> +        self.shell_exec_command(
-> +            "export RX_AFTER=$(awk '/eth0-rx/ {print $3}' /proc/interrupts)")
-> +        self.shell_exec_command(
-> +            "export TX_AFTER=$(awk '/eth0-tx/ {print $4}' /proc/interrupts)")
-> +
-> +        # Check that interrupt counts increased
-> +        self.shell_exec_command_check_fail("[ $RX_AFTER -gt $RX_BEFORE ]")
-> +        self.shell_exec_command_check_fail("[ $TX_AFTER -gt $TX_BEFORE ]")
-> +
->       def test_linux_big_boot(self):
->           self.set_machine('powernv')
->           self.vm.add_args('-smp', '16,threads=4,cores=2,sockets=2')
+> C.
 
 
