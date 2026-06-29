@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C6DFC43327
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:12:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 661E3C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:12:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAgV-0007pG-NT; Mon, 29 Jun 2026 08:01:55 -0400
+	id 1weAgK-0007Nr-33; Mon, 29 Jun 2026 08:01:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfx-00072e-GU
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:22 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1weAft-00071N-5C
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:19 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfv-0007aB-Tj
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:21 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-691c5776f35so4922363a12.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:01:19 -0700 (PDT)
+ id 1weAfq-0007YK-Es
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:15 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-46ed4f66256so2707393f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:01:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782734478; x=1783339278; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782734473; x=1783339273; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uABLgJwHmKoW5wIwYEcwRXxpSE6Uum9z9tY7YjVQSII=;
- b=szr4o+OkdyyXnKVL5+r844eVRY4BlMgpeiYLTVJM8ivJf5NAPiT1IDkXGmAsW+y9Hz
- 7RLdzUVJNpo5prVKuIYaaZbfdY5m8EM4DMfy1CVtQ6oho9PD7L2Pk3ji4zFAgIArcVY/
- K1/LyZ8obfuCrmlJ7SgZigyto2wTfCoD1su2xaAGvsdQMuQLrmbYAYYSP+56Suw8rW4y
- r4QGisgGEPwlHFYHxTy5WZDDBKZ7V91MRWe022F2jEvAsjzCIZBu3ADmI8v6yOCsmJDw
- LpKQs58S4bTTV7paUox6muW79KRQaM12MkQ4eFwgnTfeopY+ByHWW1oiTDS62MchQq2q
- IxAw==
+ :reply-to; bh=dZ68e+lllc2ko4koDZi1fAQ+t+8zwCavECbfgDMJFSI=;
+ b=QhJuSyxxW6EQlk7Tx+usKyIDgULToL919+hambr23TjmCUdyyUBpBxsZEwFHjCToAx
+ JSOLWE6JW1KtUKpcKgmd0Yp3w/yK4NssdR4RGVNcsfoz5vfkpCo5o5ytqG/esU0tUZ5m
+ BICPAWIgIZNPRDM1n3UkUc1fHBL9ISwcQRSP9GuweYVR4sFzoweq0TqGeS6ip/4eTd3H
+ K0M62vUmwCb1u5tyG5ns0l5kiEtZAMs47aMXOtoL0gaddl7Mp3ZN+T2GgYEUBurUVeL/
+ G+C3JkS3m6ps+qz7mbwL2zaezdJG2E8yvZQT/sgZKG4j95oKQffq+WReLw/ZfukzXomT
+ bo/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782734478; x=1783339278;
+ d=1e100.net; s=20251104; t=1782734473; x=1783339273;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=uABLgJwHmKoW5wIwYEcwRXxpSE6Uum9z9tY7YjVQSII=;
- b=XDB2EDJuiKXAKWoIgRxBQeIoMcU72AFRoSZu6Rl3ReLfA1ZGCDAFMLxIf+7IjUVG1K
- fIiYTiDHBHiDYzdwpsCpo63KUIKy/+8UAOFrn9md+WfAyzQStjTf2HwcwPmZR3F0wzEI
- auTiobu8vmt/0sWofsJf/zw8vba1heRONeCgFqnX7cd8RnazM+1ha15/QIkhONzqWpNH
- XDWr7ocuqrgLOHRaoBA9lcemzZNv0lZPo0tA9dDpCbyaIkTqIPSZ+S2mXrmlbUYJMcpw
- cV7xGbgFHfWl3VmWZC44SMJyBaDzfDcO5FD6LCzjpGwwN5d0yJgklPvRdd6ywnw+IizI
- 9JDA==
-X-Gm-Message-State: AOJu0Yyb1xb3j3ePYz5aE0HFit0ztSuDayuhwDUnfYMxxeiouDwl/DHW
- YnoeAfSrJseHK58pmAtbdKdXwSVC1mInhg84UdwaQv8aBlbm/OxsAiKrP0WEeRjt94JSwFdqzKV
- Bp6kr
-X-Gm-Gg: AfdE7ckaGaDlF95j3lFhgbiaMXyOEAxfPlJgBXOSJBBSXRQZWaTaqaoL2wpMNNGJ8aU
- oa36bVyaVhRKsw0tdJWBWfIj4TWhOGS3Rvkp+8ouhI/AYeqcGvmMfufeDCytBRIer53S+nuV6s+
- CDSJxxa6+2nujN8w4LjQLiCyMR8DMSgDvHr6jtb9aNmAslJkFG4TFYTbD/P0t92Ue2Dl9kbY5hh
- 1W/u2mwj9G5vhPLYMzOmpzxex6FU3hyunF/HGAVM0XIQu9M75ULkJuUL83qIIMyOuBN0H5ylbsE
- eX0vkD90VCV2L+yVPIXPXxCoSbQEgheILZX5LPCzHgO945K9ZKPJsKJMDpxnhKU5MCZjchJlVq6
- vJ817a5MqWP4K/uRr0tVT8bUO9DWGUde+6FaSnw92J7ULa1AoUvEgae/IAfMTMfB2O8/OR+55Rx
- qQjfHyYKsxt7giBpcpa/Yy+e5nZajzKwCxlht0+6I79wCoYPZlP3ubEC+ALEi8IxSlNflRHFUkV
- CEe10yBq/PBgMmJW2XnIA==
-X-Received: by 2002:a05:6402:43c5:b0:698:5f35:a8e0 with SMTP id
- 4fb4d7f45d1cf-6985f35b11dmr1979746a12.6.1782734477953; 
- Mon, 29 Jun 2026 05:01:17 -0700 (PDT)
+ bh=dZ68e+lllc2ko4koDZi1fAQ+t+8zwCavECbfgDMJFSI=;
+ b=KgTP4pBeo9xUioSxY04BHznHlwue5VyCGNq7NWr1YMZLojTtGsWuh7HwV4KbHvSZCw
+ CAjmoUGHgzWFiMZ/kIbjZeeIJZmlYQT1lY7ABURdgNsF2nv2EdcAnQkpLGJbe2G+KjnS
+ w4jdCxWunD8Es02qB/S43qxahr5c4WXB+8uWG1Wd7LDIstIz8CqwOVaR4490K+fQQqUw
+ hasTBXiMoNmFU4nd/ci3uxQeunMsBXWay6C8jyrO/icaHK94gwBq7+ZTHXqj3Tl81zW9
+ p0PU2tHJqZ9dtZuqn3XTHfFrYS1NJSxWcA3EjZFD+9o1Q6c5ZY24yJDKYS2yHQlFcP9T
+ qiZA==
+X-Gm-Message-State: AOJu0YxpMpnJLJg4IZhyiQxsdiLrIt64BGSp8getIrmetq60M4NrI9d4
+ 95v4q2zjtUrxnVrJWHOcRnp2HoGBZtMRjDvTO+f12jZbKfbVdqfkl+4Mjjf6rO/VniCVAi4+z+U
+ fmqU4
+X-Gm-Gg: AfdE7cm4WhIdNkVOz/sGIrT4GNdPVja0q14W2qGWCbkqfqw1aN8PAdr7UHuc804z+J/
+ oRZ1GT538EJfKHdKUa+zP0jOAOi4+ZzIdW5JDHd/HhI8RjHapHgvYK4OWCfOFDLOfBjDYG4E0Or
+ AG0CHFo0KDQe8yi1ycBxMpmTl36ZQUpioiiyccyJ60r49kjhUNBYgXhe44pNrk9cGtFqhDWMe99
+ TtFWeMJuM2PRc6lSJqrVYaDwSG2NoZuNFKVWZqZXafasv/VEAekkJt4WUh9HBd72AcIFSdcouyl
+ p6LSUKLL/5rI0OyueJ+Bh0J3dWNkhtBYhApbkl5E2iiSoF9UDxjy0mkElGkf99tcpfdhutPp1E4
+ JNEq9dgo41xRK4v4c70P73yN6xoB0Y/usCu+0mHdoPOOvZl69I94yI44pXC5pqHPLKtq6YN6RZ2
+ y1nBGVAwo6Bb0sFbbEHsHPjhEZMwJj+06lHZ/EkyBVgFEQOEoIVeSGVtssTUtylZByKo0a6X31z
+ B4LlOERQmXnhkaf+Hzu6g==
+X-Received: by 2002:a05:6000:420c:b0:474:18d9:8371 with SMTP id
+ ffacd0b85a97d-4750079f973mr222502f8f.28.1782734472167; 
+ Mon, 29 Jun 2026 05:01:12 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.01.17
+ ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.01.11
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 05:01:17 -0700 (PDT)
+ Mon, 29 Jun 2026 05:01:11 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 42/54] target/arm: trigger timer recalc on HCR:(E2H|TGE) changes
-Date: Mon, 29 Jun 2026 13:00:20 +0100
-Message-ID: <20260629120032.1645265-43-peter.maydell@linaro.org>
+Subject: [PULL 37/54] docs/arm/sabrelite: Mention FlexCAN support
+Date: Mon, 29 Jun 2026 13:00:15 +0100
+Message-ID: <20260629120032.1645265-38-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260629120032.1645265-1-peter.maydell@linaro.org>
 References: <20260629120032.1645265-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,55 +101,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Matyáš Bobek <matyas.bobek@gmail.com>
 
-Toggling the HCR state affects the offset calculated in
-gt_phys_raw_cnt_offset so we should trigger a re-calculation on its
-change.
+Also added example command line usage of the Sabrelite board
+with FlexCAN controllers.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20260624124527.1018912-6-alex.bennee@linaro.org
+Signed-off-by: Matyáš Bobek <matyas.bobek@gmail.com>
+Signed-off-by: Pavel Pisa <pisa@fel.cvut.cz>
+Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Pavel Pisa <pisa@fel.cvut.cz>
+Message-id: 19407fc30bdf6b264d1c093a82903609e9cfee48.1782140438.git.matyas.bobek@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/helper.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ docs/system/arm/sabrelite.rst |  1 +
+ docs/system/devices/can.rst   | 24 ++++++++++++++++++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 20165dbf48..93e3d8b575 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -3716,6 +3716,7 @@ static const ARMCPRegInfo v8_aa32_el1_reginfo[] = {
- static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
- {
-     ARMCPU *cpu = env_archcpu(env);
-+    bool hcr_change_timer;
+diff --git a/docs/system/arm/sabrelite.rst b/docs/system/arm/sabrelite.rst
+index 4ccb0560af..d3a3c01dd6 100644
+--- a/docs/system/arm/sabrelite.rst
++++ b/docs/system/arm/sabrelite.rst
+@@ -24,6 +24,7 @@ The SABRE Lite machine supports the following devices:
+  * 4 SDHC storage controllers
+  * 4 USB 2.0 host controllers
+  * 5 ECSPI controllers
++ * 2 FlexCAN CAN controllers
+  * 1 SST 25VF016B flash
  
-     if (arm_feature(env, ARM_FEATURE_V8)) {
-         valid_mask |= MAKE_64BIT_MASK(0, 34);  /* ARMv8.0 */
-@@ -3807,6 +3808,10 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
-         (HCR_VM | HCR_PTW | HCR_DC | HCR_DCT | HCR_FWB | HCR_NV | HCR_NV1)) {
-         tlb_flush(CPU(cpu));
-     }
-+    hcr_change_timer = (env->cp15.hcr_el2 ^ value) &
-+                       (HCR_E2H | HCR_TGE);
+ Please note above list is a complete superset the QEMU SABRE Lite machine can
+diff --git a/docs/system/devices/can.rst b/docs/system/devices/can.rst
+index 09121836fd..622f898952 100644
+--- a/docs/system/devices/can.rst
++++ b/docs/system/devices/can.rst
+@@ -173,6 +173,30 @@ The test can also be run the other way around, generating messages in the
+ guest system and capturing them in the host system. Other combinations are
+ also possible.
+ 
++Examples on how to use CAN emulation for FlexCAN on SabreLite board
++-------------------------------------------------------------------
++FlexCANs are connected to QEMU CAN buses by passing the bus IDs as machine
++properties:
 +
-+    /* update */
-     env->cp15.hcr_el2 = value;
++* property ``canbus0`` for connecting ``flexcan1``
++* property ``canbus1`` for connecting ``flexcan2``
++
++Note that upstream Linux SabreLite DTs have only a single FlexCAN (``flexcan1``)
++enabled.
++
++An example command to run QEMU emulating a Sabrelite development board
++with both FlexCANs connected to a single QEMU CAN bus (called ``qcan0``),
++bridged to host system ``can0`` interface::
++
++  qemu-system-arm -M sabrelite -smp 4 -m 1G \
++    -object can-bus,id=qcan0 \
++    -machine canbus0=qcan0 -machine canbus1=qcan0 \
++    -object can-host-socketcan,if=can0,canbus=qcan0,id=qcan0-socketcan \
++    -kernel ... -dtb ... -initrd ...
++
++Note that in the Linux guest, bitrate for the FlexCAN device is ignored,
++but needs to be set via the ``ip`` command.
++
+ Links to other resources
+ ------------------------
  
-     /*
-@@ -3828,6 +3833,11 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
-         arm_cpu_update_vinmi(cpu);
-         arm_cpu_update_vfnmi(cpu);
-     }
-+    if (hcr_change_timer) {
-+#ifndef CONFIG_USER_ONLY
-+        gt_recalc_timer(cpu, GTIMER_PHYS);
-+#endif
-+    }
- }
- 
- static void hcr_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
 -- 
 2.43.0
 
