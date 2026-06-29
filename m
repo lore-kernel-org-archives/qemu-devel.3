@@ -4,86 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5866FC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:04:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91C52C43602
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:04:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAgA-00077d-Cg; Mon, 29 Jun 2026 08:01:34 -0400
+	id 1weAiZ-0001rX-09; Mon, 29 Jun 2026 08:04:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfq-00070q-7C
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:15 -0400
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1weAgB-0007Ao-VJ
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:36 -0400
 Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfo-0007Xl-1f
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:13 -0400
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1weAg9-0007mf-0n
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:35 -0400
 Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-46ee68c3b7aso2745484f8f.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:01:11 -0700 (PDT)
+ ffacd0b85a97d-47362928f65so860653f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:01:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782734492; cv=none;
+ d=google.com; s=arc-20260327;
+ b=RiupAXy+Omo/daQHpY5n/77hKxLwkqdI9H6J0ShLP832bc3T+VI6FMOUlQcBkTtl+c
+ RQWMFrIoqVqbB/J9LsVxQ0wKHZR+G69KDmMFsKXu9+zMseU1FnjZkvLXTxmd7VGW+zcW
+ kR4dvwLaE1a2IptxkIQem1/XZW9mhNg9a5sPkFF12y5A2Z4triaJOOPVOOfoa3XqgFZs
+ BsbJ/h5A53B1jFnw/El95oTWU+pslOqiT4tZZuabWBkFB7oD8mMa8TXZ9iwtpsFE1XL6
+ DOb6dQHJH269aj7j0bAUDgUZm+dWM1EGQelorzpF+MU2fYc43LHjyM4G5lFddRG0w4A4
+ 47AA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=gqE4D1/c18zHfiu8KnIhjq7ZyZs0Olnm0rRW7CetrCA=;
+ fh=CukSOekYFEZMpB8oD5eSkKAGPk+P/7dxmT6gKBA6EdM=;
+ b=TxXpt7BUGsXAksa+aGnBY+TTFlcArCZeCFXmfmQTYDVBRON6Tif/ayyW6oOa7Sl8j9
+ xlSv7rSaZl1jIoB5QZHxdxs0ivQh7aFLG7PG0HHEDztmJ92vccIZD9hjdGbo46QBhMST
+ RYfHPkcF4AzgObzqg1Kf7oS39fgiWTi4HqWDSI1vSthc6md3dqI067zqQsY4MBMQaAkZ
+ cSUOTma+36Z4UDr56YmlTtF5vAmssw0L+6ut+grv9+qeAr/W9TNaHObCok/0cG3ZOPfq
+ hQAQNzOeWacQsV6YvfbC0aUPLzj6yAVi0dGemAB+Rd56ginPc7M7SDHiuZMkzKJNGEO6
+ rryw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782734471; x=1783339271; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=TkLfoKCD6Z5Gi0FYcZX7r6hIjibNz+Sx6f0GTVudYAo=;
- b=DGh7ic9ppQrUvSyeFgZJY4MqCwIoo1MjZAq/nEw4D2yYF5xihQiui4fZ4XPy3YGpFC
- a7F98cC3M4QAV0SuQCUIwuU41qlwyW56W6Nx+iNnDlcSttYR+sTksXwvyBw7ZutecIZT
- 2RuOcg/+QFzB89f8bVCigxISPyo7ZuSkn1O4jWoeiIf3BChbngKkSbrB7DIXGven6xSR
- tVBocAKdbf/qmHlwppC/d5fXuDBZnyNSIq2V1+lZGPhLkYl/6wfWxZwg+Gtj3KTCUoX/
- NHqEBe1ARV0+HvV1P9flP3frBboSQ/v8bFW72kvsOAC/ikaeJm34RyuAeyQ028/Sbl6V
- h7Hw==
+ d=linaro.org; s=google; t=1782734492; x=1783339292; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=gqE4D1/c18zHfiu8KnIhjq7ZyZs0Olnm0rRW7CetrCA=;
+ b=m4oeFRYEZ0cZFIxgKKyd7tS7+FoO2YjIXRU+cpbg6ru6tF1WcIdJ1voYLiRDXyRojK
+ 86EiYlERAPsyNmYh/43clQwHnAxWvjkBdr+SakioVLvjVK5qvKPoJOON8A0Mw/K8/lqJ
+ XCTaYZCCEvJ2TBhBrU3y8as18vXvZrq2say5mP6Aj/GxqOVu5HezssyYtqc705Q4Kr0z
+ 7y4tQpCE1eXT43wkSp6l0Nx91l2gn17pUp5mwpzRLXhKEIXZXGMInbGv931tiZl8tYG2
+ +07Oa6iiUvcw5PdEzxpMhNGEzb0cQHkwISO4e1j9UaNvyHXVyBOnANUDmlZyfV1BM7Ym
+ NGRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782734471; x=1783339271;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=TkLfoKCD6Z5Gi0FYcZX7r6hIjibNz+Sx6f0GTVudYAo=;
- b=i3wstO1HKncuiQEE6d4yLx4U2Y5dsizmEPjsk34es/TesbXm6vynW5SQxUOIL/GFvf
- HTVH70KItUnwYcv83zoKvW/yGYFro5/JmnuXs87LeTc6McMOGcdmaFRSwt4s+iE4+5JY
- Gggss7WUg/MNtUZLGgzT8bRbkrOq3QIsG1efPycIFHtJpOnwxwiHAbtYxQSTijbdSAVf
- dtgmErnD96kB675GXBiig4oQ58+rn3OY4ALhGXV25wTq9B6M29rTb4dfQN9qb+b+PkVk
- dcO5EysfVM6H1aqjmVtFo4oDRIgMG4TavKEnUkxW3VO+RJqpSqeBfWS8/UH50YYx/Ol/
- g3Rw==
-X-Gm-Message-State: AOJu0YyMxbWw0Xj1aDX0phmDR5tTfhME4sMqjfijeok3ES56BnFCTOmW
- pGVlspV/vXikaCDElaKZlgDrE0wZmr67a8X/nMucZHdIpgMBIb3rBzNsg2prmlIxkW4x2lG3Ng7
- YsvEU
-X-Gm-Gg: AfdE7cljUQ8lARZgjSaqxqkTOOfSZ+TgcAhIUoLd4kygcVkzM0E7+M/WPr1wgy9wPhR
- Xg4pswIJM9uoE6Y/TNnC/v2Mz9qvLwwB30To3EvMKGmHBmIlFzB4R89sQOfcAfsgkNZpIge8ECj
- SPx+5A5+OQkAithijBdbkfaHMaxXBLyhh34U+SlRJdS7udRAp4zyyrl6orPQU15g1pc3FoQxxWH
- dCVY9Buf5S2fUuompkiEs9k/LIT1W9MQTmRa0lMiPmg+YsoeKEi0ORL8HoZCi73FLBR6mntx3Hz
- B0QbPpEQ4XfdNq/ji/S3EkIqdFz7p5ulZRk5Bh64TnOhpLZuSQtJXDlW9XH2Doz97MAr8qdUKgk
- HBArVuP75sgfbWjVaBln2L4imx4hxzZsFTe+O/e+vtn+uYpPrxVt6+4wh1xfAGIweSHi0oKL9Nj
- 2OI6zhfIL0VKp2pCUMwUN3xZEfOoeyJPou7lnsNRDAO5VjElIhm/AfrBHcPuQwSqhmI2x5OaRpD
- 6EEFJg=
-X-Received: by 2002:a05:6000:4701:b0:470:2fb1:3db5 with SMTP id
- ffacd0b85a97d-4702fb13deemr13683665f8f.30.1782734470318; 
- Mon, 29 Jun 2026 05:01:10 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.01.09
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 05:01:09 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 35/54] hw/arm: Plug FlexCAN into FSL_IMX6 and Sabrelite
-Date: Mon, 29 Jun 2026 13:00:13 +0100
-Message-ID: <20260629120032.1645265-36-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260629120032.1645265-1-peter.maydell@linaro.org>
-References: <20260629120032.1645265-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20251104; t=1782734492; x=1783339292;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gqE4D1/c18zHfiu8KnIhjq7ZyZs0Olnm0rRW7CetrCA=;
+ b=BzVZjsoYTaurwx4MtaL+TRxF42OBKngQQU8FJIqCjYFly0/5bf+/FOfguWVp0vDmCX
+ M6OsNPjySScIN0lO/UoYE0kEBWQub/c7YQaaDzCFKaTbxXf3ePIbIUE0/cg5kYiVPLTO
+ vkuj0gkwoyONp5jYU4lO5sYhXtC6W1mrYSUJu2ZDwIIDeIWW/KXCuFFxSKAhlDDB7wiY
+ t2Yt7UH4bcjkMDhrmVm1UU/k6THpR+khReW7wMLl9qgibRmfFCdb7gIYvNMqk0nQY86u
+ JavxxtIaoEtLkLTc0xpoxtkVXwDZ9ZEFhVgr/hn2GDwOdS7Xa70Ta9+oTbF7vU+wAaIu
+ KDIg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rpirh1NX53Ues6pFyEzS2gThjhRlmbjcL1hQuGQhTzu3xw9hFX+ZmsxEs9Jte0ENCe0jmfAM8a7/duh@nongnu.org
+X-Gm-Message-State: AOJu0YwVpdz6OJNPtoPOwYGTzmvXjCMPXb1iXL+pqIABzhpn2M7ORle1
+ fgdS/o0AEQ0vmMnxkQKSntgB+s4+Fkm6JrdO3KZ8t4VcRZNLMTXGmumIfZfT66sOJP7XR2cZCnF
+ i/QFRilXWUCxu2BdPuzII5ch9FO/F0+Ljyl+hYb+s3g==
+X-Gm-Gg: AfdE7ckwzrapNH4wCmaVYYWgAzGSG19LukwedbJTqy5RX7y5PiQxsD3T7lhldnZo9Ti
+ uFGlLSPm2CW3E2H17oQ2qcLygetnGzCgQeGW64OFSRkXljtnZ10kTnTUkJnFLmptUQ9x/rOaj+1
+ PMuyAlt7jz7dItpBpXB+yZKRpPq8E/lTO9YllWZ215pI1PVtVUs1IwLxfbihanud5eer116lZvQ
+ vHHKjlvy55ANmbie84/9k0noxL6opH4KWDotroAe43AWRVIbC7XsXW6rViTxtTyrjegejYSOARl
+ VKBQsrGcrO+flG02GgTuro/StCvMdedMi823L7hj3KB5hPBie3ZhcwOEPx4GvjhzO6HVdbTn5as
+ d7zNPTkQqs1OvrrMy+N4=
+X-Received: by 2002:a5d:64c6:0:b0:472:7ded:6aef with SMTP id
+ ffacd0b85a97d-474febcd3d4mr298326f8f.2.1782734491244; Mon, 29 Jun 2026
+ 05:01:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20260626123531.132078-1-alexander@mihalicyn.com>
+ <CAAjaMXabXNmh1UZ5wnpX4wucnC+yWvMo2-jr2XBTby4zqf6CTA@mail.gmail.com>
+ <CH3PR12MB8481967103B141D5CE6E0BED8EE82@CH3PR12MB8481.namprd12.prod.outlook.com>
+In-Reply-To: <CH3PR12MB8481967103B141D5CE6E0BED8EE82@CH3PR12MB8481.namprd12.prod.outlook.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Mon, 29 Jun 2026 15:01:18 +0300
+X-Gm-Features: AVVi8CfdDdUAYXoDbF1nEExRIdM_ymRXVXKaGUxP7kMEr9z2ao5SJGt59CZVK4w
+Message-ID: <CAAjaMXaRNKF1hdJNoNgroy0iea3SsNO-nAfBHX5zGMVvbf2Brw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/9] hw/audio/virtio-sound: basic migration support
+To: Aleksandr Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>, 
+ "open list:ARM SMMU <qemu-arm@nongnu.org>, " <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000147ab80655633865"
 Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,195 +124,483 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matyáš Bobek <matyas.bobek@gmail.com>
+--000000000000147ab80655633865
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-FlexcanState is added to the FslIMX6State struct like other peripherals.
+On Mon, 29 Jun 2026, 14:32 Aleksandr Mikhalitsyn, <
+aleksandr.mikhalitsyn@futurfusion.io> wrote:
 
-Add two new machine properties to Sabrelite machine for linking
-the embedded FlexCAN instances to QEMU CAN buses by name.
-No other machine uses FslIMX6State.
+> Dear Manos,
+>
+> (replying from my @futurfusion.io address)
+>
+> I'm using my personal email address hosted at Gmail, cause it works just
+> well with plain text email and does not corrupt patches.
+> While Microsoft Outlook (behind futurfusion.io) doesn't work that good,
+> so I still do SoB tags with my work email, but send
+> them through Gmail servers. Hope it is fine.
+>
 
-Signed-off-by: Matyáš Bobek <matyas.bobek@gmail.com>
-Signed-off-by: Pavel Pisa <pisa@fel.cvut.cz>
-Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Pavel Pisa <pisa@fel.cvut.cz>
-Message-id: 4159df998b0508bb411284ef406de23bbc5edfd8.1782140438.git.matyas.bobek@gmail.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/arm/Kconfig            |  1 +
- hw/arm/fsl-imx6.c         | 29 +++++++++++++++++++++++++++++
- hw/arm/sabrelite.c        | 24 ++++++++++++++++++++++++
- include/hw/arm/fsl-imx6.h |  6 ++++++
- 4 files changed, 60 insertions(+)
+Ok, that is good enough proof for me! No need to do anything different then
+for future revisions.
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 500bfdfe2a..5f5c4899ad 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -520,6 +520,7 @@ config FSL_IMX6
-     select IMX_FEC
-     select IMX_I2C
-     select IMX_USBPHY
-+    select CAN_FLEXCAN
-     select WDT_IMX2
-     select PL310  # cache controller
-     select PCI_EXPRESS_DESIGNWARE
-diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
-index f663ddbf0a..bf106a9063 100644
---- a/hw/arm/fsl-imx6.c
-+++ b/hw/arm/fsl-imx6.c
-@@ -90,6 +90,10 @@ static void fsl_imx6_init(Object *obj)
-         snprintf(name, NAME_SIZE, "spi%d", i + 1);
-         object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
-     }
-+    for (i = 0; i < FSL_IMX6_NUM_CANS; i++) {
-+        snprintf(name, NAME_SIZE, "flexcan%d", i + 1);
-+        object_initialize_child(obj, name, &s->flexcan[i], TYPE_CAN_FLEXCAN);
-+    }
-     for (i = 0; i < FSL_IMX6_NUM_WDTS; i++) {
-         snprintf(name, NAME_SIZE, "wdt%d", i);
-         object_initialize_child(obj, name, &s->wdt[i], TYPE_IMX2_WDT);
-@@ -377,6 +381,27 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
-                            qdev_get_gpio_in(gic, spi_table[i].irq));
-     }
- 
-+    /* Initialize all FLEXCANs */
-+    for (i = 0; i < FSL_IMX6_NUM_CANS; i++) {
-+        static const struct {
-+            hwaddr addr;
-+            unsigned int irq;
-+        } flexcan_table[FSL_IMX6_NUM_CANS] = {
-+            { FSL_IMX6_CAN1_ADDR, FSL_IMX6_FLEXCAN1_IRQ },
-+            { FSL_IMX6_CAN2_ADDR, FSL_IMX6_FLEXCAN2_IRQ },
-+        };
-+
-+        s->flexcan[i].ccm = IMX_CCM(&s->ccm);
-+        object_property_set_link(OBJECT(&s->flexcan[i]), "canbus",
-+                                 OBJECT(s->canbus[i]), &error_abort);
-+
-+        sysbus_realize(SYS_BUS_DEVICE(&s->flexcan[i]), &error_abort);
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->flexcan[i]), 0, flexcan_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->flexcan[i]), 0,
-+                           qdev_get_gpio_in(gic, flexcan_table[i].irq));
-+    }
-+
-     object_property_set_uint(OBJECT(&s->eth), "phy-num", s->phy_num,
-                              &error_abort);
-     qemu_configure_nic_device(DEVICE(&s->eth), true, NULL);
-@@ -480,6 +505,10 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
- 
- static const Property fsl_imx6_properties[] = {
-     DEFINE_PROP_UINT32("fec-phy-num", FslIMX6State, phy_num, 0),
-+    DEFINE_PROP_LINK("canbus0", FslIMX6State, canbus[0], TYPE_CAN_BUS,
-+                     CanBusState *),
-+    DEFINE_PROP_LINK("canbus1", FslIMX6State, canbus[1], TYPE_CAN_BUS,
-+                     CanBusState *),
- };
- 
- static void fsl_imx6_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/arm/sabrelite.c b/hw/arm/sabrelite.c
-index 7e036e6388..84bbc2f979 100644
---- a/hw/arm/sabrelite.c
-+++ b/hw/arm/sabrelite.c
-@@ -24,6 +24,7 @@ struct SabreliteMachineState {
-     MachineState parent_obj;
- 
-     FslIMX6State soc;
-+    CanBusState *canbus[FSL_IMX6_NUM_CANS];
- };
- 
- #define TYPE_SABRELITE_MACHINE MACHINE_TYPE_NAME("sabrelite")
-@@ -64,6 +65,13 @@ static void sabrelite_init(MachineState *machine)
-     /* Ethernet PHY address is 6 */
-     object_property_set_int(OBJECT(&s->soc), "fec-phy-num", 6, &error_fatal);
- 
-+    for (int i = 0; i < FSL_IMX6_NUM_CANS; i++) {
-+        g_autofree char *bus_name = g_strdup_printf("canbus%d", i);
-+
-+        object_property_set_link(OBJECT(&s->soc), bus_name,
-+                                 OBJECT(s->canbus[i]), &error_fatal);
-+    }
-+
-     qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
- 
-     memory_region_add_subregion(get_system_memory(), FSL_IMX6_MMDC_ADDR,
-@@ -112,6 +120,21 @@ static void sabrelite_init(MachineState *machine)
-     }
- }
- 
-+static void sabrelite_machine_instance_init(Object *obj)
-+{
-+    SabreliteMachineState *s = SABRELITE_MACHINE(obj);
-+
-+    object_property_add_link(obj, "canbus0", TYPE_CAN_BUS,
-+                             (Object **)&s->canbus[0],
-+                             object_property_allow_set_link,
-+                             0);
-+
-+    object_property_add_link(obj, "canbus1", TYPE_CAN_BUS,
-+                             (Object **)&s->canbus[1],
-+                             object_property_allow_set_link,
-+                             0);
-+}
-+
- static void sabrelite_machine_class_init(ObjectClass *oc, const void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -128,6 +151,7 @@ static const TypeInfo sabrelite_machine_init_typeinfo = {
-     .name          = TYPE_SABRELITE_MACHINE,
-     .parent        = TYPE_MACHINE,
-     .class_init    = sabrelite_machine_class_init,
-+    .instance_init = sabrelite_machine_instance_init,
-     .instance_size = sizeof(SabreliteMachineState),
-     .abstract      = false,
-     .interfaces    = arm_machine_interfaces,
-diff --git a/include/hw/arm/fsl-imx6.h b/include/hw/arm/fsl-imx6.h
-index cddd100dd6..376deea3a4 100644
---- a/include/hw/arm/fsl-imx6.h
-+++ b/include/hw/arm/fsl-imx6.h
-@@ -30,12 +30,14 @@
- #include "hw/sd/sdhci.h"
- #include "hw/ssi/imx_spi.h"
- #include "hw/net/imx_fec.h"
-+#include "hw/net/flexcan.h"
- #include "hw/usb/chipidea.h"
- #include "hw/usb/imx-usb-phy.h"
- #include "hw/pci-host/designware.h"
- #include "hw/core/or-irq.h"
- #include "system/memory.h"
- #include "target/arm/cpu.h"
-+#include "net/can_emu.h"
- #include "qom/object.h"
- 
- #define TYPE_FSL_IMX6 "fsl-imx6"
-@@ -51,6 +53,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslIMX6State, FSL_IMX6)
- #define FSL_IMX6_NUM_WDTS 2
- #define FSL_IMX6_NUM_USB_PHYS 2
- #define FSL_IMX6_NUM_USBS 4
-+#define FSL_IMX6_NUM_CANS 2
- 
- struct FslIMX6State {
-     /*< private >*/
-@@ -73,6 +76,7 @@ struct FslIMX6State {
-     IMXUSBPHYState     usbphy[FSL_IMX6_NUM_USB_PHYS];
-     ChipideaState      usb[FSL_IMX6_NUM_USBS];
-     IMXFECState        eth;
-+    FlexcanState       flexcan[FSL_IMX6_NUM_CANS];
-     DesignwarePCIEHost pcie;
-     OrIRQState         pcie4_msi_irq;
-     MemoryRegion       rom;
-@@ -80,6 +84,8 @@ struct FslIMX6State {
-     MemoryRegion       ocram;
-     MemoryRegion       ocram_alias;
-     uint32_t           phy_num;
-+
-+    CanBusState       *canbus[FSL_IMX6_NUM_CANS];
- };
- 
- 
--- 
-2.43.0
 
+
+> I'm ready to do all necessary actions to proof that these two email belon=
+g
+> to me, for example I send my series from
+> my Gmail and then reply from futurfusion.io with some ACK to prove that
+> it's me.
+>
+> Also, in Linux kernel I have a proper email mapping:
+>
+> https://github.com/torvalds/linux/blob/dc59e4fea9d83f03bad6bddf3fa2e52491=
+777482/.mailmap#L38
+>
+> P.S. Sorry for doing non-inline reply, it's again because of terrible
+> Outlook.
+>
+> P.S.2. I'll continue my work on patches next week, cause I'm currently
+> away from home on vacation. ;)
+> Huge thanks for such a fast review of my patch submission!
+>
+> Kind regards,
+> Alex
+>
+> ------------------------------
+> *From:* Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> *Sent:* Monday, June 29, 2026 13:04
+> *To:* Alexander Mikhalitsyn <alexander@mihalicyn.com>
+> *Cc:* qemu-devel@nongnu.org <qemu-devel@nongnu.org>; Volker R=C3=BCmelin =
+<
+> vr_qemu@t-online.de>; Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com=
+>;
+> St=C3=A9phane Graber <stgraber@stgraber.org>; Daniel P . Berrang=C3=A9 <
+> berrange@redhat.com>; Gerd Hoffmann <kraxel@redhat.com>; Michael S.
+> Tsirkin <mst@redhat.com>; Aleksandr Mikhalitsyn <
+> aleksandr.mikhalitsyn@futurfusion.io>
+> *Subject:* Re: [PATCH v3 0/9] hw/audio/virtio-sound: basic migration
+> support
+>
+> Hi Alexander,
+>
+> On Fri, Jun 26, 2026 at 3:35=E2=80=AFPM Alexander Mikhalitsyn
+> <alexander@mihalicyn.com> wrote:
+> >
+> > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+>
+> Could you please send your patches from your
+> aleksandr.mikhalitsyn@futurfusion.io address for the next revision?
+> Replying to review comments with your personal email is fine, but the
+> s-o-b should match your sending address. We do not know if the address
+> belongs to you otherwise. This is not explicitly stated in our Code
+> Provenance documentation but we need a way to verify your S-o-b
+> provenance.
+>
+> Thanks,
+>
+> >
+> > Dear friends,
+> >
+> > This patchset is aimed to support virtio-sound live migration and based
+> on
+> > pre-existing Volker R=C3=BCmelin's patches from qemu-devel lists [1]. I=
+ tried
+> > to ask (
+> https://lore.kernel.org/qemu-devel/9d7ea128c711c201688a4716f53b8a335fc535=
+69.camel@mihalicyn.com/
+> )
+> > if Volker is going to continue his work on this, but received no reply
+> so I
+> > just decided to go forward: take his patches, rebase and resend. Of
+> course,
+> > I kept all authorship/tags so I hope that it is fine.
+> >
+> > Testing.
+> >
+> > I manually validated this with Ubuntu 24.04 Desktop VM and found no
+> issues.
+> > Also, it was validated with CI (
+> https://gitlab.com/mihalicyn/qemu/-/pipelines/2626702088).
+> >
+> > Original patchset:
+> >
+> https://lore.kernel.org/qemu-devel/a289a081-9a61-4bcb-b693-bf6cd7768c0e@t=
+-online.de
+>  [1]
+> >
+> > Git tree:
+> > https://gitlab.com/mihalicyn/qemu/-/commits/virtio-sound-migration
+> >
+> > Changelog for version 3:
+> > - addressed review feedback from Marc-Andr=C3=A9 Lureau:
+> >         - drop VirtIOSoundPCMStream's id field (unused)
+> >         - resurrected error_report(..) in virtio_snd_pcm_start_stop()
+> >         - fixes in "hw/audio/virtio-sound: add stream state variable"
+> >           [ please, look in commit message for details ]
+> >         - added "hw/audio/virtio-sound: remove channel positions field
+> >           from VirtIOSoundPCMStream"
+> >         - fixes in "hw/audio/virtio-sound: add missing vmstate fields"
+> >           [ details in commit message ]
+> >
+> > Changelog for version 2:
+> > - no code changes (only commit messages)
+> >   followed suggestions from Daniel P. Berrang=C3=A9 (thanks, Daniel!)
+> >   https://lore.kernel.org/qemu-devel/ajzoxZr4g0Xsr_4p@redhat.com/
+> >   and added some extra details about what I did with the original
+> >   patches during rebase (for some of them it was simpler and less error
+> >   prone to just drop changes and reimplement them by following the idea
+> >   of the patch, cause base code has changed significantly).
+> >
+> > Changelog relative to the original Volker R=C3=BCmelin's submission:
+> > - rebased:
+> >         - "hw/audio/virtio-sound: return correct command response size"
+> >                 was dropped as it was already merged
+> >         - "hw/audio/virtio-sound: fix segmentation fault in tx/rx xfer
+> handler"
+> >                 was dropped as it seems to be replaced with another fix
+> >
+> https://github.com/qemu/qemu/commit/731655f87f319fd06f27282c6cafbc2467ac8=
+045
+> >         - I had to drop all pre-existing Reviewed-by tags cause it was =
+2
+> years since
+> >           this patchset was sent and reviewed and I did a quite
+> significant code changes
+> >           during rebase
+> >
+> > Kind regards,
+> > Alex
+> >
+> > Alexander Mikhalitsyn (1):
+> >   hw/audio/virtio-sound: remove channel positions field from
+> >     VirtIOSoundPCMStream
+> >
+> > Volker R=C3=BCmelin (8):
+> >   hw/audio/virtio-sound: remove command and stream mutexes
+> >   hw/audio/virtio-sound: allocate an array of streams
+> >   hw/audio/virtio-sound: free all stream buffers on reset
+> >   hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
+> >   hw/audio/virtio-sound: add stream state variable
+> >   hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
+> >   hw/audio/virtio-sound: introduce virtio_snd_set_active()
+> >   hw/audio/virtio-sound: add missing vmstate fields
+> >
+> >  hw/audio/trace-events         |   3 +-
+> >  hw/audio/virtio-snd.c         | 679 ++++++++++++++++++++--------------
+> >  include/hw/audio/virtio-snd.h |  26 +-
+> >  3 files changed, 399 insertions(+), 309 deletions(-)
+> >
+> > --
+> > 2.47.3
+> >
+>
+> --
+> Manos Pitsidianakis
+> Emulation and Virtualization Engineer at Linaro Ltd
+>
+
+--000000000000147ab80655633865
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, 29 Jun 2026, 14:32 Aleks=
+andr Mikhalitsyn, &lt;<a href=3D"mailto:aleksandr.mikhalitsyn@futurfusion.i=
+o">aleksandr.mikhalitsyn@futurfusion.io</a>&gt; wrote:<br></div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">
+
+
+
+
+<div dir=3D"ltr">
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+Dear Manos,</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+<br>
+</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+(replying from my @<a href=3D"http://futurfusion.io" target=3D"_blank" rel=
+=3D"noreferrer">futurfusion.io</a> address)</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+<br>
+</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+I&#39;m using my personal email address hosted at Gmail, cause it works jus=
+t well with plain text email and does not corrupt patches.</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+While Microsoft Outlook (behind <a href=3D"http://futurfusion.io" target=3D=
+"_blank" rel=3D"noreferrer">futurfusion.io</a>) doesn&#39;t work that good,=
+ so I still do SoB tags with my work email, but send</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+them through Gmail servers. Hope it is fine.</div></div></blockquote></div>=
+</div><div dir=3D"auto"><br></div><div dir=3D"auto">Ok, that is good enough=
+ proof for me! No need to do anything different then for future revisions.<=
+/div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"au=
+to"><div class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"g=
+mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
+,204,204);padding-left:1ex"><div dir=3D"ltr">
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+<br>
+</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+I&#39;m ready to do all necessary actions to proof that these two email bel=
+ong to me, for example I send my series from</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+my Gmail and then reply from <a href=3D"http://futurfusion.io" target=3D"_b=
+lank" rel=3D"noreferrer">futurfusion.io</a> with some ACK to prove that it&=
+#39;s me.</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+<br>
+</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+Also, in Linux kernel I have a proper email mapping:</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+<a href=3D"https://github.com/torvalds/linux/blob/dc59e4fea9d83f03bad6bddf3=
+fa2e52491777482/.mailmap#L38" target=3D"_blank" rel=3D"noreferrer">https://=
+github.com/torvalds/linux/blob/dc59e4fea9d83f03bad6bddf3fa2e52491777482/.ma=
+ilmap#L38</a></div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+<br>
+</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+P.S. Sorry for doing non-inline reply, it&#39;s again because of terrible O=
+utlook.</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+<br>
+</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+P.S.2. I&#39;ll continue my work on patches next week, cause I&#39;m curren=
+tly away from home on vacation. ;)</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+Huge thanks for such a fast review of my patch submission!</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+<br>
+</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+Kind regards,</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+Alex</div>
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
+<br>
+</div>
+<hr style=3D"display:inline-block;width:98%">
+<div id=3D"m_7993606734492337038divRplyFwdMsg">
+<div style=3D"direction:ltr;font-family:Calibri,sans-serif;font-size:11pt;c=
+olor:rgb(0,0,0)">
+<b>From:</b>=C2=A0Manos Pitsidianakis &lt;<a href=3D"mailto:manos.pitsidian=
+akis@linaro.org" target=3D"_blank" rel=3D"noreferrer">manos.pitsidianakis@l=
+inaro.org</a>&gt;<br>
+<b>Sent:</b>=C2=A0Monday, June 29, 2026 13:04<br>
+<b>To:</b>=C2=A0Alexander Mikhalitsyn &lt;<a href=3D"mailto:alexander@mihal=
+icyn.com" target=3D"_blank" rel=3D"noreferrer">alexander@mihalicyn.com</a>&=
+gt;<br>
+<b>Cc:</b>=C2=A0<a href=3D"mailto:qemu-devel@nongnu.org" target=3D"_blank" =
+rel=3D"noreferrer">qemu-devel@nongnu.org</a> &lt;<a href=3D"mailto:qemu-dev=
+el@nongnu.org" target=3D"_blank" rel=3D"noreferrer">qemu-devel@nongnu.org</=
+a>&gt;; Volker R=C3=BCmelin &lt;<a href=3D"mailto:vr_qemu@t-online.de" targ=
+et=3D"_blank" rel=3D"noreferrer">vr_qemu@t-online.de</a>&gt;; Marc-Andr=C3=
+=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@redhat.com" target=3D"_bl=
+ank" rel=3D"noreferrer">marcandre.lureau@redhat.com</a>&gt;; St=C3=A9phane =
+Graber &lt;<a href=3D"mailto:stgraber@stgraber.org" target=3D"_blank" rel=
+=3D"noreferrer">stgraber@stgraber.org</a>&gt;; Daniel P . Berrang=C3=A9 &lt=
+;<a href=3D"mailto:berrange@redhat.com" target=3D"_blank" rel=3D"noreferrer=
+">berrange@redhat.com</a>&gt;; Gerd Hoffmann &lt;<a href=3D"mailto:kraxel@r=
+edhat.com" target=3D"_blank" rel=3D"noreferrer">kraxel@redhat.com</a>&gt;;
+ Michael S. Tsirkin &lt;<a href=3D"mailto:mst@redhat.com" target=3D"_blank"=
+ rel=3D"noreferrer">mst@redhat.com</a>&gt;; Aleksandr Mikhalitsyn &lt;<a hr=
+ef=3D"mailto:aleksandr.mikhalitsyn@futurfusion.io" target=3D"_blank" rel=3D=
+"noreferrer">aleksandr.mikhalitsyn@futurfusion.io</a>&gt;<br>
+<b>Subject:</b>=C2=A0Re: [PATCH v3 0/9] hw/audio/virtio-sound: basic migrat=
+ion support</div>
+<div style=3D"direction:ltr">=C2=A0</div>
+</div>
+<div style=3D"font-size:11pt">Hi Alexander,<br>
+<br>
+On Fri, Jun 26, 2026 at 3:35=E2=80=AFPM Alexander Mikhalitsyn<br>
+&lt;<a href=3D"mailto:alexander@mihalicyn.com" target=3D"_blank" rel=3D"nor=
+eferrer">alexander@mihalicyn.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; From: Alexander Mikhalitsyn &lt;<a href=3D"mailto:aleksandr.mikhalitsy=
+n@futurfusion.io" target=3D"_blank" rel=3D"noreferrer">aleksandr.mikhalitsy=
+n@futurfusion.io</a>&gt;<br>
+<br>
+Could you please send your patches from your<br>
+<a href=3D"mailto:aleksandr.mikhalitsyn@futurfusion.io" target=3D"_blank" r=
+el=3D"noreferrer">aleksandr.mikhalitsyn@futurfusion.io</a> address for the =
+next revision?<br>
+Replying to review comments with your personal email is fine, but the<br>
+s-o-b should match your sending address. We do not know if the address<br>
+belongs to you otherwise. This is not explicitly stated in our Code<br>
+Provenance documentation but we need a way to verify your S-o-b<br>
+provenance.<br>
+<br>
+Thanks,<br>
+<br>
+&gt;<br>
+&gt; Dear friends,<br>
+&gt;<br>
+&gt; This patchset is aimed to support virtio-sound live migration and base=
+d on<br>
+&gt; pre-existing Volker R=C3=BCmelin&#39;s patches from qemu-devel lists [=
+1]. I tried<br>
+&gt; to ask (<a href=3D"https://lore.kernel.org/qemu-devel/9d7ea128c711c201=
+688a4716f53b8a335fc53569.camel@mihalicyn.com/" id=3D"m_7993606734492337038O=
+WA6941f02b-1969-9e4e-711e-d2b9cc4c83b5" target=3D"_blank" rel=3D"noreferrer=
+">https://lore.kernel.org/qemu-devel/9d7ea128c711c201688a4716f53b8a335fc535=
+69.camel@mihalicyn.com/</a>)<br>
+&gt; if Volker is going to continue his work on this, but received no reply=
+ so I<br>
+&gt; just decided to go forward: take his patches, rebase and resend. Of co=
+urse,<br>
+&gt; I kept all authorship/tags so I hope that it is fine.<br>
+&gt;<br>
+&gt; Testing.<br>
+&gt;<br>
+&gt; I manually validated this with Ubuntu 24.04 Desktop VM and found no is=
+sues.<br>
+&gt; Also, it was validated with CI (<a href=3D"https://gitlab.com/mihalicy=
+n/qemu/-/pipelines/2626702088" id=3D"m_7993606734492337038OWA61c1378e-0a4d-=
+e5fb-1e7d-9b656bd415cf" target=3D"_blank" rel=3D"noreferrer">https://gitlab=
+.com/mihalicyn/qemu/-/pipelines/2626702088</a>).<br>
+&gt;<br>
+&gt; Original patchset:<br>
+&gt; <a href=3D"https://lore.kernel.org/qemu-devel/a289a081-9a61-4bcb-b693-=
+bf6cd7768c0e@t-online.de" id=3D"m_7993606734492337038OWA1039b5e4-0041-23a6-=
+64ed-eb1366130103" target=3D"_blank" rel=3D"noreferrer">
+https://lore.kernel.org/qemu-devel/a289a081-9a61-4bcb-b693-bf6cd7768c0e@t-o=
+nline.de</a>=C2=A0[1]<br>
+&gt;<br>
+&gt; Git tree:<br>
+&gt; <a href=3D"https://gitlab.com/mihalicyn/qemu/-/commits/virtio-sound-mi=
+gration" id=3D"m_7993606734492337038OWA96413e88-a0a1-d43d-49c7-fa6040c3e94d=
+" target=3D"_blank" rel=3D"noreferrer">
+https://gitlab.com/mihalicyn/qemu/-/commits/virtio-sound-migration</a><br>
+&gt;<br>
+&gt; Changelog for version 3:<br>
+&gt; - addressed review feedback from Marc-Andr=C3=A9 Lureau:<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - drop VirtIOSoundPCMS=
+tream&#39;s id field (unused)<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - resurrected error_re=
+port(..) in virtio_snd_pcm_start_stop()<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - fixes in &quot;hw/au=
+dio/virtio-sound: add stream state variable&quot;<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 [ please, =
+look in commit message for details ]<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - added &quot;hw/audio=
+/virtio-sound: remove channel positions field<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 from VirtI=
+OSoundPCMStream&quot;<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - fixes in &quot;hw/au=
+dio/virtio-sound: add missing vmstate fields&quot;<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 [ details =
+in commit message ]<br>
+&gt;<br>
+&gt; Changelog for version 2:<br>
+&gt; - no code changes (only commit messages)<br>
+&gt;=C2=A0=C2=A0 followed suggestions from Daniel P. Berrang=C3=A9 (thanks,=
+ Daniel!)<br>
+&gt;=C2=A0=C2=A0 <a href=3D"https://lore.kernel.org/qemu-devel/ajzoxZr4g0Xs=
+r_4p@redhat.com/" id=3D"m_7993606734492337038OWAcb3276a6-3c46-78e3-4327-2ea=
+66bbac108" target=3D"_blank" rel=3D"noreferrer">
+https://lore.kernel.org/qemu-devel/ajzoxZr4g0Xsr_4p@redhat.com/</a><br>
+&gt;=C2=A0=C2=A0 and added some extra details about what I did with the ori=
+ginal<br>
+&gt;=C2=A0=C2=A0 patches during rebase (for some of them it was simpler and=
+ less error<br>
+&gt;=C2=A0=C2=A0 prone to just drop changes and reimplement them by followi=
+ng the idea<br>
+&gt;=C2=A0=C2=A0 of the patch, cause base code has changed significantly).<=
+br>
+&gt;<br>
+&gt; Changelog relative to the original Volker R=C3=BCmelin&#39;s submissio=
+n:<br>
+&gt; - rebased:<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - &quot;hw/audio/virti=
+o-sound: return correct command response size&quot;<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 was dropped as it was already merged<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - &quot;hw/audio/virti=
+o-sound: fix segmentation fault in tx/rx xfer handler&quot;<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 was dropped as it seems to be replaced with ano=
+ther fix<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 <a href=3D"https://github.com/qemu/qemu/commit/=
+731655f87f319fd06f27282c6cafbc2467ac8045" id=3D"m_7993606734492337038OWA87d=
+1e5d7-4be7-48e0-dec6-cdd7ab5c86b6" target=3D"_blank" rel=3D"noreferrer">
+https://github.com/qemu/qemu/commit/731655f87f319fd06f27282c6cafbc2467ac804=
+5</a><br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - I had to drop all pr=
+e-existing Reviewed-by tags cause it was 2 years since<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 this patch=
+set was sent and reviewed and I did a quite significant code changes<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 during reb=
+ase<br>
+&gt;<br>
+&gt; Kind regards,<br>
+&gt; Alex<br>
+&gt;<br>
+&gt; Alexander Mikhalitsyn (1):<br>
+&gt;=C2=A0=C2=A0 hw/audio/virtio-sound: remove channel positions field from=
+<br>
+&gt;=C2=A0=C2=A0=C2=A0=C2=A0 VirtIOSoundPCMStream<br>
+&gt;<br>
+&gt; Volker R=C3=BCmelin (8):<br>
+&gt;=C2=A0=C2=A0 hw/audio/virtio-sound: remove command and stream mutexes<b=
+r>
+&gt;=C2=A0=C2=A0 hw/audio/virtio-sound: allocate an array of streams<br>
+&gt;=C2=A0=C2=A0 hw/audio/virtio-sound: free all stream buffers on reset<br=
+>
+&gt;=C2=A0=C2=A0 hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop=
+()<br>
+&gt;=C2=A0=C2=A0 hw/audio/virtio-sound: add stream state variable<br>
+&gt;=C2=A0=C2=A0 hw/audio/virtio-sound: introduce virtio_snd_pcm_open()<br>
+&gt;=C2=A0=C2=A0 hw/audio/virtio-sound: introduce virtio_snd_set_active()<b=
+r>
+&gt;=C2=A0=C2=A0 hw/audio/virtio-sound: add missing vmstate fields<br>
+&gt;<br>
+&gt;=C2=A0 hw/audio/trace-events=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 |=C2=A0=C2=A0 3 +-<br>
+&gt;=C2=A0 hw/audio/virtio-snd.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 | 679 ++++++++++++++++++++--------------<br>
+&gt;=C2=A0 include/hw/audio/virtio-snd.h |=C2=A0 26 +-<br>
+&gt;=C2=A0 3 files changed, 399 insertions(+), 309 deletions(-)<br>
+&gt;<br>
+&gt; --<br>
+&gt; 2.47.3<br>
+&gt;<br>
+<br>
+--<br>
+Manos Pitsidianakis<br>
+Emulation and Virtualization Engineer at Linaro Ltd</div>
+</div>
+
+</blockquote></div></div></div>
+
+--000000000000147ab80655633865--
 
