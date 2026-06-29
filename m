@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77370C43327
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66E6AC43458
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 21:37:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weJfP-00072p-QH; Mon, 29 Jun 2026 17:37:23 -0400
+	id 1weJfI-0006rF-PV; Mon, 29 Jun 2026 17:37:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1weJfP-00072W-1n
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 17:37:23 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1weJfB-0006q1-JA
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 17:37:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1weJfN-0004Dk-Mh
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 17:37:22 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1weJfA-0003wY-9f
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 17:37:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782769041;
+ s=mimecast20190719; t=1782769027;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nXeXshimwAxrn9+eaWCq3jzOzOCoeduWsu291snjukk=;
- b=KldioY0qmHnZ0CScZUdMR5GyGb2qgFtyLVGxDvCbRbS3Lke1rNakttB9lbo7jr4kMNJfXo
- eStOeCKkzlg8io9i7cUZ3pKNHkOM5pZ3gi0Gg60W2VeUb9q8jrI9qdHzgp7x6831bjiPVp
- /pTKzNME3Gnyk23FjiruTzeFKYQOJ5U=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=t2i1M56psiJC4Y+a4wxdvlazg6AIoI7yl1Qb9xCS6G0=;
+ b=UdH+Hp1QyrYHcUVMam2ImGj7I/fNDX7M1SF6D4NVqx4LcIr3vU6e0rIznfoD4c2C7Pk0/s
+ Q0a3/43ybvsR6HfnejkyygHyeg2/KTKaJXPblCgxV65rlfZ1/svDkALWUtGsLnDPFf4w0Z
+ t/JFo7Fbsoz592pUOFZJ/yOsDHeGn5w=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-582--TBkmm3hO66x73XOMYFGsw-1; Mon,
- 29 Jun 2026 17:37:19 -0400
-X-MC-Unique: -TBkmm3hO66x73XOMYFGsw-1
-X-Mimecast-MFC-AGG-ID: -TBkmm3hO66x73XOMYFGsw_1782769038
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-GtMX6rFcNoWowG9GbFY0aw-1; Mon,
+ 29 Jun 2026 17:37:02 -0400
+X-MC-Unique: GtMX6rFcNoWowG9GbFY0aw-1
+X-Mimecast-MFC-AGG-ID: GtMX6rFcNoWowG9GbFY0aw_1782769020
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AB2B619344BD; Mon, 29 Jun 2026 21:37:17 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 329151979064; Mon, 29 Jun 2026 21:37:00 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.171])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 430F21956096; Mon, 29 Jun 2026 21:37:12 +0000 (UTC)
+ id 4A4D119560AD; Mon, 29 Jun 2026 21:36:56 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -60,9 +60,9 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>, Lukas Straub <lukasstraub2@web.de>,
  Stefan Hajnoczi <stefanha@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 08/14] qapi: convert intro sections for misc-arm.json
-Date: Mon, 29 Jun 2026 17:36:18 -0400
-Message-ID: <20260629213624.936258-9-jsnow@redhat.com>
+Subject: [PATCH 05/14] qapi: convert intro sections for compat.json
+Date: Mon, 29 Jun 2026 17:36:15 -0400
+Message-ID: <20260629213624.936258-6-jsnow@redhat.com>
 In-Reply-To: <20260629213624.936258-1-jsnow@redhat.com>
 References: <20260629213624.936258-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -95,65 +95,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/misc-arm.json | 24 ++++++++++--------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ qapi/compat.json | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
-index 4dc66d00e5c..64059b5688d 100644
---- a/qapi/misc-arm.json
-+++ b/qapi/misc-arm.json
-@@ -5,11 +5,10 @@
+diff --git a/qapi/compat.json b/qapi/compat.json
+index 90b8d51cf27..b42d142ddcc 100644
+--- a/qapi/compat.json
++++ b/qapi/compat.json
+@@ -9,8 +9,7 @@
  
  ##
- # @GICCapability:
+ # @CompatPolicyInput:
 -#
--# The struct describes capability for a specific GIC (Generic
--# Interrupt Controller) version.  These bits are not only decided by
--# QEMU/KVM software version, but also decided by the hardware that the
--# program is running upon.
-+#     The struct describes capability for a specific GIC (Generic
-+#     Interrupt Controller) version.  These bits are not only decided
-+#     by QEMU/KVM software version, but also decided by the hardware
-+#     that the program is running upon.
+-# Policy for handling "funny" input.
++#     Policy for handling "funny" input.
  #
- # @version: version of GIC to be described.  Currently, only 2 and 3
- #     are supported.
-@@ -29,12 +28,11 @@
+ # @accept: Accept silently
+ #
+@@ -25,8 +24,7 @@
  
  ##
- # @query-gic-capabilities:
-+#     It will return a list of `GICCapability` objects that describe
-+#     its capability bits.
- #
--# It will return a list of `GICCapability` objects that describe its
--# capability bits.
+ # @CompatPolicyOutput:
 -#
--# On non-ARM targets this command will report an error as the GIC
--# technology is not applicable.
-+#     On non-ARM targets this command will report an error as the GIC
-+#     technology is not applicable.
+-# Policy for handling "funny" output.
++#     Policy for handling "funny" output.
  #
- # Since: 2.6
+ # @accept: Pass on unchanged
  #
-@@ -48,8 +46,7 @@
+@@ -39,8 +37,7 @@
  
  ##
- # @SsidSizeMode:
+ # @CompatPolicy:
 -#
--# SMMUv3 SubstreamID size configuration mode.
-+#     SMMUv3 SubstreamID size configuration mode.
+-# Policy for handling deprecated management interfaces.
++#     Policy for handling deprecated management interfaces.
  #
- # @auto: derive from host IOMMU capabilities
- #
-@@ -64,8 +61,7 @@
- 
- ##
- # @OasMode:
--#
--# SMMUv3 Output Address Size configuration mode.
-+#     SMMUv3 Output Address Size configuration mode.
- #
- # @auto: derive from host IOMMU capabilities
+ # This is intended for testing users of the management interfaces.
  #
 -- 
 2.54.0
