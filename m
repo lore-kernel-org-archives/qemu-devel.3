@@ -4,109 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41EA0C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 01:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7551C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 01:54:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we1AM-00048D-Qh; Sun, 28 Jun 2026 21:52:06 -0400
+	id 1we1CS-0004aj-8p; Sun, 28 Jun 2026 21:54:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1we1AL-00047o-Av
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 21:52:05 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1we1AJ-0005ui-Ma
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 21:52:05 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-6984169c126so2872796a12.1
- for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 18:52:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782697922; cv=none;
- d=google.com; s=arc-20260327;
- b=kvwTxwu6DR51+UybOhprqwTaTzqdfnruYysEv3K3tj642/MMdxRmGAb1UfVaDNoFBu
- Fui/sU3tlVxIOJVLHfxi379GII5Qrtbz9gGTH87lRNLo1Z5MDVul8OazYpREKIXeS5fH
- WzfO4kyYPMfMQafIL3sxmQpfTyrW3vG0TyCHldO/DidaygbGDPSpoy3lq4cdFGbj/am9
- JYH0pXajvW3OgP8HYq5UyiJoThHakoIbGHpXNQ1sym49jvuZfqj3T/vRZp3ClP9o0b1R
- dvsNa2YaqmPYfYu++DcdmxP1wD5wJVuOBXhzQB9RPUurkwj9/dFpLuVvVVyksPMmt4BZ
- pBgA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=CMqBTCRUbnPotNNJ9L9MwTYdCpIX8sbnIZflPhglVns=;
- fh=rtJ6LEstOJ+xc1WjVUI/6HMi9vdAdPgmpAwNOEXv+NU=;
- b=IwBmwMciCsI32jUeUxqBVJaFd51jeyPSeBdKEsJ4nNF4aSArmeI39TZ32tTdZlmjiG
- GKO5uNGu9++GtXVCxRHNAzTxftoibA0uf0VPtz2DjjsvN6LK0TwksUrFTaHP47uOQYkT
- 98CpFbEgW4710WIPKA3cfQpggCz3LLyVdvzrNMEGEk9TfeMvLJcRJ50jiRLHdio0Ga7R
- BykOdOrOuDA17Y7+jbQNuopcfYxkGnRc6GbEKLOqWNtMbijxoRp9qFcwCOrMl2AXQhAx
- /Zp1MmVejmAmh6ox9KT1N9SXZ0pLLcKUYQ3JS7O8h+cVQvLaoofSsM8V6oH9mKzjw5Ua
- kF/Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1we1CM-0004a5-0I
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 21:54:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1we1CG-0006MP-5D
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 21:54:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782698037;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Oy3wGPh4kUyBTZuM9QPlhryw0n0/N/FFI0LCYRC2luA=;
+ b=QXp1/BcW4236vr3wz8KZtTpo2ZjtJMuSoBkryH9DoGJ0OF0kl5jSEfmOj6hlszssMtepaG
+ ARVxcupeHiZgPaqHaX50bNMYOg3w39FGit9FzvCe57NHV2NmnZxL6sGJtN/21jXLeAjlVf
+ 32BirkKz4OmM/n3Uf2r1JrdvVVhR3dE=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-611-SF5qE1tXOnGbhbGG4SfbdA-1; Sun, 28 Jun 2026 21:53:55 -0400
+X-MC-Unique: SF5qE1tXOnGbhbGG4SfbdA-1
+X-Mimecast-MFC-AGG-ID: SF5qE1tXOnGbhbGG4SfbdA_1782698035
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2c8018f11fbso22732165ad.3
+ for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 18:53:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782697922; x=1783302722; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CMqBTCRUbnPotNNJ9L9MwTYdCpIX8sbnIZflPhglVns=;
- b=aCsxoLzTPr7j8etPWh1kfRohrWGpzbbfhuPZ0F/nk8uuRnm8TOAr5QcxhPeLbIPftX
- vJqhDXR0KZJD9Ct+qvLCplB6ryj2+CKcQu/mGY1qhYu7hZYUyBY9vt6lhGE8u1ZNS5aE
- 4GJT/wUfGrO7FbnZ4SlVF30h7SV0L5L7nWxXCLdks6qh2+ojSSvKzGNtg/WlpTrPPKnW
- Him3DICyDJxntSC4HxntjYNdOCuQX3Ry/Y1aL5DNip/ZzAZeNty4YKrDo6cMs/poY8WQ
- AuywZPbqzYKZTqkXWXpFMDJn36j8UQ8d0fi+jkcJmusBcZU/mx18SBjJKQ0esnj4CUR+
- GAsw==
+ d=redhat.com; s=google; t=1782698034; x=1783302834; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Oy3wGPh4kUyBTZuM9QPlhryw0n0/N/FFI0LCYRC2luA=;
+ b=nm2X8+a9ZC4UqWj6+0khOn5tl+G45CHQk9HWlECxxRHOAn1YrabuLHRK15jCEUrvkL
+ oTnzuENZiGXDm7CCEwEyWH0u438X3B1NQehUUTdART+07OswTYr6jdWPIfFDnKneiU7I
+ 7C1zaWQ2c7IIt48lJz5rTojui9MRxqWuvH7LvJgtmddhLUoHA/N8zaKgD3IIpedo19O3
+ TycZ94xzd74rTDp/DBFVHjYkVbtvNi2h1swJ5BAtjqVhc2Mz3njPPocZHuF7d8Y8ALYo
+ ++SRG7bzMk6qXKfQhiaOkXwXX2qNgmYpigF0CD0VUNj1e3kDUVG7uBAiupA2KY+jU05n
+ J1MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782697922; x=1783302722;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=CMqBTCRUbnPotNNJ9L9MwTYdCpIX8sbnIZflPhglVns=;
- b=srtIQ4r5KmrwDa7lCEO5AcuVtGBQjJJjKNkzji06SVB/CIrHvBqZSddXNywnM1Hi2r
- 1Z4F7G+l+uoo7HRcJijSK6+AI/Xl7etZyZY1RF/HkGH+cCA2zrW1yg3rBGKCQXptKb1E
- FF+AACgbtycGlvCXBPGHC74qkkwVt0SU88f9wjpwQey4sCR/3APjxh1xBjTE/n9wQdhi
- uVsn5Jhg+RvDKuhielHRCouSKYfZEbv647foBMqKnNPaaUDO0z2Ntqy8AVqUTYUv6K2u
- cqeKaAnQH9ROs6Uscx5DBOtXsXMfxyGx8FNtcn9Zf8+0D+f4neCQreLF6BNQU8t7BT1j
- ig1w==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpTeed3JowqBVbQBkHachomC/rFOOHJwA5CC91S61T7+8f8wq01ZlgxNrMIQbKWyKbox35ZAUXK1Ejs@nongnu.org
-X-Gm-Message-State: AOJu0Yw4FYpp+zpf0hTj7iXmOLzDNGtVbW4cx8qBxzQ4ypJDsIjrZnFi
- Tbyjpu30rhB2WObxEMDb4lTl5KR6g3I237a1fPWYoE1AwmPdKtGESOe5Q/LqDlXlqqk+cx38IzS
- AlWKY1+j+aNvdVYOTDrn3xsReQrtHBZc=
-X-Gm-Gg: AfdE7ckoVll/cjSzK+DhQWQeUY3OvBRX7aRszGORPSrR0tCXl/zbJr24rE5dFtfMPVf
- +2aZDoQtuaARPod7L6OZEDEtWdx009dc3qXy1GX70PwR6Hulbr1u/4ZoYU7rhhx5LTKHsCNAkNC
- 4Z7f/Q3m2dE/uFTJWTsO3UNmkRlhdiDDRhcFWevC08xnr9bWHBqD0r++mg8KF52JbvdOGPNNaxx
- 4R0gAtIujHa9vC3ctJpyMKI0w/70ZlrSQUFgRLjW/DFcd2inST3M7omTD+s17I24RyUtRNzqtzP
- sDNQHpbfk+oAayQgEG3YD2+ZjxRqj8IppjZbag==
-X-Received: by 2002:a05:6402:42d5:b0:698:3b7c:7e37 with SMTP id
- 4fb4d7f45d1cf-6983b7c7f56mr4453673a12.33.1782697922307; Sun, 28 Jun 2026
- 18:52:02 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782698034; x=1783302834;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Oy3wGPh4kUyBTZuM9QPlhryw0n0/N/FFI0LCYRC2luA=;
+ b=Eny7vL60hpWLjmxN9vegShQa+viep2kf02qhTQH1N7wELKEButMxhBQJNbpnjOZQPI
+ Yvs2qGRWlSP8H86GGPPHvAYYEMzELWMM3pnw3oYE9IFtYgoaI/uBHnoLrga5HSLOB4zt
+ ucdOQLm+07FeovNu7h2R3gLEAghWIBnSSC3guc8j78UILkx5mXWrx6ftg+V5dznpOC8h
+ NMi0LVKLWWPe21G/gJhZpwL6Zt9pZlGrlc+93g54LfuoEYxyLTdLidO+/Q9vX7xPq4Hu
+ 5z4R/YXBtDi0a/PxOwxAfzegmSkGHVJHtAxieJ8oLdEeq7BaL/wbpP1FA560/xbHQLzY
+ mHMg==
+X-Gm-Message-State: AOJu0YymF55ysmPygQfWnknGU02ZhgZd+GZ6Y6Xpa40sWaV1vl9VBZNM
+ DAZTpdFcgKZlcl5zvJ9YMDoszpjBdoBx05kks9ecLsWaeD9QqUltAZYclvZaeJg+F6rfwLUK7pv
+ FCFRJcOJpByWyPaPep6oh58/O6H0RG/FcNqgEmtzrPxC7dkXPbdBvwNzNYh74TE0bszD+Cj0e9D
+ ahwRkCGIfi9ANYPcA+6t+OOruqGsZMfmzJW9SZzS7a
+X-Gm-Gg: AfdE7ckQkW9sIkv0p7ZYUnfRM6etv+HYONTxCbkVSNB8+2R6aH+cEsX6Ha1GHB+kmIh
+ o6KwhBxsP2YNmrDenufz3rjCwByTQGlUarRsWzLCKzTra5hawMkHIvm4kA7SkC9Kl/xeCm1S4YC
+ 6Z/6IFsmT3EfBnqbEgyj+QJ73qh4UcU0buGvX0CPs3HxcJcPzLYKiYPCco6lTAZB7RjbJq4fXpM
+ VGhBkanBo7zJ+ABTwbyoWlXcPJF3liffF4Na3CoMYQ1HXjqhXHrL9OLdTQexxNdtZC++aBvTmZu
+ EK9GqGOGVZRigfNrhxn5YqefP2dc/0me+RqonPh4+XYHnKaaThiYqKjRrhBC6mmd+jr8FImbduX
+ XQm0mQx/GjC8R7M+3DjzY4A==
+X-Received: by 2002:a17:902:e952:b0:2c9:bd30:e6ff with SMTP id
+ d9443c01a7336-2c9bd30ea60mr48334025ad.39.1782698034445; 
+ Sun, 28 Jun 2026 18:53:54 -0700 (PDT)
+X-Received: by 2002:a17:902:e952:b0:2c9:bd30:e6ff with SMTP id
+ d9443c01a7336-2c9bd30ea60mr48333765ad.39.1782698033720; 
+ Sun, 28 Jun 2026 18:53:53 -0700 (PDT)
+Received: from localhost.localdomain ([208.115.228.234])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2c7f63b24a2sm82165225ad.50.2026.06.28.18.53.51
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 28 Jun 2026 18:53:53 -0700 (PDT)
+From: Jason Wang <jasowang@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>,
+	Jason Wang <jasowangio@gmail.com>
+Subject: [PATCH] MAINTAINERS: update Jason Wang's email address
+Date: Mon, 29 Jun 2026 09:53:45 +0800
+Message-ID: <20260629015346.17653-1-jasowang@redhat.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-References: <20260616190147.1286316-1-visitorckw@gmail.com>
- <20260616190147.1286316-6-visitorckw@gmail.com>
-In-Reply-To: <20260616190147.1286316-6-visitorckw@gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 29 Jun 2026 11:51:36 +1000
-X-Gm-Features: AVVi8Ccfc-DaiAEW7_omqutxWG8tDvIYBF2EI5rzffMcZiT-WYX_3fQ0e87Otjk
-Message-ID: <CAKmqyKMXyrtFeruxxsy2NNTeCeqQfkM4khYuWN+Qu9Zhb0ebMg@mail.gmail.com>
-Subject: Re: [PATCH v3 5/5] tests/qtest: Add qtest for Milk-V Duo board
-To: Kuan-Wei Chiu <visitorckw@gmail.com>
-Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, alistair.francis@wdc.com,
- farosas@suse.de, lvivier@redhat.com, liwei1518@gmail.com, 
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
- chao.liu.zevorn@gmail.com, jserv@ccns.ncku.edu.tw, eleanor15x@gmail.com, 
- marscheng@google.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ PP_MIME_FAKE_ASCII_TEXT=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,140 +118,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 17, 2026 at 5:04=E2=80=AFAM Kuan-Wei Chiu <visitorckw@gmail.com=
-> wrote:
->
-> Add minimal qtest coverage for the Milk-V Duo machine to validate basic
-> MMIO mapping and register access.
->
-> Currently tested:
-> - Verify DW8250 UART component version and type signatures.
-> - Test read/write access to CV1800B clock bypass register.
->
-> Tested with:
-> $ meson test -C build -v qemu:qtest-riscv64/milkv-duo-test
-> [...]
-> Ok:                 1
-> Fail:               0
->
-> Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-> ---
->  MAINTAINERS                  |  1 +
->  tests/qtest/meson.build      |  3 +-
->  tests/qtest/milkv-duo-test.c | 70 ++++++++++++++++++++++++++++++++++++
->  3 files changed, 73 insertions(+), 1 deletion(-)
->  create mode 100644 tests/qtest/milkv-duo-test.c
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index e197dcb5b2..472513537f 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1807,6 +1807,7 @@ F: hw/riscv/milkv_duo.c
->  F: include/hw/char/dw8250.h
->  F: include/hw/misc/cv1800b_clk.h
->  F: include/hw/riscv/cv1800b.h
-> +F: tests/qtest/milkv-duo-test.c
->
->  RX Machines
->  -----------
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 4897325d84..38acbdc0c8 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -293,7 +293,8 @@ qtests_riscv64 =3D ['riscv-csr-test'] + \
->    (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
->     config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
->     ['iommu-riscv-test'] : []) + \
-> -  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
-> +  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : []) +=
- \
-> +   ['milkv-duo-test']
->
->  qos_test_ss =3D ss.source_set()
->  qos_test_ss.add(
-> diff --git a/tests/qtest/milkv-duo-test.c b/tests/qtest/milkv-duo-test.c
-> new file mode 100644
-> index 0000000000..06064b8733
-> --- /dev/null
-> +++ b/tests/qtest/milkv-duo-test.c
-> @@ -0,0 +1,70 @@
-> +/*
-> + * QTest for Milk-V Duo Board
-> + *
-> + * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "libqtest.h"
-> +
-> +#define CV1800B_CLK_BASE            0x03002000
-> +#define CV1800B_CLK_BYPASS          0x030
-> +#define CV1800B_CLK_BYPASS_RESET    0xFFFFFFFF
-> +#define TEST_PATTERN_5A             0x5A5A5A5A
-> +#define TEST_PATTERN_A5             0xA5A5A5A5
-> +
-> +#define CV1800B_UART0_BASE          0x04140000
-> +#define DW_UART_UCV                 0xF8
-> +#define DW_UART_CTR                 0xFC
-> +#define DW_UART_VERSION_3_23A       0x3332332A
-> +#define DW_UART_TYPE_SIGNATURE      0x44570110
-> +
-> +static void test_milkv_duo_uart(void)
-> +{
-> +    QTestState *qts;
-> +    uint32_t component_version;
-> +    uint32_t component_type;
-> +
-> +    qts =3D qtest_init("-M milkv-duo");
-> +
-> +    component_version =3D qtest_readl(qts, CV1800B_UART0_BASE + DW_UART_=
-UCV);
-> +    g_assert_cmphex(component_version, =3D=3D, DW_UART_VERSION_3_23A);
-> +
-> +    component_type =3D qtest_readl(qts, CV1800B_UART0_BASE + DW_UART_CTR=
-);
-> +    g_assert_cmphex(component_type, =3D=3D, DW_UART_TYPE_SIGNATURE);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +static void test_milkv_duo_clk(void)
-> +{
-> +    QTestState *qts;
-> +    uint32_t clk_bypass_val;
-> +
-> +    qts =3D qtest_init("-M milkv-duo");
-> +
-> +    clk_bypass_val =3D qtest_readl(qts, CV1800B_CLK_BASE + CV1800B_CLK_B=
-YPASS);
-> +    g_assert_cmphex(clk_bypass_val, =3D=3D, CV1800B_CLK_BYPASS_RESET);
-> +
-> +    qtest_writel(qts, CV1800B_CLK_BASE + CV1800B_CLK_BYPASS, TEST_PATTER=
-N_5A);
-> +    clk_bypass_val =3D qtest_readl(qts, CV1800B_CLK_BASE + CV1800B_CLK_B=
-YPASS);
-> +    g_assert_cmphex(clk_bypass_val, =3D=3D, TEST_PATTERN_5A);
-> +
-> +    qtest_writel(qts, CV1800B_CLK_BASE + CV1800B_CLK_BYPASS, TEST_PATTER=
-N_A5);
-> +    clk_bypass_val =3D qtest_readl(qts, CV1800B_CLK_BASE + CV1800B_CLK_B=
-YPASS);
-> +    g_assert_cmphex(clk_bypass_val, =3D=3D, TEST_PATTERN_A5);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +int main(int argc, char **argv)
-> +{
-> +    g_test_init(&argc, &argv, NULL);
-> +
-> +    qtest_add_func("/riscv/milkv-duo/uart", test_milkv_duo_uart);
-> +    qtest_add_func("/riscv/milkv-duo/clk", test_milkv_duo_clk);
+Update maintainer email from jasowang@redhat.com to
+jasowangio@gmail.com and add corresponding .mailmap entries.
 
-Thanks for the tests. These are just checking some static values
-though. Can you also add a boot test?
+Signed-off-by: Jason Wang <jasowangio@gmail.com>
+---
+ .mailmap    | 3 ++-
+ MAINTAINERS | 8 ++++----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-Alistair
+diff --git a/.mailmap b/.mailmap
+index 34c092714a..8ade2eed66 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -31,7 +31,8 @@ malc <av1474@comtv.ru> malc <malc@c046a42c-6fe2-441c-8c8c-71466251a162>
+ Aaron Larson <alarson@ddci.com> alarson@ddci.com
+ Andreas Färber <andreas.faerber@web.de> Andreas Färber <andreas.faerber>
+ fanwenjie <fanwj@mail.ustc.edu.cn> fanwj@mail.ustc.edu.cn <fanwj@mail.ustc.edu.cn>
+-Jason Wang <jasowang@redhat.com> Jason Wang <jasowang>
++Jason Wang <jasowangio@gmail.com> Jason Wang <jasowang>
++Jason Wang <jasowangio@gmail.com> Jason Wang <jasowang@redhat.com>
+ Marek Dolata <mkdolata@us.ibm.com> mkdolata@us.ibm.com <mkdolata@us.ibm.com>
+ Michael Ellerman <mpe@ellerman.id.au> michael@ozlabs.org <michael@ozlabs.org>
+ Nick Hudson <hnick@vmware.com> hnick@vmware.com <hnick@vmware.com>
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 72357df7c4..6160d86825 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2275,7 +2275,7 @@ F: hw/char/
+ F: include/hw/char/
+ 
+ Network devices
+-M: Jason Wang <jasowang@redhat.com>
++M: Jason Wang <jasowangio@gmail.com>
+ S: Odd Fixes
+ F: hw/net/
+ F: include/hw/net/
+@@ -3448,7 +3448,7 @@ F: include/qemu/qemu-print.h
+ F: util/qemu-print.c
+ 
+ Network device backends
+-M: Jason Wang <jasowang@redhat.com>
++M: Jason Wang <jasowangio@gmail.com>
+ S: Maintained
+ F: net/
+ F: include/net/
+@@ -4045,7 +4045,7 @@ F: target/i386/igvm.c
+ 
+ VT-d Emulation
+ M: Michael S. Tsirkin <mst@redhat.com>
+-R: Jason Wang <jasowang@redhat.com>
++R: Jason Wang <jasowangio@gmail.com>
+ R: Yi Liu <yi.l.liu@intel.com>
+ R: Clément Mathieu--Drif <clement.mathieu--drif@bull.com>
+ S: Supported
+@@ -4480,7 +4480,7 @@ F: subprojects/libvfio-user.wrap
+ F: tests/functional/x86_64/test_vfio_user_client.py
+ 
+ EBPF
+-M: Jason Wang <jasowang@redhat.com>
++M: Jason Wang <jasowangio@gmail.com>
+ R: Yuri Benditovich <ybendito@redhat.com>
+ S: Maintained
+ F: docs/devel/ebpf_rss.rst
+-- 
+2.54.0
+
 
