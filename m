@@ -4,110 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76FF0C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 02:42:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 548C2C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 02:54:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we1wJ-0001BC-68; Sun, 28 Jun 2026 22:41:39 -0400
+	id 1we286-0002SL-RY; Sun, 28 Jun 2026 22:53:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1we1wB-0001AK-At
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 22:41:32 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1we1w8-0007Ze-M7
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 22:41:30 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-691c5776f95so4835517a12.3
- for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 19:41:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782700887; cv=none;
- d=google.com; s=arc-20260327;
- b=onb5JhXuIfIOS62sayeVOPiWVj/AVtHUEOqLNb8HkuD3nPhZl4lMpF6vLHE9E1nTLc
- hNkv1zV72hx3gJjeSq1I6TLs/hdmqCWSY0vUlHYRxtKamZFB+jK51KBzA/5p3/3utMWU
- TG9gAozUpTWEsputF9O8plKIX477AflpJ2Ruwf1bA/hc4d2yzJGKG55Hej8Oa00AiQhq
- wCqA4HowpVQLVg3tl49aNKefu6yxA/0F4J80GG/Wg/X7I8PO0z5wnkMjbyb6AZtDJnDh
- Mkc9k7gBuAJvAd9OaWe2pgGt1wnoumpJ/HHuZ14GOZHohnWd6qSGiZbvfmx8CEcrO41k
- ECsg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=bBv1I/ZO1y/i1zHZqaZCewy9Qr2VDqFLv9ENiF1z5zQ=;
- fh=JXgRGc/KlTGn0KxZ9tReTCjfE6V82C8AZjzHlOeGekQ=;
- b=n5c/7FDGMQXx3Xp2o4g0IqSjiNomOwKmw9shVH22I5tLmHq9Hh7CThHgoH65YNbKXa
- gB48vm8d7ndalI4EmIO14ijnh+kvX4vT6U/R1wj25/B0UOFFjFwS9J+oq0redoNNd0Px
- tz8aBM1T+lPeGywVsUg2FhLgFSjCHdloGWD4zc1v1qXpuAzCueM8bwUak0Dhrm7BEjhA
- eTMN397NO9Sc4l2wSUXNlAcP8+gR2xKdLDFIpc+ggu0QpXHEQMchaBb9uEvKLbZXkYKe
- /idN9KjsHb8DpqWLIPpr401w13kR0YgvuC3A6f0QHU2hOAT5KOklNCIPT/C+vr+jjuXP
- kZGQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782700887; x=1783305687; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bBv1I/ZO1y/i1zHZqaZCewy9Qr2VDqFLv9ENiF1z5zQ=;
- b=OGv93KUPHe75jNVBqM9wGrU4vQQiexXH3ehUY6Yhlosh2pzzgPUROqGSE8RGe0WPQS
- oOXVoUUWZxSuZ7qwToR7sGfGe+l5DtN3WMQ/OvJ7QrEYOZOfLngRMFIBEFyLsrFcazGH
- 4aSKMuD8HyMpImOGTpW1FeXsdTq8w1dbgOIx4Fvfo5tb0/zApmhSZ/vYl6Z5WwbiyA0b
- cxcpfJrCvCZtgTRcUZnoRP6+vSCcydqOsj2XjjvXL2KT54+0tFfohDGlismZ9llYnAM6
- JGFcNa6nViaqSO9k23iUhnjoFsKSiNWyB5yVbg5MX4njnHXPBrDPDMPCHL0eHMPIvPXr
- zBoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782700887; x=1783305687;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=bBv1I/ZO1y/i1zHZqaZCewy9Qr2VDqFLv9ENiF1z5zQ=;
- b=cFsqOQQp8lpqNXWamgZ+MmKBj56LBOz78r/+3ryfVVnxNRjqWPpcqyBRfOnhIhst32
- Esrgbqt/u33c3B7y0WkRXXKkBHxymm8egoKJPy+tazgkg2uuodZKgrtdmN3lSUrestFC
- g5ukuTU0Hsqrtgt5ocpnOPTxQrRBvGnvPPGq4R7xeLlpDGp/NbAsmLfE2rmHdB6jvha1
- 4q1vkMQJq6no0hyguJRulaoIVQBoUAEk1ia2hVjIwJfIJpLH7Jd+45GqBrw7cfWIFrlK
- O8GVE3/Nm3P63Y+c+VPG6/lcs/hDWB07A8aghQZjDDxVJ2VuYW3tIuPDVV7SLr/K83+S
- l6uw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpmfhvofKxrbjPZHfmdlg0Z2WELpVswg/2q4LJ/Iq2T/RaVvKIe48TYg8PIifpS/dISAMRwJWKL7nKc@nongnu.org
-X-Gm-Message-State: AOJu0YxGuGR93bnKi4iX6s4KnIrq4eGkYnScEVaKrkP3v+s1nxtN9E9y
- 57qQTjjkgawZTaPzLMznjm9gMm3ghx9AEg3eiupRs4KAOY+XKtdeAzgJqYEH/LH9xirTp2eR0T0
- rI+Bq/ZUCWHU1yas4lrHV9IFeobp0Nj4=
-X-Gm-Gg: AfdE7ckRo6r9Gch4u1ADkE+Wyxbx6+Dcm7ZcZ5fr3mRRkk5D9XC4RymGzpXOd16goqP
- hqqYvqXI/qjtwKUF8CfJThFbBVel2RKSVmWtWe06JjzyuBP/ToVcsq74ouwiU2V2/5qzJfJq46T
- 26ksAMZMhc+02g4QvfSAZTlYe2VHXWjVLS6ycZUNYx6kX7qEW/4BBjyQlKzkn+v6COJJghniFee
- SAfKpxEH/4ZPUrP9P/Dh4Y8v9TI0eUtkMdQDH1hH6tNx2loseQqpG45p2R3EvC4G0BfPna83tnH
- VapevqVCEYh6KDHZRyWNiSGaePA=
-X-Received: by 2002:a05:6402:5207:b0:697:560b:f6b2 with SMTP id
- 4fb4d7f45d1cf-69810a157dbmr5477045a12.4.1782700887069; Sun, 28 Jun 2026
- 19:41:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1we284-0002Rx-7u
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 22:53:48 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1we281-0003Jc-Hr
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 22:53:48 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxX+su3kFq6QAZAA--.63511S3;
+ Mon, 29 Jun 2026 10:53:34 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJDxB8Er3kFqDh23AA--.6626S3;
+ Mon, 29 Jun 2026 10:53:33 +0800 (CST)
+Subject: Re: [PATCH v2 1/4] target/loongarch/kvm: fix uninitialized val and
+ unchecked GET in cpucfg2 check
+To: Tao Cui <cui.tao@linux.dev>, qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@mailo.com>,
+ Qiang Ma <maqianga@uniontech.com>, Tao Cui <cuitao@kylinos.cn>
+References: <20260626052742.810726-1-cui.tao@linux.dev>
+ <20260626052742.810726-2-cui.tao@linux.dev>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <48e32310-1c70-8e84-5055-0d8d773fd004@loongson.cn>
+Date: Mon, 29 Jun 2026 10:50:16 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20260622065717.15386-1-wang.yechao255@zte.com.cn>
-In-Reply-To: <20260622065717.15386-1-wang.yechao255@zte.com.cn>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 29 Jun 2026 12:41:00 +1000
-X-Gm-Features: AVVi8Cd1PPCiwz-wImhBZ3i32lzdKbi7DkqxbDKf41eQ5lhqgTo2l7_tAYxToOs
-Message-ID: <CAKmqyKMhqavLeDj7fy-JpY8WGKO0m_o+94UMPX2sBK5Ldsid4w@mail.gmail.com>
-Subject: Re: [PATCH v2] target/riscv/kvm: add extensions after v7.1-rc4 update
-To: Wang Yechao <wang.yechao255@zte.com.cn>
-Cc: Alistair Francis <alistair.francis@wdc.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <20260626052742.810726-2-cui.tao@linux.dev>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxB8Er3kFqDh23AA--.6626S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7tFWxAFWkuF43KF4kGr4ftFc_yoW8uF15pr
+ n3Cw4YgFWrtrZ7Can7tw1qg34UZw1UKrsrZasxAwnakr43Kr17AFyIkanrWF15G34xJa10
+ qF4jqrs8Zwn8XwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+ xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jYSoJU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,48 +84,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 22, 2026 at 4:59=E2=80=AFPM Wang Yechao <wang.yechao255@zte.com=
-.cn> wrote:
->
-> Expose zilsd, zclsd and zalasr.
->
-> Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-Thanks!
 
-Applied to riscv-to-apply.next
-
-Alistair
-
+On 2026/6/26 下午1:27, Tao Cui wrote:
+> From: Tao Cui <cuitao@kylinos.cn>
+> 
+> kvm_check_cpucfg2() discards the return value of KVM_GET_DEVICE_ATTR and
+> uses the local val (the host cpucfg2 mask) without checking whether the
+> read succeeded. val is also declared without an initializer, so on a GET
+> failure env->cpucfg[2] &= val reads an uninitialized value.
+> 
+> The &= mask is best-effort feature negotiation: if KVM_HAS_DEVICE_ATTR
+> succeeds, a GET failure is most likely a copy_{from,to}_user issue, not a
+> reason to fail the whole register sync. Check the GET return value, warn and
+> skip the mask on failure (the guest keeps the cpucfg2 it already has), and
+> initialize val to 0.
+> 
+> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 > ---
-> Changes in v2:
-> - Rebase on https://github.com/alistair23/qemu/tree/riscv-to-apply.next
->
-> ---
->  target/riscv/kvm/kvm-cpu.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index f0de5c3071..707b992d55 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -304,10 +304,13 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] =3D {
->      KVM_EXT_CFG("zihintntl", ext_zihintntl, KVM_RISCV_ISA_EXT_ZIHINTNTL)=
-,
->      KVM_EXT_CFG("zihintpause", ext_zihintpause, KVM_RISCV_ISA_EXT_ZIHINT=
-PAUSE),
->      KVM_EXT_CFG("zihpm", ext_zihpm, KVM_RISCV_ISA_EXT_ZIHPM),
-> +    KVM_EXT_CFG("zilsd", ext_zilsd, KVM_RISCV_ISA_EXT_ZILSD),
->      KVM_EXT_CFG("zimop", ext_zimop, KVM_RISCV_ISA_EXT_ZIMOP),
->      KVM_EXT_CFG("zcmop", ext_zcmop, KVM_RISCV_ISA_EXT_ZCMOP),
-> +    KVM_EXT_CFG("zclsd", ext_zclsd, KVM_RISCV_ISA_EXT_ZCLSD),
->      KVM_EXT_CFG("zabha", ext_zabha, KVM_RISCV_ISA_EXT_ZABHA),
->      KVM_EXT_CFG("zacas", ext_zacas, KVM_RISCV_ISA_EXT_ZACAS),
-> +    KVM_EXT_CFG("zalasr", ext_zalasr, KVM_RISCV_ISA_EXT_ZALASR),
->      KVM_EXT_CFG("zawrs", ext_zawrs, KVM_RISCV_ISA_EXT_ZAWRS),
->      KVM_EXT_CFG("zfa", ext_zfa, KVM_RISCV_ISA_EXT_ZFA),
->      KVM_EXT_CFG("zfbfmin", ext_zfbfmin, KVM_RISCV_ISA_EXT_ZFBFMIN),
-> --
-> 2.43.5
+>   target/loongarch/kvm/kvm.c | 15 ++++++++++++---
+>   1 file changed, 12 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+> index d6539c12ac..5bd5e268b9 100644
+> --- a/target/loongarch/kvm/kvm.c
+> +++ b/target/loongarch/kvm/kvm.c
+> @@ -725,7 +725,7 @@ static int kvm_loongarch_get_cpucfg(CPUState *cs)
+>   static int kvm_check_cpucfg2(CPUState *cs)
+>   {
+>       int ret;
+> -    uint64_t val;
+> +    uint64_t val = 0;
+>       struct kvm_device_attr attr = {
+>           .group = KVM_LOONGARCH_VCPU_CPUCFG,
+>           .attr = 2,
+> @@ -736,8 +736,17 @@ static int kvm_check_cpucfg2(CPUState *cs)
+>       ret = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, &attr);
+>   
+>       if (!ret) {
+> -        kvm_vcpu_ioctl(cs, KVM_GET_DEVICE_ATTR, &attr);
+> -        env->cpucfg[2] &= val;
+> +        /*
+> +         * The &= mask is best-effort feature negotiation. If HAS succeeded,
+> +         * a GET failure is most likely a copy_{from,to}_user issue; warn and
+> +         * keep the cpucfg2 the guest already has rather than failing the sync.
+> +         */
+> +        int r = kvm_vcpu_ioctl(cs, KVM_GET_DEVICE_ATTR, &attr);
+> +        if (r) {
+> +            warn_report("CPUCFG2: KVM_GET_DEVICE_ATTR: %s", strerror(errno));
+> +        } else {
+> +            env->cpucfg[2] &= val;
+> +        }
+>   
+>           if (FIELD_EX32(env->cpucfg[2], CPUCFG2, FP)) {
+>               /* The FP minimal version is 1. */
+> 
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+
 
