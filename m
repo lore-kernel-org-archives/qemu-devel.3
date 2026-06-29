@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D988EC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:09:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E911C43602
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:10:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAgK-0007Np-0x; Mon, 29 Jun 2026 08:01:44 -0400
+	id 1weAib-00029f-2W; Mon, 29 Jun 2026 08:04:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAg9-00076H-73
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:33 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1weAfz-00073E-Vq
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:24 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAg7-0007iN-Cn
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:32 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-4624a44e152so2961535f8f.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:01:30 -0700 (PDT)
+ id 1weAfy-0007bF-CA
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:23 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-c127a694ccbso53867666b.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:01:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782734490; x=1783339290; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782734481; x=1783339281; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=mMvYRb9ZsQhXZoGUOGkoiHa6AnRq4mGKiU2SO2LgH2k=;
- b=E4PnGVPx8jnb65cNKQ/gGq7NqeYQpO8TYW+3OqP6zbQH9WTqng7i+PiGHlmDCl0KB5
- gQNb5UJC7mXdM/RDxK6F4IhBYdfS3gpif9S9JoAmpf9cp9aK28N35foLsj5VqJMGYTp1
- DBWTDjkAtDdnswO1WeSkQtzkLDzBzrg0OLr8w7ZoLxyucWWD0AtfoHc7wbeT4iXUIhMl
- yrc6qaK2MsXcyoxuV7dqBDMrpypzTK8P+tYsiaFyzbELxQtRV4ft2uOxe6vxptdeJFpI
- 3Sucwc3MZ4SzsYPXmHm6ADcdFZPWZaJy1fzX1wfcZzwbZotnYGhrVJbH0W81HgoTrFuO
- j/ww==
+ :reply-to; bh=UieAOkcCm4++Nv0pwychI8mLwpbs12/8vlMvEYuNlpk=;
+ b=MrtiszwGMWi5qurKIcRtv20++SPEFs/LEinGLFnFe6uSmtdI1kJ9dVtS9QuQ0qPswe
+ +3Qv9FBsHdjuRGoobVUV3PtylHe3v5tTz/2wTNzvBMfwr+3fpCip3ZdZejXSq1zs8VhH
+ jdIqb1P3vw4atSqXqE101NeJS+qbrBAzKLnw/1r8LfXkC1dyXzBqkHmyifYb0/4fiUhb
+ AwnzybF83coO+sTKnKP5stWLnsHFHRDYSfihE2HghCbMHmDHmSYxrN/KznSdAj0VuxBg
+ B4gpheH0Ijh2A/EcChuAXgT0tPJoRWeRZeewXb5roJPajnF2DjTLjYJSuti5elMQsRG8
+ s78w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782734490; x=1783339290;
+ d=1e100.net; s=20251104; t=1782734481; x=1783339281;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=mMvYRb9ZsQhXZoGUOGkoiHa6AnRq4mGKiU2SO2LgH2k=;
- b=FO1Jo3RzrKW4rDBFsQmYQr1zfkg2SfyrEKMUHsFTwNETvAVvzHJmkAyP3lg2lioHZ7
- UXRTGyErj3QH959ejlAb/ihVz9hD08isE0fop89qa43zZ1/m3dOV7Wh2tzBj6fe7xe4U
- VOztDWDl+DCmyFx8nnRrfV7qECzzJ0dNOt/c9tboMywVHPpDapf5xuknOygmfXbuJPkX
- T4aN/TcIfWvDdIT+QeYDertSR0QjzeybTylzPeeA8AKbVasD1fuhBFt6jkuGLaWP5Fm6
- 7pPhvAfx/UO2t/Lh/f12rl5KZsXFrVntJQEQOkSmh53yGrXWEYa1Ziv57G1RgDSICY1s
- bCBg==
-X-Gm-Message-State: AOJu0Yyg399QN9ZGHmv3An4jUwccXzDIFd0u5xZNQgQG+VLmwy6Nrad8
- 5k5ZTByCLlhS+90O7UghoDuGkt3SnloMkIHRJmjYrx8H3PH3oSMnkKIQxnNd92WHlzKONJIJtqT
- ONbtA
-X-Gm-Gg: AfdE7ckprm9jOLAEjtC/lcTqvar6+o1nZrgWOvvXs3GmOBqVFa+3WRyDSMIEZey005Z
- ErCIm88J7beioIIYhbBxAe0GOkhkzDtJsQokXWGtiEsGtDe7ICyq4MGCjfjbAeNdR7kdlwsPWIV
- qQOBF8TAYy6UUTR5evUTN1cBizaRL47zxnqeftasdf13zJTu/bOgTBobLTHZNZ6B5clFxTg9/r2
- FL+mNX8V38F3m/DcGyVK/WA6LDWnnhEO7aqSjjrgZ7n2N2gAcCz7nZBiSJR+/wO/wGLRbs7O1Fw
- xHjs2e4djArNDon0PKHH7xvfZjdRVTxtwMK93uW3YYEI8riSKayY10X/c7FuO5rVDhyYMaDwC8D
- FpiRVKRf9BhEtODsD+b2YXXgoFVwhnfH2FyWdBYZWe1n3e/sHQh+j1O201w9laRHsPeH6Blz7F0
- +s4B1UjgqxdoC7TptuIGcjakviVHRxM2SAWRgN+j/8QsLxMU3lVPpe/7l+C72IKtFk5OLB/837s
- HTd0cFAK3IFyYeLjmjSXg==
-X-Received: by 2002:a05:6000:4816:b0:472:55a:ef90 with SMTP id
- ffacd0b85a97d-472055af4a5mr10875317f8f.8.1782734489663; 
- Mon, 29 Jun 2026 05:01:29 -0700 (PDT)
+ bh=UieAOkcCm4++Nv0pwychI8mLwpbs12/8vlMvEYuNlpk=;
+ b=rKLr2ZZikPXFp2dFxsKDdh01qqm/z6S0Dcbkus6ObzuZTxb5aR1c7dy1YoX5PSOMHl
+ Q2B8ZQTHE/btxFE+4VHQPSR+OoFk0WGDn1WqZ0qvPaRBhWVNFt2uH7Hi8w49GE4EMJmf
+ 8LA3hMaOqg/ujuqAF7eQs3W6X1TGHmbVcxb/Rg+N4b3xvQZgHRY3xYAODIaqF2Zoe8zy
+ xHeWg9HiKwxBy02Bcp8hIWkOrbu6Fym1IKWTI5GlIWRdzXFIV/dGh8XyvEujz3YKZYGe
+ kXLRj8wQOU4jwlI0Dpy0SpOjJr8iRGOuLtKsCBhnFZRBts3n0nD7AJPjxLq+B7en0+7/
+ pNBw==
+X-Gm-Message-State: AOJu0YzE0o3F//dZeLqcUEg5zZXXKjkkQN98CSu9GOszXDlmbEZt6l4E
+ hzOGWZUp8iLwqEee2khlZn3p2qd7CRU+aLiJ9BFZ/2ArZqaRLBfj/dQN6nvNCiawEc/iD7VB4og
+ 4mppP
+X-Gm-Gg: AfdE7ckMe8SpstRk1kQESkJbQUvoGWZoa9RkgyJXiNQ3fT1Sda6tGJwhc2rqPhBCUHs
+ J3oVTC+u/3UZLvjntGN1YwQ8+6J2QBCliiW4qEQJaKI9dkWA2Ofl5aUGauJ7pX+RBBHXV7mbs8h
+ /5bIQP7K6b926o+Ea0C0OYS6vo4/C9fVIhnkTt6kcFelRFLOWQmO8t3HZH+1saGRPzIfSEAq3xH
+ URyv1ogBUgJh2fI5uc2X1xqVoKJ2d4Z8Q1+YnVJsfhw2uJNrf8NRtGpqMe0neUdXqU5h/YigRk2
+ XKXKYF4KC9xJfDiIZ0/vO9GCk7K8wPd8TYL7u3ZaShpXXUny2LlvA/mQrzVTC7F3niAGI/m4of3
+ m7ULi42o2avdBZpC36lmqqR2j1xaLYoOOYMyAePYTe+F+HtP4gbXrJXT8FepFYhX28TLj9PhATq
+ kZxpfDfUK4jcQWiWlRl+rH9WMW4oPTWN84FcS6H6qVGbLsJW3BeJ/5n+T/z7qudcbiLYtDzweFQ
+ Qobf1U9F0idR/OPBbFTl46SJiXqSJQF
+X-Received: by 2002:a17:906:209c:b0:c12:1c1f:debf with SMTP id
+ a640c23a62f3a-c121c1ff012mr474444766b.2.1782734480037; 
+ Mon, 29 Jun 2026 05:01:20 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.01.28
+ ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.01.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 05:01:29 -0700 (PDT)
+ Mon, 29 Jun 2026 05:01:19 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 54/54] docs/system/arm/virt: Document accelerated SMMUv3 and
- Tegra241 CMDQV
-Date: Mon, 29 Jun 2026 13:00:32 +0100
-Message-ID: <20260629120032.1645265-55-peter.maydell@linaro.org>
+Subject: [PULL 44/54] target/arm: Enable FADD/FSUB (half-precision) with
+ FEAT_SME_F8F16
+Date: Mon, 29 Jun 2026 13:00:22 +0100
+Message-ID: <20260629120032.1645265-45-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260629120032.1645265-1-peter.maydell@linaro.org>
 References: <20260629120032.1645265-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,57 +101,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Add subsections for accel=on (nested Stage-1/Stage-2 translation) and
-cmdqv (Tegra241 CMDQV hardware command queues) under "User-creatable
-SMMUv3 devices".
+These two instructions can be enabled with either
+FEAT_SME_F8F16 or FEAT_SME_F16F16.
 
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Message-id: 20260623104003.36590-1-skolothumtho@nvidia.com
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+[PMM: fix && vs || mixup in feature function]
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260625015159.719300-2-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/system/arm/virt.rst | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ target/arm/cpu-features.h      | 11 +++++++++++
+ target/arm/tcg/translate-sme.c |  4 ++--
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-index f811e662d6..ae0be35d57 100644
---- a/docs/system/arm/virt.rst
-+++ b/docs/system/arm/virt.rst
-@@ -288,6 +288,32 @@ User-creatable SMMUv3 devices
-       -device pxb-pcie,id=pcie.1,numa_node=1
-       -device arm-smmuv3,primary-bus=pcie.1,id=smmuv3.1
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 2e4f22f193..98102d75bf 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1610,6 +1610,11 @@ static inline bool isar_feature_aa64_sme_f8f32(const ARMISARegisters *id)
+     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, F8F32);
+ }
  
-+  *Accelerated SMMUv3 (nested translation)*
++static inline bool isar_feature_aa64_sme_f8f16(const ARMISARegisters *id)
++{
++    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, F8F16);
++}
 +
-+  The ``accel=on`` option enables hardware-accelerated nested translation
-+  for vfio-pci passthrough devices. In this mode the guest SMMU driver
-+  programs its own Stage-1 page tables, with the host SMMUv3 handling both
-+  Stage-1 (guest) and Stage-2 (host) translations in hardware. The host
-+  SMMUv3 must support nested translation. This mode requires the iommufd
-+  backend and is only supported when booting with ACPI (not device tree).
-+
-+  When ``accel=on``, QEMU automatically derives the values for the
-+  ``ril``, ``ats``, ``oas``, ``ssidsize`` and ``cmdqv`` sub-options
-+  from the host SMMUv3 capabilities unless they are set explicitly.
-+
-+  Example::
-+
-+      -device arm-smmuv3,primary-bus=pcie.0,id=smmuv3.0,accel=on
-+
-+  *Accelerated SMMUv3 command queues (Tegra241 CMDQV)*
-+
-+  The ``cmdqv`` sub-option enables NVIDIA Tegra241 Command Queue
-+  Virtualization (CMDQV) on supported hosts. With CMDQV, each accelerated
-+  ``arm-smmuv3`` device gets dedicated hardware command queues and the
-+  guest issues SMMU invalidation commands directly to real hardware,
-+  bypassing QEMU and improving throughput for workloads that issue many
-+  invalidations. Without it, every invalidation command traps into QEMU.
-+
- Linux guest kernel configuration
- """"""""""""""""""""""""""""""""
+ static inline bool isar_feature_aa64_sme_f16f16(const ARMISARegisters *id)
+ {
+     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, F16F16);
+@@ -1781,6 +1786,12 @@ isar_feature_aa64_sme2_or_sve2_lut(const ARMISARegisters *id)
+     return isar_feature_aa64_sme2_or_sve2(id) && isar_feature_aa64_lut(id);
+ }
  
++static inline bool
++isar_feature_aa64_sme_f16f16_or_f8f16(const ARMISARegisters *id)
++{
++    return isar_feature_aa64_sme_f16f16(id) || isar_feature_aa64_sme_f8f16(id);
++}
++
+ /*
+  * Feature tests for "does this exist in either 32-bit or 64-bit?"
+  */
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index a79b0a9b80..b8dde80c20 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -1335,9 +1335,9 @@ static bool do_faddsub(DisasContext *s, arg_az_n *a, ARMFPStatusFlavour fpst,
+     return true;
+ }
+ 
+-TRANS_FEAT(FADD_nn_h, aa64_sme_f16f16, do_faddsub, a,
++TRANS_FEAT(FADD_nn_h, aa64_sme_f16f16_or_f8f16, do_faddsub, a,
+            FPST_ZA_F16, gen_helper_gvec_fadd_h)
+-TRANS_FEAT(FSUB_nn_h, aa64_sme_f16f16, do_faddsub, a,
++TRANS_FEAT(FSUB_nn_h, aa64_sme_f16f16_or_f8f16, do_faddsub, a,
+            FPST_ZA_F16, gen_helper_gvec_fsub_h)
+ 
+ TRANS_FEAT(FADD_nn_s, aa64_sme2, do_faddsub, a,
 -- 
 2.43.0
 
