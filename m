@@ -4,156 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67952C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 15:59:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDCB8C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 16:03:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weEO6-0002SN-26; Mon, 29 Jun 2026 11:59:10 -0400
+	id 1weERw-0004Hs-P4; Mon, 29 Jun 2026 12:03:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1weEO4-0002S3-F5
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 11:59:08 -0400
-Received: from mail-westus3azon11010048.outbound.protection.outlook.com
- ([52.101.201.48] helo=PH7PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1weERs-00047x-PL
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 12:03:06 -0400
+Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1weEO2-00029V-6h
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 11:59:08 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VgMO5D1v9YHDI1LWxD5CBFQQzcUqhpb+yssOZ8ocF5QVw9DE50GukyTH/UTGEJlhpfMlcEpwaOuw3UmETsvtD9aEqvxeYEzmASHH1ySOetWjJtyCDLBisl5yACWu38YFxZz8RoGASSjiqBdJTu33BW65QraqZGGSNQvMQdmTkXUUI0NF7Xkl8oA02+MpNCTGJO4VHeTmvpoM7EO9NcO2fCJWZQmEQud/vtbmwL5EfqHcGorYTLzdaOvvXMaCKcDWDNyZHhOLvHGYlvEfnPrMvtc0Jvh9+qsLT/M+vkMZAGXKFLybvOKwm17mvQO6+vTBC77qQr0+s0gq8/GKJ6Fe7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uBo+q9L6hmBeapd9vfgdlawx8SpuEKEhErPDtF7W+Ok=;
- b=JCEkDcFWI3pXlDrctj5yUXzYRt4Ndh6N0DiRbItPIvNVA6ojHm7NFD29JWXXEifnyTuXH7iwpGl64Rs+v9/mrcl6QWkNN4uut1PY6WVNKRsMHTNHN6q2plMcSblhAzjtfYDW/oMz7eZxM1YCZcD55l+4UTOBpeG324gg5XwayKSSyj4aLA2gve2mIstqfoa/wgpGCh3/tXNV0AIgoHrwgQzZPyzU/gR3m5n/7Zot28NBersP3yIlN+RFZw8xmP2x4mQISDnGWjw4jpYA9wDOX2g6TbqLjBvK5xSA3f/sg5ewOjppJb99JdrtS+dFRnjyKtUDSoWjBjDkEJFEuGsU0A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uBo+q9L6hmBeapd9vfgdlawx8SpuEKEhErPDtF7W+Ok=;
- b=cwTqWFRsie7mswg28+llknS0zRi/HnGUtR2rJkHTaVssrmJJygpwBhdO/+wwMDdYM47Zg9S81tFjadkQjhyiN+GMukthEXocXojAfvuMYeC0/7+jn46+tVzKxnzjIyx5uvuAlaZNMJS0uFSI7xOTrKM2seR/ZWisRfuaKnb2Y7MR7zYdjeENRGpSEMbHSAaGEVqJ358JSJM40zhktvUybCR6Jw9+tOcmmZPNj9RDZplzhNMk08hB7hi8O5a2IDEcYFYTV4l8IRnfdo/aPDJxuhdOEoeRnWJSJzJhLa4FgS/Zs8/rVPpaDll5dK4+5kZAxZEiUVZfq6ZA1BooD8SSXg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
- by DS0PR12MB8788.namprd12.prod.outlook.com (2603:10b6:8:14f::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Mon, 29 Jun
- 2026 15:53:55 +0000
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da%7]) with mapi id 15.21.0159.015; Mon, 29 Jun 2026
- 15:53:55 +0000
-Message-ID: <64207c96-affd-4895-a6ab-2cee7ac4347e@nvidia.com>
-Date: Mon, 29 Jun 2026 18:53:48 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 07/14] migration: Make switchover-ack re-usable
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1weERn-0003PG-Fi
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 12:03:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
+ s=default; t=1782748942;
+ bh=WMNzcafKr5kxS8seHExGHssW6g/xT6qtKw1/sGani/g=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=ksrwwH44FPEQpjS4IuDrfBf3u4mWn4L+xfFaeG/e6TW23MgaF82iJXX5F0jZoSaVW
+ CTO3E3JqYsv++6BtcAexx5plIV4PgDhnxwwBQQJiLVgeoPQ3ZbbfNp/nH0uC9bJyCY
+ dD3+LBfz9/AMwd//VpszT3V8x052P+mH+I0lxcKHU1CudzMm/Iwzg1lPmcSiYmIcJ2
+ HO9mc5Nz1QwlU1kZ5KahwpjLQzZWVqiD5dYleJY1UC7AF+zLP5U64KpEpvq1oFFLGu
+ M8Njt+cPZtVgtSVm0wufhNM06G95e9IDnuhhaMNEEyIusJBk0HGzn1mFG4HnMEc23+
+ 349iEqE7w22IA==
+Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
+ by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 8B57A2FF409;
+ Mon, 29 Jun 2026 16:02:22 +0000 (UTC)
+Received: from pc.. (unknown [202.120.40.100])
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 0601937C98C;
+ Tue, 30 Jun 2026 00:02:22 +0800 (CST)
+From: Ziyang Zhang <functioner@sjtu.edu.cn>
+To: qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, Maor Gottlieb <maorg@nvidia.com>
-References: <20260622101214.25770-1-avihaih@nvidia.com>
- <20260622101214.25770-8-avihaih@nvidia.com> <87v7b520uo.fsf@pond.sub.org>
- <b997b3f7-0a95-4c21-bf18-c19bf8754936@nvidia.com>
- <9fa2038d-f75b-4d6a-a2fc-1bc871878b74@redhat.com>
- <675f8d2f-ca22-4b04-bc30-8fa7b6d3a6dd@nvidia.com>
- <4a3457d3-d892-494b-b8a9-556ad9a7912a@redhat.com>
- <59fa369a-b5a1-4484-bcb0-93b663fb0c44@redhat.com>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <59fa369a-b5a1-4484-bcb0-93b663fb0c44@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TL0P290CA0011.ISRP290.PROD.OUTLOOK.COM
- (2603:1096:950:5::13) To BL1PR12MB5063.namprd12.prod.outlook.com
- (2603:10b6:208:31a::11)
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>,
+ Ziyang Zhang <functioner@sjtu.edu.cn>
+Subject: [PATCH v4 1/1] contrib/plugins: add a minimal dlcall plugin
+Date: Tue, 30 Jun 2026 00:02:17 +0800
+Message-Id: <20260629160217.1637276-2-functioner@sjtu.edu.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260629160217.1637276-1-functioner@sjtu.edu.cn>
+References: <20260622163438.130746-1-functioner@sjtu.edu.cn>
+ <20260629160217.1637276-1-functioner@sjtu.edu.cn>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|DS0PR12MB8788:EE_
-X-MS-Office365-Filtering-Correlation-Id: 74d392ef-8e29-4c39-37cc-08ded5f69f73
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|7416014|23010399003|1800799024|22082099003|18002099003|4143699003|5023799004|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info: 1S+RFaK2GzzghWo1QUKZ1X5zpWk34cgyk32RwMU8wnhN/dzDT6EUzF8/T86h22O/J+K5hvuovnehR/jACvonR2yuS56Q2gBcWf+A9oJYf3JHa2R+vCytah5kQcJS0suEsHz5F08QAwAJDmQzwJEmfZXQQrhmwdc/I5Lm77vrfwOX/Crrho34LLlUJt6bZspOodCgRFw4hqv4QLGA5Zj/yN6vEhs0LbU7IOAbmXFmI+0HGEkveFRyoy2GyZGgvjQblgVDvcPUTgNsn0vNyJfoVF+R687rN4ifAUoCWmQUSVSZnpY51UiF34aAgWqHpfHz1LlpQ8EAde5WM3Twp7j9mFD2QhYgPe9h0lQ7/ek8Ij+PEQl6DXpZIEEp2ZnaiVviSAabD8WH26T83ihAF2kyIdfomeAn8oh07MYVoNkSFCyR4P2KlBj8oThUbxgdI8s8BUKk7pJVjnBx7uVS/5an3QBveqaoxDFEpsA2rch5RokhTsY5dSAAj0B5nXu7Un2WEhqJ8JI3+ZwHJg9VNsPI6ZMcF+xcTRFyBn3vJW2IwvdQkK8Fe05cWZqvUziahxU2o7cGnHwfI/TziPqsxJsAa2Z96JhdpRHR2DH9sMkCP5X6vSn0NFA8ro9+kNkBFuoSZt3hVLDPpRGklwAy8Cc2eiScq4BPjvPc9uMF4P2IjKc=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(7416014)(23010399003)(1800799024)(22082099003)(18002099003)(4143699003)(5023799004)(11063799006)(56012099006);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a3JjalF2ZmQyYXFnci96WjluM2Z4MDRoSlBzZVhNeWoyb09IZ3Uvb2JnbWlQ?=
- =?utf-8?B?aDZWOVBDRWUyRzVCRjU2RGszWHJ1dmdkSmgwM1J0ZWdzcXpnM3F5Qk1zQWJm?=
- =?utf-8?B?TTFEZ3FIVSt5Y3NEWENCNmhFcmhLZzhaRnBIczBuR21YZTY2Rm9MdDNXWVpK?=
- =?utf-8?B?VHFVOUNxak5UZjBOSmdpL2tJSksyOWd6bDNxZFhXMDRXalVlTEVOTXBUcmJ5?=
- =?utf-8?B?QThXQmo4dWlwdERiT01HdlRjVnRUV1JLMEhwVlBzaStrUkQvMmI3RGs3Yk8w?=
- =?utf-8?B?RW4wMGEra0oyT0NLd3ZVajAwSThMR3pnZ21WaWRGeVpiemVPZmtsaVdzWnlT?=
- =?utf-8?B?V1RudDZOeVl6djdjNTVBZ0V6ME1KWGhONnI5OXB5eVdrbFg4YWpuaUNXem84?=
- =?utf-8?B?VUluVW92K1NMU2w0MTRNdkJDSENSbVNyV3daQjFRdUU3N2g4M1ZoSy8xa1pW?=
- =?utf-8?B?RlRSWGZPNTNjdnI5UjhwbnNySzY5Ym8rVFZMZUUwalNTeTZ4UERlYU1tYTV4?=
- =?utf-8?B?VmZqTHl4VGtlVm95SnlpWVVRbVI3bnQ4bDE3Z3NLZWRvNDE2M1FVL3hZNGZj?=
- =?utf-8?B?OCs2TmNsaG1PSWNXVncwNjB4Ri9hN2tvWXgzaVllZHJHYXptdVAzQ2dYVmhy?=
- =?utf-8?B?K0lJUisxWTczSE41djNiQ1hTRzdnVklIVGVzWWRuYkVtbjlOZ1kwUEpmdXJ3?=
- =?utf-8?B?U05oZVdjN3lKL0xad2wvYWxDMUw4czVKOWY4SkpJVExmQmJZMkcxSTNseFRW?=
- =?utf-8?B?bmxUUWwzZTVNbE5KR1dBWUFMNXoxQzg5OXloZWFReGxrN1ovcnpmYTM2bHJp?=
- =?utf-8?B?SkhhTHVZOGZ6cE9xbjVja0JFQW84OFZpL29YVHZhdHRwbFUvZW80Z2ZJZFpq?=
- =?utf-8?B?TXM0UVFJQlZVTjNaVmlrdlpzeHNQb291Q25DeHZFSlZkQ2JzRVVaRkpBQUZH?=
- =?utf-8?B?UlhnKzBpVjE5NDNISFcvek9GaDFVbkQ5djd4dUZHSkdBTmlNbDdmWERHQVBs?=
- =?utf-8?B?ZFZOSm9kWHN2Z0dIQmF3QkJodERoK0hmNG1OcmUySUFCS1U3OFBPV0ozdTN0?=
- =?utf-8?B?c2VaNXZFTEtrVVFsejI0anZPemxvcVhYMmRTWDNHTDRIS21UdVIzdHFPT3lj?=
- =?utf-8?B?amV3QVE4QkRsYWhNdzZSdXBMVjQvc2tWYURZdnlXdnZnN1Rjd2RqOU1PNmpw?=
- =?utf-8?B?UnJ4djMvcDVST2kzeVhVK1Q3d0pnTlNYQmJncWZ5WnpUTk8xQTFYMTVIaXRN?=
- =?utf-8?B?UEFXZmNwbVNYZ0xrNVJCN1ZKWnV2YzVQRElIdXJtblFGQ20wUWdlWU92bm0v?=
- =?utf-8?B?blpqSlRSWEZQRUx6ZFNRN3FjNkc1TExiaXJEd1dJZ2VJZGNCU3BOdkRudjE3?=
- =?utf-8?B?b1NTVXVGZTltbVBKMGZTdWoySEZVM3JMcXlUSVVDZkVBWjlmb25ZVmVDMGlm?=
- =?utf-8?B?UERBRWl3aW5ndW9XRmxSVGJPNlVBRlJxT25RU0w0R0Q0d01KSHhCcE90RUdV?=
- =?utf-8?B?OGFFQ2wySkxaTmx2TnlyN3dEdVFvK2xWZ0Ura1hGUG44Q2pHQjRZcC9nT0tt?=
- =?utf-8?B?ZU82ZnhRS3Yvci9GWTV1UWx4YkdZdURST3g4TjFRbUk4SXNyUitMRTE0d3p5?=
- =?utf-8?B?RmpBRUVzbVRhbDM5OTRiQy9hTm5mcXJFcUJtTXpxM3AyVnJxUWZ1dnduMm5m?=
- =?utf-8?B?TG9sdXNPUUZ2SWlmU1lwR0kwdGNuLzdCYm04KytuZVE0YkRJdWpCS2dST2hl?=
- =?utf-8?B?Z1k3NWtuTmtvQVptNjJscWNVQXRDcE5DTnhLOXArM2cxd2NPQ0lqMmkvcnEy?=
- =?utf-8?B?UFVMME9KSGlCNXJOR0REZlBNUWtKcGJQV2hoYlY0UGsrLzNuWGw0ZHlwWThY?=
- =?utf-8?B?NVk2NUJ5NWxzdFhRWk9sZ2xaODdTbnVhY1ZNREp1V1psVjhnL2tsTXVsNG9n?=
- =?utf-8?B?cGZqdi9sVDMyOURNWU9mS0dFUk1BVUl3T3hja1FEeGJnaFJERUsrT05pS3lG?=
- =?utf-8?B?KzdLUzRQelRLUTZTdEhtZUVkWGUwOTdTQ0NtV1ZUdURQazBjL1JWRjMxSUVR?=
- =?utf-8?B?L2xTQk01UEZZV2VnQ1NjMVR6eEY1MEdyNnkwOXlxZHprYzZvL0FWTk9XWlJ0?=
- =?utf-8?B?c3pvcEZOWDNOVzNTY3JDRXVJYUpxV1hzbmZ2Z2VsMklJQnBPSWVCOEk4bWpF?=
- =?utf-8?B?R3d1aWtFcEJWTktyeDQvMzZjR3c0VmZmRWpzU3AvWXpUNEUrRjYrbUhXL3dD?=
- =?utf-8?B?eHRub1g2azkxd0dpNXprTUZxejFReGF0cW9BaWRTVmF5TDJic3liamhJNytv?=
- =?utf-8?B?TjF0MDJ6czU0YThZY0s5eGZNakpXc2NJQU50OTFrdDdkN0tKcTQydz09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 74d392ef-8e29-4c39-37cc-08ded5f69f73
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jun 2026 15:53:54.9705 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: rf5cE264FOalsvQbaIAgmfZLNnYMwelfSvzLoGyWrkgpvJhtcdtgGcVczdjp7fpsWr/6keHxIuMolmPID70gkA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8788
-Received-SPF: permerror client-ip=52.101.201.48;
- envelope-from=avihaih@nvidia.com;
- helo=PH7PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=202.120.2.186;
+ envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,147 +78,287 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add a minimal dlcall plugin that lets the guest invoke host functions
+through magic system calls. The plugin registers a vCPU syscall filter
+callback that intercepts a reserved syscall number and dispatches a set
+of pass-through operations: querying host attributes, loading and freeing
+shared libraries, resolving symbols, retrieving the last library error,
+and invoking a host function through a common interface.
 
-On 6/29/2026 5:57 PM, Cédric Le Goater wrote:
-> External email: Use caution opening links or attachments
->
->
-> Avihai
->
-> On 6/28/26 18:29, Cédric Le Goater wrote:
->> On 6/28/26 12:03, Avihai Horon wrote:
->>>
->>> On 6/28/2026 12:00 PM, Cédric Le Goater wrote:
->>>> External email: Use caution opening links or attachments
->>>>
->>>>
->>>> On 6/28/26 10:16, Avihai Horon wrote:
->>>>>
->>>>> On 6/26/2026 10:54 AM, Markus Armbruster wrote:
->>>>>> External email: Use caution opening links or attachments
->>>>>>
->>>>>>
->>>>>> Just spelling nitpickery this time.
->>>>>>
->>>>>> Avihai Horon <avihaih@nvidia.com> writes:
->>>>>>
->>>>>>> Switchover-ack is a mechanism to synchronize between source and
->>>>>>> destination QEMU during migration to prevent the source from 
->>>>>>> switching
->>>>>>> over prematurely.
->>>>>>>
->>>>>>> VFIO uses switchover-ack to ensure switchover happens only after
->>>>>>> destination side has loaded the precopy initial bytes. This is 
->>>>>>> important
->>>>>>> for VFIO, as otherwise downtime could be impacted and be higher.
->>>>>>>
->>>>>>> In its current state, switchover-ack is a one-time mechanism, 
->>>>>>> meaning
->>>>>>> that switchover is acked only once and past that another ACK 
->>>>>>> cannot be
->>>>>>> requested again. This was sufficient until now, as VFIO precopy 
->>>>>>> initial
->>>>>>> bytes was defined to be monotonically decreasing. Thus, when 
->>>>>>> precopy
->>>>>>> initial bytes reached zero for all VFIO devices, a single ACK 
->>>>>>> would be
->>>>>>> sent and its validity would hold.
->>>>>>>
->>>>>>> However, now the new VFIO_PRECOPY_INFO_REINIT feature allows 
->>>>>>> precopy
->>>>>>> initial bytes to be re-initialized during precopy. Specifically, it
->>>>>>> means that initial bytes can grow after reaching zero, which would
->>>>>>> invalidate a previously sent switchover ACK.
->>>>>>>
->>>>>>> To solve this, make switchover-ack reusable and allow devices to 
->>>>>>> request
->>>>>>> switchover ACKs when needed via the save_query_pending 
->>>>>>> SaveVMHandler.
->>>>>>>
->>>>>>> Since now switchover ACK can be requested for a specific device 
->>>>>>> and in
->>>>>>> different times, make switchover ACK per-device (instead of a 
->>>>>>> single ACK
->>>>>>> for all devices) and let source side do the pending ACKs 
->>>>>>> accounting.
->>>>>>>
->>>>>>> Keep the legacy switchover-ack mechanism for backward 
->>>>>>> compatibility and
->>>>>>> turn it on by a compatibility property for older machines. 
->>>>>>> Enable the
->>>>>>> property until VFIO implements the new switchover-ack.
->>>>>>>
->>>>>>> Acked-by: Markus Armbruster <armbru@redhat.com>
->>>>>>> Reviewed-by: Peter Xu <peterx@redhat.com>
->>>>>>> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
->>>>>>> ---
->>>>>>>   qapi/migration.json                | 14 ++++----
->>>>>>>   include/migration/client-options.h |  1 +
->>>>>>>   include/migration/register.h       |  2 ++
->>>>>>>   migration/migration.h              | 32 ++++++++++++++++--
->>>>>>>   migration/savevm.h                 |  6 ++--
->>>>>>>   migration/migration.c              | 37 ++++++++++++++-------
->>>>>>>   migration/options.c                | 10 ++++++
->>>>>>>   migration/savevm.c                 | 53 
->>>>>>> +++++++++++++++++++++++-------
->>>>>>>   migration/trace-events             |  5 +--
->>>>>>>   9 files changed, 123 insertions(+), 37 deletions(-)
->>>>>>>
->>>>>>> diff --git a/qapi/migration.json b/qapi/migration.json
->>>>>>> index 27a7970556..9b3070e494 100644
->>>>>>> --- a/qapi/migration.json
->>>>>>> +++ b/qapi/migration.json
->>>>>>> @@ -508,14 +508,12 @@
->>>>>>>   #     (since 7.1)
->>>>>>>   #
->>>>>>>   # @switchover-ack: If enabled, migration will not stop the 
->>>>>>> source VM
->>>>>>> -#     and complete the migration until an ACK is received from the
->>>>>>> -#     destination that it's OK to do so.  Exactly when this ACK is
->>>>>>> -#     sent depends on the migrated devices that use this 
->>>>>>> feature. For
->>>>>>> -#     example, a device can use it to make sure some of its 
->>>>>>> data is
->>>>>>> -#     sent and loaded in the destination before doing switchover.
->>>>>> Here, "switchover" is used as noun.  My dictionary is happy with 
->>>>>> that.
->>>>>>
->>>>>>> -#     This can reduce downtime if devices that support this 
->>>>>>> capability
->>>>>>> -#     are present.  'return-path' capability must be enabled to 
->>>>>>> use
->>>>>>> -#     it.  (since 8.1)
->>>>>>> +#     and complete the migration until the destination has
->>>>>>> +#     acknowledged that it is OK to switchover.  The 
->>>>>>> acknowledgement
->>>>>>
->>>>>> Here, it's used as verb.  I think it needs to be spelled "to switch
->>>>>> over".
->>>>>>
->>>>>> Same for code comments etc.
->>>>>
->>>>> Sure, I can send a patch to fix those.
->>>>
->>>> Can you please send the update as a follow up patch ?
->>>
->>> I was planning to send it along with the bool return value refactor 
->>> in patch #1. Would that be fine?
->>
->> OK. Nothing merged yet. Let's have a v5.
->
-> FYI, I plan to send vfio-next before the end the week. Initial plan was
-> tomorrow.
+The magic syscall number defaults to 4096 and can be overridden at load
+time with the "syscall_num=N" argument; values low enough to clash with a
+real syscall are rejected.
 
-Hi Cedric,
+Co-authored-by: Kailiang Xu <xukl2019@sjtu.edu.cn>
+Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
+Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
+---
+ contrib/plugins/dlcall.c    | 238 ++++++++++++++++++++++++++++++++++++
+ contrib/plugins/meson.build |   5 +
+ 2 files changed, 243 insertions(+)
+ create mode 100644 contrib/plugins/dlcall.c
 
-Actually, I have plenty of things on my plate right now and I'm not sure 
-if I'll be able to send it this week.
-
-Would it be OK if you merge the series as is and I send those two 
-patches separately early next week?
-(They are actually more related to migration core, so this question 
-should be addressed to Peter/Fabiano I guess...)
-
-Thanks.
+diff --git a/contrib/plugins/dlcall.c b/contrib/plugins/dlcall.c
+new file mode 100644
+index 0000000000..3a8f47cdf8
+--- /dev/null
++++ b/contrib/plugins/dlcall.c
+@@ -0,0 +1,238 @@
++/*
++ * Copyright (C) 2026, Ziyang Zhang <functioner@sjtu.edu.cn>
++ *
++ * dlcall plugin: lets a linux-user guest invoke host functions by issuing a
++ * magic system call. The guest can ask QEMU to dlopen() a host shared
++ * library, dlsym() a symbol, and call it with guest-supplied arguments.
++ *
++ * WARNING: trusted guests only. The guest can load arbitrary host libraries
++ * and execute arbitrary host code with arbitrary arguments, i.e. full code
++ * execution in the QEMU host process. It is NOT a sandbox and provides no
++ * isolation; only load it for guests you fully trust.
++ *
++ * WARNING: requires guest_base == 0, which is qemu-user's default. Pointer
++ * operands are dereferenced as host addresses directly, and the invoked host
++ * functions dereference guest pointers with no address translation, so guest
++ * and host must share a single address space. A non-zero guest_base (e.g. set
++ * via -B/-R) would make every pointer off by guest_base and hit unrelated
++ * host memory.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include <assert.h>
++#include <errno.h>
++#include <string.h>
++#include <stdio.h>
++#include <glib.h>
++#include <dlfcn.h>
++
++#include <qemu-plugin.h>
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
++
++/*
++ * The magic system call number for dlcall.
++ *
++ * It defaults to DLCALL_SYSCALL_DEFAULT and can be overridden at load time
++ * with the "syscall_num=N" argument. To avoid hijacking a real syscall the
++ * guest might issue, N must be at least DLCALL_SYSCALL_MIN: every Linux ABI
++ * keeps its syscall numbers well below this; numbers from here up are free.
++ */
++enum {
++    DLCALL_SYSCALL_DEFAULT = 4096,
++    DLCALL_SYSCALL_MIN = 4096,
++};
++
++static int64_t dlcall_syscall_num = DLCALL_SYSCALL_DEFAULT;
++
++/*
++ * dlcall calling convention.
++ *
++ * The guest issues the magic system call (dlcall_syscall_num). The first
++ * argument (a1) is one of the call IDs below; the remaining arguments (a2, a3,
++ * a4, ...) are that ID's operands. All pointer operands are guest virtual
++ * addresses that the plugin dereferences as host addresses directly (see the
++ * guest_base requirement above). Results are written back through
++ * caller-provided "out" pointers rather than returned in the syscall value.
++ *
++ * The syscall return value (*sysret) only reports dispatch status: 0 on a
++ * recognised ID, -EINVAL for an unknown one. The actual success/failure of an
++ * operation (e.g. a NULL handle from dlopen) is delivered through its out
++ * pointer, exactly like the underlying libdl call.
++ *
++ * Operands per ID:
++ *
++ *   DLCALL_ID_GET_HOST_ATTRIBUTE
++ *     a2  const char *key        in:  attribute name to query
++ *     a3  const char **attr_ptr  out: matching value, or NULL if unknown
++ *
++ *   DLCALL_ID_LOAD_LIBRARY                            (wraps dlopen)
++ *     a2  const char *path       in:  library path
++ *     a3  int flags              in:  dlopen() flags (e.g. RTLD_NOW)
++ *     a4  void **handle_ptr      out: library handle, or NULL on failure
++ *
++ *   DLCALL_ID_GET_PROC_ADDRESS                        (wraps dlsym)
++ *     a2  void *handle           in:  library handle
++ *     a3  const char *name       in:  symbol name
++ *     a4  void **entry_ptr       out: symbol address, or NULL if not found
++ *
++ *   DLCALL_ID_FREE_LIBRARY                            (wraps dlclose)
++ *     a2  void *handle           in:  library handle
++ *     a3  int *ret_ptr           out: dlclose() return value (0 on success)
++ *
++ *   DLCALL_ID_GET_LIBRARY_ERROR                       (wraps dlerror)
++ *     a2  const char **error_ptr out: last libdl error string, or NULL
++ *
++ *   DLCALL_ID_INVOKE_PROC                             (calls the symbol)
++ *     a2  void *proc             in:  function pointer, signature
++ *                                     void (*)(void *arg1, void *arg2)
++ *     a3  void *arg1             in:  first argument forwarded to proc
++ *     a4  void *arg2             in:  second argument forwarded to proc
++ */
++enum DlcallID {
++    DLCALL_ID_GET_HOST_ATTRIBUTE,
++    DLCALL_ID_LOAD_LIBRARY,
++    DLCALL_ID_GET_PROC_ADDRESS,
++    DLCALL_ID_FREE_LIBRARY,
++    DLCALL_ID_GET_LIBRARY_ERROR,
++    DLCALL_ID_INVOKE_PROC,
++};
++
++static inline const char *query_host_attribute(const char *key)
++{
++    if (strcmp(key, "emu") == 0) {
++        return "qemu";
++    }
++    return NULL;
++}
++
++static inline void invoke_proc(void *proc, void *arg1, void *arg2)
++{
++    typedef void (*Func)(void * /*arg1*/, void * /*arg2*/);
++    Func func = (Func) proc;
++    func(arg1, arg2);
++}
++
++static bool vcpu_syscall_filter(unsigned int vcpu_index,
++                                int64_t num, uint64_t a1, uint64_t a2,
++                                uint64_t a3, uint64_t a4, uint64_t a5,
++                                uint64_t a6, uint64_t a7, uint64_t a8,
++                                int64_t *sysret, void *userdata)
++{
++    if (num == dlcall_syscall_num) {
++        switch (a1) {
++        /* Query host attribute by a reserved key. */
++        case DLCALL_ID_GET_HOST_ATTRIBUTE: {
++            const char *key = (const char *) a2;
++            const char **attr_ptr = (const char **) a3;
++            assert(attr_ptr);
++            *attr_ptr = query_host_attribute(key);
++            *sysret = 0;
++            break;
++        }
++
++        /* Load a shared library. */
++        case DLCALL_ID_LOAD_LIBRARY: {
++            const char *path = (const char *) a2;
++            int flags = (int) a3;
++            void **handle_ptr = (void **) a4;
++            assert(handle_ptr);
++            *handle_ptr = dlopen(path, flags);
++            *sysret = 0;
++            break;
++        }
++
++        /* Get the address of a function in a shared library. */
++        case DLCALL_ID_GET_PROC_ADDRESS: {
++            void *handle = (void *) a2;
++            const char *name = (const char *) a3;
++            void **entry_ptr = (void **) a4;
++            assert(entry_ptr);
++            *entry_ptr = dlsym(handle, name);
++            *sysret = 0;
++            break;
++        }
++
++        /* Free a shared library. */
++        case DLCALL_ID_FREE_LIBRARY: {
++            void *handle = (void *) a2;
++            int *ret_ptr = (int *) a3;
++            *ret_ptr = dlclose(handle);
++            *sysret = 0;
++            break;
++        }
++
++        /* Get the last error message for a library event. */
++        case DLCALL_ID_GET_LIBRARY_ERROR: {
++            const char **error_ptr = (const char **) a2;
++            *error_ptr = dlerror();
++            *sysret = 0;
++            break;
++        }
++
++        /* Invoke a function of a common interface. */
++        case DLCALL_ID_INVOKE_PROC: {
++            void *proc = (void *) a2;
++            void *arg1 = (void *) a3;
++            void *arg2 = (void *) a4;
++            assert(proc);
++            invoke_proc(proc, arg1, arg2);
++            *sysret = 0;
++            break;
++        }
++
++        default:
++            *sysret = -EINVAL;
++            break;
++        }
++        return true;
++    }
++    return false;
++}
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
++                                           const qemu_info_t *info,
++                                           int argc, char **argv)
++{
++    if (info->system_emulation) {
++        fprintf(stderr, "plugin dlcall: only useful for user emulation\n");
++        return -1;
++    }
++
++    for (int i = 0; i < argc; i++) {
++        char *opt = argv[i];
++        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
++        if (g_strcmp0(tokens[0], "syscall_num") == 0) {
++            const char *val = tokens[1];
++            char *endptr = NULL;
++            guint64 num;
++            if (!val || *val == '\0') {
++                fprintf(stderr,
++                        "plugin dlcall: missing value for syscall_num\n");
++                return -1;
++            }
++            num = g_ascii_strtoull(val, &endptr, 0);
++            if (*endptr != '\0' || g_strrstr(val, "-") != NULL) {
++                fprintf(stderr,
++                        "plugin dlcall: invalid syscall_num '%s'\n", val);
++                return -1;
++            }
++            if (num < DLCALL_SYSCALL_MIN || num > G_MAXINT64) {
++                fprintf(stderr,
++                        "plugin dlcall: syscall_num %s is out of range; "
++                        "it must be >= %d to avoid clashing with a real "
++                        "syscall\n", val, DLCALL_SYSCALL_MIN);
++                return -1;
++            }
++            dlcall_syscall_num = (int64_t) num;
++        } else {
++            fprintf(stderr, "plugin dlcall: unknown option '%s'\n", opt);
++            return -1;
++        }
++    }
++
++    qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter, NULL);
++
++    return 0;
++}
+diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+index 099319e7a1..e7fc4d6d8f 100644
+--- a/contrib/plugins/meson.build
++++ b/contrib/plugins/meson.build
+@@ -19,6 +19,11 @@ if host_os != 'windows'
+   contrib_plugins += 'lockstep.c'
+ endif
+ 
++if host_os == 'linux'
++  # dlcall passes guest calls through to host libraries; linux-user only
++  contrib_plugins += 'dlcall.c'
++endif
++
+ if 'cpp' in all_languages
+   contrib_plugins += 'cpp.cpp'
+ endif
+-- 
+2.34.1
 
 
