@@ -4,113 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70117C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 06:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11C8FC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 06:22:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we5EH-0001aF-Kg; Mon, 29 Jun 2026 02:12:27 -0400
+	id 1we5Nf-0005Ib-NQ; Mon, 29 Jun 2026 02:22:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1we5EE-0001Z2-Jo
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 02:12:22 -0400
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1we5Nb-0005IA-Uq
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 02:22:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1we5EC-0006vT-2U
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 02:12:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1we5NZ-0004Az-HT
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 02:22:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782714117;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=4f6R0CXxBN8eUBL29prVX9w4nx5JdtEUtKzs/EhuceQ=;
+ b=LdtDTHneyur8zUoWjLlcDitGg1JvQxL6psvbWo55qNEmsV2c3AKDcXqtGCr2EQKJom96V+
+ CrP2KDYuZpyXm0aZU3LVEMhIYpHXM6A7HSGsX3wgdKFWGx1L/C48MHLaHKjEYd4sEWK0tI
+ 6qmIWYDiUuzbpL+69jdnhtd6lSqUOQE=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 0A8953F468
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 06:12:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20251003; t=1782713536;
- bh=8W3RzLAM/J7cY41L92q4LdQLYG8Vxh0+7AkVoZMu+GU=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
- In-Reply-To:Content-Type;
- b=g7o6/0YjWN8H1+OaAEioahm6Zz7LgU8HMqe6xOAz8b3mxX3zmW1tWC6+6Qa1SQLvL
- gOPmgyz1y0QPqOD8mEhILdVx51e9o+A2eg9a2OtDb0te3DlsZjBb1pQ3f/UGtWa9pI
- rTBn5pbpPGwPGkLwGqLdn2BZBdKWeh8XFCZHizYcRtyFgYoba9nVYqQcJwJaVBB+v8
- YNqkjMj8mR4UD8yGbkHkf6eB1NDw3tqYzO7vvfT0gwJ9XPjd1YlvNSy+NY+GJsuiv+
- 9t9HmyYOHsW5glK7Ilsld3rmhM7BdCpoKpMophL896SDy3+Rr/Nipc0zKW9o35bl7A
- e4U9wj+yPfuvUmz02E2Ld33TAVpu1eocF/33RXzzoMVFzTkesHYAy2LUwFTVDjeH1Q
- usAExSFAVaBLPTZV8AnsRLzEWXTYeLLxyjzkC2SNFWQLagAn/Q6BF99Z0Mz0ZW0wea
- QD8Iib4KPYAM5cTtTV66pbbWzeSrUroG8HDCkBKEF9ONziT1ZPBYJHHpBpJieEoNV0
- 5guqkDsudWBayEZAbvXhZx66KhLc1mIp8w4S70chV5xaO+dnYjDluWLkTig7KpUFGi
- I/6ecRFsppJFMRzjt6/wDxsEFhoM7Lv9SRDlM12jg0b7RJ8hram2SI5CGjJLonLOIF
- dxqTihLF3LjvXzKXjB7aPGPE=
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-248-tnudvx-LONS2bZtg1VKX7g-1; Mon, 29 Jun 2026 02:21:54 -0400
+X-MC-Unique: tnudvx-LONS2bZtg1VKX7g-1
+X-Mimecast-MFC-AGG-ID: tnudvx-LONS2bZtg1VKX7g_1782714113
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-469218e618dso1689867f8f.2
- for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 23:12:16 -0700 (PDT)
+ ffacd0b85a97d-472a798fc7cso454016f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 23:21:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782714113; x=1783318913; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=4f6R0CXxBN8eUBL29prVX9w4nx5JdtEUtKzs/EhuceQ=;
+ b=PZH4xQ7twbvdd6bxZRh33q55Vnez4wI/LQNghe0gbPOQHwfv6IIpm4nrVHdFERv1aL
+ u6iGcWE1+5FBcK1+BhABOQb1G6QOB7Wio5bLKAwxmR8JPwqmFSE0YKQrV+x2Yf+FbhWU
+ NOiFStXlQSCATxgRMRoZ2yVSAECs8KNUDgsZPQUvd27UaOC5ySKdOtdNoZ0W935vHkwi
+ BcTv8klPUm8oJ7EaD/sQtUszZYep2MeTIJc4Ys8y2cm+mLP+cgLGbITtPr0yKtD59CcV
+ QEZM4THhHp8T7O3oMD/bbCbCMucTIgZm8SYmxL1WUJXc0oHowqj2vDJilMZlotEuMkS1
+ vDBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782713535; x=1783318335;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8W3RzLAM/J7cY41L92q4LdQLYG8Vxh0+7AkVoZMu+GU=;
- b=WB2mGt6FOPenPuO0f48ZmrqoaZI/zjLEScSIzyrYWdlFiKxBm7TLwZHKUHYti0tGaj
- JiUFOMk5DgNTyK6No/ulQByRnu22/8VHOmTxj8DhDLXu1RlT6OtAMemoZlrSsVbM6s0F
- VkumA0rNWylXOC6oJd+IDNHNXZ+sknsmdhlgisur8ATU1ERNpTJzbIMgzX09u4lBjtLj
- ctD+BWBs+oVSMn6Aem2GgFJhc1ZcNrBRBk8juHg+OCVw0gUX7dla9fu6/LzddkYOmIvz
- Vfift0oY3Uflg+01baLKKa1I1kDX0yJDwzccfMv3Xm3LUKgzGJwWBSLT75fRXS4E+ok9
- pvog==
+ d=1e100.net; s=20251104; t=1782714113; x=1783318913;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4f6R0CXxBN8eUBL29prVX9w4nx5JdtEUtKzs/EhuceQ=;
+ b=U7d5rpn9rvXiLVCEVBh5N/98c5z6AiEyIUto/DiTeeKxNFpfO+3iE9SlOlns1W8OOP
+ cY8XfiYqBmLhsTjgdi/vlKuJbtOkaiR7zfR7+eciV8ky0s+kCTd3WvECSiwB9Nln4DfO
+ bXdPFtB+UypIt+f6wPzxHOi429bFXqiXdgLH70DRLHa1Ygj55bUgHRinL1glY65IqTPR
+ u86ST5HAZBPEfAgHv51trVliSLwwVfSMxHtLLF5W2GqwXsp3tMgSVRJpZmMZ6i6kv4iC
+ +ssHn02Kvh5PHh2jOWvhagv8UL/DiS5BXlT2u1IHljTyQLmZYKZLj44VdR8rDCcsVSaL
+ r+8Q==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/9Aw2Tf2ZKYnjfSIRiDCiTWQdkkhESZK5gZZP71xhYPY//eaS6q5Z0qSnMVQ+f9RgO5SHFA1YwMaUZ@nongnu.org
-X-Gm-Message-State: AOJu0YxYGW2UfizqcNFE32c6p1V3kK89oZlnkAVLacda5C0uFRndrwBm
- iP00KT6aPJzsNkypkWjfdd7ZKDoCKP62nBQYEjxERnRVan9iSFRlOEvXcOF6/3Xh0XaHo3hEmYR
- U87YT8S5OLEP3PaWCSsQEgyMVg/pxn4+efIMBXBKqpE7vVGI004XUOhZtXsTEoAEuoXa/58WJ
-X-Gm-Gg: AfdE7cl+b8zvsJsnLYhs/VTHXzB883pF/Y0HTnXdUSvaSDZmRTQT9H77UsNSQY4fb4Q
- n7DF+1GXxsZ0N2Z+G9fJnOsU6yDiJskhN4jmVRH4HGHqZtYcEPDSuTi+D6DrUvbmQuJJu0B/IKm
- Mvz8O/ybrpc+tXnXhoxPWHFe5sykKXvnxmPUGtWnapt8N19QCf6zEA1PQPHoT6LnxHVu/kzWo24
- KwLKuxaRUvDMd4F1jZ73C7Ak1w6gC2hmqqURd8BrUmxoTWv0P5JMhhgNpOyDWT+XmMuI/4FwtjF
- OmuDlm5VRUMFA7d17CYrWTY/zesbEkCPWh0HOHzFccTN1idvxoNYyOlvoCCoCK89oUP9zW7I/NH
- CnhJicUlAPA/f629w5NCE2VorRwwbRvXPLTYX1vZl15uZOUwPUbTUsx4jHqoR8x+4UqQQpmOyML
- s3GxUtJnRKgKXZS15byyb/pO2rEyDM2xfAB33ezCC2qHKwFOsWXZ0=
-X-Received: by 2002:a05:600c:3b8a:b0:490:44eb:c1e0 with SMTP id
- 5b1f17b1804b1-4926fc761ddmr196991295e9.21.1782713535554; 
- Sun, 28 Jun 2026 23:12:15 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b8a:b0:490:44eb:c1e0 with SMTP id
- 5b1f17b1804b1-4926fc761ddmr196990905e9.21.1782713535127; 
- Sun, 28 Jun 2026 23:12:15 -0700 (PDT)
-Received: from [192.168.123.154]
- (dynamic-046-114-104-147.46.114.pool.telefonica.de. [46.114.104.147])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4726b76e6f8sm16115691f8f.13.2026.06.28.23.12.13
+ AFNElJ+dhqq8avT1ec1zIw7dQ8sdPFJbBEyMRNU/HqF2j+FFOIqv1b5XqAwVXCClZ7yzo8zFxm4XoCz9IXR0@nongnu.org
+X-Gm-Message-State: AOJu0YxVqscKL5dMWWrGDlzblaC5WL4K3xVuoS+/+bVT/nIenslpR+nG
+ 2mduoprqiS5XSEQ4KWePA1l6qKqfZvsP7ZDZayq4l3DLNkYJxXsVMjQyyEtL8Aw482J7ee+r6H9
+ 4IaRMP7ienZFS/0qlZXVjxWO0Ee08SywJBpOiwhar5PUdKhmpOBqEjFFl
+X-Gm-Gg: AfdE7cnLMvaFYJzX40MfuR8Xq1TXkmuNRGRtkj6sTvSGbR0FJ5zLn52XMJwpuaDLPu8
+ 3ZPrhQ7N6h81WScpXE6QlTVPd1kW+QakhywOf4PXUI0bvloeCmI8ffj9BLiZ0TczzVoMqdWfmiR
+ jwOcwmrUTRDWBa9MBGtFYePUstaWxQpqtp2PiE1Ym0UFkmb7v9onqb55Oyw1m4St3ijWaptjbGI
+ cN9MBzJknTClP9QknEeIkfzK6ms+JcNbqJV5P2imHKvGSmurnC9WPPDjI/ylJMZDYJiuRhR/Pom
+ TFzXUqdjpW1Lur+TXUKgsLI6ZPgeSfqqybUqiDTSdrvd2kqe63lIqm5XvLK/asEG6L9Cckj9Klk
+ y7N2vXjs=
+X-Received: by 2002:a05:600c:3b24:b0:490:bd66:db49 with SMTP id
+ 5b1f17b1804b1-49266850100mr247147915e9.12.1782714113308; 
+ Sun, 28 Jun 2026 23:21:53 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b24:b0:490:bd66:db49 with SMTP id
+ 5b1f17b1804b1-49266850100mr247147655e9.12.1782714112988; 
+ Sun, 28 Jun 2026 23:21:52 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.113.50]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-492690168d5sm402370205e9.14.2026.06.28.23.21.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Jun 2026 23:12:14 -0700 (PDT)
-Message-ID: <34ffc248-aa4d-4154-bf5d-3b095aff0144@canonical.com>
-Date: Mon, 29 Jun 2026 08:12:12 +0200
+ Sun, 28 Jun 2026 23:21:51 -0700 (PDT)
+Message-ID: <5ca03dce-aae9-41ad-b05f-60835634ff38@redhat.com>
+Date: Mon, 29 Jun 2026 08:21:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/2] hw/acpi: correct field sequence in SPCR table
-To: Alistair Francis <alistair23@gmail.com>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-References: <20260622111843.34056-1-heinrich.schuchardt@canonical.com>
- <20260622111843.34056-2-heinrich.schuchardt@canonical.com>
- <CAKmqyKPeK-nCsemLAru6nkWP7V8qtA=XgW3ALuOJ5nFegF5F4Q@mail.gmail.com>
+Subject: Re: new roms/ content for hexagon: h2
+To: Brian Cain <bcain@quicinc.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: "deller@gmx.de" <deller@gmx.de>,
+ "mark.cave-ayland@ilande.co.uk" <mark.cave-ayland@ilande.co.uk>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "pierrick.bouvier@oss.qualcomm.com" <pierrick.bouvier@oss.qualcomm.com>
+References: <CH4PR02MB1068109FAF2014DE3A545D5EFB8E92@CH4PR02MB10681.namprd02.prod.outlook.com>
 Content-Language: en-US
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-In-Reply-To: <CAKmqyKPeK-nCsemLAru6nkWP7V8qtA=XgW3ALuOJ5nFegF5F4Q@mail.gmail.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CH4PR02MB1068109FAF2014DE3A545D5EFB8E92@CH4PR02MB10681.namprd02.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.125.188.122;
- envelope-from=heinrich.schuchardt@canonical.com;
- helo=smtp-relay-internal-0.canonical.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,91 +169,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/29/26 02:58, Alistair Francis wrote:
-> On Mon, Jun 22, 2026 at 9:18 PM Heinrich Schuchardt
-> <heinrich.schuchardt@canonical.com> wrote:
->>
->> On LoongArch and RISC-V invalid SPCR tables are created:
->>
->>      Terminal Type : 00
->>      Language : 03
->>
->> The correct values are:
->>
->>      Terminal Type : 03
->>      Language : 00
->>
->> This is due to commit 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate
->> SPCR creation to common location") that swapped the fields.
->>
->> See the specification of the table in
->> https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
->>
->> This page shows version 1.10. But the sequence of the fields was not changed
->> since version 1.0.
->>
->> Our LoongArch and ARM code uses version 1.07 of the specification.
->> Our RISC-V code uses version 1.10 of the specification.
->>
->> Fixes: 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate SPCR creation to common location")
->> Origin: https://lore.kernel.org/qemu-devel/20260326121947.51200-1-heinrich.schuchardt@canonical.com/T/#u
->> Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2146419
->> Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
->> ---
->> v4:
->>          Reproduce the test data changes using rebuild-expected-aml.sh
->>          creating the same diff as v3 but in two separate patches.
->> v3:
->>          Update test data
->> v2:
->>          Mention the different specification versions used by our code
->>          https://lore.kernel.org/qemu-devel/20260326144835.67911-1-heinrich.schuchardt@canonical.com/
->> v1:
->>          https://lore.kernel.org/qemu-devel/20260326121947.51200-1-heinrich.schuchardt@canonical.com/T/#u
->> ---
->>   hw/acpi/aml-build.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
->> index 9b3cdd3781..990abc64cd 100644
->> --- a/hw/acpi/aml-build.c
->> +++ b/hw/acpi/aml-build.c
->> @@ -2144,10 +2144,10 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
->>       build_append_int_noprefix(table_data, f->stop_bits, 1);
->>       /* Flow Control */
->>       build_append_int_noprefix(table_data, f->flow_control, 1);
->> -    /* Language */
->> -    build_append_int_noprefix(table_data, f->language, 1);
->>       /* Terminal Type */
->>       build_append_int_noprefix(table_data, f->terminal_type, 1);
->> +    /* Language */
->> +    build_append_int_noprefix(table_data, f->language, 1);
+On 28/06/2026 21.44, Brian Cain wrote:
+> Hi all,
 > 
-> Won't this break tests? Don't you need to disable the test first (then
-> re-enable it and fix it in patch 3)
-
-Hello Alistair,
-
-It would be helpful if /tests/qtest/bios-tables-test.c would clearly 
-point out if changes to tests/qtest/bios-tables-test-allowed-diff.h and 
-their reversion should be in the submitted patch series or not and what 
-the acceptance criteria for the patch series are.
-
-I was not able to identify this from the existing text. So I eliminated 
-those redundant changes.
-
-Best regards
-
-Heinrich
-
+> I'm working on upstreaming support for hexagon system emulation and it'd be 
+> useful to add the h2 vmm to QEMU's roms/ in order to simplify booting OSs 
+> like Linux.
 > 
-> Alistair
+> To that end, I think the initial step in the process is to mirror the repo 
+> in the qemu-project? https://github.com/qualcomm/hexagon-hypervisor/ 
+> <https://github.com/qualcomm/hexagon-hypervisor/> is where the code is 
+> hosted now.  And once that is done I suppose I would add QEMU patches to add 
+> the build process and build output into roms/.  Can one of you do that 
+> mirror step or suggest how I can do it?
 > 
->>       /* PCI Device ID  */
->>       build_append_int_noprefix(table_data, f->pci_device_id, 2);
->>       /* PCI Vendor ID */
->> --
->> 2.53.0
->>
+> Thanks,
+> -Brian
+
+  Hi Brian,
+
+I think Stefan or Alex can most likely help here.
+
+  Regards,
+   Thomas
 
 
