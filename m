@@ -4,98 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5955EC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 08:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2432C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 08:33:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we7M4-0005tu-04; Mon, 29 Jun 2026 04:28:36 -0400
+	id 1we7Q0-0006jg-8z; Mon, 29 Jun 2026 04:32:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1we7M2-0005tO-4b
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 04:28:34 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1we7Py-0006jV-9D
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 04:32:38 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1we7M0-0003Ta-4K
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 04:28:33 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-493a287b8c1so8456785e9.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 01:28:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1we7Pw-0005ua-1d
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 04:32:38 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-c124c3c876aso187043366b.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 01:32:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782721954; cv=none;
+ d=google.com; s=arc-20260327;
+ b=rp5mSvY8kiGbfUPZALHNi8UStYylMdu72aFrkxi5coUoetonyTY5sZOj3f/D2Dhh9c
+ 3oZyfD3bzQAQYiomLZzUyvsn3UtjOYdEryGbMi403gzdb8a5rHNqzzBvPu9LCHltMPQH
+ nerAADG5RW5qszV5WGfT9R55KMKza4CGtFBYs7oey/62D6FyxTQvWImBy8hxmYWM8mRr
+ e0oIFcB3crr8PZ04tfA8NA0uRUSFfwDxtbQON0prAohZR2SZEa1i7lZthvkKnQASr3dR
+ M/fUkD5dxmWjEpidx44EQKFLCs3NZCIjiyWC4LBAY4/+DrK/QLhdrBZK9Ysr8eoTWRMR
+ Sa/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=dPPWYEN8H613lAMb7zSZWHcVrudV3LLaWLE5jhX72h8=;
+ fh=XlSsuloH83uiYGd5wjFfxhBlTtHH/VsvoyCW8PyiI6I=;
+ b=M+kzmS685nfdypT05iXcFE0n+4g2iAJxsdShbzA0qi+WmB6ODKaBg9vmqWhJkmJD4H
+ pva446OiVOoT/ayl+BpKFUTIi+24dfFTEUwb3PeXppjui9zpzn8N4FgQAtOlcUHQUblV
+ Piqh7n/fUNtkZUOeL9kU1ctk5m/j8r0ZDA3SjcSVQdnha7+thJCA7wmx9u5GJi2/Awpc
+ Hsj9w7Tu5GKJwIaYMXVZ7pkOtIHTcl+oYW3qN5KW7PmiKUS+xVd433uvFyr/sGZgcRa+
+ 0I41ydS/Zj2+tmQkOgBw/DXH5nPM1wWN3Jg/pe4oA9QwSnvppd1FFwwDspZYoOgphbzh
+ oOXQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782721710; x=1783326510; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=6EBCgYCl1c/EFz5qNJ+IZVbmtL8NqUAYJ+SNhcF0Mok=;
- b=EEV0TXgiH0xk3clhxYSo0CSvsoZ9m5rzxUwWiaSamJG81x+SHkXPlKfMKaP0TuCgmE
- 6aWmJB63Zve2hsc70qZGlGLL9v87c8HvF5cAkyknSywwGele3ru4tkw9k3kUAOfXd4nW
- 8NSLDdysSR4EmZnVQC/AiEpWAeflVJaP7X7apTT5SsF19ScxoA1n75d7HBQ01Rzqo3dE
- sID/SWfdqqFolHUuIsghHnD8vXO4Io60WXh0nq7klatg4ZGe38io5T5bgXGMxevjTWz4
- 97BHo3Odegsv3834+7jI8UmCwZPo5t8n/RvL4ntGWC8/qTs6tGGqsfNwAe08GhmTaeAH
- ybRA==
+ d=gmail.com; s=20251104; t=1782721954; x=1783326754; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dPPWYEN8H613lAMb7zSZWHcVrudV3LLaWLE5jhX72h8=;
+ b=S180PuHQtbO3ER70FebBJ287Ej/kIQnazZpFklzdavmgpHM3acefzI3iZjmtCqtLes
+ vFOz6toj95lmFqwqiCJJtIw4GTacZzxDl0DNyZHzwMG4DSyVvy/Ai9MBZQgEf1owLB0c
+ jOw5s5L9JDSQxrdbSjCoFzwsyaP9AqxtB6efpNcqYCyupzUeGsdUOEoMz08kJ/pYx/vn
+ 00/Kb1durk6ZTssm8PxTwGarXYC3PTsno+H917D//OwjwqqVsQWyxP98nG15hggM/UHE
+ T2S/KWicQ0OAJdAbhAzXEzK4ZSLL2ReFWEw+KZBajxfG/S0kBJr4itGN+Vt3kp0cY2dp
+ gzWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782721710; x=1783326510;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6EBCgYCl1c/EFz5qNJ+IZVbmtL8NqUAYJ+SNhcF0Mok=;
- b=iyiX+CNHKeoQXnd8ksibAt3wU5xa8coVHNq0bPtCtg1BBINTNs37UsG91fv/q2l1Uq
- 7RMwnXw/SiZr0/9isvQeetElpGj58Meo5+v43zJBLODmG6nIrWXQKXww8bXyau245DXi
- Z63MfCOt+MJDcBcH8YHFTLQ+RkrIoA5+UoXaqw222lxETGRryxAuzHET7d4ak6jp6uri
- BB0pihUnbO008z4oBGhUGk2vlj+1LQiyyMOq4tSu4IBYAecAdwKZVAhU+rRg+hBEuCFz
- Ck3Y0ri1mTc5SUuw+LZVJuqFKRc/SdBnXnbKKRXLx0aumrsbu67i1TCcqvi+GP8Y40WK
- K6tw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8FaPB0QYyuf6YwWdj6msA8UtJCnh5C3UXNlW/UiI+7aeppfrBw+nauY/ja36EP0n+o30kpOXh9uhYK@nongnu.org
-X-Gm-Message-State: AOJu0YxrFdd9VfgbA2+tNV2utF3P6Xp34ChHgZI/PVNi4G6aALdAaDhX
- MmKT5eCL1YTz9CUqJDdmrKASQROgLXlg6mYZriyVzp0H/0bA3AzEjAHH70/X9w0GUq0=
-X-Gm-Gg: AfdE7cnkQjN0Dy1eWRH2aTCG9n/voRZyuJsUp8vAGeghs4a2hs79K1XNezdIZS8eSak
- i7gSq+55nxZNM8iYOhp2xh1qSjJeK9QG+4vffEWEKXebBQrBwiuCENLfWM/dIOgklXYiJQqvFe2
- ++y8xL82fxIe4BsPU/NSQxSZ0akYK82xmiJu8mUF+K5rwMf/VBmGVyLTjUtDyet35zYwzmeUSKX
- zVlB/IkSl0hf19Thx/eBaR9D/g6pOfvn3L0d9bHlARekFcFFpC86GSBFlPQu7jqKV2QYt04yOcr
- BE5e2DAoW2G50l7nfGI9FncYsdbcvokTWcuyZVKDawS9qTyQPsv3Rzy8ijJpT9HKDJSzTCtdfU4
- HeFidXPS+No76pXKPxizlyUxbqWYJmB/4oo3Tj2rQvYq1Xakd8W+lfd9qqfk1Cj42cwANcuzooY
- gFTl4nKQaSl2sXYvrfSZqPAaK4KvDpXihCRdfTXFmvpD5nrdIpL6/+OmhzSf1RJiDlS+g7SYaHr
- LJyo/KdPqqcmMfRfcba7fvagN8a/+kmHEnoNmv9hvQgiluRTj6KXom4eEFDQDb8G5tXudTKJr7K
- 1zHV0HnsPGDI90m7JcAlwvo=
-X-Received: by 2002:a05:600c:a00e:b0:493:a91c:d47 with SMTP id
- 5b1f17b1804b1-493a91c0e98mr60305295e9.23.1782721709658; 
- Mon, 29 Jun 2026 01:28:29 -0700 (PDT)
-Received: from meli-email.org (ppp-2-86-131-154.home.otenet.gr. [2.86.131.154])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492690168d5sm411376645e9.14.2026.06.29.01.28.29
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 29 Jun 2026 01:28:29 -0700 (PDT)
-Date: Mon, 29 Jun 2026 11:23:32 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>, qemu-devel@nongnu.org
-Cc: Volker R=?UTF-8?B?w7xtZWxpbg==?= <vr_qemu@t-online.de>,
- Marc-Andr=?UTF-8?B?w6k=?= Lureau <marcandre.lureau@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- St=?UTF-8?B?w6lwaGFuZQ==?= Graber <stgraber@stgraber.org>,
- "Daniel P . Berrang=?UTF-8?B?w6k=?=" <berrange@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Alexander Mikhalitsyn <alexander@mihalicyn.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: Re: [PATCH v3 9/9] hw/audio/virtio-sound: add missing vmstate fields
-User-Agent: meli/0.8.13
-References: <20260626123531.132078-1-alexander@mihalicyn.com>
- <20260626123531.132078-10-alexander@mihalicyn.com>
-In-Reply-To: <20260626123531.132078-10-alexander@mihalicyn.com>
-Message-ID: <thdwvg.71u440c3d5z8@linaro.org>
+ d=1e100.net; s=20251104; t=1782721954; x=1783326754;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=dPPWYEN8H613lAMb7zSZWHcVrudV3LLaWLE5jhX72h8=;
+ b=snKmVTeAE9lGUD/DQnjuBsi645DimR3loytVdtOTfd7NLmY8LvBjObSVU4rv3UdKcU
+ w3piaM/zkrkjtMCFqNOLgFXI4cIE9XBVjUjPKLoGVU2hd9VMS40PhBUHzForBaTpE5S0
+ WfXah3fqlWtVS9GPY/qpmaRd5xnf/ztpyPXJx8kX4geMzRAhSjbnZQ1fEMUu16Os5ahe
+ X2t35rvWfemd07zWeAcawf83C/KFuRDEhwWRYJopy1zZgFY7u6et/8k/BvL+o+mhh0gq
+ xh558TNNaKCfEG/sKeKUs07uvEWagYDQYlJfQJm+lM246QPTQqSlO2G+HsmkCFCuEDN/
+ ymbA==
+X-Gm-Message-State: AOJu0Yy08l2HerWzEh32A9uLNJtvQbavfI+MkstozV+JBq9qJISZsmlV
+ 3Gbe+ae9LC3TT5AkELQwUgdNj1e8oPgCRQafad/paldzVYirKEgeuhRD3hfq/9p7MSa7b/6A3dk
+ 2TBt39k5zd39WlHZB7tXYSR2T6wWkt/o=
+X-Gm-Gg: AfdE7cnhB95BqUJA1jC0U6UMO/08X6Xf/T7AbA776amt7hec6J2o5UQQ+Kqw+N6hnzU
+ aMVuhedavt8xYtwTfEBeRBGQiCjVBwVLBf7VHG2cnnqx9BllmD8QjzY/A0XTcNTFsrbOM8Cp7Kc
+ mn6NA4C1/e9TzYL4LCzl3Bq7zfQYlui7UtrtKnJxLsgT3Ho5KInMfjSJKVDWbA7oHuwFDEdoPG/
+ uiu0NYwWS5iQJVz9m07zVJCtedwhbJMoePe+mYEIQH+vy5MDC0R4vgvMn91M5p6J1x42R4BVg==
+X-Received: by 2002:a17:907:a08a:b0:bec:2a21:785d with SMTP id
+ a640c23a62f3a-c1205f09ea5mr828333966b.46.1782721954078; Mon, 29 Jun 2026
+ 01:32:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x329.google.com
+References: <20260624070851.13342-1-zhangckid@gmail.com>
+ <20260624070851.13342-7-zhangckid@gmail.com>
+ <aj5_T__4oqt41IWv@redhat.com>
+In-Reply-To: <aj5_T__4oqt41IWv@redhat.com>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Mon, 29 Jun 2026 16:31:56 +0800
+X-Gm-Features: AVVi8CcVl-6-qzf1-eZie0Mu_xrnGX2yVoIC3yl6P05pMNcssOA3C-14XSaAfrY
+Message-ID: <CAK3tnvLTwLdWm2ZHcLhHRsncHZVvEgW_B14Ua4ZS9EX6BE1Erw@mail.gmail.com>
+Subject: Re: [PATCH V9 06/17] monitor: refactor monitor_data_init() to pass ID
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,226 +121,269 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 26 Jun 2026 15:35, Alexander Mikhalitsyn <alexander@mihalicyn.com> wrote:
->From: Volker Rümelin <vr_qemu@t-online.de>
+On Fri, Jun 26, 2026 at 9:32=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
 >
->The virtio-sound device is currently not migratable. Add the
->missing VMSTATE fields, enable migration and reconnect the audio
->streams after migration.
+> On Wed, Jun 24, 2026 at 03:08:40PM +0800, Zhang Chen wrote:
+> > Anonymous monitors (e.g., '-monitor stdio' or GDB stub) leave their 'id=
+'
+> > field as NULL. To allow downstream subsystems (like iothread tracking) =
+to
+> > identify these instances later, the initialization paths must propagate
+> > the context.
+> >
+> > Refactor monitor_data_init() to accept the 'id' parameters, and
+> > update all internal QMP/HMP paths to pass these identifiers.
+> >
+> > For anonymous monitors, 'mon->id' remains NULL at this stage to avoid
+> > namespace pollution, setting up infrastructure for subsequent patches.
+> >
+> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> > ---
+> >  chardev/char.c             | 2 +-
+> >  gdbstub/system.c           | 3 ++-
+> >  include/monitor/monitor.h  | 5 +++--
+> >  monitor/hmp.c              | 5 +++--
+> >  monitor/monitor-internal.h | 4 +++-
+> >  monitor/monitor.c          | 9 ++++++---
+> >  monitor/qmp-cmds.c         | 2 +-
+> >  monitor/qmp.c              | 5 +++--
+> >  stubs/monitor-internal.c   | 3 ++-
+> >  9 files changed, 24 insertions(+), 14 deletions(-)
 >
->The queue_inuse[] array variables mimic the inuse variable in
->struct VirtQueue which is private. They are needed to restart
->the virtio queues after migration.
+> This patch will significantly conflict with my series that
+> creates QOM objects for the monitors. They will all be
+> guaranteed to have an "id" at that point though, which
+> addresses the problem you're trying to solve IIUC.
 >
->Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
->[AM: trivial rebase changes]
->Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
->---
->v3:
->	- added latency_bytes field to VMStateDescription
+> https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg06427.html
 >
->	As suggested by Marc-André Lureau:
->	- removed the "rc" variable from virtio_snd_post_load()
->	- dropped info field from VMStateDescription, because
->	  it can't be modified by guest and initialized only from realize
->	- added minimum_version_id/version_id so we can extend VMStateDescription
->	  without breaking compatibility in the future
->---
-> hw/audio/virtio-snd.c         | 80 +++++++++++++++++++++++++++++++----
-> include/hw/audio/virtio-snd.h |  1 +
-> 2 files changed, 73 insertions(+), 8 deletions(-)
+
+Thank you for your updates.
+As Markus's help, we already know your series for create
+QOM for the monitors. So this series V7 based on the assumption of
+your patch merged. But for the comments:
+"Feels like this patch should not be merged as is."
+https://lists.gnu.org/archive/html/qemu-devel/2026-05/msg04214.html
+
+I have to fix it by myself.
+I'm very happy this series based on your series, I can conveniently make
+the monitor as a regular QOM object like others in this series.
+If you think that OK, I will rebase my series on your QOM for monitor patch=
+es
+in next version.
+
+Thanks
+Chen
+
+
+
+
+> >
+> > diff --git a/chardev/char.c b/chardev/char.c
+> > index ca8b37ed8d..f057247001 100644
+> > --- a/chardev/char.c
+> > +++ b/chardev/char.c
+> > @@ -805,7 +805,7 @@ static Chardev *qemu_chr_new_from_name(const char *=
+label, const char *filename,
+> >
+> >      if (qemu_opt_get_bool(opts, "mux", 0)) {
+> >          assert(permit_mux_mon);
+> > -        monitor_init_hmp(chr, true, &err);
+> > +        monitor_init_hmp(chr, true, NULL, &err);
+> >          if (err) {
+> >              error_report_err(err);
+> >              object_unparent(OBJECT(chr));
+> > diff --git a/gdbstub/system.c b/gdbstub/system.c
+> > index e86c5870ab..50f934fde3 100644
+> > --- a/gdbstub/system.c
+> > +++ b/gdbstub/system.c
+> > @@ -388,7 +388,8 @@ bool gdbserver_start(const char *device, Error **er=
+rp)
+> >          /* Initialize a monitor terminal for gdb */
+> >          mon_chr =3D qemu_chardev_new(NULL, TYPE_CHARDEV_GDB,
+> >                                     NULL, NULL, &error_abort);
+> > -        monitor_init_hmp(mon_chr, false, &error_abort);
+> > +
+> > +        monitor_init_hmp(mon_chr, false, NULL, &error_abort);
+> >      } else {
+> >          qemu_chr_fe_deinit(&gdbserver_system_state.chr, true);
+> >          mon_chr =3D gdbserver_system_state.mon_chr;
+> > diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+> > index 55649a8664..4a5eb20bea 100644
+> > --- a/include/monitor/monitor.h
+> > +++ b/include/monitor/monitor.h
+> > @@ -19,8 +19,9 @@ bool monitor_cur_is_qmp(void);
+> >
+> >  void monitor_init_globals(void);
+> >  void monitor_init_globals_core(void);
+> > -void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp);
+> > -void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp);
+> > +void monitor_init_qmp(Chardev *chr, bool pretty, const char *id, Error=
+ **errp);
+> > +void monitor_init_hmp(Chardev *chr, bool use_readline, const char *id,
+> > +                      Error **errp);
+> >  int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp);
+> >  int monitor_init_opts(QemuOpts *opts, Error **errp);
+> >  void monitor_cleanup(void);
+> > diff --git a/monitor/hmp.c b/monitor/hmp.c
+> > index cc4390486e..4ee8cb58d1 100644
+> > --- a/monitor/hmp.c
+> > +++ b/monitor/hmp.c
+> > @@ -1522,7 +1522,8 @@ static void monitor_readline_flush(void *opaque)
+> >      monitor_flush(&mon->common);
+> >  }
+> >
+> > -void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
+> > +void monitor_init_hmp(Chardev *chr, bool use_readline, const char *id,
+> > +                      Error **errp)
+> >  {
+> >      MonitorHMP *mon =3D g_new0(MonitorHMP, 1);
+> >
+> > @@ -1531,7 +1532,7 @@ void monitor_init_hmp(Chardev *chr, bool use_read=
+line, Error **errp)
+> >          return;
+> >      }
+> >
+> > -    monitor_data_init(&mon->common, false, false, false);
+> > +    monitor_data_init(&mon->common, false, false, false, id);
+> >
+> >      mon->use_readline =3D use_readline;
+> >      if (mon->use_readline) {
+> > diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+> > index a5c4aba306..f651ba6a90 100644
+> > --- a/monitor/monitor-internal.h
+> > +++ b/monitor/monitor-internal.h
+> > @@ -108,6 +108,8 @@ struct Monitor {
+> >      bool skip_flush;
+> >      bool use_io_thread;
+> >
+> > +    char *id;
+> > +
+> >      char *mon_cpu_path;
+> >      QTAILQ_ENTRY(Monitor) entry;
+> >
+> > @@ -179,7 +181,7 @@ extern QemuMutex monitor_lock;
+> >  extern MonitorList mon_list;
+> >
+> >  void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+> > -                       bool use_io_thread);
+> > +                       bool use_io_thread, const char *id);
+> >  void monitor_data_destroy(Monitor *mon);
+> >  int monitor_can_read(void *opaque);
+> >  void monitor_list_append(Monitor *mon);
+> > diff --git a/monitor/monitor.c b/monitor/monitor.c
+> > index 00b93ed612..65749f931e 100644
+> > --- a/monitor/monitor.c
+> > +++ b/monitor/monitor.c
+> > @@ -608,8 +608,10 @@ static void monitor_iothread_init(void)
+> >  }
+> >
+> >  void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+> > -                       bool use_io_thread)
+> > +                       bool use_io_thread, const char *id)
+> >  {
+> > +    mon->id =3D id ? g_strdup(id) : NULL;
+> > +
+> >      if (use_io_thread && !mon_iothread) {
+> >          monitor_iothread_init();
+> >      }
+> > @@ -629,6 +631,7 @@ void monitor_data_destroy(Monitor *mon)
+> >      } else {
+> >          readline_free(container_of(mon, MonitorHMP, common)->rs);
+> >      }
+> > +    g_free(mon->id);
+> >      g_string_free(mon->outbuf, true);
+> >      qemu_mutex_destroy(&mon->mon_lock);
+> >  }
+> > @@ -732,7 +735,7 @@ int monitor_init(MonitorOptions *opts, bool allow_h=
+mp, Error **errp)
+> >
+> >      switch (opts->mode) {
+> >      case MONITOR_MODE_CONTROL:
+> > -        monitor_init_qmp(chr, opts->pretty, errp);
+> > +        monitor_init_qmp(chr, opts->pretty, opts->id, errp);
+> >          break;
+> >      case MONITOR_MODE_READLINE:
+> >          if (!allow_hmp) {
+> > @@ -743,7 +746,7 @@ int monitor_init(MonitorOptions *opts, bool allow_h=
+mp, Error **errp)
+> >              error_setg(errp, "'pretty' is not compatible with HMP moni=
+tors");
+> >              return -1;
+> >          }
+> > -        monitor_init_hmp(chr, true, errp);
+> > +        monitor_init_hmp(chr, true, opts->id, errp);
+> >          break;
+> >      default:
+> >          g_assert_not_reached();
+> > diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
+> > index 0c409c27dc..e49b9cbf8b 100644
+> > --- a/monitor/qmp-cmds.c
+> > +++ b/monitor/qmp-cmds.c
+> > @@ -168,7 +168,7 @@ char *qmp_human_monitor_command(const char *command=
+_line, bool has_cpu_index,
+> >      char *output =3D NULL;
+> >      MonitorHMP hmp =3D {};
+> >
+> > -    monitor_data_init(&hmp.common, false, true, false);
+> > +    monitor_data_init(&hmp.common, false, true, false, NULL);
+> >
+> >      if (has_cpu_index) {
+> >          int ret =3D monitor_set_cpu(&hmp.common, cpu_index);
+> > diff --git a/monitor/qmp.c b/monitor/qmp.c
+> > index 687019811f..8fd71386e8 100644
+> > --- a/monitor/qmp.c
+> > +++ b/monitor/qmp.c
+> > @@ -513,7 +513,7 @@ static void monitor_qmp_setup_handlers_bh(void *opa=
+que)
+> >      monitor_list_append(&mon->common);
+> >  }
+> >
+> > -void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
+> > +void monitor_init_qmp(Chardev *chr, bool pretty, const char *id, Error=
+ **errp)
+> >  {
+> >      MonitorQMP *mon =3D g_new0(MonitorQMP, 1);
+> >
+> > @@ -525,7 +525,8 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Er=
+ror **errp)
+> >
+> >      /* Note: we run QMP monitor in I/O thread when @chr supports that =
+*/
+> >      monitor_data_init(&mon->common, true, false,
+> > -                      qemu_chr_has_feature(chr, QEMU_CHAR_FEATURE_GCON=
+TEXT));
+> > +                      qemu_chr_has_feature(chr, QEMU_CHAR_FEATURE_GCON=
+TEXT),
+> > +                      id);
+> >
+> >      mon->pretty =3D pretty;
+> >
+> > diff --git a/stubs/monitor-internal.c b/stubs/monitor-internal.c
+> > index 4fece49d53..325a559e62 100644
+> > --- a/stubs/monitor-internal.c
+> > +++ b/stubs/monitor-internal.c
+> > @@ -8,6 +8,7 @@ int monitor_get_fd(Monitor *mon, const char *name, Erro=
+r **errp)
+> >      return -1;
+> >  }
+> >
+> > -void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
+> > +void monitor_init_hmp(Chardev *chr, bool use_readline, const char *id,
+> > +                      Error **errp)
+> >  {
+> >  }
+> > --
+> > 2.49.0
+> >
+> >
 >
->diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
->index 81ba1e1a277..7af0b63c03b 100644
->--- a/hw/audio/virtio-snd.c
->+++ b/hw/audio/virtio-snd.c
->@@ -24,7 +24,6 @@
-> #include "qapi/error.h"
-> #include "hw/audio/virtio-snd.h"
-> 
->-#define VIRTIO_SOUND_VM_VERSION 1
-> #define VIRTIO_SOUND_JACK_DEFAULT 0
-> #define VIRTIO_SOUND_STREAM_DEFAULT 2
-> #define VIRTIO_SOUND_CHMAP_DEFAULT 0
->@@ -78,17 +77,40 @@ static uint32_t supported_rates = BIT(VIRTIO_SND_PCM_RATE_5512)
->                                 | BIT(VIRTIO_SND_PCM_RATE_192000)
->                                 | BIT(VIRTIO_SND_PCM_RATE_384000);
-> 
->+static const VMStateDescription vmstate_virtio_snd_stream = {
->+    .name = "virtio-sound-stream",
->+    .version_id = 1,
->+    .minimum_version_id = 1,
->+    .fields = (const VMStateField[]) {
->+        VMSTATE_UINT32(state, VirtIOSoundPCMStream),
->+        VMSTATE_UINT32(params.buffer_bytes, VirtIOSoundPCMStream),
->+        VMSTATE_UINT32(params.period_bytes, VirtIOSoundPCMStream),
->+        VMSTATE_UINT32(params.features, VirtIOSoundPCMStream),
->+        VMSTATE_UINT8(params.channels, VirtIOSoundPCMStream),
->+        VMSTATE_UINT8(params.format, VirtIOSoundPCMStream),
->+        VMSTATE_UINT8(params.rate, VirtIOSoundPCMStream),
->+        VMSTATE_UINT32(latency_bytes, VirtIOSoundPCMStream),
->+        VMSTATE_END_OF_LIST()
->+    },
->+};
->+
-> static const VMStateDescription vmstate_virtio_snd_device = {
->-    .name = TYPE_VIRTIO_SND,
->-    .version_id = VIRTIO_SOUND_VM_VERSION,
->-    .minimum_version_id = VIRTIO_SOUND_VM_VERSION,
->+    .name = "virtio-sound-device",
->+    .version_id = 1,
->+    .minimum_version_id = 1,
->+    .fields = (const VMStateField[]) {
->+        VMSTATE_UINT32_ARRAY(queue_inuse, VirtIOSound, VIRTIO_SND_VQ_MAX),
->+        VMSTATE_STRUCT_VARRAY_POINTER_UINT32(streams, VirtIOSound,
->+            snd_conf.streams,
->+            vmstate_virtio_snd_stream, VirtIOSoundPCMStream),
->+        VMSTATE_END_OF_LIST()
->+    },
-> };
-> 
-> static const VMStateDescription vmstate_virtio_snd = {
->-    .name = TYPE_VIRTIO_SND,
->-    .unmigratable = 1,
->-    .minimum_version_id = VIRTIO_SOUND_VM_VERSION,
->-    .version_id = VIRTIO_SOUND_VM_VERSION,
->+    .name = "virtio-sound",
-
-Why change the name? It differentiates between the device impl and 
-virtio-sound-pci wrapper device.
-
->+    .version_id = 1,
->+    .minimum_version_id = 1,
->     .fields = (const VMStateField[]) {
->         VMSTATE_VIRTIO_DEVICE,
->         VMSTATE_END_OF_LIST()
->@@ -799,6 +821,7 @@ process_cmd(VirtIOSound *s, virtio_snd_ctrl_command *cmd)
->                  sizeof(virtio_snd_hdr));
->     virtqueue_push(cmd->vq, cmd->elem,
->                    sizeof(virtio_snd_hdr) + cmd->payload_size);
->+    s->queue_inuse[VIRTIO_SND_VQ_CONTROL] -= 1;
-
-Let's do a g_assert that this is > 0 before decrementing it.
-
->     virtio_notify(VIRTIO_DEVICE(s), cmd->vq);
-> }
-> 
->@@ -845,6 +868,7 @@ static void virtio_snd_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
-> 
->     elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
->     while (elem) {
->+        s->queue_inuse[VIRTIO_SND_VQ_CONTROL] += 1;
->         cmd = g_new0(virtio_snd_ctrl_command, 1);
->         cmd->elem = elem;
->         cmd->vq = vq;
->@@ -955,6 +979,7 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
->             goto tx_err;
->         }
-> 
->+        vsnd->queue_inuse[VIRTIO_SND_VQ_TX] += 1;
->         size = iov_size(elem->out_sg, elem->out_num) - msg_sz;
-> 
->         buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
->@@ -1034,6 +1059,7 @@ static void virtio_snd_handle_rx_xfer(VirtIODevice *vdev, VirtQueue *vq)
->             goto rx_err;
->         }
-> 
->+        vsnd->queue_inuse[VIRTIO_SND_VQ_RX] += 1;
->         size = iov_size(elem->in_sg, elem->in_num) -
->             sizeof(virtio_snd_pcm_status);
->         buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
->@@ -1175,6 +1201,7 @@ static inline void return_tx_buffer(VirtIOSoundPCMStream *stream,
->     virtqueue_push(buffer->vq,
->                    buffer->elem,
->                    sizeof(virtio_snd_pcm_status));
->+    stream->s->queue_inuse[VIRTIO_SND_VQ_TX] -= 1;
-
-Ditto
-
->     virtio_notify(VIRTIO_DEVICE(stream->s), buffer->vq);
->     QSIMPLEQ_REMOVE(&stream->queue,
->                     buffer,
->@@ -1268,6 +1295,7 @@ static inline void return_rx_buffer(VirtIOSoundPCMStream *stream,
->     virtqueue_push(buffer->vq,
->                    buffer->elem,
->                    sizeof(virtio_snd_pcm_status) + buffer->size);
->+    stream->s->queue_inuse[VIRTIO_SND_VQ_RX] -= 1;
-
-Ditto
-
->     virtio_notify(VIRTIO_DEVICE(stream->s), buffer->vq);
->     QSIMPLEQ_REMOVE(&stream->queue,
->                     buffer,
->@@ -1386,6 +1414,37 @@ static void virtio_snd_unrealize(DeviceState *dev)
->     virtio_cleanup(vdev);
-> }
-> 
->+static int virtio_snd_post_load(VirtIODevice *vdev)
->+{
->+    VirtIOSound *s = VIRTIO_SND(vdev);
->+    uint32_t i;
->+
->+    for (i = 0; i < s->snd_conf.streams; i++) {
->+        struct VirtIOSoundPCMStream *stream;
->+
->+        stream = virtio_snd_pcm_get_stream(s, i);
->+        if (stream->state & VSND_PCMSTREAM_STATE_F_PREPARED) {
->+            virtio_snd_pcm_open(stream);
->+
->+            if (stream->state & VSND_PCMSTREAM_STATE_F_ACTIVE) {
->+                virtio_snd_pcm_set_active(stream, true);
->+            }
->+        }
->+    }
->+
->+    for (i = 0; i < VIRTIO_SND_VQ_MAX; i++) {
->+        if (s->queue_inuse[i]) {
->+            if (!virtqueue_rewind(s->queues[i], s->queue_inuse[i])) {
->+                error_report(
->+                    "virtio-snd: could not rewind %u elements in queue %u",
->+                    s->queue_inuse[i], i);
->+            }
->+            s->queue_inuse[i] = 0;
->+        }
->+    }
->+
->+    return 0;
->+}
-> 
-> static void virtio_snd_reset(VirtIODevice *vdev)
-> {
->@@ -1418,6 +1477,10 @@ static void virtio_snd_reset(VirtIODevice *vdev)
->             virtio_snd_pcm_buffer_free(buffer);
->         }
->     }
->+
->+    for (i = 0; i < VIRTIO_SND_VQ_MAX; i++) {
->+        vsnd->queue_inuse[i] = 0;
->+    }
-> }
-> 
-> static void virtio_snd_class_init(ObjectClass *klass, const void *data)
->@@ -1431,6 +1494,7 @@ static void virtio_snd_class_init(ObjectClass *klass, const void *data)
-> 
->     dc->vmsd = &vmstate_virtio_snd;
->     vdc->vmsd = &vmstate_virtio_snd_device;
->+    vdc->post_load = virtio_snd_post_load;
->     vdc->realize = virtio_snd_realize;
->     vdc->unrealize = virtio_snd_unrealize;
->     vdc->get_config = virtio_snd_get_config;
->diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd.h
->index 85d5d7c8619..384d2868c19 100644
->--- a/include/hw/audio/virtio-snd.h
->+++ b/include/hw/audio/virtio-snd.h
->@@ -194,6 +194,7 @@ struct VirtIOSound {
->     VirtIODevice parent_obj;
-> 
->     VirtQueue *queues[VIRTIO_SND_VQ_MAX];
->+    uint32_t queue_inuse[VIRTIO_SND_VQ_MAX];
->     uint64_t features;
->     VirtIOSoundPCMStream *streams;
->     AudioBackend *audio_be;
->-- 
->2.47.3
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 >
 
