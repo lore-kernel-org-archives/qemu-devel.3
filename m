@@ -4,161 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDF68C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 16:28:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E21EC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 16:28:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weEpn-0003Be-VO; Mon, 29 Jun 2026 12:27:48 -0400
+	id 1weEqe-0003MZ-9f; Mon, 29 Jun 2026 12:28:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1weEpm-0003BJ-GQ
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 12:27:46 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1weEqH-0003FM-KE
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 12:28:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1weEpk-0004h1-Qk
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 12:27:46 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1weEqF-0004uo-In
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 12:28:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782750462;
+ s=mimecast20190719; t=1782750493;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=PCvgt7Lu1b8GYX0uU3LTdesw9Cib0NFFU4HY18f3gZ4=;
- b=ObWQo5La9/E8lDLZQ8ZXEX+ENTWm1SHExkskd3Cy7zQRr3P/uTV1U3DLmoodHQqtc3gUO7
- TMyx0kBSeZhpwFty7ujM6oq9hTPoqYCzIE9ywcRc0wnUnJEZuNDMfWuJyuuYE82dg4xyKM
- ttJu84lAhFFNieRXqJkh2fc49YrD9yM=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=xnpa0XARCCK/z5iVOr8UpDGEsTS72ptQ/PES0WnvDwQ=;
+ b=RCJH/AGprKjNKYdf7GsiJjNAlOqgXmQ+ZinYaY8b1Z4QxQJARJZ9sCV8eUpF0TXRyFdCgq
+ vMazuEFMC+8IAuo3H2qBxVH6cd3zX8HgYYQPBko2qYTZDqwJWuQC9rSwJcsPQDWdn8kabt
+ b+mVhSnCJ15fd6oL6jyB8mNC4N0qfMg=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-534-hcQVuzrENB2cx_RwOPfAVw-1; Mon, 29 Jun 2026 12:27:40 -0400
-X-MC-Unique: hcQVuzrENB2cx_RwOPfAVw-1
-X-Mimecast-MFC-AGG-ID: hcQVuzrENB2cx_RwOPfAVw_1782750459
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-473bc66c837so922881f8f.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 09:27:40 -0700 (PDT)
+ us-mta-684-cenfvVR3PiGUxWbOgM_Ecw-1; Mon, 29 Jun 2026 12:28:11 -0400
+X-MC-Unique: cenfvVR3PiGUxWbOgM_Ecw-1
+X-Mimecast-MFC-AGG-ID: cenfvVR3PiGUxWbOgM_Ecw_1782750491
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8efad04d884so32454156d6.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 09:28:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782750459; x=1783355259; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=PCvgt7Lu1b8GYX0uU3LTdesw9Cib0NFFU4HY18f3gZ4=;
- b=Fv0JXy13FeQuz64eQeWKn3WVdu0/sG5WxMVy66SZiJfNodpJoiARDQN98/iWq64tJ/
- Aizz3UJtx71RK4n5Qv4dr01qAe3vz1NBUnBVQggRvwk6HFWlDVURuZvX696/J5Hf+tLX
- Kq/myuTIUbeWMkqLEOSC/9KK53/D/vyQ83MxIUnJ4pauVg9hUGEFh+ewoT6Nf/qytv/D
- I4uoElrqcRD2VQyQoNvkfZThrfU3Ooap6nD2KVsfHQCoYG1gXHWPGrnRRr3PtKiuyI/X
- lJTwtwAv82zGRuhJJjZL2NPZA86QIujfsECqE/pCsh3bmwazJufRe00fcslbQdkekqXp
- biFA==
+ d=redhat.com; s=google; t=1782750491; x=1783355291; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=xnpa0XARCCK/z5iVOr8UpDGEsTS72ptQ/PES0WnvDwQ=;
+ b=plSVxsmOvVKpe6Z8v6DP+/DLw0eQLTADZdkArYyRzef5JLhT3bbSqNUH6Cswi9BVXJ
+ B26V7vc1ZgjUJTm6Yu79oDiZEAUrewBpE/83iNlj5AXWJcY4dcK45xverq1Ojq2qNgzS
+ Auh1RUBjE3TrMENElWfRn5mWlufosd3DCLxV+ymBwJtOg4fFTrHY5JUW4n9opcqW63pj
+ S5mxHqVFbAbOoHC314VdrOou2xD+jDHcDHBpGPFUoOT4KKTqVXGsQ2PZWe5GEXvKkMtk
+ 0BnL2fl3UsVbkHhnVw1ZFEJ01SZBpZv9bC/yQVIGHzEEKGLVGUsu5vsm5Cod+lvj4mKe
+ 4x4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782750459; x=1783355259;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PCvgt7Lu1b8GYX0uU3LTdesw9Cib0NFFU4HY18f3gZ4=;
- b=jY4LTl0B5W9D1jo0zihJ7jUnwpOy5TjU20eM70tH9cmZjnWmVZIoDJwUelGcsEYMRh
- p4laKmfKj6AsHEeQoXBJ2QM/sG0Lj3/hXu+sijry7lNGtrXvsoKYghZwML9w8ca5w9m3
- a1aDi8MSji+Ny9cXKquynfp9Ai5rRFU093DL+PGvoCc7nBFKPWQzJZW+SzJ8iYCELolS
- DoQDmpnGU4te/N0ZTWSSu4e6rtRSeLcOCwR76H4Z7rVK0vG1GfrUMdQfY3bICD0VvQYa
- /q1RudF0eD2C6emQAsFxO20fE6POxBQypyCk+pE0gtQ6e4lquwZl+L176X/YX/PxxXVF
- mVMg==
-X-Gm-Message-State: AOJu0YyRq80UgGR5ot2jQaS5xKc0UepGVfsG8UjHlMSQS0Qa0LDprJ4C
- 34NJaozhlXhrYV+1hyB0CJNw4t1j+SP0PycBW9YBqIXeEuiOnPiNsJctLrLD3qdevOR8vFqwQEV
- scRicLmLCD8li4pADvMQxqhwQ3rLO3O8k8Rs5BL2QyybJuLsAG2X/ubWL
-X-Gm-Gg: AfdE7cm4Ty1IlFAdAmrZQnFLfUS1kyX/yqedp0W4/Ayn028n130xR7dTAP7i4gf7Ozq
- 5X3WDGUQQ5jfzkSmd7tN024Bb/Ke2SIrvmkGMIYFlkEi3Fd/4VMHtWH5Ka0f1rJluEiXeG6GCRe
- 9SygY5RfPnbeYwZwE5X/3kUtVfvBRCimj8dDPVOJjV/wD5h8l3Werks+GSrPxsNNQTEXCdK34+G
- Ie1m7VkcSReoeu7RW9Q7fAjJdrPIIdDUYKEhKTASuVwZv/+HgrAYG36NzMiimvTqoVtxotKIf0e
- gt3hb21EhsNobu1pVRNgK1a6N1I1sDmncpBtNkdliaVeUCI38PfaNDv4Y+0oS6FWVhzJif1TZrM
- KYryBlPXNYlC7NLtKn/kHpVtof28I76buJsYqOEUGqszxDsMFeg==
-X-Received: by 2002:a05:6000:2481:b0:473:b63c:8a21 with SMTP id
- ffacd0b85a97d-474ff09c3a8mr2003042f8f.18.1782750459494; 
- Mon, 29 Jun 2026 09:27:39 -0700 (PDT)
-X-Received: by 2002:a05:6000:2481:b0:473:b63c:8a21 with SMTP id
- ffacd0b85a97d-474ff09c3a8mr2002961f8f.18.1782750458970; 
- Mon, 29 Jun 2026 09:27:38 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47496fd271bsm5037268f8f.31.2026.06.29.09.27.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jun 2026 09:27:38 -0700 (PDT)
-Message-ID: <457ee606-5e99-4438-a107-4130f8a6dc90@redhat.com>
-Date: Mon, 29 Jun 2026 18:27:36 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 07/14] migration: Make switchover-ack re-usable
-To: Avihai Horon <avihaih@nvidia.com>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ d=1e100.net; s=20251104; t=1782750491; x=1783355291;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=xnpa0XARCCK/z5iVOr8UpDGEsTS72ptQ/PES0WnvDwQ=;
+ b=GuqZXDvQB+QYfl4QsbFukEKgfnEAvPeDHyfjYTKfP6apiSvknQ/FJ3frTXhbvr4x+z
+ yadxswGWn53uuFT71MXJASldJqo/yJ3Y5ovXZdluNa2ttUejf+Oj+YvMsRabf4ujVdxQ
+ lbepZXiMKtzmVDE1/Mhfs+G+x2E5UOFzdv2sx+rHQXK1AhHjd1Wa06qPsnbl4CVKvi/1
+ dkrBCMCmy4CaJ4QJ0sJ1JSwM6HB5ES+mWfo2kGPvvUfe3MxQBR6wfE9jko5LIGsNCVMq
+ +5uXEtFT3OX1jWLroTuoPQ5QEcrnGXrGf49wZTWu8T4XnpadEkc693Znzxg/l42wfHmE
+ TvvQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrTY9oWjwjpIDeNUaUulvnhOka5YUd8QFvJttOgj9f0WrQNZwO8NNFRKF30/TgC9eMLoJR3chrOcMw1@nongnu.org
+X-Gm-Message-State: AOJu0YzRDPI+lAq1LpV7UxMqbo13on8GTz0oMtcVKlF+Aa6dkqSNkLEH
+ awyM8aAmnbDzZVoV8FecfFqJZT1zidtO9ZHjz4uFpy3M76TLnbkOBWpUW7d2WJIlQF/QjQQoX+q
+ FjGYYo1Ae58BxQLPaMTIJsvssVeqK1PBXCxRtuS/1Pm52G4xs/kgbPAIt
+X-Gm-Gg: AfdE7ckH8QyFWqb98McM39iD+rPOmHdDCUM8PuiPUdw8vcTD/9iaoXAn83p0FKjfLHe
+ Wh1bqv7fw9wDBrySY5a6399WZvVBGqtz5KrpttTlINTztd2usR2Yv3oyAt0s0u8MIFaoLLEmZX4
+ YUqpe+qhDG+Ebhu4mwdYpglznYmMXgIDKhLJtAvlD+pjgeUhWm4jxnYb1x3AhUdww8+DUy+YKwa
+ ME60uqSmUbc65RkurpKVySyRsCqav+YuY+8sD26JaeYl1XS7/7fOY3nDrpNzeJ99aSJUfWlkIli
+ ElJsB+Ig9+B6pRDTdEJM9j2JsHtqQ6mBxwyUOglwTWaKW73ilpGuVhMts9N+pL4bLupzNPRYQMY
+ RNSQ=
+X-Received: by 2002:a05:6214:dcf:b0:8ef:9806:ddaa with SMTP id
+ 6a1803df08f44-8ef9806ee0fmr96814426d6.49.1782750491047; 
+ Mon, 29 Jun 2026 09:28:11 -0700 (PDT)
+X-Received: by 2002:a05:6214:dcf:b0:8ef:9806:ddaa with SMTP id
+ 6a1803df08f44-8ef9806ee0fmr96813586d6.49.1782750490400; 
+ Mon, 29 Jun 2026 09:28:10 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8f1a27e64a9sm2263536d6.4.2026.06.29.09.28.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Jun 2026 09:28:09 -0700 (PDT)
+Date: Mon, 29 Jun 2026 12:27:57 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ Alex Williamson <alex@shazbot.org>, Fabiano Rosas <farosas@suse.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Zhao Liu <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Jason Herne <jjherne@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
  Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  John Snow <jsnow@redhat.com>, Maor Gottlieb <maorg@nvidia.com>
+Subject: Re: [PATCH v4 07/14] migration: Make switchover-ack re-usable
+Message-ID: <akKdDU7VOmPz-QFT@x1.local>
 References: <20260622101214.25770-1-avihaih@nvidia.com>
- <20260622101214.25770-8-avihaih@nvidia.com> <87v7b520uo.fsf@pond.sub.org>
+ <20260622101214.25770-8-avihaih@nvidia.com>
+ <87v7b520uo.fsf@pond.sub.org>
  <b997b3f7-0a95-4c21-bf18-c19bf8754936@nvidia.com>
  <9fa2038d-f75b-4d6a-a2fc-1bc871878b74@redhat.com>
  <675f8d2f-ca22-4b04-bc30-8fa7b6d3a6dd@nvidia.com>
  <4a3457d3-d892-494b-b8a9-556ad9a7912a@redhat.com>
  <59fa369a-b5a1-4484-bcb0-93b663fb0c44@redhat.com>
  <64207c96-affd-4895-a6ab-2cee7ac4347e@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <64207c96-affd-4895-a6ab-2cee7ac4347e@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -182,23 +141,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Jun 29, 2026 at 06:53:48PM +0300, Avihai Horon wrote:
+> 
+> On 6/29/2026 5:57 PM, Cédric Le Goater wrote:
+> > External email: Use caution opening links or attachments
+> > 
+> > 
+> > Avihai
+> > 
+> > On 6/28/26 18:29, Cédric Le Goater wrote:
+> > > On 6/28/26 12:03, Avihai Horon wrote:
+> > > > 
+> > > > On 6/28/2026 12:00 PM, Cédric Le Goater wrote:
+> > > > > External email: Use caution opening links or attachments
+> > > > > 
+> > > > > 
+> > > > > On 6/28/26 10:16, Avihai Horon wrote:
+> > > > > > 
+> > > > > > On 6/26/2026 10:54 AM, Markus Armbruster wrote:
+> > > > > > > External email: Use caution opening links or attachments
+> > > > > > > 
+> > > > > > > 
+> > > > > > > Just spelling nitpickery this time.
+> > > > > > > 
+> > > > > > > Avihai Horon <avihaih@nvidia.com> writes:
+> > > > > > > 
+> > > > > > > > Switchover-ack is a mechanism to synchronize between source and
+> > > > > > > > destination QEMU during migration to prevent the
+> > > > > > > > source from switching
+> > > > > > > > over prematurely.
+> > > > > > > > 
+> > > > > > > > VFIO uses switchover-ack to ensure switchover happens only after
+> > > > > > > > destination side has loaded the precopy initial
+> > > > > > > > bytes. This is important
+> > > > > > > > for VFIO, as otherwise downtime could be impacted and be higher.
+> > > > > > > > 
+> > > > > > > > In its current state, switchover-ack is a
+> > > > > > > > one-time mechanism, meaning
+> > > > > > > > that switchover is acked only once and past that
+> > > > > > > > another ACK cannot be
+> > > > > > > > requested again. This was sufficient until now,
+> > > > > > > > as VFIO precopy initial
+> > > > > > > > bytes was defined to be monotonically
+> > > > > > > > decreasing. Thus, when precopy
+> > > > > > > > initial bytes reached zero for all VFIO devices,
+> > > > > > > > a single ACK would be
+> > > > > > > > sent and its validity would hold.
+> > > > > > > > 
+> > > > > > > > However, now the new VFIO_PRECOPY_INFO_REINIT
+> > > > > > > > feature allows precopy
+> > > > > > > > initial bytes to be re-initialized during precopy. Specifically, it
+> > > > > > > > means that initial bytes can grow after reaching zero, which would
+> > > > > > > > invalidate a previously sent switchover ACK.
+> > > > > > > > 
+> > > > > > > > To solve this, make switchover-ack reusable and
+> > > > > > > > allow devices to request
+> > > > > > > > switchover ACKs when needed via the
+> > > > > > > > save_query_pending SaveVMHandler.
+> > > > > > > > 
+> > > > > > > > Since now switchover ACK can be requested for a
+> > > > > > > > specific device and in
+> > > > > > > > different times, make switchover ACK per-device
+> > > > > > > > (instead of a single ACK
+> > > > > > > > for all devices) and let source side do the
+> > > > > > > > pending ACKs accounting.
+> > > > > > > > 
+> > > > > > > > Keep the legacy switchover-ack mechanism for
+> > > > > > > > backward compatibility and
+> > > > > > > > turn it on by a compatibility property for older
+> > > > > > > > machines. Enable the
+> > > > > > > > property until VFIO implements the new switchover-ack.
+> > > > > > > > 
+> > > > > > > > Acked-by: Markus Armbruster <armbru@redhat.com>
+> > > > > > > > Reviewed-by: Peter Xu <peterx@redhat.com>
+> > > > > > > > Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+> > > > > > > > ---
+> > > > > > > >   qapi/migration.json                | 14 ++++----
+> > > > > > > >   include/migration/client-options.h |  1 +
+> > > > > > > >   include/migration/register.h       |  2 ++
+> > > > > > > >   migration/migration.h              | 32 ++++++++++++++++--
+> > > > > > > >   migration/savevm.h                 |  6 ++--
+> > > > > > > >   migration/migration.c              | 37 ++++++++++++++-------
+> > > > > > > >   migration/options.c                | 10 ++++++
+> > > > > > > >   migration/savevm.c                 | 53
+> > > > > > > > +++++++++++++++++++++++-------
+> > > > > > > >   migration/trace-events             |  5 +--
+> > > > > > > >   9 files changed, 123 insertions(+), 37 deletions(-)
+> > > > > > > > 
+> > > > > > > > diff --git a/qapi/migration.json b/qapi/migration.json
+> > > > > > > > index 27a7970556..9b3070e494 100644
+> > > > > > > > --- a/qapi/migration.json
+> > > > > > > > +++ b/qapi/migration.json
+> > > > > > > > @@ -508,14 +508,12 @@
+> > > > > > > >   #     (since 7.1)
+> > > > > > > >   #
+> > > > > > > >   # @switchover-ack: If enabled, migration will
+> > > > > > > > not stop the source VM
+> > > > > > > > -#     and complete the migration until an ACK is received from the
+> > > > > > > > -#     destination that it's OK to do so.  Exactly when this ACK is
+> > > > > > > > -#     sent depends on the migrated devices that
+> > > > > > > > use this feature. For
+> > > > > > > > -#     example, a device can use it to make sure
+> > > > > > > > some of its data is
+> > > > > > > > -#     sent and loaded in the destination before doing switchover.
+> > > > > > > Here, "switchover" is used as noun.  My dictionary
+> > > > > > > is happy with that.
+> > > > > > > 
+> > > > > > > > -#     This can reduce downtime if devices that
+> > > > > > > > support this capability
+> > > > > > > > -#     are present.  'return-path' capability
+> > > > > > > > must be enabled to use
+> > > > > > > > -#     it.  (since 8.1)
+> > > > > > > > +#     and complete the migration until the destination has
+> > > > > > > > +#     acknowledged that it is OK to
+> > > > > > > > switchover.  The acknowledgement
+> > > > > > > 
+> > > > > > > Here, it's used as verb.  I think it needs to be spelled "to switch
+> > > > > > > over".
+> > > > > > > 
+> > > > > > > Same for code comments etc.
+> > > > > > 
+> > > > > > Sure, I can send a patch to fix those.
+> > > > > 
+> > > > > Can you please send the update as a follow up patch ?
+> > > > 
+> > > > I was planning to send it along with the bool return value
+> > > > refactor in patch #1. Would that be fine?
+> > > 
+> > > OK. Nothing merged yet. Let's have a v5.
+> > 
+> > FYI, I plan to send vfio-next before the end the week. Initial plan was
+> > tomorrow.
+> 
 > Hi Cedric,
 > 
-> Actually, I have plenty of things on my plate right now and I'm not sure if I'll be able to send it this week.
+> Actually, I have plenty of things on my plate right now and I'm not sure if
+> I'll be able to send it this week.
 > 
-> Would it be OK if you merge the series as is and I send those two patches separately early next week?
+> Would it be OK if you merge the series as is and I send those two patches
+> separately early next week?
+> (They are actually more related to migration core, so this question should
+> be addressed to Peter/Fabiano I guess...)
 
-Sure.
+I'm OK either way.
 
-No rush needed for this. It can be addressed as a followup
-during this QEMU cycle.
-
-> (They are actually more related to migration core, so this question should be addressed to Peter/Fabiano I guess...)
-
-yep.
+The simplest to me is you can provide a small fixup for Cédric to pick up
+and squash into this patch (if it's only wording changes to doc and
+comments, IMHO no re-test needed), as long as Cédric is comfortable with
+it, then you can send a separate patch (or patches) if that'll be on
+migration.
 
 Thanks,
 
-C.
+-- 
+Peter Xu
 
 
