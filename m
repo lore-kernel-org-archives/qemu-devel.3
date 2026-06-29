@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D13A8C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:39:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 147A1C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:40:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weCD6-0005WO-L8; Mon, 29 Jun 2026 09:39:40 -0400
+	id 1weCDH-0005um-6n; Mon, 29 Jun 2026 09:39:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <44cb540d2d079ce2c785b130e163ab42b9e1a109@kylie.crudebyte.com>)
- id 1weCD4-0005MM-KO; Mon, 29 Jun 2026 09:39:38 -0400
+ (envelope-from <54b8f64c422d0ed6d992387f0de419420cdb9fea@kylie.crudebyte.com>)
+ id 1weCDE-0005tO-6A; Mon, 29 Jun 2026 09:39:48 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <44cb540d2d079ce2c785b130e163ab42b9e1a109@kylie.crudebyte.com>)
- id 1weCD2-0004Sy-V1; Mon, 29 Jun 2026 09:39:38 -0400
+ (envelope-from <54b8f64c422d0ed6d992387f0de419420cdb9fea@kylie.crudebyte.com>)
+ id 1weCDC-0004Vt-8R; Mon, 29 Jun 2026 09:39:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=zs07pzHmW7tkQmObc5X6hbxRDWBQWxGeCE3vT9miv2U=; b=PkXLK
- c7lSO92VU5KYkxNVMUnQNqgEbyfpwM294tnLJKk1HahHDWEZN2xfNOiaIcbVWlFyG3TamOFL8fTWS
- 00tFWKgmd9MW+6aHL2pPH6J8ztrom8fVFMxUWWjj96eUKyMXXoP6itmvUDkUbYnvbWe4m03wfoo+3
- sZy7AgHPO9dz08WzLxNSFsKSW71IBPaD7DG1EjhmeQv7KOSq3DtSjzfMEhoKc3e58Dx7U7sB4BQVJ
- FpoFbZYXo+Ml4KS4dNIICDQMuob8FCVRz2urs4y8YhTrjVpugLQs5tzLG3mKv0CcqgmBYhNQ9slmE
- tro3UuoZ8JspAipRbRLs6vraFbIDZLpi21cy4vM1wWyUE9+shcRlWR425K4h7CRHu/UeUdmRSwi92
- i0R5VtWX4oL1XE9PTO2kYzhSTkBNvNh/1O2DlLhXxF7tX4X4cmytAALhP20fU/GmvB2YdcxyBXkdR
- ZIKW+YeDs61fhEgIRD3Qn7bDwwda9fr31kcJedGl+Hge9G+3XydwPL/nhv2BDBRnT1p2NTZ6iAEmn
- ThaWY04NaqVqq5Oc+Sfv2bjwguvPpq3wXdvXnPEMbi/HaaVJL4r5We5uSm12VDXH2mVrLg/mzj0iE
- 145aA8eGfSdxWDkDFWgjS3P3J/POpIu2cbvSw0o5QFeRaNOxxqDX5Be4CiNdy0=;
-Message-ID: <44cb540d2d079ce2c785b130e163ab42b9e1a109.1782739719.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=bahZBcXVLOQmQeZVYzUyGC3qGp5fyPz+QA3ZZ0QrvZs=; b=fyPp5
+ LZxIt1jZpXd1hHSuEX+Zjsrk6k2SomFP2NCHcSaRm0aavkMBp9N6+98vZrMuxfNiNKW/v8pCVjdYF
+ 6T0KUFJYXyz7Dnnx9HoFjXGpAM6IM+wQLRN3KnJ80igI47EHfz4UAK+vffNvhC6BTifjj+Ym8H7tu
+ yY6MIrNgbGc8twGSPFTRDDdfSNGMA4otWXXlXSzkogmO+WR+aBIM/hvkZY8bLPk+f/g5f2PNCbRiM
+ alLEBxm6noNg70bgNfm41QnN09ZAviMkwvGYQBmuOqp1EWh88SgpiT/7/rSkDxA1rxq9CAPOB5VSd
+ RIsgor9iYc83NcyGOOXpAzX3p7usi1cEoIZ0sa5lq/YcEhT/WDPgDH557acjRCnEIXbYZVtFGOSJn
+ ouPoKMEn23S6gqpdTdqyGNHssoOiKMfTo3hyjtmg5jhgpz0J5wvfkHcJEb1/18ColXplEtxKe2Dvj
+ lV5YEdKoGoZBDkUO/nF/Psh/LSwUqKnpgJo0/J69IOSha6tOVUPnJY2+YCrlMUXpqM8RuCa4IXdKR
+ qF7tBgI0BYfSy9i0MZKWfoeq56vZJCTMABgxvainYPlVyYNZz9tPI/ye5sG9YztVCe2d1573Z3toT
+ a6Q96Nv90Zf5HFXd1EGVpxj+kRoh9j98Ot9/A2O0VZ9BvDaO32doWZUyE3qCHQ=;
+Message-ID: <54b8f64c422d0ed6d992387f0de419420cdb9fea.1782739719.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1782739719.git.qemu_oss@crudebyte.com>
 References: <cover.1782739719.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Mon, 29 Jun 2026 15:28:39 +0200
-Subject: [PULL 11/23] qemu-options: document 9pfs max_xattr option
+Subject: [PULL 12/23] tests/9p: add Tread / Rread test client functions
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
  Peter Maydell <peter.maydell@linaro.org>, Feifan Qian <bea1e@proton.me>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=44cb540d2d079ce2c785b130e163ab42b9e1a109@kylie.crudebyte.com;
+ envelope-from=54b8f64c422d0ed6d992387f0de419420cdb9fea@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -66,88 +66,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add documentation for the new "max_xattr" command line option
-of 9pfs server, introduced by the previous commit.
+Add v9fs_tread() and v9fs_rread() functions to the 9P test client
+for reading files from 9pfs server in test cases.
 
-Link: https://lore.kernel.org/qemu-devel/b5a1a6ba299a49183d0032d9e4cd5e009d4aae47.1781361555.git.qemu_oss@crudebyte.com
+Link: https://lore.kernel.org/qemu-devel/049bdd1e66416f5200fb3d59d2da5e8ec149926d.1781361555.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- qemu-options.hx | 28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ tests/qtest/libqos/virtio-9p-client.c | 45 +++++++++++++++++++++++++++
+ tests/qtest/libqos/virtio-9p-client.h | 33 ++++++++++++++++++++
+ tests/qtest/virtio-9p-test.c          |  1 +
+ 3 files changed, 79 insertions(+)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index f1874a0591..e44b47de68 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -1940,19 +1940,19 @@ ERST
+diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
+index af01d4c345..b9785ef8cb 100644
+--- a/tests/qtest/libqos/virtio-9p-client.c
++++ b/tests/qtest/libqos/virtio-9p-client.c
+@@ -241,6 +241,7 @@ static const char *rmessage_name(uint8_t id)
+         id == P9_RUNLINKAT ? "RUNLINKAT" :
+         id == P9_RFLUSH ? "RFLUSH" :
+         id == P9_RREADDIR ? "RREADDIR" :
++        id == P9_RREAD ? "RREAD" :
+         "<unknown>";
+ }
  
- DEF("fsdev", HAS_ARG, QEMU_OPTION_fsdev,
-     "-fsdev local,id=id,path=path,security_model=mapped-xattr|mapped-file|passthrough|none\n"
--    " [,writeout=immediate][,readonly=on][,fmode=fmode][,dmode=dmode]\n"
-+    " [,writeout=immediate][,readonly=on][,fmode=fmode][,dmode=dmode][,max_xattr=max]\n"
-     " [[,throttling.bps-total=b]|[[,throttling.bps-read=r][,throttling.bps-write=w]]]\n"
-     " [[,throttling.iops-total=i]|[[,throttling.iops-read=r][,throttling.iops-write=w]]]\n"
-     " [[,throttling.bps-total-max=bm]|[[,throttling.bps-read-max=rm][,throttling.bps-write-max=wm]]]\n"
-     " [[,throttling.iops-total-max=im]|[[,throttling.iops-read-max=irm][,throttling.iops-write-max=iwm]]]\n"
-     " [[,throttling.iops-size=is]]\n"
--    "-fsdev synth,id=id\n",
-+    "-fsdev synth,id=id[,max_xattr=max]\n",
-     QEMU_ARCH_ALL)
- 
- SRST
--``-fsdev local,id=id,path=path,security_model=security_model [,writeout=writeout][,readonly=on][,fmode=fmode][,dmode=dmode] [,throttling.option=value[,throttling.option=value[,...]]]``
-+``-fsdev local,id=id,path=path,security_model=security_model [,writeout=writeout][,readonly=on][,fmode=fmode][,dmode=dmode][,max_xattr=max] [,throttling.option=value[,throttling.option=value[,...]]]``
-   \ 
--``-fsdev synth,id=id[,readonly=on]``
-+``-fsdev synth,id=id[,readonly=on][,max_xattr=max]``
-     Define a new file system device. Valid options are:
- 
-     ``local``
-@@ -2026,6 +2026,12 @@ SRST
-         Let every is bytes of a request count as a new request for iops
-         throttling purposes.
- 
-+    ``max_xattr=max``
-+        Specifies the maximum number of concurrent xattr FIDs allowed for
-+        this export. The default is 1024. Set to 0 for allowing an infinite
-+        number of xattr FIDs. This limit prevents host memory exhaustion
-+        attacks by capping the number of simultaneous xattr FIDs.
+@@ -1103,3 +1104,47 @@ void v9fs_runlinkat(P9Req *req)
+     v9fs_req_recv(req, P9_RUNLINKAT);
+     v9fs_req_free(req);
+ }
 +
-     -fsdev option is used along with -device driver "virtio-9p-...".
- 
- ``-device virtio-9p-type,fsdev=id,mount_tag=mount_tag``
-@@ -2045,14 +2051,14 @@ ERST
- 
- DEF("virtfs", HAS_ARG, QEMU_OPTION_virtfs,
-     "-virtfs local,path=path,mount_tag=tag,security_model=mapped-xattr|mapped-file|passthrough|none\n"
--    "        [,id=id][,writeout=immediate][,readonly=on][,fmode=fmode][,dmode=dmode][,multidevs=remap|forbid|warn]\n"
--    "-virtfs synth,mount_tag=tag[,id=id][,readonly=on]\n",
-+    "        [,id=id][,writeout=immediate][,readonly=on][,fmode=fmode][,dmode=dmode][,multidevs=remap|forbid|warn][,max_xattr=max]\n"
-+    "-virtfs synth,mount_tag=tag[,id=id][,readonly=on][,max_xattr=max]\n",
-     QEMU_ARCH_ALL)
- 
- SRST
--``-virtfs local,path=path,mount_tag=mount_tag ,security_model=security_model[,writeout=writeout][,readonly=on] [,fmode=fmode][,dmode=dmode][,multidevs=multidevs]``
-+``-virtfs local,path=path,mount_tag=mount_tag ,security_model=security_model[,writeout=writeout][,readonly=on] [,fmode=fmode][,dmode=dmode][,multidevs=multidevs][,max_xattr=max]``
-   \ 
--``-virtfs synth,mount_tag=mount_tag``
-+``-virtfs synth,mount_tag=mount_tag[,max_xattr=max]``
-     Define a new virtual filesystem device and expose it to the guest using
-     a virtio-9p-device (a.k.a. 9pfs), which essentially means that a certain
-     directory on host is made directly accessible by guest as a pass-through
-@@ -2118,6 +2124,12 @@ SRST
-         Specifies the tag name to be used by the guest to mount this
-         export point.
- 
-+    ``max_xattr=max``
-+        Specifies the maximum number of concurrent xattr FIDs allowed for
-+        this export. The default is 1024. Set to 0 for allowing an infinite
-+        number of xattr FIDs. This limit prevents host memory exhaustion
-+        attacks by capping the number of simultaneous xattr FIDs.
++/* size[4] Tread tag[2] fid[4] offset[8] count[4] */
++TReadRes v9fs_tread(TReadOpt opt)
++{
++    P9Req *req;
++    uint32_t err;
 +
-     ``multidevs=remap|forbid|warn``
-         Specifies how to deal with multiple devices being shared with
-         the same 9p export in order to avoid file ID collisions on guest.
++    g_assert(opt.client);
++
++    uint32_t body_size = 4 + 8 + 4;
++
++    req = v9fs_req_init(opt.client, body_size, P9_TREAD, opt.tag);
++    v9fs_uint32_write(req, opt.fid);
++    v9fs_uint64_write(req, opt.offset);
++    v9fs_uint32_write(req, opt.count);
++    v9fs_req_send(req);
++
++    if (!opt.requestOnly) {
++        v9fs_req_wait_for_reply(req, NULL);
++        if (opt.expectErr) {
++            v9fs_rlerror(req, &err);
++            g_assert_cmpint(err, ==, opt.expectErr);
++        } else {
++            v9fs_rread(req, opt.rread.count, opt.rread.data);
++        }
++        req = NULL; /* request was freed */
++    }
++
++    return (TReadRes) {
++        .req = req,
++        .count = opt.rread.count ? *opt.rread.count : 0
++    };
++}
++
++/* size[4] Rread tag[2] count[4] data[count] */
++void v9fs_rread(P9Req *req, uint32_t *count, void *data)
++{
++    v9fs_req_recv(req, P9_RREAD);
++    v9fs_uint32_read(req, count);
++    if (data && *count > 0) {
++        v9fs_memread(req, data, *count);
++    }
++    v9fs_req_free(req);
++}
+diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
+index e3221a3104..37f2517cff 100644
+--- a/tests/qtest/libqos/virtio-9p-client.h
++++ b/tests/qtest/libqos/virtio-9p-client.h
+@@ -473,6 +473,37 @@ typedef struct TunlinkatRes {
+     P9Req *req;
+ } TunlinkatRes;
+ 
++/* options for 'Tread' 9p request */
++typedef struct TReadOpt {
++    /* 9P client being used (mandatory) */
++    QVirtio9P *client;
++    /* user supplied tag number being returned with response (optional) */
++    uint16_t tag;
++    /* file ID of file to read from (required) */
++    uint32_t fid;
++    /* start position of read from beginning of file (optional) */
++    uint64_t offset;
++    /* how many bytes to read (required) */
++    uint32_t count;
++    /* data being received from 9p server as 'Rread' response (optional) */
++    struct {
++        uint32_t *count;
++        void *data;
++    } rread;
++    /* only send Tread request but not wait for a reply? (optional) */
++    bool requestOnly;
++    /* do we expect an Rlerror response, if yes which error code? (optional) */
++    uint32_t expectErr;
++} TReadOpt;
++
++/* result of 'Tread' 9p request */
++typedef struct TReadRes {
++    /* if requestOnly was set: request object for further processing */
++    P9Req *req;
++    /* amount of bytes read */
++    uint32_t count;
++} TReadRes;
++
+ void v9fs_set_allocator(QGuestAllocator *t_alloc);
+ void v9fs_memwrite(P9Req *req, const void *addr, size_t len);
+ void v9fs_memskip(P9Req *req, size_t len);
+@@ -524,5 +555,7 @@ TlinkRes v9fs_tlink(TlinkOpt);
+ void v9fs_rlink(P9Req *req);
+ TunlinkatRes v9fs_tunlinkat(TunlinkatOpt);
+ void v9fs_runlinkat(P9Req *req);
++TReadRes v9fs_tread(TReadOpt opt);
++void v9fs_rread(P9Req *req, uint32_t *count, void *data);
+ 
+ #endif
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index 1c69d41e33..8ccec77e70 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -31,6 +31,7 @@
+ #define tsymlink(...) v9fs_tsymlink((TsymlinkOpt) __VA_ARGS__)
+ #define tlink(...) v9fs_tlink((TlinkOpt) __VA_ARGS__)
+ #define tunlinkat(...) v9fs_tunlinkat((TunlinkatOpt) __VA_ARGS__)
++#define tread(...) v9fs_tread((TReadOpt) __VA_ARGS__)
+ 
+ static void pci_config(void *obj, void *data, QGuestAllocator *t_alloc)
+ {
 -- 
 2.47.3
 
