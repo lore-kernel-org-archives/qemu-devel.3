@@ -4,110 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF527C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41FF7C43327
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 11:54:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAY8-0004ck-E0; Mon, 29 Jun 2026 07:53:16 -0400
+	id 1weAYZ-0004jH-Pt; Mon, 29 Jun 2026 07:53:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1weAY6-0004c2-Ke; Mon, 29 Jun 2026 07:53:14 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1weAY4-0003cP-Ge; Mon, 29 Jun 2026 07:53:14 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65TAmSNf2918383; Mon, 29 Jun 2026 11:53:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=Is/rrH9ZeBbHYTmY6TMNq8knxp2ETo
- SAKz7V1k72kUE=; b=ktrD9n9IDRo4JTPsz2ihJSzpUND+H7LRwRvXo5dR6UB9On
- 05MRfDEbS2bO7/prKvZR/bu0LzRLJ0gcUCJCQhMxxOXIEz/K/fq7M3V2jQospCo7
- POVm1rdIg4v0l2l9AVskqCOfZbTvNwgz3bFMRFJrJ2Clf+huVaQzqoeRHvpr62yL
- y/E4BUBzZ1w2b6ZbvHAM9G6IqnfnITJ1/xPV6St6N28L2rpYpTSZHb6gydlhjf4e
- T7qU125RMvvkb1k9ldSKMY+V9QcMTC9iqpTDxe1nhWW4S59XK+g22fNXxdJPrAzL
- mlv22N61gS+EBbKBGLBCw1HlvvTCGrArpIMZmWvw==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rerux9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jun 2026 11:53:10 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65TBnhto031956;
- Mon, 29 Jun 2026 11:53:09 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruq5dw7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jun 2026 11:53:09 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65TBr5Fl44237202
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Jun 2026 11:53:06 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D30982004B;
- Mon, 29 Jun 2026 11:53:05 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1B88B20040;
- Mon, 29 Jun 2026 11:53:04 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.123.10.203])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 29 Jun 2026 11:53:03 +0000 (GMT)
-Date: Mon, 29 Jun 2026 17:23:02 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Shivang Upadhyay <shivangu@linux.ibm.com>
-Cc: harshpb@linux.ibm.com, milesg@linux.ibm.com, npiggin@gmail.com,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [PATCH v2 2/2] ppc/pnv: add test to verify external DTB is honored
-Message-ID: <akJaUpckzqdnZmHq@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260623063156.1110370-1-shivangu@linux.ibm.com>
- <20260626112239.177191-1-shivangu@linux.ibm.com>
- <20260626112239.177191-3-shivangu@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1weAYW-0004ir-KS
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 07:53:41 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1weAYV-0003gu-4c
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 07:53:40 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-664b05d408bso2473072d50.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 04:53:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782734018; cv=none;
+ d=google.com; s=arc-20260327;
+ b=I+RaRBPE4yHuaJWLZL9+wxCY9yeoHYBiAjQTf0E0ODsZ2kTUI/MgTdBkA3bsBHxO6U
+ pWPU0P4gpKjYYRVKXK3dojT0fyaj4oCRjPcAxwlJ2xhW7CsBe5sANY8Ak6qCG3cOUMIL
+ vAfrLwJrKru1EoKyUradh6VaZzMHWFfGvZzUTeHB1BRlR5sAx8wfUlo1nxzd5oub16pL
+ oXy8kvUmg1am/dGPjhuKgoH6SF3nqPmHA0MEc49SKUsY6rkKDc3+BAGB0Ufa8aBIK9ac
+ S43Af5u9U1TUd/7Kags+rZHrzznA0um2dKIZlG4NZc4AOP/5RXsfy4VWzgMvmYM0Jwuo
+ t15g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=xOtCIUr5DqcKQLZcdvUkFdIuHd53Vv+n01JflmKWVjI=;
+ fh=VqS+tPLsGlswY454e0dYtkegTr3u8RL39VDhCWIP5Lk=;
+ b=GLhNiLpMRcA4dTnrFqnm+Hun1OpwPiART93GkIrkiv4Xt/YcVXAVsvgXsxJ5jLXl/0
+ fHrV/hhgMNmIJL75PuZJfa5E4U5ZIKsOutRwxCHcAhNteaRT/nfowDpCVKToU5gx1c+E
+ 9nr7qIzTbnWQBCpuurTHDKo8f6jfv2h1PP7cNfPSzV1naJMUXVPECcJOWHcLcIjf2Blv
+ qIAqD1SRW8tpHUm7trPAWqweyAT6wg1f5rwOji7JijNNb+nv0liar1gE5GFwnoa6TRWg
+ +opC6/k00WeLI6FwLMJ8SlKFiIDsrtqHa1dAioc5/6nhhRT20bZbq5hOum55nE6n8QJn
+ 0b+A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782734018; x=1783338818; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=xOtCIUr5DqcKQLZcdvUkFdIuHd53Vv+n01JflmKWVjI=;
+ b=CEbyv+XqrJdxuuqQEGBvNFEI98+5FDimab7QoqJByHvZ4kVgBkdKiXYyjFJIkEC/Zr
+ q6sN5WHFxUpB+BfcJ6LrZ3/h5fIgRp2y7818rcdmL+AI0VoOcKF9wF4cimyAZ1Nk5F/t
+ 2hyAkJwazj/d3Gtw0HmY2Oa7X0nvey3VkDv/GQ4azhOrJpQ56WcJpQEnrj0vTe2z96EI
+ wwZVTQ8zb4528+oyj2uDnDk9f/uUIMe84isAWPt6IGXnzTxkPu2bbBi7J116fGSLGDvv
+ K+sEWPhx8+NgOxamHYbgCgwlAbMrycpGc41bAggYew02d76piLF1i60S3lyJMng4pAvZ
+ mPZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782734018; x=1783338818;
+ h=to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xOtCIUr5DqcKQLZcdvUkFdIuHd53Vv+n01JflmKWVjI=;
+ b=CSUAyK/OTnXPosLbEDRgI7S2zIz5QqBLbCmOdFwACSLU+JVRGPAA+b+H9LdhrKwwgZ
+ 0gtUFndIY9UCoV16IaRWvTJKfqlzEMWLlsHnpz+dm7lqeW06pnVMZa6lnBN2FvT2LQsz
+ myVVqSbDYh8jO1/00PdZM2tyL3FTTP276a9bkM9Z0cg7yWw6MrTdKzk1grw6Ac41JASn
+ olXA0gcCaRmsZuxQwj8kz6tkWUtQTH5eoUZBO85zv41oArTVgvJC85BKgVqD9JIyaU9s
+ xy0SgUJQE0jR6Z4PL1/pId/d2hdiNulKqS/GPPs/7hk1bHxefjCi+zC2Jqf5VrexF+jT
+ +UDQ==
+X-Gm-Message-State: AOJu0YwRxNY+My9tPsj+XVO7ATIh/1KUkYSPDBEa2SmQYWTFJuu6YepE
+ ep8D3JoneAKTYRVEl9xUX1NcXYQcTd0nj9uHx2u8mWXDk6zG+QE0TTV1QNT7sulrzKirL9EJ0fI
+ jukj9HAje+mHER+nETDcMBHsQdoThMpnXlcZsUP+DLZx8ZUR9WVsKg1c=
+X-Gm-Gg: AfdE7cm6BEDP3mDxK0BdABPubWFxlGxcPIlnpetHg4mjURZGaxLtos5ilWxY0YhRSkF
+ C8hD+FyNgO2+Hd/MEobEs5mmNNLtnCMINdxs9n2l6oWmdxCQfX/GyiAf4Z7kje70nLKKLiOd/aW
+ y2ALT+dDnPUzp1NMCGhBT5smNV/V67XYCOiNrNbXpFIb5ZSzSPelvqiUOLEed0LyZPJVCmwpdXu
+ dX82O8RG7PIXDYv83dOmCszsbO1jimci8wDtdK58N7QjX8KPZZ3jq3gueqrURh6uQQxilV/Yr4P
+ p1zUwmZpOlofgdflbNmIqfnaVk4DmYcg5EMjC/jbFuBosDm3OU593q7gymSKEYHwl2k=
+X-Received: by 2002:a53:4204:0:b0:664:ae6a:eeb with SMTP id
+ 956f58d0204a3-664ae6a100cmr7237073d50.73.1782734017622; Mon, 29 Jun 2026
+ 04:53:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260626112239.177191-3-shivangu@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a425ca6 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=NEAV23lmAAAA:8
- a=VnNF1IyMAAAA:8 a=kw6g8SXCx7t_rz4BuM0A:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: tM63XX4YVJVbxssVRrqR9xcgPr-bXi8o
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDA5NyBTYWx0ZWRfX8FMY8NuMi+YR
- /iTVRh8NeO6ALZVDkkoOcfN/sW9bKSlBXvcA3wIG2AVAXy9aMhwtdNQPiyZQyPfFod6VxaoNA9G
- ihCVayyUaPS0ZGVpX/+Y7hMV0irqthctDOiet/V3EYcRlVA1QyOAAi3SmjStw9BvaPrxr3jy2iz
- hxyka440QxXjWlqg5z+MOzH6T10pXPlSYBNlkIT/WEf0972H0D/OR75qAgDP9p9o1Owzg3lmzFf
- /MOQ6AAAbpSa63Fs+w1oujRm9O9a7WPK/60EwEmwHngH03C5TiD7DJbWGf3PCx2RHHt1AH+4clM
- ATbq8Xlu7xf+8om9o+XhZBXQIZZDQbIpuDpn75NQzLyLkLREJK6p9yKf1ap3TKQ1uitB/pR3cwx
- ma0WNWgHsDbKMQtTgWaPFyo7d6n+r8SXEjuDWLcjPRMpOfeGajlNMnfRM8B4MlvtqRYhMIUyFVk
- d1ursPK37+o8V4cDp9Q==
-X-Proofpoint-GUID: uR4ZSQ5nmXAx_sZ0qqQ1sibtzxazk5lO
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDA5NyBTYWx0ZWRfX4CJVkJEo/Bjg
- aCxUOpWZszMpO0ODyJzY+ma0cOWckyRtC3Ym50c2ikBR2/eY3t70voBZjMecrol5mZuWXqLKdbJ
- JwnKg1KzufsL0Yj8TglvIr0dqF/Zpmo=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
- spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290097
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 29 Jun 2026 12:53:25 +0100
+X-Gm-Features: AVVi8Cf0YnSeKjrtozUDW5ulWi5-aVq8MlzvCUEJOf8OwwAT7S00oOBwAK6hQlg
+Message-ID: <CAFEAcA9C3tLDOCSMJVP7UoCRkH=BkVkA1HaziS_am6ZNpE2gbg@mail.gmail.com>
+Subject: announce: new official git repo for risu
+To: QEMU Developers <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,53 +108,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/06/26 04:52PM, Shivang Upadhyay wrote:
-> Test boots a powernv11 machine, using a custom dtb.
-> Custom dtb has the following bootargs.
-> 
->     chosen {
->         bootargs = "hello world";
->     };
-> 
-> Test Checks wheather above bootargs make it to kernel's command line.
+(Since there's no specific forum for the 'risu' random instruction
+set testing tool and we do risu patch review on qemu-devel, this
+seems like the best place to send an email about this.)
 
-nit: s/wheather/whether
+The 'risu' tool has a new official upstream git repo at:
+   https://gitlab.com/pm215/risu
+This replaces the old and no-longer-working
+   https://git.linaro.org/people/peter.maydell/risu.git
 
-> +    # testdtb for power11, which contains string "hello world" in command line
-> +    ASSET_SAMPLE_DTB = Asset(
-> +        ('https://github.com/roz3x/qemu/raw/refs/heads/sample-dtb/output.dtb'),
-> +        'ea1271516264eea1eb58a067a99d0c2ca9528be8dc7d4e46bb2d5ae0d42fc568')
+This actually happened at the tail end of last year, but I never got
+round to saying anything about it, since risu only gets a very small
+volume of contributions. At least putting out an email should result
+in the info about the move getting into web searches and the like.
 
-nit: since you are anyways sending a v3, can you rename output.dtb to
-something like qemu-powernv10.dtb, etc so in future you don't modify
-this generic path unknowingly ?
-
-> +
->      def do_test_linux_boot(self, command_line = KERNEL_COMMON_COMMAND_LINE):
->          self.require_accelerator("tcg")
->          kernel_path = self.ASSET_KERNEL.fetch()
-> @@ -104,6 +109,20 @@ def do_test_ppc64_powernv(self, proc):
->          # Device detection output driven by udev probing is sometimes cut off
->          # from console output, suspect S14silence-console init script.
->  
-> +    def test_ppc64_powernv_external_dtb(self):
-> +        self.set_machine('powernv11')
-> +        self.require_accelerator("tcg")
-> +
-> +        kernel_path = self.ASSET_KERNEL.fetch()
-> +        sample_dtb_path = self.ASSET_SAMPLE_DTB.fetch()
-> +        self.vm.set_console()
-> +        self.vm.add_args('-kernel', kernel_path,
-> +                         '-dtb', sample_dtb_path)
-> +        self.vm.launch()
-> +
-> +        # check if custom dtb is reflected or not
-> +        wait_for_console_pattern(self, "Kernel command line: hello world", self.panic_message)
-> +
-
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-
-Thanks,
-- Aditya G
-
+thanks
+-- PMM
 
