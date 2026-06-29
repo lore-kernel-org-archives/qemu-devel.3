@@ -4,61 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 066DFC43327
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:23:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79F9BC43638
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:24:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weB1G-0007BR-4O; Mon, 29 Jun 2026 08:23:24 -0400
+	id 1weB2O-0007bL-TF; Mon, 29 Jun 2026 08:24:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1weB1C-0007B7-69
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:23:18 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <sundayjiang@tencent.com>)
+ id 1we2DS-0003qP-OB
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 22:59:22 -0400
+Received: from smtpbgbr2.qq.com ([54.207.22.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1weB19-0001cY-9t
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:23:17 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65TCN7Tm064985
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 29 Jun 2026 21:23:07 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=ESDHU93ry/M9ZLK6jXU6gYNB10Bhtz9/DaJKqLjZXLY=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1782735787; v=1;
- b=KfQnZ+NcKxJ6qA7HkuwPwes7QibRObQBtE4XMdRV0RWZmJ43Ez6hIQ1sMqFfCNrm
- tH5c3xbKVGh2Kq+96SMA4CPoLFUFLgojdGVcwV0Kexe4GdmgQDDpj+xqbCQLXuX4
- Y45iLeKxJUMYVAGeALF4DrndKYrXh+TfZnQzFt5pAQ0iUyQXvhEtrSxevGFubPyE
- uGEzFw6sUZYRwek6E7gM0ti+hEaFlIHAsjFxwjAdow/v6LXlo8r6a+IngNLs4JTQ
- QH/fVh8+HyFsjKFTNGEP3WB9WM4taW9BeVw2i7dF+AzT8UPUXqWAvn2BgZKSz9oC
- 6jIQ9mSzQGq4glVWYYggKw==
-Message-ID: <b57f9a79-f48d-4fab-a70f-e26f26fcfcbf@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 29 Jun 2026 21:23:07 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] ui/gtk: Narrow DMA-BUF critical section
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20260628-gtk-v2-1-1e4839012f09@rsg.ci.i.u-tokyo.ac.jp>
- <CAMxuvaxrGgD7EAwWdGG0BZgiyXPNrExExTVnANr6M2gw5+DzNQ@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CAMxuvaxrGgD7EAwWdGG0BZgiyXPNrExExTVnANr6M2gw5+DzNQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <sundayjiang@tencent.com>)
+ id 1we2DO-0005Fa-Tx
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 22:59:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tencent.com;
+ s=s201512; t=1782701945;
+ bh=G92nJfjeMFgrNCRCCU60pacRq/fto+xFzNz/Q9sQh1s=;
+ h=From:To:Subject:Mime-Version:Date:Message-ID;
+ b=gY8THEAa+9cvEKzXZGT9zN6aty0N8CAJpSPvIzj6jYrvpDu2tIwiG4DzdhK9tjQ6E
+ F6A42VYHsPh8YBy5BW2pin/jbvQ6QPZKP8UEkFsYX9528Y0Bh6zQ5zKKIg+RFtfA7I
+ HIJ6Q1DgWoJLDpCJfsVxpNttBP3fgqggHdODrXJY=
+EX-QQ-RecipientCnt: 1
+X-QQ-GoodBg: 2
+X-QQ-SSF: 00400000000000F0
+X-QQ-FEAT: D4aqtcRDiqT5qm0zBSmG5D0AXglwW1xwi4guWxQtjSc=
+X-QQ-BUSINESS-ORIGIN: 2
+X-QQ-Originating-IP: oQ5rdKUZ1LFAbBrIt4X81c3m+fVpEC8L8cKg3ccHWPs=
+X-Originating-IP: 14.22.245.79
+X-QQ-STYLE: 
+X-QQ-mid: lv5gz3a-0t1782701944t8b8465be
+From: "=?utf-8?B?c3VuZGF5amlhbmco6JKL5rWp5aSpKQ==?=" <sundayjiang@tencent.com>
+To: "=?utf-8?B?cWVtdS1kZXZlbA==?=" <qemu-devel@nongnu.org>
+Subject: [PATCH] hw/misc/ivshmem: clear chardev handlers before freeing peers
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_6A41DF77_60FB7180_7EB06019"
+Content-Transfer-Encoding: 8Bit
+Date: Mon, 29 Jun 2026 10:59:03 +0800
+X-Priority: 3
+Message-ID: <tencent_3105EC28797360A155078F53@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-BIZMAIL-ID: 18420475979379230856
+X-Address-Ticket: version=; type=; ticket_id=; id_list=; display_name=;
+ session_id=; 
+X-QQ-SENDSIZE: 520
+Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
+ id ; Mon, 29 Jun 2026 10:59:05 +0800 (CST)
+Feedback-ID: lv:tencent.com:qybglogicsvrgz:qybglogicsvrgz5b-1
+X-QQ-XMAILINFO: NkvzaOX174LgQF+i0UbafFiDJCO3niR3/kU2qUodXrFm84YoGSXvUVYX
+ il3cRCkkPLXAFq/Pv/e624qdLcYopSNo5zh+7p4cKTuCM7FUfiXtc/+FQID4dFyqxXa5bDB
+ PMDGUWrXfORVY/lviVRbW30+eFc31UXTTf1zxQsRWaXzYUzJvoQJftXEO4Iq/HrE8UAoQ7/
+ d6BN9MRSniYacy9qTHsdtSJmt9XRLVwHnUeopHAsMuvhbArh1BdfBlQdYG+eMf9xvToEXHh
+ VIC853YqnkYI60YDHBiZyoHxm0lj99m9jCZCHTfrsDsrXdJXxhMEgfT/J8r8EVnlXhqJzNL
+ c4J+pWOZmhMzRnm+rjUMoAjYyd2WrntmfL3iItsDaOoYZM85BljHtCBdVbsLnNsV4TGIHM4
+ VocPQhCIb5qBYJq1fZ5Zjx4HxBemtyxMEM9d0eAAN85sRuMZxoxC3LLuGRMsD9UFhVGetUB
+ P0+9LUPsqFZjQB2xiIU8aU1q65eX7JHSFWLzN68cqylVBfj5rdyyW6KEYQAWZ7FrKePR+ey
+ Am2/8f5PjB6Dw/tQ0EFsdnnNCSMHkM5aaAx6z5HDjmWdtV6tyr7YMWMmTNbhzicSYq7Igod
+ gPu2XhkGvrdkr8l2RHagY4Ic6tXbB2+iaJoy13Roo5L7WVqDxiLw0moh2109onWD7RQHDft
+ ihYOXqNT1G9ogeeioXGqC9EODmvZ/yxEkkibu/V02c03RdgzxD9ZTjqiC9peh5WgfgSnv91
+ QBbsdULJsrDW8maiQ4pzNTDDDVSes+gQjkLbkCMGc9JuFLGy+Zcc8HJvDy3T0KPGLjiMpyp
+ t1JidpV3UY3w7Fs74tQh5Qd+thgcXZkDywXWv0hJArYC3acO+dMuXyXvU6JJZrN9j4eUk40
+ 6tnS1XUoHcg2YsplsPEFnuJZp05gnMN7DREHiMUEWthnOXz751RMbigMnm9gLNbNXSJfz/a
+ elkdRYF4CVAA0D2aOCymkKeuCxonQ4Zx0tLXIWRBpqOzWVVHMNI5TeyyW5nSc8U2xtwNbxn
+ tnALIFNbh+Ns1qRi/VJ5L2AVPv3qbeI1DYfkrheQ73ElC+/qn/bWnp1Oo5sc5AlNltBOZ8M
+ 6FdAqCH4ee1P8m1X55u8p3jCrDWd9uOOXojHoEd4i/R8MUKUXVkhX15AKKApijU0w==
+X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
+X-QQ-RECHKSPAM: 0
+Received-SPF: pass client-ip=54.207.22.56;
+ envelope-from=sundayjiang@tencent.com; helo=smtpbgbr2.qq.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ MSGID_FROM_MTA_HEADER=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 29 Jun 2026 08:24:25 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,174 +101,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/06/29 18:20, Marc-André Lureau wrote:
-> Hi Akihiko
-> 
-> On Sun, Jun 28, 2026 at 5:59 PM Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> Scanout operations need to be properly ordered to avoid tearing. The
->> virtio specification allows the guest to use pageflip. With pageflip,
->> the guest only modifies the invisible framebuffer while the host scans
->> out the visible framebuffer. The guest may choose not to use pageflip to
->> avoid its overhead, accepting the risk of tearing.
->>
->> ui/gtk performs the following procedure to flush a scanout:
->> 1) Queue a draw event.
->> 2) The draw event gets triggered.
->> 3) Blit the guest framebuffer to the host framebuffer.
->>
->> When flushing a DMA-BUF scanout, ui/gtk blocks the device before 2) if
->> possible and unblocks it after 3) to enforce proper ordering. However,
->> blocking the device before 2) has two problems.
->>
->> First, it can leave the device blocked indefinitely because GTK
->> sometimes decides to cancel 2) when the window is not visible for
->> example. ui/gtk regularly repeats 1) as a workaround, but it is not
->> applicable to GtkGLArea because it causes display corruption.
->>
->> Second, the behavior is inconsistent with the other types of scanout
->> that leave the device unblocked between 1) and 2).
->>
->> To fix these problems, let ui/gtk block the device only when the
->> queued draw event runs, immediately before 3). Blocking before that is
->> unnecessary since ui/gtk does not access the framebuffer yet. If the
->> guest does not use pageflip but instead updates the visible framebuffer
->> directly, ui/gtk should not add the overhead of a pre-draw block.
->>
-> 
-> Are you saying this won't create undesired drawing artefacts?
-> 
-> I don't see how the guest synchronizes with the display if the gl cmds
-> keep running.
+This is a multi-part message in MIME format.
 
-The point of pageflip is to avoid drawing artifacts when scanout and
-rendering can happen concurrently. The virtio-gpu spec adopts that 
-model: the guest can switch the scanout resource with 
-VIRTIO_GPU_CMD_SET_SCANOUT instead of rendering into the resource 
-currently being scanned out.
+------=_NextPart_6A41DF77_60FB7180_7EB06019
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
 
-So, if a guest chooses not to use pageflip on a system where scanout and
-rendering run concurrently, it can get artifacts. This change does not 
-try to make that case artifact-free.
+RnJvbSAyYTdmYTE3Y2QyMWQwYTVjMWRkZjBmMTNmNWM2YjM5Mzc1MDUyYWVmIE1vbiBTZXAg
+MTcgMDA6MDA6MDAgMjAwMUZyb206IEhhb3RpYW4gSmlhbmcgPHN1bmRheWppYW5nQHRlbmNl
+bnQuY29tJmd0Ow0KRGF0ZTogTW9uLCAyOSBKdW4gMjAyNiAxMDo1MDoyMSArMDgwMA0KU3Vi
+amVjdDogW1BBVENIXSBody9taXNjL2l2c2htZW06IGNsZWFyIGNoYXJkZXYgaGFuZGxlcnMg
+YmVmb3JlIGZyZWVpbmcgcGVlcnMNCg0KDQppdnNobWVtX2V4aXQoKSBmcmVlcyBzLSZndDtw
+ZWVycyBhbmQgcy0mZ3Q7bXNpX3ZlY3RvcnMgYnV0IGRvZXMgbm90IGNsZWFyDQp0aGUgY2hh
+cmRldiBoYW5kbGVycyByZWdpc3RlcmVkIGluIGl2c2htZW1fY29tbW9uX3JlYWxpemUoKS4g
+Jm5ic3A7VGhvc2UNCmhhbmRsZXJzIGFyZSBvbmx5IHJlbW92ZWQgbGF0ZXIgaW4gb2JqZWN0
+X2ZpbmFsaXplKCkgdmlhIHJlbGVhc2VfY2hyLA0Kd2hpY2ggcnVucyBhZnRlciBpdnNobWVt
+X2V4aXQoKS4NCg0KDQpCZXR3ZWVuIGV4aXQgYW5kIGZpbmFsaXplLCBpdnNobWVtX3JlYWQo
+KSBjYW4gZmlyZSBvbiBwZW5kaW5nIGNoYXJkZXYNCmRhdGEgYW5kIHByb2Nlc3NfbXNnX2Nv
+bm5lY3QoKSBkZXJlZmVyZW5jZXMgdGhlIGZyZWVkIHMtJmd0O3BlZXJzLg0KQWRkaXRpb25h
+bGx5LCBzLSZndDtwZWVycywgcy0mZ3Q7bmJfcGVlcnMsIGFuZCBzLSZndDttc2lfdmVjdG9y
+cyBhcmUgbm90DQp6ZXJvZWQgYWZ0ZXIgZnJlZSwgbGVhdmluZyBkYW5nbGluZyBwb2ludGVy
+cyB0aGF0IG1ha2UgdGhlIFVBRiBjb2RlDQpwYXRocyByZWFjaGFibGUuDQoNCg0KRml4IGJ5
+IGNsZWFyaW5nIGNoYXJkZXYgaGFuZGxlcnMgYXQgdGhlIGJlZ2lubmluZyBvZiBpdnNobWVt
+X2V4aXQoKSwNCmJlZm9yZSBhbnkgcmVzb3VyY2VzIHRoZXkgYWNjZXNzIGFyZSBmcmVlZCwg
+YW5kIG51bGxpZnlpbmcgZnJlZWQNCnBvaW50ZXJzLg0KDQoNCkZpeGVzOiBmNjRhMDc4ZDQ1
+YSAoIml2c2htZW06IGZpeCBwY2lfaXZzaG1lbV9leGl0KCkiKQ0KTGluazogaHR0cHM6Ly9n
+aXRsYWIuY29tL3FlbXUtcHJvamVjdC9xZW11Ly0vd29ya19pdGVtcy8zNTk0DQpSZXBvcnRl
+ZC1ieTogSGFvdGlhbiBKaWFuZyA8c3VuZGF5amlhbmdAdGVuY2VudC5jb20mZ3Q7DQpDYzog
+cWVtdS1zdGFibGVAbm9uZ251Lm9yZw0KU2lnbmVkLW9mZi1ieTogSGFvdGlhbiBKaWFuZyA8
+c3VuZGF5amlhbmdAdGVuY2VudC5jb20mZ3Q7DQotLS0NCiZuYnNwO2h3L21pc2MvaXZzaG1l
+bS1wY2kuYyB8IDYgKysrKysrDQombmJzcDsxIGZpbGUgY2hhbmdlZCwgNiBpbnNlcnRpb25z
+KCspDQoNCg0KZGlmZiAtLWdpdCBhL2h3L21pc2MvaXZzaG1lbS1wY2kuYyBiL2h3L21pc2Mv
+aXZzaG1lbS1wY2kuYw0KaW5kZXggYzk4N2VlYmI5OC4uY2UwZGU1MjcxZSAxMDA2NDQNCi0t
+LSBhL2h3L21pc2MvaXZzaG1lbS1wY2kuYw0KKysrIGIvaHcvbWlzYy9pdnNobWVtLXBjaS5j
+DQpAQCAtOTM4LDYgKzkzOCw5IEBAIHN0YXRpYyB2b2lkIGl2c2htZW1fZXhpdChQQ0lEZXZp
+Y2UgKmRldikNCiZuYnNwOyAmbmJzcDsgJm5ic3A7SVZTaG1lbVN0YXRlICpzID0gSVZTSE1F
+TV9DT01NT04oZGV2KTsNCiZuYnNwOyAmbmJzcDsgJm5ic3A7aW50IGk7DQombmJzcDsNCisg
+Jm5ic3A7ICZuYnNwO3FlbXVfY2hyX2ZlX3NldF9oYW5kbGVycygmYW1wO3MtJmd0O3NlcnZl
+cl9jaHIsIE5VTEwsIE5VTEwsIE5VTEwsIE5VTEwsDQorICZuYnNwOyAmbmJzcDsgJm5ic3A7
+ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgTlVMTCwgTlVMTCwgdHJ1ZSk7DQorDQombmJzcDsg
+Jm5ic3A7ICZuYnNwO21pZ3JhdGVfZGVsX2Jsb2NrZXIoJmFtcDtzLSZndDttaWdyYXRpb25f
+YmxvY2tlcik7DQombmJzcDsNCiZuYnNwOyAmbmJzcDsgJm5ic3A7aWYgKG1lbW9yeV9yZWdp
+b25faXNfbWFwcGVkKHMtJmd0O2l2c2htZW1fYmFyMikpIHsNCkBAIC05NjYsNiArOTY5LDgg
+QEAgc3RhdGljIHZvaWQgaXZzaG1lbV9leGl0KFBDSURldmljZSAqZGV2KQ0KJm5ic3A7ICZu
+YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7Y2xvc2VfcGVlcl9ldmVu
+dGZkcyhzLCBpKTsNCiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDt9DQombmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7Z19mcmVlKHMtJmd0O3BlZXJzKTsNCisg
+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7cy0mZ3Q7cGVlcnMgPSBOVUxMOw0KKyAmbmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtzLSZndDtuYl9wZWVycyA9IDA7DQombmJzcDsgJm5i
+c3A7ICZuYnNwO30NCiZuYnNwOw0KJm5ic3A7ICZuYnNwOyAmbmJzcDtpZiAoaXZzaG1lbV9o
+YXNfZmVhdHVyZShzLCBJVlNITUVNX01TSSkpIHsNCkBAIC05NzMsNiArOTc4LDcgQEAgc3Rh
+dGljIHZvaWQgaXZzaG1lbV9leGl0KFBDSURldmljZSAqZGV2KQ0KJm5ic3A7ICZuYnNwOyAm
+bmJzcDt9DQombmJzcDsNCiZuYnNwOyAmbmJzcDsgJm5ic3A7Z19mcmVlKHMtJmd0O21zaV92
+ZWN0b3JzKTsNCisgJm5ic3A7ICZuYnNwO3MtJmd0O21zaV92ZWN0b3JzID0gTlVMTDsNCiZu
+YnNwO30NCiZuYnNwOw0KJm5ic3A7c3RhdGljIGludCBpdnNobWVtX3ByZV9sb2FkKHZvaWQg
+Km9wYXF1ZSkNCi0tIA0KMi4zNC4x
 
-What this patch is trying to preserve is the display model already used 
-by the 2D code and by the other display implementations: QEMU keeps the 
-framebuffer stable while it is actually reading/blitting it. The extra 
-blocking before the queued draw callback runs does not add 
-synchronization for that model, because ui/gtk is not accessing the 
-framebuffer yet.
+------=_NextPart_6A41DF77_60FB7180_7EB06019
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Regards,
-Akihiko Odaki
+PGRpdiBzdHlsZT0iZm9udC1zaXplOiAxNC42NjY3cHg7IGZvbnQtZmFtaWx5OiAtYXBwbGUt
+c3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1BpbmdGYW5nIFNDJnF1b3Q7LCAm
+cXVvdDtNaWNyb3NvZnQgWWFIZWkmcXVvdDs7IiBkYXRhLW1haWwtZnJvbT0id2VtYWlsLXBj
+Ij48ZGl2IGlkPSJ3ZW1haWxfcGxhY2Vob2xkZXJfc3BhY2UiPjxkaXY+RnJvbSAyYTdmYTE3
+Y2QyMWQwYTVjMWRkZjBmMTNmNWM2YjM5Mzc1MDUyYWVmIE1vbiBTZXAgMTcgMDA6MDA6MDAg
+MjAwMTxkaXY+RnJvbTogSGFvdGlhbiBKaWFuZyAmbHQ7c3VuZGF5amlhbmdAdGVuY2VudC5j
+b20mZ3Q7PC9kaXY+PGRpdj5EYXRlOiBNb24sIDI5IEp1biAyMDI2IDEwOjUwOjIxICswODAw
+PC9kaXY+PGRpdj5TdWJqZWN0OiBbUEFUQ0hdIGh3L21pc2MvaXZzaG1lbTogY2xlYXIgY2hh
+cmRldiBoYW5kbGVycyBiZWZvcmUgZnJlZWluZyBwZWVyczwvZGl2PjxkaXY+PGJyPjwvZGl2
+PjxkaXY+aXZzaG1lbV9leGl0KCkgZnJlZXMgcy0mZ3Q7cGVlcnMgYW5kIHMtJmd0O21zaV92
+ZWN0b3JzIGJ1dCBkb2VzIG5vdCBjbGVhcjwvZGl2PjxkaXY+dGhlIGNoYXJkZXYgaGFuZGxl
+cnMgcmVnaXN0ZXJlZCBpbiBpdnNobWVtX2NvbW1vbl9yZWFsaXplKCkuICZuYnNwO1Rob3Nl
+PC9kaXY+PGRpdj5oYW5kbGVycyBhcmUgb25seSByZW1vdmVkIGxhdGVyIGluIG9iamVjdF9m
+aW5hbGl6ZSgpIHZpYSByZWxlYXNlX2Nociw8L2Rpdj48ZGl2PndoaWNoIHJ1bnMgYWZ0ZXIg
+aXZzaG1lbV9leGl0KCkuPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5CZXR3ZWVuIGV4aXQg
+YW5kIGZpbmFsaXplLCBpdnNobWVtX3JlYWQoKSBjYW4gZmlyZSBvbiBwZW5kaW5nIGNoYXJk
+ZXY8L2Rpdj48ZGl2PmRhdGEgYW5kIHByb2Nlc3NfbXNnX2Nvbm5lY3QoKSBkZXJlZmVyZW5j
+ZXMgdGhlIGZyZWVkIHMtJmd0O3BlZXJzLjwvZGl2PjxkaXY+QWRkaXRpb25hbGx5LCBzLSZn
+dDtwZWVycywgcy0mZ3Q7bmJfcGVlcnMsIGFuZCBzLSZndDttc2lfdmVjdG9ycyBhcmUgbm90
+PC9kaXY+PGRpdj56ZXJvZWQgYWZ0ZXIgZnJlZSwgbGVhdmluZyBkYW5nbGluZyBwb2ludGVy
+cyB0aGF0IG1ha2UgdGhlIFVBRiBjb2RlPC9kaXY+PGRpdj5wYXRocyByZWFjaGFibGUuPC9k
+aXY+PGRpdj48YnI+PC9kaXY+PGRpdj5GaXggYnkgY2xlYXJpbmcgY2hhcmRldiBoYW5kbGVy
+cyBhdCB0aGUgYmVnaW5uaW5nIG9mIGl2c2htZW1fZXhpdCgpLDwvZGl2PjxkaXY+YmVmb3Jl
+IGFueSByZXNvdXJjZXMgdGhleSBhY2Nlc3MgYXJlIGZyZWVkLCBhbmQgbnVsbGlmeWluZyBm
+cmVlZDwvZGl2PjxkaXY+cG9pbnRlcnMuPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5GaXhl
+czogZjY0YTA3OGQ0NWEgKCJpdnNobWVtOiBmaXggcGNpX2l2c2htZW1fZXhpdCgpIik8L2Rp
+dj48ZGl2Pkxpbms6IGh0dHBzOi8vZ2l0bGFiLmNvbS9xZW11LXByb2plY3QvcWVtdS8tL3dv
+cmtfaXRlbXMvMzU5NDwvZGl2PjxkaXY+UmVwb3J0ZWQtYnk6IEhhb3RpYW4gSmlhbmcgJmx0
+O3N1bmRheWppYW5nQHRlbmNlbnQuY29tJmd0OzwvZGl2PjxkaXY+Q2M6IHFlbXUtc3RhYmxl
+QG5vbmdudS5vcmc8L2Rpdj48ZGl2PlNpZ25lZC1vZmYtYnk6IEhhb3RpYW4gSmlhbmcgJmx0
+O3N1bmRheWppYW5nQHRlbmNlbnQuY29tJmd0OzwvZGl2PjxkaXY+LS0tPC9kaXY+PGRpdj4m
+bmJzcDtody9taXNjL2l2c2htZW0tcGNpLmMgfCA2ICsrKysrKzwvZGl2PjxkaXY+Jm5ic3A7
+MSBmaWxlIGNoYW5nZWQsIDYgaW5zZXJ0aW9ucygrKTwvZGl2PjxkaXY+PGJyPjwvZGl2Pjxk
+aXY+ZGlmZiAtLWdpdCBhL2h3L21pc2MvaXZzaG1lbS1wY2kuYyBiL2h3L21pc2MvaXZzaG1l
+bS1wY2kuYzwvZGl2PjxkaXY+aW5kZXggYzk4N2VlYmI5OC4uY2UwZGU1MjcxZSAxMDA2NDQ8
+L2Rpdj48ZGl2Pi0tLSBhL2h3L21pc2MvaXZzaG1lbS1wY2kuYzwvZGl2PjxkaXY+KysrIGIv
+aHcvbWlzYy9pdnNobWVtLXBjaS5jPC9kaXY+PGRpdj5AQCAtOTM4LDYgKzkzOCw5IEBAIHN0
+YXRpYyB2b2lkIGl2c2htZW1fZXhpdChQQ0lEZXZpY2UgKmRldik8L2Rpdj48ZGl2PiZuYnNw
+OyAmbmJzcDsgJm5ic3A7SVZTaG1lbVN0YXRlICpzID0gSVZTSE1FTV9DT01NT04oZGV2KTs8
+L2Rpdj48ZGl2PiZuYnNwOyAmbmJzcDsgJm5ic3A7aW50IGk7PC9kaXY+PGRpdj4mbmJzcDs8
+L2Rpdj48ZGl2PisgJm5ic3A7ICZuYnNwO3FlbXVfY2hyX2ZlX3NldF9oYW5kbGVycygmYW1w
+O3MtJmd0O3NlcnZlcl9jaHIsIE5VTEwsIE5VTEwsIE5VTEwsIE5VTEwsPC9kaXY+PGRpdj4r
+ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgTlVMTCwgTlVM
+TCwgdHJ1ZSk7PC9kaXY+PGRpdj4rPC9kaXY+PGRpdj4mbmJzcDsgJm5ic3A7ICZuYnNwO21p
+Z3JhdGVfZGVsX2Jsb2NrZXIoJmFtcDtzLSZndDttaWdyYXRpb25fYmxvY2tlcik7PC9kaXY+
+PGRpdj4mbmJzcDs8L2Rpdj48ZGl2PiZuYnNwOyAmbmJzcDsgJm5ic3A7aWYgKG1lbW9yeV9y
+ZWdpb25faXNfbWFwcGVkKHMtJmd0O2l2c2htZW1fYmFyMikpIHs8L2Rpdj48ZGl2PkBAIC05
+NjYsNiArOTY5LDggQEAgc3RhdGljIHZvaWQgaXZzaG1lbV9leGl0KFBDSURldmljZSAqZGV2
+KTwvZGl2PjxkaXY+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsg
+Jm5ic3A7Y2xvc2VfcGVlcl9ldmVudGZkcyhzLCBpKTs8L2Rpdj48ZGl2PiZuYnNwOyAmbmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDt9PC9kaXY+PGRpdj4mbmJzcDsgJm5ic3A7ICZuYnNw
+OyAmbmJzcDsgJm5ic3A7Z19mcmVlKHMtJmd0O3BlZXJzKTs8L2Rpdj48ZGl2PisgJm5ic3A7
+ICZuYnNwOyAmbmJzcDsgJm5ic3A7cy0mZ3Q7cGVlcnMgPSBOVUxMOzwvZGl2PjxkaXY+KyAm
+bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtzLSZndDtuYl9wZWVycyA9IDA7PC9kaXY+PGRp
+dj4mbmJzcDsgJm5ic3A7ICZuYnNwO308L2Rpdj48ZGl2PiZuYnNwOzwvZGl2PjxkaXY+Jm5i
+c3A7ICZuYnNwOyAmbmJzcDtpZiAoaXZzaG1lbV9oYXNfZmVhdHVyZShzLCBJVlNITUVNX01T
+SSkpIHs8L2Rpdj48ZGl2PkBAIC05NzMsNiArOTc4LDcgQEAgc3RhdGljIHZvaWQgaXZzaG1l
+bV9leGl0KFBDSURldmljZSAqZGV2KTwvZGl2PjxkaXY+Jm5ic3A7ICZuYnNwOyAmbmJzcDt9
+PC9kaXY+PGRpdj4mbmJzcDs8L2Rpdj48ZGl2PiZuYnNwOyAmbmJzcDsgJm5ic3A7Z19mcmVl
+KHMtJmd0O21zaV92ZWN0b3JzKTs8L2Rpdj48ZGl2PisgJm5ic3A7ICZuYnNwO3MtJmd0O21z
+aV92ZWN0b3JzID0gTlVMTDs8L2Rpdj48ZGl2PiZuYnNwO308L2Rpdj48ZGl2PiZuYnNwOzwv
+ZGl2PjxkaXY+Jm5ic3A7c3RhdGljIGludCBpdnNobWVtX3ByZV9sb2FkKHZvaWQgKm9wYXF1
+ZSk8L2Rpdj48ZGl2Pi0tIDwvZGl2PjxkaXY+Mi4zNC4xPC9kaXY+PGRpdj48YnI+PC9kaXY+
+PC9kaXY+PC9kaXY+PC9kaXY+PGRpdj48L2Rpdj4=
 
-> 
->> ui/gtk still blocks the device during 3) for DMA-BUF. Unlike the other
->> scanout types, 3) can happen asynchronously with the device for a
->> DMA-BUF, so ui/gtk needs to keep the visible guest framebuffer stable
->> for the blit.
->>
->> With the problems fixed, the workaround to repeat 1) is no longer
->> necessary and is removed.
->>
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> ---
->> Changes in v2:
->> - Clarified that guests can use pageflip to avoid tearing while ui/gtk
->>    only needs to keep the DMA-BUF stable during the blit.
->> - Avoided the unprotected gd_egl_scanout_flush() fallback by queuing
->>    redraws through gtk_widget_queue_draw_area().
->> - Link to v1: https://lore.kernel.org/qemu-devel/20260115-gtk-v1-1-57f49e856408@rsg.ci.i.u-tokyo.ac.jp
->> ---
->>   ui/gtk-egl.c     |  6 ++----
->>   ui/gtk-gl-area.c | 23 +----------------------
->>   2 files changed, 3 insertions(+), 26 deletions(-)
->>
->> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
->> index 7c5c9b2428c2..adc81f34b1c8 100644
->> --- a/ui/gtk-egl.c
->> +++ b/ui/gtk-egl.c
->> @@ -91,6 +91,7 @@ void gd_egl_draw(VirtualConsole *vc)
->>               } else {
->>                   qemu_dmabuf_set_draw_submitted(dmabuf, false);
->>               }
->> +            qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
->>           }
->>   #endif
->>           gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0, vc->gfx.w, vc->gfx.h);
->> @@ -405,14 +406,11 @@ void gd_egl_flush(DisplayChangeListener *dcl,
->>
->>       if (vc->gfx.guest_fb.dmabuf &&
->>           !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
->> -        qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
->>           qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
->>           gtk_egl_set_scanout_mode(vc, true);
->> -        gtk_widget_queue_draw_area(area, x, y, w, h);
->> -        return;
->>       }
->>
->> -    gd_egl_scanout_flush(&vc->gfx.dcl, x, y, w, h);
->> +    gtk_widget_queue_draw_area(area, x, y, w, h);
->>   }
->>
->>   void gtk_egl_init(DisplayGLMode mode)
->> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
->> index 23806b9d01bb..29497019ee46 100644
->> --- a/ui/gtk-gl-area.c
->> +++ b/ui/gtk-gl-area.c
->> @@ -86,6 +86,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
->>               } else {
->>                   qemu_dmabuf_set_draw_submitted(dmabuf, false);
->>               }
->> +            qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
->>           }
->>   #endif
->>
->> @@ -163,27 +164,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
->>
->>       gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx.drawing_area);
->>
->> -    if (vc->gfx.guest_fb.dmabuf &&
->> -        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
->> -        /*
->> -         * gd_egl_refresh() calls gd_egl_draw() if a DMA-BUF draw has already
->> -         * been submitted, but this function does not call gd_gl_area_draw() in
->> -         * such a case due to display corruption.
->> -         *
->> -         * Calling gd_gl_area_draw() is necessary to prevent a situation where
->> -         * there is a scheduled draw event but it won't happen bacause the window
->> -         * is currently in inactive state (minimized or tabified). If draw is not
->> -         * done for a long time, gl_block timeout and/or fence timeout (on the
->> -         * guest) will happen eventually.
->> -         *
->> -         * However, it is found that calling gd_gl_area_draw() here causes guest
->> -         * display corruption on a Wayland Compositor. The display corruption is
->> -         * more serious than the possible fence timeout so gd_gl_area_draw() is
->> -         * omitted for now.
->> -         */
->> -        return;
->> -    }
->> -
->>       if (!vc->gfx.gls) {
->>           if (!gtk_widget_get_realized(vc->gfx.drawing_area)) {
->>               return;
->> @@ -347,7 +327,6 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
->>
->>       if (vc->gfx.guest_fb.dmabuf &&
->>           !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
->> -        qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
->>           qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
->>           gtk_gl_area_set_scanout_mode(vc, true);
->>       }
->>
->> ---
->> base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
->> change-id: 20260115-gtk-424c2b910e65
->>
->> Best regards,
->> --
->> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>
-> 
+------=_NextPart_6A41DF77_60FB7180_7EB06019--
 
 
