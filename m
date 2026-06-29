@@ -4,108 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5A5DC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:42:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1597DC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:43:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weCF5-0008R6-RZ; Mon, 29 Jun 2026 09:41:43 -0400
+	id 1weCF0-0008Ly-53; Mon, 29 Jun 2026 09:41:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1weCED-0007lM-1m
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 09:40:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1)
+ (envelope-from <c3aa2491cd2cd89e2f484d32f323ee447e782984@kylie.crudebyte.com>)
+ id 1weCEi-0008Ce-P1; Mon, 29 Jun 2026 09:41:22 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1weCEB-00055H-EY
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 09:40:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782740446;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Oy3wGPh4kUyBTZuM9QPlhryw0n0/N/FFI0LCYRC2luA=;
- b=VqnUIigd3kzewMTUPIQhG2usxgj5e1pgbR5cMwjXoKx6+WxYJlYuDOT2yg3nILKzxRyX8Y
- X0uHcqGmNOgj1p65nkkx6jRLDS1CatW5gT34NUAB/723NC9/bsWNV0LSZ7E7rtTeWd7hBj
- iAlJQg3pwwoSpqyjrBU/1c3zEl8OZqA=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-oi9C76q3MN2KkTQiH768Sg-1; Mon, 29 Jun 2026 09:40:45 -0400
-X-MC-Unique: oi9C76q3MN2KkTQiH768Sg-1
-X-Mimecast-MFC-AGG-ID: oi9C76q3MN2KkTQiH768Sg_1782740444
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2c804e38c65so36806805ad.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 06:40:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782740444; x=1783345244; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Oy3wGPh4kUyBTZuM9QPlhryw0n0/N/FFI0LCYRC2luA=;
- b=CE+rlkNdnd2w//4dlUuxddfNnTaVnxc9NXZ1qrdT+9jc7L2iKLCvuF3Y57HCfLLRec
- tTGFANrA+yKloJRZ8nK/VZOGs5ui/JPG8K7TvCTnTDXVXQ6ZldrLRdEyMR7wuS+eKjFL
- 7pRNSxT0FPhhBO1FvGffHIeCy7KBLn52Y2wygW0fqX2zJQVsprdZ4I39vlSZ+6ZyfFw+
- no5xR2LJvscLLwQLE+2Lel+1TEuQ4BKxnpXxy4UZ2BS2WXPBTpO1W+kRCjRrlW4x7gVv
- DeP/gNSRrsK0UMdzYDB4J8tj+doqm5xp9zoi+KLX1qJrE6ilKnhVP2B6Mqcq1+3KC8JI
- 4alg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782740444; x=1783345244;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Oy3wGPh4kUyBTZuM9QPlhryw0n0/N/FFI0LCYRC2luA=;
- b=eSEPM+T0N0JSreD/SgcaDSpBEPq9bRkmVwTaHthFYeHy6Kw+maom9sOix1t47NvlF4
- IpPoL4YyObmFQyFyuXHdmD1MsJHkF/HkhRgZFSQI6YjRzggqRP5KaYe5QPLnIVpUVrde
- rS42RexoJY6aTlyJB2CS8ogeeLHvqCVWG70UX+X2gaJGNfd+jHZUn0CMKf5116nh7SKh
- 0ExCIhwPEWc4UOjVszW7kSnSBzOB5ILx0nO4/+3D2YJzaGM2f3oBRWgJCQLLMSWx8ysP
- fBNkOE4H7NoyAK/U4AMCGbAMrINfYtVpi0FA7j0u6R5fvpcVr4wLsLgjZvtnODnHL1Ns
- ttvQ==
-X-Gm-Message-State: AOJu0Yxwj0ho+0bE4h/mbZgTfoFNkjBcY+j7WtzVo7t/5IOjiApTFcia
- 2es8eUYBIulZfri1r6NxD5PI9OL4AavHTI0/G7qpPyKT2LJfQeP8WprE2QvczzTnvgHqMCzScp2
- tJ+VBcg+U60xyvYgy1ffcUhvzC0gLEAboCq5OLKgrTHZfHDurdmWZ5u1ZrW6VgZsBy80j3McY+F
- yG29UwIciXJjh/25SI4OoaxGRr9obIzeKwMSnob/XM
-X-Gm-Gg: AfdE7ck5JbkgZ96DUpu0W4KHQ6sHE9sEYdJlzTHN/C0Ask0K33gUt3okoLgt/Jix5Wf
- 64Bq578CUijzqN9RxJQga+n1iLm6g2xnMwDTRF5+AEuKkyfcc8pKikbPsZigrVFdfv9CScPZe2T
- BwK32gAVLI+DDj1asdnusQuHee6Jkqne1EX/wsukoeJ0vtBOtvdewA7acWiw8HXeYMxJ28veiHD
- a3BdS3RFbwmRY2Uird4tpLMjpztAWH4X0BlcDt7RehVgMFM8fjs9TMGhSZuYL+Ji9wgKAIivnSA
- NeJaNQd4ufGe3YgHABrxsfWtuC25SFGVpeHSajfXq/t0wKFkjL4+cQfzmKwpgKO4KKaGSoiHBkB
- NfCazu1ZVS9uIEPhGMHaj0Q==
-X-Received: by 2002:a17:903:46c7:b0:2c9:b3ad:7a39 with SMTP id
- d9443c01a7336-2c9b3ad7d67mr74932725ad.4.1782740443862; 
- Mon, 29 Jun 2026 06:40:43 -0700 (PDT)
-X-Received: by 2002:a17:903:46c7:b0:2c9:b3ad:7a39 with SMTP id
- d9443c01a7336-2c9b3ad7d67mr74932305ad.4.1782740443170; 
- Mon, 29 Jun 2026 06:40:43 -0700 (PDT)
-Received: from localhost.localdomain ([208.115.228.234])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c9a93d5ebdsm48626505ad.74.2026.06.29.06.40.41
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Jun 2026 06:40:42 -0700 (PDT)
-From: Jason Wang <jasowang@redhat.com>
+ (Exim 4.90_1)
+ (envelope-from <c3aa2491cd2cd89e2f484d32f323ee447e782984@kylie.crudebyte.com>)
+ id 1weCEh-0005Nm-9W; Mon, 29 Jun 2026 09:41:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=zIK5xwOzU2OkUrM5JSFz9ht0XvrYw6wrNhpI1E1fCjI=; b=Fsppn
+ FtIH8Mwo8UlXxeBSyw/nlAxMLFIDWmpnlMfPzp1CJVgaeu9T5PcYwMQ/SI3jPbFm1vDN6jKy6k22n
+ HoldnUnIv/JpxHI7X30rP32UJKdNnRmU96J8WT7KTxmUB1Sif9sp1AlCnrF6jBJvN5pEm5o9su86R
+ Ai3OzXzYqxMWkjDanEVE9sK2JGWpVIMzEmTGES9Wtwj3YxeQ1PQZ6niKh6Ky3nBjE249loG6fiTPX
+ qQY/z/sHTQdVvWYIjom8NjfCWWReOORKzZs9bT4NcBR1/PKhlAl69SIga3V3cYDIq961qOb9bH4WG
+ qYWVNWHdzB4tZ2cWvixwOMkkX3PZSjXh58zMYyw4NRebqj3h62vnoM3Ez+dI2m9H/ClPoLEo+I+Fr
+ QZS+AG+AL0zXUpADHe7JjouaJeMmUAlgqwM3DteGAR9LkseeSPoOlDgG7Sz5byqDSSz3L6plRuLFI
+ tNol/hxMp78xJwwbmMLvX6g40AIssPf/Zhrv/1tDKvAFl5FyZMlPdfbXPHA8fC25lWzlZHACwQmWW
+ bbrUjLhGRO5zCJeO05yXFzkrrqvOFVoJeYflAWYX1c1gxA9T1l9VFR8QBtlrrvVmvZDIBFhXfrt9d
+ zCDgeIsckrNTgP/Ddxt3qtalnEJ+JimjA66hlB1HcSHVzYSO/6eAiIKVMBJ9d4=;
+Message-ID: <c3aa2491cd2cd89e2f484d32f323ee447e782984.1782739719.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1782739719.git.qemu_oss@crudebyte.com>
+References: <cover.1782739719.git.qemu_oss@crudebyte.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Mon, 29 Jun 2026 15:28:39 +0200
+Subject: [PULL 22/23] hw/9pfs: fix invalid union access by v9fs_co_fstat()
 To: qemu-devel@nongnu.org
-Cc: jasowangio@gmail.com,
-	Jason Wang <jasowang@redhat.com>
-Subject: [PULL 1/1] MAINTAINERS: update Jason Wang's email address
-Date: Mon, 29 Jun 2026 21:40:32 +0800
-Message-ID: <20260629134033.31893-2-jasowang@redhat.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260629134033.31893-1-jasowang@redhat.com>
-References: <20260629134033.31893-1-jasowang@redhat.com>
-MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Feifan Qian <bea1e@proton.me>
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=c3aa2491cd2cd89e2f484d32f323ee447e782984@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- PP_MIME_FAKE_ASCII_TEXT=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,70 +66,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update maintainer email from jasowang@redhat.com to
-jasowangio@gmail.com and add corresponding .mailmap entries.
+The individual FID types (P9_FID_NONE, P9_FID_FILE, P9_FID_DIR, P9_FID_XATTR)
+share union V9fsFidOpenState with FID-type specific fields. Accessing any of
+the union fields must comply with the FID-type to avoid undefined behaviour
+or information disclosure.
 
-Signed-off-by: Jason Wang <jasowangio@gmail.com>
+Fix this in v9fs_lock() and v9fs_getlock() by checking if FID has a valid
+file descriptor before calling v9fs_co_fstat().
+
+Fixes: 10b468bdc533 ("virtio-9p: Implement TXATTRCREATE")
+Link: https://lore.kernel.org/qemu-devel/4b33cd1aaa2551efda220a6f651e3660d27f4746.1781621428.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- .mailmap    | 3 ++-
- MAINTAINERS | 8 ++++----
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ hw/9pfs/9p.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/.mailmap b/.mailmap
-index 34c092714a..8ade2eed66 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -31,7 +31,8 @@ malc <av1474@comtv.ru> malc <malc@c046a42c-6fe2-441c-8c8c-71466251a162>
- Aaron Larson <alarson@ddci.com> alarson@ddci.com
- Andreas Färber <andreas.faerber@web.de> Andreas Färber <andreas.faerber>
- fanwenjie <fanwj@mail.ustc.edu.cn> fanwj@mail.ustc.edu.cn <fanwj@mail.ustc.edu.cn>
--Jason Wang <jasowang@redhat.com> Jason Wang <jasowang>
-+Jason Wang <jasowangio@gmail.com> Jason Wang <jasowang>
-+Jason Wang <jasowangio@gmail.com> Jason Wang <jasowang@redhat.com>
- Marek Dolata <mkdolata@us.ibm.com> mkdolata@us.ibm.com <mkdolata@us.ibm.com>
- Michael Ellerman <mpe@ellerman.id.au> michael@ozlabs.org <michael@ozlabs.org>
- Nick Hudson <hnick@vmware.com> hnick@vmware.com <hnick@vmware.com>
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 72357df7c4..6160d86825 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2275,7 +2275,7 @@ F: hw/char/
- F: include/hw/char/
- 
- Network devices
--M: Jason Wang <jasowang@redhat.com>
-+M: Jason Wang <jasowangio@gmail.com>
- S: Odd Fixes
- F: hw/net/
- F: include/hw/net/
-@@ -3448,7 +3448,7 @@ F: include/qemu/qemu-print.h
- F: util/qemu-print.c
- 
- Network device backends
--M: Jason Wang <jasowang@redhat.com>
-+M: Jason Wang <jasowangio@gmail.com>
- S: Maintained
- F: net/
- F: include/net/
-@@ -4045,7 +4045,7 @@ F: target/i386/igvm.c
- 
- VT-d Emulation
- M: Michael S. Tsirkin <mst@redhat.com>
--R: Jason Wang <jasowang@redhat.com>
-+R: Jason Wang <jasowangio@gmail.com>
- R: Yi Liu <yi.l.liu@intel.com>
- R: Clément Mathieu--Drif <clement.mathieu--drif@bull.com>
- S: Supported
-@@ -4480,7 +4480,7 @@ F: subprojects/libvfio-user.wrap
- F: tests/functional/x86_64/test_vfio_user_client.py
- 
- EBPF
--M: Jason Wang <jasowang@redhat.com>
-+M: Jason Wang <jasowangio@gmail.com>
- R: Yuri Benditovich <ybendito@redhat.com>
- S: Maintained
- F: docs/devel/ebpf_rss.rst
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index a2b7335515..3119f01117 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -3908,6 +3908,10 @@ static void coroutine_fn v9fs_lock(void *opaque)
+         err = -ENOENT;
+         goto out_nofid;
+     }
++    if (!fid_has_valid_file_handle(pdu->s, fidp)) {
++        err = -EBADF;
++        goto out;
++    }
+     err = v9fs_co_fstat(pdu, fidp, &stbuf);
+     if (err < 0) {
+         goto out;
+@@ -3953,6 +3957,10 @@ static void coroutine_fn v9fs_getlock(void *opaque)
+         err = -ENOENT;
+         goto out_nofid;
+     }
++    if (!fid_has_valid_file_handle(pdu->s, fidp)) {
++        err = -EBADF;
++        goto out;
++    }
+     err = v9fs_co_fstat(pdu, fidp, &stbuf);
+     if (err < 0) {
+         goto out;
 -- 
-2.54.0
+2.47.3
 
 
