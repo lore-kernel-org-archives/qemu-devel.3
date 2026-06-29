@@ -4,139 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B1DCC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 04:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DFC3C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 04:54:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we3em-00055j-GL; Mon, 29 Jun 2026 00:31:40 -0400
+	id 1we40L-00017O-Fh; Mon, 29 Jun 2026 00:53:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1we3da-0002un-Ps
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 00:30:28 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1we40F-00016q-Tv
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 00:53:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1we3dU-0000op-Io
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 00:30:25 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65T4NG221787623
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 04:30:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 3UuTOFdc8oYjbXiuLSyd2e3M5N5lZKNz6xk5uPNFpGs=; b=T4rnMon6eYJXtFA7
- byuFFEzpZBwzXA5+9wXvpXbMc+Rx5QOufh4bjliMTat6Hu1m/0eKJZOShOV1kwxY
- jZjdahtHGWBnR3Y1Tfta3DgSUuKFLcyCvOtvDe1KZy58rdgXeeMHS66Z57HP4y0F
- xsU6aBfhfDxJvgiTR5e8aPwDRALGR2MgsaWfPCOopB5xuhGk7m2HrgA6gsSONn8o
- fMsCsFfHapiV4zU8HcSvvimdmqafUGyBMDNW19v6KgfDG1qL2vydpbvgdUcd73Wl
- bJjrKPkUMFE6D1QWeUul+HnSCxMkB7xN8s1Imi2mT5hJ7zSxUtXTQZhCHLmQjSaz
- wBNNrA==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f26tuvff6-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 04:30:06 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-30ca3374c6aso7999304eec.0
- for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 21:30:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1we3zq-0003Sw-O6
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 00:53:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782708804;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tpcP+sGwKYaBepDBJKxraeicU3ElQpCiKSq3wJfZFpM=;
+ b=PET7CxUFFyVeoUH0lTk7yKA5fMZPmyCGeCC5hjiz9FNxIJltrQjv13q6rfzvl25M3+9X0+
+ OApz7FTpTeJbfNu9TC2aWSD7DMaVrzNn9kRS8Qq1xSHBasLAuOq7Ph4CstjXECUUKTx3/f
+ avGpkZCYwvB79btM5PUlqiWu7efaLfQ=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-541-G-B7BHDsMiyhazTZ50NIGQ-1; Mon, 29 Jun 2026 00:53:17 -0400
+X-MC-Unique: G-B7BHDsMiyhazTZ50NIGQ-1
+X-Mimecast-MFC-AGG-ID: G-B7BHDsMiyhazTZ50NIGQ_1782708797
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-48f680bda84so4774257b6e.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Jun 2026 21:53:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782708797; cv=none;
+ d=google.com; s=arc-20260327;
+ b=DEp9Odk1+V4aI+mzt1QDxKFvUuAhoijK5w9kJxwrkhI2Elh+ICKuDdQtADfmmVjnkR
+ CvolWXPHMDfRk65L/2JuqmSYL4CLfminUkiHPhJhDKFa6PUXaVUk0HTRLaICC5uaeG3U
+ qxL+HlYTdcxjfwKEEXZ+oH5MLNWBqWU2E3rCqLafz1dLgyKu2MfNaTlnJUKM5anrtwGb
+ 76SPdQ4fgj8hWIGob7DUpNOsIXNl9AYwg73jInRCziq2pIQl2bNkzjV+/AhmH8nXGGID
+ SWhsX15bQEYlaS9sHVdaMw220EDfAkwDE198vD2QjzT3lLyExB11zsYskEvLiE7Vl19m
+ VlGw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=tpcP+sGwKYaBepDBJKxraeicU3ElQpCiKSq3wJfZFpM=;
+ fh=rvP0WXKqeFGsCcy61Ow0iQ5z6XYIhmi8GIpCeOLZ84c=;
+ b=BhWXBfygXoBfllMo5ak7raqy7ACp9ZZASAG6fhCuK+V7BKVpd0/iOql0VBVxFViDK1
+ GzKwY+Otwrfp4ZFZL7575mxXZHSHX3+1l6xOdq5ONP6zamzSmnRamPjaayU9KLpH5ZOT
+ KWrg9l6CzSiMlUyTLdALdG+JKbqqv8zkap5K808iVxejvPup6sKrF0frmj2PiQBv2dKG
+ Bc0SEOiqCtMyT/WDcrC/nUK83TMuR+HWT8D8gYni2OOJ33L224qqbQe5DOaH9t8m1ePR
+ qOAhw3IneYIDjPfJahH4mDxHHiV93nZ15FDOu8KlIeIJ/cMncm8T+1DOCfcnLh6+Fng/
+ bSvA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782707406; x=1783312206; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1782708797; x=1783313597; darn=nongnu.org;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3UuTOFdc8oYjbXiuLSyd2e3M5N5lZKNz6xk5uPNFpGs=;
- b=DybMVHwu9tMFg0ngm3j5Mg0EmYUuJZk6lgWJ4b8nhB6sSD1MuCFTz8alKJyZeXXwD0
- T7FWEtFZpCrvfm8DK59VFyknsVldnE/7HyuKhQ/oxgPlvSEP5SoEetecNAde/z2KT/uW
- GoT2ueH4A4eg0O9MovPeCHLTNOQ0IKGiMZg9qCNcAKUiR6VcRORGddi3q1bpzDsL9Kh4
- QZ5x39QC+f5OMx7GSg6a24LsdkdITJf7ysGWdhZczOWQUc4rtcxRwtlcDin/ZBtuoxWD
- N3BACDu4/cN/twJ4JsocP4bxYl0LfAERgz1gu8ucweALzW+eLuJ6NXPN1JG636HaQxYt
- mGWg==
+ bh=tpcP+sGwKYaBepDBJKxraeicU3ElQpCiKSq3wJfZFpM=;
+ b=MprmGk9XkfSXJNHgHYwWSWrqfGSv0L/TrpQaeBOsE/SmrwcIB4utjaLkIRWtym0lS3
+ YVegLrcpX2W8udSimoUECNo9TLWgKt3oA3ddfkCXzFf/XqbfPS/bnaWFBTGN8mqkPr8o
+ WvgS0o76N3S55UjQNRkxeI4T7B2AvuxxPiVAoKh8VuR8UBl6hZ6W9YvodJpOklY9Oto8
+ FPLY50ctsdaIBZmqo8c4XHwttlImbQsddNPIlB5ZsRBxWvhY88NnUJ9RA95X4MDfxg2s
+ iHoDJLUe9K0DL2qg+74180VW8IP5V17d056N19MdhJ7bKAUwK1QKi54REfCvD0BZVA58
+ M5dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782707406; x=1783312206;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1782708797; x=1783313597;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=3UuTOFdc8oYjbXiuLSyd2e3M5N5lZKNz6xk5uPNFpGs=;
- b=cgE9u+bBUeHxKdpIjBfasHMVwX6T6ZP5IAtB2PhcRUszkV5QCC3cE1EU1XgXqeqdAJ
- Auwj8U4FrfudhQSmxv/17trom3CfR5WgbBv/Mf7dR+2edza0RXS4VPC5RslJ5WUw/6wg
- N3v20akkhq6eotxEBrEJj1W3aCuT762DlDp6bDfYVUZtJDq0E9Q2XpAI9sEFG3icNpf2
- 2tLtUZ4hRIeEuJNqRUvrfN+CsESnE/tGXSjuPFVmLbcibsqrImFVVeSoEuok6jnMNzB7
- u/vIIpYUwQxKCvU9keuroyuBAA6WXeBrySGs2BWpjbobqt+//ykACeRGsZcMBS29AbwF
- 1Yzg==
-X-Gm-Message-State: AOJu0Yz4HyKWfrGK0h1SqAY5b+oQr2kWcbw5RMEAU5aLItfVoTNYh+cm
- ovxSR8t5nAgbrW/0emSAD/Ra9OpDrwyVBJn2RtCQA5vt47yBC9eO4LyfG9n6F2Jf5dg1V8OMQa2
- JSMkOfY4IgVbb/DmT6DBhGDbSflL7PX4CBTMQIkNll3k8OwUB/rRmlj7otAhl8ns9cg==
-X-Gm-Gg: AfdE7clwSc5xKrZI+hLWuWZlGyWfuklNhMNP9xjxL54fYo+wtXrn68hAOy9fPWfTr8i
- Ehm/TwJ7cYnla2bJqTtX0Z5H8cWpiVUPp9Pg4mncs8j5UpGZLpU7adO2UiyN93i4RwXQNSAH8To
- 8uu1V66UubjQeF/yw05umKiuzi/PqTU6mqHllhaQ8WRVZUPjJDK8A/cnJLjlQaXVUnetUB3nx5u
- 1d5jTqrP0s1uB82FH7ORkmpTsQrKExtaJZcpCw1yw3TikiPS22k4rtoV26gBVLDT90QuTnC9mJD
- 3AV6sjuG+HwdAJezlwyu4Do43vVD5xDwilCdCwH8f8LZHR6bEqZWAhuAu7mj+H9rqKRkugyMikD
- Kolisa9i0w4Wj4VzR2xvVi2sHUJz0+AMWU0liv7JG904nNomABM2+/o2zX8Q=
-X-Received: by 2002:a05:7300:548:b0:30e:952b:ddf4 with SMTP id
- 5a478bee46e88-30e952be013mr5674009eec.3.1782707405481; 
- Sun, 28 Jun 2026 21:30:05 -0700 (PDT)
-X-Received: by 2002:a05:7300:548:b0:30e:952b:ddf4 with SMTP id
- 5a478bee46e88-30e952be013mr5673986eec.3.1782707404942; 
- Sun, 28 Jun 2026 21:30:04 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30d3af0d2e4sm21314609eec.22.2026.06.28.21.30.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 28 Jun 2026 21:30:04 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, stefanha@redhat.com
-Cc: brian.cain@oss.qualcomm.com, Brian Cain <bcain@quicinc.com>,
- Taylor Simpson <ltaylorsimpson@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL v4 59/77] target/hexagon: Implement modify_ssr, resched,
- pending_interrupt
-Date: Sun, 28 Jun 2026 20:58:12 -0700
-Message-Id: <20260629035830.1520296-60-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260629035830.1520296-1-brian.cain@oss.qualcomm.com>
-References: <20260629035830.1520296-1-brian.cain@oss.qualcomm.com>
+ bh=tpcP+sGwKYaBepDBJKxraeicU3ElQpCiKSq3wJfZFpM=;
+ b=DbX0je5gHAyu5giAUnDbvgkj0SHpU3dP8qJGJLVlZKmMIjIX+q0lhqPnK2HX1FZeJe
+ wxLnY/oZ/qgpHWssCSiq2lo6kKb6SvGBpNA1Mg0pFMNjvdYofzYZM9pNDpO6OBFIElxt
+ AH1FW2BMO7SLwe/ISUZd7q0xBytFLDaw07tXGbQdjeqIjX8sePs43e0gl9kjXlyOvvQD
+ rO0er2vZD7/DJh0OS7atuksC9CjW6faQfjHe120p+9J6uI8Pvt0CSM/m1G/wlkFpFY6h
+ Fg1jxasrfj3EcdpNKZp5drOSh2sE5d5ihqdZfZqMeeHMw6DETfIbIGk4pWsPnn1WSCb/
+ GrgQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9j65wxjqh4CP1nrETU5adJXkvQq8O8dRiHqggTmxA7VPg4cKIkAZQ5TY4GZqcRyo2CI9AP8jA0u1HA@nongnu.org
+X-Gm-Message-State: AOJu0Yx1RecA0Alh9d/+bXCZXVVRP1+s1mk15JRWpaZG4GVI+F63qJrS
+ umDTsjr8rMVFtMQb302eYDhIb9Lwy2Y0xopmnWu63hAqsZxmEnsbjydwM+gxuDFdNp+SiZn2Wc4
+ xdJzKeAW39OSTkbUdFW+AvrMmdCJBnVGd9gFICY6IIqLzOR56i/0FoCFhjP5ueegKdU2rgRKu0a
+ mJRzi1DmVg3YNJyDCOLzDB5KhGPc1Pv2k=
+X-Gm-Gg: AfdE7cntXxzGdOYFt02mXQxzp/+UnxrnByyGsxYltSJOxcsz4WpzSXQjelopzORoMmV
+ 8QgAhc65JMnIM7gXdhRXsDunFOOTwGbqW8VkBxljLQy2kUT8rN/5R1WQCJl5O0PmCMQaY5Nmtjj
+ zc1JMhfNVDmwBfCKICBH7HvUTsTHSPeRsuuGeKqAg7mBtd2Nf9KbTFdkZaK6pDHC+sfq61ugsGX
+ eCJAuXbIQB8USfcnB9aW0G41Q==
+X-Received: by 2002:a05:6808:f8b:b0:48a:3f80:ee5c with SMTP id
+ 5614622812f47-4921772124fmr11444567b6e.23.1782708796984; 
+ Sun, 28 Jun 2026 21:53:16 -0700 (PDT)
+X-Received: by 2002:a05:6808:f8b:b0:48a:3f80:ee5c with SMTP id
+ 5614622812f47-4921772124fmr11444553b6e.23.1782708796500; Sun, 28 Jun 2026
+ 21:53:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDAzNCBTYWx0ZWRfX54X3dhorhE5F
- B8oKFFnd/tHSNdrAHQXAv1jLxouIgQuZE8hCpCRuqgS1tNf59gr0OMPjpDgUpEhJbn2ctuj92IR
- B3BOYc+r8aUAFlC5hf9Rnk5XCik3hDs=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDAzNCBTYWx0ZWRfX1VECk1CPWb9G
- ZZzvKunfo2/a7deFR5sysDRgTk9JiSyz2Y6hPKdZMtt6jxch26MrKyodYUe3i1PnXTQAxmib3L5
- 9+yNAfyDryLqNe8Nie+nLW+zGzdTEirRPF1yk4bHa9Zdr9w0rxqxNPcgMk6qifTirWVjKRKAh2y
- aY9cKDW5PUPsEHv5mJNrpwmYKQoTbDV+eYBoJMFJUykqGCQhQVTTZleeB9rw8CAW6d/z8zdewIn
- RDRnUJSkEHMO7VUYpL03vL754RoVSZJKxylMGZES/rkA/A+p3MqB6rdNMwJtDccLHSgBWVvsLEv
- P+w/aqBfFLW5YiqI9hm0Ipcz6ynAqzn1g+iH/ePPvpjSAHl1xbYAx+yNTTB2zuLTmxgI8r3liLh
- VtylZvtl6G5ch/gT0zJURXunFWF+0JWLrecaeH/xyuJ5jv4x1MxspeaQ65FkpKHREdGfWekd74b
- 2YdtQI9gHjH9POhpH/g==
-X-Proofpoint-GUID: vVabJusp2eGl7hAy_kQTv2-cwvEOzAyF
-X-Proofpoint-ORIG-GUID: vVabJusp2eGl7hAy_kQTv2-cwvEOzAyF
-X-Authority-Analysis: v=2.4 cv=DY8nbPtW c=1 sm=1 tr=0 ts=6a41f4ce cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=c5yFZwH1WPb9xS9x6awA:9
- a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-29_01,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 bulkscore=0 clxscore=1015 impostorscore=0
- lowpriorityscore=0 spamscore=0 priorityscore=1501 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290034
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260619093140.832136-1-mbawa@redhat.com>
+In-Reply-To: <20260619093140.832136-1-mbawa@redhat.com>
+From: Mohammadfaiz Bawa <mbawa@redhat.com>
+Date: Mon, 29 Jun 2026 10:23:00 +0530
+X-Gm-Features: AVVi8Cfwes4OvpC3edtf2KIDZcN-dMCMEGKPl5SIFDFG5edS8qCeoHw5IR2_G5I
+Message-ID: <CAJg9KkxHPZnGjFg9CcpB1RGv321OZU3guBGWHZiUqYQhaVG0Lw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] hw/tpm: fix tpm-tis-device backward migration on
+ aarch64
+To: Stefan Berger <stefanb@linux.vnet.ibm.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mbawa@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,23 +137,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RnJvbTogQnJpYW4gQ2FpbiA8YmNhaW5AcXVpY2luYy5jb20+CgpSZXZpZXdlZC1ieTogVGF5bG9y
-IFNpbXBzb24gPGx0YXlsb3JzaW1wc29uQGdtYWlsLmNvbT4KU2lnbmVkLW9mZi1ieTogQnJpYW4g
-Q2FpbiA8YnJpYW4uY2FpbkBvc3MucXVhbGNvbW0uY29tPgotLS0KIHRhcmdldC9oZXhhZ29uL29w
-X2hlbHBlci5jIHwgMTQgKysrKysrKysrKysrKysKIDEgZmlsZSBjaGFuZ2VkLCAxNCBpbnNlcnRp
-b25zKCspCgpkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hleGFnb24vb3BfaGVscGVyLmMgYi90YXJnZXQv
-aGV4YWdvbi9vcF9oZWxwZXIuYwppbmRleCAzYzI1M2IzOTFlNy4uOWZiY2Q3OWM5ZDQgMTAwNjQ0
-Ci0tLSBhL3RhcmdldC9oZXhhZ29uL29wX2hlbHBlci5jCisrKyBiL3RhcmdldC9oZXhhZ29uL29w
-X2hlbHBlci5jCkBAIC0xMjI3LDYgKzEyMjcsMTUgQEAgZmxvYXQ2NCBIRUxQRVIoZGZtcHloaCko
-Q1BVSGV4YWdvblN0YXRlICplbnYsIGZsb2F0NjQgUnh4ViwKICAgICByZXR1cm4gUnh4VjsKIH0K
-IAorI2lmbmRlZiBDT05GSUdfVVNFUl9PTkxZCit2b2lkIEhFTFBFUihtb2RpZnlfc3NyKShDUFVI
-ZXhhZ29uU3RhdGUgKmVudiwgdWludDMyX3QgbmV3LCB1aW50MzJfdCBvbGQpCit7CisgICAgQlFM
-X0xPQ0tfR1VBUkQoKTsKKyAgICBoZXhhZ29uX21vZGlmeV9zc3IoZW52LCBuZXcsIG9sZCk7Cit9
-CisjZW5kaWYKKworCiAvKiBIaXN0b2dyYW0gaW5zdHJ1Y3Rpb25zICovCiAKIHZvaWQgSEVMUEVS
-KHZoaXN0KShDUFVIZXhhZ29uU3RhdGUgKmVudikKQEAgLTE2NDgsNiArMTY1NywxMSBAQCBzdGF0
-aWMgaW5saW5lIFFFTVVfQUxXQVlTX0lOTElORSB2b2lkIHJlc2NoZWQoQ1BVSGV4YWdvblN0YXRl
-ICplbnYpCiAgICAgfQogfQogCit2b2lkIEhFTFBFUihyZXNjaGVkKShDUFVIZXhhZ29uU3RhdGUg
-KmVudikKK3sKKyAgICByZXNjaGVkKGVudik7Cit9CisKIHZvaWQgSEVMUEVSKHdhaXQpKENQVUhl
-eGFnb25TdGF0ZSAqZW52LCB1aW50MzJfdCBQQykKIHsKICAgICBCUUxfTE9DS19HVUFSRCgpOwot
-LSAKMi4zNC4xCgo=
+On Fri, Jun 19, 2026 at 3:01=E2=80=AFPM Mohammadfaiz Bawa <mbawa@redhat.com=
+> wrote:
+>
+> 46cd2c1050f0 ("hw/tpm: add PPI support to tpm-tis-device for ARM64
+> virt") unconditionally registers a "tpm-ppi" RAMBlock when the TPM
+> TIS sysbus device is realized.  This breaks backward migration: a
+> QEMU with PPI support cannot migrate to an older QEMU without it:
+>
+>   Unknown ramblock "tpm-ppi", cannot accept migration
+>
+> The failure is 100% reproducible on any aarch64 guest that uses
+> tpm-tis-device when migrating to a host whose QEMU predates the PPI
+> commit.
+>
+> Fix by gating the PPI memory region behind a new "ppi" device
+> property, and disabling it via hw_compat_11_0[] for machine types
+> <=3D virt-11.0.  Also move the sysbus_init_mmio() calls from
+> instance_init to realizefn so the memory regions are properly
+> initialized before being registered (Peter).
+>
+> Not exposing the 2nd MMIO slot when ppi=3Doff triggers a NULL
+> dereference in platform_bus_get_mmio_addr(), so patch 1 adds a
+> guard first.
+>
+> Changes in v3:
+> - Reordered: platform-bus NULL guard is now patch 1 (Peter)
+>
+> Changes in v2:
+> - Dropped zero-size memory region hack (Peter)
+> - Moved sysbus_init_mmio() from initfn to realizefn (Peter)
+> - Only expose PPI MMIO region when ppi=3Don (Peter)
+> - Added NULL guard in platform_bus_get_mmio_addr() (found via testing)
+> - v1: https://lore.kernel.org/qemu-devel/20260618123317.633869-1-mbawa@re=
+dhat.com
+> - v2: https://lore.kernel.org/qemu-devel/20260619053623.756021-1-mbawa@re=
+dhat.com
+>
+> Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
+>
+> Mohammadfaiz Bawa (3):
+>   hw/core/platform-bus: guard platform_bus_get_mmio_addr() against NULL
+>   hw/tpm: gate PPI support on tpm-tis-device behind a device property
+>   hw/core/machine: disable tpm-tis-device PPI for machine type <=3D 11.0
+>
+>  hw/core/machine.c       |  1 +
+>  hw/core/platform-bus.c  |  3 +--
+>  hw/tpm/tpm_tis.h        |  1 +
+>  hw/tpm/tpm_tis_sysbus.c | 18 +++++++++++-------
+>  4 files changed, 14 insertions(+), 9 deletions(-)
+>
+> --
+> 2.54.0
+>
+Gentle ping.
+Patch 1/3 has Peter's Reviewed-by. Looking for review on the other two.
+
+Thanks,
+Faiz
+
 
