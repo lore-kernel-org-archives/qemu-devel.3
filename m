@@ -4,141 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35890C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 15:55:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A703C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 15:56:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weEKn-0000kP-Rp; Mon, 29 Jun 2026 11:55:46 -0400
+	id 1weELB-0000wo-9q; Mon, 29 Jun 2026 11:56:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1weEKg-0000iy-EG
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 11:55:41 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1weEKe-0001SF-LH
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 11:55:38 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65TASw2j2641481
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 15:55:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- J2YcPv3LwsbecURuwRCLmCgBWHJEPX8jTtAhha31BJs=; b=mw+qrK8J+erB5pg6
- FnmOUtNC65lupFcWYjirURnfUknBNlDp9Y39EmZt3da7TYDVu1IgUk4aJzqgINxn
- 1fZ6qbMdidfyFIRGQlYkwSfv/MTFyzs1uUwXqSFfMsk2hrm5k5qQOQm2OUxa+RHC
- 9m/sbvcJAfsrPV7+6HrAI+E04MavCvXwsn4GM9rf9yWkpWGn17IxfR8laAdxSSuP
- aKNu1oiGE7VOztT515D0FAumLKz/DIXQr7YW7xp/KC3vT2Ro7yRJiiyW2PV27VLa
- Kh9zERv/OiLa6D2pUE2aTy3mv1z215luqsjVhiWFxAeuFZTqigT5cwDyudGofbfX
- vTzYnQ==
-Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3npesqnj-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 15:55:34 +0000 (GMT)
-Received: by mail-dl1-f69.google.com with SMTP id
- a92af1059eb24-139f02b1fbeso9852543c88.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 08:55:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <linisha232@gmail.com>)
+ id 1weEL7-0000uj-4M
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 11:56:05 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <linisha232@gmail.com>)
+ id 1weEL3-0001VO-J9
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 11:56:03 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-472a14c9965so1382397f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 08:56:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782748558; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Lmm5kyl0blSyUrhN6mi0gYDHJiYaC6ne5nyQvG8B0+0DfQ2+QtPFQoP151YPsL85lb
+ zipi1hdtTC/IFZaDl70qCwHYe4f+uci6or8AAx8i/ibbO4v0ufhzxOWHEYqqmVyVmcDT
+ JH/DN8mfKxMzA8Xz6P7MA9/7i/fESgbWikEE8R7gWxQTzVeiH7RksxSn54eAT/ASLrBv
+ BlbdTUeK+fU7iz9KDnMbHXDeqUXgBjMzAcaW2hVXg2yzomQHnfpY9vAk9e7TQtB+2j39
+ 3lQElRISUrN2FpAP4cwR/Rei5af8hoBtwOSstqAqbeOMcRie46VfeFQ5qp9ZzSyLXnQt
+ AxEw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=S8TGHsifkdeY5GIszP4r+Vw927pPsHcm1fDJsZHVizI=;
+ fh=uUCBWekSDVrYYWxjdpTxM1S3i9nbfYwKkNluXnWis1M=;
+ b=hhk4ybyoOYswAMFIdmflW9FssMDrumyU5db2M0HHES6aJotdycv2ehkJ8nZLrJV+sO
+ v104x/Nu0KoTbReWRH7A8BaUaErQ9rkxso5WkI+5Ll51rdkV/yK3h/IoG5Cq/czc+rIH
+ irBgbJaDmSAB4INpuvncw7GTQ4N4gN0zRMo5ZiSoLs169bDDN3hw0xlhml4gIAo+xTgl
+ P75et+nz7ylMZgjuIxNDlYdBYwyiywijZbe5giS9EZA/tWKEk14/8FOJXe66/xenRWnc
+ H09UkxsN3qw7PhepnuWHTzu4lvbSpsI2jZDMAyD8cnKkVOEpWcwc0rdjV69IB60WPunC
+ Xk1w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782748534; x=1783353334; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=J2YcPv3LwsbecURuwRCLmCgBWHJEPX8jTtAhha31BJs=;
- b=MoWXrWVRBZksGxI841J+xJcQCt2sCQ6LwdqlZqMMB0zE7xXt8eYfyOJzdUBbPTxGOd
- 0VDG69AJiYFQ45VcxkCUlRYvDyeGMos+71TuUT6Kb6z5Lf2qlRH/giOoMzvrGE11tmzu
- D3/6Mw6Zmi0ZZRuwLaY1Mevu0hNF6hbresXpMglphzPoO/Ke1Woarmupfz2E/KzuCI67
- 0XqV9nth4UMvkJFCurWTE/zPv8U6rlw79NAi0AWvHkvKiG2mY4ouHNwI+NK/wAz18Kpa
- LvK0Gp4vebdzxqWQkbmg77VNlbbKhroXuKt1VQ+yjIQLrVUNdAUTF5UeqccWNfh+MLOF
- 4IBA==
+ d=gmail.com; s=20251104; t=1782748558; x=1783353358; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=S8TGHsifkdeY5GIszP4r+Vw927pPsHcm1fDJsZHVizI=;
+ b=WwNb+UdKC2oeCHya/zzuTLT7H3hH5YPbcxNTGIDzg+u37WtKBEg9PkOYj9Lb6Lv832
+ yDwmmFzdVbyXgyCz55NysukEvCy48RAOuS8+5DZxSQZpRqancht37DtyIxCnCyfHaKaK
+ OlDcWW97zQjaZSd7PHvaSjibJClBT+PepYL6zUMyGZSCNlbGmMT+6/Pz9dt04CKpLG2T
+ Zp0jdeIb0Vf2dkyLFT9cd+ctB4rzz1NPLauWaq6CwwgxH7b0TEiijFRxRjjN6HFCYgPP
+ Gq1vVgAYi33ZxKttZXZgBRkQBtWmNO4s8w4njS6jYNDFbAwDV6FLkSGqzw0cBWeD2h3Y
+ qwsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782748534; x=1783353334;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=J2YcPv3LwsbecURuwRCLmCgBWHJEPX8jTtAhha31BJs=;
- b=n1bxguJ63l74AOg1eHAIUhQDjn7D6mR/EPBxVMCBPJHqOZCpfYi0uSbQRABxPKzFSl
- jKBFFoc/pkqYSEFy8inQ5+7Q5QWRs/zXXNie4M13l95337uwb2l3YH5Wgo/RqSXlEsMP
- Rx5+GUlRowAJ//RGjFCQTtOQ4RdPcpbWuPiZXQcmifHrtB4ilFgTQohCBEs7iewF8o9H
- 2h5P2ESggzO7DugsCbFXAu4sj5UDSWNnfEeM5IAwXGnaDJVnL/OxCGWoexxVHHuLpc/p
- Kef9D/Xy+Zsy87ApXLc5tx4t8C1ysZKjl1dwonTZmM31IHz5o/l2P9Hlm0omYNNb7Lbw
- fMXQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8mVQo7n07A1ZicU6+/6TqfR5yT8nE5aBkyFuG5PwLXTrwCOu7NoaGCF2TiI47uXot+mrJX4Wgtr1K6@nongnu.org
-X-Gm-Message-State: AOJu0Yw+2b9Nq6agIBE9Az5Lw6qZXvxY7nVHwRouk4XBtk+dnv9WD0yd
- aJNIxUgVadgxemVUo5RED6oe2ONzs2m7p4YoB2XM5tem/2sTwZBXYFfr+YW9RhcS5A95H6iEehn
- xH1/FegacqQtUMKmuhB0l9TXoQVuNHIwlluDdutgeWUhSGkFxdo9xLBusrA==
-X-Gm-Gg: AfdE7cma6A+lq49Mse1JyBgQ03QYHyiEwHC9srCk5ilGinvV9Ejjr9vvshTwrL/AdvR
- Y1tUX+y4pXnhki4p3LA6kcrjjMf6Jom5h9b1lrajL/QqhKuVHwaJ9DTcOw+1l2hILQOUc/pfNde
- AqPO/L+EYGm4iJs4QZ37pdd7o4CW5mbeyEZ7+0vwjk7J3/FoQmyTKuv6To6x7W4fcvLT7atoW2K
- mp3pj9EA7pRH9rcgdg7h4PRIbEyOI/OZHri+Mt3Zw/oSjnkoIrIMl1x0JpGE2u1XvGcH/RFHvR7
- Bnn3i/u4JNlpYSjIAgxHu1Iyu4fcLlu2hQgCpjm3sCuuReSX6C9Zya+lHasVyg8k6czOaaG6gbS
- YziXtp9NUAnAONwcv9DHz//7sNffFxFjdEvK9TWcwxJYxhiNAgBzrm3rAUV3Tl1j7NMfEeQuUnv
- HPwSw=
-X-Received: by 2002:a05:7022:6894:b0:139:c4e3:947a with SMTP id
- a92af1059eb24-13b2a176442mr20235c88.15.1782748533793; 
- Mon, 29 Jun 2026 08:55:33 -0700 (PDT)
-X-Received: by 2002:a05:7022:6894:b0:139:c4e3:947a with SMTP id
- a92af1059eb24-13b2a176442mr20216c88.15.1782748533233; 
- Mon, 29 Jun 2026 08:55:33 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-139d8f318f3sm50094298c88.2.2026.06.29.08.55.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jun 2026 08:55:32 -0700 (PDT)
-Message-ID: <a6374310-0681-4660-8e87-1b10310b1126@oss.qualcomm.com>
-Date: Mon, 29 Jun 2026 08:55:31 -0700
+ d=1e100.net; s=20251104; t=1782748558; x=1783353358;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=S8TGHsifkdeY5GIszP4r+Vw927pPsHcm1fDJsZHVizI=;
+ b=r+lAe7R2Tld7t6GuoCTCF0zKoVQGm0MyXEqFhZgPYSS2HgvHOWENqcjIeUl03Bxq40
+ EqL5tSPrrLHofPQUL30Lqgg5mX9lmA17XAMaVv7odrPdJo7BJ5bl2drejVyfiTm1CcZl
+ YPy1IkbmqkUAlAN4w8dq2SqrGIKOaeCfXK7Tp70RBg96gSCYxsfIHAof8Z9mQ9JqLgVm
+ afKmvUG3GLYNweTGMqeScCaj7+9ntjveKJmlDc7XDF30xSIqTXn4Guk62k03KefXvlRZ
+ VNizx2MrBltJSQU6Adp835+qbQB+5LPxU+DX+q5M9ianhpC7/R8ELuTi9/tIIiYGBjO7
+ l+lg==
+X-Gm-Message-State: AOJu0YxIv8byGmer48AvrHkoDhx3fVsGRSCxx4eBoxLdtJEPuZxXx1xz
+ hosIg8ZWuV1OoQcq27MAoenxzzsAhQYF4MyFhJI5Wk68YhFE9AV2+cjMb4uuJGmONOP6yAgiuBP
+ BKguJnKqNVjBtiSIo26yC7kwjWVaX8YSpugbR+TAtdScEAd8ZboXvCu9EJhGcF7PALLjMs2k=
+X-Gm-Gg: AfdE7cmZjVOZKlkbS8aThTdLpLlZJA+xUYTkluc19wLjymEc60tGVZBQhff+PHJX2Ps
+ V6phq8edfDuc+wKTIwQYUWRL+nqMjgbsaMqQM25zRgXwyVNl7wCDZUUKDn/oOGXuSB677Zg3GVl
+ CaGA5oypsVlQDRXK+KVhoL0SFaO202S0jjZuKFHvdHFWglbmtvUyrLvUuhUbd4SJHseUx6qw45M
+ pN+VlKuS2VQbHbCjc+32Sn0wVlja2U6NZnhxRaB7+yW1EvmDu5L+PDxoivCrWI4pYJ8eiWr6+w=
+X-Received: by 2002:a5d:4649:0:b0:46d:d5da:f0ac with SMTP id
+ ffacd0b85a97d-475017f69afmr1487913f8f.47.1782748558107; Mon, 29 Jun 2026
+ 08:55:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: announce: new official git repo for risu
-To: Peter Maydell <peter.maydell@linaro.org>,
- QEMU Developers <qemu-devel@nongnu.org>
-References: <CAFEAcA9C3tLDOCSMJVP7UoCRkH=BkVkA1HaziS_am6ZNpE2gbg@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA9C3tLDOCSMJVP7UoCRkH=BkVkA1HaziS_am6ZNpE2gbg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDEzMiBTYWx0ZWRfX2npiH6cDEa/A
- MHDfnjG/5nRai+5AoU4wfhPDru54lsP52G5+hy1wu7TWLXa/adb7EiFy60DkvnwBhMSy3wDld/u
- +hGWZxvJEEpRNtZTvOq81gsqr2sFUIETJz0opdaqcqw9ote/bdryGFVDAfKn4p/mpqBcVwdgtED
- TiViVBlinksUxbJDGu7GonQtru4m7ucxvbaBWm0xXmVJmYXvyUtmBBjEAY6bqKLW/Idm6fk0SkG
- IjPN/c+majkXN47wYglk3m+ODixhqBWbsO9IXkPhCmb0fS7UPU9dha8lDOp3gWkKplFKMkPYXhE
- DUGQCCAE79Y0TYwRT2Y7FjcXD5uGZcqk0GcWM8orQjqBQURS0JYd2kg6kALwcDfJ56dzlBBcBYO
- 2St5MmIFoB4WBTg7ccdoiPpH442bQryE2XOq8Wo/BtZVfAR9lzKt19Y9ZRguSffhXJUgQI0gtiY
- 6b/rCrC8rxE+afqaEcg==
-X-Proofpoint-ORIG-GUID: c2NJDw4SBZfMS-N30Ed1di9XYj7-qV7M
-X-Authority-Analysis: v=2.4 cv=T6q8ifKQ c=1 sm=1 tr=0 ts=6a429576 cx=c_pps
- a=kVLUcbK0zfr7ocalXnG1qA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=p0WdMEafAAAA:8 a=KKAkSRfTAAAA:8 a=SzlNI-oRMvhN3JfLb-AA:9 a=QEXdDO2ut3YA:10
- a=vr4QvYf-bLy2KjpDp97w:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDEzMiBTYWx0ZWRfX/rOHe2lrrQ9U
- B/gt+U00uYkj0xwXPbj0De9A/2n8VgPCIX9AVGVxabo2u9k+geIdjfKio2YeZOPTMoQ7s8dTatY
- BbgDBn0GdJm0vCa6fnMSHXDGOYfhSMg=
-X-Proofpoint-GUID: c2NJDw4SBZfMS-N30Ed1di9XYj7-qV7M
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 malwarescore=0 impostorscore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290132
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260625192121.1887-1-linisha232@gmail.com>
+ <20260626181118.1136-1-linisha232@gmail.com>
+ <882ff78f-f927-4ff0-8c40-7b9f00c063a6@oss.qualcomm.com>
+In-Reply-To: <882ff78f-f927-4ff0-8c40-7b9f00c063a6@oss.qualcomm.com>
+From: linisha <linisha232@gmail.com>
+Date: Mon, 29 Jun 2026 21:25:44 +0530
+X-Gm-Features: AVVi8CeE0YKlCVXRwQICS_KqfM1zAyZa4xPwWubm70wnsBI-JDgjpRe2x2xHZBI
+Message-ID: <CAGKMO+Vh2Hb_Ue1=MF1+WDcN98DDUgRxgEGFdgZgUjP1N+fuSw@mail.gmail.com>
+Subject: Re: [PATCH v3] docs/system: add general note about architecture and
+ machine differences
+To: pierrick.bouvier@oss.qualcomm.com
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org, 
+ pbonzini@redhat.com, mjt@tls.msk.ru, philmd@mailo.com, berrange@redhat.com
+Content-Type: multipart/alternative; boundary="00000000000087a8e00655667e7d"
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=linisha232@gmail.com; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_KAM_HTML_FONT_INVALID=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,30 +117,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+--00000000000087a8e00655667e7d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/29/2026 4:53 AM, Peter Maydell wrote:
-> (Since there's no specific forum for the 'risu' random instruction
-> set testing tool and we do risu patch review on qemu-devel, this
-> seems like the best place to send an email about this.)
-> 
-> The 'risu' tool has a new official upstream git repo at:
->    https://gitlab.com/pm215/risu
-> This replaces the old and no-longer-working
->    https://git.linaro.org/people/peter.maydell/risu.git
-> 
-> This actually happened at the tail end of last year, but I never got
-> round to saying anything about it, since risu only gets a very small
-> volume of contributions. At least putting out an email should result
-> in the info about the move getting into web searches and the like.
-> 
-> thanks
-> -- PMM
-> 
+=F0=9F=98=8A
 
-Would that be interesting for the project to host it directly under
-qemu-project namespace instead of your personal one?
+linisha reacted via Gmail
+<https://www.google.com/gmail/about/?utm_source=3Dgmail-in-product&utm_medi=
+um=3Det&utm_campaign=3Demojireactionemail#app>
 
-Regards,
-Pierrick
+On Mon, 29 Jun, 2026, 9:22=E2=80=AFpm Pierrick Bouvier, <
+pierrick.bouvier@oss.qualcomm.com> wrote:
+
+> On 6/26/2026 11:11 AM, Linisha wrote:
+> > Add a note near the start of the introduction explaining that QEMU
+> > options, properties, and command lines may differ between target
+> > architectures and machine types. This helps prevent confusion when
+> > examples shown for one architecture do not work for another, such as
+> > the pflash0/pflash1 options visible in -machine help on some machines
+> > but not others.
+> >
+> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> > Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> > Buglink: https://gitlab.com/qemu-project/qemu/-/issues/3254
+> > Signed-off-by: Linisha <linisha232@gmail.com>
+> > ---
+> >
+> > v3:
+> > - Wrap commit message body at 76 characters (Daniel P. Berrang=C3=A9)
+> > - Add Reviewed-by: Daniel P. Berrang=C3=A9
+> >
+> > v2: Take a different approach based on review feedback from Daniel
+> >     Berrang=C3=A9 and Peter Maydell. Instead of incorrectly claiming
+> >     pflash0/pflash1 are virt-only (they actually work on x86 pc/q35
+> >     machines too), add a general note near the start of the introductio=
+n
+> >     about how options, properties, and command lines may differ between
+> >     target architectures and machine types.
+> >
+> >  docs/system/introduction.rst | 9 +++++++++
+> >  1 file changed, 9 insertions(+)
+> >
+>
+> This was merged into master (20553466cc47af6a8c95f665b601fce3c852e503).
+> Thank you for your contribution!
+>
+> Regards,
+> Pierrick
+>
+
+--00000000000087a8e00655667e7d
+Content-Type: text/vnd.google.email-reaction+json; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+{
+  "emoji": "=F0=9F=98=8A",
+  "version": 1
+}
+--00000000000087a8e00655667e7d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div><p style=3D"font-size:50px;margin-top:0;margin-bottom:0">=F0=9F=98=8A<=
+/p><p style=3D"margin-top:10px;margin-bottom:0">linisha reacted via <a styl=
+e=3D"color:unset;text-decoration:underline" href=3D"https://www.google.com/=
+gmail/about/?utm_source=3Dgmail-in-product&amp;utm_medium=3Det&amp;utm_camp=
+aign=3Demojireactionemail#app">Gmail</a></p></div><br><div class=3D"gmail_q=
+uote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, 2=
+9 Jun, 2026, 9:22=E2=80=AFpm Pierrick Bouvier, &lt;<a href=3D"mailto:pierri=
+ck.bouvier@oss.qualcomm.com">pierrick.bouvier@oss.qualcomm.com</a>&gt; wrot=
+e:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bo=
+rder-left:1px #ccc solid;padding-left:1ex">On 6/26/2026 11:11 AM, Linisha w=
+rote:<br>
+&gt; Add a note near the start of the introduction explaining that QEMU<br>
+&gt; options, properties, and command lines may differ between target<br>
+&gt; architectures and machine types. This helps prevent confusion when<br>
+&gt; examples shown for one architecture do not work for another, such as<b=
+r>
+&gt; the pflash0/pflash1 options visible in -machine help on some machines<=
+br>
+&gt; but not others.<br>
+&gt; <br>
+&gt; Suggested-by: Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro=
+.org" target=3D"_blank" rel=3D"noreferrer">peter.maydell@linaro.org</a>&gt;=
+<br>
+&gt; Reviewed-by: Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@re=
+dhat.com" target=3D"_blank" rel=3D"noreferrer">berrange@redhat.com</a>&gt;<=
+br>
+&gt; Buglink: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/3254=
+" rel=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/qemu-p=
+roject/qemu/-/issues/3254</a><br>
+&gt; Signed-off-by: Linisha &lt;<a href=3D"mailto:linisha232@gmail.com" tar=
+get=3D"_blank" rel=3D"noreferrer">linisha232@gmail.com</a>&gt;<br>
+&gt; ---<br>
+&gt; <br>
+&gt; v3:<br>
+&gt; - Wrap commit message body at 76 characters (Daniel P. Berrang=C3=A9)<=
+br>
+&gt; - Add Reviewed-by: Daniel P. Berrang=C3=A9<br>
+&gt; <br>
+&gt; v2: Take a different approach based on review feedback from Daniel<br>
+&gt;=C2=A0 =C2=A0 =C2=A0Berrang=C3=A9 and Peter Maydell. Instead of incorre=
+ctly claiming<br>
+&gt;=C2=A0 =C2=A0 =C2=A0pflash0/pflash1 are virt-only (they actually work o=
+n x86 pc/q35<br>
+&gt;=C2=A0 =C2=A0 =C2=A0machines too), add a general note near the start of=
+ the introduction<br>
+&gt;=C2=A0 =C2=A0 =C2=A0about how options, properties, and command lines ma=
+y differ between<br>
+&gt;=C2=A0 =C2=A0 =C2=A0target architectures and machine types.<br>
+&gt; <br>
+&gt;=C2=A0 docs/system/introduction.rst | 9 +++++++++<br>
+&gt;=C2=A0 1 file changed, 9 insertions(+)<br>
+&gt; <br>
+<br>
+This was merged into master (20553466cc47af6a8c95f665b601fce3c852e503).<br>
+Thank you for your contribution!<br>
+<br>
+Regards,<br>
+Pierrick<br>
+</blockquote></div>
+
+--00000000000087a8e00655667e7d--
 
