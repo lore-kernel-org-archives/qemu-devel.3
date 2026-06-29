@@ -4,134 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 292DDC43327
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 137A5C43458
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 10:42:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we9RQ-0004Et-6O; Mon, 29 Jun 2026 06:42:16 -0400
+	id 1we9Rb-0004HB-5O; Mon, 29 Jun 2026 06:42:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1we9RO-0004EY-5R
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 06:42:14 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1we9RZ-0004Gj-Ug
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 06:42:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1we9RM-0003n3-DT
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 06:42:13 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65TAT7u82618934
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 10:42:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=qcppdkim1; bh=zvM0Ja3Y1GzYh/xMuKQb7hl4fqjXmwMVadP
- uiO72iTM=; b=UzkbhM1KYyuizx4kqoEt2XJJJ2ByAQMu+Q2GCw3R/Uu5h/HGtXO
- q2qAvpLBpeNRIUmfPYwKQCpRe8fMWRR6CM/e1ZZzN3+Ooql6nK/tq3u4y51WWfEt
- n+esdUEKAC/zZzLLmRDkBlHiVIucH21xxg2DzBvZpjg52p7WgbcdqdmE2xV13+Nd
- rYz9TBFNhNEzzA9WpIKQECogUB2qeDKyuel063uRqF3o0poKwCktUOa0MIM9AWNR
- gonhTPpzOPRZmuKDsBIMRtksCsBgQ9HuUklj6rBMq34CY5Ju4SGgrAiTKmM3QJhc
- BUZM/EXuO1T4Xa73/1rOSQ2tPkZ/kB4lw5Q==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3pdkr653-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 10:42:08 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-30c011c7cb9so8057636eec.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 03:42:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782729728; x=1783334528; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=zvM0Ja3Y1GzYh/xMuKQb7hl4fqjXmwMVadPuiO72iTM=;
- b=jgyzXsZSDN60jJYTCmiE97qGIX4qmETf1sipkhUwUfA9GjMhlBQMBUbU4zRVj0Fnde
- uczKG35uT4UIY4YoYwEpeAcWWTZd1P0CGXLGFbkdIVLTecTaBTQaGMWtgkiVpRaTlMvy
- 0Uf7ae0U4CMEkPIXPmT6f4pDW+79FbsHgM/PpI2faWSJAHmBZ1IHXysApuyGmtLgPliY
- Y+1greT28yVIm5I7hmhCsIjODmavetqq9RXebvanQ/pbnaxx5lMG/MkPLarYQLW/Zj5W
- METQjtwMADgyMm+ypay9tcjUs5j2B7aG5AQuCj4/4uAmLM8KP/ljwVW2ymVk9ixsuzUb
- 7Oqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782729728; x=1783334528;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zvM0Ja3Y1GzYh/xMuKQb7hl4fqjXmwMVadPuiO72iTM=;
- b=cPJ1QhZADCh4QLh+XAMP3ybhTL/F8s6toWjzn2rIXJeiS4pbJSxhI1Cl7aCiwUvSwQ
- l8wxuH+ChLh002J6dJORixNDUecXV5dppeo2ypiTg16LSM7nATLp6cgs7t7pCHORhy0K
- OG/xqWjCT9Zq2Z3sXjpdSmjVrzz6UMbzsecioXC0XRP7wTRkC2kI1KU3cfFwZ1xfCcnS
- H+OJr5IfmWeYDTjdcGEBJvVQqww26EJrQdtyEKDA0oZGUh8GlxtstjxoxhHRTBecgncz
- pwz7jemRO8SMy/cjNnlbMf8QD6lWQ+ci1vAUgJ2+ZD67804xPtNt9PecclDI1nqbD+RL
- u7cA==
-X-Gm-Message-State: AOJu0Yxrlew9cTZe365eyVz5CZUKkjO/7MAb/K1n3emVQsSZ9a8yPtO3
- l776pmLoxsmg23qtYpwCKsUA+I7d6guGZKfvth3KvlwtWoxqGRlArAIlRKaWzneQTV5Av+GIUgm
- 4ju2Kmm42vQdKbhBQ40uejVMMEAXAwfYiWT974sRtyk63Wig9lXr2YliAnoDKX0Tttg==
-X-Gm-Gg: AfdE7ckKIMlyxHAlZsKIaMhq8iLpR1FQBuHmqSnKzSJpSRkV/lXA9SxvQsOFpRRM3xy
- IV38sHYbdwZ76U8pyuFy/LXHaem4Ko7M+VtmOVnMOUfgYvN/KlkQ6MwBL07QAdFx043+oPiFJCF
- Ltcp0N0WwNtwrAVEuN3U7PJyiuAXctbI9BLIDorbq+ZMDTx0JdwPeQBlHu9sXQ1QuJzx7uV1xyl
- TFGzJEdD8xgPA2tp8RZQG/eHeVq5PPdt8XBvZVdje+YFLsRRw0x/OEEC8utiqXd9UyUiQZLE0iO
- CnxWUeeMrr2GI3HO5AQDIW2+RcsJiqXlCTbQnNVjftUVYuas4STuUzVi0yUF27V3dP1Z5wniDpS
- dcrV0dPqSgypujL3Eizp4mouh9P4LBNmYjYsh3ozWnrxdjQ==
-X-Received: by 2002:a05:7300:cb87:b0:30b:f888:7821 with SMTP id
- 5a478bee46e88-30c850a2bd2mr16917719eec.28.1782729727570; 
- Mon, 29 Jun 2026 03:42:07 -0700 (PDT)
-X-Received: by 2002:a05:7300:cb87:b0:30b:f888:7821 with SMTP id
- 5a478bee46e88-30c850a2bd2mr16917689eec.28.1782729727029; 
- Mon, 29 Jun 2026 03:42:07 -0700 (PDT)
-Received: from QCOM-UWl2o8bcGT.qualcomm.com ([189.79.21.40])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30c7c4ca240sm47727025eec.4.2026.06.29.03.42.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 03:42:06 -0700 (PDT)
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- andrew.jones@oss.qualcomm.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH] hw/riscv/riscv-iommu: fault when !PTE_U and no priv access
-Date: Mon, 29 Jun 2026 07:42:00 -0300
-Message-ID: <20260629104201.349850-1-daniel.barboza@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1we9RY-0003uq-Dz
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 06:42:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782729742;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QM2xB1nomDlL4ukHeL7bSN6O5PKqyuJ52BNzBDdmL9I=;
+ b=dk3hGLiQE/16L+5jglCqFN+2fMGxIXvcxaDgGaP4m28cHB6YWO/5d0PO4+a0SWF0iQwUoX
+ MHTLIF8mP6fXdApDH36jxnosWt0g5Z0UlNqvudaoQrdKb0/K0kRbNS9mLGsblbX+FDO6kv
+ hH5urwRdu9GPkR0oWEAA/9qCwx0GkBg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-144-jrwQoKvrNhK8RMGgLZpVzQ-1; Mon,
+ 29 Jun 2026 06:42:19 -0400
+X-MC-Unique: jrwQoKvrNhK8RMGgLZpVzQ-1
+X-Mimecast-MFC-AGG-ID: jrwQoKvrNhK8RMGgLZpVzQ_1782729738
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 593F218052D4; Mon, 29 Jun 2026 10:42:17 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9D9C73653A; Mon, 29 Jun 2026 10:42:16 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 035EC21E6920; Mon, 29 Jun 2026 12:42:14 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
+ <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  "Michael S .
+ Tsirkin" <mst@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  Jason Wang
+ <jasowang@redhat.com>,  Fam Zheng <fam@euphon.net>
+Subject: Re: [PATCH V9 02/17] iothread: introduce iothread_ref/unref to
+ track attached devices
+In-Reply-To: <CAK3tnv+YGdTPOgGSwz-KO22E_-UaaABmEKwTqrsuE7no91pXEQ@mail.gmail.com>
+ (Zhang Chen's message of "Mon, 29 Jun 2026 14:58:35 +0800")
+References: <20260624070851.13342-1-zhangckid@gmail.com>
+ <20260624070851.13342-3-zhangckid@gmail.com>
+ <87o6gx1yg4.fsf@pond.sub.org>
+ <CAK3tnv+YGdTPOgGSwz-KO22E_-UaaABmEKwTqrsuE7no91pXEQ@mail.gmail.com>
+Date: Mon, 29 Jun 2026 12:42:13 +0200
+Message-ID: <877bnhvda2.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=R8Uz39RX c=1 sm=1 tr=0 ts=6a424c00 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=p0WdMEafAAAA:8
- a=EUspDBNiAAAA:8 a=z1aqH4CQ4Ijy_SfQUPkA:9 a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-GUID: RSfbH2BPHDXcAP0mIykXbxKhfMKitDW7
-X-Proofpoint-ORIG-GUID: RSfbH2BPHDXcAP0mIykXbxKhfMKitDW7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDA4NiBTYWx0ZWRfXzW7OryQUHWAw
- 3miE2746Yfxnb3hDhtvrn2lVVKn0y8ppZUyjETlNMwgTnlgNPBeL1UOxYyuKTnhhDL3OseWdN0H
- LIqhB1HIJccFB4ZmoYwlSOERPZmrqfAI44ILJFWbdbpJjVwzmFeShs40tY0C4wWTU6X0z2cU10D
- sJ0x2cUFznQK7Kw0NwCZPd+s/tSHmB31ER6rmY66ksUsNqbLGyTNioo/zqcL1taFEFbkuKS3BUR
- DXp4tU4PJC0berxWtBHFlBV45kG/gJNClTeiLFaGSHzZhuQJ5yvJxYbBvZw1+A2kCk6lenVW0AA
- FqtrFangahXXEzTFJUgSJuyxs5H5teE+tlZCK3k+vWnCIT2KKXryWM4VS7idE0HdxCTqemGCc7r
- 49O7jBnYgFrFZHADRmlY+DqyWwb3/ko/I95yCEaMjdw3LZEzSv7CBCcAofv9XYZkUnFs0ARSGku
- 1Ac5Rl6WTWfYQSgu+dw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDA4NiBTYWx0ZWRfX5ZhqTePJcE+O
- K8Gsw8irgpNpkESWDPEGYUHsPYbZB9K/qc00wgP2e7yj6AdLssk7A93G9rn32ivvYnZvvxJg0F4
- vzlYE9tkFp9e1VliTczQc3xrvuGE3Vs=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0
- priorityscore=1501 impostorscore=0 suspectscore=0 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290086
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,47 +93,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All IOMMU accesses are assumed to be user mode unless told otherwise,
-i.e. we have a process_id.  In case we have a non-user mode leaf PTE
-(PTE_U isn't set) and we are running in user mode, we need to throw a
-fault.
+Zhang Chen <zhangckid@gmail.com> writes:
 
-Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3553
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- hw/riscv/riscv-iommu.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+> On Fri, Jun 26, 2026 at 4:46=E2=80=AFPM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>>
+>> Looks like you missed my review of v8.  I'm replaying my review
+>> comments.
+>
+> Oh, my fault, very sorry about that, focused on other patch's comments fi=
+xes.
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index c2c470b5df..2bea770fbc 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -297,6 +297,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-         G_STAGE = 1,
-     } pass;
-     MemTxResult ret;
-+    bool pv = !!ctx->process_id;
- 
-     satp = get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
-     gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
-@@ -468,6 +469,15 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
- 
-         if (!(pte & PTE_V)) {
-             break;                /* Invalid PTE */
-+        } else if (!(pte & PTE_U) && !pv) {
-+            /*
-+             * All accesses are assumed to be User mode unless
-+             * process_id is valid (pv).  In case we have a
-+             * non-user mode PTE and !pv we need to fault.
-+             */
-+            return (iotlb->perm & IOMMU_WO)
-+                    ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT
-+                      : RISCV_IOMMU_FQ_CAUSE_RD_FAULT;
-         } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
-             base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
-         } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
--- 
-2.43.0
+Happens :)
+
+> Thank you for your detailed explanation.
+>
+> I will address your comments in next version.
+> Expect the:
+>   IOThreadHolder *h =3D QAPI_CLONE(IOThreadHolder, holder);
+>
+> Same as your estimate, this doesn't seem worthwhile.
+
+Replacing hand-written code by QAPI_CLONE() is worth a try.
+
+I additionally described how to avoid the copy entirely instead, but
+advised against it.
+
+> And the same issue in the [ PATCH V8 14/15] comments:
+> static IOThreadHolderList *iothread_get_holders_list(IOThread *iothread)
+>
+>> If iothread->holders was a IOThreadHolderList instead of a GList, this
+>> loop could be QAPI_CLONE(IOThreadHolderList, iothread->holders) instead.
+>
+> If we change the GList *holders to the IOThreadHolderList *holders,
+> This means that we have to reimplement the  GList related API,
+> for example the "g_list_prepend", "g_list_find_custom" and the
+> "g_list_delete_link"
+>
+> This doesn't seem worthwhile.
+
+The replacement for g_list_prepend() would be trivial:
+
+    h->next =3D iothread->holders;
+    iothread->holders =3D h;
+
+iothread_unref() would turn into simple loop to find and delete the
+matching list element.  iothread_get_holders_list()'s similarly simple
+loop around QAPI_CLONE() would turn into a single QAPI_CLONE().
+Basically the same amount of code, I think.
+
+Your solution already exists, which is a valid argument.
+
+Mine stays within QAPI instead of mixing GList and QAPI.  Also a valid
+argument.
+
+Use your judgement.  I'd try to avoid the mixing.
 
 
