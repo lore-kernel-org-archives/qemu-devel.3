@@ -4,153 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F6DEC43327
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 15:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C699C43602
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 15:29:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weDsf-00067s-Fl; Mon, 29 Jun 2026 11:26:43 -0400
+	id 1weDur-0006oC-Rx; Mon, 29 Jun 2026 11:28:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1weDsR-00067a-NU
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 11:26:28 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1weDuo-0006kW-28
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 11:28:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1weDsO-0008QK-S2
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 11:26:27 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65TAT6Lq2627938
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 15:26:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- AFyOESO+/WNR1mTkSFW9hEOAlbcFBb776hUaFkffCRA=; b=SWNQ4heOfAs082sI
- WhsIt6fIHblh93rgzTgaeouX4QrHy61W6QHNxPoJjWuU9qxSgQxtNInuPB+TolJR
- jn+2vAYL5LFDYoKrRM5sJQIq5+3jdOPx+9ORg4qKdO6FU0zswj9Dp2WM2nO09JyF
- FPxFAXgXgkpSguiqRwzEZPS6LBymj0VYVgXuv7zTAX2AmvofxHKgFbszozDdgVXA
- yCW40Ei3IwP4OZ+0eq/tKpCnOvBcVqHLCME/5Q1V3YzXFNnXEJ0JheOlJdKwqUik
- EJMY2qR4cXX3YNqIWkGhZs0XUQZ6Hmj6kCC0A/ewF3le36ID5Oa56RpaQY4yE9DV
- 6UbBgg==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3nbgsmxj-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 15:26:22 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id
- a92af1059eb24-137f3465368so4227801c88.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 08:26:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782746782; cv=none;
- d=google.com; s=arc-20260327;
- b=KsMfIWLfuY5ebktx8M1buBbQZwD3Xv0roBQOEldAJ/FXqJgGf5WV10M09w3/5Jf1Ed
- 5OUGMpJbRPpOpzdbuvhh7tMo+kZ3LbEulUNI+PJV+omu36iwXzcouIJfDD80GxnMklui
- krfpACrvAjum+JGYhtqaP6NdxmhXdQwm39oLXqz/zadJ5YzfacD3w5YfNkABoCNdcMX6
- 24CAl04uQeA7syfmBfFNFZvQB/RWBWTnriTeVStnQW7NJ3H7POPgPYYxfKtzKoZ6Onw4
- GBtD5483ndARZk1WZiRxNJUXRQfhawEFe03kNqCNEEWcoB7hnYe4+t8gQFIyLoac5pYU
- 0QTw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=AFyOESO+/WNR1mTkSFW9hEOAlbcFBb776hUaFkffCRA=;
- fh=iXaGwEf+iMAymjNeFD/yd0eELTBhB7olSksT67XHMyc=;
- b=rkS9WbPsQ/NpOjHV4HlGz0dnUo7DsnbVSzFB5AlFAnS5UvKKJ3CBqJ0iCJlenwa9Wi
- zj4FC0p35uQREtdhZPxGodZRygAncQMfak3h4LZd2wuZsKrxgJtD272J0z84FnHFvqST
- aDvRTxc4SnOAPJzqmgbaTe2Pj1EvfBAmeBViwbg55dIA0Q9e7Vlffq9YxnKJwVoRF4rg
- jM7gOK35MYyvLo8Ml1+HHTAchpkuqUHvZLUcMBPxnITmhSyIMcdexvhmudMn8hX0DW+q
- /ip02KpFdlsBZEn9hXXTD4CJyNEz41bgOqgt98ZO/dhCpT0d8elGfNBbh0FuSabqS/le
- Xd/g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1weDul-0000Zt-JU
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 11:28:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782746925;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5lvq7JLqjbMX5TrlBnGXzrqrCFVtr4Qt3b91ZGtdqVQ=;
+ b=EEOirRvbqAw9TDN1KRELGmnPNgj3EUWeBCrRnZTHUei36f7+1iGAoqk5VOD4kvLAOnR3ew
+ S2xMuXq3BJJR63tA93f4xxbsTAlALhWUBIL+fo/ihjBPOGDlOARQsxGCBaTTZxX+FL8OQC
+ EFgnhWgjiu+AAKz0hZwI+KNjCkEWqwc=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-586-GWmZdE6FOTiBYj-J_mwzwA-1; Mon, 29 Jun 2026 11:28:43 -0400
+X-MC-Unique: GWmZdE6FOTiBYj-J_mwzwA-1
+X-Mimecast-MFC-AGG-ID: GWmZdE6FOTiBYj-J_mwzwA_1782746923
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-c125bdd01cbso153325666b.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 08:28:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782746782; x=1783351582; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AFyOESO+/WNR1mTkSFW9hEOAlbcFBb776hUaFkffCRA=;
- b=Df+CLtVdMhkCpbjVuXwATaWJyZv7alHRDTVibBAq4M/pUZCsdZ0k0DM1CQOk2o5Az5
- LMYl/8rQPccoJLVumWyNTO0PadFvGKnnnEf8V6RWclqxczAwvYyzEOGdMfPsy4pjk1Gp
- MMiGGEKUV/GToEUFDgPY3K5gGULapU7/zRrqNOeHepYF4X/wC6UQsEumbcPSjzlwWj1a
- TfYGhRNPnjeK41ajVYLx4jTEPMhPRAY1wQSmocE9LvmpPy7viEfy0II5r52kTuo9G/6A
- BBemPW6nZs0D/SmrSQhNlr/WmxhqkriSreVze1TBmll47Tp2Fg/j4ayZf1GFOl1OWNDY
- VTQw==
+ d=redhat.com; s=google; t=1782746922; x=1783351722; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5lvq7JLqjbMX5TrlBnGXzrqrCFVtr4Qt3b91ZGtdqVQ=;
+ b=D0/0R+G6FojPS6CMAoOgxF3rF5leQnFEctgC0y3LCPAMhJotl7oYvkL51LUUFSm/Sn
+ UbBXuYpHoxV6JTd+CvGybeE4CYhQ6FxWv4ca56VFj7E1428DKnXp8z5QTqHa6nbY4sAj
+ bhy6HniAz0bDff0HomeOaJbBG5KCGjWDdzNkzIabAFHDs1gJo+SmeYJ+mXwTvkKu1W2C
+ +/i6xA/HlHYNQvC5CQpXKdGOCA+qnKABqKfzDKC9zz8ZPF1u+S/1zGczhu9Rz23Ivdda
+ 6Rr3IHOihy6LZLDbU+0LlMIoRyqGFrh4dH6+H6IJPW5U7V0KouUCI9sASyZnntFuxPiN
+ bnDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782746782; x=1783351582;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=AFyOESO+/WNR1mTkSFW9hEOAlbcFBb776hUaFkffCRA=;
- b=gTIJbyJYPSBYXe/NYlcf4ktd2VT326Q/NY7ssnkK7FT25fzGGJ0uvsBLWJPoyQjTr9
- B5UDgNsljw8azTaGDBeF6LfoHcKLDHWdKNn4BWFtwaVzRjsdhuQmBCPnHkW6rk9KzShD
- 85cB2U6ULapzNCxO6Grfhn0wxi9ywjkFpyTo4mBL521lZGiaZlZETckeRD1VuOJDTyAm
- W1+RcUBlDpIoeWgG6uJwcq+92DIddE0LENa/Vgf+DpQTrFOBmoyLxGXBjO7gpMkUvYqo
- ft3r/3L43Z4rBXxMvGJ9EEjh+N92OZOJpRse1UVvOENYrOxJ/R/4DeN2npKMnZkjwWM0
- 3tNg==
-X-Gm-Message-State: AOJu0Yz33IHfZfYg33g+vpu6a16TBw1tfd2jKklddAvy1M693GNdGzex
- BQZwd8QFVYd5dwzfHLVzF5n+7vMaIO/r/lE+gwnlo7I0oUnaQk9v4g1x9gR24BHRjzEsedM0SYH
- LtWS9a2nYZwzE5BrP2wlCngpuiQU1WXVA2aMsqZP9ZUvjZhPXoJg67rxHDS8NaIv34oHWm2a3ds
- pPslj5POTZZJRV/BgVa7rDyENhxjKU6dU+
-X-Gm-Gg: AfdE7ckmHk5Hdk9LItHG0I8fm/l0rdgxNjSQRxip445bmE1l9JHjmTXpvAbN2WcYofj
- xesJkcUscL6k3nUELLIZPCHTQ7W6/3poTiP+lsSuTs03THkPZ2GWxSWP8CApvxB8RL4toSLirbc
- zYZqw2kRHkCNoT6aXYC/rCGuuSDxycc0qQQCXGCRkazL2k1taycXhltBsZfdnUq+eMM5nR
-X-Received: by 2002:a05:7022:6a6:b0:136:9ebf:3be7 with SMTP id
- a92af1059eb24-139dbbaf08emr14203764c88.26.1782746781595; 
- Mon, 29 Jun 2026 08:26:21 -0700 (PDT)
-X-Received: by 2002:a05:7022:6a6:b0:136:9ebf:3be7 with SMTP id
- a92af1059eb24-139dbbaf08emr14203733c88.26.1782746780896; Mon, 29 Jun 2026
- 08:26:20 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782746922; x=1783351722;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5lvq7JLqjbMX5TrlBnGXzrqrCFVtr4Qt3b91ZGtdqVQ=;
+ b=dVbix9dMSLHs3xiFNBpKGHWQMMtDhxxoTzul6gTaMHCAy4yq1T2oDPvJX0vIgr0Q2b
+ rIMl8rzavNOalx6iLo+vTMhyRTOO2viRbhFDwViAASnDFA5uc0ZPIbf+mI9ELfW8DrQd
+ IwFzVsCs8Poqlf5wTp5zN3Qci24etNXhhM3YZDkLoPAljOkZ5RFybBoUkJwvxuyl+pzq
+ B06DsMHkV4F4Rn5/bRmNH13S36Naxckz4K5j0KYF3pK0EaoGxGU8CRpIpb1hTtQLH8wy
+ 2Kziq91erO/lnZoV4GdSzpmtUpFLPyc1+AQsbtqzxYOzGeZnLSB8hOobMgdL5olpwrI4
+ xGbg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RopJIiRV34s/Tk6jM8xueuPAEsZNZ/+VahdpK9WZOqB84UMCG9CJLma59pdBrvxzDXJrgWe3q+AEVVi@nongnu.org
+X-Gm-Message-State: AOJu0Yze0uViLEkTzubybXJxF7GAuQwRQhtp/bS8qoXG2yOAq1bgLYiO
+ A9CKpmUxkhxvi0vR0mZkSQ5huzcwYAiWtVSFBZyT6bePrMC1eZvzsnlJ999qLVjLWRyQhcz/XlE
+ rsfj4g78XG3lNVXhTX5RdhkqrstaSdmpgCdFbVYFENkIesda3Fy3ufRvp
+X-Gm-Gg: AfdE7clPeq6p5qNMUv17+4ZoRgRxYIE05FVgNI9HgqJm5x7NLboTKhIzbpsfojjSmxD
+ T6FGao7UGKRQGEaaq9tyZHd3Lhpii0X4Lw6gy/eDjlKYUa0CJj2o9hmSFVXhUbyYjgF9H8VlL4a
+ lfLN3o0FAxKzUUsd17wUK1us48dafVmaKFuruwPGEzZFjQlQSS9wdBwWZ6bUPZoUAWhtYhTh6Ri
+ gK0SXB9i/uZytOcK/vnj1w48+1YCM6+QnEzM1ORLYZd7FTSoKvsE23mfTSKi1RLqYcbt9KosFFz
+ 9i3znR2GT58ZRuPL7bVMss2x7f+N8cVZNZbh9djFf+NbNRHyiD+N7CRCq6o/Byj2A4qal3opap2
+ uJGYT/oR11f169lOyJcE2gRcc163dpAQjaETBARBoCRvZiHT5CC033A==
+X-Received: by 2002:a17:906:b30e:b0:c12:6822:d292 with SMTP id
+ a640c23a62f3a-c1281378684mr45597566b.4.1782746922415; 
+ Mon, 29 Jun 2026 08:28:42 -0700 (PDT)
+X-Received: by 2002:a17:906:b30e:b0:c12:6822:d292 with SMTP id
+ a640c23a62f3a-c1281378684mr45595766b.4.1782746921905; 
+ Mon, 29 Jun 2026 08:28:41 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c1251a33abbsm300107466b.54.2026.06.29.08.28.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jun 2026 08:28:41 -0700 (PDT)
+Message-ID: <2c83f650-bfb5-4c59-aa62-db64ba81db81@redhat.com>
+Date: Mon, 29 Jun 2026 17:28:39 +0200
 MIME-Version: 1.0
-References: <20260628190358.634435-1-brian.cain@oss.qualcomm.com>
- <CAFEAcA8zD4ifpmdTxoMe4jCUGE=jQd6uwbnx5WL92GL9nWsHnw@mail.gmail.com>
-In-Reply-To: <CAFEAcA8zD4ifpmdTxoMe4jCUGE=jQd6uwbnx5WL92GL9nWsHnw@mail.gmail.com>
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-Date: Mon, 29 Jun 2026 10:26:01 -0500
-X-Gm-Features: AVVi8Cf7eg2cgn65bSeG_YOz_kR6MoZosChMi2mQN56cEcigMtYK30wcH05XlFo
-Message-ID: <CAEqNhNbCtZzqUxRy9PZ5JyMKbTPKx5jsaPChV229cYvstWLemA@mail.gmail.com>
-Subject: Re: [PATCH] configs/meson: disable hexagon idef-parser for emscripten
- builds
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Kohei Tokunaga <ktokunaga.mail@gmail.com>,
- pierrick.bouvier@oss.qualcomm.com, stefanha@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-ORIG-GUID: L88shu_xzj_c2yec42dVLZDd81PZ-NWZ
-X-Authority-Analysis: v=2.4 cv=Z4Hc2nRA c=1 sm=1 tr=0 ts=6a428e9e cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=gowsoOTTUOVcmtlkKump:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=NI4JFcc8okL2R1nn9IgA:9 a=QEXdDO2ut3YA:10 a=vBUdepa8ALXHeOFLBtFW:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDEyOCBTYWx0ZWRfXw0Nnk99C9Hxo
- azVXhJubxywPPI65oBhEmS3TekKzBkpCEG6EwgMpSBJmQLeC2LPHVH9XgiwmV7z/QSkB21HLgLM
- UDIFynSbhTt/vyYU5Vium6Kg0AIGgKo=
-X-Proofpoint-GUID: L88shu_xzj_c2yec42dVLZDd81PZ-NWZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDEyOCBTYWx0ZWRfX46YlSYBbehR8
- UNzNM1u3qHtCy4bt25+ArtY/N4kltQ1ZB7ZQWu+DuREPmiRQiTo1YUsPe1mUSlJN4/kqgzYKgM/
- 40fX69AiWAyLWWbsTUFm5lTxkNp0Jmd6Nl0LEdwn+Lq29Kfwhc3CaUa0s7M2juD6jf3t+M12KnI
- Hs5sN4LyAlulNOqnQPbKwspze/7d9ZZIFVktnIUbf5B6yUT1K2Ffe/lbnfhEwwdGTGmhiS8a3ce
- XT36jehJ5xH8eP8wY8OnhLrYUniGEKlO15HR/iolcqP2uG+X2VNkmmhHaxXvQy9zRlvt6jLERUg
- cDDZeQQyijdE937vYELO14nWL1EtBWzPiJftUSqRR4+JMA9ioYX/7FUMi8AnAuPIZdyJ7oJ7/Rq
- srUoaiTD+9XBnZ5y0XU6pbovHkOR3ZRkt9WO/bBMaK399qHdh4NRBhxcodUW1r+46qeznXz2APC
- ZUL3+rSRWJd8TFTrZuQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
- bulkscore=0 spamscore=0 impostorscore=0 phishscore=0 clxscore=1015
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606290128
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/3] arm/kvm: get demuxed ID registers from kvm
+Content-Language: en-US
+To: Sebastian Ott <sebott@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20260622135627.40573-1-sebott@redhat.com>
+ <20260622135627.40573-4-sebott@redhat.com>
+From: Eric Auger <eauger@redhat.com>
+In-Reply-To: <20260622135627.40573-4-sebott@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eauger@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,53 +128,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 29, 2026 at 4:39=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
-> On Sun, 28 Jun 2026 at 20:05, Brian Cain <brian.cain@oss.qualcomm.com> wr=
-ote:
-> >
-> > The idef-parser is a native build tool that requires glib-2.0 on the
-> > build machine. In emscripten cross builds, emconfigure sets
-> > PKG_CONFIG_LIBDIR to emscripten's sysroot which prevents native
-> > pkg-config from finding system-installed packages.
->
-> This sounds like a bug in their cross build setup.
->
->  Disable idef-parser
-> > by default for emscripten since the wasm target does not need it.
-> >
-> > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> > ---
-> >  configs/meson/emscripten.txt | 3 +++
-> >  1 file changed, 3 insertions(+)
-> >
-> > diff --git a/configs/meson/emscripten.txt b/configs/meson/emscripten.tx=
-t
-> > index 4230e88005f..c5c57e392a9 100644
-> > --- a/configs/meson/emscripten.txt
-> > +++ b/configs/meson/emscripten.txt
-> > @@ -6,3 +6,6 @@ objc_args =3D ['-pthread']
-> >  # configuration so explicitly add the flag here.
-> >  c_link_args =3D ['-pthread','-sASYNCIFY=3D1','-sPROXY_TO_PTHREAD=3D1',=
-'-sFORCE_FILESYSTEM','-sALLOW_TABLE_GROWTH','-sTOTAL_MEMORY=3D2GB','-sWASM_=
-BIGINT','-sEXPORT_ES6=3D1','-sASYNCIFY_IMPORTS=3Dffi_call_js','-sEXPORTED_R=
-UNTIME_METHODS=3DaddFunction,removeFunction,TTY,FS']
-> >  cpp_link_args =3D ['-pthread','-sASYNCIFY=3D1','-sPROXY_TO_PTHREAD=3D1=
-','-sFORCE_FILESYSTEM','-sALLOW_TABLE_GROWTH','-sTOTAL_MEMORY=3D2GB','-sWAS=
-M_BIGINT','-sEXPORT_ES6=3D1','-sASYNCIFY_IMPORTS=3Dffi_call_js','-sEXPORTED=
-_RUNTIME_METHODS=3DaddFunction,removeFunction,TTY,FS']
-> > +
-> > +[project options]
-> > +hexagon_idef_parser =3D false
->
-> We should have a comment here that briefly explains that we're doing
-> this to work around a bug in the cross build setup we use.
+Hi Sebastian,
 
-Added a comment -
-https://lore.kernel.org/qemu-devel/20260629131232.2487780-3-brian.cain@oss.=
-qualcomm.com/
+On 6/22/26 3:56 PM, Sebastian Ott wrote:
+> From: Cornelia Huck <cohuck@redhat.com>
+> 
+> We now have the infrastructure in place to handle demuxed ID registers
+> from kvm. Use it to get the values that kvm emulates for CCSIDR_EL1.
+> 
+> Tested-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> Signed-off-by: Sebastian Ott <sebott@redhat.com>
+> ---
+>  target/arm/kvm.c | 32 ++++++++++++++++++++++++++++++++
+>  1 file changed, 32 insertions(+)
+> 
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index a54ef51ec2..059d361d88 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -244,6 +244,33 @@ static int get_host_cpu_reg(int fd, ARMHostCPUFeatures *ahcf,
+>      return ret;
+>  }
+>  
+> +
+> +/* CSSELR values; used to index KVM_REG_ARM_DEMUX_ID_CCSIDR */
+> +#define CSSELR_MAX 14
+where does this value come from? Worth to document
+> +
+> +static int get_host_cpu_reg_demux(int fd, ARMHostCPUFeatures *ahcf,
+> +                                  ARMIDRegisterIdx index, int subindex)
+> +{
+> +
+> +    struct kvm_one_reg one_reg = {
+> +        .id = KVM_REG_ARM64 | KVM_REG_SIZE_U32 | KVM_REG_ARM_DEMUX,
+> +    };
+> +
+> +    switch (index) {
+> +    case CCSIDR_EL1_IDX:
+> +        if (subindex >= CSSELR_MAX) {
+Can't we introduce a macro that gets the size of the DEMUX register
+instead of hardcoding it?
+> +            return -EINVAL;
+> +        }
+> +        one_reg.id |= KVM_REG_ARM_DEMUX_ID_CCSIDR | subindex;
+> +        one_reg.addr = (uintptr_t)&ahcf->isar.idregs[index + subindex];
+> +        break;
+> +    default:
+> +        return -EINVAL;
+> +    }
+> +
+> +    return ioctl(fd, KVM_GET_ONE_REG, &one_reg);
+> +}
+> +
+>  static uint32_t kvm_arm_sve_get_vls(int fd)
+>  {
+>      uint64_t vls[KVM_ARM64_SVE_VLS_WORDS];
+> @@ -286,6 +313,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>      bool pmu_supported = false;
+>      uint64_t features = 0;
+>      int err;
+> +    int i;
+nit: you can declare it directly with the for (int i = 0
+>  
+>      ahcf->target = QEMU_KVM_ARM_TARGET_NONE;
+>      ahcf->dtb_compatible = "arm,armv8";
+> @@ -454,6 +482,10 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>              /* Read the set of supported vector lengths. */
+>              arm_host_cpu_features.sve_vq_supported = kvm_arm_sve_get_vls(fd);
+>          }
+> +        /* Grab demuxed registers. */
+> +        for (i = 0; i < CSSELR_MAX; i++) {
+> +            err |= get_host_cpu_reg_demux(fd, ahcf, CCSIDR_EL1_IDX, i);
+> +        }
+>      }
+>  
+>      kvm_arm_destroy_scratch_host_vcpu(fdarray);
 
->
-> -- PMM
+Thanks
+
+Eric
+
 
