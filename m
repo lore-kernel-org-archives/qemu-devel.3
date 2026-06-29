@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5630C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:06:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F449C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:06:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAgA-000777-3c; Mon, 29 Jun 2026 08:01:34 -0400
+	id 1weAgJ-0007Mr-Bk; Mon, 29 Jun 2026 08:01:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfk-0006xZ-Jb
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:09 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1weAfi-0006w6-3e
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:07 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfh-0007SF-LE
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:08 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-471eeac43bfso1733158f8f.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:01:04 -0700 (PDT)
+ id 1weAfc-0007Py-Ic
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:03 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-47362928f65so860022f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:00:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782734463; x=1783339263; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782734458; x=1783339258; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NEwrFTmw2uYqFCPwKBfqshoz5JAjsjRtgyEC9s0QvTU=;
- b=ye/okTO7NPXjKXURowz/3W2TN/58p/jutYeEYSeooxvUbLG6dhN/7aJQTBqYgh6Z1u
- lBQUbCD8qCNI5HBTO/OAcj4bSbuGTB5+j+wBX8JbHc/tKkqCDtzHb4qgM7sBqWEZeQUM
- 19GsTQuW74kPW3Hiy8L1ftnTQZdC0UnFmDNvmkp1/MPLNOv4IgirQDRkxPQTWn+6kHo/
- KlWtq0eWPSYYVya4QjfK1C35nQuAw5P75EDn72FIISZ7KnsjHqJoLzXS6aNAkhYkvZl0
- peLa7aXwrlRdcZ+dH+vmReWy0fmsZqaWT4Hfa/if0e23GSOvQSgpWvepCWW5r+RjPLZx
- II9A==
+ :reply-to; bh=7nxrNrYCopcurGkkgdYz5xeXgIeGKYV3dyMssD6Ea1k=;
+ b=JyCMYcKQItAzcpdILpTTgPqDdmaIigsugmU5NULG4u121w2vzpxtDBrdNX8To8/Zh3
+ Ap11zMKY3Y/Icxpi0Scr1IHRvVAvLAfaXueBCqmXaRkC0kDdZwD4NaDYBlaH2HtBQ+ZO
+ qf3TVPY0ZmVCB0wSsln1KIhxT6fv9rq6G5vMXGBZsHBzu6B/6rV2HhlDEoxSVUuxLgPB
+ TMpu73nzrH4AO2avWvkgbqJubxd7u399p2Soy2sOpX7CsYw92H28o3H52Y8oDEBCb6Hm
+ CJUIg9KZ1IbsFbuT1JfySmEKSDnClEg586PKfccjSA0EWwyljls9oDNh2R1lGIZrOcS1
+ VIeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782734463; x=1783339263;
+ d=1e100.net; s=20251104; t=1782734458; x=1783339258;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=NEwrFTmw2uYqFCPwKBfqshoz5JAjsjRtgyEC9s0QvTU=;
- b=BJl0xpZ3l8VKuNF6Q8spPVvL0+qaNxJZ5rL6PIqaxd0TXZlvFobDn+l6Frv1dbPEQz
- DAYgNb93/8gA5oaQgA5wPgHblr2ZeZSdvFAUdsuayCVWiV33/aB8E4t5mYl5rGmDw9Zq
- Pdv45043t+2uZG9cIaic6m0zcL08/K6UCI4nkAdi+BHKbGp6epeAJVSvejGpBNneSCTx
- wsVs6OF81AKM8vH8gHLG0h+KI2XVEIXeJT9PeGjm0OYwwo50oMO1Wilr8XHmJiyWJV2f
- lufhQEDpkbVea42Zfs8RsXJwCFbR1VLdLFA+V57tx2deuu0dkyv5MjYWEKnqPfz4bxxV
- tFwQ==
-X-Gm-Message-State: AOJu0YyQ3Xn9MA9bhwnhzE0EBnBqu2ueZ9OzF/WHDQDHcG/EvhF2lW5l
- TLb373ShYnPTrVr4dum2fBirDwhPP/jYTgDj5Xd4MpP5nUQNOqMryeGyAUhtgdP9z6/ozddfF1L
- UG49s
-X-Gm-Gg: AfdE7ck7nbOIjrmTHyWYQta6c0hGn0jIisnn5iUBNByPRb618rHk5phBK+SxIlbO9Ve
- ySXToKVkEHkgfA967noPJA+C+2SmvNrVqEgrunPao6YVY/TqC0xTJ9ooMe13/o33lLImaAR6rFr
- hvsYDInL6oln8CYsDctBahjEQGvxiFibNPCpDarUx/cSqSVig98pMNnK3zRkaY0VMw81vzmFX89
- nDaNG3DSAn03cml5sMb6ysNCpnH9xmm1iCZDE6UKcREYGmAAnXDRq6D89njCgPnTrh5QTjFPnyq
- WdzUvpaBonSx2cSgZWNP3+mWMyVtqRvG7Jrx1XM8JAcLWdaNBV1XgJmqGv0gKBVB0UpmH3QPiC7
- Mw4T78xuzwxT0gcgLEQDj/5biztxMmryxNvzVJ0uW20HdrB8uDaIGPzEVWzAAIf7HlI2oO1Ll3q
- av+dDB5KSvv7+hkA2Eyb+6ni4ndr63RZ7lTQ7VXz9+1N6dlD23FhbXEP0dTJSbAsT3NynxWGRoE
- q+jBlgQ3gwTX/zjdhKcog==
-X-Received: by 2002:a05:6000:41fb:b0:472:f8b5:aaca with SMTP id
- ffacd0b85a97d-472f8b5ad11mr8132840f8f.15.1782734463001; 
- Mon, 29 Jun 2026 05:01:03 -0700 (PDT)
+ bh=7nxrNrYCopcurGkkgdYz5xeXgIeGKYV3dyMssD6Ea1k=;
+ b=Xd8BbCpDVDhHDbXtEQnFeEidPPV3MJbHsOsMklNFAJCUA/hAYKvoOZs/SDpd5KzXP8
+ N8Y84qLF97L3QGENa2UsXttZkS8DuolJERI7mwVLvf4GGAzWkSfj0hdlOb6dsR/RvFfA
+ ywoO0BG5nDh1ArX5vFpTs1km7LAIGpCJjOl/kEQy9hMQNaXWYLYEp82fsYZgLAO7hx+p
+ /J3snM+iNFFWdck9rajC2HQeMddxt5dp8/DfoF/Ol3f324ZRR9FDyyZLRlbNm20ytNc9
+ 4WHSQihmsnZg6f8t6PZ2216pbu3q1UcZhMAlpkwpFYLjCP4XgeoRDtA11i30c/0ltxuc
+ ccmg==
+X-Gm-Message-State: AOJu0YzSKzKWppXtX85J9M2eB9bqIFvh6YzxyCKWsnpZB0XZMUxE2yG8
+ atrYYMXv3EoqZqhtVJn7wceHFCgwfzBWAQVKWnGU06AeFgKE5qI9Bs70q9qEaRDJiQwbPDYokUs
+ HWrcY
+X-Gm-Gg: AfdE7cmGLx3avMkPOb1aTyqsWbzJCwSXP7fczUKhv37wVGFOCMLEbBQiAqGQDGaL8iT
+ JWphO6M6hcrBnVLWGMqVB8mHBxw8o2ggmPupwbkPveZUuKuT3oqogFygQVoLTLZwrEhM3EvAqkj
+ RkCU6p7ShPvPUlmVj2DitlHUDxaS+hwhBeliwF7Ym17rdGw+4QdY31KP4nHBgvL+8GEBMwssyUe
+ Rq7R1/ymAho+tocMw3oV44gbtjiWvVX4RoN9msRNLETCqe6Im596DfkQlOvzUm2cYb9DZOHi0z+
+ a8y3NAalcp7+AD16WQaOr+B7yQ1X9kVst0p8cshg1BLbldK2WSv0isiZ2D/kxOQ0GzjCjxdhZrL
+ jiBGlid7dJmkxUKYWi0UQwMRzsCvezm9GPVf4k4+YvbEPQRUNeg5drrhhQ3e96oexnghKIXWHhI
+ UcuGGstybh8nbsmenKjC8iF2BxCWlZH6m5+4NTsKGck2QSRtjUqGFqSdfOAbMMcPASkO+CST3Px
+ crvLdOg5955FXI/XI6dWo8xDXdowj1g
+X-Received: by 2002:a05:6000:2487:b0:474:6301:3e3d with SMTP id
+ ffacd0b85a97d-474ff09be36mr258798f8f.11.1782734458213; 
+ Mon, 29 Jun 2026 05:00:58 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.01.02
+ ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.00.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 05:01:02 -0700 (PDT)
+ Mon, 29 Jun 2026 05:00:57 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 28/54] target/arm/cpu-features.h: x-rme now means GPC3
-Date: Mon, 29 Jun 2026 13:00:06 +0100
-Message-ID: <20260629120032.1645265-29-peter.maydell@linaro.org>
+Subject: [PULL 23/54] target/arm: GICv5 cpuif: Remove ICC_HAPR_EL1
+Date: Mon, 29 Jun 2026 13:00:01 +0100
+Message-ID: <20260629120032.1645265-24-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260629120032.1645265-1-peter.maydell@linaro.org>
 References: <20260629120032.1645265-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,31 +101,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jim MacArthur <jim.macarthur@linaro.org>
+The ICC_HAPR_EL1 register reported the current running priority of
+the CPU. However this can be easily calculated by reading the
+APR register, so it has been removed in the newly released A.a
+version of the GICv5 spec (IHI 111701).
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-Message-id: 20260618-jmac-gpc3b-v3-4-353e546067e7@linaro.org
+Remove QEMU's implementation of this register. (This is OK for
+us to do without warning because our GICv5 support is listed
+as "experimental"; we anticipated that this kind of spec change
+might happen.)
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-id: 20260615105029.2898872-5-peter.maydell@linaro.org
 ---
- target/arm/tcg/cpu64.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/arm/tcg/gicv5-cpuif.c | 14 --------------
+ 1 file changed, 14 deletions(-)
 
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index e9eda8fbf1..a5734446dd 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -159,8 +159,8 @@ static void cpu_arm_set_rme(Object *obj, bool value, Error **errp)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
- 
--    /* Enable FEAT_RME_GPC2 */
--    FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR0, RME, value ? 2 : 0);
-+    /* Enable FEAT_RME_GPC3 */
-+    FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR0, RME, value ? 3 : 0);
+diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
+index 1aa4bde799..a868adca66 100644
+--- a/target/arm/tcg/gicv5-cpuif.c
++++ b/target/arm/tcg/gicv5-cpuif.c
+@@ -511,15 +511,6 @@ static void gic_icc_apr_el1_reset(CPUARMState *env, const ARMCPRegInfo *ri)
+     }
  }
  
- static void cpu_max_set_l0gptsz(Object *obj, Visitor *v, const char *name,
+-static uint64_t gic_icc_hapr_el1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+-{
+-    /*
+-     * ICC_HAPR_EL1 reports the current running priority, which can be
+-     * calculated from the APR register.
+-     */
+-    return gic_running_prio(env, gicv5_current_phys_domain(env));
+-}
+-
+ /* ICC_CR0_EL1 is also banked */
+ static uint64_t gic_icc_cr0_el1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+@@ -928,11 +919,6 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
+         .writefn = gic_icc_pcr_el1_write,
+         .resetfn = gic_icc_pcr_el1_reset,
+     },
+-    {   .name = "ICC_HAPR_EL1", .state = ARM_CP_STATE_AA64,
+-        .opc0 = 3, .opc1 = 1, .crn = 12, .crm = 0, .opc2 = 3,
+-        .access = PL1_R, .type = ARM_CP_IO | ARM_CP_NO_RAW,
+-        .readfn = gic_icc_hapr_el1_read, .raw_writefn = arm_cp_write_ignore,
+-    },
+ };
+ 
+ void define_gicv5_cpuif_regs(ARMCPU *cpu)
 -- 
 2.43.0
 
