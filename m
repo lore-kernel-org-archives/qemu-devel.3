@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E450AC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8104C43602
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:06:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAgJ-0007N4-DI; Mon, 29 Jun 2026 08:01:43 -0400
+	id 1weAfo-00070Y-9E; Mon, 29 Jun 2026 08:01:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfv-00071x-U7
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:20 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1weAfa-0006tJ-PA
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:03 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfu-0007Zg-5i
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:19 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-4629051c946so1754987f8f.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:01:17 -0700 (PDT)
+ id 1weAfV-0007NI-7g
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:00:56 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-4745492ed3aso410523f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:00:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782734477; x=1783339277; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782734450; x=1783339250; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5J7JbcYjvYkbmupyUVBulnGG9P2cGrj8EchG/bCGUNk=;
- b=wimX1iKlOyBtTRbPQ/tdwIjQVHCiaT+YEmRn6XLydNs2iHDqZxRW9dCtHnZJNvQwjP
- EEyK0kID4RYFALR8ay7w5ckpv7wyAtEKtTbbPUfXD0Z0+ayOCPRVWo5AZgvga3GjjjST
- 2IIvdcQcD3vo7kKMhcSNEMqtfx0ZFoWLBwBnNp653bcIXqAJWAC+H8UfOTHOZY/0B2Ie
- qDRrexznEQ9HcqOv+P2l/bDDEpYeKdwkcYNOLr2TX59quGq9IyNbncniKaCrhVQr5Oi7
- /u312TrMtEyu3xO/sKMzy0PeKcMEakvOivrbnxio0/pZR9v/pFhHUDEJKzmB21+hTFai
- HU6w==
+ :reply-to; bh=9DBBXZ6/da7INOl9cTlESZkgra1ZBKms/6DduvGkI/E=;
+ b=Fk89nO6mbfwDuZIm2aTiEDCdwYiDUr8JSLZ/oBjgiWN2yZ1TjNiwy99UiA7JJAuomd
+ 1QYUrG79owq0gvEEwEjezVcL+cv6mumIXVSaDIcGmA2/HKErX1bVU8oCOgtiEh96uTuB
+ qSGw1SjVx9+3urd0pKbfBUFUj1H2C1PiBjkTbg23CYIr88S6/IXg/SJpAkgs2rzqzQtD
+ vAUbqxoe1JA8zGgS0kF8pjgvMmFtF4IcXqxI1Zn5EyrivnAaM4MzGgKN316HUOhOb6M3
+ RefPP1X0Y7LIo4mANjBBKis8cC6VFM133Ip2l71lSFpfDoycj04AnDSGdFIXE1+rerPj
+ 0QbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782734477; x=1783339277;
+ d=1e100.net; s=20251104; t=1782734450; x=1783339250;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=5J7JbcYjvYkbmupyUVBulnGG9P2cGrj8EchG/bCGUNk=;
- b=EnyyqqODZw3k30Xq1UcjzLKUeSZXO3C9UcvwGb52wXA+dUC/fYaHHFgHrrxRSo+bqJ
- nnvd8p5d0cMx4kb7byGMThdiUHi0P8D2mraS20z4JjizCacVYeOh9D1IEa0a8pu7K+Mp
- r1LxdzC53w9HQTH3raWVysYjgZjtuOgRsl+BoJj3a0k7D/5zkgLWwpmIUh4E1aLpfh9i
- PNOZtqVPvvFFy4O9BH5LOyfOFBXf2ApoOPIDw0XY+KU9lkYbXquNz6+asedirsjem8Y1
- KIxR8Vxz3iX2rnGxvlKz9P+Iib4algwELnItdmwy49owD6Lup060ut/GJ3lvMhtZs2G4
- lSdg==
-X-Gm-Message-State: AOJu0YzGlmLgEh6U0YVDX9rx7aQwgWQaRvln7ovyMzfe8CNMWXNWJ/zF
- AQAPBlCb3KUCkh5gPcYtRuIO09uNWLpO38U0im3Iw77/kPvURSPJmftAa4wH8Z8IAG3GCm1uRfx
- DoEE8
-X-Gm-Gg: AfdE7cmsaxukxEZBTdjz+23eNvyWdS5wD+Sl+yfpK2inNFGCG5dWbxhVQAcQcQjS0qN
- gh48gGM8b5pMXravEWhDvcqCQ3Pr4pRrAFBWfM1DyOrLsw9MDjV7/vJP2u4Jic+mZ3vRllyJCzw
- MG6YvBIdC6zDM7fCpBfEq+9TPF6vgbCs/uNs2BGlWEu506UyU5QfP6Xbdz7nf7Jv9FyfZT+2XWU
- 7QzJrwxSX1xccZe7Qao/BxNcAatz2vJ/epoNX5IF4lhvDFUIsADHPXn9/mEdNZ+vMwg/DsLFJwa
- 6pLKqCtQnMjU6hyPDwcQj9CCgZ1AtckKuOrdo/lgCwT69PGcKorgAcmeChCK84O0pPz02XSlwdu
- YnOgI3So0QhqPxJHYimzqqt711c6ErXK3mLgS9CkiXXNABa0Ocd02tmuPSTsvzj9ya06mkycHFm
- tI3iTYa4MmTfUeiUlGjeiXwlOpMFSZpJOXBIbqkx5FH/9JtIrQpNMJU3W/St1WIFCP6V3WmZMj4
- 2D9I1tiRlv2H8BAzbpi1A==
-X-Received: by 2002:a05:6000:4022:b0:473:1e79:87e6 with SMTP id
- ffacd0b85a97d-4731e798941mr6400735f8f.3.1782734468176; 
- Mon, 29 Jun 2026 05:01:08 -0700 (PDT)
+ bh=9DBBXZ6/da7INOl9cTlESZkgra1ZBKms/6DduvGkI/E=;
+ b=ndqmauNA8JAiRZ2lagJXZwbxQVnku2iElbwWwSq+s7CMQDkgBqNTXJuL1OFwMxZbBb
+ Pm9fJ20lL+c4l6bgbv3RiD6FA2uHBdWno9HQPASWXmk4oZnyWsGheyBvM7Slb73Snos7
+ 7VK5r9m9DLqfAe6x6QEooTj1izC+VtUXgQkRmxL0SGEZB52/GtWLZKOEFfP4UortdAX5
+ 1w2rA3uJLhhtzR8PMEB3CEwdEgfqQ8D9XL2P4QpO5wp1Z2gyuSmCfDBIPxgYNB3+rrWW
+ tyhG7mXkfSNHdIsto9X2NVe8UX0dguRYftaseWKg+dfxwgNi65y84OMc3IRssY838/b+
+ e40Q==
+X-Gm-Message-State: AOJu0YwjXdLUP0SgYcA8fuk5i1CrdSF2iHzyZKNXb0ECEmnV8478pva9
+ sFFm/p1XFiHK3hPW0wvW8bbfiC+ATABbQVQzmFTqAocqrQUitEYcRuAjOt5J4AMmFfda79dTat7
+ +sWqU
+X-Gm-Gg: AfdE7cnBpIeP4PqE3MUjxPs9g0XJrh2CQsRsACgbW3OBWCZ2DK4zlfWVMVGsasFy7G8
+ zVlwvMjvyxcvioawc+Kc7f5b6mkY/kJQGoamgmgOoS5lTe0mGOaD415WJaKQ9MgwcTGpljx19qg
+ o1X3QkkpglM6ROGXdTcUtCjVIb2dUcfff/zknmBhqEiIvcQ6rwegTn1R24f8pH5rB+u5G65yVVn
+ MFTM0f1Y3TvP6OFkyvQzFYgbDY8ydzsEL2uNgSi+oFyURbdPmIz/RDiCD+ctP0jO6DIxqPq3Irk
+ +KG3EoMfUhFRGB8KoyEkFPq1g6FYEqTAHMHfQEx1giTG3z31OSvulSExU/rpGuktmhq3c3aeXKA
+ NKvixyxclHwZZRuJmdasHrb8LUxUIwO2i+gOXAY2igr0af0AYpfC/VEX9KasX304ju+DnG3R63w
+ O2iGYl42gYEd6ZkxjQsXWSi6iWBxLRkdTtxl+S2jFGDeO6ows90DIF5jMi3fA1qh5h3UAeAmybd
+ ywONyd3C98Ae4+7/qzGfg==
+X-Received: by 2002:a05:6000:29c6:b0:46f:ce0c:f1f3 with SMTP id
+ ffacd0b85a97d-46fce0cf2f1mr11076759f8f.6.1782734450211; 
+ Mon, 29 Jun 2026 05:00:50 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.01.07
+ ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.00.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 05:01:07 -0700 (PDT)
+ Mon, 29 Jun 2026 05:00:49 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 33/54] hw/misc/imx6_ccm: Add PLL3 and CAN clock
-Date: Mon, 29 Jun 2026 13:00:11 +0100
-Message-ID: <20260629120032.1645265-34-peter.maydell@linaro.org>
+Subject: [PULL 15/54] target/arm: Implement FDOT (multiple and single vector)
+Date: Mon, 29 Jun 2026 12:59:53 +0100
+Message-ID: <20260629120032.1645265-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260629120032.1645265-1-peter.maydell@linaro.org>
 References: <20260629120032.1645265-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,123 +100,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matyáš Bobek <matyas.bobek@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Add fixed frequency (480 MHz) PLL3, of which the FlexCAN
-clock is derived, and compute FlexCAN frequency based on
-the divider configuration (CCM_CSCMR2).
-
-The clock frequency will be used for computing timestamps
-in FlexCAN emulator.
-
-Signed-off-by: Matyáš Bobek <matyas.bobek@gmail.com>
-Signed-off-by: Pavel Pisa <pisa@fel.cvut.cz>
-Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Pavel Pisa <pisa@fel.cvut.cz>
-Message-id: 95da33074f8b79842566d61e4e04448b1e622080.1782140438.git.matyas.bobek@gmail.com
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260618041517.573469-7-richard.henderson@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/misc/imx6_ccm.c         | 24 ++++++++++++++++++++++++
- hw/misc/trace-events       |  2 ++
- include/hw/misc/imx6_ccm.h |  4 ++++
- include/hw/misc/imx_ccm.h  |  1 +
- 4 files changed, 31 insertions(+)
+ target/arm/tcg/sme.decode      | 3 +++
+ target/arm/tcg/translate-sme.c | 8 ++++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/hw/misc/imx6_ccm.c b/hw/misc/imx6_ccm.c
-index a10b67d396..45fdd0d5a8 100644
---- a/hw/misc/imx6_ccm.c
-+++ b/hw/misc/imx6_ccm.c
-@@ -257,6 +257,15 @@ static uint64_t imx6_analog_get_pll2_clk(IMX6CCMState *dev)
-     return freq;
- }
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index 80ad674cf2..3c7caf8bdb 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -449,6 +449,9 @@ FMLALL_n1_b     11000001 001 1 .... 0 .. 001 ..... 000 ..   @azz_nx1_o2x4 n=1
+ FMLALL_n1_b     11000001 001 0 .... 0 .. 000 ..... 0001 .   @azz_nx1_o1x4 n=2
+ FMLALL_n1_b     11000001 001 1 .... 0 .. 000 ..... 0001 .   @azz_nx1_o1x4 n=4
  
-+static uint64_t imx6_analog_get_pll3_clk(IMX6CCMState *dev)
++FDOT_n1_sb      11000001 001 0 .... 0 .. 100 ..... 11 ...   @azz_nx1_o3 n=2
++FDOT_n1_sb      11000001 001 1 .... 0 .. 100 ..... 11 ...   @azz_nx1_o3 n=4
++
+ ### SME2 Multi-vector Multiple Array Vectors
+ 
+ %zn_ax2         6:4 !function=times_2
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index cc85c6d6e0..8fea451089 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -1170,6 +1170,14 @@ static bool do_fdot(DisasContext *s, arg_azz_n *a, bool multi)
+ TRANS_FEAT(FDOT_n1, aa64_sme2, do_fdot, a, false)
+ TRANS_FEAT(FDOT_nn, aa64_sme2, do_fdot, a, true)
+ 
++static bool do_fdot_fp8(DisasContext *s, arg_azz_n *a, bool multi)
 +{
-+    uint64_t freq = 480000000;
-+
-+    trace_imx6_analog_get_pll3_clk(freq);
-+
-+    return freq;
++    return do_azz_acc_fp8(s, a->n, 1, a->rv, a->off, a->zn, a->zm,
++                          0, 0, multi, gen_helper_gvec_fdot_sb);
 +}
 +
- static uint64_t imx6_analog_get_pll2_pfd0_clk(IMX6CCMState *dev)
++TRANS_FEAT(FDOT_n1_sb, aa64_sme_f8f32, do_fdot_fp8, a, false)
++
+ static bool do_fdot_nx(DisasContext *s, arg_azx_n *a)
  {
-     uint64_t freq = 0;
-@@ -344,6 +353,18 @@ static uint64_t imx6_ccm_get_per_clk(IMX6CCMState *dev)
-     return freq;
- }
- 
-+static uint64_t imx6_ccm_get_can_clk(IMX6CCMState *dev)
-+{
-+    uint64_t freq = 0;
-+
-+    freq = imx6_analog_get_pll3_clk(dev) / 8;
-+    freq /= (1 + EXTRACT(dev->ccm[CCM_CSCMR2], CAN_CLK_PODF));
-+
-+    trace_imx6_ccm_get_can_clk(freq);
-+
-+    return freq;
-+}
-+
- static uint32_t imx6_ccm_get_clock_frequency(IMXCCMState *dev, IMXClk clock)
- {
-     uint32_t freq = 0;
-@@ -358,6 +379,9 @@ static uint32_t imx6_ccm_get_clock_frequency(IMXCCMState *dev, IMXClk clock)
-     case CLK_IPG_HIGH:
-         freq = imx6_ccm_get_per_clk(s);
-         break;
-+    case CLK_CAN:
-+        freq = imx6_ccm_get_can_clk(s);
-+        break;
-     case CLK_32k:
-         freq = CKIL_FREQ;
-         break;
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index b88accc437..99910fc068 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -242,11 +242,13 @@ imx6_analog_get_periph_clk(uint32_t freq) "freq = %u Hz"
- imx6_analog_get_pll2_clk(uint32_t freq) "freq = %u Hz"
- imx6_analog_get_pll2_pfd0_clk(uint32_t freq) "freq = %u Hz"
- imx6_analog_get_pll2_pfd2_clk(uint32_t freq) "freq = %u Hz"
-+imx6_analog_get_pll3_clk(uint32_t freq) "freq = %u Hz"
- imx6_analog_read(const char *reg, uint32_t value) "reg[%s] => 0x%" PRIx32
- imx6_analog_write(const char *reg, uint32_t value) "reg[%s] <= 0x%" PRIx32
- imx6_ccm_get_ahb_clk(uint32_t freq) "freq = %u Hz"
- imx6_ccm_get_ipg_clk(uint32_t freq) "freq = %u Hz"
- imx6_ccm_get_per_clk(uint32_t freq) "freq = %u Hz"
-+imx6_ccm_get_can_clk(uint32_t freq) "freq = %u Hz"
- imx6_ccm_get_clock_frequency(unsigned clock, uint32_t freq) "(Clock = %d) = %u"
- imx6_ccm_read(const char *reg, uint32_t value) "reg[%s] => 0x%" PRIx32
- imx6_ccm_reset(void) ""
-diff --git a/include/hw/misc/imx6_ccm.h b/include/hw/misc/imx6_ccm.h
-index ccf46d7353..a54b940686 100644
---- a/include/hw/misc/imx6_ccm.h
-+++ b/include/hw/misc/imx6_ccm.h
-@@ -164,6 +164,10 @@
- #define PERCLK_PODF_SHIFT        (0)
- #define PERCLK_PODF_LENGTH       (6)
- 
-+/* CCM_CSCMR2 */
-+#define CAN_CLK_PODF_SHIFT       (2)
-+#define CAN_CLK_PODF_LENGTH      (6)
-+
- /* CCM_ANALOG_PFD_528 */
- #define PFD0_FRAC_SHIFT          (0)
- #define PFD0_FRAC_LENGTH         (6)
-diff --git a/include/hw/misc/imx_ccm.h b/include/hw/misc/imx_ccm.h
-index c4212d04ea..6839716ea3 100644
---- a/include/hw/misc/imx_ccm.h
-+++ b/include/hw/misc/imx_ccm.h
-@@ -46,6 +46,7 @@ typedef enum  {
-     CLK_EXT,
-     CLK_HIGH_DIV,
-     CLK_HIGH,
-+    CLK_CAN,
- } IMXClk;
- 
- struct IMXCCMClass {
+     return do_azz_acc_fp(s, a->n, 1, a->rv, a->off, a->zn, a->zm,
 -- 
 2.43.0
 
