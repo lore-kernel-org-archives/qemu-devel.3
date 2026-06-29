@@ -4,116 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D3BC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 11:40:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1766C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 11:41:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAKu-0000zT-Rh; Mon, 29 Jun 2026 07:39:36 -0400
+	id 1weAMq-0001rF-PO; Mon, 29 Jun 2026 07:41:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1weAKt-0000xn-AF; Mon, 29 Jun 2026 07:39:35 -0400
+ id 1weAMo-0001qb-K3; Mon, 29 Jun 2026 07:41:34 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1weAKq-0002PX-TF; Mon, 29 Jun 2026 07:39:35 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1weAMn-00035u-1v; Mon, 29 Jun 2026 07:41:34 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65TAmCp73181299; Mon, 29 Jun 2026 11:39:30 GMT
+ 65TAmIDB3030303; Mon, 29 Jun 2026 11:41:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=JtwcWg
- PVayABFqkq+CLBjsdFFHHlWyH1GFWPrrmPzqc=; b=qiLB2R3tx8uqHAPRL58XWZ
- b1CR01Jia6f7fsvENhXWRu3I7W1qwDa8J43+iLtcO1GYBSY+/dW36JI7ERjubVhv
- dBtyKbFnL7x5NjkW3vwXYyd96KWZBDQAxcK6tBQZomc5PFcPsihfqGT1+Dl1EPER
- H8kdy1RPTVp3NCNUkvVJoO9SKvzZBuCzhdq9pcxntg5/78dP2EUakid+XS1puviB
- wqhUIRLn4wkBvSmW7aQWuhSLQlfc3RS66tKujMffUD2bDre1J0NsYmhD/gJVUF3E
- KMMUE8pCJQ7byPL8OFQcjG6Ho+2w9lcjRpAzaOh3to2bVRmgxrKnIr6LwfJoGwgw
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qfs0xj-1
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=Z6A71ZNPufFKJkYCMHlGBC6TRnZ0hX
+ XY+t7h3Bnbjtk=; b=I+rkKhd6Sja/z1Skhpdgs7RtY31VsHHayv5iHfZ3FpXPeA
+ RGmNyogiF/eZLMsY1GKkUdnkIqz78c9wUi3swr+cFaqTFR4jXFxcm7czo8yxM8q/
+ rDpxtsSKqWWjupblS6hz8UmGGOCu8zZHYcq7LbBPvXVgTcUp4V3Xvw81vYoNY6u6
+ JT0qZhKOTX3bdbqo2TBFOfAxwLenevm5H0nvk+2dSUA9UePEHKRp4zU0XtSYPO4c
+ 9BD9t+QfUMiMOqmtdhZ3oiYLishPCufty1DWT2wNi47/C3EWzwkLZEpchZPfUC1Y
+ qn3F063Vkwubv+bDno6l4pE+qlp66kuIJpSw4XKA==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26pds2jv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jun 2026 11:39:29 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65TBYir1016493;
- Mon, 29 Jun 2026 11:39:28 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruq5cd0-1
+ Mon, 29 Jun 2026 11:41:29 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65TB4fmx001013;
+ Mon, 29 Jun 2026 11:41:28 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7vwafb-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jun 2026 11:39:28 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65TBdOfR49152310
+ Mon, 29 Jun 2026 11:41:28 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65TBfOlM47317368
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Jun 2026 11:39:24 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 627902004E;
- Mon, 29 Jun 2026 11:39:24 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6F24320040;
- Mon, 29 Jun 2026 11:39:20 +0000 (GMT)
+ Mon, 29 Jun 2026 11:41:24 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 983F820043;
+ Mon, 29 Jun 2026 11:41:24 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C96C82004B;
+ Mon, 29 Jun 2026 11:41:22 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.123.10.203])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 29 Jun 2026 11:39:20 +0000 (GMT)
-Date: Mon, 29 Jun 2026 17:09:18 +0530
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 29 Jun 2026 11:41:22 +0000 (GMT)
+Date: Mon, 29 Jun 2026 17:11:20 +0530
 From: Aditya Gupta <adityag@linux.ibm.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- Misbah Anjum N <misanjum@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>
-Subject: Re: [PATCH v3 1/8] tests/functional: Add remote interrupts test for
- PowerNV
-Message-ID: <akJXAebIn7BHhPRS@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260629110411.3051274-1-adityag@linux.ibm.com>
- <20260629110411.3051274-2-adityag@linux.ibm.com>
- <71cffeef-3398-44e6-8e13-130266e789c1@redhat.com>
+To: Shivang Upadhyay <shivangu@linux.ibm.com>
+Cc: harshpb@linux.ibm.com, milesg@linux.ibm.com, npiggin@gmail.com,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Subject: Re: [PATCH v2 1/2] ppc/pnv: avoid regenerating DTB if external DTB
+ is present
+Message-ID: <akJSWs7btybHFuMa@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+References: <20260623063156.1110370-1-shivangu@linux.ibm.com>
+ <20260626112239.177191-1-shivangu@linux.ibm.com>
+ <20260626112239.177191-2-shivangu@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <71cffeef-3398-44e6-8e13-130266e789c1@redhat.com>
+In-Reply-To: <20260626112239.177191-2-shivangu@linux.ibm.com>
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=RYqgzVtv c=1 sm=1 tr=0 ts=6a425971 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=7NDaL-D_JNWX0BNlmoEA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDA5MiBTYWx0ZWRfX326U21f3F5P3
- ZmjfQMqSJA1pni2y7/JEKqiLMng98KLseFKbpLg7UbVjNIRghJdMwo1nyCIzi2d/qZXHoekEzmT
- NP8ycmqZ/j4gFW5P5FDWyikeA3r6Z/Q=
-X-Proofpoint-GUID: KnKkqMB-M5J5oHA9W-sjnD2imNfdkZ4m
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDA5MiBTYWx0ZWRfX9L9s3INCbU3y
- qGMJos97RJXSAka7a1lfqDsdEnOLPkNZq0E89/OXTyT2QXEimrDlXP22ywC/GeXEn3BiQuSp7Qj
- Gw3s5FdmVaFnfetLQY18IcQcHCpdYg42/Ou68Q1Ei5RJNvxI2t57ynVTI5qtMYraTyO3GETf54X
- R5hS1yVlHCdVC8cGjrv6dX7w8Fi3qh5lQARW9ZR9hC9xrwymvCtUlp5mJz+JYzgHFe0Fmche/tO
- ZaOWUkRH37+z6ZFpbSu2CZxMhzzsewzeKJwpB15NJma/Ko10Qwof1kpOhWTZWNY1Iws6Q8rKAa5
- W3lNLcK6N3jal4xT4Ea9YIlqXoFglYARYn/OJa6VRZEB0ArVocqx9AdMI4jV/KuHs3gznHS+2Cq
- uxX/vFrGsfFRQ8TYb9jYfBg8c0JJdF6V5tlWP3FuRf92oeUWhXtorOFg2ADN5TAMlo29/Eas01u
- dBouDnYsdzIP+BJJm2w==
-X-Proofpoint-ORIG-GUID: m2y9ZQBwnscvKGIWyzf0BmB-lGtIUgS5
+X-Proofpoint-GUID: nA2VnuRQnhG6tuorBUt4aTIEVg5LhBOD
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDA5MiBTYWx0ZWRfX9zV5MkcfGDct
+ roh4IPeumuzJ9W3xk3N4vUrQuyB4pmBfrU9rqdMVcXTPGXAyyq5/Rp12pKZpOBAUg90XsZAkLhn
+ hzCX0jTI+TtmNzYBvWDQ8XCknGzHJOo=
+X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a4259ea cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=Bu0ecm2RSgxt74y_FWUA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDA5MiBTYWx0ZWRfX2Np5YrfCb1Jo
+ U/P/73MkEtL9B7rpdYsv+rAJIYvMTBApSNuRoPQhyP+9Jl6jxY0jGFaWkoaooInsPck9ppQEOSe
+ 85wtsLCz5jkTPim3m3kkqPt1fS2IGysgEEnjXYK4bHNpsIAhif9bF0ZXdQ9fC1HJYI3DzuAmEj0
+ ch561oSj7Ipw65n3KfBhi4YwdL5nETSy6D9zPAaJX5T0GgQyBqET8RjENcZXgCS/IGHYeIFWIpl
+ mWV91NNQfRh8uI/cFpDqv03n0p+cYGyo6sdOzC4sYpsaOYUMxpRE8Ins4Ztk6yL8HPHnMXB3jWX
+ TervKRoRsWWOQpmT/H9NrW7oc13MWe8+Gu4LEurgpSSY/hKOFKbNETO+w7XojFNbRFtSYVvFWgJ
+ TYtCPvkgQnw5Wu8KenZ6q2zdRJassEbFCnu3kPiEIjAv6brbreiVijOO5rq7SzCanBBN6eUsU5S
+ wGxj/RnUENFHshAvFjA==
+X-Proofpoint-ORIG-GUID: fdLoAI-qOatew41yv4vme_VR535kA7ET
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
- adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
+ priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
+ spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290092
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
@@ -140,37 +125,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/06/29 01:20PM, Cédric Le Goater wrote:
-> On 6/29/26 13:04, Aditya Gupta wrote:
-> > In the past there have been hard to recreate issues where XIVE changes
-> > cause qemu crashes due to multi-socket interrupts such as in [1].
-> > 
-> > Add a functional test explicitly to test whether remote interrupts work.
-> > 
-> > The test can also work as additional boot test for multi-socket boot,
-> > initrd boot test, as well as a check for e1000e to be working in powernv,
+On 26/06/26 04:52PM, Shivang Upadhyay wrote:
+> Currently externally provided dtb is overwritten in `pnv_reset`.
+> Fix this by only creating dtb if not provided from `-dtb`.
 > 
-> you should consider moving to a more modern nic model: igb, which
-> has sr-iov support too.
+> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+> ---
+>  hw/ppc/pnv.c | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 62812f22f8..e44fb7e2dc 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -803,9 +803,13 @@ static void pnv_reset(MachineState *machine, ResetType type)
+>          mpipl_write_succeeded = do_mpipl_write(pnv);
+>      }
+>  
+> -    /* Regenerate device tree */
+> -    fdt = pnv_dt_create(machine);
+> -    _FDT((fdt_pack(fdt)));
+> +    /* Only create new dt if not provided in -dtb */
+> +	if (!machine->dtb) {
+> +		fdt = pnv_dt_create(machine);
+> +        _FDT((fdt_pack(fdt)));
+> +	} else {
+> +	    fdt = machine->fdt;
+> +	}
 
-yes, can do. with igb i see multiple irqs, so test will have to take sum
-of all rx irqs, and compare:
+nit: indent is wrong
 
-	2026-06-29 17:00:46,288: cat /proc/interrupts | grep eth0
-	2026-06-29 17:00:46,391: 135:          0          0          0  PNV-PCI-MSI 2416443392 Edge      eth0
-	2026-06-29 17:00:46,393: 136:          0          6          0  PNV-PCI-MSI 2416443393 Edge      eth0-rx-0
-	2026-06-29 17:00:46,394: 137:          0         14          0  PNV-PCI-MSI 2416443394 Edge      eth0-rx-1
-	2026-06-29 17:00:46,395: 138:          0          4          0  PNV-PCI-MSI 2416443395 Edge      eth0-rx-2
-	2026-06-29 17:00:46,397: 139:          0          4          0  PNV-PCI-MSI 2416443396 Edge      eth0-rx-3
-	2026-06-29 17:00:46,398: 140:          0         16          0  PNV-PCI-MSI 2416443397 Edge      eth0-tx-0
-	2026-06-29 17:00:46,399: 141:          0          6          0  PNV-PCI-MSI 2416443398 Edge      eth0-tx-1
-	2026-06-29 17:00:46,399: 142:          0          6          0  PNV-PCI-MSI 2416443399 Edge      eth0-tx-2
-	2026-06-29 17:00:46,400: 143:          0          4          0  PNV-PCI-MSI 2416443400 Edge      eth0-tx-3
+with indentation fixed, feel free to add:
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
 
-I feel e1000e suffices for this test, should i stay with e1000e or use
-igb here ?
-
-Thanks,
 - Aditya G
 
 
