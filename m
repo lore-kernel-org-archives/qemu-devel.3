@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D918C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:39:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C63A9C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:39:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weCCq-0004pa-Pq; Mon, 29 Jun 2026 09:39:24 -0400
+	id 1weCCj-0004NM-OP; Mon, 29 Jun 2026 09:39:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <693b296b176d1829b10855d9831bd2ad21b2cdcf@kylie.crudebyte.com>)
- id 1weCCp-0004jK-Mb; Mon, 29 Jun 2026 09:39:23 -0400
+ (envelope-from <64c6c7e0df726055fac9ed12b30f712b115193f3@kylie.crudebyte.com>)
+ id 1weCCi-0004JF-ID; Mon, 29 Jun 2026 09:39:16 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <693b296b176d1829b10855d9831bd2ad21b2cdcf@kylie.crudebyte.com>)
- id 1weCCn-0004QO-Q0; Mon, 29 Jun 2026 09:39:23 -0400
+ (envelope-from <64c6c7e0df726055fac9ed12b30f712b115193f3@kylie.crudebyte.com>)
+ id 1weCCg-0004Pk-SH; Mon, 29 Jun 2026 09:39:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=ed/gUTUSntpOl1RgXFscwZa1JEbVNq5Lj8RO8ztlHbY=; b=GgJeZ
- DnnK2qjVgGAGIWyeefCLwXsBejCIhYOwkCJpGbJpe49aM6YQc7cHpBPO3r1oV+V64b/5y5sD3GXEt
- nw4EftDmjOEP83BLQJOZLrhd2gBUaZdJCkaPMbjm5iaJyD3ZcqG34VR6HHPsZVOYPZ4PL3eK1PbJ5
- oYeMEV5dtF1zcksUKmp3CM/AtQwc541DibA8JCGLyKNx4FgqxlIZavabAfQfC0S4pxNEo2jX35o13
- Qfxg1KRWnIwwpIvH2s3wp2FLp9DB+58weULXEQAc0QRrOWUPU1seXCN5FuHKNXl83I1NNV3Nl/xLJ
- 92aRLhvbJq4x7RUt88tgyvpgqeDu1QqsuGNLJQrPobgrlUMXLY4BT8RM+0I03IpF35/LHUjmXEKLi
- evYWKXTkIGyD/XaREDn6t6vHU97Oa4Ay3I3QyLXMvdH6q4sHVsZIaS66zKtOD4Rd8fppxk28VcwwJ
- dpRWP3IiUAGsXH/VKIogcJlxMi8L6/m/t+j561WieTaglpSe9H4BuUEKEvyiodz+TSWEb1G52NiC6
- lukvCUlhm+ZGcZinbOBQ5EymKKtFEqQWIbdBjRvQnLemPhocedCwsopldohkIkxzs2kGjx8tbBoKe
- WCKkGqlU4o5MP0O/lb9j1fhHFOPpL0vqfiiGa0YsRJKcutiEPPpKTXNRjzV0NI=;
-Message-ID: <693b296b176d1829b10855d9831bd2ad21b2cdcf.1782739719.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=h5MqDz5GNrcRukA+fwCV4Ptg8NEURV8By00x0yDcRIo=; b=MRr73
+ IKn44QatR3fFz4Zrz7BAv9LayFuEfN/50wrryU6A/qYGo3GCTh/I3CXNl5ZCUivLnju1hlz+xG5ZB
+ NjXrLfuJMjE3ZR0gSsd1T6lMdEhBJZMHzz9+MPA8awYt0eUHTcsgrUEMHels0tKBWlKxN6ABDwuIy
+ xb/m4Sgi9+y40AbfI08GExWenbbWtJ7fuWou2+Kow3FaB4EKZvLxYq9Hduaf6Y7VCh/NQ3QvsVUcA
+ +WHXGffx5G0lczUBdsoGDoo8TPewxSUxboYtb757YXacvoWYxxEO1VdtKcrHUsYUPD9czBCi7Kr43
+ F0m0upgWZBcOndzjEiaLiUIPENWsxHH88JUTRElM3xsCgbXAzsCaI4SFXBipqoZNP+iaroLzvY26s
+ V+ConF/Kni9E/XriOJKs1lYKEpHl9KjtgChGkzbPNwQGmLhrzXcPRidPOO/PfwFWYQ4DLFeXvT4SP
+ RfPtFCuky+OHeQEAhDfC+YpqgDaf0nIIyivSgEAt8Yu5ZaT5zFzaqCNhyVh27/9ZrbEGsxyyu+6OO
+ 7VSYVzsusfb9q7eWsesLqmm2SgW6NsIMFQLE4zcsBxPPSt1uEq6oPw8kbsM9d8KIFybF06zHRIVYd
+ l2bF1mUj3IvsK6fiwXZcevLhZpcb0NdwPqODYXsCxG7xGqTTPwXfw0Yd9lNIII=;
+Message-ID: <64c6c7e0df726055fac9ed12b30f712b115193f3.1782739719.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1782739719.git.qemu_oss@crudebyte.com>
 References: <cover.1782739719.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Mon, 29 Jun 2026 15:28:39 +0200
-Subject: [PULL 09/23] hw/9pfs: add xattr FID limit to prevent memory exhaustion
+Subject: [PULL 08/23] hw/9pfs: cap Treaddir allocation (CVE-2026-9238)
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>, Feifan Qian <bea1e@proton.me>
+ Peter Maydell <peter.maydell@linaro.org>, Feifan Qian <bea1e@proton.me>,
+ Stefano Stabellini <sstabellini@kernel.org>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=693b296b176d1829b10855d9831bd2ad21b2cdcf@kylie.crudebyte.com;
+ envelope-from=64c6c7e0df726055fac9ed12b30f712b115193f3@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -66,203 +67,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a limit on the number of simultaneously open xattr FIDs to prevent
-host memory exhaustion attacks. Each xattr FID contains a buffer for the
-xattr value, and without a limit, a malicious priviliged guest with
-direct communication access to 9p server could create a huge number of
-xattr FIDs until host memory is eventually exhausted.
+Constrain max_count in v9fs_readdir() to transport's current, real
+response buffer size before calling v9fs_do_readdir() to prevent
+excessive host memory allocation for specific, crafted, huge
+directories (large amount of entries) by bad clients.
 
-Fix this by:
+Client may send a Treaddir request with a large 'count' parameter, and
+while the negotiated 'msize' provides some limit, it accounts for guest
+being somewhat faithful on the negotiated 'msize' value throughout the
+session.
 
- - add xattr_fid_limit to struct FsContext for the max. amount
- - add xattr_fid_count to struct FsContext for the current amount
- - init xattr_fid_limit with 1024
- - init xattr_fid_count with 0
- - add function xattr_fid_count_inc() to increment the count
- - add function xattr_fid_count_decr() to decrement the count
- - call xattr_fid_count_inc() in Txattrcreate handler
- - call xattr_fid_count_inc() in Txattrwalk handler
- - call xattr_fid_count_decr() when a xattr FID is freed
+A bad guest client could have negotiated a large 'msize' but provide a
+small reply buffer for Treaddir request, causing QEMU to allocate host
+memory proportional to 'msize' before discovering the reply cannot fit.
 
-Additionally:
+Possible consequence was a potential DoS by a priviliged guest, causing
+a disconnection of guest communication due to transport device being
+marked as "broken", however QEMU process would have continued to run with
+potentially giant host memory allocation, which might have negative
+impact on other services running on host.
 
- - reset the xattr FID counter in virtfs_reset()
-
-When the limit is reached then xattr_fid_count_inc() returns -ENOSPC and
-the request handler is aborted on its error path without turning the
-FID into an xattr type and without allocating memory for the xattr.
-
-The default value of 1024 was chosen, as (sane usage of) xattr requests
-in the 9p protocol are usually very short-lived, and even machines with
-128 cores with very high xattr activity should have plenty of head room
-without ever hitting this limit.
-
-Fixes: 10b468bdc5 ("virtio-9p: Implement TXATTRCREATE")
-Fixes: CVE-2026-8348
+Fixes: CVE-2026-9238
+Fixes: 2149675b195f ("9pfs: add new function v9fs_co_readdir_many()")
 Reported-by: Feifan Qian <bea1e@proton.me>
-Link: https://lore.kernel.org/qemu-devel/eb3787869745d47234fb662600187bf773e1ef8a.1781361555.git.qemu_oss@crudebyte.com
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Link: https://lore.kernel.org/qemu-devel/f81a387a2de4f2172fd5830c5654f49d78102254.1781287774.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- fsdev/file-op-9p.h |  9 +++++++
- hw/9pfs/9p.c       | 62 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 71 insertions(+)
+ hw/9pfs/9p.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index e8d0661c4b..454761d81d 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -81,6 +81,11 @@ typedef struct ExtendedOps {
- 
- #define V9FS_SEC_MASK               0x0000003C
- 
-+/*
-+ * Limits the maximum amount of simultaneously open xattr FIDs to prevent
-+ * host memory exhaustion (as each xattr FID contains a xattr value buffer).
-+ */
-+#define V9FS_MAX_XATTR_DEFAULT  1024
- 
- typedef struct FileOperations FileOperations;
- typedef struct XattrOperations XattrOperations;
-@@ -109,6 +114,10 @@ struct FsContext {
-     void *private;
-     mode_t fmode;
-     mode_t dmode;
-+    /* max. amount of simultaneously open xattr FIDs */
-+    uint32_t xattr_fid_limit;
-+    /* current amount of open xattr FIDs */
-+    uint32_t xattr_fid_count;
- };
- 
- struct V9fsPath {
 diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 09454a5404..e737629581 100644
+index 81d9bb8c6d..09454a5404 100644
 --- a/hw/9pfs/9p.c
 +++ b/hw/9pfs/9p.c
-@@ -265,6 +265,31 @@ static size_t v9fs_string_size(V9fsString *str)
-     return str->size;
- }
+@@ -2679,6 +2679,7 @@ static void coroutine_fn v9fs_readdir(void *opaque)
+     uint32_t max_count;
+     V9fsPDU *pdu = opaque;
+     V9fsState *s = pdu->s;
++    size_t max_resp_sz;
  
-+static int xattr_fid_count_inc(V9fsPDU *pdu)
-+{
-+    V9fsState *s = pdu->s;
-+
-+    if (s->ctx.xattr_fid_limit > 0 &&
-+        s->ctx.xattr_fid_count >= s->ctx.xattr_fid_limit) {
-+        error_report_once("9pfs: xattr_fid_count limit exceeded "
-+                          "(configurable by option 'max_xattr').");
-+        return -ENOSPC;
-+    }
-+    s->ctx.xattr_fid_count++;
-+    return 0;
-+}
-+
-+static void xattr_fid_count_decr(V9fsPDU *pdu)
-+{
-+    V9fsState *s = pdu->s;
-+
-+    if (s->ctx.xattr_fid_count > 0) {
-+        s->ctx.xattr_fid_count--;
-+    } else {
-+        error_report_once("9pfs: xattr_fid_count underflow detected");
-+    }
-+}
-+
- /*
-  * returns 0 if fid got re-opened, 1 if not, < 0 on error
-  */
-@@ -397,6 +422,7 @@ static int coroutine_fn free_fid(V9fsPDU *pdu, V9fsFidState *fidp)
-         }
-     } else if (fidp->fid_type == P9_FID_XATTR) {
-         retval = v9fs_xattr_fid_clunk(pdu, fidp);
-+        xattr_fid_count_decr(pdu);
+     retval = pdu_unmarshal(pdu, offset, "dqd", &fid,
+                            &initial_offset, &max_count);
+@@ -2687,9 +2688,28 @@ static void coroutine_fn v9fs_readdir(void *opaque)
      }
-     v9fs_path_free(&fidp->path);
-     g_free(fidp);
-@@ -634,6 +660,14 @@ static void coroutine_fn virtfs_reset(V9fsPDU *pdu)
-         fidp->clunked = true;
-         put_fid(pdu, fidp);
-     }
+     trace_v9fs_readdir(pdu->tag, pdu->id, fid, initial_offset, max_count);
+ 
++    max_resp_sz = s->msize;
 +
 +    /*
-+     * Explicitly reset the xattr FID counter.
-+     *
-+     * free_fid() already decrements the counter for each P9_FID_XATTR, so the
-+     * counter should already be zero, hence this is just a defensive measure.
++     * Constrain max_count to transport's current, actual response buffer size.
++     * A bad client might provide a response buffer < msize.
 +     */
-+    s->ctx.xattr_fid_count = 0;
- }
- 
- #define P9_QID_TYPE_DIR         0x80
-@@ -4023,6 +4057,14 @@ static void coroutine_fn v9fs_xattrwalk(void *opaque)
-             clunk_fid(s, xattr_fidp->fid);
-             goto out;
-         }
-+
-+        /* Check xattr FID limit */
-+        err = xattr_fid_count_inc(pdu);
-+        if (err < 0) {
-+            clunk_fid(s, xattr_fidp->fid);
-+            goto out;
++    if (s->transport->response_buffer_size) {
++        size_t buf_size = s->transport->response_buffer_size(pdu);
++        if (max_resp_sz > buf_size) {
++            max_resp_sz = buf_size;
 +        }
-+
-         /*
-          * Read the xattr value
-          */
-@@ -4030,6 +4072,7 @@ static void coroutine_fn v9fs_xattrwalk(void *opaque)
-         xattr_fidp->fid_type = P9_FID_XATTR;
-         xattr_fidp->fs.xattr.xattrwalk_fid = true;
-         xattr_fidp->fs.xattr.value = g_malloc0(size);
-+
-         if (size) {
-             err = v9fs_co_llistxattr(pdu, &xattr_fidp->path,
-                                      xattr_fidp->fs.xattr.value,
-@@ -4056,6 +4099,14 @@ static void coroutine_fn v9fs_xattrwalk(void *opaque)
-             clunk_fid(s, xattr_fidp->fid);
-             goto out;
-         }
-+
-+        /* Check xattr FID limit */
-+        err = xattr_fid_count_inc(pdu);
-+        if (err < 0) {
-+            clunk_fid(s, xattr_fidp->fid);
-+            goto out;
-+        }
-+
-         /*
-          * Read the xattr value
-          */
-@@ -4063,6 +4114,7 @@ static void coroutine_fn v9fs_xattrwalk(void *opaque)
-         xattr_fidp->fid_type = P9_FID_XATTR;
-         xattr_fidp->fs.xattr.xattrwalk_fid = true;
-         xattr_fidp->fs.xattr.value = g_malloc0(size);
-+
-         if (size) {
-             err = v9fs_co_lgetxattr(pdu, &xattr_fidp->path,
-                                     &name, xattr_fidp->fs.xattr.value,
-@@ -4164,6 +4216,12 @@ static void coroutine_fn v9fs_xattrcreate(void *opaque)
-         goto out_put_fid;
-     }
- 
-+    /* Check xattr FID limit */
-+    err = xattr_fid_count_inc(pdu);
-+    if (err < 0) {
-+        goto out_put_fid;
 +    }
 +
-     /* Make the file fid point to xattr */
-     xattr_fidp = file_fidp;
-     xattr_fidp->fid_type = P9_FID_XATTR;
-@@ -4425,6 +4483,10 @@ int v9fs_device_realize_common(V9fsState *s, const V9fsTransport *t,
- 
-     s->reclaiming = false;
- 
-+    /* init xattr FID limit */
-+    s->ctx.xattr_fid_limit = V9FS_MAX_XATTR_DEFAULT;
-+    s->ctx.xattr_fid_count = 0;
+     /* Enough space for a R_readdir header: size[4] Rreaddir tag[2] count[4] */
+-    if (max_count > s->msize - 11) {
+-        max_count = s->msize - 11;
++    if (max_resp_sz > 11) {
++        max_resp_sz -= 11;
++    } else {
++        max_resp_sz = 0;
++    }
 +
-     rc = 0;
- out:
-     if (rc) {
++    if (max_count > max_resp_sz) {
++        max_count = max_resp_sz;
+         warn_report_once(
+             "9p: bad client: T_readdir with count > msize - 11"
+         );
 -- 
 2.47.3
 
