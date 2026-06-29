@@ -4,61 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5AB8C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 16:47:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4BFEC43602
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 16:47:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weF8P-0001To-1u; Mon, 29 Jun 2026 12:47:02 -0400
+	id 1weF8R-0001dW-CJ; Mon, 29 Jun 2026 12:47:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1weF7v-0001SM-MB; Mon, 29 Jun 2026 12:46:33 -0400
-Received: from m16.mail.163.com ([220.197.31.2])
+ id 1weF7x-0001SY-5W; Mon, 29 Jun 2026 12:46:35 -0400
+Received: from m16.mail.163.com ([117.135.210.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1weF7t-0006r4-ET; Mon, 29 Jun 2026 12:46:31 -0400
+ id 1weF7u-0006zJ-BB; Mon, 29 Jun 2026 12:46:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=1y
- dwkpFapKt+oISVO7BXsjsNG3KUKnBk+W+fyW5zLBM=; b=O/RQL+wtMQocwN2nXQ
- yJEofGfRuMFj17jlpbeg+LUHKoBapQ2rBWpGK1L6roEJLe9hv55nRdnT0C0Vfv7q
- p8A1/MBdJyQqL79J2PfSsXpKvBZ0wqGiPN5b8FZF0eOUxlSkPlts97sDP4dZCMJm
- O4a8j5aVh1oOhYwcInVsEV1FQ=
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=vJ
+ rV/Ckza0Bh0YVW0GqMeKM5p4AeioWxVjuT6cgZIHk=; b=a1mgeUpjA0OaPylLLY
+ edjK83Toe67acIU1WsQa2VuphGOF08kFTNerHestrz4FKBKWr6VZjJTf0EQZRjB1
+ zv5SLO7GspIKWHrtFtlanNZO/aJT3OR+H0JBibq/7me2/Bj6+pwL53f9Oed0cDll
+ TEkRTH9Pgf1q40M9c3rcNI6EQ=
 Received: from dt-VM.localdomain (unknown [])
  by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id
- _____wD311NLoUJq1eP1Gg--.32114S3; 
- Tue, 30 Jun 2026 00:46:04 +0800 (CST)
+ _____wD311NLoUJq1eP1Gg--.32114S2; 
+ Tue, 30 Jun 2026 00:46:03 +0800 (CST)
 From: Tao Ding <dingtao0430@163.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Tao Ding <dingtao0430@163.com>
-Subject: [PATCH v2 1/2] fixed sdma boundary bug
-Date: Tue, 30 Jun 2026 00:45:32 +0800
-Message-ID: <20260629164533.42956-2-dingtao0430@163.com>
+Subject: [PATCH v2 0/2] sdhci: fix SDMA boundary bug
+Date: Tue, 30 Jun 2026 00:45:31 +0800
+Message-ID: <20260629164533.42956-1-dingtao0430@163.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260629164533.42956-1-dingtao0430@163.com>
-References: <20260629164533.42956-1-dingtao0430@163.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wD311NLoUJq1eP1Gg--.32114S3
-X-Coremail-Antispam: 1Uf129KBjvJXoWxCF1rXw4rAr13WF1fWry5twb_yoW5CF1xpF
- ZFvr4rWrs3Jry5Aa1kGa4rCFyjqw47ZasxXr1FyrnY9ayY9FyFqw43K3WakFyjqrWxZr17
- Ar9xJ34Yv3W5taUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zinYFJUUUUU=
+X-CM-TRANSID: _____wD311NLoUJq1eP1Gg--.32114S2
+X-Coremail-Antispam: 1Uf129KBjvdXoW7XrW3XF4Utr1DZry8JFy3XFb_yoW3twc_Cr
+ nFka4kJa9xXFsrAa4IyF4qv34Ska1Yqw1UXFyDGr17G34IkF13X3Wv93y8Ww1rXw4rKrWS
+ yr4qyryxAFnrXjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUvcSsGvfC2KfnxnUUI43ZEXa7sRijg45UUUUU==
 X-Originating-IP: [101.204.16.250]
-X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC4Qym5GpCoUzxXQAA3G
-Received-SPF: pass client-ip=220.197.31.2; envelope-from=dingtao0430@163.com;
+X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC4Qym5GpCoUzxVAAA3P
+Received-SPF: pass client-ip=117.135.210.2; envelope-from=dingtao0430@163.com;
  helo=m16.mail.163.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, RCVD_IN_MSPIKE_H2=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,88 +72,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During SDMA transfers, the controller raises an interrupt at buffer boundaries
-to request a system address update. But the emulation fails to clear the
-SDHC_DOING_READ/WRITE flags after DMA completion, so writes to SDHC_SYSAD are
-ignored. Clear these flags when the transfer ends. 
-(according to PartA2_SD_Host_Controller_Simplified_Specification_Ver2.00.pdf section 2.2.1)
+Hi all,
 
-Signed-off-by: Tao Ding <dingtao0430@163.com>
----
-Uboot test:
-    1. Prepare zImage, U-Boot, and rootfs.cpio.gz, and make sure
-     the U-Boot configuration enables MMC_SDHCI_SDMA.
-     More details can be found at:
-     https://lore.kernel.org/qemu-devel/20260617155857.7451-1-dingtao0430@163.com/T/#mcdf231e6bd762903f8393bf93253cbcb12ececcf
-    2. ./qemu-system-aarch64 -M xilinx-zynq-a9 -machine boot-mode=sd -m 1024 -display none -serial null -serial stdio -monitor none \
-        -device loader,file=u-boot-dtb.bin,addr=0x04000000,cpu-num=0  \
-        -drive file=zynq-sd.img,format=raw,if=sd -D qemu.log
+This series fixes an SDMA multi-block transfer bug in the generic SDHCI
+controller.
+
+v1 of this series was posted here:
+https://lore.kernel.org/qemu-devel/20260617155857.7451-1-dingtao0430@163.com/
+
+Thanks
+
+Changes in v1->v2:
+* Reword the commit message of patch 1/2.
+* Add a new qtest patch to cover the SDHCI SDMA case.
+  Based on the xilinx-zynq-a9 board, which is more compatible with generic sdhci, 
+  rather than the npcm7xx board.
+
+Tao Ding (2):
+  fixed sdma boundary bug
+  qtest: add xilinx-zynq SDHCI sdma test
+
+ hw/sd/sdhci.c                        |   2 +
+ tests/qtest/meson.build              |   1 +
+ tests/qtest/xilinx-zynq-sdhci-test.c | 178 +++++++++++++++++++++++++++
+ 3 files changed, 181 insertions(+)
+ create mode 100644 tests/qtest/xilinx-zynq-sdhci-test.c
 
 
-After applying the fix, success load sd card:
-  
-U-Boot 2026.07-rc4-g1e80ee41441c (Jun 15 2026 - 19:05:05 +0800)
-
-Model: Xilinx ZC702 board
-DRAM:  ECC disabled 1 GiB
-Core:  33 devices, 21 uclasses, devicetree: board
-Flash: 0 Bytes
-NAND:  0 MiB
-MMC:   mmc@e0100000: 0
-Loading Environment from FAT... *** Error - No Valid Environment Area found
-*** Warning - bad env area, using default environment
-
-In:    serial@e0001000
-Out:   serial@e0001000
-Err:   serial@e0001000
-Net:   
-ZYNQ GEM: e000b000, mdio bus e000b000, phyaddr 7, interface rgmii-id
-
-Warning: ethernet@e000b000 (eth0) using random MAC address - 4a:63:5a:a4:d3:6b
-eth0: ethernet@e000b000
-Hit any key to stop autoboot: 0
-Zynq> fatload mmc 0 ${kernel_addr_r} zImage
-10838528 bytes read in 4316 ms (2.4 MiB/s)
-Zynq> fatload mmc 0 ${ramdisk_addr_r} rootfs-arm32.cpio.gz
-406531 bytes read in 199 ms (1.9 MiB/s)
-Zynq> setenv ramdisk_size ${filesize}
-Zynq> fatload mmc 0 ${fdt_addr_r} zynq-zc702.dtb
-15754 bytes read in 21 ms (732.4 KiB/s)
-Zynq> setenv bootargs console=ttyPS0,115200 earlycon ignore_loglevel rdinit=/init
-Zynq> bootz ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_addr_r}
-Kernel image @ 0x2000000 [ 0x000000 - 0xa56200 ]
-## Flattened Device Tree blob at 01f00000
-   Booting using the fdt blob at 0x1f00000
-Working FDT set to 1f00000
-   Loading Ramdisk to 2ff9c000, end 2ffff403 ... OK
-   Loading Device Tree to 2ff95000, end 2ff9bd89 ... OK
-Working FDT set to 2ff95000
-
-Starting kernel ...
-
- hw/sd/sdhci.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index c86dfa281f..0d87289ca4 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -644,6 +644,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
-                 s->data_count = 0;
-             }
-             if (page_aligned && boundary_count == 0) {
-+                s->prnsts &= ~SDHC_DOING_READ;
-                 break;
-             }
-         }
-@@ -669,6 +670,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
-                 }
-             }
-             if (page_aligned && boundary_count == 0) {
-+                s->prnsts &= ~SDHC_DOING_WRITE;
-                 break;
-             }
-         }
+base-commit: 608ad9307d5b4797d2254ee3a4bad2bc8c8bcbae
 -- 
 2.43.0
 
