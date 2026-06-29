@@ -4,91 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0D26C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 22:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1A2FC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 23:09:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weKL3-0000vq-RS; Mon, 29 Jun 2026 18:20:25 -0400
+	id 1weL5t-00073F-KO; Mon, 29 Jun 2026 19:08:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1weKL2-0000vS-4K; Mon, 29 Jun 2026 18:20:24 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <bp@alien8.de>) id 1weL5p-00072x-Vj
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 19:08:45 -0400
+Received: from mail.alien8.de ([2a01:4f9:3051:3f93::2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1weKL0-0000qa-EJ; Mon, 29 Jun 2026 18:20:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=/ahXE+VRPqdTGuu+VUC6f7e0knsO2YFDM0gX2XH6SWY=; b=0cCbkoyd+FyVAwDUTBsTPMRueD
- 8eb5w8Qu7swsBj7rJq7vgQ6ZuJSoQuRKCqSaoyK7FMhhH08aigJmnE8wfBTNb51ys4MjFTAZSlHLO
- I16AZvfVDDdnZt7z7WTE+YaqQF7RQ//7IsqOC+EtLMR5G+Zrw9s159Fps6Ph4JQOmjZuauu01Jmx9
- 0Txe6pSbNLm0w0tZ6z1xIeY2kOJfqaLXykruMkDM0Pp8+GSmAj4fhwipJKcSL4rMKw7Va9n2yw6mC
- PlMb2KE3MiVCll1hIxWx9XTAmP2upo1idHt//U6m9uWSGFWD/6FTZyi09bE8TAJRovJTzIx1sXgj/
- o/MmqGT4tC6rQGZqinPW8+wourc2NbXoucrRHpq8nBmu3PAYWjx0GNiW4F2gbi0VvV9ceqIoQFf2p
- LwSABSmb5ITap1CHuUStEVfcQpW66D3/1pSNrYZprBj22lYNAz6AgkYbgkKGelXwDvfO9qwtZMf5i
- 8QEjaYJ/GsQqHl6mzLj6jj7qdb3w22k9dIrNGjYT7c/mZooWMUVcuvMzhJE4i+7Ujf8wqOjd56YHa
- 7h77Lxz6RtVnk0Gi93kqG6CowO5B1F6w9dZ9b+uT8Nz3giXHEEnqaQOOsLk0bAhYn3GQbPQjF5LBi
- YQBsZawnaGa64ZU+HfEGcwgXNDGsEziz1MWnjYBzc=;
-Received: from [2a02:8012:2f01:0:7031:47:9ac8:4c3f]
- by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1weKKq-000JYb-01; Mon, 29 Jun 2026 23:20:12 +0100
-Message-ID: <c0cd50bd-e054-48b6-af54-1050e13bb720@ilande.co.uk>
-Date: Mon, 29 Jun 2026 23:20:09 +0100
+ (Exim 4.90_1) (envelope-from <bp@alien8.de>) id 1weL5n-0005YL-IU
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 19:08:45 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+ by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 6A8A740E00B8; 
+ Mon, 29 Jun 2026 23:08:29 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+ header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+ by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+ with ESMTP id AXHmSM-qeycv; Mon, 29 Jun 2026 23:08:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+ t=1782774498; bh=UeIaK4vbx8U5hKEeuwHcmKvq00Qb2plMGIJAQwLE5vw=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=O94K/Hd+nP2J+j9V3I6ztKEjTYtQga5ziVBmwz3Xz5mvwNb+vsGFFw+kgxq2F/0lc
+ XXDVixfurRJIkyJNwIBaDLCJZMQo0OiSBRODB+kr465XqQM7oqb0gpGjyfll9UFhwn
+ r/7z/PsK5mmVUqH4PFuFlsP1KRYzFYKxROUKD0y1CBe/HFgzFDyuPGTAi4xZh8IQCj
+ lel1+4oQG/XKgMgzd4qaHZPpaq2EHTZbHH7tNrmxhoVoyr3UIdmJgSz4wwUHOlD93Y
+ HXPtbCtSMUrCl3To9ztq7dYVpmB0D4ZXy6OIR2nUbjKUSL1V/Z6UETxJmOijkvN6j+
+ UcVwEPOBlzWJqj2Sp/l7KFkdlnunFaSK3M9LQW47ShycOQSofddz+BqOMp3Uw7HbiQ
+ l+/qS2QDMSM6iySOg4/H8vTC8AYOMo/RC4JyjlqgSyPRfWu+2TGMZyfe+El/peBjRU
+ jEeqs+0FgiBPuldqwKYp6kX/suSUtmYWslG3Asj681NNIpDXmr6WdWHVaHBiD76orv
+ L+h7EK0cpPRceU+7uApm9rnaMiMlCz++MBsKos3jMiXLlI+jOxeWUT81fNZV72Lpy4
+ awPkx7oSYsG82L+jl+WKTavMzA/wQQ/kDsc88pkKeKhUVrAlXBylNTlTP/owx5TBH6
+ Kzj3ISPW8+E+67Y7l+YQ4eNI=
+Received: from stx.tnic (unknown [IPv6:2600:1700:38ca:c00::1a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest
+ SHA256) (No client certificate requested)
+ by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 01D6840E00BA;
+ Mon, 29 Jun 2026 23:07:59 +0000 (UTC)
+Date: Mon, 29 Jun 2026 16:07:56 -0700
+From: Borislav Petkov <bp@alien8.de>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ linux-edac@vger.kernel.org, Markus Armbruster <armbru@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Alex Williamson <alex@shazbot.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Eric Blake <eblake@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Lukas Straub <lukasstraub2@web.de>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH 00/14] qapi: convert to explicit intro section syntax
+Message-ID: <20260629230756.GCakL6zDDd_g8DIeGD@fat_crate.local>
+References: <20260629213624.936258-1-jsnow@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
- qemu-devel@nongnu.org
-Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
- QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20260309181452.83702-1-thuth@redhat.com>
- <00c4ab4b-a58b-4de4-8e41-566b2cb7f920@redhat.com>
- <124bd918-f2ab-43e2-bd2d-fc824de62c40@tls.msk.ru>
- <fcbe3d7f-64d4-4b13-b930-a81e77db4784@ilande.co.uk>
- <df7a091c-a8a1-416a-acf3-28a0cbd8dd2f@redhat.com>
- <c7d6b801-449e-4f55-9c1d-ebec7a0e9595@redhat.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <c7d6b801-449e-4f55-9c1d-ebec7a0e9595@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:7031:47:9ac8:4c3f
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2] hw/sparc64/sun4u: Mark unusable PCI busses as full to
- ease device plugging
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260629213624.936258-1-jsnow@redhat.com>
+Received-SPF: pass client-ip=2a01:4f9:3051:3f93::2; envelope-from=bp@alien8.de;
+ helo=mail.alien8.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,80 +93,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/06/2026 14:43, Thomas Huth wrote:
-
-> On 09/06/2026 08.02, Thomas Huth wrote:
->> On 08/06/2026 23.29, Mark Cave-Ayland wrote:
->>> On 08/06/2026 09:26, Michael Tokarev wrote:
->>>
->>>> On 30.04.2026 12:50, Thomas Huth wrote:
->>>>> On 09/03/2026 19.14, Thomas Huth wrote:
->>>>>> From: Thomas Huth <thuth@redhat.com>
->>>>>>
->>>>>> When trying to plug a PCI device to a Sparc64 machine, you currently
->>>>>> have to specify the right bus ("bus=pciB"), otherwise you get this error:
->>>>>>
->>>>>>   $ qemu-system-sparc64 -device virtio-scsi-pci
->>>>>>   qemu-system-sparc64: -device virtio-scsi-pci: PCI: no slot/function
->>>>>>   available for virtio-scsi-pci, all in use or reserved
->>>>>>
->>>>>> This is quite annoying for the unexperienced users, and it also breaks
->>>>>> e.g. the iotests ("make check-block") when running with qemu-system- sparc64.
->>>>>>
->>>>>> Mark the non-usable PCI busses as full now, so that QEMU can automatically
->>>>>> plug new PCI devices to the right "pciB" bus.
->>>>>>
->>>>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>>>>> ---
->>>>>>   v2: Do the change in the machine code, not in the sabre device
->>>>>>
->>>>>>   hw/sparc64/sun4u.c | 7 +++++++
->>>>>>   1 file changed, 7 insertions(+)
->>>>>>
->>>>>> diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
->>>>>> index b8bda1eb816..37539535c6c 100644
->>>>>> --- a/hw/sparc64/sun4u.c
->>>>>> +++ b/hw/sparc64/sun4u.c
->>>>>> @@ -723,6 +723,13 @@ static void sun4uv_init(MemoryRegion *address_space_mem,
->>>>>>       fw_cfg_add_i16(fw_cfg, FW_CFG_SPARC64_DEPTH, graphic_depth);
->>>>>>       qemu_register_boot_set(fw_cfg_boot_set, fw_cfg);
->>>>>> +
->>>>>> +    /*
->>>>>> +     * Mark internal PCI busses as full so that the plugging of additional
->>>>>> +     * PCI devices happens on the right bus that still has free slots:
->>>>>> +     */
->>>>>> +    qbus_mark_full(&pci_bus->qbus);
->>>>>> +    qbus_mark_full(&pci_busA->qbus);
->>>>>>   }
->>>>>>   enum {
->>>>>
->>>>> Friendly ping!
->>>>
->>>> This, being a simple change, somehow has not been reviewed still, so
->>>> it's sitting in the queue...
->>>
->>> Yes, apologies - I've been absolutely flat out recently, and I've got a note to 
->>> take a look at this and Peter's patch as soon as I can.
->>>
->>> Is this fixing an urgent issue with "make check-block" or similar?
->>
->> It's not urgent since this has been broken forever, but yes, it fixes "make check- 
->> block" for the case where sparc64 is the only available target during "configure -- 
->> target-list=sparc64-softmmu" and thus the iotests run with qemu-system-sparc64.
-> Ping!
+On Mon, Jun 29, 2026 at 05:36:10PM -0400, John Snow wrote:
+> GitLab CI: https://gitlab.com/jsnow/qemu/-/pipelines/2638342206
 > 
-> While it's not urgent, soft-freeze date is in a week, so it would be nice to get this 
-> merged before it misses another release ... WDYT?
+> Hi, this patchset converts some of the most trivial modules to use the
+> new explicit intro syntax. This particular patchset does not
+> differentiate between "trivial" conversions and those that take
+> slightly more liberty in refactoring, but there are (debatably?) no
+> such cases in this patchset.
+> 
+> John Snow (14):
+>   qapi: convert intro sections for error.json
+>   qapi: convert intro sections for acpi-hest.json
+>   qapi: convert intro sections for ebpf.json
+>   qapi: convert intro sections for uefi.json
+>   qapi: convert intro sections for compat.json
+>   qapi: convert intro sections for vfio.json
+>   qapi: convert intro sections for trace.json
+>   qapi: convert intro sections for misc-arm.json
+>   qapi: convert intro sections for cryptodev.json
+>   qapi: convert intro sections for machine-common.json
+>   qapi: convert intro sections for accelerator.json
+>   qapi: convert intro sections for authz.json
+>   qapi: convert intro sections for yank.json
+>   qapi: convert intro sections for replay.json
+> 
+>  qapi/accelerator.json    | 18 ++++++----------
+>  qapi/acpi-hest.json      |  4 ++--
+>  qapi/authz.json          | 21 +++++++------------
+>  qapi/compat.json         |  9 +++-----
+>  qapi/cryptodev.json      | 18 ++++++----------
+>  qapi/ebpf.json           | 14 ++++++-------
+>  qapi/error.json          |  3 +--
+>  qapi/machine-common.json | 19 +++++++----------
+>  qapi/misc-arm.json       | 24 +++++++++------------
+>  qapi/replay.json         | 45 ++++++++++++++++++----------------------
+>  qapi/trace.json          | 12 ++++-------
+>  qapi/uefi.json           |  5 ++---
+>  qapi/vfio.json           | 19 ++++++++---------
+>  qapi/yank.json           | 28 ++++++++++---------------
+>  14 files changed, 94 insertions(+), 145 deletions(-)
 
-Hi Thomas,
+Why is this thread CCing linux-edac?
 
-I'm still playing catch-up a bit here, but I can't immediately find my notes on using 
-pciA under QEMU. I think if it fixes the iotests then go ahead and merge it for now, 
-which gives me time in freeze to investigate any reported issues.
+I don't see any relation here...
 
+-- 
+Regards/Gruss,
+    Boris.
 
-ATB,
-
-Mark.
-
+https://people.kernel.org/tglx/notes-about-netiquette
 
