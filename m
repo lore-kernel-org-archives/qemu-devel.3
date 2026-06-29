@@ -4,86 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60DCCC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 16:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E32C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 16:46:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weF4X-0000RP-RR; Mon, 29 Jun 2026 12:43:01 -0400
+	id 1weF7x-0001Rz-2y; Mon, 29 Jun 2026 12:46:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weF4O-0000PY-9K
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 12:42:52 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weF4M-0004jL-Es
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 12:42:51 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-47122683cf3so1090926f8f.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 09:42:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782751369; x=1783356169; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Y/5iESuASLycsAoZotgaQvHLlAkwq24s+d8w0Yh0hvY=;
- b=PaCCpSst2digO3EJMGXd6WpsSepiMNVlmsPFMW0ZK+9Bn/1IVnUV7FWgMsxkDFlrlY
- +r6cHFIMuCNkJyJYMf0326wTGOvCUhKRFqmyprwAwexSSG6D9QIt+C8MPmA6rDgpxkCx
- 8bNKs4ZWSt0f9g2yWdW8UVeeIEqv990LfRgiRHB4ssSVdWFr7RWsmIcJpr81w+K4Dp1B
- nLzegPOTY3N80EUEgg4s6eF6o6Uz5M0Pgcqp2TaniUx45X8s+Zc6ktk+pLwN72rRSUzE
- PvWS861BIz2xQmaEgkRt6l0M5fjROyn3iY8NE8aWrsDbL/3sMPhVm2pUw2MaUds9dt3A
- JU4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782751369; x=1783356169;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y/5iESuASLycsAoZotgaQvHLlAkwq24s+d8w0Yh0hvY=;
- b=mKOC19amPXS5myskXsPh7Tz85OW8ChnBJ0L5HEgQ9BN5GOWIVvBh5gHbYkRbrZR8fr
- UrJ+yjxIo4CSba2/dvzI66wUNIaA6gd/b3uUzzZ3uOpcblGpSSSpLJXDEkcSbI/kggGL
- 0tvW3t0VTLFwAd0sjtPWYgJKKpbb3WTa8wiwrtvCMWdicyd18MjLuPKNgWnntKdtT1Kn
- RjiXyHCk3tXw62pSqRcvavtk5/N9UBHZdbiULIs92vXhljGel5fOScoFtdOhcKVicxm+
- GcUv3BtMOOblrcKlB6vpUqTaCD2ErUjTpr8jE0w5TDVwm89RtE9/XZEly+w9kmYmKUaB
- nmLA==
-X-Gm-Message-State: AOJu0Ywr1LwZjw+LRAlEP4ygPTUVAmNenbT8E5+EQI20k5zwn1VN8YlF
- UDIY1UD81XxGdt+/ZEkNp3dnIT+WBqTnu0FcDZt8imxtomNUl8oCfQ+LWIi+U4hxgvBVLRxB0kk
- txASA
-X-Gm-Gg: AfdE7cmKz+4K/Nadr64JbDZbFDaQl8R2vZ3UNrl9WR7hE6EMp3O8y1kyjsJJkE1EMp2
- Jr1tp7QFG47UCb7E1hDPeMZdRShee8CvQgtZ0yhlP0LoapX5Jk2o4a6XWjd2CpfrUHgsspruxEW
- uVeh8Zj1isEx8cW6Dfju65S8D5bXfM5bVZNzPMix6sVI7MXXZD4LyUMip9jkkq1HtuUmTzT7bkK
- qth/wpH4f0KrsqfUD6iw9WKa/JZT6xDYqRKLLajsN1tqZIsRyIy+FGHnyqo8MojsLAoEifZz3US
- Q6h6JWoJBVRxZchuBTotQ3v0CgCnjBNh9zzHnNRvv6awl3+PW8njlNtrW3pQKoaSTGcWAPjPyN6
- Qz/xfoKt99qlfqOo336wYgxnvpZvYRiYmUyoki8Ty9T3SWoxOcFOtQj+nZvEB6Pi48wEuEQWYNN
- 2U6ZUUOQuXc3t6GK3c6DHAyFlW5DI8Fw2CbP9cwWRkZJrR8dP9+XKKzduXp68dNPt2hpiaHS/Mi
- 5qEt2e9KaC2b2R0hgTV0Aujs2YuU9lk
-X-Received: by 2002:a05:6000:2284:b0:471:92b:1683 with SMTP id
- ffacd0b85a97d-471092b1810mr15674764f8f.13.1782751368684; 
- Mon, 29 Jun 2026 09:42:48 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c1ee0189esm53582443f8f.9.2026.06.29.09.42.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 09:42:47 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1weF7t-0001RJ-2n; Mon, 29 Jun 2026 12:46:29 -0400
+Received: from m16.mail.163.com ([117.135.210.4])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1weF7p-0006nm-3Y; Mon, 29 Jun 2026 12:46:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=68
+ DELvQ63CxdDYcJUgQUdUT2IAmUQtFHhivD0F/+SLA=; b=iXh8bRBakUHY7fq3A6
+ Ajk7vebMHPyBXxM1tximSDrVxM5oKFFRuRdTxtF2kedhWYDdvOdhxMunDS+cqsUS
+ pawzFCHb7CRQTyZ5T5EpzL8TRXgvvj4D0sgAlVmaHVeDxW/M15kwDdnrf8uNuAbj
+ L2J4CT9YhrdoXTrXt+uxpJ5kA=
+Received: from dt-VM.localdomain (unknown [])
+ by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id
+ _____wD311NLoUJq1eP1Gg--.32114S4; 
+ Tue, 30 Jun 2026 00:46:04 +0800 (CST)
+From: Tao Ding <dingtao0430@163.com>
 To: qemu-devel@nongnu.org
-Cc: Bin Meng <bmeng.cn@gmail.com>, Jason Wang <jasowangio@gmail.com>,
- Jason Wang <jasowang@redhat.com>
-Subject: [PATCH] net: Correct padding check in qemu_receive_packet()
-Date: Mon, 29 Jun 2026 17:42:46 +0100
-Message-ID: <20260629164246.2028947-1-peter.maydell@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Tao Ding <dingtao0430@163.com>
+Subject: [PATCH v2 2/2] qtest: add xilinx-zynq SDHCI sdma test
+Date: Tue, 30 Jun 2026 00:45:33 +0800
+Message-ID: <20260629164533.42956-3-dingtao0430@163.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260629164533.42956-1-dingtao0430@163.com>
+References: <20260629164533.42956-1-dingtao0430@163.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-CM-TRANSID: _____wD311NLoUJq1eP1Gg--.32114S4
+X-Coremail-Antispam: 1Uf129KBjvJXoW3JFyDWF4rGF4xuF1xXw4UXFb_yoW3XFy7pa
+ yj9FyjyrWqyF18Xrs3Ga15tFyY9rsxZa4UWFy5urs2krs7JF92vrs7KFyUXrs7GrW8Xryr
+ urs8XF1DGw1xWrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pi8nY7UUUUU=
+X-Originating-IP: [101.204.16.250]
+X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC4Qym5GpCoUzxagAA3x
+Received-SPF: pass client-ip=117.135.210.4; envelope-from=dingtao0430@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,87 +75,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In qemu_receive_packet() we check to see if we should pad a short
-packet.  This is doing the wrong test: because this function is used
-when the device adds a packet to its own incoming queue (i.e.  for
-loopback), we should be checking the NetClientState's own do_not_pad
-flag, not that for its peer.
+Thanks for the review comments.
 
-We didn't notice this earlier, because at the moment all the real
-peers of a network device (i.e.  the network backends) do not set
-do_not_pad, so net_peer_needs_padding() always returns true except in
-the corner case where the network device has no peer at all.
+Add a standalone qtest for the SDHCI controller on the
+xilinx-zynq-a9 machine. This test covers the bug fixed by patch 1/2 in this series.
 
-The effect of this is that if a network device has no peer (e.g.
-because QEMU was started with -net none or with -nodefaults) then we
-can still let through the kind of "guest misprograms the network
-device to loopback-transmit a short packet and then we mishandle it
-in the receive path" bug like #3043 which commit a01344d9d78 was
-trying to fix.
+The test covers the SDMA boundary continuation case for a
+multi-block read. After the controller stops at a boundary,
+software updates SYSAD to continue the transfer. This verifies
+the generic SDHCI behavior that previously failed when the
+continuation SYSAD write was ignored and the transfer stalled.
 
-Since the distinction between "we should check nc->do_not_pad"
-and "we should check nc->peer->do_not_pad" is a bit subtle, add
-enough documentation commentary to make it more obvious.
-
-Cc: qemu-stable@nongnu.org
-Fixes: a01344d9d78 ("net: pad packets to minimum length in qemu_receive_packet()")
-Suggested-by: Bin Meng <bmeng.cn@gmail.com>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Tao Ding <dingtao0430@163.com>
 ---
- include/net/net.h | 23 +++++++++++++++++++++++
- net/net.c         |  2 +-
- 2 files changed, 24 insertions(+), 1 deletion(-)
+Build:
+  mkdir build
+  cd build
+  ../configure --target-list="arm-softmmu"  --disable-slirp --enable-debug --disable-werror
+  make -j4
 
-diff --git a/include/net/net.h b/include/net/net.h
-index 45bc86fc86..9edfacf827 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -349,9 +349,32 @@ uint32_t net_crc32_le(const uint8_t *p, int len);
-     .offset     = vmstate_offset_macaddr(_state, _field),            \
- }
- 
-+/**
-+ * net_peer_needs_padding: Should we pad as we send out packets?
-+ * @nc: NetClientState
-+ *
-+ * Return true if the peer of this NetClientState (i.e. the
-+ * destination that qemu_send_packet() etc send to) requires us to pad
-+ * out packets that are shorter than the minimum ethernet frame
-+ * length.
-+ */
- static inline bool net_peer_needs_padding(NetClientState *nc)
- {
-   return nc->peer && !nc->peer->do_not_pad;
- }
- 
-+/**
-+ * net_client_needs_padding: Should we pad as we queue packets to ourselves?
-+ * @nc: NetClientState
-+ *
-+ * Return true if this NetClientState requires us to pad out packets
-+ * that are shorter than the minimum ethernet frame length.  This is
-+ * the check to make in qemu_receive_packet() when we are queuing a
-+ * packet back into ourselves (i.e. loopback).
-+ */
-+static inline bool net_client_needs_padding(NetClientState *nc)
+Run:
+  QTEST_QEMU_BINARY=./qemu-system-arm \
+  tests/qtest/xilinx-zynq-sdhci-test
+
+Before the fix, the test fails with a BLKCNT assertion:
+  ERROR:../tests/qtest/xilinx-zynq-sdhci-test.c:90:wait_for_block_count: 
+  assertion failed (qtest_readw(qts, XILINX_ZYNQ_MMC_BA + SDHC_BLKCNT) == expected): (1 == 0)
+
+After applying the fix, the test passes:
+  ok 1 /arm/xilinx-zynq-sdhci/sdma/read-boundary-continue
+
+ tests/qtest/meson.build              |   1 +
+ tests/qtest/xilinx-zynq-sdhci-test.c | 178 +++++++++++++++++++++++++++
+ 2 files changed, 179 insertions(+)
+ create mode 100644 tests/qtest/xilinx-zynq-sdhci-test.c
+
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 2ae720156f..c12a35721d 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -244,6 +244,7 @@ qtests_arm = \
+    config_all_devices.has_key('CONFIG_MUSICPAL') ? ['pflash-cfi02-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed : []) + \
+   (config_all_devices.has_key('CONFIG_NPCM7XX') ? qtests_npcm7xx : []) + \
++  (config_all_devices.has_key('CONFIG_ZYNQ') ? ['xilinx-zynq-sdhci-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_GENERIC_LOADER') ? ['hexloader-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test', 'tpm-tis-i2c-swtpm-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_VEXPRESS') ? ['test-arm-mptimer'] : []) + \
+diff --git a/tests/qtest/xilinx-zynq-sdhci-test.c b/tests/qtest/xilinx-zynq-sdhci-test.c
+new file mode 100644
+index 0000000000..1be9bdabf7
+--- /dev/null
++++ b/tests/qtest/xilinx-zynq-sdhci-test.c
+@@ -0,0 +1,178 @@
++/*
++* QTests for the Xilinx Zynq SDHCI controller.
++*
++* Copyright (c) 2026 Tao Ding <dingtao0430@163.com>
++*
++* SPDX-License-Identifier: GPL-2.0-or-later
++*/
++
++#include "qemu/osdep.h"
++#include "hw/sd/sdhci.h"
++#include "hw/sd/sdhci-internal.h"
++
++#include "libqtest.h"
++#include "libqtest-single.h"
++#include "libqos/sdhci-cmd.h"
++
++#define XILINX_ZYNQ_MMC_BA             0xE0100000
++#define XILINX_ZYNQ_BLK_SIZE           512
++#define XILINX_ZYNQ_TEST_IMAGE_SIZE    (1 << 20)
++#define XILINX_ZYNQ_SDMA_BOUNDARY_ARG  7
++#define XILINX_ZYNQ_SDMA_BOUNDARY_SIZE (512 * 1024)
++#define XILINX_ZYNQ_SDMA_BLOCK_COUNT \
++    ((XILINX_ZYNQ_SDMA_BOUNDARY_SIZE / XILINX_ZYNQ_BLK_SIZE) + 1)
++#define XILINX_ZYNQ_SDMA_TRANSFER_SIZE \
++    (XILINX_ZYNQ_SDMA_BLOCK_COUNT * XILINX_ZYNQ_BLK_SIZE)
++#define XILINX_ZYNQ_DMA_ADDR           0x00100000
++
++#define SDHC_MAKE_BLKSZ(boundary, size) (((boundary) << 12) | (size))
++
++static char *sd_path;
++
++static QTestState *setup_sd_card(void)
 +{
-+    return !nc->do_not_pad;
++    QTestState *qts;
++    uint16_t rca;
++
++    qts = qtest_initf(
++        "-machine xilinx-zynq-a9 "
++        "-drive if=sd,index=0,file=%s,format=raw,auto-read-only=off",
++        sd_path);
++
++    qtest_writew(qts, XILINX_ZYNQ_MMC_BA + SDHC_SWRST, SDHC_RESET_ALL);
++    qtest_writew(qts, XILINX_ZYNQ_MMC_BA + SDHC_CLKCON,
++                 SDHC_CLOCK_SDCLK_EN | SDHC_CLOCK_INT_STABLE |
++                 SDHC_CLOCK_INT_EN);
++    sdhci_cmd_regs(qts, XILINX_ZYNQ_MMC_BA, 0, 0, 0, 0, SDHC_APP_CMD);
++    sdhci_cmd_regs(qts, XILINX_ZYNQ_MMC_BA, 0, 0, 0x41200000, 0,
++                   (41 << 8));
++    sdhci_cmd_regs(qts, XILINX_ZYNQ_MMC_BA, 0, 0, 0, 0, SDHC_ALL_SEND_CID);
++    sdhci_cmd_regs(qts, XILINX_ZYNQ_MMC_BA, 0, 0, 0, 0,
++                   SDHC_SEND_RELATIVE_ADDR | SDHC_CMD_RESPONSE);
++    rca = qtest_readl(qts, XILINX_ZYNQ_MMC_BA + SDHC_RSPREG0) >> 16;
++    sdhci_cmd_regs(qts, XILINX_ZYNQ_MMC_BA, 0, 0, rca << 16, 0,
++                   SDHC_SELECT_DESELECT_CARD);
++
++    return qts;
 +}
 +
- #endif
-diff --git a/net/net.c b/net/net.c
-index 2892f1730d..93fe2ed1c3 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -783,7 +783,7 @@ ssize_t qemu_receive_packet(NetClientState *nc, const uint8_t *buf, int size)
-         return 0;
-     }
- 
--    if (net_peer_needs_padding(nc)) {
-+    if (net_client_needs_padding(nc)) {
-         if (eth_pad_short_frame(min_pkt, &min_pktsz, buf, size)) {
-             buf = min_pkt;
-             size = min_pktsz;
++static void write_pattern_to_image(size_t offset, size_t len)
++{
++    int fd;
++    int ret;
++    uint8_t *buf = g_malloc(len);
++
++    for (size_t i = 0; i < len; i++) {
++        buf[i] = (i * 13 + 7) & 0xff;
++    }
++
++    fd = open(sd_path, O_WRONLY);
++    g_assert_cmpint(fd, >=, 0);
++    ret = pwrite(fd, buf, len, offset);
++    close(fd);
++    g_assert_cmpint(ret, ==, len);
++
++    g_free(buf);
++}
++
++static void wait_for_block_count(QTestState *qts, uint16_t expected)
++{
++    int i;
++
++    for (i = 0; i < 1000; i++) {
++        if (qtest_readw(qts, XILINX_ZYNQ_MMC_BA + SDHC_BLKCNT) == expected) {
++            return;
++        }
++        g_usleep(100);
++    }
++
++    g_assert_cmpuint(qtest_readw(qts, XILINX_ZYNQ_MMC_BA + SDHC_BLKCNT),
++                     ==, expected);
++}
++
++/*
++ * SDMA stops at each boundary and requires software to update SYSAD
++ * to continue. The bug this test covers leaves DOING_READ/WRITE asserted,
++ * so the continuation SYSAD write is ignored and the transfer stalls.
++ */
++static void test_read_sdma_boundary_continue(void)
++{
++    QTestState *qts = setup_sd_card();
++    uint8_t *actual = g_malloc0(XILINX_ZYNQ_SDMA_TRANSFER_SIZE);
++    uint8_t *expected = g_malloc(XILINX_ZYNQ_SDMA_TRANSFER_SIZE);
++
++    write_pattern_to_image(0, XILINX_ZYNQ_SDMA_TRANSFER_SIZE);
++
++    for (size_t i = 0; i < XILINX_ZYNQ_SDMA_TRANSFER_SIZE; i++) {
++        expected[i] = (i * 13 + 7) & 0xff;
++    }
++
++    qtest_writel(qts, XILINX_ZYNQ_DMA_ADDR, 0xdeadbeef);
++    qtest_writel(qts, XILINX_ZYNQ_DMA_ADDR + XILINX_ZYNQ_SDMA_BOUNDARY_SIZE,
++                 0xcafef00d);
++
++    qtest_writel(qts, XILINX_ZYNQ_MMC_BA + SDHC_SYSAD, XILINX_ZYNQ_DMA_ADDR);
++    sdhci_cmd_regs(qts, XILINX_ZYNQ_MMC_BA,
++                   SDHC_MAKE_BLKSZ(XILINX_ZYNQ_SDMA_BOUNDARY_ARG,
++                                   XILINX_ZYNQ_BLK_SIZE),
++                   XILINX_ZYNQ_SDMA_BLOCK_COUNT, 0,
++                   SDHC_TRNS_DMA | SDHC_TRNS_MULTI | SDHC_TRNS_READ |
++                   SDHC_TRNS_BLK_CNT_EN,
++                   SDHC_READ_MULTIPLE_BLOCK | SDHC_CMD_DATA_PRESENT);
++
++    wait_for_block_count(qts, 1);
++
++    qtest_writew(qts, XILINX_ZYNQ_MMC_BA + SDHC_NORINTSTS, 0xffff);
++    qtest_writel(qts, XILINX_ZYNQ_MMC_BA + SDHC_SYSAD,
++                 XILINX_ZYNQ_DMA_ADDR + XILINX_ZYNQ_SDMA_BOUNDARY_SIZE);
++
++    wait_for_block_count(qts, 0);
++
++    qtest_memread(qts, XILINX_ZYNQ_DMA_ADDR, actual,
++                  XILINX_ZYNQ_SDMA_TRANSFER_SIZE);
++    g_assert_cmpmem(actual, XILINX_ZYNQ_SDMA_TRANSFER_SIZE,
++                    expected, XILINX_ZYNQ_SDMA_TRANSFER_SIZE);
++
++    g_free(expected);
++    g_free(actual);
++    qtest_quit(qts);
++}
++
++static void drive_destroy(void)
++{
++    unlink(sd_path);
++    g_free(sd_path);
++}
++
++static void drive_create(void)
++{
++    int fd;
++    int ret;
++    GError *error = NULL;
++
++    fd = g_file_open_tmp("xilinx-zynq-sdhci.XXXXXX", &sd_path, &error);
++    if (fd == -1) {
++        fprintf(stderr, "unable to create sdhci file: %s\n", error->message);
++        g_error_free(error);
++    }
++    g_assert_nonnull(sd_path);
++
++    ret = ftruncate(fd, XILINX_ZYNQ_TEST_IMAGE_SIZE);
++    g_assert_cmpint(ret, ==, 0);
++    close(fd);
++}
++
++int main(int argc, char **argv)
++{
++    int ret;
++
++    drive_create();
++
++    g_test_init(&argc, &argv, NULL);
++    qtest_add_func("xilinx-zynq-sdhci/sdma/read-boundary-continue",
++                   test_read_sdma_boundary_continue);
++
++    ret = g_test_run();
++    drive_destroy();
++    return ret;
++}
 -- 
 2.43.0
 
