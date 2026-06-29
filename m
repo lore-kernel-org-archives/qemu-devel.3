@@ -4,72 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23844C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 08:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45478C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 08:13:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we74q-0001PJ-0K; Mon, 29 Jun 2026 04:10:48 -0400
+	id 1we76w-0001uX-Dg; Mon, 29 Jun 2026 04:12:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1we74m-0001P4-PY; Mon, 29 Jun 2026 04:10:45 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1we76u-0001u0-TJ
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 04:12:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1we74j-0003oh-H7; Mon, 29 Jun 2026 04:10:44 -0400
-Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65T8A8FN080280
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 29 Jun 2026 17:10:20 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=45A0yc7fdzoVpIaOAtzzsDwOKquOmy46iehdiNNBXeY=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1782720620; v=1;
- b=Bj/+ZD8QdgUvVlbQiSYUC1wPU5wF5e3gCYPMZVx/KEcsUzoiLI2SRnC3RFxpuPBR
- E5iOlUqpWlTErxiJeJEykckol8a+j08F0Iwmgvug+Pvsi09Q5CSB+H9No25aVI34
- VoNSZ7VFd0nZOCzfHE8A/Bg9yzMhphabUGan5R617HUemj+hEESZfIveM2KeCZHk
- 8ugI5Lo0fGOkWAkioaQIT+cU+rC024T9F8O6/7TZPNTyqg1aFR54AmTxWUtWj7D4
- gXWxSs4HQYhhetpm91EXfiZK8Og8zBhqgTlWbo5JxZHRggsm4rtWclbfaZ1Dr42z
- wlf12BKpJSXYt97KXhuPMg==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 29 Jun 2026 17:10:06 +0900
-Subject: [PATCH v7] target/arm: Always add pmu property for host and max
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1we76t-0004fM-HR
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 04:12:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782720773;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oKIK0SUno5CX+2oH+AKwpBCMF/JJ5BRSDyNKjfU3BYk=;
+ b=cHitoopiNXSbgg/krmXcwZUnicK6d5o7AAS1i+jNtv3NJbJsUipwJCMaYe05z6LQjovKJE
+ VKYLYrRyNF5JuCviKxNNmd8weruAO0b0zqa/UCDS9uKvtol2tb03C9xzSZZMvis5I5Prih
+ vRqN+0Ty9EoOrkrNDe6pTuOe9L+Z1Sc=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-426-ooDRrMJGM-CoUIiIu0eRvQ-1; Mon, 29 Jun 2026 04:12:52 -0400
+X-MC-Unique: ooDRrMJGM-CoUIiIu0eRvQ-1
+X-Mimecast-MFC-AGG-ID: ooDRrMJGM-CoUIiIu0eRvQ_1782720771
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47416fc1674so306161f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 01:12:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782720771; x=1783325571; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=oKIK0SUno5CX+2oH+AKwpBCMF/JJ5BRSDyNKjfU3BYk=;
+ b=fNSTbcB0t5YL3tXXc4eLDTrMwYDT3H+81hLZ+AMt+i7Na0aQKQn9Gb09OERTDl3k/i
+ 1IdkM0BT3RTRwHRXppuA3lhh76M3FOcMZRGeWcId4QoJO/Z+TxWAoStlZwmb2n/XwL8S
+ LK2wxtZvdfGc/PpGfScs72oh4Rn7IazlNM3rBUR8SRNVEA9IYJ9NTpFCOmPr/u2ZrYZm
+ ORvAoJKf3ERVbQKCSIs63ic6e6JszPrtFJmiBWqYR0wm4DVeVtuRANAOxk4xg8E4+bKB
+ PHXQX5CiPsG/IXl742WRWyk2qT2xtS3tKq1IWmHkdA4rnSu03RScdLbHJO+6ZNtxFN8C
+ JLnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782720771; x=1783325571;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=oKIK0SUno5CX+2oH+AKwpBCMF/JJ5BRSDyNKjfU3BYk=;
+ b=CJTEpPJRD3KLjCOI1ekB6bn2AwvyMBb7M2KujafZkTrajGHR3Ilj8PTSYu63ObOtPI
+ iN/DjPpcJv7DzTBCT8wtyU6JZ8EoGF+J/UVxr0zpDlvGTnna9iYd7UzZpC1eUuCFAKSV
+ 0VhPffHimdpib6/dlTGlCYb4Rzlz54vXZKHAtuQe0o8hOvHBi0iJsrloWnac+uERPpJU
+ txWraCmVtEE3LLkTocUf+BO4/IiNjTK+ieljKR7lKi8da1G5KHqWvQL/JkkGvOEWbwsg
+ oczHY7Mk+efCFVJu22WBAzsiUPIjP9HkD6bqji0NY4eAyHNNyPME59MPjzkkF0Dlvgla
+ Ocig==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqSmlk0grKhD1Bz+1CJG/G7gsaCdkBHezipfKuNqOrHwwOnPs/gGK7NbYdep2Zj3sF6xu3s280vEdws@nongnu.org
+X-Gm-Message-State: AOJu0YzMZT5DoaRAHD3bgVhTa2uF6NSEFidsuUMNrHBtBdIh+MB8+v7H
+ IPTyIssnR9BTQ5Hcg65v4bOSrrx9U/aG4tkXx8FmyRZil2Q98Lelr5527jBM24ELsODZTndZ5S/
+ sVOqZU7/355c2KNJxSZ785wMjaTjuvhcLtkGpyu7jadvOa92vOap1vIhF
+X-Gm-Gg: AfdE7ckhaf2KhhTsA1a9a5OuYUhvW+BuzoDUYahBMh2HcfqiiQ5a05ExIyW9tiYFi5A
+ gvVpBEB4tGsrpALaqlfpIjQjcHWuWD0xO0+T+3W6gwKEFQOywzj+IWdheNS+EOFjWVN8ioSjOXw
+ fKiFhD0LHcpKHLpLSDS0BbJei1gwrMIO/rpviTskbe7YmoJtzwlCVyQnnZzGJ7191Hemlz7lGIv
+ vNjP9h+3Fl3a4a92vmB4umakre8zBNDeusd8A8zdj8Br7D3JRoDrlf2Kmg9ynM4RQbZBaD80WgI
+ Pm+XcKu67KWxI/EaEJkMKEo20GLrk1HDVlry+giYSzFZCP2REnw2s7QYud7/GbxgOwXI8LtBG/R
+ aG6c5VjM4BtM55BkJM4ugq3+Qcf/HqL65sA1l5HqoRPwDaBDfc2sRIA==
+X-Received: by 2002:a05:6000:2f87:b0:46e:1658:7c62 with SMTP id
+ ffacd0b85a97d-46e16587d84mr24643966f8f.16.1782720770995; 
+ Mon, 29 Jun 2026 01:12:50 -0700 (PDT)
+X-Received: by 2002:a05:6000:2f87:b0:46e:1658:7c62 with SMTP id
+ ffacd0b85a97d-46e16587d84mr24643935f8f.16.1782720770546; 
+ Mon, 29 Jun 2026 01:12:50 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4728072188fsm14230044f8f.29.2026.06.29.01.12.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jun 2026 01:12:49 -0700 (PDT)
+Message-ID: <6b64061f-06d4-4e92-8f06-43332c10fd3b@redhat.com>
+Date: Mon, 29 Jun 2026 10:12:48 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 03/17] arm: sbsa_gwdt: rename device type to sbsa-gwdt
+Content-Language: en-US
+To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
+ rad@semihalf.com, leif.lindholm@oss.qualcomm.com, qemu-arm@nongnu.org
+References: <20260624102830.1355552-1-imammedo@redhat.com>
+ <20260624102830.1355552-4-imammedo@redhat.com>
+From: Eric Auger <eauger@redhat.com>
+In-Reply-To: <20260624102830.1355552-4-imammedo@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260629-pmu-v7-1-939518c349be@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/23My27CMBCF4VdBXteWPb5NuuI9Kha+BdyKOEogI
- kJ59xqiilbp8ozm++9kTENOI3nf3cmQpjzm0tVh33YknFx3TDTHuglwUNxAQ/vzlbqoW2MTBB0
- 5qZ/9kNp8e1Y+DnWf8ngpw/yMTuJx/esnQTm1YBoB0iM6tY9u7vKNhXImj8AEL2SFWRFU1Mokk
- /IQZdQbJP9BsiIMNgjU6ADsBqlfCPiKVEXgwAO2xnNsN0j/IM0FVyvSVFCfmoDW2mDRbJB5IS3
- FikxF4L0JCOhikvthPLKQWWZXeilfc2EusM+eHJZl+QYzfaZhrAEAAA==
-X-Change-ID: 20240629-pmu-ad5f67e2c5d0
-To: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- devel@daynix.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.16-dev-925f5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3881;
- i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=NOddyoW1QSFprsadGPfRc4eDcTb4qMBeBLKW310x0/A=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5aTRrbu9kd61/XYdxjNilDIlmgpfTEp5c3FKvWX/lrbn
- SLqORI7SlkYxLgYZMUUWVKKdnNrRNd+KkyIb4GZw8oEMoSBi1MAJuK7h5HhEZvqG9vWKWkar6sl
- P3t3c7zjqDScdZhBPWRR6PT9N6/bM/z3MbBda37myMkIxSvcb+fxCUVyL5RhdV1eMGun/r6Os1O
- YAA==
-X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
- fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eauger@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,109 +124,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-kvm-steal-time and sve properties are added for KVM even if the
-corresponding features are not available. Always add pmu property for
-"host" and "max".
 
-Note that we still don't add the property for other CPUs that lack PMU.
-This is because we do not know what a PMU version should be enabled
-when the user sets the property to true while it is defined as an error
-for the "host" or "max" CPU when the hardware accelerator is enabled and
-the host doesn't have a PMU.
 
-This fixes qtest-aarch64/arm-cpu-features on the hosts that supports
-KVM but doesn't support PMU emulation.
+On 6/24/26 12:28 PM, Igor Mammedov wrote:
+> Use hyphenated name to follow QEMU device naming convention.
+> Migration compatibility is preserved since the vmstate name
+> is already "sbsa-gwdt".
+> 
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
-Changes in v7:
-- Reject pmu=on for "host" when PMU is unavailable.
-- Handle "max" too, since it maps to "host" with hwaccel.
-- Link to v6: https://lore.kernel.org/qemu-devel/20250531-pmu-v6-1-2bb6c828ade3@rsg.ci.i.u-tokyo.ac.jp
+Eric
 
-Changes in v6:
-- Limited the scope of the change to the "host" CPU.
-- Link to v5: https://lore.kernel.org/r/20250104-pmu-v5-1-be9c8777c786@daynix.com
-
-Changes in v5:
-- Rebased.
-- Link to v4: https://lore.kernel.org/r/20240720-pmu-v4-0-2a2b28f6b08f@daynix.com
-
-Changes in v4:
-- Split patch "target/arm/kvm: Fix PMU feature bit early" into
-  "target/arm/kvm: Set PMU for host only when available" and
-  "target/arm/kvm: Do not silently remove PMU".
-- Changed to define PMU also for Armv7.
-- Changed not to define PMU for M.
-- Extracted patch "hvf: arm: Raise an exception for sysreg by default"
-  from "hvf: arm: Properly disable PMU".
-- Rebased.
-- Link to v3: https://lore.kernel.org/r/20240716-pmu-v3-0-8c7c1858a227@daynix.com
-
-Changes in v3:
-- Dropped patch "target/arm: Do not allow setting 'pmu' for hvf".
-- Dropped patch "target/arm: Allow setting 'pmu' only for host and max".
-- Dropped patch "target/arm/kvm: Report PMU unavailability".
-- Added patch "target/arm/kvm: Fix PMU feature bit early".
-- Added patch "hvf: arm: Do not advance PC when raising an exception".
-- Added patch "hvf: arm: Properly disable PMU".
-- Changed to check for Armv8 before adding PMU property.
-- Link to v2: https://lore.kernel.org/r/20240716-pmu-v2-0-f3e3e4b2d3d5@daynix.com
-
-Changes in v2:
-- Restricted writes to 'pmu' to host and max.
-- Prohibited writes to 'pmu' for hvf.
-- Link to v1: https://lore.kernel.org/r/20240629-pmu-v1-0-7269123b88a4@daynix.com
----
- target/arm/cpu.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
-
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 86aae36ae552..4a4bed525359 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1345,11 +1345,11 @@ static void arm_set_pmu(Object *obj, bool value, Error **errp)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
- 
--    if (value) {
--        set_feature(&cpu->env, ARM_FEATURE_PMU);
--    } else {
--        unset_feature(&cpu->env, ARM_FEATURE_PMU);
-+    if (value && !arm_feature(&cpu->env, ARM_FEATURE_PMU)) {
-+        error_setg(errp, "'pmu' feature is not supported");
-+        return;
-     }
-+
-     cpu->has_pmu = value;
- }
- 
-@@ -1529,6 +1529,7 @@ static void arm_cpu_propagate_feature_implications(ARMCPU *cpu)
- static void arm_cpu_post_init(Object *obj)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
-+    ARMCPUClass *acc = ARM_CPU_GET_CLASS(obj);
- 
-     /*
-      * Some features imply others. Figure this out now, because we
-@@ -1585,6 +1586,10 @@ static void arm_cpu_post_init(Object *obj)
- 
-     if (arm_feature(&cpu->env, ARM_FEATURE_PMU)) {
-         cpu->has_pmu = true;
-+    }
-+
-+    if (cpu->has_pmu || !strcmp(acc->info->name, "host") ||
-+        !strcmp(acc->info->name, "max")) {
-         object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
-     }
- 
-
----
-base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
-change-id: 20240629-pmu-ad5f67e2c5d0
-
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+>  include/hw/watchdog/sbsa_gwdt.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/include/hw/watchdog/sbsa_gwdt.h b/include/hw/watchdog/sbsa_gwdt.h
+> index 307a4f291a..8941dcff9e 100644
+> --- a/include/hw/watchdog/sbsa_gwdt.h
+> +++ b/include/hw/watchdog/sbsa_gwdt.h
+> @@ -16,7 +16,7 @@
+>  #include "hw/core/sysbus.h"
+>  #include "hw/core/irq.h"
+>  
+> -#define TYPE_WDT_SBSA "sbsa_gwdt"
+> +#define TYPE_WDT_SBSA "sbsa-gwdt"
+>  #define SBSA_GWDT(obj) \
+>      OBJECT_CHECK(SBSA_GWDTState, (obj), TYPE_WDT_SBSA)
+>  #define SBSA_GWDT_CLASS(klass) \
 
 
