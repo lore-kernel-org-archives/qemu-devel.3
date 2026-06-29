@@ -4,62 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91101C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 09:19:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 035A4C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 09:20:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we88g-0008Mv-9s; Mon, 29 Jun 2026 05:18:50 -0400
+	id 1we8AY-0000e5-8H; Mon, 29 Jun 2026 05:20:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1we88f-0008Md-9r; Mon, 29 Jun 2026 05:18:49 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1we8AQ-0000dZ-6H
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 05:20:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1we88c-0007rP-JS; Mon, 29 Jun 2026 05:18:49 -0400
-Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 20FE8807F4;
- Mon, 29 Jun 2026 12:18:39 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:946::1:3] (unknown [2a02:6bf:8080:946::1:3])
- by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id bIZXNlAXwiE0-vcoHnPUd; Mon, 29 Jun 2026 12:18:38 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1782724718;
- bh=4vYl+I3y5J3TceNsoWne5748nVrzLZkB6Vkiyjso9PU=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=JcYhYkqhqdVX77qpO4Fuk0bR3R015I4TGMZXLheKfSvRPIJ/pJFjGutHq6bb3vQ6b
- P2bGf4FYjmg8XRjhLvtFnmeiL3JZwCXAjMLcxcTpgzWh1tkLizV4RFAWxS9MU/9OcH
- OPxq3TAuFFTV6VtdddjAEEF/vW8f/XnK20HVDkSY=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <93dc8fbe-2346-430d-90f1-ca44b3970cd5@yandex-team.ru>
-Date: Mon, 29 Jun 2026 12:18:37 +0300
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1we8AO-0008Pr-4P
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 05:20:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782724834;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/7gox1afUBqGqCa3SRy96tT2Py3X9xkB9ybZTli7P0s=;
+ b=DoN2DuR1gX4ttXnvRo5R+ZAEk2Jz2YYCu8Hkif6PYU1CgaaCH4Zn/5IFs/ryOgVr32LVR7
+ p8ja4UPzfwf2jv7bSm0VKl5Kgf5J/LCTDibJdqjLIOVSZLhnlc4z8/rj5N0Bi///8glv9t
+ d5elIAANQbCjaWdsASG9ryhTxnodIEI=
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
+ [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-444-dYsQlRPjOL2uD9ibwfVjkQ-1; Mon, 29 Jun 2026 05:20:32 -0400
+X-MC-Unique: dYsQlRPjOL2uD9ibwfVjkQ-1
+X-Mimecast-MFC-AGG-ID: dYsQlRPjOL2uD9ibwfVjkQ_1782724831
+Received: by mail-pf1-f197.google.com with SMTP id
+ d2e1a72fcca58-845bc2f62c9so2402036b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 02:20:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782724831; cv=none;
+ d=google.com; s=arc-20260327;
+ b=HCTyu080qIh7D70xfqG5GNtZTvL5t4MFeIQl8pXq7i2TJQeIaKGl90gGbF8pSvpmzX
+ 4IDP+ROH0RG/9HPnkWDOvy3zLhCeX1Xdv/Hf0dC48tNQQ2tISgdkLNd4KNJy6da65hSk
+ GyN7Y3efzhhKMLlRGvmowPRm5aMROEcC/B0dxMPGL5MuwhMCDdiZTr727Z8JuneNqriq
+ NZ//S3Mmxiz/+8/17soSTpVlyiR4GK0M6SQY92l7/seU2TnPCnJ/ln1qhYNrgEcTsypz
+ S2JFp2KYbvPWWGHmx7fmiTQUegL1xOvGysIoERMgms3EOZT5CmcDn1npJBOSSF7k43RC
+ kzRw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=/7gox1afUBqGqCa3SRy96tT2Py3X9xkB9ybZTli7P0s=;
+ fh=GIU+FyOM+eiO1tYKbHGSJ9iUu0d9Nn25uUBQaeMGCdg=;
+ b=fWPADyRZDy4qcgT4CAMfVKLX+ofNBy8Hql3iIHlIkUxFZ44EULTBP8XoD9cSFX200T
+ MRnWz789tS+MMJvVRJExFOO1WmBbucqjwy8Lw4a61jE2S1JZVJWYKZkGzULhao8QaCqk
+ R9KrgLZg4u56MBmsbRhmUcB3IAO+LunjQF6p05737YtpmFu0IXhtyWrV+2LxQMyAD4NI
+ WHHpz24v8IvGwLD/QrROExAwWY/81prQF5uJSkQc5tRhdEwfWumFWQ7hDmgM9JWENXjV
+ +xkPF/p5ubdf5QQUjOv7rjw39L2x1VJLZfjkld6SyLKOr8K2Qkm35fd38nNq/IPoqSvR
+ +QJA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782724831; x=1783329631; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/7gox1afUBqGqCa3SRy96tT2Py3X9xkB9ybZTli7P0s=;
+ b=sdxin/4ONKpx1LxO6GF2KYqTHPdaMQJvvCHbVKIthAEWN8ecNGTzVrE/fzh4AEruPj
+ Y/nDQJxawjvzQ6yPyOGr9SLjqbgKt53rTJKpO8VGirjemr0UxY1E7FAsrO6RK5X/AGlm
+ ganEbuYBuPEDG4uauRZviPGsmp8KsxzNrdw1Jx6ZrxlN96GEQpGURXYDIJYm+GXOB7Ab
+ kAk3sprnquX0rOksw3dIO9v42lKu1oOdPsKF2xzUMi+ioH3jF9Atvc3+9rISAYP8Bdr2
+ RAxy4IgRS1HLykwPOUEemaMfnUV9Xj8umkPsBSB27Z7w9hp5PQwDQW0S1adMFVszee57
+ tuGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782724831; x=1783329631;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/7gox1afUBqGqCa3SRy96tT2Py3X9xkB9ybZTli7P0s=;
+ b=U9qRaHYzOS9+6mn86zK/ICH4NNSyAONsQwgXXa3PfVJsqfTlR59rgSzudTz7iGx2IW
+ WxV/OKbRbni5jxqn0LhsUb2zapJ7cpnWee2FEYBYMOsmM767uho4RMqKwsnPCJZug66q
+ 6HxknivcAhhG51yd0yi6wCGJwzk6aKeEMotrfT1kmaD/s1H1xsDyLQ4chKpiNebBFTf5
+ 7Nhp06oo8ctAlg0lpK+4yoUNus38aH63PrXl5j4j+8CSgas6ew145PTKbH2j4/rwIc5j
+ wTGPKu4VSl6mU0uqNw/OxZ+xC5qq4+L39wya3gMa/SxmUYjIyEICVUDfIanHWDO7NTso
+ U7wg==
+X-Gm-Message-State: AOJu0Yw7FG98Pa5fUaPIXvZjAMxcqb8tmzcnm8x/yEHCvhvcCzpTAmUY
+ eY3taRORl7RjV6U0fxpq6EyfLvjD8QMvwsa112i2IrB3hF1r7hKo03UhtG6rKIi544RQbOhpI/2
+ fzgTUxSuRvNSgZMEFBoNL1s/tsjN9T3Oxm18otsM3jajQoTXhB6mQxDzikkMIW9kEoEmYvt4tQB
+ cfFw6eBFnEaSl5e8jLHGI98ZsN9bd3Vao=
+X-Gm-Gg: AfdE7ckLVn+hJ7mH3vySpZXVls0uTDF4vvcx3Z8N/OSg4gF1VIhkyKoNhzZo3QBwDz7
+ yLLgSGWM0TveCVwb5cHDP9hTIJYIynYu3KfKGKtaQgIv7X4YIgdWsVaMsL6OJoY4PcD+wRHBY8+
+ 87Ktpf9PoLFYKpjY0gUwQ0HR/YoNrbYab7e5N2txGDlQLYhLfLg5F+hi9BUotWOYA4jved9GusB
+ EtsEKZwOlscQd7MT7nNc+BbiGuy3wb8VOiyudJg+UkQ7yzZa4noubXRyKiDm71/TGC7KTEP2ZAt
+ F9KdP3MkCBK9
+X-Received: by 2002:a05:6a00:1248:b0:847:9015:e68c with SMTP id
+ d2e1a72fcca58-8479015ef67mr1172070b3a.17.1782724830715; 
+ Mon, 29 Jun 2026 02:20:30 -0700 (PDT)
+X-Received: by 2002:a05:6a00:1248:b0:847:9015:e68c with SMTP id
+ d2e1a72fcca58-8479015ef67mr1172048b3a.17.1782724830121; Mon, 29 Jun 2026
+ 02:20:30 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/1] qcow2: add functionality to repair bitmaps
-To: Jean-Louis Dupond <jean-louis@dupond.be>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
- Eric Blake <eblake@redhat.com>
-References: <20260522224335.1286291-1-jean-louis@dupond.be>
- <20260522224335.1286291-2-jean-louis@dupond.be>
-Content-Language: ru, en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260522224335.1286291-2-jean-louis@dupond.be>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20260628-gtk-v2-1-1e4839012f09@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260628-gtk-v2-1-1e4839012f09@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 29 Jun 2026 13:20:18 +0400
+X-Gm-Features: AVVi8Cdo5gpf1q-E-sbJWl2gHq8cX7efBOvAIp8pJg-6nD18fP7UfNAfZZMRsXo
+Message-ID: <CAMxuvaxrGgD7EAwWdGG0BZgiyXPNrExExTVnANr6M2gw5+DzNQ@mail.gmail.com>
+Subject: Re: [PATCH v2] ui/gtk: Narrow DMA-BUF critical section
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,246 +135,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-23.05.26 01:43, Jean-Louis Dupond пишет:
-> In some cases, it might happen that bitmaps become corrupt.
-> For example when adding/removing bitmaps on a live image.
-> 
-> Of course this should not happen, but in case this happens, the image is
-> corrupt and even cannot be opened anymore. You'll get something like the
-> following:
-> qemu-img: Could not open 'disk.qcow2': Bitmap '' doesn't satisfy the constraints
-> 
-> So the image becomes useless, and cannot be repaired. This while in fact
-> only (one) bitmap entry is corrupt, and the rest of the data is just
-> intact.
-> 
-> This commit adds a way to fix this corruption, by just replacing the
-> bitmap list in the qcow2 image with the valid bitmaps, and dropping the
-> bitmaps that are corrupt.
-> 
-> $ qemu-img check disk.qcow2
-> qemu-img: Check failed: Invalid argument
-> qemu-img: Lost persistent bitmaps during inactivation of node '#block147': Bitmap '' doesn't satisfy the constraints
-> 
-> $ qemu-img check -r all disk.qcow2
-> qcow2_free_clusters failed: Invalid argument
-> Leaked cluster 3 refcount=1 reference=0
-> Leaked cluster 26 refcount=1 reference=0
-> ERROR cluster 983214 refcount=0 reference=1
-> Rebuilding refcount structure
-> Repairing cluster 1 refcount=1 reference=0
-> Repairing cluster 2 refcount=1 reference=0
-> Repairing cluster 32768 refcount=1 reference=0
-> ....
-> Repairing cluster 983214 refcount=1 reference=0
-> The following inconsistencies were found and repaired:
-> 
->      2 leaked clusters
->      3 corruptions
-> 
-> Double checking the fixed image now...
-> No errors were found on the image.
-> 983056/1048576 = 93.75% allocated, 0.05% fragmented, 0.00% compressed clusters
-> Image end offset: 64437878784
-> 
-> And the image is valid again!
-> Worst case you lose all bitmaps, but at least the image and the data
-> itself is useable again.
-> 
-> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+Hi Akihiko
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+On Sun, Jun 28, 2026 at 5:59=E2=80=AFPM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> Scanout operations need to be properly ordered to avoid tearing. The
+> virtio specification allows the guest to use pageflip. With pageflip,
+> the guest only modifies the invisible framebuffer while the host scans
+> out the visible framebuffer. The guest may choose not to use pageflip to
+> avoid its overhead, accepting the risk of tearing.
+>
+> ui/gtk performs the following procedure to flush a scanout:
+> 1) Queue a draw event.
+> 2) The draw event gets triggered.
+> 3) Blit the guest framebuffer to the host framebuffer.
+>
+> When flushing a DMA-BUF scanout, ui/gtk blocks the device before 2) if
+> possible and unblocks it after 3) to enforce proper ordering. However,
+> blocking the device before 2) has two problems.
+>
+> First, it can leave the device blocked indefinitely because GTK
+> sometimes decides to cancel 2) when the window is not visible for
+> example. ui/gtk regularly repeats 1) as a workaround, but it is not
+> applicable to GtkGLArea because it causes display corruption.
+>
+> Second, the behavior is inconsistent with the other types of scanout
+> that leave the device unblocked between 1) and 2).
+>
+> To fix these problems, let ui/gtk block the device only when the
+> queued draw event runs, immediately before 3). Blocking before that is
+> unnecessary since ui/gtk does not access the framebuffer yet. If the
+> guest does not use pageflip but instead updates the visible framebuffer
+> directly, ui/gtk should not add the overhead of a pre-draw block.
+>
 
-(some nit-picking and notes below, but the patch is OK for me as is)
+Are you saying this won't create undesired drawing artefacts?
 
+I don't see how the guest synchronizes with the display if the gl cmds
+keep running.
+
+> ui/gtk still blocks the device during 3) for DMA-BUF. Unlike the other
+> scanout types, 3) can happen asynchronously with the device for a
+> DMA-BUF, so ui/gtk needs to keep the visible guest framebuffer stable
+> for the blit.
+>
+> With the problems fixed, the workaround to repeat 1) is no longer
+> necessary and is removed.
+>
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 > ---
->   block/qcow2-bitmap.c   | 42 +++++++++++++++++++++++++++++++++++++++---
->   block/qcow2-refcount.c |  3 ++-
->   block/qcow2.c          | 16 ++++++++++++----
->   block/qcow2.h          |  3 ++-
->   4 files changed, 55 insertions(+), 9 deletions(-)
-> 
-> diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
-> index 256ec99878..91bd82a9f5 100644
-> --- a/block/qcow2-bitmap.c
-> +++ b/block/qcow2-bitmap.c
-> @@ -100,6 +100,9 @@ typedef enum BitmapType {
->       BT_DIRTY_TRACKING_BITMAP = 1
->   } BitmapType;
->   
-> +static int GRAPH_RDLOCK
-> +update_ext_header_and_dir(BlockDriverState *bs, Qcow2BitmapList *bm_list);
-> +
->   static inline bool can_write(BlockDriverState *bs)
->   {
->       return !bdrv_is_read_only(bs) && !(bdrv_get_flags(bs) & BDRV_O_INACTIVE);
-> @@ -655,12 +658,14 @@ fail:
->   int coroutine_fn
->   qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->                                 void **refcount_table,
-> -                              int64_t *refcount_table_size)
-> +                              int64_t *refcount_table_size,
-> +                              BdrvCheckMode fix)
->   {
->       int ret;
->       BDRVQcow2State *s = bs->opaque;
->       Qcow2BitmapList *bm_list;
-> -    Qcow2Bitmap *bm;
-> +    Qcow2Bitmap *bm, *bm_next;
-> +    bool bitmap_modified = false;
-
-(I'd call it bm_list_modified, as we don't modify any bitmap..)
-
->   
->       if (s->nb_bitmaps == 0) {
->           return 0;
-> @@ -677,12 +682,21 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->                                  s->bitmap_directory_size, NULL);
->       if (bm_list == NULL) {
->           res->corruptions++;
-> +
-> +        if (fix & BDRV_FIX_ERRORS) {
-> +            ret = update_ext_header_and_dir(bs, NULL);
-> +            if (ret >= 0) {
-> +                res->corruptions_fixed++;
-> +            }
-> +            goto out;
-
-I think, "return ret" is better here.
-
-at "out:" we only free the bm_list, which is NULL here anyway.
-
-And on the next line, we do "return -EINVAL", not "goto out", better be consistent.
-
-> +        }
->           return -EINVAL;
->       }
->   
-> -    QSIMPLEQ_FOREACH(bm, bm_list, entry) {
-> +    QSIMPLEQ_FOREACH_SAFE(bm, bm_list, entry, bm_next) {
->           uint64_t *bitmap_table = NULL;
->           int i;
-> +        bool bitmap_valid = true;
->   
->           ret = qcow2_inc_refcounts_imrt(bs, res,
->                                          refcount_table, refcount_table_size,
-> @@ -695,6 +709,12 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->           ret = bitmap_table_load(bs, &bm->table, &bitmap_table);
->           if (ret < 0) {
->               res->corruptions++;
-
-This maybe called several times per bitmap, but finally we calculate
-corruptions_fixed as bitmaps count.
-
-Still, I don't think it's important.
-
-> +            if (fix & BDRV_FIX_ERRORS) {
-> +                QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
-> +                bitmap_free(bm);
-> +                bitmap_modified = true;
-> +                continue;
-> +            }
->               goto out;
->           }
->   
-> @@ -704,6 +724,7 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->   
->               if (check_table_entry(entry, s->cluster_size) < 0) {
->                   res->corruptions++;
-> +                bitmap_valid = false;
->                   continue;
->               }
->   
-> @@ -720,9 +741,24 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->               }
->           }
-
-Note, that if qcow2_inc_refcounts_imrt() fails, we'll fix nothing.
-
->   
-> +        if ((fix & BDRV_FIX_ERRORS) && !bitmap_valid) {
-> +            QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
-> +            bitmap_free(bm);
-> +            bitmap_modified = true;
-> +        }
-> +
->           g_free(bitmap_table);
->       }
->   
-> +    /* If fixing, update the bitmap directory with the repaired list */
-> +    if ((fix & BDRV_FIX_ERRORS) && bitmap_modified) {
-> +        uint32_t initial_bitmaps = s->nb_bitmaps;
-> +        ret = update_ext_header_and_dir(bs, bm_list);
-> +        if (ret >= 0) {
-> +            res->corruptions_fixed += initial_bitmaps - s->nb_bitmaps;
-> +        }
-> +    }
-> +
->   out:
->       bitmap_list_free(bm_list);
->   
-> diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
-> index 6512cda407..df7f6d2f23 100644
-> --- a/block/qcow2-refcount.c
-> +++ b/block/qcow2-refcount.c
-> @@ -2305,7 +2305,8 @@ calculate_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->       }
->   
->       /* bitmaps */
-> -    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table, nb_clusters);
-> +    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table,
-> +                                        nb_clusters, fix);
->       if (ret < 0) {
->           return ret;
->       }
-> diff --git a/block/qcow2.c b/block/qcow2.c
-> index 81fd299b4c..adfb7ee37a 100644
-> --- a/block/qcow2.c
-> +++ b/block/qcow2.c
-> @@ -1927,11 +1927,19 @@ qcow2_do_open(BlockDriverState *bs, QDict *options, int flags,
->       if (!(bdrv_get_flags(bs) & BDRV_O_INACTIVE)) {
->           /* It's case 1, 2 or 3.2. Or 3.1 which is BUG in management layer. */
->           bool header_updated;
-> -        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, errp)) {
-> -            ret = -EINVAL;
-> -            goto fail;
-> +        Error *local_err = NULL;
-> +        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, &local_err)) {
-> +            /*
-> +             * Allow this to fail in check mode
-> +             * because otherwise we can't open the image at all.
-> +             */
-> +            if (!(flags & BDRV_O_CHECK)) {
-> +                ret = -EINVAL;
-> +                error_propagate(errp, local_err);
-> +                goto fail;
-> +            }
-
-Should we at least print local_err (I mean error_report_err())?
-
-> +            error_free(local_err);
->           }
+> Changes in v2:
+> - Clarified that guests can use pageflip to avoid tearing while ui/gtk
+>   only needs to keep the DMA-BUF stable during the blit.
+> - Avoided the unprotected gd_egl_scanout_flush() fallback by queuing
+>   redraws through gtk_widget_queue_draw_area().
+> - Link to v1: https://lore.kernel.org/qemu-devel/20260115-gtk-v1-1-57f49e=
+856408@rsg.ci.i.u-tokyo.ac.jp
+> ---
+>  ui/gtk-egl.c     |  6 ++----
+>  ui/gtk-gl-area.c | 23 +----------------------
+>  2 files changed, 3 insertions(+), 26 deletions(-)
+>
+> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+> index 7c5c9b2428c2..adc81f34b1c8 100644
+> --- a/ui/gtk-egl.c
+> +++ b/ui/gtk-egl.c
+> @@ -91,6 +91,7 @@ void gd_egl_draw(VirtualConsole *vc)
+>              } else {
+>                  qemu_dmabuf_set_draw_submitted(dmabuf, false);
+>              }
+> +            qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
+>          }
+>  #endif
+>          gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0, vc->gfx.w, vc->gfx.h);
+> @@ -405,14 +406,11 @@ void gd_egl_flush(DisplayChangeListener *dcl,
+>
+>      if (vc->gfx.guest_fb.dmabuf &&
+>          !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+> -        qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
+>          qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+>          gtk_egl_set_scanout_mode(vc, true);
+> -        gtk_widget_queue_draw_area(area, x, y, w, h);
+> -        return;
+>      }
+>
+> -    gd_egl_scanout_flush(&vc->gfx.dcl, x, y, w, h);
+> +    gtk_widget_queue_draw_area(area, x, y, w, h);
+>  }
+>
+>  void gtk_egl_init(DisplayGLMode mode)
+> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+> index 23806b9d01bb..29497019ee46 100644
+> --- a/ui/gtk-gl-area.c
+> +++ b/ui/gtk-gl-area.c
+> @@ -86,6 +86,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
+>              } else {
+>                  qemu_dmabuf_set_draw_submitted(dmabuf, false);
+>              }
+> +            qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
+>          }
+>  #endif
+>
+> @@ -163,27 +164,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+>
+>      gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx=
+.drawing_area);
+>
+> -    if (vc->gfx.guest_fb.dmabuf &&
+> -        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+> -        /*
+> -         * gd_egl_refresh() calls gd_egl_draw() if a DMA-BUF draw has al=
+ready
+> -         * been submitted, but this function does not call gd_gl_area_dr=
+aw() in
+> -         * such a case due to display corruption.
+> -         *
+> -         * Calling gd_gl_area_draw() is necessary to prevent a situation=
+ where
+> -         * there is a scheduled draw event but it won't happen bacause t=
+he window
+> -         * is currently in inactive state (minimized or tabified). If dr=
+aw is not
+> -         * done for a long time, gl_block timeout and/or fence timeout (=
+on the
+> -         * guest) will happen eventually.
+> -         *
+> -         * However, it is found that calling gd_gl_area_draw() here caus=
+es guest
+> -         * display corruption on a Wayland Compositor. The display corru=
+ption is
+> -         * more serious than the possible fence timeout so gd_gl_area_dr=
+aw() is
+> -         * omitted for now.
+> -         */
+> -        return;
+> -    }
 > -
->           update_header = update_header && !header_updated;
->       }
->   
-> diff --git a/block/qcow2.h b/block/qcow2.h
-> index 192a45d596..2d9c6929a7 100644
-> --- a/block/qcow2.h
-> +++ b/block/qcow2.h
-> @@ -1034,7 +1034,8 @@ void qcow2_cache_discard(Qcow2Cache *c, void *table);
->   int coroutine_fn GRAPH_RDLOCK
->   qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->                                 void **refcount_table,
-> -                              int64_t *refcount_table_size);
-> +                              int64_t *refcount_table_size,
-> +                              BdrvCheckMode fix);
->   
->   bool coroutine_fn GRAPH_RDLOCK
->   qcow2_load_dirty_bitmaps(BlockDriverState *bs, bool *header_updated,
+>      if (!vc->gfx.gls) {
+>          if (!gtk_widget_get_realized(vc->gfx.drawing_area)) {
+>              return;
+> @@ -347,7 +327,6 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *=
+dcl,
+>
+>      if (vc->gfx.guest_fb.dmabuf &&
+>          !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+> -        qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
+>          qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+>          gtk_gl_area_set_scanout_mode(vc, true);
+>      }
+>
+> ---
+> base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
+> change-id: 20260115-gtk-424c2b910e65
+>
+> Best regards,
+> --
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>
 
-
--- 
-Best regards,
-Vladimir
 
