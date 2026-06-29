@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D626C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0905CC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:39:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weCC5-0001ip-50; Mon, 29 Jun 2026 09:38:37 -0400
+	id 1weCCO-00039e-UV; Mon, 29 Jun 2026 09:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <12bcbdca8ae9fcd5fec093e8ef5e70521e85e889@kylie.crudebyte.com>)
- id 1weCC3-0001f2-Rv; Mon, 29 Jun 2026 09:38:35 -0400
+ (envelope-from <69c8f5e6946f76a70b141a340c7aeb9d6a8e3c27@kylie.crudebyte.com>)
+ id 1weCCO-00035W-2n; Mon, 29 Jun 2026 09:38:56 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <12bcbdca8ae9fcd5fec093e8ef5e70521e85e889@kylie.crudebyte.com>)
- id 1weCC2-0003tk-BA; Mon, 29 Jun 2026 09:38:35 -0400
+ (envelope-from <69c8f5e6946f76a70b141a340c7aeb9d6a8e3c27@kylie.crudebyte.com>)
+ id 1weCCM-0003xP-Ft; Mon, 29 Jun 2026 09:38:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=wA5WgsgKQXyassqJxRXshSb0ETANhXBadc5QCGmjXfc=; b=eFABQ
- rR3hRakIqvrO+RRoc2U6Bv+Wst6//+VE6aJrUudZz0XBRbu671rP7kkGnSvxdpVOYyf88r0K3uUPn
- 0QzLvW2JMmfjB8457rf6/nWLYNMcYtIve9yPW0L/d+BJJOvRRIxKubfCAeQf482KyGE64Rhc3eDuG
- EDCSrT6W3Oqi0RvTfVd+LChW9KT55/ydtxCP38aUEh4/Vj1CBVkuyM5r1hiK/CP9+o94YIjfrDREN
- GIvH8f6tukZQ8yiMVp2ONUTyfk8cUkVaxoT1GHJ3dNrVuQN2mmNjjkG/ZuZ7X/RLyYwoLsmz8jve0
- VtbY6kkK97wugcUSQENWix8JiODjBn5uzGoNnDwupKLd4v2JZnC+w9c5beDG52P7tDTj8mVU8xZnU
- KXYj8jMsNU2imHUCxHzVxALSvOw2/c3RYBYxT5cwES2Tiy77+PWQd+70f/JjhNBYM6IWQVDPmZBhX
- UgFtcaLu/mfyLab+bRdrXwQsR7LzfU84mDTp/mPKtkcJV3q2uskcni9dRHl4qvsF9MGNCE9Sq+LYY
- 7R8Q9HyFjfLH7Qi/PkzGyq3Qen8WfxL3cZ/PHS9QHFUFY3XD+2vffA1hbm7txSATLcbwhP115xgn6
- ygIX2d0QN0BA0NEuROSKxtGNDu2M3U8FoclLm8ogdF8qbPoNuk2jIT4pTgjqxE=;
-Message-ID: <12bcbdca8ae9fcd5fec093e8ef5e70521e85e889.1782739719.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=3J8Z3/ZuD35HVfkr5nQfyeSnezElwJXEdSzjILafr4E=; b=pzHUl
+ 0M5kZdTex5xN4tXUtB+tszTglZKuyg7z+fCCA94c2KrKGcCxL3zUj72uKMY9HnlX4RYWiL7jKjp2v
+ KnBl8rOlNexdeYSz2aHed0kFiwTz+fsSfiY8BsHKUdvl5mil+6iGk+ufNbxnfYNQXMMaMJpKDIHNy
+ GMeuyqCgXYP6aWvDPGwTnXQsC2Or6revRCIhQSENmoNGdwTvR5LoINw527tRWZ1CaKB3V5jliAadP
+ AgB7Ay9AEKk3A+iCbo81fMuoQiqM8HJ3DsYk3XcEwSvfbL/hZlvcuE5CkPBBawuA9w1by1PB43dIN
+ HhJsFSpYm2QBHOXdzJD3Uw6XC085aUkfE8jM4cS7FE5Ha3MKYesuWsWlSPdbQVv6n68YUXZn9fUFo
+ /wH7vDyf8qn/VcgISqwKoPtPKhG91IiWKTtzWvTg+ruQ5Vidww5PPEr2IN0WbuITMbGKWJwJVt2ak
+ J5fn/4WQLUlXCXJ2nBQrdabtkOSASmgSNhh1dm/02oIh/oH3Xj0Ox/GlkEuVODhmsheqTlcwFhVti
+ QWdmQ7vHTy1xhwmMk8jw9ESjSVYZL/4IzeYV6w35HQ78ZEmoPmA42OUOkcju1HdWjzaC+rUS3GXBz
+ R8yBUMWFLtN8xyTO/CFh5GzbCYey0qTDJdSUJ0PvTvlzxr4krm0KuBZ1JIqipg=;
+Message-ID: <69c8f5e6946f76a70b141a340c7aeb9d6a8e3c27.1782739719.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1782739719.git.qemu_oss@crudebyte.com>
 References: <cover.1782739719.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Mon, 29 Jun 2026 15:28:39 +0200
-Subject: [PULL 06/23] 9pfs/virtio: implement response_buffer_size callback
+Subject: [PULL 07/23] 9pfs/xen: implement response_buffer_size callback
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>, Feifan Qian <bea1e@proton.me>
+ Peter Maydell <peter.maydell@linaro.org>, Feifan Qian <bea1e@proton.me>,
+ Stefano Stabellini <sstabellini@kernel.org>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=12bcbdca8ae9fcd5fec093e8ef5e70521e85e889@kylie.crudebyte.com;
+ envelope-from=69c8f5e6946f76a70b141a340c7aeb9d6a8e3c27@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -66,47 +67,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add and implement the response_buffer_size callback for the virtio
+Add and implement the response_buffer_size callback for the Xen
 transport.
 
-Returns the actual current virtio response buffer size for the supplied
-PDU, which will be used as safety guard for limiting the response size
-when generating a 9p response.
+Returns the size of the response buffer from the rings in_sg, as limit
+for 9p server while generating a response for supplied PDU.
 
-Link: https://lore.kernel.org/qemu-devel/5bbed2768f7a0da8fa2be183e75928c5d1ef691d.1781287774.git.qemu_oss@crudebyte.com
+We use a local iovec array variable in_sg[2] instead of ring->sg, as
+ring->sg is only allocated by init_in_iov_from_pdu() and
+init_out_iov_from_pdu() during request / response processing.
+response_buffer_size() however may be called before those allocators,
+which would dereference ring->sg as NULL pointer. The local array
+avoids this.
+
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Link: https://lore.kernel.org/qemu-devel/3b139769eb1d3f9d91ee5281228e6467f9a08b99.1781287774.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- hw/9pfs/virtio-9p-device.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/9pfs/xen-9p-backend.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
-index 8c5d86cb66..50dc93091d 100644
---- a/hw/9pfs/virtio-9p-device.c
-+++ b/hw/9pfs/virtio-9p-device.c
-@@ -198,6 +198,15 @@ static size_t virtio_9p_msize_limit(V9fsState *s)
-     return (VIRTQUEUE_MAX_SIZE - 2) * guestPageSize;
+diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+index e31124bcf5..24c90d97ec 100644
+--- a/hw/9pfs/xen-9p-backend.c
++++ b/hw/9pfs/xen-9p-backend.c
+@@ -268,6 +268,17 @@ static size_t xen_9p_msize_limit(V9fsState *s)
+     return limit;
  }
  
-+static size_t virtio_9p_response_buffer_size(V9fsPDU *pdu)
++static size_t xen_9pfs_response_buffer_size(V9fsPDU *pdu)
 +{
-+    V9fsState *s = pdu->s;
-+    V9fsVirtioState *v = container_of(s, V9fsVirtioState, state);
-+    VirtQueueElement *elem = v->elems[pdu->idx];
++    Xen9pfsDev *priv = container_of(pdu->s, Xen9pfsDev, state);
++    Xen9pfsRing *ring = &priv->rings[pdu->tag % priv->num_rings];
++    struct iovec in_sg[2];
++    int num;
 +
-+    return iov_size(elem->in_sg, elem->in_num);
++    xen_9pfs_in_sg(ring, in_sg, &num, pdu->idx, 0);
++    return iov_size(in_sg, num);
 +}
 +
- static const V9fsTransport virtio_9p_transport = {
-     .pdu_vmarshal = virtio_pdu_vmarshal,
-     .pdu_vunmarshal = virtio_pdu_vunmarshal,
-@@ -205,6 +214,7 @@ static const V9fsTransport virtio_9p_transport = {
-     .init_out_iov_from_pdu = virtio_init_out_iov_from_pdu,
-     .push_and_notify = virtio_9p_push_and_notify,
-     .msize_limit = virtio_9p_msize_limit,
-+    .response_buffer_size = virtio_9p_response_buffer_size,
+ static const V9fsTransport xen_9p_transport = {
+     .pdu_vmarshal = xen_9pfs_pdu_vmarshal,
+     .pdu_vunmarshal = xen_9pfs_pdu_vunmarshal,
+@@ -275,6 +286,7 @@ static const V9fsTransport xen_9p_transport = {
+     .init_out_iov_from_pdu = xen_9pfs_init_out_iov_from_pdu,
+     .push_and_notify = xen_9pfs_push_and_notify,
+     .msize_limit = xen_9p_msize_limit,
++    .response_buffer_size = xen_9pfs_response_buffer_size,
  };
  
- static void virtio_9p_device_realize(DeviceState *dev, Error **errp)
+ static int xen_9pfs_init(struct XenLegacyDevice *xendev)
 -- 
 2.47.3
 
