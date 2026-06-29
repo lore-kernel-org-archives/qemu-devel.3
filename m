@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F449C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C6AEC43327
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:06:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAgJ-0007Mr-Bk; Mon, 29 Jun 2026 08:01:43 -0400
+	id 1weAgQ-0007YN-A3; Mon, 29 Jun 2026 08:01:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfi-0006w6-3e
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:07 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1weAg1-00073x-Gn
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:26 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfc-0007Py-Ic
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:03 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-47362928f65so860022f8f.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:00:59 -0700 (PDT)
+ id 1weAfy-0007bR-Rg
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:25 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-47231f1f8f3so2284586f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:01:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782734458; x=1783339258; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782734481; x=1783339281; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=7nxrNrYCopcurGkkgdYz5xeXgIeGKYV3dyMssD6Ea1k=;
- b=JyCMYcKQItAzcpdILpTTgPqDdmaIigsugmU5NULG4u121w2vzpxtDBrdNX8To8/Zh3
- Ap11zMKY3Y/Icxpi0Scr1IHRvVAvLAfaXueBCqmXaRkC0kDdZwD4NaDYBlaH2HtBQ+ZO
- qf3TVPY0ZmVCB0wSsln1KIhxT6fv9rq6G5vMXGBZsHBzu6B/6rV2HhlDEoxSVUuxLgPB
- TMpu73nzrH4AO2avWvkgbqJubxd7u399p2Soy2sOpX7CsYw92H28o3H52Y8oDEBCb6Hm
- CJUIg9KZ1IbsFbuT1JfySmEKSDnClEg586PKfccjSA0EWwyljls9oDNh2R1lGIZrOcS1
- VIeQ==
+ :reply-to; bh=c1CLvQpxi98w8hCCGMuReQm8cigrXYogjEHOmllUeYE=;
+ b=nL3qATjdfDykB+JdT7SCr00T3/hR9aP4fIJQqqOm7JVSA6PHhCWIvlcmiwkqZA/eAh
+ gDBy4J/q1+/u5t746jM+7oNM738wfM3eTu2MiNGFc3euPZ1ODkGajLjANZDeSH8sRBzQ
+ KPElxRDGgEbSrwwIC+1Yeyb7cMeKC75fcepmjlvH6ZfDJw1GfBrkiBuFhyBqnVQjzEGM
+ tXcVqTZKhazO1f6pW8R63ab1+YYgrJSaE3b679N/6CzjYeq8r/Pc/lAZVljQE6QYRY/h
+ nwFziv8w4M4VC5QdiEvrpLuIj/QoNWDpEYPcQCPL57yaxWYs5RC50KuRrd20AM0TRtWg
+ FICA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782734458; x=1783339258;
+ d=1e100.net; s=20251104; t=1782734481; x=1783339281;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=7nxrNrYCopcurGkkgdYz5xeXgIeGKYV3dyMssD6Ea1k=;
- b=Xd8BbCpDVDhHDbXtEQnFeEidPPV3MJbHsOsMklNFAJCUA/hAYKvoOZs/SDpd5KzXP8
- N8Y84qLF97L3QGENa2UsXttZkS8DuolJERI7mwVLvf4GGAzWkSfj0hdlOb6dsR/RvFfA
- ywoO0BG5nDh1ArX5vFpTs1km7LAIGpCJjOl/kEQy9hMQNaXWYLYEp82fsYZgLAO7hx+p
- /J3snM+iNFFWdck9rajC2HQeMddxt5dp8/DfoF/Ol3f324ZRR9FDyyZLRlbNm20ytNc9
- 4WHSQihmsnZg6f8t6PZ2216pbu3q1UcZhMAlpkwpFYLjCP4XgeoRDtA11i30c/0ltxuc
- ccmg==
-X-Gm-Message-State: AOJu0YzSKzKWppXtX85J9M2eB9bqIFvh6YzxyCKWsnpZB0XZMUxE2yG8
- atrYYMXv3EoqZqhtVJn7wceHFCgwfzBWAQVKWnGU06AeFgKE5qI9Bs70q9qEaRDJiQwbPDYokUs
- HWrcY
-X-Gm-Gg: AfdE7cmGLx3avMkPOb1aTyqsWbzJCwSXP7fczUKhv37wVGFOCMLEbBQiAqGQDGaL8iT
- JWphO6M6hcrBnVLWGMqVB8mHBxw8o2ggmPupwbkPveZUuKuT3oqogFygQVoLTLZwrEhM3EvAqkj
- RkCU6p7ShPvPUlmVj2DitlHUDxaS+hwhBeliwF7Ym17rdGw+4QdY31KP4nHBgvL+8GEBMwssyUe
- Rq7R1/ymAho+tocMw3oV44gbtjiWvVX4RoN9msRNLETCqe6Im596DfkQlOvzUm2cYb9DZOHi0z+
- a8y3NAalcp7+AD16WQaOr+B7yQ1X9kVst0p8cshg1BLbldK2WSv0isiZ2D/kxOQ0GzjCjxdhZrL
- jiBGlid7dJmkxUKYWi0UQwMRzsCvezm9GPVf4k4+YvbEPQRUNeg5drrhhQ3e96oexnghKIXWHhI
- UcuGGstybh8nbsmenKjC8iF2BxCWlZH6m5+4NTsKGck2QSRtjUqGFqSdfOAbMMcPASkO+CST3Px
- crvLdOg5955FXI/XI6dWo8xDXdowj1g
-X-Received: by 2002:a05:6000:2487:b0:474:6301:3e3d with SMTP id
- ffacd0b85a97d-474ff09be36mr258798f8f.11.1782734458213; 
- Mon, 29 Jun 2026 05:00:58 -0700 (PDT)
+ bh=c1CLvQpxi98w8hCCGMuReQm8cigrXYogjEHOmllUeYE=;
+ b=TZKMnc3ovT0IRGpD6eiVVABX3hI9hakEiB3/UFu+ezMnFjpCG4MTdhXYHSDx7YD0VG
+ lUiDqfjL+/5p9Nw2gK4r9fNKOtHxUN5rJeG+MpdeAThEtflSmE+OPyRT6z+VC6wulXYL
+ eV2OTK4BgHWBgCJ6Ijhw217lV6u32T6jsTq/z93/Lmkm4SxiLVg6aiXbCMfe8V0P3VpJ
+ n0JeNK/NpQyoON4gOwLVAXvGdyg1dmEiW5pMEplJTahFyDAw9o3+vk09H4FQEmuC8jFL
+ so8+kFHHy2y0SkNn0LzlfomgWqx3Q+JL0UC9Q4ifkfFfVQ22uHVAoykkKNN6ESjrNqiH
+ v5EQ==
+X-Gm-Message-State: AOJu0YxAYdmaUBDXduHrcssXhZXBJZamCfoVQaWQgRWfBc/+Nxb2q4XB
+ VZY4s0WlcxpA+0vafgZbNDI8QBryy7A6Ni2ewwH9WlMSOy7B9PZi5mhqUX1Oq6roU7ir0SkVEt3
+ WkWsj
+X-Gm-Gg: AfdE7clnZMdwMdroaia4E3dWZ1cFYg714Oa6rslw8+IVxdWTIgl73998/w1NLK3lmi8
+ OE+gsqO4ARiOI5GwC8hqFLM5Yq4mUgJ40tCXj9et2US3UMPa+6Yby+Vq0oENIjzx+fcZIvNiaIj
+ QUMM2ELc0f+ZMUgnMaOnjct2863jnzf7PSw2X5DVNscAPIT4i+GQjSYwz3LhP/0ZIJm9CTmmVlF
+ 1ONKURfFxFRThYhBykG+7EMb5QMImt6PzDwiCgo0paQfmA0KHABBBe7ovOL7rCRRbH/hktKdHM0
+ rk+3ehAvZcwu6vnWRhunIPYkUmxOBuTgBjQR8ORx3XND4CwryoQ44yLRLriRhlqWNyPAtxcpTTM
+ flN8eNIHGAvq51JO54WP8H0ZsdWc88zjAAkDi30GcxJ/SBRD+eB8kXyNPRn2oY50qDPgZaWaQej
+ u6WIhDcUkB8sWHVoiX+C4CjtQdkfKFyTeDAXNKNQFblhnQkCeaFHHMIQB1iPAJdeOPkvfmH04pl
+ nocdbtmdXJeF6/3NZnrWg==
+X-Received: by 2002:a05:6000:1882:b0:462:7add:607 with SMTP id
+ ffacd0b85a97d-46dc0e059e8mr26388231f8f.25.1782734480980; 
+ Mon, 29 Jun 2026 05:01:20 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.00.57
+ ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.01.20
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 05:00:57 -0700 (PDT)
+ Mon, 29 Jun 2026 05:01:20 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 23/54] target/arm: GICv5 cpuif: Remove ICC_HAPR_EL1
-Date: Mon, 29 Jun 2026 13:00:01 +0100
-Message-ID: <20260629120032.1645265-24-peter.maydell@linaro.org>
+Subject: [PULL 45/54] target/arm: Rename SME FMLAL/FMLSL patterns
+Date: Mon, 29 Jun 2026 13:00:23 +0100
+Message-ID: <20260629120032.1645265-46-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260629120032.1645265-1-peter.maydell@linaro.org>
 References: <20260629120032.1645265-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,56 +100,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ICC_HAPR_EL1 register reported the current running priority of
-the CPU. However this can be easily calculated by reading the
-APR register, so it has been removed in the newly released A.a
-version of the GICv5 spec (IHI 111701).
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Remove QEMU's implementation of this register. (This is OK for
-us to do without warning because our GICv5 support is listed
-as "experimental"; we anticipated that this kind of spec change
-might happen.)
+Rename patterns to include _sh suffix, so that we can
+distinguish insns of the same name from FEAT_SME_F8F16.
 
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260625015159.719300-3-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260615105029.2898872-5-peter.maydell@linaro.org
 ---
- target/arm/tcg/gicv5-cpuif.c | 14 --------------
- 1 file changed, 14 deletions(-)
+ target/arm/tcg/sme.decode      | 32 ++++++++++++++++----------------
+ target/arm/tcg/translate-sme.c | 12 ++++++------
+ 2 files changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index 1aa4bde799..a868adca66 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -511,15 +511,6 @@ static void gic_icc_apr_el1_reset(CPUARMState *env, const ARMCPRegInfo *ri)
-     }
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index 1de5f341ef..90ee161461 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -324,13 +324,13 @@ SUB_azz_n1_d    11000001 0111 .... 0 .. 110 ..... 11 ...    @azz_nx1_o3 n=4
+ @azz_nx1_o2x2   ........ ... . zm:4 . .. ... zn:5 ... ..    \
+                 &azz_n off=%off2_x2 rv=%mova_rv
+ 
+-FMLAL_n1        11000001 001 0 .... 0 .. 011 ..... 00 ...   @azz_nx1_o3x2 n=1
+-FMLAL_n1        11000001 001 0 .... 0 .. 010 ..... 000 ..   @azz_nx1_o2x2 n=2
+-FMLAL_n1        11000001 001 1 .... 0 .. 010 ..... 000 ..   @azz_nx1_o2x2 n=4
++FMLAL_n1_sh     11000001 001 0 .... 0 .. 011 ..... 00 ...   @azz_nx1_o3x2 n=1
++FMLAL_n1_sh     11000001 001 0 .... 0 .. 010 ..... 000 ..   @azz_nx1_o2x2 n=2
++FMLAL_n1_sh     11000001 001 1 .... 0 .. 010 ..... 000 ..   @azz_nx1_o2x2 n=4
+ 
+-FMLSL_n1        11000001 001 0 .... 0 .. 011 ..... 01 ...   @azz_nx1_o3x2 n=1
+-FMLSL_n1        11000001 001 0 .... 0 .. 010 ..... 010 ..   @azz_nx1_o2x2 n=2
+-FMLSL_n1        11000001 001 1 .... 0 .. 010 ..... 010 ..   @azz_nx1_o2x2 n=4
++FMLSL_n1_sh     11000001 001 0 .... 0 .. 011 ..... 01 ...   @azz_nx1_o3x2 n=1
++FMLSL_n1_sh     11000001 001 0 .... 0 .. 010 ..... 010 ..   @azz_nx1_o2x2 n=2
++FMLSL_n1_sh     11000001 001 1 .... 0 .. 010 ..... 010 ..   @azz_nx1_o2x2 n=4
+ 
+ BFMLAL_n1       11000001 001 0 .... 0 .. 011 ..... 10 ...   @azz_nx1_o3x2 n=1
+ BFMLAL_n1       11000001 001 0 .... 0 .. 010 ..... 100 ..   @azz_nx1_o2x2 n=2
+@@ -477,11 +477,11 @@ SUB_azz_nn_d    11000001 111 ...01 0 .. 110 ...00 11 ...    @azz_4x4_o3
+ @azz_4x4_o2x2   ........ ... ..... . .. ... ..... ... ..    \
+                 &azz_n n=4 rv=%mova_rv zn=%zn_ax4 zm=%zm_ax4 off=%off2_x2
+ 
+-FMLAL_nn        11000001 101 ....0 0 .. 010 ....0 000 ..    @azz_2x2_o2x2
+-FMLAL_nn        11000001 101 ...01 0 .. 010 ...00 000 ..    @azz_4x4_o2x2
++FMLAL_nn_sh     11000001 101 ....0 0 .. 010 ....0 000 ..    @azz_2x2_o2x2
++FMLAL_nn_sh     11000001 101 ...01 0 .. 010 ...00 000 ..    @azz_4x4_o2x2
+ 
+-FMLSL_nn        11000001 101 ....0 0 .. 010 ....0 010 ..    @azz_2x2_o2x2
+-FMLSL_nn        11000001 101 ...01 0 .. 010 ...00 010 ..    @azz_4x4_o2x2
++FMLSL_nn_sh     11000001 101 ....0 0 .. 010 ....0 010 ..    @azz_2x2_o2x2
++FMLSL_nn_sh     11000001 101 ...01 0 .. 010 ...00 010 ..    @azz_4x4_o2x2
+ 
+ BFMLAL_nn       11000001 101 ....0 0 .. 010 ....0 100 ..    @azz_2x2_o2x2
+ BFMLAL_nn       11000001 101 ...01 0 .. 010 ...00 100 ..    @azz_4x4_o2x2
+@@ -617,13 +617,13 @@ BFSUB_nn        11000001 111 00101 0 .. 111 ...00 01 ...    @az_4x4_o3
+ @azx_4x1_o2x2   ........ .... zm:4 . .. . .. ..... .. ...   \
+                 &azx_n n=4 rv=%mova_rv off=%off2_x2 zn=%zn_ax4 idx=%idx2_10_2
+ 
+-FMLAL_nx        11000001 1000 .... . .. 1 .. ..... 00 ...   @azx_1x1_o3x2
+-FMLAL_nx        11000001 1001 .... 0 .. 1 .. ....0 00 ...   @azx_2x1_o2x2
+-FMLAL_nx        11000001 1001 .... 1 .. 1 .. ...00 00 ...   @azx_4x1_o2x2
++FMLAL_nx_sh     11000001 1000 .... . .. 1 .. ..... 00 ...   @azx_1x1_o3x2
++FMLAL_nx_sh     11000001 1001 .... 0 .. 1 .. ....0 00 ...   @azx_2x1_o2x2
++FMLAL_nx_sh     11000001 1001 .... 1 .. 1 .. ...00 00 ...   @azx_4x1_o2x2
+ 
+-FMLSL_nx        11000001 1000 .... . .. 1 .. ..... 01 ...   @azx_1x1_o3x2
+-FMLSL_nx        11000001 1001 .... 0 .. 1 .. ....0 01 ...   @azx_2x1_o2x2
+-FMLSL_nx        11000001 1001 .... 1 .. 1 .. ...00 01 ...   @azx_4x1_o2x2
++FMLSL_nx_sh     11000001 1000 .... . .. 1 .. ..... 01 ...   @azx_1x1_o3x2
++FMLSL_nx_sh     11000001 1001 .... 0 .. 1 .. ....0 01 ...   @azx_2x1_o2x2
++FMLSL_nx_sh     11000001 1001 .... 1 .. 1 .. ...00 01 ...   @azx_4x1_o2x2
+ 
+ BFMLAL_nx       11000001 1000 .... . .. 1 .. ..... 10 ...   @azx_1x1_o3x2
+ BFMLAL_nx       11000001 1001 .... 0 .. 1 .. ....0 10 ...   @azx_2x1_o2x2
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index b8dde80c20..7aa270d3ec 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -1107,10 +1107,10 @@ static bool do_fmlal(DisasContext *s, arg_azz_n *a, bool sub, bool multi)
+                          multi, FPST_ENV, gen_helper_sve2_fmlal_zzzw_s);
  }
  
--static uint64_t gic_icc_hapr_el1_read(CPUARMState *env, const ARMCPRegInfo *ri)
--{
--    /*
--     * ICC_HAPR_EL1 reports the current running priority, which can be
--     * calculated from the APR register.
--     */
--    return gic_running_prio(env, gicv5_current_phys_domain(env));
--}
--
- /* ICC_CR0_EL1 is also banked */
- static uint64_t gic_icc_cr0_el1_read(CPUARMState *env, const ARMCPRegInfo *ri)
- {
-@@ -928,11 +919,6 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-         .writefn = gic_icc_pcr_el1_write,
-         .resetfn = gic_icc_pcr_el1_reset,
-     },
--    {   .name = "ICC_HAPR_EL1", .state = ARM_CP_STATE_AA64,
--        .opc0 = 3, .opc1 = 1, .crn = 12, .crm = 0, .opc2 = 3,
--        .access = PL1_R, .type = ARM_CP_IO | ARM_CP_NO_RAW,
--        .readfn = gic_icc_hapr_el1_read, .raw_writefn = arm_cp_write_ignore,
--    },
- };
+-TRANS_FEAT(FMLAL_n1, aa64_sme2, do_fmlal, a, false, false)
+-TRANS_FEAT(FMLSL_n1, aa64_sme2, do_fmlal, a, true, false)
+-TRANS_FEAT(FMLAL_nn, aa64_sme2, do_fmlal, a, false, true)
+-TRANS_FEAT(FMLSL_nn, aa64_sme2, do_fmlal, a, true, true)
++TRANS_FEAT(FMLAL_n1_sh, aa64_sme2, do_fmlal, a, false, false)
++TRANS_FEAT(FMLSL_n1_sh, aa64_sme2, do_fmlal, a, true, false)
++TRANS_FEAT(FMLAL_nn_sh, aa64_sme2, do_fmlal, a, false, true)
++TRANS_FEAT(FMLSL_nn_sh, aa64_sme2, do_fmlal, a, true, true)
  
- void define_gicv5_cpuif_regs(ARMCPU *cpu)
+ static bool do_fmlall_fp8(DisasContext *s, arg_azz_n *a, bool multi)
+ {
+@@ -1128,8 +1128,8 @@ static bool do_fmlal_nx(DisasContext *s, arg_azx_n *a, bool sub)
+                          false, FPST_ENV, gen_helper_sve2_fmlal_zzxw_s);
+ }
+ 
+-TRANS_FEAT(FMLAL_nx, aa64_sme2, do_fmlal_nx, a, false)
+-TRANS_FEAT(FMLSL_nx, aa64_sme2, do_fmlal_nx, a, true)
++TRANS_FEAT(FMLAL_nx_sh, aa64_sme2, do_fmlal_nx, a, false)
++TRANS_FEAT(FMLSL_nx_sh, aa64_sme2, do_fmlal_nx, a, true)
+ 
+ static bool do_bfmlal(DisasContext *s, arg_azz_n *a, bool sub, bool multi)
+ {
 -- 
 2.43.0
 
