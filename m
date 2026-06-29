@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E36C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44CD1C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:02:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAgH-0007MH-JW; Mon, 29 Jun 2026 08:01:41 -0400
+	id 1weAgF-0007J5-Dr; Mon, 29 Jun 2026 08:01:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfa-0006tI-Ok
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:03 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1weAfm-0006yF-7M
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:10 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfW-0007NQ-JT
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:00:56 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-474303f3c72so434826f8f.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:00:51 -0700 (PDT)
+ id 1weAfi-0007UA-Of
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:09 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-493b0fe95feso4828335e9.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:01:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782734451; x=1783339251; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782734465; x=1783339265; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ij0GPUbz1ZykJj2qp1NXd9LdWM0AfY20p8Pi5WYFrkY=;
- b=DiDGvuZ8oQmMOjhQwHa/bKE30mMcw16qF2KhJR2BIKL15Es/UjJ0wVt9MW0jYf+zr9
- 7CcqsAmKOvaZ0RXlXF4P6fN7KDdf0U52OhH8kcsn04s7YRTE8xRW2z9YvviRhqCk0aX9
- cHk6R/21VyJvBncJjN4BDLE9In7WgSYmS3SGDYq/qOSe31SmEypFu77ttRy8ps1yCXdN
- IOylKU1lm+1OIJO0XjbUgnRVbkX7Ba9nSXp7KAyRqrk7WOzWzBcgmllRZf+5h4OGHaBw
- ykdH3iOt6sxQWKWgOR5aGSc8ERjBHm0hSMcWL2p04zDQ7lAQqonyCobXXvv2j8IvsD+4
- 8Tjg==
+ :reply-to; bh=ppLpIKgj1iYNeAkqUQhnvLVdqr6JLUnnYruG7BwRYA0=;
+ b=rkfbJi2/uQEsUBxK96WAXcWtFghoRlqIkTrjMlR9xt+Drc33CfZtRJmkPVqWB3izUa
+ XNIPmgfGOzd6emYEn6NrPZwPPpto31fNMSElkOvX1OjFoubOVvdLUIA+IJNZAfMnqDvQ
+ LcNYQSqvBi53JB1j7iAe1PrDzBqBrXM1ojS6FxhNWRZgmRXfeyB+u5W0H3gnpZneceR/
+ axIB2RutFmNpsEEIACkgbBbR6P/VPO12rmeetGcsOKPs5Og8IvQW4z5abGMlGzHbqpEu
+ dfyA5LBSA4BYBT2nMb28lC7g7r9fyT77rc5ZxGYpmhCOBmWU5S11x7BW64S18UAJu4Ir
+ nPYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782734451; x=1783339251;
+ d=1e100.net; s=20251104; t=1782734465; x=1783339265;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ij0GPUbz1ZykJj2qp1NXd9LdWM0AfY20p8Pi5WYFrkY=;
- b=GckCRBo7eUdR5RcL9Zq8b1LpndmDgfrwYHy3okx4lj1BGrvLYpozVFWsK4bkakK2cM
- hUhNEX9fvnqOohsHjmFvLK7WPp7KwakWNcTUlgS5vF/Sdl97OfVhW9Rcscn2A9eOVtYs
- VyR+Zb4AmMiL6W2WgR3UQ88hTSnY+k8a0tQXdrc9Nuwe5pqHrldeCU6fRAzHV+jTgtwz
- uJIw/2I66HTB9kgZOsgOPMf/a+YBJWnotFzpOBnqdtl93vfuuAaGKKozoIp2E7Ysl6O8
- X1kJE78QrTJSKWir+Y3DeZI+qFkHQeQVau4hWP/ahmFCBcSokWyMNoisuf5NrbO/AOc4
- 0fkQ==
-X-Gm-Message-State: AOJu0YyHsCuJr4I0/ASpSJVgRWD522eSYT99Axv/sy93NlAk1Jy03Oaf
- 8N05LnBL14Y5eBXnNV/r/pqv9pVlT3jTXgAtrGE+px1MNce2LE3IYqMk33aycFpTi+W/D/Na5dY
- cBn3b
-X-Gm-Gg: AfdE7cnedHV4m8Il8FtECJhQhUW3Gk4b1kL3KupLsLEazQURLzwNegRv/OoeIZp8OYn
- QMHcO2ymnJHjwkqYYAEtROgZHcDldow2RmCJPzj6ceZ8FKtjKQPJGVHC0d2A+KUgaVGpwbyKOXY
- 6snrTPi5vtV7EBWsG2gymtasMyjuDVAdfNp3PW2BLzxOCd1ud3glXzDlj714Vbyc/JWed3FvaQv
- +pwnxRrTPAAPeEikj8gCZSJG6QvRQfsZIXi6dHzYIEEL0xG9ui5rr6y5h/5snCvtPN85mzJ+8mU
- 7LF5HH8pEcLNkHi7YaBv58G3xiAlSZ3prgY2ephJUDN2WE0ITbK8UMncoDvg+M63rpodoglcWvy
- MizF0xZ5ugxnauvfd90aLWbzgHqh6dXzqIgx4rBXNSH8T9h7JDx5cLirI8e0sVSETDnPYK/WSCc
- bYQer+9Nlz3DXum8qHpOjcg2kzXc+dTsq2BQwD93kGDhJj1G2lXn38mEsfZYzp7iuMXG+Nztplk
- C40l0aZ8KkAvPg0WVw+Lw==
-X-Received: by 2002:a05:6000:2410:b0:472:d154:fac6 with SMTP id
- ffacd0b85a97d-472d1550355mr8042750f8f.35.1782734444486; 
- Mon, 29 Jun 2026 05:00:44 -0700 (PDT)
+ bh=ppLpIKgj1iYNeAkqUQhnvLVdqr6JLUnnYruG7BwRYA0=;
+ b=bDdnV6H5trZ53sv6P0TOCwhhpDrJJwEsAkbQXe9jxme5X3M2VvL4JJov3e0y20/1HG
+ 4T/CDjw2U39NfRhYGTkFiCSa6P1FMy4dBQad8QmwWDTfiSCou7fgbjHlk+6Q9CMRy+eE
+ yfOQuXuS80g4xv6GgJGaqF8REx3DopNHASn0jwhyd8C55nfPnWi3NdQlNUCmQWBlzbfl
+ wSO9/i/3T2YEg4DBzW3BhMXqFDOTP+OdJbt2FpUdkP1to6u/oqJvnZCXA0t7V3ucmKI2
+ FN391P7XeJNBCSkpf8FENUpuwWTbBDprUoPkXbSCPpN7Tbh7p2OagoekgnXKpT+fFXHF
+ t8ow==
+X-Gm-Message-State: AOJu0YxvJWloi66CHQe8g4kQRFuqcXImXhVC/Cu8rgyYRI3bJ0eqRQp0
+ eRujvTCKbDBBnLiAzt4kSSOjx+mPMhMvHk5EIGPy24Ul6d3/wrdqTtCHKFundX1qlYMhUf4zMuV
+ xmSg3
+X-Gm-Gg: AfdE7cnVw9uFNqHmxn0fqk7g2xJcr2+zGjEJTUUdaoe17SAanHtLT3Zr0Tg0AMhF68c
+ 7RvbAx/O7LfG90J5+yQ9qzOmO+doHHfhclxta2Xq0zPR9GzVqwGafM5+O+RCigr0qZ8dCeTuCUt
+ VUJi+dRtsTZ4EYvcJrxa458/wNufzilGtdp2NfiSfm61Q0zgfEB3+gyZmgNRd1yZ1KZTHwrDBHZ
+ LdRXnX0dbcWYKamBUJ1lJCJzP8w8sXlfWFvaPkQV3wYrb+LvZEHGiDy4n36H1buKd345puTUDZA
+ EDnHmRj1limp4h8Rknwf98niPEtEEkJ8L+T8vjHkn9wE5tBcKJxrK4evCOvazzO78EcsNgoPnRP
+ eJmtUH9qgZyalF2qd4Orz5z9DBWlC/T8bYn0Y1zLAN9WIuZjm+v0ygwo8E6z1J5XmNduxehNo2E
+ aQD4xyNWIWWBq3pUqh0QU5640rXUpT4MgIMakbTi6Ds0SNicmV3iiBUMtrscfVC4h81ybsCREHI
+ 6sv8UGoBu/S6z191BbWJw==
+X-Received: by 2002:a05:600c:3052:b0:493:b6e4:fb2b with SMTP id
+ 5b1f17b1804b1-493b6e4fbdemr6655885e9.25.1782734465092; 
+ Mon, 29 Jun 2026 05:01:05 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.00.43
+ ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.01.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 05:00:43 -0700 (PDT)
+ Mon, 29 Jun 2026 05:01:04 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/54] target/arm: Use expand_pred_N for helper_sve_not_zpz_N
-Date: Mon, 29 Jun 2026 12:59:47 +0100
-Message-ID: <20260629120032.1645265-10-peter.maydell@linaro.org>
+Subject: [PULL 30/54] tests/tcg/aarch64/system/gpc-test.c: Basic test for
+ granule protection check
+Date: Mon, 29 Jun 2026 13:00:08 +0100
+Message-ID: <20260629120032.1645265-31-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260629120032.1645265-1-peter.maydell@linaro.org>
 References: <20260629120032.1645265-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,74 +101,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Jim MacArthur <jim.macarthur@linaro.org>
 
-These is a bitwise operation; with expand_pred_N,
-we can always operate on uint64_t.
+* Sets up granule protection tables
+* Enables GPC and bypass windows
+* Performs memory accesses in the protected region to
+  check for allowed and disallowed reads.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260618040718.572950-9-richard.henderson@linaro.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+Message-id: 20260618-jmac-gpc3b-v3-6-353e546067e7@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/sve_helper.c | 43 ++++++++++++++++++++++++++++++++-----
- 1 file changed, 38 insertions(+), 5 deletions(-)
+ tests/tcg/aarch64/Makefile.softmmu-target |  11 +-
+ tests/tcg/aarch64/system/gpc-test.c       | 165 ++++++++++++++++++++++
+ 2 files changed, 175 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/aarch64/system/gpc-test.c
 
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index b2875a559b..ac96b18784 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -917,12 +917,45 @@ DO_ZPZ(sve_ah_fneg_h, uint16_t, H1_2, DO_AH_FNEG_H)
- DO_ZPZ(sve_ah_fneg_s, uint32_t, H1_4, DO_AH_FNEG_S)
- DO_ZPZ_D(sve_ah_fneg_d, uint64_t, DO_AH_FNEG_D)
+diff --git a/tests/tcg/aarch64/Makefile.softmmu-target b/tests/tcg/aarch64/Makefile.softmmu-target
+index c353b7f8d6..3f30be6c5d 100644
+--- a/tests/tcg/aarch64/Makefile.softmmu-target
++++ b/tests/tcg/aarch64/Makefile.softmmu-target
+@@ -53,7 +53,10 @@ memory-sve: memory.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
  
--#define DO_NOT(N)    (~N)
-+static inline void
-+sve_not_zpz(uint64_t *d, uint64_t *n, uint8_t *pg, uint32_t desc,
-+            uint64_t (*expand)(uint8_t))
+ memory-sve: CFLAGS+=-DCHECK_UNALIGNED=1 -march=armv8.1-a+sve -O3
+ 
+-TESTS+=memory-sve
++gpc-test: gpc-test.c $(LINK_SCRIPT) vector_log_boot.o $(MINILIB_OBJS)
++	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS) vector_log_boot.o
++
++TESTS+=memory-sve gpc-test
+ 
+ # Running
+ QEMU_BASE_MACHINE=-M virt -cpu max -display none
+@@ -74,6 +77,12 @@ QEMU_EL2_MACHINE=-machine virt,virtualization=on,gic-version=2 -cpu cortex-a57 -
+ QEMU_EL2_BASE_ARGS=-semihosting-config enable=on,target=native,chardev=output,arg="2"
+ run-vtimer: QEMU_OPTS=$(QEMU_EL2_MACHINE) $(QEMU_EL2_BASE_ARGS) -kernel
+ 
++# gpc tests need EL3 and RME
++QEMU_EL3_MACHINE=-machine virt,virtualization=on,secure=on,gic-version=3 -cpu max,x-rme=on
++QEMU_EL3_BASE_ARGS=-semihosting-config enable=on,target=native,chardev=output,arg="3"
++run-gpc-test:  QEMU_OPTS=$(QEMU_EL3_MACHINE) $(QEMU_EL3_BASE_ARGS) -kernel
++run-gpc3-test: QEMU_OPTS=$(QEMU_EL3_MACHINE) $(QEMU_EL3_BASE_ARGS) -kernel
++
+ # Simple Record/Replay Test
+ .PHONY: memory-record
+ run-memory-record: memory-record memory
+diff --git a/tests/tcg/aarch64/system/gpc-test.c b/tests/tcg/aarch64/system/gpc-test.c
+new file mode 100644
+index 0000000000..f26b23efaf
+--- /dev/null
++++ b/tests/tcg/aarch64/system/gpc-test.c
+@@ -0,0 +1,165 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ *
++ *
++ * Copyright (c) 2026 Linaro Ltd
++ *
++ */
++
++#include <stdbool.h>
++#include <stdint.h>
++#include <minilib.h>
++#include "boot.h"
++
++#define ID_AA64PFR0_EL1 "S3_0_C0_C4_0"
++
++#define GPTBR_EL3 "S3_6_C2_C1_4"
++#define GPCBW_EL3 "S3_6_C2_C1_5"
++#define GPCCR_EL3 "S3_6_C2_C1_6"
++#define VBAR_EL3 "S3_6_C12_C0_0"
++
++#define get_sys_reg(register_name, dest) \
++        asm("mrs %[reg], " register_name "\n\t" : [reg] "=r" (dest))
++#define set_sys_reg(register_name, value) \
++        asm("msr " register_name ", %[reg]\n\r" : : [reg] "r" (value))
++
++const uint32_t gpc_granule_size = 4096;
++const uint32_t gpis_per_64_bits = 16;
++
++int main(uint64_t sp)
 +{
-+    intptr_t opr_sz = simd_oprsz(desc) / 8;
-+    bool zeroing = simd_data(desc) & 1;
- 
--DO_ZPZ(sve_not_zpz_b, uint8_t, H1, DO_NOT)
--DO_ZPZ(sve_not_zpz_h, uint16_t, H1_2, DO_NOT)
--DO_ZPZ(sve_not_zpz_s, uint32_t, H1_4, DO_NOT)
--DO_ZPZ_D(sve_not_zpz_d, uint64_t, DO_NOT)
-+    if (zeroing) {
-+        for (intptr_t i = 0; i < opr_sz; ++i) {
-+            uint64_t p = expand(pg[H1(i)]);
-+            d[i] = ~n[i] & p;
-+        }
-+    } else {
-+        for (intptr_t i = 0; i < opr_sz; ++i) {
-+            uint64_t p = expand(pg[H1(i)]);
-+            d[i] = (~n[i] & p) | (d[i] & ~p);
-+        }
++    uint64_t out;
++    uint64_t pfr0;
++    uint64_t gpt_base;
++    uint64_t rme_status;
++    uint64_t currentel_raw;
++    uint64_t currentel;
++    uint64_t gpcbw;
++    uint64_t gpt_table0_addr = (uint64_t) realms_gpt0;
++    uint64_t gpt_table1_addr = (uint64_t) realms_gpt1;
++
++    /* Mask is FNG1, FNG0, and A2 */
++    const uint64_t feature_mask = (1ULL << 18 | 1ULL << 17 | 1ULL << 16);
++    const uint64_t in = feature_mask;
++
++    get_sys_reg("CurrentEL", currentel_raw);
++    currentel = (currentel_raw >> 2) & 0x3;
++
++    if (currentel < 3) {
++        ml_printf("FAIL: Test must be run at EL3 (it is %d)\n", currentel);
++        return 1;
 +    }
-+}
 +
-+void HELPER(sve_not_zpz_b)(void *vd, void *vn, void *pg, uint32_t desc)
-+{
-+    sve_not_zpz(vd, vn, pg, desc, expand_pred_b);
-+}
++    get_sys_reg(ID_AA64PFR0_EL1, pfr0);
 +
-+void HELPER(sve_not_zpz_h)(void *vd, void *vn, void *pg, uint32_t desc)
-+{
-+    sve_not_zpz(vd, vn, pg, desc, expand_pred_h);
-+}
++    /* rme_status is 1 for RME, 2 for RME + GPC2, 3 for RME+GPC3 */
++    rme_status = (pfr0 >> 52) & 0xF;
++    if (rme_status < 2) {
++        ml_printf("SKIP: System does not support RME (RME=%ld)\n", rme_status);
++        return 0;
++    }
 +
-+void HELPER(sve_not_zpz_s)(void *vd, void *vn, void *pg, uint32_t desc)
-+{
-+    sve_not_zpz(vd, vn, pg, desc, expand_pred_s);
-+}
++    /* Configure the level 0 table for the first 4GB of memory */
++    realms_gpt0[0] = gpt_table1_addr | 0x3; /* Covers GB 0; table descriptor */
++    realms_gpt0[1] = 0xf1; /* Covers GB 1; full access */
++    realms_gpt0[2] = 0xf1; /* Covers GB 2; full access */
++    realms_gpt0[3] = 0xf1; /* Covers GB 3; full access */
 +
-+void HELPER(sve_not_zpz_d)(void *vd, void *vn, void *pg, uint32_t desc)
-+{
-+    sve_not_zpz(vd, vn, pg, desc, expand_pred_d);
++    /* Pick an artibtrary location to read inside the first 1GB. */
++    uint64_t fault_location = 0x10202008;
++    uint32_t gpi_index = fault_location / gpc_granule_size;
++    realms_gpt1[gpi_index / gpis_per_64_bits] = 0;
++
++    gpt_base = gpt_table0_addr >> 12;
++    set_sys_reg(GPTBR_EL3, gpt_base);
++
++    /*
++     * Default values:
++     * PPS=0:     GPC table 0 protects 4GB.
++     * RLPAD=0:   Realm physical address spaces are normal
++     * NSPAD=0:   Non-secure physical address spaces are normal
++     * SPAD=0:    Secure physical address spaces are normal
++     * IRGN=0:    Inner non-cacheable
++     * ORGN=0:    Outer non-cacheable
++     * PGS=0:     Physical granule size is 4KB.
++     * GPCP=0:    All GPC faults reported
++     * TBGPCP=0:  Trace buffer rejects trace
++     * L0GPTSZ=0: Each entry in table 0 protects 1GB.
++     * APPSAA=0:  Accesses above 4GB must be to Non-secure PAs
++     * GPCBW=0:   Bypass windows disabled.
++     * NA6, NA7, NSP, SA, NSO are all reserved values for GPI.
++     */
++    uint64_t gpccr = 0;
++
++    /* Switch on granule protection check */
++    gpccr |= 1 << 16; /* GPC enabled. */
++    gpccr |= 0b10 << 12; /* SH = Outer shareable */
++    set_sys_reg(GPCCR_EL3, gpccr);
++
++    /* Access some memory outside the GPC forbidden region */
++    uint64_t x = *(unsigned int *) (fault_location + 4096 * 16);
++    ml_printf("Fault address: %lx\n", exception_fault_address);
++    if (exception_fault_address != 0) {
++        ml_printf("FAIL: Memory access was blocked by GPC, "
++                  "and should not have been\n");
++        return 1;
++    }
++
++    /* Access the GPC forbidden region */
++    x = *(unsigned int *) fault_location;
++
++    ml_printf("Fault address: %lx\n", exception_fault_address);
++    if (exception_fault_address != fault_location) {
++        ml_printf("FAIL: Memory access was not blocked by GPC, "
++                  "and should have been\n");
++        return 1;
++    }
++
++    rme_status = (pfr0 >> 52) & 0xF;
++    if (rme_status < 3) {
++        ml_printf("SKIP: System does not support GPC3 (RME=%ld)\n", rme_status);
++        return 0;
++    }
++
++    /* Clear the exception record */
++    exception_fault_address = 0;
++
++    /* Enable bypass windows */
++    gpccr |= 1 << 29; /* GPC Bypass windows enabled */
++    set_sys_reg(GPCCR_EL3, gpccr);
++
++    gpcbw = 0; /* Base 0GB, Size 1GB, Stride 1TB */
++    set_sys_reg(GPCBW_EL3, gpcbw);
++    ml_printf("GPCBW configured\n");
++
++    /* Access the GPC forbidden region again */
++    x = *(unsigned int *) fault_location;
++
++    ml_printf("Fault address: %lx\n", exception_fault_address);
++    if (exception_fault_address != 0) {
++        ml_printf("FAIL: Memory access was blocked by GPC, "
++                  "and should have been allowed by bypass window. code=%lx\n",
++                  exception_type_code);
++        return 1;
++    }
++
++    /* Clear the exception record */
++    exception_fault_address = 0;
++    /* Reconfigure GPCBW to 1GB start */
++    gpcbw = 1; /* Base 1GB, Size 1GB, Stride 1TB */
++    set_sys_reg(GPCBW_EL3, gpcbw);
++    ml_printf("GPCBW reconfigured for 1GB start\n");
++
++    /* Access the GPC forbidden region again */
++    x = *(unsigned int *) fault_location;
++
++    ml_printf("Fault address: %lx\n", exception_fault_address);
++    if (exception_fault_address != fault_location) {
++        ml_printf("FAIL: Memory access was allowed by GPC, "
++                  "and should not have been allowed by bypass window. code=%lx\n",
++                  exception_type_code);
++        return 1;
++    }
++
++    return 0;
 +}
- 
- #define DO_SXTB(N)    ((int8_t)N)
- #define DO_SXTH(N)    ((int16_t)N)
 -- 
 2.43.0
 
