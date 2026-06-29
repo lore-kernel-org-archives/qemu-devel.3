@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 548C2C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 02:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE9C3C43327
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 02:57:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1we286-0002SL-RY; Sun, 28 Jun 2026 22:53:50 -0400
+	id 1we2BE-00034v-KD; Sun, 28 Jun 2026 22:57:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1we284-0002Rx-7u
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 22:53:48 -0400
+ id 1we2B6-00034O-P7
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 22:56:56 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1we281-0003Jc-Hr
- for qemu-devel@nongnu.org; Sun, 28 Jun 2026 22:53:48 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1we2B4-0004MX-AF
+ for qemu-devel@nongnu.org; Sun, 28 Jun 2026 22:56:56 -0400
 Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxX+su3kFq6QAZAA--.63511S3;
- Mon, 29 Jun 2026 10:53:34 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Cxx3jx3kFqGwEZAA--.39031S3;
+ Mon, 29 Jun 2026 10:56:49 +0800 (CST)
 Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxB8Er3kFqDh23AA--.6626S3;
- Mon, 29 Jun 2026 10:53:33 +0800 (CST)
-Subject: Re: [PATCH v2 1/4] target/loongarch/kvm: fix uninitialized val and
- unchecked GET in cpucfg2 check
+ by front1 (Coremail) with SMTP id qMiowJBxbcLu3kFq_R23AA--.18101S3;
+ Mon, 29 Jun 2026 10:56:48 +0800 (CST)
+Subject: Re: [PATCH v2 3/4] target/loongarch/kvm: remove redundant cpucfg
+ failure traces
 To: Tao Cui <cui.tao@linux.dev>, qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@mailo.com>,
  Qiang Ma <maqianga@uniontech.com>, Tao Cui <cuitao@kylinos.cn>
 References: <20260626052742.810726-1-cui.tao@linux.dev>
- <20260626052742.810726-2-cui.tao@linux.dev>
+ <20260626052742.810726-4-cui.tao@linux.dev>
 From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <48e32310-1c70-8e84-5055-0d8d773fd004@loongson.cn>
-Date: Mon, 29 Jun 2026 10:50:16 +0800
+Message-ID: <8f1f5aeb-150c-cf88-0751-369487c8dbd5@loongson.cn>
+Date: Mon, 29 Jun 2026 10:53:31 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20260626052742.810726-2-cui.tao@linux.dev>
+In-Reply-To: <20260626052742.810726-4-cui.tao@linux.dev>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxB8Er3kFqDh23AA--.6626S3
+X-CM-TRANSID: qMiowJBxbcLu3kFq_R23AA--.18101S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7tFWxAFWkuF43KF4kGr4ftFc_yoW8uF15pr
- n3Cw4YgFWrtrZ7Can7tw1qg34UZw1UKrsrZasxAwnakr43Kr17AFyIkanrWF15G34xJa10
- qF4jqrs8Zwn8XwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoW7tFWfGry3XFWxurWUCryUJwc_yoW8tF1rpr
+ sFyrn8KryrtrWqqa1qqwn8Xr1UGrWxGr42va1xKryxursxtryxXF48twsxGF4rG3ykXas0
+ qFWxurZYgF15X3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ 0xBIdaVrnRJUUUBFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
  IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
- xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jYSoJU
- UUUU=
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1ln4kS14v26r1Y6r17M2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12
+ xvs2x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q
+ 6rW5McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr4
+ 1lc7I2V7IY0VAS07AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWU
+ JVW8JwCFI7km07C267AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
+ vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IY
+ x2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26c
+ xKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAF
+ wI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jz2NtUUUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -48
@@ -89,55 +89,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2026/6/26 下午1:27, Tao Cui wrote:
 > From: Tao Cui <cuitao@kylinos.cn>
 > 
-> kvm_check_cpucfg2() discards the return value of KVM_GET_DEVICE_ATTR and
-> uses the local val (the host cpucfg2 mask) without checking whether the
-> read succeeded. val is also declared without an initializer, so on a GET
-> failure env->cpucfg[2] &= val reads an uninitialized value.
-> 
-> The &= mask is best-effort feature negotiation: if KVM_HAS_DEVICE_ATTR
-> succeeds, a GET failure is most likely a copy_{from,to}_user issue, not a
-> reason to fail the whole register sync. Check the GET return value, warn and
-> skip the mask on failure (the guest keeps the cpucfg2 it already has), and
-> initialize val to 0.
+> kvm_get_one_reg() and kvm_set_one_reg() already trace on failure, so the
+> trace_kvm_failed_get_cpucfg()/trace_kvm_failed_put_cpucfg() calls in
+> kvm_loongarch_get_cpucfg() and kvm_loongarch_put_cpucfg() duplicate that.
+> Remove the calls and the now-unused trace events.
 > 
 > Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 > ---
->   target/loongarch/kvm/kvm.c | 15 ++++++++++++---
->   1 file changed, 12 insertions(+), 3 deletions(-)
+>   target/loongarch/kvm/kvm.c    | 6 ------
+>   target/loongarch/trace-events | 2 --
+>   2 files changed, 8 deletions(-)
 > 
 > diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-> index d6539c12ac..5bd5e268b9 100644
+> index 4bb5be6864..a504cfaaf7 100644
 > --- a/target/loongarch/kvm/kvm.c
 > +++ b/target/loongarch/kvm/kvm.c
-> @@ -725,7 +725,7 @@ static int kvm_loongarch_get_cpucfg(CPUState *cs)
->   static int kvm_check_cpucfg2(CPUState *cs)
->   {
->       int ret;
-> -    uint64_t val;
-> +    uint64_t val = 0;
->       struct kvm_device_attr attr = {
->           .group = KVM_LOONGARCH_VCPU_CPUCFG,
->           .attr = 2,
-> @@ -736,8 +736,17 @@ static int kvm_check_cpucfg2(CPUState *cs)
->       ret = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, &attr);
+> @@ -714,9 +714,6 @@ static int kvm_loongarch_get_cpucfg(CPUState *cs)
 >   
->       if (!ret) {
-> -        kvm_vcpu_ioctl(cs, KVM_GET_DEVICE_ATTR, &attr);
-> -        env->cpucfg[2] &= val;
-> +        /*
-> +         * The &= mask is best-effort feature negotiation. If HAS succeeded,
-> +         * a GET failure is most likely a copy_{from,to}_user issue; warn and
-> +         * keep the cpucfg2 the guest already has rather than failing the sync.
-> +         */
-> +        int r = kvm_vcpu_ioctl(cs, KVM_GET_DEVICE_ATTR, &attr);
-> +        if (r) {
-> +            warn_report("CPUCFG2: KVM_GET_DEVICE_ATTR: %s", strerror(errno));
-> +        } else {
-> +            env->cpucfg[2] &= val;
-> +        }
->   
->           if (FIELD_EX32(env->cpucfg[2], CPUCFG2, FP)) {
->               /* The FP minimal version is 1. */
+>       for (i = 0; i < 21; i++) {
+>           ret = kvm_get_one_reg(cs, KVM_IOC_CPUCFG(i), &val);
+> -        if (ret < 0) {
+> -            trace_kvm_failed_get_cpucfg(strerror(errno));
+> -        }
+>           env->cpucfg[i] = (uint32_t)val;
+>       }
+>       return ret;
+> @@ -777,9 +774,6 @@ static int kvm_loongarch_put_cpucfg(CPUState *cs)
+>   	}
+>           val = env->cpucfg[i];
+>           ret = kvm_set_one_reg(cs, KVM_IOC_CPUCFG(i), &val);
+> -        if (ret < 0) {
+> -            trace_kvm_failed_put_cpucfg(strerror(errno));
+> -        }
+>       }
+>       return ret;
+>   }
+> diff --git a/target/loongarch/trace-events b/target/loongarch/trace-events
+> index dea11edc0f..829d8e0f53 100644
+> --- a/target/loongarch/trace-events
+> +++ b/target/loongarch/trace-events
+> @@ -9,7 +9,5 @@ kvm_failed_get_mpstate(const char *msg) "Failed to get mp_state from KVM: %s"
+>   kvm_failed_put_mpstate(const char *msg) "Failed to put mp_state into KVM: %s"
+>   kvm_failed_get_counter(const char *msg) "Failed to get counter from KVM: %s"
+>   kvm_failed_put_counter(const char *msg) "Failed to put counter into KVM: %s"
+> -kvm_failed_get_cpucfg(const char *msg) "Failed to get cpucfg from KVM: %s"
+> -kvm_failed_put_cpucfg(const char *msg) "Failed to put cpucfg into KVM: %s"
+>   kvm_arch_handle_exit(int num) "kvm arch handle exit, the reason number: %d"
+>   kvm_set_intr(int irq, int level) "kvm set interrupt, irq num: %d, level: %d"
 > 
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
