@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A2E6C43327
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0469EC43602
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 12:01:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weAfw-00071E-PL; Mon, 29 Jun 2026 08:01:21 -0400
+	id 1weAg9-000767-8H; Mon, 29 Jun 2026 08:01:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfa-0006tL-Qs
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:01:03 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1weAfQ-0006qq-Uv
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:00:50 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weAfW-0007No-K5
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:00:58 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-493a7bd27c2so11484295e9.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:00:53 -0700 (PDT)
+ id 1weAfP-0007LZ-9V
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 08:00:48 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-47122683cf3so839794f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 05:00:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782734452; x=1783339252; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782734446; x=1783339246; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=7NXEh6OXHSzjD4eG2UcaoneiN/XAFR9prpxJ8BGPQMw=;
- b=o/eV+aFgZMAwN5r54WfKHjho043kIVfBlB8HyFsIbEnQbHMYWPDBrSvvtz7V5wMvxO
- R48eHbcNg7+XPO00OfMWig4VqKUhyFy2ZpXXti3nbXdxzt7upLU3zmgIPmIng3MJitOy
- 2jnlQiIp38wh7x6hxHFTRPpuOMIKg4h+GcZ9ZX3KX+GuqPu6MsD57gdKxZd1FaPCqrKJ
- RFg0bJm6uGe8+BzNyAKQqG+mFAMyj+MxCuQGAX1Z5bxP3xClzbRfssLGYmH2VyMapN9S
- Bs+2D24LoUqKlGLFFrNxTw8V3L9IU/IMCCLDukU4GlhM/By5/jE5NjPdMWBzUBwrjj2C
- NHtg==
+ :reply-to; bh=7lR7Tonf1+bbpt3Sq4KZxZhoKMSzg6FEvdecxKcxMM8=;
+ b=W/O1Y0RDc2v+xk342XNxvW83wxwsUtzcbTtIMqp1nJfvJc50l62l8gLk6emEVjNL1l
+ cFF9sslNk0Tifrh6oFQCsaBOIA+Jv/v1FXGDu/ca00oRpp4jsEJ7+g4AyxMIzk9w+GKM
+ CVph/nVDIxIunHJ8H+xUVmpAT7wSxtDF5f7MZwwgNV81o98iVBicJmagodEUL/EGag3n
+ bFxIT4MCm+8F472fJMQsLPAEzL+XYiO3s0jyP7X58QE/FAKWiUVMqOoSflq4vujO7/Qa
+ wWfR/jfazEj0g+TE3/IRooDZ0ztHN14i///jz0nEeMNxGz+lrlfO5AObVvzhonlZ+CQS
+ sY2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782734452; x=1783339252;
+ d=1e100.net; s=20251104; t=1782734446; x=1783339246;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=7NXEh6OXHSzjD4eG2UcaoneiN/XAFR9prpxJ8BGPQMw=;
- b=rQMCNNXJd1C0AdTpjOYp4MHDa0LH+Wfsowb2Pi4kQ61XCnFd/aWrMVFcBdaymhzS4h
- OaqdjF7YSbUCxpJX0rgcJn+OrFF+P6uS4A4IJju+mV0YcTVV9Gbr1o9Ai+/9LWOe6DGX
- RQSSbTdwvTTD+bDiukw2F31ApihZZ8mC70iwzTNzmk5dA8eC3mGdzePO55+YPkiL0zfS
- EEiS5GYZ8fy2VyKNqAwmfs5e0OUzKeQVme2hQ+Xp7rS6jSAL48pFQR2PbkjA/e969zHR
- 7w5NB2zCAGh+WSm1aypmdrr0BadAQIiUC7cVh3dzcadZPcscVapGslZKFU6VEt5eIO8N
- vShg==
-X-Gm-Message-State: AOJu0Yx2QaG+rmgZtSEhK4tAU0Sswpbm1lZghgLaJ6XcqMYA8cPTha+s
- YIImh5jiqaKXR8ekT75VMqQaNOvqpKciTjCq6vfb1zOHPwzVMe3ssgTij+cpeI9uZ/8xgnfuLnq
- xwuLJ
-X-Gm-Gg: AfdE7cnB+MejU12fmGGTtCxZYZlkAzpGjFZK5R/23H+if4oEURR/nvc1SruEqTXznlM
- L0hjAjPYBwHztMTqiD7YoFAdOABhS9i54OmzuXiChdzm1gXglhuyZSg/oMc81cIcnUexL5BIbqv
- v2ZVZmFYdHVUdl2fUOwe1oBEcJyh+3sYJNy/3iLtDS0wCgh/0Pj2SDAac8mii/sKpkyDm+75brM
- NhkrdOCj+h0sWVgoeIdzZHaJgEeF8x8O2SO779oi5REa3fx9KNOhdFTKh4kNYyASVx60qzYDSPn
- 51nmymFbtAs9hoaD0IgVDIyu+7wshl1OWTNfWJ+IIghfOPKRhZccIO3Jw/08QVQd1SG4gbzLu4r
- MstIXmDKGHGVH6rnwfDM9fUQxbhIp6BC502IYzjOdDE1aej5fgRrvSjBz88oxuqflzqd5nwmZE8
- 3ouqD4Ih4Vl2TjOY2GoBqoA/cQavp9JOA5OANHruDTSsbh4Ta1Uq5ayn/FGJKa3YN+1CvBizFkf
- nNg1Ro2n1NFyH88Nakucg==
-X-Received: by 2002:a05:600c:4f4d:b0:492:7083:e5a with SMTP id
- 5b1f17b1804b1-493b71dc518mr9286085e9.31.1782734452397; 
- Mon, 29 Jun 2026 05:00:52 -0700 (PDT)
+ bh=7lR7Tonf1+bbpt3Sq4KZxZhoKMSzg6FEvdecxKcxMM8=;
+ b=Q1rzZqPmzcfmasCNHvliuxN90U7ipE2gLtgttpcmQGZ8Ry7QATCuHF/gwZeYZkZ2N0
+ 2KE3nYVHG2T83nQTXhEbEMNQ2QS/u2/Ngt1EQLIHQjilQCRHgHcfKPVHPaaCTL1921rX
+ OLRmXMduOrGhTG1l3hNcsh7+xzY4nBBjHWwmo9cfctJsW7XrJN4wQko8nUpgOfzUbakV
+ 0Lkva26TQD3F9o8V8AZbpD4okzwPjOKxcIbkgQ+IdrdOyhrAFo6SxrCtpd1ffBvtlY74
+ dSX7rdIwO3RqLO/j3DQoKkSFUJ42goSC41kQvFpb9Uvrm5S7jZAb3aH/wjuT+KW+LhG0
+ Cnsg==
+X-Gm-Message-State: AOJu0Yz+y1jAX6HPdEXjBJA/z/4KHMKUIq+BJZGFILCXZjR4G14YHRvm
+ AS31TQsvppA1JQHeX3iQNHG2Sq7E3D9Pv2+xpSonn1qLdWB5RWhItMWJRZd2lWjPs79XTzGMXfH
+ WE9II
+X-Gm-Gg: AfdE7cnRDhxCx2zooNs47Pti8CikucLwyGm+KswuliCH752rUCsEKXyr7BLksnhq1Iq
+ hoHmYO8vKt5DU8xCxB/3HnMBOQng12Ice3piA0wFhn9Xpo75JEkzMibSdZJPf/HE6aN618Ed8YY
+ vTJyarXnNebTM/uGOSUmcoQM75ptZzM8i7Tos9/ZB/WzwDfd78eMftI5+TdT6M6DupV4T1eMLIn
+ SPzJMf2NRby/2lRQoYLxp5Ubgt2JzT4CpH2qXOCC9+yAycm5uVUwK4P8axMFrhaLgmcP1+nAhY1
+ Yp3QC8h3PElVlk9Y99OWPXsPWo3uZUZ7seZjW+hPUg+E/WIYTKO4QmmHfLxdI8B0Ke7ARzEL/kI
+ gjZ8dCFBPI80MyK+pNoUCxmtICAFsNpNHP9VVBkU/aU7qAFT1IeYIH3X5ELW+FgAEUlEdTlaBN3
+ SBeMGfF4Daa3G+I/Es8c8B9tkBzhmIsFo8WQNccesOtcC/JlHybxqtx5hYuzPT0TZbJE9BukJZA
+ s6sCBDUoJrfq06X4M17RazpIwQDjYz6
+X-Received: by 2002:a05:6000:25e7:b0:461:a5d3:915a with SMTP id
+ ffacd0b85a97d-46fb6bf2c9cmr18285765f8f.6.1782734445487; 
+ Mon, 29 Jun 2026 05:00:45 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.00.51
+ ffacd0b85a97d-473dddcb295sm8753061f8f.35.2026.06.29.05.00.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 05:00:51 -0700 (PDT)
+ Mon, 29 Jun 2026 05:00:44 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/54] target/arm: Implement FDOT (multiple and indexed vector)
-Date: Mon, 29 Jun 2026 12:59:55 +0100
-Message-ID: <20260629120032.1645265-18-peter.maydell@linaro.org>
+Subject: [PULL 10/54] target/arm: Move tile_vslice_{index,
+ offset} to vec_internal.h
+Date: Mon, 29 Jun 2026 12:59:48 +0100
+Message-ID: <20260629120032.1645265-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260629120032.1645265-1-peter.maydell@linaro.org>
 References: <20260629120032.1645265-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,44 +103,103 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
+Move in preparation for being used outside sme_helper.c.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260618041517.573469-9-richard.henderson@linaro.org
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260618041517.573469-2-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/sme.decode      | 3 +++
- target/arm/tcg/translate-sme.c | 4 ++++
- 2 files changed, 7 insertions(+)
+ target/arm/tcg/sme_helper.c   | 33 ---------------------------------
+ target/arm/tcg/vec_internal.h | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+), 33 deletions(-)
 
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index 04dd0e6df0..7324ccddac 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -781,6 +781,9 @@ FMLALL_nx_b     11000001 0100 .... . .. ... ..... 000 ..    @azx_1x1_i4_o2
- FMLALL_nx_b     11000001 1001 .... 0 .. 0.. ....1 00.. .    @azx_2x1_i4_o1
- FMLALL_nx_b     11000001 0001 .... 1 .. 0.. ...10 00.. .    @azx_4x1_i4_o1
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 8e8e6c00ca..685b6b46be 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -64,39 +64,6 @@ void helper_sme_zero(CPUARMState *env, uint32_t imm, uint32_t svl)
+     }
+ }
  
-+FDOT_nx_b       11000001 0101 .... 0 .. 0.. ....1 11 ...    @azx_2x1_i2_o3
-+FDOT_nx_b       11000001 0101 .... 1 .. 0.. ...00 01 ...    @azx_4x1_i2_o3
+-
+-/*
+- * When considering the ZA storage as an array of elements of
+- * type T, the index within that array of the Nth element of
+- * a vertical slice of a tile can be calculated like this,
+- * regardless of the size of type T. This is because the tiles
+- * are interleaved, so if type T is size N bytes then row 1 of
+- * the tile is N rows away from row 0. The division by N to
+- * convert a byte offset into an array index and the multiplication
+- * by N to convert from vslice-index-within-the-tile to
+- * the index within the ZA storage cancel out.
+- */
+-#define tile_vslice_index(i) ((i) * sizeof(ARMVectorReg))
+-
+-/*
+- * When doing byte arithmetic on the ZA storage, the element
+- * byteoff bytes away in a tile vertical slice is always this
+- * many bytes away in the ZA storage, regardless of the
+- * size of the tile element, assuming that byteoff is a multiple
+- * of the element size. Again this is because of the interleaving
+- * of the tiles. For instance if we have 1 byte per element then
+- * each row of the ZA storage has one byte of the vslice data,
+- * and (counting from 0) byte 8 goes in row 8 of the storage
+- * at offset (8 * row-size-in-bytes).
+- * If we have 8 bytes per element then each row of the ZA storage
+- * has 8 bytes of the data, but there are 8 interleaved tiles and
+- * so byte 8 of the data goes into row 1 of the tile,
+- * which is again row 8 of the storage, so the offset is still
+- * (8 * row-size-in-bytes). Similarly for other element sizes.
+- */
+-#define tile_vslice_offset(byteoff) ((byteoff) * sizeof(ARMVectorReg))
+-
+-
+ /*
+  * Move Zreg vector to ZArray column.
+  */
+diff --git a/target/arm/tcg/vec_internal.h b/target/arm/tcg/vec_internal.h
+index 06fef2a209..77e5b01550 100644
+--- a/target/arm/tcg/vec_internal.h
++++ b/target/arm/tcg/vec_internal.h
+@@ -55,6 +55,37 @@ typedef struct CPUArchState CPUARMState;
+ #define H8(x)   (x)
+ #define H1_8(x) (x)
+ 
++/*
++ * When considering the ZA storage as an array of elements of
++ * type T, the index within that array of the Nth element of
++ * a vertical slice of a tile can be calculated like this,
++ * regardless of the size of type T. This is because the tiles
++ * are interleaved, so if type T is size N bytes then row 1 of
++ * the tile is N rows away from row 0. The division by N to
++ * convert a byte offset into an array index and the multiplication
++ * by N to convert from vslice-index-within-the-tile to
++ * the index within the ZA storage cancel out.
++ */
++#define tile_vslice_index(i) ((i) * sizeof(ARMVectorReg))
 +
- ### SME2 Add / Sub array accumulators
- 
- ADD_aaz_s       11000001 101 000000 .. 111 ....0 10 ...     @az_2x2_o3
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 467b44e832..a9adaa02bd 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -1161,6 +1161,10 @@ TRANS_FEAT(FMLALL_nx_b, aa64_sme_f8f32, do_azz_acc_fp8,
-            a->n, 4, a->rv, a->off, a->zn, a->zm,
-            a->idx << 2, 0, false, gen_helper_gvec_fmla_idx_sb)
- 
-+TRANS_FEAT(FDOT_nx_b, aa64_sme_f8f32, do_azz_acc_fp8,
-+           a->n, 1, a->rv, a->off, a->zn, a->zm,
-+           a->idx, 0, false, gen_helper_gvec_fdot_idx_sb)
++/*
++ * When doing byte arithmetic on the ZA storage, the element
++ * byteoff bytes away in a tile vertical slice is always this
++ * many bytes away in the ZA storage, regardless of the
++ * size of the tile element, assuming that byteoff is a multiple
++ * of the element size. Again this is because of the interleaving
++ * of the tiles. For instance if we have 1 byte per element then
++ * each row of the ZA storage has one byte of the vslice data,
++ * and (counting from 0) byte 8 goes in row 8 of the storage
++ * at offset (8 * row-size-in-bytes).
++ * If we have 8 bytes per element then each row of the ZA storage
++ * has 8 bytes of the data, but there are 8 interleaved tiles and
++ * so byte 8 of the data goes into row 1 of the tile,
++ * which is again row 8 of the storage, so the offset is still
++ * (8 * row-size-in-bytes). Similarly for other element sizes.
++ */
++#define tile_vslice_offset(byteoff) ((byteoff) * sizeof(ARMVectorReg))
 +
- static bool do_fdot(DisasContext *s, arg_azz_n *a, bool multi)
- {
-     return do_azz_acc_fp(s, a->n, 1, a->rv, a->off, a->zn, a->zm, 1, 0,
+ /*
+  * Expand active predicate bits to bytes, for byte elements.
+  */
 -- 
 2.43.0
 
