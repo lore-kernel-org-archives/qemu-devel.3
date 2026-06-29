@@ -4,141 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CBF8C43638
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:20:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0944C43327
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:20:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weBnl-0004iD-BE; Mon, 29 Jun 2026 09:13:29 -0400
+	id 1weBuR-0001sw-9f; Mon, 29 Jun 2026 09:20:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1weBnj-0004g0-Mf
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 09:13:27 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1weBu7-000180-Ld; Mon, 29 Jun 2026 09:20:03 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1weBni-0003D9-2M
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 09:13:27 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65TAT4tY2627852
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 13:13:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:content-type:date:from
- :in-reply-to:message-id:mime-version:references:subject:to; s=
- qcppdkim1; bh=qFYqNPPFISG4W33OXfV6Z2hBY6Ip8YqwFk+1NFRkGKE=; b=Ty
- r3de0iNQmwbPzKC3Ib+cYDMNvYzKWSK9M5mQ/+PlbEqRaBf7paw2KA40PUMlleej
- qslwzosYj1GQvaXUNlqhfGqMStRS5+EqubZTMvL/eIfqgdmbD5BHthtqvO3XzZRs
- K2Wj9/rFjMxOPGpt0f4wLXXGd40MjlahQSNY+qLjo47iTkNCo6a1ytp2rRSLZ/yW
- oupE9RlPw1dpuRlB2Gcum6UqywpWoan2N/ouEPyvusoQ+VzFoChT/mw2RONv7BRl
- COX5IN90WrqKbKWhzlYmiwJ/8KXr/dyJjGqDWEzfK/sk1n4WPrM8xZ6sIHWELlOb
- F7nVaREITBISEEzR8EQA==
-Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3nbgs197-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 13:13:15 +0000 (GMT)
-Received: by mail-dl1-f70.google.com with SMTP id
- a92af1059eb24-139af2bd2c8so5629563c88.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 06:13:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782738794; x=1783343594; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qFYqNPPFISG4W33OXfV6Z2hBY6Ip8YqwFk+1NFRkGKE=;
- b=dI7bnpdMxvN0/B+dqah0DsUmXglCcJ9GfkkTAEGNbnxh51qv/MXKS8OylzAnzmWS+6
- RF/ZMBGv8JOYGK4K5tQ1juzHiLTym94ZwJGqk8f647vurS0d155NgSe7FFdwoVBmQpDR
- AFA5ynFuN3nBAY3leImQfbaapzBuc5M3exrU6fv9TqAJddnJGHyYdZxhpUOhOPfiwzvC
- 394ey12n0r1lTyAsADtoqe4Fy3xbn0onywjEc6utCYlJYgnPDjK6zk0/OeKZd2qQQD5U
- BIqIX3tibxsA6DiEUZD4TQ/n9A9+AGlf1KedpqVvoyBF1Cpta3rgScq8gSrvn5eZqypN
- yG/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782738794; x=1783343594;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=qFYqNPPFISG4W33OXfV6Z2hBY6Ip8YqwFk+1NFRkGKE=;
- b=BWQJmzrAfbZTJSaM84zYF40j9Qtr3IrMXQrEaK8ZAyYXMOVwJnMb3H8Z2aFvuz1O6A
- RPTdydlL60hxGBYLK3qqhx61zPg99tqlN3jpdHGuzXaMrh09pDh9bloWHEpCzsLA4oTL
- rzpX8TNk+Ftd87KOSbh38gjqEEOIo8BAE71HgD2M2pQAgvs7bPOocDuxbZPV2Lo7mrER
- k2U42rSqe4HsLhzTKMaUtTPdbV/SaYDRnFsMnti19DHX0Hmt4wvGjP+298438W/CcRUM
- XJcEukqiRtBeEetaRjDsi2v48w8ZVXPAqL6Hvjwok6C83A5IZFMbH/fRJVR9kHaFYx0f
- emAA==
-X-Gm-Message-State: AOJu0YyZMwfbqSVxEqwbv89qsvN+nkD54e2R7Ypurtl/GWoGjvhk5phv
- oSwghUSKLpkxO9Ewgb+7bGJhjimdW2VcqylkOa98KV8wZTBWFsQbWAsBLsdZwaqMuGdILXo/His
- OEw/oxxVg0ipJ0BM1lMv9nrG/lP2pLOFA0ZERZkdAg99SOA28uZkQR8YMM8hph5tF+w==
-X-Gm-Gg: AfdE7clHb0k0NnXLSNyAOdIBQN6PmNiDtI8HYwUuU4DqBnhI01pp73+jGuj/COGc5ZX
- NVRZHDmx2TkqKJgjRkfPTdVVox3jFwmMFkWn0IP4Dd35fuM3EdFrhGQ5GISCc25tLMEzAWfExIl
- 9j6MkGPKDvv8IrmHcva6KPsNWrMKhRKkzqEyH6D4Btgx+yl2n5rsIJcnUMs+aQHPbTN3p1V+wo9
- nkZ+ecsGW/hSxda1Qct4vq16GfDqyx6hVBa9wpvCMeBRDNPjCf1C3E2+p/TOblsAyqNCwLq57gr
- 4tkum/gSCXLGKWjxpKrOYmqSFzeTV73fsQ7bH6dj0OvKDHgEcnP8XtFygmTP/E4gC2K+P0igjbX
- e8gqs2DCLfGiLqAfM4fhfn+N2x9Q0qR9qhXI48dlFc0rO/gNBuQVSiPm5SMo=
-X-Received: by 2002:a05:7022:e998:b0:139:ed5d:7564 with SMTP id
- a92af1059eb24-13b22730539mr383692c88.43.1782738794070; 
- Mon, 29 Jun 2026 06:13:14 -0700 (PDT)
-X-Received: by 2002:a05:7022:e998:b0:139:ed5d:7564 with SMTP id
- a92af1059eb24-13b22730539mr383666c88.43.1782738793525; 
- Mon, 29 Jun 2026 06:13:13 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-139e78317f3sm28459106c88.9.2026.06.29.06.13.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2026 06:13:12 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, stefanha@redhat.com, peter.maydell@linaro.org
-Cc: brian.cain@oss.qualcomm.com, Brian Cain <bcain@quicinc.com>,
- Taylor Simpson <ltaylorsimpson@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL v5 22/77] target/hexagon: Add vmstate representation
-Date: Mon, 29 Jun 2026 06:11:37 -0700
-Message-Id: <20260629131232.2487780-23-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260629131232.2487780-1-brian.cain@oss.qualcomm.com>
-References: <20260629131232.2487780-1-brian.cain@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1weBu5-000541-Bb; Mon, 29 Jun 2026 09:20:03 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 0B97A44C12;
+ Mon, 29 Jun 2026 15:19:49 +0200 (CEST)
+Message-ID: <526e49ea-03a7-460f-9974-976abf83c6b2@proxmox.com>
+Date: Mon, 29 Jun 2026 15:19:47 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 17/28] fuse: Manually process requests (without libfuse)
+From: Fiona Ebner <f.ebner@proxmox.com>
+To: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>
+References: <20260310162622.333137-1-kwolf@redhat.com>
+ <20260310162622.333137-18-kwolf@redhat.com>
+ <2493d422-d58a-4409-aee4-e932a4e0a73c@proxmox.com>
+ <8ec42109-4123-4cc7-a55e-9aa2576a791c@redhat.com>
+ <d5c3d3da-5102-4bdc-87bc-9733fb0cbf09@redhat.com>
+ <9be52b33-9a28-41ca-896c-a41b5558864c@proxmox.com>
+Content-Language: en-US
+In-Reply-To: <9be52b33-9a28-41ca-896c-a41b5558864c@proxmox.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-ORIG-GUID: aQ7CguCJAM9egE0J9lSWvEZAZoPifV8y
-X-Authority-Analysis: v=2.4 cv=Z4Hc2nRA c=1 sm=1 tr=0 ts=6a426f6b cx=c_pps
- a=SvEPeNj+VMjHSW//kvnxuw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=pDBHowQsxXgegazyqkAA:9 a=QEXdDO2ut3YA:10 a=Kq8ClHjjuc5pcCNDwlU0:22
- a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDEwOSBTYWx0ZWRfX/OUn7/p6SC3Y
- 43lCMI1Yb0Hm3RnYTMKZblY8B9yRtbjyw9b2rA9vfNmLTcB7LE7pc0/Fa7OCWo9sSZixndulUpr
- 4Mq8HhCb/ZUvZOnjmrrTP2yw65ugIbU=
-X-Proofpoint-GUID: aQ7CguCJAM9egE0J9lSWvEZAZoPifV8y
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDEwOSBTYWx0ZWRfX8AG7gtUG0yxk
- dI0hDenj+KRlTXGD+kT63PJEU9CUJEgY9XCnALTF0XepmfqjSgmAKcnl+g7PBFDtS+7Lgat3/YM
- D1+0iqoN8+x8dL32xuQuOsGptnfKT17lm9aU2/SAXtB3+ayvHuKZ5y1drKeUbSiZrV1CPw+Dsdc
- 138vxicdSZWVrDsc520FVNiZY2EtUkJQAU1Eq7m32vS6NAfbt/kasZ8LbGfjcZ03lrdcp93MQ0t
- iXWgi2dwRCZ5DaSNlRM2c6kDdbPJhML1PRS3oFTb6nnKKK8TnZPdgz87DsP15NpgobM+grdqF49
- /AVm8MiV5HbpBiD29rP5x9JznUf4K3xRTfOjPBzDA/6I8NXbmEL/G0juuhnT+B7TL6cH/EKiRxS
- rZNCdC9zM5i/IDz9vAJhXVhUFYjCVNXTOdcFeT8z34T8F6kxS1ZFgOeseVUlIPTMWmEegC9VDlQ
- QLG2gMw+mpWInEyOXtw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
- bulkscore=0 spamscore=0 impostorscore=0 phishscore=0 clxscore=1015
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606290109
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1782739177164
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,53 +63,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RnJvbTogQnJpYW4gQ2FpbiA8YmNhaW5AcXVpY2luYy5jb20+CgpSZXZpZXdlZC1ieTogVGF5bG9y
-IFNpbXBzb24gPGx0YXlsb3JzaW1wc29uQGdtYWlsLmNvbT4KUmV2aWV3ZWQtYnk6IFBoaWxpcHBl
-IE1hdGhpZXUtRGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9yZz4KUmV2aWV3ZWQtYnk6IFJpY2hhcmQg
-SGVuZGVyc29uIDxyaWNoYXJkLmhlbmRlcnNvbkBsaW5hcm8ub3JnPgpTaWduZWQtb2ZmLWJ5OiBC
-cmlhbiBDYWluIDxicmlhbi5jYWluQG9zcy5xdWFsY29tbS5jb20+Ci0tLQogdGFyZ2V0L2hleGFn
-b24vaW50ZXJuYWwuaCB8ICA0ICsrKysKIHRhcmdldC9oZXhhZ29uL2NwdS5jICAgICAgfCAgMyAr
-KysKIHRhcmdldC9oZXhhZ29uL21hY2hpbmUuYyAgfCAzMiArKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKwogMyBmaWxlcyBjaGFuZ2VkLCAzOSBpbnNlcnRpb25zKCspCiBjcmVhdGUgbW9k
-ZSAxMDA2NDQgdGFyZ2V0L2hleGFnb24vbWFjaGluZS5jCgpkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hl
-eGFnb24vaW50ZXJuYWwuaCBiL3RhcmdldC9oZXhhZ29uL2ludGVybmFsLmgKaW5kZXggNWZjODM3
-YWUyMjkuLmNkMDZmZjQxZDRmIDEwMDY0NAotLS0gYS90YXJnZXQvaGV4YWdvbi9pbnRlcm5hbC5o
-CisrKyBiL3RhcmdldC9oZXhhZ29uL2ludGVybmFsLmgKQEAgLTMxLDQgKzMxLDggQEAgdm9pZCBo
-ZXhhZ29uX2RlYnVnKENQVUhleGFnb25TdGF0ZSAqZW52KTsKIAogZXh0ZXJuIGNvbnN0IGNoYXIg
-KiBjb25zdCBoZXhhZ29uX3JlZ25hbWVzW1RPVEFMX1BFUl9USFJFQURfUkVHU107CiAKKyNpZm5k
-ZWYgQ09ORklHX1VTRVJfT05MWQorZXh0ZXJuIGNvbnN0IFZNU3RhdGVEZXNjcmlwdGlvbiB2bXN0
-YXRlX2hleGFnb25fY3B1OworI2VuZGlmCisKICNlbmRpZgpkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hl
-eGFnb24vY3B1LmMgYi90YXJnZXQvaGV4YWdvbi9jcHUuYwppbmRleCBkMzBlNWI2NGVhYy4uMzA1
-OTE5NmJjYWMgMTAwNjQ0Ci0tLSBhL3RhcmdldC9oZXhhZ29uL2NwdS5jCisrKyBiL3RhcmdldC9o
-ZXhhZ29uL2NwdS5jCkBAIC0zODIsNiArMzgyLDkgQEAgc3RhdGljIHZvaWQgaGV4YWdvbl9jcHVf
-Y2xhc3NfaW5pdChPYmplY3RDbGFzcyAqYywgY29uc3Qgdm9pZCAqZGF0YSkKICAgICBjYy0+Z2Ri
-X3N0b3BfYmVmb3JlX3dhdGNocG9pbnQgPSB0cnVlOwogICAgIGNjLT5nZGJfY29yZV94bWxfZmls
-ZSA9ICJoZXhhZ29uLWNvcmUueG1sIjsKICAgICBjYy0+ZGlzYXNfc2V0X2luZm8gPSBoZXhhZ29u
-X2NwdV9kaXNhc19zZXRfaW5mbzsKKyNpZm5kZWYgQ09ORklHX1VTRVJfT05MWQorICAgIGRjLT52
-bXNkID0gJnZtc3RhdGVfaGV4YWdvbl9jcHU7CisjZW5kaWYKICAgICBjYy0+dGNnX29wcyA9ICZo
-ZXhhZ29uX3RjZ19vcHM7CiB9CiAKZGlmZiAtLWdpdCBhL3RhcmdldC9oZXhhZ29uL21hY2hpbmUu
-YyBiL3RhcmdldC9oZXhhZ29uL21hY2hpbmUuYwpuZXcgZmlsZSBtb2RlIDEwMDY0NAppbmRleCAw
-MDAwMDAwMDAwMC4uMmRkOTU0NjZlN2QKLS0tIC9kZXYvbnVsbAorKysgYi90YXJnZXQvaGV4YWdv
-bi9tYWNoaW5lLmMKQEAgLTAsMCArMSwzMiBAQAorLyoKKyAqIENvcHlyaWdodCAoYykgUXVhbGNv
-bW0gVGVjaG5vbG9naWVzLCBJbmMuIGFuZC9vciBpdHMgc3Vic2lkaWFyaWVzLgorICoKKyAqIFNQ
-RFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wLW9yLWxhdGVyCisgKi8KKworI2luY2x1ZGUg
-InFlbXUvb3NkZXAuaCIKKyNpbmNsdWRlICJtaWdyYXRpb24vdm1zdGF0ZS5oIgorI2luY2x1ZGUg
-ImNwdS5oIgorCitjb25zdCBWTVN0YXRlRGVzY3JpcHRpb24gdm1zdGF0ZV9oZXhhZ29uX2NwdSA9
-IHsKKyAgICAubmFtZSA9ICJjcHUiLAorICAgIC52ZXJzaW9uX2lkID0gMSwKKyAgICAubWluaW11
-bV92ZXJzaW9uX2lkID0gMSwKKyAgICAuZmllbGRzID0gKGNvbnN0IFZNU3RhdGVGaWVsZFtdKSB7
-CisgICAgICAgIFZNU1RBVEVfVUlOVDMyX0FSUkFZKGVudi5ncHIsIEhleGFnb25DUFUsIFRPVEFM
-X1BFUl9USFJFQURfUkVHUyksCisgICAgICAgIFZNU1RBVEVfVUlOVDMyX0FSUkFZKGVudi5wcmVk
-LCBIZXhhZ29uQ1BVLCBOVU1fUFJFR1MpLAorICAgICAgICBWTVNUQVRFX1VJTlQzMl9BUlJBWShl
-bnYudF9zcmVnLCBIZXhhZ29uQ1BVLCBOVU1fU1JFR1MpLAorICAgICAgICBWTVNUQVRFX1VJTlQz
-Ml9BUlJBWShlbnYuZ3JlZywgSGV4YWdvbkNQVSwgTlVNX0dSRUdTKSwKKyAgICAgICAgVk1TVEFU
-RV9VSU5UMzIoZW52Lm5leHRfUEMsIEhleGFnb25DUFUpLAorICAgICAgICBWTVNUQVRFX1VJTlQz
-MihlbnYudGxiX2xvY2tfc3RhdGUsIEhleGFnb25DUFUpLAorICAgICAgICBWTVNUQVRFX1VJTlQz
-MihlbnYuazBfbG9ja19zdGF0ZSwgSGV4YWdvbkNQVSksCisgICAgICAgIFZNU1RBVEVfVUlOVDMy
-KGVudi50bGJfbG9ja19jb3VudCwgSGV4YWdvbkNQVSksCisgICAgICAgIFZNU1RBVEVfVUlOVDMy
-KGVudi5rMF9sb2NrX2NvdW50LCBIZXhhZ29uQ1BVKSwKKyAgICAgICAgVk1TVEFURV9VSU5UMzIo
-ZW52LnRocmVhZElkLCBIZXhhZ29uQ1BVKSwKKyAgICAgICAgVk1TVEFURV9VSU5UMzIoZW52LmNh
-dXNlX2NvZGUsIEhleGFnb25DUFUpLAorICAgICAgICBWTVNUQVRFX1VJTlQzMihlbnYud2FpdF9u
-ZXh0X3BjLCBIZXhhZ29uQ1BVKSwKKyAgICAgICAgVk1TVEFURV9VSU5UNjQoZW52LnRfY3ljbGVf
-Y291bnQsIEhleGFnb25DUFUpLAorCisgICAgICAgIFZNU1RBVEVfRU5EX09GX0xJU1QoKQorICAg
-IH0sCit9OwotLSAKMi4zNC4xCgo=
+Am 12.05.26 um 5:23 PM schrieb Fiona Ebner:
+> Hi Hanna,
+> 
+> Am 08.05.26 um 3:11 PM schrieb Hanna Czenczek:
+>> On 08.05.26 15:06, Hanna Czenczek wrote:
+>>> On 08.05.26 13:55, Fiona Ebner wrote:
+>>>> Dear maintainers,
+>>>>
+>>>> Am 10.03.26 um 6:37 PM schrieb Kevin Wolf:
+>>>>> From: Hanna Czenczek <hreitz@redhat.com>
+>>>>>
+>>>>> Manually read requests from the /dev/fuse FD and process them, without
+>>>>> using libfuse.  This allows us to safely add parallel request
+>>>>> processing
+>>>>> in coroutines later, without having to worry about libfuse internals.
+>>>>> (Technically, we already have exactly that problem with
+>>>>> read_from_fuse_export()/read_from_fuse_fd() nesting.)
+>>>>>
+>>>>> We will continue to use libfuse for mounting the filesystem;
+>>>>> fusermount3
+>>>>> is a effectively a helper program of libfuse, so it should know best
+>>>>> how
+>>>>> to interact with it.  (Doing it manually without libfuse, while doable,
+>>>>> is a bit of a pain, and it is not clear to me how stable the "protocol"
+>>>>> actually is.)
+>>>>>
+>>>>> Take this opportunity of quite a major rewrite to update the Copyright
+>>>>> line with corrected information that has surfaced in the meantime.
+>>>>
+>>>> a colleague ran into another issue with a fuse export, this time in
+>>>> combination with virt-fw-vars and bisecting points to this patch.
+>>>> Before commit a94a1d7699 ("fuse: Manually process requests (without
+>>>> libfuse)") the reproducer [0] completes successfully, after that
+>>>> commit it hangs at [1]. The issue is still present with current
+>>>> master. I can dig into the details next week.
+>>>
+>>> On my system, virt-fw-vars opens the file with O_TRUNC (after “INFO:
+>>> writing raw edk2 varstore...”). It then tries to write to the file,
+>>> but this returns a short write because the export is not marked as
+>>> growable, and for some reason, the write is infinitely retried instead
+>>> of aborting on ret=0 (which should indicate ENOSPC for writes).
+>>>
+>>> Using growable=true makes it work.  (For me :))
+>>>
+>>> For some reason, before said commit, libfuse just did not pass that
+>>> truncate on. I’ll look into why exactly, but so far I would say the
+>>> FUSE export behavior is as I would expect it.
+>>
+>> Ah, I see. libfuse sets FUSE_CAP_ATOMIC_O_TRUNC, which has O_TRUNC be
+>> passed on as an open option, but the old export code just ignored all
+>> open options.
+>>
+>> The new code does not set that option, so O_TRUNC is executed as an
+>> explicit truncate by the kernel, which then *is* executed.
+> 
+> thank you for digging into it!
+> 
+>> I’m not entirely sure how we should handle it. There is a case to be
+>> made that with growable=off, it may make sense to ignore O_TRUNC (which
+>> requires turning on FUSE_CAP_ATOMIC_O_TRUNC again and then continue to
+>> ignore it). But on the other hand, O_TRUNC is O_TRUNC, and growable=off
+>> does not explicitly mean “please behave as much as a block device as
+>> possible”.
+>>
+>> What do you suggest?
+> 
+> It turns out that the missing FUSE_ATOMIC_O_TRUNC flag also regresses
+> exports from block devices, making open() with O_TRUNC fail with
+> EOPNOTSUPP [0], which worked before. Intuitively to me, growable=off
+> feels like it should imply "shrinkable=off" as well.
+> 
+> My suggestions would be one of the following, with a preference for 2.:
+> 
+> 1. Always set FUSE_ATOMIC_O_TRUNC
+> 
+>   Most backwards compatible. There is the issue that O_TRUNC does not
+>   apply when it's actually a file, which is surprising.
+> 
+> 2. Set FUSE_ATOMIC_O_TRUNC if growable=off
+> 
+>   Feels natural to me. People using growable=on with block device based
+>   exports are still affected by the change in behavior.
+> 
+> 3. Set FUSE_ATOMIC_O_TRUNC if driver not file-based
+> 
+>   What should be the exact condition to consider the driver
+>   not file-based? Here, O_TRUNC for a growable=off file-based export
+>   does apply, which feels surprising to me. Continues breaking the use
+>   I reported this issue for, requiring using growable=on in such cases.
+> 
+> 4. Set FUSE_ATOMIC_O_TRUNC if growable=off or if driver not file-based
+> 
+>   Similar to 2., but reduces cases affected by the change in behavior.
+
+Should I go for approach number 2 or do you prefer another one?
+
+> 
+> Best Regards,
+> Fiona
+> 
+> [0]:
+> 
+>> #!/bin/bash
+>>
+>> rm /tmp/export.fuse
+>> lvremove lvm/test
+>>
+>> touch /tmp/export.fuse
+>> lvcreate -n test --size 1M lvm
+>>
+>> (
+>> ./storage-daemon/qemu-storage-daemon \
+>>     --blockdev raw,node-name=node0,file.driver=host_device,file.filename=/dev/lvm/test \
+>>     --export fuse,id=exp0,mountpoint=/tmp/export.fuse,node-name=node0,writable=true \
+>>     --chardev socket,id=qmp,path=/run/qsd.qmp,server=on,wait=off \
+>>     --monitor chardev=qmp,mode=control
+>> ) &
+>>
+>> sleep 1 # too lazy to do proper synchronization for the reproducer here
+>>
+>> python3 -c 'open("/tmp/export.fuse", "wb")'
+>> echo '{"execute": "qmp_capabilities"}{"execute": "quit"}' | socat - /run/qsd.qmp
+
+
 
