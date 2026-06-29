@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9404C43602
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC8E8C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:38:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weCBR-0000fe-8S; Mon, 29 Jun 2026 09:37:57 -0400
+	id 1weCC0-0001Kr-QU; Mon, 29 Jun 2026 09:38:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <75893c058b21d87d1ec66bbd4e8bf84e1fd616d1@kylie.crudebyte.com>)
- id 1weCBP-0000f4-N6; Mon, 29 Jun 2026 09:37:55 -0400
+ (envelope-from <4b615eaa1be4a54fb677c302e1a86fe09a94aecd@kylie.crudebyte.com>)
+ id 1weCBz-00017V-5O; Mon, 29 Jun 2026 09:38:31 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <75893c058b21d87d1ec66bbd4e8bf84e1fd616d1@kylie.crudebyte.com>)
- id 1weCBO-0003j1-54; Mon, 29 Jun 2026 09:37:55 -0400
+ (envelope-from <4b615eaa1be4a54fb677c302e1a86fe09a94aecd@kylie.crudebyte.com>)
+ id 1weCBw-0003s1-4J; Mon, 29 Jun 2026 09:38:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-ID:Content-Type:
- Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
- Content-Description; bh=gk0GupwaFHhZm5Es0fllYcuI2CT/UCNdx7u0syNCmNg=; b=WzkHj
- OSl87M8cUydCGsDMmuSi7MxkHmutNeBzUqt4jqR57G1c5T4D8j1l0Dr5I6BiWzNLYSe9Qq8phj8fD
- CVZDzG3P7So0c0m6EyY574VNczL9hSawDbGjdVcQYXtCj09lDs6CzfKTzYRqrN+6SGOnLbQFhz5LK
- ag+xQyau2sJ3J48FJjW0EhRBo8IcQYYUBxEdx8dt7hlBOSK2NK4Zl6X+xamtqkl66JbsxifW7qm5/
- 8TSCbEEWYJYilLOQu67kcM1sXBEOVs79/21WACHEmeEBnuN5i3hsb/6Xp1H/ghs0a9N4jkj5LPWZh
- 64Z5DulFRBGs9SiWyO9+cKVxWOe3CQACvOZS8ncUZgyOgrduagj8AaKAMQkMg7TAcGoc7D6/j2vv9
- qQFzBPWeMHgB8UnyawlHvsKJOVUhNpIwePrbna43S73MiDRip/be/gmk6POH0RWNT37R55T130H4j
- 6YyB1ojZ1KFtDiuHcZa5WzZEQyeU3C5lDGb2bErQmBhequ9sGKgHI1+grYUjN13DDsePsgpd6y0IY
- SYf1Ht2QHwMbZa5NKsUJkZYtqoQtVaN2PC5KksyChQuyTRVsKiqKR+Mgic25DO86W7p5exYF/uglj
- kb69xSJOMRZRwMdQwK3r6z4F5PczEF/T2euyOzXPRjRvzUysrpDx8ZvIrUBR5Y=;
-Message-ID: <cover.1782739719.git.qemu_oss@crudebyte.com>
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=O1zLhq6mUlcxDD4gyURp+Ui17aiGUEOzm6zq3xQ5tDU=; b=NM8/O
+ qViVyKLLZMUDterdSrf4XU2HQOz0HrcKeZxiVpXaQWNCH4xv7FhaEAfGe7WSd/Wcq46snDz+orGAr
+ XO+rwSE2HWgHMnOb4CNR49/axZ72VPy4lPf3Z3ceyR9/hKE5RUO1Oniot6HY2w7RTxob6ipoVQFW4
+ lk+0iRqqVMvI4FfBQJCqBzlZQ8HX8G33dp+ZggoQCBvse2h4QVgDMw5AmkDY8y9KErVRRrpZRZg/B
+ yKdRxB7aq+52OYh9VhSMyYuIN9dJrQTMEyHj2SlWAPDWZW6qeskOtnbaiTv6qecwRSdtkwf4OD2Qe
+ JY3MxQn+6gi+YQHj+gzRe4Or7zNY9Edsl41ShMiFqrh3vKypc1nkPotjIavLS321ofZCGXq2XgsXZ
+ 98jjK3JJYlDfPYOr1TM8JtUhZO/9ymoH+PG97gu9k9aWfXjTh1k0S5mc+P7lCwqmINnIE/7WM7o7a
+ d5OGPbhED49plT9UFzaikx1+ctKNXLfGVMDzSASA0rsvdUIioyzJFC1QXMmPCH2ML5/1HrrKXJdYO
+ LDutkgfObc0cILuVNp8xCOVSW8/WaYyTz39+6VoMGtSSvfTSUFSUauWYQQQ2EnVZve0AhIXBXnQSu
+ Ekie2UqbHZ4XDdDhKCKR2ctmJiTNNGkqZMpvn4AgdqDXX3EUwjCbXDRjLvw+BE=;
+Message-ID: <4b615eaa1be4a54fb677c302e1a86fe09a94aecd.1782739719.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1782739719.git.qemu_oss@crudebyte.com>
+References: <cover.1782739719.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Mon, 29 Jun 2026 15:28:39 +0200
-Subject: [PULL 00/23] 9p queue 2026-06-29
+Subject: [PULL 05/23] hw/9pfs: add response_buffer_size transport callback
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>, Feifan Qian <bea1e@proton.me>,
- Stefano Stabellini <sstabellini@kernel.org>
+ Peter Maydell <peter.maydell@linaro.org>, Feifan Qian <bea1e@proton.me>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=75893c058b21d87d1ec66bbd4e8bf84e1fd616d1@kylie.crudebyte.com;
+ envelope-from=4b615eaa1be4a54fb677c302e1a86fe09a94aecd@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -65,68 +66,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 20553466cc47af6a8c95f665b601fce3c852e503:
+Add a new callback to the V9fsTransport interface that allows each transport
+to provide the real size of its current response buffer.
 
-  Merge tag 'pbouvier/pr/docs-20260626' of https://gitlab.com/p-b-o/qemu into staging (2026-06-27 23:28:35 -0400)
+This is needed for subsequent safety guards that will limit generated
+responses appropriately before trying to allocate, generate, and send a
+response to guest.
 
-are available in the Git repository at:
+This is especially required for request handlers that need to allocate
+dynamic and potentially large host memory for generating a response. These
+safety guards are mandatory to counter bad clients that try to trick server
+by supplying response buffers being smaller than the previously negotiated
+msize value.
 
-  https://github.com/cschoenebeck/qemu.git tags/pull-9p-20260629
+Link: https://lore.kernel.org/qemu-devel/703ed8ce4401c4550ef2cd99f30ab808665d6e85.1781287774.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+---
+ hw/9pfs/9p.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-for you to fetch changes up to 75893c058b21d87d1ec66bbd4e8bf84e1fd616d1:
+diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
+index d8f364fafd..1a309664f6 100644
+--- a/hw/9pfs/9p.h
++++ b/hw/9pfs/9p.h
+@@ -482,6 +482,7 @@ struct V9fsTransport {
+                                          unsigned int *pniov, size_t size);
+     void        (*push_and_notify)(V9fsPDU *pdu);
+     size_t      (*msize_limit)(V9fsState *s);
++    size_t      (*response_buffer_size)(V9fsPDU *pdu);
+ };
+ 
+ #endif
+-- 
+2.47.3
 
-  hw/9pfs/local: harden local_fid_fd() on FID types (2026-06-29 15:10:32 +0200)
-
-----------------------------------------------------------------
-9pfs changes:
-
-- Fix DoS via Treaddir (CVE-2026-9238).
-
-- Add xattr FID limit (CVE-2026-8348).
-
-- Fix union V9fsFidOpenState type confusion.
-
-----------------------------------------------------------------
-Christian Schoenebeck (23):
-      hw/9pfs: add msize_limit transport callback
-      9pfs/virtio: implement msize_limit callback
-      9pfs/xen: implement msize_limit callback
-      hw/9pfs: cap negotiated msize to transport limit
-      hw/9pfs: add response_buffer_size transport callback
-      9pfs/virtio: implement response_buffer_size callback
-      9pfs/xen: implement response_buffer_size callback
-      hw/9pfs: cap Treaddir allocation (CVE-2026-9238)
-      hw/9pfs: add xattr FID limit to prevent memory exhaustion
-      hw/9pfs: add max_xattr option
-      qemu-options: document 9pfs max_xattr option
-      tests/9p: add Tread / Rread test client functions
-      tests/9p: add Tclunk / Rclunk test client functions
-      tests/9p: add Txattrcreate / Rxattrcreate test client functions
-      hw/9pfs: enable xattr (mockup) support for synth fs driver
-      hw/9pfs: add xattr count query interface to fs synth driver
-      tests/9p: increase P9_MAX_SIZE for test client
-      tests/9p: add virtio_9p_add_synth_driver_args() test client function
-      tests/9p: add 3 xattr FID limit test cases (synth fs driver)
-      tests/9p: add 3 xattr FID limit test cases (local fs driver)
-      hw/9pfs: fix invalid union access by v9fs_co_fsync()
-      hw/9pfs: fix invalid union access by v9fs_co_fstat()
-      hw/9pfs/local: harden local_fid_fd() on FID types
-
- fsdev/file-op-9p.h                    |  11 ++
- fsdev/qemu-fsdev-opts.c               |   6 +
- fsdev/qemu-fsdev.c                    |   2 +-
- hw/9pfs/9p-local.c                    |  14 +-
- hw/9pfs/9p-synth.c                    |  51 ++++++-
- hw/9pfs/9p.c                          | 113 ++++++++++++++-
- hw/9pfs/9p.h                          |   2 +
- hw/9pfs/virtio-9p-device.c            |  17 +++
- hw/9pfs/xen-9p-backend.c              |  31 ++++
- qemu-options.hx                       |  28 ++--
- system/vl.c                           |   7 +-
- tests/qtest/libqos/virtio-9p-client.c | 124 ++++++++++++++++
- tests/qtest/libqos/virtio-9p-client.h |  88 +++++++++++-
- tests/qtest/libqos/virtio-9p.c        |   6 +
- tests/qtest/libqos/virtio-9p.h        |   6 +
- tests/qtest/virtio-9p-test.c          | 262 +++++++++++++++++++++++++++++++++-
- 16 files changed, 746 insertions(+), 22 deletions(-)
 
