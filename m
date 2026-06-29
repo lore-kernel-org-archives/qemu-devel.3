@@ -4,62 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35F78C43602
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:14:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93109C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:15:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weBna-0004ax-Ow; Mon, 29 Jun 2026 09:13:19 -0400
+	id 1weBnF-0004Lv-OI; Mon, 29 Jun 2026 09:12:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1weBnY-0004ZZ-Hu
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 09:13:16 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1weBnD-0004L7-Fa
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 09:12:55 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1weBnU-0003CF-Bb
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 09:13:16 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65TDD50i078765
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 29 Jun 2026 22:13:05 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=b0kGlyV3rUK5bAvtdPhdmMGBj2pWS94NAqeNMalkqDM=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1782738785; v=1;
- b=qbrq6cVBVXvWDZ51ucQt0ne4w42GnCZtsGNmTrCS82MPB572OY6TR/tiNLJOzpE1
- XUeljBxtu08HHf11l22lRKzqATw3Sarz7v9D1jFKW3D3IfqbTPg5jiqUfnzFpH/J
- PD94adZnI9lcXBDEgNJPihlmZD/OrKWPV9ddPCZNRd+j/NlQdELVeSjZLUKUwQbP
- HeT0vG/ftB4HApDGnCU57Ks9/RNJy1ck2hrHgUyUDKxW6VravCEBZ57i1+T05rXI
- +NfoVq8hGcRxuWuUt/SB5cQXZzOdOEE3kY4Tgxa5hbLq8Ami1416mVNVGtKwEXSo
- Pd1sOpd81rgwAqDA7lHpIA==
-Message-ID: <470d9fc7-0a54-46b9-a1b9-4428b341b823@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 29 Jun 2026 22:13:05 +0900
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1weBnB-0003AT-HA
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 09:12:55 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65TATKdT2656133
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 13:12:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 3PJq1TG0I8TU78Tf0jGrc0eZLiVvKT6OxHA758wVFTs=; b=aeQI7omgk4psQU1v
+ dklo1ZY8aTrlQ1yNluyHu1iUG1BwOvRDFdBgxUcPX0lUkTO+HFRo4V0i+fZVprGz
+ KFE2vtakLYTBunxbnCFsSfZbu5GJivAgpIyuCu9YtfOG/R/Mr9clOSvI9SfbHQEz
+ 1YPe4Tvq+V+l2w8Dujtei9LAQQGqVtsq0widppa8BN1QMFAb+oNEWVFSiRdsI0eV
+ kaWlKGHY6McBVfXVs0qSbhB6qszH559DFi7K4W5Ykc1HOzLhNvPQMfozVY+dmPfW
+ YeiDW9c7mY0t3hNte2KbxB3vraXyPDTvSjhp9mv9nE8YxlK9+gclwwQnCyIwUFZK
+ R/RGLA==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3np7gxqs-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 13:12:52 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id
+ a92af1059eb24-139871a52c2so4634529c88.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 06:12:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1782738772; x=1783343572; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3PJq1TG0I8TU78Tf0jGrc0eZLiVvKT6OxHA758wVFTs=;
+ b=Hs/sSJq/EqUPASyeUA59GB2HNYLS9pD69sgDF5mGrr101qVA5XLhTH+b1EQF0jKeok
+ dtm6/Zs2h/DvdZMP2d9nVwOFt9TInezUhpXynjnVFMJJk278LbscB3DlmEu/p1Nc2XM5
+ n9SOC+XxkrsPrADC95r9Bhwga8sz1boFAoOukxUUyp5bwnMeic0YtvsDQyxQ0bNsMDsV
+ G253rBriETIuNBXCnLlPHKza07PmsCM3vwhLturwH2jzl9mAyTHTfJjGizf5ANCB2LkN
+ p41GNePBp8XORLol8GXD+cfz1E4pf6eD+QJttHlReuYWr8QJ6Jpa2PQwbkSi3B5o4bfx
+ 7KbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782738772; x=1783343572;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3PJq1TG0I8TU78Tf0jGrc0eZLiVvKT6OxHA758wVFTs=;
+ b=fvz8sl9Y+67TpsE09xK1ZbwPJBd9BdOYUBWLO7/JcWt4RGTt04vGLqifvxl0RUPbEx
+ 3FGxUiReLpiq38SA5V+CP8nzzo6ZovEYdBvIA8pVdf57pC2grqXvfWod4oeNF0J8lGHz
+ g++yfGWvg03GkkoMd7PC8IKCUCA/3p40MZLltx0pPpITyhgQkrcRyMYQT7SoIKI1x1Am
+ gWV8yJLj8ZnK9IZPxkM0Fo5m6WyNyDURgzSR00LQVNTY9dWIIvklOGhtO4RMFSGcSig/
+ 7TpwSYTUozAEsw87ygkFWZO+znlsbjw7OsVDrSWcWrYlV/+Bofj0ipGU3bVxLPBIammn
+ RKGQ==
+X-Gm-Message-State: AOJu0YwpJ7J8IzfSfeFnGcV6pRmon0v6zqJnIkVF/vayQG560GCz0nim
+ 3uWkfsIVHA8eAeyOc944yYoLifkqpZOYIRgYQXT8mADG18pxDBTWYH/Rf8BE5ws3XMz2cSL4QBP
+ Klfku7MrTfDCASyLHtNhpi4pa5yB8Z5MI49jBnaH2tpjc/I2DtBhmAwOYl4ssl9RpZQ==
+X-Gm-Gg: AfdE7cmmbqIPB79B1EyFq8MRdzv7dnKaFfwprnzldADBFp5LdgvhgZNDyJPYSKy+4AF
+ 5Rj1EvD8kqbZL8lu5KYEnEwS0mJ+/dm5jkziHwQtjAv8FOTfj6O/bQol+chWoG7zY+oIlA8BTjP
+ hwSiiDzeKLENiCEFVTt4X1KmEo8ztJhLmWkRcSdubh7v470PTKwwnlGB9KHfl0YWD4Zr3qXzj/m
+ NeKS2yqlO/EQLGtVcvrBd4JVxVS6OoEOGLgiNtQKHe3dgWkIsQ27Ogsz/czDwSll94n2y7WGnqs
+ e086+xwqc98Fk5mkCzRfkLkrsgNs3jYNagmPkOAkGurD0sX/bIA3YzC9vxtQk8GHT+vihqyGVqd
+ zDm6Mqn0F1VQC0AtJ40jdrDCHbozZ6MpiN21Bfs73YthsJ7qW5MR/Ak4LXc0=
+X-Received: by 2002:a05:7022:48:b0:139:ed5d:5c9f with SMTP id
+ a92af1059eb24-139ed5d5d5dmr6287028c88.40.1782738771460; 
+ Mon, 29 Jun 2026 06:12:51 -0700 (PDT)
+X-Received: by 2002:a05:7022:48:b0:139:ed5d:5c9f with SMTP id
+ a92af1059eb24-139ed5d5d5dmr6287000c88.40.1782738770723; 
+ Mon, 29 Jun 2026 06:12:50 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-139e78317f3sm28459106c88.9.2026.06.29.06.12.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Jun 2026 06:12:49 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org, stefanha@redhat.com, peter.maydell@linaro.org
+Cc: brian.cain@oss.qualcomm.com, Brian Cain <bcain@quicinc.com>,
+ Taylor Simpson <ltaylorsimpson@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL v5 09/77] target/hexagon: Handle system/guest registers in
+ gen_analyze_funcs.py and hex_common.py
+Date: Mon, 29 Jun 2026 06:11:24 -0700
+Message-Id: <20260629131232.2487780-10-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260629131232.2487780-1-brian.cain@oss.qualcomm.com>
+References: <20260629131232.2487780-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] ui/gtk: Narrow DMA-BUF critical section
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20260628-gtk-v2-1-1e4839012f09@rsg.ci.i.u-tokyo.ac.jp>
- <CAMxuvaxrGgD7EAwWdGG0BZgiyXPNrExExTVnANr6M2gw5+DzNQ@mail.gmail.com>
- <b57f9a79-f48d-4fab-a70f-e26f26fcfcbf@rsg.ci.i.u-tokyo.ac.jp>
- <CAJ+F1CJoSn9qaA4JtNz1c3ZoAUJP1dPk58AOF-sQbf-t_YqKTA@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CAJ+F1CJoSn9qaA4JtNz1c3ZoAUJP1dPk58AOF-sQbf-t_YqKTA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDEwOSBTYWx0ZWRfX84DlwPB9pzU+
+ GRQ9fCOc+LXndEbE4uD3Tcc5d7xoP92bKVdQ3OD8zThNxYIzKr6lB06c/gKqt5fdDQHRMcZSTgx
+ rA0PVFs6jDr+sPZBokBlUr4X4qSKz7YYCiSRH7mlWTup+vIlNzN4OybcV73azVo0lMwd0tqgV5G
+ Wr+tWG6zEj4MBVmnjv7H7NNfDFvBOHNA05B22dpM8S0r4j8TCEYqrBpD/+bq/VeEWE0euCwnypc
+ GNkJFeoyST1100Y9NiVVZKcyDv9eavLBDNNuvUrMLZZAfNRRWIOKcJqkMz/hlmXQVH/KO9Te3TB
+ IfbLyASxhLPojQYdPHiXEPCTCYO25ZNickTyzHHxvzfdiMwNmn5EH5tqAc5Map5UcDie7zRlp7I
+ vjtFg62gAD4oXEPguRIToxhypFs08wB+lM8/YSxZGvVyWJOaDsc+igCe2+nl98nJjFZWrBMuu8p
+ 5HwLwIEpDmx6r8XLpzA==
+X-Proofpoint-GUID: rpxZYRsU9Qv1_RS5HhpHOp7Uco9ATNm4
+X-Proofpoint-ORIG-GUID: rpxZYRsU9Qv1_RS5HhpHOp7Uco9ATNm4
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDEwOSBTYWx0ZWRfX6SjXlMly7hjH
+ X9KhqGLEsBunlme+ybkCvaRmFR2aHgK6dRFNc4y/arrJib1pT8zmZGrpXXZtKBGA0Y8udiltEoi
+ HY/CD666NAWOepkzDMyL5LfnGM4zNu4=
+X-Authority-Analysis: v=2.4 cv=OcWoyBTY c=1 sm=1 tr=0 ts=6a426f54 cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=-IRm0M9p1sl727KxlF4A:9
+ a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-29_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 clxscore=1015 phishscore=0
+ bulkscore=0 suspectscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290109
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,211 +151,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/06/29 21:46, Marc-André Lureau wrote:
-> Hi
-> 
-> On Mon, Jun 29, 2026 at 4:24 PM Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> On 2026/06/29 18:20, Marc-André Lureau wrote:
->>> Hi Akihiko
->>>
->>> On Sun, Jun 28, 2026 at 5:59 PM Akihiko Odaki
->>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>>>
->>>> Scanout operations need to be properly ordered to avoid tearing. The
->>>> virtio specification allows the guest to use pageflip. With pageflip,
->>>> the guest only modifies the invisible framebuffer while the host scans
->>>> out the visible framebuffer. The guest may choose not to use pageflip to
->>>> avoid its overhead, accepting the risk of tearing.
->>>>
->>>> ui/gtk performs the following procedure to flush a scanout:
->>>> 1) Queue a draw event.
->>>> 2) The draw event gets triggered.
->>>> 3) Blit the guest framebuffer to the host framebuffer.
->>>>
->>>> When flushing a DMA-BUF scanout, ui/gtk blocks the device before 2) if
->>>> possible and unblocks it after 3) to enforce proper ordering. However,
->>>> blocking the device before 2) has two problems.
->>>>
->>>> First, it can leave the device blocked indefinitely because GTK
->>>> sometimes decides to cancel 2) when the window is not visible for
->>>> example. ui/gtk regularly repeats 1) as a workaround, but it is not
->>>> applicable to GtkGLArea because it causes display corruption.
->>>>
->>>> Second, the behavior is inconsistent with the other types of scanout
->>>> that leave the device unblocked between 1) and 2).
->>>>
->>>> To fix these problems, let ui/gtk block the device only when the
->>>> queued draw event runs, immediately before 3). Blocking before that is
->>>> unnecessary since ui/gtk does not access the framebuffer yet. If the
->>>> guest does not use pageflip but instead updates the visible framebuffer
->>>> directly, ui/gtk should not add the overhead of a pre-draw block.
->>>>
->>>
->>> Are you saying this won't create undesired drawing artefacts?
->>>
->>> I don't see how the guest synchronizes with the display if the gl cmds
->>> keep running.
->>
->> The point of pageflip is to avoid drawing artifacts when scanout and
->> rendering can happen concurrently. The virtio-gpu spec adopts that
->> model: the guest can switch the scanout resource with
->> VIRTIO_GPU_CMD_SET_SCANOUT instead of rendering into the resource
->> currently being scanned out.
->>
->> So, if a guest chooses not to use pageflip on a system where scanout and
->> rendering run concurrently, it can get artifacts. This change does not
->> try to make that case artifact-free.
->>
->> What this patch is trying to preserve is the display model already used
->> by the 2D code and by the other display implementations: QEMU keeps the
->> framebuffer stable while it is actually reading/blitting it. The extra
->> blocking before the queued draw callback runs does not add
->> synchronization for that model, because ui/gtk is not accessing the
->> framebuffer yet.
-> 
-> I am missing some pieces to understand how the guest will be fenced.
-> How does qemu say: "I have consumed the resource (for the
-> flush/display), you can reuse it"?
-
-By blocking VIRTIO_GPU_CMD_SET_SCANOUT: once that command completes, the 
-previous scanout resource is no longer the visible one from the guest's 
-point of view.
-
-While GTK is actually blitting the current DMA-BUF, QEMU sets 
-renderer_blocked. That stops the virtio-gpu command queue, so a guest's 
-next SET_SCANOUT cannot be processed until the blit has finished and the 
-UI unblocks the device.
-
-So the ordering is:
-
-1. QEMU starts consuming scanout A and blocks the renderer.
-2. The guest may submit SET_SCANOUT for scanout B, but QEMU does not
-    complete it yet.
-3. QEMU finishes consuming A and unblocks the renderer.
-4. SET_SCANOUT(B) can complete; at that point the guest may reuse A.
-
-A guest that renders directly into the current scanout still can tear, 
-but a pageflipping guest gets the reuse point from SET_SCANOUT completion.
-
-Regards,
-Akihiko Odaki
-
-> 
->>
->> Regards,
->> Akihiko Odaki
->>
->>>
->>>> ui/gtk still blocks the device during 3) for DMA-BUF. Unlike the other
->>>> scanout types, 3) can happen asynchronously with the device for a
->>>> DMA-BUF, so ui/gtk needs to keep the visible guest framebuffer stable
->>>> for the blit.
->>>>
->>>> With the problems fixed, the workaround to repeat 1) is no longer
->>>> necessary and is removed.
->>>>
->>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>> ---
->>>> Changes in v2:
->>>> - Clarified that guests can use pageflip to avoid tearing while ui/gtk
->>>>     only needs to keep the DMA-BUF stable during the blit.
->>>> - Avoided the unprotected gd_egl_scanout_flush() fallback by queuing
->>>>     redraws through gtk_widget_queue_draw_area().
->>>> - Link to v1: https://lore.kernel.org/qemu-devel/20260115-gtk-v1-1-57f49e856408@rsg.ci.i.u-tokyo.ac.jp
->>>> ---
->>>>    ui/gtk-egl.c     |  6 ++----
->>>>    ui/gtk-gl-area.c | 23 +----------------------
->>>>    2 files changed, 3 insertions(+), 26 deletions(-)
->>>>
->>>> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
->>>> index 7c5c9b2428c2..adc81f34b1c8 100644
->>>> --- a/ui/gtk-egl.c
->>>> +++ b/ui/gtk-egl.c
->>>> @@ -91,6 +91,7 @@ void gd_egl_draw(VirtualConsole *vc)
->>>>                } else {
->>>>                    qemu_dmabuf_set_draw_submitted(dmabuf, false);
->>>>                }
->>>> +            qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
->>>>            }
->>>>    #endif
->>>>            gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0, vc->gfx.w, vc->gfx.h);
->>>> @@ -405,14 +406,11 @@ void gd_egl_flush(DisplayChangeListener *dcl,
->>>>
->>>>        if (vc->gfx.guest_fb.dmabuf &&
->>>>            !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
->>>> -        qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
->>>>            qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
->>>>            gtk_egl_set_scanout_mode(vc, true);
->>>> -        gtk_widget_queue_draw_area(area, x, y, w, h);
->>>> -        return;
->>>>        }
->>>>
->>>> -    gd_egl_scanout_flush(&vc->gfx.dcl, x, y, w, h);
->>>> +    gtk_widget_queue_draw_area(area, x, y, w, h);
->>>>    }
->>>>
->>>>    void gtk_egl_init(DisplayGLMode mode)
->>>> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
->>>> index 23806b9d01bb..29497019ee46 100644
->>>> --- a/ui/gtk-gl-area.c
->>>> +++ b/ui/gtk-gl-area.c
->>>> @@ -86,6 +86,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
->>>>                } else {
->>>>                    qemu_dmabuf_set_draw_submitted(dmabuf, false);
->>>>                }
->>>> +            qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
->>>>            }
->>>>    #endif
->>>>
->>>> @@ -163,27 +164,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
->>>>
->>>>        gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx.drawing_area);
->>>>
->>>> -    if (vc->gfx.guest_fb.dmabuf &&
->>>> -        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
->>>> -        /*
->>>> -         * gd_egl_refresh() calls gd_egl_draw() if a DMA-BUF draw has already
->>>> -         * been submitted, but this function does not call gd_gl_area_draw() in
->>>> -         * such a case due to display corruption.
->>>> -         *
->>>> -         * Calling gd_gl_area_draw() is necessary to prevent a situation where
->>>> -         * there is a scheduled draw event but it won't happen bacause the window
->>>> -         * is currently in inactive state (minimized or tabified). If draw is not
->>>> -         * done for a long time, gl_block timeout and/or fence timeout (on the
->>>> -         * guest) will happen eventually.
->>>> -         *
->>>> -         * However, it is found that calling gd_gl_area_draw() here causes guest
->>>> -         * display corruption on a Wayland Compositor. The display corruption is
->>>> -         * more serious than the possible fence timeout so gd_gl_area_draw() is
->>>> -         * omitted for now.
->>>> -         */
->>>> -        return;
->>>> -    }
->>>> -
->>>>        if (!vc->gfx.gls) {
->>>>            if (!gtk_widget_get_realized(vc->gfx.drawing_area)) {
->>>>                return;
->>>> @@ -347,7 +327,6 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
->>>>
->>>>        if (vc->gfx.guest_fb.dmabuf &&
->>>>            !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
->>>> -        qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
->>>>            qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
->>>>            gtk_gl_area_set_scanout_mode(vc, true);
->>>>        }
->>>>
->>>> ---
->>>> base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
->>>> change-id: 20260115-gtk-424c2b910e65
->>>>
->>>> Best regards,
->>>> --
->>>> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>
->>>
->>
->>
-
+RnJvbTogQnJpYW4gQ2FpbiA8YmNhaW5AcXVpY2luYy5jb20+CgpBZGQgcmVnaXN0ZXIgY2xhc3Nl
+cyBmb3IgZ3Vlc3QgKEcpIGFuZCBzeXN0ZW0gKFMpIHJlZ2lzdGVycyB0bwpoZXhfY29tbW9uLnB5
+LCBhbmQgdXBkYXRlIGdlbl9hbmFseXplX2Z1bmNzLnB5IHRvIGhhbmRsZSB0aGVtLgoKR3Vlc3Qg
+YW5kIHN5c3RlbSByZWdpc3RlcnMgY2FuIG9ubHkgYXBwZWFyIG9uY2UgcGVyIHBhY2tldCAob25l
+CnRyYW5zZmVyIGluc3RydWN0aW9uIGVhY2gpLCBzbyB0aGVyZSBpcyBubyByZWFkLWFmdGVyLXdy
+aXRlIGhhemFyZAp0byBkZXRlY3QgZHVyaW5nIHRoZSBhbmFseXplIHBoYXNlLiAgU291cmNlIGNs
+YXNzZXMgKEd1ZXN0U291cmNlLApHdWVzdFBhaXJTb3VyY2UsIFN5c3RlbVNvdXJjZSwgU3lzdGVt
+UGFpclNvdXJjZSkgcHJvdmlkZSBhIG5vLW9wCmFuYWx5emVfcmVhZCgpIHNpbmNlIHRoZXNlIHJl
+Z2lzdGVyIHJlYWRzIGRvIG5vdCBuZWVkIHRyYWNraW5nLgoKUmV2aWV3ZWQtYnk6IFRheWxvciBT
+aW1wc29uIDxsdGF5bG9yc2ltcHNvbkBnbWFpbC5jb20+ClNpZ25lZC1vZmYtYnk6IEJyaWFuIENh
+aW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4KLS0tCiB0YXJnZXQvaGV4YWdvbi9nZW5f
+YW5hbHl6ZV9mdW5jcy5weSB8ICAxNCArKy0KIHRhcmdldC9oZXhhZ29uL2hleF9jb21tb24ucHkg
+ICAgICAgIHwgMTUyICsrKysrKysrKysrKysrKysrKysrKysrKysrKysKIDIgZmlsZXMgY2hhbmdl
+ZCwgMTY0IGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvdGFyZ2V0
+L2hleGFnb24vZ2VuX2FuYWx5emVfZnVuY3MucHkgYi90YXJnZXQvaGV4YWdvbi9nZW5fYW5hbHl6
+ZV9mdW5jcy5weQppbmRleCBmZGVmZDViNGIzNi4uNDRiYjIyZWQ5MjcgMTAwNzU1Ci0tLSBhL3Rh
+cmdldC9oZXhhZ29uL2dlbl9hbmFseXplX2Z1bmNzLnB5CisrKyBiL3RhcmdldC9oZXhhZ29uL2dl
+bl9hbmFseXplX2Z1bmNzLnB5CkBAIC0yMiw3ICsyMiw2IEBACiBpbXBvcnQgc3RyaW5nCiBpbXBv
+cnQgaGV4X2NvbW1vbgogCi0KICMjCiAjIyBHZW5lcmF0ZSB0aGUgY29kZSB0byBhbmFseXplIHRo
+ZSBpbnN0cnVjdGlvbgogIyMgICAgIEZvciBBMl9hZGQ6IFJkMzI9YWRkKFJzMzIsUnQzMiksIHsg
+UmRWPVJzVitSdFY7fQpAQCAtNDIsNiArNDEsMTMgQEAgZGVmIGdlbl9hbmFseXplX2Z1bmMoZiwg
+dGFnLCByZWdzLCBpbW1zKToKICAgICBmLndyaXRlKGYic3RhdGljIHZvaWQgYW5hbHl6ZV97dGFn
+fShEaXNhc0NvbnRleHQgKmN0eClcbiIpCiAgICAgZi53cml0ZSgie1xuIikKIAorICAgIGlmIGhl
+eF9jb21tb24udGFnX2lnbm9yZSh0YWcpOgorICAgICAgICBmLndyaXRlKCJ9XG5cbiIpCisgICAg
+ICAgIHJldHVybgorCisgICAgaWYgaGV4X2NvbW1vbi5pc19zeXNlbXVfdGFnKHRhZyk6CisgICAg
+ICAgIGYud3JpdGUoIiNpZm5kZWYgQ09ORklHX1VTRVJfT05MWVxuIikKKwogICAgIGYud3JpdGUo
+IiAgICBJbnNuICppbnNuIEdfR05VQ19VTlVTRUQgPSBjdHgtPmluc247XG4iKQogICAgIGlmICho
+ZXhfY29tbW9uLmlzX2h2eF9pbnNuKHRhZykpOgogICAgICAgICBpZiBoZXhfY29tbW9uLmhhc19o
+dnhfaGVscGVyKHRhZyk6CkBAIC01OCw3ICs2NCw4IEBAIGRlZiBnZW5fYW5hbHl6ZV9mdW5jKGYs
+IHRhZywgcmVncywgaW1tcyk6CiAgICAgZm9yIHJlZ25vLCByZWdpc3RlciBpbiBlbnVtZXJhdGUo
+cmVncyk6CiAgICAgICAgIHJlZ190eXBlLCByZWdfaWQgPSByZWdpc3RlcgogICAgICAgICByZWcg
+PSBoZXhfY29tbW9uLmdldF9yZWdpc3Rlcih0YWcsIHJlZ190eXBlLCByZWdfaWQpCi0gICAgICAg
+IHJlZy5kZWNsX3JlZ19udW0oZiwgcmVnbm8pCisgICAgICAgIGlmIHJlZy5pc19yZWFkKCkgb3Ig
+cmVnLmlzX3dyaXR0ZW4oKToKKyAgICAgICAgICAgIHJlZy5kZWNsX3JlZ19udW0oZiwgcmVnbm8p
+CiAKICAgICAjIyBBbmFseXplIHRoZSByZWdpc3RlciByZWFkcwogICAgIGZvciByZWdubywgcmVn
+aXN0ZXIgaW4gZW51bWVyYXRlKHJlZ3MpOgpAQCAtNzgsNiArODUsOSBAQCBkZWYgZ2VuX2FuYWx5
+emVfZnVuYyhmLCB0YWcsIHJlZ3MsIGltbXMpOgogCiAgICAgZi53cml0ZSgiICAgIG1hcmtfaW1w
+bGljaXRfd3JpdGVzKGN0eCk7XG4iKQogCisgICAgaWYgaGV4X2NvbW1vbi5pc19zeXNlbXVfdGFn
+KHRhZyk6CisgICAgICAgIGYud3JpdGUoIiNlbmRpZiAvKiAhQ09ORklHX1VTRVJfT05MWSAqL1xu
+IikKKwogICAgIGYud3JpdGUoIn1cblxuIikKIAogCmRpZmYgLS1naXQgYS90YXJnZXQvaGV4YWdv
+bi9oZXhfY29tbW9uLnB5IGIvdGFyZ2V0L2hleGFnb24vaGV4X2NvbW1vbi5weQppbmRleCAyODBh
+ZWYwZGYzZi4uNzk0MzZlZTI5ZDcgMTAwNzU1Ci0tLSBhL3RhcmdldC9oZXhhZ29uL2hleF9jb21t
+b24ucHkKKysrIGIvdGFyZ2V0L2hleGFnb24vaGV4X2NvbW1vbi5weQpAQCAtMzMsNiArMzMsNDEg
+QEAKIG92ZXJyaWRlcyA9IHt9ICAjIHRhZ3Mgd2l0aCBoZWxwZXIgb3ZlcnJpZGVzCiBpZGVmX3Bh
+cnNlcl9lbmFibGVkID0ge30gICMgdGFncyBlbmFibGVkIGZvciBpZGVmLXBhcnNlcgogCisKK2Rl
+ZiBpc19zeXNlbXVfdGFnKHRhZyk6CisgICAgcmV0dXJuIGJvb2woYXR0cmliZGljdFt0YWddICYg
+eyJBX1BSSVYiLCAiQV9HVUVTVCJ9KQorCisKK2RlZiB0YWdfaWdub3JlKHRhZyk6CisgICAgdGFn
+X3NraXBzID0gKAorICAgICAgICAiWTZfZGlhZyIsCisgICAgICAgICJZNl9kaWFnMCIsCisgICAg
+ICAgICJZNl9kaWFnMSIsCisgICAgKQorICAgIGF0dHJfc2tpcHMgPSB7CisgICAgICAgICJBX0ZB
+S0VJTlNOIiwKKyAgICAgICAgIkFfTUFQUElORyIsCisgICAgICAgICJBX0NPTkRNQVBQSU5HIiwK
+KyAgICB9CisgICAgcmV0dXJuIHRhZyBpbiB0YWdfc2tpcHMgb3IgYXR0cmliZGljdFt0YWddICYg
+YXR0cl9za2lwcworCisKK2RlZiBnZXRfc3lzX3RhZ3MoKToKKyAgICByZXR1cm4gc29ydGVkKAor
+ICAgICAgICB0YWcgZm9yIHRhZyBpbiBmcm96ZW5zZXQodGFncykgaWYgaXNfc3lzZW11X3RhZyh0
+YWcpCisgICAgKQorCisKK2RlZiBnZXRfdXNlcl90YWdzKCk6CisgICAgcmV0dXJuIHNvcnRlZCgK
+KyAgICAgICAgdGFnIGZvciB0YWcgaW4gZnJvemVuc2V0KHRhZ3MpIGlmIG5vdCBpc19zeXNlbXVf
+dGFnKHRhZykKKyAgICApCisKKworZGVmIGdldF9hbGxfdGFncygpOgorICAgIHJldHVybiBnZXRf
+dXNlcl90YWdzKCkgKyBnZXRfc3lzX3RhZ3MoKQorCisKICMgV2Ugc2hvdWxkIGRvIHRoaXMgYXMg
+YSBoYXNoIGZvciBwZXJmb3JtYW5jZSwKICMgYnV0IHRvIGtlZXAgb3JkZXIgbGV0J3Mga2VlcCBp
+dCBhcyBhIGxpc3QuCiBkZWYgdW5pcXVpZnkoc2VxKToKQEAgLTM2OSwxMiArNDA0LDE2IEBAIGRl
+ZiBoZWxwZXJfcHJvdG9fdHlwZShzZWxmKToKICAgICAgICAgcmV0dXJuICJzMzIiCiAgICAgZGVm
+IGhlbHBlcl9hcmdfdHlwZShzZWxmKToKICAgICAgICAgcmV0dXJuICJpbnQzMl90IgorICAgIGRl
+ZiBpc19wYWlyKHNlbGYpOgorICAgICAgICByZXR1cm4gRmFsc2UKIAogY2xhc3MgUGFpcihTY2Fs
+YXIpOgogICAgIGRlZiBoZWxwZXJfcHJvdG9fdHlwZShzZWxmKToKICAgICAgICAgcmV0dXJuICJz
+NjQiCiAgICAgZGVmIGhlbHBlcl9hcmdfdHlwZShzZWxmKToKICAgICAgICAgcmV0dXJuICJpbnQ2
+NF90IgorICAgIGRlZiBpc19wYWlyKHNlbGYpOgorICAgICAgICByZXR1cm4gVHJ1ZQogCiBjbGFz
+cyBIdng6CiAgICAgZGVmIGlzX3NjYWxhcl9yZWcoc2VsZik6CkBAIC0xMDEwLDYgKzEwNDksMTA5
+IEBAIGRlZiBhbmFseXplX3dyaXRlKHNlbGYsIGYsIHRhZywgcmVnbm8pOgogICAgICAgICAgICAg
+Y3R4X2xvZ19xcmVnX3dyaXRlKGN0eCwge3NlbGYucmVnX251bX0sIGluc25faGFzX2h2eF9oZWxw
+ZXIpOwogICAgICAgICAiIiIpKQogCitjbGFzcyBHdWVzdFJlZ2lzdGVyKFJlZ2lzdGVyKToKKyAg
+ICBwYXNzCisKK2NsYXNzIEd1ZXN0RGVzdChHdWVzdFJlZ2lzdGVyLCBTaW5nbGUsIERlc3QpOgor
+ICAgIGRlZiBkZWNsX3RjZyhzZWxmLCBmLCB0YWcsIHJlZ25vKToKKyAgICAgICAgc2VsZi5kZWNs
+X3JlZ19udW0oZiwgcmVnbm8pCisgICAgICAgIGYud3JpdGUoY29kZV9mbXQoZiIiIlwKKyAgICAg
+ICAgICAgIFRDR3ZfaTMyIHtzZWxmLnJlZ190Y2coKX0gPSB0Y2dfdGVtcF9uZXdfaTMyKCk7Cisg
+ICAgICAgICIiIikpCisgICAgZGVmIGdlbl93cml0ZShzZWxmLCBmLCB0YWcpOgorICAgICAgICBm
+LndyaXRlKGNvZGVfZm10KGYiIiJcCisgICAgICAgICAgICBnZW5fbG9nX2dyZWdfd3JpdGUoY3R4
+LCB7c2VsZi5yZWdfbnVtfSwge3NlbGYucmVnX3RjZygpfSk7CisgICAgICAgICIiIikpCisgICAg
+ZGVmIGFuYWx5emVfd3JpdGUoc2VsZiwgZiwgdGFnLCByZWdubyk6CisgICAgICAgIGYud3JpdGUo
+Y29kZV9mbXQoZiIiIlwKKyAgICAgICAgICAgIGN0eF9sb2dfZ3JlZ193cml0ZShjdHgsIHtzZWxm
+LnJlZ19udW19KTsKKyAgICAgICAgIiIiKSkKKworY2xhc3MgR3Vlc3RTb3VyY2UoR3Vlc3RSZWdp
+c3RlciwgU2luZ2xlLCBPbGRTb3VyY2UpOgorICAgIGRlZiBkZWNsX3RjZyhzZWxmLCBmLCB0YWcs
+IHJlZ25vKToKKyAgICAgICAgc2VsZi5kZWNsX3JlZ19udW0oZiwgcmVnbm8pCisgICAgICAgIGYu
+d3JpdGUoY29kZV9mbXQoZiIiIlwKKyAgICAgICAgICAgIFRDR3ZfaTMyIHtzZWxmLnJlZ190Y2co
+KX0gPSB0Y2dfdGVtcF9uZXdfaTMyKCk7CisgICAgICAgICAgICBnZW5fcmVhZF9ncmVnKHtzZWxm
+LnJlZ190Y2coKX0sIHtzZWxmLnJlZ19udW19KTsKKyAgICAgICAgIiIiKSkKKyAgICBkZWYgYW5h
+bHl6ZV9yZWFkKHNlbGYsIGYsIHJlZ25vKToKKyAgICAgICAgcGFzcworCitjbGFzcyBHdWVzdFBh
+aXJEZXN0KEd1ZXN0UmVnaXN0ZXIsIFBhaXIsIERlc3QpOgorICAgIGRlZiBkZWNsX3RjZyhzZWxm
+LCBmLCB0YWcsIHJlZ25vKToKKyAgICAgICAgc2VsZi5kZWNsX3JlZ19udW0oZiwgcmVnbm8pCisg
+ICAgICAgIGYud3JpdGUoY29kZV9mbXQoZiIiIlwKKyAgICAgICAgICAgIFRDR3ZfaTY0IHtzZWxm
+LnJlZ190Y2coKX0gPSB0Y2dfdGVtcF9uZXdfaTY0KCk7CisgICAgICAgICIiIikpCisgICAgZGVm
+IGdlbl93cml0ZShzZWxmLCBmLCB0YWcpOgorICAgICAgICBmLndyaXRlKGNvZGVfZm10KGYiIiJc
+CisgICAgICAgICAgICBnZW5fbG9nX2dyZWdfd3JpdGVfcGFpcihjdHgsIHtzZWxmLnJlZ19udW19
+LCB7c2VsZi5yZWdfdGNnKCl9KTsKKyAgICAgICAgIiIiKSkKKyAgICBkZWYgYW5hbHl6ZV93cml0
+ZShzZWxmLCBmLCB0YWcsIHJlZ25vKToKKyAgICAgICAgZi53cml0ZShjb2RlX2ZtdChmIiIiXAor
+ICAgICAgICAgICAgY3R4X2xvZ19ncmVnX3dyaXRlX3BhaXIoY3R4LCB7c2VsZi5yZWdfbnVtfSk7
+CisgICAgICAgICIiIikpCisKK2NsYXNzIEd1ZXN0UGFpclNvdXJjZShHdWVzdFJlZ2lzdGVyLCBQ
+YWlyLCBPbGRTb3VyY2UpOgorICAgIGRlZiBkZWNsX3RjZyhzZWxmLCBmLCB0YWcsIHJlZ25vKToK
+KyAgICAgICAgc2VsZi5kZWNsX3JlZ19udW0oZiwgcmVnbm8pCisgICAgICAgIGYud3JpdGUoY29k
+ZV9mbXQoZiIiIlwKKyAgICAgICAgICAgIFRDR3ZfaTY0IHtzZWxmLnJlZ190Y2coKX0gPSB0Y2df
+dGVtcF9uZXdfaTY0KCk7CisgICAgICAgICAgICBnZW5fcmVhZF9ncmVnX3BhaXIoe3NlbGYucmVn
+X3RjZygpfSwge3NlbGYucmVnX251bX0pOworICAgICAgICAiIiIpKQorICAgIGRlZiBhbmFseXpl
+X3JlYWQoc2VsZiwgZiwgcmVnbm8pOgorICAgICAgICBwYXNzCisKK2NsYXNzIFN5c3RlbURlc3Qo
+UmVnaXN0ZXIsIFNpbmdsZSwgRGVzdCk6CisgICAgZGVmIGRlY2xfdGNnKHNlbGYsIGYsIHRhZywg
+cmVnbm8pOgorICAgICAgICBzZWxmLmRlY2xfcmVnX251bShmLCByZWdubykKKyAgICAgICAgZi53
+cml0ZShjb2RlX2ZtdChmIiIiXAorICAgICAgICAgICAgVENHdl9pMzIge3NlbGYucmVnX3RjZygp
+fSA9IHRjZ190ZW1wX25ld19pMzIoKTsKKyAgICAgICAgIiIiKSkKKyAgICBkZWYgZ2VuX3dyaXRl
+KHNlbGYsIGYsIHRhZyk6CisgICAgICAgIGYud3JpdGUoY29kZV9mbXQoZiIiIlwKKyAgICAgICAg
+ICAgIGdlbl9sb2dfc3JlZ193cml0ZShjdHgsIHtzZWxmLnJlZ19udW19LCB7c2VsZi5yZWdfdGNn
+KCl9KTsKKyAgICAgICAgIiIiKSkKKyAgICBkZWYgYW5hbHl6ZV93cml0ZShzZWxmLCBmLCB0YWcs
+IHJlZ25vKToKKyAgICAgICAgZi53cml0ZShjb2RlX2ZtdChmIiIiXAorICAgICAgICAgICAgY3R4
+X2xvZ19zcmVnX3dyaXRlKGN0eCwge3NlbGYucmVnX251bX0pOworICAgICAgICAiIiIpKQorCitj
+bGFzcyBTeXN0ZW1Tb3VyY2UoUmVnaXN0ZXIsIFNpbmdsZSwgT2xkU291cmNlKToKKyAgICBkZWYg
+ZGVjbF90Y2coc2VsZiwgZiwgdGFnLCByZWdubyk6CisgICAgICAgIHNlbGYuZGVjbF9yZWdfbnVt
+KGYsIHJlZ25vKQorICAgICAgICBmLndyaXRlKGNvZGVfZm10KGYiIiJcCisgICAgICAgICAgICBU
+Q0d2X2kzMiB7c2VsZi5yZWdfdGNnKCl9ID0gdGNnX3RlbXBfbmV3X2kzMigpOworICAgICAgICAg
+ICAgZ2VuX3JlYWRfc3JlZyh7c2VsZi5yZWdfdGNnKCl9LCB7c2VsZi5yZWdfbnVtfSk7CisgICAg
+ICAgICIiIikpCisgICAgZGVmIGFuYWx5emVfcmVhZChzZWxmLCBmLCByZWdubyk6CisgICAgICAg
+IHBhc3MKKworY2xhc3MgU3lzdGVtUGFpckRlc3QoUmVnaXN0ZXIsIFBhaXIsIERlc3QpOgorICAg
+IGRlZiBkZWNsX3RjZyhzZWxmLCBmLCB0YWcsIHJlZ25vKToKKyAgICAgICAgc2VsZi5kZWNsX3Jl
+Z19udW0oZiwgcmVnbm8pCisgICAgICAgIGYud3JpdGUoY29kZV9mbXQoZiIiIlwKKyAgICAgICAg
+ICAgIFRDR3ZfaTY0IHtzZWxmLnJlZ190Y2coKX0gPSB0Y2dfdGVtcF9uZXdfaTY0KCk7CisgICAg
+ICAgICIiIikpCisgICAgZGVmIGdlbl93cml0ZShzZWxmLCBmLCB0YWcpOgorICAgICAgICBmLndy
+aXRlKGNvZGVfZm10KGYiIiJcCisgICAgICAgICAgICBnZW5fbG9nX3NyZWdfd3JpdGVfcGFpcihj
+dHgsIHtzZWxmLnJlZ19udW19LCB7c2VsZi5yZWdfdGNnKCl9KTsKKyAgICAgICAgIiIiKSkKKyAg
+ICBkZWYgYW5hbHl6ZV93cml0ZShzZWxmLCBmLCB0YWcsIHJlZ25vKToKKyAgICAgICAgZi53cml0
+ZShjb2RlX2ZtdChmIiIiXAorICAgICAgICAgICAgY3R4X2xvZ19zcmVnX3dyaXRlX3BhaXIoY3R4
+LCB7c2VsZi5yZWdfbnVtfSk7CisgICAgICAgICIiIikpCisKK2NsYXNzIFN5c3RlbVBhaXJTb3Vy
+Y2UoUmVnaXN0ZXIsIFBhaXIsIE9sZFNvdXJjZSk6CisgICAgZGVmIGRlY2xfdGNnKHNlbGYsIGYs
+IHRhZywgcmVnbm8pOgorICAgICAgICBzZWxmLmRlY2xfcmVnX251bShmLCByZWdubykKKyAgICAg
+ICAgZi53cml0ZShjb2RlX2ZtdChmIiIiXAorICAgICAgICAgICAgVENHdl9pNjQge3NlbGYucmVn
+X3RjZygpfSA9IHRjZ190ZW1wX25ld19pNjQoKTsKKyAgICAgICAgICAgIGdlbl9yZWFkX3NyZWdf
+cGFpcih7c2VsZi5yZWdfdGNnKCl9LCB7c2VsZi5yZWdfbnVtfSk7CisgICAgICAgICIiIikpCisg
+ICAgZGVmIGFuYWx5emVfcmVhZChzZWxmLCBmLCByZWdubyk6CisgICAgICAgIHBhc3MKKwogZGVm
+IGluaXRfcmVnaXN0ZXJzKCk6CiAgICAgcmVncyA9IHsKICAgICAgICAgR3ByRGVzdCgiUiIsICJk
+IiksCkBAIC0xMDU2LDYgKzExOTgsMTYgQEAgZGVmIGluaXRfcmVnaXN0ZXJzKCk6CiAgICAgICAg
+IFFSZWdTb3VyY2UoIlEiLCAidSIpLAogICAgICAgICBRUmVnU291cmNlKCJRIiwgInYiKSwKICAg
+ICAgICAgUVJlZ1JlYWRXcml0ZSgiUSIsICJ4IiksCisKKyAgICAgICAgIyBzeXN0ZW0gcmVncwor
+ICAgICAgICBHdWVzdERlc3QoIkciLCAiZCIpLAorICAgICAgICBHdWVzdFNvdXJjZSgiRyIsICJz
+IiksCisgICAgICAgIEd1ZXN0UGFpckRlc3QoIkciLCAiZGQiKSwKKyAgICAgICAgR3Vlc3RQYWly
+U291cmNlKCJHIiwgInNzIiksCisgICAgICAgIFN5c3RlbURlc3QoIlMiLCAiZCIpLAorICAgICAg
+ICBTeXN0ZW1Tb3VyY2UoIlMiLCAicyIpLAorICAgICAgICBTeXN0ZW1QYWlyRGVzdCgiUyIsICJk
+ZCIpLAorICAgICAgICBTeXN0ZW1QYWlyU291cmNlKCJTIiwgInNzIiksCiAgICAgfQogICAgIGZv
+ciByZWcgaW4gcmVnczoKICAgICAgICAgcmVnaXN0ZXJzW2Yie3JlZy5yZWd0eXBlfXtyZWcucmVn
+aWR9Il0gPSByZWcKLS0gCjIuMzQuMQoK
 
