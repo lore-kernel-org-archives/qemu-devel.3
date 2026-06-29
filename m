@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BF19C43327
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:40:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 405EDC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:40:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weCDl-0007J0-Ry; Mon, 29 Jun 2026 09:40:21 -0400
+	id 1weCDu-0007QB-Up; Mon, 29 Jun 2026 09:40:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <0e3085ddc7fb137b727829913c20ad9d08577bdb@kylie.crudebyte.com>)
- id 1weCDk-0007Ht-VD; Mon, 29 Jun 2026 09:40:20 -0400
+ (envelope-from <7e42d569a68aec6b0b6f1f068328c5c4ff20bc72@kylie.crudebyte.com>)
+ id 1weCDt-0007Pl-HY; Mon, 29 Jun 2026 09:40:29 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <0e3085ddc7fb137b727829913c20ad9d08577bdb@kylie.crudebyte.com>)
- id 1weCDj-0004pf-9n; Mon, 29 Jun 2026 09:40:20 -0400
+ (envelope-from <7e42d569a68aec6b0b6f1f068328c5c4ff20bc72@kylie.crudebyte.com>)
+ id 1weCDs-0004rl-2l; Mon, 29 Jun 2026 09:40:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=JFJiWtJxyrEw3flRMhi/G/BAccH/foEXolMe42jdQ+k=; b=irLz8
- 5/WwLPFfe7nbjfj9aY3GE6vxNlnUTpLjyi5FVJvZKeMRe0QtKkaMnr9RIR1lRjDMR5/u5sFwewNJx
- XV1CCAJwqLITBRL+zuohhw5bFT4LsItrFuZMM0ueSqppAEEWfX653VyVa4yi+5ykuaCR5x3VicbFM
- wGgeMk3R+me//juA177Qy7vigspaOpBGfHr9+VDTEF1d4n24mLeyIjPyUPw7NoupEEprPobSodY4Y
- 8YSEi2Uc9iMQwinn3uKQBdJ+k96y62H3N5KyyJIbFe5MGaDfg5Aq/+9F1T2ow8k5RJiwwLtrgpBMC
- /BlsOI4CmgsE7WDPdbAwcoLvCyQNzAFkpaVPrWuVvZ3GR65UIjiq+rFvvSiBZ04jDhcuSas6FaRTO
- pmzWlALdh5AHm/SldNppgkhxpBvK470ZDznpM4deB5U/Fbme0B3X3zYsI3jHYV4e+ysyr4O27RjLQ
- D1B4n3FRIRKNLeTpoJ4XzDAxaoq8g6YE+IdQD/Z6qKcPsbtqyl89ZTSaRvFo/7oKF+MraUXTPyvfk
- UuxGwAh1RhokrKhvvBr+SeEyKuyO2fYPopc33/UNQ8DLkKL51AL2IAh5issdeAJiRGJPRP5AvZfV2
- LCcJ9enx4dc7gSFi2aPJeivE2hXbnbKdb9NHVVFQkmOqWwxeCoIRE+93qfxa08=;
-Message-ID: <0e3085ddc7fb137b727829913c20ad9d08577bdb.1782739719.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=HbXPBJCXbwc+UJtT3KR5/IXT9P+T41ck2z/jzLjzqpE=; b=P62Lq
+ neNLPD9M3H3SZsC4xJiYqXH7JeYf4/B5nVxmj9clogI6dpDWBDTD9J67hotNOR1w9wUCAvyVaKkD1
+ loEMBQ4gD/TaSDM59joGbYkARdxEtSkQw61yK4tf+7g7pd366Uez9jaVXyepLvP3jh+GDIlsTgC0N
+ 5nmjZaq7jaFaRyQrvTO+4y3u2pzqDy01loIjmdf1lojA8X1r9Oy6K6cBzi+GBrgdkn2T8N89qwFqh
+ rFKnsxfzXsxdtNZwlJAnOpdA9noAY2tapDVZa251VCiaSDA8avpq0dkhr1HA3xSQVGYeTbYoT+jbz
+ VBbb1UW64jYFl4eRcIypyM0fXFwuQ6W0pIg0RYmbVcJOqVqayA3NQ4S+UNKK74SILYx0wgIJK3VmA
+ BD94UvKsbSut7U3tuUDO2bw7Xa1oR1v62RTBkXcg0BLx/Af3J5H+TwFmblarkuWQTocH2rPZcn15s
+ tWEUms6fwX5lQUt8ckl1I43oknDWTds/EiLbeVT0E80uhPRoGCwaCRpW8eEJuwY8MqTYVnVaAOK9f
+ 2d/ZUS/4pYaecSrst/XtL/DWEjap8z7mz7qCirxkORg2WI2qwpmUcliNBKWtCzFFvMpRhyffBxqyx
+ N/yAlqTJHnTaH4SRR8xq4zZXRnTJiamkhKFqno5SvuPYHPPBjRs7P8ouITZMl0=;
+Message-ID: <7e42d569a68aec6b0b6f1f068328c5c4ff20bc72.1782739719.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1782739719.git.qemu_oss@crudebyte.com>
 References: <cover.1782739719.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Mon, 29 Jun 2026 15:28:39 +0200
-Subject: [PULL 15/23] hw/9pfs: enable xattr (mockup) support for synth fs
+Subject: [PULL 16/23] hw/9pfs: add xattr count query interface to fs synth
  driver
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
  Peter Maydell <peter.maydell@linaro.org>, Feifan Qian <bea1e@proton.me>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=0e3085ddc7fb137b727829913c20ad9d08577bdb@kylie.crudebyte.com;
+ envelope-from=7e42d569a68aec6b0b6f1f068328c5c4ff20bc72@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,46 +67,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The synth backend is used for testing only. Enable xattr operations
-by making lsetxattr and lremovexattr callbacks to return success
-result.
+Add a synthetic "/stat/xattr_count" file path that, if being read
+by 9p client, returns the 9p server internal xattr FID counter to
+client.
 
-They are still actually not doing anything, they just pretend to be
-working to prevent 9pfs server from erroring out on xattr requests.
+This allows to test and verify that the xattr FID limit is being
+enforced correctly.
 
-This allows the subsequent test case patches to verify xattr FID
-limit enforcement.
-
-Link: https://lore.kernel.org/qemu-devel/9c1c7128135f3bd9c2f62a3f64bb730b6a94ec7a.1781361555.git.qemu_oss@crudebyte.com
+Link: https://lore.kernel.org/qemu-devel/357c20fc244c04dcbd36b13aa20a5c9b2034e9f0.1781361555.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- hw/9pfs/9p-synth.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/9pfs/9p-synth.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
 diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-index 322dc3bb69..4b0732e093 100644
+index 4b0732e093..3b3654b282 100644
 --- a/hw/9pfs/9p-synth.c
 +++ b/hw/9pfs/9p-synth.c
-@@ -477,15 +477,15 @@ static int synth_lsetxattr(FsContext *ctx, V9fsPath *path,
-                                 const char *name, void *value,
-                                 size_t size, int flags)
- {
--    errno = ENOTSUP;
--    return -1;
-+    /* pretend it worked */
-+    return 0;
+@@ -565,6 +565,19 @@ static ssize_t v9fs_synth_qtest_flush_write(void *buf, int len, off_t offset,
+     return 1;
  }
  
- static int synth_lremovexattr(FsContext *ctx,
-                                    V9fsPath *path, const char *name)
++/* transmits internal xattr counter to client */
++static ssize_t v9fs_synth_read_xattr_count(void *buf, int len, off_t offset,
++                                           void *arg)
++{
++    FsContext *ctx = arg;
++    size_t local_count = ctx->xattr_fid_count;
++    if (len < (int)sizeof(size_t)) {
++        return -ENOSPC;
++    }
++    memcpy(buf, &local_count, sizeof(size_t));
++    return sizeof(size_t);
++}
++
+ static int synth_init(FsContext *ctx, Error **errp)
  {
--    errno = ENOTSUP;
--    return -1;
-+    /* pretend it worked */
-+    return 0;
- }
+     QLIST_INIT(&synth_root.child);
+@@ -626,6 +639,19 @@ static int synth_init(FsContext *ctx, Error **errp)
+                 g_free(name);
+             }
+         }
++
++        /* Directory for internal statistic queries */
++        {
++            V9fsSynthNode *stat_dir = NULL;
++            ret = qemu_v9fs_synth_mkdir(NULL, 0755, "stat", &stat_dir);
++            assert(!ret);
++
++            /* File for internal xattr count query */
++            ret = qemu_v9fs_synth_add_file(stat_dir, 0444, "xattr_count",
++                                           v9fs_synth_read_xattr_count,
++                                           NULL, ctx);
++            assert(!ret);
++        }
+     }
  
- static int synth_name_to_path(FsContext *ctx, V9fsPath *dir_path,
+     return 0;
 -- 
 2.47.3
 
