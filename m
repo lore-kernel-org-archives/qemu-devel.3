@@ -4,99 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10849C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 13:54:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6512EC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jun 2026 14:02:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weCQu-0003qZ-Ao; Mon, 29 Jun 2026 09:53:56 -0400
+	id 1weCYg-0005J4-Sc; Mon, 29 Jun 2026 10:02:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weCQq-0003pf-F4
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 09:53:52 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ id 1weCYY-0005I4-CC
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:01:52 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weCQo-00033V-KN
- for qemu-devel@nongnu.org; Mon, 29 Jun 2026 09:53:52 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-664b3831a20so2603351d50.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 06:53:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782741229; cv=none;
- d=google.com; s=arc-20260327;
- b=MngTrg28xPRw6vgnPuEwv6KjQp3wl3kFuyUHrhXT6mVFbNLtoLo7pAaK3pwVQbfmNb
- iG+WjgQsoV3gMKiJz/bNpIn2zqiaX2J9sTmlFE/Sh+ta11TdLrR9mxErHdXanKiGrF3B
- 3PxtFONhs5kuoaq4IDHNqatY8DmHDFHAkcfdAWktTO6GpNs4ggcee2DdI61Cne1wYNU6
- 2LVJQ+xikGYew/e92QgomTSMbGbcn6F+k5bpkagSiPKlWFjZHSlqye83sDI05ZMrFmJo
- 7iqTfXdgphUG1gBDCeRRcOO+KnEs/PhzQLoABTPx/PL4/PBY0BcJdrBnyc3CJi/ZU412
- zEwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=MxI7l67+ARTiQp2Dg96U9G6lCaV1NIe40wxMSlk72rI=;
- fh=xXUECa7x/m9222uVR6doJyAafWA+wMRf05AlemDJ3Gc=;
- b=ZoTusxhxRdCGQRR103jVMaHogOcYEb+ffWILgk0ZZr8V644T5nl0PuYYoQfLz5z72L
- nuOrnDs4z1qT4+GZ4pj36Q2SeBuwZjcp8I7A3HbSUvvvg4eiMNEQ8zRlROFYRjzhbyVo
- lFRnocGkeeUhUgCptQ997jU5oCFvbVW3d3M8L6x5ZqAIQA+NtQmFvIKUwlTJ3Aj5C/YF
- o3oihPIZz1gml4iiE9czSb7v1kPUm+65czNwt5MsuD6Guy7aAE3Ai0nZ3KBU4ae4KeaF
- CiE3pnQS7r9Q1MlOKxt9da8WkxX7MlbEO/maS6212aLunMupdCoESeovb7QBZ2FpizFb
- 3skg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ id 1weCYW-0008Sj-Cm
+ for qemu-devel@nongnu.org; Mon, 29 Jun 2026 10:01:50 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-493a5d32e8cso17159055e9.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 07:01:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782741229; x=1783346029; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MxI7l67+ARTiQp2Dg96U9G6lCaV1NIe40wxMSlk72rI=;
- b=w09Y4/Ge64Qv2e5CRj+EVVuyJEd292NaEQSThEHX7kDc1xD92ATJNASB79DRdNXnnA
- 88bGq67/m/mPVDnDhIAzDgdk3efi0u4n2H8AlwKhZc8USNGd2blS9gJYYhaAK7tt6HJk
- Q0MiX5AqanyZypnEzTXrnBfaGA2N/rWYDnLRzIXJ6qI0emgO2ctqKTZNHoevBLnWzr1e
- xl6pkhHo+v/DGv9Lh5J1tIGDbXkW7uhnsKMkmUQtCJxgCrfm+4q5Nxt0fyFnmqyJk0sg
- mRh4/ti70X1MM1lfzFpeJwKOFx+C5dE9KLreKFGKJajvB7dDslRrVCS++oP2oRtg/Zyu
- aG3A==
+ d=linaro.org; s=google; t=1782741706; x=1783346506; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=+TWHxiw/UhhyLv2Z7QTCjbZXmpvwWXJtjMFmHukF1+w=;
+ b=Gkw0hSuXhr+3aaJVSq2ffKsYdWXcT3nW43OqHA1G8gHjsqRgcfUfjWW3pM2Sf1JP4p
+ 1RBHer9A01gK3nkJDntZNV0WWC+S7touW7nBjnVHdArBjzp9koaEb6118xEofE4PkSZv
+ rInfWknMJp8QMck42swGqiQuqGALc+HrXN3rAY3h2edVG8OPi2D2saD5hRHNBeIDn2/O
+ Hfo97hVY1O2PhO2U8iZfiDzBULJakSwvFy3vYlTuDnO83ehFdq6zVv7iC6B/gANqK/Zw
+ 7S83uG4RaJG1ACSn3Q4tN5EUO4v+vJzC5lZFfVX9tNuAjk0ndi/UvVF2gxCphj1VunUx
+ quDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782741229; x=1783346029;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1782741706; x=1783346506;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MxI7l67+ARTiQp2Dg96U9G6lCaV1NIe40wxMSlk72rI=;
- b=dvK4fD7UOtbCAt5hTP+EykPCfEIeH8Kdg5kun9vfC//kY/fANSPcuY5oTfOqtnrHSS
- wSrozR7HY25f7Dfice2M3+xDjxypnreLvO67jLlm+9n1kSSYJ+IjD+HeVOrOasfaZWOV
- 7HLc6KMBq9vSVrkEaP9tpbo/tyJ1i1Xa581o9pGAWXkDwEVKTIKquCGUGRmddNkgcV0k
- TkA+/TZCUcZrFlTy5/PlFubrMEoIgDWhrgtls+WZLYf+QNJc0J7OAdWYTypTmCatNaLS
- iXSv32q/x47mQeNTkQjhSI5gjBm/UK7XEbQlpzkLCmRvGZtw+fIU+C/S0gRYzPcWPrn2
- 8j6Q==
-X-Gm-Message-State: AOJu0YwYNzca1PHQarCb6yKoEhgYTh08bsydlVKsv9b3lwzQkxp7vOcN
- JLg8mX1iEj9IFfJe0XV4gZbjoBjE5v2IIy2hNu6R6J30JBB6nqJ+mMZxwwk5JH/0FIEdfDSwaG+
- 4Mpr9EhyLFbYMLwNa2zjByd107JLKRNVe32Hbqy3Aug==
-X-Gm-Gg: AfdE7cmys4zVe/0j2GVP+PG6eWKAo38W5liMzQ67LaaRjMPeGkvXZbaMnQD3LrGVY2p
- 1MgiPXgZH4k0j3VLRpJb1WMonCbeDCwArEnKmEWsZixDmlBUkWuMJ6ay0lPSGOT39nszQaJd7xO
- gxcoifWUe4CejjnLVZU4q4wr9A/9K0boPGHr8y0wJjPyKkCuf6l6QA+AkfknXJDumHF3Tu3vlWQ
- bMJRgeKyPjieBh2tq+FPvVRQYJNnzEjtbdb/2WU03VkYQVViPLbOBOU+A32mbP3C7LXqwkHIuUS
- e295HOaLLNQ9PytIdrqEloAE8E+XynSXq/NXTfca0IDBGIyxYZpgLVV4
-X-Received: by 2002:a05:690e:b4a:b0:664:ac17:6014 with SMTP id
- 956f58d0204a3-664f60b3266mr463127d50.31.1782741229154; Mon, 29 Jun 2026
- 06:53:49 -0700 (PDT)
-MIME-Version: 1.0
-References: <rxuL-6ZdTjc0-X6Ez2rU4TPEObWUUb4HjRf6X2__bLs3i-9N2d5NX3HbQK2Zyrh5V2c1szltCX91cL-s-WHxX1XoBDSyx5_m6FCvmBmblIY=@proton.me>
- <ad4b1u-MEfso3miW@redhat.com>
- <0NssTF_XyAbzwx4DB1ecmeaWsoqoRMwGSrf6SCVUaBsAR3aN_FinUY8ucoU3PrTya2Jdf09HrEMWR9mwdFI0HW_ZF6SBe6gi6aIgrVpZd3g=@proton.me>
- <CAFEAcA-BW-W0tD=_Cy6AR-E637h_Ryo0JBTHTzXqB3o3f71Rxg@mail.gmail.com>
-In-Reply-To: <CAFEAcA-BW-W0tD=_Cy6AR-E637h_Ryo0JBTHTzXqB3o3f71Rxg@mail.gmail.com>
+ bh=+TWHxiw/UhhyLv2Z7QTCjbZXmpvwWXJtjMFmHukF1+w=;
+ b=Gl1/AiYtp/X78l2rekCGZl8N5NDrnpdQk5WOXq+b3FdCinIoEZnkTEQ9oQt527uxFG
+ dKRVWeksfMXmC73625e90+38VL/pm1xYQIijEi3tVPMMr0ESJneIRXEUl4Cg9uPxai05
+ vX/hheoQHoyeAHbESTgNdeIAblRrvEln11mAUsixLbg947cmky+F721/d/uC+6qSOuNx
+ kHlCV69iib9TcPD/IvQ5kJxxIA+mfJc362Xikujgr1s81GBB8+Mde1vKBRDMpyVKqS0H
+ Ifb5i27omW/z1DnSCo0pk/RuAR92mUQyFfDBmdARQBQX0IcI8025+8RT/KcGmxegZB4n
+ EMBQ==
+X-Gm-Message-State: AOJu0Yx0+H4Q7GEabk9HXBN/+HiW4Rv2ZoX2L6FE0yq4VX7JU8If5WPL
+ 8fv+HvT4TXF7UDaKS2RGGvadBL6icL7KgHkvvRHOnUJ52tuar+s58ykf68RGrN6OZ6Ot3Rjij7U
+ mf0aE
+X-Gm-Gg: AfdE7cmAzaJ5VavCH8N5bM2+UFiQxIPYMTVNVO9baVzQFMs38wox+/TyTgXsNhbZ2RH
+ R7DAbgxpZiGOHPaNf/wk+8bBLVc02r70slWZTd53i9vcLq1vK1B+ZPyNRUfbQMYbL1C0j/8zbHF
+ CgqTP/mYb1eSkkuKqe5SPSYM/oJufF435A50Va/IRIP7+EdwYI8dvnD0Jk+uBhbYdwhCHm+VNl4
+ OXMAYHdzni2UTwz1VZOr+4IbnJY8ETkmoRjOMJy0gf/LFFAjdDtH7D1bktqJJjWzyngMVcidbDo
+ LKd1MATvz40018cVTJUN9XI6MmLSuGtbuYWdPMVhdUwJD19hvZWm/Rz5dMOacbYk13aJmeBZfjo
+ XZl2I2XWB/FlF3wjrSWfSKHvdKxadZAAC4k+XZ5/MPaCkmuLcUOScvsKqoGwiL4ge9McN5v3XKM
+ Uq2EdMOlElFswNTdVwstdrTBM6q4SpW6/G7ZDUlnOMlGtKcwXqV9z7ACqifpGukdSqjSXAkPRwB
+ Y1Z8oN2pnUzpmBsDrBFqw==
+X-Received: by 2002:a05:600c:1914:b0:493:a56b:d915 with SMTP id
+ 5b1f17b1804b1-493a56bd94amr98823055e9.31.1782741691148; 
+ Mon, 29 Jun 2026 07:01:31 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49268ff9f40sm292848455e9.6.2026.06.29.07.01.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Jun 2026 07:01:29 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 29 Jun 2026 14:53:36 +0100
-X-Gm-Features: AVVi8Cdj7cy0fg1useHXpScEewKdutw6IrQ3pEum1zg_5BVgC29D2znrzQdxjhs
-Message-ID: <CAFEAcA_D3u900UDM5dzPrMvs1CF_XJD6HdgnKTvHXa0H=ysSbg@mail.gmail.com>
-Subject: Re: [PATCH] hw/net/fsl_etsec: validate FCB offsets in process_tx_fcb()
-To: Feifan Qian <bea1e@proton.me>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Bernhard Beschow <shentey@gmail.com>, 
- Jason Wang <jasowang@redhat.com>, "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>, 
- "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] hw/dma/i8257: Return zeroes for read_memory in verify mode
+Date: Mon, 29 Jun 2026 15:01:28 +0100
+Message-ID: <20260629140128.1900095-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,55 +99,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping again -- are PPC or net maintainers going to pick this up?
+The i8257 DMA controller has a "verify" mode, which the datasheet
+describes like this:
 
-thanks
--- PMM
+> DMA verify, which does not actually involve the transfer of data.
+> When an 8257 channel is in the DMA verify mode, it will respond the
+> same as described for transfer operations, except that no memory or
+> I/O read/write control signals will be generated.  When an 8257
+> channel is in the DMA verify mode, it will respond the same as
+> described for transfer operations, except that no memory or I/O read
+> /write control signals will be generated, thus preventing the
+> transfer of data.  The 8257, however, will gain control of the system
+> bus and will acknowledge the peripheral's DMA request for each DMA
+> cycle.  The perihperal can use these acknowledge signals to enable an
+> internal access of each byte of a data block in order to execute some
+> verification procedure, such as the accumulation of a CRC check word.
 
-On Fri, 29 May 2026 at 15:18, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Wed, 15 Apr 2026 at 05:08, Feifan Qian <bea1e@proton.me> wrote:
-> >
-> > The TX Frame Control Block (FCB) is prepended to a TX frame when
-> > BD_TX_TOEUN is set. It contains two guest-controlled u8 offset
-> > fields that process_tx_fcb() uses to locate L3/L4 headers within
-> > the frame buffer:
-> >
-> >   l3_header_offset = FCB byte 3 (0..255)
-> >   l4_header_offset = FCB byte 2 (0..255)
-> >
-> > These offsets are applied without any bounds check. When the
-> > UDP-no-CTU branch is taken, the function writes zero to
-> > l4_header[6] and l4_header[7]. With both offsets set to 0xFF the
-> > write target is:
-> >
-> >   tx_buffer + 8 + 255 + 255 + 6/7 = tx_buffer + 525
-> >
-> > A malicious guest can therefore corrupt up to 509 bytes of heap
-> > memory beyond a minimally-sized (16 B) TX frame.
-> >
-> > Fix: reject the frame and log a guest error when the minimum
-> > required buffer length
-> >
-> >   8 (FCB) + l3_header_offset + l4_header_offset + 8
-> >
-> > exceeds tx_buffer_len. Move the l3_header and l4_header pointer
-> > declarations past the new guard so that out-of-bounds pointers
-> > are never materialised.
-> >
-> > Cc: qemu-stable@nongnu.org
-> > Signed-off-by: Feifan Qian <bea1e@proton.me>
->
-> This bug just got re-found by somebody recently, so:
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3517
->
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->
-> Jason, are you going to pick this one up, or one of the PPC
-> folks? (I found it didn't quite apply cleanly for some reason,
-> but I don't know why as that file hasn't changed in ages.)
->
-> thanks
-> -- PMM
+In practice, for QEMU's purposes the only real user of this is the
+floppy controller, which can be made to perform a "read data from
+floppy disk and check the checksum" by telling the fdc to do a read
+and the DMA controller to do a verify.  This causes the fdc to do all
+the usual read actions including the checksum, but the data is never
+written to memory.  However, it is possible for a guest doing
+something silly to program the DMA controller to do a verify
+operation for a device that wants to read from memory.  Currently we
+simply return early from i8257_dma_read_memory() without writing to
+the buffer.  None of the callers (the GUS, sb16 and cs4231a sound
+cards, plus the fdc) expect this, so they will take the uninitialized
+data as if it were from the guest.  This can cause us to leak host
+data off the stack into the guest.
+
+Make i8257_dma_read_memory() fill the buffer with zeroes rather
+than leaving it untouched for a verify operation.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3487
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/dma/i8257.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/hw/dma/i8257.c b/hw/dma/i8257.c
+index 7d7e543427..5771549889 100644
+--- a/hw/dma/i8257.c
++++ b/hw/dma/i8257.c
+@@ -408,6 +408,19 @@ static int i8257_dma_read_memory(IsaDma *obj, int nchan, void *buf, int pos,
+     hwaddr addr = ((r->pageh & 0x7f) << 24) | (r->page << 16) | r->now[ADDR];
+ 
+     if (i8257_is_verify_transfer(r)) {
++        /*
++         * If the device is expecting this verify operation then
++         * it won't care about the nonexistent data. But if it
++         * is expecting a real read (i.e. the guest has misprogrammed
++         * the DMA controller and the device) it's going to try to do
++         * something with the buffer contents. Give it zeroes.
++         * (It's not clear whether this is exactly what happens if
++         * you do this on real hardware. In practice no device QEMU
++         * emulates has a use for verify on a memory-read transfer,
++         * so we don't care beyond avoiding the guest being able to
++         * trigger the caller reading uninitialized data.)
++         */
++        memset(buf, 0, len);
+         return len;
+     }
+ 
+-- 
+2.43.0
+
 
