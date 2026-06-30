@@ -4,150 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB2FC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:20:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09438C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weZJi-0003CA-O7; Tue, 30 Jun 2026 10:20:02 -0400
+	id 1weZJB-000316-3q; Tue, 30 Jun 2026 10:19:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1weZJh-0003Al-4K
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:20:01 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1weZJA-00030u-CK; Tue, 30 Jun 2026 10:19:28 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1weZJf-0005Zt-5c
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:20:00 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65UEDM9M2224546
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 14:19:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- fgKVOZpMEaY04mD/9g7XL4KyaNHYwKpuiKtrgadyHAk=; b=HdjvmUAZk2HvPFO7
- 2fop/8j/kX9mHOAMytXR2AmMebUVnxuC+zr46WfD0jLdD3UXVslqDy+tA1OCbvjO
- hlDFXVwfgWTMXTbaR/h/KcqKkitTlBWJZuf1r3bQwIw3wo9rGTw3y5wzJ7FsQSj6
- ODADvxnxDxnFI9rM0XoeQJUgkWGDruSa5iIHYBf72e0Sl3l+kJsZ3/cjJBKjeH8Y
- Y6Ryob3SdCaSIH7fVge+v8dl92S8apbr/tbDO+ldkJ6NHohEytkmuB2LZKhDx39D
- TVvnb9Y7zmZGsq0qoRgNpOJu4faqpBCj3k/McZTvUY8KkblsZqm50Vza/vrU12Gy
- hGhF0A==
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
- [209.85.217.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3x1cvajx-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 14:19:56 +0000 (GMT)
-Received: by mail-vs1-f71.google.com with SMTP id
- ada2fe7eead31-737d352d3b0so2896568137.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 07:19:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782829196; x=1783433996; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fgKVOZpMEaY04mD/9g7XL4KyaNHYwKpuiKtrgadyHAk=;
- b=hpKnjHXIO+GGPkmgEMVaNqFAGnk+z7HB0c8ies/9ucv9oCrpqv2HeBk81btQBo2QXC
- c9Ud9095aJZD1+tMamllp9BUGfwNK30fBuPfKITx5YEJ4pShRU5jmy54Znl+IraB6LkG
- 9UAIetectgIcvYJkoOWgvNYRqM9ZV7hGHryiWO4W8wvpTRuCWhjGFQgeE9gtd1ujekg/
- XwQHUoqOs+ilTZJOAeVG8xOh4LbmDS1a0n1DegKQbnQ70RLKzNL/M1LaxgKrKKBdBPPr
- oovDGBX1YdR57/4hmxX180UGsiQ3ac8Z+1w6/iZlw1TNLQTzYgCTOup8qIYZdSoAdueA
- WwMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782829196; x=1783433996;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fgKVOZpMEaY04mD/9g7XL4KyaNHYwKpuiKtrgadyHAk=;
- b=OOZQtBaUobp0WwddTY0hdL7MELI6Akz8ELYS+2xlh9bhUmv1m1mFWY93xRjOTpRZW3
- fbQC2Ghd/n5HhrTfW4IS2G2iBZlqNZqd+g0Q8h7cMya7rQB3/btcgqAcenr7bJoXWyy+
- r3IqGnPpSeMyMhPUTKgIH2n+jacni2Fu0zKH40qnt0nPgjnOmAA+djAdc5SGfIOm+yYr
- /T6i3cBzj8xuI48BHDjkRlzfA3SoaBwPOOQ11j9q/d6ytYmcfqUVzuND6P7Bw5G0l5Pb
- aJFlT48I6MSKkc2/izYrI/FGcUs9dst5GCgKclPy07b2wcolXuuKA70FOrbJ8my51eXw
- 4L+A==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rp07sw3TZw4sGEKgt2RVws9Os16mgu8QCC1PaY1ZFZiKNYNm6iVvZMG9mH6EQURuwW2ppNcJPR9OJL/@nongnu.org
-X-Gm-Message-State: AOJu0Yyf0qGN/ctxzH/LRA3kB90QUkvDuCifEopHFPl4pY5kowhZCjv3
- DdZZgZMyYWC2EYOAROLnAhEsf9XnfgG7rvTPRuO/76FE5+SBezdMlOoCrfcQ03h3TNX0+T0nN4k
- 5dBO1CVPrf/HzeX1rtm1Eevno11pxOEZHRafkA17UQQAgonFBzVGpRdgDdA==
-X-Gm-Gg: AfdE7cnApO5g7UCMd7SIManqybhpVbaHLNmuO4C8Nle0q/eluNvcPi0ugRTqK6JQsEz
- cjPbIn7BtP7Vq9rEh6aKt4LXGwULlszUMVAA4qlr+hugFRJx497l5nmFw7sW+V49RL1/Ww6vM67
- llHtZ0lxnMXM7N6VUjNcVB2eFp6weMZ9BQEQBvYCjPUlk3dsx9CLmSwkfITF9kFDxXdnPq7MlVm
- ySK8uIUvKWjLWnHZ5Qscxt9uGbRSej5nofS/g61zZWGxQuUztUu9P91s/pK4sz2M1iJR5eaV0vh
- T/cFVspDrtinjRRP0XBVM7s8UUgmptTfHXp1eCHIhixE5dHrhqssBVzcDuxRKmGgN3JJmZOIb8r
- x5QQjVjH0X6nd8R/DtUSvlHygvmnbmFDPHULn96KBhvBC+aK8YbI1VBZruGvmPA==
-X-Received: by 2002:a05:6102:f89:b0:650:94b2:b209 with SMTP id
- ada2fe7eead31-73a365e0f3amr2099731137.4.1782829196192; 
- Tue, 30 Jun 2026 07:19:56 -0700 (PDT)
-X-Received: by 2002:a05:6102:f89:b0:650:94b2:b209 with SMTP id
- ada2fe7eead31-73a365e0f3amr2099710137.4.1782829195541; 
- Tue, 30 Jun 2026 07:19:55 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493be383819sm875845e9.1.2026.06.30.07.19.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jun 2026 07:19:54 -0700 (PDT)
-Message-ID: <b13c7644-83aa-48c8-9045-550a436b57ad@oss.qualcomm.com>
-Date: Tue, 30 Jun 2026 16:19:52 +0200
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1weZJ8-0005U6-O7; Tue, 30 Jun 2026 10:19:28 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65UEIlBE2429646; Tue, 30 Jun 2026 14:19:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=F3S14cRfglZUXzS0XFeBBm14YuG+pX37nxQ5KECID
+ pg=; b=TeGYuXimi4ObfVheb02QGQw2tuHsHDqfFnX0ncxr1RrjlnlymXwjWuqCK
+ tpUR++f2yNezczjtWdPo/xHcvgDtu1KWsCw9n4Y4d/TpZIEHZsNaqcvHKYopjtQ+
+ yG4ug2h+byoScyKA3rmcmGzCXi/QK45g0XiCauyry7VA2zInc0z6+2GSzDCW3mx5
+ emO4j3kEhubtQPa4ZRmYAVLnqJH9MNBk+vkXE/WlWW16QtlSBqLQtF6KpqwtnIwH
+ V7DHYLib+jlDjJYRBqHvTC4GmNJCTqGc/NdCKoJpCwsF2WgxDNxKS4jlaUmW+viJ
+ 5jSV1EmAM2Vw+mBkWlUiHoaYm21VQ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qfy716-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 14:19:23 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UE4acc000851;
+ Tue, 30 Jun 2026 14:19:22 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruqatkq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 14:19:22 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65UEJK4k22807090
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Jun 2026 14:19:21 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DA3745805D;
+ Tue, 30 Jun 2026 14:19:20 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C398558043;
+ Tue, 30 Jun 2026 14:19:19 +0000 (GMT)
+Received: from t15.ibmuc.com (unknown [9.61.10.219])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 30 Jun 2026 14:19:19 +0000 (GMT)
+From: jrossi@linux.ibm.com
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
+ mjrosato@linux.ibm.com
+Cc: jrossi@linux.ibm.com, zycai@linux.ibm.com, jdaley@linux.ibm.com,
+ jjherne@linux.ibm.com, farman@linux.ibm.com, nrb@linux.ibm.com
+Subject: [PATCH v2 0/6] s390x: Fix intermittent errors with IPL from PCI
+ devices on s390x
+Date: Tue, 30 Jun 2026 10:19:11 -0400
+Message-ID: <20260630141917.673995-1-jrossi@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 01/18] target/s390x: Fix wrong address handling in
- address loops
-Content-Language: en-US
-To: Ilya Leoshkevich <iii@linux.ibm.com>, freude@linux.ibm.com
-Cc: richard.henderson@linaro.org, david@kernel.org, thuth@redhat.com,
- berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux390-list@tuxmaker.boeblingen.de.ibm.com,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
-References: <20260624081029.23815-1-freude@linux.ibm.com>
- <20260624081029.23815-2-freude@linux.ibm.com>
- <e516de9c-e9fb-45af-aa5e-8cb9dbf1e3f3@linux.ibm.com>
- <d55a9d7e7759251c1e75050a9a9ccd6f@linux.ibm.com>
- <6e7ce946-1128-4b2c-9520-a171bca3ceb7@linux.ibm.com>
- <a6e637d07024e0ff8a457500110e225f@linux.ibm.com>
- <9cbb2f6f-c80e-4ba8-a307-4f640f64a8a5@linux.ibm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <9cbb2f6f-c80e-4ba8-a307-4f640f64a8a5@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDEzMyBTYWx0ZWRfX8OvV7Hjoo/Zn
- TTjdOAnuZZ8wGuQsKIHMyzEeVn0qmZu3lHo2lDno+067NOZ6yNQRG7jI2IwfMNleL3rtWwG/IGc
- g0e/ko/v6sQSndMK7OboQkmTB17O/OeBjreHnGY2AJyloG9L9wShyO3BKvgYw1HwaPKuLi90R0x
- L7gP7sKAPA/UXkzN/eAEA9TuyCE2QVd4/Ft4fGTUD4CGKgLb7eSx8eI/HPLVgH4isBW2aUeO30u
- 7omSu0MdbUvCxxfRVCiv9XZ3yHKQYOLM5Mxo0oMvEgNeWmVj/Txijc1ATWTLDgLEdm9xt/G8qb2
- 4nIODtMigwKoppYPVAv9akfKqE0x1zFNbyjAQncdLbq8i3Gw+ScF5Xj+kqDkE7RDlxMOCH5xEnf
- bxytD67wxMIotODOv9es3Ffr55+WST+StZJwfozMG5trAKpyCMDpmJeKDIHpZ0XvMCbtxKH6mU+
- Os1fFpH8a1J/TOcAK+g==
-X-Proofpoint-ORIG-GUID: F4tGv3cHeCw53WgVryHzbrtCPrijIjlX
-X-Proofpoint-GUID: F4tGv3cHeCw53WgVryHzbrtCPrijIjlX
-X-Authority-Analysis: v=2.4 cv=ftfsol4f c=1 sm=1 tr=0 ts=6a43d08c cx=c_pps
- a=P2rfLEam3zuxRRdjJWA2cw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=VnNF1IyMAAAA:8 a=lMLw8EYMNNNL7W2twHAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=ODZdjJIeia2B_SHc_B0f:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDEzMyBTYWx0ZWRfX+pRwS91LbAjt
- Q8CNh45QwnDZjpXThwaT5DdQzS/K4BvBJ+qiWgWfpwnjmbDJM5NXh8f8p8wYljOkRXNw96ClzVu
- 8uRpJS8eCIBVY+bv5WKSI9DMRWf4qhQ=
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=RYqgzVtv c=1 sm=1 tr=0 ts=6a43d06b cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=ofBkBVCz4bjBFbFzGRQA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDEzNCBTYWx0ZWRfX4KnMIjzOGEHv
+ O7Dq1CphSHobkNM4eDXoqYx8apP2Kh3l6t+7HDhXQfoGlc3WADbKC+/bBFCfLzXTu0uWFvKPRgv
+ 7g/IRoakavrXf0maVhx+VmBCU6J/jC0=
+X-Proofpoint-GUID: BVbek8cFs2WS2kyA8ZWwdbThIbUSX1U7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDEzNCBTYWx0ZWRfX2jMh3VHZqY01
+ e+5k5JtHAOSWC3H7hbgXGxTG1dIULm/0WIlvHohIGUTBJV96gu9MYbFoBnI+ikEtkj5Z6rxQTkt
+ 3chP5lmm7FS613oeDhjbAAZVUwdpQ1Whcrv59nYgnVFWbv6gjwMcGolUFAuTeI3rvQf78sPNgJo
+ Ligk/9Fu95TVpeeqJADdrrfkx9a1H96+mfkXpXVQw+DZq8vXRdTvmFbvZ39OHvTy5YC83wZ5PrN
+ KOutZQYwGUKNWol8upNua2J4Z2NMYcOk1cvPs+PgCHQE57lSo0+unOD2cPrKpA7X/N/lRW8fn3t
+ sPaKC+eW09/BSNu+VTgMuN+lpSvNRV56LiyTCzLZv3k+c0kdVNwucxalI1uHmXNz9c6LYfMjb29
+ L0Bk+ErSRjNBaqsI6VRZ0uP6pFnzXTFd7z0cn7A2g0MsGzXsTSAwk6STOsAhsxxoE6FtUGux7dk
+ NWwe10Ma/LYlcJb6yYw==
+X-Proofpoint-ORIG-GUID: BVbek8cFs2WS2kyA8ZWwdbThIbUSX1U7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-30_04,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 spamscore=0 clxscore=1015 malwarescore=0
- phishscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ phishscore=0 impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300133
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300134
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -164,157 +119,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/6/26 12:54, Ilya Leoshkevich wrote:
-> 
-> 
-> On 6/30/26 12:23, Harald Freudenberger wrote:
->> On 2026-06-30 11:33, Ilya Leoshkevich wrote:
->>> On 6/29/26 14:57, Harald Freudenberger wrote:
->>>> On 2026-06-24 14:56, Ilya Leoshkevich wrote:
->>>>> On 6/24/26 10:09, Harald Freudenberger wrote:
->>>>>> With the introduction of the address wrapping function
->>>>>> wrap_address() the result can't be used to walk the
->>>>>> source address any more. So introduce a new local variable
->>>>>> to hold the wrapped address to avoid mixing source and
->>>>>> wrapped address value.
->>>>>>
->>>>>> Fixes: fcc2699d41 ("target/s390x: Have MSA helper pass a mmu_idx 
->>>>>> argument")
->>>>>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
->>>>>> ---
->>>>>>   target/s390x/tcg/crypto_helper.c | 16 ++++++++--------
->>>>>>   1 file changed, 8 insertions(+), 8 deletions(-)
->>>>>
->>>>> If I take as an example AMODE 24 and look at the third loop iteration,
->>>>> with the current code in master I would get:
->>>>>
->>>>>     ((((addr & 0xffffff) + 8) & 0xffffff) + 8) & 0xffffff
->>>>>
->>>>> and with your patch it would be:
->>>>>
->>>>>     (addr + 8 + 8) & 0xffffff
->>>>>
->>>>> which is undeniably more elegant, but otherwise looks equivalent to 
->>>>> me.
->>>>>
->>>>> What is the functional issue here?
->>>>>
->>>>>> diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/ 
->>>>>> crypto_helper.c
->>>>>> index ae392bce0e..29ad2aff43 100644
->>>>>> --- a/target/s390x/tcg/crypto_helper.c
->>>>>> +++ b/target/s390x/tcg/crypto_helper.c
->>>>>> @@ -126,8 +126,8 @@ static void sha512_read_icv(CPUS390XState 
->>>>>> *env, const int mmu_idx,
->>>>>>       const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, 
->>>>>> mmu_idx);
->>>>>>         for (int i = 0; i < 8; i++, addr += 8) {
->>>>>> -        addr = wrap_address(env, addr);
->>>>>> -        a[i] = cpu_ldq_mmu(env, addr, oi, ra);
->>>>>> +        uint64_t _addr = wrap_address(env, addr);
->>>>>> +        a[i] = cpu_ldq_mmu(env, _addr, oi, ra);
->>>>>>       }
->>>>>>   }
->>>>>
->>>>> [...]
->>>>
->>>> It is a fix, not an improvement. The original code
->>>> used the addr variable to hold the wrapped address.
->>>> But as addr is also used as the loop variable there
->>>> is a mixing between unwrapped and wrapped address here
->>>> and the unfixed code only works when wrap_address does
->>>> return the very same address as output as it became as
->>>> input. My fix corrects this.
->>>
->>> What does the patch change w.r.t. wrapping?
->>> Suppose we have amode 24 and addr = 0xfffff0:
->>>
->>> Before:
->>>
->>>   i = 0; addr = wrap(0xfffff0) = 0xfffff0;
->>>          a[0] = ldq(0xfffff0);
->>>   i = 1; addr = wrap(0xfffff0 + 8) = 0xfffff8;
->>>          a[1] = ldq(0xfffff8);
->>>   i = 2; addr = wrap(0xfffff8 + 8) = 0;
->>>          a[2] = ldq(0);
->>>   i = 3; addr = wrap(0 + 8) = 8;
->>>          a[3] = ldq(8);
->>>
->>> After:
->>>
->>>   i = 0; addr = 0xfffff0;
->>>          _addr = wrap(0xfffff0) = 0xfffff0;
->>>          a[0] = ldq(0xfffff0)
->>>   i = 1; addr = 0xfffff0 + 8;
->>>          _addr = wrap(0xfffff8) = 0xfffff8;
->>>          a[1] = ldq(0xfffff8);
->>>   i = 2; addr = 0xfffff8 + 8 = 0x1000000
->>>          _addr = wrap(0x1000000) = 0;
->>>          a[2] = ldq(0);
->>>   i = 3; addr = 0x1000000 + 8 = 0x1000008;
->>>          _addr = wrap(0x1000008) = 8;
->>>          a[3] = ldq(8);
->>>
->>> The behavior look identical to me.
->>> What am I missing?
->>
->> Lets assume addr is some 0x1000 and wrap does just add some offset, 
->> e.g. 0x8000
->>
->> for (int i = 0; i < 8; i++, addr += 8) {
->>      addr = wrap_address(env, addr);
->>      fetch or write something at the wrapped address addr;
->> }
->>
->> Then the idea of this loop is to run through addr 0x1000 ... 0x103F.
->> 1. loop with i=0 and addr 0x1000
->> 2. loop with i=1 and addr 0x1000 + 8
->> 3. loop with i=2 and addr 0x1000 + 8 + 8
->> 4. loop with i=3 and addr 0x1000 + 8 + 8 + 8
->> 5. loop with i=4 and addr 0x1000 + 8 + 8 + 8 + 8
->> 6. loop with i=5 and addr 0x1000 + 8 + 8 + 8 + 8 + 8
->> 7. loop with i=6 and addr 0x1000 + 8 + 8 + 8 + 8 + 8 + 8
->> 8. loop with i=7 and addr 0x1000 + 8 + 8 + 8 + 8 + 8 + 8 + 8
->>
->> BUT the given code does something different. As the addr is used in 
->> the loop
->> to hold the wrapped address this loop in fact does:
->> 1. loop with i=0 and addr 0x1000 - all fine, but as addr = 
->> wrap_address() at the
->>     end of the loop now addr is 0x1000 + 0x8000 = 0x9000, so next loop 
->> starts with
->> 2. loop with i=1 and addr 0x9000 + 8
->>     and at the end of the loop addr is 0x9008 + 0x8000 = 0x11008 and 
->> next loop starts
->> 3. loop with i=2 and addr 0x11008 + 8
->>     ...
->>
->> So introducing an intermediate variable which holds the wrapped address
->> makes sure the surrounding addr walk in the loop does as intended.
-> 
-> Ah, now I see where we were talking past each other, thanks for the
-> clarification. You assume that wrap_address() may do arbitrary
-> transformations, like addition in your example above. But today it does
-> only bitwise "and", as defined by the architecture:
-> 
-> static inline uint64_t wrap_address(CPUS390XState *env, uint64_t a)
-> {
->      if (!(env->psw.mask & PSW_MASK_64)) {
->          if (!(env->psw.mask & PSW_MASK_32)) {
->              /* 24-Bit mode */
->              a &= 0x00ffffff;
->          } else {
->              /* 31-Bit mode */
->              a &= 0x7fffffff;
->          }
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-            bool wrap32 = env->psw.mask & PSW_MASK_32;
-            a = extract64(a, 0, wrap32 ? 31 : 24);
->      }
->      return a;
-> }
-> 
-> and I believe in this specific case the order doesn't matter.
-> 
+When booting from a PCI device on s390x there may be intermittent failures
+caused by mismatched byte swaps.  Refactor the byte swapping to ensure that
+it is properly synchronized.
+
+Correct how the queue notification offset is calculated so that it may be
+used for multi-queue configurations in the future.
+
+Handle some switch cases that were not caught for PCI devices.
+
+Changes v1 -> v2:
+    - Split addition of missing break into its own patch
+    - Add PCI case to generic is_viritio_supported() wapper
+    - Switch the order of patches formerly 3 and 4
+    - Use virtio_is_supported() instead of checking cutype when writing IPLB
+        location to cover both CCW and PCI virtio devices
+
+Jared Rossi (3):
+  pc-bios/s390-ccw/virtio.c: Fix missing break for PCI notifications
+  pc-bios/s390-ccw: Verify virtio support when booting from virtio PCI
+    device on s390x
+  pc-bios/s390-ccw: write IPLB location for non-net virtio devices
+
+Zhuoying Cai (3):
+  pc-bios/s390-ccw: Refactor byte swapping
+  pc-bios/s390-ccw: Add per-queue notification offset for multi-queue
+    virtio configurations
+  s390x: Enable boot menu for virtio pci device
+
+ hw/s390x/ipl.c                |  1 +
+ pc-bios/s390-ccw/main.c       |  5 ++-
+ pc-bios/s390-ccw/virtio-pci.c | 57 ++++++++++++++++++++++++++---------
+ pc-bios/s390-ccw/virtio-pci.h |  5 ++-
+ pc-bios/s390-ccw/virtio.c     | 29 ++++++++++--------
+ pc-bios/s390-ccw/virtio.h     |  2 ++
+ 6 files changed, 69 insertions(+), 30 deletions(-)
+
+-- 
+2.54.0
 
 
