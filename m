@@ -4,89 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F78CC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 13:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B9A2C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 13:40:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weYLN-0007ck-0X; Tue, 30 Jun 2026 09:17:41 -0400
+	id 1weYgy-0005q1-3U; Tue, 30 Jun 2026 09:40:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1weYLH-0007Zc-BE
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 09:17:35 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1weYLF-0005sT-1K
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 09:17:35 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-6984169c126so6401778a12.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 06:17:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1weYgw-0005pe-CV
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 09:39:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1weYgt-0005PA-HE
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 09:39:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782826792;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dVJjTqLJ7aZHl2k4bqz6Gqsk74v2Sb2nqrLLUKq9MGg=;
+ b=MyBdS41eI1+GCfjJCwl4ubnhrRlXwllpiYAbbsX7s20gFApJpIU8NXg0DsE64QuoD+defE
+ WqF2PTyHNYjUnGg+lJ4+11BHYhSRyAEd+9bqziIfoxQZwBwrd+39Ck4zZI+hE8jlJqRrQ2
+ ogSEUCnlIjKo5suSc4+FFJa7hMcLXHI=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-573-MQFDhLo6Pj2IqAs52c6FRw-1; Tue, 30 Jun 2026 09:39:51 -0400
+X-MC-Unique: MQFDhLo6Pj2IqAs52c6FRw-1
+X-Mimecast-MFC-AGG-ID: MQFDhLo6Pj2IqAs52c6FRw_1782826790
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-4767036f8faso41276f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 06:39:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782825451; x=1783430251; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ksv9TfO1zwfVNClMeCsbr3U40+aYKoQ6bDKsO8Cs9cA=;
- b=Xibj8ZNYqvc8f++HX74gpUlfGo5TvXNzNy8+6PtDOBm3n6AXgAitrbxauIPGfE+E/m
- zpJPGj+wifXl0TulaNaDkvbGz9g0/0IAYF8bGkwyouFSLVpUW6t0LEgdmEqKxl8boGov
- +eMl0qALAD3LtwnRLFk0xipepvVqAwAnRVKpDFblSzIE9uddJcA557N9egRXUjkgNdmN
- 9WA8fMN1CeVajcQgCxJv5iMZCuq1++0DBLsAKav+gUVjjmj7NLvuV+lYRhFVkz+yxz3e
- yhiOXZWEJYBcWOtWQNhIO2ZFzMEVutm9QU2TSZHeFvUTbt7e0dTRy7Qgdgdd1GTuqUkt
- zz2Q==
+ d=redhat.com; s=google; t=1782826790; x=1783431590; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=dVJjTqLJ7aZHl2k4bqz6Gqsk74v2Sb2nqrLLUKq9MGg=;
+ b=WGRZMi0X1OUdE0T0cd1VcTQYuyq2ypJdHv7aPtgLO4U+TFYzXFc1QXOs2f8N1BCko8
+ Wn5c1QsiTXnBoX100BQF1OFHljFLX8SDGotTrxqPnxUCZv2ZqdA4mrhBHilpPZ+l+q36
+ 7mEeyy+0u0CpMYK4MLCcI/7NAzRZHExfEB8HddomGlaM6Iq8k9EFsMU6PW6gN+uGpIuQ
+ W1cVyuBvyl/8lTwjwkfwIrPpwTxnohCk5FjYwcLjV5wOXjXxqpTzGCH6IvZgKIn063fR
+ Zy1h2L//dgiK/abWnuqXGtBtHpIUXd2UExNV4CdUSD0OdJp9BQv47N9ru6cS89o+HCDq
+ t2Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782825451; x=1783430251;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=ksv9TfO1zwfVNClMeCsbr3U40+aYKoQ6bDKsO8Cs9cA=;
- b=qtZVUlo4rOUYBmwu2AhskOaj+PB09K0mOyoamqMatG8HWppJ51vk3YR1U1AE67r2bG
- YtUG190AAdu0SC2TP33MkY2eI45F2kqhIeNuCkSBTLV2RFJ7+hG84/QDUHvwH9Yeq7dZ
- FzWH6/LT6HsBwiMY3JuzO+rFyKFMi1Wan9UXmfsYASM3AdLE6J69/8w5YLVRyxcVHIzq
- MyMRH0jzwky8Dcbl/koBqW+Glg3uLgEGBGjDTxBSWc0ggLml7R/CJB5X6F7yiK+V1Abs
- MIiDbwj7fEvMdz6n4dyH5A0eWawx3oiXoAdrQ/UnyW+0AqkvZIt3t3+WvvGMAbLk9IEe
- 4qfQ==
-X-Gm-Message-State: AOJu0YwacW6pVYUggIU5cJALZTtpkkvc/SQ4fYQ/QztNW4Wn6Rcfbsao
- 2cmVp7FiOAy7KmeiQnzRtuZ/JbNW388fvCpylxSXCh4dTC/Zf0Gz/7a4/YuwI6g26N8=
-X-Gm-Gg: AfdE7ckqhxgAVUa4dV+pHcq2BhdZa8NxAKKHgjirtAGIiXphaDhxBaeRcWk4IcOYo2A
- dttGA021qPhKr44UMrtPmb8xBS1zOPuk3DUanlDWJ4CCYL9y4rGGWZ/KyNFHxGSULADrE9iKfCy
- 0EdT4nqCXWwWJCn7DZKQT1wf0wj/8zfo+K1JA59WFQ2ZExrh4WGDee6ye0A3OACStezzmVl1IK5
- 8bS8lVc79kjKNP0QaXvpsKuuqHlCSF1hVZH+c85EwDwbr9FbzSGoI6koencuumA2YfcplW8GYM0
- +XNqGkw9DvlQatIpDI44bCqHoKQk19IyGtcprZ/2oKZrHB+f2q7gC65k7wjxAOL4o8eCk9LDPPu
- ddeOSuFdyKuHw1V4jbF/wVyoctmppmvv92Gt2oPkcIkCTCGbU8MFirO6hDlIKkcKxwTwG76rJ7b
- xTiCVPvsl39ULRU+Q=
-X-Received: by 2002:a05:6402:2548:b0:698:3b7c:7e3e with SMTP id
- 4fb4d7f45d1cf-698878e1956mr359384a12.40.1782825451384; 
- Tue, 30 Jun 2026 06:17:31 -0700 (PDT)
-Received: from [127.0.1.1] ([2a10:d582:31e:0:a648:9a45:1aff:ca47])
+ d=1e100.net; s=20251104; t=1782826790; x=1783431590;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dVJjTqLJ7aZHl2k4bqz6Gqsk74v2Sb2nqrLLUKq9MGg=;
+ b=K3xLgBMF6c3zRC6tTCtny/YkNiAcHLT/TYNOqI+AnRyN2ZNOsydFZTTTz42FIiledw
+ 0nY0j8tGzz14ryw/pj/4kO1MLHNYocgdiUpytJSt+rgTmUSjhnatXIFsnWc6DPSd8Oe2
+ WRoQ68c4ChDGXp4PBZFcKYkwZXRRDwz+Tv27DVAzk+DwlgwS1JJv21LW4M2neCIrFlZD
+ MKiWL7QCuKiS9hrKKbgx1LY3mP9mJ3jIJGy/naHOmLc5rk1+GltZswXItllN8O9cGVfR
+ lPOJNfyREYWxkDa3EFGyJ613L3/W+qqSXJqrQCBwBb1pcNpWItTGBeCKBspE28fwKArH
+ WPhg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rpz/16pyjTkuhoWoPoswn2ExHHORfgUfCtLmfbUmDGEG7L/m/4j+X3OsN1N5rNqaieGLAF914MQsdbr@nongnu.org
+X-Gm-Message-State: AOJu0YxyuVfZ2P09X9yg9Tuh1hDalTAW7qB73dUKBvXkUKinn3bIH2CQ
+ LKmdweaqt2zwxpi2wjuRB5sL5knicPAhJU6gKMUE0RZNi4FvT52Dyee1EwCh7S6ljlKeQPjoDrd
+ sPqP0XTmSUuAZL6DBRlLYZhtXvdRU1Tf5PhJbSc4lBeAMDLj1LGS0zpmK
+X-Gm-Gg: AfdE7cmYNFStlNQlU86q89rG/jyANp+4OS8M2TzcFTsfxQ4GM6asSzYfAYpECYrOYw+
+ +FALVUc9GQLiTpno2Yt6Y1gJl587aXLiqRcMNp1yhNHWFGQG2zjaerg/0ElXXm/7jt5F8NKWYWu
+ p8cWoGRK1lmha5wh5l/d/dKIHX8501jGlrBDny5HcxjLgXjFEWjcLCI+XGM2UIpKsk47ipp5x8G
+ +mnXYA7ZPEB+FtYe0phHY59ocIXiv9tyxnEPg7mrm4dZekVUGgK1qYZvRXut3mZxliSQZOT+DOI
+ o3gzWFTc7+7ih3e087bmTVMGmenczvlmlpKNbhpfgxx7jQ3MYYVCPMEb9zprOd+VaJfYp76LXEW
+ 8+t+KH/nq2HuF8rJxnSNKsYIdseUd0Z9A
+X-Received: by 2002:a05:6000:27c3:b0:461:9950:da50 with SMTP id
+ ffacd0b85a97d-4765963cc87mr661168f8f.11.1782826789626; 
+ Tue, 30 Jun 2026 06:39:49 -0700 (PDT)
+X-Received: by 2002:a05:6000:27c3:b0:461:9950:da50 with SMTP id
+ ffacd0b85a97d-4765963cc87mr661135f8f.11.1782826789079; 
+ Tue, 30 Jun 2026 06:39:49 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6987c3a42f6sm1201535a12.6.2026.06.30.06.17.30
+ ffacd0b85a97d-4756636cf98sm5915718f8f.22.2026.06.30.06.39.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jun 2026 06:17:31 -0700 (PDT)
-From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Tue, 30 Jun 2026 14:16:32 +0100
-Subject: [PATCH v3 1/6] target/arm/tcg: Implement new instructions for FPRCVT
+ Tue, 30 Jun 2026 06:39:48 -0700 (PDT)
+Date: Tue, 30 Jun 2026 09:39:44 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
+ harshpb@linux.ibm.com, npiggin@gmail.com, fbarrat@linux.ibm.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
+ kowal@linux.ibm.com, chalapathi.v@linux.ibm.com,
+ calebs@linux.ibm.com, milesg@linux.ibm.com, jishnuvw@linux.ibm.com,
+ adityag@linux.ibm.com, amachhiw@linux.ibm.com
+Subject: Re: [PATCH v5 0/9] pnv/phb5: Update PHB4 to the latest PHB5 spec
+Message-ID: <20260630093929-mutt-send-email-mst@kernel.org>
+References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
+ <d58ee809-02b3-49be-b927-eacf2da8bfb5@linux.vnet.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260630-jmac-fprcvt-v3-1-f4840d5e0a7f@linaro.org>
-References: <20260630-jmac-fprcvt-v3-0-f4840d5e0a7f@linaro.org>
-In-Reply-To: <20260630-jmac-fprcvt-v3-0-f4840d5e0a7f@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Alex Bennee <alex.bennee@linaro.org>, 
- Jim MacArthur <jim.macarthur@linaro.org>
-X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=jim.macarthur@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d58ee809-02b3-49be-b927-eacf2da8bfb5@linux.vnet.ibm.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,199 +123,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds the opcode format for the SIMD versions of FCVTXX and [US]CVTF.
-These use very similar logic to the FP-to-general and general-to-FP
-register versions which exist, but use another SIMD/FP register
-as source or destination. The source and destination size rules are
-slightly different.
+On Tue, Jun 30, 2026 at 03:52:04PM +0530, Saif Abrar wrote:
+> Hello Cedric, Michael,
+> 
+> Is it OK to retain you Rbs in the next v6?
+> 
+> or would you like to review this v5? (as the patches have evolved since you
+> last reviewed.)
+> 
+> Regards,
+> 
+> Saif
 
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
----
- target/arm/cpu-features.h      |  5 +++
- target/arm/tcg/a64.decode      | 15 ++++++++
- target/arm/tcg/translate-a64.c | 83 ++++++++++++++++++++++++++++--------------
- 3 files changed, 76 insertions(+), 27 deletions(-)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index a80b251589..aba95f4253 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1665,6 +1665,11 @@ static inline bool isar_feature_aa64_f8mm4(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64FPFR0, F8MM4);
- }
- 
-+static inline bool isar_feature_aa64_fprcvt(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64ISAR3, FPRCVT);
-+}
-+
- /*
-  * Combinations of feature tests, for ease of use with TRANS_FEAT.
-  */
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 28cd1faf61..5b6f156d08 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -1456,6 +1456,21 @@ FCVTZU_g        . 0011110 .. 111001 000000 ..... .....  @icvt
- FCVTAS_g        . 0011110 .. 100100 000000 ..... .....  @icvt
- FCVTAU_g        . 0011110 .. 100101 000000 ..... .....  @icvt
- 
-+# Conversion between floating-point and integer (SIMD & FP)
-+SCVTF_simd      . 0011110 .. 111100 000000 ..... .....  @icvt
-+UCVTF_simd      . 0011110 .. 111101 000000 ..... .....  @icvt
-+
-+FCVTAS_g_simd   . 0011110 .. 111010 000000 ..... .....  @icvt
-+FCVTAU_g_simd   . 0011110 .. 111011 000000 ..... .....  @icvt
-+FCVTMS_g_simd   . 0011110 .. 110100 000000 ..... .....  @icvt
-+FCVTMU_g_simd   . 0011110 .. 110101 000000 ..... .....  @icvt
-+FCVTNS_g_simd   . 0011110 .. 101010 000000 ..... .....  @icvt
-+FCVTNU_g_simd   . 0011110 .. 101011 000000 ..... .....  @icvt
-+FCVTPS_g_simd   . 0011110 .. 110010 000000 ..... .....  @icvt
-+FCVTPU_g_simd   . 0011110 .. 110011 000000 ..... .....  @icvt
-+FCVTZS_g_simd   . 0011110 .. 110110 000000 ..... .....  @icvt
-+FCVTZU_g_simd   . 0011110 .. 110111 000000 ..... .....  @icvt
-+
- FJCVTZS         0 0011110 01 111110 000000 ..... .....  @rr
- 
- FMOV_ws         0 0011110 00 100110 000000 ..... .....  @rr
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 227719ef25..0da365e345 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -9905,12 +9905,14 @@ TRANS(SCVTF_g, do_cvtf_g, a, true)
- TRANS(UCVTF_g, do_cvtf_g, a, false)
- 
- /*
-- * [US]CVTF (vector), scalar version.
-- * Which sounds weird, but really just means input from fp register
-+ * [US]CVTF (vector), scalar or SIMD version.
-+ * Which sounds weird, but really just means input from FP/SIMD register
-  * instead of input from general register.  Input and output element
-- * size are always equal.
-+ * size are always equal for the scalar version and different for the
-+ * SIMD version.
-  */
--static bool do_cvtf_f(DisasContext *s, arg_fcvt *a, bool is_signed)
-+static bool do_cvtf_f(DisasContext *s, arg_fcvt *a, MemOp src_mop_int,
-+                      bool is_signed)
- {
-     TCGv_i64 tcg_int;
-     int check = fp_access_check_scalar_hsd(s, a->esz);
-@@ -9918,14 +9920,18 @@ static bool do_cvtf_f(DisasContext *s, arg_fcvt *a, bool is_signed)
-     if (check <= 0) {
-         return check == 0;
-     }
--
-     tcg_int = tcg_temp_new_i64();
--    read_vec_element(s, tcg_int, a->rn, 0, a->esz | (is_signed ? MO_SIGN : 0));
-+    read_vec_element(s, tcg_int, a->rn, 0,
-+                     src_mop_int | (is_signed ? MO_SIGN : 0));
-     return do_cvtf_scalar(s, a->esz, a->rd, a->shift, tcg_int, is_signed);
- }
- 
--TRANS(SCVTF_f, do_cvtf_f, a, true)
--TRANS(UCVTF_f, do_cvtf_f, a, false)
-+TRANS(SCVTF_f, do_cvtf_f, a, a->esz, true)
-+TRANS(UCVTF_f, do_cvtf_f, a, a->esz, false)
-+TRANS_FEAT(SCVTF_simd, aa64_fprcvt, do_cvtf_f, a,
-+           a->sf ? MO_64 : MO_32, true)
-+TRANS_FEAT(UCVTF_simd, aa64_fprcvt, do_cvtf_f, a,
-+           a->sf ? MO_64 : MO_32, false)
- 
- static void do_fcvt_scalar(DisasContext *s, MemOp out, MemOp esz,
-                            TCGv_i64 tcg_out, int shift, int rn,
-@@ -10044,6 +10050,7 @@ static bool do_fcvt_g(DisasContext *s, arg_fcvt *a,
-     return true;
- }
- 
-+
- TRANS(FCVTNS_g, do_fcvt_g, a, FPROUNDING_TIEEVEN, true)
- TRANS(FCVTNU_g, do_fcvt_g, a, FPROUNDING_TIEEVEN, false)
- TRANS(FCVTPS_g, do_fcvt_g, a, FPROUNDING_POSINF, true)
-@@ -10056,13 +10063,14 @@ TRANS(FCVTAS_g, do_fcvt_g, a, FPROUNDING_TIEAWAY, true)
- TRANS(FCVTAU_g, do_fcvt_g, a, FPROUNDING_TIEAWAY, false)
- 
- /*
-- * FCVT* (vector), scalar version.
-- * Which sounds weird, but really just means output to fp register
-+ * FCVT* (vector), scalar or SIMD/FP version.
-+ * Which sounds weird, but really just means output to fp or SIMD register
-  * instead of output to general register.  Input and output element
-- * size are always equal.
-+ * size are always equal for the scalar version and different for the
-+ * SIMD version.
-  */
- static bool do_fcvt_f(DisasContext *s, arg_fcvt *a,
--                      ARMFPRounding rmode, bool is_signed)
-+                      ARMFPRounding rmode, MemOp dst_mop_int, bool is_signed)
- {
-     TCGv_i64 tcg_int;
-     int check = fp_access_check_scalar_hsd(s, a->esz);
-@@ -10072,26 +10080,47 @@ static bool do_fcvt_f(DisasContext *s, arg_fcvt *a,
-     }
- 
-     tcg_int = tcg_temp_new_i64();
--    do_fcvt_scalar(s, a->esz | (is_signed ? MO_SIGN : 0),
-+    do_fcvt_scalar(s, dst_mop_int | (is_signed ? MO_SIGN : 0),
-                    a->esz, tcg_int, a->shift, a->rn, rmode);
- 
-     if (!s->fpcr_nep) {
-         clear_vec(s, a->rd);
-     }
--    write_vec_element(s, tcg_int, a->rd, 0, a->esz);
--    return true;
--}
--
--TRANS(FCVTNS_f, do_fcvt_f, a, FPROUNDING_TIEEVEN, true)
--TRANS(FCVTNU_f, do_fcvt_f, a, FPROUNDING_TIEEVEN, false)
--TRANS(FCVTPS_f, do_fcvt_f, a, FPROUNDING_POSINF, true)
--TRANS(FCVTPU_f, do_fcvt_f, a, FPROUNDING_POSINF, false)
--TRANS(FCVTMS_f, do_fcvt_f, a, FPROUNDING_NEGINF, true)
--TRANS(FCVTMU_f, do_fcvt_f, a, FPROUNDING_NEGINF, false)
--TRANS(FCVTZS_f, do_fcvt_f, a, FPROUNDING_ZERO, true)
--TRANS(FCVTZU_f, do_fcvt_f, a, FPROUNDING_ZERO, false)
--TRANS(FCVTAS_f, do_fcvt_f, a, FPROUNDING_TIEAWAY, true)
--TRANS(FCVTAU_f, do_fcvt_f, a, FPROUNDING_TIEAWAY, false)
-+    write_vec_element(s, tcg_int, a->rd, 0, dst_mop_int);
-+    return true;
-+}
-+
-+TRANS(FCVTNS_f, do_fcvt_f, a, FPROUNDING_TIEEVEN, a->esz, true)
-+TRANS(FCVTNU_f, do_fcvt_f, a, FPROUNDING_TIEEVEN, a->esz, false)
-+TRANS(FCVTPS_f, do_fcvt_f, a, FPROUNDING_POSINF, a->esz, true)
-+TRANS(FCVTPU_f, do_fcvt_f, a, FPROUNDING_POSINF, a->esz, false)
-+TRANS(FCVTMS_f, do_fcvt_f, a, FPROUNDING_NEGINF, a->esz, true)
-+TRANS(FCVTMU_f, do_fcvt_f, a, FPROUNDING_NEGINF, a->esz, false)
-+TRANS(FCVTZS_f, do_fcvt_f, a, FPROUNDING_ZERO, a->esz, true)
-+TRANS(FCVTZU_f, do_fcvt_f, a, FPROUNDING_ZERO, a->esz, false)
-+TRANS(FCVTAS_f, do_fcvt_f, a, FPROUNDING_TIEAWAY, a->esz, true)
-+TRANS(FCVTAU_f, do_fcvt_f, a, FPROUNDING_TIEAWAY, a->esz, false)
-+
-+TRANS_FEAT(FCVTNS_g_simd, aa64_fprcvt, do_fcvt_f, a,
-+           FPROUNDING_TIEEVEN, a->sf ? MO_64 : MO_32, true)
-+TRANS_FEAT(FCVTNU_g_simd, aa64_fprcvt, do_fcvt_f, a,
-+           FPROUNDING_TIEEVEN, a->sf ? MO_64 : MO_32, false)
-+TRANS_FEAT(FCVTPS_g_simd, aa64_fprcvt, do_fcvt_f, a,
-+           FPROUNDING_POSINF, a->sf ? MO_64 : MO_32, true)
-+TRANS_FEAT(FCVTPU_g_simd, aa64_fprcvt, do_fcvt_f, a,
-+           FPROUNDING_POSINF, a->sf ? MO_64 : MO_32, false)
-+TRANS_FEAT(FCVTMS_g_simd, aa64_fprcvt, do_fcvt_f, a,
-+           FPROUNDING_NEGINF, a->sf ? MO_64 : MO_32, true)
-+TRANS_FEAT(FCVTMU_g_simd, aa64_fprcvt, do_fcvt_f, a,
-+           FPROUNDING_NEGINF, a->sf ? MO_64 : MO_32, false)
-+TRANS_FEAT(FCVTZS_g_simd, aa64_fprcvt, do_fcvt_f, a,
-+           FPROUNDING_ZERO, a->sf ? MO_64 : MO_32, true)
-+TRANS_FEAT(FCVTZU_g_simd, aa64_fprcvt, do_fcvt_f, a,
-+           FPROUNDING_ZERO, a->sf ? MO_64 : MO_32, false)
-+TRANS_FEAT(FCVTAS_g_simd, aa64_fprcvt, do_fcvt_f, a,
-+           FPROUNDING_TIEAWAY, a->sf ? MO_64 : MO_32, true)
-+TRANS_FEAT(FCVTAU_g_simd, aa64_fprcvt, do_fcvt_f, a,
-+           FPROUNDING_TIEAWAY, a->sf ? MO_64 : MO_32, false)
- 
- static bool trans_FJCVTZS(DisasContext *s, arg_FJCVTZS *a)
- {
+I took a look again.
 
--- 
-2.43.0
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+
+> On 17-06-2026 15:20, Saif Abrar wrote:
+> > Hello,
+> > This patchset resolves the review comments for v4:
+> > https://lore.kernel.org/qemu-devel/20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com/
+> > 
+> > Thanks to all the reviewers for their efforts.
+> > 
+> > Major updates include the following:
+> > - Rename to phb5.
+> > - New file for common definitions used in tests/qtest/pnv-* files.
+> > - Initializing PnvPHB4Class members within class_init method.
+> > - Updated IODA3 PCT table max size to 128, each with 2 entries.
+> > - Multiple general cleanups.
+> > 
+> > Tested with 'make check-qtest' , 'make check-functional-ppc64' and 'make check'.
+> > 
+> > Regards.
+> > 
+> > Saif Abrar (9):
+> >    qtest/phb5: Add testbench for PHB
+> >    pnv/phb5: Add reset logic to PHB5
+> >    pnv/phb5: Implement sticky reset logic in PHB5
+> >    pnv/phb5: Implement read-only and write-only bits of registers
+> >    pnv/phb5: Implement write-clear and return 1's on unimplemented reg
+> >      read
+> >    pnv/phb5: Set link-active status in HPSTAT and LMR registers
+> >    pnv/phb5: Set link speed and width in the DLP training control
+> >      register
+> >    pnv/phb5: Implement IODA PCT table
+> >    pnv/phb5: Mask off LSI Source-ID based on number of interrupts
+> > 
+> >   hw/pci-host/pnv_phb.c               |   1 +
+> >   hw/pci-host/pnv_phb4.c              | 581 +++++++++++++++++++++++++---
+> >   include/hw/pci-host/pnv_phb4.h      |  16 +-
+> >   include/hw/pci-host/pnv_phb4_regs.h |  66 +++-
+> >   tests/qtest/meson.build             |   1 +
+> >   tests/qtest/pnv-host-i2c-test.c     |  13 +-
+> >   tests/qtest/pnv-phb-test.c          | 235 +++++++++++
+> >   tests/qtest/pnv-qtest-common.h      |  24 ++
+> >   tests/qtest/pnv-xive2-common.h      |   7 +-
+> >   9 files changed, 868 insertions(+), 76 deletions(-)
+> >   create mode 100644 tests/qtest/pnv-phb-test.c
+> >   create mode 100644 tests/qtest/pnv-qtest-common.h
+> > 
 
 
