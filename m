@@ -4,98 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8859C43602
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 10:23:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 701CCC43327
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 10:24:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weVbp-0007JW-EQ; Tue, 30 Jun 2026 06:22:29 -0400
+	id 1weVd3-0007kt-A7; Tue, 30 Jun 2026 06:23:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1weVbn-0007Iz-Dt; Tue, 30 Jun 2026 06:22:27 -0400
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1weVcq-0007k7-Qz; Tue, 30 Jun 2026 06:23:33 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1weVbl-0004Y6-Nw; Tue, 30 Jun 2026 06:22:27 -0400
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1weVco-000518-L8; Tue, 30 Jun 2026 06:23:32 -0400
 Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65U9n9qi1578226; Tue, 30 Jun 2026 10:22:16 GMT
+ 65U9n0vA1578045; Tue, 30 Jun 2026 10:23:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=AGjhYe
- MyleodoNOzT/Q8+eG7yAoXg7SVuR2tcUHMosI=; b=gytYtNE3NSV7KK+k8DGrQg
- /WIZC8gUfcvNMHertpgymZlRBLOb/FmoVSL/IEXiWw9nlxzYhHS4jWvk26CpY0sJ
- eq8P/tCtuNAFwOVJUozBEBcXWjhvRSu1AfKD+y1BrQPXihXvTiDvFCvhhiyyrD54
- Ml3n5UKdZV2jaoTzSBv+PDDocsJjvn5vLePDxNXJqEwrKnPxd7GX8dPr1JH3TXrN
- pxGz/RhX7KqHO/ARF5jQgoAHbyeGg566ezV0rEZBqtUU2aIbzD6t5ChIOKBQvvAQ
- BRryTb7l/BIHZKXIwLRTld7oEyFN/2VQMSTMgpat5vigjquOncpC5aGdBD621eNQ
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rewsjq-1
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=5IZ6lZT9HCEu51HvZb+b5+zSgs0ThBA9dh8/dHRjhcY=; b=fH4wOeczOEnj
+ 9W9NBvD4wpdzW23BlZQaTafvDHauWxJ8OnZwPJgPeDdtd5qiJmQYrcq5oDf94KK5
+ kOOpXVN7bP9PeFE0PLpKlT5Dpsq2YxhdwxWO0rM8I8E/5nchw/x91nuIk2T0Ub0N
+ H8AP70PQByVktvQPlfxNun9A9bdM7C8hIblapOUgZTGKPEVsc7GU59zBzpAoB7QB
+ x7ftTIookgqWJMFUpLnZeAhP9x712BTPQ033KNhxpP3DkE8eG+p01Fg8e5j1wMqj
+ 3qrcd4WxNkKnVD4jMBkGIUyxRXQwf4l77zkNVfMBArN1LxM6Waw+47SQ0MemIsSI
+ 14aiKBU6ww==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rewsq0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 10:22:15 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UA4fPL006108;
- Tue, 30 Jun 2026 10:22:14 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhy9d08-1
+ Tue, 30 Jun 2026 10:23:27 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UAJewJ022491;
+ Tue, 30 Jun 2026 10:23:26 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7w1rfv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 10:22:14 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65UAMD5F21168690
+ Tue, 30 Jun 2026 10:23:26 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65UANPbG29491796
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Jun 2026 10:22:14 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 928AC58054;
- Tue, 30 Jun 2026 10:22:13 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 96FF258055;
- Tue, 30 Jun 2026 10:22:06 +0000 (GMT)
-Received: from [9.43.123.94] (unknown [9.43.123.94])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 30 Jun 2026 10:22:06 +0000 (GMT)
-Message-ID: <d58ee809-02b3-49be-b927-eacf2da8bfb5@linux.vnet.ibm.com>
-Date: Tue, 30 Jun 2026 15:52:04 +0530
+ Tue, 30 Jun 2026 10:23:25 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 515675805C;
+ Tue, 30 Jun 2026 10:23:25 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 573475805A;
+ Tue, 30 Jun 2026 10:23:24 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 30 Jun 2026 10:23:24 +0000 (GMT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/9] pnv/phb5: Update PHB4 to the latest PHB5 spec
-To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org, mst@redhat.com
-Cc: harshpb@linux.ibm.com, npiggin@gmail.com, fbarrat@linux.ibm.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
- kowal@linux.ibm.com, chalapathi.v@linux.ibm.com, calebs@linux.ibm.com,
- milesg@linux.ibm.com, jishnuvw@linux.ibm.com, adityag@linux.ibm.com,
- amachhiw@linux.ibm.com
-References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
-Content-Language: en-US
-From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-In-Reply-To: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Tue, 30 Jun 2026 12:23:23 +0200
+From: Harald Freudenberger <freude@linux.ibm.com>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: richard.henderson@linaro.org, david@kernel.org, thuth@redhat.com,
+ berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ linux390-list@tuxmaker.boeblingen.de.ibm.com,
+ linux-s390@vger.kernel.org, dengler@linux.ibm.com,
+ borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
+Subject: Re: [PATCH v8 01/18] target/s390x: Fix wrong address handling in
+ address loops
+Mail-Reply-To: freude@linux.ibm.com
+In-Reply-To: <6e7ce946-1128-4b2c-9520-a171bca3ceb7@linux.ibm.com>
+References: <20260624081029.23815-1-freude@linux.ibm.com>
+ <20260624081029.23815-2-freude@linux.ibm.com>
+ <e516de9c-e9fb-45af-aa5e-8cb9dbf1e3f3@linux.ibm.com>
+ <d55a9d7e7759251c1e75050a9a9ccd6f@linux.ibm.com>
+ <6e7ce946-1128-4b2c-9520-a171bca3ceb7@linux.ibm.com>
+Message-ID: <a6e637d07024e0ff8a457500110e225f@linux.ibm.com>
+X-Sender: freude@linux.ibm.com
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a4398d8 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a43991f cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=N1-tE7rikoB3GCo6Uq0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: doAWwkymRZHl_SkDgEw2kGeNdUjv3Ssu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDA5MyBTYWx0ZWRfX4VaekMmb9GvD
- 1zT7YNmmDTz86/KY/LpTlmdqVdOEWTjUxPehVjkX+tFWZmwblce4n2HRRtM5zxffLWRxiH1mF6x
- VfFgbS77wywX15l4NfFRX5AlLLjs0poDtpYw1XUsxh0nd0yHAtF32o20x+NQjVCV9LMI1Q5fwjK
- Ond+2Gu+4Ljs89KwA2AjI2Vi8cCbzkguP2t0+kM/BRpadF8ESiFBxGSDzW+LJbeUcy4X1hFl4e6
- W0DNZvB1MsXbJKhtjz73hIw6mcO14QSZhZm8fIN59JnjsBXyYICAp4Z9y85Vz24KhVOhaHOcS0i
- 31EBwErN6jUmVX237KWrqa9a5Pt1k/gh0jFALI4I5tFsMBNgHkdGIB01RbyrVRiEHrzMPdtkZYL
- FJmXMJGU8z0vrJ40uuxJfisX1aiNM+q3iEzJR27TfbplCxOhNo84uEHw7bC55Nkj9JL0mHQmf+n
- VCCLXa30P4ROfMiFQMA==
-X-Proofpoint-GUID: xQgYoFSdDW-3I41MIoWLGolqICkYrO2t
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDA5MyBTYWx0ZWRfX9BUyPG1uLrl+
- fEl8FPg3jA/U8+1hd0PfBLtAtxSU2R5QuAJi3WyiHZz6TEdwrCn5iFRG0VqMF6kWlZsy/Vwjt1T
- /aVlQC3VcFtUGkUWgS7n+58TnKzWO4M=
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=y3FDp6X5KcjlW3Ig3ksA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: Jx1J-90prwl4Ykyn-DABtV_5LIDbj6uX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDA5MyBTYWx0ZWRfX5N7Ry8TTcVyF
+ /DL0ngovBnUc/RoCXxpUaGAYWbJLxIvMchGooe315a1BBEtlORNNv9NlyVgMLOTzG7vLd6f2Mgg
+ HlBjeba0vPVkP6c2CT9DaXNsBKrTQ68po0yGH7PHse7wQiSKf29RjoKd0oWYdN2hgiYfZqQel3w
+ T3MeX5ohu+w7nSFHGpTZ8EdOumzMMj6PWhfdsvxhJ6snjm3Enz1exMpRtyEsnyrSDzpFxx3l3g2
+ a90AzFdhhtSn1XB9xR8UGi1nK9QjKw7QTA+MUWkP2X1B3gfaaoWK7EU3IWRy2KuZ6w4BZ52TtfW
+ jbrWSyAQWKlVrx4NeSes0b0vNcn22XWz588/2/gR7xZGqrGCQcGEFL+F01SE+XAXO9c0O8FhzAj
+ nl6k8iXwj5rD4Li/1t2PkklXhGS1nxY4KJdgcOiqgivgkxpajC3ZYCTohC40DsWx/oFijFaCrR2
+ Hoptme0d6YhJgHYW8zg==
+X-Proofpoint-GUID: Jx1J-90prwl4Ykyn-DABtV_5LIDbj6uX
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDA5MyBTYWx0ZWRfX5Pfo0u7m7YDH
+ ehOmpJI2W5tgUPDNsNExugLdmWxYkyOFX5o0WpmkuuFyTleZTc6gLGAKfCWftKExrtb8vrEQLCU
+ uNYOhUsfAEjGbPQt3DRzOfkPTnvGxxM=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-30_03,2026-06-26_01,2025-10-01_01
@@ -104,15 +108,15 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300093
-Received-SPF: none client-ip=148.163.158.5;
- envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=freude@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,63 +129,135 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Cedric, Michael,
+On 2026-06-30 11:33, Ilya Leoshkevich wrote:
+> On 6/29/26 14:57, Harald Freudenberger wrote:
+>> On 2026-06-24 14:56, Ilya Leoshkevich wrote:
+>>> On 6/24/26 10:09, Harald Freudenberger wrote:
+>>>> With the introduction of the address wrapping function
+>>>> wrap_address() the result can't be used to walk the
+>>>> source address any more. So introduce a new local variable
+>>>> to hold the wrapped address to avoid mixing source and
+>>>> wrapped address value.
+>>>> 
+>>>> Fixes: fcc2699d41 ("target/s390x: Have MSA helper pass a mmu_idx 
+>>>> argument")
+>>>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+>>>> ---
+>>>>   target/s390x/tcg/crypto_helper.c | 16 ++++++++--------
+>>>>   1 file changed, 8 insertions(+), 8 deletions(-)
+>>> 
+>>> If I take as an example AMODE 24 and look at the third loop 
+>>> iteration,
+>>> with the current code in master I would get:
+>>> 
+>>>     ((((addr & 0xffffff) + 8) & 0xffffff) + 8) & 0xffffff
+>>> 
+>>> and with your patch it would be:
+>>> 
+>>>     (addr + 8 + 8) & 0xffffff
+>>> 
+>>> which is undeniably more elegant, but otherwise looks equivalent to 
+>>> me.
+>>> 
+>>> What is the functional issue here?
+>>> 
+>>>> diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/ 
+>>>> crypto_helper.c
+>>>> index ae392bce0e..29ad2aff43 100644
+>>>> --- a/target/s390x/tcg/crypto_helper.c
+>>>> +++ b/target/s390x/tcg/crypto_helper.c
+>>>> @@ -126,8 +126,8 @@ static void sha512_read_icv(CPUS390XState *env, 
+>>>> const int mmu_idx,
+>>>>       const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, 
+>>>> mmu_idx);
+>>>>         for (int i = 0; i < 8; i++, addr += 8) {
+>>>> -        addr = wrap_address(env, addr);
+>>>> -        a[i] = cpu_ldq_mmu(env, addr, oi, ra);
+>>>> +        uint64_t _addr = wrap_address(env, addr);
+>>>> +        a[i] = cpu_ldq_mmu(env, _addr, oi, ra);
+>>>>       }
+>>>>   }
+>>> 
+>>> [...]
+>> 
+>> It is a fix, not an improvement. The original code
+>> used the addr variable to hold the wrapped address.
+>> But as addr is also used as the loop variable there
+>> is a mixing between unwrapped and wrapped address here
+>> and the unfixed code only works when wrap_address does
+>> return the very same address as output as it became as
+>> input. My fix corrects this.
+> 
+> What does the patch change w.r.t. wrapping?
+> Suppose we have amode 24 and addr = 0xfffff0:
+> 
+> Before:
+> 
+>   i = 0; addr = wrap(0xfffff0) = 0xfffff0;
+>          a[0] = ldq(0xfffff0);
+>   i = 1; addr = wrap(0xfffff0 + 8) = 0xfffff8;
+>          a[1] = ldq(0xfffff8);
+>   i = 2; addr = wrap(0xfffff8 + 8) = 0;
+>          a[2] = ldq(0);
+>   i = 3; addr = wrap(0 + 8) = 8;
+>          a[3] = ldq(8);
+> 
+> After:
+> 
+>   i = 0; addr = 0xfffff0;
+>          _addr = wrap(0xfffff0) = 0xfffff0;
+>          a[0] = ldq(0xfffff0)
+>   i = 1; addr = 0xfffff0 + 8;
+>          _addr = wrap(0xfffff8) = 0xfffff8;
+>          a[1] = ldq(0xfffff8);
+>   i = 2; addr = 0xfffff8 + 8 = 0x1000000
+>          _addr = wrap(0x1000000) = 0;
+>          a[2] = ldq(0);
+>   i = 3; addr = 0x1000000 + 8 = 0x1000008;
+>          _addr = wrap(0x1000008) = 8;
+>          a[3] = ldq(8);
+> 
+> The behavior look identical to me.
+> What am I missing?
 
-Is it OK to retain you Rbs in the next v6?
+Lets assume addr is some 0x1000 and wrap does just add some offset, e.g. 
+0x8000
 
-or would you like to review this v5? (as the patches have evolved since 
-you last reviewed.)
+for (int i = 0; i < 8; i++, addr += 8) {
+     addr = wrap_address(env, addr);
+     fetch or write something at the wrapped address addr;
+}
 
-Regards,
+Then the idea of this loop is to run through addr 0x1000 ... 0x103F.
+1. loop with i=0 and addr 0x1000
+2. loop with i=1 and addr 0x1000 + 8
+3. loop with i=2 and addr 0x1000 + 8 + 8
+4. loop with i=3 and addr 0x1000 + 8 + 8 + 8
+5. loop with i=4 and addr 0x1000 + 8 + 8 + 8 + 8
+6. loop with i=5 and addr 0x1000 + 8 + 8 + 8 + 8 + 8
+7. loop with i=6 and addr 0x1000 + 8 + 8 + 8 + 8 + 8 + 8
+8. loop with i=7 and addr 0x1000 + 8 + 8 + 8 + 8 + 8 + 8 + 8
 
-Saif
+BUT the given code does something different. As the addr is used in the 
+loop
+to hold the wrapped address this loop in fact does:
+1. loop with i=0 and addr 0x1000 - all fine, but as addr = 
+wrap_address() at the
+    end of the loop now addr is 0x1000 + 0x8000 = 0x9000, so next loop 
+starts with
+2. loop with i=1 and addr 0x9000 + 8
+    and at the end of the loop addr is 0x9008 + 0x8000 = 0x11008 and next 
+loop starts
+3. loop with i=2 and addr 0x11008 + 8
+    ...
+
+So introducing an intermediate variable which holds the wrapped address
+makes sure the surrounding addr walk in the loop does as intended.
 
 
-On 17-06-2026 15:20, Saif Abrar wrote:
-> Hello,
-> This patchset resolves the review comments for v4:
-> https://lore.kernel.org/qemu-devel/20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com/
->
-> Thanks to all the reviewers for their efforts.
->
-> Major updates include the following:
-> - Rename to phb5.
-> - New file for common definitions used in tests/qtest/pnv-* files.
-> - Initializing PnvPHB4Class members within class_init method.
-> - Updated IODA3 PCT table max size to 128, each with 2 entries.
-> - Multiple general cleanups.
->
-> Tested with 'make check-qtest' , 'make check-functional-ppc64' and 'make check'.
->
-> Regards.
->
-> Saif Abrar (9):
->    qtest/phb5: Add testbench for PHB
->    pnv/phb5: Add reset logic to PHB5
->    pnv/phb5: Implement sticky reset logic in PHB5
->    pnv/phb5: Implement read-only and write-only bits of registers
->    pnv/phb5: Implement write-clear and return 1's on unimplemented reg
->      read
->    pnv/phb5: Set link-active status in HPSTAT and LMR registers
->    pnv/phb5: Set link speed and width in the DLP training control
->      register
->    pnv/phb5: Implement IODA PCT table
->    pnv/phb5: Mask off LSI Source-ID based on number of interrupts
->
->   hw/pci-host/pnv_phb.c               |   1 +
->   hw/pci-host/pnv_phb4.c              | 581 +++++++++++++++++++++++++---
->   include/hw/pci-host/pnv_phb4.h      |  16 +-
->   include/hw/pci-host/pnv_phb4_regs.h |  66 +++-
->   tests/qtest/meson.build             |   1 +
->   tests/qtest/pnv-host-i2c-test.c     |  13 +-
->   tests/qtest/pnv-phb-test.c          | 235 +++++++++++
->   tests/qtest/pnv-qtest-common.h      |  24 ++
->   tests/qtest/pnv-xive2-common.h      |   7 +-
->   9 files changed, 868 insertions(+), 76 deletions(-)
->   create mode 100644 tests/qtest/pnv-phb-test.c
->   create mode 100644 tests/qtest/pnv-qtest-common.h
->
+
 
