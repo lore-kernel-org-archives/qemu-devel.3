@@ -4,51 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2069FC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 07:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C20C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 07:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weT6R-0008J3-6P; Tue, 30 Jun 2026 03:41:55 -0400
+	id 1weTGu-0001cU-Hl; Tue, 30 Jun 2026 03:52:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1weT6O-0008IB-JM
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 03:41:52 -0400
+ id 1weTGq-0001c2-DQ
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 03:52:40 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1weT6L-0004Rs-Je
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 03:41:52 -0400
+ id 1weTGm-0000aA-Ey
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 03:52:40 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65U7ffdc088419
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65U7q9J0092839
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 30 Jun 2026 16:41:41 +0900 (JST)
+ Tue, 30 Jun 2026 16:52:09 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=+wi4rJdBYKd+ALuL6Jlxgy226asFlIhS7w/t2fWsNu8=; 
+DKIM-Signature: a=rsa-sha256; bh=OeqjAs7c8KOPo4XIP1Ri3UwTBEqyE7yB1iTCKCHX5js=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1782805301; v=1;
- b=kP1bXRNaINf86nAmHTEP+zBVeNKfidc1beec7bdYHeOHZ2WU77SwY65QI6uY/e1j
- sCDQ9JtnmtgXhXFWId0WBx9yGPGSWBpBVvsEYF17wEVXp6PadXMyh50oaBNNUe3h
- 6uAl+KQ/TPwOHLNpmmtEwCohIkt3xTi/9oeHczYnFSCL/9rQtJYHCQAB7HnPYEmH
- moQC5TL+bGY4VaJ8X0IHfKUlagz6+w8fwRIdeyFxo+SkjWuoqjehXU6ogTwwfxBw
- o4OMl8GqGUNlKAuo8Y+Dxoqf6AcYnAicv0Kv3b0hV3trA893Uj2Rwhdxr009scpW
- vValBbAhneJEk8/9/nb3eg==
-Message-ID: <3b65505c-818f-42d8-8e62-2e1195f155b0@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 30 Jun 2026 16:41:41 +0900
+ s=rs20250326; t=1782805929; v=1;
+ b=jzXrToZWc9iLf9oCc/HpeYQTgg75BWQ4GsZGqMUKwTCFA70GnDe00LnKmW6YyFci
+ CSfjfYbohwk3boO3BBoMegxXs+ZWGlI+NCkrsTsF2K+MzEUZTlU7tATLZFrjk4zA
+ 93jv6/7sjzn7TohRhU5rSMp4V69yQtUFyknhj6pM7z9HUagoaBgRbiPOl/TN18dR
+ hmO1btCiK8hDFfQ51psCq12qMIZW9K2aeMaXITNYfOdb6JSqG0zGgKQT9RHGq+j9
+ /fnrFb6fGN4OhEVFo2vvqtdYiFr9aNMlNFrrPyvvAUmjp8dt3EGpbCfnREVzZemK
+ D+3WGzpZi7c1+gAPlT9W0g==
+Message-ID: <f2c35b50-264d-4268-bd0e-dd52fe6269bf@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 30 Jun 2026 16:52:08 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] hw/net: fix e1000e/igb ip_len inflation by Ethernet
- minimum-frame padding
-To: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>, qemu-devel@nongnu.org
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Jason Wang <jasowang@redhat.com>
-References: <20260629-net-tx-pkt-ip-length-padding-v5-1-16760e30252e@gmail.com>
+Subject: Re: [PATCH v8 0/7] igb: Implement Transmit Rate Limiting (TRL)
+To: Josh Hilke <jrhilke@google.com>
+Cc: qemu-devel@nongnu.org, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Matlack <dmatlack@google.com>,
+ Alex Williamson <alex.williamson@nvidia.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20260623-igb-trl-v8-0-c9b1fc6c3304@google.com>
+ <ff0bcd39-afd6-4842-9cd5-3e39e56ec901@rsg.ci.i.u-tokyo.ac.jp>
+ <CAAdrzjtjVyG-yV+MnZ5wtgef3UQ-MLCWZtHh9feeBK4ek4YXJg@mail.gmail.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260629-net-tx-pkt-ip-length-padding-v5-1-16760e30252e@gmail.com>
+In-Reply-To: <CAAdrzjtjVyG-yV+MnZ5wtgef3UQ-MLCWZtHh9feeBK4ek4YXJg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -74,125 +79,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/06/30 0:21, Sanjeeva Yerrapureddy wrote:
-> When a guest transmits a short Ethernet frame, iov_size() returns the
-> padded wire length including any bytes added to reach the Ethernet
-> minimum frame size of 60 bytes.  net_tx_pkt_rebuild_payload() uses
-> this inflated size as payload_len.  net_tx_pkt_update_ip_hdr_checksum()
-> then overwrites the IPv4 Total Length field with payload_len +
-> l3_hdr_len, inflating it by the padding.  The receiver interprets
-> Ethernet padding as IP payload, producing a malformed packet.
-> 
-> Fix by removing the ip_len write from net_tx_pkt_update_ip_hdr_checksum()
-> so it only recomputes the checksum, and moving the ip_len assignment
-> into net_tx_pkt_update_ip_checksums() where it is only performed for
-> TSO (where ip_len must be derived from payload_len since the guest sets
-> ip_len=0 per Intel 82574 datasheet §7.3.4 for super-packets the host
-> will segment).
-> 
-> Both e1000e and igb already call net_tx_pkt_update_ip_hdr_checksum()
-> from their IXSM paths, so both are corrected by this single common-
-> layer change.
-> 
-> Signed-off-by: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
+On 2026/06/30 3:11, Josh Hilke wrote:
+> Do I need to push a v9 to include your "Reviewed-by" tag?
 
-Reivewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-
-Thank you for promptly responding to reviews and identifying the cause 
-of the issue.
+No. I think this series is ready to pull along with other network patches.
 
 Regards,
 Akihiko Odaki
 
-> ---
-> Thank you Akihiko for the review of v4. I agree that avoiding two
-> similar functions is cleaner. v5 moves the ip_len write into
-> net_tx_pkt_update_ip_checksums() (the TSO path that already owns it)
-> and strips it from net_tx_pkt_update_ip_hdr_checksum(), which becomes a
-> pure checksum recomputation. The net effect is that both e1000e and igb
-> IXSM paths are corrected automatically without any device-layer change.
 > 
-> Changes in v5:
-> - Remove the ip_len write from net_tx_pkt_update_ip_hdr_checksum() so
->    it only recomputes the checksum.
-> - Move the ip_len assignment into net_tx_pkt_update_ip_checksums() (the
->    TSO path), which already called net_tx_pkt_update_ip_hdr_checksum()
->    immediately after. The comment and the ip_len line are restored to
->    their upstream positions.
-> - Remove net_tx_pkt_update_ip_hdr_checksum_only() entirely — no longer
->    needed.
-> - Revert the e1000e IXSM path to its original call of
->    net_tx_pkt_update_ip_hdr_checksum(). Because that function no longer
->    inflates ip_len, igb (which already calls the same function) is also
->    corrected with no additional change.
-> - Link to v4: https://lore.kernel.org/qemu-devel/20260628-net-tx-pkt-ip-length-padding-v4-1-829b36db5adb@gmail.com
+> Thanks,
+> Josh
 > 
-> Changes in v4:
-> - Add net_tx_pkt_update_ip_hdr_checksum_only(); call it from the e1000e
->    IXSM path to avoid inflating ip_len.
-> - Link to v3: https://lore.kernel.org/qemu-devel/20260627-net-tx-pkt-ip-length-padding-v3-1-e860dabadd3f@gmail.com
-> 
-> Changes in v3:
-> - Architectural redesign: three-case fallback logic in
->    net_tx_pkt_rebuild_payload() plus net_tx_pkt_set_payload_len() API;
->    e1000e pre-sets payload_len from PAYLEN descriptor field.
-> - Link to v2: https://lore.kernel.org/qemu-devel/20260625-net-tx-pkt-ip-length-padding-v2-1-287d0ba59ec1@gmail.com
-> 
-> Changes in v2:
-> - Fix iov_copy() to use raw_payload_len and net_tx_pkt_get_total_len()
->    to use iov_size() to preserve correct wire frame size.
-> - Link to v1: https://lore.kernel.org/qemu-devel/20260624-net-tx-pkt-ip-length-padding-v1-1-7a22fe9b4e40@gmail.com
-> 
-> On the relationship to the short-packet receive-path discussion
-> (Peter Maydell):
-> https://lore.kernel.org/qemu-devel/CAFEAcA_UhmCxJc16CHE=4ZR1+PA0=4-29=fEe+d+iUmhLTzpuQ@mail.gmail.com/
-> 
-> The linked thread concerns the receive path. This patch addresses only
-> the transmit path: the IXSM offload path was overwriting a correctly
-> set guest ip_len with an inflated value that included Ethernet padding.
-> No changes to padding behaviour or the receive path are made.
-> 
-> To: qemu-devel@nongnu.org
-> Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>
-> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Cc: Jason Wang <jasowang@redhat.com>
-> ---
->   hw/net/net_tx_pkt.c | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
-> index 903238dca2..b134348fe8 100644
-> --- a/hw/net/net_tx_pkt.c
-> +++ b/hw/net/net_tx_pkt.c
-> @@ -93,9 +93,6 @@ void net_tx_pkt_update_ip_hdr_checksum(struct NetTxPkt *pkt)
->       uint16_t csum;
->       assert(pkt);
->   
-> -    pkt->l3_hdr.ip.ip_len = cpu_to_be16(pkt->payload_len +
-> -        pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len);
-> -
->       pkt->l3_hdr.ip.ip_sum = 0;
->       csum = net_raw_checksum(pkt->l3_hdr.octets,
->           pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len);
-> @@ -117,7 +114,9 @@ void net_tx_pkt_update_ip_checksums(struct NetTxPkt *pkt)
->   
->       if (gso_type == VIRTIO_NET_HDR_GSO_TCPV4 ||
->           gso_type == VIRTIO_NET_HDR_GSO_UDP) {
-> -        /* Calculate IP header checksum */
-> +        /* Set ip_len and calculate IP header checksum */
-> +        pkt->l3_hdr.ip.ip_len = cpu_to_be16(pkt->payload_len +
-> +            pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len);
->           net_tx_pkt_update_ip_hdr_checksum(pkt);
->   
->           /* Calculate IP pseudo header checksum */
-> 
-> ---
-> base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
-> change-id: 20260628-net-tx-pkt-ip-length-padding-951e75fa97b4
-> 
-> Best regards,
-> --
-> Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
-> 
+> On Wed, Jun 24, 2026 at 1:18 AM Akihiko Odaki
+> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>>
+>> On 2026/06/24 0:05, Josh Hilke wrote:
+>>> This is v8 of a patch series implementing the Transmit Rate Limiter (TRL) feature for
+>>> the Intel 82576 (igb) network device emulation in QEMU.
+>>>
+>>> v7: https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg05440.html
+>>>
+>>> Changelog:
+>>>
+>>> v8:
+>>>     - Fix extraneous whitespace modifications.
+>>>     - Use muldiv64() in igb_trl_calculate_delay().
+>>>     - Fix comment for rate factor in igb_trl_calculate_delay().>
+>>> Signed-off-by: Josh Hilke <jrhilke@google.com>
+>>
+>> For the whole series:
+>>
+>> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>
+>> Regards,
+>> Akihiko Odaki
+>>
+>>> ---
+>>> Josh Hilke (7):
+>>>         igb: Define TRL registers and core state
+>>>         igb: Add VMState support for TRL state
+>>>         igb: Implement TRL register write and configuration
+>>>         igb: Refactor TX path to return processed byte count
+>>>         igb: Implement TRL throttling and timer resumption
+>>>         igb: Add QTest for Transmit Rate Limiter register multiplexing
+>>>         igb: Add QTest for Transmit Rate Limiter traffic throttling
+>>>
+>>>    hw/net/igb.c           |  43 +++++++++++
+>>>    hw/net/igb_common.h    |   1 +
+>>>    hw/net/igb_core.c      | 142 ++++++++++++++++++++++++++++++++--
+>>>    hw/net/igb_core.h      |  12 +++
+>>>    hw/net/igb_regs.h      |   5 ++
+>>>    tests/qtest/igb-test.c | 206 +++++++++++++++++++++++++++++++++++++++++++++++++
+>>>    6 files changed, 404 insertions(+), 5 deletions(-)
+>>> ---
+>>> base-commit: 98b060da3a4f92b2a994ead5b16a87e783baf77c
+>>> change-id: 20260608-igb-trl-19be198da6f2
+>>>
+>>> Best regards,
+>>
 
 
