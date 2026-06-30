@@ -4,72 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10093C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 21:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20A3BC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 21:42:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wefs1-0004dO-TC; Tue, 30 Jun 2026 17:19:53 -0400
+	id 1wegDO-0007uA-40; Tue, 30 Jun 2026 17:41:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1wefry-0004cb-BA; Tue, 30 Jun 2026 17:19:51 -0400
-Received: from xmbghk7.mail.qq.com ([43.163.128.43])
+ (Exim 4.90_1) (envelope-from <christianslima@proton.me>)
+ id 1wegDM-0007tW-0j
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 17:41:56 -0400
+Received: from mail-08.mail-europe.com ([57.129.93.249])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1wefrv-0000Fe-Pr; Tue, 30 Jun 2026 17:19:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1782854377; bh=C9JU5nYmpNBq44scWx9gShXAN2m+5opKU2KoGCuFvyk=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=C3q0sUJtI4f6lWNvKiFQBRy2LiOhW32+GeF58gPg/j2tN0FuaYYAcjvIn489JTw85
- T/DYNk+XHCR5gjdrAeM1kGwJrQM1TVvjQEqStDJ/akSDmin7ndRW78VK8j9Y6nCVn5
- Or4L68qnbicQv8jrXZZO/fdzwIH9WZqtrfXHPyAo=
-Received: from [192.168.1.10] ([220.166.214.112])
- by newxmesmtplogicsvrsza63-0.qq.com (NewEsmtp) with SMTP
- id 4E289658; Wed, 01 Jul 2026 05:19:34 +0800
-X-QQ-mid: xmsmtpt1782854374tr4hy914i
-Message-ID: <tencent_7F27F8BD919DB95B3CC8499DAEC9227DCD0A@qq.com>
-X-QQ-XMAILINFO: NC4p7XQIBeahXtGvXkf7zacvMTstsgmVIedma5m3VoZIk8VjssiokL2UHbRQp9
- sLoX5Zi1LdrRbnxEN1b/ZSxezWvRG5HKZQ22UXX/qo/3EzxwXr/BGq0f6QQEdtH8FCNTSKNUG6L5
- SQLe46Ws67nfEMwGUI3mM1d0H7q1ShDzsTUi24rawJIqXsTREhkRwPWQpO7a44F1cWdbzz63AjIz
- IUQFkQlVWVGdJ3KxCwMCh1rJFRnZ7xfIdZI8+C50GiMl9eBieTXSBi7+Vy2oNnAb2zQ3NSsHIvzc
- 6GIlTxjvlc2L9qvrTIAzzfn96r8BogMFYQbaZH/ZpRTSZKdMpzuQJUC8G43XEyHy815luyD1a1hR
- OP9tlzE2ofrBGGLn4bJV9hR7HZNneJxIpOPJxN4b53jAV2yaPmWTg5RyLfc2VZbk7x0E4wi2ZH03
- UJERW+cNiWa1y9Gsjm+DLFlKs9mFD6JwdsuN0HvXjhws6p88Zwm71dXsybZgK52vHkZUCVLJiOlK
- +q6wqHRLeSZqxJfjcBAnMDrRBcD94L2NKXM9mabyQvHgAEkWWCXoMooQk1HWo8eGd+yV24GCC2bH
- 590oGM4n89IhT6B/VsZ8b8CkJyAfjpJkJU+aTxSpfjWGoBPECHnc7mA/YARgPsrDiEsR3A+s+tFH
- mw/UvQl6ncx1WECqsXE2U6ArOvmBAr3f3XqKPb9FqrDnrbsjd9DXho7GnHY2YxV29CD8nYu+YZf3
- 8UDMrYBDrICQ1U6EC5hM4I5H8DfQ2r4+N0hZiYk7bgpQTthJsZN76+M0GaDSfmhCWz0e51UCSE4I
- KfrSue5e6MVMOPA/L8uJcE/LUYpkr2ctLNEHPMHb+lG2iJg0fc/0QZTfxpvbXuDoCv3S1XRQKZ0J
- nBeFIncjHeloovuecUXknLhWl4LrYl80O/t12ioQCH4zHLJJK5z3U5BeLPrwi1UTPz7vbo5T+f/H
- DqfcccA82gezzkXSiHN//pbcIczsb6NhHPqbwNq2X8EvqZ5z2ysCet9wyoYkFz4yxf1QjP1HPt5P
- rtFj8L+Q==
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-X-OQ-MSGID: <8cbc0b95a652cd34f40979c94cd7c2df9ef9fc45.camel@qq.com>
-Subject: Re: [PATCH v1] riscv/virt: Add secondary UART
-From: Yanfeng Liu <yfliu2008@qq.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com,  zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com
-Date: Wed, 01 Jul 2026 05:19:34 +0800
-In-Reply-To: <CAFEAcA9qpbF+hFpuYpqZrepozryA=ZuDhHLijYAZucumfAMkGQ@mail.gmail.com>
-References: <tencent_AB4D09097B1EC06F8C6CD11DF2C14E8A6D05@qq.com>
- <CAFEAcA9qpbF+hFpuYpqZrepozryA=ZuDhHLijYAZucumfAMkGQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4-0ubuntu2.1 
+ (Exim 4.90_1) (envelope-from <christianslima@proton.me>)
+ id 1wegDI-0007Ch-Dn
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 17:41:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+ s=protonmail; t=1782855707; x=1783114907;
+ bh=AqwNOxf7jDusFnS+r7xaI3RqIc876/LzyZNvvZuJhzs=;
+ h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector;
+ b=Bb+Jf0lWYYS+juwlYeq7jRckyvDz7hhHRcoE8KWKFFt4drTBa1LCWNMu+wKcWX1qh
+ mziowfgy29ssi++vuEbhsT25GAqvk5+7Zym1GJxstOaJwgaJ+ZNXVsbf5vLeQnlUJ2
+ jd3S0dQBSmBXMg3elYYzO6lXLvZkMBdaQ8ui2Z0twqWoEgYCkCgN1L9XaQDYeX249u
+ V1YCWUANNMrxpkViJjLngtj8l5swCnEE4HWAW/Tz82yQfMcaphHucmObBtDlLHRqHq
+ LKD7zJKdPhfhKmrqGAl5VbvBr4YvXripFmDj8szVRu8tN58qkLL+OIRx8oeKykfUXz
+ w/KsPzdEH8blg==
+Date: Tue, 30 Jun 2026 21:41:42 +0000
+To: Markus Armbruster <armbru@redhat.com>
+From: Christian <christianslima@proton.me>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>
+Subject: Re: [PATCH] disas: converts malloc to g_malloc0
+Message-ID: <VLQ3cW-y90jLFN8RYLC7eWH7G4nyYcDC97wYVCeRXhRSqVvvwakdP2nfSIvmuDvs-oW2dTr7D_vqDh6VCfepW6uAae4WOmQqrnpLJCytYI4=@proton.me>
+In-Reply-To: <87zf0cplir.fsf@pond.sub.org>
+References: <20260630005249.143976-1-christianslima@proton.me>
+ <87qzlor5j2.fsf@pond.sub.org>
+ <ivgABRYgjCAvFEp6oiNyDgt4s4XO8EYr1VBiYPbuEzRH4UFDlpqPw4AgUlgFBb2AAKdw2EybEjNzoz8S4QPaJE2cUQjs48fm4BM97KPZ_IQ=@proton.me>
+ <87zf0cplir.fsf@pond.sub.org>
+Feedback-ID: 169431447:user:proton
+X-Pm-Message-ID: ba4d9ed753d6b73959947a9d2b5588a9170dc72d
 MIME-Version: 1.0
-Received-SPF: pass client-ip=43.163.128.43; envelope-from=yfliu2008@qq.com;
- helo=xmbghk7.mail.qq.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=57.129.93.249;
+ envelope-from=christianslima@proton.me; helo=mail-08.mail-europe.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,42 +72,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter,
-
-thanks a lot for the comments, will send v2 later.
-
-Regards,
-Yanfeng
-
-
-On Mon, 2026-06-29 at 10:37 +0100, Peter Maydell wrote:
-> On Sun, 28 Jun 2026 at 08:06, Yanfeng Liu <yfliu2008@qq.com> wrote:
-> >=20
-> > This adds secondary UART device to RiscV virt board to simplify
-> > multi-core bare-metal development as Virtio needs comparably
-> > more work.
-> >=20
-> > Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
-> > ---
+> g_new0(T, N) allocates an array T[N].  The macro's return value is a T
+> *.  So, g_new0(struct m68k_opcode *, m68k_numopcodes) returns struct
+> m68k_opcode **, which fails type checking.  Good, because it's indeed
+> wrong: you want an array of T, not an array of T *.
 >=20
-> Just a note that for other architectures we have seen the
-> addition of an extra UART cause breakage for previously
-> working guests, usually because they took the approach of
-> "find the first UART node in the DTB" and/or because
-> different software at different levels of the stack was
-> looking for the UART in the DTB differently and so you
-> ended up with e.g. UEFI outputting on one UART and the
-> kernel on the other. A particular trap is that the order
-> of nodes in the final DTB ends up being the reverse of the
-> order in which they are added in the code in QEMU.
+> Details at <https://docs.gtk.org/glib/func.new0.html>.
 >=20
-> Compare commit 5d8a250f9068 (openrisc) and e7100972f2 (arm)
-> for descriptions of some of the things we've run into and
-> the measures we've taken as a result. It's possible that
-> not all of these will be relevant for riscv but it's quite
-> likely that some will.
->=20
-> thanks
-> -- PMM
+> Questions?
 
+Thanks for your explanation, now I understand what's wrong. I'll submit a v=
+2 later. :) 
 
