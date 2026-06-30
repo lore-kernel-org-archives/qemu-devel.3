@@ -4,137 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 682D8C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 11:04:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D84FAC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 11:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weWFg-0005Vs-D1; Tue, 30 Jun 2026 07:03:40 -0400
+	id 1weWGn-00060H-Hs; Tue, 30 Jun 2026 07:04:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1weWFf-0005Vk-9w
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 07:03:39 -0400
-Received: from mail-francecentralazon11023080.outbound.protection.outlook.com
- ([40.107.162.80] helo=PA4PR04CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1weWGm-0005zw-KB; Tue, 30 Jun 2026 07:04:48 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1weWFd-0005aZ-Bv
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 07:03:39 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SAlrdNIEoNqRow7b0I/YfzAm31gaOqWCXhP2WlMA04Jum3+/PY6w6hHwdz/Wv7Mgdt3/XqzkN02mOMANMEiirEIERNXmn/Jb0Ksy3IE3vGQUF9Fuy2+L5pyqcxWZ8OCy+yeVB8rnqMgzZpAqg7Y5/iXlFeAUhG2BYn2NRtw4zBcOCzWtCChkg/I3KiF4Qe8bnfev7A4TDGhO7c4zO+YGu5N+8Prk31y+f5Ya9SJbKO1dMdvMl2u9TH3tL0SvX7WPUHAT9u+b9ItmPIa+7nOyGqKi79d5YiI5p05J3VQO0HBphWCOCKEbuECYFjwvH5bLnp6ATKfPD4i1EAJuRy2U/Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WVDP8egmB/nI3mdnB74M2NhIDiAqJszaaDtJiuFT7pI=;
- b=NDm7lv/fqN1YnynfiFxEjjcWwsGf3TK//RQZF4Q8j9DctOXELpfaXsShnOAHd6NeCtwhp/RfvXDKjAvdMgo8E2sWyUvCvAvGXaoNbImcrqYmPSK6DLCy0qYTUG4f6QOwpVZ35ZkMq2Mh16HxmbXY843ORhMfigAaFB+M9ASUlscY+Jbh2fUBuTyFcWoOGhiLRgYU4utN7Wfb/x8UDYltnu4jpjFBc8FNrwypZ9+m3n00ouEXqx91+MfLc4257c4u8U14Ht2o6anEZLNjlIRI+bnBf9WyyzQ8F0jNPAL2QsQxdNIf7a+FzWH+U8TrYFYVNJgExoBnp92POxu+AsbD0g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WVDP8egmB/nI3mdnB74M2NhIDiAqJszaaDtJiuFT7pI=;
- b=qFeu/U0UK/kq3cZkFoKR6HNdFuuhIHYs+05M/dZt5Dq3x15dJA47YzpdivozKOVvwUFim7hSyjn07p0/+ko41KeWscDfn4qQHl9azauJFzwG0EL7ngHB3k5q94UqrQBgRfIDjG/vJuQZ0ZWtZ3r0ki+s2yMACGZ/AlYTpvFYahBuqScluv44eTPf0sVzV914WEaKP7i5C3t7exUaJIziBNxhjdstCG2yDdvf1fhnpx8aldb1BOEkic6KG3/hvGuf6nr1xgqgCO2BAJWZ5RYJ3E124KX7nvJTf3FdfoBhsjsMIAEf8dURAd1ggxJTGGx8sOjON8VSR2VnKRQNfJYb5A==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by AS4PR08MB7711.eurprd08.prod.outlook.com (2603:10a6:20b:512::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Tue, 30 Jun
- 2026 10:58:31 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0159.018; Tue, 30 Jun 2026
- 10:58:31 +0000
-Message-ID: <9aeb2a71-49ef-477e-a67b-1c509bbf99eb@virtuozzo.com>
-Date: Tue, 30 Jun 2026 12:58:29 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/7] dump: report win-dmp via vmcoreinfo, guard
- guest-RAM reads during migration
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, anisinha@redhat.com, berrange@redhat.com,
- peterx@redhat.com, farosas@suse.de
-References: <20260619101834.228432-1-den@openvz.org>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <20260619101834.228432-1-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VIVP296CA0011.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:357::19) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1weWGk-0005u2-UG; Tue, 30 Jun 2026 07:04:48 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65U9mvCM1647021; Tue, 30 Jun 2026 11:04:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=p637Vo
+ 8GTcPc11xlHFzMbjyb6EiPlAKwGfKxeoz3sL0=; b=OiSub7OIOrTYbCYV9Emyvv
+ 8g7ZUWWLQJKCLqQK+k94/os22pAjGqYFDCj2OJiwC7slyrsb8+F9jTxcLBHPfisP
+ llC6rdvGG45ufevofVrHl6Vv7jOaTzsg5Uk+GFw7wlorFnrUAHmlYOMKZQtWjRyJ
+ oPaU57mfBu5TZ2tP71yl5Ll99kIqdcxrLJRwWgPEtNbRLStB1Y2pu9fEHfwrQ/2Y
+ XI9cGOqAQR/HMrfatFNB6sZojlqkgpMQMqBtVek5/+6ciOJwI/nfas+HQi/wFAcu
+ +vx1EjJQSavN8//D/X/S9j7CxCOveGOruE68nNJzcVHmwMMkkzz7Skhmd+8uFFqg
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26n5pa6s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 11:04:42 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UB4edo007595;
+ Tue, 30 Jun 2026 11:04:41 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7w1wx2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 11:04:41 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65UB4bY848628116
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Jun 2026 11:04:37 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B28BD20043;
+ Tue, 30 Jun 2026 11:04:37 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 588B420040;
+ Tue, 30 Jun 2026 11:04:32 +0000 (GMT)
+Received: from [9.123.10.203] (unknown [9.123.10.203])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 30 Jun 2026 11:04:32 +0000 (GMT)
+Message-ID: <b489fbd0-a1f8-429a-90f0-9ed950cfda1a@linux.ibm.com>
+Date: Tue, 30 Jun 2026 16:34:31 +0530
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AS4PR08MB7711:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5b63c33a-3334-4870-3a1c-08ded69685af
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|10070799003|366016|23010399003|56012099006|3023799007|22082099003|18002099003|6133799003;
-X-Microsoft-Antispam-Message-Info: okGF6GYUUwMa1l4nu98rNjywMzRkn85McsPOD/Xvc1kRiyUAljDEwQfHnii64nWUxeJOtB2/PbDXcsyzrPUxoxq+itcoZq/FwO2UnDhdCQzt8qSMONnclO3YnNgrdmP8Fvx5i7n7kIQZRLjjKxNn9IJt9hVS5nIlvw3IW9Ir9Cy19553vbTgO+60sMObWwmF488Cyfoto+4FE6JiR41S0i0UrsIlTdDKzMJIGW7QZIYQz7PhXI6YJZuQWPo6x3kfZMLv9Epl916C0pRS9DF26mo8dFxzfxUD4LX2VAAbxpNFKlaLFU71D15esbppMMv3TIwKEiX+wQC5KoVzz2o3VbOdvOrIPP6q8itwlmFgHp8xh6z6iPn5VQrvqMYT6s6viVEMDF32fkjjR0MNWKDnmN+ULRz7XOIgqBPTY26RLogvk+rvA47Hl1c3dkgocrw+sY9K7jjaHuR/AAw6+7rxdsi3KPl8N3NXrRr0fSS8bDTXeq4TjRTRlUDVodqCeUiaAm0vZPaxHFTVBGPZuprYI2Uta+WimRwMgn5YAnVwu/vMvMHLRw/6dCUcMrnlZun+Lo9vpnddyXK3zMxUsz+/Sj8Wz/wCXJZ9YAXmiL1NBNHzyGximxYdDRFAr7rRk9uUJHxmVzcZPUpYsT4kabbwn3T0FN5QSB+EFb1bcaPOS1I=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(10070799003)(366016)(23010399003)(56012099006)(3023799007)(22082099003)(18002099003)(6133799003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eEdhNEZyM01QSUd1WmowMnI5ZUYzelpxdjRZNXp1aWRDYnJOVUJLeXkvRG5R?=
- =?utf-8?B?a1VkNWhqOXEzZUJXbnlRcFJEbzRST3dnRHVHaGM0S3pHSlJCektmZUYrVm1Q?=
- =?utf-8?B?Mk1RdzJ1UWppdnl3MzJEMllrTEIwRmFKd2R6TWF2YUd0NnBLSlNQRTk5MXU0?=
- =?utf-8?B?dnZBUDNqQm9rRS9WaEV1TEp4KzVHSTFkWFhFOTBQd1JHOTNYcU1tYmg4Z2sv?=
- =?utf-8?B?RGFKQWNxR3NIWGRwbUVrK2VNa1JSbWFQOVdsUWk2eFZZUUpSOUhPRDFEVGZo?=
- =?utf-8?B?SHNMZ042SmpmRVhVU2Y4RjM2TElhbnFsa3MyUHo1NGN0ZlFsaVlOMTlXS2dN?=
- =?utf-8?B?Y1I4N0h4cWZJY0UrNTNKN0tBUitUNjM3K3ZnNStyMGIvc0QweWplaklVVFYy?=
- =?utf-8?B?Q29HbENzZmtnN2dLVWtacE4well1Vk9JWDlUNmFhT0JqVzE2em9WN2Q4eEVU?=
- =?utf-8?B?ZnVLZmEvbTdtNTJCN3pqbzJuS3VRK1Z1RXRicXVoL1NWT0R4eWM4ZGdQcFRL?=
- =?utf-8?B?UFc5aWN6WTdDZFUvZDR2Nk9QMU9NbGxqWkFTZmtLVVdPeGdtSW1zUDlndnBR?=
- =?utf-8?B?Wmd2TEdQV2tWYVVXNDRHZTdTQTJqbXNmWUF3Vk12SDJteXljd1RWVHR6R2Ns?=
- =?utf-8?B?eURxQmtWZ2hWOTA3QkdXUXhlWHdvd00wdjZ1em5VSjZWSjE5VVpBYUIvVXow?=
- =?utf-8?B?eGVnbUtVaXRpSU5ud2t6clZyQUprR3pGQ0JxU1pYOG9CR01PMkt5SUF1RCtm?=
- =?utf-8?B?REt2blk1VmJSOFZjeHh0Nnpra3dvTlNtcTYvdkxrRGpOVGFWakZxeE1oaTYr?=
- =?utf-8?B?MFV1UGw1d0Z0QWRFVXlBTkpZMWQ5QitwUm1mL01oZVpROWdxQldwQTMzS2pD?=
- =?utf-8?B?dHkwUXJpV0ZjN3hWTXpGaUJJeHZZQnhsZGk5Qm9PM016dUVicGFLWEQ1MEhT?=
- =?utf-8?B?NUhzdjB6eEpoQlJoVFZaZlE0UUFGMVo3dFRuNzJjL1lRcTFSck5LbDQvUjFP?=
- =?utf-8?B?cU0xNXJpTC9adHNyeUZpOTZ5OFpJcWdiWFVHN2RkNjZFR0RWeU0zWVdjS2JI?=
- =?utf-8?B?K09EYk42c0hWY09ySi8xYkVGaGU1QWtoSWVZamxHRnVwR3BOTGhqOW56STJB?=
- =?utf-8?B?ZlQ1QnB5VEtvMG54MVN2Zk9IeVFUeEVwcGE4OWh2cWdnQy9BQ1pKZFlZZ1hZ?=
- =?utf-8?B?cjNhSjhRMjVKUEo2ZSsyQlE2bzhyRUJITXBpcXNNRDE2TGZDV2QwV3hOaUVM?=
- =?utf-8?B?V0Nic3ZBWW1zMWRkS1AvL3pjN0xEMlJHaDFWUStpZzNuVm9RbzdNUVhsY2Rj?=
- =?utf-8?B?c24xbmZIeVV2aHNKSkZydXpjK3RrQWt6NCttaXIrWDlud1A5NjhFK1haZVcv?=
- =?utf-8?B?LzFXcGI3OXRxRzByUU9vYTZieXM2OFVxdEJ3N3JpSHVLQXd4L2ZtL2p4R3Np?=
- =?utf-8?B?aTZ1U1hXRkVPZXhoYkZ6SnhOcHFVOUFHZVhWMUUrak5qQUQxMXM0RWVBcm1i?=
- =?utf-8?B?ZXVFNFJuZ3lMbzFkZ05KUnUxdC9VRXhMWUl5RitEL1pwZS9LV0V3TnFMNlB1?=
- =?utf-8?B?bTNZSTBYTGNTRG9sNkxqR3hHamlER2pGRkhZMzNQZTlSeXptVnM1cjdaa054?=
- =?utf-8?B?RjgydmZoamVzYjhLSGdCR29RTSt5Rkd5ZXhiS3lMMnZ0d1hOS1dUSkJWVlZN?=
- =?utf-8?B?QTc5L2JZUWlIRlJveXdMODFoMjlyaVdFYzQvVnR2N05FLytuOUVrUVNseU9X?=
- =?utf-8?B?MUZ6N0thRUlFZGZBeHVsTHRTcDJYTFFpOXowbzk3UEhiK2swSVlNcTc0T0dh?=
- =?utf-8?B?U3JlZ0xFSy9qRFJuOTFUT2h1NDR0UWN3ZCs5UE9JcFZmQ2dJWEJ1RS90SzUv?=
- =?utf-8?B?WExSeDhCbkFZbnRqY3A5SW84eEhhUTZFcEk5Zm1ReDhuYWdzd0VWd0h2NjJY?=
- =?utf-8?B?QUR4U3R5ZjA2RTBJa2RzOHpMRVdpRXVjWlZFWURmaFhBVjQwTEx2REZJaDRu?=
- =?utf-8?B?MXlmUEFWT0R2ZGY1UFF0bGUxc1Rwc0NPTnozNEt3clptejd2MThpNEU4cENa?=
- =?utf-8?B?M0UxNWZMZG92dGZBZ0pIRllLYUZwRURPSFU2ZFBMeGlXbmhURlZ2RllOdE5M?=
- =?utf-8?B?c3BiY2dTV2l5RW9qZm05dk91SjdVRnhwdmhPZU1tQllGb0hwakQyem5WWlBq?=
- =?utf-8?B?aks4ODE5N2NscG9CYXNiVi9SK0dERk9IUG1NK3VBYjBMT2dJM3hhTGRicTNi?=
- =?utf-8?B?dllKdFNiU3JkZGpjeEUrVkUzR2YwU1J6bWo5UUpwd2o3aFZvV2lTY1ZkdUZi?=
- =?utf-8?B?OHRGNUU2bmdIbGFtRHRMTUpudnBWeWc4eFVjV0ZHQWgreHhDdUxYVXFzZkhw?=
- =?utf-8?Q?Kqw8b42uxY0WJBPwyEm4ni9Y4vw+5Kn8qz9JDRVhtjNJB?=
-X-MS-Exchange-AntiSpam-MessageData-1: gF4Fj4Y4Vq5eAg==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5b63c33a-3334-4870-3a1c-08ded69685af
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jun 2026 10:58:31.2453 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ld2TgbG+fTeGUBIhurxwIABsBxQ6C/cKWOZ1+gpE86AmldEUuJhNrMx01+TZ55atfbgx7MnJZPgdaML4P3dWSA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS4PR08MB7711
-Received-SPF: pass client-ip=40.107.162.80; envelope-from=den@virtuozzo.com;
- helo=PA4PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/8] tests/functional: Add remote interrupts test for
+ PowerNV
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
+ Misbah Anjum N <misanjum@linux.ibm.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>
+References: <20260629110411.3051274-1-adityag@linux.ibm.com>
+ <20260629110411.3051274-2-adityag@linux.ibm.com>
+ <71cffeef-3398-44e6-8e13-130266e789c1@redhat.com>
+ <akJXAebIn7BHhPRS@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+ <99726741-229a-4230-b19e-63a7f27ba9f0@redhat.com>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <99726741-229a-4230-b19e-63a7f27ba9f0@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDA5OCBTYWx0ZWRfXyOn2n8yBwHxz
+ aphjvogEmwz5lMG+7nuSeKE7X4AYCGM8xNfjjzIKgNvUIhy9ygEfe23OiDXBDYhH2Tv0ag15QxG
+ 4Ph+ERcE2+KiGmfmdOxyOXjv1TQtAr8tMWPxog/JsVTFWq8rFrGWqpnGOIprWvWR5LW4UDyEjlz
+ kD9i1i+XvSomRXrgZrg88LD8dOm5f6mwmvhGLWcKLd0QwKDz7FqE0bFE68w5iKMfz6ImQ3T0rHO
+ 0tscuBQHfGWhMZJS81GISO2ve9MuS2DC5zZh9i8sxfCkgE/m3WAnNSzYi9PB1RJUHQvaC6vWyBj
+ ks9H74iTX+3y42FIThieeoRAIJlgwXvqh1gbbnbmMv1ggi7/ywwczMIOOaWIitJvr5/T7BrO3as
+ MFYnaoC/uuwCKUBGECX+H9+zSWzrIAtz0jFdHEYsChJAUp9tN1QxG84LwWk416/M1FuNSIjNGmk
+ tU9zY9TvPyIaNJz6rvA==
+X-Authority-Analysis: v=2.4 cv=V45NF+ni c=1 sm=1 tr=0 ts=6a43a2cb cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=iwaJfe35vvhaYKSfLwYA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: TpDGdy-qLs_HN0XJ2IQLCzQ29TShOsb3
+X-Proofpoint-GUID: 1X1mrKOCAymXUolzHQA1BeY_br-2Yc_s
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDA5OCBTYWx0ZWRfXzmcXD2ltV6QP
+ cROUd6M6pBQkb6Qb1vU2YTCKNRPT0JMKGhTTW/v5vkUbGNemSI/UnsAOhI32iYLO5qgZZCPQXRD
+ yafCpn1XUj4/kdtSPBL9xVVUmYwOMd0=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-30_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 impostorscore=0 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300098
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,87 +142,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/19/26 12:18, Denis V. Lunev wrote:
-> This series fixes Windows-dump (win-dmp) availability reporting and closes
-> a related hole found while doing so: several commands read guest RAM and
-> must not run while a migration destination is still receiving it.
->
-> dump-guest-memory, memsave and pmemsave all read guest RAM on the main
-> thread with the BQL held. On a migration destination that RAM is either
-> still being loaded (precopy) or pulled from the source on demand
-> (postcopy, where the guest already runs). During precopy the read returns
-> incomplete data; during postcopy it deadlocks, as the read faults on a
-> not-yet-received page while the postcopy incoming path needs the BQL the
-> reader holds to install it. dump-guest-memory only guarded the precopy
-> phase and memsave/pmemsave had no guard at all, so a new
-> migration_guest_ram_loading() predicate captures both phases and all
-> three commands now use it.
->
-> query-dump-guest-memory-capability also advertised win-dmp for every x86
-> VM, and dump-guest-memory accepted it unconditionally; win-dmp only works
-> when the guest has published a Windows dump header through vmcoreinfo.
-> win_dump_available() now reads that note back from the vmcoreinfo device
-> and validates it, keeping its original signature, so the dump.c call sites
-> are unchanged.
->
-> The series also adds the first qtest coverage for dump-guest-memory:
-> capability list, ELF and kdump output, protocol errors, and win-dmp
-> reporting in both directions (the positive case forges a vmcoreinfo note,
-> so no Windows guest is needed).
->
-> Tested:
->  - Linux guest: win-dmp not advertised; an explicit win-dmp request is
->    rejected without stopping the guest; elf/kdump dumps work.
->  - Windows Server 2022 guest: win-dmp advertised once vmcoreinfo is
->    populated; dump-guest-memory format=win-dmp produces a valid (PAGEDU64)
->    crashdump.
->  - Live postcopy migration: on the destination, dump-guest-memory, memsave
->    and pmemsave are all refused immediately, without faulting a page.
->
-> This supersedes the earlier "dump: enhance win_dump_available to report
-> properly" series, which obtained the note by reusing the dump setup path
-> (splitting dump_init() and stopping the vCPUs). Reading vmcoreinfo
-> directly is much smaller.
->
-> Changes since v4:
->  - Refuse guest-RAM reads (dump-guest-memory, memsave, pmemsave) while a
->    migration destination is still receiving RAM, via a shared
->    migration_guest_ram_loading() helper.
->  - Decide win-dmp availability by reading vmcoreinfo directly instead of
->    splitting dump_init()/dump_preinit() and stopping the vCPUs.
->  - Add dump-guest-memory qtests.
->
-> Denis V. Lunev (7):
->   migration: add migration_guest_ram_loading() helper
->   dump: refuse dump-guest-memory while guest RAM is being migrated
->   system/cpus: refuse memsave/pmemsave while guest RAM is being migrated
->   dump: make win_dump_available() check vmcoreinfo for a Windows dump
->     header
->   tests/qtest: add dump-guest-memory test
->   tests/qtest/dump: reject win-dmp without vmcoreinfo
->   tests/qtest/dump: cover win-dmp availability via vmcoreinfo
->
->  MAINTAINERS              |   1 +
->  dump/dump.c              |   5 +-
->  dump/win_dump-x86.c      |  42 +++++
->  include/migration/misc.h |   3 +
->  migration/migration.c    |   6 +
->  system/cpus.c            |  11 ++
->  tests/qtest/dump-test.c  | 331 +++++++++++++++++++++++++++++++++++++++
->  tests/qtest/meson.build  |   1 +
->  8 files changed, 398 insertions(+), 2 deletions(-)
->  create mode 100644 tests/qtest/dump-test.c
->
->
-> base-commit: c7cf7c810153d6f5f31aa2d5c0dee9087f6b4dff
-Hello, Marc-Andre!
 
-Should I do something with this series or it is good to
-go in. Its final destiny is unclear for me at the
-moment.
+On 29/06/26 20:13, Cédric Le Goater wrote:
+> On 6/29/26 13:39, Aditya Gupta wrote:
+>> On 26/06/29 01:20PM, Cédric Le Goater wrote:
+>>> On 6/29/26 13:04, Aditya Gupta wrote:
+>>>> In the past there have been hard to recreate issues where XIVE changes
+>>>> cause qemu crashes due to multi-socket interrupts such as in [1].
+>>>>
+>>>> Add a functional test explicitly to test whether remote interrupts 
+>>>> work.
+>>>>
+>>>> The test can also work as additional boot test for multi-socket boot,
+>>>> initrd boot test, as well as a check for e1000e to be working in 
+>>>> powernv,
+>>>
+>>> you should consider moving to a more modern nic model: igb, which
+>>> has sr-iov support too.
+>>
+>> yes, can do. with igb i see multiple irqs, so test will have to take sum
+>> of all rx irqs, and compare:
+>>
+>>     2026-06-29 17:00:46,288: cat /proc/interrupts | grep eth0
+>>     2026-06-29 17:00:46,391: 135:          0          0 0  
+>> PNV-PCI-MSI 2416443392 Edge      eth0
+>>     2026-06-29 17:00:46,393: 136:          0          6 0  
+>> PNV-PCI-MSI 2416443393 Edge      eth0-rx-0
+>>     2026-06-29 17:00:46,394: 137:          0         14 0  
+>> PNV-PCI-MSI 2416443394 Edge      eth0-rx-1
+>>     2026-06-29 17:00:46,395: 138:          0          4 0  
+>> PNV-PCI-MSI 2416443395 Edge      eth0-rx-2
+>>     2026-06-29 17:00:46,397: 139:          0          4 0  
+>> PNV-PCI-MSI 2416443396 Edge      eth0-rx-3
+>>     2026-06-29 17:00:46,398: 140:          0         16 0  
+>> PNV-PCI-MSI 2416443397 Edge      eth0-tx-0
+>>     2026-06-29 17:00:46,399: 141:          0          6 0  
+>> PNV-PCI-MSI 2416443398 Edge      eth0-tx-1
+>>     2026-06-29 17:00:46,399: 142:          0          6 0  
+>> PNV-PCI-MSI 2416443399 Edge      eth0-tx-2
+>>     2026-06-29 17:00:46,400: 143:          0          4 0  
+>> PNV-PCI-MSI 2416443400 Edge      eth0-tx-3
+>>
+>> I feel e1000e suffices for this test, should i stay with e1000e or use
+>> igb here ?
+>
+> or use a single cpu per socket config. Which seems better for the test.
 
-Can you shed some light with it?
 
-Thank you in advance,
-    Den
+The test uses single cpu per socket, since i have `-smp 
+4,sockets=4,threads=1`. Was this what you meant ?
+
+Thanks,
+- Aditya G
+
+
 
