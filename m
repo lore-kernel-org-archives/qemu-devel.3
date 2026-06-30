@@ -4,119 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 701CCC43327
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 10:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEE4CC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 10:28:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weVd3-0007kt-A7; Tue, 30 Jun 2026 06:23:49 -0400
+	id 1weVgn-0000nU-Uo; Tue, 30 Jun 2026 06:27:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1weVcq-0007k7-Qz; Tue, 30 Jun 2026 06:23:33 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1weVco-000518-L8; Tue, 30 Jun 2026 06:23:32 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65U9n0vA1578045; Tue, 30 Jun 2026 10:23:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=5IZ6lZT9HCEu51HvZb+b5+zSgs0ThBA9dh8/dHRjhcY=; b=fH4wOeczOEnj
- 9W9NBvD4wpdzW23BlZQaTafvDHauWxJ8OnZwPJgPeDdtd5qiJmQYrcq5oDf94KK5
- kOOpXVN7bP9PeFE0PLpKlT5Dpsq2YxhdwxWO0rM8I8E/5nchw/x91nuIk2T0Ub0N
- H8AP70PQByVktvQPlfxNun9A9bdM7C8hIblapOUgZTGKPEVsc7GU59zBzpAoB7QB
- x7ftTIookgqWJMFUpLnZeAhP9x712BTPQ033KNhxpP3DkE8eG+p01Fg8e5j1wMqj
- 3qrcd4WxNkKnVD4jMBkGIUyxRXQwf4l77zkNVfMBArN1LxM6Waw+47SQ0MemIsSI
- 14aiKBU6ww==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rewsq0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 10:23:27 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UAJewJ022491;
- Tue, 30 Jun 2026 10:23:26 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7w1rfv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 10:23:26 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65UANPbG29491796
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Jun 2026 10:23:25 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 515675805C;
- Tue, 30 Jun 2026 10:23:25 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 573475805A;
- Tue, 30 Jun 2026 10:23:24 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 30 Jun 2026 10:23:24 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1weVgl-0000mf-UR
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 06:27:35 -0400
+Received: from mail-dy1-x1335.google.com ([2607:f8b0:4864:20::1335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1weVgi-0006S5-St
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 06:27:35 -0400
+Received: by mail-dy1-x1335.google.com with SMTP id
+ 5a478bee46e88-30e9eefa268so175891eec.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 03:27:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782815251; cv=none;
+ d=google.com; s=arc-20260327;
+ b=a7DtvAV7VXHMSnuGIqbp/gst+F+c0FleBvs+Mb9ktvZCuQ5WCig3JxFQngTH2jj3+L
+ E9gLpFdMd0YdhUKSPDhPruNO9ykIWQTBlhc+psjb+D3C2aH3tgusKqlykupO0vMsUEfn
+ 6ZhB5thl1iMazCkOyZK8c464Zr6Kcqd882oi51kIYtGwN9HZlUhU/LpHkTXO1hoPYjuI
+ WFX6oaK+Nt/EN0p4W8uqTTHFY8c04GaJUjpWOu0AxK8lyTv/+PjHa0FO9mDXEkrLAqrJ
+ izLj5VFH3kstGyu0JrOXRiA/g/+ihGieaTRpjYJe8KJodZGHOVcjE4smvclu4M8VjVii
+ qQ9Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=olz5IO/9nCkIveP2YP2rNfItXDo2ws5ArCaOiHTZe08=;
+ fh=gP7RdfkoFupDb4wxvincWeBNKaMCWcANwH4AOs7ZxQ4=;
+ b=TngVngqoUSoWdHoRiwLCSQZkRAtCMNOJPviimb/a40xAHwF/XuBukEnU8L26aF42hA
+ znTAJdHorsiJalL3kvaaaW6w5fsOhdFd/k3a8DQfZ/02euTKLapNkHlLjb4FtaK1wEa5
+ +dw7n4OtWpcqb/TNYv4jJKUKIxm0FLA3MGSEHTBJhNGVRaBE/s1BHADGTy+k7aiybSVb
+ cvUDKKOo50InXuyir+KXLMNvHtM/oqlzkIpqJF8mOHfcZZhzs+3vA0+nU+ThiRwZw5jd
+ jOe4Z2GgGib7Oh8bAcYjuW193fmoCn5X5GVhr5/lzvCUZ4a3VjZ5+E8zay4qHV2xKg4f
+ 72lw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782815251; x=1783420051; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=olz5IO/9nCkIveP2YP2rNfItXDo2ws5ArCaOiHTZe08=;
+ b=qWbXjFFEFuADq3ont+nmrOlWAh7aZKZcPeu9AS5MeQezj+scU7alNo7a4njJ+O8Msw
+ dAAYdSoRc62O/6ggM0c+3rlPUh6LVGv7LZXGHC064bwT0MjgDfqU10lyOoTEBMI6kJaU
+ a5Qw4jxsRos/uSIJ+n4amp3opbSvg6kpuPIz6Wm8jNdO+S/C0dMLxXewgDBr1gYLe5JF
+ tlYl7AP3oD7AFHI0Xkhd15LBYTCTK1b0kkuCF3mygfZJE5rtsmOsvwCrp2bs0NLT90ZF
+ /sm85J3gG8VSCDYr667SO7u5aH6ebesU3AGzHTyt+WOrd92qVRX03lZ6nXlkM4dq9fS0
+ 6TcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782815251; x=1783420051;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=olz5IO/9nCkIveP2YP2rNfItXDo2ws5ArCaOiHTZe08=;
+ b=EEFHAtu0ec/Tu54jv6/iurTM9IrquKoi36Yq836LTqs1e0dtuO6zfGctBtJkHMj4Lb
+ bGRTxxUWY3W/j4zkqse5z7aV/bAw58LWiRan8pTvJl+k7v0XGhYhMpQ2TwMpWRRKKUpn
+ Bl0Fj1apRbGSB9SKXsBzrb5b1+V+ielPueixMtyotxQTKoxfL5RGV5GaohkDlkALXZQ3
+ egIKtAmR/V4Bo50k/26NYDxHpm+uSRFHMPFKVTGS35kN4c+SHIAn2qPDt86uNr4cy2SN
+ WNXk/dBUvupaITfS70+Ah/gF7U+kfW/LBCPLNXliGuDHd6b8pscUEEXn/T/FfrFpfZ5S
+ SI0Q==
+X-Gm-Message-State: AOJu0YwiYAL3s1I1gbopAmePf3zolHdqK1m7yH6KrZ1fvrjdafWIhHIJ
+ N3z/SOIxdX0cBFASdmXIcKrauH5sPV3XPAqVZL7ufXC5i/8k6JOIjWDM6FVevQqeHRKs08TQ65r
+ URUTOZXsQyOMw64ZEqqHHI5iuXG6nTTo=
+X-Gm-Gg: AfdE7cl76ESXlvM/ugjD8Ck/t2y1N9/h6SOx6UDaaA7f00p4Ww5GKPgtsQtfc+bGYKs
+ jGuaQRrJGzycqOaZoIsdYRgPhlgjO+sPRTGEWKgjSOIYNS0D/odsOpywkd17Ed8Pt7trtAPnq+J
+ 0K+emTATJM9qqRIDNOEw4V1gRmOc4npOEOnpXXVuxCDUQ6SsvSjNJUnHjQsd8d+LiFvI06stjeT
+ HX8B+Sejf4afr6V1yzkrkYT2S2F0LJEjcg3sfsuLFXnj0dWttKVaCRt/TaILE2jJ21ih7ilYdFc
+ fKy24OM6Uh2OeyFKk5xRqHQPfBfa
+X-Received: by 2002:a05:7300:4342:b0:30e:d6ca:61ac with SMTP id
+ 5a478bee46e88-30ee13e52d4mr2453015eec.34.1782815250929; Tue, 30 Jun 2026
+ 03:27:30 -0700 (PDT)
 MIME-Version: 1.0
-Date: Tue, 30 Jun 2026 12:23:23 +0200
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: richard.henderson@linaro.org, david@kernel.org, thuth@redhat.com,
- berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux390-list@tuxmaker.boeblingen.de.ibm.com,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
-Subject: Re: [PATCH v8 01/18] target/s390x: Fix wrong address handling in
- address loops
-Mail-Reply-To: freude@linux.ibm.com
-In-Reply-To: <6e7ce946-1128-4b2c-9520-a171bca3ceb7@linux.ibm.com>
-References: <20260624081029.23815-1-freude@linux.ibm.com>
- <20260624081029.23815-2-freude@linux.ibm.com>
- <e516de9c-e9fb-45af-aa5e-8cb9dbf1e3f3@linux.ibm.com>
- <d55a9d7e7759251c1e75050a9a9ccd6f@linux.ibm.com>
- <6e7ce946-1128-4b2c-9520-a171bca3ceb7@linux.ibm.com>
-Message-ID: <a6e637d07024e0ff8a457500110e225f@linux.ibm.com>
-X-Sender: freude@linux.ibm.com
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a43991f cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=y3FDp6X5KcjlW3Ig3ksA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: Jx1J-90prwl4Ykyn-DABtV_5LIDbj6uX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDA5MyBTYWx0ZWRfX5N7Ry8TTcVyF
- /DL0ngovBnUc/RoCXxpUaGAYWbJLxIvMchGooe315a1BBEtlORNNv9NlyVgMLOTzG7vLd6f2Mgg
- HlBjeba0vPVkP6c2CT9DaXNsBKrTQ68po0yGH7PHse7wQiSKf29RjoKd0oWYdN2hgiYfZqQel3w
- T3MeX5ohu+w7nSFHGpTZ8EdOumzMMj6PWhfdsvxhJ6snjm3Enz1exMpRtyEsnyrSDzpFxx3l3g2
- a90AzFdhhtSn1XB9xR8UGi1nK9QjKw7QTA+MUWkP2X1B3gfaaoWK7EU3IWRy2KuZ6w4BZ52TtfW
- jbrWSyAQWKlVrx4NeSes0b0vNcn22XWz588/2/gR7xZGqrGCQcGEFL+F01SE+XAXO9c0O8FhzAj
- nl6k8iXwj5rD4Li/1t2PkklXhGS1nxY4KJdgcOiqgivgkxpajC3ZYCTohC40DsWx/oFijFaCrR2
- Hoptme0d6YhJgHYW8zg==
-X-Proofpoint-GUID: Jx1J-90prwl4Ykyn-DABtV_5LIDbj6uX
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDA5MyBTYWx0ZWRfX5Pfo0u7m7YDH
- ehOmpJI2W5tgUPDNsNExugLdmWxYkyOFX5o0WpmkuuFyTleZTc6gLGAKfCWftKExrtb8vrEQLCU
- uNYOhUsfAEjGbPQt3DRzOfkPTnvGxxM=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-30_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
- spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300093
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=freude@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260630101022.379057-1-thuth@redhat.com>
+In-Reply-To: <20260630101022.379057-1-thuth@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 30 Jun 2026 14:27:18 +0400
+X-Gm-Features: AVVi8CesBUVHGmgB3pxe3kSPmpkXu5mr-BkeEL4YtLLkI6CeTw8RP7vXvR1NpXg
+Message-ID: <CAJ+F1CJR0+eaEZZm541J349atXXK3DRrTVce=7HTwgzz8A_tWg@mail.gmail.com>
+Subject: Re: [PATCH] hw/display/qxl: Fix mono cursor validation that can read
+ past a cursor chunk
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1335;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1335.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,135 +114,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-06-30 11:33, Ilya Leoshkevich wrote:
-> On 6/29/26 14:57, Harald Freudenberger wrote:
->> On 2026-06-24 14:56, Ilya Leoshkevich wrote:
->>> On 6/24/26 10:09, Harald Freudenberger wrote:
->>>> With the introduction of the address wrapping function
->>>> wrap_address() the result can't be used to walk the
->>>> source address any more. So introduce a new local variable
->>>> to hold the wrapped address to avoid mixing source and
->>>> wrapped address value.
->>>> 
->>>> Fixes: fcc2699d41 ("target/s390x: Have MSA helper pass a mmu_idx 
->>>> argument")
->>>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
->>>> ---
->>>>   target/s390x/tcg/crypto_helper.c | 16 ++++++++--------
->>>>   1 file changed, 8 insertions(+), 8 deletions(-)
->>> 
->>> If I take as an example AMODE 24 and look at the third loop 
->>> iteration,
->>> with the current code in master I would get:
->>> 
->>>     ((((addr & 0xffffff) + 8) & 0xffffff) + 8) & 0xffffff
->>> 
->>> and with your patch it would be:
->>> 
->>>     (addr + 8 + 8) & 0xffffff
->>> 
->>> which is undeniably more elegant, but otherwise looks equivalent to 
->>> me.
->>> 
->>> What is the functional issue here?
->>> 
->>>> diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/ 
->>>> crypto_helper.c
->>>> index ae392bce0e..29ad2aff43 100644
->>>> --- a/target/s390x/tcg/crypto_helper.c
->>>> +++ b/target/s390x/tcg/crypto_helper.c
->>>> @@ -126,8 +126,8 @@ static void sha512_read_icv(CPUS390XState *env, 
->>>> const int mmu_idx,
->>>>       const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, 
->>>> mmu_idx);
->>>>         for (int i = 0; i < 8; i++, addr += 8) {
->>>> -        addr = wrap_address(env, addr);
->>>> -        a[i] = cpu_ldq_mmu(env, addr, oi, ra);
->>>> +        uint64_t _addr = wrap_address(env, addr);
->>>> +        a[i] = cpu_ldq_mmu(env, _addr, oi, ra);
->>>>       }
->>>>   }
->>> 
->>> [...]
->> 
->> It is a fix, not an improvement. The original code
->> used the addr variable to hold the wrapped address.
->> But as addr is also used as the loop variable there
->> is a mixing between unwrapped and wrapped address here
->> and the unfixed code only works when wrap_address does
->> return the very same address as output as it became as
->> input. My fix corrects this.
-> 
-> What does the patch change w.r.t. wrapping?
-> Suppose we have amode 24 and addr = 0xfffff0:
-> 
-> Before:
-> 
->   i = 0; addr = wrap(0xfffff0) = 0xfffff0;
->          a[0] = ldq(0xfffff0);
->   i = 1; addr = wrap(0xfffff0 + 8) = 0xfffff8;
->          a[1] = ldq(0xfffff8);
->   i = 2; addr = wrap(0xfffff8 + 8) = 0;
->          a[2] = ldq(0);
->   i = 3; addr = wrap(0 + 8) = 8;
->          a[3] = ldq(8);
-> 
-> After:
-> 
->   i = 0; addr = 0xfffff0;
->          _addr = wrap(0xfffff0) = 0xfffff0;
->          a[0] = ldq(0xfffff0)
->   i = 1; addr = 0xfffff0 + 8;
->          _addr = wrap(0xfffff8) = 0xfffff8;
->          a[1] = ldq(0xfffff8);
->   i = 2; addr = 0xfffff8 + 8 = 0x1000000
->          _addr = wrap(0x1000000) = 0;
->          a[2] = ldq(0);
->   i = 3; addr = 0x1000000 + 8 = 0x1000008;
->          _addr = wrap(0x1000008) = 8;
->          a[3] = ldq(8);
-> 
-> The behavior look identical to me.
-> What am I missing?
+Hi
 
-Lets assume addr is some 0x1000 and wrap does just add some offset, e.g. 
-0x8000
+On Tue, Jun 30, 2026 at 2:11=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrot=
+e:
+>
+> From: Thomas Huth <thuth@redhat.com>
+>
+> qxl_render_cursor() maps the guest-provided QXLCursor object using the
+> guest-controlled cursor->chunk.data_size.
+> For a mono cursor, qxl_cursor() then validates the expected bitmap size
+> against cursor->data_size, but it does not validate that the first chunk
+> actually contains that many bytes.
+> A guest could set cursor->data_size to the correct full mono cursor size
+> while setting cursor->chunk.data_size to zero. In that case, cursor_set_m=
+ono()
+> reads the AND/XOR masks starting at cursor->chunk.data. If the cursor obj=
+ect
+> is placed at the end of the QXL RAM BAR, those reads cross the mapped RAM
+> region and could crash the QEMU process (e.g. under ASan).
+>
+> Fix it by double-checking cursor->chunk.data_size for the correct size.
+>
+> This patch is based on the suggested changes by the reporter in the bug
+> ticket.
+>
+> Reported-by: huntr bubble
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3646
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  hw/display/qxl-render.c | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+>
+> diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
+> index 7b692d5a854..3bf634ee059 100644
+> --- a/hw/display/qxl-render.c
+> +++ b/hw/display/qxl-render.c
+> @@ -272,9 +272,11 @@ static QEMUCursor *qxl_cursor(PCIQXLDevice *qxl, QXL=
+Cursor *cursor,
+>      case SPICE_CURSOR_TYPE_MONO:
+>          /* Assume that the full cursor is available in a single chunk. *=
+/
+>          size =3D 2 * cursor_get_mono_bpl(c) * c->height;
+> -        if (size !=3D cursor->data_size) {
+> -            fprintf(stderr, "%s: bad monochrome cursor %ux%u with size %=
+u\n",
+> -                    __func__, c->width, c->height, cursor->data_size);
+> +        if (size !=3D cursor->data_size || cursor->chunk.data_size < siz=
+e) {
+> +            qxl_set_guest_bug(qxl, "%s: bad monochrome cursor %ux%u"
+> +                              " data_size %u chunk_size %u",
+> +                              __func__, c->width, c->height,
+> +                              cursor->data_size, cursor->chunk.data_size=
+);
 
-for (int i = 0; i < 8; i++, addr += 8) {
-     addr = wrap_address(env, addr);
-     fetch or write something at the wrapped address addr;
-}
-
-Then the idea of this loop is to run through addr 0x1000 ... 0x103F.
-1. loop with i=0 and addr 0x1000
-2. loop with i=1 and addr 0x1000 + 8
-3. loop with i=2 and addr 0x1000 + 8 + 8
-4. loop with i=3 and addr 0x1000 + 8 + 8 + 8
-5. loop with i=4 and addr 0x1000 + 8 + 8 + 8 + 8
-6. loop with i=5 and addr 0x1000 + 8 + 8 + 8 + 8 + 8
-7. loop with i=6 and addr 0x1000 + 8 + 8 + 8 + 8 + 8 + 8
-8. loop with i=7 and addr 0x1000 + 8 + 8 + 8 + 8 + 8 + 8 + 8
-
-BUT the given code does something different. As the addr is used in the 
-loop
-to hold the wrapped address this loop in fact does:
-1. loop with i=0 and addr 0x1000 - all fine, but as addr = 
-wrap_address() at the
-    end of the loop now addr is 0x1000 + 0x8000 = 0x9000, so next loop 
-starts with
-2. loop with i=1 and addr 0x9000 + 8
-    and at the end of the loop addr is 0x9008 + 0x8000 = 0x11008 and next 
-loop starts
-3. loop with i=2 and addr 0x11008 + 8
-    ...
-
-So introducing an intermediate variable which holds the wrapped address
-makes sure the surrounding addr walk in the loop does as intended.
-
-
-
+Hopefully spice does chunk.data_size validation..
+Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
