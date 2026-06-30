@@ -4,68 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09938C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 12:04:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61F5BC43602
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 12:15:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weXCg-0006zX-V1; Tue, 30 Jun 2026 08:04:38 -0400
+	id 1weXMh-0000fD-FJ; Tue, 30 Jun 2026 08:14:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nowicki@posteo.net>)
- id 1weX9g-0005je-Ph
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 08:01:36 -0400
-Received: from mout01.posteo.de ([185.67.36.65])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1weXMf-0000ep-Qb
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 08:14:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nowicki@posteo.net>)
- id 1weX9c-0003ko-NW
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 08:01:30 -0400
-Received: from submission (posteo.de [185.67.36.169]) 
- by mout01.posteo.de (Postfix) with ESMTPS id EFB99240027
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 14:01:22 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.net; s=2017;
- t=1782820882; bh=ztG9C1CYYBqp9Bn9OVrhab1X5KM79DBSLY0Hg0z355U=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:Content-Type:
- Content-Transfer-Encoding:From;
- b=ZoxsaEz825z9yxh6H2ChlQF3qEsIl7xkyIhJE5jRH2pzMFMtpikKgF13G2wnK6NhW
- zoTorsjnNlU4J1wYS2UV9jQSJ5PdfBmGseIzVKCOiVDPkf+ixeBBTLgMxWh3MeXGMx
- TX4eVLw5LZfxGFxk1FI3RqQAFu/++Ya/aboiVXCav3yV27y69XmCSMDzZCJqduvTPb
- vbFD9qYAMxVMTykTFw5JlGWevJnRjVU9v81kY0Wri7y9osTBwtgqLI99H5oQI/XmKd
- eCzpNZBoupvAYzPiF9X+tbhqCqeDwvH1NSFjhGWoFsFIdSWM5b2Dx/izeLLUxzlDNT
- oxSsuShs9BHBw==
-Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4gqMDx10Ynz6tw1;
- Tue, 30 Jun 2026 14:01:21 +0200 (CEST)
-Message-ID: <9ecec0b1-f9b3-414a-b9b0-5d2b62ecd5a9@posteo.net>
-Date: Tue, 30 Jun 2026 12:01:22 +0000
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1weXMe-00085b-44
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 08:14:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782821694;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZsgQ05J3IM9pT8gzR6K93v0u7ubw3BDuulLMWVi8m7I=;
+ b=Np7Wz/SP0HeQCJ5ZmYmiyholDNa8qDsTLEH13E21XGNZWtmvpxnS7FuwBE/MA6xbhA3dJ9
+ njOuHgrXU4ml+P1NipzKr8G34Yfde0aBQbMe2zDEQQkCw1frfsSxUEd6GDwV7RFJJgtqHd
+ xpYJcyxdVJR/P7++ICtnsraXiqSIYsQ=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-692-CuuIn91YOcSOnYdXNOa1xw-1; Tue, 30 Jun 2026 08:14:52 -0400
+X-MC-Unique: CuuIn91YOcSOnYdXNOa1xw-1
+X-Mimecast-MFC-AGG-ID: CuuIn91YOcSOnYdXNOa1xw_1782821691
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-493bc2ce23bso5448185e9.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 05:14:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782821691; x=1783426491; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZsgQ05J3IM9pT8gzR6K93v0u7ubw3BDuulLMWVi8m7I=;
+ b=mhBf+1p+C4GkHrHWLhGKzue2+DUv6+ZtC2+6wunauCdUG6xH9kzC5mbvjBelvioQCg
+ pymTB40JK5a8Mq4Gs7/2OnAY9AJ+5xvJzMJAIqjZsWaTDnS290KsPM9tDiUPPosjPU4P
+ M2eDcptRCe0RzyOk12cogeTqKUdnaGlst421lftPmPSqAR1O4NqaaBoF/1rmoOd9W2kh
+ +QX5ErINdEmhk+7M6cpP1qaz5snXHTIzTZCLLVJOiYnmmOsRGfWUkcTjT+xdS75YaoVr
+ w5zG92On4oW/EmMuEDFuxuohMqfLgYJYQ990GH2i+b5VUYbnUhvxvXR1xaZH2AgdktbB
+ ZhFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782821691; x=1783426491;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ZsgQ05J3IM9pT8gzR6K93v0u7ubw3BDuulLMWVi8m7I=;
+ b=f2YFxf4AGBwfiboGLk8wDyvf/ZvI7hggtLxuDJRpMGNKggEZD1TNac0DW7lSkv64Po
+ QRtpft1wA80M4fPMOBXEFgvzmdis4yqaKG+z1ctImVQZNCr3rc08oB7bHEt2oP9m5Sa8
+ qgkFxIjKzQzZVVHDM2IoxmDw6OOqS4SuIfizbK+DpeqMQb3Elpc0EAEpoF+wTXAFXEVO
+ ONOk45Jmue6PoY223eBV6wMg7z1RtTSAFG0MWnQT/O5bQQ1GLx0h5fN2v8rppblajFrD
+ WxSxmtJH06/TOJUkw6WbJYnAGp5UbQ3rGJB1Y2lKYUXJaBbdC8zGuEe4Qt2TDzD5Mh6k
+ a5qg==
+X-Gm-Message-State: AOJu0YyI/0b6Kdh6tPJwllVffdw2CTM5vhkKlLr1xLC3gNRlyLpX0uY1
+ 4fyNXrwyeprnGDrmqRXn42JJf4Zl4Y7U2OG1xYScgxj1fvM+kJclJx0sp9ClNjPjINbrXwJOkoR
+ VXfscn5jw5NHEaXbyFvZMnu9JD0oKphe4Iek8xQbbI1J58AVhnlgGP/ii
+X-Gm-Gg: AfdE7cnA4WQPApnix8v6MVGh40cWoJPLEY3wiUM34voZVO5IEb7okEpoyIUPCoYNNN2
+ qD+x+3fI7qWMEorwniGK95Go3UINrVSNl/TwGbFHB+MD7B3KS4/RxWILOxv87upwqAmXklZuMqK
+ SGTyki+y4jB8EQQZB2Vki0JFkkjdDyi4ToR3yE7zx9kUNaiBM/8nkrb2TA66cmSs6V8hj/LSaVE
+ TDzI0Fy3HCCht4/wLZpfciFi3TntETee1fl0hfk5Z7+zxefnAbM14y4gdSqm8Ay96qShvwY73d/
+ 9YfIz3uj9BSNspCcAHHxCMz8EXByopoeEjc+f+qHZFVChIGjr/u3v6mAsaHXfqzCkkGytI8=
+X-Received: by 2002:a05:600c:5391:b0:492:3fc4:bd6b with SMTP id
+ 5b1f17b1804b1-493b827df5bmr52379105e9.7.1782821691389; 
+ Tue, 30 Jun 2026 05:14:51 -0700 (PDT)
+X-Received: by 2002:a05:600c:5391:b0:492:3fc4:bd6b with SMTP id
+ 5b1f17b1804b1-493b827df5bmr52378645e9.7.1782821690961; 
+ Tue, 30 Jun 2026 05:14:50 -0700 (PDT)
+Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493b8cd88e8sm64261165e9.7.2026.06.30.05.14.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Jun 2026 05:14:50 -0700 (PDT)
+Date: Tue, 30 Jun 2026 14:14:47 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, eauger@redhat.com,
+ shannon.zhaosl@gmail.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
+ qemu-arm@nongnu.org
+Subject: Re: [PATCH v3 17/17] sbsa-gwdt: limit compare_value to INT64_MAX
+Message-ID: <20260630141447.7cc20ba0@imammedo>
+In-Reply-To: <CAFEAcA8DzTCP_z9mkHK7QHwMvk8bVb1z7mtN80MsYOZ49ZPx3w@mail.gmail.com>
+References: <20260624102830.1355552-1-imammedo@redhat.com>
+ <20260624102830.1355552-18-imammedo@redhat.com>
+ <CAFEAcA8DzTCP_z9mkHK7QHwMvk8bVb1z7mtN80MsYOZ49ZPx3w@mail.gmail.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Subject: Re: [PATCH v3 0/2] hw/nvme: add monitor commands for inspecting state
-To: Klaus Jensen <its@irrelevant.dk>,
- Mateusz Nowicki <mateusz.nowicki@posteo.net>
-Cc: qemu-devel@nongnu.org, "Dr . David Alan Gilbert" <dave@treblig.org>,
- Markus Armbruster <armbru@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Jesper Devantier <foss@defmacro.it>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Eric Blake <eblake@redhat.com>,
- qemu-block@nongnu.org
-References: <20260626112116.7621-1-mateusz.nowicki@posteo.net>
- <akObGmLY1mRSedwd@AALNPWKJENSEN.aal.scsc.local>
-Content-Language: en-US
-From: Mateusz Nowicki <nowicki@posteo.net>
-In-Reply-To: <akObGmLY1mRSedwd@AALNPWKJENSEN.aal.scsc.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.67.36.65; envelope-from=nowicki@posteo.net;
- helo=mout01.posteo.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 30 Jun 2026 08:04:37 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,82 +121,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CONFIG_NVME_PCI is poisoned in common code, so the schema 'if' can't work.
-v4 drops it: the commands stay unconditional and hw/nvme/monitor-stub.c 
-provides
-the qmp_x_query_nvme[_queues]() stubs via meson if_false (like 
-hw/i386/sgx-stub.c).
-Verified it links with and without NVMe (x86_64 / avr).
+On Mon, 29 Jun 2026 15:48:48 +0100
+Peter Maydell <peter.maydell@linaro.org> wrote:
 
-v4: 
-https://lore.kernel.org/qemu-devel/cover.1782819251.git.mateusz.nowicki@posteo.net/
+> On Wed, 24 Jun 2026 at 11:29, Igor Mammedov <imammedo@redhat.com> wrote:
+> >
+> > QEMU timer subsystem uses int64_t, so WCV values with bit 63 set
+> > overflow and cause the timer to fire immediately. The SBSA spec
+> > defines WCV as an unsigned 64-bit compare value, so such values
+> > are valid per spec and represent far-future deadlines (however
+> > unpractical).
+> >
+> > Windows in GTDT mode writes WCV in two 32-bit halves while the
+> > watchdog is running:
+> >
+> >  sbsa-gwdt_control_write [0x8]  <- 0xffffffff    # WOR (~4 sec)
+> >  sbsa-gwdt_control_write [0x0]  <- 0x1           # WCS enable
+> >  sbsa-gwdt_control_write [0x14] <- 0xffffffff    # WCVU (intermediate)
+> >  sbsa-gwdt_control_write [0x10] <- 0xa906ca28    # WCVL
+> >  sbsa-gwdt_control_write [0x14] <- 0xecb1        # WCVU (final)
+> >
+> > The intermediate WCVU write (0xffffffff) creates a WCV above
+> > INT64_MAX, which overflows QEMU's signed timer and fires
+> > immediately =E2=80=94 triggering WS0 =3D> WS1 =3D> reboot before the fi=
+nal
+> > WCVU write lands.
+> >
+> > Clamp WCV to INT64_MAX to avoid timer API overflow. =20
+>=20
+> This bug doesn't exist as described in the current upstream
+> version of this device, because we don't use WCVU/WCVL in
+> calculating the timeout (only WORU/WORL, which are forced to
+> 48 bits wide on write). This suggests that either you have
+> introduced it in this series, in which case it would be better
+> to not do that, or else that it exists in a different form
+> in current upstream, in which case it would be better to
+> fix it first in the patchset, so it can be cc:stable for
+> backports.
 
-Thanks,
-Mateusz
+it's masked by missing timer reschedule on WCV update,
+that preceding patch #16 fixes.
+So yes it's ordering issue.
 
-On 6/30/2026 12:31 PM, Klaus Jensen wrote:
-> On Jun 26 11:21, Mateusz Nowicki wrote:
->> Add two HMP commands for inspecting emulated NVMe controllers from
->> the QEMU monitor without attaching gdb to the QEMU process:
->>
->>    - 'info nvme'        - per-controller summary (PCI, identify
->>                           fields, CC/CSTS/AQA, queue counts)
->>    - 'info nvme-queues' - per-queue listing of admin and I/O SQ/CQ
->>                           (size, head/tail, PRP1, doorbell offset,
->>                           phase tag)
->>
->> Useful for verifying queue setup, doorbell rings, AERs held in the
->> admin SQ and similar driver/controller interaction details from a
->> running QEMU monitor.
->>
->> Changes in v3:
->>    - Gate the new x-query-nvme[-queues] commands and their 'info'
->>      counterparts behind CONFIG_NVME_PCI.  They were registered
->>      unconditionally while the implementations live in hw/nvme/, so
->>      targets built without NVMe (e.g. riscv64-softmmu) failed to link
->>      with an undefined reference to qmp_x_query_nvme.
->>    - hw/nvme/meson.build: keep the source file list alphabetically
->>      sorted (Markus).
->>
->> Changes in v2:
->>    - hw/nvme/meson.build: add the missing trailing newline (Markus).
->>    - Pick up Acked-by tags from Dr. David Alan Gilbert and Markus
->>      Armbruster on both patches.
->>
->> v2: https://lore.kernel.org/qemu-devel/cover.1778694320.git.mateusz.nowicki@posteo.net/
->> v1: https://lore.kernel.org/qemu-devel/cover.1778409416.git.mateusz.nowicki@posteo.net/
->>
->> Mateusz Nowicki (2):
->>    hw/nvme: add 'info nvme' HMP command
->>    hw/nvme: add 'info nvme-queues' HMP command
->>
->>   hmp-commands-info.hx |  32 ++++++++++
->>   hw/nvme/meson.build  |   2 +-
->>   hw/nvme/monitor.c    | 139 +++++++++++++++++++++++++++++++++++++++++++
->>   qapi/machine.json    |  36 +++++++++++
->>   4 files changed, 208 insertions(+), 1 deletion(-)
->>   create mode 100644 hw/nvme/monitor.c
->>
->> -- 
->> 2.53.0
->>
->>
-> With this, my build complains about CONFIG_NVME_PCI being poisoned now:
->
-> qapi/qapi-introspect.c:1743:13: error: attempt to use poisoned ‘CONFIG_NVME_PCI’
->   1743 | #if defined(CONFIG_NVME_PCI)
->        |             ^
-> In file included from /home/kjensen/src/qemu/include/exec/poison.h:7,
->                   from /home/kjensen/src/qemu/include/qemu/osdep.h:38,
->                   from qapi/qapi-introspect.c:12:
-> ./config-poison.h:277:20: note: poisoned here
->    277 | #pragma GCC poison CONFIG_NVME_PCI
->        |                    ^~~~~~~~~~~~~~~
-> qapi/qapi-introspect.c:1756:13: error: attempt to use poisoned ‘CONFIG_NVME_PCI’
->   1756 | #if defined(CONFIG_NVME_PCI)
->        |             ^
-> ./config-poison.h:277:20: note: poisoned here
->    277 | #pragma GCC poison CONFIG_NVME_PCI
->        |                    ^~~~~~~~~~~~~~~
->
+perhaps it's better split this patches into independed series,
+given that the last 14-17 patches are fixing native GWDT
+behavior for Windows usecase (which would still not work
+due to too large timeouts)
+and that it's not directly related to this series (linux uses
+normal refresh approach with native gwdt mode), and WDAT mode
+peddled by this series work fine with both Windows and Linux.
+
+With the last 4 patches we still need to convince MS to fix large
+timeouts on their side to make native gwdt work as expected.
+
+
+>=20
+> thanks
+> -- PMM
+>=20
+
 
