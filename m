@@ -4,64 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70E53C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 11:53:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6AFCC44500
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 11:53:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weX1A-0002U4-Bk; Tue, 30 Jun 2026 07:52:44 -0400
+	id 1weX1Q-0002WV-7B; Tue, 30 Jun 2026 07:53:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mateusz.nowicki@posteo.net>)
- id 1weX18-0002SI-GG
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 07:52:42 -0400
-Received: from mout02.posteo.de ([185.67.36.66])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1weX1O-0002Ve-2H; Tue, 30 Jun 2026 07:52:58 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mateusz.nowicki@posteo.net>)
- id 1weX15-0001Ld-1G
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 07:52:42 -0400
-Received: from submission (posteo.de [185.67.36.169]) 
- by mout02.posteo.de (Postfix) with ESMTPS id 46E1F240103
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 13:52:36 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.net; s=2017;
- t=1782820356; bh=1a8nVCf5L0n90zM9p8EuZBcSpS2tt5IZlMv/BXN4Q4o=;
- h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
- Content-Transfer-Encoding:From;
- b=o6tMlpjtZso1rgtfM3rPU+1Dd+kYSr1+R5ixJIPe9o5EMnM2KxsRxroKqyTQsk7Cs
- Y5qAqmCFuSv7b7aSgcGLqtYv1kANPkL35zm1/1wQXsD/abPu2gunBI5ZOPUK7/qy88
- czYPwy8gV3B7XmryFxNR6HSkqdH+NYuqCcgtYCU4M98bIIHvAln7Yf1QX0+ewP29Th
- l2DqqRFEau3hqU7el/WZeFDWXCYY3wuHRI1JFvWbV2gjz9S1jyd6tNyFhhNi3nFMqi
- iY0FfY+o/mtrZLbZmVZga9jS2AQdhxfK8lk+sIJlePiHY+kgA8KKeWtS/ks0OsOI8x
- kzHlTXQ4nIcVg==
-Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4gqM2n5xDlz6v0F;
- Tue, 30 Jun 2026 13:52:33 +0200 (CEST)
-From: Mateusz Nowicki <mateusz.nowicki@posteo.net>
-To: qemu-devel@nongnu.org
-Cc: Mateusz Nowicki <mateusz.nowicki@posteo.net>,
- Klaus Jensen <its@irrelevant.dk>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Markus Armbruster <armbru@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Jesper Devantier <foss@defmacro.it>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Eric Blake <eblake@redhat.com>,
- qemu-block@nongnu.org
-Subject: [PATCH v4 2/2] hw/nvme: add 'info nvme-queues' HMP command
-Date: Tue, 30 Jun 2026 11:52:35 +0000
-Message-ID: <416be273b5f007e656d2ac8ec67d817114ac5452.1782819251.git.mateusz.nowicki@posteo.net>
-In-Reply-To: <cover.1782819251.git.mateusz.nowicki@posteo.net>
-References: <cover.1782819251.git.mateusz.nowicki@posteo.net>
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1weX1M-0001UV-El; Tue, 30 Jun 2026 07:52:57 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65U9nIpI1581758; Tue, 30 Jun 2026 11:52:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=KCxnIIaGEuIxO2XmE3sWJbEU5L+fBp
+ bBF+/bCmtjHrs=; b=nmkSsOlnVqLmhoFeFcEm29ImcBna7F/Nf5Lxrnj6T9BhRt
+ +d3vwu4k3EhXu6Fw8eyV9XC3bRZvXQLtKUkJornWOR2albspDVqogabS9zLoDGk8
+ xxE4d+pMDM4I6jblWbOQO1wIHTQWdWlk1WJUeIrkxmBqkZligZwKKEBYhi6dKVuY
+ r+b4lcHWb6yWoxWt3/IupPWZ396T3YyTkwc2RLdBLf6miMFCD/KltrfUDoFaB4Nd
+ Fqui/sBHuh0KnDMMoVJMxDb4uxiJjqRk664o8jgsFylKYWRUskFunzrI/iX4sUsy
+ deXzLABXPDe5Q+YrquJYaqR3ykvk80rC+/FOBPiQ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26q9x9e1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 11:52:52 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UBnaD1015963;
+ Tue, 30 Jun 2026 11:52:51 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruqa8fc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 11:52:51 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65UBqlTa39453004
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Jun 2026 11:52:47 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C035720043;
+ Tue, 30 Jun 2026 11:52:47 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2196820040;
+ Tue, 30 Jun 2026 11:52:46 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 30 Jun 2026 11:52:45 +0000 (GMT)
+Date: Tue, 30 Jun 2026 17:23:04 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Shivang Upadhyay <shivangu@linux.ibm.com>
+Cc: adityag@linux.ibm.com, harshpb@linux.ibm.com, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, milesg@linux.ibm.com, npiggin@gmail.com,
+ amachhiw@linux.ibm.com
+Subject: Re: [PATCH v3 1/2] ppc/pnv: avoid regenerating DTB if external DTB
+ is present
+Message-ID: <20260630172158.2d40c4a9-97-amachhiw@linux.ibm.com>
+Mail-Followup-To: Shivang Upadhyay <shivangu@linux.ibm.com>, 
+ adityag@linux.ibm.com, harshpb@linux.ibm.com, qemu-devel@nongnu.org, 
+ qemu-ppc@nongnu.org, milesg@linux.ibm.com, npiggin@gmail.com
+References: <20260630103508.254000-1-shivangu@linux.ibm.com>
+ <20260630103508.254000-2-shivangu@linux.ibm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.67.36.66;
- envelope-from=mateusz.nowicki@posteo.net; helo=mout02.posteo.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260630103508.254000-2-shivangu@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDEwOSBTYWx0ZWRfXyGvljQvlHx5h
+ Qv/oc8IcL1xxU8kfs/IY7MdVZkPq1J7Fk4FTOsWegeYE3ZBFJggtjgo0/tR6DgSTf2xFL7DHu/y
+ qZyh0M6xu5qt3gfqqbxwoiqaCIsT6bE7aaoGaieVInPUMugga7IVG5KRXHJdkcWCm8BAb5rtj0M
+ maF4kjMzTJ8rf9Kmblr9cd1R+thf4qdGwNeQI5URmFqVjjWjk/abgh1H3O5yMxntCiQDwuldrpZ
+ 5gXapOahoHYfemnA6hvkdUwcZqr3lgaeeD06FnvYtZCxMgL7ifANN9GNiYN1+Ir5tHoJO/9gtyu
+ dvgB3tFULxnNJUsDECI5/+2zqiHs9D+Hl5KrXve5UBsAWdjPMOQIdbuqyxP5lkL2Xmu4ak4lUQp
+ 34xu9JmvXR6IrUnWUXKcrb7vj1RWATZvUx69wNXepAF5ViiNHi+VuDD3Kx4Lk8Zmdw0r+LqigyF
+ vVmq5KQ8qDmrYXOPCpQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDEwOSBTYWx0ZWRfX0G10rh9P6kiP
+ yr2Lja9W+SjFuLC9hQVoBwKAOG8CefFOYXXvkLKK8ygc8ZTkpmBgHX46jBRa2UWlhH8C+Z3+1TP
+ qRG+gc9QoyFkxG0wO3bn35PxXhJdKt8=
+X-Proofpoint-GUID: wpGCj5VS54YNY0a7FM0Oe1arMgOFFl_M
+X-Proofpoint-ORIG-GUID: LIK_5m8EncOQNjLGTttePKqQKei793Nb
+X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a43ae14 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=NdBKe68Bqb0dG6RT75AA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-30_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606300109
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,184 +128,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an 'info nvme-queues' HMP command that lists, for every emulated
-NVMe controller, the admin SQ/CQ and every active I/O SQ/CQ.
+On 2026/06/30 04:05 PM, Shivang Upadhyay wrote:
+> Currently externally provided dtb is overwritten in `pnv_reset`.
+> Fix this by only creating dtb if not provided from `-dtb`.
+> 
+> Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+> ---
+>  hw/ppc/pnv.c | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
 
-For each queue the command prints:
+LGTM.
 
-  - the ring size, head and tail indices;
-  - the associated CQ id (for SQ) or interrupt vector (for CQ);
-  - the queue's PRP1 (DMA base address of the ring);
-  - the BAR0-relative doorbell offset (SQyTDBL / CQyHDBL);
-  - the current CQ phase tag.
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-The doorbell offsets are computed from CAP.DSTRD so they remain
-correct if the emulation ever exposes a non-zero stride.
+~Amit
 
-Useful when debugging the Linux NVMe driver against the QEMU
-emulation - queue setup, doorbell rings, AERs held in the admin SQ
-etc. - without attaching gdb to the QEMU process.
-
-Example, with the long PRP1 ring address and BAR0-relative doorbell
-offset replaced by '...'; phase tag column omitted for brevity:
-
-  (qemu) info nvme-queues
-  /machine/peripheral-anon/device[0]
-  SQ 0  size=32    head=9     tail=9     cqid=0    prp1=...  SQTDBL=...
-  CQ 0  size=32    head=8     tail=8     iv=0      prp1=...  CQHDBL=...
-  SQ 1  size=1024  head=2     tail=2     cqid=1    prp1=...  SQTDBL=...
-  CQ 1  size=1024  head=2     tail=2     iv=1      prp1=...  CQHDBL=...
-
-Signed-off-by: Mateusz Nowicki <mateusz.nowicki@posteo.net>
-Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
-Acked-by: Markus Armbruster <armbru@redhat.com>
----
- hmp-commands-info.hx   | 15 ++++++++++
- hw/nvme/monitor-stub.c |  6 ++++
- hw/nvme/monitor.c      | 63 ++++++++++++++++++++++++++++++++++++++++++
- qapi/machine.json      | 17 ++++++++++++
- 4 files changed, 101 insertions(+)
-
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index b984691c3c..874c1e1970 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -353,6 +353,21 @@ SRST
-     Show emulated NVMe controllers.
- ERST
- 
-+    {
-+        .name       = "nvme-queues",
-+        .args_type  = "",
-+        .params     = "",
-+        .help       = "show active NVMe queues and their doorbells",
-+        .cmd_info_hrt = qmp_x_query_nvme_queues,
-+    },
-+
-+SRST
-+  ``info nvme-queues``
-+    Show all active NVMe submission and completion queues, including
-+    head/tail, DMA address of the ring and BAR0-relative doorbell
-+    offset.
-+ERST
-+
-     {
-         .name       = "usbhost",
-         .args_type  = "",
-diff --git a/hw/nvme/monitor-stub.c b/hw/nvme/monitor-stub.c
-index 5eb9f04c8d..489cc4a5c7 100644
---- a/hw/nvme/monitor-stub.c
-+++ b/hw/nvme/monitor-stub.c
-@@ -13,3 +13,9 @@ HumanReadableText *qmp_x_query_nvme(Error **errp)
-     error_setg(errp, "NVMe support is not compiled in");
-     return NULL;
- }
-+
-+HumanReadableText *qmp_x_query_nvme_queues(Error **errp)
-+{
-+    error_setg(errp, "NVMe support is not compiled in");
-+    return NULL;
-+}
-diff --git a/hw/nvme/monitor.c b/hw/nvme/monitor.c
-index 95a6754437..c8161943c0 100644
---- a/hw/nvme/monitor.c
-+++ b/hw/nvme/monitor.c
-@@ -74,3 +74,66 @@ HumanReadableText *qmp_x_query_nvme(Error **errp)
- 
-     return human_readable_text_from_str(buf);
- }
-+
-+static void append_sq(GString *buf, NvmeSQueue *sq, unsigned stride)
-+{
-+    hwaddr db_off = 0x1000 + 2 * sq->sqid * stride;
-+
-+    g_string_append_printf(buf,
-+        "  SQ %u  size=%-5u head=%-5u tail=%-5u cqid=%-3u  "
-+        "prp1=0x%016" PRIx64 "  SQTDBL=BAR0+0x%03" HWADDR_PRIx "\n",
-+        sq->sqid, sq->size, sq->head, sq->tail, sq->cqid,
-+        sq->dma_addr, db_off);
-+}
-+
-+static void append_cq(GString *buf, NvmeCQueue *cq, unsigned stride)
-+{
-+    hwaddr db_off = 0x1000 + (2 * cq->cqid + 1) * stride;
-+
-+    g_string_append_printf(buf,
-+        "  CQ %u  size=%-5u head=%-5u tail=%-5u iv=%-5u  "
-+        "prp1=0x%016" PRIx64 "  CQHDBL=BAR0+0x%03" HWADDR_PRIx
-+        "  phaseTag=%u\n",
-+        cq->cqid, cq->size, cq->head, cq->tail, cq->vector,
-+        cq->dma_addr, db_off, cq->phase);
-+}
-+
-+static int collect_queues(Object *obj, void *opaque)
-+{
-+    GString *buf = opaque;
-+    NvmeCtrl *n;
-+    unsigned stride;
-+
-+    if (!object_dynamic_cast(obj, TYPE_NVME)) {
-+        return 0;
-+    }
-+    n = NVME(obj);
-+    stride = 4u << NVME_CAP_DSTRD(ldq_le_p(&n->bar.cap));
-+
-+    g_string_append_printf(buf, "%s\n", object_get_canonical_path(obj));
-+    append_sq(buf, &n->admin_sq, stride);
-+    append_cq(buf, &n->admin_cq, stride);
-+
-+    for (unsigned i = 1; i <= n->params.max_ioqpairs; i++) {
-+        if (n->sq && n->sq[i]) {
-+            append_sq(buf, n->sq[i], stride);
-+        }
-+        if (n->cq && n->cq[i]) {
-+            append_cq(buf, n->cq[i], stride);
-+        }
-+    }
-+    return 0;
-+}
-+
-+HumanReadableText *qmp_x_query_nvme_queues(Error **errp)
-+{
-+    g_autoptr(GString) buf = g_string_new("");
-+
-+    object_child_foreach_recursive(object_get_root(), collect_queues, buf);
-+
-+    if (buf->len == 0) {
-+        g_string_append(buf, "no NVMe controllers\n");
-+    }
-+
-+    return human_readable_text_from_str(buf);
-+}
-diff --git a/qapi/machine.json b/qapi/machine.json
-index d4a589e768..c21b128e0a 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1789,6 +1789,23 @@
-   'returns': 'HumanReadableText',
-   'features': [ 'unstable' ] }
- 
-+##
-+# @x-query-nvme-queues:
-+#
-+# Query state of all active SQ/CQ for emulated NVMe controllers.
-+#
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
-+# Returns: per-queue state as human-readable text
-+#
-+# Since: 11.1
-+##
-+{ 'command': 'x-query-nvme-queues',
-+  'returns': 'HumanReadableText',
-+  'features': [ 'unstable' ] }
-+
- ##
- # @SmbiosEntryPointType:
- #
--- 
-2.53.0
-
+> 
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 62812f22f8..afb6019b10 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -803,9 +803,13 @@ static void pnv_reset(MachineState *machine, ResetType type)
+>          mpipl_write_succeeded = do_mpipl_write(pnv);
+>      }
+>  
+> -    /* Regenerate device tree */
+> -    fdt = pnv_dt_create(machine);
+> -    _FDT((fdt_pack(fdt)));
+> +    /* Only create new dt if not provided in -dtb */
+> +    if (!machine->dtb) {
+> +        fdt = pnv_dt_create(machine);
+> +        _FDT((fdt_pack(fdt)));
+> +    } else {
+> +        fdt = machine->fdt;
+> +    }
+>  
+>      /*
+>       * If it's a MPIPL boot, add the "mpipl-boot" property, and reset the
+> -- 
+> 2.54.0
+> 
+> 
 
