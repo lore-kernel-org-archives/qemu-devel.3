@@ -4,108 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94D8BC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 15:46:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4923C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 15:55:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weaes-0005Rm-Kn; Tue, 30 Jun 2026 11:45:58 -0400
+	id 1weanf-0007QB-5G; Tue, 30 Jun 2026 11:55:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1weaeO-0005L1-OI
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 11:45:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1weand-0007Q1-Rq
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 11:55:01 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1weaeK-0003mM-Ot
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 11:45:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782834322;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PTIG68u+RKN829e8+UvspXHyVMwJkLzjPyf3W2fXnSg=;
- b=jLDwy3u3nShOHg5jelqhaTqBEnCBTFdmf/7jUqdD/DduM03vLyQZQJfkvbSAk+y8NAgivF
- ftBtDchejNWh9gZvDJmv9odBIdrhPWWbPKo5m7AJ/Kf6jsWxaDCObQX6YkxRAwvvY634l9
- p7julr6WWO3ErH/xR0d8Ru+SixnuzRQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-609-wPwkb8XTMn-6jYdfJ9RhMg-1; Tue, 30 Jun 2026 11:45:21 -0400
-X-MC-Unique: wPwkb8XTMn-6jYdfJ9RhMg-1
-X-Mimecast-MFC-AGG-ID: wPwkb8XTMn-6jYdfJ9RhMg_1782834320
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-493b0a5e636so20224935e9.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 08:45:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1weanb-0006l3-Tj
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 11:55:01 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65UEDKip2217091
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 15:54:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ cqQj/JNEycemoIKPGXlc2DE4FpfepTwXna84lWWRfHU=; b=EHenxBBT+5HBXp/A
+ DXYIQjbdSddLgwiImR01hVxxYLrss1397N7jOsuww+aWdNwUNQ97hKA7nv5MeNna
+ 8okBc1PT5Gpv12rge/h43YeO7hcJzD3u4MWWJcBE6MUApDDn6AJjX5CvlQRvFiLW
+ x0oJBz4jqJ1LOFWCHpZz1J5gU5lyOH7jJP6p7XFx2QOOyjCRz8jDNTSMtHgTzB8i
+ ECNKyHDFR0pi04+4Qq1ze5/fuzVQ0u96tvDl3gogNFScd8WNCSo+0k9W+RE4Gf7D
+ eMkKVvXUqh01KhtBZvSxkzd6pyEkqICmKajflwF6+213xcNBOFcTbTGTTnCovXDx
+ QdqNzg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f43vfkh7f-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 15:54:55 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-92e4f27f49bso369248285a.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 08:54:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1782834894; x=1783439694; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cqQj/JNEycemoIKPGXlc2DE4FpfepTwXna84lWWRfHU=;
+ b=dACcp4JtBVPqW9kz966fLnAjcyIoTKvItFWmTRl06rByxuNpZ4TgjLc/MBEnYH8hk5
+ XwAd2e99KEQkVhtnd3/uCfQqImBsK3JluZOHQUIoUoZ+mHQDjRPvKahxVqy/uGuv2TXB
+ AGWiZL+bPcG2Zhm6cvgdXRZsz6np+5rblb1qK/+2++lAGEp3J6uzaaxSkOqh2jFsTnw4
+ Bna/U7tDvRVW+/DB/VhQ67KhWIUJbYYLwejge8IsS2e24b7BLmiCzbX0rseUZJtY/qzD
+ oD2zRbV5GN27VKk2fgc/GxYnNsqKwhss88j/iZFwnqZpQW8Ix3a86LMLRrgnQKszCAIL
+ XSww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782834320; x=1783439120;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PTIG68u+RKN829e8+UvspXHyVMwJkLzjPyf3W2fXnSg=;
- b=NViU4dNqYhco3JiQEI++/vZwy1fBcgygE0n6Af4ceAGwRM2iA4WVtlvKfPBgDwSSZU
- 5k5JDXAStS95suPUZk49ZasoJ8eVHErlbMAt7hZZqVKJqxRv12z4td43Cvj//Ybz+scb
- dXoYf1w+kN0J4tZIkNQ5A9ndtpv1tJfGH7Et5yTJuAFbZPwBgj9tQh/oYEbBSC6iJl5u
- 0z8He2xDpsOTKBhWtmSIaTCbGGKaFllxe5ckXj+y5qSOoxccslqeP8wZOBhnjZBgjnff
- ql1dMYtj14ObCuSKjvHuE2RMz8CzNK+m1nwc/V3lOx8DPuVUfYESjuFR13xqpwFDzkTD
- 5sUQ==
+ d=1e100.net; s=20251104; t=1782834894; x=1783439694;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cqQj/JNEycemoIKPGXlc2DE4FpfepTwXna84lWWRfHU=;
+ b=BfrJuS/elIQQQ1WPrk1CvuFYHnAhm7P8SXnc2JCKxNzBvuYTlHc8LOWDmZqsa+nQGX
+ PiiCvHNAIAdWwPQvpV6vquz5rgSxxPfW5etbgDE9zahQwEDROW1q7yFnA3+TQwyu05AJ
+ v2hAR8PLQasRfUvaXxV7Ik4UUjq4g0gINaIbJ2WGwoseAzaOotRNHuVk6PGExzofpjTF
+ s0roJQJp8apicoFzzFM5A/wbTvktN4AJ0qTMrpDRWnXlS3g0Nnq9/hk3oztFJYmYoxS1
+ +FH/oMzwj9MZgFEDqKhgY+2Phy5iBhdDIXyVLZTl2t/7Fo15Yz9xBr876Z9Ihh4lByQI
+ uroA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9cd4G7gIDPIF8Z7tgo4e+J2WqNpC44fxe8pJziGyiA71KbKL068+E8V7dcnLCKJTx6xWqEngG59WUm@nongnu.org
-X-Gm-Message-State: AOJu0YwDR3VrsteAuH0jxNI88pbVdOQy4SFQ+QylN9FxBCHOJBvkNngI
- p0yGPekxiPaYU8KqlMYdgIyF+hUJzYSNpRnE4R1DjJGbdvkOoII/fiZVaLSeHV+bxecZ0T8aAjF
- XM8+wDvMO6aj5HavHirVlsXRwqSCxRm2/XLybeIweHfzIJ37szltqpBZC
-X-Gm-Gg: AfdE7cl0nL+UmeiJ/6jG7IvSWcPzYHXSl9fG9bLhr+uGk1UDW3aNPkvSz8ZeAt0WmdI
- 3JhENSlAZ0Z3qW1/JiwPxeShJg/jdZkS0VqsGccX+q89MUCnCjJIKKt61QRHrvSqhd3558RflAv
- myY1A9BMCOkmruEAkFtzNowdQb+9zmJX+f78qA8DHFD0nWbHmhfmldgVfr0F0Vs1g8jjAER4EN7
- yUlqWKqff+/JLWNOgyJvpgL2NR62uIEdad7Fhn1NbXkQ2vUW6+y9xRFDYlje0d55dbXLK6A/Hpd
- nn0QfSgCU3DU4aQFWHr+ZD62WQSo0k6sWIqiqe0y1fHlDAHBcMFI94H3lM/ky0Zah0DzM+Bxgdw
- 4XHVnrKxcNr7BhJ1nGkITE/+2qEh7JJNL2Cs6jZK8vP+OynIAGJl3G2HCDnY=
-X-Received: by 2002:a05:600c:a43:b0:493:b2c1:b2f9 with SMTP id
- 5b1f17b1804b1-493b827ed93mr65790785e9.8.1782834319937; 
- Tue, 30 Jun 2026 08:45:19 -0700 (PDT)
-X-Received: by 2002:a05:600c:a43:b0:493:b2c1:b2f9 with SMTP id
- 5b1f17b1804b1-493b827ed93mr65790275e9.8.1782834319469; 
- Tue, 30 Jun 2026 08:45:19 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493be810be8sm3104665e9.9.2026.06.30.08.45.17
+ AFNElJ/CfEeuW42J5kkUwS4lWcgOAD6xKg/ELHbGi++XGlv97ZZU/T8WlGmNAec1OgFbP//pSbIhXQoAq0IO@nongnu.org
+X-Gm-Message-State: AOJu0YxSb+9F5vXdnfuvAh9kyLzJgzuo5wlzkuJmtVhyAUIdgCmlCMMC
+ 9f2nUCDah4wwCmTxKFrauJP6OKn55pcTeiL3t66OVhfAI2fVpa7Y03qLX5PUI/4RhhrowlMy3ki
+ lGS+U7SMeIPq1DnycwJyb/GSzTzDtCDW8VUfETs2JAA+/2F0p7tnVBQCF8g==
+X-Gm-Gg: AfdE7clh0aOZmaLQuqk8AJRo7qjwM7XfOiS/O/hiHtuvQ+cxwBKOzqM5chgw9jLuGIJ
+ KZGNTP2wEgOtgJkiVanSbCpadQMAAnIIBxmmudJXzgD2+wX62VEm/i21TfKZReEwpeqkq9v956s
+ zX+9dG+iXTD1EdxHId5ktnoscDxPS3D//z8aHgK/W+ZZR1ryCjYfiK7G3rjlHOjsZyhjKzsqwfl
+ Izua49TCAeZCx1u6M+1q5zMD6G05/1apTpRrjng6Pxl27CVOAjPyWOYsT54UDMFVCc9srfA+THh
+ HMGut2hSBzcK2jE6M7vecvj7ct0uu4H6vcwbh13KsDk9YKWcvXdS2m7qs40aFrHS6+9AlEeYTkw
+ be8i1kph7kebfFm9tY/NvUB43gJDhqti/pNtH2sdu99R2n+KOPKzdCFLgckTRvw==
+X-Received: by 2002:a05:620a:2951:b0:90c:be8b:3676 with SMTP id
+ af79cd13be357-92e62886f7amr681014385a.56.1782834894538; 
+ Tue, 30 Jun 2026 08:54:54 -0700 (PDT)
+X-Received: by 2002:a05:620a:2951:b0:90c:be8b:3676 with SMTP id
+ af79cd13be357-92e62886f7amr681006985a.56.1782834893793; 
+ Tue, 30 Jun 2026 08:54:53 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c1288f4c3aesm152445366b.47.2026.06.30.08.54.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jun 2026 08:45:18 -0700 (PDT)
-Message-ID: <0cfb0e2e-d390-4159-be78-257c188b5c18@redhat.com>
-Date: Tue, 30 Jun 2026 17:45:16 +0200
+ Tue, 30 Jun 2026 08:54:52 -0700 (PDT)
+Message-ID: <90e6b1ee-8337-4bb1-ba0c-0fdfe451487e@oss.qualcomm.com>
+Date: Tue, 30 Jun 2026 17:54:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/arm/smmuv3: Sanitize
- SMMU_S_STRTAB_BASE_CFG.LOG2SIZE
+Subject: Re: [PATCH] hw/dma/i8257: Return zeroes for read_memory in verify mode
 Content-Language: en-US
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "berrange@redhat.com" <berrange@redhat.com>,
- Nicolin Chen <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>
-References: <20260630083042.2692392-1-eric.auger@redhat.com>
- <20260630083042.2692392-3-eric.auger@redhat.com>
- <SJ0PR12MB8614797527766BD0AFDE5717ABF72@SJ0PR12MB8614.namprd12.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <SJ0PR12MB8614797527766BD0AFDE5717ABF72@SJ0PR12MB8614.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260629140128.1900095-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260629140128.1900095-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: x0TY9w4O4p48KxuLuc0Jv7kyCYPP1peY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDE1MCBTYWx0ZWRfX1j+JpoNQeMkQ
+ Sf/+8BRsr+UXeLv3sT0+/lIpalA7xn27oD2y08RYxlsmSBSz7pGCLfNJQiTjaXTM1bqtdJjZyUL
+ cpH/XEj1MceM6nH4dqnvhRH34gCP6GLv8t+2mkVvcZ+p1ZrPgFwpzJqcbPFMSDX7sMwH/o0YErm
+ ojAfTNYqM+hVZGXT4b78rSlarSd9Wtoh1oEyi+iZk2eX5fhv9/g4Cwb/VQh/tKGbHgBD/NnsYnQ
+ 1zOkshaLGDcuCPK8b41yBLoD6KBncEgdXf+QLDYlGAzQrWnN3/5DoxnqUuKXAjf2MFiLSN4vSOi
+ XueXIiq9SoVPucF5Zmo0k7C4E9mEvAEYtHYaqCbV4gYbAljThfcrm1n2Dmd+xzuPHhQhJbcJOuM
+ mxcu96VtHibOfAFMjnEOEy4787qvtK11xH9v+nsphisdlqk0LUDyacS6/BIcciNCzKOB2llLcxu
+ cF8xu0075elJe0D3rtg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDE1MCBTYWx0ZWRfXxQQSXqHXYk2V
+ KxskxO4HgCB4oopxJoMTkSPpj52lGKvS4agJfS72E9VRYY7btuXS3sUFuHXR3TdjL5awwoDELdf
+ t0+o4CtXwOk3439ggrojJ3GvAO27LVk=
+X-Proofpoint-GUID: x0TY9w4O4p48KxuLuc0Jv7kyCYPP1peY
+X-Authority-Analysis: v=2.4 cv=PcXPQChd c=1 sm=1 tr=0 ts=6a43e6cf cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=p0WdMEafAAAA:8 a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=eIhYIOwvZRR6YV1ZOekA:9
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-30_04,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 clxscore=1015 impostorscore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606300150
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,112 +153,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
-
-On 6/30/26 11:43 AM, Shameer Kolothum Thodi wrote:
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Sent: 30 June 2026 09:30
->> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
->> devel@nongnu.org; qemu-arm@nongnu.org; peter.maydell@linaro.org;
->> berrange@redhat.com; Shameer Kolothum Thodi
->> <skolothumtho@nvidia.com>; Nicolin Chen <nicolinc@nvidia.com>; Nathan
->> Chen <nathanc@nvidia.com>
->> Subject: [PATCH 2/2] hw/arm/smmuv3: Sanitize
->> SMMU_S_STRTAB_BASE_CFG.LOG2SIZE
->>
->> External email: Use caution opening links or attachments
->>
->>
->> STRTAB_BASE_CFG.LOG2SIZE is programmed by the guest through the
->> emulated SMMUv3 MMIO register interface. Currently the value is
->> not checked.
->>
->> The SMMU spec says: "Except for readback of a written value, the
->> effective LOG2SIZE is <= SMMU_IDR1.SIDSIZE for the purposes of
->> input StreamID range checking and upper/lower/linear Stream table
->> index address calculation."
->>
->> So for STE lookup make sure log2size is capped at SMMU_IDR1.SIDSIZE.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> ---
->>  hw/arm/smmuv3.c | 9 +++++++++
->>  1 file changed, 9 insertions(+)
->>
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index 0a8d2fbb6a7..db5aca26ec0 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -672,6 +672,15 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid,
->> STE *ste, SMMUEventInfo *event)
->>      /*
->>       * Check SID range against both guest-configured and implementation limits
->>       */
->> +    if (log2size > SMMU_IDR1_SIDSIZE) {
->> +        /*
->> +         * spec says: Except for readback of a written value, the effective
->> +         * LOG2SIZE is <= SMMU_IDR1.SIDSIZE for the purposes of input
->> StreamID
->> +         * range checking and upper/lower/linear Stream table index address
->> +         * calculation.
->> +         */
->> +        log2size = SMMU_IDR1_SIDSIZE;
-> We are now limiting the log2size here and later in the code we use
-> this for strtab_size_shift calculation.
->
-> However, spec says(6.3.24):
->
-> "The alignment of ADDR is affected by the literal value of the respective
-> SMMU_STRTAB_BASE_CFG.LOG2SIZE field and is not limited by SIDSIZE."
->
-> So this will change the behaviour now. Please check.
-
-You right, there is this statement  + the existing comment in the code +
-the additional note: "Note: This means that configuring a table that is
-larger than required by the incoming StreamID span results
-in some entries being unreachable, but the table is still aligned to the
-configured size."
-
-and then there is
-
-"../.. the effective LOG2SIZE is <= SMMU_IDR1.SIDSIZE for the purposes of input
-StreamID range checking and upper/lower/linear Stream table index address
-calculation.
-"
-
-This sounds contradictory to me.
-
-On the other hand who is going to program an LOG2SIZE greater than the SIDSIZE?
-
-There is no further info about log2size limit and with some of its values spec ADDR alignment computations cannot apply
-
-ADDR[LOG2SIZE + 5:0] = 0.
-ADDR[MAX(5, (LOG2SIZE - SPLIT - 1 + 3)):0] = 0.
+On 29/6/26 16:01, Peter Maydell wrote:
+> The i8257 DMA controller has a "verify" mode, which the datasheet
+> describes like this:
+> 
+>> DMA verify, which does not actually involve the transfer of data.
+>> When an 8257 channel is in the DMA verify mode, it will respond the
+>> same as described for transfer operations, except that no memory or
+>> I/O read/write control signals will be generated.  When an 8257
+>> channel is in the DMA verify mode, it will respond the same as
+>> described for transfer operations, except that no memory or I/O read
+>> /write control signals will be generated, thus preventing the
+>> transfer of data.  The 8257, however, will gain control of the system
+>> bus and will acknowledge the peripheral's DMA request for each DMA
+>> cycle.  The perihperal can use these acknowledge signals to enable an
+>> internal access of each byte of a data block in order to execute some
+>> verification procedure, such as the accumulation of a CRC check word.
+> 
+> In practice, for QEMU's purposes the only real user of this is the
+> floppy controller, which can be made to perform a "read data from
+> floppy disk and check the checksum" by telling the fdc to do a read
+> and the DMA controller to do a verify.  This causes the fdc to do all
+> the usual read actions including the checksum, but the data is never
+> written to memory.  However, it is possible for a guest doing
+> something silly to program the DMA controller to do a verify
+> operation for a device that wants to read from memory.  Currently we
+> simply return early from i8257_dma_read_memory() without writing to
+> the buffer.  None of the callers (the GUS, sb16 and cs4231a sound
+> cards, plus the fdc) expect this, so they will take the uninitialized
+> data as if it were from the guest.  This can cause us to leak host
+> data off the stack into the guest.
+> 
+> Make i8257_dma_read_memory() fill the buffer with zeroes rather
+> than leaving it untouched for a verify operation.
+> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3487
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/dma/i8257.c | 13 +++++++++++++
+>   1 file changed, 13 insertions(+)
 
 
-Adding to that, the code currently does not consider SPLIT >= LOG2SIZE case and also the ignores aligment computation of L2PTR according to span.
+Queued via hw-misc, thanks!
 
-I will do my best to rework that ...
-
-Thanks
-
-Eric
-
-
->
->> +    }
->>      if (sid >= (1 << MIN(log2size, SMMU_IDR1_SIDSIZE))) {
-> This MIN check now is redundant here, right?
-Yes it is
->
-> Thanks,
-> Shameer
->
-
+Phil.
 
