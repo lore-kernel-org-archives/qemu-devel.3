@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD7FDC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 22:09:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A67F0C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 22:09:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wegdY-0007kf-AN; Tue, 30 Jun 2026 18:09:00 -0400
+	id 1wegdZ-0007v7-It; Tue, 30 Jun 2026 18:09:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1wegct-000778-AH
+ id 1wegct-00077A-Fs
  for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:08:19 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1wegcq-0005u7-Vs
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:08:18 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ id 1wegcp-0005tt-VF
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:08:19 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65UKtfdZ994498; Tue, 30 Jun 2026 22:08:09 GMT
+ 65UKtmqZ1252859; Tue, 30 Jun 2026 22:08:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=Y2Woe
- hWoqCwSie4c7FzZCiIlhlhe6UXDhywuAJmyHAI=; b=jdPND/hbxbkrwDJa/N/5+
- M6o/PAhUy9wJV0fFDrsIxgyzzAOlJNlmy3J+Qll8YDJTQqqt8ZT3+9xL+M6Xu1VE
- 6JxnZPdiaADcBzjMm1nYhVDsBYfxlOYMv41rGS9sSYEelBJyTQ48THz/Zo2IgI9U
- 38tB/IKAZNPV6XZTa5sW8QUzffij25Zv4A7zlarK+2RDCJaqYcpEMCqjr1xwMv3m
- rZAR8vTGgNmh/KDDmpMGQaxbOT461jlwWAL059ZDy05bZgvf+5OSf4Cy9EooF8xA
- Io9hc1x1YdLB73DaQfqHiIJqQfiYbgmUszO4BeAKixuU0Yhpa2XHWF8uRWHMGhwN
- w==
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=645Tf
+ vzesUp3Di2aVWeUFo+Xd5Fg6DnwGsMTXCF/Mrs=; b=jpKaHkrqWkgvxGwaeuRvh
+ YB+EQz+LUh18E/mwlrl84HyfLNlE5bwbyz5epo4flX9mZeZeSO4IJFajoBy+S4Gj
+ UWS3FFEUI9bUW/5Tmm6LchWw8wDDzp1tESXmIZf2l8iKpw6UasW+F7ymjeVMgQk0
+ lZzpZICKoeTILQhg3bpi0kWYdmzR9l9fQvQHPZJ3ULvpHSYmvJOJ8wcL4EKwuXJA
+ H7daTKCKfGI1/Tw1ex2sDTWipp63zv1mBiK1WYLvepCtwhdf/nhTnNqEFGRGd4Cr
+ MoGlz9KqDaimuruXTxSMPShkXHjYPawTehw4ESzItwYGvz/aMJKUn4Qinm1dnl0H
+ A==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4f272qn25w-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4f26p8n6me-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Tue, 30 Jun 2026 22:08:09 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 65UM3U09033962; Tue, 30 Jun 2026 22:08:08 GMT
+ with ESMTP id 65UM3Zx5034546; Tue, 30 Jun 2026 22:08:09 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4f3u1w75w9-1
+ 4f3u1w75wt-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Jun 2026 22:08:08 +0000 (GMT)
+ Tue, 30 Jun 2026 22:08:09 +0000 (GMT)
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 65UM87gH008507;
- Tue, 30 Jun 2026 22:08:07 GMT
+ by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 65UM87gL008507;
+ Tue, 30 Jun 2026 22:08:08 GMT
 Received: from alaljime-e5-test-20240903-1847.osdevelopmeniad.oraclevcn.com
  (alaljime-e5-test-20240903-1847.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.250.206])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4f3u1w75vm-3; Tue, 30 Jun 2026 22:08:07 +0000 (GMT)
+ 4f3u1w75vm-5; Tue, 30 Jun 2026 22:08:08 +0000 (GMT)
 From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 To: mst@redhat.com, qemu-devel@nongnu.org
 Cc: sarunkod@amd.com, qemu@demindiro.com, imammedo@redhat.com,
  peter.maydell@linaro.org, philmd@oss.qualcomm.com,
  alejandro.j.jimenez@oracle.com
-Subject: [PATCH 2/5] amd_iommu: Return int from page walk status helpers
-Date: Tue, 30 Jun 2026 22:08:03 +0000
-Message-ID: <20260630220806.1758748-3-alejandro.j.jimenez@oracle.com>
+Subject: [PATCH 4/5] amd_iommu: Decode IRTEs without bitfields
+Date: Tue, 30 Jun 2026 22:08:05 +0000
+Message-ID: <20260630220806.1758748-5-alejandro.j.jimenez@oracle.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260630220806.1758748-1-alejandro.j.jimenez@oracle.com>
 References: <20260630220806.1758748-1-alejandro.j.jimenez@oracle.com>
@@ -74,30 +74,30 @@ X-Proofpoint-Virus-Version: vendor=baseguard
  definitions=2026-06-30_05,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
  adultscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0 bulkscore=0
- mlxlogscore=999 suspectscore=0 phishscore=0 classifier=spam adjust=0
+ mlxlogscore=927 suspectscore=0 phishscore=0 classifier=spam adjust=0
  reason=mlx scancount=1 engine=8.19.0-2606160000 definitions=main-2606300215
-X-Proofpoint-ORIG-GUID: FQfSdZoV0O1jZ7QtKzmkQAycdvmXCq39
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDIxNCBTYWx0ZWRfX7xMGTLtpU8Ge
- eC8cRmgxzV7fXuvKqUueDOcxCayGvoHE8FH1bMCGxCj1zvmJLzcfk1GIZjSkPKIjEKUYIaEqSrG
- xTr2QSsl6Jfdl5IK5xvf02QOc8QYC1sYyv7fMW5ypOVBqSg/HmPvKmQdtIKI9kYzSWnMYRI2voU
- k3txRpcEvErirIhhusxlhSUU2AD/OJZE1paCfCW2B6+d3do5ongA4GxVxiJd0Hjdon7XZlrG3Av
- 3ZQM7Qmk6VHqDpq75/w99CpGGNgp/ovFDjoeRfLAQHzcT2OL1O8RZJMrZlu25wWGqpnHTGYQQax
- AWus5YAaN6TsaZrLUQmvn+nS9P3tLFALsF7ev+EMliSECEa8ESLnY1AV6elsdG6to+ejLP6y59X
- BfLy63uFq1o1ATHsGQKbJd/7kBH+SmTFqxR+i/JKZB5j6VR4YvshYMoeU8a8N530DLDom3hDjJY
- J6c37rS8vkWZTV8/hoij2zTnqnFMrXsKVsEkAeRg=
-X-Authority-Analysis: v=2.4 cv=LOxWhpW9 c=1 sm=1 tr=0 ts=6a443e49 b=1 cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDIxNSBTYWx0ZWRfXwupzoWUUkgw6
+ o4AS7m11xS6SjD4ql2UuUP4BXlEHN5UPtbTh77ERO4l8E8MBt8Z5MQbdJT1oHtJG6TnvSD9YB45
+ HNU832PJOu+XVjzuWSlcwypFeArzx3HlebogBfgpSbu0POEMni/R
+X-Proofpoint-GUID: kTkTa2l1tr4Cu6vtgC2Jd3UVR6JE9i6Z
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDIxNSBTYWx0ZWRfX4le8XeNqOPFt
+ BxyiF+UM2nZ4V8xFILmHwFfetiqojM6oa3OKa/Sg0WSDN4zJIEJkAqXi4wKGsWIJtdWHfmevaYA
+ +rm6XkXscZ4Gej/8vECEVsAanxii1a5s5Odi4gyDxMalHLWbVYEvegZ452l/CdMMo2pi8/IWYha
+ oUkU9QOAlTsuAbzMJ9Ww93lLh3B49ZyQPWwpArjvj+ne1NwzX3tqArFw+y6np4oNxh3bwzMd1h0
+ kFgPmC6hxEpreGX7lhilfyhty7wt02b0+XymPD4xZyqv1eSjQegKhFYP8B6zc+MfO2q2tbve3ux
+ pYlOopRNP3MnQwjdXw5HYwfQ0RjJsuzCNHeVsOkmHU0k/Md+WiP7Yh1VL9QoIzjxTdVANgRYl+v
+ PZL6/9uJ5tdCr92fZOqS59rW67nyYZxFtiq0ZHOROk+rfW2Yg+P9wGMQ6z/6Hu/msXgCiJ8xxHS
+ 4b7CdcFC3dZrS+jSfoiekHRXmQslBfSBJn7wKj18=
+X-Proofpoint-ORIG-GUID: kTkTa2l1tr4Cu6vtgC2Jd3UVR6JE9i6Z
+X-Authority-Analysis: v=2.4 cv=D5N37PRj c=1 sm=1 tr=0 ts=6a443e49 b=1 cx=c_pps
  a=qoll8+KPOyaMroiJ2sR5sw==:117
  a=qoll8+KPOyaMroiJ2sR5sw==:17
  a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=7Gl3-_t3PgB9XO-mQDs3:22 a=KKAkSRfTAAAA:8 a=yPCof4ZbAAAA:8
- a=CPMDAz_8QbydQVlharwA:9 a=cvBusfyB2V15izCimMoJ:22 a=5yU3S35YU4bGjq-dph-N:22
+ a=BqU2WV_vvsyTyxaotp0D:22 a=KKAkSRfTAAAA:8 a=yPCof4ZbAAAA:8
+ a=iN8GYCbXJNbl4wqCgcoA:9 a=cvBusfyB2V15izCimMoJ:22 a=5yU3S35YU4bGjq-dph-N:22
  a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12313
-X-Proofpoint-GUID: FQfSdZoV0O1jZ7QtKzmkQAycdvmXCq39
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDIxNCBTYWx0ZWRfXzko/2Dl+Jb5G
- QO2Tm5TkWxS4IRQhJOHWO1yhZqiO7465YDCu0nwnjVb4pmNPkUW2IkHiS11HuN9xw6NjzfywMSR
- ps70ew4cwAixPsQ/orR1o+ZGXge33K6vYFfo3ABn/zCK9NSW1S9A
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -120,53 +120,280 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-fetch_pte() returns a status code 0 on success, and (small) negative values
-on failure. The PTE value itself is returned via an output parameter.
-amdvi_get_top_pt_level_and_perms() follows the same return convention.
+Interrupt remapping table entries are data stored in guest memory in
+little-endian format. Decoding them with bitfields depends on host bitfield
+layout and the value returned from dma_memory_read() is not portable to
+big-endian hosts.
 
-Both functions currently return uint64_t, which means any negative error
-values are returned as unsigned and then converted back to int by the
-callers. This does not cause any issues in the current implementation, but
-Coverity flags the type mismatch and potential overflow.
+Replace the legacy and GA IRTE bitfield definitions with explicit FIELD()
+definitions. Convert the guest memory values returned from dma_memory_read()
+with le32_to_cpu() or le64_to_cpu(), then extract relevant fields using
+FIELD_EX32() or FIELD_EX64() as appropriate to match the IRTE format.
 
-Make both helpers return int, so the type matches what the return variable
-is (0 on success, small negative value on failure), and also the type used
-by all callers to store their return values.
-
-No functional changes are intended.
-
-Fixes: a1c97c395729 ("amd_iommu: Sync shadow page tables on page invalidation")
-Fixes: 786550e2d38a ("amd_iommu: Follow root pointer before page walk and use 1-based levels")
+Fixes: b44159fe0078 ("x86_iommu/amd: Add interrupt remap support when VAPIC is not enabled")
+Fixes: 135f866e609c ("x86_iommu/amd: Add interrupt remap support when VAPIC is enabled")
 Reported-by: Peter Maydell <peter.maydell@linaro.org>
 Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/i386/amd_iommu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/i386/amd_iommu.c | 93 +++++++++++++++++++++++++++++++++------------
+ hw/i386/amd_iommu.h | 49 ------------------------
+ 2 files changed, 69 insertions(+), 73 deletions(-)
 
 diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 05b7c638f4..a0835a20d7 100644
+index 291cb368a9..c7bf21b762 100644
 --- a/hw/i386/amd_iommu.c
 +++ b/hw/i386/amd_iommu.c
-@@ -659,7 +659,7 @@ static uint64_t large_pte_page_size(uint64_t pte)
-  *   - IOVA exceeds the address width supported by DTE[Mode]
-  * In all such cases a page walk must be aborted.
-  */
--static uint64_t amdvi_get_top_pt_level_and_perms(hwaddr address, uint64_t dte,
-+static int amdvi_get_top_pt_level_and_perms(hwaddr address, uint64_t dte,
-                                                  uint8_t *top_level,
-                                                  IOMMUAccessFlags *dte_perms)
+@@ -89,6 +89,11 @@ typedef struct AMDVIIOTLBKey {
+     uint16_t devid;
+ } AMDVIIOTLBKey;
+ 
++typedef struct AMDVIIrteGA {
++    uint64_t ga_lo;
++    uint64_t ga_hi;
++} AMDVIIrteGA;
++
+ /* XT IOMMU General Interrupt Control Register layout */
+ FIELD(AMDVI_XT_GEN_INTR, DEST_MODE, 2, 1)
+ FIELD(AMDVI_XT_GEN_INTR, DEST_LO, 8, 24)
+@@ -96,6 +101,37 @@ FIELD(AMDVI_XT_GEN_INTR, VECTOR, 32, 8)
+ FIELD(AMDVI_XT_GEN_INTR, DELIVERY_MODE, 40, 1)
+ FIELD(AMDVI_XT_GEN_INTR, DEST_HI, 56, 8)
+ 
++/* Interrupt Remapping Table Fields Formats */
++
++/* Basic 32-bit IRTE layout (GAEn=0) */
++FIELD(AMDVI_IRTE, VALID, 0, 1)
++FIELD(AMDVI_IRTE, SUP_IOPF, 1, 1)
++FIELD(AMDVI_IRTE, INT_TYPE, 2, 3)
++FIELD(AMDVI_IRTE, RQ_EOI, 5, 1)
++FIELD(AMDVI_IRTE, DM, 6, 1)
++FIELD(AMDVI_IRTE, GUEST_MODE, 7, 1)
++FIELD(AMDVI_IRTE, DESTINATION, 8, 8)
++FIELD(AMDVI_IRTE, VECTOR, 16, 8)
++
++/* 128-bit IRTE layout (GAEn=1) */
++FIELD(AMDVI_IRTE_GA_LO, VALID, 0, 1)
++FIELD(AMDVI_IRTE_GA_LO, SUP_IOPF, 1, 1)
++FIELD(AMDVI_IRTE_GA_LO, INT_TYPE, 2, 3)
++FIELD(AMDVI_IRTE_GA_LO, RQ_EOI, 5, 1)
++FIELD(AMDVI_IRTE_GA_LO, DM, 6, 1)
++FIELD(AMDVI_IRTE_GA_LO, GUEST_MODE, 7, 1)
++/*
++ * In the 128-bit IRTE format, XT mode uses IRTE_GA_LOW.Destination[23:0]
++ * together with IRTE_GA_HI.DestinationHi[7:0] to construct a 32-bit x2APIC
++ * destination.
++ * Without XTEn (i.e. when x2APIC support is not enabled), only
++ * IRTE_GA_LOW.Destination[7:0] is used.
++ */
++FIELD(AMDVI_IRTE_GA_LO, DESTINATION, 8, 24)
++
++FIELD(AMDVI_IRTE_GA_HI, VECTOR, 0, 8)
++FIELD(AMDVI_IRTE_GA_HI, DESTINATION_HI, 56, 8)
++
+ uint64_t amdvi_extended_feature_register(AMDVIState *s)
  {
-@@ -702,7 +702,7 @@ static uint64_t amdvi_get_top_pt_level_and_perms(hwaddr address, uint64_t dte,
-  *      page table walk. This means that the DTE has valid data, but one of the
-  *      lower level entries in the Page Table could not be read.
-  */
--static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
-+static int fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
-                           uint64_t *pte, hwaddr *page_size)
+     uint64_t feature = AMDVI_DEFAULT_EXT_FEATURES;
+@@ -1983,7 +2019,7 @@ static IOMMUTLBEntry amdvi_translate(IOMMUMemoryRegion *iommu, hwaddr addr,
+ }
+ 
+ static int amdvi_get_irte(AMDVIState *s, MSIMessage *origin, uint64_t *dte,
+-                          union irte *irte, uint16_t devid)
++                          uint32_t *irte, uint16_t devid)
  {
-     uint64_t pte_addr;
+     uint64_t irte_root, offset;
+ 
+@@ -1998,7 +2034,8 @@ static int amdvi_get_irte(AMDVIState *s, MSIMessage *origin, uint64_t *dte,
+         return -AMDVI_IR_GET_IRTE;
+     }
+ 
+-    trace_amdvi_ir_irte_val(irte->val);
++    *irte = le32_to_cpu(*irte);
++    trace_amdvi_ir_irte_val(*irte);
+ 
+     return 0;
+ }
+@@ -2010,8 +2047,9 @@ static int amdvi_int_remap_legacy(AMDVIState *iommu,
+                                   X86IOMMUIrq *irq,
+                                   uint16_t sid)
+ {
++    uint8_t int_type;
++    uint32_t irte;
+     int ret;
+-    union irte irte;
+ 
+     /* get interrupt remapping table */
+     ret = amdvi_get_irte(iommu, origin, dte, &irte, sid);
+@@ -2019,32 +2057,33 @@ static int amdvi_int_remap_legacy(AMDVIState *iommu,
+         return ret;
+     }
+ 
+-    if (!irte.fields.valid) {
++    if (!FIELD_EX32(irte, AMDVI_IRTE, VALID)) {
+         trace_amdvi_ir_target_abort("RemapEn is disabled");
+         return -AMDVI_IR_TARGET_ABORT;
+     }
+ 
+-    if (irte.fields.guest_mode) {
++    if (FIELD_EX32(irte, AMDVI_IRTE, GUEST_MODE)) {
+         error_report_once("guest mode is not zero");
+         return -AMDVI_IR_ERR;
+     }
+ 
+-    if (irte.fields.int_type > AMDVI_IOAPIC_INT_TYPE_ARBITRATED) {
++    int_type = FIELD_EX32(irte, AMDVI_IRTE, INT_TYPE);
++    if (int_type > AMDVI_IOAPIC_INT_TYPE_ARBITRATED) {
+         error_report_once("reserved int_type");
+         return -AMDVI_IR_ERR;
+     }
+ 
+-    irq->delivery_mode = irte.fields.int_type;
+-    irq->vector = irte.fields.vector;
+-    irq->dest_mode = irte.fields.dm;
+-    irq->redir_hint = irte.fields.rq_eoi;
+-    irq->dest = irte.fields.destination;
++    irq->delivery_mode = int_type;
++    irq->vector = FIELD_EX32(irte, AMDVI_IRTE, VECTOR);
++    irq->dest_mode = FIELD_EX32(irte, AMDVI_IRTE, DM);
++    irq->redir_hint = FIELD_EX32(irte, AMDVI_IRTE, RQ_EOI);
++    irq->dest = FIELD_EX32(irte, AMDVI_IRTE, DESTINATION);
+ 
+     return 0;
+ }
+ 
+ static int amdvi_get_irte_ga(AMDVIState *s, MSIMessage *origin, uint64_t *dte,
+-                             struct irte_ga *irte, uint16_t devid)
++                             AMDVIIrteGA *irte, uint16_t devid)
+ {
+     uint64_t irte_root, offset;
+ 
+@@ -2058,7 +2097,9 @@ static int amdvi_get_irte_ga(AMDVIState *s, MSIMessage *origin, uint64_t *dte,
+         return -AMDVI_IR_GET_IRTE;
+     }
+ 
+-    trace_amdvi_ir_irte_ga_val(irte->hi.val, irte->lo.val);
++    irte->ga_lo = le64_to_cpu(irte->ga_lo);
++    irte->ga_hi = le64_to_cpu(irte->ga_hi);
++    trace_amdvi_ir_irte_ga_val(irte->ga_hi, irte->ga_lo);
+     return 0;
+ }
+ 
+@@ -2069,8 +2110,9 @@ static int amdvi_int_remap_ga(AMDVIState *iommu,
+                               X86IOMMUIrq *irq,
+                               uint16_t sid)
+ {
++    AMDVIIrteGA irte;
++    uint8_t int_type;
+     int ret;
+-    struct irte_ga irte;
+ 
+     /* get interrupt remapping table */
+     ret = amdvi_get_irte_ga(iommu, origin, dte, &irte, sid);
+@@ -2078,30 +2120,33 @@ static int amdvi_int_remap_ga(AMDVIState *iommu,
+         return ret;
+     }
+ 
+-    if (!irte.lo.fields_remap.valid) {
++    if (!FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, VALID)) {
+         trace_amdvi_ir_target_abort("RemapEn is disabled");
+         return -AMDVI_IR_TARGET_ABORT;
+     }
+ 
+-    if (irte.lo.fields_remap.guest_mode) {
++    if (FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, GUEST_MODE)) {
+         error_report_once("guest mode is not zero");
+         return -AMDVI_IR_ERR;
+     }
+ 
+-    if (irte.lo.fields_remap.int_type > AMDVI_IOAPIC_INT_TYPE_ARBITRATED) {
++    int_type = FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, INT_TYPE);
++    if (int_type > AMDVI_IOAPIC_INT_TYPE_ARBITRATED) {
+         error_report_once("reserved int_type is set");
+         return -AMDVI_IR_ERR;
+     }
+ 
+-    irq->delivery_mode = irte.lo.fields_remap.int_type;
+-    irq->vector = irte.hi.fields.vector;
+-    irq->dest_mode = irte.lo.fields_remap.dm;
+-    irq->redir_hint = irte.lo.fields_remap.rq_eoi;
++    irq->delivery_mode = int_type;
++    irq->vector = FIELD_EX64(irte.ga_hi, AMDVI_IRTE_GA_HI, VECTOR);
++    irq->dest_mode = FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, DM);
++    irq->redir_hint = FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, RQ_EOI);
+     if (iommu->xten) {
+-        irq->dest = irte.lo.fields_remap.destination |
+-                    (irte.hi.fields.destination_hi << 24);
++        irq->dest = FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, DESTINATION) |
++                    (FIELD_EX64(irte.ga_hi, AMDVI_IRTE_GA_HI, DESTINATION_HI)
++                    << 24);
+     } else {
+-        irq->dest = irte.lo.fields_remap.destination & 0xff;
++        irq->dest = FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, DESTINATION) &
++                    0xff;
+     }
+ 
+     return 0;
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index ca4440a4c1..687691ec1c 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -291,55 +291,6 @@
+ #define AMDVI_DEV_LINT0_PASS_MASK       (1ULL << 62)
+ #define AMDVI_DEV_LINT1_PASS_MASK       (1ULL << 63)
+ 
+-/* Interrupt remapping table fields (Guest VAPIC not enabled) */
+-union irte {
+-    uint32_t val;
+-    struct {
+-        uint32_t valid:1,
+-                 no_fault:1,
+-                 int_type:3,
+-                 rq_eoi:1,
+-                 dm:1,
+-                 guest_mode:1,
+-                 destination:8,
+-                 vector:8,
+-                 rsvd:8;
+-    } fields;
+-};
+-
+-/* Interrupt remapping table fields (Guest VAPIC is enabled) */
+-union irte_ga_lo {
+-  uint64_t val;
+-
+-  /* For int remapping */
+-  struct {
+-      uint64_t  valid:1,
+-                no_fault:1,
+-                /* ------ */
+-                int_type:3,
+-                rq_eoi:1,
+-                dm:1,
+-                /* ------ */
+-                guest_mode:1,
+-                destination:24,
+-                rsvd_1:32;
+-  } fields_remap;
+-};
+-
+-union irte_ga_hi {
+-  uint64_t val;
+-  struct {
+-      uint64_t  vector:8,
+-                rsvd_2:48,
+-                destination_hi:8;
+-  } fields;
+-};
+-
+-struct irte_ga {
+-  union irte_ga_lo lo;
+-  union irte_ga_hi hi;
+-};
+-
+ #define TYPE_AMD_IOMMU_DEVICE "amd-iommu"
+ OBJECT_DECLARE_SIMPLE_TYPE(AMDVIState, AMD_IOMMU_DEVICE)
+ 
 -- 
 2.47.3
 
