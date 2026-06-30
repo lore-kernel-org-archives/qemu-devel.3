@@ -4,65 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C20C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 07:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4226DC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 07:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weTGu-0001cU-Hl; Tue, 30 Jun 2026 03:52:45 -0400
+	id 1weTKW-0002NE-Jm; Tue, 30 Jun 2026 03:56:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1weTGq-0001c2-DQ
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 03:52:40 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1)
+ (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
+ id 1weTKU-0002Mr-H3
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 03:56:26 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1weTGm-0000aA-Ey
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 03:52:40 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65U7q9J0092839
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 30 Jun 2026 16:52:09 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=OeqjAs7c8KOPo4XIP1Ri3UwTBEqyE7yB1iTCKCHX5js=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1782805929; v=1;
- b=jzXrToZWc9iLf9oCc/HpeYQTgg75BWQ4GsZGqMUKwTCFA70GnDe00LnKmW6YyFci
- CSfjfYbohwk3boO3BBoMegxXs+ZWGlI+NCkrsTsF2K+MzEUZTlU7tATLZFrjk4zA
- 93jv6/7sjzn7TohRhU5rSMp4V69yQtUFyknhj6pM7z9HUagoaBgRbiPOl/TN18dR
- hmO1btCiK8hDFfQ51psCq12qMIZW9K2aeMaXITNYfOdb6JSqG0zGgKQT9RHGq+j9
- /fnrFb6fGN4OhEVFo2vvqtdYiFr9aNMlNFrrPyvvAUmjp8dt3EGpbCfnREVzZemK
- D+3WGzpZi7c1+gAPlT9W0g==
-Message-ID: <f2c35b50-264d-4268-bd0e-dd52fe6269bf@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 30 Jun 2026 16:52:08 +0900
+ (Exim 4.90_1)
+ (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
+ id 1weTKT-000231-40
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 03:56:26 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 9FC94601C1;
+ Tue, 30 Jun 2026 07:56:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 54860C2BCC7;
+ Tue, 30 Jun 2026 07:56:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1782806177;
+ bh=i+iwUHWRs5J2pQrc4bbbiul0j7v12ylyz4AlGwd2BaE=;
+ h=From:Date:Subject:To:Cc:Reply-To:From;
+ b=g3WElN32L6BeEHRBsJAZq9Jpcdudh7NHXK6QB9uPet22szsUZRfrnD9qgXbc/Ohjl
+ 9W3+jANwsceEwVQSuMAQLQTrzJDiFFXgbKzyCrCQPKb6MsmKvwPXCwhtULZfXwi0er
+ 3BuLvd6Kp9w5WkYcJ02rKs8X7PrmlWu2fscULRddYRFlP2bV/h69My4Ed892m9aDlQ
+ 9N3wgg3NmZBuSnGICLXeFOVxnIXDCarvY76f1lbnDvm6cgei6xiHiTnuLsmxz31NLK
+ fv+mhRJb1OsH3jK0rPAAwY7WnTPPIleuBYOh2cbHGzLemdYQe1bZD5k5HqpxdJ7fNH
+ AEo/sjy8Hs5gg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org
+ (localhost.localdomain [127.0.0.1])
+ by smtp.lore.kernel.org (Postfix) with ESMTP id 3EC72C43458;
+ Tue, 30 Jun 2026 07:56:17 +0000 (UTC)
+From: Miao Wang via B4 Relay <devnull+shankerwangmiao.gmail.com@kernel.org>
+Date: Tue, 30 Jun 2026 15:56:04 +0800
+Subject: [PATCH] target/loongarch: Enable TARGET_PAGE_BITS_VARY for
+ loongarch64 user-only
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 0/7] igb: Implement Transmit Rate Limiting (TRL)
-To: Josh Hilke <jrhilke@google.com>
-Cc: qemu-devel@nongnu.org, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Matlack <dmatlack@google.com>,
- Alex Williamson <alex.williamson@nvidia.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20260623-igb-trl-v8-0-c9b1fc6c3304@google.com>
- <ff0bcd39-afd6-4842-9cd5-3e39e56ec901@rsg.ci.i.u-tokyo.ac.jp>
- <CAAdrzjtjVyG-yV+MnZ5wtgef3UQ-MLCWZtHh9feeBK4ek4YXJg@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CAAdrzjtjVyG-yV+MnZ5wtgef3UQ-MLCWZtHh9feeBK4ek4YXJg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260630-loong64-vary-page-sz-v1-1-1d1a894674be@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAJN2Q2oC/x2MWwqAIBAArxL73YJpSXSV6MNys4XQUIgeePekz
+ 4GZeSFRZEowVC9EOjlx8AWauoJlM94Rsi0MUkgttBK4h+CdbvE08cbDFCE9KDtlyYqZ+r6Fkh6
+ RVr7+7Tjl/AF/a21FZgAAAA==
+X-Change-ID: 20260630-loong64-vary-page-sz-253ded0be884
+To: qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>, b4-sent@kernel.org,
+ Miao Wang <shankerwangmiao@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1044;
+ i=shankerwangmiao@gmail.com; s=20250715; h=from:subject:message-id;
+ bh=P2yWSCAzG7Ep94c0IDqmt6Vf+hrglM5091uNh3I1QpQ=;
+ b=owEBbQKS/ZANAwAKAbAx48p7/tluAcsmYgBqQ3aXlgurCQL3nbFGIngXREWSBvfHmQxB0Q+Pf
+ gtjb0rJ9wOJAjMEAAEKAB0WIQREqPWPgPJBxluezBOwMePKe/7ZbgUCakN2lwAKCRCwMePKe/7Z
+ bkqfD/sHaIJAqHxhYzIrezK4G6ydiZlKdhf60zKPyUF1YM7PyeyFHvuA9cFWCn/eWtetTHzCIJy
+ 8TEFYK5NB8gEQ2tUsxiqgJb4S9DvuPjXvKGArIH/nPOvoKUkkDdQtQE99K7MjUqFtKbiokZ4hxw
+ PN+FJWW6pqLC29iKuDKgACX/exz4CVqOEgLmnOuiM88sbHYo/wRyxQlEzpAtPlEDKvKRLnJIdz/
+ 0hNwfFCzek4yG3k/SacA2xCPq/e2J8sLfKemQJoJ1YRXMe7BUjGEH5kBg2D1q8QONiOQC0WFb3F
+ u92aFFAPEhtQtnXql4vYTEwvIhNuMDJnL7Zbovzu+vW42TNjASs1zJ3R2LlkvEzInIJTUn7XqlV
+ YrOOUC6B36w4BdvO7VIyrBNkmmOAFycjag59ZRxD1C+fVGjuo9ZpWOT8c4y6oSfgtLw3r8xMVDM
+ +TYmZYvkxPkJtS4D7nRNINbez+IsyJb2LKKbpQpBS69bBov9wsVS8uXg63TsyJq53UEQi/vNcZ0
+ uelK3IZGUm58Q3C7HJWRJpKKhgsYrFCoSgxliCm8f9nXvfbDaZRp4e2DqZtXK+FvNbjj4P0KgPM
+ oNcixh95BUkPY2k1mqJbk5+dBs8DKGjhua+EyIXyKFuthdnxZ4i3v2gzYqYJhHdw5ASJB/TyEWb
+ ySK0JD3XlnqJlVw==
+X-Developer-Key: i=shankerwangmiao@gmail.com; a=openpgp;
+ fpr=6FAEFF06B7D212A774C60BFDFA0D166D6632EF4A
+X-Endpoint-Received: by B4 Relay for shankerwangmiao@gmail.com/20250715
+ with auth_id=462
+X-Original-From: Miao Wang <shankerwangmiao@gmail.com>
+Received-SPF: pass client-ip=172.105.4.254;
+ envelope-from=devnull+shankerwangmiao.gmail.com@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_FORGED_REPLYTO=2.095, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,67 +99,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: shankerwangmiao@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/06/30 3:11, Josh Hilke wrote:
-> Do I need to push a v9 to include your "Reviewed-by" tag?
+From: Miao Wang <shankerwangmiao@gmail.com>
 
-No. I think this series is ready to pull along with other network patches.
+Hard coding PAGE_SIZE to 4K will prevent user-only emulation from
+working on hosts with 16K page size.
 
-Regards,
-Akihiko Odaki
+Fixes: 1d832c19db1e ("target/loongarch: Support 4K page size")
+Fixes: qemu-project/qemu#3651
 
-> 
-> Thanks,
-> Josh
-> 
-> On Wed, Jun 24, 2026 at 1:18 AM Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> On 2026/06/24 0:05, Josh Hilke wrote:
->>> This is v8 of a patch series implementing the Transmit Rate Limiter (TRL) feature for
->>> the Intel 82576 (igb) network device emulation in QEMU.
->>>
->>> v7: https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg05440.html
->>>
->>> Changelog:
->>>
->>> v8:
->>>     - Fix extraneous whitespace modifications.
->>>     - Use muldiv64() in igb_trl_calculate_delay().
->>>     - Fix comment for rate factor in igb_trl_calculate_delay().>
->>> Signed-off-by: Josh Hilke <jrhilke@google.com>
->>
->> For the whole series:
->>
->> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>
->> Regards,
->> Akihiko Odaki
->>
->>> ---
->>> Josh Hilke (7):
->>>         igb: Define TRL registers and core state
->>>         igb: Add VMState support for TRL state
->>>         igb: Implement TRL register write and configuration
->>>         igb: Refactor TX path to return processed byte count
->>>         igb: Implement TRL throttling and timer resumption
->>>         igb: Add QTest for Transmit Rate Limiter register multiplexing
->>>         igb: Add QTest for Transmit Rate Limiter traffic throttling
->>>
->>>    hw/net/igb.c           |  43 +++++++++++
->>>    hw/net/igb_common.h    |   1 +
->>>    hw/net/igb_core.c      | 142 ++++++++++++++++++++++++++++++++--
->>>    hw/net/igb_core.h      |  12 +++
->>>    hw/net/igb_regs.h      |   5 ++
->>>    tests/qtest/igb-test.c | 206 +++++++++++++++++++++++++++++++++++++++++++++++++
->>>    6 files changed, 404 insertions(+), 5 deletions(-)
->>> ---
->>> base-commit: 98b060da3a4f92b2a994ead5b16a87e783baf77c
->>> change-id: 20260608-igb-trl-19be198da6f2
->>>
->>> Best regards,
->>
+Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+---
+ target/loongarch/cpu-param.h | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/target/loongarch/cpu-param.h b/target/loongarch/cpu-param.h
+index 3bcf77b3755abdc302699c22c7aa99e2e8c3bbf3..6abe72ff5cab46e246fde4fa76bce05ba7c1cd20 100644
+--- a/target/loongarch/cpu-param.h
++++ b/target/loongarch/cpu-param.h
+@@ -10,6 +10,11 @@
+ 
+ #define TARGET_VIRT_ADDR_SPACE_BITS 48
+ 
+-#define TARGET_PAGE_BITS 12
++#ifdef CONFIG_USER_ONLY
++/* Allow user-only to vary page size from 4k */
++# define TARGET_PAGE_BITS_VARY
++#else
++# define TARGET_PAGE_BITS 12
++#endif
+ 
+ #endif
+
+---
+base-commit: 30e8a06b64aa58a3990ba39cb5d09531e7d265e0
+change-id: 20260630-loong64-vary-page-sz-253ded0be884
+
+Best regards,
+-- 
+Miao Wang <shankerwangmiao@gmail.com>
+
 
 
