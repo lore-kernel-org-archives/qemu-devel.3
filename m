@@ -4,71 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7280C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 17:34:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC569C43327
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 17:34:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wecKx-0006qy-Vp; Tue, 30 Jun 2026 13:33:32 -0400
+	id 1wecLA-0006tS-OY; Tue, 30 Jun 2026 13:33:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wecKd-0006mN-Eh
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 13:33:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wecKX-0001mK-G2
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 13:33:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782840783;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=SCt4eGn98246K6Xn1QLWU80/H2/G0pj2GXg//BLsdyo=;
- b=DESEoiJqZ+qR5CAhipqzLLHhrbnLjkwUeEGjOlfBULm2ONhnxckoF+kReEte8nh9YoJHrO
- OI0zFs3ZgMFhA/MLsh/AFWrBbj1qjT0tvLZqizeyYqa34OV8k67yhMXInt1x22NADKMyY3
- k+O3xLz9erBUJq3UO5VtcmNVUdlD5TQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-508-qKlv2bRPOAqRLQk9fxGZ3g-1; Tue,
- 30 Jun 2026 13:32:59 -0400
-X-MC-Unique: qKlv2bRPOAqRLQk9fxGZ3g-1
-X-Mimecast-MFC-AGG-ID: qKlv2bRPOAqRLQk9fxGZ3g_1782840778
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0C9B0184A083; Tue, 30 Jun 2026 17:32:58 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.58])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ED6C41956088; Tue, 30 Jun 2026 17:32:54 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Stefan Berger <stefanb@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH] platform-bus: Align MMIO regions to host page size
-Date: Tue, 30 Jun 2026 19:32:45 +0200
-Message-ID: <20260630173245.2070268-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wecKi-0006n3-Od
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 13:33:21 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wecKg-0001qc-4w
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 13:33:16 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2c82538b6c0so30930015ad.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 10:33:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782840791; x=1783445591; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YO+B+ZiXktj6oN262Vp+dQOZ7sT+QIXOTjCy7uqzCYw=;
+ b=zR3YZskMYayX3XphggGmy8iOC55J7hCgNpFwIvo687fJpveOk8jIc3KRiow5NtTiiu
+ A5HwkkMqfe11XDa+Q4MsnoLFhTCfiiLkasbI5Hqh0W0lVWIYmo8q19q2Vney8YJJcsOH
+ ftPnBPV+C/kaXYfqtBM+XTPbLmoFCpqKG9MNasta+s093cqb2xu5+II9GWYwi4j3pqAr
+ 3XTfCBdj/YxW9VK+dK+dreyIadRX0pSSjJojXpwlQpfYTXL9BzZ58byAsGBYK1QM2dAu
+ 5UjwcxFMzAPHpnYBKbaP/C44FANTZzYWU50eXG7zMzxtLWMKqwPR7WXNRiKm2f9ha63A
+ romw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782840791; x=1783445591;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YO+B+ZiXktj6oN262Vp+dQOZ7sT+QIXOTjCy7uqzCYw=;
+ b=ZKOxm46ECmlBVJMl2gw9nfyc0Z1azfsWI0aMUq8hFY9dMjyTx5t1KHNmuNhVqITwx3
+ xrHqAHWgo8lgt/j7Px47JeZWv3J7cSeU9PrtYDb3l5A7UuY32H6klN4mQjHV4zIFzwhG
+ N724+KcyO2tiMZSwYUlr+wADKCIK5H/AK2YW6P23SY5SI/TDHp7upmcRanrQAdQLKCR8
+ p2qzKVmYhfIiKdnRktZ2Gej51gcwJufKEuyRJCGY+OTjNhxViIaRJNf07UsFO5pt0FQN
+ H4E9KQe6nxSVCwb9UEr0aPoSgxnjxOI3LrXnj3HNf/pPvAqKcLUyQM7FAbHop6OX0/7h
+ a4KQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoLVnFNhPAh0cnZ5fItc1QUNTWRdAy6qkL49KnNT7hh2VWWiwZqp0p/poNkYvZYp22tYsnUWkRl1doS@nongnu.org
+X-Gm-Message-State: AOJu0Yw0ICjUD+ItmEEDzIAh56qHf1MvocoeOYiPwnAzJ4wnoUrcgwlE
+ XRS1jCKrWK51ymF5MiawLkqYHRTNtoyGmt9HsyGs7r9FXN4mLbbwOXai6cSTGN952TM=
+X-Gm-Gg: AfdE7ckHhRIZA0YhU5HJkzygM10Nd+PVlXGcea9Xh81f0g8hun89BgcQVgjG8EpFJIw
+ vvAzbWSTHL30iaI7h/wpJGhV9NC+y/dlo74wLM6SwMQwC+m0Kv3cDVGUHFzbVs2ETEJRRmmUesS
+ 1YVdjTcors222klqxktipuF3mbUzxZiuDppSyNWo8C8IZS8Ybn0Wgl9DKBmGK03ji+o2AP7+HeW
+ /rGg8nkRvE0hmoh37PEP+MpvEhhFOV0VjsnsFtvA2fK+LXK4q0jFd7/fWQErePyKUcPkh+695gH
+ IBNuIW3MO5QKl1/SOVKfdoZ5431o7qERwCb1kUdhh7HRdQsS0g5hvDH3CuLrf6+rkugQAgbcokO
+ I2s7om+iviPAN/S2/pCeCws1v+LXyTTSiAYYE6yUpFBRwwHWxkvb8qFLUfPT/+4wHAh55dsEO0B
+ FQpQGBgtCMy/4GwARUS69Pv+NH4JuPWFG5zTKNHSvjtmcabg1DEol7h4DwwQ==
+X-Received: by 2002:a17:903:46ce:b0:2c9:c083:cd3f with SMTP id
+ d9443c01a7336-2ca2d52b5cfmr34199875ad.1.1782840790896; 
+ Tue, 30 Jun 2026 10:33:10 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ca382acd0csm18696955ad.62.2026.06.30.10.33.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Jun 2026 10:33:10 -0700 (PDT)
+Message-ID: <7a1ac883-82d0-441a-817f-440875f71afe@linaro.org>
+Date: Tue, 30 Jun 2026 10:33:08 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 2/2] riscv/debug: migrate debug_check_breakpoint to
+ use GTree breakpoints
+To: Shivang Upadhyay <shivangu@linux.ibm.com>, qemu-devel@nongnu.org,
+ pbarbuda@microsoft.com, mohamed@unpredictable.fr
+Cc: pbonzini@redhat.com, philmd@mailo.com, zhao1.liu@intel.com,
+ laurent@vivier.eu, deller@gmx.de, pierrick.bouvier@oss.qualcomm.com,
+ palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com, qemu-riscv@nongnu.org, rathc@linux.ibm.com,
+ harshpb@linux.ibm.com, adityag@linux.ibm.com
+References: <20260630171555.114844-1-shivangu@linux.ibm.com>
+ <20260630171555.114844-3-shivangu@linux.ibm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260630171555.114844-3-shivangu@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,43 +112,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On aarch64 hosts with 64K pages, the platform bus MMIO allocator can
-place device regions (such as the 1KB "tpm-ppi" region) at offsets
-that are not aligned to the host page size. This causes unnecessary
-and noisy VFIO IOMMU warnings when starting VMs configured with
-passed-through PCI devices:
+On 6/30/26 10:15, Shivang Upadhyay wrote:
+> as cpu->breakpoints is migrated to GTree, change the breakpoint
+> looping from QTAILQ_FOREACH to g_tree_foreach.
+> ---
+>   target/riscv/debug.c | 71 +++++++++++++++++++++++++-------------------
+>   1 file changed, 41 insertions(+), 30 deletions(-)
 
-  vfio_listener_valid_section received unaligned region tpm-ppi
-    iova=0xc005000 offset_within_region=0x0
-    qemu_real_host_page_size=0x10000
+(1) This can't be a separate patch, because the first patch can't compile
+(2) You can't use a global variable for bp_found.
 
-Fix this by ensuring the alignment used by the platform bus allocator
-is at least qemu_real_host_page_size().
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/core/platform-bus.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+r~
 
-diff --git a/hw/core/platform-bus.c b/hw/core/platform-bus.c
-index a2217a2deec7ab0f49b211c6658db02d13c319df..a17a38c1ba5491e2001fec5a29c188de67e93d11 100644
---- a/hw/core/platform-bus.c
-+++ b/hw/core/platform-bus.c
-@@ -140,6 +140,13 @@ static void platform_bus_map_mmio(PlatformBusDevice *pbus, SysBusDevice *sbdev,
-         return;
-     }
- 
-+    /*
-+     * Ensure alignment is at least the host page size so that IOMMU
-+     * mappings (e.g. VFIO) work on hosts with large pages such as
-+     * aarch64 with 64K pages.
-+     */
-+    alignment = MAX(alignment, qemu_real_host_page_size());
-+
-     /*
-      * Look for empty space in the MMIO space that is naturally aligned with
-      * the target device's memory region
--- 
-2.54.0
+> 
+> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+> index 30d39ee5cd..6b2ffd08db 100644
+> --- a/target/riscv/debug.c
+> +++ b/target/riscv/debug.c
+> @@ -939,53 +939,64 @@ void riscv_cpu_debug_excp_handler(CPUState *cs)
+>       }
+>   }
+>   
+> -bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
+> +static bool bp_found;
+> +
+> +static gboolean check_breakpoints(gpointer key, gpointer value, gpointer cpu_state)
+>   {
+> +    CPUState *cs = (CPUState*)cpu_state;
+> +    CPUBreakpoint *bp = (CPUBreakpoint*)value;
+>       RISCVCPU *cpu = RISCV_CPU(cs);
+>       CPURISCVState *env = &cpu->env;
+> -    CPUBreakpoint *bp;
+> +    int trigger_type;
+>       target_ulong ctrl;
+>       target_ulong pc;
+> -    int trigger_type;
+>       int i;
+>   
+> -    QTAILQ_FOREACH(bp, &cs->breakpoints, entry) {
+> -        for (i = 0; i < RV_MAX_TRIGGERS; i++) {
+> -            trigger_type = get_trigger_type(env, i);
+> +    for (i = 0; i < RV_MAX_TRIGGERS; i++) {
+> +        trigger_type = get_trigger_type(env, i);
+> +
+> +        if (!trigger_common_match(env, trigger_type, i)) {
+> +            continue;
+> +        }
+> +
+> +        switch (trigger_type) {
+> +        case TRIGGER_TYPE_AD_MATCH:
+> +            ctrl = env->tdata1[i];
+> +            pc = env->tdata2[i];
+>   
+> -            if (!trigger_common_match(env, trigger_type, i)) {
+> -                continue;
+> +            if ((ctrl & TYPE2_EXEC) && (bp->pc == pc)) {
+> +                env->badaddr = pc;
+> +                bp_found = true;
+> +                return true;
+>               }
+> +            break;
+> +        case TRIGGER_TYPE_AD_MATCH6:
+> +            ctrl = env->tdata1[i];
+> +            pc = env->tdata2[i];
+>   
+> -            switch (trigger_type) {
+> -            case TRIGGER_TYPE_AD_MATCH:
+> -                ctrl = env->tdata1[i];
+> -                pc = env->tdata2[i];
+> -
+> -                if ((ctrl & TYPE2_EXEC) && (bp->pc == pc)) {
+> -                    env->badaddr = pc;
+> -                    return true;
+> -                }
+> -                break;
+> -            case TRIGGER_TYPE_AD_MATCH6:
+> -                ctrl = env->tdata1[i];
+> -                pc = env->tdata2[i];
+> -
+> -                if ((ctrl & TYPE6_EXEC) && (bp->pc == pc)) {
+> -                    env->badaddr = pc;
+> -                    return true;
+> -                }
+> -                break;
+> -            default:
+> -                /* other trigger types are not supported or irrelevant */
+> -                break;
+> +            if ((ctrl & TYPE6_EXEC) && (bp->pc == pc)) {
+> +                env->badaddr = pc;
+> +                bp_found = true;
+> +                return true;
+>               }
+> +            break;
+> +        default:
+> +            /* other trigger types are not supported or irrelevant */
+> +            break;
+>           }
+>       }
+>   
+>       return false;
+>   }
+>   
+> +bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
+> +{
+> +    bp_found = false;
+> +    g_tree_foreach(cs->breakpoints, check_breakpoints, cs);
+> +
+> +    return bp_found;
+> +}
+> +
+>   bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
+>   {
+>       RISCVCPU *cpu = RISCV_CPU(cs);
 
 
