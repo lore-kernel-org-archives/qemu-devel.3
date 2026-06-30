@@ -4,85 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5561C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 09:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77109C43327
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 09:37:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weUsG-0005Rx-FL; Tue, 30 Jun 2026 05:35:24 -0400
+	id 1weUu9-00067g-FV; Tue, 30 Jun 2026 05:37:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weUsF-0005RT-8D
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 05:35:23 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1weUsD-0007jy-H2
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 05:35:23 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-493b77b150aso8441715e9.2
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 02:35:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782812120; x=1783416920; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=lBv48mWGG9CLR02Vrgkp5vRb8jfCgsvJ/FbDc8SdOkg=;
- b=MofwSYF83hGjyqpWHvTyNSP9Mk2loA9WMY5g9mHcLbHBiAjEbCBHRrMaVX5xUgAHmL
- uyODRkEzxKxZANn4wOZk0rv3DN0/hWg+0fxOTCMOjIVMh00lqQ2Wd9FhOzvDZKkeTEtf
- dQx9ZiS7uGWKhHUvI1K/08LXthjvSQ3J1BNIR0UVw5z4XXZYxmwg5E0Q0JPQ7Ax18KjO
- nsYMchuQ30qOCwIrUvyOw1XOrbCUjiVs0VBqgME6DOo9Z+v63jbYCwyKDYysIMz0W8Cv
- 9qsr9NOYdHxPvoZTclK8BGKQCnqNk9Ggvz/bWP7UPPurtIkgii/92qCnQIodfS1jm1hY
- LKDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782812120; x=1783416920;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lBv48mWGG9CLR02Vrgkp5vRb8jfCgsvJ/FbDc8SdOkg=;
- b=Y5WjT8fbsShHFKMytHZpJJJhxIyEXvjEjC/2IUo0o2Z3delAGNU/XINyA8eJCDaoQK
- meNTmA0QAjQw7jYzRCjfk4yB72WWVHfPmg/d3rcXzVp4s1ULOgjERwxurQcOErIOzHJw
- qGsIQRqzi0ogzE0cNRC3vCyuelNMUEJDQUQdLHfnmOFnpKMTsIB7OZlZH0lW+UuTzzGw
- geuo+PS8shfUb2vTArSN2e846rvs5tFZrpZG3mQoWvVE/vgXkHGI/MSV4kWZ8KVp/dxC
- 5iIIb78mm1IhEFNNORFfql9sZ2AoTKBs+e2M9Iqhj77CXgJMdPxLRS0PyCF37jT0X+J2
- BlOg==
-X-Gm-Message-State: AOJu0Yzbvo56nKeewXz+UfBz0ts8vovkc59x3r1ziRloKxE9GK9MT0oI
- cs40s8bAFhpwgMjvy/aoo1UB7uPehhJAJjyYG9LgeA6zIa8MDdkpfU+SXPYXqQaloOBxLu9cApN
- +BTUv
-X-Gm-Gg: AfdE7cmR7QkrUD1DzgtIRK905z6zsCoICB+tEtSNdEVM5hqtfn6NJSeYkpio+7QMcAx
- v7mtuOQ48NeifYyfBUv4YIQ9hb/kWhk1OLZcU7Mbn+PAdz6RIEjfwKK0bN2V5C9EhSffrRUbRgK
- 0JyfsvDn5ArFwd/BkYjYdi5XMlmdqyEMfNJ4zZyUGnVw/nQAn74FjwC5ZVsDYiEr396jgylsw6U
- lAQb+eMApFFSLAz3mFxrm+k+iDh4NkYYk2gnuULWJzASnuPtLO5TQHonhb525S+6RnxTRUbahkw
- gyJ1MQ4WyjkBAU9ZBkwgICKZWMVKRRIJn2V4VY6N1ahPfs8NxsuLn82q9uZ7BBCGjwEaQgjLH6e
- zZjEwCtyEpLJ7j8UdPunElq0dMHv1RHcT1FHm67naonyPAIkQ4i4CbsICc01itpVIiF3aj+sSWb
- e0/l+bcj4W/FOJCdCD49xT1foHIwCL0WXRD5BwDKv300L0nYM7C7lUC2AiIEprG4xM0ToZOcKVl
- yxDp5Ngp1j7n+6iHwaOKkVnhd8YekRL
-X-Received: by 2002:a05:600c:c162:b0:492:3e69:a86f with SMTP id
- 5b1f17b1804b1-493b827fc33mr43965735e9.1.1782812119694; 
- Tue, 30 Jun 2026 02:35:19 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493bb1b2b9dsm24559495e9.1.2026.06.30.02.35.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jun 2026 02:35:18 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] io/channel-socket: Document why we can ignore
- socket_set_cork() errors
-Date: Tue, 30 Jun 2026 10:35:18 +0100
-Message-ID: <20260630093518.2325304-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1weUu8-00067M-1I; Tue, 30 Jun 2026 05:37:20 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1weUu6-0000CB-I3; Tue, 30 Jun 2026 05:37:19 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65U5mNdh1076043; Tue, 30 Jun 2026 09:37:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=kNSvMX
+ kMwqcHG3oWPHQdKBBybsoFSq7+VyXqOOqqjhg=; b=GWeA65YkIlb3QB8hOXIF/V
+ Ygb06PAjwa2nYtidg2oenPUKD3R9lbzSWePYeGgEInMdfTbp9Jh2JydVm9Z6FLab
+ NSHgdFWl/hp4QmMsUBFStvdp94wG4cdyQ2huDYx/k/lW/B+86aF6y5OPzZFq/PEA
+ 1wcxn+LOF9NhJK/wqGreE5PRL3C6jvSf/3jp/LXe9+on6TL1KAvr0dn2r+AFI3Ko
+ /GZWSZBsV77NRSoAip5SeM+eohoTZFNDqGTDo9HofCiHs0TJctsNziGxbVT9uFPy
+ lj8zaZAscQhPZFfDB7zcfxLK3BrUJilAfza0i9upp8TzwTadSfsJjeldiwW8rI6Q
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26q9wpgr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 09:37:15 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65U9Ybp3005987;
+ Tue, 30 Jun 2026 09:37:15 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7w1kh3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 09:37:15 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65U9bBRo34341204
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Jun 2026 09:37:11 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 46DCD20049;
+ Tue, 30 Jun 2026 09:37:11 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D285D2004B;
+ Tue, 30 Jun 2026 09:37:09 +0000 (GMT)
+Received: from shivang.upadyay (unknown [9.123.12.247])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 30 Jun 2026 09:37:09 +0000 (GMT)
+Message-ID: <dcfa2a3250641cb188a04fa7e46f09abd46c6725.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 2/2] ppc/pnv: add test to verify external DTB is honored
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: harshpb@linux.ibm.com, milesg@linux.ibm.com, npiggin@gmail.com,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Date: Tue, 30 Jun 2026 15:07:08 +0530
+In-Reply-To: <akJaUpckzqdnZmHq@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+References: <20260623063156.1110370-1-shivangu@linux.ibm.com>
+ <20260626112239.177191-1-shivangu@linux.ibm.com>
+ <20260626112239.177191-3-shivangu@linux.ibm.com>
+ <akJaUpckzqdnZmHq@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDA4MyBTYWx0ZWRfX4pjqoVySXX3Y
+ IUiVxjN1UtitUarYZtRuUQnxLipCf4tYUHr8RQvXfE7nEBDcFfvFsmnHHtwa1bVi6kyunc7hZdw
+ bwvi1iwDatbnutc73s70vL0QsklxtRdKtCaqNA0ML/f261ITtFA3VmjKirqueqPiYbYDfoa3WfJ
+ 0gZ1ZkNb9j6O1BEu1GPKI1+hjdeFOxxHiKwv4oX4qjpayvHXKaETkcaWg7GnaG0aCMani1GqdG3
+ gYnwj7Tz/POBkPZfJSsCpZEpPmr5P2CEsZDgWxkm3WiG7LL6e/NsvmOlhrDn2Sc1xjbeTTnL4Er
+ gVutk/8RDrHfurAXP7aV29kZliK6sZhPxFrVtFxTx6vo3+CM2lEVebAz33HRGXt//3RrDLyvOr4
+ UdWsLgIi4OS2OJenFmbCSmenhb20chcNo73/ExRWOLOFyRkGObzocaH0NkRq6VMv1qp/UqxBrIA
+ zngP7IMVS8TB/zGswXA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDA4MyBTYWx0ZWRfXxgBhlX60J/Tu
+ 9k11x1FiabGiCdidaiZHTBWuD2n0Dr3+8e5XDjoWvYmilnkHbTBlxaF9sAO7Z1FfKNNnVaGuUNu
+ mAG0a2EDUwAuunhfRY+z+AdVZ5ek1vQ=
+X-Proofpoint-GUID: 6woNYWT5PnSRmaYNPcdY3ZP9NysGxJ9C
+X-Proofpoint-ORIG-GUID: k49RIFpIXe9uw05gRrKg7vieQW8zxy3E
+X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a438e4c cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=NEAV23lmAAAA:8
+ a=jrUJX8GpwmtQND6zI7UA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-30_02,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606300083
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,43 +127,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In qio_channel_socket_set_cork(), we call socket_set_cork() but
-ignore its success/failure return value.  This is OK because we are
-implementing qio_channel_set_cork() here, and that function's API
-documentation states that the setting is merely a hint.  So even if
-setting TCP_CORK on the underlying socket fails for some reason, this
-isn't going to be a problem for the caller; correspondingly the
-qio_channel_set_cork() function has no error return.
+On Mon, 2026-06-29 at 17:23 +0530, Aditya Gupta wrote:
+> > +=C2=A0=C2=A0=C2=A0 # testdtb for power11, which contains string "hello=
+ world" in
+> > command line
+> > +=C2=A0=C2=A0=C2=A0 ASSET_SAMPLE_DTB =3D Asset(
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> > ('https://github.com/roz3x/qemu/raw/refs/heads/sample-dtb/output.dt
+> > b'),
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> > 'ea1271516264eea1eb58a067a99d0c2ca9528be8dc7d4e46bb2d5ae0d42fc568')
+>=20
+> nit: since you are anyways sending a v3, can you rename output.dtb to
+> something like qemu-powernv10.dtb, etc so in future you don't modify
+> this generic path unknowingly ?
 
-Add a comment in qio_channel_socket_set_cork() explaining why we
-don't check for errors.
+Yeah, Sounds like a good idea.
+Ill send the next revision.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2254
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-Spotted by a static analyzer; it seemed to me worth adding the comment.
----
- io/channel-socket.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/io/channel-socket.c b/io/channel-socket.c
-index ea2ec84108..12773b832c 100644
---- a/io/channel-socket.c
-+++ b/io/channel-socket.c
-@@ -946,6 +946,12 @@ qio_channel_socket_set_cork(QIOChannel *ioc,
-     QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
-     int v = enabled ? 1 : 0;
- 
-+    /*
-+     * We can ignore the error return from socket_set_cork() because
-+     * at the QIO API level set_cork is only a hint, and so
-+     * qio_channel_set_cork() can never fail even if it didn't
-+     * actually do anything.
-+     */
-     socket_set_cork(sioc->fd, v);
- }
- 
--- 
-2.43.0
-
+~Shivang.
 
