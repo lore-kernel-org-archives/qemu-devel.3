@@ -4,73 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 569F8C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:56:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D411C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:58:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weZsn-0007rn-Q5; Tue, 30 Jun 2026 10:56:21 -0400
+	id 1weZus-0008Ne-4E; Tue, 30 Jun 2026 10:58:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1weZsb-0007pl-3M
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:56:06 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1weZuq-0008NH-1X
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:58:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1weZsZ-0001wP-BX
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:56:04 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1weZuo-00035j-Od
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:58:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782831359;
+ s=mimecast20190719; t=1782831500;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GtVamKYFTeeekIBUnppJ42ULmv5+cTo9o41wHNAhNag=;
- b=hL/W5fjkE8bjxU9YCIEmrR5XnVYy9Oldn58QlGFpDzcly/Kj+V5lWI7CSUDCvBkJnOYa/4
- fAHNN+tRKwMdJrQ/2QBc9Jqzqk5C87zhvuNRlyGAXr5k7KKZUp7dEEyFbNsqnZuBq0GC8f
- t8u6Mz+nliJ1utGV4UfU3uIZhiZlrvo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-3g2fVdcPPnOlLBLMYjR_aA-1; Tue,
- 30 Jun 2026 10:55:56 -0400
-X-MC-Unique: 3g2fVdcPPnOlLBLMYjR_aA-1
-X-Mimecast-MFC-AGG-ID: 3g2fVdcPPnOlLBLMYjR_aA_1782831355
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7D1AB18001F3; Tue, 30 Jun 2026 14:55:54 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 25BF41955F76; Tue, 30 Jun 2026 14:55:53 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A57A221E6920; Tue, 30 Jun 2026 16:55:50 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  devel@lists.libvirt.org,  =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  "Dr.
- David Alan Gilbert" <dave@treblig.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Christian Brauner <brauner@kernel.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Peter Krempa
- <pkrempa@redhat.com>
-Subject: Re: [PATCH v5 22/35] monitor: implement "user creatable" interface
- for adding monitors
-In-Reply-To: <20260624173752.2928717-23-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 24 Jun 2026 18:37:38
- +0100")
-References: <20260624173752.2928717-1-berrange@redhat.com>
- <20260624173752.2928717-23-berrange@redhat.com>
-Date: Tue, 30 Jun 2026 16:55:50 +0200
-Message-ID: <87fr24yt55.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=IzULxBEfbcpVZOloIPWWzuh8Tu59yIQd/zon6zQ8Syg=;
+ b=PkwUj2uwi3MOMgKqxOSCZm+LhXyPmWUxx8DJLptpd4VdhEKeFfR2sU9QK1/wBmldvxKi76
+ zjqCzisSrb9UBaQBl3XDxL40RLz1uPDQU7ponRcNsHowExnaFvN3ZfQbRgzjkuQj7d8ox6
+ xGneP7GJJvk9oGnESavj33N3zyWq6TA=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-553-z4lGKDCpM5yceBbCVReSuw-1; Tue, 30 Jun 2026 10:58:18 -0400
+X-MC-Unique: z4lGKDCpM5yceBbCVReSuw-1
+X-Mimecast-MFC-AGG-ID: z4lGKDCpM5yceBbCVReSuw_1782831498
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8ec235c7c66so50452826d6.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 07:58:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782831498; x=1783436298; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=IzULxBEfbcpVZOloIPWWzuh8Tu59yIQd/zon6zQ8Syg=;
+ b=OaWYyvEvstLEOt3fyE/hktdnDjQP8rQabC5+9pd7Dmb5OvFdYxzY4ncUWqO5kXJ8mo
+ 1yA6aYrKW5zpc+niZ+ghBuhUkiqvSNjGRClEKBRWc+C7qNhitn7pYmrikIz7Zzfkerdl
+ hyh+YdaeEc1t4qLchh2+jadudTPg3shE/oUaKnH4VAG0zKozucAmBnUT6/kK8aZJ7EfF
+ wtUaoGI7197IRmGUzRtHveLFkShrp/eUxdXpNOKADMBXuqUZK25X6/EfSDYA0sat7Rnz
+ sa81Wy2kog+smFljw/3wLBJG19vxslJLcEAPBb3tp3xt1uT8N+3X2Hzl0C8Kh7u+VoP1
+ Ukng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782831498; x=1783436298;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IzULxBEfbcpVZOloIPWWzuh8Tu59yIQd/zon6zQ8Syg=;
+ b=XTCxTeM9U5OxPFbSof1cXe0sP+LwkaU5CUfFzJ3lKQndUvFNAk6NNxf6VvuCJq+kzX
+ zO5cY8z2IW/SWI6m3iGtLJHMC63EIpblrIkc73ymMS3pTS3sUqFxu1OEZw97g2iuri4O
+ E6kygcExghJOabny6fKHkr/FAhh3yzJNI7IhpzqnBO44kSU15Q9KyvQOm1Lko3V/U0P8
+ MlItWbAFV40FvX2d6GgyTiCjzhjarDwZShJg+pj4xqSRynMRHB5WvJLV5mN1x3ORqgvk
+ cj05vNdjUaZEbJ3VTSDWq5WBpB5nx4Rj8kXwUI4s/B+qFfp4i/aOrIrWjo4MxKl+/gd5
+ RCbA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rr76HRBzlTZu1PUk/WRqjtKilqeSNUWNAOdAi13NzbdfE0gEQKT435VvRnCP+Da+wqHkE+HINLS4skS@nongnu.org
+X-Gm-Message-State: AOJu0YznRLWHsbpa8uhFUA8+vawjTpAPdAAc0+bh5VVQ9+YvFCkXuG2w
+ E14oiY6TG94K6TMc+8J3HInZbM+MVmfUPgm6Mn7O41fOzQkNI8M/rNdmn2fINjGK+Bl/dlsOjZw
+ vLtk6GHtZZ8tfoPC3sbP/Ti+Yl0Cx39jWrbYo57dLlZvgPFLRw8Nt1mM5
+X-Gm-Gg: AfdE7cnP+CCfrBsZlZMk3P5lNfcSauAAsOBzND+0rKfbGR1cxesG3kr8fxMGILANhGA
+ RO+88pHxB7A09C6qQDy89kLhzTfTTgXAtFQrYTb5QQnK+Hs2BZexZ2tnSt0Z+QpA3W2O1v3GS9M
+ 8Agi566WMP/kPj3tHAOfhcHtoVo63gjYSaJZGEYn+SuvUStsa6jQf0bpOwjM50eqEbhGjahonm4
+ nh/jBFAP64GYuNaoK/uML/8xmD6Ew21oo2SvSryKWveERQ+yEPeMsYe13Oyrw32TJ0GJIB6xhuH
+ hk3JJb6bUNBz1BlYMK/MOEf4lbzv2qzbITrvDGIN/9JJ/euJdc4liGdxjek/djb50xaQwXFnU/i
+ 6CJE=
+X-Received: by 2002:a05:6214:1c4c:b0:8ef:b2f4:c686 with SMTP id
+ 6a1803df08f44-8f1bb5188fcmr65458296d6.13.1782831498007; 
+ Tue, 30 Jun 2026 07:58:18 -0700 (PDT)
+X-Received: by 2002:a05:6214:1c4c:b0:8ef:b2f4:c686 with SMTP id
+ 6a1803df08f44-8f1bb5188fcmr65457736d6.13.1782831497455; 
+ Tue, 30 Jun 2026 07:58:17 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8f24723defcsm13424456d6.49.2026.06.30.07.58.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Jun 2026 07:58:16 -0700 (PDT)
+Date: Tue, 30 Jun 2026 10:58:05 -0400
+From: Peter Xu <peterx@redhat.com>
+To: yujun <yujun@kylinos.cn>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] migration: Fix invalid %ud format and trace arg typo
+Message-ID: <akPZfTuOc45rOLHU@x1.local>
+References: <20260630031324.43453-1-yujun@kylinos.cn>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Disposition: inline
+In-Reply-To: <20260630031324.43453-1-yujun@kylinos.cn>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -94,153 +115,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On Tue, Jun 30, 2026 at 11:13:24AM +0800, yujun wrote:
+> Standard printf has no %ud conversion; glibc treats it as %u followed
+> by a literal 'd', so postcopy userfaultfd error messages printed event
+> values like "5d" instead of "5".  The same typo existed in two postcopy
+> discard trace format strings.
+> 
+> Also rename the misspelled ram_save_iterate_big_wait() trace argument
+> milliconds to milliseconds.
+> 
+> Fixes: 00fa4fc85b ("postcopy: Allow registering of fd handler")
+> Signed-off-by: yujun <yujun@kylinos.cn>
 
-> Implement the user creatable QOM interface and define the monitor-qmp
-> and monitor-hmp types in QAPI. This unlocks the ability to create them
-> on the command line with -object or in HMP/QMP with object_add.
->
-> For example:
->
->   $QEMU -chardev stdio,id=3Dmonchr0 -object monitor-hmp,id=3Dmon0,chrdev=
-=3Dmonchr0
->
-> Initially the "prepare_delete" callback is hardcoded to return an error
-> which means -object and object_add can be used, but object_del will fail.
-> Support for deleting monitors will be introduced in subsequent commits.
->
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Tested-by: Peter Krempa <pkrempa@redhat.com>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+queued, thanks.
 
-[...]
-
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index dd45ac1087..6affb70a59 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -1187,6 +1187,45 @@
->    'data': { '*cpu-affinity': ['uint16'],
->              '*node-affinity': ['uint16'] } }
->=20=20
-> +##
-> +# @MonitorProperties:
-> +#
-> +# Properties for all monitors
-> +#
-> +# @chardev: ID of the character device providing the monitor transport
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'struct': 'MonitorProperties',
-> +  'data': { 'chardev': 'str' }}
-> +
-> +##
-> +# @MonitorHMPProperties:
-> +#
-> +# Properties for the HMP monitor
-> +#
-> +# @readline: whether to enable readline for line editing
-> +#      (default: enabled)
-
-The default value is 'true', and it means 'enabeld'.  We pretty much
-universally have the default value in (default: ...), not the meaning.
-
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'struct': 'MonitorHMPProperties',
-> +  'base': 'MonitorProperties',
-> +  'data': { '*readline': 'bool' } }
-> +
-> +##
-> +# @MonitorQMPProperties:
-> +#
-> +# Properties for the QMP monitor
-> +#
-> +# @pretty: whether to pretty print JSON responses (default: disabled)
-
-Likewise.
-
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'struct': 'MonitorQMPProperties',
-> +  'base': 'MonitorProperties',
-> +  'data': { '*pretty': 'bool' } }
-> +
->  ##
->  # @ObjectType:
->  #
-> @@ -1237,6 +1276,8 @@
->      'memory-backend-ram',
->      { 'name': 'memory-backend-shm',
->        'if': 'CONFIG_POSIX' },
-> +    'monitor-hmp',
-> +    'monitor-qmp',
->      'pef-guest',
->      { 'name': 'pr-manager-helper',
->        'if': 'CONFIG_LINUX' },
-> @@ -1315,6 +1356,8 @@
->        'memory-backend-ram':         'MemoryBackendProperties',
->        'memory-backend-shm':         { 'type': 'MemoryBackendShmPropertie=
-s',
->                                        'if': 'CONFIG_POSIX' },
-> +      'monitor-hmp':                {'type': 'MonitorHMPProperties' },
-> +      'monitor-qmp':                {'type': 'MonitorQMPProperties' },
-
-Use the short form when possible:
-
-         'monitor-hmp':                'MonitorHMPProperties',
-         'monitor-qmp':                'MonitorQMPProperties',
-
->        'pr-manager-helper':          { 'type': 'PrManagerHelperProperties=
-',
->                                        'if': 'CONFIG_LINUX' },
->        'qtest':                      'QtestProperties',
-> diff --git a/stubs/monitor-internal.c b/stubs/monitor-internal.c
-> index 51db7588b9..59ccc4b35c 100644
-> --- a/stubs/monitor-internal.c
-> +++ b/stubs/monitor-internal.c
-> @@ -10,4 +10,5 @@ int monitor_get_fd(Monitor *mon, const char *name, Erro=
-r **errp)
->=20=20
->  void monitor_new_hmp(const char *chardev_id, bool use_readline, Error **=
-errp)
->  {
-> +    g_assert_not_reached();
->  }
-> diff --git a/system/vl.c b/system/vl.c
-> index fb36140aac..79ed2be449 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -1830,6 +1830,10 @@ static void object_option_add_visitor(Visitor *v)
->  {
->      ObjectOption *opt =3D g_new0(ObjectOption, 1);
->      visit_type_ObjectOptions(v, NULL, &opt->opts, &error_fatal);
-> +    if (opt->opts->qom_type =3D=3D OBJECT_TYPE_MONITOR_HMP ||
-> +        opt->opts->qom_type =3D=3D OBJECT_TYPE_MONITOR_QMP) {
-> +        default_monitor =3D 0;
-> +    }
-
-Still okay, but if we pick up more, we better do it like
-default_driver_disable() does for devices.
-
->      QTAILQ_INSERT_TAIL(&object_opts, opt, next);
->  }
->=20=20
-> @@ -1971,7 +1975,9 @@ static bool object_create_early(const char *type)
->=20=20
->      /* Reason: property "chardev" */
->      if (g_str_equal(type, "rng-egd") ||
-> -        g_str_equal(type, "qtest")) {
-> +        g_str_equal(type, "qtest") ||
-> +        g_str_equal(type, "monitor-hmp") ||
-> +        g_str_equal(type, "monitor-qmp")) {
->          return false;
->      }
-
-QAPI schema
-Acked-by: Markus Armbruster <armbru@redhat.com>
+-- 
+Peter Xu
 
 
