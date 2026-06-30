@@ -4,125 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FD49C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 18:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7878C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 18:36:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wedIJ-0004Kz-Sd; Tue, 30 Jun 2026 14:34:51 -0400
+	id 1wedJc-0004z0-BC; Tue, 30 Jun 2026 14:36:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wedII-0004Kh-KB; Tue, 30 Jun 2026 14:34:50 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wedJa-0004yR-GN
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 14:36:10 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wedIG-0003NW-Vf; Tue, 30 Jun 2026 14:34:50 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65UEIc8t2171251; Tue, 30 Jun 2026 18:34:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=xMwXUV
- 4ej667qW/ukKiVjWOVOdoMrryVkbVp9K4ur5s=; b=JatE03W7vTUN/CIQjf19Zl
- 4rBXLSvJXqqx9IdPoefaWyO/cQFxPWix2LusKLXEdu5YhRORySnXwJOfiw7FY/Qj
- zHHjMxFx48eoS5lMF7Deg0JnxxXL1yrxlxDG+QF5a5Sh5GpgnDvbJI4Ayz77+CpV
- juCM/A9Q14rFJy2rlPHlUoqtFT2sNorkdflBty+fdNO2ekRYWoA/u62NvI1UVMMn
- nLjyClvg7994e0Oh9oLu3o4rkxtXlCRyYpnXPgbcZOYZSzGX0ia2mxxxwlcbJ586
- 6l1pL+BqteX0taUQj8FAaJcykg/UeNYp5fs8qdJIO8yqnSL9Z92CwfX73EXUZ2Jg
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rf07cu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 18:34:45 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UIJb4c015060;
- Tue, 30 Jun 2026 18:34:45 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhbnqd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 18:34:45 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65UIYfmL27132312
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Jun 2026 18:34:41 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3604720043;
- Tue, 30 Jun 2026 18:34:41 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6BE1D2004B;
- Tue, 30 Jun 2026 18:34:27 +0000 (GMT)
-Received: from [9.39.22.35] (unknown [9.39.22.35])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 30 Jun 2026 18:34:27 +0000 (GMT)
-Message-ID: <9eb293a6-4619-4499-8ba8-e63a1d703ac2@linux.ibm.com>
-Date: Wed, 1 Jul 2026 00:04:01 +0530
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wedJY-00044K-EQ
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 14:36:10 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wedJR-00000005BGu-1gnp; Tue, 30 Jun 2026 20:36:01 +0200
+Message-ID: <ee6fc8e2-dffd-4a93-8501-7894c593b760@maciej.szmigiero.name>
+Date: Tue, 30 Jun 2026 20:35:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/8] Testcase improvements and Power8E/NVL removal
-To: Misbah Anjum N <misanjum@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>
-References: <20260629110411.3051274-1-adityag@linux.ibm.com>
- <9eefc074b799f7380cf61885bc37642a@linux.ibm.com>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <9eefc074b799f7380cf61885bc37642a@linux.ibm.com>
+Subject: Re: [PATCH v3 0/7] migration/cpr: support vhost-vsock devices
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de,
+ qemu-devel@nongnu.org, peterx@redhat.com, dongli.zhang@oracle.com,
+ bchaney@akamai.com, mark.kanda@oracle.com, den@openvz.org
+References: <20260626164643.2526-1-andrey.drobyshev@virtuozzo.com>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ xsFNBFpGusUBEADXUMM2t7y9sHhI79+2QUnDdpauIBjZDukPZArwD+sDlx5P+jxaZ13XjUQc
+ 6oJdk+jpvKiyzlbKqlDtw/Y2Ob24tg1g/zvkHn8AVUwX+ZWWewSZ0vcwp7u/LvA+w2nJbIL1
+ N0/QUUdmxfkWTHhNqgkNX5hEmYqhwUPozFR0zblfD/6+XFR7VM9yT0fZPLqYLNOmGfqAXlxY
+ m8nWmi+lxkd/PYqQQwOq6GQwxjRFEvSc09m/YPYo9hxh7a6s8hAP88YOf2PD8oBB1r5E7KGb
+ Fv10Qss4CU/3zaiyRTExWwOJnTQdzSbtnM3S8/ZO/sL0FY/b4VLtlZzERAraxHdnPn8GgxYk
+ oPtAqoyf52RkCabL9dsXPWYQjkwG8WEUPScHDy8Uoo6imQujshG23A99iPuXcWc/5ld9mIo/
+ Ee7kN50MOXwS4vCJSv0cMkVhh77CmGUv5++E/rPcbXPLTPeRVy6SHgdDhIj7elmx2Lgo0cyh
+ uyxyBKSuzPvb61nh5EKAGL7kPqflNw7LJkInzHqKHDNu57rVuCHEx4yxcKNB4pdE2SgyPxs9
+ 9W7Cz0q2Hd7Yu8GOXvMfQfrBiEV4q4PzidUtV6sLqVq0RMK7LEi0RiZpthwxz0IUFwRw2KS/
+ 9Kgs9LmOXYimodrV0pMxpVqcyTepmDSoWzyXNP2NL1+GuQtaTQARAQABzTBNYWNpZWogUy4g
+ U3ptaWdpZXJvIDxtYWlsQG1hY2llai5zem1pZ2llcm8ubmFtZT7CwZQEEwEIAD4CGwMFCwkI
+ BwIGFQoJCAsCBBYCAwECHgECF4AWIQRyeg1N257Z9gOb7O+Ef143kM4JdwUCaZD5QgUJESzD
+ fQAKCRCEf143kM4JdxkAEAC9cPa1ONCizZerNCJR9fI1ezsYWjNYpTWoYWT2vWug8repG8EJ
+ E6/l300/TRf0kYy9vNC0PUe+uJeJig2HxfwuCAHECobvvANSEq+KTUXq1sE3tJ7ZKCZwDiR/
+ zs4axmFlZVzFUHkzCqH/y7xBBHHQJrtSD0W/Gs1DbCb1xCblyE4uzQ9DytlxkZdVgXt3Fmm8
+ Xa6JAxoDnUktl6LWpQ4tW6IRXN4gOQeRQKzREIIbk1gEvba/60JvuS1GX2KK2/SRODspF9TV
+ 5IKHmnepKOSpwLhkR3U4uV1D/4aqcJaDsH1krdAse5nkyXXQ7aBMvGLx2KADaoq6uhBFswyZ
+ L7/AuhKEq4+YTuvE+EBYJS1YXFCisqQgG2zDGQc2I5AVpQlF6isKa+kcQBT7V27XuSrcsYdH
+ Op7nJynlyBg7nYkgAdy+zLgQ+0fgCmtWha5qJUP6oVWcMfA6btSiN+rNkMylqgXbkeHgdDkr
+ 1+VshxGvQSMm/4DStFJwZ7zEln9qxr4AQbfdugNZmMb3F/haKvUuNh2TJHICgbwjEDryZipf
+ 2iUjqBVVzW4ut7fgHkBq9yw2Vy5ryr+R/N/1Pja6gvtvU53dfDIGXxBRGTQFD92xXVd/Ml8/
+ G0QvpiUCuUBvVGJb8k0Xlx9CYWlyFqoNUevPW8e8CCw+j3i+H9tMPuvJjs7AzQRaRrwiAQwA
+ xnVmJqeP9VUTISps+WbyYFYlMFfIurl7tzK74bc67KUBp+PHuDP9p4ZcJUGC3UZJP85/GlUV
+ dE1NairYWEJQUB7bpogTuzMI825QXIB9z842HwWfP2RW5eDtJMeujzJeFaUpmeTG9snzaYxY
+ N3r0TDKj5dZwSIThIMQpsmhH2zylkT0jH7kBPxb8IkCQ1c6wgKITwoHFjTIO0B75U7bBNSDp
+ XUaUDvd6T3xd1Fz57ujAvKHrZfWtaNSGwLmUYQAcFvrKDGPB5Z3ggkiTtkmW3OCQbnIxGJJw
+ /+HefYhB5/kCcpKUQ2RYcYgCZ0/WcES1xU5dnNe4i0a5gsOFSOYCpNCfTHttVxKxZZTQ/rxj
+ XwTuToXmTI4Nehn96t25DHZ0t9L9UEJ0yxH2y8Av4rtf75K2yAXFZa8dHnQgCkyjA/gs0ujG
+ wD+Gs7dYQxP4i+rLhwBWD3mawJxLxY0vGwkG7k7npqanlsWlATHpOdqBMUiAR22hs02FikAo
+ iXNgWTy7ABEBAAHCwXwEGAEIACYCGwwWIQRyeg1N257Z9gOb7O+Ef143kM4JdwUCaZD5YwUJ
+ ESzCOAAKCRCEf143kM4Jd4+KEADEBLxVKXGqinMD1nb/QPA0Rj35WluRdPIB2dcDcyTOtiyN
+ ErIQQMhr0W4sxZOd741a2nv89VZKjzBNjihOZgbEuHfG/0lhIZ5t6aF7k4gbMctzQT7utzmD
+ y5OoV+/VFHguLThwxRvCMkGEieE8Cb4muYdQgaq1s5ipV1IqF3cDYg2iGupnsYSgOfw7ZyvG
+ 9c7Fxn7jiD/wI9eL3AesCkVFbF0r/9yLbuW6vh3kd/+bORO1GK4snSjrZLi04bnihnDfa33N
+ Pik3cmUZZANzo+HkADZjJ1pl3DZn1Qj8STk6YhaTtJhLKH4lteAlSS4xRIeoiw/2hbzbRr4j
+ hnu96hf6ukM7E7oC89SfWGXZHbUds77MFyKvBTCMJnkQq+PbmYp1vgTnOl3JO7ARZ3rNPkHE
+ IpOWDjHRyDiKVVxt2bKaELZrFGcYYTVXt9pUfY1xFt76G0piVr50+jTezgMmZYr7aZOrqlUi
+ WHQjcZZbROLql/+ngphSgdthGIhVWrIMHJu1UxnRiwKc/fzDFUZ9hFL+W4ZLm+52TzMatpta
+ oNdcP9rtsQjdYMNLuwysP4keDX8yBXADwJD7eQ+ryIIKh6X1lBMIWxeZG5W0DQ6/4BCUEbCe
+ 1DqkYRtZyUEzgAbaHliaa5t3dfCtSMz5cAbGqxarXc7bKOjA6P8hCwgP0tEypA==
+In-Reply-To: <20260626164643.2526-1-andrey.drobyshev@virtuozzo.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a440c46 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=C9BDwd5fFWHTyHC46gQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: qgHq8iGx1BOwy5u4DcpFOjgtT-tOuA8l
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDE3NSBTYWx0ZWRfX/OIIw2DTGf+M
- Xu5EH+kePlX7npn3rK8GAcpF+AqqsWqjbzYHnlI9o1MaQ2Jo61DfbATjOvFj9WLoFnfZZw98QyH
- 4clSDhflnvfP/P9cP9tmu/KUFHJfC9kMEgKBmFJtVxzPFa2F6NnW0NPBOh2/ZvERFjh+NcKMAyi
- vMJiur4E2UmelG4jxAH46mKnYtzDKoC//pg5ExjsH7frLhf/BYsMlF/ZvM1qo+tK2NeDmOrvwzR
- JK6YcfiYFARx16XHgTNwPJl4/Hnf5An0vGkaVrK3hsBZckQTgEdRmyXJr7SeCKDNM3umKPpfkJH
- iUZqB5mH0dYkIX6en+IzArPr/nnojRkGeANAVTfIU74VzjTtNlSKi9WdxkqnLPQc3Ji4mXDuQvL
- xox/Txaz4YOCszdEveKJwmn9cr65gYjLZbS3UUAMeIHs0sXyHwMg6fM1LEt5weHpbBTT0ABXXMJ
- 1rxOQE6Ys3FiaTCwK0A==
-X-Proofpoint-GUID: 3P-6R5aZUoDbSgkA86zm_rCdVOX4gFhO
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDE3NSBTYWx0ZWRfX0jlt5WXJJnKZ
- L4XrOPhNoQyxN05xfLY8hANtQxhLTVKmLyXQqHjJLcQc8TaUuRamiuV6rlAqHV8kdxVA/y2JT59
- 1rvwoaqZed63WkAXypojKPEglllvKmg=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-30_04,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
- spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300175
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,67 +103,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 26.06.2026 18:46, Andrey Drobyshev wrote:
+> v2 -> v3:
+> 
+> Re-design device ownership hand-off (suggested by Dongli).  Do not rely
+> on SETUP migration notifiers, as this approach forces us to reorder
+> generic migration code (see v2 discussion).  Instead:
+> 
+>    * .pre_save() releases ownership on the source (RESET_OWNER) once VM
+>      is stopped;
+>    * .realize() is adjusted to defer device ownership acquisition for an
+>      incoming CPR;
+>    * .post_load() actually claims the device (VHOST_SET_OWNER);
+>    * FAILED migration event callback re-aquires the ownership on the
+>      source after re_save released it.
+> 
+> v2: https://lore.kernel.org/qemu-devel/57c9c9b3-d758-489b-95b8-d16c258b9b0c@virtuozzo.com
+> 
+> Andrey Drobyshev (7):
+>    vhost: add vhost_reset_owner op
+>    vhost-vsock: don't reset connections during CPR
+>    vhost-vsock: fix FD leak in realize()
+>    vhost-vsock: preserve vhost FD during CPR
+>    vhost: factor out vhost_dev_init_backend()
+>    vhost: add vhost_dev_set_owner() / vhost_dev_reset_owner() helpers
+>    vhost-vsock: hand off device ownership across CPR
+> 
+These patches look okay CPR-wise, so:
+Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com> # for CPR
 
-On 30/06/26 09:49, Misbah Anjum N wrote:
-> On 2026-06-29 16:34, Aditya Gupta wrote:
->> <...snip...>
->>
->> base-commit: 20553466cc47af6a8c95f665b601fce3c852e503
->
-> Hi Aditya,
->
-> I've tested the v3 patch series on PowerNV and pSeries guests 
-> including the new remote interrupts functional test and Power8E/NVL 
-> removal.
->
-> Testing Environment:
-> - Host: Fedora 42 ppc64le
-> - Arch: ppc64le
-> - QEMU: emulator version 11.0.50 (v11.0.0-2400-g20553466cc-dirty)
->
-> PowerNV Guest Bringup
-> Status: Success
-> qemu-system-ppc64 -name test-vm -machine powernv -m 4096 -smp 4 
-> -nographic -kernel 
-> ~/.cache/qemu/download/6fd29aff9ad4362511ea5d0acbb510667c7031928e97d64ec15bbc5daf4b8151 
-> -drive 
-> file=~/.cache/qemu/download/aee2192b692077c4bde31cb56ce474424b358f17cec323d5c94af3970c9aada2,format=raw,if=none,id=drive0,readonly=on 
-> -device nvme,drive=drive0,bus=pcie.2,addr=0x0,serial=1234 -append 
-> "root=/dev/nvme0n1 console=tty0 console=hvc0"
->
-> PSeries Guest Bringup
-> Status: Success
-> qemu-system-ppc64 -name test-vm -machine pseries,accel=kvm -m 4096 smp 
-> 8,sockets=1,cores=8,threads=1 -nographic -serial mon:stdio -drive 
-> file=/home/kvmci/tests/data/avocado-vt/images/rhel8.0devel-ppc64le.qcow2,if=virtio,format=qcow2 
-> -netdev bridge,id=net0,br=virbr0 -device virtio-net-pci,netdev=net0
->
-> Power8E/NVL Removal Verification
-> Status: Success (both correctly rejected after removal)
->   qemu-system-ppc64: unable to find CPU model 'power8e_v2.1'
->   qemu-system-ppc64: unable to find CPU model 'power8nvl_v1.0'
->
-> QEMU Functional Test Results (make check-functional-ppc64)
-> Status: Success
-> Ok:                 12
-> Fail:               0
-> Skipped:            4
->
-> QEMU Unit Test Results (make check-qtest-ppc64)
-> Status: Success
-> Ok:                 33
-> Fail:               0
-> Skipped:            0
->
-> Result: All tests passed successfully.
->
-> Tested-by: Misbah Anjum N <misanjum@linux.ibm.com>
+But the vsock parts still need review by their maintainers/reviewers.
 
-Thank you for thoroughly testing this misbah !
+Thanks,
+Maciej
 
-- Aditya G
-
->
-> Thanks,
-> Misbah Anjum N
 
