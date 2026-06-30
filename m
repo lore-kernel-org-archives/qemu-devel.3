@@ -4,132 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B3B4C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 13:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03AEFC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 13:59:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weYyr-00023F-6I; Tue, 30 Jun 2026 09:58:30 -0400
+	id 1weYz9-000285-L0; Tue, 30 Jun 2026 09:58:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1weYym-00022l-TH; Tue, 30 Jun 2026 09:58:25 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1weYyt-00023x-Aq; Tue, 30 Jun 2026 09:58:32 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1weYyl-0003om-9I; Tue, 30 Jun 2026 09:58:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GRampWPsGeuVvM4a4VU/EEbxVjwNN1ouTqVSNTDv3AZ6zWydv7eHK2w5png7Y7S+OKGknTDDdpaEkGkW6Kj4OOEOIpRLZ26WUIMfaCuh60JmnSRm4386TKATvqUtM13/spLsXvFDHSqc4DDAFwdKYbmV8aTXVljo2J3T76kqhHDk5rkzm3SEjDJYa2+UN77f2uEs0gxlOk6kQJr/O6mV5ZBSiaAJLvQsA1td/CjW+8O0i6LId6LmJDVJG6mHqC1sndUlwR4gtyCMrZ0sI38TosLskpiSUzlaC0ccWYMpJGh7zOz/65jbv6+Z69QcssqXRfupyoB8g6AeWOP0U/+KqA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ENCf4yX4DLqru6hMUl/+ERSODshf7YuA/2OVunt83Bg=;
- b=sN7uJ/oVhQ8rRcZTrxrEm6ev1bXe0dllOEc8GIp8ePQe/0R1Nlo1nz1dYUTjfPn9rtSPN2DABhPPn6RnnCSQW/mL5ivkIjrHdVcb4wL4AOZv6UkKAUi1uNg+BHacvoCWgDD3a2j1XZIOdsK9SnUOrRrtUqP8kLC5KYs2rcsDgVFoBLCHOLyWsw3dnIjprpcLY3PmWVlSqFfkfrElAz/oXGwpPY+6gNT1MVOueIiuQsaNOw1xrtEGrVmEw+Cl9GiBcmZ+HO9X9pXP3ZidZr5V0CGbKxTLAjQWFnkS4EtvrU3rn+ui+1FrnuxIWDnSqfkHUM4PhGZLyZWVKV4qZfQXRA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ENCf4yX4DLqru6hMUl/+ERSODshf7YuA/2OVunt83Bg=;
- b=Dg31aYzs++wquiaVwNepNA+zNcy5561bHRcAJunuFyXkwf8WAHRO9tARTicVbJ6Az5PKIUVjeM6uvzYKRxkIPTe2h9LIh0BK8WX56GaLXN8iocANXTFlQva49yNnA4lBruGQ72o1VPIrqkrcB2D/+xmBNtsLkV68HyT7j/2v06hymwxfznQt5t2N9DcmoHJLZbw98mNpZeel67KL29WjSHW5OPDfdrDEWlD++5iMrGiyGHHFBNtTf4F/3k0aPw2Q3P67wa40no+kVx+3gPFfyUnKSmf8ZzoXTVsF5G6IfvvvRl6hJvjSx7wBDjjNzAd2xFfw8UD5mZteECcjeWiDmQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by TYPPR02MB8959.apcprd02.prod.outlook.com (2603:1096:405:382::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Tue, 30 Jun
- 2026 13:58:11 +0000
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0159.018; Tue, 30 Jun 2026
- 13:58:11 +0000
-From: Bin Meng <bin.meng@processmission.com>
-To: QEMU <qemu-devel@nongnu.org>
-Cc: Alistair Francis <alistair@alistair23.me>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- qemu-arm@nongnu.org
-Subject: [PATCH 07/10] hw/ssi: aspeed_smc: Fix direct-read dummy bytes
-Date: Tue, 30 Jun 2026 21:57:26 +0800
-Message-Id: <20260630135729.466264-8-bin.meng@processmission.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260630135729.466264-1-bin.meng@processmission.com>
-References: <20260630135729.466264-1-bin.meng@processmission.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SE2P216CA0161.KORP216.PROD.OUTLOOK.COM
- (2603:1096:101:2cb::15) To KL1PR02MB4977.apcprd02.prod.outlook.com
- (2603:1096:820:71::8)
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1weYyr-00043g-AF; Tue, 30 Jun 2026 09:58:31 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65U9nAhr1578229; Tue, 30 Jun 2026 13:58:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=6dsnWHSgujZZiPcVNMGZL5eaLxQl/jvISiq0nHJVvgM=; b=BPvBQh9kZbJ0
+ JjO+QEq1zw33QCazqc8Rl2WSxLnog+fHO6/yyujc0JT7JNMvqfEPjHSyuuCfvu9r
+ YF/fqJE8u0qYHmlUCe+7ZZWjQVCYLoqwx5gCT7+FYDcLlwl8HOkmaRxrjEOUfXS8
+ dnAoOSZDn7x+5JgnCWByaz/GyfnUhTBcrc53GAz93pIuazsQmjvF0GJykFxYt+fJ
+ 91+t/GCH/J5QfJmzZG0ecmvA7JS+tuS5bpVx1XOM900rxKwUsCy609Hi59VP1Xdj
+ tU1y2EOwRMegNNZQ7p4rSr7/7vzmoU86PUrAIg0QZ56S/zuozsPw/RFqT56okOy4
+ sUoCNJQS6Q==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rextg6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 13:58:24 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UDna1R022594;
+ Tue, 30 Jun 2026 13:58:23 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2suk2hm9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 13:58:23 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65UDwLTm66388268
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Jun 2026 13:58:22 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 97CD758058;
+ Tue, 30 Jun 2026 13:58:21 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9C58258057;
+ Tue, 30 Jun 2026 13:58:20 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 30 Jun 2026 13:58:20 +0000 (GMT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYPPR02MB8959:EE_
-X-MS-Office365-Filtering-Correlation-Id: 272496c8-84e3-47f7-e498-08ded6af9f38
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|34096008|23010399003|7416014|6133799003|22082099003|18002099003|56012099006;
-X-Microsoft-Antispam-Message-Info: apPIGzg0txUS2aPRCxSoKy2I/0Rg5jT/6dYVIxMx/Ovbasae4NqBywdy7B5Z8udO3yWiSa33SzB6vyoyAfsMbYu654eCke5busBKHQxqPWL87gPwFmAw+rL7v1goac80VpJPjpbO7C1mOv7zIbHvO70II3uzX6Q0ZP5R9Fj5hqgDK4EM5QA83/1kreqBiYxTzgpzdur2/8vt7soKsSURBK4ngGY23xvF7mNyCK/Ceg0e3NyPd7f42hG3UMIL0kZUrduWqUnL3WVgOPuT60qqECjtKhcieO7jccXhWUgtwRWl9vh3rNUPzkPapjXzpEthpMALhq9TsyqaiYwuGeJBcRVLyEkEAjNIA4/qzBQqo5XJHLmdgxqKTLip2nNBtg7aUYJ4ue49yrokRmSiAmuT9RABA/aupGLTy18JkOrLOFhuRyoRZIYwGaXmr3X2Yg0SZdxwa+8zO7wUQq9ygxYQctgw6V/7cOAL/ZekK+AH4B0yXDITOu4oEwJkYJdqSiCRjVPYll0jhUUFLTaPRnXZ6oPqWm0yOSht2UrVj5QLmI8De9J52oumeaa6l4yu2SAnugiplFgZZEjzsN3krm3NVBD9OVRESbjds3abyOJmaxzx+VeoBJPL4/AVzt13Mrkuutt8oTmh9DqCCh2A/sIFuJsgtTFB2FwpgL3o4cb5tpg=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(34096008)(23010399003)(7416014)(6133799003)(22082099003)(18002099003)(56012099006);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?CdETN+mrBPAq40RnEelFhVKKlAx9wEeEh2IlurbfHQDkC8PoYjTN03/yIFcT?=
- =?us-ascii?Q?y5TAw4W+llvED1OoHyTkFTqf2TtHQ8PgAj8CJT+bVEXaDrKX8T4S7vdiQj68?=
- =?us-ascii?Q?AqToC7W33ureLIfrYLDvwPTY5qTma93syxG3tZ78U3jcChVZwwGy0nvrk2af?=
- =?us-ascii?Q?BEswEgxi4wmHtB4/AEcclBMX/0A1GbLJaIMNiDWttGQjj1A8XkhSg9VpS874?=
- =?us-ascii?Q?EMQdeQ6O9pjeo6d2N8DReI/CR3HIZ7BwBhSV+8hY3u72t2wNPCo4EHV1M65s?=
- =?us-ascii?Q?sTXFEjVkwvNd9qy5izMiA+MUbJUtQlJGFnU9pRaQWHlF+5GadXF8dX6v4TQl?=
- =?us-ascii?Q?ZTx2J9cLXO/HJ/5lONHaRTUMV+UZDxWXEs+fBvuOz3fIhnhDfS2z5o8928Wd?=
- =?us-ascii?Q?Dp9EU+Vxd+aq098quvfU+pHP8umJJ1O2+SGUcreQ9OflfsQZL4doaIS2jEkQ?=
- =?us-ascii?Q?wSQ7f3eLCjbNTon5mwVX2HzVqEYy+dWSBeroac5c6jIIwr4FavRcpHWWS5ih?=
- =?us-ascii?Q?07AH/NHw8HLCjWvDck8XURd3tDIcytUzHxsbLB5/QW+9PK2lK83PE3ldNUKT?=
- =?us-ascii?Q?JY39vxG+JUuSEAcLTd6PdN4R1Uxor2a026jXrTvu+pPKM3EsDfvyM9+KOKFu?=
- =?us-ascii?Q?4O87pVDIneElRgNpgnmopcnY649BU7A37ruIW6PHwnKXkvX0I/rfxXnispkL?=
- =?us-ascii?Q?O/V0+QgcQ/jNVP+hnxOTVFt/YYc9t6AWI1aNRB9/fk6aNt+M4OazU6lI0LPt?=
- =?us-ascii?Q?rm7coGU+3VO1G+FyyK6jfijGLMoEh9YWUTC5nXfxJYmoZYSd0aiVQzdLtKRf?=
- =?us-ascii?Q?1+nPtWJwY16cwpSJGXr7D67te3QbO+xkL9ecXiF/bvPJxssEyOZqaoqpMoOA?=
- =?us-ascii?Q?ybEbAPaSgxdqFctGOi1KIRR5/b8dIrSrx52V9/XUz+3Jcxiysz8hZKPbfrhJ?=
- =?us-ascii?Q?GeRnuZG8ss3D8qR8l6qdX5GnKBvXfIFwswXiCE9h6Fkm/4X8Ev3f/NNb/B0T?=
- =?us-ascii?Q?Jgfo05DukNc9OhEjxHFQ3AXVeAATtiMhq6wz7IgqWbelSGLaGV8nHbEdoCGp?=
- =?us-ascii?Q?C6ER9XvQYauHZK8GtYhVVTi5O1XGE7j+FlrjjoM8OuTsifEUiQ1hMlC1yEDt?=
- =?us-ascii?Q?dJB01yHcy7qUy5KToGvzSvUox2MRXK0uejR5BBeD2ThmFPF43rzkbihZzQCH?=
- =?us-ascii?Q?NcT6P0FjU7pGFabe79waNjyjDV1+WTjz9RGBbklF+NWqHINSn96fOymLvzzN?=
- =?us-ascii?Q?KIE8wb1KUQmMl4gLa0xgLOQjXYLm9mZzgPgSRro6J5ZaQytwu8jgp8nUGm3S?=
- =?us-ascii?Q?YSWkwLye1OjTZcsZ7VqmnoyU2ssrbCEeDAH2UVGDTU43cTXnAxDnQ8HUnf/b?=
- =?us-ascii?Q?A4qOm2Du3VIEFLhJnz+qe04Tj6tDZw2U45n+/keVV9JnOi8NejqX8/R+P51x?=
- =?us-ascii?Q?3NNxh3pDWX9JI74G+qwOgTh1rS22EoGLQAQpb92/tqNu9XRHqrrDgvA/6FXN?=
- =?us-ascii?Q?6d7X8AoNKFnj37nAIV2iiLI7vUbR9S/oOzliDxpbgFOhT+peJRpBJM3KLiRH?=
- =?us-ascii?Q?XIQbNv0Zo8LWa2pSNP+D+P31ChpsLjXt3MNkUK82jlfXj2Jc4ngBrOmTuE4P?=
- =?us-ascii?Q?g7nXyW4R9ST/190hND+v0xgwbP/uJkWswwj5dh0/imKyNTbngYzC64yFXswZ?=
- =?us-ascii?Q?ZBPxDRB+7qIagj7MQegpjFQMkT8fR4cj1hvxYaII3z21gJhPT7tkTO53diKB?=
- =?us-ascii?Q?S0uaBmKz6sqXJrIho6m3QBXm1Xz72DQ=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 272496c8-84e3-47f7-e498-08ded6af9f38
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jun 2026 13:58:11.3563 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CVoh4slonqCioel9h7TAndHtbaUNOo7tLohozsB31y2b+rHgaXuQ2Q0Y31ZGWmXUqQtg+R0aDgscpoFGXhQsxEvmWKjmJ7CRh895uAvh5c8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYPPR02MB8959
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=bin.meng@processmission.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Date: Tue, 30 Jun 2026 15:58:20 +0200
+From: Harald Freudenberger <freude@linux.ibm.com>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: richard.henderson@linaro.org, david@kernel.org, thuth@redhat.com,
+ berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ linux390-list@tuxmaker.boeblingen.de.ibm.com,
+ linux-s390@vger.kernel.org, dengler@linux.ibm.com,
+ borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
+Subject: Re: [PATCH v8 07/18] target/s390x: Support AES CTR for cpacf kmctr
+ instruction
+Mail-Reply-To: freude@linux.ibm.com
+In-Reply-To: <a948d24d-f9cb-4d67-bf46-007d6de3c523@linux.ibm.com>
+References: <20260624081029.23815-1-freude@linux.ibm.com>
+ <20260624081029.23815-8-freude@linux.ibm.com>
+ <a948d24d-f9cb-4d67-bf46-007d6de3c523@linux.ibm.com>
+Message-ID: <dd14bb109eaa9c599a1a94f9618775c0@linux.ibm.com>
+X-Sender: freude@linux.ibm.com
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a43cb80 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=ZZgNOd5QJxuZDPaVO9IA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: w9e1MVYFfISiOexL7pT5rTYYHV3O8hi5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDEyOSBTYWx0ZWRfXyXuNgwlfch56
+ NbEyNaime2PCsj8hO69sxTrF8+ICfB5oQjwk2x7yjyPM+CZvrZpzE7OosD/jOBeLGm1pfxzRDe1
+ FY69Jwdo090XxBIn43p7JLQPzaTDD6HVai/o0vQkb0t+etQ+uJnJ6eo6MpXNdPtTyuy6mhVVn8D
+ PGaqsELV2spSjPgMJu4VsL0R7Q5CPy06h4Xj/wjY3PSH4aJgPlWAx1wNNumf+XeWMjjEtw+tJtF
+ y6phXP96wvh5q7B2fqQ8Y69rLBFxc/kwsSYm61DqqOmP4pX2AWEOshAdD+PgAWBht+0gBwdYO1v
+ PP3ALpF/GRllWaMA8WgBtdnKm7Cw3FMEnDml/Pcb0wyqZwGVSk64LIqIJR0IEjWpkoT8t9IoJkr
+ 2cDJAOq1brwhN1aHV+HsYMThuEXBD6z5qHFFXX0kpMO0lhVuXaIZnXOP9us2t4i7xPGbUDN0AN3
+ NIT+BlD6yFIslPAh/wA==
+X-Proofpoint-GUID: w9e1MVYFfISiOexL7pT5rTYYHV3O8hi5
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDEyOSBTYWx0ZWRfXxE47MuHnp+/I
+ No/B9sjXZgaaYpMVMEJlgAegoMe4Ld6qHRqa/WPS9odj4PU9WGoQZkNdCP6ka6Nl4oeCb0yhv1d
+ tpUzzZCEAVzeroiSsn0XEfo8F3Hk3ko=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-30_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
+ spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300129
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=freude@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -143,70 +127,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-m25p80 now consumes fast-read dummy phases as byte counts. The
-ASPEED SMC direct-read path still treated the CEx dummy field as
-raw cycles and emitted field * 8 SSI transfers. Convert the
-ASPEED dummy field to SSI byte transfers using the selected
-direct-read data width.
+On 2026-06-24 19:26, Ilya Leoshkevich wrote:
+> On 6/24/26 10:10, Harald Freudenberger wrote:
+>> Support the subfunctions CPACF_KMCTR_AES_128, CPACF_KMCTR_AES_192
+>> and CPACF_KMCTR_AES_256 for the cpacf kmctr instruction.
+>> 
+>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+>> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
+>> ---
+>>   target/s390x/gen-features.c      |  3 ++
+>>   target/s390x/tcg/cpacf.h         |  5 +++
+>>   target/s390x/tcg/cpacf_aes.c     | 76 
+>> ++++++++++++++++++++++++++++++++
+>>   target/s390x/tcg/crypto_helper.c | 24 ++++++++++
+>>   4 files changed, 108 insertions(+)
+> 
+> [...]
+> 
+>> --- a/target/s390x/tcg/cpacf_aes.c
+>> +++ b/target/s390x/tcg/cpacf_aes.c
+>> @@ -213,3 +213,79 @@ int cpacf_aes_cbc(CPUS390XState *env, const int 
+>> mmu_idx, uintptr_t ra,
+>>         return !len ? 0 : 3;
+>>   }
+>> +
+>> +int cpacf_aes_ctr(CPUS390XState *env, const int mmu_idx, uintptr_t 
+>> ra,
+>> +                  uint64_t param_addr, uint64_t *dst_ptr_reg,
+>> +                  uint64_t *src_ptr_reg, uint64_t *src_len_reg,
+>> +                  uint64_t *ctr_ptr_reg, uint32_t type,
+>> +                  uint8_t fc, uint8_t mod)
+>> +{
+>> +    enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
+>> +    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
+>> +    uint8_t ctr[AES_BLOCK_SIZE], buf[AES_BLOCK_SIZE];
+>> +    uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
+>> +    uint64_t addr, len = *src_len_reg, done = 0;
+>> +    int i, keysize, addr_reg_size = 64;
+>> +    uint8_t key[32];
+>> +    AES_KEY exkey;
+>> +
+>> +    g_assert(type == S390_FEAT_TYPE_KMCTR);
+>> +
+>> +    switch (fc) {
+>> +    case 0x12: /* CPACF_KMCTR_AES_128 */
+>> +        keysize = 16;
+>> +        break;
+>> +    case 0x13: /* CPACF_KMCTR_AES_192 */
+>> +        keysize = 24;
+>> +        break;
+>> +    case 0x14: /* CPACF_KMCTR_AES_256 */
+>> +        keysize = 32;
+>> +        break;
+>> +    default:
+>> +        g_assert_not_reached();
+>> +    }
+> 
+> A general comment; I think I've seen this in previous patches as well.
+> Would it make sense to properly define constants like
+> CPACF_KMCTR_AES_128 and drop comments? Or, if the goal is easier
+> cross-checking with POp, hardcode decimal numbers, since POp specifies
+> them in decimal?
 
-Fixes: ac2810defa9d ("aspeed/smc: handle dummy bytes when doing fast reads in command mode")
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
----
+I'll add defines to cpacf.h and remove this hardcoded values here.
 
- hw/ssi/aspeed_smc.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+> 
+>> +
+>> +    if (!(env->psw.mask & PSW_MASK_64)) {
+>> +        len = (uint32_t)len;
+>> +        addr_reg_size = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
+>> +    }
+>> +
+>> +    /* length has to be properly aligned. */
+>> +    if (!QEMU_IS_ALIGNED(len, AES_BLOCK_SIZE)) {
+>> +        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+>> +    }
+>> +
+>> +    /* fetch key from param block */
+>> +    for (i = 0; i < keysize; i++) {
+>> +        addr = wrap_address(env, param_addr + i);
+>> +        key[i] = cpu_ldb_mmu(env, addr, oi, ra);
+>> +    }
+>> +
+>> +    /* expand key */
+>> +    AES_set_encrypt_key(key, keysize * 8, &exkey);
+>> +
+>> +    /* process up to MAX_BLOCKS_PER_RUN aes blocks */
+>> +    for (i = 0; i < MAX_BLOCKS_PER_RUN && len >= AES_BLOCK_SIZE; i++) 
+>> {
+>> +        /* read in nonce/ctr => ctr */
+>> +        aes_read_block(env, mmu_idx, *ctr_ptr_reg + done, ctr, ra);
+>> +        /* encrypt ctr => buf */
+>> +        AES_encrypt(ctr, buf, &exkey);
+>> +        /* read in one block of input data => in */
+>> +        aes_read_block(env, mmu_idx, *src_ptr_reg + done, in, ra);
+>> +        /* xor input data with encrypted ctr => out */
+>> +        aes_xor(in, buf, out);
+>> +        /* write out the processed block */
+>> +        aes_write_block(env, mmu_idx, *dst_ptr_reg + done, out, ra);
+>> +        len -= AES_BLOCK_SIZE, done += AES_BLOCK_SIZE;
+> 
+> Same comment as in the previous patch.
 
-diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-index d87fbd798c..f5abc9fcc9 100644
---- a/hw/ssi/aspeed_smc.c
-+++ b/hw/ssi/aspeed_smc.c
-@@ -449,19 +449,28 @@ static uint32_t aspeed_smc_check_segment_addr(const AspeedSMCFlash *fl,
-     return addr;
- }
- 
--static int aspeed_smc_flash_dummies(const AspeedSMCFlash *fl)
-+static int aspeed_smc_flash_dummy_bytes(const AspeedSMCFlash *fl)
- {
-     const AspeedSMCState *s = fl->controller;
-     uint32_t r_ctrl0 = s->regs[s->r_ctrl0 + fl->cs];
-     uint32_t dummy_high = (r_ctrl0 >> CTRL_DUMMY_HIGH_SHIFT) & 0x1;
-     uint32_t dummy_low = (r_ctrl0 >> CTRL_DUMMY_LOW_SHIFT) & 0x3;
--    uint32_t dummies = ((dummy_high << 2) | dummy_low) * 8;
-+    uint32_t dummy_byte = (dummy_high << 2) | dummy_low;
- 
--    if (r_ctrl0 & CTRL_IO_DUAL_ADDR_DATA) {
--        dummies /= 2;
-+    /*
-+     * Scale the controller dummy field to SSI byte transfers using the
-+     * direct-read dummy/address bus width.
-+     */
-+    if ((r_ctrl0 & CTRL_IO_QPI) ||
-+        ((r_ctrl0 & CTRL_IO_QUAD_DATA) &&
-+         (r_ctrl0 & CTRL_IO_QUAD_ADDR_DATA))) {
-+        dummy_byte *= 4;
-+    } else if ((r_ctrl0 & CTRL_IO_DUAL_DATA) &&
-+               (r_ctrl0 & CTRL_IO_DUAL_ADDR_DATA)) {
-+        dummy_byte *= 2;
-     }
- 
--    return dummies;
-+    return dummy_byte;
- }
- 
- static void aspeed_smc_flash_setup(AspeedSMCFlash *fl, uint32_t addr)
-@@ -487,7 +496,7 @@ static void aspeed_smc_flash_setup(AspeedSMCFlash *fl, uint32_t addr)
-      * settings, let's check for fast read mode.
-      */
-     if (aspeed_smc_flash_mode(fl) == CTRL_FREADMODE) {
--        for (i = 0; i < aspeed_smc_flash_dummies(fl); i++) {
-+        for (i = 0; i < aspeed_smc_flash_dummy_bytes(fl); i++) {
-             ssi_transfer(fl->controller->spi, s->regs[R_DUMMY_DATA] & 0xff);
-         }
-     }
--- 
-2.34.1
+Will change this wherever it appears in the series.
 
+> 
+> 
+> Otherwise:
+> 
+> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> 
+> [...]
 
