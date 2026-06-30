@@ -4,143 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5301AC43327
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52FE9C43458
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 22:09:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wegbj-0002uz-Rj; Tue, 30 Jun 2026 18:07:07 -0400
+	id 1wegdU-0007Nj-59; Tue, 30 Jun 2026 18:08:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wegZK-0005J3-EJ
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:04:39 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1wegcr-000771-SF
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:08:19 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wegZD-0004RU-AS
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:04:36 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65UJDc3V2920057
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 22:04:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Kxaj7fpgNv8IGwzoF4MRlr4aYlGXFkG9O6uvFK55Lmo=; b=G7liW+w/QBpZVtFW
- 1recrgGQWkM1whaGtR975WZKz+mLXZuQwY9bDNza94u+d3V31rHUjQ9TcFgA11Ty
- 9Yk1Hqmb+cLQfGSWNvpytSL7rX15X5odlFIJtRv+tu034xOgDPNEgz+dS8/lt/b9
- +r9e6mwKACXEZ03cXkTnzQ2MgASdba8qkVdYdkY857D0CG+nD45DUBYnnt5yJB7y
- 3ybMZkxQftcygDJzx2WNueWXeU3Z6FIrqWYr7QAMGUIloI5lzWQxqeNNp8SHNpWo
- ktLga8vSbID7+wfYi7UYFtANT20PO/LXipHiI67h8fSC54dYzsfciHXMLIkznQpt
- Jd5EfQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f4jvw8uky-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 22:04:20 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-92e52306621so445981085a.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 15:04:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782857060; x=1783461860; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Kxaj7fpgNv8IGwzoF4MRlr4aYlGXFkG9O6uvFK55Lmo=;
- b=Ci3qoMVPg8WHyeM9NItE7q+zWqCqyHdyZpEei0NLK2XINKvTZBxBsidmOC3Xv5YiyT
- gWVoU/fxTCWELJizKc0WdxnvsWrWkif6yUyatYrpdcBIZWGdFpx1gW+1i0aUgQqWMdOe
- 9bOgQB0caCwUtN1k6JaMoVLi1lCdWf0My2AhAVh+aqjNQ85xAT8GcLiaJa9RjXwFLL1L
- 7R14Z0i2v4wQyxXAZXrUMfovG59VK5rAs/FeiJnnI5MTU1JfuVw0SgIvoU1oJYVDqFJE
- wD4W+/SAeYV8CSRtUJYsyWuFXK0YbMMuniOPCuYkC4UXWune/rBSIJSpQDFsmDRo2O8W
- 6TDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782857060; x=1783461860;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Kxaj7fpgNv8IGwzoF4MRlr4aYlGXFkG9O6uvFK55Lmo=;
- b=GnDYzTEQ9xT9ugAtYUcSlkYicSrJBXHSjVAvTd/wAWC5bg4qwsP164Q65NtZ6nWeSV
- 7QTfu3rNUtZJ0EZtInjHwKjbFJIqVZ58wmjnXZra0ZE6Ozqatc8ueLNIZjX4E3thhdt7
- vGYMe1kWR/BKszKwwmJwhoPchIvzFnvFs27gBJKNFvgGJa2GBu8w+APSzFHhuHgJ5+ZU
- P4ixB1Oj2EAZ4xPU3D+29Sb9y6BcRsQ8npZtYtOXKS5DKC0VOUS5js8es0hYhA98mynk
- urKnyUja5M8Km9BxNn5LtyOwMAdSwsPACjawF21efX/XeOdn00f9BzQIGl+PevZapRaO
- 0IKA==
-X-Gm-Message-State: AOJu0YyXmMbeBn+gruJsil+o5IjXH/LBHrpWPRnebvxZWfQyP94H9J1/
- Y3I96dhcezMIRBdf3NkD3Lbf2k4e6kq8CRfnl0QI1OXQbqp+NDNX3stHaTvqgY/9Hz7L4XunyTu
- fZqERgTfF+FY/bsRc/jbBSAQE7CL6erdt+FgfV6yuss7pdLOIsZr5ciZuBHpdqkhwTQ==
-X-Gm-Gg: AfdE7cn8/rCvGostyJUfSb+xmbqLqd3UQ3HeHOmYOBu03ef5WYAczkIcai+L+DMVZY/
- djxAfUCNpJ7FzCgsUUQqESZW/Md2G6R2iY51JKm/HmEF5YkH6E5psNrDSHjJeMlRSfXqwevPBSi
- oYYIUjmExUdXXzmw0WAVmyKePcwaBe3oL/jKAJvWIMx4jScNEoo25qiuiFr/EFc41bigvQKQQmx
- UDR/bVqG91CV1OJid9zrTYATfngaX6X1nDvrVXmZrDbvsJB54w5pdqYr7p2GZ+m51p/0K85afq1
- 9Dgrte/uJw9hby7MXRivg3tR+Oba16aXqQAzJmpeEytGp19BRM/zJFsFJLohiSqS7angw+psSmQ
- kAhSuetAi+bJMWgvlGO2vLssVmjRpTZnFcyrSOMfhli0RzRZb0rG8wHJJNUzCppxv+SgP
-X-Received: by 2002:a05:620a:4411:b0:92e:6c8a:2a1a with SMTP id
- af79cd13be357-92e6c8a3c36mr434431985a.7.1782857059415; 
- Tue, 30 Jun 2026 15:04:19 -0700 (PDT)
-X-Received: by 2002:a05:620a:4411:b0:92e:6c8a:2a1a with SMTP id
- af79cd13be357-92e6c8a3c36mr434427285a.7.1782857058967; 
- Tue, 30 Jun 2026 15:04:18 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493bfe616f5sm4295345e9.1.2026.06.30.15.04.17
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Jun 2026 15:04:18 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 26/33] target/xtensa: Move watchpoints handling to
- check_hw_watchpoints()
-Date: Wed,  1 Jul 2026 00:00:53 +0200
-Message-ID: <20260630220100.1289-27-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260630220100.1289-1-philmd@oss.qualcomm.com>
-References: <20260630220100.1289-1-philmd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1wegcp-0005tH-Pa
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:08:17 -0400
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65UKtqxw1029962; Tue, 30 Jun 2026 22:08:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=corp-2025-04-25; bh=bxQacfJOzFJzNHYY
+ mS3sMwSkA9R6H6+Wg3Y1aWNzpiI=; b=HA1LtdCVO8FPHMirn4Baviam/xXK8l6k
+ fGYkVmmA5FybTTjagO6+0AQ2zo1tQjyCBrvEhTz0dJJeK8IlLsv39OK+LFM1w3Q5
+ jlDBsrHrE2T1ZHJwkor9vVOpzjTO7KADpZbAgwZ0SNQoI/Qw90YnR28eDDXVY412
+ PvSIqSZCnmRtrY69/XPuvN+gx3kHaqGDA1T0x3cffF/4TzgNq5S0kdf+IkV+iqeg
+ LnRJu/TlegCIfpzxfC/okY67m2Da9LhFRw/T5UWz+oRxnf9UTxo76sUSqWybjI9S
+ hEXsks+q/yOR6sq2JnsNFO/0Tqz5dp+9gRa/9lg9s4f5BEjp4QlKjg==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4f26n154bg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Jun 2026 22:08:08 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
+ with ESMTP id 65UM3XrT034400; Tue, 30 Jun 2026 22:08:07 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4f3u1w75vv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Jun 2026 22:08:07 +0000 (GMT)
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 65UM87gD008507;
+ Tue, 30 Jun 2026 22:08:07 GMT
+Received: from alaljime-e5-test-20240903-1847.osdevelopmeniad.oraclevcn.com
+ (alaljime-e5-test-20240903-1847.allregionaliads.osdevelopmeniad.oraclevcn.com
+ [100.100.250.206])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
+ 4f3u1w75vm-1; Tue, 30 Jun 2026 22:08:07 +0000 (GMT)
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+To: mst@redhat.com, qemu-devel@nongnu.org
+Cc: sarunkod@amd.com, qemu@demindiro.com, imammedo@redhat.com,
+ peter.maydell@linaro.org, philmd@oss.qualcomm.com,
+ alejandro.j.jimenez@oracle.com
+Subject: [PATCH 0/5] amd_iommu fixes staged for 11.1
+Date: Tue, 30 Jun 2026 22:08:01 +0000
+Message-ID: <20260630220806.1758748-1-alejandro.j.jimenez@oracle.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: BV3ybp878TcUvF1RjYLWA51fybFskwTh
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDIxNSBTYWx0ZWRfX397g+OVj+KCn
- Pd4Mf8T3nUwNv9rmwda+rKL7f/tGmtKDzWyZsTGtxYEdX5Q9Kpbjro4ZXVzDN4cnghoi9eHx1Jl
- VQHV84xhpxOBtHAx+GAEvqUdVocczBc=
-X-Authority-Analysis: v=2.4 cv=JKgLdcKb c=1 sm=1 tr=0 ts=6a443d64 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=OabgTiWiKDF5Aaswr54A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-GUID: BV3ybp878TcUvF1RjYLWA51fybFskwTh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDIxNSBTYWx0ZWRfX1G20Z8xPwbSm
- 5s/xu5sCF1jLqbAek1Sb2t44RQQ6z6U1eYrQ0Gm+VkioEI7ZJSfcebOetcTNvPdZ6t3GFjNz46n
- UmouIMTXaDDWzxuXMX2aZrvgPm50DjkGraVTzR1trOI9rSoRttU+/ELDzcrjizJzyLTvrTDvoCN
- 9Wa9M/I/KGP1UaTWTKU1kSm99HwP9I6SJM42vnCWsIHWcl9K3qG3X7Ca7JQgAWzAOfF6pMQcZpM
- m1bhCVfIXS6Dyt6vnBfPTJwbI34G8ObJJaQz1cSIhi+Kw3MqwpAy8NYauNvkRuFPMldVvazJ1GU
- eEy2Ar0FwKsfUlQHAr/1Vbd+kWxAjtlFH0UqOMOGAhn2d8hXRexXCVLfDcLECn7wKxxqHy8HaPd
- NkEajiZq5ue8NVljOfdamfJZPhr5V3K6G5EsIcUP3/KacELXBr96vewdpAngqSJ9SZF+BfdzJc+
- YbLcg4y2bIdsRNoWIFw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-30_05,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 suspectscore=0 clxscore=1015
- malwarescore=0 impostorscore=0 adultscore=0 phishscore=0 spamscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606300215
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ adultscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0 bulkscore=0
+ mlxlogscore=922 suspectscore=0 phishscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2606160000 definitions=main-2606300215
+X-Proofpoint-GUID: MyivBTlXfAOJ8gIfYz7hkA98KyUqoQ4T
+X-Authority-Analysis: v=2.4 cv=FvI1OWrq c=1 sm=1 tr=0 ts=6a443e48 b=1 cx=c_pps
+ a=qoll8+KPOyaMroiJ2sR5sw==:117
+ a=qoll8+KPOyaMroiJ2sR5sw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=x4eqshVgHu-cdnggieHk:22 a=NEAV23lmAAAA:8
+ a=VwQbUJbxAAAA:8 a=yPCof4ZbAAAA:8 a=iQI0comr82-aZKQ-86cA:9 a=QEXdDO2ut3YA:10
+ a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12313
+X-Proofpoint-ORIG-GUID: MyivBTlXfAOJ8gIfYz7hkA98KyUqoQ4T
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDIxNCBTYWx0ZWRfXxLQbA0UT7gCf
+ 5x32zbFIMEImZw7bgwvcnXAta8PXB3Ic5hi00vlM6I0NNU6GsyEUpKGDfj/cFxFhSHby3GGS/jP
+ w8v1U4SOcd6Q8wWF1De/GGZM2VpGTGw8rYv3GlwjZQwUrDtXydfp
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDIxNCBTYWx0ZWRfX17DsmF8oMuIt
+ +omVurSoFVMw+Zcvq/QaOL1BCvubqUI9a1KvUYZ2y734F/syrH+L+1l30+UVAMpLhsxqJXON4d/
+ QVC24XKAC6zMh3gkm/wm9baYkcNyeMQpSHCU/7X9Buf7S40ujc0jWqGVo509kURbkPs/zwAQ0Y0
+ 39kRv6Qdioyo0fiLglbIlQiApq3Uf3yYAFPxMegyPxrprwSPIgICXlTfdBJmdaviqTloOTrsxAZ
+ TzFf+zM8+agoKWeD1Hk9Eze7Amp3+Shj3iGqYsiZ1ip5BTfglxDDacGUW1gHIDDXTDllSM2YLvG
+ ii06HXPoDHepfuB56qTYSZCRndGFr+phN0N6rROMYEsHdAtoWRNUQhTPP1RcK3uRD1FmCmjae2J
+ KKPfkTcFYm4EeNxXyReE8+8i8aX99i2UnY0iGRuBhSsiUWfsYvtoUB3+WEYKQvF8JrgVrlcGHyD
+ GXSP5D6NJVY7ehSi6gOO7+xvDorsuY9SgBbk3kW8=
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,81 +118,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rewrite check_hw_watchpoints() by moving related code from
-xtensa_breakpoint_handler() to it. No logical change intended.
+Hi Michael,
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- target/xtensa/helper.c | 36 +++++++++++++++++++-----------------
- 1 file changed, 19 insertions(+), 17 deletions(-)
+I have staged these recently reviewed AMD vIOMMU fixes for 11.1:
 
-diff --git a/target/xtensa/helper.c b/target/xtensa/helper.c
-index 5a0e8655146..7674a7c1d55 100644
---- a/target/xtensa/helper.c
-+++ b/target/xtensa/helper.c
-@@ -30,6 +30,7 @@
- #include "cpu.h"
- #include "exec/cputlb.h"
- #include "exec/target_page.h"
-+#include "exec/watchpoint.h"
- #include "gdbstub/helpers.h"
- #include "exec/helper-proto.h"
- #include "accel/tcg/cpu-loop.h"
-@@ -205,35 +206,36 @@ void xtensa_register_core(XtensaConfigList *node)
-     g_free((gpointer)type.name);
- }
- 
--static uint32_t check_hw_breakpoints(CPUXtensaState *env)
-+static bool check_hw_watchpoints(CPUState *cs)
- {
--    unsigned i;
-+    CPUXtensaState *env = cpu_env(cs);
-+    CPUWatchpoint *wp_hit = cs->watchpoint_hit;
- 
--    for (i = 0; i < env->config->ndbreak; ++i) {
-+    if (!wp_hit || !(wp_hit->flags & BP_CPU)) {
-+        return false;
-+    }
-+    cs->watchpoint_hit = NULL;
-+    for (int i = 0; i < env->config->ndbreak; ++i) {
-         if (env->cpu_watchpoint[i] &&
-                 env->cpu_watchpoint[i]->flags & BP_WATCHPOINT_HIT) {
--            return DEBUGCAUSE_DB | (i << DEBUGCAUSE_DBNUM_SHIFT);
-+
-+            uint32_t cause = DEBUGCAUSE_DB | (i << DEBUGCAUSE_DBNUM_SHIFT);
-+            if (cause) {
-+                debug_exception_env(env, cause);
-+                break;
-+            }
-         }
-     }
--    return 0;
-+    cpu_loop_exit_noexc(cs);
-+
-+    return true;
- }
- 
- void xtensa_breakpoint_handler(CPUState *cs)
- {
-     CPUXtensaState *env = cpu_env(cs);
- 
--    if (cs->watchpoint_hit) {
--        if (cs->watchpoint_hit->flags & BP_CPU) {
--            uint32_t cause;
--
--            cs->watchpoint_hit = NULL;
--            cause = check_hw_breakpoints(env);
--            if (cause) {
--                debug_exception_env(env, cause);
--            }
--            cpu_loop_exit_noexc(cs);
--        }
--    } else {
-+    if (!check_hw_watchpoints(cs)) {
-         if (cpu_breakpoint_test(cs, env->pc, BP_GDB)
-             || !cpu_breakpoint_test(cs, env->pc, BP_CPU)) {
-             return;
+https://github.com/aljimenezb/qemu/commits/amdvi-next
+
+Base: 30e8a06b64aa ("Merge tag 'net-pull-request' of https://github.com/jasowang/qemu into staging")
+Tip:  018c1dfb3e8c ("amd_iommu: Fix endianness handling for command buffer entries")
+
+Patch 1 is an independent fix previously posted at:
+https://lore.kernel.org/qemu-devel/20260616174620.438468-1-alejandro.j.jimenez@oracle.com/
+
+Patches 2-5 address a Coverity finding and big-endian portability
+issues. They were reviewed in:
+https://lore.kernel.org/qemu-devel/20260624195925.1254462-1-alejandro.j.jimenez@oracle.com/
+
+I did basic smoke testing on an AMD Zen4 host using the AMD vIOMMU device.
+Completed several guest boot and reboot cycles with xtsup both enabled and
+disabled. No regressions were observed in guest startup or reboot behavior.
+
+There are two other outstanding series pending review, but I am unlikely to
+complete review/testing by myself for those before the upcoming soft-freeze
+deadline.
+
+Thank you,
+Alejandro
+
+Alejandro Jimenez (4):
+  amd_iommu: Return int from page walk status helpers
+  amd_iommu: Decode XT interrupt control register without bitfields
+  amd_iommu: Decode IRTEs without bitfields
+  amd_iommu: Fix endianness handling for command buffer entries
+
+David Hoppenbrouwers (1):
+  amd_iommu: Fix opcode reported in invalid command handling
+
+ hw/i386/amd_iommu.c | 168 +++++++++++++++++++++++++++++++-------------
+ hw/i386/amd_iommu.h |  63 -----------------
+ 2 files changed, 120 insertions(+), 111 deletions(-)
+
+
+base-commit: 30e8a06b64aa58a3990ba39cb5d09531e7d265e0
 -- 
-2.53.0
+2.47.3
 
 
