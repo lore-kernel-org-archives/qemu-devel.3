@@ -4,122 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36445C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:48:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 569F8C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:56:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weZkh-0006W1-Je; Tue, 30 Jun 2026 10:47:55 -0400
+	id 1weZsn-0007rn-Q5; Tue, 30 Jun 2026 10:56:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1weZkf-0006UZ-GB
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:47:53 -0400
-Received: from smtpout6.mo537.mail-out.ovh.net ([51.210.91.25])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1weZsb-0007pl-3M
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:56:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1weZkc-0006vK-9P
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:47:51 -0400
-Received: from director1.derp.mail-out.ovh.net
- (director1.derp.mail-out.ovh.net [51.210.158.128])
- by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4gqQwz4BNFz3yw6;
- Tue, 30 Jun 2026 14:47:47 +0000 (UTC)
-Received: from director1.derp.mail-out.ovh.net
- (director1.derp.mail-out.ovh.net. [127.0.0.1])
- by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <danielhb413@gmail.com>; Tue, 30 Jun 2026 14:47:47 +0000 (UTC)
-Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.242])
- by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4gqQwz18nxz60Mw; Tue, 30 Jun 2026 14:47:47 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.3])
- (Authenticated sender: clg@kaod.org)
- by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- DD83F2403C7E; Tue, 30 Jun 2026 14:47:44 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-95G001c6bb933f-c171-45ee-b63e-b28d557242f3,
- C9F07EB534A46111D337A1875201B4A1724CF27E) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <752e7645-816b-4b8c-9bff-abfde0ea3451@kaod.org>
-Date: Tue, 30 Jun 2026 16:47:44 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1weZsZ-0001wP-BX
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:56:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782831359;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GtVamKYFTeeekIBUnppJ42ULmv5+cTo9o41wHNAhNag=;
+ b=hL/W5fjkE8bjxU9YCIEmrR5XnVYy9Oldn58QlGFpDzcly/Kj+V5lWI7CSUDCvBkJnOYa/4
+ fAHNN+tRKwMdJrQ/2QBc9Jqzqk5C87zhvuNRlyGAXr5k7KKZUp7dEEyFbNsqnZuBq0GC8f
+ t8u6Mz+nliJ1utGV4UfU3uIZhiZlrvo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-3g2fVdcPPnOlLBLMYjR_aA-1; Tue,
+ 30 Jun 2026 10:55:56 -0400
+X-MC-Unique: 3g2fVdcPPnOlLBLMYjR_aA-1
+X-Mimecast-MFC-AGG-ID: 3g2fVdcPPnOlLBLMYjR_aA_1782831355
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7D1AB18001F3; Tue, 30 Jun 2026 14:55:54 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 25BF41955F76; Tue, 30 Jun 2026 14:55:53 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A57A221E6920; Tue, 30 Jun 2026 16:55:50 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  devel@lists.libvirt.org,  =?utf-8?Q?Marc-Andr?=
+ =?utf-8?Q?=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  "Dr.
+ David Alan Gilbert" <dave@treblig.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Christian Brauner <brauner@kernel.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Peter Krempa
+ <pkrempa@redhat.com>
+Subject: Re: [PATCH v5 22/35] monitor: implement "user creatable" interface
+ for adding monitors
+In-Reply-To: <20260624173752.2928717-23-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 24 Jun 2026 18:37:38
+ +0100")
+References: <20260624173752.2928717-1-berrange@redhat.com>
+ <20260624173752.2928717-23-berrange@redhat.com>
+Date: Tue, 30 Jun 2026 16:55:50 +0200
+Message-ID: <87fr24yt55.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/9] pnv/phb5: Update PHB4 to the latest PHB5 spec
-To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org, mst@redhat.com
-Cc: harshpb@linux.ibm.com, npiggin@gmail.com, fbarrat@linux.ibm.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
- kowal@linux.ibm.com, chalapathi.v@linux.ibm.com, calebs@linux.ibm.com,
- milesg@linux.ibm.com, jishnuvw@linux.ibm.com, adityag@linux.ibm.com,
- amachhiw@linux.ibm.com
-References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
- <d58ee809-02b3-49be-b927-eacf2da8bfb5@linux.vnet.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
- BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
- M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
- 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
- jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
- TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
- neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
- VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
- QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
- ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
- WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
- wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
- SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
- cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
- S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
- 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
- hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
- tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
- t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
- OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
- KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
- o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
- ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
- IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
- d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
- +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
- HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
- l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
- 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
- ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
- KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <d58ee809-02b3-49be-b927-eacf2da8bfb5@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 15497730743525813393
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFFhL1THFxwX0LQ/ecAPJ/7sXa92PIbFPIcF9Ukf5TFC4T/hYmoHmbeEK2q7mO+/wZc5Ep7O9CDjwydtRNsp3ssTkGEKZlW76F5448+h2bkxcwF+FwjsUlb8rQafzEbPwvWz6jFqioA6jjxF7lUSwVgEypxXfhKjc7excDOgNoa94ZYJWmRSbiFBa4tx8Or19KqBwFBHJ7drLMePasTcZNxTr6FZ9H54eE+g5ztCy3R/tfQfvdkmQlWVC/iSB/i756WC2cxfD/r1ud6nZLYVxJWOcRoM9lYOUkZ4iB0HJZR7pvmtulsC/WdwKSrYXd0vPNnW8s5MTqlvVsUu6AVLENleQx+Jw84KmU5NgwpjD6CL9+SXEi+hpbhQ2+CDvUqisULG7lUUp7wg2TuZOKWrImG9IzZwZxk8a96BVV09uFwpK+8XenteKU0t5yxZEtlvnyBQ/3zM5wpmnT7Xma07lSyxkp3JaGmk1/W+dzCdRTwQilKYr4XErHjTL0yPo30xbFSOM8P32lR90nZbLZJwfhEzL3mr07Y2G/jmvdyt5+jqFQ8Q6j4kNNpsm4noWADyw2wPF5WoLwN1uKtrB2VjDB9JkXcHD0F7pqR0+uPdlWdA2IgL+dxh7Mh9kSE7E5tNlX9hdbrK4veDCm2Jb362zjIhykvpklQJ8gGQqM+hcSvSA
-DKIM-Signature: a=rsa-sha256; bh=is/2fL0TeVagAyrfMMgGCc2Pc/iAS1UsDusm6HmzqZc=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1782830868; v=1;
- b=iFUilq9rIdbCCV5UKYNZ4dtMen1zPybz/A3xJ8tJsgeL6LD4+o2SDo1Kzv/533MYqXyX/jNj
- cmolTAceonYXbdLHwYSdpfoMZKpf8N1Q2/CMQKianhyN8a+rbRYDK5f4lZ1d4KiLDjyXS8nbHoz
- qtHbSNxreuphh18pFZqYj9knU0wVOCDAh6R1+glc1rs/pSNbvXv4mj0FlEBUuemUAXcCGuapZUR
- M9hUSkCw0Hmal3bAWFuXUihR21/kKxzch5evXZ0dUweh8oh6JVMZYZ2IdwsQW+BxW+pfcP3EWhF
- 58d8CIb+O8EA7SKsTrF+r1K7wpZim6lOkQGgxwCWAb3rQ==
-Received-SPF: pass client-ip=51.210.91.25; envelope-from=clg@kaod.org;
- helo=smtpout6.mo537.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,69 +94,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/30/26 12:22, Saif Abrar wrote:
-> Hello Cedric, Michael,
-> 
-> Is it OK to retain you Rbs in the next v6?
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-yes. I took a look.
+> Implement the user creatable QOM interface and define the monitor-qmp
+> and monitor-hmp types in QAPI. This unlocks the ability to create them
+> on the command line with -object or in HMP/QMP with object_add.
+>
+> For example:
+>
+>   $QEMU -chardev stdio,id=3Dmonchr0 -object monitor-hmp,id=3Dmon0,chrdev=
+=3Dmonchr0
+>
+> Initially the "prepare_delete" callback is hardcoded to return an error
+> which means -object and object_add can be used, but object_del will fail.
+> Support for deleting monitors will be introduced in subsequent commits.
+>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Tested-by: Peter Krempa <pkrempa@redhat.com>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-Thanks,
+[...]
 
-C.
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index dd45ac1087..6affb70a59 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -1187,6 +1187,45 @@
+>    'data': { '*cpu-affinity': ['uint16'],
+>              '*node-affinity': ['uint16'] } }
+>=20=20
+> +##
+> +# @MonitorProperties:
+> +#
+> +# Properties for all monitors
+> +#
+> +# @chardev: ID of the character device providing the monitor transport
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'struct': 'MonitorProperties',
+> +  'data': { 'chardev': 'str' }}
+> +
+> +##
+> +# @MonitorHMPProperties:
+> +#
+> +# Properties for the HMP monitor
+> +#
+> +# @readline: whether to enable readline for line editing
+> +#      (default: enabled)
 
+The default value is 'true', and it means 'enabeld'.  We pretty much
+universally have the default value in (default: ...), not the meaning.
 
-> 
-> or would you like to review this v5? (as the patches have evolved since you last reviewed.)
-> 
-> Regards,
-> 
-> Saif
-> 
-> 
-> On 17-06-2026 15:20, Saif Abrar wrote:
->> Hello,
->> This patchset resolves the review comments for v4:
->> https://lore.kernel.org/qemu-devel/20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com/
->>
->> Thanks to all the reviewers for their efforts.
->>
->> Major updates include the following:
->> - Rename to phb5.
->> - New file for common definitions used in tests/qtest/pnv-* files.
->> - Initializing PnvPHB4Class members within class_init method.
->> - Updated IODA3 PCT table max size to 128, each with 2 entries.
->> - Multiple general cleanups.
->>
->> Tested with 'make check-qtest' , 'make check-functional-ppc64' and 'make check'.
->>
->> Regards.
->>
->> Saif Abrar (9):
->>    qtest/phb5: Add testbench for PHB
->>    pnv/phb5: Add reset logic to PHB5
->>    pnv/phb5: Implement sticky reset logic in PHB5
->>    pnv/phb5: Implement read-only and write-only bits of registers
->>    pnv/phb5: Implement write-clear and return 1's on unimplemented reg
->>      read
->>    pnv/phb5: Set link-active status in HPSTAT and LMR registers
->>    pnv/phb5: Set link speed and width in the DLP training control
->>      register
->>    pnv/phb5: Implement IODA PCT table
->>    pnv/phb5: Mask off LSI Source-ID based on number of interrupts
->>
->>   hw/pci-host/pnv_phb.c               |   1 +
->>   hw/pci-host/pnv_phb4.c              | 581 +++++++++++++++++++++++++---
->>   include/hw/pci-host/pnv_phb4.h      |  16 +-
->>   include/hw/pci-host/pnv_phb4_regs.h |  66 +++-
->>   tests/qtest/meson.build             |   1 +
->>   tests/qtest/pnv-host-i2c-test.c     |  13 +-
->>   tests/qtest/pnv-phb-test.c          | 235 +++++++++++
->>   tests/qtest/pnv-qtest-common.h      |  24 ++
->>   tests/qtest/pnv-xive2-common.h      |   7 +-
->>   9 files changed, 868 insertions(+), 76 deletions(-)
->>   create mode 100644 tests/qtest/pnv-phb-test.c
->>   create mode 100644 tests/qtest/pnv-qtest-common.h
->>
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'struct': 'MonitorHMPProperties',
+> +  'base': 'MonitorProperties',
+> +  'data': { '*readline': 'bool' } }
+> +
+> +##
+> +# @MonitorQMPProperties:
+> +#
+> +# Properties for the QMP monitor
+> +#
+> +# @pretty: whether to pretty print JSON responses (default: disabled)
+
+Likewise.
+
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'struct': 'MonitorQMPProperties',
+> +  'base': 'MonitorProperties',
+> +  'data': { '*pretty': 'bool' } }
+> +
+>  ##
+>  # @ObjectType:
+>  #
+> @@ -1237,6 +1276,8 @@
+>      'memory-backend-ram',
+>      { 'name': 'memory-backend-shm',
+>        'if': 'CONFIG_POSIX' },
+> +    'monitor-hmp',
+> +    'monitor-qmp',
+>      'pef-guest',
+>      { 'name': 'pr-manager-helper',
+>        'if': 'CONFIG_LINUX' },
+> @@ -1315,6 +1356,8 @@
+>        'memory-backend-ram':         'MemoryBackendProperties',
+>        'memory-backend-shm':         { 'type': 'MemoryBackendShmPropertie=
+s',
+>                                        'if': 'CONFIG_POSIX' },
+> +      'monitor-hmp':                {'type': 'MonitorHMPProperties' },
+> +      'monitor-qmp':                {'type': 'MonitorQMPProperties' },
+
+Use the short form when possible:
+
+         'monitor-hmp':                'MonitorHMPProperties',
+         'monitor-qmp':                'MonitorQMPProperties',
+
+>        'pr-manager-helper':          { 'type': 'PrManagerHelperProperties=
+',
+>                                        'if': 'CONFIG_LINUX' },
+>        'qtest':                      'QtestProperties',
+> diff --git a/stubs/monitor-internal.c b/stubs/monitor-internal.c
+> index 51db7588b9..59ccc4b35c 100644
+> --- a/stubs/monitor-internal.c
+> +++ b/stubs/monitor-internal.c
+> @@ -10,4 +10,5 @@ int monitor_get_fd(Monitor *mon, const char *name, Erro=
+r **errp)
+>=20=20
+>  void monitor_new_hmp(const char *chardev_id, bool use_readline, Error **=
+errp)
+>  {
+> +    g_assert_not_reached();
+>  }
+> diff --git a/system/vl.c b/system/vl.c
+> index fb36140aac..79ed2be449 100644
+> --- a/system/vl.c
+> +++ b/system/vl.c
+> @@ -1830,6 +1830,10 @@ static void object_option_add_visitor(Visitor *v)
+>  {
+>      ObjectOption *opt =3D g_new0(ObjectOption, 1);
+>      visit_type_ObjectOptions(v, NULL, &opt->opts, &error_fatal);
+> +    if (opt->opts->qom_type =3D=3D OBJECT_TYPE_MONITOR_HMP ||
+> +        opt->opts->qom_type =3D=3D OBJECT_TYPE_MONITOR_QMP) {
+> +        default_monitor =3D 0;
+> +    }
+
+Still okay, but if we pick up more, we better do it like
+default_driver_disable() does for devices.
+
+>      QTAILQ_INSERT_TAIL(&object_opts, opt, next);
+>  }
+>=20=20
+> @@ -1971,7 +1975,9 @@ static bool object_create_early(const char *type)
+>=20=20
+>      /* Reason: property "chardev" */
+>      if (g_str_equal(type, "rng-egd") ||
+> -        g_str_equal(type, "qtest")) {
+> +        g_str_equal(type, "qtest") ||
+> +        g_str_equal(type, "monitor-hmp") ||
+> +        g_str_equal(type, "monitor-qmp")) {
+>          return false;
+>      }
+
+QAPI schema
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
