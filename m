@@ -4,153 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9C8DC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 10:58:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 682D8C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 11:04:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weWAM-0004Fm-T0; Tue, 30 Jun 2026 06:58:10 -0400
+	id 1weWFg-0005Vs-D1; Tue, 30 Jun 2026 07:03:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1weWAL-0004Fd-Cr
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 06:58:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1weWFf-0005Vk-9w
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 07:03:39 -0400
+Received: from mail-francecentralazon11023080.outbound.protection.outlook.com
+ ([40.107.162.80] helo=PA4PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1weWAJ-00034g-BR
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 06:58:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782817085;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=lWMUGORVDHMTAPzxwwLX3XTRmf7QjM+bxaFfZwSWhTc=;
- b=YfW47vnr4B1brf1UcihPaWhtfhPv6Y4XZPN/zKpv0EMaavllVhQoTMdN+DPjL35hZ/KNHm
- 622N8G+ifnHqjp4j4zc6qkfJ1MCMUXECnDfmviOmzN2LqjYC1wW2B1loyW5IV/NP63BJZx
- SkTawRNc9Lf40WX7nhDCE33SlprEkek=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-493-h8-Cy7o6OAe-Aasu_gPBiw-1; Tue, 30 Jun 2026 06:58:01 -0400
-X-MC-Unique: h8-Cy7o6OAe-Aasu_gPBiw-1
-X-Mimecast-MFC-AGG-ID: h8-Cy7o6OAe-Aasu_gPBiw_1782817080
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4925bf70f5bso36324125e9.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 03:58:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782817080; x=1783421880; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=lWMUGORVDHMTAPzxwwLX3XTRmf7QjM+bxaFfZwSWhTc=;
- b=OFfwCsN6FoduF7WIrtrhZNSdIXK86XyRR7cy8tNaQfWrAt3p5yEBiPNK/TfJqQHjVc
- LtbzphAvCcoWZcCTOA6Sv7SfGOwe0K4UN3ijT7pt6PcPOhiM1LF7xTgF0JCTV0ndqap3
- BFQKlh3vva6xrnhg03wKeA6DQzAqqa18rQEismyg5r9AL+chMUFogeZ1Bbnbz1vOLI1C
- YeStUQQosyleDEnK8eEGfDcy+VpDkWQToAY/DIkx48fKNaVJ8hZy3gWL7QPUfORsdi9a
- PNvHAAHPMnku+RG4Hbv/IbEBYEdo2yrheNCtT99Br/yvr3LPD3qWMF/7fPk8MNg2yHjk
- HKbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782817080; x=1783421880;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lWMUGORVDHMTAPzxwwLX3XTRmf7QjM+bxaFfZwSWhTc=;
- b=rUf077es+Qj255tnJk8CkJGUw+JJMTWSWKRpAViQMoqonWbZOZcW4kUX2ftjeyQ0kM
- O74C8CrIe4MI1VJH1cv1nqCMQf611popUv+e4l9X2pB217Mj4OQlkmMLSly1286SQIea
- V2rH+vfRFVg+FVm8WbgfvEwAJpa2CFlM2CJFrLdu+88+gD8nC49xVxZNOPvOQn232IMp
- Fz4X20ZumsWNdjkH5LdcII1VwsemCzkHx/VeT/EctR9XFkM4QLBXroqfiCSw3HPMzEgs
- L+W3i30dTef6LUGxZXUeRXEjlXW359RaRz7W9ar708F5DY6FwuwJL/RV3Vk2x4c3/SIl
- R6Sg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8WXdAlyd6FWWG7a8BHy7prHSmniTmwjBI2/QXrUEGcIb5FmRs/wfDf7Im5mEuH28wxPi/nATgyrb1D@nongnu.org
-X-Gm-Message-State: AOJu0YywPJabypmY1020QFOe3W7r//20rsai65V7EraY6c5mhthAfxnS
- SLEEX7ORGzKc8f1sQLQgbl6XB0BZtn7ChB3zMpnoBeddRMcBC3wJt+ke/O6arVjnMnw2wHPY01/
- QB7chcu7B8bIxq2LEVM/XGIdKM3g+hE3dlKzTomo0oME2/DxmF1cUAubc
-X-Gm-Gg: AfdE7clMS0LZAarCanupCm5NomvlB8egdeGJ/CZC8m3Bt0b7BR1RP6QFBl7XoZmbT2M
- v/nEzLzr9ehNezjfsFPaar4AsUWplFk4r1dyhIKHtUyxjJdbv8r38CSqCk5PNoaaPTQgeX1zNBh
- uVDsDZZ1g7uUoXmnwpSUra5JuKH8GJdgiHEbqkHEwLVMg2JhzNXpp4b2k303qHrWO1cVAM91+M5
- ytSzWOEneVHyDq9v0lXIAE1LKmoKNwZtCwQcCxCd3/T3uv4rf5rdutTWrHoN+D0QYvuZ7gBtjzc
- jG01PPl7oXF2yb0RSz+1mpSQR0zfi8QJcnWTDbw+3Z8Eay6XmkmaGoc8frZ2IrTBUeRF1sVUWkI
- crG1GnJCoKnV6YoZlNs0zaPqO/Vr57feO5b4g5uS0dfE=
-X-Received: by 2002:a05:600c:4e4f:b0:493:bdae:1a2e with SMTP id
- 5b1f17b1804b1-493bdae1a49mr520135e9.22.1782817080360; 
- Tue, 30 Jun 2026 03:58:00 -0700 (PDT)
-X-Received: by 2002:a05:600c:4e4f:b0:493:bdae:1a2e with SMTP id
- 5b1f17b1804b1-493bdae1a49mr519435e9.22.1782817079053; 
- Tue, 30 Jun 2026 03:57:59 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-40-241-22.web.vodafone.de.
- [109.40.241.22]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47567a6f351sm6773313f8f.36.2026.06.30.03.57.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jun 2026 03:57:58 -0700 (PDT)
-Message-ID: <fb461d4d-167f-42c8-a02d-151e15cbe503@redhat.com>
-Date: Tue, 30 Jun 2026 12:57:56 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1weWFd-0005aZ-Bv
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 07:03:39 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SAlrdNIEoNqRow7b0I/YfzAm31gaOqWCXhP2WlMA04Jum3+/PY6w6hHwdz/Wv7Mgdt3/XqzkN02mOMANMEiirEIERNXmn/Jb0Ksy3IE3vGQUF9Fuy2+L5pyqcxWZ8OCy+yeVB8rnqMgzZpAqg7Y5/iXlFeAUhG2BYn2NRtw4zBcOCzWtCChkg/I3KiF4Qe8bnfev7A4TDGhO7c4zO+YGu5N+8Prk31y+f5Ya9SJbKO1dMdvMl2u9TH3tL0SvX7WPUHAT9u+b9ItmPIa+7nOyGqKi79d5YiI5p05J3VQO0HBphWCOCKEbuECYFjwvH5bLnp6ATKfPD4i1EAJuRy2U/Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WVDP8egmB/nI3mdnB74M2NhIDiAqJszaaDtJiuFT7pI=;
+ b=NDm7lv/fqN1YnynfiFxEjjcWwsGf3TK//RQZF4Q8j9DctOXELpfaXsShnOAHd6NeCtwhp/RfvXDKjAvdMgo8E2sWyUvCvAvGXaoNbImcrqYmPSK6DLCy0qYTUG4f6QOwpVZ35ZkMq2Mh16HxmbXY843ORhMfigAaFB+M9ASUlscY+Jbh2fUBuTyFcWoOGhiLRgYU4utN7Wfb/x8UDYltnu4jpjFBc8FNrwypZ9+m3n00ouEXqx91+MfLc4257c4u8U14Ht2o6anEZLNjlIRI+bnBf9WyyzQ8F0jNPAL2QsQxdNIf7a+FzWH+U8TrYFYVNJgExoBnp92POxu+AsbD0g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WVDP8egmB/nI3mdnB74M2NhIDiAqJszaaDtJiuFT7pI=;
+ b=qFeu/U0UK/kq3cZkFoKR6HNdFuuhIHYs+05M/dZt5Dq3x15dJA47YzpdivozKOVvwUFim7hSyjn07p0/+ko41KeWscDfn4qQHl9azauJFzwG0EL7ngHB3k5q94UqrQBgRfIDjG/vJuQZ0ZWtZ3r0ki+s2yMACGZ/AlYTpvFYahBuqScluv44eTPf0sVzV914WEaKP7i5C3t7exUaJIziBNxhjdstCG2yDdvf1fhnpx8aldb1BOEkic6KG3/hvGuf6nr1xgqgCO2BAJWZ5RYJ3E124KX7nvJTf3FdfoBhsjsMIAEf8dURAd1ggxJTGGx8sOjON8VSR2VnKRQNfJYb5A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by AS4PR08MB7711.eurprd08.prod.outlook.com (2603:10a6:20b:512::5)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Tue, 30 Jun
+ 2026 10:58:31 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0159.018; Tue, 30 Jun 2026
+ 10:58:31 +0000
+Message-ID: <9aeb2a71-49ef-477e-a67b-1c509bbf99eb@virtuozzo.com>
+Date: Tue, 30 Jun 2026 12:58:29 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Record maintainer/reviewer Git Lab handles
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>
-References: <20260624122936.2706393-1-berrange@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v5 0/7] dump: report win-dmp via vmcoreinfo, guard
+ guest-RAM reads during migration
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, anisinha@redhat.com, berrange@redhat.com,
+ peterx@redhat.com, farosas@suse.de
+References: <20260619101834.228432-1-den@openvz.org>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260624122936.2706393-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <20260619101834.228432-1-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-ClientProxiedBy: VIVP296CA0011.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:357::19) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AS4PR08MB7711:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5b63c33a-3334-4870-3a1c-08ded69685af
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|1800799024|10070799003|366016|23010399003|56012099006|3023799007|22082099003|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info: okGF6GYUUwMa1l4nu98rNjywMzRkn85McsPOD/Xvc1kRiyUAljDEwQfHnii64nWUxeJOtB2/PbDXcsyzrPUxoxq+itcoZq/FwO2UnDhdCQzt8qSMONnclO3YnNgrdmP8Fvx5i7n7kIQZRLjjKxNn9IJt9hVS5nIlvw3IW9Ir9Cy19553vbTgO+60sMObWwmF488Cyfoto+4FE6JiR41S0i0UrsIlTdDKzMJIGW7QZIYQz7PhXI6YJZuQWPo6x3kfZMLv9Epl916C0pRS9DF26mo8dFxzfxUD4LX2VAAbxpNFKlaLFU71D15esbppMMv3TIwKEiX+wQC5KoVzz2o3VbOdvOrIPP6q8itwlmFgHp8xh6z6iPn5VQrvqMYT6s6viVEMDF32fkjjR0MNWKDnmN+ULRz7XOIgqBPTY26RLogvk+rvA47Hl1c3dkgocrw+sY9K7jjaHuR/AAw6+7rxdsi3KPl8N3NXrRr0fSS8bDTXeq4TjRTRlUDVodqCeUiaAm0vZPaxHFTVBGPZuprYI2Uta+WimRwMgn5YAnVwu/vMvMHLRw/6dCUcMrnlZun+Lo9vpnddyXK3zMxUsz+/Sj8Wz/wCXJZ9YAXmiL1NBNHzyGximxYdDRFAr7rRk9uUJHxmVzcZPUpYsT4kabbwn3T0FN5QSB+EFb1bcaPOS1I=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(10070799003)(366016)(23010399003)(56012099006)(3023799007)(22082099003)(18002099003)(6133799003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eEdhNEZyM01QSUd1WmowMnI5ZUYzelpxdjRZNXp1aWRDYnJOVUJLeXkvRG5R?=
+ =?utf-8?B?a1VkNWhqOXEzZUJXbnlRcFJEbzRST3dnRHVHaGM0S3pHSlJCektmZUYrVm1Q?=
+ =?utf-8?B?Mk1RdzJ1UWppdnl3MzJEMllrTEIwRmFKd2R6TWF2YUd0NnBLSlNQRTk5MXU0?=
+ =?utf-8?B?dnZBUDNqQm9rRS9WaEV1TEp4KzVHSTFkWFhFOTBQd1JHOTNYcU1tYmg4Z2sv?=
+ =?utf-8?B?RGFKQWNxR3NIWGRwbUVrK2VNa1JSbWFQOVdsUWk2eFZZUUpSOUhPRDFEVGZo?=
+ =?utf-8?B?SHNMZ042SmpmRVhVU2Y4RjM2TElhbnFsa3MyUHo1NGN0ZlFsaVlOMTlXS2dN?=
+ =?utf-8?B?Y1I4N0h4cWZJY0UrNTNKN0tBUitUNjM3K3ZnNStyMGIvc0QweWplaklVVFYy?=
+ =?utf-8?B?Q29HbENzZmtnN2dLVWtacE4well1Vk9JWDlUNmFhT0JqVzE2em9WN2Q4eEVU?=
+ =?utf-8?B?ZnVLZmEvbTdtNTJCN3pqbzJuS3VRK1Z1RXRicXVoL1NWT0R4eWM4ZGdQcFRL?=
+ =?utf-8?B?UFc5aWN6WTdDZFUvZDR2Nk9QMU9NbGxqWkFTZmtLVVdPeGdtSW1zUDlndnBR?=
+ =?utf-8?B?Wmd2TEdQV2tWYVVXNDRHZTdTQTJqbXNmWUF3Vk12SDJteXljd1RWVHR6R2Ns?=
+ =?utf-8?B?eURxQmtWZ2hWOTA3QkdXUXhlWHdvd00wdjZ1em5VSjZWSjE5VVpBYUIvVXow?=
+ =?utf-8?B?eGVnbUtVaXRpSU5ud2t6clZyQUprR3pGQ0JxU1pYOG9CR01PMkt5SUF1RCtm?=
+ =?utf-8?B?REt2blk1VmJSOFZjeHh0Nnpra3dvTlNtcTYvdkxrRGpOVGFWakZxeE1oaTYr?=
+ =?utf-8?B?MFV1UGw1d0Z0QWRFVXlBTkpZMWQ5QitwUm1mL01oZVpROWdxQldwQTMzS2pD?=
+ =?utf-8?B?dHkwUXJpV0ZjN3hWTXpGaUJJeHZZQnhsZGk5Qm9PM016dUVicGFLWEQ1MEhT?=
+ =?utf-8?B?NUhzdjB6eEpoQlJoVFZaZlE0UUFGMVo3dFRuNzJjL1lRcTFSck5LbDQvUjFP?=
+ =?utf-8?B?cU0xNXJpTC9adHNyeUZpOTZ5OFpJcWdiWFVHN2RkNjZFR0RWeU0zWVdjS2JI?=
+ =?utf-8?B?K09EYk42c0hWY09ySi8xYkVGaGU1QWtoSWVZamxHRnVwR3BOTGhqOW56STJB?=
+ =?utf-8?B?ZlQ1QnB5VEtvMG54MVN2Zk9IeVFUeEVwcGE4OWh2cWdnQy9BQ1pKZFlZZ1hZ?=
+ =?utf-8?B?cjNhSjhRMjVKUEo2ZSsyQlE2bzhyRUJITXBpcXNNRDE2TGZDV2QwV3hOaUVM?=
+ =?utf-8?B?V0Nic3ZBWW1zMWRkS1AvL3pjN0xEMlJHaDFWUStpZzNuVm9RbzdNUVhsY2Rj?=
+ =?utf-8?B?c24xbmZIeVV2aHNKSkZydXpjK3RrQWt6NCttaXIrWDlud1A5NjhFK1haZVcv?=
+ =?utf-8?B?LzFXcGI3OXRxRzByUU9vYTZieXM2OFVxdEJ3N3JpSHVLQXd4L2ZtL2p4R3Np?=
+ =?utf-8?B?aTZ1U1hXRkVPZXhoYkZ6SnhOcHFVOUFHZVhWMUUrak5qQUQxMXM0RWVBcm1i?=
+ =?utf-8?B?ZXVFNFJuZ3lMbzFkZ05KUnUxdC9VRXhMWUl5RitEL1pwZS9LV0V3TnFMNlB1?=
+ =?utf-8?B?bTNZSTBYTGNTRG9sNkxqR3hHamlER2pGRkhZMzNQZTlSeXptVnM1cjdaa054?=
+ =?utf-8?B?RjgydmZoamVzYjhLSGdCR29RTSt5Rkd5ZXhiS3lMMnZ0d1hOS1dUSkJWVlZN?=
+ =?utf-8?B?QTc5L2JZUWlIRlJveXdMODFoMjlyaVdFYzQvVnR2N05FLytuOUVrUVNseU9X?=
+ =?utf-8?B?MUZ6N0thRUlFZGZBeHVsTHRTcDJYTFFpOXowbzk3UEhiK2swSVlNcTc0T0dh?=
+ =?utf-8?B?U3JlZ0xFSy9qRFJuOTFUT2h1NDR0UWN3ZCs5UE9JcFZmQ2dJWEJ1RS90SzUv?=
+ =?utf-8?B?WExSeDhCbkFZbnRqY3A5SW84eEhhUTZFcEk5Zm1ReDhuYWdzd0VWd0h2NjJY?=
+ =?utf-8?B?QUR4U3R5ZjA2RTBJa2RzOHpMRVdpRXVjWlZFWURmaFhBVjQwTEx2REZJaDRu?=
+ =?utf-8?B?MXlmUEFWT0R2ZGY1UFF0bGUxc1Rwc0NPTnozNEt3clptejd2MThpNEU4cENa?=
+ =?utf-8?B?M0UxNWZMZG92dGZBZ0pIRllLYUZwRURPSFU2ZFBMeGlXbmhURlZ2RllOdE5M?=
+ =?utf-8?B?c3BiY2dTV2l5RW9qZm05dk91SjdVRnhwdmhPZU1tQllGb0hwakQyem5WWlBq?=
+ =?utf-8?B?aks4ODE5N2NscG9CYXNiVi9SK0dERk9IUG1NK3VBYjBMT2dJM3hhTGRicTNi?=
+ =?utf-8?B?dllKdFNiU3JkZGpjeEUrVkUzR2YwU1J6bWo5UUpwd2o3aFZvV2lTY1ZkdUZi?=
+ =?utf-8?B?OHRGNUU2bmdIbGFtRHRMTUpudnBWeWc4eFVjV0ZHQWgreHhDdUxYVXFzZkhw?=
+ =?utf-8?Q?Kqw8b42uxY0WJBPwyEm4ni9Y4vw+5Kn8qz9JDRVhtjNJB?=
+X-MS-Exchange-AntiSpam-MessageData-1: gF4Fj4Y4Vq5eAg==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5b63c33a-3334-4870-3a1c-08ded69685af
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jun 2026 10:58:31.2453 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ld2TgbG+fTeGUBIhurxwIABsBxQ6C/cKWOZ1+gpE86AmldEUuJhNrMx01+TZ55atfbgx7MnJZPgdaML4P3dWSA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS4PR08MB7711
+Received-SPF: pass client-ip=40.107.162.80; envelope-from=den@virtuozzo.com;
+ helo=PA4PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,123 +151,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/06/2026 14.29, Daniel P. Berrangé wrote:
-> When triaging GitLab issues, whether regular bugs or security
-> disclosures, we need to be able to assign suitable accounts.
+On 6/19/26 12:18, Denis V. Lunev wrote:
+> This series fixes Windows-dump (win-dmp) availability reporting and closes
+> a related hole found while doing so: several commands read guest RAM and
+> must not run while a migration destination is still receiving it.
+>
+> dump-guest-memory, memsave and pmemsave all read guest RAM on the main
+> thread with the BQL held. On a migration destination that RAM is either
+> still being loaded (precopy) or pulled from the source on demand
+> (postcopy, where the guest already runs). During precopy the read returns
+> incomplete data; during postcopy it deadlocks, as the read faults on a
+> not-yet-received page while the postcopy incoming path needs the BQL the
+> reader holds to install it. dump-guest-memory only guarded the precopy
+> phase and memsave/pmemsave had no guard at all, so a new
+> migration_guest_ram_loading() predicate captures both phases and all
+> three commands now use it.
+>
+> query-dump-guest-memory-capability also advertised win-dmp for every x86
+> VM, and dump-guest-memory accepted it unconditionally; win-dmp only works
+> when the guest has published a Windows dump header through vmcoreinfo.
+> win_dump_available() now reads that note back from the vmcoreinfo device
+> and validates it, keeping its original signature, so the dump.c call sites
+> are unchanged.
+>
+> The series also adds the first qtest coverage for dump-guest-memory:
+> capability list, ELF and kdump output, protocol errors, and win-dmp
+> reporting in both directions (the positive case forges a vmcoreinfo note,
+> so no Windows guest is needed).
+>
+> Tested:
+>  - Linux guest: win-dmp not advertised; an explicit win-dmp request is
+>    rejected without stopping the guest; elf/kdump dumps work.
+>  - Windows Server 2022 guest: win-dmp advertised once vmcoreinfo is
+>    populated; dump-guest-memory format=win-dmp produces a valid (PAGEDU64)
+>    crashdump.
+>  - Live postcopy migration: on the destination, dump-guest-memory, memsave
+>    and pmemsave are all refused immediately, without faulting a page.
+>
+> This supersedes the earlier "dump: enhance win_dump_available to report
+> properly" series, which obtained the note by reusing the dump setup path
+> (splitting dump_init() and stopping the vCPUs). Reading vmcoreinfo
+> directly is much smaller.
+>
+> Changes since v4:
+>  - Refuse guest-RAM reads (dump-guest-memory, memsave, pmemsave) while a
+>    migration destination is still receiving RAM, via a shared
+>    migration_guest_ram_loading() helper.
+>  - Decide win-dmp availability by reading vmcoreinfo directly instead of
+>    splitting dump_init()/dump_preinit() and stopping the vCPUs.
+>  - Add dump-guest-memory qtests.
+>
+> Denis V. Lunev (7):
+>   migration: add migration_guest_ram_loading() helper
+>   dump: refuse dump-guest-memory while guest RAM is being migrated
+>   system/cpus: refuse memsave/pmemsave while guest RAM is being migrated
+>   dump: make win_dump_available() check vmcoreinfo for a Windows dump
+>     header
+>   tests/qtest: add dump-guest-memory test
+>   tests/qtest/dump: reject win-dmp without vmcoreinfo
+>   tests/qtest/dump: cover win-dmp availability via vmcoreinfo
+>
+>  MAINTAINERS              |   1 +
+>  dump/dump.c              |   5 +-
+>  dump/win_dump-x86.c      |  42 +++++
+>  include/migration/misc.h |   3 +
+>  migration/migration.c    |   6 +
+>  system/cpus.c            |  11 ++
+>  tests/qtest/dump-test.c  | 331 +++++++++++++++++++++++++++++++++++++++
+>  tests/qtest/meson.build  |   1 +
+>  8 files changed, 398 insertions(+), 2 deletions(-)
+>  create mode 100644 tests/qtest/dump-test.c
+>
+>
+> base-commit: c7cf7c810153d6f5f31aa2d5c0dee9087f6b4dff
+Hello, Marc-Andre!
 
-Thanks a lot for doing this, Daniel, very appreciated!
+Should I do something with this series or it is good to
+go in. Its final destiny is unclear for me at the
+moment.
 
-I already curated a local list of handles on my own in the past (most of 
-them by looking the handles up via commits they made, so I'm pretty sure 
-they are correct), so let me add some handles for the missing entries below...
+Can you shed some light with it?
 
-> $ ./scripts/gitlab-map-check
-> Missing GitLab handle: Akihiko Odaki
-
-https://gitlab.com/akihiko.odaki
-
-> Missing GitLab handle: Albert Esteve
-> Missing GitLab handle: Alberto Garcia
-
-https://gitlab.com/bertogg
-
-> Missing GitLab handle: Alejandro Jimenez
-> Missing GitLab handle: Aleksandar Rikalo
-> Missing GitLab handle: Alessandro Di Federico
-> Missing GitLab handle: Alexandre Iooss
-> Missing GitLab handle: Alexandre Ratchov
-> Missing GitLab handle: Alexey Kardashevskiy
-
-https://gitlab.com/aik1
-
-> Missing GitLab handle: Amit Shah
-> Missing GitLab handle: Andrew Jeffery
-> Missing GitLab handle: Anthony PERARD
-
-https://gitlab.com/anthonyper
-
-> Missing GitLab handle: Anton Johansson
-> Missing GitLab handle: Antony Pavlov
-> Missing GitLab handle: Ari Sundholm
-> Missing GitLab handle: Artyom Tarasenko
-> Missing GitLab handle: Aurelien Jarno
-> Missing GitLab handle: BALATON Zoltan
-> Missing GitLab handle: Ben Chaney
-> Missing GitLab handle: Bernhard Beschow
-> Missing GitLab handle: Bibo Mao
-> Missing GitLab handle: Brad Smith
-> Missing GitLab handle: Canokeys.org
-> Missing GitLab handle: Chao Liu
-> Missing GitLab handle: Chinmay Rath
-> Missing GitLab handle: Christoph Muellner
-> Missing GitLab handle: Clément Chigot
-> Missing GitLab handle: Clément Mathieu--Drif
-> Missing GitLab handle: Collin Walling
-> Missing GitLab handle: Corey Minyard
-> Missing GitLab handle: Darren Kenny
-> Missing GitLab handle: Denis V. Lunev
-> Missing GitLab handle: Dmitry Fleytman
-> Missing GitLab handle: Dmitry Osipenko
-> Missing GitLab handle: Dorjoy Chowdhury
-> Missing GitLab handle: Doru Blânzeanu
-> Missing GitLab handle: Edgar E. Iglesias
-> Missing GitLab handle: Elena Ufimtseva
-> Missing GitLab handle: Eric Auger
-
-https://gitlab.com/eauger1
-
-> Missing GitLab handle: Eric Farman
-> Missing GitLab handle: Eugenio Pérez
-> Missing GitLab handle: Farhan Ali
-> Missing GitLab handle: Felipe Balbi
-> Missing GitLab handle: Francisco Iglesias
-> Missing GitLab handle: Frederic Konrad
-> Missing GitLab handle: Gaurav Sharma
-> Missing GitLab handle: Gautam Gala
-> Missing GitLab handle: Gautam Menghani
-> Missing GitLab handle: Giuseppe Lettieri
-> Missing GitLab handle: Glenn Miles
-> Missing GitLab handle: Gonglei
-> Missing GitLab handle: Haixu Cui
-> Missing GitLab handle: Halil Pasic
-> Missing GitLab handle: Hao Wu
-> Missing GitLab handle: Hari Bathini
-> Missing GitLab handle: Hendrik Brueckner
-> Missing GitLab handle: Hervé Poussineau
-> Missing GitLab handle: Hongren (Zenithal) Zheng
-> Missing GitLab handle: Huacai Chen
-> Missing GitLab handle: Hyman Huang
-> Missing GitLab handle: Ilya Dryomov
-> Missing GitLab handle: Ilya Leoshkevich
-
-https://gitlab.com/iii-i
-
-> Missing GitLab handle: Ilya Maximets
-> Missing GitLab handle: Jagannathan Raman
-> Missing GitLab handle: Jamin Lin
-> Missing GitLab handle: Jan Kiszka
-> Missing GitLab handle: Jared Rossi
-> Missing GitLab handle: Jason Herne
-> Missing GitLab handle: Jean-Christophe Dubois
-> Missing GitLab handle: Jesper Devantier
-> Missing GitLab handle: Jeuk Kim
-> Missing GitLab handle: Jiaxun Yang
-
-https://gitlab.com/FlyGoat
-
-> Missing GitLab handle: Jiri Pirko
-> Missing GitLab handle: Jiri Slaby
-> Missing GitLab handle: Joe Komlodi
-> Missing GitLab handle: Joel Stanley
-> Missing GitLab handle: John Levon
-> Missing GitLab handle: Jonathan Cameron
-> Missing GitLab handle: Kane Chen
-> Missing GitLab handle: Kashyap Chamarthy
-
-https://gitlab.com/kchamart
-
-  HTH,
-   Thomas
-
-
+Thank you in advance,
+    Den
 
