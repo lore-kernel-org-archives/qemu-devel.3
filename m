@@ -4,99 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A554C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 18:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FD49C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 18:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wedCP-0003DU-Nn; Tue, 30 Jun 2026 14:28:45 -0400
+	id 1wedIJ-0004Kz-Sd; Tue, 30 Jun 2026 14:34:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wedCO-0003DE-TH
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 14:28:44 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wedCN-0001j4-Cg
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 14:28:44 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-845537740ddso2830385b3a.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 11:28:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782844122; x=1783448922; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=2Wc17ItNgaUDBvSNC3EzuTb8GqF3cZ/ioHshyrcjWxM=;
- b=ArTls1SFEipn4zyYaxBi0TW7I3+qKxT+D5aKmUFeF6+HU8+m9HdNvrpbOPpJaDB2Yz
- RUgu3jGO8z+SD+/kjs4t3OC6ta+IdnQPvfsTuuqQ/SYC0jcc/xOGo9MAOeXCBf592U/7
- 5mZotKVC14wlU6MfifFou8Bj98J2NCZ9oFNQ+vyurts2yZymrKKMKh5j0ujQ2iVzTYXC
- QMXu6NK2OkloWY6i0wJgsRVA/Cjzb1IYiEy2xdUHwrPEAH91n+Wj1jolICxK9cHgrsHb
- kH3SpTTmxBuYxRA6yKZzO0Qd7HajuUNTGI9x28HFmGOGXWCV10tqFGLs6JWbmJyTMCXu
- Le+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782844122; x=1783448922;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=2Wc17ItNgaUDBvSNC3EzuTb8GqF3cZ/ioHshyrcjWxM=;
- b=b+NtcqGD7BQhVNsrPr63EIMJt7QCdydsq//DzjGCMhxdETHcxULrG/waM0U4TuCYbo
- de3krw3UYP0gO2DhaLo9F1FAvecedJGAAesI8Ei8xyiV/vSD5YKXqlZ5Ioi0nT/QgjcO
- +YjlV0n7+hLj88tryJMw1MHblfA3VqCLT0R5Ud6v0NdHjP445m6e6fkAYNuv4hSb5gHi
- od4onzuBf8qE5N3YMthHAB4bRFTPyJjRf/PWvBRRVH6y2znhRzApUYJVm8OIk1Wg8dyO
- V+p+gBfv8PBDo4fW0pIXFIrYlumryNeJyCSCwOg1KiCnwf+ESUKbm10ISraagYYs4BXu
- aoGQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrOJ0SlV2sm7LY11ekrFjJ6PS0TvG+hTHaql28k8mCVt7FkAyQd+t1djrOEw/ZZ8ad6l5jOB/XQ6Ekj@nongnu.org
-X-Gm-Message-State: AOJu0YwNe6LYLk3N38trofNg27Div1/Q5dnYODiJeO+wm1D/J27+CO8L
- ec5PyKIwpykJ1ACXBbqPoLoRVEhUlA79naye2452zK96fX4NTeiF4t+q/3S9qeFlct8=
-X-Gm-Gg: AfdE7cmaq15SC78vxZvaun3Gq0ewkTlJBk+1cv8TeviE3X92ixqPrDnIEIi/R3kTWQp
- v3HwgV1/lUQYl4UAYxc93u1VaBFutp0pftFsE4D+qxra+pOu9MImFHwTH4zGJ96RWg+RXr/AVPj
- oGIodHW6GIDFO1dE5gldBbIGycI0OixM3LmoSrPJlOfdBVoQGKejomdx+6ldQwzM77ryUdzqPtk
- nORZwJRDSCdu7K5VgwH+M1U1h3JsoXSTSJgRhuqXJza/1fFg9PjdqMWWcSKIFS9+Qk3sm5cxmcw
- j/ZLAchVKzf9c24eSKNRdv0H3TyhbN8+VEOvRaRz+PiHsAmklQh6w4bOuhtg3iYbXymqh56zXny
- bWGMAouzrdCMKC/afNn8mjfEI/VlKNZcLpO7jGfvx8LU8PCh+8nziwlTQGqiIL97B9KKJSJGpZd
- WcIx0ScUahlDbwsN/4b7/1mHdhI/1+2709MC4MteL8+kefQ7Y/kAzGA0mD9NXVgQCfEsRw
-X-Received: by 2002:a05:6a00:c87:b0:847:8a64:29a5 with SMTP id
- d2e1a72fcca58-8479eeccb86mr4077968b3a.12.1782844121695; 
- Tue, 30 Jun 2026 11:28:41 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8479ff89f93sm2680657b3a.4.2026.06.30.11.28.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jun 2026 11:28:41 -0700 (PDT)
-Message-ID: <46a6f923-ed24-48ab-8bab-7a8fc9956f36@linaro.org>
-Date: Tue, 30 Jun 2026 11:28:39 -0700
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wedII-0004Kh-KB; Tue, 30 Jun 2026 14:34:50 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wedIG-0003NW-Vf; Tue, 30 Jun 2026 14:34:50 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65UEIc8t2171251; Tue, 30 Jun 2026 18:34:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=xMwXUV
+ 4ej667qW/ukKiVjWOVOdoMrryVkbVp9K4ur5s=; b=JatE03W7vTUN/CIQjf19Zl
+ 4rBXLSvJXqqx9IdPoefaWyO/cQFxPWix2LusKLXEdu5YhRORySnXwJOfiw7FY/Qj
+ zHHjMxFx48eoS5lMF7Deg0JnxxXL1yrxlxDG+QF5a5Sh5GpgnDvbJI4Ayz77+CpV
+ juCM/A9Q14rFJy2rlPHlUoqtFT2sNorkdflBty+fdNO2ekRYWoA/u62NvI1UVMMn
+ nLjyClvg7994e0Oh9oLu3o4rkxtXlCRyYpnXPgbcZOYZSzGX0ia2mxxxwlcbJ586
+ 6l1pL+BqteX0taUQj8FAaJcykg/UeNYp5fs8qdJIO8yqnSL9Z92CwfX73EXUZ2Jg
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rf07cu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 18:34:45 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UIJb4c015060;
+ Tue, 30 Jun 2026 18:34:45 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhbnqd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 18:34:45 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65UIYfmL27132312
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Jun 2026 18:34:41 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3604720043;
+ Tue, 30 Jun 2026 18:34:41 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6BE1D2004B;
+ Tue, 30 Jun 2026 18:34:27 +0000 (GMT)
+Received: from [9.39.22.35] (unknown [9.39.22.35])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 30 Jun 2026 18:34:27 +0000 (GMT)
+Message-ID: <9eb293a6-4619-4499-8ba8-e63a1d703ac2@linux.ibm.com>
+Date: Wed, 1 Jul 2026 00:04:01 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/2] accel/tcg: use GTree for faster breakpoint lookups
-To: Shivang Upadhyay <shivangu@linux.ibm.com>, qemu-devel@nongnu.org,
- pbarbuda@microsoft.com, mohamed@unpredictable.fr
-Cc: pbonzini@redhat.com, philmd@mailo.com, zhao1.liu@intel.com,
- laurent@vivier.eu, deller@gmx.de, pierrick.bouvier@oss.qualcomm.com,
- palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com, qemu-riscv@nongnu.org, rathc@linux.ibm.com,
- harshpb@linux.ibm.com, adityag@linux.ibm.com
-References: <20260630171555.114844-1-shivangu@linux.ibm.com>
- <20260630171555.114844-2-shivangu@linux.ibm.com>
- <187d9a11-b1d0-44fa-bf91-43b723063a44@linaro.org>
- <470cc3fdd99cfb62b41ed0238550a2b4f4fc4929.camel@linux.ibm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v3 0/8] Testcase improvements and Power8E/NVL removal
+To: Misbah Anjum N <misanjum@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>
+References: <20260629110411.3051274-1-adityag@linux.ibm.com>
+ <9eefc074b799f7380cf61885bc37642a@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <470cc3fdd99cfb62b41ed0238550a2b4f4fc4929.camel@linux.ibm.com>
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <9eefc074b799f7380cf61885bc37642a@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a440c46 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=C9BDwd5fFWHTyHC46gQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: qgHq8iGx1BOwy5u4DcpFOjgtT-tOuA8l
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDE3NSBTYWx0ZWRfX/OIIw2DTGf+M
+ Xu5EH+kePlX7npn3rK8GAcpF+AqqsWqjbzYHnlI9o1MaQ2Jo61DfbATjOvFj9WLoFnfZZw98QyH
+ 4clSDhflnvfP/P9cP9tmu/KUFHJfC9kMEgKBmFJtVxzPFa2F6NnW0NPBOh2/ZvERFjh+NcKMAyi
+ vMJiur4E2UmelG4jxAH46mKnYtzDKoC//pg5ExjsH7frLhf/BYsMlF/ZvM1qo+tK2NeDmOrvwzR
+ JK6YcfiYFARx16XHgTNwPJl4/Hnf5An0vGkaVrK3hsBZckQTgEdRmyXJr7SeCKDNM3umKPpfkJH
+ iUZqB5mH0dYkIX6en+IzArPr/nnojRkGeANAVTfIU74VzjTtNlSKi9WdxkqnLPQc3Ji4mXDuQvL
+ xox/Txaz4YOCszdEveKJwmn9cr65gYjLZbS3UUAMeIHs0sXyHwMg6fM1LEt5weHpbBTT0ABXXMJ
+ 1rxOQE6Ys3FiaTCwK0A==
+X-Proofpoint-GUID: 3P-6R5aZUoDbSgkA86zm_rCdVOX4gFhO
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDE3NSBTYWx0ZWRfX0jlt5WXJJnKZ
+ L4XrOPhNoQyxN05xfLY8hANtQxhLTVKmLyXQqHjJLcQc8TaUuRamiuV6rlAqHV8kdxVA/y2JT59
+ 1rvwoaqZed63WkAXypojKPEglllvKmg=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-30_04,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
+ spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300175
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,26 +138,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/30/26 11:17, Shivang Upadhyay wrote:
-> On Tue, 2026-06-30 at 10:31 -0700, Richard Henderson wrote:
->>>     6 files changed, 118 insertions(+), 45 deletions(-)
->>
->> I think it would be better to use IntervalTree, so that we don't have
->> to keep that second
->> tree of pages.  Obviously, IntervalTree can query an interval, which
->> takes care of
->> querying for entries within a page.
->>
->>
->> r~
-> 
-> As per my initial understanding of Interval trees, The primary goal of
-> them would be store intervals, and then query with point/intervals. But
-> current usecase is storing points and querring with intervals? maybe i
-> can be wrong with this idea.
 
-A point is simply an interval of 1.  In this case, start = last = pc.
+On 30/06/26 09:49, Misbah Anjum N wrote:
+> On 2026-06-29 16:34, Aditya Gupta wrote:
+>> <...snip...>
+>>
+>> base-commit: 20553466cc47af6a8c95f665b601fce3c852e503
+>
+> Hi Aditya,
+>
+> I've tested the v3 patch series on PowerNV and pSeries guests 
+> including the new remote interrupts functional test and Power8E/NVL 
+> removal.
+>
+> Testing Environment:
+> - Host: Fedora 42 ppc64le
+> - Arch: ppc64le
+> - QEMU: emulator version 11.0.50 (v11.0.0-2400-g20553466cc-dirty)
+>
+> PowerNV Guest Bringup
+> Status: Success
+> qemu-system-ppc64 -name test-vm -machine powernv -m 4096 -smp 4 
+> -nographic -kernel 
+> ~/.cache/qemu/download/6fd29aff9ad4362511ea5d0acbb510667c7031928e97d64ec15bbc5daf4b8151 
+> -drive 
+> file=~/.cache/qemu/download/aee2192b692077c4bde31cb56ce474424b358f17cec323d5c94af3970c9aada2,format=raw,if=none,id=drive0,readonly=on 
+> -device nvme,drive=drive0,bus=pcie.2,addr=0x0,serial=1234 -append 
+> "root=/dev/nvme0n1 console=tty0 console=hvc0"
+>
+> PSeries Guest Bringup
+> Status: Success
+> qemu-system-ppc64 -name test-vm -machine pseries,accel=kvm -m 4096 smp 
+> 8,sockets=1,cores=8,threads=1 -nographic -serial mon:stdio -drive 
+> file=/home/kvmci/tests/data/avocado-vt/images/rhel8.0devel-ppc64le.qcow2,if=virtio,format=qcow2 
+> -netdev bridge,id=net0,br=virbr0 -device virtio-net-pci,netdev=net0
+>
+> Power8E/NVL Removal Verification
+> Status: Success (both correctly rejected after removal)
+>   qemu-system-ppc64: unable to find CPU model 'power8e_v2.1'
+>   qemu-system-ppc64: unable to find CPU model 'power8nvl_v1.0'
+>
+> QEMU Functional Test Results (make check-functional-ppc64)
+> Status: Success
+> Ok:                 12
+> Fail:               0
+> Skipped:            4
+>
+> QEMU Unit Test Results (make check-qtest-ppc64)
+> Status: Success
+> Ok:                 33
+> Fail:               0
+> Skipped:            0
+>
+> Result: All tests passed successfully.
+>
+> Tested-by: Misbah Anjum N <misanjum@linux.ibm.com>
 
+Thank you for thoroughly testing this misbah !
 
-r~
+- Aditya G
+
+>
+> Thanks,
+> Misbah Anjum N
 
