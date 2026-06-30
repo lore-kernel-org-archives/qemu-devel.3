@@ -4,107 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54182C43602
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 13:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2C2FC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 13:14:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weYFq-00053M-OE; Tue, 30 Jun 2026 09:11:58 -0400
+	id 1weYHz-0005cI-FK; Tue, 30 Jun 2026 09:14:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1weYFn-00052S-My
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 09:11:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1weYHn-0005at-3g
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 09:13:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1weYFm-0003g2-1x
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 09:11:55 -0400
+ id 1weYHl-0004b7-LE
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 09:13:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782825110;
+ s=mimecast20190719; t=1782825237;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:mime-version:mime-version:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5xxmLSENPR1sSMK9+/aPMPjVkH+BvQrkMchhb6zfZx8=;
- b=MVRx7TIdVgh+XHYklWOhQxmgGYXCOyfto5apixCU82BXXWSd9GhgmJfJ5nf1XOKTDhVtm2
- fL0zxE1smYXwSTliV0dLZOLsfR9gYyzT3eBga04jgF/3o+O1d8qbEtoE0PYUrg5Xn7Hgev
- PQlLhgs2Q/PHKF+3OAjvKflV9m4pW60=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2fxDeuFtAamJnUx68ai6yqnwyLW2L/ImIpa9F1jTftA=;
+ b=UjapWvJlnTomMEyrB1OMOJnTT6gvxFOvdlrr5F4RsnyXpp5zUOa/niUJG0tnYv/ie/6el9
+ mDZdhib4dVV9qPJNtBgWbQvATmrUZtUqGwVmhhQsIcUeQ+Q5LkOY+5TqWHNyO7diwmud8I
+ Zs76pgnYTHzesHz5VpK1teSdAX6ni2k=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-577-B8xT1idbO9-Hk3Cvli0sig-1; Tue, 30 Jun 2026 09:11:47 -0400
-X-MC-Unique: B8xT1idbO9-Hk3Cvli0sig-1
-X-Mimecast-MFC-AGG-ID: B8xT1idbO9-Hk3Cvli0sig_1782825106
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4924725bec9so27388695e9.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 06:11:47 -0700 (PDT)
+ us-mta-648-Pdd7xFltOUa2om0Bw4ZTPw-1; Tue, 30 Jun 2026 09:13:55 -0400
+X-MC-Unique: Pdd7xFltOUa2om0Bw4ZTPw-1
+X-Mimecast-MFC-AGG-ID: Pdd7xFltOUa2om0Bw4ZTPw_1782825234
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-493a5d7eaedso21199465e9.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 06:13:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782825106; x=1783429906;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20251104; t=1782825234; x=1783430034;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5xxmLSENPR1sSMK9+/aPMPjVkH+BvQrkMchhb6zfZx8=;
- b=eIA5kDykef9HPt5xXZMAIdC+sBD2NJDixp9GsDz7HiQ9g+tMQFrr6fmV9lzZ47ur+Q
- rX4wmKXEBI1Yr7TpdkI5Yy3c/k0A5Eh5EBLhUnj6TU2CQOQp/D/1Z9y2L0+rh0ksxG4h
- FhLNP+i0CS9bWf1hJdz2qidMCRbM9+yHH6DF0naFuRLcTHBFhtDe+ODuhiIRFvZktrpr
- zVhsLdUvyAUffnu0qzHZwZbiZyn133NWrCTOmdwulJuJfH3do+7qIa1XQI05Y+OpcEjk
- Er3u/rJaJXheS5bsf1OVp44MrJKT5Ltk2zeUObFoyTw1ofUSQUCVVzw50RXTN7VQJH/e
- x7FA==
+ bh=2fxDeuFtAamJnUx68ai6yqnwyLW2L/ImIpa9F1jTftA=;
+ b=Tdh07cUk737xgV58TOlNcT8KU/4gJtNcPD7ci86OVLU6ulpTu+SnayxcruEzWr78+Q
+ CXmSQLMmsoIKzUCZh3/42K+VM9J/k1YBtEUACKepFAGHkLohIltPPj7RsMgT5XYCHn8W
+ ivn+JEfokxU9P/gxSrCLqQGlD8LW/POO+Z4Vey8QN7lzGxzgTMm4Cv/xrbaWltSwWdbf
+ TJ/4FStExEXNJ6pSem9YlJKRcOkcTntEc4RYhXJnsYIjo+IGfalu8Yr8XXxlvKeswgPq
+ 75lfamYgtxYUpmvmVx5zS4tdWrnAEGcVe8asdmbojK8tTPJvhZ3gdva2L3gPBxgdfleX
+ 9h1w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8qBMTyigGnLtqN9CwU9j/QAiiMyxYABgSwPAjOfqkp3pXl80gtZopkrjK7/USN1gBD0lE5uXFwApaO@nongnu.org
-X-Gm-Message-State: AOJu0YwOOQheaLTo4LzS8ExKUG58sFPaFn+bzReWR2sa1F+3O69RUs4J
- lXozOm7tCyksDfAQ51oH7YWh22Nj+/66ZJBA90+nk3DGmTrTrLcc/wUlds/nUc7pBg7tES5zQ5F
- PVjuYGdgXyXnRRrpZvPPltZ7UJOCymN4iI1xsRWqT2g2AE+U2jPFnNMce
-X-Gm-Gg: AfdE7cmsw57wkKQPjpU44EGhGgv3S/PqXg/OWkWSkV2mwqdFKlY8kLz0Yc65AKrsrkL
- xxwAlwD1vHdopWvkf6ANqppOJ9K5BokqfIFS7eC1fiK0JU1cjm8Lwj3ryUcE70/UUBGAGKtH+m/
- r/CF+9a+iM9LkvqqEZ8A7sm+LJqIwMrvGxO+mtpG5alBAkcTexSIOZdwr8aDyPr7F5uMwVC7ens
- IByzUwndtHY1hDbf34DooIsDHQgbpdXvw6lsNnMD2JttSVH33jo/UMmJTQiLoAyXPSPXMAMgVto
- ATlWmQihdt2G7T5sDqf11oiYyBsMBhAZfbWpuc3UZ6X2Ete92G3TkaiwftdwUHYF/fcuifMcY9q
- OVbL4FDtVnYYdLznMigXwE1rlg9piuaPtOy+DDBjSmlzmC4kyThpMuz6l7qw=
-X-Received: by 2002:a05:600c:c493:b0:493:b61c:72c3 with SMTP id
- 5b1f17b1804b1-493b82b6360mr53630865e9.32.1782825106238; 
- Tue, 30 Jun 2026 06:11:46 -0700 (PDT)
-X-Received: by 2002:a05:600c:c493:b0:493:b61c:72c3 with SMTP id
- 5b1f17b1804b1-493b82b6360mr53630335e9.32.1782825105757; 
- Tue, 30 Jun 2026 06:11:45 -0700 (PDT)
+ AFNElJ/qr7/PsM9KmdZiY7ajPH/JlCRJKhFy/GWv5Imhp6o0fwJQp1Ch+5ZLeMcz8zmD514acYkkeqIO9cCy@nongnu.org
+X-Gm-Message-State: AOJu0YwcIoMiuuozCBxy+n4dB08LX6SNzeyaADxjGRB6b1vIt9L0RFOW
+ qyyD7Cy3bpzIeAOmNZnc1Swwie0uAVfwVKsjWW3ObhK7UVgUCh/fmFITKmis7cbkz/ikx+6r60r
+ CxVxPWGfxbpXk76u71aQwdiusN2WTOVE+qJdSSPIENIJ5aBExCA/+R6y6
+X-Gm-Gg: AfdE7cnMSxamcLD4RTJCrkZXaqEVaC3+VkGaVk+RjCdcuyGl352BRSGhBAqMlunD772
+ jFscIgnsdr99Inkkinem+Ej9uKrkodtf/h0dTXACs1eByeOanahKIxC9tdUHfqYtaz4ThS0AJwL
+ MfZFao8aPAYZxQKjwjyh1FYlJNjvXWdwB5lucEG4v79o3u/hFw++lZMRstXMgiHsI9NI4n8jLq0
+ yBD9We7IJID+LG/wOy6i1gpmarXIRMss9j93CUL9ri8ukXU7u5IcXf9fCsWWaZGD3R1+UP5KkSH
+ 6yxs3NbzdU/2JQJkvuJMVPzATOnInI2OEOvJXUb+d4PR5GfoxVRMEwS4MixoNXlgr9jyJQhH7oh
+ qZOUjy6ZqlkmAjf+r8dJx2fj8uWATxKR1WYfwPuasXmRRVTjm6MDvtMXZUyQ=
+X-Received: by 2002:a05:600c:8b71:b0:493:aaf5:6e04 with SMTP id
+ 5b1f17b1804b1-493bda4ae27mr9082545e9.15.1782825234240; 
+ Tue, 30 Jun 2026 06:13:54 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b71:b0:493:aaf5:6e04 with SMTP id
+ 5b1f17b1804b1-493bda4ae27mr9082245e9.15.1782825233830; 
+ Tue, 30 Jun 2026 06:13:53 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493b8c70aebsm77034265e9.4.2026.06.30.06.11.44
+ 5b1f17b1804b1-493b8cd303csm66624125e9.6.2026.06.30.06.13.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jun 2026 06:11:45 -0700 (PDT)
-Message-ID: <d3840d33-5e34-4c23-8704-9e729559dc10@redhat.com>
-Date: Tue, 30 Jun 2026 15:11:43 +0200
+ Tue, 30 Jun 2026 06:13:53 -0700 (PDT)
+Message-ID: <a034d5c4-02a5-43a1-b453-2c1dec59a5cc@redhat.com>
+Date: Tue, 30 Jun 2026 15:13:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/arm/smmuv3: Sanitize SMMU_S_STRTAB_BASE_CFG.SPLIT
+Subject: Re: [PATCH 2/2] hw/arm/smmuv3: Sanitize
+ SMMU_S_STRTAB_BASE_CFG.LOG2SIZE
 Content-Language: en-US
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "berrange@redhat.com" <berrange@redhat.com>,
- Nicolin Chen <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, skolothumtho@nvidia.com, nicolinc@nvidia.com,
+ nathanc@nvidia.com
 References: <20260630083042.2692392-1-eric.auger@redhat.com>
- <20260630083042.2692392-2-eric.auger@redhat.com>
- <SJ0PR12MB8614BCB8A6B565224E8468ABABF72@SJ0PR12MB8614.namprd12.prod.outlook.com>
+ <20260630083042.2692392-3-eric.auger@redhat.com>
+ <akOJ8SNPV_I48tD_@redhat.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <SJ0PR12MB8614BCB8A6B565224E8468ABABF72@SJ0PR12MB8614.namprd12.prod.outlook.com>
+In-Reply-To: <akOJ8SNPV_I48tD_@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,63 +119,56 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
 
-On 6/30/26 11:11 AM, Shameer Kolothum Thodi wrote:
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Sent: 30 June 2026 09:30
->> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
->> devel@nongnu.org; qemu-arm@nongnu.org; peter.maydell@linaro.org;
->> berrange@redhat.com; Shameer Kolothum Thodi
->> <skolothumtho@nvidia.com>; Nicolin Chen <nicolinc@nvidia.com>; Nathan
->> Chen <nathanc@nvidia.com>
->> Subject: [PATCH 1/2] hw/arm/smmuv3: Sanitize
->> SMMU_S_STRTAB_BASE_CFG.SPLIT
+
+On 6/30/26 11:18 AM, Daniel P. Berrangé wrote:
+> On Tue, Jun 30, 2026 at 10:30:20AM +0200, Eric Auger wrote:
+>> STRTAB_BASE_CFG.LOG2SIZE is programmed by the guest through the
+>> emulated SMMUv3 MMIO register interface. Currently the value is
+>> not checked.
 >>
->> External email: Use caution opening links or attachments
+>> The SMMU spec says: "Except for readback of a written value, the
+>> effective LOG2SIZE is <= SMMU_IDR1.SIDSIZE for the purposes of
+>> input StreamID range checking and upper/lower/linear Stream table
+>> index address calculation."
 >>
->>
->> Currently the guest value for the SPLIT field is not checked.
->> Also the spec says that values different from 6, 8, 10, respectively
->> meaning 4KB, 16kB and 64kB leaf tables are reserved and behave as 6.
+>> So for STE lookup make sure log2size is capped at SMMU_IDR1.SIDSIZE.
 >>
 >> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 >> ---
->>  hw/arm/smmuv3.c | 7 +++++++
->>  1 file changed, 7 insertions(+)
->>
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index 5e5a6a960c9..0a8d2fbb6a7 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -1688,6 +1688,13 @@ static MemTxResult smmu_writel(SMMUv3State
->> *s, hwaddr offset,
->>          s->strtab_base_cfg = data;
->>          if (FIELD_EX32(data, STRTAB_BASE_CFG, FMT) == 1) {
->>              s->sid_split = FIELD_EX32(data, STRTAB_BASE_CFG, SPLIT);
->> +            if (s->sid_split != 6 && s->sid_split != 8 && s->sid_split != 10) {
->> +                /* Other values are reserved, behave as 6 */
->> +                qemu_log_mask(LOG_GUEST_ERROR,
->> +                              "Invalid STRTAB_BASE_CFG.SPLIT=0x%b, use 0b0110\n",
->> +                              s->sid_split);
-> 0x%b is confusing. I think either 0b%b or %u is better.
-sure replaced by
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "Invalid STRTAB_BASE_CFG.SPLIT=%u, use 6
-instead\n",
+>>  hw/arm/smmuv3.c | 9 +++++++++
+>>  1 file changed, 9 insertions(+)
+> Can you add the "Resolves: bug URL" to the commit message so it
+> gets auto-closed on merge.
 
-Thanks
+sure. Thanks for the hint
 
 Eric
 >
-> Other than that,
->
-> Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
->
-> Thanks,
-> Shameer
->
+>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>> index 0a8d2fbb6a7..db5aca26ec0 100644
+>> --- a/hw/arm/smmuv3.c
+>> +++ b/hw/arm/smmuv3.c
+>> @@ -672,6 +672,15 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
+>>      /*
+>>       * Check SID range against both guest-configured and implementation limits
+>>       */
+>> +    if (log2size > SMMU_IDR1_SIDSIZE) {
+>> +        /*
+>> +         * spec says: Except for readback of a written value, the effective
+>> +         * LOG2SIZE is <= SMMU_IDR1.SIDSIZE for the purposes of input StreamID
+>> +         * range checking and upper/lower/linear Stream table index address
+>> +         * calculation.
+>> +         */
+>> +        log2size = SMMU_IDR1_SIDSIZE;
+>> +    }
+>>      if (sid >= (1 << MIN(log2size, SMMU_IDR1_SIDSIZE))) {
+>>          event->type = SMMU_EVT_C_BAD_STREAMID;
+>>          return -EINVAL;
+>> -- 
+>> 2.53.0
+>>
+> With regards,
+> Daniel
 
 
