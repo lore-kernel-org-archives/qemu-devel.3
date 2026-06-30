@@ -4,108 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EEEFC43602
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:21:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBD58C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:22:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weZJN-00036I-Kv; Tue, 30 Jun 2026 10:19:41 -0400
+	id 1weZMB-0006kC-W4; Tue, 30 Jun 2026 10:22:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1weZJL-00034z-FD; Tue, 30 Jun 2026 10:19:39 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1weZMA-0006k3-F9
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:22:35 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1weZJJ-0005Vc-Tb; Tue, 30 Jun 2026 10:19:39 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65UEIYtJ2171574; Tue, 30 Jun 2026 14:19:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=3NVBzHrsjcXoL5VrR
- sXbVgS3KofagMRdHGLr2vz295U=; b=DEX0aTl9imoYSx2DVR2qfcZQms1fjqi2B
- 3U3sLkUEcPMiYVwgfNlfk7o+O3LDXn04j1sI9SmASEQ2lULOoCUkNkBNW/NqWThF
- /SWBWKshaErFDh+oa/Do8Cv8ZcQhjP5NzPFWxEZQmCBGvCG0y1gqyvSM5th+3Hnr
- Hnhz2oAk0tIQvpZweJ0GwKcwXFR8oBddNnMqeKHKxNPNNsKHfS6nt7MMICXFJ3Hi
- KS5N+grAKigDU4NBidrybj1RxcDNNIn3qw85dUeTf39hqnhgaYoIfeFQYgDD8xor
- S7gOh31/vCW4fEBfvE/R/2p11OX4I3pPYYiZGnQ3FUGA0sfhV9wsg==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26q9xyx0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 14:19:36 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UE4bqI012664;
- Tue, 30 Jun 2026 14:19:35 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhyac8j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 14:19:35 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65UEJYh78323850
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Jun 2026 14:19:34 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 207D45805D;
- Tue, 30 Jun 2026 14:19:34 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0F00658053;
- Tue, 30 Jun 2026 14:19:33 +0000 (GMT)
-Received: from t15.ibmuc.com (unknown [9.61.10.219])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 30 Jun 2026 14:19:32 +0000 (GMT)
-From: jrossi@linux.ibm.com
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
- mjrosato@linux.ibm.com
-Cc: jrossi@linux.ibm.com, zycai@linux.ibm.com, jdaley@linux.ibm.com,
- jjherne@linux.ibm.com, farman@linux.ibm.com, nrb@linux.ibm.com
-Subject: [PATCH v2 4/6] pc-bios/s390-ccw: Verify virtio support when booting
- from virtio PCI device on s390x
-Date: Tue, 30 Jun 2026 10:19:15 -0400
-Message-ID: <20260630141917.673995-5-jrossi@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20260630141917.673995-1-jrossi@linux.ibm.com>
-References: <20260630141917.673995-1-jrossi@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1weZM8-0006TR-J4
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:22:34 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65UEDD2H2213505
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 14:22:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ r82B7kdGtgmJkzg9AZKk8BwpTG49cZuth6pj0JTPkUU=; b=mQvEvB5j8eX5Xjx6
+ 1AzLcblacBxlvCs0F6Ku5TtuURdc6/jbyrzK6R6KR57SJGxJ+Ycl0swPmPpYS4RC
+ NH99exv61zxvqJbLLThBs07Bx4JMGZfDjPG09TN8Hnkp5Q9tgZWSkRKLBUDqau9/
+ rxEuw03ZFWFvBrzGQAK337iogv3x1ZBzjaGWtCou2KUHyGEoUXDA9OAjNHOJNrvd
+ e2lMOdYB8l2VNH4jJCKdGZcOt9QpiEhUotIlGcvfwBP1nQsOTx1oACY9WV+hXVvO
+ X3UxqeTTEpzMlup12KfjQ5GYqohP4pswvQl/EacUvXs+wnHfh1jbBLZFwZPwDDu6
+ PsBVJw==
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
+ [209.85.217.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f462fjp08-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 14:22:30 +0000 (GMT)
+Received: by mail-vs1-f71.google.com with SMTP id
+ ada2fe7eead31-737f663b020so1546408137.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 07:22:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1782829349; x=1783434149; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=r82B7kdGtgmJkzg9AZKk8BwpTG49cZuth6pj0JTPkUU=;
+ b=MFplY2FA7neUzzFm87Kl2iau6pSj8SxkXtngEGZBeEtO3kmUEW4whahkM9bguJrHEm
+ xgWp85OemHJMnZpuViGpm/1V2bEZNN7NEr1lO8yzC1yz0BaEtPiSBPEeMzTjH1pg2AXp
+ 2XBf7Btga/haHH/ur5mMldK09E9QhlMXfBZxBVQgYjIoAJArv2os4GkK3kDgNCoyY1ci
+ r21G/fN/h/5yCPUdBVnP9I46Of/w81tE3r0SckE7dZlgYVV3nyusHa+A41hEYKREhsSi
+ E/9bx6pw3qUTcqnGtV3tWF6XnZkiOiBc0kKqobdjpbYFPIivAeiZvNfDyxhLt+4EvcVH
+ STdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782829349; x=1783434149;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=r82B7kdGtgmJkzg9AZKk8BwpTG49cZuth6pj0JTPkUU=;
+ b=sDjndF5ZKoHkE8z+RF2vB3Qq/mRA1FpcSTMxKodmulYoTHEd5XEmJfTA/HBQ/Oxi6F
+ e8BblGMci7wxOWGjgoZieT+irMvNebsBsbI+6PgrUK4wyJmlfUktsawea8AGJ7H4MSqv
+ zKHzwWnYi9vxttYec8mBUhYjUONnuAQO/gQKWu9Zr92TjODetKuiLi+7PGEDi+HZkcmu
+ l/rycFzCM0nSaHcWAvypolzVn1I1WyqAxdWHljTf1VOZ3x/ItuyZHp+Ev4afOq47I7fO
+ NXBhR2+C4rx72LDTL8djl2aDh1EXWyDHDUaah0XROhD2suM5AbzCKv+lai2mlB3RqkY6
+ wIYg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqsHAYxwvkroROBcnogySSwS4dw8iU8mVi0cSAuiiNsbx6SMzP0AkO5o1FmfBXUbLHbj6Vj/K9Pvk6i@nongnu.org
+X-Gm-Message-State: AOJu0Ywx48BPQq4dEV9fpVoBOjLvm4HQPERZYOrHLqDjJHuQBXA/096a
+ wHzdDqyT9uL1lrfg77oK0Ue1iw/2NdqqAYIbFQ3CfyVFQsBDqCXRdTH49yc1/UE3CWB6mJZw1op
+ +rHii78+ssA3yihzjelyCR35A0hQCtHweQUnYwy7FxT5V8BpuPQeVhi6YpL2WYvaVRA==
+X-Gm-Gg: AfdE7clzDgZN1Gq6AoIB2TxwAn4fWl7kfARmLJQgQncgFg2Rr8EKloTFni7Z4mlz6Qg
+ kTD24wBJzHn5e7gfXKz7MRvHe5BNoKAKLfUK5UEnhxPR9LNL2N+LCfnT6TvT/t6gIrJaFG/NgvJ
+ pvfgm7GW+TvEoQFqH9OETD3UpmoGAEi2fABo7u0YJbyADECJsyKQKwG+oms4K6N6YUWmDKf4Wla
+ C/t4dCmU7qAG4Fw2fqFMkxs+alYKES+iKVX6Rraobaw6+gOpa8advoL5vTUsSCn4GH8e+qn5zmw
+ N0korzMnqIkEei66wNiS4vAEVyoPwOXsX37UL7Ik0M/s35pDBBj6mTdXkNM99rlsTM8566j1sm/
+ 61LyF1nyML6FXLaSkoGD0nZvEOSf5jOZ3dGjoJJiuaoORew881hUXoaHpbsIwSQ==
+X-Received: by 2002:a05:6102:8022:b0:738:be73:55e9 with SMTP id
+ ada2fe7eead31-73cb894e386mr312970137.12.1782829349258; 
+ Tue, 30 Jun 2026 07:22:29 -0700 (PDT)
+X-Received: by 2002:a05:6102:8022:b0:738:be73:55e9 with SMTP id
+ ada2fe7eead31-73cb894e386mr312960137.12.1782829348834; 
+ Tue, 30 Jun 2026 07:22:28 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47560effc81sm8305952f8f.0.2026.06.30.07.22.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Jun 2026 07:22:27 -0700 (PDT)
+Message-ID: <9b5b0e92-4d07-422d-b8d9-247781afd0a8@oss.qualcomm.com>
+Date: Tue, 30 Jun 2026 16:22:26 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/scsi/mptsas: Reset doorbell state on reset
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
+References: <20260629185035.2138238-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260629185035.2138238-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDEzNCBTYWx0ZWRfX5SgwDJ1uN9F0
- V6j5Ez+yOhH+ACbAMOGeVkN55i6wxd+JdLAlXg7ykZKTV79TLeSJH+CxIJbrOHTCTyGxEVbIF4P
- PaYa0qoYIxvHbP5VBAJ4JXKAyWJrkkEid+w1HyLZrXYs0bInt8WLUGeIKLyPI72cG2xj6Qt/Ye4
- dX3P3CH2zJbVxAb0+nMrKm3CxCIXAnYXYdhaoQnMIEsVRcVwCmypJYoGb+FVTfVjjiu1DbQ8402
- jIdGyk/myq/FXEPRFB7BxCYZ5aXiXIi9y3MiNqKgJPpZcY8MBtrcpvpM5wVctvyS20WwMYu3vXl
- EJe5vS4rvFqen00GlUgJ8eNu4CU+BT60huZjINoRlhQ6oLsuQSQHAvGNvfY3ouMDOSEbgbI9up/
- aBVL4xY/ye3Ny/fBL/J+qWNNHtDxMlJWCDasyP21LRca/C+MjSBvR2Ddpmh4Xo9UqSFcKXKHI3l
- /uCF6InX5aDOopyihMA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDEzNCBTYWx0ZWRfX/Gvqhynwi1Yt
- Dj0NeLlzzjMiSdAqsvj/TKaNwheaIYKf7biFoRUOteNWmZAuKdmYfwA5HjXAVXC+bNQiieWc+2w
- AG/kJO6OTjC6JeOsYHBvfHC6YlFKJrM=
-X-Proofpoint-GUID: hZC4LRS0ZosACCqfxM9BVrKI-9kY3Qts
-X-Proofpoint-ORIG-GUID: hZC4LRS0ZosACCqfxM9BVrKI-9kY3Qts
-X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a43d078 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=2yqyArzitvNQz83JccQA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDEzMyBTYWx0ZWRfXzBEqBYqdXv+6
+ +F+3TiJul085IhrFcRVJlSmBYUNKOLxFmGWm7LQUf0l0RIAcR+EQMXFJ0PS3hU4W4L+0E5+JGUR
+ lly4/jFSJ7ThzapmJuibrFKFeLyoSHyKC6rqmrlLV7GpR0gXv4BmGRC/OXslOOgevybNyFObQDp
+ a8WEXvP6rkdUhAGOuf/Pm0KM7m0OHKkKwAfRmXH4OEWJMcKH4bONtddD0yn5x9Xso3H2/HN0ohy
+ 5onw757TfXO6kLGVgmIRg9PubQdO/JLNCmtCHvz/A18Aozwqcd53lKSEn68YLJV6ZaWfyaE/Syp
+ 1+nBtGnGzkub3ruUE7ljaLnVPIeleDCsN4gMe4OBKNA/n02ZnLBydo6Ndb9EWaJh+KQG5C+c03S
+ yQd3vpYyarZAtxC1XciULwIT1JfEBSHKcuSv9zJvaurnQgDE5j25eSEIlajoeEmbQMKaTLe2BQE
+ ZMFlNkNewlAzKUuIiBg==
+X-Proofpoint-ORIG-GUID: rExsaElpe4rht3cQevdhAfklRkSzyVrN
+X-Authority-Analysis: v=2.4 cv=JqbBas4C c=1 sm=1 tr=0 ts=6a43d126 cx=c_pps
+ a=P2rfLEam3zuxRRdjJWA2cw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=p0WdMEafAAAA:8 a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=BxYp5kjD7oKxsPU3rKwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=ODZdjJIeia2B_SHc_B0f:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: rExsaElpe4rht3cQevdhAfklRkSzyVrN
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDEzMyBTYWx0ZWRfX16nGBqVeRVM1
+ WFbewCqNapBKRQaTBhMV2a/QxKD67Ud4QPnfTJxewGi0JMOCkiM4DwHEzqqisQp6F7tTmE8xxM4
+ ZoYAAvct8K4b81LCg3pdtoW2ZlblOq0=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-30_04,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606300134
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ clxscore=1015 priorityscore=1501 bulkscore=0 adultscore=0 impostorscore=0
+ suspectscore=0 phishscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300133
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,116 +154,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+On 29/6/26 20:50, Peter Maydell wrote:
+> Currently the mptsas reset function clears intr_status, but it
+> doesn't reset the doorbell state machine.  This means that the state
+> machine and the interrupt state get out of sync, and the guest can
+> trigger an assertion failure in mptsas_doorbell_read() where
+> s->doorbell_state is still DOORBELL_READ but s->intr_status does not
+> have MPI_HIS_DOORBELL_INTERRUPT set.
+> 
+> Fix this by having reset also reset the doorbell state.  Strictly
+> speaking we don't need to also clear doorbell_reply_idx and
+> doorbell_reply_size, because those are only read when in
+> DOORBELL_READ state, and the code always sets them up before
+> transitioning into that state.  But it's less confusing to clear them
+> out on reset.
+> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/304
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> Disclaimer: this fixes the fuzzer repro case, and I have
+> run "make check" and "make check-functional", but I'm pretty
+> sure neither of those actually exercises the mptsas device...
+> ---
+>   hw/scsi/mptsas.c | 4 ++++
+>   1 file changed, 4 insertions(+)
 
-The virtio specification requires that each PCI device has a vendor ID of
-0x1af4.  Verify this value before continuing with boot process.
-
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
----
- pc-bios/s390-ccw/main.c       |  1 +
- pc-bios/s390-ccw/virtio-pci.c | 19 +++++++++++++++++++
- pc-bios/s390-ccw/virtio-pci.h |  3 +++
- pc-bios/s390-ccw/virtio.c     |  2 ++
- pc-bios/s390-ccw/virtio.h     |  1 +
- 5 files changed, 26 insertions(+)
-
-diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index 26287cfd81..fb47d29bb1 100644
---- a/pc-bios/s390-ccw/main.c
-+++ b/pc-bios/s390-ccw/main.c
-@@ -163,6 +163,7 @@ static bool find_fid(uint32_t fid)
-     }
- 
-     vdev->pci_fh = entry.fh;
-+    vdev->vendor_id = entry.vendor_id;
-     virtio_pci_id2type(vdev, entry.device_id);
- 
-     return vdev->dev_type != 0;
-diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
-index 2c83ec4f13..f501252c81 100644
---- a/pc-bios/s390-ccw/virtio-pci.c
-+++ b/pc-bios/s390-ccw/virtio-pci.c
-@@ -325,6 +325,20 @@ static int enable_pci_bus_master(void)
-     return 0;
- }
- 
-+bool virtio_pci_is_supported(VDev *vdev)
-+{
-+    if (vdev->vendor_id == PCI_VENDOR_VIRTIO) {
-+        switch (vdev->dev_type) {
-+        case VIRTIO_ID_BLOCK:
-+            return true;
-+        default:
-+            return false;
-+        }
-+    }
-+
-+    return false;
-+}
-+
- int virtio_pci_setup(VDev *vdev)
- {
-     VRing *vr;
-@@ -335,6 +349,11 @@ int virtio_pci_setup(VDev *vdev)
-     vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
-     vdev->cmd_vr_idx = 0;
- 
-+    if (!virtio_pci_is_supported(vdev)) {
-+        puts("Virtio PCI unsupported for this device ID");
-+        return -ENODEV;
-+    }
-+
-     if (virtio_pci_read_pci_cap_config()) {
-         puts("Invalid virtio PCI capabilities");
-         return -EIO;
-diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.h
-index 2494df1619..33b683bd92 100644
---- a/pc-bios/s390-ccw/virtio-pci.h
-+++ b/pc-bios/s390-ccw/virtio-pci.h
-@@ -56,6 +56,8 @@
- 
- #define VIRTIO_F_VERSION_1          1   /* Feature bit 32 */
- 
-+#define PCI_VENDOR_VIRTIO           0x1af4
-+
- struct VirtioPciCap {
-     uint8_t bar;     /* Which PCIAS it's in */
-     uint32_t off;    /* Offset within bar */
-@@ -65,6 +67,7 @@ typedef struct VirtioPciCap  VirtioPciCap;
- void virtio_pci_id2type(VDev *vdev, uint16_t device_id);
- int virtio_pci_reset(VDev *vdev);
- long virtio_pci_notify(VRing *vr);
-+bool virtio_pci_is_supported(VDev *vdev);
- int virtio_pci_setup(VDev *vdev);
- int virtio_pci_setup_device(void);
- 
-diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
-index df04479aa6..a0d249db24 100644
---- a/pc-bios/s390-ccw/virtio.c
-+++ b/pc-bios/s390-ccw/virtio.c
-@@ -247,6 +247,8 @@ bool virtio_is_supported(VDev *vdev)
-     case S390_IPL_TYPE_QEMU_SCSI:
-     case S390_IPL_TYPE_CCW:
-         return virtio_ccw_is_supported(vdev);
-+    case S390_IPL_TYPE_PCI:
-+        return virtio_pci_is_supported(vdev);
-     default:
-         return false;
-     }
-diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
-index 75ae5bdbc2..aa307025e0 100644
---- a/pc-bios/s390-ccw/virtio.h
-+++ b/pc-bios/s390-ccw/virtio.h
-@@ -259,6 +259,7 @@ struct VDev {
-     bool scsi_device_selected;
-     ScsiDevice selected_scsi_device;
-     uint32_t pci_fh;
-+    uint16_t vendor_id;
-     uint32_t max_transfer;
-     uint32_t guest_features[2];
- };
--- 
-2.54.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
