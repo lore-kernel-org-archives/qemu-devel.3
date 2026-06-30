@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F162C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 22:02:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0AECC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 22:03:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wegWg-0002X1-Ho; Tue, 30 Jun 2026 18:01:55 -0400
+	id 1wegXh-0002t5-7c; Tue, 30 Jun 2026 18:02:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wegVy-0002S3-EE
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:01:14 -0400
+ id 1wegW5-0002So-Qa
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:01:20 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wegVv-0003UK-Bd
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:01:09 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1wegW2-0003WU-5O
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:01:16 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65UJDc9i2959972
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 22:01:05 GMT
+ 65UJDalA2948483
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 22:01:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=OPRtoS8bCmRfUJtgYIN+9z
- G8WE6m801BhasHkzEbwes=; b=GeZIJpSHOdeb9nH5x1z+rVGrq6IZO5fO4sMHdv
- dIF/Nm1Pi2/9uOavcFtXWmSFfRwBNqXuhScIujhQd8T/aurWHrcAQxES+vEjK1CN
- NGDC/GPTOVZknZoBZ2vPqMZ2d8g3F4lj6hql4NrqzkCNZHBQ45N9fklGTvLbneTh
- ZjHrXdq3eETUVxVh/bKi0zUZ8c4mNz5tnGXsL9Emc6z5RNdDYM/Zrt0d9M4G4D5c
- mXqf+5weGnJp10SVdgXxS1nEjhkd/qu+WN9Jys2TEfB+3mSKmvfbMlH4LLb+WN5a
- rxF6qol61UDFhCUp5ERwHinOHl7rIHbKjgqquUD3JWXSt7Bw==
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
- [209.85.222.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f4j9113hv-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ BV3Qij8EC8HKpY66szPIpqeKiHQzHVd80VSFDRIdzxo=; b=T8uWZARW3jkobYyv
+ 86/iBQ5uoy1qy8t27DC5NJ2v95Jau/msqwekOfbnCtFjWduUrUiTovAt1rSoWDeZ
+ y6/oWLx4f6H++Qr/KNAqNOcoMeKEjwVXT689L87djojfZm6YQXSXpylcUVFOLAEg
+ y0xb7EQNVa0RiXnG4g/E+IkYfii4pD6XgvsnCl7yn9LFFxG8eGtIJ4s+o2M0pcIS
+ Wz6N+UNbjL4JvrD1vDNyr4yHlXWafQM+XB1aI3KZhBiyb/+ymE8UkDr0OKHzkEFT
+ EKeR/sRks5yJGxOBfk8qrJ6g2P9l+Nt5lGiRd7W3VhTowH8ODRQn3breIv1AYK6z
+ qF7OAA==
+Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
+ [209.85.222.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f4kgw0pqb-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 22:01:04 +0000 (GMT)
-Received: by mail-ua1-f71.google.com with SMTP id
- a1e0cc1a2514c-9674d6a4ca4so5112421241.2
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 15:01:04 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 22:01:12 +0000 (GMT)
+Received: by mail-ua1-f69.google.com with SMTP id
+ a1e0cc1a2514c-9692ca167ddso1086277241.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 15:01:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782856864; x=1783461664; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=OPRtoS8bCmRfUJtgYIN+9zG8WE6m801BhasHkzEbwes=;
- b=DmBnmegwrS5I71YxeZfI53rOTXV4VvOOsoxsihismCbCwxkgSotFZ/SOmkbIWgURvZ
- WOoVVt8DXTZ0OHVNhBbCj29hJRoqo5UV4W04nSTEOod35AI0cUQ/3G1lhXWc5ZimtgXW
- 4h87mcQM9+UwDWwpyT3XUDz39gdRlY/97xfIfsatZ9x+KJYF7CxFFSljfovwFU/LiVeJ
- NYZec9HJwqSSCW8Sv1jr0jHoNjLoPC12qGqApazYbaswjXbU59aWXEPt0y9WJYzLHGF7
- SQvPQCnbtbx4puqcZ2sCTCl7mInRSfkLT2eBgX3oQS8+A+1D3IVgJYkvduMS0wRQ7c69
- baWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782856864; x=1783461664;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1782856872; x=1783461672; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OPRtoS8bCmRfUJtgYIN+9zG8WE6m801BhasHkzEbwes=;
- b=Jb1ZO838iA2wlka3GiFr0R6Tqwg3mnDi7aW6Vg+ap3hByJQVfbrnZdic2xc6lGX0wK
- bCPB2Vz4qhqQVK1d+Zcx860bjNNxbl3p2lFHYcE4GBQSlFGV0KHve9cOpBpacwvqjlNo
- /BdulA+NfVWfwyvUQ6U5z+iTLWa8dnwgJv1aGb5NbWPM74oZrPvswyDpffyNyXz7pQS3
- qIwRW6D8g4DZ6U3lb/iquBsL7AQrvJ7csLiNGnSYZXFZtapgsvyve3TNI+Hfyl9t9Ohq
- T2+k5wC8S8LiJiO3kMpTxYCY7BJX6B1Of8JHG4qNQ2xVjjszOsm5mobPTkhsPLzwoW+d
- W6vQ==
-X-Gm-Message-State: AOJu0YyK4O1bStfcDSQkZGPdf7xgIo+7w7AbAs7aj/hPzYlzJzrheknw
- rUjIbd+nPvkvVOuwsn1K1DPMT5/JjvnlsVXI4Ccykf2Iiw/H37WUfh6dbKCu0NkfbcdtvhPdKno
- 954m+Ns5wChn55ybjGyVlJFYz4qi0828VBkXTszJ1ovVkDn+jDyakrYURsIr1MXy0YA==
-X-Gm-Gg: AfdE7cneR1STqMgw6RzH/wfVZICjn5Y9+1WC/Awsvcgug8yE0Jx064f5Inrik2rk/fk
- QMI5EfC05BtuOFye1vJ5EQj0eTFDFwYcKQog1CC0P8H3rjrkV5CTnHO+BUZ4bcfNfyVq+Y2GaUy
- 9VwoXosABgQ/qmT7gYi6ZRPlaUFdIuuZy6ZsA2pFd2J5P+BssgQ/Gq2VEnuQk94hzjciUg9EUCt
- O8FLP8ckFxFQ+ccmY8o/DqKM3VzeKsdUTxKI8F7Dng+q2OgxzdRGfXT3EMDLB/LVelRsRo9SbqF
- zZ8K5LYh5wxLw5K5m4P8XP7qnlNZOsA/vRIC5t5gIbkDZXPAGYSqw4DrthV9SVVhV7tMuqqL/KS
- 1qO5PSFji/KRRr5LEWCwsIi87pQsJHwoU0/xiA1iSxMqCcfQuqhX2Bkbap3pbG19l3qqG
-X-Received: by 2002:a05:6102:94c:b0:6c5:d55d:c096 with SMTP id
- ada2fe7eead31-73a3813288amr3218111137.16.1782856863647; 
- Tue, 30 Jun 2026 15:01:03 -0700 (PDT)
-X-Received: by 2002:a05:6102:94c:b0:6c5:d55d:c096 with SMTP id
- ada2fe7eead31-73a3813288amr3218048137.16.1782856862931; 
- Tue, 30 Jun 2026 15:01:02 -0700 (PDT)
+ bh=BV3Qij8EC8HKpY66szPIpqeKiHQzHVd80VSFDRIdzxo=;
+ b=SZC8koXhRxO4L0LLkm5DvRZOP5Q07h9AQgSvSgqELRvNyo6IWnC8MnOvLHpRCIZcS3
+ iyEw2RZI7lYECot8hrcM/UlS6Q/JCJN1CMwAI+3AmIasUbhkmB2ql1LZBOjv1iVUwARR
+ EPXFJI0DBcXtYumMY6TS6aPeW179GjMeoEXHpaWtlRqYS0qPBFywL7KEw6F88hW6nKve
+ +1FrwCZ1kPKSafCY+rYbQ/vMZirfSGm5HzSlIHOOevKA4197oY4AbpP4g9n/BPW49n3g
+ nBL3qfz3iPkAc0+yoEVbwbcLXjEIh9i44qPe0rLnCe9q3ThA8CeMaRf7HHB8fzuWEyQ+
+ Nwzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782856872; x=1783461672;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BV3Qij8EC8HKpY66szPIpqeKiHQzHVd80VSFDRIdzxo=;
+ b=YexoX88SpcHuIPoQhS8fO0gzZRi6lc7Mt1XXNu/VhTErjBtX0eECHUHfdrKnoCH79M
+ U3ygA3TXwPojUUp4zNX7QlA8V4zVcv63iEPi9LYKVYSLuClcqliRevmwdxnDzW2j7/OQ
+ 0L2puoCdqj/Uma0dB4dilNII4jSYIqe3mNNbJf/lDuNf3RjYhl92hy3M161N58AwQx88
+ +bnS7p/qpsWJIE8wNmhoMbnxNdHQoDNwrokrZltlYFSjBGaP9JmDt3Ua8l/mOARAdMRM
+ iPTBXsSMZsBXg79E2NmSqvJx1ikzBEf7RWD1S7SyNqx4LDKZqsiIkDPruFGwE/mC/kLN
+ +aGw==
+X-Gm-Message-State: AOJu0YzacrDpA3dD7FYBNFX0MbVYzMsDOr0RKTyUinfab4k68Teh9Csk
+ adTt0Nsw35YuKslGwCbCQkgsMUJwQvyRXyt8gnVyKOfMtGBpS3uITKaCW5VgwtmuFC0l36Xfvxn
+ I+V+CkH6PeFiqlzjfJCV4eVCAdLegDACEVz2qzA0zsXyqI1N9a8r/acXyJDALW3AFDw==
+X-Gm-Gg: AfdE7cli/RdqXjBMOZNtdvwaipm+IV7HEPyG3/ZHRdlaXbPwgxOEpFhajdWSFEMvLA6
+ 1ADOrD5iSxYs+ZB5C03ViqdbShHFT37lEmeahnkA39rsqjWcACIm6M7hQkZb9lFxVehM2SALEqn
+ B+xNZ76x+a6BNc2t5cwdd8dGRlaeBESNmSC6NRIbX10auLqfqQeOsAUFkZiNITjBezRySSc1Z1w
+ 2GmUqpJsz0ps/iMlov4mqd+2/PFByVdrwzRXse+u3kM9MlkvNCAzi3/MOEDmyj4X2bRmCv0S4Yd
+ aBPx2OXpBHVxi7jzf7g8Kb9xy159dIQtjj1nIiJPt9QQssUO4uJqbQv/OZAzGIb3utdpdi30IyO
+ Kf0Ty4WNxn5m3yrxCvNQMFsLpxdK/0bOA8IUloWDcaqDxkd13j+t4U3CbAjMyOpatlBc3
+X-Received: by 2002:a05:6102:644b:b0:6d4:ba3e:bf97 with SMTP id
+ ada2fe7eead31-73a35ff40b8mr2328058137.4.1782856871556; 
+ Tue, 30 Jun 2026 15:01:11 -0700 (PDT)
+X-Received: by 2002:a05:6102:644b:b0:6d4:ba3e:bf97 with SMTP id
+ ada2fe7eead31-73a35ff40b8mr2327993137.4.1782856870920; 
+ Tue, 30 Jun 2026 15:01:10 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493bfc32992sm8921235e9.11.2026.06.30.15.01.01
+ ffacd0b85a97d-4756636cf1asm12147563f8f.18.2026.06.30.15.01.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Jun 2026 15:01:02 -0700 (PDT)
+ Tue, 30 Jun 2026 15:01:09 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -92,38 +94,40 @@ Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Chao Liu <chao.liu.zevorn@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 00/33] accel: Unassorted cleanups around debugging
-Date: Wed,  1 Jul 2026 00:00:27 +0200
-Message-ID: <20260630220100.1289-1-philmd@oss.qualcomm.com>
+Subject: [PATCH 01/33] cpu: Constify CPUState::cc (cached CPUClass pointer)
+Date: Wed,  1 Jul 2026 00:00:28 +0200
+Message-ID: <20260630220100.1289-2-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260630220100.1289-1-philmd@oss.qualcomm.com>
+References: <20260630220100.1289-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: R4TVeG_kheA8scg8PB_l7XSOJPsDpQCf
-X-Authority-Analysis: v=2.4 cv=ftfsol4f c=1 sm=1 tr=0 ts=6a443ca1 cx=c_pps
- a=KB4UBwrhAZV1kjiGHFQexw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Authority-Analysis: v=2.4 cv=Co2PtH4D c=1 sm=1 tr=0 ts=6a443ca8 cx=c_pps
+ a=UbhLPJ621ZpgOD2l3yZY1w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=WQsqrIFglPMf3GDb8uYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=o1xkdb1NAhiiM49bd1HK:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: R4TVeG_kheA8scg8PB_l7XSOJPsDpQCf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDIxNCBTYWx0ZWRfX6ezpYbFrrNdo
- 4BtquFowNuW+NQaNnVOppC1Z9k7hzUGgSuBE6PxXM7otTCYjT93c9aDYuw0OO2TL8wUrtZJkMrx
- 1GlO89uUN/NwKMyDS7MOKVRcqemGsfmXQo7vziHr2+MhusdhTqf6g2B18gi+E1xA/LxDfreX0Kz
- g8m6pi9uEpxavkKPB7Pw+IxWM+2PGQ4cjWdosMxabJ5w5OJOuFuzUE43cHE47GaRbZy+oWvxZbI
- u4OPJyn4OdX8CFw6/VMhuGIDyKaX+RWuVtin6B7AcJYtR87Nl7s7KFxUcwQUON7Wv3G0Nf34YDL
- NU9uzPk3mkhTKPeWFsFOnU43l+IC/wBxCiO8D1f4Qpc9OjvxqIKqlRUHDEHFrxg4DAjK/EDQHFu
- OhBZxVfTJ6O1Cbp/L/zRJPYksorrOBlQavp/ZkCIDmFYI1xH086hsU/hplXKOZZuBovnX/VXWZz
- o1m/4XnrUOvDI2un0xw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDIxNCBTYWx0ZWRfX0KnXDw6UvJ/f
- Hkx26S8QZe3aGSlOAWhbPdYeWab7fXJJ3/WemI0XTQ87es9OdQkQXivMW5lr3ldVRxHvaskFhan
- +xnsG6Vhan+wgQZMIAIa47Ux/CQEJ/Y=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=O_p9N0DIn41U_kaacwQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=O8hF6Hzn-FEA:10 a=TOPH6uDL9cOC6tEoww4z:22
+X-Proofpoint-ORIG-GUID: jGeWFDtRW5Xdnyj-Lbws5_f02n-M6l8J
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDIxNCBTYWx0ZWRfXz9lQ1Uxre5mc
+ /LrKJEQW2DARF9Qx2rpiTTgCEXwTpHJ62ONfNR4T0OM/LfPEmw8aKZsRZeBx3oyIpk3JiM964kd
+ 8KXqDdyJ+XtWXx8YCzCChqlpocKkyIE=
+X-Proofpoint-GUID: jGeWFDtRW5Xdnyj-Lbws5_f02n-M6l8J
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDIxNCBTYWx0ZWRfXzXzprp0LMju+
+ 1jWKz8QJ2uZMAwqq/4sOuMKSVi5qyvgLMVU2Ezyqr/WJkdoR3PvCEEkoTKbL90aJ1oQIAV/MJmD
+ dboSSrVTCd4eKlIWlumZKmqshz/ffdkWlwEDXYjqCD0XwJSDAB08MvBgKycgpWU4H/PXQ4LU1bD
+ kfvswHgFohlsUjKI/cbWYFvbk3mO/ClWFYWtzqxKxyo4hLhGwHL7m6lScE0lDaxEN70snE5JeDY
+ 4yKltoWYfPDwIexZtRq0b+sCQttbX0nNrY+hNKrLevWeMRkUcW07QTvit0RNXgu5pfpIh4Ws7fe
+ 5tAsSME+s0qbV0snIouXOYFJurjTsi3aApMjrqJnvOP0Mc2SLDYBFBtXRUfO5Ld2NjrcRZdrnRZ
+ 0WoOXX5lj5XiJQ/ZUI1ZE5QKclMQlOGg8bxsb7BdVu8RhzbwOnulck0x/hdYvbfvKQIwPGUvuOO
+ g15nAoew+E6wmBqebrA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-30_05,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0
- priorityscore=1501 malwarescore=0 spamscore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 clxscore=1015 bulkscore=0 suspectscore=0 phishscore=0
+ spamscore=0 lowpriorityscore=0 adultscore=0 impostorscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300214
 Received-SPF: pass client-ip=205.220.168.131;
@@ -150,122 +154,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refreshing the `split-accel' preparatory work; this series follows
-"accel: Preparatory cleanups for split-accel" from last year:
-https://lore.kernel.org/qemu-devel/20250703173248.44995-1-philmd@linaro.org/
+Various CPUState can share the same CPUClass parent,
+and must not update its fields. Protect the CPUClass
+by marking the CPUState pointer const.
 
-Nothing really noteworthy here, generic code refactoring with the
-objective to strengthen the various APIs, introducing few enums or
-headers.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ include/hw/core/cpu.h     | 2 +-
+ accel/tcg/cpu-exec.c      | 2 +-
+ accel/tcg/translate-all.c | 3 +--
+ gdbstub/gdbstub.c         | 2 +-
+ 4 files changed, 4 insertions(+), 5 deletions(-)
 
-Philippe Mathieu-Daudé (33):
-  cpu: Constify CPUState::cc (cached CPUClass pointer)
-  target/i386: Remove duplicate tlb_flush() call in cpu_post_load()
-  accel/tcg: Restrict tlb_protect/unprotect_code() to TCG
-  accel/hvf: Remove left-over comment
-  accel/mshv: Replace @dirty field by generic CPUState::vcpu_dirty field
-  gdbstub: Add trace event for STEP packet handler
-  gdbstub: Only return E22 when reverse GDB is not supported
-  accel/kvm: Always define AccelOpsClass::supports_guest_debug
-  accel/kvm: Simplify kvm_init() w.r.t. TARGET_KVM_HAVE_GUEST_DEBUG
-  accel: Change gdbstub_supported_sstep_flags() -> get_gdbstub_config()
-  gdbstub: Store @can_reverse in GDBState
-  gdbstub: Make default replay_mode value explicit in stubs
-  accel: Have get_gdbstub_config() return @can_reverse value
-  accel: Move supports_guest_debug() declaration to AccelClass
-  accel/kvm: Hold have_guest_supported in KVMState
-  accel/kvm: Hold gdbstub_sstep_flags in KVMState
-  cpu: Move BREAKPOINT definitions to 'exec/breakpoint.h'
-  cpu: Define BreakpointFlags type
-  accel: Remove unnecessary 'inline' qualifier in remove_all_breakpoints
-  gdbstub/user: Directly call gdb_breakpoint_remove_all() in user mode
-  gdbstub: Reduce @type variable scope
-  gdbstub: Introduce GdbBreakpointType enumerator
-  accel: Use GdbBreakpointType enum
-  target/arm: Inline check_watchpoints() in arm_debug_check_watchpoint()
-  target/arm: Factor arm_check_watchpoint_hit() out
-  target/xtensa: Move watchpoints handling to check_hw_watchpoints()
-  target/ppc: Ensure TCG is used in ppc_update_daw()
-  accel/tcg: Improve docstrings around TCGCPUOps::*watchpoint* handlers
-  cpu: Move CPUWatchpoint definition to 'exec/watchpoint.h'
-  cpu: Better name cpu_single_step() trace event
-  cpu: Introduce cpu_single_stepping() helper
-  cpu: Rename CPUState @singlestep_enabled -> @singlestep_flags
-  cpu: Only check SSTEP_ENABLE flag in cpu_single_stepping()
-
- accel/kvm/kvm-cpus.h               | 12 +++--
- accel/tcg/system-page-protection.h | 17 +++++++
- gdbstub/internals.h                | 10 ++--
- include/accel/accel-cpu-ops.h      | 10 ++--
- include/accel/accel-ops.h          |  4 +-
- include/accel/tcg/cpu-ops.h        | 12 +++--
- include/exec/breakpoint.h          | 26 ++++++----
- include/exec/cputlb.h              |  8 +--
- include/exec/watchpoint.h          | 20 ++++++--
- include/gdbstub/enums.h            | 12 +++--
- include/hw/core/cpu.h              | 42 ++++++++--------
- include/qemu/accel.h               | 10 ++--
- include/system/hvf_int.h           | 11 ++--
- include/system/kvm.h               |  9 ++--
- include/system/kvm_int.h           |  2 +
- include/system/mshv_int.h          |  1 -
- include/system/whpx-all.h          |  4 +-
- target/arm/internals.h             |  6 ++-
- accel/accel-common.c               | 22 ++++++--
- accel/hvf/hvf-accel-ops.c          | 23 ++++-----
- accel/hvf/hvf-all.c                |  9 ++--
- accel/kvm/kvm-accel-ops.c          |  7 ++-
- accel/kvm/kvm-all.c                | 55 +++++++++++---------
- accel/mshv/mshv-all.c              | 18 +++----
- accel/tcg/cpu-exec-common.c        |  2 +-
- accel/tcg/cpu-exec.c               | 12 ++---
- accel/tcg/cputlb.c                 | 15 +++---
- accel/tcg/tb-maint.c               |  1 +
- accel/tcg/tcg-accel-ops-rr.c       |  2 +-
- accel/tcg/tcg-accel-ops.c          | 31 ++++++------
- accel/tcg/tcg-all.c                | 16 ++++--
- accel/tcg/translate-all.c          |  3 +-
- accel/tcg/user-exec-stub.c         | 11 ++--
- accel/tcg/watchpoint.c             |  9 ++--
- accel/whpx/whpx-accel-ops.c        |  7 ---
- accel/whpx/whpx-common.c           |  1 +
- cpu-common.c                       |  8 +--
- cpu-target.c                       | 10 ++--
- gdbstub/gdbstub.c                  | 11 ++--
- gdbstub/system.c                   | 39 ++++++--------
- gdbstub/user.c                     | 20 ++------
- linux-user/riscv/cpu_loop.c        |  2 +-
- linux-user/s390x/cpu_loop.c        |  2 +-
- stubs/replay-mode.c                |  2 +-
- system/cpus.c                      |  2 +-
- system/watchpoint.c                |  8 +--
- target/arm/hvf/hvf.c               | 24 +++++----
- target/arm/hyp_gdbstub.c           |  9 ++--
- target/arm/kvm.c                   | 14 +++---
- target/arm/tcg/debug.c             | 81 +++++++++++++++---------------
- target/arm/tcg/mte_helper.c        |  3 +-
- target/arm/whpx/whpx-all.c         |  2 +-
- target/i386/hvf/hvf.c              | 10 ++--
- target/i386/kvm/kvm.c              | 15 +++---
- target/i386/machine.c              |  1 -
- target/i386/mshv/mshv-cpu.c        |  6 +--
- target/i386/whpx/whpx-all.c        |  8 +--
- target/loongarch/kvm/kvm.c         | 10 ++--
- target/microblaze/translate.c      |  2 +-
- target/ppc/cpu.c                   |  4 +-
- target/ppc/kvm.c                   | 20 +++++---
- target/ppc/translate.c             | 16 +++---
- target/riscv/cpu_helper.c          |  2 +-
- target/riscv/debug.c               | 12 ++---
- target/riscv/kvm/kvm-cpu.c         |  8 +--
- target/s390x/kvm/kvm.c             | 11 ++--
- target/s390x/tcg/debug.c           |  3 +-
- target/xtensa/dbg_helper.c         |  2 +-
- target/xtensa/helper.c             | 36 ++++++-------
- trace-events                       |  2 +-
- 70 files changed, 477 insertions(+), 388 deletions(-)
- create mode 100644 accel/tcg/system-page-protection.h
-
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 59d601465b4..60a23d6f38b 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -480,7 +480,7 @@ struct CPUState {
+     /*< private >*/
+     DeviceState parent_obj;
+     /* cache to avoid expensive CPU_GET_CLASS */
+-    CPUClass *cc;
++    const CPUClass *cc;
+     /*< public >*/
+ 
+     int nr_threads;
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 9c754b03656..d7f91dce9db 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -460,7 +460,7 @@ cpu_tb_exec(CPUState *cpu, TranslationBlock *itb, int *tb_exit)
+          * counter hit zero); we must restore the guest PC to the address
+          * of the start of the TB.
+          */
+-        CPUClass *cc = cpu->cc;
++        const CPUClass *cc = cpu->cc;
+         const TCGCPUOps *tcg_ops = cc->tcg_ops;
+ 
+         if (tcg_ops->synchronize_from_tb) {
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index 3f1a3a28438..328d96aba30 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -575,7 +575,7 @@ void tb_check_watchpoint(CPUState *cpu, uintptr_t retaddr)
+ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
+ {
+     TranslationBlock *tb;
+-    CPUClass *cc;
++    const CPUClass *cc = cpu->cc;
+     uint32_t n;
+ 
+     tb = tcg_tb_lookup(retaddr);
+@@ -591,7 +591,6 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
+      * to account for the re-execution of the branch.
+      */
+     n = 1;
+-    cc = cpu->cc;
+     if (cc->tcg_ops->io_recompile_replay_branch &&
+         cc->tcg_ops->io_recompile_replay_branch(cpu, tb)) {
+         cpu->neg.icount_decr.u16.low++;
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index c3c944e965b..26366acb674 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -578,7 +578,7 @@ static void gdb_register_feature(CPUState *cpu, int base_reg,
+ 
+ static const char *gdb_get_core_xml_file(CPUState *cpu)
+ {
+-    CPUClass *cc = cpu->cc;
++    const CPUClass *cc = cpu->cc;
+ 
+     /*
+      * The CPU class can provide the XML filename via a method,
 -- 
 2.53.0
 
