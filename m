@@ -4,127 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2DDAC43602
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 13:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57A9EC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:00:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weYyh-000218-3m; Tue, 30 Jun 2026 09:58:19 -0400
+	id 1weZ0G-0005QR-03; Tue, 30 Jun 2026 09:59:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1weYyd-00020M-Us; Tue, 30 Jun 2026 09:58:16 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1weZ0E-0005KE-I7; Tue, 30 Jun 2026 09:59:54 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1weYyc-0003om-Ak; Tue, 30 Jun 2026 09:58:15 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fqeWR2/46P1Q850EOFmMZOUYer1tT8IucRGf4hAl1FutDkfDMeII8OhmSd2Rt6aD9OF0OvnY5pGOWpPsOMf9N0hLon+1onT8N/1VNOcqDIk+U2emKOUDx+TX5HA7Q6Q/qWyP6TL64R9eaoQ88kpy1uitDKwotUVy07auWJtRFyILOmvG9RI8lKnRoIXXYCg1uHMxYdCiI6Ow9/GADTKjgmDiyz8YSOC5yyLJWz6SOzTjJTYG+czUCw3VjYHG3HpcklLwm2VDE+3rdjncW2G0OpoyzYTzodtq3eACiU6sG0P5HjHQpi6bK8rM01/VDsWgHw1xTWclR4iLEVMGCxJCDQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SHnw/B+4SGmk7uUK3XX9T+nDhUFaptf/jqhd8hx1JiM=;
- b=MUogkzPi7QTp1gyV7xsG5exeka3Xnp+tzWlzr6eWAh62uNB0/mWHyz9qqTwcUkYBTm8leftPQAS+FSDB0sBfHJzFPWN5Ce8aiwhfASOg+3MRTGojZkIj7d1iJsHqGtZ6VtHRHrVQCXqBFPQPusxmo6+nHwBzxI+f25lbRAtKHQYYjiNz7BTCVHfL3DxG1X7eWcczsbJIsbJcbhjPHCnmk7jrfawhNNv/epOZ+7BSaVOP4AAf/fE5yl3EnMkL5jAIQzxjy/D1bweflQph2Wm8Py0ZZ4ZtnGzM4thE/NB19G1shan2JMtLqCF802Pc3O1mxumDY53nxOdL/trvXGkKWA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SHnw/B+4SGmk7uUK3XX9T+nDhUFaptf/jqhd8hx1JiM=;
- b=iiZpuYPRCjQ4Iz5ZkmumRjYRJSevOUaclk+PG8TrpqIepUYrt1u5pxXPHJOKlpcCvfMiRhmaeyNiY1U2oEcoaKPEz/Sv9MbtVBZViJ8gSQ2u1qEsznxq6pZqyHSthN+YS2DEh99F6mxUMqVPGCpQ1taR6fwGPBUryBK2TjfWEUdkzm8xrSrj1BDPphBNVOcuV4y+GpopG28zOPpOoT+UWy3b6tHUcPXJLCen2eZ5O4ZkkLAfgJAHqi5KlfE+uDlyTc8XJs+HtRBCdnTJ/kgDufwy1xFz4iQi470Ep3Xsuyfv6S0SDgRPB5J4Cn6fH4TLc2izcARyjrsYj2/TLaq7zw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by TYPPR02MB8959.apcprd02.prod.outlook.com (2603:1096:405:382::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Tue, 30 Jun
- 2026 13:58:03 +0000
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0159.018; Tue, 30 Jun 2026
- 13:58:03 +0000
-From: Bin Meng <bin.meng@processmission.com>
-To: QEMU <qemu-devel@nongnu.org>
-Cc: Alistair Francis <alistair@alistair23.me>, Hanna Reitz <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Subject: [PATCH 03/10] hw/block: m25p80: Fix dummy byte handling for Macronix
- flash
-Date: Tue, 30 Jun 2026 21:57:22 +0800
-Message-Id: <20260630135729.466264-4-bin.meng@processmission.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260630135729.466264-1-bin.meng@processmission.com>
-References: <20260630135729.466264-1-bin.meng@processmission.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SE2P216CA0161.KORP216.PROD.OUTLOOK.COM
- (2603:1096:101:2cb::15) To KL1PR02MB4977.apcprd02.prod.outlook.com
- (2603:1096:820:71::8)
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1weZ0C-0004oi-V2; Tue, 30 Jun 2026 09:59:54 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65U9nJvE1535058; Tue, 30 Jun 2026 13:59:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=DwbGV7+T1Yrf9/3wO3J1YAxHmEC6q/0qNJY7UW7WU1s=; b=b5srNAfODP58
+ lhmIhiCRNWsV23hUVni/pqaBEu+vKp1idSqCX4z00QxgkZBpDiM3+f2f2StAhtbR
+ RoRl3CsDpjP1/7oxeHsjrHnuNy/PlOAWgRXinFbotRScvC+ziPCOy5b503EmRUWL
+ aOi3S35BLGGBkZ3wzLqpDUchSDEGt5ssq6fmznUbbxtGSBztGA2C82nRgcc9xX/n
+ q2kH9l6OykZd7uXCphtFFhmPpYdQEsVN076vpODCQxqoWSnK1vBpRu4BUJUikpx5
+ /u/rcpiX6lZsc0CWDAHS9irENR5rGBkCAgR6GioXmLNFEMG57aOdbH2Uv4GnJ40B
+ rt1gJi+QtA==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26mjpvw1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 13:59:49 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UDnvd3032252;
+ Tue, 30 Jun 2026 13:59:48 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhafat-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 13:59:48 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65UDxlwL26018506
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Jun 2026 13:59:47 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6E3D858056;
+ Tue, 30 Jun 2026 13:59:47 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 503A65805D;
+ Tue, 30 Jun 2026 13:59:46 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 30 Jun 2026 13:59:46 +0000 (GMT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYPPR02MB8959:EE_
-X-MS-Office365-Filtering-Correlation-Id: fb597c56-f06e-405d-4550-08ded6af9a41
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|34096008|23010399003|3023799007|6133799003|22082099003|18002099003|56012099006;
-X-Microsoft-Antispam-Message-Info: ddtJql2dff036mivNRv2EuwMJRKZpZu70VbNW872VN6ptsKoVRfLlHvFer3/o0uVpi7KwPAet4dHgfX2u5oxeEYRBAsASlRbyRwk/Fo+l/gXiC57qoTqZzcq+hylUpHB3eNSFRGXxn9y2MMX0G9STrhXx8s2T92mCpRK0mLOSWWgquMwqND1zPo48SGEnYk9QNJD5wuu9l2Tjpwk58KOJzlWcRJ1N202iHlwFbyqphRw8vY8nKDbrxJW8D1koCRweJZeM2uWJDQWrK3mzqNH9QcNtT288onBi//Smf0pwCGtwHkddTAMALrshHtGRAeUs5DMplKRyiHpy2FBPkZN5rkg1az0OR0nWCKniwSTgZhPCu9iApHzzZcvWIgGf2zt8ExOwCykPLarfV7XmHTUAwcNdlbPZ9ZoSdjMlcGwMgbJbFE/aILGE/+25WQfCG4WOD8lODVF5BGur3Fuxo+eDDwKx27dzpgbRFO+599sEkjWxqaGg0yNRzV+gSAx5aTHCFBctQGUt06KuT5ikaxRBeY59JB+scd2RP6nplcP3xDO9/59FS23vDdm2OTo64A0RCSJYsA1t391gM7YupIVkhiJ1oyAq015QdGjjq4Bq//y2mAIUvr9iQPrJNSTNBXL
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(34096008)(23010399003)(3023799007)(6133799003)(22082099003)(18002099003)(56012099006);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?EN5GFX/Rd3aqqay6QELEK7RNCnEZjkbUq/A8WkN+cA7aWLSjykyUMPCSfj5c?=
- =?us-ascii?Q?RhYduyTlARnJFJ04XYTVj/33hEIv/tL1Ms/DWC6LuJXO5GsPNb97YwSxdwv/?=
- =?us-ascii?Q?N0Ehe7GTt1bExDc4k31oyKUwbCRADCStRRRW0lr1PSpuqSa+B/swVZyrz+Nc?=
- =?us-ascii?Q?UR23QLN2rC7bMUJC8mkiPYopTRkOz2lXi/erWxIQMqoX8Z6R0ugcbs8JhOXe?=
- =?us-ascii?Q?ev9avZX4vKjV5g2aP+4x6ET4Z+RKVLHrB6yLy0v3e12cMCqBPDwVWM+2yvEW?=
- =?us-ascii?Q?u8YN0/F79hhyKkOYEZa3I+lpHvohH1IRzinFV9iChG/46//GzQRAQghaMuhG?=
- =?us-ascii?Q?cdf2pcrcwJ+RsvAwDcLj0SHN/X+/V9zRF4nEVIBavGmfh0LC3ePNzibkTpW6?=
- =?us-ascii?Q?AlPijx0d+DtHGhVOgP/nMnzdfXDZwkyJYPYeivSj+LA3brgxT4NMhUkQsdgn?=
- =?us-ascii?Q?ms00uMyS+ggJjEWS30h4VbEmsLUJksYwHf0YTEO3gpEwhIrU1kXW4IdvG0Pg?=
- =?us-ascii?Q?H6FLOqCPh2ia/bTvsjgQCkr+40JPXeke6vswu9/OjwDvzrY3ZerCSFL/iRnI?=
- =?us-ascii?Q?kQda4V6ig39mGMsvcwvve3/4A5dKBgWjdMhDcukdOm8YmvxAGFol+sBcP2BH?=
- =?us-ascii?Q?MvEz9YI2GQ8hOMOEuDXPaZHSQ40EsLMFV43gwPaJDZQea2UQ6t/KTnPppYo1?=
- =?us-ascii?Q?9QwX7DB2I7yPsJWpxx83MLNRhBrXjB5nioeL0gBtxCr7Zf2LT5qGO+Nb2817?=
- =?us-ascii?Q?oY3TROUyHrXusGvy8Sj40SEabingFvo4NifY7V9vTX2WLAfigjndbYejzbru?=
- =?us-ascii?Q?e8Mw+EFihZ6NkiuRtTV0DRrL4swuc4YKPYgxMJfgAOzZJsh9v5m9m7Xp2lEJ?=
- =?us-ascii?Q?xRHGmc5ruR6jlT18p6ayPyoukvPD+WjAgOXeJ4uRCLqw8A3AEqGmkPzMMhjl?=
- =?us-ascii?Q?JtZq7I7W47bubgfeBqw3tgNew1bK/4C4V0o2TnOngBF6oBRBEtbFFKNjPeuf?=
- =?us-ascii?Q?CbIYpdCQ0mUGTfFh0ZWP9kCV9Mb1hr/aHWuP9caWOIERJvc7onmOITo7bNeB?=
- =?us-ascii?Q?MSvL0dh8TGim6AMLoJNQCbaGDTaGD6y6d6nCI0T3uKZSc05sFrriEnlkLwAn?=
- =?us-ascii?Q?y54xpWS4BQnUuy1dNiKT+xUgWJqnNgfNtNSknwSqJPwp9tGK8DvD3Y0Ml2HU?=
- =?us-ascii?Q?0yyyX8DTWpQj5G0aD3zL5JJLmmzCuUa01zKu/1251aRhhQyD+9cw9saHf3ab?=
- =?us-ascii?Q?5tR51Dbl9X9RbOAVoJoMkFgJdnEWaZoADQjibbS0g5FNq/Fjzs+YfvkXto4B?=
- =?us-ascii?Q?3QJsClRZcyA6i2LaD6DlUt6Mqk/OmrLQNdOOd1karWPWZfsnVlBjo28f+M9v?=
- =?us-ascii?Q?kRTk2zIwOCj9n/bGl8qTZkU4WJR4hpkLYqcGOO93CIaIK0MUOJzsPl8btADF?=
- =?us-ascii?Q?FaY3Ub8LJJiM2gF+ANWllWSx1qKlhVinTXaY6cBlzlsLcfMH2R951cQQOVgu?=
- =?us-ascii?Q?qrgDhnOq+NjaJ5kWn6FcUWMwnh3w5pA+wgXdwryfLWcpuQSuPmPhhfms3fD8?=
- =?us-ascii?Q?DgfVpd58lNfGy9ckFQh24NfZsceP2+6InvcA4TS6280ileilqGwQpjmxnPDy?=
- =?us-ascii?Q?Ck2Ja+y3OgLNC5qo/ighP7Z7aoDowZXoI+Dk0Po3IlwrbegQJrX+lT2zGJ8V?=
- =?us-ascii?Q?vYVMyY2gnUSbMhzblfH8zA23moO1vzXrfY5HThDeODM2oJANsYGQzs/XQt0v?=
- =?us-ascii?Q?B9RFiwlD0UR0dEcdzeY8Q3V4cmhq+os=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fb597c56-f06e-405d-4550-08ded6af9a41
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jun 2026 13:58:03.0452 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ShH03Sm2iwxlE7t1+UBVU0iUqqtgAgMBGpA17mn9ODMMUECxr95Zh3KMiHOhQAYxcKqb6O4f2M76LQLN2Ieg525IHVXXPTyJYLzXOE3uNdc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYPPR02MB8959
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=bin.meng@processmission.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Date: Tue, 30 Jun 2026 15:59:45 +0200
+From: Harald Freudenberger <freude@linux.ibm.com>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: richard.henderson@linaro.org, david@kernel.org, thuth@redhat.com,
+ berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ linux390-list@tuxmaker.boeblingen.de.ibm.com,
+ linux-s390@vger.kernel.org, dengler@linux.ibm.com,
+ borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
+Subject: Re: [PATCH v8 06/18] target/s390x: Support AES CBC for cpacf kmc
+ instruction
+Mail-Reply-To: freude@linux.ibm.com
+In-Reply-To: <193565c3-6215-4dd7-bb99-4410ed48196f@linux.ibm.com>
+References: <20260624081029.23815-1-freude@linux.ibm.com>
+ <20260624081029.23815-7-freude@linux.ibm.com>
+ <193565c3-6215-4dd7-bb99-4410ed48196f@linux.ibm.com>
+Message-ID: <81ddd4d2d7c3912704c41db6bd2bf453@linux.ibm.com>
+X-Sender: freude@linux.ibm.com
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDEyOSBTYWx0ZWRfX52ctn0xxmTQy
+ 7re+EvqxVXnrJoOKrh043Q5Q3BcRZnrweCEytXwi+ppvJ833rasG47F3pkAQJ8OwDoePrCDyUy3
+ 2/8ltBKS2oV0oYAjOKuiC4P4blcQfFW+tTXEXEfFv8eEf6CpknkDEcQuE4emkkKfUyPzXjxQsVM
+ V5RP5OhnSqehn8PkkWW3wWJo29a2+gbRPm6ut0V4s4JrpH5DgySoZxiW9y3Ih9UnXllCkfONAyS
+ Of54e+T2IBPHfzSVy1ADz7IIjw9xOmGZ2CYg1SSUKtBQySC14Ljff1E6JEtYdEz39F0daLRuvHW
+ F8jlE7nLXcOKYayR7XOFgThxaW1D++j8WT3WQmYPnY7muy8uaFkaC+iCGQfRarZNeH9+N1hYjxe
+ jscnGXwlQw7tX3iVwtJzIafC9J0ff4ZvRdwu1sBZHOO8u1FmQwYWxFXIk9Irzj6xI0j/NI0zEt3
+ 5m/adFX8au8VZpdrESg==
+X-Proofpoint-GUID: 19iLcD2_3rvNgPqS3-K03qt3fjAeAvJs
+X-Authority-Analysis: v=2.4 cv=Z8bc2nRA c=1 sm=1 tr=0 ts=6a43cbd5 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=SFrgTpVYP7yuAwOcGMEA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDEyOSBTYWx0ZWRfXx79Mi0z/yyTC
+ Sml/B6tCFDPnzhQqVtVuk+bruyYXIxJvTeBEbwvM1RvlN6wGfoF7gU4S3+kXv+Ua6w2KDmOEhRv
+ gyOoLqSUr1JPRqJpJF84gQqDgsGTJ8E=
+X-Proofpoint-ORIG-GUID: 19iLcD2_3rvNgPqS3-K03qt3fjAeAvJs
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-30_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 adultscore=0 spamscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300129
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=freude@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -138,132 +127,146 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Macronix flashes expose DC[1:0] bits in the volatile configuration
-register [1]. These bits select the number of dummy clock cycles
-used by the fast-read command families.
+On 2026-06-24 19:22, Ilya Leoshkevich wrote:
+> On 6/24/26 10:10, Harald Freudenberger wrote:
+>> Support the subfunctions CPACF_KMC_AES_128, CPACF_KMC_AES_192
+>> and CPACF_KMC_AES_256 for the cpacf kmc instruction.
+>> 
+>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+>> Tested-by: Holger Dengler <dengler@linux.ibm.com>
+>> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
+>> ---
+>>   target/s390x/gen-features.c      |   3 +
+>>   target/s390x/tcg/cpacf.h         |   4 ++
+>>   target/s390x/tcg/cpacf_aes.c     | 102 
+>> +++++++++++++++++++++++++++++++
+>>   target/s390x/tcg/crypto_helper.c |  24 ++++++++
+>>   4 files changed, 133 insertions(+)
+> 
+> [...]
+> 
+>> diff --git a/target/s390x/tcg/cpacf_aes.c 
+>> b/target/s390x/tcg/cpacf_aes.c
+>> index ba836f1473..6412cc187d 100644
+>> --- a/target/s390x/tcg/cpacf_aes.c
+>> +++ b/target/s390x/tcg/cpacf_aes.c
+>> @@ -111,3 +111,105 @@ int cpacf_aes_ecb(CPUS390XState *env, const int 
+>> mmu_idx, uintptr_t ra,
+>>         return !len ? 0 : 3;
+>>   }
+>> +
+>> +static void aes_xor(const uint8_t *src1, const uint8_t *src2, uint8_t 
+>> *dst)
+>> +{
+>> +    for (int i = 0; i < AES_BLOCK_SIZE; i++) {
+>> +        dst[i] = src1[i] ^ src2[i];
+>> +    }
+>> +}
+>> +
+>> +int cpacf_aes_cbc(CPUS390XState *env, const int mmu_idx, uintptr_t 
+>> ra,
+>> +                  uint64_t param_addr, uint64_t *dst_ptr_reg,
+>> +                  uint64_t *src_ptr_reg, uint64_t *src_len_reg,
+>> +                  uint32_t type, uint8_t fc, uint8_t mod)
+>> +{
+>> +    enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
+>> +    uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE], 
+>> buf[AES_BLOCK_SIZE];
+>> +    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
+>> +    uint64_t addr, len = *src_len_reg, done = 0;
+>> +    int i, keysize, addr_reg_size = 64;
+>> +    uint8_t key[32], iv[AES_BLOCK_SIZE];
+>> +    AES_KEY exkey;
+>> +
+>> +    g_assert(type == S390_FEAT_TYPE_KMC);
+>> +
+>> +    switch (fc) {
+>> +    case 0x12: /* CPACF_KMC_AES_128 */
+>> +        keysize = 16;
+>> +        break;
+>> +    case 0x13: /* CPACF_KMC_AES_192 */
+>> +        keysize = 24;
+>> +        break;
+>> +    case 0x14: /* CPACF_KMC_AES_256 */
+>> +        keysize = 32;
+>> +        break;
+>> +    default:
+>> +        g_assert_not_reached();
+>> +    }
+>> +
+>> +    if (!(env->psw.mask & PSW_MASK_64)) {
+>> +        len = (uint32_t)len;
+>> +        addr_reg_size = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
+>> +    }
+>> +
+>> +    /* length has to be properly aligned. */
+>> +    if (!QEMU_IS_ALIGNED(len, AES_BLOCK_SIZE)) {
+>> +        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+>> +    }
+>> +
+>> +    /* fetch iv from param block */
+>> +    for (i = 0; i < AES_BLOCK_SIZE; i++) {
+>> +        addr = wrap_address(env, param_addr + i);
+>> +        iv[i] = cpu_ldb_mmu(env, addr, oi, ra);
+>> +    }
+>> +
+>> +    /* fetch key from param block */
+>> +    for (i = 0; i < keysize; i++) {
+>> +        addr = wrap_address(env, param_addr + AES_BLOCK_SIZE + i);
+>> +        key[i] = cpu_ldb_mmu(env, addr, oi, ra);
+>> +    }
+> 
+> Another couple of candidates for copy_from_guest_wrap().
+> 
 
-Convert the Macronix dummy-cycle settings through per-command-family
-tables and round up the non-byte-aligned cases that the byte-oriented
-SSI model cannot represent exactly.
+Yes, makes sense to have some (inline) function. I think I will add
+something to cpacf.h.
 
-[1] https://www.macronix.com/Lists/Datasheet/Attachments/8657/MX66L51235F,%203V,%20512Mb,%20v1.1.pdf
-
-Fixes: cf6f1efe0b57 ("m25p80: Fast read commands family changes")
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
----
-
- hw/block/m25p80.c | 66 +++++++++++++++++++++++++++--------------------
- 1 file changed, 38 insertions(+), 28 deletions(-)
-
-diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-index ba109cc055..745d13dff6 100644
---- a/hw/block/m25p80.c
-+++ b/hw/block/m25p80.c
-@@ -975,7 +975,6 @@ static uint8_t numonyx_extract_cfg_num_dummies(Flash *s)
- {
-     uint8_t num_dummies;
-     uint8_t mode;
--    assert(get_man(s) == MAN_NUMONYX);
- 
-     mode = numonyx_mode(s);
-     num_dummies = extract32(s->volatile_cfg, 4, 4);
-@@ -1029,6 +1028,41 @@ static uint8_t numonyx_extract_cfg_num_dummies(Flash *s)
-     return num_dummies / 8;
- }
- 
-+static uint8_t macronix_extract_cfg_num_dummies(Flash *s, uint8_t bus_width)
-+{
-+    static const uint8_t dummy_cycles_fast[4] = { 8, 6, 8, 10 };
-+    static const uint8_t dummy_cycles_dio[4] = { 4, 6, 8, 10 };
-+    static const uint8_t dummy_cycles_qio[4] = { 6, 4, 8, 10 };
-+    const uint8_t *dummy_cycles = dummy_cycles_fast;
-+    uint8_t num_dummies;
-+
-+    assert(get_man(s) == MAN_MACRONIX);
-+
-+    switch (s->cmd_in_progress) {
-+    case DIOR:
-+    case DIOR4:
-+        dummy_cycles = dummy_cycles_dio;
-+        break;
-+    case QIOR:
-+    case QIOR4:
-+        dummy_cycles = dummy_cycles_qio;
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    num_dummies = dummy_cycles[extract32(s->volatile_cfg, 6, 2)];
-+    num_dummies *= bus_width;
-+
-+    if (num_dummies % 8) {
-+        qemu_log_mask(LOG_UNIMP,
-+                      "M25P80: the number of dummy bits is not multiple of 8");
-+        num_dummies = ROUND_UP(num_dummies, 8);
-+    }
-+
-+    return num_dummies / 8;
-+}
-+
- static void decode_fast_read_cmd(Flash *s)
- {
-     s->needed_bytes = get_addr_length(s);
-@@ -1044,11 +1078,7 @@ static void decode_fast_read_cmd(Flash *s)
-         s->needed_bytes += numonyx_extract_cfg_num_dummies(s);
-         break;
-     case MAN_MACRONIX:
--        if (extract32(s->volatile_cfg, 6, 2) == 1) {
--            s->needed_bytes += 6;
--        } else {
--            s->needed_bytes += 8;
--        }
-+        s->needed_bytes += macronix_extract_cfg_num_dummies(s, 1);
-         break;
-     case MAN_SPANSION:
-         s->needed_bytes += extract32(s->spansion_cr2v,
-@@ -1096,17 +1126,7 @@ static void decode_dio_read_cmd(Flash *s)
-         s->needed_bytes += numonyx_extract_cfg_num_dummies(s);
-         break;
-     case MAN_MACRONIX:
--        switch (extract32(s->volatile_cfg, 6, 2)) {
--        case 1:
--            s->needed_bytes += 6;
--            break;
--        case 2:
--            s->needed_bytes += 8;
--            break;
--        default:
--            s->needed_bytes += 4;
--            break;
--        }
-+        s->needed_bytes += macronix_extract_cfg_num_dummies(s, 2);
-         break;
-     case MAN_ISSI:
-         /*
-@@ -1146,17 +1166,7 @@ static void decode_qio_read_cmd(Flash *s)
-         s->needed_bytes += numonyx_extract_cfg_num_dummies(s);
-         break;
-     case MAN_MACRONIX:
--        switch (extract32(s->volatile_cfg, 6, 2)) {
--        case 1:
--            s->needed_bytes += 4;
--            break;
--        case 2:
--            s->needed_bytes += 8;
--            break;
--        default:
--            s->needed_bytes += 6;
--            break;
--        }
-+        s->needed_bytes += macronix_extract_cfg_num_dummies(s, 4);
-         break;
-     case MAN_ISSI:
-         /*
--- 
-2.34.1
-
+>> +
+>> +    /* expand key */
+>> +    if (mod) {
+>> +        AES_set_decrypt_key(key, keysize * 8, &exkey);
+>> +    } else {
+>> +        AES_set_encrypt_key(key, keysize * 8, &exkey);
+>> +    }
+>> +
+>> +    /* process up to MAX_BLOCKS_PER_RUN aes blocks */
+>> +    for (i = 0; i < MAX_BLOCKS_PER_RUN && len >= AES_BLOCK_SIZE; i++) 
+>> {
+>> +        aes_read_block(env, mmu_idx, *src_ptr_reg + done, in, ra);
+>> +        if (mod) {
+>> +            /* decrypt in => buf */
+>> +            AES_decrypt(in, buf, &exkey);
+>> +            /* buf xor iv => out */
+>> +            aes_xor(buf, iv, out);
+>> +            /* prep iv for next round */
+>> +            memcpy(iv, in, AES_BLOCK_SIZE);
+>> +        } else {
+>> +            /* in xor iv => buf */
+>> +            aes_xor(in, iv, buf);
+>> +            /* encrypt buf => out */
+>> +            AES_encrypt(buf, out, &exkey);
+>> +            /* prep iv for next round */
+>> +            memcpy(iv, out, AES_BLOCK_SIZE);
+>> +        }
+>> +        aes_write_block(env, mmu_idx, *dst_ptr_reg + done, out, ra);
+>> +        len -= AES_BLOCK_SIZE, done += AES_BLOCK_SIZE;
+> 
+> I think
+> 
+>     len -= AES_BLOCK_SIZE;
+>     done += AES_BLOCK_SIZE;
+> 
+> would be clearer.
+> 
+> 
+> Other than that:
+> 
+> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> 
+> [...]
 
