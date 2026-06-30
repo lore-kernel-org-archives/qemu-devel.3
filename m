@@ -4,104 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 151F3C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 05:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CEC3C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 05:44:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weQr3-0005gj-OG; Tue, 30 Jun 2026 01:17:53 -0400
+	id 1weRGY-0000sU-8a; Tue, 30 Jun 2026 01:44:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1weQqx-0005fI-Vy
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 01:17:49 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1weQqt-0007ny-KK
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 01:17:46 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-664db84f074so1757802d50.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jun 2026 22:17:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782796662; cv=none;
- d=google.com; s=arc-20260327;
- b=fzhJRBf3hXaJxFBEZmuU8fX7h4kvp8L/dLmvrUMchk4MF1tOsLgk7dZ2gv+jRJsZ0u
- aCQ7sW4ilyYWdxwuv8rubfdiVnkZ/8bCIsu3HCBYCsDP1TfUxgnxDlQADL8f9pkvPeQe
- +ftfa/4bLZ+PwT8+usBFeaBABcyhInTwr3FaZcBUlEVJEYUoARlipqllw0jXphZKZkpA
- JZg3lV/E0LnCpiUKBns1fL7DaqpRNePeZi5ajoeg6E1rP1EDLGM8pBKRkp2K3Lm31Sz7
- nLGmoCYW40jk6fKAFjzD4aH85vHIvHN1BUAMI/Avmj/8QeDwxsdE3MREG7TDzXuihfiq
- gEgg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=BVTF+Ub9rlHpqD3pivcOnwoBRq9ruG7byLVLRbeZ24g=;
- fh=iDp5i+ro4oOWeHQdE5F92zc2sb8szbNgm/kYGOQWLcY=;
- b=AZXRO7cL2dQJ2hdrPHeughJ+0KvKSnjX3tcNvNVujZtyCOfupBjJ6pIFdTWGlgvNHW
- OENLZzBlPAH6wpbMndkSW8iWe12rs4fo+SD/Mm0R2XM/Krc4tge/DCaYpitiU90inLOP
- meT9ktuu3nxLlVfA7LLEU8ppQ7im9qy9PFHRwW7rmZaVKTR2YzWod6DWvzBBhFzIUuHg
- RmiS+M6MJCLBdolQgEUSt6EeC9I9BvstdAsv28MmA85XDV7iItrRM2i2wlfyrpF3/Ooa
- ayFX/VzY5tKhrFMZ9TmOtt2JKD9ZgAOMOwMzwQYy7OZ+OAzutTzQvJ7dS3184HPmRiaW
- I08w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782796662; x=1783401462; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BVTF+Ub9rlHpqD3pivcOnwoBRq9ruG7byLVLRbeZ24g=;
- b=X/Y4fWsPbpPilvRNcs5VRbN+UhIaJL6s01DA5ooxgCVxFMNHkWYXswIrQnjoRhoP57
- E1729lMvOxKSA5KZ8Tbpe+I50oouHKjudAK4UAYtMB/L0xiSY3T4/a87Uq1lrfHYIUSG
- uihR9xJQS4orOT5oCwzaHGc8jCiog/VmTi48+kr+jA8O6wpBuv0y84no/WyuN7QSy54K
- +gy2dBw/UEyABd4PFgX7bHdXkS6G7I7OAedAZXs38chjlFpv0zFaHU5caLugGpAih5yK
- Ev/uzW2F31EV+XIRbDTSi8PV8zXt2XKYFPjAPf4Z+ofmlZuHV9yI51Y8aJda0AMULQSA
- uQFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782796662; x=1783401462;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BVTF+Ub9rlHpqD3pivcOnwoBRq9ruG7byLVLRbeZ24g=;
- b=SgJeGhxUB3C1AMs0805u/XIKlLmRSNZyuCN6mFzeIVjgoXIN4K71jvKVqkAQpBNHR2
- VYw8Tqv0UDCygH4ILLj27BfUXi8vALvF49P/iqLUXMDbiMgEB6hD7b/HanRnMHQMQbxU
- 9D4TIe9nFMXnaFcaatFtYLGKNUwuC8VKWFFMoD2DQl0fl08fI7qQvfANr6Qns9jyzuLe
- G+KP6A0QICOaukB8H7ZwVO5uqw3BlkQrNrYd1mOUS1Fo15o4xHOGkrRoDECat103BXlX
- MIKkQS8Sn40LxejFnPnHApJ90SOIjOPIryTMM6uDFjTwnv+0jZzbPiH4GLCHcX+pbcKJ
- rDOQ==
-X-Gm-Message-State: AOJu0YzU8E3+0yGFzTBQcY3oDLtLReQe3v9aWPuGCPTMlN0WimdsuMpz
- cgKxQAUtyK+AkqOAzxyyiylKD9S2AAqshSWRDMomhgQVIk1DOBHgyPAWtqqgTfe7VGhdTsBEqnv
- 9Yp+ozSb4hKdWtUvXjlgxxkdw/cwb6gU=
-X-Gm-Gg: AfdE7cmsb6uN3y89BAwR5K31RYTJ8hvZ7HmiD449lMCFTTBLQyQP4SNBQrjpiS1TXtB
- 5MxclqxYz6+AExOz+vsQLSFgXFTTojcuQ/XqMZZiixGe1+7eqwl4YqB+7S9xpmO589Ko1OhXKsz
- tvk24ikxdfJy2iU3rZS7Yhc4hqHlPL3p1mXqBhnYZ85rMwHfQ15eV1FvWgaTF2c83Kq42V8/iIy
- qChvd8mr8ABbej5NbPvnkbtPnu3dgDUUNffcxpgzvsP3VyLJPNOrzLprME+chUiYRTSVTjM
-X-Received: by 2002:a05:690e:4810:b0:664:7a6c:17c2 with SMTP id
- 956f58d0204a3-664f9a33c67mr1672262d50.39.1782796662090; Mon, 29 Jun 2026
- 22:17:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1weRGT-0000rj-9J; Tue, 30 Jun 2026 01:44:09 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1weRGR-0008Pf-1s; Tue, 30 Jun 2026 01:44:09 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65U1J6TB604849; Tue, 30 Jun 2026 05:44:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=VIbXXr
+ AV4Mx/uegbGyPP1sNug65VX/GQacgHTmN60Cw=; b=oeGPgLQUE/LDQVhQEBtIAI
+ 7JjgV+J/hDWTUr+Zz+HGaQxk8QNKVV3ZEhJZOQQRvfF7/8nQmuP/oDNa4koz9hHi
+ btQbaYpNxkHJlxo2bO5wO1utPomo9hva9Fzrbod06BFkKkavzXWrBDRouD4E4XIf
+ VVgkYOD/KD1t+WxSjLWrDxZdTWrJmw4upHdNdfTXa0WkqD3w85HFMb6XKLHaRKWn
+ QYLIw7S7oP3XASzuq5tNy1kl7CP9maETpfpkiDN6hw/nmX+KThFm+HIo7WR5FYqv
+ U+bUVOdGB7WlaFZG2k31eEdXdfr//yjZg0u8sXw3CikqfTO4t4ZE6XcveeuqN/Ag
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26n5n0cp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 05:44:01 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65U5PMae007914;
+ Tue, 30 Jun 2026 05:44:00 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbh8m81-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 05:44:00 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65U5hx1T24445550
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Jun 2026 05:43:59 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2778C58054;
+ Tue, 30 Jun 2026 05:43:59 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 02C8C58062;
+ Tue, 30 Jun 2026 05:43:51 +0000 (GMT)
+Received: from [9.124.209.153] (unknown [9.124.209.153])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 30 Jun 2026 05:43:50 +0000 (GMT)
+Message-ID: <cdc5c7dd-ced8-4aaf-aac4-8c7be60795d6@linux.ibm.com>
+Date: Tue, 30 Jun 2026 11:12:51 +0530
 MIME-Version: 1.0
-References: <20260629164533.42956-1-dingtao0430@163.com>
- <20260629164533.42956-2-dingtao0430@163.com>
-In-Reply-To: <20260629164533.42956-2-dingtao0430@163.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Tue, 30 Jun 2026 13:17:30 +0800
-X-Gm-Features: AVVi8CfHefAlW_jXuKSHymbdXuaSx75H2VtVTr1V7Pwjx8F8zvxqR4DKUY9lNJc
-Message-ID: <CAEUhbmXTe73LZFnG5MUGjkpXWaF7gn694cEsHfHsd6+TXfKe7w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] fixed sdma boundary bug
-To: Tao Ding <dingtao0430@163.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- qemu-block@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 00/28] target/ppc: Moving instructions to decodetree
+ specification
+To: milesg@linux.ibm.com, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ npiggin@gmail.com, harshpb@linux.ibm.com, richard.henderson@linaro.org,
+ peter.maydell@linaro.org, stefanha@redhat.com
+Cc: vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
+ ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
+ sv@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
+ uverma@linux.ibm.com, nikhilks@linux.ibm.com
+References: <20260520160728.2283628-1-rathc@linux.ibm.com>
+ <285fdd30-f22d-4d4b-b8ee-5f04fccfca6d@linux.ibm.com>
+ <4ef1791085a32802185b2c68686aab273f4dfcbd.camel@linux.ibm.com>
+ <f96c5fde-b4d6-48ee-8778-7255ecb3236e@linux.ibm.com>
+ <1c2a47848384c57ceb2d2ed929d3ccdf16d72ed3.camel@linux.ibm.com>
+Content-Language: en-US
+From: Chinmay Rath <rathc@linux.ibm.com>
+In-Reply-To: <1c2a47848384c57ceb2d2ed929d3ccdf16d72ed3.camel@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDA0MiBTYWx0ZWRfXwjc3ouOkVPdM
+ a983+talfzckTbVaBgHa6KgIi8M99rw83mY7sJwBot56snnxWhYD5/D4RamI6HyIZtRyhLRR/Tc
+ rTtTl8wz8ZkiQhW9xnHTm9DzLLR5eeC4i3v+0GRwxI89TpO9LrIfoSGp9fZjk8uDzMf8sECUUex
+ wxIy8U4LzPIoG6q0QFJ1cPh6K5o25bUQ2ivTIanUjwdUiSgDtvaii9gOaDwnlKzdPQLpstvsNqx
+ D3F0li7cUqYznLO/zuqc4RJm8LiKyS3wMT2jyrwPJy0GKgfc03Xtg7r3OsvdJQLBtqyE+w29NpB
+ 46nEIGXRIvlU7ai+i281poPAZ9OU6/Qyzl2KTD2qbN8yYB+EThmIcgecP63mMrwG8WixKrFJDlI
+ uKuZ0MbYgrec77SeQH8DbwF9r7GXfG4cILKWH517Bf72f1aMNLEL54xOyE8OBZ4ae3CniK7NoS1
+ hJqIu7YyJldatplrZlg==
+X-Authority-Analysis: v=2.4 cv=V45NF+ni c=1 sm=1 tr=0 ts=6a4357a2 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=p0WdMEafAAAA:8
+ a=TgFuzEOzGliqHDKaYHMA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: L9A55C9FUqeqQ3fDbVBH6txRBLiFcn7F
+X-Proofpoint-GUID: O9dRDu0tcv-yODFzwdHjIk4ETjoIHDtu
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDA0MiBTYWx0ZWRfX+iISpYzWehUz
+ 1c6lysX7z6rUbN/2OqBCQ3p5Wa5AbhF44Lmh7D0/qA1kxHb4TUq/Iq9vnUhrrXz3sWQO1u2ukYu
+ ENlNzPo7bvM/1KQIDXsNknSyKKIjHCc=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-30_01,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 impostorscore=0 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300042
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,122 +133,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 30, 2026 at 12:46=E2=80=AFAM Tao Ding <dingtao0430@163.com> wro=
-te:
->
-> During SDMA transfers, the controller raises an interrupt at buffer bound=
-aries
-> to request a system address update. But the emulation fails to clear the
-> SDHC_DOING_READ/WRITE flags after DMA completion, so writes to SDHC_SYSAD=
- are
-> ignored. Clear these flags when the transfer ends.
-> (according to PartA2_SD_Host_Controller_Simplified_Specification_Ver2.00.=
-pdf section 2.2.1)
->
-> Signed-off-by: Tao Ding <dingtao0430@163.com>
 
-The commit summary should be something like:
+On 6/12/26 00:48, Miles Glenn wrote:
+> On Thu, 2026-06-04 at 15:59 +0530, Chinmay Rath wrote:
+>> On 6/3/26 19:40, Miles Glenn wrote:
+>>> On Wed, 2026-06-03 at 17:09 +0530, Chinmay Rath wrote:
+>>>> On 5/20/26 21:37, Chinmay Rath wrote:
+>>>>> We recently had a QEMU decodetree hackathon at our org focusing on moving
+>>>>> instructions to decodetree specification. I have consolidated the patches
+>>>>> generated out of this effort in this series. Though I have done a round
+>>>>> of review on all of them, might share some more review comments later.
+>>>>>
+>>>>> The checkpatch.pl script emits false error for a couple of patches which
+>>>>> are of the following nature :
+>>>>>
+>>>>> TRANS(STWAT, do_st_atomic, DEF_MEMOP(MO_UL))
+>>>>>
+>>>>> static bool trans_LDAT(DisasContext *ctx, arg_LDAT *a)
+>>>>>                                                        ^
+>>>>> I see this happening in the last pointer argument in function
+>>>>> definitions after macros (like TRANS(..) in this case).
+>>>>>
+>>>>> Richard, Peter, Stefan,
+>>>>> Could you please advise if it would be okay to have the above false
+>>>>> positive in the patches ?
+>>>> Hi Chao,
+>>>> I was wondering if you would be able to advise a way forward for this
+>>>> checkpatch issue ? TIA.
+>>>>> Gitlab CI: https://gitlab.com/rathc/qemu/-/pipelines/2540725424
+>>>>> Please note that check-python-tox and migration-compat-aarch64 from CI
+>>>>> fails in the upstream master branch as seen in the following:
+>>>>> https://gitlab.com/rathc/qemu/-/pipelines/2537246569
+>>>>>
+>>>>> Thanks,
+>>>>> Chinmay
+>>>> Hi Glenn,
+>>>> If possible, would you like to have a look at this series when you get a
+>>>> chance ? TIA.
+>>> Hi Chinmay,
+>>>
+>>> First, I'd like to thank you and everyone that worked on this for their
+>>> efforts!  This seems like one of those tasks that everyone knows is
+>>> needed but everyone would rather work on other more interesting things
+>>> (myself included).  I would like to take a look at this series when I
+>>> get the chance.  I do have a lot on my plate right now, but hopefully I
+>>> can get to it in the next week or so.
+>>>
+>>> Thanks,
+>>>
+>>> Glenn
+>> Sure Glenn, thanks !
+> I had a little time to look over the changes today and I didn't see any
+> major issues.  I did notice that the change, "Refactor sleep and its
+> variants to use a common helper", didn't seem related to moving things
+> into decodetree, so maybe that should be reviewed separately?  There
+> was also a lot of moving of implementation code out of translate.c into
+> more specific files, like fixedpoint-impl.c.inc.  This didn't seem
+> required in order to use decodetree either, so perhaps those changes
+> should be split out into another patch?
+>
+> Otherwise, I think it looks pretty good.
+>
+> Thanks,
+>
+> Glenn
+Thanks for going through this Glenn !
+I shall mention in the cover letter that some patches in the series 
+facilitate the movement instead of purely doing the movement (like the 
+"Refactor sleep and its variants to use a common helper" patch). Would 
+that be okay to you ?
 
-hw/sd: sdhci: Fix SDMA boundary bug
+The movement of instructions from translate.c to specific files along 
+with their decodetree movement is something that has been traditionally 
+in all older decodetree movement patches, so that is something that's 
+expected IMO.
 
-> ---
-> Uboot test:
->     1. Prepare zImage, U-Boot, and rootfs.cpio.gz, and make sure
->      the U-Boot configuration enables MMC_SDHCI_SDMA.
->      More details can be found at:
->      https://lore.kernel.org/qemu-devel/20260617155857.7451-1-dingtao0430=
-@163.com/T/#mcdf231e6bd762903f8393bf93253cbcb12ececcf
->     2. ./qemu-system-aarch64 -M xilinx-zynq-a9 -machine boot-mode=3Dsd -m=
- 1024 -display none -serial null -serial stdio -monitor none \
->         -device loader,file=3Du-boot-dtb.bin,addr=3D0x04000000,cpu-num=3D=
-0  \
->         -drive file=3Dzynq-sd.img,format=3Draw,if=3Dsd -D qemu.log
+Thanks,
+Chinmay
 >
 >
-> After applying the fix, success load sd card:
+>> -Chinmay
+>>>> Thanks,
+>>>> Chinmay
+>>>>> Aboorva Devarajan (3):
+>>>>>      target/ppc: Move vector merge instructions to decodetree
+>>>>>      target/ppc: Move vector pack instructions to decodetree
+>>>>>      target/ppc: Move GPR atomic load/store instructions to decodetree
+>>>>>
+>>>>> Amit Machhiwal (2):
+>>>>>      target/ppc: Move fixed-point Shift insns to decodetree
+>>>>>      target/ppc: Move fixed-point byte-reversal store insns to decodetree
+>>>>>
+>>>>> Mukesh Kumar Chaurasiya (IBM) (2):
+>>>>>      target/ppc: convert slw,srw instruction via decode spec
+>>>>>      target/ppc: convert sraw[i] instruction via decode spec
+>>>>>
+>>>>> Nikhil Kumar Singh (3):
+>>>>>      target/ppc: Migrate extswsli to decodetree
+>>>>>      target/ppc: Migrate atomic loads to decodetree
+>>>>>      target/ppc: Convert cache instructions to decodetree
+>>>>>
+>>>>> Ojaswin Mujoo (7):
+>>>>>      target/ppc: Move isync instruction to decodetree.
+>>>>>      target/ppc: Convert b{a, l, la} to decode tree
+>>>>>      target/ppc: move various conditional branch insns to decodetree
+>>>>>      target/ppc: Fix TRANS* macro variadic arguments handling
+>>>>>      target/ppc: Move wait instruction to decodetree
+>>>>>      target/ppc: Move sleep & friends to decodetree
+>>>>>      target/ppc: Refactor sleep and its variants to use a common helper
+>>>>>
+>>>>> Shivang Upadhyay (4):
+>>>>>      target/ppc: Move Condition Register access instructions to decodetree.
+>>>>>      target/ppc: Move Condition Register logical instructions to
+>>>>>        decodetree.
+>>>>>      target/ppc: Move Fixed-Point Load/Store String instructions to
+>>>>>        decodetree.
+>>>>>      target/ppc: Move VMX integer arithmetic and BCD instructions to
+>>>>>        decodetree.
+>>>>>
+>>>>> Shivani Nittor (1):
+>>>>>      target/ppc : Convert mcrf to decode tree
+>>>>>
+>>>>> Tanushree Shah (2):
+>>>>>      target/ppc: Move rlwimi, rlwinm instructions to decodetree
+>>>>>      target/ppc: Move lmw, stmw instructions to decodetree
+>>>>>
+>>>>> Utkarsh Verma (1):
+>>>>>      target/ppc: Move st{b, h, w, d, q}cx instructions to decodetree
+>>>>>
+>>>>> Vishal Chourasia (3):
+>>>>>      target/ppc: Move mfmsr, mtmsr[d] instructions to decodetree
+>>>>>      target/ppc: Move byte-reverse instructions to decodetree
+>>>>>      target/ppc: Move system call and rfi instructions to decodetree
+>>>>>
+>>>>>     target/ppc/helper.h                           |  100 +-
+>>>>>     target/ppc/insn32.decode                      |  244 ++
+>>>>>     target/ppc/int_helper.c                       |   76 +-
+>>>>>     target/ppc/internal.h                         |    7 -
+>>>>>     target/ppc/mem_helper.c                       |   18 +-
+>>>>>     target/ppc/tcg-excp_helper.c                  |   10 +-
+>>>>>     target/ppc/translate.c                        | 2592 ++++-------------
+>>>>>     target/ppc/translate/branch-impl.c.inc        |  181 ++
+>>>>>     target/ppc/translate/fixedpoint-impl.c.inc    |  936 ++++++
+>>>>>     target/ppc/translate/misc-impl.c.inc          |  175 ++
+>>>>>     .../ppc/translate/processor-ctrl-impl.c.inc   |   30 +
+>>>>>     target/ppc/translate/storage-ctrl-impl.c.inc  |  117 +
+>>>>>     target/ppc/translate/vmx-impl.c.inc           |  360 +--
+>>>>>     target/ppc/translate/vmx-ops.c.inc            |   41 -
+>>>>>     14 files changed, 2529 insertions(+), 2358 deletions(-)
+>>>>>
 >
-> U-Boot 2026.07-rc4-g1e80ee41441c (Jun 15 2026 - 19:05:05 +0800)
->
-> Model: Xilinx ZC702 board
-> DRAM:  ECC disabled 1 GiB
-> Core:  33 devices, 21 uclasses, devicetree: board
-> Flash: 0 Bytes
-> NAND:  0 MiB
-> MMC:   mmc@e0100000: 0
-> Loading Environment from FAT... *** Error - No Valid Environment Area fou=
-nd
-> *** Warning - bad env area, using default environment
->
-> In:    serial@e0001000
-> Out:   serial@e0001000
-> Err:   serial@e0001000
-> Net:
-> ZYNQ GEM: e000b000, mdio bus e000b000, phyaddr 7, interface rgmii-id
->
-> Warning: ethernet@e000b000 (eth0) using random MAC address - 4a:63:5a:a4:=
-d3:6b
-> eth0: ethernet@e000b000
-> Hit any key to stop autoboot: 0
-> Zynq> fatload mmc 0 ${kernel_addr_r} zImage
-> 10838528 bytes read in 4316 ms (2.4 MiB/s)
-> Zynq> fatload mmc 0 ${ramdisk_addr_r} rootfs-arm32.cpio.gz
-> 406531 bytes read in 199 ms (1.9 MiB/s)
-> Zynq> setenv ramdisk_size ${filesize}
-> Zynq> fatload mmc 0 ${fdt_addr_r} zynq-zc702.dtb
-> 15754 bytes read in 21 ms (732.4 KiB/s)
-> Zynq> setenv bootargs console=3DttyPS0,115200 earlycon ignore_loglevel rd=
-init=3D/init
-> Zynq> bootz ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_addr=
-_r}
-> Kernel image @ 0x2000000 [ 0x000000 - 0xa56200 ]
-> ## Flattened Device Tree blob at 01f00000
->    Booting using the fdt blob at 0x1f00000
-> Working FDT set to 1f00000
->    Loading Ramdisk to 2ff9c000, end 2ffff403 ... OK
->    Loading Device Tree to 2ff95000, end 2ff9bd89 ... OK
-> Working FDT set to 2ff95000
->
-> Starting kernel ...
->
->  hw/sd/sdhci.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> index c86dfa281f..0d87289ca4 100644
-> --- a/hw/sd/sdhci.c
-> +++ b/hw/sd/sdhci.c
-> @@ -644,6 +644,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCISta=
-te *s)
->                  s->data_count =3D 0;
->              }
->              if (page_aligned && boundary_count =3D=3D 0) {
-> +                s->prnsts &=3D ~SDHC_DOING_READ;
->                  break;
->              }
->          }
-> @@ -669,6 +670,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCISta=
-te *s)
->                  }
->              }
->              if (page_aligned && boundary_count =3D=3D 0) {
-> +                s->prnsts &=3D ~SDHC_DOING_WRITE;
->                  break;
->              }
->          }
-> --
-
-I reconsidered this, and now think we should keep these bits on here.
-This is because BLKSIZE/BLKCNT register is also protected by
-!TRANSFERRING_DATA(prnsts) and if we clear the bits, that will
-accidentally allow overwriting LKSIZE/BLKCNT settings during a paused
-SDMA transfer due to boundary hit, which is definitely not we want.
-Even normal guest drivers won't do such things, QEMU shouldn't expose
-such a possibility to the guest.
-
-Instead we should add another state to indicate that SDMA transfer is
-paused due to hitting the boundary and only with such state can we
-write the SYSAD register.
-
-Regards,
-Bin
 
