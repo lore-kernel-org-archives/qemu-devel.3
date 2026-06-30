@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4E9CC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 11:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF40DC43327
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 11:30:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weWYx-0003XT-UZ; Tue, 30 Jun 2026 07:23:35 -0400
+	id 1weWef-0005uF-DW; Tue, 30 Jun 2026 07:29:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1weWYr-0003VD-6I
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 07:23:29 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1weWeV-0005sm-Vd
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 07:29:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1weWYp-0005eY-IS
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 07:23:28 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1weWeU-00081i-1w
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 07:29:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782818606;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fAgskVNcOFIUtP/RrQaHagFgGhUfOdFnNQlOrd7k3bg=;
- b=dw17452VJEUwY4trC6L+yNq3CKTuoFy0v0ZONTk15YDZf2q+0GJJayyvrchQq9+k1z5e3e
- 5guYsKtGSPB+qsUZOrlji8BdxzvYsL5/MQ5DBOcJO9rH2iesziumHTeuSPZ20ra7FmACj5
- 5fQW1yAGj9zX9EQUzV97Tg0cAExKbZY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ s=mimecast20190719; t=1782818956;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=LQZipDXQofwb6udttBXvsJ71Aka78BYTOANw6v5zEn0=;
+ b=it1BFtSL2kTLHow6trOi+dq1Q6OMWLOjCxDsiZdFghtFZoIzqf3QGNIIsOSyvWXU3/Fxy+
+ +jk6WqKBhvaj/3eJ3WncrzuRKKVAt1ooRPPvNXKlSxRsagC0STo/duFQdq1FHcG6pOiRyy
+ uXA9HlvjgXNfVEgxyP4XJqns9QfEUPs=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-367-qX_9pg8SPjaN62cHn8CAAw-1; Tue,
- 30 Jun 2026 07:23:22 -0400
-X-MC-Unique: qX_9pg8SPjaN62cHn8CAAw-1
-X-Mimecast-MFC-AGG-ID: qX_9pg8SPjaN62cHn8CAAw_1782818601
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-255-7uunBaFCNZ-50gsN-4H9IA-1; Tue,
+ 30 Jun 2026 07:29:12 -0400
+X-MC-Unique: 7uunBaFCNZ-50gsN-4H9IA-1
+X-Mimecast-MFC-AGG-ID: 7uunBaFCNZ-50gsN-4H9IA_1782818951
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D6B3C1955F7C; Tue, 30 Jun 2026 11:23:21 +0000 (UTC)
-Received: from fedora (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 90F85180065F; Tue, 30 Jun 2026 11:23:19 +0000 (UTC)
-From: Albert Esteve <aesteve@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: manos.pitsidianakis@linaro.org, Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F283718C1075; Tue, 30 Jun 2026 11:28:05 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.50.20])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 121ED1955D6D; Tue, 30 Jun 2026 11:27:59 +0000 (UTC)
+Date: Tue, 30 Jun 2026 12:27:56 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Albert Esteve <aesteve@redhat.com>
+Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Albert Esteve <aesteve@redhat.com>
-Subject: [PATCH 3/3] hw/display/vhost-user-media: add shared memory cache BAR
-Date: Tue, 30 Jun 2026 13:23:10 +0200
-Message-ID: <20260630112310.552606-4-aesteve@redhat.com>
-In-Reply-To: <20260630112310.552606-1-aesteve@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 2/3] hw/display: add vhost-user-media device
+Message-ID: <akOoPD_P51HDn-Jo@redhat.com>
 References: <20260630112310.552606-1-aesteve@redhat.com>
+ <20260630112310.552606-3-aesteve@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260630112310.552606-3-aesteve@redhat.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,107 +85,136 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register a 4 GiB shared memory PCI BAR (BAR 2) so the guest driver
-can use it as a DMA cache for video buffers. The memory region is
-allocated on device realize and exposed to the guest through a VirtIO
-shared memory capability (shmem ID 0).
+On Tue, Jun 30, 2026 at 01:23:09PM +0200, Albert Esteve wrote:
+> Add the QEMU side of the vhost-user-media device, which connects to a
+> virtio-media vhost-user backend daemon implementing the V4L2 API over
+> the virtio-media protocol.
+> 
+> The virtio-media device is specified in the VirtIO specification v1.4,
+> section 5.22:
+>     https://docs.oasis-open.org/virtio/virtio/v1.4/cs01/virtio-v1.4-cs01.html
+> 
+> Tested with the rust-vmm vhost-device-media backend [1]:
+> 
+>     cargo run -- -s /path/to/media.sock -d /dev/video0 --backend v4l2-proxy
+> 
+> Example invocation:
+> 
+>     qemu-system-x86_64 \
+>         -chardev socket,path=/tmp/media.sock,id=media \
+>         -device vhost-user-media-pci,chardev=media,id=media
+> 
+> [1] https://github.com/rust-vmm/vhost-device/pull/944
+> 
+> Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> ---
+>  hw/display/Kconfig                   |   5 +
+>  hw/display/meson.build               |   3 +
+>  hw/display/vhost-user-media-pci.c    |  77 ++++++
+>  hw/display/vhost-user-media.c        | 393 +++++++++++++++++++++++++++
+>  hw/virtio/virtio.c                   |   3 +-
+>  include/hw/virtio/vhost-user-media.h |  47 ++++
+>  6 files changed, 527 insertions(+), 1 deletion(-)
+>  create mode 100644 hw/display/vhost-user-media-pci.c
+>  create mode 100644 hw/display/vhost-user-media.c
+>  create mode 100644 include/hw/virtio/vhost-user-media.h
+> 
+> diff --git a/hw/display/Kconfig b/hw/display/Kconfig
+> index b3593fe981..060274b1e6 100644
+> --- a/hw/display/Kconfig
+> +++ b/hw/display/Kconfig
+> @@ -120,6 +120,11 @@ config VHOST_USER_VGA
+>      default y
+>      depends on VIRTIO_VGA && VHOST_USER_GPU
+>  
+> +config VHOST_USER_MEDIA
+> +    bool
+> +    default y
+> +    depends on VIRTIO && VHOST_USER
+> +
+>  config DPCD
+>      bool
+>      select AUX
+> diff --git a/hw/display/meson.build b/hw/display/meson.build
+> index ffecedbf70..214c047df6 100644
+> --- a/hw/display/meson.build
+> +++ b/hw/display/meson.build
+> @@ -37,6 +37,9 @@ system_ss.add(when: 'CONFIG_NEXTCUBE', if_true: files('next-fb.c'))
+>  system_ss.add(when: 'CONFIG_VGA', if_true: files('vga.c'))
+>  system_ss.add(when: 'CONFIG_VIRTIO', if_true: files('virtio-dmabuf.c'))
+>  system_ss.add(when: 'CONFIG_DM163', if_true: files('dm163.c'))
+> +system_ss.add(when: 'CONFIG_VHOST_USER_MEDIA', if_true: files('vhost-user-media.c'))
+> +system_ss.add(when: ['CONFIG_VHOST_USER_MEDIA', 'CONFIG_VIRTIO_PCI' ],
+> +  if_true: files('vhost-user-media-pci.c'))
+>  
+>  stub_ss.add([files('acpi-vga-stub.c'), pixman])
+>  if (config_all_devices.has_key('CONFIG_VGA_CIRRUS') or
+> diff --git a/hw/display/vhost-user-media-pci.c b/hw/display/vhost-user-media-pci.c
+> new file mode 100644
+> index 0000000000..ad9e3900a4
+> --- /dev/null
+> +++ b/hw/display/vhost-user-media-pci.c
+> @@ -0,0 +1,77 @@
+> +/*
+> + * Vhost-user MEDIA virtio device PCI glue
+> + *
+> + * Copyright Red Hat, Inc. 2024
 
-The host must be started with a memfd-backed memory object covering
-at least the shared region size, e.g.:
+Have you really been hanging on to this new code for 2 years
+before posting ? Should this be 2026 ? 
 
-    -object memory-backend-memfd,id=mem,size=4G,share=on \
-    -numa node,memdev=mem
+> + * Authors: Albert Esteve <aesteve@redhat.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
----
- hw/display/vhost-user-media-pci.c | 28 ++++++++++++++++++++++++++++
- hw/display/vhost-user-media.c     |  4 ++++
- 2 files changed, 32 insertions(+)
+> diff --git a/hw/display/vhost-user-media.c b/hw/display/vhost-user-media.c
+> new file mode 100644
+> index 0000000000..5c627437e7
+> --- /dev/null
+> +++ b/hw/display/vhost-user-media.c
+> @@ -0,0 +1,393 @@
+> +/*
+> + * Vhost-user Media device
+> + *
+> + * Copyright Red Hat, Inc. 2024
 
-diff --git a/hw/display/vhost-user-media-pci.c b/hw/display/vhost-user-media-pci.c
-index ad9e3900a4..838a9da71d 100644
---- a/hw/display/vhost-user-media-pci.c
-+++ b/hw/display/vhost-user-media-pci.c
-@@ -12,12 +12,18 @@
- #include "hw/virtio/vhost-user-media.h"
- #include "hw/virtio/virtio-pci.h"
- 
-+/* BAR 2 is used for the shared memory cache region exposed to the guest */
-+#define VIRTIO_MEDIA_PCI_CACHE_BAR 2
-+
-+#define VIRTIO_MEDIA_PCI_SHMCAP_ID_CACHE 0
-+
- #define TYPE_VHOST_USER_MEDIA_PCI "vhost-user-media-pci-base"
- OBJECT_DECLARE_SIMPLE_TYPE(VHostUserMEDIAPCI, VHOST_USER_MEDIA_PCI)
- 
- struct VHostUserMEDIAPCI {
-     VirtIOPCIProxy parent_obj;
-     VHostUserMEDIA vdev;
-+    MemoryRegion cachebar;
- };
- 
- static const Property vumedia_pci_properties[] = {
-@@ -31,12 +37,34 @@ static void vumedia_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
- {
-     VHostUserMEDIAPCI *dev = VHOST_USER_MEDIA_PCI(vpci_dev);
-     DeviceState *dev_state = DEVICE(&dev->vdev);
-+    VirtIODevice *vdev = VIRTIO_DEVICE(dev_state);
-+    VirtioSharedMemory *shmem;
-+    uint64_t cache_size;
- 
-     if (vpci_dev->nvectors == DEV_NVECTORS_UNSPECIFIED) {
-         vpci_dev->nvectors = 1;
-     }
- 
-     qdev_realize(dev_state, BUS(&vpci_dev->bus), errp);
-+    if (*errp) {
-+        return;
-+    }
-+
-+    shmem = QSIMPLEQ_LAST(&vdev->shmem_list, VirtioSharedMemory, entry);
-+    cache_size = memory_region_size(&shmem->mr);
-+
-+    memory_region_init(&dev->cachebar, OBJECT(vpci_dev),
-+                       "vhost-media-pci-cachebar", cache_size);
-+    memory_region_add_subregion(&dev->cachebar, 0, &shmem->mr);
-+    virtio_pci_add_shm_cap(vpci_dev, VIRTIO_MEDIA_PCI_CACHE_BAR, 0,
-+                            cache_size, VIRTIO_MEDIA_PCI_SHMCAP_ID_CACHE);
-+
-+    /* After 'realized' so the memory region exists */
-+    pci_register_bar(&vpci_dev->pci_dev, VIRTIO_MEDIA_PCI_CACHE_BAR,
-+                     PCI_BASE_ADDRESS_SPACE_MEMORY |
-+                     PCI_BASE_ADDRESS_MEM_PREFETCH |
-+                     PCI_BASE_ADDRESS_MEM_TYPE_64,
-+                     &dev->cachebar);
- }
- 
- static void vumedia_pci_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/display/vhost-user-media.c b/hw/display/vhost-user-media.c
-index 5c627437e7..bbb64ea4d3 100644
---- a/hw/display/vhost-user-media.c
-+++ b/hw/display/vhost-user-media.c
-@@ -20,6 +20,8 @@
- #include "hw/virtio/virtio-bus.h"
- #include "hw/virtio/vhost-user-media.h"
- 
-+#define CACHE_SIZE (1ull << 32)
-+
- static const int feature_bits[] = {
-     VIRTIO_F_RING_RESET,
-     VHOST_INVALID_FEATURE_BIT
-@@ -288,6 +290,8 @@ static void vhost_user_media_device_realize(DeviceState *dev, Error **errp)
- 
-     virtio_init(vdev, VIRTIO_ID_MEDIA, sizeof(struct virtio_media_config));
- 
-+    virtio_new_shmem_region(vdev, 0, CACHE_SIZE);
-+
-     /* one command queue and one event queue */
-     media->vhost_dev.nvqs = 2;
-     media->vhost_dev.vqs = g_new0(struct vhost_virtqueue,
+Same Q
+
+> + *
+> + * This is the boilerplate for instantiating a vhost-user device
+> + * implementing a virtio-media device.
+> + *
+> + * Authors:
+> + *     Albert Esteve <aesteve@redhat.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+
+> diff --git a/include/hw/virtio/vhost-user-media.h b/include/hw/virtio/vhost-user-media.h
+> new file mode 100644
+> index 0000000000..30bdef8ce1
+> --- /dev/null
+> +++ b/include/hw/virtio/vhost-user-media.h
+> @@ -0,0 +1,47 @@
+> +/*
+> + * vhost-user-media virtio device
+> + *
+> + * Copyright Red Hat, Inc. 2024
+
+Again
+
+
+With regards,
+Daniel
 -- 
-2.54.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
