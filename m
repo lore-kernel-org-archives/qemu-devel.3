@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 481F0C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 04:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 010FBC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 04:33:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weQ8f-0006mn-O0; Tue, 30 Jun 2026 00:32:01 -0400
+	id 1weQ8U-0006iu-6c; Tue, 30 Jun 2026 00:31:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1weQ8e-0006m9-EZ
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 00:32:00 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1weQ8O-0006hw-PF
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 00:31:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1weQ8c-0003F9-U6
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 00:32:00 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1weQ8M-00032E-Ac
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 00:31:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782793918;
+ s=mimecast20190719; t=1782793901;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/BaSE9iED73RydcdKRYU3/Gp7j/oPk8CVubFRkdDiyk=;
- b=UIlRX+1KNgTYTxgdDbXr3w9UJrW90t2Js7dc0eSw9t2pXhyDrrOKv8DELP1goHGsc/cSKA
- 2404d60WQlDE/EvIqx4pnj9ni/8IBUNegwbZC1EKkRClSJjJsUIydoM4JCOIM7xJ57xO0S
- IUC1ujpIJEPW8DAMuUwJ36ce8wOaHqs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=RsQ3r20dWJ/sbw+RO5G2Osf8/wn0Bi9DM3VVxkTPYTQ=;
+ b=CJ81TeyKdVHpcgAPWpS0I51S//9Cw1yDZ7/vimrcb2xJyBZ1F/Klfwj52gPrtIpTJR4dLG
+ 5pYtvGG+Zs0txSki7IBoMmFFKU2PBE+Id19+ffp/+DJ3CkBNo2g7a4sPmLtb/JoCWHiexb
+ dB8V78wdQkqzXPcrA5SkU6H8QDw1az0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-dBl4gPVwP_mqVs019gPoxg-1; Tue,
- 30 Jun 2026 00:31:53 -0400
-X-MC-Unique: dBl4gPVwP_mqVs019gPoxg-1
-X-Mimecast-MFC-AGG-ID: dBl4gPVwP_mqVs019gPoxg_1782793912
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-5-JxFw9DobM26dx2CaMTHjnw-1; Tue,
+ 30 Jun 2026 00:31:40 -0400
+X-MC-Unique: JxFw9DobM26dx2CaMTHjnw-1
+X-Mimecast-MFC-AGG-ID: JxFw9DobM26dx2CaMTHjnw_1782793899
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C4C3A197731D; Tue, 30 Jun 2026 04:31:52 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 29C9F1956062; Tue, 30 Jun 2026 04:31:39 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.58])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4CAF01956042; Tue, 30 Jun 2026 04:31:51 +0000 (UTC)
+ id A365E1956045; Tue, 30 Jun 2026 04:31:37 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Nathan Chen <nathanc@nvidia.com>,
- Shameer Kolothum <skolothumtho@nvidia.com>,
+Cc: Avihai Horon <avihaih@nvidia.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 20/23] iommufd: Introduce handler for device ATS support
-Date: Tue, 30 Jun 2026 06:31:04 +0200
-Message-ID: <20260630043107.1511076-21-clg@redhat.com>
+Subject: [PULL 13/23] migration: Fail migration if switchover-ack is requested
+ after switchover decision
+Date: Tue, 30 Jun 2026 06:30:57 +0200
+Message-ID: <20260630043107.1511076-14-clg@redhat.com>
 In-Reply-To: <20260630043107.1511076-1-clg@redhat.com>
 References: <20260630043107.1511076-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -84,71 +84,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nathan Chen <nathanc@nvidia.com>
+From: Avihai Horon <avihaih@nvidia.com>
 
-Introduce a support_ats() handler that returns whether ATS is supported
-for a device associated with a host IOMMU device, checking if the
-IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED capability bit is set.
+Switchover ACK is checked only during precopy while the guest is still
+running. The last migration_can_switchover() decision and guest stop are
+not atomic, so a device may want to request another switchover ACK in
+the gap after switchover decision has been made but before the guest is
+stopped. Migration would then miss that request, which can increase
+downtime.
 
-Implement this handler in a new function for iommufd.
+Cover this case by failing the migration if a switchover-ack was
+requested during that time.
 
-Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Signed-off-by: Nathan Chen <nathanc@nvidia.com>
-Link: https://lore.kernel.org/qemu-devel/20260623204943.989903-2-nathanc@nvidia.com
+Ideally, precopy iterations should be resumed in this case, however,
+VFIO doesn't support going back to precopy after being stopped, so
+implementing such logic would require non-trivial changes to the guest
+start/stop flow. Given the above and that this case should be rare,
+failing the migration seems reasonable.
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+Link: https://lore.kernel.org/qemu-devel/20260622101214.25770-9-avihaih@nvidia.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/system/host_iommu_device.h | 9 +++++++++
- backends/iommufd.c                 | 8 ++++++++
- 2 files changed, 17 insertions(+)
+ migration/savevm.h    |  4 ++--
+ migration/migration.c |  4 +++-
+ migration/savevm.c    | 19 ++++++++++++++++++-
+ 3 files changed, 23 insertions(+), 4 deletions(-)
 
-diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
-index f0003015832855b7173475559ef411bee31d1c86..2cb53653406ceec30906120ffbfd263a3d0810e8 100644
---- a/include/system/host_iommu_device.h
-+++ b/include/system/host_iommu_device.h
-@@ -133,6 +133,15 @@ struct HostIOMMUDeviceClass {
-      * Returns: true on success, false on failure.
+diff --git a/migration/savevm.h b/migration/savevm.h
+index fb92d3bc8586553c490eb03d68be3cb56c8d0554..415198423f578049c209a1e40b796cfe63b410f0 100644
+--- a/migration/savevm.h
++++ b/migration/savevm.h
+@@ -47,8 +47,8 @@ void qemu_savevm_state_complete_postcopy(QEMUFile *f);
+ int qemu_savevm_state_complete_precopy(MigrationState *s, Error **errp);
+ void qemu_savevm_query_pending_iter(MigrationState *s, MigPendingData *pending,
+                                     bool exact);
+-void qemu_savevm_query_pending_final(MigrationState *s,
+-                                     MigPendingData *pending);
++bool qemu_savevm_query_pending_final(MigrationState *s,
++                                     MigPendingData *pending, Error **errp);
+ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy);
+ bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp);
+ void qemu_savevm_state_end(QEMUFile *f);
+diff --git a/migration/migration.c b/migration/migration.c
+index 7da86fb08aa4d694155d87b8603aeecbd31e27c0..898695a81920b7b255c7ed17b13a9065d66d8c44 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2827,7 +2827,9 @@ static bool migration_switchover_start(MigrationState *s, Error **errp)
+      * properly update all the dirty bitmaps to finally generate the
+      * correct discard bitmaps; see ram_postcopy_send_discard_bitmap().
       */
-     bool (*get_pasid_info)(HostIOMMUDevice *hiod, PasidInfo *pasid_info);
-+    /**
-+     *  @support_ats: Returns true if ATS can be used by the device,
-+     *  false if the host IOMMU reports it is unavailable.
-+     *
-+     *  @hiod: handle to the host IOMMU device
-+     *
-+     *  Returns: true if ATS is supported, false otherwise
-+     */
-+    bool (*support_ats)(HostIOMMUDevice *hiod);
- };
+-    qemu_savevm_query_pending_final(s, &pending);
++    if (!qemu_savevm_query_pending_final(s, &pending, errp)) {
++        return false;
++    }
  
- /*
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 09624cd6526b4027b82b02dad3e6494231fedc2c..4b40aaebe6cbb9d27b0d0b15f093a79fac9ed3b3 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -638,6 +638,13 @@ static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
-     }
+     /* Inactivate disks except in COLO */
+     if (!migrate_colo()) {
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 1f6e696c50d189370a311c25d8eb092bc41c2b24..f654a1c563df40d546e42018a3706e92fb11cfa7 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1852,11 +1852,28 @@ void qemu_savevm_query_pending_iter(MigrationState *s, MigPendingData *pending,
+     qemu_savevm_query_pending(s, pending, exact, false);
  }
  
-+static bool hiod_iommufd_support_ats(HostIOMMUDevice *hiod)
-+{
-+    HostIOMMUDeviceCaps *caps = &hiod->caps;
-+
-+    return !(caps->hw_caps & IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED);
-+}
-+
- static bool hiod_iommufd_get_pasid_info(HostIOMMUDevice *hiod,
-                                         PasidInfo *pasid_info)
+-void qemu_savevm_query_pending_final(MigrationState *s, MigPendingData *pending)
++bool qemu_savevm_query_pending_final(MigrationState *s, MigPendingData *pending,
++                                     Error **errp)
  {
-@@ -660,6 +667,7 @@ static void hiod_iommufd_class_init(ObjectClass *oc, const void *data)
+     g_assert(bql_locked());
  
-     hiodc->get_cap = hiod_iommufd_get_cap;
-     hiodc->get_pasid_info = hiod_iommufd_get_pasid_info;
-+    hiodc->support_ats = hiod_iommufd_support_ats;
- };
+     qemu_savevm_query_pending(s, pending, true, true);
++
++    /*
++     * Switchover-ack requests done after switchover decision are not allowed.
++     * Fail the migration in this case since we currently don't support going
++     * back to precopy.
++     */
++    if (migrate_switchover_ack() && !migrate_switchover_ack_legacy() &&
++        pending->switchover_ack_pending > 0) {
++        error_setg(errp,
++                   "Switchover ACK was requested by %" PRIu32
++                   " devices during switchover",
++                   pending->switchover_ack_pending);
++        return false;
++    }
++
++    return true;
+ }
  
- static const TypeInfo types[] = {
+ void qemu_savevm_state_cleanup(void)
 -- 
 2.54.0
 
