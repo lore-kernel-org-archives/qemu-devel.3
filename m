@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4226DC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 07:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44836C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 08:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weTKW-0002NE-Jm; Tue, 30 Jun 2026 03:56:28 -0400
+	id 1weThe-0004vz-HK; Tue, 30 Jun 2026 04:20:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
- id 1weTKU-0002Mr-H3
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 03:56:26 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
- id 1weTKT-000231-40
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 03:56:26 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 9FC94601C1;
- Tue, 30 Jun 2026 07:56:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 54860C2BCC7;
- Tue, 30 Jun 2026 07:56:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1782806177;
- bh=i+iwUHWRs5J2pQrc4bbbiul0j7v12ylyz4AlGwd2BaE=;
- h=From:Date:Subject:To:Cc:Reply-To:From;
- b=g3WElN32L6BeEHRBsJAZq9Jpcdudh7NHXK6QB9uPet22szsUZRfrnD9qgXbc/Ohjl
- 9W3+jANwsceEwVQSuMAQLQTrzJDiFFXgbKzyCrCQPKb6MsmKvwPXCwhtULZfXwi0er
- 3BuLvd6Kp9w5WkYcJ02rKs8X7PrmlWu2fscULRddYRFlP2bV/h69My4Ed892m9aDlQ
- 9N3wgg3NmZBuSnGICLXeFOVxnIXDCarvY76f1lbnDvm6cgei6xiHiTnuLsmxz31NLK
- fv+mhRJb1OsH3jK0rPAAwY7WnTPPIleuBYOh2cbHGzLemdYQe1bZD5k5HqpxdJ7fNH
- AEo/sjy8Hs5gg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org
- (localhost.localdomain [127.0.0.1])
- by smtp.lore.kernel.org (Postfix) with ESMTP id 3EC72C43458;
- Tue, 30 Jun 2026 07:56:17 +0000 (UTC)
-From: Miao Wang via B4 Relay <devnull+shankerwangmiao.gmail.com@kernel.org>
-Date: Tue, 30 Jun 2026 15:56:04 +0800
-Subject: [PATCH] target/loongarch: Enable TARGET_PAGE_BITS_VARY for
- loongarch64 user-only
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260630-loong64-vary-page-sz-v1-1-1d1a894674be@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAJN2Q2oC/x2MWwqAIBAArxL73YJpSXSV6MNys4XQUIgeePekz
- 4GZeSFRZEowVC9EOjlx8AWauoJlM94Rsi0MUkgttBK4h+CdbvE08cbDFCE9KDtlyYqZ+r6Fkh6
- RVr7+7Tjl/AF/a21FZgAAAA==
-X-Change-ID: 20260630-loong64-vary-page-sz-253ded0be884
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1weThc-0004vl-IF
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 04:20:20 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1weThZ-0003Kd-BA
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 04:20:18 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2c8c30492a0so35672345ad.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 01:20:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1782807616; x=1783412416; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=h246oOnwhMfIwpoInL9ueM4/KFf2GZfScnXDka7dbNo=;
+ b=KlWWpkdTAU85+6Z8i2o6Psq3AJSwwQIfyyb7Fo4uXrx+V1zM3+GCrPVeobW43gdUc8
+ CE/S25bMKIsUxMuKb2XOMM0v8v47vkX6acqJHKVJltf1nQSliTNWPDhGe2kxQrGike29
+ 5jaXH05YkVBuKnBLGYFDGLFCE/sDlVMA1DbyZ0S8hRNDWyc7KcTKCShtqwUjJ9YalCdc
+ qxWOjEWmRZ0LWB8cxWnSnUgXo2ZCV8f7/WLLGWxh0C+RLA77jV8IyO/d74Ol1xezigIk
+ Cd9GOswwjIn18ebNq7mSWIW3zOW8wp+ZSPf6AATNNxXSaGaQDFGpY6t27mykdfMSG0Ho
+ OSig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782807616; x=1783412416;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=h246oOnwhMfIwpoInL9ueM4/KFf2GZfScnXDka7dbNo=;
+ b=NwO3X3ZAuRKJTPwRQbA2tOOZJZgdTPb1Q9VYr/eqtjQ9xz6YuT+F+f30dQQeG2wcNr
+ Wgjp5M32AqWeFP5H4+FhX55WOp2yEKn/mzQS3PZ3RupTqDN+RQTur7EoGOT2nA6G0pjg
+ JP06huawCitfDvly8foUxl+zPcLti3r4hfs/nQvmq29cvbdx0LEFcyiRDTLNRkgfh/pO
+ o5UlCT+bX0swAnIm6p+eY/5t1vuHtu7MptqEcdibpTqgh2Hc2LhALYc6kDuN0x2yMGIw
+ qOya+dAqFgdgCXaA70pUWsXS5IM2ysnzW8SwKrYIjAknwklGotXdVowd6MZ06hnLZtLI
+ LNvA==
+X-Gm-Message-State: AOJu0YwczuvEZrYlUC2Htkk0t9AoPYPUO9gI9aGd9umiYbV0dUKX4VZK
+ BaWd7yJ4FApXIP/frpz/6r4qKhTo1EaVFU748On/vQeYqiYNZAyEaMU3mc5i8I4w
+X-Gm-Gg: AfdE7ckm1GKC+6s/BYpu9Pq20kuD3vbFR3voTU4XntGp1pJJmzMdpiNHqbIEAgIpv/e
+ KToBm+ZxfSNFfepsNnNCNNOAHrAKPOpHQrMGeXlbq+uQrcunKXQzWZoYEP92/occ+OMklbFkJ0a
+ jdcndFF6Y59Q22ims2K/jTbewC22WpVZBgEPlf7WeuyVQ1F0bN4Mpd4kYyqJ69ddYos2OCaXV43
+ q4RMmbagrdzm3+jVgnWZ181oww4yNnOYL+l/BiGxwbdsfcZXDDrl/iRAoDBKykQiSN8BarAEx6D
+ 72YLb4ZQvkkmb9IUOfHNsC37NJwUlAAUBuWch8syANR/JnKLPVcH6xqcSyVVdNbgDv8gTRg6p+f
+ tq6r9eP/d/lFwVPjg9W3tkBnfK1OnRQXPsOkccJv2ToL+BPQJMj+m6qaTzQsVbO2E+A/94xrSM0
+ t/m6vS+OAqpdUQ+j6ADwG3f2xyjHHF43WeUgr9ubbDIPY=
+X-Received: by 2002:a17:902:e550:b0:2c9:b1ed:eb5d with SMTP id
+ d9443c01a7336-2ca2ed46d69mr20322655ad.47.1782807615882; 
+ Tue, 30 Jun 2026 01:20:15 -0700 (PDT)
+Received: from setun ([2401:4900:a344:dc6e:573c:3e9:c03e:731a])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ca4f2a71dbsm1284615ad.50.2026.06.30.01.20.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Jun 2026 01:20:15 -0700 (PDT)
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, b4-sent@kernel.org,
- Miao Wang <shankerwangmiao@gmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1044;
- i=shankerwangmiao@gmail.com; s=20250715; h=from:subject:message-id;
- bh=P2yWSCAzG7Ep94c0IDqmt6Vf+hrglM5091uNh3I1QpQ=;
- b=owEBbQKS/ZANAwAKAbAx48p7/tluAcsmYgBqQ3aXlgurCQL3nbFGIngXREWSBvfHmQxB0Q+Pf
- gtjb0rJ9wOJAjMEAAEKAB0WIQREqPWPgPJBxluezBOwMePKe/7ZbgUCakN2lwAKCRCwMePKe/7Z
- bkqfD/sHaIJAqHxhYzIrezK4G6ydiZlKdhf60zKPyUF1YM7PyeyFHvuA9cFWCn/eWtetTHzCIJy
- 8TEFYK5NB8gEQ2tUsxiqgJb4S9DvuPjXvKGArIH/nPOvoKUkkDdQtQE99K7MjUqFtKbiokZ4hxw
- PN+FJWW6pqLC29iKuDKgACX/exz4CVqOEgLmnOuiM88sbHYo/wRyxQlEzpAtPlEDKvKRLnJIdz/
- 0hNwfFCzek4yG3k/SacA2xCPq/e2J8sLfKemQJoJ1YRXMe7BUjGEH5kBg2D1q8QONiOQC0WFb3F
- u92aFFAPEhtQtnXql4vYTEwvIhNuMDJnL7Zbovzu+vW42TNjASs1zJ3R2LlkvEzInIJTUn7XqlV
- YrOOUC6B36w4BdvO7VIyrBNkmmOAFycjag59ZRxD1C+fVGjuo9ZpWOT8c4y6oSfgtLw3r8xMVDM
- +TYmZYvkxPkJtS4D7nRNINbez+IsyJb2LKKbpQpBS69bBov9wsVS8uXg63TsyJq53UEQi/vNcZ0
- uelK3IZGUm58Q3C7HJWRJpKKhgsYrFCoSgxliCm8f9nXvfbDaZRp4e2DqZtXK+FvNbjj4P0KgPM
- oNcixh95BUkPY2k1mqJbk5+dBs8DKGjhua+EyIXyKFuthdnxZ4i3v2gzYqYJhHdw5ASJB/TyEWb
- ySK0JD3XlnqJlVw==
-X-Developer-Key: i=shankerwangmiao@gmail.com; a=openpgp;
- fpr=6FAEFF06B7D212A774C60BFDFA0D166D6632EF4A
-X-Endpoint-Received: by B4 Relay for shankerwangmiao@gmail.com/20250715
- with auth_id=462
-X-Original-From: Miao Wang <shankerwangmiao@gmail.com>
-Received-SPF: pass client-ip=172.105.4.254;
- envelope-from=devnull+shankerwangmiao.gmail.com@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: 0
-X-Spam_score: -0.0
-X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
+ lvivier@redhat.com, ayoub@saferwall.com,
+ Aadeshveer Singh <aadeshveer07@gmail.com>
+Subject: [RFC PATCH v2 1/7] migration/tests: remove capability conflict test
+ postcopy-ram+mapped-ram
+Date: Tue, 30 Jun 2026 13:49:34 +0530
+Message-ID: <20260630081940.611092-2-aadeshveer07@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260630081940.611092-1-aadeshveer07@gmail.com>
+References: <20260630081940.611092-1-aadeshveer07@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_FORGED_REPLYTO=2.095, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,48 +100,114 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: shankerwangmiao@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Miao Wang <shankerwangmiao@gmail.com>
+Remove the test test_validate_caps_pair, which asserted postcopy-ram
+and mapped-ram capabilities cannot be active together. The new fast
+snapshot load feature is exactly this pair of capabilities active
+together, with the following patches in this series, this combination
+will now supported and be functional.
 
-Hard coding PAGE_SIZE to 4K will prevent user-only emulation from
-working on hosts with 16K page size.
+Remove the capability check that rejected mapped-ram and postcopy-ram
+being set simultaneously, as this combination now corresponds to fast
+snapshot load.
 
-Fixes: 1d832c19db1e ("target/loongarch: Support 4K page size")
-Fixes: qemu-project/qemu#3651
+No replacement test for fast snapshot load is included in this RFC. A
+test exercising the full save/load flow will be added in a follow-up.
 
-Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 ---
- target/loongarch/cpu-param.h | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ migration/options.c                |  6 ----
+ tests/qtest/migration/misc-tests.c | 52 ------------------------------
+ 2 files changed, 58 deletions(-)
 
-diff --git a/target/loongarch/cpu-param.h b/target/loongarch/cpu-param.h
-index 3bcf77b3755abdc302699c22c7aa99e2e8c3bbf3..6abe72ff5cab46e246fde4fa76bce05ba7c1cd20 100644
---- a/target/loongarch/cpu-param.h
-+++ b/target/loongarch/cpu-param.h
-@@ -10,6 +10,11 @@
+diff --git a/migration/options.c b/migration/options.c
+index 5cbfd29099..16583651ac 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -727,12 +727,6 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+                        "Mapped-ram migration is incompatible with xbzrle");
+             return false;
+         }
+-
+-        if (new_caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
+-            error_setg(errp,
+-                       "Mapped-ram migration is incompatible with postcopy");
+-            return false;
+-        }
+     }
  
- #define TARGET_VIRT_ADDR_SPACE_BITS 48
+     /*
+diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
+index ec6d438cdc..4e0deb7f18 100644
+--- a/tests/qtest/migration/misc-tests.c
++++ b/tests/qtest/migration/misc-tests.c
+@@ -201,55 +201,6 @@ static void do_test_validate_uri_channel(MigrateCommon *args)
+     migrate_end(from, to, false);
+ }
  
--#define TARGET_PAGE_BITS 12
-+#ifdef CONFIG_USER_ONLY
-+/* Allow user-only to vary page size from 4k */
-+# define TARGET_PAGE_BITS_VARY
-+#else
-+# define TARGET_PAGE_BITS 12
-+#endif
- 
- #endif
-
----
-base-commit: 30e8a06b64aa58a3990ba39cb5d09531e7d265e0
-change-id: 20260630-loong64-vary-page-sz-253ded0be884
-
-Best regards,
+-static void validate_caps_pair(QTestState *from,
+-                               const char *first_capability,
+-                               const char *second_capability,
+-                               const char *expected_error)
+-{
+-    QDict *rsp;
+-    const char *error_desc;
+-
+-    migrate_set_capability(from, first_capability, true);
+-
+-    rsp = qtest_qmp_assert_failure_ref(
+-        from,
+-        "{ 'execute': 'migrate-set-capabilities',"
+-        "  'arguments': { 'capabilities': [ { "
+-        "      'capability': %s, 'state': true } ] } }",
+-        second_capability);
+-
+-    error_desc = qdict_get_str(rsp, "desc");
+-    g_assert_cmpstr(error_desc, ==, expected_error);
+-    qobject_unref(rsp);
+-
+-    migrate_set_capability(from, first_capability, false);
+-}
+-
+-static void test_validate_caps_pair(char *test_path, MigrateCommon *args)
+-{
+-    g_autofree char *serial_path = g_strconcat(tmpfs, "/src_serial", NULL);
+-    g_autofree char *cap_pair = g_path_get_basename(test_path);
+-    QTestState *from, *to;
+-
+-    args->start.hide_stderr = true;
+-    args->start.only_source = true;
+-
+-    if (migrate_start(&from, &to, &args->start)) {
+-        return;
+-    }
+-
+-    if (g_str_equal(cap_pair, "mapped_ram_postcopy")) {
+-        const char *error =
+-            "Mapped-ram migration is incompatible with postcopy";
+-
+-        validate_caps_pair(from, "mapped-ram", "postcopy-ram", error);
+-        validate_caps_pair(from, "postcopy-ram", "mapped-ram", error);
+-    }
+-
+-    qtest_quit(from);
+-    unlink(serial_path);
+-}
+-
+ static void test_validate_uri_channels_both_set(char *name, MigrateCommon *args)
+ {
+     args->uri = "tcp:127.0.0.1:0",
+@@ -309,7 +260,4 @@ void migration_test_add_misc(MigrationTestEnv *env)
+                        test_validate_uri_channels_both_set);
+     migration_test_add("/migration/validate_uri/channels/none_set",
+                        test_validate_uri_channels_none_set);
+-    migration_test_add_suffix("/migration/validate_caps/",
+-                              "mapped_ram_postcopy",
+-                              test_validate_caps_pair);
+ }
 -- 
-Miao Wang <shankerwangmiao@gmail.com>
-
+2.54.0
 
 
