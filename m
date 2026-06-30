@@ -4,83 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D05C6C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 12:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B4E7C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 12:44:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weXon-0006PS-8O; Tue, 30 Jun 2026 08:44:11 -0400
+	id 1weXp6-0006Sx-Bs; Tue, 30 Jun 2026 08:44:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1weXoZ-0006Ol-9o
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 08:43:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <yoshinori.sato@nifty.com>)
+ id 1weXoW-0006OY-2q; Tue, 30 Jun 2026 08:43:45 -0400
+Received: from mta-snd-w07.mail.nifty.com ([106.153.227.39])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1weXoX-0002BR-1g
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 08:43:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782823423;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VIMFFc/RnWR5N1EsN5P+Jp60EIpB3vAIIs8hpyb+4Yw=;
- b=etanXiW/cqJ8mMHQOLWh7YJ3Lwhzp7E3yxQEPxSOug7uAeVxIqt3BbWpWmKhXwgFBUeHQm
- Aw6zohOXqh9vmcpC3hwlWfAgmYcy68bduAwVImAFe9AilPQfdInQng0SaKa1N38KYiRSVu
- DU75jgT4nTCj2oYkKeGq+C3QX+V8ZvA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-HZl-VoE1On6CDUtS1kImkQ-1; Tue,
- 30 Jun 2026 08:43:37 -0400
-X-MC-Unique: HZl-VoE1On6CDUtS1kImkQ-1
-X-Mimecast-MFC-AGG-ID: HZl-VoE1On6CDUtS1kImkQ_1782823416
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9FF871955F1F; Tue, 30 Jun 2026 12:43:35 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.50.20])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 13E8F1955F6F; Tue, 30 Jun 2026 12:43:31 +0000 (UTC)
-Date: Tue, 30 Jun 2026 13:43:28 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Christian Brauner <brauner@kernel.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Peter Krempa <pkrempa@redhat.com>
-Subject: Re: [PATCH v5 05/35] monitor: minimal conversion of monitors to QOM
-Message-ID: <akO58EjJf3xs4KmU@redhat.com>
-References: <20260624173752.2928717-1-berrange@redhat.com>
- <20260624173752.2928717-6-berrange@redhat.com>
- <87o6gs1buf.fsf@pond.sub.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87o6gs1buf.fsf@pond.sub.org>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <yoshinori.sato@nifty.com>)
+ id 1weXoT-00028j-6c; Tue, 30 Jun 2026 08:43:43 -0400
+Received: from sakura.ysato.name by mta-snd-w07.mail.nifty.com with ESMTP
+ id <20260630124336545.PFZU.18412.sakura.ysato.name@nifty.com>;
+ Tue, 30 Jun 2026 21:43:36 +0900
+Received: from SIOS1075.ysato.ml (ZM005235.ppp.dion.ne.jp [222.8.5.235])
+ by sakura.ysato.name (Postfix) with ESMTPSA id 1B2BA1C0076;
+ Tue, 30 Jun 2026 21:43:36 +0900 (JST)
+Date: Tue, 30 Jun 2026 21:43:35 +0900
+Message-ID: <87zf0cp5ag.wl-yoshinori.sato@nifty.com>
+From: yoshinori.sato@nifty.com
+To: Randy Schifflin <randy.schifflin@gmail.com>
+Cc: qemu-devel@nongnu.org,
+	qemu-trivial@nongnu.org
+Subject: Re: [PATCH 2/2] target/sh4: fixup tcg for sh4 fipr/ftrv instructions
+In-Reply-To: <20260629-fixup-sh4-tcg-fpu-instructions-b4-v1-2-4356b305f971@gmail.com>
+References: <20260629-fixup-sh4-tcg-fpu-instructions-b4-v1-0-4356b305f971@gmail.com>
+ <20260629-fixup-sh4-tcg-fpu-instructions-b4-v1-2-4356b305f971@gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/30.1 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+ s=default-1th84yt82rvi; t=1782823416; 
+ bh=Z3wcba5FUNvs88z4S0j4+tXcFaFDcNXuYzX3/M9cfBA=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=OqFgrYFqDiU+qD5WMyJB3Oh2hZpVBCqNkcB943tdMSkurFo+s2RldOUrokbF0egX+0hcZK7t
+ iurxvTSRl7rfRkNum0ESZ9L32VnZIaGs5NQ8Ic/FzOWneX6luAwd3F5WiDGSy9gN4BAVTkQd8G
+ hlUrK2Pzy+Qiy204i6czkT/YPK83oEJWReAfs9BkP0X/ak1zSFP1nGHHnwzmDGqexh6ToHQS0e
+ x2Xez0M9jKar1g6FpG5Dt5UhPEJHmDLSFEG9YiVUK4EM96KkvhlJPVZIPkccwUbDGzbKZHQ7Mp
+ pzS/XUtdtPgIv/gxZD4pvibeoBJxGhJZmQJM0mvmt9Ls82fw==
+Received-SPF: pass client-ip=106.153.227.39;
+ envelope-from=yoshinori.sato@nifty.com; helo=mta-snd-w07.mail.nifty.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,246 +69,245 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 30, 2026 at 01:55:52PM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+On Tue, 30 Jun 2026 06:49:13 +0900,
+Randy Schifflin wrote:
 > 
-> > This introduces a Monitor QOM object, with MonitorHMP and
-> > MonitorQMP subclasses. This is the bare minimum conversion
-> > of just the type declarations and replacing g_new/g_free
-> > with object_new/object_unref.
-> >
-> > Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > Tested-by: Peter Krempa <pkrempa@redhat.com>
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >  include/monitor/monitor.h  | 11 ++++++++++-
-> >  monitor/hmp.c              | 29 +++++++++++++++++++++++++++--
-> >  monitor/monitor-internal.h | 18 ++++++++++++++++--
-> >  monitor/monitor.c          | 18 ++++++++++++++++--
-> >  monitor/qmp-cmds.c         | 15 ++++++++-------
-> >  monitor/qmp.c              | 29 +++++++++++++++++++++++++++--
-> >  6 files changed, 104 insertions(+), 16 deletions(-)
-> >
-> > diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-> > index b9642b58ba..2e9f9e12e9 100644
-> > --- a/include/monitor/monitor.h
-> > +++ b/include/monitor/monitor.h
-> > @@ -5,8 +5,17 @@
-> >  #include "qapi/qapi-types-misc.h"
-> >  #include "qemu/readline.h"
-> >  #include "exec/hwaddr.h"
-> > +#include "qom/object.h"
-> > +
-> > +#define TYPE_MONITOR "monitor"
-> > +OBJECT_DECLARE_TYPE(Monitor, MonitorClass, MONITOR);
-> > +
-> > +#define TYPE_MONITOR_HMP "monitor-hmp"
-> > +OBJECT_DECLARE_TYPE(MonitorHMP, MonitorHMPClass, MONITOR_HMP);
-> > +
-> > +#define TYPE_MONITOR_QMP "monitor-qmp"
-> > +OBJECT_DECLARE_TYPE(MonitorQMP, MonitorQMPClass, MONITOR_QMP);
-> >  
-> > -typedef struct MonitorHMP MonitorHMP;
-> >  typedef struct MonitorOptions MonitorOptions;
-> >  
-> >  #define QMP_REQ_QUEUE_LEN_MAX 8
-> > diff --git a/monitor/hmp.c b/monitor/hmp.c
-> > index 4e4468424a..81047d2513 100644
-> > --- a/monitor/hmp.c
-> > +++ b/monitor/hmp.c
-> > @@ -43,6 +43,20 @@
-> >  #include "system/block-backend.h"
-> >  #include "trace.h"
-> >  
-> > +OBJECT_DEFINE_TYPE(MonitorHMP, monitor_hmp, MONITOR_HMP, MONITOR);
-> > +
-> > +static void monitor_hmp_finalize(Object *obj)
-> > +{
-> > +}
-> > +
-> > +static void monitor_hmp_class_init(ObjectClass *cls, const void *data)
-> > +{
-> > +}
-> > +
-> > +static void monitor_hmp_init(Object *obj)
-> > +{
-> > +}
-> > +
-> >  static void monitor_command_cb(void *opaque, const char *cmdline,
-> >                                 void *readline_opaque)
-> >  {
-> > @@ -1526,10 +1540,21 @@ static void monitor_readline_flush(void *opaque)
-> >  
-> >  void monitor_new_hmp(Chardev *chr, bool use_readline, Error **errp)
-> >  {
-> > -    MonitorHMP *mon = g_new0(MonitorHMP, 1);
-> > +    MonitorHMP *mon;
-> > +    static int counter;
-> > +    g_autofree char *id = g_strdup_printf("hmpcompat%d", counter++);
+> Fixes TCG generation for sh4 `fipr` and `ftrv` instructions.
+> Updates the current logic for these instructions to check the
+> FPSCR register appropriately (according to the sh4 cpu manual, `fipr`
+> and `ftrv` are only defined when the FPSCR register PR flag is 0).
+> Also fixes the mth/nth-vector operands by multiplying by 4 to convert
+> to the correct floating point register offset.
 > 
-> Hmm.  The system picking IDs is problematic when they can clash with the
-> user's IDs.  If we had an ounce of common sense, we'd restrict both
-> across the board so they cannot clash.  But we don't.
+> Signed-off-by: Randy Schifflin <randy.schifflin@gmail.com>
+> ---
+>  target/sh4/op_helper.c |  2 +-
+>  target/sh4/translate.c | 15 +++++----------
+>  2 files changed, 6 insertions(+), 11 deletions(-)
 > 
-> We need an ID here, because we need to make the new object the child of
-> something (actually: child of /objects/), which requires a child name.
+> diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
+> index 90c065b217..777380f8e4 100644
+> --- a/target/sh4/op_helper.c
+> +++ b/target/sh4/op_helper.c
+> @@ -488,7 +488,7 @@ void helper_ftrv(CPUSH4State *env, uint32_t n)
+>      float32 p;
+>  
+>      bank_matrix = (env->sr & FPSCR_FR) ? 0 : 16;
+> -    bank_vector = (env->sr & FPSCR_FR) ? 16 : 0;
+> +    bank_vector = (env->sr & FPSCR_FR) ? 16 + n : n;
+>      set_float_exception_flags(0, &env->fp_status);
+>      for (i = 0 ; i < 4 ; i++) {
+>          r[i] = float32_zero;
+> diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+> index d38a6bd352..373950fd66 100644
+> --- a/target/sh4/translate.c
+> +++ b/target/sh4/translate.c
+> @@ -377,11 +377,6 @@ static inline void gen_store_fpr64(DisasContext *ctx, TCGv_i64 t, int reg)
+>          goto do_illegal;                    \
+>      }
+>  
+> -#define CHECK_FPSCR_PR_1 \
+> -    if (!(ctx->tbflags & FPSCR_PR)) {       \
+> -        goto do_illegal;                    \
+> -    }
+> -
+>  #define CHECK_SH4A \
+>      if (!(ctx->features & SH_FEATURE_SH4A)) { \
+>          goto do_illegal;                      \
+> @@ -1740,22 +1735,22 @@ static void _decode_opc(DisasContext * ctx)
+>          return;
+>      case 0xf0ed: /* fipr FVm,FVn */
+>          CHECK_FPU_ENABLED
+> -        CHECK_FPSCR_PR_1
+> +        CHECK_FPSCR_PR_0
+>          {
+> -            TCGv m = tcg_constant_i32((ctx->opcode >> 8) & 3);
+> -            TCGv n = tcg_constant_i32((ctx->opcode >> 10) & 3);
+> +            TCGv m = tcg_constant_i32(((ctx->opcode >> 8) & 3) << 2);
+> +            TCGv n = tcg_constant_i32(((ctx->opcode >> 10) & 3) << 2);
+>              gen_helper_fipr(tcg_env, m, n);
+>              return;
+>          }
+>          break;
+>      case 0xf0fd: /* ftrv XMTRX,FVn */
+>          CHECK_FPU_ENABLED
+> -        CHECK_FPSCR_PR_1
+> +        CHECK_FPSCR_PR_0
+>          {
+>              if ((ctx->opcode & 0x0300) != 0x0100) {
+>                  goto do_illegal;
+>              }
+> -            TCGv n = tcg_constant_i32((ctx->opcode >> 10) & 3);
+> +            TCGv n = tcg_constant_i32(((ctx->opcode >> 10) & 3) << 2);
+>              gen_helper_ftrv(tcg_env, n);
+>              return;
+>          }
 > 
-> Non-problem with -object / object-add, because @id is mandatory there.
+> -- 
+> 2.43.0
 > 
-> Non-problem with -device / device_add, because we use separate parents
-> for devices with and without @id (/machine/peripheral/ and
-> /machine/peripheral-anon/, plus the /machine/unattached/ orphanage).
+
+On Tue, 30 Jun 2026 06:49:13 +0900,
+Randy Schifflin wrote:
 > 
-> Example for an existing problem:
+> Fixes TCG generation for sh4 `fipr` and `ftrv` instructions.
+> Updates the current logic for these instructions to check the
+> FPSCR register appropriately (according to the sh4 cpu manual, `fipr`
+> and `ftrv` are only defined when the FPSCR register PR flag is 0).
+> Also fixes the mth/nth-vector operands by multiplying by 4 to convert
+> to the correct floating point register offset.
 > 
->     $ qemu-system-x86_64 -nodefaults -monitor stdio -chardev null,id=chr0 -mon id=compat_monitor0,chardev=chr0
->     qemu-system-x86_64: -mon id=compat_monitor0,chardev=chr0: Duplicate ID 'compat_monitor0' for mon
+> Signed-off-by: Randy Schifflin <randy.schifflin@gmail.com>
+> ---
+>  target/sh4/op_helper.c |  2 +-
+>  target/sh4/translate.c | 15 +++++----------
+>  2 files changed, 6 insertions(+), 11 deletions(-)
 > 
-> Example for a problem created by this series:
+> diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
+> index 90c065b217..777380f8e4 100644
+> --- a/target/sh4/op_helper.c
+> +++ b/target/sh4/op_helper.c
+> @@ -488,7 +488,7 @@ void helper_ftrv(CPUSH4State *env, uint32_t n)
+>      float32 p;
+>  
+>      bank_matrix = (env->sr & FPSCR_FR) ? 0 : 16;
+> -    bank_vector = (env->sr & FPSCR_FR) ? 16 : 0;
+> +    bank_vector = (env->sr & FPSCR_FR) ? 16 + n : n;
+>      set_float_exception_flags(0, &env->fp_status);
+>      for (i = 0 ; i < 4 ; i++) {
+>          r[i] = float32_zero;
+> diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+> index d38a6bd352..373950fd66 100644
+> --- a/target/sh4/translate.c
+> +++ b/target/sh4/translate.c
+> @@ -377,11 +377,6 @@ static inline void gen_store_fpr64(DisasContext *ctx, TCGv_i64 t, int reg)
+>          goto do_illegal;                    \
+>      }
+>  
+> -#define CHECK_FPSCR_PR_1 \
+> -    if (!(ctx->tbflags & FPSCR_PR)) {       \
+> -        goto do_illegal;                    \
+> -    }
+> -
+>  #define CHECK_SH4A \
+>      if (!(ctx->features & SH_FEATURE_SH4A)) { \
+>          goto do_illegal;                      \
+> @@ -1740,22 +1735,22 @@ static void _decode_opc(DisasContext * ctx)
+>          return;
+>      case 0xf0ed: /* fipr FVm,FVn */
+>          CHECK_FPU_ENABLED
+> -        CHECK_FPSCR_PR_1
+> +        CHECK_FPSCR_PR_0
+>          {
+> -            TCGv m = tcg_constant_i32((ctx->opcode >> 8) & 3);
+> -            TCGv n = tcg_constant_i32((ctx->opcode >> 10) & 3);
+> +            TCGv m = tcg_constant_i32(((ctx->opcode >> 8) & 3) << 2);
+> +            TCGv n = tcg_constant_i32(((ctx->opcode >> 10) & 3) << 2);
+>              gen_helper_fipr(tcg_env, m, n);
+>              return;
+>          }
+>          break;
+>      case 0xf0fd: /* ftrv XMTRX,FVn */
+>          CHECK_FPU_ENABLED
+> -        CHECK_FPSCR_PR_1
+> +        CHECK_FPSCR_PR_0
+>          {
+>              if ((ctx->opcode & 0x0300) != 0x0100) {
+>                  goto do_illegal;
+>              }
+> -            TCGv n = tcg_constant_i32((ctx->opcode >> 10) & 3);
+> +            TCGv n = tcg_constant_i32(((ctx->opcode >> 10) & 3) << 2);
+>              gen_helper_ftrv(tcg_env, n);
+>              return;
+>          }
 > 
->     $  qemu-system-x86_64 -nodefaults -display none -S -monitor stdio -chardev null,id=chr0 -object monitor-hmp,id=hmpcompat0,chardev=chr0
->     qemu-system-x86_64: -monitor stdio: attempt to add duplicate property 'hmpcompat0' to object (type 'container')
+> -- 
+> 2.43.0
 > 
-> I readily admit that these clashes are *unlikely*.  Still, do we really
-> want to define an interface that claims to let you pick any ID, then
-> rejects some of them sometimes?  Feels rather 1990s to me.  At the very
-> least, cover the wart in the commit message.
 
-The way I looked at it was aything using -object with the new
-monitor-qmp/monitor-hmp types is new code. They can:
-
-  1. Trivially abide the warning about "hmpcompatNN" / "qmpcompatNN"
-     being internal usage for compat syntax
-  2. Not use both  -monitor and -object on the same QEMU instance
-     so not have a clash between the two to begin with
-
-The remaining danger where is some existing code using -object with
-a *non-monitor* type, and calling it "hmpcompatNN" / "qmpcompatNN",
-which would be insanity. Never say never, but I think that's an
-acceptable risk.
-
-
-> This existing problem example leads me to the next mess: interaction
-> with monitors' *other* ID.
+On Tue, 30 Jun 2026 06:49:13 +0900,
+Randy Schifflin wrote:
 > 
-> qemu-system-FOO's -mon accepts an optional "id" parameter.  It goes into
-> its QemuOpts, and from there into MonitorOptions member @id.
-
-Arrrggggggghh.  That is not documented for -mon at all AFAICT
-
-  $ qemu-system-x86_64  -help 2>&1 | grep -- -mon
-  -monitor dev    redirect the monitor to char device 'dev'
-  -qmp dev        like -monitor but opens in 'control' mode
-  -mon [chardev=]name[,mode=readline|control][,pretty[=on|off]]
-
-but yeah as you say, it exists, and in fact libvirt even uses
-it despite it being undocumented.
-
-> qemu-storage-daemon's --monitor is similar, except it bypasses QemuOpts.
+> Fixes TCG generation for sh4 `fipr` and `ftrv` instructions.
+> Updates the current logic for these instructions to check the
+> FPSCR register appropriately (according to the sh4 cpu manual, `fipr`
+> and `ftrv` are only defined when the FPSCR register PR flag is 0).
+> Also fixes the mth/nth-vector operands by multiplying by 4 to convert
+> to the correct floating point register offset.
 > 
-> qemu-system-FOO provides convenience options -monitor, -qmp,
-> -qmp-pretty.
+> Signed-off-by: Randy Schifflin <randy.schifflin@gmail.com>
+> ---
+>  target/sh4/op_helper.c |  2 +-
+>  target/sh4/translate.c | 15 +++++----------
+>  2 files changed, 6 insertions(+), 11 deletions(-)
 > 
-> Their argument may refer to an existing chardev by ID, like
-> "chardev:ID".  This creates a monitor with that same[*] QemuOpts and
-> MonitorOptions ID.
+> diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
+> index 90c065b217..777380f8e4 100644
+> --- a/target/sh4/op_helper.c
+> +++ b/target/sh4/op_helper.c
+> @@ -488,7 +488,7 @@ void helper_ftrv(CPUSH4State *env, uint32_t n)
+>      float32 p;
+>  
+>      bank_matrix = (env->sr & FPSCR_FR) ? 0 : 16;
+> -    bank_vector = (env->sr & FPSCR_FR) ? 16 : 0;
+> +    bank_vector = (env->sr & FPSCR_FR) ? 16 + n : n;
+>      set_float_exception_flags(0, &env->fp_status);
+>      for (i = 0 ; i < 4 ; i++) {
+>          r[i] = float32_zero;
+> diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+> index d38a6bd352..373950fd66 100644
+> --- a/target/sh4/translate.c
+> +++ b/target/sh4/translate.c
+> @@ -377,11 +377,6 @@ static inline void gen_store_fpr64(DisasContext *ctx, TCGv_i64 t, int reg)
+>          goto do_illegal;                    \
+>      }
+>  
+> -#define CHECK_FPSCR_PR_1 \
+> -    if (!(ctx->tbflags & FPSCR_PR)) {       \
+> -        goto do_illegal;                    \
+> -    }
+> -
+>  #define CHECK_SH4A \
+>      if (!(ctx->features & SH_FEATURE_SH4A)) { \
+>          goto do_illegal;                      \
+> @@ -1740,22 +1735,22 @@ static void _decode_opc(DisasContext * ctx)
+>          return;
+>      case 0xf0ed: /* fipr FVm,FVn */
+>          CHECK_FPU_ENABLED
+> -        CHECK_FPSCR_PR_1
+> +        CHECK_FPSCR_PR_0
+>          {
+> -            TCGv m = tcg_constant_i32((ctx->opcode >> 8) & 3);
+> -            TCGv n = tcg_constant_i32((ctx->opcode >> 10) & 3);
+> +            TCGv m = tcg_constant_i32(((ctx->opcode >> 8) & 3) << 2);
+> +            TCGv n = tcg_constant_i32(((ctx->opcode >> 10) & 3) << 2);
+>              gen_helper_fipr(tcg_env, m, n);
+>              return;
+>          }
+>          break;
+>      case 0xf0fd: /* ftrv XMTRX,FVn */
+>          CHECK_FPU_ENABLED
+> -        CHECK_FPSCR_PR_1
+> +        CHECK_FPSCR_PR_0
+>          {
+>              if ((ctx->opcode & 0x0300) != 0x0100) {
+>                  goto do_illegal;
+>              }
+> -            TCGv n = tcg_constant_i32((ctx->opcode >> 10) & 3);
+> +            TCGv n = tcg_constant_i32(((ctx->opcode >> 10) & 3) << 2);
+>              gen_helper_ftrv(tcg_env, n);
+>              return;
+>          }
 > 
-> Else, their argument is character device configuration in legacy syntax,
-> like "stdio".  This creates both a monitor and a character device, with
-> ID "compat_monitorN", where N counts up from zero.  The character device
-> is visible in "info chardev", as always.
+> -- 
+> 2.43.0
 > 
-> Aside: in both cases we use the same ID for two different objects, which
-> feels unadvisable.
 
-Agreed, that's awful.
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
 
-> Aside: we have code checking whether a QemuOpts or character device ID
-> starts with "compat_monitor", which is horryfying.
-
-Eww.
-
-> Your series does not mess with this at all.  Understandable; I stay out
-> of this swamp when I can, too.
-
-I didn't realize the swap was there in this case !
-
-> However, it results in monitors having two IDs, namely the one in
-> MonitorOptions, and the one in /object/.  This is confusing.
-> 
-> Perhaps we should we'd get rid of the one in MonitorOptions.  May well
-> be more trouble than it's worth.
-> 
-> Could we at least make the two IDs the same?
-
-Since -mon has an existing ID, we might as well pass it through to
-use as the child prop name for the objects.
-
-
-
-> > diff --git a/monitor/monitor.c b/monitor/monitor.c
-> > index a87597e606..a497c25c54 100644
-> > --- a/monitor/monitor.c
-> > +++ b/monitor/monitor.c
-> > @@ -73,6 +73,20 @@ static GHashTable *coroutine_mon; /* Maps Coroutine* to Monitor* */
-> >  MonitorList mon_list;
-> >  static bool monitor_destroyed;
-> >  
-> > +OBJECT_DEFINE_TYPE(Monitor, monitor, MONITOR, OBJECT);
-> > +
-> > +static void monitor_finalize(Object *obj)
-> > +{
-> > +}
-> > +
-> > +static void monitor_class_init(ObjectClass *cls, const void *data)
-> > +{
-> > +}
-> > +
-> > +static void monitor_init(Object *obj)
-> > +{
-> > +}
-> > +
-> >  Monitor *monitor_cur(void)
-> >  {
-> >      Monitor *mon;
-> > @@ -598,7 +612,7 @@ void monitor_list_append(Monitor *mon)
-> >  
-> >      if (mon) {
-> >          monitor_data_destroy(mon);
-> > -        g_free(mon);
-> > +        object_unparent(OBJECT(mon));
-> >      }
-> >  }
-> >  
-> > @@ -680,7 +694,7 @@ void monitor_cleanup(void)
-> >          monitor_flush(mon);
-> >          monitor_data_destroy(mon);
-> >          qemu_mutex_lock(&monitor_lock);
-> > -        g_free(mon);
-> > +        object_unparent(OBJECT(mon));
-> >      }
-> >      qemu_mutex_unlock(&monitor_lock);
-> >  
-> 
-> Hmm...
-> 
->     {"execute": "qom-list-types", "arguments": {"implements": "monitor"}}
->     {"return": [{"name": "monitor-hmp", "parent": "monitor"}, {"name": "monitor-qmp", "parent": "monitor"}, {"name": "monitor", "parent": "object"}]}
-> 
-> Shouldn't type "monitor" be abstract?
-
-Yes it absolutely should be, and I'd swear it *was* abstract
-at some point in my work, but I guess I lost it along the way.
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Yosinori Sato
 
