@@ -4,95 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 223E3C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 10:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E70C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 10:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weVlI-0001mE-Et; Tue, 30 Jun 2026 06:32:16 -0400
+	id 1weVoI-0002aJ-BF; Tue, 30 Jun 2026 06:35:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1weVl9-0001lc-Rq; Tue, 30 Jun 2026 06:32:07 -0400
-Received: from fhigh-b8-smtp.messagingengine.com ([202.12.124.159])
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1weVoH-0002Zy-Cl; Tue, 30 Jun 2026 06:35:21 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1weVl6-0000El-4a; Tue, 30 Jun 2026 06:32:06 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfhigh.stl.internal (Postfix) with ESMTP id D8DFC7A007F;
- Tue, 30 Jun 2026 06:31:59 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-01.internal (MEProxy); Tue, 30 Jun 2026 06:32:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1782815519; x=
- 1782901919; bh=AcMS9OzUeOOJUP/YBmx/zB2Fq1k2uNovFLnkwEFa7/E=; b=V
- LW9Cd5p6iCDHAYSKE4J9sgyBd7K7UOf+QA73vnKQ4a4bVyuEAtGzBmaWpxK304sR
- 5Ip00kba61GSnDXsYGS1cV9vV2GolBkkeOGFw+DOEV3w0NVJZBEKYdtu31m8PXXl
- mr7QqcYj5lcPTpb1Ts2dZbLImgDJtEr+60Ztai5YXAXZ5zeiFEshY2L+mW9MG7Hd
- WQyEZdv53kdJ05TF2Mwn6z5Zvtf4xnh34NWR5vF6+ajp963dWVzJcIyKieOmBznO
- 35pY5rXO+h3wz7ik4OhEOfH1QO5En+PBnA0T6tROt4qlHVONppX9ZjWBZJHvDS1p
- Fy0JlEY15H6BSTxiBuqYQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
- 1782815519; x=1782901919; bh=AcMS9OzUeOOJUP/YBmx/zB2Fq1k2uNovFLn
- kwEFa7/E=; b=EDtjh2eOIrvq3xPZZIMM8OgflNvg9alokApDIW0Nd1po0hHCQYw
- U9agmLKNPqyZMYpJWUcZO0rpktB2pZ8c1xYnqHsYrB80KDetryDcRNoa5crDMlEE
- 0cItqwZiRJssNzQPGaaRisIPZixE8Cpic9CEPa8/Ft6dYCcgZdPMULbpNDA6BVlF
- 5ebPyjfcpdZg8SqoaA8log2pIL5ySd7j9pn9B47FFG6TRWqmpom3TNGcepo94NWj
- BJYKTm4YrTW6SGeRspWRCg8XwN/+oiJhPsvvH6fZNY+KhH7cqc/7GKpze3eCzB09
- gxkGBl9SiInh3XJUEtXlNOe/GEN5Q2YnjVA==
-X-ME-Sender: <xms:HptDaobPa6tKqbK5E_xgBdbScuCKS83Oz955YH1mE_8OekW3gplG6A>
- <xme:HptDapY35DXmYomDorE9xaT0v7cenDzunVUH3Kpk-f-GO7bs2uOOHr7jSGRl8EzMq
- jfZskHdhYlrT7fC7rCyYG85XzpphGD3pYya7xlbq7Dkxlx7hF74Lw>
-X-ME-Received: <xmr:HptDatzXJOJbaMG0LFZk08St4l8TCQi2UlwOhVUay5QdlT_BWflfVjk0GkIX8w>
-X-ME-Proxy-Cause: dmFkZTF0ICRrCWl0HDfvP2UKBMxVAFNKR5Erwlhj+k9QEpYWKGf0028+jc61gvAd35yL0Q
- KY0omSR83bIVJ30gLum54huxvhg00I047vHa2ETp5GBJ7XRuIFjcixNXTqH1GiWAV/n/75
- VZdNqXo6hdmWXCNmD8yURfyByaCyYs1dMZie7hFfuOpIpJl3JfhQofNra5+4qpKwU6PyDh
- jNvWZVQphGbUSH6+MFtgip3PDRQKyi/8ZicF5/xJpi9UxcsOBhFjYd3B6f/3aFouqRut/U
- WrU4qxTGYEWg8Lomf+IwxbUgxWZH6jkZEvTDdUPSkWZsRHJPwUc0kzcAvMWKcBTlozVxZU
- rBfh/275mLMZAn0YyDt4awGCWl7mOEBGkiyy0XCIYV7XU9tGeenVTYKKzfbVxo63dco2k3
- Y80JAj1p5fNtCvgDnV0SyixqKf6gtJKP3x09TnUFkzuGqXA9ZKC2GVY96mdgLNoGO7cwmK
- OJuJqEWMuNVbyooRE3fQh6KSk72clRaVGft0Fk8P+H9hhI0aLgMavKpoxAApVVv3LJlUIv
- VAvVTBHgCePbaztBSMDzTSbC9wPooqJHlj0TEUvc6Mkrh+LJPyVVhREvvPCv0o5bnDlpZ+
- 2EQQpmk2l+ht1oav1VOVjE3i7BDpLsVj0pXg4EFsFH+dCr/VnlW7c/zGeUwg
-X-ME-Proxy: <xmx:HptDaleh4ewW7ES1bO2VIsImhdNdiv5zopV-y9Rajap2AVwci1oJAg>
- <xmx:HptDai6etEoBCMyCVJyvrAXILEIMtC0TRFYNcfU5WzHv0Z9-AsGjGA>
- <xmx:HptDaqIz5S3UvkOezvmN1cYx0CcVUAotlavyC6FC0AmKSfsCmvw1pA>
- <xmx:HptDaqzLoIN3hu3xP9fimKW-ELDNGx_nWE_J3iOxG-xFPRgtpvA0Yw>
- <xmx:H5tDatlKODE7IQH3mAHaUP_8fGSj_ovPMkJxx2lbYHwRwKpkxTudAGux>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Jun 2026 06:31:58 -0400 (EDT)
-Date: Tue, 30 Jun 2026 12:31:57 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Mateusz Nowicki <mateusz.nowicki@posteo.net>
-Cc: qemu-devel@nongnu.org, "Dr . David Alan Gilbert" <dave@treblig.org>,
- Markus Armbruster <armbru@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Jesper Devantier <foss@defmacro.it>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Eric Blake <eblake@redhat.com>,
- qemu-block@nongnu.org
-Subject: Re: [PATCH v3 0/2] hw/nvme: add monitor commands for inspecting state
-Message-ID: <akObGmLY1mRSedwd@AALNPWKJENSEN.aal.scsc.local>
-References: <20260626112116.7621-1-mateusz.nowicki@posteo.net>
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1weVoF-0001zK-RR; Tue, 30 Jun 2026 06:35:21 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65U9nG3C1535003; Tue, 30 Jun 2026 10:35:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=7qK60Cak/o69NgfwuKeggui4RaYQpsU4ujSk+MrFu
+ VQ=; b=NOMmLLhHjzkQ2ojYmNuKuavJkv5h95wxtJuN3gwmOM7HjEROHFgxSBBxc
+ H0rmCG3CiQhoyyaRD7YEVtZ8bc4mrMtss+e936zoR7J691frlY9BhJWj26Rp8Vk4
+ wlj20rp+kwZG8sa7cZenHrT6LZBa0EPtJgqN8TIb2Q3qreCibR77D99rxbgqDX9a
+ pwtGVBcqwMh3Y/ImeC+7P+siYNXBkECNwNLHATZxz0YJ8g2Q8sXp1jY1jxoLIPTP
+ hVJRXTBm5/u0CUu27CuZHc8FSy39bym6NenZub7BFYXVQ7vNXoCqjYxRRPqPHxQ4
+ qtGnNTkFypga7YBbRuPUDLY2woTjA==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26mjnw3j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 10:35:17 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UA4cEG005983;
+ Tue, 30 Jun 2026 10:35:17 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhy9ebb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 10:35:16 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65UAZDO839911818
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Jun 2026 10:35:13 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3139820043;
+ Tue, 30 Jun 2026 10:35:13 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 04E5620040;
+ Tue, 30 Jun 2026 10:35:11 +0000 (GMT)
+Received: from shivang.bl1-in.ibm.com (unknown [9.123.12.247])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 30 Jun 2026 10:35:10 +0000 (GMT)
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: adityag@linux.ibm.com, harshpb@linux.ibm.com, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: shivangu@linux.ibm.com, milesg@linux.ibm.com, npiggin@gmail.com,
+ amachhiw@linux.ibm.com
+Subject: [PATCH v3 0/2] ppc/pnv: fixing external dtb
+Date: Tue, 30 Jun 2026 16:05:06 +0530
+Message-ID: <20260630103508.254000-1-shivangu@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="nApFfMhECkHwgzGP"
-Content-Disposition: inline
-In-Reply-To: <20260626112116.7621-1-mateusz.nowicki@posteo.net>
-Received-SPF: pass client-ip=202.12.124.159; envelope-from=its@irrelevant.dk;
- helo=fhigh-b8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDA5MyBTYWx0ZWRfX7ar3sF6gpega
+ LCTL9TSBD6o6dYvnWghnTVbtExaAwvZt2Rkb4/rv8cb2m7segZS2NpQJCH2RjJkd0//gGtgSWg9
+ b0yipv+IYWATdhnEuIXoUqTzueXGNAJUm5i71qR/Z8T4+REyxCT0YOoeMGWarNjB8+elwJhV9/D
+ aF0K27Che27xlldbWWG/I9Q14W6+AYaWYLvJTI7H3O9glzOBVL5fDWpF+Uym1eJX0l35dtxSTuI
+ tEZz3TUUPsqzaQEayWwQ9cpWbNXMGDWr7kbYbAVYsCe4+wC0bWQpLgozthnHjsV2kweyYWXDE2t
+ UZ2HTkAMzWXnU4cYG4At8EMkaDvm00FPWOZkeyHEWWCPaPEG6O9DtkvP45IlbEb1aWIHUs9HruA
+ 2V8Haj662jvQUS6yt0Gw8NyDTdAOsBDi38lIVqcoEAujn8/h3hZw/Bv87YKlAIvZcW3lg7bPXwy
+ 4Sgd2MwN9wHYSRq5wew==
+X-Proofpoint-GUID: fKMDpBquFVqJYfQEhn5HNQVHhxwC71CV
+X-Authority-Analysis: v=2.4 cv=Z8bc2nRA c=1 sm=1 tr=0 ts=6a439be6 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=HK4ePdA0MMetCi7OCQ0A:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDA5MyBTYWx0ZWRfX5Lquv2ECJLNN
+ fX4WeYDg4J2a6nqIeuCnCUqCjwKmFOWPj2sOVEcyAR2kZd+QPPow/o3W2YwwUJygMOBzX8+Gip2
+ DrF8NLCIdHRuHp6Hjt8qOTbCIsDo+eQ=
+X-Proofpoint-ORIG-GUID: ljwVn1iyn0UXvfM4fWFhumzDs_qHxekA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-30_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 adultscore=0 spamscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300093
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,95 +120,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---nApFfMhECkHwgzGP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Currently powerpc pnv machines doesnt respect `-dtb`
+argument passed from outside. During cpu start content of
+machine->fdt is overwritten by `pnv_dt_create`.
 
-On Jun 26 11:21, Mateusz Nowicki wrote:
-> Add two HMP commands for inspecting emulated NVMe controllers from
-> the QEMU monitor without attaching gdb to the QEMU process:
->=20
->   - 'info nvme'        - per-controller summary (PCI, identify
->                          fields, CC/CSTS/AQA, queue counts)
->   - 'info nvme-queues' - per-queue listing of admin and I/O SQ/CQ
->                          (size, head/tail, PRP1, doorbell offset,
->                          phase tag)
->=20
-> Useful for verifying queue setup, doorbell rings, AERs held in the
-> admin SQ and similar driver/controller interaction details from a
-> running QEMU monitor.
->=20
-> Changes in v3:
->   - Gate the new x-query-nvme[-queues] commands and their 'info'
->     counterparts behind CONFIG_NVME_PCI.  They were registered
->     unconditionally while the implementations live in hw/nvme/, so
->     targets built without NVMe (e.g. riscv64-softmmu) failed to link
->     with an undefined reference to qmp_x_query_nvme.
->   - hw/nvme/meson.build: keep the source file list alphabetically
->     sorted (Markus).
->=20
-> Changes in v2:
->   - hw/nvme/meson.build: add the missing trailing newline (Markus).
->   - Pick up Acked-by tags from Dr. David Alan Gilbert and Markus
->     Armbruster on both patches.
->=20
-> v2: https://lore.kernel.org/qemu-devel/cover.1778694320.git.mateusz.nowic=
-ki@posteo.net/
-> v1: https://lore.kernel.org/qemu-devel/cover.1778409416.git.mateusz.nowic=
-ki@posteo.net/
->=20
-> Mateusz Nowicki (2):
->   hw/nvme: add 'info nvme' HMP command
->   hw/nvme: add 'info nvme-queues' HMP command
->=20
->  hmp-commands-info.hx |  32 ++++++++++
->  hw/nvme/meson.build  |   2 +-
->  hw/nvme/monitor.c    | 139 +++++++++++++++++++++++++++++++++++++++++++
->  qapi/machine.json    |  36 +++++++++++
->  4 files changed, 208 insertions(+), 1 deletion(-)
->  create mode 100644 hw/nvme/monitor.c
->=20
-> --=20
-> 2.53.0
->=20
->=20
+This was previously found and fixed, during the discussion
+for dumpdtb issue [1]. But reintroduced in MPIPL support
+[2]. Saddly it skipped in the review phase [3].
 
-With this, my build complains about CONFIG_NVME_PCI being poisoned now:
+Adding a functional test for checking the external dtb case
+in powernv11.
 
-qapi/qapi-introspect.c:1743:13: error: attempt to use poisoned =E2=80=98CON=
-FIG_NVME_PCI=E2=80=99
- 1743 | #if defined(CONFIG_NVME_PCI)
-      |             ^
-In file included from /home/kjensen/src/qemu/include/exec/poison.h:7,
-                 from /home/kjensen/src/qemu/include/qemu/osdep.h:38,
-                 from qapi/qapi-introspect.c:12:
-=2E/config-poison.h:277:20: note: poisoned here
-  277 | #pragma GCC poison CONFIG_NVME_PCI
-      |                    ^~~~~~~~~~~~~~~
-qapi/qapi-introspect.c:1756:13: error: attempt to use poisoned =E2=80=98CON=
-FIG_NVME_PCI=E2=80=99
- 1756 | #if defined(CONFIG_NVME_PCI)
-      |             ^
-=2E/config-poison.h:277:20: note: poisoned here
-  277 | #pragma GCC poison CONFIG_NVME_PCI
-      |                    ^~~~~~~~~~~~~~~
+[1] https://lore.kernel.org/all/20260323231612.GA2637687@ax162/
+[2] https://lore.kernel.org/qemu-devel/20260310124619.3909045-8-adityag@linux.ibm.com/
+[3] https://lore.kernel.org/qemu-devel/abAmBV7g_bGNw0Ax@shivang.upadyay/
 
+Changelog
+* V2: https://lore.kernel.org/all/20260626112239.177191-1-shivangu@linux.ibm.com/
+  - renamed dtb file appropriate name.
+  - addressed identation and spelling mistake by aditya.
+  - keeping reviewed by from aditya.
 
---nApFfMhECkHwgzGP
-Content-Type: application/pgp-signature; name=signature.asc
+* V1: https://lore.kernel.org/all/20260623063156.1110370-1-shivangu@linux.ibm.com/
+  - change dtb from power10 to power11
+  - refactored pnv_reset code to not `load_device_tree` on each iteration.
+  - added commit message body.
 
------BEGIN PGP SIGNATURE-----
+Shivang Upadhyay (2):
+  ppc/pnv: avoid regenerating DTB if external DTB is present
+  ppc/pnv: add test to verify external DTB is honored
 
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmpDmxoACgkQTeGvMW1P
-DekHRwf9HgKPKnNsf9lJMggaP9pw2aOsOI+nIz7gggJIgD0dJJQovgTRm9h4c8fy
-FcFU8wxd4Bw3oE9mBZ3GGFHg6sz1B6yxeQFDRMZ+Ug5x7MaenMr5BJd+iR8MyPYB
-uvuCubXYWWxpepQvsNh0PEqafTt2Ys/DbUIf+fbp0F0dZ1D1LQH8RyZkimVYK/P+
-pm2fBENE4oPC0hDqg7g8ayaNaXMlRFmjA88ZYjxy+Ujwd6bVIVrC3OE4SmFh+G/C
-ohIia3kHxhTaDuB/BtIEaXEavkniaeQDYD/hb8Rub0j7PIH2B49nzdnVDU93XJxL
-7l/DsIPoM1Izphi107SzKFSqLgi9pQ==
-=KxvM
------END PGP SIGNATURE-----
+ hw/ppc/pnv.c                           | 10 +++++++---
+ tests/functional/ppc64/test_powernv.py | 19 +++++++++++++++++++
+ 2 files changed, 26 insertions(+), 3 deletions(-)
 
---nApFfMhECkHwgzGP--
+-- 
+2.54.0
+
 
