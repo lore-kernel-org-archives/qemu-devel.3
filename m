@@ -4,108 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61F5BC43602
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 12:15:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED90CC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 12:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weXMh-0000fD-FJ; Tue, 30 Jun 2026 08:14:59 -0400
+	id 1weXUn-0002lN-Ov; Tue, 30 Jun 2026 08:23:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1weXMf-0000ep-Qb
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 08:14:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1weXUg-0002iO-AI
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 08:23:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1weXMe-00085b-44
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 08:14:57 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1weXUd-0002ip-Po
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 08:23:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782821694;
+ s=mimecast20190719; t=1782822189;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZsgQ05J3IM9pT8gzR6K93v0u7ubw3BDuulLMWVi8m7I=;
- b=Np7Wz/SP0HeQCJ5ZmYmiyholDNa8qDsTLEH13E21XGNZWtmvpxnS7FuwBE/MA6xbhA3dJ9
- njOuHgrXU4ml+P1NipzKr8G34Yfde0aBQbMe2zDEQQkCw1frfsSxUEd6GDwV7RFJJgtqHd
- xpYJcyxdVJR/P7++ICtnsraXiqSIYsQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-CuuIn91YOcSOnYdXNOa1xw-1; Tue, 30 Jun 2026 08:14:52 -0400
-X-MC-Unique: CuuIn91YOcSOnYdXNOa1xw-1
-X-Mimecast-MFC-AGG-ID: CuuIn91YOcSOnYdXNOa1xw_1782821691
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-493bc2ce23bso5448185e9.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 05:14:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782821691; x=1783426491; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZsgQ05J3IM9pT8gzR6K93v0u7ubw3BDuulLMWVi8m7I=;
- b=mhBf+1p+C4GkHrHWLhGKzue2+DUv6+ZtC2+6wunauCdUG6xH9kzC5mbvjBelvioQCg
- pymTB40JK5a8Mq4Gs7/2OnAY9AJ+5xvJzMJAIqjZsWaTDnS290KsPM9tDiUPPosjPU4P
- M2eDcptRCe0RzyOk12cogeTqKUdnaGlst421lftPmPSqAR1O4NqaaBoF/1rmoOd9W2kh
- +QX5ErINdEmhk+7M6cpP1qaz5snXHTIzTZCLLVJOiYnmmOsRGfWUkcTjT+xdS75YaoVr
- w5zG92On4oW/EmMuEDFuxuohMqfLgYJYQ990GH2i+b5VUYbnUhvxvXR1xaZH2AgdktbB
- ZhFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782821691; x=1783426491;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ZsgQ05J3IM9pT8gzR6K93v0u7ubw3BDuulLMWVi8m7I=;
- b=f2YFxf4AGBwfiboGLk8wDyvf/ZvI7hggtLxuDJRpMGNKggEZD1TNac0DW7lSkv64Po
- QRtpft1wA80M4fPMOBXEFgvzmdis4yqaKG+z1ctImVQZNCr3rc08oB7bHEt2oP9m5Sa8
- qgkFxIjKzQzZVVHDM2IoxmDw6OOqS4SuIfizbK+DpeqMQb3Elpc0EAEpoF+wTXAFXEVO
- ONOk45Jmue6PoY223eBV6wMg7z1RtTSAFG0MWnQT/O5bQQ1GLx0h5fN2v8rppblajFrD
- WxSxmtJH06/TOJUkw6WbJYnAGp5UbQ3rGJB1Y2lKYUXJaBbdC8zGuEe4Qt2TDzD5Mh6k
- a5qg==
-X-Gm-Message-State: AOJu0YyI/0b6Kdh6tPJwllVffdw2CTM5vhkKlLr1xLC3gNRlyLpX0uY1
- 4fyNXrwyeprnGDrmqRXn42JJf4Zl4Y7U2OG1xYScgxj1fvM+kJclJx0sp9ClNjPjINbrXwJOkoR
- VXfscn5jw5NHEaXbyFvZMnu9JD0oKphe4Iek8xQbbI1J58AVhnlgGP/ii
-X-Gm-Gg: AfdE7cnA4WQPApnix8v6MVGh40cWoJPLEY3wiUM34voZVO5IEb7okEpoyIUPCoYNNN2
- qD+x+3fI7qWMEorwniGK95Go3UINrVSNl/TwGbFHB+MD7B3KS4/RxWILOxv87upwqAmXklZuMqK
- SGTyki+y4jB8EQQZB2Vki0JFkkjdDyi4ToR3yE7zx9kUNaiBM/8nkrb2TA66cmSs6V8hj/LSaVE
- TDzI0Fy3HCCht4/wLZpfciFi3TntETee1fl0hfk5Z7+zxefnAbM14y4gdSqm8Ay96qShvwY73d/
- 9YfIz3uj9BSNspCcAHHxCMz8EXByopoeEjc+f+qHZFVChIGjr/u3v6mAsaHXfqzCkkGytI8=
-X-Received: by 2002:a05:600c:5391:b0:492:3fc4:bd6b with SMTP id
- 5b1f17b1804b1-493b827df5bmr52379105e9.7.1782821691389; 
- Tue, 30 Jun 2026 05:14:51 -0700 (PDT)
-X-Received: by 2002:a05:600c:5391:b0:492:3fc4:bd6b with SMTP id
- 5b1f17b1804b1-493b827df5bmr52378645e9.7.1782821690961; 
- Tue, 30 Jun 2026 05:14:50 -0700 (PDT)
-Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493b8cd88e8sm64261165e9.7.2026.06.30.05.14.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jun 2026 05:14:50 -0700 (PDT)
-Date: Tue, 30 Jun 2026 14:14:47 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, eauger@redhat.com,
- shannon.zhaosl@gmail.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
- qemu-arm@nongnu.org
-Subject: Re: [PATCH v3 17/17] sbsa-gwdt: limit compare_value to INT64_MAX
-Message-ID: <20260630141447.7cc20ba0@imammedo>
-In-Reply-To: <CAFEAcA8DzTCP_z9mkHK7QHwMvk8bVb1z7mtN80MsYOZ49ZPx3w@mail.gmail.com>
-References: <20260624102830.1355552-1-imammedo@redhat.com>
- <20260624102830.1355552-18-imammedo@redhat.com>
- <CAFEAcA8DzTCP_z9mkHK7QHwMvk8bVb1z7mtN80MsYOZ49ZPx3w@mail.gmail.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+ bh=bedK6d4MMqdEp0QNQkxJoz2bH38RdEhhIYMA806BHPg=;
+ b=gunSulU/0E0TJ+Uz643hVfPqWsVo2Jjz5I0rsrSjfa74j9eZXFTSGzdCR+dCD71/wTjoGJ
+ r2MhH57pTOYkWFkjQPAeQrEbZAXMtY6OGB/x92jVZWBYXj1MWr3w44+6s4LeFpRIj3E7rv
+ lEhUdEUxBK5yLkZcLeaaWYpre2hnNHM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-5t2XP1tsNrO8CJoSqt-LmQ-1; Tue,
+ 30 Jun 2026 08:23:04 -0400
+X-MC-Unique: 5t2XP1tsNrO8CJoSqt-LmQ-1
+X-Mimecast-MFC-AGG-ID: 5t2XP1tsNrO8CJoSqt-LmQ_1782822183
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2E220195609E; Tue, 30 Jun 2026 12:23:03 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 551D836926; Tue, 30 Jun 2026 12:23:02 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id DC33821E6920; Tue, 30 Jun 2026 14:22:59 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  devel@lists.libvirt.org,  =?utf-8?Q?Marc-Andr?=
+ =?utf-8?Q?=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  "Dr.
+ David Alan Gilbert" <dave@treblig.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Christian Brauner <brauner@kernel.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: Re: [PATCH v5 00/35] monitor: turn QMP and HMP into QOM objects
+In-Reply-To: <akJRoQpOIdnIHFoc@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Mon, 29 Jun 2026 12:06:09 +0100")
+References: <20260624173752.2928717-1-berrange@redhat.com>
+ <aj6AFxvD7xTPZIrV@redhat.com> <8733y5vcee.fsf@pond.sub.org>
+ <akJRoQpOIdnIHFoc@redhat.com>
+Date: Tue, 30 Jun 2026 14:22:59 +0200
+Message-ID: <871pdo1al8.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,63 +94,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Jun 2026 15:48:48 +0100
-Peter Maydell <peter.maydell@linaro.org> wrote:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> On Wed, 24 Jun 2026 at 11:29, Igor Mammedov <imammedo@redhat.com> wrote:
-> >
-> > QEMU timer subsystem uses int64_t, so WCV values with bit 63 set
-> > overflow and cause the timer to fire immediately. The SBSA spec
-> > defines WCV as an unsigned 64-bit compare value, so such values
-> > are valid per spec and represent far-future deadlines (however
-> > unpractical).
-> >
-> > Windows in GTDT mode writes WCV in two 32-bit halves while the
-> > watchdog is running:
-> >
-> >  sbsa-gwdt_control_write [0x8]  <- 0xffffffff    # WOR (~4 sec)
-> >  sbsa-gwdt_control_write [0x0]  <- 0x1           # WCS enable
-> >  sbsa-gwdt_control_write [0x14] <- 0xffffffff    # WCVU (intermediate)
-> >  sbsa-gwdt_control_write [0x10] <- 0xa906ca28    # WCVL
-> >  sbsa-gwdt_control_write [0x14] <- 0xecb1        # WCVU (final)
-> >
-> > The intermediate WCVU write (0xffffffff) creates a WCV above
-> > INT64_MAX, which overflows QEMU's signed timer and fires
-> > immediately =E2=80=94 triggering WS0 =3D> WS1 =3D> reboot before the fi=
-nal
-> > WCVU write lands.
-> >
-> > Clamp WCV to INT64_MAX to avoid timer API overflow. =20
->=20
-> This bug doesn't exist as described in the current upstream
-> version of this device, because we don't use WCVU/WCVL in
-> calculating the timeout (only WORU/WORL, which are forced to
-> 48 bits wide on write). This suggests that either you have
-> introduced it in this series, in which case it would be better
-> to not do that, or else that it exists in a different form
-> in current upstream, in which case it would be better to
-> fix it first in the patchset, so it can be cc:stable for
-> backports.
+> On Mon, Jun 29, 2026 at 01:01:13PM +0200, Markus Armbruster wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > Markus,
+>> >
+>> > This series is fully reviewed now by multiple people.
+>> >
+>> > Do you have any plans to do reviews and/or queue this as maintainer,
+>> > or will you ack it for me to send a pull request.
+>> >
+>> > I would like to get this merged before soft freeze which is fast
+>> > approaching.
+>>=20
+>> Soft freeze is in a week, and the heat wave left me seriously
+>> sleep-deprived.
+>>=20
+>> I'd like to give your interface changes an eye-over.  I probably won't
+>> be able to do more in time for the soft freeze.
+>
+> In terms of interfaces...
+>
+> Patch 22 is where we define the QAPI for the new user-creatable QOM
+> objects for HMP/QMP, to enable use with -object / object-add.
+>
+> Patch 32 is where we define the QAPI for the new auto-delete-on-close
+> concept for the monitor.
 
-it's masked by missing timer reschedule on WCV update,
-that preceding patch #16 fixes.
-So yes it's ordering issue.
+Thanks!
 
-perhaps it's better split this patches into independed series,
-given that the last 14-17 patches are fixing native GWDT
-behavior for Windows usecase (which would still not work
-due to too large timeouts)
-and that it's not directly related to this series (linux uses
-normal refresh approach with native gwdt mode), and WDAT mode
-peddled by this series work fine with both Windows and Linux.
-
-With the last 4 patches we still need to convince MS to fix large
-timeouts on their side to make native gwdt work as expected.
-
-
->=20
-> thanks
-> -- PMM
->=20
+I'll try to also look at PATCH 34 and 35.
 
 
