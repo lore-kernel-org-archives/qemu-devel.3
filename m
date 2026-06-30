@@ -4,116 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03AEFC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 13:59:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3896DC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 13:59:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weYz9-000285-L0; Tue, 30 Jun 2026 09:58:47 -0400
+	id 1weYyb-0001zo-BJ; Tue, 30 Jun 2026 09:58:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1weYyt-00023x-Aq; Tue, 30 Jun 2026 09:58:32 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1weYyY-0001zB-RR; Tue, 30 Jun 2026 09:58:10 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1weYyr-00043g-AF; Tue, 30 Jun 2026 09:58:31 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65U9nAhr1578229; Tue, 30 Jun 2026 13:58:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=6dsnWHSgujZZiPcVNMGZL5eaLxQl/jvISiq0nHJVvgM=; b=BPvBQh9kZbJ0
- JjO+QEq1zw33QCazqc8Rl2WSxLnog+fHO6/yyujc0JT7JNMvqfEPjHSyuuCfvu9r
- YF/fqJE8u0qYHmlUCe+7ZZWjQVCYLoqwx5gCT7+FYDcLlwl8HOkmaRxrjEOUfXS8
- dnAoOSZDn7x+5JgnCWByaz/GyfnUhTBcrc53GAz93pIuazsQmjvF0GJykFxYt+fJ
- 91+t/GCH/J5QfJmzZG0ecmvA7JS+tuS5bpVx1XOM900rxKwUsCy609Hi59VP1Xdj
- tU1y2EOwRMegNNZQ7p4rSr7/7vzmoU86PUrAIg0QZ56S/zuozsPw/RFqT56okOy4
- sUoCNJQS6Q==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rextg6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 13:58:24 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UDna1R022594;
- Tue, 30 Jun 2026 13:58:23 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2suk2hm9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 13:58:23 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65UDwLTm66388268
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Jun 2026 13:58:22 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 97CD758058;
- Tue, 30 Jun 2026 13:58:21 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9C58258057;
- Tue, 30 Jun 2026 13:58:20 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 30 Jun 2026 13:58:20 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1weYyW-0003om-QV; Tue, 30 Jun 2026 09:58:10 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rI5QFdAzE3QrWwFVv4RJ2JVXuhpo9Nl9lj97Yv4+1QCGRvwJHQ3k10EI60A3yDRGql1DPd3rmFNqckPm7Bu2ydVKq+AOvMfqmQvNZOE48Bfw3rbOVB+UgzK4f8Hck5zVkJjyJWhkqzdtAp8v6C7CJk2vdDIfF5WBzH5KKsmdTlOyGu3GzC/b8TARqjBh29bVNTj+8g4SVbugJwdI/ezHhaXLk35oXSH07lkZheRcoXr7AQ4CGx1hw5LDPErREokbrHVCX8KUp6j3mdJN4+KwK7pKxZxzMq3vhvgtYp2/xE5dW52Gz2qakwepDmX/LJC3e/WTwncTUIGwHt91nzpKaw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eSuIJaaPVfoo68DMqCwnOzkDYqtrgDihQZjSYqgQeJQ=;
+ b=ADFI0lGrb8CR0jVArC+x9F8Js3lIUNooQdZoFJpAiH2qqE7fkc32XRUDQfzJ+wNUicNovVHZD2caQYD/uycRwuFXtgjVQljETHvonldd1eA3cUh89Dqxzq0DNuHpNI9T6Nx8pTYnclp+tB+rcu8wEMtlLaFzFn3esm1uSj+u83YzsmJq5i/Wn6C50Bbe7ONErtFG+toERdI9FM06ncOY7ZAy+PksXnBrs6CvCD4pnPTLzWSh1f2m0lCFpc59TzWTTezbxQwyrhmmcRR/UQxM/AeHbob7O5NIh9An6xqeR0b15bDbDXE0wnUd2gpNzhkL8xy4+cUOnQIFsZ64mr8Rog==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eSuIJaaPVfoo68DMqCwnOzkDYqtrgDihQZjSYqgQeJQ=;
+ b=NXStbrkrrew+1983mukzUTDMitu7VbNBqQqUz/Wu+l+elG3+KW6SCrk/TnkiBuwGJ/FckFPxFJQ+TdPzBCA2e6dU6r2cqjY5q5LVFfLSieoV2ZHIYnZNg4FR1d6p2Jms6cF5DbVqZcwgz/Jfl/TsaQ/gDYmsRCpHVTO+scDNofp33tsEIv+nqaCDbmVzSISdWgEy9kNwJoRlL4WSInTPJcwR86KnN6DMWv5zYEuvso0+TjkhEHffWf9Wf+ROGSq1unSBK3uYcPigQiwaMnd66wBvH15I7xaQ0IQaAUhqLgQncW7WKOKc/2fSJ0IUoRJhgUn2+Kf/JHo96HO6dKiSKg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
+ by TYPPR02MB8959.apcprd02.prod.outlook.com (2603:1096:405:382::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Tue, 30 Jun
+ 2026 13:57:59 +0000
+Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
+ ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
+ ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0159.018; Tue, 30 Jun 2026
+ 13:57:59 +0000
+From: Bin Meng <bin.meng@processmission.com>
+To: QEMU <qemu-devel@nongnu.org>
+Cc: Alistair Francis <alistair@alistair23.me>, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Subject: [PATCH 01/10] hw/block: m25p80: Fix dummy byte handling for Winbond
+ flash
+Date: Tue, 30 Jun 2026 21:57:20 +0800
+Message-Id: <20260630135729.466264-2-bin.meng@processmission.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260630135729.466264-1-bin.meng@processmission.com>
+References: <20260630135729.466264-1-bin.meng@processmission.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SE2P216CA0161.KORP216.PROD.OUTLOOK.COM
+ (2603:1096:101:2cb::15) To KL1PR02MB4977.apcprd02.prod.outlook.com
+ (2603:1096:820:71::8)
 MIME-Version: 1.0
-Date: Tue, 30 Jun 2026 15:58:20 +0200
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: richard.henderson@linaro.org, david@kernel.org, thuth@redhat.com,
- berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux390-list@tuxmaker.boeblingen.de.ibm.com,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
-Subject: Re: [PATCH v8 07/18] target/s390x: Support AES CTR for cpacf kmctr
- instruction
-Mail-Reply-To: freude@linux.ibm.com
-In-Reply-To: <a948d24d-f9cb-4d67-bf46-007d6de3c523@linux.ibm.com>
-References: <20260624081029.23815-1-freude@linux.ibm.com>
- <20260624081029.23815-8-freude@linux.ibm.com>
- <a948d24d-f9cb-4d67-bf46-007d6de3c523@linux.ibm.com>
-Message-ID: <dd14bb109eaa9c599a1a94f9618775c0@linux.ibm.com>
-X-Sender: freude@linux.ibm.com
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a43cb80 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=ZZgNOd5QJxuZDPaVO9IA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: w9e1MVYFfISiOexL7pT5rTYYHV3O8hi5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDEyOSBTYWx0ZWRfXyXuNgwlfch56
- NbEyNaime2PCsj8hO69sxTrF8+ICfB5oQjwk2x7yjyPM+CZvrZpzE7OosD/jOBeLGm1pfxzRDe1
- FY69Jwdo090XxBIn43p7JLQPzaTDD6HVai/o0vQkb0t+etQ+uJnJ6eo6MpXNdPtTyuy6mhVVn8D
- PGaqsELV2spSjPgMJu4VsL0R7Q5CPy06h4Xj/wjY3PSH4aJgPlWAx1wNNumf+XeWMjjEtw+tJtF
- y6phXP96wvh5q7B2fqQ8Y69rLBFxc/kwsSYm61DqqOmP4pX2AWEOshAdD+PgAWBht+0gBwdYO1v
- PP3ALpF/GRllWaMA8WgBtdnKm7Cw3FMEnDml/Pcb0wyqZwGVSk64LIqIJR0IEjWpkoT8t9IoJkr
- 2cDJAOq1brwhN1aHV+HsYMThuEXBD6z5qHFFXX0kpMO0lhVuXaIZnXOP9us2t4i7xPGbUDN0AN3
- NIT+BlD6yFIslPAh/wA==
-X-Proofpoint-GUID: w9e1MVYFfISiOexL7pT5rTYYHV3O8hi5
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDEyOSBTYWx0ZWRfXxE47MuHnp+/I
- No/B9sjXZgaaYpMVMEJlgAegoMe4Ld6qHRqa/WPS9odj4PU9WGoQZkNdCP6ka6Nl4oeCb0yhv1d
- tpUzzZCEAVzeroiSsn0XEfo8F3Hk3ko=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-30_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
- spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300129
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=freude@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYPPR02MB8959:EE_
+X-MS-Office365-Filtering-Correlation-Id: f349a961-43f0-4770-87b0-08ded6af9741
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|1800799024|366016|34096008|23010399003|3023799007|6133799003|22082099003|18002099003|56012099006;
+X-Microsoft-Antispam-Message-Info: aFWCodoeuinjmO9wQl6ZdCtqgCjRLZqVeGb3D0T4qxAJAtvjGSBaXCOQA58ViSe94i6OOg1epsNqM9/mn8scJlcKmjRvg69myU11IctkzBzBK4+d5bPnyhEUvz9TKBQGpzQ7j7EPDbiZB0G8uGbt6/k/GUUhq9RZg6f72UgmKvnyXpFBSyhQHqopA5NKFZPGDczEuV1BmNtrJ5tIceEhOJBZqPtKGO8w3nfHwqfsHOY3GUafsuwSBZBgXw9Fnky3VY2jIn4e9nUZXiaJeKTU1mt4Hv3tRWbOaZ+pHdVfzR5xjUMbF0fw9UQ30ZG0p4MlJO8lkoY1Fnw/Go937+2R6RsniLETRGBTZpSUYOeLYS3sj7Crt8E6OGusKb1143kHslqqzmLDoRpzwgfjO0dSw+S64tjQZNChTwcAz+q3MLSSViK7Vj1dSnlqBC6weyA2ikqF/vjL2pkOOw7Hp/r21YW/i3THzvAldAXYd7uRk5TYmuVwl0WU6lNod1/f3Ca3PBGedZXkF8lqd4gaSRed0VhoFgt2dXKRB3nfQ3CvXPG3niwQ5VPVTSGEUJ7gua3Y31kd/TBp8WrVLpPMeLP/Izy+vrS2sxNJbDaSKhwVwQZ4UaXEhaEGFjbXZ1IRfTNJSGQO0QXpfS4OYuBDCmAuFOLFUZbmi4FZDtk7U41Gc4c=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(34096008)(23010399003)(3023799007)(6133799003)(22082099003)(18002099003)(56012099006);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?tApaf34gIDpT/bogM/bmbwVLn6vxe4QvITBDtMhUW0wW9mELxGbwjmP1e94Y?=
+ =?us-ascii?Q?H9M7pr+Aw4kxBYosh6ZjyblRPMI07oft3USzrj2VM1U2hdb1EDaXL2WHX1Tg?=
+ =?us-ascii?Q?YEMWfkZckE4PrztTo9LC6g8yM9KBx2sS5R9OZiNAZAVBMMoEPRSJ5TCYxg7+?=
+ =?us-ascii?Q?yjDwaKF7bgEtquuf+JNimsLJOLt1Y6cwyHMUaAsQYvaEdFQzOxlT3hGK4//Y?=
+ =?us-ascii?Q?c5E92arv6SLe8Jb6pCj9o/K68IrbrEW8Rwg01OVX9zU41qOLf4uJpgNchTlx?=
+ =?us-ascii?Q?Nutc3Owt02GIWYAzIjEqRb3pTKYa94oRW+qAUu4MQkOz6evvLSWrQ4VmhCk0?=
+ =?us-ascii?Q?TA4K0wywNvF7vt5fm078uPovXOIRfmLl/lwlKQzyWx9oJ0WypA6mxGZ9pfKm?=
+ =?us-ascii?Q?9see+Mr9bhmLO3Ss3ocBHG6boCwGDukmaYQa87C+RtGV/EFR1i3FuTIr+hmE?=
+ =?us-ascii?Q?GujUUcMtXbFsMUEk2ProtlHmJ8Nteh/PlQfJ4JNeNU98rcf2hfFsgDghlW7I?=
+ =?us-ascii?Q?O52NPYZ0uKw7QIN/oEddpVHPQvW/e0I7QerF0IcQ9cnPF8Z2bLPUN0sjuYr/?=
+ =?us-ascii?Q?nipfZmSrVVFtK/++Z8RXdsco1u8ny22CDG9CPCtKC+H3GUwj/HUzE6xd3Xeu?=
+ =?us-ascii?Q?FIz68M4Pc6q+gwNqAq4HBzr3frXvCB5QfdrJJg1O/sqZ16XBr7VxbUgBRAta?=
+ =?us-ascii?Q?ITfiow8fF5IQOFoO50Co5xfRrSscrsr7fJyd2DSSyRzUit0nxziMCrlrDA15?=
+ =?us-ascii?Q?mjehiVjmD0Ndr2215jMgBnDBVguiaBFGp2TBCF1wuP6HMuZ8kZd2G75XmVYT?=
+ =?us-ascii?Q?X9Y16NGOO9XfwSvwzwxvj4UFmABCcFKmr0BmVTdxaD8gbsCaLsbWCr3jcDFh?=
+ =?us-ascii?Q?p7/din5z3eJ7ggT0mXji2TO7lsD4XU83jxnie+bhS2uwfPbNsLheFr15cGKn?=
+ =?us-ascii?Q?j0ZlVQyqBOjHG7KozODPvEz97YUeaAovY3QqF3bNApElQauCsMicjx9+/dHk?=
+ =?us-ascii?Q?vnIIWQ0DRJPdQxvxskWA7jbSs8mrHcDEBKjLJ5ljdhD/iRaIeGVCqhks/Flj?=
+ =?us-ascii?Q?OS2cJqv7NxIq3gjvK00Mc5f0emfwacEye6hCUuax+Ud/VhslJ0mmx+lI/25e?=
+ =?us-ascii?Q?dVwiWFHl5gxWDmujFAA6VwacysX01ddvpLGKnmpGLMKtKwmgaG7pgGkBY/D0?=
+ =?us-ascii?Q?b2Rp+yyx/lkRSjdztLmz4NNTe/sNs5WJbPo80n822nftlZcMhtPnBkAF4JOb?=
+ =?us-ascii?Q?N66OGpypdnjWZD70BmM2ThRuL+Gy5FwB2ZNDze6DIyH8HUz/H4/CdGhfIIqA?=
+ =?us-ascii?Q?DryedS+5MY9j4z1YvOg3T5y9T5GAwb6DVPYse74RsbwuwIzGNGGj/I0vVxrk?=
+ =?us-ascii?Q?H3HqD3JC/dizHuqgBPvoLPIdYFhW0c1ua6a8aqNq+rLnTS+6Pzzj7LfGyA8Z?=
+ =?us-ascii?Q?LizDHea4y4A92mLWV15IaKyBnpqQ2whsSpbd0T+EWxgc8pm6FuNz1chqXGy/?=
+ =?us-ascii?Q?4RoFRQnoNvvo+BK9O0wn2rTaMIHUEF5sZ2LIQebNqXj8WNIOCcLpT4VUVYyg?=
+ =?us-ascii?Q?6DhthS7m9DCOrphQtpDCxi5oZi8G4SuJLAYmi5keQGNUTphmXkvtlDgjYTRQ?=
+ =?us-ascii?Q?omD3FG51ZQpduskkRkLrVNdcB7U2fz1Ja9rqj/KPWDfj6YxT4CNXqAhojtC/?=
+ =?us-ascii?Q?Ak/bEHhNqLfkleqf+j9BqH/U73gkO3E1bEnbKpyNGhwbO0Z8/XmFYWMSJdcA?=
+ =?us-ascii?Q?bH+hcS8VW2GNBi7b/kYOvpMYPHBqe8A=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f349a961-43f0-4770-87b0-08ded6af9741
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jun 2026 13:57:59.0135 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ycp7zRUaSnAaiV+rbxmW7mnYY5oV3mwc6KwglTniCbVZw9FJlQNcBycno88R2NWBe/OcLaID3sXqNK1cG96Og8v+g3k9hwLlvvw2hfZ4o8A=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYPPR02MB8959
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=bin.meng@processmission.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,119 +138,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-06-24 19:26, Ilya Leoshkevich wrote:
-> On 6/24/26 10:10, Harald Freudenberger wrote:
->> Support the subfunctions CPACF_KMCTR_AES_128, CPACF_KMCTR_AES_192
->> and CPACF_KMCTR_AES_256 for the cpacf kmctr instruction.
->> 
->> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
->> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
->> ---
->>   target/s390x/gen-features.c      |  3 ++
->>   target/s390x/tcg/cpacf.h         |  5 +++
->>   target/s390x/tcg/cpacf_aes.c     | 76 
->> ++++++++++++++++++++++++++++++++
->>   target/s390x/tcg/crypto_helper.c | 24 ++++++++++
->>   4 files changed, 108 insertions(+)
-> 
-> [...]
-> 
->> --- a/target/s390x/tcg/cpacf_aes.c
->> +++ b/target/s390x/tcg/cpacf_aes.c
->> @@ -213,3 +213,79 @@ int cpacf_aes_cbc(CPUS390XState *env, const int 
->> mmu_idx, uintptr_t ra,
->>         return !len ? 0 : 3;
->>   }
->> +
->> +int cpacf_aes_ctr(CPUS390XState *env, const int mmu_idx, uintptr_t 
->> ra,
->> +                  uint64_t param_addr, uint64_t *dst_ptr_reg,
->> +                  uint64_t *src_ptr_reg, uint64_t *src_len_reg,
->> +                  uint64_t *ctr_ptr_reg, uint32_t type,
->> +                  uint8_t fc, uint8_t mod)
->> +{
->> +    enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
->> +    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
->> +    uint8_t ctr[AES_BLOCK_SIZE], buf[AES_BLOCK_SIZE];
->> +    uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
->> +    uint64_t addr, len = *src_len_reg, done = 0;
->> +    int i, keysize, addr_reg_size = 64;
->> +    uint8_t key[32];
->> +    AES_KEY exkey;
->> +
->> +    g_assert(type == S390_FEAT_TYPE_KMCTR);
->> +
->> +    switch (fc) {
->> +    case 0x12: /* CPACF_KMCTR_AES_128 */
->> +        keysize = 16;
->> +        break;
->> +    case 0x13: /* CPACF_KMCTR_AES_192 */
->> +        keysize = 24;
->> +        break;
->> +    case 0x14: /* CPACF_KMCTR_AES_256 */
->> +        keysize = 32;
->> +        break;
->> +    default:
->> +        g_assert_not_reached();
->> +    }
-> 
-> A general comment; I think I've seen this in previous patches as well.
-> Would it make sense to properly define constants like
-> CPACF_KMCTR_AES_128 and drop comments? Or, if the goal is easier
-> cross-checking with POp, hardcode decimal numbers, since POp specifies
-> them in decimal?
+The m25p80 model uses s->needed_bytes to track how many bytes a
+controller must send after an opcode before the flash model can enter
+the data phase. For address-bearing commands this includes the address
+bytes. For fast-read commands it also includes the dummy phase.
 
-I'll add defines to cpacf.h and remove this hardcoded values here.
+The tricky part is that flash datasheets describe the dummy phase in
+clock cycles, while the QEMU SSI interface advances the flash model one
+transferred byte at a time. The dummy clock count therefore has to be
+converted to the number of SSI bytes that the controller will actually
+emit.
 
-> 
->> +
->> +    if (!(env->psw.mask & PSW_MASK_64)) {
->> +        len = (uint32_t)len;
->> +        addr_reg_size = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
->> +    }
->> +
->> +    /* length has to be properly aligned. */
->> +    if (!QEMU_IS_ALIGNED(len, AES_BLOCK_SIZE)) {
->> +        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
->> +    }
->> +
->> +    /* fetch key from param block */
->> +    for (i = 0; i < keysize; i++) {
->> +        addr = wrap_address(env, param_addr + i);
->> +        key[i] = cpu_ldb_mmu(env, addr, oi, ra);
->> +    }
->> +
->> +    /* expand key */
->> +    AES_set_encrypt_key(key, keysize * 8, &exkey);
->> +
->> +    /* process up to MAX_BLOCKS_PER_RUN aes blocks */
->> +    for (i = 0; i < MAX_BLOCKS_PER_RUN && len >= AES_BLOCK_SIZE; i++) 
->> {
->> +        /* read in nonce/ctr => ctr */
->> +        aes_read_block(env, mmu_idx, *ctr_ptr_reg + done, ctr, ra);
->> +        /* encrypt ctr => buf */
->> +        AES_encrypt(ctr, buf, &exkey);
->> +        /* read in one block of input data => in */
->> +        aes_read_block(env, mmu_idx, *src_ptr_reg + done, in, ra);
->> +        /* xor input data with encrypted ctr => out */
->> +        aes_xor(in, buf, out);
->> +        /* write out the processed block */
->> +        aes_write_block(env, mmu_idx, *dst_ptr_reg + done, out, ra);
->> +        len -= AES_BLOCK_SIZE, done += AES_BLOCK_SIZE;
-> 
-> Same comment as in the previous patch.
+Some controllers have drivers that push these dummy bytes into a FIFO.
+Other controllers are programmed with a dummy-cycle count and generate
+the clocks themselves. The flash model still has to use the same byte
+count that a FIFO-style controller or the Linux spi-mem layer would use,
+otherwise the model waits too long and drops the first data bytes.
 
-Will change this wherever it appears in the series.
+Let's fix the inconsistency from the flash side first. We start from an
+easy one, the Winbond flashes.
 
-> 
-> 
-> Otherwise:
-> 
-> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> 
-> [...]
+Per the Windbond W25Q256JV datasheet [1] instrunction set table
+(chapter 8.1.2, 8.1.3, 8.1.4, 8.1.5), fix the wrong number of
+dummy bytes needed for fast read commands.
+
+[1] https://www.winbond.com/resource-files/w25q256jv%20spi%20revb%2009202016.pdf
+
+Fixes: fe8477052831 ("m25p80: Fix QIOR/DIOR handling for Winbond")
+Fixes: 3830c7a460b8 ("m25p80: Fix WINBOND fast read command handling")
+Fixes: cf6f1efe0b57 ("m25p80: Fast read commands family changes")
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
+---
+
+ hw/block/m25p80.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index 4a4cda6602..59ecb32c0a 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -1004,7 +1004,7 @@ static void decode_fast_read_cmd(Flash *s)
+         s->needed_bytes += 1;
+         break;
+     case MAN_WINBOND:
+-        s->needed_bytes += 8;
++        s->needed_bytes += 1;
+         break;
+     case MAN_NUMONYX:
+         s->needed_bytes += numonyx_extract_cfg_num_dummies(s);
+@@ -1099,7 +1099,7 @@ static void decode_qio_read_cmd(Flash *s)
+     switch (get_man(s)) {
+     case MAN_WINBOND:
+         s->needed_bytes += WINBOND_CONTINUOUS_READ_MODE_CMD_LEN;
+-        s->needed_bytes += 4;
++        s->needed_bytes += 2;
+         break;
+     case MAN_SPANSION:
+         s->needed_bytes += SPANSION_CONTINUOUS_READ_MODE_CMD_LEN;
+-- 
+2.34.1
+
 
