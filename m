@@ -4,90 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EB8BC43327
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 15:16:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51B7BC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 15:18:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weaB8-0002go-JU; Tue, 30 Jun 2026 11:15:14 -0400
+	id 1weaDs-0005xY-2f; Tue, 30 Jun 2026 11:18:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1weaB7-0002ga-9f
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 11:15:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1weaDq-0005x2-11; Tue, 30 Jun 2026 11:18:02 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1weaB5-000095-St
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 11:15:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782832510;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nyb+QiJafndVMzw69KLmfCh9TRyCjbVtvIVgo3SIUg0=;
- b=N9/ta8/gvfYj/VhQr6P1xsHpRgu4Tpj3JOhwZq9eO+H3QNrc4pAYKA1OAfI712vhGSh0N3
- /mMkXnPDuP3AsFnJII+pkXUJGAtodCTMMOyDGC3Wdw55nxwNgOhlBYKOWyvL+YKXLttEGm
- nifZiMlKdYlrj8OSrv89JaPNLpuEO6w=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-NLRcfKm-P5ezzvWHIHQaYA-1; Tue,
- 30 Jun 2026 11:15:08 -0400
-X-MC-Unique: NLRcfKm-P5ezzvWHIHQaYA-1
-X-Mimecast-MFC-AGG-ID: NLRcfKm-P5ezzvWHIHQaYA_1782832507
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ADE071802664
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 15:15:07 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.3])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C336A1956068; Tue, 30 Jun 2026 15:15:06 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 30 Jun 2026 19:13:18 +0400
-Subject: [GIT PULL 3/8] system/cpus: refuse memsave/pmemsave while guest
- RAM is being migrated
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1weaDn-0000tw-0R; Tue, 30 Jun 2026 11:18:01 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65UEIKJS2428612; Tue, 30 Jun 2026 15:17:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=db7ZgF
+ e9TDq+Z8zJDr+K9KY2PiGFoiasvPoLMejQO/o=; b=Z1jFROu5GZ6AItQAEvDlTo
+ UZdfKY2gVVpTbE/gKNlztbKGHX9JC1Avl13sVdbRm1cL3FvWLPMerm2BalySzKlq
+ BlznKJQd7cNvm/iP8PddhCaKXfmuT8Fz34ODjXt8svw+GtVorTaQzJ6Dmxg43Irz
+ rj70fkW+YQm6T10D5b6SDqHeO9mnFuk5Xbk0cW2n0jOVFVOtk/ZHdvyov+GF8Y+M
+ IOjR7jhhEJxR1INW9Go323wLDBojyWiyErfHgsv1SFytm1QsQUGUBEacFiqljHBL
+ ug7MBPNzY2pCXtPL2pi8evN2NQmihNlmR98dmVi74G4085lCMVn06Wb8YEMDBB0Q
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qfygm5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 15:17:56 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UF4cLb018433;
+ Tue, 30 Jun 2026 15:17:55 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhat96-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jun 2026 15:17:55 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65UFHprR50004398
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Jun 2026 15:17:51 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 77A3220040;
+ Tue, 30 Jun 2026 15:17:51 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E62B82004B;
+ Tue, 30 Jun 2026 15:17:49 +0000 (GMT)
+Received: from shivang.upadyay (unknown [9.39.22.216])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 30 Jun 2026 15:17:49 +0000 (GMT)
+Message-ID: <e4808991c1a6e324a3461fbcff199bd9fe14768b.camel@linux.ibm.com>
+Subject: Re: [RFC PATCH v2] target/ppc: Convert cache instructions to
+ decodetree
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: Nikhil Kumar Singh <nikhilks@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: rathc@linux.ibm.com
+Date: Tue, 30 Jun 2026 20:47:43 +0530
+In-Reply-To: <20260630144210.148159-1-nikhilks@linux.ibm.com>
+References: <20260520160728.2283628-4-rathc@linux.ibm.com>
+ <20260630144210.148159-1-nikhilks@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260630-dump-v1-3-7df3087dffc9@redhat.com>
-References: <20260630-dump-v1-0-7df3087dffc9@redhat.com>
-In-Reply-To: <20260630-dump-v1-0-7df3087dffc9@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1889;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=dMyitmawkA0irUeHeZPgJ9NlFJzjYFkln3tC9a0Qg4g=;
- b=owEBbAKT/ZANAwAKAdro4Ql1lpzlAcsmYgBqQ91nmHDr8Ctk2gnGy11or5hUTbuYrJVZDKuRG
- iwxdZRoQHaJAjIEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCakPdZwAKCRDa6OEJdZac
- 5dhVD/YoLGPNyUzSWXr9dPVfqc3htlAA4VWMR/zMp5W9ZxNixQXdp5WmgapnJca6xr9BtL6FCOL
- /1Ou4QjBp/+DlSe/coqMCGxAFi0O1dk04nrlQkYq3vRKV8QjpdT8rgLUUGOjhNmeGSoB0O3X8id
- 19ULotSpMZqAWjmEb1JSfF42NlcLvX3bT0/lsPRiYY4xA7mbWG7doxDipFrPSArGQK+QR+WlihW
- MvwQG8o3/LHjBhA2jH3pqbhRhsM4Qx3CuDrx91SHbVNUIGywQAYJQdu1gTyUEgyWNhzI7gtx39t
- mEAyFkmR1bMc98tfVnnr56I9U7tOllqa3fDsQIFLNqod1EmzkdV44FezxpKOI2MEF3cJmNmqybv
- 4t4T5eU+Y5ivno/gPQ0AtcaPson2yVXjDRqAZPyOmX0UAzuB8IWhuXG3nQ+TyuFCXBT7cO8CT6a
- 7rDldGbtQ+zx7z2uF+tWACa02+gEUVlXvV1r9v47tFUCJdZClLLFSmW3y+UpgTlhXELU0yLiEc/
- v2U5aA+EgHIBu7A4QoJ8gScthp7CSWnL1qVM/s7yZ++2s7ZU9Sv0NQbtyOwBbJ6OQ3302nXu0le
- Ubi+c9EpWJcMkb+hx4a8Y3NYnKmVFoOS/ILjDns8zGRkH9kUMZOc6afsyG0dSVVgHKdsQuydGKC
- OTOEP3+iV1lyd
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=RYqgzVtv c=1 sm=1 tr=0 ts=6a43de24 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=syXIhHOfpIr89EnvoDAA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDEzOSBTYWx0ZWRfX4a7U0SMVRPEr
+ yMACc3ZjR0Q9olE2gVnCO1M9OaiYRG3V/jFBWtPvI9YtajbP2mARtXyPQJN168MJO5ZVgl2FeDN
+ KrS9PJh/qfw1QCJVscC4nSzjSgLxYA8=
+X-Proofpoint-GUID: KxAErtoMaAf-ysE-_JXRWW1aFHkkIBoP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDEzOSBTYWx0ZWRfXxQWC09sBgn54
+ gHedXWg/FIASQ5QjqBKD8nbNLh7dLsJpaXvsrGAmEewytkpNmXFtvJRYUDhIb6aqCd7pS4OOfMv
+ avEiNlhxU2OpoHUL2sNCuXRGHbwpGls4d4f4WhPfbNEHpf/INRG8EaGe8P02pqrtcaRCPi3Ppda
+ ZxOpPEzvMNNN2cu29TfMpJkByl1MHJK5jxY5o+GwDUUL8QTmPLaOWXQlNw1nzf0liLNLmrRSQmc
+ 7D9mX+K2BGrLMt4OI8zg3IDn0lrx38F6G3XP73KaDRrfm0b6iXUPzqb8knYALhbPulcp5IwaHmI
+ XxH4rxMg/j14Jg6G0Tlc2SMDrDjeqWIM5LgH2UEAe00Ki9p234vUCPwCRDh/4JXWAaxPVF8XmC3
+ 3M1MYjjZ/rLg5qFKEOMNgdDuN0naIdM3N3G23uYHxex9vV9DnK2D8Y9DZizerBSTxeGoRYeA6Du
+ DhufIVIE4BJVls3RWwA==
+X-Proofpoint-ORIG-GUID: KxAErtoMaAf-ysE-_JXRWW1aFHkkIBoP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-30_04,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300139
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,63 +124,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+On Tue, 2026-06-30 at 20:12 +0530, Nikhil Kumar Singh wrote:
+> +=C2=A0=C2=A0=C2=A0 REQUIRE_INSNS_FLAGS(ctx, CACHE);
+> +
+> +=C2=A0=C2=A0=C2=A0 /*
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * As per PowerISA v3.1, the L field (mapped to =
+a->rt in X-form)
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * can have values 0, 1, 3, 4, or 6. Other value=
+s are Undefined
+> Behavior (UB).
+> +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> +=C2=A0=C2=A0=C2=A0 switch (a->rt) {
+> +=C2=A0=C2=A0=C2=A0 case 0: /* dcbf */
+> +=C2=A0=C2=A0=C2=A0 case 1: /* dcbfl */
+> +=C2=A0=C2=A0=C2=A0 case 3: /* dcbflp */
+> +=C2=A0=C2=A0=C2=A0 case 4: /* dcbfps */
+> +=C2=A0=C2=A0=C2=A0 case 6: /* dcbstps */
+Thanks for this addition Nikhil.
 
-memsave and pmemsave read guest memory and write it to a file, with no
-guard at all. They run on the main thread with the BQL held, so on a
-postcopy destination touching a not-yet-received page deadlocks: the
-thread blocks on the userfault while the postcopy incoming path waits for
-the BQL to install that page. During precopy the read returns incomplete
-state instead.
+Reviewed-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 
-Refuse both while guest RAM is still being received, using the same
-migration_guest_ram_loading() check as dump-guest-memory.
-
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20260619101834.228432-4-den@openvz.org>
----
- system/cpus.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/system/cpus.c b/system/cpus.c
-index 49f6daec3cd..b31c825b464 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -43,6 +43,7 @@
- #include "system/physmem.h"
- #include "system/replay.h"
- #include "system/runstate.h"
-+#include "migration/misc.h"
- #include "system/cpu-timers.h"
- #include "system/whpx.h"
- #include "hw/core/boards.h"
-@@ -843,6 +844,11 @@ void qmp_memsave(uint64_t addr, uint64_t size, const char *filename,
-     uint8_t buf[1024];
-     uint64_t orig_addr = addr, orig_size = size;
- 
-+    if (migration_guest_ram_loading()) {
-+        error_setg(errp, "Guest memory access not allowed during migration");
-+        return;
-+    }
-+
-     if (!has_cpu) {
-         cpu_index = 0;
-     }
-@@ -889,6 +895,11 @@ void qmp_pmemsave(uint64_t addr, uint64_t size, const char *filename,
-     uint64_t l;
-     uint8_t buf[1024];
- 
-+    if (migration_guest_ram_loading()) {
-+        error_setg(errp, "Guest memory access not allowed during migration");
-+        return;
-+    }
-+
-     f = fopen(filename, "wb");
-     if (!f) {
-         error_setg_file_open(errp, errno, filename);
-
--- 
-2.54.0
-
+~Shivang.
 
