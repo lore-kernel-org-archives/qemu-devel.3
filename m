@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 463CEC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 13:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B93BFC43327
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 13:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weYz6-00025B-Lu; Tue, 30 Jun 2026 09:58:44 -0400
+	id 1weYz2-00024Y-BQ; Tue, 30 Jun 2026 09:58:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1weYyq-00023J-55; Tue, 30 Jun 2026 09:58:29 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ id 1weYyq-00023K-J5; Tue, 30 Jun 2026 09:58:29 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1weYyo-0003om-3R; Tue, 30 Jun 2026 09:58:27 -0400
+ id 1weYyo-00040A-3i; Tue, 30 Jun 2026 09:58:28 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KcipN/9xtKNariXQMn6PXO/RsFBwJbmkWA0EylTbqPpLayZ4JDe9yp2s30ZrS5DaEEN5QK4amZeq3cfDVaMIk6YGZ3L3rUsws3Tjv5kUUZe+J+FAVz112idtG5FaHIs19SvOfK2bPZV9Ea1O6aWEnHrRnFRtcRFfjf9F8vWQfoNDUW7If8A+iGcgX7Hy7/SEJzztvDYqLl5pvPryrE7VaZJTS59afMF3+ALy2Ejx09rjvexENV1W76ps0OpTP01ml9sbiBFeQTCBVrUqzqpIfhPmaPzrEwiM3C7sAYnKxgXCneyqDrm3lhgmDS4Skv0wH/phgaeoqS2HdluR1eJlyw==
+ b=LQYDfaboSTrrPY29LleoI24DjLqSiSGMCfXLxSjjr130EWqq535Rc6JW4rzUYBZUZPNvyAdRreoYiHbuB7K+shcJ2YtUH6VRZj6cMj9cQTYEL8mA/JoWY7NYw8AOKUB/aRfwrbpfs5jfvMW6oOn/iC5+44UkyQPxyJ4PjMzRte83GvPu75p+cQpF24tEJMXcrLVlz7sNaZDhZBzZYnHARq/WSu85ukCjPT0gqkQdyxxVzUvjY73yR7NOZxaspAId24pv129+T1PrajlvjeC0DyKooqeeIw/VljOtgPPU0nkFPFa2V74pLpszBPa2g1y6Hgm5CkDqi83f2fvnomYVaA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Y1sjayF5ObqNguGjmSLOK+Ap0DWobwdKEGhwAIhaR6w=;
- b=NVqiBc1ZYvaKl0s3+xJ9BpX99Uu6wPIOje5M2JBhw9mIW8mkDBsE/7M1bsEJVq83tDhx+tkI7qt6TUhVX8Ju/LJBG6d7xLs6KFJGRWTcC84tHdUNc9cep79sYs6EPq90wVG7Fe0xyek9NZwcZXVEJ0Ai48yc/YXa3tRFeHBLD44Ov9RqFYjtr/QYTrbdbShHFfh87HJqQWwjVGs2NjvCovubLYordcR5hDv1psGExVpzROKLsEDJpPSGacrZqSCzS55AMlwZ7rIA6QYONHFpqIrYYuOy9uO4mcubPyPEhWJnhnSpO6RH0ZvVeh2I/VycPmiek7A5ghyOodzPUdRL+g==
+ bh=zzD8q5BY2iG8pOglsmPmBqC/035+v+0KOfKNGaB4CBg=;
+ b=ArdayxKns9MSpdwrjxX2aHblM7F9fsqpFGtoX6QMfmwQtKm3EQSy7E9ya0cWbIhsquz2yZrXhuOvWihFdDlm9Vv7z731bnQNw9BSq+Cns/5FqFzRifDDMFFlrW42roT4xYdSsx56VsVzNYxtbaXjpxy9EZVLTzCHCntPv0JZfiEUs3gEWSlM00LFoiHfKo00MQt5/5mdFD0NCrefx9Mf/C7HfpJOMDuf8B/7EY+C+rSv+rv163RNPsrzMp/1K+m3PldZcaUt2e/H7IGYVYswE6C9IWnKGHlNAtmyWNuBtLLP2Y+cTLE+3mF/WfsKp1LaEz94cS29FXDHzESfZjJx4Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,104 +33,107 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Y1sjayF5ObqNguGjmSLOK+Ap0DWobwdKEGhwAIhaR6w=;
- b=bw9KggLoVcZOKM0GJkVQeoqmHPXFNq2PZItvjm6IHDQLZtJxizgVivoI+WITZ2tVXeR2B1xutQL1kQgGsQjy4aF1i+QS6y0w4lNWOItXMVfIfzaSDpdZouG4d/5fEtmX8l55MAreDLeNrEo5QaqHm8RtOusj0ULBF2cxJglvfoMGk4zK5munYqpSxEOqht9UhrGWL2tg5+lcoJXEpmUUUUcE+bwtu76XQD0Vpwq4EP63qbYwI+jovBv9CDk4Qj+4mUKoJ60lKNLzhWQVnd4wMEqLDcgNtVPujYgtttOZp/rUiuhmNBFt31OrT/IJ5NO9egv+ItrasIIv0OfpuhDISg==
+ bh=zzD8q5BY2iG8pOglsmPmBqC/035+v+0KOfKNGaB4CBg=;
+ b=unQK7VW73MR4L1FKcs1cDwMC3SG34Ze2vW5n/svAofjmFFkOMuJYviuk5AyXdqowzytGXW5F6wcdMVqH8QTd8+8320GyNgijcyNm8hk/1GEt3NqdlS9uXZ4Cu19YloPUEcKxcmQ5XQnPO3ygxmB9O99t4SXan7xmxBTP4HZhkPc2htw39fgzsghdEknWlmiHst9Zq7Vd9nT1TSFoD+INhFL8pyqVnyrkcFulUJL2ItBw5Zt6y1yhUA5K1vMtshUjP7SrioUvoUtY3emftc8kiyU8W9m1/CbAWdoQ889XYry9/preqRp5St0dso9N67BD+Ok+8v4EA21DbkxAbUXH8Q==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
  by TYPPR02MB8959.apcprd02.prod.outlook.com (2603:1096:405:382::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Tue, 30 Jun
- 2026 13:58:14 +0000
+ 2026 13:58:08 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0159.018; Tue, 30 Jun 2026
- 13:58:14 +0000
+ 13:58:08 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
 Cc: Alistair Francis <alistair@alistair23.me>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- qemu-arm@nongnu.org
-Subject: [PATCH 08/10] Revert "aspeed/smc: Fix number of dummy cycles for
- FAST_READ_4 command"
-Date: Tue, 30 Jun 2026 21:57:27 +0800
-Message-Id: <20260630135729.466264-9-bin.meng@processmission.com>
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+Subject: [PATCH 06/10] hw/ssi: xilinx_spips: Fix dummy phase handling
+Date: Tue, 30 Jun 2026 21:57:25 +0800
+Message-Id: <20260630135729.466264-7-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260630135729.466264-1-bin.meng@processmission.com>
 References: <20260630135729.466264-1-bin.meng@processmission.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-ClientProxiedBy: SE2P216CA0161.KORP216.PROD.OUTLOOK.COM
  (2603:1096:101:2cb::15) To KL1PR02MB4977.apcprd02.prod.outlook.com
  (2603:1096:820:71::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYPPR02MB8959:EE_
-X-MS-Office365-Filtering-Correlation-Id: 99aa5c7e-2028-4203-e093-08ded6afa0ea
+X-MS-Office365-Filtering-Correlation-Id: 024ac769-cf2c-4257-b37e-08ded6af9d79
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|34096008|23010399003|7416014|22082099003|18002099003|56012099006;
-X-Microsoft-Antispam-Message-Info: XZrAF0ktr5RB9PHUyAxV+md3IQZqaQ7/joqH9MYxPSQoZBqjOTkYaFRr0JaOzXbN4UUSro2h22BeYEqXqvTRYOKFAtnSrYYNCtbv+OSUC5VjP0TuioG0kdIfWgCn2ZJTsfgo9FCInt4Nxy+CxjTbjVXr3CVoOscSF2fNybfXc2wqTE9XtAWBkr65jLUKlubQ43BENEywquM3rlsm43d/N2G5b9qAMBgUKZqffZLezD8xgywG68cKBPYnYIf2TSKPIyRsF7wDn+nMnDt+l79bK7HYkhce+YuhwoyIHMkxuJ7mUdBd7colq2VDZWQ1ydrEJ5y6Kpn+y3qiYwxNvOnkVSuLB/nSc5xyL/kTjXs6V+LtvwHmSuJI306+DiovQv2GPG2I408rlNJ3rL9rPfvggtRJLa0UCQ+5dUZvDEsDY0venMD3uwdPQ0K8iqmqbtlf/lDrAMY8MvaMdG2U6NOyqMIW9y7qT+HN+fBzwQ0h0C9aP2N80EBDHPrrxRyKuUBbXHfCLmQx/UWGb5gIRiMHgYFYDuo435i2/peofZ3lmn9HXVSLl5aiG7AMQcrpgTg7Um8JnyG4pVpLQBJoUrYMB0BgZ/fW+Mc8U82u2uoxeT4lJ/gO0SBS9OkaTPsQJmgNcAmA1C+gMDrplp2VYHBqwQS4xemVRUKdHx+zNer60j0=
+ ARA:13230040|376014|1800799024|366016|34096008|23010399003|3023799007|6133799003|22082099003|18002099003|56012099006;
+X-Microsoft-Antispam-Message-Info: ba3HGOsj3c3PnepKSbsYeJfWqcuXccZQ8NqDsyHVqM76iLXm8lEszuk+4W6mwJDyR6ukOCc/rHI/OktXEfZ1U2GTXGSpt5DK9CTuAsAyuzNIiRh50NNsZI6emj7FGxt3URcUQQgfvbMM7jlfkbklseRkx9ueSqQQvJ9ikEkkaDR/qH8xbVGbhYpdl4Lf3zpuGUtGbfHuhUmsoSLO5YX+G+bw9aXzPtmOTRfR/cH+xM4meJE+9QWxMSVkjDQuQKSxfBY5PpgpiXLOqTAAr7hDJAJ4Rrqce3cCpIIAqeodkUdqR6OLDRCl+F/YovBj1B+W0aEn8z5vk1sc5nNF9mee3S69340r4BJOiHRuqV2Or7iTpZGPZJiDI+VHDquJWDgZHb+1uEK+ZGGCD27J9X9HFaJ/3dgV/h2Ugg1gPH1afZL7VEzAIobjBLF3J9BNlJPV2MRKgrC9RGG2H7Fr0IDYTqYl8ek3z29azTjASND4jWjVsGiZCpQCjxkkY+94rnpnP7pkXbbwYnXJMO2oOWvASLz2kMpoEg0uZ7wwNi5OcP3dqnXIP2GbDp9vmO7CR922MQbo9+mS+nKYU0lBBtLihTlX5Diiy/ClDCPI7VoKBVgxKGbWM7+jvkoZrWd9YzW6zPati53x6tJMIYEvT62TJ/YeXpyanJL6oxUUFPudA4M=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(34096008)(23010399003)(7416014)(22082099003)(18002099003)(56012099006);
+ SFS:(13230040)(376014)(1800799024)(366016)(34096008)(23010399003)(3023799007)(6133799003)(22082099003)(18002099003)(56012099006);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?+4Eclop7N7Ldj62+fFnnfOBsxifv5HN9z1vSexnjyQ4++O/Ch2Fyxa906b9s?=
- =?us-ascii?Q?CgAwUd5/NkVCiSa/bsmBniOCz4FkolLyuhLBJesWctqo3TrgoxFNe1jtchvq?=
- =?us-ascii?Q?A1SUnWkIkrlC0HvBvFD6mSfWav7U566mExpGGEkyajV3yqoYMc/NUSgIXxdm?=
- =?us-ascii?Q?oSYYi/6kJjnS7hIwfVmSuMsBwoDs8H/10v+rt2QHrBQFjwDOV+sbzrsfSh5m?=
- =?us-ascii?Q?C76nmaGhmNWPnsxcuxtC5gnSTKo1ee/RBZFuda8JxK86ILmS4qfy+DM+97+T?=
- =?us-ascii?Q?eYIHA9KKMcbJ4yOHWzIoljThdKigrijo1w/3Lwqta4sBVT/AkBfXj3u8Dx0w?=
- =?us-ascii?Q?9tp/wIM2JjewfY68sIXqqJZ+GT6YDraSl7JSVEUeLPhJvYY708dC+xm8H9mw?=
- =?us-ascii?Q?joOrQ4uox4Nz8rd+g54944eorbVy589z79YuJqQRoNv6ymXXvnZ93ji7o46b?=
- =?us-ascii?Q?j03xDmmCSaHzgx3qkwAP8pejD3yv5VFqiBK26BTRpvDk4BOU0BFqo3FB7fnz?=
- =?us-ascii?Q?9KQWtf4rv81JP3ce+hPwkF5PCmg9126vNUE6LSjIQtN8o7DQm8U34qArG7U5?=
- =?us-ascii?Q?krxEuC2nLqxF+KHOhTyFN1S7v5rmDAoimGglbyDKT0tz1YXftIdPBQf2hXMG?=
- =?us-ascii?Q?gPKsgh4/YGtWqPtceX9oStu1tT4crHJIhpubPNRlKSR8YOl/dtr3sBG7Jgwd?=
- =?us-ascii?Q?MKBQoDDJTD3mtwfcZnznTRC1f/roChzrZe7Rj41agUwSl7swio8jHfsvt16M?=
- =?us-ascii?Q?Sfk+67dvgJ2LGlTjxN2zC3y4muAYca9+Q3kAzAWsyUPKRYGdTTySSe2/4S+h?=
- =?us-ascii?Q?jPH4mDLHqnZFtRdlS0qwg/jKCPSSf3hvBm2UnGJajvWyl12jtosb6SaavBvy?=
- =?us-ascii?Q?hdV4dn72f5Nj5aFXHS01mg3MgU7FMNV0O+swKzPc2Ohf3r6iD1Bp5EQrJ4cH?=
- =?us-ascii?Q?ScaT6YfIAVWVMWNQ68udIWM/Tv6kzg5mDI8XxddS18eIS+8yitpfewxHpAeX?=
- =?us-ascii?Q?AUcZrRNhDSUzFJvUNpU9GthB5MxUk6MIlmmMhItTgpQbDGAd6oWo26f7WJyV?=
- =?us-ascii?Q?YL9iJGSPuUbaJlkeAwkpHKDlR01oVqdu11QoBXWAmlCeMXNy4mYMievKM7Fj?=
- =?us-ascii?Q?0lL6azvCBvHA3QF0nhpHCtEvMl7N40hDgo4tdyqQo28XHvE/4KLUm16hdD4D?=
- =?us-ascii?Q?MUTPxoaPfwXDzlfJ5jwo1dBi0leVHkjQpyE9DaiRi6TqVRfewepBVVrDf1ex?=
- =?us-ascii?Q?Zj7YIjRCuWF0Rk2XCo0CIBeNm2my9eB+PPj/GsWVl/tNMOwNXX7dnvuF2ymP?=
- =?us-ascii?Q?00ErnbFpv91wTKP8aEp/QoKLi3rT7kBI8O4C2WqN/vWhHZaortCqAh3aRTCy?=
- =?us-ascii?Q?9cRrOCTSpNKvy020KZkkk7lLo35J4WEkJQMRiAijm+fQVhw93Td7KTkz8Afj?=
- =?us-ascii?Q?DsunBud3qVeIfRk6AmvMK3oCcCoNV9Djm9d1LppSJVrnAzYRvT8uPXS+/Dbr?=
- =?us-ascii?Q?CdJB6tWpBn/OGsv77N6IWtQWTNZyXCM1iLIT3cUhfw3rwWfUYhn0zu9N2c6n?=
- =?us-ascii?Q?VflH4jOwfYBhY5Pry8wYRQuvDmI5GFwwrLhbeI5soTswrTXuVWBV8Bb77AMB?=
- =?us-ascii?Q?DxUBzIuTMMd3qmVm+EjGaT9VinDDWwk1B8hZabVKruFTuuPdAneOfbYfofUn?=
- =?us-ascii?Q?0nCzLEx+b4OyO6u7z2lIbWLcrYGxeS8j86UeRbtvRtd3UT6SbD2yYRTu87wI?=
- =?us-ascii?Q?IBpvXPdD9CL/+lESEDcHzZzQKFR5KlY=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?R0doNjRZWUVUREo5ejVzQ1dWWTBRN3h0MjBjQlR4MTQrUFVYK0JFS1dhNlNm?=
+ =?utf-8?B?N0xPdHBhTDVJVGREakhuUGY4L2pxN0h0aEdDSnY1Ykp0bSs3UDdJL0pZU2Y0?=
+ =?utf-8?B?ZGt2c2RESkxLNksyYXAzTzEwc1M0Mk9rTjhPMXR3clRsL0FVckV4UWlIeTlm?=
+ =?utf-8?B?MkxCYmZYQlQxTGt5S3VrNG9la3NzZTBQdlR2T3JjOUcxZm5EOUtwYXFrQnlK?=
+ =?utf-8?B?STM2R2p0L0Q3Z3BCMTB6ellUNklYZzhEM0xxVTk4aE5HbC9QOWs1eXR2RUtP?=
+ =?utf-8?B?VDgvR1dFVkFBN1NGYUxvT3ZnWTBwU1NzeGVaaGZkcXc5TlN6RFowbkVJaXdS?=
+ =?utf-8?B?S1FpNkFYS3o0RVBDblo3VkhqUkhGRHpQeUsrR0FDQVhjRnk3NFliUkVHNlZV?=
+ =?utf-8?B?bjRnU3B5OTg3ck5HelUvaVNHQlZ1UXhjNzFxNXdLdTE4M2huaTAwcSt4K1ZS?=
+ =?utf-8?B?U1dCTWFjU0FvejhwaFhMUDdQVGFKUmJXREovR1pvS3hKYzJzVnJIdU1YbTdh?=
+ =?utf-8?B?TjRueVRSeUo0TjJEcXpENG91bmZ4bWlWZUpQd0d0UnNMNHpNeTNwZXFIb0ll?=
+ =?utf-8?B?R3JnclU5cmdQVHBHQ0pCK3cyZHc1Z2ZtUE9IekF0cEhqSHRtZkJkeTBBVlZh?=
+ =?utf-8?B?ZmdRRnJZTFlkUXQrZWw0VkQ1a2FMbzFEU0NCRzRFQ2cwc1NxaXV6dUhnZVhl?=
+ =?utf-8?B?aUp6bDlVRnJWWlJDOFNZbEJWanE2OGs2b2JYbHhMVThiWlE0YW9ZcHMvT0FL?=
+ =?utf-8?B?K0Rtbm4wa2FuU2Y0d2JOcWhHSndGajJJc2pncGJlSUN6TytHRzRQdVRQYzFr?=
+ =?utf-8?B?R0ZVWktPa2xWcFFiWU5JZm5KaVhjSW9IRlNwaDhEU2ZrbHdOb3RxVnBnTjJs?=
+ =?utf-8?B?MVBYRUoyT2Y1ZlpvWHBSemtYK2FhYzZoZGFoNUxESFNnRk9YRk1ja2JrbXpO?=
+ =?utf-8?B?OWtiUlRJRHZDYUp2L0IxZG5nSUU0U3FIck1uQjlOMUQ2SHd3Rmd6VzlnU3kr?=
+ =?utf-8?B?SWdZQm1kdWtGUmhKbzdHV2VLRndWTDJuT2dGNmVOWWIwWTlqVDMrWkpIaUhY?=
+ =?utf-8?B?NEZrY2JTeVBFME5sR1BkcXd5QnM3Qm1DK1NQVzc4NHJqZ2lzTjNOVlFjQzk5?=
+ =?utf-8?B?ZEdacThoUVl6cUY5U3FibEdtWHJUWGRsK1RaQWwxamM0SHJBa2FWc0g5K2Ju?=
+ =?utf-8?B?WE53aHdJanAwdGF2bVJtbmJsUjhNbHcyZ052T2hRYUpaTnpCVWpuZlphQkFB?=
+ =?utf-8?B?ajlGYVlNS1hkM2Q3TXhYVnNFMmpiSXhFZWEwT0E1cFdXQmlOWnAxUVIxeUp1?=
+ =?utf-8?B?bi9Nc3VpTEt1cjhxWE9tbTJYbUtKQSszbmU3UllZc0NDVjNuZFJPdG5WYWlr?=
+ =?utf-8?B?RTUwVnF3Y3R5bkxBRHlpNkpkSHNtM3JmZ3BFNnhZb29HajF2T1poVGc2bU9P?=
+ =?utf-8?B?S2g1dFR5VS9pUEFoY3NCMEZwalF3TWFlK2VvZ2cwdVlITXpqaGpkZjRKVVhQ?=
+ =?utf-8?B?NlJUQ1BMUUVnOFhmdlhwR2hFWE1mYnVzaHFwd0VveGxtVGhkRXYzU1hQVXd2?=
+ =?utf-8?B?eVkzUklwellPaGIzeUNzZ0d5dU5tclc1RXJOczROanl4TXdlTDNDZGlhVnR6?=
+ =?utf-8?B?QmlHRWNHQmRuNVo1NkRYTVFCNGRneWZTSEprT1VOYzhDQ1lGVUFnbGI2NGNp?=
+ =?utf-8?B?L3Y5K01zdHVETWpJemVWbnBQY1lUam80cHpIaWZodkN4YjJjUktpdEEvQit5?=
+ =?utf-8?B?UzlueXJxMlRSeGFvTGZJRlJUK2daNDU2MkVTM0FwaU5OR0swcmxMZ3I3Q0JD?=
+ =?utf-8?B?UUpUVld4OFdqVk9qVFBnUUdJSWFVeG56RWdwQ3hMYmZXYTEreWZmbThSMlBD?=
+ =?utf-8?B?ei9JLzVFRnNkUTdVVitaOGFQb3VoN3k3YUtPVi9MTzFQMGdRZjdlOHJnL0po?=
+ =?utf-8?B?WngvTk9iMlFWbVFiQTBMRGcvOS9CditVRnFPVnRWWmF5TVEzWm9RNUdqWVYw?=
+ =?utf-8?B?WU4zNllWSWxYTGgybDNyb3hCN0IvVS9QY0JFaXBmUXcrVXdhYUtBcTJVc0hB?=
+ =?utf-8?B?YlZEZjd4bGVNbzluTWpNYml2YjJCWWE4Y2JwOWRqT1JuNC9Idjc0Z2Iyd0Ra?=
+ =?utf-8?B?S0ZqaFZoZUxRYnlxQWVXdTBpNXNONmtRTFRYMzFGaDhZNkRpTUtobFk0TnV5?=
+ =?utf-8?B?eFhzZnBoaXhUeXY2VFNIelFzeHJoeFJQakdJOE5aQ1NJNzNOZ3pDMjRhRm5K?=
+ =?utf-8?B?RlptS1d4OTE2SFBQT3VwVVlueEh2U1hvb0xaeTBUTGpYdUgwUnRKckNLRUh5?=
+ =?utf-8?B?SzlIeEt3SkhzbWVLSEp1ajV2Mkw0VVg1TzZ2QklpN0FoZVFWc01hTFJxYk40?=
+ =?utf-8?Q?Cyb5rkq+T2YTEKH0=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 99aa5c7e-2028-4203-e093-08ded6afa0ea
+X-MS-Exchange-CrossTenant-Network-Message-Id: 024ac769-cf2c-4257-b37e-08ded6af9d79
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jun 2026 13:58:14.2431 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jun 2026 13:58:08.4409 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XEy7hlT5phWgejCFbQcv0BE5sHQByN73pNY4/Ygl42NPzc/Ud9ZMlmbf732YkJkeEvPnzszLEdSF8QAAD6dwyaU8AxW2JkNqypGxoGg+mIs=
+X-MS-Exchange-CrossTenant-UserPrincipalName: CumEsFOeyGyKHJLS2wPeek7fXSWTkDgpbqUfuSAnYnIOacdeo5W1iaXc+Rku0TVex7oXpzSnUjtEqCV5w1yvykEYdk+KmjhhulLhwnEh314=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYPPR02MB8959
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=bin.meng@processmission.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -147,34 +150,316 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 7faf6f1790dddf9f3acf6ddd95f7bbc1b4a755d0.
+The ZynqMP generic FIFO encodes dummy phases as a number of
+dummy cycles. QEMU's SSI bus transfers whole bytes, so the
+controller model must convert the programmed cycle count to the
+number of SSI byte transfers needed for the selected SPI, dual SPI
+or quad SPI mode.
 
-The incorrect implementation of dummy cycles in m25p80 model is now
-corrected. Revert this commit.
+The legacy Xilinx QSPI snoop paths had the opposite problem after
+the m25p80 dummy handling was fixed. They still treated each dummy
+byte queued through the FIFO as a request to generate several SSI
+transfers based on the current link width. The flash model now
+consumes dummy phases as byte counts, so the manual FIFO path should
+forward one SSI transfer per dummy byte.
 
+Update the Xilinx QSPI dummy accounting consistently for the generic
+FIFO, manual FIFO and LQSPI direct-read paths. Also make the command
+table report the dummy byte counts consumed by m25p80 for dual and
+quad output reads, and account for the mode byte before LQSPI data
+reads begin.
+
+This matches the ZynqMP TRM (ug1085, v2.2 [1]) description of the
+generic FIFO dummy cycle entry and keeps the controller side aligned
+with the flash model's dummy byte ownership.
+
+The description of the genenic command fifo register says:
+
+  When [receive, transmit, data_xfer] = [0,0,1], the [immediate_data]
+  field represents the number of dummy cycle sent on the SPI interface.
+
+[1] https://www.xilinx.com/support/documentation/user_guides/ug1085-zynq-ultrascale-trm.pdf
+    table 24‐22, an example of Generic FIFO Contents for Quad I/O Read Command (EBh)
+
+Fixes: ef06ca3946e2 ("xilinx_spips: Add support for RX discard and RX drain")
+Fixes: c95997a39de6 ("xilinx_spips: Add support for the ZynqMP Generic QSPI")
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 ---
 
- hw/ssi/aspeed_smc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/ssi/xilinx_spips.h |   2 +-
+ hw/ssi/xilinx_spips.c         | 120 ++++++++++++++++++++++++----------
+ 2 files changed, 88 insertions(+), 34 deletions(-)
 
-diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-index f5abc9fcc9..c2a732664b 100644
---- a/hw/ssi/aspeed_smc.c
-+++ b/hw/ssi/aspeed_smc.c
-@@ -568,11 +568,11 @@ static int aspeed_smc_num_dummies(uint8_t command)
+diff --git a/include/hw/ssi/xilinx_spips.h b/include/hw/ssi/xilinx_spips.h
+index c8f6c5053c..d1eefa4ba6 100644
+--- a/include/hw/ssi/xilinx_spips.h
++++ b/include/hw/ssi/xilinx_spips.h
+@@ -69,7 +69,7 @@ struct XilinxSPIPS {
+     uint8_t num_busses;
+ 
+     uint8_t snoop_state;
+-    int cmd_dummies;
++    int cmd_dummy_bytes;
+     uint8_t link_state;
+     uint8_t link_state_next;
+     uint8_t link_state_next_when;
+diff --git a/hw/ssi/xilinx_spips.c b/hw/ssi/xilinx_spips.c
+index f6e717bc01..fa98dc2dd8 100644
+--- a/hw/ssi/xilinx_spips.c
++++ b/hw/ssi/xilinx_spips.c
+@@ -192,6 +192,10 @@
+     FIELD(GQSPI_GF_SNAPSHOT, EXPONENT, 9, 1)
+     FIELD(GQSPI_GF_SNAPSHOT, DATA_XFER, 8, 1)
+     FIELD(GQSPI_GF_SNAPSHOT, IMMEDIATE_DATA, 0, 8)
++#define GQSPI_GF_MODE_SPI     1
++#define GQSPI_GF_MODE_DSPI    2
++#define GQSPI_GF_MODE_QSPI    3
++
+ #define R_GQSPI_MOD_ID        (0x1fc / 4)
+ #define R_GQSPI_MOD_ID_RESET  (0x10a0000)
+ 
+@@ -237,7 +241,7 @@ static void xilinx_spips_update_cs(XilinxSPIPS *s, int field)
+     }
+     if (!(field & ((1 << (s->num_cs * s->num_busses)) - 1))) {
+         s->snoop_state = SNOOP_CHECKING;
+-        s->cmd_dummies = 0;
++        s->cmd_dummy_bytes = 0;
+         s->link_state = 1;
+         s->link_state_next = 1;
+         s->link_state_next_when = 0;
+@@ -382,7 +386,7 @@ static void xilinx_spips_reset(DeviceState *d)
+     s->link_state_next = 1;
+     s->link_state_next_when = 0;
+     s->snoop_state = SNOOP_CHECKING;
+-    s->cmd_dummies = 0;
++    s->cmd_dummy_bytes = 0;
+     s->man_start_com = false;
+     xilinx_spips_update_ixr(s);
+     xilinx_spips_update_cs_lines(s);
+@@ -457,6 +461,7 @@ static void xlnx_zynqmp_qspips_flush_fifo_g(XlnxZynqMPQSPIPS *s)
+         int i;
+ 
+         if (!s->regs[R_GQSPI_DATA_STS]) {
++            uint32_t prev_gf_snapshot = s->regs[R_GQSPI_GF_SNAPSHOT];
+             uint8_t imm;
+ 
+             s->regs[R_GQSPI_GF_SNAPSHOT] = fifo32_pop(&s->fifo_g);
+@@ -484,7 +489,54 @@ static void xlnx_zynqmp_qspips_flush_fifo_g(XlnxZynqMPQSPIPS *s)
+                 }
+                 s->regs[R_GQSPI_DATA_STS] = 1ul << imm;
+             } else {
+-                s->regs[R_GQSPI_DATA_STS] = imm;
++                /*
++                 * When [receive, transmit, data_xfer] = [0,0,1], it represents
++                 * the number of dummy cycle sent on the SPI interface. We need
++                 * to convert the number of dummy cycles to bytes according to
++                 * the SPI mode being used.
++                 *
++                 * Ref: ug1085 v2.2 (December 2020) table 24‐22, an example of
++                 *      Generic FIFO Contents for Quad I/O Read Command (EBh)
++                 */
++                if (!ARRAY_FIELD_EX32(s->regs, GQSPI_GF_SNAPSHOT, TRANSMIT) &&
++                    !ARRAY_FIELD_EX32(s->regs, GQSPI_GF_SNAPSHOT, RECIEVE)) {
++                    uint8_t spi_mode = ARRAY_FIELD_EX32(s->regs, GQSPI_GF_SNAPSHOT, SPI_MODE);
++                    /*
++                     * Some ZynqMP GQSPI drivers, such as Linux, use the data
++                     * bus width in the dummy GENFIFO entry only to configure
++                     * the controller mode. The immediate value is already
++                     * the number of dummy cycles for the dummy phase, which
++                     * follows the address bus width. Reuse the previous TX
++                     * phase mode to convert cycles to SSI bytes.
++                     *
++                     * This does not make the model Linux-only. U-Boot emits
++                     * the dummy entry with op->dummy.buswidth, so the entry
++                     * mode already matches the dummy phase. Its opcode and
++                     * address phases are immediate entries, not DATA_XFER TX
++                     * entries, so the override below is not taken for U-Boot.
++                     */
++                    if (FIELD_EX32(prev_gf_snapshot, GQSPI_GF_SNAPSHOT,
++                                   DATA_XFER) &&
++                        FIELD_EX32(prev_gf_snapshot, GQSPI_GF_SNAPSHOT,
++                                   TRANSMIT) &&
++                        !FIELD_EX32(prev_gf_snapshot, GQSPI_GF_SNAPSHOT,
++                                    RECIEVE)) {
++                        spi_mode = FIELD_EX32(prev_gf_snapshot,
++                                              GQSPI_GF_SNAPSHOT, SPI_MODE);
++                    }
++
++                    if (spi_mode == GQSPI_GF_MODE_QSPI) {
++                        s->regs[R_GQSPI_DATA_STS] = ROUND_UP(imm * 4, 8) / 8;
++                    } else if (spi_mode == GQSPI_GF_MODE_DSPI) {
++                        s->regs[R_GQSPI_DATA_STS] = ROUND_UP(imm * 2, 8) / 8;
++                    } else if (spi_mode == GQSPI_GF_MODE_SPI) {
++                        s->regs[R_GQSPI_DATA_STS] = ROUND_UP(imm * 1, 8) / 8;
++                    } else {
++                        qemu_log_mask(LOG_GUEST_ERROR, "Unknown SPI MODE: 0x%x ", spi_mode);
++                    }
++                } else {
++                    s->regs[R_GQSPI_DATA_STS] = imm;
++                }
+             }
+         }
+         /* Zero length transfer check */
+@@ -550,7 +602,7 @@ static void xlnx_zynqmp_qspips_flush_fifo_g(XlnxZynqMPQSPIPS *s)
+     }
+ }
+ 
+-static int xilinx_spips_num_dummies(XilinxQSPIPS *qs, uint8_t command)
++static int xilinx_spips_num_dummy_bytes(XilinxQSPIPS *qs, uint8_t command)
+ {
+     if (!qs) {
+         /* The SPI device is not a QSPI device */
+@@ -567,10 +619,11 @@ static int xilinx_spips_num_dummies(XilinxQSPIPS *qs, uint8_t command)
+     case QPP_4:
+         return 0;
      case FAST_READ:
-     case DOR:
-     case QOR:
--    case FAST_READ_4:
+-    case DOR:
+-    case QOR:
+     case FAST_READ_4:
++        return 1;
++    case DOR:
      case DOR_4:
++    case QOR:
      case QOR_4:
          return 1;
      case DIOR:
-+    case FAST_READ_4:
-     case DIOR_4:
-         return 2;
-     case QIOR:
+@@ -611,7 +664,6 @@ static void xilinx_spips_flush_txfifo(XilinxSPIPS *s)
+         int i;
+         uint8_t tx = 0;
+         uint8_t tx_rx[MAX_NUM_BUSSES] = { 0 };
+-        uint8_t dummy_cycles = 0;
+         uint8_t addr_length;
+ 
+         if (fifo8_is_empty(&s->tx_fifo)) {
+@@ -631,26 +683,18 @@ static void xilinx_spips_flush_txfifo(XilinxSPIPS *s)
+                 tx_rx[i] = tx;
+             }
+         } else {
+-            /*
+-             * Extract a dummy byte and generate dummy cycles according to the
+-             * link state
+-             */
+             tx = fifo8_pop(&s->tx_fifo);
+-            dummy_cycles = 8 / s->link_state;
++            for (i = 0; i < num_effective_busses(s); ++i) {
++                tx_rx[i] = tx;
++            }
+         }
+ 
+         for (i = 0; i < num_effective_busses(s); ++i) {
+             int bus = num_effective_busses(s) - 1 - i;
+-            if (dummy_cycles) {
+-                int d;
+-                for (d = 0; d < dummy_cycles; ++d) {
+-                    tx_rx[0] = ssi_transfer(s->spi[bus], (uint32_t)tx_rx[0]);
+-                }
+-            } else {
+-                DB_PRINT_L(debug_level, "tx = %02x\n", tx_rx[i]);
+-                tx_rx[i] = ssi_transfer(s->spi[bus], (uint32_t)tx_rx[i]);
+-                DB_PRINT_L(debug_level, "rx = %02x\n", tx_rx[i]);
+-            }
++
++            DB_PRINT_L(debug_level, "tx = %02x\n", tx_rx[i]);
++            tx_rx[i] = ssi_transfer(s->spi[bus], (uint32_t)tx_rx[i]);
++            DB_PRINT_L(debug_level, "rx = %02x\n", tx_rx[i]);
+         }
+ 
+         if (s->regs[R_CMND] & R_CMND_RXFIFO_DRAIN) {
+@@ -685,9 +729,9 @@ static void xilinx_spips_flush_txfifo(XilinxSPIPS *s)
+         switch (s->snoop_state) {
+         case (SNOOP_CHECKING):
+             /* Store the count of dummy bytes in the txfifo */
+-            s->cmd_dummies = xilinx_spips_num_dummies(q, tx);
++            s->cmd_dummy_bytes = xilinx_spips_num_dummy_bytes(q, tx);
+             addr_length = get_addr_length(s, tx);
+-            if (s->cmd_dummies < 0) {
++            if (s->cmd_dummy_bytes < 0) {
+                 s->snoop_state = SNOOP_NONE;
+             } else {
+                 s->snoop_state = SNOOP_ADDR + addr_length - 1;
+@@ -697,14 +741,14 @@ static void xilinx_spips_flush_txfifo(XilinxSPIPS *s)
+             case DOR:
+             case DOR_4:
+                 s->link_state_next = 2;
+-                s->link_state_next_when = addr_length + s->cmd_dummies;
++                s->link_state_next_when = addr_length + s->cmd_dummy_bytes;
+                 break;
+             case QPP:
+             case QPP_4:
+             case QOR:
+             case QOR_4:
+                 s->link_state_next = 4;
+-                s->link_state_next_when = addr_length + s->cmd_dummies;
++                s->link_state_next_when = addr_length + s->cmd_dummy_bytes;
+                 break;
+             case DIOR:
+             case DIOR_4:
+@@ -720,10 +764,10 @@ static void xilinx_spips_flush_txfifo(XilinxSPIPS *s)
+             /*
+              * Address has been transmitted, transmit dummy cycles now if needed
+              */
+-            if (s->cmd_dummies < 0) {
++            if (s->cmd_dummy_bytes < 0) {
+                 s->snoop_state = SNOOP_NONE;
+             } else {
+-                s->snoop_state = s->cmd_dummies;
++                s->snoop_state = s->cmd_dummy_bytes;
+             }
+             break;
+         case (SNOOP_STRIPING):
+@@ -1152,11 +1196,13 @@ static void lqspi_load_cache(void *opaque, hwaddr addr)
+     XilinxQSPIPS *q = opaque;
+     XilinxSPIPS *s = opaque;
+     int i;
++    int dummy_bytes;
+     int flash_addr = ((addr & ~(LQSPI_CACHE_SIZE - 1))
+                    / num_effective_busses(s));
+     int peripheral = flash_addr >> LQSPI_ADDRESS_BITS;
+     int cache_entry = 0;
+     uint32_t u_page_save = s->regs[R_LQSPI_STS] & ~LQSPI_CFG_U_PAGE;
++    uint8_t command;
+ 
+     if (addr < q->lqspi_cached_addr ||
+             addr > q->lqspi_cached_addr + LQSPI_CACHE_SIZE - 4) {
+@@ -1170,10 +1216,10 @@ static void lqspi_load_cache(void *opaque, hwaddr addr)
+         fifo8_reset(&s->rx_fifo);
+ 
+         /* instruction */
++        command = s->regs[R_LQSPI_CFG] & LQSPI_CFG_INST_CODE;
+         DB_PRINT_L(0, "pushing read instruction: %02x\n",
+-                   (unsigned)(uint8_t)(s->regs[R_LQSPI_CFG] &
+-                                       LQSPI_CFG_INST_CODE));
+-        fifo8_push(&s->tx_fifo, s->regs[R_LQSPI_CFG] & LQSPI_CFG_INST_CODE);
++                   (unsigned)command);
++        fifo8_push(&s->tx_fifo, command);
+         /* read address */
+         DB_PRINT_L(0, "pushing read address %06x\n", flash_addr);
+         if (s->regs[R_LQSPI_CFG] & LQSPI_CFG_ADDR4) {
+@@ -1183,14 +1229,22 @@ static void lqspi_load_cache(void *opaque, hwaddr addr)
+         fifo8_push(&s->tx_fifo, (uint8_t)(flash_addr >> 8));
+         fifo8_push(&s->tx_fifo, (uint8_t)flash_addr);
+         /* mode bits */
++        dummy_bytes = xilinx_spips_num_dummy_bytes(q, command);
+         if (s->regs[R_LQSPI_CFG] & LQSPI_CFG_MODE_EN) {
+             fifo8_push(&s->tx_fifo, extract32(s->regs[R_LQSPI_CFG],
+                                               LQSPI_CFG_MODE_SHIFT,
+                                               LQSPI_CFG_MODE_WIDTH));
++            if (dummy_bytes > 0) {
++                dummy_bytes--;
++            }
++        }
++        if (dummy_bytes < 0) {
++            dummy_bytes = extract32(s->regs[R_LQSPI_CFG],
++                                    LQSPI_CFG_DUMMY_SHIFT,
++                                    LQSPI_CFG_DUMMY_WIDTH);
+         }
+         /* dummy bytes */
+-        for (i = 0; i < (extract32(s->regs[R_LQSPI_CFG], LQSPI_CFG_DUMMY_SHIFT,
+-                                   LQSPI_CFG_DUMMY_WIDTH)); ++i) {
++        for (i = 0; i < dummy_bytes; ++i) {
+             DB_PRINT_L(0, "pushing dummy byte\n");
+             fifo8_push(&s->tx_fifo, 0);
+         }
 -- 
 2.34.1
 
