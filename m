@@ -4,133 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B2AC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:00:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 389ECC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:15:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weYz7-000268-71; Tue, 30 Jun 2026 09:58:45 -0400
+	id 1weZEu-00020T-5x; Tue, 30 Jun 2026 10:15:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1weYys-00023w-SE; Tue, 30 Jun 2026 09:58:32 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1weYyq-0003om-Vu; Tue, 30 Jun 2026 09:58:30 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=J/blmQRDJkux9soLPvDFuKkbx49Fi+JxUOG7oZ+wBITKgZKHbhrKdJIHFzvSpmijYZE/x6eRbhFzvwDMsrXMmSSikTnKY8igrGA6qaJN60j4KYl+ji84kE5a6kkmjzFE1D90hHqeAMc7gUFhw4x1eXDJuARQzv39ZUggsaeHmFW4+07tHe4SVsu8FaDPsD7XD9tEQXxaC/CtFtvVU7GEVk4QkYL52N3HVhoRjGZ169bny2BpGwUNQUlZ+6GbX8mAq17MP8B51zR/WMIo2x2JHr3daFVMYboUGh/v0jyqLlCuruWJk3VLQvyG1wHR/cZdzcL5ePBqspppozcnlAE+rQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RbCj2tP2kDYscwQyGmkrxWJbt0IrvGxWtGBkGkl7Nak=;
- b=Y89y7IfFU9DdZT6s7BBiuGpb3C6JO3fnxzCR37J6fPoLsc/dmAu0kxTP9EW/8KrIqXEN8VhHcs125Ea5jZ4MnN65z7qjMAw1XbAWEsNJSUZWKWWGoMA7TzeAcpzTR+CWbUY+gNSFCoUPUA+VtQQ7B/76KNFFQwqNnye+8fJxoEkiRUbArz4Q89XntyQF+b4pmdM1vSVGJGFeIxbV/J1DaX6zfXIDschgjg/OvxrqR+HbsX5ozWXwcvih70e455ApOULwzmOKsVIWpHO37kKRX5TVDQJvljXxf81JL32TXwwCGZJHzgLwUKEk0G/IrP9ueNxWxlEJKRN13cX4a1t4xQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RbCj2tP2kDYscwQyGmkrxWJbt0IrvGxWtGBkGkl7Nak=;
- b=pY3iFfEY3HhiptLpHKkqfOjj8nzv1uEf/X/yw1j+vDT+NXcilSlccRB3JAaq983t9+lSPpOHLdP7HKQ8i7E9fGsnWjmQr7gjCAxHGO/iRm3pWHLwqTRFHDmVNtcEVl76mtuNrFrgCyWewJEqY+8rUaFGUw6RPFgvtCrnP7O5Tre2Fq9X2CDl2QLr9LzkMxifdEiesaHDRImG9JqO5Gec69JkP8kFHXmkBZEKGstmjriC+3kZphSX/AkGkwQ5rZEMy2dTXNtkSradfig/XqAdr/UrDMDp6KEw/vIuJJFlJY0PeNEDjUy5g49LQfry8ms8aAe+D2ecidO1GR21yFGFwQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by TYPPR02MB8959.apcprd02.prod.outlook.com (2603:1096:405:382::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Tue, 30 Jun
- 2026 13:58:17 +0000
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0159.018; Tue, 30 Jun 2026
- 13:58:17 +0000
-From: Bin Meng <bin.meng@processmission.com>
-To: QEMU <qemu-devel@nongnu.org>
-Cc: Alistair Francis <alistair@alistair23.me>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- qemu-arm@nongnu.org
-Subject: [PATCH 09/10] Revert "aspeed/smc: snoop SPI transfers to fake dummy
- cycles"
-Date: Tue, 30 Jun 2026 21:57:28 +0800
-Message-Id: <20260630135729.466264-10-bin.meng@processmission.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260630135729.466264-1-bin.meng@processmission.com>
-References: <20260630135729.466264-1-bin.meng@processmission.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SE2P216CA0161.KORP216.PROD.OUTLOOK.COM
- (2603:1096:101:2cb::15) To KL1PR02MB4977.apcprd02.prod.outlook.com
- (2603:1096:820:71::8)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1weZEs-0001zk-Oh
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:15:02 -0400
+Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1weZEm-0003qQ-V6
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:14:58 -0400
+Received: by mail-dy1-x1333.google.com with SMTP id
+ 5a478bee46e88-30bc871ecdfso6125648eec.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 07:14:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782828895; cv=none;
+ d=google.com; s=arc-20260327;
+ b=b9BAQ8HpJhuE/EPsPxO8cH3SNm2qlxqZkwHjaW/3DeCEGLbk1YpPt2s66SEg01ifQ5
+ VtkkzaP7460OVIToib4NhVsV8AzSlbwT0oVLQJcV8dY6HBpWqrYjhsyJz4VQaRUKyJJI
+ PwDsqp0gaLwR8unG6g0P/se5yb1CuwrQjmoV7dHagUNYpEhXY0EgjOiV4KgNlrpaAPuu
+ 8NacpQKCI+g8d7YyryyySO/phP/V/kVPlhsUf2+eUeVk81SqGVd4/TcmNp4D0wP9X6uy
+ 7qC2YSAia2cweqwxaNDpoQhgdq/+RmQCIzCWnZXbC0ziwmxU128Gdm8cbb7PHDC90zbv
+ RAGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=UkVDLaJDNQOl4sVuHADtBAqX37JYxoOBUaM57zC9puY=;
+ fh=UcPTacNDH0s5IGqnKdbAAPfHJkJqsMCJCiCJ3AY//nU=;
+ b=C+CLq4r+b81zY5nd+JRjwhj+L2BOmFd7ZupATkt1O5/BRR8SQdgorW6iFhdxopYgtL
+ wSl/8RP6t+fqlRNKJPQ9y3B1gp5lg4AUSPi2MATT2kb+OXa4Ro7FFgcq3+VyYOT/wr2Y
+ DrDC1NzUoddOff3pXq2We0N6ZaISOeNkMXoXc7jfNN3OBVjAmuGp8itrgRpvGAg9inwi
+ KlOOfEEdAS/NJdgs43rUXXuaSUktEJKGTYz9f5Ba7imT9ZA2JFiKhUUXol7UXAUb6Fil
+ 8uImLM+PNxSMWahdjRUnoHM3amzT5hLfag/5aWR2hY3VAy+eEXomKX2oy3YBMIZ+3nuj
+ lwnA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1782828895; x=1783433695; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=UkVDLaJDNQOl4sVuHADtBAqX37JYxoOBUaM57zC9puY=;
+ b=m3suRl64cktaxIETcOPkVgDBWjmqjcCGAsF3D2W9iN1WvmnqrJXniiZv63lOCVP48B
+ lVD9C7aN/7Pd1m3fTGZS6p/gjpn+1g1gIOKTFBmVCh0cgllTlrdR1b/Zui3xr5qH07U1
+ 2lGkxokTEvnQ+YvLTfMml6hLQy9MnLBQKgUdetQaVHSTJm2qMO4F5nr2J/aKWYRrIYB0
+ ETs4qaaysxaY4yq+CuHA2gjxhUm1+H1TVuRYrTRzhb9LPs3B65tJQZgBBGQ+6wBvEB59
+ aKmniWcR1jcs4ZfskPJfDCduX/6XZyv2VOvbviFJE/B1e3AqryAO7V5hyIGZSMfvS4Yg
+ m+UQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782828895; x=1783433695;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=UkVDLaJDNQOl4sVuHADtBAqX37JYxoOBUaM57zC9puY=;
+ b=T5ONIq2Mg2/jZN5TnovwmnsJe3jeCFWCwOPk2gpmTQ6a9TDXc+25F5ar6uDxlgoIid
+ OwHVU4b30D3TS5HryerO3mwqqUOO9Cbcrg7UhPSYqEY5hpNsUUVo/35eIcENQ5fkzXpm
+ wqaLvUS5ew8Z5a071bCNLIlw6mCBdW4snLtJ+wFte2E1N47P5Mt3Krh1taKo/aylOPvy
+ 8E53GJ2oiCFOydX6kloM7GksOrkO283MpzU56K+jHLE5/E1Yvwtw44ZXmtfwQR0hRtvA
+ 2LzLb31iFUD+tE1ZP/jvC96FQEkuWl9KRL5zBdI5OjbuD1vDWiOzJLwszpxKCALZYCsF
+ q1Og==
+X-Gm-Message-State: AOJu0Yy1HyMz+dM6jyYP8iHyf/w3hI9A6AhumThbKWQM8D+d9WIYOI5t
+ EQcUEQfFANGywVEmvGNFw7exZv5FVHdyGPLv43exQkJQ3fHqR8hPnMVxiMI/G9B7V8UubSFfv5m
+ PykxG1kdyv+oUL/4bQO/vl7NP9SyGIPs=
+X-Gm-Gg: AfdE7ckVvQxe9gqHWAo1GESNhrwYttuDNSDKbwWAoxatib0VyfsNxFtiKZAgr3mQNCu
+ Mz1AwTOuKkkbEGqXmDKEE6qupqnKWuJ+YACcDApLWKnio2feC9/8BRjy8Sc7nWbrJ9V5YDLWilB
+ R6fHJjYRxJFiERvwnIXHZadTJ8pFJmRF/9We0L9HyNKCeivOEnQUOBhqnpPreNgczVeTqyjfqbG
+ TPrRBqTC2uijMbfsNUtQcJsthlaTdhppjcNwLN8r92CIHva2fZTEkx5JEakDs7k1wz2Ii2IanDu
+ ml1RA3//OPX8YpU5ShFmnRYvbQXRUop4hY+TeA0=
+X-Received: by 2002:a05:7300:6409:b0:304:e2a5:689c with SMTP id
+ 5a478bee46e88-30ee146e255mr3473906eec.21.1782828895037; Tue, 30 Jun 2026
+ 07:14:55 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYPPR02MB8959:EE_
-X-MS-Office365-Filtering-Correlation-Id: 85935784-7f7a-404a-8d63-08ded6afa2a6
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|34096008|23010399003|7416014|5023799004|22082099003|18002099003|56012099006;
-X-Microsoft-Antispam-Message-Info: kARvLMFf7SKyw3OzGvD6Lc0OFJSWtG4QOWh3I6QdyeIMIFlZlrstBbxJVVXjwTOSX++Nyw9E5/+I+/nXD5MVVDFIfJ8ToBTPb9KcJZ0hBKFPiZaX8nQB3p2QznC4Kise+xX8SoTa5159wAuGrgnjVHcLStfT03Box6DHyoWw8Z5MjHOAmAzo0nojTNO+1F+LZIf38iPaeh+CmyDp3QgcB7cIO79pqwrcn1jU5DL6WfhEv5RAfzlKwC0dwQjWN1yPag5WDr4xVtUTgeq07mbkuCExk3UDfko6vy/+nISpuU1KhICRfn5rrfz32pgDMWVi6SCTDzTg/D/sivRA9l4mgX9Vr2G8D3IjKMQB5irGN5EMtePKWZv60xgq1l2epvxx+34f1HnWYIf7W1QIpXNrkpKOrPLvmESTrvkeQmI78LgU3VnaFVi8ELA/3QZ7Kfqum0RNZUlcnTOCCwSkEtC8kuclo2Td9rJYJbervMmn5L7BN+breBkgnx22xu63S/D64tDYaYZjljy5Tf5d9PyVPmqaVn1Bg+eFlnQ9wZUiMydCpbaH5YMr6KGGVibkpcTC34cFQxQzenw7Ue0l4Oa6C2+wz0J12Pd3sHJMLj0VEKmAn7/ihbQ+SGfYP729afpK1hyzVfSVFMlgTeNRFjw/Wu8RncrLe9NiqNFaHfi1v9Q=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(34096008)(23010399003)(7416014)(5023799004)(22082099003)(18002099003)(56012099006);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?X1PXULAj1trvYLXNXRweJds0gFsMd4fq1FLuKdmF1rB9xBVLtktXHwWJBOIN?=
- =?us-ascii?Q?H4POin/1MDabAvLmgwq6AIhpYLgFlP+bB2xJulXd/QMKhW3SMbgUDqrYDPzU?=
- =?us-ascii?Q?BZUaEnrNyKJYjO+Zxghlj1Clu6kydizBId0ntvhNiHIJh+tSTsZdpQ/Tb3gd?=
- =?us-ascii?Q?HTqMKgXuqQmhEL4AP52O9yORcur8FtremHVrdhwVcJW8AIyG/8EbxcOLMUQH?=
- =?us-ascii?Q?87lVYr6+JeHeYY3TSXn2PYPwZ7fN3fLL2B0ElNT+kTRAsaIQ7pfPcK4rfp6J?=
- =?us-ascii?Q?0s3e/lPQKBlXoKbO36FZFeSqpju2AiAsW9Aw5sE7Kvfw1b3qzmswCukgyN/i?=
- =?us-ascii?Q?pb8BxQyltBrzTIokdJFYTCHp9drWtyw8Kg5+9ioVwMPYAGYN3/ONDV6UxPr/?=
- =?us-ascii?Q?sDwQA8xl8/te6Fren2mPAgegFWmSheaJ/ow+LM7I5JhDZ7vET42i4ytVf+uh?=
- =?us-ascii?Q?tc64Cl1mMz/kgk3Mii+mcGJoN75Xqw2Da9vW/nCQS7tcQWwQ8arvb/BAGuyG?=
- =?us-ascii?Q?R8THH2HqpW8mNUQEp0zLX/yiqdWZqGZn+0bdNYNuT1ZgL9+d/+StPbzVu14T?=
- =?us-ascii?Q?4xEbVRRZ43F35jsAxqtxMZMYLVaOEIE3Iqig8sGMPkC9nGHpoj2wK9DjRAkr?=
- =?us-ascii?Q?rDU/WZuDISECTINPh9Q/YsLe/lgwFbAN+SdrKeuYq+2IhwLxJVZ32Am1N004?=
- =?us-ascii?Q?q2BP92rjJuWymvY4zGf56iqqFGN7Y0kpOU+En5Vad+y2loaQugAPRLaWnCpZ?=
- =?us-ascii?Q?Zfab8xKDbZ46zHooXnIIjSetgPYjBML4Kjfb7Hb+YDnrZxCLeBCYajwQTzm0?=
- =?us-ascii?Q?d4jlfrGY9JkJS74mDEw+Bye5Zs7awpSDFkFCQtb0om8D5P0aZ0DMe2scFULk?=
- =?us-ascii?Q?nrQ1yhNx8xaPVxy8T7zeDSgaDtfFDpO+F6RSstQrOrDJrYaEFQil9vhbq5bK?=
- =?us-ascii?Q?0I5zG8CGhR+BdNUe6Bmxbu8KAGwnNrA4vvlfgYXq33Y5dgrjk+VloFElQw8E?=
- =?us-ascii?Q?tjdkzcih6mdILwNeFUIHT6JABOedK7RN37XEgT2cpio5b4XYdTdHDwTay/iR?=
- =?us-ascii?Q?L5QQEF3w6yPfzOQJhXYW15YMcGaGOmcTW5jY68s9nqKKsnit/gTq8Lh5ya6+?=
- =?us-ascii?Q?OW03Yx+GO1EmHNG3PC8EXh4vrN6hKSTBqntP2/vofBZEPrFqbeW75p/hxOP5?=
- =?us-ascii?Q?VuaiKSqDYz5GR55zQL/XLcr7Oq+AksTWmC3lfOF0HJSiQL2jhQia2szHZWe4?=
- =?us-ascii?Q?x1GRHhkEozSUTiIiEba8CWelOR9eWNqRFaBhChyr29zfHEpNfmNk5ccvz/1o?=
- =?us-ascii?Q?+BhSJiB1TAfppNqDIQ8L1tfxrDTHuErJVNDdUBxnVLCegUwQPWTxavDWS3qQ?=
- =?us-ascii?Q?yAGgAJa0WE9ckb8RQsbeufSJTwrgWNnPzv8QUswlGIZGzTEyDZB5qx/04BGY?=
- =?us-ascii?Q?fugZxZGgUFNrRCwX/dzTNgQoZMrQhGJDuMIXM3+9F/pgca4+Jm5Q3ABqI59t?=
- =?us-ascii?Q?x5nmMDfCj1agNmP9FOk3tnNv7t85AEv33p/zuM/UprLN4a9K1FXdEKda4zP8?=
- =?us-ascii?Q?u2MzSw6/gh4KBA/Q7rlTDCkl6yRgMIGfTN4LCqNQMLuw+7CFFGDKaQQDBwJ7?=
- =?us-ascii?Q?TBE0f00dhfTYjVEOeL/vg/Pi2e2xVnjCpmgtJZJSJBE1YYBUdLYf+H+5Oyr/?=
- =?us-ascii?Q?kck9Sc7u57rW7pi5xE3SsRSmxFasOpHiNxDXzdcdv739nJpGFCHy4R5MF8zg?=
- =?us-ascii?Q?/z+bInUHIjIh/lMlF0e2ag3uqiNON2c=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 85935784-7f7a-404a-8d63-08ded6afa2a6
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jun 2026 13:58:17.1370 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: WBofoP4lO1ZeZ4uVObMfs2FOe2Ez1wqMG0mAyAKddAZpLYuI8uzwByF9ridSlHV+X555xGaO5I9zcqXhsqnMrWCSM1VISm7GJAVq1dDa1Mo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYPPR02MB8959
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=bin.meng@processmission.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+References: <20260626080554.1656771-1-ziyifu970225@gmail.com>
+In-Reply-To: <20260626080554.1656771-1-ziyifu970225@gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 30 Jun 2026 18:14:39 +0400
+X-Gm-Features: AVVi8Cez40oNTl0JOFzk6vtc84sYyAdmDilGonjrHu7Wfbua4EbjwUX5oC_b20o
+Message-ID: <CAJ+F1CLq=FJhE+tBgySzVCfjDkEExWv14Pe_ib4FKY22Gm=4dQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/usb: record async control completion for parameter
+ transfers
+To: Ziyi Fu <ziyifu970225@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
+ Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>, 
+ BU Embedded <bu-embedded@cyberus-technology.de>,
+ Ziyi Fu <ziyi.fu@cyberus-technology.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -147,212 +120,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit f95c4bffdc4c53b29f89762cab4adc5a43f95daf.
+On Fri, Jun 26, 2026 at 4:05=E2=80=AFPM Ziyi Fu <ziyifu970225@gmail.com> wr=
+ote:
+>
+> From: Ziyi Fu <ziyi.fu@cyberus-technology.de>
+>
+> Record the completion side of parameter-based control transfers when they
+> complete asynchronously. This lets pcap captures include descriptor
+> response data for requests such as GET_DESCRIPTOR from usb-host devices.
+>
+> The synchronous path already recorded the completion, but the async
+> SETUP_STATE_PARAM path was missing it.
+>
+> Signed-off-by: Ziyi Fu <ziyi.fu@cyberus-technology.de>
 
-The m25p80 model now accounts for fast-read dummy bytes in its
-command decoder. In ASPEED SMC model user mode, guest software
-already sends the complete byte stream, including any dummy
-bytes needed by the flash. Hence the model should just forward
-exactly the bytes supplied by the guest without the need of
-decoding guest-supplied flash op codes to inject extra dummy
-transfers.
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
----
+> ---
+> Tested with a usb-host HID keyboard on qemu-xhci. Before this change, the
+> generated pcap contained GET_DESCRIPTOR submissions but not the correspon=
+ding
+> completion payloads. After this change, the pcap contains the descriptor
+> payloads and Wireshark can associate endpoint 0x81 with the HID interface=
+.
+>
+>  hw/usb/core.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/hw/usb/core.c b/hw/usb/core.c
+> index 9572a870cc..d71204c5c8 100644
+> --- a/hw/usb/core.c
+> +++ b/hw/usb/core.c
+> @@ -345,6 +345,7 @@ void usb_generic_async_ctrl_complete(USBDevice *s, US=
+BPacket *p)
+>              p->actual_length =3D 0;
+>              usb_packet_copy(p, s->data_buf, s->setup_len);
+>          }
+> +        usb_pcap_ctrl(p, false);
+>          break;
+>
+>      default:
+> --
+> 2.51.2
+>
 
- include/hw/ssi/aspeed_smc.h |   2 -
- hw/ssi/aspeed_smc.c         | 114 +-----------------------------------
- hw/ssi/trace-events         |   1 -
- 3 files changed, 2 insertions(+), 115 deletions(-)
 
-diff --git a/include/hw/ssi/aspeed_smc.h b/include/hw/ssi/aspeed_smc.h
-index 76831422c6..a273365689 100644
---- a/include/hw/ssi/aspeed_smc.h
-+++ b/include/hw/ssi/aspeed_smc.h
-@@ -80,8 +80,6 @@ struct AspeedSMCState {
- 
-     AspeedSMCFlash flashes[ASPEED_SMC_CS_MAX];
- 
--    uint8_t snoop_index;
--    uint8_t snoop_dummies;
-     bool unselect;
- };
- 
-diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-index c2a732664b..287a46eef3 100644
---- a/hw/ssi/aspeed_smc.c
-+++ b/hw/ssi/aspeed_smc.c
-@@ -197,9 +197,6 @@
- /* Flash opcodes. */
- #define SPI_OP_READ       0x03    /* Read data bytes (low frequency) */
- 
--#define SNOOP_OFF         0xFF
--#define SNOOP_START       0x0
--
- /*
-  * Default segments mapping addresses and size for each peripheral per
-  * controller. These can be changed when board is initialized with the
-@@ -537,104 +534,6 @@ static MemTxResult aspeed_smc_flash_read(void *opaque, hwaddr addr,
-     return MEMTX_OK;
- }
- 
--/*
-- * TODO (clg@kaod.org): stolen from xilinx_spips.c. Should move to a
-- * common include header.
-- */
--typedef enum {
--    READ = 0x3,         READ_4 = 0x13,
--    FAST_READ = 0xb,    FAST_READ_4 = 0x0c,
--    DOR = 0x3b,         DOR_4 = 0x3c,
--    QOR = 0x6b,         QOR_4 = 0x6c,
--    DIOR = 0xbb,        DIOR_4 = 0xbc,
--    QIOR = 0xeb,        QIOR_4 = 0xec,
--
--    PP = 0x2,           PP_4 = 0x12,
--    DPP = 0xa2,
--    QPP = 0x32,         QPP_4 = 0x34,
--} FlashCMD;
--
--static int aspeed_smc_num_dummies(uint8_t command)
--{
--    switch (command) { /* check for dummies */
--    case READ: /* no dummy bytes/cycles */
--    case PP:
--    case DPP:
--    case QPP:
--    case READ_4:
--    case PP_4:
--    case QPP_4:
--        return 0;
--    case FAST_READ:
--    case DOR:
--    case QOR:
--    case DOR_4:
--    case QOR_4:
--        return 1;
--    case DIOR:
--    case FAST_READ_4:
--    case DIOR_4:
--        return 2;
--    case QIOR:
--    case QIOR_4:
--        return 4;
--    default:
--        return -1;
--    }
--}
--
--static bool aspeed_smc_do_snoop(AspeedSMCFlash *fl,  uint64_t data,
--                                unsigned size)
--{
--    AspeedSMCState *s = fl->controller;
--    uint8_t addr_width = aspeed_smc_flash_addr_width(fl);
--
--    trace_aspeed_smc_do_snoop(fl->cs, s->snoop_index, s->snoop_dummies,
--                              (uint8_t) data & 0xff);
--
--    if (s->snoop_index == SNOOP_OFF) {
--        return false; /* Do nothing */
--
--    } else if (s->snoop_index == SNOOP_START) {
--        uint8_t cmd = data & 0xff;
--        int ndummies = aspeed_smc_num_dummies(cmd);
--
--        /*
--         * No dummy cycles are expected with the current command. Turn
--         * off snooping and let the transfer proceed normally.
--         */
--        if (ndummies <= 0) {
--            s->snoop_index = SNOOP_OFF;
--            return false;
--        }
--
--        s->snoop_dummies = ndummies * 8;
--
--    } else if (s->snoop_index >= addr_width + 1) {
--
--        /* The SPI transfer has reached the dummy cycles sequence */
--        for (; s->snoop_dummies; s->snoop_dummies--) {
--            ssi_transfer(s->spi, s->regs[R_DUMMY_DATA] & 0xff);
--        }
--
--        /* If no more dummy cycles are expected, turn off snooping */
--        if (!s->snoop_dummies) {
--            s->snoop_index = SNOOP_OFF;
--        } else {
--            s->snoop_index += size;
--        }
--
--        /*
--         * Dummy cycles have been faked already. Ignore the current
--         * SPI transfer
--         */
--        return true;
--    }
--
--    s->snoop_index += size;
--    return false;
--}
--
- static MemTxResult aspeed_smc_flash_write(void *opaque, hwaddr addr,
-                                    uint64_t data, unsigned size, MemTxAttrs attrs)
- {
-@@ -652,10 +551,6 @@ static MemTxResult aspeed_smc_flash_write(void *opaque, hwaddr addr,
- 
-     switch (aspeed_smc_flash_mode(fl)) {
-     case CTRL_USERMODE:
--        if (aspeed_smc_do_snoop(fl, data, size)) {
--            break;
--        }
--
-         for (i = 0; i < size; i++) {
-             ssi_transfer(s->spi, (data >> (8 * i)) & 0xff);
-         }
-@@ -717,7 +612,6 @@ static void aspeed_smc_flash_update_ctrl(AspeedSMCFlash *fl, uint32_t value)
-     s->regs[s->r_ctrl0 + fl->cs] = value;
- 
-     if (unselect != s->unselect) {
--        s->snoop_index = unselect ? SNOOP_OFF : SNOOP_START;
-         aspeed_smc_flash_do_select(fl, unselect);
-     }
- }
-@@ -763,9 +657,6 @@ static void aspeed_smc_reset_hold(Object *obj, ResetType type)
-         aspeed_smc_flash_set_segment_region(s, i,
-                     asc->segment_to_reg(s, &asc->segments[i]));
-     }
--
--    s->snoop_index = SNOOP_OFF;
--    s->snoop_dummies = 0;
- }
- 
- static MemTxResult aspeed_smc_read(void *opaque, hwaddr addr, uint64_t *data,
-@@ -1293,11 +1184,10 @@ static void aspeed_smc_realize(DeviceState *dev, Error **errp)
- static const VMStateDescription vmstate_aspeed_smc = {
-     .name = "aspeed.smc",
-     .version_id = 3,
--    .minimum_version_id = 2,
-+    .minimum_version_id = 1,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32_ARRAY(regs, AspeedSMCState, ASPEED_SMC_R_MAX),
--        VMSTATE_UINT8(snoop_index, AspeedSMCState),
--        VMSTATE_UINT8(snoop_dummies, AspeedSMCState),
-+        VMSTATE_UNUSED_V(2, 2), /* was snoop_index/snoop_dummies */
-         VMSTATE_BOOL_V(unselect, AspeedSMCState, 3),
-         VMSTATE_END_OF_LIST()
-     }
-diff --git a/hw/ssi/trace-events b/hw/ssi/trace-events
-index 2f36cf96b8..b9d8648297 100644
---- a/hw/ssi/trace-events
-+++ b/hw/ssi/trace-events
-@@ -2,7 +2,6 @@
- 
- aspeed_smc_flash_set_segment(int cs, uint64_t reg, uint64_t start, uint64_t end) "CS%d segreg=0x%"PRIx64" [ 0x%"PRIx64" - 0x%"PRIx64" ]"
- aspeed_smc_flash_read(int cs, uint64_t addr,  uint32_t size, uint64_t data, int mode) "CS%d @0x%" PRIx64 " size %u: 0x%" PRIx64" mode:%d"
--aspeed_smc_do_snoop(int cs, int index, int dummies, int data) "CS%d index:0x%x dummies:%d data:0x%x"
- aspeed_smc_flash_write(int cs, uint64_t addr,  uint32_t size, uint64_t data, int mode) "CS%d @0x%" PRIx64 " size %u: 0x%" PRIx64" mode:%d"
- aspeed_smc_read(uint64_t addr,  uint32_t size, uint64_t data) "@0x%" PRIx64 " size %u: 0x%" PRIx64
- aspeed_smc_dma_checksum(uint32_t addr, uint32_t data) "0x%08x: 0x%08x"
--- 
-2.34.1
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
