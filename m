@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE7FAC43602
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:47:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36445C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:48:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weZjr-0005yA-Qk; Tue, 30 Jun 2026 10:47:03 -0400
+	id 1weZkh-0006W1-Je; Tue, 30 Jun 2026 10:47:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1weZjp-0005xl-RT
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:47:01 -0400
-Received: from smtpout7.mo538.mail-out.ovh.net ([51.210.91.36])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1weZkf-0006UZ-GB
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:47:53 -0400
+Received: from smtpout6.mo537.mail-out.ovh.net ([51.210.91.25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1weZjn-0006gh-QK
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:47:01 -0400
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net [152.228.215.222])
- by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4gqQw15RVhz5x9Z;
- Tue, 30 Jun 2026 14:46:57 +0000 (UTC)
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net. [127.0.0.1])
- by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alistair@alistair23.me>; Tue, 30 Jun 2026 14:46:57 +0000 (UTC)
-Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.249.67])
- by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4gqQw143msz5vMf; Tue, 30 Jun 2026 14:46:57 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.1])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1weZkc-0006vK-9P
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:47:51 -0400
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [51.210.158.128])
+ by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4gqQwz4BNFz3yw6;
+ Tue, 30 Jun 2026 14:47:47 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <danielhb413@gmail.com>; Tue, 30 Jun 2026 14:47:47 +0000 (UTC)
+Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.242])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4gqQwz18nxz60Mw; Tue, 30 Jun 2026 14:47:47 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.3])
  (Authenticated sender: clg@kaod.org)
  by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 1FC642403D11; Tue, 30 Jun 2026 14:46:56 +0000 (UTC)
+ DD83F2403C7E; Tue, 30 Jun 2026 14:47:44 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-98R0025807b073-d847-4323-ad22-fd12fd4f6b59,
+ (GARM-95G001c6bb933f-c171-45ee-b63e-b28d557242f3,
  C9F07EB534A46111D337A1875201B4A1724CF27E) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <0964b84f-0f60-4909-9c60-ad715227a6ed@kaod.org>
-Date: Tue, 30 Jun 2026 16:46:55 +0200
+Message-ID: <752e7645-816b-4b8c-9bff-abfde0ea3451@kaod.org>
+Date: Tue, 30 Jun 2026 16:47:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] Revert "aspeed/smc: snoop SPI transfers to fake
- dummy cycles"
-To: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
-Cc: Alistair Francis <alistair@alistair23.me>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- qemu-arm@nongnu.org
-References: <20260630135729.466264-1-bin.meng@processmission.com>
- <20260630135729.466264-10-bin.meng@processmission.com>
+Subject: Re: [PATCH v5 0/9] pnv/phb5: Update PHB4 to the latest PHB5 spec
+To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, mst@redhat.com
+Cc: harshpb@linux.ibm.com, npiggin@gmail.com, fbarrat@linux.ibm.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
+ kowal@linux.ibm.com, chalapathi.v@linux.ibm.com, calebs@linux.ibm.com,
+ milesg@linux.ibm.com, jishnuvw@linux.ibm.com, adityag@linux.ibm.com,
+ amachhiw@linux.ibm.com
+References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
+ <d58ee809-02b3-49be-b927-eacf2da8bfb5@linux.vnet.ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -97,28 +96,29 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260630135729.466264-10-bin.meng@processmission.com>
+In-Reply-To: <d58ee809-02b3-49be-b927-eacf2da8bfb5@linux.vnet.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 15483656996531186902
+x-ovh-tracer-id: 15497730743525813393
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGgDKSxq8nrtCdtp3KJ3JdAucwsroXHWwkX8RobovTQuBBkUPE1X/a959BYlM2N202h45nX0D6TP8QYmKmRhPIASCeWvwpYyjsy9Z4Iib7MxjMEsgwYxFY0T2+RZJoctqKsqbBSq0zjjqS0+bzhg/VIOp4PVSTPKsjOoadGEi7sUSw3ppupZrfkLqhyAIQzNmaF9w4dnMZedCO8tv8POrrTUGnEwBma4LC4/q5/2HJojvBfoAtErm9+3gc72ldPOCj5Kxq8z4SIOtDAx+dDsJ51cHCC85hTCG7jFkHDUO7Ps2ZH83BNLbxNPU65RHX8FZHvEsIGUGCI+gMxr3vBi6vFTm7cEiT+YVFBEvQ3ML0IVqNusFCES1IEuuF/Y6y8OnckKgqBWkLHDuHLx9qe7cRTk+SYuKmOEysveTN6zKVEKIoH7FlwcWsZQYjPspJj/VXSE+0xeXT0iwNAZIeAMOtaBt2mhCtJfwHGSFAqRJwtYR26i3CiR82qbYfZEiAXZacOdtxUHcKPDL8UNw39ZsitU2kRNBK6JXFT+aZN3AAomXbXl93aJbArIuY1NBhKz7vKaZPCA4xMExQH2ypAzkTk9yBVV8rj1nJWQHGsjmYHUd5njwzgA7XNjOwXW/vHyUSxvY5T/+stuMO+OmKLqbA6TOrpRCRJea7Yy4Sw72MUWA
-DKIM-Signature: a=rsa-sha256; bh=gSa3E6CuWV95gDaxb2Jjzne5uTE5iKaN7+MWEpSVpjo=; 
+X-VR-SPAMCAUSE: dmFkZTFFhL1THFxwX0LQ/ecAPJ/7sXa92PIbFPIcF9Ukf5TFC4T/hYmoHmbeEK2q7mO+/wZc5Ep7O9CDjwydtRNsp3ssTkGEKZlW76F5448+h2bkxcwF+FwjsUlb8rQafzEbPwvWz6jFqioA6jjxF7lUSwVgEypxXfhKjc7excDOgNoa94ZYJWmRSbiFBa4tx8Or19KqBwFBHJ7drLMePasTcZNxTr6FZ9H54eE+g5ztCy3R/tfQfvdkmQlWVC/iSB/i756WC2cxfD/r1ud6nZLYVxJWOcRoM9lYOUkZ4iB0HJZR7pvmtulsC/WdwKSrYXd0vPNnW8s5MTqlvVsUu6AVLENleQx+Jw84KmU5NgwpjD6CL9+SXEi+hpbhQ2+CDvUqisULG7lUUp7wg2TuZOKWrImG9IzZwZxk8a96BVV09uFwpK+8XenteKU0t5yxZEtlvnyBQ/3zM5wpmnT7Xma07lSyxkp3JaGmk1/W+dzCdRTwQilKYr4XErHjTL0yPo30xbFSOM8P32lR90nZbLZJwfhEzL3mr07Y2G/jmvdyt5+jqFQ8Q6j4kNNpsm4noWADyw2wPF5WoLwN1uKtrB2VjDB9JkXcHD0F7pqR0+uPdlWdA2IgL+dxh7Mh9kSE7E5tNlX9hdbrK4veDCm2Jb362zjIhykvpklQJ8gGQqM+hcSvSA
+DKIM-Signature: a=rsa-sha256; bh=is/2fL0TeVagAyrfMMgGCc2Pc/iAS1UsDusm6HmzqZc=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1782830817; v=1;
- b=ATFn7S0lM03S2VpKO03BDhMy7YFvLfZZcBMa0Bpzsz5sypX/fmOm4FzHDHDSIMi5GD8QWPTY
- W32fMN9CUYwU1VzWEj/8Zc5vAF7kOUP2GFIme4IVA3r+UWMMX58pDnaBvsRjoQowR+qNVw9+oni
- ss+UYNqP5VbzO4UUGjohGS3kYgEToxMFJ5IoVPK5Wre8H2DiYKv0IzeKKspd8YL2P9fQd/0q2oC
- KbfF0PcXF6EtWnVsmcvSk0fm0nSdTuozOZe6680Vo6L4QDBdcN6HTMdvsgFUJJtP+cP2lh/CNcQ
- gpX5OrRdOANEO9jhUaLQ1jPpZaOn15DPCTX1MBY8Vzpjg==
-Received-SPF: pass client-ip=51.210.91.36; envelope-from=clg@kaod.org;
- helo=smtpout7.mo538.mail-out.ovh.net
+ t=1782830868; v=1;
+ b=iFUilq9rIdbCCV5UKYNZ4dtMen1zPybz/A3xJ8tJsgeL6LD4+o2SDo1Kzv/533MYqXyX/jNj
+ cmolTAceonYXbdLHwYSdpfoMZKpf8N1Q2/CMQKianhyN8a+rbRYDK5f4lZ1d4KiLDjyXS8nbHoz
+ qtHbSNxreuphh18pFZqYj9knU0wVOCDAh6R1+glc1rs/pSNbvXv4mj0FlEBUuemUAXcCGuapZUR
+ M9hUSkCw0Hmal3bAWFuXUihR21/kKxzch5evXZ0dUweh8oh6JVMZYZ2IdwsQW+BxW+pfcP3EWhF
+ 58d8CIb+O8EA7SKsTrF+r1K7wpZim6lOkQGgxwCWAb3rQ==
+Received-SPF: pass client-ip=51.210.91.25; envelope-from=clg@kaod.org;
+ helo=smtpout6.mo537.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -135,219 +135,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/30/26 15:57, Bin Meng wrote:
-> This reverts commit f95c4bffdc4c53b29f89762cab4adc5a43f95daf.
+On 6/30/26 12:22, Saif Abrar wrote:
+> Hello Cedric, Michael,
 > 
-> The m25p80 model now accounts for fast-read dummy bytes in its
-> command decoder. In ASPEED SMC model user mode, guest software
-> already sends the complete byte stream, including any dummy
-> bytes needed by the flash. Hence the model should just forward
-> exactly the bytes supplied by the guest without the need of
-> decoding guest-supplied flash op codes to inject extra dummy
-> transfers.
-> 
-> Signed-off-by: Bin Meng <bin.meng@processmission.com>
-> ---
-> 
->   include/hw/ssi/aspeed_smc.h |   2 -
->   hw/ssi/aspeed_smc.c         | 114 +-----------------------------------
->   hw/ssi/trace-events         |   1 -
->   3 files changed, 2 insertions(+), 115 deletions(-)
-> 
-> diff --git a/include/hw/ssi/aspeed_smc.h b/include/hw/ssi/aspeed_smc.h
-> index 76831422c6..a273365689 100644
-> --- a/include/hw/ssi/aspeed_smc.h
-> +++ b/include/hw/ssi/aspeed_smc.h
-> @@ -80,8 +80,6 @@ struct AspeedSMCState {
->   
->       AspeedSMCFlash flashes[ASPEED_SMC_CS_MAX];
->   
-> -    uint8_t snoop_index;
-> -    uint8_t snoop_dummies;
->       bool unselect;
->   };
->   
-> diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-> index c2a732664b..287a46eef3 100644
-> --- a/hw/ssi/aspeed_smc.c
-> +++ b/hw/ssi/aspeed_smc.c
-> @@ -197,9 +197,6 @@
->   /* Flash opcodes. */
->   #define SPI_OP_READ       0x03    /* Read data bytes (low frequency) */
->   
-> -#define SNOOP_OFF         0xFF
-> -#define SNOOP_START       0x0
-> -
->   /*
->    * Default segments mapping addresses and size for each peripheral per
->    * controller. These can be changed when board is initialized with the
-> @@ -537,104 +534,6 @@ static MemTxResult aspeed_smc_flash_read(void *opaque, hwaddr addr,
->       return MEMTX_OK;
->   }
->   
-> -/*
-> - * TODO (clg@kaod.org): stolen from xilinx_spips.c. Should move to a
-> - * common include header.
-> - */
-> -typedef enum {
-> -    READ = 0x3,         READ_4 = 0x13,
-> -    FAST_READ = 0xb,    FAST_READ_4 = 0x0c,
-> -    DOR = 0x3b,         DOR_4 = 0x3c,
-> -    QOR = 0x6b,         QOR_4 = 0x6c,
-> -    DIOR = 0xbb,        DIOR_4 = 0xbc,
-> -    QIOR = 0xeb,        QIOR_4 = 0xec,
-> -
-> -    PP = 0x2,           PP_4 = 0x12,
-> -    DPP = 0xa2,
-> -    QPP = 0x32,         QPP_4 = 0x34,
-> -} FlashCMD;
-> -
-> -static int aspeed_smc_num_dummies(uint8_t command)
-> -{
-> -    switch (command) { /* check for dummies */
-> -    case READ: /* no dummy bytes/cycles */
-> -    case PP:
-> -    case DPP:
-> -    case QPP:
-> -    case READ_4:
-> -    case PP_4:
-> -    case QPP_4:
-> -        return 0;
-> -    case FAST_READ:
-> -    case DOR:
-> -    case QOR:
-> -    case DOR_4:
-> -    case QOR_4:
-> -        return 1;
-> -    case DIOR:
-> -    case FAST_READ_4:
-> -    case DIOR_4:
-> -        return 2;
-> -    case QIOR:
-> -    case QIOR_4:
-> -        return 4;
-> -    default:
-> -        return -1;
-> -    }
-> -}
-> -
-> -static bool aspeed_smc_do_snoop(AspeedSMCFlash *fl,  uint64_t data,
-> -                                unsigned size)
-> -{
-> -    AspeedSMCState *s = fl->controller;
-> -    uint8_t addr_width = aspeed_smc_flash_addr_width(fl);
-> -
-> -    trace_aspeed_smc_do_snoop(fl->cs, s->snoop_index, s->snoop_dummies,
-> -                              (uint8_t) data & 0xff);
-> -
-> -    if (s->snoop_index == SNOOP_OFF) {
-> -        return false; /* Do nothing */
-> -
-> -    } else if (s->snoop_index == SNOOP_START) {
-> -        uint8_t cmd = data & 0xff;
-> -        int ndummies = aspeed_smc_num_dummies(cmd);
-> -
-> -        /*
-> -         * No dummy cycles are expected with the current command. Turn
-> -         * off snooping and let the transfer proceed normally.
-> -         */
-> -        if (ndummies <= 0) {
-> -            s->snoop_index = SNOOP_OFF;
-> -            return false;
-> -        }
-> -
-> -        s->snoop_dummies = ndummies * 8;
-> -
-> -    } else if (s->snoop_index >= addr_width + 1) {
-> -
-> -        /* The SPI transfer has reached the dummy cycles sequence */
-> -        for (; s->snoop_dummies; s->snoop_dummies--) {
-> -            ssi_transfer(s->spi, s->regs[R_DUMMY_DATA] & 0xff);
-> -        }
-> -
-> -        /* If no more dummy cycles are expected, turn off snooping */
-> -        if (!s->snoop_dummies) {
-> -            s->snoop_index = SNOOP_OFF;
-> -        } else {
-> -            s->snoop_index += size;
-> -        }
-> -
-> -        /*
-> -         * Dummy cycles have been faked already. Ignore the current
-> -         * SPI transfer
-> -         */
-> -        return true;
-> -    }
-> -
-> -    s->snoop_index += size;
-> -    return false;
-> -}
-> -
->   static MemTxResult aspeed_smc_flash_write(void *opaque, hwaddr addr,
->                                      uint64_t data, unsigned size, MemTxAttrs attrs)
->   {
-> @@ -652,10 +551,6 @@ static MemTxResult aspeed_smc_flash_write(void *opaque, hwaddr addr,
->   
->       switch (aspeed_smc_flash_mode(fl)) {
->       case CTRL_USERMODE:
-> -        if (aspeed_smc_do_snoop(fl, data, size)) {
-> -            break;
-> -        }
-> -
->           for (i = 0; i < size; i++) {
->               ssi_transfer(s->spi, (data >> (8 * i)) & 0xff);
->           }
-> @@ -717,7 +612,6 @@ static void aspeed_smc_flash_update_ctrl(AspeedSMCFlash *fl, uint32_t value)
->       s->regs[s->r_ctrl0 + fl->cs] = value;
->   
->       if (unselect != s->unselect) {
-> -        s->snoop_index = unselect ? SNOOP_OFF : SNOOP_START;
->           aspeed_smc_flash_do_select(fl, unselect);
->       }
->   }
-> @@ -763,9 +657,6 @@ static void aspeed_smc_reset_hold(Object *obj, ResetType type)
->           aspeed_smc_flash_set_segment_region(s, i,
->                       asc->segment_to_reg(s, &asc->segments[i]));
->       }
-> -
-> -    s->snoop_index = SNOOP_OFF;
-> -    s->snoop_dummies = 0;
->   }
->   
->   static MemTxResult aspeed_smc_read(void *opaque, hwaddr addr, uint64_t *data,
-> @@ -1293,11 +1184,10 @@ static void aspeed_smc_realize(DeviceState *dev, Error **errp)
->   static const VMStateDescription vmstate_aspeed_smc = {
->       .name = "aspeed.smc",
->       .version_id = 3,
-> -    .minimum_version_id = 2,
-> +    .minimum_version_id = 1,
->       .fields = (const VMStateField[]) {
->           VMSTATE_UINT32_ARRAY(regs, AspeedSMCState, ASPEED_SMC_R_MAX),
-> -        VMSTATE_UINT8(snoop_index, AspeedSMCState),
-> -        VMSTATE_UINT8(snoop_dummies, AspeedSMCState),
-> +        VMSTATE_UNUSED_V(2, 2), /* was snoop_index/snoop_dummies */
->           VMSTATE_BOOL_V(unselect, AspeedSMCState, 3),
->           VMSTATE_END_OF_LIST()
->       }
-> diff --git a/hw/ssi/trace-events b/hw/ssi/trace-events
-> index 2f36cf96b8..b9d8648297 100644
-> --- a/hw/ssi/trace-events
-> +++ b/hw/ssi/trace-events
-> @@ -2,7 +2,6 @@
->   
->   aspeed_smc_flash_set_segment(int cs, uint64_t reg, uint64_t start, uint64_t end) "CS%d segreg=0x%"PRIx64" [ 0x%"PRIx64" - 0x%"PRIx64" ]"
->   aspeed_smc_flash_read(int cs, uint64_t addr,  uint32_t size, uint64_t data, int mode) "CS%d @0x%" PRIx64 " size %u: 0x%" PRIx64" mode:%d"
-> -aspeed_smc_do_snoop(int cs, int index, int dummies, int data) "CS%d index:0x%x dummies:%d data:0x%x"
->   aspeed_smc_flash_write(int cs, uint64_t addr,  uint32_t size, uint64_t data, int mode) "CS%d @0x%" PRIx64 " size %u: 0x%" PRIx64" mode:%d"
->   aspeed_smc_read(uint64_t addr,  uint32_t size, uint64_t data) "@0x%" PRIx64 " size %u: 0x%" PRIx64
->   aspeed_smc_dma_checksum(uint32_t addr, uint32_t data) "0x%08x: 0x%08x"
+> Is it OK to retain you Rbs in the next v6?
 
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+yes. I took a look.
 
 Thanks,
 
 C.
 
+
+> 
+> or would you like to review this v5? (as the patches have evolved since you last reviewed.)
+> 
+> Regards,
+> 
+> Saif
+> 
+> 
+> On 17-06-2026 15:20, Saif Abrar wrote:
+>> Hello,
+>> This patchset resolves the review comments for v4:
+>> https://lore.kernel.org/qemu-devel/20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com/
+>>
+>> Thanks to all the reviewers for their efforts.
+>>
+>> Major updates include the following:
+>> - Rename to phb5.
+>> - New file for common definitions used in tests/qtest/pnv-* files.
+>> - Initializing PnvPHB4Class members within class_init method.
+>> - Updated IODA3 PCT table max size to 128, each with 2 entries.
+>> - Multiple general cleanups.
+>>
+>> Tested with 'make check-qtest' , 'make check-functional-ppc64' and 'make check'.
+>>
+>> Regards.
+>>
+>> Saif Abrar (9):
+>>    qtest/phb5: Add testbench for PHB
+>>    pnv/phb5: Add reset logic to PHB5
+>>    pnv/phb5: Implement sticky reset logic in PHB5
+>>    pnv/phb5: Implement read-only and write-only bits of registers
+>>    pnv/phb5: Implement write-clear and return 1's on unimplemented reg
+>>      read
+>>    pnv/phb5: Set link-active status in HPSTAT and LMR registers
+>>    pnv/phb5: Set link speed and width in the DLP training control
+>>      register
+>>    pnv/phb5: Implement IODA PCT table
+>>    pnv/phb5: Mask off LSI Source-ID based on number of interrupts
+>>
+>>   hw/pci-host/pnv_phb.c               |   1 +
+>>   hw/pci-host/pnv_phb4.c              | 581 +++++++++++++++++++++++++---
+>>   include/hw/pci-host/pnv_phb4.h      |  16 +-
+>>   include/hw/pci-host/pnv_phb4_regs.h |  66 +++-
+>>   tests/qtest/meson.build             |   1 +
+>>   tests/qtest/pnv-host-i2c-test.c     |  13 +-
+>>   tests/qtest/pnv-phb-test.c          | 235 +++++++++++
+>>   tests/qtest/pnv-qtest-common.h      |  24 ++
+>>   tests/qtest/pnv-xive2-common.h      |   7 +-
+>>   9 files changed, 868 insertions(+), 76 deletions(-)
+>>   create mode 100644 tests/qtest/pnv-phb-test.c
+>>   create mode 100644 tests/qtest/pnv-qtest-common.h
+>>
 
 
