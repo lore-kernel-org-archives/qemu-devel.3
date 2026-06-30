@@ -4,141 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBD58C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:22:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 258B2C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:32:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weZMB-0006kC-W4; Tue, 30 Jun 2026 10:22:36 -0400
+	id 1weZUe-0000db-LN; Tue, 30 Jun 2026 10:31:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1weZMA-0006k3-F9
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:22:35 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1weZM8-0006TR-J4
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:22:34 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65UEDD2H2213505
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 14:22:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- r82B7kdGtgmJkzg9AZKk8BwpTG49cZuth6pj0JTPkUU=; b=mQvEvB5j8eX5Xjx6
- 1AzLcblacBxlvCs0F6Ku5TtuURdc6/jbyrzK6R6KR57SJGxJ+Ycl0swPmPpYS4RC
- NH99exv61zxvqJbLLThBs07Bx4JMGZfDjPG09TN8Hnkp5Q9tgZWSkRKLBUDqau9/
- rxEuw03ZFWFvBrzGQAK337iogv3x1ZBzjaGWtCou2KUHyGEoUXDA9OAjNHOJNrvd
- e2lMOdYB8l2VNH4jJCKdGZcOt9QpiEhUotIlGcvfwBP1nQsOTx1oACY9WV+hXVvO
- X3UxqeTTEpzMlup12KfjQ5GYqohP4pswvQl/EacUvXs+wnHfh1jbBLZFwZPwDDu6
- PsBVJw==
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
- [209.85.217.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f462fjp08-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 14:22:30 +0000 (GMT)
-Received: by mail-vs1-f71.google.com with SMTP id
- ada2fe7eead31-737f663b020so1546408137.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 07:22:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1weZUa-0000dA-OI
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:31:16 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1weZUY-0000lV-Gc
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:31:16 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2c9b42be8feso27467435ad.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 07:31:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782829349; x=1783434149; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1782829871; x=1783434671; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=r82B7kdGtgmJkzg9AZKk8BwpTG49cZuth6pj0JTPkUU=;
- b=MFplY2FA7neUzzFm87Kl2iau6pSj8SxkXtngEGZBeEtO3kmUEW4whahkM9bguJrHEm
- xgWp85OemHJMnZpuViGpm/1V2bEZNN7NEr1lO8yzC1yz0BaEtPiSBPEeMzTjH1pg2AXp
- 2XBf7Btga/haHH/ur5mMldK09E9QhlMXfBZxBVQgYjIoAJArv2os4GkK3kDgNCoyY1ci
- r21G/fN/h/5yCPUdBVnP9I46Of/w81tE3r0SckE7dZlgYVV3nyusHa+A41hEYKREhsSi
- E/9bx6pw3qUTcqnGtV3tWF6XnZkiOiBc0kKqobdjpbYFPIivAeiZvNfDyxhLt+4EvcVH
- STdQ==
+ bh=4SYKXqQbYYwS3K02zbSGADcDZzlKLU+Sb2cmDV+qFjE=;
+ b=JWlErBFYjBq5Ko3WYgh6T1wXGCfQxjDrom1j2KcuRstbahbrUm6rJ7VWWASikJfOTd
+ watiwgaZO/+9DMXI8IAumCrlLcRmYGJJ8eEnswq7k9HKks7dXOMzraABdRfbpy0at2oP
+ q9DO6ISzdwq9j6krlQiwekDWEfCCXv3+b/Rcx6Uc/zJSiGWrD6Haorng+kKxydC8utsR
+ d7BcVYf74LAKajL3NIFX1A39c66hqvC5IM/KhIuxy6BEnXZ9Obn9MQCugMRrTaokhOhK
+ kctf5ApIVuW/8KaQ4UhC+f0kUupyGME9NOP8oQWq7hZrlfy015LlxUsEgqYtINAMBldA
+ N15w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782829349; x=1783434149;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1782829871; x=1783434671;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=r82B7kdGtgmJkzg9AZKk8BwpTG49cZuth6pj0JTPkUU=;
- b=sDjndF5ZKoHkE8z+RF2vB3Qq/mRA1FpcSTMxKodmulYoTHEd5XEmJfTA/HBQ/Oxi6F
- e8BblGMci7wxOWGjgoZieT+irMvNebsBsbI+6PgrUK4wyJmlfUktsawea8AGJ7H4MSqv
- zKHzwWnYi9vxttYec8mBUhYjUONnuAQO/gQKWu9Zr92TjODetKuiLi+7PGEDi+HZkcmu
- l/rycFzCM0nSaHcWAvypolzVn1I1WyqAxdWHljTf1VOZ3x/ItuyZHp+Ev4afOq47I7fO
- NXBhR2+C4rx72LDTL8djl2aDh1EXWyDHDUaah0XROhD2suM5AbzCKv+lai2mlB3RqkY6
- wIYg==
+ bh=4SYKXqQbYYwS3K02zbSGADcDZzlKLU+Sb2cmDV+qFjE=;
+ b=W9hLkRaJgjGDx6edf1LYKbSVGgRgmNYV4Jsuw43DwhW7i16Uz6pet7Tbp39/Ha7m+n
+ u1zqnoaO7IWclgvNr8plYsHh5qpflXoEDIR7qa8sRmnb4YyYQgx43aOLMUHqG/SMljqG
+ lR5bJ4eLKzIZ4Bcv6RiwkTk5YxlYiAODV+8cRp43D4s/SU12tnYnYof36yA6EJpUqRTp
+ hnhmm+YmEfQG985tkYYrBFhpjgr2ZFn70Ghh2cipJHqswZKir4Uykw9736Cx7h9eyEzv
+ NCfomG7REN7hLFg1tvybM3jFUhqQ27AZ4Vh8dNjKTXLjeY15WsRVuZl69qedsvbGyDp6
+ J3XQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqsHAYxwvkroROBcnogySSwS4dw8iU8mVi0cSAuiiNsbx6SMzP0AkO5o1FmfBXUbLHbj6Vj/K9Pvk6i@nongnu.org
-X-Gm-Message-State: AOJu0Ywx48BPQq4dEV9fpVoBOjLvm4HQPERZYOrHLqDjJHuQBXA/096a
- wHzdDqyT9uL1lrfg77oK0Ue1iw/2NdqqAYIbFQ3CfyVFQsBDqCXRdTH49yc1/UE3CWB6mJZw1op
- +rHii78+ssA3yihzjelyCR35A0hQCtHweQUnYwy7FxT5V8BpuPQeVhi6YpL2WYvaVRA==
-X-Gm-Gg: AfdE7clzDgZN1Gq6AoIB2TxwAn4fWl7kfARmLJQgQncgFg2Rr8EKloTFni7Z4mlz6Qg
- kTD24wBJzHn5e7gfXKz7MRvHe5BNoKAKLfUK5UEnhxPR9LNL2N+LCfnT6TvT/t6gIrJaFG/NgvJ
- pvfgm7GW+TvEoQFqH9OETD3UpmoGAEi2fABo7u0YJbyADECJsyKQKwG+oms4K6N6YUWmDKf4Wla
- C/t4dCmU7qAG4Fw2fqFMkxs+alYKES+iKVX6Rraobaw6+gOpa8advoL5vTUsSCn4GH8e+qn5zmw
- N0korzMnqIkEei66wNiS4vAEVyoPwOXsX37UL7Ik0M/s35pDBBj6mTdXkNM99rlsTM8566j1sm/
- 61LyF1nyML6FXLaSkoGD0nZvEOSf5jOZ3dGjoJJiuaoORew881hUXoaHpbsIwSQ==
-X-Received: by 2002:a05:6102:8022:b0:738:be73:55e9 with SMTP id
- ada2fe7eead31-73cb894e386mr312970137.12.1782829349258; 
- Tue, 30 Jun 2026 07:22:29 -0700 (PDT)
-X-Received: by 2002:a05:6102:8022:b0:738:be73:55e9 with SMTP id
- ada2fe7eead31-73cb894e386mr312960137.12.1782829348834; 
- Tue, 30 Jun 2026 07:22:28 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47560effc81sm8305952f8f.0.2026.06.30.07.22.27
+ AHgh+RqVt5iO9bPxo9inIoRINwd6of9VjR0vqfERpjbplOU8H3FqNsaxkvA5cEFQzjTjMGR4RzkgC5IR+Mah@nongnu.org
+X-Gm-Message-State: AOJu0Yw2WGRAcoUFdvL07eW3eVanO/KQBwEMnLMQ8dpyejxTJSGndc63
+ SvTPdsqxJVISfOUqfLl0c0j6wwltUGOc3GjZIynqTcAyOKAC3FkVD0vjiY0Kf058noQ=
+X-Gm-Gg: AfdE7cnnb9Lp8CEqADyp7f6iunf/+oGZFThDjrTOdq94WT7//9BVpma8uyDYLS4CXht
+ 93beR22VJimH3yItraY9C9bZ5roxPgcXqVlh7lRvGhLhOPiC4v45eWY+Z/hSM2tD/1V3M/XYk8W
+ n+2IXLxiPJhbIbyz7etQtpW5LM7DW+JyYCT0Cz3iWr48383iUtJp/SRZR68CHTvzNscv78UvnkR
+ yUL2c5m6RnueLa+9FPGqZ26tDXiCV+GCS7kdJP8HWb7C4FU1ZdtDWsg5VcBW1nNSsxZlevpNoaK
+ o+dixVGT845K2Odx3NX1cH1Bj55h74XVtD5bYZldcYCzcN3AtE/Rc4h+k9RdQnCUQnZQKYTjejQ
+ d/Q+cnnMwLqKZJwgkyX3H8xzQCVo44W77ViMaoRNeSMy8L+b63c/9buhbUU9ntwo1+07nbrCUrF
+ JXDC9Z6wFMTgf7UHEx/o6km6xG2ryi5HDL2r9UM7J4gkrc+TmQ9VOUOFD09GBEU/eyYy6d
+X-Received: by 2002:a17:902:d2c1:b0:2c9:9a19:10c with SMTP id
+ d9443c01a7336-2ca2ea2393emr32291045ad.40.1782829871361; 
+ Tue, 30 Jun 2026 07:31:11 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ca382c5c48sm15185045ad.78.2026.06.30.07.31.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jun 2026 07:22:27 -0700 (PDT)
-Message-ID: <9b5b0e92-4d07-422d-b8d9-247781afd0a8@oss.qualcomm.com>
-Date: Tue, 30 Jun 2026 16:22:26 +0200
+ Tue, 30 Jun 2026 07:31:10 -0700 (PDT)
+Message-ID: <f0662290-e441-43a0-81b5-a9210f90096d@linaro.org>
+Date: Tue, 30 Jun 2026 07:31:08 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/scsi/mptsas: Reset doorbell state on reset
+Subject: Re: [PATCH v2] target/arm/hvf: seed NO_RAW ID registers from
+ isar.idregs[] on vCPU init
+To: Jason Wright <wrigjl@proton.me>, agraf@csgraf.de, peter.maydell@linaro.org
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, zenghui.yu@linux.dev,
+ philmd@oss.qualcomm.com
+References: <20260529114723.42040-1-peter.maydell@linaro.org>
+ <20260529114723.42040-18-peter.maydell@linaro.org>
+ <745e66c7-2a9b-4185-bae7-77e10623332b@linux.dev>
+ <20260607182221.4357-1-wrigjl@proton.me>
+ <20260629205213.82391-1-wrigjl@proton.me>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
-References: <20260629185035.2138238-1-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260629185035.2138238-1-peter.maydell@linaro.org>
+In-Reply-To: <20260629205213.82391-1-wrigjl@proton.me>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDEzMyBTYWx0ZWRfXzBEqBYqdXv+6
- +F+3TiJul085IhrFcRVJlSmBYUNKOLxFmGWm7LQUf0l0RIAcR+EQMXFJ0PS3hU4W4L+0E5+JGUR
- lly4/jFSJ7ThzapmJuibrFKFeLyoSHyKC6rqmrlLV7GpR0gXv4BmGRC/OXslOOgevybNyFObQDp
- a8WEXvP6rkdUhAGOuf/Pm0KM7m0OHKkKwAfRmXH4OEWJMcKH4bONtddD0yn5x9Xso3H2/HN0ohy
- 5onw757TfXO6kLGVgmIRg9PubQdO/JLNCmtCHvz/A18Aozwqcd53lKSEn68YLJV6ZaWfyaE/Syp
- 1+nBtGnGzkub3ruUE7ljaLnVPIeleDCsN4gMe4OBKNA/n02ZnLBydo6Ndb9EWaJh+KQG5C+c03S
- yQd3vpYyarZAtxC1XciULwIT1JfEBSHKcuSv9zJvaurnQgDE5j25eSEIlajoeEmbQMKaTLe2BQE
- ZMFlNkNewlAzKUuIiBg==
-X-Proofpoint-ORIG-GUID: rExsaElpe4rht3cQevdhAfklRkSzyVrN
-X-Authority-Analysis: v=2.4 cv=JqbBas4C c=1 sm=1 tr=0 ts=6a43d126 cx=c_pps
- a=P2rfLEam3zuxRRdjJWA2cw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=p0WdMEafAAAA:8 a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=BxYp5kjD7oKxsPU3rKwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=ODZdjJIeia2B_SHc_B0f:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: rExsaElpe4rht3cQevdhAfklRkSzyVrN
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDEzMyBTYWx0ZWRfX16nGBqVeRVM1
- WFbewCqNapBKRQaTBhMV2a/QxKD67Ud4QPnfTJxewGi0JMOCkiM4DwHEzqqisQp6F7tTmE8xxM4
- ZoYAAvct8K4b81LCg3pdtoW2ZlblOq0=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-30_04,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 bulkscore=0 adultscore=0 impostorscore=0
- suspectscore=0 phishscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300133
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,31 +110,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/6/26 20:50, Peter Maydell wrote:
-> Currently the mptsas reset function clears intr_status, but it
-> doesn't reset the doorbell state machine.  This means that the state
-> machine and the interrupt state get out of sync, and the guest can
-> trigger an assertion failure in mptsas_doorbell_read() where
-> s->doorbell_state is still DOORBELL_READ but s->intr_status does not
-> have MPI_HIS_DOORBELL_INTERRUPT set.
+On 6/29/26 13:52, Jason Wright wrote:
+> Commit 887eaa8a29 ("target/arm: implement FEAT_RNG_TRAP for RNDR/RNDRRS")
+> gave ID_AA64ISAR0_EL1 a readfn so the RNDR field can reflect SCR_EL3.TRNDR
+> at read time, and marked the cpreg ARM_CP_NO_RAW in the system-emulation
+> path.  HVF then trips its hvf_arch_init_vcpu() assertion that no ID
+> register in hvf_sreg_list[] is NO_RAW, aborting on boot on Apple Silicon:
 > 
-> Fix this by having reset also reset the doorbell state.  Strictly
-> speaking we don't need to also clear doorbell_reply_idx and
-> doorbell_reply_size, because those are only read when in
-> DOORBELL_READ state, and the code always sets them up before
-> transitioning into that state.  But it's less confusing to clear them
-> out on reset.
+>    Assertion failed: (!(ri->type & ARM_CP_NO_RAW)),
+>    function hvf_arch_init_vcpu, file hvf.c, line 1441.
 > 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/304
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Reproduce with:
+> 
+>    qemu-system-aarch64 -M virt,accel=hvf -cpu host \
+>                        -nographic -display none -bios /dev/null
+> 
+> Fix it the same way ID_AA64PFR0_EL1 already is: list
+> HV_SYS_REG_ID_AA64ISAR0_EL1 in the SYNC_NO_RAW_REGS block in sysreg.c.inc
+> so the assert loop skips it, and seed the vCPU's copy at init time.
+> 
+> While here, unify how the three isar.idregs[]-backed ID registers are
+> seeded.  isar.idregs[] already holds QEMU's intended value for each (the
+> host caps, probed once at realize via hv_vcpu_config_get_feature_reg(),
+> plus any QEMU adjustment), so there is no need to read each register back
+> from the vCPU first.  Seed PFR0, ISAR0 and MMFR0 directly from
+> isar.idregs[], dropping the two per-vCPU hv_vcpu_get_sys_reg() reads:
+> 
+>    - PFR0: take the GIC sysreg-interface bit from env->gicv3state, as the
+>      id_aa64pfr0_read() readfn does.  Identical to the previous code
+>      whenever a GICv3 sysreg interface is present (the configuration HVF
+>      runs in practice); it differs only in that a vCPU with no GICv3 now
+>      reports ID_AA64PFR0_EL1.GIC == 0 instead of inheriting the host's
+>      value, which matches the field's meaning.
+>    - ISAR0: no overlay is needed; HVF does not expose EL3, so
+>      SCR_EL3.TRNDR is never set and the readfn is constant.
+>    - MMFR0: still clamp PARANGE to the chosen IPA size, updating
+>      isar.idregs[] in place because the page-table walker and the
+>      ID_AA64MMFR0_EL1 cpreg resetvalue read PARANGE back from there.
+> 
+> Reported-by: Zenghui Yu<zenghui.yu@linux.dev>
+> Suggested-by: Peter Maydell<peter.maydell@linaro.org>
+> Fixes: 887eaa8a29 ("target/arm: implement FEAT_RNG_TRAP for RNDR/RNDRRS")
+> Signed-off-by: Jason Wright<wrigjl@proton.me>
 > ---
-> Disclaimer: this fixes the fuzzer repro case, and I have
-> run "make check" and "make check-functional", but I'm pretty
-> sure neither of those actually exercises the mptsas device...
-> ---
->   hw/scsi/mptsas.c | 4 ++++
->   1 file changed, 4 insertions(+)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
