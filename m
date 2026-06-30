@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BD51C44500
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BD16C43602
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 22:17:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weglG-0003gk-GX; Tue, 30 Jun 2026 18:16:58 -0400
+	id 1wegl0-0003dY-Pk; Tue, 30 Jun 2026 18:16:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
- id 1wegl0-0003db-JA
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:16:42 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1wegkz-0003cz-Au
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:16:41 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
- id 1wegkv-0000vP-NH
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:16:42 -0400
+ id 1wegkv-0000vM-Qu
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:16:40 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id B195E600FF;
+ by sea.source.kernel.org (Postfix) with ESMTP id 6F601409B6;
  Tue, 30 Jun 2026 22:16:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 65EDBC2BCF6;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 4AE53C2BCB9;
  Tue, 30 Jun 2026 22:16:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1782857768;
- bh=L6IISu+Ef5DMiwb6NE2E84F0pPZO0hJVnrXkzVidAic=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
- b=YfDI1e3k54vCpzwpHuMWjpcPb6AM+zyBTkHfwQUnhaT9zFC4XVspWLItk84OdHgYb
- v+DNvPFmMlaC2ce3hvLM3YzQufEUl8a11xnze6eiThPlgXnKh4Omm/GeQNFTjJPjK/
- mQ0ICIoToERmOui3exhC+dFsEdAhzdtDi4y9MQrT6dinfPEdwI9jbXirf3bK/SoUtp
- DaHErWDK2QWsf/67lCNFXkp12b9yVioeuQi4t955YqWqDO3l2s8qjrpdke0kllmgdE
- UIRhs9swmZyoUXLA4S3IKqMn86C9pEKlUuVxp13kUue9fGBlLqioFlrCFu4bUkCaTe
- p1Hxwxxn/ZN1g==
+ bh=Jnac3Vd6PcQZNcrRe2BiSO47pzYJgNbV2+RTOfGAG7I=;
+ h=From:Subject:Date:To:Cc:Reply-To:From;
+ b=nbAwTUnKvFuvXDX7ddFwe6bu4ZjNhXmy2zU9Vhi9m8yPeWkC2R+wu+pYo4lnbGdU+
+ bjqONzOrERvZ4BPZz5Rx+FZ1TQ55OuxEI7Go1KpIFaYAYjSx+maapXezRlIg37KJgu
+ B6aXtGwbpT6lSqMzS2SbwqO8fXj2Q3wWUP9/BYovPfrdxLn6CJ75ISFOmY4Et+FUlj
+ 56BPG+ofxrCuSJ8/K3wxXkfTs+Z7JSCRaIINgL8VwuZpQ2Cz+jmPGRC7ByryoqAExf
+ TuFL1ESwIRL2M1Yl+ibKuuS7/9SYaaDPD9cGJq1ZN+XlgZ89abQDjf8ISe/pwweGZU
+ CjW/j3kK9me2A==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org
  (localhost.localdomain [127.0.0.1])
- by smtp.lore.kernel.org (Postfix) with ESMTP id 5972EC43327;
+ by smtp.lore.kernel.org (Postfix) with ESMTP id 30DFDC43458;
  Tue, 30 Jun 2026 22:16:08 +0000 (UTC)
 From: Miao Wang via B4 Relay <devnull+shankerwangmiao.gmail.com@kernel.org>
-Date: Wed, 01 Jul 2026 06:15:57 +0800
-Subject: [PATCH 3/6] target/loongarch: gen_vreplve: Fix offset calculation
+Subject: [PATCH 0/6] target/loongarch: Fixes for endianness problems in
+ vector instruction emulation
+Date: Wed, 01 Jul 2026 06:15:54 +0800
+Message-Id: <20260701-loong64-be-v1-0-9c7d65e00697@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260701-loong64-be-v1-3-9c7d65e00697@gmail.com>
-References: <20260701-loong64-be-v1-0-9c7d65e00697@gmail.com>
-In-Reply-To: <20260701-loong64-be-v1-0-9c7d65e00697@gmail.com>
+X-B4-Tracking: v=1; b=H4sIABpARGoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDcwND3Zz8/Lx0MxPdpFTdxJQ0i0RDUzNz0zRDJaCGgqLUtMwKsGHRsbW
+ 1AKAknoVcAAAA
+X-Change-ID: 20260701-loong64-be-adf8a15675f1
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>,
  Richard Henderson <richard.henderson@linaro.org>,
  Miao Wang <shankerwangmiao@gmail.com>, b4-sent@kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1277;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2079;
  i=shankerwangmiao@gmail.com; s=20250715; h=from:subject:message-id;
- bh=bC5SqslKnEPRqmw7UZDsgSavAaNwn/tX4lGdinMQfiM=;
- b=owEBbQKS/ZANAwAKAbAx48p7/tluAcsmYgBqREAl3N+hxcxcq0u1qJyanEPHRKJo+Psrg6oJ7
- Py6YFFIKeSJAjMEAAEKAB0WIQREqPWPgPJBxluezBOwMePKe/7ZbgUCakRAJQAKCRCwMePKe/7Z
- bqqFD/90jfPSAFlcgay7PWLh0sTEnyfvqZ3J/xtOAcZudwA6HYfL5LNyaxiel/59YEn0tXeKobp
- fuL+sOnfcBbUXQApM1CkJMk6nhwgavHPw42s19O2ppEyWlgtimobR+sbGnHnoI8GP/guOyktqbz
- wGJqm6B51Fb389TIxaekNsZzaKNOGlHP+RevUvz4UHdYv3cLq/nwKnc9yIh6FlJR4ibOE7pgNBm
- W81WXW1Dr2V+YfHF693guguA/6gxahn0CivpOSxLF4QH0G5PyuCmjzCuepEPH3FUJaRNJWMm41u
- 8mH7kRV1R3xlm3m7I6n92UE5LQwKuR/p+5HU/NChSsW7/wV84xgVwxa7ow6TUyzafA5mFbMKa/r
- TZ2IZtLPS41GvWxaxxZO2KbVnBjZzFmCwgAE9msQh9Ipj56S2tNrP+9Xoh5Rr+Lt0ZDLCg7WmyB
- xBaLfc2Fn5UDAg+uRQGE3T/CXfKm4tZhXpcOZUNgcQ/FW8Q2ri8XEEqPyT/S4P4LVaOohdgqM6I
- xv8Af3tT3O6cOjOjZ9tMDAUeHvN1PwKBnuBWXJs1LAH3zXihrNYgpOr9XR8t3w/F6mtv96XLaBa
- qR2uIo8mY32V+Jmp6PiGTGN+oZoG1gipgYzlGMXaM2krF6LRah1/hCL6eoQYkteSE2KXryhXk/C
- qdhp74IYeghk3sA==
+ bh=Jnac3Vd6PcQZNcrRe2BiSO47pzYJgNbV2+RTOfGAG7I=;
+ b=owEBbQKS/ZANAwAKAbAx48p7/tluAcsmYgBqREAex2BVC3kw/lfZqZlNNiDPz2E4t0UUuggLg
+ NFVv1+819WJAjMEAAEKAB0WIQREqPWPgPJBxluezBOwMePKe/7ZbgUCakRAHgAKCRCwMePKe/7Z
+ buKhEAC8Z3FQm8oLIiC2K4tfioKYidmkdwU+AoJpNEl6sJfxtMIaymRjl8h+bDkTAnUPXbHVBcL
+ kDdlzs6gQdqxQbVLS+jhuRC2KX9MaS9zhzjmSgkFa/E37toERta3iWnhCJ7kerxupnUUm7oFx61
+ lalPS6ElXxa7HLCVkBOkBFmdnwKduMuRUt4LffNHYQ37i3bPua797t2ks7W3CtXl+CtofpxQ6u0
+ J6hv814ZfFdJuKqUD1pAw+S4ZNfoAA7EiS9BGsbgZA4m9H7W77O4oVQ0g/p0+dbnOwwEFIIUP6q
+ DwN4ciUmhWXwsU8RY5cLdposqr6afEUs0e7exOl8J9JpAlszd0tIF73taJ9dgc9er/MQylPe9pM
+ XpsSAOiAH4LOKVELZ48CvxSSwmc1nP//GzxOm1j5U0CP84e5rYzVrpAeebKngCkj3aI050OKPrW
+ z7ZLyEsvGFGLnkrHvN3bCiy+ViQl4wpypki0hazjubdV91xzNoTStoDZPdhn3M3QF4b+cfrdTB7
+ +t6cwqQLBiI0LKIODEjsxDVLCe1kpUT7bi+weCC6Fz52bS7HzbscxZGvDYzvXlmVzPVkgLGgUex
+ R3KOq00Sg2oLKOcWzA6FUpC6TNYhKehtvxwZvSrFziezdWS67YLr7u4Ywxn4qAdkQMeKngV9Esu
+ vjQe2h2uzYW3W0A==
 X-Developer-Key: i=shankerwangmiao@gmail.com; a=openpgp;
  fpr=6FAEFF06B7D212A774C60BFDFA0D166D6632EF4A
 X-Endpoint-Received: by B4 Relay for shankerwangmiao@gmail.com/20250715
  with auth_id=462
 X-Original-From: Miao Wang <shankerwangmiao@gmail.com>
-Received-SPF: pass client-ip=172.105.4.254;
+Received-SPF: pass client-ip=172.234.252.31;
  envelope-from=devnull+shankerwangmiao.gmail.com@kernel.org;
- helo=tor.source.kernel.org
+ helo=sea.source.kernel.org
 X-Spam_score_int: 0
 X-Spam_score: -0.0
 X-Spam_bar: /
@@ -101,36 +104,50 @@ Reply-To: shankerwangmiao@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Miao Wang <shankerwangmiao@gmail.com>
+The current implementation of vector instruction emulation in loongarch
+target works illy on big endianness hosts. It can be reproduced using
+the test cases from gcc [1]. One can cross-compile the target
+loongarch64-linux-user for s390x and use qemu-s390x to run the compiled
+qemu to test loongarch64 emulation on big endian hosts.
 
-When generating tcg instructions for vreplve, the calculation of the
-offset in the vector registers from given channel in the general
-register should be done using tcg op codes. The algorithm should be
-similar as vec_reg_offset().
+Possible reproduce steps are:
 
-Fixes: df97f3380760 ("target/loongarch: Implement xvreplve xvinsve0 xvpickve")
-Fixes: 008a3b1662b6 ("target/loongarch: Add LASX data support")
+1. Install s390x cross toolchains and qemu-s390x
+2. Compile qemu using ./configure --target-list=loongarch64-linux-user --cross-prefix=s390x-linux-gnu-
+3. Install loongarch64 cross toolchains to compile the test cases. To
+   get an accurate result, the test cases should be compiled using -O0.
+   To make the error output of the test cases readable and meaningful,
+   printf() should be replaced with a version without any vectorization
+   optimizations, since the endianness problems will prevent printf()
+   with lsx optimizations from working correctly
+4. Use qemu-s390x ./qemu-loongarch64 /path/to/test_case.exe to test the
+   cases on big endianness hosts.
+
+With this patch series, all the tests in [1] can pass.
+
+[1]: under gcc/testsuite/gcc.target/loongarch/vector in the gcc source
+
 Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
 ---
- target/loongarch/tcg/insn_trans/trans_vec.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Miao Wang (6):
+      target/loongarch: make VReg aligned to 16 bytes
+      target/loongarch: Fix offset calculation in vector registers
+      target/loongarch: gen_vreplve: Fix offset calculation
+      target/loongarch: gen_xvreplve0: Fix elem0 offset calculation
+      target/loongarch: do_vldrepl_vl: Fix endianness when reading from guest memory
+      target/loongarch: vstelm: Fix reading from vector registers
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-index 195b89f78834b208f0ba83930b844e792dc488b6..df0e809d544678490ca3ccfddab3fd4d74f7189a 100644
---- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-@@ -5036,7 +5036,7 @@ static bool gen_vreplve_vl(DisasContext *ctx, arg_vvr *a,
-     tcg_gen_andi_i64(t0, gpr_src(ctx, a->rk, EXT_NONE), (LSX_LEN / bit) - 1);
-     tcg_gen_shli_i64(t0, t0, vece);
-     if (HOST_BIG_ENDIAN) {
--        tcg_gen_xori_i64(t0, t0, vece << ((LSX_LEN / bit) - 1));
-+        tcg_gen_xori_i64(t0, t0, 16 - (bit / 8));
-     }
- 
-     tcg_gen_trunc_i64_ptr(t1, t0);
+ target/loongarch/cpu.h                          |  2 +-
+ target/loongarch/tcg/insn_trans/trans_vec.c.inc | 39 +++++++++++++------------
+ target/loongarch/tcg/translate.c                |  6 ++--
+ 3 files changed, 25 insertions(+), 22 deletions(-)
+---
+base-commit: 30e8a06b64aa58a3990ba39cb5d09531e7d265e0
+change-id: 20260701-loong64-be-adf8a15675f1
 
+Best regards,
 -- 
-2.49.0
+Miao Wang <shankerwangmiao@gmail.com>
 
 
 
