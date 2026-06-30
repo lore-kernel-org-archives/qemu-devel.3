@@ -4,64 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22D0BC43327
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 18:18:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A554C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 18:29:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wed2A-0000Na-FB; Tue, 30 Jun 2026 14:18:10 -0400
+	id 1wedCP-0003DU-Nn; Tue, 30 Jun 2026 14:28:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wed28-0000NM-53; Tue, 30 Jun 2026 14:18:08 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wed26-0006nd-I8; Tue, 30 Jun 2026 14:18:07 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65UEIFCl2288459; Tue, 30 Jun 2026 18:17:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=uqKMWx
- kDSpVtLRT2Q2AxHSoiyBO6kT8HdU2l+MtRkIM=; b=FHdhajkt4WGaR8CRu9BHGB
- lij7kPiPl7cYxk5fGFcvEoz6gJ17P3L8fNUOdJDV6DqmxvUtELDohjGbLi+aBOHH
- WAL8YIGAZjc9d3vYq52UafgWaEJXNML59L4YtJilvnpYO+GxN1hi2MxR2pWGOoeE
- kM5ZaR+xMdOnXOlBVBcPcTDkzFeoZ6/roPjF5qq/GiIntG80KkT37LYhXUovJYpe
- b4VppWpFPjoB9x/sPGQVkSbSvFURThCmTaIXJJOyiQOLxlfSmoXCbFmr2hTlJqUm
- z3XtAiNYRz0rdfpeptIiUwDnQB6vX1sXdssm1Mr8Z8mbg5taqLeD+Oj9ihro7M1A
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26pe0fxw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 18:17:59 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UI4aDi020382;
- Tue, 30 Jun 2026 18:17:57 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2u2gbgp4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 18:17:57 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65UIHsmM62259464
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Jun 2026 18:17:54 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1638520043;
- Tue, 30 Jun 2026 18:17:54 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 72B8120040;
- Tue, 30 Jun 2026 18:17:49 +0000 (GMT)
-Received: from shivang.upadyay (unknown [9.39.22.48])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 30 Jun 2026 18:17:49 +0000 (GMT)
-Message-ID: <470cc3fdd99cfb62b41ed0238550a2b4f4fc4929.camel@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wedCO-0003DE-TH
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 14:28:44 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wedCN-0001j4-Cg
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 14:28:44 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-845537740ddso2830385b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 11:28:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782844122; x=1783448922; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=2Wc17ItNgaUDBvSNC3EzuTb8GqF3cZ/ioHshyrcjWxM=;
+ b=ArTls1SFEipn4zyYaxBi0TW7I3+qKxT+D5aKmUFeF6+HU8+m9HdNvrpbOPpJaDB2Yz
+ RUgu3jGO8z+SD+/kjs4t3OC6ta+IdnQPvfsTuuqQ/SYC0jcc/xOGo9MAOeXCBf592U/7
+ 5mZotKVC14wlU6MfifFou8Bj98J2NCZ9oFNQ+vyurts2yZymrKKMKh5j0ujQ2iVzTYXC
+ QMXu6NK2OkloWY6i0wJgsRVA/Cjzb1IYiEy2xdUHwrPEAH91n+Wj1jolICxK9cHgrsHb
+ kH3SpTTmxBuYxRA6yKZzO0Qd7HajuUNTGI9x28HFmGOGXWCV10tqFGLs6JWbmJyTMCXu
+ Le+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782844122; x=1783448922;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=2Wc17ItNgaUDBvSNC3EzuTb8GqF3cZ/ioHshyrcjWxM=;
+ b=b+NtcqGD7BQhVNsrPr63EIMJt7QCdydsq//DzjGCMhxdETHcxULrG/waM0U4TuCYbo
+ de3krw3UYP0gO2DhaLo9F1FAvecedJGAAesI8Ei8xyiV/vSD5YKXqlZ5Ioi0nT/QgjcO
+ +YjlV0n7+hLj88tryJMw1MHblfA3VqCLT0R5Ud6v0NdHjP445m6e6fkAYNuv4hSb5gHi
+ od4onzuBf8qE5N3YMthHAB4bRFTPyJjRf/PWvBRRVH6y2znhRzApUYJVm8OIk1Wg8dyO
+ V+p+gBfv8PBDo4fW0pIXFIrYlumryNeJyCSCwOg1KiCnwf+ESUKbm10ISraagYYs4BXu
+ aoGQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrOJ0SlV2sm7LY11ekrFjJ6PS0TvG+hTHaql28k8mCVt7FkAyQd+t1djrOEw/ZZ8ad6l5jOB/XQ6Ekj@nongnu.org
+X-Gm-Message-State: AOJu0YwNe6LYLk3N38trofNg27Div1/Q5dnYODiJeO+wm1D/J27+CO8L
+ ec5PyKIwpykJ1ACXBbqPoLoRVEhUlA79naye2452zK96fX4NTeiF4t+q/3S9qeFlct8=
+X-Gm-Gg: AfdE7cmaq15SC78vxZvaun3Gq0ewkTlJBk+1cv8TeviE3X92ixqPrDnIEIi/R3kTWQp
+ v3HwgV1/lUQYl4UAYxc93u1VaBFutp0pftFsE4D+qxra+pOu9MImFHwTH4zGJ96RWg+RXr/AVPj
+ oGIodHW6GIDFO1dE5gldBbIGycI0OixM3LmoSrPJlOfdBVoQGKejomdx+6ldQwzM77ryUdzqPtk
+ nORZwJRDSCdu7K5VgwH+M1U1h3JsoXSTSJgRhuqXJza/1fFg9PjdqMWWcSKIFS9+Qk3sm5cxmcw
+ j/ZLAchVKzf9c24eSKNRdv0H3TyhbN8+VEOvRaRz+PiHsAmklQh6w4bOuhtg3iYbXymqh56zXny
+ bWGMAouzrdCMKC/afNn8mjfEI/VlKNZcLpO7jGfvx8LU8PCh+8nziwlTQGqiIL97B9KKJSJGpZd
+ WcIx0ScUahlDbwsN/4b7/1mHdhI/1+2709MC4MteL8+kefQ7Y/kAzGA0mD9NXVgQCfEsRw
+X-Received: by 2002:a05:6a00:c87:b0:847:8a64:29a5 with SMTP id
+ d2e1a72fcca58-8479eeccb86mr4077968b3a.12.1782844121695; 
+ Tue, 30 Jun 2026 11:28:41 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-8479ff89f93sm2680657b3a.4.2026.06.30.11.28.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Jun 2026 11:28:41 -0700 (PDT)
+Message-ID: <46a6f923-ed24-48ab-8bab-7a8fc9956f36@linaro.org>
+Date: Tue, 30 Jun 2026 11:28:39 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH 1/2] accel/tcg: use GTree for faster breakpoint lookups
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+To: Shivang Upadhyay <shivangu@linux.ibm.com>, qemu-devel@nongnu.org,
  pbarbuda@microsoft.com, mohamed@unpredictable.fr
 Cc: pbonzini@redhat.com, philmd@mailo.com, zhao1.liu@intel.com,
  laurent@vivier.eu, deller@gmx.de, pierrick.bouvier@oss.qualcomm.com,
@@ -69,51 +80,23 @@ Cc: pbonzini@redhat.com, philmd@mailo.com, zhao1.liu@intel.com,
  daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
  chao.liu.zevorn@gmail.com, qemu-riscv@nongnu.org, rathc@linux.ibm.com,
  harshpb@linux.ibm.com, adityag@linux.ibm.com
-Date: Tue, 30 Jun 2026 23:47:48 +0530
-In-Reply-To: <187d9a11-b1d0-44fa-bf91-43b723063a44@linaro.org>
 References: <20260630171555.114844-1-shivangu@linux.ibm.com>
  <20260630171555.114844-2-shivangu@linux.ibm.com>
  <187d9a11-b1d0-44fa-bf91-43b723063a44@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
-MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: 7BteIhalfyh8xvRIlcrWAxVA6kp_UpE-
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDE3MCBTYWx0ZWRfXwDWsvq2ZezEm
- lTwB3lD2xflJVs2DnGDFrhOJqJsl/sa6nEyvsapKtpWsVWhb3gz94cazklNv4+neGhIDM0DO4bw
- tv7WXeQ53w6UUUkeRRO8sZ9rTT+9E14=
-X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a440857 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=jfeNv2Vnnl0YCIFMb-4A:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDE3MCBTYWx0ZWRfX4XvYe1Zqok0+
- KSlDzafyLEQ6D/wA1RCzlvJjZziB2W+Cl5utJoCySndZWtTR7T6X66QQMB6jhwaQnWIGMcoB2Qf
- A1T7CTYwZTqtmf3WODJ17vkawGJU9sgC6eXB0HVaTZzub/FgnT4uPCvgBkYqT9/ZFNyLj3aA/z7
- Ef8suEWc0Pu6CBoScKpr/rX6GC5cBgyXh6I5xNUFRvREQAHCVX9o0xFxwWTXevjmLedtWrVcFZG
- 2lhIQ1XwFGsEhYCYMaOS+xgKviTDSjsNhHsthOecPUg4epmPk3cIof62swqp5qArVW7C+FISD1k
- pm5QLWXQRh8rc2vNjJe36lWNspzxYHZN3neut+S+K8f1yP5mlXkeGiU1zyPS0JXDyko/2IoilpN
- WpPQXEn5xmXTh5k9PeMnjlA/t0cGjT6N7xJL1oFPkuaEOHwLOiDpIbnkvZYGtaHlLdYrz6l7HUi
- VTpe2oQ7mCldbAlQoqA==
-X-Proofpoint-ORIG-GUID: kMilMdYcRn9luEhTw3qCwKoh9C9yVFXo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-30_04,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
- spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300170
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ <470cc3fdd99cfb62b41ed0238550a2b4f4fc4929.camel@linux.ibm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <470cc3fdd99cfb62b41ed0238550a2b4f4fc4929.camel@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,26 +113,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2026-06-30 at 10:31 -0700, Richard Henderson wrote:
-> > =C2=A0=C2=A0 6 files changed, 118 insertions(+), 45 deletions(-)
->=20
-> I think it would be better to use IntervalTree, so that we don't have
-> to keep that second=20
-> tree of pages.=C2=A0 Obviously, IntervalTree can query an interval, which
-> takes care of=20
-> querying for entries within a page.
->=20
->=20
-> r~
+On 6/30/26 11:17, Shivang Upadhyay wrote:
+> On Tue, 2026-06-30 at 10:31 -0700, Richard Henderson wrote:
+>>>     6 files changed, 118 insertions(+), 45 deletions(-)
+>>
+>> I think it would be better to use IntervalTree, so that we don't have
+>> to keep that second
+>> tree of pages.  Obviously, IntervalTree can query an interval, which
+>> takes care of
+>> querying for entries within a page.
+>>
+>>
+>> r~
+> 
+> As per my initial understanding of Interval trees, The primary goal of
+> them would be store intervals, and then query with point/intervals. But
+> current usecase is storing points and querring with intervals? maybe i
+> can be wrong with this idea.
 
-As per my initial understanding of Interval trees, The primary goal of
-them would be store intervals, and then query with point/intervals. But
-current usecase is storing points and querring with intervals? maybe i
-can be wrong with this idea.
+A point is simply an interval of 1.  In this case, start = last = pc.
 
-Maybe i can just use cpu->breakpoint tree to find out page match, with
-using lower_bound on the `pc & TARGET_PAGE_MASK` and find if the bp->pc
-< (pc & TARGET_PAGE_MASK + PAGESIZE)?=20
 
-~Shivang.
+r~
 
