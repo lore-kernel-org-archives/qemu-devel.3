@@ -4,59 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CB56C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 11:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC16EC43327
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 11:23:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weWYx-0003Wp-QZ; Tue, 30 Jun 2026 07:23:35 -0400
+	id 1weWYt-0003V6-Tz; Tue, 30 Jun 2026 07:23:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1weWYk-0003SQ-Pr
+ id 1weWYl-0003SR-3h
  for qemu-devel@nongnu.org; Tue, 30 Jun 2026 07:23:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1weWYh-0005br-E2
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 07:23:21 -0400
+ id 1weWYi-0005cR-PQ
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 07:23:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782818596;
+ s=mimecast20190719; t=1782818599;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Nn7wAQySvYQPqCaaoPzWCdHh+QUoLvsSCq7YQ7Cq5L4=;
- b=eGo6o/bx48xg4yTonkx++RWhtnDS8r/RN2QXjgrjamjeulzSis3g2UCGnXS0h/EvjIJA7S
- N/8StJ6nv/llSIdwkutvP117I2iWh86gvlI+w1xtms+QA/E/NqUNJZIPrIvF1LtugzZgg4
- +DN26UnWzh5enG21KNDpyLwv8Id+gt8=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iYts4rJsICRglCBK64//7QzvYf2luURO8e9CajLyTJY=;
+ b=eawnUn+wNVk1R5N9sT3zu52N0aLwkUljEjvN9ug7wvG4INQJ08TVCShgWsaWMLHf3AFUs4
+ 7t+WDG9GbauYRIE4DJlSIldC0SSRPOxHR+LRl+IcBAgubLFxMQY3CTNis+vqbFNDhcZh++
+ uvZ/exGv095b3Yg0ZJOi4+qNjyjcIro=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-235-GoW7Ju1dNd2tuUeVVYuiXA-1; Tue,
- 30 Jun 2026 07:23:15 -0400
-X-MC-Unique: GoW7Ju1dNd2tuUeVVYuiXA-1
-X-Mimecast-MFC-AGG-ID: GoW7Ju1dNd2tuUeVVYuiXA_1782818594
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-567-I93T73G6Pi-VtdsUOPNXgA-1; Tue,
+ 30 Jun 2026 07:23:17 -0400
+X-MC-Unique: I93T73G6Pi-VtdsUOPNXgA-1
+X-Mimecast-MFC-AGG-ID: I93T73G6Pi-VtdsUOPNXgA_1782818596
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 21BE61800A3B; Tue, 30 Jun 2026 11:23:14 +0000 (UTC)
+ id 8A3C8180057C; Tue, 30 Jun 2026 11:23:16 +0000 (UTC)
 Received: from fedora (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CDA33180065F; Tue, 30 Jun 2026 11:23:11 +0000 (UTC)
+ id A130B1800678; Tue, 30 Jun 2026 11:23:14 +0000 (UTC)
 From: Albert Esteve <aesteve@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: manos.pitsidianakis@linaro.org, Stefano Garzarella <sgarzare@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Albert Esteve <aesteve@redhat.com>
-Subject: [PATCH 0/3] hw/display: add vhost-user-media device
-Date: Tue, 30 Jun 2026 13:23:07 +0200
-Message-ID: <20260630112310.552606-1-aesteve@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH 1/3] virtio_ids: Add ID for virtio media
+Date: Tue, 30 Jun 2026 13:23:08 +0200
+Message-ID: <20260630112310.552606-2-aesteve@redhat.com>
+In-Reply-To: <20260630112310.552606-1-aesteve@redhat.com>
+References: <20260630112310.552606-1-aesteve@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
@@ -84,70 +86,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series introduces the QEMU frontend for the virtio-media device,
-a VirtIO device that exposes V4L2 video device functionality to the guest
-over the virtio-media protocol, as specified in the VirtIO specification
-v1.4, section 5.22 [1].
+Temporary commit. DO NOT MERGE.
 
-Note on patch 1
----------------
-Patch 1 adds a temporary virtio-media device ID to QEMU's copy of the
-Linux standard headers. It is included to unblock testing but is marked
-"DO NOT MERGE": it will be superseded once the corresponding kernel-side
-patch [2] is merged upstream and QEMU's headers are updated to match.
-Patches 2 and 3 depend on patch 1 for the VIRTIO_ID_MEDIA definition.
+While we wait for the patch [1] to get merged upstream,
+manually update and add the virtio-media ID to the kernel
+header for testing purposes.
 
-Overview
---------
-Patch 2 introduces the vhost-user-media device frontend as defined by
-the specification.
+[1] https://lore.kernel.org/all/20260310-virtio-media-id-v1-1-be211bcf682b@redhat.com/
 
-Patch 3 adds a 4 GiB shared memory PCI BAR (BAR 2) used by the guest
-driver as a DMA cache for video buffer exchange with the host backend.
-The region is exposed to the guest through a VirtIO shared memory
-capability.
+Signed-off-by: Albert Esteve <aesteve@redhat.com>
+---
+ include/standard-headers/linux/virtio_ids.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-Testing
--------
-The series was tested with:
-
-  Guest driver: the virtio-media out-of-tree Linux kernel driver [3].
-  An upstream series for this driver has also been posted [4].
-
-  Host backend: the rust-vmm vhost-device-media backend [5]:
-      cargo run -- -s /path/to/media.sock -d /dev/video0 --backend v4l2-proxy
-
-  Full QEMU invocation:
-
-      qemu-system-x86_64 \
-          -chardev socket,path=/tmp/media.sock,id=media \
-          -device vhost-user-media-pci,chardev=media,id=media \
-          -object memory-backend-memfd,id=mem,size=4G,share=on \
-          -numa node,memdev=mem
-
-[1] https://docs.oasis-open.org/virtio/virtio/v1.4/cs01/virtio-v1.4-cs01.html
-[2] https://lore.kernel.org/all/20260310-virtio-media-id-v1-1-be211bcf682b@redhat.com/
-[3] https://github.com/chromeos/virtio-media/tree/main/driver
-[4] https://lore.kernel.org/all/20260622204343.1994418-1-briandaniels@google.com/
-[5] https://github.com/rust-vmm/vhost-device/pull/944
-
-Albert Esteve (3):
-  virtio_ids: Add ID for virtio media
-  hw/display: add vhost-user-media device
-  hw/display/vhost-user-media: add shared memory cache BAR
-
- hw/display/Kconfig                          |   5 +
- hw/display/meson.build                      |   3 +
- hw/display/vhost-user-media-pci.c           | 105 ++++++
- hw/display/vhost-user-media.c               | 397 ++++++++++++++++++++
- hw/virtio/virtio.c                          |   3 +-
- include/hw/virtio/vhost-user-media.h        |  47 +++
- include/standard-headers/linux/virtio_ids.h |   1 +
- 7 files changed, 560 insertions(+), 1 deletion(-)
- create mode 100644 hw/display/vhost-user-media-pci.c
- create mode 100644 hw/display/vhost-user-media.c
- create mode 100644 include/hw/virtio/vhost-user-media.h
-
+diff --git a/include/standard-headers/linux/virtio_ids.h b/include/standard-headers/linux/virtio_ids.h
+index 6c12db16fa..fd73ae9d13 100644
+--- a/include/standard-headers/linux/virtio_ids.h
++++ b/include/standard-headers/linux/virtio_ids.h
+@@ -69,6 +69,7 @@
+ #define VIRTIO_ID_BT			40 /* virtio bluetooth */
+ #define VIRTIO_ID_GPIO			41 /* virtio gpio */
+ #define VIRTIO_ID_SPI			45 /* virtio spi */
++#define VIRTIO_ID_MEDIA         48 /* virtio media */
+ 
+ /*
+  * Virtio Transitional IDs
 -- 
 2.54.0
 
