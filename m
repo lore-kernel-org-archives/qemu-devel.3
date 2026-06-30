@@ -4,119 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B22B9C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 10:55:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9C8DC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 10:58:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weW79-0002bA-89; Tue, 30 Jun 2026 06:54:51 -0400
+	id 1weWAM-0004Fm-T0; Tue, 30 Jun 2026 06:58:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1weW77-0002aQ-9u; Tue, 30 Jun 2026 06:54:49 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1weWAL-0004Fd-Cr
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 06:58:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1weW75-0001Uu-Ae; Tue, 30 Jun 2026 06:54:49 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65U9n4sx1647794; Tue, 30 Jun 2026 10:54:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Im+B37
- /SL9oA94Sy66pOLWN1+mjEkNkV4Bpkm4TMsck=; b=SBTiaqccJhtw4uRiZKWPP1
- 4kpl67e8q4PK1hlPn2+G7Y1MkXiplASeBVA07ghGZAmJ2mK4KTN8KmOv+/5IBqX9
- H1+z7e6FUMUHJYPyn4DkupQN7VxDaHJ6QzErCVO5w1wF4CJLLM5nbIvJyfjHEKqs
- A21oaENB4MlKr2ntdmdOH1WZ5TZ6XsDLPlUbZF6EWKmFLjfu3AO6pqlD2vKIpfWh
- /2xAm4tX6EOFh7UpDnhfJongaLQerLjwZKPJHEja2R0S3zSrYlJ6hOgRTYNZgcAm
- 3eZ4MXoTzRUdpIKainu9WnCDhWiFAlr/ff4ySiq+hSqz6xZVr84sgEFVR/Forzpw
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26n5p8hk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 10:54:42 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UAnfLB014922;
- Tue, 30 Jun 2026 10:54:41 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2suk1s6r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 10:54:41 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65UAsbaL48234814
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Jun 2026 10:54:37 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 899EA2004B;
- Tue, 30 Jun 2026 10:54:37 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DA5EB20040;
- Tue, 30 Jun 2026 10:54:36 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.74.190])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 30 Jun 2026 10:54:36 +0000 (GMT)
-Message-ID: <9cbb2f6f-c80e-4ba8-a307-4f640f64a8a5@linux.ibm.com>
-Date: Tue, 30 Jun 2026 12:54:36 +0200
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1weWAJ-00034g-BR
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 06:58:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782817085;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=lWMUGORVDHMTAPzxwwLX3XTRmf7QjM+bxaFfZwSWhTc=;
+ b=YfW47vnr4B1brf1UcihPaWhtfhPv6Y4XZPN/zKpv0EMaavllVhQoTMdN+DPjL35hZ/KNHm
+ 622N8G+ifnHqjp4j4zc6qkfJ1MCMUXECnDfmviOmzN2LqjYC1wW2B1loyW5IV/NP63BJZx
+ SkTawRNc9Lf40WX7nhDCE33SlprEkek=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-493-h8-Cy7o6OAe-Aasu_gPBiw-1; Tue, 30 Jun 2026 06:58:01 -0400
+X-MC-Unique: h8-Cy7o6OAe-Aasu_gPBiw-1
+X-Mimecast-MFC-AGG-ID: h8-Cy7o6OAe-Aasu_gPBiw_1782817080
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4925bf70f5bso36324125e9.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 03:58:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782817080; x=1783421880; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=lWMUGORVDHMTAPzxwwLX3XTRmf7QjM+bxaFfZwSWhTc=;
+ b=OFfwCsN6FoduF7WIrtrhZNSdIXK86XyRR7cy8tNaQfWrAt3p5yEBiPNK/TfJqQHjVc
+ LtbzphAvCcoWZcCTOA6Sv7SfGOwe0K4UN3ijT7pt6PcPOhiM1LF7xTgF0JCTV0ndqap3
+ BFQKlh3vva6xrnhg03wKeA6DQzAqqa18rQEismyg5r9AL+chMUFogeZ1Bbnbz1vOLI1C
+ YeStUQQosyleDEnK8eEGfDcy+VpDkWQToAY/DIkx48fKNaVJ8hZy3gWL7QPUfORsdi9a
+ PNvHAAHPMnku+RG4Hbv/IbEBYEdo2yrheNCtT99Br/yvr3LPD3qWMF/7fPk8MNg2yHjk
+ HKbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782817080; x=1783421880;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lWMUGORVDHMTAPzxwwLX3XTRmf7QjM+bxaFfZwSWhTc=;
+ b=rUf077es+Qj255tnJk8CkJGUw+JJMTWSWKRpAViQMoqonWbZOZcW4kUX2ftjeyQ0kM
+ O74C8CrIe4MI1VJH1cv1nqCMQf611popUv+e4l9X2pB217Mj4OQlkmMLSly1286SQIea
+ V2rH+vfRFVg+FVm8WbgfvEwAJpa2CFlM2CJFrLdu+88+gD8nC49xVxZNOPvOQn232IMp
+ Fz4X20ZumsWNdjkH5LdcII1VwsemCzkHx/VeT/EctR9XFkM4QLBXroqfiCSw3HPMzEgs
+ L+W3i30dTef6LUGxZXUeRXEjlXW359RaRz7W9ar708F5DY6FwuwJL/RV3Vk2x4c3/SIl
+ R6Sg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8WXdAlyd6FWWG7a8BHy7prHSmniTmwjBI2/QXrUEGcIb5FmRs/wfDf7Im5mEuH28wxPi/nATgyrb1D@nongnu.org
+X-Gm-Message-State: AOJu0YywPJabypmY1020QFOe3W7r//20rsai65V7EraY6c5mhthAfxnS
+ SLEEX7ORGzKc8f1sQLQgbl6XB0BZtn7ChB3zMpnoBeddRMcBC3wJt+ke/O6arVjnMnw2wHPY01/
+ QB7chcu7B8bIxq2LEVM/XGIdKM3g+hE3dlKzTomo0oME2/DxmF1cUAubc
+X-Gm-Gg: AfdE7clMS0LZAarCanupCm5NomvlB8egdeGJ/CZC8m3Bt0b7BR1RP6QFBl7XoZmbT2M
+ v/nEzLzr9ehNezjfsFPaar4AsUWplFk4r1dyhIKHtUyxjJdbv8r38CSqCk5PNoaaPTQgeX1zNBh
+ uVDsDZZ1g7uUoXmnwpSUra5JuKH8GJdgiHEbqkHEwLVMg2JhzNXpp4b2k303qHrWO1cVAM91+M5
+ ytSzWOEneVHyDq9v0lXIAE1LKmoKNwZtCwQcCxCd3/T3uv4rf5rdutTWrHoN+D0QYvuZ7gBtjzc
+ jG01PPl7oXF2yb0RSz+1mpSQR0zfi8QJcnWTDbw+3Z8Eay6XmkmaGoc8frZ2IrTBUeRF1sVUWkI
+ crG1GnJCoKnV6YoZlNs0zaPqO/Vr57feO5b4g5uS0dfE=
+X-Received: by 2002:a05:600c:4e4f:b0:493:bdae:1a2e with SMTP id
+ 5b1f17b1804b1-493bdae1a49mr520135e9.22.1782817080360; 
+ Tue, 30 Jun 2026 03:58:00 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e4f:b0:493:bdae:1a2e with SMTP id
+ 5b1f17b1804b1-493bdae1a49mr519435e9.22.1782817079053; 
+ Tue, 30 Jun 2026 03:57:59 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-40-241-22.web.vodafone.de.
+ [109.40.241.22]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47567a6f351sm6773313f8f.36.2026.06.30.03.57.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Jun 2026 03:57:58 -0700 (PDT)
+Message-ID: <fb461d4d-167f-42c8-a02d-151e15cbe503@redhat.com>
+Date: Tue, 30 Jun 2026 12:57:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 01/18] target/s390x: Fix wrong address handling in
- address loops
-To: freude@linux.ibm.com
-Cc: richard.henderson@linaro.org, david@kernel.org, thuth@redhat.com,
- berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux390-list@tuxmaker.boeblingen.de.ibm.com,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
-References: <20260624081029.23815-1-freude@linux.ibm.com>
- <20260624081029.23815-2-freude@linux.ibm.com>
- <e516de9c-e9fb-45af-aa5e-8cb9dbf1e3f3@linux.ibm.com>
- <d55a9d7e7759251c1e75050a9a9ccd6f@linux.ibm.com>
- <6e7ce946-1128-4b2c-9520-a171bca3ceb7@linux.ibm.com>
- <a6e637d07024e0ff8a457500110e225f@linux.ibm.com>
+Subject: Re: [PATCH v2 0/2] Record maintainer/reviewer Git Lab handles
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <20260624122936.2706393-1-berrange@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <a6e637d07024e0ff8a457500110e225f@linux.ibm.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260624122936.2706393-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDA5OCBTYWx0ZWRfX4ZgeIXc8DGH7
- K35j8LgT+FW1eINpA3LjECbRV8qZZHSWcAbNovqo0KkMw4kBH9N6v2dtEgXKM1Znu/AVywUe63+
- PcIrIraxhW15dmxgCNHOWDeqmwW5Vub3SswMb0nc/Oc6/UHJ1EQ4To6Gya38dIxTT88R784zZFD
- rLXMAUdZEwECl7hogddka74OEGZ+4FaRpJq9czwwE0mYrjkx+3DW9SmkF/Uf2bYDNq4qnJ4S1Kb
- DxScbCUl8Tzf2GQWZgwOoUnuD3CcrD6YS7M9Zam9JIjAmZoDEs5o1UhRfJRuveKl5BC9oDqFpdO
- 3aUaU7hCJhss6opsz0F1J1f01DonvU1MGMQG6na/weKGb8wEx+9dS/57yadoyyVOx26HuVCKhFn
- a1IIi910z8pb81RLQ5jWQs7bAWHlDtGhPLRh4Wv/U7T4mwHrGWGIAaZGHIoDl8a3K4y+sv9dWgA
- 6Bqxq5Y+zUWC+F7mFXg==
-X-Authority-Analysis: v=2.4 cv=V45NF+ni c=1 sm=1 tr=0 ts=6a43a073 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=0qfM-hUmz0_4sP66ULwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 9KN980UPFeBcI_xoQe3G--psREiQeajr
-X-Proofpoint-GUID: 9KN980UPFeBcI_xoQe3G--psREiQeajr
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDA5OCBTYWx0ZWRfXyRl/DIQJq8la
- OtMKbXbfVKA4x0iy19EW8v5U298SlWb85c/pTjtue11fkJjrunclvVHTva/YUNpG8Lpyq93pfP3
- ow5a5AIIHaGbK7isSmEdR/fVH3/5nlw=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-30_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
- adultscore=0 clxscore=1015 impostorscore=0 malwarescore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300098
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,150 +166,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 24/06/2026 14.29, Daniel P. Berrangé wrote:
+> When triaging GitLab issues, whether regular bugs or security
+> disclosures, we need to be able to assign suitable accounts.
+
+Thanks a lot for doing this, Daniel, very appreciated!
+
+I already curated a local list of handles on my own in the past (most of 
+them by looking the handles up via commits they made, so I'm pretty sure 
+they are correct), so let me add some handles for the missing entries below...
+
+> $ ./scripts/gitlab-map-check
+> Missing GitLab handle: Akihiko Odaki
+
+https://gitlab.com/akihiko.odaki
+
+> Missing GitLab handle: Albert Esteve
+> Missing GitLab handle: Alberto Garcia
+
+https://gitlab.com/bertogg
+
+> Missing GitLab handle: Alejandro Jimenez
+> Missing GitLab handle: Aleksandar Rikalo
+> Missing GitLab handle: Alessandro Di Federico
+> Missing GitLab handle: Alexandre Iooss
+> Missing GitLab handle: Alexandre Ratchov
+> Missing GitLab handle: Alexey Kardashevskiy
+
+https://gitlab.com/aik1
+
+> Missing GitLab handle: Amit Shah
+> Missing GitLab handle: Andrew Jeffery
+> Missing GitLab handle: Anthony PERARD
+
+https://gitlab.com/anthonyper
+
+> Missing GitLab handle: Anton Johansson
+> Missing GitLab handle: Antony Pavlov
+> Missing GitLab handle: Ari Sundholm
+> Missing GitLab handle: Artyom Tarasenko
+> Missing GitLab handle: Aurelien Jarno
+> Missing GitLab handle: BALATON Zoltan
+> Missing GitLab handle: Ben Chaney
+> Missing GitLab handle: Bernhard Beschow
+> Missing GitLab handle: Bibo Mao
+> Missing GitLab handle: Brad Smith
+> Missing GitLab handle: Canokeys.org
+> Missing GitLab handle: Chao Liu
+> Missing GitLab handle: Chinmay Rath
+> Missing GitLab handle: Christoph Muellner
+> Missing GitLab handle: Clément Chigot
+> Missing GitLab handle: Clément Mathieu--Drif
+> Missing GitLab handle: Collin Walling
+> Missing GitLab handle: Corey Minyard
+> Missing GitLab handle: Darren Kenny
+> Missing GitLab handle: Denis V. Lunev
+> Missing GitLab handle: Dmitry Fleytman
+> Missing GitLab handle: Dmitry Osipenko
+> Missing GitLab handle: Dorjoy Chowdhury
+> Missing GitLab handle: Doru Blânzeanu
+> Missing GitLab handle: Edgar E. Iglesias
+> Missing GitLab handle: Elena Ufimtseva
+> Missing GitLab handle: Eric Auger
+
+https://gitlab.com/eauger1
+
+> Missing GitLab handle: Eric Farman
+> Missing GitLab handle: Eugenio Pérez
+> Missing GitLab handle: Farhan Ali
+> Missing GitLab handle: Felipe Balbi
+> Missing GitLab handle: Francisco Iglesias
+> Missing GitLab handle: Frederic Konrad
+> Missing GitLab handle: Gaurav Sharma
+> Missing GitLab handle: Gautam Gala
+> Missing GitLab handle: Gautam Menghani
+> Missing GitLab handle: Giuseppe Lettieri
+> Missing GitLab handle: Glenn Miles
+> Missing GitLab handle: Gonglei
+> Missing GitLab handle: Haixu Cui
+> Missing GitLab handle: Halil Pasic
+> Missing GitLab handle: Hao Wu
+> Missing GitLab handle: Hari Bathini
+> Missing GitLab handle: Hendrik Brueckner
+> Missing GitLab handle: Hervé Poussineau
+> Missing GitLab handle: Hongren (Zenithal) Zheng
+> Missing GitLab handle: Huacai Chen
+> Missing GitLab handle: Hyman Huang
+> Missing GitLab handle: Ilya Dryomov
+> Missing GitLab handle: Ilya Leoshkevich
+
+https://gitlab.com/iii-i
+
+> Missing GitLab handle: Ilya Maximets
+> Missing GitLab handle: Jagannathan Raman
+> Missing GitLab handle: Jamin Lin
+> Missing GitLab handle: Jan Kiszka
+> Missing GitLab handle: Jared Rossi
+> Missing GitLab handle: Jason Herne
+> Missing GitLab handle: Jean-Christophe Dubois
+> Missing GitLab handle: Jesper Devantier
+> Missing GitLab handle: Jeuk Kim
+> Missing GitLab handle: Jiaxun Yang
+
+https://gitlab.com/FlyGoat
+
+> Missing GitLab handle: Jiri Pirko
+> Missing GitLab handle: Jiri Slaby
+> Missing GitLab handle: Joe Komlodi
+> Missing GitLab handle: Joel Stanley
+> Missing GitLab handle: John Levon
+> Missing GitLab handle: Jonathan Cameron
+> Missing GitLab handle: Kane Chen
+> Missing GitLab handle: Kashyap Chamarthy
+
+https://gitlab.com/kchamart
+
+  HTH,
+   Thomas
 
 
-On 6/30/26 12:23, Harald Freudenberger wrote:
-> On 2026-06-30 11:33, Ilya Leoshkevich wrote:
->> On 6/29/26 14:57, Harald Freudenberger wrote:
->>> On 2026-06-24 14:56, Ilya Leoshkevich wrote:
->>>> On 6/24/26 10:09, Harald Freudenberger wrote:
->>>>> With the introduction of the address wrapping function
->>>>> wrap_address() the result can't be used to walk the
->>>>> source address any more. So introduce a new local variable
->>>>> to hold the wrapped address to avoid mixing source and
->>>>> wrapped address value.
->>>>>
->>>>> Fixes: fcc2699d41 ("target/s390x: Have MSA helper pass a mmu_idx 
->>>>> argument")
->>>>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
->>>>> ---
->>>>>   target/s390x/tcg/crypto_helper.c | 16 ++++++++--------
->>>>>   1 file changed, 8 insertions(+), 8 deletions(-)
->>>>
->>>> If I take as an example AMODE 24 and look at the third loop iteration,
->>>> with the current code in master I would get:
->>>>
->>>>     ((((addr & 0xffffff) + 8) & 0xffffff) + 8) & 0xffffff
->>>>
->>>> and with your patch it would be:
->>>>
->>>>     (addr + 8 + 8) & 0xffffff
->>>>
->>>> which is undeniably more elegant, but otherwise looks equivalent to me.
->>>>
->>>> What is the functional issue here?
->>>>
->>>>> diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/ 
->>>>> crypto_helper.c
->>>>> index ae392bce0e..29ad2aff43 100644
->>>>> --- a/target/s390x/tcg/crypto_helper.c
->>>>> +++ b/target/s390x/tcg/crypto_helper.c
->>>>> @@ -126,8 +126,8 @@ static void sha512_read_icv(CPUS390XState *env, 
->>>>> const int mmu_idx,
->>>>>       const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, 
->>>>> mmu_idx);
->>>>>         for (int i = 0; i < 8; i++, addr += 8) {
->>>>> -        addr = wrap_address(env, addr);
->>>>> -        a[i] = cpu_ldq_mmu(env, addr, oi, ra);
->>>>> +        uint64_t _addr = wrap_address(env, addr);
->>>>> +        a[i] = cpu_ldq_mmu(env, _addr, oi, ra);
->>>>>       }
->>>>>   }
->>>>
->>>> [...]
->>>
->>> It is a fix, not an improvement. The original code
->>> used the addr variable to hold the wrapped address.
->>> But as addr is also used as the loop variable there
->>> is a mixing between unwrapped and wrapped address here
->>> and the unfixed code only works when wrap_address does
->>> return the very same address as output as it became as
->>> input. My fix corrects this.
->>
->> What does the patch change w.r.t. wrapping?
->> Suppose we have amode 24 and addr = 0xfffff0:
->>
->> Before:
->>
->>   i = 0; addr = wrap(0xfffff0) = 0xfffff0;
->>          a[0] = ldq(0xfffff0);
->>   i = 1; addr = wrap(0xfffff0 + 8) = 0xfffff8;
->>          a[1] = ldq(0xfffff8);
->>   i = 2; addr = wrap(0xfffff8 + 8) = 0;
->>          a[2] = ldq(0);
->>   i = 3; addr = wrap(0 + 8) = 8;
->>          a[3] = ldq(8);
->>
->> After:
->>
->>   i = 0; addr = 0xfffff0;
->>          _addr = wrap(0xfffff0) = 0xfffff0;
->>          a[0] = ldq(0xfffff0)
->>   i = 1; addr = 0xfffff0 + 8;
->>          _addr = wrap(0xfffff8) = 0xfffff8;
->>          a[1] = ldq(0xfffff8);
->>   i = 2; addr = 0xfffff8 + 8 = 0x1000000
->>          _addr = wrap(0x1000000) = 0;
->>          a[2] = ldq(0);
->>   i = 3; addr = 0x1000000 + 8 = 0x1000008;
->>          _addr = wrap(0x1000008) = 8;
->>          a[3] = ldq(8);
->>
->> The behavior look identical to me.
->> What am I missing?
-> 
-> Lets assume addr is some 0x1000 and wrap does just add some offset, e.g. 
-> 0x8000
-> 
-> for (int i = 0; i < 8; i++, addr += 8) {
->      addr = wrap_address(env, addr);
->      fetch or write something at the wrapped address addr;
-> }
-> 
-> Then the idea of this loop is to run through addr 0x1000 ... 0x103F.
-> 1. loop with i=0 and addr 0x1000
-> 2. loop with i=1 and addr 0x1000 + 8
-> 3. loop with i=2 and addr 0x1000 + 8 + 8
-> 4. loop with i=3 and addr 0x1000 + 8 + 8 + 8
-> 5. loop with i=4 and addr 0x1000 + 8 + 8 + 8 + 8
-> 6. loop with i=5 and addr 0x1000 + 8 + 8 + 8 + 8 + 8
-> 7. loop with i=6 and addr 0x1000 + 8 + 8 + 8 + 8 + 8 + 8
-> 8. loop with i=7 and addr 0x1000 + 8 + 8 + 8 + 8 + 8 + 8 + 8
-> 
-> BUT the given code does something different. As the addr is used in the 
-> loop
-> to hold the wrapped address this loop in fact does:
-> 1. loop with i=0 and addr 0x1000 - all fine, but as addr = 
-> wrap_address() at the
->     end of the loop now addr is 0x1000 + 0x8000 = 0x9000, so next loop 
-> starts with
-> 2. loop with i=1 and addr 0x9000 + 8
->     and at the end of the loop addr is 0x9008 + 0x8000 = 0x11008 and 
-> next loop starts
-> 3. loop with i=2 and addr 0x11008 + 8
->     ...
-> 
-> So introducing an intermediate variable which holds the wrapped address
-> makes sure the surrounding addr walk in the loop does as intended.
-
-Ah, now I see where we were talking past each other, thanks for the
-clarification. You assume that wrap_address() may do arbitrary
-transformations, like addition in your example above. But today it does
-only bitwise "and", as defined by the architecture:
-
-static inline uint64_t wrap_address(CPUS390XState *env, uint64_t a)
-{
-     if (!(env->psw.mask & PSW_MASK_64)) {
-         if (!(env->psw.mask & PSW_MASK_32)) {
-             /* 24-Bit mode */
-             a &= 0x00ffffff;
-         } else {
-             /* 31-Bit mode */
-             a &= 0x7fffffff;
-         }
-     }
-     return a;
-}
-
-and I believe in this specific case the order doesn't matter.
 
