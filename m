@@ -4,58 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EE97C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:45:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9811C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 14:46:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weZiJ-0004R8-5y; Tue, 30 Jun 2026 10:45:27 -0400
+	id 1weZid-0004i1-JM; Tue, 30 Jun 2026 10:45:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1weZiG-0004N3-Mw
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:45:24 -0400
-Received: from smtpout6.mo536.mail-out.ovh.net ([51.210.91.15])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1weZic-0004hZ-Jd
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:45:46 -0400
+Received: from smtpout6.mo538.mail-out.ovh.net ([51.210.91.35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1weZiC-0006B4-RL
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:45:23 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [57.128.106.70])
- by mo536.mail-out.ovh.net (Postfix) with ESMTPS id 4gqQt204ynz82lT;
- Tue, 30 Jun 2026 14:45:13 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alistair@alistair23.me>; Tue, 30 Jun 2026 14:45:13 +0000 (UTC)
-Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.188.3])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4gqQt141Khz7t8k; Tue, 30 Jun 2026 14:45:13 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.1])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1weZia-0006Jd-Vf
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 10:45:46 -0400
+Received: from director3.derp.mail-out.ovh.net
+ (director3.derp.mail-out.ovh.net [152.228.215.222])
+ by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4gqQtY14bHz6JdB;
+ Tue, 30 Jun 2026 14:45:41 +0000 (UTC)
+Received: from director3.derp.mail-out.ovh.net
+ (director3.derp.mail-out.ovh.net. [127.0.0.1])
+ by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alistair@alistair23.me>; Tue, 30 Jun 2026 14:45:40 +0000 (UTC)
+Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.178.104])
+ by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gqQtX6nTpz5vMJ;
+ Tue, 30 Jun 2026 14:45:40 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
  (Authenticated sender: clg@kaod.org)
  by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- EC79C1923CE9; Tue, 30 Jun 2026 14:45:10 +0000 (UTC)
+ 2A1BB1923CEA; Tue, 30 Jun 2026 14:45:39 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-110S00429cb3646-372b-4002-97e7-fd4cf846f178,
+ (GARM-110S0045203db43-8b92-4cef-b24d-5da687463a36,
  C9F07EB534A46111D337A1875201B4A1724CF27E) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <da018c65-3cd1-40f0-bc16-28551f191a84@kaod.org>
-Date: Tue, 30 Jun 2026 16:45:10 +0200
+Message-ID: <8d1da954-d8e5-42bd-b57c-bbb554fe9e38@kaod.org>
+Date: Tue, 30 Jun 2026 16:45:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/10] hw/{block,ssi}: Fix spi-nor flash dummy byte
- handling
+Subject: Re: [PATCH 07/10] hw/ssi: aspeed_smc: Fix direct-read dummy bytes
 To: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
 Cc: Alistair Francis <alistair@alistair23.me>,
  Andrew Jeffery <andrew@codeconstruct.com.au>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Hanna Reitz <hreitz@redhat.com>, Hao Wu <wuhaotsh@google.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- Kane Chen <kane_chen@aspeedtech.com>, Kevin Wolf <kwolf@redhat.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Tyrone Ting <kfting@nuvoton.com>, qemu-arm@nongnu.org,
- qemu-block@nongnu.org, Joel Bueno <buenocalvachejoel@gmail.com>
+ qemu-arm@nongnu.org
 References: <20260630135729.466264-1-bin.meng@processmission.com>
+ <20260630135729.466264-8-bin.meng@processmission.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -100,23 +96,23 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260630135729.466264-1-bin.meng@processmission.com>
+In-Reply-To: <20260630135729.466264-8-bin.meng@processmission.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 15454383599328537739
+x-ovh-tracer-id: 15461983423161543894
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEwjQ90nLJ8WSO3sU6rBY1jWoN5RqdBC4YtictgPSKeOzTpOHV0HXYogliSzyzw9skccflC9Uz2ePnXCH/NVaKagxAYKLikAf+1h6Wksnm/KMe4FnARmWHv7Jt3SshE13xinu5jVyrIaotzHu7WyytWU1WcsiPyr9TOTQjensbwSpyCwnjzmzCLbUJ0N0Wbl0TRoiBWyHqIzt7R3iOTv1YCsIP6LLTxZ9vMTim982v3e97l1Mzr/+LNYScIEpnN7iYVxIvfUimRvuR0Uedsx4bdIUgly3YU/ePy9eGYWmt865SpYdX194k2GzgfkmaXI43RMncNQzf+Lt1FLiZOfvSUYfHNzdpqUo8x8224bv2LZ+W/f6KdSITjFP4W004ykOaYKnodi870cQI2qRgoBc/aysYvfMVKB0EbnQO/51Qria5GSiR0rIAyiroO3VG8unmh7VeTZP5Mps7QbCXUjvOH+Azr/zP9BpLd/aHhruAiGoL4juC4+4CKmBPFO81IGhThQpCn1IGDfRtnSJBZVHgtdImHKd8nhQjfkTTHiLdJaABD6A7yg3WOXvscgnjHwCqztNFd/nHAZQAuz0Qbjo8FmVcLRVRE6U+CE6BGHqSrFcnzFwXPbH+O5bEl10CzvDCSQJ3XD7MkrJg/lWrWIf8pLmGvuCBYQwNTVjNpmh9vtg
-DKIM-Signature: a=rsa-sha256; bh=0SChvd0whtSsIN+2G/Y70UK2p59QA4KpdDQAZVFUuQI=; 
+X-VR-SPAMCAUSE: dmFkZTEQSx1diC0J9uiKZUafSv9aKiyqW/HsXhmH4hT2rJWTfjT5eBa9iGH6ww9pWdKLRCJIaHQbvMO1JK/h66gk5/O/k1U+fW+kJwEbUJsoGorEfe/23uuJsrEhXunFJIJD582mpb0QNEcr3m5aIhfspUGNSnwh0GPa2YScPXku/NzkqLG+6qAlYLYbJmiFgJVZUZ2R09/LM31LehARZmokqSvscUUE/lXyWsWrUeza58Mel1+2X6q8qnlEONj0VpWIe7lrTLAuJ6Z2VXlJr8OT21Q5OjHCYLe2N2pjCwx3a2h/IzCuqas8Nc+2wrEuAH4nsAdkyDDiDkBXVf/nfVVdF7doC8bnqJtnL6mLs4ry4nLqDUXuDx6knDht05Txfd3PUEcW7A+bcEu4YRdMibvYrYYF3Vc1/teMFjXAc095cFYVLB7lXwCXQjq+NbYxrlvKmWSSua2S7mGLqSOIjogx4at5YelS8eK8sTchU64Enj1ThjObGy1ZPxgUqaSFgkFGZXKY1h0pOz5gvSm9/m0GZ/ZnJTWUbmaYEl/pieo370fsT2Ig80zojoMqWa0NdS7XJ46Ez8YCw9+KPRBjL5b1crJP+R9aEO6tdl1n39vuMYh9wvaiqrlGbxgcLIKAjIxcjhskerPQFw5HcoP3L5JyrCP5vPa0SKdczmmoYVaIi1Xbog
+DKIM-Signature: a=rsa-sha256; bh=nJ0BE+Hw74QZw4DMiClZ0grePGxWCLY7x0tau66y2JY=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1782830716; v=1;
- b=IfOsMAiD+lzL72587MosCXK8xCL8wxfowV+J8xzb2DGvJT63Q1RvRjnTv6XZKIPwmg4Hteek
- P+cooKaGdZ6+HEuIbz0X+O7J/dCYINQ8dvePsh81qMn3Y+7dPN8F7M3uuC/7USQ99T9TLMu8KHI
- IglUXbMFO/9S+pDlLgQBy/wKxzFxVU5VsKLihkuamNPpwCSAegr+MLXWwW86BS7dWsVQEhKs41P
- PpQzEDo63pojhvC7Uu/quu++owcWU7ZfF6OvEjNBRWoWlXs2SrNXsCRqBx5PySQDRhLmW/lPYKE
- AMa9LcOmANQ33KKvEgKzEuHSts4dL01RBiEDEwZZkUuMQ==
-Received-SPF: pass client-ip=51.210.91.15; envelope-from=clg@kaod.org;
- helo=smtpout6.mo536.mail-out.ovh.net
+ t=1782830742; v=1;
+ b=H3eg6nRrtgUM9j0/31aQAdBZRjzumMXS6IoUTKW8DGQa0Ep5Uhfa1mtk2GmfkArnJZousksC
+ pPPQbrOJ3j4SARvAtrM5tDqxwA0vmctW79j2r7X5uyWOjjajVg/vf6RnzIZixir1Dop/u8CATOm
+ 3KIQfN2bbhDPYXpbqOmqDU5eqxdvIsqcWS1xdSwgxVxVmMljz/7hfbt+Xq3YSbFV2V17wS5p/Jz
+ euM3QqWoMy0F4WKGr9UrPLAeMS4gOcdSj5ghtMK43Aj0nAnSkjcMhPJDACr7DgnH8Ouze9hx4Y5
+ OzAddIuL3y3G5cKc7pySW0tlj5SZKzjuM6hJ33i7qbWXA==
+Received-SPF: pass client-ip=51.210.91.35; envelope-from=clg@kaod.org;
+ helo=smtpout6.mo538.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -139,86 +135,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+ Joel
-
 On 6/30/26 15:57, Bin Meng wrote:
+> m25p80 now consumes fast-read dummy phases as byte counts. The
+> ASPEED SMC direct-read path still treated the CEx dummy field as
+> raw cycles and emitted field * 8 SSI transfers. Convert the
+> ASPEED dummy field to SSI byte transfers using the selected
+> direct-read data width.
 > 
-> This series fixes dummy-cycle accounting for SPI NOR fast-read
-> operations across the m25p80 flash model and several SSI controller
-> models.
+> Fixes: ac2810defa9d ("aspeed/smc: handle dummy bytes when doing fast reads in command mode")
+> Signed-off-by: Bin Meng <bin.meng@processmission.com>
+> ---
 > 
-> The root problem is that the affected code paths mixed two different
-> units. Flash datasheets and controller registers often describe
-> fast-read dummy phases in clock cycles, while the SSI bus interface used
-> by these models transfers byte-sized words to the flash. As a result,
-> some paths treated cycle counts as byte counts directly, and other paths
-> compensated in controller-specific ways that duplicated flash command
-> semantics.
+>   hw/ssi/aspeed_smc.c | 21 +++++++++++++++------
+>   1 file changed, 15 insertions(+), 6 deletions(-)
 > 
-> The first four patches fix the flash side. They make m25p80 keep
-> `needed_bytes` as a byte count and convert manufacturer-specific
-> dummy-cycle requirements to dummy byte transfers for Winbond,
-> Numonyx/Micron, Macronix, and Spansion flashes. The Numonyx/Micron
-> change also handles the standard-mode case where the dummy phase follows
-> the address bus width for output fast-read commands.
-> 
-> The next patches fix controller-generated dummy phases. NPCM7xx FIU
-> and Xilinx ZynqMP GQSPI now convert programmed dummy-cycle fields to
-> SSI byte transfers using the bus width selected for the dummy phase.
-> The ASPEED SMC direct-read path is updated the same way. The two ASPEED
-> reverts then remove older workarounds that either hard-coded FAST_READ_4
-> dummy behavior or snooped manual user-mode SPI streams to inject extra
-> dummy cycles. With m25p80 accounting fixed, user-mode byte streams
-> should be forwarded as supplied by the guest.
-> 
-> The final patch documents the intended ownership boundary: flash models
-> own command semantics and dummy-byte consumption, while controller
-> models own hardware-generated dummy phases and cycle-to-byte conversion.
-> 
-> Some background:
-> 
-> While recently working on some device modeling, I hit this issue
-> again. I then realized that I had sent a fix series for it more than
-> five years ago, but it never made it upstream.
-> 
-> This series picks up that old work, refreshes it against the current
-> tree, and fixes several issues in the SPI controller models. The original
-> series is available at [1]. I have tried to verify all the SPI controller
-> changes by booting real-world guest software to ensure the change does
-> not break anything.
-> 
-> [1] https://lore.kernel.org/qemu-devel/20210114150902.11515-1-bmeng.cn@gmail.com/
-> 
-> 
-> Bin Meng (10):
->    hw/block: m25p80: Fix dummy byte handling for Winbond flash
->    hw/block: m25p80: Fix dummy byte handling for Numonyx/Micron flash
->    hw/block: m25p80: Fix dummy byte handling for Macronix flash
->    hw/block: m25p80: Fix dummy byte handling for Spansion flash
->    hw/ssi: npcm7xx_fiu: Correct the dummy cycle emulation logic
->    hw/ssi: xilinx_spips: Fix dummy phase handling
->    hw/ssi: aspeed_smc: Fix direct-read dummy bytes
->    Revert "aspeed/smc: Fix number of dummy cycles for FAST_READ_4
->      command"
->    Revert "aspeed/smc: snoop SPI transfers to fake dummy cycles"
->    docs/devel: Document SSI dummy-cycle ownership
-> 
->   docs/devel/index-internals.rst |   1 +
->   docs/devel/ssi.rst             | 132 +++++++++++++++++++++++++++++
->   include/hw/ssi/aspeed_smc.h    |   2 -
->   include/hw/ssi/xilinx_spips.h  |   2 +-
->   hw/block/m25p80.c              | 146 ++++++++++++++++++++++-----------
->   hw/ssi/aspeed_smc.c            | 135 ++++--------------------------
->   hw/ssi/npcm7xx_fiu.c           |  25 ++----
->   hw/ssi/xilinx_spips.c          | 120 +++++++++++++++++++--------
->   hw/ssi/trace-events            |   1 -
->   9 files changed, 345 insertions(+), 219 deletions(-)
->   create mode 100644 docs/devel/ssi.rst
-> 
+> diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
+> index d87fbd798c..f5abc9fcc9 100644
+> --- a/hw/ssi/aspeed_smc.c
+> +++ b/hw/ssi/aspeed_smc.c
+> @@ -449,19 +449,28 @@ static uint32_t aspeed_smc_check_segment_addr(const AspeedSMCFlash *fl,
+>       return addr;
+>   }
+>   
+> -static int aspeed_smc_flash_dummies(const AspeedSMCFlash *fl)
+> +static int aspeed_smc_flash_dummy_bytes(const AspeedSMCFlash *fl)
+>   {
+>       const AspeedSMCState *s = fl->controller;
+>       uint32_t r_ctrl0 = s->regs[s->r_ctrl0 + fl->cs];
+>       uint32_t dummy_high = (r_ctrl0 >> CTRL_DUMMY_HIGH_SHIFT) & 0x1;
+>       uint32_t dummy_low = (r_ctrl0 >> CTRL_DUMMY_LOW_SHIFT) & 0x3;
+> -    uint32_t dummies = ((dummy_high << 2) | dummy_low) * 8;
+> +    uint32_t dummy_byte = (dummy_high << 2) | dummy_low;
+>   
+> -    if (r_ctrl0 & CTRL_IO_DUAL_ADDR_DATA) {
+> -        dummies /= 2;
+> +    /*
+> +     * Scale the controller dummy field to SSI byte transfers using the
+> +     * direct-read dummy/address bus width.
+> +     */
+> +    if ((r_ctrl0 & CTRL_IO_QPI) ||
+> +        ((r_ctrl0 & CTRL_IO_QUAD_DATA) &&
+> +         (r_ctrl0 & CTRL_IO_QUAD_ADDR_DATA))) {
+> +        dummy_byte *= 4;
+> +    } else if ((r_ctrl0 & CTRL_IO_DUAL_DATA) &&
+> +               (r_ctrl0 & CTRL_IO_DUAL_ADDR_DATA)) {
+> +        dummy_byte *= 2;
+>       }
+>   
+> -    return dummies;
+> +    return dummy_byte;
+>   }
+>   
+>   static void aspeed_smc_flash_setup(AspeedSMCFlash *fl, uint32_t addr)
+> @@ -487,7 +496,7 @@ static void aspeed_smc_flash_setup(AspeedSMCFlash *fl, uint32_t addr)
+>        * settings, let's check for fast read mode.
+>        */
+>       if (aspeed_smc_flash_mode(fl) == CTRL_FREADMODE) {
+> -        for (i = 0; i < aspeed_smc_flash_dummies(fl); i++) {
+> +        for (i = 0; i < aspeed_smc_flash_dummy_bytes(fl); i++) {
+>               ssi_transfer(fl->controller->spi, s->regs[R_DUMMY_DATA] & 0xff);
+>           }
+>       }
 
-Thanks for the cleanup, Bin.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Tested-by: Cédric Le Goater <clg@redhat.com>
+Thanks,
 
 C.
 
