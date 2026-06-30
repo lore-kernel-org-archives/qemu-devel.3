@@ -4,114 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77109C43327
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 09:37:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5996EC43327
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jun 2026 09:44:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weUu9-00067g-FV; Tue, 30 Jun 2026 05:37:21 -0400
+	id 1weV0B-0007DB-1P; Tue, 30 Jun 2026 05:43:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1weUu8-00067M-1I; Tue, 30 Jun 2026 05:37:20 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1weUu6-0000CB-I3; Tue, 30 Jun 2026 05:37:19 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65U5mNdh1076043; Tue, 30 Jun 2026 09:37:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=kNSvMX
- kMwqcHG3oWPHQdKBBybsoFSq7+VyXqOOqqjhg=; b=GWeA65YkIlb3QB8hOXIF/V
- Ygb06PAjwa2nYtidg2oenPUKD3R9lbzSWePYeGgEInMdfTbp9Jh2JydVm9Z6FLab
- NSHgdFWl/hp4QmMsUBFStvdp94wG4cdyQ2huDYx/k/lW/B+86aF6y5OPzZFq/PEA
- 1wcxn+LOF9NhJK/wqGreE5PRL3C6jvSf/3jp/LXe9+on6TL1KAvr0dn2r+AFI3Ko
- /GZWSZBsV77NRSoAip5SeM+eohoTZFNDqGTDo9HofCiHs0TJctsNziGxbVT9uFPy
- lj8zaZAscQhPZFfDB7zcfxLK3BrUJilAfza0i9upp8TzwTadSfsJjeldiwW8rI6Q
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26q9wpgr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 09:37:15 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65U9Ybp3005987;
- Tue, 30 Jun 2026 09:37:15 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7w1kh3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jun 2026 09:37:15 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65U9bBRo34341204
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Jun 2026 09:37:11 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 46DCD20049;
- Tue, 30 Jun 2026 09:37:11 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D285D2004B;
- Tue, 30 Jun 2026 09:37:09 +0000 (GMT)
-Received: from shivang.upadyay (unknown [9.123.12.247])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 30 Jun 2026 09:37:09 +0000 (GMT)
-Message-ID: <dcfa2a3250641cb188a04fa7e46f09abd46c6725.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 2/2] ppc/pnv: add test to verify external DTB is honored
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: Aditya Gupta <adityag@linux.ibm.com>
-Cc: harshpb@linux.ibm.com, milesg@linux.ibm.com, npiggin@gmail.com,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Date: Tue, 30 Jun 2026 15:07:08 +0530
-In-Reply-To: <akJaUpckzqdnZmHq@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260623063156.1110370-1-shivangu@linux.ibm.com>
- <20260626112239.177191-1-shivangu@linux.ibm.com>
- <20260626112239.177191-3-shivangu@linux.ibm.com>
- <akJaUpckzqdnZmHq@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1weV05-0007Bf-RB
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 05:43:31 -0400
+Received: from mail-dy1-x1334.google.com ([2607:f8b0:4864:20::1334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1weV04-0003iD-45
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 05:43:29 -0400
+Received: by mail-dy1-x1334.google.com with SMTP id
+ 5a478bee46e88-30b9e755555so145957eec.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 02:43:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782812606; cv=none;
+ d=google.com; s=arc-20260327;
+ b=oudrCTqTaL6TyMxBiJug1sBFiHVovPLWWjgbZoleOLnYfqqR90BD/lNG4kZyb+ZqLH
+ DPaB56DA65CpezFGFSomHGFDQ4spZuFat0dQPz4M5nY5nTEVAPgYHync+3KfQDhNFOXE
+ Z96uGJvMPquz2Ha30U3RUeSxnduu3uLVTfw/Q5bm8Bd+I2djewc9OscYvhxvvGnJLC5J
+ QZNWk5ovNicOGhonDEVVDjwM2lasH6I2e2dq63njGivlnaEGfzQmBemce2vJnKxQClWf
+ GQkTqYB7GwuuWEUOtE9j3EbZJKBcBZ/fqk1SxLDsOnKDyB1/hEss8EeUgnZ1XEn4e2Mr
+ YuCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=FFDeTaWq9gb9YQZ3DE+5IyVJ3b1N4Ny9ykkllIKbndA=;
+ fh=Rf+6LNIT7ae/oiXm7iYpRqM0ZV+oa7nPLPPWJ9l612k=;
+ b=cVo4EW94EO7IKW1Eym2fP/Qdpl9sE4kCF1I4aRqIVp07a8XOr4twoOZ8UcITRjsrzu
+ WvgFkhewyA9hJoCKpgPL7jGKZN/QhmrE7gwyYvOlPmXkicKK3MHLLDpVDAeiaUAfXex5
+ mAfHlA6V4HbaaDs+r04Uv0UQd0HzkPhnxLpAewSrja3xQRTTRoRCV2azlVq8j+CYSfy3
+ cDZle8OHGnW78YVXmAipeacKNjCPDmeM8iMe8Wtqz/8rZ1EaLO2xLeI5UCbnGT+ARP+N
+ LUj7Ma6Czotjoz0R0+uKMbqLORcuMQj42Swm33fQpUVTO1lw4kzwizSE5VBrkU17we0H
+ 9ARQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782812606; x=1783417406; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FFDeTaWq9gb9YQZ3DE+5IyVJ3b1N4Ny9ykkllIKbndA=;
+ b=kolZwVgH8Vp33Hxqy35OCe0tnfrRIqgrqCtaFTzCzEr6HsrZENnonRDSSR6+ysG4pR
+ wEdVZf2AzBvpP7Rkm1W4IErixefRFT3gfsVGg0JX2mYfMwPafRxUqmijoLOPdYDlHsh9
+ Mzk4GTP3doL0Wtj2poQfpcExV997qQhlxBQgWMicWdFr0ZbEqTGQNKkqKsbNtSjE8Gt2
+ uXMD9ATga0hVP8xHZpTZR1Ibq+75w1cm+8zy5GS7h1TtMdqLX1Z04TS4HvnKuBoRVQTd
+ C7xiPM6aW3JXnTFC3KLeYYazn0/+cSRcBadHECXPmcZoEMS77I0xtePVSnV6UP+MTSon
+ 707A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782812606; x=1783417406;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=FFDeTaWq9gb9YQZ3DE+5IyVJ3b1N4Ny9ykkllIKbndA=;
+ b=GhfMvIDDjyoJJ/f4yxbx0ZGrxKuDPOaW6X8cFKy5S/j5aHplaNnDgjqetX2LfQdlQe
+ Lty4KekyfSwSRUlfznsvGMiDSPzdmJkBr0Ae5gqiNUTL6diRhd5phAKVWme5NkQC2lJM
+ 7dB+0N9XXZYN7lVFxLpxon9/ONappdl4z7IfD8DiE3he00Zf4rax3x0Omj4Y/T76r1Ay
+ HPPTTgQrUdI3Th88ly0G3BUTCjaGNa5ODN11tR7Bt3k4ARfhrDOv1/v+gf5UvrLyfV6i
+ CuS+VCt8qJwzgDq1DVqgLVPRHqLYtJ3eHFnHfTzaALl8RwYaaihrpIQm7q//PFW+1MPj
+ ZYvg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rpn7LiDHBNI+IXDoTyj+aWRgoLOl3afzyE8VhfFaQBuiPQfkqkk3uPLXgtXVDBAIv7IJKo/fnaNAZTB@nongnu.org
+X-Gm-Message-State: AOJu0YzhEVXW0mGPMdkM2ypVbRBNteWZ2ztqsLL5RVH5okc17WvXlGrE
+ OdErU5NKpCsoS5GIXw2nbbS04WTpa1zmmFmeo/lEyLhVAP9tw2uDhUSHkmoemuZU1q4OKHhqk4z
+ 2n7r9kG4QJrBbYa8DcxIeGzhW8u+eKz4=
+X-Gm-Gg: AfdE7clGtpGXm+F8PUGSoq/GVswA0WWX1EXLcDkT9rhKTVQQeRuxlEPwS64GzGmZW4C
+ PVL80EV1BQv8FTEgMBLojckohX+HoLKNKnCK2JWQhHDHTtpfC68sV9l0kkF7C05pk3hFU3lTfaj
+ H3DcewA8K5hY0lS6XgUIafsg9hYYqHcuqu35hx1BFouO4/Qqd5qWGbPs9YsnBTlIvTK1Pw89W3r
+ /ag8JJlOxZgRFLHmgT14CnpYC4iVfrOYctE3QP9zRm67lZ/17KZ3vztSEgzrNffUiirNt6A83CL
+ phWfpBuumdUbWz0K3NaF5kQXFtwj
+X-Received: by 2002:a05:7300:430f:b0:30c:9f31:b631 with SMTP id
+ 5a478bee46e88-30ee13a1086mr2309432eec.33.1782812606231; Tue, 30 Jun 2026
+ 02:43:26 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260630093302.688700-1-frolov@swemel.ru>
+In-Reply-To: <20260630093302.688700-1-frolov@swemel.ru>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 30 Jun 2026 13:43:13 +0400
+X-Gm-Features: AVVi8CclDxxyWWrgA6bDAIzL7TOpEnEIL2_KjB-Zl2MNH1KMEicOteusmWkiADg
+Message-ID: <CAJ+F1C+cS7c=Mc2GAn-WQ-XmCPU-hQM4JuDFsEkS87q0yTdrNg@mail.gmail.com>
+Subject: Re: [PATCH] utils/module: fix memleak in module_load()
+To: Dmitry Frolov <frolov@swemel.ru>
+Cc: sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org, qemu-trivial@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
-MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDA4MyBTYWx0ZWRfX4pjqoVySXX3Y
- IUiVxjN1UtitUarYZtRuUQnxLipCf4tYUHr8RQvXfE7nEBDcFfvFsmnHHtwa1bVi6kyunc7hZdw
- bwvi1iwDatbnutc73s70vL0QsklxtRdKtCaqNA0ML/f261ITtFA3VmjKirqueqPiYbYDfoa3WfJ
- 0gZ1ZkNb9j6O1BEu1GPKI1+hjdeFOxxHiKwv4oX4qjpayvHXKaETkcaWg7GnaG0aCMani1GqdG3
- gYnwj7Tz/POBkPZfJSsCpZEpPmr5P2CEsZDgWxkm3WiG7LL6e/NsvmOlhrDn2Sc1xjbeTTnL4Er
- gVutk/8RDrHfurAXP7aV29kZliK6sZhPxFrVtFxTx6vo3+CM2lEVebAz33HRGXt//3RrDLyvOr4
- UdWsLgIi4OS2OJenFmbCSmenhb20chcNo73/ExRWOLOFyRkGObzocaH0NkRq6VMv1qp/UqxBrIA
- zngP7IMVS8TB/zGswXA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDA4MyBTYWx0ZWRfXxgBhlX60J/Tu
- 9k11x1FiabGiCdidaiZHTBWuD2n0Dr3+8e5XDjoWvYmilnkHbTBlxaF9sAO7Z1FfKNNnVaGuUNu
- mAG0a2EDUwAuunhfRY+z+AdVZ5ek1vQ=
-X-Proofpoint-GUID: 6woNYWT5PnSRmaYNPcdY3ZP9NysGxJ9C
-X-Proofpoint-ORIG-GUID: k49RIFpIXe9uw05gRrKg7vieQW8zxy3E
-X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a438e4c cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=NEAV23lmAAAA:8
- a=jrUJX8GpwmtQND6zI7UA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-30_02,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606300083
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1334;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1334.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,23 +118,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-06-29 at 17:23 +0530, Aditya Gupta wrote:
-> > +=C2=A0=C2=A0=C2=A0 # testdtb for power11, which contains string "hello=
- world" in
-> > command line
-> > +=C2=A0=C2=A0=C2=A0 ASSET_SAMPLE_DTB =3D Asset(
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
-> > ('https://github.com/roz3x/qemu/raw/refs/heads/sample-dtb/output.dt
-> > b'),
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
-> > 'ea1271516264eea1eb58a067a99d0c2ca9528be8dc7d4e46bb2d5ae0d42fc568')
->=20
-> nit: since you are anyways sending a v3, can you rename output.dtb to
-> something like qemu-powernv10.dtb, etc so in future you don't modify
-> this generic path unknowingly ?
+Hi
 
-Yeah, Sounds like a good idea.
-Ill send the next revision.
+On Tue, Jun 30, 2026 at 1:35=E2=80=AFPM Dmitry Frolov <frolov@swemel.ru> wr=
+ote:
+>
+> Memmory for version_dir, allocated by g_strdup, is not freed
+>
 
-~Shivang.
+memory
+
+> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+>
+> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
+> ---
+>  util/module.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/util/module.c b/util/module.c
+> index 09dc43f51e..dbca6bc8be 100644
+> --- a/util/module.c
+> +++ b/util/module.c
+> @@ -243,6 +243,7 @@ int module_load(const char *prefix, const char *name,=
+ Error **errp)
+>                               G_CSET_A_2_Z G_CSET_a_2_z G_CSET_DIGITS "+-=
+.~",
+>                               '_');
+>      dirs[n_dirs++] =3D g_strdup_printf("/var/run/qemu/%s", version_dir);
+> +    g_free(version_dir);
+
+Or declare the variable with g_autofree?
+
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+>  #endif
+>      assert(n_dirs <=3D ARRAY_SIZE(dirs));
+>
+> --
+> 2.34.1
+>
+>
 
