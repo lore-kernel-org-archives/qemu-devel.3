@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96FB7C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 08:16:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 277B5C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 08:22:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weq7F-0004Po-1D; Wed, 01 Jul 2026 04:16:17 -0400
+	id 1weqCo-0005Kf-11; Wed, 01 Jul 2026 04:22:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1weq7C-0004PY-I0
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 04:16:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1weqCm-0005KX-BY
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 04:22:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1weq7A-0000fe-SM
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 04:16:14 -0400
+ id 1weqCk-00037G-Ba
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 04:22:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782893772;
+ s=mimecast20190719; t=1782894117;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ckmKp8kjaueEBQsWaKhsx/Osmi0E/wlF3h6qoYSEaas=;
- b=hns6uOhUj9leeXJHsRGSt1dzDokuqEqLPplFiOPC0qnC2ADuT4UxEALlEePq8H5vISAbzC
- RHK9Xif0CYs/g9DhE3dtw/iPhgJSvhseIZX+yQb2S/Ny99kQYzZEJgW/na8CI5eOANdLb0
- QjMWuTLnPiaeh+YaapKTHyp5yF1DjAU=
+ bh=NORV+EDLzxFbm9FB+iMadvKsxe4AElx8+hRTO1FYBLU=;
+ b=Ha2XakMJoXHWJSsKr32urSKmWl729Rsuqc2Ua7pgoeFzjfEU+l+goZpGR0J+gFEWdDvVdm
+ e/rD6OY4wojNiERQbKCVU+/Munu2DfcUtYajvac6h79r5UE416Xl85jgAWmQJvXSTBkEcA
+ npXnLNGjDH5JiLFU/P+boq/VQeyw1SY=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-294-0OD7unq0PjqcAg5Wrd7NSw-1; Wed,
- 01 Jul 2026 04:16:11 -0400
-X-MC-Unique: 0OD7unq0PjqcAg5Wrd7NSw-1
-X-Mimecast-MFC-AGG-ID: 0OD7unq0PjqcAg5Wrd7NSw_1782893769
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-173-F8fEGCSMPs6RkamOfD8hhQ-1; Wed,
+ 01 Jul 2026 04:21:55 -0400
+X-MC-Unique: F8fEGCSMPs6RkamOfD8hhQ-1
+X-Mimecast-MFC-AGG-ID: F8fEGCSMPs6RkamOfD8hhQ_1782894114
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4BA5F1955D5B; Wed,  1 Jul 2026 08:16:09 +0000 (UTC)
+ id F00D31933F9E; Wed,  1 Jul 2026 08:21:53 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.33.35])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 898373000C23; Wed,  1 Jul 2026 08:16:05 +0000 (UTC)
-Date: Wed, 1 Jul 2026 09:16:01 +0100
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B810F180049F; Wed,  1 Jul 2026 08:21:50 +0000 (UTC)
+Date: Wed, 1 Jul 2026 09:21:47 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org,
@@ -57,29 +57,26 @@ Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Christian Brauner <brauner@kernel.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Peter Krempa <pkrempa@redhat.com>
-Subject: Re: [PATCH v5 34/35] qemu-options: document new monitor-hmp and
- monitor-qmp objects
-Message-ID: <akTMwaEFe3eR7Dpi@redhat.com>
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: Re: [PATCH v5 00/35] monitor: turn QMP and HMP into QOM objects
+Message-ID: <akTOGzFdz3_0Np-U@redhat.com>
 References: <20260624173752.2928717-1-berrange@redhat.com>
- <20260624173752.2928717-35-berrange@redhat.com>
- <87qzln6ugf.fsf@pond.sub.org>
+ <87fr236t9v.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87qzln6ugf.fsf@pond.sub.org>
+In-Reply-To: <87fr236t9v.fsf@pond.sub.org>
 User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
 X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -98,47 +95,71 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 01, 2026 at 09:27:12AM +0200, Markus Armbruster wrote:
+On Wed, Jul 01, 2026 at 09:52:44AM +0200, Markus Armbruster wrote:
 > Daniel P. Berrangé <berrange@redhat.com> writes:
 > 
-> > Add new docs for the `-object monitor-hmp` and `-object monitor-qmp`
-> > options, updating `-mon` to state that it is legacy syntax sugar
-> > for the new `-object` args.
+> > Conceptually -object and object_add/object_del should be sufficient
+> > for essentially all QEMU configuration....if only we ported all our
+> > internal custom backends/devices/etc to QOM. That is of course a big
+> > job which is why it hasn't happened.
 > >
-> > Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > Tested-by: Peter Krempa <pkrempa@redhat.com>
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >  qemu-options.hx | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 49 insertions(+)
+> > This series started with the premise that the monitor is one of the
+> > easier areas to convert since we have no more than three classes,
+> > a common base, and QMP and HMP subclasses[1]. So why not give it a
+> > go and thus unlock the ability to dynamically create/delete monitors
+> > in QMP/HMP.
 > >
-> > diff --git a/qemu-options.hx b/qemu-options.hx
-> > index c799286153..a804d5b880 100644
-> > --- a/qemu-options.hx
-> > +++ b/qemu-options.hx
-> > @@ -4980,6 +4980,16 @@ SRST
-> >        -mon chardev=mon1,mode=control,pretty=on
-> >  
-> >      enables the QMP monitor on localhost port 4444 with pretty-printing.
-> > +
-> > +    The use of ``-mon mode=readline`` is historical syntax sugar
-> > +    for the new ``-object monitor-hmp`` option, each use of which
-> > +    creates an object with the ID ``hmpcompatNNN`` where ``NNN`` is
-> > +    a counter starting from 0.
-> > +
-> > +    The use of ``-mon mode=control`` is historical syntax sugar
-> > +    for the new ``-object monitor-qmp`` option, each use of which
-> > +    creates an object with the ID ``qmpcompatNNN`` where ``NNN`` is
-> > +    a counter starting from 0.
-> >  ERST
+> > This series does the conversion in a great many small steps to better
+> > understand the implications at each stage.
+> >
+> > The high level outcome of this series is
+> >
+> >  * HMP and QMP monitors are QOM objects, 'monitor-hmp' and
+> >    'monitor-qmp' respectively
+> >
+> >  * Both can be cold plugged and hot plugged. QMP only, can
+> >    also be hot unplugged.
+> >
+> >  * '-mon' is obsolete, deprecated and replaced by '-object',
+> >    but -monitor, -qmp and kept  as high level syntax sugar
 > 
-> Should we document how -monitor, -qmp, and -qmp-pretty map to -object
-> and -chardev?
+> Possible additional work: change monitor_parse() to build a
+> MonitorOptions instead of a QemuOpts, so it call monitor_new() directly
+> instead of via monitor_new_opts().  Observation, not a demand.
+> 
+> >
+> >  * QMP gains a concept of "close-action" which makes it
+> >    possible to mark a monitor for auto-delete.
+> 
+> I'm not quite convinced this is warranted.  I'd like to hear more about
+> use cases.
 
-I thought they already described how they were mapped to -mon,
-but I see I was mistaken. It is worth a followup patch to
-improve their docs, especially given your points around the
-implicit "id" value they have internally.
+Replied about that inline to the patch. IMHO without this facility
+the series does not fully address the needs of systemd that motivated
+the original patches:
+
+  https://lists.nongnu.org/archive/html/qemu-devel/2026-04/msg01349.html
+
+> Is libvirt going to make use of it?
+
+This wasn't motivated by libvirt's needs, but indeed it could be
+useful for libvirt. Currently if apps want to access QMP, they
+need to use libvirt's QMP passthrough, which means they need
+special client code to talk to libvirt APIs.
+
+With this libvirt could dynamically add a monitor, with auto
+close, open it and pass the open FD back to the client app.
+libvirt would not need to watch for when the client app is
+gone as dropping the FD would cleanup the monitor.
+
+
+> Fully addressing all review comments before the soft freeze may or may
+> not be possible.  Perhaps punting sufficiently harmless changes to a
+> post-freeze fixup series could help.  Use your judgement.
+> 
+> We could also leave the close-action feature for the next development
+> cycle.
+
 
 With regards,
 Daniel
