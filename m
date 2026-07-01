@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86092C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7B2BC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:21:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wes2z-0004jf-6H; Wed, 01 Jul 2026 06:20:01 -0400
+	id 1wes21-00016l-Su; Wed, 01 Jul 2026 06:19:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes2x-0004iZ-C7
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:19:59 -0400
-Received: from mail-dl1-x1230.google.com ([2607:f8b0:4864:20::1230])
+ id 1wes20-00011o-HR
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:19:00 -0400
+Received: from mail-dl1-x122c.google.com ([2607:f8b0:4864:20::122c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes2v-00051R-RE
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:19:59 -0400
-Received: by mail-dl1-x1230.google.com with SMTP id
- a92af1059eb24-139f3eaaa49so489238c88.0
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:19:57 -0700 (PDT)
+ id 1wes1y-0004jn-UO
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:19:00 -0400
+Received: by mail-dl1-x122c.google.com with SMTP id
+ a92af1059eb24-1390f75d8bbso824118c88.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:18:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782901196; x=1783505996; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782901138; x=1783505938; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Gw4l4Gi5whz+2vBwByejJ5LTilUWHMGfCkjX1QzScfU=;
- b=dkSUMjsvdz6tNNtmhOgmp972pvHskmqHU5eibOIYyX2JaNQIzb0ZnPUJGNWd+XsDpp
- U9oS3yA8M2NQmiR//N7v81JizfJFQONg/XOWDVHX47uK6Zial60vQajthXQjbqgXTyY1
- DsI1+pghgsZgWVb4J2WScgIWFHCPzcFwVDufbzCMIpVmRFKg76QdqHJXatMYEUvMhyzS
- 8lhPVTcQ2Hd8u5WEVdP8FA8nJzI/6qzVnneHvdw7UaXcVQtgVtHmuvJFfdNhJPPA3Cua
- dkKc1vmDLtXUu3zDyH3fsr2KHQaTNi/3gjZHKFQ+1mWYPvAzzV4RECoBKNNizgleIV9+
- gs9A==
+ bh=3GJTmb7JTT81bbVI0cEDaE70d55XevEsg0cLzgv9BI8=;
+ b=W40dofVNcgjSMTAjnxQxFvvK9IM+6tj3424gw1CrFDt6/jJ+0qZbx0H4PPiY99uEUU
+ s/Ly6mnbCfbduvW4395Qtla/uMw5Jf9PCIjUF3iOnMPXCzY5P8HNjIcMtPiDzQIaqCgR
+ YGPn42MnxFIbyIGQrcoM08gAbR5xe5WbnhPjQ2UfU3JUHZsmUmCZkMWQ7W58JwEzH+sn
+ WR9VJOw99QtJmic8Immdbmz0v+aESbGDA9XJ1uhq5CgY4wbbUwsvVz/OZymhhLzgvZyF
+ ZEbzky7kBcK9azcaObioyTa6jVlS0cxypkE1ycMzj0mzGtkhXzlj8zACkmEXRN+GGyTe
+ 1WXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782901196; x=1783505996;
+ d=1e100.net; s=20251104; t=1782901138; x=1783505938;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Gw4l4Gi5whz+2vBwByejJ5LTilUWHMGfCkjX1QzScfU=;
- b=eSxRpjGMi6aFsR6OufaIbKxgTM2fwSZb1CsGRKILZRCzA0gd5P3iT6IgALkLPYziy5
- p4LXt5HtVr9UlLmw5EHdQ1npzFCJhGZXVpLXITQwuXjvB8FcHe8l1fqQvRS58GknDQoQ
- 5kIjPatLYKzZfweoE109k7VPO6e5ypnhmIbvAslGnAWr3O0zHpZWFhUo6tlhvjqFhpI6
- i0irqoBRGGQjAsNHgSAQHCU64Qc1DvjDsRUC+8Qu3dPXmbNxBlWvJGfDs0/qzcTBN7Zx
- bUZNPxSAWGKrN1pHmzmSI3rBcxrgsS36C9pGaejU9jGzq+QQ2LyTvhl1Y62sLOlA4hw0
- q0vg==
-X-Gm-Message-State: AOJu0YzW1kaS19odTaKKAsCEvaryOqH6rjdU/HL7pnE3i41MvC6y8msT
- C2+hFvmfos0nlNvjcDPKRzwQzv485BXhJgXie3D7lYSSt2ML8fWw+tX2pI/t8g==
-X-Gm-Gg: AfdE7cmSc/cHMIoZKsFSfYE180B5UA36v3uc8Xij+tVOqJ6mNjKcYcK/GSBNNiJUOJN
- 8jdKVANSy95FUz6l/5RE1jrY7EUmOJqbrNudFDjmWgetgG73eyy6nxadJZ8NUikwv4vrg98Q4Th
- 7ULEJyauGHtB7gPlJModFC2i8u1t79fpgp5pAl6X+iCJN75JidmDUdNZcD4NA7JXez2W8LTl7Be
- L4VD4a+N7B3H75+Xbwq9OTsSnURj6VVdn9bdOr3PSpfRAyBxSixsvO3b9yN8abLuz6IIS7vTQGt
- 7OMEyRixIhoiVbORj3s167nttowwIPANP9Cd92d28bPSP3OugG0DOxLzgappPZXy+6F7R0lEqAL
- jhLTkUwFJfbVN0YwHbY5z0UITS5qqkPWpKihO6JzWLAKs6tutIUXJN1rP5SqAB0o541Pfwkp0B9
- /bN/RFjdiucTSo4gm4m63xEpjBLzHFELk=
-X-Received: by 2002:a05:7022:45a3:b0:137:1ae1:bc0e with SMTP id
- a92af1059eb24-13b36d7fbf1mr960008c88.13.1782901196219; 
- Wed, 01 Jul 2026 03:19:56 -0700 (PDT)
+ bh=3GJTmb7JTT81bbVI0cEDaE70d55XevEsg0cLzgv9BI8=;
+ b=ZCBX0EcjONTLWRpz9UfYJUuPyhbyWIWiCnL29SijG6wrJ4mn1+7wPCuHTOk7leUsnC
+ RJtVW51wT1K24QUGbZR/6XfnU/3z9vNxzlDIg25OKw6SnxLoEfFJSU7ooqBV9nXC09gX
+ qvH72FcxpMzk7yDYJ9/qrQIxv0uRp9WW+IwIX9E3pVexJ3pTVf9ZAoFerhlAXpXY83RX
+ TPg78JoTaJjQSuBx/WtD60Kix+fZJQ94CVgqV83aOyFaagF9rgUUC+FpRn63MxpMqFl6
+ MBxcSidpc5M2EzwTUMxY+NtFM6ht83RqiLH2fXKjTX7T6lKR4eUMPMppqXrCazcEs4aZ
+ B+jg==
+X-Gm-Message-State: AOJu0Yw19ynTuTtBBYvrHvH2mr3CkUwe2mm4FhI8Zl4vwY09LrXJ91uw
+ 9y1Qu0hx/FA8yD77JmU0JUY+fYGG/Ag3zGdTpq/p8Zm5V7QINUir58iT4+04Xg==
+X-Gm-Gg: AfdE7clXsXPtqcwdyJ/30rCUsCk5PGDMCIuIQI/2b5iyHbOKnhk7HpSCEF1DR0XJwwN
+ 78UZhZqWuOCJz4/vatEcTAD5KusXvkQRv6V8IsA5eRmwSr7BNW8EyDu74Bh9n2L8ZavhK120DI6
+ 97sJJFdal7FVNLB0soFJM+Hf4guVIQ7rxU1/eOaaOqvfq1LiTrTvb72mq49dveQiJtg94HU3D2O
+ dNnilumQRguQdQjPLxunA4XEtHru12GPuudhN97i8EHhioSYUPkEyiZMF9Mzp9x6m+71uHAuym5
+ GRqy3/NaqXMxnb/rFDY8RdEBT1la3BEmfqFYPRras7UZzLCagzxhGpCkstalwKBnKQ03dTGJn44
+ hyKbsPMIYebASRhVkxkdB84ss+aeIbBk6H2JgZ91kV7l76ud8Ce+IqC72gdPIeKZKjBfLilTeaN
+ HFG3et+kjlaVXL3s4ItQS92LuLy+mdlpU=
+X-Received: by 2002:a05:7022:e17:b0:139:f599:8124 with SMTP id
+ a92af1059eb24-13b36d86554mr1114654c88.3.1782901137447; 
+ Wed, 01 Jul 2026 03:18:57 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.19.53
+ a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.18.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jul 2026 03:19:55 -0700 (PDT)
+ Wed, 01 Jul 2026 03:18:57 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Alistair Francis <alistair.francis@wdc.com>,
- Joel Stanley <joel@jms.id.au>
-Subject: [PULL 34/39] hw/riscv/atlantis: Ensure OpenSBI has a non-zero
- next_addr
-Date: Wed,  1 Jul 2026 20:17:47 +1000
-Message-ID: <20260701101752.2522962-35-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 16/39] hw/riscv/virt.c: change 'plic' nodename to
+ 'interrupt-controller'
+Date: Wed,  1 Jul 2026 20:17:29 +1000
+Message-ID: <20260701101752.2522962-17-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260701101752.2522962-1-alistair.francis@wdc.com>
 References: <20260701101752.2522962-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1230;
- envelope-from=alistair23@gmail.com; helo=mail-dl1-x1230.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122c;
+ envelope-from=alistair23@gmail.com; helo=mail-dl1-x122c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,63 +104,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-When using OpenSBI fw_dynamic on the Atlantis board OpenSBI fails
-to print any output, as it hits an error early on
-in the boot process and gets stuck in `sbi_hart_hang()`.
+We're still using "/soc/plic@..." as FDT nodename in virt.c.  This is
+not the right nodename per the DT docs:
 
-The error occurs in the `sanitize_domain()` function inside OpenSBI.
-`sanitize_domain()` is called after a M-Mode OpenSBI Firmware and a generic
-coverall S-Mode RWX memory region are created. `sanitize_domain()` is
-checking that the next address is executable.
+https://www.kernel.org/doc/Documentation/devicetree/bindings/interrupt-controller/sifive%2Cplic-1.0.0.txt
 
-If no next address is provided (which occurs on QEMU with an empty payload),
-then `dom->next_addr` will be 0. On most RISC-V boards address 0 will fall
-inside the coverall S-Mode RWX memory region and pass this check. On
-Atlantis the OpenSBI firmware is running at address 0, so this address
-falls inside the M-Mode only OpenSBI firmware region and fails the check.
+The nodename must be 'interrupt-controller@...' since the node inherits
+the 'interrupt-controller' type.  In fact, ever since at least the 2020
+Linux kernel commit c825a081c169cc7f ("dt-bindings: riscv: convert plic
+bindings to json-schema") the correct nodename has been
+'interrupt-controller' for the sifive PLIC controller.
 
-Once the check has failed OpenSBI aborts and the user doesn't see any
-messages. This can be fixed by either supplying a payload, or just
-manually forcing a non-zero address (actually just any address that
-isn't the OpenSBI firmware) for next_addr.
+There's no deprecation needed for bug fixes so we're just fixing the
+name.  This was the policy we dud when fixing the aplic [1] and the
+imsic [2] nodenames to 'interrupt-controller@...' as well.
 
-This patch ensures that if no kernel is loaded we still specify a
-default kernel_entry so that OpenSBI happily boots and jumps to
-the first address in memory.
+The sifive_u PLIC FDT already uses the correct nodename for PLIC, so it
+is safe to assume that available SW is already aware of the correct
+nodename and this change won't affect well-behaved SW.
 
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+[1] commit 29390fd ("hw/riscv/virt.c: rename aplic nodename to 'interrupt-controller'")
+[2] commit e8ad581 ("hw/riscv/virt.c: change imsic nodename to 'interrupt-controller'")
+
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260630024952.1520546-9-joel@jms.id.au>
+Message-ID: <20260616235939.1358663-5-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/tt_atlantis.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ hw/riscv/virt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index 1f0cd08ac9..d4fa9c251d 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -377,8 +377,16 @@ static void tt_atlantis_machine_done(Notifier *notifier, void *data)
-     if (machine->kernel_filename) {
-         riscv_load_kernel(machine, &boot_info, kernel_start_addr,
-                           true, NULL);
-+        kernel_entry = boot_info.image_low_addr;
-+    } else {
-+        /* If we aren't loading a payload, OpenSBI thinks we are trying to boot
-+         * address 0, which fails `sbi_domain_check_addr()` as that is where
-+         * OpenSBI is running. Instead point OpenSBI to the end of the region
-+         * where it was loaded, which avoids the early hang, allowing the
-+         * system to proceed with the OpenSBI boot output.
-+         */
-+        kernel_entry = kernel_start_addr;
-     }
--    kernel_entry = boot_info.image_low_addr;
- 
-     fdt_load_addr = riscv_compute_fdt_addr(s->memmap[TT_ATL_DDR_LO].base,
-                                            s->memmap[TT_ATL_DDR_LO].size,
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 33775a61fd..fa464e644f 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -335,7 +335,7 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
+     plic_phandles[socket] = (*phandle)++;
+     plic_addr = s->memmap[VIRT_PLIC].base +
+                 (s->memmap[VIRT_PLIC].size * socket);
+-    plic_name = g_strdup_printf("/soc/plic@%lx", plic_addr);
++    plic_name = g_strdup_printf("/soc/interrupt-controller@%lx", plic_addr);
+     qemu_fdt_add_subnode(ms->fdt, plic_name);
+     qemu_fdt_setprop_cell(ms->fdt, plic_name,
+         "#interrupt-cells", FDT_PLIC_INT_CELLS);
 -- 
 2.54.0
 
