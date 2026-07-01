@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E74C43602
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 20:11:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD893C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 20:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wf1F7-0001ua-8s; Wed, 01 Jul 2026 16:09:09 -0400
+	id 1wf1F6-0001tQ-9B; Wed, 01 Jul 2026 16:09:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1weyma-0008WJ-8y; Wed, 01 Jul 2026 13:31:32 -0400
+ id 1weymr-00009S-Al; Wed, 01 Jul 2026 13:31:56 -0400
 Received: from smtp2-g21.free.fr ([2a01:e0c:1:1599::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1weymW-00079t-4R; Wed, 01 Jul 2026 13:31:30 -0400
+ id 1weymp-0007N2-75; Wed, 01 Jul 2026 13:31:48 -0400
 Received: from localhost (unknown [89.92.102.124])
  (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id 5F4FD2003EF;
- Wed,  1 Jul 2026 19:31:04 +0200 (CEST)
+ by smtp2-g21.free.fr (Postfix) with ESMTPSA id 9C5262003C6;
+ Wed,  1 Jul 2026 19:31:25 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1782927085;
- bh=d2xU5ugaq0WYvWO+htoe62DpMagP1np2F5de6Z3kIPE=;
+ s=smtp-20201208; t=1782927105;
+ bh=WvcsUh32DCWpKfKABADNif+d9+Y8576yIkWIMEnm4os=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=jgtMba+BGQzvNbdokQlvOv43yndpDuD9hMraeqs4CK9nvBINyPnKSL7WjewFBKhXJ
- t7HZW2jYi8mL8P10Jol5zxWASqSdGX8cqbZxOiFvS53JMBQ0fbTPRUkFlq00Rt+j2a
- iBSTTnahOANj+rQ5z5y1sERF5MXOzxdbn1G7u6qBP6Cuce0Sw0Tr7QbsUyH2MaLJhx
- IQQIjSysmopnAj4R3VhsJpaPXh11q9CypO+iYtwRbunXGEbqMXtcPtwddk/+gSfNso
- /fJESRNq+hEbJbNrIzvP+aA1H6CltAyDFokpel0+6RdVXf3PpWiTI2M2Q1EAk67tRT
- jkcM2GJFeHgqg==
+ b=JwpvvXrYMCc3wsf50cV+EVbgDy7YC/c1LILC/NPsUXmnSElFjR0yt7LaFbV4cHlTW
+ WVVM5RL7yge6e40aA7gYBGC1rBSZ8d89GYSn9zmeftViGCgTfV4os282j5NQL1p1V6
+ yYguq/e+9spWdG75V4rd2K8WRFxBjsQCJKm6YTZp7TgmfCxBhZg9sNXrvBUAIN64IV
+ 4yaJlGNMM8cHcnC2888avNixiGFVemWarb87mC1rgKm/gQZXn/XlRpmuOkLLNBl3qv
+ DZt4WMrZ0mBq59EC0x7K5IrI1uI71A8tkQt0pgD99mRem4i6+Nh9PT3o1S8910APRG
+ dTDwVP1ux7Tdw==
 From: Emmanuel Blot <emmanuel.blot@free.fr>
-Date: Wed, 01 Jul 2026 19:28:37 +0200
-Subject: [PATCH v5 7/8] hw/arm: anacapa: add ADC128D818 devices
+Date: Wed, 01 Jul 2026 19:28:38 +0200
+Subject: [PATCH v5 8/8] test/functional: anacapa: test ADC128D818
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260701-i2c-adc128d818-anacapa-v5-7-fe8292d86b38@free.fr>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260701-i2c-adc128d818-anacapa-v5-8-fe8292d86b38@free.fr>
 References: <20260701-i2c-adc128d818-anacapa-v5-0-fe8292d86b38@free.fr>
 In-Reply-To: <20260701-i2c-adc128d818-anacapa-v5-0-fe8292d86b38@free.fr>
 To: qemu-devel@nongnu.org
@@ -53,14 +53,13 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Alexander Hansen <alexander.hansen@9elements.com>, 
  William de Abreu Pinho <williampinho@meta.com>, 
  Emmanuel Blot <eblot@meta.com>, qemu-arm@nongnu.org, 
- Emmanuel Blot <emmanuel.blot@free.fr>, Corey Minyard <cminyard@mvista.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+ Emmanuel Blot <emmanuel.blot@free.fr>, Corey Minyard <cminyard@mvista.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1782926919; l=3268;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1782926919; l=4381;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=d2xU5ugaq0WYvWO+htoe62DpMagP1np2F5de6Z3kIPE=;
- b=G2f9UbP78E3/mm4inv3n5CAYgd2cWd0wg5TGMKQkpapZb2fSs+Fx0xh4uiV4TT3HMp49mwKj1
- 3k6r3XSVIBLCYDIlryOSewDARS8guROYNXgmkaK9ywYLVoCgiZwxCcz
+ bh=WvcsUh32DCWpKfKABADNif+d9+Y8576yIkWIMEnm4os=;
+ b=37rA/MpbaXR9yDxdbj6j8SQbKtD3sdw4PXcHboyyoNqeZG/tlVN7Swevu1+p92UWcQZCskyO/
+ R5RHi7Cjm2lCaWOG3unoPxvjhj/H0+tCVlI2btI+8FBmCcMtvTsPT7P
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
 Received-SPF: pass client-ip=2a01:e0c:1:1599::11;
@@ -88,94 +87,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire up the two ADC128D818 instances that appear in the Anacapa DTS:
-one on i2c8 mux channel 0 and one on i2c13 mux channel 3.
+Verify the ADC128D818 on the Anacapa R-PDB (i2c8 mux channel 0): two
+channels are driven with distinct voltages and each is checked to be
+reported back independently through the kernel hwmon interface, and the
+channel 0 limit registers are validated.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- hw/arm/Kconfig                  |  1 +
- hw/arm/aspeed_ast2600_anacapa.c | 21 +++++++++++++++++----
- 2 files changed, 18 insertions(+), 4 deletions(-)
+ tests/functional/arm/test_aspeed_anacapa.py | 69 ++++++++++++++++++++++++++---
+ 1 file changed, 63 insertions(+), 6 deletions(-)
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index fb798ccbee..04ecf5d473 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -553,6 +553,7 @@ config ASPEED_SOC
-     select LED
-     select PMBUS
-     select MAX31785
-+    select ADC128D818
-     select FSI_APB2OPB_ASPEED
-     select AT24C
-     select PCI_EXPRESS
-diff --git a/hw/arm/aspeed_ast2600_anacapa.c b/hw/arm/aspeed_ast2600_anacapa.c
-index a1c8111a93..18f759f5f8 100644
---- a/hw/arm/aspeed_ast2600_anacapa.c
-+++ b/hw/arm/aspeed_ast2600_anacapa.c
-@@ -1,13 +1,14 @@
- /*
-  * Facebook Anacapa
-  *
-- * Copyright (c) Meta Platforms, Inc. and affiliates.
-+ * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
-  *
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  */
+diff --git a/tests/functional/arm/test_aspeed_anacapa.py b/tests/functional/arm/test_aspeed_anacapa.py
+index 2b72e46b0e..49fab7ad09 100644
+--- a/tests/functional/arm/test_aspeed_anacapa.py
++++ b/tests/functional/arm/test_aspeed_anacapa.py
+@@ -2,24 +2,81 @@
+ #
+ # Functional test that boots the ASPEED machines
+ #
++# Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
++#
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "hw/sensor/adc128d818.h"
- #include "hw/arm/machines-qom.h"
- #include "hw/arm/aspeed.h"
- #include "hw/arm/aspeed_soc.h"
-@@ -15,7 +16,6 @@
- #include "hw/gpio/pca9552.h"
- #include "hw/nvram/eeprom_at24c.h"
- 
--/* Anacapa hardware value */
- #define ANACAPA_BMC_HW_STRAP1 0x00002002
- #define ANACAPA_BMC_HW_STRAP2 0x00000000
- #define ANACAPA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
-@@ -221,6 +221,17 @@ static const uint8_t hpm_brd_id_eeprom[] = {
- };
- static const size_t hpm_brd_id_eeprom_len = sizeof(hpm_brd_id_eeprom);
- 
-+static void anacapa_add_adc128d818(I2CBus *bus, uint8_t addr,
-+                                   const char *description)
-+{
-+    DeviceState *dev = DEVICE(i2c_slave_new(TYPE_ADC128D818, addr));
-+    g_autofree char *childname = g_strdup_printf("0x%02x", addr);
++import re
++import time
 +
-+    qdev_prop_set_string(dev, "description", description);
-+    object_property_add_child(OBJECT(bus), childname, OBJECT(dev));
-+    i2c_slave_realize_and_unref(I2C_SLAVE(dev), bus, &error_fatal);
-+}
+ from qemu_test import Asset
++from qemu_test import exec_command_and_wait_for_pattern
+ from aspeed import FacebookAspeedTest
+ 
+ 
+ class AnacapaMachine(FacebookAspeedTest):
+ 
+     ASSET_ANACAPA_FLASH = Asset(
+-        'https://github.com/legoater/qemu-aspeed-boot/raw/c5f585f9f57843c0dc95e3865a57d92ec39cbb0b/images/anacapa-bmc/openbmc-20260616025349/obmc-phosphor-image-anacapa-20260616025349.static.mtd.xz',
+-        'de3841fb6ed3085aec6424358ee6efc4b8ee85688361e5aa1987fd1acb7d3fb4')
++        "https://github.com/legoater/qemu-aspeed-boot/raw/c5f585f9f57843c0dc95e3865a57d92ec39cbb0b/images/anacapa-bmc/openbmc-20260616025349/obmc-phosphor-image-anacapa-20260616025349.static.mtd.xz",
++        "de3841fb6ed3085aec6424358ee6efc4b8ee85688361e5aa1987fd1acb7d3fb4",
++    )
 +
- static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
- {
-     /* Reference: aspeed-bmc-facebook-anacapa.dts */
-@@ -259,7 +270,8 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
-     i2c_mux = i2c_slave_create_simple(i2c[8], TYPE_PCA9546, 0x72);
++    ADC128D818_QOM_PATH = \
++        "/machine/soc/i2c/bus[8]/aspeed.i2c.bus.8/0x72/i2c.0/0x1f"
++    ADC128D818_MUX_CHANNEL = "/sys/bus/i2c/devices/8-0072/channel-0"
++    PROMPT = "root@anacapa:~#"
  
-     /* i2c8mux ch0 */
--    /* adc128d818@1f — no model */
-+    /* adc128d818@1f — R-PDB ADC (mode 1: 8 voltage channels) */
-+    anacapa_add_adc128d818(pca954x_i2c_get_bus(i2c_mux, 0), 0x1f, "i2c8:0:1f");
-     /* pca9555@22 */
-     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
-                             TYPE_PCA9552, 0x22);
-@@ -320,7 +332,8 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
-     i2c_mux = i2c_slave_create_simple(i2c[13], TYPE_PCA9548, 0x70);
+     def test_arm_ast2600_anacapa_openbmc(self):
+         image_path = self.uncompress(self.ASSET_ANACAPA_FLASH)
  
-     /* i2c13mux ch3 */
--    /* adc128d818@1f - no model */
-+    /* adc128d818@1f — MB ADC (mode 1: 8 voltage channels) */
-+    anacapa_add_adc128d818(pca954x_i2c_get_bus(i2c_mux, 3), 0x1f, "i2c13:3:1f");
+-        self.do_test_arm_aspeed_openbmc('anacapa-bmc', image=image_path,
+-                                        uboot='2019.04', cpu_id='0xf00',
+-                                        soc='AST2600 rev A3')
++        self.do_test_arm_aspeed_openbmc(
++            "anacapa-bmc",
++            image=image_path,
++            uboot="2019.04",
++            cpu_id="0xf00",
++            soc="AST2600 rev A3",
++        )
  
-     /* i2c13mux ch4 */
-     /* eeprom@51 */
+-if __name__ == '__main__':
++        exec_command_and_wait_for_pattern(self, "root", "Password:")
++        exec_command_and_wait_for_pattern(self, "0penBmc", "#")
++
++        self.adc_hwmon = self.resolve_adc128d818_hwmon()
++        self.assertIn(b"adc128d818", self.read_adc128d818("name"))
++
++        adc = self.ADC128D818_QOM_PATH
++        for ch0_mv, ch1_mv in ((108, 2000), (1280, 500)):
++            self.vm.cmd("qom-set", path=adc, property="ain0", value=ch0_mv)
++            self.vm.cmd("qom-set", path=adc, property="ain1", value=ch1_mv)
++            self.wait_adc128d818_value("in0_input", ch0_mv)
++            self.wait_adc128d818_value("in1_input", ch1_mv)
++
++        self.assertIn(b"2551", self.read_adc128d818("in0_max"))
++        self.assertRegex(self.read_adc128d818("in0_min"), rb"(?m)^0\r*$")
++
++    def resolve_adc128d818_hwmon(self):
++        out = self.read_adc128d818_console(
++            f"basename $(readlink {self.ADC128D818_MUX_CHANNEL})"
++        )
++        match = re.search(rb"i2c-(\d+)", out)
++        self.assertIsNotNone(match, "could not resolve ADC128D818 i2c bus")
++        bus = int(match.group(1))
++        return f"/sys/bus/i2c/devices/{bus}-001f/hwmon/hwmon*"
++
++    def read_adc128d818_console(self, command):
++        return exec_command_and_wait_for_pattern(self, command, self.PROMPT)
++
++    def read_adc128d818(self, attr):
++        return self.read_adc128d818_console(f"cat {self.adc_hwmon}/{attr}")
++
++    def wait_adc128d818_value(self, attr, expected, timeout=20):
++        needle = str(expected).encode()
++        deadline = time.monotonic() + timeout
++        while time.monotonic() < deadline:
++            if needle in self.read_adc128d818(attr):
++                return
++            time.sleep(2)
++        self.fail(f"{attr} did not reach {expected}")
++
++
++if __name__ == "__main__":
+     FacebookAspeedTest.main()
 
 -- 
 2.50.1
