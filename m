@@ -4,95 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FD23C43327
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 00:34:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC28DC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 00:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weitx-0001mY-12; Tue, 30 Jun 2026 20:34:05 -0400
+	id 1wej3o-0003nh-FN; Tue, 30 Jun 2026 20:44:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shankerwangmiao@gmail.com>)
- id 1wehAk-0003xj-6A
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:43:18 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wej3m-0003nM-Bd
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 20:44:14 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shankerwangmiao@gmail.com>)
- id 1wehAi-0003oO-MH
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 18:43:17 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-84789df5be0so9836b3a.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 15:43:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wej3j-0005VN-4r
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 20:44:12 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-697ce8cfe65so160240a12.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 17:44:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782866649; cv=none;
+ d=google.com; s=arc-20260327;
+ b=g02XOPDnrG09zGHb/yyx2pMK8+E16A/uDvcnU8GMwBzabr/oWP+Kgwk7jAOoM5OuyV
+ 9X7v3e5r5Sx/TiCzaP3DHryXTfyAM9GksVTw2xD4iwcZjmgV+el2yBts0DmQ/8lPsGC3
+ TWmzm3IUychtM5q2G2yhKlVGcLkQDXeHbO27+hd3E3Kpe2oofTAZXyIg+ziA1cJcsiMh
+ tbUbrOc8v33CacdS+Eedw3HRpZhv5Zb8SIljaUe81kCLD3k3nAAOVqrqRoXFsIVOgbKs
+ o1/IGOpO/mwUeZi/CsOZ1xrtbYD5SsqmoCnImxHuXgUCO88MSy+CPAejoHFQsftl9OqI
+ r59A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=HAcuwiVLB70smj+H9Yjzxahy8QdYt7cyfakzqvYNrWo=;
+ fh=JS97lGsTsLXsimIh3Iw+rRF2SeWqX5tm7TeGB0K1Zn4=;
+ b=Vdoly/mfuOjzXxkGfGuPrG62TG9uqXZoplM4tJIJYEADPzO5jgveeoxCM8KcE7wIAj
+ JgtbDIa2pEnpdRX11QAyq+xqPEstOfLOMV1nKWTdcXMU5xvui3ZCwVyvU3OxRA1L66Yn
+ i79F2JBrBFfWdGhdvDKtX3N4PdXnoUi4fMV+0VpieHja++akhaboKOkGLr3qRcucZSPj
+ W5F/KUjpzXFj/1hh2USe0FUYBpI5DhZKpqO9Uy5oaGx7xijTOX1M/EPBRqS+6pMzbUEn
+ 6ZZ0QIK/rPB3f28ac15SF4uLGWlACx1BXHG25WAuuwCMdHekI1WMpTpy0XaecXqSmSe8
+ 7CMw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782859395; x=1783464195; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:content-type:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=+Qu6iAtCM9ny+ZJJiiaEpeaU+d6O6Uo3RKNTVYIuSKA=;
- b=UT9DrXN7uc9YMUrlKdZAQRv07m1k8xWDewXfNPtRqTtfrWCmNMdNAt5pcl+9phoSi0
- /ipjLGoNejZJZ4saNFoNd4p3Jwm2ejzIfix6nnx0k4KyPDy7ZIR2af29XX0qBnQ0isG2
- 3NOUZlZAILQ2pljiewEW9HvG6zrJaVI6RVb4QGO6kEmLdhtoeIb1CR8R04glkKs6BkiQ
- c1kv8n8jRBaEuuajzqeAkN/Bahz59nkMVUMCBsIyfYYTIoxARHap1XVD/w0WpfvSvDE2
- 5vjvluUfi2K61aq+v8z0CbfFuF8D9uuPWOE3Lj0S7I1MlS7QELpm4w2a/V24jwBmBkKl
- oPvw==
+ d=gmail.com; s=20251104; t=1782866649; x=1783471449; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HAcuwiVLB70smj+H9Yjzxahy8QdYt7cyfakzqvYNrWo=;
+ b=sc+2WmBTgicZPRBlzXdj+3BCmiUhMvSMF12DajH/vB+d3zM2DYc9a2Qdaw7TGK4CMa
+ qvnzcHoWta/Vb8rSlT6Jw3V8lLKdWDtAitDfD9TjYsAs7g4MAIPsLFOuzyPxzkBv0Opb
+ XAq063pvc/iQfebxrAQoNCTbo7V/Db2IIRbeNkItQOvXI6glW7obMOkclwDDiU23Ep7X
+ Ku1n+jH9LDtGY4HQMUtQw38yEuBParnEb1H7HutTxzR6x6GjTb9/arCqdJDHz3618g47
+ l+UN2KfnBmPlhvbNZwYy+dhD4oFWKUr8EBPDZTLdntOOEu0xbSYd6PDud2OkpHGiXkBH
+ ggcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782859395; x=1783464195;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=+Qu6iAtCM9ny+ZJJiiaEpeaU+d6O6Uo3RKNTVYIuSKA=;
- b=e9PMqkl9ugOfao3ep0Q9vVUOXctPVFXhKfXonbuc+JSoLSENB/m1RWTN9fT8k0MVtV
- FJ5EncdhHQ9FeKdNb24tqZ4qxewd76eGkjVLYm2NKgVJp6wWC8f6yCIEMJ4WOtfXA49I
- QOiQLAQMs/BNIFLgMfDzIWYa4ZHx/wDxk9BLJOITKo4xXHPNwfgKw3voVkLy5af4u+m9
- oVAi47kGZqJ8xUz8Er8VIB0HPcPTDLe3WmXxhSsBCpVeKE6WGA775AQFU1bV6gMDCCrm
- Wwlfy1AhDYM+XoFO/fvvhTz1czMj5ShQRBpGa3LqYIydspvG6WtITb3RDAv2XcU7t72w
- IQfQ==
-X-Gm-Message-State: AOJu0YzPG9F8WHapasY5Xr9H5L9kTv4r2gwVW7NI2NRpfw5lnj8Te856
- iNqmf9BW7YsGG1B0RGeVTYf91/c0MjsDAqb5OdtYgJ2v8Qq5xxKeas9W
-X-Gm-Gg: AfdE7cnNt9EsAEyua7TE8GpDmPmXAkDdiD5mKVD/WaHt60xdFMVPdxEFyEKL81Lu5K/
- npIug5qj3oXWfN32xNxBj/sAPWmKBDUQu6ga4jxN7usikzlX/ppJvBSWaM5tJ0qMVsb4dWnm18j
- Esu4PwG1BXc0h43qk4OHO0m+ZToqw4ze175fgs5CtOCOJLM817f9koE6XMIxFhxbqn22eTS6sTJ
- Y+Xwc+xTW/JJy37y7RYPEsuK8PpABP7N1rvbMZb1G5CZjoMwSi++Vt+KGtPn0AgvtRRBfnwfWN0
- ikISMPiF2gzr+fcQg7ZbntPRBbkujqJq+cWrm3jQ5k5OG0nztiYVYb1cfqHHHUMeK1HhPyB7ICk
- T5xz8fuhFyFdyTrFjEj3KGhmRkyYc9Rv0RGwZpUK6YueK7EesLhNkJg3yYrNzbgJC5bDi5cVZC5
- NlcVPJCFQl1Kcmi8iBYYpv4r9fWXI3WCa+Pd5vZdfgI6seQA==
-X-Received: by 2002:a05:6a00:3d0f:b0:845:cb89:c1a3 with SMTP id
- d2e1a72fcca58-8479f0e9c81mr2877150b3a.1.1782859394669; 
- Tue, 30 Jun 2026 15:43:14 -0700 (PDT)
-Received: from smtpclient.apple ([23.247.139.92])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8479ff89f93sm2949343b3a.4.2026.06.30.15.43.12
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 30 Jun 2026 15:43:13 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.8\))
-Subject: Re: [PATCH 5/6] target/loongarch: do_vldrepl_vl: Fix endianness when
- reading from guest memory
-From: Miao Wang <shankerwangmiao@gmail.com>
-In-Reply-To: <3697e939-0d8d-41ca-9af3-0729ef589bd2@oss.qualcomm.com>
-Date: Wed, 1 Jul 2026 06:42:59 +0800
-Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
+ d=1e100.net; s=20251104; t=1782866649; x=1783471449;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=HAcuwiVLB70smj+H9Yjzxahy8QdYt7cyfakzqvYNrWo=;
+ b=EUtxzkVYgdxXqXnL576QjT93F3WTLUti3p+00ObTRlVjlOEUxQ2XyZOii48BKC8ejg
+ tB18t/mYeL6EOEk5EGLpzmcSFiyoxnIp61px46XPAbvs1nWGFlgt5otiSR8144ke643o
+ GL/Owce1mTpEqdUdHs92TaAHr5LZXnhNZZ+12zeScXnwR8/lV4Lv9U68kzg910B8LTS5
+ Kq0hGnVk683oPpG9ZSpmXvyNjCQkmM0OXbYaoOzH8rU5klT5LYw5J9jlzF7rxCDyoo0G
+ FFzoFWjv6Kza1lMkDMiQVrzp3uHF0/xXe/Gtm9ZBF3T2cB0qHI2bC1edlFOmVtfFgmDf
+ R5TA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rrn650tY7cObS8A33dptzYJ712cBzlOYh3EVSiSYrcH2pQ8IY2NT2wmuUiXJSan3ZKKAMzW+cBKrGx1@nongnu.org
+X-Gm-Message-State: AOJu0YwhzAY5Muko/VMa1jJFHdZ2536oP+NjZCoqLwGyKUfuNXF1APUD
+ xsx3adQ2XlvLk0C5LYe7NzmRzJTl0h/1ienyuQHig9+f3OlKOXVXSoRcLL8Iq2zzLV/jCEbPILI
+ io1K+DYSIK0aQ5U3z3DW3pkzJL9n/QQA=
+X-Gm-Gg: AfdE7clMScvTSUPsMI1Wljr8qtWxlDYg7vckY+yX9i0OHhjK4RUulUJdq5jjNHhnkTo
+ YBED1ggJtShwh2JCYSttaj/0YPYlqailoFZgUNrjC8KooO+EfunkYlzm8zWOpc3x4F+z/+HGVqG
+ SasQBcp2fIU1USEyIVvmH07/qp+K1DV2jCgRJrDHLwYaFgaKbD0saKKb6DZM4lecQOydSSVl0Ys
+ 1Ut596aOXRTgYoXVlohUeSGPaeew9JeNPV0nxZZCK+TTeiineBKrgvW8Sum6YI6xSzDh20X8abY
+ vPRnX6ihRK+p9jd+3b2h3UdNuc+T1joFrxkNOQ==
+X-Received: by 2002:a05:6402:4401:b0:698:954:484e with SMTP id
+ 4fb4d7f45d1cf-69887724ea8mr1402097a12.14.1782866648797; Tue, 30 Jun 2026
+ 17:44:08 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260630024952.1520546-1-joel@jms.id.au>
+ <20260630024952.1520546-9-joel@jms.id.au>
+In-Reply-To: <20260630024952.1520546-9-joel@jms.id.au>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 1 Jul 2026 10:43:40 +1000
+X-Gm-Features: AVVi8Cf4P-3w2A8s5Oc2Xr0h5y5xzAhx0UEpDB6kSZnxxO1001nhHiQry2bv0OE
+Message-ID: <CAKmqyKNq-9z4jpZm1cDYx9tr-2fZBM7m27=7mFy=w+PUJA+xSw@mail.gmail.com>
+Subject: Re: [PATCH v10 08/12] hw/riscv/atlantis: Ensure OpenSBI has a
+ non-zero next_addr
+To: Joel Stanley <joel@jms.id.au>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Andrew Jones <andrew.jones@oss.qualcomm.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, Michael Ellerman <mpe@kernel.org>, 
+ Joel Stanley <jms@oss.tenstorrent.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <C577E147-250A-448B-957A-E02D7DBBA322@gmail.com>
-References: <20260701-loong64-be-v1-0-9c7d65e00697@gmail.com>
- <20260701-loong64-be-v1-5-9c7d65e00697@gmail.com>
- <3697e939-0d8d-41ca-9af3-0729ef589bd2@oss.qualcomm.com>
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-X-Mailer: Apple Mail (2.3826.700.81.1.8)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=shankerwangmiao@gmail.com; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 30 Jun 2026 20:34:00 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,49 +129,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,=20
+On Tue, Jun 30, 2026 at 12:53=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrot=
+e:
+>
+> From: Alistair Francis <alistair.francis@wdc.com>
+>
+> When using OpenSBI fw_dynamic on the Atlantis board OpenSBI fails
+> to print any output, as it hits an error early on
+> in the boot process and gets stuck in `sbi_hart_hang()`.
+>
+> The error occurs in the `sanitize_domain()` function inside OpenSBI.
+> `sanitize_domain()` is called after a M-Mode OpenSBI Firmware and a gener=
+ic
+> coverall S-Mode RWX memory region are created. `sanitize_domain()` is
+> checking that the next address is executable.
+>
+> If no next address is provided (which occurs on QEMU with an empty payloa=
+d),
+> then `dom->next_addr` will be 0. On most RISC-V boards address 0 will fal=
+l
+> inside the coverall S-Mode RWX memory region and pass this check. On
+> Atlantis the OpenSBI firmware is running at address 0, so this address
+> falls inside the M-Mode only OpenSBI firmware region and fails the check.
+>
+> Once the check has failed OpenSBI aborts and the user doesn't see any
+> messages. This can be fixed by either supplying a payload, or just
+> manually forcing a non-zero address (actually just any address that
+> isn't the OpenSBI firmware) for next_addr.
+>
+> This patch ensures that if no kernel is loaded we still specify a
+> default kernel_entry so that OpenSBI happily boots and jumps to
+> the first address in memory.
+>
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
 
-> 2026=E5=B9=B47=E6=9C=881=E6=97=A5 06:34=EF=BC=8CPhilippe =
-Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> On 1/7/26 00:15, Miao Wang via B4 Relay wrote:
->> From: Miao Wang <shankerwangmiao@gmail.com>
->> When reading from guest memory into vector registers, endianness =
-should
->> be considered since the data in guest memory is in guest endianness =
-and
->> the values in vector registers is in host endianness. Add MO_LE flag =
-to
->> tcg_gen_qemu_ld_i64() to fix this.
->> Fixes: 4a26512f01e0 ("target/loongarch: Implement xvld xvst")
->> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
->> ---
->>  target/loongarch/tcg/insn_trans/trans_vec.c.inc | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->> diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc =
-b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
->> index =
-03938b1f052335190cdc437fc2d453b4f4fe16a4..91b1e15b61cac5d119892df1abd2ecf8=
-a4c8e59d 100644
->> --- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
->> +++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
->> @@ -5397,7 +5397,7 @@ static bool do_vldrepl_vl(DisasContext *ctx, =
-arg_vr_i *a,
->>        addr =3D make_address_i(ctx, addr, a->imm);
->>  -    tcg_gen_qemu_ld_i64(val, addr, ctx->mem_idx, mop);
->> +    tcg_gen_qemu_ld_i64(val, addr, ctx->mem_idx, mop | MO_LE);
->>      tcg_gen_gvec_dup_i64(mop, vec_full_offset(a->vd), oprsz, ctx->vl =
-/ 8, val);
->>        return true;
->=20
-> Missing counterpart in do_vstelm_vl(), otherwise:
->=20
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-The fix for vstelm_vl() is in the next patch in the series.
+Alistair
 
-Cheers,
-
-Miao Wang
-
-
+> ---
+>  hw/riscv/tt_atlantis.c | 10 +++++++++-
+>  1 file changed, 9 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+> index 1f0cd08ac959..d4fa9c251d3b 100644
+> --- a/hw/riscv/tt_atlantis.c
+> +++ b/hw/riscv/tt_atlantis.c
+> @@ -377,8 +377,16 @@ static void tt_atlantis_machine_done(Notifier *notif=
+ier, void *data)
+>      if (machine->kernel_filename) {
+>          riscv_load_kernel(machine, &boot_info, kernel_start_addr,
+>                            true, NULL);
+> +        kernel_entry =3D boot_info.image_low_addr;
+> +    } else {
+> +        /* If we aren't loading a payload, OpenSBI thinks we are trying =
+to boot
+> +         * address 0, which fails `sbi_domain_check_addr()` as that is w=
+here
+> +         * OpenSBI is running. Instead point OpenSBI to the end of the r=
+egion
+> +         * where it was loaded, which avoids the early hang, allowing th=
+e
+> +         * system to proceed with the OpenSBI boot output.
+> +         */
+> +        kernel_entry =3D kernel_start_addr;
+>      }
+> -    kernel_entry =3D boot_info.image_low_addr;
+>
+>      fdt_load_addr =3D riscv_compute_fdt_addr(s->memmap[TT_ATL_DDR_LO].ba=
+se,
+>                                             s->memmap[TT_ATL_DDR_LO].size=
+,
+> --
+> 2.47.3
+>
+>
 
