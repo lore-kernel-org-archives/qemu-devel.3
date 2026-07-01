@@ -4,61 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7097CC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 15:31:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9E23C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 15:58:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wewta-0005Lb-Lc; Wed, 01 Jul 2026 11:30:38 -0400
+	id 1wexJr-0002a2-Dr; Wed, 01 Jul 2026 11:57:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wewtO-0005Es-VO
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 11:30:31 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wewtM-0003ox-6f
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 11:30:25 -0400
-Received: from example.com (unknown [167.220.208.73])
- by linux.microsoft.com (Postfix) with ESMTPSA id DD0BC20B7166;
- Wed,  1 Jul 2026 08:30:17 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com DD0BC20B7166
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1782919820;
- bh=HWPrvAn7EFe4ZnZmgq/RGK7Brh0+CpGD2KIlAvcJrEU=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Xoj8ppFISXUIsK62XSbTpm0YiH5nq/muNly1+6Q9Mf7/wLXJj/xzu0IVI+qTBdqBd
- /7154wseo4VJ6BFJlJ5n0Jncsok0wgMDj4rm1LkAt4osunknuYuXwRCbI7JRmksysv
- SSjAUTDFCrolwI9tVDWC5ebJ+8aDUMHBARXYmqB0=
-Date: Wed, 1 Jul 2026 17:30:16 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>,
- Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <liuwe@microsoft.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>,
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wexJp-0002ZV-Uq
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 11:57:45 -0400
+Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wexJn-0005np-GA
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 11:57:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
+ s=default; t=1782921427;
+ bh=yXCUUvPgdYz7tcDJMijkLwj07Wj7W2aPdemmMHum/pU=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=V5JStoezch8rs4qqm/oE4v2sDE5XHQN36uS7/PQZNwKmB2SHRehXYBCfzIAu0+dxg
+ 7Rj1NrNIEB08MejLc/tt4jQXjWTjlSxsht0Z0LQ1BuzfvBw5V+4kDI6SuZ75SN+PUr
+ u3kj5tS+OkcGNeLbgwyP+vwscePtoRN28pKD5i7q8xxT8HX+04alyRjdHAU4B1rk5J
+ hcBcVQKQS5nr4kss6Hvyig808ab1I1/5sAEca3usHtUhu3iVGuXjPgVvefljYiwElF
+ 5RaUklxPh7yjSmv/LDearHWX6rVKsS5OQmWjLQvY0cGJxLUDbdyGoORQuyTD56MHwW
+ AQBBXzlbhVf1A==
+Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
+ by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id D29462FF55B;
+ Wed,  1 Jul 2026 15:57:07 +0000 (UTC)
+Received: from pc.. (unknown [202.120.40.100])
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 376E2380C9A;
+ Wed,  1 Jul 2026 23:57:07 +0800 (CST)
+From: Ziyang Zhang <functioner@sjtu.edu.cn>
+To: qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Wei Liu <wei.liu@kernel.org>, Alex Williamson <alex@shazbot.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Subject: Re: [PATCH 16/34] target/i386/mshv: migrate LAPIC state
-Message-ID: <akUyiNahX3LnFPhn@example.com>
-References: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
- <20260417105618.3621-17-magnuskulke@linux.microsoft.com>
- <CABgObfbgqcSYekjGkuDCUibQc8j4iyGPbajU_-VdPsGkLZgiLQ@mail.gmail.com>
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>,
+ Ziyang Zhang <functioner@sjtu.edu.cn>
+Subject: [PATCH v5 2/2] docs/about/emulation: document the dlcall plugin
+Date: Wed,  1 Jul 2026 23:57:05 +0800
+Message-Id: <20260701155705.1737328-3-functioner@sjtu.edu.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260701155705.1737328-1-functioner@sjtu.edu.cn>
+References: <20260701155705.1737328-1-functioner@sjtu.edu.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABgObfbgqcSYekjGkuDCUibQc8j4iyGPbajU_-VdPsGkLZgiLQ@mail.gmail.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=202.120.2.186;
+ envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,41 +77,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 26, 2026 at 09:27:20AM +0200, Paolo Bonzini wrote:
-> Il ven 17 apr 2026, 12:57 Magnus Kulke <magnuskulke@linux.microsoft.com> ha
-> scritto:
-> 
-> > +#ifdef CONFIG_MSHV
-> 
-> + VMSTATE_BUFFER(hv_lapic_state, APICCommonState),
-> 
-> +#endif
-> 
-> 
-> This breaks migration across releases for everyone else, and also across
-> builds that have different --enable-mshv. Compile-time defines are almost
-> always wrong in VMState definitions.
-> 
->      DeviceState *vapic;
-> >      hwaddr vapic_paddr; /* note: persistence via kvmvapic */
-> >      uint32_t extended_log_dest;
-> > +
-> > +#ifdef CONFIG_MSHV
-> > +    uint8_t hv_lapic_state[sizeof(struct
-> > hv_local_interrupt_controller_state)];
-> > +#endif
-> >
-> 
-> No, this is called common for a reason. You need to implement a subclass
-> and handle migration in there.
-> 
+Document the dlcall plugin under Example Plugins: what it does, the trusted-
+guests and guest_base == 0 constraints, how to load it, and a pointer to
+Lorelei, a complete userspace implementation, for prebuilt thunks and a
+runnable example.
 
-makes sense. I think I found a way to put the additional fields into a
-subclass. the apic_id is semantic, so we cannot use the auto-wiring
-dc->vmds state, but APIC_COMMON is doing the same. I'll send a revised patch
-soon.
+Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
+---
+ docs/about/emulation.rst | 55 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
-thanks,
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index 3b4c365933..8877708d18 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -1046,6 +1046,61 @@ Count traps
+ This plugin counts the number of interrupts (asynchronous events), exceptions
+ (synchronous events) and host calls (e.g. semihosting) per cpu.
+ 
++Dlcall
++......
++
++``contrib/plugins/dlcall.c``
++
++This plugin lets a linux-user guest call functions in the host's native shared
++libraries instead of emulating them, turning slow instruction-by-instruction
++emulation of a library into a native host call. For example, the stock zlib
++``minizip`` utility compresses several times faster, because the actual
++``deflate`` runs on the host's native libz while ``minizip`` itself stays
++emulated.
++
++The guest issues a reserved "magic" system call (4096 by default, configurable
++with ``syscall_num=N``) whose first argument selects a pass-through operation:
++dlopen/dlclose a host library, dlsym a symbol, and invoke a resolved host
++function. The plugin performs the operation on the host and consumes the
++syscall, so the real kernel never sees it.
++
++.. warning::
++
++   Trusted guests only. The guest can load arbitrary host libraries and run
++   arbitrary code in the QEMU host process. The plugin is not a sandbox and
++   provides no isolation. It also requires ``guest_base == 0`` (qemu-user's
++   default), as guest pointers are dereferenced as host addresses with no
++   translation.
++
++The plugin is deliberately minimal and knows nothing about any particular
++library or its calling convention. Turning a real library into working thunks,
++including argument marshalling, callbacks and variadic functions, is done
++entirely in userspace, and any toolchain can implement the interface.
++`Lorelei <https://github.com/rover2024/lorelei>`_ is a complete, MIT-licensed
++implementation: it provides the guest and host runtimes and a Thunk Library
++Compiler that generates the thunks from a library's headers, with prebuilt
++thunks (zlib, lzma, ...) for x86_64, aarch64 and riscv64 hosts.
++
++Loading the plugin is all that is required from QEMU's side:
++
++.. code-block:: shell
++
++   qemu-x86_64 -plugin contrib/plugins/libdlcall.so <guest-program> ...
++
++See `Lorelei <https://github.com/rover2024/lorelei>`_ for prebuilt thunk trees,
++the runtime environment they expect, and a full runnable example (for instance,
++running an unmodified ``minizip`` over the host's native libz).
++
++.. list-table:: Dlcall plugin arguments
++  :widths: 20 80
++  :header-rows: 1
++
++  * - Option
++    - Description
++  * - syscall_num=N
++    - The magic syscall number the guest issues (default 4096). Must be high
++      enough not to clash with a real syscall.
++
+ Other emulation features
+ ------------------------
+ 
+-- 
+2.34.1
 
-magnus
 
