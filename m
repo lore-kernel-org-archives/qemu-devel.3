@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 484AEC43327
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 14:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD14FC43602
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 14:34:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wevmw-0007uj-Cz; Wed, 01 Jul 2026 10:19:42 -0400
+	id 1wew0H-00020Y-TP; Wed, 01 Jul 2026 10:33:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wevmu-0007ub-Kq
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:19:40 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1wew08-0001wu-VC; Wed, 01 Jul 2026 10:33:21 -0400
+Received: from [115.124.30.131] (helo=out30-131.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wevms-0002OO-Dv
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:19:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=m4bQvNHDs6XwQLXSCduuBqKVav7YlWO7rkKAwP8IZBc=; b=Fo8EDsSI1hytdL/N
- SIQwF0VH/fU7FKAT84JZ6UmX0ZU3tlAEHYjrdhEUyOx/oEseqB1A14yhUfBk9lQ/f56ZW7eCN7e3U
- 148CZtRAyUwa86uN2sE4/h/gzyEOreWZQ+ngqb6DE9+7bJomWRdwd9v1zqIN0nlQ96zpaG6xKfJyE
- /lF+q6wiaRlGou+7iIbEFETiBjae72m9ACLn3LiPzMR7ZzI3qm3e+199iLJsLOZzkTJgC/pz3eop8
- C5zJ6l92sjgkexoLWtCeNqm7wuTRD6if5rjg5mSRCAN9EgCUtRaFbu7SiM4vh4iqkBDkA5AbKA4v6
- bJ+TUf25+aZxLlD8/A==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1wevmm-0000000BSVX-3Kau;
- Wed, 01 Jul 2026 14:19:32 +0000
-Date: Wed, 1 Jul 2026 14:19:32 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, marcandre.lureau@redhat.com,
- qemu-devel@nongnu.org, devel@lists.libvirt.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Christian Brauner <brauner@kernel.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Peter Krempa <pkrempa@redhat.com>
-Subject: Re: [PATCH v5 32/35] monitor: add support for auto-deleting monitors
- upon close
-Message-ID: <akUh9FLxh3COFvP1@gallifrey>
-References: <20260624173752.2928717-1-berrange@redhat.com>
- <20260624173752.2928717-33-berrange@redhat.com>
- <178233405051.3955748.10990724544083287885.b4-review@b4>
- <87zf0busnt.fsf@pond.sub.org> <akTLejz0-b48s5NS@redhat.com>
- <87mrwa4yrl.fsf@pond.sub.org> <akUaDiOQIvJFDJTe@redhat.com>
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1wew05-0000SP-0E; Wed, 01 Jul 2026 10:33:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1782916379; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=SXjVdCGN0cA5Jj+IrBWQWgnMneXp9emPga8+CP/p0a4=;
+ b=fYdWJD7Fty2vNR8U+xW1I5rOHwwVI0pY4AGolDaF4MBZNhfVVUMc2md9T7atkoIUSdTZ9Q64KmuXm5khzGwVXljumkZ2pik/7+lDzUEv5fncoqoCbbEJ7NGBJTcUQbQdLSEDXhs2DzqYaUvgDZOtLs3DtDeL5u0xPgRpSVBIrDw=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R151e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
+ MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0X6A2Trt_1782916376; 
+Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
+ fp:SMTPD_---0X6A2Trt_1782916376 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 01 Jul 2026 22:32:57 +0800
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
+Date: Wed, 01 Jul 2026 22:32:11 +0800
+Subject: [PATCH v3 3/5] disas/riscv: Use signed type for vector immediates
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <akUaDiOQIvJFDJTe@redhat.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.88+deb13-amd64 (x86_64)
-X-Uptime: 14:17:57 up 46 days, 17:30,  3 users,  load average: 0.05, 0.04, 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260701-b4-disas-xthead-fix-riscv-next-v3-3-fc4f5f1b6c15@linux.alibaba.com>
+References: <20260701-b4-disas-xthead-fix-riscv-next-v3-0-fc4f5f1b6c15@linux.alibaba.com>
+In-Reply-To: <20260701-b4-disas-xthead-fix-riscv-next-v3-0-fc4f5f1b6c15@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: Christoph Muellner <christoph.muellner@vrull.eu>, 
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-riscv@nongnu.org, 
+ TANG Tiancheng <lyndra@linux.alibaba.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1782916375; l=911;
+ i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
+ bh=ITXOf+1LAM2NiTyNtuQuF3UTMPPL6Gn2c9yAeXo53pw=;
+ b=1xu37Wm3vbI84OQN54CfAEXTlEhJmMNhTVGcJ6PdKBbgosajeDq6e1f1ws3GgUyV80pcn1x2d
+ 9woVkTmGAqoAyN/uUHYgiajuZH0RNmCGTiKE0VIJI4Azu1mmNcR6N9H
+X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
+ pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.131 (deferred)
+Received-SPF: pass client-ip=115.124.30.131;
+ envelope-from=lyndra@linux.alibaba.com;
+ helo=out30-131.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,127 +82,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Daniel P. Berrangé (berrange@redhat.com) wrote:
-> On Wed, Jul 01, 2026 at 03:37:02PM +0200, Markus Armbruster wrote:
-> > Daniel P. Berrangé <berrange@redhat.com> writes:
-> > 
-> > > On Wed, Jul 01, 2026 at 08:32:06AM +0200, Markus Armbruster wrote:
-> > >> marcandre.lureau@redhat.com writes:
-> > >> 
-> > >> >> The default monitor is usually a long lived object that will exist for
-> > >> >> the entire lifetime of the VM. A monitor can only service a single
-> > >> >> client at a time though, and so it might be desirable to hotplug
-> > >> >> additional monitors at runtime for specific tasks. If doing that,
-> > >> >> however, there is a need to remove the monitor when it is no longer
-> > >> >> needed.
-> > >> 
-> > >> Whatever adds the additional monitor can also delete it.  The fact that
-> > >> you propose other means suggests you believe this would be cumbersome in
-> > >> practice.  Why?
-> > >
-> > > The use is is that someone/something wants to spawn a script that
-> > > does some job with the QEMU monitor.  The thing that spawns the
-> > > script adds the new monitor and launches the script. Having
-> > > auto-delete means that you do not need to then keep track of that
-> > > script to perform cleanup of the dynamically added monitor. It
-> > > gives you "do the right thing" behaviour automatically when the
-> > > script exits, closing its monitor connection.
-> > >
-> > > The initial series proposed by Christian supported the ability
-> > > to run "object-del' on the monitor itself - a "self delete"
-> > > essentially. That is very awkward from the code POV, as it
-> > > required special case hanlding to ensure the QMP response to
-> > > the delete action got sent on the socket before the delete
-> > > action took place. It also made it impossible to then delete
-> > > the character device.
-> > >
-> > > Auto-delete gives us a better solution with less code complexity.
-> > 
-> > I agree "self delete" is problematic.
-> > 
-> > I wonder how important the ability to fire and forget a script with a
-> > dedicated monitor is.  I'd (naively?) expect whatever spawns the script
-> > to reap its exit status.
-> > 
-> > If it is important, what about fire and forget a script with a dedicated
-> > character device?  Can't come up with a use case for that within ten
-> > seconds.  However, we use character devices for all kinds of crap.  Food
-> > for thought, not a demand.
-> 
-> In a hypothetical libvirt usage of this functionality, libvirt would
-> not be spawning the script or even know what its PID is. Libvirt would
-> just create a auto-delete monitor, open an FD to it, and pass the FD
-> back to the libvirt client & forget about it.
-> 
-> > >> >> Allowing a client to run "object-del" against its own monitor adds
-> > >> >> complex edge cases, as it would be desirable to send the QMP response
-> > >> >> despite the monitor sending it being deleted. Doing "object-del" alone
-> > >> >> will also result in orphaning a character device backend instance, as
-> > >> >> there is no opportunity to run the companion "chardev-del" command.
-> > >> >> 
-> > >> >> A simpler way to ensure cleanup is to add the concept of auto-deleting
-> > >> >> monitor objects. Specifically when the "CHR_EVENT_CLOSED" event is
-> > >> >> emitted, the equivalent of "object-del" + "chardev-del" can be run
-> > >> >> internally. Since the transient client has already droppped its
-> > >> >> monitor connection, there is no synchronization to be concerned about.
-> > >> 
-> > >> If object-del or chardev-del fail, there's no way to report the error.
-> > >> Can they fail?
-> > >
-> > > object-del can fail if
-> > >
-> > >  * An object with the specified "id" does not exist. That shouldn't
-> > >    happen in this case but harmless if it odes.
-> > >  * object_del command tries to delete the monitor that
-> > >    is servicing the object_del command. Cannot happen with
-> > >    auto-delete
-> > >  * the monitor has not finished initializing it BH with
-> > >    chardev handlers. Cannot happen if we know we have a
-> > >    live connection already.
-> > >
-> > > chardev-del can fail if
-> > >
-> > >  * The chardev with "id" does not exist. SHouldn't happen
-> > >    but is harmless if it does
-> > >  * The chardev reports it is "busy" - aka the frontend
-> > >    is still connected - we just deleted it so cannot happen
-> > >  * Record/replay is in use - a niche use case
-> > >
-> > > So I don't think errors are a problem.
-> > >
-> > >> Do we always want to delete both monitor and character device?
-> > >
-> > > IMHO yes they are a pair whose lifetime should be tied together
-> > > for normal use.
-> > 
-> > Would we make monitor auto-delete delete its character device if
-> > character devices also had an auto-delete feature?
-> 
-> That's a possibility.
-> 
-> We would have to accept that it allows users to create a scenario in
-> which auto-delete will frequenty fail.
-> 
-> ie configuring the chardev for auto-delete, but not having the
-> frontend auto-delete, which would trigger the "busy" check. 
+operand_vimm() sign-extends the 5-bit vector immediate field in bits
+19:15, but returns uint32_t. This sends negative immediates through an
+unsigned type before they are assigned to rv_decode.imm.
 
-This feels like it has some overlap with 'yank'?  Where you can force
-a channel to get out of the way even if you don't delete it at that point.
+Return int32_t to match the signed value extracted by the helper.
 
-Dave
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+---
+ disas/riscv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Not convinced that's nicer ?
-> 
-> With regards,
-> Daniel
-> -- 
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-> 
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 400a57083f90be18ccd12415797bce0df974784b..e9dcc173d8fa2f89d85b76595a76931c4dddb462 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -4487,7 +4487,7 @@ static uint32_t operand_cimmq(rv_inst inst)
+         ((inst << 57) >> 62) << 6;
+ }
+ 
+-static uint32_t operand_vimm(rv_inst inst)
++static int32_t operand_vimm(rv_inst inst)
+ {
+     return (int64_t)(inst << 44) >> 59;
+ }
+
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+2.43.0
+
 
