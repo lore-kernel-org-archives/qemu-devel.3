@@ -4,102 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36493C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 19:40:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD449C43602
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 20:10:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wf0mU-0004tJ-Br; Wed, 01 Jul 2026 15:39:34 -0400
+	id 1wf1F6-0001tV-FV; Wed, 01 Jul 2026 16:09:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wf0mS-0004tB-KM
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 15:39:32 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wf0mQ-00065Q-NC
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 15:39:32 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-47248615e4dso1055493f8f.2
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 12:39:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782934768; x=1783539568; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2xL2701bNp0/C2fZ7bBEzpI0NEEq78NMsb3WNBM5OMs=;
- b=vhBhdmCVFUC1HaAZwVgRHKVMhzdfUBpC+97MuQ1DGB6JUOWq+m2P92T6HLVQpRnjyB
- ygilNtoqNh73hoLyaGwOS7JBEReG6TmmOanK4ea2TYge1bBAcLoz8HP3BI8CgNa8QCXE
- vV9nTqsx6dSXo062zEZxdBJTh9KRld/t92I7yj5Ykf9o8P8REuO9I5Rp2Cp5SW5zba0Q
- 1J67l9wkKdaHFSKI8GvnW3gQfa4shfqw3OT+VTBa6LiEK18alBJcwkyusdSiw2SnmPV6
- V1gN410gwYYc823mJ6GfHdjPNZYZZxdtpkROF4s7hRg96ozfiqZ00OHt2oIea0z6Oaxe
- y1Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782934768; x=1783539568;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2xL2701bNp0/C2fZ7bBEzpI0NEEq78NMsb3WNBM5OMs=;
- b=tXec8cmK2BMcOWYwWX+6v7/iqu4LBIjay3OlRVoEGMaw2l8lyCaPDZgzKKYZfuWWR1
- nti8QLdw1KWNvJKqE3TTvmuUUCB/1wrCatsie5U9DLF7r1ILayqOk+5zorAq37MQidC1
- D9fTKr1nMYRlNffYLT+MZALzpMexdmtEqpi/UvaHkjdzv0xI7TXS2YZZOFAyL+T2uG4i
- 2Fg1/A6Y3gIizZk7pIv9mpBwetT6d7kkPdamtC6sp/Yq3jVHEzkXL7yFIr7d+MXTJW/Y
- pv5WbKipoonvP1V9W2DiS6dTsPiOxXufAmOkRKz3jrXh/MCEnTCp+jYYcFI8KHQg28u+
- 5JGA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rrr3hJFe3vMnVRi6DoF0XfCeY1HbmDgqRJ/tPjWRpCLB4mLH0553RS4wtRCn4kbcGv0D2S9ckg5g0mU@nongnu.org
-X-Gm-Message-State: AOJu0YzQeTlLs9VglPMXq1uLVHoBMFKAPJ1euB6KVEllR4Bt7t+F1m49
- Et038aSqTCr+mRMmIJldYAtD6PWnLRymYzPUvunSdKCbC4vLdK9PqrHARILLHH/T8qQ=
-X-Gm-Gg: AfdE7ckQNMFgVXVw7FWxKM6aFIijJv1c12Pcx3ypQcveMiSOgfXOWo8IJZc6uTEcs4D
- REQK7Cjc+8BsEi8GFUbXFwBbDDbru17WVu5q2RskLiSXg/Bcr+idz9d/Nr+s3jEOpPBUc9L7by1
- WJ6vsHtpjn2jWjWuUgkUOQH7voIMkroZIpH5mbxGiJ4pd8nUAko7EOdkpveBpXQYw3QeYGzbP/T
- qUzjMDCwJDBz6OKGKdzSPXl6r9kWyEMQnKiAXXfMM7cTsWKvrva1eBIzTlmr0FExSWE7z3IQeSS
- 7q+pg0MOih7RxwHCt8XYHuI8LCCsqgeAX/hT+cRDWJ7rb2vz3UrrWRIy7m+3yYdU1aaeEJLZLkp
- 8jcSbDneEmkxcalvUOtxU7gUkjF9JCQW23cxmhL5kN8A8F+i2otc2UlZwIFzi+2b/0lWscE1W+9
- Pnt5cqRof3vAjP
-X-Received: by 2002:a05:6000:469b:b0:477:2e75:522c with SMTP id
- ffacd0b85a97d-4775a1010f1mr3024596f8f.28.1782934768220; 
- Wed, 01 Jul 2026 12:39:28 -0700 (PDT)
-Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-477db8a4ad4sm2555225f8f.11.2026.07.01.12.39.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jul 2026 12:39:27 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 41C9E5F889;
- Wed, 01 Jul 2026 20:39:26 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,  Emmanuel Blot
- <eblot@meta.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>,  qemu-devel
- <qemu-devel@nongnu.org>,  Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: macOS builds broken in CI
-In-Reply-To: <CAJSP0QWgS5wN1rnMw_xx5DwDDfpkGyB5fJEHdCGbK3mG7Xdqag@mail.gmail.com>
- (Stefan Hajnoczi's message of "Wed, 1 Jul 2026 19:26:38 +0200")
-References: <CAJSP0QXRy1Dc_MwqtU_gS1+jOdrW=Vk6YynP75q5HP3Rz_CpTA@mail.gmail.com>
- <904444A5-0120-4BE6-8E11-C7167F2A3BDB@unpredictable.fr>
- <D91DC576-2462-4652-9E8C-5A7C96791622@unpredictable.fr>
- <CAJSP0QWBpXN-=iu_13y3k_4z4uZJX7NPTgFH16CSBn30EYTrAg@mail.gmail.com>
- <CAJSP0QWtZUKQC5d23+tJi896H6sndwL+bD2cvSkQhC67mBjbkw@mail.gmail.com>
- <CAJSP0QWgS5wN1rnMw_xx5DwDDfpkGyB5fJEHdCGbK3mG7Xdqag@mail.gmail.com>
-User-Agent: mu4e 1.14.2; emacs 30.1
-Date: Wed, 01 Jul 2026 20:39:26 +0100
-Message-ID: <87fr22ts7l.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
+ id 1weyks-00080K-TO; Wed, 01 Jul 2026 13:29:46 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
+ id 1weykq-0006O6-Qg; Wed, 01 Jul 2026 13:29:46 -0400
+Received: from localhost (unknown [89.92.102.124])
+ (Authenticated sender: emmanuel.blot@free.fr)
+ by smtp2-g21.free.fr (Postfix) with ESMTPSA id 36B7220039E;
+ Wed,  1 Jul 2026 19:29:23 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+ s=smtp-20201208; t=1782926982;
+ bh=Ouee2Ps/oTe0Wc/KxKCavPPjCwx8Kr2JVkVu0ezh1R4=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=G8iKTdq67gYU94fGQuhuEixzaRFbQdn5eEU5/5UUiV0eIeIf0oXw+Rrp8v39riBLo
+ ROO8/FFnyHsDf87oDbaN9dL1XMj3q1LjMtSVfLHNISvcrelrgHYktHQBfhq9TZp0ET
+ 6LATsFI7IYbvCgzqADfwJWwC46twBGlAhfqN6+0NdP7SCFnsn3LdE2hG9BL1No19fo
+ 6bYFpJoWTnyPrAInc++LTbke4DBTcgtSK9K6US/GNoag3KsQQcJGChika00x45qJpE
+ /0sn1FYAh2A/V0DK+pnMQl+tllwejQ9tUHh0pySCtsYi98W4tEfevB6JCDmb5xnP8G
+ z5cLmSTmtcY3Q==
+From: Emmanuel Blot <emmanuel.blot@free.fr>
+Date: Wed, 01 Jul 2026 19:28:32 +0200
+Subject: [PATCH v5 2/8] tests/qtest: adc128d818: add test harness and
+ register access
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260701-i2c-adc128d818-anacapa-v5-2-fe8292d86b38@free.fr>
+References: <20260701-i2c-adc128d818-anacapa-v5-0-fe8292d86b38@free.fr>
+In-Reply-To: <20260701-i2c-adc128d818-anacapa-v5-0-fe8292d86b38@free.fr>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
+ Alexander Hansen <alexander.hansen@9elements.com>, 
+ William de Abreu Pinho <williampinho@meta.com>, 
+ Emmanuel Blot <eblot@meta.com>, qemu-arm@nongnu.org, 
+ Emmanuel Blot <emmanuel.blot@free.fr>, Corey Minyard <cminyard@mvista.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1782926919; l=6947;
+ i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
+ bh=Ouee2Ps/oTe0Wc/KxKCavPPjCwx8Kr2JVkVu0ezh1R4=;
+ b=fL3qxsFOENd5XFnepIyQSn1772ZC//9IqWkLNVv5vlttZL6fIvOcsAGSDgB9Vgz76/2P7NRwR
+ wGCJQe66d+nC0vrHLZqtkx5kwe0CWeAHVFbhoUlm6dSuGszibcxfPON
+X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
+ pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
+Received-SPF: pass client-ip=212.27.42.2; envelope-from=emmanuel.blot@free.fr;
+ helo=smtp2-g21.free.fr
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 01 Jul 2026 16:09:06 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -114,105 +88,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stefan Hajnoczi <stefanha@gmail.com> writes:
+Introduce the QOS test node and QMP property helpers for the
+ADC128D818, and cover basic register access: manufacturer and
+revision IDs, power-on-reset defaults, software reset, and the
+ain and temperature property readback.
 
-> (Update Philippe's email address.)
->
-> On Wed, Jul 1, 2026 at 7:23=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail.co=
-m> wrote:
->>
->> On Thu, Jun 25, 2026 at 9:53=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail.=
-com> wrote:
->> >
->> > On Thu, Jun 25, 2026 at 3:15=E2=80=AFPM Mohamed Mediouni
->> > <mohamed@unpredictable.fr> wrote:
->> > >
->> > >
->> > >
->> > > > On 25. Jun 2026, at 21:11, Mohamed Mediouni <mohamed@unpredictable=
-.fr> wrote:
->> > > >
->> > > >
->> > > >
->> > > >> On 25. Jun 2026, at 20:38, Stefan Hajnoczi <stefanha@gmail.com> w=
-rote:
->> > > >>
->> > > >> Hi Alex,
->> > > >> tests/tcg/multiarch/system/Makefile.softmmu-target's
->> > > >> run-gdbstub-interrupt seems to be broken on GitLab CI macOS runne=
-rs. 5
->> > > >> days ago it still passed, but now rerunning the pipeline on the s=
-ame
->> > > >> commit ID fails:
->> > > >>
->> > > >> - Good (5 days ago): https://gitlab.com/qemu-project/qemu/-/pipel=
-ines/2615134022
->> > > >> - Bad (today): https://gitlab.com/qemu-project/qemu/-/pipelines/2=
-629704018
->> > > >>
->> > > >> I've tried many CI runs with different pull requests applied on t=
-op of
->> > > >> qemu.git/master and they fail in the same way. Maybe it's an
->> > > >> environmental thing with the macOS runners?
->> > > >>
->> > > >> It's unclear where the SIGKILL (Error 137) comes from. Could it b=
-e an
->> > > >> out-of-memory condition on macOS runners?
->> > > >
->> > > > Hi,
->> > > >
->> > > > SIGKILL is the known symptom for failure during signature verifica=
-tion
->> > > > by AMFI.
->> > > >
->> > > > Now that we don=E2=80=99t have separate -unsigned binaries anymore=
- but relying
->> > > > on in-place ad-hoc (w/o certificate) signing with entitlements we =
-might
->> > > > have issues linked to that.
->> > > >
->> > > > In the past file modification had issues with verification tied to=
- the
->> > > > inode and the workaround being a reboot or a cat binary > new_bina=
-ry;
->> > > > chmod +x new_binary so that the old (now out of sync) signing stat=
-e is lost
->> > > >
->> > > This is highlighted in the software update context in: https://devel=
-oper.apple.com/documentation/security/updating-mac-software
->> > >
->> > > > This code is incorrect because it modifies the command-line
->> > > > tool=E2=80=99s executable file in place. macOS caches information
->> > > > about the code=E2=80=99s signature in the kernel. It doesn=E2=80=
-=99t flush
->> > > > that cache when you modify the file=E2=80=99s contents. Modifying =
-the
->> > > > file in place yields a mismatch between the file=E2=80=99s contents
->> > > > and the in-kernel cache, which can cause a hard-to-reproduce
->> > > > code-signing crash the next time you run the tool.
->> > > > While this example uses a command-line tool to demonstrate the
->> > > > issue, updating any file that contains signed code might
->> > > > trigger this code-signing crash. That includes executables,
->> > > > frameworks, dynamic libraries, and bundles.
->> > > > To update a file that contains signed code without risking this cr=
-ash, write the updated code to a temporary file and replace the existing fi=
-le with that temporary one:
->> > >
->> >
->> > Nice, thanks for sharing this! Do you want to send a patch to fix this?
->>
->> The macOS CI jobs have been failing for a week. The QEMU 11.1 soft
->> freeze is on July 7th and I'm concerned that we will enter the 11.1
->> freeze without working macOS builds in the CI system.
->>
->> Does anyone want to fix this macOS host issue?
+Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+---
+ tests/qtest/adc128d818-test.c | 169 ++++++++++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build       |   1 +
+ 2 files changed, 170 insertions(+)
 
-I'll have a look tomorrow.
+diff --git a/tests/qtest/adc128d818-test.c b/tests/qtest/adc128d818-test.c
+new file mode 100644
+index 0000000000..9a8811256f
+--- /dev/null
++++ b/tests/qtest/adc128d818-test.c
+@@ -0,0 +1,169 @@
++/*
++ * QTest testcase for the ADC128D818 ADC
++ *
++ * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/bitops.h"
++#include "libqos/i2c.h"
++#include "libqos/qgraph.h"
++#include "libqtest-single.h"
++#include "qobject/qdict.h"
++
++#define ADC128D818_TEST_ID      "adc128d818-test"
++#define ADC128D818_TEST_ADDR    0x1f
++
++/* Register addresses */
++#define REG_CONFIG              0x00
++#define REG_INT_STATUS          0x01
++#define REG_INT_MASK            0x03
++#define REG_CONV_RATE           0x07
++#define REG_CH_DISABLE          0x08
++#define REG_ONE_SHOT            0x09
++#define REG_DEEP_SHUTDOWN       0x0a
++#define REG_ADV_CONFIG          0x0b
++#define REG_BUSY_STATUS         0x0c
++
++/* Channel Reading Registers (16-bit, read-only) */
++#define REG_CH_READING_BASE     0x20
++
++/* Limit Registers (8-bit, read/write) */
++#define REG_LIMIT_BASE          0x2a
++
++/* ID Registers (read-only) */
++#define REG_MANUFACTURER_ID     0x3e
++#define REG_REVISION_ID         0x3f
++
++/* Configuration Register (0x00) bitfields */
++#define CONFIG_START            BIT(0)
++#define CONFIG_INT_ENABLE       BIT(1)
++#define CONFIG_INT_CLEAR        BIT(3)
++#define CONFIG_INITIALIZATION   BIT(7)
++
++/* Advanced Configuration Register (0x0b) bitfields */
++#define ADV_CONFIG_EXT_REF_EN   BIT(0)
++#define ADV_CONFIG_MODE_1       (1 << 1)
++#define ADV_CONFIG_MODE_2       (2 << 1)
++#define ADV_CONFIG_MODE_3       (3 << 1)
++
++/* Number of channels */
++#define NUM_CHANNELS            8
++
++/* Internal VREF in mV */
++#define INTERNAL_VREF_MV        2560
++
++/* QMP helpers for setting device properties */
++
++static void qmp_adc128d818_set(const char *property, int value)
++{
++    QDict *resp;
++
++    resp = qmp("{ 'execute': 'qom-set', 'arguments':"
++               " { 'path': %s, 'property': %s, 'value': %d } }",
++               ADC128D818_TEST_ID, property, value);
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++}
++
++static int qmp_adc128d818_get(const char *property)
++{
++    QDict *resp;
++    int ret;
++
++    resp = qmp("{ 'execute': 'qom-get', 'arguments':"
++               " { 'path': %s, 'property': %s } }",
++               ADC128D818_TEST_ID, property);
++    g_assert(qdict_haskey(resp, "return"));
++    ret = qdict_get_int(resp, "return");
++    qobject_unref(resp);
++    return ret;
++}
++
++/* Manufacturer and Revision ID registers */
++static void test_id_registers(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QI2CDevice *dev = (QI2CDevice *)obj;
++
++    g_assert_cmphex(i2c_get8(dev, REG_MANUFACTURER_ID), ==, 0x01);
++    g_assert_cmphex(i2c_get8(dev, REG_REVISION_ID), ==, 0x09);
++}
++
++/* Power-on-reset default values */
++static void test_defaults(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QI2CDevice *dev = (QI2CDevice *)obj;
++    unsigned ch;
++
++    g_assert_cmphex(i2c_get8(dev, REG_CONFIG), ==, 0x08);
++    g_assert_cmphex(i2c_get8(dev, REG_INT_STATUS), ==, 0x00);
++    g_assert_cmphex(i2c_get8(dev, REG_INT_MASK), ==, 0x00);
++    g_assert_cmphex(i2c_get8(dev, REG_CONV_RATE), ==, 0x00);
++    g_assert_cmphex(i2c_get8(dev, REG_CH_DISABLE), ==, 0x00);
++    g_assert_cmphex(i2c_get8(dev, REG_DEEP_SHUTDOWN), ==, 0x00);
++    g_assert_cmphex(i2c_get8(dev, REG_ADV_CONFIG), ==, 0x00);
++    g_assert_cmphex(i2c_get8(dev, REG_BUSY_STATUS), ==, 0x02);
++
++    for (ch = 0u; ch < NUM_CHANNELS; ch++) {
++        g_assert_cmphex(i2c_get8(dev, REG_LIMIT_BASE + ch * 2u), ==, 0xFF);
++        g_assert_cmphex(i2c_get8(dev, REG_LIMIT_BASE + ch * 2u + 1u), ==, 0x00);
++    }
++}
++
++/* Software reset via INITIALIZATION bit */
++static void test_soft_reset(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QI2CDevice *dev = (QI2CDevice *)obj;
++
++    i2c_set8(dev, REG_INT_MASK, 0xAA);
++    i2c_set8(dev, REG_CH_DISABLE, 0x55);
++    i2c_set8(dev, REG_LIMIT_BASE, 0x42);
++
++    g_assert_cmphex(i2c_get8(dev, REG_INT_MASK), ==, 0xAA);
++    g_assert_cmphex(i2c_get8(dev, REG_CH_DISABLE), ==, 0x55);
++    g_assert_cmphex(i2c_get8(dev, REG_LIMIT_BASE), ==, 0x42);
++
++    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
++
++    g_assert_cmphex(i2c_get8(dev, REG_CONFIG), ==, 0x08);
++    g_assert_cmphex(i2c_get8(dev, REG_INT_MASK), ==, 0x00);
++    g_assert_cmphex(i2c_get8(dev, REG_CH_DISABLE), ==, 0x00);
++    g_assert_cmphex(i2c_get8(dev, REG_LIMIT_BASE), ==, 0xFF);
++    g_assert_cmphex(i2c_get8(dev, REG_BUSY_STATUS), ==, 0x02);
++}
++
++/* Verify ain property readback via QMP */
++static void test_ain_property(void *obj, void *data, QGuestAllocator *alloc)
++{
++    int value;
++
++    qmp_adc128d818_set("ain3", 1500);
++    value = qmp_adc128d818_get("ain3");
++    g_test_message("Set ain3 = 1500 mV, readback = %d mV", value);
++    g_assert_cmpint(value, ==, 1500);
++
++    qmp_adc128d818_set("temperature", 37500);
++    value = qmp_adc128d818_get("temperature");
++    g_test_message("Set temperature = 37500 mC, readback = %d mC", value);
++    g_assert_cmpint(value, ==, 37500);
++}
++
++static void adc128d818_register_nodes(void)
++{
++    QOSGraphEdgeOptions opts = {
++        .extra_device_opts = "id=" ADC128D818_TEST_ID
++                             ",address=0x1f"
++    };
++    add_qi2c_address(&opts, &(QI2CAddress) { ADC128D818_TEST_ADDR });
++
++    qos_node_create_driver("adc128d818", i2c_device_create);
++    qos_node_consumes("adc128d818", "i2c-bus", &opts);
++
++    qos_add_test("id-registers", "adc128d818", test_id_registers, NULL);
++    qos_add_test("defaults", "adc128d818", test_defaults, NULL);
++    qos_add_test("soft-reset", "adc128d818", test_soft_reset, NULL);
++    qos_add_test("ain-property", "adc128d818", test_ain_property, NULL);
++}
++libqos_init(adc128d818_register_nodes);
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 45ea497fa5..defa0d9941 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -296,6 +296,7 @@ qtests_riscv64 = ['riscv-csr-test'] + \
+ qos_test_ss = ss.source_set()
+ qos_test_ss.add(
+   'ac97-test.c',
++  'adc128d818-test.c',
+   'adm1272-test.c',
+   'adm1266-test.c',
+   'ds1338-test.c',
 
->>
->> Stefan
+-- 
+2.50.1
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
