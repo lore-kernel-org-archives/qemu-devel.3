@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CFBEC44500
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 119D2C43602
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:18:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wes1S-0007um-2n; Wed, 01 Jul 2026 06:18:26 -0400
+	id 1wes1q-0000Ts-9J; Wed, 01 Jul 2026 06:18:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes1I-0007tD-FN
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:19 -0400
-Received: from mail-dl1-x1235.google.com ([2607:f8b0:4864:20::1235])
+ id 1wes1m-0000Nv-HR
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:47 -0400
+Received: from mail-dl1-x122d.google.com ([2607:f8b0:4864:20::122d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes1F-0004NS-5L
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:15 -0400
-Received: by mail-dl1-x1235.google.com with SMTP id
- a92af1059eb24-137335bc3caso973803c88.0
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:18:12 -0700 (PDT)
+ id 1wes1k-0004go-VS
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:46 -0400
+Received: by mail-dl1-x122d.google.com with SMTP id
+ a92af1059eb24-139f1dfc9faso744695c88.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:18:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782901091; x=1783505891; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782901123; x=1783505923; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sUwEwMNsdOnQXvI4sKTKgIiKNo/dHs30yRWt8rLVeEs=;
- b=shOYFK2EyKLTSNEz1/wg0KXPQn9S0NRf/ecP+lL76JTKc8/UQDmGeBbx9y73xSYEpo
- LkWGDmPKQFjWup6ZXUGGWkhNqf2S7aD9YahQOr2rfMz19m2vX3i8JwrDK5FIAZi8Ncy9
- C0scm5j1BfBo/IbUbmjnj1a1/ZeidbMXy3XDSQvDAX3mFORVqh3oEHbOfbIVIzZxvuJi
- uF8REK1oy24bSdiam41Ya6dTPgFCLrZyZvirm0r74mhzFkUxKyKxXkxjMFsu8KeI9Eno
- s+SAQbQfOtkW20NneleHRs6pQaNBMuF2SXUrU/VrKBulUrecu5e7rOyPf7Yd9mCttIrN
- +wPw==
+ :message-id:reply-to:content-type;
+ bh=bTIPaD+O2axDE0WFafplpEczwJ6SStZTyPjY+DQUbwY=;
+ b=pzRK9TSu16ER4Jg7qIaJish6xZdmK1IlYYa21h1Dtjx1MhcM2q1JQoBqCXn0nXeIZk
+ 1FvKsPD0j+nSLK6bVwZ3Jw77dtM24CwlzmYYI7424VQtwq2LUxcwnqcgWpIA9Wm0OMN/
+ SkYF8YJTYnGcMtGue8+9jfMMlmv5fkYCfls7NAjmB395OBRH2JcnhtejIOWGv72CaTGu
+ naSF2MYg3sxcJp++NJC+kH+DD2GQVhGRa/KLl7rLmw82nxJeh5rmpRFpLvUR3eN3KUQx
+ k44CdSJ0IbwrjviIHRE5K0g1a1/xHBWNROqBKnXDYzjI0PdqIxM3JnlRV+sBkOFoSeGN
+ jpeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782901091; x=1783505891;
+ d=1e100.net; s=20251104; t=1782901123; x=1783505923;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=sUwEwMNsdOnQXvI4sKTKgIiKNo/dHs30yRWt8rLVeEs=;
- b=W9+T3dYWpMRiE1DtK6w9iDooGNyeCgMfXvZrnj5OeAfOJqDmpQ5ocH5sgzEMAMN/Mw
- utPs9jEFEzCrpzdwttfDnMRALCNbiNwn2xd/r1Tm5Xh3/NTgMi1NMFwMCX9iCvR/K3OO
- L5WJsVZcahWoGt3mxKbFpzTcfMZJVQ9WSHHB1qJk/oVuY/kRFwfZ5n3g2aCb0iabEAR0
- gDn23k6Uq5nBbrW45FgwtHc6kOR+Vch0evOq1kzyk31lofo0VsaCKZ27Igc9Zqs1pUti
- P4Iz/nUpdzTS60B1dJIEdOZP2Htw44K3jA/qYYNscq8Caq+bH3RMzJ53cpSngexHZvci
- RCnw==
-X-Gm-Message-State: AOJu0Yxb6h24+kp41tehHKOQe6Uq9QWr9sRAVqrvNYlvLcML/3fbsYKl
- EzaZwGjWLnfZ8oCqCtaLqx1UJZg+rUY6dKNKEQZfxb/Sp2dk2yGuT4IWG+234w==
-X-Gm-Gg: AfdE7cmbYFoPsvz6Kpq50DVatl11v59ANU0Oeh5qnUrmsIRMOEFDUAbndh2CgFvn0Tj
- QexYOAELoExKDS7seL6fAOo3tsom0YW+jJTb+RlCa6HBUmcaSrvrg47tJlyyqSigMGLZ8XvNUig
- ZW7OWJYzIosB6sXacPuBON+1AbiPq+7M+iJRAGYeWO/geEyFdRojeWI0cd6kWEkBbJoz1xBQ5WS
- Z/h70JQBe85RZcy/rDtnrq7xEYodTeHSBrIdl8HwA5bs7uJv8Hq2UvTABOGsIWBFT6++049ElzB
- qb8ubk7x5GBKxSXPoJOxACdVQbkN2ZBEOVU6VYreR1h54WTAxeHiiQIMvzdAnMm9QwTqucx7fey
- UufF0IMC0xVT6sJ2/dLh0YcLiHErFnrxf2HiYldH2o2riqWMzB/WvPJlBB7yaI92okeRKnNdjS6
- EcRQAd8Om3sG4Hs+ZgLr8IU2duuRu01bM=
-X-Received: by 2002:a05:7022:4595:b0:134:feba:401 with SMTP id
- a92af1059eb24-13b3916e058mr188860c88.37.1782901091319; 
- Wed, 01 Jul 2026 03:18:11 -0700 (PDT)
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=bTIPaD+O2axDE0WFafplpEczwJ6SStZTyPjY+DQUbwY=;
+ b=jsyO6WHAEg4T8w8Z34H5G/whcl5mFv9UZtjxyX1/YhionRPBboMUGcvPKSyRV73gaF
+ yNfjC5RAdqU4cwM6DrydBW87YcIHKid2AM9pLvS+N9gaoJK9TAoYm1AF+DAUranOs5zt
+ 9NvXKPO7W3HLgMMI5Cc/pdNKW8ZGpc1ROJ5fQHh2L3ea0bRa95tHhWnXm6QlCZOKYVht
+ 5/CcZ4Z8A4ONvqglKnsDiFO35YYDIkESo8Zvjjdk6l9OUNxCJygACLXLa1QG7e6vGHKz
+ RmDlnBLwLnYs9QlZjw6u2c4fel81+VjjYVr+/0JymF0kFSup98dk72DllYB/STvZwCcc
+ FjRQ==
+X-Gm-Message-State: AOJu0YxYLlzr6JJkcZwR+8RcargqLmM7bmhxE1sDIdhGIDR024UfKqT9
+ 1VQ+0WESymihh1vx5vJ35mV191v4FvRTTLEnMfgOsWl7pdy0OCYmGJedgcHVVA==
+X-Gm-Gg: AfdE7cnPWNx2S9dmmZD1cb6TvBPwzGqEcpN1YQUuhE66jvkL8ROWUgRVc5njMLSfAs5
+ dPRNfQr/X3i8vV3QrtMnyFbUzDoXOXRAmCj1oaDXXeeJ2JenkNfe0PgDwfxDLKaZSXUVRNZ0KI/
+ dFnnbHtp8Qhb4rfzan/uZYHOJ/ySkZvyYIjkKOC3d548CHVlKDSBgJw+TniSaUOItYY7tV9dITc
+ okgl0+k6VnF/9EEEJtgWyhnYuMykvqlxFMs3qE+uGCNya5XlwL+grcYF6gzJGLy8NC+VuQaS0zM
+ Hr7nWANsnGwRXWFmqzjt8f0OJlhtifSkPfgNfFTC/0SblAnGrenLaFi/t30/pNe/FmVJTPNbYvC
+ fQ86THIFsibnEtfdeeOJr+gErP73dFLIWgZEnABXq+ROm4K3P03E+V10qwIzBDC/52RqVi/wSS2
+ 3e2jhpIxWb/OzUB5cgjKlUbbLQLbf1aik=
+X-Received: by 2002:a05:7022:210:b0:13b:3132:6e94 with SMTP id
+ a92af1059eb24-13b390eb92fmr217366c88.12.1782901123172; 
+ Wed, 01 Jul 2026 03:18:43 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.18.08
+ a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.18.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jul 2026 03:18:10 -0700 (PDT)
+ Wed, 01 Jul 2026 03:18:42 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Subject: [PULL 01/39] target/riscv: Avoid NULL deref in IMSIC CSR write
-Date: Wed,  1 Jul 2026 20:17:14 +1000
-Message-ID: <20260701101752.2522962-2-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Qingwei Hu <qingwei.hu@bytedance.com>,
+ Nutty Liu <nutty.liu@hotmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 11/39] hw/intc: riscv_imsic: Skip reset for KVM irqchip
+Date: Wed,  1 Jul 2026 20:17:24 +1000
+Message-ID: <20260701101752.2522962-12-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260701101752.2522962-1-alistair.francis@wdc.com>
 References: <20260701101752.2522962-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1235;
- envelope-from=alistair23@gmail.com; helo=mail-dl1-x1235.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122d;
+ envelope-from=alistair23@gmail.com; helo=mail-dl1-x122d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,56 +103,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joel Stanley <joel@jms.id.au>
+From: Qingwei Hu <qingwei.hu@bytedance.com>
 
-rmw_xireg_aia() and rmw_xtopei() were changed to store the IMSIC
-callback's value in a local before passing it back to the caller.
-For write only CSR accesses that pointer is NULL, causing a crash when
-guest programs write to xireg or xtopei, such as when the guest sets up
-the IMSIC.
+The emulated IMSIC state arrays are only allocated when QEMU handles
+the interrupt controller state itself. With KVM AIA/APLIC-IMSIC, the
+interrupt controller state is owned by the KVM in-kernel irqchip, so
+these emulated state arrays are not allocated.
 
-This only happens when setting aia=aplic-imsic so none of the existing
-boot tests caught it.
+The IMSIC reset handler still clears those arrays unconditionally. This
+makes qemu_system_reset(), which runs during machine creation,
+dereference NULL pointers with -machine virt,aia=aplic-imsic and KVM.
 
-Fix it by guarding the pointer dereference as done for other CSRs.
+Skip the emulated IMSIC reset path when the interrupt controller is
+handled by KVM. The emulated path is unchanged for TCG and for
+configurations that use QEMU emulation.
 
-Fixes: 63469ad75dcc ("target/riscv: Fix arguments to board IMSIC emulation callbacks")
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+Fixes: 766391483b ("hw/intc: riscv_imsic: Add reset API to IMSIC")
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Signed-off-by: Qingwei Hu <qingwei.hu@bytedance.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260617054034.1020724-2-joel@jms.id.au>
+Message-ID: <20260615131925.3019370-3-qingwei.hu@bytedance.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/csr.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ hw/intc/riscv_imsic.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index dd9726fcf4..dd790d5bef 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2733,7 +2733,9 @@ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
-                                     AIA_MAKE_IREG(isel, priv, virt, vgein,
-                                                   riscv_cpu_mxl_bits(env)),
-                                     &wide_val, new_val, wr_mask);
--            *val = wide_val;
-+            if (val) {
-+                *val = wide_val;
-+            }
-         }
-     } else {
-         isel_reserved = true;
-@@ -3009,7 +3011,9 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
-                     AIA_MAKE_IREG(ISELECT_IMSIC_TOPEI, priv, virt, vgein,
-                                   riscv_cpu_mxl_bits(env)),
-                     &wide_val, new_val, wr_mask);
--    *val = wide_val;
-+    if (val) {
-+        *val = wide_val;
-+    }
+diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
+index 1c86ecdb2c..7e5b5349ba 100644
+--- a/hw/intc/riscv_imsic.c
++++ b/hw/intc/riscv_imsic.c
+@@ -347,6 +347,10 @@ static void riscv_imsic_reset_enter(Object *obj, ResetType type)
+     RISCVIMSICState *imsic = RISCV_IMSIC(obj);
+     int i;
  
- done:
-     if (ret) {
++    if (kvm_irqchip_in_kernel()) {
++        return;
++    }
++
+     memset(imsic->eidelivery, 0, sizeof(uint32_t) * imsic->num_pages);
+     memset(imsic->eithreshold, 0, sizeof(uint32_t) * imsic->num_pages);
+ 
 -- 
 2.54.0
 
