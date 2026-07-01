@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A94BC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 12:30:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D414EC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 12:32:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weu5G-0001sq-80; Wed, 01 Jul 2026 08:30:31 -0400
+	id 1weu6y-0002RT-5D; Wed, 01 Jul 2026 08:32:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1weu57-0001lI-R7
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:30:28 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1weu6u-0002Qs-GF
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:32:13 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1weu55-0000YE-1I
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:30:20 -0400
+ id 1weu6s-00017x-Uv
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:32:12 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 6D967596708;
- Wed, 01 Jul 2026 14:30:17 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 426CE596707;
+ Wed, 01 Jul 2026 14:32:09 +0200 (CEST)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 67Xpi1muRu0a; Wed,  1 Jul 2026 14:30:15 +0200 (CEST)
+ id w44ufI6MfD1M; Wed,  1 Jul 2026 14:32:07 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 41522596707; Wed, 01 Jul 2026 14:30:15 +0200 (CEST)
+ id 2FA43596704; Wed, 01 Jul 2026 14:32:07 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 40210596704;
- Wed, 01 Jul 2026 14:30:15 +0200 (CEST)
-Date: Wed, 1 Jul 2026 14:30:15 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 2E4425966FB;
+ Wed, 01 Jul 2026 14:32:07 +0200 (CEST)
+Date: Wed, 1 Jul 2026 14:32:07 +0200 (CEST)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Chad Jablonski <chad@jablonski.xyz>
 cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 3/7] ati-vga: Implement CCE microcode register handling
-In-Reply-To: <20260606195216.2524314-4-chad@jablonski.xyz>
-Message-ID: <82234c1c-0675-3f1c-9401-0e0c1b1b50e4@eik.bme.hu>
+Subject: Re: [PATCH v3 6/7] ati-vga: Disable GUI engine MMIO writes when CCE
+ enabled (r128 only)
+In-Reply-To: <20260606195216.2524314-7-chad@jablonski.xyz>
+Message-ID: <b0c004cb-db54-af1e-535f-d1757ac4fcfb@eik.bme.hu>
 References: <20260606195216.2524314-1-chad@jablonski.xyz>
- <20260606195216.2524314-4-chad@jablonski.xyz>
+ <20260606195216.2524314-7-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -66,55 +67,46 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Sat, 6 Jun 2026, Chad Jablonski wrote:
-> Implement registers used for loading and reading microcode for the CCE
-> engine. Loading the microcode is the first step for any driver
-> implementing CCE. Reading, while not used by drivers, is very helpful for
-> any reverse engineering and testing work. The microcode is currently
-> stored but not used. This lays the groundwork for future RE work on the
-> microcode.
+> When the CCE engine is enabled, real r128 hardware ignores any MMIO writes to
+> GUI registers (0x1400-0x1fff range). Writes made by the CCE engine are
+> not affected by this.
 >
-> There's some quirky behavior around microcode reads that isn't
-> documented elsewhere. There appear to be two internal pointers, one for
-> reading and one for writing that can get out of sync. Comments in the
-> code expand on this.
+> Testing on r100 shows that this behavior is specific to r128.
 >
 > Tested and validated against a Rage 128 Pro Ultra (PCI 1002:5446) and
 > Radeon QY (RV100) (PCI 1002:5159).
 >
 > Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 > ---
-> hw/display/ati.c     | 61 ++++++++++++++++++++++++++++++++++++++++++++
-> hw/display/ati_int.h | 11 ++++++++
-> 2 files changed, 72 insertions(+)
+> hw/display/ati.c | 9 +++++++++
+> 1 file changed, 9 insertions(+)
 >
 > diff --git a/hw/display/ati.c b/hw/display/ati.c
-> index 826c856b1c..73fd5e7d23 100644
+> index e1ba64747b..582c646a3d 100644
 > --- a/hw/display/ati.c
 > +++ b/hw/display/ati.c
-> @@ -579,6 +579,36 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
->         qemu_log_mask(LOG_GUEST_ERROR,
->                       "Read from write-only register 0x%x\n", (unsigned)addr);
->         break;
-> +    /* r100: CP_ME_RAM_ADDR */
-> +    case PM4_MICROCODE_ADDR:
-> +        val = s->cce.microcode.addr;
-> +        break;
-> +    /* r100: CP_ME_RAM_RADDR */
-> +    case PM4_MICROCODE_RADDR:
-> +        /* Always returns 0. Tested on hardware. */
-> +        val = 0;
-> +        break;
-> +    /* r100: CP_ME_RAM_DATAH */
-> +    case PM4_MICROCODE_DATAH:
-> +        val = (s->cce.microcode.microcode[s->cce.microcode.raddr] >> 32) &
-> +              0xffffffff;
+> @@ -1183,6 +1183,15 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+>     if (addr < CUR_OFFSET || addr > CUR_CLR1 || ATI_DEBUG_HW_CURSOR) {
+>         trace_ati_mm_write(size, addr, ati_reg_name(addr & ~3ULL), data);
+>     }
+> +    if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF &&
+> +        s->cce.buffer_mode && addr >= 0x1400 && addr <= 0x1fff) {
 
-I'm not sure we need to mask here as you shift out the low part and the 
-high part will be 0 so unless the compiler warns I'd just write >> 32 but 
-I'm not sure we need all of this anyway as I'm not sure any driver would 
-do more than just write the microcode and then never read it. So I'd only 
-bother to implement it if something is known to need it.
+Should this go to ati_r128_mm_write then if we decided to have chip 
+specific functions? I still wonder if keeping the ifs would be simpler.
 
 Regards,
 BALATON Zoltan
+
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +            "ati_mm_write: wrote 0x%"PRIx64" to gui register "
+> +            "0x%"PRIx64" while cce engine enabled, ignored.\n",
+> +            data, addr);
+> +        return;
+> +    }
+> +
+>     switch (addr) {
+>     case MM_INDEX:
+>         s->regs.mm_index = data & ~3;
+>
 
