@@ -4,56 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A735C43602
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63417C43458
 	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 21:34:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wf2Zd-0007uB-Ls; Wed, 01 Jul 2026 17:34:25 -0400
+	id 1wf2Za-0007tT-8b; Wed, 01 Jul 2026 17:34:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <bounce.4ijdd3qenjsu6n5=tukaubulnpa5=zye27th3k3x07p@em1175899.techtravels.org>)
- id 1wf2Zb-0007tm-BG
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 17:34:23 -0400
+ <bounce.12z04cv3btw88n0=vpz22ppphfu9=9e2hb48lqb2g1v@em1175899.techtravels.org>)
+ id 1wf2ZY-0007ss-7H
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 17:34:20 -0400
 Received: from a4i502.smtp2go.com ([158.120.81.246])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <bounce.4ijdd3qenjsu6n5=tukaubulnpa5=zye27th3k3x07p@em1175899.techtravels.org>)
- id 1wf2ZZ-00089C-Ow
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 17:34:23 -0400
+ <bounce.12z04cv3btw88n0=vpz22ppphfu9=9e2hb48lqb2g1v@em1175899.techtravels.org>)
+ id 1wf2ZW-00089C-NL
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 17:34:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=techtravels.org;
- i=@techtravels.org; q=dns/txt; s=s1175899; t=1782941650; h=from :
+ i=@techtravels.org; q=dns/txt; s=s1175899; t=1782941644; h=from :
  subject : to : message-id : date;
- bh=loUvFRcKc/2Ppn91bp6AtFPfYk5qkHlMIFia9txb9d0=;
- b=Ib+KqtJvUSRKxf+uGFTafCXo8Kv5Mtyx1WYE/mhhp5qvF8XUrtWrXkhwRzVOqYWNvOTqo
- Kdyk7QGQXNtVU5xiY1cH5U1a9ai7xFCFLlP4mIQNCM6ZpmAB7/3oMNYoP91sBu0UjBYRA7k
- j+fI9r77BfvX9gbvuuOx4EbkJYdZbWjlnIDEe+BpCnTBnl/3VD8qJmguXBVRNT7s7XWFMQ+
- oa8l2Pb3tV1PoIScOJ43A3hkIvEYoF47wWftD5kc1KHc5qImlOu0nbeTvd97X2hjQm/TWDh
- 7U0nWfzRmLDPZg7YNsapEASS2j7m4FqkmJT7/6n+36m5i8pJwKH5Ni9zk9AA==
+ bh=6TyIQGe5nKgG8efVYuK4A2vSVU/zotj9XIBU1Sl9kvk=;
+ b=URggQX4M92mSB1GNlX9d7bGDeymWnrNGKcqso2zXstKHjn4JzCpP3ULJGw8L2KfvwI9J0
+ nMfqu3ZO4rQuwquQHos8Km4mcnUWhY+HxDu6ZT89Vv/tQZJvXHo87wqDOm36LLRQn/dTV8R
+ w+uj2rUV7w8w+8iNculzvrnAEMObX4pM0onAiQbDNDCy/1KdwZgiGFrYGJWYODvXm1VE9df
+ OULdoAbJm4VOOFLubgFZBq7rF/rn+aqa/UD89SRnuTugsfpaPyWHaYtlMcoV9pWzEJCSRqt
+ V+OSA25c21ieXhSnrRXLFKtoPVWrAlWxxmTotFwhnqcqa1ult3xJpPGWCYuw==
 Received: from [10.91.249.253] (helo=antecquad..) by smtpcorp.com with esmtpsa
  (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
  (Exim 4.99.4) (envelope-from <keith@techtravels.org>)
- id 1wf2ZE-FnQW0hPscrZ-KKaz; Wed, 01 Jul 2026 21:34:00 +0000
+ id 1wf2ZF-FnQW0hPscrZ-GnN3; Wed, 01 Jul 2026 21:34:01 +0000
 From: Keith Monahan <keith@techtravels.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Fam Zheng <fam@euphon.net>, Peter Maydell <peter.maydell@linaro.org>,
  BALATON Zoltan <balaton@eik.bme.hu>, Keith Monahan <keith@techtravels.org>
-Subject: [PATCH v2 0/4] hw/scsi/ncr53c710: rewrite to support HP-UX,
- Linux and NetBSD
-Date: Wed,  1 Jul 2026 17:33:55 -0400
-Message-ID: <20260701213359.1855870-1-keith@techtravels.org>
+Subject: [PATCH v2 1/4] hw/misc/lasi: derive IRR from pending and unmasked
+ requests
+Date: Wed,  1 Jul 2026 17:33:56 -0400
+Message-ID: <20260701213359.1855870-2-keith@techtravels.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260701213359.1855870-1-keith@techtravels.org>
+References: <20260701213359.1855870-1-keith@techtravels.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Report-Abuse: Please forward a copy of this message, including all headers,
  to <abuse-report@smtp2go.com>
-Feedback-ID: 1175899m:1175899aL0uvZj:1175899sz_Vqlbc_-
-X-smtpcorp-track: dEWXH48TutMI.kP53q71FjMXh.z-f2CgAxAhH
+Feedback-ID: 1175899m:1175899aL0uvZj:1175899sBq7-A2oFb
+X-smtpcorp-track: 4V0NyJAWXDYc.Tue5cxI5_PbL.hohf3QgT23G
 Received-SPF: pass client-ip=158.120.81.246;
- envelope-from=bounce.4ijdd3qenjsu6n5=tukaubulnpa5=zye27th3k3x07p@em1175899.techtravels.org;
+ envelope-from=bounce.12z04cv3btw88n0=vpz22ppphfu9=9e2hb48lqb2g1v@em1175899.techtravels.org;
  helo=a4i502.smtp2go.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -76,59 +78,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series replaces the NCR 53C710 model so HP-UX 10.20 (including the
-Ignite/16700A media) installs and boots on the HP 715 (-M 715), while
-keeping the Linux lasi700 and NetBSD osiop drivers working.
+The LASI interrupt request register (IRR) was latched: set when a source
+asserted and then never cleared or re-evaluated against the mask, so a
+masked or dropped request stayed set forever. The parisc core I/O
+dispatcher reads IRR to find its interrupt source, so the stuck bit was
+returned on every later interrupt as an "unexpected core I/O interrupt".
+On an installed HP-UX system an unacknowledged i82596 LAN interrupt
+latched this way and the flood wedged the boot.
 
-I first tried to fix the existing model, but it took about a dozen fixes
-just to get the kernel's own driver to negotiate its first command, and
-the real problems were structural. It's connected-only and runs SCRIPTS
-synchronously inside the guest register write, so it can't do the
-disconnect/reselect or async completion HP-UX needs. Fixing that meant
-rewriting the interpreter, so the new engine is derived from lsi53c895a.c
-and adapted to the 710: big-endian SCRIPTS and table-indirect fetch,
-24-bit DMA, the 710 register map, and the single-byte interrupt model.
+Derive IRR as (pending & unmasked) with IPR tracking each source's level,
+matching the hardware and the in-tree parisc gsc/lasi driver.
 
-v1 was one big rewrite patch; v2 splits it:
+Signed-off-by: Keith Monahan <keith@techtravels.org>
+---
+ hw/misc/lasi.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-  1  hw/misc/lasi: independent LASI IRR fix (unchanged from v1).
-  2  hw/scsi/lasi_ncr710: drop dead defines from the glue (no behaviour change).
-  3  hw/scsi/ncr53c710: the base engine, enough to install and boot Debian
-     (53c700) and boot NetBSD (osiop).
-  4  hw/scsi/ncr53c710: the HP-UX bits on top (overlapped tagged
-     disconnect/reselect, async completion, and the ATN message-reject tail).
-
-Patch 3 is still the large one. It's a from-scratch rewrite on lsi53c895a.c
-rather than an edit of the old model, so it doesn't diff usefully against
-it, and splitting the engine itself would leave non-building intermediate
-states.
-
-On factoring a shared core out of lsi53c895a.c (raised in review of v1):
-only ~14% of the 710 is shared code, and the interrupt model and
-reselection differ in the interpreter's hot path, so the win is small
-while the regression and testing risk lands on lsi53c895a.c and its
-guests. I've kept them as sibling models.
-
-Tested on -M 715: HP-UX 10.20 install and reboot (Ignite and an
-overlapping tagged software install), Debian install and boot, NetBSD 9.4
-and 10.1 boot and device enumeration.
-
-v1 -> v2: split the rewrite into reviewable pieces; no functional change.
-
-Keith Monahan (4):
-  hw/misc/lasi: derive IRR from pending and unmasked requests
-  hw/scsi/lasi_ncr710: remove dead and shadowing defines
-  hw/scsi/ncr53c710: rewrite the SCRIPTS engine
-  hw/scsi/ncr53c710: support HP-UX overlapped tagged commands
-
- hw/misc/lasi.c        |   25 +-
- hw/scsi/lasi_ncr710.c |  118 +-
- hw/scsi/lasi_ncr710.h |   28 +-
- hw/scsi/ncr53c710.c   | 3042 +++++++++++++++++------------------------
- hw/scsi/ncr53c710.h   |  295 ++--
- hw/scsi/trace-events  |   43 +-
- 6 files changed, 1481 insertions(+), 2070 deletions(-)
-
+diff --git a/hw/misc/lasi.c b/hw/misc/lasi.c
+index e8e1578b75..f0dfd78b4d 100644
+--- a/hw/misc/lasi.c
++++ b/hw/misc/lasi.c
+@@ -62,7 +62,15 @@ static MemTxResult lasi_chip_read_with_attrs(void *opaque, hwaddr addr,
+ 
+     switch (addr) {
+     case LASI_IRR:
+-        val = s->irr;
++        /*
++         * The interrupt request register reports the interrupts that are both
++         * pending and unmasked, derived live from IPR and IMR rather than
++         * latched, so masking or deasserting a source removes it immediately.
++         * The parisc core I/O interrupt dispatcher reads IRR; a latched bit
++         * that never cleared would be redelivered forever as a phantom
++         * "unexpected" interrupt.
++         */
++        val = s->ipr & s->imr;
+         break;
+     case LASI_IMR:
+         val = s->imr;
+@@ -234,13 +242,18 @@ static void lasi_set_irq(void *opaque, int irq, int level)
+ 
+     if (level) {
+         s->ipr |= bit;
+-        if (bit & s->imr) {
++        if ((bit & s->imr) && (s->icr & ICR_BUS_ERROR_BIT) == 0) {
+             uint32_t iar = s->iar;
+-            s->irr |= bit;
+-            if ((s->icr & ICR_BUS_ERROR_BIT) == 0) {
+-                stl_be_phys(&address_space_memory, iar & -32, iar & 31);
+-            }
++            stl_be_phys(&address_space_memory, iar & -32, iar & 31);
+         }
++    } else {
++        /*
++         * The interrupt sources are level triggered, so a source that drops
++         * its request must clear its pending bit.  Otherwise the bit stays set
++         * in IPR (and hence IRR) and is redelivered as a phantom "unexpected"
++         * core I/O interrupt on every later interrupt.
++         */
++        s->ipr &= ~bit;
+     }
+ }
+ 
 -- 
 2.43.0
 
