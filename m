@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2EABC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:19:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21889C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:19:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wes1W-0008I7-HO; Wed, 01 Jul 2026 06:18:30 -0400
+	id 1wes2J-0002dM-RE; Wed, 01 Jul 2026 06:19:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes1U-00089m-OS
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:28 -0400
-Received: from mail-dl1-x1230.google.com ([2607:f8b0:4864:20::1230])
+ id 1wes2H-0002XL-Nk
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:19:17 -0400
+Received: from mail-dl1-x1234.google.com ([2607:f8b0:4864:20::1234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes1S-0004PZ-8F
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:28 -0400
-Received: by mail-dl1-x1230.google.com with SMTP id
- a92af1059eb24-139f3eaaa49so487913c88.0
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:18:25 -0700 (PDT)
+ id 1wes2G-0004nI-34
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:19:17 -0400
+Received: by mail-dl1-x1234.google.com with SMTP id
+ a92af1059eb24-13b2d7dc8d1so389975c88.1
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:19:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782901104; x=1783505904; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782901155; x=1783505955; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hZs8xCvcYpAj0njqISvDgTB4k3lfKCWL1Ml9/oahnQs=;
- b=OcX1hfxev5zAHuyWEL5tzBLROBbY+90kCsqymuO5fsQbfnkiN0pcfJKbcqHO/cWwSW
- Z5O3wGBrn8IbXrEM1cH/MobYyZ8RHS+2i49M6BXPP8IUmeLVZ9OBcB54GDsigJKpEKuC
- EUZIG4D2F+4g58TvziP4Cp96uew2KvduAsceYkYTf84U8TGMxUrWnSkx9qR8AehkZRDN
- AU4aA4hVOwbkuLoLlOjMg4SWiZJBkWLOCuJdgYo0y6RUTTeZoPHhtm6iITwXioj7LJAO
- 73fy9Ywu20zS7NFt1W3EI5QW1nAvT6yMXIz8sLWS4ARKtdHwQ5XzZCQazpAicwTJHTmX
- BUJw==
+ bh=EDSU73NnRsCuqjkJt0Y0dn6AC859Y51TrtUnRoh72iM=;
+ b=XIa4hqh3AHBZbEpJTbjBGTtuo0xMCXrsGqpqdWbZPmYZHLaj/dH1JTCyi4KgfwNrDB
+ vucazPKMMw90jsvqnkP8iG5HMw2udVD3Kxkr6NYX9iyc4Lzh4cQVtiV5Nv1tF9TepaxH
+ w7paWB1j77tMl6Q71N/6VaarnJIAMaxgYEag+V5xZPddPhio13kn5FxvnVXTz1EmqiTl
+ qgGbipe3rTnPbFxIUnlBSB6HRArgyDJuqeII1pV1k8IYWCizlJXnVBjqGINdzCzGwr3K
+ kaRcDl2CoGAO8IX80qWPLBh2HHGQkHRjKaLlJxeno1wcaNo5QUbU6dXU9NEO8UDSzVRQ
+ 4qqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782901104; x=1783505904;
+ d=1e100.net; s=20251104; t=1782901155; x=1783505955;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hZs8xCvcYpAj0njqISvDgTB4k3lfKCWL1Ml9/oahnQs=;
- b=PgRC/uWGcrUs4FZLo2eApKoNPCmTO84lE4nnhp2OPZrBiliBzTwasrgYONOJ+fdGZ0
- OMKeBSnL3aDqQoIE48VhRGl1+Kx0pofFxPsed+Hbd93Vwb6xncsuXGWJM858WRDAwUi6
- O/lqyf8RYyEQZGxkDj9l7iVTMykYWXB/eTV9XBp8MWUkJXnzZKpHEHN1EFlApICDcx0L
- FX0uXJq8eGzEJg/oeLaO2TdO9CTAP7pmLGKY3+7zjJTlG1tlSZmYxm1wS6lR9gXacHul
- xbuDmXtdA2ANW0upFBTIw8E4uGyI84LCLMA8BlypPqw8tc3ut/+FReg/ShNhRDGcDbhk
- SeNQ==
-X-Gm-Message-State: AOJu0YyEuJB+KSZGqOT2+19IacKaXpV3WUccOOzQNSy4l5u8QfRWybCv
- id0VchdTjuNQmSXfHQB+Shn/3Bp6nENnpI9uXaJCAhzalFHJSeegFa9FPWqLGw==
-X-Gm-Gg: AfdE7ckV2R3ZADjs7q9Wj45gaixwDHhnOJi+Sq/PniRkEqA7BuF2NITKY8P1IEyzzTQ
- VnGXwji+10JlLSr5UFTMGIxpWMTHsUezbbSr8+qdTaC19DLzFg4B6fMvkrDQE8r0n0Wetudfiuv
- Pca/0+90ByoRU59ioD1w1ewJssyrc5gWwWBWaIccF3N3eG2ne+/6AZN8gFT0lHd43g+z2Op1MbX
- RIgt4lQUZJjP1Jidsur2NYTUsD5D2fcpHM2QX+XfopAFBH8pyJoVi/w/rwF70ikpnBIJ/e1HPR8
- BN6xd7NHUHMOj1iWqVUwqrzU3/zxUN8Z4bf9eF+H5UTU4887FMy8CdK+sPk0/m00OQp+8Lpl1dH
- qrZVRCHifxGx4cqerVLxIZEvKC05j7qV/q3ZeF2UY5359RYUeDvgWKmkfq50ZkC8zKF7t/pHfRS
- hgNMcF3zq5FTpw/TQ/870RxGTRRPHvzg8=
-X-Received: by 2002:a05:7022:48:b0:138:3613:db8 with SMTP id
- a92af1059eb24-13b36d6f2e7mr1007922c88.3.1782901103983; 
- Wed, 01 Jul 2026 03:18:23 -0700 (PDT)
+ bh=EDSU73NnRsCuqjkJt0Y0dn6AC859Y51TrtUnRoh72iM=;
+ b=PCq9yn3mhXdxnQWmd1Bt59c6adEa8qNja3QQD3RbynoSTM9VVkKYRbXKyjzwtfmd2o
+ +azr17+q75mOWfWyCwfFARM48uhnzI0JP0beF0lqWlrT+X47dFfIqfReqrc/sHnEPDTQ
+ UGFduh4KEC3Lc3GqoxIDBqLaqHR9rye150G0jFpA2NamUbb3k1SDRweFrYt2e55JudL2
+ p6pEQ0lII+y0Vvkx77t0xT+/yeYo/cpVzOz3b4dfbr9JsOqh2FssLT3A4/n8vD2AqJqR
+ k9VmOmJT0FDE//SRE4p6xRVBaHjHthh3J6kITZOruvxT2ZkP+43Y7NCj+6Goe+2kNvll
+ eaIQ==
+X-Gm-Message-State: AOJu0YzAI5EFRCeMLzHHhzUXvV1L0TnwK6rxGRShQ5tOL7w+hl7/3shF
+ wMwiWvsjvOzZ8Ub9q4VAsYZvM0Rvj9JCHeEcM+SpSc1RIWsuhPDsDBUWG8NYrQ==
+X-Gm-Gg: AfdE7cl2IRC87Ox8EF0J6PRQ6sj5x1QDIvuBPS+ndefuPhJT9i96gMzcmg5aY2yHy8g
+ rC8dvw5R8bB60gNZsD35ENmni3U+h60iTP4TR5EvrtM8kx4gxGIbuJ2E74XZORuuCfXHGVzkZfN
+ E4pmp2Q5eYKy0RhhnfFwC6jDGfY39e+S3+VoiWCY+bNeeEampu68bgdq5COeTyMAgEO0dKH2E8A
+ dO+zJA+RY+JP6bQj82qfok/ffPw2ty8/WCX/d1trE0sl9cpsjH/GqZ0RclJFlAefxPpKYqoPptt
+ lQPHuLulMOkDvWEQ7JrjopeNlxOv8tTiGOcStMPpSxLpZDI1fljnLrcx5aJmzNPn+pYkPQSa7Fw
+ cTxWuqgPDU2VyYegzQYgCfktJuOI+hp+OQgWl5wOMaF7byZcKArvfwP+8ObSOrZHQCFSyGB7bH3
+ LEJOYop5n4nru8opvXImJBv294y4qu7hU=
+X-Received: by 2002:a05:7022:419d:b0:13b:20ad:b976 with SMTP id
+ a92af1059eb24-13b36e01a14mr1163595c88.47.1782901154659; 
+ Wed, 01 Jul 2026 03:19:14 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.18.21
+ a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.19.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jul 2026 03:18:23 -0700 (PDT)
+ Wed, 01 Jul 2026 03:19:14 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 05/39] target/riscv: dynamic alloc of debug trigger arrays
-Date: Wed,  1 Jul 2026 20:17:18 +1000
-Message-ID: <20260701101752.2522962-6-alistair.francis@wdc.com>
+Subject: [PULL 22/39] hw/riscv/riscv-iommu: set cmd_ill IOFENCE.C rsvp bits
+ are set
+Date: Wed,  1 Jul 2026 20:17:35 +1000
+Message-ID: <20260701101752.2522962-23-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260701101752.2522962-1-alistair.francis@wdc.com>
 References: <20260701101752.2522962-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1230;
- envelope-from=alistair23@gmail.com; helo=mail-dl1-x1230.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1234;
+ envelope-from=alistair23@gmail.com; helo=mail-dl1-x1234.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,265 +106,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-The debug trigger facility consists of a set of arrays: tdata1-3,
-cpu_breakpoint, cpu_watchpoint and itrigger_timer.  All of them are
-static allocated with RV_MAX_TRIGGERS (2).  This means that all RISC-V
-cpus will have 2 triggers per hart.
+We're not setting RISCV_IOMMU_CQCSR_CMD_ILL if a reserved bit happens to
+be set in an IOFENCE.C command.
 
-The RISC-V Server Ref demands at least 11 triggers per hart, and several
-CPUs in the wild works with 4+ triggers.  We need more flexibility, ergo
-we need to parametrize the amount of triggers and make it configurable.
-
-Before doing that we need to handle a situation faced in a previous
-attempt [1].  We were unable to set the tdataN array length in
-vmstate_debug, meaning that we would always migrate RV_MAX_TRIGGERS
-regardless of the actual amount of triggers in play. To fix that we need
-to change the tdata arrays from static to dynamic, allowing us to use
-VMSTATE_VARRAY_UINT32().  This also means that, in contrast with [1], we
-have the opportunity to turn all trigger arrays into dynamic allocation
-and reduce the amount of stuff being carried by CPURISCVState, or in
-other words, we can carry just what we're using instead of a static max
-value.
-
-All the forementioned trigger facility arrays are now dynamic.  They are
-allocated and freed during realize/unrealize, and their size is
-expressed by env->num_triggers.  All relevant code is changed to use
-env->num_triggers instead of the RV_MAX_TRIGGERS to loop through each
-array.
-
-This will make it easier for the next patch to parametrize
-env->num_triggers.
-
-[1] https://lore.kernel.org/qemu-devel/94c772b0-5231-40e4-9cab-6ac39b9e4d45@oss.qualcomm.com/
-
+Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3575
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260617131710.1855353-3-daniel.barboza@oss.qualcomm.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260626170533.3562484-1-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h     | 18 +++++++++++------
- target/riscv/debug.h   |  1 +
- target/riscv/cpu.c     |  6 ++++++
- target/riscv/csr.c     |  2 +-
- target/riscv/debug.c   | 46 ++++++++++++++++++++++++++++++++++--------
- target/riscv/machine.c | 16 ++++++++++-----
- 6 files changed, 69 insertions(+), 20 deletions(-)
+ hw/riscv/riscv-iommu-bits.h | 1 +
+ hw/riscv/riscv-iommu.c      | 4 ++++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 16e9f87b83..af246a56ed 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -467,12 +467,18 @@ struct CPUArchState {
-     /* trigger module */
-     uint16_t mcontext;
-     uint8_t trigger_cur;
--    uint64_t tdata1[RV_MAX_TRIGGERS];
--    uint64_t tdata2[RV_MAX_TRIGGERS];
--    uint64_t tdata3[RV_MAX_TRIGGERS];
--    struct CPUBreakpoint *cpu_breakpoint[RV_MAX_TRIGGERS];
--    struct CPUWatchpoint *cpu_watchpoint[RV_MAX_TRIGGERS];
--    QEMUTimer *itrigger_timer[RV_MAX_TRIGGERS];
-+    /*
-+     * num_triggers is the length of tdata1, tdata2, tdata3,
-+     * cpu_breakpoint, cpu_watchpoint and itrigger_timer
-+     * arrays.
-+     */
-+    uint32_t num_triggers;
-+    uint64_t *tdata1;
-+    uint64_t *tdata2;
-+    uint64_t *tdata3;
-+    struct CPUBreakpoint **cpu_breakpoint;
-+    struct CPUWatchpoint **cpu_watchpoint;
-+    QEMUTimer **itrigger_timer;
-     int64_t last_icount;
-     bool itrigger_enabled;
+diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
+index f9b6f35170..cc0b1c3ccd 100644
+--- a/hw/riscv/riscv-iommu-bits.h
++++ b/hw/riscv/riscv-iommu-bits.h
+@@ -347,6 +347,7 @@ struct riscv_iommu_command {
+ #define RISCV_IOMMU_CMD_IOFENCE_OPCODE          2
+ #define RISCV_IOMMU_CMD_IOFENCE_FUNC_C          0
+ #define RISCV_IOMMU_CMD_IOFENCE_AV      BIT_ULL(10)
++#define RISCV_IOMMU_CMD_IOFENCE_RESERVED GENMASK_ULL(31, 14)
+ #define RISCV_IOMMU_CMD_IOFENCE_DATA    GENMASK_ULL(63, 32)
  
-diff --git a/target/riscv/debug.h b/target/riscv/debug.h
-index 55a3ac72e6..a25d099b37 100644
---- a/target/riscv/debug.h
-+++ b/target/riscv/debug.h
-@@ -148,6 +148,7 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs);
- bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp);
- 
- void riscv_trigger_realize(CPURISCVState *env);
-+void riscv_trigger_unrealize(CPURISCVState *env);
- void riscv_trigger_reset_hold(CPURISCVState *env);
- 
- bool riscv_itrigger_enabled(CPURISCVState *env);
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index b47e2b41c8..e7318fe9f9 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1012,7 +1012,13 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
- static void riscv_cpu_unrealize(DeviceState *dev)
- {
-     RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(dev);
-+#ifndef CONFIG_USER_ONLY
-+    RISCVCPU *cpu = RISCV_CPU(dev);
- 
-+    if (cpu->cfg.debug) {
-+        riscv_trigger_unrealize(&cpu->env);
-+    }
-+#endif
-     mcc->parent_unrealize(dev);
- }
- 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index dd790d5bef..a60a796725 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -5441,7 +5441,7 @@ static RISCVException read_tdata(CPURISCVState *env, int csrno,
-                                  target_ulong *val)
- {
-     /* return 0 in tdata1 to end the trigger enumeration */
--    if (env->trigger_cur >= RV_MAX_TRIGGERS && csrno == CSR_TDATA1) {
-+    if (env->trigger_cur >= env->num_triggers && csrno == CSR_TDATA1) {
-         *val = 0;
-         return RISCV_EXCP_NONE;
-     }
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 30d39ee5cd..9a4910c431 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -172,7 +172,7 @@ target_ulong tselect_csr_read(CPURISCVState *env)
- 
- void tselect_csr_write(CPURISCVState *env, target_ulong val)
- {
--    if (val < RV_MAX_TRIGGERS) {
-+    if (val < env->num_triggers) {
-         env->trigger_cur = val;
-     }
- }
-@@ -701,7 +701,7 @@ static bool check_itrigger_priv(CPURISCVState *env, int index)
- bool riscv_itrigger_enabled(CPURISCVState *env)
- {
-     int count;
--    for (int i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (int i = 0; i < env->num_triggers; i++) {
-         if (get_trigger_type(env, i) != TRIGGER_TYPE_INST_CNT) {
-             continue;
-         }
-@@ -721,7 +721,7 @@ bool riscv_itrigger_enabled(CPURISCVState *env)
- void helper_itrigger_match(CPURISCVState *env)
- {
-     int count;
--    for (int i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (int i = 0; i < env->num_triggers; i++) {
-         if (get_trigger_type(env, i) != TRIGGER_TYPE_INST_CNT) {
-             continue;
-         }
-@@ -750,7 +750,7 @@ static void riscv_itrigger_update_count(CPURISCVState *env)
-     int64_t last_icount = env->last_icount, current_icount;
-     current_icount = env->last_icount = icount_get_raw();
- 
--    for (int i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (int i = 0; i < env->num_triggers; i++) {
-         if (get_trigger_type(env, i) != TRIGGER_TYPE_INST_CNT) {
-             continue;
-         }
-@@ -950,7 +950,7 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
-     int i;
- 
-     QTAILQ_FOREACH(bp, &cs->breakpoints, entry) {
--        for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-+        for (i = 0; i < env->num_triggers; i++) {
-             trigger_type = get_trigger_type(env, i);
- 
-             if (!trigger_common_match(env, trigger_type, i)) {
-@@ -996,7 +996,7 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
-     int flags;
-     int i;
- 
--    for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (i = 0; i < env->num_triggers; i++) {
-         trigger_type = get_trigger_type(env, i);
- 
-         if (!trigger_common_match(env, trigger_type, i)) {
-@@ -1049,19 +1049,49 @@ void riscv_trigger_realize(CPURISCVState *env)
- {
-     int i;
- 
--    for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    /*
-+     * Alloc env->tdata1/2/3, cpu_breakpoint, cpu_watchpoint and
-+     * itrigger_timer dynamically.  This is overkill now
-+     * given that they could be static arrays with RV_MAX_TRIGGERS
-+     * but we'll parametrize the trigger number later, i.e. the
-+     * array length won't be static.
-+     */
-+    env->num_triggers = RV_MAX_TRIGGERS;
-+    env->tdata1 = g_new0(uint64_t, env->num_triggers);
-+    env->tdata2 = g_new0(uint64_t, env->num_triggers);
-+    env->tdata3 = g_new0(uint64_t, env->num_triggers);
-+    env->cpu_breakpoint = g_new0(struct CPUBreakpoint *, env->num_triggers);
-+    env->cpu_watchpoint = g_new0(struct CPUWatchpoint *, env->num_triggers);
-+    env->itrigger_timer = g_new0(QEMUTimer *, env->num_triggers);
+ #define RISCV_IOMMU_CMD_IODIR_OPCODE            3
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index c2c470b5df..9bf02084cc 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -1880,6 +1880,10 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
+         switch (cmd_opcode) {
+         case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOFENCE_FUNC_C,
+                              RISCV_IOMMU_CMD_IOFENCE_OPCODE):
++            if (cmd.dword0 & RISCV_IOMMU_CMD_IOFENCE_RESERVED) {
++                goto cmd_ill;
++            }
 +
-+    for (i = 0; i < env->num_triggers; i++) {
-         env->itrigger_timer[i] = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-                                               riscv_itrigger_timer_cb, env);
-     }
- }
- 
-+void riscv_trigger_unrealize(CPURISCVState *env)
-+{
-+    g_free(env->tdata1);
-+    g_free(env->tdata2);
-+    g_free(env->tdata3);
-+
-+    g_free(env->cpu_breakpoint);
-+    g_free(env->cpu_watchpoint);
-+
-+    for (int i = 0; i < env->num_triggers; i++) {
-+        timer_del(env->itrigger_timer[i]);
-+    }
-+    g_free(env->itrigger_timer);
-+}
-+
- void riscv_trigger_reset_hold(CPURISCVState *env)
- {
-     target_ulong tdata1 = build_tdata1(env, TRIGGER_TYPE_AD_MATCH, 0, 0);
-     int i;
- 
-     /* init to type 2 triggers */
--    for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (i = 0; i < env->num_triggers; i++) {
-         /*
-          * type = TRIGGER_TYPE_AD_MATCH
-          * dmode = 0 (both debug and M-mode can write tdata)
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 6e70b145a5..ba96ceceef 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -240,16 +240,22 @@ static int debug_post_load(void *opaque, int version_id)
- 
- static const VMStateDescription vmstate_debug = {
-     .name = "cpu/debug",
--    .version_id = 3,
--    .minimum_version_id = 3,
-+    .version_id = 4,
-+    .minimum_version_id = 4,
-     .needed = debug_needed,
-     .post_load = debug_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT16(env.mcontext, RISCVCPU),
-         VMSTATE_UINT8(env.trigger_cur, RISCVCPU),
--        VMSTATE_UINT64_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
--        VMSTATE_UINT64_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
--        VMSTATE_UINT64_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
-+        VMSTATE_VARRAY_UINT32(env.tdata1, RISCVCPU,
-+                              env.num_triggers, 0,
-+                              vmstate_info_uint64, uint64_t),
-+        VMSTATE_VARRAY_UINT32(env.tdata2, RISCVCPU,
-+                              env.num_triggers, 0,
-+                              vmstate_info_uint64, uint64_t),
-+        VMSTATE_VARRAY_UINT32(env.tdata3, RISCVCPU,
-+                              env.num_triggers, 0,
-+                              vmstate_info_uint64, uint64_t),
-         VMSTATE_END_OF_LIST()
-     }
- };
+             res = riscv_iommu_iofence(s,
+                 cmd.dword0 & RISCV_IOMMU_CMD_IOFENCE_AV, cmd.dword1 << 2,
+                 get_field(cmd.dword0, RISCV_IOMMU_CMD_IOFENCE_DATA));
 -- 
 2.54.0
 
