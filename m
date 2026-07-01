@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A081AC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 14:17:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0091EC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 14:17:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wevkE-0005mR-9p; Wed, 01 Jul 2026 10:16:54 -0400
+	id 1wevkE-0005kf-3H; Wed, 01 Jul 2026 10:16:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wevju-0005a4-N4
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:16:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wevjr-0005Wo-Nf
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:16:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wevjr-0000Nl-Gm
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:16:33 -0400
+ id 1wevjo-0000GX-GW
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:16:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782915390;
+ s=mimecast20190719; t=1782915387;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1E586opbSMK99s73IKeOpRcaRb1mqhJgla8yeFcph98=;
- b=RlsrvUksGW8MRvQjlZOhRmAf6JHhDYjEQJca5tVMx3Obgkr4PDO+quWnY1/YLXmb3mc41S
- p5MzgOH7WcXnb+s+8ABt5qauIoF3F4jZAmwmECX6D/Y+IXTv1lf8DGqbrpKIP0qLmXC1z/
- zT7cSSzied/DJjZG66LTrebNst7vdhA=
+ bh=UqBgkjj4+5qCZafjC2NJKdGLFc9kuK531RBFru072RQ=;
+ b=PSVrZCtzb1Dktf87H83k6Yt5elPcfYNCSkJAWm2Dw4WOu3vhBMWj+/Pj/ow5riDaKIdmTs
+ BjKuIalR4XiBjsol2OKuRwhcakDgeXAs8zyRq6c/c6QvxCrfPVsOjSj86Rux0JoZeQSakv
+ olDSCFEdKriI2AouO7DXNBZFk/CcHjY=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-41-tZ4NKfnmMzKSYnsTpLu3aA-1; Wed, 01 Jul 2026 10:16:27 -0400
-X-MC-Unique: tZ4NKfnmMzKSYnsTpLu3aA-1
-X-Mimecast-MFC-AGG-ID: tZ4NKfnmMzKSYnsTpLu3aA_1782915386
+ us-mta-206-a_hFSWPIPkCAI5L5K0jyCA-1; Wed, 01 Jul 2026 10:16:26 -0400
+X-MC-Unique: a_hFSWPIPkCAI5L5K0jyCA-1
+X-Mimecast-MFC-AGG-ID: a_hFSWPIPkCAI5L5K0jyCA_1782915385
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4926596eebcso7000865e9.3
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 07:16:27 -0700 (PDT)
+ 5b1f17b1804b1-493c36b290cso2570015e9.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 07:16:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782915386; x=1783520186; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782915385; x=1783520185; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=1E586opbSMK99s73IKeOpRcaRb1mqhJgla8yeFcph98=;
- b=gmOQmolvakp/ZIwa4DHSB7W+fvWPgdvSAOUB3P+cpN5SHp0Zjjczu7NXRjEbJ5NTrL
- OihYfVk9G+BO513+R/tB9GC9Gh2XGStwMf3tFwWbUZ8i90WkrJp7UX7TeTh10hnhZTst
- Ebn+SfnI8d+ZbipE15O9bPKpLTTZ/LciP07AHIsroCw2tmF0ZWbIuVUm1H5xPbgIXAF3
- WDCPHI2SSiRvxdbc+8yMM5V/Nw9AeV89Bzz3bMLuNLg2T/A8u+v0fe+kmxbC8juyCEOc
- SmfOKpNhxVBpS9yGkwD3cmYk517Hs1lF67BFN20u/3dHs31E7t7SvxOZ9VxlTo8OOPks
- serw==
+ :reply-to; bh=UqBgkjj4+5qCZafjC2NJKdGLFc9kuK531RBFru072RQ=;
+ b=RlmifWen4HQ+geolFaWHakl12BpGLy36SIRBRy/DEa+gsPJdOdNwFG7LkAv56y3QGo
+ +P/uMZ05bT0hb8pPeS0huCBu/NdHq8KW/gdumeO2qyNNbpHR3/3gfYwbfI8wYhi7v5A8
+ v7qBkc/TeIRECK3zofMmgoAZUK8pUzqsF2Xi3YXuDQkCm0RMcjJQ3nJjVylvrOaD53Zr
+ 1M97hao2U/2m6efGctGF3OC8LDLWt1wwo/H7lU2/nJEtK2A/UQ7qDa4fF+hX/Sqs5jCJ
+ 7I5cl6L5g99cMRAf99PTsShPTxv4XNgKpU1oCwBw8Gt+O0E5yk/U7Dk3lOTp0BmvZU05
+ /rvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782915386; x=1783520186;
+ d=1e100.net; s=20251104; t=1782915385; x=1783520185;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=1E586opbSMK99s73IKeOpRcaRb1mqhJgla8yeFcph98=;
- b=PJInChahOLPh87zqCs8Gbnz+PafnJDTIm1UhrbmuqH/9jzosLpG3BJ/I2t8PN5NOzd
- xdDUKu8Aq0qFvsY9sGjGx1hXQEiU0xCy3Fl0J/iw8yS0N/meWp1c53UcTa1PWUpmreCS
- cZNqGgWDgD/7CfwbQ493+quP/NJ6hnmC2fZAlF8pOtHK1VRkomx9n57HTtbpJjXsZXLu
- geTY0itKCX+C1/xX0XV9KGAq5/G/Gsd+zbTztJjJMrwzj5lXy9NXjnmGdGz9WgLtXZGO
- U6Ddzekyw/gGU04Rpr9Y8Asm+Rb879kNSPRPJ9QZq2cSTfWQTZyGds5KWR9CqC6aQJw1
- sR8w==
-X-Gm-Message-State: AOJu0YyfIj9L3wR+/WdzvNLijBi8YDBxt2SmtRwIoeGhRhrPJSOQPgrg
- ARXfWOhb5C9RWkUvy4y0LrLDUN6VtzfrrJmbOOIsHXBNybJauzVACSmXHYPMn52LvBHCQt2n+Gr
- 9niS1D2ItaFruG/SR3kwfkEhBo864v5tIy5QDngxcSzTWvRbF+ZLu/efY
-X-Gm-Gg: AfdE7ck1vj1sJ7llMFahddux9i81g8GXIsDzKdqxuo7n6Vx5BLkCq4BOD+h2g0pNW4K
- uBFQcCbcxibhr7PRzVv0ktAAlgUUDmOeeZdcXuj2PeExgqjPsy95f87qVX4bHgG/WirTxOav4OG
- REAl+U2JY0nyw/cpYb9aGgx/Io6+CeLxy4+Js1xXJDORv+ryOey5VR3/+n+iWUC5NO7CTe7OLC2
- 1nFhHBJuzrgEcoP6u8O4epvMC5KKqSkUwRM9lcqR/BxGD7TzRcvGVZ8bGShMXwPAo5cyQUzC4du
- 6jm035Zhbq2HQHZs6WRRWQOp8fzwiphk2D3hlkT/vt5HqQkloz6THUrlRIAypORCi9gzHeX/xKp
- JlhsQiiEZUEee9L475ro+g/7Ww1vHszoxZ2wUmseUJ37+FVm6SSjWX3515UK04xwi4587beC+AO
- ZkivJA
-X-Received: by 2002:a05:600c:8183:b0:492:1e36:1fe9 with SMTP id
- 5b1f17b1804b1-493c3df34d3mr11294735e9.37.1782915386219; 
- Wed, 01 Jul 2026 07:16:26 -0700 (PDT)
-X-Received: by 2002:a05:600c:8183:b0:492:1e36:1fe9 with SMTP id
- 5b1f17b1804b1-493c3df34d3mr11294185e9.37.1782915385691; 
- Wed, 01 Jul 2026 07:16:25 -0700 (PDT)
+ bh=UqBgkjj4+5qCZafjC2NJKdGLFc9kuK531RBFru072RQ=;
+ b=OXXzk19na76MbvuQVZ2E36wVcJp8LJXWr7HJT9+oRdYOv3Fp0HQ+NNt24vzqf74gSh
+ spbl1L6zYpibvzdgDLugVL8h3crHS+oG+v8gKxjz2S0KA0syJjyOFEpm9+vBo7Tl1C7V
+ VBIfRbDugCuMBQrAMMQBSMLfygRExBRpGgzzXHhMfo9QHhNgivud5bSZWzqAQuvSY/WJ
+ DwuTozx6FwZYMBGtIvMhvVtJ0i48/IOCU3VxC9YYqTNaI/+siiYDK/aSoBq4ZpgTqo++
+ JgQqT786xrAfUYlq7Nsx7ZKfz03R36cp8J2OvG0HWp/iEREEWplfwqB9XZvbxYZQVjcW
+ kAcA==
+X-Gm-Message-State: AOJu0YzBLmSmIeWpe47lUK5WLaFOMNWRFsVXRANn6HbnD0e5Vb7KpbzN
+ 1ROEuA5mk8u44mI4fHsrDwwMAqxrCQ0JU780oKi13FSxYKpWHk6zNMk15dxn36TL8TM9nJvj2vQ
+ MzFJYb0c3TVoRwsNKoy6HRIJInuFjY032yOJQBekEdXPbVJaOU7yH8xCx
+X-Gm-Gg: AfdE7ck2OR016AWEs1h5dx4pf5uLivHbv0KJGikxZqpSAsRivlQPpPOcqknrZLBE5lf
+ oiNs92oEpAmSD8sSilVN4CjhZfH+BG8MvNnUhY7A+Cta2wzhBkyoB/nqjIzjHorLKS42j/8LH3I
+ DvwAS+haacDYHZ7A9zSdVXvE5WotS4k3ROyO8qJGZgRSyoiscDudO/wRVmOvuL7Xtjr9XMhk+VF
+ efFomgpgLrgUcKmvBAFgPbNqpY8OoxMmZeDe1plJKX1smAPzYmmEJ/kd9YDUaotUzYNlUk8bwHX
+ w5LXVEFFmenNNhMtVc04SyBS+UrkI4rSz3xHwwaYoooQkSyNxwT624xlXhTfzzjGkKa/bkBITAj
+ aBVcpTzazRy/YvS36Zh5m1CXJ0AynwrNKLh2I2J3p05dekfnJzeBRqn2wvp/iZA80Cv+c0Jl2IP
+ SYP4xP
+X-Received: by 2002:a05:600c:8217:b0:492:5e71:f6ab with SMTP id
+ 5b1f17b1804b1-493c2b84c14mr29476245e9.20.1782915384517; 
+ Wed, 01 Jul 2026 07:16:24 -0700 (PDT)
+X-Received: by 2002:a05:600c:8217:b0:492:5e71:f6ab with SMTP id
+ 5b1f17b1804b1-493c2b84c14mr29475875e9.20.1782915384073; 
+ Wed, 01 Jul 2026 07:16:24 -0700 (PDT)
 Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([151.29.41.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493be493c24sm53283795e9.0.2026.07.01.07.16.24
+ 5b1f17b1804b1-493be493c24sm53283795e9.0.2026.07.01.07.16.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jul 2026 07:16:24 -0700 (PDT)
+ Wed, 01 Jul 2026 07:16:22 -0700 (PDT)
 From: Luigi Leonardi <leonardi@redhat.com>
-Date: Wed, 01 Jul 2026 16:16:18 +0200
-Subject: [PATCH 2/3] hw/i386/microvm: add platform bus support
+Date: Wed, 01 Jul 2026 16:16:17 +0200
+Subject: [PATCH 1/3] hw/core/platform-bus: fix crash when num_irqs is zero
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260701-microvm_uefi_var-v1-2-0652cae6a152@redhat.com>
+Message-Id: <20260701-microvm_uefi_var-v1-1-0652cae6a152@redhat.com>
 References: <20260701-microvm_uefi_var-v1-0-0652cae6a152@redhat.com>
 In-Reply-To: <20260701-microvm_uefi_var-v1-0-0652cae6a152@redhat.com>
 To: qemu-devel@nongnu.org
@@ -99,14 +99,14 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Sergio Lopez <slp@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
  Luigi Leonardi <leonardi@redhat.com>
 X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,159 +123,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a platform bus to microvm to support dynamic sysbus devices with
-automatic MMIO address allocation. The bus is mapped at 0xfec20000
-with a 1 MB window, placed after the IOAPICs.
+bitmap_new(0) returns a zero-size allocation, and the subsequent
+bitmap_zero() dereferences it because small_nbits(0) is true.
+Skip IRQ initialization entirely when num_irqs is zero, which is
+valid for platform buses that only provide MMIO mapping.
 
-This is necessary to support the uefi-vars-sysbus device, which
-will be attached to microvm using the platform bus.
-
-The platform bus is created without IRQ lines for now; IRQ support can
-be added later as needed.
+This will be the case for the microvm platform bus which initially
+has no IRQ lines.
 
 Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
 ---
- hw/i386/Kconfig           |  1 +
- hw/i386/microvm-dt.c      |  9 +++++++++
- hw/i386/microvm.c         | 36 ++++++++++++++++++++++++++++++++++++
- include/hw/i386/microvm.h |  4 ++++
- 4 files changed, 50 insertions(+)
+ hw/core/platform-bus.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index 12473acaa7..e5f5e11980 100644
---- a/hw/i386/Kconfig
-+++ b/hw/i386/Kconfig
-@@ -133,6 +133,7 @@ config MICROVM
-     select PCI_EXPRESS_GENERIC_BRIDGE
-     select USB_XHCI_SYSBUS
-     select I8254
-+    select PLATFORM_BUS
+diff --git a/hw/core/platform-bus.c b/hw/core/platform-bus.c
+index a2217a2dee..4f765582e7 100644
+--- a/hw/core/platform-bus.c
++++ b/hw/core/platform-bus.c
+@@ -194,6 +194,10 @@ static void platform_bus_realize(DeviceState *dev, Error **errp)
+                        pbus->mmio_size);
+     sysbus_init_mmio(d, &pbus->mmio);
  
- config NITRO_ENCLAVE
-     default y
-diff --git a/hw/i386/microvm-dt.c b/hw/i386/microvm-dt.c
-index 45fbb5bbd1..69feddc715 100644
---- a/hw/i386/microvm-dt.c
-+++ b/hw/i386/microvm-dt.c
-@@ -38,6 +38,7 @@
- #include "hw/i386/fw_cfg.h"
- #include "hw/rtc/mc146818rtc.h"
- #include "hw/core/sysbus.h"
-+#include "hw/core/sysbus-fdt.h"
- #include "hw/virtio/virtio-mmio.h"
- #include "hw/usb/xhci.h"
- 
-@@ -337,6 +338,14 @@ void dt_setup_microvm(MicrovmMachineState *mms)
-     qemu_fdt_add_subnode(ms->fdt, "/chosen");
-     dt_setup_sys_bus(mms);
- 
-+    if (mms->platform_bus_dev) {
-+        /* Platform bus IRQs are not supported, intc is required but unused */
-+        platform_bus_add_all_fdt_nodes(ms->fdt, "/ioapic1",
-+                                       MICROVM_PLATFORM_BUS_BASE,
-+                                       MICROVM_PLATFORM_BUS_SIZE,
-+                                       0);
-+    }
-+
-     /* add to fw_cfg */
-     if (debug) {
-         fprintf(stderr, "%s: add etc/fdt to fw_cfg\n", __func__);
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index 779741ec76..d4836b5e12 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -47,6 +47,7 @@
- #include "hw/virtio/virtio-mmio.h"
- #include "hw/acpi/acpi.h"
- #include "hw/acpi/generic_event_device.h"
-+#include "hw/core/platform-bus.h"
- #include "hw/pci-host/gpex.h"
- #include "hw/usb/xhci.h"
- #include "hw/vfio/types.h"
-@@ -146,6 +147,24 @@ static void create_gpex(MicrovmMachineState *mms)
-     }
- }
- 
-+static void create_platform_bus(MicrovmMachineState *mms)
-+{
-+    DeviceState *dev;
-+    SysBusDevice *s;
-+
-+    dev = qdev_new(TYPE_PLATFORM_BUS_DEVICE);
-+    dev->id = g_strdup(TYPE_PLATFORM_BUS_DEVICE);
-+    qdev_prop_set_uint32(dev, "num_irqs", 0);
-+    qdev_prop_set_uint32(dev, "mmio_size", MICROVM_PLATFORM_BUS_SIZE);
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    mms->platform_bus_dev = dev;
-+
-+    s = SYS_BUS_DEVICE(dev);
-+    memory_region_add_subregion(get_system_memory(),
-+                                MICROVM_PLATFORM_BUS_BASE,
-+                                sysbus_mmio_get_region(s, 0));
-+}
-+
- static int microvm_ioapics(MicrovmMachineState *mms)
- {
-     if (!x86_machine_is_acpi_enabled(X86_MACHINE(mms))) {
-@@ -248,6 +267,8 @@ static void microvm_devices_init(MicrovmMachineState *mms)
-         x86ms->pci_irq_mask = 0;
-     }
- 
-+    create_platform_bus(mms);
-+
-     if (x86ms->pic == ON_OFF_AUTO_ON || x86ms->pic == ON_OFF_AUTO_AUTO) {
-         qemu_irq *i8259;
- 
-@@ -453,12 +474,27 @@ static HotplugHandler *microvm_get_hotplug_handler(MachineState *machine,
-     return NULL;
- }
- 
-+static void link_one_device(SysBusDevice *sbdev, void *opaque)
-+{
-+    platform_bus_link_device(PLATFORM_BUS_DEVICE(opaque), sbdev);
-+}
-+
-+static void microvm_link_platform_bus_devices(MicrovmMachineState *mms)
-+{
-+    if (!mms->platform_bus_dev) {
++    if (pbus->num_irqs == 0) {
 +        return;
 +    }
 +
-+    foreach_dynamic_sysbus_device(link_one_device, mms->platform_bus_dev);
-+}
-+
- static void microvm_machine_done(Notifier *notifier, void *data)
- {
-     MicrovmMachineState *mms = container_of(notifier, MicrovmMachineState,
-                                             machine_done);
-     X86MachineState *x86ms = X86_MACHINE(mms);
- 
-+    microvm_link_platform_bus_devices(mms);
-     acpi_setup_microvm(mms);
-     dt_setup_microvm(mms);
-     fw_cfg_add_e820(x86ms->fw_cfg);
-diff --git a/include/hw/i386/microvm.h b/include/hw/i386/microvm.h
-index 184b7a8c09..bd2897aa78 100644
---- a/include/hw/i386/microvm.h
-+++ b/include/hw/i386/microvm.h
-@@ -61,6 +61,9 @@
- #define MICROVM_XHCI_BASE     0xfe900000
- #define MICROVM_XHCI_IRQ      10
- 
-+#define MICROVM_PLATFORM_BUS_BASE 0xfec20000
-+#define MICROVM_PLATFORM_BUS_SIZE 0x00100000
-+
- #define PCIE_MMIO_BASE        0xc0000000
- #define PCIE_MMIO_SIZE        0x20000000
- #define PCIE_ECAM_BASE        0xe0000000
-@@ -101,6 +104,7 @@ struct MicrovmMachineState {
-     Notifier machine_done;
-     Notifier powerdown_req;
-     struct GPEXConfig gpex;
-+    DeviceState *platform_bus_dev;
- 
-     uint32_t ioapic_phandle[2];
- };
+     pbus->used_irqs = bitmap_new(pbus->num_irqs);
+     pbus->irqs = g_new0(qemu_irq, pbus->num_irqs);
+     for (i = 0; i < pbus->num_irqs; i++) {
 
 -- 
 2.54.0
