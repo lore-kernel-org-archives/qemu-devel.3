@@ -4,89 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E035FC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 12:19:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82505C43602
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 12:22:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wettd-00067n-O3; Wed, 01 Jul 2026 08:18:29 -0400
+	id 1wetws-0007Zm-K6; Wed, 01 Jul 2026 08:21:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiri@resnulli.us>) id 1wettb-00067T-BQ
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:18:27 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jiri@resnulli.us>) id 1wettY-0005Dt-Ug
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:18:27 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-473ba028d46so567163f8f.1
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 05:18:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=resnulli-us.20251104.gappssmtp.com; s=20251104; t=1782908302; x=1783513102;
- darn=nongnu.org; 
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=VDQp6t8niIEysPmOVq236y+Fsxq9FvxfUesp7S7IOPc=;
- b=yCL1L8qOgdQwnd4aKuGVSjbu82Abm2taTuzty+IO74I44+Xe/Cr2tfo7sFFyB+cGsJ
- Pzfhi5Fn24XIhU88RHnN5Pm7L5VmoTrSDUZl7LIco9tfvBp8A2IiqkGX1ZANyJJEKZ3Y
- bqKD3lm5nJJTFyyTJWzfVhlaeyageN6M4ViH49N8+w2nfKrQpAEPFHZobXhGKZLMRQql
- n2uH3D2exZv8LTAal6hw8QnoKFlALek1YaILPCc9REMME70SJVClsglj+0XCkL020r9W
- AAODVhWGIjpLsMmmzGnwlxibblHdWcTkKOrBdjcgplAn9lQO4piRnAIpmHSI6N4/tC7r
- 1wyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782908302; x=1783513102;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VDQp6t8niIEysPmOVq236y+Fsxq9FvxfUesp7S7IOPc=;
- b=TVD7eju8RXGQvSdSNIHTxpVPPn4Wu3Dhm/xBq0IIesAjB35PkIl3Qn0Vua9dYrifrJ
- VV/0IBi3H7iwC9OKrNVTeg1QdXdDEEoj+Crs5qg3qbJfBnE2o3s6EV4svxG6SQ9gYhQ6
- 26J6gS5AFIsXacDe7DjaD+Y/38lG7lfsuPhXyFvQ35wZBW2NVZ6sMovhQ5YbRn9Og4uB
- eHheY8Mxrxih+CODo5DgyUWV1F2dAkpOMZoS9N4jsg2pnrSXEzCE2v2kjxR21Kko1xmx
- mLG6E8y1xdFKE8z/+wH/psF4hYxzlAgGCe3qap1zRUpGZ1ksT6ld0tN1yk3zz+n1wIZu
- VTbw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrJFPmxj5hQut7y7edVtyAgybhRh4WWoO0RmbENvvL6culeq6ZaGUAawx+ABDvJIzrkn9byl0tddq9o@nongnu.org
-X-Gm-Message-State: AOJu0YyTsMcQbDMh4bXTTOhk5Bbj0Pa+DJZSTC/Za6o75vkDssLg5OaI
- RlIbA3QcJ1PPFxMPoJ01h7hlcP3qOTi8hco8LlEMTkzvJ6vguJlQs92WZiOyuEzUxWI=
-X-Gm-Gg: AfdE7ck+zc+xIvPZFs7yfOd+uuQG3Z4EGirY3At5vRFQ4DzkOIf9vcANwsrQVe50gmN
- azLRjMVWdLXmhO3C7ARLaVClqqgHWglRk2rOqBxQ5kt9lGpFlWtnOT1AawgJDzZVXU67BYUgwPo
- LsO/0GGZ3Ye+8iBVagdALY9R3vn2Dr0IO841DNqFGYB3mDnbbS15HQkV26Xh1O3d7vR3UVYkM8d
- 7Opb0EdThWqW0oW3eBB+sioK1VNqsqYf+u6E4GyretfV6km6hDV9769jgY3FwyXyaHd10L37JLZ
- 0dsKXf6ylHKdyarqZtooZIXQa81FdsffDiHCR6u6U/NaHGzUWISUALUUixQ/HcofFH8Gu/Y9bsZ
- xwogqNVhhohpgrSTMArynRw93EpT6a1o+7uzcrjdxeAPRcvmeOcZEKHmOzdeJp3nOyJ1A5zE+ny
- Q3D4gZtOUJyUVgN47CKa3aUw==
-X-Received: by 2002:a05:6000:2dc4:b0:46e:f162:64a8 with SMTP id
- ffacd0b85a97d-47758cbef97mr2379741f8f.23.1782908301567; 
- Wed, 01 Jul 2026 05:18:21 -0700 (PDT)
-Received: from localhost ([140.209.217.212]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47563d19573sm15836638f8f.4.2026.07.01.05.18.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jul 2026 05:18:21 -0700 (PDT)
-Date: Wed, 1 Jul 2026 14:18:17 +0200
-From: Jiri Pirko <jiri@resnulli.us>
-To: Xiong Weimin <15927021679@163.com>
-Cc: Serapheim Dimitropoulos <serapheimd@gmail.com>, stefanha@redhat.com, 
- qemu-devel@nongnu.org, mst@redhat.com, pbonzini@redhat.com,
- sgarzarella@redhat.com, Xie <xieyongji@bytedance.com>
-Subject: Re: [RFC DISCUSSION] virtio-rdma: RDMA device emulation for QEMU
-Message-ID: <akUFOeFkqtRVyHuX@FV6GYCPJ69>
-References: <20260316210600.62415-1-serapheimd@gmail.com>
- <CAJSP0QX3JtwhXDTnEgS-heLYYncjJtttg1KmFqG-+_VUXbH+Ww@mail.gmail.com>
- <20260320172345.4688-1-serapheimd@gmail.com>
- <1747673b.8c8c.19efe3cc66f.Coremail.15927021679@163.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wetwq-0007ZH-RS
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:21:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wetwp-0006GV-AB
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:21:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782908506;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=yeOIfhuA4RPtJKlJYeZDFX68YuNf/Zw9w1HH1eJpJkM=;
+ b=VWWsByaIg8zkcQOJwdLA6nRSuBiZULNDNm7z6PK7LTsBNpbcJGkN1vLsLoSwQAjIm5EGF9
+ vP3hjjCidrBtXzymwIB1TS/qUjpF2CnLglPpN2fkb4eWmGwZdRJ6Dg0ufnOvfU7uHjAoWP
+ sE35JckWNrN/Zku+Ahl8psoSDW5UgjM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-144-H-tEf-4QPxyatpl6KnUYvA-1; Wed,
+ 01 Jul 2026 08:21:44 -0400
+X-MC-Unique: H-tEf-4QPxyatpl6KnUYvA-1
+X-Mimecast-MFC-AGG-ID: H-tEf-4QPxyatpl6KnUYvA_1782908503
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 94C14188E6C0; Wed,  1 Jul 2026 12:21:43 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.3])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 23F271686; Wed,  1 Jul 2026 12:21:41 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: vkuznets@redhat.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH] docs/hyperv: fix misleading hv-crash shutdown description
+Date: Wed,  1 Jul 2026 16:21:35 +0400
+Message-ID: <20260701122135.3168729-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1747673b.8c8c.19efe3cc66f.Coremail.15927021679@163.com>
-Received-SPF: none client-ip=2a00:1450:4864:20::42a;
- envelope-from=jiri@resnulli.us; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,23 +84,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thu, Jun 25, 2026 at 12:04:16PM +0200, 15927021679@163.com wrote:
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+The documentation stated that writing to HV_X64_MSR_CRASH_CTL
+unconditionally causes the guest to shutdown. In reality, it triggers
+qemu_system_guest_panicked() via KVM_SYSTEM_EVENT_CRASH and the
+resulting action depends on the generic panic action policy
+(-action panic=...), which defaults to shutdown.
 
-[...]
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ docs/system/i386/hyperv.rst | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
+diff --git a/docs/system/i386/hyperv.rst b/docs/system/i386/hyperv.rst
+index 1c1de77feb6..e1babffb0f9 100644
+--- a/docs/system/i386/hyperv.rst
++++ b/docs/system/i386/hyperv.rst
+@@ -71,8 +71,11 @@ Existing enlightenments
+   by the guest when it crashes, HV_X64_MSR_CRASH_P0..HV_X64_MSR_CRASH_P5 MSRs
+   contain additional crash information. This information is outputted in QEMU log
+   and through QAPI.
+-  Note: unlike under genuine Hyper-V, write to HV_X64_MSR_CRASH_CTL causes guest
+-  to shutdown. This effectively blocks crash dump generation by Windows.
++  Note: unlike under genuine Hyper-V, write to HV_X64_MSR_CRASH_CTL triggers
++  ``qemu_system_guest_panicked()`` via ``KVM_SYSTEM_EVENT_CRASH`` and the
++  resulting action depends on the ``-action panic=...`` policy (default:
++  ``shutdown``). With the default action, this effectively blocks crash dump
++  generation by Windows.
+ 
+ ``hv-time``
+   Enables two Hyper-V-specific clocksources available to the guest: MSR-based
+@@ -304,8 +307,9 @@ currently implemented Hyper-V enlightenments with the following exceptions:
+   ``hv-version-id-snumber`` can be left unchanged, guests are not supposed to
+   behave differently when different Hyper-V version is presented to them.
+ - ``hv-crash`` must only be enabled if the crash information is consumed via
+-  QAPI by higher levels of the virtualization stack. Enabling this feature
+-  effectively prevents Windows from creating dumps upon crashes.
++  QAPI by higher levels of the virtualization stack. With the default
++  ``-action panic=shutdown`` policy, enabling this feature effectively
++  prevents Windows from creating dumps upon crashes.
+ - ``hv-reenlightenment`` can only be used on hardware which supports TSC
+   scaling or when guest migration is not needed.
+ - ``hv-spinlocks`` should be set to e.g. 0xfff when host CPUs are overcommited
+-- 
+2.54.0
 
->= What is working today =
->
->
->We now have an end-to-end stack:
->
->
->  guest: linux drivers/infiniband/hw/virtio/
->  userspace: rdma-core virtio provider
->  VMM: QEMU vhost-user-rdma device
-
-
-Can you share links to public git repos for these? And what about
-virtio spec?
 
