@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40057C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B87CC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:21:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wes1s-0000ZR-0n; Wed, 01 Jul 2026 06:18:52 -0400
+	id 1wes2D-0002DG-L2; Wed, 01 Jul 2026 06:19:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes1p-0000Tg-IT
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:49 -0400
-Received: from mail-dl1-x1231.google.com ([2607:f8b0:4864:20::1231])
+ id 1wes2B-00023e-V7
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:19:12 -0400
+Received: from mail-dl1-x1229.google.com ([2607:f8b0:4864:20::1229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes1n-0004hH-Uk
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:49 -0400
-Received: by mail-dl1-x1231.google.com with SMTP id
- a92af1059eb24-139b914bab6so540232c88.1
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:18:47 -0700 (PDT)
+ id 1wes2A-0004mR-6a
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:19:11 -0400
+Received: by mail-dl1-x1229.google.com with SMTP id
+ a92af1059eb24-139f1dfc9faso745193c88.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:19:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782901126; x=1783505926; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782901149; x=1783505949; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fN4MRw+BnrddfO5S62VeAje597hHSVZtAx/lMrwd+BM=;
- b=Vx1Uy25lddfLwvBrSgM2NCcm6LKtr/yxdbyRQxVNugPaWGXpDmtzeCmw08FeTTQioB
- VJchkvRYYUiw7Lc8DFwtNf8uuuWG+iQAd3M1UOHlMOAwAeVuimkksBkRk1LNufW86zfP
- uppxk7Lw6iUGfhn1otbvn0BFHFd4ITE/rVICw8zHx4Y4uST9ZJT6+01H0aIA1yUjjUSs
- ErNxtif+f4zJxnY/xwEn7CHjEMuZSZP8VbzCoe3jvv3Re7Vzmx+ePb/sFA514NerseFY
- ASX+6fbjgSyRsp0AQMEr1eUy4iCe3KV5x+XrVW6iS2ftvCjpxwvHO/lINdOc+F/FwIqv
- mgVA==
+ :message-id:reply-to:content-type;
+ bh=kJLk5Ha+pejJGZeNgnvGuO8LBxn6qxRniUrTFHlUS+k=;
+ b=ZPplF6RvDFwnVX5Cc9h8pcsv8sm98OyU6QGLZjcIbxj0mU4+5z1O0ThEML2Qq2ZzIk
+ f9MLa9TMo2Y9FNLVfkwqTgMX9C5Eq6jRqyXqhpHiN8lgbY7yNAraLxZpAVA8Px5vm6rb
+ SgDrJnrtJj4n+3kFrDUIfHsEYSLWhbajlupRcLiep6M4IaRGEf9WmbxZ7nikT5FcNHsw
+ OGQwLwyY1TZBXrOEUlB+BcBSBYqEgY/IADjAdps+5aeTlusll31na4xS3IWawrCR15dd
+ vPvoqG5a8j5/tbLiBJYeAc9J4jC5CeKglR84/zfLALTr0tW6++QR/+OYkHdngb93FzWo
+ kJ7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782901126; x=1783505926;
+ d=1e100.net; s=20251104; t=1782901149; x=1783505949;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fN4MRw+BnrddfO5S62VeAje597hHSVZtAx/lMrwd+BM=;
- b=Y5NUlAedU3+o/9ybOsuCTC3vjmm3TWpiZaXVN7KANONpUTtxaRPIN1Bb6jSg74FtWq
- GOyhZvKffItpE4ABihD6MH0Kbfnl05YQsZgNzpWA2AaitJlCIu03KKeqRP+PXvYsZHHt
- /U71OMe4ThI85TBPxietzaFvVFEaqvIWNYFsHBUxRFf8P2PBZYroX9/BBwiXRvFweGQp
- EUtsT/s7clQOwflCdYQVnH8KlgIEMMkbThwxVWDc411Pt1LNorWAa5Iel2USqazLbfma
- +jzhy+9Jgytec2hHD7irv262VyS8Inzel+gUpXFNxb45DlyGw3Rhkl7fN5/2b4oSX9nU
- jXYA==
-X-Gm-Message-State: AOJu0Yw6/cXbbxKLruGCqYBl1Jl6NiEr/FjWbin97p087leWzFUQtNiC
- D2PbcNxjU2ZMx5lOldnfuLCyvlW7KEgo6LjciiKrHc/9Q0g+7b8auSQ0RnHYDg==
-X-Gm-Gg: AfdE7cme9OkaB5uBa9Rbs4M2upA5F/3Acpe0e8wvG7PC9vs9dtC3B4yTLjg9lp7mKYt
- Sa8X+7GjUYKm6dIyXtLxrkJ1aJ8sQJrpPMWSDftS6mR/GNupd2/k6yeKfB8hEUHDlh3Dw18Fy2G
- ANWuIn2lgQEmMfbenfaROiLJ3ho1BNuW2TXIxtl2KEwVK7ufl6zNq/h6XxI6FOK1PavFNgnpWbJ
- 9p/kdp0Dh7UpPRjPVarhkDP/A2RdS6Mxv/sEGBUlVKIJlqJLu/8+14fyY0R1ePq22BBTvwOroRu
- NmR5EbCgVv31wJci3Ki9Z8JxsAmp3xO4hBd0MoGssJGSu5b5YeGiq3pMVFRjA1V73KG0gDG3WIS
- kDUD3PGIgIPETWd522sS7cCgI2/rRT7CSJODZODffWoHczIKHAmttddCzR70+xBFNrJSR3kIYcF
- ZTEfuRTYpgMbfAs+wMasuIFbZB6B2VXFo=
-X-Received: by 2002:a05:7022:41d:b0:136:c77a:6509 with SMTP id
- a92af1059eb24-13b36dd3a16mr974956c88.25.1782901126262; 
- Wed, 01 Jul 2026 03:18:46 -0700 (PDT)
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=kJLk5Ha+pejJGZeNgnvGuO8LBxn6qxRniUrTFHlUS+k=;
+ b=j4sPKyMMtVwcqTfZqfl2WuS4U0a6UM/5D6V0H3ZBhJy+2Do1o7qSf3F5b4cfVSGT0G
+ OoaEyKQxfOWJKKRMLvNw7B+SRqtPys//dZQNyW9qAWfz4EpCIrACB/F1ecuIRHhepOAF
+ AADw5U/A16O2r5qiDoFHrufdE1TfgaiVEftKhfXR0DwU9EaJm7wA/fus/ekl5u1QU0Ul
+ 7E1sB1IldbUtqwxothC/jqsWVX5xtvr/QbgwYnx5mQr91DgECAXUogeSME3Nyr8OpBhe
+ VRXrYSkNRG8rTqruugTyN0PmGATd1Vq1Sjbw6U73KZ3vkvKRz36/rTXgnFnsvb61mZec
+ /Zvw==
+X-Gm-Message-State: AOJu0YyydETNu9oiXCUhLGMRE4xB1ifKS0ZLqBnv0Ia92+5WnzYOfbd0
+ tGrasOru1naMFJ/Lkpm2nRGvP2PardieXZIGJYSsrNVBNBskiEwvKzids/q0cQ==
+X-Gm-Gg: AfdE7cnGLSI6aS4Ucq5A+u9ZpLU7ObxCoxsuhgKFWR3eYK7BA31aZoot/xGHDcZtzNs
+ tZqh+eki/CYxkurvFwD+RMmjob6wR0vlRV2C/4phVZPUbyg2Si05m0Seej/R+t1q2mEm6iPoshw
+ 8nOSRntOojIWqor+sM54a735bv9oAEoZ61SwFMoOuopjgwwoBPhKfyI4nI+DQbXid1oTXXcCX3u
+ 2Asx47ZmpKAgcXFk+Cv8kto7kKt7rKmpxFyuHG9qimFiIomiyHRsYkKuWFLVcz4oSPSFaFckZzB
+ 53qEuNl1El2+wPHCI1knQyOoa6sdNCA2tASEtI1mNndV7xUhfe71TU4oryRCXj2GzsHZTTeniY+
+ UQrtboP7Z87QZLu5nDE70AvdOVUr0dgknA8cS0Lwm2OmsZkmlXnwlGN+YLASuBGaqK3Knuq3MCL
+ gJ8uACNGGqPSwwsZPTaepRGHYrUlBBNvk=
+X-Received: by 2002:a05:7022:210:b0:13b:3132:6e94 with SMTP id
+ a92af1059eb24-13b390eb92fmr218433c88.12.1782901148721; 
+ Wed, 01 Jul 2026 03:19:08 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.18.43
+ a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.19.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jul 2026 03:18:45 -0700 (PDT)
+ Wed, 01 Jul 2026 03:19:08 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Meng Zhuo <mengzhuo@iscas.ac.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: [PULL 12/39] target/riscv/kvm: skip FP/Vector sync on
- KVM_PUT_RUNTIME_STATE
-Date: Wed,  1 Jul 2026 20:17:25 +1000
-Message-ID: <20260701101752.2522962-13-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 20/39] hw/riscv/riscv-iommu: check DC.TC reserved bits
+Date: Wed,  1 Jul 2026 20:17:33 +1000
+Message-ID: <20260701101752.2522962-21-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260701101752.2522962-1-alistair.francis@wdc.com>
 References: <20260701101752.2522962-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1231;
- envelope-from=alistair23@gmail.com; helo=mail-dl1-x1231.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1229;
+ envelope-from=alistair23@gmail.com; helo=mail-dl1-x1229.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,63 +103,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Meng Zhuo <mengzhuo@iscas.ac.cn>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-During KVM exit processing (KVM_PUT_RUNTIME_STATE), QEMU never modifies
-FP or Vector registers — only core GPRs/PC and CSRs are potentially
-changed.  Re-syncing 32 FP and 32 Vector registers on every KVM exit
-wastes 36-68 individual KVM_SET_ONE_REG ioctls per vCPU exit.
+We are not checking for reserved TC bits being set during device context
+validation.
 
-Follow the s390x pattern: early return on RUNTIME after syncing core
-registers and CSRs.  KVM_PUT_FULL_STATE and KVM_PUT_RESET_STATE continue
-to sync everything for correctness during migration and initialization.
-
-Signed-off-by: Meng Zhuo <mengzhuo@iscas.ac.cn>
+Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3548
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Message-ID: <20260518102118.2768383-1-mengzhuo@iscas.ac.cn>
+Message-ID: <20260627194640.4130073-1-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/kvm/kvm-cpu.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ hw/riscv/riscv-iommu-bits.h | 3 +++
+ hw/riscv/riscv-iommu.c      | 4 ++++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index f0de5c3071..39d48a9db4 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1395,6 +1395,17 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
-         return ret;
-     }
+diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
+index a938fd3eb4..f9b6f35170 100644
+--- a/hw/riscv/riscv-iommu-bits.h
++++ b/hw/riscv/riscv-iommu-bits.h
+@@ -308,6 +308,9 @@ struct riscv_iommu_dc {
+ #define RISCV_IOMMU_DC_IOHGATP_GSCID    GENMASK_ULL(59, 44)
+ #define RISCV_IOMMU_DC_IOHGATP_MODE     RISCV_IOMMU_ATP_MODE_FIELD
  
-+    /*
-+     * For RUNTIME_STATE, KVM already has the correct FP and Vector state
-+     * from the preceding KVM_RUN exit. QEMU never modifies these registers
-+     * during exit handling, so re-syncing is unnecessary.  This saves ~68
-+     * KVM_SET_ONE_REG ioctls per vCPU exit.  See also s390x which uses
-+     * the same pattern.
-+     */
-+    if (KVM_PUT_RUNTIME_STATE == level) {
-+        return ret;
++#define RISCV_IOMMU_DC_TC_RESERVED      (GENMASK_ULL(23, 12) \
++                                         | GENMASK_ULL(63, 32))
++
+ enum riscv_iommu_dc_iohgatp_modes {
+     RISCV_IOMMU_DC_IOHGATP_MODE_BARE = 0,
+     RISCV_IOMMU_DC_IOHGATP_MODE_SV32X4 = 8,
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index c9687e01a8..c2c470b5df 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -752,6 +752,10 @@ static bool riscv_iommu_validate_device_ctx(RISCVIOMMUState *s,
+     uint32_t fsc_mode, msi_mode;
+     uint64_t gatp;
+ 
++    if (ctx->tc & RISCV_IOMMU_DC_TC_RESERVED) {
++        return false;
 +    }
 +
-     ret = kvm_riscv_put_regs_fp(cs);
-     if (ret) {
-         return ret;
-@@ -1407,11 +1418,9 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
- 
-     if (KVM_PUT_RESET_STATE == level) {
-         RISCVCPU *cpu = RISCV_CPU(cs);
--        if (cs->cpu_index == 0) {
--            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_RUNNABLE);
--        } else {
--            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_STOPPED);
--        }
-+        int state = cs->cpu_index == 0 ? KVM_MP_STATE_RUNNABLE
-+                                       : KVM_MP_STATE_STOPPED;
-+        ret = kvm_riscv_sync_mpstate_to_kvm(cpu, state);
-         if (ret) {
-             return ret;
-         }
+     if (!(s->cap & RISCV_IOMMU_CAP_ATS) &&
+         (ctx->tc & RISCV_IOMMU_DC_TC_EN_ATS ||
+          ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI ||
 -- 
 2.54.0
 
