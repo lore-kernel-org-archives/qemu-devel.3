@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEDB7C43327
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 03:08:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68041C43602
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 03:08:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1welG4-0005pi-1q; Tue, 30 Jun 2026 23:05:04 -0400
+	id 1welHb-00005W-46; Tue, 30 Jun 2026 23:06:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1welFv-0005gz-Ar
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 23:04:56 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1welHY-0008VS-CI
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 23:06:36 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1welFr-0002oS-IU
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 23:04:55 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2c9f10fa7a3so1525605ad.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 20:04:50 -0700 (PDT)
+ id 1welHW-0003pK-Mf
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 23:06:35 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-8453427d3f4so79741b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 20:06:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782875090; x=1783479890; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fYkR10xGijSj9NHAYmbf6T4A8YrwDfmmBe0qsSqt02A=;
- b=PlJh29MZG+wnIK3EdQOaafl/sF1UKw7yA0RgbRw/knE+ZRI4U6MBNDMyYeMPsElD5R
- CankjxBYkYOBtF2g/jKbdBsve97YVd214sEqHfjAfsJ2PTEpOoqK/tZCzL9luePyz6YC
- yjEAr//nAIYnnj26I+ef9qhBDOVNyRWgdyCjnTF9dv6eyWvd6WlllQiExy8d3pPDrH5S
- 0UlnQFt+hybYGklPWfiXl/DPj4LNdG+JbGlm06j1uBwrE+YvLp+OXmlRfHsZAA6tKt2s
- 0OINouPKuiFH33QvC0TdbdBgY+1TuUXwWCIXUsDpn2s1scpgObEVgK492Etw2k0+3tzp
- 5rWw==
+ d=linaro.org; s=google; t=1782875193; x=1783479993; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ls0T9EHio6ON4SVMOxDwfUlFQWjpZwELz7O6LMgd1Rg=;
+ b=Qy7okZTjDCgzczLBIwg3kmnRnQOUuhcRZujoALx7GFwESArOKmEafPHzGnb5uTkvsJ
+ MKad1lGi0PPo1lS+UvbUVkwngIO6ptGOB79JqhpDcEcc2CqpDVIIDm/JCc0YMDh2W3xK
+ cHNrfOjruSVCX+NgQdgRMmTICQxpIRruO2dUtnQbNa82foQeZ+sDYObCjMSiyp8C1fWC
+ AzvnGv4RNSOVdi51AY/RlAsZW9JJUPUnidb3YS+YdMYGahftpD7r3SKkxhmuIHWqmLxV
+ osVk5+EmEaKk6cKdQmftXcHVsbAd0qFgRvVhpveQbShlELEYkymILmc7yYmt/XPkxGg9
+ dyYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782875090; x=1783479890;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fYkR10xGijSj9NHAYmbf6T4A8YrwDfmmBe0qsSqt02A=;
- b=h3ONIzrS56HSEAhCdehoBvybSmfdH8aR7lwgkjEJ7yTPFYCAANDBrllagOODDqjna2
- hwZB+fgU4sUsqtVHiu0FPviw7LeBLsvJH0YomSCBpHfwQBPqLNEtv5rl9vjEFEeoCBj2
- Q28/ibSM40IPuq1lWZITemO8JBuksxkyyaxPVEhMZnJeXSB25LRUUVtrfiFB81LfshFP
- UZkHbpssddLy6fD0LaIhLO6nq+RYLsC+2DCOFUuCIGZneoLzDbHRK8TI2ls4Kh3lE5eN
- 996LV95hEc8A5lg1l0ULcBhAz4euOq17YMe5Zi7SAO5uO2bgnm5EQRm39KTjKSHIqyhJ
- USgQ==
-X-Gm-Message-State: AOJu0YyVvUfPz1r0CTCOuIv02I6JJNOw43pJF+xjQzJPeF6etRJaEr9g
- f2F59yOQpr8f74oYxnuHrnFsRvuuqiMemfQdrFsPfSB6iuv6IO+Rlc4z0dBV5LQeJ8SRtfNiN8o
- KhMwN
-X-Gm-Gg: AfdE7ckPFyULnfBbzBx4n9RkonxrAxq6idoN3u1paP6DlneJdQm/GySmrsxIjZ2Twkn
- ydMrVt3a4Y7h7atG67KxJ765/lg3P3IS2mMDC2rDMOfwetx7zql1RKwNd8rGsuh2qeYV3YXPZ8Y
- fAsrFlK60BmHjAJu2rmhnjJc+FpiCkTSADkM8JdkWo6stCGRlLoUhbuPEEtHiUihrsb3Pn00Gzv
- w6SQ3kOjQKXwiRvNyOMSRFx25by52+u4c+dStIqMqRA4ojuhn2GfjDD0gOuFOhcqU21OR2evdkH
- 6kME1JXxoWH4GMyrXRZWKpr0XXz8aTGCCaGXntBor3EVQSsPsYtIokXY35S93hNqxfHTOal7Mw6
- TvLe5xG6KQWvrsRYnepftS4pUdnoz1vYVfYBy6ow3mhe7aSs6SIJKQLXEHOivw76U70x3iC0H3V
- XFCMtlA2PlmsI3/kcODa9Q5nYi9UKs2mEbwngNlnuy77rE9w/EGA==
-X-Received: by 2002:a17:903:291:b0:2c9:bd64:8c81 with SMTP id
- d9443c01a7336-2ca5a58544dmr25847205ad.18.1782875089934; 
- Tue, 30 Jun 2026 20:04:49 -0700 (PDT)
-Received: from stoup.. (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ d=1e100.net; s=20251104; t=1782875193; x=1783479993;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ls0T9EHio6ON4SVMOxDwfUlFQWjpZwELz7O6LMgd1Rg=;
+ b=ZB+DTP8ci8Or5+eXQjzINAXpxhr76C49DHpAYeqPTyKva+X7Q5yryvU2uh1DrcgOaX
+ 7eJK6kd88ZUvnbtvDNtV4yaBmmd++W+ggHlfCcocTpUvCaS4ekRcAVuoOISe0U05+8J8
+ JTSWQzhnPi55c9Jz5QWnie2oasX45S+mlK4gRknCnJ4cTfCyl8Tqw/0esuTqAsi6viJb
+ 5Xlk3JI5TDepKj1Biy90LkgHJwPWWk86AqE1xd4kQ3+ju/eVa5JpHyKjX1FSSIz8jQtZ
+ 2QtR64o8HntLQ1BoxvjxMT5agLJPzbODm15JJP5MDODg87lZlxqjvM8qAeMn3SRHP9Vk
+ HRUQ==
+X-Gm-Message-State: AOJu0YyT+lKVwulW5z4e2QTXfDNQUXtsCJE/umtZGz4orc1XyNzJwTOP
+ gnsAFha9+I9AeCkiPlFuL5t7BhLU5SfPnrZf+pJ4U8cq+bEEjyvfBbvQtb1xyRcgpANt+4ENilB
+ vIMgT
+X-Gm-Gg: AfdE7ckGC/bpFBw1BZZT/FypcqSj6+b2bW34w/xzhGqxg565RnRbSV3mfAVtofDh7XH
+ fmynr/aoULjJ9wA6F+bmMlg0VVbXc+9v6n5/R3iMkSCdYUNz8fTZY+wnx/8B/oSt488IiCIhhGv
+ Z73ac76b9PQl5/+yO6KavzpquBL16HwUonXA3S3jGOhxdhaDFnd/Tqn4IHGxj3Xfg1ilb1iLzTf
+ FmosSQhagfJfmxho27MTJsoIdl09g7oiCZJdpKnaBdxJRGyJqMxSStgE70/gqn2/C/iomY0lKra
+ ssIQLzwkXpbEcNPoEtHnn0Jl5kLZoJ2/2n31sJO8DUWelXzP0YaA8nEDdEE7QiXbB02Uhv77aFN
+ 1pAcPKFsq/aL18OQjRNqiLvBxKm+mM/zqQiic6SDoek9av+p1hwGAgiG1yqOP5ixz202MuJBRIr
+ y1L+3tyzc4Jhzp7NnKZTqAt7eUoGPDYLTcRhbba7JzZlpzcFJQDUdvra/ZDQ==
+X-Received: by 2002:a05:6a00:4fc9:b0:846:4d4c:23f8 with SMTP id
+ d2e1a72fcca58-847add62e06mr2948367b3a.1.1782875192944; 
+ Tue, 30 Jun 2026 20:06:32 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ca37c74261sm23758085ad.22.2026.06.30.20.04.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jun 2026 20:04:49 -0700 (PDT)
+ d2e1a72fcca58-847a0329c22sm3076883b3a.40.2026.06.30.20.06.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Jun 2026 20:06:32 -0700 (PDT)
+Message-ID: <00f3bf40-b9da-462f-aac4-b956163193a5@linaro.org>
+Date: Tue, 30 Jun 2026 20:06:30 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/17] accel/tcg: Use IntervalTree for breakpoints and
+ watchpoints
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: shivangu@linux.ibm.com,
-	qemu-arm@nongnu.org,
-	qemu-riscv@nongnu.org
-Subject: [PATCH 06/17] *: Add missing include of exec/breakpoint.h
-Date: Tue, 30 Jun 2026 20:04:32 -0700
-Message-ID: <20260701030443.1382447-7-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260701030443.1382447-1-richard.henderson@linaro.org>
+Cc: shivangu@linux.ibm.com, qemu-arm@nongnu.org, qemu-riscv@nongnu.org
 References: <20260701030443.1382447-1-richard.henderson@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Content-Language: en-US
+In-Reply-To: <20260701030443.1382447-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,167 +103,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- accel/tcg/tcg-accel-ops.c           | 1 +
- cpu-common.c                        | 1 +
- gdbstub/system.c                    | 1 +
- gdbstub/user.c                      | 1 +
- system/watchpoint.c                 | 1 +
- target/i386/cpu.c                   | 1 +
- target/i386/kvm/kvm.c               | 1 +
- target/i386/machine.c               | 1 +
- target/i386/tcg/system/bpt_helper.c | 1 +
- target/ppc/cpu.c                    | 1 +
- target/xtensa/dbg_helper.c          | 1 +
- target/xtensa/helper.c              | 1 +
- 12 files changed, 12 insertions(+)
+On 6/30/26 20:04, Richard Henderson wrote:
+> Follow-up to 20260630171555.114844-1-shivangu@linux.ibm.com
+> ("[RFC PATCH 0/2] change cpu->breakpoints to a GTree")
+> 
+> Beyond using interval-tree for breakpoints:
+> 
+>    - Pass the matching breakpoint to the target debug hook,
+>    - Allow the target to record an id/index for each BP or WP
+>      so that the target doesn't have to search for which item
+>      triggered, so that the target doesn't have to search again.
+>    - Convert both BP and WP to IntervalTree.
+> 
+> 
+> r~
 
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index c179cd4ade..c153bb3355 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -31,6 +31,7 @@
- #include "accel/tcg/cpu-loop.h"
- #include "system/tcg.h"
- #include "system/replay.h"
-+#include "exec/breakpoint.h"
- #include "exec/icount.h"
- #include "qemu/main-loop.h"
- #include "qemu/guest-random.h"
-diff --git a/cpu-common.c b/cpu-common.c
-index adb76b3a78..11ab32d64d 100644
---- a/cpu-common.c
-+++ b/cpu-common.c
-@@ -20,6 +20,7 @@
- #include "qemu/osdep.h"
- #include "qemu/main-loop.h"
- #include "exec/cpu-common.h"
-+#include "exec/breakpoint.h"
- #include "hw/core/cpu.h"
- #include "qemu/lockable.h"
- #include "trace/trace-root.h"
-diff --git a/gdbstub/system.c b/gdbstub/system.c
-index 2063b63b2f..6ff24312bf 100644
---- a/gdbstub/system.c
-+++ b/gdbstub/system.c
-@@ -18,6 +18,7 @@
- #include "gdbstub/syscalls.h"
- #include "gdbstub/commands.h"
- #include "exec/hwaddr.h"
-+#include "exec/breakpoint.h"
- #include "accel/accel-ops.h"
- #include "accel/accel-cpu-ops.h"
- #include "system/address-spaces.h"
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index 97eb13e796..05fe18f906 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -14,6 +14,7 @@
- #include "qemu/cutils.h"
- #include "qemu/sockets.h"
- #include "qapi/error.h"
-+#include "exec/breakpoint.h"
- #include "exec/hwaddr.h"
- #include "exec/gdbstub.h"
- #include "gdbstub/commands.h"
-diff --git a/system/watchpoint.c b/system/watchpoint.c
-index 21d0bb36ca..4c2543a7c9 100644
---- a/system/watchpoint.c
-+++ b/system/watchpoint.c
-@@ -21,6 +21,7 @@
- #include "qemu/error-report.h"
- #include "exec/cputlb.h"
- #include "exec/target_page.h"
-+#include "exec/breakpoint.h"
- #include "exec/watchpoint.h"
- #include "hw/core/cpu.h"
- 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 5805d33ab9..422ca139af 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -39,6 +39,7 @@
- #include "standard-headers/asm-x86/kvm_para.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/i386/topology.h"
-+#include "exec/breakpoint.h"
- #include "exec/watchpoint.h"
- #ifndef CONFIG_USER_ONLY
- #include "confidential-guest.h"
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 64cc421abe..739e21793d 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -70,6 +70,7 @@
- #include "migration/blocker.h"
- #include "exec/memattrs.h"
- #include "exec/target_page.h"
-+#include "exec/breakpoint.h"
- #include "trace.h"
- 
- #include CONFIG_DEVICES
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index 1f5c517e56..2b9cf3878d 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -7,6 +7,7 @@
- #include "hw/i386/x86.h"
- #include "kvm/kvm_i386.h"
- #include "hw/xen/xen.h"
-+#include "exec/breakpoint.h"
- #include "exec/watchpoint.h"
- #include "system/kvm.h"
- #include "system/kvm_xen.h"
-diff --git a/target/i386/tcg/system/bpt_helper.c b/target/i386/tcg/system/bpt_helper.c
-index 2feea69c8a..3b1ecd8735 100644
---- a/target/i386/tcg/system/bpt_helper.c
-+++ b/target/i386/tcg/system/bpt_helper.c
-@@ -21,6 +21,7 @@
- #include "accel/tcg/cpu-loop.h"
- #include "cpu.h"
- #include "exec/helper-proto.h"
-+#include "exec/breakpoint.h"
- #include "exec/watchpoint.h"
- #include "tcg/helper-tcg.h"
- 
-diff --git a/target/ppc/cpu.c b/target/ppc/cpu.c
-index 41edb18643..0bd6ebe39b 100644
---- a/target/ppc/cpu.c
-+++ b/target/ppc/cpu.c
-@@ -22,6 +22,7 @@
- #include "cpu-models.h"
- #include "cpu-qom.h"
- #include "exec/log.h"
-+#include "exec/breakpoint.h"
- #include "exec/watchpoint.h"
- #include "fpu/softfloat-helpers.h"
- #include "mmu-hash64.h"
-diff --git a/target/xtensa/dbg_helper.c b/target/xtensa/dbg_helper.c
-index 3d1143ad5e..160cdd798c 100644
---- a/target/xtensa/dbg_helper.c
-+++ b/target/xtensa/dbg_helper.c
-@@ -30,6 +30,7 @@
- #include "cpu.h"
- #include "exec/helper-proto.h"
- #include "qemu/host-utils.h"
-+#include "exec/breakpoint.h"
- #include "exec/watchpoint.h"
- #include "system/address-spaces.h"
- 
-diff --git a/target/xtensa/helper.c b/target/xtensa/helper.c
-index 5a0e865514..0db5502287 100644
---- a/target/xtensa/helper.c
-+++ b/target/xtensa/helper.c
-@@ -30,6 +30,7 @@
- #include "cpu.h"
- #include "exec/cputlb.h"
- #include "exec/target_page.h"
-+#include "exec/breakpoint.h"
- #include "gdbstub/helpers.h"
- #include "exec/helper-proto.h"
- #include "accel/tcg/cpu-loop.h"
--- 
-2.43.0
+Bah.  I was mid-rebase for this, and it's missing the CPUWatchpoint work.
+I'll send a v2 tommorrow.
+
+
+r~
+
+> 
+> 
+> Richard Henderson (17):
+>    accel/tcg: Pass CPUBreakpoint to debug_check_breakpoint
+>    accel/tcg: Constify CPUWatchpoint for debug_check_watchpoint
+>    cpu: Move cpu_breakpoint_test out of line
+>    exec/breakpoint: Move BP declarations from hw/core/cpu.h
+>    qemu/typedefs: Declare CPUBreakpoint and CPUWatchpoint globally
+>    *: Add missing include of exec/breakpoint.h
+>    hw/core/cpu: Remove exec/breakpoint.h include
+>    exec/breakpoint: Introduce BP_CPU_ID_SHIFT
+>    target/arm: Split is_wp out of bp_wp_matches
+>    target/arm: Set ID for watchpoints and breakpoints
+>    target/arm: Use bp argument in arm_debug_check_breakpoint
+>    target/arm: Use wp argument in arm_debug_check_watchpoint
+>    target/riscv: Set ID for watchpoints and breakpoints
+>    target/riscv: Use bp argument in riscv_cpu_debug_check_breakpoint
+>    target/riscv: Use bp argument in riscv_cpu_debug_check_watchpoint
+>    target/xtensa: Use BP_CPU_ID_SHIFT
+>    cpu: Use interval-tree for CPUBreakpoint
+> 
+>   include/accel/tcg/cpu-ops.h         |   4 +-
+>   include/exec/breakpoint.h           |  39 ++++++++--
+>   include/hw/core/cpu.h               |  39 +---------
+>   include/qemu/typedefs.h             |   2 +
+>   target/arm/internals.h              |   4 +-
+>   target/ppc/internal.h               |   4 +-
+>   target/riscv/debug.h                |   4 +-
+>   target/xtensa/cpu.h                 |   2 +-
+>   accel/tcg/cpu-exec.c                |  48 ++++++------
+>   accel/tcg/tcg-accel-ops.c           |   1 +
+>   cpu-common.c                        |  54 ++++++++-----
+>   gdbstub/system.c                    |   1 +
+>   gdbstub/user.c                      |   1 +
+>   hw/core/cpu-common.c                |   1 -
+>   linux-user/main.c                   |  13 +++-
+>   system/watchpoint.c                 |   1 +
+>   target/arm/tcg/debug.c              |  76 ++++--------------
+>   target/i386/cpu.c                   |   1 +
+>   target/i386/kvm/kvm.c               |   1 +
+>   target/i386/machine.c               |   1 +
+>   target/i386/tcg/system/bpt_helper.c |   1 +
+>   target/i386/tcg/tcg-cpu.c           |   2 +-
+>   target/ppc/cpu.c                    |   1 +
+>   target/ppc/tcg-excp_helper.c        |   4 +-
+>   target/riscv/debug.c                | 116 ++++++----------------------
+>   target/xtensa/dbg_helper.c          |  19 ++---
+>   target/xtensa/helper.c              |   1 +
+>   27 files changed, 174 insertions(+), 267 deletions(-)
+> 
 
 
