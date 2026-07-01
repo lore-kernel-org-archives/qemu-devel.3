@@ -4,64 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1FFFC43602
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 15:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A49D0C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 16:02:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wexJh-0002XH-GT; Wed, 01 Jul 2026 11:57:37 -0400
+	id 1wexO6-000525-Qw; Wed, 01 Jul 2026 12:02:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wexJf-0002Wz-4s
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 11:57:35 -0400
-Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1wexO2-00050O-L5; Wed, 01 Jul 2026 12:02:06 -0400
+Received: from m16.mail.163.com ([220.197.31.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wexJc-0005kN-Kg
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 11:57:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
- s=default; t=1782921427;
- bh=23c7Vi3Bj6545DtDxLAEHiAJBS3g84GNnJP4iGwRlCc=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=a/lN0K6Y3waWQhbJOyig7GyHdSj6ZSrKaY/4NtxPAzH2NRRZdLU+JTaHGeaaY/x+W
- 2fWgdVqdGs5IKfe6Dpf/aPrHW+pLPPNS/bzXahveTHv4/5EQ0eMbvulDGL6vL87/Hf
- ZbtC/dE1Qg+zZACvletSOsrdtOtGF8njMI83A2QHxYI1ma7R73j1MZMfgkt8N1pfWr
- IZGWEJB6h1SPCZ66osGZTWA8bWtnSKoL21txpCERMssN0kcAMvG0OUPTT/Nb/3zmPB
- Nc08aGQZbLKtOjCWZKic+/wnSnDmnrminsfav36XHYjkx/VFv5uUCfrcFMuodueg7L
- qLG2e0B5bubIg==
-Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id BF6402FF40C;
- Wed,  1 Jul 2026 15:57:07 +0000 (UTC)
-Received: from pc.. (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 152FC37C951;
- Wed,  1 Jul 2026 23:57:07 +0800 (CST)
-From: Ziyang Zhang <functioner@sjtu.edu.cn>
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>,
- Ziyang Zhang <functioner@sjtu.edu.cn>
-Subject: [PATCH v5 1/2] contrib/plugins: add a minimal dlcall plugin
-Date: Wed,  1 Jul 2026 23:57:04 +0800
-Message-Id: <20260701155705.1737328-2-functioner@sjtu.edu.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260701155705.1737328-1-functioner@sjtu.edu.cn>
-References: <20260701155705.1737328-1-functioner@sjtu.edu.cn>
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1wexNy-0007HG-0B; Wed, 01 Jul 2026 12:02:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=eH
+ 92iKX1xAjF0k5XnPY7UR4Ec4d8kXYHKzu1XxRlgGU=; b=Z0hE7h6IWvxwF4eyFW
+ h/sIlk5SrhKdgPctg8ptILTI7O5RKfbOr9k9fSo9Ak0A6I/xAHpqGQNhK23xsKqS
+ CHza6gvUQkdwxB7BNaSJ8rvh1aufn0ZqakNe7Xvxrnj5Iw4E/ZWJlP077w7q4zx5
+ gFXKp/l+cgng+RbnaeQwB6txQ=
+Received: from dt-VM.localdomain (unknown [])
+ by gzga-smtp-mtada-g1-3 (Coremail) with SMTP id
+ _____wBXoVQJOUVqJKGVGA--.1257S3; 
+ Wed, 01 Jul 2026 23:58:04 +0800 (CST)
+From: Tao Ding <dingtao0430@163.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Tao Ding <dingtao0430@163.com>
+Subject: [PATCH v3 1/2] hw/sd: sdhci: Fix SDMA boundary bug
+Date: Wed,  1 Jul 2026 23:57:58 +0800
+Message-ID: <20260701155759.43328-2-dingtao0430@163.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260701155759.43328-1-dingtao0430@163.com>
+References: <20260701155759.43328-1-dingtao0430@163.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.120.2.186;
- envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: _____wBXoVQJOUVqJKGVGA--.1257S3
+X-Coremail-Antispam: 1Uf129KBjvJXoWxKr48KF15ur4kGF1rGrW7urg_yoWxGFykpF
+ Zakr1rKr4ktr1fZw4kG3WUAF1Y9wsruasrKr45KrnYvFZIgF1FqwsFk3WUGrW7trn2v342
+ krWUtrn0v3Wjqw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0piOJ57UUUUU=
+X-Originating-IP: [101.204.16.250]
+X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC4Qw9e2pFOQxbvAAA3W
+Received-SPF: pass client-ip=220.197.31.5; envelope-from=dingtao0430@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,295 +74,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a minimal dlcall plugin that lets the guest invoke host functions
-through magic system calls. The plugin registers a vCPU syscall filter
-callback that intercepts a reserved syscall number and dispatches a set
-of pass-through operations: querying host attributes, loading and freeing
-shared libraries, resolving symbols, retrieving the last library error,
-and invoking a host function through a common interface.
+During SDMA transfers, the controller raises an interrupt at buffer boundaries
+to request a system address update. The host driver will rewrite the SDHC_SYSAD register. 
+(according to PartA2_SD_Host_Controller_Simplified_Specification_Ver2.00.pdf section 2.2.1)
+However, the current code will ignore write operations to SDHC_SYSAD. 
 
-The magic syscall number defaults to 4096 and can be overridden at load
-time with the "syscall_num=N" argument; values low enough to clash with a
-real syscall are rejected.
+To fix this bug, when SDMA encounters a boundary, a state is set to record it. 
+In this state, SDHC_SYSAD can be written. In other cases, it is still protected by TRANSFERRING_DATA.
 
-Co-authored-by: Kailiang Xu <xukl2019@sjtu.edu.cn>
-Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
-Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
+Suggested-by: Bin Meng <bmeng.cn@gmail.com>
+Signed-off-by: Tao Ding <dingtao0430@163.com>
 ---
- contrib/plugins/dlcall.c    | 246 ++++++++++++++++++++++++++++++++++++
- contrib/plugins/meson.build |   5 +
- 2 files changed, 251 insertions(+)
- create mode 100644 contrib/plugins/dlcall.c
+The reviewer pointed out an issue in patch v2 and suggested a more appropriate way of modification.
+In this patch, a new state has been added to indicate encountering a boundary. 
+No additional state has been added to the existing stopped_state, 
+which seems to be specifically for gap requests (as can be seen from some if-else statements in the code)
 
-diff --git a/contrib/plugins/dlcall.c b/contrib/plugins/dlcall.c
-new file mode 100644
-index 0000000000..187fdf05b8
---- /dev/null
-+++ b/contrib/plugins/dlcall.c
-@@ -0,0 +1,246 @@
-+/*
-+ * Copyright (C) 2026, Ziyang Zhang <functioner@sjtu.edu.cn>
-+ *
-+ * dlcall plugin: lets a linux-user guest invoke host functions by issuing a
-+ * magic system call. The guest can ask QEMU to dlopen() a host shared
-+ * library, dlsym() a symbol, and call it with guest-supplied arguments.
-+ *
-+ * The plugin is minimal and prescribes nothing about how a library is
-+ * thunked. Any toolchain can implement the userspace side. Lorelei is a
-+ * complete, MIT-licensed implementation (guest/host runtimes plus a thunk
-+ * compiler that generates thunks from a library's headers):
-+ * https://github.com/rover2024/lorelei
-+ *
-+ * See docs/about/emulation.rst|Dlcall for details and examples.
-+ *
-+ * WARNING: trusted guests only. The guest can load arbitrary host libraries
-+ * and execute arbitrary host code with arbitrary arguments, i.e. full code
-+ * execution in the QEMU host process. It is NOT a sandbox and provides no
-+ * isolation; only load it for guests you fully trust.
-+ *
-+ * WARNING: requires guest_base == 0, which is qemu-user's default. Pointer
-+ * operands are dereferenced as host addresses directly, and the invoked host
-+ * functions dereference guest pointers with no address translation, so guest
-+ * and host must share a single address space. A non-zero guest_base (e.g. set
-+ * via -B/-R) would make every pointer off by guest_base and hit unrelated
-+ * host memory.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <assert.h>
-+#include <errno.h>
-+#include <string.h>
-+#include <stdio.h>
-+#include <glib.h>
-+#include <dlfcn.h>
-+
-+#include <qemu-plugin.h>
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-+
-+/*
-+ * The magic system call number for dlcall.
-+ *
-+ * It defaults to DLCALL_SYSCALL_DEFAULT and can be overridden at load time
-+ * with the "syscall_num=N" argument. To avoid hijacking a real syscall the
-+ * guest might issue, N must be at least DLCALL_SYSCALL_MIN: every Linux ABI
-+ * keeps its syscall numbers well below this; numbers from here up are free.
-+ */
-+enum {
-+    DLCALL_SYSCALL_DEFAULT = 4096,
-+    DLCALL_SYSCALL_MIN = 4096,
-+};
-+
-+static int64_t dlcall_syscall_num = DLCALL_SYSCALL_DEFAULT;
-+
-+/*
-+ * dlcall calling convention.
-+ *
-+ * The guest issues the magic system call (dlcall_syscall_num). The first
-+ * argument (a1) is one of the call IDs below; the remaining arguments (a2, a3,
-+ * a4, ...) are that ID's operands. All pointer operands are guest virtual
-+ * addresses that the plugin dereferences as host addresses directly (see the
-+ * guest_base requirement above). Results are written back through
-+ * caller-provided "out" pointers rather than returned in the syscall value.
-+ *
-+ * The syscall return value (*sysret) only reports dispatch status: 0 on a
-+ * recognised ID, -EINVAL for an unknown one. The actual success/failure of an
-+ * operation (e.g. a NULL handle from dlopen) is delivered through its out
-+ * pointer, exactly like the underlying libdl call.
-+ *
-+ * Operands per ID:
-+ *
-+ *   DLCALL_ID_GET_HOST_ATTRIBUTE
-+ *     a2  const char *key        in:  attribute name to query
-+ *     a3  const char **attr_ptr  out: matching value, or NULL if unknown
-+ *
-+ *   DLCALL_ID_LOAD_LIBRARY                            (wraps dlopen)
-+ *     a2  const char *path       in:  library path
-+ *     a3  int flags              in:  dlopen() flags (e.g. RTLD_NOW)
-+ *     a4  void **handle_ptr      out: library handle, or NULL on failure
-+ *
-+ *   DLCALL_ID_GET_PROC_ADDRESS                        (wraps dlsym)
-+ *     a2  void *handle           in:  library handle
-+ *     a3  const char *name       in:  symbol name
-+ *     a4  void **entry_ptr       out: symbol address, or NULL if not found
-+ *
-+ *   DLCALL_ID_FREE_LIBRARY                            (wraps dlclose)
-+ *     a2  void *handle           in:  library handle
-+ *     a3  int *ret_ptr           out: dlclose() return value (0 on success)
-+ *
-+ *   DLCALL_ID_GET_LIBRARY_ERROR                       (wraps dlerror)
-+ *     a2  const char **error_ptr out: last libdl error string, or NULL
-+ *
-+ *   DLCALL_ID_INVOKE_PROC                             (calls the symbol)
-+ *     a2  void *proc             in:  function pointer, signature
-+ *                                     void (*)(void *arg1, void *arg2)
-+ *     a3  void *arg1             in:  first argument forwarded to proc
-+ *     a4  void *arg2             in:  second argument forwarded to proc
-+ */
-+enum DlcallID {
-+    DLCALL_ID_GET_HOST_ATTRIBUTE,
-+    DLCALL_ID_LOAD_LIBRARY,
-+    DLCALL_ID_GET_PROC_ADDRESS,
-+    DLCALL_ID_FREE_LIBRARY,
-+    DLCALL_ID_GET_LIBRARY_ERROR,
-+    DLCALL_ID_INVOKE_PROC,
-+};
-+
-+static inline const char *query_host_attribute(const char *key)
-+{
-+    if (strcmp(key, "emu") == 0) {
-+        return "qemu";
-+    }
-+    return NULL;
-+}
-+
-+static inline void invoke_proc(void *proc, void *arg1, void *arg2)
-+{
-+    typedef void (*Func)(void * /*arg1*/, void * /*arg2*/);
-+    Func func = (Func) proc;
-+    func(arg1, arg2);
-+}
-+
-+static bool vcpu_syscall_filter(unsigned int vcpu_index,
-+                                int64_t num, uint64_t a1, uint64_t a2,
-+                                uint64_t a3, uint64_t a4, uint64_t a5,
-+                                uint64_t a6, uint64_t a7, uint64_t a8,
-+                                int64_t *sysret, void *userdata)
-+{
-+    if (num == dlcall_syscall_num) {
-+        switch (a1) {
-+        /* Query host attribute by a reserved key. */
-+        case DLCALL_ID_GET_HOST_ATTRIBUTE: {
-+            const char *key = (const char *) a2;
-+            const char **attr_ptr = (const char **) a3;
-+            assert(attr_ptr);
-+            *attr_ptr = query_host_attribute(key);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Load a shared library. */
-+        case DLCALL_ID_LOAD_LIBRARY: {
-+            const char *path = (const char *) a2;
-+            int flags = (int) a3;
-+            void **handle_ptr = (void **) a4;
-+            assert(handle_ptr);
-+            *handle_ptr = dlopen(path, flags);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Get the address of a function in a shared library. */
-+        case DLCALL_ID_GET_PROC_ADDRESS: {
-+            void *handle = (void *) a2;
-+            const char *name = (const char *) a3;
-+            void **entry_ptr = (void **) a4;
-+            assert(entry_ptr);
-+            *entry_ptr = dlsym(handle, name);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Free a shared library. */
-+        case DLCALL_ID_FREE_LIBRARY: {
-+            void *handle = (void *) a2;
-+            int *ret_ptr = (int *) a3;
-+            *ret_ptr = dlclose(handle);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Get the last error message for a library event. */
-+        case DLCALL_ID_GET_LIBRARY_ERROR: {
-+            const char **error_ptr = (const char **) a2;
-+            *error_ptr = dlerror();
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Invoke a function of a common interface. */
-+        case DLCALL_ID_INVOKE_PROC: {
-+            void *proc = (void *) a2;
-+            void *arg1 = (void *) a3;
-+            void *arg2 = (void *) a4;
-+            assert(proc);
-+            invoke_proc(proc, arg1, arg2);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        default:
-+            *sysret = -EINVAL;
-+            break;
-+        }
-+        return true;
-+    }
-+    return false;
-+}
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-+                                           const qemu_info_t *info,
-+                                           int argc, char **argv)
-+{
-+    if (info->system_emulation) {
-+        fprintf(stderr, "plugin dlcall: only useful for user emulation\n");
-+        return -1;
-+    }
-+
-+    for (int i = 0; i < argc; i++) {
-+        char *opt = argv[i];
-+        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-+        if (g_strcmp0(tokens[0], "syscall_num") == 0) {
-+            const char *val = tokens[1];
-+            char *endptr = NULL;
-+            guint64 num;
-+            if (!val || *val == '\0') {
-+                fprintf(stderr,
-+                        "plugin dlcall: missing value for syscall_num\n");
-+                return -1;
-+            }
-+            num = g_ascii_strtoull(val, &endptr, 0);
-+            if (*endptr != '\0' || g_strrstr(val, "-") != NULL) {
-+                fprintf(stderr,
-+                        "plugin dlcall: invalid syscall_num '%s'\n", val);
-+                return -1;
-+            }
-+            if (num < DLCALL_SYSCALL_MIN || num > G_MAXINT64) {
-+                fprintf(stderr,
-+                        "plugin dlcall: syscall_num %s is out of range; "
-+                        "it must be >= %d to avoid clashing with a real "
-+                        "syscall\n", val, DLCALL_SYSCALL_MIN);
-+                return -1;
-+            }
-+            dlcall_syscall_num = (int64_t) num;
-+        } else {
-+            fprintf(stderr, "plugin dlcall: unknown option '%s'\n", opt);
-+            return -1;
-+        }
-+    }
-+
-+    qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter, NULL);
-+
-+    return 0;
-+}
-diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-index 099319e7a1..e7fc4d6d8f 100644
---- a/contrib/plugins/meson.build
-+++ b/contrib/plugins/meson.build
-@@ -19,6 +19,11 @@ if host_os != 'windows'
-   contrib_plugins += 'lockstep.c'
- endif
+
+This bug may be encountered when using uboot with SDMA functionality, and can be reproduced by following the steps below.
+Uboot test:
+    1. Prepare zImage, uboot and rootfs.cpio.gz, make sure uboot config (MMC_SDHCI_SDMA=y).
+        for more detail, can obtained 
+        "https://lore.kernel.org/qemu-devel/20260617155857.7451-1-dingtao0430@163.com/T/#mcdf231e6bd762903f8393bf93253cbcb12ececcf"
+    2. ./qemu-system-aarch64 -M xilinx-zynq-a9 -machine boot-mode=sd -m 1024 -display none -serial null -serial stdio -monitor none \
+        -device loader,file=u-boot-dtb.bin,addr=0x04000000,cpu-num=0  \
+        -drive file=zynq-sd.img,format=raw,if=sd -D qemu.log
+
+
+After applying the fix, success load sd card:
+  
+U-Boot 2026.07-rc4-g1e80ee41441c (Jun 15 2026 - 19:05:05 +0800)
+
+Model: Xilinx ZC702 board
+DRAM:  ECC disabled 1 GiB
+Core:  33 devices, 21 uclasses, devicetree: board
+Flash: 0 Bytes
+NAND:  0 MiB
+MMC:   mmc@e0100000: 0
+Loading Environment from FAT... *** Error - No Valid Environment Area found
+*** Warning - bad env area, using default environment
+
+In:    serial@e0001000
+Out:   serial@e0001000
+Err:   serial@e0001000
+Net:   
+ZYNQ GEM: e000b000, mdio bus e000b000, phyaddr 7, interface rgmii-id
+
+Warning: ethernet@e000b000 (eth0) using random MAC address - 4a:63:5a:a4:d3:6b
+eth0: ethernet@e000b000
+Hit any key to stop autoboot: 0
+Zynq> fatload mmc 0 ${kernel_addr_r} zImage
+10838528 bytes read in 4316 ms (2.4 MiB/s)
+Zynq> fatload mmc 0 ${ramdisk_addr_r} rootfs-arm32.cpio.gz
+406531 bytes read in 199 ms (1.9 MiB/s)
+Zynq> setenv ramdisk_size ${filesize}
+Zynq> fatload mmc 0 ${fdt_addr_r} zynq-zc702.dtb
+15754 bytes read in 21 ms (732.4 KiB/s)
+Zynq> setenv bootargs console=ttyPS0,115200 earlycon ignore_loglevel rdinit=/init
+Zynq> bootz ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_addr_r}
+Kernel image @ 0x2000000 [ 0x000000 - 0xa56200 ]
+## Flattened Device Tree blob at 01f00000
+   Booting using the fdt blob at 0x1f00000
+Working FDT set to 1f00000
+   Loading Ramdisk to 2ff9c000, end 2ffff403 ... OK
+   Loading Device Tree to 2ff95000, end 2ff9bd89 ... OK
+Working FDT set to 2ff95000
+
+Starting kernel ...
+
+ hw/sd/sdhci.c         | 9 ++++++++-
+ include/hw/sd/sdhci.h | 2 ++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index c86dfa281f..ecd286f2d7 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -307,6 +307,7 @@ static void sdhci_reset(SDHCIState *s)
+     s->data_count = 0;
+     s->stopped_state = sdhc_not_stopped;
+     s->pending_insert_state = false;
++    s->sdma_boundary_paused = false;
+     if (object_dynamic_cast(OBJECT(s), TYPE_FSL_ESDHC_BE) ||
+             object_dynamic_cast(OBJECT(s), TYPE_FSL_ESDHC_LE)) {
+         s->norintstsen = 0x013f;
+@@ -620,6 +621,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+     }
  
-+if host_os == 'linux'
-+  # dlcall passes guest calls through to host libraries; linux-user only
-+  contrib_plugins += 'dlcall.c'
-+endif
-+
- if 'cpp' in all_languages
-   contrib_plugins += 'cpp.cpp'
- endif
+     s->prnsts |= SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE;
++    s->sdma_boundary_paused = false;
+     if (s->trnmod & SDHC_TRNS_READ) {
+         s->prnsts |= SDHC_DOING_READ;
+         while (s->blkcnt) {
+@@ -644,6 +646,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+                 s->data_count = 0;
+             }
+             if (page_aligned && boundary_count == 0) {
++                s->sdma_boundary_paused = true;
+                 break;
+             }
+         }
+@@ -669,6 +672,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+                 }
+             }
+             if (page_aligned && boundary_count == 0) {
++                s->sdma_boundary_paused = true;
+                 break;
+             }
+         }
+@@ -679,6 +683,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+     }
+ 
+     if (s->blkcnt == 0) {
++        s->sdma_boundary_paused = false;
+         sdhci_end_transfer(s);
+     } else {
+         sdhci_update_irq(s);
+@@ -1164,6 +1169,7 @@ static inline void sdhci_reset_write(SDHCIState *s, uint8_t value)
+                 SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE);
+         s->blkgap &= ~(SDHC_STOP_AT_GAP_REQ | SDHC_CONTINUE_REQ);
+         s->stopped_state = sdhc_not_stopped;
++        s->sdma_boundary_paused = false;
+         s->norintsts &= ~(SDHC_NIS_WBUFRDY | SDHC_NIS_RBUFRDY |
+                 SDHC_NIS_DMA | SDHC_NIS_TRSCMP | SDHC_NIS_BLKGAP);
+         break;
+@@ -1185,7 +1191,7 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+ 
+     switch (offset & ~0x3) {
+     case SDHC_SYSAD:
+-        if (!TRANSFERRING_DATA(s->prnsts)) {
++        if (!TRANSFERRING_DATA(s->prnsts) || s->sdma_boundary_paused) {
+             s->sdmasysad = (s->sdmasysad & mask) | value;
+             MASKED_WRITE(s->sdmasysad, mask, value);
+             /* Writing to last byte of sdmasysad might trigger transfer */
+@@ -1508,6 +1514,7 @@ const VMStateDescription sdhci_vmstate = {
+         VMSTATE_VBUFFER_UINT32(fifo_buffer, SDHCIState, 1, NULL, buf_maxsz),
+         VMSTATE_TIMER_PTR(insert_timer, SDHCIState),
+         VMSTATE_TIMER_PTR(transfer_timer, SDHCIState),
++        VMSTATE_BOOL(sdma_boundary_paused, SDHCIState),
+         VMSTATE_END_OF_LIST()
+     },
+     .subsections = (const VMStateDescription * const []) {
+diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+index a9da6203fc..c485277744 100644
+--- a/include/hw/sd/sdhci.h
++++ b/include/hw/sd/sdhci.h
+@@ -103,6 +103,8 @@ struct SDHCIState {
+      * to be protected. Set wp_inverted to invert the signal.
+      */
+     bool wp_inverted;
++    /* Indicate that SDMA transfer is paused due to hitting the boundary */
++    bool sdma_boundary_paused;
+ };
+ typedef struct SDHCIState SDHCIState;
+ 
 -- 
-2.34.1
+2.43.0
 
 
