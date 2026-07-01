@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4655C43602
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:18:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82A2BC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:19:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wes1T-00085C-M0; Wed, 01 Jul 2026 06:18:27 -0400
+	id 1wes1v-0000eo-EY; Wed, 01 Jul 2026 06:18:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes1Q-0007zk-93
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:26 -0400
-Received: from mail-dl1-x1230.google.com ([2607:f8b0:4864:20::1230])
+ id 1wes1s-0000am-Ja
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:52 -0400
+Received: from mail-dl1-x1231.google.com ([2607:f8b0:4864:20::1231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes1O-0004PF-K5
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:23 -0400
-Received: by mail-dl1-x1230.google.com with SMTP id
- a92af1059eb24-13b2d7dc8d1so388748c88.1
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:18:22 -0700 (PDT)
+ id 1wes1q-0004hn-J7
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:52 -0400
+Received: by mail-dl1-x1231.google.com with SMTP id
+ a92af1059eb24-13986d61b4fso569985c88.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:18:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782901101; x=1783505901; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782901129; x=1783505929; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AzyXLWxgfnB9GYfv+2CNeQACOH3jbsa5rH69fbSpNSY=;
- b=qx4Hh3M1Oz6Rb8O874KXuTzV4D1aHZ58KsejnTgEktEWOE6o2aY7CU3FytSaHEMuXz
- tLwkYy67astcckUKoNpcgJrKcLtvO7+P5Z4dzKuosfEszM20THfs4RQjo/sD3juLwobi
- hQgGQBWoMH1Yylc2HI2jHVj2eRgRyi8wJ2PpSQowV/GMg0nloHQxWnFppgpO79n4Gopf
- zwpy1mpW25hMg0AWifW/gAqnHl0hH57zcK66Q6t/AniEobV9hDULsTKyu/8V3QGOy904
- RVrPtN5593Eaoysv5TF6cqiW2QJo4/yEfJE1bU5qzE+QDgAb2aN8ZjmeDTlDFQhnOY5y
- kpQQ==
+ bh=k84FWXRS7Lajzej72StGfyo2q1XvyUBIRB/lVrbIaBc=;
+ b=fxBND4W40gEgwtO08HoNAOlbl29HaFEnb1tVuSVkfhWzQPTAtUD47RjZZuvKY7FZrd
+ jvyhWhBYAOS+UF/kax1/eYw9fGO4NcS4olN0GMRvSqCE2lWrFFMd4xnd5MPU9+mSdQ98
+ jN0xQvXvaI1o/jqDS9/mz56wFsovRjuoWi2UMZY0czTgS3du5S5kLOi2BU6spwK38wph
+ r/bKQmyXbEMqWaX7yienvPgpC4nT//w1jSowEg5KFoECc2ZZiI7b2qKjXekQwsFy/6HL
+ Q2XHbVgoVTjq8VxBp9pNzfS3TdXaEUJye0dG1+pD9VcqrmEICFz1pAhmtwpnYTQqWJQx
+ fmGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782901101; x=1783505901;
+ d=1e100.net; s=20251104; t=1782901129; x=1783505929;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=AzyXLWxgfnB9GYfv+2CNeQACOH3jbsa5rH69fbSpNSY=;
- b=jSNbkQxK6ZVO/GaqlQn7RDQQqxbtNtoIERAHjYstz8YGKuEzT0YH2TrSG2w9Aw6MKS
- /SYgecT8v8vKaxaWPhnSV4JrNljYg9CAFUfQiaJESnLYTLSJDgVET38Aijxjd/53KUg+
- EjXQsjzn3CohJRr3dlH161RoZUTtk2UrOTPbn/sXHnTD1HH0UfFtHtCyXhqpdzy3Wvxl
- DdWTwThMSRAk4T+qHgMYl8P45kgME0mDf5GGmEf7AtS0ZyYHRL7zuZsNqLiPrTMrBSV/
- +1J8YjUbclGtS71APiOk3uJRMWDlN+5Tvs5fLI/lv+vnYJa1yrezmRdzNqflW0c2IU7H
- elcA==
-X-Gm-Message-State: AOJu0Yz9TQtkKwIyvAXc0mRiKUbmPCWbCEn6fydMvZ1x9AEmY4mZHgtv
- 6PbWOPJI2Hi/3E/l84F4+qLAbY/OemczGYQjyQNaKUoPfvRL4HojfqPNKHZADA==
-X-Gm-Gg: AfdE7cmGo/RPlv0An9vVs3m8oOW9cfBWT13glrtxkekr2QvkCWHgIA9j1BDos3zYpKu
- 6788zXMpzEByUueG3kHRAimG56JahVMv7hlLzeweiB1yGeLztnJJ2w8J7Lv4AC0deYPA6aIwzyR
- iKLHVOWA3vVNcBrhwjrrztEcnPfWGcwoZLpmUrtLZKoz1piFAmZGUontNCRevLd9WIOkfHzdgjM
- YPkydLuGBKhoop18/HeJgGH2MhZy5V4DDV9BgzgdO8n5N8Sc1AJGqOpKDbmFOZwRPwPV4TfkJdm
- dEeNlyOLrRj1AZngaHEVfubXkFxWPa8kobHsE675DG/ZXPneKCM+n55UNQFFws/Qf0hGy2ybszR
- lWae11Fp0RhKmoPxTZUQKRTnaWum6DOHFjIl1fYxNabW8lANTTDnwVWYK8k4qvmuVBIz5Tcpsu1
- AiG20nXnugy5SkbutoAhZomy2Kp8sZVqA=
-X-Received: by 2002:a05:7022:622:b0:137:f532:e342 with SMTP id
- a92af1059eb24-13b36d61aa9mr1065500c88.7.1782901100723; 
- Wed, 01 Jul 2026 03:18:20 -0700 (PDT)
+ bh=k84FWXRS7Lajzej72StGfyo2q1XvyUBIRB/lVrbIaBc=;
+ b=lphl06Vn3MlQZ9JRMePiL8GdHSlqyZqcm37BnkTrVm34UureWsRjeGdzC2iTdVegQ3
+ NczBwbwyf+lMWjS6mQdUAtJyOkLvOdgnSTkhV4Mv5tXb2uQicg7rtLv1gTjyPks6yq0p
+ Xfr/sBAKbrHmQPy++DdC7DE3qCOyG1rkYuTVv1taom65qRiRlIP8JnYlNwnMkBM2oxvD
+ Ux21hqIp0Lh7gxkN4KPsm2fd9TelyuIoSHFNxUEhzJx99A6unZZo8kC+jTm11auPAPxo
+ ca75JZw/6y1E8kRdYJahvFvK3EGzjojh4fpZSL8SKU320lB12zRnydsKSg9At7YYhuDB
+ 9B8w==
+X-Gm-Message-State: AOJu0Yx8Zzt1gIDCBcKtReipyU7QfVtqedUrEGau44j5X7/V950GJf5T
+ VeNvfeTjWw6h9nYOvR4BbOpaEGCzREDVAgBKsEvTvkG4Ak89l140n7ncfkGpPg==
+X-Gm-Gg: AfdE7cn76GbEWEtwUD0hBlf7xBHA/6ZuHPVeB5W188vZfvor1JP2BmYQa8mUH4xJqmV
+ SfI9u5/NvLWUPXN/+cw/vb9Hgr+/4joY5vmcIkV3B1Ox3IhrADqvBbDnaRqO+ucuH6l4796cCdB
+ qwZeKDwgkuZwWRuotuNPiN3agYaGooQMG3QfCPjm/7Nsz3q2gsC+USLx91IVb5H4gDEaAVYzF4C
+ vu0T0E0AoC/nBHpZ/2FRdnTvtfbeZWx5u3X2anEwxkBk3Rcly+wnKTPpI4zCNdJef+B7oa0DBki
+ /h4SIW51ZPbl1Rl2pPXbzO22GlKWMHCBtjDM61GBMJ3EMyqf+If1lmMfA7FwnLOwQ6yepfDDJe9
+ 6zFKpZVo8rR3bpXPec8YdpTw3HT26fbxXjCyILDKjW3/MQ2x/DsKLWsQAU4x7MUzTBQFQJi4/JX
+ pyceiS4jm6noa9IaniohZhZEt9r+3htqc=
+X-Received: by 2002:a05:7022:ec88:b0:139:ed5c:7690 with SMTP id
+ a92af1059eb24-13b36e03ab9mr1099322c88.41.1782901129052; 
+ Wed, 01 Jul 2026 03:18:49 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.18.18
+ a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.18.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jul 2026 03:18:20 -0700 (PDT)
+ Wed, 01 Jul 2026 03:18:48 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 04/39] target/riscv/cpu: add CPU unrealize callback
-Date: Wed,  1 Jul 2026 20:17:17 +1000
-Message-ID: <20260701101752.2522962-5-alistair.francis@wdc.com>
+Subject: [PULL 13/39] hw/riscv/sifive_u.c: remove unneeded
+ qemu_fdt_get_phandle() call
+Date: Wed,  1 Jul 2026 20:17:26 +1000
+Message-ID: <20260701101752.2522962-14-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260701101752.2522962-1-alistair.francis@wdc.com>
 References: <20260701101752.2522962-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1230;
- envelope-from=alistair23@gmail.com; helo=mail-dl1-x1230.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1231;
+ envelope-from=alistair23@gmail.com; helo=mail-dl1-x1231.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,71 +106,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Next patch is going to dynamically allocate debug trigger arrays during
-realize() time.  We need a way of freeing them during unrealize(), which
-doesn't exist at this moment.
+create_fdt() has the following code sequence:
 
-There's a lot going on in that patch already so we're adding the
-callback infrastructure beforehand.
+    plic_phandle = phandle++;
+    (...)
+    qemu_fdt_setprop_cell(fdt, nodename, "phandle", plic_phandle);
+    plic_phandle = qemu_fdt_get_phandle(fdt, nodename);
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+What this is doing is assigning a value to plic_phandle, then use that
+as phandle of "nodename", and then fetching the phandle of "nodename"
+again in the same variable that already had the right phandle val.
+
+Here's how it looks like in gdb:
+
+Thread 1 "qemu-system-ris" hit Breakpoint 1, create_fdt
+     (s=0xaaaaac162a30, memmap=0xaaaaab8f70c8 <sifive_u_memmap>,
+      is_32_bit=false) at ../hw/riscv/sifive_u.c:199
+199         plic_phandle = phandle++;
+(gdb) n
+200         cells =  g_new0(uint32_t, ms->smp.cpus * 4 - 2);
+(gdb) p plic_phandle
+$3 = 12
+(gdb) c
+Continuing.
+
+Thread 1 "qemu-system-ris" hit Breakpoint 2, create_fdt
+    (s=0xaaaaac162a30, memmap=0xaaaaab8f70c8 <sifive_u_memmap>,
+     is_32_bit=false) at ../hw/riscv/sifive_u.c:232
+232         plic_phandle = qemu_fdt_get_phandle(fdt, nodename);
+(gdb) n
+233         g_free(cells);
+(gdb) p plic_phandle
+$4 = 12
+(gdb)
+
+Remove the extra qemu_fdt_get_phandle() call.
+
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260617131710.1855353-2-daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260616235939.1358663-2-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h | 2 ++
- target/riscv/cpu.c | 9 +++++++++
- 2 files changed, 11 insertions(+)
+ hw/riscv/sifive_u.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 7582874c35..16e9f87b83 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -576,6 +576,7 @@ typedef struct RISCVCPUDef {
- /**
-  * RISCVCPUClass:
-  * @parent_realize: The parent class' realize handler.
-+ * @parent_unrealize: The parent class' unrealize handler.
-  * @parent_phases: The parent class' reset phase handlers.
-  *
-  * A RISCV CPU model.
-@@ -584,6 +585,7 @@ struct RISCVCPUClass {
-     CPUClass parent_class;
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index 0c6e4204cb..fda9a09f06 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -229,7 +229,6 @@ static void create_fdt(SiFiveUState *s, const MemMapEntry *memmap,
+     qemu_fdt_setprop_cell(fdt, nodename, "riscv,ndev",
+                           SIFIVE_U_PLIC_NUM_SOURCES - 1);
+     qemu_fdt_setprop_cell(fdt, nodename, "phandle", plic_phandle);
+-    plic_phandle = qemu_fdt_get_phandle(fdt, nodename);
+     g_free(cells);
+     g_free(nodename);
  
-     DeviceRealize parent_realize;
-+    DeviceUnrealize parent_unrealize;
-     ResettablePhases parent_phases;
-     RISCVCPUDef *def;
- };
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index fa497e5e8a..b47e2b41c8 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1009,6 +1009,13 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
-     mcc->parent_realize(dev, errp);
- }
- 
-+static void riscv_cpu_unrealize(DeviceState *dev)
-+{
-+    RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(dev);
-+
-+    mcc->parent_unrealize(dev);
-+}
-+
- bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu)
- {
-     if (tcg_enabled()) {
-@@ -2664,6 +2671,8 @@ static void riscv_cpu_common_class_init(ObjectClass *c, const void *data)
- 
-     device_class_set_parent_realize(dc, riscv_cpu_realize,
-                                     &mcc->parent_realize);
-+    device_class_set_parent_unrealize(dc, riscv_cpu_unrealize,
-+                                      &mcc->parent_unrealize);
- 
-     resettable_class_set_parent_phases(rc, NULL, riscv_cpu_reset_hold, NULL,
-                                        &mcc->parent_phases);
 -- 
 2.54.0
 
