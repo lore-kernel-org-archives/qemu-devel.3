@@ -4,71 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82505C43602
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 12:22:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE897C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 12:25:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wetws-0007Zm-K6; Wed, 01 Jul 2026 08:21:50 -0400
+	id 1weu0F-0008PC-6c; Wed, 01 Jul 2026 08:25:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wetwq-0007ZH-RS
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:21:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1weu0D-0008Oy-BO
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:25:17 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wetwp-0006GV-AB
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:21:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782908506;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=yeOIfhuA4RPtJKlJYeZDFX68YuNf/Zw9w1HH1eJpJkM=;
- b=VWWsByaIg8zkcQOJwdLA6nRSuBiZULNDNm7z6PK7LTsBNpbcJGkN1vLsLoSwQAjIm5EGF9
- vP3hjjCidrBtXzymwIB1TS/qUjpF2CnLglPpN2fkb4eWmGwZdRJ6Dg0ufnOvfU7uHjAoWP
- sE35JckWNrN/Zku+Ahl8psoSDW5UgjM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-144-H-tEf-4QPxyatpl6KnUYvA-1; Wed,
- 01 Jul 2026 08:21:44 -0400
-X-MC-Unique: H-tEf-4QPxyatpl6KnUYvA-1
-X-Mimecast-MFC-AGG-ID: H-tEf-4QPxyatpl6KnUYvA_1782908503
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 94C14188E6C0; Wed,  1 Jul 2026 12:21:43 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.3])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 23F271686; Wed,  1 Jul 2026 12:21:41 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: vkuznets@redhat.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH] docs/hyperv: fix misleading hv-crash shutdown description
-Date: Wed,  1 Jul 2026 16:21:35 +0400
-Message-ID: <20260701122135.3168729-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1weu0A-0007NX-Ky
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:25:17 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E7F59596708;
+ Wed, 01 Jul 2026 14:25:10 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id lZUPU0qfakRy; Wed,  1 Jul 2026 14:25:08 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 6AAF5596707; Wed, 01 Jul 2026 14:25:08 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 6977D596704;
+ Wed, 01 Jul 2026 14:25:08 +0200 (CEST)
+Date: Wed, 1 Jul 2026 14:25:08 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Chad Jablonski <chad@jablonski.xyz>
+cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 0/7] ati-vga: CCE engine setup and PIO packet processing
+In-Reply-To: <20260606195216.2524314-1-chad@jablonski.xyz>
+Message-ID: <019e542e-0a9d-84cd-593f-357a38b8f9aa@eik.bme.hu>
+References: <20260606195216.2524314-1-chad@jablonski.xyz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,50 +64,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Hello,
 
-The documentation stated that writing to HV_X64_MSR_CRASH_CTL
-unconditionally causes the guest to shutdown. In reality, it triggers
-qemu_system_guest_panicked() via KVM_SYSTEM_EVENT_CRASH and the
-resulting action depends on the generic panic action policy
-(-action panic=...), which defaults to shutdown.
+On Sat, 6 Jun 2026, Chad Jablonski wrote:
+> This series implements CCE engine setup and PIO packet submission/processing
+> for the Rage 128 and Radeon. This forms the foundation for full CCE support
+> for both chips in the future.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- docs/system/i386/hyperv.rst | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+Sorry, I did not have time to review this but AFAIU this is more of an RFC 
+now as it does not work with any drivers yet so you'll follow up with more 
+patches anyway.
 
-diff --git a/docs/system/i386/hyperv.rst b/docs/system/i386/hyperv.rst
-index 1c1de77feb6..e1babffb0f9 100644
---- a/docs/system/i386/hyperv.rst
-+++ b/docs/system/i386/hyperv.rst
-@@ -71,8 +71,11 @@ Existing enlightenments
-   by the guest when it crashes, HV_X64_MSR_CRASH_P0..HV_X64_MSR_CRASH_P5 MSRs
-   contain additional crash information. This information is outputted in QEMU log
-   and through QAPI.
--  Note: unlike under genuine Hyper-V, write to HV_X64_MSR_CRASH_CTL causes guest
--  to shutdown. This effectively blocks crash dump generation by Windows.
-+  Note: unlike under genuine Hyper-V, write to HV_X64_MSR_CRASH_CTL triggers
-+  ``qemu_system_guest_panicked()`` via ``KVM_SYSTEM_EVENT_CRASH`` and the
-+  resulting action depends on the ``-action panic=...`` policy (default:
-+  ``shutdown``). With the default action, this effectively blocks crash dump
-+  generation by Windows.
- 
- ``hv-time``
-   Enables two Hyper-V-specific clocksources available to the guest: MSR-based
-@@ -304,8 +307,9 @@ currently implemented Hyper-V enlightenments with the following exceptions:
-   ``hv-version-id-snumber`` can be left unchanged, guests are not supposed to
-   behave differently when different Hyper-V version is presented to them.
- - ``hv-crash`` must only be enabled if the crash information is consumed via
--  QAPI by higher levels of the virtualization stack. Enabling this feature
--  effectively prevents Windows from creating dumps upon crashes.
-+  QAPI by higher levels of the virtualization stack. With the default
-+  ``-action panic=shutdown`` policy, enabling this feature effectively
-+  prevents Windows from creating dumps upon crashes.
- - ``hv-reenlightenment`` can only be used on hardware which supports TSC
-   scaling or when guest migration is not needed.
- - ``hv-spinlocks`` should be set to e.g. 0xfff when host CPUs are overcommited
--- 
-2.54.0
+> CCE engine microcode loading is shared across Rage 128 and Radeon. Microcode
+> is stored but not executed in this series. Type-0/1/2 packets are handled by
+> fixed-function hardware and do not require microcode. Ring buffer (BM modes)
+> and Type 3 packet processing will follow in future series.
 
+I was wondering if anything wants to read the microcode. If not we could 
+just ignore the writes and not store the data and just log when something 
+tried to read. (Or just do nothing for it as uniplemented register 
+accesses are already logged.) Or are you aware something that needs the 
+read registers?
+
+> There are differences between CCE setup for Rage 128 and Radeon. Patch 2
+> introduces chip-specific register handlers. The packet processing itself in
+> patch 7 is reusable for both chips.
+>
+> The plan for the next series is to tackle BM modes for Radeon. Differences
+> between the two chips start to become larger in the BM modes.
+
+So far we handled these differences within the same function with if on 
+model. The differences added by this series does not seem large enough to 
+not fit in an if to keep the single functions but if we go with separate 
+functions instead then maybe the existing ifs should also be removed and 
+split into the model specific functions with the common one named 
+ati_common_reg_* then? The current series only converts new registers so 
+I'd either use ifs with the single handler function or convert everything 
+to stay consistent.
+
+Regards,
+BALATON Zoltan
+
+> Hardware tests available at:
+> r128: https://codeberg.org/cjab/ati-tests/src/commit/1ec2dc95d4ed8d11504723b8298847af9b5be075/tests/r128/cce.c
+> r100: https://codeberg.org/cjab/ati-tests/src/commit/1ec2dc95d4ed8d11504723b8298847af9b5be075/tests/r100/cce.c
+>
+> Tested on Rage 128 Pro Ultra (PCI 1002:5446) and
+> Radeon QY (RV100) (PCI 1002:5159).
+>
+> Changes from v2:
+> - MM_INDEX and MM_DATA are not available through ati_reg_write
+> - Use ati_int.h header instead of creating a new one
+> - Drop PM4_STAT register implementation for now. It will be easier to more
+>  accurately implement with BM modes.
+> - Introduce chip-specific register handlers
+> - Combine PM4_BUFFER_CNTL and PM4_MICRO_CNTL patches
+> - Add CCE mode registers for r100
+> - PM4_MICROCODE_DATAH is one bit wider for r100
+> - Testing on r100 showed that GUI MMIO is not disabled in CCE mode. Now
+>  gated for r128 only.
+> - Small style fixes
+>
+> Changes from v1:
+> - Rebased onto master (no longer depends on HOST_DATA series)
+>
+> Chad Jablonski (7):
+>  ati-vga: Extract ati_reg_write() from ati_mm_write()
+>  ati-vga: Chip-specific register handlers
+>  ati-vga: Implement CCE microcode register handling
+>  ati-vga: Implement CCE mode registers for r128
+>  ati-vga: Implement CCE mode registers for r100
+>  ati-vga: Disable GUI engine MMIO writes when CCE enabled (r128 only)
+>  ati-vga: Process Type-0/1/2 CCE packets via PIO
+>
+> hw/display/ati.c        | 505 +++++++++++++++++++++++++++-------------
+> hw/display/ati_cce.c    | 154 ++++++++++++
+> hw/display/ati_int.h    |  73 ++++++
+> hw/display/ati_regs.h   |  15 ++
+> hw/display/meson.build  |   3 +-
+> hw/display/trace-events |   9 +
+> 6 files changed, 598 insertions(+), 161 deletions(-)
+> create mode 100644 hw/display/ati_cce.c
+>
+>
 
