@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 695BFC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D10F8C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:23:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wes2V-0003Lc-Ae; Wed, 01 Jul 2026 06:19:31 -0400
+	id 1wes3N-0005Un-Li; Wed, 01 Jul 2026 06:20:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes2T-0003Ex-TB
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:19:29 -0400
-Received: from mail-dl1-x122f.google.com ([2607:f8b0:4864:20::122f])
+ id 1wes3F-0005Ah-LV
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:20:19 -0400
+Received: from mail-dl1-x1234.google.com ([2607:f8b0:4864:20::1234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes2S-0004oj-EJ
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:19:29 -0400
-Received: by mail-dl1-x122f.google.com with SMTP id
- a92af1059eb24-137335bc3caso975357c88.0
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:19:28 -0700 (PDT)
+ id 1wes3E-0005HI-5J
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:20:17 -0400
+Received: by mail-dl1-x1234.google.com with SMTP id
+ a92af1059eb24-139f3eaaa49so489476c88.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:20:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782901167; x=1783505967; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782901215; x=1783506015; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Lp72y72ZYgpjZ3El6NcBALD3KeSi/ftqY/n9UJcn88E=;
- b=b/oFCE/e++H8s/tSKxF/Ktlx1cfiRpv1OdtDX4sdxx24hC0LuGLFkzQiI+IporD8De
- Xr252wwO1h4LmImqDopuD3HL8WPvqg3Mce1ZH7vguIgsd4TkNVQvcq6tzdzhVobQN99E
- Va2ZrdtmzIJhGkBXPBHWhb6IGkWsjN5R0cPxbBP0Zl3hYhs25ZksVzLTy76hcvCDPG6e
- XKBVRkA57HLoZgXyfCXUIa7992oT3/EyDvDa3w7DPZ1g078rnZHTCMyQizS2p50DS3wC
- btPiwQwKL4VNB+6VcwOknDw/pTWCCSwx9ZLe2nwGmHLegp8dSGiEuZDyxfJxZIoVqv1e
- KC9g==
+ bh=TLUhJfzbCYk9A3+G7+as9F7PDtMpfTdzJ2wND1eSiFM=;
+ b=EseTazMxD8/wNg0WgnC09W/bkSbvAEB/Ky9bJel94w/UkqDp51oXv2PqhDlkHjcWNR
+ mdllnQ/pcObR44z3/rE2oy170HzpD0+myIAB/HPDgycmW1fj0mNTWDxHEjhs6nlbRzPy
+ V0f5m6e49hh0ppl831wlzt3uDBuokFYpdw3tTY/O2K77lIlqQQ56b09s3/XPpToqB4op
+ xjX0cb9eCmoUTFrpQ0XWd1EYFqOaUuCvsJWzo5eIERZqavxEI8S+OFKNq81mJOXXDggJ
+ D0bphWNDSzWRQE/XANXb9ASgBGa8kVf4bO5qnH2DxNr7YavHoBObcR/VLvpaLf6TjoNd
+ 5Eaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782901167; x=1783505967;
+ d=1e100.net; s=20251104; t=1782901215; x=1783506015;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Lp72y72ZYgpjZ3El6NcBALD3KeSi/ftqY/n9UJcn88E=;
- b=SSjSHEGAOvqpGYM5h5Jo6hM4RVFIr6BIQnG38VqXzGj47sWQxsWWWSHm3DyImJcN+G
- Yvo31G/P/ba1RUXBSETNtPzavjL+zu5goqw6sX9u2TeLnoL02zSzGLdBrjlfyMma3Mfn
- SsrkICNgVBauDvlJr+3P0zUlZg6HsT/Z3Phg6mCA7bpGuyIba1WIBGDSVrriX7qAl5Ft
- hKuWdlsFCsRu5SD7j29f3TkOwNW3MQR3M8RPsSq/UsluWJQEOo796vamgiRRugVRFUxb
- sZpYyS+38DyPFg5VWNv1wdszV/gikM9LwPuJARW1wJELJPyzElTfxe0cMqDVoGKtY8KE
- i7iw==
-X-Gm-Message-State: AOJu0YxK5dvj08pYMa/RNqSQ3BJB0gnF/o8z9b+z3aUBQNR/xPWLSMWv
- LQt0zzvp8b8MlO3XCU0O0kT5nrV5q+xhcXer6VnO91UoGyyXEDOy5jymAKMurg==
-X-Gm-Gg: AfdE7cn3CD9Kie7YsIbmf3nv7VyQg+/k2LRqTZYoXCnyhmuxqBpcbf/Tp4No+I5YA/4
- mF+LEc9CACyLBpi8H2doOcHI1HLKvxqqugu9Jg2KibfSNmjB4j7iM3M7bfMV9ACqk3On2tuORHH
- lfzf7t14fDbf6y5ZNwmhjPCTCWy3dQ1IPEId44z2Aj6JWSbpk8cf45PZKbVfiYNvRiv0k7r66AK
- IAuWcYJw9BF58b3s14shtApt3WRr3BMtUctlhhrV+FepoFSoCU/KKg0en34/emKSJ3y9wkdz5dp
- kmAZanlJlgIpNCy1MENUMywMGAQQIiotqQLYF9AwORkU4Gy+IDejsx1m83ou1/miUSyj6BKJMo7
- +OmixC5LjezZCC+9LdTKSe0E4teqLuQAn/3EjNLzsR2PxohAXDQ0vAdMD1SavbPw+T0xwBXzxYR
- J1V5+1JRHb1DGSpK54hhJwP5zx91BfF9I=
-X-Received: by 2002:a05:7022:1287:b0:138:1130:5fd3 with SMTP id
- a92af1059eb24-13b39105ddbmr184858c88.10.1782901166730; 
- Wed, 01 Jul 2026 03:19:26 -0700 (PDT)
+ bh=TLUhJfzbCYk9A3+G7+as9F7PDtMpfTdzJ2wND1eSiFM=;
+ b=lBGnPqUbcsO0HlFC63vZpzyq/b07iE0YtFxs5TOo8vaWBetSL/yceuF4H3aMkk39dZ
+ tFdnyYel3AJhcaoOTuNBI2xoVu9afdABVzIDrDsupZK9pPRsvQm27QwEWivcAfkIdoRR
+ lqNOrQXZo3HRocShhwpOLrIUY7v8yeHREgkolfSq/fnIyIwBk/fNNJt/7IN/T7aApzE3
+ iDXvazKlIlhyNidJajdL9DNxJaLkwz3MWSKBYY5YIi7q2VkJnWmShJ2AlY/GGZeNfaFz
+ UdBsg2TgFicagVFl8ek7w8iwSHkx06xnWvwD7ec1CSth+BM5RcU0u97o+1542CAzt04n
+ nF3w==
+X-Gm-Message-State: AOJu0YyVxPGJ9Ogt40lwzGkddEvd8/1XKVfmEaB5PlTdZCWrnahVR46m
+ rgRzcMvaMene03q7RjM5SDGzZ7OSSGbA1m/QmE9AS/XtDzK1O1s0x6CvquH5nQ==
+X-Gm-Gg: AfdE7cm74dnSZsQNIkMGIAQ9xlXW8NmfmKG+7+i/kbaxGv+NswThL2Zzs9TN5PovQm1
+ 2KLkD/Vr3MMc28Bpjur/Mcr/iDdgv62itHH5s3SvjPF725fm+iePmcKeNNDQJpGiGFZzzeRbWtY
+ loC8Xy/mH/6h3c5wE4o4CZj7ULmqtHtxk9JuL9mVZ4k2LbRNotkNn9V1HzQJHElOTVz2br6u9O1
+ SnWeNCe8f+wHas3WtNfMQX7wNjVsT1MzjDsHhGsgdpy6Glc4ONHBNKyOfRHhk1Ii4njZlxFmngi
+ WK3AVock7Aw7mzwMNsRNiySSG+ypJtjXfwVyaUkZamTDM0VDSj2rCrtQY3sb/mVKplWFti12+Hm
+ hkqgAi8jsToBQOwilwdCrxevapC2XA360WEabGDxqCLdjASRNYb5WOLdNVvoMOVwNTtk3EeIL/r
+ 7fR8Cavo4ZpDiS7nwAqujE4md0wJKLn2c=
+X-Received: by 2002:a05:7022:48:b0:138:3613:db8 with SMTP id
+ a92af1059eb24-13b36d6f2e7mr1012770c88.3.1782901214561; 
+ Wed, 01 Jul 2026 03:20:14 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.19.24
+ a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.20.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jul 2026 03:19:26 -0700 (PDT)
+ Wed, 01 Jul 2026 03:20:14 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Inochi Amaoto <inochiama@gmail.com>,
- qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 26/39] target/riscv: Check PMP before updating PTE
-Date: Wed,  1 Jul 2026 20:17:39 +1000
-Message-ID: <20260701101752.2522962-27-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Nutty Liu <nutty.liu@hotmail.com>
+Subject: [PULL 39/39] hw/riscv/riscv-iommu.c: always fault with SADE=0 and A=0
+Date: Wed,  1 Jul 2026 20:17:52 +1000
+Message-ID: <20260701101752.2522962-40-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260701101752.2522962-1-alistair.francis@wdc.com>
 References: <20260701101752.2522962-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122f;
- envelope-from=alistair23@gmail.com; helo=mail-dl1-x122f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1234;
+ envelope-from=alistair23@gmail.com; helo=mail-dl1-x1234.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -86,7 +88,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,44 +104,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Inochi Amaoto <inochiama@gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-According to the RISC-V spec, the PTE update is a supervisor write
-operations, and it should also follow the CPU PMP configuration like
-the PTE read.
+riscv-iommu spec: "If SADE is 1, the IOMMU updates A and D bits in
+first-stage PTEs atomically. If SADE is 0, the IOMMU causes a
+page-fault corresponding to the original access type if the
+A bit is 0 or if the memory access is a store and the D bit is 0.".
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260622113402.563196-1-inochiama@gmail.com>
+Note that SADE=0 and A=0 will always cause a fault regardless of the
+original access type.  Right now we're faulting in this case just for
+reads.
+
+Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3551
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Message-ID: <20260630211044.82894-1-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_helper.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/riscv/riscv-iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 59edcdd370..2db07f5dfb 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1655,10 +1655,18 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
- 
-     /* Page table updates need to be atomic with MTTCG enabled */
-     if (updated_pte != pte && !is_debug) {
-+        int pmp_prot, pmp_ret;
-+
-         if (!adue) {
-             return TRANSLATE_FAIL;
-         }
- 
-+        pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
-+                                           sxlen_bytes, MMU_DATA_STORE, PRV_S);
-+        if (pmp_ret != TRANSLATE_SUCCESS) {
-+            return TRANSLATE_PMP_FAIL;
-+        }
-+
-         /*
-          * - if accessed or dirty bits need updating, and the PTE is
-          *   in RAM, then we do so atomically with a compare and swap.
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 01f5634f04..974042d017 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -480,7 +480,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+             break;                /* Read access check failed */
+         } else if ((iotlb->perm & IOMMU_WO) && !(pte & PTE_W)) {
+             break;                /* Write access check failed */
+-        } else if ((iotlb->perm & IOMMU_RO) && !ade && !(pte & PTE_A)) {
++        } else if (!ade && !(pte & PTE_A)) {
+             break;                /* Access bit not set */
+         } else if ((iotlb->perm & IOMMU_WO) && !ade && !(pte & PTE_D)) {
+             break;                /* Dirty bit not set */
 -- 
 2.54.0
 
