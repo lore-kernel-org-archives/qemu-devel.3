@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A513C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 20:51:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0B0FC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 20:51:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wf1sQ-0003BJ-6P; Wed, 01 Jul 2026 16:49:46 -0400
+	id 1wf1tD-0003nT-L3; Wed, 01 Jul 2026 16:50:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wf1sO-0003Af-BJ; Wed, 01 Jul 2026 16:49:44 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wf1t9-0003cX-DF; Wed, 01 Jul 2026 16:50:31 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wf1sM-0003sy-Gs; Wed, 01 Jul 2026 16:49:44 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wf1t7-0004NG-If; Wed, 01 Jul 2026 16:50:31 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 661GmlOO1455730; Wed, 1 Jul 2026 20:49:39 GMT
+ 661Gmoim1339798; Wed, 1 Jul 2026 20:50:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=/3eqHN
- bv4aXfd+u4AnT0IFpGYmbYJdEcHut8ZRCL9ww=; b=j9RPGbfSwVucKK0S41Y9Zx
- Lgh9M8GG6HQY9/XXj2hb/fZdJU8+tJ5GKVz9WVXNDw+HYoCrh6K27FOgYjAov2tq
- YDKa7hVbaeRvSPkM+bwdmKGuso+JDlUjBjqQJsDD5WqLOl5n/aTQ5aqshv0dG6Oo
- vClqxf2s0D46gWL3mmgfWZZ7FWN9E7ltRzGat4q88nNcEMNb+0SydZ1/5LH6XMsN
- jAzm8gy2077QpRERs+561wz0ILXtus9XN/+PCzLSw/fqAWYgiGyZ5zm1i8NHFG1S
- LNFYj/uYE0iN/vXVN3d71JLNmu4YvUi5LWonfIVxQZaEMaehkfIMxenTBf3wRkZw
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26pe6pys-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=NAicq5uOLykXnygWz
+ mTg96eZ5hFzE9v0Y9FC2UsYLCY=; b=L5MAJ2HNBuJZaVAEMX7WKgtzdV1lwDDdQ
+ 2KZ24DQ+qdbitt/kRDBwRDRwA51/RoAwXnu6HescbCziIkEyJJRqllDAXvPt3UeY
+ XUdCvsdwcBEmndnV2hkoFU0duq0DXuba+ulEZgsB5k/6N1ZCh7TxOCmP7EBosVan
+ PLqUtlvyIWWkr0yrasT/bTz9GmWZgVML37rgr1hZx5vxUFymT0ktCWv9oq1zAM7v
+ NC13BL/tQx/cSQUiuAYImN5d9uDt48lUoSdd9i9zlVDXiBjLx1UmPBOsKSFD1buX
+ G0igYdnoiUBzqzpOkZJ9v1sJ5KJM4Ys1Hu7ycWNSxURPG9px4x1Uw==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qa69ya-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 01 Jul 2026 20:49:38 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 661KnbRt006913;
- Wed, 1 Jul 2026 20:49:37 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhh0pm-1
+ Wed, 01 Jul 2026 20:50:26 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 661KnZBE025906;
+ Wed, 1 Jul 2026 20:50:25 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruqh9kt-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 01 Jul 2026 20:49:37 +0000 (GMT)
+ Wed, 01 Jul 2026 20:50:25 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
  [10.39.53.233])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 661KnaXQ4063898
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 661KoOuT39387898
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 1 Jul 2026 20:49:36 GMT
+ Wed, 1 Jul 2026 20:50:24 GMT
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 05A9358054;
- Wed,  1 Jul 2026 20:49:36 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 005695803F;
+ Wed,  1 Jul 2026 20:50:24 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4E5CA5803F;
- Wed,  1 Jul 2026 20:49:33 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 580C65804E;
+ Wed,  1 Jul 2026 20:50:21 +0000 (GMT)
 Received: from fedora-workstation.lan (unknown [9.61.149.234])
  by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  1 Jul 2026 20:49:33 +0000 (GMT)
+ Wed,  1 Jul 2026 20:50:21 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
@@ -67,51 +66,50 @@ Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
  alifm@linux.ibm.com, brueckner@linux.ibm.com,
  pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-Subject: [PATCH v12 03/35] crypto/x509-utils: Add helper functions for
- certificate store
-Date: Wed,  1 Jul 2026 16:48:49 -0400
-Message-ID: <20260701204922.1320349-4-zycai@linux.ibm.com>
+Subject: [PATCH v12 19/35] s390x: Guest support for Secure-IPL Facility
+Date: Wed,  1 Jul 2026 16:49:05 -0400
+Message-ID: <20260701204922.1320349-20-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260701204922.1320349-1-zycai@linux.ibm.com>
 References: <20260701204922.1320349-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: JTvVEOqaNmBOwnvDVzTbh86igaZulrS2
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDIyMiBTYWx0ZWRfX+1JD8KRJuOQC
- WGN4I3kLDmK9uKT6x5QMk6dW1KQErxP56zhC3WmV5mNFI+C4kJpJxUtMFbzE2Yxe8jWEaOCv/8m
- kJA/2h+SDYcNCigHGt64YyBE2e8ajVA=
-X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a457d62 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=20KFwNOVAAAA:8 a=GX81FK21qHpjiM7aGUoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDIyMiBTYWx0ZWRfXz3M4k3C7Cu1y
- z1V++cOn9/CDohtVqFnLlHOtIKiaBpSPuNjNkgZQQ+edSq2Ky3sBg1+mZfwX77/3qDyucJdZR/z
- wr8R8Qwf649V7WyRliqid1zPjs4Eao4hft3NEY4MvoZODdT6uUa1g4XtOV/ks+yPnxzoOb7/OLe
- 3YUDbJkXVLL1fzwgfwBydMHrGUoB2h8uPafd+IhmcjnVoJQOeSfTWh7Yc1UjDkPf6VCIak2kUeW
- rs2yIxvs3PDhcNrURRzhFKBmPW4MztR1nLm+3kR6RrkIqQyNk7f4jvp5d6y9hcL3duzZpwbxiLf
- 8ACue+RilhuP5vWdSNF83lGFvZArlxrKRqX/L4CXjRfo1L8DvYsAJ5nZKe8mySrpfwkPZDaME9+
- +5jSH1iu6Hyi2GE79y+rHZg3MVqQJDW0C3KiGIKiB6DJtfzWPRWRfsLxu4Nu0ikMjOjxwkYdoQU
- hzK1/DQVd8/EdeyqMZw==
-X-Proofpoint-ORIG-GUID: JTvVEOqaNmBOwnvDVzTbh86igaZulrS2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDIyMiBTYWx0ZWRfX2L/lUGLQEgOB
+ poWYhHKI+Ymj9NHKt5EMHpLY91ztHfXGY/scbYfkXa4iWQJkCyxUi1ihf1wPnlFpPwDCgxj3cvO
+ 4SBEyCZVLi9Q9iW9RL5Pdi2HHKVyFB5fUI4cP08PGwevaW+bAscZ+nVOahYLSqLtPMojAOYZtDl
+ AkFI5GZbUIq5qmTWYjnj18p3w2uybkEPhumX3O4zKe0g9fDb8W8+Hsazvx7L1K0gZN+nCbnqhZK
+ 9S6quTFMEN+ix8pgWrTKHKM9cShKlEfiSmErVMp4TLYsCS1sGHVJCNOPcspMZM/mp1GycYqnjCF
+ 78QP04RNoByUNk6c6bFNVy8RqbID4knVUOimp70DENjJ74ZuDc43USX6owym1D6SSd9f713gGqs
+ 8jad6ZOpiyktMmYyEtkrEv1P3H38tWsT8SfwDBRlrsLK8g9BNxoP5x65HX8xMRuyDaqsJOOUXRd
+ QZfeFZ+IqCMVeBgTZXQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDIyMiBTYWx0ZWRfXx3KscIhUBRRw
+ W+zXfAXmm0jtTX0yaaN8grJxftfvFgX+o+dPV4MZDqgc99OUqmdTUxHJf3ons1JnbI6rDKpThYe
+ II882mcMIQpcBbEGzqIMEZcelhrRn0k=
+X-Proofpoint-GUID: 0txjtNyXfuFvKQIR0MES1DW3qLWm2GRc
+X-Proofpoint-ORIG-GUID: 0txjtNyXfuFvKQIR0MES1DW3qLWm2GRc
+X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a457d92 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=Bichc5AjJS213ZhIJUEA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-01_04,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
- spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010222
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ spamscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607010222
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,118 +126,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce new helper functions for x509 certificate, which will be used
-by the certificate store:
+Introduce Secure-IPL (SIPL) facility.
 
-qcrypto_x509_convert_cert_der() - converts a certificate from PEM to DER format
+Use fac_ipl to represent bytes 136 and 137 for IPL device facilities
+of the SCLP Read Info block.
 
-These functions provide support for certificate format conversion.
+Availability of SIPL facility is determined by byte 136 bit 1 of the
+SCLP Read Info block. Byte 136's facilities cannot be represented
+without the availability of the extended-length-SCCB, so add it as a
+check for consistency.
+
+Secure IPL is not available for guests under protected virtualization.
+
+This feature is available starting with the gen16 CPU model.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Acked-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- crypto/x509-utils.c         | 49 +++++++++++++++++++++++++++++++++++++
- include/crypto/x509-utils.h | 21 ++++++++++++++++
- 2 files changed, 70 insertions(+)
+ hw/s390x/sclp.c                     | 2 ++
+ include/hw/s390x/sclp.h             | 4 +++-
+ target/s390x/cpu_features.c         | 4 ++++
+ target/s390x/cpu_features.h         | 1 +
+ target/s390x/cpu_features_def.h.inc | 3 +++
+ target/s390x/cpu_models.c           | 2 ++
+ target/s390x/gen-features.c         | 2 ++
+ target/s390x/kvm/kvm.c              | 3 +++
+ 8 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
-index 6176a88653..68cf008938 100644
---- a/crypto/x509-utils.c
-+++ b/crypto/x509-utils.c
-@@ -81,6 +81,46 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
-     return ret;
- }
+diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
+index b9c3983df1..666bae33f0 100644
+--- a/hw/s390x/sclp.c
++++ b/hw/s390x/sclp.c
+@@ -146,6 +146,8 @@ static void read_SCP_info(SCLPDevice *sclp, SCCB *sccb)
+     if (s390_has_feat(S390_FEAT_EXTENDED_LENGTH_SCCB)) {
+         s390_get_feat_block(S390_FEAT_TYPE_SCLP_FAC134,
+                             &read_info->fac134);
++        s390_get_feat_block(S390_FEAT_TYPE_SCLP_FAC_IPL,
++                            read_info->fac_ipl);
+     }
  
-+int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
-+                                  uint8_t **result, size_t *resultlen,
-+                                  Error **errp)
-+{
-+    int ret = -1;
-+    int rc;
-+    gnutls_x509_crt_t crt;
-+    gnutls_datum_t datum = {.data = cert, .size = size};
-+    gnutls_datum_t datum_der = {.data = NULL, .size = 0};
-+
-+    rc = gnutls_x509_crt_init(&crt);
-+    if (rc < 0) {
-+        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
-+        return ret;
-+    }
-+
-+    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
-+    if (rc != 0) {
-+        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
-+        goto cleanup;
-+    }
-+
-+    rc = gnutls_x509_crt_export2(crt, GNUTLS_X509_FMT_DER, &datum_der);
-+    if (rc != 0) {
-+        error_setg(errp, "Failed to convert certificate to DER format: %s",
-+                   gnutls_strerror(rc));
-+        goto cleanup;
-+    }
-+
-+    *resultlen = datum_der.size;
-+    *result = g_memdup2(datum_der.data, datum_der.size);
-+
-+    ret = 0;
-+
-+cleanup:
-+    gnutls_x509_crt_deinit(crt);
-+    g_free(datum_der.data);
-+    return ret;
-+}
-+
- #else /* ! CONFIG_GNUTLS */
+     read_info->facilities = cpu_to_be64(SCLP_HAS_CPU_INFO |
+diff --git a/include/hw/s390x/sclp.h b/include/hw/s390x/sclp.h
+index ddc61f1c21..a9595d8007 100644
+--- a/include/hw/s390x/sclp.h
++++ b/include/hw/s390x/sclp.h
+@@ -136,7 +136,9 @@ typedef struct ReadInfo {
+     uint32_t hmfai;
+     uint8_t  _reserved7[134 - 128];     /* 128-133 */
+     uint8_t  fac134;
+-    uint8_t  _reserved8[144 - 135];     /* 135-143 */
++    uint8_t  _reserved8;
++    uint8_t  fac_ipl[2];                /* 136-137 */
++    uint8_t  _reserved9[144 - 138];     /* 138-143 */
+     struct CPUEntry entries[];
+     /*
+      * When the Extended-Length SCCB (ELS) feature is enabled the
+diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
+index 436471f4b4..200bd8c15b 100644
+--- a/target/s390x/cpu_features.c
++++ b/target/s390x/cpu_features.c
+@@ -119,6 +119,7 @@ void s390_fill_feat_block(const S390FeatBitmap features, S390FeatType type,
+      * Some facilities are not available for CPUs in protected mode:
+      * - All SIE facilities because SIE is not available
+      * - DIAG318
++     * - Secure IPL Facility
+      *
+      * As VMs can move in and out of protected mode the CPU model
+      * doesn't protect us from that problem because it is only
+@@ -149,6 +150,9 @@ void s390_fill_feat_block(const S390FeatBitmap features, S390FeatType type,
+         clear_be_bit(s390_feat_def(S390_FEAT_DIAG_318)->bit, data);
+         clear_be_bit(s390_feat_def(S390_FEAT_CERT_STORE)->bit, data);
+         break;
++    case S390_FEAT_TYPE_SCLP_FAC_IPL:
++        clear_be_bit(s390_feat_def(S390_FEAT_SIPL)->bit, data);
++        break;
+     default:
+         return;
+     }
+diff --git a/target/s390x/cpu_features.h b/target/s390x/cpu_features.h
+index 5635839d03..b038198555 100644
+--- a/target/s390x/cpu_features.h
++++ b/target/s390x/cpu_features.h
+@@ -24,6 +24,7 @@ typedef enum {
+     S390_FEAT_TYPE_SCLP_CONF_CHAR,
+     S390_FEAT_TYPE_SCLP_CONF_CHAR_EXT,
+     S390_FEAT_TYPE_SCLP_FAC134,
++    S390_FEAT_TYPE_SCLP_FAC_IPL,
+     S390_FEAT_TYPE_SCLP_CPU,
+     S390_FEAT_TYPE_MISC,
+     S390_FEAT_TYPE_PLO,
+diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
+index 2976ecd0ee..bcf8a666e4 100644
+--- a/target/s390x/cpu_features_def.h.inc
++++ b/target/s390x/cpu_features_def.h.inc
+@@ -140,6 +140,9 @@ DEF_FEAT(SIE_IBS, "ibs", SCLP_CONF_CHAR_EXT, 10, "SIE: Interlock-and-broadcast-s
+ DEF_FEAT(DIAG_318, "diag318", SCLP_FAC134, 0, "Control program name and version codes")
+ DEF_FEAT(CERT_STORE, "cstore", SCLP_FAC134, 5, "Certificate Store functions")
  
- int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
-@@ -93,4 +133,13 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
-     return -1;
- }
- 
-+int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
-+                                  uint8_t **result,
-+                                  size_t *resultlen,
-+                                  Error **errp)
-+{
-+    error_setg(errp, "GNUTLS is required to export X.509 certificate");
-+    return -1;
-+}
++/* Features exposed via SCLP SCCB Facilities byte 136 - 137 (bit numbers relative to byte-136) */
++DEF_FEAT(SIPL, "sipl", SCLP_FAC_IPL, 1, "Secure-IPL facility")
 +
- #endif /* ! CONFIG_GNUTLS */
-diff --git a/include/crypto/x509-utils.h b/include/crypto/x509-utils.h
-index 1e99661a71..91ae79fb03 100644
---- a/include/crypto/x509-utils.h
-+++ b/include/crypto/x509-utils.h
-@@ -19,4 +19,25 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
-                                       size_t *resultlen,
-                                       Error **errp);
+ /* Features exposed via SCLP CPU info. */
+ DEF_FEAT(SIE_F2, "sief2", SCLP_CPU, 4, "SIE: interception format 2 (Virtual SIE)")
+ DEF_FEAT(SIE_SKEY, "skey", SCLP_CPU, 5, "SIE: Storage-key facility")
+diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+index 962f135f42..a52e34aa95 100644
+--- a/target/s390x/cpu_models.c
++++ b/target/s390x/cpu_models.c
+@@ -263,6 +263,7 @@ bool s390_has_feat(S390Feat feat)
+         case S390_FEAT_SIE_CMMA:
+         case S390_FEAT_SIE_PFMFI:
+         case S390_FEAT_SIE_IBS:
++        case S390_FEAT_SIPL:
+         case S390_FEAT_CONFIGURATION_TOPOLOGY:
+             return false;
+             break;
+@@ -507,6 +508,7 @@ static void check_consistency(const S390CPUModel *model)
+         { S390_FEAT_AP_QUEUE_INTERRUPT_CONTROL, S390_FEAT_AP },
+         { S390_FEAT_DIAG_318, S390_FEAT_EXTENDED_LENGTH_SCCB },
+         { S390_FEAT_CERT_STORE, S390_FEAT_EXTENDED_LENGTH_SCCB },
++        { S390_FEAT_SIPL, S390_FEAT_EXTENDED_LENGTH_SCCB },
+         { S390_FEAT_NNPA, S390_FEAT_VECTOR },
+         { S390_FEAT_RDP, S390_FEAT_LOCAL_TLB_CLEARING },
+         { S390_FEAT_UV_FEAT_AP, S390_FEAT_AP },
+diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
+index 6c20c3a862..bd2060ab93 100644
+--- a/target/s390x/gen-features.c
++++ b/target/s390x/gen-features.c
+@@ -721,6 +721,7 @@ static uint16_t full_GEN16_GA1[] = {
+     S390_FEAT_UV_FEAT_AP,
+     S390_FEAT_UV_FEAT_AP_INTR,
+     S390_FEAT_CERT_STORE,
++    S390_FEAT_SIPL,
+ };
  
-+/**
-+ * qcrypto_x509_convert_cert_der
-+ * @cert: pointer to the raw certificate data in PEM format
-+ * @size: size of the certificate
-+ * @result: output location for the allocated buffer for the certificate
-+ *          in DER format
-+ *          (the function allocates memory which must be freed by the caller)
-+ * @resultlen: pointer to the size of the buffer (will be updated with the
-+ *             actual size of the DER-encoded certificate)
-+ * @errp: error pointer
-+ *
-+ * Convert the given @cert from PEM to DER format.
-+ *
-+ * Returns: 0 on success,
-+ *         -1 on error.
-+ */
-+int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
-+                                  uint8_t **result,
-+                                  size_t *resultlen,
-+                                  Error **errp);
+ static uint16_t full_GEN17_GA1[] = {
+@@ -922,6 +923,7 @@ static uint16_t qemu_MAX[] = {
+     S390_FEAT_PRNO_TRNG,
+     S390_FEAT_EXTENDED_LENGTH_SCCB,
+     S390_FEAT_CERT_STORE,
++    S390_FEAT_SIPL,
+ };
+ 
+ /****** END FEATURE DEFS ******/
+diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+index 56795837f5..61ac6c84a0 100644
+--- a/target/s390x/kvm/kvm.c
++++ b/target/s390x/kvm/kvm.c
+@@ -2501,6 +2501,9 @@ bool kvm_s390_get_host_cpu_model(S390CPUModel *model, Error **errp)
+ 
+     set_bit(S390_FEAT_CERT_STORE, model->features);
+ 
++    /* Some Secure IPL facilities are emulated by QEMU */
++    set_bit(S390_FEAT_SIPL, model->features);
 +
- #endif
+     /* Test for Ultravisor features that influence secure guest behavior */
+     query_uv_feat_guest(model->features);
+ 
 -- 
 2.54.0
 
