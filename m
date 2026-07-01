@@ -4,127 +4,190 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A534C43327
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 12:40:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 504BEC43327
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 12:41:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weuEK-0004Pd-P6; Wed, 01 Jul 2026 08:39:52 -0400
+	id 1weuFD-0005QJ-V3; Wed, 01 Jul 2026 08:40:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1weuEE-0004Oc-LL; Wed, 01 Jul 2026 08:39:48 -0400
-Received: from smtpout9.mo536.mail-out.ovh.net ([51.210.91.18])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1weuFB-0005PR-Fx
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:40:45 -0400
+Received: from mout.gmx.net ([212.227.17.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1weuE5-0003kF-O9; Wed, 01 Jul 2026 08:39:46 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [57.128.106.70])
- by mo536.mail-out.ovh.net (Postfix) with ESMTPS id 4gr02W2cCzz82NJ;
- Wed,  1 Jul 2026 12:39:31 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alexander.hansen@9elements.com>; Wed,  1 Jul 2026 12:39:31 +0000 (UTC)
-Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.178.1])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4gr02V6GYvz7tJy; Wed,  1 Jul 2026 12:39:30 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.3])
- (Authenticated sender: clg@kaod.org)
- by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 7D1D61923CE8; Wed,  1 Jul 2026 12:39:28 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-105G00635fc6e4c-ea57-4709-8603-6d56815b390c,
- 301A22583DD1BC3AA74069A6B587A2F51A576089) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <03dbf5a7-68c7-4cdd-895d-178088421f9b@kaod.org>
-Date: Wed, 1 Jul 2026 14:39:27 +0200
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1weuF9-0004L2-MW
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:40:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1782909637; x=1783514437; i=deller@gmx.de;
+ bh=X2PZE3mxIZ9EOORQ3KgGj3Hk59U1uiT9uEU5FLuNzps=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=nVDdA4dQTcVBR4tzSgGqdcuoKtuQYH+OIvfbcAvcwUFXe7yJcX9vrj/sOruyV0Ri
+ 5W0dOCwzsrDqqxTXEGQzUY+OGdNG5Gpq6MSNfQWyYkQS7CP0dUyCC6ddk87xYr4BK
+ YflNUi3t3rZoqOcDGmjUpZFR2WBrApkVCi6R3XJ18f7+2DvE71w2hGmfUyxg2dKO5
+ w4zetO+yKq+f0Q8PjC+CXAfLFtB4wyD8qixvgxspusyHvJ3HfIKwTcsJEyG3yeYpJ
+ WGkr9U7SuXyX+DIjIdYDGK4qsSSnMzUj4zvoyk/rLCs8Pk6SZjEk/j0TdP8JK7Bg3
+ gamn0WDIcakWvEkQmA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M3UV8-1wfSCt07ak-000Y1z; Wed, 01
+ Jul 2026 14:40:37 +0200
+Message-ID: <c8135914-92ad-4c8e-81a1-d6fca4af06eb@gmx.de>
+Date: Wed, 1 Jul 2026 14:40:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/5] hw/i2c: parent slaves created with
- i2c_slave_create_simple
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Emmanuel Blot <eblot@meta.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alexander Hansen <alexander.hansen@9elements.com>,
- William de Abreu Pinho <williampinho@meta.com>, qemu-arm@nongnu.org,
- Corey Minyard <cminyard@mvista.com>, Markus Armbruster <armbru@redhat.com>
-References: <20260627-i2c-adc128d818-anacapa-v3-0-cfb94270a980@meta.com>
- <20260627-i2c-adc128d818-anacapa-v3-3-cfb94270a980@meta.com>
- <dc92984a-5c25-419e-b4ad-f5b79efbaeea@oss.qualcomm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
- BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
- M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
- 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
- jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
- TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
- neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
- VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
- QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
- ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
- WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
- wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
- SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
- cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
- S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
- 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
- hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
- tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
- t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
- OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
- KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
- o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
- ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
- IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
- d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
- +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
- HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
- l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
- 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
- ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
- KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <dc92984a-5c25-419e-b4ad-f5b79efbaeea@oss.qualcomm.com>
+Subject: Re: [PATCH 0/2] hw/scsi/ncr53c710: rewrite to support HP-UX, Linux
+ and NetBSD
+To: Keith Monahan <keith@techtravels.org>, qemu-devel@nongnu.org
+Cc: Fam Zheng <fam@euphon.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Reinoud Zandijk <reinoud@netbsd.org>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20260701031803.1817812-1-keith@techtravels.org>
+Content-Language: en-US
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <20260701031803.1817812-1-keith@techtravels.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 757449165447801901
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEfCxVbzupYT+omBcuGo06y1nGPEiaGosYuK0SauiS/Z6tE4qzsLrxZGDXf2Gn9lttrfZY+t39XxRkE5pCIMwJkJW9NXPvHG9AfCGNX1iKMzljtKMO73UkAN60jgnFj6WHsj2TMouUH2ztYqsWqCbfRuHpgLuwSk40P2jf+PaBaZd9bz5/fYuu3SXxSDjhqgnksH9KuazrUmgfJMBrD9h1iL3rFdi9uRO6BkhJ7dY2BAis3YoYFYss8BRjfyc1hUTetBRRjppbIQ5WZbMS4ZKj6FcoUClwK7OoGsPkTjYVbWLvQWuJVZLgU9//oZWxJfijAVZJq0XMCkslLV6n2zZCLTLk9KnuRDUKKVnbpXk2t3TLBbt3jQVbtj/hez60KOee/TgSNdMKHrW6m/MjEJ0R2raj0ojou26ZNE8YyrPCEE9OqbZmRwC0Rnu6m9SiusFDDYh24ZH2xpZ8baOCJHkdfHpin6Zz3eM8LrvkLjZNRHWGYF3BQfvesI3roXgm+TF3di7dFXqA0edB1tRfMld5nNRdNs+L9sDEhznqYhKGC9R0q47HnjHPBSSIHchIKrhrzCMqQVv8DrdyOr3F3Du/Ra7L1qxxUIrCYUWsSmWWDfpnZjfxfjPZ1ccxI/4wwPtiA+w5SXFjKa7Q6G4urIxId10B6Nut3Mau7B62MqcR8rw
-DKIM-Signature: a=rsa-sha256; bh=XQeueU0Fn1iUGsUpYmausRvWKjy4Z5Pqzpm6pQfrNPY=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1782909573; v=1;
- b=lwPuLB0/m/OzrpIhSJi0XkwsAjGcl+JuqtKsovMbJvV3CWSYF/SYVGNCLb5MLUEDBSu55X/0
- zS9WgqL+4t+w3c27Xz84JCx+h8H6Cov1Qd9sq1yVuXLgKFQagUoMI/UrbD4ZIgVVZbocbRh9Obh
- TP0nNEAEn22dlxhqxq/ruM+3hfWByV3osNgMGsg5OEkFXhZAoOYQUEVA1bcgo0qMVJDrFTSZVeT
- +owgAVquW+eflwa79ySFGGnldVuSRETHVGt+l7JPANRmMCaCHpW2aJDqj/J85v/Wg5qXE2oitoX
- aS1lPq3MjdczXb5ZRykMdvGIYBP2pUlbgKSEo9x25BWEw==
-Received-SPF: pass client-ip=51.210.91.18; envelope-from=clg@kaod.org;
- helo=smtpout9.mo536.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:wmIf5fcVhHKpzy6ZWQLlAJ7qUQmIkK7gLDIJ6DR9A7QgrRvWnRq
+ 60FIhFUHA+8J/PsM5xu5YHs5OhgPxQ8u33PQ8QjDcPO/G+wNz3rlvhOodV3wd1C5p/0t20Q
+ rlJZaODoUIfjPLCJuyo2tkU3/bnUzNBhNro/i4W+IMiRqelniqT9HQ5ewNw+WY+X7GdSiQV
+ b1N2KZSv0aiPEbU5+DZ3Q==
+UI-OutboundReport: notjunk:1;M01:P0:1/1Pce4y+oA=;jQfKjpLBh83hwl4U+6xDvbe19/3
+ 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
+ vODA4qiC8hEzG8Q/+8=
+Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,83 +203,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/26 08:29, Philippe Mathieu-Daudé wrote:
-> On 28/6/26 02:45, Emmanuel Blot wrote:
->> Slaves created with i2c_slave_create_simple() were left unparented and
->> showed up under /machine/unattached with no stable QOM path. Add each
->> slave as a QOM child of its bus, named after its I2C address, so it has
->> a deterministic and addressable QOM path.
-> 
-> +Markus
-> 
-> Personally I never liked the idea of having buses being parents
-> of the devices attached to them, 
+On 7/1/26 05:18, Keith Monahan wrote:
+> This series replaces the NCR 53C710 model so HP-UX 10.20 (including the
+> Ignite/16700A install media) installs and boots on the HP 715 (-M 715),
+> while keeping the in tree Linux lasi700 and NetBSD osiop drivers working=
+.
+>=20
+> I first tried to fix the existing model.  It took about a dozen fixes
+> just to get the kernel's own 53c710 driver to negotiate its first
+> command, and even then HP-UX would not boot reliably.  Two of the faults
+> are in the core interpreter itself.  The model is connected only: no
+> target initiated disconnect/reselect, which HP-UX needs (and so does any
+> tagged, overlapped I/O).  And it runs SCRIPTS synchronously inside the
+> guest register write, so completion interrupts come back reentrantly
+> instead of the way the real chip delivers them.  Fixing either one meant
+> rewriting the interpreter, so I rewrote it.
+>=20
+> The new model is derived from lsi53c895a.c, the maintained sibling in th=
+e
+> same NCR/LSI SCRIPTS family.  Its disconnect/reselect, asynchronous
+> completion and DMA paths already work across many guests.  I adapted it
+> to the 710: big endian SCRIPTS and table indirect fetch, 24 bit DMA byte
+> counts, the 710 register map, and the single byte interrupt model.  The
+> two LSI models share structure now, so a fix to one can carry to the
+> other.
+>=20
+> Patch 1 is an independent LASI interrupt controller fix (a latched
+> request register that floods the installed HP-UX boot with "unexpected
+> core I/O interrupt").  Patch 2 is the rewrite, which depends on it.
+>=20
+> Tested: HP-UX 10.20 install + reboot (Ignite 16700A and an overlapping
+> tagged software install); Debian install + boot (Linux 53c700);
+> NetBSD/hppa 9.4 and 10.1 boot + device enumeration (osiop).
+>=20
+> Keith Monahan (2):
+>    hw/misc/lasi: derive IRR from pending and unmasked sources
+>    hw/scsi/ncr53c710: rewrite the 53C710 SCRIPTS engine
+>=20
+>   hw/misc/lasi.c        |   27 +-
+>   hw/scsi/lasi_ncr710.c |  120 +-
+>   hw/scsi/lasi_ncr710.h |   28 +-
+>   hw/scsi/ncr53c710.c   | 3062 +++++++++++++++++------------------------
+>   hw/scsi/ncr53c710.h   |  295 ++--
+>   hw/scsi/trace-events  |   31 +-
+>   6 files changed, 1500 insertions(+), 2063 deletions(-)
+Thanks for this series!!!
+I've tested this driver with HP-UX 10.20 (which didn't worked with the pre=
+vious
+ncr710 driver yet), and it's a big step forward.
+Thanks for doing this.
 
-What was the problem ?
-
-> but maybe it is simpler this way.
-
-It is much simpler for functional tests when looking for board
-devices which don't have ids.
-
-patch 5 didn't reach the list, but here is an extract :
-
-+    ADC128D818_QOM_PATH = \
-+        "/machine/soc/i2c/bus[8]/aspeed.i2c.bus.8/0x72/i2c.0/0x1f"
-+    ADC128D818_MUX_CHANNEL = "/sys/bus/i2c/devices/8-0072/channel-0"
-
-+        adc = self.ADC128D818_QOM_PATH
-+        for ch0_mv, ch1_mv in ((108, 2000), (1280, 500)):
-+            self.vm.cmd("qom-set", path=adc, property="ain0", value=ch0_mv)
-+            self.vm.cmd("qom-set", path=adc, property="ain1", value=ch1_mv)
-+            self.wait_adc128d818_value("in0_input", ch0_mv)
-+            self.wait_adc128d818_value("in1_input", ch1_mv)
-
-Thanks,
-
-C.
-
-> 
->> Signed-off-by: Emmanuel Blot <eblot@meta.com>
->> ---
->>   hw/i2c/core.c        | 3 +++
->>   include/hw/i2c/i2c.h | 7 +++++--
->>   2 files changed, 8 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/i2c/core.c b/hw/i2c/core.c
->> index 54f6bdca88..0bbce45d48 100644
->> --- a/hw/i2c/core.c
->> +++ b/hw/i2c/core.c
->> @@ -382,6 +382,9 @@ I2CSlave *i2c_slave_create_simple(I2CBus *bus, const char *name, uint8_t addr)
->>   {
->>       I2CSlave *dev = i2c_slave_new(name, addr);
->> +    g_autofree char *childname = g_strdup_printf("0x%02x", addr);
->> +    object_property_add_child(OBJECT(bus), childname, OBJECT(dev));
->> +
->>       i2c_slave_realize_and_unref(dev, bus, &error_abort);
->>       return dev;
->> diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
->> index dd5930f4b5..dc557bbf3f 100644
->> --- a/include/hw/i2c/i2c.h
->> +++ b/include/hw/i2c/i2c.h
->> @@ -166,13 +166,16 @@ bool i2c_scan_bus(I2CBus *bus, uint8_t address, bool broadcast,
->>   I2CSlave *i2c_slave_new(const char *name, uint8_t addr);
->>   /**
->> - * Create and realize an I2C slave device on the heap.
->> + * Create and realize an I2C slave device on the heap, add the device as a
->> + * child of its parent bus.
->> + *
->>    * @bus: I2C bus to put it on
->>    * @name: I2C slave device type name
->>    * @addr: I2C address of the slave when put on a bus
->>    *
->>    * Create the device state structure, initialize it, put it on the
->> - * specified @bus, and drop the reference to it (the device is realized).
->> + * specified @bus, parent it, and drop the reference to it (the device is
->> + * realized).
->>    */
->>   I2CSlave *i2c_slave_create_simple(I2CBus *bus, const char *name, uint8_t addr);
->>
-> 
+Tested-by: Helge Deller <deller@gmx.de>
 
 
