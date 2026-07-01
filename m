@@ -4,145 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D78B6C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 14:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AB47C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 14:16:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wevfB-0004ZO-TZ; Wed, 01 Jul 2026 10:11:41 -0400
+	id 1wevjJ-0005Rh-MI; Wed, 01 Jul 2026 10:15:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wevf9-0004Yh-G7
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:11:39 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wevjI-0005R9-0x
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:15:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wevf7-0005AF-LK
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:11:39 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 661A8okK744654
- for <qemu-devel@nongnu.org>; Wed, 1 Jul 2026 14:11:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- f9M6ffqp+O1C6cnUKTROzF6bcO3QKmoO+LrbijWPOhY=; b=Za54quXAY2bI/UYu
- wVCR4UDYMX6O0jiQVClIF+UD2szwFKD6vsizTT//2q7fVMVahKINdsnXaFk21FU/
- B7xSqJShV+m8eLhMO/7Sh799emeeSIJ08a5ZGs/t7ShnQI/8wsrNf8XSfmKJcTxa
- 4FZXZtz7WX56Gi+5Xl2z8zfPKvuY+/k5cuxaWYFthVaVyXxIDQJ2B8lFZtm0q/AM
- jls45kgogE0pFAsYmDh63zItC7sFQFTtDxCQdnoSmLski7H3nw4fLXsc1gyO3aKJ
- eXc7/lj/nuRlXhcfKm1p7CkYhS3pak3y/AkIpjJ13r3SV7cRrxunfICK9O2CK5+d
- O/Y4yg==
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f4x0thw8q-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 14:11:31 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-966c4d68d91so97651241.2
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 07:11:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782915091; x=1783519891; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=f9M6ffqp+O1C6cnUKTROzF6bcO3QKmoO+LrbijWPOhY=;
- b=jeQbDBonN2dz3V9g8oNt/+vvFOarNOsZJ3WPoYjnjV9V0G2YcCR8diWdj+yQxBVOUE
- mPPopcRtXY+jop2dztj5YbhrE+5VLwyi1cdceaW1KtKtlpd8syEfQZt7LkF2Ajs//Gsm
- bvVAqgravEHa/z5BuRSt8pmo3Zhg2bqFVYIjoFbH6zhILWc+bjwniJUWS3bNVhblbdML
- 8urkNKvVUrv3EneT9Ss9oC+kkbsOKLjohTa0bNc//sk2C0hVgjJM7EZ9Ti/IIAIjU9/w
- OHYUzkoCJ9eDceyuul7LSE/HxnVpcqJzxHrkkboKGlY68YMFixtA6bBAnye4shWo9WqW
- p2BA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782915091; x=1783519891;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=f9M6ffqp+O1C6cnUKTROzF6bcO3QKmoO+LrbijWPOhY=;
- b=VXuGgYH9rRU5S5NZ3AxOMIS6Sct0Uit5ltYnlBw5q5F1kTwXnAnEOGP/U43zDYZTaR
- WdTx+M0b0caGSHJJfc+/FOQfYgxq5I2YilIBCwJAiODyYsO1OUzhKqX1HUT/ChRqHK41
- VJfA1fPxkBB/aemF47UCHam0GBQqKjYRv4jmI6pOeoKOBoJDASJzeoY8scUlS6PQqC3/
- DgZtYShXBTnaZWIFWgnYx2a2XhZq+r+NAdoapSh3ZZWxut2hdFw1Mu/+7q+My2sFZUZm
- Du4rh1befyNdo5SjYlhfH3n2qwrWiFidMn0kWrjh5aFIdB5Qz0PfM0ws5KlCHmq9cwWs
- n4BQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoOQCT9jCNignWwCoTlSC8P73MNJ/MOwso/2rqpT5+wDK7s8IG5YXSfOhpLGvco1ig1Biz4TITrzWyL@nongnu.org
-X-Gm-Message-State: AOJu0Yy2uVVSbgQsVoMuHVi7DFuAUAogVFUOGvnmH08pGNgg5tIrNaTo
- GCdqklHHHeDhHHD24eIDzGX7lOFlM4wPvE19R49CurHaVbGJ5Z9hFzwTabD7CcwIDglz5p4asCK
- ouoUAN6SE0+Na4c7Ymxc5HC1tICfL7Hq2m+43L2ZW7KAPmK7bM/3A49gEKw==
-X-Gm-Gg: AfdE7cnaGFCfUg2D03tdiJJbNeDfjYB3vDEDve25sUsx+TGqiPvMc6M/htcZ5UsB1U9
- jUwlSDMftijpDokYF7xMdhLtb2GKpD8NwlhCcWSEzu6GHea/i3ClXD5EoB9/DKoa+Yj1mADU11W
- okaznFgiKe2Qtgzl8AD9nKKumy2E4y1C/rxRieMxyl6LnNWQ3aMQ3DgB8MoPrN5AM+85UZoY/vs
- CprC/flgIZ1EjPf2CFKVIAZ1NUqz9wo30VUvaFgigZ65YvT5wMbcV4X6GFhF8O0zDY+RMiIljd8
- +sWk+X+9DCHnkyHHz5ET/A7h0LEDT4CtzTJE8+MNUta6fU2Yy/kJ/aSURR5oVBxltVLE8wkG/Gk
- itZXbKC7BCJi/7ldzSpAgM9702/4b4Ldn0NfxZWnr1YB4oozcI4yqozwArBn0vcOWSh4=
-X-Received: by 2002:a05:6102:5093:b0:739:4470:d8 with SMTP id
- ada2fe7eead31-73daa581a0cmr724390137.26.1782915091354; 
- Wed, 01 Jul 2026 07:11:31 -0700 (PDT)
-X-Received: by 2002:a05:6102:5093:b0:739:4470:d8 with SMTP id
- ada2fe7eead31-73daa581a0cmr724349137.26.1782915090841; 
- Wed, 01 Jul 2026 07:11:30 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c12891741e8sm279416966b.55.2026.07.01.07.11.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Jul 2026 07:11:28 -0700 (PDT)
-Message-ID: <99728d81-ab13-458e-b893-e0f4d8a7aa84@oss.qualcomm.com>
-Date: Wed, 1 Jul 2026 16:11:24 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wevjG-0007mc-GK
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:15:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782915353;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=L9TpchyD0oH5lX1oqWBrp5EL9pmjGpMnTwog+p205Q0=;
+ b=W7+4+MBAOctYCeScPtFRic8rx9JYTMMP7LxidGwmX8aoMx5wbQ3Q55jRkj6QwV1XrwRa3c
+ +9lm9CJAMrQ5W9KR8dUFHJlWZmRr6Zne7kg3Kqj+PBMrGmpcJf5/9niI7pAYuz5QSkaq5N
+ yJ4Le1ozlSrPm/EbJo8JHkFDKPzExEo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-194-PrrlC1DIOg29c11_00a7eg-1; Wed,
+ 01 Jul 2026 10:15:48 -0400
+X-MC-Unique: PrrlC1DIOg29c11_00a7eg-1
+X-Mimecast-MFC-AGG-ID: PrrlC1DIOg29c11_00a7eg_1782915346
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 00C04188E6DA; Wed,  1 Jul 2026 14:15:45 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 20B561800610; Wed,  1 Jul 2026 14:15:42 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 89A6121E6920; Wed, 01 Jul 2026 16:15:40 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Emmanuel Blot <eblot@meta.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,  Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@kaod.org>,  Steven Lee
+ <steven_lee@aspeedtech.com>,  Troy Lee <leetroy@gmail.com>,  Jamin Lin
+ <jamin_lin@aspeedtech.com>,  Kane Chen <kane_chen@aspeedtech.com>,  Andrew
+ Jeffery <andrew@codeconstruct.com.au>,  Joel Stanley <joel@jms.id.au>,
+ Alexander Hansen <alexander.hansen@9elements.com>,  William de Abreu
+ Pinho <williampinho@meta.com>,  qemu-arm@nongnu.org,  Corey Minyard
+ <cminyard@mvista.com>
+Subject: Re: [PATCH v3 3/5] hw/i2c: parent slaves created with
+ i2c_slave_create_simple
+In-Reply-To: <dc92984a-5c25-419e-b4ad-f5b79efbaeea@oss.qualcomm.com>
+ ("Philippe =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 1 Jul 2026
+ 08:29:26 +0200")
+References: <20260627-i2c-adc128d818-anacapa-v3-0-cfb94270a980@meta.com>
+ <20260627-i2c-adc128d818-anacapa-v3-3-cfb94270a980@meta.com>
+ <dc92984a-5c25-419e-b4ad-f5b79efbaeea@oss.qualcomm.com>
+Date: Wed, 01 Jul 2026 16:15:40 +0200
+Message-ID: <87echm4wz7.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386/mshv: zero-init msr hvcall args
-Content-Language: en-US
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Doru_Bl=C3=A2nzeanu?= <doru.blanzeanu@microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Wei Liu <liuwe@microsoft.com>, Wei Liu <wei.liu@kernel.org>
-References: <20260701134214.419806-1-magnuskulke@linux.microsoft.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260701134214.419806-1-magnuskulke@linux.microsoft.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: Jonb0qiNkHZdbwNdC7xk4Nd6aohp2QeN
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDE0OCBTYWx0ZWRfX4n2w8IejX//Q
- KruaZzFjpQhkU4jb+finf39XQncbPX02hvq5Z1XKeIW1+bfP5XVx+V2sM9KNMkYWxBxUPN5cgEH
- 32G28BJjBdE/AlzcID2+Orof9VwgDLQ=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDE0OCBTYWx0ZWRfX7cT2Z4IUN7zI
- +QjhlhAkuhE5EL8K8bd3m3vlOlIxqCf2w7MZ6ZSNlxGcgyDnlmqyIoCA2heKerynCVEQOsCRzy0
- P+6FtjN1GIwj3NPQq5nkRGxbXVGwM4zOnWYHcswUHTcK+8ztrZFB7qR7SSTJc0PSlKfQDqBpkwz
- vFJn+/EI45ycZbGwzJPm1UZwerSupG3DZyvpfxUT0u95R3eSxEmiKcr6FZbIEEnaL/xhtxAljJR
- gi5ZGoBtIwq2np7ZPBt9oh6oGFK7q3D9X31usNLw/zNOJvIvzmBELr7T07Jjy6TuMhsqaxqL6iG
- EcprIaZxi68d/RDabe/fsveI+22ydrfAUc0yK7zOXmsjty2YcWsyzsPzyaNZ0P+dB0YqWfMoyl/
- n1EPndRe6cgkd0u9MsqIuXnv5fyT24iZcMVk9YSXstf12SN1YI6p672hAQRtMPIpUV0n5wFMblj
- Cl88A1K2PP46qOttXkQ==
-X-Authority-Analysis: v=2.4 cv=T5+8ifKQ c=1 sm=1 tr=0 ts=6a452013 cx=c_pps
- a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=yMhMjlubAAAA:8 a=EUspDBNiAAAA:8 a=gMQFvG_s1_ppK5Sky0UA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=1WsBpfsz9X-RYQiigVTh:22
-X-Proofpoint-ORIG-GUID: Jonb0qiNkHZdbwNdC7xk4Nd6aohp2QeN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-01_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
- bulkscore=0 clxscore=1015 priorityscore=1501 malwarescore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010148
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,47 +100,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/7/26 15:42, Magnus Kulke wrote:
-> In the current code we leave the argument arrays for the get/set hvcall
-> unitialized, setting only individual fields. some fields will be
-> populated during the hvcall, but in any case the arg arrays will contain
-> unitialized data (e.g. in reserved fields), to which static analysis
-> objects to.
-> 
-> Fixes: c38eb12c85
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> ---
->   target/i386/mshv/msr.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/i386/mshv/msr.c b/target/i386/mshv/msr.c
-> index 8c220a9942..a35415ed9d 100644
-> --- a/target/i386/mshv/msr.c
-> +++ b/target/i386/mshv/msr.c
-> @@ -326,7 +326,7 @@ int mshv_get_msrs(CPUState *cpu)
->   {
->       int ret = 0;
->       size_t n_assocs = MSHV_MSR_TOTAL_COUNT;
-> -    struct hv_register_assoc assocs[MSHV_MSR_TOTAL_COUNT];
-> +    struct hv_register_assoc assocs[MSHV_MSR_TOTAL_COUNT] = { 0 };
+Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
 
-Matter of style, '{ }' is clearer. Otherwise this can be read as
-"uint32_t name is explicitly set to 0, hv_register_value value is
-implicitly zeroed". Anyway nitpicking, so:
+> On 28/6/26 02:45, Emmanuel Blot wrote:
+>> Slaves created with i2c_slave_create_simple() were left unparented and
+>> showed up under /machine/unattached with no stable QOM path. Add each
+>> slave as a QOM child of its bus, named after its I2C address, so it has
+>> a deterministic and addressable QOM path.
+>
+> +Markus
+>
+> Personally I never liked the idea of having buses being parents
+> of the devices attached to them, but maybe it is simpler this way.
+>
+>> Signed-off-by: Emmanuel Blot <eblot@meta.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
->       size_t i, j;
->       uint32_t name;
->   
-> @@ -386,7 +386,7 @@ static void load_from_env(const CPUState *cpu, struct hv_register_assoc *assocs,
->   int mshv_set_msrs(const CPUState *cpu)
->   {
->       size_t n_assocs = MSHV_MSR_TOTAL_COUNT;
-> -    struct hv_register_assoc assocs[MSHV_MSR_TOTAL_COUNT];
-> +    struct hv_register_assoc assocs[MSHV_MSR_TOTAL_COUNT] = { 0 };
->       int ret;
->       size_t i, j;
->   
+Patches haven't reached the list as far as I can tell.  I need them to
+contribute to the discussion.  Emmanuel, please resend them.
 
 
