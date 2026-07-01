@@ -4,52 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 006E1C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 07:22:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2068BC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 07:27:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wepGR-0003r8-TM; Wed, 01 Jul 2026 03:21:43 -0400
+	id 1wepLy-0004j4-Gl; Wed, 01 Jul 2026 03:27:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wepGP-0003r0-6f
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 03:21:41 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wepGM-0002zQ-Ln
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 03:21:40 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxNvD4v0Rq1GEAAA--.2226S3;
- Wed, 01 Jul 2026 15:21:28 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCxGOD2v0RqtCC6AA--.25525S2;
- Wed, 01 Jul 2026 15:21:27 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: thuth@redhat.com,
-	qemu-devel@nongnu.org
-Cc: maobibo@loongson.cn,
-	berrange@redhat.com,
-	lixianglai@loongson.cn
-Subject: [PATCH] hw/intc/loongarch_dintc: Fix OOB access in DINT MMIO write
- handler
-Date: Wed,  1 Jul 2026 14:54:54 +0800
-Message-Id: <20260701065454.1976188-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wepLx-0004if-D7
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 03:27:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wepLv-0004mt-HC
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 03:27:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782890841;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5w+YcSRWa96uwGmTO7z4aHRknvgZdkDmX6JnAy9ZmX0=;
+ b=Jvm218JFhDQO2nKcuL0IxvrCM6TLfs31JANpP9I3XOFB1Kb4KIQW5og3xPmkYU5RkJGIp3
+ 0NBrW+vxsBkbS0YLet2R8ONWc7Ht1HNE7kmtYocjlX/eGZfm0yXz1+X40pXzHJSZjkpS8g
+ CIUYoB97lxa7kkTcpXu5U5xAaFk8aks=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-351-pTkmTbzbOvmEHPbAtNoJkA-1; Wed,
+ 01 Jul 2026 03:27:17 -0400
+X-MC-Unique: pTkmTbzbOvmEHPbAtNoJkA-1
+X-Mimecast-MFC-AGG-ID: pTkmTbzbOvmEHPbAtNoJkA_1782890836
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DC11C18E6A72; Wed,  1 Jul 2026 07:27:15 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D27F736F00; Wed,  1 Jul 2026 07:27:14 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 6684321E6920; Wed, 01 Jul 2026 09:27:12 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  devel@lists.libvirt.org,  =?utf-8?Q?Marc-Andr?=
+ =?utf-8?Q?=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  "Dr.
+ David Alan Gilbert" <dave@treblig.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Christian Brauner <brauner@kernel.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Peter Krempa
+ <pkrempa@redhat.com>
+Subject: Re: [PATCH v5 34/35] qemu-options: document new monitor-hmp and
+ monitor-qmp objects
+In-Reply-To: <20260624173752.2928717-35-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 24 Jun 2026 18:37:50
+ +0100")
+References: <20260624173752.2928717-1-berrange@redhat.com>
+ <20260624173752.2928717-35-berrange@redhat.com>
+Date: Wed, 01 Jul 2026 09:27:12 +0200
+Message-ID: <87qzln6ugf.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxGOD2v0RqtCC6AA--.25525S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,52 +95,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Validate guest-controlled cpu_num before using it to index the cpu[] array
-or pass to async_run_on_cpu(). Without this check, a malicious guest can
-trigger a NULL pointer dereference in async_run_on_cpu() and an
-out-of-bounds array access in qemu_set_irq(), causing host crash.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3616
-Fixes: 0d148eaf5a3e ("hw/loongarch: Implement dintc set irq")
-Reported-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- hw/intc/loongarch_dintc.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+> Add new docs for the `-object monitor-hmp` and `-object monitor-qmp`
+> options, updating `-mon` to state that it is legacy syntax sugar
+> for the new `-object` args.
+>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Tested-by: Peter Krempa <pkrempa@redhat.com>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  qemu-options.hx | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 49 insertions(+)
+>
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index c799286153..a804d5b880 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -4980,6 +4980,16 @@ SRST
+>        -mon chardev=3Dmon1,mode=3Dcontrol,pretty=3Don
+>=20=20
+>      enables the QMP monitor on localhost port 4444 with pretty-printing.
+> +
+> +    The use of ``-mon mode=3Dreadline`` is historical syntax sugar
+> +    for the new ``-object monitor-hmp`` option, each use of which
+> +    creates an object with the ID ``hmpcompatNNN`` where ``NNN`` is
+> +    a counter starting from 0.
+> +
+> +    The use of ``-mon mode=3Dcontrol`` is historical syntax sugar
+> +    for the new ``-object monitor-qmp`` option, each use of which
+> +    creates an object with the ID ``qmpcompatNNN`` where ``NNN`` is
+> +    a counter starting from 0.
+>  ERST
 
-diff --git a/hw/intc/loongarch_dintc.c b/hw/intc/loongarch_dintc.c
-index c877a8003b..e40292887c 100644
---- a/hw/intc/loongarch_dintc.c
-+++ b/hw/intc/loongarch_dintc.c
-@@ -19,6 +19,7 @@
- #include "target/loongarch/cpu.h"
- #include "qemu/error-report.h"
- #include "system/hw_accel.h"
-+#include "qemu/log.h"
- 
- /* msg addr field */
- FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
-@@ -52,7 +53,19 @@ static void loongarch_dintc_mem_write(void *opaque, hwaddr addr,
-     CPUState *cs;
- 
-     cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
-+
-+    /* Validate cpu_num against the configured number of CPUs */
-+    if (cpu_num >= s->num_cpu) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "loongarch-dintc: invalid cpu number%d\n", cpu_num);
-+        return;
-+    }
-     cs = cpu_by_arch_id(cpu_num);
-+    if (!cs) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "loongarch-dintc: no CPU for arch_id %d\n", cpu_num);
-+        return;
-+    }
-     irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
- 
-     async_run_on_cpu(cs, do_set_vcpu_dintc_irq,
--- 
-2.47.3
+Should we document how -monitor, -qmp, and -qmp-pretty map to -object
+and -chardev?
+
+>=20=20
+>  DEF("debugcon", HAS_ARG, QEMU_OPTION_debugcon, \
+> @@ -5730,6 +5740,45 @@ SRST
+>      they are specified. Note that the 'id' property must be set. These
+>      objects are placed in the '/objects' path.
+>=20=20
+> +    ``-object monitor-hmp,id=3Did,chardev=3Dchardev_id,readline=3Don|off=
+``
+> +        Set up a monitor running the Human Monitor Protocol,
+> +        connected to the chardev ``chardev_id``.
+> +
+> +        The ``id`` parameter is a unique ID that can be used
+> +        to dynamically delete the monitor at runtime. Note
+> +        that monitors created using the historical syntax
+> +        will be allocated IDs following the pattern ``hmpcompatNN``.
+> +        Mixing ``-object`` with the historical monitor syntax is
+> +        discouraged.
+> +
+> +        The ``readline`` parameter, which defaults to ``on``,
+> +        controls whether the monitor provides line editing.
+> +
+> +    ``-object monitor-qmp,id=3Did,chardev=3Dchardev_id,pretty=3Don|off,c=
+lose-action=3Dnone|delete``
+> +        Set up a monitor running the QEMU Monitor Protocol,
+> +        connected to the chardev ``chardev_id``.
+> +
+> +        The ``id`` parameter is a unique ID that can be used
+> +        to dynamically delete the monitor at runtime. Note
+> +        that monitors created using the historical syntax
+> +        will be allocated IDs following the pattern ``qmpcompatNN``.
+> +        Mixing ``-object`` with the historical monitor syntax is
+> +        discouraged.
+> +
+> +        The ``pretty`` parameter, which defaults to ``off``,
+> +        controls whether the monitor responses are pretty
+> +        printed as multi-line indented JSON, as opposed to
+> +        constrained to a single line without extraneous
+> +        whitespace.
+> +
+> +        The ``close-action`` parameter, which defaults to ``none``,
+> +        controls what happens when the connection to the monitor
+> +        is terminated by the user. If set to ``delete``, then the
+> +        ``monitor-qmp`` object and its associated character
+> +        device are both immediately deleted. This can be useful
+> +        if an extra monitor was hotplugged for a specific task
+> +        and should be unplugged when completed.
+> +
+>      ``-object memory-backend-file,id=3Did,size=3Dsize,mem-path=3Ddir,sha=
+re=3Don|off,discard-data=3Don|off,merge=3Don|off,dump=3Don|off,prealloc=3Do=
+n|off,host-nodes=3Dhost-nodes,policy=3Ddefault|preferred|bind|interleave,al=
+ign=3Dalign,offset=3Doffset,readonly=3Don|off,rom=3Don|off|auto``
+>          Creates a memory file backend object, which can be used to back
+>          the guest RAM with huge pages.
 
 
