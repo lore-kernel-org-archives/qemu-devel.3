@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2418C43327
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:19:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EDFDC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:19:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wes1o-0000Oe-RA; Wed, 01 Jul 2026 06:18:48 -0400
+	id 1wes2O-0002pR-QV; Wed, 01 Jul 2026 06:19:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes1k-0000ND-Nn
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:45 -0400
-Received: from mail-dl1-x122c.google.com ([2607:f8b0:4864:20::122c])
+ id 1wes2N-0002n7-GM
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:19:23 -0400
+Received: from mail-dl1-x122d.google.com ([2607:f8b0:4864:20::122d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes1j-0004gc-7x
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:44 -0400
-Received: by mail-dl1-x122c.google.com with SMTP id
- a92af1059eb24-13b2d7dc8d1so389188c88.1
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:18:41 -0700 (PDT)
+ id 1wes2L-0004ns-TE
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:19:23 -0400
+Received: by mail-dl1-x122d.google.com with SMTP id
+ a92af1059eb24-1390f75d8bbso824585c88.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:19:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782901120; x=1783505920; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782901160; x=1783505960; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vCxXyJGnPgrLKzxNFm2z8guBWfArySRohcHx9XVJ4g0=;
- b=SpkiWCkkL6G0wGMhL5EMo/DEv9s3L7s1z5KSDIJtoYbtotdg2nlFrg/WEub7QnUky4
- 36uqGhqp8Xz3JHL1qWvwv7rfVxO/Zdv1ZkRbzrYleMfXX3+yuZODjyVrE4/zIwaKEuvJ
- bRcMh5U113BS5jUZgqFYTIsqhvejlGzIZtMWYWgKd29s1XO6sjanMAfrL9iVSbN3kC6O
- hIAonSCCn/0FQwYncPVbOa9uUbkl471MjvWh5VXwOYcxqOhwkEhNoBDsSeOrht6dGYOh
- nPzm+R12LUO0R4W4lP7w2la/rbcakgPNHeAjYlhYXc9F7kfSyW4bXZOLesRUacQGnFcL
- 92Bg==
+ bh=x0/oaRy28fMuBPA07y5h4YdlLYT97Klt1rSVUyNJSsQ=;
+ b=gMAr8WiIhVqH6IWVYys0c8wCD5EV3U5tCnQVXHbt6DeCA6Z45VOIY4zfwguaMGYgWP
+ 9NluHC7uTz2whXM6N9tCKE+nXhIn0+N9kBUCrQ8BUCORc1x9d23TZEId0dEsEg0yCuqD
+ Jj0auMQwpRWnkpcLxFvuyvWwuKdBMTnlrk6eyQrzW0/1PJGXkqk6jFsSq8QlV2ciBYxp
+ lE/C11BxjFLMhumFa+j2OJNLmEdvwwCwm+euhcm3KoyE500Bbe9/DNwo+GgBkSgD5HeU
+ ehcGeLp0kOAoP2d3C627MOCJy8EjNurfC7+v7rBJf7aru9tSTbEqRbR7Cu3sV1e4+aXt
+ vSsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782901120; x=1783505920;
+ d=1e100.net; s=20251104; t=1782901160; x=1783505960;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vCxXyJGnPgrLKzxNFm2z8guBWfArySRohcHx9XVJ4g0=;
- b=Vx3mBpuWRe+cfbsH72I1IjUSPHrIkAsIoQqjUrVfIH1DmmznRikEyf2CgiA0yut1HQ
- TINEX+UTGqlf7ZFwbep/O2Ze/Lm1cXZe42KXK1TEw2w4D6obp5e+XP/lR5/3DhUPUzBn
- DIShZtwJm1eQNQPPVVei+HdFC/QkXaQYExlsjX9PFsHtn7JK3bGaJGNWf9iJvaaPJjA3
- pvJ0PFB9F/d+VeCHuAM0em89e0hOvpEhcEmef5BTouaP/qVTF1oeJ7JH1K4rHkIZxGnJ
- WN+aLIUew+Z8pAXz+bCDGaTX9z3szemF63TW8fsBes1UGFRGi8l/vyAr6Puq9HbZ67/W
- Zdag==
-X-Gm-Message-State: AOJu0YyDK02JCT5YKiUbl0ir6Stintq4i4Imj45c3xCwtGq6o+ebj85g
- 1oeNezs0c3yXFlF4ynlRbPNLdmCuG33M5HSARpMpmlLxzmvz65wucpOxM+EczQ==
-X-Gm-Gg: AfdE7cn/jJDak3n9JWu8rvCAFWsGr5xqIpQ+z4mCOG35o6T7mFpukYnKfRob6xZTo4v
- f9TqzQR+7gPv77HEsxR+rACYhwgxVJlK0Y5erKMxnQ2eulteCdYRHdPfuKeBs/Kq9PKnsg7Wsp8
- z/EhdM8ZvMnOiHkINfSQwGVCjtpZbQC51QHkrR0wIHOTAm+DwMTKw4+i8GEz834EdMZ21f8ikDK
- amFxkRjnugLx9Ie5RoWjtZ1skYUVWr2UOB755ePHNafQT+85iAhQ9B/xucFqga2/MWcvSohQ/XV
- jD7nKs8CrvnFF+ni1ArNL4zJLOm12xzMkOkj53r4B/TNW7AZGJHn0TahGIeEFjA9I16wh5yljv4
- 2YeKEPOxvWfrNq+7Tzl0w+3ZYL1l2IgitAVaQSeIT5sISSh9WauQ8qn1VAepbcL1NV0XPgFIGO1
- 6G48o/JjIqD6i/taA4KuSpUtrX/yaKIac=
-X-Received: by 2002:a05:7022:ec3:b0:139:afa6:fce4 with SMTP id
- a92af1059eb24-13b36d6f151mr940267c88.12.1782901120068; 
- Wed, 01 Jul 2026 03:18:40 -0700 (PDT)
+ bh=x0/oaRy28fMuBPA07y5h4YdlLYT97Klt1rSVUyNJSsQ=;
+ b=AL/KpPRng8p//okLC6omE7q8dgMnuSndSpiXcw/VsvWGgOV8QwOsmo0x3oEh/8LVPn
+ b+YNuhBy1hVuK62J1gaoAs1QhVi46PHWrrr3Tz2H/zKiB44e/9TRlP9NYpMNrYE739lp
+ bhRynUbFMj19jBt1NY5Gun2Sjy/DktUmzWCo2dcDlnR/3aoioVgVHgCnofPW82mZwnoJ
+ YQINAj1IhGf/N3lwpYesJR1T/oGUbTsaHDrqIFWikaBZEiUahKULSyk7wUz2ex9/Z9Lc
+ qRYpl/75kPC/JlV6StGMsrc+JvoGPmZev6JuE0RrmUFpC/Fny6HJlTlxnOPsCAK6I5Up
+ XhcA==
+X-Gm-Message-State: AOJu0YyLZnRi/2ZT+t/hYlWD8ICslul60jjmROAsbEagiPagFbhrZI75
+ 016WB7Ax2RQcSKKYRrk8bOLwQCYEsw5ze5gCHkbAVmYxC6hkkf2s5cVVFTNgPQ==
+X-Gm-Gg: AfdE7cnC6H+3Eo4FFV7hJUSgw3QVjLcCGJPqv4sKLqgpRi6CtWE441HBd9558qQ2ybD
+ BN7bRsEY8297eIAdq4jAEsi3cuxqIQaGrF7HytjO5+n5W3ii6zHmJd0q1ym4LiP+rs1QJyVNTJI
+ 0qwjE+9OXSU/ngjkVLdL9smipxgr7f27txIskKW4NqqPtjSS86KisW3e4bwpeoHf96gnhWyvCuJ
+ SdmaLSowilO2BPvCxc/PBDYDwP+sxUT4XDOnpARv/oSJZr+DC9NdQj/XU2jSvpuNov8hPZFz7+I
+ TgidtgrWRF4Nf57bAL9gtPtlwHtTXdNJHDW7WrNQH2lMhenJz7FuV9TxzvEZt00i4RtK3ZPncLh
+ ojLV5xpw72feLpVZt/tZTLKG9bMt/pvqi7nBYUKOc6nYWYL0/bKMTckO4w+YE1v2hlxW+itl6xa
+ 9skFXRaiBi0/T8zKl0BaZ85LCX3sB8Mu8=
+X-Received: by 2002:a05:7022:102:b0:137:f58c:3cb5 with SMTP id
+ a92af1059eb24-13b36e02d09mr1039987c88.26.1782901160261; 
+ Wed, 01 Jul 2026 03:19:20 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.18.37
+ a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.19.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jul 2026 03:18:39 -0700 (PDT)
+ Wed, 01 Jul 2026 03:19:19 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Qingwei Hu <qingwei.hu@bytedance.com>,
- Nutty Liu <nutty.liu@hotmail.com>,
+Cc: alistair23@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 10/39] hw/intc: riscv_aplic: Skip reset for KVM irqchip
-Date: Wed,  1 Jul 2026 20:17:23 +1000
-Message-ID: <20260701101752.2522962-11-alistair.francis@wdc.com>
+Subject: [PULL 24/39] hw/riscv/riscv-iommu.c: fix MSI MRIF interrupt-pending
+ offset
+Date: Wed,  1 Jul 2026 20:17:37 +1000
+Message-ID: <20260701101752.2522962-25-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260701101752.2522962-1-alistair.francis@wdc.com>
 References: <20260701101752.2522962-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122c;
- envelope-from=alistair23@gmail.com; helo=mail-dl1-x122c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122d;
+ envelope-from=alistair23@gmail.com; helo=mail-dl1-x122d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,46 +104,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Qingwei Hu <qingwei.hu@bytedance.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-The emulated APLIC state arrays are only allocated when QEMU handles
-the interrupt controller state itself. With KVM AIA/APLIC-IMSIC, the
-interrupt controller state is owned by the KVM in-kernel irqchip, so
-these emulated state arrays are not allocated.
+We're doing a wrong shift when calculating the offset for the
+interrupt-pending bits, off by one right shift order.
 
-The APLIC reset handler still clears those arrays unconditionally. This
-makes qemu_system_reset(), which runs during machine creation,
-dereference NULL pointers with -machine virt,aia=aplic-imsic and KVM.
+This went undercover for awhile because the calculation works for
+interrupt entities 1 to 63.  The math goes wrong when using interrupt
+entities 64 or greater.
 
-Skip the emulated APLIC reset path when the interrupt controller is
-handled by KVM. The emulated path is unchanged for TCG and for
-configurations that use QEMU emulation.
+Instead of fixing the issue and running we're also adding some notes
+on where this calc comes from.
 
-Fixes: 99bfcd329a ("hw/intc: riscv_aplic: Add reset API to APLIC")
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Signed-off-by: Qingwei Hu <qingwei.hu@bytedance.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260615131925.3019370-2-qingwei.hu@bytedance.com>
+Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3561
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260626220529.3800372-1-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/intc/riscv_aplic.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/riscv/riscv-iommu.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index c2c67c29e6..84606e9f3d 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -910,6 +910,10 @@ static void riscv_aplic_reset_enter(Object *obj, ResetType type)
-     RISCVAPLICState *aplic = RISCV_APLIC(obj);
-     int i;
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index c65e273dbb..01f5634f04 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -686,7 +686,26 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
  
-+    if (!riscv_use_emulated_aplic(aplic->msimode)) {
-+        return;
-+    }
-+
-     aplic->domaincfg = 0;
-     memset(aplic->sourcecfg, 0, sizeof(uint32_t) * aplic->num_irqs);
-     memset(aplic->target, 0, sizeof(uint32_t) * aplic->num_irqs);
+     /* MRIF pending bit address */
+     addr = get_field(pte[0], RISCV_IOMMU_MSI_PTE_MRIF_ADDR) << 9;
+-    addr = addr | ((data & 0x7c0) >> 3);
++    /*
++     * AIA spec section "Format of a memory-resident interrupt file":
++     * address offset 0x000 contains interrupt-pending bits for
++     * identities 1-63, offfset 0x010 for identities 64-127, and
++     * so it goes up to 0x1F0 for identities 1984-2047.
++     *
++     * Hence each batch of identities advances offset by 16 (0x010)
++     * for every interrupt-pending bits.  This means that doing
++     * (data & 0x7c0) will filter out the first 6 bits, then
++     * a >> 2 will turn the result in the 0x10 steps we need.
++     *
++     * E.g:
++     *
++     * - (1-63 & 0x7c0) = 0, 0 >> 2 = 0, offset 0x000
++     * - (64-127 & 0x7c0) = 64, 64 >> 2 = 16, offset 0x010
++     * - (128-191 & 0x7c0) = 128, 128 >> 2 = 32, offset 0x020
++     *
++     * and so on.
++     */
++    addr = addr | ((data & 0x7c0) >> 2);
+ 
+     trace_riscv_iommu_msi(s->parent_obj.id, PCI_BUS_NUM(ctx->devid),
+                           PCI_SLOT(ctx->devid), PCI_FUNC(ctx->devid),
 -- 
 2.54.0
 
