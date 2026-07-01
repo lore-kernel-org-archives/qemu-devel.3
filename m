@@ -4,82 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CE7FC43327
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 03:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2877AC43602
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 03:18:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1welG6-0005ql-33; Tue, 30 Jun 2026 23:05:06 -0400
+	id 1welSQ-0007Hi-4i; Tue, 30 Jun 2026 23:17:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1welFx-0005in-5V
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 23:04:58 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1welSJ-0007HI-Ez
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 23:17:46 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1welFt-0002qC-Oe
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 23:04:56 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2c9b1edf2bdso1020785ad.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 20:04:53 -0700 (PDT)
+ id 1welSH-0007OZ-R8
+ for qemu-devel@nongnu.org; Tue, 30 Jun 2026 23:17:43 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-37cab825ec9so139661a91.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 20:17:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782875092; x=1783479892; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vRXrShiuVMuf4OcMbWA5wcZpSLQDxfyJIHc+c1cth2E=;
- b=No+/5seMIIWdSFiOMs+kpjVC2OObo8TTg/meIOZ2D8dNKrNXaJSUu+4cHBbiO3W/dQ
- NuyLjleBtlUqRBwKcanV5zhZGrRUW3XI7hDVbN9NEYDPsMoB+J+pi5Oyb9tNs/OIhC2Q
- bnCRgEBgNS5hIbvFp0Fqs6cvg0oOfllETD7E0FPd4+dPPfND5gxcf224c1sDr3+H9Q9v
- mOy4i17edNP84UmfSccrcz3g2LhewupHkzu7ui/+yz14fjHLmpIu6JFoCcOWnR+1ZKBY
- ziicXElGQWpR2P31e0q5jJ/sfvXwZqeXkGCK0L49a3xVbEbiRYbp0hPBJOiGDuooYezI
- NiEQ==
+ d=linaro.org; s=google; t=1782875860; x=1783480660; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ULOQtr1YJTNJ4QgkNmEBvJ3hn7RftSvavRhuzQ74SFg=;
+ b=h/3aCX9OPqI8UROhTvFVNjdxYRdcDA6KvSD9kU1qOQxihZoSTr1EnwU7UvjT+6xLoo
+ zowKyL8RghWy61yyc/6bZxD8VNRVKGloHLCz32asbPiOBwfW+klpnZmlOOHndpUVLb0t
+ T9Ei+mnnw2OM+o9UUitkrUMDsS585OAQ74C6UUTGVkrQ5dF6iwmrWIGC98DD+Ul7GeF3
+ gV/GBNLETQ6ch6Y1NkA5w+NTQgNeo7YIvTlE+HffV6Q6F528VyHZ1DKuOcWXEMcZ2z66
+ pNp5pEuWVwOoWIyWYhc8t+c/76o7qGTYkRGCmTfK1rTgnM8ukZX6/sfIBJ+W5z2z9yZ8
+ LdQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782875092; x=1783479892;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vRXrShiuVMuf4OcMbWA5wcZpSLQDxfyJIHc+c1cth2E=;
- b=PvukXg8jM/XdwB/OgXEYmPUzWwVZ6AkDSt/uVjkJF9IqrL3H4v2gl4M3jYOCZ1xCJD
- zLvaY0e5E1jNJYZnNm6BJVgQ5533ZUltiT1aj8B1tHU8bzxzh3RsHPb5BGxDhsN/PGlY
- Z2NFkJj3HK6vdw+E8f6fprZa+BAr4dBLX8G2iKIKiKg3w4nzJP/r+C8jsZz4D5lAcJyO
- M6hwu5OpDGy64xJn6vcDnIOv+wc2rt9PmDJb3FeUbXclygveVNXHJh5/wBYnPI162YXu
- qScyDqLyBp+pcUcp2ulwMnuQnOZS1Svr31b1yvZ+OXAiF3D7pfir/kIINQgcVvH1XYlT
- TpYw==
-X-Gm-Message-State: AOJu0YxU3lwyByX+FLnwXDh69hWl8oXfCJ5jAzxt9iDW2kYP0KU4t1CQ
- AnEszb6RT/FUIj28FaPZQH0qkGTfQFOPb0gdb/0zfkdClHVNBHnSMGehIshamH1EaDuhIMJeqGC
- ZQqA+
-X-Gm-Gg: AfdE7cnVoz71YrZaFJImnnStM8Mb/N1CVxu+Joe42o5WLPdKqO8LCiMiP8EsPSBnvu9
- qa4rPBLSBl9UsMgvpGy8WOpTNHwM1z93oknJOn1MOB3Ph0/sF58YJVFL868i4TeJojCIoqlzKuj
- 08vBLuGq0ABR/qZv7ZY1SG2hG/TtemzBolSww69+18d0rO0jE13fR7b0FNGGA5toSYXIwgE+w8p
- Vvq/SidOtrhtkzs1x1zfhL+2HidKvwRlU/pAKC2Et/vXpei0AcX+EdEaGRu3RGltQol+hUMlZzL
- 3CPJXV2bjsYzhbH73CX5ZITdN7XL8tjS8OKmEGNQ+GCx8MPKBACknhI+xuG6oz1cA5T2tu/W6pX
- R1/xVSW4a3fdN4vfUR6gV2YqWtaqnU11RmOglEcWf5uFgBeVF7mjynmu9BLIYD74SsMD/YvuKoO
- rrABP6DU/8sB45VqbyuGxX27d8RbBwyqo4l3ZEhGcUMp9p+FHo+w==
-X-Received: by 2002:a17:903:41d1:b0:2c9:9927:a060 with SMTP id
- d9443c01a7336-2ca2ed3191emr53264715ad.24.1782875092225; 
- Tue, 30 Jun 2026 20:04:52 -0700 (PDT)
-Received: from stoup.. (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ d=1e100.net; s=20251104; t=1782875860; x=1783480660;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ULOQtr1YJTNJ4QgkNmEBvJ3hn7RftSvavRhuzQ74SFg=;
+ b=XUN45A5rBnTtrHbh40xP4gX/sOMKv5zQRQTQjIGkRu978RHPaViC/QfMqOUYXSkQ61
+ s2KpDrWqNz1XhIuKpOmmyU82Znv4/hV9viIbV8h/ycBaXj/2kux2jvdN8cOz8HoX8R7w
+ GSaTlC4nAAfMXgDZXXN/3UKeAAYpv3H/AD6lR77wTLYGWFd70Hzc7tgguLfHQy4mSzDq
+ nv0+94O7B6Nn6EBpWyBFI9TlD7LQvlPCjEfQKpPJ/CZPe58GKjoMalq6NIT2b+9DsGPz
+ kDsTa4CWMT3N/8dwZcYCQEg5hKWBQpT+P3/GBAiFkFo1Mqx+gQp5o2S0d7MUmFJqYjTn
+ 0GzA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rpu9099QqYmucxUbfIvlW2hX8tkBknIPQykf7ZNQcBe71r5v4yNAcxRYAjfxz2ryIWTlwrjxcsjz0MT@nongnu.org
+X-Gm-Message-State: AOJu0YzahDKIJwfsU9uh/8DYu1FNcLB3/anJUhIN5KnUcm1POks7NKCL
+ q88hri6TM9J7WIaAe+JIXdazWnlJngPSYUkQw9uSoDdaHh4Togvox2u4UJHWtnNSxSY=
+X-Gm-Gg: AfdE7cnf0JIpHVLYKHSOtpM7LGYkLOlaO+CXX8KKSG8oddBsdhUU1GabzaCQdX/eBBp
+ 0n8TS9JdzkSmE0hbT2auA2GB2vN7Z5UBdM/0YBG0xDCWz76uINCw0BK+jBb2hfxVHpGe0CzL3FP
+ 6y6+QSRY/lVtAOPIkZofRD3hr2m1WQhjNripRf+WkBPT3pvJCwCe8tw1G4fdPVvXaAhRKgpkOCf
+ Bj1qyLBW0zSIw9C03d015mfxR5s0zXgiasqqHGf5T8TrSmFmtYkvqcsEmxtm5n7ir6NZiOfJzqM
+ XFXMo4/aDRW4TsV+/q/vHzjZS/fte8nyz3k+rFZS8YQqg5vgcC/eY84YUpGDmGbyTqnBnupZMPY
+ B1lyJBkt1YKViER039+o1plHZ8D3zh0TpfWsv/crj18+dOYh1VRhaU/J80h9ZciR330Yupgux9o
+ fV9D+fkUg+8Cm18R8cp7lhkN/tWScnDkZLPA+6ILELoN02iF0fNye+MK/T8TMOQaBFycET
+X-Received: by 2002:a17:90a:c10e:b0:37d:9874:9363 with SMTP id
+ 98e67ed59e1d1-3808bd3faa8mr2712959a91.2.1782875859811; 
+ Tue, 30 Jun 2026 20:17:39 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ca37c74261sm23758085ad.22.2026.06.30.20.04.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jun 2026 20:04:51 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: shivangu@linux.ibm.com,
-	qemu-arm@nongnu.org,
-	qemu-riscv@nongnu.org
-Subject: [PATCH 09/17] target/arm: Split is_wp out of bp_wp_matches
-Date: Tue, 30 Jun 2026 20:04:35 -0700
-Message-ID: <20260701030443.1382447-10-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260701030443.1382447-1-richard.henderson@linaro.org>
-References: <20260701030443.1382447-1-richard.henderson@linaro.org>
+ 41be03b00d2f7-c9bbcd9f5fbsm2480215a12.9.2026.06.30.20.17.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Jun 2026 20:17:39 -0700 (PDT)
+Message-ID: <f4235288-ef5f-4ae1-b5fe-eafcf1d19dc2@linaro.org>
+Date: Tue, 30 Jun 2026 20:17:37 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/5] disas/riscv: Use extract helpers for operand fields
+To: TANG Tiancheng <lyndra@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: Christoph Muellner <christoph.muellner@vrull.eu>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-riscv@nongnu.org
+References: <20260701-b4-disas-xthead-fix-riscv-next-v2-0-e6e4ff5a7847@linux.alibaba.com>
+ <20260701-b4-disas-xthead-fix-riscv-next-v2-5-e6e4ff5a7847@linux.alibaba.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260701-b4-disas-xthead-fix-riscv-next-v2-5-e6e4ff5a7847@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,96 +110,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This function is only called twice, once for each of
-breakpoint and watchpoint.  Hoist the separate bp/wp
-code into the respective callers.
+On 6/30/26 18:51, TANG Tiancheng wrote:
+>   static int32_t operand_imm20(rv_inst inst)
+>   {
+> -    return (((int64_t)inst << 32) >> 44) << 12;
+> +    return extract32(inst, 12, 20) << 12;
+>   }
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/debug.c | 46 ++++++++++++++++--------------------------
- 1 file changed, 17 insertions(+), 29 deletions(-)
+sextract32.
 
-diff --git a/target/arm/tcg/debug.c b/target/arm/tcg/debug.c
-index ed94b20739..51d6748427 100644
---- a/target/arm/tcg/debug.c
-+++ b/target/arm/tcg/debug.c
-@@ -252,41 +252,16 @@ static bool linked_bp_matches(ARMCPU *cpu, int lbn)
-     return contextidr == (uint32_t)env->cp15.dbgbvr[lbn];
- }
- 
--static bool bp_wp_matches(ARMCPU *cpu, int n, bool is_wp)
-+static bool bp_wp_matches(ARMCPU *cpu, uint64_t cr, int access_el)
- {
-     CPUARMState *env = &cpu->env;
--    uint64_t cr;
-     int pac, hmc, ssc, wt, lbn;
-     /*
-      * Note that for watchpoints the check is against the CPU security
-      * state, not the S/NS attribute on the offending data access.
-      */
-     bool is_secure = arm_is_secure(env);
--    int access_el = arm_current_el(env);
- 
--    if (is_wp) {
--        CPUWatchpoint *wp = env->cpu_watchpoint[n];
--
--        if (!wp || !(wp->flags & BP_WATCHPOINT_HIT)) {
--            return false;
--        }
--        cr = env->cp15.dbgwcr[n];
--        if (wp->hitattrs.user) {
--            /*
--             * The LDRT/STRT/LDT/STT "unprivileged access" instructions should
--             * match watchpoints as if they were accesses done at EL0, even if
--             * the CPU is at EL1 or higher.
--             */
--            access_el = 0;
--        }
--    } else {
--        uint64_t pc = is_a64(env) ? env->pc : env->regs[15];
--
--        if (!env->cpu_breakpoint[n] || env->cpu_breakpoint[n]->pc != pc) {
--            return false;
--        }
--        cr = env->cp15.dbgbcr[n];
--    }
-     /*
-      * The WATCHPOINT_HIT flag guarantees us that the watchpoint is
-      * enabled and that the address and access type match; for breakpoints
-@@ -366,8 +341,19 @@ static bool check_watchpoints(ARMCPU *cpu)
-     }
- 
-     for (n = 0; n < ARRAY_SIZE(env->cpu_watchpoint); n++) {
--        if (bp_wp_matches(cpu, n, true)) {
--            return true;
-+        CPUWatchpoint *wp = env->cpu_watchpoint[n];
-+
-+        if (wp && (wp->flags & BP_WATCHPOINT_HIT)) {
-+            /*
-+             * The LDRT/STRT/LDT/STT "unprivileged access" instructions should
-+             * match watchpoints as if they were accesses done at EL0, even if
-+             * the CPU is at EL1 or higher.
-+             */
-+            int access_el = wp->hitattrs.user ? 0 : arm_current_el(env);
-+
-+            if (bp_wp_matches(cpu, env->cp15.dbgwcr[n], access_el)) {
-+                return true;
-+            }
-         }
-     }
-     return false;
-@@ -412,7 +398,9 @@ bool arm_debug_check_breakpoint(CPUState *cs, const CPUBreakpoint *bp)
-      */
- 
-     for (n = 0; n < ARRAY_SIZE(env->cpu_breakpoint); n++) {
--        if (bp_wp_matches(cpu, n, false)) {
-+        if (env->cpu_breakpoint[n] &&
-+            env->cpu_breakpoint[n]->pc != pc &&
-+            bp_wp_matches(cpu, env->cp15.dbgbcr[n], arm_current_el(env))) {
-             return true;
-         }
-     }
--- 
-2.43.0
+>   
+>   static int32_t operand_jimm20(rv_inst inst)
+>   {
+> -    return (((int64_t)inst << 32) >> 63) << 20 |
+> -        ((inst << 33) >> 54) << 1 |
+> -        ((inst << 43) >> 63) << 11 |
+> -        ((inst << 44) >> 56) << 12;
+> +    uint32_t imm = extract32(inst, 31, 1) << 20 |
+> +        extract32(inst, 21, 10) << 1 |
+> +        extract32(inst, 20, 1) << 11 |
+> +        extract32(inst, 12, 8) << 12;
+> +
+> +    return sextract32(imm, 0, 21);
+>   }
 
+You can use sextract32 on the first extraction, rather than re-extracting at the end:
+
+     return sextract(inst, 31, 1) << 20 |
+            ...
+
+
+>   static int32_t operand_simm12(rv_inst inst)
+>   {
+> -    return (((int64_t)inst << 32) >> 57) << 5 |
+> -        (inst << 52) >> 59;
+> +    uint32_t imm = extract32(inst, 25, 7) << 5 |
+> +        extract32(inst, 7, 5);
+> +
+> +    return sextract32(imm, 0, 12);
+>   }
+
+Likewise.
+
+>   
+>   static int32_t operand_sbimm12(rv_inst inst)
+>   {
+> -    return (((int64_t)inst << 32) >> 63) << 12 |
+> -        ((inst << 33) >> 58) << 5 |
+> -        ((inst << 52) >> 60) << 1 |
+> -        ((inst << 56) >> 63) << 11;
+> +    uint32_t imm = extract32(inst, 31, 1) << 12 |
+> +        extract32(inst, 25, 6) << 5 |
+> +        extract32(inst, 8, 4) << 1 |
+> +        extract32(inst, 7, 1) << 11;
+> +
+> +    return sextract32(imm, 0, 13);
+>   }
+
+Etc.
+
+
+r~
 
