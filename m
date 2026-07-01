@@ -4,98 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19DD7C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 04:20:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B939C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 04:30:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wemQW-0003Fn-NJ; Wed, 01 Jul 2026 00:19:56 -0400
+	id 1wemaH-0005J3-Ja; Wed, 01 Jul 2026 00:30:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wemQU-0003FS-Vw
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 00:19:55 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ id 1wemaF-0005I7-85
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 00:29:59 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wemQT-0000lN-3c
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 00:19:54 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-664cb440f9eso214140d50.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 21:19:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782879592; cv=none;
+ id 1wemaD-0005Pz-EG
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 00:29:59 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-664d530fcfdso215079d50.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 21:29:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782880196; cv=none;
  d=google.com; s=arc-20260327;
- b=bNm99nWaFc7P0NntrFlgHq/Hag+RCteWy3+/Xnf+HNLWZq0o1wEUmeboDE1qeHAwvl
- PPvKObOQX+K8LYVNGCahBETgL1xyqgB7PQAU96NjO6Xc3T7n1rU7KH6mGMNJ7dj+H4uk
- YYevJ/3TRNRiGfiBZs45DGBuxxGHALoS6za/X3TU54pPenVt63bkKYP0kUFobdjaFYIS
- VwQsgtPtU/EEmqGDiS1pLrcTQgZF+zer4hdIL/6OLnDFp2UwHgnc2n8ddAjwIGmejciN
- lSnVPWMo1QkJBnDyFgfBGIbwW6g/UwToiWE/ZTWQXRUxLmtspNfZYFU2lwidjPB2VXF/
- SBYw==
+ b=OkTX9F7ZKP0RRl2XET3vqIV5WqiQi/dzHm+LN76/qABzrKkhMWz7hTu0Xcod64YrPc
+ m9hlxAjqJaNIdgV+9BzejS3cE6lf8halh3l3TguiOy9Ex+rL6lj/qUkXy+wepXfugVOT
+ PEH/JnjoiLvZZ/7eAf2ta69TFXMU0GRdfZY/R53TK24fMAU86C0rGnWO0tJWgn2TMfAb
+ wHEbiAz6V/z+ON1Q4OXicSCMDwv5apfbd/fHicRZgwy9u1w90pbPJ4om0amUpnm7OZYr
+ 4iCscKF1YnJoztERCLUJz6cv8TB/aCYVMDOi5dTb9Ikr78q+qkbFCM59MxBB/EhWI4/y
+ qa6Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=CvgvBLihmNPjprZvfpqDIX5qq/Rjw5o8gsVoLpnBKA8=;
- fh=zNczsUAc7VUo12MdnrCOj5W1HTnGpzz3yepcOBqIM0g=;
- b=h4Q4voLl76Ul/UW2Erqt3a3za2aEY+QrPSgsMpq7LzgGADtzMBrN2ijiVLeqMMLoYm
- rZcHGaCCUrTYrxXuUSuKqOF+hfoFIvEEFIQN80I4kM33UlqReSbfP+1PVfdFD/147exs
- cu71Q5G/CkZuGmsWAbtIo9mAt0crac/3+oUu8Oc1viffDuRU14EQvyYZxlMPrQXgWpW8
- SErN/io84snqXksCIXLS+IgmJPtnLRK42zwk0suhPX/7ASqGZygDyKGdSIfEYogpdOj4
- ShKyYaWv1lpzr0MWCSzGLVfTUFSgNZPf04YqXH4zF41DMZpjaPPpW/LnsuS7O+0FVaza
- YMRw==; darn=nongnu.org
+ bh=NkA89hQKgBW8RKe455wjGc4VzEyzFdTmOegKbWYXtQ4=;
+ fh=QMl3m49tuLtOusuuXCnCOZCsoZiLfsjUwXG2nLBmcSY=;
+ b=rsWuewaYxzLdpq6n817C4O/U5C07qwgE3NvKUpDFxf0JJQR2qPK2N+fCjaBue2JOBC
+ LDTqXKfKYnNDj1P8oEyzxgqQPybnTbPeAgm8ceSTsJokHIAn4W/thefACdNo+edRGGS+
+ 4ROxGgtK1qxKfLnT1UBXm47x8C+70Ecp9xbrgd53j8AyxaTx2rCBZWK45CyKryD+dSvN
+ dwTKLi+yqpOVMxZNTTRRgJSQc8CPNqes1t7WHuT9Y3I6z5YDL2uhmniq9bZFdrxOPWUp
+ AdecmGfHEPOOOBH/mRIB0h3EoGV7tGg0hFdf5Cw8BhWLrPqtned7sPGWJU4ihflZYXbu
+ NVmw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1782879592; x=1783484392; darn=nongnu.org;
+ d=jms.id.au; s=google; t=1782880196; x=1783484996; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=CvgvBLihmNPjprZvfpqDIX5qq/Rjw5o8gsVoLpnBKA8=;
- b=fq3x21xTz7rlr9XCaL7T2Bmr2wxxk4n0qDoW8OPMh3/7ZLQcxFn3bhHX1zmw1KfwBE
- dvtwuzLBdAmFvSQKQxcL+IcpQOE1+4GeJKcVtCOY/jGdqJCcnYQf3kUGoEPAfaCSrUnf
- P+oeQpDmseVqL0405NSpPN3wKCDaxVn/tvS3Q=
+ bh=NkA89hQKgBW8RKe455wjGc4VzEyzFdTmOegKbWYXtQ4=;
+ b=kZL5O0viJauqH0YQy0w58p9YEaPr4x2ChiU2zMNQzyQLi2PfYJ8sfnSr5gbUDNt6qf
+ SGkvur7BJth1xKPXUWCw0VltLK1PnxJgSvgdsnZ7siSTC/8DDxO+O48r8PybHeW4IXTm
+ WJWwOk5r0IspN/ElpveZpSRGc4XsUxqGJ3J94=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782879592; x=1783484392;
+ d=1e100.net; s=20251104; t=1782880196; x=1783484996;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CvgvBLihmNPjprZvfpqDIX5qq/Rjw5o8gsVoLpnBKA8=;
- b=ARD/lD5ccmh0SZjwu+utaVFiK6Qx62pXhZztZdNtiPxB/z/NSEWrz4ToSuEPXRisP5
- YVzrzq6a7x+OABSOmWSPIfO7JjhQ2Z8nPc/TFwJ0X4+4k++4GOwIQQP1uCQAWTsV5IlZ
- 0y/IqGEMFjQGrfLGWEhNwATxUpM7zW6xzO6H/8J/oeXcwbi4yPnnUspLdYyYDweTtLmS
- wfFrHkS9P0kf+XYTzLJKULPVOa4DjYDLtyvY4olV36QFotBPGFOFz/Wxe5NizepYESv0
- G3/04lP5E2aKVq9Q1stEswAooJpkLTztWuFAYskJX40scylUE/76muEmNWFrkwgb8F4s
- G82g==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqeF+5qfQO1OoXHjO1Qf8LeIad3vAeymfkeK4eNV/1B7qVa6TEoz9APHd4jMPd8XyrmXgBpvR4OSi9q@nongnu.org
-X-Gm-Message-State: AOJu0Yxfc06tH2IZIcWQxfnUs5/ys015ipNOemJYe6Ho0TJmqFHwb5AE
- 0gvGIW7ZRsSdg/wjMLyZviHTuRvH+HSLjtN4sf7p5lrdq2d6qqUTgSyV5ndQiz1+Jrl9gh6k4wa
- Qcmmt+SE+2PQo2dIGPKjMFSd3pIRifz8=
-X-Gm-Gg: AfdE7cmKk+47H2YY2M7yBhM5pvvix3fZExZrcQX44x3/tJzGmW8fxxnScW0gGMUxxYo
- 9xW/cIg2Zf5+jXARuediC0sVWvG6sG+1YqyndBJ3Qrzj+paSBq3B6TOgZ60Q8MU7HOJSpsxBchh
- 6FAyEIAYZjTRPJ6f9QxZCAUaI0/TZ3pynNZZblpMVtunPGOGarGr001seaiJYMz6TtaFU3NG6Uf
- 3wXGZuLz6g3yrbHmpHF3sYtaaYBxngoJLm+XUw1puyNIOqTBFyXRSbmC8IK5mzQAh7HXWkFin+U
- TH/z2JmnsizeQFXSfLGoVAO11AE+PhfOi1AO8kPoUMoki02vJ6FY5o9WaQFkGYZ6q6xBs4EvGw7
- MZUbEtV/BbLggDQ==
-X-Received: by 2002:a05:690e:190d:b0:664:b514:a06f with SMTP id
- 956f58d0204a3-66521958471mr37504d50.15.1782879591794; Tue, 30 Jun 2026
- 21:19:51 -0700 (PDT)
+ bh=NkA89hQKgBW8RKe455wjGc4VzEyzFdTmOegKbWYXtQ4=;
+ b=L/TbvelSZP5UTWi817+aL9mE8tLgRQ5x7y9dyxzhRSEpwV2nY5He2QRa++6U5cCYsv
+ ZPMOxIc5hiv8c9zrByCmzx4sw3j/wpoD35sq09XLpBSMkNEFW1mB4fj5c5I2P9kFrFHR
+ zrClKCOb4fD+ZNtGytVL+pDJ5hwU30/QKAaAeej8dDfM98XKc86yyzl1zSXkw5xMj5cA
+ 2pQL5kLdkiqk4Lj0vj2qs5ibjvK9nCcC/ElZuv8ATerrDv3IFMvP436yxGvodZq82w8O
+ JROOwky+3cfWelm012IfzkWZt+LwnWxGPSGUYg9cnxlzOF1q5B7FefZ7AbKFqHYxbPq+
+ VX4Q==
+X-Gm-Message-State: AOJu0Yy/fctzangvIEEgYtyoRXGlMbjmI1NCcHt51RZhvLlGjY+/+qd+
+ dM9ORN5/NtdvpX8sTWDJmCpzM6SCf4Dv7wz4U6kyEHvHVRY8sgEQC36TlXsIpQ3Tlu0zQZTV0WS
+ MZkRBwPLefaO+36oPsVKl1Wn7PBb8DNM=
+X-Gm-Gg: AfdE7cmo1GmnGWMaqWfhOKSNnyT79Dp1IoQ+iDWeHHjMJ4cpiVq7mn4R61eBobVVDQq
+ xuj/kokGyW4YNdLg65Z0lX9uOgqwai1DA/tKtmAeEDvS714bstzn1rUBWYdABlE3OhWtBzG+o9e
+ SM0BiYW86XtDpKCpT5zW2UvtRX8btLP3V69pcHm4V1VvQ8/T1BUIV5kYiIps9B2+KLPXTP9/IDk
+ puIC6zcIKWRpj8qn0YsI28bqU4b8AeIIAc6A5zH/ZvZfsbgOSAX9AOMuG/+SNucx54VFQiJtHa9
+ MIWNtBHn1D1WGoVuen2dW3giMy3RAURla2p1unHsLCHMjcadF6MI6dltNOV1xWb37jyYqeWReN3
+ wxqmGL9AIen7PGCULp9P8N5Wv
+X-Received: by 2002:a05:690e:484f:b0:662:551d:b987 with SMTP id
+ 956f58d0204a3-6652196979cmr31110d50.12.1782880196316; Tue, 30 Jun 2026
+ 21:29:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260616190147.1286316-1-visitorckw@gmail.com>
- <20260616190147.1286316-4-visitorckw@gmail.com>
-In-Reply-To: <20260616190147.1286316-4-visitorckw@gmail.com>
+References: <20260610214133.1882563-1-daniel.barboza@oss.qualcomm.com>
+ <20260610214133.1882563-2-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260610214133.1882563-2-daniel.barboza@oss.qualcomm.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 1 Jul 2026 13:49:40 +0930
-X-Gm-Features: AVVi8Cd48M5qRjkGNLjxwKG1Gr3rOgK6CT4OdqS_FmrqEQlT4LaGWZSMTfJP-c4
-Message-ID: <CACPK8Xe5DUNiBn1PLvDD3tBWFqaCzD0TUEGcK8UmV14gsRvWTg@mail.gmail.com>
-Subject: Re: [PATCH v3 3/5] hw/riscv: Add Sophgo CV1800B SoC support
-To: Kuan-Wei Chiu <visitorckw@gmail.com>
-Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, alistair.francis@wdc.com,
- farosas@suse.de, lvivier@redhat.com, liwei1518@gmail.com, 
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
- chao.liu.zevorn@gmail.com, jserv@ccns.ncku.edu.tw, eleanor15x@gmail.com, 
- marscheng@google.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Date: Wed, 1 Jul 2026 13:59:45 +0930
+X-Gm-Features: AVVi8CdJsOpeHLO2sqRcWf7JZmfLsV6KCqBXcRTkerrIhb-5qjq35Keb_txflJs
+Message-ID: <CACPK8Xf9sT_Pyc20zpLnpo+32RNRjS29VP86RhmF0ufoNd8kxQ@mail.gmail.com>
+Subject: Re: [PATCH v8 1/7] target/riscv/cpu.c: remove 'bare' condition for
+ .profile
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
+ andrew.jones@oss.qualcomm.com, leif.lindholm@oss.qualcomm.com, uwu@icenowy.me, 
+ Palmer Dabbelt <palmer@dabbelt.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=joel.stan@gmail.com; helo=mail-yx1-xb12c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=joel.stan@gmail.com; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -119,68 +117,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 17 Jun 2026 at 04:31, Kuan-Wei Chiu <visitorckw@gmail.com> wrote:
+On Thu, 11 Jun 2026 at 07:11, Daniel Henrique Barboza
+<daniel.barboza@oss.qualcomm.com> wrote:
+>
+> We want to configure other CPU types to use profiles as an alternative
+> to adding every profile extension explicitly, i.e. a profile is nothing
+> more than an extension bundle.
+>
+> This means that a vendor CPU can set .profile=rva23s64 while having the
+> same handling as any other vendor CPU. Same thing with all other CPU
+> types.
 
-> diff --git a/hw/riscv/cv1800b.c b/hw/riscv/cv1800b.c
-> new file mode 100644
-> index 0000000000..c6749e1202
-> --- /dev/null
-> +++ b/hw/riscv/cv1800b.c
-> @@ -0,0 +1,168 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +/*
-> + * Sophgo CV1800B SoC
-> + *
-> + * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "hw/riscv/cv1800b.h"
-> +#include "hw/core/qdev-properties.h"
-> +#include "target/riscv/cpu-qom.h"
-> +#include "system/system.h"
-> +#include "hw/char/serial.h"
++1000
 
-Unused?
+>
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-> +#include "hw/intc/riscv_aclint.h"
-> +#include "system/address-spaces.h"
-> +#include "hw/intc/sifive_plic.h"
-> +#include "target/riscv/cpu.h"
-> +#include "hw/riscv/boot.h"
-> +#include "hw/sd/sdhci.h"
-> +#include "hw/misc/unimp.h"
-
-> +
-> +static void cv1800b_soc_instance_init(Object *obj)
-> +{
-> +    CV1800BSoCState *s = CV1800B_SOC(obj);
-> +
-> +    object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY);
-> +    object_initialize_child(obj, "clk", &s->clk, TYPE_CV1800B_CLK);
-> +}
-> +
-> +static void cv1800b_soc_realize(DeviceState *dev, Error **errp)
-> +{
-> +    CV1800BSoCState *s = CV1800B_SOC(dev);
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +    uint32_t num_harts = ms->smp.cpus;
-> +    MemoryRegion *system_memory = get_system_memory();
-> +    char *plic_hart_config;
-> +    DeviceState *uart, *sdhci;
-> +
-> +    qdev_prop_set_uint32(DEVICE(&s->cpus), "num-harts", num_harts);
-> +    qdev_prop_set_uint32(DEVICE(&s->cpus), "hartid-base", 0);
-> +    qdev_prop_set_string(DEVICE(&s->cpus), "cpu-type", TYPE_RISCV_CPU_THEAD_C906);
-> +
-> +    qdev_prop_set_uint64(DEVICE(&s->cpus), "resetvec",
-> +                         cv1800b_memmap[CV1800B_DEV_ROM].base);
-
-These could go in cv1800b_soc_instance_init. I think num-harts can
-stay here, as it relies on the machine details.
-
-> +
-> +    sysbus_realize(SYS_BUS_DEVICE(&s->cpus), &error_fatal);
-> +
+Reviewed-by: Joel Stanley <joel@jms.id.au>
 
