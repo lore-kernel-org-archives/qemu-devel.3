@@ -4,67 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 730EAC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 01:49:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B474DC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 01:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wek4C-0002JA-N6; Tue, 30 Jun 2026 21:48:44 -0400
+	id 1wek76-0002wX-0k; Tue, 30 Jun 2026 21:51:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wek4A-0002J1-EC
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 21:48:43 -0400
-Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
+ (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
+ id 1wek70-0002vt-1J; Tue, 30 Jun 2026 21:51:38 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wek47-0003oz-He
- for qemu-devel@nongnu.org; Tue, 30 Jun 2026 21:48:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
- s=default; t=1782870505;
- bh=m+I/bnMVHwihvOy2CbiAphq/Fvh+pfFR/3CoFvQe2jw=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=oFvddbpB2kft4F5U2p+ZZnBqqqnqUXvvT9hWuYTSBooZbyPoYS3VvL8lVE+kGh9Qj
- WjmJbg3P5hy7OYaAbo5/sHz0Bo20IRK8vAjdRJz/IvAwdsgdotc24uHAg6/7SwQm9V
- 9HaHzS4i7ERCw0SrVSeU/NOEjzeOB6AguGzmiAlz86q3HkqCOsGghL/p1BI6JNIG07
- XQShCQdjGzbGN4WG7sUy1nZIExI68NGYX35FRNqSf144wGwvq+NKkLi6LXcC7aL2W0
- QHjDTBomxB2J6lh27AEZe65SSka32WyMf5tINy9eXNfqnk5B7oj5vFX1Zp3Pr1T1fS
- Kb1VBLaDoIIvw==
-Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id DD0E72FF47D;
- Wed,  1 Jul 2026 01:48:25 +0000 (UTC)
-Received: from [10.0.1.62] (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id A588C380CA3;
- Wed,  1 Jul 2026 09:48:24 +0800 (CST)
-Message-ID: <faad8fd9-5fa8-4ae8-8437-28864543e34e@sjtu.edu.cn>
-Date: Wed, 1 Jul 2026 09:48:24 +0800
+ (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
+ id 1wek6x-0004Tc-LD; Tue, 30 Jun 2026 21:51:37 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65UNIinO3447412; Wed, 1 Jul 2026 01:51:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Zg9Gso
+ g+INwMexCAZDnVjLCwm7LGqdvw/U+v0xEm5Zk=; b=cUJRuxp4C9RaZyhK1BFv8C
+ Mff0HfkY8oxt13vSqEm57/ZM+FvlUiseV5gKnRCTIB5exTtZcniUil0r7x50k/QF
+ QJoI+64JUNskkWVxVGqo+/9WEVI8tQBhyDbBbA1WfxeW1dM5n5ef6Eh82mEiV98z
+ j3WuBaUKdgOX4rmvUfGz8ypXjAu0GZTfvMd0Sp2dPUYafdCo/JYQ6Dlh24gIBsrh
+ /xhXsrAu55w/UdenVvgEcmXzA8UnfD6aDgts0Sb6U3P8JGWkgBsQRvcGwpbEI42Q
+ 8xByX1gvd41KjPvIuHqpGFifoq1eII1ck3K6itrxEwjmtCn3hF15MklxmNRWQc1A
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26pe209y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 01 Jul 2026 01:51:31 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6611o336005094;
+ Wed, 1 Jul 2026 01:51:30 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhd30y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 01 Jul 2026 01:51:29 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6611pPmC59703640
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 1 Jul 2026 01:51:26 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D9B2B2004B;
+ Wed,  1 Jul 2026 01:51:25 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4651720067;
+ Wed,  1 Jul 2026 01:51:17 +0000 (GMT)
+Received: from [9.67.23.244] (unknown [9.67.23.244])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  1 Jul 2026 01:51:16 +0000 (GMT)
+Message-ID: <d225ef6f-14c9-4bce-8f6b-12590071114c@linux.ibm.com>
+Date: Wed, 1 Jul 2026 07:21:12 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/1] contrib/plugins: add dlcall to call host functions
- from a guest
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20260622163438.130746-1-functioner@sjtu.edu.cn>
- <20260629160217.1637276-1-functioner@sjtu.edu.cn>
- <42297965-3d92-4d9d-ad6f-4861841d4806@oss.qualcomm.com>
-From: Ziyang Zhang <functioner@sjtu.edu.cn>
-In-Reply-To: <42297965-3d92-4d9d-ad6f-4861841d4806@oss.qualcomm.com>
+From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+Subject: Re: [PATCH 2/8] tests/qtest/pnv_spi: Test Power11 PNV_SPI
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
+ Misbah Anjum N <misanjum@linux.ibm.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>
+References: <20260623141933.577981-1-adityag@linux.ibm.com>
+ <20260623141933.577981-3-adityag@linux.ibm.com>
+ <db95d79a-a6bd-40a1-bc08-f572cebe1641@linux.ibm.com>
+ <akQOQaFAKIMwJr2j@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Content-Language: en-US
+In-Reply-To: <akQOQaFAKIMwJr2j@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=202.120.2.186;
- envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: vZyHofFPYV6323zKUTAmiRoshqRFA1uJ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDAxNyBTYWx0ZWRfX8brOzZwxeLru
+ CrYEhVrmddV+r0S9MkqVnqzMV02QT16JuNXbGny3FY8ru5TGkROSJ/yyvqs/IqNXksfQB3oBKU9
+ pwIQWJvfcpWzH450ctTr7WVfD/L+lSs=
+X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a4472a3 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=jFxEIJLJGxOkPOqaoPIA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDAxNyBTYWx0ZWRfX/djNckrFoscy
+ EvvdJ+pywS7wHCT9ceMMA16NcG6dCDh6KveuMIMO9rFaBmwsL2QqPwNC2It2N55xhPQ6u/Wmsh7
+ MwR4vFtBZ1rBgn1J0Z1Rv+NGkfnLGqQYjtoOuzFlkpM4WyaKzBIOWx5H+H/i/iernOh6lDHlAsV
+ XWuvACvbeHRNEyQTL+kZMrdcLAviG6Jq36ASy9AyyX/rhhJIKafQ444yrIU+P34WQb4BOtqOQYr
+ N4XZmIp4mAmVegkdrzFfcG5z4tRFzpZr4fSSxeQOfyxv1Erj8M9eYKEa3ldkdOSI9ToaqJ06gty
+ 1CG9wSa/ytpbNO0lLlXXMZjYFBQ8SYRAwVC3Y9HiEqUO6BK1IGdw4rpnpEsQT0dquKCvd1T4/RG
+ OG+BPyoRSKCvVlc+983IskGlpOJjsmYExV82YcGT5+iUYhm0YxRbXwjJqV6lJMEHPvo4oMb4Dfu
+ 92bZKJuEB/l8pKRgWIw==
+X-Proofpoint-ORIG-GUID: qv15DRiyvtH463WVSpSlniXiS2nFTvqf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-30_06,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
+ spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010017
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=nikhilks@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,99 +140,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick,
 
-Thanks for the review, and for thinking about the end-user experience.
+On 01/07/26 00:22, Aditya Gupta wrote:
+> On 26/06/30 09:55AM, Nikhil Kumar Singh wrote:
+>> Hi Aditya,
+>>
+>> One comment below.
+>>
+>> On 23/06/26 19:49, Aditya Gupta wrote:
+>>> @@ -77,6 +77,7 @@ static void test_spi_seeprom(const void *data)
+>>>        const PnvChip *chip = data;
+>>>        QTestState *qts = NULL;
+>>>        g_autofree char *tmp_path = NULL;
+>>> +    const char *machine = "powernv10";
+>> Would it make sense to introduce `pnv_get_machine_type()` in patch 2
+>> instead of patch 3? That would avoid hardcoding `"powernv10"` here and
+>> allow this patch to use the helper directly.
+> Could be done, but i will prefer to keep it in current state, as of this
+> patch, power11 wasn't added to this test, and the test only runs for
+> powernv10, later as powern11 gets added in next patch this is changed to
+> use pnv_get_machine_type.
+>
+> If pnv_get_machine_type gets introduced in this patch, it makes sense to
+> modify all other tests also to use it, which is more than what this
+> patch intends to do (just remove hardcoded index in spi test).
+> To me, it seems okay to keep it as is, what do you say ?
+Thanks for the explanation. I agree with keeping it as is for this 
+patch. Looks good to me.
 
-On Tue, 30 Jun 2026 12:34:59 -0700, Pierrick Bouvier wrote:
-> Thanks for publishing it.
-> 
-> A few ideas to make Lorelei even more easy to use:
-> 
-> Would that be possible to add binary artifacts to the existing 1.0.0
-> Lorelei release?
-> Ideally, it should provide a toolchain (for x64 hosts) with support for
-> x64, arm64 and riscv64 guest thunks.
-> 
-> Also, would that possible to provide a script to generate boilerplate
-> for thunks, and extract list of symbols from a given library?
-> 
-> My ultimate goal would be to have something as simple as:
-> $ wget toolchain.hostx64.tar.gz
-> 
-> # automatically generate boilerplate + compile guest/host thunks
-> $ toolchain.hostx64/bin/generate-thunks \
->    --arch arm64 --library /usr/lib/libfoo.so \
->    --header /usr/include/foo.h --out thunks_arm64
-> 
-> $ aarch64-linux-gnu-gcc main.c -lfoo
-> $ env LD_LIBRARY_PATH=./thunks_arm64 \
->    qemu-arm64 ./a.out -plugin contrib/plugins/liblorelei.so
-> 
-> I understand it asks for more, but we really need to make lorelei as
-> simple to use as possible, without pushing the internal details to users.
-> 
-> What do you think about this?
-
-
-Prebuilt toolchain / instant acceleration
-
-Agreed: the goal is to install it and feel the speedup right away,
-with no build step. I'll do this, but as a point release on top of
-1.0.0.0 rather than in the initial tag, so it lands as its own
-increment. The model is FEX's FEXFetchRootFS: a prebuilt host
-toolchain plus ready-made thunks, so a user goes from download
-straight to an accelerated guest. Like FEXFetchRootFS, the tool will
-likely have the user pick their distribution and version, because a
-thunk is bound to a specific library build: the exported symbols, and
-sometimes the ABI, differ across distros and releases, so the prebuilt
-thunks must match the host's real libraries.
-
-Generating thunks for a new library
-
-One caveat on the generate-thunks sketch. Lorelei guarantees that
-thunk *generation* is automatic and reproducible: once a library is
-described, TLC deterministically emits both sides, including the
-callback and variadic cases. What it cannot do on its own is
-*describe* the library, that is, pick the symbols you need and write
-descriptors for the ones that do not marshal trivially (callbacks by
-pointer, ownership crossing the boundary). Those stay judgment calls
-that need a human, or an AI, in the loop.
-
-So adding a new library is not one fully automatic command. What
-Lorelei does is drastically cut the effort versus hand-writing every
-thunk the way Box64 does: the generate-thunks helper automates what
-is automatable (symbol extraction, boilerplate, building both sides),
-so simple libraries are close to one-shot and harder ones start from
-a skeleton rather than a blank file.
-
-Plugin name
-
-I would rather keep "dlcall" than rename it to "lorelei". The plugin
-defines a general interface (the magic-syscall dlopen/dlsym/invoke
-ABI), and Lorelei is only one userspace implementation of it now:
-
-   - "dlcall" says what the plugin does and is understood without
-     leaving the tree. "lorelei" names an external project and says
-     nothing about the mechanism.
-   - An in-tree interface should not be tied to the branding or
-     lifetime of an out-of-tree project. If Lorelei is renamed,
-     forked, or joined by other toolchains, the name becomes
-     misleading.
-   - Naming it after one implementation implies it is the blessed one
-     and discourages alternatives. A generic name keeps QEMU neutral.
-   - It also matches how the other contrib plugins are named, by
-     functionality (lockstep, cache, ...).
-
-I do agree Lorelei should be discoverable from the tree, so I'll add
-docs to docs/about/emulation.rst that introduce the dlcall interface
-and point at Lorelei as a ready-to-use implementation, with a minimal
-example and without the internal details.
-
-Does that sound reasonable?
-
-Thanks,
-Ziyang Zhang
-
-
+  ~ Nikhil
+>> Otherwise, the patch looks good to me.
+> Thanks for reviewing, Nikhil !
+>
+> - Aditya G
+>
+>> Thanks,
+>> Nikhil
 
