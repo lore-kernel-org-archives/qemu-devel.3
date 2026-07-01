@@ -4,104 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B939C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 04:30:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F63C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 05:17:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wemaH-0005J3-Ja; Wed, 01 Jul 2026 00:30:01 -0400
+	id 1wenJu-0002Oc-3h; Wed, 01 Jul 2026 01:17:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wemaF-0005I7-85
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 00:29:59 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wemaD-0005Pz-EG
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 00:29:59 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-664d530fcfdso215079d50.2
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 21:29:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782880196; cv=none;
- d=google.com; s=arc-20260327;
- b=OkTX9F7ZKP0RRl2XET3vqIV5WqiQi/dzHm+LN76/qABzrKkhMWz7hTu0Xcod64YrPc
- m9hlxAjqJaNIdgV+9BzejS3cE6lf8halh3l3TguiOy9Ex+rL6lj/qUkXy+wepXfugVOT
- PEH/JnjoiLvZZ/7eAf2ta69TFXMU0GRdfZY/R53TK24fMAU86C0rGnWO0tJWgn2TMfAb
- wHEbiAz6V/z+ON1Q4OXicSCMDwv5apfbd/fHicRZgwy9u1w90pbPJ4om0amUpnm7OZYr
- 4iCscKF1YnJoztERCLUJz6cv8TB/aCYVMDOi5dTb9Ikr78q+qkbFCM59MxBB/EhWI4/y
- qa6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=NkA89hQKgBW8RKe455wjGc4VzEyzFdTmOegKbWYXtQ4=;
- fh=QMl3m49tuLtOusuuXCnCOZCsoZiLfsjUwXG2nLBmcSY=;
- b=rsWuewaYxzLdpq6n817C4O/U5C07qwgE3NvKUpDFxf0JJQR2qPK2N+fCjaBue2JOBC
- LDTqXKfKYnNDj1P8oEyzxgqQPybnTbPeAgm8ceSTsJokHIAn4W/thefACdNo+edRGGS+
- 4ROxGgtK1qxKfLnT1UBXm47x8C+70Ecp9xbrgd53j8AyxaTx2rCBZWK45CyKryD+dSvN
- dwTKLi+yqpOVMxZNTTRRgJSQc8CPNqes1t7WHuT9Y3I6z5YDL2uhmniq9bZFdrxOPWUp
- AdecmGfHEPOOOBH/mRIB0h3EoGV7tGg0hFdf5Cw8BhWLrPqtned7sPGWJU4ihflZYXbu
- NVmw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1782880196; x=1783484996; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=NkA89hQKgBW8RKe455wjGc4VzEyzFdTmOegKbWYXtQ4=;
- b=kZL5O0viJauqH0YQy0w58p9YEaPr4x2ChiU2zMNQzyQLi2PfYJ8sfnSr5gbUDNt6qf
- SGkvur7BJth1xKPXUWCw0VltLK1PnxJgSvgdsnZ7siSTC/8DDxO+O48r8PybHeW4IXTm
- WJWwOk5r0IspN/ElpveZpSRGc4XsUxqGJ3J94=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782880196; x=1783484996;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NkA89hQKgBW8RKe455wjGc4VzEyzFdTmOegKbWYXtQ4=;
- b=L/TbvelSZP5UTWi817+aL9mE8tLgRQ5x7y9dyxzhRSEpwV2nY5He2QRa++6U5cCYsv
- ZPMOxIc5hiv8c9zrByCmzx4sw3j/wpoD35sq09XLpBSMkNEFW1mB4fj5c5I2P9kFrFHR
- zrClKCOb4fD+ZNtGytVL+pDJ5hwU30/QKAaAeej8dDfM98XKc86yyzl1zSXkw5xMj5cA
- 2pQL5kLdkiqk4Lj0vj2qs5ibjvK9nCcC/ElZuv8ATerrDv3IFMvP436yxGvodZq82w8O
- JROOwky+3cfWelm012IfzkWZt+LwnWxGPSGUYg9cnxlzOF1q5B7FefZ7AbKFqHYxbPq+
- VX4Q==
-X-Gm-Message-State: AOJu0Yy/fctzangvIEEgYtyoRXGlMbjmI1NCcHt51RZhvLlGjY+/+qd+
- dM9ORN5/NtdvpX8sTWDJmCpzM6SCf4Dv7wz4U6kyEHvHVRY8sgEQC36TlXsIpQ3Tlu0zQZTV0WS
- MZkRBwPLefaO+36oPsVKl1Wn7PBb8DNM=
-X-Gm-Gg: AfdE7cmo1GmnGWMaqWfhOKSNnyT79Dp1IoQ+iDWeHHjMJ4cpiVq7mn4R61eBobVVDQq
- xuj/kokGyW4YNdLg65Z0lX9uOgqwai1DA/tKtmAeEDvS714bstzn1rUBWYdABlE3OhWtBzG+o9e
- SM0BiYW86XtDpKCpT5zW2UvtRX8btLP3V69pcHm4V1VvQ8/T1BUIV5kYiIps9B2+KLPXTP9/IDk
- puIC6zcIKWRpj8qn0YsI28bqU4b8AeIIAc6A5zH/ZvZfsbgOSAX9AOMuG/+SNucx54VFQiJtHa9
- MIWNtBHn1D1WGoVuen2dW3giMy3RAURla2p1unHsLCHMjcadF6MI6dltNOV1xWb37jyYqeWReN3
- wxqmGL9AIen7PGCULp9P8N5Wv
-X-Received: by 2002:a05:690e:484f:b0:662:551d:b987 with SMTP id
- 956f58d0204a3-6652196979cmr31110d50.12.1782880196316; Tue, 30 Jun 2026
- 21:29:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wenJo-0002Nr-VT
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 01:17:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wenJm-0004u3-89
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 01:17:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782883020;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=peWTpTg7JqFAW0LkxxYWDjYDZtHG8zrUND5SPB98CHc=;
+ b=JILnkAIv7FpRW+KvoNkCMIfh4hCr5WY/5Dw6FYMw+znJ1zll8/6dQgTN/7jgIv44CH04dF
+ ojS4p8leqCCivzSWlS3K12n4WsdKh2dLdP/vlId8axzwOoosTt39Zr+Ydqkl+g17Zzf0fr
+ rM3mVWHywtxEsKaj2QtLLmoI5xjFPkQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-iTcLylwGORm4VX27-UsSdQ-1; Wed,
+ 01 Jul 2026 01:16:59 -0400
+X-MC-Unique: iTcLylwGORm4VX27-UsSdQ-1
+X-Mimecast-MFC-AGG-ID: iTcLylwGORm4VX27-UsSdQ_1782883018
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1DB28184A0B0; Wed,  1 Jul 2026 05:16:58 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 893891800586; Wed,  1 Jul 2026 05:16:57 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C5D8621E6920; Wed, 01 Jul 2026 07:16:54 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: "Christian S. Lima" <christianslima@proton.me>
+Cc: qemu-devel@nongnu.org,  Laurent Vivier <laurent@vivier.eu>
+Subject: Re: [PATCH v2] disas: converts malloc to g_new0
+In-Reply-To: <20260630223159.68737-1-christianslima@proton.me> (Christian
+ S. Lima's message of "Tue, 30 Jun 2026 22:32:04 +0000")
+References: <20260630223159.68737-1-christianslima@proton.me>
+Date: Wed, 01 Jul 2026 07:16:54 +0200
+Message-ID: <87echnwapl.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260610214133.1882563-1-daniel.barboza@oss.qualcomm.com>
- <20260610214133.1882563-2-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260610214133.1882563-2-daniel.barboza@oss.qualcomm.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 1 Jul 2026 13:59:45 +0930
-X-Gm-Features: AVVi8CdJsOpeHLO2sqRcWf7JZmfLsV6KCqBXcRTkerrIhb-5qjq35Keb_txflJs
-Message-ID: <CACPK8Xf9sT_Pyc20zpLnpo+32RNRjS29VP86RhmF0ufoNd8kxQ@mail.gmail.com>
-Subject: Re: [PATCH v8 1/7] target/riscv/cpu.c: remove 'bare' condition for
- .profile
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
- andrew.jones@oss.qualcomm.com, leif.lindholm@oss.qualcomm.com, uwu@icenowy.me, 
- Palmer Dabbelt <palmer@dabbelt.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=joel.stan@gmail.com; helo=mail-yx1-xb12d.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,23 +83,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 11 Jun 2026 at 07:11, Daniel Henrique Barboza
-<daniel.barboza@oss.qualcomm.com> wrote:
->
-> We want to configure other CPU types to use profiles as an alternative
-> to adding every profile extension explicitly, i.e. a profile is nothing
-> more than an extension bundle.
->
-> This means that a vendor CPU can set .profile=rva23s64 while having the
-> same handling as any other vendor CPU. Same thing with all other CPU
-> types.
+"Christian S. Lima" <christianslima@proton.me> writes:
 
-+1000
+> Following the qemu coding style change from malloc to g_new0, the
+> advantages are that g_new0 catch multiplication overflowing size_t,
+> allows for better detection of type errors because it returns the type
+> itself and initialize memory with zeros to detect if something go wrong.
+
+In general, just-in-case zero-initialization won't detect anything, it
+just converts unpredictable bad behavior to predictable bad behavior.
+
+In this case, it does exactly nothing, as we'll see below.
 
 >
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> Signed-off-by: Christian S. Lima <christianslima@proton.me>
+> ---
+> Changes in v2:
+>     - Change from g_malloc0 to g_new0
+> ---
+>  disas/m68k.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>
+> diff --git a/disas/m68k.c b/disas/m68k.c
+> index 800b4145ac..c3571783b0 100644
+> --- a/disas/m68k.c
+> +++ b/disas/m68k.c
+> @@ -1887,8 +1887,7 @@ print_insn_m68k (bfd_vma memaddr, disassemble_info *info)
+>  
+>        /* Then create a sorted table of pointers
+>  	 that point into the unsorted table.  */
+> -      opc_pointer[0] = malloc (sizeof (struct m68k_opcode *)
+> -                               * m68k_numopcodes);
+> +      opc_pointer[0] = g_new0(const struct m68k_opcode *, m68k_numopcodes);
+>        opcodes[0] = opc_pointer[0];
+>  
+>        for (i = 1; i < 16; i++)
+           {
+             opc_pointer[i] = opc_pointer[i - 1] + numopcodes[i - 1];
+             opcodes[i] = opc_pointer[i];
+           }
 
-Reviewed-by: Joel Stanley <joel@jms.id.au>
+This obviously overwrites every single bit in opc_pointer[], i.e. the
+switch from allocating uninitialized to zero-initialzed memory is a
+complete waste.  I'd use g_new().  Up to the maintainer.
+
+Either way,
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+
 
