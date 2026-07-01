@@ -4,123 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E276FC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 08:53:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E2C7C43327
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 09:16:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weqgX-0002vJ-GL; Wed, 01 Jul 2026 04:52:45 -0400
+	id 1wer0c-00019T-Gw; Wed, 01 Jul 2026 05:13:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1weqgW-0002v5-2M; Wed, 01 Jul 2026 04:52:44 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1weqzn-0000uM-4B
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 05:12:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1weqgT-0002KR-So; Wed, 01 Jul 2026 04:52:43 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6618ITMC298982; Wed, 1 Jul 2026 08:52:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=NjfCTE
- /KOteQCQyMrkozfQ8VV+twVmp3gBhQITTRJM0=; b=AUmuJfrgB7gafn4A7DU3mw
- Wkn/2ZebIHA2iH9jERhtCje9Z3YB+WSZj4AO1Rd1Z8jKXol2SVkCBJjbfpO6p71P
- Qo64HbU8JrlwcRDA+spMSCSQcZ58DndIxExpfywFX9VA7sBdDGgmbWVNmPZEMriL
- FnmT8zMGaThUptuUqRS0/976A+J3p226dcBS4XQ960LP0ZUKcaFxrxM2U51feVyn
- Ehi39bbZ0ixQuwELHZUXbfV213I5ScJMRhAelCuwneNjGqyt+T6FmY02stK15u5/
- ZwUe5zF1//sNgUXXn/kShUSVZbt4leT39lpUofXgCiohWEjECOeP8qX7hmSRV1ZA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26n5uh6a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 01 Jul 2026 08:52:37 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6618nbXA017129;
- Wed, 1 Jul 2026 08:52:36 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhedrx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 01 Jul 2026 08:52:36 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6618qWkd15663534
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 1 Jul 2026 08:52:32 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1415920043;
- Wed,  1 Jul 2026 08:52:32 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9A30520040;
- Wed,  1 Jul 2026 08:52:31 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.26.144])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  1 Jul 2026 08:52:31 +0000 (GMT)
-Message-ID: <176ef620-b70a-4ddd-90bc-32df206542d5@linux.ibm.com>
-Date: Wed, 1 Jul 2026 10:52:31 +0200
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1weqzl-0007Nv-Ig
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 05:12:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782897157;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2UlUWdtEhYgdtN6KjOCbmywf5XaizCagqsN+FcWuwf4=;
+ b=F7+PrRQ30C9gn7jDeOh/Rb+WxB7MibZAnO0Kjx2HQX/SBp1IkLySnswj9MPWF8ZkogVlvb
+ 4Uv7egd3HA4SGB406Ugp62RUnyNSbDBuUQQMBuHJkRVqzEI4Xq7h0S6IQAavUrb8BV7W9q
+ hH4N/nMXqFj33EAeFiFvfwzpuLEET9M=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-QDFIVG2UMVKh4fvf7Tz87w-1; Wed,
+ 01 Jul 2026 05:12:31 -0400
+X-MC-Unique: QDFIVG2UMVKh4fvf7Tz87w-1
+X-Mimecast-MFC-AGG-ID: QDFIVG2UMVKh4fvf7Tz87w_1782897150
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 896191945111; Wed,  1 Jul 2026 09:12:30 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.44.33.117])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BEBA71800586; Wed,  1 Jul 2026 09:12:27 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, peter.maydell@linaro.org, berrange@redhat.com,
+ skolothumtho@nvidia.com, nicolinc@nvidia.com, nathanc@nvidia.com
+Subject: [PATCH v2 4/5] hw/arm/smmuv3: Check L1STD.SPAN
+Date: Wed,  1 Jul 2026 11:11:41 +0200
+Message-ID: <20260701091209.2860306-5-eric.auger@redhat.com>
+In-Reply-To: <20260701091209.2860306-1-eric.auger@redhat.com>
+References: <20260701091209.2860306-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 01/18] target/s390x: Fix wrong address handling in
- address loops
-To: freude@linux.ibm.com, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>
-Cc: richard.henderson@linaro.org, david@kernel.org, thuth@redhat.com,
- berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux390-list@tuxmaker.boeblingen.de.ibm.com,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
-References: <20260624081029.23815-1-freude@linux.ibm.com>
- <20260624081029.23815-2-freude@linux.ibm.com>
- <e516de9c-e9fb-45af-aa5e-8cb9dbf1e3f3@linux.ibm.com>
- <d55a9d7e7759251c1e75050a9a9ccd6f@linux.ibm.com>
- <6e7ce946-1128-4b2c-9520-a171bca3ceb7@linux.ibm.com>
- <a6e637d07024e0ff8a457500110e225f@linux.ibm.com>
- <9cbb2f6f-c80e-4ba8-a307-4f640f64a8a5@linux.ibm.com>
- <b13c7644-83aa-48c8-9045-550a436b57ad@oss.qualcomm.com>
- <d6e0a18ac424ae1fc31fc3a437e983b2@linux.ibm.com>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <d6e0a18ac424ae1fc31fc3a437e983b2@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDA5MCBTYWx0ZWRfXwfYq5Pu0cj58
- U+2aiEqrB8rWoTs6fxN5EfNXocI5fy39tmbLkBllBGWaVfh7ziOHFoTUimE+7DEGycJgQybVDD7
- ZE/7/tznFHZmg1WBNXVufMFjhvJ+XUpGN5uIWuq5W8oe6PCcHLEWHT/GD4zSK3G9Ci6T3r8vNDF
- VO2eQ0fO2up9XDv7crek8CukkDeNJYYR5nlTdzRrBipnBMCNCaRSL6Lj3JiksLOzKaBiifGWZ8Z
- U56RuF4Cls7zzMikVYSpDSlX7s8WNBlBhDQF4N0BTAj2NY51Zxz3UhdLb+8nIMVhdVuGqenbNGR
- QeXNNUaJoTuMlEigozrA6+x3eqg97pQ51ai9FfI8Fb8GhYVKtIfTNUyrhKBWGyJTXUQw3nc1LVT
- 1MQd3pphlyWh03jxfAMlzkEXzwCRCf9A08FiufeqRuvzURnaqIXk1j5aakZIorEjEqJ9k5lR4rd
- hOrO37ebPJpb2y9ghKg==
-X-Authority-Analysis: v=2.4 cv=V45NF+ni c=1 sm=1 tr=0 ts=6a44d555 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=JeL95Ie2d5q0B7KwirEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: p7MJbbC_FYHgAAk5jecUvqirYaZPbUor
-X-Proofpoint-GUID: p7MJbbC_FYHgAAk5jecUvqirYaZPbUor
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDA5MCBTYWx0ZWRfX3w6ndjzpfI/c
- 2pfrsF4/FlHsfqpJ2HKUep3z5Qb9An/pg5E5zjGy1NM/hp0M/8DxMbr3G2h8/I6jkz1vy3ZPMJM
- wvSroNrZPF+H+UqiU3ZtBBCr4rQZG4Q=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-01_02,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
- adultscore=0 clxscore=1011 impostorscore=0 malwarescore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010090
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,170 +84,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Span values above 11 are reserved and behave as 0.
 
+Also span must be within the range of 0 to (SMMU_STRTAB_BASE_CFG.SPLIT + 1),
+ie. it must stay within the bounds of the stream table split point.
 
-On 7/1/26 09:42, Harald Freudenberger wrote:
-> On 2026-06-30 16:19, Philippe Mathieu-Daudé wrote:
->> On 30/6/26 12:54, Ilya Leoshkevich wrote:
->>>
->>>
->>> On 6/30/26 12:23, Harald Freudenberger wrote:
->>>> On 2026-06-30 11:33, Ilya Leoshkevich wrote:
->>>>> On 6/29/26 14:57, Harald Freudenberger wrote:
->>>>>> On 2026-06-24 14:56, Ilya Leoshkevich wrote:
->>>>>>> On 6/24/26 10:09, Harald Freudenberger wrote:
->>>>>>>> With the introduction of the address wrapping function
->>>>>>>> wrap_address() the result can't be used to walk the
->>>>>>>> source address any more. So introduce a new local variable
->>>>>>>> to hold the wrapped address to avoid mixing source and
->>>>>>>> wrapped address value.
->>>>>>>>
->>>>>>>> Fixes: fcc2699d41 ("target/s390x: Have MSA helper pass a mmu_idx 
->>>>>>>> argument")
->>>>>>>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
->>>>>>>> ---
->>>>>>>>   target/s390x/tcg/crypto_helper.c | 16 ++++++++--------
->>>>>>>>   1 file changed, 8 insertions(+), 8 deletions(-)
->>>>>>>
->>>>>>> If I take as an example AMODE 24 and look at the third loop 
->>>>>>> iteration,
->>>>>>> with the current code in master I would get:
->>>>>>>
->>>>>>>     ((((addr & 0xffffff) + 8) & 0xffffff) + 8) & 0xffffff
->>>>>>>
->>>>>>> and with your patch it would be:
->>>>>>>
->>>>>>>     (addr + 8 + 8) & 0xffffff
->>>>>>>
->>>>>>> which is undeniably more elegant, but otherwise looks equivalent 
->>>>>>> to me.
->>>>>>>
->>>>>>> What is the functional issue here?
->>>>>>>
->>>>>>>> diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/ 
->>>>>>>> tcg/ crypto_helper.c
->>>>>>>> index ae392bce0e..29ad2aff43 100644
->>>>>>>> --- a/target/s390x/tcg/crypto_helper.c
->>>>>>>> +++ b/target/s390x/tcg/crypto_helper.c
->>>>>>>> @@ -126,8 +126,8 @@ static void sha512_read_icv(CPUS390XState 
->>>>>>>> *env, const int mmu_idx,
->>>>>>>>       const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | 
->>>>>>>> MO_UNALN, mmu_idx);
->>>>>>>>         for (int i = 0; i < 8; i++, addr += 8) {
->>>>>>>> -        addr = wrap_address(env, addr);
->>>>>>>> -        a[i] = cpu_ldq_mmu(env, addr, oi, ra);
->>>>>>>> +        uint64_t _addr = wrap_address(env, addr);
->>>>>>>> +        a[i] = cpu_ldq_mmu(env, _addr, oi, ra);
->>>>>>>>       }
->>>>>>>>   }
->>>>>>>
->>>>>>> [...]
->>>>>>
->>>>>> It is a fix, not an improvement. The original code
->>>>>> used the addr variable to hold the wrapped address.
->>>>>> But as addr is also used as the loop variable there
->>>>>> is a mixing between unwrapped and wrapped address here
->>>>>> and the unfixed code only works when wrap_address does
->>>>>> return the very same address as output as it became as
->>>>>> input. My fix corrects this.
->>>>>
->>>>> What does the patch change w.r.t. wrapping?
->>>>> Suppose we have amode 24 and addr = 0xfffff0:
->>>>>
->>>>> Before:
->>>>>
->>>>>   i = 0; addr = wrap(0xfffff0) = 0xfffff0;
->>>>>          a[0] = ldq(0xfffff0);
->>>>>   i = 1; addr = wrap(0xfffff0 + 8) = 0xfffff8;
->>>>>          a[1] = ldq(0xfffff8);
->>>>>   i = 2; addr = wrap(0xfffff8 + 8) = 0;
->>>>>          a[2] = ldq(0);
->>>>>   i = 3; addr = wrap(0 + 8) = 8;
->>>>>          a[3] = ldq(8);
->>>>>
->>>>> After:
->>>>>
->>>>>   i = 0; addr = 0xfffff0;
->>>>>          _addr = wrap(0xfffff0) = 0xfffff0;
->>>>>          a[0] = ldq(0xfffff0)
->>>>>   i = 1; addr = 0xfffff0 + 8;
->>>>>          _addr = wrap(0xfffff8) = 0xfffff8;
->>>>>          a[1] = ldq(0xfffff8);
->>>>>   i = 2; addr = 0xfffff8 + 8 = 0x1000000
->>>>>          _addr = wrap(0x1000000) = 0;
->>>>>          a[2] = ldq(0);
->>>>>   i = 3; addr = 0x1000000 + 8 = 0x1000008;
->>>>>          _addr = wrap(0x1000008) = 8;
->>>>>          a[3] = ldq(8);
->>>>>
->>>>> The behavior look identical to me.
->>>>> What am I missing?
->>>>
->>>> Lets assume addr is some 0x1000 and wrap does just add some offset, 
->>>> e.g. 0x8000
->>>>
->>>> for (int i = 0; i < 8; i++, addr += 8) {
->>>>      addr = wrap_address(env, addr);
->>>>      fetch or write something at the wrapped address addr;
->>>> }
->>>>
->>>> Then the idea of this loop is to run through addr 0x1000 ... 0x103F.
->>>> 1. loop with i=0 and addr 0x1000
->>>> 2. loop with i=1 and addr 0x1000 + 8
->>>> 3. loop with i=2 and addr 0x1000 + 8 + 8
->>>> 4. loop with i=3 and addr 0x1000 + 8 + 8 + 8
->>>> 5. loop with i=4 and addr 0x1000 + 8 + 8 + 8 + 8
->>>> 6. loop with i=5 and addr 0x1000 + 8 + 8 + 8 + 8 + 8
->>>> 7. loop with i=6 and addr 0x1000 + 8 + 8 + 8 + 8 + 8 + 8
->>>> 8. loop with i=7 and addr 0x1000 + 8 + 8 + 8 + 8 + 8 + 8 + 8
->>>>
->>>> BUT the given code does something different. As the addr is used in 
->>>> the loop
->>>> to hold the wrapped address this loop in fact does:
->>>> 1. loop with i=0 and addr 0x1000 - all fine, but as addr = 
->>>> wrap_address() at the
->>>>     end of the loop now addr is 0x1000 + 0x8000 = 0x9000, so next 
->>>> loop starts with
->>>> 2. loop with i=1 and addr 0x9000 + 8
->>>>     and at the end of the loop addr is 0x9008 + 0x8000 = 0x11008 and 
->>>> next loop starts
->>>> 3. loop with i=2 and addr 0x11008 + 8
->>>>     ...
->>>>
->>>> So introducing an intermediate variable which holds the wrapped address
->>>> makes sure the surrounding addr walk in the loop does as intended.
->>>
->>> Ah, now I see where we were talking past each other, thanks for the
->>> clarification. You assume that wrap_address() may do arbitrary
->>> transformations, like addition in your example above. But today it does
->>> only bitwise "and", as defined by the architecture:
->>>
->>> static inline uint64_t wrap_address(CPUS390XState *env, uint64_t a)
->>> {
->>>      if (!(env->psw.mask & PSW_MASK_64)) {
->>>          if (!(env->psw.mask & PSW_MASK_32)) {
->>>              /* 24-Bit mode */
->>>              a &= 0x00ffffff;
->>>          } else {
->>>              /* 31-Bit mode */
->>>              a &= 0x7fffffff;
->>>          }
->>
->>            bool wrap32 = env->psw.mask & PSW_MASK_32;
->>            a = extract64(a, 0, wrap32 ? 31 : 24);
->>>      }
->>>      return a;
->>> }
->>>
->>> and I believe in this specific case the order doesn't matter.
->>>
-> 
-> Hm, however a wrap_address() function may return whatever
-> wrapping address calculation may be. A caller should not
-> rely on the returned address being 'the same' as the address
-> given in. So using separate variables for the address to
-> wrap and the wrapped address is wise in my opinion.
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+---
+ hw/arm/smmuv3.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-Sure, I too think it's cleaner and more future-proof.
-My only point was that there are no practical issues today.
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 5ec3700d0d5..f694f832598 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -707,7 +707,7 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
+ 
+         span = L1STD_SPAN(&l1std);
+ 
+-        if (!span) {
++        if (!span || span > 11) {
+             /* l2ptr is not valid */
+             if (!event->inval_ste_allowed) {
+                 qemu_log_mask(LOG_GUEST_ERROR,
+@@ -716,6 +716,16 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
+             event->type = SMMU_EVT_C_BAD_STREAMID;
+             return -EINVAL;
+         }
++
++        if (span > s->sid_split + 1) {
++            if (!event->inval_ste_allowed) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "invalid span (0x%x)\n", span);
++            }
++            event->type = SMMU_EVT_C_BAD_STREAMID;
++            return -EINVAL;
++        }
++
+         max_l2_ste = (1 << span) - 1;
+         l2ptr = l1std_l2ptr(&l1std);
+         trace_smmuv3_find_ste_2lvl(s->strtab_base, l1ptr, l1_ste_offset,
+-- 
+2.53.0
+
 
