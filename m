@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DEA1C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BE4FC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:18:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wes1F-0007sh-LZ; Wed, 01 Jul 2026 06:18:13 -0400
+	id 1wes1S-00081d-Ml; Wed, 01 Jul 2026 06:18:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes1D-0007sS-ME
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:11 -0400
-Received: from mail-dl1-x122b.google.com ([2607:f8b0:4864:20::122b])
+ id 1wes1L-0007tp-CO
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:19 -0400
+Received: from mail-dl1-x1235.google.com ([2607:f8b0:4864:20::1235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes1B-0004Mh-IB
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:11 -0400
-Received: by mail-dl1-x122b.google.com with SMTP id
- a92af1059eb24-137335bc3caso973708c88.0
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:18:09 -0700 (PDT)
+ id 1wes1I-0004Nn-15
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:17 -0400
+Received: by mail-dl1-x1235.google.com with SMTP id
+ a92af1059eb24-13b355fbb1aso1328422c88.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:18:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782901088; x=1783505888; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=vK+UhYDuJpixhI7TmqzOfxEUUHTP7zTnhEPWWK+I7fk=;
- b=ZTWhv4yE/zc0myJtsd0lLmH/abQc+Dn7laUsDDSYp+fXMQo0giyyiMc4AQi4cRc63D
- FwunPWsr3uBCdn1dQf+OS45vFyMd2/Kcny3E7X9TikJL8/UCJoTU7PO5JLn33m9aYWSq
- 7/tdpA43Zn+B4Nz5pEP/0JWyiACyxw8KCIzm3CRXEbPGhvy5f5eDjOYasKbGmG5y8gjS
- giZaHBefN0O0OKg8PqP/hisyEiG1mF0yPm/x38MH6NkH8ARBnM7natcStoRNlptYDIz6
- 9ZnQOv/mX5gYl69ffL4dJXdk+GqUYzNcODfj+CbUQI+81cuPUe+YXmXLf2xlFSOM9F3p
- 0x9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782901088; x=1783505888;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1782901095; x=1783505895; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vK+UhYDuJpixhI7TmqzOfxEUUHTP7zTnhEPWWK+I7fk=;
- b=EAT2yfnbQacvN4YBa4xpUSK3/MVQn2x/qeV2UtcEr5F4TGN7zY5FOJ/VwcvVjuWeLw
- x1dxzZbpMF92Gs5airtZbn5qMy+mT26SVE5MIDaJ2yj3kSe9jpXOUDfdl/2lSpANCWIP
- HimiOmt5SHTcmp58bQDOINq/LjqM/0zdyG85ci9AupDZIPmW9tyqap8Wxt9AaIsqv8kN
- wu744e+nzqPBR7LX7Bnhau45Bh25B1DoT9tLP075lFGnV4wWLT9UsB3YkUyqRVH/3pPh
- TzRrtQnHYQU5tkBLr++HLoeMkJziXgsTC+jmFxnErCa5rRbn8RhgMxeMFjTmUb4WznDQ
- ctSQ==
-X-Gm-Message-State: AOJu0YxflGvVub+yOoTx/b5GMyDcG3MpKFDwg8NmMLD7+UI7hFxiORLF
- LVseSUaVu3B2BmDkEnD1iDOtOaYMlQgiI8QwhRoILroYlJaQdQY4sNTmwj+A4g==
-X-Gm-Gg: AfdE7ckd2UpuT3h1wjF3+bQXHElHY3qhsIloVwq9K94w26b3HnruB2kusEfyDd2Vl8e
- K8iNqIYrs3+fIQUCcapPSMOln540YJedEG6yJTEr6nmxogCW4t1QGVpnUtGrpCzdfK8QW9Ctp7U
- QjfGP4UZvtGlvacBZH1KIklwLHk4mpIWj4/BCFqk4I/dw2iJ3Kf1fjm+49fozM+kDBBlDTvBFYn
- 1SqHoiyFTn0a2UTIJeBWrDzq3eGAS22qOeq2sG7l3jUx6gB0tlFDcVjtIFYCPACsgFNelmBBQDZ
- XI71jc02gWqRZJpl2LUuG9vMKFbf49UY/FJ6e4BMcc9bBeTCEvVNIWIcn8Z7w5iEGUy1/u/8LPi
- kdoYFfbB1Dm68ySpC+CN5X+YPIpogvn8XpE2nN4PymOFPoX9QfoZt5kKUBk965zm8WoSmElvOOG
- jT/vlLWRDYXhRwIY0kkNrSRy/zkg5G280=
-X-Received: by 2002:a05:7023:b16:b0:139:cf4f:3b80 with SMTP id
- a92af1059eb24-13b3916e114mr151288c88.34.1782901087861; 
- Wed, 01 Jul 2026 03:18:07 -0700 (PDT)
+ bh=DNvGQpzbbrugJ5jYcQ05mYd42IlYP+x1m5KuM5cZI4M=;
+ b=JJUZzKPtQYIXxtgQmaM3EExtV+d2vsswTuxRC0QTVq4LoApE7R0xGUqudMbCQZs44N
+ co7a5CA9uWP65nqXckeb/tcHyQYPekL149lqHbLxK6nA4kmuI4BEIije+AXHoBL//E/w
+ nBGfBao7lMshUAIGSIZpcpmRY/rzYsD5XzVBO4wzUxSE1QB5ip2xAm//MuAegbfyhOxu
+ vhTQGM/O2p5tzhHtWQ1izwikgatTcp/LTp1tIIw/8riRlp6nOaAstNxlcTiAYs/Oo8O4
+ Fa9NW+2TPnjWFkaXtBR7eQMVinIKKvPBn1JNgGW89SXpa6kjxRUJN13jlNjNah0X2qtR
+ xWKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782901095; x=1783505895;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=DNvGQpzbbrugJ5jYcQ05mYd42IlYP+x1m5KuM5cZI4M=;
+ b=ZupqBmscYRclx1tX+aAE+4ML+YxEa3lTFbU7YuT7KoRjqj/hv5fKuf1QCqyivjJbql
+ Nxlop0/ZxVav/IjtuQScYfPRx6lOTXitWTrDj72O9FrmHH1qUstjbqGJIZNDLwq4JQrR
+ WuizNYrX2QJpJKQgmYJDDZd/I9sbupsGnahbhlZT4iju22mryiPITNECwTpd+oHprZqw
+ y7TSj+HnpxcDi5kLhHj8orlWF+zeyOUfQlVlp5gn3cFDGR9UBxHshZYP3pcNNelEmXtK
+ LuDRd7HYg74vtXe3q/+eTuanab9abgZhbl5uZMPC4e9He/z7oqcQfwPt1C5Y07sD+KSz
+ DnVg==
+X-Gm-Message-State: AOJu0YxXvHAdqV9cBzVwlIH2U3+E6CoY5rp7wudDgJx7TdUduXUtRV6t
+ E4iseTwiE9wktV+obT/xXFmD62mzb3dPyE7ciFh8Jhfg8OmL5rUIuAzYRN7eMQ==
+X-Gm-Gg: AfdE7ckPg/nXgTM8dQy+1NDmxJefi2XJnMy+Kq2i62jxDCJB5wF6xdkx5qrD7iOC//B
+ Fhyo0jbxJogGzqJPjbwKnq1+1J0XzmA2VxKXC7OkLwIxVINVn1St7GLsMiizgtjOuBhMDRTU8k5
+ yC6NnWqhDZ5E5oHt6VMm0dc5HbFzt/7xtljTzCYWRUyi7ZKqnZGKv/nFa0ppIaV23lNmKiJY+JV
+ UMpGwpoSREoIJO6/fJmj/3ZskOO5CVUy2Rh+qcnrtiPXpAMJCSnaLG4uVy4U9Wn4dg4S7354D2i
+ kVE9zj0T9Wvw9hsVabUXXVKLatgZK4sVPHX78537ZC/1fr9GRdP61SnFgN6LqJwk0nzTehaT5lB
+ ILPIzqMqsJjoChstGBLOfYWEzK2YoYvRyuUNJ2dlpgRLu4NU8832y5v3FlYxjFXbRfWOk3Upd28
+ e0q795z7P8JUo9Yyrx6GLxKwo8gDcLJh4=
+X-Received: by 2002:a05:7022:392:b0:137:ef8d:a58 with SMTP id
+ a92af1059eb24-13b390d6b3emr234233c88.3.1782901094462; 
+ Wed, 01 Jul 2026 03:18:14 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.18.05
+ a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.18.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jul 2026 03:18:07 -0700 (PDT)
+ Wed, 01 Jul 2026 03:18:14 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
-	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 00/39] riscv-to-apply queue
-Date: Wed,  1 Jul 2026 20:17:13 +1000
-Message-ID: <20260701101752.2522962-1-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: [PULL 02/39] tests/functional/riscv64: Use newer kernel for tuxrun
+ boot
+Date: Wed,  1 Jul 2026 20:17:15 +1000
+Message-ID: <20260701101752.2522962-3-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260701101752.2522962-1-alistair.francis@wdc.com>
+References: <20260701101752.2522962-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122b;
- envelope-from=alistair23@gmail.com; helo=mail-dl1-x122b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1235;
+ envelope-from=alistair23@gmail.com; helo=mail-dl1-x1235.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,156 +104,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Joel Stanley <joel@jms.id.au>
 
-The following changes since commit 30e8a06b64aa58a3990ba39cb5d09531e7d265e0:
+The published tuxrun kernel is 6.4 which predates the introduction of
+AIA support in Linux. Update it to a 6.11 kernel, the newest build
+on the tuxrun site.
 
-  Merge tag 'net-pull-request' of https://github.com/jasowang/qemu into staging (2026-06-29 17:41:42 +0200)
+Boot times on a laptop are slightly longer but still reasonable:
 
-are available in the Git repository at:
+                       | v6.4.16 | v6.11.9
+  ---------------------|---------|--------
+   test_riscv64        | 4.82s   | 5.56s
+  ---------------------|---------|--------
+   test_riscv64_maxcpu | 4.94s   | 5.30s
 
-  https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20260701
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260617054034.1020724-3-joel@jms.id.au>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ tests/functional/riscv64/test_tuxrun.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-for you to fetch changes up to 64ce9ac18757d79f3b5b337f7bcbdd0dabef3ce1:
+diff --git a/tests/functional/riscv64/test_tuxrun.py b/tests/functional/riscv64/test_tuxrun.py
+index 0d8de36204..43d1242be5 100755
+--- a/tests/functional/riscv64/test_tuxrun.py
++++ b/tests/functional/riscv64/test_tuxrun.py
+@@ -17,8 +17,8 @@
+ class TuxRunRiscV64Test(TuxRunBaselineTest):
+ 
+     ASSET_RISCV64_KERNEL = Asset(
+-        'https://storage.tuxboot.com/buildroot/20241119/riscv64/Image',
+-        '2bd8132a3bf21570290042324fff48c987f42f2a00c08de979f43f0662ebadba')
++        'https://storage.tuxboot.com/kernels/6.11.9/riscv64/Image',
++        '174f8bb87f08961e54fa3fcd954a8e31f4645f6d6af4dd43983d5e9841490fb0')
+     ASSET_RISCV64_ROOTFS = Asset(
+         'https://storage.tuxboot.com/buildroot/20241119/riscv64/rootfs.ext4.zst',
+         'aa4736a9872651dfc0d95e709465eedf1134fd19d42b8cb305bfd776f9801004')
+-- 
+2.54.0
 
-  hw/riscv/riscv-iommu.c: always fault with SADE=0 and A=0 (2026-07-01 20:14:20 +1000)
-
-----------------------------------------------------------------
-RISC-V PR for 11.1
-
-* Fix IMSIC CSR write and add tests
-* Parametrise debug trigger number
-* Add 'svbare' satp-mode
-* Fix RINTC PLIC context ID for KVM
-* Avoid abort when reading vtype before env->xl is set
-* Skip reset for KVM irqchip
-* Skip FP/Vector sync on KVM_PUT_RUNTIME_STATE
-* More FDT cleanups (PLIC)
-* Make FCTL.BE in IOMMU read only 0
-* Check DC.TC reserved bits in IOMMU
-* Apply UXL WARL handling to vsstatus
-* Set cmd_ill IOFENCE.C if rsvp bits are set in IOMMU
-* Set RISCV_IOMMU_FQ_HDR_PV appropriately
-* Fix MSI MRIF IOMMU interrupt-pending offset
-* Report QEMU CPU archid as 42
-* Check PMP before updating PTE
-* Add the Tenstorrent Atlantis machine
-
-----------------------------------------------------------------
-Alistair Francis (1):
-      hw/riscv/atlantis: Ensure OpenSBI has a non-zero next_addr
-
-Charlie Jenkins (1):
-      target/riscv: Report QEMU CPU archid as 42
-
-Chris Rauer (1):
-      hw/i2c: Add DesignWare I2C Controller
-
-Daniel Henrique Barboza (16):
-      target/riscv/cpu: add CPU unrealize callback
-      target/riscv: dynamic alloc of debug trigger arrays
-      target/riscv: add 'num-triggers' debug property
-      target/riscv/cpu.c: add 'svbare' satp-mode
-      hw/riscv/sifive_u.c: remove unneeded qemu_fdt_get_phandle() call
-      hw/riscv/sifive_u.c: use intc_phandle in plic creation
-      hw/riscv/sifive_u: add #address-cells in PLIC FDT
-      hw/riscv/virt.c: change 'plic' nodename to 'interrupt-controller'
-      hw/riscv: add create_fdt_plic() helper
-      hw/riscv/riscv-iommu: rename regs_rw to regs
-      hw/riscv/riscv-iommu.c: make FCTL.BE read only 0
-      hw/riscv/riscv-iommu: check DC.TC reserved bits
-      hw/riscv/riscv-iommu: set cmd_ill IOFENCE.C rsvp bits are set
-      hw/riscv/riscv-iommu.c: set RISCV_IOMMU_FQ_HDR_PV appropriately
-      hw/riscv/riscv-iommu.c: fix MSI MRIF interrupt-pending offset
-      hw/riscv/riscv-iommu.c: always fault with SADE=0 and A=0
-
-Inochi Amaoto (1):
-      target/riscv: Check PMP before updating PTE
-
-Joel Stanley (9):
-      target/riscv: Avoid NULL deref in IMSIC CSR write
-      tests/functional/riscv64: Use newer kernel for tuxrun boot
-      tests/functional/riscv64: Add virt machine AIA boot test
-      hw/riscv/virt: Move AIA initialisation to helper file
-      hw/riscv/aia: Provide number of irq sources
-      hw/riscv/aia: Configure stride for the M-mode IMSIC
-      hw/riscv: Add Tenstorrent Atlantis machine
-      hw/riscv/atlantis: Integrate i2c controllers
-      hw/riscv/atlantis: Add some i2c peripherals
-
-Meng Zhuo (1):
-      target/riscv/kvm: skip FP/Vector sync on KVM_PUT_RUNTIME_STATE
-
-Nicholas Piggin (4):
-      hw/riscv/boot: Describe discontiguous memory in boot_info
-      hw/riscv/boot: Account for discontiguous memory when loading firmware
-      target/riscv: tt-ascalon: Enable Zkr extension
-      tests/functional/riscv64: Add tt-atlantis tests
-
-Qingwei Hu (3):
-      hw/riscv/virt-acpi-build: Fix RINTC PLIC context ID for KVM
-      hw/intc: riscv_aplic: Skip reset for KVM irqchip
-      hw/intc: riscv_imsic: Skip reset for KVM irqchip
-
-SeungJu Cheon (1):
-      target/riscv: Apply UXL WARL handling to vsstatus
-
-ZhengXiang Qin (1):
-      target/riscv: avoid abort when reading vtype before env->xl is set
-
- MAINTAINERS                                  |  21 +
- docs/system/riscv/tt_atlantis.rst            |  41 ++
- docs/system/target-riscv.rst                 |   1 +
- hw/riscv/aia.h                               |  26 +
- hw/riscv/riscv-iommu-bits.h                  |   4 +
- hw/riscv/riscv-iommu.h                       |  26 +-
- include/hw/i2c/designware_i2c.h              |  56 ++
- include/hw/riscv/boot.h                      |  12 +-
- include/hw/riscv/fdt-common.h                |   5 +
- include/hw/riscv/sifive_u.h                  |   2 +
- include/hw/riscv/tt_atlantis.h               |  64 +++
- include/hw/riscv/virt.h                      |   2 +-
- target/riscv/cpu.h                           |  39 +-
- target/riscv/debug.h                         |   1 +
- hw/i2c/designware_i2c.c                      | 745 +++++++++++++++++++++++++++
- hw/intc/riscv_aplic.c                        |   4 +
- hw/intc/riscv_imsic.c                        |   4 +
- hw/riscv/aia.c                               |  94 ++++
- hw/riscv/boot.c                              |  34 +-
- hw/riscv/fdt-common.c                        |  30 ++
- hw/riscv/k230.c                              |   8 +-
- hw/riscv/microchip_pfsoc.c                   |   8 +-
- hw/riscv/opentitan.c                         |   6 +-
- hw/riscv/riscv-iommu-hpm.c                   |   4 +-
- hw/riscv/riscv-iommu.c                       |  73 ++-
- hw/riscv/shakti_c.c                          |   6 +-
- hw/riscv/sifive_u.c                          |  48 +-
- hw/riscv/spike.c                             |   6 +-
- hw/riscv/tt_atlantis.c                       | 617 ++++++++++++++++++++++
- hw/riscv/virt-acpi-build.c                   |  29 +-
- hw/riscv/virt.c                              | 148 ++----
- hw/riscv/xiangshan_kmh.c                     |   6 +-
- target/riscv/cpu.c                           |  43 +-
- target/riscv/cpu_helper.c                    |   8 +
- target/riscv/csr.c                           |  48 +-
- target/riscv/debug.c                         |  46 +-
- target/riscv/kvm/kvm-cpu.c                   |  19 +-
- target/riscv/machine.c                       |  16 +-
- hw/i2c/Kconfig                               |   5 +
- hw/i2c/meson.build                           |   1 +
- hw/riscv/Kconfig                             |  13 +
- hw/riscv/meson.build                         |   2 +
- tests/functional/riscv64/meson.build         |   1 +
- tests/functional/riscv64/test_opensbi.py     |   4 +
- tests/functional/riscv64/test_tt_atlantis.py |  57 ++
- tests/functional/riscv64/test_tuxrun.py      |  11 +-
- 46 files changed, 2196 insertions(+), 248 deletions(-)
- create mode 100644 docs/system/riscv/tt_atlantis.rst
- create mode 100644 hw/riscv/aia.h
- create mode 100644 include/hw/i2c/designware_i2c.h
- create mode 100644 include/hw/riscv/tt_atlantis.h
- create mode 100644 hw/i2c/designware_i2c.c
- create mode 100644 hw/riscv/aia.c
- create mode 100644 hw/riscv/tt_atlantis.c
- create mode 100755 tests/functional/riscv64/test_tt_atlantis.py
 
