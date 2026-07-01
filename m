@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFE70C43327
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 12:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC139C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 12:45:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weuHs-0006Xz-Hw; Wed, 01 Jul 2026 08:43:32 -0400
+	id 1weuJG-0007AJ-HB; Wed, 01 Jul 2026 08:44:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1weuHo-0006XD-38
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:43:28 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1weuJF-0007A8-4X
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:44:57 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1weuHm-0005Fi-Db
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:43:27 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-c88d1d4543fso810446a12.0
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 05:43:25 -0700 (PDT)
+ id 1weuJC-0005YU-E2
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 08:44:56 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-38060005f1cso908608a91.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 05:44:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782909804; x=1783514604; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782909892; x=1783514692; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=BOk36/Pf9YoV1BiPunZKH3kZOtdRTLv5FsdcrsSswpI=;
- b=ji8AKeWiK0H+0VVBhonMfSXyNfUGKBLKf1O6Fmlg/63YZmDJQYp3QbyW/1knvV+gN9
- fVYtKAVtN6cnWmO95DXx3dE287+kfPizyHrX7U5OmePkd+Nvf2oO4Q6ioYyneafTFgYe
- 9ezurFeuneyBM+0EQ5BYygr2QPLV+Np8CLub0cas5ls64sGns5fNMCtdiY9UEQ/rWT+d
- ZvW8AO5m7k2DDpHUZoSBKE/bdol5fmGeK78mB7iV7R+5rXoMXR7aTzsfMdjsJrnVugIK
- o+79dws820AgXUrEEo/VXpL5iD0F4RaFw1/NBx47AS2Pf677q4ARulqutj841zpet4oA
- ru3A==
+ bh=2NqrJXIRHddtkDH7D79FJR/M5LoDmIZclrzAOMj5n94=;
+ b=pXLMwVHEE9awss/j7gP7GmxGQmq5GVi2nYJaT8P7KaYb5bWSTzRXiv4WhSWhhLYOr7
+ TvQXF3d0cclCp+xS1mn1O7knTRUsZNaP1TfxpTFV5J6lFGt3ygaIrGwy1vbtxvButTTN
+ ZtMTzmcxA8aE8XFMr5zarte0IeOvdI6dMdqq6YAb/u0KwFtXpPJFpjFfZ8yr5ztS6q53
+ yDC6ClU5HXfuHBjBn1cKklh9/C/pDxhlNxexHzz+pO8h+Z9FTG6sHg0Jtx8BJyYYDlDZ
+ X4EQE2bDYpA+LcoB8X9YZqDWx4s8QybTi2iRFnYxxpww51bdlY7g+vp4z/8QVkVWhnFx
+ ooSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782909804; x=1783514604;
+ d=1e100.net; s=20251104; t=1782909892; x=1783514692;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=BOk36/Pf9YoV1BiPunZKH3kZOtdRTLv5FsdcrsSswpI=;
- b=e5k8BBdQGh6xMwAwGTENWeu0KnfBb6F1bOssiDL3Wj8Pg9GRErWXURCVS6xhXZfmzD
- mZXtjArL6cfn74vnSGm5CFb3VOMOpaC/czEni0SSmG5dcwKULLmz9ZkzWUGu7QIzQEFC
- oIvaX/Pv+4vD4yHzWSEdXgOQGSENyhsV46TTXrSQs5yVTfJ07BD8eOgrNpGAf378BYF1
- pX4ThrWELm6IQFMly6ppmK/eo7FBIUy45IKZzRYLKFJ+Hk51QJJit90nA9iOi92ummqi
- utqTvGE25vd2T6djob2RRSFj3daDzlFc4nP8CqUd32AAOfXmQn4B6ztGRQSUBz5EMfdO
- /uig==
+ bh=2NqrJXIRHddtkDH7D79FJR/M5LoDmIZclrzAOMj5n94=;
+ b=Y9N9EEAo4EUiTam5t9wzQ843LRpVy2zbAfdUiAbN0DGKJxjCiT+7KPuJUSCe/msePt
+ hUrXdPLdekuCc3ksibvCuLKq3T3oRuYZD2CM9Slu3QK6+I6jR/9/zYo8H8tu6hGY5/7R
+ 2nDWkhSIuGGhBEi1w/+wJZO3nGsi9/BeJG61qR8++VOnM9f6Nfnx/Ytcs5GXst5OL/OS
+ wXcVj5SIeX9Dc8m2AYxn7UCH1PuAsn14LDUwXSgnkUra78rMC8hE4Zu10HfNnQJ9cRo6
+ 7ML2377mEn5oI+0SQGVKdusJ4QyCKgnL/B2RI0Du4hSw7Ix/6++TNfkIJ/jfjJM1EgkH
+ RA7w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ99U7E0rwC27GN+dQalvh8B9rLgszOxL07xhWGFPH7YEmW1Y349qBjGbaR1aYlGaP6Di6v1wp0toa38@nongnu.org
-X-Gm-Message-State: AOJu0YwBolVollLAecjeUO+db79p8N4kaWmvdXo4z3LkKN2Lm7bUpYF7
- 3A1c/1bx9UI8nPO4E1TNebjUchZQx9ib+nychyqEtZtmS/Eh2tLbvUr67Kfw1nfQTrvUtCZKBZK
- pGjsS
-X-Gm-Gg: AfdE7cmE3QQGIzq6nP51OGzIjR3PUowBbNy6qhQ3WLe8+mxj3uHXY1Tcp+QMug1mLpV
- 9A49KDHhpm2Auxv0vZ0eOMUMktGMsSmScooJfkeq82sC+mYRlYbTRrfNvxE1i6Krq7YCwGqGJ8p
- eLtmFhPb2kv3J7vsNx8cUQfiICdaUd5H+AJJs49DyxT1eUgMb6RRwLyjjvlsahLru1Iev7YvnI0
- lTnktI4FZgIYt1HRzh9BkW6R43TuPyFisEzze0y2nVGNybTnfOWQCuMBLGl5Kv49WtjWthOqk14
- MS+S0M9qw9++gZGEM8cEft1olB0mKRvF7ymntuMQy1jQtfkewvYxySvyuiYL4friOY5DQ5jeRiE
- Q3onbuUQndm7amaYCaPYnNo/BcBog59Ul2gsSLhpReIK0ZBByT8ePgcFRxLUru/CUl9oBGDn+Qk
- xrOGxBentL4ztTWMgqgH0GgFh8VRX749gds2MtuzssVz26Ro62AlBJnVb6CA==
-X-Received: by 2002:a05:6a20:7283:b0:3bf:651d:fee0 with SMTP id
- adf61e73a8af0-3bfeca33e96mr1338942637.19.1782909803929; 
- Wed, 01 Jul 2026 05:43:23 -0700 (PDT)
+ AHgh+Rp2WeTLii2b+o/ux9RKHZho5Kh1lZkQTinpzLXw+E31z/Ku4rBvTjWIgujqI40PSFrZDg/P4IqnqCoQ@nongnu.org
+X-Gm-Message-State: AOJu0Yxl4aQUTBvL132dNVU3gcInVfcEZ7Vl5n2O8Z9Gbi9TzntactSm
+ 4ypTNG1+bhMg83c19sJUoSWUFBcS/DTLNmeHtRIlncVQYlBnn3sSn8EkKOxdLdOlpSM=
+X-Gm-Gg: AfdE7ckpHvxRYUGdkeWywAdyRuuZwHuIt7s8G5WW6wucjjzrRizYCP808ZP+7gWDIvh
+ 4hzkfx89C89bQAIgsnKyEgaVHYxYYSBXgd45Ihg0SsZOjVZUGQG/D0RXdDIagnWcruNCo/OZVwg
+ YFSpsvxNsazDghYBsp+V/mFlCOB0Mi2v/SM1mlX9tatYhUgUK/HUOKTnEKaBx7jNKGW88FobWK0
+ 4VVYF3hu7ZZqK6bpCOdbMxfBsr242RRzu4iRBUeO1izwr/OA017NaWr10iSEHAUgd2wJ6F5rY1j
+ TC64MunYgHGw1ULMT2gwMQADivV7G/IHlC3iG+HWFFkY194gyjQQs4iCFiq8tf+6P3s872iJHSg
+ y3EK+2C2hEhgklQaTEk+NpN6R/1OuSK1pmH9wytaeqnvqA0gtWhHI0TSlgg5vsLzTZDVvX679tb
+ 1Rdjjm7V6W4vfndPEzuTVgAZqFYBcpgD7HSxNkRYewADl8hs1Vtv9FbhuP0qkwyRrszadS
+X-Received: by 2002:a17:90b:562c:b0:36b:769c:c037 with SMTP id
+ 98e67ed59e1d1-380aa0b53afmr1211764a91.5.1782909892341; 
+ Wed, 01 Jul 2026 05:44:52 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c9bc001d5f4sm3245764a12.23.2026.07.01.05.43.23
+ 98e67ed59e1d1-38095e83b6csm1893033a91.8.2026.07.01.05.44.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Jul 2026 05:43:23 -0700 (PDT)
-Message-ID: <9633c308-d799-48fa-8255-3fcd81bfd08b@linaro.org>
-Date: Wed, 1 Jul 2026 05:43:21 -0700
+ Wed, 01 Jul 2026 05:44:51 -0700 (PDT)
+Message-ID: <3d06dbe0-9e1d-4862-8d6d-75d0085cd626@linaro.org>
+Date: Wed, 1 Jul 2026 05:44:49 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/17] exec/breakpoint: Introduce BP_CPU_ID_SHIFT
+Subject: Re: [PATCH 04/17] exec/breakpoint: Move BP declarations from
+ hw/core/cpu.h
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: shivangu@linux.ibm.com, qemu-arm@nongnu.org, qemu-riscv@nongnu.org
 References: <20260701030443.1382447-1-richard.henderson@linaro.org>
- <20260701030443.1382447-9-richard.henderson@linaro.org>
- <a5d3aa14-4b74-4e0a-a514-a8dc23890813@oss.qualcomm.com>
- <6d52bca8-c748-4b27-a46d-a9de9dc2b782@oss.qualcomm.com>
+ <20260701030443.1382447-5-richard.henderson@linaro.org>
+ <bf05f5e5-737d-44ca-8fd5-abd97c6513d4@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <6d52bca8-c748-4b27-a46d-a9de9dc2b782@oss.qualcomm.com>
+In-Reply-To: <bf05f5e5-737d-44ca-8fd5-abd97c6513d4@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,45 +108,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/30/26 23:19, Philippe Mathieu-Daudé wrote:
-> Hi Richard,
+On 6/30/26 23:11, Philippe Mathieu-Daudé wrote:
+> On 1/7/26 05:04, Richard Henderson wrote:
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   include/exec/breakpoint.h | 21 +++++++++++++++++++++
+>>   include/hw/core/cpu.h     | 21 ---------------------
+>>   2 files changed, 21 insertions(+), 21 deletions(-)
+>>
+>> diff --git a/include/exec/breakpoint.h b/include/exec/breakpoint.h
+>> index 95f0482e6d..4013d9a07c 100644
+>> --- a/include/exec/breakpoint.h
+>> +++ b/include/exec/breakpoint.h
+>> @@ -12,6 +12,20 @@
+>>   #include "exec/vaddr.h"
+>>   #include "exec/memattrs.h"
+>> +/* Breakpoint/watchpoint flags */
+>> +#define BP_MEM_READ           0x01
+>> +#define BP_MEM_WRITE          0x02
+>> +#define BP_MEM_ACCESS         (BP_MEM_READ | BP_MEM_WRITE)
+>> +#define BP_STOP_BEFORE_ACCESS 0x04
+>> +/* 0x08 currently unused */
+>> +#define BP_GDB                0x10
+>> +#define BP_CPU                0x20
+>> +#define BP_ANY                (BP_GDB | BP_CPU)
+>> +#define BP_HIT_SHIFT          6
+>> +#define BP_WATCHPOINT_HIT_READ  (BP_MEM_READ << BP_HIT_SHIFT)
+>> +#define BP_WATCHPOINT_HIT_WRITE (BP_MEM_WRITE << BP_HIT_SHIFT)
+>> +#define BP_WATCHPOINT_HIT       (BP_MEM_ACCESS << BP_HIT_SHIFT)
 > 
-> On 1/7/26 08:10, Philippe Mathieu-DaudÃ© wrote:
->> On 1/7/26 05:04, Richard Henderson wrote:
->>> Allow the target to store an identifier with
->>> breakpoints and watchpoints.  Change "flags" to
->>> use uint32_t instead of "int".
->>>
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>> ---
->>>   include/exec/breakpoint.h | 10 ++++++----
->>>   cpu-common.c              |  4 ++--
->>>   2 files changed, 8 insertions(+), 6 deletions(-)
->>>
->>> diff --git a/include/exec/breakpoint.h b/include/exec/breakpoint.h
->>> index fc91343875..93876f3304 100644
->>> --- a/include/exec/breakpoint.h
->>> +++ b/include/exec/breakpoint.h
->>> @@ -25,10 +25,12 @@
->>>   #define BP_WATCHPOINT_HIT_READ  (BP_MEM_READ << BP_HIT_SHIFT)
->>>   #define BP_WATCHPOINT_HIT_WRITE (BP_MEM_WRITE << BP_HIT_SHIFT)
->>>   #define BP_WATCHPOINT_HIT       (BP_MEM_ACCESS << BP_HIT_SHIFT)
->>> +/* Bits [31:16] are reserved as an identifier for BP_CPU. */
->>> +#define BP_CPU_ID_SHIFT       16
-> 
-> While I understand the benefits of storing the ID in the structure,
-> I'm not keen in having it packed with the BP flags, it hinders the
-> code logic. Since there is no point in optimizing this, lets simply
-> add an index field. And convert the API introducing _by_index()
-> helpers. I suppose you plan to remove cpu_breakpoint_remove_by_ref()
-> at the end.
+> See https://lore.kernel.org/qemu-devel/20260630220100.1289-18-philmd@oss.qualcomm.com/ ;)
 
-At first I thought packing the id into the flags would work well with 
-cpu_breakpoint_remove, and it's "bp->flags == flags" test.  But it seems all backends use 
-cpu_breakpoint_remove_by_ref and that continues to be easier to use.
-
-So I might just add an index parameter to the "insert" functions and leave it at that, not 
-bothering with any "_by_index" api.
+I noticed your series just after I posted mine.  :-)
+I'll have a look through and probably rebase on yours.
 
 
 r~
