@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DA12C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 05:24:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1294FC43327
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 05:24:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wenQi-0005E6-FS; Wed, 01 Jul 2026 01:24:12 -0400
+	id 1wenQo-0005FH-Bt; Wed, 01 Jul 2026 01:24:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wenQd-0005DD-TT; Wed, 01 Jul 2026 01:24:07 -0400
+ id 1wenQk-0005Ee-OS; Wed, 01 Jul 2026 01:24:14 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wenQc-0006rF-4G; Wed, 01 Jul 2026 01:24:07 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wenQi-0006rj-6u; Wed, 01 Jul 2026 01:24:13 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6613ITPq3867661; Wed, 1 Jul 2026 05:24:04 GMT
+ 6613IPal3925383; Wed, 1 Jul 2026 05:24:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=djYiciTOY1LazIZfV
- u0lv7Rc+0cP6IKZ+ziP+ett4Mk=; b=e9aA8VtGGBJgZzsRCdafPHEo3fHztzWrS
- xMersYXruaV2ENuj9u2/fQK65s4LrNLd0yLn9NqKjfALgAnZA8F3rZxCFvUk5Ceo
- DiI+OnNv1HoH2WzglhlCXkHlesTMVaQSM2xi825siFcU92t9m9IM9rJrVzjEleqe
- rRaMQtGCzFT3rp0TqeYThTE9hC3Ar7u1RkrJc9GeYR8uEGXsFJ2NsebmhkB1xT9f
- QbSf/gkBVe9WZzY4i0NHP1F3ZgrpDmpUApBnFJRNC32EFwKD6xh4I3OBUN4ujb56
- +uIKPZ5pXX0+nSTFwCScIc3dzQPl9Ezn4cYj3Im1UR7+QaqxMp0eA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26n5tp7c-1
+ :mime-version:references:subject:to; s=pp1; bh=ycHh8YWky6M2U5Wpc
+ gzdlLDTxNHEDLB2b4+wAt3PiEo=; b=fhfV7Rc2k3QLL1bM2dLWKXNhU3ML6GxjL
+ 4G8oTZX/8AhXyejPV8va5MEO9pSjSM4uAjlflnKFHuqblP40VkaxEHhCvK8iZAJW
+ l6haIKzV9qaUFTkI1o7fOMiuV47N5bqC1zbPPHWsqt7e//8R8TsfnGENxdLlad6D
+ LgM91yiLIb6M5oQfmp+B8pHi1AWL1yGgWkiLZvy34CBVzQ+3/vQtx4hUoHgBYHgJ
+ V1KXP7rqO3iutmNsB3FvHaR4szgWfGEljQSjPWlt6x4rU54Z7qmESybunj19xhyD
+ bumksWcXeIQCa4shxg3X3edfK9WH6XdfxQdwfYFyHkjiApNkQWBbw==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26pe2q49-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 01 Jul 2026 05:24:03 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6615JgdV022029;
- Wed, 1 Jul 2026 05:24:02 GMT
+ Wed, 01 Jul 2026 05:24:10 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6615Jabh005574;
+ Wed, 1 Jul 2026 05:24:09 GMT
 Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhdpyj-1
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruqdy1c-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 01 Jul 2026 05:24:02 +0000 (GMT)
+ Wed, 01 Jul 2026 05:24:09 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
  by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6615NwXf46530840
+ 6615O5VO42991962
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 1 Jul 2026 05:23:58 GMT
+ Wed, 1 Jul 2026 05:24:05 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7BD7E20049;
- Wed,  1 Jul 2026 05:23:58 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 78ED220049;
+ Wed,  1 Jul 2026 05:24:05 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C343320040;
- Wed,  1 Jul 2026 05:23:55 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CE3A120040;
+ Wed,  1 Jul 2026 05:24:02 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.124.211.190])
  by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  1 Jul 2026 05:23:55 +0000 (GMT)
+ Wed,  1 Jul 2026 05:24:02 +0000 (GMT)
 From: Amit Machhiwal <amachhiw@linux.ibm.com>
 To: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
 Cc: Amit Machhiwal <amachhiw@linux.ibm.com>,
@@ -64,9 +64,10 @@ Cc: Amit Machhiwal <amachhiw@linux.ibm.com>,
  Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
  Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v4 1/3] [DO_NOT_MERGE] linux-headers: Add uapi header changes
-Date: Wed,  1 Jul 2026 10:53:39 +0530
-Message-ID: <20260701052341.62289-2-amachhiw@linux.ibm.com>
+Subject: [PATCH v4 2/3] target/ppc/kvm: Add support for querying host
+ compatibility mode
+Date: Wed,  1 Jul 2026 10:53:40 +0530
+Message-ID: <20260701052341.62289-3-amachhiw@linux.ibm.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260701052341.62289-1-amachhiw@linux.ibm.com>
 References: <20260701052341.62289-1-amachhiw@linux.ibm.com>
@@ -74,30 +75,29 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDA1MiBTYWx0ZWRfXwXecdgsGa3O6
- 3DqwVEwiQANjp66JzdVowjaY44kVKVkHj6EdLtH/OCeAjxIUlMN6Kg4hYdt9qgRnpkqop58ih7b
- wi1VyiKIICodbFsO0W14ToMlGj4rjDWYVoFTJhcmGTqO4b77Lsl+1EUbtuDTJx9dVbU16/fphG5
- opcYH7QhEUo4rpxZRaw+4UpXdNeZzqRUFj6+oW3OzlDu6v1o7Ku86uIVeBi6DrnfuZB9cPUH85L
- ul6HpRGMw+V2x/QyvEaYQZaEZtYSNitP6+tmrpQu/D/p/6XryydutSC19txbbiDObRyiCoTh+Sd
- BE/2oQTdyDgoXbcbY/xPJ6AlDLkigsiyTCXII3TAjpiJDCU7/WZh6LrKXjtNM6yvdXV701mZXl9
- 0TeXwfE+Z0WvbIynQO6yPsNrZZOkyaIW3XzLKMZtmHb9ze/36Y5A1Q/Nr/coWF4VqUiSdJcUlT1
- J/ERZ1KrAXspN2GXq3g==
-X-Authority-Analysis: v=2.4 cv=V45NF+ni c=1 sm=1 tr=0 ts=6a44a474 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-GUID: UUhOgQjF6XzooNUPOEoOFW7IAZZwOnxI
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDA1MiBTYWx0ZWRfX5yCPodqPAoUh
+ FmZQRbC8HHCl2d/fNTPWLeDyIqtr3p8eWd95eidl7L5lsBd7i8/NpPff3KWHmQ4wzvSjjsS0NKH
+ 4B3lCSnZn0L80xBOv/X/8GywmOQYrwo=
+X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a44a47a cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=MBz6HKjOuQBNVPZFXNsA:9
-X-Proofpoint-ORIG-GUID: 5Ba5R1ss5CozZLULh-WMhnNbrwg79i-9
-X-Proofpoint-GUID: WpVQtmguszroi2JYXzDnhFy6wc7SAEJu
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDA1MiBTYWx0ZWRfX/Ys7dZlLsZcq
- KgDmM+JLKlGahbA/OGEivt0g/dJAUKSOhRpJ07INUNB3lT94q8Hli5LZGZQsvJoxy5CdHbUI+R/
- 3zgbUg4fHRtcqw7ljOhmnt0QhHidGyc=
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=MQa1r56DKncGqAxa_z4A:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDA1MiBTYWx0ZWRfX4rWPsaq8Ep6k
+ Yb3I9OLDr3WtUVU3bmuZFN5ubXYQQVvD2tQMnOYWaunQLy5aQ3h/74ll1YdeWs3rz3THulD4QC9
+ w5z3y7GXNnLxI373XYQJZlJY+tYSQw8WFpNY6FN2pb51cCA9PAiP4RZ1K0jshuAiu0OFj1dSCeD
+ q7QSBMdwyoDJ/tt53eJ6KRWI+EDh6Sy853FYFKPNoO5UQYwC51kNTYRvnVTI01xxZC3QAhL0m3W
+ SrNgYFs+2Shh9ARXruPpZvEU5wmlWoFQ5KTEBtg9iBRR5SXHz6vfuoW/y57cA37FXWRfYWOmcUa
+ KPcHrqDh1d99BYjUc2yHRUfKayCntjHEu/85SEeELmC9GhqQ5QSFPOYKyz0kFE2o1HvOZyFcRYP
+ 8WUwLu2k4CawThYHl1fcg9/PNZ/U0V6/VXWWUws2odtir+Vds6sknj+iFu7c9orMrHucreDPDXy
+ j+LRQcznX+NQ+nKXjxA==
+X-Proofpoint-ORIG-GUID: HkHNPIdDznWlxOzZZsVKjlqYY89b2cvk
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-01_01,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
- adultscore=0 clxscore=1015 impostorscore=0 malwarescore=0 bulkscore=0
+ priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
+ spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010052
 Received-SPF: pass client-ip=148.163.156.1;
@@ -124,87 +124,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a temporary patch intended for review and testing purposes only.
-It syncs the QEMU linux-headers with the kernel v5 changes that introduce
-the KVM_PPC_GET_COMPAT_CAPS ioctl for querying host CPU compatibility
-capabilities. The struct kvm_ppc_compat_caps places 'size' as the first
-field as required by copy_struct_from/to_user() versioning, with
-KVM_PPC_COMPAT_CAPS_SIZE_VER0 (24) defined as the frozen version-floor
-constant. The capability number is KVM_CAP_PPC_COMPAT_CAPS (250) and
-the ioctl is defined as _IO so the ioctl number remains stable if the
-struct grows in future versions. Capability bit definitions for POWER9,
-POWER10, and POWER11 compatibility modes are also included.
+Add infrastructure to query the host CPU compatibility mode via the
+KVM_PPC_GET_COMPAT_CAPS ioctl. This allows QEMU to determine if the
+host is running in a compatibility mode (e.g., a Power11 processor
+operating in Power10 compatibility mode).
 
-The actual header sync will be done via scripts/update-linux-headers.sh
-once the kernel changes [1] are merged upstream.
+The kvmppc_get_compat_caps() function issues the ioctl and returns the
+compat_capabilities bitmap. The kvm_ppc_host_compat_pvr() function derives
+the effective PVR from the bitmap using ctz64() to find the lowest set
+bit (highest supported compat level in IBM MSB-0 numbering).
 
-[1] https://lore.kernel.org/all/20260628083352.118b631-1-amachhiw@linux.ibm.com/
+The struct kvm_ppc_compat_caps places 'size' first and userspace sets it
+to sizeof(struct kvm_ppc_compat_caps) before calling the ioctl. The kernel
+uses copy_struct_from/to_user() to handle forward and backward ABI
+compatibility: an older userspace with a smaller struct gets trailing fields
+zero-padded. When newer userspace passes a larger struct to an older kernel
+(usize > ksize), the kernel unconditionally returns -E2BIG and writes its
+own ksize back into host_compat.size. QEMU detects this, validates the
+returned size against KVM_PPC_COMPAT_CAPS_SIZE_VER0, and retries with that
+size.
+
+Additionally, cas_check_pvr() in hw/ppc/spapr_hcall.c is updated to
+prevent fallback to raw mode when the host is running in compatibility
+mode. This ensures that nested guests cannot exceed the host's
+compatibility level. The call is guarded with kvm_enabled() since
+kvm_ppc_host_compat_pvr() invokes kvm_vm_ioctl() which dereferences
+kvm_state; without the guard, a TCG guest on a CONFIG_KVM=y binary
+would segfault.
+
+If the capability is not supported or the query fails, the functions
+return 0, allowing fallback to existing behavior.
 
 Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 ---
 Changes in v4:
-- Changed ioctl definition from _IOWR to _IO to match kernel v5.
-- The ioctl number must remain stable if the struct grows; the size
-  field is read first by the kernel via get_user() before any
-  copy_struct_from_user() call.
+- Replaced fprintf(stderr, ...) with error_report() for error reporting
+  in kvmppc_get_compat_caps().
+- Replaced __builtin_ctzll() with the portable ctz64() helper.
+- Simplified kvm_ppc_host_compat_pvr() to switch directly on the
+  capability bit value (e.g. KVM_PPC_COMPAT_CAP_POWER9) instead of a
+  derived index, removing the KVM_PPC_COMPAT_CAP_P*_IDX defines from
+  kvm_ppc.h.
+- Dropped the post-ioctl size mismatch check; it is not meaningful with
+  the copy_struct_from/to_user() model.
+- Added a function comment to kvm_ppc_host_compat_pvr().
+- Guarded the kvm_ppc_host_compat_pvr() call in cas_check_pvr() with
+  kvm_enabled() to prevent a segfault when QEMU is built with
+  CONFIG_KVM=y but run as a TCG guest (kvm_state is NULL in that case).
 
- linux-headers/asm-powerpc/kvm.h | 20 ++++++++++++++++++++
- linux-headers/linux/kvm.h       |  4 ++++
- 2 files changed, 24 insertions(+)
+ hw/ppc/spapr_hcall.c | 14 +++++++++
+ target/ppc/kvm.c     | 75 ++++++++++++++++++++++++++++++++++++++++++++
+ target/ppc/kvm_ppc.h |  7 +++++
+ 3 files changed, 96 insertions(+)
 
-diff --git a/linux-headers/asm-powerpc/kvm.h b/linux-headers/asm-powerpc/kvm.h
-index 077c5437f521..e42c86481320 100644
---- a/linux-headers/asm-powerpc/kvm.h
-+++ b/linux-headers/asm-powerpc/kvm.h
-@@ -437,6 +437,26 @@ struct kvm_ppc_cpu_char {
- 	__u64	behaviour_mask;		/* valid bits in behaviour */
- };
+diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+index 23bcd788daf6..708902934cff 100644
+--- a/hw/ppc/spapr_hcall.c
++++ b/hw/ppc/spapr_hcall.c
+@@ -1136,6 +1136,7 @@ static uint32_t cas_check_pvr(PowerPCCPU *cpu, uint32_t max_compat,
+ {
+     bool explicit_match = false; /* Matched the CPU's real PVR */
+     uint32_t best_compat = 0;
++    uint32_t compat_host_pvr = 0;
+     int i;
  
-+/* For KVM_PPC_GET_COMPAT_CAPS */
-+struct kvm_ppc_compat_caps {
-+	__u64	size;			/* Size of this structure */
-+	__u64	flags;			/* Reserved for future use */
-+	__u64	compat_capabilities;	/* Capabilities supported by the host */
-+};
-+#define KVM_PPC_COMPAT_CAPS_SIZE_VER0	24 /* sizeof first published struct */
+     /*
+@@ -1163,6 +1164,19 @@ static uint32_t cas_check_pvr(PowerPCCPU *cpu, uint32_t max_compat,
+         }
+     }
+ 
++    if (explicit_match && kvm_enabled()) {
++        compat_host_pvr = kvm_ppc_host_compat_pvr();
++        /*
++         * If the host is booted in a compatibility mode, do not try booting in
++         * the raw mode as it may allow KVM guests to boot with a higher CPU
++         * version compared to what host was booted with; which should not be
++         * allowed.
++         */
++        if (compat_host_pvr) {
++            explicit_match = false;
++        }
++    }
++
+     *raw_mode_supported = explicit_match;
+ 
+     /* Parsing finished */
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index b94c2997a07f..b1b596f004ef 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -2602,6 +2602,81 @@ bool kvmppc_supports_ail_3(void)
+     return cap_ail_mode_3;
+ }
+ 
++#if defined(TARGET_PPC64)
++static target_ulong kvmppc_get_compat_caps(void)
++{
++    struct kvm_ppc_compat_caps host_compat;
++    int ret;
++
++    if (!kvm_check_extension(kvm_state, KVM_CAP_PPC_COMPAT_CAPS)) {
++        return 0;
++    }
++
++    /*
++     * Set size to sizeof(struct kvm_ppc_compat_caps) so the kernel applies
++     * copy_struct_from/to_user() versioning. size must be >= VER0.
++     */
++    memset(&host_compat, 0, sizeof(host_compat));
++    host_compat.size = sizeof(host_compat);
++
++    ret = kvm_vm_ioctl(kvm_state, KVM_PPC_GET_COMPAT_CAPS, &host_compat);
++    if (ret == -E2BIG && host_compat.size >= KVM_PPC_COMPAT_CAPS_SIZE_VER0) {
++        /*
++         * Kernel is older and knows only a smaller struct version. It
++         * wrote back its ksize into host_compat.size. Retry with that
++         * size so the kernel accepts the call.
++         *
++         * When a VER1 struct is introduced, add a check here:
++         *   if (host_compat.size >= KVM_PPC_COMPAT_CAPS_SIZE_VER1) { ... }
++         */
++        uint64_t ksize = host_compat.size;
++        memset(&host_compat, 0, sizeof(host_compat));
++        host_compat.size = ksize;
++        ret = kvm_vm_ioctl(kvm_state, KVM_PPC_GET_COMPAT_CAPS, &host_compat);
++    }
++
++    if (ret < 0) {
++        error_report("KVM: failed to get host CPU compat capabilities: %s",
++                     strerror(-ret));
++        return 0;
++    }
++
++    return host_compat.compat_capabilities & KVM_PPC_COMPAT_BITMASK;
++}
 +
 +/*
-+ * Capability bits for compat_capabilities field in kvm_ppc_compat_caps.
-+ * These bits indicate which processor compatibility modes are supported.
++ * Return the effective host PVR based on the CPU compatibility mode
++ * reported by KVM. Returns 0 if no compat mode is active or the
++ * capability is not supported, in which case the caller falls back
++ * to the raw hardware PVR.
 + */
-+#define KVM_PPC_COMPAT_CAP_POWER9	(1ULL << 62)
-+#define KVM_PPC_COMPAT_CAP_POWER10	(1ULL << 61)
-+#define KVM_PPC_COMPAT_CAP_POWER11	(1ULL << 60)
-+#define KVM_PPC_COMPAT_BITMASK		(KVM_PPC_COMPAT_CAP_POWER9 | \
-+					 KVM_PPC_COMPAT_CAP_POWER10 | \
-+					 KVM_PPC_COMPAT_CAP_POWER11)
++uint32_t kvm_ppc_host_compat_pvr(void)
++{
++    uint32_t compat_host_pvr = 0;
++    uint64_t cap_idx = 0;
++    target_ulong host_caps = kvmppc_get_compat_caps();
 +
++    if (host_caps) {
++        cap_idx = 1ULL << ctz64(host_caps);
++        switch (cap_idx) {
++        case KVM_PPC_COMPAT_CAP_POWER9:
++            compat_host_pvr = CPU_POWERPC_POWER9_DD22;
++            break;
++        case KVM_PPC_COMPAT_CAP_POWER10:
++            compat_host_pvr = CPU_POWERPC_POWER10_DD20;
++            break;
++        case KVM_PPC_COMPAT_CAP_POWER11:
++            compat_host_pvr = CPU_POWERPC_POWER11_DD20;
++            break;
++        default:
++            break;
++        }
++    }
 +
- /*
-  * Values for character and character_mask.
-  * These are identical to the values used by H_GET_CPU_CHARACTERISTICS.
-diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
-index 50e87ed72c20..6aa70b8d2e61 100644
---- a/linux-headers/linux/kvm.h
-+++ b/linux-headers/linux/kvm.h
-@@ -985,6 +985,8 @@ struct kvm_enable_cap {
- #define KVM_CAP_S390_USER_OPEREXEC 246
- #define KVM_CAP_S390_KEYOP 247
- #define KVM_CAP_S390_VSIE_ESAMODE 248
-+#define KVM_CAP_S390_HPAGE_2G 249
-+#define KVM_CAP_PPC_COMPAT_CAPS 250
++    return compat_host_pvr;
++}
++#endif /* TARGET_PPC64 */
++
+ PowerPCCPUClass *kvm_ppc_get_host_cpu_class(void)
+ {
+     uint32_t host_pvr = mfpvr();
+diff --git a/target/ppc/kvm_ppc.h b/target/ppc/kvm_ppc.h
+index 742881231e16..195dbaac5e17 100644
+--- a/target/ppc/kvm_ppc.h
++++ b/target/ppc/kvm_ppc.h
+@@ -81,6 +81,8 @@ bool kvmppc_supports_ail_3(void);
+ int kvmppc_enable_hwrng(void);
+ int kvmppc_put_books_sregs(PowerPCCPU *cpu);
+ PowerPCCPUClass *kvm_ppc_get_host_cpu_class(void);
++
++uint32_t kvm_ppc_host_compat_pvr(void);
+ void kvmppc_check_papr_resize_hpt(Error **errp);
+ int kvmppc_resize_hpt_prepare(PowerPCCPU *cpu, target_ulong flags, int shift);
+ int kvmppc_resize_hpt_commit(PowerPCCPU *cpu, target_ulong flags, int shift);
+@@ -440,6 +442,11 @@ static inline PowerPCCPUClass *kvm_ppc_get_host_cpu_class(void)
+     return NULL;
+ }
  
- struct kvm_irq_routing_irqchip {
- 	__u32 irqchip;
-@@ -1329,6 +1331,8 @@ struct kvm_s390_keyop {
- /* Available with KVM_CAP_COUNTER_OFFSET */
- #define KVM_ARM_SET_COUNTER_OFFSET _IOW(KVMIO,  0xb5, struct kvm_arm_counter_offset)
- #define KVM_ARM_GET_REG_WRITABLE_MASKS _IOR(KVMIO,  0xb6, struct reg_mask_range)
-+/* Available with KVM_CAP_PPC_COMPAT_CAPS */
-+#define KVM_PPC_GET_COMPAT_CAPS	_IO(KVMIO,  0xe4)
- 
- /* ioctl for vm fd */
- #define KVM_CREATE_DEVICE	  _IOWR(KVMIO,  0xe0, struct kvm_create_device)
++static inline uint32_t kvm_ppc_host_compat_pvr(void)
++{
++    return 0;
++}
++
+ static inline void kvmppc_check_papr_resize_hpt(Error **errp)
+ {
+ }
 -- 
 2.50.1 (Apple Git-155)
 
