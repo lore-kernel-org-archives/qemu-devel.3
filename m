@@ -4,100 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 854ACC43327
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 08:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D776BC43327
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 08:45:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weqVn-0000rJ-8S; Wed, 01 Jul 2026 04:41:39 -0400
+	id 1weqZe-0001mp-Qw; Wed, 01 Jul 2026 04:45:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1weqVg-0000qG-Un; Wed, 01 Jul 2026 04:41:33 -0400
+ id 1weqZa-0001lk-RV; Wed, 01 Jul 2026 04:45:36 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1weqVc-0008Ud-2k; Wed, 01 Jul 2026 04:41:32 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1weqZY-00011E-Qw; Wed, 01 Jul 2026 04:45:34 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6618IrI8195455; Wed, 1 Jul 2026 08:41:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=hmhty5
- /4biwvmUDqRXBuLPtRgvVRow+cjNFCtObiWd4=; b=n9nxevcFBhBkivL7LZOcyp
- YlJ0ZTrQuQwxGd/2tEXXjLMwc5+tYpGw2z2i4BflgqS8GRNECjSnr+j6aT/Gwxsz
- GijH87bik+55mCFqdkgkFqgItgoDG81o/1Zpj4T/cxwI7mYicJPM0q1BMjtVB+ie
- R3PJx3kaJvkhUhpFRahKEvO7OC6czVS7UeN+qMdSWltTPqc1ok0CGjczbSskrhEg
- FrjeWgxktNsuoch6xNMsaxT6+uqn5rWvsvHkH5pN+KC4/bTTr+eg8bUtvv1v1Rc4
- SxxYDL14qa4jXQ4On/pE5a57siNC6CeaRccyqoU8QVItgHdxZIIosEPw7Xybk8vg
+ 6618IjLQ236558; Wed, 1 Jul 2026 08:45:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=IQSnUL
+ xubPIV+FpUGTCILHoC53DEBk7df8J3eQkc3ak=; b=B9lPbx/Po72rR5vYGRmay5
+ m6aYyVLW8lrjLmhcAB5DIFzd/qHyuDjkI3a1/I6b++F1B7fK2qIZ8Yb5yXeL4xt6
+ eSFWrih6qsoz09M0J0gOV9QonWJ30mckp6j+lwjxUxB1YI1AMXRcy5B4b/9OcD3q
+ gyMMFVHY/CDnR58RAUfOFRtDycpjGzrySJe4zhgfGjgfvcaLynvLkP58E5TddB40
+ s8tbTP7LyUcrKa2DuJayRVY/mZKR1hT7Zki+YiUYRnTvB8nY+1sp0yAqRPVozD3S
+ 9XE2SGPWMJZOatQdDhqPDnRep+kNDJRIHUB43HamQzhB+21kPP0lJKHw9urs+ecw
  ==
 Received: from ppma12.dal12v.mail.ibm.com
  (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26mju5xw-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qa35xr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 01 Jul 2026 08:41:22 +0000 (GMT)
+ Wed, 01 Jul 2026 08:45:30 +0000 (GMT)
 Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6618YhqB017226;
- Wed, 1 Jul 2026 08:41:22 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruqemkn-1
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6618Ym9w017666;
+ Wed, 1 Jul 2026 08:45:29 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruqen4h-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 01 Jul 2026 08:41:21 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6618fKee30016014
+ Wed, 01 Jul 2026 08:45:29 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6618jQat47382836
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 1 Jul 2026 08:41:20 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 283D02004B;
- Wed,  1 Jul 2026 08:41:20 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 310D320040;
- Wed,  1 Jul 2026 08:41:19 +0000 (GMT)
+ Wed, 1 Jul 2026 08:45:26 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 160B02004B;
+ Wed,  1 Jul 2026 08:45:26 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9B37D20040;
+ Wed,  1 Jul 2026 08:45:24 +0000 (GMT)
 Received: from shivang.upadyay (unknown [9.123.12.247])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  1 Jul 2026 08:41:18 +0000 (GMT)
-Message-ID: <ea947f1ec44ed4b513545ae1d5be1fc455233064.camel@linux.ibm.com>
-Subject: Re: [PATCH 17/17] cpu: Use interval-tree for CPUBreakpoint
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  1 Jul 2026 08:45:24 +0000 (GMT)
+Message-ID: <f197b0818d6734de7ca4b389315facb0d41130e9.camel@linux.ibm.com>
+Subject: Re: [PATCH v3 1/2] ppc/pnv: avoid regenerating DTB if external DTB
+ is present
 From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org
-Date: Wed, 01 Jul 2026 14:11:18 +0530
-In-Reply-To: <20260701030443.1382447-18-richard.henderson@linaro.org>
-References: <20260701030443.1382447-1-richard.henderson@linaro.org>
- <20260701030443.1382447-18-richard.henderson@linaro.org>
+To: adityag@linux.ibm.com, harshpb@linux.ibm.com, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, milesg@linux.ibm.com, npiggin@gmail.com
+Date: Wed, 01 Jul 2026 14:15:23 +0530
+In-Reply-To: <20260630172158.2d40c4a9-97-amachhiw@linux.ibm.com>
+References: <20260630103508.254000-1-shivangu@linux.ibm.com>
+ <20260630103508.254000-2-shivangu@linux.ibm.com>
+ <20260630172158.2d40c4a9-97-amachhiw@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDA4NCBTYWx0ZWRfX/EIIr5GMkDOt
- u7AGW/OGc3anShRmf0qlHaP+TooZCvszQ1KTN70Kkj0jrpC40Z67G8rj60v/4nrT9r7t/qczq9K
- C8Qx46X4VxrYZ93G5HNTPWVfHujpQxwMTv1LiLyob621s4fthZpWqiVJAQaj70oN0eRJVQnRdgl
- LwAJf4xUJNO8WT35QvYarG5dTWRwDf2o4wxywcHUeSjDPhdmSeo5FmvF0cwR0SaECKxOvbvzaL2
- rYbpEMwcKWR92adxgDhBdOkrRbcy8PLhbD9E80WZeevZW4JXL7PhogaX4VtmApNKFA/x5E8onfD
- Fyma3kWALWnFTx6iRi8QcBvhB/7tzFjf2nOiRSCu9rRUz2924tXay1mjVTesX6mbAyNfpqr8XGn
- hxifgRZ7VQTraib3YMSn76/HDnRgfZq1Q62uz7wPB/uL6HUyaHjtgannECO598RzHbdqPrn0FRY
- z2UvVjFFiZX+x3jl82Q==
-X-Proofpoint-GUID: QbfCVw2IhVtcfXqOvHQF8n1N7EGihEPQ
-X-Authority-Analysis: v=2.4 cv=Z8bc2nRA c=1 sm=1 tr=0 ts=6a44d2b2 cx=c_pps
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDA4NCBTYWx0ZWRfX/BnH9UjJZXYd
+ X9bEKN8YcqDLeee2tx9+3+Aol9vbQHIAxr36SZD2II2QT75kv/IxD3/a+tg9rOmIzl3+/o8OdVN
+ 6WLY742/z+U+whH91HVNBH30xsgKljAt2+3TnGuOVzTbTwmoo+kA4kqKFuqk0IvfFG2NwNWE8RJ
+ RBTlaLwcSlC+u1B5DEWAEgiiUAjHT8Yf7y/+pQm6tG3mVehkkrqYA3qVb1hv7lj3m9A227kEqAK
+ 3NISRI7tD5OuKr5re7cmz/jL2W0j/4XQ5hgG00eMgEwt3KySeuvjWPj6uZJi4lWyL1m8+cgvmm6
+ GiHDA4euZbtZzyTY3ph9U/u1cKUjoj003q/HGKHilHTUJHxRDho13uj9EqWbovVAjdnBZwuYRh6
+ UxOhba32iRmedyXHsd01YJHBp1oCbtJKjOZGn8yWsiY0R8YjntEIePCEyb3RdO9TJ7XF91YOMzB
+ 4g3TQDYLJ5AKDm1t2NQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDA4NCBTYWx0ZWRfX90xzU0ISwkyJ
+ WbbNBucYvE4aXyxXObJDcsDsRmTiaccmOhm+bv2kr+PTJWua5MZQkb4n7LVBL/JmYWcijjKcg4e
+ 4Yui+K6jIfdhEgYt95BgediyBMBcwtI=
+X-Proofpoint-GUID: rfx70XWA8dXxfzzhzBJ4ZdQA6cTm65gg
+X-Proofpoint-ORIG-GUID: v9-Dl4vi3oSfFK1SQtHTLkj7iyuw2iAq
+X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a44d3aa cx=c_pps
  a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=l4yQKMJeipP3SqVgYxcA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDA4NCBTYWx0ZWRfX0AMMUIJGbsFV
- SHixAF4JsiFZF5VUmJfkqmI91xPMgUjk6Ft3eYclxmwQ56dLxg0/g2/TLUasAdRi6doVGVhzwah
- 4wQaaYv40sH+UzyjFcLavgqtcczZmkM=
-X-Proofpoint-ORIG-GUID: QbfCVw2IhVtcfXqOvHQF8n1N7EGihEPQ
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=xEDVpvJxk-5VxwPUaT4A:9 a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-01_02,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 adultscore=0 spamscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010084
+ spamscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607010084
 Received-SPF: pass client-ip=148.163.158.5;
  envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -122,16 +126,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gVHVlLCAyMDI2LTA2LTMwIGF0IDIwOjA0IC0wNzAwLCBSaWNoYXJkIEhlbmRlcnNvbiB3cm90
-ZToKPiAtwqDCoMKgIGlmIChtYXRjaF9wYWdlKSB7Cj4gK8KgwqDCoCBuID0gaW50ZXJ2YWxfdHJl
-ZV9pdGVyX2ZpcnN0KCZjcHUtPmJyZWFrcG9pbnRzLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHBjICYgVEFSR0VUX1BB
-R0VfTUFTSywKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoCBwYyB8IH5UQVJHRVRfUEFHRV9NQVNLKTsKPiArwqDCoMKgIGlm
-IChuKSB7ClRoaXMgbG9naWMgc2VlbXMgZ3JlYXQuIEkgdGVzdGVkIHRoaXMgcGF0Y2ggc2VyaWVz
-LCBvbiB0aGUgcHBjIGtlcm5lbApicmVha3BvaW50cyB1c2VjYXNlLiBJdCBzZWVtcyB0byBwZXJm
-b3JtIHNsaWdodGx5IGJldHRlciB0aGFuIEdUcmVlCmltcGxlbWVudGF0aW9uLgoKTWF5YmUgdGhp
-cyBjYW4gb3BlbiB0aGUgd2F5IHRvIGhhdmUgYGJyZWFrLXJhbmdlYCBzdXBwb3J0IGZyb20gZ2Ri
-PwoKVGhhbmtzCn5TaGl2YW5nCg==
+On Tue, 2026-06-30 at 17:23 +0530, Amit Machhiwal wrote:
+> LGTM.
+>=20
+> Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+>=20
+> ~Amit
+Thanks
 
+~Shivang
 
