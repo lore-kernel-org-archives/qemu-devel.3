@@ -4,144 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9876BC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 14:08:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10328C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 14:10:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wevbn-0002qi-RB; Wed, 01 Jul 2026 10:08:11 -0400
+	id 1wevda-0003UI-2r; Wed, 01 Jul 2026 10:10:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wevbk-0002qF-Ur
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:08:08 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wevdY-0003Tf-F1
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:10:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wevbj-0002YY-6A
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:08:08 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 661AGDx0793713
- for <qemu-devel@nongnu.org>; Wed, 1 Jul 2026 14:08:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- rFiIzrK1bmKT3FgjZ2FoUrQPK8y0UL4wulpyfTy2WxM=; b=EqQ+/kMrwrVWMAAc
- jS382Q9SXaMW9sjPtPCBpcHQMz5kz8QM4GmVeUsjFKd5d8PEfonha8Qs+WUmSQTm
- B6cGKR8WzvEZ5tfvp6OrPQKjobwzNWYSR0LYA6l3TKaHkn7CoSj+UuVJQRNT8HXM
- Ww63DK+ECZW5uBbSWbM3PnPxUGPqb06NcN2ALBRcpYmCtALsu42pdhinJxncmx+j
- FYthQ7Fl2XmTwzM5lNtoYf6oDQQy7GkbcniIGdL2S+Ag1MojylIOuX2/YF01hWzP
- v/9QC/o+/nCDVvT8WtQQ34uoUMTF7n13bvwiyGXsCvdwro8AxDckZTF9WmgE8ghn
- CaUOuQ==
-Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com
- [209.85.217.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f510agydq-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 14:08:04 +0000 (GMT)
-Received: by mail-vs1-f70.google.com with SMTP id
- ada2fe7eead31-737cd7b76ceso151678137.3
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 07:08:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782914884; x=1783519684; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rFiIzrK1bmKT3FgjZ2FoUrQPK8y0UL4wulpyfTy2WxM=;
- b=VFVXV4R5Jol7qhYlIsRe9F4WCgOKf4jy+kWCzuFPskSn2YKbLTNwD16HJfZvA2PPSs
- +hSMbmudnQZM5sSL7tO9AtFI6SvvDHAj9NmeBXILem8+MJVyimiA2OPKA32X/tuPB27+
- DFrkyjvXiMGmFrO+wkfmFIqnZrD+nalzLqxTYH02KSuHWZQhfx92Bzcsy0Kqx4p7yLvW
- iVpDgQjeHYEjnHKDrxc1FHNQWXOfoNx/Q4irdyLqv9mZtnjxR8HPOYevx7qzlJ1zbWQW
- 9jv7QVWZD20Axt8chZLNOka6bEcUnTrhNt8rP6mPE2JN7o4PKLqdR259mtDoU2OsjN74
- Cs/w==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wevdW-0003vz-I8
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:10:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782914996;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wSJoBP1n90AixtXBkqkDbkBEiMdcH6OFxpJmUJV3xi0=;
+ b=OJ73NTB3Phl2k2jh81GqwWfmonCvuC2Q4TDNlS+qsl3U3SgFo9OTnBSVMl3HvLoPhzl3TC
+ 8AQMKKMaxFdRPHkp1hQ3OKeM2X7xbyXxMo9d9jQRkKgUE8tiB/0NveQY00KzJ3GbTWNWa8
+ klQuYnPgnAPAaMckReK0thkgHn1J0a4=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-93-6wAZrh-nN3mk4AE8Me49PQ-1; Wed, 01 Jul 2026 10:09:55 -0400
+X-MC-Unique: 6wAZrh-nN3mk4AE8Me49PQ-1
+X-Mimecast-MFC-AGG-ID: 6wAZrh-nN3mk4AE8Me49PQ_1782914994
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-bf481a6e4e6so65507366b.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 07:09:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782914884; x=1783519684;
+ d=1e100.net; s=20251104; t=1782914994; x=1783519794;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rFiIzrK1bmKT3FgjZ2FoUrQPK8y0UL4wulpyfTy2WxM=;
- b=c4lbrPM7e+eD1mBJARrrqJ7OWGneY+uBrhG4LxU8k+GpWbrIWROpzY0qqITIiDWo7e
- q3GBn9qsKKi/Dhl8kMwHNs35ApImllq1caWAHNfHq9Tj9v1vRYn1+qI1rBcdhL+Reloo
- sT5TupP8wF4xjcN6ghRp8SO10gOLfFNr6KWBXicmScRh8VD4HTnq8hNObgOWsF+zGtIS
- Z7Wxl/XAnT9aSqbToRaegt1NfnVWzYVn+Grd+2L7ccuvv5utMTrwls+ZFudJ3dYZOiIA
- N8Um5D3TSxjr3CcqqQF6QVKnZV2g5xY3RWRxkpJS5gCgKL/TlKZRUyH0SfoMFg+XMnS2
- 0Hsg==
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wSJoBP1n90AixtXBkqkDbkBEiMdcH6OFxpJmUJV3xi0=;
+ b=RwDDF9W5YFkFtnABYOKnqXJhi3QhdOumU2rd5m9qh8e7/Ig6PNbJF1PwwQUzUayoJN
+ kVLLXAfS4DWnzKAgvscs3x6Q420FV64Uan8vsnJkH2OFKtcY4J/eW7wVdjC1YTplh+Nr
+ s9LFzGstJsRWaXilK5krYf9lHM2T24hzsyuHKWrDHf90S0uCJ+hrjuZMXFfQE2cueEUg
+ VeRU8l9K+2SYGP2w5wGWc4PMDS0w1vl4cb79MuO+tUH5ICQz+QdyC+8NkGEjJxiRYegU
+ ynQDuIGbOrYc+qmvpg5NOfwHp7/bVQOtKodd47vfScSPmYYae5lSXG5b+lAltT1rVZS9
+ ufjg==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rqpp50TBDXF//AQOJzNkyynIk7O3mVyIVfv2k2P34FECIgTAEi3gXcqp+gwpWnh6nWvqDPCkNTJy20C@nongnu.org
-X-Gm-Message-State: AOJu0YyLre9HlpMh+UjVI2QJ6adj1XFLqVnNAQI1kFbehrvDfftA+c7V
- X+M1PIYBX7O4KQZ4uTTzio0d/xgeohHOK44XTocOKX/e2LhKF4cxaMECfH6rxgOJid842045b9S
- VzAModWjbErn+W5h0RPSgVs/1efCitHJ2/8VKdPO32DIIAY2Rl3j3/6GRjQ==
-X-Gm-Gg: AfdE7cm5IgDEdMVghzsfzGluOT9kemz2tdfM7qA4yDBnJE+xYju2FajFTr17z+xb7Y2
- YoXZAnnqbyOEKszLsEbwnOmtf0uULh0WOouJzNQ8DvRRo4rY14n28KNS5B6EfazRnnFd/YVgbfr
- rj8jxnK2P19MEcl6IKpnNU7CxOoN3hdj5QWa5Dg97vqGjJukQRqMkj7GVtFMBAAW903BgZ71MRO
- 9GhorIglpXOyTD0hkKlDZ/KF5An+1zhHVCaVOI+tGIrfqtt5zbtnPZU7fL2LHXBNzAEknUZUn5p
- Ecuc/xrWplsvR1vSUQS03LRaSEhIpZ2HkT22eG9albT6kayK5H/qHEU0C9zIapQHOxeV8VyAJz6
- wy6xCwRvSpXF6y+wekm0NocKI7bmvZPpcJqMDwBusOQcA+R2bRd2Z2ZSo+dzRta+HuoU=
-X-Received: by 2002:a05:6102:3e0b:b0:738:bf0f:d0c7 with SMTP id
- ada2fe7eead31-73daa01ae10mr715933137.25.1782914883996; 
- Wed, 01 Jul 2026 07:08:03 -0700 (PDT)
-X-Received: by 2002:a05:6102:3e0b:b0:738:bf0f:d0c7 with SMTP id
- ada2fe7eead31-73daa01ae10mr715851137.25.1782914883387; 
- Wed, 01 Jul 2026 07:08:03 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c128917536csm281608166b.56.2026.07.01.07.08.01
+ AHgh+Rpgo1ZSHrletTH70oLAHmhNb74ZqE99kQqN4rl441RN7hD6nYT0h5IeaA7Yjwn8VY+FrLUtBv0rBveP@nongnu.org
+X-Gm-Message-State: AOJu0Yz0Zgnet4dT/hVuwdB/IAbMTZh+ol+iatp7HMZveIMKn1Hu8ofz
+ 7zslSRV9Mb91eNHEQEPpvTooOX96LmHE+I2p7vfK59z++i1FIRwXAUf+f7/iw80miuyRk9q2a7d
+ SwLfUs4JqMsM/8DnRkVu7NXSXKJ8YLrE7MxcLINjc8PkAFgH1d+1owDTu
+X-Gm-Gg: AfdE7ckfczEfWTo5XmMl62vL5ZVOHDG0VnwKnUklw2UDBi3M7x2EmQLxR+yttufeTsJ
+ 95iXEDidDDEwyZ2mXvIw/Ido90YN4/TRpz/8NtjfBZXjKbOgftxZ0WJWz8Ev9ZR1zlRzylDXABF
+ lGwtJ9uEMzyg+iJWeyE1sNculGrg8yh8tn4knCdfdacpP9F4THMzX+2D9qTDzVMnBJ9MAJ5A33Y
+ wQcUQWx9NNdmqO0LUwZ1AaJzHs2eB4HsHbDl4FVvtGJha9/Yia0rVyWO/zxQfZ5U0lG/b4GZHzN
+ P1zavIZBzWfhODo6KkdQF/Lb7Qs2lIKLmCKanhZ3WwB76tumg5K+jmDvzB6nIL9g/4LyAmyVXwq
+ esRzpQ1k/S6qEAuZUfodgeMU4T5qFvNXxoE55CuzxT5cKgoy02UXew0bE6p4=
+X-Received: by 2002:a17:906:f84a:b0:c12:9136:8a1a with SMTP id
+ a640c23a62f3a-c12aa137356mr70448766b.31.1782914994252; 
+ Wed, 01 Jul 2026 07:09:54 -0700 (PDT)
+X-Received: by 2002:a17:906:f84a:b0:c12:9136:8a1a with SMTP id
+ a640c23a62f3a-c12aa137356mr70444966b.31.1782914993819; 
+ Wed, 01 Jul 2026 07:09:53 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c1288f0dfdesm279151066b.30.2026.07.01.07.09.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Jul 2026 07:08:02 -0700 (PDT)
-Message-ID: <8c5eb29b-57df-46cf-8678-36182e052afe@oss.qualcomm.com>
-Date: Wed, 1 Jul 2026 16:08:00 +0200
+ Wed, 01 Jul 2026 07:09:53 -0700 (PDT)
+Message-ID: <5d91c5f7-9f69-4cd2-bc8c-7d06962e5fe6@redhat.com>
+Date: Wed, 1 Jul 2026 16:09:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 21/34] target/arm: Update contiguous first-fault and
- no-fault loads
+Subject: Re: [RFC PATCH v6 14/17] arm-qmp-cmds: introspection for ID register
+ props
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-References: <20200511133405.5275-1-peter.maydell@linaro.org>
- <20200511133405.5275-22-peter.maydell@linaro.org>
- <e9cdc625-7ded-4678-965a-a98f18150ade@oss.qualcomm.com>
- <58d000af-4213-4600-83ec-e418ac8682b8@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <58d000af-4213-4600-83ec-e418ac8682b8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Khushit Shah <khushit.shah@nutanix.com>
+Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Shaju Abraham <shaju.abraham@nutanix.com>,
+ "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
+ "cohuck@redhat.com" <cohuck@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "sebott@redhat.com" <sebott@redhat.com>,
+ "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, "maz@kernel.org" <maz@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>,
+ Sandesh Patel <sandesh.patel@nutanix.com>
+References: <20260616132625.1732031-1-eric.auger@redhat.com>
+ <20260616132625.1732031-15-eric.auger@redhat.com>
+ <c6f663fc-93ad-4a22-b9dc-d7a4653bf348@redhat.com>
+ <A6010F6F-FF60-4227-ACFE-B141EEBE88AC@nutanix.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <A6010F6F-FF60-4227-ACFE-B141EEBE88AC@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: b2qc5fKXPkjo8DpEyg6Erd1DbQf2L2RQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDE0OCBTYWx0ZWRfX3Hv2W7ucXIA0
- Gqd9iwa7MntCtXxY1WIHVP4QDGYSSGKN0qSJJGLJVXk3NOVDd65Oi+RuDqHYDLBDXga3yoovQOm
- Mz099jrIMOgdMnJ4triGc7wgNoLoyc5gsL2QsX/r5xjivq2aTP6ZiXD8s6PHiKxw1Y97KxKXfIe
- ngQIg/4z1bnGh4uQxNO+g0gqZQrbUSY5txYKwQ/MfXp0XNyvf/0LUfbKIwGLGp2/XXeZEmgKuGT
- eeix9kdJ3VyllAWFDD/QR0VMJLqC9kKvx/BCA4WnDq7nQbCcbb0nO+mbhA1A+wLxbyZkhu4mmpa
- c3AXPXpKhJ1sPf8jT0QtVm+LCZh/CwwChWhlSCbduwwd/2I6dTycgDR1f0/yIK4vLgTuJqagbOc
- y+piG8H1MitFibtkPqe0qU1q5Pzx/K6V8/6L03JUv356AXx9H4VT96AfkSGTdXZ/6/Ifau+J61Q
- dkmRQy9DEm4etAjyK/w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDE0OCBTYWx0ZWRfX/nzGmWumptr2
- lxAJ/eAsYfQqnUjABIdfIk3TlCvrXHaey3kFTN3jzmaX4lG7XFK71rURWXYrADodZuXzo95ITZ4
- 05GngoKJqEnYEinN9vr18R2mZiISV6s=
-X-Authority-Analysis: v=2.4 cv=JpXBas4C c=1 sm=1 tr=0 ts=6a451f44 cx=c_pps
- a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=Jid1Q9jbKs2eGPar2nUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=crWF4MFLhNY0qMRaF8an:22
-X-Proofpoint-ORIG-GUID: b2qc5fKXPkjo8DpEyg6Erd1DbQf2L2RQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-01_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 suspectscore=0 malwarescore=0 impostorscore=0 clxscore=1015
- spamscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010148
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,85 +132,163 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/7/26 15:11, Richard Henderson wrote:
-> On 7/1/26 00:37, Philippe Mathieu-Daudé wrote:
->> (this is commit c647673ce4d72a8789703c62a7f3cbc732cb1ea8)
-> ...
->>> +    /* Probe the page(s). */
->>> +    if (!sve_cont_ldst_pages(&info, fault, env, addr, MMU_DATA_LOAD, 
->>> retaddr)) {
->>> +        /* Fault on first element. */
->>> +        tcg_debug_assert(fault == FAULT_NO);
->>> +        memset(vd, 0, reg_max);
->>> +        goto do_fault;
->>> +    }
->>> +
->>> +    mem_off = info.mem_off_first[0];
->>> +    flags = info.page[0].flags;
->>> +
->>> +    if (fault == FAULT_FIRST) {
->>> +        /*
->>> +         * Special handling of the first active element,
->>> +         * if it crosses a page boundary or is MMIO.
->>> +         */
->>> +        bool is_split = mem_off == info.mem_off_split;
->>> +        /* TODO: MTE check. */
->>> +        if (unlikely(flags != 0) || unlikely(is_split)) {
->>> +            /*
->>> +             * Use the slow path for cross-page handling.
->>> +             * Might trap for MMIO or watchpoints.
->>> +             */
->>> +            tlb_fn(env, vd, reg_off, addr + mem_off, retaddr);
->>> +
->>> +            /* After any fault, zero the other elements. */
->>>               swap_memzero(vd, reg_off);
->>> -            return;
->>> +            reg_off += 1 << esz;
->>> +            mem_off += 1 << msz;
->>> +            swap_memzero(vd + reg_off, reg_max - reg_off);
->>> +
->>> +            if (is_split) {
->>> +                goto second_page;
->>> +            }
->>> +        } else {
->>> +            memset(vd, 0, reg_max);
->>> +        }
->>> +    } else {
->>> +        memset(vd, 0, reg_max);
->>> +        if (unlikely(mem_off == info.mem_off_split)) {
+
+
+On 6/19/26 8:05 AM, Khushit Shah wrote:
+>
+>> On 18 Jun 2026, at 2:56 PM, Eric Auger <eric.auger@redhat.com> wrote:
 >>
->> Is this code reachable on user emulation? The changes are
->> quite complex, previously code was guarded with CONFIG_USER_ONLY.
-> 
-> Yes, if you mean this line specifically.  This merely requires an 
-> unaligned vector load that crosses pages.
+>> !-------------------------------------------------------------------|
+>>  CAUTION: External Email
+>>
+>> |-------------------------------------------------------------------!
+>>
+>> Hi Khushit,
+>>
+>> On 6/16/26 3:17 PM, Eric Auger wrote:
+>>> From: Cornelia Huck <cohuck@redhat.com>
+>>>
+>>> Implement the capability to query available ID register values by
+>>> adding SYSREG_* options and values to the cpu model expansion for the
+>>> host model, if available.
+>>>
+>>> Excerpt:
+>>> (QEMU) query-cpu-model-expansion type=full model={"name":"host"}
+>>> {"return": {"model": {"name": "host", "props": {"SYSREG_ID_AA64PFR0_EL1_EL3": 1,
+>>> "SYSREG_ID_AA64ISAR2_EL1_CLRBHB": 0, "SYSREG_CTR_EL0_L1Ip": 3,
+>>> "SYSREG_MIDR_EL1_PartNum": 3407, "SYSREG_CTR_EL0_DminLine": 4,
+>>> "SYSREG_ID_AA64MMFR0_EL1_PARange": 5, "SYSREG_ID_AA64MMFR1_EL1_ECBHB": 0
+>>> ../..
+>>>
+>>> So this allows the upper stack to detect available writable ID
+>>> regs and the "host passthrough model" values.
+>>>
+>>> It also allows to test some ID reg field values:
+>>> (QEMU) query-cpu-model-expansion type=full model={"name":"host","props":{"SYSREG_ID_AA64ISAR0_EL1_DP":0x13}}
+>>> {"error": {"class": "GenericError", "desc": "idreg SYSREG_ID_AA64ISAR0_EL1_DP set value (0x13) exceeds length of field (4)!"}}
+>>>
+>>> (QEMU) query-cpu-model-expansion type=full model={"name":"host","props":{"SYSREG_ID_AA64ISAR0_EL1_DP":0x2}}
+>>> {"error": {"class": "GenericError", "desc": "idreg SYSREG_ID_AA64ISAR0_EL1_DP set value (0x2) does not match any arch valid enum value!"}}
+>> for your info I am currently exploring ways to test set field values
+>> against KVM. Current check only test against field size and enum values
+>> if any.
+>>
+>> I have a POC instantiating a scratch vcpu and it is totally feasible to
+>> set the id reg with the modified value. What is more tricky is to build
+>> an incremental scratch vcpu with all the set values accumulating But I
+>> guess it should be feasible too.
+>>
+>> If we manage to do that, I don't think you need safe rules/values
+>> anymore because using query-cpu-model-expansion you could directly check
+>> the enhanced cpu model can safely apply on host. I will share as soon as
+>> I get something clean enough. Thanks Eric
+> This seems like it is definitely doable. But, I think it is inefficient and does not
+> scale with the number of cpu models.
+>
+> It will essentially require 1 (vcpu create) + x (number of id register) ioctl calls
+> per Named CPU model or a configuration that management software wants
+> to test.
+yes. But that's also the only way to test incremental stacked settings.
+If an IDREG setting depends on a formerly applied one and is
+incompatible, you will know. With only safe_rules/values you won't have
+that precision I am afraid.
+>
+> In v3, I will  change how we handle safe_rules. As the analysis in mail to Marc
+> almost all of the writeable ID register fields supports writing a lower value.
+>
+> There are only few exceptions.
 
-Sorry for not being clear enough, I meant the TLB_MMIO & TLB_WATCHPOINT
-checks just after:
+OK
+>
+> Another point I want to raise is without safe_rules, we will not have
+> QMP feature parity with x86 where cpu-definitions reports model
+> blocker properties. This in-parity means some management
+Interesting. I need to further look at cpu-definitions I acknowledge
 
-+            /* The first active element crosses a page boundary. */
-+            flags |= info.page[1].flags;
-+            if (unlikely(flags & TLB_MMIO)) {
-+                /* Some page is MMIO, see below. */
-+                goto do_fault;
-+            }
-+            if (unlikely(flags & TLB_WATCHPOINT) &&
-+                (cpu_watchpoint_address_matches
-+                 (env_cpu(env), addr + mem_off, 1 << msz)
-+                 & BP_MEM_READ)) {
-+                /* Watchpoint hit, see below. */
-+                goto do_fault;
-+            }
-+            /* TODO: MTE check. */
-+            /*
-+             * Use the slow path for cross-page handling.
-+             * This is RAM, without a watchpoint, and will not trap.
-+             */
-+            tlb_fn(env, vd, reg_off, addr + mem_off, retaddr);
-+            goto second_page;
-           }
-       }
+Thanks
+
+Eric
+> software can not be easily ported to work with arm64 named
+> cpu models. 
+>
+> Warm Regards,
+> Khushit
+>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+>>>
+>>> ---
+>>>
+>>> v5 -> v6:
+>>> - add the write capability
+>>> ---
+>>> target/arm/arm-qmp-cmds.c | 29 +++++++++++++++++++++++++++++
+>>> 1 file changed, 29 insertions(+)
+>>>
+>>> diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
+>>> index 83ec95c290..edcfc82a25 100644
+>>> --- a/target/arm/arm-qmp-cmds.c
+>>> +++ b/target/arm/arm-qmp-cmds.c
+>>> @@ -21,6 +21,7 @@
+>>>  */
+>>>
+>>> #include "qemu/osdep.h"
+>>> +#include "qemu/error-report.h"
+>>> #include "qemu/target-info.h"
+>>> #include "hw/core/boards.h"
+>>> #include "kvm_arm.h"
+>>> @@ -84,6 +85,8 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>>                                                      Error **errp)
+>>> {
+>>>     CpuModelExpansionInfo *expansion_info;
+>>> +    ObjectPropertyIterator iter;
+>>> +    ObjectProperty *idregprop;
+>>>     const QDict *qdict_in;
+>>>     QDict *qdict_out;
+>>>     ObjectClass *oc;
+>>> @@ -145,6 +148,20 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>>         }
+>>>
+>>>         qdict_in = qobject_to(QDict, model->props);
+>>> +
+>>> +        object_property_iter_init(&iter, obj);
+>>> +
+>>> +        while ((idregprop = object_property_iter_next(&iter))) {
+>>> +            if (!g_str_has_prefix(idregprop->name, "SYSREG_")) {
+>>> +                continue;
+>>> +            }
+>>> +            if (qdict_get(qdict_in, idregprop->name)) {
+>>> +                if (!object_property_set(obj, idregprop->name, visitor, &err)) {
+>>> +                    break;
+>>> +                }
+>>> +            }
+>>> +        }
+>>> +
+>>>         i = 0;
+>>>         while ((name = cpu_model_advertised_features[i++]) != NULL) {
+>>>             if (qdict_get(qdict_in, name)) {
+>>> @@ -190,6 +207,18 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>>         }
+>>>     }
+>>>
+>>> +    object_property_iter_init(&iter, obj);
+>>> +
+>>> +    while ((idregprop = object_property_iter_next(&iter))) {
+>>> +        QObject *value;
+>>> +
+>>> +        if (!g_str_has_prefix(idregprop->name, "SYSREG_")) {
+>>> +            continue;
+>>> +        }
+>>> +        value = object_property_get_qobject(obj, idregprop->name, &error_abort);
+>>> +        qdict_put_obj(qdict_out, idregprop->name, value);
+>>> +    }
+>>> +
+>>>     if (!qdict_size(qdict_out)) {
+>>>         qobject_unref(qdict_out);
+>>>     } else {
+>
+
 
