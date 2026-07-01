@@ -4,82 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2068BC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 07:27:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95786C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 07:34:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wepLy-0004j4-Gl; Wed, 01 Jul 2026 03:27:26 -0400
+	id 1wepSS-0005lz-4Z; Wed, 01 Jul 2026 03:34:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wepLx-0004if-D7
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 03:27:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wepSQ-0005lh-HX
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 03:34:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wepLv-0004mt-HC
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 03:27:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wepSO-0000MN-RS
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 03:34:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782890841;
+ s=mimecast20190719; t=1782891243;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5w+YcSRWa96uwGmTO7z4aHRknvgZdkDmX6JnAy9ZmX0=;
- b=Jvm218JFhDQO2nKcuL0IxvrCM6TLfs31JANpP9I3XOFB1Kb4KIQW5og3xPmkYU5RkJGIp3
- 0NBrW+vxsBkbS0YLet2R8ONWc7Ht1HNE7kmtYocjlX/eGZfm0yXz1+X40pXzHJSZjkpS8g
- CIUYoB97lxa7kkTcpXu5U5xAaFk8aks=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-351-pTkmTbzbOvmEHPbAtNoJkA-1; Wed,
- 01 Jul 2026 03:27:17 -0400
-X-MC-Unique: pTkmTbzbOvmEHPbAtNoJkA-1
-X-Mimecast-MFC-AGG-ID: pTkmTbzbOvmEHPbAtNoJkA_1782890836
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DC11C18E6A72; Wed,  1 Jul 2026 07:27:15 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D27F736F00; Wed,  1 Jul 2026 07:27:14 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6684321E6920; Wed, 01 Jul 2026 09:27:12 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  devel@lists.libvirt.org,  =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  "Dr.
- David Alan Gilbert" <dave@treblig.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Christian Brauner <brauner@kernel.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Peter Krempa
- <pkrempa@redhat.com>
-Subject: Re: [PATCH v5 34/35] qemu-options: document new monitor-hmp and
- monitor-qmp objects
-In-Reply-To: <20260624173752.2928717-35-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 24 Jun 2026 18:37:50
- +0100")
-References: <20260624173752.2928717-1-berrange@redhat.com>
- <20260624173752.2928717-35-berrange@redhat.com>
-Date: Wed, 01 Jul 2026 09:27:12 +0200
-Message-ID: <87qzln6ugf.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=DHvVX9r7XG0ikk4EZa9QYwjLuFgzLrZXiCIURWzxJfs=;
+ b=hnIQcV+d8DUNEiLWlkn9x4QcaaprjyxINXbQ1t5aY4Rga5XRYmrHKkZDg4yYADYuiU+xb3
+ OyqfZO6e7JmUP4JixYnz8FL33r11dC9gwa+MZN7YiVRIKw8/yjvkSWI9X4OfqNSmm+ef/6
+ ZOyK5U6B9m6vT2DPaDQLan4qoDwiT/w=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-642-49Sgy51ePd-Zq4dwYg40gA-1; Wed, 01 Jul 2026 03:34:02 -0400
+X-MC-Unique: 49Sgy51ePd-Zq4dwYg40gA-1
+X-Mimecast-MFC-AGG-ID: 49Sgy51ePd-Zq4dwYg40gA_1782891241
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-476608a9fefso105066f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 00:34:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782891241; x=1783496041; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=DHvVX9r7XG0ikk4EZa9QYwjLuFgzLrZXiCIURWzxJfs=;
+ b=qcPULJCIAi7un2ste0/jLHbLcjZu4pYZUN1nUVxXJgFZxej8yFranTGAvMUquqDogi
+ yuhjPc6clpvqmpGAxflk8mKJUJe7+ELWX+Va1kvJWVAj8Jd35e7QqjQ61FKS5mwuC1l/
+ u4fe7DiNcJgI+8cxdifzEl3fwU8qieEN8vQVTMrbz/u7PAmPmzG39SnORv5Ho6d2PmKd
+ gqmagtggS63uLuYXtXvVHzTrF053BO3O1LWu4y9+yBsN0qogFAfaiuvqA9JsywNg1QNi
+ vxuvuLCfAMXaEmXhbpCwMvmM7zw32HOfBl92NQF0W4f+X9eCP0U4CkwxBH2z2azCwsZO
+ 7xag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782891241; x=1783496041;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DHvVX9r7XG0ikk4EZa9QYwjLuFgzLrZXiCIURWzxJfs=;
+ b=IBzR+MiAZyS7bWwVAKgXRyxjaV/QUCA/7SQ8w/LJ0xC+BBhQPDJrCzRbNhuaIxnzrn
+ +knl9YaeCpkCRsgEBrU3VyfLrSOZ1haCEhgGQu63L1m85NxqF5WXzqs/vAK7EuUUWzQO
+ 9Y/CUYDuZfprwf5ssl5DigYXOJ9O8Y0LYdNMjHb+4LFcCLR07974JC7Iry+7CplR2Dkl
+ adhbmjlh4k6GmPz8JHHxj5/pfDUpiYgUj/XLFQ57rNTyNyPM3Ib3dH1WXeZf9FXvFJAr
+ j+DyqySwgY0WBdl/EtAw0tHARTLpsqZ8n5bWw+s7j6KmTvtTz802Aom3AibqePvFPNNK
+ N9Mw==
+X-Gm-Message-State: AOJu0YybS/05eEXJW6K0R3pu0ts6ZWhwR202sBInt8QOf6LumVUHUPJG
+ 9wU2a9LOzAogXOK+Cg8BT+aDWcsEOD2UWhc5RU6Pi2O23apWXY5Z43jvPefRI1fbcrPRt3BhYUY
+ FGWYQrlNGFV1L2KuzQVDxD49PHdHF4zZ62DPri3mNze6lExB1vuZdIN0h
+X-Gm-Gg: AfdE7ckqmQXq2iVuFt3gYNL3+k/5g0QjsJM+euQbObwOoyqWGx0bqhGoDRww0KMPLIM
+ 6vOFD6KUlRQhp2QwMIEejGHrie/VCRWJILLnGxRHfSaLQnHMX6PNDJX/7HyulhZuRDgFFQ4hpbn
+ SdW6CnvNlTuCsMPQ18Sd4vSytnah7hp61cCc9VrBSe3IGp3bXcWtp+zZLPx51U/39zuwU2ZZTTp
+ RHkPrHihUO+i+t3aupEGs9uEM32xLIbjqjnBDRy0VRo0yudvlL9tPdaPPxt7+D5QddPGlBubCPP
+ Q25SxPsYBFLVdxvXM+TMx9HlaJaAc5lbwIdenDTOohBTJyozxtOunoiwSBJ214MLv6L6qGR2AVI
+ y9x5Z1BH3I/YzugAm/cL+MVJkp+0q8BmasebpnqEhFG1mTd51/Q==
+X-Received: by 2002:adf:e18e:0:b0:460:d18:865c with SMTP id
+ ffacd0b85a97d-475de07c91bmr9619057f8f.1.1782891241053; 
+ Wed, 01 Jul 2026 00:34:01 -0700 (PDT)
+X-Received: by 2002:adf:e18e:0:b0:460:d18:865c with SMTP id
+ ffacd0b85a97d-475de07c91bmr9619002f8f.1.1782891240597; 
+ Wed, 01 Jul 2026 00:34:00 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-475641e4618sm15093237f8f.9.2026.07.01.00.33.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 01 Jul 2026 00:34:00 -0700 (PDT)
+Message-ID: <25ee74ac-1ccf-4f91-9ed1-3c9ca42a92ce@redhat.com>
+Date: Wed, 1 Jul 2026 09:33:58 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] platform-bus: Align MMIO regions to host page size
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Stefan Berger <stefanb@linux.ibm.com>
+References: <20260630173245.2070268-1-clg@redhat.com>
+ <CAFEAcA8G2sti8T=u_Sa5HSSNXAJfJMmbv14PVD0y6yn1wDEaHw@mail.gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <CAFEAcA8G2sti8T=u_Sa5HSSNXAJfJMmbv14PVD0y6yn1wDEaHw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,94 +169,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 6/30/26 22:03, Peter Maydell wrote:
+> On Tue, 30 Jun 2026 at 18:33, Cédric Le Goater <clg@redhat.com> wrote:
+>>
+>> On aarch64 hosts with 64K pages, the platform bus MMIO allocator can
+>> place device regions (such as the 1KB "tpm-ppi" region) at offsets
+>> that are not aligned to the host page size. This causes unnecessary
+>> and noisy VFIO IOMMU warnings when starting VMs configured with
+>> passed-through PCI devices:
+>>
+>>    vfio_listener_valid_section received unaligned region tpm-ppi
+>>      iova=0xc005000 offset_within_region=0x0
+>>      qemu_real_host_page_size=0x10000
+> 
+> Why does vfio care about the tpm-ppi region? I thought vfio
+> was only for passthrough devices, not for normal ones.
 
-> Add new docs for the `-object monitor-hmp` and `-object monitor-qmp`
-> options, updating `-mon` to state that it is legacy syntax sugar
-> for the new `-object` args.
->
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Tested-by: Peter Krempa <pkrempa@redhat.com>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  qemu-options.hx | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 49 insertions(+)
->
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index c799286153..a804d5b880 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -4980,6 +4980,16 @@ SRST
->        -mon chardev=3Dmon1,mode=3Dcontrol,pretty=3Don
->=20=20
->      enables the QMP monitor on localhost port 4444 with pretty-printing.
-> +
-> +    The use of ``-mon mode=3Dreadline`` is historical syntax sugar
-> +    for the new ``-object monitor-hmp`` option, each use of which
-> +    creates an object with the ID ``hmpcompatNNN`` where ``NNN`` is
-> +    a counter starting from 0.
-> +
-> +    The use of ``-mon mode=3Dcontrol`` is historical syntax sugar
-> +    for the new ``-object monitor-qmp`` option, each use of which
-> +    creates an object with the ID ``qmpcompatNNN`` where ``NNN`` is
-> +    a counter starting from 0.
->  ERST
+It's caught by the VFIO listener which doesn't filer per device, it
+covers the entire address space.
 
-Should we document how -monitor, -qmp, and -qmp-pretty map to -object
-and -chardev?
+This is a benign address mis-alignment warning of the tpm-ppi memory
+region and VFIO simply skips the region.
 
->=20=20
->  DEF("debugcon", HAS_ARG, QEMU_OPTION_debugcon, \
-> @@ -5730,6 +5740,45 @@ SRST
->      they are specified. Note that the 'id' property must be set. These
->      objects are placed in the '/objects' path.
->=20=20
-> +    ``-object monitor-hmp,id=3Did,chardev=3Dchardev_id,readline=3Don|off=
-``
-> +        Set up a monitor running the Human Monitor Protocol,
-> +        connected to the chardev ``chardev_id``.
-> +
-> +        The ``id`` parameter is a unique ID that can be used
-> +        to dynamically delete the monitor at runtime. Note
-> +        that monitors created using the historical syntax
-> +        will be allocated IDs following the pattern ``hmpcompatNN``.
-> +        Mixing ``-object`` with the historical monitor syntax is
-> +        discouraged.
-> +
-> +        The ``readline`` parameter, which defaults to ``on``,
-> +        controls whether the monitor provides line editing.
-> +
-> +    ``-object monitor-qmp,id=3Did,chardev=3Dchardev_id,pretty=3Don|off,c=
-lose-action=3Dnone|delete``
-> +        Set up a monitor running the QEMU Monitor Protocol,
-> +        connected to the chardev ``chardev_id``.
-> +
-> +        The ``id`` parameter is a unique ID that can be used
-> +        to dynamically delete the monitor at runtime. Note
-> +        that monitors created using the historical syntax
-> +        will be allocated IDs following the pattern ``qmpcompatNN``.
-> +        Mixing ``-object`` with the historical monitor syntax is
-> +        discouraged.
-> +
-> +        The ``pretty`` parameter, which defaults to ``off``,
-> +        controls whether the monitor responses are pretty
-> +        printed as multi-line indented JSON, as opposed to
-> +        constrained to a single line without extraneous
-> +        whitespace.
-> +
-> +        The ``close-action`` parameter, which defaults to ``none``,
-> +        controls what happens when the connection to the monitor
-> +        is terminated by the user. If set to ``delete``, then the
-> +        ``monitor-qmp`` object and its associated character
-> +        device are both immediately deleted. This can be useful
-> +        if an extra monitor was hotplugged for a specific task
-> +        and should be unplugged when completed.
-> +
->      ``-object memory-backend-file,id=3Did,size=3Dsize,mem-path=3Ddir,sha=
-re=3Don|off,discard-data=3Don|off,merge=3Don|off,dump=3Don|off,prealloc=3Do=
-n|off,host-nodes=3Dhost-nodes,policy=3Ddefault|preferred|bind|interleave,al=
-ign=3Dalign,offset=3Doffset,readonly=3Don|off,rom=3Don|off|auto``
->          Creates a memory file backend object, which can be used to back
->          the guest RAM with huge pages.
+> 
+>> Fix this by ensuring the alignment used by the platform bus allocator
+>> is at least qemu_real_host_page_size().
+>>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>   hw/core/platform-bus.c | 7 +++++++
+>>   1 file changed, 7 insertions(+)
+>>
+>> diff --git a/hw/core/platform-bus.c b/hw/core/platform-bus.c
+>> index a2217a2deec7ab0f49b211c6658db02d13c319df..a17a38c1ba5491e2001fec5a29c188de67e93d11 100644
+>> --- a/hw/core/platform-bus.c
+>> +++ b/hw/core/platform-bus.c
+>> @@ -140,6 +140,13 @@ static void platform_bus_map_mmio(PlatformBusDevice *pbus, SysBusDevice *sbdev,
+>>           return;
+>>       }
+>>
+>> +    /*
+>> +     * Ensure alignment is at least the host page size so that IOMMU
+>> +     * mappings (e.g. VFIO) work on hosts with large pages such as
+>> +     * aarch64 with 64K pages.
+>> +     */
+>> +    alignment = MAX(alignment, qemu_real_host_page_size());
+> 
+> Do we need to tie this to machine versions? Otherwise I think
+> the memory layout can change underfoot which would break a
+> guest migrated from an old QEMU to new.
+
+OK. Let's extend vfio_known_safe_misalignment() instead as done
+by commit 851d6d1a0ff2 ("vfio/common: remove spurious tpm-crb-cmd
+misalignment warning").
+
+
+Thanks,
+
+C.
+
 
 
