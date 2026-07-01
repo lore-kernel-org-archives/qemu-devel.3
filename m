@@ -4,83 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6FE8C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 13:04:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A5BFC43327
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 13:12:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weubO-000427-K0; Wed, 01 Jul 2026 09:03:42 -0400
+	id 1weujE-0005wm-VB; Wed, 01 Jul 2026 09:11:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1weubM-00041r-W6
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 09:03:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1weubL-0002wt-AZ
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 09:03:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782911018;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YUTdL2j7vm3/QhpLlr70daZucDuR76Seyns+8N6uVEc=;
- b=VAhA7io05y4haHgz1/oduaxP9pVG2ZGH/0DzltvUFyDLY5fnLqJJLgPNGoAQHF7Gi+tjgQ
- vuSt3MlYbf8FYUQkVoDxuOWxVHeGqoy+xD0HdfFbHc4s5OyRYBLtLVZYL1a2tAENIbkHOZ
- BCj/qb9ZyDYftrtKEY8H1j4BKPNPoxA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-477-Wd4InJA_M-WhZplUhGVAKA-1; Wed,
- 01 Jul 2026 09:03:35 -0400
-X-MC-Unique: Wd4InJA_M-WhZplUhGVAKA-1
-X-Mimecast-MFC-AGG-ID: Wd4InJA_M-WhZplUhGVAKA_1782911014
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 33F711954234; Wed,  1 Jul 2026 13:03:34 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 088031955D53; Wed,  1 Jul 2026 13:03:33 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9C1DF21E6920; Wed, 01 Jul 2026 15:03:30 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,
- devel@lists.libvirt.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  "Dr.
- David Alan Gilbert" <dave@treblig.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Christian Brauner <brauner@kernel.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Peter Krempa
- <pkrempa@redhat.com>
-Subject: Re: [PATCH v5 01/35] qom: replace 'can_be_deleted' with
- 'prepare_delete'
-In-Reply-To: <akOJbvaI7lvoW6Xw@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Tue, 30 Jun 2026 10:16:30 +0100")
-References: <20260624173752.2928717-1-berrange@redhat.com>
- <20260624173752.2928717-2-berrange@redhat.com>
- <87qzlopjlp.fsf@pond.sub.org> <akOJbvaI7lvoW6Xw@redhat.com>
-Date: Wed, 01 Jul 2026 15:03:30 +0200
-Message-ID: <8733y26evx.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1weujD-0005w0-1O
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 09:11:47 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1weuj9-0005IO-NW
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 09:11:46 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-847921eed4aso509965b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 06:11:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782911485; x=1783516285; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=b9tiKavyIaytNH9UYWA1lU/SV0F1gVF5Yxs59w8qlmE=;
+ b=egX2d4FfvglPt8aYXVfAA+DJiSLPU2i3aNt0lv1HFe6bSkEgdlUiEm5x4iyqhj98j0
+ T9q6AxIC80olrw+QMQRC93RhYVxdV1DKTgt3+D+Ge1lJT0S57vqVxo1BhdVYrOHAJGfr
+ CsFmG45V2XP4NqDVpqpLsuV97Zcc8Uq02qZXE5le2zIy36+4Ocdu5pDMOCvwXDLwVAnM
+ lZuqtOZDkfiEq0HziMNhBj7sr8cQ9xKumHBXlOgFND4JnVvPvFnTIkX8AWnnN76lUyFB
+ Wk3ax4G4tJxz7pZORM9yADQZQKkMLrp4MYPqhponKDToBA8xai8kzC1j5nqdtqZduXMG
+ KV+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782911485; x=1783516285;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=b9tiKavyIaytNH9UYWA1lU/SV0F1gVF5Yxs59w8qlmE=;
+ b=oZAXFxQ262i3INNd8YhlxMiK9eF4fEb9Yd1JSWW/okW7VnDuKEE4wPs6sDbipcX/PR
+ sMsHAhI/rBfReWsguBcNRoNs63+bmcwxURQKTmL5CNk72EbsW8ud0d9nm7NJ0vj2mIOA
+ 2+lVTj1P8C06s4gJEPjDK5PO1+GX23MPrs8gwTmom9Tx6c+P3+Fw+lS3PmqmMHpXuNig
+ 1H+lp2ZIOABYHw9NPAwQHramw4s0SDaVPFpZogktblOdyfRgQq7N0VemZbZeBxbptLsL
+ 0qa26uulWh/qdqW92jmjkOuDIsDqSICxVw53A6IXxXcyYPk6lTXlzUoFymOYFlnzvKxE
+ 3ZOQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqM/e3pY1hc+bsRaj6z0+oZKGDkRfW5+8MZ1MDVXNDl8WtEAy7HCg2MG4+NMil5IxczrfH9gpc85my0@nongnu.org
+X-Gm-Message-State: AOJu0YxNcZ6Pw6pSzks9kaOjGQ8lz9Ukc63Cd1LeFkRWgf1xlirbUP7f
+ +X2dgYrNUvVqstdkQCwnNhADSs4hGxmWtBgJup9TGplbGGlYyDotAHZS+pueaDIDkfw=
+X-Gm-Gg: AfdE7cljTvejUa2MkqksKs+gy5zTNO4iK6X9xsQfs+Nb2/J3OGDz7lI5bG/ygHnykr4
+ OWyTlIwDlM/Nzec4W4rNcFkmoKipq6Ug0H7HLuc7Da4J5Nzj93YcEp78oBjk/8gRxzWr0cCTW0N
+ QGJIIyjVmTuo+PFN5tmcEC3KguVLEgS3ySf7PPJjVzyy72ZeCNWOYvDzw+qtoWcypPIg27AzXzq
+ G0WaQs6KYJ20Wkn4V23vAA7xNmixAgILYi4mpzGEf+MkkGaKRLLK9hShh/J84zFoZYhdZgbf4lN
+ NQaJdc1fqW7ZpSi2P6+pHPaBtwJ6MLx3KV57W7ZWJBOeDA9HZqy5/O2S6TMdBCAbEjOhBoHk5f4
+ oyqDYZwKO+6D3fp+0gNIo+sFBhD5q42vHfp6C1JBn12WohRAtvVBL8FWXLKSIsD0FUIj6mZJ26D
+ MT9siXx0w32UVcA6YmVzHXlSG+L8ivZoQ2zJFgb2Tj8q7LaKAWW77RXD70YQ==
+X-Received: by 2002:a05:6a00:181b:b0:846:1698:638b with SMTP id
+ d2e1a72fcca58-847c504d207mr659969b3a.27.1782911485241; 
+ Wed, 01 Jul 2026 06:11:25 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-847a033a883sm3981477b3a.47.2026.07.01.06.11.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 01 Jul 2026 06:11:24 -0700 (PDT)
+Message-ID: <58d000af-4213-4600-83ec-e418ac8682b8@linaro.org>
+Date: Wed, 1 Jul 2026 06:11:23 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 21/34] target/arm: Update contiguous first-fault and
+ no-fault loads
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+References: <20200511133405.5275-1-peter.maydell@linaro.org>
+ <20200511133405.5275-22-peter.maydell@linaro.org>
+ <e9cdc625-7ded-4678-965a-a98f18150ade@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <e9cdc625-7ded-4678-965a-a98f18150ade@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,121 +108,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 7/1/26 00:37, Philippe Mathieu-Daudé wrote:
+> (this is commit c647673ce4d72a8789703c62a7f3cbc732cb1ea8)
+...
+>> +    /* Probe the page(s). */
+>> +    if (!sve_cont_ldst_pages(&info, fault, env, addr, MMU_DATA_LOAD, retaddr)) {
+>> +        /* Fault on first element. */
+>> +        tcg_debug_assert(fault == FAULT_NO);
+>> +        memset(vd, 0, reg_max);
+>> +        goto do_fault;
+>> +    }
+>> +
+>> +    mem_off = info.mem_off_first[0];
+>> +    flags = info.page[0].flags;
+>> +
+>> +    if (fault == FAULT_FIRST) {
+>> +        /*
+>> +         * Special handling of the first active element,
+>> +         * if it crosses a page boundary or is MMIO.
+>> +         */
+>> +        bool is_split = mem_off == info.mem_off_split;
+>> +        /* TODO: MTE check. */
+>> +        if (unlikely(flags != 0) || unlikely(is_split)) {
+>> +            /*
+>> +             * Use the slow path for cross-page handling.
+>> +             * Might trap for MMIO or watchpoints.
+>> +             */
+>> +            tlb_fn(env, vd, reg_off, addr + mem_off, retaddr);
+>> +
+>> +            /* After any fault, zero the other elements. */
+>>               swap_memzero(vd, reg_off);
+>> -            return;
+>> +            reg_off += 1 << esz;
+>> +            mem_off += 1 << msz;
+>> +            swap_memzero(vd + reg_off, reg_max - reg_off);
+>> +
+>> +            if (is_split) {
+>> +                goto second_page;
+>> +            }
+>> +        } else {
+>> +            memset(vd, 0, reg_max);
+>> +        }
+>> +    } else {
+>> +        memset(vd, 0, reg_max);
+>> +        if (unlikely(mem_off == info.mem_off_split)) {
+> 
+> Is this code reachable on user emulation? The changes are
+> quite complex, previously code was guarded with CONFIG_USER_ONLY.
 
-> On Tue, Jun 30, 2026 at 09:34:26AM +0200, Markus Armbruster wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->> > While most objects can perform all their cleanup in the finalizer
->> > method, there can be interactions with other resources / subsystems
->> > / threads which require that some cleanup be performed on an user
->> > creatable object before unparenting it and entering finalization.
->> >
->> > The current 'can_be_deleted' method runs in the deletion path and
->> > is intended to be used to block deletion. While it could be used
->> > to perform cleanup tasks, its name suggests it should be free of
->> > side-effects.
->> >
->> > Generalize this by renaming it to 'prepare_delete', explicitly
->> > allowing for cleanup to be provided. Existing users of 'can_be_deleted'
->> > are re-written, which provides them with more detailed/tailored error
->> > messages.
->> >
->> > Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->> > Tested-by: Peter Krempa <pkrempa@redhat.com>
->> > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->>=20
->> [...]
->>=20
->> > diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
->> > index 7080f85f95..6faa0b2fd9 100644
->> > --- a/qom/object_interfaces.c
->> > +++ b/qom/object_interfaces.c
->> > @@ -32,16 +32,15 @@ bool user_creatable_complete(UserCreatable *uc, Er=
-ror **errp)
->> >      return !*errp;
->> >  }
->> >=20=20
->> > -bool user_creatable_can_be_deleted(UserCreatable *uc)
->> > +bool user_creatable_prepare_delete(UserCreatable *uc, Error **errp)
->> >  {
->> > -
->> >      UserCreatableClass *ucc =3D USER_CREATABLE_GET_CLASS(uc);
->> > +    ERRP_GUARD();
->> >=20=20
->> > -    if (ucc->can_be_deleted) {
->> > -        return ucc->can_be_deleted(uc);
->> > -    } else {
->> > -        return true;
->> > +    if (ucc->prepare_delete) {
->> > +        ucc->prepare_delete(uc, errp);
->> >      }
->> > +    return !*errp;
->> >  }
->>=20
->> Simpler:
->>=20
->>        if (ucc->prepare_delete) {
->>            return ucc->prepare_delete(uc, errp);
->>        }
->>=20
->>        return true;
->
-> ok
->
->>=20
->> >=20=20
->> >  void user_creatable_add_qapi(ObjectOptions *options, Error **errp)
->> > @@ -253,8 +252,7 @@ bool user_creatable_del(const char *id, Error **er=
-rp)
->> >          return false;
->> >      }
->> >=20=20
->> > -    if (!user_creatable_can_be_deleted(USER_CREATABLE(obj))) {
->> > -        error_setg(errp, "object '%s' is in use, can not be deleted",=
- id);
->> > +    if (!user_creatable_prepare_delete(USER_CREATABLE(obj), errp)) {
->>=20
->> This changes error messages.
->>=20
->> The old ones mention @id.
->>=20
->> The new ones don't:
->>=20
->>         error_setg(errp, "Cryptodev backend is still in use");
->>         error_setg(errp, "Host memory backend is still mapped");
->>         error_setg(errp, "IOMMUFD backend still has %d users", be->users=
-);
->>         error_setg(errp, "Throttle group still has multiple references");
->>     error_setg(errp, "Deleting can bus devices is not supported");
+Yes, if you mean this line specifically.  This merely requires an unaligned vector load 
+that crosses pages.
 
-Spel it CAN, please.
 
->>     error_setg(errp, "Deleting main loop is not supported");
->>=20
->> Visible in the diff to tests/qemu-iotests/245 below.
->>=20
->> Because this runs within object-del, and @id is the argument provided by
->> the user there, the error message is still sufficiently clear, I guess.
->>=20
->> If this ever gets used where the object isn't obvious to the user from
->> context, the error messages become sub-par.  Observation, not a demand.
->>=20
->> Please cover this change in the commit message.
->
-> Oh yes, I remember being slightly annoyed at the need to do
-> this - I was surprised to realize that an Object does not
-> actually know its own 'id'. The 'id' only exists as the
-> name of the property in the parent.
->
-> We could add an  object_get_id() API which traveres obj->parent
-> and then iterates over child properties. Annoyingly O(n) time
-> for that, but perhaps not a big enough problem to worry about ?
-> At least for error reporting we're probably ok with that time
-> complexity even if there are 1000 objects registered as children.
-
-Could you use object_get_canonical_path_component()?
-
-[...]
-
+r~
 
