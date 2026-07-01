@@ -4,127 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B474DC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 01:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FFEAC43327
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 01:52:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wek76-0002wX-0k; Tue, 30 Jun 2026 21:51:44 -0400
+	id 1wek7b-00035b-MF; Tue, 30 Jun 2026 21:52:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1wek70-0002vt-1J; Tue, 30 Jun 2026 21:51:38 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1wek7Z-00033L-BC; Tue, 30 Jun 2026 21:52:13 -0400
+Received: from [115.124.30.124] (helo=out30-124.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1wek6x-0004Tc-LD; Tue, 30 Jun 2026 21:51:37 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65UNIinO3447412; Wed, 1 Jul 2026 01:51:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Zg9Gso
- g+INwMexCAZDnVjLCwm7LGqdvw/U+v0xEm5Zk=; b=cUJRuxp4C9RaZyhK1BFv8C
- Mff0HfkY8oxt13vSqEm57/ZM+FvlUiseV5gKnRCTIB5exTtZcniUil0r7x50k/QF
- QJoI+64JUNskkWVxVGqo+/9WEVI8tQBhyDbBbA1WfxeW1dM5n5ef6Eh82mEiV98z
- j3WuBaUKdgOX4rmvUfGz8ypXjAu0GZTfvMd0Sp2dPUYafdCo/JYQ6Dlh24gIBsrh
- /xhXsrAu55w/UdenVvgEcmXzA8UnfD6aDgts0Sb6U3P8JGWkgBsQRvcGwpbEI42Q
- 8xByX1gvd41KjPvIuHqpGFifoq1eII1ck3K6itrxEwjmtCn3hF15MklxmNRWQc1A
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26pe209y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 01 Jul 2026 01:51:31 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6611o336005094;
- Wed, 1 Jul 2026 01:51:30 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhd30y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 01 Jul 2026 01:51:29 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6611pPmC59703640
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 1 Jul 2026 01:51:26 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D9B2B2004B;
- Wed,  1 Jul 2026 01:51:25 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4651720067;
- Wed,  1 Jul 2026 01:51:17 +0000 (GMT)
-Received: from [9.67.23.244] (unknown [9.67.23.244])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  1 Jul 2026 01:51:16 +0000 (GMT)
-Message-ID: <d225ef6f-14c9-4bce-8f6b-12590071114c@linux.ibm.com>
-Date: Wed, 1 Jul 2026 07:21:12 +0530
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1wek7U-0004aZ-F2; Tue, 30 Jun 2026 21:52:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1782870708; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=9Qp9WyQgZCGMQw/BzdFmRIuqWaTT7FH5KiLpIpJJz54=;
+ b=UnIbCJQ5CbI7OM3cbh4UgL10QVgZzRoX923LVqAhvDZEmT9S9oMjU2RgOaxN9tBFkCIj2Ad9HRlFj4Zd/DzO00Umr9bXNp0VwDuQayejrEuUHfs+12IxrEJyPTdkistWbCgB0HmCLEr1eWdZoujiDck4pLKxEBE7tOVopxTgIwU=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R891e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
+ MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0X61Frtn_1782870706; 
+Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
+ fp:SMTPD_---0X61Frtn_1782870706 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 01 Jul 2026 09:51:47 +0800
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
+Date: Wed, 01 Jul 2026 09:51:34 +0800
+Subject: [PATCH v2 4/5] disas/riscv: Decode unsigned vector immediates as
+ unsigned
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-Subject: Re: [PATCH 2/8] tests/qtest/pnv_spi: Test Power11 PNV_SPI
-To: Aditya Gupta <adityag@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- Misbah Anjum N <misanjum@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>
-References: <20260623141933.577981-1-adityag@linux.ibm.com>
- <20260623141933.577981-3-adityag@linux.ibm.com>
- <db95d79a-a6bd-40a1-bc08-f572cebe1641@linux.ibm.com>
- <akQOQaFAKIMwJr2j@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-Content-Language: en-US
-In-Reply-To: <akQOQaFAKIMwJr2j@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: vZyHofFPYV6323zKUTAmiRoshqRFA1uJ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDAxNyBTYWx0ZWRfX8brOzZwxeLru
- CrYEhVrmddV+r0S9MkqVnqzMV02QT16JuNXbGny3FY8ru5TGkROSJ/yyvqs/IqNXksfQB3oBKU9
- pwIQWJvfcpWzH450ctTr7WVfD/L+lSs=
-X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a4472a3 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=jFxEIJLJGxOkPOqaoPIA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDAxNyBTYWx0ZWRfX/djNckrFoscy
- EvvdJ+pywS7wHCT9ceMMA16NcG6dCDh6KveuMIMO9rFaBmwsL2QqPwNC2It2N55xhPQ6u/Wmsh7
- MwR4vFtBZ1rBgn1J0Z1Rv+NGkfnLGqQYjtoOuzFlkpM4WyaKzBIOWx5H+H/i/iernOh6lDHlAsV
- XWuvACvbeHRNEyQTL+kZMrdcLAviG6Jq36ASy9AyyX/rhhJIKafQ444yrIU+P34WQb4BOtqOQYr
- N4XZmIp4mAmVegkdrzFfcG5z4tRFzpZr4fSSxeQOfyxv1Erj8M9eYKEa3ldkdOSI9ToaqJ06gty
- 1CG9wSa/ytpbNO0lLlXXMZjYFBQ8SYRAwVC3Y9HiEqUO6BK1IGdw4rpnpEsQT0dquKCvd1T4/RG
- OG+BPyoRSKCvVlc+983IskGlpOJjsmYExV82YcGT5+iUYhm0YxRbXwjJqV6lJMEHPvo4oMb4Dfu
- 92bZKJuEB/l8pKRgWIw==
-X-Proofpoint-ORIG-GUID: qv15DRiyvtH463WVSpSlniXiS2nFTvqf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-30_06,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
- spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010017
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=nikhilks@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260701-b4-disas-xthead-fix-riscv-next-v2-4-e6e4ff5a7847@linux.alibaba.com>
+References: <20260701-b4-disas-xthead-fix-riscv-next-v2-0-e6e4ff5a7847@linux.alibaba.com>
+In-Reply-To: <20260701-b4-disas-xthead-fix-riscv-next-v2-0-e6e4ff5a7847@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: Christoph Muellner <christoph.muellner@vrull.eu>, 
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-riscv@nongnu.org, 
+ TANG Tiancheng <lyndra@linux.alibaba.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1782870704; l=9235;
+ i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
+ bh=tImFSjPmU33K6q3EkmJwGTaBYcGu4Ak+aNy0XMBBkqg=;
+ b=npeV81SzyREjx1q0bGtMvKXzrNeMNcMUej2PTC5bjh//TC9DuhYZiQqYGZd/07ZtqR+5Ic3V1
+ tQfb1Q09QRGAL3+zb4gx7O6k2JvUqA0TJKWQBbmLaZoc1uuG4AWU+xp
+X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
+ pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.124 (deferred)
+Received-SPF: pass client-ip=115.124.30.124;
+ envelope-from=lyndra@linux.alibaba.com;
+ helo=out30-124.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,40 +83,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+rv_codec_v_i decodes all .vi operands with operand_vimm(), which
+sign-extends bits 19:15. That matches spec operands named imm, but not the
+.vi forms whose operand is uimm; uimm=31 is decoded as -1 and printed by
+the shared 6-bit 'u' formatter as 63.
 
-On 01/07/26 00:22, Aditya Gupta wrote:
-> On 26/06/30 09:55AM, Nikhil Kumar Singh wrote:
->> Hi Aditya,
->>
->> One comment below.
->>
->> On 23/06/26 19:49, Aditya Gupta wrote:
->>> @@ -77,6 +77,7 @@ static void test_spi_seeprom(const void *data)
->>>        const PnvChip *chip = data;
->>>        QTestState *qts = NULL;
->>>        g_autofree char *tmp_path = NULL;
->>> +    const char *machine = "powernv10";
->> Would it make sense to introduce `pnv_get_machine_type()` in patch 2
->> instead of patch 3? That would avoid hardcoding `"powernv10"` here and
->> allow this patch to use the helper directly.
-> Could be done, but i will prefer to keep it in current state, as of this
-> patch, power11 wasn't added to this test, and the test only runs for
-> powernv10, later as powern11 gets added in next patch this is changed to
-> use pnv_get_machine_type.
->
-> If pnv_get_machine_type gets introduced in this patch, it makes sense to
-> modify all other tests also to use it, which is more than what this
-> patch intends to do (just remove hardcoded index in spi test).
-> To me, it seems okay to keep it as is, what do you say ?
-Thanks for the explanation. I agree with keeping it as is for this 
-patch. Looks good to me.
+Add rv_codec_v_i_u/operand_vuimm() for the 5-bit uimm forms: vsll.vi,
+vsrl.vi, vsra.vi, vnsrl.wi, vnsra.wi, vssrl.vi, vssra.vi, vnclipu.wi,
+vnclip.wi, vslideup.vi, vslidedown.vi, vrgather.vi, vaeskf1.vi,
+vaeskf2.vi, vsm3c.vi, vsm4k.vi and vwsll.vi. The remaining rv_codec_v_i
+entries are the signed imm forms.
 
-  ~ Nikhil
->> Otherwise, the patch looks good to me.
-> Thanks for reviewing, Nikhil !
->
-> - Aditya G
->
->> Thanks,
->> Nikhil
+Fixes: 07f4964d1785 ("disas/riscv.c: rvv: Add disas support for vector instructions")
+Fixes: 9d92f56d4a44 ("disas/riscv: Add support for vector crypto extensions")
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+---
+ disas/riscv.c | 45 ++++++++++++++++++++++++++++-----------------
+ disas/riscv.h |  1 +
+ 2 files changed, 29 insertions(+), 17 deletions(-)
+
+diff --git a/disas/riscv.c b/disas/riscv.c
+index e9dcc173d8fa2f89d85b76595a76931c4dddb462..4b3f90418f8f17dd3fcb71f70c39607fa293eb0e 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -1803,19 +1803,19 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "vxor.vi", rv_codec_v_i, rv_fmt_vd_vs2_imm_vm, NULL, 0, 0, 0 },
+     { "vsll.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vsll.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vsll.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vsll.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vsrl.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vsrl.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vsrl.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vsrl.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vsra.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vsra.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vsra.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vsra.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vnsrl.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vnsrl.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vnsrl.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vnsrl.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vnsra.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vnsra.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vnsra.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vnsra.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vmseq.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vmseq.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+     { "vmseq.vi", rv_codec_v_i, rv_fmt_vd_vs2_imm_vm, NULL, 0, 0, 0 },
+@@ -1909,16 +1909,16 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "vsmul.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+     { "vssrl.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vssrl.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vssrl.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vssrl.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vssra.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vssra.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vssra.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vssra.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vnclipu.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vnclipu.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vnclipu.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vnclipu.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vnclip.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vnclip.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vnclip.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vnclip.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vfadd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vfadd.vf", rv_codec_v_r, rv_fmt_vd_vs2_fs1_vm, NULL, 0, 0, 0 },
+     { "vfsub.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+@@ -2048,15 +2048,15 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "vfmv.f.s", rv_codec_v_r, rv_fmt_fd_vs2, NULL, 0, 0, 0 },
+     { "vfmv.s.f", rv_codec_v_r, rv_fmt_vd_fs1, NULL, 0, 0, 0 },
+     { "vslideup.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vslideup.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vslideup.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vslide1up.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+     { "vslidedown.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vslidedown.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vslidedown.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vslide1down.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+     { "vrgather.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vrgatherei16.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vrgather.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vrgather.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vrgather.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vcompress.vm", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
+     { "vmv1r.v", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vmv2r.v", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+@@ -2144,8 +2144,8 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "vaesef.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vaesem.vv", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vaesem.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+-    { "vaeskf1.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
+-    { "vaeskf2.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
++    { "vaeskf1.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
++    { "vaeskf2.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
+     { "vaesz.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vandn.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vandn.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+@@ -2169,14 +2169,14 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "vsha2ch.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
+     { "vsha2cl.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
+     { "vsha2ms.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
+-    { "vsm3c.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
++    { "vsm3c.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
+     { "vsm3me.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
+-    { "vsm4k.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
++    { "vsm4k.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
+     { "vsm4r.vv", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vsm4r.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vwsll.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vwsll.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vwsll.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vwsll.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "amocas.w", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+     { "amocas.d", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+     { "amocas.q", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+@@ -4492,6 +4492,11 @@ static int32_t operand_vimm(rv_inst inst)
+     return (int64_t)(inst << 44) >> 59;
+ }
+ 
++static uint32_t operand_vuimm(rv_inst inst)
++{
++    return extract32(inst, 15, 5);
++}
++
+ static uint32_t operand_vzimm11(rv_inst inst)
+ {
+     return (inst << 33) >> 53;
+@@ -4895,6 +4900,12 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa)
+         dec->imm = operand_vimm(inst);
+         dec->vm = operand_vm(inst);
+         break;
++    case rv_codec_v_i_u:
++        dec->rd = operand_rd(inst);
++        dec->rs2 = operand_rs2(inst);
++        dec->imm = operand_vuimm(inst);
++        dec->vm = operand_vm(inst);
++        break;
+     case rv_codec_vror_vi:
+         dec->rd = operand_rd(inst);
+         dec->rs2 = operand_rs2(inst);
+diff --git a/disas/riscv.h b/disas/riscv.h
+index 379e642ec84e2da12ffd7905b590cdcee7bf215f..91ada8b531eb9a03bae49d8d36fc42c497f277ed 100644
+--- a/disas/riscv.h
++++ b/disas/riscv.h
+@@ -149,6 +149,7 @@ typedef enum {
+     rv_codec_v_r,
+     rv_codec_v_ldst,
+     rv_codec_v_i,
++    rv_codec_v_i_u,
+     rv_codec_vsetvli,
+     rv_codec_vsetivli,
+     rv_codec_vror_vi,
+
+-- 
+2.43.0
+
 
