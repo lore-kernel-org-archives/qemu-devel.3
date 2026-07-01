@@ -4,55 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74090C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 13:04:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6FE8C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 13:04:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weubR-00042Z-1F; Wed, 01 Jul 2026 09:03:45 -0400
+	id 1weubO-000427-K0; Wed, 01 Jul 2026 09:03:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1weubP-00042N-DY
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 09:03:43 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1weubN-0002xE-UV
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 09:03:43 -0400
-Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.73])
- by linux.microsoft.com (Postfix) with ESMTPSA id 806E520B7166;
- Wed,  1 Jul 2026 06:03:37 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 806E520B7166
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1782911019;
- bh=t0b0kgAwBWjoBzCwbUZlk9sfo6c+G/d89YtQ3t1AOI4=;
- h=From:To:Cc:Subject:Date:From;
- b=O2jn8zpI8r0cbxWs5y0MiVSlFWO/bWVLg0wNEACeplmFM19ZUhIs4+LpAaSFO0dAx
- cs3JNiqJm3SLL+USRQWBGIN+4X6mSqMuO1srHwopjTkWUBWTUA4csCKOQ+1SUe361I
- CwHA6nZjJ1frTacvfdv5eT/e1e/Y7Y2tB5Y0SkXw=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Wei Liu <liuwe@microsoft.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <doru.blanzeanu@microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH] accel/mshv: Fix pointer to proc feature bitfield
-Date: Wed,  1 Jul 2026 15:03:35 +0200
-Message-Id: <20260701130335.418156-1-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1weubM-00041r-W6
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 09:03:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1weubL-0002wt-AZ
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 09:03:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782911018;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YUTdL2j7vm3/QhpLlr70daZucDuR76Seyns+8N6uVEc=;
+ b=VAhA7io05y4haHgz1/oduaxP9pVG2ZGH/0DzltvUFyDLY5fnLqJJLgPNGoAQHF7Gi+tjgQ
+ vuSt3MlYbf8FYUQkVoDxuOWxVHeGqoy+xD0HdfFbHc4s5OyRYBLtLVZYL1a2tAENIbkHOZ
+ BCj/qb9ZyDYftrtKEY8H1j4BKPNPoxA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-477-Wd4InJA_M-WhZplUhGVAKA-1; Wed,
+ 01 Jul 2026 09:03:35 -0400
+X-MC-Unique: Wd4InJA_M-WhZplUhGVAKA-1
+X-Mimecast-MFC-AGG-ID: Wd4InJA_M-WhZplUhGVAKA_1782911014
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 33F711954234; Wed,  1 Jul 2026 13:03:34 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 088031955D53; Wed,  1 Jul 2026 13:03:33 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9C1DF21E6920; Wed, 01 Jul 2026 15:03:30 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,
+ devel@lists.libvirt.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  "Dr.
+ David Alan Gilbert" <dave@treblig.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Christian Brauner <brauner@kernel.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Peter Krempa
+ <pkrempa@redhat.com>
+Subject: Re: [PATCH v5 01/35] qom: replace 'can_be_deleted' with
+ 'prepare_delete'
+In-Reply-To: <akOJbvaI7lvoW6Xw@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Tue, 30 Jun 2026 10:16:30 +0100")
+References: <20260624173752.2928717-1-berrange@redhat.com>
+ <20260624173752.2928717-2-berrange@redhat.com>
+ <87qzlopjlp.fsf@pond.sub.org> <akOJbvaI7lvoW6Xw@redhat.com>
+Date: Wed, 01 Jul 2026 15:03:30 +0200
+Message-ID: <8733y26evx.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,53 +96,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Processor features are stored in a union containing two "banks":
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-union hv_partition_processor_features {
-    uint64_t as_uint[2];
-    struct {
-        uint64_t sse3_support:1;
-        ...
-    }
-}
+> On Tue, Jun 30, 2026 at 09:34:26AM +0200, Markus Armbruster wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > While most objects can perform all their cleanup in the finalizer
+>> > method, there can be interactions with other resources / subsystems
+>> > / threads which require that some cleanup be performed on an user
+>> > creatable object before unparenting it and entering finalization.
+>> >
+>> > The current 'can_be_deleted' method runs in the deletion path and
+>> > is intended to be used to block deletion. While it could be used
+>> > to perform cleanup tasks, its name suggests it should be free of
+>> > side-effects.
+>> >
+>> > Generalize this by renaming it to 'prepare_delete', explicitly
+>> > allowing for cleanup to be provided. Existing users of 'can_be_deleted'
+>> > are re-written, which provides them with more detailed/tailored error
+>> > messages.
+>> >
+>> > Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>> > Tested-by: Peter Krempa <pkrempa@redhat.com>
+>> > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>>=20
+>> [...]
+>>=20
+>> > diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
+>> > index 7080f85f95..6faa0b2fd9 100644
+>> > --- a/qom/object_interfaces.c
+>> > +++ b/qom/object_interfaces.c
+>> > @@ -32,16 +32,15 @@ bool user_creatable_complete(UserCreatable *uc, Er=
+ror **errp)
+>> >      return !*errp;
+>> >  }
+>> >=20=20
+>> > -bool user_creatable_can_be_deleted(UserCreatable *uc)
+>> > +bool user_creatable_prepare_delete(UserCreatable *uc, Error **errp)
+>> >  {
+>> > -
+>> >      UserCreatableClass *ucc =3D USER_CREATABLE_GET_CLASS(uc);
+>> > +    ERRP_GUARD();
+>> >=20=20
+>> > -    if (ucc->can_be_deleted) {
+>> > -        return ucc->can_be_deleted(uc);
+>> > -    } else {
+>> > -        return true;
+>> > +    if (ucc->prepare_delete) {
+>> > +        ucc->prepare_delete(uc, errp);
+>> >      }
+>> > +    return !*errp;
+>> >  }
+>>=20
+>> Simpler:
+>>=20
+>>        if (ucc->prepare_delete) {
+>>            return ucc->prepare_delete(uc, errp);
+>>        }
+>>=20
+>>        return true;
+>
+> ok
+>
+>>=20
+>> >=20=20
+>> >  void user_creatable_add_qapi(ObjectOptions *options, Error **errp)
+>> > @@ -253,8 +252,7 @@ bool user_creatable_del(const char *id, Error **er=
+rp)
+>> >          return false;
+>> >      }
+>> >=20=20
+>> > -    if (!user_creatable_can_be_deleted(USER_CREATABLE(obj))) {
+>> > -        error_setg(errp, "object '%s' is in use, can not be deleted",=
+ id);
+>> > +    if (!user_creatable_prepare_delete(USER_CREATABLE(obj), errp)) {
+>>=20
+>> This changes error messages.
+>>=20
+>> The old ones mention @id.
+>>=20
+>> The new ones don't:
+>>=20
+>>         error_setg(errp, "Cryptodev backend is still in use");
+>>         error_setg(errp, "Host memory backend is still mapped");
+>>         error_setg(errp, "IOMMUFD backend still has %d users", be->users=
+);
+>>         error_setg(errp, "Throttle group still has multiple references");
+>>     error_setg(errp, "Deleting can bus devices is not supported");
 
-get_proc_features() to retrieve the 2nd bank was passing a pointer that
-steps over the whole union (+16B) instead of picking the 2nd bank _in_
-the union. This manifests in mismatching feature bits for the 2nd bank
-and possibly other side-effects caused by writing beyond the union.
+Spel it CAN, please.
 
-We need to step over the first bank (+8B) by using as_uint64[0/1] to
-correct this behaviour.
+>>     error_setg(errp, "Deleting main loop is not supported");
+>>=20
+>> Visible in the diff to tests/qemu-iotests/245 below.
+>>=20
+>> Because this runs within object-del, and @id is the argument provided by
+>> the user there, the error message is still sufficiently clear, I guess.
+>>=20
+>> If this ever gets used where the object isn't obvious to the user from
+>> context, the error messages become sub-par.  Observation, not a demand.
+>>=20
+>> Please cover this change in the commit message.
+>
+> Oh yes, I remember being slightly annoyed at the need to do
+> this - I was surprised to realize that an Object does not
+> actually know its own 'id'. The 'id' only exists as the
+> name of the property in the parent.
+>
+> We could add an  object_get_id() API which traveres obj->parent
+> and then iterates over child properties. Annoyingly O(n) time
+> for that, but perhaps not a big enough problem to worry about ?
+> At least for error reporting we're probably ok with that time
+> complexity even if there are 1000 objects registered as children.
 
-Fixes: 2f6da91e8a ("accel/mshv: store partition proc features")
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- accel/mshv/mshv-all.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Could you use object_get_canonical_path_component()?
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 9452504ac2..c8b7f10294 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -167,7 +167,7 @@ static int get_proc_features(int vm_fd,
- 
-     ret = get_partition_property(vm_fd,
-                                  HV_PARTITION_PROPERTY_PROCESSOR_FEATURES0,
--                                 features[0].as_uint64);
-+                                 &features->as_uint64[0]);
-     if (ret < 0) {
-         error_report("Failed to get processor features bank 0");
-         return -1;
-@@ -175,7 +175,7 @@ static int get_proc_features(int vm_fd,
- 
-     ret = get_partition_property(vm_fd,
-                                  HV_PARTITION_PROPERTY_PROCESSOR_FEATURES1,
--                                 features[1].as_uint64);
-+                                 &features->as_uint64[1]);
-     if (ret < 0) {
-         error_report("Failed to get processor features bank 1");
-         return -1;
--- 
-2.34.1
+[...]
 
 
