@@ -4,96 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF518C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:16:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89FD4C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:18:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1weryo-0007HF-E9; Wed, 01 Jul 2026 06:15:42 -0400
+	id 1wes0y-0007qu-Tw; Wed, 01 Jul 2026 06:17:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1werym-0007GU-Bz; Wed, 01 Jul 2026 06:15:40 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1weryi-00034B-Kl; Wed, 01 Jul 2026 06:15:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782900904; bh=f7R8DQcCOxvGuDBIuqoFwbtdiBmbingpU+zagh2CXLw=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=J+gs+s/zurxusNooGYki+HSO2VY8SgVywycAtvjcl9uUsXhsIV20TvVtw5NIHZz8X
- JKfIlZQb2xvOwCANcsTDy3/SwyTXtV4VfCAKg/Rjv5toHIEuNahPXRMEvqxdhSPqSa
- P/CXoz5LeDOOMsBarGv04rXLebjd5J/ddgiahPPfbnaWthOztMhabwtxH1w7x3NlVK
- LNOyw2FPydSswF7dAvFKnPQDQ3ZuxSO2wFWYX8pkL+DX7xLMy51WSHz5ulniVTZavc
- OVh8Qc19yGe88S3wHhHQcgeevBRFYGT7mb+/4708IY3g8MXChYrcQDvNKApEchRB3v
- W0tscNTg+Rozw==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 974DB1BD15A;
- Wed, 01 Jul 2026 13:15:04 +0300 (MSK)
-Message-ID: <e825ad7a-a183-48d7-ae5f-1e3c5e30689b@tls.msk.ru>
-Date: Wed, 1 Jul 2026 13:15:23 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wes0x-0007qT-9D
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:17:55 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wes0v-0004Kb-Rt
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:17:55 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-664d4478a64so490369d50.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:17:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782901072; cv=none;
+ d=google.com; s=arc-20260327;
+ b=nlu9R2t6dXnqTOWAS/vr5402rNSFBm3/dQTxPnd8AuIWkjiCk2OPpTtZQHlpVn7vr7
+ rgRlO5quBmGaqnd7MDyqHAK5G38xadJwE2J09olm+LlTn/dWQtYwz9ksNHzjPxEZ9G0X
+ +DTYKH/+H4Q/TyA3Nx7NWlHA07Ka7A2kcTFBY/N5Pp2T9fF6EjrrWuNgRcLRYMwPZaFr
+ jQUJ6KbB+n1+aKdyJBiJsOt2N13Qah5PZrTrqxDXxVdWwlIQ5AQ661wiYpTSpp69/XfH
+ galedMlDXwTgqDVszoN2yL9Mgrv1uuRybF0zJbcjqoe/FtlQmi8iUItQlmlc6RakyyET
+ iWsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=yEmWzI0RVS/Bw1VF5wrn8kh2clwN3I0hVTTNgilHq/0=;
+ fh=0dcqPTLPDt4LOpf4C0v2p5LqsmDysv9RNiX72DWZ7UI=;
+ b=jDmgVkDEBltfL1D4QUWpQtCizcP4Mtc0nymYeebYyOQRzlmJDwFqOwOf7WTLg+RDnz
+ 8Pdv1I3CgH11MQhUGKtAXuq+MfvE0MF6fPpvJTIYFTuss48QAyLCcWLbS2zko0hG8255
+ YKFpLBGhF+zjuMq4kM4Zcok/qQtropXNps0EtEYl3IyDGvFVQlOC9FhNVlnCTedwtEV7
+ LqEWE+/vAFXH+QNOlO/N4SU5TaFCLr8a+6WTA88MzBaiZwHjTzI3+62fzGTo+sRZ3iU6
+ HCbVAckpN91OT+Myo5puO4MTGnThQbLCZy1U+6aakaJbnodIqLV2Ts1hqdXwPofQ+jvg
+ 6mFA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782901072; x=1783505872; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=yEmWzI0RVS/Bw1VF5wrn8kh2clwN3I0hVTTNgilHq/0=;
+ b=QKPnfz5bCEqsXpuLPZNdyTDnhcaHDTrXUYgujnoHj6jEoFQb8bTwoMubAc13f/KEAh
+ UrgdV7Oie+S1RVU46z8goxwPpiASVXFNMfLAgyia8YNpkhLrdlIo6AKuuQsSonO5IKNp
+ 5KOD1cijtRi0i/p2Wz9gbWN07thPGWUDbAqUkZJS7A+ZYIzaQTbeeems8EknT/Y+7nDJ
+ x7s48YyI2HqPdp+emJvVXdKBOaxPQJuhWHKB+GI69KGlcHl/707Snz9WUPN2c54eTjoi
+ +2yNukcI+DahrFzEVeVnRs8KJfBsdVkqnmCUlV0GrvSkMjH2VTR6J/b6L6YSFf1vYMeQ
+ x8yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782901072; x=1783505872;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yEmWzI0RVS/Bw1VF5wrn8kh2clwN3I0hVTTNgilHq/0=;
+ b=Nylxw8U/DQpzwNqlyxR7+MxlF8r1I0hEhl6N5wAWCWLPH2C1tnNOoJTBAjtlfUaBcm
+ +2SKS6x3roEsNSwIyE9DnMdrvWXfYOisYJqahBP9n0X1/AhlIf72zfSidUBTzk9CYiit
+ sN+qtY3q6O4yZwSwO0nw0fwvRCElYABkyzdPTTa91UsFnz2AKekBnimeeRgmUkCbQw9W
+ dWs4NWO07/GtupBhnzwlyPx/W1P1F7z/1bJKiW5RjmxCcVHFE8FaeQgLS+QBnm+hjGed
+ 8PxfSB3/xo7IyfPnP1RU0rLmLfbO8Za4yOVJmHOwjGwQdikMNSvTkyIp2wMwOT6nrES8
+ kUlA==
+X-Gm-Message-State: AOJu0Yz4Wcb+XKa51za/tJSsrXnp+f76tYOM8cCWVBWmwmL4bnRDtXFq
+ nuzcoNxHKoQy14j/RM1urm3aqQiqTo0Qfla7XJ+cuCyBFWbJUWTPa3U7vdTbjJVa+PLD0js+YGK
+ 52EmXVHvk4KOFdJogiFX7tCDbidUa8ysPnDE4Q7A6yA==
+X-Gm-Gg: AfdE7cnR0tloPuKvMeCE4/TmVKqJyDTpPOeG2fXDThDwITqouihS3ERR/x2Om8mdvPH
+ lwOUFrTiBwsQQC+W96I8DqFWQ+3A0Wg9cVfBcfYsIVdAgOJeheqTWfb/m6YBrGi+np4elnHUwaP
+ llEYN/hjvbsh7vtQwVvE71hxYf50MheWWOHDuU70oD75cI/FrJcgIKh5YYZtsf3I/XKysbxsO+8
+ cNl/x3ZvYXAsxZg23ojLB7NNb9DKbcnnhY0LkdvU0GMTQJdvTWnbpKs2GhFpnOBpiHkuBA8b8M/
+ 6aS1m5XLHwuI4lOKJhvpY9BdQPuvGXNchorzAwcCWJRRuGyD48yDMCrH
+X-Received: by 2002:a05:690e:118b:b0:664:ae6d:ad33 with SMTP id
+ 956f58d0204a3-66521d69a4dmr881598d50.77.1782901072241; Wed, 01 Jul 2026
+ 03:17:52 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/23] 9p queue 2026-06-29
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Feifan Qian <bea1e@proton.me>, Stefano Stabellini <sstabellini@kernel.org>
-References: <cover.1782739719.git.qemu_oss@crudebyte.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <cover.1782739719.git.qemu_oss@crudebyte.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260701031803.1817812-1-keith@techtravels.org>
+ <20260701031803.1817812-3-keith@techtravels.org>
+In-Reply-To: <20260701031803.1817812-3-keith@techtravels.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 1 Jul 2026 11:17:40 +0100
+X-Gm-Features: AVVi8CdBds4w-sjht2Y0_VvUdKqiA2eDTM1DpeUoHrXH662n5xNjOQs9Ln57WUI
+Message-ID: <CAFEAcA-nmkUPtJgb9---_6eBFNdU5_-EndQibQOXEBn_ifUSmA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] hw/scsi/ncr53c710: rewrite the 53C710 SCRIPTS engine
+To: Keith Monahan <keith@techtravels.org>
+Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>,
+ Fam Zheng <fam@euphon.net>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Reinoud Zandijk <reinoud@netbsd.org>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,66 +117,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.06.2026 16:28, Christian Schoenebeck wrote:
-
-> 9pfs changes:
-> 
-> - Fix DoS via Treaddir (CVE-2026-9238).
-> 
-> - Add xattr FID limit (CVE-2026-8348).
-> 
-> - Fix union V9fsFidOpenState type confusion.
-> 
-> ----------------------------------------------------------------
-> Christian Schoenebeck (23):
->        hw/9pfs: add msize_limit transport callback
->        9pfs/virtio: implement msize_limit callback
->        9pfs/xen: implement msize_limit callback
->        hw/9pfs: cap negotiated msize to transport limit
->        hw/9pfs: add response_buffer_size transport callback
->        9pfs/virtio: implement response_buffer_size callback
->        9pfs/xen: implement response_buffer_size callback
->        hw/9pfs: cap Treaddir allocation (CVE-2026-9238)
->        hw/9pfs: add xattr FID limit to prevent memory exhaustion
->        hw/9pfs: add max_xattr option
->        qemu-options: document 9pfs max_xattr option
->        tests/9p: add Tread / Rread test client functions
->        tests/9p: add Tclunk / Rclunk test client functions
->        tests/9p: add Txattrcreate / Rxattrcreate test client functions
->        hw/9pfs: enable xattr (mockup) support for synth fs driver
->        hw/9pfs: add xattr count query interface to fs synth driver
->        tests/9p: increase P9_MAX_SIZE for test client
->        tests/9p: add virtio_9p_add_synth_driver_args() test client function
->        tests/9p: add 3 xattr FID limit test cases (synth fs driver)
->        tests/9p: add 3 xattr FID limit test cases (local fs driver)
->        hw/9pfs: fix invalid union access by v9fs_co_fsync()
->        hw/9pfs: fix invalid union access by v9fs_co_fstat()
->        hw/9pfs/local: harden local_fid_fd() on FID types
-
-Thank you for this work!
-
-FWIW, I've applied this to 11.0.x and 10.0.x.  For the latter, I also
-picked up the following two commits which are simple refactoring:
-
-commit c84ebaa6b2cf9a27fc051b4692a42350adf6358e
-Author: Greg Kurz <groug@kaod.org>
-Date:   Wed Mar 12 16:29:28 2025 +0100
-
-     9pfs: Don't use file descriptors in core code
+On Wed, 1 Jul 2026 at 04:19, Keith Monahan <keith@techtravels.org> wrote:
+>
+> Rewrite the NCR 53C710 model with a SCRIPTS engine derived from QEMU's
+> LSI53C895A model (hw/scsi/lsi53c895a.c), an actively maintained sibling
+> in the same NCR/LSI SCRIPTS family, adapted to the 53C710: its register
+> map, single byte (DSTAT/SSTAT0) interrupt model, big endian SCRIPTS and
+> table indirect fetch (the part sits on the big endian PA-RISC LASI bus),
+> and 24 bit DMA counts.  Behaviour follows the NCR 53C710 Data Manual
+> (Jun 1992) and Programmer's Guide (Oct 1990).
 
 
-commit 29070a13e7c131448ff35c90c70ff42e2989d420
-Author: Greg Kurz <groug@kaod.org>
-Date:   Wed Mar 12 16:29:27 2025 +0100
+>  hw/scsi/lasi_ncr710.c |  120 +-
+>  hw/scsi/lasi_ncr710.h |   28 +-
+>  hw/scsi/ncr53c710.c   | 3062 +++++++++++++++++------------------------
+>  hw/scsi/ncr53c710.h   |  295 ++--
+>  hw/scsi/trace-events  |   31 +-
+>  5 files changed, 1479 insertions(+), 2057 deletions(-)
 
-     9pfs: local : Introduce local_fid_fd() helper
+This is way too much change to be reviewable as a single
+patch, I'm afraid. Can you break it down into meaningful
+pieces, please?
 
-
-What do you think, for older 7.2.x series, which was an LTS but now
-security-only support, which of the above should be picked up?
-I mean, which are the most important ones here?
-
-Thanks,
-
-/mjt
+thanks
+-- PMM
 
