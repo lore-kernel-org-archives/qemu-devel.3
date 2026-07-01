@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5445EC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 20:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42B12C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 20:54:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wf1u3-0007Hi-HG; Wed, 01 Jul 2026 16:51:27 -0400
+	id 1wf1tr-0005ff-44; Wed, 01 Jul 2026 16:51:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wf1ty-0006kn-TK; Wed, 01 Jul 2026 16:51:22 -0400
+ id 1wf1tm-0005LP-6k; Wed, 01 Jul 2026 16:51:10 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wf1tv-0004XW-Mf; Wed, 01 Jul 2026 16:51:22 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1wf1tk-0004WC-JV; Wed, 01 Jul 2026 16:51:09 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 661Gn7ie1341374; Wed, 1 Jul 2026 20:51:15 GMT
+ 661GnQAl1296349; Wed, 1 Jul 2026 20:51:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=nsK9FB
- AMBCYC7/MgwSTu9dE/HE+nAwhf3LNFJfKCU0E=; b=tSUu6riru0Mb5wg+boYZdt
- C9+D5RuXeLF3qngdb6nSeinfhbIqKIxyQNH1MPX/R1QiVV286gtcdMxuEbbTGriz
- 0XZnRQYhM56PaJdTwdXZgsJXBZEUJU6Hw205qOEAb6aJRmbil6qdiVVto4nl1xsQ
- ga6ftVGcEum7lEz7vNL1JzFFyJg//nXL6pbMATRIXoe83pZb7V0S0lfav/1HQh5M
- Ue+u1sIKXI7jxEz1pJjInYKkoYIzl291VeFh/hBOZJI3OxFMsDSoia2X00OdMIjK
- BfgNQ00XWZq6t6VXMJCBSjy1R2xrHYsHxkMAVTZZ+ui1FY2dDBneFUs+IJ7JTd4w
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rf66g1-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=JbxLzSL2g7Atg+2SD
+ csJiJbzAuuwSlleV+K3OwKPTCw=; b=HM2n2gHkT8+82qJh9LvfSiQrFF5ntw9bC
+ YG2i8Ruo80uZqiUcnPeBoVsgFZEgKYzCdw4gmdq3gM7tMPmblfwiYAQHITPFfrYk
+ Oi+sD+yfwdiAavE5k/5g1VlpL583UYxhMgV2pJGuCd0x/9oo07dlnIFfCQsEe7xU
+ gGqOpQGWG03pWb2cfFQrhFP9JR0PD1/zeQsjJ7f7UYzYtyjkCEHpNI92jzxA2mOx
+ uG/29LyRaNWO7EhGbGdpk90QgnrYwdWCkko1g+V82BVAnkhJvqMzrFyav9RZmQHm
+ yEEhIfEXH2ie+4W8h2wpMoywSWbP6Mqc5iw3yxWNGJjYPVvf+/BcQ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26mjxafd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 01 Jul 2026 20:51:14 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 661KnakX027027;
- Wed, 1 Jul 2026 20:51:14 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2suk930x-1
+ Wed, 01 Jul 2026 20:51:05 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 661KnbSP006913;
+ Wed, 1 Jul 2026 20:51:04 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhh0w8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 01 Jul 2026 20:51:14 +0000 (GMT)
+ Wed, 01 Jul 2026 20:51:04 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
  [10.39.53.233])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 661KpCjN55574828
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 661Kp3QW33030804
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 1 Jul 2026 20:51:12 GMT
+ Wed, 1 Jul 2026 20:51:03 GMT
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 81E9B5804E;
- Wed,  1 Jul 2026 20:51:12 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 80AC25804E;
+ Wed,  1 Jul 2026 20:51:03 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AFE6E5803F;
- Wed,  1 Jul 2026 20:51:09 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D6DCB5803F;
+ Wed,  1 Jul 2026 20:51:00 +0000 (GMT)
 Received: from fedora-workstation.lan (unknown [9.61.149.234])
  by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  1 Jul 2026 20:51:09 +0000 (GMT)
+ Wed,  1 Jul 2026 20:51:00 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
@@ -67,41 +66,39 @@ Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
  alifm@linux.ibm.com, brueckner@linux.ibm.com,
  pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-Subject: [PATCH v12 35/35] docs/system/s390x: Add secure IPL documentation
-Date: Wed,  1 Jul 2026 16:49:21 -0400
-Message-ID: <20260701204922.1320349-36-zycai@linux.ibm.com>
+Subject: [PATCH v12 32/35] s390x/ipl: re-apply secure boot flags on DIAG 308
+ reboot
+Date: Wed,  1 Jul 2026 16:49:18 -0400
+Message-ID: <20260701204922.1320349-33-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260701204922.1320349-1-zycai@linux.ibm.com>
 References: <20260701204922.1320349-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a457dc2 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=q5T4S90kAAAA:8 a=xOmL8MRHFtDrr2fuNQ0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=LnBBZQxPVJ0Z7KJyRdxh:22
-X-Proofpoint-ORIG-GUID: wrImkqN6-OI9bs2vKshiY2mAAzcpojDD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDIyMiBTYWx0ZWRfX6OzJ6lyXrmmh
- a44iuUs4IisLD/wpsLbQAs/NTW9JG7tFEyJUZoi/5VnnTWh7NHE1DoSm93mU5xO/rl+qf3I9GaJ
- 80a1RL13UZoMFSLfuo2tLsV+SIyXlPaSYc4X6mH7eeFqw2NOChVvwDTE0WdAYY/zrkoRa8HUxJV
- wKlPee97sS9uhM9bUrluLip3kiQswjsMEx7d1cjI+qi/FCJt9T9uORegWb1K1r0D8jhU8rIqeZr
- PZe8a0MqcE5Hdm9ivX2sgx6IwToCRsEyN0n0wlqz95mKKcueBZz46a7briWXgdi8ITRaAwgGXGy
- BE6Dzdmt/wxDMDHKEnX1Mqd+AWQ6FPFOjcFfDhQtgmYIF/eREYpeVl3J+pBR/L6a+Kyaa7JBqnc
- HJHMpb7EeHA7SVLa44GlBLrOjkKliTw9oSMunxC74aGyYHSZAWo5K3Tfr5rZPm8vseL4fr/uT14
- eYWd3MsQ8XA2wIaRo3g==
-X-Proofpoint-GUID: wrImkqN6-OI9bs2vKshiY2mAAzcpojDD
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDIyMiBTYWx0ZWRfX1PzMgh4/td5K
- myKVlV4brVjHhDMsEhek02AQQtKjhN+XYm1y5EmiE4fnMYwOs5FlKcHuz87MpMKzzp12jdbUuAF
- 4COeocMEGnOxzrSjD0njIPuXdzxch8w=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDIyMiBTYWx0ZWRfX+J153HIX0NRA
+ KhDs/Q8k5DIBHJT179BHzZ12kT7nJHVClqRIXTwt3u39zaiNpQNLEkgH7J8HdzpJCqdQq7SKGMF
+ x/7n/q9Cfo3Y7mipQWycQ7o9kAMhFBGDnRa0a5dLWm/jU/wKxXFL3NxIEpfmtjc9UwF8rK+gy5k
+ ToTMWy6AUmz1FIDbw0qGidmSJ3VNjYZw/v/CF/E9jgv2Bxx97yuZ3LYjZJ6YF0fCKJ+32BsPUto
+ zNjkAG6yHCFvfhl0KkV9XgHtkKD4FehNgZNjMmm/cArieKW5HXB5B92Qei2RA3O4Vfq7zrKgz7i
+ JrKTI7kZMZe7zoWaLBKUNuvMcx/fMBYCYFBH7Ds7u/Z5E6GQM1+7Sv9ALvH4IeCjQjyPLkGJOn5
+ iouSCZZZTggO9wlb43ZtJ7SCxstVuwN5fHclPNT1BccBusdBCAbcZXpst30akihk3BAvz93vDxb
+ UX+Ut8yt1OVIsHsxTuA==
+X-Proofpoint-GUID: T_7Wxynw_3QI7AFqRZEQKyrJ3UxebIXX
+X-Authority-Analysis: v=2.4 cv=Z8bc2nRA c=1 sm=1 tr=0 ts=6a457db9 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=GJyF48k09KdBxdLS7nQA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDIyMiBTYWx0ZWRfX6duhhcGt1RSo
+ dFjIGzBRXNOFlY1UaIVMOEq6vHUlgpbCy07RXlaDEKijWLo1q9d5efcrUrdZ+Kp7pgCMmEKGY/+
+ BvHB5rzg3WRZKnDzodJAjsiQFzbqIzU=
+X-Proofpoint-ORIG-GUID: T_7Wxynw_3QI7AFqRZEQKyrJ3UxebIXX
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-01_04,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
- spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
+ clxscore=1015 adultscore=0 spamscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010222
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
@@ -128,132 +125,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add documentation for secure IPL
+The Linux kernel does not preserve hdr_flags in the IPLB across a
+reboot, causing secure IPL flags to be lost on re-IPL.
 
-Signed-off-by: Collin Walling <walling@linux.ibm.com>
+Set secure IPL flasg from s390_ipl_update_diag308() to restore the
+flags from the current machine configuration.  Device validation is
+skipped here as it was already enforced during initial boot.
+
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Reviewed-by: Joshua Daley <jdaley@linux.ibm.com>
 ---
- docs/system/s390x/secure-ipl.rst | 103 +++++++++++++++++++++++++++++++
- 1 file changed, 103 insertions(+)
+ hw/s390x/ipl.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
-index c8fb887ac0..91c9c4be11 100644
---- a/docs/system/s390x/secure-ipl.rst
-+++ b/docs/system/s390x/secure-ipl.rst
-@@ -1,5 +1,22 @@
- .. SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index f4e01b6918..f970b34126 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -737,6 +737,14 @@ void s390_ipl_update_diag308(IplParameterBlock *iplb)
+     } else {
+         ipl->iplb = *iplb;
+         ipl->iplb_valid = true;
++
++        /*
++         * The kernel does not preserve secure boot flags across a reboot.
++         * Re-apply them here based on the current machine configuration.
++         */
++        s390_set_secure_boot_flags(&ipl->iplb,
++                                   s390_secure_boot_enabled(),
++                                   s390_has_certificate());
+     }
  
-+s390 Secure IPL
-+===============
-+
-+Secure IPL, also known as secure boot, enables s390-ccw virtual machines to
-+verify the integrity of guest kernels.
-+
-+For technical details of this feature, see the
-+:doc:`specs document </specs/s390x-secure-ipl>`.
-+
-+This document explains how to use secure IPL with s390x in QEMU. It covers
-+the command line options for providing certificates and enabling secure IPL,
-+the different IPL modes (Normal, Audit, and Secure), and system requirements.
-+
-+A quickstart guide is provided to demonstrate how to generate certificates,
-+sign images, and start a guest in Secure Mode.
-+
-+
- Secure IPL Command Line Options
- -------------------------------
- 
-@@ -79,3 +96,89 @@ Configuration:
- .. code-block:: shell
- 
-     qemu-system-s390x -machine s390-ccw-virtio,secure-boot=on,boot-certs.0.path=/.../qemu/certs,boot-certs.1.path=/another/path/cert.pem ...
-+
-+
-+Constraints
-+-----------
-+
-+The following constraints apply when attempting to boot an s390x guest in secure
-+mode:
-+
-+- z16 or "qemu" CPU model
-+- certificates must be in X.509 PEM format
-+- only support for SCSI scheme of virtio-blk/virtio-scsi devices
-+- a boot device must be specified
-+- any unsupported devices (e.g., ECKD and VFIO) or non-eligible devices (e.g.,
-+  network) will cause the entire boot process terminating early with an error
-+  logged to the console.
-+
-+
-+Secure IPL Quickstart
-+---------------------
-+
-+Build QEMU with gnutls enabled
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+.. code-block:: shell
-+
-+    ./configure … --enable-gnutls
-+
-+Generate certificate (e.g. via certtool)
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+A private key is required before generating a certificate. This key must be kept
-+secure and confidential.
-+
-+Use an RSA private key for signing.
-+
-+.. code-block:: shell
-+
-+    certtool --generate-privkey > key.pem
-+
-+A self-signed certificate requires the organization name. Use the ``cert.info``
-+template to pre-fill values and avoid interactive prompts from certtool.
-+
-+.. code-block:: shell
-+
-+    cat > cert.info <<EOF
-+    cn = "My Name"
-+    expiration_days = 36500
-+    cert_signing_key
-+    EOF
-+
-+    certtool --generate-self-signed \
-+             --load-privkey key.pem \
-+             --template cert.info \
-+             --hash=SHA256 \
-+             --outfile cert.pem
-+
-+Sign Images (e.g. via sign-file)
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+- signing must be performed on a guest filesystem
-+- sign-file script used in the example below is located within the kernel source
-+  repo
-+
-+.. code-block:: shell
-+
-+    ./sign-file sha256 key.pem cert.pem /boot/vmlinuz-…
-+    ./sign-file sha256 key.pem cert.pem /usr/lib/s390-tools/stage3.bin
-+
-+Note: re-signing a component will not verify correctly; the existing signature
-+must be stripped before a new one is applied.
-+
-+Run zipl with secure boot enabled
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+- zipl must be performed on a guest filesystem
-+
-+.. code-block:: shell
-+
-+    zipl --secure 1 -V
-+
-+Command line options for starting the guest
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+.. code-block:: shell
-+
-+    qemu-system-s390x -machine s390-ccw-virtio,secure-boot=on,boot-certs.0.path=cert.pem ...
+     update_machine_ipl_properties(iplb);
 -- 
 2.54.0
 
