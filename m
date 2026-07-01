@@ -4,106 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB13C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 09:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DEB5C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 09:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wer7o-0006S9-Px; Wed, 01 Jul 2026 05:20:56 -0400
+	id 1wer7n-0006RU-Mr; Wed, 01 Jul 2026 05:20:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wenf5-0008TC-8l
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 01:39:03 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wenf2-0004IF-TH
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 01:39:02 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-8475eca3a66so245543b3a.2
- for <qemu-devel@nongnu.org>; Tue, 30 Jun 2026 22:38:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782884337; cv=none;
- d=google.com; s=arc-20260327;
- b=Qbd9AI7OgtzymVF++zQy+m6wkFXkncaTNBNIB20kXvb1E8BBZtklnfpdOeNSCDjoYY
- nndo65o9+BjVGMd8oGvgCJTErzySCzcnqUlUMQCiUNpJhm9lDH1t9HPtvR9hLykq9YWo
- yx/tkYKQfvNp3YfnrjlIguheGQrIJmVqGFknFMkz+O0WJBSuM+138c99L/sH6OwUD/a5
- nUQrTVVpPZ8voD2q9jUGKB7f4eLeZU2/7Wcep0AEaaOlqhQzzWZT2BdIS+73OG1gj48N
- ZZP0Xj1dfzLbIpa/Rs2R3FIyFY7hsaomCwtHEFj2JztlXCfiJ/mALCjAg23AZKvyHCi4
- o1QA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=2tGjOoVjR/8nFMMUnv40ozYvFgs90qmTPu5OwPCZMig=;
- fh=lyeb/miAe8uwD1JGoqa3DkmppHBCFOu8N+3uBDFEx4k=;
- b=qjYlzgwEMD0vDJ1uXZzU26EgYuYLcd04VY0l5VQ90YQAeE0mlJop1MB9/8UbppGa1y
- gC/TIkiCUWen0NPjRAwXD2Xro2NMrU2VZSlXwViCC7QAFuzoQMpaFC3uMQAWwjwHKgIP
- 8pF455vS8kdqjgudrKoRFQh0UQe/MPyqw0X6Vnk0nywG0x04LvxKSu11stVZACdkkzHD
- 8rEnufAxyWh7hwaeelHlUajhdemF16SnzEIjYd6qvLAIzCU42DLgl+GKIU/pJVRjtMVK
- uh4lziMxP2so1Lgg0+znYonLaSR1MUaAzCtTsaknMg1TA1GuleZDOln4X6HGXK16TX/V
- vuYA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782884337; x=1783489137; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2tGjOoVjR/8nFMMUnv40ozYvFgs90qmTPu5OwPCZMig=;
- b=b0anI8ir0qXZ7Knb+cBEcqcrw56rmJmKpY2QI7gFI1urRuc+4JXJOPAv+EqW9/WMfd
- S/lTuhMGTxO1V7Mo289mT24JuIei5wlKN/L26j/QtDyYxcoVl6BPniMi/BdKS3razn/Q
- 0oT+4uy5QEAeNlSu5B4hTAEaguCh8JDHAc/ByzSExRKUlvOCMPjuDXpvzpTetjJm1X+D
- JHSQz93pvxH5uNg7hzpJMrEiZKJ4/sWJfZz4Djkg5ePW5vGWjbijgFe9BlZNVat2N8c9
- WL27JxsxnJfi0jz3Uv8lfVMA5Ow8PK5Z18GcL5sTNETxN/eoGreCOHyu0+w9BTmrkKaB
- 5G1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782884337; x=1783489137;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2tGjOoVjR/8nFMMUnv40ozYvFgs90qmTPu5OwPCZMig=;
- b=hvTU5PYZrMlVtLLo0MgcJxB4qpRLtMxmYSrE/ADWKyZr7MxqCF+08MC8Hg6p4cU83U
- v8gnmecCHaM2dxMdQaOB2qcP47Q3KrTWzoDYNdmxU3ki5Rv88DvR3rZeGJFuZLOQLCc5
- 0UTEJucnifeRfFBAucY25gmuA/pyBzW3zJIHOjLSGwOEMu24/hZFvglJfE0hqBbjNGeZ
- MXPjFWe9FNedZrDLwNvnPxfEtHbPtcmqlEbDTjcD4cbcIVrkmqRlC8IFTYUv1jWmaz98
- 9uVvbEDS85bxxLemfQsLFGnUwhn/oUU7Y45wjqBGHlLJUno1pSFRBEQ/NOkGYIOAYYeR
- UJyQ==
-X-Gm-Message-State: AOJu0YwGNR5NcJ8C9ien4D6anHAPKvTThMnEFOHc7shSN6oOiBBUPPMo
- dKSbgnUcpDzkHQ8wdDCgNPI5SPAHDX7VtfAnJxnCQ2bvFRAbEDz7h9jnmLKQ0IB8ZfePRv48aqF
- 2+0JupgFuN4U5ETKmm6REjpohv1DUJu0=
-X-Gm-Gg: AfdE7cm5VPXJBtKNYIQ65yj5tNhyuBhVEF2MiXVq/NN2COvvRv7dcbvz4QN9vdQNIwT
- fmunBFUWTDW15Q5/WJm7znTS5bjz3YL+Ujr40zBYPa0mnehQQ7/1BOSKwaS72jcl7mKYN8sh/7s
- i1zn33xM4UMSz4Mu6QN1Dtio1fA3uY5oqRe1LGm3anpCnIpDYUVIEQXGp0BGC2oG0BnpHBHhWqG
- ZmUYRWK7w2QcNrNpqSR66vS7RgFNDUzusDk4veymO9O2Iy0zQIH6ehdM6g2yD36Uu5mGCLfetJw
- AgEclloZjNY=
-X-Received: by 2002:a05:6a00:2a0e:b0:82f:9407:d167 with SMTP id
- d2e1a72fcca58-847c09c8386mr129950b3a.38.1782884336637; Tue, 30 Jun 2026
- 22:38:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <syadav@linux.ibm.com>)
+ id 1wenEh-0001m4-GK; Wed, 01 Jul 2026 01:11:47 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <syadav@linux.ibm.com>)
+ id 1wenEf-0003C4-R9; Wed, 01 Jul 2026 01:11:47 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6613ICZx4061322; Wed, 1 Jul 2026 05:11:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=7qmi50
+ UoS8q9wmo3tmp2mRMrA1cWrFujuLb1+Yu6YMY=; b=a3u7lJGPTgOjbiZJ7s6uTR
+ lOw7+6GHXeCyTkoQ1Hqbv4hvJbYVynRJPyY0fhiLMGmWsIJaVgpa/6v+0K1P4jH8
+ +YlhQ4yzfgjTvBW0OrFKdLik7WxykY5MBLDchBJUnHANqjVwCUB1ZpOvYRf1Vayl
+ sSk7bC7lAYe2ixeOd51mVDx6qH3tRWCTBsRPjmKx6Yto7psqCEXCGcxXHpUltgkd
+ cgRBFckQuE707UsoiwkFva/AWNq+VW037ltOnCpCge92QMk8YZA4NGBu3Y2ZK649
+ tac5Nfk6N8J6S00f2+WmFiOfvfoxe/ytR2FbnOgcRgJjsw+xCnUjL2t3oS+l1xkg
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qg2k4d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 01 Jul 2026 05:11:42 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66154Z1m004823;
+ Wed, 1 Jul 2026 05:11:41 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhdnq3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 01 Jul 2026 05:11:41 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6615BbTD20578770
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 1 Jul 2026 05:11:37 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 30B2120043;
+ Wed,  1 Jul 2026 05:11:37 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2EC3820040;
+ Wed,  1 Jul 2026 05:11:36 +0000 (GMT)
+Received: from ltcblue9yr-lp6.ltc.tadn.ibm.com (unknown [9.5.7.39])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  1 Jul 2026 05:11:35 +0000 (GMT)
+From: Sneh Shikha Yadav <syadav@linux.ibm.com>
+To: gautam@linux.ibm.com
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Sneh Shikha Yadav <syadav@linux.ibm.com>
+Subject: Re: [PATCH v2] target/ppc: Expose the TB offset of the guest in QEMU
+ monitor
+Date: Wed,  1 Jul 2026 07:11:20 +0200
+Message-ID: <20260701051122.939440-1-syadav@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260626093554.69966-1-gautam@linux.ibm.com>
+References: <20260626093554.69966-1-gautam@linux.ibm.com>
 MIME-Version: 1.0
-References: <20260529-feat-mte4-v7-0-ccbd3c14eb3c@gmail.com>
- <CAFEAcA8R1RXrGo2xov-4gKLQXX=FTVKoK1rGuxuYmBo9e8SN_g@mail.gmail.com>
-In-Reply-To: <CAFEAcA8R1RXrGo2xov-4gKLQXX=FTVKoK1rGuxuYmBo9e8SN_g@mail.gmail.com>
-From: Gabriel Brookman <brookmangabriel@gmail.com>
-Date: Tue, 30 Jun 2026 22:38:45 -0700
-X-Gm-Features: AVVi8CeOBtZJTvsljiabzMR8Fo81rmvNVpq8-chsg7c0ssTUY6z7FEJUK5wsM14
-Message-ID: <CA+1f7BD2pVP2ByBRbwbHBRWNNuZHKdM_7xSVSmPztEWw1BbVbw@mail.gmail.com>
-Subject: Re: [PATCH v7 00/15] target/arm: add support for MTE4
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=brookmangabriel@gmail.com; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=RYqgzVtv c=1 sm=1 tr=0 ts=6a44a18e cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=foYxvERbx4e-ZuiC3n4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDA0NiBTYWx0ZWRfX0Q4Zm3wx6Ppq
+ EhilFPuWuDSNmbFAdLWB4yw2SVoveZL1Fuefwsfq925aAdQRBJf4prEBMEV5zSr8VggUll7aO1q
+ rY1NcfsFS8IjWTyJksnjb7tiGSr3RU0=
+X-Proofpoint-GUID: 7a_piHurJG90NqvZOkfUCOxVS3lMw70g
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDA0NiBTYWx0ZWRfX5v10vAmH3Qt+
+ NZJUhP8TqFuw6p1RBwUAWR9bekfdjDiabwMiDIxTu9xQVuPsRPV8+iC8uB80B/HxXnJUoO7rJ1d
+ 3xrSvTIbq/24YJOpUnH82/0pLbwdhZ9GcDSr56DJdbsxe+Bq86+If3+KFuY1ytfWfEJv8UBmdax
+ jTAiEu4Z7b8hhXvbcjcCsH5ZKfg+p1pQeacZ3cvkEf1xJjj8HDBZdMuKUdf2Ud17YptTJ6je7CC
+ pMzzGyIU9FbsXPpzeXFiB8q+MFPkQAbdmbbKxi5fYpLmKK9MmyR6lsr5folyrz99MCIuvUCOQmM
+ QqontxP6q3M4goi0dHRTQsoJW4QMn/773/w7+imJeN8v2crfvIc9xV/ILaKxBTHTqfZ9xlrqdC9
+ DBpMUVF5E3UcRojxEo9xaNLIcDiLmea1kZqaK9WspyxndKNeg42WFyp6fg1Zqi48ggH51Q39Ji4
+ PDRuHC46Tyb6MCP/fig==
+X-Proofpoint-ORIG-GUID: 7a_piHurJG90NqvZOkfUCOxVS3lMw70g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-01_01,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1011
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010046
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=syadav@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 01 Jul 2026 05:20:53 -0400
+X-Mailman-Approved-At: Wed, 01 Jul 2026 05:20:49 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -118,20 +124,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sorry, repeating as I forgot to include the mailing list:
+- Host: SLES 16.1 (ppc64le, Power11)
+- Kernel: 6.12.0-160099.38-default
+- QEMU: built from latest master (commit b3ea565608)
+- Guest: avocado-vt-vm1 (ppc64 KVM guest)
 
-Hello,
+—logs— 
 
-According to ARM developer, FEAT_MTE4 only implies the existence of
-its 4 subfeatures, plus FEAT_MTE2, and MTE_PERM, all of which are now
-implemented. There are no features that MTE4 guarantees that aren't
-either already present or introduced by my series. This means that we
-can now claim to implement FEAT_MTE4, and close the issue.
+ TB offset visible in QEMU monitor: 
+# virsh qemu-monitor-command avocado-vt-vm1 --hmp "info registers" | grep TB_OFFSET
+TB 00000000 00000000 DECR 0 TB_OFFSET -916489431416832 
 
-We can also add it to emulation.rst. My apologies -- I can't do that
-right now because of my current role, but it should be a trivial
-one-liner for whoever picks it up.
+On Host :
+qemu # trace-cmd record -e kvm_hv:kvm_guest_enter -e kvm_hv:kvm_guest_exit 
+Hit Ctrl^C to stop recording
+^CCPU0 data recorded at offset=0x140000
+    2728 bytes in size (65536 uncompressed)
+CPU1 data recorded at offset=0x150000
+    187 bytes in size (65536 uncompressed)
+CPU2 data recorded at offset=0x160000
+    7084 bytes in size (65536 uncompressed)
+CPU3 data recorded at offset=0x170000
+    0 bytes in size (0 uncompressed)
+.
+.
+.
+CPU14 data recorded at offset=0x1e0000
+    0 bytes in size (0 uncompressed)
+CPU15 data recorded at offset=0x1e0000
+    42586 bytes in size (524288 uncompressed)
 
-Thanks,
-Gabriel
+On Guest :
+# trace-cmd record -e powerpc:hcall_entry -e powerpc:hcall_exit -C ppc-tb     --ts-offset 916489431416832 -o trace_guest.dat
+Hit Ctrl^C to stop recording
+^CCPU0 data recorded at offset=0x130000
+    186 bytes in size (65536 uncompressed)
+CPU1 data recorded at offset=0x140000
+    522 bytes in size (65536 uncompressed)
+CPU2 data recorded at offset=0x150000
+    95 bytes in size (65536 uncompressed)
+CPU3 data recorded at offset=0x160000
+    111 bytes in size (65536 uncompressed)
+
+
+qemu #  head  -10 /root/combined_log
+ trace_host.dat: cpus=16
+trace_guest.dat: cpus=4
+ trace_host.dat:        CPU 1/KVM-596247 [000] d..1.916674455351586: kvm_guest_enter:      VCPU 1: pc=0xc0000000001b60e8 pexcp=0x8000 ceded=0
+ trace_host.dat:        CPU 1/KVM-596247 [000] .....916674455369430: kvm_guest_exit:       VCPU 1: trap=H_DATA_STORAGE pc=0xc008000001c6070c msr=0x800000000280a033, ceded=0
+ trace_host.dat:        CPU 1/KVM-596247 [000] d..1.916674455373152: kvm_guest_enter:      VCPU 1: pc=0xc008000001c60710 pexcp=0x0 ceded=0
+ trace_host.dat:        CPU 1/KVM-596247 [000] .....916674455378631: kvm_guest_exit:       VCPU 1: trap=H_DATA_STORAGE pc=0xc008000001c6070c msr=0x800000000280a033, ceded=0
+ trace_host.dat:        CPU 1/KVM-596247 [000] d..1.916674455380902: kvm_guest_enter:      VCPU 1: pc=0xc008000001c60710 pexcp=0x0 ceded=0
+ trace_host.dat:        CPU 1/KVM-596247 [000] .....916674455386279: kvm_guest_exit:       VCPU 1: trap=H_DATA_STORAGE pc=0xc008000001c6070c msr=0x800000000280a033, ceded=0
+ trace_host.dat:        CPU 1/KVM-596247 [000] d..1.916674455388450: kvm_guest_enter:      VCPU 1: pc=0xc008000001c60710 pexcp=0x0 ceded=0
+ trace_host.dat:        CPU 1/KVM-596247 [000] .....916674455393602: kvm_guest_exit:       VCPU 1: trap=H_DATA_STORAGE pc=0xc008000001c60f4c msr=0x800000000280a033, ceded=0
+
+Tested-by: Sneh Shikha Yadav <syadav@linux.ibm.com>
 
