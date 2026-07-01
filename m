@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9E23C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E59FBC44500
 	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 15:58:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wexJr-0002a2-Dr; Wed, 01 Jul 2026 11:57:47 -0400
+	id 1wexJX-0002PM-7p; Wed, 01 Jul 2026 11:57:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wexJp-0002ZV-Uq
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 11:57:45 -0400
+ id 1wexJS-0002P0-LM
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 11:57:22 -0400
 Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wexJn-0005np-GA
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 11:57:45 -0400
+ id 1wexJO-0005Un-Cw
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 11:57:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
  s=default; t=1782921427;
- bh=yXCUUvPgdYz7tcDJMijkLwj07Wj7W2aPdemmMHum/pU=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=V5JStoezch8rs4qqm/oE4v2sDE5XHQN36uS7/PQZNwKmB2SHRehXYBCfzIAu0+dxg
- 7Rj1NrNIEB08MejLc/tt4jQXjWTjlSxsht0Z0LQ1BuzfvBw5V+4kDI6SuZ75SN+PUr
- u3kj5tS+OkcGNeLbgwyP+vwscePtoRN28pKD5i7q8xxT8HX+04alyRjdHAU4B1rk5J
- hcBcVQKQS5nr4kss6Hvyig808ab1I1/5sAEca3usHtUhu3iVGuXjPgVvefljYiwElF
- 5RaUklxPh7yjSmv/LDearHWX6rVKsS5OQmWjLQvY0cGJxLUDbdyGoORQuyTD56MHwW
- AQBBXzlbhVf1A==
+ bh=su8Yw7+fzpdMagpUTcCVWcbHN1TtxwUa0T3uyeCUZMg=;
+ h=From:To:Cc:Subject:Date;
+ b=0bX1OYvjg9EoGL+D3J6ElbfgsFNtRNejhXLSLL2AKreH2Fa9p3601HBH8gXs00L82
+ SXwVirPLthw51oZMu+dBncPxxchSU+Ll5fpVVvKrmpD5yA94spIB57GxXHAK0gEdhk
+ W3BKtGVOq/xoH2p4Ex9/wsNdWNjrXnY5Zr/NSeEm6nLXxtQHFxfcUuC7jtbA2hNd3+
+ hNEU+cEmzhumw1CZH/mI+oOSFIxBR8xmTgZzkZONOf2JlsVtUmGRsQji90ZSxDd5AQ
+ O7CZAT0iJqPTpRX5zafrGP2mkWrQb+AK5KHPA41lrHh5cnQDwVh5L8XGegqUUWokBb
+ 4HvV/NX1xwCpQ==
 Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id D29462FF55B;
+ by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 525DA2FF557;
  Wed,  1 Jul 2026 15:57:07 +0000 (UTC)
 Received: from pc.. (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 376E2380C9A;
- Wed,  1 Jul 2026 23:57:07 +0800 (CST)
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 25D7237C941;
+ Wed,  1 Jul 2026 23:57:06 +0800 (CST)
 From: Ziyang Zhang <functioner@sjtu.edu.cn>
 To: qemu-devel <qemu-devel@nongnu.org>
 Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
@@ -46,12 +46,11 @@ Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
  Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
  Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>,
  Ziyang Zhang <functioner@sjtu.edu.cn>
-Subject: [PATCH v5 2/2] docs/about/emulation: document the dlcall plugin
-Date: Wed,  1 Jul 2026 23:57:05 +0800
-Message-Id: <20260701155705.1737328-3-functioner@sjtu.edu.cn>
+Subject: [PATCH v5 0/2] contrib/plugins: add dlcall to call host functions
+ from a guest
+Date: Wed,  1 Jul 2026 23:57:03 +0800
+Message-Id: <20260701155705.1737328-1-functioner@sjtu.edu.cn>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260701155705.1737328-1-functioner@sjtu.edu.cn>
-References: <20260701155705.1737328-1-functioner@sjtu.edu.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=202.120.2.186;
@@ -77,82 +76,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Document the dlcall plugin under Example Plugins: what it does, the trusted-
-guests and guest_base == 0 constraints, how to load it, and a pointer to
-Lorelei, a complete userspace implementation, for prebuilt thunks and a
-runnable example.
+Hi,
 
-Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
----
- docs/about/emulation.rst | 55 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+This patch adds a single plugin, contrib/plugins/dlcall.c (~240 lines,
+no changes to QEMU core), that lets a linux-user guest call functions in the
+host's native shared libraries instead of emulating them.
 
-diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-index 3b4c365933..8877708d18 100644
---- a/docs/about/emulation.rst
-+++ b/docs/about/emulation.rst
-@@ -1046,6 +1046,61 @@ Count traps
- This plugin counts the number of interrupts (asynchronous events), exceptions
- (synchronous events) and host calls (e.g. semihosting) per cpu.
- 
-+Dlcall
-+......
-+
-+``contrib/plugins/dlcall.c``
-+
-+This plugin lets a linux-user guest call functions in the host's native shared
-+libraries instead of emulating them, turning slow instruction-by-instruction
-+emulation of a library into a native host call. For example, the stock zlib
-+``minizip`` utility compresses several times faster, because the actual
-+``deflate`` runs on the host's native libz while ``minizip`` itself stays
-+emulated.
-+
-+The guest issues a reserved "magic" system call (4096 by default, configurable
-+with ``syscall_num=N``) whose first argument selects a pass-through operation:
-+dlopen/dlclose a host library, dlsym a symbol, and invoke a resolved host
-+function. The plugin performs the operation on the host and consumes the
-+syscall, so the real kernel never sees it.
-+
-+.. warning::
-+
-+   Trusted guests only. The guest can load arbitrary host libraries and run
-+   arbitrary code in the QEMU host process. The plugin is not a sandbox and
-+   provides no isolation. It also requires ``guest_base == 0`` (qemu-user's
-+   default), as guest pointers are dereferenced as host addresses with no
-+   translation.
-+
-+The plugin is deliberately minimal and knows nothing about any particular
-+library or its calling convention. Turning a real library into working thunks,
-+including argument marshalling, callbacks and variadic functions, is done
-+entirely in userspace, and any toolchain can implement the interface.
-+`Lorelei <https://github.com/rover2024/lorelei>`_ is a complete, MIT-licensed
-+implementation: it provides the guest and host runtimes and a Thunk Library
-+Compiler that generates the thunks from a library's headers, with prebuilt
-+thunks (zlib, lzma, ...) for x86_64, aarch64 and riscv64 hosts.
-+
-+Loading the plugin is all that is required from QEMU's side:
-+
-+.. code-block:: shell
-+
-+   qemu-x86_64 -plugin contrib/plugins/libdlcall.so <guest-program> ...
-+
-+See `Lorelei <https://github.com/rover2024/lorelei>`_ for prebuilt thunk trees,
-+the runtime environment they expect, and a full runnable example (for instance,
-+running an unmodified ``minizip`` over the host's native libz).
-+
-+.. list-table:: Dlcall plugin arguments
-+  :widths: 20 80
-+  :header-rows: 1
-+
-+  * - Option
-+    - Description
-+  * - syscall_num=N
-+    - The magic syscall number the guest issues (default 4096). Must be high
-+      enough not to clash with a real syscall.
-+
- Other emulation features
- ------------------------
- 
+It is the natural next step on top of the vCPU syscall-filter callback that I
+contributed and that was merged earlier:
+
+  https://lore.kernel.org/qemu-devel/20251214144620.179282-1-functioner@sjtu.edu.cn/
+
+Why bother? Because it turns slow, instruction-by-instruction emulation of a
+library into a native host call. Some results, all on completely unmodified
+guest binaries:
+
+  * minizip (the stock zlib utility) compresses several times faster, because
+    the actual deflate runs natively on the host instead of being translated.
+  * Real OpenGL/Vulkan games run under qemu-user: SuperTuxKart and Hollow
+    Knight are playable, with their graphics calls going straight to the host
+    GPU.
+
+How it works
+============
+
+The guest makes a system call with a reserved number (4096 by default) that no
+real Linux ABI uses. Its first argument selects a pass-through operation, and the
+rest carry operands:
+
+  syscall(4096, op, arg1, arg2, ...)
+          |     |    \............ operands (pointers / values)
+          |     \................. which pass-through operation
+          \....................... the reserved "magic" number
+
+The plugin registers a vCPU syscall filter: before QEMU forwards a syscall to
+the host kernel, the filter runs, sees 4096, performs the operation on the
+host, writes the result back, and tells QEMU the syscall is consumed, so the
+real kernel never sees it.
+
+The whole interface is just a handful of primitives:
+
+  * query a host attribute
+  * dlopen / dlclose a host shared library
+  * dlsym a symbol, and read the last dlerror
+  * invoke a resolved host function with a void(void *, void *) signature
+
+That is all the plugin does. It knows nothing about zlib, X11 or OpenGL, or
+about any library's calling convention.
+
+The same machinery also runs in reverse: when a host function needs to call
+back into the guest (a qsort comparator, an allocator, a GUI or game callback),
+control re-enters the guest to run the callback and then resumes the suspended
+host call. This reentry is what lets stateful, callback-driven APIs work, not
+just leaf functions.
+
+Why the plugin belongs in QEMU, and the rest does not
+=====================================================
+
+Only the plugin lives in the tree. Everything else is ordinary userspace:
+
+  --- userspace (out of tree, not tied to any DBT) -------------
+      guest: unmodified program  ->  guest runtime + thunk libs
+  --------------------------------------------------------------
+                 |  syscall(4096, op, args)   (only crossing point)
+                 v
+  === inside QEMU: THIS PATCH, ~240 lines ======================
+      dlcall plugin:  dlopen / dlsym / invoke a host fn
+  ==============================================================
+                 |
+                 v
+  --- userspace (out of tree) ----------------------------------
+      host: host runtime + thunk libs  ->  real libz / libGL ...
+  --------------------------------------------------------------
+
+The split is deliberate, and it is why only this one file is proposed for the
+tree:
+
+  * This plugin defines the most general interaction interface for native
+    pass-through: the magic-syscall ABI between an emulated guest and its
+    emulator. That contract is what every pass-through implementation builds
+    on, so it belongs in a stable, shared place.
+  * It is also the only piece that is inherently QEMU-specific: it plugs into
+    QEMU's syscall-filter hook and runs inside the QEMU process. The argument
+    marshalling, calling conventions, callbacks/reentry and per-library
+    coverage are not tied to any particular DBT and behave as ordinary
+    userspace, so they should stay out of tree rather than couple QEMU to them.
+
+Background: we presented this approach at KVM Forum 2025, "Lorelei: Enable QEMU
+to Leverage Native Shared Libraries":
+
+  https://www.youtube.com/watch?v=_jioQFm7wyU
+
+The userspace side
+==================
+
+A fair point on v3 was that, on its own, the plugin is only half of an
+interface: useful only if the other half (the guest/host runtimes and the
+per-library thunks) is public and specified, rather than a private demo. That
+half is now available as a standalone, documented, CI-tested project, Lorelei:
+
+  https://github.com/rover2024/lorelei
+
+Lorelei provides the guest and host runtimes and a Thunk Library Compiler
+(TLC, built on Clang LibTooling) that reads a library's headers and generates
+the guest and host thunks automatically, including the awkward cases of
+function-pointer callbacks and variadic functions. It has CI for x86_64, arm64
+and riscv64 hosts. Lorelei and its thunk libraries are MIT-licensed.
+
+Because the plugin is not upstream yet, Lorelei currently builds and tests
+against the QEMU fork that carries it. Its releases ship prebuilt guest and
+host thunk trees for x86_64, aarch64 and riscv64 hosts, so trying it out does
+not require building from source:
+
+  https://github.com/rover2024/lorelei/releases/tag/v1.0.1.0
+
+The plugin stays deliberately minimal and prescribes nothing about how
+thunking is done. Lorelei is one reference implementation of the userspace
+side. Any toolchain, or another instrumentation framework, can implement the
+same dlcall interface.
+
+A from-scratch walkthrough of the bare mechanism, with the minizip and
+OpenGL/X11 examples above, is also available here:
+
+  https://github.com/rover2024/qemu-passthrough-test
+
+It is fully opt-in (loaded with -plugin) and targets linux-user, where the
+guest and host already share a trust domain. The test cases use x86_64 guests
+and run on x86_64, arm64 and riscv64 Linux hosts.
+
+Following the v4 review (Pierrick Bouvier), this version adds a documentation
+patch (patch 2/2) for docs/about/emulation.rst with a minimal example, and now
+references Lorelei as one complete userspace implementation of the interface,
+from both that documentation and the plugin's header comment.
+
+Feedback on the plugin and on the pass-through approach is welcome.
+
+Changes since v4:
+
+  * Added a documentation patch for docs/about/emulation.rst (Pierrick
+    Bouvier): what the plugin does, its trusted-guests and guest_base == 0
+    constraints, how to load it, and a minimal example, with a pointer to
+    Lorelei.
+  * The plugin's header comment now points to Lorelei as one complete
+    userspace implementation. The plugin code is otherwise unchanged.
+
+Changes since v3:
+
+  * Lorelei, the userspace toolchain that implements this interface, is now a
+    public, documented, CI-tested project, with a Thunk Library Compiler that
+    generates the guest/host thunks automatically. This addresses the v3
+    feedback that the interface needs a public implementation behind it. The
+    plugin code itself is unchanged.
+
+Changes since v2:
+
+  * Dropped the RFC tag. The approach was positively received on v2.
+  * Rebased on master and adjusted the syscall-filter callback to its updated
+    signature (int64_t sysret, added userdata, dropped the plugin id
+    argument).
+
+Changes since v1:
+
+  * Renamed the plugin from "passthrough" to "dlcall" (Pierrick Bouvier).
+    The old name was too generic. The name "dlcall" reflects what the plugin actually
+    does (dlopen/dlsym a host symbol and call it) and avoids confusion with
+    QEMU's existing plugin hostcall concept (QEMU_PLUGIN_*_HOSTCALL).
+  * Made the magic syscall number configurable at load time via the
+    "syscall_num=N" argument, defaulting to 4096 and rejecting values low
+    enough to clash with a real syscall (Pierrick Bouvier).
+
+v1: https://lore.kernel.org/qemu-devel/20260617130742.769234-1-functioner@sjtu.edu.cn/
+v2: https://lore.kernel.org/qemu-devel/20260619045404.820960-1-functioner@sjtu.edu.cn/
+v3: https://lore.kernel.org/qemu-devel/20260622163438.130746-1-functioner@sjtu.edu.cn/
+v4: https://lore.kernel.org/qemu-devel/20260629160217.1637276-1-functioner@sjtu.edu.cn/
+
+Thanks,
+Ziyang Zhang
+
+Ziyang Zhang (2):
+  contrib/plugins: add a minimal dlcall plugin
+  docs/about/emulation: document the dlcall plugin
+
+ contrib/plugins/dlcall.c    | 246 ++++++++++++++++++++++++++++++++++++
+ contrib/plugins/meson.build |   5 +
+ docs/about/emulation.rst    |  55 ++++++++
+ 3 files changed, 306 insertions(+)
+ create mode 100644 contrib/plugins/dlcall.c
+
 -- 
 2.34.1
 
