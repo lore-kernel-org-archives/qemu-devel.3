@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E801C43327
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:21:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A787C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:21:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wes33-0004re-Gq; Wed, 01 Jul 2026 06:20:05 -0400
+	id 1wes1j-0000L9-DM; Wed, 01 Jul 2026 06:18:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes31-0004nf-L2
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:20:03 -0400
-Received: from mail-dl1-x1234.google.com ([2607:f8b0:4864:20::1234])
+ id 1wes1f-0000IC-T2
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:41 -0400
+Received: from mail-dl1-x122b.google.com ([2607:f8b0:4864:20::122b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes2z-00052G-Hx
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:20:03 -0400
-Received: by mail-dl1-x1234.google.com with SMTP id
- a92af1059eb24-13b392c721cso49438c88.0
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:20:01 -0700 (PDT)
+ id 1wes1e-0004eO-Ch
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:18:39 -0400
+Received: by mail-dl1-x122b.google.com with SMTP id
+ a92af1059eb24-13b355fbb1aso1329039c88.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:18:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782901200; x=1783506000; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782901117; x=1783505917; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dUOpRDTToMD5PsAczk1hbVZqaMH7r1LSgV3yyuN2LIU=;
- b=D+duxDdBG4r/6uJwIFIt7cuB+E4JY4BE6bLq41WFMFJg86T8e7NOyOxS7a9QyM0kue
- EfIEyNkIePWqOH2bSIAUGP6yyxzW0cKMxp1hhrb5jCEwZfER5HTXa39vhAWoHnTSnZyJ
- Afcupyv8OphvUhqsy77kujAEsG6kiCoqZ3PJqhv1mDqHhdljPrK42AhebzQFn5MRbdft
- tpWL4WL5gxD+XUStbAnkr/L+TjiQvErgoObyplofNeSVE7xpjTDfbnAsLmHzCvofKEbk
- Rp9rl1R4tKKm7KhnRR3YsBROxNtaVYx2bz1MVLbgqWZFlP2Ic9Wod4U01f1Gm+md1uow
- mj9w==
+ bh=zcIRkGhhyBAlMl+YVxltb7+6Up2QH7Eq1tUIuaL2RG4=;
+ b=loi43g23UbzOU825qPZretB2byPYHzy/qY0IspgVXr1Awmtdz7fY7jYOwI8HtriqWc
+ zZw0ygcPTXLv5gQJOviQLlLyMja1D7N/PcKUeifUtLzTbx4fRbdW6GS72/iFRozWqG3w
+ uVv0adyV2hx5Qk8Wwr10LyWomJLH0uVlubNh3B7tR2ViORXd+HE94VrMzxYK0z70+M8+
+ /9Cybg94d+DTBLLzHaYOPwmyl3C3OLTTqWBh/nSUqABWbd/5jK5o4Whq6t+2yprT73JN
+ dHrc/ini9uZ9YlbY+JAmjeREovcYnmOfNc8giz+4X52DG9TlmYZ71/16gKx/ZtrqIeTN
+ rdIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782901200; x=1783506000;
+ d=1e100.net; s=20251104; t=1782901117; x=1783505917;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dUOpRDTToMD5PsAczk1hbVZqaMH7r1LSgV3yyuN2LIU=;
- b=USoJhV5X164ZVaWUrs8Je0kIGmQVVD6ohM6xisWb6OyEt5g0iLqkqnA65yzDLCvN2j
- SW85D9JGngdOZXqj+O8BKLwt1+5gwmBscw2y7pVMK5VvVHebow20xF8gmHF5mNsWBAJh
- 7VrM3q+3EChcJ64fuaWFgml9Qtky1oeB7r3+OFLCnRHfyfr0O7dzKpSTKsliA2pFN/N/
- 4Y28GokSAlkOZHmUrwkKWc122z0BB+9ge/jXrBzgSsid7PPvDrOqKLkXlWJmoXjVLGRq
- WDwe3Ow2M8InJ8hM7Utk9fQRbZzUsVjJnVAjsGTUcUGb7C8OGl6/rsZm0Ibdpqw+4l1Q
- iduw==
-X-Gm-Message-State: AOJu0Yy4xN1pv6nVZ7GvusBssvVsbmk62dfKBeSeZxWfVkVYjmB5cm1P
- TmqSulNa3L4XY+jARWYozWn2ncExB7RDOC7FQgqLg67MYc+dFxZDNHlXnhnZzQ==
-X-Gm-Gg: AfdE7cmFZHJudUAPhq4V1IkbRSIIaFbqphjT+CWKOYX0KRNlksVk3gvL2Vw5yIiFdN0
- Ez0h1mvM2L5c+qEcWjJxTCIwPQy+hiqN/S6jR15G1u5Vj1gPkOkviLG7RmL7W0QqpX2JVh5NWU5
- X1cFg0x4nmoQytM9B3J1CXTbNTXbS1QZLlvBLgx1dbuwYI0Q/ewDzpTtzDyqCE1v+vu03W4zRi3
- T9X38Vko/+4BeIPIBmCecEipi3QehHxPOXA86ByUjag3qdZXTQuFVvF5McJvQsRpHbtSNs+P2Am
- gI2nQeEe6JM38auH79167oKXwbmtzT4tcIj2MmkkkLI9HlOi0T/XgLs6Rw1voQ5RgEVJPJeveCf
- 6OnSr7EaUf+WO4438BoS4O48S7cCQzlhtwp+bTtTq6o7MW0XWmvRKb42SmOsOVhsonO2aI1UBau
- zkjyOLvVDejSZ2pLHAQOqKRgPnheOMG4I6xPO1TH2msg==
-X-Received: by 2002:a05:7022:51f:b0:137:8bc2:f501 with SMTP id
- a92af1059eb24-13b36d6d48bmr946352c88.7.1782901199922; 
- Wed, 01 Jul 2026 03:19:59 -0700 (PDT)
+ bh=zcIRkGhhyBAlMl+YVxltb7+6Up2QH7Eq1tUIuaL2RG4=;
+ b=nZSVpIINoLzjDoAsPX6PAVxdLJkG9cpdb5PUIdFDztJbZ9xlRTSKuj6HsbQW1lQaIi
+ /I+ML5MbURT4zR/1tDinE02hqjXwPMTdwqQJ8UiDgN4Y2Bd6rHoONpDCuxj0hCmIqN+4
+ RWceXVniemA1oRQXnb8nwRD6CAIe2KbeZp4E0UtrAG/10KFwgNzZiEbF9iLlbeAmrYQZ
+ Eq6E/mRIVgbXOt3YTz1NHBFJfGKhTdzNunzmX8zTUobMEeuLR6wFo5BHDd6kpvUpRiAx
+ JqiFlIF4NUGx8K+Sh2ER7jfvKmjYc5/F4W1xNNadnaREiQKrXkEwBxQUOG9pGN9dx7oi
+ wq/A==
+X-Gm-Message-State: AOJu0Yw2u3NDabciex7iUCd5R9i7Pbki/uhlvyXIREwvhQkXPWMEtz3r
+ YNOQIVKUJKUkV8eLqlpSbr6xlFhMnUg7HjKL2HxwopnvEui6NVesenbI77ihVg==
+X-Gm-Gg: AfdE7cklgKCBZ7rWq8WFLYVolBj/eCS+8hVjxmfVm2i5PpipMofnM7GujHuTu6YrCv0
+ gstPX9a3n1hW19nRIbovSD0Pblm9/VUk62alet/cw5XqA9pHH2lsdFhgdvH1RElyoc8fZyZdSku
+ A+dOXocm7WjVoVRQqRy7JBJ/ghgBBznTNxUU7qJv9Wuf/uObZsAQ6eNxJeBbsl6HKkEFozgqNCM
+ qteh6zFAQMp4cDf9uPcbk9Vm4JgosirEbu9DAD+EZ3gGZayzPMzF9OCu0Jw9siuymsvF36E6eyM
+ cQI5AZqLAs6/z4aKGSHIHmIDrmt3e/419zul4MyzKWVRA1VEYJNecyvcWQ+87pUWzVq5XUQ92oI
+ vZGDaV3m7ko+rebtnwTmlVisq0XwH+1sV6VprmEty4IsRBTqFhehA8EC5tqsrpSVblPnTUBwTMT
+ KL+mS+nym6QuSTOiiiYDctO2DfRtihOUc=
+X-Received: by 2002:a05:7022:698d:b0:139:ed5d:3aa with SMTP id
+ a92af1059eb24-13b3914bfe3mr189618c88.47.1782901116817; 
+ Wed, 01 Jul 2026 03:18:36 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.19.56
+ a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.18.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jul 2026 03:19:59 -0700 (PDT)
+ Wed, 01 Jul 2026 03:18:36 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>, Joel Stanley <joel@jms.id.au>
-Subject: [PULL 35/39] tests/functional/riscv64: Add tt-atlantis tests
-Date: Wed,  1 Jul 2026 20:17:48 +1000
-Message-ID: <20260701101752.2522962-36-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, ZhengXiang Qin <qinzhengxiang@foxmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 09/39] target/riscv: avoid abort when reading vtype before
+ env->xl is set
+Date: Wed,  1 Jul 2026 20:17:22 +1000
+Message-ID: <20260701101752.2522962-10-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260701101752.2522962-1-alistair.francis@wdc.com>
 References: <20260701101752.2522962-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1234;
- envelope-from=alistair23@gmail.com; helo=mail-dl1-x1234.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122b;
+ envelope-from=alistair23@gmail.com; helo=mail-dl1-x122b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,126 +104,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: ZhengXiang Qin <qinzhengxiang@foxmail.com>
 
-Add OpenSBI and Linux boot tests for the tt-atlantis machine. Based on
-tests/functional/riscv64/test_sifive_u.py.
+TCG plugins may read registers from the vcpu_init_cb() callback.  For
+vtype, this reaches read_vtype() before env->xl has been initialized.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Message-ID: <20260630024952.1520546-10-joel@jms.id.au>
+In that case read_vtype() currently hits g_assert_not_reached() because
+env->xl is zero.  Fall back to the CPU's maximum XLEN only for this
+early-init case.
+
+Fixes: 638181a180bd ("core/cpu-common: initialise plugin state before thread creation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3545
+Signed-off-by: ZhengXiang Qin <qinzhengxiang@foxmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <tencent_FB929239B227F05F30D62745E38BA01D4307@qq.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- MAINTAINERS                                  |  1 +
- tests/functional/riscv64/meson.build         |  1 +
- tests/functional/riscv64/test_opensbi.py     |  4 ++
- tests/functional/riscv64/test_tt_atlantis.py | 57 ++++++++++++++++++++
- 4 files changed, 63 insertions(+)
- create mode 100755 tests/functional/riscv64/test_tt_atlantis.py
+ target/riscv/csr.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a6d1e1f676..78e48ae8df 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1801,6 +1801,7 @@ S: Supported
- F: docs/system/riscv/tt_*.rst
- F: hw/riscv/tt_*.c
- F: include/hw/riscv/tt_*.h
-+F: tests/functional/riscv64/test_tt_*.py
- 
- AMD Microblaze-V Generic Board
- M: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
-index 5871211e89..c9d4c090fb 100644
---- a/tests/functional/riscv64/meson.build
-+++ b/tests/functional/riscv64/meson.build
-@@ -14,5 +14,6 @@ tests_riscv64_system_thorough = [
-   'endianness',
-   'boston',
-   'sifive_u',
-+  'tt_atlantis',
-   'tuxrun',
- ]
-diff --git a/tests/functional/riscv64/test_opensbi.py b/tests/functional/riscv64/test_opensbi.py
-index d077e40f42..0f8beb7e7a 100755
---- a/tests/functional/riscv64/test_opensbi.py
-+++ b/tests/functional/riscv64/test_opensbi.py
-@@ -28,6 +28,10 @@ def test_riscv_sifive_u(self):
-         self.set_machine('sifive_u')
-         self.boot_opensbi()
- 
-+    def test_riscv_tt_atlantis(self):
-+        self.set_machine('tt-atlantis')
-+        self.boot_opensbi()
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index a60a796725..7fb0ad5bc1 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -949,7 +949,16 @@ static RISCVException read_vtype(CPURISCVState *env, int csrno,
+                                  target_ulong *val)
+ {
+     uint64_t vill;
+-    switch (env->xl) {
++    int xl = env->xl;
++    /*
++     * TCG plugins can read registers before env->xl is initialized.
++     * Fall back to the CPU's maximum XLEN in that early-init case.
++     */
++    if (xl == 0) {
++        xl = riscv_cpu_mxl(env);
++    }
 +
-     def test_riscv_virt(self):
-         self.set_machine('virt')
-         self.boot_opensbi()
-diff --git a/tests/functional/riscv64/test_tt_atlantis.py b/tests/functional/riscv64/test_tt_atlantis.py
-new file mode 100755
-index 0000000000..48abd5cd27
---- /dev/null
-+++ b/tests/functional/riscv64/test_tt_atlantis.py
-@@ -0,0 +1,57 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Linux kernel on a Tenstorrent Atlantis machine
-+# and checks the console
-+#
-+# Copyright (c) Linaro Ltd.
-+# Copyright 2026 Tenstorrent
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import Asset, LinuxKernelTest
-+
-+
-+class TTAtlantis(LinuxKernelTest):
-+
-+    ASSET_KERNEL = Asset(
-+        'https://storage.tuxboot.com/kernels/6.11.9/riscv64/Image',
-+        '174f8bb87f08961e54fa3fcd954a8e31f4645f6d6af4dd43983d5e9841490fb0')
-+    ASSET_ROOTFS = Asset(
-+        ('https://github.com/groeck/linux-build-test/raw/'
-+         '9819da19e6eef291686fdd7b029ea00e764dc62f/rootfs/riscv64/'
-+         'rootfs.ext2.gz'),
-+        'b6ed95610310b7956f9bf20c4c9c0c05fea647900df441da9dfe767d24e8b28b')
-+
-+    def do_test_riscv64_tt_atlantis(self, connect_disk):
-+        self.set_machine('tt-atlantis')
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        rootfs_path = self.uncompress(self.ASSET_ROOTFS)
-+
-+        self.vm.set_console()
-+        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'earlycon=sbi '
-+
-+        if connect_disk:
-+            kernel_command_line += 'root=/dev/vda panic=-1 noreboot rootwait '
-+            self.vm.add_args('-device',
-+                             'virtio-blk,drive=drive0,serial=0x1234,bus=pcie.0')
-+            self.vm.add_args('-drive',
-+                             f'file={rootfs_path},if=none,id=drive0,format=raw')
-+            pattern = 'Boot successful.'
-+        else:
-+            kernel_command_line += 'panic=0 noreboot '
-+            pattern = 'Cannot open root device'
-+
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-append', kernel_command_line,
-+                         '-no-reboot')
-+
-+        self.vm.launch()
-+        self.wait_for_console_pattern(pattern)
-+
-+    def test_riscv64_tt_atlantis(self):
-+        # tt-atlantis machine has no PCI host yet, so no disk
-+        self.do_test_riscv64_tt_atlantis(False)
-+
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
++    switch (xl) {
+     case MXL_RV32:
+         vill = (uint32_t)env->vill << 31;
+         break;
 -- 
 2.54.0
 
