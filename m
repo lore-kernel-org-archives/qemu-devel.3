@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E96C43327
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4311C43602
 	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 10:21:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wes3M-0005Qn-Th; Wed, 01 Jul 2026 06:20:24 -0400
+	id 1wes2G-0002TM-R9; Wed, 01 Jul 2026 06:19:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes3E-00057k-Ew
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:20:16 -0400
-Received: from mail-dl1-x122e.google.com ([2607:f8b0:4864:20::122e])
+ id 1wes2E-0002KX-W6
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:19:15 -0400
+Received: from mail-dl1-x1236.google.com ([2607:f8b0:4864:20::1236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wes3A-0005GP-UD
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:20:16 -0400
-Received: by mail-dl1-x122e.google.com with SMTP id
- a92af1059eb24-1390f75d8bbso825689c88.0
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:20:12 -0700 (PDT)
+ id 1wes2D-0004mw-Bf
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 06:19:14 -0400
+Received: by mail-dl1-x1236.google.com with SMTP id
+ a92af1059eb24-1390f75d8bbso824403c88.0
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 03:19:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782901211; x=1783506011; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782901152; x=1783505952; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PZTbT1dhTtg0bcqDcW5c5jUwySoXm0jFKsV3PPsjufE=;
- b=fZP/SuQt61FEy8+ZHJd9RKpVyw4zctyTB2GT+ny3ChmU+c2FMGTbeFAGjDuCSVd7GU
- 8Q3GB9uAfg7BxmL6251/NTGdwRhWD3u7kLiKhNkFVCEkCsP7hiG6JnxXsh+uCpArH0YB
- 02T0pbV+4z/7XFDqOdvZLZXYslDemUESw0hN/EO8kb/snI0u3oBOJLbCUJzVCMYuPob3
- 6H0Nq0D3m7YpsK8PxOW9W1S+/NV810sf0t4ujapUolcZC3WvKMRpxOs0A7VijWNTynCr
- 3cZdvgp0PR6Nnh9xlbjlV9BTTLVjg8lgE58nfleL3o69DZZywHuLB7qHKxYdyb4900QV
- YuGg==
+ bh=4+OwQNthO4GGjeh+jELwW/MnL7i6J35yeuhzee2BgvE=;
+ b=YI8y6HXZl9wO192EiS/g/gtQEOAPf1kus4EJpa3Yd6TYd6IF32i8j+zMDadBovjbuC
+ ntz3s34//64AvS95t6/4nRKlKi/M86Jz3lcnOtgu+4BczoJcJSzxUSmm8GHkkVs7flPf
+ /yziH/YWQ3naQ+qJ0csYsrSQZPC9Vt102YnDszYVSsNElunP40xVm5dLuZutOsuALQol
+ so8bzcAu4PksSUPyfvnAjaeLI/8bF0p12bAR66r5KmPayIH8pfaIpMBPfWxO3ZbmRXZl
+ z/p5rHrSFZpqfmonSuemzwHHK45YXnRxHfgu+j0gZ+QvxjdQgeaaB8hO+I718KaLhyTM
+ vNTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782901211; x=1783506011;
+ d=1e100.net; s=20251104; t=1782901152; x=1783505952;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=PZTbT1dhTtg0bcqDcW5c5jUwySoXm0jFKsV3PPsjufE=;
- b=oUgFrdID5XvSUYnN1hHS6oAuUo4sanpC+tGSr2+agGAW/tYJjEdB5umwWOYInxVrfv
- Ivf7M6vWvK5PpOb7tRfCse31HGLGf8QKoEW2149XXXl5Pkw0OfXihUtO93AswSvrS+PP
- lHN/iv0x+vhAmZcsIBqOhdv1blHf79ha+eGvGwfZppb+UZ7zHD5QVwDc7auXtIzdGiLz
- FtRXyksh7MJjibPo6AZqYBM6PRwXDUUaTTsvYlYwqyi6c0bWoXIRJhhH0srrG2D1Nk2K
- 2y7yQzcc8FMRWpcY3ZovNSPt7t6DZg/kSf/fuHPV7xWXzFNp8KOllLdPRGX/whoJUuVt
- IQ+A==
-X-Gm-Message-State: AOJu0YwvvNgKCDEeSWdkT4hACCBdrSJWBMZ8GT+yHCZRCZQwCDGLuplc
- 7qWoRuD0BTCrBZHP2yeWGcNntx4WVU8ByPlQ/ePF9XoGnlpzIdwnSRflt+e9UA==
-X-Gm-Gg: AfdE7ckhVIQH5r59wM8XaMh4JSNpgK1RLz4uoCiAn3GvxPARlED/swPmLuaY67fKSYM
- TbdN219jjzrSjbfzcl9krVYGoXYSjWmDTJTYLsY5r3rtr4klc3nPfdc8SDKY2kAYHi3swHlaoPd
- ZZTu6wsFPLFfiQ27KsqOvZJW4DRkJGPE7XDXBpivNIoRSm1gCIgg4ayFlzTcFKiamLjWdDDummi
- nuDZr+6v4e0eQvugmj4zp2e0glFdef7C7r2T+8uA8I3AkfQVfV513zPkK76iqedzqyy0fj11lTG
- PzjrfPSMwP4brDyuYk0F5r82M1iefkdxd3WbelxrLK6VFWdr73a5jeUSZOOJrMqT2djnGL0jVYz
- lNIFCyJ3iwNBZl3UJW6ux/rEPVtpspSDKAvnRUfsTu0vevYBkHLkoLkocKr22oJAGvWNoRuoy7C
- nbNkk/cYH6u3cWtTq3tZoFan7KJS+c8wA=
-X-Received: by 2002:a05:7022:6714:b0:137:fec9:8ffb with SMTP id
- a92af1059eb24-13b36e02ffbmr972634c88.25.1782901211524; 
- Wed, 01 Jul 2026 03:20:11 -0700 (PDT)
+ bh=4+OwQNthO4GGjeh+jELwW/MnL7i6J35yeuhzee2BgvE=;
+ b=lT+EbX89jp080RjGPWPYaZMn+xKXZKvxKncRmOw+6smT6F9F38RW7wilJ7GmldNeB0
+ QJdgyWnuE+9FSk4xKbI7eUA/+ZslePGML3IAQLoqaY3oLTzp61Cbx5PuEpMtfQyjTPS+
+ pBCCA4gjPpUoYdk9qp62hQzLmAOlNh52x45wPaHOLnfivzYWVRJd9Ta0UYK1xwu+0FZf
+ jz9nvxuWynFhBuE4NY/qiPTsxBLvlICv/XjaNh173RGlLrk8JJ2QHwsV/e5Y4lClcdYR
+ pFCUcG7AR2gLkZiKFOAL/Wteew21vWgFNQCPg6k5Baz8ZlFYH6ImBj8wGL3sSLUr6u5S
+ Lfhw==
+X-Gm-Message-State: AOJu0YwJv99EfCdIs6IYbO78Q0T52alCkyTUAq8bqr9UN+CrWHG0v8qx
+ hjBbAfj3frnCnZrW98GBbZBdE6j57+6Kgdp2K/Vmd+0EAykxHT3xMCvJ1mubTw==
+X-Gm-Gg: AfdE7cn9TfFjt1MDhmYQvKYLar4kJuoenegIA81TMoY5cymTWGdOopS3eEHTZo98TDz
+ EDinryO7jIoDsLZzpnkYc7fW/EUSeiItUTsoyCMDlXckdjaJJ7rjv6yOmXOBptphFD3zmgjTXk/
+ wV4fPgkfVjvW1jN0UzGINLvm/FVZJEqbOoXlbrGJQQ8sOe7lElzjGElGcIUZPWtoJa0YFIeAU2W
+ xp0rtD3DDmsHgJ516LgbTfBslxAcCDxGrU9ECB52m4zt0RN2OnfL1UnJk39adsNQe4SU/q/e1Jk
+ +QEUoZYu4RVnLqd7BDbPL0hMBFK0y3bYMVPj82VT91348/I8JKqliWU9Qds83cBAguOjvtJYxjS
+ w7DsSgAxM6vnjB3rlrzoJmIbOaBh0kh7FZYqnfaAGp8zP2qnTy+gPHOs/vJuXuvQaDW6Nrqtk6s
+ N9Q2QjL+GsGFymNahszZn/4NWT00fTBrJ3C5WjD47wKQ==
+X-Received: by 2002:a05:7022:238d:b0:139:e497:a805 with SMTP id
+ a92af1059eb24-13b36d86482mr1055058c88.10.1782901151854; 
+ Wed, 01 Jul 2026 03:19:11 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.20.08
+ a92af1059eb24-13b2ab2e0e3sm19355047c88.7.2026.07.01.03.19.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jul 2026 03:20:11 -0700 (PDT)
+ Wed, 01 Jul 2026 03:19:11 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Joel Stanley <joel@jms.id.au>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Nicholas Piggin <npiggin@gmail.com>
-Subject: [PULL 38/39] hw/riscv/atlantis: Add some i2c peripherals
-Date: Wed,  1 Jul 2026 20:17:51 +1000
-Message-ID: <20260701101752.2522962-39-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, SeungJu Cheon <suunj1331@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 21/39] target/riscv: Apply UXL WARL handling to vsstatus
+Date: Wed,  1 Jul 2026 20:17:34 +1000
+Message-ID: <20260701101752.2522962-22-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260701101752.2522962-1-alistair.francis@wdc.com>
 References: <20260701101752.2522962-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122e;
- envelope-from=alistair23@gmail.com; helo=mail-dl1-x122e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1236;
+ envelope-from=alistair23@gmail.com; helo=mail-dl1-x1236.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,100 +103,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joel Stanley <joel@jms.id.au>
+From: SeungJu Cheon <suunj1331@gmail.com>
 
-Add an I2C RTC device and a temperature sensor. These are not present
-on the board but help for testing.
+write_mstatus() already handles the reserved UXL value by writing a
+legal value instead.
 
-The tmp105 is a lm75 compatible temperature sensor used by the
-SENSORS_LM75 Linux kernel driver.
+Apply the same handling when writing vsstatus so that reserved UXL
+values follow the same WARL behavior.
 
-The ds1338 is a RTC device that is used by the RTC_DRV_DS1307 Linux
-kernel driver.
+Factor the common logic into a local helper riscv_write_uxl() and use
+it for both mstatus and vsstatus.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Message-ID: <20260630024952.1520546-13-joel@jms.id.au>
+Suggested-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Fixes: f310df58bd2 ("target/riscv: Enable uxl field write")
+Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260625081521.595683-1-suunj1331@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/tt_atlantis.c | 27 +++++++++++++++++++++++++++
- hw/riscv/Kconfig       |  2 ++
- 2 files changed, 29 insertions(+)
+ target/riscv/csr.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index 5ce150fff7..beaf64e0c1 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -64,6 +64,13 @@ static const MemMapEntry tt_atlantis_memmap[] = {
-     [TT_ATL_DDR_HI] =          { 0x100000000,  0x1000000000 },
- };
- 
-+static I2CBus *i2c_get_bus(TTAtlantisState *s, unsigned busnr)
-+{
-+    assert(busnr < TT_ATL_NUM_I2C);
-+
-+    return s->i2c[busnr].bus;
-+}
-+
- static uint32_t fdt_phandle = 1;
- static uint32_t next_phandle(void)
- {
-@@ -309,6 +316,19 @@ static void create_fdt_i2c(void *fdt, const MemMapEntry *mem, uint32_t irq,
-     qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 7fb0ad5bc1..7168a4dc12 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -2021,6 +2021,20 @@ static target_ulong legalize_mpp(CPURISCVState *env, target_ulong old_mpp,
+     return val;
  }
  
-+static void create_fdt_i2c_device(TTAtlantisState *s, int bus,
-+                                  const char *compat, int addr)
++static uint64_t riscv_write_uxl(CPURISCVState *env, uint64_t val,
++                                uint64_t field)
 +{
-+    void *fdt = MACHINE(s)->fdt;
-+    hwaddr base = s->memmap[TT_ATL_I2C0 + bus].base;
-+    g_autofree char *name = g_strdup_printf("/soc/i2c@%"HWADDR_PRIX"/sensor@%x",
-+                                            base, addr);
++    RISCVMXL xl = riscv_cpu_mxl(env);
++    uint64_t uxl = get_field(val, field);
 +
-+    qemu_fdt_add_subnode(fdt, name);
-+    qemu_fdt_setprop_string(fdt, name, "compatible", compat);
-+    qemu_fdt_setprop_cell(fdt, name, "reg", addr);
++    if (uxl == MXL_RV128) {
++        uxl = xl == MXL_RV128 ? MXL_RV64 : xl;
++        val = set_field(val, field, uxl);
++    }
++
++    return val;
 +}
 +
- static void finalize_fdt(TTAtlantisState *s)
+ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
+                                     target_ulong val, uintptr_t ra)
  {
-     uint32_t aplic_s_phandle = next_phandle();
-@@ -336,6 +356,9 @@ static void finalize_fdt(TTAtlantisState *s)
-                        TT_ATL_I2C0_IRQ + i,
-                        aplic_s_phandle, periph_clk_phandle);
+@@ -2067,17 +2081,8 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
+ 
+     if (xl != MXL_RV32 || env->debugger) {
+         if ((val & MSTATUS64_UXL) != 0) {
+-            uint64_t uxl = val & MSTATUS64_UXL >> 32;
+             mask |= MSTATUS64_UXL;
+-
+-            /*
+-             * uxl = 3 is reserved so write the current xl instead.
+-             * In case xl = MXL_RV128 (3) write MXL_RV64.
+-             */
+-            if (uxl == 3) {
+-                uxl = xl == MXL_RV128 ? MXL_RV64 : xl;
+-                val = deposit64(val, 32, 2, uxl);
+-            }
++            val = riscv_write_uxl(env, val, MSTATUS64_UXL);
+         }
      }
-+
-+    create_fdt_i2c_device(s, 0, "dallas,ds1338", 0x6f);
-+    create_fdt_i2c_device(s, 4, "ti,tmp105", 0x48);
- }
  
- static void create_fdt(TTAtlantisState *s)
-@@ -551,6 +574,10 @@ static void tt_atlantis_machine_init(MachineState *machine)
-                            qdev_get_gpio_in(s->irqchip, TT_ATL_I2C0_IRQ + i));
+@@ -5239,6 +5244,8 @@ static RISCVException write_vsstatus(CPURISCVState *env, int csrno,
+     uint64_t mask = (target_ulong)-1;
+     if ((val & VSSTATUS64_UXL) == 0) {
+         mask &= ~VSSTATUS64_UXL;
++    } else {
++        val = riscv_write_uxl(env, val, VSSTATUS64_UXL);
      }
- 
-+    /* I2C peripherals: qemu specific */
-+    i2c_slave_create_simple(i2c_get_bus(s, 0), "ds1338", 0x6f);
-+    i2c_slave_create_simple(i2c_get_bus(s, 4), "tmp105", 0x48);
-+
-     /* Load or create device tree */
-     if (machine->dtb) {
-         load_fdt(s);
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index dcce819bf6..de37c08cae 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -130,6 +130,8 @@ config TENSTORRENT
-     select SERIAL_MM
-     select DEVICE_TREE
-     select DESIGNWARE_I2C
-+    select DS1338
-+    select TMP105
- 
- config XIANGSHAN_KUNMINGHU
-     bool
+     if ((env->henvcfg & HENVCFG_DTE)) {
+         if ((val & SSTATUS_SDT) != 0) {
 -- 
 2.54.0
 
