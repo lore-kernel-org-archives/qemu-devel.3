@@ -4,87 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 525D9C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 18:22:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36493C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 19:40:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wezYR-00086p-6H; Wed, 01 Jul 2026 14:20:59 -0400
+	id 1wf0mU-0004tJ-Br; Wed, 01 Jul 2026 15:39:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1wezYK-00084R-Hn
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 14:20:54 -0400
-Received: from mail-pj2-x02.google.com ([2607:f8b0:4864:39::2])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wf0mS-0004tB-KM
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 15:39:32 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1wezYI-0007H4-Fp
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 14:20:51 -0400
-Received: by mail-pj2-x02.google.com with SMTP id
- 98e67ed59e1d1-37fd7db8cf1so469274a91.1
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 11:20:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wf0mQ-00065Q-NC
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 15:39:32 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-47248615e4dso1055493f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 12:39:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782930049; x=1783534849; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1782934768; x=1783539568; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ghb/SNZpSBJ7yxU8U8gwuUxJ/trOYWhvix8hFHF3tTw=;
- b=WsG7tjvLv8NSM0njGsySo22XThcy+JQ3CXJtRxNBY3Ul8LG62WlLC4/rKd2HQQML2L
- emlAFu5mHaA879/V9Luvew2tQKkK1lYwTFoVZt3YIjq3nt/OD2neCZJztM2Te+6RWuG4
- DloSrMlQeVdWJWXvt3vmzfLHOVwYydqsK134spL5Jq45iEyMEpA3pnrabdfc174txsV0
- acVXj85GbKK2nj5of/kZpmUdPN0yGABGmf6hA++o0TyvhAodtNxPp2o0zkuM+X7baWjy
- +/QQ5EEF9aRnrrMWJluOR7Bgtf3+wTTxd40S94YouMdy03sCav54+PWfgRFjHm3PGgUN
- WAIw==
+ bh=2xL2701bNp0/C2fZ7bBEzpI0NEEq78NMsb3WNBM5OMs=;
+ b=vhBhdmCVFUC1HaAZwVgRHKVMhzdfUBpC+97MuQ1DGB6JUOWq+m2P92T6HLVQpRnjyB
+ ygilNtoqNh73hoLyaGwOS7JBEReG6TmmOanK4ea2TYge1bBAcLoz8HP3BI8CgNa8QCXE
+ vV9nTqsx6dSXo062zEZxdBJTh9KRld/t92I7yj5Ykf9o8P8REuO9I5Rp2Cp5SW5zba0Q
+ 1J67l9wkKdaHFSKI8GvnW3gQfa4shfqw3OT+VTBa6LiEK18alBJcwkyusdSiw2SnmPV6
+ V1gN410gwYYc823mJ6GfHdjPNZYZZxdtpkROF4s7hRg96ozfiqZ00OHt2oIea0z6Oaxe
+ y1Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782930049; x=1783534849;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Ghb/SNZpSBJ7yxU8U8gwuUxJ/trOYWhvix8hFHF3tTw=;
- b=tBn3qfqDycd2EcqwqQtLONTPwUNSiXK9UIpVuqw/1aoUEiBTP1nMhfSTaoJ+wS/ANt
- G//pP9vmipMCBREdZFtgtVzqD6zptebJhl0FFUbDFK5Y9mJzYJaOesz1hfyAWgHg3dVL
- r5uVYM7wKSNJDgLXzeabxllIf0SSoHO0dSvpxXe5lY/ixQP9n2cQPyvinxrfnMD45YbT
- ykaLHR59rJcGeYHalCtABQewxCzQjZzLaR0sNxUsiDkxM9YfiONnTRHcEltYCga+rBHI
- 8JYQjWpqnR1EUcciwGzz/zFvkyQedlp3vJNrA30LLsfqI/F8Bz8G1IUuoaUIlgph2a4g
- mnYA==
-X-Gm-Message-State: AOJu0YyXih0WSE8xTcIqH2bPhpB8hTdIO5DqC/2Vem4ojxyPesLPyhSn
- vnLrRHH3LzXlzD1203J5iBUeWRxbuKUbPxLKzEvNFzSJVGornDNu3Iy+tKWslQTxUA==
-X-Gm-Gg: AfdE7ckwrMIhZ667G8JQDG55Y7Nskl2tfbEISSpIRgInmgL0hwJkzQT1gt0W9LgP+kA
- dVp5ft7OutmtbwtO1QXb0FxI30rV3kxTS1NN+wm/vieGl9KCCxsi9RQbT/qnYfKT+Nt5k1WAz8B
- k6HNUyFGoHS3mEjxguMcF0Ns5mwyJjlq1rmz6bJHl2tx6bG5egKXBDV5I2Glipv+GsMpxXEi8eh
- 1Sf7MKuBOe9CE5XLvR6LQTA03NhqMg0SV3OVO9NVUw0ol/3gXqAVwAjNFhcP4PrqP5S+yp+7LTB
- LjLrvd6ViV5X9rWfGJDZLsd9npbQuGfeUSM5PGLK0lfILLVgNpsPoMXKeA+/hAeRq1fZoqdpjuC
- DQVXtpKxZS6UnxxJgls0Oes+7g7AXaF95fWz8E8nTT6oyKqW8D8c3uFYxzv4r8rbwGBossbb3U6
- tAUQ4ohTzH4SsbZ1eP7g==
-X-Received: by 2002:a17:90b:5487:b0:37f:e1e9:2b0b with SMTP id
- 98e67ed59e1d1-380aa184626mr2732716a91.16.1782930049009; 
- Wed, 01 Jul 2026 11:20:49 -0700 (PDT)
-Received: from kotori-desktop ([2408:820c:8ffe:590:494:7c85:ae9c:cba8])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30f0bc27e0dsm187109eec.27.2026.07.01.11.20.45
+ d=1e100.net; s=20251104; t=1782934768; x=1783539568;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2xL2701bNp0/C2fZ7bBEzpI0NEEq78NMsb3WNBM5OMs=;
+ b=tXec8cmK2BMcOWYwWX+6v7/iqu4LBIjay3OlRVoEGMaw2l8lyCaPDZgzKKYZfuWWR1
+ nti8QLdw1KWNvJKqE3TTvmuUUCB/1wrCatsie5U9DLF7r1ILayqOk+5zorAq37MQidC1
+ D9fTKr1nMYRlNffYLT+MZALzpMexdmtEqpi/UvaHkjdzv0xI7TXS2YZZOFAyL+T2uG4i
+ 2Fg1/A6Y3gIizZk7pIv9mpBwetT6d7kkPdamtC6sp/Yq3jVHEzkXL7yFIr7d+MXTJW/Y
+ pv5WbKipoonvP1V9W2DiS6dTsPiOxXufAmOkRKz3jrXh/MCEnTCp+jYYcFI8KHQg28u+
+ 5JGA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rrr3hJFe3vMnVRi6DoF0XfCeY1HbmDgqRJ/tPjWRpCLB4mLH0553RS4wtRCn4kbcGv0D2S9ckg5g0mU@nongnu.org
+X-Gm-Message-State: AOJu0YzQeTlLs9VglPMXq1uLVHoBMFKAPJ1euB6KVEllR4Bt7t+F1m49
+ Et038aSqTCr+mRMmIJldYAtD6PWnLRymYzPUvunSdKCbC4vLdK9PqrHARILLHH/T8qQ=
+X-Gm-Gg: AfdE7ckQNMFgVXVw7FWxKM6aFIijJv1c12Pcx3ypQcveMiSOgfXOWo8IJZc6uTEcs4D
+ REQK7Cjc+8BsEi8GFUbXFwBbDDbru17WVu5q2RskLiSXg/Bcr+idz9d/Nr+s3jEOpPBUc9L7by1
+ WJ6vsHtpjn2jWjWuUgkUOQH7voIMkroZIpH5mbxGiJ4pd8nUAko7EOdkpveBpXQYw3QeYGzbP/T
+ qUzjMDCwJDBz6OKGKdzSPXl6r9kWyEMQnKiAXXfMM7cTsWKvrva1eBIzTlmr0FExSWE7z3IQeSS
+ 7q+pg0MOih7RxwHCt8XYHuI8LCCsqgeAX/hT+cRDWJ7rb2vz3UrrWRIy7m+3yYdU1aaeEJLZLkp
+ 8jcSbDneEmkxcalvUOtxU7gUkjF9JCQW23cxmhL5kN8A8F+i2otc2UlZwIFzi+2b/0lWscE1W+9
+ Pnt5cqRof3vAjP
+X-Received: by 2002:a05:6000:469b:b0:477:2e75:522c with SMTP id
+ ffacd0b85a97d-4775a1010f1mr3024596f8f.28.1782934768220; 
+ Wed, 01 Jul 2026 12:39:28 -0700 (PDT)
+Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-477db8a4ad4sm2555225f8f.11.2026.07.01.12.39.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jul 2026 11:20:48 -0700 (PDT)
-From: Tomita Moeko <tomitamoeko@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Tomita Moeko <tomitamoeko@gmail.com>, K S Maan <kirandeepmaan45@gmail.com>
-Subject: [PATCH v4 1/4] hw/pci: Introduce romfile_fixup hook in PCIDevice
-Date: Thu,  2 Jul 2026 02:20:32 +0800
-Message-ID: <20260701182035.96010-2-tomitamoeko@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260701182035.96010-1-tomitamoeko@gmail.com>
-References: <20260701182035.96010-1-tomitamoeko@gmail.com>
+ Wed, 01 Jul 2026 12:39:27 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 41C9E5F889;
+ Wed, 01 Jul 2026 20:39:26 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,  Emmanuel Blot
+ <eblot@meta.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>,  qemu-devel
+ <qemu-devel@nongnu.org>,  Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: macOS builds broken in CI
+In-Reply-To: <CAJSP0QWgS5wN1rnMw_xx5DwDDfpkGyB5fJEHdCGbK3mG7Xdqag@mail.gmail.com>
+ (Stefan Hajnoczi's message of "Wed, 1 Jul 2026 19:26:38 +0200")
+References: <CAJSP0QXRy1Dc_MwqtU_gS1+jOdrW=Vk6YynP75q5HP3Rz_CpTA@mail.gmail.com>
+ <904444A5-0120-4BE6-8E11-C7167F2A3BDB@unpredictable.fr>
+ <D91DC576-2462-4652-9E8C-5A7C96791622@unpredictable.fr>
+ <CAJSP0QWBpXN-=iu_13y3k_4z4uZJX7NPTgFH16CSBn30EYTrAg@mail.gmail.com>
+ <CAJSP0QWtZUKQC5d23+tJi896H6sndwL+bD2cvSkQhC67mBjbkw@mail.gmail.com>
+ <CAJSP0QWgS5wN1rnMw_xx5DwDDfpkGyB5fJEHdCGbK3mG7Xdqag@mail.gmail.com>
+User-Agent: mu4e 1.14.2; emacs 30.1
+Date: Wed, 01 Jul 2026 20:39:26 +0100
+Message-ID: <87fr22ts7l.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::2;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pj2-x02.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,48 +114,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some devices, such as VFIO IGD passthrough, require device-specific
-fixups on the romfile provided by user. Add an optional romfile_fixup
-hook to PCIDevice. When set, it is invoked from pci_add_option_rom()
-right after the image is loaded, receiving the ROM buffer and its
-size. This provides a place to post-process a loaded romfile without
-leaking device-specific logic into the generic PCI core.
+Stefan Hajnoczi <stefanha@gmail.com> writes:
 
-Reported-by: K S Maan <kirandeepmaan45@gmail.com>
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
----
- hw/pci/pci.c                | 4 ++++
- include/hw/pci/pci_device.h | 1 +
- 2 files changed, 5 insertions(+)
+> (Update Philippe's email address.)
+>
+> On Wed, Jul 1, 2026 at 7:23=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail.co=
+m> wrote:
+>>
+>> On Thu, Jun 25, 2026 at 9:53=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail.=
+com> wrote:
+>> >
+>> > On Thu, Jun 25, 2026 at 3:15=E2=80=AFPM Mohamed Mediouni
+>> > <mohamed@unpredictable.fr> wrote:
+>> > >
+>> > >
+>> > >
+>> > > > On 25. Jun 2026, at 21:11, Mohamed Mediouni <mohamed@unpredictable=
+.fr> wrote:
+>> > > >
+>> > > >
+>> > > >
+>> > > >> On 25. Jun 2026, at 20:38, Stefan Hajnoczi <stefanha@gmail.com> w=
+rote:
+>> > > >>
+>> > > >> Hi Alex,
+>> > > >> tests/tcg/multiarch/system/Makefile.softmmu-target's
+>> > > >> run-gdbstub-interrupt seems to be broken on GitLab CI macOS runne=
+rs. 5
+>> > > >> days ago it still passed, but now rerunning the pipeline on the s=
+ame
+>> > > >> commit ID fails:
+>> > > >>
+>> > > >> - Good (5 days ago): https://gitlab.com/qemu-project/qemu/-/pipel=
+ines/2615134022
+>> > > >> - Bad (today): https://gitlab.com/qemu-project/qemu/-/pipelines/2=
+629704018
+>> > > >>
+>> > > >> I've tried many CI runs with different pull requests applied on t=
+op of
+>> > > >> qemu.git/master and they fail in the same way. Maybe it's an
+>> > > >> environmental thing with the macOS runners?
+>> > > >>
+>> > > >> It's unclear where the SIGKILL (Error 137) comes from. Could it b=
+e an
+>> > > >> out-of-memory condition on macOS runners?
+>> > > >
+>> > > > Hi,
+>> > > >
+>> > > > SIGKILL is the known symptom for failure during signature verifica=
+tion
+>> > > > by AMFI.
+>> > > >
+>> > > > Now that we don=E2=80=99t have separate -unsigned binaries anymore=
+ but relying
+>> > > > on in-place ad-hoc (w/o certificate) signing with entitlements we =
+might
+>> > > > have issues linked to that.
+>> > > >
+>> > > > In the past file modification had issues with verification tied to=
+ the
+>> > > > inode and the workaround being a reboot or a cat binary > new_bina=
+ry;
+>> > > > chmod +x new_binary so that the old (now out of sync) signing stat=
+e is lost
+>> > > >
+>> > > This is highlighted in the software update context in: https://devel=
+oper.apple.com/documentation/security/updating-mac-software
+>> > >
+>> > > > This code is incorrect because it modifies the command-line
+>> > > > tool=E2=80=99s executable file in place. macOS caches information
+>> > > > about the code=E2=80=99s signature in the kernel. It doesn=E2=80=
+=99t flush
+>> > > > that cache when you modify the file=E2=80=99s contents. Modifying =
+the
+>> > > > file in place yields a mismatch between the file=E2=80=99s contents
+>> > > > and the in-kernel cache, which can cause a hard-to-reproduce
+>> > > > code-signing crash the next time you run the tool.
+>> > > > While this example uses a command-line tool to demonstrate the
+>> > > > issue, updating any file that contains signed code might
+>> > > > trigger this code-signing crash. That includes executables,
+>> > > > frameworks, dynamic libraries, and bundles.
+>> > > > To update a file that contains signed code without risking this cr=
+ash, write the updated code to a temporary file and replace the existing fi=
+le with that temporary one:
+>> > >
+>> >
+>> > Nice, thanks for sharing this! Do you want to send a patch to fix this?
+>>
+>> The macOS CI jobs have been failing for a week. The QEMU 11.1 soft
+>> freeze is on July 7th and I'm concerned that we will enter the 11.1
+>> freeze without working macOS builds in the CI system.
+>>
+>> Does anyone want to fix this macOS host issue?
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 4298adf5a0..7d30d44411 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -2632,6 +2632,10 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
-             /* Only the default rom images will be patched (if needed). */
-             pci_patch_ids(pdev, ptr, size);
-         }
-+
-+        if (pdev->romfile_fixup) {
-+            pdev->romfile_fixup(pdev, ptr, size);
-+        }
-     }
- 
-     pci_register_bar(pdev, PCI_ROM_SLOT, 0, &pdev->rom);
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index 5cac6e1688..a65e77018c 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -159,6 +159,7 @@ struct PCIDevice {
-     bool has_rom;
-     MemoryRegion rom;
-     int32_t rom_bar;
-+    void (*romfile_fixup)(PCIDevice *pdev, uint8_t *ptr, uint32_t size);
- 
-     /* INTx routing notifier */
-     PCIINTxRoutingNotifier intx_routing_notifier;
--- 
-2.53.0
+I'll have a look tomorrow.
 
+>>
+>> Stefan
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
