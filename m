@@ -4,61 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32FCFC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 14:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 484AEC43327
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 14:19:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wevl2-0007Gi-4c; Wed, 01 Jul 2026 10:17:44 -0400
+	id 1wevmw-0007uj-Cz; Wed, 01 Jul 2026 10:19:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
- id 1wevkx-0007DS-T2
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:17:39 -0400
-Received: from out-182.mta1.migadu.com ([95.215.58.182])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wevmu-0007ub-Kq
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:19:40 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
- id 1wevkt-00015S-8A
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:17:38 -0400
-Message-ID: <10c554a8-3602-4ab0-a3df-796d8f7c2268@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1782915449;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OaMwduoRAKIjOQFP6y0wArUDt0qzWVZ7mzAnUdjLbwk=;
- b=cZbX/UyaNevAnUvBUCl4WO70LDUwOQXwphNRAr+EBOaidIT3xAE3BI+w23QJ4idBcL3BFw
- hTawdAzXWMtgqXoG52uIjiR5sJjv2HAJT+1BHjluL0v0TGktiK2OM+0MZnWW+ipNSIwOhg
- ipPnYErUMuDE+IFuOvxPwSex8RWcN3M=
-Date: Wed, 1 Jul 2026 22:17:14 +0800
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wevms-0002OO-Dv
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 10:19:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=m4bQvNHDs6XwQLXSCduuBqKVav7YlWO7rkKAwP8IZBc=; b=Fo8EDsSI1hytdL/N
+ SIQwF0VH/fU7FKAT84JZ6UmX0ZU3tlAEHYjrdhEUyOx/oEseqB1A14yhUfBk9lQ/f56ZW7eCN7e3U
+ 148CZtRAyUwa86uN2sE4/h/gzyEOreWZQ+ngqb6DE9+7bJomWRdwd9v1zqIN0nlQ96zpaG6xKfJyE
+ /lF+q6wiaRlGou+7iIbEFETiBjae72m9ACLn3LiPzMR7ZzI3qm3e+199iLJsLOZzkTJgC/pz3eop8
+ C5zJ6l92sjgkexoLWtCeNqm7wuTRD6if5rjg5mSRCAN9EgCUtRaFbu7SiM4vh4iqkBDkA5AbKA4v6
+ bJ+TUf25+aZxLlD8/A==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1wevmm-0000000BSVX-3Kau;
+ Wed, 01 Jul 2026 14:19:32 +0000
+Date: Wed, 1 Jul 2026 14:19:32 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, marcandre.lureau@redhat.com,
+ qemu-devel@nongnu.org, devel@lists.libvirt.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Christian Brauner <brauner@kernel.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
+ Peter Krempa <pkrempa@redhat.com>
+Subject: Re: [PATCH v5 32/35] monitor: add support for auto-deleting monitors
+ upon close
+Message-ID: <akUh9FLxh3COFvP1@gallifrey>
+References: <20260624173752.2928717-1-berrange@redhat.com>
+ <20260624173752.2928717-33-berrange@redhat.com>
+ <178233405051.3955748.10990724544083287885.b4-review@b4>
+ <87zf0busnt.fsf@pond.sub.org> <akTLejz0-b48s5NS@redhat.com>
+ <87mrwa4yrl.fsf@pond.sub.org> <akUaDiOQIvJFDJTe@redhat.com>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2] target/arm/hvf: seed NO_RAW ID registers from
- isar.idregs[] on vCPU init
-To: Jason Wright <wrigjl@proton.me>
-Cc: agraf@csgraf.de, peter.maydell@linaro.org, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, richard.henderson@linaro.org, philmd@oss.qualcomm.com
-References: <20260529114723.42040-1-peter.maydell@linaro.org>
- <20260529114723.42040-18-peter.maydell@linaro.org>
- <745e66c7-2a9b-4185-bae7-77e10623332b@linux.dev>
- <20260607182221.4357-1-wrigjl@proton.me>
- <20260629205213.82391-1-wrigjl@proton.me>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Zenghui Yu <zenghui.yu@linux.dev>
-In-Reply-To: <20260629205213.82391-1-wrigjl@proton.me>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=95.215.58.182; envelope-from=zenghui.yu@linux.dev;
- helo=out-182.mta1.migadu.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <akUaDiOQIvJFDJTe@redhat.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.88+deb13-amd64 (x86_64)
+X-Uptime: 14:17:57 up 46 days, 17:30,  3 users,  load average: 0.05, 0.04, 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,52 +80,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/30/26 4:52 AM, Jason Wright wrote:
-> Commit 887eaa8a29 ("target/arm: implement FEAT_RNG_TRAP for RNDR/RNDRRS")
-> gave ID_AA64ISAR0_EL1 a readfn so the RNDR field can reflect SCR_EL3.TRNDR
-> at read time, and marked the cpreg ARM_CP_NO_RAW in the system-emulation
-> path.  HVF then trips its hvf_arch_init_vcpu() assertion that no ID
-> register in hvf_sreg_list[] is NO_RAW, aborting on boot on Apple Silicon:
+* Daniel P. Berrangé (berrange@redhat.com) wrote:
+> On Wed, Jul 01, 2026 at 03:37:02PM +0200, Markus Armbruster wrote:
+> > Daniel P. Berrangé <berrange@redhat.com> writes:
+> > 
+> > > On Wed, Jul 01, 2026 at 08:32:06AM +0200, Markus Armbruster wrote:
+> > >> marcandre.lureau@redhat.com writes:
+> > >> 
+> > >> >> The default monitor is usually a long lived object that will exist for
+> > >> >> the entire lifetime of the VM. A monitor can only service a single
+> > >> >> client at a time though, and so it might be desirable to hotplug
+> > >> >> additional monitors at runtime for specific tasks. If doing that,
+> > >> >> however, there is a need to remove the monitor when it is no longer
+> > >> >> needed.
+> > >> 
+> > >> Whatever adds the additional monitor can also delete it.  The fact that
+> > >> you propose other means suggests you believe this would be cumbersome in
+> > >> practice.  Why?
+> > >
+> > > The use is is that someone/something wants to spawn a script that
+> > > does some job with the QEMU monitor.  The thing that spawns the
+> > > script adds the new monitor and launches the script. Having
+> > > auto-delete means that you do not need to then keep track of that
+> > > script to perform cleanup of the dynamically added monitor. It
+> > > gives you "do the right thing" behaviour automatically when the
+> > > script exits, closing its monitor connection.
+> > >
+> > > The initial series proposed by Christian supported the ability
+> > > to run "object-del' on the monitor itself - a "self delete"
+> > > essentially. That is very awkward from the code POV, as it
+> > > required special case hanlding to ensure the QMP response to
+> > > the delete action got sent on the socket before the delete
+> > > action took place. It also made it impossible to then delete
+> > > the character device.
+> > >
+> > > Auto-delete gives us a better solution with less code complexity.
+> > 
+> > I agree "self delete" is problematic.
+> > 
+> > I wonder how important the ability to fire and forget a script with a
+> > dedicated monitor is.  I'd (naively?) expect whatever spawns the script
+> > to reap its exit status.
+> > 
+> > If it is important, what about fire and forget a script with a dedicated
+> > character device?  Can't come up with a use case for that within ten
+> > seconds.  However, we use character devices for all kinds of crap.  Food
+> > for thought, not a demand.
 > 
->   Assertion failed: (!(ri->type & ARM_CP_NO_RAW)),
->   function hvf_arch_init_vcpu, file hvf.c, line 1441.
+> In a hypothetical libvirt usage of this functionality, libvirt would
+> not be spawning the script or even know what its PID is. Libvirt would
+> just create a auto-delete monitor, open an FD to it, and pass the FD
+> back to the libvirt client & forget about it.
 > 
-> Reproduce with:
+> > >> >> Allowing a client to run "object-del" against its own monitor adds
+> > >> >> complex edge cases, as it would be desirable to send the QMP response
+> > >> >> despite the monitor sending it being deleted. Doing "object-del" alone
+> > >> >> will also result in orphaning a character device backend instance, as
+> > >> >> there is no opportunity to run the companion "chardev-del" command.
+> > >> >> 
+> > >> >> A simpler way to ensure cleanup is to add the concept of auto-deleting
+> > >> >> monitor objects. Specifically when the "CHR_EVENT_CLOSED" event is
+> > >> >> emitted, the equivalent of "object-del" + "chardev-del" can be run
+> > >> >> internally. Since the transient client has already droppped its
+> > >> >> monitor connection, there is no synchronization to be concerned about.
+> > >> 
+> > >> If object-del or chardev-del fail, there's no way to report the error.
+> > >> Can they fail?
+> > >
+> > > object-del can fail if
+> > >
+> > >  * An object with the specified "id" does not exist. That shouldn't
+> > >    happen in this case but harmless if it odes.
+> > >  * object_del command tries to delete the monitor that
+> > >    is servicing the object_del command. Cannot happen with
+> > >    auto-delete
+> > >  * the monitor has not finished initializing it BH with
+> > >    chardev handlers. Cannot happen if we know we have a
+> > >    live connection already.
+> > >
+> > > chardev-del can fail if
+> > >
+> > >  * The chardev with "id" does not exist. SHouldn't happen
+> > >    but is harmless if it does
+> > >  * The chardev reports it is "busy" - aka the frontend
+> > >    is still connected - we just deleted it so cannot happen
+> > >  * Record/replay is in use - a niche use case
+> > >
+> > > So I don't think errors are a problem.
+> > >
+> > >> Do we always want to delete both monitor and character device?
+> > >
+> > > IMHO yes they are a pair whose lifetime should be tied together
+> > > for normal use.
+> > 
+> > Would we make monitor auto-delete delete its character device if
+> > character devices also had an auto-delete feature?
 > 
->   qemu-system-aarch64 -M virt,accel=hvf -cpu host \
->                       -nographic -display none -bios /dev/null
+> That's a possibility.
 > 
-> Fix it the same way ID_AA64PFR0_EL1 already is: list
-> HV_SYS_REG_ID_AA64ISAR0_EL1 in the SYNC_NO_RAW_REGS block in sysreg.c.inc
-> so the assert loop skips it, and seed the vCPU's copy at init time.
+> We would have to accept that it allows users to create a scenario in
+> which auto-delete will frequenty fail.
 > 
-> While here, unify how the three isar.idregs[]-backed ID registers are
-> seeded.  isar.idregs[] already holds QEMU's intended value for each (the
-> host caps, probed once at realize via hv_vcpu_config_get_feature_reg(),
-> plus any QEMU adjustment), so there is no need to read each register back
-> from the vCPU first.  Seed PFR0, ISAR0 and MMFR0 directly from
-> isar.idregs[], dropping the two per-vCPU hv_vcpu_get_sys_reg() reads:
-> 
->   - PFR0: take the GIC sysreg-interface bit from env->gicv3state, as the
->     id_aa64pfr0_read() readfn does.  Identical to the previous code
->     whenever a GICv3 sysreg interface is present (the configuration HVF
->     runs in practice); it differs only in that a vCPU with no GICv3 now
->     reports ID_AA64PFR0_EL1.GIC == 0 instead of inheriting the host's
->     value, which matches the field's meaning.
->   - ISAR0: no overlay is needed; HVF does not expose EL3, so
->     SCR_EL3.TRNDR is never set and the readfn is constant.
->   - MMFR0: still clamp PARANGE to the chosen IPA size, updating
->     isar.idregs[] in place because the page-table walker and the
->     ID_AA64MMFR0_EL1 cpreg resetvalue read PARANGE back from there.
-> 
-> Reported-by: Zenghui Yu <zenghui.yu@linux.dev>
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Fixes: 887eaa8a29 ("target/arm: implement FEAT_RNG_TRAP for RNDR/RNDRRS")
-> Signed-off-by: Jason Wright <wrigjl@proton.me>
+> ie configuring the chardev for auto-delete, but not having the
+> frontend auto-delete, which would trigger the "busy" check. 
 
-Tested-by: Zenghui Yu <zenghui.yu@linux.dev>
+This feels like it has some overlap with 'yank'?  Where you can force
+a channel to get out of the way even if you don't delete it at that point.
 
-Thank you for the fix!
+Dave
 
-Zenghui
+> Not convinced that's nicer ?
+> 
+> With regards,
+> Daniel
+> -- 
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
