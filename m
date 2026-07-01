@@ -4,75 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 467EEC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 20:11:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA6E1C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jul 2026 20:22:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wf1F6-0001ts-Ni; Wed, 01 Jul 2026 16:09:08 -0400
+	id 1wf1R2-0007cS-ID; Wed, 01 Jul 2026 16:21:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1weylX-0008Kj-Q2; Wed, 01 Jul 2026 13:30:29 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wf1Qw-0007c5-NW
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 16:21:22 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1weylW-0006wb-2m; Wed, 01 Jul 2026 13:30:27 -0400
-Received: from localhost (unknown [89.92.102.124])
- (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id 60B662003CA;
- Wed,  1 Jul 2026 19:30:03 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1782927023;
- bh=rtgoa2ZXcKYJ0bC3r8HA9NmSZpy9z/77OldWyHbsVvE=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=ZQumOsZax7vdWPvRJ32hhSg0xDG9QXmhY1S2eKemUOxuZN42JfEGA060eoDhKiB7N
- G4BvMli+FqC6dK6rFUlNYQZi1Jp6FqFz6DGjOXrFqHk6slUICI1PcqeOT2LHvwREJS
- 2J0o1IpT1AYDAsY5QlvcZ4YUjlpIh2uQM0aZWK6IBYfuHNUjZJRVL26tyQ5SEyO7AF
- Tf7JbdMWva2FxnSwn9ySwynamVf1A1teWucRzzmHOtfRx+HKvAwH1pA/juFAGBPuJI
- 6FoJGJ3W2YHG2t+QcUSYINucgjzAhRwB0Fuvnu2xq8Lj5gHfe78/u1TOzJH0mRG1fx
- HENQKhShMqzYA==
-From: Emmanuel Blot <emmanuel.blot@free.fr>
-Date: Wed, 01 Jul 2026 19:28:34 +0200
-Subject: [PATCH v5 4/8] tests/qtest: adc128d818: test limit interrupts
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wf1Qu-0003M9-Vk
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 16:21:22 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 661Gmj4r1590015
+ for <qemu-devel@nongnu.org>; Wed, 1 Jul 2026 20:21:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 5wmlurrdykMTTLEIwFUHCN0Kmd3yPS5/zJEe3OJGT8U=; b=PK4bpu61UKPKa3hF
+ hJoEXzwd1BOMMIyKBIARPpFN02XDfuEolPKVDB2fGRZooA2J9z4f5tu86WgFmisH
+ iGIGNOnlZ1wOPxE3oRB3z/fzSDwTDJNeUkf665DWuEYff1SyXpP3IT+DFj13DNyA
+ s3g2/+gVNrsJUA8ijta40dfcni5MkgaRLNuIB/3Tjfdz63dJxyYcOujeIm8r/nIK
+ db7mJfyaJgKimR6rPi1moMEunt5JfH/x6VCGuKsjoAZ854HazigPKGt9ougGB2/6
+ N16pMGY308X6tORDPvDT+a7V3oh3mdyLPDrOpz+rn3G1XpCjTYExsmphuWL4vdSr
+ JMVGnA==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f53q09pmc-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 20:21:17 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8f0867a75ecso23158266d6.3
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 13:21:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1782937276; x=1783542076; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5wmlurrdykMTTLEIwFUHCN0Kmd3yPS5/zJEe3OJGT8U=;
+ b=XQZ7s9vuYLS/2Vsfll8lWCpM+loEmf8yEXuV1gCRnGBBrgI2fDQlwkTSqfZycGAgqO
+ /0jndFj7/vVQqmpnzAbsB6AFxZMvZ8wmFh1U/f3CHJfYcjcQBoSSyPi8bGF2Cx8+F1C8
+ awCYYCTklTA66R3yr+3vQDI+I4eNyz9tFcTqh9462LYZzz080bm7CRcaiuf0a9Y7/l6H
+ PwOT3n9M/fwJUJQKJ0qLB7OcFL2lN/Ue4kUxbcUPRwdEX3xz7/62kfOVUFZhIopI1sgw
+ RZBZcYshQRWTv7oD7RlN6eTXPmNhlXJxcuCYVepGToQm7LsMxI1ToEoUbqWIqgEnKazr
+ 4nPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782937276; x=1783542076;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5wmlurrdykMTTLEIwFUHCN0Kmd3yPS5/zJEe3OJGT8U=;
+ b=s6N/buRqsL19WLinZR9Fpa66ixO8YguJ5IqR03eRBUkTq4KugXZTRKQxMpfFdUlE5j
+ FuzeCCWbYHkjoXfTrsr26vyZqULyUAhiXkX8MW9NO2X/BzK5SDPVYu6qekk4PI8QfxrS
+ +DCTm6H4GiydhrLgs1z9LaWIf1Id6UVI8dxav7LceTPwkKBrOLaEgGOwL1o3SqE+bORo
+ xO3JzKvtCcI5wNvS+1mpv6d1XFFfz34VgYX93g/DN5hmOhqRyQStAP7S5vDBqHbshCC9
+ shqLw4zxgCiLTfXNJvom7T/IfPXMTXysyNL59ElzOMYI44mmzANBwRTL3zi6JWXGTWhk
+ AhDA==
+X-Gm-Message-State: AOJu0YwHLk0fiZKJiKitTclg2pj/puXgl0f3KZj/VzvT3jfAfJf9c92y
+ EuO5IvohsLSN66mkr8H8MtzaC4LopDA3NiL28PYg3T+ktVQh0XyvE6iAU6R2wU+CytMc9iTfOtg
+ xXo/bDASoUN+VsSj4FWxT51VVNyifrxi5D4U6oBMf19NYFQM5/y6LkytyMw==
+X-Gm-Gg: AfdE7clx8eLpmzc9WheVRo9TiO8GfesDnvgkkxOWWvttERpAEswav6NoVuS1xOiz7es
+ hCfPznNXhXe/8rrp7HSXTb32TqF0ShsKZ1+UEpH1XKw+jYCwOTXaOPf9XNDhXfC14bxZEa0e2jV
+ FqX2vwvWYrs7KUFKfpisna4hamPX/UvuGagzFoTsZ4sWTDVCOsCHz2bkTXz4G/GGkY0/LbNMpQp
+ eZAXvd4STqvNUcQzTH9UIWwaMwG1O1wnsi0aDSLGoKhWB4qsl6WH55QqM/zLJidASuJpYsK/k4p
+ HaTVW/HysNh395QpTsu9OG9PJA6/J6iNvXzzirzfXZH0+/sW5quq40KG86ZnNg4xyFUGFLe0n/S
+ zqGZNJCngcROYtouuCNaNFibimI5ZUb3niR8Zt2hV+rZpwMonSw7E/WfD8gA1MCpbIvzALqYqJb
+ o=
+X-Received: by 2002:ad4:424e:0:b0:8e9:f5de:d62e with SMTP id
+ 6a1803df08f44-8f3c95d47cdmr31299096d6.47.1782937276252; 
+ Wed, 01 Jul 2026 13:21:16 -0700 (PDT)
+X-Received: by 2002:ad4:424e:0:b0:8e9:f5de:d62e with SMTP id
+ 6a1803df08f44-8f3c95d47cdmr31298336d6.47.1782937274924; 
+ Wed, 01 Jul 2026 13:21:14 -0700 (PDT)
+Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8f4724bad04sm7738516d6.44.2026.07.01.13.21.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 01 Jul 2026 13:21:14 -0700 (PDT)
+Message-ID: <ba6246ab-38ad-4d32-be51-51c1c99d2569@oss.qualcomm.com>
+Date: Wed, 1 Jul 2026 15:21:12 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260701-i2c-adc128d818-anacapa-v5-4-fe8292d86b38@free.fr>
-References: <20260701-i2c-adc128d818-anacapa-v5-0-fe8292d86b38@free.fr>
-In-Reply-To: <20260701-i2c-adc128d818-anacapa-v5-0-fe8292d86b38@free.fr>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- Alexander Hansen <alexander.hansen@9elements.com>, 
- William de Abreu Pinho <williampinho@meta.com>, 
- Emmanuel Blot <eblot@meta.com>, qemu-arm@nongnu.org, 
- Emmanuel Blot <emmanuel.blot@free.fr>, Corey Minyard <cminyard@mvista.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1782926919; l=5773;
- i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=rtgoa2ZXcKYJ0bC3r8HA9NmSZpy9z/77OldWyHbsVvE=;
- b=bY6T7JWadDl4YiQ/uUPuGHUY6ebWgYtN8SLw3fy3YctIltLEFO9o1CtmmHsjwjiMEa67fiNjv
- ecpKxoF9Nj7AZKiaNoSq0RaYXtycGHvaFa5JrJmpHL+Sf6ineaSvvai
-X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
- pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=212.27.42.2; envelope-from=emmanuel.blot@free.fr;
- helo=smtp2-g21.free.fr
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: new roms/ content for hexagon: h2
+To: Stefan Hajnoczi <stefanha@gmail.com>, Brian Cain <bcain@quicinc.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "deller@gmx.de" <deller@gmx.de>, "thuth@redhat.com" <thuth@redhat.com>,
+ "mark.cave-ayland@ilande.co.uk" <mark.cave-ayland@ilande.co.uk>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "pierrick.bouvier@oss.qualcomm.com" <pierrick.bouvier@oss.qualcomm.com>
+References: <CH4PR02MB1068109FAF2014DE3A545D5EFB8E92@CH4PR02MB10681.namprd02.prod.outlook.com>
+ <CAJSP0QX+aJJKes6zbxKZ0+NEhYydXhK61+cva26jTFw3dLRZMA@mail.gmail.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <CAJSP0QX+aJJKes6zbxKZ0+NEhYydXhK61+cva26jTFw3dLRZMA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=dtnrzVg4 c=1 sm=1 tr=0 ts=6a4576bd cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8 a=COk6AnOGAAAA:8 a=sV-nAV3Y9LPqhRapAsYA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: XSNWG-qJl9dEEHFel0qp_OPIbuw2-nDM
+X-Proofpoint-GUID: XSNWG-qJl9dEEHFel0qp_OPIbuw2-nDM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDIxNyBTYWx0ZWRfX2VoPu6zmZwMV
+ +FKHv9MxBgZO0fQIabCcBsVW09tlxUgYVvHgQJI5yO1llidNzUppgJ3D4aWNriDZCH+ZIvVYfoU
+ F43bSO2RQv0z0IVE5A5e6kaZO+Emck0mMud7sfWa03zbq5BogGjMPhyCgC7nJFliv9DnYZWOitJ
+ kda9LslIjJzEhFLN8GkI0otlq0YdvqkW3IcLxSecUugOSQc3EVoIkw1MEl5ztDapQRLSghER5o9
+ 2k7ExdpfIg4iArJIJYwV1u4JkEA/HIkTnl5AaENfksSOv2o3+xTGPXOVtVzY5bEUiha/ay4ySnS
+ gwtzy8ydUVDzRRVD4ZouBGCUgIGR2tpUCkhZwctZht1rAikNz1Io/3gxXqBYOErt7CMvFhRucYM
+ SVHqFs4wkvuz8PIkvnjJI40ymhYO84tTiRQMVgJcKUlb1h5pX6W3qQu46ZtWxvc4TkSi1hbNfkK
+ mZ/bQFNcBk4iBOtqrMQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDIxNyBTYWx0ZWRfX0G3eiFU+IMBX
+ r/q7MSmYzq9otdUazIlBqDySFzUuBUhLJVs8FWQfbK4imoaV5S4IKMlu95rHSjEXeME/kI1L+oV
+ jQL7BPsSOCG6NDpKSZjVSwGKiEUNkRY=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-01_04,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 priorityscore=1501 suspectscore=0 spamscore=0
+ lowpriorityscore=0 phishscore=0 malwarescore=0 bulkscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010217
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 01 Jul 2026 16:09:06 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,155 +159,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cover per-channel high- and low-limit interrupt status, the
-INT_CLEAR bit gating the monitoring loop, and the temperature
-high-limit alarm with hysteresis.
 
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
----
- tests/qtest/adc128d818-test.c | 121 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 121 insertions(+)
+On 6/30/2026 11:01 AM, Stefan Hajnoczi wrote:
+> On Sun, Jun 28, 2026 at 9:46 PM Brian Cain <bcain@quicinc.com> wrote:
+>> I'm working on upstreaming support for hexagon system emulation and it'd be useful to add the h2 vmm to QEMU's roms/ in order to simplify booting OSs like Linux.
+>>
+>> To that end, I think the initial step in the process is to mirror the repo in the qemu-project?  https://github.com/qualcomm/hexagon-hypervisor/ is where the code is hosted now.  And once that is done I suppose I would add QEMU patches to add the build process and build output into roms/.  Can one of you do that mirror step or suggest how I can do it?
+> Hi Brian,
+> I have created a mirror of the stable branch here:
+> https://gitlab.com/qemu-project/hexagon-hypervisor
+>
+> Please take a look and let me know if you need any changes.
 
-diff --git a/tests/qtest/adc128d818-test.c b/tests/qtest/adc128d818-test.c
-index 891189f0bd..3e3fabb8d9 100644
---- a/tests/qtest/adc128d818-test.c
-+++ b/tests/qtest/adc128d818-test.c
-@@ -330,6 +330,123 @@ static void test_ext_vref(void *obj, void *data, QGuestAllocator *alloc)
-     g_assert_cmphex(reading, ==, 0x8000);
- }
- 
-+/* Interrupt status set on limit violation; persists while fault remains */
-+static void test_interrupt_status(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint8_t status;
-+
-+    i2c_set8(dev, REG_LIMIT_BASE, 0x10);
-+    g_test_message("Set ch0 high limit = 0x10");
-+
-+    qmp_adc128d818_set("ain0", 2560);
-+    g_test_message("Injected ain0 = 2560 mV (exceeds limit)");
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START | CONFIG_INT_ENABLE);
-+
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("INT_STATUS = 0x%02x (expect bit 0 set)", status);
-+    g_assert_cmphex(status & 0x01u, ==, 0x01);
-+
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("INT_STATUS after re-read = 0x%02x (expect bit 0 still set)",
-+             status);
-+    g_assert_cmphex(status & 0x01u, ==, 0x01);
-+
-+    qmp_adc128d818_set("ain0", 80);
-+    g_test_message("Injected ain0 = 80 mV (within limit)");
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("INT_STATUS after fault cleared = 0x%02x "
-+                   "(expect bit 0 clear)", status);
-+    g_assert_cmphex(status & 0x01u, ==, 0x00);
-+}
-+
-+/* INT_CLEAR stops the round-robin monitoring loop */
-+static void test_int_clear(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint8_t status;
-+
-+    i2c_set8(dev, REG_LIMIT_BASE, 0x10);
-+    qmp_adc128d818_set("ain0", 2560);
-+
-+    i2c_set8(dev, REG_CONFIG,
-+             CONFIG_START | CONFIG_INT_ENABLE | CONFIG_INT_CLEAR);
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("INT_STATUS with INT_CLEAR set = 0x%02x (expect 0x00)",
-+                   status);
-+    g_assert_cmphex(status, ==, 0x00);
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START | CONFIG_INT_ENABLE);
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("INT_STATUS after INT_CLEAR cleared = 0x%02x (expect bit 0)",
-+             status);
-+    g_assert_cmphex(status & 0x01u, ==, 0x01);
-+}
-+
-+/* Low-limit interrupt triggers correctly */
-+static void test_low_limit(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint8_t status;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+
-+    i2c_set8(dev, REG_LIMIT_BASE + 3u, 0x80);
-+    g_test_message("Set ch1 low limit = 0x80");
-+
-+    i2c_set8(dev, REG_LIMIT_BASE + 5u, 0x80);
-+    g_test_message("Set ch2 low limit = 0x80");
-+
-+    qmp_adc128d818_set("ain1", 640);
-+    qmp_adc128d818_set("ain2", 1280);
-+    qmp_adc128d818_set("ain0", 1280);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START | CONFIG_INT_ENABLE);
-+
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("INT_STATUS = 0x%02x (expect bits 1 and 2 set)", status);
-+    g_assert_cmphex(status & 0x02u, ==, 0x02);
-+    g_assert_cmphex(status & 0x04u, ==, 0x04);
-+
-+    g_assert_cmphex(status & 0x01u, ==, 0x00);
-+}
-+
-+/* Temperature high-limit interrupt with hysteresis */
-+static void test_temp_hysteresis(void *obj, void *data,
-+                                 QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint8_t status;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+
-+    i2c_set8(dev, REG_LIMIT_BASE + 7u * 2u, 0x32);
-+    i2c_set8(dev, REG_LIMIT_BASE + 7u * 2u + 1u, 0x28);
-+
-+    qmp_adc128d818_set("temperature", 25000);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("25 C: INT_STATUS = 0x%02x (temp bit expect clear)", status);
-+    g_assert_cmphex(status & 0x80u, ==, 0x00);
-+
-+    qmp_adc128d818_set("temperature", 55000);
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("55 C: INT_STATUS = 0x%02x (temp bit expect set)", status);
-+    g_assert_cmphex(status & 0x80u, ==, 0x80);
-+
-+    qmp_adc128d818_set("temperature", 45000);
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("45 C (hysteresis): INT_STATUS = 0x%02x "
-+                   "(temp bit expect set)", status);
-+    g_assert_cmphex(status & 0x80u, ==, 0x80);
-+
-+    qmp_adc128d818_set("temperature", 35000);
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("35 C: INT_STATUS = 0x%02x (temp bit expect clear)", status);
-+    g_assert_cmphex(status & 0x80u, ==, 0x00);
-+}
-+
- static void adc128d818_register_nodes(void)
- {
-     QOSGraphEdgeOptions opts = {
-@@ -354,5 +471,9 @@ static void adc128d818_register_nodes(void)
-     qos_add_test("temperature-edges", "adc128d818", test_temperature_edges,
-                  NULL);
-     qos_add_test("ext-vref", "adc128d818", test_ext_vref, NULL);
-+    qos_add_test("interrupt-status", "adc128d818", test_interrupt_status, NULL);
-+    qos_add_test("int-clear", "adc128d818", test_int_clear, NULL);
-+    qos_add_test("low-limit", "adc128d818", test_low_limit, NULL);
-+    qos_add_test("temp-hysteresis", "adc128d818", test_temp_hysteresis, NULL);
- }
- libqos_init(adc128d818_register_nodes);
 
--- 
-2.50.1
+Excellent, thanks!
 
+
+I have a feeling that the 'stable' branch of this repo was a 'good 
+intention' that does not have a process by which it gets updated.  I've 
+asked the maintainers if they plan to keep this branch active or prune 
+it.  And I'll ask if they can generate a tag/release that we could use 
+as a basis.
+
+
+What's the process by which we update our fork?  It has an automated 
+mirror process driven by gitlab?  What if we need changes that 
+can't/won't be upstreamed - can we make those locally?  I don't yet have 
+any plans to make local changes, just want to understand how the process 
+works.
+
+
+>
+> Thanks,
+> Stefan
+>
 
