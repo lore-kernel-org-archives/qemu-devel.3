@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C14FC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 13:36:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABDD6C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 13:36:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfHaW-00084k-8I; Thu, 02 Jul 2026 09:36:20 -0400
+	id 1wfHaV-00084c-TE; Thu, 02 Jul 2026 09:36:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wfHaV-00084B-4A
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:36:19 -0400
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wfHaU-00083j-Ni
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:36:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wfHaT-00015a-AW
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wfHaS-00014o-AH
  for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:36:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782999376;
+ s=mimecast20190719; t=1782999374;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1rR3wOaCqir41NboczA76GKl3LF8SZvplqqP5ybbjVs=;
- b=ek11kYKdaslO2sFsZL9Hs33A0Bfxm+w/12a1QkOMncwAt/XUzkEGVOJBkQBZP0ptcwLyUz
- S691BoTGSyCeXZo4a1gZ1D8bSlDTRMFjHLm+EsvEF7noZFvepfQQSWFN70jAUQfr/o0+U+
- 8Ou6RCVuxcR1uXORWVEp2ipqvwo4nOw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=utgm0XcZH1OQFlYYcbnG8kYHRsMRZSLs/jw2MKeR8kE=;
+ b=iYVIcoRLr7Bsdu2/LHhXsiM/wbi3jeX9BDdHP9PgAri4itvOKWr1vbnF9++0jUbCYd+hMz
+ CQBwc0lf9/BZj6qlaS6F7pox+hRDerYob7vkwhugHiPGl7Bg90o+j1orZijxILG40OjQeK
+ U5nKgVRilSwPDYQThndTXhLJOsVLvv4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-536-QqBrvTwHO86RJHaOZCRSaA-1; Thu, 02 Jul 2026 09:36:15 -0400
-X-MC-Unique: QqBrvTwHO86RJHaOZCRSaA-1
-X-Mimecast-MFC-AGG-ID: QqBrvTwHO86RJHaOZCRSaA_1782999373
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-476608a9fefso477104f8f.1
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 06:36:14 -0700 (PDT)
+ us-mta-88-9a2itBN6PtKHkuWqJr1w7A-1; Thu, 02 Jul 2026 09:36:13 -0400
+X-MC-Unique: 9a2itBN6PtKHkuWqJr1w7A-1
+X-Mimecast-MFC-AGG-ID: 9a2itBN6PtKHkuWqJr1w7A_1782999372
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-492488f8583so27585255e9.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 06:36:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782999373; x=1783604173; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1rR3wOaCqir41NboczA76GKl3LF8SZvplqqP5ybbjVs=;
- b=qwMtD1N9P+Hk1NnFMJvpPaqLNxt1B5rM2MC2dTSZ/+g6qsNX6exUrH8d12KSzgTv8b
- b9+GU0eyGbe+4SyGVQyYOTvcD2QcpyASl4K14bEF1kqLWUfI2NOCsHGDJ1vUhHb9Qece
- DHqpnjwA5eT1zPHd9GdRfzEfL7wyMeoZWy3xA31wk/PTPC756FvOaxpAP0Vca+JFFDKU
- 36Uu9WsMYyTnxRnO1WtpX3MBP2oCS1roqAC4pNnJrEvRLGHpsCnq0zH4Q/L/XQeLy7zt
- qdGXvS82lx7yyAik6Hbpn5NaySI/Js1w+W3nVxoTJg6QBR5t8f5oLLRMcXkyEMe4jGF9
- IL5w==
+ d=redhat.com; s=google; t=1782999372; x=1783604172; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=utgm0XcZH1OQFlYYcbnG8kYHRsMRZSLs/jw2MKeR8kE=;
+ b=jBK8ExdkcBEVTvaSuIHWLtt+h3sfG5XgetpWmFWLmt25HdbwpAw06I/EQyxO8dHHjK
+ H1dyTKdRrmCynkljhexyrAqodrW8jY+EBUYplAKXWrH2UHgY446BGLggiF4IOLJzGnFY
+ kxUJrf7HbE1a3tLDRdGz4lQumNQyB/rMfdK3T7iICOVvlatI3CrgPOyt7OnFSEhup3l/
+ RfOoKkS19iWKeHF8QOsxPfZzghdzve1ovYgPOo2fkVlmK5c/H4bxkSckxJL/L1q9FM8p
+ 0y8mfNticILJmu/mozqGFUR79oacgJ7RuBgIvpoKHFiQqnVckYR4EMpdpZfVIwAJJ1KH
+ z8QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782999373; x=1783604173;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1rR3wOaCqir41NboczA76GKl3LF8SZvplqqP5ybbjVs=;
- b=Zk7VBOXQvzBFlFcBHnXaog/O9l8OrnnoeHyCnsgvjzb40PMPgdl00Hs4idZWaDBVoL
- pYpACqcPvx8uZ8fyhXkpyjsyh3ytUBHZabjotlZ7WI9qCqlkzXBSxBviOUkEYLgz9WD1
- 70pX05BzlPAyb3TGQkJ7qryrPvt9pXbS5flWs5AJ5wg4phx+M6awQZNnvKJeMcPQiuZO
- ltGUXDG9vMuk4iamUcO/AM7lDZu3OhwNO5f+Brkk8M/qXWHe5ePaYCy6ySyKgs9F5XMa
- 0Hv/LsPzTUQTcK+eGx4DoAL3pFNZnbmjXZIxZvNvZ/L0OpOOzje5cQnmaEQ/iDH3n3v5
- GOLA==
+ d=1e100.net; s=20251104; t=1782999372; x=1783604172;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=utgm0XcZH1OQFlYYcbnG8kYHRsMRZSLs/jw2MKeR8kE=;
+ b=tZR+7z61ah3mMvURIZMKTlhlBNLK2GQrKY8LOcWHqxEOz/9BrRy6ChImJhf6IMaCqq
+ XJTDFMQcRVBfvr1JjPRilga78N6GBe8Mbdo/62e6g8JnGlKeO741TnfJHSiO0mC/xPYi
+ Ve8EdD/0nu2QIQ1r7t9A1Y2gHzKYRQpozF9tDIW6mXU1DLD1AcisUigYCBj9xEQbznis
+ AuCsN2O0Y+iVW8Xa/yqD3NS65QQqEvGlTv7XbFEq5IjG+u+EMYSbO0BhUmMjA/5Mf1hT
+ /+p1GYIt7v35LNliHafekoJOqaDSEN/38RIzP21NeKMUIuu9BrwYNx5sXYpf+gRrByqA
+ vgTA==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoCOTBKVHz3TJqVn+wdKDtIURo3dRlLx8XdeZBv7bHmsk1zCw1MFZiXPzHE/Kyw+pSxTPXq6uDG3EzI@nongnu.org
-X-Gm-Message-State: AOJu0YxAL6+LxPtVO2d0VB8VvnlOtQRFE3B6AHwPn8u8zYIoHR4z16BB
- Ju5UWT83iBlKMvuOUlvbYcKk5YMPvV/Y+ElGjxeZ7OGVR013LTvPxXty0JFNqaDaHyztFpLrPIf
- adTtqKzybG8MhmBcy7fJY9mnG4E39dtbu91H9PPjYBdp+pqH91zR9+bB1
-X-Gm-Gg: AfdE7cmF60OiSzftbmKViH0p3MXopCew6fRxEz81HGcbbpBrcXM8megUrvoOHk8C3Sd
- RmM+Ea6U9ocv5kmpcQrdFe91x/Wv5GPZU5zDtWQ4w8LEmbzwg94T+oZcUvGeIoXSmDqzDLki6vF
- EpCnxjyw+XnTpAwo7zpmGdkudLWJY/Epfg3CFZvaYGvHr13skyeNc3/Ww7t/7Leggcca0gIivsq
- +lYT6ty7MD5hc4oH0QoNBJoYK/t74KrIicsewOKqrhS94+e1oxj2kzKytQ1xF0CbqKexz3krId9
- C5HOkTxpVmK+Mbv0k9mkhSOIHJ5WwnfM+QONlMBn3OYWJ/GjxutDXuIRIFA53M5aEIIwzECyV5C
- 3KyzjNeM4rs7rAwX2FczW/SKWIWGOu2ye5/1x9PfihL3w49+ks79ziP9MJlWOfLxG2N9XbXnXiA
+ AFNElJ/fVWdEHQpH8u+xPmO1QspbDAMd/W3gu4/y36eFlh0vidhV+UCf4Zfpk/Y+rGgai+vtBeh/LS/xF6rA@nongnu.org
+X-Gm-Message-State: AOJu0Yy+wS2SSbAQuLjJOSEmEc4uoe1LilEGKifMB6kvdHxGOKgOunIB
+ 7wiShW+G/50vFW5rmYF4S46N0ubljMKCSdn6niay2WdoaD4BHxzRa7gGWf49cgxMbK0H0HkIw5y
+ LP0I5g5FE78fL97DI1NVFk8xBuq2pt0FeCvqfu+thsjwld7mVlKv0H5hF
+X-Gm-Gg: AfdE7cnbGg5RjMUo9NHLFIa/fpPz0PihYYN95L4ws2STMkXVh3GvIrNDfv5bTnzyIpD
+ xPgVF/u9sW1NGCW6xPxF9SzA+vGngU5rpBl0uyTprmhPSOLaxkwcnWukYaJqOt0cdUxMZxnrLbS
+ LQv5UBiYhmAXKFYEmxKOH2JJhiCyKaHpJ+iiuIsjRzaQhDfp6E1PaVj3DtchUt8ii3HuuP3dQH0
+ vi6nM9zHRhogXRKvUMXfWuN1Wf2HAy9wUt/Jrds651ZeMMG8xAZkavhyXlu/A09d7GtA/vBBqxX
+ KyGCW0Ovi0txYcxqY1znUhUz7vZ4jsq5zhBflYuS3bnh3IOd2EiQl3lQB96A+CiCRp+0aThCYno
+ pwkTCQV1LIEUtcB9EUsr5edBXtiXahOGV+KM0qkNcn1kPgfVJR1ufXRAKrMUqdNAOyaAQOstskw
  ==
-X-Received: by 2002:a05:6000:26d3:b0:475:f0c2:75af with SMTP id
- ffacd0b85a97d-4774643eac5mr8474698f8f.26.1782999373277; 
- Thu, 02 Jul 2026 06:36:13 -0700 (PDT)
-X-Received: by 2002:a05:6000:26d3:b0:475:f0c2:75af with SMTP id
- ffacd0b85a97d-4774643eac5mr8474641f8f.26.1782999372790; 
+X-Received: by 2002:a05:600d:111:b0:493:b243:8ffc with SMTP id
+ 5b1f17b1804b1-493c2ba5556mr72547905e9.35.1782999372014; 
  Thu, 02 Jul 2026 06:36:12 -0700 (PDT)
+X-Received: by 2002:a05:600d:111:b0:493:b243:8ffc with SMTP id
+ 5b1f17b1804b1-493c2ba5556mr72547405e9.35.1782999371682; 
+ Thu, 02 Jul 2026 06:36:11 -0700 (PDT)
 Received: from rh.fritz.box
  (p200300f6af2a6100f239e076bbd76784.dip0.t-ipconnect.de.
  [2003:f6:af2a:6100:f239:e076:bbd7:6784])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-477db3dbb01sm9135980f8f.1.2026.07.02.06.36.11
+ ffacd0b85a97d-477db3dbb01sm9135980f8f.1.2026.07.02.06.36.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jul 2026 06:36:12 -0700 (PDT)
+ Thu, 02 Jul 2026 06:36:11 -0700 (PDT)
 From: Sebastian Ott <sebott@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>, Eric Auger <eauger@redhat.com>,
  Jonathan Cameron <jonathan.cameron@huawei.com>,
@@ -93,13 +91,11 @@ To: Peter Maydell <peter.maydell@linaro.org>, Eric Auger <eauger@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Cornelia Huck <cohuck@redhat.com>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Eric Auger <eric.auger@redhat.com>, Sebastian Ott <sebott@redhat.com>
-Subject: [PATCH v4 1/3] arm: handle demuxed ID registers
-Date: Thu,  2 Jul 2026 15:36:04 +0200
-Message-ID: <20260702133606.34529-2-sebott@redhat.com>
+ Sebastian Ott <sebott@redhat.com>
+Subject: [PATCH v4 0/3] arm: demuxed ID registers (CCSIDR_EL1)
+Date: Thu,  2 Jul 2026 15:36:03 +0200
+Message-ID: <20260702133606.34529-1-sebott@redhat.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260702133606.34529-1-sebott@redhat.com>
-References: <20260702133606.34529-1-sebott@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
@@ -126,118 +122,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cornelia Huck <cohuck@redhat.com>
+Handle the demuxed ID register CCSIDR_EL1 as part of the
+idregs array. V3 of this series was posted here:
+https://lore.kernel.org/qemu-devel/20260622135627.40573-1-sebott@redhat.com/
 
-For some registers, we do not have a single ID register, but actually
-an array of values (e.g. CCSIDR_EL1, where the actual value is
-determined by whatever CSSELR_EL1 points to.) If we want to avoid
-using a different way to handle registers like that for every
-instance, we should provide some kind of infrastructure. Therefore,
-add accessors {GET,SET}_IDREG_DEMUX that are similar to the accessors
-we already use for regular ID registers.
+Changes V3->V4:
+* added R-B from Eric
+* incorporated suggestions from Eric
 
-Tested-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
----
- target/arm/cpu-sysregs.h |  9 +++++++++
- target/arm/cpu.h         | 12 ++++++++++++
- target/arm/cpu64.c       |  8 ++++++++
- 3 files changed, 29 insertions(+)
+Cornelia Huck (3):
+  arm: handle demuxed ID registers
+  arm: handle CCSIDR_EL1 as a demuxed register
+  arm/kvm: get demuxed ID registers from kvm
 
-diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
-index 7877a3b06a..a4b9621a7e 100644
---- a/target/arm/cpu-sysregs.h
-+++ b/target/arm/cpu-sysregs.h
-@@ -20,20 +20,29 @@
- 
- #define DEF(NAME, OP0, OP1, CRN, CRM, OP2) NAME##_IDX,
- 
-+#define DEF_MUX(NAME, OP0, OP1, CRN, CRM, OP2, NUM)     \
-+    NAME##_IDX,                                         \
-+    NAME##_IDX_LAST = NAME##_IDX + NUM - 1,
-+
- typedef enum ARMIDRegisterIdx {
- #include "cpu-sysregs.h.inc"
-     NUM_ID_IDX,
- } ARMIDRegisterIdx;
- 
- #undef DEF
-+#undef DEF_MUX
- #define DEF(NAME, OP0, OP1, CRN, CRM, OP2) \
-     SYS_##NAME = ENCODE_ID_REG(OP0, OP1, CRN, CRM, OP2),
- 
-+#define DEF_MUX(NAME, OP0, OP1, CRN, CRM, OP2, NUM)     \
-+    DEF(NAME, OP0, OP1, CRN, CRM, OP2)
-+
- typedef enum ARMSysRegs {
- #include "cpu-sysregs.h.inc"
- } ARMSysRegs;
- 
- #undef DEF
-+#undef DEF_MUX
- 
- extern const uint32_t id_register_sysreg[NUM_ID_IDX];
- 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 84d33e87dc..5668deee4c 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -920,6 +920,18 @@ typedef struct {
-         i_->idregs[REG ## _EL1_IDX];                                    \
-     })
- 
-+#define SET_IDREG_DEMUX(ISAR, REG, INDEX, VALUE)                        \
-+    ({                                                                  \
-+        ARMISARegisters *i_ = (ISAR);                                   \
-+        i_->idregs[REG ## _IDX + INDEX] = VALUE;                        \
-+    })
-+
-+#define GET_IDREG_DEMUX(ISAR, REG, INDEX)                               \
-+    ({                                                                  \
-+        ARMISARegisters *i_ = (ISAR);                                   \
-+        i_->idregs[REG ## _IDX + INDEX];                                \
-+    })
-+
- /**
-  * ARMCPU:
-  * @env: #CPUARMState
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 2816735577..48a0421674 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -42,14 +42,21 @@
- #define DEF(NAME, OP0, OP1, CRN, CRM, OP2)      \
-     [NAME##_IDX] = SYS_##NAME,
- 
-+#define DEF_MUX(NAME, OP0, OP1, CRN, CRM, OP2, NUM)     \
-+    DEF(NAME, OP0, OP1, CRN, CRM, OP2)
-+
- const uint32_t id_register_sysreg[NUM_ID_IDX] = {
- #include "cpu-sysregs.h.inc"
- };
- 
- #undef DEF
-+#undef DEF_MUX
- #define DEF(NAME, OP0, OP1, CRN, CRM, OP2) \
-     case SYS_##NAME: return NAME##_IDX;
- 
-+#define DEF_MUX(NAME, OP0, OP1, CRN, CRM, OP2, NUM)     \
-+    DEF(NAME, OP0, OP1, CRN, CRM, OP2)
-+
- int get_sysreg_idx(ARMSysRegs sysreg)
- {
-     switch (sysreg) {
-@@ -59,6 +66,7 @@ int get_sysreg_idx(ARMSysRegs sysreg)
- }
- 
- #undef DEF
-+#undef DEF_MUX
- 
- void aarch64_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
- {
+ hw/arm/virt.c                 | 19 ++++------
+ hw/intc/armv7m_nvic.c         |  2 +-
+ target/arm/cpu-max.c          |  6 ++--
+ target/arm/cpu-sysregs.h      |  9 +++++
+ target/arm/cpu-sysregs.h.inc  |  1 +
+ target/arm/cpu.h              | 18 ++++++----
+ target/arm/cpu64.c            | 14 ++++++--
+ target/arm/helper.c           |  2 +-
+ target/arm/kvm.c              | 31 ++++++++++++++++
+ target/arm/tcg/cpu32-system.c | 26 +++++++-------
+ target/arm/tcg/cpu64.c        | 68 +++++++++++++++++------------------
+ 11 files changed, 123 insertions(+), 73 deletions(-)
+
 -- 
 2.54.0
 
