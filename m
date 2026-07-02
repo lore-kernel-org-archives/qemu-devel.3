@@ -4,100 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A794C43327
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 06:15:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5481FC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 06:16:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfAhG-0004CV-Ll; Thu, 02 Jul 2026 02:14:50 -0400
+	id 1wfAjA-0005RC-L8; Thu, 02 Jul 2026 02:16:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wfAh8-000469-Ec
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 02:14:43 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wfAj9-0005Qc-4l
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 02:16:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wfAh6-0006yQ-JN
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 02:14:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wfAj7-0007us-DG
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 02:16:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782972878;
+ s=mimecast20190719; t=1782973004;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=0e+A6IJ8GlqWZg43ZGGl4ELT79+D3X0r+2HPToiqUVw=;
- b=LP0+M5p6wELMpfgqiLbT2lTl3X66T7RSmy2vvPwaBnUoEDvh1DbMwg3jFCXqji86668dSX
- A6A2juBSqkJqxtqcBlYZ66DCE2VOoNprcLP+Pwc1gCOoE4gljZ7zhXA8zxc0g1RfaIO5If
- Asfr5swKByAUpfMTppkEi/5+aLdErJ8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DYVIXsStIyODfBWhUT8uaPJRtkEPNYzWO/XmAapofY4=;
+ b=XAiB1H6iz6zRtF5MT2nQW0sQCvcyjxzTtY26S3FMdrvnsyoQ9ugVG2KO5Q+UohEtMBtd7D
+ +6dgeR3OAjhGB3qVCckIhUgluhLL9efkK9EhdsJn8pxiXytye7LhTqnPT+BzEVQMXE56SQ
+ WQW7l0PdkEo37HQzTkjVwaP0lqOFWUc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-117-OapMrnwAPtO5gc5l1hfSCg-1; Thu, 02 Jul 2026 02:14:37 -0400
-X-MC-Unique: OapMrnwAPtO5gc5l1hfSCg-1
-X-Mimecast-MFC-AGG-ID: OapMrnwAPtO5gc5l1hfSCg_1782972876
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-493c20d0468so20008785e9.1
- for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 23:14:37 -0700 (PDT)
+ us-mta-433-26MefdCRM-Gf60w4sIi4ug-1; Thu, 02 Jul 2026 02:16:43 -0400
+X-MC-Unique: 26MefdCRM-Gf60w4sIi4ug-1
+X-Mimecast-MFC-AGG-ID: 26MefdCRM-Gf60w4sIi4ug_1782973002
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4926fa2cb17so2345625e9.1
+ for <qemu-devel@nongnu.org>; Wed, 01 Jul 2026 23:16:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782972876; x=1783577676; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=0e+A6IJ8GlqWZg43ZGGl4ELT79+D3X0r+2HPToiqUVw=;
- b=mE8l4JfX5xieU/ouf/Hxu+yBkQCOFw8eODichsiK1hmtdrKiM58pk8KTa1HEn1mL2t
- YT+3wQb1cfgBhBtOsbiXFcpacoWQo4EpbKl3poCz75yE8WWCVWwlU5ysiHP99Y+aHHdd
- 65EHfwR2bbZ/HgYnhNCy3k6FOtF3n3EEJ7INj4iyul+it0VJoG9lqpoXW31TKGHqbsyw
- GP4aO4M4/ZdyNzZRw7guJqnL+rWOZfSvr85Uwzi4bm6KffEL3EkVw+ZG/fMsz8XkiB0z
- J9DE1JfOVtOx5laOYFEny4K6AFl8y8hK3u67FJFpNL53lxvcGLyz2VI+GiT1ghjsA+a3
- tD1A==
+ d=redhat.com; s=google; t=1782973002; x=1783577802; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=DYVIXsStIyODfBWhUT8uaPJRtkEPNYzWO/XmAapofY4=;
+ b=DvlLTq51jXav+kTJ0sGVSCmpG9qGSxkwajnyGNoNk2NbCVK6zurwpX9ezj+33AUt3H
+ IsWvFtuBpwugVdEjB7VsaubiNwnHc7CgMtVfJ+M3lNXj5m2lP/uLrE+l272CsP4CeiBS
+ LFYlZxkzfAHNTpLDh2PGQlocEYXzkOYSF46lsfdALG2p+q0yGvC7GTwxSUnkU4NPh8IO
+ yrVMglnVEPLLDGeEGnbLz1+RpMqVovWufLDtrIKk4kVy2A537VuXOoa25W/RZ7EDBZQa
+ Q38oxclokfzcyfIvns5AJKFs25Kbu5LNRperN8Tn9DBnez2JNJxy0g2jptY4VbD715/n
+ +mIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782972876; x=1783577676;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=0e+A6IJ8GlqWZg43ZGGl4ELT79+D3X0r+2HPToiqUVw=;
- b=Bq0EQC95J8okkICU1WPaoXKEXoX6TicvaoU58P0uRnZvvIKS2OieV7ODNht6HjgbTn
- ArhA8OlT2Zo6HlPhsBsyzvKSyZflbqE+cEXWsoVI9TtUqfzpSS5WqW6XSaYqVCh32Pqf
- b+fczhV//VghgHFJsQhDVLHHWtxH5AqBbuqZxPEwzm50LbJiSNAufC3NSwC9IQS1e7G6
- Sbk5Z7STtRcHH56/naiACb5qwhmkeFmWjxCGufB43wjWF5/ZTYlNDla/ZzUuPSVdziYl
- hIuvRqlWlKme1KKcR71G/+2ojJz5QQ7LLwnoLMAYDbBQfG/lLMMUTpz0ICmkOy59wdoa
- aGAg==
+ d=1e100.net; s=20251104; t=1782973002; x=1783577802;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DYVIXsStIyODfBWhUT8uaPJRtkEPNYzWO/XmAapofY4=;
+ b=ZWSFj8XT7s73MdyxXvvkvcP7qeWQoWxqTP18ThEdUSC/86i7gTBbIvDqPhWaHp0vdC
+ ZgMNP8f8s33NERqq7AE7dWrcR7GeYqG5Uwxx0HAf+f7e6r/tac4tEBUk3S5wvf6NCDFW
+ samMZJxbnKCy3jRNRdFoLMBdiEQcwqF1hGpEhJURk/wfGOQlQ31PQPFls7f7xN7vzl96
+ fmSbgkFFRcpmr1Nc9cM+8pJj/tAp/aZZ99MvMFmV7VFr+OzZchhgHa3HMcRN4WvdhZY3
+ F8d9m4iOH44NqbfWHoAl/z14gQ08FODjr60YIuZyKrFbs7JMb6peVRhaOuYzIRyWH3yr
+ tnzw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/xYVfYq+cq2DSaGYTizPG+UxUtdc7loWf53PQUHvErlt3H62hgJrSMNF8p2LDbuRykX9jKkjTMjaMe@nongnu.org
-X-Gm-Message-State: AOJu0YyNLGeIJRqHdKKWLQPHzpTWLa0jqIACHYanuEllHWoCMptode1c
- EpXgZ38G85JeOiwf7p1hRdntnTCe5cKflZPbI2KlbpR2E9UMkN90PfFVSQ3ZxOsl4cD9qejmj75
- EAaZiVlGVBNKXod+NsL2H9fkg7IigINJE3kBqZj/mVZnk0XhURTQpLC6b
-X-Gm-Gg: AfdE7cmQlvCxFwrWnp1WpKzJm4bJvXdXZDYHssOyGirB9fjgGtREp2E4XnSNuNlCSVj
- QooWw3hyVgNyDCrDBBBbAj6FgpXHoBH7Lqwe4TNYvCDIV57gVjyoXJ0KYnvb5f8gsneUY52s2+K
- omicUAiqvJ2VKLSYTfSHyxpixmbUNdwWfusItTdOW1Y4ZEsd5Tm/3kXwd+7N+6diSdePal4CA1I
- mMl1AryUTBJWQW73vX9cmR+nomjAiDYM9/RLfxPmShLMGN+CndIxksOxRbZIoXNohW4fhBNlIQ3
- U62NZNz20F/e4lxkOx+Dg3MPx/NoVbfAJ59fGDvPKfkiqU4ROHqG7JnpreHgm+9ChWFZu6gotmJ
- ojsfJJuBzMPTNogwr96TyLPtcsydB9d4vp+8i/3f1+oI=
-X-Received: by 2002:a05:600c:c043:b0:493:c00d:da59 with SMTP id
- 5b1f17b1804b1-493c3cd5db0mr33987425e9.12.1782972876167; 
- Wed, 01 Jul 2026 23:14:36 -0700 (PDT)
-X-Received: by 2002:a05:600c:c043:b0:493:c00d:da59 with SMTP id
- 5b1f17b1804b1-493c3cd5db0mr33987135e9.12.1782972875748; 
- Wed, 01 Jul 2026 23:14:35 -0700 (PDT)
+ AFNElJ/OVibhy9hEPvKRumNjSA7WToi/ph/4lmm+7C9FfAj7BleZ+ns+4UtkWpXhhSaaq/7LFXuRzWf9wtuy@nongnu.org
+X-Gm-Message-State: AOJu0Yx6arPsZuu0AmylE6oonavmFi/K/FY6j6PHrvn/e8wHp19CYNpA
+ TG2Ly3vYLXdtUmXhFl5gQLzzKaFyJ86DNOwbc3E/HvV5UidovjQbQ7fZu6l7tcmskTCqQEno5qu
+ dn+7Z/PlP+CFIPvJlScyDPAHcujs1q3YaTmbQoVlICKK6YT+iQ+JeSz3d
+X-Gm-Gg: AfdE7cl1MZcIUdz0Zbqw8KPqocdoP6E6atNUkB29C2lLkNiajnfe8Oe8+15oAzgXT1X
+ ZjG/Nv762nk4zZpoCNUm5WuWGUxMd0Z+l0QBlLtrfTuhkErbmmgBrdoZV94PTMNWfzPLr0q/cu5
+ 91s92RNXQJLao+DEDpDskYK1WVb4sUJLQv6FExmYtC4YqG/5099eOlsrCrMj9+Zkj/Eb821uQsY
+ XTGosOIFQU+5kOtR8rXz06bkPOtbiREKePA0AZnlxNPHoB5p9mt4WotlRUb6Ait0bJ0D2J+XiT6
+ HcZQNx6P+d3VfELtTUuHnUEEqttbWgoCgGv4ljCl+Lfzj7FT7ogkB+XjjjPfdmvaQRV9s0zV40q
+ KXHOurTmI1iO3QmSIXio1mmQoXXrBdR3zneKh3o9swJ4=
+X-Received: by 2002:a05:600c:8106:b0:490:b4a8:e031 with SMTP id
+ 5b1f17b1804b1-493c2313932mr52723055e9.4.1782973002057; 
+ Wed, 01 Jul 2026 23:16:42 -0700 (PDT)
+X-Received: by 2002:a05:600c:8106:b0:490:b4a8:e031 with SMTP id
+ 5b1f17b1804b1-493c2313932mr52722615e9.4.1782973001631; 
+ Wed, 01 Jul 2026 23:16:41 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-40-241-22.web.vodafone.de.
  [109.40.241.22]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493bef183e7sm126789235e9.2.2026.07.01.23.14.34
+ 5b1f17b1804b1-493c63172fesm38398615e9.0.2026.07.01.23.16.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Jul 2026 23:14:35 -0700 (PDT)
-Message-ID: <d42c2c0e-0a2a-4b24-9143-c2c7bc9f7023@redhat.com>
-Date: Thu, 2 Jul 2026 08:14:33 +0200
+ Wed, 01 Jul 2026 23:16:41 -0700 (PDT)
+Message-ID: <28cf6717-c8a7-4968-a555-c107dfae2fb3@redhat.com>
+Date: Thu, 2 Jul 2026 08:16:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] hw/intc/loongarch_dintc: Fix OOB access in DINT MMIO
  write handler
-To: gaosong <gaosong@loongson.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
 Cc: maobibo@loongson.cn, berrange@redhat.com, lixianglai@loongson.cn
 References: <20260701065454.1976188-1-gaosong@loongson.cn>
- <72f8e95a-520c-44ce-b42d-7bac6ce8db05@oss.qualcomm.com>
- <b057fe4c-6ec5-6467-c88e-4c94d18a5891@loongson.cn>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -142,9 +137,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <b057fe4c-6ec5-6467-c88e-4c94d18a5891@loongson.cn>
+In-Reply-To: <20260701065454.1976188-1-gaosong@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -169,73 +164,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02/07/2026 03.50, gaosong wrote:
-> 在 2026/7/1 下午3:43, Philippe Mathieu-Daudé 写道:
->> Hi,
->>
->> On 1/7/26 08:54, Song Gao wrote:
->>> Validate guest-controlled cpu_num before using it to index the cpu[] array
->>> or pass to async_run_on_cpu(). Without this check, a malicious guest can
->>> trigger a NULL pointer dereference in async_run_on_cpu() and an
->>> out-of-bounds array access in qemu_set_irq(), causing host crash.
->>>
->>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3616
->>> Fixes: 0d148eaf5a3e ("hw/loongarch: Implement dintc set irq")
->>> Reported-by: Thomas Huth <thuth@redhat.com>
->>> Signed-off-by: Song Gao <gaosong@loongson.cn>
->>> ---
->>>   hw/intc/loongarch_dintc.c | 13 +++++++++++++
->>>   1 file changed, 13 insertions(+)
->>>
->>> diff --git a/hw/intc/loongarch_dintc.c b/hw/intc/loongarch_dintc.c
->>> index c877a8003b..e40292887c 100644
->>> --- a/hw/intc/loongarch_dintc.c
->>> +++ b/hw/intc/loongarch_dintc.c
->>> @@ -19,6 +19,7 @@
->>>   #include "target/loongarch/cpu.h"
->>>   #include "qemu/error-report.h"
->>>   #include "system/hw_accel.h"
->>> +#include "qemu/log.h"
->>>     /* msg addr field */
->>>   FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
->>> @@ -52,7 +53,19 @@ static void loongarch_dintc_mem_write(void *opaque, 
->>> hwaddr addr,
->>>       CPUState *cs;
->>>         cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
->>> +
->>> +    /* Validate cpu_num against the configured number of CPUs */
->>> +    if (cpu_num >= s->num_cpu) {
->>> +        qemu_log_mask(LOG_GUEST_ERROR,
->>> +                      "loongarch-dintc: invalid cpu number%d\n", cpu_num);
->>> +        return;
->>
->> Do you know how real hardware behave in this case?
->>
-> I haven't been able to verify the exact physical hardware behavior for 
-> writes targeting a non-existent CPU.
-> However, I don't think this situation will actually happen,
+On 01/07/2026 08.54, Song Gao wrote:
+> Validate guest-controlled cpu_num before using it to index the cpu[] array
+> or pass to async_run_on_cpu(). Without this check, a malicious guest can
+> trigger a NULL pointer dereference in async_run_on_cpu() and an
+> out-of-bounds array access in qemu_set_irq(), causing host crash.
 > 
-> but QEMU ASAN has reported a code risk, and I'm not sure if we need to 
-> address it. Could you offer some advice?
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3616
+> Fixes: 0d148eaf5a3e ("hw/loongarch: Implement dintc set irq")
+> Reported-by: Thomas Huth <thuth@redhat.com>
+I think that should rather be:
 
-I don't know, but I guess real hardware would ignore the write, too - if 
-there is no CPU with the right ID listening to the write, it's unlikely that 
-something happens.
+Reported-by: huntr bubble
 
-So I think your patch is doing the right thing:
+since I merely made you aware of the bug report at gitlab.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-
-
->>> +    }
->>>       cs = cpu_by_arch_id(cpu_num);
->>> +    if (!cs) {
->>> +        qemu_log_mask(LOG_GUEST_ERROR,
->>> +                      "loongarch-dintc: no CPU for arch_id %d\n", cpu_num);
->>> +        return;
->>> +    }
->>>       irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
->>>         async_run_on_cpu(cs, do_set_vcpu_dintc_irq,
-> 
+  Thomas
 
 
