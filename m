@@ -4,112 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BED4BC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 02:05:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6439BC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 02:08:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wf6n3-0008Sz-0O; Wed, 01 Jul 2026 22:04:33 -0400
+	id 1wf6r1-0000sK-B5; Wed, 01 Jul 2026 22:08:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wf6n1-0008SR-F4; Wed, 01 Jul 2026 22:04:31 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wf6qv-0000s1-MN; Wed, 01 Jul 2026 22:08:35 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wf6mz-0002DJ-VZ; Wed, 01 Jul 2026 22:04:31 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wf6qs-0003aR-2a; Wed, 01 Jul 2026 22:08:32 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6621KXXh2390254; Thu, 2 Jul 2026 02:04:28 GMT
+ 6621KDq42646296; Thu, 2 Jul 2026 02:08:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=j3Q+zm
- pi7T04n+qKxK0U/6rx+3fPBubV8x+ihF9wd80=; b=nWykHHQPkGHjHVMvllv3jW
- k9L7ucyzPTKjWxOMKW86ByPvij7pxxhWscshwcME/gAUQpDL8fEDON6RgE9XHVNL
- s0vn48A+//xHHYvk9Gre/u2VmW/X+zS0SzsYc/4L05TE2XJMlmkmMPCyoO1e684J
- HDakQr7ifC3l1/QLVsW8YkqPyUAaPQulJ0Oe+GZHYMGEAa2Q7YJGDHQtcs8uHEBe
- gwqmDmrldn1pF9kztwmWKo0okSnjsAOPvMiuuBAJ5mN6wY4bAZVrPfKbgsXEaEpt
- 2dSrN2fT17TJMGFWO63dmB+VA1OSBjiLnE0m2zqmNLTA0bgOGCEQEaF4TvgGj3Eg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=zFfo5W
+ NnS/Wb8k4LcM8YKVQ8t35i2ITu6YsDFvQnOI4=; b=Ov5drtb5jUDWdBk52fjddP
+ 0WtuU7slxAOzjUaQhKpX/JOBSe4OnRQ8KtVlNQfXseCyB4NE8zuAEMkedcq3okMs
+ wAq9R7BN8pEcGarPtM19PxTz76V0on9gkNl8Xeyl4Mk5sjrm2IkE+NnmPYo4DRsD
+ Pu//JUZOSJ7t4E5e0xBcA+2Gymb2FrXASfX8GBulbOuTqbMDFI5nFmhlL8LF9j1L
+ IBH4P90gF2y7EQDkNaWFTd0sIJqwAcRmQW/D/T3CdmBg81MB1HMuRLKyZCjRtyb4
+ uFYFgBrhop/M2dlBtrFtWpC3Z8P0QTDaHQah7g0NDSNJlp+5enWiK8zTKS7zGHmA
  ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qa785q-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qg7krr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 02:04:28 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6621ngdN006225;
- Thu, 2 Jul 2026 02:04:27 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruqj71r-1
+ Thu, 02 Jul 2026 02:08:27 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66224jKS000403;
+ Thu, 2 Jul 2026 02:08:26 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhyhs33-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 02:04:27 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66224QZV30409284
+ Thu, 02 Jul 2026 02:08:26 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66228PH0983864
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 2 Jul 2026 02:04:26 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1D20A5805E;
- Thu,  2 Jul 2026 02:04:26 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 79F1358058;
- Thu,  2 Jul 2026 02:04:24 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.136.69]) by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  2 Jul 2026 02:04:24 +0000 (GMT)
-Message-ID: <c80d3ccc133b3a869dc3e3a8cb5ca9254eac62c0.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 5/6] pc-bios/s390-ccw: write IPLB location for
- non-net virtio devices
-From: Eric Farman <farman@linux.ibm.com>
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- cohuck@redhat.com, mjrosato@linux.ibm.com
-Cc: zycai@linux.ibm.com, jdaley@linux.ibm.com, jjherne@linux.ibm.com,
- nrb@linux.ibm.com
-Date: Wed, 01 Jul 2026 22:04:23 -0400
-In-Reply-To: <20260630141917.673995-6-jrossi@linux.ibm.com>
-References: <20260630141917.673995-1-jrossi@linux.ibm.com>
- <20260630141917.673995-6-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+ Thu, 2 Jul 2026 02:08:25 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 18FA058053;
+ Thu,  2 Jul 2026 02:08:25 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1C75658059;
+ Thu,  2 Jul 2026 02:08:24 +0000 (GMT)
+Received: from [9.61.65.1] (unknown [9.61.65.1])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  2 Jul 2026 02:08:23 +0000 (GMT)
+Message-ID: <600890ad-c962-464e-8414-159110ceb8f5@linux.ibm.com>
+Date: Wed, 1 Jul 2026 22:08:23 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/6] s390x: Enable boot menu for virtio pci device
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ cohuck@redhat.com
+Cc: zycai@linux.ibm.com, jdaley@linux.ibm.com, jjherne@linux.ibm.com,
+ farman@linux.ibm.com, nrb@linux.ibm.com
+References: <20260630141917.673995-1-jrossi@linux.ibm.com>
+ <20260630141917.673995-7-jrossi@linux.ibm.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20260630141917.673995-7-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfX4x5tcGTKwley
- MqwLLZG5KFGKtbSoDHn2gFobN41t8focik3UFVCoCzET/iswmlQaZ3E65uRx6mEDZwYzan37b0v
- 7fgFwMsH5buur3XkPYsFsEmOfq7Xiw3K4CObDLMggqANqoSIvHi5BLN6obYN7wDa7D0IEVjra+V
- m1LcZOKqw4FWYNLsmAxaZ8G5e6WeiZOChq0qhSWkB2zHKndw0yNAx4oak++1Iu9kC2S+0L36AMb
- RJhinLHWw7RQkjVXzVraGhj/OVjDgpD7L+UgXnFg73WKt8crSwImdj6eoDb0bdMlBrQiVYaxCTK
- SSIz3jWXcoqQMoVo99byjRepSC8zDLj5b9srWTmK+3nstVTMVf2diXOIQTwSz2zLOa5tAHwTycq
- YRKFJ3r/Otd8Ny7jbTcjf3BpN3gKkjxB8eh6az5FZVO7Gtm/XejpUil5rW1JjaMCmkmQBSI4l4o
- AY90JC9l7l7+EMbuRgw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfX+xskwkVr3AUz
- HGutsJpGDoJ1IUwaMCExFFdnd3Mk46b2Cjd+iy40M8/F4jvsBxgYTFNHHTKkiDjISpbWQ59j64n
- bW9q3R9LR5cSkDzlGFgl8dSzmTJpNMY=
-X-Proofpoint-GUID: M0d3By88-N1h1GCBlmrDy3hXp8eMPDaY
-X-Proofpoint-ORIG-GUID: M0d3By88-N1h1GCBlmrDy3hXp8eMPDaY
-X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a45c72c cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Authority-Analysis: v=2.4 cv=RYqgzVtv c=1 sm=1 tr=0 ts=6a45c81b cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=flT6WI0wyULpFbpzkcoA:9 a=QEXdDO2ut3YA:10 a=zgiPjhLxNE0A:10
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=sE9LAG50w_MMDgMmH7gA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfXzZabu52Zz2BK
+ 5+jHRDYLyXeEFErLxD2gxyp6sWnRdepEBP2DJUj7LfwNTn0nNqWFAyta2RPWq2mneD5vtudM9Ii
+ 7ROYeWPDHDGzMOH6Hfx+f6QAPSLF6BA=
+X-Proofpoint-GUID: 09BaeW3u21Vrhq9buBkwC1UWgY6cJn9t
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfX0g2i3/TDeaN0
+ xc2Wnx0g3C0u4jr8erbktDMCQmrvmINsIoRIgJSXAVkVUuJYmur3PX7upY5quA7xU0sgBwiI7+B
+ 2khXMlCF0lV9lBIgfjEiaQZJHvNStI2ioY+yze25CATJn6cCO0QcR1+RdYhOkN2oSR9rgnk/vK9
+ 51leEhrhv20pKfsIfMyB0bI0stOF8BhSpa2m9ZpPyFyzPGKrpHPQNMS1Mjm1VXkOizD7v7Pux2j
+ mtFOeIgDS8XDHm1g93SULPvBk1aoNNWydObb1qTZ5/dLfKksHubYxY0v2hBQJ2S2Y/ftcefGxU1
+ 5nPiGSIQaKB1R7vd8AByFI3Eyz6jbjrnHfMRwCG8Tc42F37zCZgWOj3opvBu3OUxGjyd95JWxSJ
+ 0cGUMbA0zbcE1tMY4GZSsGd2gjgRCudcimFFZ+ianwqqK5EJQUR80bFbUmqjWH4Im46Y7ZulfsI
+ /tYha5tf14hk5JiKI9A==
+X-Proofpoint-ORIG-GUID: 09BaeW3u21Vrhq9buBkwC1UWgY6cJn9t
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607020016
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ phishscore=0 impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020016
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,19 +125,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2026-06-30 at 10:19 -0400, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
->=20
-> When IPL type is PCI, cutype is unknown, so the IPLB location does not
-> get written to lowcore.  Instead of checking cutype, check if the device
-> is virtio generically, which covers both CCW and PCI variants.  Net devic=
-es
-> are excluded.
->=20
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->  pc-bios/s390-ccw/main.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+On 6/30/26 10:19 AM, jrossi@linux.ibm.com wrote:
+> From: Zhuoying Cai <zycai@linux.ibm.com>
+> 
+> Add S390_IPL_TYPE_PCI to the boot menu handling logic to enable
+> interactive boot menu support for virtio PCI devices on s390x.
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Thanks, that message was bugging me!
+
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+
+
 
