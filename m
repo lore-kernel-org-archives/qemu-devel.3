@@ -4,105 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA9DDC44500
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 14:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5450C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 14:48:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfIg2-0001Ba-T4; Thu, 02 Jul 2026 10:46:06 -0400
+	id 1wfIiY-0001to-Kb; Thu, 02 Jul 2026 10:48:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfIg1-0001B2-26
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 10:46:05 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wfIiK-0001s9-TU
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 10:48:30 -0400
+Received: from mail-pz2-x01.google.com ([2607:f8b0:4864:3b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfIfz-0008U7-PA
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 10:46:04 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-664cdeab266so2650375d50.3
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 07:46:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783003562; cv=none;
- d=google.com; s=arc-20260327;
- b=Z7TzVo5oReWeSdXTOYbJ6iywNt4MBA3fs2bl8kLoCLohBWyExBsdCLu6v81fevS/0w
- 5/pFMrxuFGQb2XrtitmDy45vK7gZ3uhbD2cWr2ORlvCxhfzFFGF7r0OZGgEjPY7mR05W
- BFGs1iuHyyztMsPWXI8o8O6wTJlHjgT68QBT9tYvcXZapL7/uHmOvheRSkDxjXF4zFLS
- 5w8jxKcqvVSc82tWPOJ3kOJUmVsO17xLnwys7O+tY82DHMaA4q2uQyMfL0iP1rkd8qOu
- KJ5PKPLNnsS6W3vyjm6CIdeqOLGpizDF8L2kVX2aAEs6klDL9K1Tq5IhfOMNvZPAMI1a
- np7w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=V/XuN+kAuWIj2q7usufUAWom2uprrhjVLsVtB5cdVaw=;
- fh=Q3krpAQIA0wAxp6tS0EmfBAbNCwv1IVxVd0z2YXKEao=;
- b=I0YPUdH1MWUkDBzO19TaVZjVwSkya6COIT3y8MLtkcNn/9ZLF1nRWMd5plGQHQONr3
- ctAB5f0ti+kDXFi79kaNm5CtcvF9q0TpOImMWrgh0fTYss8zrlrkCE1GWinyxQh8xE0/
- FfbOHEbsVq79sULv2jQMRym4z/tx0JbfL50rU4PPQYPMsn7w7JRUMhHopFToqT394Fif
- ewzs9O3+J9wnYU9nwt5wyPUwR6hVNE/5cwPedFbhZtu5itXMX5zANGeXa7vujzQnSJA9
- ilnQiZXXZ1jJ9P1gXCCjBUAqINmvx36SZnvj3KqJeQj2TGQCbNMRq1tTRKXu8JnxpZBe
- 7qdQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wfIiJ-0000jp-9s
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 10:48:28 -0400
+Received: by mail-pz2-x01.google.com with SMTP id
+ 41be03b00d2f7-c8c1ebd68a1so682583a12.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 07:48:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783003562; x=1783608362; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=V/XuN+kAuWIj2q7usufUAWom2uprrhjVLsVtB5cdVaw=;
- b=kD8CuzUDUBdRPh4k1ldJ4UvxQNnZGXEB5f1kKyOCj4XSQuUXIr8aHbl/5FNR5IoYFp
- vH5XEQHi/xTBaPr8ztdjU9DRZCLONZpyTxlsYeTunFH2w3GaZ0WeK+j23Cxd7kXws0jg
- 5WSah/iwprUdU5c7mmm6vxElzbqpMHSxwoDAb7QtdYnh+x4adLbzdwx5z3M+Pu2bLsXG
- ZU5Tv4glhmSUreDOn7mI6Na+ioTblYOZe5y12baqh7lGESmBUN5M2oHCUTWCoSFp3j6H
- nRH9qUbh4URl7qb8wIl1WH2xrS4nDt5CJzvwfX76h2bY7AzEbsOjHDzFnbejtE/S5nIL
- 6Ksg==
+ d=gmail.com; s=20251104; t=1783003706; x=1783608506; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=SCeMv0MMAa9iI6Ds6fpjAC1GlUKqmp+8wT1cCzkDQOM=;
+ b=bT7/RvovRYI6TTdBtCDOMSPTh8FidaFoO4EppDxc79U3GgifAIXYJ4Zl+gOx86WQ6i
+ YWhclzWOL876oe8XGq81hkOfXYalkgm116CVfi4qd1Fdmtrc8VYuyap1zu775rGdg2+w
+ d37RjzR4ZeUMwvo//STx+20coC/yJmPdKVRddgUs2UejYRNvtzKJGiIyxkKj2vGeFzWc
+ 0ky9I4E/M0mJH+wFsPFtLv6twWPxL8f6hapiBr7gmRIuW5YlOZcH3E6m2TugmWekNiXa
+ O/baFKCvTAvZ4H5H0AfNx1zJuK5IgILSHi8dS0RrOBfVbFNGA2pqel0bgeS/avYRWcHf
+ baAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783003562; x=1783608362;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=V/XuN+kAuWIj2q7usufUAWom2uprrhjVLsVtB5cdVaw=;
- b=T/3Rtpfo3yQg4eti/wTM3Qphxw6PSciUk8hztCEl14w2yKlGZFTQgs4L2ZTvqnNzhk
- bjf2CwiN6aApNi4Mw1/PtAi5x8Svis9yHTxQ1VT4dgmgE9jqZboD7Zk5UnTh5fvVMeNf
- Hk74ZCEfzcsSKD4LpOZMhUfdaxNcbxqA/ElvnHbdYgwC9GaP1BNRPbWObtiNA7dhBtdP
- T92V0wmay0Ij0qY/6gXgZWOTU/ibB8P9tf8xoIkezJP0YA8MMvHVyRqo1oFGYesmIpxA
- rd83xmluAPOUJgf0bX3fHrN7vqOPDH2JqK+CfYZTembDOPvdt7JWsXb1njx+TYwvpaWd
- 3bww==
-X-Gm-Message-State: AOJu0YwjrfSCm9ATX9lHH0/yYqHnX7XN8ks1oTCm55fBkNaB/LVBHY+C
- QoZ2SAx3+U/1yl3+ahetDXcTY0FuGoOGiEA91db3LKQJGwbkfTZEztBwlYIXaILhzRsWtDElPqN
- sbb1PgkKtEMqEnA7bb+itUoj14AXsuVjGRQ/WvHsyJQ==
-X-Gm-Gg: AfdE7cmOO0Gti1GyB8js7m5/kvRAg720vxc+ap1wP7yUSjDNx/T1a3K62NNhPTWode2
- LPpU1dCKN+u4+f7MGs5pWAgv6gHzFfDefsfNjixb/fEGEd7hU2hr0s8lZBYDXBJlnp0rLMr0a1v
- wVQMcH5X4n8zCiy+oPXbbQWCJzXhA77H9eTL4IV4vY+v+SptvYNNy1heHCcFjcx1thg2fNB66BB
- zovlLqNNasmiXqrhKMs+pJK6wnEBKax3VxGYyzo09n4HN2Thc2MoVwAx4esT/M4PbvMFvL0RF1q
- 3DF5Y+yvmKMkQ7fVjkLPsunLKQo4KQt3sYLcPJv26+52tQnMQC2ht5nv
-X-Received: by 2002:a05:690e:12c4:b0:665:2100:990 with SMTP id
- 956f58d0204a3-66521a1eed0mr7183330d50.28.1783003561829; Thu, 02 Jul 2026
- 07:46:01 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783003706; x=1783608506;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SCeMv0MMAa9iI6Ds6fpjAC1GlUKqmp+8wT1cCzkDQOM=;
+ b=JH88e8ds+ISODYFYpPnrU7TrGS7q6tC/hVusqmGtO475oXt0gbT6t8Za7Vvzq217iB
+ ervZbR+oe0GHX6lpcAyFCKPQxRut8KuaXFWxIU9YjvxfoH3EgFu532WeKqeTEZ3jKmuj
+ aUEL01IhcgHCR/yGA08kXWPEONKQ+6PfLQcxr8pUrnQ4zx575F3xhIgHTb831cboDp0P
+ X6uIvm8yEDjPkiyCUTsopSN7rzsyydekmF8DZR5+1kP5vX+mXdIFGfzHS88/Q3gQpk9T
+ xKml5wRFcq7HagawhuKEMsDQr9eqaCaijY0XcC/XWBV+mlhN0kbxIvWxFBXYchPLpgvX
+ C8iQ==
+X-Gm-Message-State: AOJu0YyBTnDPuRvFo3cY7+HuB9H+JePvckMs35R4Fkm2lJxbha+cFxP6
+ fdKuzHA55lCmrkNzi2i8BdGGxL2ycKMNtAMrmOqGjQ5ucSE/hSJjSTzr
+X-Gm-Gg: AfdE7cnVuCkQTqu66da7hcb1UPHJoyV53L2B94kIhuSZvIa/VAkKOvVyODt0P1ndDoF
+ 6Ncs+t7JMFbPdZ+RyeOLeJ+xGyPdSFxluJ33P376eYPSd9XwzUW5aqPbHOF2i7ztltDWa4sPAVg
+ arateCOXdCPGP5DWIq+xgO2lhOuEPSkmH+v3t6kBXkKkMgkaq3pC5CYRzViiFW+nwGSXAiHtwCR
+ 2RO+oc0PMhozabfXcl45bqa+3zr0wYJZ1ZFZSJCjRdx9aZkJafrv5i/LH+oqtjAMryvyrrxkkTt
+ ous0YvTLag6AI/rOybbn/ATM3/uytQocnJfX9bB+dCawZQRL6dUAUgh7cWQXvq93F5ZINtkZYyJ
+ 3bu1CAOz7mNLWMNcacYPFCwEhgRBJB6omzuZHQ2GMTIM9mggHFU+o5Miod3a0WVGhjEEsHKJpJT
+ jhbuwZkfBuG+TiQjFD2wt83jjlVVJ3PNdFF2JPmr9uLp1+7rsh
+X-Received: by 2002:a05:6a21:4ccb:b0:3bf:6c08:4ebb with SMTP id
+ adf61e73a8af0-3bfed592afamr7465642637.48.1783003705940; 
+ Thu, 02 Jul 2026 07:48:25 -0700 (PDT)
+Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-30f0bbd223esm10673017eec.21.2026.07.02.07.48.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Jul 2026 07:48:25 -0700 (PDT)
+Date: Thu, 2 Jul 2026 22:48:22 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ andrew.jones@oss.qualcomm.com, 
+ leif.lindholm@oss.qualcomm.com, uwu@icenowy.me,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: Re: [PATCH v8 6/7] tests/functional/riscv64: add riscv-server-ref
+ TPM selftest
+Message-ID: <akZ6LnH2X4NZ-cz8@ChaodeMacBook-Pro.local>
+References: <20260610214133.1882563-1-daniel.barboza@oss.qualcomm.com>
+ <20260610214133.1882563-7-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
-References: <20260529-feat-mte4-v7-0-ccbd3c14eb3c@gmail.com>
- <CAFEAcA8R1RXrGo2xov-4gKLQXX=FTVKoK1rGuxuYmBo9e8SN_g@mail.gmail.com>
- <CA+1f7BD2pVP2ByBRbwbHBRWNNuZHKdM_7xSVSmPztEWw1BbVbw@mail.gmail.com>
-In-Reply-To: <CA+1f7BD2pVP2ByBRbwbHBRWNNuZHKdM_7xSVSmPztEWw1BbVbw@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 2 Jul 2026 15:45:49 +0100
-X-Gm-Features: AVVi8Ceh5Mi6Q21hlZwgPuzVtjkrapNMI0dwIIC9hQk1MNU62sEJ_UrwgxYaUk8
-Message-ID: <CAFEAcA_jkzy4evQOefKz3B+=wzcVULWr+swVP4=zKkcbcE44pA@mail.gmail.com>
-Subject: Re: [PATCH v7 00/15] target/arm: add support for MTE4
-To: Gabriel Brookman <brookmangabriel@gmail.com>
-Cc: qemu-devel@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260610214133.1882563-7-daniel.barboza@oss.qualcomm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::1;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pz2-x01.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,24 +105,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 1 Jul 2026 at 06:38, Gabriel Brookman <brookmangabriel@gmail.com> wrote:
->
-> Sorry, repeating as I forgot to include the mailing list:
->
-> Hello,
->
-> According to ARM developer, FEAT_MTE4 only implies the existence of
-> its 4 subfeatures, plus FEAT_MTE2, and MTE_PERM, all of which are now
-> implemented. There are no features that MTE4 guarantees that aren't
-> either already present or introduced by my series. This means that we
-> can now claim to implement FEAT_MTE4, and close the issue.
->
-> We can also add it to emulation.rst. My apologies -- I can't do that
-> right now because of my current role, but it should be a trivial
-> one-liner for whoever picks it up.
+On Wed, Jun 10, 2026 at 06:41:32PM +0800, Daniel Henrique Barboza wrote:
+> Add a TPM specific selftest for the riscv-server-ref board.  The test
+> will be skipped if there's no 'swtpm' in the host.
+> 
+> The test has been basically cloned from our Aspeed ast2600 friends.
+> Shoutout to monsieur Cédric Le Goater for the code.
+> 
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
-Great, thanks. I'll send out a patch which updates the docs,
-and close the issue.
-
--- PMM
+> ---
+>  tests/functional/riscv64/test_server_ref.py | 31 ++++++++++++++++++++-
+>  1 file changed, 30 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tests/functional/riscv64/test_server_ref.py b/tests/functional/riscv64/test_server_ref.py
+> index 2ecfcf60ad..9b120628dc 100755
+> --- a/tests/functional/riscv64/test_server_ref.py
+> +++ b/tests/functional/riscv64/test_server_ref.py
+> @@ -8,8 +8,13 @@
+>  riscv-server-ref board test
+>  """
+>  
+> +import os
+> +import tempfile
+> +import subprocess
+> +
+>  from qemu_test import QemuSystemTest, Asset
+>  from qemu_test import wait_for_console_pattern
+> +from qemu_test import skipIfMissingCommands
+>  
+>  class RiscvServerRefTest(QemuSystemTest):
+>      """
+> @@ -26,7 +31,7 @@ class RiscvServerRefTest(QemuSystemTest):
+>           'master/riscv/images/virt64/buildroot/rootfs.ext2'),
+>          'f00bb88749f945d80675540a1338bd1ccb226574685a5b6c65ab44027d0411a8')
+>  
+> -    def test_boot_linux_test(self):
+> +    def _test_boot_linux_test(self, tpmstate_dir=None):
+>          self.set_machine('riscv-server-ref')
+>          kernel_path = self.ASSET_KERNEL.fetch()
+>          rootfs_path = self.ASSET_ROOTFS.fetch()
+> @@ -38,6 +43,22 @@ def test_boot_linux_test(self):
+>          self.vm.add_args('-device', 'ahci,id=ahci')
+>          self.vm.add_args('-device', 'ide-hd,drive=hd0,bus=ahci.0')
+>  
+> +        if tpmstate_dir is not None:
+> +            # Note: code taken verbatim from
+> +            # tests/functional/arm/test_aspeed_ast2600_buildroot_tpm.py
+> +
+> +            # We must put the TPM state dir in /tmp/, not the build dir,
+> +            # because some distros use AppArmor to lock down swtpm and
+> +            # restrict the set of locations it can access files in.
+> +            socket = os.path.join(tpmstate_dir, 'swtpm-socket')
+> +            subprocess.run(['swtpm', 'socket', '-d', '--tpm2',
+> +                            '--tpmstate', f'dir={tpmstate_dir}',
+> +                            '--ctrl', f'type=unixio,path={socket}'],
+> +                           check=True)
+> +            self.vm.add_args('-chardev', f'socket,id=chrtpm,path={socket}')
+> +            self.vm.add_args('-tpmdev', 'emulator,id=tpm0,chardev=chrtpm')
+> +            self.vm.add_args('-device', 'tpm-tis-device,tpmdev=tpm0')
+> +
+>          self.vm.set_console()
+>          self.vm.launch()
+>  
+> @@ -55,5 +76,13 @@ def test_boot_linux_test(self):
+>          # Wait for boot to complete - system reaches login prompt
+>          wait_for_console_pattern(self, 'Run /sbin/init as init process')
+>  
+> +    def test_boot_linux_test(self):
+> +        self._test_boot_linux_test()
+> +
+> +    @skipIfMissingCommands('swtpm')
+> +    def test_boot_linux_test_tpm(self):
+> +        with tempfile.TemporaryDirectory(prefix="qemu_") as tpmstate_dir:
+> +            self._test_boot_linux_test(tpmstate_dir)
+> +
+>  if __name__ == '__main__':
+>      QemuSystemTest.main()
+> -- 
+> 2.43.0
+> 
 
