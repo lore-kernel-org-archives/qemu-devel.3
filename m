@@ -4,68 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B43C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 13:12:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16058C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 13:12:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfHCz-0007d3-Qv; Thu, 02 Jul 2026 09:12:01 -0400
+	id 1wfHCl-0007Yl-4T; Thu, 02 Jul 2026 09:11:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wfHCx-0007cp-Sq
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:11:59 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wfHCv-0006Nw-8w
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:11:59 -0400
-Received: from example.com (unknown [167.220.208.73])
- by linux.microsoft.com (Postfix) with ESMTPSA id 95F9220B7167;
- Thu,  2 Jul 2026 06:11:50 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 95F9220B7167
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1782997913;
- bh=KjWxs47FrqE58lRtkZlQudRjJ8DeMoQhjDC1mCt8QmE=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=XQpa7uBkUFxCWuuq5e/QgHSyhHNv2e4U8bCh1dfhYWQyPFtEbcLV3Oc/Km0AOxGwq
- KdvgGeAf66YEscsKkUpzhqmkKWOeziMcMyxzpEl0FtFdQ0UPOp7aTEkIFWWLcUjWyO
- 6XNIEtsX0fVX2aOnGWeZvRhQNlYdprs08VOKRJ3w=
-Date: Thu, 2 Jul 2026 15:11:49 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
- kvm <kvm@vger.kernel.org>, Magnus Kulke <magnuskulke@microsoft.com>,
- Wei Liu <liuwe@microsoft.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Wei Liu <wei.liu@kernel.org>, Alex Williamson <alex@shazbot.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Subject: Re: [PATCH 16/34] target/i386/mshv: migrate LAPIC state
-Message-ID: <akZjldXYFQ7Fchoo@example.com>
-References: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
- <20260417105618.3621-17-magnuskulke@linux.microsoft.com>
- <CABgObfbgqcSYekjGkuDCUibQc8j4iyGPbajU_-VdPsGkLZgiLQ@mail.gmail.com>
- <akUyiNahX3LnFPhn@example.com>
- <CABgObfbQTUOaiMYApABTettYa0D3WasGs1NjQrWvo4tmAZpazg@mail.gmail.com>
- <akY0Gpd/GHj3Pdun@example.com>
- <CABgObfZhNwXLG9ip=CnEiVb=p24etvxeodbjG5=Di4hOKvYF8Q@mail.gmail.com>
- <6CBE1CEC-F8F9-488F-95E4-5237F0F7A232@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wfHCj-0007YH-62
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:11:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wfHCh-0006MF-Rv
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:11:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782997902;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0dC1/xjKaSYyWxJrIi95BC+AjqyHw72eAfR+jRKz2Ik=;
+ b=E9oQK1VLa8jfvDEwljKYBnkPkYpKruw+BkIJEIZaSEpFK3Xpde9bmMx+R+/VtEnTejKSwi
+ U3wtLexYiCmFyGEIcM+VMGtUejPxin90u+Ip/597Qcmo+abvQ5dXCINDR2Hv3JkJMHC9v+
+ H2pSa1UlyYiQtP9MLXzLiWsVWSAGHjA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-290-285TyGt_PjG7u91LuhnOyQ-1; Thu, 02 Jul 2026 09:11:40 -0400
+X-MC-Unique: 285TyGt_PjG7u91LuhnOyQ-1
+X-Mimecast-MFC-AGG-ID: 285TyGt_PjG7u91LuhnOyQ_1782997899
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-471c76f357aso1631065f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 06:11:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782997899; x=1783602699; darn=nongnu.org;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=0dC1/xjKaSYyWxJrIi95BC+AjqyHw72eAfR+jRKz2Ik=;
+ b=Qvor8XhFazVVlJace+Zpn3DhW8q7TrXjLMZCmr44Xd+t3gbhJ40yhM0PjkI3tz00/X
+ P9mXA65j+FIxbsCTLIjljqQfShxAFw27JrpViw/NrQzajg4d/ON06g6xsD1vRughqGhA
+ isWAtdRusV3rejOxg/hCi/HR3ZLLN5xTgE9EbEUTuM3eacCAUEM7Fat8TthuYwZf+IMU
+ jDmYjbqiVXXxOWmaFXTKqyoUteuAMKst8CGzZI747Se+msiL3jgKia9ufa2Gw1KTr4YI
+ s0p/iMo/rpxxhn0vSRKCKnbWC2kDCL1Ecw2wTQki6DyZWH5LnD++KdblWPkphnRFpNtK
+ 6HLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782997899; x=1783602699;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0dC1/xjKaSYyWxJrIi95BC+AjqyHw72eAfR+jRKz2Ik=;
+ b=HuiEvMo40mb8aU9Mx2xBy03l2SGrmCPnMg3L1FHsPCxF0xusy481MLJ3R44v7ZRPVA
+ dWyt9uV8wm8OLVYwbngqZdxjZbJjqOoh7WgwVmc65BNn8DAlDA7zOr1w27ifDZXTYI4c
+ YRb9DuBAob3endnsVf/t+5dP50G3N7/FZN4a5HMOAW3PfW4rwdiDt0XljghgkMYGNLfC
+ yx3Kea1cH13nHgYZLUbUEieM2/JgWJObm9jTlN55iwHq5WF/oxVpB5X66zs4Uaq7Tt7s
+ iuL1DaADsa/TedUv0PjCake1jBOf8c5h0MgIMuPHdcC6IPdW7ti0cjBzBSsZ0IcOSXUU
+ MfGg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rrd5wgdvE+EfPuMJ/HVnR2iXGMmH57qpMiUIcMCGpXyQlEVlNkK1cSRd1tS00xKOMi0u1jS9q9AeyyS@nongnu.org
+X-Gm-Message-State: AOJu0YxfTFKw0XXK2BsF5Z7kH2Cz13IpYTPyocR0ned9SK+KdZGqEnvP
+ /Bz5sbz1GpzIukuGgQo3lm2v+2K/scywh4KUAJs+OlbIEQxkFtnUDJkOuMtHCDekhGnNr9AFqLk
+ 1PA1Gal9Tt9BGub0Qa/UnRClRxOsITQjl581ZwqoXEup/syIlrIbr3shV
+X-Gm-Gg: AfdE7clAjySRvJpn+ViIPzp/KXydmpv8GWHsG8LENOeye3KHS0V37wIUEvZer5x4I2s
+ WMOm16d/709WTaMR09pL2bLssLlsbS9iTi9yVwvQyruqzBzC+tbq9GaC7y5q7dVpGFOHREuG4u9
+ VM2Qu+Ha5v1DSV778kV4vdHQLwJMGhs4eLh7N+l3zNVb4t9dNbCk2GY0hjnyGy56OZdfvyyndBz
+ C6ymzzyLToqQX61iP0OnMZPLjlW5cK01Da5GiuJ2N0KIBhk8r69ZLOyFg7cr3uODZoxvv8mDP0X
+ GAfkyi1E7TVmpkYIJw2R2MN23FXzixI22OzzG+8RoVlv1R1GOhnh+DRiHHOMd898k233Xu2kL2j
+ PXzFdISc1cseF6zcSPOjLn1uDPh3QUdmbu4vHwW1RnnsOHHJidFIytU7fiMqL
+X-Received: by 2002:a05:6000:27ce:b0:472:90af:e406 with SMTP id
+ ffacd0b85a97d-4775a1f55c9mr7561540f8f.37.1782997898919; 
+ Thu, 02 Jul 2026 06:11:38 -0700 (PDT)
+X-Received: by 2002:a05:6000:27ce:b0:472:90af:e406 with SMTP id
+ ffacd0b85a97d-4775a1f55c9mr7561503f8f.37.1782997898524; 
+ Thu, 02 Jul 2026 06:11:38 -0700 (PDT)
+Received: from rh (p200300f6af2a6100f239e076bbd76784.dip0.t-ipconnect.de.
+ [2003:f6:af2a:6100:f239:e076:bbd7:6784])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-477db3dba0esm8538417f8f.7.2026.07.02.06.11.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Jul 2026 06:11:37 -0700 (PDT)
+Date: Thu, 2 Jul 2026 15:11:36 +0200 (CEST)
+From: Sebastian Ott <sebott@redhat.com>
+To: Eric Auger <eauger@redhat.com>
+cc: Peter Maydell <peter.maydell@linaro.org>, 
+ Jonathan Cameron <jonathan.cameron@huawei.com>, 
+ Alireza Sanaee <alireza.sanaee@huawei.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Cornelia Huck <cohuck@redhat.com>, qemu-arm@nongnu.org, 
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 2/3] arm: handle CCSIDR_EL1 as a demuxed register
+In-Reply-To: <aa1f8006-4665-4fcd-b8ee-5b90cd53e953@redhat.com>
+Message-ID: <d4e67daa-64b0-946f-21cd-b7e0c6a942ca@redhat.com>
+References: <20260622135627.40573-1-sebott@redhat.com>
+ <20260622135627.40573-3-sebott@redhat.com>
+ <aa1f8006-4665-4fcd-b8ee-5b90cd53e953@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6CBE1CEC-F8F9-488F-95E4-5237F0F7A232@unpredictable.fr>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,54 +123,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 02, 2026 at 02:38:24PM +0200, Mohamed Mediouni wrote:
-> > On 2. Jul 2026, at 13:47, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> > What is the issue? The interrupt won't be triggered either if you use a separate field, or if you use the normal one.
-> 
-> Hi,
-> 
-> For injecting LINT0, it’s possible on modern WHPX when using the hw irqchip
->  - starting from Server 2022/Windows 11 only - not before that point.
-> 
-> How it’s done is though cancelling the vCPU execution, wait until the vm exits
-> as a result, set an interrupt window, run the vCPU again and then when it exits
-> Manually injecting an event…
-> 
-> That’s unlike non-legacy interrupts where the request interrupts path actually
-> works on Hyper-V.
-> 
-> > 
-> > For LINT1, can you not inject an NMI either?
-> 
-> The request interrupt path works at least to some extent on LINT1/NMIs unlike LINT0
-> but didn’t dig deeper to see if it has more issues…
-> 
-> I’m convinced that an Hyper-V specific structure is the wrong idea for this though...
+Hey Eric,
 
-Thanks for chiming in Mohamed. Indeed, I think the culprit is that
-injecting legacy interrupts is currently not working as expected on
-MSHV either, so this behaviour is probably related to Microsoft
-Hypervisor itself.
+On Mon, 29 Jun 2026, Eric Auger wrote:
+> On 6/22/26 3:56 PM, Sebastian Ott wrote:
+>> From: Cornelia Huck <cohuck@redhat.com>
+>>
+>> Move handling of CCSIDR_EL1 over to the new *_IDREG_DEMUX
+>> infrastructure.
+>>
+>> Tested-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+>> Signed-off-by: Sebastian Ott <sebott@redhat.com>
+>> ---
+>>  hw/arm/virt.c                 | 23 ++++++------
+>>  hw/intc/armv7m_nvic.c         |  2 +-
+>>  target/arm/cpu-max.c          |  6 ++--
+>>  target/arm/cpu-sysregs.h.inc  |  1 +
+>>  target/arm/cpu.h              |  6 ----
+>>  target/arm/cpu64.c            |  6 ++--
+>>  target/arm/helper.c           |  2 +-
+>>  target/arm/tcg/cpu32-system.c | 26 +++++++-------
+>>  target/arm/tcg/cpu64.c        | 68 +++++++++++++++++------------------
+>>  9 files changed, 68 insertions(+), 72 deletions(-)
+>>
+>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>> index d8d27f2ef6..ab2b566e69 100644
+>> --- a/hw/arm/virt.c
+>> +++ b/hw/arm/virt.c
+>> @@ -307,21 +307,22 @@ void set_cpu_cache(CPUCoreCaches *cpu_cache, enum CacheType cache_type,
+>>
+> I think you would gain in readibility to use a local variable
+> ccsdir = GET_IDREG_DEMUX(&armcpu->isar, CCSIDR_EL1, bank_index);
 
-When you refer to "cancelling the vCPU exection", I suspect you mean
-manipulating the intercept/explicit suspend registers? I understand that
-the mshv driver maintainers would prefer not to expose that particular
-knob, since the kernel driver maintains some internal suspend state. Thus
-the hvcall is blocked from dom0 userspace currently. I'll have to further
-clarify that with the mshv team, though.
+Indeed, thanks!
+Sebastian
 
-Mirroring the LINT0/1 fields in a dedicated MsvhApic structure was
-motivated by the legacy interrupt injection path not working and thus
-breaking the destination on a migration. Assuming we don't have the option
-to make it work without a kernel change (in the short term), what
-would be your suggestion?
-
-I can image we can short-circuit this chain for mshv, is that
-preferable?
-
-pic_irq_request() => apic_accept_pic_intr() => apic_deliver_pic_intr()
-
-best,
-
-magnus
 
