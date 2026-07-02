@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBF13C43602
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 15:01:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B60ECC43327
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 15:01:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfIsy-0005Au-Sz; Thu, 02 Jul 2026 10:59:28 -0400
+	id 1wfIt5-0005HQ-Dd; Thu, 02 Jul 2026 10:59:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wfIsw-0005A6-PA
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 10:59:26 -0400
+ id 1wfIt4-0005FH-3v
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 10:59:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wfIsv-0004QC-2a
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 10:59:26 -0400
+ id 1wfIt2-0004Rd-CG
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 10:59:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783004364;
+ s=mimecast20190719; t=1783004371;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vPtLXtDs1quwQoKW3oUgsV/vU6Ks6Nz7WqQkGI+WJLA=;
- b=BQW1cWgifCjB8vpDVkcR03990JIUlAEEOtzZcHhLretDFdhol0R1QvWyl4KLCGlMvtsW19
- 26LH4RjYdzk+SBpOMOzSNJFGCVzVhZH8s1hvDfUOEdXuNAVxnbhq5dY9b/snOQb3x44gEM
- 8KMiDJALt/kMCdNqbF2KWZa5yKmIpUU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=wKlAMqzhb6j1xFK4DBP+i+CsiM5O/z/vnQTjLLV0L9E=;
+ b=EQYxXhencB5fahwyZ8bSHEVfEyYIUsaK3SCpHTF1Lh0NeDJ0B0UxTTB53iJYJ1diXsS4vJ
+ APPyVG/JPUUx6fgvZwSsckmWeBejL9IwX7ykkhPGrz5QccIWfzRx/26B101l3Keb3LuqoQ
+ t9gFxWSodQs8NpDD8psvcXbW+9NfGuI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-426-8nwYI2MqNF21xdPQY120pA-1; Thu,
- 02 Jul 2026 10:59:19 -0400
-X-MC-Unique: 8nwYI2MqNF21xdPQY120pA-1
-X-Mimecast-MFC-AGG-ID: 8nwYI2MqNF21xdPQY120pA_1783004358
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-26-i8ZLn6q1OlaLHEu7biGACw-1; Thu,
+ 02 Jul 2026 10:59:26 -0400
+X-MC-Unique: i8ZLn6q1OlaLHEu7biGACw-1
+X-Mimecast-MFC-AGG-ID: i8ZLn6q1OlaLHEu7biGACw_1783004365
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3437F18333A6; Thu,  2 Jul 2026 14:59:18 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5B40C1944B2A; Thu,  2 Jul 2026 14:59:25 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 23281180058D; Thu,  2 Jul 2026 14:59:15 +0000 (UTC)
+ id 6E7F0180056E; Thu,  2 Jul 2026 14:59:23 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, eauger@redhat.com, peter.maydell@linaro.org,
  shannon.zhaosl@gmail.com, leif.lindholm@oss.qualcomm.com,
  qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>
-Subject: [PATCH v4 07/13] arm: virt: add support for WDAT based watchdog
-Date: Thu,  2 Jul 2026 16:58:50 +0200
-Message-ID: <20260702145856.1539572-8-imammedo@redhat.com>
+Subject: [PATCH v4 10/13] tests: acpi: arm/virt: update expected WDAT blob
+Date: Thu,  2 Jul 2026 16:58:53 +0200
+Message-ID: <20260702145856.1539572-11-imammedo@redhat.com>
 In-Reply-To: <20260702145856.1539572-1-imammedo@redhat.com>
 References: <20260702145856.1539572-1-imammedo@redhat.com>
 MIME-Version: 1.0
@@ -64,14 +64,14 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,195 +87,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add WDAT handling for sbsa-gwdt on arm/virt machine.
+replace blank table with a new one:
 
-WDAT mode is enabled by 'wdat' option: ex: "-device sbsa-gwdt,wdat=on"
+  [000h 0000 004h]                   Signature : "WDAT"    [Watchdog Action Table]
+  [004h 0004 004h]                Table Length : 00000104
+  [008h 0008 001h]                    Revision : 01
+  [009h 0009 001h]                    Checksum : 3B
+  [00Ah 0010 006h]                      Oem ID : "BOCHS "
+  [010h 0016 008h]                Oem Table ID : "BXPC    "
+  [018h 0024 004h]                Oem Revision : 00000001
+  [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
+  [020h 0032 004h]       Asl Compiler Revision : 00000001
 
-When WDAT is enabled:
- - Build the WDAT ACPI table instead of the GTDT watchdog entry,
-   since they are mutually exclusive due to different timer
-   resolution (WDAT uses 1 kHz vs GTDT's system counter frequency).
- - Skip FDT watchdog node creation, as the DT-based Linux driver
-   would use the system counter frequency which doesn't match the
-   WDAT-mode 1 kHz clock.
+  [024h 0036 004h]               Header Length : 00000020
+  [028h 0040 002h]                 PCI Segment : 00FF
+  [02Ah 0042 001h]                     PCI Bus : FF
+  [02Bh 0043 001h]                  PCI Device : FF
+  [02Ch 0044 001h]                PCI Function : FF
+  [02Dh 0045 003h]                    Reserved : 000000
+  [030h 0048 004h]                Timer Period : 00000001
+  [034h 0052 004h]                   Max Count : 000927C0
+  [038h 0056 004h]                   Min Count : 00001388
+  [03Ch 0060 001h]       Flags (decoded below) : 81
+                                       Enabled : 1
+                           Stopped When Asleep : 1
+  [03Dh 0061 003h]                    Reserved : 000000
+  [040h 0064 004h]        Watchdog Entry Count : 00000008
+
+  [044h 0068 001h]             Watchdog Action : 08
+  [045h 0069 001h]                 Instruction : 00
+  [046h 0070 002h]                    Reserved : 0000
+
+  [048h 0072 00Ch]             Register Region : [Generic Address Structure]
+  [048h 0072 001h]                    Space ID : 00 [SystemMemory]
+  [049h 0073 001h]                   Bit Width : 20
+  [04Ah 0074 001h]                  Bit Offset : 00
+  [04Bh 0075 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [04Ch 0076 008h]                     Address : 000000000C001000
+
+  [054h 0084 004h]                       Value : 00000001
+  [058h 0088 004h]               Register Mask : 00000001
+
+  [05Ch 0092 001h]             Watchdog Action : 01
+  [05Dh 0093 001h]                 Instruction : 02
+  [05Eh 0094 002h]                    Reserved : 0000
+
+  [060h 0096 00Ch]             Register Region : [Generic Address Structure]
+  [060h 0096 001h]                    Space ID : 00 [SystemMemory]
+  [061h 0097 001h]                   Bit Width : 20
+  [062h 0098 001h]                  Bit Offset : 00
+  [063h 0099 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [064h 0100 008h]                     Address : 000000000C000000
+
+  [06Ch 0108 004h]                       Value : 00000001
+  [070h 0112 004h]               Register Mask : 00000007
+
+  [074h 0116 001h]             Watchdog Action : 06
+  [075h 0117 001h]                 Instruction : 03
+  [076h 0118 002h]                    Reserved : 0000
+
+  [078h 0120 00Ch]             Register Region : [Generic Address Structure]
+  [078h 0120 001h]                    Space ID : 00 [SystemMemory]
+  [079h 0121 001h]                   Bit Width : 20
+  [07Ah 0122 001h]                  Bit Offset : 00
+  [07Bh 0123 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [07Ch 0124 008h]                     Address : 000000000C001008
+
+  [084h 0132 004h]                       Value : 00000000
+  [088h 0136 004h]               Register Mask : FFFFFFFF
+
+  [08Ch 0140 001h]             Watchdog Action : 09
+  [08Dh 0141 001h]                 Instruction : 82
+  [08Eh 0142 002h]                    Reserved : 0000
+
+  [090h 0144 00Ch]             Register Region : [Generic Address Structure]
+  [090h 0144 001h]                    Space ID : 00 [SystemMemory]
+  [091h 0145 001h]                   Bit Width : 20
+  [092h 0146 001h]                  Bit Offset : 00
+  [093h 0147 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [094h 0148 008h]                     Address : 000000000C001000
+
+  [09Ch 0156 004h]                       Value : 00000001
+  [0A0h 0160 004h]               Register Mask : 00000001
+
+  [0A4h 0164 001h]             Watchdog Action : 0A
+  [0A5h 0165 001h]                 Instruction : 00
+  [0A6h 0166 002h]                    Reserved : 0000
+
+  [0A8h 0168 00Ch]             Register Region : [Generic Address Structure]
+  [0A8h 0168 001h]                    Space ID : 00 [SystemMemory]
+  [0A9h 0169 001h]                   Bit Width : 20
+  [0AAh 0170 001h]                  Bit Offset : 00
+  [0ABh 0171 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [0ACh 0172 008h]                     Address : 000000000C001000
+
+  [0B4h 0180 004h]                       Value : 00000000
+  [0B8h 0184 004h]               Register Mask : 00000001
+
+  [0BCh 0188 001h]             Watchdog Action : 0B
+  [0BDh 0189 001h]                 Instruction : 82
+  [0BEh 0190 002h]                    Reserved : 0000
+
+  [0C0h 0192 00Ch]             Register Region : [Generic Address Structure]
+  [0C0h 0192 001h]                    Space ID : 00 [SystemMemory]
+  [0C1h 0193 001h]                   Bit Width : 20
+  [0C2h 0194 001h]                  Bit Offset : 00
+  [0C3h 0195 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [0C4h 0196 008h]                     Address : 000000000C001000
+
+  [0CCh 0204 004h]                       Value : 00000000
+  [0D0h 0208 004h]               Register Mask : 00000001
+
+  [0D4h 0212 001h]             Watchdog Action : 20
+  [0D5h 0213 001h]                 Instruction : 00
+  [0D6h 0214 002h]                    Reserved : 0000
+
+  [0D8h 0216 00Ch]             Register Region : [Generic Address Structure]
+  [0D8h 0216 001h]                    Space ID : 00 [SystemMemory]
+  [0D9h 0217 001h]                   Bit Width : 20
+  [0DAh 0218 001h]                  Bit Offset : 00
+  [0DBh 0219 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [0DCh 0220 008h]                     Address : 000000000C001000
+
+  [0E4h 0228 004h]                       Value : 00000004
+  [0E8h 0232 004h]               Register Mask : 00000004
+
+  [0ECh 0236 001h]             Watchdog Action : 21
+  [0EDh 0237 001h]                 Instruction : 82
+  [0EEh 0238 002h]                    Reserved : 0000
+
+  [0F0h 0240 00Ch]             Register Region : [Generic Address Structure]
+  [0F0h 0240 001h]                    Space ID : 00 [SystemMemory]
+  [0F1h 0241 001h]                   Bit Width : 20
+  [0F2h 0242 001h]                  Bit Offset : 00
+  [0F3h 0243 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [0F4h 0244 008h]                     Address : 000000000C000000
+
+  [0FCh 0252 004h]                       Value : 00000004
+  [100h 0256 004h]               Register Mask : 00000004
+
+Raw Table Data: Length 260 (0x104)
 
 Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
 ---
-v4:
-  (Eric)
-    - remove unused 'wdt' parameter from build_gtdt()
-    - add Native/WDAT modes documentation to docs/system/arm/virt.rst
-v3:
-   - Skip FDT watchdog node creation in wdat mode
-   (Eric)
-     - wiring part of larger '[PATCH v2 11/21] arm: virt: add support for WDAT based watchdog'
----
- docs/system/arm/virt.rst | 15 +++++++++++++++
- hw/arm/virt-acpi-build.c | 34 ++++++++++++++++++++++++++--------
- hw/arm/virt.c            | 12 ++++++++----
- 3 files changed, 49 insertions(+), 12 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ tests/data/acpi/aarch64/virt/WDAT.wdat      | Bin 0 -> 260 bytes
+ 2 files changed, 1 deletion(-)
 
-diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-index bf5a9c8f6c..5f6dd17978 100644
---- a/docs/system/arm/virt.rst
-+++ b/docs/system/arm/virt.rst
-@@ -323,6 +323,21 @@ using ``-device sbsa-gwdt``. It is only supported on the virt machine,
- which wires up statically assigned MMIO regions and IRQs via
- machine-specific plug handlers.
- 
-+Two modes are available:
-+
-+Native mode (default)
-+  The watchdog is described via the ACPI GTDT table and FDT, using
-+  the system counter frequency. Example::
-+
-+    -device sbsa-gwdt
-+
-+WDAT mode
-+  The watchdog is described via the ACPI WDAT table (no FDT node),
-+  using a 1 kHz timer frequency. WDAT and GTDT watchdog entries are
-+  mutually exclusive. Example::
-+
-+    -device sbsa-gwdt,wdat=on
-+
- Linux guest kernel configuration
- """"""""""""""""""""""""""""""""
- 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index f5b3b4ce48..f6386088b6 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -65,6 +65,7 @@
- #include "target/arm/cpu.h"
- #include "target/arm/multiprocessing.h"
- #include "hw/watchdog/sbsa_gwdt.h"
-+#include "hw/acpi/wdat-gwdt.h"
- 
- #include "smmuv3-accel.h"
- #include "tegra241-cmdqv.h"
-@@ -859,7 +860,8 @@ build_srat(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-  * 5.2.25 Generic Timer Description Table (GTDT)
-  */
- static void
--build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-+build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms,
-+           bool add_watchdog)
- {
-     /*
-      * Table 5-117 Flag Definitions
-@@ -870,7 +872,6 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-     AcpiTable table = { .sig = "GTDT", .rev = 3, .oem_id = vms->oem_id,
-                         .oem_table_id = vms->oem_table_id };
-     uint32_t gtdt_start = table_data->len;
--    Object *wdt = object_resolve_type_unambiguous(TYPE_WDT_SBSA, NULL);
- 
-     acpi_table_begin(&table, table_data);
- 
-@@ -903,12 +904,12 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-     build_append_int_noprefix(table_data, 0xFFFFFFFFFFFFFFFF, 8);
- 
-     /* Platform Timer Count */
--    build_append_int_noprefix(table_data,  wdt ? 1 : 0, 4);
-+    build_append_int_noprefix(table_data,  add_watchdog ? 1 : 0, 4);
-     /* Platform Timer Offset */
-     build_append_int_noprefix(table_data,
--        wdt ? (table_data->len - gtdt_start) +
--              4 + 4 + 4 /* len of this & following 2 fields to skip */
--            : 0, 4);
-+        add_watchdog ? (table_data->len - gtdt_start) +
-+                       4 + 4 + 4 /* len of this & following 2 fields to skip */
-+                     : 0, 4);
- 
-     if (vms->ns_el2_virt_timer_irq) {
-         /* Virtual EL2 Timer GSIV */
-@@ -921,7 +922,7 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-     }
- 
-     /* ACPI 6.5 spec: 5.2.25.2 ARM Generic Watchdog Structure (Table 5-124) */
--    if (wdt) {
-+    if (add_watchdog) {
-         hwaddr rbase = vms->memmap[VIRT_GWDT_REFRESH].base;
-         hwaddr cbase = vms->memmap[VIRT_GWDT_CONTROL].base;
-         int irq = ARM_SPI_BASE + vms->irqmap[VIRT_GWDT_WS0];
-@@ -1332,13 +1333,19 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
-     VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
-     GArray *table_offsets;
-     unsigned dsdt, xsdt;
-+    bool has_wdat = false;
-     GArray *tables_blob = tables->table_data;
-     MachineState *ms = MACHINE(vms);
-     CPUCoreCaches caches[CPU_MAX_CACHES];
-     unsigned int num_caches;
-+    Object *wdt = object_resolve_type_unambiguous(TYPE_WDT_SBSA, NULL);
- 
-     num_caches = virt_get_caches(vms, caches);
- 
-+    if (wdt) {
-+        has_wdat = object_property_get_bool(wdt, "wdat", &error_abort);
-+    }
-+
-     table_offsets = g_array_new(false, true /* clear */,
-                                         sizeof(uint32_t));
- 
-@@ -1357,6 +1364,17 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
-     acpi_add_table(table_offsets, tables_blob);
-     build_madt(tables_blob, tables->linker, vms);
- 
-+    acpi_add_table(table_offsets, tables_blob);
-+    if (wdt && has_wdat) {
-+        uint64_t freq = object_property_get_uint(wdt, "clock-frequency",
-+                                                 &error_abort);
-+        build_gwdt_wdat(tables_blob, tables->linker,
-+                        vms->oem_id, vms->oem_table_id,
-+                        vms->memmap[VIRT_GWDT_REFRESH].base,
-+                        vms->memmap[VIRT_GWDT_CONTROL].base,
-+                        freq);
-+    }
-+
-     if (!vmc->no_cpu_topology) {
-         acpi_add_table(table_offsets, tables_blob);
-         build_pptt(tables_blob, tables->linker, ms, vms->oem_id,
-@@ -1364,7 +1382,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
-     }
- 
-     acpi_add_table(table_offsets, tables_blob);
--    build_gtdt(tables_blob, tables->linker, vms);
-+    build_gtdt(tables_blob, tables->linker, vms, wdt && !has_wdat);
- 
-     acpi_add_table(table_offsets, tables_blob);
-     {
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index eabc5274d5..fb916c341b 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3846,10 +3846,12 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
-         qdev_prop_set_array(dev, "reserved-regions", reserved_regions);
-         g_free(resv_prop_str);
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_WDT_SBSA)) {
--        uint64_t cntfrq = object_property_get_int(OBJECT(qemu_get_cpu(0)),
--                                                  "cntfrq", &error_abort);
-+        if (!object_property_get_bool(OBJECT(dev), "wdat", &error_abort)) {
-+            uint64_t cntfrq = object_property_get_int(OBJECT(qemu_get_cpu(0)),
-+                                                      "cntfrq", &error_abort);
- 
--        qdev_prop_set_uint64(dev, "clock-frequency", cntfrq);
-+            qdev_prop_set_uint64(dev, "clock-frequency", cntfrq);
-+        }
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_ARM_SMMUV3)) {
-         if (vms->legacy_smmuv3_present || vms->iommu == VIRT_IOMMU_VIRTIO) {
-             error_setg(errp, "virt machine already has %s set. "
-@@ -3911,7 +3913,9 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
-         sysbus_mmio_map(s, 1, cbase);
-         sysbus_connect_irq(s, 0, qdev_get_gpio_in(vms->gic, irq));
- 
--        create_gwdt_dt_bindings(vms);
-+        if (!object_property_get_bool(OBJECT(dev), "wdat", &error_abort)) {
-+            create_gwdt_dt_bindings(vms);
-+        }
-     }
- 
-     if (vms->platform_bus_dev) {
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 135186b40b..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/aarch64/virt/WDAT.wdat",
+diff --git a/tests/data/acpi/aarch64/virt/WDAT.wdat b/tests/data/acpi/aarch64/virt/WDAT.wdat
+index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..d5adacf9114637d8803d08906ff1e29ac61f5fe0 100644
+GIT binary patch
+literal 260
+zcmZXOK@NgI3`O4vF`x@byg*$Mjv=^kCkZBU9awQJZ&p(1B&bcAwm<K;ecx}dG(f1E
+zXZz@-8M;<PBmmZ16+lr{z~)btGhbi?GEanrk^*Op%cs@+r=JYk@zHbs;iGQ%_k0R#
+Y9+OSa{H}$nYB)I0_dnOT-}Sg>0T&h&0RR91
+
+literal 0
+HcmV?d00001
+
 -- 
 2.47.3
 
