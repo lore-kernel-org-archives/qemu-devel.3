@@ -4,95 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C931C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 01:49:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28562C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 01:59:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wf6YG-000529-Bv; Wed, 01 Jul 2026 21:49:16 -0400
+	id 1wf6hS-0006fI-Q8; Wed, 01 Jul 2026 21:58:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wf6YD-00050v-WF; Wed, 01 Jul 2026 21:49:14 -0400
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wf6hP-0006ew-Fo; Wed, 01 Jul 2026 21:58:43 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wf6YC-0005dA-H9; Wed, 01 Jul 2026 21:49:13 -0400
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wf6hM-0008QY-Oz; Wed, 01 Jul 2026 21:58:43 -0400
 Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6621KivN2390598; Thu, 2 Jul 2026 01:49:11 GMT
+ 6621LIKV2391333; Thu, 2 Jul 2026 01:58:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=be11Vz
- /4Tj4N6AhiTPrAi/DkxTigmEZL20wDEzzXOys=; b=cCG9I2tnPQ4fAGmqboHnJt
- 4Z+EIKAuPY2MElWheOAQGXeB4FXlzaBsFweJ4YrlPFJlctzCFuZJ+uN0tR9KDJw4
- 43sQKO5fP2E1sGjiZygjXZyi/pArUjvo1IDL8NSRRqQn2WtzlJ0igawXHv5KOs3N
- FrVT2uvnkhyeAsUjgNYex+R+hqKfCBZroSKk/+0usvaFU6tWJvG6KdwxA4kg5Ui4
- 03RBwR+nKYjm7vDbDF4MQiv6pdGurm+DyO2HiHV5A0ACrvL6IxwYd0eODR5IBCyx
- Kgp31/lNsBNUgFK6CNkcq1pWjq6l+Lw4Zu4LAZtg1xwFsrIr3R2fDr7TH4dddTqw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=at6zz1
+ rYPJydWYID6fgTi7mSk4gr/awBs5Gat47tGkg=; b=lZ5k0R3KkGr+XKZILHzYJk
+ aFyuQhm75YOVEP6BbrHKpjoLpg92GSbo5FcNQI1aMV7C3QiDAa6vYI/vf1pCicRJ
+ 0CqCZU5eKAumnBqOFqZCAhIKBYIOqsNV7DwZpXzUpCc2H/VTWPToFhcoZKfIPoi/
+ gnRE2jwj73XVdvUqmaXHsb223+eeCFoEzGTkjhvLtdRMxMWUQwhFw/zDozRFh/X1
+ 8hTkeZ06PsjmGhj8Qg8m0OFbjx51qHlbY4zAMEF4NyocWdZ6D/bkTZlmEmflUkn6
+ gxmkBJYsVJ+MRQSczx5dg3d0+rZIiJKbr3cw3BxsqcUw83iX2IFsrq/jELCZBUmA
  ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qa76ve-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qa77j0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 01:49:11 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6621Yfs7025758;
- Thu, 2 Jul 2026 01:49:10 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2suk9xy9-1
+ Thu, 02 Jul 2026 01:58:34 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6621nbLg017835;
+ Thu, 2 Jul 2026 01:58:33 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhyhqtw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 01:49:10 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6621n9sK26018490
+ Thu, 02 Jul 2026 01:58:32 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6621wVdD21627454
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 2 Jul 2026 01:49:09 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7C64C58059;
- Thu,  2 Jul 2026 01:49:09 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C80EF58058;
- Thu,  2 Jul 2026 01:49:07 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.136.69]) by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  2 Jul 2026 01:49:07 +0000 (GMT)
-Message-ID: <d52bc6d7e5f763e64bc4c5db6d43928223174c53.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 3/6] pc-bios/s390-ccw: Add per-queue notification
- offset for multi-queue virtio configurations
-From: Eric Farman <farman@linux.ibm.com>
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- cohuck@redhat.com, mjrosato@linux.ibm.com
-Cc: zycai@linux.ibm.com, jdaley@linux.ibm.com, jjherne@linux.ibm.com,
- nrb@linux.ibm.com
-Date: Wed, 01 Jul 2026 21:49:07 -0400
-In-Reply-To: <20260630141917.673995-4-jrossi@linux.ibm.com>
-References: <20260630141917.673995-1-jrossi@linux.ibm.com>
- <20260630141917.673995-4-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+ Thu, 2 Jul 2026 01:58:31 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2880F58058;
+ Thu,  2 Jul 2026 01:58:31 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EE67758057;
+ Thu,  2 Jul 2026 01:58:29 +0000 (GMT)
+Received: from [9.61.143.111] (unknown [9.61.143.111])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu,  2 Jul 2026 01:58:29 +0000 (GMT)
+Message-ID: <7a7daacb-a55e-4590-9d13-73234a088c68@linux.ibm.com>
+Date: Wed, 1 Jul 2026 21:58:29 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 21/35] pc-bios/s390-ccw: Rework zipl_load_segment
+ function
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
+ david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260701204922.1320349-1-zycai@linux.ibm.com>
+ <20260701204922.1320349-22-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <20260701204922.1320349-22-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfX/zOdoJhChZZb
- ej3xb3nUVTppbgo0kwqAHkOcoFoJB8rGfSLFZT2zcH6dsw7FGeUrdURbwMUOCuabL5bW1EnQqgq
- lqBhD3RTwmn6DmdbHV8DsVbBTH7jo+DRN0vE/d2O0/AoE96MfRXsmYYqrXp1Qa55OX0zEW+KawL
- g5cNY9kMIQLLb3AZSZRpiErX/jtyFijd/EQ1Z3s/QyzkRWvnksu5Um8z8LVXgJYam2KkgguBeMD
- 0YxqxSek2jN/IIdlZUxZDDn2p/AY4nFjXTVQfM+a5jMfEcPvc5rwntzEYZqB3UgeCnrnq11Pdaa
- y+QrnhJpOBGjUHM5UMVh/gpxOjKWcwLxqy4chqw5NCOUFwdzcXTtPB5xMezjr8RESRs5Y3mvbAG
- RM4Lao9Juh65ysFiR+CfJF2xbzZX6vxuWUY8iI8IimPphewdMQIqnQ1q/0SoMNNAPvfWEdyMTLl
- S5wYLo0W2YJ8Yc9Qt1A==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfX9WneEMd5SNCa
- XCK06h7Wl/qV7+gY8oQbYBVKo8K5JiOOVsSJ7O6ybAIySelvwNBXHhKu8SRjThN+61h+yK5U/Os
- 6tqIJYwVgnI6agn0z7HwE/gkickI1Yw=
-X-Proofpoint-GUID: dJn7si8zr7UreudaYZHqhmr0JeUiUiEv
-X-Proofpoint-ORIG-GUID: dJn7si8zr7UreudaYZHqhmr0JeUiUiEv
-X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a45c397 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfX5nQAf2HpJvpm
+ lwaUlmgEDZeGPzhuo4E0F1kzbaFvFL2xXCNEukQ1zTKqoQdHvkvr9v+l4WizwJXFdh3n+rHFynR
+ Otnf4My9Ihc/KJf4rP/ISl/p/rpX9SMUQtJpX/9mfbxKltFWjAautH9gSvJFkp/XNAbY2vdbuTA
+ Ti8tFhvOvKrs2dl1caHRQI2b7Ihy4XMvuBtTdDS7VzO3pfCF5azMEfJ77Vb9QEFysEGXY6mi8q2
+ CGVAjHeHIzh1JwPfZNW5onP9lDZ0y0T4Vf9pq81SVWy/xZARtfFLzHg6qI5ZSSqn5lKWPh5KjNz
+ PzidRCohhrJkVkAMKNuxzzQhNhyz2zDUqXVU/t28EByWVdpXVX7pLK4MUKXNRrNgbyTzP1XFXvD
+ Eh1h4MJgbmrPyAvpP3h0Ox7zVQOPE03aM8blm1QaV/dmkVJbyCIJmeQziTnSjmBvaGFagaw57K4
+ tcdVZbTiTww5CNBvn0g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfX/dqwSFQ5UD1n
+ h8WVjxjkQKJ079wQY0Kovpt4CPA/r67U9wIrinjQsmokhyIOS+0L/FJelNZ/jB1a9upARQK7aIZ
+ YkLcmtv5fOhfJWcn9XblzRuk0iXqO0Q=
+X-Proofpoint-GUID: eBiLBBU-N0F9Ivjj40ZdCeGCn6xtQid6
+X-Proofpoint-ORIG-GUID: eBiLBBU-N0F9Ivjj40ZdCeGCn6xtQid6
+X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a45c5ca cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
  a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=kOaQzcC4gn6ku6mWJeYA:9 a=QEXdDO2ut3YA:10
+ a=20KFwNOVAAAA:8 a=dDsesF0xEnKmZbA7g9YA:9 a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
@@ -102,7 +107,7 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2607020016
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -126,30 +131,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2026-06-30 at 10:19 -0400, jrossi@linux.ibm.com wrote:
-> From: Zhuoying Cai <zycai@linux.ibm.com>
->=20
-> The initial support for virtio-blk-pci IPL devices used a single virt-que=
-ue, but
-> other device types require multiple queues, and for PCI device types this=
- also
-> requires a per-queue notification offset.
->=20
-> Add a PCI notify field to the VRing struct so that each queue has a uniqu=
-e
-> notify offset as defined in the virtio spec.
->=20
+
+
+On 7/1/26 4:49 PM, Zhuoying Cai wrote:
+> Change zipl_load_segment() to accept explicit blockno and address
+> parameters instead of ComponentEntry pointer and return segment length.
+>
+> Modify this function to allow the caller to specify a memory address
+> where segment data should be loaded into.
+>
+> seg_len variable is necessary to store the calculated segment length and
+> is used during signature verification. Return the length on success, or
+> a negative return code on failure.
+>
+> Remove static qualifier and add function declaration to bootmap.h to
+> make it accessible to other modules.
+>
 > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Collin Walling <walling@linux.ibm.com>
 > ---
->  pc-bios/s390-ccw/virtio-pci.c | 38 +++++++++++++++++++++--------------
->  pc-bios/s390-ccw/virtio-pci.h |  2 +-
->  pc-bios/s390-ccw/virtio.c     |  2 +-
->  pc-bios/s390-ccw/virtio.h     |  1 +
->  4 files changed, 26 insertions(+), 17 deletions(-)
+>   pc-bios/s390-ccw/bootmap.c | 18 ++++++++++--------
+>   pc-bios/s390-ccw/bootmap.h |  2 ++
+>   2 files changed, 12 insertions(+), 8 deletions(-)
+>
+> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+> index b9ba004cfc..b19981feb1 100644
+> --- a/pc-bios/s390-ccw/bootmap.c
+> +++ b/pc-bios/s390-ccw/bootmap.c
+> @@ -613,19 +613,19 @@ static int ipl_eckd(void)
+>    * IPL a SCSI disk
+>    */
+>   
+> -static int zipl_load_segment(ComponentEntry *entry)
+> +/*
+> + * Returns: length of the segment on success,
+> + *          negative value on error.
+> + */
+> +int zipl_load_segment(block_number_t blockno, uint64_t address)
+>   {
+>       const int max_entries = (MAX_SECTOR_SIZE / sizeof(ScsiBlockPtr));
+>       ScsiBlockPtr *bprs = (void *)sec;
+>       const int bprs_size = sizeof(sec);
+> -    block_number_t blockno;
+> -    uint64_t address;
+>       int i;
+>       char err_msg[] = "zIPL failed to read BPRS at 0xZZZZZZZZZZZZZZZZ";
+>       char *blk_no = &err_msg[30]; /* where to print blockno in (those ZZs) */
+> -
+> -    blockno = entry->data.blockno;
+> -    address = entry->compdat.load_addr;
+> +    int seg_len = 0;
+>   
+>       debug_print_int("loading segment at block", blockno);
+>       debug_print_int("addr", address);
+> @@ -668,10 +668,12 @@ static int zipl_load_segment(ComponentEntry *entry)
+>                   puts("zIPL load segment failed");
+>                   return -EIO;
+>               }
+> +
+> +            seg_len += bprs->size * (bprs[i].blockct + 1);
+>           }
+>       } while (blockno);
+>   
+> -    return 0;
+> +    return seg_len;
+>   }
+>   
+>   static int zipl_run_normal(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
+> @@ -687,7 +689,7 @@ static int zipl_run_normal(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
+>               continue;
+>           }
+>   
+> -        if (zipl_load_segment(entry)) {
+> +        if (zipl_load_segment(entry->data.blockno, entry->compdat.load_addr) < 0) {
+>               return -1;
+>           }
+>   
+> diff --git a/pc-bios/s390-ccw/bootmap.h b/pc-bios/s390-ccw/bootmap.h
+> index 95943441d3..8d61ac383c 100644
+> --- a/pc-bios/s390-ccw/bootmap.h
+> +++ b/pc-bios/s390-ccw/bootmap.h
+> @@ -113,6 +113,8 @@ typedef struct ScsiMbr {
+>       ScsiBlockPtr pt;   /* block pointer to program table */
+>   } __attribute__ ((packed)) ScsiMbr;
+>   
+> +int zipl_load_segment(block_number_t blockno, uint64_t address);
+> +
+>   #define ZIPL_MAGIC              "zIPL"
+>   #define ZIPL_MAGIC_EBCDIC       "\xa9\xc9\xd7\xd3"
+>   #define IPL1_MAGIC "\xc9\xd7\xd3\xf1" /* == "IPL1" in EBCDIC */
 
-Thank you for pulling out the bugfix from this patch. This still looks good=
-.
-
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
 
