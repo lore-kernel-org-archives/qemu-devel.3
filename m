@@ -4,67 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58BA2C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 16:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC370C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 16:57:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfKXu-00039u-CH; Thu, 02 Jul 2026 12:45:50 -0400
+	id 1wfKid-0006OI-89; Thu, 02 Jul 2026 12:56:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wfKXr-00037N-Cl; Thu, 02 Jul 2026 12:45:48 -0400
-Received: from smtp2-g21.free.fr ([2a01:e0c:1:1599::11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wfKXo-0003VU-AW; Thu, 02 Jul 2026 12:45:45 -0400
-Received: from localhost (unknown [89.92.102.124])
- (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id 0BD552003D0;
- Thu,  2 Jul 2026 18:45:31 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1783010743;
- bh=EUeKINjg7CGBQX2Etv44obZlaiZ6I+u6rrG2JIcxyVg=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=Awi375iBdMzpDIsQSEzxcttctfH9zC6rRUUyjh56CBfvc1X3GksDPCJvPMVAsDw2Y
- 2b5+Yde3XS/OmPb4DCmXhacSODJIsIf0Tak3auMNrKiNxf+dcGS56ALNYVNYLwgeG4
- 9+Wd5sGu0agsL/RIotqvjhO21QFlGnyAFv4nLyvZN3hoWnXUtayioONeOMTjC/zwn/
- uHxAxAOWLF9Q0yaxy8jbUL5jEpPqh6E2aNAcv5Lx0VVEbMyPtdL9spa0YZPM7kmr6I
- Kbhrsh6LE8sLtX8CuW/e5DiPPALAwqrh4ji+7hSc5/7hkDMxJeUcBSiEBM+yMzds3g
- 1MIidGG7eez7A==
-From: Emmanuel Blot <emmanuel.blot@free.fr>
-Date: Thu, 02 Jul 2026 18:44:31 +0200
-Subject: [PATCH 4/4] tests/functional: arm: add SanMiguel BMC boot test
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wfKib-0006O1-S9
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 12:56:53 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wfKia-0006ef-0D
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 12:56:53 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2c82538b6b0so16961245ad.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 09:56:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783011410; x=1783616210; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0yXqWSav02NxMHzDJClLmLOneTxzDlJLqoluzEcKTto=;
+ b=s6HVvMI3Eg7aE5zJDfj7RTjk0gG0ZtvV10W85tQleOqlCT1SDb7ONIyMdFk9ba0pKh
+ z6UxnpAXOcrC2WBcSwN5f2bQ11kJ/D0ZVH6xzt74WvgEpgj/a1ouvOz00Mj6fXlHcuuI
+ 0nTKF0axv8WvUM/XZ4wCeGU789aEYgPp0e28d2NjOp0bqSKiB+aBz4AUnHiX4Wiu2KeI
+ whLu7DYMlmC8BS/Q163WkN8Ccojq1+xF9bzF3xaIhhD2ozdB667OrGO42vGDSpD90xqM
+ /Q2YCERJu7LkKxuoGbDtwl+IpS0i69NZboD8ScSOHJCE/VBBdZpa7jtrr6yk3fLX7NhV
+ Lwag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783011410; x=1783616210;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0yXqWSav02NxMHzDJClLmLOneTxzDlJLqoluzEcKTto=;
+ b=NB4a2ZTu/G5cEpb4aJnnvPHuh2bUSYzC1nk6qPxc7xdw2wzTCulr8IorZIShl6XR/Q
+ 3TliJ1cENcjoniR519oxk9ag7yuzzEVqbcFIyh/hxzujQ+uf1mOx3ELp00mu4tD2Ynfy
+ yj4yKUazR/ddnfsM1fCNrmzFvDIhMUTVit6JNpXsdfstcCM71jTZGmxw0VvpWNeHbl0s
+ obSUczDFdoUE2X5SHbL2trwlrI6dtxmckwnBDtzcI7o14+Jc7wsZrkavNibAoakgCf/s
+ KUH0BQXEfdB+oKO746jIjmzESMVPqV83lRafRSUvIvpG0+6NhS2DE4ZWXK47HlqMZA1p
+ hzQA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrcQ+rELicYGVtBm48s0/IWMXFztXMmAv5AbAcAVzCSz8LGKPsLE0UUASOGZ0MZJ2eoYLhh0K+M47Zo@nongnu.org
+X-Gm-Message-State: AOJu0YzTJwLYhuL2tExSWd2P3RJBXCdXU5VR/NceD/Uu578LpHJ1rv0l
+ ja7IEnRxERcm/KJgnDMefbXyfGDsRGBY0gKvlbGjCGRSbNVz/hDv9ZHA1C/VPP0EZwM=
+X-Gm-Gg: AfdE7cn5rfN81sNhjTWsPEntkclqSsBPAtKTQJmeuAqzsR+oqxek6BRD6Po/ubxU1fD
+ srVeFFeHAH9MNAy87YNSnFpQyJTjRAYPk5p3GPbEGAo8Hy2VHcoGDe8RwjS70ZQIUovC3whF1+d
+ tqbuov/MTP+pE0LtB2sRXNB6ObZ79kB/6ZyyoGJooU5CNNfb37OI6dZvTt6nNXB1mVAZ0DJMh+m
+ 077pn44XyhNkHd6RxuMs9G4GQ85dJYZ7uyt5fE4X2n1Ub71uhCYn1VOd6OzqMLkrthd1GyiqLyQ
+ ah2oKIC2/S5GY//ym2BKf27Teke6woNmYhgnuBU7/Y6Fve8RwSU04v/qx4CSLSG3Gnlqm1n4ljZ
+ lq7mj8/YGU2jEvRcLJ17wzvpoe6HzGE6RtnDHzPMyuytHRtmTs0MBPTuajlFVH4PkHmaAbxI0v5
+ JT/qnlMJQxmOlQ3P91L1nwZWOGNVch6/5qfGcuhJWndr64xBGzxH4BGLPrLk/S2vZjYfG2
+X-Received: by 2002:a17:903:19ed:b0:2ca:594f:feb8 with SMTP id
+ d9443c01a7336-2ca7e942459mr73888365ad.47.1783011410092; 
+ Thu, 02 Jul 2026 09:56:50 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ca9aa0b7e9sm16456145ad.81.2026.07.02.09.56.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 02 Jul 2026 09:56:49 -0700 (PDT)
+Message-ID: <4ac69742-14b6-4560-a458-f484fba95ceb@linaro.org>
+Date: Thu, 2 Jul 2026 09:56:47 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260702-sanmiguel-bmc-v1-4-b176b840aee3@free.fr>
-References: <20260702-sanmiguel-bmc-v1-0-b176b840aee3@free.fr>
-In-Reply-To: <20260702-sanmiguel-bmc-v1-0-b176b840aee3@free.fr>
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- qemu-arm@nongnu.org, Emmanuel Blot <emmanuel.blot@free.fr>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783010682; l=2157;
- i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=EUeKINjg7CGBQX2Etv44obZlaiZ6I+u6rrG2JIcxyVg=;
- b=aPBadd20+BiCAQGGoXlX/em4teKtc9Ye9THUKI03G/7s6hHqtCSw2uHtJ8tQ8tWe0Ga2rU7at
- oCIPnN+q0LFCaxBwyHlD+0qtPn3QPI6P2Bs5YHt66bm1Wwu27ebMB29
-X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
- pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=2a01:e0c:1:1599::11;
- envelope-from=emmanuel.blot@free.fr; helo=smtp2-g21.free.fr
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/33] accel/mshv: Replace @dirty field by generic
+ CPUState::vcpu_dirty field
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-ppc@nongnu.org
+References: <20260630220100.1289-1-philmd@oss.qualcomm.com>
+ <20260630220100.1289-6-philmd@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260630220100.1289-6-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,73 +112,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
----
- tests/functional/arm/meson.build              |  2 ++
- tests/functional/arm/test_aspeed_sanmiguel.py | 33 +++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+)
+On 6/30/26 15:00, Philippe Mathieu-Daudé wrote:
+> No need for accel-specific @dirty field when we have
+> a generic one in CPUState. (Other accelerators already
+> did that in commits 6f13a0ada01..36ab216b81d).
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
+> ---
+>   include/system/mshv_int.h   |  1 -
+>   accel/mshv/mshv-all.c       | 18 +++++++++---------
+>   target/i386/mshv/mshv-cpu.c |  6 +++---
+>   3 files changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
-index 61b00932db..68e75b7ea1 100644
---- a/tests/functional/arm/meson.build
-+++ b/tests/functional/arm/meson.build
-@@ -17,6 +17,7 @@ test_arm_timeouts = {
-   'aspeed_catalina' : 480,
-   'aspeed_gb200nvl_bmc' : 480,
-   'aspeed_rainier' : 480,
-+  'aspeed_sanmiguel' : 480,
-   'bpim2u' : 500,
-   'collie' : 180,
-   'cubieboard' : 360,
-@@ -52,6 +53,7 @@ tests_arm_system_thorough = [
-   'aspeed_catalina',
-   'aspeed_gb200nvl_bmc',
-   'aspeed_rainier',
-+  'aspeed_sanmiguel',
-   'bpim2u',
-   'canona1100',
-   'collie',
-diff --git a/tests/functional/arm/test_aspeed_sanmiguel.py b/tests/functional/arm/test_aspeed_sanmiguel.py
-new file mode 100644
-index 0000000000..6409d12341
---- /dev/null
-+++ b/tests/functional/arm/test_aspeed_sanmiguel.py
-@@ -0,0 +1,33 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots the SanMiguel BMC machine
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import Asset
-+from aspeed import FacebookAspeedTest
-+
-+
-+class SanMiguelMachine(FacebookAspeedTest):
-+
-+    ASSET_SANMIGUEL_FLASH = Asset(
-+        "https://github.com/eblot/qemu-aspeed-boot/raw/refs/heads/sanmiguel-bmc/images/sanmiguel-bmc/"
-+            "openbmc-20260616025450/obmc-phosphor-image-sanmiguel-20260616025450.static.mtd.xz",
-+        "f0b79a09cd861d79919facc16af1dbdc85a3df55b06dd62ba0318a01580d447b",
-+    )
-+
-+    def test_arm_ast2600_sanmiguel_openbmc(self):
-+        image_path = self.uncompress(self.ASSET_SANMIGUEL_FLASH)
-+
-+        self.do_test_arm_aspeed_openbmc(
-+            "sanmiguel-bmc",
-+            image=image_path,
-+            uboot="2019.04",
-+            cpu_id="0xf00",
-+            soc="AST2600 rev A3",
-+            dt_model="Facebook SanMiguel BMC",
-+        )
-+
-+
-+if __name__ == "__main__":
-+    FacebookAspeedTest.main()
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
--- 
-2.50.1
-
+r~
 
