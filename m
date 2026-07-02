@@ -4,71 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7DEAC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 16:08:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 361CFC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 16:08:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfJuo-0001Fx-LL; Thu, 02 Jul 2026 12:05:27 -0400
+	id 1wfJwM-0004lE-L6; Thu, 02 Jul 2026 12:07:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wfJuk-0000rb-6o
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 12:05:22 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wfJwE-0004Xl-DM
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 12:06:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wfJui-00070A-6A
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 12:05:21 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wfJwC-0007SU-Gj
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 12:06:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783008318;
+ s=mimecast20190719; t=1783008411;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CAgMa1f7M/K5Sb0DK56b2GlUmSFRCVsNow8G0aaiYgM=;
- b=GOnuQZT7e9d9KC4TnmfPjQf6MKPGhPBLp9bmhCETPKi13Sbc2RnzK7mG4w5Kc6oGQXkInK
- 0uBEYIfX2+BsKd4DuoWvPUkCxr0qUyMR/9olH6eeRvORmnfugh0S+Q7vFMpTUFnCfSrkZC
- UMLELeNVY3xZ4pe0GQEMHRG1vrf3rjM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=uXfdeyeBs/yL9lJQpogthSB7/mlGmImMV85AwszJ8Jw=;
+ b=EAYfIW8ph2/wiE78JVzfy7A1BoGlxdTcnhkf24USpMfaYjrZ/j1csG+BazO+aAjJ2cWKfZ
+ D+3XO0TYCPF3l2WNEShwzlbF9cCOjW1wHfJ1sw2xMMkZReb4Yz+dO3llRU+EV/LUncec1a
+ d3FyxANr+MjBvi/TNJjwiEZwZxUJl9I=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-272-jpFwq5u0P9OkplJpUWrx5Q-1; Thu,
- 02 Jul 2026 12:05:15 -0400
-X-MC-Unique: jpFwq5u0P9OkplJpUWrx5Q-1
-X-Mimecast-MFC-AGG-ID: jpFwq5u0P9OkplJpUWrx5Q_1783008314
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-dPvYBcEJOhe7vXbt-Ya_eQ-1; Thu,
+ 02 Jul 2026 12:06:48 -0400
+X-MC-Unique: dPvYBcEJOhe7vXbt-Ya_eQ-1
+X-Mimecast-MFC-AGG-ID: dPvYBcEJOhe7vXbt-Ya_eQ_1783008406
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3711F19541A2; Thu,  2 Jul 2026 16:05:14 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.33.186])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9724A1945110; Thu,  2 Jul 2026 16:05:10 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Krempa <pkrempa@redhat.com>
-Subject: [PATCH v6 21/34] monitor: eliminate monitor_is_hmp_non_interactive
- method
-Date: Thu,  2 Jul 2026 17:03:24 +0100
-Message-ID: <20260702160337.1910921-22-berrange@redhat.com>
-In-Reply-To: <20260702160337.1910921-1-berrange@redhat.com>
-References: <20260702160337.1910921-1-berrange@redhat.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C3DDC1935338; Thu,  2 Jul 2026 16:06:45 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.58])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 37CB13001D8B; Thu,  2 Jul 2026 16:06:42 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org,
+	qemu-arm@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>, Eric Auger <eric.auger@redhat.com>,
+ Stefan Berger <stefanb@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] vfio/listener: Only warn on misalignment for VFIO-owned
+ regions
+Date: Thu,  2 Jul 2026 18:06:40 +0200
+Message-ID: <20260702160640.3875666-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
 X-Spam_score: 0.8
@@ -93,187 +84,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The monitor_is_hmp_non_interactive method is used by
-monitor_suspend and monitor_resume, to make them a no-op
-if the HMP does not use readline.
+Any device on the board can have non-page-aligned memory regions. The
+VFIO listener should not warn about misalignment for regions that are
+not VFIO-related.
 
-There are only a handful of callers of suspend/resume and
-they can be made to skip the call when readline is not
-present.
+Replace the vfio_known_safe_misalignment() whitelist with a
+vfio_get_vfio_device() ownership check: only warn when a VFIO device's
+own region is misaligned. For all other regions, emit a trace event
+and silently skip. Extract the misalignment test into a
+vfio_section_misaligned() helper for readability.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Tested-by: Peter Krempa <pkrempa@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Note: vfio_get_vfio_device() currently only covers VFIO PCI devices,
+including vfio-user-pci.  Other VFIO backends (AP, CCW) don't expose
+memory regions through this path so this is sufficient for now.
+
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/monitor/monitor.h      |  2 +-
- migration/migration-hmp-cmds.c |  5 ++++-
- monitor/hmp-cmds.c             |  5 ++++-
- monitor/hmp.c                  | 11 ++++++++---
- monitor/monitor.c              | 30 +-----------------------------
- 5 files changed, 18 insertions(+), 35 deletions(-)
+ hw/vfio/device.c     |  2 +-
+ hw/vfio/listener.c   | 33 +++++++++++++++------------------
+ hw/vfio/trace-events |  2 +-
+ 3 files changed, 17 insertions(+), 20 deletions(-)
 
-diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-index e802e8dfb2..890497b0d2 100644
---- a/include/monitor/monitor.h
-+++ b/include/monitor/monitor.h
-@@ -37,7 +37,7 @@ int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp);
- int monitor_new_opts(QemuOpts *opts, Error **errp);
- void monitor_cleanup(void);
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 1a7f8088aad9583ee96fc303be917fdb2f100df9..3a47109efb35c6dc28719dcc19acb85bef1d26cd 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -439,7 +439,7 @@ bool vfio_device_hiod_create_and_realize(VFIODevice *vbasedev,
  
--int monitor_suspend(Monitor *mon);
-+void monitor_suspend(Monitor *mon);
- void monitor_resume(Monitor *mon);
- 
- int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp);
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 8b385f560e..502ca704da 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -19,6 +19,7 @@
- #include "monitor/hmp.h"
- #include "monitor/hmp-completion.h"
- #include "monitor/monitor.h"
-+#include "monitor/monitor-internal.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-migration.h"
- #include "qapi/qapi-visit-migration.h"
-@@ -853,12 +854,14 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
- 
-     if (!detach) {
-         HMPMigrationStatus *status;
-+        MonitorHMP *hmp = MONITOR_HMP(mon);
- 
--        if (monitor_suspend(mon) < 0) {
-+        if (!hmp->use_readline) {
-             monitor_printf(mon, "terminal does not allow synchronous "
-                            "migration, continuing detached\n");
-             return;
-         }
-+        monitor_suspend(mon);
- 
-         status = g_malloc0(sizeof(*status));
-         status->mon = mon;
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index e139caeba9..e9fb8d827a 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -129,7 +129,10 @@ void hmp_info_version(Monitor *mon, const QDict *qdict)
- 
- void hmp_quit(Monitor *mon, const QDict *qdict)
+ VFIODevice *vfio_get_vfio_device(Object *obj)
  {
--    monitor_suspend(mon);
-+    MonitorHMP *hmp = MONITOR_HMP(mon);
-+    if (hmp->use_readline) {
-+        monitor_suspend(mon);
-+    }
-     qmp_quit(NULL);
+-    if (object_dynamic_cast(obj, TYPE_VFIO_PCI)) {
++    if (object_dynamic_cast(obj, TYPE_VFIO_PCI_DEVICE)) {
+         return &VFIO_PCI_DEVICE(obj)->vbasedev;
+     } else {
+         return NULL;
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index c19600e980a8d02217b5d9df4aca8f879ab2c5d5..76b9b02f8163f18d20994e4ec1f914a4d148fa92 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -40,7 +40,6 @@
+ #include "migration/misc.h"
+ #include "migration/qemu-file.h"
+ #include "system/tcg.h"
+-#include "system/tpm.h"
+ #include "vfio-migration-internal.h"
+ #include "vfio-helpers.h"
+ #include "vfio-listener.h"
+@@ -352,20 +351,10 @@ static void vfio_ram_discard_unregister_listener(VFIOContainer *bcontainer,
+     g_free(vrdl);
  }
  
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index abff9b7bf3..ed903d40d5 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -1528,13 +1528,16 @@ static void monitor_read(void *opaque, const uint8_t *buf, int size)
- static void monitor_event(void *opaque, QEMUChrEvent event)
+-static bool vfio_known_safe_misalignment(MemoryRegionSection *section)
++static bool vfio_section_misaligned(MemoryRegionSection *section)
  {
-     Monitor *mon = opaque;
-+    MonitorHMP *hmp = MONITOR_HMP(mon);
- 
-     switch (event) {
-     case CHR_EVENT_MUX_IN:
-         qemu_mutex_lock(&mon->mon_lock);
-         if (mon->mux_out) {
-             mon->mux_out = 0;
--            monitor_resume(mon);
-+            if (hmp->use_readline) {
-+                monitor_resume(mon);
-+            }
-         }
-         qemu_mutex_unlock(&mon->mon_lock);
-         break;
-@@ -1547,7 +1550,9 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
-             } else {
-                 monitor_flush_locked(mon);
-             }
--            monitor_suspend(mon);
-+            if (hmp->use_readline) {
-+                monitor_suspend(mon);
-+            }
-             mon->mux_out = 1;
-         }
-         qemu_mutex_unlock(&mon->mon_lock);
-@@ -1558,7 +1563,7 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
-                        "information\n", QEMU_VERSION);
-         qemu_mutex_lock(&mon->mon_lock);
-         mon->reset_seen = 1;
--        if (!mon->mux_out) {
-+        if (!mon->mux_out && hmp->use_readline) {
-             /* Suspend-resume forces the prompt to be printed.  */
-             monitor_suspend(mon);
-             monitor_resume(mon);
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 9b62716033..f1b189c1c2 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -157,25 +157,6 @@ bool monitor_requires_iothread(const Monitor *mon)
-     return cls->requires_iothread && cls->requires_iothread(mon);
- }
- 
--/**
-- * Is @mon is using readline?
-- * Note: not all HMP monitors use readline, e.g., gdbserver has a
-- * non-interactive HMP monitor, so readline is not used there.
-- */
--static inline bool monitor_uses_readline(const MonitorHMP *mon)
--{
--    return mon->use_readline;
--}
+-    MemoryRegion *mr = section->mr;
 -
--static inline bool monitor_is_hmp_non_interactive(const Monitor *mon)
--{
--    if (!object_dynamic_cast(OBJECT(mon), TYPE_MONITOR_HMP)) {
+-    if (!TPM_IS_CRB(mr->owner)) {
 -        return false;
 -    }
 -
--    return !monitor_uses_readline(container_of(mon, MonitorHMP, parent_obj));
--}
--
- static gboolean monitor_unblocked(void *do_not_use, GIOCondition cond,
-                                   void *opaque)
- {
-@@ -550,12 +531,8 @@ static gboolean qapi_event_throttle_equal(const void *a, const void *b)
-     return TRUE;
+-    /* this is a known safe misaligned region, just trace for debug purpose */
+-    trace_vfio_known_safe_misalignment(memory_region_name(mr),
+-                                       section->offset_within_address_space,
+-                                       section->offset_within_region,
+-                                       qemu_real_host_page_size());
+-    return true;
++    return (section->offset_within_address_space & ~qemu_real_host_page_mask()) !=
++           (section->offset_within_region & ~qemu_real_host_page_mask());
  }
  
--int monitor_suspend(Monitor *mon)
-+void monitor_suspend(Monitor *mon)
- {
--    if (monitor_is_hmp_non_interactive(mon)) {
--        return -ENOTTY;
--    }
--
-     qatomic_inc(&mon->suspend_cnt);
- 
-     if (monitor_requires_iothread(mon)) {
-@@ -567,7 +544,6 @@ int monitor_suspend(Monitor *mon)
+ static bool vfio_listener_valid_section(MemoryRegionSection *section,
+@@ -379,10 +368,12 @@ static bool vfio_listener_valid_section(MemoryRegionSection *section,
+         return false;
      }
  
-     trace_monitor_suspend(mon, 1);
--    return 0;
- }
- 
- static void monitor_accept_input(void *opaque)
-@@ -584,10 +560,6 @@ static void monitor_accept_input(void *opaque)
- 
- void monitor_resume(Monitor *mon)
- {
--    if (monitor_is_hmp_non_interactive(mon)) {
--        return;
--    }
--
-     if (qatomic_dec_fetch(&mon->suspend_cnt) == 0) {
-         AioContext *ctx;
- 
+-    if (unlikely((section->offset_within_address_space &
+-                  ~qemu_real_host_page_mask()) !=
+-                 (section->offset_within_region & ~qemu_real_host_page_mask()))) {
+-        if (!vfio_known_safe_misalignment(section)) {
++    if (unlikely(vfio_section_misaligned(section))) {
++        /*
++         * Only warn for VFIO device regions.  Other VFIO backends
++         * (AP, CCW) don't expose memory regions through this path.
++         */
++        if (vfio_get_vfio_device(memory_region_owner(section->mr))) {
+             error_report("%s received unaligned region %s iova=0x%"PRIx64
+                          " offset_within_region=0x%"PRIx64
+                          " qemu_real_host_page_size=0x%"PRIxPTR,
+@@ -390,6 +381,12 @@ static bool vfio_listener_valid_section(MemoryRegionSection *section,
+                          section->offset_within_address_space,
+                          section->offset_within_region,
+                          qemu_real_host_page_size());
++        } else {
++            trace_vfio_listener_region_misaligned(
++                         memory_region_name(section->mr),
++                         section->offset_within_address_space,
++                         section->offset_within_region,
++                         qemu_real_host_page_size());
+         }
+         return false;
+     }
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index f71d0bbc0a5440e4ccd374fac4733af08438e7be..5056b9942027938cd6bc832198acc9809739399f 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -98,7 +98,7 @@ vfio_spapr_group_attach(int groupfd, int tablefd) "Attached groupfd %d to liobn
+ vfio_listener_region_add_iommu(const char* name, uint64_t start, uint64_t end) "region_add [iommu] %s 0x%"PRIx64" - 0x%"PRIx64
+ vfio_listener_region_del_iommu(const char *name) "region_del [iommu] %s"
+ vfio_listener_region_add_ram(uint64_t iova_start, uint64_t iova_end, void *vaddr) "region_add [ram] 0x%"PRIx64" - 0x%"PRIx64" [%p]"
+-vfio_known_safe_misalignment(const char *name, uint64_t iova, uint64_t offset_within_region, uintptr_t page_size) "Region \"%s\" iova=0x%"PRIx64" offset_within_region=0x%"PRIx64" qemu_real_host_page_size=0x%"PRIxPTR
++vfio_listener_region_misaligned(const char *name, uint64_t iova, uint64_t offset_within_region, uintptr_t page_size) "Region \"%s\" iova=0x%"PRIx64" offset_within_region=0x%"PRIx64" qemu_real_host_page_size=0x%"PRIxPTR
+ vfio_listener_region_add_no_dma_map(const char *name, uint64_t iova, uint64_t size, uint64_t page_size) "Region \"%s\" 0x%"PRIx64" size=0x%"PRIx64" is not aligned to 0x%"PRIx64" and cannot be mapped for DMA"
+ vfio_listener_region_skip_dma_map(const char *name, uint64_t iova, uint64_t size) "Region \"%s\" 0x%"PRIx64" size=0x%"PRIx64" marked to skip IOMMU mapping"
+ vfio_listener_region_del(uint64_t start, uint64_t end) "region_del 0x%"PRIx64" - 0x%"PRIx64
 -- 
 2.54.0
 
