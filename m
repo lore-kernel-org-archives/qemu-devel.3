@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A120EC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 13:37:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6758C43602
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 13:41:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfHbb-0001UI-Be; Thu, 02 Jul 2026 09:37:27 -0400
+	id 1wfHeY-0002xi-0G; Thu, 02 Jul 2026 09:40:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wfHbZ-0001N1-Fl
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:37:25 -0400
-Received: from mail-pj2-x04.google.com ([2607:f8b0:4864:39::4])
+ id 1wfHeS-0002xA-U1
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:40:24 -0400
+Received: from mail-pj2-x01.google.com ([2607:f8b0:4864:39::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wfHbX-0001Oa-GY
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:37:25 -0400
-Received: by mail-pj2-x04.google.com with SMTP id
- 98e67ed59e1d1-38108e5002eso51102a91.0
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 06:37:21 -0700 (PDT)
+ id 1wfHeQ-0002MK-BY
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:40:24 -0400
+Received: by mail-pj2-x01.google.com with SMTP id
+ 98e67ed59e1d1-380f3c172f5so214251a91.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 06:40:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782999441; x=1783604241; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=TWC67xpeW6SkAcMo3SnmZfkvmqHquflJsAo15XkmnHE=;
- b=Ht3L3AZPyTFhqHEUbT76wfnfanHFXW9oq1gBX2dutr1q88nGiWsSKqzrS6EjwilZsd
- AaL80nKSen3bch1k2wTsy9mAf7Xs6TstFOrCt2ScQhefbMMV9M/OFVzeyd39u82aNch+
- Yd6IWB4y5Fd/sBKVurY1N/q47+Z/xQjh4F/Ebf4WajzTsJ6UTNGIS0tX7fT93Vld64pu
- vA1eh2pkFm5Xwixvbcd87o4CJrs6Imqdrv2Amnye76r7VphRb6Vo0MMf1G/DCowTNXqo
- I02XQUBO7NxL0tiHrJ4hxdbqyzsIskKZkaBWZC7YNmaFZnr/3STHp5ZbUAjpENoywsHr
- BdMA==
+ d=gmail.com; s=20251104; t=1782999621; x=1783604421; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=qEJagJJB8d/UT1dEARi/ieGivTtepnXkDt36O3ubz04=;
+ b=sEosvpQBGLQInb3q6zEUY1osZY7eSj1Lzjg6QbKbV1v1mpsTBHanR6qsqa1ZqVzsmd
+ OKYgv6ar90uOIdVsYMSwKFRJuZ7vuxO13X8255LwyGf2kKVlpbBF9W81aGfCZI8tWBnF
+ XMrosv9bWIsqEF59JdWzjrNlhCXziGK9pEmMpKW15r1h+vJjcJB0kt9+oGK1NXYHRQgC
+ ZlW4TVNZOL0hg/jtghQZFtC/xjU2dWjM4CymMyEKG9bpObY8FpYhVXy12PN9W5jAiAC8
+ 5BE4J7h8yZ4VGr3bwz6pFkG5tsf7NYnI9K6Xx0SDIX9F5DdPZ5zUQ4T5Hqi1xjGxzN4L
+ Tvpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782999441; x=1783604241;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TWC67xpeW6SkAcMo3SnmZfkvmqHquflJsAo15XkmnHE=;
- b=oPMgdCah8iPAYL2L14EE2UmIVMONX7RMlGVQ3+GitUaOxk+FJCEiE/7P+/kJuF2gXP
- vzqqHIt/7P+5MsEzgRDIOf3GLZEVPK7+PyVMKYlwmUEbi9pWtcgen9a5Z1ffmbLcURKF
- v895ECuoxlckYkeyvxNgliPCtK4e4tZTBbpP6hZgKppd5XVWg+v2YOP2KurkX1i8M6sa
- I91UJxjgLgk6iLfTTF691BQWwZx+gIJkh7fL521rPJvdlNuX7HhdIVNcduCLvbokudlu
- DkJRA4qB4rxacMl6D+yHuzvhVOtKOa7gQsTF8dxhthRK/Bi/HlxDLWeG8wpF55RZ7g5n
- /Zsw==
-X-Gm-Message-State: AOJu0YxV/p7198YzU1sRu0oIHjCNjb5IZfkG086Exs4C4wGrjmbHzGEh
- LXyy1HoZYJYIfBvZf4XNGOHSQw/C+yCPHVtwJPvE+9eu9MqS8S1c4Xo7
-X-Gm-Gg: AfdE7clwF6sp36c6VnCGfGthFDzSvsAYksWSBCqdpl0baVLtDXzW3uXo+RwPfZQs84D
- 2lUr+hiJ2w//vj8Yfq9bDggUpLMVB9xRjNBlBA9aAxloxuuVObDG2EHdS+0+z2G0EUzsfr8oDA4
- FpZiax1tpr/dpg53LqYpm1pvPSR8ckJjLV74z19FvLnnPrK6rtlh2ZHQkp1a4Ouf9BdSAqJ0qI7
- A58zu0SfnRtv7WQo4cP56mgERCyvoRNCyKC9+5QiwR5KrmFuG2cP+DbJ4pPzqLEWUs/7vguIwQ3
- Nt5ueyFrjn1dKeOsnPvs/Fm/DmwpPjqmeP8j6Es5a3XD8uloACVryFqYbMMnuYrhWMo0OHhp7fb
- dGKGVZfyvy0u7AMbdqSI4CtX7p2HWvK1fJOPsCyyrCevX7taVWyViaHmcdm7MTajINUHUp76u6t
- hdA9+T/EHj5PcX3lyXEWwQtw5VkpRzuN5hcKLB4xKCAw08Ih0j
-X-Received: by 2002:a05:6a20:9187:b0:3bf:c126:bb02 with SMTP id
- adf61e73a8af0-3bfed4818b7mr7049123637.47.1782999440493; 
- Thu, 02 Jul 2026 06:37:20 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782999621; x=1783604421;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qEJagJJB8d/UT1dEARi/ieGivTtepnXkDt36O3ubz04=;
+ b=EhIpxyQGZkIMp1VTBeTvg6WmURIvPToLDPMa5f7xddkhlno61aQ9eTohmmzrqCrG+s
+ A/k7HY6llT6jTjaNrKf6JGCX2NrJTxGquQKvI4EW42uepmG14zZlcStxNiMweXYls+no
+ E5AqfCS9WlSR4kGacHyQvai2L/L2PQzJpWEAFQJoQ1X67Ph2DfTGGAqD3jvJRQB4aahp
+ D19kIouG5qsHVTa5gb9fDbwFBT+T207ZVxKFiPLqmcq8nlpx/QIFn56SJyXZ3rb33Qs0
+ znktvcM/l3LKVI/YWPHbwz8ZPdN0JTUKqsHTgKRcGkM1oQKGOdWIVw/kL0kmlRsf3V7P
+ iNXQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpGoQUJUTbRzbyOgmcKmbnlAJorhgzLuJwGCJ/epwU9bh78dBA+t9HWEiWVDByfE4p+wvuNuUkRMAIy@nongnu.org
+X-Gm-Message-State: AOJu0Yxfr6t9cRSBbNZHP1RYEOPMLxjrCK94vxVtnhghMRCbW8vTFQXI
+ VJJrhtoDDIeAD3z18Fm8XcJE9WxwvPlH/2HWNgIQbhaPmJfdqbIwE5g5
+X-Gm-Gg: AfdE7cny0WiVPedsph501tKXeU4cn8ZjoOXeJDSxEMffsCihJknEjq2DNnCXYLi+sym
+ ZY0B+qe3MTLU/3VxHMcumXne6Ryg3yhsS33/T5WvPTNzPZU6tvAj/oO1xcvYBzEkMbp7Nh2bsFm
+ Q4GmCgGZgfpRgkU4amE7Tw2heYe1cGNWvNqZMft5CqxX8UIWttbuD1bcy5KbM9X7ZJR7MdA599u
+ hySS/N5yBiN/RaUtQR5014QOr+CVotsvrZen7nPZdfCnCq3uGnOeXUMOx9yhTN3mzwmvcvHCPw2
+ ycWYSvR0QHrQkB5UC6+woE+0tyFiCcBDePQ+NGoZj4tsQQ4TNDLb4tBS+NqDgwg8Eu/l1Xqb/Zl
+ W/t96OvR9uNJ1VxDFq4SYIh6P3PmtfXZbG8tR9R/IrFJGLnvP5oME6elc9eDa1jk9GkGKe+fY/B
+ JbK0ZmhBLlimNiQ3z4Z9fSv2johnYxam4NLhWczZlVJ3GFGw/V
+X-Received: by 2002:a17:90a:d44b:b0:37f:f080:38f5 with SMTP id
+ 98e67ed59e1d1-380aa1b86f4mr6061968a91.22.1782999620786; 
+ Thu, 02 Jul 2026 06:40:20 -0700 (PDT)
 Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b3c85b345sm14617293c88.10.2026.07.02.06.37.19
+ 5a478bee46e88-30f0bbd221bsm10208741eec.22.2026.07.02.06.40.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jul 2026 06:37:20 -0700 (PDT)
-Date: Thu, 2 Jul 2026 21:37:17 +0800
+ Thu, 02 Jul 2026 06:40:20 -0700 (PDT)
+Date: Thu, 2 Jul 2026 21:40:17 +0800
 From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- andrew.jones@oss.qualcomm.com, 
- Palmer Dabbelt <palmer@dabbelt.com>, Tao Tang <tangtao1634@phytium.com.cn>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] hw/riscv/riscv-iommu.c: check for misaligned IOHGATP_PPN
-Message-ID: <akZhlFh68iVQNiKD@ChaodeMacBook-Pro.local>
-References: <20260630203155.2103084-1-daniel.barboza@oss.qualcomm.com>
+To: Kuan-Wei Chiu <visitorckw@gmail.com>
+Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, 
+ alistair.francis@wdc.com, farosas@suse.de, lvivier@redhat.com,
+ liwei1518@gmail.com, 
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ jserv@ccns.ncku.edu.tw, 
+ eleanor15x@gmail.com, marscheng@google.com, qemu-devel@nongnu.org, 
+ qemu-riscv@nongnu.org
+Subject: Re: [PATCH v3 4/5] hw/riscv: Add Milk-V Duo board support
+Message-ID: <akZqNlzqKFo5QkcH@ChaodeMacBook-Pro.local>
+References: <20260616190147.1286316-1-visitorckw@gmail.com>
+ <20260616190147.1286316-5-visitorckw@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260630203155.2103084-1-daniel.barboza@oss.qualcomm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:39::4;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pj2-x04.google.com
+In-Reply-To: <20260616190147.1286316-5-visitorckw@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:39::1;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pj2-x01.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,139 +106,215 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 30, 2026 at 05:31:55PM +0800, Daniel Henrique Barboza wrote:
-> We must check if IOHGATP_PPN is 16kb aligned for non-bare GATP modes.
+On Tue, Jun 16, 2026 at 07:01:46PM +0800, Kuan-Wei Chiu wrote:
+> Add support for the Milk-V Duo development board, which is powered by
+> the Sophgo CV1800B SoC.
 > 
-> qos-riscv-iommu.h needs change too since G_IOHGATP must now be 16kb
-> aligned too.
+> The implementation includes:
+> - Board-level machine initialization with 64mb of default ram.
+> - Integration of the CV1800B SoC.
+> - Support for loading external FDT, kernel, and initrd images.
+> - Proper setup of the reset vector to match the CV1800B's boot flow.
 > 
-> Fixes: 69a9ae4836 ("hw/riscv/riscv-iommu: add ATS support")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3550
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+
 > ---
->  hw/riscv/riscv-iommu.c               | 14 ++++++++++++++
->  tests/qtest/libqos/qos-riscv-iommu.h |  2 +-
->  2 files changed, 15 insertions(+), 1 deletion(-)
+>  MAINTAINERS                                 |  11 ++
+>  configs/devices/riscv64-softmmu/default.mak |   1 +
+>  hw/riscv/Kconfig                            |   6 +
+>  hw/riscv/meson.build                        |   1 +
+>  hw/riscv/milkv_duo.c                        | 124 ++++++++++++++++++++
+>  5 files changed, 143 insertions(+)
+>  create mode 100644 hw/riscv/milkv_duo.c
 > 
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 891a56e731..09990c640f 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -795,6 +795,20 @@ static bool riscv_iommu_validate_device_ctx(RISCVIOMMUState *s,
->          return false;
->      }
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 93df53d87f..e197dcb5b2 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1797,6 +1797,17 @@ F: include/hw/riscv/k230.h
+>  F: include/hw/watchdog/k230_wdt.h
+>  F: tests/qtest/k230-wdt-test.c
 >  
-> +    if (gatp != RISCV_IOMMU_DC_IOHGATP_MODE_BARE) {
-> +        uint64_t iohgatp_ppn = get_field(ctx->gatp,
-> +                                         RISCV_IOMMU_DC_IOHGATP_PPN);
-> +        /*
-> +         * One of the conditions for a misconfigured DDT entry
-> +         * according to the riscv-spec: "DC.iohgatp.MODE is not
-> +         * Bare and the root page table determined by DC.iohgatp.PPN
-> +         * is not aligned to a 16-KiB boundary."
-> +         */
-> +        if (iohgatp_ppn & ((1ULL << 14) - 1)) {
-I believe that if we are checking the PPN of this hgatp register, we should be
-checking its lower 2 bits. According to the RISC-V specification, this is meant
-to check the 16 KB alignment of the base address for the second-stage page
-table. 
-
-It's equal:
-
- ```text
-   addr = PPN << 12
-   16 KiB = 2^14
-   so, PPN just need lower 14 - 12 = 2 bit is 0
- ```
-
-Reference:
-
- 1. iohgatp section：
-
- The iohgatp field holds the PPN of the root second-stage page table ...
- The root page table as determined by iohgatp.PPN is 16 KiB and must be aligned
- to a 16-KiB boundary.
-
- 2. Device-context configuration checks：
-
- A DC with DC.tc.V=1 is considered as misconfigured if any of the following
- conditions are true. If misconfigured then, stop and report "DDT entry
- misconfigured" (cause = 259).
-  ...
- DC.iohgatp.MODEis not Bare and the root page table determined by DC.iohgatp.PPN
- is not aligned to a 16-KiB boundary.
-
-So, We can modify it this way.
-
- ```c
-   if (iohgatp_ppn & ((1ULL << 2) - 1)) {
-       return false;
-   }
- ```
-
-To better align with what you expressed in your comments, we are
-obtaining the page table base address directly from the PPN.
-
- ```c
-   if (PPN_PHYS(iohgatp_ppn) & ((1ULL << 14) - 1)) {
-       return false;
-   }
- ```
-> +            return false;
+> +Milk-V Duo
+> +M: Kuan-Wei Chiu <visitorckw@gmail.com>
+> +S: Maintained
+> +F: hw/char/dw8250.c
+> +F: hw/misc/cv1800b_clk.c
+> +F: hw/riscv/cv1800b.c
+> +F: hw/riscv/milkv_duo.c
+> +F: include/hw/char/dw8250.h
+> +F: include/hw/misc/cv1800b_clk.h
+> +F: include/hw/riscv/cv1800b.h
+> +
+>  RX Machines
+>  -----------
+>  rx-gdbsim
+> diff --git a/configs/devices/riscv64-softmmu/default.mak b/configs/devices/riscv64-softmmu/default.mak
+> index a8e4d0ab33..2ba91b14d4 100644
+> --- a/configs/devices/riscv64-softmmu/default.mak
+> +++ b/configs/devices/riscv64-softmmu/default.mak
+> @@ -13,3 +13,4 @@
+>  # CONFIG_SHAKTI_C=n
+>  # CONFIG_XIANGSHAN_KUNMINGHU=n
+>  # CONFIG_MIPS_BOSTON_AIA=n
+> +# CONFIG_MILKV_DUO=n
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index 299baed4a8..42a0e78574 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -157,3 +157,9 @@ config SOPHGO_CV1800B
+>      select SIFIVE_PLIC
+>      select SOPHGO_CV1800B_CLK
+>      select DW8250
+> +
+> +config MILKV_DUO
+> +    bool
+> +    depends on RISCV64
+> +    default y
+> +    select SOPHGO_CV1800B
+> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+> index 6c242d77da..8c88f2bc25 100644
+> --- a/hw/riscv/meson.build
+> +++ b/hw/riscv/meson.build
+> @@ -20,5 +20,6 @@ riscv_ss.add(when: 'CONFIG_MIPS_BOSTON_AIA', if_true: files('boston-aia.c'))
+>  riscv_ss.add(when: 'CONFIG_K230', if_true: files('k230.c'))
+>  
+>  riscv_ss.add(when: 'CONFIG_SOPHGO_CV1800B', if_true: files('cv1800b.c'))
+> +riscv_ss.add(when: 'CONFIG_MILKV_DUO', if_true: files('milkv_duo.c'))
+>  
+>  hw_arch += {'riscv': riscv_ss}
+> diff --git a/hw/riscv/milkv_duo.c b/hw/riscv/milkv_duo.c
+> new file mode 100644
+> index 0000000000..8e9a553a57
+> --- /dev/null
+> +++ b/hw/riscv/milkv_duo.c
+> @@ -0,0 +1,124 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +/*
+> + * Milk-V Duo board
+> + *
+> + * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/units.h"
+> +#include "qapi/error.h"
+> +#include "hw/core/boards.h"
+> +#include "hw/riscv/cv1800b.h"
+> +#include "hw/riscv/boot.h"
+> +#include "target/riscv/cpu-qom.h"
+> +#include "system/system.h"
+> +#include "system/device_tree.h"
+> +#include "qemu/error-report.h"
+> +#include "hw/core/loader.h"
+> +#include <libfdt.h>
+> +#include "hw/riscv/machines-qom.h"
+> +
+> +struct MilkVDuoState {
+> +    MachineState parent_obj;
+> +    CV1800BSoCState soc;
+> +};
+> +
+> +#define TYPE_MILK_V_DUO MACHINE_TYPE_NAME("milkv-duo")
+> +OBJECT_DECLARE_SIMPLE_TYPE(MilkVDuoState, MILK_V_DUO)
+> +
+> +static void milkv_duo_init(MachineState *machine)
+> +{
+> +    MilkVDuoState *s = MILK_V_DUO(machine);
+> +    MemoryRegion *system_memory = get_system_memory();
+> +    RISCVBootInfo boot_info;
+> +    hwaddr firmware_load_addr, firmware_end_addr;
+> +    hwaddr fdt_load_addr = 0;
+> +    int fdt_size = 0;
+> +    uint64_t kernel_entry = 0;
+> +
+> +    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_CV1800B_SOC);
+> +    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
+> +
+> +    memory_region_add_subregion(system_memory,
+> +                                cv1800b_memmap[CV1800B_DEV_DRAM].base,
+> +                                machine->ram);
+> +
+> +    riscv_boot_info_init(&boot_info, &s->soc.cpus);
+> +
+> +    firmware_load_addr = cv1800b_memmap[CV1800B_DEV_DRAM].base;
+> +    firmware_end_addr = firmware_load_addr;
+> +    if (machine->firmware) {
+> +        firmware_end_addr = riscv_find_and_load_firmware(machine, machine->firmware,
+> +                                                         &firmware_load_addr, NULL);
+> +    }
+> +
+> +    if (machine->dtb) {
+> +        machine->fdt = load_device_tree(machine->dtb, &fdt_size);
+> +        if (!machine->fdt) {
+> +            error_report("Failed to load device tree");
+> +            exit(1);
+> +        }
+> +
+> +        if (machine->kernel_cmdline && *machine->kernel_cmdline) {
+> +            if (fdt_path_offset(machine->fdt, "/chosen") < 0) {
+> +                qemu_fdt_add_subnode(machine->fdt, "/chosen");
+> +            }
+> +            qemu_fdt_setprop_string(machine->fdt, "/chosen", "bootargs",
+> +                                    machine->kernel_cmdline);
 > +        }
 > +    }
 > +
->      fsc_mode = get_field(ctx->satp, RISCV_IOMMU_DC_FSC_MODE);
->  
->      if (ctx->tc & RISCV_IOMMU_DC_TC_PDTV) {
-> diff --git a/tests/qtest/libqos/qos-riscv-iommu.h b/tests/qtest/libqos/qos-riscv-iommu.h
-> index 90e69a5d73..4a972401f5 100644
-> --- a/tests/qtest/libqos/qos-riscv-iommu.h
-> +++ b/tests/qtest/libqos/qos-riscv-iommu.h
-> @@ -46,7 +46,7 @@
->  #define QRIOMMU_L1_PTE_VAL          0x0000000000012000ull
->  #define QRIOMMU_L2_PTE_VAL          0x0000000000013000ull
->  
-> -#define QRIOMMU_G_IOHGATP           0x0000000000020000ull
-> +#define QRIOMMU_G_IOHGATP           0x0000000008000000ull
-I believe this isn't an adjustment. as the original value was specifically
-set to perform the 16KB alignment check.
-
-The iommu helper function will handle:
-
- ```c
-   iohgatp = qriommu_apply_space_offs(QRIOMMU_G_IOHGATP);
-   dc.iohgatp = (iohgatp >> 12) | (8ull << 60);
- ```
-
-So, we can get:
-
- ```
-   iohgatp addr = 0x80000000 + 0x20000 = 0x80020000
-   PPN         = 0x80020000 >> 12 = 0x80020
- ```
-
-This is a valid 16 KB byte alignment check:
-
-```
-   0x80020000 & 0x3fff == 0
-   equal
-   0x80020000 & ((1ULL << 14) - 1) == 0
-```
-
-But if we use old ppn check code, It just so happens that his check
-will fail:
-
-```
-   0x80020 & 0x3fff != 0
-```
-
-Thanks,
-Chao
->  #define QRIOMMU_G_L0_PTE_VAL        0x0000000000021000ull
->  #define QRIOMMU_G_L1_PTE_VAL        0x0000000000022000ull
->  
+> +    if (machine->kernel_filename) {
+> +        hwaddr kernel_start_addr = riscv_calc_kernel_start_addr(&boot_info,
+> +                                                                firmware_end_addr);
+> +        riscv_load_kernel(machine, &boot_info, kernel_start_addr, true, NULL);
+> +        kernel_entry = boot_info.image_low_addr;
+> +    }
+> +
+> +    if (machine->dtb) {
+> +        fdt_load_addr = riscv_compute_fdt_addr(cv1800b_memmap[CV1800B_DEV_DRAM].base,
+> +                                               machine->ram_size, machine, &boot_info);
+> +        rom_add_blob_fixed_as("fdt", machine->fdt, fdt_size, fdt_load_addr,
+> +                              &address_space_memory);
+> +    }
+> +
+> +    riscv_setup_rom_reset_vec(machine, &s->soc.cpus,
+> +                              firmware_load_addr,
+> +                              cv1800b_memmap[CV1800B_DEV_ROM].base,
+> +                              cv1800b_memmap[CV1800B_DEV_ROM].size,
+> +                              kernel_entry,
+> +                              fdt_load_addr);
+> +}
+> +
+> +static void milkv_duo_machine_class_init(ObjectClass *oc, const void *data)
+> +{
+> +    MachineClass *mc = MACHINE_CLASS(oc);
+> +    static const char *const valid_cpu_types[] = {
+> +        TYPE_RISCV_CPU_THEAD_C906,
+> +        NULL
+> +    };
+> +
+> +    mc->desc = "Milk-V Duo Board (CV1800B)";
+> +    mc->init = milkv_duo_init;
+> +    mc->max_cpus = 2;
+> +    mc->default_cpu_type = TYPE_RISCV_CPU_THEAD_C906;
+> +    mc->valid_cpu_types = valid_cpu_types;
+> +    mc->default_ram_size = 64 * MiB;
+> +    mc->default_ram_id = "riscv.milkv_duo.ram";
+> +}
+> +
+> +static const TypeInfo milkv_duo_machine_type_info = {
+> +    .name = TYPE_MILK_V_DUO,
+> +    .parent = TYPE_MACHINE,
+> +    .instance_size = sizeof(MilkVDuoState),
+> +    .class_init = milkv_duo_machine_class_init,
+> +    .interfaces = riscv64_machine_interfaces,
+> +};
+> +
+> +static void milkv_duo_machine_register_types(void)
+> +{
+> +    type_register_static(&milkv_duo_machine_type_info);
+> +}
+> +
+> +type_init(milkv_duo_machine_register_types)
 > -- 
-> 2.43.0
+> 2.54.0.1136.gdb2ca164c4-goog
 > 
 
