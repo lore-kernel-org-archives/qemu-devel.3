@@ -4,66 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF33CC43327
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 13:02:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52BE4C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 13:03:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfH3P-0005LB-Bv; Thu, 02 Jul 2026 09:02:07 -0400
+	id 1wfH4G-0005g3-HY; Thu, 02 Jul 2026 09:03:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wfH3E-0005IW-Ql
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:02:05 -0400
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
+ id 1wfH49-0005dN-E3; Thu, 02 Jul 2026 09:02:55 -0400
 Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wfH3B-0002zm-F8
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:01:56 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=MChIAcK
- EQvzoBsl8vXVnQ0sSdtF1j2sCWN3YzYyPPLxOdsgVY4bIJlkLZMtE4korMeTaU4C8GaWk5
- jk7TqgKzJA2P/0feB6qUD4a6j4Z4/9zyMlvI87xRjy9NWFDNGaHhoZHUzbiK5xTyopsFam
- k9ZkrrJ5RkiYyQDp7YeH6J1O8/vAKmUD8z2R1cY5VaEiEPb9i5kTD5otNdEgIwkOY5m+qv
- wCwsznkNmy8GosL7B+c0UmBfxE4mTN/KWi8OxKNqm4QMwGA2qnmh2/RDamDddfPyWm2q48
- NAMPXpqRFKFhGpPN7XyUEeWyXzczfJ5T6+EGRoQGpmtcDCzlPr/dCuA==
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
+ id 1wfH46-0003M0-K6; Thu, 02 Jul 2026 09:02:52 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=PtklKtL
+ 4Zc52uG79Z8uOvRGNC/f26zuNEJLb8ra236s4kb/EFdoY9FYtAsC7pPMlwbluW5AO4xq0V
+ JcmffF8A4ZLT3dyOx1tRw22KFPjKG1O2iClhbDtU4WuZrO5LJe5NQcO4+jj31ZqJsk6SML
+ +f5sOSZrMlJDdbDhE9x2CB3CfBl7osZd/SYy4Xo134bWi8vcnRjfkG88/npdfwfvbNicp5
+ V28b6/T6AFATiG9b7k3NzkvkAPoVEOWVcpuiQu69m82n/4dDa0bRk9DaNoYxe/T07L4x8f
+ hcqvhY/ylWWp5wE87kDFnW5HkTf8AYTYRTOl1CVnAexg9QGCZrPLq+A==
 ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=j
  ojVjXqSi9y8Z+JInfRj97f82T+mwWHFqcrYQjs5j2w=;
  h=date:subject:cc:to:
- from:dkim-signature:dkim-signature; d=mx.catap.net; b=hdU9+vMHROkFMQX8
- DpAEcdeFB6dVs1mXEaKjWSK9m7tCwslYPFxEqLF8DHXqRga9Bd+yWb+VFLlb9ZFbeZ6MLG
- Rav6JFSxRSUvH7l2Y4KYo/nOYzaxqnyvXkZTpEvk9eBWr8GTmX3IRyI7HLqVV1fQHObV86
- t4w1SElKL+gsJnT83WkuK0qFOspKIORD9hUAWHDuL1hUV2Crquj9+0eXe2LbU6Q3w6XZ4T
- 2tac/r7YhIQwtPDCXSQ5LHi82xQqwsX+QtHGvEWvZzfJeKhUH2/pooNrTk52kN79aX2uB6
- n0StPNQFWPUIpW3MiCZlHJQ4wD5Gzif8f7eBmUtSJ77pAg==
+ from:dkim-signature:dkim-signature; d=mx.catap.net; b=lUkHDyQrc5AoaZUJ
+ 6GK7qwaxjLyw0atIhvPcRLTKVDO25Ri9YouZyN6Dx4hBPdSaMqY6S1qSi9fHVcCcUreffc
+ j5z+xoeYBYVDqWwAm0nH6mqis9UWJ3t9LcrH05+CwOxS2UYrezMQvRO8o/eihYG0ePgvzi
+ ZwS3qNiYlFnki6eM54HMJRrK6MbsECHavuSxQJXQKqPedNjJSaeIzXkHqYZk/Ycu0/QccQ
+ C6YR9elNcOq0FX5l1kncxhPRTLN0j23AkJJLl8CP0Ifpc2+0S4GXzhQhqFFHfqN59DKp39
+ qtralJKlIdRCA/8e4DDczy/vqe0F+BRR2n+8hvhWuv4HkA==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=ak9CNxXX; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=jD/pBSZ5;
+ header.b=s2pFqYx9; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=+MNL0z4u;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=jojVjXqS
  i9y8Z+JInfRj97f82T+mwWHFqcrYQjs5j2w=; h=date:subject:cc:to:from;
- d=korins.ky; b=ak9CNxXXAXos4v93Rk+DCNsteZTjRBhK4ItS1GbHgtZM5EfMh5jtfx0
- 9De9V1AowmyD8DqN3SJLvYUT1X/yPcnSeg58p1QcukiRg7k6u/5x8B9wE2iIxOF3IaCwV4
- IFuqN6IRruuFo899/HG4/yRtAFviZDlE9fkcqHsVhXPp2vRNe6LpTGRsx28NldF1vgl+bl
- /TdbjBn5Yqy6mByDPZeVwmRTmDZLxeJDW5e1RzzIjOzCM9JsaHqZ8BmxPT8824ZdwP2/0N
- oJthy5NPaUQMZk9KyvZqjy1E1d686vVGoorQ98TldeR+mR6cBHI8sqM/ou4GHKz0bBq0t3
- 3M/RWPg==
+ d=korins.ky; b=s2pFqYx9sy6ecSkalfln2fWOwNmEHf4+i9AiWkPjV1jOZdHtJsWq89l
+ sNLN3FmuAKs7wuxNsbfXHkn7Ir3pm42bxRcoRVL99odctTGtR0ypLYoinPBPvoq/oBvMW9
+ Q4Ny6KwT1V2v2/CuGUP2jWZ1yQQqooUWmEejkEilZsgrJM5eVNY65KxP6hb2UTtSMz6y6m
+ WJxvfbnNOywKsx3YUsQknodLEfF9NHXSoFaObFBwzfyt0fKyYzLinA2WWXCONDD0K4IeRK
+ uBggUi333uUKZl8aQoz014jMzbpnvqr01YHq3V5YpUL3MW1cfr55aJuNxp0ANKG+wIR0Ee
+ wLxUImA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
  bh=jojVjXqSi9y8Z+JInfRj97f82T+mwWHFqcrYQjs5j2w=; h=date:subject:cc:to:
- from; d=korins.ky; b=jD/pBSZ5NFzuaT0U4kC//x+djRaBlg7jTEORiCEaC6yrq+Z8q
- O0MWGyfUbakGZJirx5quVitdj3Yh1KJJaEvDQ==
-Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 57118cf1
+ from; d=korins.ky; b=+MNL0z4u/rwMQWs0RGLzKouOYzScDiXp1wn6gY29koOcqZ4MP
+ Qu2fxVI4LDqz64dd73xbij/piMKLtrMCGipCw==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id bcc1eab0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 2 Jul 2026 15:01:49 +0200 (CEST)
+ Thu, 2 Jul 2026 15:02:48 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id ba30b2c7;
- Thu, 2 Jul 2026 15:01:49 +0200 (CEST)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 797cfeea;
+ Thu, 2 Jul 2026 15:02:47 +0200 (CEST)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
-To: qemu-devel@nongnu.org
-Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH] powernv: boot OpenBSD on POWER9
-Date: Thu,  2 Jul 2026 15:01:45 +0200
-Message-ID: <20260702130145.23111-1-kirill@korins.ky>
+To: qemu-devel@nongnu.org,
+	qemu-ppc@nongnu.org
+Cc: "Kirill A. Korinsky" <kirill@korins.ky>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Brad Smith <brad@comstyle.com>, Aditya Gupta <adityag@linux.ibm.com>
+Subject: [PATCH v3] powernv: boot OpenBSD on POWER9
+Date: Thu,  2 Jul 2026 15:01:53 +0200
+Message-ID: <20260702130152.89334-2-kirill@korins.ky>
 X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
