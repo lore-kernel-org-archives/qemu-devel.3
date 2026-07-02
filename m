@@ -4,89 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60C5AC43327
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 20:46:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02ACBC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 20:47:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfOG8-0006n5-9c; Thu, 02 Jul 2026 16:43:44 -0400
+	id 1wfOJu-0005XR-65; Thu, 02 Jul 2026 16:47:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfOFs-0006dW-IB
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 16:43:29 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfOFk-0000SA-U0
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 16:43:25 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-8479f1a86ecso1576849b3a.1
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 13:43:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783024998; x=1783629798; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=aznq3Uqs/3cRH7j/pqiSwXtYe8SCzSrfHOaWqIOhEVM=;
- b=Dx7f6hMSXXNAXoznZFi7cphx4BhqoqXJebtcUn5WCZpW4smDJY3LeDKCZN7MDVK2iu
- 0jpocFfvkO8uJczWZfxxqxRI3bx2f5S625sN270JpQODiYnfdiIphxe2yvR+0bgjK230
- WltXm64FqRDjsTMjFlsvrWs1akSxviOEcvGlng+Ib604Opb41fqdcuUooqQ/EORBITrG
- HdIP4Z99XB59zQoFDIx3HPoRZCr9Mn5IfBTzskPwjsBlPV3xQ//+gz+ThvFnYKbFSKSC
- 2LLpTyfsbtZx9VJe6uATABAO6sVcTIn7PBex7x6dH8uurWM+kg3T28QOWhGAR5D1EZcf
- l0WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783024998; x=1783629798;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=aznq3Uqs/3cRH7j/pqiSwXtYe8SCzSrfHOaWqIOhEVM=;
- b=O2wtr+9z8BlbJwB8e5eC8wVW+ilAfin21QKcrd5qo7FCRtUTaty1YMGO2xoTEy4r67
- R/JAj+sedisWN4LE4PAO7KKSTDLJdsqoHRoYsyTUi8xrU1g4MN9H4gzRw4pV9psTqwYF
- GsqDiQGpvgSYVXlYBnrAIDg6CpXdkXcpox4XVMwHH3dfPmguJAjA+E8Ji0htHVbFQOiP
- pSqDaBJoJ/17wvXvoKEZd6bH2ztu9Ul4t8W3bAoj6XFm0OtEDRlvgliHCS0ToxUbwNB8
- xK7jd2lriGurqppVfUeH2LLiagcTWqiea39snddau9O24IJ298wwOLGdlnyxLJhZxr/r
- 5UsA==
-X-Gm-Message-State: AOJu0Yy8rMfre3l90lPN6x3bBnyGE7Ln5phbnXgvj/pVqLS1b1RqrbcE
- 62I3nnNFySqj3JlaJf2QnefbJFpdAUfp8/F43pRycqrT2tmdcySmLaa7QfinUkwikapsaAZyyI5
- mwzvu
-X-Gm-Gg: AfdE7cn9Z6ZrIV+NAaTjApkUJxutfv8at4udAOjyAYSMdB5K73f1WelmXBODqp+lifU
- MrKW8MshJNp/CMfmOh9oDDhclMpUfhUsz3Fva4pCoKw5Wq8Y/DsLhkGxK5oNGI0gNHrJ6btCQ3S
- HdLU6Ez/NX3fJBDQRyOft01ifFb62/1hzCwG9Zg5mEsaUmEmeMbtaqgjwBJ0mWtW0aFr6TNcngl
- wcqwmNFFXGT05sCSYg109Q0e+plcijmfI/+iEosbJzewOfoNfNrlhPyLk+gxHgr9Z/nJoLPsGWO
- xpVWMewk1u9dYK3GpZenLmQhG4nE5IjZPdhcxcbaeRhb0a+hEEbrU6tqWXripzpcJiiGsfvx603
- 2VImxcwdy7HChL6UanpRxzDM60VO9vZXpHAmsUl5JFm3c/VXHRI2zxQ3rLeRc3a0DEY39Gy4s7c
- VuZwGc68t01Kx5dESyK/Dt8E96V56I+lO1KlNS6w7oyMiFN9uwKV4eJitI3+4Z
-X-Received: by 2002:a05:6a00:414f:b0:835:41f3:f440 with SMTP id
- d2e1a72fcca58-847c50428a1mr6691310b3a.14.1783024997715; 
- Thu, 02 Jul 2026 13:43:17 -0700 (PDT)
-Received: from stoup.. (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c9e921cd139sm1678941a12.23.2026.07.02.13.43.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jul 2026 13:43:17 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 02/15] target/arm: Implement FMOP4 (non-widening) for
- float16
-Date: Thu,  2 Jul 2026 13:43:01 -0700
-Message-ID: <20260702204314.79224-3-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260702204314.79224-1-richard.henderson@linaro.org>
-References: <20260702204314.79224-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wfOJr-0005WZ-ES; Thu, 02 Jul 2026 16:47:35 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wfOJp-0002L4-5e; Thu, 02 Jul 2026 16:47:35 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 662JIRQt723198; Thu, 2 Jul 2026 20:47:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=KwYIB0
+ a9luYC9YjgySomi8O/UOYXEe8m35va+GYDyBs=; b=UYzxrBo3r7cYilFpTLX23g
+ Sgxs9nQFkYVS5XahWWhJdRm47lPZrtTZIwLnaQctPhxAReCtVEleBJ5MKgXefZSQ
+ ZMUnO/5OZtQivgspikjthDvVRzv84RFuHAKJxQ7GX3wLuVLdal2cxOlwUs5L+L0B
+ u1k5E/7KTp4ASb26cTsk8MWdwaM0GImvzjIVpExlkr7RW/dBPEpJCUjUIeOkGJ9V
+ FKE2zbgrQrZGbXJjLt52XktlHUQ5M1k3NLKEQTEoCZ/NK9bwr0/0V8mWYk2cwWM5
+ BQAWBLPeNAHY4H8pMVsbUdte8Q+Nhs46eMT9MjGSzloJKwbCMLYOTgSGe+yJv05A
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qgbxss-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Jul 2026 20:47:28 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 662KYcdH031116;
+ Thu, 2 Jul 2026 20:47:27 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhnpmb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Jul 2026 20:47:27 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 662KlQhe27918898
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 2 Jul 2026 20:47:26 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EBA3F58053;
+ Thu,  2 Jul 2026 20:47:25 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 20CC058043;
+ Thu,  2 Jul 2026 20:47:23 +0000 (GMT)
+Received: from [9.61.151.121] (unknown [9.61.151.121])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  2 Jul 2026 20:47:22 +0000 (GMT)
+Message-ID: <efefd0a4-e40e-4555-9e1b-5cdd1edb55c5@linux.ibm.com>
+Date: Thu, 2 Jul 2026 16:47:22 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 26/35] pc-bios/s390-ccw: Add additional security
+ checks for secure boot
+To: Eric Farman <farman@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
+ jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260701204922.1320349-1-zycai@linux.ibm.com>
+ <20260701204922.1320349-27-zycai@linux.ibm.com>
+ <2648e0272c9a8b9d5c5667a85a303f63b54ecb3a.camel@linux.ibm.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <2648e0272c9a8b9d5c5667a85a303f63b54ecb3a.camel@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=RYqgzVtv c=1 sm=1 tr=0 ts=6a46ce60 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=ZuPAuNYYAqAqPPLlsVkA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDIxMyBTYWx0ZWRfXw8zjJsFy4Urw
+ i3lnMzR/zuBkcwx7GH/lzIiL72hTODpTUqlTBocNdozYJXV62smNRUcwq85SXzmQDNtifE1xTfO
+ II9TNxHpW9amy6lTzotQ/JQ8HDVKi1A=
+X-Proofpoint-GUID: LaZXV_xjz4ZyUuyFaZp45dQ_4q_vGGVI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDIxMyBTYWx0ZWRfX2UM4GoiPTk6k
+ qWr4TDhvA8kw1ergN8EGzl7/6kOtZZLNlN73oqVbPeYgZsNKrURCSUjwlZdw4L0f5bkTP9tfZ0F
+ L8yt70gB3yrPQtex9b9/z5ViOIrEX2LqjhWhp7kOyvqLIacHqi2FbkuamzZVoG6ljmzThEM0vTR
+ W+sukZv6GK++VvIRIMyiI+DmHld1D75lk2SnJJxUV5+Nq/pEPiNlIylDJnecwixLPGoctTH9vm0
+ kj0jgMo0/N2hlZDwHKQCaYTvs/Tea2MiJ2EY2wslMLHMb3zDDz7sYtVzgV+CA1IIdQbBzJDaMkw
+ ACA0yeyxGhCfC2jrtQaLcWKtEZHgJ6hb4PWMMizjiGQfNoa7/xWOage74A8N/x7/NdZsjbk2jpc
+ 7xaaH0Zz0GVRK/ETOkcge9/GNTSfVX+2+h9gA4c+QU5hiyM+pWCuH6GMvnXuezZbSDIAoAhoClE
+ upob6fGFTcpenBXOizA==
+X-Proofpoint-ORIG-GUID: LaZXV_xjz4ZyUuyFaZp45dQ_4q_vGGVI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-02_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020213
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,135 +131,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/cpu-features.h        |  5 ++++
- target/arm/tcg/helper-sme-defs.h |  4 +++
- target/arm/tcg/sme_helper.c      | 42 ++++++++++++++++++++++++++++++++
- target/arm/tcg/translate-sme.c   |  8 ++++++
- target/arm/tcg/sme.decode        |  3 +++
- 5 files changed, 62 insertions(+)
+Thanks for the review!
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 5a45358318..eb5c574e59 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1797,6 +1797,11 @@ isar_feature_aa64_sme_f16f16_or_f8f16(const ARMISARegisters *id)
-     return isar_feature_aa64_sme_f16f16(id) || isar_feature_aa64_sme_f8f16(id);
- }
- 
-+static inline bool isar_feature_aa64_sme_mop4_f16f16(const ARMISARegisters *id)
-+{
-+    return isar_feature_aa64_sme_mop4(id) && isar_feature_aa64_sme_f16f16(id);
-+}
-+
- /*
-  * Feature tests for "does this exist in either 32-bit or 64-bit?"
-  */
-diff --git a/target/arm/tcg/helper-sme-defs.h b/target/arm/tcg/helper-sme-defs.h
-index 9e1f09ce5b..ec7389d2ae 100644
---- a/target/arm/tcg/helper-sme-defs.h
-+++ b/target/arm/tcg/helper-sme-defs.h
-@@ -356,6 +356,10 @@ DEF_HELPER_FLAGS_5(sme2_sel_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32, i32)
- DEF_HELPER_FLAGS_5(sme2_sel_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32, i32)
- DEF_HELPER_FLAGS_5(sme2_sel_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32, i32)
- 
-+DEF_HELPER_FLAGS_5(sme_fmop4a_hh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_5(sme_fmop4s_hh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_5(sme_ah_fmop4s_hh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
-+
- DEF_HELPER_FLAGS_5(sme_fmop4a_ss, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_5(sme_fmop4s_ss, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_5(sme_ah_fmop4s_ss, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index b08d91e6de..c4d149f7f7 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -2636,6 +2636,48 @@ void sme_mop4(void *vza, void *vzn, void *vzm, void *fn_opaque,
-     }
- }
- 
-+static void inner_fmop4a_hh(void *vd, void *vn, void *vm, void *vinfo)
-+{
-+    float16 *d = vd, *n = vn, *m = vm;
-+    float_status *fpst = vinfo;
-+
-+    *d = float16_muladd(*n, *m, *d, 0, fpst);
-+}
-+
-+void HELPER(sme_fmop4a_hh)(void *vza, void *vzn, void *vzm,
-+                           float_status *fpst, uint32_t desc)
-+{
-+    sme_mop4(vza, vzn, vzm, fpst, desc, sizeof(float16), inner_fmop4a_hh);
-+}
-+
-+static void inner_fmop4s_hh(void *vd, void *vn, void *vm, void *vinfo)
-+{
-+    float16 *d = vd, *n = vn, *m = vm;
-+    float_status *fpst = vinfo;
-+
-+    *d = float16_muladd(float16_chs(*n), *m, *d, 0, fpst);
-+}
-+
-+void HELPER(sme_fmop4s_hh)(void *vza, void *vzn, void *vzm,
-+                           float_status *fpst, uint32_t desc)
-+{
-+    sme_mop4(vza, vzn, vzm, fpst, desc, sizeof(float16), inner_fmop4s_hh);
-+}
-+
-+static void inner_ah_fmop4s_hh(void *vd, void *vn, void *vm, void *vinfo)
-+{
-+    float16 *d = vd, *n = vn, *m = vm;
-+    float_status *fpst = vinfo;
-+
-+    *d = float16_muladd(*n, *m, *d, float_muladd_negate_product, fpst);
-+}
-+
-+void HELPER(sme_ah_fmop4s_hh)(void *vza, void *vzn, void *vzm,
-+                              float_status *fpst, uint32_t desc)
-+{
-+    sme_mop4(vza, vzn, vzm, fpst, desc, sizeof(float16), inner_ah_fmop4s_hh);
-+}
-+
- static void inner_fmop4a_ss(void *vd, void *vn, void *vm, void *vinfo)
- {
-     float32 *d = vd, *n = vn, *m = vm;
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index aab5eab9df..d19cd274ac 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -2025,6 +2025,14 @@ static bool do_mop4_fp(DisasContext *s, arg_mop4 *a, MemOp esz,
-     return true;
- }
- 
-+static gen_helper_gvec_3_ptr * const fmop4_hh[3] = {
-+    gen_helper_sme_fmop4a_hh,
-+    gen_helper_sme_fmop4s_hh,
-+    gen_helper_sme_ah_fmop4s_hh
-+};
-+TRANS_FEAT(FMOP4_hh, aa64_sme_mop4_f16f16,
-+           do_mop4_fp, a, MO_16, FPST_ZA_F16, fmop4_hh)
-+
- static gen_helper_gvec_3_ptr * const fmop4_ss[3] = {
-     gen_helper_sme_fmop4a_ss,
-     gen_helper_sme_fmop4s_ss,
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index 5a3d47cdfe..227f3d7790 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -1094,7 +1094,10 @@ LUTI4_s_4b      1100 0000 1001 101     1 00 00 00 ....0 zd:5    \
- %mop4_zm        17:3 !function=times_2_plus_16
- %mop4_zn        6:3  !function=times_2
- 
-+@mop4_o1        .... .... ... m:1 .... .... .. n:1 ... . s:1 ... zad:1 \
-+                &mop4 zm=%mop4_zm zn=%mop4_zn
- @mop4_o2        .... .... ... m:1 .... .... .. n:1 ... . s:1 .. zad:2 \
-                 &mop4 zm=%mop4_zm zn=%mop4_zn
- 
-+FMOP4_hh        1000 0001 000. ...0 0000 00.. ..0. 100.         @mop4_o1
- FMOP4_ss        1000 0000 000. ...0 0000 00.. ..0. 00..         @mop4_o2
--- 
-2.43.0
+On 7/2/26 12:08 PM, Eric Farman wrote:
+> On Wed, 2026-07-01 at 16:49 -0400, Zhuoying Cai wrote:
+>> Add additional checks to ensure that components do not overlap with
+>> signed components when loaded into memory.
+>>
+>> Add additional checks to ensure the load addresses of unsigned components
+>> are greater than or equal to 0x2000.
+>>
+>> When the secure IPL code loading attributes facility (SCLAF) is installed,
+>> all signed components must contain a secure code loading attributes block
+>> (SCLAB).
+>>
+>> The SCLAB provides further validation of information on where to load the
+>> signed binary code from the load device, and where to start the execution
+>> of the loaded OS code.
+>>
+>> When SCLAF is installed, its content must be evaluated during secure IPL.
+>>
+>> Add IPL Information Error Indicators (IIEI) and Component Error
+>> Indicators (CEI) for IPL Information Report Block (IIRB).
+>>
+>> When SCLAF is installed, additional secure boot checks are performed
+>> during zipl and store results of verification into IIRB.
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> ---
+>>  include/hw/s390x/ipl/qipl.h   |  29 +++++-
+>>  pc-bios/s390-ccw/sclp.h       |   1 +
+>>  pc-bios/s390-ccw/secure-ipl.c | 170 +++++++++++++++++++++++++++++++++-
+>>  pc-bios/s390-ccw/secure-ipl.h |  51 ++++++++++
+>>  4 files changed, 246 insertions(+), 5 deletions(-)
+>>
+
+[...]
+
+>> +static void check_sclab(SclaBlock **global_sclab,
+>> +                        IplDeviceComponentEntry *comp_entry,
+>> +                        IplInfoBlockHeader *comp_list_hdr)
+>> +{
+>> +    SclabOriginLocator *sclab_locator;
+>> +    SclaBlock *sclab;
+>> +
+>> +    /* sclab locator is located at the last 8 bytes of the signed comp */
+>> +    sclab_locator = (SclabOriginLocator *)(comp_entry->addr +
+>> +                                           comp_entry->len - 8);
+> 
+> Need to verify that len >=8, otherwise who knows what gets read.
+> 
+>> +
+>> +    /* return early if sclab does not exist */
+>> +    zipl_secure_validate(magic_match(sclab_locator->magic, ZIPL_MAGIC),
+>> +                         &comp_entry->cei, S390_CEI_INVALID_SCLAB,
+>> +                         "Magic does not match. SCLAB does not exist");
+>> +
+>> +    if (comp_entry->cei & S390_CEI_INVALID_SCLAB) {
+>> +        return;
+>> +    }
+>> +
+>> +    zipl_secure_validate(sclab_locator->len >= S390_SCLAB_MIN_LEN, &comp_entry->cei,
+>> +                         S390_CEI_INVALID_SCLAB_LEN | S390_CEI_INVALID_SCLAB,
+>> +                         "Invalid SCLAB length");
+>> +
+>> +    /* return early if sclab is invalid */
+>> +    if (comp_entry->cei & S390_CEI_INVALID_SCLAB) {
+>> +        return;
+>> +    }
+> 
+> I get why these two conditions (missing/invalid SCLAB) cause us to stop processing when in audit
+> mode...
+> 
+>> +
+>> +    sclab = (SclaBlock *)(comp_entry->addr + comp_entry->len -
+>> +                          sclab_locator->len);
+>> +
+>> +    zipl_secure_validate(sclab->format == 0, &comp_entry->cei,
+>> +                         S390_CEI_INVALID_SCLAB_FORMAT,
+>> +                         "Format-0 SCLAB is not being used");
+> 
+> ...but why doesn't this one (SCLAB format)? Do the subsequent flags checks all apply regardless of
+> format?
+> 
+
+Continuing with the flag checks seems reasonable to me, since we're
+still dealing with some form of valid SCLAB. Please let me know your
+thoughts. Thanks!
+
+>> +
+>> +    if (!(sclab->flags & S390_SCLAB_OPSW)) {
+>> +        /* OPSW = 0 - Load PSW field in SCLAB must contain zeros */
+>> +        zipl_secure_validate(sclab->load_psw == 0, &comp_entry->cei,
+>> +                             S390_CEI_SCLAB_LOAD_PSW_NOT_ZERO,
+>> +                             "Load PSW is not zero when Override PSW bit is zero");
+>> +    } else {
+>> +        /* OPSW = 1 indicating global SCLAB */
+>> +        if (*global_sclab) {
+>> +            comp_list_hdr->iiei |= S390_IIEI_MORE_GLOBAL_SCLAB;
+>> +            zipl_secure_error("More than one global SCLAB");
+>> +        }
+>> +        *global_sclab = sclab;
+>> +
+>> +        /* override load address flag must set to one */
+>> +        zipl_secure_validate(sclab->flags & S390_SCLAB_OLA, &comp_entry->cei,
+>> +                             S390_CEI_SCLAB_OLA_NOT_ONE,
+>> +                             "OLA flag is not set to one in the global SCLAB");
+>> +    }
+>> +
+>> +    if (!(sclab->flags & S390_SCLAB_OLA)) {
+>> +        /* OLA = 0 - Load address field in SCLAB must contain zeros */
+>> +        zipl_secure_validate(sclab->load_addr == 0, &comp_entry->cei,
+>> +                             S390_CEI_SCLAB_LOAD_ADDR_NOT_ZERO,
+>> +                             "Load Address is not zero when OLA flag is zero");
+>> +    } else {
+>> +        /* OLA = 1 - Load address field must match storage address of the component */
+>> +        zipl_secure_validate(sclab->load_addr == comp_entry->addr, &comp_entry->cei,
+>> +                             S390_CEI_UNMATCHED_SCLAB_LOAD_ADDR,
+>> +                             "Load Address does not match with component load address");
+>> +    }
+>> +
+>> +    zipl_secure_validate(~sclab->flags & S390_SCLAB_NUC || sclab->flags & S390_SCLAB_OPSW,
+>> +                         &comp_entry->cei, S390_CEI_NUC_NOT_IN_GLOBAL_SCLAB,
+>> +                         "NUC bit is set, but not in the global SCLAB");
+>> +
+>> +    zipl_secure_validate(~sclab->flags & S390_SCLAB_SC || sclab->flags & S390_SCLAB_OPSW,
+>> +                         &comp_entry->cei, S390_CEI_SC_NOT_IN_GLOBAL_SCLAB,
+>> +                         "SC bit is set, but not in the global SCLAB");
+>> +}
+>> +
+>>  static int zipl_load_signature(ComponentEntry *entry, uint64_t sig)
+>>  {
+>>      if (entry->compdat.sig_info.format != DER_SIGNATURE_FORMAT) {
+>> @@ -268,6 +415,8 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec,
+>>      uint8_t *tmp_buf;
+>>      bool verified;
+>>      bool signed_found = false;
+>> +    bool sclab_found = false;
+>> +    SclaBlock *global_sclab = NULL;
+>>  
+>>      if ((MAX_SIGNED_COMP * CERT_BUF_MAX_LEN) > (CERT_BUF_SIZE)) {
+>>          panic("Not enough memory to store certificates");
+>> @@ -308,6 +457,10 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec,
+>>  
+>>              /* no signature present (unsigned component) */
+>>              if (!sig_entry.len) {
+>> +                zipl_secure_validate(comp_entry.addr >= S390_UNSIGNED_MIN_ADDR,
+>> +                            &comp_entry.cei, S390_CEI_INVALID_UNSIGNED_ADDR,
+>> +                            "Load address for unsigned component is less than 0x2000");
+>> +
+>>                  comp_list_add(comp_list, comp_entry);
+>>                  break;
+>>              }
+>> @@ -319,6 +472,9 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec,
+>>              comp_entry.flags = S390_IPL_DEV_COMP_FLAG_SC;
+>>              signed_found = true;
+>>  
+>> +            check_sclab(&global_sclab, &comp_entry, &comp_list->ipl_info_header);
+>> +            sclab_found |= !(comp_entry.cei & S390_CEI_INVALID_SCLAB);
+>> +
+>>              cert_entry = (IplSignatureCertificateEntry) { 0 };
+>>              verified = verify_signature(comp_entry, sig_entry,
+>>                                          &cert_entry.len, &cert_table_idx);
+>> @@ -364,9 +520,17 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec,
+>>          }
+>>      }
+>>  
+>> -    if (!signed_found) {
+>> -        zipl_secure_error("Secure boot is on, but components are not signed");
+>> -    }
+>> +    zipl_secure_validate(signed_found, &comp_list->ipl_info_header.iiei,
+>> +                         S390_IIEI_NO_SIGNED_COMP,
+>> +                         "Secure boot is on, but components are not signed");
+>> +
+>> +    zipl_secure_validate(sclab_found, &comp_list->ipl_info_header.iiei,
+>> +                         S390_IIEI_NO_SCLAB, "No recognizable SCLAB");
+>> +
+>> +    comp_entry = (IplDeviceComponentEntry){ 0 };
+>> +    comp_entry.addr = entry->compdat.load_psw;
+>> +    check_global_sclab(global_sclab, &comp_entry, comp_list);
+>> +    comp_list_add(comp_list, comp_entry);
+> 
+> Do we actually need to add an (empty) entry when global_sclab wasn't found?
+> 
+
+I think we should still add this entry even when global_sclab is not
+found, since the comp_entry would still contain the PSW value from the
+EXEC entry.
+
+>>  
+>>      *entry_ptr = entry;
+>>      free((void *)sig_entry.addr);
+>> diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
+>> index 1b1287858b..1bacb4987a 100644
+>> --- a/pc-bios/s390-ccw/secure-ipl.h
+>> +++ b/pc-bios/s390-ccw/secure-ipl.h
+>> @@ -27,6 +27,33 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec,
+>>                      IplSignatureCertificateList *cert_list,
+>>                      uint8_t **tmp_cert_buf);
+>>  
+>> +#define S390_SCLAB_OPSW    0x8000   /* override PSW flag */
+>> +#define S390_SCLAB_OLA     0x4000   /* override load address flag */
+>> +#define S390_SCLAB_NUC     0x2000   /* no unsigned components flag */
+>> +#define S390_SCLAB_SC      0x1000   /* single component flag */
+>> +
+>> +#define S390_SCLAB_MIN_LEN      32
+>> +#define S390_UNSIGNED_MIN_ADDR  0x2000
+>> +
+>> +/* Secure Code Loading Attributes Block */
+>> +struct SclaBlock {
+>> +    uint8_t  format;
+>> +    uint8_t  reserved1;
+>> +    uint16_t flags;
+>> +    uint8_t  reserved2[4];
+>> +    uint64_t load_psw;
+>> +    uint64_t load_addr;
+>> +    uint64_t reserved3[];
+>> +} __attribute__ ((packed));
+>> +typedef struct SclaBlock SclaBlock;
+>> +
+>> +struct SclabOriginLocator {
+>> +    uint8_t reserved[2];
+>> +    uint16_t len;
+>> +    uint8_t magic[4];
+>> +} __attribute__ ((packed));
+>> +typedef struct SclabOriginLocator SclabOriginLocator;
+>> +
+>>  static inline void zipl_secure_error(const char *message)
+>>  {
+>>      switch (boot_mode) {
+>> @@ -38,6 +65,30 @@ static inline void zipl_secure_error(const char *message)
+>>      }
+>>  }
+>>  
+>> +static inline void zipl_secure_validate_u16(bool condition, uint16_t *flags,
+>> +                                            uint16_t flag, const char *message)
+>> +{
+>> +    if (!condition) {
+>> +        *flags |= flag;
+>> +        zipl_secure_error(message);
+>> +    }
+>> +}
+>> +
+>> +static inline void zipl_secure_validate_u32(bool condition, uint32_t *flags,
+>> +                                            uint32_t flag, const char *message)
+>> +{
+>> +    if (!condition) {
+>> +        *flags |= flag;
+>> +        zipl_secure_error(message);
+>> +    }
+>> +}
+>> +
+>> +#define zipl_secure_validate(condition, flags, flag, message)   \
+>> +    _Generic((flags),                                           \
+>> +        uint16_t * : zipl_secure_validate_u16,                  \
+>> +        uint32_t * : zipl_secure_validate_u32                   \
+>> +    )(condition, flags, flag, message)
+>> +
+>>  static inline uint64_t _diag320(void *data, unsigned long subcode)
+>>  {
+>>      register unsigned long addr asm("0") = (unsigned long)data;
 
 
