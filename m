@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D72DDC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 18:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4DF0C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 18:07:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfLnz-0002yo-Oy; Thu, 02 Jul 2026 14:06:31 -0400
+	id 1wfLoa-0003EB-Q9; Thu, 02 Jul 2026 14:07:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfLnm-0002yD-KJ
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:06:19 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1wfLoX-0003Bm-0U
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:07:05 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfLnk-00021k-3o
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:06:17 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2c99672293cso20913095ad.2
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 11:06:13 -0700 (PDT)
+ id 1wfLoU-0002E4-Ag
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:07:04 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-845eb7b96feso1653686b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 11:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783015572; x=1783620372; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783015621; x=1783620421; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=YHp3qTrwnqyG8gtZe9J4Osishaoqr2bqlcF+ZcKAw2Q=;
- b=qUWS7hyk/+E8SLNL/D/hY7pJfOn6reOfuKnC/b5hFcIiMer34+6G6hDhAjqMqp+wlz
- rgaCoFdZ/EuSmIo7Q4OohyBhiLoePls/A5E01M4ahSAZz7EuPx//jnWwH8rtfkqJTUJR
- 3s5kE/WfDTQq38oYNsNC8eOtwQUjKfYKoU2dOiOw/pmtbWrzy3OK2Svdaq27vK6IthLm
- jYgIKnUBk+q/m2GNIykcNle8LgdQMkE0dZc+XH/tUMbXJoV/AfrggQ5efqjYjL0ggwE0
- ugtBdMeosoW/Ku0gXEIbFP+z7v5yfq7QJJ9/CWPA1PMsc4fyPVL1+BMtsMfPz4D6mlVF
- 6HMA==
+ bh=ItlymjENmn1AVJm5yiNCQ8JseetCMgXOicY/Ez1UY3E=;
+ b=AE/RFQYyxbkBIlnNG2ONn6MmufaBrgIRSMYJA0ploqlA3vLI52zgZHFbotfGVO5fnw
+ wPcVUnxx2r6PkOcpXMjXINuLrcHE6jFQUoja9jjV4vBErOUCzQcNcFEi7Qlfv9T6HARv
+ ymQSMvYN0i/n2qx1vm2iQeAhhq+BEMofIKAJQ8IJwjG/B8hX1TNRrjSFsl8Ex4rk9zIV
+ sdbsugQn2AHdrzzG3cjIYf7f/7NNglzBhbZQlz4H+BFZqir4HK+ZwmwVL9FDgns22thg
+ 4TD+K3bqL2rxQEZSW3MzJX13DDtoIsg7qr3oAelSM1XunsokjT0jf6oupiAqh3zRrTI3
+ BBcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783015572; x=1783620372;
+ d=1e100.net; s=20251104; t=1783015621; x=1783620421;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=YHp3qTrwnqyG8gtZe9J4Osishaoqr2bqlcF+ZcKAw2Q=;
- b=prZ7w1FZ7Ffao0ZGmOi99RdDAJyBT9CRT1hZuHRXgOd2F5CgbhsYkk25ST7h3tnzaP
- CHvo2JgbDN3MzkgZYooE5KDK+0nJxx8/1FVLoPo0D/aF6dW9OIvG8/tfgak+y3DJKfTy
- rlI72DY1PdDmKgspYSYrH3TOThAZcRx8wVOsxq8Ub4gGk+kdTy24DHOFn+j80ZY1Jlfq
- Mx/kyOBIXp420N1NR8Rn2D5vaKR7nk2hfWjPDZmIGtCgj+LJvcoF4yypdglfmH0aEHXS
- WLXRdshUL0cJOpzDVLqSgppr57FweZ8Rhnyv8F6Yu5Ezy9ut50/gwtsZHo36VDpctmy5
- cxUQ==
+ bh=ItlymjENmn1AVJm5yiNCQ8JseetCMgXOicY/Ez1UY3E=;
+ b=PAPTrsLV1Rq3d9dIgKRGcIvbNkzaB0Aw7mgMFACUlOvUOgKxWo7MeOxMhbso8Tlht6
+ 0PNvCtj/FSEdn4h/G3GeNWv+9tbYyVOXcSdTQ4Bj8hRa4EJ0YkhQBYWsqCU5WN1wzKwZ
+ jv5Dlpk3yQJzQmfoaA/FPcqLIDMOtKmYLcu3q4up/ZeMhAbi7iasl6LVjcnoF7qQ+6DF
+ JcwBpwQhjMaz0z08RclGyDKk0JmgZDvaoI4qLX6BcpakCPkOdv187fx9UWqYG92L/aJs
+ FtAlapOuXwpODUswcCvFyDJD3ZKBkHlcAatrmgNSQXkW05GIX7QxF2Ki7xi9iNd6tYF8
+ 4DXQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpM1ZigkfvsCDi8u7GP/zVVA5Zl7dO39NNG9UoyHBaiu5Ije4z+nR5Tlzkr+3ZyDonIWyrnxhREUDCh@nongnu.org
-X-Gm-Message-State: AOJu0Yx4dcQvHPTeYSH8QL6OTBvtd+BRO0GNr2H2KmsRU/znurTExsRp
- IgS8GzcPxJsRFqTWbdlTozLU3wi75m4NDDzdy5Mj+gU7sQU2+BRAtzRrQjAJrl92HEo=
-X-Gm-Gg: AfdE7cm5o4akyjrPSTwFGqexfx53u81hTP6bf80gp1W9dD0pAkcYkzrezOqwyi9q9Uu
- alruAV8QqqRhpM0k+8o5GoiCu/kAe2qXKkW+/hCfYjx/j+u575lZTJwQ4fUT3vqX3rrrVGgAuPZ
- zNo9prkXavJQIJSEeDrNPT8T6VTTZd2uF8a+zKvyy5Rl1pEUAEPPvjWUmrRDONdnBEkr7VyVV/9
- fKHMl+HKLhuBKfc/HYl+dlv7/dGhSQngwhrJ5OUseQBt55CbA3EebgPB6Nm8kI2WI0D6VNaobre
- eL1ltpWJAi96l/yDuBAFEwxb/Mtq0MnatkQ1/79S/rpGBRuDgS8tDqfWCK9tCrnZciSN/OTq5yB
- vhDJj+3Nk0SG7ckYK3RC0eXmxuo2H8StxyTcOgPPLrA10EzOP0RjwMau/IqrEoqLhx/yZAp6Twp
- Z/Lt3r/OG3Vv6EBtlXb2HGU3ltfbA7WyBQzpeqmgfCXx5Dvi9N0Qhs6RB6Ng==
-X-Received: by 2002:a17:902:e746:b0:2c9:ed4a:c3a1 with SMTP id
- d9443c01a7336-2ca7e6ff0b0mr79237615ad.19.1783015571845; 
- Thu, 02 Jul 2026 11:06:11 -0700 (PDT)
+ AHgh+RrDvnRRzOaAPZv7WC62Ge45nHWIMvn2CXOLZ4WPj07XYDRW1s+6y1uBp8Aic35IPerajpi67Kxm0Ato@nongnu.org
+X-Gm-Message-State: AOJu0YwnO8O+G8R4edOKw/O1gw1tVbFGKCtUaqG84Q9K9JWKg44l+5xB
+ L1dX5HSlua0SLlDPoM1Fm4p19kwVb5hrEBU/IJWXnvO/cSo/7/8kCXm5f9PSRzC/qU4=
+X-Gm-Gg: AfdE7cnFvat8Q1IMsWXltID7TumyBCFRmNZa9Judkt8UFwQySilS/rmtAGNMjQjGYt7
+ ArGizfLyoh/AOzyvRr17hGIoRRCRLRnKRE5nCRgjzL6fZa3CitOk1knEBp1m5dlnLIiO3qY2XBR
+ E+zTzVbSWOU5ZG5cxtvRRDasRs4bH3LdEOGwUYA7VHaD+tQMvBFtKZ0lZrgbB2hc6qDz64JmkQQ
+ sko4rXm13WEvkgRDNGEf7qpMUVsum12XHFsGt6nENq0z6DRXSIgmzP0d5JIp1HXY+FxQqORHXGC
+ ZKgLgJPj0ETvDgiaJrvq9y/v7R2GdtGHmX07Fv8XGKyriADidKQAQ2zVTYiGzHGgcpJDVwWZmEJ
+ /xcE+QlIIgVx6Kc3XG8MT2VMGkLtK7VsJcZBWeIpc5JZ5iARbNMbSoqvjqMekMyOCizWc3Iaups
+ 6/OuJjMo51CpZu9XhS0nxzXZIX4Iuss5zkoNZR+shfm0I4NjwVOMkWnP/Qew==
+X-Received: by 2002:a05:6a00:cd1:b0:83e:b443:965e with SMTP id
+ d2e1a72fcca58-847c075cae0mr7012180b3a.3.1783015620742; 
+ Thu, 02 Jul 2026 11:07:00 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ca9aa052d5sm17268385ad.78.2026.07.02.11.06.11
+ d2e1a72fcca58-847cb9ad161sm1728266b3a.51.2026.07.02.11.07.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Jul 2026 11:06:11 -0700 (PDT)
-Message-ID: <2bd90440-babb-4cc6-8ab0-71b21ed9dc7f@linaro.org>
-Date: Thu, 2 Jul 2026 11:06:09 -0700
+ Thu, 02 Jul 2026 11:07:00 -0700 (PDT)
+Message-ID: <de592374-d84f-44fc-a6e0-f40dab5cf542@linaro.org>
+Date: Thu, 2 Jul 2026 11:06:58 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 26/33] target/xtensa: Move watchpoints handling to
- check_hw_watchpoints()
+Subject: Re: [PATCH 29/33] cpu: Move CPUWatchpoint definition to
+ 'exec/watchpoint.h'
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -82,14 +82,14 @@ Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  qemu-ppc@nongnu.org
 References: <20260630220100.1289-1-philmd@oss.qualcomm.com>
- <20260630220100.1289-27-philmd@oss.qualcomm.com>
+ <20260630220100.1289-30-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260630220100.1289-27-philmd@oss.qualcomm.com>
+In-Reply-To: <20260630220100.1289-30-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,17 +113,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/30/26 15:00, Philippe Mathieu-Daudé wrote:
-> Rewrite check_hw_watchpoints() by moving related code from
-> xtensa_breakpoint_handler() to it. No logical change intended.
+> Define CPUWatchpoint in "exec/watchpoint.h", including this
+> header where appropriate.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
 > ---
->   target/xtensa/helper.c | 36 +++++++++++++++++++-----------------
->   1 file changed, 19 insertions(+), 17 deletions(-)
+>   include/accel/tcg/cpu-ops.h |  1 +
+>   include/exec/breakpoint.h   |  9 ---------
+>   include/exec/watchpoint.h   | 12 ++++++++++++
+>   target/arm/internals.h      |  1 +
+>   gdbstub/system.c            |  1 +
+>   target/arm/hyp_gdbstub.c    |  1 +
+>   target/i386/kvm/kvm.c       |  1 +
+>   target/ppc/kvm.c            |  1 +
+>   target/s390x/kvm/kvm.c      |  1 +
+>   9 files changed, 19 insertions(+), 9 deletions(-)
 
-Eh.  I gave you an r-b plus future work for the previous, but if we're going to start 
-adjuting all of the backends, let's do it right.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
