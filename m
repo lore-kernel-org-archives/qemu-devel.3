@@ -4,86 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2C44C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 17:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4AE6C43602
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 17:12:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfKwN-0000Jw-Hc; Thu, 02 Jul 2026 13:11:07 -0400
+	id 1wfKxY-0000tR-By; Thu, 02 Jul 2026 13:12:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfKwI-0000J4-KI
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:11:03 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfKwG-0002Un-KI
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:11:02 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-37cab825ec9so2224244a91.1
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 10:11:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wfKxR-0000mz-Ng
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:12:13 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wfKxO-0002qp-ND
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:12:13 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 662E3gNR560655
+ for <qemu-devel@nongnu.org>; Thu, 2 Jul 2026 17:12:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=OiKCLdfsyg9WtOLsO+xWUlwobzjgWUuWLDt
+ 6lZlyWQY=; b=EHJiiUDwfVrQ1ArmNIOge/TKuY/0M8ofONWy5cvrbmYIAci+FHT
+ 0haEmPq2Kuv/HEWZWWn7FHQeL2xlKRHb1IvYhUQSK4dlIjb2GRvpvEiiFx9pkXUL
+ j3tzxVgEZbihOtxIKDHwrws4inJz6jXuSqd6EkxuGfQaFHNlf752mTefUtbvC562
+ rFKNod+JBdv9WevkcQIpLQ9cMZyEvlRRh48FubfwbiIg4NPJv1tzVQC44kUeSid4
+ jz/w4bB4RlGJJH1yy354Dm0FKdcUgbpr/E7YuxeH0ZTj50dw6sJOmRt+AnfH65mX
+ DKxxDAt0zhiOfUZdlOSRwibRpQuuRLnufoQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5n9bj207-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 17:12:08 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-51bff5c7035so37631471cf.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 10:12:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783012259; x=1783617059; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783012328; x=1783617128; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=TEjRBe7VBaAE6CoIJmyeuVYkGDzs+ItPUGbcShRXyGE=;
- b=puILz3vtDQ8XNMeXGv3HX+v9DEgEqiS+0fjC5Naig7Wy0ofD0lKXgotBSiPntsSj6J
- IlULLdW+qNLJoTo71IPBwcBG1HyHhWjR8LqtwBxKNhDpW3SrvOSphiqVbsdCO/fb4iZi
- z4u09qeiisVC0myj5Gw35GdJSDVg28swGYykDZo+XA0DlUmjqOp+Cjv8Jykcs9pvU5L7
- kdSzqO5qrMSorxOzEpuDHJqr3we8hFz6FYDabhyVSKqj/Z8DGfgkSM261UGxRWmItUOM
- WM3S6UoYGFwEz2zVIcigegNXJqxKOhqu+x4/3TEjJ9o4N2z+ZIdnCApN/Hz+4abs168Z
- J1Rg==
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=OiKCLdfsyg9WtOLsO+xWUlwobzjgWUuWLDt6lZlyWQY=;
+ b=Og2gewJr73Djk8TxT/wGHUCCqN6Djx4np/LXsIsXJkt0c6AOazD40N1BpdCEld8yQS
+ sA071Mnln4ENX9cKz/IJzTUfiwBB8baPkwKS/ci2sZz/5flZnrxABvogaTcHyciySg4H
+ k+9Q95isU2jXoTxeyCe2GPU+PyE43WAXevZtbBoXJDRVMOegBirfuM7gABhzBV5FOK5l
+ NDVRfDz3a/9d/yuFS9JE2DNPvxlXxabJeEysge6LOzFqSBkiglBYzC7yiUjd4iXlOcVa
+ SZdUCBzE9Z2mNPgnfeN3zT1Yv970aX7K2+m2B+PSHRMEGWs8iQZHBS4C942pkjhaMyZb
+ smDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783012259; x=1783617059;
+ d=1e100.net; s=20251104; t=1783012328; x=1783617128;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=TEjRBe7VBaAE6CoIJmyeuVYkGDzs+ItPUGbcShRXyGE=;
- b=TIb+ROxZ32UKoaEU0QUh69Q5pd1D8NPz+sogtmdyH0RlEc1/w/WLAfqwQH5xcb1InJ
- HRT/ETpDtodQuIvGwHtJEgGiRYR7/gjeoVz39CWlL8EZS9zIX7rzczhS43Dl1JsLtaBV
- 1N4XGmcrt5gXjpKKVJ9bXMoC5wulZQ7f3h9Mtro/w07mHn40gUcLu7+pU1c1dqWdLqkL
- ONyvYzBtUA0NTmbwPFUOogQs+VHSuWxXTx5QIWx3wbtDRDILe+QmVuLg/W1WHKIOmg8X
- 7K3j9++X/eAZD/D1dp8gwffD5dArRDXikqhpaaCY8fSQCHbMMquDSV8iCfHZyxuY1ru/
- 3Dgw==
-X-Gm-Message-State: AOJu0Yz6h2TJslHDAQ+CRRP9FAtIvJnCplZ1uQtssSJhyOpcUBqDnjc9
- rkc/4V5NwpLcOww0DP0+LOS/UttuMatkjZ0Dq+pY0tKOBhiSwyStXmlWql9f+Kr7djKpWkpQG9y
- DciE9
-X-Gm-Gg: AfdE7cl8GBFhoMKKCccEqQL47yAnEMCTMq3dXrgVy82hZ+5wf17wmhDIpkM4STqexiY
- rq5IlwMBP5ZylDCz6llDCLuaAvQkfmJkx7Ycx4WwrepHG+MUXCU9MMX/CGcbvA17Usws5QgeAp5
- kv4aOdZdQfRCS2298YJNBD65tVYMrsZESmKoBL53RYjjor1cnuN05aWhkMU4oVECxAzE/ia3kBH
- /zRxXx8awiitDMAlSnuSoTZkm/xjn/QsHUz3lzjCEEJgsZqC9Q77qUPCOLSvB/Y7EL2YnQe1n+3
- JVtRFO0/Fn2PJEG6rBcFZqeQ6FY/3Ct9e1jc/+CQowsnW70lGvgezSfT9WfHu7ewM8JzDM3pzIB
- qbn1m1uSM54yK8gN5D0QaVFwLzEiendZGhvNYHb4Mj51eJWEDXGNFFYmO0fuL4mI9o5qug2dx7s
- SY2iXdSMFXb9clXL4491By+tVGHABblbPvUBNCw9zmKMocQUYNiTG84l5XJGav
-X-Received: by 2002:a17:90b:184e:b0:37f:bd85:38b5 with SMTP id
- 98e67ed59e1d1-380aa1a4117mr7101939a91.22.1783012258497; 
- Thu, 02 Jul 2026 10:10:58 -0700 (PDT)
-Received: from stoup.. (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ :message-id:reply-to;
+ bh=OiKCLdfsyg9WtOLsO+xWUlwobzjgWUuWLDt6lZlyWQY=;
+ b=HivL+ygv2UO+Nfu+76jylNfcsPPyBPw25aKoRrkiytwplVYfLHbxXov/b6X4wAmB7a
+ PzJQR08vLfFYfpoYeXAF+XTE6txLsShWOR4n6UAsxDh9SnLyxYoquE2oQHiaQ90p0vUq
+ YP/4lAoiqETTvhnSdy+DrDZUygqP/p3goRx0GfAgJW0gu3T9eHLoZIS6V45YE23ci+KS
+ O8XnNwKdo5rYFrHUEIBk8Ql9P32i8PFxyZt7nzbwRUR2+OnrZZDX8p3S2EiqE6Vo87Yk
+ M7LGgUK48Ad0WC6r+4jnN/ssnNT5TT9mOmVFIcHDk1D98gFT1EZBKpfD9lXCP/Z1/33y
+ FDDA==
+X-Gm-Message-State: AOJu0YxV9lqo3U01Flybgh0ILKS5x0DR1Wi8SBEHml9BthSoiY3DMWTy
+ lyOaanrkCKT/LHu8u6lYK5ER+pTWFRXk1mjJKT7awZgi9Xmj7KCsx7YT4A/Ii+1bX+CetjNzKiY
+ EEXF+t/cjPWmQDKLdYoAy8r0W+JLWEyKg+PuKKGsF5tqan2pW92KR3mq76PgALiH7xA==
+X-Gm-Gg: AfdE7clNFZo042mc8V47WVUZQxiDUswBJ4dngWK2r9yIlaRNIUfsc+QSe80IoDqBC4v
+ pkEfumUk7BhtjIxRrEsfmCiBU+T2YQXuhpcdVTBA6YZ0olPlRouIe2deiWtHKLKwIiEmqVoGqBo
+ 4U4fV312lTjsQydqxFlTX434WRVd9yuNKlevW0whH09uf8Keyj8FaIymJLVx3SqFO4ZnzHTmnUU
+ x9emZK02tVrbfOOwjfX8yIVFojMXGtOF2Rw9GluuH+SCK1z51LdQkwJ6NjzEuU9sg/jaB5EoAAk
+ ZHiaAWsDyfgYU4N5sZaiEjkqzOSu3eQp0vg8QJLVQ3s3hQAWin6/E+c9rb2OU6XOPE0V6N9dGZx
+ lkLz902Fg57epx9/ZMCSZv8KIoGeIoTsCQyVYdXnmOsmmHQ==
+X-Received: by 2002:ac8:5a50:0:b0:519:f02b:45cb with SMTP id
+ d75a77b69052e-51c26a7a3bemr94016171cf.26.1783012327496; 
+ Thu, 02 Jul 2026 10:12:07 -0700 (PDT)
+X-Received: by 2002:ac8:5a50:0:b0:519:f02b:45cb with SMTP id
+ d75a77b69052e-51c26a7a3bemr94015411cf.26.1783012326877; 
+ Thu, 02 Jul 2026 10:12:06 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([189.79.21.40])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-380e165be46sm1427026a91.7.2026.07.02.10.10.57
+ d75a77b69052e-51c30c1582esm18338491cf.16.2026.07.02.10.12.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jul 2026 10:10:57 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Thu, 02 Jul 2026 10:12:06 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: philmd@oss.qualcomm.com,
-	qemu-stable@nongnu.org
-Subject: [PATCH] accel/tcg: Use TLB_FORCE_SLOW not TLB_MMIO for user-only
- plugins
-Date: Thu,  2 Jul 2026 10:10:56 -0700
-Message-ID: <20260702171057.47998-1-richard.henderson@linaro.org>
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ andrew.jones@oss.qualcomm.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PATCH] hw/riscv/riscv-iommu.c: update ioval2 when faulting in
+ spa_fetch()
+Date: Thu,  2 Jul 2026 14:12:02 -0300
+Message-ID: <20260702171202.1322493-1-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-ORIG-GUID: ZA-B-WcZDkS4tvDS13pDM0AZ9zOJHb64
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDE4MCBTYWx0ZWRfX89K4n2jwBh19
+ ot3dCZJmtVUy9tcpMlg/yLFWTtpamzXbipekyLa2lB3DyvkVGwl2GoMwWHItQ+20z8bV8dbQhLr
+ Ual/lDfyHB9NsJQEDfAOqgmU/CBMnH4=
+X-Proofpoint-GUID: ZA-B-WcZDkS4tvDS13pDM0AZ9zOJHb64
+X-Authority-Analysis: v=2.4 cv=bOom5v+Z c=1 sm=1 tr=0 ts=6a469be8 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=p0WdMEafAAAA:8
+ a=EUspDBNiAAAA:8 a=brxubhDnoS8KGqh5eZoA:9 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDE4MCBTYWx0ZWRfX48rMfF/QeFJA
+ rIpAbH1PqlICH32Na2zGTj3rYU2KUwBC6WkJDRcvfakim3e6koze21x3LGFzjTz+LuwBZ9QMHQp
+ eIgVphKXBzScn965d1kqMMcLRA2aR+E1yuoOZb3sd4UEc328DkfMMqHcKPG66QftCyqRiNhmujr
+ ZecgVNEOvm3CGytzkdME5X39nnVI2I3bO8bBFp7JUvdkWX6joAWhLdbAwfTrO/Gu1uXufsEdGXk
+ V87TGxCecClQuHN1Egiub++J3ArFzN8Qck4PBc+xO+HKbpCeig3GAsqsk7v3gbqeHFdTEaSbiT0
+ Vdww9AmI/FwJmEPQus/lMagwbUvv23v+KnWssqsLfNVrVH1RFM4Ah3WI9UgZcirtAH3PhkgrZoM
+ z3oURDqdfW/Ovwicg4pAFd7YBvCAhfnYM4r0sjcHJno9DxiJBqTvUbd6pNl4vID+B4gZMf3yNl6
+ 8Zu+Bu5v3XJ7qzpIQLA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-02_02,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 clxscore=1015 suspectscore=0
+ phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020180
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,69 +148,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In 6d03226b422 we set TLB_MMIO to a non-zero value for user-only
-so that we could return a non-zero value from probe_* functions
-so that we could force callers like Arm SVE vector moves to use
-the slow path rather than direct access.  All for the sake of
-exposing these accesses to plugins.
+riscv_iommu_translate(), the only caller of riscv_iommu_spa_fetch(),
+will use riscv_iommu_report_fault() for all faults it detects.  And it
+will use iotlb->translated_addr as 'iotval2' every time.
 
-Back then, TLB_FORCE_SLOW did not exist, so TLB_MMIO seemed like
-a reasonable solution.  However, user-only doesn't really have
-MMIO and this has knock-on effects, like forcing Arm SVE first-fault
-vector loads to stop.  Better to use TLB_FORCE_SLOW as a more exact
-exact trigger for plugins.
+At this moment we're updating iotlb->translated_addr only after a
+translation step is completed, meaning any fault that occur before that
+will have a zeroed iotlb->translated_addr, and as a result iotval2 will
+also be zero later on.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 6d03226b422 ("plugins: force slow path when plugins instrument memory ops")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Keep iotlb->translated_addr updated with the latest translated addr we
+have.
+
+Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3559
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- include/exec/tlb-flags.h | 7 ++++---
- accel/tcg/user-exec.c    | 4 ++--
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ hw/riscv/riscv-iommu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/include/exec/tlb-flags.h b/include/exec/tlb-flags.h
-index 357e79095c..e12cddf234 100644
---- a/include/exec/tlb-flags.h
-+++ b/include/exec/tlb-flags.h
-@@ -27,12 +27,13 @@
- 
- /*
-  * Allow some level of source compatibility with softmmu.
-- * Invalid is set when the page does not have requested permissions.
-- * MMIO is set when we want the target helper to use the functional
-+ * INVALID is set when the page does not have requested permissions.
-+ * FORCE_SLOW is set when we want the target helper to use the functional
-  * interface for load/store so that plugins see the access.
-  */
- #define TLB_INVALID_MASK     (1 << 0)
--#define TLB_MMIO             (1 << 1)
-+#define TLB_FORCE_SLOW       (1 << 1)
-+#define TLB_MMIO             0
- #define TLB_WATCHPOINT       0
- 
- #else
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 7704e4017d..e4629b837d 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -769,7 +769,7 @@ static int probe_access_internal(CPUArchState *env, vaddr addr,
-         if (page_flags & acc_flag) {
-             if (access_type != MMU_INST_FETCH
-                 && cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
--                return TLB_MMIO;
-+                return TLB_FORCE_SLOW;
-             }
-             return 0; /* success */
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 974042d017..6761b77f95 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -546,6 +546,14 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
          }
-@@ -804,7 +804,7 @@ void *probe_access(CPUArchState *env, vaddr addr, int size,
+     } while (1);
  
-     g_assert(-(addr | TARGET_PAGE_MASK) >= size);
-     flags = probe_access_internal(env, addr, size, access_type, false, ra);
--    g_assert((flags & ~TLB_MMIO) == 0);
-+    g_assert((flags & ~TLB_FORCE_SLOW) == 0);
- 
-     return size ? g2h_vaddr(env_cpu(env), addr) : NULL;
- }
++    /*
++     * riscv_iommu_translate() will receive a fault and then call
++     * riscv_iommu_report_fault() using iotlb->translated_addr
++     * as iotval2.  Update translated_addr it with the latest
++     * translated addr we have.
++     */
++    iotlb->translated_addr = addr;
++
+     return (iotlb->perm & IOMMU_WO) ?
+                 (pass ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
+                         RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S) :
 -- 
 2.43.0
 
