@@ -4,98 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BDF0C43327
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 18:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06406C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 18:42:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfMLP-0007bY-Df; Thu, 02 Jul 2026 14:41:03 -0400
+	id 1wfMLH-0007B9-MX; Thu, 02 Jul 2026 14:40:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wfMLN-0007UU-Bp
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:41:01 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfMKo-0006zh-B9
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:40:26 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wfMLH-0005YQ-F3
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:41:01 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-493c19bad03so18021885e9.2
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 11:40:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfMKl-0005KW-HU
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:40:26 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-490cf322ed0so14931375e9.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 11:40:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783017654; x=1783622454; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783017622; x=1783622422; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YxuiptMm10yF1MNT/yhAAdCmyxpf1Cn1NfFEs5L9eyI=;
- b=rwAx93SyD1TfMfhedF+uSw7olmcbAYn7MipverVAc513j/y+6xoUS9IAB9x5VNuZWe
- gQpmeKSHTLxyVSxBw3xz7IMGZDRjlmH6rvYt+7cIdzcFdkbtCRAJCboLwEts4CfU7wfC
- yZnwEaZEaj8g1jA7FBYcv3ljQ+3BbDTpM0J1h9CsKGu7iZOiVCQs/O7PzuPC4krQX6ME
- Qpz51jZH3UDYPPLeT2hLhwoxxBSNgnepf9/1i9xD+WClPlheCeZxqrRV63qhHMdLZ4tx
- hnCKQf3eZ9dZqnGFIFyYvvADeeovXDXJzs4/YB9HS8/MWjX8dWCQ21FiFo7oD54oouxa
- TdIQ==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=lpwBOWPVMATfbpndlLRvz9T6HcOtZn2wa3F6Vcr3xJ0=;
+ b=yQxj0Y8647pI+FVvSaBw3TywVXTlV8FBZxHA/65FMidLjKDxoFmsPBgZcngrUYoMRn
+ Gg+jebs+Vua1gU7/MhQDXif1XfBu+NeorHtRjtQgbr3BTmPqRFuB4Kd+hwhjLwV6U0wj
+ V+W4fo3Xc0Ytl9NuaaTBfojsxlfUDENe1HLHq9qEuD2oIyW+ei4heGmZN0+D+4JQG1WO
+ bHyfx15n+SrEySHDN7FH7NAMyx0gFxF8YjvZ1Vrk9AAMVmhUevyzlty28k2SCfgco+Sk
+ cOM+bD8bjewPApgRaa/lI38j0MG/I4+4K+i+LwdUdBjIfIaZbAv0E45b8ve0IwdfP147
+ 06wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783017654; x=1783622454;
+ d=1e100.net; s=20251104; t=1783017622; x=1783622422;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=YxuiptMm10yF1MNT/yhAAdCmyxpf1Cn1NfFEs5L9eyI=;
- b=DzlatepE3S5Z+JtOiljvKpyD9Zj6sa+7T9TPJ+GzBu0yTs97PGviM6NVpsmRKOQMfI
- dOqtFcWNyTGLhfVw8VjQpVX5wwf14wkQXFuqbH3Hcs3Nr5g+gePN+8PTw0dT+37njcT9
- o81PIY86tuGuPIxiFRvIL7UQ11XsiUMIPmTqmRkFgPjbym15GksugmwH8JfH776mtQqX
- PgOs3umlZ7kLL/QDFx8ziCIWcMBU0+XPYmWVqDCBihc2P6lRLiV7BKKwZTQOm1u2XtIw
- ayEd1Ss3ZQ0klecHecNN4OVX8/FO5oG00NxEfF5QA2gB8x1HWoRQ3rNhI7QVBstlmwae
- dZdA==
-X-Gm-Message-State: AOJu0YyOcKJ4Or6ohqgf1B2bJ3dVdNIYKGz2A5exTY8SpUg7NBOfyBwe
- asE6+3vewRk9SFHuWpy7SrbUYRC792zvejQHztPnm1clevIN+ldsOeZ8YCTpCg==
-X-Gm-Gg: AfdE7cl4wO2hzktukBroi8WIFUSgLTJ9nqwGni3mSyW5D85oC8T2KLYKAu/NCa6TE7s
- RkrusOsUBeMxE1CuG9FPN0KKFTtCGoOowKR/1fKveo/DaBJEqJYlfV/TihSTY10mG5CaCuxAnnD
- itvoJv8p7CqofRprMsiEIrAqD/FzJ8erSuyinHF+g+/JKKmFPiuXZNjB5/xF2bp9lgEaOqYxuB/
- 0O27vyBP1qleNpuh5rta6xFsrcNtc4oFULTw2Fqp2z7oAyk1tHcdn/b+MQ4VpEFaFL2wLE1N5HJ
- 3BebaHibtHqWt3W/Tg8TdWMdQwhIVLKssuEaK/ZPq3m+tNf6TDuFAddAW2qA3P2DA8Sv7gYsr/w
- itSglYx/1j+sefmB4ORj1PlWW25kNVoQvwCyPZ5uL/M6dsmfIC7TgQbgliWOlveh9piAwipc+Oi
- tqrwn2W9UcuQNH1cqIX14L+TQ8jtb9j/VdnQS02b9uXjfMFIjmjE0PU5+vg+wIJZZSG0wS2CIn5
- oU/pjjhcHSPPgo1H50gQUD4xVTzu74MoRNs
-X-Received: by 2002:a05:600d:c:b0:492:43d2:9e6e with SMTP id
- 5b1f17b1804b1-493c2b4aa28mr80807455e9.9.1783017653737; 
- Thu, 02 Jul 2026 11:40:53 -0700 (PDT)
-Received: from Provence.localdomain
- (dynamic-2a02-3100-25c8-8a00-0219-99ff-feb2-2458.310.pool.telefonica.de.
- [2a02:3100:25c8:8a00:219:99ff:feb2:2458])
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=lpwBOWPVMATfbpndlLRvz9T6HcOtZn2wa3F6Vcr3xJ0=;
+ b=RH5EDixqvFKzYShGJ6d6+3IxD2PFcc11kTaMCqjxoMa71trOJECjCBUN+mlnMBsRk0
+ jfxfF5u/UhRTiqTpRhFEBixUYoDM5ncN9NQ+wmA/NiDdxR47ezGsqc15rdYO8s49U7Ze
+ 8RZlwsesUF9/saxNCP4oTduqcI9FIAyOB5+aLlICJNUIuUZzUtw5eRZ2tKgQQ+It/DBY
+ 5WqkWBTyqt57uajDjt6rAGG2GTYpaetLtWHF5nRrnxZK/UcKTGHzftp5qkIhbo6HZTqJ
+ 4HD5A6pRsb+nZdp1wRC2mJm4iR1qNZwwyHQJ5Pu3/ohNeqnhsC26XiIqU17AVUNGAzt5
+ h9AQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8pWTYeC03EjZ09otBWK/ThLyBXZazLinZqokyfRkH9VkD04cHEC2a7Vq47NTaCU/korxbtuPb/5I6x@nongnu.org
+X-Gm-Message-State: AOJu0YySvj471EgMNMmRqPgwgWY/zSXiv8v655vEO74ntJ9A4v7aWLWL
+ y/qW6VfXqrvoHOWv0Et0NmT5TwKvjAnILVDJpJcW3VZmTKMlTrP7dFYC0y09VZnJSB27DSo5ohd
+ QIT4Z2ewtYw==
+X-Gm-Gg: AfdE7cnlzyYEewjbrH4/O9UbKppfd0n7p8ZPpmgBSL3vgYR0GoeoBO9u4JaKyrKSBBR
+ laixoJfQpNZJhpQejenxshTCn5R3E00vFElTSZ4veHKou7BFFcx+j8yFsoUkdCleSz+abMce1wk
+ mIfUUnkjcNPU+K6uvJyOPz0zbhFwCasTsYpU95n8/Vm15cr6eVAzvAFP3xRZRbU/WIlhxmWS4cH
+ tLFt1bzcXhcBeFV58JleRgzD/m2qK+WRkv1rrcwLYcjYyCY7F8M0urvUKVXY/hy6B8BJbmXCg40
+ 1JSVebGppaNfBM08hcNVd9dSewJhf68HxotZW3E5NoP/NUv4LI8PkjBPJslZtjJRF2+4OPgHtCw
+ U+iUrFM0f5CUxCeJmKBzSjj8lDGyDaPQqE63uj3N6Lm9BIpX4XB6cbAGDPNhYudVY6h/seHqGyy
+ jNAU5Y0G1mYrfj5zRcy9dDOIfSBTJedWi2ycELB/6tqp2orWbQhUj09o+sU7fir8nHuUkWTG3xA
+ 4bS4WYde+IhNtS+9QmuXA==
+X-Received: by 2002:a05:600c:8590:b0:492:4e1c:120 with SMTP id
+ 5b1f17b1804b1-493c2ba4360mr86893615e9.32.1783017621648; 
+ Thu, 02 Jul 2026 11:40:21 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493bef1807asm120271225e9.1.2026.07.02.11.40.52
+ ffacd0b85a97d-477db8a4a09sm11628213f8f.13.2026.07.02.11.40.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jul 2026 11:40:53 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Matyas Bobek <matyas.bobek@gmail.com>,
- Vikram Garhwal <vikram.garhwal@bytedance.com>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
- Jason Wang <jasowangio@gmail.com>, Pavel Pisa <pisa@cmp.felk.cvut.cz>,
- Jason Wang <jasowang@redhat.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Francisco Iglesias <francisco.iglesias@amd.com>
-Subject: [PATCH v2 4/5] hw/arm/imx8mp-evk: Introduce FslImx8mpEvkState
-Date: Thu,  2 Jul 2026 20:40:37 +0200
-Message-ID: <20260702184038.178196-5-shentey@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260702184038.178196-1-shentey@gmail.com>
-References: <20260702184038.178196-1-shentey@gmail.com>
+ Thu, 02 Jul 2026 11:40:21 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 01/11] target/arm: Separate out Neon from VFP access checks
+Date: Thu,  2 Jul 2026 19:40:09 +0100
+Message-ID: <20260702184019.3431139-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260702184019.3431139-1-peter.maydell@linaro.org>
+References: <20260702184019.3431139-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,100 +103,474 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce class FslImx8mpEvkState which will be needed for holding
-CanBusState attributes and associated properties.
+Currently we use vfp_access_check() for AArch32 VFP and Neon
+instructions.  This is not quite right:
+ * there are optional CPACR.ASEDIS and HCPTR.TASE controls that allow
+   trapping of just the Neon and not VFP instructions
+ * Neon instructions are supposed to report a slightly different
+   syndrome in HCR when they trap to AArch32 EL2
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+As a preliminary refactor so we have somewhere we can make this
+distinction, separate out Neon access checks into a separate
+neon_access_check(), which initially just calls vfp_access_check().
+
+The set of insns this needs to cover are those described in section
+E1.3.9 of the DDI0487M.b Arm ARM.  For us this corresponds to
+everything in neon-dp.decode and neon-ls.decode and thus in
+translate-neon.c, plus three insns that we handle in translate-vfp.c:
+ - VDUP (general-purpose register)
+ - VMOV (general-purpose register to scalar) byte and halfword
+ - VMOV (scalar to general-purpose register) byte and halfword
+(which are the ones in that file with ARM_FEATURE_NEON checks).
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/imx8mp-evk.c | 30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+ target/arm/tcg/translate-a32.h  |  1 +
+ target/arm/tcg/translate-neon.c | 74 ++++++++++++++++-----------------
+ target/arm/tcg/translate-vfp.c  | 33 +++++++++++----
+ 3 files changed, 62 insertions(+), 46 deletions(-)
 
-diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-index 4a0c9df76b..ca0ee2d3f2 100644
---- a/hw/arm/imx8mp-evk.c
-+++ b/hw/arm/imx8mp-evk.c
-@@ -19,6 +19,17 @@
- #include "qapi/error.h"
- #include <libfdt.h>
- 
-+#define TYPE_IMX8MPEVK_MACHINE MACHINE_TYPE_NAME("imx8mp-evk")
-+OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mpEvkState, IMX8MPEVK_MACHINE)
-+
-+struct FslImx8mpEvkState {
-+    MachineState parent_obj;
-+
-+    FslImx8mpState soc;
-+
-+    struct arm_boot_info boot_info;
-+};
-+
- static void imx8mp_evk_modify_dtb(const struct arm_boot_info *info, void *fdt)
- {
-     int i, offset;
-@@ -57,8 +68,7 @@ static void imx8mp_evk_modify_dtb(const struct arm_boot_info *info, void *fdt)
- 
- static void imx8mp_evk_init(MachineState *machine)
- {
--    static struct arm_boot_info boot_info;
--    FslImx8mpState *s;
-+    FslImx8mpEvkState *s = IMX8MPEVK_MACHINE(machine);
- 
-     if (machine->ram_size > FSL_IMX8MP_RAM_SIZE_MAX) {
-         error_report("RAM size " RAM_ADDR_FMT " above max supported (%08" PRIx64 ")",
-@@ -66,7 +76,7 @@ static void imx8mp_evk_init(MachineState *machine)
-         exit(1);
+diff --git a/target/arm/tcg/translate-a32.h b/target/arm/tcg/translate-a32.h
+index a8df364171..1023cddab5 100644
+--- a/target/arm/tcg/translate-a32.h
++++ b/target/arm/tcg/translate-a32.h
+@@ -33,6 +33,7 @@ void load_reg_var(DisasContext *s, TCGv_i32 var, int reg);
+ void arm_gen_condlabel(DisasContext *s);
+ bool vfp_access_check(DisasContext *s);
+ bool vfp_access_check_m(DisasContext *s, bool skip_context_update);
++bool neon_access_check(DisasContext *s);
+ void read_neon_element32(TCGv_i32 dest, int reg, int ele, MemOp memop);
+ void read_neon_element64(TCGv_i64 dest, int reg, int ele, MemOp memop);
+ void write_neon_element32(TCGv_i32 src, int reg, int ele, MemOp memop);
+diff --git a/target/arm/tcg/translate-neon.c b/target/arm/tcg/translate-neon.c
+index e3c7d9217b..50a44511d9 100644
+--- a/target/arm/tcg/translate-neon.c
++++ b/target/arm/tcg/translate-neon.c
+@@ -135,7 +135,7 @@ static bool do_neon_ddda(DisasContext *s, int q, int vd, int vn, int vm,
+         return false;
      }
  
--    boot_info = (struct arm_boot_info) {
-+    s->boot_info = (struct arm_boot_info) {
-         .loader_start = FSL_IMX8MP_RAM_START,
-         .board_id = -1,
-         .ram_size = machine->ram_size,
-@@ -74,10 +84,9 @@ static void imx8mp_evk_init(MachineState *machine)
-         .modify_dtb = imx8mp_evk_modify_dtb,
-     };
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
  
--    s = FSL_IMX8MP(object_new(TYPE_FSL_IMX8MP));
--    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
--    object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
-+    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_FSL_IMX8MP);
-+    object_property_set_uint(OBJECT(&s->soc), "fec1-phy-num", 1, &error_fatal);
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(&s->soc), &error_fatal);
+@@ -165,7 +165,7 @@ static bool do_neon_ddda_env(DisasContext *s, int q, int vd, int vn, int vm,
+         return false;
+     }
  
-     memory_region_add_subregion(get_system_memory(), FSL_IMX8MP_RAM_START,
-                                 machine->ram);
-@@ -93,14 +102,14 @@ static void imx8mp_evk_init(MachineState *machine)
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -197,7 +197,7 @@ static bool do_neon_ddda_fpst(DisasContext *s, int q, int vd, int vn, int vm,
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -249,7 +249,7 @@ static bool trans_VCADD(DisasContext *s, arg_VCADD *a)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -319,7 +319,7 @@ static bool trans_VFML(DisasContext *s, arg_VFML *a)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -413,7 +413,7 @@ static bool trans_VFML_scalar(DisasContext *s, arg_VFML_scalar *a)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -506,7 +506,7 @@ static bool trans_VLDST_multiple(DisasContext *s, arg_VLDST_multiple *a)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -617,7 +617,7 @@ static bool trans_VLD_all_lanes(DisasContext *s, arg_VLD_all_lanes *a)
          }
- 
-         blk = blk_by_legacy_dinfo(di);
--        bus = qdev_get_child_bus(DEVICE(&s->usdhc[i]), "sd-bus");
-+        bus = qdev_get_child_bus(DEVICE(&s->soc.usdhc[i]), "sd-bus");
-         carddev = qdev_new(TYPE_SD_CARD);
-         qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
-         qdev_realize_and_unref(carddev, bus, &error_fatal);
      }
  
-     if (!qtest_enabled()) {
--        arm_load_kernel(&s->cpu[0], machine, &boot_info);
-+        arm_load_kernel(&s->soc.cpu[0], machine, &s->boot_info);
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -714,7 +714,7 @@ static bool trans_VLDST_single(DisasContext *s, arg_VLDST_single *a)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -798,7 +798,7 @@ static bool do_3same(DisasContext *s, arg_3same *a, GVecGen3Fn fn)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -1076,7 +1076,7 @@ static bool do_vector_2sh(DisasContext *s, arg_2reg_shift *a, GVecGen2iFn *fn)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -1126,7 +1126,7 @@ static bool do_2shift_narrow_64(DisasContext *s, arg_2reg_shift *a,
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -1177,7 +1177,7 @@ static bool do_2shift_narrow_32(DisasContext *s, arg_2reg_shift *a,
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -1302,7 +1302,7 @@ static bool do_vshll_2sh(DisasContext *s, arg_2reg_shift *a,
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -1392,7 +1392,7 @@ static bool do_fp_2sh(DisasContext *s, arg_2reg_shift *a,
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -1436,7 +1436,7 @@ static bool do_1reg_imm(DisasContext *s, arg_1reg_imm *a,
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -1499,7 +1499,7 @@ static bool do_prewiden_3d(DisasContext *s, arg_3diff *a,
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -1606,7 +1606,7 @@ static bool do_narrow_3d(DisasContext *s, arg_3diff *a,
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -1696,7 +1696,7 @@ static bool do_long_3d(DisasContext *s, arg_3diff *a,
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -1967,7 +1967,7 @@ static bool trans_VMULL_P_3d(DisasContext *s, arg_3diff *a)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -2041,7 +2041,7 @@ static bool do_2scalar(DisasContext *s, arg_2scalar *a,
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -2139,7 +2139,7 @@ static bool do_2scalar_fp_vec(DisasContext *s, arg_2scalar *a,
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -2236,7 +2236,7 @@ static bool do_vqrdmlah_2sc(DisasContext *s, arg_2scalar *a,
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -2307,7 +2307,7 @@ static bool do_2scalar_long(DisasContext *s, arg_2scalar *a,
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -2451,7 +2451,7 @@ static bool trans_VEXT(DisasContext *s, arg_VEXT *a)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -2520,7 +2520,7 @@ static bool trans_VTBL(DisasContext *s, arg_VTBL *a)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -2555,7 +2555,7 @@ static bool trans_VDUP_scalar(DisasContext *s, arg_VDUP_scalar *a)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -2591,7 +2591,7 @@ static bool do_zip_uzp(DisasContext *s, arg_2misc *a,
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -2660,7 +2660,7 @@ static bool do_vmovn(DisasContext *s, arg_2misc *a,
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -2724,7 +2724,7 @@ static bool trans_VSHLL(DisasContext *s, arg_2misc *a)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -2764,7 +2764,7 @@ static bool trans_VCVT_B16_F32(DisasContext *s, arg_2misc *a)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -2804,7 +2804,7 @@ static bool trans_VCVT_F16_F32(DisasContext *s, arg_2misc *a)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -2850,7 +2850,7 @@ static bool trans_VCVT_F32_F16(DisasContext *s, arg_2misc *a)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -2900,7 +2900,7 @@ static bool do_2misc_vec(DisasContext *s, arg_2misc *a, GVecGen2Fn *fn)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -3028,7 +3028,7 @@ static bool do_2misc(DisasContext *s, arg_2misc *a, NeonGenOneOpFn *fn)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -3232,7 +3232,7 @@ static bool trans_VSWP(DisasContext *s, arg_2misc *a)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+@@ -3305,7 +3305,7 @@ static bool trans_VTRN(DisasContext *s, arg_2misc *a)
+         return false;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
+diff --git a/target/arm/tcg/translate-vfp.c b/target/arm/tcg/translate-vfp.c
+index 8d9d1ab877..6f6b234c9a 100644
+--- a/target/arm/tcg/translate-vfp.c
++++ b/target/arm/tcg/translate-vfp.c
+@@ -303,6 +303,17 @@ bool vfp_access_check(DisasContext *s)
      }
  }
  
-@@ -128,9 +137,10 @@ static void imx8mp_evk_machine_class_init(ObjectClass *oc, const void *data)
++/*
++ * Access check for Neon; this is for instructions which can be
++ * trapped by CPACR.ASEDIS and HCPTR.TASE. Support for those traps
++ * is optional and we currently do not implement them, so this
++ * is identical to a VFP access check for now.
++ */
++bool neon_access_check(DisasContext *s)
++{
++    return vfp_access_check(s);
++}
++
+ static bool trans_VSEL(DisasContext *s, arg_VSEL *a)
+ {
+     uint32_t rd, rn, rm;
+@@ -620,15 +631,17 @@ static bool trans_VMOV_to_gp(DisasContext *s, arg_VMOV_to_gp *a)
+ {
+     /* VMOV scalar to general purpose register */
+     TCGv_i32 tmp;
++    bool insn_is_neon = false;
  
- static const TypeInfo imx8mp_evk_machine_types[] = {
-     {
--        .name = MACHINE_TYPE_NAME("imx8mp-evk"),
-+        .name = TYPE_IMX8MPEVK_MACHINE,
-         .parent = TYPE_MACHINE,
-         .class_init = imx8mp_evk_machine_class_init,
-+        .instance_size = sizeof(FslImx8mpEvkState),
-         .interfaces = aarch64_machine_interfaces,
-     },
- };
+     /*
+      * SIZE == MO_32 is a VFP instruction; otherwise NEON. MVE has
+      * all sizes, whether the CPU has fp or not.
+      */
+     if (!dc_isar_feature(aa32_mve, s)) {
+-        if (a->size == MO_32
+-            ? !dc_isar_feature(aa32_fpsp_v2, s)
+-            : !arm_dc_feature(s, ARM_FEATURE_NEON)) {
++        insn_is_neon = a->size != MO_32;
++        if (insn_is_neon
++            ? !arm_dc_feature(s, ARM_FEATURE_NEON)
++            : !dc_isar_feature(aa32_fpsp_v2, s)) {
+             return false;
+         }
+     }
+@@ -644,7 +657,7 @@ static bool trans_VMOV_to_gp(DisasContext *s, arg_VMOV_to_gp *a)
+         }
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!(insn_is_neon ? neon_access_check(s) : vfp_access_check(s))) {
+         return true;
+     }
+ 
+@@ -665,15 +678,17 @@ static bool trans_VMOV_from_gp(DisasContext *s, arg_VMOV_from_gp *a)
+ {
+     /* VMOV general purpose register to scalar */
+     TCGv_i32 tmp;
++    bool insn_is_neon = false;
+ 
+     /*
+      * SIZE == MO_32 is a VFP instruction; otherwise NEON. MVE has
+      * all sizes, whether the CPU has fp or not.
+      */
+     if (!dc_isar_feature(aa32_mve, s)) {
+-        if (a->size == MO_32
+-            ? !dc_isar_feature(aa32_fpsp_v2, s)
+-            : !arm_dc_feature(s, ARM_FEATURE_NEON)) {
++        insn_is_neon = a->size != MO_32;
++        if (insn_is_neon
++            ? !arm_dc_feature(s, ARM_FEATURE_NEON)
++            : !dc_isar_feature(aa32_fpsp_v2, s)) {
+             return false;
+         }
+     }
+@@ -689,7 +704,7 @@ static bool trans_VMOV_from_gp(DisasContext *s, arg_VMOV_from_gp *a)
+         }
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!(insn_is_neon ? neon_access_check(s) : vfp_access_check(s))) {
+         return true;
+     }
+ 
+@@ -736,7 +751,7 @@ static bool trans_VDUP(DisasContext *s, arg_VDUP *a)
+         size = 2;
+     }
+ 
+-    if (!vfp_access_check(s)) {
++    if (!neon_access_check(s)) {
+         return true;
+     }
+ 
 -- 
-2.55.0
+2.43.0
 
 
