@@ -4,96 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9A7EC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 18:37:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6622C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 18:41:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfMHP-0005kQ-Sn; Thu, 02 Jul 2026 14:36:56 -0400
+	id 1wfMLU-0007vp-Un; Thu, 02 Jul 2026 14:41:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wfMHN-0005kD-5L
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:36:53 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wfMHK-0004F0-PX
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:36:52 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wfMH7-00000005KuV-2tYF; Thu, 02 Jul 2026 20:36:37 +0200
-Message-ID: <e79a3746-9c7e-46a5-ad81-537b9d3affdb@maciej.szmigiero.name>
-Date: Thu, 2 Jul 2026 20:36:32 +0200
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wfMLN-0007XF-W1
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:41:02 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wfMLI-0005ZF-PS
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:41:01 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-493be1b9682so16022955e9.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 11:40:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783017655; x=1783622455; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=up8FV2HuMbPxWSZlYmqknqCP4ZGv1LSFUSsUpf/V/tg=;
+ b=Wh+Eklko33hJGSEMA/D3DJZux1rcjvT068QA0GNvTbVj3YSaXajRzgruiDyytZa3ww
+ gaI6YcKl1w2CxiYGU+6iJswF7+2nYvhhvCHYHAHWIlwWKWbPuEm1OQhk+TyeaUYFT/GH
+ blbeYuVmnQAxfQhZDMmlqmblYMrP+qYAoyxXrj+dTWUxW7Bg43/O1idA0i9ur7clSnag
+ JxbGNxZHA34eBpnJyR0Jq4fQ3yHLXqklQBh2bCh2xP7qiJO7HWoq1klYnSw0LzRZpLEb
+ MznOvYfCm7btb+H5GL3BMVaBfRtKiWaD2jkl7sUnAbbyVYj+oCw8TFkd5YlpD4S2qI9K
+ SgzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783017655; x=1783622455;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=up8FV2HuMbPxWSZlYmqknqCP4ZGv1LSFUSsUpf/V/tg=;
+ b=Dtd762Cmgrmo1nuc1V8d6JldJU38mYE0m5zxrYGoK9LEmE3mhGYgEbcNtLcxqe5Zek
+ GlpZl0NCWNItWlFI4pl2t6M93QcYL8pa0EUns7AVSa8idAfC59VGRBEPa/Cpbw6xmoln
+ ixoLW7wVo7QA2gDHM8f73FYLpbTYeaIATlyujKirT2HfFBUMO+YHNqGhm+Fd2/sttyys
+ ABSrDcXD6AYxS+GNSHu5MeBXBUFPFuGnj9GK2JGq6Fx2KpiRmJz0WnVT1Z+ATZRH85dX
+ eT0lVy/A6S/vpXzD6f6RT8UG/wnnlz1HDR/U5J/WaqfzKKGRPfEnmkNtY2KdADt7trMl
+ F8QA==
+X-Gm-Message-State: AOJu0YzZ6FFS6GR39aTSDi83m9SrcVyzhns5P+JvGxJqBZpXCRqIIziL
+ a1kgKl0w5kK4nRSuiFnYsrKASyXl+a0RScjjRBEUPNUHEAxMZMoSY9dnicPgDw==
+X-Gm-Gg: AfdE7ckLYAmOpwGKdK75efLUtty3zTeS1ARzefuR4VmAGYiqbWuXlLxGh7NT1rSaOyh
+ 122ax4++Izm125Xw5THrRyjaDf6P6A0mClWEKN3GHjl44pZZVDDd+MucdqkrRhG3AwuprYDU8NA
+ llLB6fSfe5UEC23gFWE2IXNh9YjYgsonhd/mk37MoP+LyGMMJrCPlRNYNLMBcveMDhoNupAaxiL
+ cUYZnR9SwYv9cx2dWOBVLEJnQnHyoCDI1AglfVYQAIuIbN/GrPxpTvCOzAf7XCeday7nbeY2rvD
+ oYIrJVohd81dyZhBdSV07/d6JT93U+ZbJGkTuPWsYJlu8305aMXgJMAgIU1B1IQVHSRYf+PRkb8
+ eIwDsA95yINhGTk3O/tXUfFb5DVMFcr3cdnaBvOtHwbD1S7vxY0/wJEo9RLsZu+hx1Fg84D86As
+ Fc907olpKB9T/eVN8XmrZgiNRXNFlWmw4jFTVXDbPMMgrEIGXBTv0CkPBWazQOAviOo14lvGyTs
+ qinUSanwSVie/pQBcdFM+2ma2Cb7eStgEhN
+X-Received: by 2002:a05:600c:8590:b0:493:b7a6:3dac with SMTP id
+ 5b1f17b1804b1-493c2ba5810mr84595485e9.33.1783017655184; 
+ Thu, 02 Jul 2026 11:40:55 -0700 (PDT)
+Received: from Provence.localdomain
+ (dynamic-2a02-3100-25c8-8a00-0219-99ff-feb2-2458.310.pool.telefonica.de.
+ [2a02:3100:25c8:8a00:219:99ff:feb2:2458])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493bef1807asm120271225e9.1.2026.07.02.11.40.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Jul 2026 11:40:54 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Matyas Bobek <matyas.bobek@gmail.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
+ Jason Wang <jasowangio@gmail.com>, Pavel Pisa <pisa@cmp.felk.cvut.cz>,
+ Jason Wang <jasowang@redhat.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Francisco Iglesias <francisco.iglesias@amd.com>
+Subject: [PATCH v2 5/5] hw/arm: Add basic FlexCAN3 support to TYPE_FSL_IMX8MP
+ and imx8mp-evk
+Date: Thu,  2 Jul 2026 20:40:38 +0200
+Message-ID: <20260702184038.178196-6-shentey@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260702184038.178196-1-shentey@gmail.com>
+References: <20260702184038.178196-1-shentey@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] vfio/migration: Parallelize device state transitions
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex@shazbot.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- qemu-devel@nongnu.org
-References: <cover.1779217494.git.maciej.szmigiero@oracle.com>
- <743f03758d2a30df4093db140ccdd0f91f69bd7e.1779217494.git.maciej.szmigiero@oracle.com>
- <871peqtm5t.fsf@suse.de> <ah3eheRXN1QJAGj_@x1.local>
- <ac677bf9-1372-4905-a0b8-874a74be07be@maciej.szmigiero.name>
- <ah86Z0r5sMnxwgo-@x1.local>
- <c739f4fe-1f43-45c4-b98f-109366526405@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <c739f4fe-1f43-45c4-b98f-109366526405@maciej.szmigiero.name>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,169 +112,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3.06.2026 23:34, Maciej S. Szmigiero wrote:
-> On 2.06.2026 22:17, Peter Xu wrote:
->> On Tue, Jun 02, 2026 at 12:01:32PM +0200, Maciej S. Szmigiero wrote:
->>> On 1.06.2026 21:33, Peter Xu wrote:
->>>> On Mon, Jun 01, 2026 at 10:39:26AM -0300, Fabiano Rosas wrote:
->>>>> A bit idiosyncratic, but I don't have any better suggestions.
->>>>
->>>> One thing I don't think proper with the current approach: if it's a real
->>>> "priority" it should be invoked always with high->low order, no matter if
->>>> running=true or not..  but that's not what will happen if we encode it with
->>>> the "depth" field.
->>>>
->>>> That is an implication that we have two demands, and they aren't the same,
->>>> but this solution wrongly packed them together.
->>>>
->>>> In 2023, VFIO already introduced VMChangeStateEntry.prepare_cb().  That is
->>>> a real impl of prority queues with only two: prepare_cb() always has higher
->>>> priority than the cb() itself.
->>>>
->>>> Can VFIO simply leverage this existing interface, instead of hijacking
->>>> "depth" in an unwanted way?
->>>>
->>>> I believe the _P2P states still need to happen first for all vfio devices,
->>>> then it can do the next step. Logically I think it can also be done
->>>> internally within VFIO by proper impl of these two callbacks, to achieve
->>>> both:
->>>>
->>>> - Proper transition to P2P states first for all devices, meanwhile,
->>>> - Proper concurrency of all VFIO devices on device state transitions
->>>>
->>>> Would that work in a cleaner way?
->>>
->>> In the VFIO migration save/source code we have two transitions:
->>> PRE_COPY -> PRE_COPY_P2P done via prepare_cb() and
->>> PRE_COPY_P2P -> STOP_COPY done via cb().
->>> On the load/target side the situation is similar, only states are
->>> different.
->>>
->>> For each of these transitions we need two callbacks: one has to launch
->>> per-VFIO device state change thread and the other one has to "collect"
->>> (or join) these threads.
->>>
->>> All handlers of the first callback have to be complete before calling
->>> any handler of the second callback since otherwise there would be
->>> VFIO device vs VFIO device serialization.
->>>
->>> Moreover, all the prepare_cb()-related transitions have to be done
->>> before any of the cb()-related is started.
->>>
->>>
->>> I presume what you suggest above is to launch per-VFIO device state
->>> transition thread in prepare_cb() which would then be responsible for
->>> doing *both* state transitions for this VFIO device.
->>> And then collect this thread in cb().
->>
->> Yes.
->>
->>>
->>> However, this would need some extra interlocking:
->>> - A lock inside VFIO code shared by all VFIO devices making sure
->>> no VFIO device starts the second transition (the cb() one) before
->>> all VFIO devices finish the first transition (the prepare_cb() one).
->>
->> Yes, more below.
->>
->>>
->>> - Looking at the current QEMU code, there are some non-VFIO cb()
->>> handlers registered via qdev_add_vm_change_state_handler() and
->>> quite a few handlers registered via qemu_add_vm_change_state_handler().
->>>
->>> I presume these VFIO prepare_cb()-related transitions need to finish
->>> before calling any of these handlers to maintain the current ordering
->>
->> IIUC, we don't necessarily need to keep this ordering; or do you see any
->> real demand of that?
->>
->> What I see is that the order is only introduced due to P2P state of VFIO,
->> it seems very specific to me.
-> 
-> While I don't have a specific example why relaxing this ordering is unsafe
-> I am not certain that it is safe either - we can end up introducing subtle
-> race condition and possible guest memory corruption.
-> 
-> Maybe Alex and Cédric can provide some additional input here.
-> 
-> If nobody can authoritatively say that calling non-VFIO cb()
-> VM state change handlers before being certain that all VFIO devices
-> reached PRE_COPY_P2P / RUNNING_P2P state is indeed safe thing to do
-> I think we'll have to play safe here.
-> 
+Real hardware supports CAN FD which is missing in the emulation and is
+considered future work. Still, CAN communication already works under Linux.
 
-I looked more deeply into this and even prototyped a similar new design.
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ docs/system/arm/imx8m.rst   |  1 +
+ include/hw/arm/fsl-imx8mp.h |  8 ++++++++
+ hw/arm/fsl-imx8mp.c         | 38 +++++++++++++++++++++++++++++++++++++
+ hw/arm/imx8mp-evk.c         | 21 ++++++++++++++++++++
+ hw/misc/imx8mp_ccm.c        |  3 +++
+ hw/arm/Kconfig              |  1 +
+ 6 files changed, 72 insertions(+)
 
-However, in the end I think that running VFIO state transitions in
-parallel with other non-VFIO cb() handlers just isn't safe.
-
-For example, on the migration source, the second transition is
-PRE_COPY_P2P -> STOP_COPY.
-PRE_COPY_P2P is the last state during migration that still allows the
-device to accept DMA and similar interactions, while STOP_COPY is
-already the "quiescent" state.
-
-So if a VFIO has already reached STOP_COPY but a non-VFIO device
-callback still hasn't finished, then any DMA/MMIO/P2P transaction from
-that "unfinished" device to the VFIO device would now hit a VFIO device
-that no longer can accept such transactions.
-This may result in hard-to-debug memory corruption during live migration.
-
-For a similar reason I think we need to preserve qdev tree depth based
-ordering as its whole point is to make sure these transitions happen in
-the correct order between different devices.
-
-This is even more pressing considering that the VFIO hardware needed to
-work on these issues isn't very widespread.
-
-What I think we can do do instead, is to use a use an early prepare_cb()
-handler registered by a VFIO code to launch a state changing thread
-inside VFIO code.
-
-Then a late prepare_cb() handler also registered by a VFIO code would
-synchronize with these state changing threads at their first sync point:
-completion of the first state change.
-This could be achieved for example by doing an event wait similar to the
-code snippet you had earlier suggested/provided.
-
-The next sync point will be at an early cb() handler registered by VFIO code -
-this will let these waiting state changing VFIO threads start the second
-transition.
-
-The final wait and joining of these threads will be at a late cb() handler
-registered by the VFIO code.
-
->>
->>> so some kind of interlocking in vm_state_notify() between calling
->>> prepare_cb() and cb() may be necessary since any "prio" based
->>> ordering will have the same problem of reverse calling order on VM
->>> start vs stop.
->>>
->>>
->>> To be clear, I'm not insisting on the implementation from this patch -
->>> any alternative one that preserves the aforementioned ordering rules
->>> and has similar downtime performance is probably okay too.
->>
->> The problem is, IIUC patch 1 needs better justification on its own, and I
->> feel like it's not doing the right thing, as discussed previously. So even
->> if we want to introduce a new priority-based approach, we may want to
->> rethink patch 1.
-
-Sure, any implementation that preserved the ordering I described above
-would be good.
-But just using existing single-priority-per-qdev-depth prepare_cb() and
-cb() handlers unfortunately won't do it.
-
-I think if there's a good idea how to implement such ordering in the
-VM state change handlers then the VFIO side of patch can be adjusted
-accordingly.
-
-I also agree that adding the description of the issue being solved as
-justification for patch 1 and maybe even as a comment somewhere in the
-code would be kind to people looking at this code in the future and
-would prevent future issues being accidentally introduced in this area.
-
-Thanks,
-Maciej
+diff --git a/docs/system/arm/imx8m.rst b/docs/system/arm/imx8m.rst
+index afbc33b2f4..1bcb8255be 100644
+--- a/docs/system/arm/imx8m.rst
++++ b/docs/system/arm/imx8m.rst
+@@ -18,6 +18,7 @@ following devices:
+  * 1 Designware PCI Express Controller
+  * 1 Ethernet Controller
+  * 2 Designware USB 3 Controllers
++ * 2 FlexCAN 3 CAN Controllers (``imx8mp-evk`` only)
+  * 5 GPIO Controllers
+  * 6 I2C Controllers
+  * 3 SPI Controllers
+diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
+index 3b6183ed1d..2be3c51af5 100644
+--- a/include/hw/arm/fsl-imx8mp.h
++++ b/include/hw/arm/fsl-imx8mp.h
+@@ -17,6 +17,7 @@
+ #include "hw/misc/imx7_snvs.h"
+ #include "hw/misc/imx8mp_analog.h"
+ #include "hw/misc/imx8mp_ccm.h"
++#include "hw/net/flexcan.h"
+ #include "hw/net/imx_fec.h"
+ #include "hw/core/or-irq.h"
+ #include "hw/pci-host/designware.h"
+@@ -37,6 +38,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mpState, FSL_IMX8MP)
+ #define FSL_IMX8MP_RAM_SIZE_MAX     (8 * GiB)
+ 
+ enum FslImx8mpConfiguration {
++    FSL_IMX8MP_NUM_CANS         = 2,
+     FSL_IMX8MP_NUM_CPUS         = 4,
+     FSL_IMX8MP_NUM_ECSPIS       = 3,
+     FSL_IMX8MP_NUM_GPIOS        = 5,
+@@ -68,11 +70,14 @@ struct FslImx8mpState {
+     USBDWC3            usb[FSL_IMX8MP_NUM_USBS];
+     DesignwarePCIEHost pcie;
+     FslImx8mPciePhyState   pcie_phy;
++    FlexcanState       flexcan[FSL_IMX8MP_NUM_CANS];
+     OrIRQState         gpt5_gpt6_irq;
+     MemoryRegion       ocram;
+ 
+     uint32_t           phy_num;
+     bool               phy_connected;
++
++    CanBusState       *canbus[FSL_IMX8MP_NUM_CANS];
+ };
+ 
+ enum FslImx8mpMemoryRegions {
+@@ -279,6 +284,9 @@ enum FslImx8mpIrqs {
+     FSL_IMX8MP_PCI_INTC_IRQ = 124,
+     FSL_IMX8MP_PCI_INTD_IRQ = 123,
+     FSL_IMX8MP_PCI_MSI_IRQ  = 140,
++
++    FSL_IMX8MP_FLEXCAN1_IRQ  = 142,
++    FSL_IMX8MP_FLEXCAN2_IRQ  = 144,
+ };
+ 
+ #endif /* FSL_IMX8MP_H */
+diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
+index 7c03ed3c34..bcd91739d9 100644
+--- a/hw/arm/fsl-imx8mp.c
++++ b/hw/arm/fsl-imx8mp.c
+@@ -246,6 +246,11 @@ static void fsl_imx8mp_init(Object *obj)
+         object_initialize_child(obj, name, &s->wdt[i], TYPE_IMX2_WDT);
+     }
+ 
++    for (i = 0; i < FSL_IMX8MP_NUM_CANS; i++) {
++        g_autofree char *name = g_strdup_printf("flexcan%d", i);
++        object_initialize_child(obj, name, &s->flexcan[i], TYPE_CAN_FLEXCAN3);
++    }
++
+     object_initialize_child(obj, "eth0", &s->enet, TYPE_IMX_ENET);
+ 
+     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
+@@ -669,6 +674,34 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->pcie_phy), 0,
+                     fsl_imx8mp_memmap[FSL_IMX8MP_PCIE_PHY1].addr);
+ 
++    /* FlexCANs */
++    for (i = 0; i < FSL_IMX8MP_NUM_CANS; i++) {
++        static const struct {
++            hwaddr addr;
++            unsigned int irq;
++        } flexcan_table[FSL_IMX8MP_NUM_CANS] = {
++            {
++                fsl_imx8mp_memmap[FSL_IMX8MP_FLEXCAN1].addr,
++                FSL_IMX8MP_FLEXCAN1_IRQ
++            }, {
++                fsl_imx8mp_memmap[FSL_IMX8MP_FLEXCAN2].addr,
++                FSL_IMX8MP_FLEXCAN2_IRQ
++            },
++        };
++
++        object_property_set_link(OBJECT(&s->flexcan[i]), "clock-control-module",
++                                 OBJECT(&s->ccm), &error_abort);
++        object_property_set_link(OBJECT(&s->flexcan[i]), "canbus",
++                                 OBJECT(s->canbus[i]), &error_abort);
++
++        sysbus_realize(SYS_BUS_DEVICE(&s->flexcan[i]), &error_abort);
++
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->flexcan[i]), 0,
++                        flexcan_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->flexcan[i]), 0,
++                           qdev_get_gpio_in(gicdev, flexcan_table[i].irq));
++    }
++
+     /* On-Chip RAM */
+     if (!memory_region_init_ram(&s->ocram, OBJECT(dev), "imx8mp.ocram",
+                                 fsl_imx8mp_memmap[FSL_IMX8MP_OCRAM].size,
+@@ -684,6 +717,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+         switch (i) {
+         case FSL_IMX8MP_ANA_PLL:
+         case FSL_IMX8MP_CCM:
++        case FSL_IMX8MP_FLEXCAN1 ... FSL_IMX8MP_FLEXCAN2:
+         case FSL_IMX8MP_GIC_DIST:
+         case FSL_IMX8MP_GIC_REDIST:
+         case FSL_IMX8MP_GPIO1 ... FSL_IMX8MP_GPIO5:
+@@ -715,6 +749,10 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+ static const Property fsl_imx8mp_properties[] = {
+     DEFINE_PROP_UINT32("fec1-phy-num", FslImx8mpState, phy_num, 0),
+     DEFINE_PROP_BOOL("fec1-phy-connected", FslImx8mpState, phy_connected, true),
++    DEFINE_PROP_LINK("canbus0", FslImx8mpState, canbus[0], TYPE_CAN_BUS,
++                     CanBusState *),
++    DEFINE_PROP_LINK("canbus1", FslImx8mpState, canbus[1], TYPE_CAN_BUS,
++                     CanBusState *),
+ };
+ 
+ static void fsl_imx8mp_class_init(ObjectClass *oc, const void *data)
+diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
+index ca0ee2d3f2..16e9722d14 100644
+--- a/hw/arm/imx8mp-evk.c
++++ b/hw/arm/imx8mp-evk.c
+@@ -26,6 +26,7 @@ struct FslImx8mpEvkState {
+     MachineState parent_obj;
+ 
+     FslImx8mpState soc;
++    CanBusState *canbus[FSL_IMX8MP_NUM_CANS];
+ 
+     struct arm_boot_info boot_info;
+ };
+@@ -86,6 +87,12 @@ static void imx8mp_evk_init(MachineState *machine)
+ 
+     object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_FSL_IMX8MP);
+     object_property_set_uint(OBJECT(&s->soc), "fec1-phy-num", 1, &error_fatal);
++    for (int i = 0; i < FSL_IMX8MP_NUM_CANS; i++) {
++        g_autofree char *bus_name = g_strdup_printf("canbus%d", i);
++
++        object_property_set_link(OBJECT(&s->soc), bus_name,
++                                 OBJECT(s->canbus[i]), &error_fatal);
++    }
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(&s->soc), &error_fatal);
+ 
+     memory_region_add_subregion(get_system_memory(), FSL_IMX8MP_RAM_START,
+@@ -122,6 +129,19 @@ static const char *imx8mp_evk_get_default_cpu_type(const MachineState *ms)
+     return ARM_CPU_TYPE_NAME("cortex-a53");
+ }
+ 
++static void imx8mp_evk_machine_init(Object *obj)
++{
++    FslImx8mpEvkState *s = IMX8MPEVK_MACHINE(obj);
++
++    object_property_add_link(obj, "canbus0", TYPE_CAN_BUS,
++                             (Object **)&s->canbus[0],
++                             object_property_allow_set_link, 0);
++
++    object_property_add_link(obj, "canbus1", TYPE_CAN_BUS,
++                             (Object **)&s->canbus[1],
++                             object_property_allow_set_link, 0);
++}
++
+ static void imx8mp_evk_machine_class_init(ObjectClass *oc, const void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -140,6 +160,7 @@ static const TypeInfo imx8mp_evk_machine_types[] = {
+         .name = TYPE_IMX8MPEVK_MACHINE,
+         .parent = TYPE_MACHINE,
+         .class_init = imx8mp_evk_machine_class_init,
++        .instance_init = imx8mp_evk_machine_init,
+         .instance_size = sizeof(FslImx8mpEvkState),
+         .interfaces = aarch64_machine_interfaces,
+     },
+diff --git a/hw/misc/imx8mp_ccm.c b/hw/misc/imx8mp_ccm.c
+index 911911ed86..97d363e79d 100644
+--- a/hw/misc/imx8mp_ccm.c
++++ b/hw/misc/imx8mp_ccm.c
+@@ -129,6 +129,9 @@ static uint32_t imx8mp_ccm_get_clock_frequency(IMXCCMState *dev, IMXClk clock)
+     case CLK_HIGH:
+         freq = CKIH_FREQ;
+         break;
++    case CLK_CAN:
++        freq = 40000000; /* 40Mhz, taken from device tree */
++        break;
+     case CLK_IPG:
+     case CLK_IPG_HIGH:
+         /*
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 5f5c4899ad..0416ba823c 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -600,6 +600,7 @@ config FSL_IMX8MP
+     imply I2C_DEVICES
+     imply PCI_DEVICES
+     select ARM_GIC
++    select CAN_FLEXCAN
+     select FSL_IMX8MP_ANALOG
+     select FSL_IMX8MP_CCM
+     select IMX
+-- 
+2.55.0
 
 
