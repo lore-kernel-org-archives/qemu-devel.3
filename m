@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28562C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 01:59:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 178F2C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 02:02:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wf6hS-0006fI-Q8; Wed, 01 Jul 2026 21:58:46 -0400
+	id 1wf6kR-0007Sk-Ak; Wed, 01 Jul 2026 22:01:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wf6hP-0006ew-Fo; Wed, 01 Jul 2026 21:58:43 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wf6kJ-0007RU-UG; Wed, 01 Jul 2026 22:01:43 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wf6hM-0008QY-Oz; Wed, 01 Jul 2026 21:58:43 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1wf6kH-00019h-Qg; Wed, 01 Jul 2026 22:01:43 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6621LIKV2391333; Thu, 2 Jul 2026 01:58:34 GMT
+ 6621KHi52450310; Thu, 2 Jul 2026 02:01:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=at6zz1
- rYPJydWYID6fgTi7mSk4gr/awBs5Gat47tGkg=; b=lZ5k0R3KkGr+XKZILHzYJk
- aFyuQhm75YOVEP6BbrHKpjoLpg92GSbo5FcNQI1aMV7C3QiDAa6vYI/vf1pCicRJ
- 0CqCZU5eKAumnBqOFqZCAhIKBYIOqsNV7DwZpXzUpCc2H/VTWPToFhcoZKfIPoi/
- gnRE2jwj73XVdvUqmaXHsb223+eeCFoEzGTkjhvLtdRMxMWUQwhFw/zDozRFh/X1
- 8hTkeZ06PsjmGhj8Qg8m0OFbjx51qHlbY4zAMEF4NyocWdZ6D/bkTZlmEmflUkn6
- gxmkBJYsVJ+MRQSczx5dg3d0+rZIiJKbr3cw3BxsqcUw83iX2IFsrq/jELCZBUmA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=L4p3TW
+ VAxxZMWY3mtUmxYFb/Fz1rh2UM3yk2Za0elVw=; b=NOuqiHmNCCMIsN+ohNvn2b
+ +SPh61WvrLZD4a0awoCFFfle+5OyfRhlPEUTCDkLaac+kE5iaY6TzLP83wEN24ly
+ iccgGpyWFt2s2QgYsFz3esufJjPgCv47Nh3+W787pEnz03tCVc0zeYY5+Jx7ZLXy
+ E2eyrJWhlqZfECj6caA+n2kmbOkPSnaKgzybjZXi+s8hdW+s5DE+akBvgEXdF3BO
+ XgzUePEwWcG7lt1sYDTm7jRu4UIslL6wjKbwvbY/W2VTLv7s9D/dIknMtda6Plbo
+ tnuogwSGLyoYyB0SfRj8YjYWfLqxgxacehsKam03O5pLnhhT3lmyeeFt2cJW3SUw
  ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qa77j0-1
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26n5ymca-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 01:58:34 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6621nbLg017835;
- Thu, 2 Jul 2026 01:58:33 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhyhqtw-1
+ Thu, 02 Jul 2026 02:01:37 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6621ngng012924;
+ Thu, 2 Jul 2026 02:01:36 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7wa2u8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 01:58:32 +0000 (GMT)
+ Thu, 02 Jul 2026 02:01:36 +0000 (GMT)
 Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
  [10.241.53.100])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6621wVdD21627454
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66221ZQE20382398
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 2 Jul 2026 01:58:31 GMT
+ Thu, 2 Jul 2026 02:01:35 GMT
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2880F58058;
- Thu,  2 Jul 2026 01:58:31 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0DA2D58062;
+ Thu,  2 Jul 2026 02:01:35 +0000 (GMT)
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EE67758057;
- Thu,  2 Jul 2026 01:58:29 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CB03758059;
+ Thu,  2 Jul 2026 02:01:33 +0000 (GMT)
 Received: from [9.61.143.111] (unknown [9.61.143.111])
  by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Thu,  2 Jul 2026 01:58:29 +0000 (GMT)
-Message-ID: <7a7daacb-a55e-4590-9d13-73234a088c68@linux.ibm.com>
-Date: Wed, 1 Jul 2026 21:58:29 -0400
+ Thu,  2 Jul 2026 02:01:33 +0000 (GMT)
+Message-ID: <8af94524-dba8-4e2d-aa27-323ede3481dc@linux.ibm.com>
+Date: Wed, 1 Jul 2026 22:01:33 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 21/35] pc-bios/s390-ccw: Rework zipl_load_segment
- function
+Subject: Re: [PATCH v12 22/35] pc-bios/s390-ccw: Introduce ZiplBootMode enum
+ for IPL mode selection
 To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
 Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
@@ -73,48 +73,47 @@ Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
  armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
  pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
 References: <20260701204922.1320349-1-zycai@linux.ibm.com>
- <20260701204922.1320349-22-zycai@linux.ibm.com>
+ <20260701204922.1320349-23-zycai@linux.ibm.com>
 Content-Language: en-US
 From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <20260701204922.1320349-22-zycai@linux.ibm.com>
+In-Reply-To: <20260701204922.1320349-23-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfX5nQAf2HpJvpm
- lwaUlmgEDZeGPzhuo4E0F1kzbaFvFL2xXCNEukQ1zTKqoQdHvkvr9v+l4WizwJXFdh3n+rHFynR
- Otnf4My9Ihc/KJf4rP/ISl/p/rpX9SMUQtJpX/9mfbxKltFWjAautH9gSvJFkp/XNAbY2vdbuTA
- Ti8tFhvOvKrs2dl1caHRQI2b7Ihy4XMvuBtTdDS7VzO3pfCF5azMEfJ77Vb9QEFysEGXY6mi8q2
- CGVAjHeHIzh1JwPfZNW5onP9lDZ0y0T4Vf9pq81SVWy/xZARtfFLzHg6qI5ZSSqn5lKWPh5KjNz
- PzidRCohhrJkVkAMKNuxzzQhNhyz2zDUqXVU/t28EByWVdpXVX7pLK4MUKXNRrNgbyTzP1XFXvD
- Eh1h4MJgbmrPyAvpP3h0Ox7zVQOPE03aM8blm1QaV/dmkVJbyCIJmeQziTnSjmBvaGFagaw57K4
- tcdVZbTiTww5CNBvn0g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfX/dqwSFQ5UD1n
- h8WVjxjkQKJ079wQY0Kovpt4CPA/r67U9wIrinjQsmokhyIOS+0L/FJelNZ/jB1a9upARQK7aIZ
- YkLcmtv5fOhfJWcn9XblzRuk0iXqO0Q=
-X-Proofpoint-GUID: eBiLBBU-N0F9Ivjj40ZdCeGCn6xtQid6
-X-Proofpoint-ORIG-GUID: eBiLBBU-N0F9Ivjj40ZdCeGCn6xtQid6
-X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a45c5ca cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfXyDCUQ+Z/Un7j
+ /tfZMMhSw16V2K5kjgXRDoYGnOLokzIBzek1ivNsuk9sLgyOchCXE3Gb+DwkRqUoLCFqXfhh3Ny
+ 70/dwTL0vxNcBT08kuoXCYv/5SctswbczuJvmByHdflowKg9TpD12zeJnw/JI7n7wWabOBZQgwV
+ peorrL/5UTzVcf+p9C37Q2Abw+a4BES+29VAcGU26fS++6Gbz+DNqHffle7JfwXxMTRT99tqdYx
+ 6DVeXetO69jxEyYFprN2mAe3bFLh91YdzfObVX3l+1h0XlFqN5qqMZRG8DlMO57pTPh2qxQgGfV
+ TJUNv6h3hYHuImz/zJGypChuk+yS0wMOAqRzv21thYhJm8ZyPvh3myXRjUhfRW68uEw/gfw5GP/
+ NEB1qnUlzZzW3Gf0jvI1TKBiFWYK7ps+m5nW86eyoV1LqrCII0mEIJXuK/AIMBsjbb9ElkR8Vrq
+ xCHcFNbPby73/G0WKQw==
+X-Authority-Analysis: v=2.4 cv=V45NF+ni c=1 sm=1 tr=0 ts=6a45c681 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=20KFwNOVAAAA:8 a=dDsesF0xEnKmZbA7g9YA:9 a=QEXdDO2ut3YA:10
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=mMgoN3YEOOTdy_fJs10A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: uiMfuKAfv7ACIvvLQ54WOvuLVWES3d92
+X-Proofpoint-GUID: uiMfuKAfv7ACIvvLQ54WOvuLVWES3d92
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfXzPWyRJ/wwnRQ
+ LUD+19zdIoT2xozox7IE2VeIvnGVzCd6NDsjd8xc6hAlEQHio3Z0gwNYmoLf/rLV2AoiiMTbvJ6
+ uAVk9aOqoHspTeunLBMn+CsA0Ly2W6g=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607020016
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 impostorscore=0 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020016
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -134,93 +133,149 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 7/1/26 4:49 PM, Zhuoying Cai wrote:
-> Change zipl_load_segment() to accept explicit blockno and address
-> parameters instead of ComponentEntry pointer and return segment length.
+> Add ZiplBootMode enumeration to support multiple IPL boot configurations.
+> Boot modes differentiate between normal boot and secure IPL operations,
+> enabled based on boot certificates specified via the boot-certs option.
 >
-> Modify this function to allow the caller to specify a memory address
-> where segment data should be loaded into.
+> Normal Mode: IPL when no certificates are provided. No signature
+> verification is performed.
 >
-> seg_len variable is necessary to store the calculated segment length and
-> is used during signature verification. Return the length on success, or
-> a negative return code on failure.
->
-> Remove static qualifier and add function declaration to bootmap.h to
-> make it accessible to other modules.
+> This prepares for future secure IPL modes requiring signature
+> verification.
 >
 > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
 > Reviewed-by: Collin Walling <walling@linux.ibm.com>
 > ---
->   pc-bios/s390-ccw/bootmap.c | 18 ++++++++++--------
->   pc-bios/s390-ccw/bootmap.h |  2 ++
->   2 files changed, 12 insertions(+), 8 deletions(-)
+>   docs/system/s390x/secure-ipl.rst | 21 +++++++++++++++++++++
+>   pc-bios/s390-ccw/bootmap.c       | 16 +++++++++++++++-
+>   pc-bios/s390-ccw/main.c          |  6 ++++++
+>   pc-bios/s390-ccw/s390-ccw.h      |  6 ++++++
+>   4 files changed, 48 insertions(+), 1 deletion(-)
 >
+> diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
+> index 88df52ce2f..9d7d33f5ed 100644
+> --- a/docs/system/s390x/secure-ipl.rst
+> +++ b/docs/system/s390x/secure-ipl.rst
+> @@ -18,3 +18,24 @@ Note: certificate files must have a .pem extension.
+>   .. code-block:: shell
+>   
+>       qemu-system-s390x -machine s390-ccw-virtio,boot-certs.0.path=/.../qemu/certs,boot-certs.1.path=/another/path/cert.pem ...
+> +
+> +
+> +IPL Modes
+> +---------
+> +
+> +Multiple IPL modes are available to differentiate between the various IPL
+> +configurations. These modes are mutually exclusive and enabled based on the
+> +``boot-certs`` option on the QEMU command line.
+> +
+> +Normal Mode
+> +^^^^^^^^^^^
+> +
+> +The absence of certificates will attempt to IPL a guest without secure IPL
+> +operations. No checks are performed, and no warnings/errors are reported.
+> +This is the default mode.
+> +
+> +Configuration:
+> +
+> +.. code-block:: shell
+> +
+> +    qemu-system-s390x -machine s390-ccw-virtio ...
 > diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-> index b9ba004cfc..b19981feb1 100644
+> index b19981feb1..667a69f80d 100644
 > --- a/pc-bios/s390-ccw/bootmap.c
 > +++ b/pc-bios/s390-ccw/bootmap.c
-> @@ -613,19 +613,19 @@ static int ipl_eckd(void)
->    * IPL a SCSI disk
->    */
+> @@ -733,7 +733,14 @@ static int zipl_run(ScsiBlockPtr *pte)
+>       /* Load image(s) into RAM */
+>       entry = (ComponentEntry *)(&header[1]);
 >   
-> -static int zipl_load_segment(ComponentEntry *entry)
-> +/*
-> + * Returns: length of the segment on success,
-> + *          negative value on error.
-> + */
-> +int zipl_load_segment(block_number_t blockno, uint64_t address)
->   {
->       const int max_entries = (MAX_SECTOR_SIZE / sizeof(ScsiBlockPtr));
->       ScsiBlockPtr *bprs = (void *)sec;
->       const int bprs_size = sizeof(sec);
-> -    block_number_t blockno;
-> -    uint64_t address;
->       int i;
->       char err_msg[] = "zIPL failed to read BPRS at 0xZZZZZZZZZZZZZZZZ";
->       char *blk_no = &err_msg[30]; /* where to print blockno in (those ZZs) */
-> -
-> -    blockno = entry->data.blockno;
-> -    address = entry->compdat.load_addr;
-> +    int seg_len = 0;
->   
->       debug_print_int("loading segment at block", blockno);
->       debug_print_int("addr", address);
-> @@ -668,10 +668,12 @@ static int zipl_load_segment(ComponentEntry *entry)
->                   puts("zIPL load segment failed");
->                   return -EIO;
->               }
+> -    rc = zipl_run_normal(&entry, tmp_sec);
+> +    switch (boot_mode) {
+> +    case ZIPL_BOOT_MODE_NORMAL:
+> +        rc = zipl_run_normal(&entry, tmp_sec);
+> +        break;
+> +    default:
+> +        panic("Unknown boot mode");
+> +    }
 > +
-> +            seg_len += bprs->size * (bprs[i].blockct + 1);
->           }
->       } while (blockno);
+>       if (rc) {
+>           return rc;
+>       }
+> @@ -1105,12 +1112,16 @@ void zipl_load(void)
+>       VDev *vdev = virtio_get_device();
 >   
-> -    return 0;
-> +    return seg_len;
->   }
+>       if (vdev->is_cdrom) {
+> +        IPL_assert((boot_mode == ZIPL_BOOT_MODE_NORMAL),
+> +                   "Secure boot from ISO image is not supported!");
+>           ipl_iso_el_torito();
+>           puts("Failed to IPL this ISO image!");
+>           return;
+>       }
 >   
->   static int zipl_run_normal(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
-> @@ -687,7 +689,7 @@ static int zipl_run_normal(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
->               continue;
->           }
+>       if (virtio_get_device_type() == VIRTIO_ID_NET) {
+> +        IPL_assert((boot_mode == ZIPL_BOOT_MODE_NORMAL),
+> +                    "Virtio net boot device does not support secure boot!");
+>           netmain();
+>           puts("Failed to IPL from this network!");
+>           return;
+> @@ -1121,6 +1132,9 @@ void zipl_load(void)
+>           return;
+>       }
 >   
-> -        if (zipl_load_segment(entry)) {
-> +        if (zipl_load_segment(entry->data.blockno, entry->compdat.load_addr) < 0) {
->               return -1;
->           }
->   
-> diff --git a/pc-bios/s390-ccw/bootmap.h b/pc-bios/s390-ccw/bootmap.h
-> index 95943441d3..8d61ac383c 100644
-> --- a/pc-bios/s390-ccw/bootmap.h
-> +++ b/pc-bios/s390-ccw/bootmap.h
-> @@ -113,6 +113,8 @@ typedef struct ScsiMbr {
->       ScsiBlockPtr pt;   /* block pointer to program table */
->   } __attribute__ ((packed)) ScsiMbr;
->   
-> +int zipl_load_segment(block_number_t blockno, uint64_t address);
+> +    IPL_assert((boot_mode == ZIPL_BOOT_MODE_NORMAL),
+> +                "Secure boot with the ECKD scheme is not supported!");
 > +
->   #define ZIPL_MAGIC              "zIPL"
->   #define ZIPL_MAGIC_EBCDIC       "\xa9\xc9\xd7\xd3"
->   #define IPL1_MAGIC "\xc9\xd7\xd3\xf1" /* == "IPL1" in EBCDIC */
+>       switch (virtio_get_device_type()) {
+>       case VIRTIO_ID_BLOCK:
+>           zipl_load_vblk();
+> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+> index b8f836c682..cd3d0776b0 100644
+> --- a/pc-bios/s390-ccw/main.c
+> +++ b/pc-bios/s390-ccw/main.c
+> @@ -30,6 +30,7 @@ IplParameterBlock *iplb;
+>   bool have_iplb;
+>   static uint16_t cutype;
+>   LowCore *lowcore; /* Yes, this *is* a pointer to address 0 */
+> +ZiplBootMode boot_mode;
+>   
+>   #define LOADPARM_PROMPT "PROMPT  "
+>   #define LOADPARM_EMPTY  "        "
+> @@ -303,6 +304,9 @@ static void ipl_ccw_device(void)
+>       switch (cutype) {
+>       case CU_TYPE_DASD_3990:
+>       case CU_TYPE_DASD_2107:
+> +        IPL_assert((boot_mode == ZIPL_BOOT_MODE_NORMAL),
+> +                    "Passthrough (vfio) CCW device does not support secure boot!");
+> +
+>           dasd_ipl(blk_schid, cutype);
+>           break;
+>       case CU_TYPE_VIRTIO:
+> @@ -390,6 +394,8 @@ void main(void)
+>           probe_boot_device();
+>       }
+>   
+> +    boot_mode = ZIPL_BOOT_MODE_NORMAL;
+> +
+>       while (have_iplb) {
+>           boot_setup();
+>           if (have_iplb && find_boot_device()) {
+> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+> index 1e1f71775e..5420443ad2 100644
+> --- a/pc-bios/s390-ccw/s390-ccw.h
+> +++ b/pc-bios/s390-ccw/s390-ccw.h
+> @@ -69,6 +69,12 @@ int sclp_read(char *str, size_t count);
+>   /* bootmap.c */
+>   void zipl_load(void);
+>   
+> +typedef enum ZiplBootMode {
+> +    ZIPL_BOOT_MODE_NORMAL = 0,
+> +} ZiplBootMode;
+> +
+> +extern ZiplBootMode boot_mode;
+> +
+>   /* jump2ipl.c */
+>   void write_reset_psw(uint64_t psw);
+>   int jump_to_IPL_code(uint64_t address);
 
 Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
 
