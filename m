@@ -4,152 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A798C43327
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 18:33:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9A7EC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 18:37:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfMDU-00051E-Su; Thu, 02 Jul 2026 14:32:52 -0400
+	id 1wfMHP-0005kQ-Sn; Thu, 02 Jul 2026 14:36:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wfMDT-00050s-DN
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:32:51 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wfMHN-0005kD-5L
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:36:53 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wfMDR-0002xS-Hl
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:32:51 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 662E3K25514999
- for <qemu-devel@nongnu.org>; Thu, 2 Jul 2026 18:32:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- IiU/adXUZ5A9dw/LaxYOxZ1OdnodgJu/dYuVzZI+PB8=; b=IkVj4Hmi89sYgkQ+
- rI4d4CMTQcP8GI9TUukz7cQ1b85BjG9Y1rjTsWvU3umF/U2sEdCKqP4GPY5e8kvD
- rxQ4wNFo/3A048yH7G48leKwp+6PG4KRO4IoC29UZKl+u+9vAwR+pBcxYXjewiDo
- lgwLXkgus9vQV13fHVXGHVMmnK7s39XzqVbP7gO/Tbj/BNDw2P2dGmcIcv6F71UP
- WoKJmCiMPAS14MA6W7BXcLtQ88lSPg1rsPs4Ix9oxLdRjkdC1/i89r3bvPTD3y8a
- 2PIEdvSnrPJMfTAHNZilH9z0CFOCAb1v7bnd1eV/f8I//9amg3q9F4u8s+qG8YOE
- Kjw8TA==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5npra8bv-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 18:32:46 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-c8895156101so2585967a12.1
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 11:32:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783017166; x=1783621966; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IiU/adXUZ5A9dw/LaxYOxZ1OdnodgJu/dYuVzZI+PB8=;
- b=d1QFAKkTFeM9h+kw/DBiTOVI0Cjmk1c66H3gVYa2CzWo0PiCioMC5xrMlXmLq0uW2l
- z5NPxM2V9aX91Skb5HO5V3xdxlGkoJmq/n2smTCs/x1gVMJnDBcRmSnaLabtQtVZd/5+
- ImMtygrlQqKZY1AtK6CW8qmaRJTOfkC84kZKri/QgwL93TZzZYCTp97EYbZOh0j8cGj4
- o49Ld74WCGsF1CwB6FuWbb/KQWtP+0yEuVPJX3ZDo58Y8lA/ScKh9FYha4YLqE9vXC6w
- BUe6zs9fvE/ihfhDYPRcMjKa20smQIfrA+fcchLGjwwd08X8/WgpWFi/6o2cfo2b1zL2
- ncaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783017166; x=1783621966;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IiU/adXUZ5A9dw/LaxYOxZ1OdnodgJu/dYuVzZI+PB8=;
- b=Sw2rEZXLPGoXknVia2uK1HqYPZir4VVYxK3UEWILEbt3VkROPUDWz+Dl4J3OSqc6aR
- 9sQnzTnB9NBQSv9OfgZsHlcacW1qNjNf0a6dqAoWaMCIGOIrR8u12pyYHsKjCunCSbrD
- 107T/73s6py2HEaKHBR+oaY2dCsEyoahb3c1WH1IOKTSNYzBoKxFTuJAuY4tegsDtWMb
- NwX12d5ZyHymTgLcpYuD6lwCd1JLETsKaj+8AboHqx1ytcONBVAmRoBXxcRkQ877iP1v
- xfGhBrzZkeHSiwl/Fs4YFnvjse9ElSS4e50Ge6T2mRM4bZdq0XPOPtzaISG4Hmg9INLN
- mBRg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9T5iBC/xonBjm1XebFWCBZk5hEDaeX2vk0ECjZPh4vaIvztsFM+kQrA8Ab4X6cPIcoyGwSPq1LN0nv@nongnu.org
-X-Gm-Message-State: AOJu0YxIAK12bk2BYb33gHy64p9RXAcIvV2RJAjnXdypUr1EDOZEFYKg
- Mi6JvpYDuuuHeh32Ry2mf3FhgN7dkee9Iq/BFIjhOGx+15uZ87hppvEMeYlaNEpbyQjgAm7esvU
- Is2AQCZbXjo/PRB6KyOLse5aEt2E41x1kNfJXhs3wtdnuvuuaRzhpmR362Q==
-X-Gm-Gg: AfdE7cnTDx5IIVzeh57BtVpFiTiSrENsCz3bdiO7PnckPrF/9VkFiNf1lzNwoyaRx0U
- 51LxPgD3HHT8/Il5RQJkEVWE9jPdXQM8d/fVuaZEbEJJk8rvrwZwhAG7+oMeNXMc5k8qh9jx0KZ
- +sMZSaxYVH2Rz18gRhtceKa5qt4XeSf6W0EMWZ1R/yDQEjnRS7c39PHvr/1rAzG1aAkeaeV51Lf
- pG75xw9hucKTTMCkizzsfLWjl+59r6sUz/Ub7T+Umae5JvjxbE0bcmExuypEPB0LwvVSN2Ods9g
- Y6iLaQyuTg2q2DE5lFDS9qcnXnfYs3Y3fUD14WPZQO9mDavWnMDEsjI0hHEwZZDC0oHLidF3hHp
- Dezy9MgjyLMjH9v6McXQZJYCRsSrBUMD1KwRZ8Fyqp0Aq/M2qp6qHag3beIIbuFLovwKLf+98dV
- aBOuE=
-X-Received: by 2002:a05:6a21:4ccb:b0:3bf:6c08:fb87 with SMTP id
- adf61e73a8af0-3bfed4b6f8fmr8687520637.55.1783017165941; 
- Thu, 02 Jul 2026 11:32:45 -0700 (PDT)
-X-Received: by 2002:a05:6a21:4ccb:b0:3bf:6c08:fb87 with SMTP id
- adf61e73a8af0-3bfed4b6f8fmr8687470637.55.1783017165424; 
- Thu, 02 Jul 2026 11:32:45 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b3c7fa566sm10597096c88.4.2026.07.02.11.32.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Jul 2026 11:32:44 -0700 (PDT)
-Message-ID: <db0e39ba-ccc1-4e17-8456-c21d3843788c@oss.qualcomm.com>
-Date: Thu, 2 Jul 2026 11:32:43 -0700
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wfMHK-0004F0-PX
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:36:52 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wfMH7-00000005KuV-2tYF; Thu, 02 Jul 2026 20:36:37 +0200
+Message-ID: <e79a3746-9c7e-46a5-ad81-537b9d3affdb@maciej.szmigiero.name>
+Date: Thu, 2 Jul 2026 20:36:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/1] contrib/plugins: add dlcall to call host functions
- from a guest
-To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20260622163438.130746-1-functioner@sjtu.edu.cn>
- <20260629160217.1637276-1-functioner@sjtu.edu.cn>
- <42297965-3d92-4d9d-ad6f-4861841d4806@oss.qualcomm.com>
- <faad8fd9-5fa8-4ae8-8437-28864543e34e@sjtu.edu.cn>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <faad8fd9-5fa8-4ae8-8437-28864543e34e@sjtu.edu.cn>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH 2/2] vfio/migration: Parallelize device state transitions
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ qemu-devel@nongnu.org
+References: <cover.1779217494.git.maciej.szmigiero@oracle.com>
+ <743f03758d2a30df4093db140ccdd0f91f69bd7e.1779217494.git.maciej.szmigiero@oracle.com>
+ <871peqtm5t.fsf@suse.de> <ah3eheRXN1QJAGj_@x1.local>
+ <ac677bf9-1372-4905-a0b8-874a74be07be@maciej.szmigiero.name>
+ <ah86Z0r5sMnxwgo-@x1.local>
+ <c739f4fe-1f43-45c4-b98f-109366526405@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <c739f4fe-1f43-45c4-b98f-109366526405@maciej.szmigiero.name>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: DZlYDhydT_W55C--ark09Vnw7plVSL8C
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDE5NCBTYWx0ZWRfX07WTJqhEVWP7
- Zoer/DaiCqDVavfE/vdHY4hjIAZXT6UM+Z4ERVb6HQr9Wyl/OcVYd6w9t+3im6SWIDhO3jMKPmK
- 6uQi43Xe7RAXgJkxfNAw9t8B9mshzJs=
-X-Authority-Analysis: v=2.4 cv=NsvhtcdJ c=1 sm=1 tr=0 ts=6a46aece cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=9rKaqBXaalEQfT-SZYsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=x9snwWr2DeNwDh03kgHS:22
-X-Proofpoint-GUID: DZlYDhydT_W55C--ark09Vnw7plVSL8C
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDE5NCBTYWx0ZWRfX9NYe5gsqW+ZU
- qLH4qoCIjjxboDJv1tNu7HyAxmIrGDfPaOq18X82Oix28DJyr7Zy7cmes6uwPnXRcJkifU5jfHa
- B8y8IzTvalN1Zcyiv8d57iMaxalY2xCf1tRrK5WudZs/euv6G9a9HOwGl5D9QJu0Hl4DTle+O06
- LAs077Rl9u1e/AS9KXfNu9yC+11QqVip7O6wjYLMyTCNOS49mGRLwDLmOi1RAOZm/N4z+CUGnFj
- h6xdG0NI3Ou+7QqGmA8sTkdXoU0nlibl54tQuwswclvW6erhYVp05mzyMeAOH/xYqb19/6rCbXC
- 7b2mEZfvtwQ4GZWdn/9LCLyS5PtfB0tFrlGFY2oBr+NjruXUMWO19fxaCtTe+nE5qCatn0swIOi
- FVi5BsVGA6mcw4qCl1DjJYodv2V5t++V7NouXpEjOefKo9Lonzk7Bdw2MuQE41+IJKORqtoWDSw
- l8qFkE1dOje6oFD7y3A==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-02_02,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 phishscore=0 suspectscore=0
- malwarescore=0 adultscore=0 clxscore=1015 impostorscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020194
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,109 +109,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/30/2026 6:48 PM, Ziyang Zhang wrote:
-> Hi Pierrick,
-> 
-> Thanks for the review, and for thinking about the end-user experience.
-> 
-> On Tue, 30 Jun 2026 12:34:59 -0700, Pierrick Bouvier wrote:
->> Thanks for publishing it.
+On 3.06.2026 23:34, Maciej S. Szmigiero wrote:
+> On 2.06.2026 22:17, Peter Xu wrote:
+>> On Tue, Jun 02, 2026 at 12:01:32PM +0200, Maciej S. Szmigiero wrote:
+>>> On 1.06.2026 21:33, Peter Xu wrote:
+>>>> On Mon, Jun 01, 2026 at 10:39:26AM -0300, Fabiano Rosas wrote:
+>>>>> A bit idiosyncratic, but I don't have any better suggestions.
+>>>>
+>>>> One thing I don't think proper with the current approach: if it's a real
+>>>> "priority" it should be invoked always with high->low order, no matter if
+>>>> running=true or not..  but that's not what will happen if we encode it with
+>>>> the "depth" field.
+>>>>
+>>>> That is an implication that we have two demands, and they aren't the same,
+>>>> but this solution wrongly packed them together.
+>>>>
+>>>> In 2023, VFIO already introduced VMChangeStateEntry.prepare_cb().  That is
+>>>> a real impl of prority queues with only two: prepare_cb() always has higher
+>>>> priority than the cb() itself.
+>>>>
+>>>> Can VFIO simply leverage this existing interface, instead of hijacking
+>>>> "depth" in an unwanted way?
+>>>>
+>>>> I believe the _P2P states still need to happen first for all vfio devices,
+>>>> then it can do the next step. Logically I think it can also be done
+>>>> internally within VFIO by proper impl of these two callbacks, to achieve
+>>>> both:
+>>>>
+>>>> - Proper transition to P2P states first for all devices, meanwhile,
+>>>> - Proper concurrency of all VFIO devices on device state transitions
+>>>>
+>>>> Would that work in a cleaner way?
+>>>
+>>> In the VFIO migration save/source code we have two transitions:
+>>> PRE_COPY -> PRE_COPY_P2P done via prepare_cb() and
+>>> PRE_COPY_P2P -> STOP_COPY done via cb().
+>>> On the load/target side the situation is similar, only states are
+>>> different.
+>>>
+>>> For each of these transitions we need two callbacks: one has to launch
+>>> per-VFIO device state change thread and the other one has to "collect"
+>>> (or join) these threads.
+>>>
+>>> All handlers of the first callback have to be complete before calling
+>>> any handler of the second callback since otherwise there would be
+>>> VFIO device vs VFIO device serialization.
+>>>
+>>> Moreover, all the prepare_cb()-related transitions have to be done
+>>> before any of the cb()-related is started.
+>>>
+>>>
+>>> I presume what you suggest above is to launch per-VFIO device state
+>>> transition thread in prepare_cb() which would then be responsible for
+>>> doing *both* state transitions for this VFIO device.
+>>> And then collect this thread in cb().
 >>
->> A few ideas to make Lorelei even more easy to use:
+>> Yes.
 >>
->> Would that be possible to add binary artifacts to the existing 1.0.0
->> Lorelei release?
->> Ideally, it should provide a toolchain (for x64 hosts) with support for
->> x64, arm64 and riscv64 guest thunks.
+>>>
+>>> However, this would need some extra interlocking:
+>>> - A lock inside VFIO code shared by all VFIO devices making sure
+>>> no VFIO device starts the second transition (the cb() one) before
+>>> all VFIO devices finish the first transition (the prepare_cb() one).
 >>
->> Also, would that possible to provide a script to generate boilerplate
->> for thunks, and extract list of symbols from a given library?
+>> Yes, more below.
 >>
->> My ultimate goal would be to have something as simple as:
->> $ wget toolchain.hostx64.tar.gz
+>>>
+>>> - Looking at the current QEMU code, there are some non-VFIO cb()
+>>> handlers registered via qdev_add_vm_change_state_handler() and
+>>> quite a few handlers registered via qemu_add_vm_change_state_handler().
+>>>
+>>> I presume these VFIO prepare_cb()-related transitions need to finish
+>>> before calling any of these handlers to maintain the current ordering
 >>
->> # automatically generate boilerplate + compile guest/host thunks
->> $ toolchain.hostx64/bin/generate-thunks \
->>    --arch arm64 --library /usr/lib/libfoo.so \
->>    --header /usr/include/foo.h --out thunks_arm64
+>> IIUC, we don't necessarily need to keep this ordering; or do you see any
+>> real demand of that?
 >>
->> $ aarch64-linux-gnu-gcc main.c -lfoo
->> $ env LD_LIBRARY_PATH=./thunks_arm64 \
->>    qemu-arm64 ./a.out -plugin contrib/plugins/liblorelei.so
->>
->> I understand it asks for more, but we really need to make lorelei as
->> simple to use as possible, without pushing the internal details to users.
->>
->> What do you think about this?
+>> What I see is that the order is only introduced due to P2P state of VFIO,
+>> it seems very specific to me.
 > 
+> While I don't have a specific example why relaxing this ordering is unsafe
+> I am not certain that it is safe either - we can end up introducing subtle
+> race condition and possible guest memory corruption.
 > 
-> Prebuilt toolchain / instant acceleration
+> Maybe Alex and Cédric can provide some additional input here.
 > 
-> Agreed: the goal is to install it and feel the speedup right away,
-> with no build step. I'll do this, but as a point release on top of
-> 1.0.0.0 rather than in the initial tag, so it lands as its own
-> increment. The model is FEX's FEXFetchRootFS: a prebuilt host
-> toolchain plus ready-made thunks, so a user goes from download
-> straight to an accelerated guest. Like FEXFetchRootFS, the tool will
-> likely have the user pick their distribution and version, because a
-> thunk is bound to a specific library build: the exported symbols, and
-> sometimes the ABI, differ across distros and releases, so the prebuilt
-> thunks must match the host's real libraries.
+> If nobody can authoritatively say that calling non-VFIO cb()
+> VM state change handlers before being certain that all VFIO devices
+> reached PRE_COPY_P2P / RUNNING_P2P state is indeed safe thing to do
+> I think we'll have to play safe here.
 > 
-> Generating thunks for a new library
-> 
-> One caveat on the generate-thunks sketch. Lorelei guarantees that
-> thunk *generation* is automatic and reproducible: once a library is
-> described, TLC deterministically emits both sides, including the
-> callback and variadic cases. What it cannot do on its own is
-> *describe* the library, that is, pick the symbols you need and write
-> descriptors for the ones that do not marshal trivially (callbacks by
-> pointer, ownership crossing the boundary). Those stay judgment calls
-> that need a human, or an AI, in the loop.
-> 
-> So adding a new library is not one fully automatic command. What
-> Lorelei does is drastically cut the effort versus hand-writing every
-> thunk the way Box64 does: the generate-thunks helper automates what
-> is automatable (symbol extraction, boilerplate, building both sides),
-> so simple libraries are close to one-shot and harder ones start from
-> a skeleton rather than a blank file.
-> 
-> Plugin name
-> 
-> I would rather keep "dlcall" than rename it to "lorelei". The plugin
-> defines a general interface (the magic-syscall dlopen/dlsym/invoke
-> ABI), and Lorelei is only one userspace implementation of it now:
-> 
->   - "dlcall" says what the plugin does and is understood without
->     leaving the tree. "lorelei" names an external project and says
->     nothing about the mechanism.
->   - An in-tree interface should not be tied to the branding or
->     lifetime of an out-of-tree project. If Lorelei is renamed,
->     forked, or joined by other toolchains, the name becomes
->     misleading.
->   - Naming it after one implementation implies it is the blessed one
->     and discourages alternatives. A generic name keeps QEMU neutral.
->   - It also matches how the other contrib plugins are named, by
->     functionality (lockstep, cache, ...).
->
 
-I agree with your arguments, let's keep this name then.
+I looked more deeply into this and even prototyped a similar new design.
 
-> I do agree Lorelei should be discoverable from the tree, so I'll add
-> docs to docs/about/emulation.rst that introduce the dlcall interface
-> and point at Lorelei as a ready-to-use implementation, with a minimal
-> example and without the internal details.
-> 
-> Does that sound reasonable?
->
+However, in the end I think that running VFIO state transitions in
+parallel with other non-VFIO cb() handlers just isn't safe.
 
-Yes sounds good to me!
+For example, on the migration source, the second transition is
+PRE_COPY_P2P -> STOP_COPY.
+PRE_COPY_P2P is the last state during migration that still allows the
+device to accept DMA and similar interactions, while STOP_COPY is
+already the "quiescent" state.
 
-> Thanks,
-> Ziyang Zhang
-> 
-> 
+So if a VFIO has already reached STOP_COPY but a non-VFIO device
+callback still hasn't finished, then any DMA/MMIO/P2P transaction from
+that "unfinished" device to the VFIO device would now hit a VFIO device
+that no longer can accept such transactions.
+This may result in hard-to-debug memory corruption during live migration.
+
+For a similar reason I think we need to preserve qdev tree depth based
+ordering as its whole point is to make sure these transitions happen in
+the correct order between different devices.
+
+This is even more pressing considering that the VFIO hardware needed to
+work on these issues isn't very widespread.
+
+What I think we can do do instead, is to use a use an early prepare_cb()
+handler registered by a VFIO code to launch a state changing thread
+inside VFIO code.
+
+Then a late prepare_cb() handler also registered by a VFIO code would
+synchronize with these state changing threads at their first sync point:
+completion of the first state change.
+This could be achieved for example by doing an event wait similar to the
+code snippet you had earlier suggested/provided.
+
+The next sync point will be at an early cb() handler registered by VFIO code -
+this will let these waiting state changing VFIO threads start the second
+transition.
+
+The final wait and joining of these threads will be at a late cb() handler
+registered by the VFIO code.
+
+>>
+>>> so some kind of interlocking in vm_state_notify() between calling
+>>> prepare_cb() and cb() may be necessary since any "prio" based
+>>> ordering will have the same problem of reverse calling order on VM
+>>> start vs stop.
+>>>
+>>>
+>>> To be clear, I'm not insisting on the implementation from this patch -
+>>> any alternative one that preserves the aforementioned ordering rules
+>>> and has similar downtime performance is probably okay too.
+>>
+>> The problem is, IIUC patch 1 needs better justification on its own, and I
+>> feel like it's not doing the right thing, as discussed previously. So even
+>> if we want to introduce a new priority-based approach, we may want to
+>> rethink patch 1.
+
+Sure, any implementation that preserved the ordering I described above
+would be good.
+But just using existing single-priority-per-qdev-depth prepare_cb() and
+cb() handlers unfortunately won't do it.
+
+I think if there's a good idea how to implement such ordering in the
+VM state change handlers then the VFIO side of patch can be adjusted
+accordingly.
+
+I also agree that adding the description of the issue being solved as
+justification for patch 1 and maybe even as a comment somewhere in the
+code would be kind to people looking at this code in the future and
+would prevent future issues being accidentally introduced in this area.
 
 Thanks,
-Pierrick
+Maciej
+
 
