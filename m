@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD5FBC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 20:50:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72C2CC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 20:52:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfOMs-0006IK-Sl; Thu, 02 Jul 2026 16:50:42 -0400
+	id 1wfOOQ-0006gQ-ND; Thu, 02 Jul 2026 16:52:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfOMs-0006IC-72
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 16:50:42 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1wfOOO-0006g8-L5
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 16:52:16 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfOMq-0003Bg-O3
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 16:50:41 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2ca265d6ca1so11853655ad.1
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 13:50:39 -0700 (PDT)
+ id 1wfOON-0003cp-4B
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 16:52:16 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-847d1e9db22so1171849b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 13:52:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783025439; x=1783630239; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783025533; x=1783630333; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vJjI2sXf3pz/Moa25rX+SEFvAPb5vzxoopCZLlRNyTk=;
- b=TuXVojFFhUC56GC6Jw1npL+HkyJIsSeu233nloj+IqWv7sv4MUgQj80fAW0Uj0qMXU
- DfUFqRzuW+kmUy8ZzDTWixIkoGxfa6D6AdYbMi6Z7n4/2oK6iHtSIEJ914fUVNgyiGIN
- E8P/ZW7I+mHevZlxIzgxu33yjF6XFCRxk7+sHhXYnOrnoEkE5C4sLIjaV/0eEU1J2+Xo
- jd9VlmkBSqWSteSpkFjhmXbAnMQ8IS32EDufYjSEvjOwUNGhLIAhf5RSO+aTeULui1AY
- sJjqFCoVlJ2KiO0vHvA83V9B7Weudst2iGx7PB1VCUEd+Hjx/fo9i311Gylrcnd9THDi
- ExZg==
+ bh=4igSEQbRRqFAd+2qC3yhmAju0E5nj3Rur/oE06rG7WQ=;
+ b=aYcwFXnaAd77Di0f0Fy4y3tHQu3pKuU2kxzYabUD+rGi3KQkHxfzy+PHZnsTKATDsu
+ 2R7jz3YrQccx3//SAl3MDKzct9tMKfdEtCQUkLB1OZsLmSiCagHQ+/r80Vx0kB3+UJ5h
+ mdGgCyo+oEqONKeRUIjk6dXBk4Fb1IjMWlnxx6K/UBhIpHuXQN5Mqtbl+ABQvELTaQjK
+ a+V/9a1abgk4QYyvLGqW0vQNGkHyNXQRe0HxKyx5OeQATHcCXQWjsHI+y1Lwnjn1M5zU
+ YxR5TdJcKF62bUP9wRFU/QM3q0GxHHldzeupBZ+CRS4bnCRZfModYtlQeSJWTc44UhJh
+ 69ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783025439; x=1783630239;
+ d=1e100.net; s=20251104; t=1783025533; x=1783630333;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=vJjI2sXf3pz/Moa25rX+SEFvAPb5vzxoopCZLlRNyTk=;
- b=BvNmJNafK3Jun/cz1wz8CCosXJep/QPMgXn4mE9e83PHTHOA1a3uf26S8PcAWvRVR1
- 2xBGJYUPCFn6e1XkhDFUH2aIjVpoJ/z6cWsh9cfi8k/zR08Ko0STNh2soZZkK2xgOTIM
- sD7PCRg/y2p4mYGHRLJ1qtJTJXnYe8V5K2D5rAw+U0L8nTfACQI+MZpIl/KJ7S/H5vE5
- xV43FG6T8ReX1FM/sPoS+BGxINWY9TS3JxdC0GY3J738/PWbbaIWkgL49FsJeRjxxJDx
- aIatEdbOmXvU/NhmzoI++69EwgqBM7XPtj7rV5gu9N1QtCX/0k9Ln69YuzB4Q/AlB/hu
- xDWQ==
-X-Gm-Message-State: AOJu0YzEZ0FHHK0F9k27H+l5VF+Q4WAzj+w9PJZDmRPoZuRmLYMGdewo
- cGQA5dHaye+pTnCZGBqt+ziwzHd0J2UHnQolRtcJaAolZYqg2rjUeH89Y0x0Zi4sSedhSMBssP9
- Jr9EM
-X-Gm-Gg: AfdE7cnuRx9n4Cn9x+1kBTOZdjdNdq29oMYNEfTs8tB8mWKkxfyUaC2ZO7cOSY3TpZK
- 7Q25VDvmhY5oZ7+t5RC+5dJa/SitdLlVCiXfeR2Ded4QeqmETd8PWDfEknbmLUybP+ENrZpFs+8
- CSFjImumLoMFo7dRE+VTYjefugM/+sIHugF/Woy3d1u6eT9z2E2tDGFa0L7aBXAdswqRNqdztJF
- iiZa3KpNuJq2c6y8ruKLW9o62wx6iyfI+c6pRTRGIkcFSup1EO4QLR+j3m0t7nGHH/XP/rA7ySe
- LgmzhY6lQ7lWMwiqnuw3+Cg51zZWtiVB3gNGdsH8fT8vc1zguXN4cpAwGV+syYWjaWcVVrKNF9q
- eiFFbX7/fHOhyAAkj0HcZi/Rtt6jn+0A6bbyxQmR3Riyrlw6XXvnU/ir6e9hTldZeYY9AC/hMES
- cclAfSCMgaRRuCglwWWgwPWuS5EVRen0On1mF1XUasZWeAZIoUj8dWFvCnVg==
-X-Received: by 2002:a17:902:d4cd:b0:2c9:994c:9a5 with SMTP id
- d9443c01a7336-2cacb1c6f95mr13617475ad.30.1783025438378; 
- Thu, 02 Jul 2026 13:50:38 -0700 (PDT)
+ bh=4igSEQbRRqFAd+2qC3yhmAju0E5nj3Rur/oE06rG7WQ=;
+ b=Cs/iNq2g8pZGZD4JXe57cdDFPEfimdfhNgXOIvdZxrNWRqJ7wDuFbPq43DYce+0lqr
+ s38UDHYb5Af2+4nW2KvEe1d2XymiDngRfq3xXIhEdQOgRIAsRRf+YCC9o0EMN9qFFU/j
+ u1KrYvMUbA4tSxA95Fq7qea07lZKAKz3oLU8MUTAsdk8u2lTGOFRlTlu3rFLVhK672Jp
+ MVd0AIXHIZ1Pepdpd1tJ4Km6oxqT8itpsmXOVGQbVfgHU631T7aMcO2fYBcvi0obqQUM
+ kdGOPQ2yMSG7hd3dT39Cx7CHkXsEMQnE8pxjgFqRcyuTLmxt7atoUr8GKmegeqKO0CDU
+ 7bKw==
+X-Gm-Message-State: AOJu0Yxi6V07c4kzbR4BcVqoznTw5JS828TZ16efUZuVpIrr0i6mAIBW
+ C5v6OhQtttuIQJ0RoclDSPegcPCXa3Nz8ZwDhKdbNzW+KOeOi5WmD9SErey9Qjw6nWx+02rD1PB
+ bkSOU
+X-Gm-Gg: AfdE7clv0EdqHodlEAVnpUvclbPhspOXyV75U4mPPXnBJJo/003XmyzYAQF4x1SNVWU
+ AMAXiLLWxMUyLESog1Lm5Kv4YbdEiRWNiuxwzjvaobZSpGdWjc9QRPZeucqT4gLBm9m5s1M02K8
+ l5hJqLcOkCRRa1XDwFEhBqFEha3ljIFbN/vqH9mfE5xoQ1YSdICQ/gVSMFogXNmWCyyDvxqhbeN
+ IPR/BaAmCikI1xwVVUlpDJWZ1395KpGR3KX61Iozp4+9UVh8cnpD9nX7U/XztnnYpLuzic+N90U
+ L3x0U+lUxXXPJa1ti+2/2eKg6/lvZvOES7bgpoADkI1vlClSOXzI1gecFrPEq/yNI+hrJiEtVmn
+ I1P3p0ePOIyFAMygddcmmf0mYwsyTT5OITgpnPaErFEGAolzXuhc/SUy287n6BnToEO3awqSncI
+ in19bdRSNU2476KpxuhVpFVi6mSJ5fb5cl1RZ+bjoqic+pfvvNfukJ8ckAmtYFjClEQ+zf
+X-Received: by 2002:aa7:9a8c:0:b0:847:76dc:3fd2 with SMTP id
+ d2e1a72fcca58-847c0988997mr7915688b3a.36.1783025533113; 
+ Thu, 02 Jul 2026 13:52:13 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ca9aa0b7e9sm18649305ad.81.2026.07.02.13.50.37
+ d2e1a72fcca58-847cb7498ccsm1882915b3a.15.2026.07.02.13.52.12
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Jul 2026 13:50:38 -0700 (PDT)
-Message-ID: <4105fb72-6ca3-4874-a53c-c6d4c10b1c83@linaro.org>
-Date: Thu, 2 Jul 2026 13:50:36 -0700
+ Thu, 02 Jul 2026 13:52:12 -0700 (PDT)
+Message-ID: <73168e97-cd8c-4fdc-a0f5-8ede8d42bfe4@linaro.org>
+Date: Thu, 2 Jul 2026 13:52:11 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/11] target/arm: Separate out Neon from VFP access checks
+Subject: Re: [PATCH 02/11] target/arm: Separate syndrome functions for A32 and
+ A64
 To: qemu-devel@nongnu.org
 References: <20260702184019.3431139-1-peter.maydell@linaro.org>
- <20260702184019.3431139-2-peter.maydell@linaro.org>
+ <20260702184019.3431139-3-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260702184019.3431139-2-peter.maydell@linaro.org>
+In-Reply-To: <20260702184019.3431139-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,32 +106,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/2/26 11:40, Peter Maydell wrote:
-> Currently we use vfp_access_check() for AArch32 VFP and Neon
-> instructions.  This is not quite right:
->   * there are optional CPACR.ASEDIS and HCPTR.TASE controls that allow
->     trapping of just the Neon and not VFP instructions
->   * Neon instructions are supposed to report a slightly different
->     syndrome in HCR when they trap to AArch32 EL2
+> Currently we have one syn_fp_access_trap() which we use for fp
+> traps from A64 and from VFP and Neon A32. This means that A64
+> has to specify arguments that are always fixed for it (coproc
+> and is_16bit) and A32 can't specify arguments it needs to (TA).
 > 
-> As a preliminary refactor so we have somewhere we can make this
-> distinction, separate out Neon access checks into a separate
-> neon_access_check(), which initially just calls vfp_access_check().
-> 
-> The set of insns this needs to cover are those described in section
-> E1.3.9 of the DDI0487M.b Arm ARM.  For us this corresponds to
-> everything in neon-dp.decode and neon-ls.decode and thus in
-> translate-neon.c, plus three insns that we handle in translate-vfp.c:
->   - VDUP (general-purpose register)
->   - VMOV (general-purpose register to scalar) byte and halfword
->   - VMOV (scalar to general-purpose register) byte and halfword
-> (which are the ones in that file with ARM_FEATURE_NEON checks).
+> Split it up into syn_a64_fp_access_trap() and
+> syn_a32_fp_access_trap(). This is a refactor with no
+> behavioural change.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/arm/tcg/translate-a32.h  |  1 +
->   target/arm/tcg/translate-neon.c | 74 ++++++++++++++++-----------------
->   target/arm/tcg/translate-vfp.c  | 33 +++++++++++----
->   3 files changed, 62 insertions(+), 46 deletions(-)
+>   target/arm/syndrome.h          | 28 ++++++++++++++++++++++------
+>   target/arm/tcg/translate-a64.c |  2 +-
+>   target/arm/tcg/translate-vfp.c |  2 +-
+>   3 files changed, 24 insertions(+), 8 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
