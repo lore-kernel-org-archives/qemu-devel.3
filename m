@@ -4,119 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D35BC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 16:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A1DAC43327
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 16:07:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfJw6-00042d-Lc; Thu, 02 Jul 2026 12:06:47 -0400
+	id 1wfJw9-0004EE-VD; Thu, 02 Jul 2026 12:06:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wfJvm-0003GA-LF; Thu, 02 Jul 2026 12:06:27 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wfJvb-0002qM-4M
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 12:06:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wfJvk-0007K3-PZ; Thu, 02 Jul 2026 12:06:26 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 662EI91m4074249; Thu, 2 Jul 2026 16:06:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Qonqtc
- K7qg5Pc0sg3VFayutA9QY4ZWorMW4FxU0F8EQ=; b=oHEFv9cxofK7u4VOb2ocne
- OGAHQ0xWt3/l+wr7qAn9nALFkWqLR7lYWPz5eMQGYQZZd0uWSgwrgkeIBA+qVnTM
- F1o02PtJY0XpKE11ZkdeXBlnQg4aAUpCZzNLEBiv8nf4dGcdvfbxMnUiLI36NOu7
- VjvTwtWZ/hDHtP1nrLzMfQkXl/0xQA7D/tSMV1gjHsY872IOGslC31ZqouVZ4lLV
- kqGiSzqu4d+A6+aXOT6q84qrUqmHZe1TeBT6jFKNcuOcxtWhPJfKH0uVifOqW6X2
- XevGCbA8+gnBkpGuxcBYIefwwMzzUhMFkTcKy+4thhHIdHZiCxCSJPaWvDiLDguw
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26n62vqa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 16:06:20 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 662G4lYF030935;
- Thu, 2 Jul 2026 16:06:19 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhmnda-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 16:06:19 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 662G5jLS42992080
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 2 Jul 2026 16:05:45 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 91A095803F;
- Thu,  2 Jul 2026 16:06:18 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5D9F758056;
- Thu,  2 Jul 2026 16:06:16 +0000 (GMT)
-Received: from [9.61.65.1] (unknown [9.61.65.1])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  2 Jul 2026 16:06:16 +0000 (GMT)
-Message-ID: <b531d879-8743-4733-947d-0f698029c44b@linux.ibm.com>
-Date: Thu, 2 Jul 2026 12:06:15 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wfJvZ-0007In-9v
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 12:06:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783008372;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nH3gil1zWmnFdjJ+tXOmb8L2JpaNzncNAE21DIxX3M8=;
+ b=QVlHykkX65MK6E3dmco3E4s7ixnmcpejdT7qAWWGQbUh++3w73Q4/qfV4wTE/1NzQYMH8q
+ 7EpMLEWGtC0a/1T5NjB44mPUYy9+083TgKhqYJMEEEdHpOfCnAVRE3G3PFz116824xwZYm
+ jIdG50bWSaPFpptUzto86z31MGGoODI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-3WtaUTp5NoOmEHmI4twEFA-1; Thu,
+ 02 Jul 2026 12:06:09 -0400
+X-MC-Unique: 3WtaUTp5NoOmEHmI4twEFA-1
+X-Mimecast-MFC-AGG-ID: 3WtaUTp5NoOmEHmI4twEFA_1783008368
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2974718333A6; Thu,  2 Jul 2026 16:06:08 +0000 (UTC)
+Received: from berrange.com (unknown [10.44.33.186])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 81AE4194510E; Thu,  2 Jul 2026 16:06:04 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Krempa <pkrempa@redhat.com>
+Subject: [PATCH v6 34/34] docs: mark '-mon' as deprecated in favour of -object
+Date: Thu,  2 Jul 2026 17:03:37 +0100
+Message-ID: <20260702160337.1910921-35-berrange@redhat.com>
+In-Reply-To: <20260702160337.1910921-1-berrange@redhat.com>
+References: <20260702160337.1910921-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 33/35] tests/functional/s390x: Add secure IPL
- functional test
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
- richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
- jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260701204922.1320349-1-zycai@linux.ibm.com>
- <20260701204922.1320349-34-zycai@linux.ibm.com>
- <c9a6b8a6-edbd-482d-9f01-7aa09073c934@linux.ibm.com>
- <f0a13552-a825-429a-be79-a75cea4ae75f@linux.ibm.com>
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <f0a13552-a825-429a-be79-a75cea4ae75f@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDE2NiBTYWx0ZWRfXwCnxbque46kc
- JwRV2WvcyuY5xKNo2mtn4hHm4+Xps01va30bpuq8j7D9y23979ORV/xGXicL9tdAvJkSrH93v5N
- jZFbqkm83RsJ3CoW/73TVhmbAnFdKNEEghU4WXOVnFz8HjdNKN41TwsAxZT1q66BQymkstOD1RI
- vbyXxQP53q0m7K8qfXw6+ZwWhqE5C5q5TZwwrXHhEXbu046WEJsnrBX6189HfsIAsaeLpdFTxaM
- LcgHP+bHYWKZKU1Dye5jz4CKRcKkqhm9HJYkXL8rYi+mkNagnXibIjJIDVFy8qrbCZqVb9kYvdH
- 7Lp2nDsdzwLOJXch6R6bY1GrBMd9h4OmQ9oYDwYrZDsNeZ0g7/XpZ6C/OO6/0AOoxJX5rUU+3ol
- /508NiWALHBw6t7Oq5kcVlWdvumz2coEgI/4FTx66nn9PfCkvcsXmSA87qbrJ/FzBbZBECQs/xe
- DC2JZ778kzLDVoC7YWg==
-X-Authority-Analysis: v=2.4 cv=V45NF+ni c=1 sm=1 tr=0 ts=6a468c7d cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=CtFJNZ2ykOYILP9N3LAA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: eqqaQaJesDFs0YMvzcfR3LfeRC4muitL
-X-Proofpoint-GUID: eqqaQaJesDFs0YMvzcfR3LfeRC4muitL
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDE2NiBTYWx0ZWRfX+AbU2rgzgmA9
- pMyTZ2L61EmDSpZc57VnSHsHOpyzi8fhPTxgh6lAoh6brXT0wLWSKTy0p3HRY/egeZ3o1Ba0Udk
- jA6IFr7H5vTr4hTr6qiH8COV3x1SUro=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-02_02,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
- adultscore=0 clxscore=1015 impostorscore=0 malwarescore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020166
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,32 +91,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/26 11:38 AM, Zhuoying Cai wrote:
-> On 7/1/26 9:48 PM, Matthew Rosato wrote:
->> On 7/1/26 4:49 PM, Zhuoying Cai wrote:
+The high level `-qmp` and `-monitor` options can remain as convenience
+wrappers, but the low level `-mon` is completed obsoleted by the new
+`-object` support with 'monitor-qmp' and 'monitor-hmp' types.
 
->>
->> I thought this would work for tcg too?  If so it would be nice to be
->> able to enable this test also for cross-platform testing w/ tcg..
->>
-> 
-> Yes, it works with tcg as well. I ran the test with tcg last night and
-> again this morning, and it passed both times. The main issue is that it
-> took about 3060 seconds to complete due to the relatively slow nature of
-> tcg and the amount of setup performed by the test.
-> 
-> We could enable the test for tcg and use tcg whenever kvm is not
-> available, but we would need to significantly increase the timeout
-> compared to the kvm case. I think something around 5000 seconds would be
-> reasonable to avoid unexpected timeout failures. If that sounds
-> acceptable, I can enable it in the next version.
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Tested-by: Peter Krempa <pkrempa@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ docs/about/deprecated.rst               | 10 ++++++++++
+ docs/devel/writing-monitor-commands.rst |  4 ++--
+ docs/system/arm/xenpvh.rst              |  4 ++--
+ docs/system/i386/xen.rst                |  3 ++-
+ docs/system/i386/xenpvh.rst             |  4 ++--
+ qemu-options.hx                         |  8 ++++----
+ system/vl.c                             |  2 ++
+ 7 files changed, 24 insertions(+), 11 deletions(-)
 
-Oof. 
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index cf3e1a007c..ed2e0f8b4a 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -61,6 +61,16 @@ The ``debug-threads`` option of the ``-name`` argument is now
+ ignored. Thread naming is unconditionally enabled for all platforms
+ where it is supported.
+ 
++``-mon`` option (since 11.1)
++''''''''''''''''''''''''''''
++
++The ``-mon`` option was the generic mechanism for creating monitor
++objects if the convenience ``-qmp`` or ``-monitor`` options were not
++flexible enough. The monitor objects have been converted to QOM, so
++``-mon mode=readline`` is replaced by ``-object monitor-hmp`` and
++``-mon mode=control`` is replaced by ``-object monitor-qmp``. The
++short convenience options are not deprecated, only ``-mon``.
++
+ QEMU Machine Protocol (QMP) commands
+ ------------------------------------
+ 
+diff --git a/docs/devel/writing-monitor-commands.rst b/docs/devel/writing-monitor-commands.rst
+index 930da5cd06..7ae7efe327 100644
+--- a/docs/devel/writing-monitor-commands.rst
++++ b/docs/devel/writing-monitor-commands.rst
+@@ -52,8 +52,8 @@ shown here.
+ First, QEMU should be started like this::
+ 
+  # qemu-system-TARGET [...] \
+-     -chardev socket,id=qmp,port=4444,host=localhost,server=on \
+-     -mon chardev=qmp,mode=control,pretty=on
++     -chardev socket,id=chrqmp0,port=4444,host=localhost,server=on \
++     -object monitor-qmp,chardev=chrqmp0,pretty=on,id=qmp0
+ 
+ Then, in a different terminal::
+ 
+diff --git a/docs/system/arm/xenpvh.rst b/docs/system/arm/xenpvh.rst
+index 430ac2c02e..511af63e3d 100644
+--- a/docs/system/arm/xenpvh.rst
++++ b/docs/system/arm/xenpvh.rst
+@@ -27,9 +27,9 @@ Sample QEMU xenpvh commands for running and connecting with Xen:
+ 
+     qemu-system-aarch64 -xen-domid 1 \
+       -chardev socket,id=libxl-cmd,path=qmp-libxl-1,server=on,wait=off \
+-      -mon chardev=libxl-cmd,mode=control \
++      -object monitor-qmp,id=qmp0,chardev=libxl-cmd \
+       -chardev socket,id=libxenstat-cmd,path=qmp-libxenstat-1,server=on,wait=off \
+-      -mon chardev=libxenstat-cmd,mode=control \
++      -object monitor-qmp,id=qmp1,chardev=libxenstat-cmd \
+       -xen-attach -name guest0 -vnc none -display none -nographic \
+       -machine xenpvh -m 1301 \
+       -chardev socket,id=chrtpm,path=tmp/vtpm2/swtpm-sock \
+diff --git a/docs/system/i386/xen.rst b/docs/system/i386/xen.rst
+index 46db5f34c1..6ff5cdb1e4 100644
+--- a/docs/system/i386/xen.rst
++++ b/docs/system/i386/xen.rst
+@@ -79,7 +79,8 @@ of type ``xen-console`` to connect to it. For the Xen console equivalent of
+ the handy ``-serial mon:stdio`` option, for example:
+ 
+ .. parsed-literal::
+-   -chardev stdio,mux=on,id=char0,signal=off -mon char0 \\
++   -chardev stdio,mux=on,id=char0,signal=off \\
++   -object monitor-hmp,chardev=char0,id=hmp0 \\
+    -device xen-console,chardev=char0
+ 
+ The Xen network device is ``xen-net-device``, which becomes the default NIC
+diff --git a/docs/system/i386/xenpvh.rst b/docs/system/i386/xenpvh.rst
+index 354250f073..904778e3f5 100644
+--- a/docs/system/i386/xenpvh.rst
++++ b/docs/system/i386/xenpvh.rst
+@@ -33,9 +33,9 @@ case you need to construct one manually:
+ 
+     qemu-system-i386 -xen-domid 3 -no-shutdown        \
+       -chardev socket,id=libxl-cmd,path=/var/run/xen/qmp-libxl-3,server=on,wait=off \
+-      -mon chardev=libxl-cmd,mode=control             \
++      -object monitor-qmp,id=qmp0,chardev=libxl-cmd   \
+       -chardev socket,id=libxenstat-cmd,path=/var/run/xen/qmp-libxenstat-3,server=on,wait=off \
+-      -mon chardev=libxenstat-cmd,mode=control        \
++      -object monitor-qmp,id=qmp1,chardev=libxenstat-cmd \
+       -nodefaults                                     \
+       -no-user-config                                 \
+       -xen-attach -name g0                            \
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 1aa548c39b..8f72b709be 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -4154,7 +4154,7 @@ The general form of a character device option is:
+     ::
+ 
+         -chardev stdio,mux=on,id=char0 \
+-        -mon chardev=char0,mode=readline \
++        -object monitor-hmp,id=hmp0,chardev=char0 \
+         -serial chardev:char0 \
+         -serial chardev:char0
+ 
+@@ -4166,7 +4166,7 @@ The general form of a character device option is:
+     ::
+ 
+         -chardev stdio,mux=on,id=char0 \
+-        -mon chardev=char0,mode=readline \
++        -object monitor-hmp,id=hmp0,chardev=char0 \
+         -parallel chardev:char0 \
+         -chardev tcp,...,mux=on,id=char1 \
+         -serial chardev:char1 \
+@@ -5004,12 +5004,12 @@ SRST
+ 
+     enables the QMP monitor on localhost port 4444 with pretty-printing.
+ 
+-    The use of ``-mon mode=readline`` is historical syntax sugar
++    The use of ``-mon mode=readline`` is deprecated syntax sugar
+     for the new ``-object monitor-hmp`` option, each use of which
+     creates an object with the ID ``compat_monitorNNN`` where ``NNN`` is
+     a counter starting from 0.
+ 
+-    The use of ``-mon mode=control`` is historical syntax sugar
++    The use of ``-mon mode=control`` is deprecated syntax sugar
+     for the new ``-object monitor-qmp`` option, each use of which
+     creates an object with the ID ``compat_monitorNNN`` where ``NNN`` is
+     a counter starting from 0.
+diff --git a/system/vl.c b/system/vl.c
+index 63bdd06dfa..061cbdf860 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -3239,6 +3239,8 @@ void qemu_init(int argc, char **argv)
+                 default_monitor = 0;
+                 break;
+             case QEMU_OPTION_mon:
++                warn_report_once("'-mon' is deprecated, use '-object' with "
++                                 "'monitor-hmp' or 'monitor-qmp' types instead");
+                 if (!qemu_opts_parse_noisily(qemu_find_opts("mon"), optarg,
+                                              true)) {
+                     exit(1);
+-- 
+2.54.0
 
-We could potentially control this with $QEMU_TEST_ALLOW_SLOW; but let's
-leave it as is for now and consider incorporating tcg testing as a
-follow-on.
-
-Thanks,
-Matt
 
