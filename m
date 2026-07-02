@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45434C43602
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 16:06:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A30E9C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 16:06:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfJu2-0007MT-KP; Thu, 02 Jul 2026 12:04:38 -0400
+	id 1wfJvH-0001zd-89; Thu, 02 Jul 2026 12:05:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wfJu0-00079s-82
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 12:04:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wfJux-0001lS-4X
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 12:05:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wfJty-0006bL-1J
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 12:04:35 -0400
+ id 1wfJut-00073f-VC
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 12:05:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783008273;
+ s=mimecast20190719; t=1783008331;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0kXvf2MdBBCfa+ZC0mZ0AqY9Mav/e1gJhw0EyEsVhf8=;
- b=T41oyDnGkPh9gCxpLvIsMuMvicw67jVfIr/0dazR+RMn/luTRqgIMeD4wRwUXzSKQPP2c8
- DYnUPMA/fwNIB0JYUBuWjvMdrAsYapsDldp8m1MTe6TPiIhrOQ7ViAlXZsPv9mhyP9pccI
- e6eKZ5uOElORwJH4AWuXQ/tVewPDFvQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=bwvugdVurxEsyCV7z7SbyBQfVZq1ipogOp5SOPNuCKY=;
+ b=LIndemgZwt+eOWt0xZFOQUo13QF5Y8unrXe+MsGjooMECT7VZq9w8jgAxWRP5nzDl5ZYnp
+ qljxaZVFD/qtLCbA6QpZJ844CTw3Xp+RQgHtar2tvkG8eZ9gNCaIEd6ZgEUKHzpcvP97He
+ 81Niqk9OCOcaeyrYBRW0wmJLsV9mSmE=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-49--AlFyBZoPFiNeSwzikHuPw-1; Thu,
- 02 Jul 2026 12:04:29 -0400
-X-MC-Unique: -AlFyBZoPFiNeSwzikHuPw-1
-X-Mimecast-MFC-AGG-ID: -AlFyBZoPFiNeSwzikHuPw_1783008268
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-150-WgKBRwZnPX683CG4BRDiHA-1; Thu,
+ 02 Jul 2026 12:05:28 -0400
+X-MC-Unique: WgKBRwZnPX683CG4BRDiHA-1
+X-Mimecast-MFC-AGG-ID: WgKBRwZnPX683CG4BRDiHA_1783008326
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2EFF4183339A; Thu,  2 Jul 2026 16:04:28 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D2C081944AAE; Thu,  2 Jul 2026 16:05:26 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.33.186])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7D6BC194510E; Thu,  2 Jul 2026 16:04:24 +0000 (UTC)
+ id 476741945110; Thu,  2 Jul 2026 16:05:23 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -58,25 +58,26 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Peter Krempa <pkrempa@redhat.com>
-Subject: [PATCH v6 10/34] monitor: move monitor_data_(init|destroy) into QOM
- init/finalize
-Date: Thu,  2 Jul 2026 17:03:13 +0100
-Message-ID: <20260702160337.1910921-11-berrange@redhat.com>
+Subject: [PATCH v6 24/34] monitor: reject attempts to delete the current
+ monitor
+Date: Thu,  2 Jul 2026 17:03:27 +0100
+Message-ID: <20260702160337.1910921-25-berrange@redhat.com>
 In-Reply-To: <20260702160337.1910921-1-berrange@redhat.com>
 References: <20260702160337.1910921-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,251 +93,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Start to take advantage of QOM, by using object init and finalize
-methods to replace monitor_data_init and monitor_data_destroy.
+From: Christian Brauner <brauner@kernel.org>
 
-A standalone helper is provided to enable the I/O thread for QMP
-where appropriate for the chardev backend.
+If an 'object_del' command for a QMP monitor arrives targetting the
+current monitor, reject this request. If the current monitor is
+deleted, it will be impossible to send any reply and the client won't
+be able to remove the corresponding chardev backend.
 
+Note, it is not possible to rely on checking monitor_cur() because
+if 'object_del' is called via human-monitor-command, monitor_cur()
+will reflect the temporary HMP, not the QMP target that needs to
+be checked.
+
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[DB: extracted monitor tracking from larger commit; added logic
+     to monitor_qmp_prepare_delete to reject request]
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Tested-by: Peter Krempa <pkrempa@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- monitor/hmp.c              |  6 +++--
- monitor/monitor-internal.h |  3 +--
- monitor/monitor.c          | 46 +++++++++++++-------------------------
- monitor/qmp-cmds.c         |  3 ---
- monitor/qmp.c              | 34 +++++++++++++++-------------
- 5 files changed, 40 insertions(+), 52 deletions(-)
+ monitor/qmp.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index dd53239478..d4c2176437 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -48,6 +48,10 @@ OBJECT_DEFINE_TYPE(MonitorHMP, monitor_hmp, MONITOR_HMP, MONITOR);
- 
- static void monitor_hmp_finalize(Object *obj)
- {
-+    MonitorHMP *mon = MONITOR_HMP(obj);
-+    if (mon->rs) {
-+        readline_free(mon->rs);
-+    }
- }
- 
- static bool monitor_hmp_get_readline(Object *obj, Error **errp)
-@@ -1590,8 +1594,6 @@ void monitor_new_hmp(const char *id, const char *chardev_id,
-         return;
-     }
- 
--    monitor_data_init(&mon->parent_obj, false, false);
--
-     if (mon->use_readline) {
-         mon->rs = readline_init(monitor_readline_printf,
-                                 monitor_readline_flush,
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index d34f9be139..6a4c3b0f37 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -193,8 +193,7 @@ extern QemuMutex monitor_lock;
- extern MonitorList mon_list;
- 
- void monitor_complete(Monitor *mon, Error **errp);
--void monitor_data_init(Monitor *mon, bool is_qmp, bool use_io_thread);
--void monitor_data_destroy(Monitor *mon);
-+void monitor_iothread_init(Monitor *mon);
- int monitor_can_read(void *opaque);
- void monitor_list_append(Monitor *mon);
- void monitor_fdsets_cleanup(void);
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index db9243410a..9fe131983d 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -82,6 +82,10 @@ static void monitor_finalize(Object *obj)
-     Monitor *mon = MONITOR(obj);
- 
-     g_free(mon->chardev_id);
-+    g_free(mon->mon_cpu_path);
-+    qemu_chr_fe_deinit(&mon->chr, false);
-+    g_string_free(mon->outbuf, true);
-+    qemu_mutex_destroy(&mon->mon_lock);
- }
- 
- static char *monitor_get_chardev_id(Object *obj, Error **errp)
-@@ -108,6 +112,11 @@ static void monitor_class_init(ObjectClass *cls, const void *data)
- 
- static void monitor_init(Object *obj)
- {
-+    Monitor *mon = MONITOR(obj);
-+
-+    qemu_mutex_init(&mon->mon_lock);
-+    mon->is_qmp = !!object_dynamic_cast(obj, TYPE_MONITOR_QMP);
-+    mon->outbuf = g_string_new(NULL);
- }
- 
- Monitor *monitor_cur(void)
-@@ -639,38 +648,16 @@ void monitor_list_append(Monitor *mon)
-     qemu_mutex_unlock(&monitor_lock);
- 
-     if (mon) {
--        monitor_data_destroy(mon);
-         object_unparent(OBJECT(mon));
-     }
- }
- 
--static void monitor_iothread_init(void)
--{
--    mon_iothread = iothread_create("mon_iothread", &error_abort);
--}
--
--void monitor_data_init(Monitor *mon, bool is_qmp, bool use_io_thread)
-+void monitor_iothread_init(Monitor *mon)
- {
--    if (use_io_thread && !mon_iothread) {
--        monitor_iothread_init();
-+    if (!mon_iothread) {
-+        mon_iothread = iothread_create("mon_iothread", &error_abort);
-     }
--    qemu_mutex_init(&mon->mon_lock);
--    mon->is_qmp = is_qmp;
--    mon->outbuf = g_string_new(NULL);
--    mon->use_io_thread = use_io_thread;
--}
--
--void monitor_data_destroy(Monitor *mon)
--{
--    g_free(mon->mon_cpu_path);
--    qemu_chr_fe_deinit(&mon->chr, false);
--    if (monitor_is_qmp(mon)) {
--        monitor_data_destroy_qmp(container_of(mon, MonitorQMP, parent_obj));
--    } else {
--        readline_free(container_of(mon, MonitorHMP, parent_obj)->rs);
--    }
--    g_string_free(mon->outbuf, true);
--    qemu_mutex_destroy(&mon->mon_lock);
-+    mon->use_io_thread = true;
- }
- 
- void monitor_cleanup(void)
-@@ -688,7 +675,7 @@ void monitor_cleanup(void)
-      * Letting the iothread continue while shutting down the dispatcher
-      * means that new requests may still be coming in. This is okay,
-      * we'll just leave them in the queue without sending a response
--     * and monitor_data_destroy() will free them.
-+     * and object finalization will free them.
-      */
-     WITH_QEMU_LOCK_GUARD(&monitor_lock) {
-         qmp_dispatcher_co_shutdown = true;
-@@ -702,8 +689,8 @@ void monitor_cleanup(void)
-     /*
-      * We need to explicitly stop the I/O thread (but not destroy it),
-      * clean up the monitor resources, then destroy the I/O thread since
--     * we need to unregister from chardev below in
--     * monitor_data_destroy(), and chardev is not thread-safe yet
-+     * we need to unregister from chardev below in object
-+     * finalization, and chardev is not thread-safe yet
-      */
-     if (mon_iothread) {
-         iothread_stop(mon_iothread);
-@@ -718,7 +705,6 @@ void monitor_cleanup(void)
-         /* Permit QAPI event emission from character frontend release */
-         qemu_mutex_unlock(&monitor_lock);
-         monitor_flush(mon);
--        monitor_data_destroy(mon);
-         qemu_mutex_lock(&monitor_lock);
-         object_unparent(OBJECT(mon));
-     }
-diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
-index 0d9adad288..6cb0b587fb 100644
---- a/monitor/qmp-cmds.c
-+++ b/monitor/qmp-cmds.c
-@@ -168,8 +168,6 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
-     char *output = NULL;
-     MonitorHMP *hmp = MONITOR_HMP(object_new(TYPE_MONITOR_HMP));
- 
--    monitor_data_init(&hmp->parent_obj, false, false);
--
-     if (has_cpu_index) {
-         int ret = monitor_set_cpu(&hmp->parent_obj, cpu_index);
-         if (ret < 0) {
-@@ -186,7 +184,6 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
-     }
- 
- out:
--    monitor_data_destroy(&hmp->parent_obj);
-     object_unref(hmp);
-     return output;
- }
 diff --git a/monitor/qmp.c b/monitor/qmp.c
-index b300886f33..3574b9a339 100644
+index 67ee491f5a..1c67f40e4a 100644
 --- a/monitor/qmp.c
 +++ b/monitor/qmp.c
-@@ -73,8 +73,16 @@ QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
+@@ -72,6 +72,9 @@ typedef struct QMPRequest QMPRequest;
  
+ QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
+ 
++/* Monitor being serviced by the dispatcher.  Protected by BQL. */
++static MonitorQMP *qmp_dispatcher_current_mon;
++
  OBJECT_DEFINE_TYPE(MonitorQMP, monitor_qmp, MONITOR_QMP, MONITOR);
  
-+static void monitor_qmp_cleanup_req_queue_locked(MonitorQMP *mon);
-+
- static void monitor_qmp_finalize(Object *obj)
- {
-+    MonitorQMP *mon = MONITOR_QMP(obj);
-+
-+    json_message_parser_destroy(&mon->parser);
-+    qemu_mutex_destroy(&mon->qmp_queue_lock);
-+    monitor_qmp_cleanup_req_queue_locked(mon);
-+    g_queue_free(mon->qmp_requests);
- }
+ static void monitor_qmp_cleanup_req_queue_locked(MonitorQMP *mon);
+@@ -369,6 +372,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
+          */
  
- static bool monitor_qmp_get_pretty(Object *obj, Error **errp)
-@@ -98,8 +106,15 @@ static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
-                                    monitor_qmp_set_pretty);
- }
+         mon = req_obj->mon;
++        qmp_dispatcher_current_mon = mon;
  
-+static void handle_qmp_command(void *opaque, QObject *req, Error *err);
- static void monitor_qmp_init(Object *obj)
- {
-+    MonitorQMP *mon = MONITOR_QMP(obj);
-+
-+    qemu_mutex_init(&mon->qmp_queue_lock);
-+    mon->qmp_requests = g_queue_new();
-+
-+    json_message_parser_init(&mon->parser, handle_qmp_command, mon, NULL);
- }
+         /*
+          * We need to resume the monitor if handle_qmp_command()
+@@ -429,6 +433,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
+         }
  
- static bool qmp_oob_enabled(MonitorQMP *mon)
-@@ -522,14 +537,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+         qmp_request_free(req_obj);
++        qmp_dispatcher_current_mon = NULL;
+     }
+     qatomic_set(&qmp_dispatcher_co, NULL);
+ }
+@@ -573,6 +578,11 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
      }
  }
  
--void monitor_data_destroy_qmp(MonitorQMP *mon)
--{
--    json_message_parser_destroy(&mon->parser);
--    qemu_mutex_destroy(&mon->qmp_queue_lock);
--    monitor_qmp_cleanup_req_queue_locked(mon);
--    g_queue_free(mon->qmp_requests);
--}
--
++static bool monitor_qmp_dispatcher_is_servicing(MonitorQMP *mon)
++{
++    return qmp_dispatcher_current_mon == mon;
++}
++
  static void monitor_qmp_setup_handlers_bh(void *opaque)
  {
      MonitorQMP *mon = opaque;
-@@ -572,14 +579,11 @@ void monitor_new_qmp(const char *id, const char *chardev_id,
-     qemu_chr_fe_set_echo(&mon->parent_obj.chr, true);
+@@ -645,6 +655,13 @@ static void monitor_qmp_complete(UserCreatable *uc, Error **errp)
  
-     /* Note: we run QMP monitor in I/O thread when @chr supports that */
--    monitor_data_init(&mon->parent_obj, true,
--                      qemu_chr_has_feature(mon->parent_obj.chr.chr,
--                                           QEMU_CHAR_FEATURE_GCONTEXT));
--
--    qemu_mutex_init(&mon->qmp_queue_lock);
--    mon->qmp_requests = g_queue_new();
-+    if (qemu_chr_has_feature(mon->parent_obj.chr.chr,
-+                             QEMU_CHAR_FEATURE_GCONTEXT)) {
-+        monitor_iothread_init(&mon->parent_obj);
+ static bool monitor_qmp_prepare_delete(UserCreatable *uc, Error **errp)
+ {
++    MonitorQMP *qmp = MONITOR_QMP(uc);
++
++    if (monitor_qmp_dispatcher_is_servicing(qmp)) {
++        error_setg(errp, "Cannot delete the current QMP monitor");
++        return false;
 +    }
- 
--    json_message_parser_init(&mon->parser, handle_qmp_command, mon, NULL);
-     if (mon->parent_obj.use_io_thread) {
-         /*
-          * Make sure the old iowatch is gone.  It's possible when
++
+     error_setg(errp, "Deleting QMP monitors is not supported");
+     return false;
+ }
 -- 
 2.54.0
 
