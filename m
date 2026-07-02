@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86CF3C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 17:29:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F58C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 17:38:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfLE1-0006rW-6w; Thu, 02 Jul 2026 13:29:21 -0400
+	id 1wfLMV-0000KF-Qf; Thu, 02 Jul 2026 13:38:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfLDy-0006qS-Ub
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:29:19 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1wfLMU-0000Jf-M6
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:38:06 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfLDw-0007pE-9J
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:29:18 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-37fb17e1435so1510779a91.1
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 10:29:15 -0700 (PDT)
+ id 1wfLMS-0002BI-02
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:38:06 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-845e47133c9so518922b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 10:38:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783013355; x=1783618155; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783013882; x=1783618682; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=BWN/28jR5SeeVCY05G1uO55qNE9LJI17KdegCcKPw34=;
- b=KkFT9YraLDnE+zxo1ANRKMlODf8GRNvJQJDlx7Gjo1os0Ryzik3A1yjXJwqmsGQTwO
- OJiEgDRB2b19j7QyvP/HwCojCgy//qaK6DXA9tdubcg9vTwN6U5jTSRlePSOwBLStytv
- uF1qwLQL545wDkrihI06AyM+lTckwPQy8lu+TkORVpkJ/CMFkuV+eJMep7dEdahqrAPw
- AmMZvZAcxSs/XbbwclTS6WFcxYA0R/MLE96UJ0XjdaMWopiCVkvshg3638tyQPsze0k6
- YrhLYH2IjgIWCrXHbvFEJwcaZKcmpApHWuyDKa/Fyjyayz32EITcFfq8H+chMZw807lI
- XXWA==
+ bh=LvGx0R3T+lYHyCwPn53IOWPHWQ/HhjPuyD4cwn4b9I8=;
+ b=H1WZoNsYpmYL5faYUy9ndEQEPGRlhJX1DnwerA3zV4OaogmLtR+58ZXCoL/LtHFyZy
+ aakOAmMj+R7PFMX96LR695HjyfGV2Qzww6zpRcdbRJG03pRkR/GGxyaA/QP02GE8NtHp
+ f7lpgVNskY8AKNU6CqOzTQ66xbucju7Z2G5oyfc2zWxd8ypQDUVTL+juZsRlv88Z65UK
+ zYG18J7hkN9nz6mJ5FBj/o6KU/OWAE9smfT+bVBBZKPxIoLRyug4FgRnSwms3j8fnvu5
+ T26aKok5glUrZvjq3OsL2FjRMxCd+Yi/2wPwcbzeQ7547onADfbJVbgo9yUnm3KlClC0
+ C3Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783013355; x=1783618155;
+ d=1e100.net; s=20251104; t=1783013882; x=1783618682;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=BWN/28jR5SeeVCY05G1uO55qNE9LJI17KdegCcKPw34=;
- b=IhE9ng2dqq5kobgG5xLjG9Ki9ITVQiCg5qdoqu/3sp3Lj9M2hV1TG76ZBIShKH2/rq
- t/F9XbbbA11zNugqwTPQ1snEETDXTwwSfO2+QjowODlYc/buMWglOf1TkhJvl5A9iKTY
- V4lvZ+35OyL3La44McNmbXmnpPOzgOMRCbGYlKBJjXCL07NLgwR4sx0n3TunqyojYE5f
- XO6Tf+NnH/3E8DDKLrIqjPuRZ9NGvXKi+JWm58hbspXO1f9gTQGlaNGiGcX1zoh12wGG
- LobwtC6ru8eq3U7RsayBJAraixwtWQG/ffmw7D0Jsrbjhit8YdBiwn1/7tUIOLk8xgha
- Z53Q==
+ bh=LvGx0R3T+lYHyCwPn53IOWPHWQ/HhjPuyD4cwn4b9I8=;
+ b=OxQ2WHWVpVZSRhU87pLsBHIUu/W5P4AEnK360rB24mx3vmV1jQQJJOX7kE0mp/sXDF
+ GjxYatRPM5sE+mF2j7tk7X+CRPb/3rYjLUaEVDsg9hlwjfHeVgxrDkn6H5bDaPHcn0JT
+ aH2GR3CHRODa6OLPQJkp370mcu363adEEIrYPbmxy9qBMsXVijs63pW9wzq3/muliQ6V
+ 2XT8sZGxYR7E9jjlH6iXdGmfZgpLy6LIbsknPjLrdcSBeQ/dTbpi9/u+5FOOOUM5Rbfu
+ Pb022o3FnqQeidH1r7XXo8PKJMHIn9E+RfJxmZB7ImGEEfmDILnLR6HO682hnFbS++0c
+ 5vZg==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rqu/ClLGY/QAaW4Oj4LXP7L7uyrViE3cG/twAjJnOICaP4N30PlPMCDLfhuETAtuNs4fMwQpnXkIC7l@nongnu.org
-X-Gm-Message-State: AOJu0YzO2CI+5xhMlINUPcy1Jg7zg5y0l8JqsLYBt6cY/NVH03Qr2IQO
- w5n3WXQKz8QFYUk5DiW+gnnTNm8q9si8fgSTthSmDa7LIoOTEuevNfS9j8Ferad6NHY=
-X-Gm-Gg: AfdE7ckse4UX92M9+QTFDRac5GQuTaWUA9KqMhfMhqblt4OuqUbWHelzxXiNpR3oCyI
- xi217hu3N0VThexwQdd+nuN+Lk9oXa0n/HBYQi9Pg7DwfGtJTAt9bYETk82ZIy2KZ61IMV7Spg7
- 6b50zn2aqRR8YAAmN4BNW1zu4P8QZIi2ZhYJNKt2+3ipxpkwGx4eA9vQERipOORBfAO4Kw4d+2k
- WYMQJmYpHPeCNvmwyKOnzZss5jpriqby7JlyNXUtRIfIg2aJ/FwwwzgzGUOYauzfpfhad2Zjl48
- zREpCqsHa+DP5pWL9k7ikvihLScIosc3woor47uyHMZzPO0KLb6d6PsbF4Sf07jPkfqaiq/bYn3
- EPDQLWhpWu6DzpE7BhdbE8Ib5v9rmXzPuJKWZmNpzeljtZpHGRHrN4mjWp+H4zMZtc3pUugZ+a8
- 3oE8VP315yNgAOdUQrIyO0L3C/UAVwQvPh1IXb6BPPb1LjPw4Uydy+9xB7uQ==
-X-Received: by 2002:a17:90b:3c04:b0:37f:f4ae:5f25 with SMTP id
- 98e67ed59e1d1-380aa1c7afdmr6656155a91.20.1783013354606; 
- Thu, 02 Jul 2026 10:29:14 -0700 (PDT)
+ AHgh+RoBkI5Oezo4DMzJiB1Z3iDJNnCrIqo+5lqAC3IUTPbjCWppypXLOfiiwlzYb7RNWKawXz91Vb+w5SJ3@nongnu.org
+X-Gm-Message-State: AOJu0Ywm+SsF5uKXesJTymSF3QPHNBU8FUClROBJBezKjC9IFvsrliWh
+ vTEypR/qAPnKkDb18f8f/WUrYGzZzsSgI+seVvXoLGxUEKcGPYqnyKJFcda5JhwJ7d8=
+X-Gm-Gg: AfdE7cm43Fbhyfx4WH+b/cnTsFudaYguIlKOejQn1rxDM82BUcNL09Ewod6WJbAZPr3
+ Xruq/U/5zBnnyoXj3RqJTk3gqRslUIOaaMAIAAsQqU5K3ExtyDO1ImFLunlqy026qyMuYhRJG6L
+ mrzCPelg0J2slKVh82xjclB5lzwzFFyDeXp4YNYCzxxxVFPks94sOIgaRWJVgC92kfuK2anfQDf
+ LkD1+D5p22Cw8r1noam2/UO9f1rEmqW7cs1CRGp31cCfx85pL10zuB+hTv+XDBKcVYCdKRp/0UW
+ 12Sp6ri/1SurMdUDp8pBTFWmvYW9eai3Ac7IYqAtXexnrfj7Wair/iZYBMcMXOcZp90tpTZHPkk
+ KPUFYlUyuOj4dbTK5Vaf3Ow8v9FuvjmRgw9OcVJ+PPVtjEMQmT9eesDbSXaGLHzyw3o+16A4PmO
+ 9ylq1h6tetQybCSl8oNrjdhgwYc7hH7gqFeDYTL7zeI6EoDv0/wbotM+NnMw==
+X-Received: by 2002:a05:6a00:99d:b0:842:50fd:4c13 with SMTP id
+ d2e1a72fcca58-847e177a490mr721520b3a.4.1783013882110; 
+ Thu, 02 Jul 2026 10:38:02 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38115739a50sm96111a91.2.2026.07.02.10.29.13
+ d2e1a72fcca58-847cb983871sm1679122b3a.41.2026.07.02.10.38.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Jul 2026 10:29:14 -0700 (PDT)
-Message-ID: <daaa61a7-6c24-47b8-bf61-dbf824197886@linaro.org>
-Date: Thu, 2 Jul 2026 10:29:12 -0700
+ Thu, 02 Jul 2026 10:38:01 -0700 (PDT)
+Message-ID: <f827368b-859b-4051-b194-aa072eede360@linaro.org>
+Date: Thu, 2 Jul 2026 10:37:59 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/33] accel: Move supports_guest_debug() declaration to
- AccelClass
+Subject: Re: [PATCH 15/33] accel/kvm: Hold have_guest_supported in KVMState
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -82,14 +81,14 @@ Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  qemu-ppc@nongnu.org
 References: <20260630220100.1289-1-philmd@oss.qualcomm.com>
- <20260630220100.1289-15-philmd@oss.qualcomm.com>
+ <20260630220100.1289-16-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260630220100.1289-15-philmd@oss.qualcomm.com>
+In-Reply-To: <20260630220100.1289-16-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,27 +112,39 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/30/26 15:00, Philippe Mathieu-Daudé wrote:
-> From: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Prefer to store per-accelerator variables in the per-accelerator
+> state, rather than as static variables. This is a good practice
+> to allow concurrent accelerators in the future.
 > 
-> AccelOpsClass is for methods dealing with vCPUs.
-> When only dealing with AccelState, AccelClass is sufficient.
-> 
-> In order to have AccelClass methods instrospect their state,
-> we need to pass AccelState by argument.
-> 
-> Restrict kvm_supports_guest_debug() scope.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> Reviewed-by: Richard Henderson<richard.henderson@linaro.org>
-> Reviewed-by: Xiaoyao Li<xiaoyao.li@intel.com>
-> Reviewed-by: Zhao Liu<zhao1.liu@intel.com>
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
 > ---
+>   include/system/kvm_int.h | 1 +
+>   accel/kvm/kvm-all.c      | 8 ++++----
+>   2 files changed, 5 insertions(+), 4 deletions(-)
 
+This doesn't really preclude concurrent accelerators, since there will only ever be one 
+KVMState instance.  But it's also not unreasonable.
+
+That said,
+
+> diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
+> index 0876aac938d..49e90cc0235 100644
+> --- a/include/system/kvm_int.h
+> +++ b/include/system/kvm_int.h
+> @@ -113,6 +113,7 @@ struct KVMState
+>      struct kvm_coalesced_mmio_ring *coalesced_mmio_ring;
+>      bool coalesced_flush_in_progress;
+>      int vcpu_events;
+> +    bool have_guest_supported;
+>  #ifdef TARGET_KVM_HAVE_GUEST_DEBUG
+>      QTAILQ_HEAD(, kvm_sw_breakpoint) kvm_sw_breakpoints;
+>  #endif
+
+you could sort the members by size to avoid extra structure holes.  There's a lot of them 
+already due to existing poor ordering.
+
+Anyway,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-Ideally there wouldn't be two different accel callbacks to init gdbserver state.  But this 
-is a small step in the right direction.
 
 
 r~
