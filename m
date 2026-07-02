@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06406C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 18:42:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9839EC43602
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 18:42:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfMLH-0007B9-MX; Thu, 02 Jul 2026 14:40:55 -0400
+	id 1wfMLM-0007Nk-0v; Thu, 02 Jul 2026 14:41:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfMKo-0006zh-B9
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:40:26 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1wfMLH-0007Bp-OS
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:40:55 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfMKl-0005KW-HU
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:40:26 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-490cf322ed0so14931375e9.1
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 11:40:23 -0700 (PDT)
+ id 1wfMLB-0005NY-NQ
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:40:55 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-472326ca506so1535163f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 11:40:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783017622; x=1783622422; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783017630; x=1783622430; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=lpwBOWPVMATfbpndlLRvz9T6HcOtZn2wa3F6Vcr3xJ0=;
- b=yQxj0Y8647pI+FVvSaBw3TywVXTlV8FBZxHA/65FMidLjKDxoFmsPBgZcngrUYoMRn
- Gg+jebs+Vua1gU7/MhQDXif1XfBu+NeorHtRjtQgbr3BTmPqRFuB4Kd+hwhjLwV6U0wj
- V+W4fo3Xc0Ytl9NuaaTBfojsxlfUDENe1HLHq9qEuD2oIyW+ei4heGmZN0+D+4JQG1WO
- bHyfx15n+SrEySHDN7FH7NAMyx0gFxF8YjvZ1Vrk9AAMVmhUevyzlty28k2SCfgco+Sk
- cOM+bD8bjewPApgRaa/lI38j0MG/I4+4K+i+LwdUdBjIfIaZbAv0E45b8ve0IwdfP147
- 06wQ==
+ :reply-to; bh=ERT5FGdTM2la0VXNAKarQCU8EPQ7kfgNCQO83CFn2Vo=;
+ b=UR6PAXGUcJZAJkLSFXacYP2r97VRxUyh62WNiyAqVnSX7J1wyqL8UYkNGRb/83f4Rh
+ J0n/S+Do/pp7tSiyS4XXSJTlrRDjYXuH7Sy8bOxBRReOcIITCiXw/7Yl5WK2Ub0il7Ez
+ kQlnCrzYX3wdlB85b9mSZO4emguX9xTFpEp48AVQspFWU1Gp3fwLGMDocXVY5fdRhy4n
+ 5ePCPDFIMl8PHPbEJOOD4z/E1AzUgJgnJyAp+T6rLYod0xAv0Vp1USNolLbPaKNwuR3a
+ xUc6Lie7hMMW4y2LzIiUmg/bfDfhmuPsuQmFIawnRDITtBRe7BNbEz0beKjw7bQvQExw
+ 2DCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783017622; x=1783622422;
+ d=1e100.net; s=20251104; t=1783017630; x=1783622430;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=lpwBOWPVMATfbpndlLRvz9T6HcOtZn2wa3F6Vcr3xJ0=;
- b=RH5EDixqvFKzYShGJ6d6+3IxD2PFcc11kTaMCqjxoMa71trOJECjCBUN+mlnMBsRk0
- jfxfF5u/UhRTiqTpRhFEBixUYoDM5ncN9NQ+wmA/NiDdxR47ezGsqc15rdYO8s49U7Ze
- 8RZlwsesUF9/saxNCP4oTduqcI9FIAyOB5+aLlICJNUIuUZzUtw5eRZ2tKgQQ+It/DBY
- 5WqkWBTyqt57uajDjt6rAGG2GTYpaetLtWHF5nRrnxZK/UcKTGHzftp5qkIhbo6HZTqJ
- 4HD5A6pRsb+nZdp1wRC2mJm4iR1qNZwwyHQJ5Pu3/ohNeqnhsC26XiIqU17AVUNGAzt5
- h9AQ==
+ :cc:subject:date:message-id:reply-to;
+ bh=ERT5FGdTM2la0VXNAKarQCU8EPQ7kfgNCQO83CFn2Vo=;
+ b=sfnC1EsXM9Q9QpYqb/wapc8tEfkxRE2ZHwOKnHH0mAToHjs23O1lu5AA+vx28rgtO0
+ wqQa/B5e72klTA4N2wlf/V/NabFy2Pnns/XBDv4MR8nkpDTJaqxeLLjfgi+F+r+S1b6c
+ M35iG60H9LA/mOgMqUCY2DmlotX1eOEq9WpFY2Ny0aQuIFotgFx1s1cbmXc+mDhOZXQm
+ CNU3nf9HjyskJLsizeEZLrtZ8I/8buHc7UOdgTx/blSRFL00K2FyoF+eNN2bSOURC3uV
+ Y6Y7rH7DIZqEXExTAA7MDAN4eeUREVl7xaaRNXw5ZNNO87U+ohGtATkdFryWCErCDhsU
+ pV2A==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8pWTYeC03EjZ09otBWK/ThLyBXZazLinZqokyfRkH9VkD04cHEC2a7Vq47NTaCU/korxbtuPb/5I6x@nongnu.org
-X-Gm-Message-State: AOJu0YySvj471EgMNMmRqPgwgWY/zSXiv8v655vEO74ntJ9A4v7aWLWL
- y/qW6VfXqrvoHOWv0Et0NmT5TwKvjAnILVDJpJcW3VZmTKMlTrP7dFYC0y09VZnJSB27DSo5ohd
- QIT4Z2ewtYw==
-X-Gm-Gg: AfdE7cnlzyYEewjbrH4/O9UbKppfd0n7p8ZPpmgBSL3vgYR0GoeoBO9u4JaKyrKSBBR
- laixoJfQpNZJhpQejenxshTCn5R3E00vFElTSZ4veHKou7BFFcx+j8yFsoUkdCleSz+abMce1wk
- mIfUUnkjcNPU+K6uvJyOPz0zbhFwCasTsYpU95n8/Vm15cr6eVAzvAFP3xRZRbU/WIlhxmWS4cH
- tLFt1bzcXhcBeFV58JleRgzD/m2qK+WRkv1rrcwLYcjYyCY7F8M0urvUKVXY/hy6B8BJbmXCg40
- 1JSVebGppaNfBM08hcNVd9dSewJhf68HxotZW3E5NoP/NUv4LI8PkjBPJslZtjJRF2+4OPgHtCw
- U+iUrFM0f5CUxCeJmKBzSjj8lDGyDaPQqE63uj3N6Lm9BIpX4XB6cbAGDPNhYudVY6h/seHqGyy
- jNAU5Y0G1mYrfj5zRcy9dDOIfSBTJedWi2ycELB/6tqp2orWbQhUj09o+sU7fir8nHuUkWTG3xA
- 4bS4WYde+IhNtS+9QmuXA==
-X-Received: by 2002:a05:600c:8590:b0:492:4e1c:120 with SMTP id
- 5b1f17b1804b1-493c2ba4360mr86893615e9.32.1783017621648; 
- Thu, 02 Jul 2026 11:40:21 -0700 (PDT)
+ AHgh+Rr3a8Affxf7xyeB1u4NOvjCfFJY2b72OeUTHe+ssE4r5VhVYWdkmVBoa7vCMMbJVibm7GpMnuKqZNVB@nongnu.org
+X-Gm-Message-State: AOJu0YxRANAuwfKVOzY9fBtwMP26520J4Pso0BrnFIKm2waF0EDuR5x/
+ 9ATgnSqcAb9ejDXaL+jcMC/ridVPUxXiCFOCyi9wieikKbkb8WqRJ7sYoWJL+CZtES4=
+X-Gm-Gg: AfdE7cn4836LqA9uuGufLqr0SLTQsIAzd5AEnrPgfgPSAKHMhFJDq16a+Q/pudQVhhB
+ ALyuJyN0Nn9bMy63vf2APd63COzXOH3JXCRcY5jHfWHmzIsDgLDk37a8qNAwYLMlC5AUgFAEGst
+ AbTsWw3bXY8pgeg7Ne0PWh4dsnQncPi2ZQMC4K5m+9xSY/Z7U61H0xY7KKwiNXXD3OF6INy9BO1
+ 60DqB0lY08PlTkKFAb8CmILEqG1xMS2hZxCcglQI3ByJGA8ZmrtZtN2xg/ZGf2ufOLL+BMAzARh
+ jShrEPqtzV5BGvOBwdhBcNI18qXuHxx+M0qlO6V7rFfZTylVJgv5vhqNX62wj5wCAOQNWvcLCgg
+ CCcQpvpfP3EKTcNkcMHo62bKMuKuq5DMr6OrFyly2ppXHz1SQGbNr+EcX3RPA6epDMwmQLoSvze
+ 3hYdnIPQr8OvwNoO9wungK2fYu3qNskIMelBJs5hbrF6zcUEzc6zj+dUNl0/hr7ybWEo1uFUXBG
+ vtdZ6qMK1BbZBTz9XJTv5WdNP246279
+X-Received: by 2002:a05:6000:240c:b0:46e:6210:ad4a with SMTP id
+ ffacd0b85a97d-47757e57e77mr10943105f8f.5.1783017630044; 
+ Thu, 02 Jul 2026 11:40:30 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-477db8a4a09sm11628213f8f.13.2026.07.02.11.40.20
+ ffacd0b85a97d-477db8a4a09sm11628213f8f.13.2026.07.02.11.40.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jul 2026 11:40:21 -0700 (PDT)
+ Thu, 02 Jul 2026 11:40:29 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 01/11] target/arm: Separate out Neon from VFP access checks
-Date: Thu,  2 Jul 2026 19:40:09 +0100
-Message-ID: <20260702184019.3431139-2-peter.maydell@linaro.org>
+Subject: [PATCH 10/11] target/arm: Pull VFP "can we use D16-D31" checks out
+ into a function
+Date: Thu,  2 Jul 2026 19:40:18 +0100
+Message-ID: <20260702184019.3431139-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260702184019.3431139-1-peter.maydell@linaro.org>
 References: <20260702184019.3431139-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,471 +102,268 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we use vfp_access_check() for AArch32 VFP and Neon
-instructions.  This is not quite right:
- * there are optional CPACR.ASEDIS and HCPTR.TASE controls that allow
-   trapping of just the Neon and not VFP instructions
- * Neon instructions are supposed to report a slightly different
-   syndrome in HCR when they trap to AArch32 EL2
+Currently we directly call dc_isar_feature(aa32_simd_r32, s) for VFP
+insns that use D16-D31 to see if they should UNDEF.  For some v7A
+CPUs (Cortex-A7, Cortex-A9) there is also a CPACR.D32DIS trap bit
+that will make VFP (and only VFP, not Neon) insns using D16-D31
+UNDEF.
 
-As a preliminary refactor so we have somewhere we can make this
-distinction, separate out Neon access checks into a separate
-neon_access_check(), which initially just calls vfp_access_check().
-
-The set of insns this needs to cover are those described in section
-E1.3.9 of the DDI0487M.b Arm ARM.  For us this corresponds to
-everything in neon-dp.decode and neon-ls.decode and thus in
-translate-neon.c, plus three insns that we handle in translate-vfp.c:
- - VDUP (general-purpose register)
- - VMOV (general-purpose register to scalar) byte and halfword
- - VMOV (scalar to general-purpose register) byte and halfword
-(which are the ones in that file with ARM_FEATURE_NEON checks).
+Pull out a function vfp_d16_d31_ok() that currently just does the
+feature check but which will provide us a place where we can make
+this check.  Since D32DIS takes precedence over traps to EL2 and EL3
+and simply makes the insns UNDEF, we are OK to do this early rather
+than having to wait until vfp_access_check().
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/translate-a32.h  |  1 +
- target/arm/tcg/translate-neon.c | 74 ++++++++++++++++-----------------
- target/arm/tcg/translate-vfp.c  | 33 +++++++++++----
- 3 files changed, 62 insertions(+), 46 deletions(-)
+ target/arm/tcg/translate-vfp.c | 61 ++++++++++++++++++++--------------
+ 1 file changed, 36 insertions(+), 25 deletions(-)
 
-diff --git a/target/arm/tcg/translate-a32.h b/target/arm/tcg/translate-a32.h
-index a8df364171..1023cddab5 100644
---- a/target/arm/tcg/translate-a32.h
-+++ b/target/arm/tcg/translate-a32.h
-@@ -33,6 +33,7 @@ void load_reg_var(DisasContext *s, TCGv_i32 var, int reg);
- void arm_gen_condlabel(DisasContext *s);
- bool vfp_access_check(DisasContext *s);
- bool vfp_access_check_m(DisasContext *s, bool skip_context_update);
-+bool neon_access_check(DisasContext *s);
- void read_neon_element32(TCGv_i32 dest, int reg, int ele, MemOp memop);
- void read_neon_element64(TCGv_i64 dest, int reg, int ele, MemOp memop);
- void write_neon_element32(TCGv_i32 src, int reg, int ele, MemOp memop);
-diff --git a/target/arm/tcg/translate-neon.c b/target/arm/tcg/translate-neon.c
-index e3c7d9217b..50a44511d9 100644
---- a/target/arm/tcg/translate-neon.c
-+++ b/target/arm/tcg/translate-neon.c
-@@ -135,7 +135,7 @@ static bool do_neon_ddda(DisasContext *s, int q, int vd, int vn, int vm,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -165,7 +165,7 @@ static bool do_neon_ddda_env(DisasContext *s, int q, int vd, int vn, int vm,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -197,7 +197,7 @@ static bool do_neon_ddda_fpst(DisasContext *s, int q, int vd, int vn, int vm,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -249,7 +249,7 @@ static bool trans_VCADD(DisasContext *s, arg_VCADD *a)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -319,7 +319,7 @@ static bool trans_VFML(DisasContext *s, arg_VFML *a)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -413,7 +413,7 @@ static bool trans_VFML_scalar(DisasContext *s, arg_VFML_scalar *a)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -506,7 +506,7 @@ static bool trans_VLDST_multiple(DisasContext *s, arg_VLDST_multiple *a)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -617,7 +617,7 @@ static bool trans_VLD_all_lanes(DisasContext *s, arg_VLD_all_lanes *a)
-         }
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -714,7 +714,7 @@ static bool trans_VLDST_single(DisasContext *s, arg_VLDST_single *a)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -798,7 +798,7 @@ static bool do_3same(DisasContext *s, arg_3same *a, GVecGen3Fn fn)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -1076,7 +1076,7 @@ static bool do_vector_2sh(DisasContext *s, arg_2reg_shift *a, GVecGen2iFn *fn)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -1126,7 +1126,7 @@ static bool do_2shift_narrow_64(DisasContext *s, arg_2reg_shift *a,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -1177,7 +1177,7 @@ static bool do_2shift_narrow_32(DisasContext *s, arg_2reg_shift *a,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -1302,7 +1302,7 @@ static bool do_vshll_2sh(DisasContext *s, arg_2reg_shift *a,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -1392,7 +1392,7 @@ static bool do_fp_2sh(DisasContext *s, arg_2reg_shift *a,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -1436,7 +1436,7 @@ static bool do_1reg_imm(DisasContext *s, arg_1reg_imm *a,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -1499,7 +1499,7 @@ static bool do_prewiden_3d(DisasContext *s, arg_3diff *a,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -1606,7 +1606,7 @@ static bool do_narrow_3d(DisasContext *s, arg_3diff *a,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -1696,7 +1696,7 @@ static bool do_long_3d(DisasContext *s, arg_3diff *a,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -1967,7 +1967,7 @@ static bool trans_VMULL_P_3d(DisasContext *s, arg_3diff *a)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -2041,7 +2041,7 @@ static bool do_2scalar(DisasContext *s, arg_2scalar *a,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -2139,7 +2139,7 @@ static bool do_2scalar_fp_vec(DisasContext *s, arg_2scalar *a,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -2236,7 +2236,7 @@ static bool do_vqrdmlah_2sc(DisasContext *s, arg_2scalar *a,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -2307,7 +2307,7 @@ static bool do_2scalar_long(DisasContext *s, arg_2scalar *a,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -2451,7 +2451,7 @@ static bool trans_VEXT(DisasContext *s, arg_VEXT *a)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -2520,7 +2520,7 @@ static bool trans_VTBL(DisasContext *s, arg_VTBL *a)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -2555,7 +2555,7 @@ static bool trans_VDUP_scalar(DisasContext *s, arg_VDUP_scalar *a)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -2591,7 +2591,7 @@ static bool do_zip_uzp(DisasContext *s, arg_2misc *a,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -2660,7 +2660,7 @@ static bool do_vmovn(DisasContext *s, arg_2misc *a,
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -2724,7 +2724,7 @@ static bool trans_VSHLL(DisasContext *s, arg_2misc *a)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -2764,7 +2764,7 @@ static bool trans_VCVT_B16_F32(DisasContext *s, arg_2misc *a)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -2804,7 +2804,7 @@ static bool trans_VCVT_F16_F32(DisasContext *s, arg_2misc *a)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -2850,7 +2850,7 @@ static bool trans_VCVT_F32_F16(DisasContext *s, arg_2misc *a)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -2900,7 +2900,7 @@ static bool do_2misc_vec(DisasContext *s, arg_2misc *a, GVecGen2Fn *fn)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -3028,7 +3028,7 @@ static bool do_2misc(DisasContext *s, arg_2misc *a, NeonGenOneOpFn *fn)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -3232,7 +3232,7 @@ static bool trans_VSWP(DisasContext *s, arg_2misc *a)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
-@@ -3305,7 +3305,7 @@ static bool trans_VTRN(DisasContext *s, arg_2misc *a)
-         return false;
-     }
- 
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
-     }
- 
 diff --git a/target/arm/tcg/translate-vfp.c b/target/arm/tcg/translate-vfp.c
-index 8d9d1ab877..6f6b234c9a 100644
+index 4db4b14841..3d6c67efb9 100644
 --- a/target/arm/tcg/translate-vfp.c
 +++ b/target/arm/tcg/translate-vfp.c
-@@ -303,6 +303,17 @@ bool vfp_access_check(DisasContext *s)
+@@ -207,6 +207,17 @@ static void gen_update_fp_context(DisasContext *s)
      }
  }
  
 +/*
-+ * Access check for Neon; this is for instructions which can be
-+ * trapped by CPACR.ASEDIS and HCPTR.TASE. Support for those traps
-+ * is optional and we currently do not implement them, so this
-+ * is identical to a VFP access check for now.
++ * Return true if a VFP insn is OK to access D16..D31, false if
++ * it should UNDEF. This checks whether the D16-D31 regs are
++ * implemented by the CPU. Eventually we will also check CPACR.D32DIS.
++ * Note that Neon insns accessing D16..D31 do not need to check D32DIS.
 + */
-+bool neon_access_check(DisasContext *s)
++static bool vfp_d16_d31_ok(DisasContext *s)
 +{
-+    return vfp_access_check(s);
++    return dc_isar_feature(aa32_simd_r32, s);
 +}
 +
- static bool trans_VSEL(DisasContext *s, arg_VSEL *a)
- {
-     uint32_t rd, rn, rm;
-@@ -620,15 +631,17 @@ static bool trans_VMOV_to_gp(DisasContext *s, arg_VMOV_to_gp *a)
- {
-     /* VMOV scalar to general purpose register */
-     TCGv_i32 tmp;
-+    bool insn_is_neon = false;
- 
-     /*
-      * SIZE == MO_32 is a VFP instruction; otherwise NEON. MVE has
-      * all sizes, whether the CPU has fp or not.
-      */
-     if (!dc_isar_feature(aa32_mve, s)) {
--        if (a->size == MO_32
--            ? !dc_isar_feature(aa32_fpsp_v2, s)
--            : !arm_dc_feature(s, ARM_FEATURE_NEON)) {
-+        insn_is_neon = a->size != MO_32;
-+        if (insn_is_neon
-+            ? !arm_dc_feature(s, ARM_FEATURE_NEON)
-+            : !dc_isar_feature(aa32_fpsp_v2, s)) {
-             return false;
-         }
-     }
-@@ -644,7 +657,7 @@ static bool trans_VMOV_to_gp(DisasContext *s, arg_VMOV_to_gp *a)
-         }
+ /*
+  * Check that VFP access is enabled, A-profile specific version.
+  *
+@@ -347,7 +358,7 @@ static bool trans_VSEL(DisasContext *s, arg_VSEL *a)
      }
  
--    if (!vfp_access_check(s)) {
-+    if (!(insn_is_neon ? neon_access_check(s) : vfp_access_check(s))) {
-         return true;
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (sz == 3 && !dc_isar_feature(aa32_simd_r32, s) &&
++    if (sz == 3 && !vfp_d16_d31_ok(s) &&
+         ((a->vm | a->vn | a->vd) & 0x10)) {
+         return false;
+     }
+@@ -473,7 +484,7 @@ static bool trans_VRINT(DisasContext *s, arg_VRINT *a)
      }
  
-@@ -665,15 +678,17 @@ static bool trans_VMOV_from_gp(DisasContext *s, arg_VMOV_from_gp *a)
- {
-     /* VMOV general purpose register to scalar */
-     TCGv_i32 tmp;
-+    bool insn_is_neon = false;
- 
-     /*
-      * SIZE == MO_32 is a VFP instruction; otherwise NEON. MVE has
-      * all sizes, whether the CPU has fp or not.
-      */
-     if (!dc_isar_feature(aa32_mve, s)) {
--        if (a->size == MO_32
--            ? !dc_isar_feature(aa32_fpsp_v2, s)
--            : !arm_dc_feature(s, ARM_FEATURE_NEON)) {
-+        insn_is_neon = a->size != MO_32;
-+        if (insn_is_neon
-+            ? !arm_dc_feature(s, ARM_FEATURE_NEON)
-+            : !dc_isar_feature(aa32_fpsp_v2, s)) {
-             return false;
-         }
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (sz == 3 && !dc_isar_feature(aa32_simd_r32, s) &&
++    if (sz == 3 && !vfp_d16_d31_ok(s) &&
+         ((a->vm | a->vd) & 0x10)) {
+         return false;
      }
-@@ -689,7 +704,7 @@ static bool trans_VMOV_from_gp(DisasContext *s, arg_VMOV_from_gp *a)
-         }
+@@ -541,7 +552,7 @@ static bool trans_VCVT(DisasContext *s, arg_VCVT *a)
      }
  
--    if (!vfp_access_check(s)) {
-+    if (!(insn_is_neon ? neon_access_check(s) : vfp_access_check(s))) {
-         return true;
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (sz == 3 && !dc_isar_feature(aa32_simd_r32, s) && (a->vm & 0x10)) {
++    if (sz == 3 && !vfp_d16_d31_ok(s) && (a->vm & 0x10)) {
+         return false;
      }
  
-@@ -736,7 +751,7 @@ static bool trans_VDUP(DisasContext *s, arg_VDUP *a)
-         size = 2;
+@@ -662,7 +673,7 @@ static bool trans_VMOV_to_gp(DisasContext *s, arg_VMOV_to_gp *a)
      }
  
--    if (!vfp_access_check(s)) {
-+    if (!neon_access_check(s)) {
-         return true;
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vn & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && (a->vn & 0x10)) {
+         return false;
+     }
+ 
+@@ -709,7 +720,7 @@ static bool trans_VMOV_from_gp(DisasContext *s, arg_VMOV_from_gp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vn & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && (a->vn & 0x10)) {
+         return false;
+     }
+ 
+@@ -745,7 +756,7 @@ static bool trans_VDUP(DisasContext *s, arg_VDUP *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vn & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && (a->vn & 0x10)) {
+         return false;
+     }
+ 
+@@ -1030,7 +1041,7 @@ static bool trans_VMOV_64_dp(DisasContext *s, arg_VMOV_64_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vm & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && (a->vm & 0x10)) {
+         return false;
+     }
+ 
+@@ -1132,7 +1143,7 @@ static bool trans_VLDR_VSTR_dp(DisasContext *s, arg_VLDR_VSTR_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vd & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && (a->vd & 0x10)) {
+         return false;
+     }
+ 
+@@ -1261,7 +1272,7 @@ static bool trans_VLDM_VSTM_dp(DisasContext *s, arg_VLDM_VSTM_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vd + n) > 16) {
++    if (!vfp_d16_d31_ok(s) && (a->vd + n) > 16) {
+         return false;
+     }
+ 
+@@ -1513,7 +1524,7 @@ static bool do_vfp_3op_dp(DisasContext *s, VFPGen3OpDPFn *fn,
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && ((vd | vn | vm) & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && ((vd | vn | vm) & 0x10)) {
+         return false;
+     }
+ 
+@@ -1685,7 +1696,7 @@ static bool do_vfp_2op_dp(DisasContext *s, VFPGen2OpDPFn *fn, int vd, int vm)
+     /* Note that the caller must check the aa32_fpdp_v2 feature. */
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && ((vd | vm) & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && ((vd | vm) & 0x10)) {
+         return false;
+     }
+ 
+@@ -2252,7 +2263,7 @@ static bool do_vfm_dp(DisasContext *s, arg_VFMA_dp *a, bool neg_n, bool neg_d)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) &&
++    if (!vfp_d16_d31_ok(s) &&
+         ((a->vd | a->vn | a->vm) & 0x10)) {
+         return false;
+     }
+@@ -2380,7 +2391,7 @@ static bool trans_VMOV_imm_dp(DisasContext *s, arg_VMOV_imm_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (vd & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && (vd & 0x10)) {
+         return false;
+     }
+ 
+@@ -2555,7 +2566,7 @@ static bool trans_VCMP_dp(DisasContext *s, arg_VCMP_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && ((a->vd | a->vm) & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && ((a->vd | a->vm) & 0x10)) {
+         return false;
+     }
+ 
+@@ -2621,7 +2632,7 @@ static bool trans_VCVT_f64_f16(DisasContext *s, arg_VCVT_f64_f16 *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vd  & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && (a->vd  & 0x10)) {
+         return false;
+     }
+ 
+@@ -2702,7 +2713,7 @@ static bool trans_VCVT_f16_f64(DisasContext *s, arg_VCVT_f16_f64 *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vm  & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && (a->vm  & 0x10)) {
+         return false;
+     }
+ 
+@@ -2777,7 +2788,7 @@ static bool trans_VRINTR_dp(DisasContext *s, arg_VRINTR_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && ((a->vd | a->vm) & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && ((a->vd | a->vm) & 0x10)) {
+         return false;
+     }
+ 
+@@ -2856,7 +2867,7 @@ static bool trans_VRINTZ_dp(DisasContext *s, arg_VRINTZ_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && ((a->vd | a->vm) & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && ((a->vd | a->vm) & 0x10)) {
+         return false;
+     }
+ 
+@@ -2930,7 +2941,7 @@ static bool trans_VRINTX_dp(DisasContext *s, arg_VRINTX_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && ((a->vd | a->vm) & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && ((a->vd | a->vm) & 0x10)) {
+         return false;
+     }
+ 
+@@ -2956,7 +2967,7 @@ static bool trans_VCVT_sp(DisasContext *s, arg_VCVT_sp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vd & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && (a->vd & 0x10)) {
+         return false;
+     }
+ 
+@@ -2982,7 +2993,7 @@ static bool trans_VCVT_dp(DisasContext *s, arg_VCVT_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vm & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && (a->vm & 0x10)) {
+         return false;
+     }
+ 
+@@ -3063,7 +3074,7 @@ static bool trans_VCVT_int_dp(DisasContext *s, arg_VCVT_int_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vd & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && (a->vd & 0x10)) {
+         return false;
+     }
+ 
+@@ -3100,7 +3111,7 @@ static bool trans_VJCVT(DisasContext *s, arg_VJCVT *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vm & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && (a->vm & 0x10)) {
+         return false;
+     }
+ 
+@@ -3240,7 +3251,7 @@ static bool trans_VCVT_fix_dp(DisasContext *s, arg_VCVT_fix_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vd & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && (a->vd & 0x10)) {
+         return false;
+     }
+ 
+@@ -3369,7 +3380,7 @@ static bool trans_VCVT_dp_int(DisasContext *s, arg_VCVT_dp_int *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vm & 0x10)) {
++    if (!vfp_d16_d31_ok(s) && (a->vm & 0x10)) {
+         return false;
      }
  
 -- 
