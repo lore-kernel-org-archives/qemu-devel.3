@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17137C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 17:53:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC1AC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 17:53:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfLan-0007W0-7h; Thu, 02 Jul 2026 13:52:53 -0400
+	id 1wfLbL-0007hl-S4; Thu, 02 Jul 2026 13:53:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfLal-0007Ua-6B
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:52:51 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1wfLbK-0007fL-AY
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:53:26 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfLai-0006Si-KZ
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:52:50 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-8478fe07f65so1964751b3a.0
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 10:52:48 -0700 (PDT)
+ id 1wfLbI-0006hM-NZ
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:53:26 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2ca1479dfe0so20622185ad.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 10:53:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783014767; x=1783619567; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783014803; x=1783619603; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=S+LSPSJC47ehc7kv4+S4odxeEs8KMNtGq4W8RkxYpfk=;
- b=U+8P9xj+wRPjkfPRrbknRVo3uxm7Po4v9WPztc5ZX9BrnxkI7Gk+rTvw6KnaWE+E15
- 77sQp/hBavPWeYd6IhGTUs2zqAjA3JkBJpKAFVGKcwKdpHM6zKr2YDmHqLRp5eq83k0x
- cKgJKJjDL5soPrwkMpBKup5w/oih7Vd2fU28+d0Kce3OiJ8tkCSsK5Z7qegyUMkL80EU
- Eo1+g7DZ9Pm1H0tlAsUtrfWYwpyD7Kf4wvZD4L/7eKRb13HWIn9YvwxLYX+rtBVDRRNg
- bMqKJ6Ow4X7LRcdyqvC/XSOh6x21/pUH0uAIa1k+wRyg0xWqESw3fuaOq4EOXx/6dHiF
- MxtA==
+ bh=+1YDasfJit96SgrAHspsfSi9XU5gZh5XjPd6MOOS2LU=;
+ b=v4Z9HUB/Z95jvRD4kBEL0zaPvSLnuiplvfqW6JRLsijSTgt8GWJhc6DI+DgPYHJQUv
+ Seuhs1K6j8Z9SGox7qan953KYFNpY1JdRK0HSeko7uUHqxzCMMob4Uewump4lbxmqn0o
+ V1dFIgJeOMzewJcdoAbpIYGHVeQFT1g7LfRPhs9KTy0wamLVCJj3KL5Y4RFQGyI6Pw2O
+ 7MgERQfI/vhlxNP8haQMk67HBZefnqi3+hOsEGmW686uAyEDYmQE66GTelvHFw7gxaNZ
+ iRkURzlNcLIQL1oy1OBeg/oa1/03A5NRyP2F0nmQYxe3gBylimuYjBeU08Xo7+7st0vu
+ AQYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783014767; x=1783619567;
+ d=1e100.net; s=20251104; t=1783014803; x=1783619603;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=S+LSPSJC47ehc7kv4+S4odxeEs8KMNtGq4W8RkxYpfk=;
- b=DjE4p2zxzBdLzUeUDQmbhpE42FWbKo1DjM97OJb5/e1m0q29Xe6VuOKXuCf6YbgvE8
- nXLedAwlJOJueun09u9P4uTVXSzHO40LghZDf9rQmvl8odf0URvKHruM3UzpqLxgFdrQ
- x/48zj66QTpXUSXedltiksxk2qBZFPOqzM4KIHciujD1qLJ79UEg1yrfwB5WsH60hGUz
- c0bSmjLaYlRV5zi9mBjZT9VAr9ISialqTEqwyd37ric6w34C3Rh0jXB1I1mjNxKcc/2C
- ADLDH9+/0sD4kg0ZsaB67guAGc2lSBOPMw87sRzNjMG2txeCPlCAGlvT7QlrciQbXr3M
- jnvQ==
+ bh=+1YDasfJit96SgrAHspsfSi9XU5gZh5XjPd6MOOS2LU=;
+ b=HCURvzDP/EqpJs19BWr5GJUfRTygtkLLC/BfmuPMABuW7WIefeByuT8C8UuMahyn30
+ fAJVBNbV52wbmKBa33V6ceU8kDq1+6HK+NeQEOWDKCjQGtnl94xwrkHTfqLtRGjSAiSw
+ eLpO2iqd8bEMwOMR+44LYfgI4iqHD0Hio90vSAqszU0jovx4xx6u/kgIVQljXO+8Tgvo
+ Rdf7dDVkiVUgv51yvdOD5amZ8EA4Q8OTiOf+jGxPq5DZ0szr0cguA8UsTWlqGiQqWyVj
+ xdiBREsDD6bYAU5iN5FI+OJtOO9MNGPMIDVL1Pa6bt0PZyiVI4wKzH2T1iHIvs+wax6L
+ qKIg==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rr0WD/EskQ39SoKH+MosFt3kUpR/Mcu3Fnntz2Aty5eB10ic8R4GQF5vENLVsCOvs1P2rCxNmhhXlJH@nongnu.org
-X-Gm-Message-State: AOJu0YypKszWcAcPF4Rw3cW16pbSfr5Bfd/ZIeQAt6+Hod/5hJFh4u5u
- uD4d+utasDTBBL6QSFykvjLU9swGnIC8rAezeXz+f+dm74/D6xdsiuZWz9pfRhYeG2g=
-X-Gm-Gg: AfdE7cllOx7FjeNIUfWToJ3gBNSYebw1ic93E8yM+IZ4QhcIPLqDKXRHWRbudpxULWA
- DVQ2CAMSajQRG3N4TVsu7nH72G3yCXPrw3NZ9B6Kc4BgjBWCDi2f5W1rRvfKnB64Ua4ssPQe7do
- tfunXFDm7SKGuL7xAkoehUs1yUWR4FYi/YGLgR6EB8vfIVg3UAw7a6BzS/KvoOAyOSFQ9Bou0MN
- u2g9ASfP98UXnm3ZzvOGWCFbW9tL6dZAMTb/eZ5p4ohxnUkDIRx+Tbg3FOhbVWTtbC2qrLs+8bN
- GeJZ8lXJuF9DOu3fEfh1mzVjCukyzhxAvWVPa46DqRZNcpwLf9CMf4XAD7PcLw8reH3byhZd6/+
- qP4CFGr2CwYxrfKAhM2elJ4Bck8kJFRKV8h0+rTS87BtpYF31eKyyT3ntp46RpLQqEssujaCBVs
- MjCIIb738ajYu/VjhfxihI84JWHkN5xjAPwQCBvhR+OTcIQoNAxRYci/2SbQ==
-X-Received: by 2002:a05:6a00:9299:b0:847:968d:b101 with SMTP id
- d2e1a72fcca58-847c0741985mr6530976b3a.21.1783014766904; 
- Thu, 02 Jul 2026 10:52:46 -0700 (PDT)
+ AHgh+Ro8C+U0PxhrANLlhqLKP9UMrWwiUVK3WvhCZTvadULvYrrsgrYFzZLSBzQ2Am0jLuqnxd1PBbmYomLJ@nongnu.org
+X-Gm-Message-State: AOJu0YxKLb4c4S/PRVR0z4n8M9rmUALt/oKJdeeaD0enlHgWrZdMhaHp
+ LirnF88J7nrBCP5Dd7R2c4ZuplWY5QZMtqFI67Y9yTFxhCOxAvpK/VFYP2PGBIs4Bwc=
+X-Gm-Gg: AfdE7ckajtIN/hO4ihSbiZnRgvuuWXDtoWnzLonewN+rdQTwY0MUUsZ0FTyXdvKOZzh
+ anlUmNvetjssnYF86S9cJDIIPP6znxdSxEy5uF5/YjU6/1MFK1g677VjiCXEZD9E7aflHLRDLHP
+ c8tneWbzjk/MtkyPwf6cexVFs4iKD5tjyt2oGhlBqjHdjoxyGDx+azBW8o5aS9xXgB/m16YzpVM
+ Vnx5wLC2kx/3l6O2KH3n13vgcZeZuyv4wFb40I4GdCmVmhTRIabv1O2yukTctk/jIQm91rhwAAd
+ WENnOER+nqg8HfremdsuXsAEjFe9olIZJ0vnid9vk+/6K29BDKVVYMMZe3mZukNSwd3TqVC0BAM
+ xfmKHu+T9gX1695UrK9jHT+4SAtA4arR2LlB//EgEOf0W7xnJ0JXLRZmr6G1u/MBOP7e5RoD/JD
+ ZPyhjOuPbbJjk0m8y5FPhxaDIcHCWiyuvxaeAj/0AtR/TDhvp71CCHEbVMgA==
+X-Received: by 2002:a17:903:2a83:b0:2ca:de3:15e8 with SMTP id
+ d9443c01a7336-2ca7e8db877mr74759235ad.26.1783014803030; 
+ Thu, 02 Jul 2026 10:53:23 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-847cb6db74fsm1767100b3a.10.2026.07.02.10.52.45
+ d9443c01a7336-2ca9a8dae33sm17144215ad.1.2026.07.02.10.53.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Jul 2026 10:52:46 -0700 (PDT)
-Message-ID: <b89f1fc2-509a-444a-b844-4e3adbb5abec@linaro.org>
-Date: Thu, 2 Jul 2026 10:52:44 -0700
+ Thu, 02 Jul 2026 10:53:22 -0700 (PDT)
+Message-ID: <d638a5c3-5579-4c17-90ee-57368d8dca00@linaro.org>
+Date: Thu, 2 Jul 2026 10:53:20 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 23/33] accel: Use GdbBreakpointType enum
+Subject: Re: [PATCH 24/33] target/arm: Inline check_watchpoints() in
+ arm_debug_check_watchpoint()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -81,21 +82,21 @@ Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  qemu-ppc@nongnu.org
 References: <20260630220100.1289-1-philmd@oss.qualcomm.com>
- <20260630220100.1289-24-philmd@oss.qualcomm.com>
+ <20260630220100.1289-25-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260630220100.1289-24-philmd@oss.qualcomm.com>
+In-Reply-To: <20260630220100.1289-25-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,31 +113,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/30/26 15:00, Philippe Mathieu-Daudé wrote:
-> Include '_gdbstub_' in the AccelOpsClass handlers to emphasize
-> we are handling gdbstub-related requests.
+> check_watchpoints() is called once, by arm_debug_check_watchpoint(),
+> which doesn't do more than this call. Merge both. No logical change
+> intended.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
 > ---
->   accel/kvm/kvm-cpus.h          | 11 ++++++++---
->   include/accel/accel-cpu-ops.h |  9 ++++++---
->   include/system/hvf_int.h      |  9 ++++++---
->   include/system/kvm.h          |  9 ++++++---
->   target/arm/internals.h        |  5 +++--
->   accel/hvf/hvf-accel-ops.c     | 20 +++++++++++---------
->   accel/kvm/kvm-accel-ops.c     |  6 +++---
->   accel/kvm/kvm-all.c           | 14 ++++++++------
->   accel/tcg/tcg-accel-ops.c     | 17 ++++++++++-------
->   gdbstub/system.c              | 12 ++++++------
->   target/arm/hvf/hvf.c          | 12 +++++++-----
->   target/arm/hyp_gdbstub.c      |  8 ++++----
->   target/arm/kvm.c              | 12 +++++++-----
->   target/i386/hvf/hvf.c         |  8 +++++---
->   target/i386/kvm/kvm.c         | 12 +++++++-----
->   target/loongarch/kvm/kvm.c    |  8 +++++---
->   target/ppc/kvm.c              | 12 +++++++-----
->   target/riscv/kvm/kvm-cpu.c    |  8 +++++---
->   target/s390x/kvm/kvm.c        |  8 +++++---
->   19 files changed, 119 insertions(+), 81 deletions(-)
+>   target/arm/tcg/debug.c | 40 +++++++++++++++++-----------------------
+>   1 file changed, 17 insertions(+), 23 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
