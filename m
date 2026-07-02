@@ -4,116 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA6A9C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 14:13:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F6ACC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 14:42:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfIAL-0002BW-AE; Thu, 02 Jul 2026 10:13:21 -0400
+	id 1wfIbC-0007xt-GD; Thu, 02 Jul 2026 10:41:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wfIAH-0002Aq-Mg; Thu, 02 Jul 2026 10:13:18 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wfIAF-0006xV-CV; Thu, 02 Jul 2026 10:13:17 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6621KIwD2509464; Thu, 2 Jul 2026 14:13:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=jBmQYn
- B/5qzq79sh4Ib1zpXghENZgr0eoQ5pRDEmzv4=; b=GmLYK/9zXHFTqdvt7N2TWN
- NQsYmvaKbcSnLGFeQZoxLXTkmoDB/v0lLgsTyY/Rkwy5dIjliC1uJQyen8RF/QXv
- 8csr25Zth0xfjyFj8Vf55smhrTY8bPLcdLJoWMo6nkUghpyHWjZ0xuvYT3fxBgi7
- ft01RBxf73krvk8J1YZlFfw1oef9gsygk3v90c/zWedAD/RJcI92M6vshEtM7sJP
- 2Q7uqEBUh3atg0WCthrAL7fITtSdzamt8XLnMhCS49MDIuTmmyM017XeYoaN+7Kr
- x2J/Khn74SaNfn1Lu4vP0jLG8Fw42UYnvdLnBWCNYo+j+HI2BmgyZfhAMgmdnqGA
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26peadh7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 14:13:11 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 662E5lFC030874;
- Thu, 2 Jul 2026 14:13:09 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7wcdhx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 14:13:09 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 662ED8BJ27919084
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 2 Jul 2026 14:13:08 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B845D58056;
- Thu,  2 Jul 2026 14:13:08 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6DFFB58052;
- Thu,  2 Jul 2026 14:13:07 +0000 (GMT)
-Received: from [9.61.149.146] (unknown [9.61.149.146])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Thu,  2 Jul 2026 14:13:07 +0000 (GMT)
-Message-ID: <d8fb862c-1e18-4989-b16f-4fb33330e5d1@linux.ibm.com>
-Date: Thu, 2 Jul 2026 10:13:06 -0400
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wfIbA-0007x1-EK
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 10:41:04 -0400
+Received: from mail-pz2-x00.google.com ([2607:f8b0:4864:3b::])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wfIb8-00062o-Cw
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 10:41:04 -0400
+Received: by mail-pz2-x00.google.com with SMTP id
+ 41be03b00d2f7-c95bd574471so384568a12.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 07:41:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783003261; x=1783608061; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=sdyciNnm/7kG67/fNn1tHNgqawBqEsjzEGL+IroabrA=;
+ b=GDsH03TbQQ/ZWMwR8IBfuI+kOf/UsBb91FAR2lpbQRBtIo5nctRPvdTEuDHsHcq6NT
+ XsjFFTc15rOSD8n7mXQU3wqYXIpS2WNTu1LA22AMJky7k3H0Y6/uGJ3l4qQfpC8isXMZ
+ EIFRAFnAEHF47jbCDDQuZdRWb23djMr6iFttCGzIMDJSQuj5iBJns8do7iIBI6+9ixrz
+ sR00R7wxb8KWH3B5mlt/qFJtHTLBXA/M77mqaHkU7zW5zRWw2rxjGT+hFkl1NuBblZbz
+ UxxM1W6IBpw7AMkrpZtWK526r2Xs2GY8t5gnrY+heKYh7paL2TybEvnUSNaXJrnVQwx5
+ jh0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783003261; x=1783608061;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=sdyciNnm/7kG67/fNn1tHNgqawBqEsjzEGL+IroabrA=;
+ b=S399RvtKGimnyw3kqtb7TJRTAuu7yXDTYLIS2WmIRgAKvLGEEzZ7+kWKQIKX2jd//R
+ NzGN66KCFByXzy9HlAO0NE80JOzLEML23HH0QQSr1mMmX5gl3KbycLSQzVjR11DjPJsk
+ 9sz9EvOk3HnXk4k2k2qCJp3ikmgAOx56z4n6TqyindxYmu4fUHA0aFAC1EfXJ8ET2LMz
+ s449CxlbOLsx+M/CmoNtn7fxggAy0rGeCAaXGZgbiYQW5cG45SG+AaSzRRsDRShjeVf4
+ pNeF/CiWHgC9nf9iJrViG7nQsC7QVNblO2wQ2a674BaVz5rNSlEaCpx9ghxIhWCM3O7q
+ e0Kg==
+X-Gm-Message-State: AOJu0YyxMbjqtdGb7Lo/b2GNvYzIHZNkVQiHKd2BlKqY2I8EWU8r1VHx
+ g+LCnbGEOpLu8sMt92CCmiGGTYr2ZRYdcZAuCxl3nBZhuRn2vqQ9Q2lo
+X-Gm-Gg: AfdE7ck4cwWfuqVc+gi3lqhgl0pmZhIkgGkj+TZ+BfhYydwGnsRlfbi69f8IHp1dU1V
+ UsQk+cwcL01fdW9w7IBLD6gPkX3ZybXCnoa51buJGAtZX1WOlP1a7rwCYpChuEsLwDTEsRRa60y
+ 1cxJOwkHU36abBwuhHOp6CxG/lq2lqog+UPeIrEH1ucJdxkkgNBPVHGtkzWETESDqsVVfmJCcdC
+ HEAPaBRjcHCXOdWznyroH9jL6Eu357hMod37QbhqllHxWpcscGngEU0q60G/NvudR/+nqK4ujjl
+ 3nefN6j75p9Thv0q0vtHgZOwTD3AdgoyxTJEEIu68WOgRmWqa9Ej9FIp/y5cw9Tu8kkXDQp547j
+ CZiGWR7AfBrjkhr7ukjDm4rKsfKOCVLpLx2J6zVLCHHJby8J/xsySQiIVft+0vj/VtrcJcnS9PH
+ WdOXMETTwaVysWgikW5Io66lgIJ/DlQHH4/0fcB02McaCr72Nrnvdr1/9sH7A=
+X-Received: by 2002:a05:6a21:4903:b0:3b3:241f:66c6 with SMTP id
+ adf61e73a8af0-3bff4115630mr6596391637.26.1783003260711; 
+ Thu, 02 Jul 2026 07:41:00 -0700 (PDT)
+Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-30f116065c5sm8180042eec.11.2026.07.02.07.40.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Jul 2026 07:41:00 -0700 (PDT)
+Date: Thu, 2 Jul 2026 22:40:57 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ andrew.jones@oss.qualcomm.com, 
+ leif.lindholm@oss.qualcomm.com, uwu@icenowy.me,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: Re: [PATCH v8 2/7] target/riscv: add riscv-server-ref CPU
+Message-ID: <akZ4bFNKEZrVBStU@ChaodeMacBook-Pro.local>
+References: <20260610214133.1882563-1-daniel.barboza@oss.qualcomm.com>
+ <20260610214133.1882563-3-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 23/35] pc-bios/s390-ccw: Add signature verification
- for secure IPL in audit mode
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260701204922.1320349-1-zycai@linux.ibm.com>
- <20260701204922.1320349-24-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <20260701204922.1320349-24-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 9M31_eo3CnDXjDBoWFmgeZAIo7QNMEd9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDE0NCBTYWx0ZWRfX/Oyikq8nWBOn
- 6dzEQh9DunLRff0feiPIl8mb8eCQ6QR3ZVth7pkoBfp4e2Y1oqgPnqDqgjnjzcaDWEFvU/BXn8Q
- MjY5srv7q6i34SKI07NIqafKGpjy+uc=
-X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a4671f7 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=UqHoEE1oasUoOjSkpRcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDE0NCBTYWx0ZWRfXxEw662l2raO5
- mOHPgJzbrSePLgiWW9wMSlCFqH7+0vbcilEb76PQhUeFl/p42pTBiH2J7R8uG+slsM3MxKqDlqQ
- dBINyagIQSUJhmfTG+F7BnqMA7NSIvluWypT6ReF9AWrYCm4ZaPnGb1XcWFlc+3oK8aTnZp02D1
- NjKCcc+HqMZITU3sDd7Tvmg2yWJ2YRMVxOQ0X5sKbPU3jF6epXZI+k3DfLybRHk8B/0qYBaQ+ME
- bIXNUG5ROVPTohxgIVuNGibd+fKGeRn5ynAsP5nFtknYXNonYs9KJFAEL8y8fG+cCBS83ToXzg2
- mSXUk4t3lj/Zedg7pfIuKNPLoD7z/uzCMr5rHfPdTY1L0fuLyAlwPB/c78Fo3uh0z4bdE2YW4Ql
- ZiIJ0rPmOhQMBAvKOfdnWRyaoTb4C1OjalJaIk/2wSs5IsTL32OXr8F0tDFFxNeocMK8/Yp5tPl
- pvz5ENAxmPT8jtb+WKg==
-X-Proofpoint-ORIG-GUID: 9M31_eo3CnDXjDBoWFmgeZAIo7QNMEd9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
- spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020144
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260610214133.1882563-3-daniel.barboza@oss.qualcomm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pz2-x00.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,72 +104,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Jun 10, 2026 at 06:41:28PM +0800, Daniel Henrique Barboza wrote:
+> The harts requirements of RISC-V server platform [1] require RVA23 ISA
+> profile support and others.
+> 
+> We're going for a profile-based implementation, instead of a regular CPU
+> that can inherit RVA23, to allow future CPUs to use it internally as a
+> starting base for their own extension sets.  There's also a new
+> 'rvserver-ref-1.0' flag that can be used to set the extensions in the
+> command line for other CPUs, which can be used for testing/debugging
+> purposes.
+> 
+> Note that for all intents and purposes "riscv-server-ref" is a regular
+> CPU and no, we're not trying to set a precedent of calling the riscv
+> server platform spec a profile.
+> 
+> [1] defines in rule SEE_020 that we must support at least 11 debug
+> triggers (4 for insn address, 4 for insn load/store, 1 for icount,
+> one for int, one for excp).  We're going for the minimum.  If more
+> triggers are needed users can set any trigger amount with:
+> 
+> -cpu riscv-server-ref,trigger-count=N
+> 
+> Note that N must be <= 128.
+> 
+> [1] https://github.com/riscv-non-isa/riscv-server-platform/blob/main/server_platform_requirements.adoc
+> 
+> Suggested-by: Icenowy Zheng <uwu@icenowy.me>
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
-
-On 7/1/26 4:49 PM, Zhuoying Cai wrote:
-> Enable secure IPL in audit mode, which performs signature verification,
-> but any error does not terminate the boot process. Only warnings will be
-> logged to the console instead.
->
-> Secure IPL in audit mode requires at least one certificate provided in
-> the key store along with necessary facilities (Secure IPL Facility,
-> Certificate Store Facility and secure IPL extension support).
->
-> Note: Secure IPL in audit mode is implemented for the SCSI scheme of
-> virtio-blk/virtio-scsi devices.
->
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
->   docs/system/s390x/secure-ipl.rst |  15 ++
->   pc-bios/s390-ccw/Makefile        |   2 +-
->   pc-bios/s390-ccw/bootmap.c       |  27 +++
->   pc-bios/s390-ccw/bootmap.h       |   9 +
->   pc-bios/s390-ccw/jump2ipl.c      |   7 +
->   pc-bios/s390-ccw/main.c          |  18 +-
->   pc-bios/s390-ccw/s390-ccw.h      |  20 ++
->   pc-bios/s390-ccw/sclp.c          |  27 +++
->   pc-bios/s390-ccw/sclp.h          |   6 +
->   pc-bios/s390-ccw/secure-ipl.c    | 362 +++++++++++++++++++++++++++++++
->   pc-bios/s390-ccw/secure-ipl.h    | 116 ++++++++++
->   11 files changed, 607 insertions(+), 2 deletions(-)
->   create mode 100644 pc-bios/s390-ccw/secure-ipl.c
->   create mode 100644 pc-bios/s390-ccw/secure-ipl.h
->
-[...]
+>  target/riscv/cpu-qom.h |  1 +
+>  target/riscv/cpu.c     | 31 +++++++++++++++++++++++++++++++
+>  2 files changed, 32 insertions(+)
+> 
+> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+> index 30dcdcfaae..a150acd151 100644
+> --- a/target/riscv/cpu-qom.h
+> +++ b/target/riscv/cpu-qom.h
+> @@ -42,6 +42,7 @@
+>  #define TYPE_RISCV_CPU_RVA22S64         RISCV_CPU_TYPE_NAME("rva22s64")
+>  #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
+>  #define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
+> +#define TYPE_RISCV_CPU_RVSERVER_REF     RISCV_CPU_TYPE_NAME("riscv-server-ref")
+>  #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
+>  #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
+>  #define TYPE_RISCV_CPU_SIFIVE_E         RISCV_CPU_TYPE_NAME("sifive-e")
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index e02d53cbba..63fbc4b98e 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2063,11 +2063,35 @@ static RISCVCPUProfile RVA23S64 = {
+>      }
+>  };
+>  
+> +/*
+> + * The riscv-server-ref spec isn't a profile per se but its
+> + * CPU definition can be modelled as a profile that extends
+> + * RVA23, with additional things on top of it, and allowing
+> + * future CPUs to derive from it via
+> + * ".profile = &RVServerRef1_0;".
+> + */
+> +static RISCVCPUProfile RVServerRef1_0 = {
+> +    .s_parent = &RVA22S64,
+> +    .name = "rvserver-ref-1.0",
+> +    .satp_mode = VM_1_10_SV48,
+> +    .ext_offsets = {
+> +        CPU_CFG_OFFSET(ext_zkr),
+> +        CPU_CFG_OFFSET(ext_sdtrig),
+> +        CPU_CFG_OFFSET(ext_ssaia),
+> +        CPU_CFG_OFFSET(ext_ssccfg),
+> +        /* ssstrict is always enabled for PRIV_VER_1_12 */
 > +
-> +void update_cert_list(IplSignatureCertificateList *cert_list)
-> +{
-> +    IplSignatureCertificateEntry *cert_entry;
-> +    uint8_t *cert_buf;
-> +
-> +    cert_buf = (uint8_t *)qipl.ipl_data;
-> +
-> +    for_each_rb_entry(cert_entry, cert_list) {
-> +        memcpy(cert_buf, (uint8_t *)cert_entry->addr, cert_entry->len);
-> +        cert_entry->addr = (uint64_t)cert_buf;
-> +        cert_buf += cert_entry->len;
+> +        RISCV_PROFILE_EXT_LIST_END
 > +    }
-> +}
-
-This looks like the correct idea but I think it needs additional 
-validation.  Firstly, as Eric mentioned, there is no check that the size 
-of our cert entries don't exceed the qipl.ipl_data space.  I know there 
-are implicit factors such as maximum certificate size and such that 
-limit it in a way that it shouldn't be possible, but we should still check.
-
-Secondly and more critically, you need to reset the qipl.ipl_data 
-address to it's initial value before reusing it.  I don't think I saw 
-that done anywhere.  The address is incremented after each IPLB is 
-loaded from the chain (see the load_next_iplb() function in iplb.h), so 
-if we in theory had started with 7 IPLBs in the chain and loaded all of 
-them, and if we then copied the maximum allowed size of certificate 
-entry data, we would exceed the qipl.ipl_data upper limit and probably 
-clobber the kernel.
-
-I think the easiest way to restore the qipl.ipl_data address to its 
-initial value is to track how many IPLBs we've used, multiply that by 
-the size of the IPLB, and then move the address back by that amount.
-
-Regards,
-Jared Rossi
+> +};
+> +
+> +
+>  RISCVCPUProfile *riscv_profiles[] = {
+>      &RVA22U64,
+>      &RVA22S64,
+>      &RVA23U64,
+>      &RVA23S64,
+> +    &RVServerRef1_0,
+>      NULL,
+>  };
+>  
+> @@ -3326,6 +3350,13 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>  #endif
+>      ),
+>  
+> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RVSERVER_REF, TYPE_RISCV_BARE_CPU,
+> +        .profile = &RVServerRef1_0,
+> +        .misa_mxl_max = MXL_RV64,
+> +        .cfg.max_satp_mode = VM_1_10_SV57,
+> +        .num_triggers = 11,
+> +    ),
+> +
+>  #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+>      DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
+>          .cfg.max_satp_mode = VM_1_10_SV57,
+> -- 
+> 2.43.0
+> 
 
