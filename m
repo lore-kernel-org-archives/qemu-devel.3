@@ -4,142 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E79C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 11:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5731C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 11:48:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfFqe-0001hS-Eb; Thu, 02 Jul 2026 07:44:52 -0400
+	id 1wfFtR-0002Rc-Bm; Thu, 02 Jul 2026 07:47:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wfFqd-0001hJ-Fa
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 07:44:51 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wfFtL-0002RH-GX
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 07:47:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wfFqb-00032a-I0
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 07:44:51 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 662AFVxs3460566
- for <qemu-devel@nongnu.org>; Thu, 2 Jul 2026 11:44:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- asCPuNecIEhhyleojB14Jv4MElxuIHDuF3lm/xzKAzI=; b=Fxg5erjXTRkvVVvk
- 8VsJJsHIba+h//CPFcymynJk/Z6Ckvcg1sQkRnKXwEcLSAMwAlfNUZy55XugPx7M
- tmuwqIMPWIUTMy3SYDeXBV4DmKEemyoidATSrETfT/RhRbkBE07mRWo1gTh91bq+
- /DhDMmSEvzjqrUXKyHKluFnFfAFGloiqrt6EhF2SJ/lGIZKGby360tWiqDq5EXSk
- +ku9Q2o8TVJBxq++Gn7tnMs9ysqb5WC5Pg3GaEGAbMINkRDbdSN9zAxf1Je3PNU/
- MKHSb+dwVY4kIVhm8+fVkpWjSm2FXpt1Z3YwInMTnzk4b86qF71li0yVnPq5n9/I
- 5rT4BQ==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5gmb1nm3-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 11:44:46 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8eb8914e651so35396296d6.3
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 04:44:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wfFtJ-0004n0-FU
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 07:47:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782992855;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Hk1/fi4v816xHNT4Er8YyKQhCLuEm4cycLCAjYyei+4=;
+ b=F10bsmcgbj4jtAP0IammIVkC8UkEpUMQXp5E8dDHgg+syTEN7trItqSBS0k5dJRZO17V3Y
+ kU7IWsR3iQS9U6Mb0QPoeuBlOihDZBm1QOgVJF3jQz00n/uKi6y6NNiDt/wKVheSYF1Zpn
+ Fm7LVo4idTpiUUsTHESpcz6kwZfry9k=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-397-yfrrzmjsNSWcs7rqgN8Wjg-1; Thu, 02 Jul 2026 07:47:34 -0400
+X-MC-Unique: yfrrzmjsNSWcs7rqgN8Wjg-1
+X-Mimecast-MFC-AGG-ID: yfrrzmjsNSWcs7rqgN8Wjg_1782992853
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-493c619bb52so4280015e9.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 04:47:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782992853; cv=none;
+ d=google.com; s=arc-20260327;
+ b=g9ANMFrGPpOzGq7BmH2cb7VR3+gQCjp6+2TjC65ZLqAp5e9MfQRGjbprNjT7E/u7HY
+ trwLr0Ceyn5JluK7paiyT3ssl4TQIN5SMiBUJ4rBdQcjnHkB4s+AfVamDLr+gbn2scKC
+ ajYpDCD0aMiTkr98+c26LvaoRnKoKoTYgVTFpEltGCG9hK3mZzzlQWr/0VPcLabxo5A7
+ VvxbbokUfnXaUhYP4Rtg3ILYpl/bAsUxX98cbbmRBuflspSlAjcbQx00ss+RhwPxqMIs
+ AfDosRf19ve1BdOV299g63C6kNC638D2F2XHZfDfFYdszkuh0Ju/3cLAnPcZpCZxyFdY
+ Wu2A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Hk1/fi4v816xHNT4Er8YyKQhCLuEm4cycLCAjYyei+4=;
+ fh=Y6ZVa2DAQ7N99Yz30qJegDSPM58qw0hum3KbRozMzY4=;
+ b=kbDgcipviaXc1CQaa5n/nbwxzOhEAXNx5S6R+nILZ3U+zX8VIGiYdJRMQ8+fJ2nrkW
+ tJgfki6R7aEXj0HS6gUaXl9bDAhblaV/CbbRsYAQaqBkUcqykuJnrx7TfmhUx532/Np0
+ +RSX/yxfaX0J8aTvzJnmMWayH06EFfNSCGnwYkOAKjO2oOVHnEH9G0nGtz2dj/slD/8R
+ yMPVwmlrCl0zTspQLCLHzaVoUuSrjP7QlGCcKxCFFbVGCUAluF4+8qQK6rWl+Umo5SZF
+ XVynQLV2FwUM28YsCdRlgg3mQk8EYwDQlYxg6mjdiCfljtojK8F6boRrxUZ5C5gVY9vF
+ Pm5w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782992686; x=1783597486; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=asCPuNecIEhhyleojB14Jv4MElxuIHDuF3lm/xzKAzI=;
- b=I0ac6acX4FbY5xlNinjIPQzwg3pLFzwgujn50Ask6qem9xv0ljVKBtSlPfANfBoE2v
- FZVD6a9eRXCVii4j88ZCYVUg/L6zb7fpYVWtqZaM/70iD7RFTHUQk15BWOGkCCIYN16l
- 2ReBYX5quGpREEGGyTCCAEnzO7EYN8CjoHNuhYSp7yZN2F0ndaNDq9VwYcvu7O4P4F08
- Ph1BFb2TAVSkSLBtaPm3FTpWuDQr//gXRVMSYFlzbZlhLLhzpecEFYsY89Lxgx3zmhwk
- M/dRYG4bF1Fl6CFXBveHZFQ7esgyF174jNzBKeITvdOxZwuOv9HPiSovi/NrXlqTAzAQ
- 9GYw==
+ d=redhat.com; s=google; t=1782992853; x=1783597653; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Hk1/fi4v816xHNT4Er8YyKQhCLuEm4cycLCAjYyei+4=;
+ b=g759HszUf3i9GBuiSlfIFTEzBgkf07eMeU3T+wi+OMve0HYyYauEAjV7mxkVUaP8BA
+ TzblyXv2796Z/lATCa2Q9kfxKZHJWH9GgsGDo3BKfOPmrtYW9xdCRJjZ3ccx8mLEVIuu
+ wp42DwftQO8eZ912k5hJkrlwtrLmvhdq13bdc2l6Xz0BdXq2hsZKBTK7KJooG4i0kWEl
+ zOD209iHUQYsBb/akxsp4igShXuh4XUGxDOuquKBVgEARxEgN5K2BKfZplHqhyRncZaU
+ 1LIpcEMWvhdy7nWeiF6mwwQWUCqGQbmLFPD8Anqm2FD0lEyRa8xdTPwuII7dstZ8IE0E
+ x7xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782992686; x=1783597486;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=asCPuNecIEhhyleojB14Jv4MElxuIHDuF3lm/xzKAzI=;
- b=AqeCuIll6mAx7PYUjOlF0xNqluV5TMDdIbTqlFLkrr2zB0SfkZjr04q3DvQm6uVcTe
- A7d8wWDuSq84fANDysWg/BGjApSHyU2a6oQ2Si+llJKAF+bLVcBrlTU0eKuBXmkwvFN6
- H3L+HWaYbWynWuLNZvlrzuI5ShLbm/jHy5w/8a8VvWnwM+jRISV2PTvT8PE4a4mEGJJJ
- d8DLggDjoIHUGi7PFMEzBqzUUVO5tDvXRZOjRhJ4Ec/j9UDvQ6YKFUDy89n0fFIq0Zvp
- 6tOIpIWmzK1wlyUadID7kOD2oNgWuDcqwshQxibYDJt2jgNwP2aADrx8v4pc4Ian5BWi
- xkag==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrS1oW9L+8/y+yUH6lnKUdXlq8QAbqazwplLMHeAw1wPHQUGVanLTNj2fPJ4HYQ5ytVD1j9VZzzdW7J@nongnu.org
-X-Gm-Message-State: AOJu0YxaeN6KQ2ReHNmKagKDg0KcdhLfgXtmvKcO6BC0jAYZc0guV9ME
- ZACgAki0e3fFTCF5iTnIfiPlmMKAqJFZLtJAjPBudFaVjCZg9CzuY/wwJmGup5NIp+sUhn3RmUI
- 5PYXZhfVC8QyixrxoRL4dE8DOaE2BHrJy9NfimEUm+J8aQQgMGGJBbnHMdQ==
-X-Gm-Gg: AfdE7clmox7vmCv3LOnPxRFjFIdu2gAA/G8ER5eMr0GMAptpi0dKMKCuP1mcbW4kQHV
- 9sQV9WirIJUfoFzRzjG61MCoguc+2is3d9TBswtUGDlmnvNcUzhacKX0sI0QxdwoyZs+EVq7whv
- k4QR0l8nVzffCw1kP5ooZCjtL+f7VYzjmDbZw+KyxpE8L4vtQwGTsbrWAaoMPPpbq2THa44sK9v
- Zp+2cbGnyG4tIPZOc9Zp/1pQntqXKRiZKWEDQ5B6MUU1m0sRKgbrq0t+vsYuFN3mgHXCgA3vB95
- vhA7it7eRq12lL2uUA2VJyB/Z0rcgMFvPnnvpyIuXJIQO7iRdPJUBkRH9TKag4FXao+6LNvsw7p
- fqU8RKISxTE/1YWzhBqmPGUBBPSJ++3jSqet75Fznujyv
-X-Received: by 2002:ad4:4ea9:0:b0:8ce:f1b:74ec with SMTP id
- 6a1803df08f44-8f422b689efmr64190696d6.25.1782992685657; 
- Thu, 02 Jul 2026 04:44:45 -0700 (PDT)
-X-Received: by 2002:ad4:4ea9:0:b0:8ce:f1b:74ec with SMTP id
- 6a1803df08f44-8f422b689efmr64190386d6.25.1782992685043; 
- Thu, 02 Jul 2026 04:44:45 -0700 (PDT)
-Received: from [192.168.68.106] ([189.79.21.40])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8f46aecc908sm25714596d6.0.2026.07.02.04.44.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Jul 2026 04:44:44 -0700 (PDT)
-Message-ID: <bd0fced4-9099-42f1-a7f5-0e192f7c490d@oss.qualcomm.com>
-Date: Thu, 2 Jul 2026 08:44:40 -0300
+ d=1e100.net; s=20251104; t=1782992853; x=1783597653;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hk1/fi4v816xHNT4Er8YyKQhCLuEm4cycLCAjYyei+4=;
+ b=qdhy9wUZpu2rhvjv3TJsST+pCgIpWhd4g4W73O4L+unKDXUJwCb3A7KBneWOInz+um
+ 7LD6oKnxLrmj/6AHhNtdxsYSD3wsKBh+fDWuexnG0XKrwWGHdgJhVwxa2fsnbt4/51r9
+ VQjwe5W/xp8/PYSx5VxKKYVtIr3N0rwtd6MAdxrDwiIIuQlg2YjTTlkIZjwVUvl1jGSv
+ PR3ZAg9j/AiVKyHzlBhRlHn8rhpAyup4JNqKp8ZWzytLjbcnZLs5ADOiz0mkBT0yen5w
+ 1n7qa+m3iAsxaqF9faplgEbsaeuWiqBCHpZ6r1vArrA6lj837UwNrNfyhlifndvsAl4s
+ u6qQ==
+X-Gm-Message-State: AOJu0Yx5qsYFzs6Kso2WK3dnKoHURIS9aYC/UR3Ba7omSTJRevSo7Ti0
+ rL/LOQucFbx+/4IyKbH6ypBc+4uaE/CQmAd6nl6ZLiPbaq50JnlsS082Hxwkh9lkd2XIKZRxlyk
+ 1Rb2fIt3HDRMCa5m6Eo0qSUO7j6YVpoTxg4xEV8op5us85/IZjfVdJkhIyxtoM59p+/1lnfpBmR
+ fiPdcjh4osjFOlB/0zY17D7CHJUvZlQ88=
+X-Gm-Gg: AfdE7ckdhCAQZyqb/81EwbvoH+3FjyqXRitid0vdObBqUOg6v5PHtSTXajtQB5/OcEk
+ QDj+EmEj4f+092kYjp8yP5ZDj3ltMBGNagEjKs7D5MqdWKTeAbByyPDkKThYUTCXclFDGbA2OcK
+ hQBGZFDsmpBzPcBtq43DOY6TxiQnuhl2Zx6c3tXzPj6G9IFh3A04tn+RC7E1nbOvKuOKew84x/0
+ rrYOpN492zG1QaN2hF7jBk4WEA1IzNCfqgpg4KZy2cf+vRaBpxRLfCKjYhx82loBb054+k=
+X-Received: by 2002:a05:600d:c:b0:493:b771:ddf9 with SMTP id
+ 5b1f17b1804b1-493c2b3d048mr62931145e9.1.1782992852840; 
+ Thu, 02 Jul 2026 04:47:32 -0700 (PDT)
+X-Received: by 2002:a05:600d:c:b0:493:b771:ddf9 with SMTP id
+ 5b1f17b1804b1-493c2b3d048mr62930775e9.1.1782992852384; Thu, 02 Jul 2026
+ 04:47:32 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/39] riscv-to-apply queue
-To: Michael Tokarev <mjt@tls.msk.ru>, alistair23@gmail.com,
- qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260701101752.2522962-1-alistair.francis@wdc.com>
- <edd19559-f4ba-46eb-b979-700f5491981f@tls.msk.ru>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <edd19559-f4ba-46eb-b979-700f5491981f@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: klEtR9me6v94KZTRL0km6GqMcjImeBWF
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDEyMSBTYWx0ZWRfX3ga1XTeLZLEJ
- sA8ikG2RIWlH3NOdv5KGp5ffFd/3RbWwgOATx+IMk8oZBIHpclTdPv7xg0SNpEjSaQRY5LJY4ha
- yCXJ/oc8/8mjaQ0i/TgEqCFn7GA4Q30=
-X-Authority-Analysis: v=2.4 cv=aJ7Ab79m c=1 sm=1 tr=0 ts=6a464f2e cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=pGLkceISAAAA:8 a=J1SvRnXkda_BMJuSyvgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDEyMSBTYWx0ZWRfXyCjscgeFKNH7
- 18sYOTDlQEU2iMfm7BX72jF18VRYLGWFzvpdEEaNBuuqk2k6FAmVJSb9odYjIs2mH/uVDljmzs9
- w/5fphfQW7jqct0MJjL30AgeXRvz254mzQEuPOqxKJJWtSoUhAydyYheUQ4Ue3flNPgKtgsX+yB
- t/x6By88RrYk01lRKxff7Wi3hOcTT5M2vJM6v7BgFrbmCttoLza/UEeO7A+NMl7XXsMVVtIQY/g
- dqe2odSwQoBULM1aXa0c191yAunUGVVqYuGEXJ21JWok9M/PQnX5nFTtuWGPrmyoGH7M01SD4UC
- miPhnaZleUAa4z5zR1GV5kCYJl7a9c+BCqqBNYmseQZhsbol+TBVM/jrYhMAbTv3EfyjtstPHNr
- HAza8bzUAoudjx2DEo8vtwL0b52DYQVRPUr9lneD34ipawlsOdG+co8IT0HUyh31EfKXoMhdH04
- 0oFP1TOduv6eq/vVyNQ==
-X-Proofpoint-ORIG-GUID: klEtR9me6v94KZTRL0km6GqMcjImeBWF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 clxscore=1015
- spamscore=0 priorityscore=1501 impostorscore=0 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020121
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
+ <20260417105618.3621-17-magnuskulke@linux.microsoft.com>
+ <CABgObfbgqcSYekjGkuDCUibQc8j4iyGPbajU_-VdPsGkLZgiLQ@mail.gmail.com>
+ <akUyiNahX3LnFPhn@example.com>
+ <CABgObfbQTUOaiMYApABTettYa0D3WasGs1NjQrWvo4tmAZpazg@mail.gmail.com>
+ <akY0Gpd/GHj3Pdun@example.com>
+In-Reply-To: <akY0Gpd/GHj3Pdun@example.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 2 Jul 2026 13:47:19 +0200
+X-Gm-Features: AVVi8Cc2s61FEbQmgi8z_ERaskybzwxwfFN9DsS31joGbGHLz47vv9qWDOuRJj0
+Message-ID: <CABgObfZhNwXLG9ip=CnEiVb=p24etvxeodbjG5=Di4hOKvYF8Q@mail.gmail.com>
+Subject: Re: [PATCH 16/34] target/i386/mshv: migrate LAPIC state
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>, 
+ Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <liuwe@microsoft.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Wei Liu <wei.liu@kernel.org>, Alex Williamson <alex@shazbot.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Marcelo Tosatti <mtosatti@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000009a968c06559f5f8b"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,124 +146,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
+--0000000000009a968c06559f5f8b
+Content-Type: text/plain; charset="UTF-8"
 
-On 7/2/2026 7:54 AM, Michael Tokarev wrote:
-> On 01.07.2026 13:17, alistair23@gmail.com wrote:
-> ...
->> RISC-V PR for 11.1
->>
->> * Fix IMSIC CSR write and add tests
->> * Parametrise debug trigger number
->> * Add 'svbare' satp-mode
->> * Fix RINTC PLIC context ID for KVM
->> * Avoid abort when reading vtype before env->xl is set
->> * Skip reset for KVM irqchip
->> * Skip FP/Vector sync on KVM_PUT_RUNTIME_STATE
->> * More FDT cleanups (PLIC)
->> * Make FCTL.BE in IOMMU read only 0
->> * Check DC.TC reserved bits in IOMMU
->> * Apply UXL WARL handling to vsstatus
->> * Set cmd_ill IOFENCE.C if rsvp bits are set in IOMMU
->> * Set RISCV_IOMMU_FQ_HDR_PV appropriately
->> * Fix MSI MRIF IOMMU interrupt-pending offset
->> * Report QEMU CPU archid as 42
->> * Check PMP before updating PTE
->> * Add the Tenstorrent Atlantis machine
->>
->> ----------------------------------------------------------------
->> Alistair Francis (1):
->>        hw/riscv/atlantis: Ensure OpenSBI has a non-zero next_addr
->>
->> Charlie Jenkins (1):
->>        target/riscv: Report QEMU CPU archid as 42
->>
->> Chris Rauer (1):
->>        hw/i2c: Add DesignWare I2C Controller
->>
->> Daniel Henrique Barboza (16):
->>        target/riscv/cpu: add CPU unrealize callback
->>        target/riscv: dynamic alloc of debug trigger arrays
->>        target/riscv: add 'num-triggers' debug property
->>        target/riscv/cpu.c: add 'svbare' satp-mode
->>        hw/riscv/sifive_u.c: remove unneeded qemu_fdt_get_phandle() call
->>        hw/riscv/sifive_u.c: use intc_phandle in plic creation
->>        hw/riscv/sifive_u: add #address-cells in PLIC FDT
->>        hw/riscv/virt.c: change 'plic' nodename to 'interrupt-controller'
->>        hw/riscv: add create_fdt_plic() helper
->>        hw/riscv/riscv-iommu: rename regs_rw to regs
->>        hw/riscv/riscv-iommu.c: make FCTL.BE read only 0
->>        hw/riscv/riscv-iommu: check DC.TC reserved bits
->>        hw/riscv/riscv-iommu: set cmd_ill IOFENCE.C rsvp bits are set
->>        hw/riscv/riscv-iommu.c: set RISCV_IOMMU_FQ_HDR_PV appropriately
->>        hw/riscv/riscv-iommu.c: fix MSI MRIF interrupt-pending offset
->>        hw/riscv/riscv-iommu.c: always fault with SADE=0 and A=0
->>
->> Inochi Amaoto (1):
->>        target/riscv: Check PMP before updating PTE
->>
->> Joel Stanley (9):
->>        target/riscv: Avoid NULL deref in IMSIC CSR write
->>        tests/functional/riscv64: Use newer kernel for tuxrun boot
->>        tests/functional/riscv64: Add virt machine AIA boot test
->>        hw/riscv/virt: Move AIA initialisation to helper file
->>        hw/riscv/aia: Provide number of irq sources
->>        hw/riscv/aia: Configure stride for the M-mode IMSIC
->>        hw/riscv: Add Tenstorrent Atlantis machine
->>        hw/riscv/atlantis: Integrate i2c controllers
->>        hw/riscv/atlantis: Add some i2c peripherals
->>
->> Meng Zhuo (1):
->>        target/riscv/kvm: skip FP/Vector sync on KVM_PUT_RUNTIME_STATE
->>
->> Nicholas Piggin (4):
->>        hw/riscv/boot: Describe discontiguous memory in boot_info
->>        hw/riscv/boot: Account for discontiguous memory when loading firmware
->>        target/riscv: tt-ascalon: Enable Zkr extension
->>        tests/functional/riscv64: Add tt-atlantis tests
->>
->> Qingwei Hu (3):
->>        hw/riscv/virt-acpi-build: Fix RINTC PLIC context ID for KVM
->>        hw/intc: riscv_aplic: Skip reset for KVM irqchip
->>        hw/intc: riscv_imsic: Skip reset for KVM irqchip
->>
->> SeungJu Cheon (1):
->>        target/riscv: Apply UXL WARL handling to vsstatus
->>
->> ZhengXiang Qin (1):
->>        target/riscv: avoid abort when reading vtype before env->xl is set
-> 
-> 
-> Hi!
-> 
-> Is there anything here worth picking up for the stable series
-> (besides "target/riscv: Check PMP before updating PTE")?
-> 
-> For example,
-> 
->   46d96da130 target/riscv: avoid abort when reading vtype before env->xl is set
->   5a3fd18f4f hw/riscv/riscv-iommu.c: make FCTL.BE read only 0
->   13c2fc34f1 hw/riscv/riscv-iommu: check DC.TC reserved bits
->   6ed77682d5 hw/riscv/riscv-iommu: set cmd_ill IOFENCE.C rsvp bits are set
->   887d2d75b1 hw/riscv/riscv-iommu.c: set RISCV_IOMMU_FQ_HDR_PV appropriately
->   3cee183ff9 hw/riscv/riscv-iommu.c: fix MSI MRIF interrupt-pending offset
->   64ce9ac187 hw/riscv/riscv-iommu.c: always fault with SADE=0 and A=0
-> 
-> resolves various bugs from the qemu issue/work-items tracker.
+Il gio 2 lug 2026, 11:49 Magnus Kulke <magnuskulke@linux.microsoft.com> ha
+scritto:
 
-All riscv-iommu stuff is worth getting. They are all fixes for code that is
-around since QEMU 9.x or something.
-
-In fact there's more to come in future PRs (I'm actively hunting riscv-iommu
-stuff in gitlab) so same thing applies for those future cases too.
+> On Thu, Jul 02, 2026 at 10:51:35AM +0200, Paolo Bonzini wrote:
+>
+> > What are the additional fields that aren't covered (i.e. cannot be copied
+> > from hv_lapic_state to the struct and back) by the common APIC state?
+> >
+>
+> that would be those:
+>
+>     uint32_t apic_version;
+>     uint32_t apic_lvt_lint0;
+>     uint32_t apic_lvt_lint1;
+>     uint32_t apic_lvt_cmci;
+>     uint32_t apic_error_status;
+>     uint32_t apic_counter_value;
+>     uint32_t apic_remote_read;
+>
+> Reference struct is this: hv_local_interrupt_controller_state
+>
+> https://gitlab.com/qemu/qemu/-/blob/master/include/hw/hyperv/hvgdk_mini.h
 
 
-Cheers,
-Daniel
+For anything that's new but part of the standard APIC you can place them in
+common APIC state, just making migration state part of a subsection.
 
-> 
-> Thanks,
-> 
-> /mjt
+Notably we have to do this for lvt_lint0+1. We cannot use the respective
+> fields in the common APIC state, because writing to those has a side effect
+> in QEMU: If unmasked, it will trigger a chain of events,
+>
+> pic_irq_request() => apic_accept_pic_intr() => apic_deliver_pic_intr()
+>
+> For MSHV (and WHPX afaiu) we're currently not able to trigger legacy
+> interrupts from userspace in this fashion.
+
+
+What is the issue? The interrupt won't be triggered either if you use a
+separate field, or if you use the normal one.
+
+For LINT1, can you not inject an NMI either?
+
+Thanks,
+
+Paolo
+
+Hence we roundtrip
+> lint0/lint1 in a dedicated mshv struct.
+
+
+> best,
+>
+> magnus
+>
+>
+
+--0000000000009a968c06559f5f8b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il gio 2 lug 2026, 11:49 Magnus =
+Kulke &lt;<a href=3D"mailto:magnuskulke@linux.microsoft.com">magnuskulke@li=
+nux.microsoft.com</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
+04);padding-left:1ex">On Thu, Jul 02, 2026 at 10:51:35AM +0200, Paolo Bonzi=
+ni wrote:<br>
+<br>
+&gt; What are the additional fields that aren&#39;t covered (i.e. cannot be=
+ copied<br>
+&gt; from hv_lapic_state to the struct and back) by the common APIC state?<=
+br>
+&gt;<br>
+<br>
+that would be those:<br>
+<br>
+=C2=A0 =C2=A0 uint32_t apic_version;<br>
+=C2=A0 =C2=A0 uint32_t apic_lvt_lint0;<br>
+=C2=A0 =C2=A0 uint32_t apic_lvt_lint1;<br>
+=C2=A0 =C2=A0 uint32_t apic_lvt_cmci;<br>
+=C2=A0 =C2=A0 uint32_t apic_error_status;<br>
+=C2=A0 =C2=A0 uint32_t apic_counter_value;<br>
+=C2=A0 =C2=A0 uint32_t apic_remote_read;<br>
+<br>
+Reference struct is this: hv_local_interrupt_controller_state<br>
+<br>
+<a href=3D"https://gitlab.com/qemu/qemu/-/blob/master/include/hw/hyperv/hvg=
+dk_mini.h" rel=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.c=
+om/qemu/qemu/-/blob/master/include/hw/hyperv/hvgdk_mini.h</a></blockquote><=
+/div></div><div dir=3D"auto"><br></div><div dir=3D"auto">For anything that&=
+#39;s new but part of the standard APIC you can place them in common APIC s=
+tate, just making migration state part of a subsection.</div><div dir=3D"au=
+to"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_conta=
+iner"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
+order-left:1px solid rgb(204,204,204);padding-left:1ex">Notably we have to =
+do this for lvt_lint0+1. We cannot use the respective<br>
+fields in the common APIC state, because writing to those has a side effect=
+<br>
+in QEMU: If unmasked, it will trigger a chain of events,<br>
+<br>
+pic_irq_request() =3D&gt; apic_accept_pic_intr() =3D&gt; apic_deliver_pic_i=
+ntr()<br>
+<br>
+For MSHV (and WHPX afaiu) we&#39;re currently not able to trigger legacy<br=
+>
+interrupts from userspace in this fashion.</blockquote></div></div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">What is the issue? The interrupt won&=
+#39;t be triggered either if you use a separate field, or if you use the no=
+rmal one.</div><div dir=3D"auto"><br></div><div dir=3D"auto">For LINT1, can=
+ you not inject an NMI either?</div><div dir=3D"auto"><br></div><div dir=3D=
+"auto">Thanks,</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</di=
+v><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote g=
+mail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"> He=
+nce we roundtrip<br>
+lint0/lint1 in a dedicated mshv struct.</blockquote></div></div><div dir=3D=
+"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">
+<br>
+best,<br>
+<br>
+magnus<br>
+<br>
+</blockquote></div></div></div>
+
+--0000000000009a968c06559f5f8b--
 
 
