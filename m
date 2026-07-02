@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16E4FC43602
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 12:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6944C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 12:53:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfGph-00014F-9n; Thu, 02 Jul 2026 08:47:57 -0400
+	id 1wfGut-0002M0-Az; Thu, 02 Jul 2026 08:53:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wfGpf-00013w-QM
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 08:47:55 -0400
+ id 1wfGur-0002La-G2
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 08:53:17 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wfGpd-000594-RR
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 08:47:55 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wfGup-0007ld-TA
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 08:53:17 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.73])
- by linux.microsoft.com (Postfix) with ESMTPSA id 80E3220B7167;
- Thu,  2 Jul 2026 05:47:48 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 80E3220B7167
+ by linux.microsoft.com (Postfix) with ESMTPSA id 8465920B7167;
+ Thu,  2 Jul 2026 05:53:11 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8465920B7167
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1782996470;
- bh=0kddJLDEX4DjKhg9Fx4xTOZSnvmi575AEC5qk6HMGsQ=;
+ s=default; t=1782996793;
+ bh=bq8uv8/M+d7V425XxI+caQVZ9sYvYXSUIzrNxIYMxWA=;
  h=From:To:Cc:Subject:Date:From;
- b=UfsXAk02L8E5d4IJ8hfQ3tvsXTf5aks3iOcrDZrVTy9JNP06ILr/zsqdWt0IIBSBZ
- jzJ8MxLDvTrWJMC+UH5mnpfKzspWrdVGltOIJHA4oJYUsuXkQjZTpfA69eb21fgaRi
- N9N9JRdktUhpnGG6OZoCwKlV/SsmAgj3ZLqsbp1I=
+ b=jC4NWi5Z9xbBjx6gRUU6v6owaDEFw5utwwowmGEuajH8SFVpRWGzWs0km+n5F4ft6
+ oKbKQEqFtEo0yLk2q8VdsSVg3qSvBZ7KQNTzONT8BoxagtG6ctIrV4tnkid42IlOVt
+ wze24UHgA4x52hSuuSW+kqSeCprsGYnM6pT9++2k=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@microsoft.com>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Zhao Liu <zhao1.liu@intel.com>,
+Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Magnus Kulke <magnuskulke@microsoft.com>,
  =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <doru.blanzeanu@microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <liuwe@microsoft.com>,
- Wei Liu <wei.liu@kernel.org>, Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH] target/i386: Skip supervisor in xsave decompaction
-Date: Thu,  2 Jul 2026 14:47:46 +0200
-Message-Id: <20260702124746.450228-1-magnuskulke@linux.microsoft.com>
+ Wei Liu <liuwe@microsoft.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH] target/i386/mshv: Fix cpu feature-leak from host
+Date: Thu,  2 Jul 2026 14:53:09 +0200
+Message-Id: <20260702125309.450767-1-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -67,71 +66,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Supervisor state should be skipped b/c there is no slot in standard
-format XSAVE buffer for it. CET State is being migrated via MSRs and
-other supervisor state isn't currently migrated.
+In the current implementation there are subtle bugs that have to do with
+the termination of subleaves, resulting in features reported on the
+guest that it should not have according to the model.
 
-Fixes: 8612deb3f4
+If a guest model has fewer valid subleaves stopping too early leaves
+unspecified gaps that are filled by the host, resulting in potentially
+invalid feature combinations, for example:
+
+The host reports features:
+
+CPUID[EAX=01H].ECX.AVX [bit 28] and
+CPUID[EAX=07H,ECX=01H].EAX.AVX_VNNI [bit 4]
+
+In the current implementation we would skip over 7.1 completely, not
+registering CPUID responses for the subleaf, resulting in a guest with
+qemu64 model (which does not feature AVX), reporting AVX_VNNI as
+available (passthrough from host).
+
+We need to walk through the max subleaves of leaf 7 and register them
+explicitly (also if they're 0).
+
+A second bug was about the propagation of "terminator" subleaves,
+all-zero responses that signal the end. We also want to register this
+terminator response , so the guest stops enumerating. In the current
+implementation we weren't doing that.
+
+Fixes: 4fa04dd1621
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- target/i386/cpu.h          |  2 ++
- target/i386/xsave_helper.c | 13 ++++++++++---
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ target/i386/mshv/mshv-cpu.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index e6a197602d..fff701c6c4 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -655,9 +655,11 @@ typedef enum X86Seg {
- 
- #define XSTATE_DYNAMIC_MASK             (XSTATE_XTILE_DATA_MASK)
- 
-+#define ESA_FEATURE_XSS_BIT             0
- #define ESA_FEATURE_ALIGN64_BIT         1
- #define ESA_FEATURE_XFD_BIT             2
- 
-+#define ESA_FEATURE_XSS_MASK            (1U << ESA_FEATURE_XSS_BIT)
- #define ESA_FEATURE_ALIGN64_MASK        (1U << ESA_FEATURE_ALIGN64_BIT)
- #define ESA_FEATURE_XFD_MASK            (1U << ESA_FEATURE_XFD_BIT)
- 
-diff --git a/target/i386/xsave_helper.c b/target/i386/xsave_helper.c
-index 625bae103a..1fa3133b1a 100644
---- a/target/i386/xsave_helper.c
-+++ b/target/i386/xsave_helper.c
-@@ -332,7 +332,7 @@ int decompact_xsave_area(const void *buf, size_t buflen, CPUX86State *env)
-     size_t i;
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 126ca40b48..a3b5f4474f 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -997,7 +997,7 @@ static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
+     CPUX86State *env = &x86_cpu->env;
      uint32_t eax, ebx, ecx, edx;
-     uint32_t size, dst_off;
--    bool align64;
-+    bool align64, supervisor;
-     uint64_t guest_xcr0, *xstate_bv;
- 
-     compacted_xstate_bv = *(uint64_t *)(buf + XSAVE_XSTATE_BV_OFFSET);
-@@ -383,6 +383,7 @@ int decompact_xsave_area(const void *buf, size_t buflen, CPUX86State *env)
-         size = eax;
-         dst_off = ebx;
-         align64 = (ecx & (1u << 1)) != 0;
-+        supervisor = (ecx & ESA_FEATURE_XSS_MASK) != 0;
- 
-         /* Component is in the layout but unknown to the guest CPUID model */
-         if (size == 0) {
-@@ -433,8 +434,14 @@ int decompact_xsave_area(const void *buf, size_t buflen, CPUX86State *env)
-             return -E2BIG;
+     uint32_t leaf, subleaf;
+-    uint32_t max_basic_leaf, max_extended_leaf;
++    uint32_t max_basic_leaf, max_extended_leaf, max_subleaf_7;
+     uint32_t max_subleaf = 0x20;
+     uint32_t leaves_with_subleaves[] = {0x04, 0x07, 0x0d, 0x0f, 0x10};
+     int n_subleaf_leaves = ARRAY_SIZE(leaves_with_subleaves);
+@@ -1035,14 +1035,31 @@ static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
+             continue;
          }
  
--        /* Copy components marked present in XSTATE_BV to guest model */
--        if (((compacted_xstate_bv >> i) & 1) != 0) {
 +        /*
-+         * Copy components marked present in XSTATE_BV to guest model.
-+         *
-+         * NB: Supervisor state is skipped b/c there is no slot in the
-+         * standard format XSAVE buffer (CET state is migrated via MSRs,
-+         * others supervisor state isn't migrated).
++         * Valid subleaves for are reported in 7.0:EAX. We need to register all
++         * subleaves to the maximum subleaf, even if they are 0. Otherwise the
++         * host will supply its own values for a unregistered subleaf, which
++         * can result in an inconsistent feature set.
 +         */
-+        if (((compacted_xstate_bv >> i) & 1) != 0 && !supervisor) {
-             memcpy(env->xsave_buf + dst_off, buf + xsave_offset, size);
-         }
++        if (leaf == 0x07) {
++            cpu_x86_cpuid(env, leaf, 0, &max_subleaf_7, &ebx, &ecx, &edx);
++            for (subleaf = 0; subleaf <= max_subleaf_7; subleaf++) {
++                cpu_x86_cpuid(env, leaf, subleaf, &eax, &ebx, &ecx, &edx);
++                add_cpuid_entry(cpuid_entries, leaf, subleaf,
++                                eax, ebx, ecx, edx);
++            }
++            continue;
++        }
++
+         subleaf = 0;
+         while (subleaf < max_subleaf) {
+             cpu_x86_cpuid(env, leaf, subleaf, &eax, &ebx, &ecx, &edx);
  
++            /* register the "terminator" to the guest, before breaking */
++            add_cpuid_entry(cpuid_entries, leaf, subleaf, eax, ebx, ecx, edx);
+             if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
+                 break;
+             }
+-            add_cpuid_entry(cpuid_entries, leaf, subleaf, eax, ebx, ecx, edx);
+             subleaf++;
+         }
+     }
 -- 
 2.34.1
 
