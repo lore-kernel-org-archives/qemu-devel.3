@@ -4,59 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D30C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 13:41:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F9E0C43602
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 13:41:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfHfW-0003Sd-89; Thu, 02 Jul 2026 09:41:30 -0400
+	id 1wfHfn-0003aV-KW; Thu, 02 Jul 2026 09:41:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wfHfT-0003S4-Rl; Thu, 02 Jul 2026 09:41:27 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wfHfS-0002iR-8Y; Thu, 02 Jul 2026 09:41:27 -0400
-Received: from example.com (unknown [167.220.208.73])
- by linux.microsoft.com (Postfix) with ESMTPSA id 0F47420B7167;
- Thu,  2 Jul 2026 06:41:19 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 0F47420B7167
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1782999682;
- bh=diPdz2O4JYNPu3wSZ0yX/ls8aW8WSEAk0f0/e/oPw6A=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=LLa/4rVwYWP6mkjDuMUlLanfcNyBKzf46+H62/gx35VijE5JW9nhtFdnZGz8CxDFd
- QQpFW8WUfl46GHQJlRfvxUZjLfnZPpmD5I3El2HT0hQLx5fKQoiEO6CYgUx3AyEzVX
- QflGV1ejsVi9+Kod551XaI+ux+JGhP8hzcUiEiuY=
-Date: Thu, 2 Jul 2026 15:41:18 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 05/33] accel/mshv: Replace @dirty field by generic
- CPUState::vcpu_dirty field
-Message-ID: <akZqfrgAahvBs7vz@example.com>
-References: <20260630220100.1289-1-philmd@oss.qualcomm.com>
- <20260630220100.1289-6-philmd@oss.qualcomm.com>
- <695e34f0-09d2-4fe2-a88a-a63da6568730@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wfHfm-0003Z9-If
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:41:46 -0400
+Received: from mail-pj2-x03.google.com ([2607:f8b0:4864:39::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wfHfl-0002uD-1X
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:41:46 -0400
+Received: by mail-pj2-x03.google.com with SMTP id
+ 98e67ed59e1d1-37e15d4e2a7so424859a91.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 06:41:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1782999703; x=1783604503; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=rotkQl0CiDNdCAUi76CHdJlf5BWJzBqUM9PHD/wQaVk=;
+ b=oSUDYtViI80bm4LKHWaRzEJTrhrczBMUa/Znju8qjA7xLoQqMwYheOyolrM+/Tnl8x
+ oPM105O/nrBhsRiKxWSqWEQWvS2M3yMN2nT7hgFuvnWFZEBTyprm3ug+0npzYvw+rI7E
+ EAp8LaaSipc3DNJHGWR2GsQgy6ir6TBTGk/OOsZcFZSazLpRsjuHoSodz5qiX1cQXeS7
+ Ki/xGr4gZpTl9HVN5Zc8TEh5e1bCGQAoeTFcYK9YunRMZnPwdtVaw1Xh6/53HHl3eMkV
+ MH0fFK9EIaL/EEt/FdhUw0y6D6/4cyHEw8XRUVv1tnCam/svqDWmVyetF24n15Ju6g/W
+ 1hSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782999703; x=1783604503;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rotkQl0CiDNdCAUi76CHdJlf5BWJzBqUM9PHD/wQaVk=;
+ b=b29mgVp6WOLF5UXAsfBnb255NMACHbX2yLjvyFnz8qcr8clSzI41liC24GqMlV9wzp
+ mTG0lI0f2jLNOiJPxpGugbqvPvUy12/rwXgOWBQ6GeeaE2CKVkVn5gsU03nz/tZX3spH
+ irNVHazSB4ldhv/GZrZWpH7QdaSb9mrIXBip4aIWe/vvjk7xLegfn0wnoMFTfKx79RWE
+ 7zhL1KepMy5P2YEPrPiqxM/qeNSBt/Ypj3S3eG0y7EYS04Pw/d0BzzC5P8e8oM4lV8yJ
+ YlZnem16AdFGxRTi4tjB4Hy5alDU8S2U3uT+bYfUd+zLWaDN1hWCYrkVQFYu5z+LODHv
+ b0nA==
+X-Gm-Message-State: AOJu0YxqQowMEsFOekdeZPwN73boILIeA7ehpNBMHxJdkpyg8kEuqwuI
+ 4OqhdbD7JBJdv0UMbE3kr/RdSUt6KluVfatlo/nc+iSNta9WcyQPLILe
+X-Gm-Gg: AfdE7ckqZ3FmFLF88j+0khIyYHte9blKaMBVdoFSMONFnrv3y006tvL+U+VMFNzBLWE
+ ydk1oG2pbw3oBDsB509/77LBeeY/kkjo0Iw4RpjC0T0bzze/vhcLeuoak1MWZmaTi2dzjQm//SA
+ t0T16Enb4FcNICL436NdBTl7kgaaN8LvVf0Sv4hrF76D1ZxkwF8Q0uWbqekTk8HR4orosYIPrNi
+ BN5Go8FGq8QrjCf4FbuHW2RbyTCMRgXOLK3iz0X90ZTYHbXf8HlEX4gSYlbomQTrheoZzN3OFis
+ whp91S20xeD/InobusaOnXuVp2ugZMi9FUapY4bGpQnjy73VrrxmS+4vfUFSYNEEayDj5g/M/Rx
+ ixkX9xnW0sjkXaIm1RcRA3aIfU2fwu4JtjB+8Dwy3yeO22TLJgoalC4qUd1VNRDsSzxxTHiPi9o
+ 05vnXx9HIDAV4l19PASFr9hVoZ/ccE4TbcY0+VmgFha9rnfvg4TNBnEBTVF/Q=
+X-Received: by 2002:a05:6a21:6f12:b0:3bf:7498:9cd1 with SMTP id
+ adf61e73a8af0-3bff42b62a6mr6332890637.45.1782999703353; 
+ Thu, 02 Jul 2026 06:41:43 -0700 (PDT)
+Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-13b3c7ef728sm9401251c88.3.2026.07.02.06.41.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Jul 2026 06:41:42 -0700 (PDT)
+Date: Thu, 2 Jul 2026 21:41:40 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ andrew.jones@oss.qualcomm.com, 
+ leif.lindholm@oss.qualcomm.com, uwu@icenowy.me,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: Re: [PATCH v8 1/7] target/riscv/cpu.c: remove 'bare' condition for
+ .profile
+Message-ID: <akZqi6dSMGa_0igp@ChaodeMacBook-Pro.local>
+References: <20260610214133.1882563-1-daniel.barboza@oss.qualcomm.com>
+ <20260610214133.1882563-2-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <695e34f0-09d2-4fe2-a88a-a63da6568730@oss.qualcomm.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+In-Reply-To: <20260610214133.1882563-2-daniel.barboza@oss.qualcomm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:39::3;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pj2-x03.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,129 +103,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 02, 2026 at 03:00:07PM +0200, Philippe Mathieu-Daudé wrote:
-> Cc'ing Magnus.
+On Wed, Jun 10, 2026 at 06:41:27PM +0800, Daniel Henrique Barboza wrote:
+> We want to configure other CPU types to use profiles as an alternative
+> to adding every profile extension explicitly, i.e. a profile is nothing
+> more than an extension bundle.
 > 
-> On 1/7/26 00:00, Philippe Mathieu-DaudÃ© wrote:
-> > No need for accel-specific @dirty field when we have
-> > a generic one in CPUState. (Other accelerators already
-> > did that in commits 6f13a0ada01..36ab216b81d).
-> > 
-> > Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> > ---
-> >   include/system/mshv_int.h   |  1 -
-> >   accel/mshv/mshv-all.c       | 18 +++++++++---------
-> >   target/i386/mshv/mshv-cpu.c |  6 +++---
-> >   3 files changed, 12 insertions(+), 13 deletions(-)
-> > 
-> > diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-> > index ba3073888ac..b91c4d661a3 100644
-> > --- a/include/system/mshv_int.h
-> > +++ b/include/system/mshv_int.h
-> > @@ -43,7 +43,6 @@ typedef struct MshvHvCallArgs {
-> >   struct AccelCPUState {
-> >       int cpufd;
-> > -    bool dirty;
-> >       MshvHvCallArgs hvcall_args;
-> >   };
-> > diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> > index 9452504ac28..1959baf6672 100644
-> > --- a/accel/mshv/mshv-all.c
-> > +++ b/accel/mshv/mshv-all.c
-> > @@ -531,7 +531,7 @@ static int mshv_init_vcpu(CPUState *cpu)
-> >       }
-> >       mshv_arch_init_vcpu(cpu);
-> > -    cpu->accel->dirty = true;
-> > +    cpu->vcpu_dirty = true;
-> >       return 0;
-> >   }
-> > @@ -617,7 +617,7 @@ static int mshv_cpu_exec(CPUState *cpu)
-> >       cpu_exec_start(cpu);
-> >       do {
-> > -        if (cpu->accel->dirty) {
-> > +        if (cpu->vcpu_dirty) {
-> >               ret = mshv_arch_store_vcpu_state(cpu);
-> >               if (ret) {
-> >                   error_report("Failed to put registers after init: %s",
-> > @@ -625,7 +625,7 @@ static int mshv_cpu_exec(CPUState *cpu)
-> >                   ret = -1;
-> >                   break;
-> >               }
-> > -            cpu->accel->dirty = false;
-> > +            cpu->vcpu_dirty = false;
-> >           }
-> >           ret = mshv_run_vcpu(mshv_state->vm, cpu, &mshv_msg, &exit_reason);
-> > @@ -746,7 +746,7 @@ static void do_mshv_cpu_synchronize_post_init(CPUState *cpu,
-> >           abort();
-> >       }
-> > -    cpu->accel->dirty = false;
-> > +    cpu->vcpu_dirty = false;
-> >   }
-> >   static void mshv_cpu_synchronize_post_init(CPUState *cpu)
-> > @@ -763,13 +763,13 @@ static void mshv_cpu_synchronize_post_reset(CPUState *cpu)
-> >           cpu_dump_state(cpu, stderr, CPU_DUMP_CODE);
-> >           vm_stop(RUN_STATE_INTERNAL_ERROR);
-> >       }
-> > -    cpu->accel->dirty = false;
-> > +    cpu->vcpu_dirty = false;
-> >   }
-> >   static void do_mshv_cpu_synchronize_pre_loadvm(CPUState *cpu,
-> >                                                  run_on_cpu_data arg)
-> >   {
-> > -    cpu->accel->dirty = true;
-> > +    cpu->vcpu_dirty = true;
-> >   }
-> >   static void mshv_cpu_synchronize_pre_loadvm(CPUState *cpu)
-> > @@ -779,7 +779,7 @@ static void mshv_cpu_synchronize_pre_loadvm(CPUState *cpu)
-> >   static void do_mshv_cpu_synchronize(CPUState *cpu, run_on_cpu_data arg)
-> >   {
-> > -    if (!cpu->accel->dirty) {
-> > +    if (!cpu->vcpu_dirty) {
-> >           int ret = mshv_arch_load_vcpu_state(cpu);
-> >           if (ret < 0) {
-> >               error_report("Failed to load registers for vcpu %d",
-> > @@ -789,13 +789,13 @@ static void do_mshv_cpu_synchronize(CPUState *cpu, run_on_cpu_data arg)
-> >               vm_stop(RUN_STATE_INTERNAL_ERROR);
-> >           }
-> > -        cpu->accel->dirty = true;
-> > +        cpu->vcpu_dirty = true;
-> >       }
-> >   }
-> >   static void mshv_cpu_synchronize(CPUState *cpu)
-> >   {
-> > -    if (!cpu->accel->dirty) {
-> > +    if (!cpu->vcpu_dirty) {
-> >           run_on_cpu(cpu, do_mshv_cpu_synchronize, RUN_ON_CPU_NULL);
-> >       }
-> >   }
-> > diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-> > index 126ca40b481..1c433c408c8 100644
-> > --- a/target/i386/mshv/mshv-cpu.c
-> > +++ b/target/i386/mshv/mshv-cpu.c
-> > @@ -1692,7 +1692,7 @@ static int pio_write(uint64_t port, const uint8_t *data, uintptr_t size,
-> >       return ret;
-> >   }
-> > -static int handle_pio_non_str(const CPUState *cpu,
-> > +static int handle_pio_non_str(CPUState *cpu,
-> >                                 hv_x64_io_port_intercept_message *info)
-> >   {
-> >       size_t len = info->access_info.access_size;
-> > @@ -1748,7 +1748,7 @@ static int handle_pio_non_str(const CPUState *cpu,
-> >           return -1;
-> >       }
-> > -    cpu->accel->dirty = false;
-> > +    cpu->vcpu_dirty = false;
-> >       return 0;
-> >   }
-> > @@ -1909,7 +1909,7 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
-> >           return -1;
-> >       }
-> > -    cpu->accel->dirty = false;
-> > +    cpu->vcpu_dirty = false;
-> >       return 0;
-> >   }
+> This means that a vendor CPU can set .profile=rva23s64 while having the
+> same handling as any other vendor CPU. Same thing with all other CPU
+> types.
+> 
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
-thanks, applied and tested.
-
-Tested-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> ---
+>  target/riscv/cpu.c | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 6423f2d548..e02d53cbba 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2744,7 +2744,6 @@ static void riscv_cpu_class_base_init(ObjectClass *c, const void *data)
+>          mcc->def->bare |= def->bare;
+>          if (def->profile) {
+>              assert(profile_extends(def->profile, mcc->def->profile));
+> -            assert(mcc->def->bare);
+>              mcc->def->profile = def->profile;
+>          }
+>          if (def->misa_mxl_max) {
+> -- 
+> 2.43.0
+> 
 
