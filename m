@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B0E4C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 02:56:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39263C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 03:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wf7aL-00010Q-GW; Wed, 01 Jul 2026 22:55:29 -0400
+	id 1wf7lH-0002Jf-CS; Wed, 01 Jul 2026 23:06:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wf7a3-0000uz-8H; Wed, 01 Jul 2026 22:55:13 -0400
+ id 1wf7lA-0002J4-V5; Wed, 01 Jul 2026 23:06:41 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wf7Zz-0002jM-Id; Wed, 01 Jul 2026 22:55:10 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wf7l9-0007Pb-7W; Wed, 01 Jul 2026 23:06:40 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6621Kunj2510123; Thu, 2 Jul 2026 02:54:57 GMT
+ 6621L6X62451719; Thu, 2 Jul 2026 03:06:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=4feySX
- +XQB0uhsYMjwQa7+XhaSKbTxkQ1VoZ87CFBL4=; b=A1oVh/IWz3h1spX3rBAsla
- 9wWgVobCzYbLwsJ9rOixa0xM4iYfZ1Yqkn33i/9hRL8PYmo9CXvjN/hRGoN/D5RJ
- AltlLfAWBMxbFtuF4Q/Oo5ohxw1krIYotbj2fFS/nLa/2IZqpv3VqBoqukMYBflb
- PIAx72PwIt8d9LIU+yRHbuC9myUvZEvC4DaIHfvQ1r/5ldz4hmkl+MWGSKTtevVF
- GpBVwV+oHNAgJnCPFNBhxwKrti77MWeJozh9PlCLtwYF8VoGL51nq9lba7DD6iEi
- otlpZ7cTEgNPkm4myo/nlFROmukr1OQ3MVTJ/gbXKZYdjAH7WeAHlAaj5ZjwMaaw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=05avRo
+ DrnWugvQBjOh1HNCi8dSZF31FzFVUB0x8aGKk=; b=V5q2rW2eN4O+Tw06pswUlA
+ bWQ+4RDi3Ga2ji3e3RS6OMuUbY2XOdC/N7vB6BWHCLm5NfZknEu3w2GIUbUmWhre
+ ygCd+OL/wQJ9jcssnbH25RAgVu5Ihbv88hheJ6fqvZui4ZWdmGcANbg/rpelvrdw
+ xwGq34g4sMUMx9s/zA/9f403SMxenSxQ4AlP/bs/mB2pkT+GffAv1IofelGijgpg
+ XKvMZ9yNvQnEF7YgzExI/5HCsWAuMZrcDPExiygpwE+zDZCoI8Amn3rYS1k0FhRd
+ 3gKNvTGJpnA1/Q7l/X0mzI0rhL6yCw40vdTSWF/127gBJTkBxPrO6n86XRQPwzog
  ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26pe7ty4-1
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26n5ytrt-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 02:54:57 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6622nbVu006968;
- Thu, 2 Jul 2026 02:54:56 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7wa788-1
+ Thu, 02 Jul 2026 03:06:34 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66234rCR024437;
+ Thu, 2 Jul 2026 03:06:33 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2u2gj1ch-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 02:54:56 +0000 (GMT)
+ Thu, 02 Jul 2026 03:06:33 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
  [10.39.53.232])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6622stL035717586
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66236WuP55116164
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 2 Jul 2026 02:54:55 GMT
+ Thu, 2 Jul 2026 03:06:32 GMT
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E015258043;
- Thu,  2 Jul 2026 02:54:54 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 56A5058043;
+ Thu,  2 Jul 2026 03:06:32 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F29665805D;
- Thu,  2 Jul 2026 02:54:52 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6A3F458053;
+ Thu,  2 Jul 2026 03:06:30 +0000 (GMT)
 Received: from [9.61.65.1] (unknown [9.61.65.1])
  by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  2 Jul 2026 02:54:52 +0000 (GMT)
-Message-ID: <cbea338c-0698-4432-ae1f-0e54ba5678c7@linux.ibm.com>
-Date: Wed, 1 Jul 2026 22:54:52 -0400
+ Thu,  2 Jul 2026 03:06:30 +0000 (GMT)
+Message-ID: <1622a0a2-9aed-4d5c-b5c4-a488d20e16b5@linux.ibm.com>
+Date: Wed, 1 Jul 2026 23:06:29 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 34/35] docs/specs: Add secure IPL documentation
+Subject: Re: [PATCH v12 35/35] docs/system/s390x: Add secure IPL documentation
 To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
@@ -72,37 +72,38 @@ Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
  pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
 References: <20260701204922.1320349-1-zycai@linux.ibm.com>
- <20260701204922.1320349-35-zycai@linux.ibm.com>
-From: Matthew Rosato <mjrosato@linux.ibm.com>
+ <20260701204922.1320349-36-zycai@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <20260701204922.1320349-35-zycai@linux.ibm.com>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20260701204922.1320349-36-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: sQYgfmxX0KOhpSzoCKi4TgH4_m5-A5S5
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDAyNiBTYWx0ZWRfX/iJstjJO+daV
- qZl+5vxbV9L959CaZvJ/gEXo5YPPiBG8IfM9ShXcdZ+Ft93cZVv9yKEw9Fp9gW+26M+OCkakPC9
- 9gV3F4CG+nFz0Mkx4x38/jlnlzjMGQ8=
-X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a45d301 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAyNiBTYWx0ZWRfX9hjD5OCf/gke
+ 9KrifbiU51lcxEZHBsX/nTlXRS+yxoWz4v28ZMBihqJ2UZVBTEmSp8Lq4k35HhXRYSrX62NkLI6
+ 4qttOSGM4fNccEWH5ZrIorzTIeR1ag0Q76A/GXm1E7ur5hRTYoCdV7R5meMPr/o27kHRxFhG5Ni
+ npG1wdk4F4VavZC5HVmLEIIOuULH3/ilAAqiSTnu0ZkcAeTiAUVOrIEmFd3kz4PFuIBvJdPsQxU
+ cfnqGJCdyFOiPYD3VPGVuqzn7Tr9yZQpBgz60qGmfmZpkxzx7c1aRyQVF+BQBhrniVQZGAL4MhD
+ zyKcIK10kmNv2SzxYO2nU2Ei9ty4k8Sl11soGl6rD073U7a34E19L4K+itqzrbGSEwuT/Pl7kfR
+ XdcgKNVwABdpPNIA+ScigSI4jFMi0oc7RtkHfBCeV05HsHApVGHRXLIpGVp4JsCtwQ9XUQtxICQ
+ cPNXEgpg3R7xIkSIefQ==
+X-Authority-Analysis: v=2.4 cv=V45NF+ni c=1 sm=1 tr=0 ts=6a45d5ba cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=MCl5k4fuD9Xhj4u6LNgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAyNiBTYWx0ZWRfX4P2A8s/4bD4M
- VG65F1yqxi4m7HJBCGYhssYJTPrivpZfSaimf35r2zTiTxEk84QFxJZiy+cJbFPe6xx2JAta5Ed
- HmRSY27VwFQxecvvALEibdbPUSNBWMf0OdK+MnZgyuq80WFaKgGU74ays+pRVEE0STS5FPkqBoc
- cCHlMdonQTwU/yXNxy+g0z9qCIWnjHNxW091L6YBBCpsXpkbeCS1Oz7hAU3/U9UA9ip/qNLzpIi
- d9xNcR6oi7ana4XELuiPzKt6ty55zJNy5hzitnQdo0GJVYIkhOE1YRVWPTCtI6eyE1vhkDio/2k
- jIBvCr8ZSHNFP2uYvuMMsG0jFzLr/U8aif9QgBmxQVpe8iRxi6vz2rQnJlBiVgrT/8F27iFRn1c
- EfSq93Dj2Ef+ivwh6AH7Dt1IMISLmHzZaEXJhexbF6PixlFT9HGB6MIUwj587f+uKbGpAesrHzD
- iRLbu03GcrHCiMca+Iw==
-X-Proofpoint-ORIG-GUID: sQYgfmxX0KOhpSzoCKi4TgH4_m5-A5S5
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=q5T4S90kAAAA:8 a=ZDNXcwnr0mxCMg5SBeIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=LnBBZQxPVJ0Z7KJyRdxh:22
+X-Proofpoint-ORIG-GUID: bdqfJ16ZkJvm3jfykRbzTrJ-2Ye2TF1c
+X-Proofpoint-GUID: bdqfJ16ZkJvm3jfykRbzTrJ-2Ye2TF1c
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDAyNiBTYWx0ZWRfX5FlntDlCHZny
+ iPGOUSXKy4vhuqY1yKmeiGb/cFtTSio7zCJcmMUFKOTcmnu07h72Ld95csW+1vqEKYnM9uf1fsF
+ U6M6E9kGv+taKlth+QTObwF0NtVhSCw=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
- spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 impostorscore=0 malwarescore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020026
 Received-SPF: pass client-ip=148.163.156.1;
@@ -134,103 +135,63 @@ On 7/1/26 4:49 PM, Zhuoying Cai wrote:
 > 
 > Signed-off-by: Collin Walling <walling@linux.ibm.com>
 > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> Reviewed-by: Joshua Daley <jdaley@linux.ibm.com>
 > ---
->  docs/specs/s390x-secure-ipl.rst | 55 +++++++++++++++++++++++++++++++++
->  1 file changed, 55 insertions(+)
-> 
-> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-> index 0f92ff96b9..65a4b2f624 100644
-> --- a/docs/specs/s390x-secure-ipl.rst
-> +++ b/docs/specs/s390x-secure-ipl.rst
-> @@ -1,5 +1,60 @@
->  .. SPDX-License-Identifier: GPL-2.0-or-later
->  
-> +s390 Secure IPL
-> +===============
+
+...
+
+> +Constraints
+> +-----------
 > +
-> +Secure IPL (a.k.a. secure boot) enables s390-ccw virtual machines to
-> +leverage qcrypto libraries and z/Architecture emulations to verify the
-
-s/emulations/emulation/ ?
-
-> +integrity of signed kernels. The qcrypto libraries are used to perform
-> +certificate validation and signature-verification, whereas the
-> +z/Architecture emulations are used to ensure secure IPL data has not
-
-emulation is used ?
-
-> +been tampered with, convey data between QEMU and guest code, and set up
-> +the relevant secure IPL data structures with verification results.
+> +The following constraints apply when attempting to boot an s390x guest in secure
+> +mode:
 > +
-> +To find out more about using this feature, see
-> +:doc:`documentation </system/s390x/secure-ipl>`.
+> +- z16 or "qemu" CPU model
+> +- certificates must be in X.509 PEM format
+> +- only support for SCSI scheme of virtio-blk/virtio-scsi devices
+> +- a boot device must be specified
+> +- any unsupported devices (e.g., ECKD and VFIO) or non-eligible devices (e.g.,
+> +  network) will cause the entire boot process terminating early with an error
+
+to terminate early, with an...
+
+> +  logged to the console.
 > +
-> +Note that "guest code" will refer to the s390-ccw BIOS unless stated
-> +otherwise.
 > +
-> +Both QEMU and guest code work in cooperation to perform secure IPL. The Secure
-> +Loading Attributes Facility (SCLAF) is used to check the Secure Code
-
-Secure 'Code' Loading Attributes Facility ?
-
-> +Loading Attribute Block (SCLAB) and ensure that secure IPL data has not
-> +been tampered with. DIAGNOSE 'X'320' is invoked by guest code to query
-> +the certificate store info and retrieve specific certificates from QEMU.
-> +DIAGNOSE 'X'508' is used by guest code to leverage qcrypto libraries to
-> +perform signature-verification in QEMU. Lastly, guest code generates and
-> +appends an IPL Information Report Block (IIRB) at the end of the IPL
-> +Parameter Block, which is used by the kernel to store signed and
-
-IPL Parameter Block (IPLB) ?
-
-> +verified entries.
+> +Secure IPL Quickstart
+> +---------------------
 > +
-> +The logical steps are as follows:
+> +Build QEMU with gnutls enabled
+> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 > +
-> +- guest code reads data payload from disk (e.g. stage3 boot loader, kernel)
-> +- guest code checks the validity of the SCLAB
-> +- guest code invokes DIAG 508 subcode 1 and provides it the payload
-
-drop the word 'it'
-
-> +- QEMU handles DIAG 508 request by reading the payload and retrieving the
-> +  certificate store
-> +- QEMU DIAG 508 utilizes qcrypto libraries to perform signature-verification on
-
-'QEMU DIAG 508 handler'
-
-> +  the payload, attempting with each cert in the store (until success or
-> +  exhausted)
-> +- QEMU DIAG 508 returns:
+> +.. code-block:: shell
 > +
-> +  - success: index of cert used to verify payload
-> +  - failure: error code
+> +    ./configure … --enable-gnutls
 > +
-> +- guest code responds to this operation:
+> +Generate certificate (e.g. via certtool)
+> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> +
+> +A private key is required before generating a certificate. This key must be kept
+> +secure and confidential.
+> +
+> +Use an RSA private key for signing.
+> +
+> +.. code-block:: shell
+> +
+> +    certtool --generate-privkey > key.pem
+> +
+> +A self-signed certificate requires the organization name. Use the ``cert.info``
+> +template to pre-fill values and avoid interactive prompts from certtool.
+> +
+> +.. code-block:: shell
+> +
+> +    cat > cert.info <<EOF
+> +    cn = "My Name"
+> +    expiration_days = 36500
 
-QEMU can't control what the guest will do.  Maybe better to say
-something like...
+Maybe the example should be more realistic, like 365 days?
 
-'guest code is expected to respond to this operation by:'
-
-With those changes (please remember to stay within 80 columns):
+With those changes (reminder, check for 80 columns):
 
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
-
-> +
-> +  - success: retrieves cert from store via DIAG 320 using returned index
-> +  - failure: reports with warning (audit mode), aborts with error (secure mode)
-> +
-> +- guest code appends IIRB at the end of the IPLB
-> +- guest code kicks off IPL
-> +
-> +More information regarding the respective DIAGNOSE commands and IPL data
-> +structures are outlined within this document.
-> +
-> +
->  s390 Certificate Store and Functions
->  ------------------------------------
->  
-
 
