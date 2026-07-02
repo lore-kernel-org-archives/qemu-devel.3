@@ -4,100 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15A54C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0375C43602
 	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 18:42:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfMLP-0007aS-5I; Thu, 02 Jul 2026 14:41:03 -0400
+	id 1wfMLJ-0007GO-DT; Thu, 02 Jul 2026 14:40:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wfMLK-0007K6-KT
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:40:58 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfMLA-00078k-2g
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:40:49 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wfMLE-0005UT-Qh
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:40:58 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-493b68b4643so12989635e9.0
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 11:40:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfMKp-0005MJ-RC
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:40:46 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-493b27c7451so9214225e9.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 11:40:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783017650; x=1783622450; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=UUNZ/LM026A5WYcYSy2SVFfc7Tu09tsw26gWqws57nw=;
- b=XGWk90IhiB+nMtILpPEhTbYDUPF2oIOQ1xdzivFJvbAnuw7s4MghyJXWHQUJCRn8ab
- EVjI8+7+0eYNx0+KDjdDozWzEB7YRvPih/7PVwiIn9WVVWQU4v1SE5ioivueuDBxIgep
- OjCdyNRBS6yRA0gXREb9oC083S3mE0fGX3OQW1BYh5ndSnYpuqvww8w5w4cAd5U2GFMZ
- s8/y43k8IZOn69olObwcgZDT99Lw08AgGsNPU1dGFb8TNaaitaOSTOJX3cbKNLElK80/
- KS6a6c+wlR6CUwHdXNWtKFnJm8BRqSFx2JFao2VaaK6g/PJF1mbvLhciZWznanlUYowE
- bbxQ==
+ d=linaro.org; s=google; t=1783017626; x=1783622426; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=mkoXpIbTWhp23z0tfD91aY5yZBlUpXNBZ010xFJTbHA=;
+ b=uSz9G05bc32/nGTqv7CG00N9umNwy3p8EwMMv1+IhHV3XndopjZFuyAFFO392sQl+z
+ /4j4rA6eNcl6J1oLWVQjIGXO5vvv3v2JBHo8pLaKJ/iKIJo2eX/F0NYUtCGKWn5vbTbp
+ XSOKFe/yNlwUtFa0c12tKwBsffCigyBvABtQcbaVPJ4aQ5rBGUl6vJXX/QNf7BDjURD8
+ gs4eE7JMw1yTVYjtIJn3QRrvyHAdvb2kDAcUXE8Djdsbhj8gbc/j8tMdCJKyTmjko90Z
+ mr/aI/SsvnRRGwAkSJ6sBGa4vua+re6KgNU2GO8pUqkOY7CO9tH/lLgrvRXhInZc1yrh
+ HCug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783017650; x=1783622450;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=UUNZ/LM026A5WYcYSy2SVFfc7Tu09tsw26gWqws57nw=;
- b=g8OE54LJPpcLSlUw2x3uo6hzIJzRimG1KHNRqFA4wx5hlOEMBZDSG57t7Gmz0guWIR
- 5HC0RLMfHXs4e3aBobHxIGQ2TucUkoAlKcHoVsTZjdPgVzZYbi0l/Q9q8hRNFfz5XtIa
- poM9eRo8x/mp6eKtUo1z92Aqh5nv+HYwRnGzpbeYH79uRX6JHX2I9Mn46raRtWx5yJX8
- SPTACiKMpk8VFwnXIOyM+WTBLxPkJTxC9VOhkrP+BjfdNXxFmZccQDa/BoltyPASfwgs
- UpyxLFi96rKrdTa5vvsmRIVXeFeIZj8wpmDXLhtnH+aR8xAWfRLKaQCIv68fXAsohDsZ
- Vkpg==
-X-Gm-Message-State: AOJu0YyOboaI9ZdDi2JcPLeguL2fVzw/DlCWFlfTC+VnEZlV+A0jO5Jq
- ZrFfMo/ckDJbVoj7FZijcZ/PzO17WtErphzGI7dz/ALnQLVLQ2ZI3cdKY/x4Uw==
-X-Gm-Gg: AfdE7clhfpqO5C//KcT04JG6OXADBQKOWvW8BGkZwrmq2fhnfGmpGEs0aT/0dPFYY7q
- dRL3JnHQ8TYZf/5j183OkZ+B8J+uj8IRe7gce59nnrcPoYJW+Q6JWocQBXsWcxoCJ1U5op18wO4
- NvmmwR9mI89JXJ6BiHGZfejG7KAIQWYoW1EVX7EmDxGpep2phSOhMUCmgW95Wye2uZbFo1SDZuP
- wy3tRnY5ZjV7E3WKswpSiCX4Ta0m8KvjL8Xqzj2X2KZS0wcd4vnUImXje9vi6AG+lAnsQZTYlJQ
- O074KmBLOtCHcuoS+rTjVzGvKXK2XnlEqRVjRVkO89jE+3ughgE+5Y0abL6SK4KT1ljlfMnj3kj
- SxX4HKGRu1ud0HII4Jr3VAuxFTXe2ktaAuj7qzjNdlfcs3qQ98bxgLVfOwXiZhGI73DCUImcn24
- bZyg3TqCIYXlfii6UAM9rCJ8HPB3jx7nOGk27FVahi30aTNHcpNPLfpD07gevRBZDwQfB2Ts9mo
- x1YjK2cATbCjkBy27Iln8PA7P8xWfp2Jvri
-X-Received: by 2002:a05:600c:218e:b0:490:b7e6:bd1d with SMTP id
- 5b1f17b1804b1-493c3cd9fcfmr71950875e9.16.1783017650138; 
- Thu, 02 Jul 2026 11:40:50 -0700 (PDT)
-Received: from Provence.localdomain
- (dynamic-2a02-3100-25c8-8a00-0219-99ff-feb2-2458.310.pool.telefonica.de.
- [2a02:3100:25c8:8a00:219:99ff:feb2:2458])
+ d=1e100.net; s=20251104; t=1783017626; x=1783622426;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=mkoXpIbTWhp23z0tfD91aY5yZBlUpXNBZ010xFJTbHA=;
+ b=WOHnHxXsMB6KXwNHSXiFP8KmSVf3mcDO+qQF/ruMcyNOuOoPbm5e9lORwU+61wXrtT
+ E0JnnSoq5fhAvAy21eDBWL70TZabKwgN8hfa7F0qH3dG15r1djfLWsVAZXnrIv7miU3j
+ NbrspfAKmT4zi7iXWKq9pugqrV8ijDKNF1Ya8/dN9XXZDVAQgjPwP7lc8I8WSbrie4HL
+ YKcbS7uSha0x48QmKNuQdVELXhkiMLDQyInypJx71plp26i5gQQs/r9E/l2NtY8PZjOb
+ YQnv+1J1kd4F5lBbHhcrcxfcSJEjkjzw1x/yKNtRv/pzf6cKTZadr4IMTA+vVFnrAGq4
+ iy7Q==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ81D3VXMSPcBOdlwG/Susb6SyrlkLk/Lx82gNpGsPuLWCC138Qzf4euIinT6OIFmqTG4lAnlhZET7mR@nongnu.org
+X-Gm-Message-State: AOJu0YyUKP5/UOHrUr4qZx3DDAr2EB8WnFqy0anvctaCJv/S43A4xW6o
+ gDZQaLxFCpNwBzt8cLgTBB7c+uIFr1YII4FdgoxY/eQi/Pjs41jSilDryZpCbkh8XoY=
+X-Gm-Gg: AfdE7ckV8+wkgv4g3pgnDplKy7+eV0VsXa8HkmHVvcc07+Lf2u5UnROSQ19LZSvjS/H
+ tqCGau9WRIkITFWY9oCTT7e/Lckxs+lO/es7HWU6tyx2oIwdLTMo7wGKOiiqMRDBUq8Pm+fVtSh
+ uh4hm3nhMRMLkX9W4EnsRQq/y4aES8HMpL0YJz0CXmorH6Hdj0Z+NQQFQoQ8+MRX9LYPYPju1HE
+ rIxknEa98cRMrcdoHEi6t7HJ3ZSZSfAF+fbaBfl04VNGflmZHkG4zMg+KQ6RBfz+LC0wrren9i1
+ mt4K6mXole7Q5qDB61/C84MGtgzd0AGqho2LDuQWNYukO9XuBr2Rc8e4ys8FWrzIC8tVLqteHQd
+ +IGe9blEzcsto4Hte2GRjmjPYVXdnCEx9rp0tkt8IQMpeesjW72S7IcHprlf6MvTXIIlzBpmJ0H
+ Umk0dfPA/IeBpx2GuIPmaWClnDiZ6V8xiMK8G0+e+dAxQep1BRS1fwKZkO6YwbUl6+arAuiLAwg
+ nEaRVmwYiSdZJDmKCQ93w==
+X-Received: by 2002:a05:600c:3b2a:b0:492:6f5c:fd8c with SMTP id
+ 5b1f17b1804b1-493c9b62894mr14907795e9.15.1783017626304; 
+ Thu, 02 Jul 2026 11:40:26 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493bef1807asm120271225e9.1.2026.07.02.11.40.49
+ ffacd0b85a97d-477db8a4a09sm11628213f8f.13.2026.07.02.11.40.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jul 2026 11:40:49 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Matyas Bobek <matyas.bobek@gmail.com>,
- Vikram Garhwal <vikram.garhwal@bytedance.com>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
- Jason Wang <jasowangio@gmail.com>, Pavel Pisa <pisa@cmp.felk.cvut.cz>,
- Jason Wang <jasowang@redhat.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Francisco Iglesias <francisco.iglesias@amd.com>
-Subject: [PATCH v2 1/5] hw/net/can/flexcan: Wire clock control module via link
- property
-Date: Thu,  2 Jul 2026 20:40:34 +0200
-Message-ID: <20260702184038.178196-2-shentey@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260702184038.178196-1-shentey@gmail.com>
-References: <20260702184038.178196-1-shentey@gmail.com>
+ Thu, 02 Jul 2026 11:40:25 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 06/11] target/arm: Handle NSACR.NSASEDIS in HCPTR accesses
+Date: Thu,  2 Jul 2026 19:40:14 +0100
+Message-ID: <20260702184019.3431139-7-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260702184019.3431139-1-peter.maydell@linaro.org>
+References: <20260702184019.3431139-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,69 +101,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When wiring struct FlexcanState to the clock control module, it is
-currently necessary to reach into its private data. Moreover, when
-forgetting to wire the clock control module, QEMU will crash after the
-guest has already started. Fix both by letting struct FlexcanState
-expose a link property whose sanity is checked at realize time.
+In cptr_el2_read() and cptr_el2_write()  we have code that implements the
+"HCPTR.{TCP10,TCP11} behave as RAO/WI from NonSecure when NSACR.cp10 is
+0" behaviour.  There is a similar requirement for HCPTR.TASE: if
+NSACR.NSASEDIS is 1 then CPACR.ASEDIS behaves as RAO/WI in NS.
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+This doesn't matter to us yet because we don't currently implement
+ASEDIS or NSASEDIS. But we're about to do that, so add the handling
+to cptr_el2_read() and cptr_el2_write().
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/fsl-imx6.c    |  3 ++-
- hw/net/can/flexcan.c | 10 ++++++++--
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ target/arm/helper.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
-index bf106a9063..585c935b89 100644
---- a/hw/arm/fsl-imx6.c
-+++ b/hw/arm/fsl-imx6.c
-@@ -391,7 +391,8 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
-             { FSL_IMX6_CAN2_ADDR, FSL_IMX6_FLEXCAN2_IRQ },
-         };
- 
--        s->flexcan[i].ccm = IMX_CCM(&s->ccm);
-+        object_property_set_link(OBJECT(&s->flexcan[i]), "clock-control-module",
-+                                 OBJECT(&s->ccm), &error_abort);
-         object_property_set_link(OBJECT(&s->flexcan[i]), "canbus",
-                                  OBJECT(s->canbus[i]), &error_abort);
- 
-diff --git a/hw/net/can/flexcan.c b/hw/net/can/flexcan.c
-index 1ea459d9f6..8f3f066ef5 100644
---- a/hw/net/can/flexcan.c
-+++ b/hw/net/can/flexcan.c
-@@ -333,8 +333,6 @@ static uint32_t flexcan_get_bitrate(FlexcanState *s)
- 
-     uint32_t pe_freq, s_freq, bitrate;
- 
--    assert(s->ccm);
--
-     /* s_freq: CAN clock from CCM divided by the prescaler */
-     pe_freq = imx_ccm_get_clock_frequency(s->ccm, CLK_CAN);
-     s_freq = pe_freq / (1 + conf_presdiv);
-@@ -1346,6 +1344,12 @@ static void flexcan_realize(DeviceState *dev, Error **errp)
-         }
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 926c9ed516..f645860e4f 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -4094,11 +4094,18 @@ static void cptr_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     /*
+      * For A-profile AArch32 EL3, if NSACR.CP10
+      * is 0 then HCPTR.{TCP11,TCP10} ignore writes and read as 1.
++     * Similarly, if NSACR.NSASEDIS is 1 then HCPTR.TASE behaves as RAO/WI.
+      */
+     if (arm_feature(env, ARM_FEATURE_EL3) && !arm_el_is_aa64(env, 3) &&
+-        !arm_is_secure(env) && !FIELD_EX32(env->cp15.nsacr, NSACR, CP10)) {
+-        uint64_t mask = R_HCPTR_TCP11_MASK | R_HCPTR_TCP10_MASK;
+-        value = (value & ~mask) | (env->cp15.cptr_el[2] & mask);
++        !arm_is_secure(env)) {
++        if (!FIELD_EX32(env->cp15.nsacr, NSACR, CP10)) {
++            uint64_t mask = R_HCPTR_TCP11_MASK | R_HCPTR_TCP10_MASK;
++            value = (value & ~mask) | (env->cp15.cptr_el[2] & mask);
++        }
++        if (FIELD_EX32(env->cp15.nsacr, NSACR, NSASEDIS)) {
++            uint64_t mask = R_HCPTR_TASE_MASK;
++            value = (value & ~mask) | (env->cp15.cptr_el[2] & mask);
++        }
      }
- 
-+    if (!s->ccm) {
-+        error_setg(errp, "%s 'clock-control-module' link property not set",
-+                   dev->canonical_path);
-+        return;
-+    }
-+
-     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
-     sysbus_init_irq(SYS_BUS_DEVICE(SYS_BUS_DEVICE(dev)), &s->irq);
+     env->cp15.cptr_el[2] = value;
  }
-@@ -1366,6 +1370,8 @@ static const VMStateDescription vmstate_can = {
- static const Property flexcan_properties[] = {
-     DEFINE_PROP_LINK("canbus", FlexcanState, canbus, TYPE_CAN_BUS,
-                      CanBusState *),
-+    DEFINE_PROP_LINK("clock-control-module", FlexcanState, ccm, TYPE_IMX_CCM,
-+                     IMXCCMState *),
- };
+@@ -4108,12 +4115,18 @@ static uint64_t cptr_el2_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     /*
+      * For A-profile AArch32 EL3, if NSACR.CP10
+      * is 0 then HCPTR.{TCP11,TCP10} ignore writes and read as 1.
++     * Similarly, if NSACR.NSASEDIS is 1 then HCPTR.TASE behaves as RAO/WI.
+      */
+     uint64_t value = env->cp15.cptr_el[2];
  
- static void flexcan_class_init(ObjectClass *klass, const void *data)
+     if (arm_feature(env, ARM_FEATURE_EL3) && !arm_el_is_aa64(env, 3) &&
+-        !arm_is_secure(env) && !FIELD_EX32(env->cp15.nsacr, NSACR, CP10)) {
+-        value |= R_HCPTR_TCP11_MASK | R_HCPTR_TCP10_MASK;
++        !arm_is_secure(env)) {
++        if (!FIELD_EX32(env->cp15.nsacr, NSACR, CP10)) {
++            value |= R_HCPTR_TCP11_MASK | R_HCPTR_TCP10_MASK;
++        }
++        if (!FIELD_EX32(env->cp15.nsacr, NSACR, NSASEDIS)) {
++            value |= R_HCPTR_TASE_MASK;
++        }
+     }
+     return value;
+ }
 -- 
-2.55.0
+2.43.0
 
 
