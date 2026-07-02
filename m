@@ -4,69 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2EA8C43602
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 09:06:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2E82C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 09:06:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfDMY-0006g4-28; Thu, 02 Jul 2026 05:05:38 -0400
+	id 1wfDMW-0006fQ-G1; Thu, 02 Jul 2026 05:05:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wfDMW-0006fN-CS
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 05:05:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wfDMU-0006eV-Hs
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 05:05:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wfDMU-0007HO-Qd
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 05:05:36 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wfDMT-0007H7-7g
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 05:05:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782983133;
+ s=mimecast20190719; t=1782983131;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Ha4XTpT+RqnbRJPQX2PzEMZ+ZMG44RCEdXff0/ITp0A=;
- b=OAUVxjA5XpQX4ZALuDdWD0hUmyEb9INb2sniG/xybCAGVWBjXQt8KX1bjXH82PrDzrn8lJ
- zJVEeSSGxHU5ow9RX4QNbexAjEJzGwHs4D3K+8s8oSWDh+bVVosfsSjCDJMuHk1gDukxJD
- qM2T++/tknqk7cnr5lsgIyfghXDoIXE=
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=UQaRk2xtMcDpH3IFdHXYJIW9a9knnWBaPSKcUW1XlE8=;
+ b=Arpc2as1110VW6Xve4YzwEuxMWRJoXW/Xx1O6Lt/V8JBc/C0756/2tmtYsiH992WUPUDDX
+ vDnPmIXkHeq5hwRyw58NOB+0LDqwnyqFqMdJQgOdi35lSQml9ieFL+QmOdm9VHqf8Mf6vB
+ ddfpRSbHWhkOik1y5ne2nCllpBeVQsw=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-dEA2y4UTO3OeFq46pSadfw-1; Thu,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-F6X5SdUQMH6SmbuFSjcpOQ-1; Thu,
  02 Jul 2026 05:05:30 -0400
-X-MC-Unique: dEA2y4UTO3OeFq46pSadfw-1
-X-Mimecast-MFC-AGG-ID: dEA2y4UTO3OeFq46pSadfw_1782983129
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+X-MC-Unique: F6X5SdUQMH6SmbuFSjcpOQ-1
+X-Mimecast-MFC-AGG-ID: F6X5SdUQMH6SmbuFSjcpOQ_1782983129
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 73B3B188E6F1
+ id 7A8AD18C1054
  for <qemu-devel@nongnu.org>; Thu,  2 Jul 2026 09:05:29 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.48.8])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 019F23000B51; Thu,  2 Jul 2026 09:05:28 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0A0EC196665E; Thu,  2 Jul 2026 09:05:28 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id A43491800D63; Thu, 02 Jul 2026 11:05:27 +0200 (CEST)
+ id 957721800846; Thu, 02 Jul 2026 11:05:27 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH 1/2] hw/uefi: add sanity check
-Date: Thu,  2 Jul 2026 11:05:25 +0200
-Message-ID: <20260702090527.4167310-2-kraxel@redhat.com>
-In-Reply-To: <20260702090527.4167310-1-kraxel@redhat.com>
-References: <20260702090527.4167310-1-kraxel@redhat.com>
+Subject: [PATCH 0/2] hw/uefi: security fixes
+Date: Thu,  2 Jul 2026 11:05:24 +0200
+Message-ID: <20260702090527.4167310-1-kraxel@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,30 +81,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Verify the passed buffer has the minimal required length before
-reading the size field + verifying the total length.
 
-Fixes: CVE-2026-58581
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3614
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
----
- hw/uefi/var-service-policy.c | 3 +++
- 1 file changed, 3 insertions(+)
 
-diff --git a/hw/uefi/var-service-policy.c b/hw/uefi/var-service-policy.c
-index 58da4adbebaf..989bf87ddb86 100644
---- a/hw/uefi/var-service-policy.c
-+++ b/hw/uefi/var-service-policy.c
-@@ -276,6 +276,9 @@ static uint32_t uefi_vars_mm_check_policy_register(uefi_vars_state *uv,
-     uefi_var_policy *pol;
-     uint64_t length;
- 
-+    if (mhdr->length < sizeof(*mchk) + sizeof(*pe)) {
-+        return uefi_vars_mm_policy_error(mhdr, mchk, EFI_BAD_BUFFER_SIZE);
-+    }
-     if (uadd64_overflow(sizeof(*mchk), pe->size, &length)) {
-         return uefi_vars_mm_policy_error(mhdr, mchk, EFI_BAD_BUFFER_SIZE);
-     }
+Gerd Hoffmann (2):
+  hw/uefi: add sanity check
+  hw/uefi: disable debug function
+
+ hw/uefi/var-service-policy.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
 -- 
 2.55.0
 
