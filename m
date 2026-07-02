@@ -4,100 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FEB4C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 07:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3EF0C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 07:15:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfBaP-0008G3-0h; Thu, 02 Jul 2026 03:11:49 -0400
+	id 1wfBdx-0000Wc-Pz; Thu, 02 Jul 2026 03:15:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wfBaM-0008FL-Uv; Thu, 02 Jul 2026 03:11:46 -0400
+ id 1wfBdv-0000SR-LY; Thu, 02 Jul 2026 03:15:28 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wfBaL-000358-Fe; Thu, 02 Jul 2026 03:11:46 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1wfBdu-0003zB-7l; Thu, 02 Jul 2026 03:15:27 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6621Li0v2648872; Thu, 2 Jul 2026 07:11:42 GMT
+ 6621KIRi2450354; Thu, 2 Jul 2026 07:15:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=4SY6nR
- r7FCTLMIQlhfdBsXT6VzpyWw1QOYumC6ivsqo=; b=rp8a7G0MOOrKf9k4AkYn3f
- dvC1TvW+LztjR8K9d5MOr5yKfAak15XK9gAlJtdh1shF5xQmrrooB2D4BY25thiB
- yteeUkR5mn+kyiuypIVe5Zrz4yBnChK8zUl4NsL4VeVS//MJjuY6xjU3GiL3bYur
- p2R3wWU5UF8iNonnNcpfblRguyfkyb4nwqvWBVVGLjymAzivbJ+DizBI8Cj9RA6d
- E0jgsuHFBigH0Qt+O3LRgn4bFWPZOD92oiMyhnPI++eaNhVcloaBw4uAt8i6seGL
- Mnol0sH08hikid+7Bm0QyUK78OEA7TKFohUvpLayF6dXomBM3n/q1xv1ztkNBMbw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=oqMQPX
+ LLp60o+IOkyeCMdVkLfJGOAT235ke6g8qevuA=; b=Ci7XXGjBnTBLf7CrLMGVhK
+ WWlYQ8UqPhMnbXXBhgfvPAMuzbvPqk9mYrTwS5J2P++GUuidU8ANs3ZSNk67UOI3
+ REmmnRDa04woeCU9RTte3Kt/WFJ7A0EBAPJtWCaa7p6GaM2p2S/bEmXNI2SmlNqA
+ 2VJ1jdIQHE79WwJ5yjH67Egk7bp0D7Bb7mcqLi48PoH828xR2Z11IUShtVdVWiG8
+ YD2xs6WBjSvZH5y5b1VOf4UQuQp/Yty4C71FpzaYl9stKhpQBFkx0qAAq6Lkaz1n
+ dQ55HR8nmuzhv6TIE9NYykGpLi0G4oL2YL/wpYdFw9aXynqHdNg4XfjgY4jIlfZQ
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qg8kk7-1
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26n60nm1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 07:11:41 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66274rkW017432;
- Thu, 2 Jul 2026 07:11:40 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhju5d-1
+ Thu, 02 Jul 2026 07:15:24 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66274mf2006768;
+ Thu, 2 Jul 2026 07:15:23 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2u2gjs75-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 07:11:40 +0000 (GMT)
+ Thu, 02 Jul 2026 07:15:23 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6627Bbro28443224
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6627FJ1048169468
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 2 Jul 2026 07:11:37 GMT
+ Thu, 2 Jul 2026 07:15:19 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E851720043;
- Thu,  2 Jul 2026 07:11:36 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 785D220043;
+ Thu,  2 Jul 2026 07:15:19 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 529A220040;
- Thu,  2 Jul 2026 07:11:35 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7AED820040;
+ Thu,  2 Jul 2026 07:15:18 +0000 (GMT)
 Received: from [9.123.10.203] (unknown [9.123.10.203])
  by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  2 Jul 2026 07:11:35 +0000 (GMT)
-Message-ID: <9e4078c0-e4de-422b-8a01-09ef78c14734@linux.ibm.com>
-Date: Thu, 2 Jul 2026 12:41:04 +0530
+ Thu,  2 Jul 2026 07:15:18 +0000 (GMT)
+Message-ID: <3cd01daf-2d18-4d37-a869-3e4186cd2e96@linux.ibm.com>
+Date: Thu, 2 Jul 2026 12:44:57 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/8] tests/qtest: Add Power11 chip & machine to qtests
-To: Nikhil Kumar Singh <nikhilks@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20260630210355.789109-1-adityag@linux.ibm.com>
- <20260630210355.789109-4-adityag@linux.ibm.com>
- <444f825f-e1bd-4f31-81dc-e6916b1b79b5@linux.ibm.com>
+Subject: Re: [PATCH v2 4/8] tests/functional: Use default powernv machine
+ instead of power10
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20260624195924.1422821-1-adityag@linux.ibm.com>
+ <20260624195924.1422821-5-adityag@linux.ibm.com>
+ <ajznoPrHDJEtVGCX@redhat.com>
 Content-Language: en-US
 From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <444f825f-e1bd-4f31-81dc-e6916b1b79b5@linux.ibm.com>
+In-Reply-To: <ajznoPrHDJEtVGCX@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=RYqgzVtv c=1 sm=1 tr=0 ts=6a460f2e cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDA2OCBTYWx0ZWRfXxdO1TFQ2ZJ+7
+ mFd0PD0M0LcvBYnnb9jOc2AbjcD2sHfCQw9PtHVBxHRcc7FVX147Qr2y2qSWx71r31AtJl3bSzF
+ OVxE8XfWwGiqeES4I8C5wPyrq2QBLWsknQ4rEM+MbE2nV7b9yshsacC4EzQIpyxak410moWUnlh
+ jb+j/UNczuKyXes9vZ/wzuuWHLTPapI4uxEDXZtv7YIDlmA7MOptUQyMnaG5vycflrqgMIArei6
+ N1QvhITr60b3/jOUV/ljf8zTnflMoFmxbcRgFia29V33iqFhDTYCkLERTaJYgNd/c3lZhVv5+eh
+ WxaRiKfgmWTEPACzYEf4uJSyETJtX0S/JyEw7xZ7SdjLFzt/rNMgJOwmbLsnJcI+PzVwDuaC/QQ
+ 7rYUbHY79rMNn9zvpRYSn5N2iodVgUz/f3LHRx3A6TnfrPHtLJeFaXfEqJ2H5NqKlFZFPRrfvEz
+ paYTdgvtjWWJ/G6PqiQ==
+X-Authority-Analysis: v=2.4 cv=V45NF+ni c=1 sm=1 tr=0 ts=6a46100c cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=Uq34ioT5xjltGcfdW80A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDA2OCBTYWx0ZWRfXxXsiaXGoiQUs
- 2fY+Ti9O++sUsWZIbB+QGSDzCNl6bCa+t5E9aLHco5ViLd2SOeVUXDu2474uiK/he2LEcR1A4uz
- 5/98hJ1jspGDRzQyc2Nxm5oYO/BZN7g=
-X-Proofpoint-GUID: 4eJ187g9j4vrgslC06rMVbVD-giq21jU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDA2OCBTYWx0ZWRfXz6WAkirRU9x3
- nbyq/gNQYbxTRfgVHyBJizxV1Fg0bo+DNi75O3e8lqNN7q9eoboJNTGZNi49oH7PdnRB8aRAfhM
- Gl0AitRoeiFghopEjpwEx0r0D22Bl+HvVSoKx5dqhVdnlx18O0CPusX5d05ZnFJ8pmMPk4enz4j
- +05pf3FwEN24viVR+vDc9b2IfuT64ZBECiE0UpsamOv8Opic7WeWR7r2PUH9zxAYh4iMPzcabTG
- O1tYNcW9JdD7baD293Ds3VPWVXBN6Uw7d/tCmaOlkqIHYAgIv81MG3egLbNERmppnOHcl7bAlGP
- 58zZUDk/BFyUxoE9qBJBzbi9u/EEIAUp8HL7vmtAZ0vtaKYKF47F/lVNRx5qUJ6lJrgcq62T8+7
- WniY+tNakERDT/IFJjAJjMisiGI2SQvUuwMFDrlzTfQ0SVfKSofw+mUgpatBd2O+Hig1Al3TQyB
- UVJ65183v0svqUVOqOw==
-X-Proofpoint-ORIG-GUID: 4eJ187g9j4vrgslC06rMVbVD-giq21jU
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=20KFwNOVAAAA:8 a=Fi5sFzxREgzQPsTXhocA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: ERfvoPfpgGnx2m9igknjxFLOV79mgW6F
+X-Proofpoint-GUID: ERfvoPfpgGnx2m9igknjxFLOV79mgW6F
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDA2OCBTYWx0ZWRfX/W+eLDG2Upvn
+ u5XHLBZMYSOHeW6DChBjyFsGfc5ReyebzEdO7FNXGxGL9VuPLjzHyqfiz70L8tFxaW2rV4TmHO9
+ w95gwnuqqSaVGdLD5La63UgEdDviXg4=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
- adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
+ phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 impostorscore=0 malwarescore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020068
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
@@ -124,21 +126,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/07/26 07:37, Nikhil Kumar Singh wrote:
+On 25/06/26 14:02, Daniel P. Berrangé wrote:
 
-> Thanks for addressing the comments I raised on v1. The changes look 
-> good to me.
->
-> Reviewed-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+> On Thu, Jun 25, 2026 at 01:29:20AM +0530, Aditya Gupta wrote:
+>> The default powernv machine has been recently changed to powernv11,
+>> though fadump functional test used powernv10
+>>
+>> Change it to use default 'powernv' machine for the tests instead of
+>> being fixed to powernv10
+>>
+>> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+>> ---
+>>   tests/functional/ppc64/test_fadump.py | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-
-Thanks for the reviews Nikhil.
-
+Thank you for the review Daniel !
 
 - Aditya G
 
->
-> ~ Nikhil
->
->
+
 
