@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29152C43602
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 13:26:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C01D9C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 13:26:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfHQS-0000Cc-6G; Thu, 02 Jul 2026 09:25:56 -0400
+	id 1wfHQn-0000TR-0s; Thu, 02 Jul 2026 09:26:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wfHQR-0000CM-6z
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:25:55 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1wfHQd-0000NX-PJ
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:26:09 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wfHQP-0003w6-NK
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:25:54 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-493be1b9682so13364755e9.2
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 06:25:53 -0700 (PDT)
+ id 1wfHQb-0003zj-Nb
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:26:06 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-493b7612475so15204695e9.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 06:26:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782998752; x=1783603552; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782998763; x=1783603563; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=L62vL1euryObaQJ4CzJerOH2c0HGM8aUiyMPBkP380w=;
- b=JXjnlDJx+jsvZQxYufPQgMdp+Ry3n2jAG03z68AzzwHlTHWo+mvXz2lZdiF2N7vx36
- wRAuOqWPuWEf6lLIgo0b2kQF2S2TlXKXA8LC8Eh7y0b0rdmqvytO3bu3HJqayNfRLjvb
- 3wHhNfjlIf1jbngoez7e2s3Nira/ow6LYx/3nIAo4kh/G7RMbBg7NJKf5XS3MxUF/8WH
- vhmImxTaAWR4K21ycMC4/HEdoFe5Lmj9uQ1hzB/VJaBUvMfC2z4SbOMG1EaLBdaeT114
- IaQ8YGHpEuC/uXV1DaEJrxuRIx9EUdLXoTSLyabVXLCtx+0K/owISIqx68fXKPsfk+8E
- ZOJg==
+ bh=wPdU9alilOC46cNSb0QUT3hcuEsh+BYqs1VSXbi7f28=;
+ b=HjOW34clz3UUjLoDve14H2E9+HsWBA5s8hVkH0OHsuoFlWidtmTNQZyL5rfU/cZWt3
+ 3MplR0BNkcrovnYWT/IooAp52HA0elJx6rW5/f626rYEl+Yx2itZ00T1PuVMk6OLcwVO
+ G1AGupbmWYDp1j7qip6z7DH2fpFG1QwWZVfmGakmvI6GEP+PU+LJisV/N/RI4TD8oyxZ
+ 9tQR6yi7FNbj2cscauws4oGhCPioqwJ2kbKHZCMPPr47vzoLWraaNANIj2ZAnRBX6iTK
+ T0e7IJ7Dt88URsEtQFgKf94+OtbNXw0nOH6DEgn9NeE4RwCfsvecEA0aUwprCSEDPHFo
+ cizQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782998752; x=1783603552;
+ d=1e100.net; s=20251104; t=1782998763; x=1783603563;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=L62vL1euryObaQJ4CzJerOH2c0HGM8aUiyMPBkP380w=;
- b=R5EymgMxXjpMVjIEBeRgTiIHXr+XyBr365lRGEf8RIk7FusZeXYFBqILeL656K/yzB
- wVaWC33AV2Oj2qH+3lW/KTX4fkSV/v2+5KKRQEXmsUEpvJMzkFIg46fV1e8o/Oe+Tsvg
- uBwgizwcpmo+0OHXdqLMnHMR5bvLP284z+wAk34a1l9WCxt21Y1hVX5OOwY0N9Vwu5It
- 5QLUOksE9A4bb0JqghYZFot/Uup1MN4c/X0SqJuqCG/Y0b+V9BknON5V9CrQ07EsKlzw
- h3aCHs4Tg4ubeXwh1WnW9Z2ZHPzIncna1RD0xVWMXkTXWrfZ5v0z4t0M0KmCQo2EA7Fs
- qJAw==
-X-Gm-Message-State: AOJu0YxrvTwhU1D31Jfx52mHbYu2/6Dnd8vqckICd9cKhCUjmhRyYOby
- lw6gvKK3Q1rhPrCuB7XPaHyewoUlGm1LkMApxkcE8Vxuxet+pamlV8zbHW5fcdqukG8=
-X-Gm-Gg: AfdE7cktbhPoc0iAK2g9jTTzXJUquCTUuQMOOuzswmFGCx5xcfo+hRaqaqiieC5wq7G
- lwS5C3vFHEDZDQMW98dfJmEWKYBM/dMXfqKtW6wZLF75aXLzhI0k2xUZGsOUNgTCwB9+MPOqsBI
- eUPnill6mPUAVjHP5/XWtoUMyL/sXhxjBxxOJ4uGhF8yS6a8A0yWUosjsq+bnKFIByhOQPQ+zwt
- BWR1wCvaLUHI/8jq3P60oMOFS3RjY2t8cIsyvyZIjGNwJUS3eRlFGGZFMQqSa8tEHCCafK7nUXe
- 1a3eenUVAHfVY5/wk9vMzy7E8nynJTFC3U7nlRbtYbkRMWzC92o8bUfi6a//XtRdTB/URHLXKQM
- QVGsZMrDFYI9RtIYR4zI7UjizlRmTVcS2jrjVoSRGt6I5NxGq5/lExwUBJu6sVH7yVWAX/6aRyH
- ohsmr/3dGHEnoO
-X-Received: by 2002:a05:600c:5010:b0:493:c453:600f with SMTP id
- 5b1f17b1804b1-493c453616emr52830535e9.6.1782998751951; 
- Thu, 02 Jul 2026 06:25:51 -0700 (PDT)
+ bh=wPdU9alilOC46cNSb0QUT3hcuEsh+BYqs1VSXbi7f28=;
+ b=m7j3f2pOtK2hUfB5i95eSNPkm5mp3i7vTu/PMFv/5KFQ1qnPSQ0eTfzVGFOzpq6Sr/
+ 98k2zqhVP+LN+qk+0kshALZd8pk6Z0XEP0rNYoOAFSq736nAVhPQ6UNgdJ5oYNMp3IjC
+ Et6tW0BHEgTFphTjTGKAGRImk8PCmAXayBkQuK4G9v99nQ0qW5T8PLBZ5+5RS5EfjYEf
+ YKsKVcv0PrrekJ/6NPFY6hpWdIMhSWDNOHI+fDJpriP8qNIF7CU95Uv2xKCuVcLeuznB
+ uaSXh3KNdEJrioujjfJYRBtTrgKruD0/M0gbS9OVvKV07WAude1vnNdOimAcpaXpqKHn
+ Ebcg==
+X-Gm-Message-State: AOJu0YwpfoRlO/SeKMrNJgLC5tuIVrqbu64SKKkAw0RxyGz6lZLcV0Un
+ sJ2TBO3Z3fJnyeHmawiPeKNuOy6qxMUkVPq2+5+s7H9B0zBqYaOudgM97BEUJ/01SSk=
+X-Gm-Gg: AfdE7clWgQCoAR1DbfAWHUHw6GmMsWW//RH7aHtveTsTc2xeeJTr66zf+duj/YzeFSD
+ onrZzodze8FN2kFpuzHaLGiaOlv99v9avX5pSgbIxjEdJCtZhMCwXE3JSpMdf4KvD7pOHfzt3aH
+ 9KMdbq0cTxWuPMQ/w9te2N/k+pwXe45T0TE6nPrNQHzntNNL6DfbUGSnqxgMSQWbvxv9MujSk5L
+ wrbvmkJfx8dOve5TBPv/PzeLdCHgvi4qvGRrtR2bu+AhdNAonBxZmgycpIMEr6xuq+jBRuGe2gG
+ vK4b+/HNRlXAVXlXJy0+/D64gQh8jLdYPRdu7rwpE8oRZTDr84GsBnfhjTHnlJVgO0ZAihkh4hS
+ 5ZkbpGe4YEM14oIV42cK3JThrfyOmmrEssFTO/fpq06n1dvwVTu+wVgGihGJngV32FKnIFDxVaf
+ XBuyzuGdVEDzmAAuePcVCfdFM=
+X-Received: by 2002:a05:600d:c:b0:493:aa28:38ad with SMTP id
+ 5b1f17b1804b1-493c2b4442emr64776085e9.10.1782998763143; 
+ Thu, 02 Jul 2026 06:26:03 -0700 (PDT)
 Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c6372a31sm53855825e9.13.2026.07.02.06.25.50
+ 5b1f17b1804b1-493c6354771sm52751585e9.3.2026.07.02.06.26.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jul 2026 06:25:51 -0700 (PDT)
+ Thu, 02 Jul 2026 06:26:02 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D409B5F89F;
- Thu, 02 Jul 2026 14:25:49 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 615A55F89F;
+ Thu, 02 Jul 2026 14:26:01 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org,  qemu-s390x@nongnu.org,  Peter Maydell
@@ -74,20 +74,21 @@ Cc: qemu-devel@nongnu.org,  qemu-s390x@nongnu.org,  Peter Maydell
  Liu <zhao1.liu@intel.com>,  Daniel Henrique Barboza
  <daniel.barboza@oss.qualcomm.com>,  qemu-ppc@nongnu.org,  Richard
  Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 06/33] gdbstub: Add trace event for STEP packet handler
-In-Reply-To: <20260630220100.1289-7-philmd@oss.qualcomm.com> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 1 Jul 2026 00:00:33
+Subject: Re: [PATCH 07/33] gdbstub: Only return E22 when reverse GDB is not
+ supported
+In-Reply-To: <20260630220100.1289-8-philmd@oss.qualcomm.com> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 1 Jul 2026 00:00:34
  +0200")
 References: <20260630220100.1289-1-philmd@oss.qualcomm.com>
- <20260630220100.1289-7-philmd@oss.qualcomm.com>
+ <20260630220100.1289-8-philmd@oss.qualcomm.com>
 User-Agent: mu4e 1.14.2; emacs 30.1
-Date: Thu, 02 Jul 2026 14:25:49 +0100
-Message-ID: <874iihtteq.fsf@draig.linaro.org>
+Date: Thu, 02 Jul 2026 14:26:01 +0100
+Message-ID: <87y0ftsety.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,27 +113,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
 
+> No need to keep processing the arguments when we know
+> reverse debugging is not available.
+>
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 
-Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 > ---
 >  gdbstub/gdbstub.c | 1 +
 >  1 file changed, 1 insertion(+)
 >
 > diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-> index 26366acb674..246e7746300 100644
+> index 246e7746300..f54415a9db7 100644
 > --- a/gdbstub/gdbstub.c
 > +++ b/gdbstub/gdbstub.c
-> @@ -1369,6 +1369,7 @@ static void handle_step(GArray *params, void *user_=
-ctx)
->          gdb_set_cpu_pc(gdb_get_cmd_param(params, 0)->val_ull);
+> @@ -1378,6 +1378,7 @@ static void handle_backward(GArray *params, void *u=
+ser_ctx)
+>  {
+>      if (!gdb_can_reverse()) {
+>          gdb_put_packet("E22");
+> +        return;
 >      }
->=20=20
-> +    trace_gdbstub_op_stepping(gdbserver_state.c_cpu->cpu_index);
->      cpu_single_step(gdbserver_state.c_cpu, gdbserver_state.sstep_flags);
->      gdb_continue();
->  }
+>      if (params->len =3D=3D 1) {
+>          switch (gdb_get_cmd_param(params, 0)->opcode) {
 
 --=20
 Alex Benn=C3=A9e
