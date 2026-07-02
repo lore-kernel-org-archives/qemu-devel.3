@@ -4,66 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D59B4C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 02:31:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FB61C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 02:50:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wf7BX-0004BY-2j; Wed, 01 Jul 2026 22:29:51 -0400
+	id 1wf7Ug-0008HC-Nb; Wed, 01 Jul 2026 22:49:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1wf7BW-0004BM-2C
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 22:29:50 -0400
-Received: from ms-2002h-snip4-5.eps.apple.com ([57.103.74.38]
- helo=outbound.ms.icloud.com)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wf7Uf-0008Gq-3a; Wed, 01 Jul 2026 22:49:37 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1wf7BR-0002SD-Fi
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 22:29:49 -0400
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-7 (Postfix) with ESMTPS id
- 61D7F18000B0; Thu, 02 Jul 2026 02:29:38 +0000 (UTC)
-X-ICL-RepId: 019f20a9-0f76-7975-9158-97c72dae7979
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ5JHVoHRQNGD1YCWgZLVxQEFVsHVghdEkoXXS1aDhwTVhUTC1NWXxUXG1wAFxlRTQhIEwVSB11NVg1HD1geXBQXFUBDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FXggZCF0dGRVaCQpXAEALTgNaB1kCQgtBAVoZXwRFCEgeXhoGWhpYG1wPRARcMFQdHQ5YBgxQTQFDCAoCURxWDVc=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
- t=1782959381; x=1785551381; bh=COq6H4N+kGc/Y6SrSsYP8fpipvMlqT9yC11jsb2+MGU=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=RNWblcRy83jrhwB2UCXoY/Gbd82sH22n4Z5rad/eWi62/isPkZT4NSYn7UTTN8m5qlNj/fyXtJoZq3u8qQreJlQ7YZI88jXFJB9k3RTiHwAVJhBS3k6O8E1CJ0zr1DfwUK05fd2Tpo4J7UHvrGLs1H3WGBByMt1EltePRS+7CRYZqlVXyBi1P6pNg2mUPDWl4fEIdGI+I+El3lhmcmNcG2jkwrh84dClOzX1BoMXHboel4NplHySLYsBEYt0dyRuByxibT7pq+SQtkI0inyJ9AVUtEcbEP6xdP/QZGCI5Z0YjwuOHGggL0Anl87VMiPkOOTrxDvA7IED8GwfiNI+LA==
-Received: from localhost.localdomain (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-7 (Postfix) with ESMTPSA id
- 8B22B180013D; Thu, 02 Jul 2026 02:29:36 +0000 (UTC)
-From: Matt Jacobson <mhjacobson@me.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Matt Jacobson <mhjacobson@me.com>
-Subject: [PATCH v3 2/5] fifo32: add fifo32_peek()
-Date: Wed,  1 Jul 2026 22:29:24 -0400
-Message-ID: <20260702022927.46510-3-mhjacobson@me.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260702022927.46510-1-mhjacobson@me.com>
-References: <20260702022927.46510-1-mhjacobson@me.com>
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wf7Ud-0000E9-BJ; Wed, 01 Jul 2026 22:49:36 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6621KThg2646495; Thu, 2 Jul 2026 02:49:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=d3w1sX
+ GD01ue4V2UPAub2ujT+yHzCM4eyZak+jfxnDE=; b=DxFI+rRFSpiMBzqBXtVcB0
+ mqnD9EO00eHLRm8cXBgxi5QlH/MxKlBpPH51Sz+6bridG5Xy427xq0fRlLhA+8U7
+ sGfHOBnpQC9hW2RBBoGRI80yX7xfeFj51Z3mGZEuRur17KwDOgRQFVzNzQVvhDba
+ XnkAkgvAcXSr9NjJE29hY15dy8wWdyLW+1uIFJnVDYwNLD5JSXiFklvEXrB1JLE8
+ ybjwnOnOVn28BDtLPaAM57nc7UChi+oyA8OYGAMZfXCEsfMmAHVTl1gkIy4/0J6m
+ EO+wvZsyTOa3rIKmSHDV+2jmgLNQDkaYBjBETCqmHcUPDpuIjI+CCS6+kuBSSyww
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qg7qs1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Jul 2026 02:49:30 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6622Yaga026806;
+ Thu, 2 Jul 2026 02:49:29 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2u2ghyqm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Jul 2026 02:49:29 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6622nRO323527992
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 2 Jul 2026 02:49:28 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D9D7A58058;
+ Thu,  2 Jul 2026 02:49:27 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5337358057;
+ Thu,  2 Jul 2026 02:49:26 +0000 (GMT)
+Received: from [9.61.143.111] (unknown [9.61.143.111])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu,  2 Jul 2026 02:49:26 +0000 (GMT)
+Message-ID: <17c83e1a-0466-4a37-ab3d-7d6c473d888f@linux.ibm.com>
+Date: Wed, 1 Jul 2026 22:49:25 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: VFi0Q6RAHQLuOp_DtyXVQ9jVSACJa84m
-X-Proofpoint-GUID: VFi0Q6RAHQLuOp_DtyXVQ9jVSACJa84m
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAyMyBTYWx0ZWRfX7NlqBUsFwBu2
- lDcJq1jNBuDmEPy2d/hYxBL2XHW+M8AXHM5Dzfw34zs/C3T86/M2Lg6xQebnK3jq/utsWnEMobj
- f65MquM2pnWpBUcu8F+INDw5pc2kOGsdDAxR9Qsuqv5JycUTq1bOObo6i5u9+grlfHDqtbMnM9R
- GmCc2M+4Ka2SDKpAZoVGkMIKCkZLxpRm5dQZSUA1OVbrBNzhHwfMS3Ly2KJL0BPmE/RpLBNnVgj
- eSrBRM0KS3rxQIsTs7N7BypO/3Dv9AkHBSXzLXpMkuaOlvBWXXMZ2tMQyaXffdv6LJPEwCihuYJ
- IFoih5ww2ZWSDKNX6nj
-Received-SPF: pass client-ip=57.103.74.38; envelope-from=mhjacobson@me.com;
- helo=outbound.ms.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 24/35] pc-bios/s390-ccw: Add signed component address
+ overlap checks
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
+ david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260701204922.1320349-1-zycai@linux.ibm.com>
+ <20260701204922.1320349-25-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <20260701204922.1320349-25-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=RYqgzVtv c=1 sm=1 tr=0 ts=6a45d1ba cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=n215UdciXD4LtEMnI7YA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDAyNiBTYWx0ZWRfX7IzN8NwaAm1R
+ u8MP5d9oDa58n6fdEkfL3ZwcYypjI4D8CzGT2VSXkuY7HvDbCzXPhdwBApRnKcjwfrD2gp1HKkk
+ d7WnIB1DTAxxXX+Is9MepIW6e3u0ILY=
+X-Proofpoint-GUID: gQkTCNqdGxA99-2k8CqSsVN_WkZG-XTW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAyNiBTYWx0ZWRfX6GLFUWNj3q0O
+ RTacsPTITeNbT/M4xp0mc49xirr2Jd4DMB6UfELC3LOM1pX34tG3JqXMtddc23BcAi0A3vUFoB8
+ 2j5h9MBa6mmuZGkOqXMRQ90D1m35rffym4Pj/jvFEIvHVAQHU1EMWpEtEyf0cnkG0Seo1xO3xNI
+ NEbLIMMSfZmKov0yqu1qCmr3+iCfY6PgJmeqSMk6I6RyRwy5GOxIDD7HLbDjq/PvGBU40qrJWaX
+ De7zVwhr3spnGhLvICzeirgtQLIRcIEAn8zRKDIvjRaJ0z64wYBdjQTxKZRXDoUFYwmP/fTR8AF
+ XGR5118seCp3IpuNoKZfJjNBeo8tFgAvrCFYkW6w1WOWx3UtyKm4gkyesbTnQfOt0+bxsP6VHEq
+ Oijx7W1LJrbkti2gj5BbP9n4AYCTrO3y8IoCPV3XETUjHW4HGDmBf3EuLFDWIhseRz/NBzwNJzV
+ V9Ol/jr/EXGB1tK5Cgw==
+X-Proofpoint-ORIG-GUID: gQkTCNqdGxA99-2k8CqSsVN_WkZG-XTW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020026
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,74 +130,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add fifo32_peek(), which, like the other Fifo32 functions, ultimately
-just delegates to the Fifo8 code.
 
-Adjust fifo32_pop() to use ldl_le_p() too.
 
-Signed-off-by: Matt Jacobson <mhjacobson@me.com>
----
- include/qemu/fifo32.h | 31 ++++++++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 7 deletions(-)
+On 7/1/26 4:49 PM, Zhuoying Cai wrote:
+> Add address range tracking and overlap checks to ensure that no
+> component overlaps with a signed component during secure IPL.
+>
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> ---
+>   pc-bios/s390-ccw/secure-ipl.c | 19 +++++++++++++++++++
+>   pc-bios/s390-ccw/secure-ipl.h |  6 ++++++
+>   2 files changed, 25 insertions(+)
+>
+> diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
+> index 2d9a4cbc02..af98881aa5 100644
+> --- a/pc-bios/s390-ccw/secure-ipl.c
+> +++ b/pc-bios/s390-ccw/secure-ipl.c
+> @@ -193,6 +193,23 @@ static void init_lists(IplDeviceComponentList *comp_list,
+>       cert_list->ipl_info_header.len = sizeof(IplInfoBlockHeader);
+>   }
+>   
+> +static void check_comp_overlap(IplDeviceComponentList *comp_list,
+> +                               IplDeviceComponentEntry comp_entry)
+> +{
+> +    IplDeviceComponentEntry *comp;
+> +
+> +    /*
+> +     * Check component's address range does not overlap with any
+> +     * signed component's address range.
+> +     */
+> +    for_each_rb_entry(comp, comp_list) {
+> +        if (comp->flags & S390_IPL_DEV_COMP_FLAG_SC &&
+> +            intersects(comp->addr, comp->len, comp_entry.addr, comp_entry.len)) {
+> +            zipl_secure_error("Component addresses overlap");
+> +        }
+> +    }
+> +}
+> +
+>   static int zipl_load_signature(ComponentEntry *entry, uint64_t sig)
+>   {
+>       if (entry->compdat.sig_info.format != DER_SIGNATURE_FORMAT) {
+> @@ -287,6 +304,8 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec,
+>               comp_entry.addr = comp_addr;
+>               comp_entry.len = (uint64_t)comp_len;
+>   
+> +            check_comp_overlap(comp_list, comp_entry);
+> +
+>               /* no signature present (unsigned component) */
+>               if (!sig_entry.len) {
+>                   comp_list_add(comp_list, comp_entry);
+> diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
+> index d5d6d6f7ac..1b1287858b 100644
+> --- a/pc-bios/s390-ccw/secure-ipl.h
+> +++ b/pc-bios/s390-ccw/secure-ipl.h
+> @@ -113,4 +113,10 @@ static inline bool verify_signature(IplDeviceComponentEntry comp_entry,
+>       return false;
+>   }
+>   
+> +static inline bool intersects(uint64_t addr0, uint64_t size0,
+> +                              uint64_t addr1, uint64_t size1)
+> +{
+> +    return addr0 + size0 > addr1 && addr1 + size1 > addr0;
+> +}
+> +
+>   #endif /* _PC_BIOS_S390_CCW_SECURE_IPL_H */
 
-diff --git a/include/qemu/fifo32.h b/include/qemu/fifo32.h
-index 4e9fd1b5ef..4e8b739a1e 100644
---- a/include/qemu/fifo32.h
-+++ b/include/qemu/fifo32.h
-@@ -15,6 +15,7 @@
- #ifndef FIFO32_H
- #define FIFO32_H
- 
-+#include "qemu/bswap.h"
- #include "qemu/fifo8.h"
- 
- typedef struct {
-@@ -117,6 +118,25 @@ static inline void fifo32_push_all(Fifo32 *fifo, const uint32_t *data,
-     }
- }
- 
-+/**
-+ * fifo32_peek:
-+ * @fifo: fifo to peek from
-+ *
-+ * Peek the data word at the current head of the FIFO. Clients are responsible
-+ * for checking for emptiness using fifo32_is_empty().
-+ *
-+ * Returns: The peeked 32 bits data word.
-+ */
-+
-+static inline uint32_t fifo32_peek(Fifo32 *fifo)
-+{
-+    uint8_t bytes[sizeof(uint32_t)];
-+    uint32_t read = fifo8_peek_buf(&fifo->fifo, bytes, sizeof(bytes));
-+    assert(read == sizeof(bytes));
-+
-+    return ldl_le_p(bytes);
-+}
-+
- /**
-  * fifo32_pop:
-  * @fifo: fifo to pop from
-@@ -130,14 +150,11 @@ static inline void fifo32_push_all(Fifo32 *fifo, const uint32_t *data,
- 
- static inline uint32_t fifo32_pop(Fifo32 *fifo)
- {
--    uint32_t ret = 0;
--    int i;
--
--    for (i = 0; i < sizeof(uint32_t); i++) {
--        ret |= (fifo8_pop(&fifo->fifo) << (i * 8));
--    }
-+    uint8_t bytes[sizeof(uint32_t)];
-+    uint32_t popped = fifo8_pop_buf(&fifo->fifo, bytes, sizeof(bytes));
-+    assert(popped == sizeof(bytes));
- 
--    return ret;
-+    return ldl_le_p(bytes);
- }
- 
- /**
--- 
-2.54.0
-
+Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
 
