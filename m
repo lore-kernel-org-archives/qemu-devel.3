@@ -4,110 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88231C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 13:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 206ACC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 13:17:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfHGC-0000d1-Cu; Thu, 02 Jul 2026 09:15:20 -0400
+	id 1wfHHo-0001ah-Gu; Thu, 02 Jul 2026 09:17:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wfHG9-0000bn-FU
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:15:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wfHHk-0001Zb-S0
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:16:56 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wfHG7-0007kR-WC
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:15:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782998114;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=X8jfvXqJvjTl5eMJrgsH0/YnrKOsZNe7DWbKjldetr8=;
- b=KDmcCQyYm5h0Gr/Voca3Vy8zFfMRRtLV8BdobWb/3ADp/FNgfu3yBCqiNmcNgsaavC9/Uz
- ZvebjYXsw27r6rQTjxK8ybwYTXwjSA4YAKNf4w0QkDQjnL5zAkQjg7oEKr9gsgnABpOo65
- g1sOaYkFXsl2qx06dOzvYC4VmpsfRPw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-582-Mww8UdjaMtKyqO05x4SzQA-1; Thu, 02 Jul 2026 09:15:12 -0400
-X-MC-Unique: Mww8UdjaMtKyqO05x4SzQA-1
-X-Mimecast-MFC-AGG-ID: Mww8UdjaMtKyqO05x4SzQA_1782998111
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-493c69e37f9so4714505e9.3
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 06:15:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wfHHh-0008L8-Th
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 09:16:56 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 662D0XdD527910
+ for <qemu-devel@nongnu.org>; Thu, 2 Jul 2026 13:16:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 3aRloceSIq4PY+JY12oja1+uP+Ju66pkj1MQEHnk9Js=; b=DcrvWLOZd6cHbXql
+ 6j2mMCrY5QDHmmE91AqaYH6jxb8Sfg+yOONLiGNfRVu0AsbEYNANFwo2Gu5Czr7h
+ 0dIwcTxTNR6eecwFyG6ZHNYuYOZANYQ/fXuAmTUPUj3X2pfadK9VA8eAvso8H5HY
+ myo8Bh90MkC1xRVTz55lut4Iw3zoZyLHTZunmHz+dcFJVWrz901IRnhTzKwFQyOK
+ Mwar2z8F34DXyQuHeNU7Cwja7RpyIxbCkn+zkdUnosCtYjQRC0P00zt/qLs6rmGC
+ 2tp8RLL3/vQJ0MQkNYiNrHanlNmxSbOEEZIbnCabjcHaUJejIKmql9/dM58d/db4
+ 6+6n/Q==
+Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com
+ [209.85.221.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5h7n9vfp-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 13:16:51 +0000 (GMT)
+Received: by mail-vk1-f197.google.com with SMTP id
+ 71dfb90a1353d-5bd83569844so2020373e0c.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 06:16:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782998111; x=1783602911; darn=nongnu.org;
- h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=X8jfvXqJvjTl5eMJrgsH0/YnrKOsZNe7DWbKjldetr8=;
- b=G/ISDSNo8vCbhuJX83frlC0LCzOeSd3V7U0pscX90Q7irrrkaOMgXhsjn57MaotxNT
- 4Vxuaouii2XJzx0A6+ItXSyveKJ+sKeKF3PUOfjJ6F5236w7Q+nnmjD1KMX4Qzqd4osh
- b2MiRUhRDbZOGdmSJXJfe53PKFJd9PncQi2LpxTF2qkEN8QaiMZOQFkf+k2UKr8gJOXC
- L/ztSr0LdPDbK6ZevPPOclqfc5zgJhjYDe78HbgSugLxcpUURSkTLTQe6Twr9ldpxGA/
- QkMza/zoKhv5CPpGmR7TMUBkJbRq8AM77n/LxySyAwneeGeamiLKjuGUIgDpRu6PtHu1
- KD1A==
+ d=oss.qualcomm.com; s=google; t=1782998211; x=1783603011; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3aRloceSIq4PY+JY12oja1+uP+Ju66pkj1MQEHnk9Js=;
+ b=hYuzFzci4Ler8+13VuiKE2OgF/6XelitC1hab2T4FapNiZ0nHtzhvh4d7xgBme21PA
+ sboUlqQN0wrluCOFydYB1G8v7ZJAirslC3bGMgVxJJi6rkdoj6XQGfOYWk3keiQScgiV
+ 63h9/dU0xhGrdopZeqU73A+WOLo/HJx6bFSOIX45mB0PDMI1HTKKAIm19gFi4htwuyE2
+ Ys+Ui1ite6MqhYlJL5Yb3U1EG32SEe36bIz57I+f1gReAni6q2VochYluiWRY/k39hry
+ P+Jd3E7vJRDss0/lUJpbmToY4+efW4ozsR3JQy2o/xYtp8DqxHu/7droILIR1VlPNVZz
+ W8qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782998111; x=1783602911;
- h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20251104; t=1782998211; x=1783603011;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=X8jfvXqJvjTl5eMJrgsH0/YnrKOsZNe7DWbKjldetr8=;
- b=a0c/S2lFqXMb3l1vosdDoZez+X21Ai1Nv4WVVOzknm3RJZZOTufP+oWa7v+aow/DgA
- KCRPWDcYpqQlFOvvIxGZhKsq+83ztaiXDh6HWMVDCV/dHgXIvoPeH/h2HCQruINJSxf3
- wUbZhyAUx/jqRN7FCvoJMWLqF/Whwc6+ZX79DQsdvs3XrrBrwLBFUc70Q/nFhvlBM5/o
- iiDSBdmf8s+q+YZPu2y1e0KYQwU3RWmbX/fl1YQu3TJcjHlUf8Fm7LvtGHiaH0XI1R7V
- SwS7LErj0lI4teiYokVaKsiO+X3u/GlErOVIRoaGWPMnCAGZXZcYj8hQT6vaFZujFjIA
- suhA==
+ bh=3aRloceSIq4PY+JY12oja1+uP+Ju66pkj1MQEHnk9Js=;
+ b=ksFDgO01FIPPAgNg8Fs54MSUwnUu4/2XSVIp7+nCPmsUJMGEvV2hXIJuAb7nLTsMBu
+ 9AQxswqDJVKTXTFQ6umwmSPAR7S+oC7PE8fLvMAmLH67j86UFGkDGwceanbzgKFRyejU
+ HToMefBcl6ul7D3NYPcsbYN6AhKblEFxF5/3l+ky3N/LrCaBxS03CBJV+h+U0jRsd0pO
+ NxF85ViRpwD7UtDjIVdzzbNHhAtI0lLyzbPhI5SJbz2u5brKKPStDKCxpEtAZcL0MEMp
+ 4P/+cXivuoMQZBeswaA9Iu9MBlhDP9l8rwPqc36KAJDWYuK3UTi3p4AyWmHeoWfyhVpy
+ 3YzA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+qZadFdyjWdi5MaJH/6TyrT87kjuc4DjteugHsotqtduBZiVG0z1z0fthSKClCfVb1pOh6QyGDJ2bZ@nongnu.org
-X-Gm-Message-State: AOJu0YwQY1xxxsv60VGOMBtazaijvAquw0xZSopM6mIoyfEhFXFINZ7C
- BtFoOe63gviT+AEc9Le/lNrPy1NqaWrBRaxd54eWvh+PTZ8Ko7g1gNhuloNX6gh24rFR4b0UvC+
- Qagl3hsn+W05LiQO8nx/FkgzcUPY+OKCOppL+BvMs3UnXlyuyV/wTUky6
-X-Gm-Gg: AfdE7ckocWKG4GHpn2eOUMTuHkK7c6fM/mg+bk3w3YQ5pa5TbrxNpJze+rB+8YZCMqa
- fPPQkPAt2Yd6oU3LR+5jKAwMBGYv2K6peBMhEP4KcqpDhZuCUHpeTUWLtrKSDT71fjVt3aSIwzq
- ULqggWkAtPPU+HCPZGRt9+CRI4KLVIPSVirv1oG2GitQG2X1Ae+VNsyjxHDtsjBrAYjGlzF615A
- eqlCJco//eHc/kH/72S/FiS8QvUQUuFWauF3pDlqjuWhpW9yI9iV+mv4DEBmynOXfSY6MmiwDAX
- AaB6oQl3o8ML3Fnc6K1Kl6Dbnc+DbTL8SZFcAo7AX4MyRRHzp0dnSS/Rh6bqBmgUwhLFXU3/BcE
- B5l24KAJRYYrd4jNtB129L9nl6m6TADNh62xsOViAzQ2PBeYbk1WDW7EWJi1j
-X-Received: by 2002:a05:600c:1553:b0:493:c310:4106 with SMTP id
- 5b1f17b1804b1-493c31041f0mr73355305e9.35.1782998104739; 
- Thu, 02 Jul 2026 06:15:04 -0700 (PDT)
-X-Received: by 2002:a05:600c:1553:b0:493:c310:4106 with SMTP id
- 5b1f17b1804b1-493c31041f0mr73351245e9.35.1782998101214; 
- Thu, 02 Jul 2026 06:15:01 -0700 (PDT)
-Received: from rh (p200300f6af2a6100f239e076bbd76784.dip0.t-ipconnect.de.
- [2003:f6:af2a:6100:f239:e076:bbd7:6784])
+ AHgh+RrMp+4pB14UJd4KeCE68XMBEV3VAzDIirehCxCAHzoj3X51cyziAE6Djbzvq6RTqcTIY0s9VRNVzbrt@nongnu.org
+X-Gm-Message-State: AOJu0YzsP4Lnk9GRy4H/uI0FmQXanr7RQjoRXN3x7VYhwJWacTe9/7f7
+ 6N8l8GujuiG4pNP0SmTDKrqPWH21V4WY8FjS1IZoZxEcAiQj1xsfLpYAcPE+z5mDEvNcMgZEhOF
+ wsHnpDrdrtRTvd8u6jjGAk4JfaOWTdoTKjVXVU+KxgJZbR5KGGhupsxxTeA==
+X-Gm-Gg: AfdE7clCcvrh7i0MdGk2yZ5kBSIuZ6DuiGNy+BFF+DrQNHd61d6HIzUhUKKdd/PuZrk
+ psvfM6YkPZovVzH2dEG3/bZegmkQuauSzSBVB4vGq+PO7qQA7rHXi59ukNEoEzpCR1bubCy2MM2
+ +Qc1MUW4DBQXZogTrFwumt7B6CNoaDZMEihuFvDNaO+2G5BD3gtirwEA8kqJA7T15dDmuXVu7pY
+ XBt3YmVWcdiAzqId/E5FM7QejN9AU/9+dhF58wnSUm/Rrz2HfhTUdi/UQGsmr29AXe3tpgFZdaV
+ KElXa4Gtn/6XGTYhRaegYCmUzmxaY7O0qYARb5UvnXBmeFEi3rUf++NpldazTKj+jkw5/Fzzu3X
+ TMpSCvxk3fX2mR6LoE40EHWJk3zSbexhiR9EOyK4hL5V4
+X-Received: by 2002:a05:6122:3c4b:b0:5bd:a247:49e2 with SMTP id
+ 71dfb90a1353d-5bddf516577mr2696067e0c.1.1782998210841; 
+ Thu, 02 Jul 2026 06:16:50 -0700 (PDT)
+X-Received: by 2002:a05:6122:3c4b:b0:5bd:a247:49e2 with SMTP id
+ 71dfb90a1353d-5bddf516577mr2696008e0c.1.1782998210349; 
+ Thu, 02 Jul 2026 06:16:50 -0700 (PDT)
+Received: from [192.168.68.106] ([189.79.21.40])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c6372c52sm55045165e9.14.2026.07.02.06.15.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jul 2026 06:15:00 -0700 (PDT)
-Date: Thu, 2 Jul 2026 15:14:59 +0200 (CEST)
-From: Sebastian Ott <sebott@redhat.com>
-To: Eric Auger <eauger@redhat.com>
-cc: Peter Maydell <peter.maydell@linaro.org>, 
- Jonathan Cameron <jonathan.cameron@huawei.com>, 
- Alireza Sanaee <alireza.sanaee@huawei.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Cornelia Huck <cohuck@redhat.com>, qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 3/3] arm/kvm: get demuxed ID registers from kvm
-In-Reply-To: <2c83f650-bfb5-4c59-aa62-db64ba81db81@redhat.com>
-Message-ID: <61a26518-832b-c1c5-f5be-868da2adf4a8@redhat.com>
-References: <20260622135627.40573-1-sebott@redhat.com>
- <20260622135627.40573-4-sebott@redhat.com>
- <2c83f650-bfb5-4c59-aa62-db64ba81db81@redhat.com>
+ 71dfb90a1353d-5bdec77b3eesm848360e0c.9.2026.07.02.06.16.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 02 Jul 2026 06:16:49 -0700 (PDT)
+Message-ID: <d8560f38-63db-467e-afad-fd7353fc91c1@oss.qualcomm.com>
+Date: Thu, 2 Jul 2026 10:16:45 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/33] cpu: Constify CPUState::cc (cached CPUClass pointer)
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
+ qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+References: <20260630220100.1289-1-philmd@oss.qualcomm.com>
+ <20260630220100.1289-2-philmd@oss.qualcomm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260630220100.1289-2-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDEzOCBTYWx0ZWRfX70QHumc0L8gR
+ VI4whbt4jdiBAVt/OoE+qxtD5Pac4mZLvOS1Pztlg+BJQDKlNgKKdRSeyZx1knPaUWKfl+OXsZ2
+ j8O84iNOw0ckG/BAIN+EvN5bvFXLnypeWBT51PhtVV/7LDpNW876PC1ubmKWS2cPRE1fcTnlhGg
+ i85eFdmB1CY/5TE3HIupspRd+l96cix3v7QyRBIJm2583Tk395d+PRWFbTX7vRGDsRPuQ1qcG+t
+ /wZnF0EwRfweSxwK9b1SqQSHQREyjzRKS0S376efoYxFIE3SK2HMrfGfkLUWBrmBBXzZjqPLUva
+ vglar1Uh3FL+B1h/mSzhgXKXEYqMrHixpk5EndivcuYeF2aSthrvOmI5/i0QKjMVinflWCAfaVc
+ dRmlZck1Nv2fvTR7vFuhz5vOEbPe6UpQSEbO1F/9xoDDzeV2Uic64l9zNn8B28fNOjRBzn42+JA
+ etI99vJyHkn5idvV/GQ==
+X-Proofpoint-ORIG-GUID: DUAeK99_pCmFhGvOfMj-e8vNO4iwHDL5
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDEzOCBTYWx0ZWRfX27VlF0JMyreP
+ RflM/ZAWSeoM4v8b/puz1zCVMo5utaMDUltkvzPq6o8lfdCfjF/hv8mpvbiCkwl6JKNEqvCwcZp
+ s5UH0O1TjZCL216nLkpZLls6kKptzIQ=
+X-Proofpoint-GUID: DUAeK99_pCmFhGvOfMj-e8vNO4iwHDL5
+X-Authority-Analysis: v=2.4 cv=WMBPmHsR c=1 sm=1 tr=0 ts=6a4664c3 cx=c_pps
+ a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=ARCOixZDCGajkiXeM4AA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=O8hF6Hzn-FEA:10 a=tNoRWFLymzeba-QzToBc:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
+ spamscore=0 priorityscore=1501 adultscore=0 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020138
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,77 +159,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey Eric,
 
-On Mon, 29 Jun 2026, Eric Auger wrote:
-> On 6/22/26 3:56 PM, Sebastian Ott wrote:
->> From: Cornelia Huck <cohuck@redhat.com>
->>
->> We now have the infrastructure in place to handle demuxed ID registers
->> from kvm. Use it to get the values that kvm emulates for CCSIDR_EL1.
->>
->> Tested-by: Alireza Sanaee <alireza.sanaee@huawei.com>
->> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->> Signed-off-by: Sebastian Ott <sebott@redhat.com>
->> ---
->>  target/arm/kvm.c | 32 ++++++++++++++++++++++++++++++++
->>  1 file changed, 32 insertions(+)
->>
->> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->> index a54ef51ec2..059d361d88 100644
->> --- a/target/arm/kvm.c
->> +++ b/target/arm/kvm.c
->> @@ -244,6 +244,33 @@ static int get_host_cpu_reg(int fd, ARMHostCPUFeatures *ahcf,
->>      return ret;
->>  }
->>
->> +
->> +/* CSSELR values; used to index KVM_REG_ARM_DEMUX_ID_CCSIDR */
->> +#define CSSELR_MAX 14
-> where does this value come from? Worth to document
 
-It's a kvm implementation detail..
+On 6/30/2026 7:00 PM, Philippe Mathieu-Daudé wrote:
+> Various CPUState can share the same CPUClass parent,
+> and must not update its fields. Protect the CPUClass
+> by marking the CPUState pointer const.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
 
->> +
->> +static int get_host_cpu_reg_demux(int fd, ARMHostCPUFeatures *ahcf,
->> +                                  ARMIDRegisterIdx index, int subindex)
->> +{
->> +
->> +    struct kvm_one_reg one_reg = {
->> +        .id = KVM_REG_ARM64 | KVM_REG_SIZE_U32 | KVM_REG_ARM_DEMUX,
->> +    };
->> +
->> +    switch (index) {
->> +    case CCSIDR_EL1_IDX:
->> +        if (subindex >= CSSELR_MAX) {
-> Can't we introduce a macro that gets the size of the DEMUX register
-> instead of hardcoding it?
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Not really. What we can use with kvm is less than what we have for tcg.
-
->> +            return -EINVAL;
->> +        }
->> +        one_reg.id |= KVM_REG_ARM_DEMUX_ID_CCSIDR | subindex;
->> +        one_reg.addr = (uintptr_t)&ahcf->isar.idregs[index + subindex];
->> +        break;
->> +    default:
->> +        return -EINVAL;
->> +    }
->> +
->> +    return ioctl(fd, KVM_GET_ONE_REG, &one_reg);
->> +}
->> +
->>  static uint32_t kvm_arm_sve_get_vls(int fd)
->>  {
->>      uint64_t vls[KVM_ARM64_SVE_VLS_WORDS];
->> @@ -286,6 +313,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->>      bool pmu_supported = false;
->>      uint64_t features = 0;
->>      int err;
->> +    int i;
-> nit: you can declare it directly with the for (int i = 0
-
-Done. Thanks!
-Sebastian
+>   include/hw/core/cpu.h     | 2 +-
+>   accel/tcg/cpu-exec.c      | 2 +-
+>   accel/tcg/translate-all.c | 3 +--
+>   gdbstub/gdbstub.c         | 2 +-
+>   4 files changed, 4 insertions(+), 5 deletions(-)
+> 
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index 59d601465b4..60a23d6f38b 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -480,7 +480,7 @@ struct CPUState {
+>       /*< private >*/
+>       DeviceState parent_obj;
+>       /* cache to avoid expensive CPU_GET_CLASS */
+> -    CPUClass *cc;
+> +    const CPUClass *cc;
+>       /*< public >*/
+>   
+>       int nr_threads;
+> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+> index 9c754b03656..d7f91dce9db 100644
+> --- a/accel/tcg/cpu-exec.c
+> +++ b/accel/tcg/cpu-exec.c
+> @@ -460,7 +460,7 @@ cpu_tb_exec(CPUState *cpu, TranslationBlock *itb, int *tb_exit)
+>            * counter hit zero); we must restore the guest PC to the address
+>            * of the start of the TB.
+>            */
+> -        CPUClass *cc = cpu->cc;
+> +        const CPUClass *cc = cpu->cc;
+>           const TCGCPUOps *tcg_ops = cc->tcg_ops;
+>   
+>           if (tcg_ops->synchronize_from_tb) {
+> diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+> index 3f1a3a28438..328d96aba30 100644
+> --- a/accel/tcg/translate-all.c
+> +++ b/accel/tcg/translate-all.c
+> @@ -575,7 +575,7 @@ void tb_check_watchpoint(CPUState *cpu, uintptr_t retaddr)
+>   void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
+>   {
+>       TranslationBlock *tb;
+> -    CPUClass *cc;
+> +    const CPUClass *cc = cpu->cc;
+>       uint32_t n;
+>   
+>       tb = tcg_tb_lookup(retaddr);
+> @@ -591,7 +591,6 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
+>        * to account for the re-execution of the branch.
+>        */
+>       n = 1;
+> -    cc = cpu->cc;
+>       if (cc->tcg_ops->io_recompile_replay_branch &&
+>           cc->tcg_ops->io_recompile_replay_branch(cpu, tb)) {
+>           cpu->neg.icount_decr.u16.low++;
+> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+> index c3c944e965b..26366acb674 100644
+> --- a/gdbstub/gdbstub.c
+> +++ b/gdbstub/gdbstub.c
+> @@ -578,7 +578,7 @@ static void gdb_register_feature(CPUState *cpu, int base_reg,
+>   
+>   static const char *gdb_get_core_xml_file(CPUState *cpu)
+>   {
+> -    CPUClass *cc = cpu->cc;
+> +    const CPUClass *cc = cpu->cc;
+>   
+>       /*
+>        * The CPU class can provide the XML filename via a method,
 
 
