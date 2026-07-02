@@ -4,99 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CD09C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 17:21:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D23C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 17:26:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfL6f-0004Iv-EC; Thu, 02 Jul 2026 13:21:45 -0400
+	id 1wfLAm-0005Uh-3x; Thu, 02 Jul 2026 13:26:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfL6c-0004H5-NS
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:21:42 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfL6a-0005dP-9x
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:21:42 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2c9b42be8feso21842635ad.2
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 10:21:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783012898; x=1783617698; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yJMLmBfSQ2nM11QZ9IlwqkPdUVHSKY8crGK/Aayr8R4=;
- b=qZmFdflF5TERSX4y9hagU6tCKJQXaN61VATSniHg/xKkAfK1LZLmu/MZUFtLCm48os
- VbzJHShighDPbvggKW95g5Z3rtQFWsN+YFC9Qh2cYVXnYWdai8Lh2yF2cZFP58y/N9R7
- ap+iWPEQD5/QynPoIgsB73t3bjBm2Um265Yq8acOVNAqtZ2aJNl7z8I257et1eI8x42v
- JkPoSTc1m0ajyv6GKMXPR7+3bv9QLeEO616mLOlMf6HpB9ZWKFKDUa64CahXcAwkUac1
- o3upAFDTmCH7aJLSxQWYeeE1f/23JTQgn0ruBj5PX5x/9DM+NDVEtNVOOi4/lNKDRoI4
- wLFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783012898; x=1783617698;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yJMLmBfSQ2nM11QZ9IlwqkPdUVHSKY8crGK/Aayr8R4=;
- b=PzXeM7GpaFpcBxamue7H3w0R2s5xe5L6OuFBXz2+Rqzh3j6gfhHdm1Bg0OwVrOgZHN
- z5M9ERAcmfxaAs1FfVXX7LD8RfPj+94Q5fN7L5rJ78JLFPO8TbMPjoUfhnmmzYFkUc4X
- VaVyfCQTFT3onn8FA5e2riwqz1l9MVGe2+wquqTmsdzKDDWZeCnHg0xHyjZgrtY7vA53
- Z9SsFEBdv4O0eeHh/5cN0/gRAOgv9Dv6oXSDTruvdwQQyP+IDPwI5lSjgzYifjFo32wt
- CuD+ut0BVcJVBvPzp2B7Ukp009iea703hv4fcz+k+hSuNlhlOC0RlFRSsQDA4ID5Qqfi
- 6jew==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqwxbifnWo/QxP5k5NUKm4ubQRXFq1aJ1vYIBuZXlW7wuW+1LhdmX8X2NApwOcg74Vg+TK2JQGB6NaW@nongnu.org
-X-Gm-Message-State: AOJu0YyjdRb/CXMHAeN4IWYYiTcL7UjcTI4LJoq9sP4e6DSn7hcfjIHN
- JwCJm16b4+LMTg9Jbr2eDe7TUijjq7z1Hf9sGbuxtQQN7oQObFISSHfpik2F0bo3Cmc=
-X-Gm-Gg: AfdE7cl7I9NxHHdtvE3ao62ifCe8jIL+SysgK3HUQwCqK6yjCMHSylOD4LYTScIzuSu
- 5fsqyWeY2qO3DULoYjQoHZB/lBK+3fgqAy7rzpEJ9B+wuBdxxU7T3I2+i2KemNnT6BB7HMB7JW2
- LA0HR1wV4ZrQFOX0dO5uyaXdgOO73yfhimtKx9C2927Nmbf9fjv6C3S6cgg3U3NIXDE9u7GyufH
- 6IA3a2g4IydgVOwCWO0iAHJfv7rak95/RGhx+0RzuyOUbz0+W+l6WOibTzYWCnNuIcdrwOg1TYp
- nffgWukqQJodF/rZ23Vy+MlMKNEb8mjmnv3fuy6Q/bSJ9SCGS1bFJAb/iTC6Sr7lUc+m5EIg0lz
- O9ifqFVT7IhCEBbbuuvA3ZEx4GHlSUl0tih4jYtbmBi8PE1xS74Q/DxolxNYU/JjnkoT0ChK9QJ
- dqzjVa7Dd0cS9SKc5t9oTM5tPEcqk+zsjBb3zhs8/Q4xIGOGyPq1fxU5+UEg==
-X-Received: by 2002:a17:903:26c7:b0:2c9:c575:7e22 with SMTP id
- d9443c01a7336-2ca7e67b281mr77848185ad.9.1783012898403; 
- Thu, 02 Jul 2026 10:21:38 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ca9a8dae33sm16806085ad.1.2026.07.02.10.21.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Jul 2026 10:21:37 -0700 (PDT)
-Message-ID: <8988604a-9228-48e1-8255-6feab950f080@linaro.org>
-Date: Thu, 2 Jul 2026 10:21:36 -0700
+ (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
+ id 1wfLAg-0005U6-Ee; Thu, 02 Jul 2026 13:25:54 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
+ id 1wfLAe-0006tq-Ly; Thu, 02 Jul 2026 13:25:54 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 662EIHAq4014030; Thu, 2 Jul 2026 17:25:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=5CPG/L
+ LjoLUGz2mxt0J77jL/VRW04N3mJHyTiu/RUlQ=; b=CppUH8THkMCuN+f1HCLqoK
+ yv6ilFpIYMJjSMLnyN4jiM7iDR9+YPOHnD+dsOcRr8dnMaAXVE/4X+XM920x9BLj
+ EHjJwKlSPKqsaT9+jXxreadqZM81snCcc71lhGdxTpmeh9LxT8TwykBtfTzbyQOp
+ ax4LbdWdkhFBtyiFTSCVOSe+T//w07K+lRIXQqODNljWsuMUIWP57tLf4WYS//rC
+ K0c/0W6d709iQHZeGfte1PktRqoYM74oNZAdgTRbc4dyLrbB3TSDKvN88e/8UFUR
+ K/IjAC2qeK+WCvF3CeXjpRVCYKkTvTro1GoEnwSnOV8pf/4KBexBGIFntbO10c2A
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rfantw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Jul 2026 17:25:47 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 662HJeWR017401;
+ Thu, 2 Jul 2026 17:25:46 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhmywu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Jul 2026 17:25:46 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 662HPjEP29950472
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 2 Jul 2026 17:25:45 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0A03958050;
+ Thu,  2 Jul 2026 17:25:45 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 592D158045;
+ Thu,  2 Jul 2026 17:25:43 +0000 (GMT)
+Received: from [9.61.18.137] (unknown [9.61.18.137])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  2 Jul 2026 17:25:43 +0000 (GMT)
+Message-ID: <342ba1eb-7545-4c16-af3f-73f1dbb363f6@linux.ibm.com>
+Date: Thu, 2 Jul 2026 13:25:42 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/33] gdbstub: Make default replay_mode value explicit in
- stubs
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-ppc@nongnu.org
-References: <20260630220100.1289-1-philmd@oss.qualcomm.com>
- <20260630220100.1289-13-philmd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v12 32/35] s390x/ipl: re-apply secure boot flags on DIAG
+ 308 reboot
+To: Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
+ david@kernel.org, walling@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260701204922.1320349-1-zycai@linux.ibm.com>
+ <20260701204922.1320349-33-zycai@linux.ibm.com>
+ <7a9aead0-32ed-4672-8526-bbaf6a96901c@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <20260630220100.1289-13-philmd@oss.qualcomm.com>
+From: "Jason J. Herne" <jjherne@linux.ibm.com>
+In-Reply-To: <7a9aead0-32ed-4672-8526-bbaf6a96901c@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a469f1b cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=Twaj4APWrUy_8NTiV2sA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: M0PZy1Wjak6W3kf2WxD_LYRm54FgrH7G
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDE4MiBTYWx0ZWRfX9RgZ2tGN2bKK
+ ZgWePuVZ9pB7JqVAsS1rHfxCdy6HcUf7Xk+/QtOHUweIAPBnUSiYE/fn+uy8TIibm/I5H+H3ryL
+ zlkOjzVTvB8UY6vT3X1taUStPPKCJwNZC23766p42y15l8IbIjeugTOkzo3CE3km/hPbS6YX/hg
+ 1jxnfXAgAevPIfDqvHb8KMj42tlRmZF12loAeBLaA4mhvR+0n4ab5poKtA0j964UTFPjvUeoV+X
+ wJn/ZeeHBma5MYgyJ59YkuTIspY2gSR9IHF6vXlg6eoEDht+e2uUKeRuQAvnV+IT7INRHW9BUVd
+ 7gGZH0MZ7F7aEZxAiUteX8dLM2vUwx1c8FuXTOpAb0F2cDL4RiQKpzQKaxaTT+WObt67yR/8UTb
+ BVqAcp96g1tU9fiZLY1HKhN7xn2MP4aPBvPRSaC5Go+lkdZYYbeA9pmmRmxpFDCsZPDFN14DpM2
+ IawTDFtoJImQIAoFjbg==
+X-Proofpoint-GUID: M0PZy1Wjak6W3kf2WxD_LYRm54FgrH7G
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDE4MiBTYWx0ZWRfXxJFz2IlXhNRN
+ Uiszuk3TwJiesHmDg366nU8+987PEFTdXv0g0ru1gg5qpHrfaXG93YeWsBKtlYvfstVpHCzULpe
+ XJDY4N12aoUUllJixbBHnTufXRgXPfE=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-02_02,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
+ spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020182
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jjherne@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,26 +131,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/30/26 15:00, Philippe Mathieu-Daudé wrote:
-> Make explicit @replay_mode is stubbed as REPLAY_MODE_NONE.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> ---
->   stubs/replay-mode.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/stubs/replay-mode.c b/stubs/replay-mode.c
-> index 439d97e4a87..5bc8f7d6589 100644
-> --- a/stubs/replay-mode.c
-> +++ b/stubs/replay-mode.c
-> @@ -1,4 +1,4 @@
->   #include "qemu/osdep.h"
->   #include "system/replay.h"
->   
-> -ReplayMode replay_mode;
-> +ReplayMode replay_mode = REPLAY_MODE_NONE;
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+On 7/1/26 11:47 PM, Jared Rossi wrote:
+> 
+> 
+> On 7/1/26 4:49 PM, Zhuoying Cai wrote:
+>> The Linux kernel does not preserve hdr_flags in the IPLB across a
+>> reboot, causing secure IPL flags to be lost on re-IPL.
+>>
+>> Set secure IPL flasg from s390_ipl_update_diag308() to restore the
+> s/flasg/flags
+> 
+>> flags from the current machine configuration.  Device validation is
+>> skipped here as it was already enforced during initial boot.
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> ---
+>>   hw/s390x/ipl.c | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
+>>
+>> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+>> index f4e01b6918..f970b34126 100644
+>> --- a/hw/s390x/ipl.c
+>> +++ b/hw/s390x/ipl.c
+>> @@ -737,6 +737,14 @@ void s390_ipl_update_diag308(IplParameterBlock 
+>> *iplb)
+>>       } else {
+>>           ipl->iplb = *iplb;
+>>           ipl->iplb_valid = true;
+>> +
+>> +        /*
+>> +         * The kernel does not preserve secure boot flags across a 
+>> reboot.
+>> +         * Re-apply them here based on the current machine 
+>> configuration.
+>> +         */
+>> +        s390_set_secure_boot_flags(&ipl->iplb,
+>> +                                   s390_secure_boot_enabled(),
+>> +                                   s390_has_certificate());
+>>       }
+>>       update_machine_ipl_properties(iplb);
+> Can this be included with the initial implementation of true secure IPL, 
+> or maybe even earlier with audit?  I can't imagine any scenario where 
+> secure IPL is intended to be cleared on reboot, so adding this as a 
+> later feature doesn't seem to make sense.
 
-r~
+I agree, this should be folded into an earlier patch, wherever it makes 
+most sense. Unless I am missing something? Everything else here lgtm. If 
+there is some reason this needs to stay separate, I'd provide my Rb.
+
+
+
+
 
