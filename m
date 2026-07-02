@@ -4,111 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61D7EC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 02:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BED4BC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 02:05:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wf6lj-0007wQ-Rl; Wed, 01 Jul 2026 22:03:11 -0400
+	id 1wf6n3-0008Sz-0O; Wed, 01 Jul 2026 22:04:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wf6li-0007wC-OK; Wed, 01 Jul 2026 22:03:10 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wf6n1-0008SR-F4; Wed, 01 Jul 2026 22:04:31 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wf6lh-0001Zj-8q; Wed, 01 Jul 2026 22:03:10 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wf6mz-0002DJ-VZ; Wed, 01 Jul 2026 22:04:31 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6621KJ8A2450358; Thu, 2 Jul 2026 02:03:07 GMT
+ 6621KXXh2390254; Thu, 2 Jul 2026 02:04:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ts5TJE
- qobOn1hEsf55RqVVIez8f/Oi7AOSoWYwpClwY=; b=XxnfyyM8lnCIxrFn8Sd+Cc
- oEXj7rX2Q+bsPH5Hy8DRskPTl+venkO22xKyyWXwfFORGTYSsnF1aPa/Ns2VKA/T
- aJszpvgehBkS8htaefyAlNhLfyKSg9qCxcehUbOMW6904CV6axgmXhoU7jtbM0qc
- 4PUWWdQLQTL7f6X9Dq4MQflFSR2cLYmrFM32LW6+3Mm3N7d4ceMmZf86hUnVPk/C
- TV1Nj1yOkaRWNjAcO9n6cAUcQMWqGPNY0bUBelrqPCxgqnsM9gZM0AcuCykw4wCW
- CvPbL2o/V/F3glPLD/C5ksgW2+GCakHl/96ueJRL7Akj9SKs9bNnV8f6/ptAPEUQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=j3Q+zm
+ pi7T04n+qKxK0U/6rx+3fPBubV8x+ihF9wd80=; b=nWykHHQPkGHjHVMvllv3jW
+ k9L7ucyzPTKjWxOMKW86ByPvij7pxxhWscshwcME/gAUQpDL8fEDON6RgE9XHVNL
+ s0vn48A+//xHHYvk9Gre/u2VmW/X+zS0SzsYc/4L05TE2XJMlmkmMPCyoO1e684J
+ HDakQr7ifC3l1/QLVsW8YkqPyUAaPQulJ0Oe+GZHYMGEAa2Q7YJGDHQtcs8uHEBe
+ gwqmDmrldn1pF9kztwmWKo0okSnjsAOPvMiuuBAJ5mN6wY4bAZVrPfKbgsXEaEpt
+ 2dSrN2fT17TJMGFWO63dmB+VA1OSBjiLnE0m2zqmNLTA0bgOGCEQEaF4TvgGj3Eg
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26n5ymgq-1
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qa785q-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 02:03:07 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6621nd9w021439;
- Thu, 2 Jul 2026 02:03:06 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhhwwg-1
+ Thu, 02 Jul 2026 02:04:28 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6621ngdN006225;
+ Thu, 2 Jul 2026 02:04:27 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruqj71r-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 02:03:06 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 662234ZV14418574
+ Thu, 02 Jul 2026 02:04:27 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66224QZV30409284
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 2 Jul 2026 02:03:05 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DC71258060;
- Thu,  2 Jul 2026 02:03:04 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E7A3D58055;
- Thu,  2 Jul 2026 02:03:03 +0000 (GMT)
+ Thu, 2 Jul 2026 02:04:26 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1D20A5805E;
+ Thu,  2 Jul 2026 02:04:26 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 79F1358058;
+ Thu,  2 Jul 2026 02:04:24 +0000 (GMT)
 Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.136.69]) by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  2 Jul 2026 02:03:03 +0000 (GMT)
-Message-ID: <c0e2bd2e7c2759b4e7e2b0a9e3e8ee046a188ea9.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 4/6] pc-bios/s390-ccw: Verify virtio support when
- booting from virtio PCI device on s390x
+ [9.61.136.69]) by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  2 Jul 2026 02:04:24 +0000 (GMT)
+Message-ID: <c80d3ccc133b3a869dc3e3a8cb5ca9254eac62c0.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 5/6] pc-bios/s390-ccw: write IPLB location for
+ non-net virtio devices
 From: Eric Farman <farman@linux.ibm.com>
 To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
  cohuck@redhat.com, mjrosato@linux.ibm.com
 Cc: zycai@linux.ibm.com, jdaley@linux.ibm.com, jjherne@linux.ibm.com,
  nrb@linux.ibm.com
-Date: Wed, 01 Jul 2026 22:03:03 -0400
-In-Reply-To: <20260630141917.673995-5-jrossi@linux.ibm.com>
+Date: Wed, 01 Jul 2026 22:04:23 -0400
+In-Reply-To: <20260630141917.673995-6-jrossi@linux.ibm.com>
 References: <20260630141917.673995-1-jrossi@linux.ibm.com>
- <20260630141917.673995-5-jrossi@linux.ibm.com>
+ <20260630141917.673995-6-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfX6PMHjK+ClskZ
- lBFOLde/fwI9Y7cjHQO17Bmmpn3hEgVlDPg5qL9e48qdlEdXI2uxVho4JYNxF0KdCJes8DhFfos
- TGt9Q9Ei009yxhCz6fJEwYBw0tjHPmEGCWfsUcw7togl3lyTm/r7r4D+MUVYxoe/sXs8sX6M7/0
- EnC4W0Bb5aPFrt4kBbhpP9vh5NJhx2Wyjqnlxc4IJrDKt+D5ed4ejFqC6PhFCRAYJSTQsVUHA1k
- 7LS6nZ3DHT8BbXcV1eDu6eRTmxZIsuMfkMyK1xJa1edBRYnchUpOrrfMoWzfYTVI/aMn2sRiDED
- LS2OXVuW6xCdlPptptiueTRq2pMMLPFJ4nEar7x1RZjAHV3hPYXlWHlFBAsMZAOtpuVxGUZiFyV
- pWIb3ojNQ47NNyGi1dOhSI0UIquXUqsSDlSfacTY9lEcs/aIDRvHSXqzyHqvLFF/kSZiZ0gqxRW
- sy5mTgMjdXwIZbYXKgA==
-X-Authority-Analysis: v=2.4 cv=V45NF+ni c=1 sm=1 tr=0 ts=6a45c6db cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfX4x5tcGTKwley
+ MqwLLZG5KFGKtbSoDHn2gFobN41t8focik3UFVCoCzET/iswmlQaZ3E65uRx6mEDZwYzan37b0v
+ 7fgFwMsH5buur3XkPYsFsEmOfq7Xiw3K4CObDLMggqANqoSIvHi5BLN6obYN7wDa7D0IEVjra+V
+ m1LcZOKqw4FWYNLsmAxaZ8G5e6WeiZOChq0qhSWkB2zHKndw0yNAx4oak++1Iu9kC2S+0L36AMb
+ RJhinLHWw7RQkjVXzVraGhj/OVjDgpD7L+UgXnFg73WKt8crSwImdj6eoDb0bdMlBrQiVYaxCTK
+ SSIz3jWXcoqQMoVo99byjRepSC8zDLj5b9srWTmK+3nstVTMVf2diXOIQTwSz2zLOa5tAHwTycq
+ YRKFJ3r/Otd8Ny7jbTcjf3BpN3gKkjxB8eh6az5FZVO7Gtm/XejpUil5rW1JjaMCmkmQBSI4l4o
+ AY90JC9l7l7+EMbuRgw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfX+xskwkVr3AUz
+ HGutsJpGDoJ1IUwaMCExFFdnd3Mk46b2Cjd+iy40M8/F4jvsBxgYTFNHHTKkiDjISpbWQ59j64n
+ bW9q3R9LR5cSkDzlGFgl8dSzmTJpNMY=
+X-Proofpoint-GUID: M0d3By88-N1h1GCBlmrDy3hXp8eMPDaY
+X-Proofpoint-ORIG-GUID: M0d3By88-N1h1GCBlmrDy3hXp8eMPDaY
+X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a45c72c cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=UJnXFHHSjimePnNXT_MA:9 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
-X-Proofpoint-ORIG-GUID: 1wcqVS7amHB6XLGQX0b0anYtLS0XTSBP
-X-Proofpoint-GUID: 1wcqVS7amHB6XLGQX0b0anYtLS0XTSBP
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfXwcnMDoa9qvJi
- 5mmxrwn6XMVCTS/suPrcCfhnmb2Z1MIzjHiW31xvJd1ZC6y4wR0eZPZr4zQOLWO3zkA4ATd+lxX
- SRQFV6XcFTNx1qAvmKVMVGZhO7L05zw=
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=flT6WI0wyULpFbpzkcoA:9 a=QEXdDO2ut3YA:10 a=zgiPjhLxNE0A:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
- adultscore=0 clxscore=1015 impostorscore=0 malwarescore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020016
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ spamscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607020016
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,19 +129,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, 2026-06-30 at 10:19 -0400, jrossi@linux.ibm.com wrote:
 > From: Jared Rossi <jrossi@linux.ibm.com>
 >=20
-> The virtio specification requires that each PCI device has a vendor ID of
-> 0x1af4.  Verify this value before continuing with boot process.
+> When IPL type is PCI, cutype is unknown, so the IPLB location does not
+> get written to lowcore.  Instead of checking cutype, check if the device
+> is virtio generically, which covers both CCW and PCI variants.  Net devic=
+es
+> are excluded.
 >=20
 > Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 > ---
->  pc-bios/s390-ccw/main.c       |  1 +
->  pc-bios/s390-ccw/virtio-pci.c | 19 +++++++++++++++++++
->  pc-bios/s390-ccw/virtio-pci.h |  3 +++
->  pc-bios/s390-ccw/virtio.c     |  2 ++
->  pc-bios/s390-ccw/virtio.h     |  1 +
->  5 files changed, 26 insertions(+)
-
-Looks nice.
+>  pc-bios/s390-ccw/main.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 
 Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
