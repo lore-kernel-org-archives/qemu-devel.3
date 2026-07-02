@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECB1EC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 02:30:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16DC7C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 02:31:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wf7BU-0004A8-TT; Wed, 01 Jul 2026 22:29:48 -0400
+	id 1wf7BZ-0004DE-HW; Wed, 01 Jul 2026 22:29:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1wf7BT-00049S-Nd
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 22:29:47 -0400
-Received: from ms-2004d-snip4-11.eps.apple.com ([57.103.74.171]
+ (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1wf7BX-0004CS-R0
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 22:29:51 -0400
+Received: from ms-2002f-snip4-11.eps.apple.com ([57.103.74.63]
  helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1wf7BP-0002Pb-Hq
- for qemu-devel@nongnu.org; Wed, 01 Jul 2026 22:29:47 -0400
+ (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1wf7BU-0002dw-Dg
+ for qemu-devel@nongnu.org; Wed, 01 Jul 2026 22:29:51 -0400
 Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-3a-60-percent-7 (Postfix) with ESMTPS id
- C30AE1800343; Thu, 02 Jul 2026 02:29:36 +0000 (UTC)
-X-ICL-RepId: 019f20a9-0969-7de9-a6c6-cde098884b5b
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ5JHVoHRQNGD1YCWgZLVxQEFVsHVghdEkoXXS1aDhwTVhUTC1NWXxUXG1wAFxlRTQhIEwVSB11NVg1HD1geXBQXFUBDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FXggZCF0dGRVaCQpXAEALTgNaB1kCQgtBAVoZXwRFCEgeXxoGWhpYG1wPRARcMFQdHQ5YBgxQTQFDCAoCURxWDVc=
+ 28FDC1800108; Thu, 02 Jul 2026 02:29:41 +0000 (UTC)
+X-ICL-RepId: 019f20a9-1e33-7107-a32c-fec4d6d50bf0
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ5JHVoHRQNGD1YCWgZLVxQEFVsHVghdEkoXXS1aDhwTVhUTC1NWXxUXG1wAFxlRTQhIEwVSB11NVg1HD1geXBQXFUBDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FXggZCF0dGRVaCQpXAEALTgNaB1kCQgtBAVoZXwRFCEgeWxoGWhpYG1wPRARcMFQdHQ5YBgxQTQFDCAoCURxWDVc=
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
- t=1782959378; x=1785551378; bh=45FDTigWHJbPVebVikGe2L0vVKou1huAPlnrZAfu2mc=;
+ t=1782959385; x=1785551385; bh=Eu3SVbJYY/o3DOHB5BtYg9ft3oXxE4t6MxAZkiuoT9o=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=iwHxwaQ9rdy/hFNXwlK63U5hGPYeD5mBI9wJezjzpKBX9mUrR3UX5GppnRUsx7lTJa2WEkRxAuQuvyFM64dSKkwgczhHbjjsnrRU7a41pLM/Vf1Ch4EDMI/GttyNn8NpT8YQRyMA3dG9/GE0NTNo4pRVWWhgcMsqMUxkJuQuQq9Ac//K9sCZ4OV5zSkNnY0OGMn8XvtKUT7veX0l3VNcvF8IYFltZ64iljOI9Ch6IVk5yTfYQe9dpf1UvV8Bd4vIWkmDnBH29A9CWAiLZfTeJpQKpSo42CElNRV+gJ7R6vcvSPJbY3ItBidGzbjcASWUgC7NhuIJtBQePfNIWd8AEw==
+ b=GNT3kU/O46AHDuFVbheIuhFVSRm1r9ccHGal9z9v8bKLTM1JMNl41MXkSP7mVCr/qZrQq2KY2rMxE8aKY6T34qZL3dLosaNK6VnDeF2vOj3Rk+SnNW+9sPiMQvmMzPaa2mhbkOTDXuuYZ+WynyotgCUxmfsbXgnMk08wG60jy3A190lmFnoH2v8Z499UWAWCUNJ21ThMuFnhcImKj0IyyUuLNoi/q1gESKVDsTlvTB62fCcUKjCD92K4otQy+lDP1hIpnZR6fiAYmuq3UexFbTGSrSNkiwrU2CdK6skz9q1S1lk+eBbJF7Fyln6ZoyqQPOw+Vv8Juhs9GMhYtxeWew==
 Received: from localhost.localdomain (unknown [17.57.154.37])
  by p00-icloudmta-asmtp-us-west-3a-60-percent-7 (Postfix) with ESMTPSA id
- 3D854180011C; Thu, 02 Jul 2026 02:29:35 +0000 (UTC)
+ 56C19180011C; Thu, 02 Jul 2026 02:29:40 +0000 (UTC)
 From: Matt Jacobson <mhjacobson@me.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
@@ -39,31 +39,31 @@ Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Matt Jacobson <mhjacobson@me.com>
-Subject: [PATCH v3 1/5] hw/block: add Sony/Apple "SuperDrive" diskette drive
-Date: Wed,  1 Jul 2026 22:29:23 -0400
-Message-ID: <20260702022927.46510-2-mhjacobson@me.com>
+Subject: [PATCH v3 5/5] hw/block: remove unused SWIM1 floppy controller stub
+Date: Wed,  1 Jul 2026 22:29:27 -0400
+Message-ID: <20260702022927.46510-6-mhjacobson@me.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260702022927.46510-1-mhjacobson@me.com>
 References: <20260702022927.46510-1-mhjacobson@me.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: ocS-Pslz7ZA131Gqt9u8m3eR6_r-s_ne
-X-Proofpoint-GUID: ocS-Pslz7ZA131Gqt9u8m3eR6_r-s_ne
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAyMyBTYWx0ZWRfX6x8qQE+N1pgM
- TT4eL2RBnOhRHtmemdYowCTsXzPr9nB2muJsptJcGu7tEEMVgkWN/IqucSGsSttv/D/sPoxH38e
- ij7u8fA8yWzx/jap6tzJytwHcA3syM8h3Hjecy7aKrcwhYaztuFGAf+nAK+fJMdQPq1G3JeZ+ry
- jG8mUexGA78z4HEwgsJx+l01rcfkkYBDb4wX4KwB3S7Zi69WX6PnZPDCTGIkNtWWHei6MMjty8j
- pODuaIADEFPMythYFQvhlK9iEiBG0WPsH5s5zBreIzuWxpnJLSBZQA6Du9TDTGIDR+eqVD3SdVK
- I15gWlGdJ4aaldzUaoN
-Received-SPF: pass client-ip=57.103.74.171; envelope-from=mhjacobson@me.com;
+X-Proofpoint-GUID: Gde-rbctyKRdPvhq9dwg_O7Yf-whdtbn
+X-Proofpoint-ORIG-GUID: Gde-rbctyKRdPvhq9dwg_O7Yf-whdtbn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAyMyBTYWx0ZWRfX643Zvl68tH0J
+ e909MzL4Jt1xbf1fwV5oB/mPGQJTixQJbVVtWPQMSiadCJPh24rkXeV8+CKrHZBDXjDdIuXKBLl
+ 7VKjUotdO1QE/lNOKtSeZLewgyMoYjHVq4pY0uLYK6Rbzg5X600Y/WpuzFnA8lCxQ4f+/XDxST6
+ OMgQhwditUuQDkAw6H2DzXl0/pPk59A8mMJmZQvEzl/Uhfg/vmArvso9Sfj+p40MjNbgpeUeo6l
+ VbnyeAD8tUwzQo56Gsa3nAtkcrlCoIh6v3jIg72LnoVHFfaFIIeToYwYrUo6xPeG5gdumZpUj/C
+ X2SqIniHvILyhOcH3/+
+Received-SPF: pass client-ip=57.103.74.63; envelope-from=mhjacobson@me.com;
  helo=outbound.ms.icloud.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,1161 +79,733 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Mac Quadra 800 contains a "SuperDrive" floppy drive that supports
-both GCR (400 kB and 800 kB) and MFM (720 kB and 1440 kB) diskettes.
-Implement an emulated version, to be controlled by a forthcoming SWIM2
-device.
-
-For GCR, the emulated drive encodes the BlockBackend's data in the Apple
-GCR format and exposes it to the controller via sony_drive_read_byte().
-The bytes are decoded not by the controller but rather in software by
-the Macintosh ".Sony" driver.  The drive also adds the sync bytes and
-addressing marks that software expects.
-
-For MFM, much less encoding is needed.  The sector data passes through
-from the BlockBackend unmodified, and the drive only adds sync bytes and
-addresssing marks.
+This was formerly used in the q800 machine; it's been replaced by a
+functional SWIM2.
 
 Signed-off-by: Matt Jacobson <mhjacobson@me.com>
 ---
- hw/block/meson.build               |    2 +-
- hw/block/sony_superdrive.c         | 1032 ++++++++++++++++++++++++++++
- hw/block/trace-events              |   10 +
- include/hw/block/sony_superdrive.h |   55 ++
- 4 files changed, 1098 insertions(+), 1 deletion(-)
- create mode 100644 hw/block/sony_superdrive.c
- create mode 100644 include/hw/block/sony_superdrive.h
+ MAINTAINERS             |   2 -
+ hw/block/meson.build    |   2 +-
+ hw/block/swim.c         | 577 ----------------------------------------
+ hw/block/trace-events   |   8 -
+ include/hw/block/swim.h |  72 -----
+ 5 files changed, 1 insertion(+), 660 deletions(-)
+ delete mode 100644 hw/block/swim.c
+ delete mode 100644 include/hw/block/swim.h
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 93df53d87f..55da29e0cf 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1394,7 +1394,6 @@ F: hw/m68k/q800-glue.c
+ F: hw/misc/mac_via.c
+ F: hw/nubus/*
+ F: hw/display/macfb.c
+-F: hw/block/swim.c
+ F: hw/misc/djmemc.c
+ F: hw/misc/iosb.c
+ F: hw/audio/asc.c
+@@ -1404,7 +1403,6 @@ F: include/standard-headers/asm-m68k/bootinfo-mac.h
+ F: include/hw/misc/mac_via.h
+ F: include/hw/nubus/*
+ F: include/hw/display/macfb.h
+-F: include/hw/block/swim.h
+ F: include/hw/m68k/q800.h
+ F: include/hw/m68k/q800-glue.h
+ F: include/hw/misc/djmemc.h
 diff --git a/hw/block/meson.build b/hw/block/meson.build
-index d646323b82..c4b873a906 100644
+index 733e9ffb47..2a9a0b9b13 100644
 --- a/hw/block/meson.build
 +++ b/hw/block/meson.build
 @@ -10,7 +10,7 @@ system_ss.add(when: 'CONFIG_PFLASH_CFI01', if_true: files('pflash_cfi01.c'))
  system_ss.add(when: 'CONFIG_PFLASH_CFI02', if_true: files('pflash_cfi02.c'))
  system_ss.add(when: 'CONFIG_SSI_M25P80', if_true: files('m25p80.c'))
  system_ss.add(when: 'CONFIG_SSI_M25P80', if_true: files('m25p80_sfdp.c'))
--system_ss.add(when: 'CONFIG_SWIM', if_true: files('swim.c'))
-+system_ss.add(when: 'CONFIG_SWIM', if_true: files('swim.c', 'sony_superdrive.c'))
+-system_ss.add(when: 'CONFIG_SWIM', if_true: files('swim.c', 'swim2.c', 'sony_superdrive.c'))
++system_ss.add(when: 'CONFIG_SWIM', if_true: files('swim2.c', 'sony_superdrive.c'))
  system_ss.add(when: 'CONFIG_XEN_BUS', if_true: files('xen-block.c'))
  
  system_ss.add(when: 'CONFIG_VIRTIO_BLK', if_true: files('virtio-blk.c'))
-diff --git a/hw/block/sony_superdrive.c b/hw/block/sony_superdrive.c
-new file mode 100644
-index 0000000000..196bd3b0dc
---- /dev/null
-+++ b/hw/block/sony_superdrive.c
-@@ -0,0 +1,1032 @@
-+/*
-+ * QEMU Macintosh SuperDrive floppy disk drive emulator
-+ *
-+ * Copyright (c) 2025 Matt Jacobson <mhjacobson@me.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "hw/block/sony_superdrive.h"
-+#include "system/block-backend.h"
-+#include "system/block-backend-io.h"
-+#include "system/blockdev.h"
-+#include "trace.h"
-+
-+/* Sony drive register selects (CA2-CA1-CA0-SEL) */
-+#define SONY_REG_DIRTN       0x0
-+#define SONY_REG_CSTIN       0x1 /* a.k.a. dipAdr ("disk in place") */
-+#define SONY_REG_STEP        0x2
-+#define SONY_REG_WRTPRT      0x3
-+#define SONY_REG_MOTORON     0x4
-+#define SONY_REG_TKO         0x5
-+#define SONY_REG_EJECT_L     0x6
-+#define SONY_REG_TACH        0x7
-+#define SONY_REG_RDDATA0     0x8
-+#define SONY_REG_RDDATA1     0x9
-+#define SONY_REG_SUPERDRIVE  0xa /* a.k.a. mfmDrvAdr */
-+#define SONY_REG_GCR         0xb
-+#define SONY_REG_SINGLE_SIDE 0xc
-+#define SONY_REG_READY       0xd
-+#define SONY_REG_INSTALLED   0xe /* a.k.a. DRVIN, a.k.a. drvExstAdr */
-+#define SONY_REG_TWOMEG      0xf
-+
-+static const char *const sony_drive_reg_names[] = {
-+    [SONY_REG_DIRTN] = "DIRTN",
-+    [SONY_REG_CSTIN] = "CSTIN",
-+    [SONY_REG_STEP] = "STEP",
-+    [SONY_REG_WRTPRT] = "WRTPRT",
-+    [SONY_REG_MOTORON] = "MOTOR_ON",
-+    [SONY_REG_TKO] = "TKO",
-+    [SONY_REG_EJECT_L] = "EJECT_L",
-+    [SONY_REG_TACH] = "TACH",
-+    [SONY_REG_RDDATA0] = "RDDATA0",
-+    [SONY_REG_RDDATA1] = "RDDATA1",
-+    [SONY_REG_SUPERDRIVE] = "SUPERDRIVE",
-+    [SONY_REG_GCR] = "GCR",
-+    [SONY_REG_SINGLE_SIDE] = "SINGLE_SIDE",
-+    [SONY_REG_READY] = "READY",
-+    [SONY_REG_INSTALLED] = "INSTALLED",
-+    [SONY_REG_TWOMEG] = "TWOMEG",
-+};
-+
-+/* Sony drive write commands (CA2-CA1-CA0-SEL) */
-+#define SONY_CMD_TRACK_POS   0x0
-+#define SONY_CMD_TRACK_NEG   0x8
-+#define SONY_CMD_TRACK_STEP  0x2
-+#define SONY_CMD_SET_MFM     0x3
-+#define SONY_CMD_SET_GCR     0xb
-+#define SONY_CMD_MOTOR_ON    0x4
-+#define SONY_CMD_MOTOR_OFF   0xc
-+#define SONY_CMD_EJECT       0xe
-+
-+static const char *const sony_drive_cmd_names[] = {
-+    [SONY_CMD_TRACK_POS] = "TRACK_POS",
-+    [SONY_CMD_TRACK_NEG] = "TRACK_NEG",
-+    [SONY_CMD_TRACK_STEP] = "TRACK_STEP",
-+    [SONY_CMD_SET_MFM] = "SET_MFM",
-+    [SONY_CMD_SET_GCR] = "SET_GCR",
-+    [SONY_CMD_MOTOR_ON] = "MOTOR_ON",
-+    [SONY_CMD_MOTOR_OFF] = "MOTOR_OFF",
-+    [SONY_CMD_EJECT] = "EJECT",
-+};
-+
-+static const char *sony_drive_cmd_name(const uint8_t selector)
-+{
-+    if (selector < ARRAY_SIZE(sony_drive_cmd_names) &&
-+        sony_drive_cmd_names[selector]) {
-+        return sony_drive_cmd_names[selector];
-+    } else {
-+        return "UNKNOWN";
-+    }
-+}
-+
-+#define SONY_GCR_TAG_LENGTH      12
-+#define SONY_GCR_DATA_LENGTH    512
-+#define SONY_GCR_SECTOR_LENGTH  (SONY_GCR_TAG_LENGTH + SONY_GCR_DATA_LENGTH)
-+#define SONY_GCR_ENCODED_LENGTH 699 /* i.e., sony_6and2_packed_len(524) */
-+#define SONY_GCR_SYNC_LEN         6
-+#define SONY_MFM_SECTOR_LENGTH  512
-+
-+static uint8_t sony_drive_sectors_for_track(const SonyDrive *const drive,
-+                                            const uint8_t track)
-+{
-+    if (drive->sectors_per_track) {
-+        return drive->sectors_per_track;
-+    } else {
-+        /*
-+         * 400K/800K GCR media use zone recording with variable sectors per
-+         * track; each zone spans 16 tracks.
-+         */
-+        static const uint8_t gcr_zone_spt[] = { 12, 11, 10, 9, 8 };
-+        uint8_t zone = track / 16;
-+
-+        if (zone >= ARRAY_SIZE(gcr_zone_spt)) {
-+            zone = ARRAY_SIZE(gcr_zone_spt) - 1;
-+        }
-+
-+        return gcr_zone_spt[zone];
-+    }
-+}
-+
-+static void bitset_set(uint8_t *const bitset, const unsigned int index,
-+                       const bool value)
-+{
-+    const uint8_t mask = (uint8_t)(1u << (index & 0x7));
-+
-+    if (value) {
-+        bitset[index >> 3] |= mask;
-+    } else {
-+        bitset[index >> 3] &= (uint8_t)~mask;
-+    }
-+}
-+
-+static void bitset_set_range(uint8_t *const bitset, const unsigned int index,
-+                             const unsigned int length, const bool value)
-+{
-+    for (unsigned int i = index; i < index + length; i++) {
-+        bitset_set(bitset, i, value);
-+    }
-+}
-+
-+static bool bitset_get(const uint8_t *const bitset, const unsigned int index)
-+{
-+    const uint8_t mask = (uint8_t)(1u << (index & 0x7));
-+    return (bitset[index >> 3] & mask) != 0;
-+}
-+
-+static const uint8_t sony_gcr_encode_table[] = {
-+    0x96, 0x97, 0x9a, 0x9b, 0x9d, 0x9e, 0x9f, 0xa6,
-+    0xa7, 0xab, 0xac, 0xad, 0xae, 0xaf, 0xb2, 0xb3,
-+    0xb4, 0xb5, 0xb6, 0xb7, 0xb9, 0xba, 0xbb, 0xbc,
-+    0xbd, 0xbe, 0xbf, 0xcb, 0xcd, 0xce, 0xcf, 0xd3,
-+    0xd6, 0xd7, 0xd9, 0xda, 0xdb, 0xdc, 0xdd, 0xde,
-+    0xdf, 0xe5, 0xe6, 0xe7, 0xe9, 0xea, 0xeb, 0xec,
-+    0xed, 0xee, 0xef, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6,
-+    0xf7, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff,
-+};
-+
-+/* 0xff is used as filler for bytes the decoder should never see. */
-+static const uint8_t sony_gcr_decode_table[] = {
-+    0x00, 0x01, 0xff, 0xff, 0x02, 0x03, 0xff, 0x04,
-+    0x05, 0x06, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0x07, 0x08, 0xff, 0xff, 0xff, 0x09, 0x0a, 0x0b,
-+    0x0c, 0x0d, 0xff, 0xff, 0x0e, 0x0f, 0x10, 0x11,
-+    0x12, 0x13, 0xff, 0x14, 0x15, 0x16, 0x17, 0x18,
-+    0x19, 0x1a, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0x1b, 0xff, 0x1c,
-+    0x1d, 0x1e, 0xff, 0xff, 0xff, 0x1f, 0xff, 0xff,
-+    0x20, 0x21, 0xff, 0x22, 0x23, 0x24, 0x25, 0x26,
-+    0x27, 0x28, 0xff, 0xff, 0xff, 0xff, 0xff, 0x29,
-+    0x2a, 0x2b, 0xff, 0x2c, 0x2d, 0x2e, 0x2f, 0x30,
-+    0x31, 0x32, 0xff, 0xff, 0x33, 0x34, 0x35, 0x36,
-+    0x37, 0x38, 0xff, 0x39, 0x3a, 0x3b, 0x3c, 0x3d,
-+    0x3e, 0x3f,
-+};
-+
-+static uint8_t sony_gcr_encode_byte(const uint8_t value)
-+{
-+    assert((value & 0xc0) == 0);
-+    return sony_gcr_encode_table[value];
-+}
-+
-+static bool sony_gcr_decode_byte(const uint8_t value, uint8_t *const out)
-+{
-+    if (value < 0x96) {
-+        return false;
-+    }
-+
-+    const uint8_t result = sony_gcr_decode_table[value - 0x96];
-+    if (result == 0xff) {
-+        return false;
-+    }
-+
-+    *out = result;
-+    return true;
-+}
-+
-+static void sony_gcr_encode_bytes(const uint8_t *const in, uint8_t *const out,
-+                                  const size_t len)
-+{
-+    for (size_t i = 0; i < len; i++) {
-+        out[i] = sony_gcr_encode_byte(in[i]);
-+    }
-+}
-+
-+static bool sony_gcr_decode_bytes(const uint8_t *const in, uint8_t *const out,
-+                                  const size_t len)
-+{
-+    bool ok = true;
-+
-+    for (size_t i = 0; i < len; i++) {
-+        if (!sony_gcr_decode_byte(in[i], &out[i])) {
-+            out[i] = 0;
-+            ok = false;
-+        }
-+    }
-+
-+    return ok;
-+}
-+
-+static size_t sony_6and2_packed_len(const size_t in_size)
-+{
-+    const size_t groups = in_size / 3;
-+    const size_t rem = in_size % 3;
-+    return groups * 4 + (rem ? (rem + 1) : 0);
-+}
-+
-+static void sony_6and2_pack(const uint8_t *in, const size_t in_size,
-+                            uint8_t *restrict out, const size_t out_size)
-+{
-+    assert(sony_6and2_packed_len(in_size) == out_size);
-+
-+    for (size_t i = 0; i < in_size; i += 3) {
-+        /* Allow partial groupings. */
-+        const bool have_b = (i + 1) < in_size;
-+        const bool have_c = (i + 2) < in_size;
-+
-+        const uint8_t a = *in++;
-+        const uint8_t b = have_b ? *in++ : 0;
-+        const uint8_t c = have_c ? *in++ : 0;
-+
-+        /* High two bits (A7:6, B7:6, C7:6), then low six bits. */
-+        const uint8_t high  = (uint8_t)(((a & 0xC0u) >> 2) |
-+                                        ((b & 0xC0u) >> 4) |
-+                                        ((c & 0xC0u) >> 6));
-+        const uint8_t low_a = (uint8_t)(a & 0x3Fu);
-+        const uint8_t low_b = (uint8_t)(b & 0x3Fu);
-+        const uint8_t low_c = (uint8_t)(c & 0x3Fu);
-+
-+        *out++ = high;
-+        *out++ = low_a;
-+
-+        if (have_b) {
-+            *out++ = low_b;
-+        }
-+
-+        if (have_c) {
-+            *out++ = low_c;
-+        }
-+    }
-+}
-+
-+static void sony_6and2_unpack(const uint8_t *in, const size_t in_size,
-+                              uint8_t *restrict out, const size_t out_size)
-+{
-+    assert(sony_6and2_packed_len(out_size) == in_size);
-+
-+    for (size_t i = 0; i < in_size; i += 4) {
-+        /* Allow partial groupings. */
-+        const bool have_b = (i + 2) < in_size;
-+        const bool have_c = (i + 3) < in_size;
-+
-+        /* High two bits (A7:6, B7:6, C7:6), then low six bits. */
-+        const uint8_t high = *in++;
-+        const uint8_t low_a = *in++;
-+        const uint8_t low_b = have_b ? *in++ : 0;
-+        const uint8_t low_c = have_c ? *in++ : 0;
-+
-+        const uint8_t a = (uint8_t)((high << 2) & 0xC0u) | low_a;
-+        const uint8_t b = (uint8_t)((high << 4) & 0xC0u) | low_b;
-+        const uint8_t c = (uint8_t)((high << 6) & 0xC0u) | low_c;
-+
-+        *out++ = a;
-+
-+        if (have_b) {
-+            *out++ = b;
-+        }
-+
-+        if (have_c) {
-+            *out++ = c;
-+        }
-+    }
-+}
-+
-+static void sony_checksum_encode(const uint8_t *in, const size_t in_size,
-+                                 uint8_t *out, const size_t out_size,
-+                                 uint8_t *sum_out)
-+{
-+    assert(in_size == out_size);
-+
-+    uint16_t sum_a = 0, sum_b = 0, sum_c = 0;
-+
-+    for (size_t i = 0; i < in_size; i += 3) {
-+        const bool have_b = (i + 1) < in_size;
-+        const bool have_c = (i + 2) < in_size;
-+
-+        const uint8_t a = *in++;
-+        const uint8_t b = have_b ? *in++ : 0;
-+        const uint8_t c = have_c ? *in++ : 0;
-+
-+        /* Per-group left-rotate on sum_c. */
-+        sum_c = (uint16_t)((sum_c & 0x00FFu) << 1);
-+        if (sum_c >= 0x0100u) {
-+            sum_c++; /* insert 1 on carry */
-+        }
-+
-+        /* Add to sum_a; carry from sum_c bumps sum_a. */
-+        sum_a += a;
-+        if (sum_c >= 0x0100u) {
-+            sum_a++;
-+            sum_c &= 0x00FFu;
-+        }
-+        const uint8_t a2 = a ^ (uint8_t)sum_c;
-+
-+        /* Add to sum_b; carry from sum_a bumps sum_b. */
-+        if (have_b) {
-+            sum_b += b;
-+            if (sum_a >= 0x0100u) {
-+                sum_b++;
-+                sum_a &= 0x00FFu;
-+            }
-+        }
-+        const uint8_t b2 = b ^ (uint8_t)sum_a;
-+
-+        /* Add to sum_c; carry from sum_b bumps sum_c. */
-+        if (have_c) {
-+            sum_c += c;
-+            if (sum_b >= 0x0100u) {
-+                sum_c++;
-+                sum_b &= 0x00FFu;
-+            }
-+        }
-+        const uint8_t c2 = c ^ (uint8_t)sum_b;
-+
-+        *out++ = a2;
-+
-+        if (have_b) {
-+            *out++ = b2;
-+        }
-+
-+        if (have_c) {
-+            *out++ = c2;
-+        }
-+    }
-+
-+    *sum_out++ = (uint8_t)sum_a;
-+    *sum_out++ = (uint8_t)sum_b;
-+    *sum_out++ = (uint8_t)sum_c;
-+}
-+
-+static bool sony_checksum_decode(const uint8_t *in, const size_t in_size,
-+                                 uint8_t *out, const size_t out_size,
-+                                 const uint8_t *const sum)
-+{
-+    assert(in_size == out_size);
-+
-+    uint16_t sum_a = 0, sum_b = 0, sum_c = 0;
-+
-+    for (size_t i = 0; i < in_size; i += 3) {
-+        const bool have_b = (i + 1) < in_size;
-+        const bool have_c = (i + 2) < in_size;
-+
-+        const uint8_t a2 = *in++;
-+        const uint8_t b2 = have_b ? *in++ : 0;
-+        const uint8_t c2 = have_c ? *in++ : 0;
-+
-+        /* Per-group left-rotate on sum_c. */
-+        sum_c = (uint16_t)((sum_c & 0x00FFu) << 1);
-+        if (sum_c >= 0x0100u) {
-+            sum_c++; /* insert 1 on carry */
-+        }
-+
-+        /* Add to sum_a; carry from sum_c bumps sum_a. */
-+        const uint8_t a = a2 ^ (uint8_t)sum_c;
-+        sum_a += a;
-+        if (sum_c >= 0x0100u) {
-+            sum_a++;
-+            sum_c &= 0x00FFu;
-+        }
-+
-+        /* Add to sum_b; carry from sum_a bumps sum_b. */
-+        const uint8_t b = b2 ^ (uint8_t)sum_a;
-+        if (have_b) {
-+            sum_b += b;
-+            if (sum_a >= 0x0100u) {
-+                sum_b++;
-+                sum_a &= 0x00FFu;
-+            }
-+        }
-+
-+        /* Add to sum_c; carry from sum_b bumps sum_c. */
-+        const uint8_t c = c2 ^ (uint8_t)sum_b;
-+        if (have_c) {
-+            sum_c += c;
-+            if (sum_b >= 0x0100u) {
-+                sum_c++;
-+                sum_b &= 0x00FFu;
-+            }
-+        }
-+
-+        *out++ = a;
-+
-+        if (have_b) {
-+            *out++ = b;
-+        }
-+
-+        if (have_c) {
-+            *out++ = c;
-+        }
-+    }
-+
-+    if (sum) {
-+        return sum[0] == (uint8_t)sum_a &&
-+               sum[1] == (uint8_t)sum_b &&
-+               sum[2] == (uint8_t)sum_c;
-+    } else {
-+        return false;
-+    }
-+}
-+
-+static bool sony_validate_address(SonyDrive *const drive, const uint8_t track,
-+                                  const uint8_t head, const uint8_t sector)
-+{
-+    const uint8_t sectors = sony_drive_sectors_for_track(drive, track);
-+    assert(sectors > 0);
-+
-+    if (track >= drive->cylinders) {
-+        return false;
-+    } else if (head > 0 && !drive->double_sided) {
-+        return false;
-+    } else if (sector >= sectors) {
-+        return false;
-+    } else {
-+        return true;
-+    }
-+}
-+
-+static uint64_t sony_lba(SonyDrive *const drive, const uint8_t track,
-+                         const uint8_t head, const uint8_t sector)
-+{
-+    const uint8_t heads = drive->double_sided ? 2 : 1;
-+
-+    if (drive->sectors_per_track) {
-+        return ((uint64_t)track * heads + head)
-+                * drive->sectors_per_track + sector;
-+    } else {
-+        uint64_t lba = 0;
-+
-+        for (uint8_t i = 0; i < track; i++) {
-+            const uint8_t sectors = sony_drive_sectors_for_track(drive, i);
-+            assert(sectors > 0);
-+            lba += sectors * heads;
-+        }
-+
-+        const uint8_t sectors = sony_drive_sectors_for_track(drive, track);
-+        assert(sectors > 0);
-+        lba += sectors * head;
-+
-+        lba += sector;
-+
-+        return lba;
-+    }
-+}
-+
-+static bool sony_drive_prepare_gcr(SonyDrive *const drive, const uint64_t lba,
-+                                   const uint8_t track, const uint8_t head,
-+                                   const uint8_t sector)
-+{
-+    assert(head < 2);
-+    const uint8_t format_byte = drive->double_sided ? 0x22 : 0x2;
-+
-+    uint8_t header_vals[5];
-+    header_vals[0] = track & 0x3f;
-+    header_vals[1] = sector;
-+    header_vals[2] = (head << 5) | ((track >> 6) & 0x1f);
-+    header_vals[3] = format_byte;
-+    header_vals[4] = header_vals[0] ^ header_vals[1] ^
-+                     header_vals[2] ^ header_vals[3];
-+
-+    uint8_t sector_data[SONY_GCR_SECTOR_LENGTH];
-+    size_t sector_data_pos = 0;
-+    sector_data[sector_data_pos++] = track;
-+    sector_data[sector_data_pos++] = head;
-+    sector_data[sector_data_pos++] = sector;
-+    sector_data[sector_data_pos++] = format_byte;
-+    sector_data[sector_data_pos++] = 0x00; /* reserved */
-+    sector_data[sector_data_pos++] = 0x00;
-+    sector_data[sector_data_pos++] = (lba >> 8) & 0xff;
-+    sector_data[sector_data_pos++] = lba & 0xff;
-+    sector_data[sector_data_pos++] = 0x00;
-+    sector_data[sector_data_pos++] = 0x00;
-+    sector_data[sector_data_pos++] = 0x00;
-+    sector_data[sector_data_pos++] = 0x00;
-+
-+    const int ret = blk_pread(drive->blk, lba * 512, SONY_GCR_DATA_LENGTH,
-+                              sector_data + sector_data_pos, 0);
-+    if (ret < 0) {
-+        return false;
-+    }
-+    sector_data_pos += SONY_GCR_DATA_LENGTH;
-+    assert(sector_data_pos == sizeof sector_data);
-+
-+    /* Fill drive->xfer_buffer. */
-+    size_t idx = 0;
-+
-+    /*
-+     * Sync field.  Note that we don't actually have to replicate the sync bytes
-+     * as on disk; we can just return what the IWM/SWIM would see.
-+     * We use a six-byte field since that matches the size of what the CPU
-+     * will write.
-+     */
-+    memset(&drive->xfer_buffer[idx], 0xff, SONY_GCR_SYNC_LEN);
-+    idx += SONY_GCR_SYNC_LEN;
-+
-+    drive->xfer_buffer[idx++] = 0xd5;
-+    drive->xfer_buffer[idx++] = 0xaa;
-+    drive->xfer_buffer[idx++] = 0x96;
-+
-+    sony_gcr_encode_bytes(header_vals, &drive->xfer_buffer[idx],
-+                          sizeof header_vals);
-+    idx += sizeof header_vals;
-+
-+    drive->xfer_buffer[idx++] = 0xde;
-+    drive->xfer_buffer[idx++] = 0xaa;
-+
-+    drive->xfer_write_position = idx;
-+
-+    /* Sync field. */
-+    memset(&drive->xfer_buffer[idx], 0xff, SONY_GCR_SYNC_LEN);
-+    idx += SONY_GCR_SYNC_LEN;
-+
-+    drive->xfer_buffer[idx++] = 0xd5;
-+    drive->xfer_buffer[idx++] = 0xaa;
-+    drive->xfer_buffer[idx++] = 0xad;
-+    drive->xfer_buffer[idx++] = sony_gcr_encode_byte(sector);
-+
-+    /* Sector data. */
-+    uint8_t sector_checksum[3];
-+    sony_checksum_encode(sector_data, sizeof sector_data,
-+                         sector_data, sizeof sector_data, sector_checksum);
-+    sony_6and2_pack(sector_data, sizeof sector_data,
-+                    drive->xfer_buffer + idx, SONY_GCR_ENCODED_LENGTH);
-+    sony_gcr_encode_bytes(drive->xfer_buffer + idx,
-+                          drive->xfer_buffer + idx, SONY_GCR_ENCODED_LENGTH);
-+    idx += SONY_GCR_ENCODED_LENGTH;
-+
-+    /* Encode and append checksum. */
-+    sony_6and2_pack(sector_checksum, sizeof sector_checksum,
-+                    drive->xfer_buffer + idx, 4);
-+    sony_gcr_encode_bytes(drive->xfer_buffer + idx,
-+                          drive->xfer_buffer + idx, 4);
-+    idx += 4;
-+
-+    /* Trail marks. */
-+    drive->xfer_buffer[idx++] = 0xde;
-+    drive->xfer_buffer[idx++] = 0xaa;
-+
-+    /* Add some empty space; the Mac driver overwrites this area. */
-+    drive->xfer_buffer[idx++] = 0xff;
-+    drive->xfer_buffer[idx++] = 0xff;
-+    drive->xfer_buffer[idx++] = 0xff;
-+    drive->xfer_buffer[idx++] = 0xff;
-+
-+    assert(idx <= sizeof drive->xfer_buffer);
-+    drive->xfer_length = idx;
-+    drive->xfer_position = 0;
-+    drive->xfer_active = true;
-+
-+    return true;
-+}
-+
-+static bool sony_drive_persist_gcr(SonyDrive *const drive)
-+{
-+    uint8_t encoded_data[SONY_GCR_ENCODED_LENGTH];
-+    uint8_t sector_data[SONY_GCR_SECTOR_LENGTH];
-+
-+    uint8_t *const encoded_buffer = drive->xfer_buffer + SONY_GCR_SYNC_LEN + 3
-+                                     + 5 + 2 + SONY_GCR_SYNC_LEN + 4;
-+    if (!sony_gcr_decode_bytes(encoded_buffer, encoded_data,
-+                               SONY_GCR_ENCODED_LENGTH)) {
-+        return false;
-+    }
-+    sony_6and2_unpack(encoded_data, sizeof encoded_data,
-+                      sector_data, sizeof sector_data);
-+
-+    uint8_t encoded_checksum[4];
-+    uint8_t checksum[3];
-+    if (!sony_gcr_decode_bytes(encoded_buffer + SONY_GCR_ENCODED_LENGTH,
-+                               encoded_checksum, 4)) {
-+        return false;
-+    }
-+    sony_6and2_unpack(encoded_checksum, sizeof encoded_checksum,
-+                      checksum, sizeof checksum);
-+    const bool result = sony_checksum_decode(sector_data, sizeof sector_data,
-+                                             sector_data, sizeof sector_data,
-+                                             checksum);
-+
-+    if (!result) {
-+        return false;
-+    } else {
-+        const int ret = blk_pwrite(drive->blk, drive->xfer_lba * 512,
-+                                   SONY_GCR_DATA_LENGTH,
-+                                   &sector_data[SONY_GCR_TAG_LENGTH], 0);
-+        return ret >= 0;
-+    }
-+}
-+
-+static bool sony_drive_prepare_mfm(SonyDrive *const drive, const uint64_t lba,
-+                                   const uint8_t track, const uint8_t head,
-+                                   const uint8_t sector)
-+{
-+    size_t idx = 0;
-+
-+    /* Sync field. */
-+    memset(drive->xfer_buffer + idx, 0x00, 12);
-+    idx += 12;
-+
-+    /* Address field. */
-+    bitset_set_range(drive->xfer_mark_bitset, idx, 3, true);
-+    drive->xfer_buffer[idx++] = 0xA1;
-+    drive->xfer_buffer[idx++] = 0xA1;
-+    drive->xfer_buffer[idx++] = 0xA1;
-+
-+    drive->xfer_buffer[idx++] = 0xFE;
-+    drive->xfer_buffer[idx++] = track;
-+    drive->xfer_buffer[idx++] = head;
-+    drive->xfer_buffer[idx++] = sector + 1; /* NOTE: 1-indexed, unlike GCR! */
-+    drive->xfer_buffer[idx++] = 0x02; /* 512 bytes/sector */
-+    drive->xfer_buffer[idx++] = 0x00; /* CRC (unimplemented) */
-+    drive->xfer_buffer[idx++] = 0x00; /* CRC (unimplemented) */
-+
-+    /* Intra-sector gap. */
-+    memset(drive->xfer_buffer + idx, 0x4E, 22);
-+    idx += 22;
-+
-+    /* Sync field. */
-+    memset(drive->xfer_buffer + idx, 0x00, 12);
-+    idx += 12;
-+
-+    /* Data mark. */
-+    bitset_set_range(drive->xfer_mark_bitset, idx, 3, true);
-+    drive->xfer_buffer[idx++] = 0xA1;
-+    drive->xfer_buffer[idx++] = 0xA1;
-+    drive->xfer_buffer[idx++] = 0xA1;
-+
-+    drive->xfer_write_position = idx;
-+    drive->xfer_buffer[idx++] = 0xFB;
-+
-+    /* Data. */
-+    const int ret = blk_pread(drive->blk, lba * 512, SONY_MFM_SECTOR_LENGTH,
-+                              drive->xfer_buffer + idx, 0);
-+    if (ret < 0) {
-+        return false;
-+    }
-+    idx += SONY_MFM_SECTOR_LENGTH;
-+
-+    drive->xfer_buffer[idx++] = 0; /* CRC (unimplemented) */
-+    drive->xfer_buffer[idx++] = 0; /* CRC (unimplemented) */
-+
-+    /* Inter-sector gap. */
-+    memset(drive->xfer_buffer + idx, 0x4E, 101);
-+    idx += 101;
-+
-+    assert(idx <= sizeof drive->xfer_buffer);
-+    drive->xfer_length = idx;
-+    drive->xfer_position = 0;
-+    drive->xfer_active = true;
-+
-+    return true;
-+}
-+
-+static bool sony_drive_persist_mfm(SonyDrive *const drive)
-+{
-+    const size_t offset = 12 + 10 + 22 + 12 + 4;
-+    const int ret = blk_pwrite(drive->blk, drive->xfer_lba * 512,
-+                               SONY_MFM_SECTOR_LENGTH,
-+                               drive->xfer_buffer + offset, 0);
-+    return ret >= 0;
-+}
-+
-+static void sony_drive_transfer_reset(SonyDrive *const drive)
-+{
-+    /* First, persist any dirty xfer. */
-+    if (drive->xfer_dirty) {
-+        bool result;
-+
-+        if (drive->gcr_encode) {
-+            result = sony_drive_persist_gcr(drive);
-+        } else {
-+            result = sony_drive_persist_mfm(drive);
-+        }
-+
-+        trace_sony_drive_persist(drive, drive->xfer_lba, result);
-+    }
-+
-+    drive->xfer_active = false;
-+    drive->xfer_dirty = false;
-+    drive->xfer_lba = UINT64_MAX;
-+    drive->xfer_position = 0;
-+    drive->xfer_write_position = 0;
-+    drive->xfer_length = 0;
-+    memset(drive->xfer_buffer, 0, sizeof drive->xfer_buffer);
-+    memset(drive->xfer_mark_bitset, 0, sizeof drive->xfer_mark_bitset);
-+}
-+
-+static bool sony_drive_prepare(SonyDrive *const drive)
-+{
-+    if (!drive->disk_in) {
-+        trace_sony_drive_prepare(drive, 0, 0, 0, 0, 0);
-+        return false;
-+    }
-+
-+    sony_drive_transfer_reset(drive);
-+
-+    const uint8_t sectors = sony_drive_sectors_for_track(drive,
-+                                                         drive->current_track);
-+    const uint8_t head = drive->sel ? 1 : 0;
-+    const uint8_t track = drive->current_track;
-+
-+    assert(sectors != 0);
-+
-+    const uint8_t sector = drive->current_sector;
-+    drive->current_sector = (drive->current_sector + 1) % sectors;
-+
-+    if (!sony_validate_address(drive, track, head, sector)) {
-+        trace_sony_drive_prepare(drive, track, head, sector,
-+                                 drive->gcr_encode, 0);
-+        return false;
-+    }
-+
-+    const uint64_t lba = sony_lba(drive, track, head, sector);
-+    assert(lba < drive->total_sectors);
-+
-+    bool result;
-+    if (drive->gcr_encode) {
-+        result = sony_drive_prepare_gcr(drive, lba, track, head, sector);
-+    } else {
-+        result = sony_drive_prepare_mfm(drive, lba, track, head, sector);
-+    }
-+
-+    drive->xfer_lba = lba;
-+    trace_sony_drive_prepare(drive, track, head, sector, drive->gcr_encode,
-+                             drive->xfer_length);
-+    return result;
-+}
-+
-+static uint8_t sony_drive_selected_drive_reg(const SonyDrive *const drive)
-+{
-+    uint8_t selector = 0;
-+
-+    if (drive->phases & 0x4) { /* CA2 */
-+        selector |= 0x8;
-+    }
-+    if (drive->phases & 0x2) { /* CA1 */
-+        selector |= 0x4;
-+    }
-+    if (drive->phases & 0x1) { /* CA0 */
-+        selector |= 0x2;
-+    }
-+    if (drive->sel) {
-+        selector |= 0x1;
-+    }
-+
-+    return selector;
-+}
-+
-+static void sony_drive_step(SonyDrive *const drive)
-+{
-+    if (drive->seek_direction < 0) {
-+        if (drive->current_track > 0) {
-+            drive->current_track--;
-+        }
-+    } else {
-+        if (!drive->cylinders || drive->current_track + 1 < drive->cylinders) {
-+            drive->current_track++;
-+        }
-+    }
-+
-+    drive->current_sector = 0;
-+    sony_drive_transfer_reset(drive);
-+    trace_sony_drive_step(drive, drive->seek_direction, drive->current_track);
-+}
-+
-+static void sony_drive_strobe_drive(SonyDrive *const drive)
-+{
-+    const uint8_t selector = sony_drive_selected_drive_reg(drive);
-+    trace_sony_drive_strobe(drive, selector, sony_drive_cmd_name(selector));
-+
-+    switch (selector) {
-+    case SONY_CMD_TRACK_POS:
-+        drive->seek_direction = 1;
-+        break;
-+    case SONY_CMD_TRACK_NEG:
-+        drive->seek_direction = -1;
-+        break;
-+    case SONY_CMD_TRACK_STEP:
-+        sony_drive_step(drive);
-+        break;
-+    case SONY_CMD_SET_MFM:
-+        /*
-+         * This and SET_GCR tell the drive whether to use constant or variable
-+         * spindle speed.  We just store the value for later retrieval
-+         * (SONY_REG_GCR).
-+         */
-+        drive->use_gcr = false;
-+        break;
-+    case SONY_CMD_SET_GCR:
-+        drive->use_gcr = true;
-+        break;
-+    case SONY_CMD_MOTOR_ON:
-+        drive->motor_on = true;
-+        break;
-+    case SONY_CMD_MOTOR_OFF:
-+        drive->motor_on = false;
-+        sony_drive_transfer_reset(drive);
-+        break;
-+    case SONY_CMD_EJECT:
-+        blk_eject(drive->blk, true);
-+        drive->disk_in = false;
-+        sony_drive_reset(drive);
-+        break;
-+    default:
-+        break;
-+    }
-+}
-+
-+bool sony_drive_read_sense(SonyDrive *const drive)
-+{
-+    const uint8_t reg = sony_drive_selected_drive_reg(drive);
-+    bool value;
-+
-+    switch (reg) {
-+    case SONY_REG_DIRTN:
-+        /* "Direction". */
-+        value = drive->seek_direction < 0;
-+        break;
-+    case SONY_REG_CSTIN:
-+        /* "Cassette in". */
-+        value = !drive->disk_in; /* sense inverted */
-+        break;
-+    case SONY_REG_STEP:
-+        value = true; /* not emulated; our seeks are instantaneous */
-+        break;
-+    case SONY_REG_WRTPRT:
-+        value = !drive->write_protected; /* sense inverted */
-+        break;
-+    case SONY_REG_MOTORON:
-+        value = !drive->motor_on; /* sense inverted */
-+        break;
-+    case SONY_REG_TKO:
-+        /* "Track zero". */
-+        value = drive->current_track != 0; /* sense inverted */
-+        break;
-+    case SONY_REG_EJECT_L:
-+        /* Not pressing eject switch. */
-+        value = false;
-+        break;
-+    case SONY_REG_TACH:
-+        /* Tacho functionality not emulated. */
-+        value = !drive->motor_on;
-+        break;
-+    case SONY_REG_RDDATA0:
-+    case SONY_REG_RDDATA1:
-+        /* Single-bit reads are not emulated. */
-+        value = true;
-+        break;
-+    case SONY_REG_SUPERDRIVE:
-+        value = true;
-+        break;
-+    case SONY_REG_GCR:
-+        value = !drive->use_gcr; /* sense inverted */
-+        break;
-+    case SONY_REG_SINGLE_SIDE:
-+        /* We are a double-sided drive. */
-+        value = true; /* sense inverted */
-+        break;
-+    case SONY_REG_READY:
-+        value = !(drive->disk_in && drive->motor_on); /* sense inverted */
-+        break;
-+    case SONY_REG_INSTALLED:
-+        value = false; /* sense inverted */
-+        break;
-+    case SONY_REG_TWOMEG:
-+        /* "Two-meg" refers to the unformatted size of HD MFM floppies. */
-+        value = !(drive->hd_media && drive->disk_in); /* sense inverted */
-+        break;
-+    default:
-+        value = true;
-+        break;
-+    }
-+
-+    trace_sony_drive_read_sense(drive, reg, sony_drive_reg_names[reg], value);
-+    return value;
-+}
-+
-+void sony_drive_set_inputs(SonyDrive *const drive, const uint8_t phases,
-+                           const bool sel, const bool enabled)
-+{
-+    trace_sony_drive_set_inputs(drive, phases, sel, enabled);
-+    const bool prev_strobe = (drive->phases & 0x8) != 0 && drive->enabled;
-+    const bool cur_strobe = (phases & 0x8) != 0 && enabled;
-+
-+    drive->phases = phases;
-+    drive->sel = sel;
-+    drive->enabled = enabled;
-+
-+    if (!prev_strobe && cur_strobe) {
-+        sony_drive_strobe_drive(drive);
-+    }
-+}
-+
-+bool sony_drive_uses_gcr_encoding(const SonyDrive *const drive)
-+{
-+    return drive->gcr_encode;
-+}
-+
-+bool sony_drive_read_byte(SonyDrive *const drive,
-+                          uint8_t *const value_out, bool *const is_mark_out)
-+{
-+    if (!drive->xfer_active || drive->xfer_position >= drive->xfer_length) {
-+        sony_drive_prepare(drive);
-+    }
-+
-+    if (!drive->xfer_active) {
-+        return false;
-+    } else {
-+        const uint16_t offset = drive->xfer_position;
-+        drive->xfer_position++;
-+        const uint8_t value = drive->xfer_buffer[offset];
-+        const bool is_mark = bitset_get(drive->xfer_mark_bitset, offset);
-+
-+        *value_out = value;
-+        *is_mark_out = is_mark;
-+
-+        trace_sony_drive_read_byte(drive, value, is_mark,
-+                                   drive->xfer_lba, offset);
-+        return true;
-+    }
-+}
-+
-+bool sony_drive_write_byte(SonyDrive *const drive, const uint8_t value)
-+{
-+    if (drive->write_protected) {
-+        return false;
-+    }
-+
-+    if (!drive->xfer_active) {
-+        return false;
-+    } else {
-+        const uint16_t offset = drive->xfer_write_position;
-+        if (offset >= drive->xfer_length) {
-+            return false;
-+        }
-+
-+        drive->xfer_buffer[offset] = value;
-+        drive->xfer_write_position++;
-+        drive->xfer_dirty = true;
-+
-+        trace_sony_drive_write_byte(drive, value, drive->xfer_lba, offset);
-+        return true;
-+    }
-+}
-+
-+void sony_drive_set_block_backend(SonyDrive *const drive,
-+                                  BlockBackend *const block)
-+{
-+    sony_drive_transfer_reset(drive);
-+    drive->blk = block;
-+    drive->disk_in = blk_is_inserted(block);
-+    sony_drive_reset(drive);
-+}
-+
-+void sony_drive_reset(SonyDrive *const drive)
-+{
-+    sony_drive_transfer_reset(drive);
-+
-+    drive->motor_on = false;
-+    drive->write_protected = false;
-+    drive->hd_media = false;
-+    drive->double_sided = false;
-+    drive->use_gcr = true;
-+    drive->gcr_encode = true;
-+    drive->cylinders = 0;
-+    drive->sectors_per_track = 0;
-+    drive->total_sectors = 0;
-+    drive->current_track = 0;
-+    drive->current_sector = 0;
-+    drive->seek_direction = 1;
-+
-+    if (drive->disk_in) {
-+        const int64_t length = blk_getlength(drive->blk);
-+
-+        if (length <= 0 || length % 512 != 0) {
-+            warn_report_once("%s: unsupported floppy size %" PRId64,
-+                             __func__, length);
-+            drive->disk_in = false;
-+        } else {
-+            drive->write_protected = !blk_is_writable(drive->blk);
-+            drive->total_sectors = length / 512;
-+
-+            if (drive->total_sectors == 800) {
-+                /* 400 kB (single-sided GCR). */
-+                drive->cylinders = 80;
-+                drive->double_sided = false;
-+                drive->gcr_encode = true;
-+            } else if (drive->total_sectors == 1600) {
-+                /* 800 kB (double-sided GCR). */
-+                drive->cylinders = 80;
-+                drive->double_sided = true;
-+                drive->gcr_encode = true;
-+            } else if (drive->total_sectors == 1440) {
-+                /* 720 kB (double-sided MFM). */
-+                drive->cylinders = 80;
-+                drive->sectors_per_track = 9;
-+                drive->double_sided = true;
-+                drive->gcr_encode = false;
-+            } else if (drive->total_sectors == 2880) {
-+                /* 1440 kB (double-sided MFM). */
-+                drive->cylinders = 80;
-+                drive->sectors_per_track = 18;
-+                drive->hd_media = true;
-+                drive->double_sided = true;
-+                drive->gcr_encode = false;
-+            } else {
-+                warn_report_once("%s: unable to determine geometry for media"
-+                                 " (%" PRId64 " bytes)", __func__, length);
-+                drive->disk_in = false;
-+            }
-+        }
-+    }
-+}
+diff --git a/hw/block/swim.c b/hw/block/swim.c
+deleted file mode 100644
+index 54b63bfbb5..0000000000
+--- a/hw/block/swim.c
++++ /dev/null
+@@ -1,577 +0,0 @@
+-/*
+- * QEMU Macintosh floppy disk controller emulator (SWIM)
+- *
+- * Copyright (c) 2014-2018 Laurent Vivier <laurent@vivier.eu>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2.  See
+- * the COPYING file in the top-level directory.
+- *
+- * Only the basic support: it allows to switch from IWM (Integrated WOZ
+- * Machine) mode to the SWIM mode and makes the linux driver happy.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qemu/main-loop.h"
+-#include "qapi/error.h"
+-#include "system/block-backend.h"
+-#include "hw/core/sysbus.h"
+-#include "migration/vmstate.h"
+-#include "hw/block/block.h"
+-#include "hw/block/swim.h"
+-#include "hw/core/qdev-properties.h"
+-#include "trace.h"
+-
+-
+-/* IWM latch bits */
+-
+-#define IWMLB_PHASE0            0
+-#define IWMLB_PHASE1            1
+-#define IWMLB_PHASE2            2
+-#define IWMLB_PHASE3            3
+-#define IWMLB_MOTORON           4
+-#define IWMLB_DRIVESEL          5
+-#define IWMLB_L6                6
+-#define IWMLB_L7                7
+-
+-/* IWM registers */
+-
+-#define IWM_READALLONES         0
+-#define IWM_READDATA            1
+-#define IWM_READSTATUS0         2
+-#define IWM_READSTATUS1         3
+-#define IWM_READWHANDSHAKE0     4
+-#define IWM_READWHANDSHAKE1     5
+-#define IWM_WRITESETMODE        6
+-#define IWM_WRITEDATA           7
+-
+-/* SWIM registers */
+-
+-#define SWIM_WRITE_DATA         0
+-#define SWIM_WRITE_MARK         1
+-#define SWIM_WRITE_CRC          2
+-#define SWIM_WRITE_PARAMETER    3
+-#define SWIM_WRITE_PHASE        4
+-#define SWIM_WRITE_SETUP        5
+-#define SWIM_WRITE_MODE0        6
+-#define SWIM_WRITE_MODE1        7
+-
+-#define SWIM_READ_DATA          8
+-#define SWIM_READ_MARK          9
+-#define SWIM_READ_ERROR         10
+-#define SWIM_READ_PARAMETER     11
+-#define SWIM_READ_PHASE         12
+-#define SWIM_READ_SETUP         13
+-#define SWIM_READ_STATUS        14
+-#define SWIM_READ_HANDSHAKE     15
+-
+-#define REG_SHIFT               9
+-
+-#define SWIM_MODE_STATUS_BIT    6
+-#define SWIM_MODE_IWM           0
+-#define SWIM_MODE_ISM           1
+-
+-/* bits in phase register */
+-
+-#define SWIM_SEEK_NEGATIVE   0x074
+-#define SWIM_STEP            0x071
+-#define SWIM_MOTOR_ON        0x072
+-#define SWIM_MOTOR_OFF       0x076
+-#define SWIM_INDEX           0x073
+-#define SWIM_EJECT           0x077
+-#define SWIM_SETMFM          0x171
+-#define SWIM_SETGCR          0x175
+-#define SWIM_RELAX           0x033
+-#define SWIM_LSTRB           0x008
+-#define SWIM_CA_MASK         0x077
+-
+-/* Select values for swim_select and swim_readbit */
+-
+-#define SWIM_READ_DATA_0     0x074
+-#define SWIM_TWOMEG_DRIVE    0x075
+-#define SWIM_SINGLE_SIDED    0x076
+-#define SWIM_DRIVE_PRESENT   0x077
+-#define SWIM_DISK_IN         0x170
+-#define SWIM_WRITE_PROT      0x171
+-#define SWIM_TRACK_ZERO      0x172
+-#define SWIM_TACHO           0x173
+-#define SWIM_READ_DATA_1     0x174
+-#define SWIM_MFM_MODE        0x175
+-#define SWIM_SEEK_COMPLETE   0x176
+-#define SWIM_ONEMEG_MEDIA    0x177
+-
+-/* Bits in handshake register */
+-
+-#define SWIM_MARK_BYTE       0x01
+-#define SWIM_CRC_ZERO        0x02
+-#define SWIM_RDDATA          0x04
+-#define SWIM_SENSE           0x08
+-#define SWIM_MOTEN           0x10
+-#define SWIM_ERROR           0x20
+-#define SWIM_DAT2BYTE        0x40
+-#define SWIM_DAT1BYTE        0x80
+-
+-/* bits in setup register */
+-
+-#define SWIM_S_INV_WDATA     0x01
+-#define SWIM_S_3_5_SELECT    0x02
+-#define SWIM_S_GCR           0x04
+-#define SWIM_S_FCLK_DIV2     0x08
+-#define SWIM_S_ERROR_CORR    0x10
+-#define SWIM_S_IBM_DRIVE     0x20
+-#define SWIM_S_GCR_WRITE     0x40
+-#define SWIM_S_TIMEOUT       0x80
+-
+-/* bits in mode register */
+-
+-#define SWIM_CLFIFO          0x01
+-#define SWIM_ENBL1           0x02
+-#define SWIM_ENBL2           0x04
+-#define SWIM_ACTION          0x08
+-#define SWIM_WRITE_MODE      0x10
+-#define SWIM_HEDSEL          0x20
+-#define SWIM_MOTON           0x80
+-
+-static const char *iwm_reg_names[] = {
+-    "READALLONES", "READDATA", "READSTATUS0", "READSTATUS1",
+-    "READWHANDSHAKE0", "READWHANDSHAKE1", "WRITESETMODE", "WRITEDATA"
+-};
+-
+-static const char *ism_reg_names[] = {
+-    "WRITE_DATA", "WRITE_MARK", "WRITE_CRC", "WRITE_PARAMETER",
+-    "WRITE_PHASE", "WRITE_SETUP", "WRITE_MODE0", "WRITE_MODE1",
+-    "READ_DATA", "READ_MARK", "READ_ERROR", "READ_PARAMETER",
+-    "READ_PHASE", "READ_SETUP", "READ_STATUS", "READ_HANDSHAKE"
+-};
+-
+-static void fd_recalibrate(FDrive *drive)
+-{
+-}
+-
+-static void swim_change_cb(void *opaque, bool load, Error **errp)
+-{
+-    FDrive *drive = opaque;
+-
+-    if (!load) {
+-        blk_set_perm(drive->blk, 0, BLK_PERM_ALL, &error_abort);
+-    } else {
+-        if (!blkconf_apply_backend_options(drive->conf,
+-                                           !blk_supports_write_perm(drive->blk),
+-                                           false, errp)) {
+-            return;
+-        }
+-    }
+-}
+-
+-static const BlockDevOps swim_block_ops = {
+-    .change_media_cb = swim_change_cb,
+-};
+-
+-static const Property swim_drive_properties[] = {
+-    DEFINE_PROP_INT32("unit", SWIMDrive, unit, -1),
+-    DEFINE_BLOCK_PROPERTIES(SWIMDrive, conf),
+-};
+-
+-static void swim_drive_realize(DeviceState *qdev, Error **errp)
+-{
+-    SWIMDrive *dev = SWIM_DRIVE(qdev);
+-    SWIMBus *bus = SWIM_BUS(qdev->parent_bus);
+-    FDrive *drive;
+-    int ret;
+-
+-    if (dev->unit == -1) {
+-        for (dev->unit = 0; dev->unit < SWIM_MAX_FD; dev->unit++) {
+-            drive = &bus->ctrl->drives[dev->unit];
+-            if (!drive->blk) {
+-                break;
+-            }
+-        }
+-    }
+-
+-    if (dev->unit >= SWIM_MAX_FD) {
+-        error_setg(errp, "Can't create floppy unit %d, bus supports "
+-                   "only %d units", dev->unit, SWIM_MAX_FD);
+-        return;
+-    }
+-
+-    drive = &bus->ctrl->drives[dev->unit];
+-    if (drive->blk) {
+-        error_setg(errp, "Floppy unit %d is in use", dev->unit);
+-        return;
+-    }
+-
+-    if (!dev->conf.blk) {
+-        /* Anonymous BlockBackend for an empty drive */
+-        dev->conf.blk = blk_new(qemu_get_aio_context(), 0, BLK_PERM_ALL);
+-        ret = blk_attach_dev(dev->conf.blk, qdev);
+-        assert(ret == 0);
+-    }
+-
+-    if (!blkconf_blocksizes(&dev->conf, errp)) {
+-        return;
+-    }
+-
+-    if (dev->conf.logical_block_size != 512 ||
+-        dev->conf.physical_block_size != 512)
+-    {
+-        error_setg(errp, "Physical and logical block size must "
+-                   "be 512 for floppy");
+-        return;
+-    }
+-
+-    /*
+-     * rerror/werror aren't supported by fdc and therefore not even registered
+-     * with qdev. So set the defaults manually before they are used in
+-     * blkconf_apply_backend_options().
+-     */
+-    dev->conf.rerror = BLOCKDEV_ON_ERROR_AUTO;
+-    dev->conf.werror = BLOCKDEV_ON_ERROR_AUTO;
+-
+-    if (!blkconf_apply_backend_options(&dev->conf,
+-                                       !blk_supports_write_perm(dev->conf.blk),
+-                                       false, errp)) {
+-        return;
+-    }
+-
+-    /*
+-     * 'enospc' is the default for -drive, 'report' is what blk_new() gives us
+-     * for empty drives.
+-     */
+-    if (blk_get_on_error(dev->conf.blk, 0) != BLOCKDEV_ON_ERROR_ENOSPC &&
+-        blk_get_on_error(dev->conf.blk, 0) != BLOCKDEV_ON_ERROR_REPORT) {
+-        error_setg(errp, "fdc doesn't support drive option werror");
+-        return;
+-    }
+-    if (blk_get_on_error(dev->conf.blk, 1) != BLOCKDEV_ON_ERROR_REPORT) {
+-        error_setg(errp, "fdc doesn't support drive option rerror");
+-        return;
+-    }
+-
+-    drive->conf = &dev->conf;
+-    drive->blk = dev->conf.blk;
+-    drive->swimctrl = bus->ctrl;
+-
+-    blk_set_dev_ops(drive->blk, &swim_block_ops, drive);
+-}
+-
+-static void swim_drive_class_init(ObjectClass *klass, const void *data)
+-{
+-    DeviceClass *k = DEVICE_CLASS(klass);
+-    k->realize = swim_drive_realize;
+-    set_bit(DEVICE_CATEGORY_STORAGE, k->categories);
+-    k->bus_type = TYPE_SWIM_BUS;
+-    device_class_set_props(k, swim_drive_properties);
+-    k->desc = "virtual SWIM drive";
+-}
+-
+-static const TypeInfo swim_drive_info = {
+-    .name = TYPE_SWIM_DRIVE,
+-    .parent = TYPE_DEVICE,
+-    .instance_size = sizeof(SWIMDrive),
+-    .class_init = swim_drive_class_init,
+-};
+-
+-static const TypeInfo swim_bus_info = {
+-    .name = TYPE_SWIM_BUS,
+-    .parent = TYPE_BUS,
+-    .instance_size = sizeof(SWIMBus),
+-};
+-
+-static void iwmctrl_write(void *opaque, hwaddr addr, uint64_t value,
+-                          unsigned size)
+-{
+-    SWIMCtrl *swimctrl = opaque;
+-    uint8_t latch, reg, ism_bit;
+-
+-    addr >>= REG_SHIFT;
+-
+-    /* A3-A1 select a latch, A0 specifies the value */
+-    latch = (addr >> 1) & 7;
+-    if (addr & 1) {
+-        swimctrl->iwm_latches |= (1 << latch);
+-    } else {
+-        swimctrl->iwm_latches &= ~(1 << latch);
+-    }
+-
+-    reg = (swimctrl->iwm_latches & 0xc0) >> 5 |
+-          (swimctrl->iwm_latches & 0x10) >> 4;
+-
+-    swimctrl->iwmregs[reg] = value;
+-    trace_swim_iwmctrl_write(reg, iwm_reg_names[reg], size, value);
+-
+-    switch (reg) {
+-    case IWM_WRITESETMODE:
+-        /* detect sequence to switch from IWM mode to SWIM mode */
+-        ism_bit = (value & (1 << SWIM_MODE_STATUS_BIT));
+-
+-        switch (swimctrl->iwm_switch) {
+-        case 0:
+-            if (ism_bit) {    /* 1 */
+-                swimctrl->iwm_switch++;
+-            }
+-            break;
+-        case 1:
+-            if (!ism_bit) {   /* 0 */
+-                swimctrl->iwm_switch++;
+-            }
+-            break;
+-        case 2:
+-            if (ism_bit) {    /* 1 */
+-                swimctrl->iwm_switch++;
+-            }
+-            break;
+-        case 3:
+-            if (ism_bit) {    /* 1 */
+-                swimctrl->iwm_switch++;
+-
+-                swimctrl->mode = SWIM_MODE_ISM;
+-                swimctrl->swim_mode |= (1 << SWIM_MODE_STATUS_BIT);
+-                swimctrl->iwm_switch = 0;
+-                trace_swim_switch_to_ism();
+-
+-                /* Switch to ISM registers */
+-                memory_region_del_subregion(&swimctrl->swim, &swimctrl->iwm);
+-                memory_region_add_subregion(&swimctrl->swim, 0x0,
+-                                            &swimctrl->ism);
+-            }
+-            break;
+-        }
+-        break;
+-    default:
+-        break;
+-    }
+-}
+-
+-static uint64_t iwmctrl_read(void *opaque, hwaddr addr, unsigned size)
+-{
+-    SWIMCtrl *swimctrl = opaque;
+-    uint8_t latch, reg, value;
+-
+-    addr >>= REG_SHIFT;
+-
+-    /* A3-A1 select a latch, A0 specifies the value */
+-    latch = (addr >> 1) & 7;
+-    if (addr & 1) {
+-        swimctrl->iwm_latches |= (1 << latch);
+-    } else {
+-        swimctrl->iwm_latches &= ~(1 << latch);
+-    }
+-
+-    reg = (swimctrl->iwm_latches & 0xc0) >> 5 |
+-          (swimctrl->iwm_latches & 0x10) >> 4;
+-
+-    switch (reg) {
+-    case IWM_READALLONES:
+-        value = 0xff;
+-        break;
+-    default:
+-        value = 0;
+-        break;
+-    }
+-
+-    trace_swim_iwmctrl_read(reg, iwm_reg_names[reg], size, value);
+-    return value;
+-}
+-
+-static const MemoryRegionOps swimctrl_iwm_ops = {
+-    .write = iwmctrl_write,
+-    .read = iwmctrl_read,
+-    .endianness = DEVICE_BIG_ENDIAN,
+-};
+-
+-static void ismctrl_write(void *opaque, hwaddr reg, uint64_t value,
+-                          unsigned size)
+-{
+-    SWIMCtrl *swimctrl = opaque;
+-
+-    reg >>= REG_SHIFT;
+-
+-    trace_swim_ismctrl_write(reg, ism_reg_names[reg], size, value);
+-
+-    switch (reg) {
+-    case SWIM_WRITE_PHASE:
+-        swimctrl->swim_phase = value;
+-        break;
+-    case SWIM_WRITE_MODE0:
+-        swimctrl->swim_mode &= ~value;
+-        /* Any access to MODE0 register resets PRAM index */
+-        swimctrl->pram_idx = 0;
+-
+-        if (!(swimctrl->swim_mode & (1 << SWIM_MODE_STATUS_BIT))) {
+-            /* Clearing the mode bit switches to IWM mode */
+-            swimctrl->mode = SWIM_MODE_IWM;
+-            swimctrl->iwm_latches = 0;
+-            trace_swim_switch_to_iwm();
+-
+-            /* Switch to IWM registers */
+-            memory_region_del_subregion(&swimctrl->swim, &swimctrl->ism);
+-            memory_region_add_subregion(&swimctrl->swim, 0x0,
+-                                        &swimctrl->iwm);
+-        }
+-        break;
+-    case SWIM_WRITE_MODE1:
+-        swimctrl->swim_mode |= value;
+-        break;
+-    case SWIM_WRITE_PARAMETER:
+-        swimctrl->pram[swimctrl->pram_idx++] = value;
+-        swimctrl->pram_idx &= 0xf;
+-        break;
+-    case SWIM_WRITE_DATA:
+-    case SWIM_WRITE_MARK:
+-    case SWIM_WRITE_CRC:
+-    case SWIM_WRITE_SETUP:
+-        break;
+-    }
+-}
+-
+-static uint64_t ismctrl_read(void *opaque, hwaddr reg, unsigned size)
+-{
+-    SWIMCtrl *swimctrl = opaque;
+-    uint32_t value = 0;
+-
+-    reg >>= REG_SHIFT;
+-
+-    switch (reg) {
+-    case SWIM_READ_PHASE:
+-        value = swimctrl->swim_phase;
+-        break;
+-    case SWIM_READ_HANDSHAKE:
+-        if (swimctrl->swim_phase == SWIM_DRIVE_PRESENT) {
+-            /* always answer "no drive present" */
+-            value = SWIM_SENSE;
+-        }
+-        break;
+-    case SWIM_READ_PARAMETER:
+-        value = swimctrl->pram[swimctrl->pram_idx++];
+-        swimctrl->pram_idx &= 0xf;
+-        break;
+-    case SWIM_READ_STATUS:
+-        value = swimctrl->swim_status & ~(1 << SWIM_MODE_STATUS_BIT);
+-        if (swimctrl->swim_mode == SWIM_MODE_ISM) {
+-            value |= (1 << SWIM_MODE_STATUS_BIT);
+-        }
+-        break;
+-    case SWIM_READ_DATA:
+-    case SWIM_READ_MARK:
+-    case SWIM_READ_ERROR:
+-    case SWIM_READ_SETUP:
+-        break;
+-    }
+-
+-    trace_swim_ismctrl_read(reg, ism_reg_names[reg], size, value);
+-    return value;
+-}
+-
+-static const MemoryRegionOps swimctrl_ism_ops = {
+-    .write = ismctrl_write,
+-    .read = ismctrl_read,
+-    .endianness = DEVICE_BIG_ENDIAN,
+-};
+-
+-static void sysbus_swim_reset(DeviceState *d)
+-{
+-    Swim *sys = SWIM(d);
+-    SWIMCtrl *ctrl = &sys->ctrl;
+-    int i;
+-
+-    ctrl->mode = 0;
+-    ctrl->iwm_switch = 0;
+-    memset(ctrl->iwmregs, 0, sizeof(ctrl->iwmregs));
+-
+-    ctrl->swim_phase = 0;
+-    ctrl->swim_mode = 0;
+-    memset(ctrl->ismregs, 0, sizeof(ctrl->ismregs));
+-    for (i = 0; i < SWIM_MAX_FD; i++) {
+-        fd_recalibrate(&ctrl->drives[i]);
+-    }
+-}
+-
+-static void sysbus_swim_init(Object *obj)
+-{
+-    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+-    Swim *sbs = SWIM(obj);
+-    SWIMCtrl *swimctrl = &sbs->ctrl;
+-
+-    memory_region_init(&swimctrl->swim, obj, "swim", 0x2000);
+-    memory_region_init_io(&swimctrl->iwm, obj, &swimctrl_iwm_ops, swimctrl,
+-                          "iwm", 0x2000);
+-    memory_region_init_io(&swimctrl->ism, obj, &swimctrl_ism_ops, swimctrl,
+-                          "ism", 0x2000);
+-    sysbus_init_mmio(sbd, &swimctrl->swim);
+-}
+-
+-static void sysbus_swim_realize(DeviceState *dev, Error **errp)
+-{
+-    Swim *sys = SWIM(dev);
+-    SWIMCtrl *swimctrl = &sys->ctrl;
+-
+-    qbus_init(&swimctrl->bus, sizeof(SWIMBus), TYPE_SWIM_BUS, dev, NULL);
+-    swimctrl->bus.ctrl = swimctrl;
+-
+-    /* Default register set is IWM */
+-    memory_region_add_subregion(&swimctrl->swim, 0x0, &swimctrl->iwm);
+-}
+-
+-static const VMStateDescription vmstate_fdrive = {
+-    .name = "fdrive",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_END_OF_LIST()
+-    },
+-};
+-
+-static const VMStateDescription vmstate_swim = {
+-    .name = "swim",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_INT32(mode, SWIMCtrl),
+-        /* IWM mode */
+-        VMSTATE_INT32(iwm_switch, SWIMCtrl),
+-        VMSTATE_UINT8(iwm_latches, SWIMCtrl),
+-        VMSTATE_UINT8_ARRAY(iwmregs, SWIMCtrl, 8),
+-        /* SWIM mode */
+-        VMSTATE_UINT8_ARRAY(ismregs, SWIMCtrl, 16),
+-        VMSTATE_UINT8(swim_phase, SWIMCtrl),
+-        VMSTATE_UINT8(swim_mode, SWIMCtrl),
+-        /* Drives */
+-        VMSTATE_STRUCT_ARRAY(drives, SWIMCtrl, SWIM_MAX_FD, 1,
+-                             vmstate_fdrive, FDrive),
+-        VMSTATE_END_OF_LIST()
+-    },
+-};
+-
+-static const VMStateDescription vmstate_sysbus_swim = {
+-    .name = "SWIM",
+-    .version_id = 1,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_STRUCT(ctrl, Swim, 0, vmstate_swim, SWIMCtrl),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+-static void sysbus_swim_class_init(ObjectClass *oc, const void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(oc);
+-
+-    dc->realize = sysbus_swim_realize;
+-    device_class_set_legacy_reset(dc, sysbus_swim_reset);
+-    dc->vmsd = &vmstate_sysbus_swim;
+-}
+-
+-static const TypeInfo sysbus_swim_info = {
+-    .name          = TYPE_SWIM,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(Swim),
+-    .instance_init = sysbus_swim_init,
+-    .class_init    = sysbus_swim_class_init,
+-};
+-
+-static void swim_register_types(void)
+-{
+-    type_register_static(&sysbus_swim_info);
+-    type_register_static(&swim_bus_info);
+-    type_register_static(&swim_drive_info);
+-}
+-
+-type_init(swim_register_types)
 diff --git a/hw/block/trace-events b/hw/block/trace-events
-index dbaa5ca6cb..c5e021738c 100644
+index c5793c7da8..47c4e663ef 100644
 --- a/hw/block/trace-events
 +++ b/hw/block/trace-events
-@@ -111,3 +111,13 @@ swim_iwmctrl_read(int reg, const char *name, unsigned size, uint64_t value) "reg
- swim_iwmctrl_write(int reg, const char *name, unsigned size, uint64_t value) "reg=%d [%s] size=%u value=0x%"PRIx64
- swim_switch_to_ism(void) "switch from IWM to ISM mode"
- swim_switch_to_iwm(void) "switch from ISM to IWM mode"
-+
-+# sony_superdrive.c
-+sony_drive_prepare(void *drive, uint8_t track, uint8_t head, uint8_t sector, bool gcr, uint16_t payload_len) "drive=%p track=%"PRIu8" head=%"PRIu8" sector=%"PRIu8" gcr=%d length=%"PRIu16
-+sony_drive_persist(void *drive, uint64_t lba, bool success) "drive=%p lba=0x%"PRIx64" success=%d"
-+sony_drive_strobe(void *drive, uint8_t command, const char *name) "drive=%p cmd=0x%02"PRIx8" [%s]"
-+sony_drive_read_sense(void *drive, uint8_t reg, const char *name, bool value) "drive=%p reg=0x%02"PRIx8" [%s] value=%d"
-+sony_drive_set_inputs(void *drive, uint8_t phases, bool sel, bool enabled) "drive=%p phases=0x%"PRIx8" sel=%d enabled=%d"
-+sony_drive_read_byte(void *drive, uint8_t value, bool is_mark, uint64_t lba, uint16_t position) "drive=%p value=0x%02"PRIx8", is_mark=%d, lba=0x%"PRIx64", position=0x%"PRIx16
-+sony_drive_write_byte(void *drive, uint8_t value, uint64_t lba, uint16_t position) "drive=%p value=0x%02"PRIx8", lba=0x%"PRIx64", position=0x%"PRIx16
-+sony_drive_step(void *drive, uint8_t seek_direction, uint8_t current_track) "drive=%p direction=%"PRId8", track=%"PRId8
-diff --git a/include/hw/block/sony_superdrive.h b/include/hw/block/sony_superdrive.h
-new file mode 100644
-index 0000000000..e15dd433e7
---- /dev/null
-+++ b/include/hw/block/sony_superdrive.h
-@@ -0,0 +1,55 @@
-+/*
-+ * QEMU Macintosh SuperDrive floppy disk drive emulator
-+ *
-+ * Copyright (c) 2025 Matt Jacobson <mhjacobson@me.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_BLOCK_SWIM_SONY_H
-+#define HW_BLOCK_SWIM_SONY_H
-+
-+#include "hw/block/block.h"
-+
-+typedef struct {
-+    BlockBackend *blk;
-+
-+    uint8_t phases;
-+    bool sel;
-+    bool enabled;
-+
-+    bool motor_on;
-+    bool disk_in;
-+    bool write_protected;
-+    bool hd_media;
-+    bool double_sided;
-+    bool use_gcr;
-+    bool gcr_encode;
-+    uint8_t cylinders;
-+    uint8_t sectors_per_track;
-+    uint8_t current_track;
-+    uint8_t current_sector;
-+    int8_t seek_direction;
-+    uint32_t total_sectors;
-+
-+    bool xfer_active;
-+    bool xfer_dirty;
-+    uint64_t xfer_lba;
-+    uint16_t xfer_position;
-+    uint16_t xfer_write_position;
-+    uint16_t xfer_length;
-+    uint8_t xfer_buffer[1024];
-+    uint8_t xfer_mark_bitset[1024 / 8];
-+} SonyDrive;
-+
-+void sony_drive_set_block_backend(SonyDrive *drive, BlockBackend *block);
-+void sony_drive_reset(SonyDrive *drive);
-+bool sony_drive_read_sense(SonyDrive *drive);
-+void sony_drive_set_inputs(SonyDrive *drive, uint8_t phases,
-+                           bool sel, bool enabled);
-+bool sony_drive_uses_gcr_encoding(const SonyDrive *drive);
-+bool sony_drive_read_byte(SonyDrive *drive,
-+                          uint8_t *value_out, bool *is_mark_out);
-+bool sony_drive_write_byte(SonyDrive *const drive, const uint8_t value);
-+
-+#endif /* HW_BLOCK_SWIM_SONY_H */
+@@ -104,14 +104,6 @@ m25p80_read_sfdp(void *s, uint32_t addr, uint8_t v) "[%p] Read SFDP 0x%"PRIx32"=
+ m25p80_binding(void *s) "[%p] Binding to IF_MTD drive"
+ m25p80_binding_no_bdrv(void *s) "[%p] No BDRV - binding to RAM"
+ 
+-# swim.c
+-swim_ismctrl_read(int reg, const char *name, unsigned size, uint64_t value) "reg=%d [%s] size=%u value=0x%"PRIx64
+-swim_ismctrl_write(int reg, const char *name, unsigned size, uint64_t value) "reg=%d [%s] size=%u value=0x%"PRIx64
+-swim_iwmctrl_read(int reg, const char *name, unsigned size, uint64_t value) "reg=%d [%s] size=%u value=0x%"PRIx64
+-swim_iwmctrl_write(int reg, const char *name, unsigned size, uint64_t value) "reg=%d [%s] size=%u value=0x%"PRIx64
+-swim_switch_to_ism(void) "switch from IWM to ISM mode"
+-swim_switch_to_iwm(void) "switch from ISM to IWM mode"
+-
+ # swim2.c
+ swim2_mmio_read(uint64_t addr, unsigned size, int reg, const char *name, uint64_t value, uint8_t mode, uint8_t setup, uint8_t phase, uint32_t fifo_count) "addr=0x%"PRIx64" size=%u reg=%d [%s] value=0x%"PRIx64" mode=0x%02x setup=0x%02x phase=0x%02x fifo=%u"
+ swim2_mmio_write(uint64_t addr, unsigned size, int reg, const char *name, uint64_t value, uint8_t mode, uint8_t setup, uint8_t phase, uint32_t fifo_count) "addr=0x%"PRIx64" size=%u reg=%d [%s] value=0x%"PRIx64" mode=0x%02x setup=0x%02x phase=0x%02x fifo=%u"
+diff --git a/include/hw/block/swim.h b/include/hw/block/swim.h
+deleted file mode 100644
+index e8998f57c4..0000000000
+--- a/include/hw/block/swim.h
++++ /dev/null
+@@ -1,72 +0,0 @@
+-/*
+- * QEMU Macintosh floppy disk controller emulator (SWIM)
+- *
+- * Copyright (c) 2014-2018 Laurent Vivier <laurent@vivier.eu>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2.  See
+- * the COPYING file in the top-level directory.
+- *
+- */
+-
+-#ifndef SWIM_H
+-#define SWIM_H
+-
+-#include "hw/block/block.h"
+-#include "hw/core/sysbus.h"
+-#include "qom/object.h"
+-
+-#define SWIM_MAX_FD            2
+-
+-typedef struct SWIMCtrl SWIMCtrl;
+-
+-#define TYPE_SWIM_DRIVE "swim-drive"
+-OBJECT_DECLARE_SIMPLE_TYPE(SWIMDrive, SWIM_DRIVE)
+-
+-struct SWIMDrive {
+-    DeviceState qdev;
+-    int32_t     unit;
+-    BlockConf   conf;
+-};
+-
+-#define TYPE_SWIM_BUS "swim-bus"
+-OBJECT_DECLARE_SIMPLE_TYPE(SWIMBus, SWIM_BUS)
+-
+-struct SWIMBus {
+-    BusState bus;
+-    struct SWIMCtrl *ctrl;
+-};
+-
+-typedef struct FDrive {
+-    SWIMCtrl *swimctrl;
+-    BlockBackend *blk;
+-    BlockConf *conf;
+-} FDrive;
+-
+-struct SWIMCtrl {
+-    MemoryRegion swim;
+-    MemoryRegion iwm;
+-    MemoryRegion ism;
+-    FDrive drives[SWIM_MAX_FD];
+-    int mode;
+-    /* IWM mode */
+-    int iwm_switch;
+-    uint8_t iwm_latches;
+-    uint8_t iwmregs[8];
+-    /* SWIM mode */
+-    uint8_t ismregs[16];
+-    uint8_t swim_phase;
+-    uint8_t swim_mode;
+-    uint8_t swim_status;
+-    uint8_t pram[16];
+-    uint8_t pram_idx;
+-    SWIMBus bus;
+-};
+-
+-#define TYPE_SWIM "swim"
+-OBJECT_DECLARE_SIMPLE_TYPE(Swim, SWIM)
+-
+-struct Swim {
+-    SysBusDevice parent_obj;
+-    SWIMCtrl     ctrl;
+-};
+-#endif
 -- 
 2.54.0
 
