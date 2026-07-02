@@ -4,91 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBAEC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 17:28:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA5CBC43602
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 17:28:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfLCG-0005ve-GI; Thu, 02 Jul 2026 13:27:32 -0400
+	id 1wfLCI-0005wf-Ru; Thu, 02 Jul 2026 13:27:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wfLCF-0005vF-IE
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:27:31 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wfLCH-0005vx-F7
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:27:33 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wfLC8-0007HF-Uf
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:27:31 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-493c52cde9eso12910295e9.3
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 10:27:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wfLCC-0007HQ-4d
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:27:33 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-45fd464d51fso1053683f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 10:27:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783013243; x=1783618043; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+8wUrJbRI3+sPbnvKF7cZc3/wpj90N524U9qWP5hr48=;
- b=QRuRz65Oq8JLPosJu0EdlIBGQNPWUSuUyW/uScVIbaIH/l2ZmWs8Y4XPc4oyy1JTpj
- wWJ3gov2I4XcymfO63cszh3dQYQ9eay/tjSpf36Ddt3RtPrGEYgEt90GUglRNWahznVw
- fLxqFGaXoKKyJh/BwxbyT+wzoPpdxa7w4xC7KhP0zY8jV/7AKN/HVenvoArcd4+WrAKU
- BKAV/yealK0hYT41Em4l+Q/NLSXu9zfj8jDMm8kDrso1oY8yY46qF3TR+ZA1EuuxMixf
- cY4sZvUi+9hviDoumgJZUPLJ/FCY+YDR2H9CIBJ4n9lZh6ODLkZua6S2vKtSdwq2g2+V
- e+zQ==
+ d=gmail.com; s=20251104; t=1783013246; x=1783618046; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=gDWLf3Imu3AeNQYGp84KvudlW5v8ha0NJcq4upYNVCc=;
+ b=auuiejcNiYU8/8UQVzzWOzRyNVXZa3L6pnnB+TsRZk138gGqo9QV47pJs90X27Hwgt
+ AlrGyIczlDu6JAb2cRi3I3Us56fO0bpvzKqbagyFix70w+kcMC9kCZqZsiuSZKSjxeLN
+ QVR+KJykrfoeNhS4wT/MlafT2m8tAKoGwUcJ+TXVdYraV7cbHIwHjkSunY0pqIiSlSdU
+ 58wFOYnnZhRucRaVc0iU8aNh/wIZxIqmVoU94Yj2tcVBUAMhpzS8B+IV17DWapbVsVhi
+ CHdJkA9CoiT3Nvzz0UFYo9FNb12Hca30vbYS/w2vJeW3UYa+1vzJQmE5GWq6WAc8U7M/
+ DxIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783013243; x=1783618043;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+8wUrJbRI3+sPbnvKF7cZc3/wpj90N524U9qWP5hr48=;
- b=Kf8CUsPZj58JlpbsaNWUj+HoZ/P6vA5xNDrNLHHcOVaK2WK1CcitsTcn8WTKgFMSTj
- PMV/WiEsiovM1RKyRhoyG9naMsa1KeVO2lO/lY0jC7aOcwJfDHuhXStxk8v61KuTIb0R
- UGRj0M0lfss41GZZ5EDK9cENIJZmOYiAhazvkWu9Bg59H/qO/enjJacrGxEkdnfntyaz
- P/W7FfY/Hwl+iXwKDInyUlX99sdQdh4GmOTfhO9M+Dgsy86Y1R4mQ/9rZ5oinp1kLCIE
- X/cuE1SyBQvY3kJowghbf8s/CSaylkYnrtyPj2X9LtIyQXyNxdDsXfbFC+HYwPlZixrW
- /N4w==
+ d=1e100.net; s=20251104; t=1783013246; x=1783618046;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=gDWLf3Imu3AeNQYGp84KvudlW5v8ha0NJcq4upYNVCc=;
+ b=OI4COuSeY/QrZyYhHXRB+JxgOD629VjpHrMp9iolwTGj3izhQo9rgcJhHHGJ3kZToa
+ w23FzN3MqidShnIR4NdFQKFUlbyodzrGpH2VyQG3+UquOs4VT1UHYxIQDSggL+xdzIY7
+ tqvMuck8XBnJC+P9tN/HWLqNDzbn6uwBl6+ci1cu2pr0lfZo5FN6WCOumkFfIhoudyRD
+ 8u1qVQrt/j8G7n2N/PGBNsSdXTyJje8+pSbAIGK+tGPNpkyncf9ye1jlS99L89P1y2Bq
+ NW7hv2OwyNzuO+FyJW8360cbGwJtBLMnIba/ulc484g8IdLly+qR1acA+A9R/yNkMSM+
+ HASQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/1ItO6whpeRfC2jFfbawz68rMrjClA0Ea447v6O45HPVWcsYcGCrSIL3sen6J2bH4wLGJfUl1XnUQr@nongnu.org
-X-Gm-Message-State: AOJu0YwQ1jxdfAjjg3DtLz35bFpczG9I2OE6yfrz0/36uYgVi9HTf9Ni
- /5rqvOpag73HXwx3ohBn7cJkMcZla3dDk1n8gVRkJELYKbKvTv9ckWmx
-X-Gm-Gg: AfdE7cnKf3sVlujQ2WKesyMh2b+x/U8CopBpncx7CI9bJHzkhXSw/PWRZJrnVq92WIh
- nhq8ApBVSHn5kYXtd9X7t1ryFn7kDTtk1JW8CH3bQF23jrTcorkkV4fQ2ypOSq7nXJmmLLmAYbL
- NqVBWIQOnmZLMq2NvxsGv+lij1o50OctOC5Lup1ZvxZ5NWSfdsrcmY/FpKHGRTydJv23PGcOJ21
- KcBIDREptRFEvRkHepx/akneJ2chch4pD31H8scylCc1UvU19T0RH5oEBfHY/N7wmP3cQRzdFvL
- Ifth1xs8EQI/8v+4lAxFQua5etoKdCcIfB3n2sbz+ezOmOis8MdwF7GD8xNWJXn5oUhlj2thbRv
- Y3V0zrBljMRFiLqhYQiUQmXL/2TmT7T3wGKmnbNWz87K+KYtrbX3r+KL60/xP4fMgFvGZQ8Sa5+
- 1+RFJbkzHVBxdwTkeaOcM=
-X-Received: by 2002:a05:600c:3510:b0:493:be08:c372 with SMTP id
- 5b1f17b1804b1-493c2b43923mr108915215e9.17.1783013243026; 
- Thu, 02 Jul 2026 10:27:23 -0700 (PDT)
+ AHgh+RrMgTs4ph2C1Y4XhmzKnj/SxDxmtRXRXwFh/4OOQWBKF9uzrD4oPQhWqFYAxntxCLOPLjg/3LiaTnBi@nongnu.org
+X-Gm-Message-State: AOJu0YwbRkSYEJakb7hziX8a65Rz6JPl/V792eKVgZmzJgek3CQq95Os
+ /b3tyCydZgoC4PAUw8sNoRNnC83Wubd2hHmvustVGpm7BTpOlXEw0d7v
+X-Gm-Gg: AfdE7clIEd0TP5Ms0TSimW61WiQk/fYEKWdr8O9oSMagNf8AQMv4cJRIpRGG2tVoQ9Z
+ MweJgeOHcSYI0ejZc2T+dC6riedBSxBijNWO9IzPUGcf4+fIridX6IT0wITQMGz2Hx+XuejJHbv
+ EFG1aFCciKH6AHG2pHYZ3SNEMCOlZFyT9Rt79HAcAku2q3RssI68/gEnZKXqHaD2uk35dv1XucN
+ Nubauas4/f/PSJgMBRrLD6+X7J4rwyrc7j0QIJAEApQHciexrHJnZsr+Nfr0iAYReuJaORnGg9R
+ YvNDJzEfMQRIUHY8/RRVnvOupevg/Fr5zan4OcZDFhiixJcPCR/Vsh94DJNxrFvasbLGom9SMTF
+ PruGHxW3xdju3FETcXV0Yzy2VSmiDce5GQz3gQ5JOI1A5aaIAEwBIkGee2bmdrfOTCLK9JPi8Bh
+ /XRhLbem9NiUS0M4/6AgQ=
+X-Received: by 2002:a5d:64e9:0:b0:475:f100:360d with SMTP id
+ ffacd0b85a97d-4775a7cdd03mr10954419f8f.60.1783013245450; 
+ Thu, 02 Jul 2026 10:27:25 -0700 (PDT)
 Received: from ehlo.thunderbird.net ([185.238.219.31])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c6372368sm72990735e9.12.2026.07.02.10.27.20
+ ffacd0b85a97d-477db3dbc75sm11541859f8f.5.2026.07.02.10.27.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Jul 2026 10:27:22 -0700 (PDT)
-Date: Thu, 02 Jul 2026 17:13:26 +0000
+ Thu, 02 Jul 2026 10:27:24 -0700 (PDT)
+Date: Thu, 02 Jul 2026 16:58:46 +0000
 From: Bernhard Beschow <shentey@gmail.com>
 To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org,
- =?UTF-8?Q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>
-CC: Peter Maydell <peter.maydell@linaro.org>, Pavel Pisa <pisa@fel.cvut.cz>
-Subject: Re: [PULL 34/54] hw/net/can/flexcan: NXP FlexCAN core emulation
-In-Reply-To: <77d5891c-de12-467e-8746-02fe43121e3e@oss.qualcomm.com>
-References: <20260629120032.1645265-1-peter.maydell@linaro.org>
- <20260629120032.1645265-35-peter.maydell@linaro.org>
- <77d5891c-de12-467e-8746-02fe43121e3e@oss.qualcomm.com>
-Message-ID: <19F69CC0-3BB0-41E4-93B0-D86215CB9B1F@gmail.com>
+ qemu-devel@nongnu.org
+CC: Gaurav Sharma <gaurav.sharma_7@nxp.com>, Pavel Pisa <pisa@cmp.felk.cvut.cz>,
+ Jason Wang <jasowang@redhat.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Matyas Bobek <matyas.bobek@gmail.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH 1/4] hw/net/can/flexcan: Subclass TYPE_CAN_FLEXCAN
+In-Reply-To: <b7ba6659-9fec-4bb4-a9ab-6c009081357f@oss.qualcomm.com>
+References: <20260701224612.48342-1-shentey@gmail.com>
+ <20260701224612.48342-2-shentey@gmail.com>
+ <b7ba6659-9fec-4bb4-a9ab-6c009081357f@oss.qualcomm.com>
+Message-ID: <8359B14D-E5CF-42E7-8CD0-8C0B34AEC31F@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x429.google.com
 X-Spam_score_int: 22
 X-Spam_score: 2.2
 X-Spam_bar: ++
 X-Spam_report: (2.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001, FREEMAIL_REPLY=1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,220 +114,87 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 2=2E Juli 2026 12:37:59 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <phil=
+Am 2=2E Juli 2026 12:45:24 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <phil=
 md@oss=2Equalcomm=2Ecom>:
->Hi Maty=C3=A1=C5=A1,
+>Hi Bernhard,
 >
->On 29/6/26 14:00, Peter Maydell wrote:
->> From: Maty=C3=A1=C5=A1 Bobek <matyas=2Ebobek@gmail=2Ecom>
+>On 2/7/26 00:46, Bernhard Beschow wrote:
+>> Subclass TYPE_CAN_FLEXCAN, yielding TYPE_CAN_FLEXCAN2 and TYPE_CAN_FLEX=
+CAN3=2E
+>> Since TYPE_CAN_FLEXCAN is now abstract, TYPE_FSL_IMX6 needs to use
+>> TYPE_CAN_FLEXCAN2=2E TYPE_CAN_FLEXCAN3 will be used in TYPE_FSL_IMX8MP=
+=2E
 >>=20
->> Added the FlexCAN2 emulator implementation core, with
->> CAN_FLEXCAN Kconfig flag and MAINTAINERS entry=2E
+>> Note that Linux performs 8 byte accesses on the i=2EMX8M Plus, therefor=
+e
+>> =2Emax_access_size has to be adjusted=2E Otherwise this results in bus =
+errors=2E
 >>=20
->> FlexCAN2 version can be found in i=2EMX6 SoCs and others=2E
->>=20
->> More information about the implementation can be found in [1]=2E
->>=20
->> Some macro and struct defintions were borrowed from the Linux kernel=2E
->> The original authors agreed with relicensing them to GPL-2=2E0-or-later=
- on
->> the qemu-devel mailing list=2E
->>=20
->> [1] http://dspace=2Ecvut=2Ecz/bitstream/handle/10467/122654/F3-BP-2025-=
-Bobek-Matyas-BP_Bobek_FlexCAN_final_4=2Epdf
->>=20
->> Signed-off-by: Maty=C3=A1=C5=A1 Bobek <matyas=2Ebobek@gmail=2Ecom>
->> Signed-off-by: Pavel Pisa <pisa@fel=2Ecvut=2Ecz>
->> Tested-by: Pavel Pisa <pisa@fel=2Ecvut=2Ecz>
->> Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
->> Reviewed-by: Pavel Pisa <pisa@fel=2Ecvut=2Ecz>
->> Message-id: 03dc62ff8013bb946aab8f64e51638b810629529=2E1782140438=2Egit=
-=2Ematyas=2Ebobek@gmail=2Ecom
->> Signed-off-by: Peter Maydell <peter=2Emaydell@linaro=2Eorg>
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
 >> ---
->>   MAINTAINERS               |    8 +
->>   hw/net/Kconfig            |    5 +
->>   hw/net/can/flexcan=2Ec      | 1396 ++++++++++++++++++++++++++++++++++=
-+++
->>   hw/net/can/flexcan_regs=2Eh |  197 ++++++
->>   hw/net/can/meson=2Ebuild    |    1 +
->>   hw/net/can/trace-events   |   18 +
->>   include/hw/net/flexcan=2Eh  |  145 ++++
->>   7 files changed, 1770 insertions(+)
->
->This commit is huge, not easy to follow / review=2E
->
->>   create mode 100644 hw/net/can/flexcan=2Ec
->>   create mode 100644 hw/net/can/flexcan_regs=2Eh
->>   create mode 100644 include/hw/net/flexcan=2Eh
->
+>>   include/hw/net/flexcan=2Eh |  4 ++-
+>>   hw/arm/fsl-imx6=2Ec        |  2 +-
+>>   hw/net/can/flexcan=2Ec     | 61 +++++++++++++++++++++++++++++++------=
+---
+>>   3 files changed, 51 insertions(+), 16 deletions(-)
+>>=20
+>> diff --git a/include/hw/net/flexcan=2Eh b/include/hw/net/flexcan=2Eh
+>> index 153afc1e03=2E=2E32de7b904a 100644
+>> --- a/include/hw/net/flexcan=2Eh
+>> +++ b/include/hw/net/flexcan=2Eh
+>> @@ -139,7 +139,9 @@ typedef struct FlexcanState {
+>>   } FlexcanState;
+>>     #define TYPE_CAN_FLEXCAN "flexcan"
+>> -
+>>   OBJECT_DECLARE_SIMPLE_TYPE(FlexcanState, CAN_FLEXCAN);
+>>   +#define TYPE_CAN_FLEXCAN2 "flexcan2"
+>> +#define TYPE_CAN_FLEXCAN3 "flexcan3"
 >
 >> diff --git a/hw/net/can/flexcan=2Ec b/hw/net/can/flexcan=2Ec
->> new file mode 100644
->> index 0000000000=2E=2E1ea459d9f6
->> --- /dev/null
+>> index 1ea459d9f6=2E=2Ed6a76c28ab 100644
+>> --- a/hw/net/can/flexcan=2Ec
 >> +++ b/hw/net/can/flexcan=2Ec
->> @@ -0,0 +1,1396 @@
->> +/*
->> + * QEMU model of the NXP FLEXCAN device=2E
->> + *
->> + * This implementation is based on the following reference manual:
->> + * i=2EMX 6Dual/6Quad Applications Processor Reference Manual
->> + * Document Number: IMX6DQRM, Rev=2E 6, 05/2020
->> + *
->> + * Copyright (c) 2025 Matyas Bobek <matyas=2Ebobek@gmail=2Ecom>
->> + *
->> + * Based on CTU CAN FD emulation implemented by Jan Charvat=2E
->> + *
->> + * SPDX-License-Identifier: GPL-2=2E0-or-later
->> + */
->> +
->> +#include "qemu/osdep=2Eh"
->> +#include "qemu/log=2Eh"
->> +#include "hw/core/sysbus=2Eh"
->> +#include "qapi/error=2Eh"
->> +#include "hw/core/irq=2Eh"
->> +#include "migration/vmstate=2Eh"
->> +#include "net/can_emu=2Eh"
->> +#include "hw/core/qdev-properties=2Eh"
->> +#include "trace=2Eh"
->> +
->> +#include "hw/net/flexcan=2Eh"
->> +#include "flexcan_regs=2Eh"
->> +#include "qemu/timer=2Eh"
+>> @@ -1298,7 +1298,7 @@ static const struct MemoryRegionOps flexcan_ops =
+=3D {
+>>       =2Eendianness =3D DEVICE_LITTLE_ENDIAN,
+>>       =2Evalid =3D {
+>>           =2Emin_access_size =3D 1,
+>> -        =2Emax_access_size =3D 4,
+>> +        =2Emax_access_size =3D 8,
 >
->
->> +/**
->> + * flexcan_get_bitrate() - Calculate CAN bitrate (in Hz)
->> + * @s: FlexCAN device pointer
->> + *
->> + * The bitrate is determined by FlexCAN configuration in CTRL1 registe=
-r,
->> + * and CCM co
->> + */
->> +static uint32_t flexcan_get_bitrate(FlexcanState *s)
->> +{
->> +    uint32_t conf_presdiv =3D (s->regs=2Ectrl & FLEXCAN_CTRL_PRESDIV_M=
-ASK) >> 24;
->> +    uint32_t conf_pseg1 =3D (s->regs=2Ectrl & FLEXCAN_CTRL_PSEG1_MASK)=
- >> 19;
->> +    uint32_t conf_pseg2 =3D (s->regs=2Ectrl & FLEXCAN_CTRL_PSEG2_MASK)=
- >> 16;
->> +    uint32_t conf_propseg =3D s->regs=2Ectrl & FLEXCAN_CTRL_PROPSEG_MA=
-SK;
->> +
->> +    /* N of time quanta for segments */
->> +    uint32_t tseg1 =3D 2 + conf_pseg1 + conf_propseg;
->> +    uint32_t tseg2 =3D 1 + conf_pseg2;
->> +    uint32_t total_qpb =3D 1 + tseg1 + tseg2;
->> +
->> +    uint32_t pe_freq, s_freq, bitrate;
->> +
->> +    assert(s->ccm);
->
->Instead of that deep buried late unexplained assertion crashing
->when the guest is running, =2E=2E=2E
->
->> +
->> +    /* s_freq: CAN clock from CCM divided by the prescaler */
->> +    pe_freq =3D imx_ccm_get_clock_frequency(s->ccm, CLK_CAN);
->> +    s_freq =3D pe_freq / (1 + conf_presdiv);
->> +    bitrate =3D s_freq / total_qpb;
->> +
->> +    trace_flexcan_get_bitrate(DEVICE(s)->canonical_path, pe_freq,
->> +                              1 + conf_presdiv, s_freq, tseg1, tseg2, =
-total_qpb,
->> +                              bitrate);
->> +    return bitrate;
->> +}
->> +static void flexcan_init(Object *obj)
->> +{
->> +    FlexcanState *s =3D CAN_FLEXCAN(obj);
->> +
->> +    memory_region_init_io(
->> +        &s->iomem, obj, &flexcan_ops, s, TYPE_CAN_FLEXCAN,
->> +        offsetof(FlexcanRegs, _reserved6)
->> +    );
->> +}
->> +
->> +static void flexcan_realize(DeviceState *dev, Error **errp)
->> +{
->> +    FlexcanState *s =3D CAN_FLEXCAN(dev);
->> +
->> +    if (s->canbus) {
->> +        if (flexcan_connect_to_bus(s, s->canbus) < 0) {
->> +            error_setg(errp, "%s: flexcan_connect_to_bus failed",
->> +                       dev->canonical_path);
->> +            return;
->> +        }
->> +    }
->
->=2E=2E=2E expose it as a link in [*] and check it is set here, returning
->an error to the upper layer before starting emulation:
->
->    if (!s->dma_mr) {
->        error_setg(errp, TYPE_CAN_FLEXCAN " 'clock-control-module' "
->                         "link not set");
->        return;
->    }
->
->> +
->> +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
->> +    sysbus_init_irq(SYS_BUS_DEVICE(SYS_BUS_DEVICE(dev)), &s->irq);
->> +}
->> +
->> +static const VMStateDescription vmstate_can =3D {
->> +    =2Ename =3D TYPE_CAN_FLEXCAN,
->> +    =2Eversion_id =3D 1,
->> +    =2Eminimum_version_id =3D 1,
->> +    =2Efields =3D (const VMStateField[]) {
->> +        VMSTATE_INT64(timer_start, FlexcanState),
->> +        VMSTATE_UINT32_ARRAY(regs_raw, FlexcanState, sizeof(FlexcanReg=
-s) / 4),
->> +        VMSTATE_INT32(locked_mbidx, FlexcanState),
->> +        VMSTATE_INT32(smb_target_mbidx, FlexcanState),
->> +        VMSTATE_END_OF_LIST(),
->> +    },
->> +};
->> +
->> +static const Property flexcan_properties[] =3D {
->> +    DEFINE_PROP_LINK("canbus", FlexcanState, canbus, TYPE_CAN_BUS,
->> +                     CanBusState *),
->
->[*] here:
->
->       DEFINE_PROP_LINK("clock-control-module", FlexcanState, ccm,
->                        TYPE_IMX_CCM, IMXCCMState *),
->
+>Isn't it better to keep 32-bit renaming as flexcan2_ops and widen to
+>64-bit for Plus version in a new flexcan8_ops struct?
 
-Yeah, this is even consistent with the "canbus" property=2E I'll take care=
- of it in my imx8mp-flexcan series, so I can address your comment there, to=
-o=2E
+I agree=2E Will do in v2=2E
 
 Best regards,
 Bernhard
 
->> +};
->> +
->> +static void flexcan_class_init(ObjectClass *klass, const void *data)
->> +{
->> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
->> +    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
->> +
->> +    rc->phases=2Eenter =3D flexcan_reset_enter;
->> +    rc->phases=2Ehold =3D flexcan_reset_hold;
->> +    dc->realize =3D flexcan_realize;
->> +    device_class_set_props(dc, flexcan_properties);
->> +    dc->vmsd =3D &vmstate_can;
->> +    dc->desc =3D "i=2EMX FLEXCAN Controller";
->> +}
->> +
->> +static const TypeInfo flexcan_info =3D {
->> +    =2Ename          =3D TYPE_CAN_FLEXCAN,
->> +    =2Eparent        =3D TYPE_SYS_BUS_DEVICE,
->> +    =2Einstance_size =3D sizeof(FlexcanState),
->> +    =2Eclass_init    =3D flexcan_class_init,
->> +    =2Einstance_init =3D flexcan_init,
->> +};
 >
+>>           =2Eunaligned =3D true,
+>>           =2Eaccepts =3D flexcan_mem_accepts
+>>       },
+>> @@ -1324,16 +1324,26 @@ static int flexcan_connect_to_bus(FlexcanState =
+*s, CanBusState *bus)
+>>       return 0;
+>>   }
+>>   -static void flexcan_init(Object *obj)
+>> +static void flexcan2_init(Object *obj)
+>>   {
+>>       FlexcanState *s =3D CAN_FLEXCAN(obj);
+>>         memory_region_init_io(
+>> -        &s->iomem, obj, &flexcan_ops, s, TYPE_CAN_FLEXCAN,
+>> +        &s->iomem, obj, &flexcan_ops, s, TYPE_CAN_FLEXCAN2,
+>>           offsetof(FlexcanRegs, _reserved6)
+>>       );
+>>   }
+>>   +static void flexcan3_init(Object *obj)
+>> +{
+>> +    FlexcanState *s =3D CAN_FLEXCAN(obj);
+>> +
+>> +    memory_region_init_io(
+>> +        &s->iomem, obj, &flexcan_ops, s, TYPE_CAN_FLEXCAN3,
+>> +        sizeof(FlexcanRegs)
+>> +    );
+>> +}
 
