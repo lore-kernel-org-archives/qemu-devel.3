@@ -4,82 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DDCCC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 21:50:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4380CC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 22:34:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfPHx-0001Af-Sf; Thu, 02 Jul 2026 17:49:41 -0400
+	id 1wfPy3-0001ve-Jy; Thu, 02 Jul 2026 18:33:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bounce.64q0a22ygc9icg0=hs6mwgf51rcl=kh3m5elt48iark@em1175899.techtravels.org>)
- id 1wfPHx-0001AX-2v
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 17:49:41 -0400
-Received: from a3i384.smtp2go.com ([203.31.37.128])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bounce.64q0a22ygc9icg0=hs6mwgf51rcl=kh3m5elt48iark@em1175899.techtravels.org>)
- id 1wfPHu-0003mG-Jg
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 17:49:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=techtravels.org;
- i=@techtravels.org; q=dns/txt; s=s1175899; t=1783028967; h=from :
- subject : to : message-id : date;
- bh=6K5n6NUxHzRY+SRhplrI/ggXwbePFcFv+gjJU28VkCA=;
- b=LrsFhaZFflYO6I/eCUYuFb6+25GWciHFwMFVJ0R4uMM3TpwP4ZFmtCesdLr43hk6F5ghS
- ndNScXyFhsoxp6qUSApcq4Zy6+MvwtTpGRuSmDR3whbv2Pul9tu2ob4P42MJ8wUoOK/ru9z
- eIcGCaBU6vO90+fn+tqoiAixf0/pOKhobwnR2Z3fb3SA7Kmjaz1ptdvAOhBLAyVr6K45Cfn
- NxsDXuty/A9s94hVGDYPivbtiFXd9eqVDMaU6UgS3ZzKDffXSuxg3eFuoTh6Xz9lZxY4fht
- d06+QmTB4ZCf0kLQ0hk7jzWhF9HOIkStsK9wyBDvdxe+xVP68g/wrbHxSyBg==
-Received: from [10.91.249.253] (helo=boxtwo.techtravels.org)
- by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
- (Exim 4.99.4) (envelope-from <keith@techtravels.org>)
- id 1wfPHe-4o5NDgrpxLX-cb4l; Thu, 02 Jul 2026 21:49:22 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=techtravels.org;
- s=mail; t=1783028959;
- bh=4XMbutzEo7hH/LOzADArmDSuWab9mjvElO4f6AxqtSg=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=a9eQqvMhsDvXuy57FDFyre3AegD4vFAboPJ8uaX1rWwX66KssYdQvZTPRc5VsfAcR
- gAVDM7TI6cld/YRpXiCiKLolywQ1r9u5tXJd6V6G2/rAlNIvuakUYH8NEZ2sdJPTtl
- Y880sWUPNu5yi73KGHWfpjG2W+QWGp3x+z0YdivVJSRQdORGB3hJb3p2WmFIWLUPUo
- sBBoGmXwTEjL/2UZ5lybRpaKegUoTcCMep7EWbyjh5sM1iFzk3r7tYskjQ06RncgS2
- ojtcFfY25fdXjJ6xkQaQcWDUMTPIBs/AiChGVCXylON077zw6AKrqPqToUoGat2dm3
- awm19cSygx76w==
-Received: from authenticated-user (boxtwo.techtravels.org [54.196.37.146])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by boxtwo.techtravels.org (Postfix) with ESMTPSA id B5E303F2ED;
- Thu,  2 Jul 2026 17:49:19 -0400 (EDT)
-Message-ID: <8d3f679a-3039-404e-879d-b97e1b58e090@techtravels.org>
-Date: Thu, 2 Jul 2026 17:49:20 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wfPy1-0001v3-RZ
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 18:33:09 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wfPy0-0006n3-7W
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 18:33:09 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2cace7da66eso3460455ad.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 15:33:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783031586; x=1783636386; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=wjtzt6622TmlKL2+S/5LJwuIq5VNHw3Gnueyp4reLWk=;
+ b=ttlWIkG40vrurl+wBhX+qsyZIz8JwnTykl97azSHgHjekT4VXNtb7hhL6/pR+O/n2s
+ WQoIWPTrN8xfN93FdQbHGG4ICd7JwyF45UyHFXiGHve8msqwqR0SP2AA2MMs4uELnqHh
+ iLg5qBrX5zLl/lwVM2rz0aSt4ZmtflXWFx7/GCKdVi0Gibi0yNAozhCcNbrtHu9JsK7n
+ wC1FZfjDtEAUwBUfiaE+K8x5um8y7/m0TycYpW6S6t9vVISI/vs7fHj7wpWxf1LIqqYy
+ cuRjsc97UPqQj0DrDJNHLZJ89irr1km9WIi7z4uGxx41BhlWrMTXiltfBBOOZokC/F57
+ KR5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783031586; x=1783636386;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wjtzt6622TmlKL2+S/5LJwuIq5VNHw3Gnueyp4reLWk=;
+ b=mozeyYzbeoAe6fvC/SUo07sQQGTlTXiVTvXkXX0bbv1r74JR8GwZVLBMfKapn+H4au
+ rC/RCRVh/SewJocOaTQtiHujPGtaVQTsq9zDTNkzmUD05h6fJK6GwGamv1a3o7CFljft
+ fu/HbYXY8H8oHCzGVqpiV8KRPfCubef6pYwhBbDYXcxL73suaHgKSW1/oD6pFLNUmaT6
+ 8bZJxH7BXyetg7/dkV6dQWXa0SmpuJlI8jTCM/w0hOYh8JweFVdb3qHVcOMdcvP2CO57
+ DkfhJuht/sUVfqI17l9Tn9//DsxkHnfPTYu5h62BmlRGHGGHnSGUvZFOkdM9IopR4liF
+ 5Scg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqQHi7gEfAqHSFRUrYSHdB7vHEOUvXbRL5jch9wsSGW5H2TcNRk7RCn9QbFPVRvVZUZrVAb6eLC3ojF@nongnu.org
+X-Gm-Message-State: AOJu0YxwnN6e2snY2ZQF1oeue/1QLCeLxd0T4N5nmnEF1TfmKEn8W+N1
+ Fy0nZvix8Ee5CYYPq0xDN7bvFLnFpi6cxfbFAi63Y3kbZsHnODM+pImgXzkLDS4qsYY=
+X-Gm-Gg: AfdE7cl/6NiLDQM5/0bzAG7DFMtCfVEJhu++t3GaIC3gbHWgen1rNTI0SsEUT6TxUYY
+ kN/i91+e98RnDRb1GKrOg8SVGDXvQGR95hD9H6wNrA5lneeEvQcGQCeemfhEKvFSklwVa6l+B3M
+ YEiHp2fU08mmLioHkiCzfTR88BggEy/Ju3NX5X3eB20h7TyV3JnrdXBCFN7iiHGAAnD0LIDMrE5
+ X6mKrxQsmNNZ/1QUcRxOKeB3zs9r8l/eno3oHcx74cVW64Blhwf5JaCQi3Db2IkJMyANfn1tEWP
+ YUhX4g5ZXk3/btMIhemlPBmC/j1aXY6PkBdpQLzvrtpBjD4u0DiMrXDzpq8AnlYzQdcrkHHXY1L
+ eKscnv6vVtsarstcXbmUxeWtznSe6rCVOD7VYXiZ81a8Q2Y8rjcCLrFfOedOTj+Ka89kEut97VU
+ 27pX7dVgxKvmNACscyGURq8JVbaPnuWcF/OZDCPd+qsVnt2XhKDlEPl7G+9A==
+X-Received: by 2002:a17:902:fc43:b0:2c6:9f14:c50c with SMTP id
+ d9443c01a7336-2ca7e6a0e95mr86171705ad.13.1783031586196; 
+ Thu, 02 Jul 2026 15:33:06 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ca9a8dadd7sm19081125ad.6.2026.07.02.15.33.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 02 Jul 2026 15:33:05 -0700 (PDT)
+Message-ID: <8ea31c58-09ef-434d-a522-b743ece14c41@linaro.org>
+Date: Thu, 2 Jul 2026 15:33:04 -0700
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 3/4] hw/scsi/ncr53c710: rewrite the SCRIPTS engine
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>, BALATON Zoltan <balaton@eik.bme.hu>
-References: <20260701213359.1855870-1-keith@techtravels.org>
- <20260701213359.1855870-4-keith@techtravels.org>
- <CAFEAcA_3vf5vrwoO0cGcdTsykU8uTf8386oyWki3iQ3Bje9Trw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/11] target/arm: Implement CPACR.ASEDIS and HCPTR.TASE
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260702184019.3431139-1-peter.maydell@linaro.org>
+ <20260702184019.3431139-10-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Keith Monahan <keith@techtravels.org>
-In-Reply-To: <CAFEAcA_3vf5vrwoO0cGcdTsykU8uTf8386oyWki3iQ3Bje9Trw@mail.gmail.com>
+In-Reply-To: <20260702184019.3431139-10-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Report-Abuse: Please forward a copy of this message, including all headers,
- to <abuse-report@smtp2go.com>
-Feedback-ID: 1175899m:1175899aieqF3d:1175899s5U9-VI9CJ
-X-smtpcorp-track: 39-imu4V8GDx.Ao9DuOg30l9P.3mXuQwKeiw8
-Received-SPF: pass client-ip=203.31.37.128;
- envelope-from=bounce.64q0a22ygc9icg0=hs6mwgf51rcl=kh3m5elt48iark@em1175899.techtravels.org;
- helo=a3i384.smtp2go.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,300 +105,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter,
+On 7/2/26 11:40, Peter Maydell wrote:
+> +static int neon_exception_el(CPUARMState *env, int cur_el)
+> +{
+> +    /*
+> +     * Return the EL to trap to for A32 Neon specific traps
+> +     * (CPACR.ASEDIS and HCPTR.TASE). In the pseudocode these
+> +     * are checked in the same function as the more general trap
+> +     * bits that we handle in fp_exception_el(). Fortunately it
+> +     * is always the case that if the trap/enable bits specify
+> +     * taking an exception to different ELs for the Neon-specific
+> +     * insns and the general fp insns then the trap to the lower
+> +     * of the two ELs has priority, so we can calculate the two
+> +     * target ELs separately and pick the right destination later.
+> +     * Compare AArch32_CheckAdvSIMDOrFPEnabled().
+> +     */
+> +    uint64_t hcr_el2 = arm_hcr_el2_eff(env);
+> +    bool cpacr_asedis = FIELD_EX64(env->cp15.cpacr_el1, CPACR, ASEDIS);
 
-Thanks for going through it. I raised this originally in the v1 thread
-and I am not sure it reached you, so let me lay it out here.
+CPACR.AESDIS overlaps CPACR_EL1.TCPAC, so we're missing a
+check for arm_el_is_aa64(env, 1), when cur_el == 0.
 
-The size is real, but the more useful thing to flag is that reading this
-as a diff against the old model will not give you an accurate view of
-the change, because these are not two versions of one model. They are
-two different implementations, and git is aligning text between them
-that never shared any code.
+> +    bool hcptr_tase = FIELD_EX64(env->cp15.cptr_el[2], HCPTR, TASE);
+> +
+> +    if (arm_feature(env, ARM_FEATURE_NO_NEON_TRAPS)) {
+> +        /* This CPU doesn't implement the trap bits (Cortex-A8) */
+> +        return 0;
+> +    }
+> +
+> +    /*
+> +     * CPACR doesn't exist before v6, but neither does Neon, so we can
+> +     * assume that if we're testing this then the trap exists.
+> +     */
+> +
+> +    if (arm_feature(env, ARM_FEATURE_EL2) && arm_el_is_aa64(env, 2)) {
+> +        /*
+> +         * The AArch64 CPTR_EL2 has no equivalent to HCPTR.TASE; only
+> +         * an AArch32 EL2 can trap Neon specifically.
+> +         */
+> +        hcptr_tase = false;
+> +    }
+> +
+> +    /*
+> +     * NSACR.NSASEDIS makes the effective values of HCPTR.TASE and
+> +     * CPACR.ASEDIS be 1 in NonSecure state. NSACR has no
+> +     * effect unless EL3 exists and is AArch32.
+> +     */
+> +    if ((arm_feature(env, ARM_FEATURE_EL3) && !arm_el_is_aa64(env, 3) &&
+> +         cur_el <= 2 && !arm_is_secure_below_el3(env))) {
 
-Three concrete ways they differ:
+Note extra ().
 
-1. Different origin. The old model descends from Toni Wilen's UAE
-    implementation by way of Helge Deller. The new engine is derived from
-    QEMU's own lsi53c895a.c. They are unrelated codebases, so the delta
-    is not one evolving into the other, it is one file removed and a
-    different one added.
+> +        if (FIELD_EX32(env->cp15.nsacr, NSACR, NSASEDIS)) {
+> +            cpacr_asedis = true;
+> +            hcptr_tase = true;
+> +        }
+> +    }
+> +
+> +    /* CPACR is ignored if E2H+TGE are both set */
+> +    if ((hcr_el2 & (HCR_E2H | HCR_TGE)) != (HCR_E2H | HCR_TGE)) {
+> +        if (cpacr_asedis) {
+> +            if (!arm_el_is_aa64(env, 3)
+> +                && (cur_el == 3 || arm_is_secure_below_el3(env))) {
+> +                /* Trap from Secure PL0 or PL1 to Secure PL1 */
+> +                return 3;
+> +            }
+> +            if (cur_el <= 1) {
+> +                /* trap from EL0 or EL1 to EL1 */
+> +                return 1;
+> +            }
+> +        }
+> +    }
 
-2. Different execution model. The old model runs SCRIPTS synchronously
-    inside the guest's register write, so completion interrupts come back
-    reentrantly. The new one runs the engine asynchronously and delivers
-    completion the way the chip actually does. That is a different 
-control flow from top to bottom, not a local change.
+I wonder if some reorg is in order.
 
-3. Different connection model. The old model is connected only, with no
-    target initiated disconnect or reselect. The new one implements
-    disconnect and reselect and the state machine around them. That is a
-    different device state machine, not a modified one.
+     bool cpacr_aesdis = FIELD_EX64(...);
+     bool hcptr_tase = FIELD_EX64(...);
 
-Because of those three, the two files do not line up function to
-function or line to line. The diff is large and noisy precisely because
-git has almost nothing to match, so it renders a wholesale replacement
-as a wall of edits. You will not learn what actually changed by reading
-the delta; the way to review this is to read ncr53c710.c as a new file
-against the 53C710 manual, not as a patch on the old one.
+     if (arm_el_is_aa64(env, 3)) {
+         if (arm_el_is_aa64(env, 2)) {
+             /* CPTR_EL2 has no equivalent to HCPTR.TASE */
+             hcptr_tase = false;
+         }
+         if (arm_el_is_aa64(env, 1)) {
+             /* CPACR_EL1 has no equivalent to CPACR.AESDIS */
+             cpacr_aesdis = false;
+         }
+     } else if (cur_el == 3 || arm_is_secure_below_el3(env)) {
+         if (cpacr_aesdis) {
+             /* Trap from Secure PL0 or PL1 to Secure PL1 */
+             return 3;
+         }
+     } else if (arm_feature(env, ARM_FEATURE_EL3)) {
+         if (FIELD_EX32(env->cp15.nsacr, NSACR, NSASEDIS)) {
+             cpacr_asedis = true;
+             hcptr_tase = true;
+         }
+     }
 
-For what it is worth, I did try to get there incrementally first. It
-took about a dozen fixes to the old model just to get the chip's own
-driver to negotiate its first command, and it still would not boot
-reliably, because the two blockers, connected only and synchronous
-SCRIPTS, are structural and cannot be patched out in small local steps.
-That is why I stopped treating the old code as a base: it has no path to
-an HP-UX boot to build on.
+     if (cur_el <= 1 && cpacr_asedis) {
+         return 1;
+     }
+     if (cur_el <= 2 && hcptr_tase) {
+         return 2;
+     }
+     return 0;
 
-I do appreciate that this is a large and complicated model, and that
-reviewing it will take real time; I am not trying to wave that away. But
-the incremental path would be worse on exactly that front. A series that
-converted the old model into this one would be a long chain of patches
-to write and a long chain to review, most of them touching code that is
-thrown away by the end. Reviewing one coherent new file, even a big one,
-is less work than reviewing however many steps it would take to get
-there.
+     /* TODO since arm_el_is_aa64 is non-trivial, perhaps */
 
-You really can't get THERE from HERE, which is why I took this approach.
+     switch (arm_min_aa64_el(env)) {
+     case 1:
+         cpacr_aesdis = false;
+         /* fall through */
+     case 2:
+         hcptr_tase = false;
+         break;
+     case -1: /* !arm_feature(ARM_FEATURE_AARCH64) */
+         ...
+     }
 
-Thanks,
-Keith
 
-On 7/2/2026 5:02 AM, Peter Maydell wrote:
-> On Wed, 1 Jul 2026 at 22:49, Keith Monahan <keith@techtravels.org> wrote:
->>
->> Replace the NCR 53C710 model with a SCRIPTS engine derived from QEMU's
->> LSI53C895A model (hw/scsi/lsi53c895a.c), another device in the same
->> NCR/LSI SCRIPTS family, adapted to the 53C710: its register map, the
->> single-byte DSTAT/SSTAT0 interrupt model, big-endian SCRIPTS and
->> table-indirect fetch (the part sits on the big-endian PA-RISC LASI bus),
->> and 24-bit DMA byte counts.  Behaviour follows the NCR 53C710 Data Manual
->> (Jun 1992) and Programmer's Guide (Oct 1990).
->>
->> The base engine supports connected I/O and reselection-interrupt
->> disconnect, enough to install and boot Debian off the 710 with the Linux
->> lasi700/53c700 driver and to boot NetBSD/hppa 9.4 and 10.1 (osiop) with
->> disk and CD-ROM enumeration.  Reselection follows the 53C700 family:
->> gated on the (re)selection interrupt enable (SIEN.SEL) alone, one-hot
->> SDID, and an SFBR id bitmask in 700-compatibility mode.  SDTR/WDTR/PPR
->> negotiation is declined with MESSAGE REJECT, which the 700-family drivers
->> require to proceed: unlike the 8xx parts they leave the target to drive
->> the phase after the reject.
->>
->> The LASI glue (hw/scsi/lasi_ncr710.c) embeds one NCR710State by value.
->> It gains the free_request SCSIBusInfo callback and request-queue init the
->> core needs, renames the reselection timer to scripts_timer, and narrows
->> the SCSI bus to the 8-bit inclusive maxima.
->>
->> The migration format is incompatible with the model this replaces, so the
->> vmstate version and minimum version are both raised.
->>
->> Signed-off-by: Keith Monahan <keith@techtravels.org>
->> ---
->>   hw/scsi/lasi_ncr710.c |  117 +-
->>   hw/scsi/lasi_ncr710.h |   12 +-
->>   hw/scsi/ncr53c710.c   | 2795 +++++++++++++++--------------------------
->>   hw/scsi/ncr53c710.h   |  276 ++--
->>   hw/scsi/trace-events  |   43 +-
->>   5 files changed, 1191 insertions(+), 2052 deletions(-)
-> 
-> I'm likely not going to be the one doing detailed review here, so
-> my opinion here is not necessarily 100% controlling, but from my
-> perspective this is still significantly too large to review, both
-> in raw size terms and because it has a lot of changes in it that
-> do not all need or want to be in the same patch.
-> 
-> Just looking through the very early stuff to show some examples
-> of changes that don't need to be in this patch:
-> 
->> @@ -50,22 +48,22 @@ static uint64_t lasi_ncr710_reg_read(void *opaque, hwaddr addr,
->>       if (addr >= 0x100) {
->>           hwaddr ncr_addr = addr - 0x100;
->>           if (size == 1) {
->> +            /*
->> +             * Single byte access: flip the byte lane (PA-RISC big endian
->> +             * access -> the chip's little endian register order).
->> +             */
->>               ncr_addr ^= 3;
->> -            NCR710_DPRINTF("Reading value to LASI WRAPPER == 0x%lx%s, "
->> -                           "val=0x%lx, size=%u\n",
->> -                           addr - 0x100, size == 1 ? " (XORed)" : "",
->> -                           val, size);
->>               val = ncr710_reg_read(&s->ncr710, ncr_addr, size);
->>           } else {
->> +            /*
->> +             * Multibyte access: gather little endian, no lane flip, so
->> +             * the 24/32 bit registers assemble correctly.
->> +             */
->>               val = 0;
-> 
-> These are comment improvements to existing code. They don't need to be in
-> the big patch.
-> 
->>               for (unsigned i = 0; i < size; i++) {
->>                   uint8_t byte_val = ncr710_reg_read(&s->ncr710, ncr_addr + i, 1);
->>                   val |= ((uint64_t)byte_val) << (i * 8);
->> -                NCR710_DPRINTF("  Read byte %u from NCR addr 0x%lx: "
->> -                               "0x%02x\n", i, ncr_addr + i, byte_val);
->>               }
->> -            NCR710_DPRINTF("  Reconstructed %u-byte value: 0x%lx\n",
->> -                           size, val);
-> 
-> Here we drop some debug printfs. That can be done separately.
-> 
->>           }
->>
->>           trace_lasi_ncr710_reg_forward_read(addr, val);
->> @@ -83,7 +81,13 @@ static void lasi_ncr710_reg_write(void *opaque, hwaddr addr,
->>
->>       trace_lasi_ncr710_reg_write(addr, val, size);
->>
->> -    if (addr <= 0x0F) {
->> +    /*
->> +     * 0x00..0x0f is the read only LASI module header (ID/SVERSION/HVERSION) and
->> +     * 0x10..0xff is unmapped module space; writes to both are ignored.  The
->> +     * SCSI bus reset is driven through the chip's SCNTL1.RST at forwarded
->> +     * offset 0x101 (see ncr53c710.c), not through this window.
->> +     */
->> +    if (addr <= 0x0f) {
->>           return;
->>       }
-> 
-> This is a better explanatory comment. That's not something that
-> needs to be in the big patch.
-> 
->>
->> @@ -92,16 +96,10 @@ static void lasi_ncr710_reg_write(void *opaque, hwaddr addr,
->>
->>           if (size == 1) {
->>               ncr_addr ^= 3;
->> -            NCR710_DPRINTF("Writing value to LASI WRAPPER == 0x%lx%s, "
->> -                           "val=0x%lx, size=%u\n",
->> -                           addr - 0x100, size == 1 ? " (XORed)" : "",
->> -                           val, size);
->>               ncr710_reg_write(&s->ncr710, ncr_addr, val, size);
->>           } else {
->>               for (unsigned i = 0; i < size; i++) {
->>                   uint8_t byte_val = (val >> (i * 8)) & 0xff;
->> -                 NCR710_DPRINTF("  Writing byte %u to NCR addr 0x%lx: 0x%02x\n",
->> -                       i, ncr_addr + i, byte_val);
->>                   ncr710_reg_write(&s->ncr710, ncr_addr + i, byte_val, 1);
->>               }
->>           }
-> 
-> Debug printfs being removed again.
-> 
->> diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
->> index 57967e7a84..57cd7d91a4 100644
->> --- a/hw/scsi/ncr53c710.c
->> +++ b/hw/scsi/ncr53c710.c
->> @@ -1,599 +1,308 @@
->>   /*
->> - * QEMU NCR710 SCSI Controller
->> + * QEMU NCR 53C710 SCSI I/O Processor emulation
->>    *
->> - * Copyright (c) 2025 Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
->> - * This driver was developed during the Google Summer of Code 2025 program.
-> 
-> Generally speaking you shouldn't drop somebody's Copyright line.
-> Even if the code has been mostly rewritten, there's still some
-> of Soumyajyotii's code here, I expect.
-> 
->> + * Copyright (c) 2026 Keith Monahan <keith@techtravels.org>
->> + * Copyright (c) 2006 CodeSourcery (lsi53c895a.c, written by Paul Brook)
->>    *
->> - * NCR710 SCSI Controller implementation
->> - * Based on the NCR53C710 Technical Manual Version 3.2, December 2000
->> + * A rewrite of the QEMU NCR 53C710 model.  The 53C710 is an early member of
->> + * the NCR/LSI SCRIPTS processor family, so the SCRIPTS engine here is derived
->> + * from QEMU's LSI53C895A model and adapted to the 53C710's register map,
->> + * single byte interrupt model, big endian SCRIPTS fetch (PA-RISC) and 24 bit
->> + * DMA, per the NCR 53C710 Data Manual (Jun 1992) and Programmer's Guide
->> + * (Oct 1990).
->>    *
->> - * Developed from an implementation of NCR53C710 by Helge Deller
->> - * which was interim based on the implementation by Toni Wilen for UAE.
->> + * Derived from hw/scsi/lsi53c895a.c (Copyright (c) 2006 CodeSourcery, written
->> + * by Paul Brook).
->>    *
->> - * SPDX-License-Identifier: GPL-2.0-or-later
->> + * Replaces the 53C710 model written for Google Summer of Code 2025 by
->> + * Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>, itself based on
->> + * earlier NCR 53C710 work by Helge Deller and by Toni Wilen (for UAE).
->>    *
->> - * Contents:
->> - * 1. Register Definitions
->> - * 2. Register name functions
->> - * 3. Parity functions
->> - * 4. SCSI FIFO Structures
->> - * 5. Scripts Misc functions
->> - * 6. DMA functions
->> - * 7. Scripts functions
->> - * 8. Read and Write functions
->> - * 9. QEMU Device model functions
->> + * The only instantiated device is the LASI wrapper (lasi_ncr710.c), which
->> + * embeds one NCR710State by value and drives it through this file.
->>    *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->>    */
-> 
->> -/* SCNTL0 (0x00) - SCSI Control Register 0 */
->> -#define NCR710_SCNTL0_TRG    0x01
->> -#define NCR710_SCNTL0_AAP    0x02
->> -#define NCR710_SCNTL0_EPG    0x04
->> -#define NCR710_SCNTL0_EPC    0x08
->> -#define NCR710_SCNTL0_WATN   0x10
->> -#define NCR710_SCNTL0_START  0x20
->> -#define NCR710_SCNTL0_ARB0   0x40
->> -#define NCR710_SCNTL0_ARB1   0x80
-> 
-> 
->> +/* SCNTL0 (0x00) */
->> +#define NCR710_SCNTL0_TRG       0x01
->> +#define NCR710_SCNTL0_AAP       0x02
->> +#define NCR710_SCNTL0_EPG       0x04
->> +#define NCR710_SCNTL0_EPC       0x08
->> +#define NCR710_SCNTL0_WATN      0x10
->> +#define NCR710_SCNTL0_START     0x20
-> 
-> These defines haven't actually changed, except that you've
-> reformatted the whitespace. If you want to adjust the whitespace,
-> that's a separate patch, but better still don't do that.
-> Then all this stuff doesn't appear in this patch at all
-> because it doesn't change.
-> 
->> +static const char *const ncr710_reg_names[64] = {
->> +    "SCNTL0", "SCNTL1", "SDID", "SIEN", "SCID", "SXFER", "SODL", "SOCL",
->> +    "SFBR", "SIDL", "SBDL", "SBCL", "DSTAT", "SSTAT0", "SSTAT1", "SSTAT2",
->> +    "DSA0", "DSA1", "DSA2", "DSA3", "CTEST0", "CTEST1", "CTEST2", "CTEST3",
->> +    "CTEST4", "CTEST5", "CTEST6", "CTEST7", "TEMP0", "TEMP1", "TEMP2", "TEMP3",
->> +    "DFIFO", "ISTAT", "CTEST8", "LCRC", "DBC0", "DBC1", "DBC2", "DCMD",
->> +    "DNAD0", "DNAD1", "DNAD2", "DNAD3", "DSP0", "DSP1", "DSP2", "DSP3",
->> +    "DSPS0", "DSPS1", "DSPS2", "DSPS3", "SCRATCH0", "SCRATCH1", "SCRATCH2",
->> +    "SCRATCH3", "DMODE", "DIEN", "DWT", "DCNTL", "ADDER0", "ADDER1", "ADDER2",
->> +    "ADDER3",
->> +};
->> +
->> +static const char *ncr710_reg_name(int offset)
->>   {
->> -    return (s->sien0 & NCR710_SSTAT0_SEL) != 0;
->> +    return (offset >= 0 && offset < 64) ? ncr710_reg_names[offset] : "???";
->>   }
-> 
-> This is a rewrite of the old version of this function, to use
-> an array of strings instead of a big switch. It is definitely
-> nicer code, but this change can be done as its own patch.
-> 
-> 
-> Personally my experience is that it is much easier to
-> structure big changes into smaller pieces to start with,
-> rather than doing the big change first and then having
-> to break it up into smaller pieces later. Doing things
-> in smaller pieces makes it easier to isolate where bugs
-> or regressions are, both during development and later if
-> we need to git bisect once a change has landed.
-> 
-> thanks
-> -- PMM
-
+r~
 
