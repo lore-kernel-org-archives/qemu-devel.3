@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DF24C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 09:47:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4648C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 09:48:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfE12-0003Dz-Od; Thu, 02 Jul 2026 05:47:28 -0400
+	id 1wfE13-0003EN-JV; Thu, 02 Jul 2026 05:47:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stojkovicdusan555@gmail.com>)
- id 1wfE10-0003Da-SH
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 05:47:26 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1wfE12-0003Ds-58
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 05:47:28 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <stojkovicdusan555@gmail.com>)
- id 1wfE0y-0002XB-Rk
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 05:47:26 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-493b779003fso7933035e9.3
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 02:47:24 -0700 (PDT)
+ id 1wfE10-0002XJ-E6
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 05:47:27 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-4720f3bf164so186009f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 02:47:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782985643; x=1783590443; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=fKC1D1OsYzhuu2T5DhZS+ayo24Iqaetkzw1OMf9jA3M=;
- b=LxGYbcBVX+uZNj+YOFMF7NS8nWo4QmrCm2KQd8cmD7qHlYBN/MxRw3mXhIi6dx8J0r
- ODWOrQ8niw2JrbxJOX1Ay+1pRM+K+Dqn4mNe6z/0j7olyz3cf45kQDAyL6/wqc+b7cgm
- 5CQdAVM+cPjHvxl3HQjxOrScXKjgQGHLwKXX1e7Xn+EgT5GY5YdI0fcXMJFDOZldRkta
- J3/LRmXy0TOyVLsxw5qHYhIKlxKSyiSZhPL1Ye17itvRu1wDDvM437kPBhllYrw7d2ma
- rmwemiF5d1JVsWLsErRxLQi243SSF8PAPuki8gxwKA1e6I8Ij1F91yjoVwVzetaCLaUW
- z8/g==
+ d=gmail.com; s=20251104; t=1782985644; x=1783590444; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=BHsFCClOErBCb2hCTW5Kdx5hfrAxpl2r1lI9X/xFrPM=;
+ b=OECrVyns3uGmroedbcT8WA0skdnblV6RTbQyW8eFN38SQORzIYJyaivWMgptu4ljj4
+ hpaXTjWxXchXBSs8DKp44ZSqJPPGnAB/RUJiZRDq9U8xsSQsu44v7oH5vgbT1i6fgdG8
+ EfJ6Q3zmJGIIJJGs403S+cMFEQWQJSy6addRoMcJBBpoUznd2rhauMSZaj2NgXcriHgP
+ vPRtbRZSKIZtXa8RlcvlKfSnNsDBG2gewve7oGFuBtiLKqnqsTppwc1K41POABHYEN+2
+ BWnuft4mtC50+lhjtLpYDwbYs5Omo7I6Vq9sap5WzSjGeqMWLEHlhXRbeHu5gw0HSBbT
+ Ngsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782985643; x=1783590443;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fKC1D1OsYzhuu2T5DhZS+ayo24Iqaetkzw1OMf9jA3M=;
- b=RBlQUPD1d/peHHi5d9kVHyRmMT09v+sz4LTbadu7jjVCfs5f/5U3wdor2fHJDwXJQP
- oItdO3ztOLptPeMynqMSRzuZ890sM1o4wQDCcVTJe/TYPgubOG5574IqqAu1f4nskN7B
- 3y5WjDZM03DcvTgIxzaYEzzklOjSvdu81fvb6chJrwCa9c8UzMeTidZhcJSXClYVtgT2
- ZygAo2m/NycpXOp46mKSVBXkUr99wNcGcKDuwYFIW5m25Ofubfd2tIBF4yQdQ7QUYWfj
- Ty52p6UJolUOVbX5V1K4KlreYaadLecLEiQuZPT/lrI92uIfp+nQlQXoQWucj152d0fq
- PYJQ==
-X-Gm-Message-State: AOJu0YymIXx1IMSIcIaAFSRq5TPTykIaOVSTFaqT/+ZlyqG9jL7DHrga
- rceFmux+HZZrqTF0r2nSLAByFd2wbJcoD2jmwKLy3xLMRrkVCemS5z88
-X-Gm-Gg: AfdE7ckJO+I6L3IZNqlj6VLQBoieux2xkvC86tXmrP/U2cFou6r6lc6Rcis2OMa2ju5
- xXpUbROJltFpb0WDPIOTSPOFpx4GpnxUUT9m0OJPEt2llO+HJ+yF3Kj6L9h7jP87BmzOAw6Z6TQ
- 9XG3MswcNmyQyqr4IZ6bx7/T/K7qo7pfI9pOE/s0hHZt6TbkKZRTsDpjz6h3xUQ4Rkz2+oJDr3u
- V+dS7iKuVNy41tpUeuD8mOipGs85zygi10h2Y/c9V2JPq4PidzQVIzZuylPIFoaYge8qjvea3yU
- 86WSV+LEhxaS5cSSVmbgl4l9/3VgxQk7xasbyHNceajyHP1xoi4VJkgTJcgXuZXNfLTcZ2A4fc7
- nlXpIW76i/GhLxzGoUBeRS9I/f4PeaQzwpARMHC6KMVnd/WRX0iri3TWRW90cv87rMIQOykpPuQ
- L1e1hPdPuC6M/idg7R1ZzqAQzIa7JW0VFpQGSmGWcIxA==
-X-Received: by 2002:a05:600c:8b30:b0:493:bdaf:83a7 with SMTP id
- 5b1f17b1804b1-493c83a5b75mr4322745e9.28.1782985642521; 
- Thu, 02 Jul 2026 02:47:22 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782985644; x=1783590444;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=BHsFCClOErBCb2hCTW5Kdx5hfrAxpl2r1lI9X/xFrPM=;
+ b=BeMp7oV0VD6ozrfx51ejga8GBC7ZFZEj2L/nW2PbKV6vmMexmZYsuVGmFD9jTOizRp
+ P/D0VpmgDLdbkuM9otMmfL/RjrbIyHEHhd96avFJkSOKDfBiMRz8NmtbZNB19zskoVGu
+ jfyLSlVpPmnOLLvFPagscEKuhUm4WdYd1UciAS5I3k+/YVMn2NLXSb6SV36C81d2BPIS
+ 7g35gKI8QKHj40BChOeah5EJWXkuc+gGu8MkZV2t1aCMIDyNK1SwSR+WC52Jcf6UxIq7
+ nrC/h8P0EJsr6s8lIQEbj9iqStcmIu3zFjLMEo+BxHWTnhcf34I6P/PuI9VsxL2nXL+U
+ 1SFA==
+X-Gm-Message-State: AOJu0YzMKTBFYStM1p7ghYnaqdejlvL53y26RIMhSBxibCzh/nbeTDAU
+ KUXOVOdTG7lCCghr1nIjH/RbXL5HQa8up+AJZZPsbvNaBLKo0FAKpP9r
+X-Gm-Gg: AfdE7cl/fUFyv//2MzaMDJeNkGfqAtgfMKKjeXh6b/TDn5p0jzowxpu0aTGvpPaB3w7
+ eeIDtCYvgJxOAJi764zvI5Q68dep1O5ep5YMlfJfgWBu2zmOQfvc5HtpY6xiRj3oWSMonXRKb3K
+ kStWz3giFTX/kPWfA8Qn93Y/6zssf/Gd+OgIUe+MxH/DZwHSSg0BjHbuwuMJY7UXYbVAmnmgkZe
+ pD8hDG2kxfDkLGi8DoNo+a4ad171Ot83lCIAQ4F6XKRdo99MgtHlIA4eqU13+AsJ6xA+lycaumH
+ iOysjdGJ8wB/Y5t3MhUAk6A6Ud6iiiBgiw2vS+44CuiEicjpKXuC0yazIHZq6CZt/ZmHl6CEba8
+ AqMca/IzLuHWncbqT3lwcRg70VW0Skrimzr0tEFnsL3lfI/Qzkf5vA4f+VsN+R6Q5yskrLKpOD8
+ tlD5VYPVgvI17cm2F6LPH25j53NXjwSPaoYR51/ZNjAg==
+X-Received: by 2002:a05:6000:290f:b0:46f:9026:4971 with SMTP id
+ ffacd0b85a97d-475de54e175mr13729534f8f.11.1782985644267; 
+ Thu, 02 Jul 2026 02:47:24 -0700 (PDT)
 Received: from RTRKN1313-LIN.domain.local ([89.216.37.146])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-477db8a4a15sm7539152f8f.14.2026.07.02.02.47.20
+ ffacd0b85a97d-477db8a4a15sm7539152f8f.14.2026.07.02.02.47.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jul 2026 02:47:22 -0700 (PDT)
+ Thu, 02 Jul 2026 02:47:24 -0700 (PDT)
 From: Dusan Stojkovic <stojkovicdusan555@gmail.com>
-Subject: [PATCH RFC v3 0/2] vhost-user: support Xen foreign memory mappings
-Date: Thu, 02 Jul 2026 11:46:11 +0200
-Message-Id: <20260702-vhost-xen-foreign-mapping-v3-0-2b8ef913382b@rt-rk.com>
+Date: Thu, 02 Jul 2026 11:46:12 +0200
+Subject: [PATCH RFC v3 1/2] vhost: accept Xen guest RAM sections for vhost-user
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAGMzRmoC/43NTQqDMBAF4KtI1p2SRJNoV4VCD9Bt6cKfUUMxk
- USCRbx7Q1auSpdvHvO9jXh0Gj25ZBtxGLTX1sSQnzLSjrUZEHQXM+GUSypZCWG0foEVDfTWoR4
- MTPU8azNAR3nelqJpFJUk/s8Oe70m+0ke9xt5xeOo/WLdJ+0Flqo/6MCAguolrSUvWKXY1S3g3
- ufWTkkN/CDx6pfEo8QqLGQpUAkljtK+719pMItFEQEAAA==
+Message-Id: <20260702-vhost-xen-foreign-mapping-v3-1-2b8ef913382b@rt-rk.com>
+References: <20260702-vhost-xen-foreign-mapping-v3-0-2b8ef913382b@rt-rk.com>
+In-Reply-To: <20260702-vhost-xen-foreign-mapping-v3-0-2b8ef913382b@rt-rk.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
  Stefano Garzarella <sgarzare@redhat.com>, 
@@ -84,8 +82,8 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Dusan Stojkovic <Dusan.Stojkovic@rt-rk.com>, 
  Nikola Jelic <Nikola.Jelic@rt-rk.com>
 X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=stojkovicdusan555@gmail.com; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=stojkovicdusan555@gmail.com; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,190 +107,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series lets QEMU, when running as a Xen device model, drive
-vhost-user backends that map guest memory through the Xen foreign
-mapping interface, implementing the front-end side of
-VHOST_USER_PROTOCOL_F_XEN_MMAP. The protocol extension itself is
-already documented in docs/interop/vhost-user.rst (feature bit 17,
-extended memory region description) and implemented by rust-vmm's
-vhost / vm-memory crates and the vhost-device backends built on them.
- 
-The problem this solves: under Xen the guest's RAM is not allocated by
-QEMU and is not backed by a file descriptor. memory_region_get_fd()
-returns -1, so vhost_section() filters out every RAM section, the vhost
-memory listener registers no regions, and starting any vhost-user
-device fails with "Failed initializing vhost-user memory map". With
-F_XEN_MMAP the backend maps guest memory itself.
+From: Dusan Stojkovic <Dusan.Stojkovic@rt-rk.com>
 
-The protocol requires one file descriptor per region in SET_MEM_TABLE.
-Guest RAM under Xen has no backing fd, so the front-end opens
-/dev/xen/privcmd per region purely to satisfy that requirement; the
-backend derives the mapping from guest_phys_addr + domid and never
-reads the fd. Each fd is closed once the message has been sent.
+When QEMU runs as a Xen device model, the guest's RAM is not allocated
+by QEMU and is not backed by a file descriptor that could be shared
+with a vhost-user backend: accesses from QEMU go through the Xen
+mapcache and memory_region_get_fd() returns -1. vhost_section()
+therefore filters out every RAM section, the vhost memory listener
+registers no regions, and starting any vhost-user device fails with
+"Failed initializing vhost-user memory map".
 
-This patchset was rebased onto the new vhost_phys_vring_addr infrastructure 
-and extends vhost_user_gpa_addresses() so that negotiated
-F_XEN_MMAP (bit 17), not F_GPA_ADDRESSES (bit 21, which the backend doesn't 
-advertise), drives GPA addressing for both rings and userspace_addr.
+With VHOST_USER_PROTOCOL_F_XEN_MMAP the backend does not need an fd or
+a process-local mapping it maps guest memory itself through the Xen
+foreign mapping interface, using the guest physical address and domain
+id. Accept the Xen RAM region in vhost_section() so that it reaches
+the backend's memory table.
 
-The two patches:
-  1/2  accept the Xen RAM section in vhost_section()
-  2/2  negotiate F_XEN_MMAP and build SET_MEM_TABLE from the extended
-       region layout. 
-Testing:
-Tested on Xen/ARM64 with a DomU using virtio-mmio transports created
-by the xenpvh machine, running vhost-device-sound (rust-vmm, built
-with the "xen" feature) as the backend in dom0. The device negotiates,
-receives the memory table and ring addresses, and the guest's
-virtio-snd driver probes and operates.
+The Xen grant region (xen.grants) must never be accepted: grant
+references can only be mapped individually on demand via
+address_space_map(), and deriving a host pointer for the whole region,
+as vhost_region_add_section() does, aborts in the Xen mapcache. Note
+that xen_mr_is_memory() returns true for both the RAM and the grants
+region, so the grants region is excluded explicitly.
 
-Non-Xen / x86 KVM: vhost-user-snd backed by
-vhost-device-sound (null backend) on a q35/KVM guest. The device
-negotiates, the guest virtio-snd driver probes and runs the control and
-PCM paths, and the SET_MEM_TABLE and vring-address traffic is identical
-to a build without this series confirming the
-non-Xen path is unchanged.
-
-The control message exchange between the frontend and backend was
-tracked using sockdump as was described in:
-Making VirtIO sing - implementing virtio-sound in rust-vmm project
-|-> at FOSDEM 2024
-
-Setup:
-The main part of the xl config this enables:
-virtio = [
- 'backend=0,type=virtio,device,transport=mmio,grant_usage=false'
-]
-
-device_model_args = [
- ...
- '-chardev', 'socket,id=snd_chardev,path=/tmp/snd.sock',
- '-device', 'vhost-user-snd,chardev=snd_chardev,id=snd,iommu_platform=true',
- ...
-]
-
-Xen 4.22-unstable was used with:
- -enable-IOREQ_SERVER 
- -enable-EXPERT
-
-An extra patch was added to xen-tools.
-Namely, xen tools will request a pv device drive type for ARM64 but 
-qemu expects pvh. This is a known issue:
-github.com/Xilinx/xen/commit/5f669949c9ffdb1947cb47038956b5fb8eeb072a
-
-Qemu master was used configured with the following flags:
-    --target-list=aarch64-softmmu \
-    --cross-prefix=aarch64-linux-gnu- \
-    --enable-xen \
-    --enable-vhost-user \
-    --extra-cflags="-I$XEN-TOOLS/usr/local/include" \
-    --extra-ldflags="-L$XEN-TOOLS/usr/local/lib -Wl,
-        -rpath-link,$XEN-TOOLS/usr/local/lib" \
-
-Likewise for x86:
-    --target-list=aarch64-softmmu \
-    --enable-slirp \
-    --enable-xen \
-    --enable-vhost-user \
-    --enable-virtfs \
-
-Linux version 6.11.7 was used with extra configuration flags:
-* For enabling Xen Dom0/DomU support
-* For enabling virtio (mmio, snd, etc.)
-* For enabling sockdump features (BPF, IKHEADERS, KPROBE, etc.)
-* Extra debug flags (DEBUG_FS, etc.)
-
-vhost-device commit-id:
-    c3bb658ef4fe20a2f264dbbbbc6fa19f1c08c0c5
-    
-    Was used built with:
-    --features alsa-backend,xen
-
-Importantly in vhost-device-scmi/src/vhu_scmi.rs:
-
-// QUEUE_SIZE must be apparently at least 1024 for MMIO.
-// There is probably a maximum size per descriptor defined in the kernel.
-const QUEUE_SIZE: usize = 1024;
-
-A similar change was made to make mmio work in vhost-user-sound device,
-bumping QUEUE_SIZE to 1024.
-
-Without this frontend and backend will fail to negotiate queue size.
-
-Scope and known limitations:
-* Foreign mappings only. Grant mappings are not supported: vhost's
-  section tracking derives a host pointer for each region, which is
-  invalid for the grant pseudo-region, and per-access grant mapping
-  needs a different region description (GRANT | no-advance-map). Patch
-  1 rejects the xen.grants region explicitly. Setting grant_usage=true
-  does not change the qemu<->backend vhost-user exchange.
- 
-* VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS is suppressed under Xen:
-  the ADD/REM_MEM_REG path has not been converted to the extended
-  region format, and Xen guests currently expose a single RAM region,
-  so SET_MEM_TABLE is sufficient. Multiple RAM regions are not yet
-  exercised. Postcopy is refused.
-
-* Spec vs reference implementation: docs/interop/vhost-user.rst
-  describes the "can not be mapped in advance" xen-mmap flag as Bit 8
-  (value 0x100), whereas rust-vmm's vm-memory uses 0x8 (bit 3,
-  MmapXenFlags::NO_ADVANCE_MAP). This series uses neither, but the
-  discrepancy probably wants resolving in the spec. Viresh, which is
-  intended -- bit position 8 or value 0x8?
-
-* userspace_addr is carried unchanged in the region descriptor; under
-  Xen it does not correspond to a mapping and backends do not
-  interpret it. An alternative would be to define it (e.g. mirror
-  guest_phys_addr).
-
-Open questions:
-- userspace_addr semantics under Xen: leave it unchanged, or define it?
-- Multi-region support: convert ADD/REM_MEM_REG to the extended layout
-  rather than suppressing CONFIGURE_MEM_SLOTS?
-- Grant-mapping support: worth pursuing, and what region-description
-  shape do backends expect?
-- Updating vhost-device-sound to reflect the mmio support.
-
-References:
-- vhost-user spec, F_XEN_MMAP / extended memory region / xen mmap flags:
-  docs/interop/vhost-user.rst
-- rust-vmm vm-memory MmapXenFlags (FOREIGN=0x1, GRANT=0x2,
-  NO_ADVANCE_MAP=0x8): src/mmap/xen.rs
-- Making VirtIO sing - implementing virtio-sound in rust-vmm project
-|-> at FOSDEM 2024
+Because of the necessity to exlude xen.grants, the missing stub for
+xen_mr_is_grants is added so that it can be called from common code.
 
 Signed-off-by: Dusan Stojkovic <Dusan.Stojkovic@rt-rk.com>
 Signed-off-by: Nikola Jelic <Nikola.Jelic@rt-rk.com>
 ---
-Changes in v3:
-- Rebased onto current master
-- Fixed semantic error in vhost_section comment
-- Link to v2: https://lore.kernel.org/qemu-devel/20260629-vhost-xen-foreign-mapping-v2-0-19e4685e7575@rt-rk.com
+ hw/virtio/vhost.c  | 18 ++++++++++++++++++
+ hw/xen/xen_stubs.c |  5 +++++
+ 2 files changed, 23 insertions(+)
 
-Changes in v2:
-- Rebased onto current master
-- Cover letter: removed a rust-vmm hunk which made the git am
-  on Patchview fail. The reference is now mentioned in a sentance.
-- Link to v1:
-  https://lore.kernel.org/qemu-devel/20260618-vhost-xen-foreign-mapping-v1-0-7f60a6241971@rt-rk.com
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index af41841b52..ffc692b3e2 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -29,6 +29,7 @@
+ #include "system/dma.h"
+ #include "system/memory.h"
+ #include "system/ramblock.h"
++#include "system/xen.h"
+ #include "trace.h"
+ 
+ /* enabled until disconnected backend stabilizes */
+@@ -657,6 +658,23 @@ static bool vhost_section(struct vhost_dev *dev, MemoryRegionSection *section)
+             return false;
+         }
+ 
++        /*
++         * Under Xen, the guest's RAM is not backed by an fd that
++         * can be passed to a vhost-user backend.  The backend
++         * instead maps guest memory through the Xen foreign mapping
++         * interface, by guest physical address and domain id (see
++         * VHOST_USER_PROTOCOL_F_XEN_MMAP), so accept the Xen RAM
++         * region even though it has no fd.
++         */
++        if (xen_enabled()) {
++            if (xen_mr_is_memory(mr) && !xen_mr_is_grants(mr)) {
++                trace_vhost_section(mr->name);
++                return true;
++            }
++            trace_vhost_reject_section(mr->name, 4);
++            return false;
++        }
++
+         /*
+          * Some backends (like vhost-user) can only handle memory regions
+          * that have an fd (can be mapped into a different process). Filter
+diff --git a/hw/xen/xen_stubs.c b/hw/xen/xen_stubs.c
+index f830768d99..7af39bceb0 100644
+--- a/hw/xen/xen_stubs.c
++++ b/hw/xen/xen_stubs.c
+@@ -29,6 +29,11 @@ bool xen_mr_is_memory(const MemoryRegion *mr)
+     g_assert_not_reached();
+ }
+ 
++bool xen_mr_is_grants(const MemoryRegion *mr)
++{
++    g_assert_not_reached();
++}
++
+ bool xen_map_cache_enabled(void)
+ {
+     return false;
 
----
-Dusan Stojkovic (2):
-      vhost: accept Xen guest RAM sections for vhost-user
-      vhost-user: implement VHOST_USER_PROTOCOL_F_XEN_MMAP
-
- hw/virtio/trace-events         |   2 +
- hw/virtio/vhost-user.c         | 120 +++++++++++++++++++++++++++++++++++++++--
- hw/virtio/vhost.c              |  18 +++++++
- hw/xen/xen_stubs.c             |   5 ++
- include/hw/virtio/vhost-user.h |   2 +-
- 5 files changed, 143 insertions(+), 4 deletions(-)
----
-base-commit: 30e8a06b64aa58a3990ba39cb5d09531e7d265e0
-change-id: 20260618-vhost-xen-foreign-mapping-d023c85bb706
-
-Best regards,
 -- 
-Dusan Stojkovic <Dusan.Stojkovic@rt-rk.com>
+2.43.0
 
 
