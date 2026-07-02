@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC1AC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 17:53:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04283C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 18:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfLbL-0007hl-S4; Thu, 02 Jul 2026 13:53:27 -0400
+	id 1wfLkf-0001Md-6g; Thu, 02 Jul 2026 14:03:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfLbK-0007fL-AY
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:53:26 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1wfLkb-0001Jd-0M
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:03:01 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wfLbI-0006hM-NZ
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 13:53:26 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2ca1479dfe0so20622185ad.1
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 10:53:24 -0700 (PDT)
+ id 1wfLkX-0001G7-UC
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 14:02:59 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-8478a25f268so1541869b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 11:02:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783014803; x=1783619603; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783015376; x=1783620176; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+1YDasfJit96SgrAHspsfSi9XU5gZh5XjPd6MOOS2LU=;
- b=v4Z9HUB/Z95jvRD4kBEL0zaPvSLnuiplvfqW6JRLsijSTgt8GWJhc6DI+DgPYHJQUv
- Seuhs1K6j8Z9SGox7qan953KYFNpY1JdRK0HSeko7uUHqxzCMMob4Uewump4lbxmqn0o
- V1dFIgJeOMzewJcdoAbpIYGHVeQFT1g7LfRPhs9KTy0wamLVCJj3KL5Y4RFQGyI6Pw2O
- 7MgERQfI/vhlxNP8haQMk67HBZefnqi3+hOsEGmW686uAyEDYmQE66GTelvHFw7gxaNZ
- iRkURzlNcLIQL1oy1OBeg/oa1/03A5NRyP2F0nmQYxe3gBylimuYjBeU08Xo7+7st0vu
- AQYw==
+ bh=aVx8enAZsftxIcGL0xojtj24NNn2E8Df/JOcb32+KxI=;
+ b=CnqVnVCysIAN/w5H4RNbri3KBAbZk+f/dFtaykCA+vJ+vIxxi+4DyvQkjxuqqUzSuB
+ 4eqhttX4Czj0x3TUx4NlH5cXfwp6MNoqBfqWLVLM583xPHPs1LM51fIEbDI87pBXivM3
+ LPyPCDsDlQWfnrUWPJJWvDVNKAFj3aqpqNJXBX6F4nnPnrVQdj2zVpV3kIVG24D3Dgix
+ 7Nhlvlwsviemwi7HT8udq6OfpcQMKNNS+Ki8htqEuKofE2ficzxFs5iGyr3HL5V/eM2G
+ ujltKZTpe7B2CgQLzGUWcE5BkKVl8UkxKAyeugjMpMfSqMcOE75TemssuU0wXKhZUOLP
+ 63MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783014803; x=1783619603;
+ d=1e100.net; s=20251104; t=1783015376; x=1783620176;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+1YDasfJit96SgrAHspsfSi9XU5gZh5XjPd6MOOS2LU=;
- b=HCURvzDP/EqpJs19BWr5GJUfRTygtkLLC/BfmuPMABuW7WIefeByuT8C8UuMahyn30
- fAJVBNbV52wbmKBa33V6ceU8kDq1+6HK+NeQEOWDKCjQGtnl94xwrkHTfqLtRGjSAiSw
- eLpO2iqd8bEMwOMR+44LYfgI4iqHD0Hio90vSAqszU0jovx4xx6u/kgIVQljXO+8Tgvo
- Rdf7dDVkiVUgv51yvdOD5amZ8EA4Q8OTiOf+jGxPq5DZ0szr0cguA8UsTWlqGiQqWyVj
- xdiBREsDD6bYAU5iN5FI+OJtOO9MNGPMIDVL1Pa6bt0PZyiVI4wKzH2T1iHIvs+wax6L
- qKIg==
+ bh=aVx8enAZsftxIcGL0xojtj24NNn2E8Df/JOcb32+KxI=;
+ b=TD353PJyiYFBtOsucSyif1b4B12J+WvmCDNd1dWWpkIenjMw5K77hM62sS7H8euoxe
+ VK+LBKb6K1vm+O7an7/yoiZOUdppo6zdpOu3ddQnh33owzoL7AAQ1btBA1EFIYNHXMFN
+ CyxHtcNympe/4sPFsxyYP47mTCg/b9nRkCnmq4KyUZSTFmf3ASbga3apOVnjvrXZEPHp
+ r2jp9z0hB986S+bMxQdqpjNwTIPPwxM+Gqg4+Nd4K3giKPx5TCQxCjIYXCQDsmUucvmg
+ pD2/pCIPJCB1JLa3ArPffwa7gXPUavNt5Rhm2BIaWU5PwWew9nFx7CXqhVoAeDlmUXUX
+ I1Dg==
 X-Forwarded-Encrypted: i=1;
- AHgh+Ro8C+U0PxhrANLlhqLKP9UMrWwiUVK3WvhCZTvadULvYrrsgrYFzZLSBzQ2Am0jLuqnxd1PBbmYomLJ@nongnu.org
-X-Gm-Message-State: AOJu0YxKLb4c4S/PRVR0z4n8M9rmUALt/oKJdeeaD0enlHgWrZdMhaHp
- LirnF88J7nrBCP5Dd7R2c4ZuplWY5QZMtqFI67Y9yTFxhCOxAvpK/VFYP2PGBIs4Bwc=
-X-Gm-Gg: AfdE7ckajtIN/hO4ihSbiZnRgvuuWXDtoWnzLonewN+rdQTwY0MUUsZ0FTyXdvKOZzh
- anlUmNvetjssnYF86S9cJDIIPP6znxdSxEy5uF5/YjU6/1MFK1g677VjiCXEZD9E7aflHLRDLHP
- c8tneWbzjk/MtkyPwf6cexVFs4iKD5tjyt2oGhlBqjHdjoxyGDx+azBW8o5aS9xXgB/m16YzpVM
- Vnx5wLC2kx/3l6O2KH3n13vgcZeZuyv4wFb40I4GdCmVmhTRIabv1O2yukTctk/jIQm91rhwAAd
- WENnOER+nqg8HfremdsuXsAEjFe9olIZJ0vnid9vk+/6K29BDKVVYMMZe3mZukNSwd3TqVC0BAM
- xfmKHu+T9gX1695UrK9jHT+4SAtA4arR2LlB//EgEOf0W7xnJ0JXLRZmr6G1u/MBOP7e5RoD/JD
- ZPyhjOuPbbJjk0m8y5FPhxaDIcHCWiyuvxaeAj/0AtR/TDhvp71CCHEbVMgA==
-X-Received: by 2002:a17:903:2a83:b0:2ca:de3:15e8 with SMTP id
- d9443c01a7336-2ca7e8db877mr74759235ad.26.1783014803030; 
- Thu, 02 Jul 2026 10:53:23 -0700 (PDT)
+ AHgh+RpxT+i7vfV61egTCQVX/eP+wdwduchSvBDm1QiK7EW7dPcstc4UZRkuGP5PvtjocFiR7mBeJObQBhNG@nongnu.org
+X-Gm-Message-State: AOJu0YxkXLLAoWocJa+fkqQcDMb5KazCQ+VHks2WuJECFHFf44SxmSgX
+ EDUb2RC5LGM7N9uwzgy/3t/gPCmi14EWeD4NEaLuZwqB8jpTCpSxLn9zekpfU007HVg=
+X-Gm-Gg: AfdE7clF077QocZk6ETSzReCwu7/NmuRQd18zvgKsKgyyDmT4bJ6vGUI2ecXi6/xANG
+ XyJ57HMzp3BHtkUPv8UXEUfTmK2ulfROmeVIdlM2bbi9iMOdy6vxwLrvvVHV9EWgM4w/+qck8X+
+ 31i66bxp3oOSWcz91yqDrctJhbayDXnSdIpZrEGmfSovsyDVfZWMQYsBS+Zcr9uTEp8RuIBtL2e
+ bi/UgUEbJyTK3AmKZY6hfUjx6jwQXLdwv4VcumAV9/y9jAZZGgS98cblTRqCjfKPL31zjFzkDFw
+ 5xibVPtSn9QFiR5KybCJPtd5LkFAXrLem0/YLFl+BdraHryGtIDVVIxMAwmvshuAKtpLEjGHNM2
+ qsYSw94XAfjEds9zzoU/Ak5rdEllfWgMFusaqgqoaJCav33xA5baardYe15kAsC0JnzQQNvgqVM
+ uU/qDUQNPlXUhEyNMhqY7Fzt+KVV8s91N9b+SFR4EG9atEi1geI4qH1TZ6xQ==
+X-Received: by 2002:a05:6a00:847:b0:847:9267:2104 with SMTP id
+ d2e1a72fcca58-847c5005699mr5725904b3a.12.1783015376338; 
+ Thu, 02 Jul 2026 11:02:56 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ca9a8dae33sm17144215ad.1.2026.07.02.10.53.22
+ 41be03b00d2f7-c9e8eb0ec6bsm1595754a12.7.2026.07.02.11.02.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Jul 2026 10:53:22 -0700 (PDT)
-Message-ID: <d638a5c3-5579-4c17-90ee-57368d8dca00@linaro.org>
-Date: Thu, 2 Jul 2026 10:53:20 -0700
+ Thu, 02 Jul 2026 11:02:55 -0700 (PDT)
+Message-ID: <3a6d2b4b-823b-4b70-8cfe-0932adbb638e@linaro.org>
+Date: Thu, 2 Jul 2026 11:02:49 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 24/33] target/arm: Inline check_watchpoints() in
- arm_debug_check_watchpoint()
+Subject: Re: [PATCH 25/33] target/arm: Factor arm_check_watchpoint_hit() out
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -82,14 +81,14 @@ Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  qemu-ppc@nongnu.org
 References: <20260630220100.1289-1-philmd@oss.qualcomm.com>
- <20260630220100.1289-25-philmd@oss.qualcomm.com>
+ <20260630220100.1289-26-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260630220100.1289-25-philmd@oss.qualcomm.com>
+In-Reply-To: <20260630220100.1289-26-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,16 +112,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/30/26 15:00, Philippe Mathieu-Daudé wrote:
-> check_watchpoints() is called once, by arm_debug_check_watchpoint(),
-> which doesn't do more than this call. Merge both. No logical change
-> intended.
+> Factor arm_check_watchpoint_hit() out of arm_debug_excp_handler().
+> No logical change intended.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 > ---
->   target/arm/tcg/debug.c | 40 +++++++++++++++++-----------------------
->   1 file changed, 17 insertions(+), 23 deletions(-)
+>   target/arm/tcg/debug.c | 37 ++++++++++++++++++++++---------------
+>   1 file changed, 22 insertions(+), 15 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+Note for future work: I really dislike having these separate "check breakpoint" and "check 
+watchpoint" hooks, then having one single "do debug exception" that then has to work out 
+what happened.  And clear the "watchpoint_hit" state.
+
+Ideally we'd reorganize this to "raise watchpoint" and "raise breakpoint" hooks, which are 
+given the CPU{Break,Watch}point structure in progress.
+
 
 r~
 
