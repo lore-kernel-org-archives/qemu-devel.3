@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6439BC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 02:08:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0209C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 02:12:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wf6r1-0000sK-B5; Wed, 01 Jul 2026 22:08:39 -0400
+	id 1wf6um-0001bU-J0; Wed, 01 Jul 2026 22:12:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wf6qv-0000s1-MN; Wed, 01 Jul 2026 22:08:35 -0400
+ id 1wf6ul-0001bH-5G; Wed, 01 Jul 2026 22:12:31 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wf6qs-0003aR-2a; Wed, 01 Jul 2026 22:08:32 -0400
+ id 1wf6uj-00053f-Jj; Wed, 01 Jul 2026 22:12:30 -0400
 Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6621KDq42646296; Thu, 2 Jul 2026 02:08:27 GMT
+ 6621KsAj2647620; Thu, 2 Jul 2026 02:12:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=zFfo5W
- NnS/Wb8k4LcM8YKVQ8t35i2ITu6YsDFvQnOI4=; b=Ov5drtb5jUDWdBk52fjddP
- 0WtuU7slxAOzjUaQhKpX/JOBSe4OnRQ8KtVlNQfXseCyB4NE8zuAEMkedcq3okMs
- wAq9R7BN8pEcGarPtM19PxTz76V0on9gkNl8Xeyl4Mk5sjrm2IkE+NnmPYo4DRsD
- Pu//JUZOSJ7t4E5e0xBcA+2Gymb2FrXASfX8GBulbOuTqbMDFI5nFmhlL8LF9j1L
- IBH4P90gF2y7EQDkNaWFTd0sIJqwAcRmQW/D/T3CdmBg81MB1HMuRLKyZCjRtyb4
- uFYFgBrhop/M2dlBtrFtWpC3Z8P0QTDaHQah7g0NDSNJlp+5enWiK8zTKS7zGHmA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=WLSz7T
+ hj01xJw6aYrrlLDmcmMUPTxL3mxhLbyM3+WT8=; b=odY2vynXh8jYkvArk7K5Ny
+ LF29La47LX/IKefmoCjauHyrThLFzKXlbEXPleaD9cyAJpt81uJl5SihHHvVQbCt
+ YdlC7ywvmR7Ro6aZTqgneid0ehj9ktbF084cxSvq2nrStxy+zDLmL4MkdAas0v12
+ BxvGlf6H7MQWgoW/24BUtTyDqSTmKVwrHlRlrRO4NWZ+0o0CZniD7F6lKIz4RUOO
+ IiFH5cuY2b9flvwwvkaJSU8YrCXuCpr+jbGsusJYoj7etKIwmQbgotoIAUsBSKpB
+ XSgNrw7XNwBzM5U29iudmV86KOZnQE9Sd8o83OZohiurdQm50wsjbfhXnbhZoQYw
  ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qg7krr-1
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qg7m2p-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 02:08:27 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66224jKS000403;
- Thu, 2 Jul 2026 02:08:26 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhyhs33-1
+ Thu, 02 Jul 2026 02:12:27 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66224jAc027839;
+ Thu, 2 Jul 2026 02:12:26 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7wa3y3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Jul 2026 02:08:26 +0000 (GMT)
+ Thu, 02 Jul 2026 02:12:26 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
  [10.39.53.232])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66228PH0983864
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6622CP3R19006186
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 2 Jul 2026 02:08:25 GMT
+ Thu, 2 Jul 2026 02:12:25 GMT
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 18FA058053;
- Thu,  2 Jul 2026 02:08:25 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4A68358053;
+ Thu,  2 Jul 2026 02:12:25 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1C75658059;
- Thu,  2 Jul 2026 02:08:24 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4BBA158043;
+ Thu,  2 Jul 2026 02:12:24 +0000 (GMT)
 Received: from [9.61.65.1] (unknown [9.61.65.1])
  by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  2 Jul 2026 02:08:23 +0000 (GMT)
-Message-ID: <600890ad-c962-464e-8414-159110ceb8f5@linux.ibm.com>
-Date: Wed, 1 Jul 2026 22:08:23 -0400
+ Thu,  2 Jul 2026 02:12:24 +0000 (GMT)
+Message-ID: <0efd5c26-a660-4165-8f6f-30b2d4ffe96a@linux.ibm.com>
+Date: Wed, 1 Jul 2026 22:12:23 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/6] s390x: Enable boot menu for virtio pci device
+Subject: Re: [PATCH v2 2/6] pc-bios/s390-ccw/virtio.c: Fix missing break for
+ PCI notifications
 To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
  cohuck@redhat.com
 Cc: zycai@linux.ibm.com, jdaley@linux.ibm.com, jjherne@linux.ibm.com,
  farman@linux.ibm.com, nrb@linux.ibm.com
 References: <20260630141917.673995-1-jrossi@linux.ibm.com>
- <20260630141917.673995-7-jrossi@linux.ibm.com>
-Content-Language: en-US
+ <20260630141917.673995-3-jrossi@linux.ibm.com>
 From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260630141917.673995-7-jrossi@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <20260630141917.673995-3-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=RYqgzVtv c=1 sm=1 tr=0 ts=6a45c81b cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Authority-Analysis: v=2.4 cv=RYqgzVtv c=1 sm=1 tr=0 ts=6a45c90b cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
  a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=sE9LAG50w_MMDgMmH7gA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfXzZabu52Zz2BK
- 5+jHRDYLyXeEFErLxD2gxyp6sWnRdepEBP2DJUj7LfwNTn0nNqWFAyta2RPWq2mneD5vtudM9Ii
- 7ROYeWPDHDGzMOH6Hfx+f6QAPSLF6BA=
-X-Proofpoint-GUID: 09BaeW3u21Vrhq9buBkwC1UWgY6cJn9t
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfX0g2i3/TDeaN0
- xc2Wnx0g3C0u4jr8erbktDMCQmrvmINsIoRIgJSXAVkVUuJYmur3PX7upY5quA7xU0sgBwiI7+B
- 2khXMlCF0lV9lBIgfjEiaQZJHvNStI2ioY+yze25CATJn6cCO0QcR1+RdYhOkN2oSR9rgnk/vK9
- 51leEhrhv20pKfsIfMyB0bI0stOF8BhSpa2m9ZpPyFyzPGKrpHPQNMS1Mjm1VXkOizD7v7Pux2j
- mtFOeIgDS8XDHm1g93SULPvBk1aoNNWydObb1qTZ5/dLfKksHubYxY0v2hBQJ2S2Y/ftcefGxU1
- 5nPiGSIQaKB1R7vd8AByFI3Eyz6jbjrnHfMRwCG8Tc42F37zCZgWOj3opvBu3OUxGjyd95JWxSJ
- 0cGUMbA0zbcE1tMY4GZSsGd2gjgRCudcimFFZ+ianwqqK5EJQUR80bFbUmqjWH4Im46Y7ZulfsI
- /tYha5tf14hk5JiKI9A==
-X-Proofpoint-ORIG-GUID: 09BaeW3u21Vrhq9buBkwC1UWgY6cJn9t
+ a=twGliZnIbIM6_6Ds3yIA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfXx4ODGMhY38dR
+ r+ZtorCEJR6gOo522Wcp+S+Ltw7Iw0wgdYxa2KIYSQuof2DC0LkRwuxZl0EnewNxBBmZWplYxkq
+ ePcEDmIVcBpbZSNNPJZlyXVniOGYpHI=
+X-Proofpoint-GUID: FFXvPiFFxQH-irAaZ2dgsZEgmjcBxCZd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAxNiBTYWx0ZWRfXwqAr9r1DCtN8
+ 8IVEuhz0s7XINV2EqAl26fm0B5ZY90lBvhAzIGMUVEnWyJGHNLn5IUpu9Bb5T3UjTCC1YZRZYDu
+ bpWRV7TWGyBzYZmINLuKfxJqF/zsRKCQFKxX1Sg+xeSjLiOfbMEHZdQPNF1F7hXSmdpPv5joFrF
+ 1wdPf9+6j5EkqK/TsHLm7zVHcuD+M8EE/RXgGx71pDfwnf5Mp+hl4y8DYSa39zhQqSo+OZGtsd2
+ Vd+Kzd1wdASletaUKcGNz0VEo/KvSUXvlLPuv+AN75xMPPmMyxuQ0B2GF4omMPQP2auxHMU54l5
+ bdnDbkJnMIhZjUaNFOREcQ2UKpnliRupySYK0BsxJupT2kA+hNf9E9G8ezn+gxBel6yLkhMtf8O
+ Dfc/xXtSgp1CFmLhXwZa1GSYKiRYf/wAU7+xoIItneufjtYnLm1xk7PseHxo6ae39xr8rOHhsG3
+ tQ9YIlKxQQi3w6WigBw==
+X-Proofpoint-ORIG-GUID: FFXvPiFFxQH-irAaZ2dgsZEgmjcBxCZd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
@@ -126,12 +127,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/30/26 10:19 AM, jrossi@linux.ibm.com wrote:
-> From: Zhuoying Cai <zycai@linux.ibm.com>
+> From: Jared Rossi <jrossi@linux.ibm.com>
 > 
-> Add S390_IPL_TYPE_PCI to the boot menu handling logic to enable
-> interactive boot menu support for virtio PCI devices on s390x.
+> Add a break after calling the PCI specific notification function instead of
+> falling through to the default case.
+> 
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 
-Thanks, that message was bugging me!
+With fixes tag as pointed out by Eric:
 
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 
