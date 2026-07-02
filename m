@@ -4,102 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A12AC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 09:06:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36625C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jul 2026 09:09:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfDN3-0007Fe-Nm; Thu, 02 Jul 2026 05:06:09 -0400
+	id 1wfDPt-0008Ur-1m; Thu, 02 Jul 2026 05:09:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfDN2-0007Bt-Gi
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 05:06:08 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ id 1wfDPr-0008UC-Ng
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 05:09:03 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfDN0-0007Oc-W4
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 05:06:08 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-664c1cf7445so2029946d50.2
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 02:06:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782983165; cv=none;
+ id 1wfDPp-0008Kp-Tx
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 05:09:03 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-664b84118d5so2525603d50.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 02:09:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782983340; cv=none;
  d=google.com; s=arc-20260327;
- b=TGoovLylAL60nNxGbkx5D3k8Au8dDYy4/8V6l92c8Lf50XOkhHsvjuotMfB90QLe9+
- PLuj9J5sS+9urRm03JjW5zB6PKI3524NHanR9YiIlVCAEQK5GyqbMR55G9KHrzYrsJRW
- X7ob7mbc/egana7qIbGpLvncuveh3JiEPHPBZ3N5tRKKObZcqzDz87bJxSqMFLaOVAy6
- zm4wpIBKxlyCf9KJGhAo1Y6lz17fFI4wVUUTrhD+6LT36DWnbCylZNl4mimFNxyZ7yN0
- Zj//wWJSrg8RphKpjgwQjyLkeFpIBGqiBKZ/cVPNKoK9yUvNujop9rg+i4+UTaGI2Q+A
- JL9g==
+ b=ZFxerWC2zS7+jlIZKvZJfYbK4nYufT5m9KZ57vkiMNP9FQhgIC2osT7pT1BDPORtVP
+ qybIUuw6z7PaiDoS2KeDMtPBKVU5LdjH+9LCAK3xGuwdjIY5Tm7MaOjmk5l/1Jv2Fq1K
+ L4u3aPGjLvEs9bVgDA1cFUq8xElI2+okM88EIlsFInm4zGZOHZNG2JUBBA90k3IWFrt8
+ nQEUs4TLUFHNdu+7oUNWA7Tjt3V1+ZMa5EDFtufjds+QPG5NCdQ26hEqNuh3KK0TQj2t
+ u7cOyhzMxaq8uSvOuReWhchQwuy4/lsbUm/vb2Kpy/FI9wvlhUGPFHfLaO7ZzTAtpvhb
+ jyqw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=9cEOkumq398N7Qdu+51eDUcOf7lxn3XziNGH2X2hLww=;
- fh=Yr7MACYtLQOa4nGMGHVQ85rgvXP8tAqFWOWLWYeuYUo=;
- b=W/zdEEn2pE5SrDE8AweSx+ms9lpbMNw7GqTrmYbprB9du8RcDIDQsEJsfSl8qeQuXA
- esQ1gi/suXzA7Lz2zxmCpG2p5QbQgI4Vw/EJOA5AgJtX4HuCpBUvmGgFQyC8Z4PyJiEV
- znRrtfXDu8Glgwm9WyaTFTqlkPwwBnvI8skGfLxKfR/UJheqFizJR2ydqXjW6H9/6Kk/
- zFYZGxOXtg57KFn30fPkz3oOAC1HOBMFE025ELTgDQO5F3tBvkCNMXKw5e7p/lm6+2X1
- g5WTBcxwqEPIGEBN5uN8tZTgGtDe0csWfow3UdUiuzCL4Jpt759IlkSSVrEZUqPmM6+v
- iVAg==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=tled533TET3/Y+hjDSa2Rw7waDndRzvPNWncCs/shvI=;
+ fh=x/UFvUes5DiY0k3JVO4V/t/IE05kHPu2wawTUY7dV4s=;
+ b=Spgw1/Xcrd0MW3eeutPkJcyBea2B4rm5zeULUdK5MDYGaUx+WhjTHZJBaJLLWIJWkZ
+ kYQoZknaSoRX9wnPLh5YoRHCx9v1myz1mL9NsDDVZE22pLrj2Tu49IRb8TyPCGafb0I8
+ n/Es8NySeHqq7hDePq7D4F6Il0goEnFMrLPnUUzeDXnbafRCYluAiwhPC8ElOLMS1ugD
+ hmf6lNbCFFMejDxf2FbWhW6507IY0hXoY2aCs8OJ9v6DVrm1egFf+1tBd285L02IDisM
+ r2zsrQLSSbrJyA5aLBAsrNFXGDRcUVDya2LC+/J1OdKBCM45RRrZgRtFnPfmCDhh5HV5
+ NHBQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782983165; x=1783587965; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=9cEOkumq398N7Qdu+51eDUcOf7lxn3XziNGH2X2hLww=;
- b=tAe6NTgNpe9fHHYEM9ynMzBYvzBzN+Vjf4Wo/UgHOx93c6hLKK2Af7+9q/FwW679G5
- 4wi65h1IAV5PFldojNAOsNhc/nwWa9Xs5n80uc9FNqTi7/nI7Xk1mgAnMVMMU02AJoju
- fQ1KBc+XTDPH4q1Fpo07lBdAYf2572ajyuD1x+seakfvfibjZDq5qSn/ayd4HIaeDuFh
- VcO5c84ebWV7CNlJ3vRGnjXh2/fTxb8kBpVjNGaOzM0JO/7Y4uxRBPY4zLzqfgbTUyeV
- 9rTQ9awFxfXsRnfdDTEKVtXByyKyuRi6j6LQeSluGFrSofEqLdtCDDGjvUjGdJsuq5rV
- I/4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782983165; x=1783587965;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1782983340; x=1783588140; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9cEOkumq398N7Qdu+51eDUcOf7lxn3XziNGH2X2hLww=;
- b=Prpm58R7ToM9is94x8zlHRwVSQwDOzb50uVL+KUe2bwyz276oHu3gAdYEPrDSyUHPb
- mwSj+8KOzYXHK6XDqdq6BF2aA6/48OAoDcxzi1Uw6V4mOjgceSqJaIt2YfVMcNLY1KkQ
- UrBOWlJFpUqzr8JCcnoqL7+glDLTZObGKuDTBxayOp5xyRNmaLWT3HI2evQSBRCVamcG
- uwHLKNcJGfzS2dt/clgb41NFqfVcLdZ0mZCEA8C8uzwLLtTCL2oFp/xuJ3HXL3AhRIJ8
- cYJYxOWKzkQdw5s5D2CPQqTE9aZ42kCuNNc+Ukwx4KI7kgM+DxFWwfUOMZWRdakNipIc
- HYHg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpM3m6zxQprm5FjkKdpGSF/IiFK1vl1YKVE7Rdx1BRDdpVxbzvLHOzibX/zLPFvGqlC7kXLM0Vn/YAm@nongnu.org
-X-Gm-Message-State: AOJu0Yzltuu/5RNkgXyc3NuuV9jPu73Jq4SHi/++hDxYAWCAFG3x3vQH
- SusdsmYWFxZto2HqrLLXpDD1d6IONt12gnEn6woQMIpNd88dkiAXkV52YqVCV1AVNCZb7sgJS32
- 45+/h8T+RnYtQwe7Zh8VV9JGadexsBGALfnsJsf94GA==
-X-Gm-Gg: AfdE7clisWlymqyGIjhr4NV8SwWo9PjthV4iOYhBPmOm0SNZ8K9ZOUyM84fQpfaaakW
- HfsTDo5/ALM9A4kEVjKgPCkMVsQSKfmbYQfjQQFta+9MlhKwSUwTBs5cuZA80ZValxQF8dZwsv7
- TkmOvaj3y7UP0jHBv2W/Cj3kNXIC0i5Y8WJt1tf+ViXeNbZgC75TkQPcpdsw3kqKULUZPdiGG4n
- tOe5V1zRZDepFcBGLY5LLmj9366+SkTJonsvWs+WhbuUc2nYMTikpXIPR9IIKotsokuX7C095zn
- X1ZLF75Uqq523V27dVUrBEu/E8H07k+fhXYdrreIH9XRBSCQpXWY3pUN
-X-Received: by 2002:a53:ac96:0:b0:664:ca89:3f3 with SMTP id
- 956f58d0204a3-66521b3c867mr6305916d50.40.1782983165543; Thu, 02 Jul 2026
- 02:06:05 -0700 (PDT)
+ bh=tled533TET3/Y+hjDSa2Rw7waDndRzvPNWncCs/shvI=;
+ b=UbCEleiw9rQahCZV9hWP2MzqcbmHVilJt484ZN7ZXjLjHxy39qGZ7vMudobYHBK2f7
+ dUKsMR/Z1iEt1+jwG6eYS5mstxQ5fLTL/5kgAyPV6qLvfQCLp4DQzoqM5ZR3M5fuq+rO
+ 1kDLPc4NSwtJjenyKDSwXyI4iEuud0s/6uDQIkdmNdi1nTm3z9b/DEo8vhBDBDEvmz+n
+ uAeLHvc1/3ihODnguEL2dfr2uiM4lr20Ml5rmeuu2vpPkcn6szCmGK/JPN+ZMbRtkGof
+ Ttzz/9d9UPhxPHc51Gqcx4Z9bDohLGY0dVrM3J/NDgSsLehTi4OWGxyGsFC3p1RBdbA8
+ 1pgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782983340; x=1783588140;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tled533TET3/Y+hjDSa2Rw7waDndRzvPNWncCs/shvI=;
+ b=AFRwQZB1jUhNk3XI5ldsVMGMeXDGK15gJnoDTmDQ2gxfrFwUHJyzphApBqSsSxamwS
+ u2ILb4drJKNv9VIeUv/xMZbDKqwS06tYeoi+mDDHCUHBjd57lebAYrv+p5DsN2DfluaZ
+ Kv/JVBAm7YuopjXYjo6GCwnpwelHFEGOs9JJxKTT0syIfkKLGOA39qUZf64JeQn1hqxU
+ z5H/megKR4BVkhvlRoaeFYWrMJLafHkvoEkezG2qB8/aLfUyI04+BdOVRWvOAjul6CCI
+ n91ZKrEPx8U00dMrGKSlUWt2qLfP9ssuc9Gs/GSyB+SQmyUIwOR7/kSVmZFfGzwEGpYG
+ 8PnA==
+X-Gm-Message-State: AOJu0Yys6Oc1PDnsFNNuvqX1x5OTwCwZ2liSAg4qdtO+A07Hvia19tdz
+ 9YazacLasUmsELRN2ZUjmo2ZrIQWCWZw14VrfMdD3Poez4ZVx2P4GbOTu1hesIlcnX8WDbqppO/
+ KOvpVay6dF2Gkw8qJz8c7lGi9SicwZPBJDREHI4HLpA==
+X-Gm-Gg: AfdE7ckZ4E7huwKPDJpW2ZHAgC+ega2grcd+XAtbIo04V9dM/ksaQZF1PklitlEvtZl
+ oItf4RZUFftP749nZnSt1Aucb47Hv78BceLbWuDzB/bPVS3aS032RbcArdTACvqT8+ZLUjikjGg
+ KGcgpCrf5HvFxqmnOVGrwW4ImlntiuNHzRfrs5Wd1YWMbDy0jSA6bLdKreA4DBPECViyy78Dwzh
+ iOxnyjs9VCN+0usuaSdRBuhOLC5tcq65HSZFiG6YN+PgKnNFkkOF2slMdTAFfsW1AbTm0o1WfSr
+ ndlPFs0Pwf5O2RHlA5rOgGKJqgVYGhn4BjOiauGzxHmNNA5UDZ+p6s76
+X-Received: by 2002:a05:690e:440e:b0:662:d3dc:e9cd with SMTP id
+ 956f58d0204a3-6652199219emr3914800d50.20.1782983340118; Thu, 02 Jul 2026
+ 02:09:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260701231224.106850-1-heinrich.schuchardt@canonical.com>
-In-Reply-To: <20260701231224.106850-1-heinrich.schuchardt@canonical.com>
+References: <20260702090527.4167310-1-kraxel@redhat.com>
+ <20260702090527.4167310-3-kraxel@redhat.com>
+In-Reply-To: <20260702090527.4167310-3-kraxel@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 2 Jul 2026 10:05:53 +0100
-X-Gm-Features: AVVi8CcFQ3Et8fmL6ZbMi6P-Fxy-dqB9fkmbkd-hkXDogb5P3YbAFgAT6RHyHz8
-Message-ID: <CAFEAcA9Y1Mfsdn=tQXA=QJqa14JbjhnexPhnem1oi9vyeDPVpQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] hw/arm/virt: define initial aarch64 TCG CPU
-To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Date: Thu, 2 Jul 2026 10:08:48 +0100
+X-Gm-Features: AVVi8Cfc0Ue87q9XnJz7rb7Z304zOhFGvjbFkhwrqWbQPBvyc199tIsNpOls3ec
+Message-ID: <CAFEAcA-eFY6yeSZFL0sr_PgYyQZmguOkvCm+T0Xs7JSkD4S9ow@mail.gmail.com>
+Subject: Re: [PATCH 2/2] hw/uefi: disable debug function
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,33 +116,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2 Jul 2026 at 00:12, Heinrich Schuchardt
-<heinrich.schuchardt@canonical.com> wrote:
+On Thu, 2 Jul 2026 at 10:06, Gerd Hoffmann <kraxel@redhat.com> wrote:
 >
-> Function virt_get_default_cpu_type() is meant to return the default CPU
-> type. But for aarch64 TCG it returns cortex-a15 which is a 32-bit CPU.
-> This results in failures to boot if no specific CPU is required by
-> the command line.
+> This was never meant to be active in production builds.  It's a code
+> path not hit on a normal boot (OVMF wouldn't try variable updates which
+> are not allowed), so this went unnoticed.
 >
-> Return neoverse-v1 as default aarch64 TCG CPU. This is the aarch64 CPU
-> with richest feature set.
+> Wrap the call into "if (0)" so it never actually called, but we also do
+> not get dead code warnings and can keep the printing function in the code
+> base for debugging.
+>
+> Also fix the name printing to not overrun the entry size.
 
-The default CPU type for the "virt" board is the way it is
-for command line backwards compatibility: people may have
-existing command lines that this change would break.
+This is burying the lede...
 
-I agree that for most people "cortex-a15" is not what they want;
-the underlying principle we were trying to follow at the time was
-"any command line that works with qemu-system-arm should work and
-do the same thing under qemu-system-aarch64". So the virt board
-has the same default CPU for both qemu-system-arm and qemu-system-aarch64.
+>
+> Fixes: CVE-2026-58582
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3615
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>  hw/uefi/var-service-policy.c | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/uefi/var-service-policy.c b/hw/uefi/var-service-policy.c
+> index 989bf87ddb86..f78c8f01d62a 100644
+> --- a/hw/uefi/var-service-policy.c
+> +++ b/hw/uefi/var-service-policy.c
+> @@ -40,11 +40,12 @@ const VMStateDescription vmstate_uefi_var_policy =3D =
+{
+>  static void print_policy_entry(variable_policy_entry *pe)
+>  {
+>      uint16_t *name =3D (void *)pe + pe->offset_to_name;
+> +    uint16_t *end =3D (void *)pe + pe->size;
+>
+>      fprintf(stderr, "%s:\n", __func__);
+>
+>      fprintf(stderr, "    name =C2=B4");
+> -    while (*name) {
+> +    while (*name && name < end) {
+>          fprintf(stderr, "%c", *name);
+>          name++;
+>      }
+> @@ -173,7 +174,9 @@ efi_status uefi_vars_policy_check(uefi_vars_state *uv=
+,
+>      pe =3D pol->entry;
+>
+>      uefi_trace_variable(__func__, var->guid, var->name, var->name_size);
+> -    print_policy_entry(pe);
+> +    if (0 /* development and debugging only */) {
+> +        print_policy_entry(pe);
+> +    }
 
-If we were going to change the default, I would probably suggest
-using "max". Picking any particular fixed CPU model name is a bad
-idea, because (a) it won't work with KVM and (b) in five years
-time that particular CPU model will be an old and out of date one,
-and we'll find we still need to tell people "you should specify
-a CPU type because the default doesn't have XYZ features".
+Please don't add "if (0)" to the codebase. Either drop the
+code entirely, or use a named #define, or convert to tracepoints.
 
 thanks
 -- PMM
