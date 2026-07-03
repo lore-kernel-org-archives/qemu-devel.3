@@ -4,190 +4,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A8BCC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 14:00:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30C20C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 14:02:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfeRX-00012G-VH; Fri, 03 Jul 2026 10:00:36 -0400
+	id 1wfeSa-0001ta-8P; Fri, 03 Jul 2026 10:01:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wfeRV-0000pt-JU
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 10:00:33 -0400
-Received: from mout.gmx.net ([212.227.15.19])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wfeSY-0001t9-7M
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 10:01:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wfeRT-0007ju-QA
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 10:00:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1783087228; x=1783692028; i=deller@gmx.de;
- bh=L+cbhFwPGF5xtU51o6eIJ7xMTCjo8CmrruFh6cMGOjM=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=sRhYNkDTqAX0VhgsSuvwkHfv9dipP5r2IJ9akvowwJvYNi58/WGf06kBEITYiVI/
- 2rVjeyxkGVPohfzZt9LwB9LqEXaOC9/SQbdCQ2NRnS6II2lKEMsb1sVws6yOGzCpD
- AJ0Yx+GpmXWHvfyrxrWu+mBOpr1oh8MV9rk1deEu6VSvUxrQ4lZmM0UyNiOmcQAGH
- 61P42Iiw867xpgec9QMpX+0dsyWKi2TVTDJu1h46ujzEoILGV3WSq0kqTBZNmBOt8
- rR0oaFdYl8kYtOng141MAB80W9tRYqkPdTQT2rh4NmemxFBD2MiQ8GJwPn+U1pcdZ
- 8XkVMuKlIU+13YHPWg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N0X8o-1x0MiO36qy-016SwY; Fri, 03
- Jul 2026 16:00:28 +0200
-Message-ID: <4bb3ec72-ba39-4846-ae7c-335121c16c41@gmx.de>
-Date: Fri, 3 Jul 2026 16:00:27 +0200
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wfeSU-0008Ef-Qo
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 10:01:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783087293;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=ut9WNz3rk5Is2DBn8GolJnYJYtiL5WqBkLU4CGW0YFU=;
+ b=Vr7Mf99/HjCPczk3PFTxZj69QnC3r1jlbM3yycuGqi3V42s0NLInKUQ5CzB5RFnzr7UwRe
+ AeJ39LZJnHHm7X1PhzjIifYu5sHHJgtliTpz7uVoF02Q6sf1O9TPQi1L9XQUFUeij3hRPC
+ nzwJj5WGD80ubarnbq1cQH0ayAa9Ef0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-376-XImEk6Z8PtK8Q-Gfsf5cwQ-1; Fri, 03 Jul 2026 10:01:31 -0400
+X-MC-Unique: XImEk6Z8PtK8Q-Gfsf5cwQ-1
+X-Mimecast-MFC-AGG-ID: XImEk6Z8PtK8Q-Gfsf5cwQ_1783087290
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-493caa3c54eso5980475e9.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 07:01:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783087290; x=1783692090; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=ut9WNz3rk5Is2DBn8GolJnYJYtiL5WqBkLU4CGW0YFU=;
+ b=GptDC944h1QqLc0HcA5dOD2FlfCFv1jC26LPo6eZPNMT91kp66xMZhRNqks83LBl+d
+ 8zEet/9gylChws0ueLG3XNbB2tunLbkWlT3zQiamn7J+qqfCOvaqnWAORqHnqz7/8EDT
+ 4v2HzmIihref0LNInPiRP5zc55qzGHABK2y9LMHn/esMlSjSzCq0zJfmNnCYlVsa+Jj9
+ s2MVcBVU6pqGcMhXWLPX7N+M3D9dta6SceDkL29J+3p0TVGWvWd/MDUD2hd0PbdQiSok
+ mVwJBv+gH8tjxj2DslAHoRTgW0VrVOjn5QJantzkcajGP3kTD8FUUV8saplJTuEwCLN3
+ pQzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783087290; x=1783692090;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ut9WNz3rk5Is2DBn8GolJnYJYtiL5WqBkLU4CGW0YFU=;
+ b=fKBLvRXL8FDp0xrEevv9IadSneo4QIl0yTBgFl01VQskKk+Jhfb+1I+znXtfalMXYE
+ bK2snRxaI5t9dUQWQzfV4AIO2heU0RNGrQYMwmhOUHo1mTbUmRv3+Wuqo8sucOSbLOSQ
+ sYKQMNjmg+KXcKtL+HRcPw8Rx3TOGESx7pnLY1LWPz6bKVdjBX5si2IC0Rt/Gy0gI+b+
+ DGwMYrQL52Ba68wKY+tIVmaUcuGHW3+ZI5XsLmbC73l7KNxSx2DFCQ17YlLrZ8rmH0Pp
+ 9JL6bkyqnVbGYR5RZoZWDYkGl5oKnzYykJ/o2wGhhVdyPuzCiOv1yVYsEgqsWHqArUfS
+ Yr5Q==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/JEDdVnHCOPh6wIVoqp8cpK+h21CszItNR28Y54jLTUEhLX5F0cgz1lX3qCRaKMkx8YeOZv0TXYFym@nongnu.org
+X-Gm-Message-State: AOJu0Yz2kmyYkcl1jTNDeco8c7alfESzNNAGPO7fVwSGDpRkbN0yBYR/
+ /W7GUKl96hbpfVSSMwqwMLcXKCz5Oo1c7hNMOzG8IXs3f8Lgfdo7cuSe8FIwl8uCGWSHnFOEKy9
+ XFuVlQ0Y9QqCLxGN05RpAKk9U+NyUpAiqKk/lUh5cvRcKDl/lV3GGLC7g
+X-Gm-Gg: AfdE7cmYIfthiDZr7CdEwf3ACzoEMIeEcoirn/usGhxCiHVHw97e/mJaC6ltawOMV5K
+ xyKiSSeeH94ObQjGnAqrVzPoy76QzVdm/ROh2fvIJCeZqL6T2/ByZQOEm4sIUJh7P5BMMpATmc4
+ 2+bPGXVzHqVc8XQbwnvZjvok19YeU0M9t6lrnnDd4OnIlMn2aeqDMcBdHJWJzgSuolCLYlYofUk
+ UnNcGSO2es+lhObHu4/tBBzlhMWg9LE9fkKHg4VWshjfkQaaK5t1Fs7wastNIbbDWhQ8OKKLobm
+ yFh5mT8M+2+BmaczZZ1Gr/1LAuZ7yDzceAdFtD5J+hd5u0zJfeg63S0AYxsMk/qW3wESB99Q4HR
+ utHU/yLM+Cm62DONzLpNc7xoctFG+8je/mmn7MQWSCgFwVUfYaQ==
+X-Received: by 2002:a05:600c:8716:b0:490:c024:2ec8 with SMTP id
+ 5b1f17b1804b1-493d0de258amr611645e9.0.1783087290238; 
+ Fri, 03 Jul 2026 07:01:30 -0700 (PDT)
+X-Received: by 2002:a05:600c:8716:b0:490:c024:2ec8 with SMTP id
+ 5b1f17b1804b1-493d0de258amr611185e9.0.1783087289688; 
+ Fri, 03 Jul 2026 07:01:29 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493c636e9e9sm129906675e9.2.2026.07.03.07.01.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 Jul 2026 07:01:29 -0700 (PDT)
+Message-ID: <9ea28269-924d-4996-a886-73f14cd31bee@redhat.com>
+Date: Fri, 3 Jul 2026 16:01:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] hw/misc/lasi: derive IRR from pending and unmasked
- requests
-To: Keith Monahan <keith@techtravels.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Peter Maydell <peter.maydell@linaro.org>, BALATON Zoltan <balaton@eik.bme.hu>
-References: <20260701213359.1855870-1-keith@techtravels.org>
- <20260701213359.1855870-2-keith@techtravels.org>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <20260701213359.1855870-2-keith@techtravels.org>
+Subject: Re: [PULL 08/23] migration: Run final save_query_pending at switchover
+To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Peter Xu <peterx@redhat.com>, "Jason J. Herne" <jjhern@linux.ibm.com>,
+ Lukas Straub <lukasstraub2@web.de>, Fabiano Rosas <farosas@suse.de>
+References: <20260630043107.1511076-1-clg@redhat.com>
+ <20260630043107.1511076-9-clg@redhat.com>
+ <a82ece02-d9fd-4ea4-b934-a9bc5abde663@nvidia.com>
+ <df58c2d0-cc0c-43c2-9dd3-ea0614de7d72@redhat.com>
+ <e7bd3ab2-2eca-44d6-8a18-29cdbcb57768@nvidia.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <e7bd3ab2-2eca-44d6-8a18-29cdbcb57768@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:mKfhJE+ERkd8Sbeaz52sXjPHT0ZrSLris2nin61QSvfxWJeq6ho
- NwoXhVrfirJ+dkqDvWq8MqiCUL/vkWWaFi+kMTyMNWb+VObjKgwU3kX504sOa1oTjoI/X5C
- U1vLO2lZzDsTRwZCHSq9Qpi76m8/oThl640F6+mtt0l+AmqCnmjOjD1MBAuUpugK4arqckm
- lUvhEIkHWVhT212jgZ8ZQ==
-UI-OutboundReport: notjunk:1;M01:P0:8vAhkPNbMBQ=;8NspUtg9zeS8CDgMKs1l5G9xtgm
- btRybwowyUnr3ftcgEnxkgp8EjtHRo8CWzubHhfjeEIwm2nRBgK7UJYvimFeXYt2xXsYO/5l4
- qxIG3yHt462lEEu7oF1l/HRj/lkLGk9qGAp4MdIaWk0pPnltkn62Fh1cveolikCL11kbe46B2
- FJZ6uJ4OKQcNMiMIhYd0RuXbv1JyHnxnvn2jS/0fZ5RXK30gtkgEICFHRRwRmKBANZu9HLTQt
- y8AJ0kR/K4Qc08RFnI5k1cQqCKvm4lMxZMKfqES/zWvIkmuwiYg8Uz5xlZurHYKANwDKAHMYF
- cEs+ouOMm6T7yUJA3BqllqrINIJa40u/ECTmSTBE2+zlsly2Ejmp//9AEOi/jJWwfVhDgzNQZ
- N6XGuDGm/NSRS91kLMN/4Id/TxRfQy3+f+Db1tRrWdMhKqFU6i+CHHofFlrVcMwxDzM3/CW70
- HoH9u/ZtyJEKx9Ry74VMMMR1oF6qeUGHp49jnuBF6mmUh/8P4ck9V9Pw2SxZgPfdY6YOuz0ud
- r6jfzuSvgF215YRuWRyzvcSAVLh586j9a0vJwCUba5Jb9gqgxNJ/Q67pLshLfY3sSFs6W27A/
- ciWHkfOEdIx8hAPqvQWog66wO0UurGciFoGPehmQMUyzBS78tdB3YPZzcT3inWQ+TxhvR6hR6
- tVceHbFderDacbVjgxGjC+XMdqfTXR9M0ruWjjAq3duenK6s6WFdoNftfv+xt8ATJ7Sqskw0B
- JNGLItMgxkOJOk423Ov78WBGfluJKnbFyHa1H7mdZvudesUtfd98cdurdw7Vx5CYt+zgY29Ul
- JRhQ7sBzlAkOIizuOJM8f95t9DsEGiTYwd0vjqejrWRxru6GK7xH8MfTp2KLxo9cg8kvbc8sN
- deZe7vrACtJ3WQzG6CCqPrKJmTwHt37nQtVLeH4OHzbsXHBhBeKLAfGqEqqVsQ131wu3qmM0+
- wGhy/64PyWVhz/JbZl1+RRFDo+XIIotd6FRJHIb3dGlCwNDm0gjhj5pwZbfwnOf1cVnswXb0s
- 0fFGjeO428lKx2LCZthkuTlnupluOyL0AwYXxCLqTvkuoJuGf31KDYQcAU8+RqB5MXs2bD0wU
- m0F4W2um+X85xJYZIbDSCDjYBx17T+oCiGuMtBiA+srfyH65A/OFF5IcLbbO7axE6+fZaOJf9
- q9nY3WY1pKEgrUluhBZ56Q4XoXPMM5UMZ6/bIhqukoKKdTkkuH88gE6OFcg/j1OOiq5TRuGbe
- TS+fcuGn2NZkCFmZQmRPR3Ei9/hEhHDAFjAZbjsgJfVmY638w7OC71muKH1dGTLs12QwZ8RxB
- Zjq3VX2QF69VQ08d9HEmTxatzRtYKhQXNi6pVJByeoJR3dj2Gk1sVoDY3UqilNwcDBYCi4u2B
- Ir2M1A+1SIEJwjqsi4PUKE3VYPDXdmwEYAZvUsR7vW0Lyw+7BbgyhWfYfSOO2rgnn/gg2jq97
- rFAAaquLjDkOZ4uRE1PFw/76PmMRZFZd1hbMcUHA5odXkRXnQpHyYdoZHC8Tk83aIpuFveaDB
- ds5Q6/e2Q9uPxl1+Ba/M6KNv2ti5dSdmpnDAb7IFv7zLbB/pjkYZ8K2lH6M5NLo6P6nQsHC6Y
- O1uGjctZr9so9cS6YgRbETmicTa+dsFCWbwR3+NN0vYc98qKNzOC27yWPZctTtztM1UiXVR+k
- qLdiFcjd2QVYJJuF+HxU1teXvdwjUo0BlsJGpVbtYtQILwDs2QUBiff3Rap9g/iI3UxxhHCxm
- POi60haFSNus8yjv1i08O9Y9xTzg17owKRucfZP6V6NySQWFSNmpbH8AvyBQZQgcuMadJ2i71
- P2lvo1jwb9qvPJ3lnKbPGu+wLREyqoR+P7J4HKfxCZRdhVb+rarsUqK1BzJpZ90IxXEZH8dto
- rPR/wkB6rtJ66o/W89+GCQkt/6yzOB8PNfLfs+Ow620+iXpBS6xyV7w9ClttOkOrOXLguBgyW
- AVnTkM8mwZ3p8E4tW2HV2oCbpqK/c0um+W4ZmgHei4x89XkWETrS7OSPf5GVieHLr+1+J4a9Y
- Kn/MmlSzDl078cjN7LrFa7UdmN2aPMiBK89HKJCua/mh+wPLnWoyXqMrNjHQX1TjIXHhFBlRA
- 2IXI9jQRYwSJFNp4uW8jGn5h2mdnxwSuiTBRYdfKhdlEOL6meyrkYkPqRQwdKX0E7R3K4Im0q
- 0lYzKq6nGKHzlrDMxhj2RZseSPJECwQ/q9qonaTLuRsb2zZO+yPOFlWC67j5iwCUqbcDW8dVy
- gDeBbAwR2WgT74tLl0lcZftrT84eLr6cFyT83NMdViq3c1J/r58n+skSFcnphSfPBHdu2Ftxp
- SQpu1BTrV1goFkpgvMVAhEN0YXCgQWHzWlJkIbZEqEa63B142yISNLdpraK9lJ/py9FswuKYC
- 3QG+/dIFnLWXDq0Pc/BFFXRmSLSVye54fCQ/iwMrdtpv4QHqz+VntefCn5fpJ1NR/ns2/TDl5
- WslzVepMUM+PfZQEZfYAqU2k/oD2Q7kL8rJI2ylZxxkxqFc5syEMwG7jRQsaDZxHrDfhsbbJM
- GZBZ1+SicAfQichZ263wpPeO5myyL2jmmS2WLeS1F8Y8wHeuhMZj4Wi/yx0grG527jwEUd0wc
- yMnIniA3mgizblzssajX2rWk2X2LMavJT6WVCyXCnX/h80JDgMWd+ozREnccURKS3ayEv8H28
- qQvWXuvj8//gFtt6JMOg0YFFH4ASeB9Ww18EcIAPf/oP4wMroY0cahAFvBtwEeYvUNZX7Z3hC
- cWam8X+E7wDmT3CTOX94I53bGYQUuMF4FglorZB/5rFoio9T8IQ8GVqnBpLpxR679SgJwklve
- n9MVxd9iM2Og0QO0RoXmykpxfu3IpVT4DNSUdk+qFwG4BXoEmmTF3db/NXL5tBQ7YJ320kGT5
- o7IZlrSe4ZjSIjP/Xsr7fj5zsvpF97Q0PawTAGTAeU5cXXML9xfM22Er0IVuVy4TYfAerr5oe
- ZfM2LVvT7LfWSlOAtHr9mIwYpkjt+mReeLeVCG7arAGnUKNiPAiJW9iEuJ5VaUarxqIUqRRZW
- 8Jjlh1dRsBTSaARw9k+nqQv/UlRUtXLIK5KHCro27j3w97KEFp6CZUiiRJ9zA++bmP/X6Pumi
- ZfTKkSNBDSaSU0v6VDMgeYEQhGFke+qKMm59i8x/H7PoFsDy1fhd27GVBPrOz5WMe4CmjzgpJ
- zn5TK2mZtdOMpHHCHMGQEvLNNjAFOwwom+Icc+9jgiVMMBOdetZ5mn/53tYJiT2vJSIis9hOY
- SSe3NaQ+A2PwhG2DBZYGGDRqLvH27yQIgNJw5XtUIklkC1s2pIK0TnW4QOOGWsaPe6uTLrub4
- GviWsR2ypVVE8UKCZsioKVSOpUObKeMjvcK36tWnYaKplS2p8Ksc85e9j/9l+tk2ksTSgHmUl
- 3hcl1r6D0WFlys93FlCdCodFVCjT6luAnKh2ag7FRjam3PBQt5qkB1NM6GyzKv+In8zUXYNf8
- cO71gt7+zWl/MBdQppqe+HVTRM1+ECuNgRvKr9azwTNA6wV4GBhkQueuVBtowZxyrr2h7Kh2H
- WaraQCsLfyTdXJuUDCEIFYwv/wb/pC5xyuczqjdcR0Hd7ErLKoxdwfc4kYT4hD8+tgKem0c29
- 1l6y6+E2Ic352fu+ntn5VeHeSfT1Jj6H9Wl3P5oxU2k2Fi9Kw223F7oKZKGG4kh2DigRzKCGV
- sLJPaLyf1Fqf/2iYuwoHlxOao263FYXV2F1PjasS8OFjeRuy4scsDD6g4jtMBuyn8EKq+VDUR
- kNtM5Myk6VJvXyfGjE5BdwHaY6pAqE3IItKtJgYuv0mVhGy1rzZxJcJrdKyehy271eHEkcKGv
- 7muXb7UDfqMVru1wRfrTyh5gHImK73wD9RfHImje2d4KJGtm17pTb3s9bqZFtMqeLYzJFZzWD
- qW/NIjtLvdVpvWHTO2QUhqKlPclfVYdmTqwdfnamkhdtRTyH69GVAzEJWh2nCA49HzedcWQ4U
- wiCTe4ZuCIq5aAsmyJOJQbjMvQfSFSNPg6cGvDkGTfVzTxshvDU+o+pzRtUfiVsrzFLw0KpS/
- ydMv+CjpGcy3obipqcEZyQ1ZTr2HSeSx6bmc6q27n91L7ji/a0pmB5ko8iX761IBWBr0C/eiT
- Xi0dvUY3+e6qROOuTJBE9N1jlIF9ESyvrSAAJHCtdOrSJiuDPSceJFxlL3gtFS1X1MINflFT+
- Dg8cYYPOuCLvPYjsatXfuV7BoeF1Ggn8z6HkzhFwmog70gPQq5E7tKM7RzHyUTWNdPREZ3QyL
- P7A4mt/0qal7Oak2brhOS7oilzPro+BWQNU3TBeAiGqVs/1OkqrHVqddFYd3TjV2FCtjLSzEC
- Ad+jgdhAFSWpFBdjZ8Pjyi0KEm2PcozoKo9lLKYkyOMOmC2UN3GTZqKJ0IsXc42oViWmdCRfk
- mHxqRyhjdGD1q4Zh/7wKW80eZ+pWIrxte3fi0Z+olDwBvMoBaI5LGDO9ChTDI5UqLdUj8uKvc
- KCMOtPAvJuZixtZjF/QFAszSt0Ii1uCVrgvtTVWe+rRfXO6myr2nIB7Vu/VO1FoBB0RAWf6wr
- Gfm34JZgLOhQ4435KZ/jXQPKmRGqbgFeD49NXF8NE+tl8HVTbzaK0QgsaE7ujJABCiOPjJB60
- TaJ3x0wYNBmMns049TRZk0V2OpNuEwArlvVeuxGZueLfISSGrBawX29pTFudRO7hI4hojGbU5
- y8S9ZHYL9XO1QjqJB0s2J2+cqF1oGT5ZlV59aqsWCUSDzobNlCFzR+zQhgIEi7Hal8PNOnqNG
- QwwOIUqnLKled4apeyHHwTG49tWW8cFNE5aZnkrl7XmwShe8HoN8LcI6yvBYMGXd4un16xYGW
- YxX/mSBJyqahR1L37HybiLfl14WumuC7LfjoMBl3cMW2Q8fmQm0GfvnU3F6iqYduhOD3ZDVUu
- FZYBuCt1zS92cdiUqu+CJGPAzZMwVUPO4Itfs7xyu4OEArftnunkVM5r+X9yz6+MoulRmc8pv
- AAbPIt3xm3Gl+cveHw5VzygtEFZtkVEsppHdX3hFSK0+TSM4n0RANmCG0VhXFXt5SVl0UpykL
- I2e+oZdzCdOLKvttNlJ8lxJgpHN1OXIjoWs9V4t+X54RyKlT5N8rYj6Et5pb00TVpj/2yThx2
- 8rilk3AmgEJm6BvoiQ22kHItTnTeOJC6ZmulcEPN92ywechwLVNTajFA2sdgRrQhTPYlpvYhG
- KwxMdgMPs63SlLVA2kQ/1OA785egeR4wRLXEz6tAf8KmeoFeRCBjQrAqa3HWeSs2uMI0HxkzO
- BwXhnde1AFiaOG3hGHdTB/d178FIQo1pFsrs7shLTbn2Df2sZ305TlUlOZ5jHk941GIhpFijU
- ZCWWjXetNirILWk1C2NLEz2lOz412zGrd8XTM1oM7Y/zSy6iBgOcZoymbZ1O0SedbUWo+M9mq
- Bs5Ow2pY1EYtrhtxYIspR04kwttVZG8kT3GgSOnVix2Wkwg026GDO7ECHW1noke2kQRb+eng+
- ot9QL+eYHWdBGtZ/ioxHXVPD8l/AC4cnY5k1vxnJBnwXg1n1tWMMaZhBI/36R42sXnOPrrkIg
- AWNao5ueSPF0cZ5oBNhbRinc+bD1Q8hbRfluWjrx1lrhv2+w
-Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -203,27 +171,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/26 23:33, Keith Monahan wrote:
-> The LASI interrupt request register (IRR) was latched: set when a source
-> asserted and then never cleared or re-evaluated against the mask, so a
-> masked or dropped request stayed set forever. The parisc core I/O
-> dispatcher reads IRR to find its interrupt source, so the stuck bit was
-> returned on every later interrupt as an "unexpected core I/O interrupt".
-> On an installed HP-UX system an unacknowledged i82596 LAN interrupt
-> latched this way and the flood wedged the boot.
->=20
-> Derive IRR as (pending & unmasked) with IPR tracking each source's level=
-,
-> matching the hardware and the in-tree parisc gsc/lasi driver.
->=20
-> Signed-off-by: Keith Monahan <keith@techtravels.org>
+>> The culprit appears to be patch 3:
+>>
+>>   migration: Run final save_query_pending at switchover
+>>
+>> I can reproduce the issue consistently with:
+>>
+>> while [ 1 ]; do
+>>     QTEST_QEMU_BINARY=./build/qemu-system-s390x \
+>>         ./build/tests/qtest/migration-test \
+>>         --full -p /s390x/migration/colo/plain/secondary_failover_checkpoint || break
+>> done
+>>
+>> The patch you proposed seems to fix the issue.
+>>
+>> Could you send it as a follow-up patch? 
+> 
+> To make sure I get it straight, you suggest to merge your pull request 
 
-Reviewed-by: Helge Deller <deller@gmx.de>
+The merge request won't be merged as is. It's broken and I will
+have to resend with a fix or without this series.
 
-Thanks Keith!
-I'll pick it up in my upcoming hppa git tree, so soon you don't need to ca=
-rry it
-extra. I hope this is OK?
+> and then send a separate fix patch for that with a proper Fixes tag, right?
 
-Helge
+We either handle the breakage with an extra patch like you proposed,
+which has to be sent and reviewed, or :
+
+>> if Peter, Fabiano, Lukas
+>> would prefer it to be integrated in the appropriate place, it
+>> could be included in v5.
+We can address this in a v5 respin of the series by fixing it
+where it belongs: in patch 3. I think that's the right place,
+since bisect breaks at that point.
+
+Let's see what Peter and Fabiano think.
+
+
+Thanks,
+
+C.
+
 
