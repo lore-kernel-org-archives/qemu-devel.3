@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25FD7C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 02:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5A48C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 02:31:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfTgU-0003b9-1u; Thu, 02 Jul 2026 22:31:18 -0400
+	id 1wfTfY-00009d-Aq; Thu, 02 Jul 2026 22:30:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wfTgQ-0003Pk-Pr; Thu, 02 Jul 2026 22:31:14 -0400
+ id 1wfTfV-0008Uh-J5; Thu, 02 Jul 2026 22:30:17 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wfTgO-0003gW-56; Thu, 02 Jul 2026 22:31:14 -0400
+ id 1wfTfT-0003RB-HU; Thu, 02 Jul 2026 22:30:17 -0400
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6631IL0L1317846; Fri, 3 Jul 2026 02:30:47 GMT
+ 6631IYsR1318479; Fri, 3 Jul 2026 02:30:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=OSDJjncHzyRzVr+4Q
- d8GFDtzAmwzc+bLwKS6KTWueXU=; b=eA16URfSKbO6YrMWUGHkVrZEAAW0u0yd/
- cvVUTI2r/bCmyy7Eo9bjyeueN09BcHVjzAUlx80ClvQBS6M10kRQWqostKTAnGrl
- CYLDAch+TDAoSGbqVK4ljwdftYk7oM+GTIdvjbHFNywwzSPe0p407BWIQxQiBqAU
- VVUc8vHsh6F8YJ1IvMBSWjAGwiHZ/BPY3erPmt/+8RWusRG9/jyX/lTJ2vcBwSyM
- R07L71/sz5rc8OYFjO3bzoJtDfk36u82aWVzi5DGWUK/DE0HSwTQ0gYDrD551B7v
- /S9R89bnhTdmJXKETCJhYHqVKbZX8mHttBUi5uKyJi9mxlnJsy3BA==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26ped1ut-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=5/C4+8
+ Obu9t+F8Dno8hhZNl0p8nzU7MhbERiaRJZ0wY=; b=No6lNiqXmgEQfWxuDZ1nPO
+ z4wbEd62twXxn9u+JpDhZJ2UAd1RNVRMM6WujDm3j1pLMRqJk6VVhOYN0T7Fgvcd
+ /E6z0wmn2BSsWKFJocPQsftrbRz1FLuxecBoLP824RKg65Zf3x9zvylRufjk7op5
+ HjdJOC/goM+DKNq0mKbJKqRgJ3MAgFv/LHJtb6CoBZQpuL+0hp12VlsxHO3w+4cg
+ ZRzQJSSHv+rgx69lAHgIoZwIjS0wZlh59eqUKMCD0lq0+LtO4wRD3PTB1aKRoqLo
+ 9czRVbLRy8+mLxEfnBNehj35lItNyzMusvmiwHxP1DxSFJ+mh//duQxKnC03u+RA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26ped1te-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 02:30:46 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6632JbBX021641;
- Fri, 3 Jul 2026 02:30:45 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2sukes3v-1
+ Fri, 03 Jul 2026 02:30:11 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6632JeId023650;
+ Fri, 3 Jul 2026 02:30:10 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhppey-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 02:30:45 +0000 (GMT)
+ Fri, 03 Jul 2026 02:30:10 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
  [10.241.53.103])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6632UikC12255800
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6632U9ZD25494080
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 3 Jul 2026 02:30:44 GMT
+ Fri, 3 Jul 2026 02:30:09 GMT
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 30A9E58056;
- Fri,  3 Jul 2026 02:30:44 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 41DCC58052;
+ Fri,  3 Jul 2026 02:30:09 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 49D8A58062;
- Fri,  3 Jul 2026 02:30:42 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5D5DB58064;
+ Fri,  3 Jul 2026 02:30:07 +0000 (GMT)
 Received: from fedora-workstation.lan (unknown [9.61.151.121])
  by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  3 Jul 2026 02:30:42 +0000 (GMT)
+ Fri,  3 Jul 2026 02:30:07 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
@@ -66,34 +67,35 @@ Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
  alifm@linux.ibm.com, brueckner@linux.ibm.com,
  pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-Subject: [PATCH v13 31/33] tests/functional/s390x: Add secure IPL functional
- test
-Date: Thu,  2 Jul 2026 22:29:29 -0400
-Message-ID: <20260703022933.1805010-32-zycai@linux.ibm.com>
+Subject: [PATCH v13 15/33] s390x/ipl: Introduce IPL Information Report Block
+ (IIRB)
+Date: Thu,  2 Jul 2026 22:29:13 -0400
+Message-ID: <20260703022933.1805010-16-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260703022933.1805010-1-zycai@linux.ibm.com>
 References: <20260703022933.1805010-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 0RYq4f791Dy04tYx2MNvtljbUNUEpMLA
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDAyMCBTYWx0ZWRfX63LY8OMpJ+FW
- Pt8GqR5gpUoW+/pMLH7ckcXeyGyh7cuEQYCsF08rO9lgdhPEzcRn8etL7t/CWrhV/fMnxltxj/d
- fT9v7PWGQ3gb6IG2mF9FvAAfXzIVTVo=
-X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a471ed6 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=vTr9H3xdAAAA:8 a=VnNF1IyMAAAA:8 a=WP5zsaevAAAA:8
- a=vvdW6g1Vg8v77fwKLDIA:9 a=t8Kx07QrZZTALmIZmm-o:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDAyMCBTYWx0ZWRfXylYz7QYJSe8r
- C8AF4/gp0ZPkRpR+Omt4qvjP1IMO00wPeYx4F/NMTWcuR8XataeHtyOw6H0+xW4in/zto/R3MQh
- UyARonAHUElaU44Rm2ccUg9sToJCY89NlyQqaPCGfpC6Ycz5Bfu7QSVrZFSZywW25O4jlZ8hEMX
- +CKvACbZku1d27cik+JDAs2hPdHltMcU6B8B8XIRx3VlZ93HmNwZbZi4MuIbJjitdcV9iq+SEAy
- Rds0cSbXeXAfnnscX05fs2IJICNtUWVV3zXkmnPzY5uM+EMaiZLwSonWexwKXgP82zchCLvlyxX
- Jabelpq3+r5eCENLrgoswBIi35bDZEvGgvh+XSWt/MDnW1qxGj+y+CeMVVOk7Ogip0FwvNGOnY8
- Oz2AQp3/smAFRCH/UyyamXZ9lMpGOA2ophakdEt2zBh1ceoYDHJe6CuNQL3q1dv/+hkoHTeDGIf
- PwRvHB+6B7uZWFIvtVQ==
-X-Proofpoint-ORIG-GUID: 0RYq4f791Dy04tYx2MNvtljbUNUEpMLA
+X-Proofpoint-GUID: qYbhb8yKUhzTST3awsmAWcu54fbqPZ7T
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDAyMCBTYWx0ZWRfX/+wWC020mS3Q
+ jVH2i9gqB6ZYmDbLrOS3b6YSw2Lyi6OtVB76z039IBRch2XdtZhc96NLSQBCKOzJ9EzmXVGOJMH
+ cI57Rwhi9e+pxH7hzO+3N/AyVmoy5pk=
+X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a471eb3 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=1NTGDykL02WXTEG3Jz0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDAyMCBTYWx0ZWRfX0FBhySsyRU3q
+ RwKJptKLORcn1UQ2Qyvst2ZagDnvddUeZ27MDJ5ilI+n2vBW1O+rzdxJu4zQKmpTu3LA7H4/r47
+ 9B5SH3MrlMZAsB0YMaDAETgU5Eksbvula2526s+12oD7VDQ8S8tN4XWn4JGhqOXsyfclmOQq0cQ
+ YWzuPEiX+0OrKdLGiNLGCI42xATmNEdSdjDowc1rLDS6rIs5LY/uV8w1v/OX23M1abE3rGhNes3
+ /7GJsfx/lUB6a+IoPIUyzTNQ7Gh+BAByJusZmTvHbIt9H/RYKno4UJibVCsQz0L2z0fnjyEL0L8
+ PN8k/kG+JZgXEY6NbhD3YxdzFb0vWtQU/5G1qzlLIrtWxXW2BVz8/Bk19Qxm91MnuuHpHSFORkQ
+ FyC0MnNtGXwKsXWqXuIAegX9KPk7KD4+i57Bn81cpI9XZXNSdIoCkHD+x1wfoLnVnH12wdKKZeC
+ Z6RBH5UNVLJ8Sbk6Hgw==
+X-Proofpoint-ORIG-GUID: qYbhb8yKUhzTST3awsmAWcu54fbqPZ7T
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_01,2026-06-26_01,2025-10-01_01
@@ -126,214 +128,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add functional test for secure IPL.
+The IPL information report block (IIRB) contains information used
+to locate IPL records and to report the results of signature verification
+of one or more secure components of the load device.
+
+IIRB is stored immediately following the IPL Parameter Block. Results on
+component verification in any case (failure or success) are stored.
+
+The IIRB data is reserved and protected by the guest kernel during early
+boot to prevent it from being overwritten before the certificate data is
+permanently saved.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
 ---
- tests/functional/s390x/meson.build        |   2 +
- tests/functional/s390x/test_secure_ipl.py | 172 ++++++++++++++++++++++
- 2 files changed, 174 insertions(+)
- create mode 100755 tests/functional/s390x/test_secure_ipl.py
+ docs/specs/s390x-secure-ipl.rst | 21 +++++++++++
+ include/hw/s390x/ipl/qipl.h     | 62 +++++++++++++++++++++++++++++++++
+ 2 files changed, 83 insertions(+)
 
-diff --git a/tests/functional/s390x/meson.build b/tests/functional/s390x/meson.build
-index b065b666bc..16da5f0054 100644
---- a/tests/functional/s390x/meson.build
-+++ b/tests/functional/s390x/meson.build
-@@ -2,6 +2,7 @@
+diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+index a8be863548..850e4a7497 100644
+--- a/docs/specs/s390x-secure-ipl.rst
++++ b/docs/specs/s390x-secure-ipl.rst
+@@ -101,3 +101,24 @@ Subcode 1 - perform signature verification
+     * ``0x0302``: PKCS#7 format signature is invalid
+     * ``0x0402``: signature-verification failed
+     * ``0x0502``: length of Diag508SigVerifBlock is invalid
++
++IPL Information Report Block
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++The IPL Parameter Block (IPLB), utilized for IPL operation, is extended with an
++IPL Information Report Block (IIRB), which contains the results from secure IPL
++operations such as:
++
++* component data
++* verification results
++* certificate data
++
++During early boot, the guest kernel reserves the memory region
++containing the IIRB. This preserves the data while the guest kernel is
++operating and during re-IPL.
++
++The guest kernel uses the contents in the IIRB for:
++
++* Boot logging: reports which components were loaded and verified.
++* kexec operations: builds the next kernel’s IPL report from the existing one.
++* Keying: installs IPL certificates into the platform trusted keyring.
+diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
+index ed1a91182a..45d25264f4 100644
+--- a/include/hw/s390x/ipl/qipl.h
++++ b/include/hw/s390x/ipl/qipl.h
+@@ -32,6 +32,9 @@ typedef enum S390IplType S390IplType;
+ #define QEMU_DEFAULT_IPL S390_IPL_TYPE_CCW
  
- test_s390x_timeouts = {
-   'ccw_virtio' : 420,
-+  'secure_ipl' : 360,
- }
+ #define MAX_CERTIFICATES  64
++/* largest supported block size - same as VIRTIO_DASD_DEFAULT_BLOCK_SIZE */
++#define VIRTIO_MAX_BLOCK_SIZE   4096
++#define MAX_COMP_ENTRIES        ((VIRTIO_MAX_BLOCK_SIZE - 32) / 32)
  
- tests_s390x_system_quick = [
-@@ -14,6 +15,7 @@ tests_s390x_system_thorough = [
-   'ccw_virtio',
-   'pxelinux',
-   'replay',
-+  'secure_ipl',
-   'topology',
-   'tuxrun',
- ]
-diff --git a/tests/functional/s390x/test_secure_ipl.py b/tests/functional/s390x/test_secure_ipl.py
-new file mode 100755
-index 0000000000..06fc93e404
---- /dev/null
-+++ b/tests/functional/s390x/test_secure_ipl.py
-@@ -0,0 +1,172 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+"""
-+s390x Secure IPL functional test.
+ /*
+  * The QEMU IPL Parameters will be stored at absolute address
+@@ -146,4 +149,63 @@ union IplParameterBlock {
+ } QEMU_PACKED;
+ typedef union IplParameterBlock IplParameterBlock;
+ 
++struct IplInfoReportBlockHeader {
++    uint32_t len;
++    uint8_t  flags;
++    uint8_t  reserved1[11];
++};
++typedef struct IplInfoReportBlockHeader IplInfoReportBlockHeader;
 +
-+Validates s390x secure boot by preparing a signed guest image, booting with
-+secure-boot enabled, and verifying cryptographic validation results.
-+"""
++struct IplInfoBlockHeader {
++    uint32_t len;
++    uint8_t  type;
++    uint8_t  reserved1[11];
++};
++typedef struct IplInfoBlockHeader IplInfoBlockHeader;
 +
-+from subprocess import check_call, DEVNULL
++enum IplInfoBlockType {
++    IPL_INFO_BLOCK_TYPE_CERTIFICATES = 1,
++    IPL_INFO_BLOCK_TYPE_COMPONENTS = 2,
++};
 +
-+from qemu_test import QemuSystemTest, Asset, get_qemu_img
-+from qemu_test import exec_command_and_wait_for_pattern, exec_command
-+from qemu_test import wait_for_console_pattern, skipBigDataTest
++struct IplSignatureCertificateEntry {
++    uint64_t addr;
++    uint64_t len;
++};
++typedef struct IplSignatureCertificateEntry IplSignatureCertificateEntry;
 +
-+class S390xSecureIpl(QemuSystemTest):
-+    """Test s390x Secure IPL (secure boot) functionality."""
-+    ASSET_F40_QCOW2 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/'
-+         'fedora-secondary/releases/40/Server/s390x/images/'
-+         'Fedora-Server-KVM-40-1.14.s390x.qcow2'),
-+        '091c232a7301be14e19c76ce9a0c1cbd2be2c4157884a731e1fc4f89e7455a5f')
++struct IplSignatureCertificateList {
++    IplInfoBlockHeader            ipl_info_header;
++    IplSignatureCertificateEntry  cert_entries[MAX_CERTIFICATES];
++};
++typedef struct IplSignatureCertificateList IplSignatureCertificateList;
 +
-+    def __init__(self, *args, **kwargs):
-+        super().__init__(*args, **kwargs)
-+        self.root_password = None
-+        self.qcow2_path = None
-+        self.cert_path = None
-+        self.prompt = None
++#define S390_IPL_DEV_COMP_FLAG_SC  0x80
++#define S390_IPL_DEV_COMP_FLAG_CSV 0x40
 +
-+    def _create_certificate(self, vm):
-+        """Generate x509 certificate"""
-+        exec_command_and_wait_for_pattern(self,
-+                                          'openssl version', 'OpenSSL 3.2.1 30',
-+                                          vm=vm)
-+        exec_command_and_wait_for_pattern(self,
-+                            'openssl req -new -x509 -newkey rsa:2048 '
-+                            '-keyout mykey.pem -outform PEM -out mycert.pem '
-+                            '-days 36500 -subj "/CN=My Name/" -nodes -verbose',
-+                            'Writing private key to \'mykey.pem\'', vm=vm)
++struct IplDeviceComponentEntry {
++    uint64_t addr;
++    uint64_t len;
++    uint8_t  flags;
++    uint8_t  reserved1[5];
++    uint16_t cert_index;
++    uint8_t  reserved2[8];
++};
++typedef struct IplDeviceComponentEntry IplDeviceComponentEntry;
 +
-+    def _sign_binaries(self, vm):
-+        """Sign stage3 binary and kernel"""
-+        # Install kernel-devel (needed for sign-file)
-+        exec_command_and_wait_for_pattern(self,
-+                                'sudo dnf install kernel-devel-$(uname -r) -y',
-+                                'Complete!', vm=vm)
-+        wait_for_console_pattern(self, self.prompt, vm=vm)
-+        exec_command_and_wait_for_pattern(self,
-+                                    'ls /usr/src/kernels/$(uname -r)/scripts/',
-+                                    'sign-file', vm=vm)
++struct IplDeviceComponentList {
++    IplInfoBlockHeader       ipl_info_header;
++    IplDeviceComponentEntry  device_entries[MAX_COMP_ENTRIES];
++};
++typedef struct IplDeviceComponentList IplDeviceComponentList;
 +
-+        # Sign stage3 binary and kernel
-+        exec_command(self, '/usr/src/kernels/$(uname -r)/scripts/sign-file '
-+                    'sha256 mykey.pem mycert.pem /lib/s390-tools/stage3.bin',
-+                    vm=vm)
-+        wait_for_console_pattern(self, self.prompt, vm=vm)
-+        exec_command(self, '/usr/src/kernels/$(uname -r)/scripts/sign-file '
-+                    'sha256 mykey.pem mycert.pem /boot/vmlinuz-$(uname -r)',
-+                    vm=vm)
-+        wait_for_console_pattern(self, self.prompt, vm=vm)
++#define COMP_LIST_MAX   sizeof(IplDeviceComponentList)
++#define CERT_LIST_MAX   sizeof(IplSignatureCertificateList)
 +
-+    def _run_zipl_secure(self, vm):
-+        """Run zipl to prepare for secure boot"""
-+        exec_command_and_wait_for_pattern(self, 'zipl --secure 1 -VV', 'Done.',
-+                                          vm=vm)
++struct IplInfoReportBlock {
++    IplInfoReportBlockHeader     hdr;
++    uint8_t                      info_blks[COMP_LIST_MAX + CERT_LIST_MAX];
++};
++typedef struct IplInfoReportBlock IplInfoReportBlock;
 +
-+    def _extract_certificate(self, vm):
-+        """Extract certificate from VM to host filesystem"""
-+        out = exec_command_and_wait_for_pattern(self, 'cat mycert.pem',
-+                                                '-----END CERTIFICATE-----',
-+                                                vm=vm)
-+        # strip first line to avoid console echo artifacts
-+        cert = "\n".join(out.decode("utf-8").splitlines()[1:])
-+        self.log.info("%s", cert)
-+
-+        self.cert_path = self.scratch_file("mycert.pem")
-+
-+        with open(self.cert_path, 'w', encoding="utf-8") as file_object:
-+            file_object.write(cert)
-+
-+    def setup_s390x_secure_ipl(self):
-+        """
-+        Prepare a secure boot-enabled guest image.
-+
-+        Boots a temporary VM to generate a certificate, sign boot components
-+        (stage3 and kernel), run zipl, and extract the certificate to host.
-+        """
-+        self.require_netdev('user')
-+
-+        temp_vm = self.get_vm(name='sipl_setup')
-+        temp_vm.set_machine('s390-ccw-virtio')
-+
-+        asset_path = self.ASSET_F40_QCOW2.fetch()
-+        self.qcow2_path = self.scratch_file('f40.qcow2')
-+        qemu_img = get_qemu_img(self)
-+        check_call([qemu_img, 'create', '-f', 'qcow2', '-b', asset_path,
-+                    '-F', 'qcow2', self.qcow2_path], stdout=DEVNULL, stderr=DEVNULL)
-+
-+        temp_vm.set_console()
-+        temp_vm.add_args('-nographic',
-+                         '-accel', 'kvm',
-+                         '-m', '1024',
-+                         '-drive',
-+                         f'id=drive0,if=none,format=qcow2,file={self.qcow2_path}',
-+                         '-device', 'virtio-blk-ccw,drive=drive0,bootindex=1')
-+        temp_vm.launch()
-+
-+        # Initial root account setup (Fedora first boot screen)
-+        self.root_password = 'fedora40password'
-+        wait_for_console_pattern(self, 'Please make a selection from the above',
-+                                 vm=temp_vm)
-+        exec_command_and_wait_for_pattern(self, '4', 'Password:', vm=temp_vm)
-+        exec_command_and_wait_for_pattern(self, self.root_password,
-+                                          'Password (confirm):', vm=temp_vm)
-+        exec_command_and_wait_for_pattern(self, self.root_password,
-+                                    'Please make a selection from the above',
-+                                    vm=temp_vm)
-+
-+        # Login as root
-+        self.prompt = '[root@localhost ~]#'
-+        exec_command_and_wait_for_pattern(self, 'c', 'localhost login:', vm=temp_vm)
-+        exec_command_and_wait_for_pattern(self, 'root', 'Password:', vm=temp_vm)
-+        exec_command_and_wait_for_pattern(self, self.root_password, self.prompt,
-+                                          vm=temp_vm)
-+
-+        self._create_certificate(temp_vm)
-+        self._sign_binaries(temp_vm)
-+        self._run_zipl_secure(temp_vm)
-+        self._extract_certificate(temp_vm)
-+
-+        # Shutdown temp vm
-+        temp_vm.shutdown()
-+
-+    @skipBigDataTest()
-+    def test_s390x_secure_ipl(self):
-+        """
-+        Verify secure boot validation during s390x guest boot.
-+
-+        Expects two "Verified component" messages and confirms
-+        /sys/firmware/ipl/secure reports secure boot is active.
-+        """
-+        self.require_accelerator('kvm')
-+        self.setup_s390x_secure_ipl()
-+
-+        self.set_machine('s390-ccw-virtio')
-+
-+        self.vm.set_console()
-+        self.vm.add_args('-nographic',
-+                         '-machine', 's390-ccw-virtio,secure-boot=on,'
-+                         f'boot-certs.0.path={self.cert_path}',
-+                         '-accel', 'kvm',
-+                         '-m', '1024',
-+                         '-drive',
-+                         f'id=drive1,if=none,format=qcow2,file={self.qcow2_path}',
-+                         '-device', 'virtio-blk-ccw,drive=drive1,bootindex=1')
-+        self.vm.launch()
-+
-+        # Expect two verified components
-+        verified_output = "Verified component"
-+        wait_for_console_pattern(self, verified_output)
-+        wait_for_console_pattern(self, verified_output)
-+
-+        # Login and verify the vm is booted using secure boot
-+        wait_for_console_pattern(self, 'localhost login:')
-+        exec_command_and_wait_for_pattern(self, 'root', 'Password:')
-+        exec_command_and_wait_for_pattern(self, self.root_password, self.prompt)
-+        exec_command_and_wait_for_pattern(self, 'cat /sys/firmware/ipl/secure', '1')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+ #endif
 -- 
 2.54.0
 
