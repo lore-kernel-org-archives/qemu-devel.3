@@ -4,95 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C082AC44500
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EE77C43602
 	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 04:45:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfVll-0002A5-5V; Fri, 03 Jul 2026 00:44:53 -0400
+	id 1wfVlR-00025S-TT; Fri, 03 Jul 2026 00:44:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wfVlZ-00029J-8E
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 00:44:41 -0400
+ id 1wfVlB-00025C-Rk
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 00:44:17 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wfVlG-000385-9m
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 00:44:38 -0400
+ id 1wfVl9-000338-OF
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 00:44:17 -0400
 Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6631IxiA1151701; Fri, 3 Jul 2026 04:44:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=WgHVki
- 7BX9aDh8hCxyIP4ZIcst3gC9SZO6fT3w+ArTQ=; b=PWJMbkxk7V+6IVTHV0PqhB
- d6QOzRrwtjTcQGjjPLmjDLVcn0ZEWcJuWGQVTArUq3OK88kM66hmP098lRGAPWe7
- PJoTol15cmV+ZA9yG+aR7Gb+lxwfMyMZw4fG2eL390tsOvUWKzVOoQyUO0P0/tai
- 1HCH03BY67bsvYvpJMZgToyYMYN5dNluZ+o+M17GBFmx1H09dstRafwMYgfgpB1V
- 0hGmayaumY6qn2ZH/WoKiYSyto7Wvs02+3yrVsnDTlYDqIa5aZ7UyZtj0CDc76ae
- jcVuqyVbX+aLm/Vd1nLfr3gm5CNY4S2HdkTSQFUC8YKqJYOfmK3axJa/LwcpVcZw
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26mk4x87-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 04:44:21 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6634YZ8c002499;
- Fri, 3 Jul 2026 04:44:20 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhypxh5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 04:44:20 +0000 (GMT)
+ 6631J5Ef1151893
+ for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 04:44:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=aaH20zl/L+ei22Y2hn7LFTKFDYye
+ Fdz2YSO/vxDqROk=; b=HWaGPMSlEnMCA3b3QYwiJR6idDXg+dCACxjhDdlZC8b0
+ PyHy70mJSGp4Ko1+YvqbcMODh4NKII3eO5i2umf3+4loDiUxrH3YZDNhRQU3jBTj
+ cVoTS5DGX3KDb+hX+rqW3aq+nPJkwrM+8jOZjBxJ1JeriwNeJqnZrjR0gr6LaB/j
+ Jl8deMYO0yR2Ifm71J5zcGMgaHrCwHl/USx8UmoyBb9HZbOeJlsuRZbpNNLNpfym
+ sh9kZKkYPtbHIe82823/6at//D4pMQ0gQA4sHxJyuTbSM92nHYVKLUWa82mKOZ80
+ WbNaXdsh1dt7T2v0q9lThU40WKj7Oqtyt2WztGHmcw==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26mk4x7n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 04:44:11 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6634YYAc023912
+ for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 04:44:10 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2u2gq1m7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 04:44:10 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6634iGiL38076802
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 3 Jul 2026 04:44:16 GMT
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6634i8kW28181074
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 04:44:08 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A49C420043;
- Fri,  3 Jul 2026 04:44:16 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B42AB2004B
+ for <qemu-devel@nongnu.org>; Fri,  3 Jul 2026 04:44:08 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4944D20040;
- Fri,  3 Jul 2026 04:44:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CAE6720043
+ for <qemu-devel@nongnu.org>; Fri,  3 Jul 2026 04:44:07 +0000 (GMT)
 Received: from Mac-11.lan (unknown [9.39.22.184])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  3 Jul 2026 04:44:15 +0000 (GMT)
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP
+ for <qemu-devel@nongnu.org>; Fri,  3 Jul 2026 04:44:07 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 2/7] Revert "hw/ppc: Deprecate 405 CPUs"
-Date: Fri,  3 Jul 2026 10:13:57 +0530
-Message-ID: <20260703044402.79723-3-harshpb@linux.ibm.com>
+Subject: [PULL 0/7] ppc queue
+Date: Fri,  3 Jul 2026 10:13:55 +0530
+Message-ID: <20260703044402.79723-1-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260703044402.79723-1-harshpb@linux.ibm.com>
-References: <20260703044402.79723-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDAzNyBTYWx0ZWRfX9RW6XwcIi/Ya
- KDZdLJE0IZA4YQYRqQK81l89+NElHG2OkfV1FIXEBf3YKIBHm3UWoiGjPR/CVIpVvPijp8E9mlJ
- mi/fKlgYK8t1Mxi2AIxhmBPr+L8kmU0rEhWGBaisuFRiwFQ3oYaywXgVw5GooaZXMK3vfoTf09m
- DIZH5Fjd7jLDCf/780FnUaSNI9w2Zqs5UMGwPNWdHtYeukVDzMskMp1znA31+Ns4EwC440FqRbq
- gOp7IUFtD8QRuxvPuBrsDiwWQJJmNQrIFG0yKdv+ElsY9k+IIUEaEFcFbFXJEL5llqIiyYIaeQB
- 9JPTjAmm/rEUzmRnuS9QLBFVZ9cvb54w73V+L8Bsy2SNpsvLVW6nQCwsXqIZWW+UWAefw2VQ6nT
- j7RPuBL5jxVx5nCKN6Vg6tPmjEbD2gI57qgTw/wmunGvqY8LbfY5H6iYINhPzwqavLD6imwKQgF
- qRhOseZ8xY2SNJ2xhUw==
-X-Proofpoint-GUID: 5HG7AicGR_sT5pOXjhxEK-cm5XGQg0RS
-X-Authority-Analysis: v=2.4 cv=Z8bc2nRA c=1 sm=1 tr=0 ts=6a473e25 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDAzNyBTYWx0ZWRfX7C9EIXZAiHSm
+ LWoJckwS8LpunFJiVIy9uxLCcCAu89uB8TeGtYpHSzm2CfYJhr0ZlBz9vgoGq/Xp9MBVJ9/6QPN
+ lzCH2PEeLYNPchMIx3lSDbBh6mhsOdXP3KZ1RC0NoIUI86yJDLqe1GGrA3u46QLug/4JpWQO1tM
+ mA8YqwTpdxacGVCmo6YrGTr+rjE562jliCv8Bugn90OslMaQeQasIXVQGlcMTH7Z6i16yDRveH/
+ 2oh7nkbjXtvBYKtaDOihjx2S5Vnkg1PM1ulPicTi/SP3eaDgDiQIQsD/qD5eb5KWO7wwrYHJ4Zy
+ IhXOi1r5PnRapoMRMjDe0gWpYvex2pZF1V/I1t02Gdlpd/SXGRNP8JXeiGZBfVat2SQY9wW5b/n
+ hp6oMiILbIuDvmT0rUAwg58fnHnWrSLDeh1fKm2t8jUecIzoSSIcdkNqXOYGnCFJm8KK8Jg/4hZ
+ 194kd+EMFLhStSesE0A==
+X-Proofpoint-GUID: Qt8dGvVTfoivfP6_4mzooKMe2maWQ1NK
+X-Authority-Analysis: v=2.4 cv=Z8bc2nRA c=1 sm=1 tr=0 ts=6a473e1b cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=f7IdgyKtn90A:10
  a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=kzH-N7ndX5ZrohmAGq0A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDAzNyBTYWx0ZWRfX75bk06REliLH
- rSaH5YnIXAOY7XlnWCZbjwbz5hbegTeBVLaDXm4zhIYh7+wRfJU0M3lHf1RYRsdrsoLXdFVbZH/
- Go1smCSs+rrOmudDkxHinwLmqzaFTWw=
-X-Proofpoint-ORIG-GUID: 5HG7AicGR_sT5pOXjhxEK-cm5XGQg0RS
+ a=p0WdMEafAAAA:8 a=syKfl9KtHoKKEz0BSpoA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDAzNyBTYWx0ZWRfX/WzEmxbzWECJ
+ HqEuJgRl4RwUYFchanOMgjoPB/QSGlD+Q08nGGqIgY3e1rIuAAW8A9mviE7ddZS2Lq7oXtvMHn+
+ 6sq5mWpT111zbM0nNRgNOuldv9z33S4=
+X-Proofpoint-ORIG-GUID: Qt8dGvVTfoivfP6_4mzooKMe2maWQ1NK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_01,2026-06-26_01,2025-10-01_01
@@ -125,49 +120,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Glenn Miles <milesg@linux.ibm.com>
+The following changes since commit b4bdad7dcef623d2874df4e79e0be01075096c3b:
 
-This reverts commit 52f0b59ec6b780f2a3e162d5862b90b406fa4697.
+  Merge tag 'dump-pr-v1' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-07-02 16:04:08 +0200)
 
-The PowerPC 405 CPU is used by the PPE42 CPU which was added to
-QEMU v10.2.  The PPE42 CPU is basically a stripped down version
-of the PowerPC 405 CPU and is used by the Power9, Power10, and
-Power11 CPUs as an embedded processor to handle various tasks.
-Also, IBM has plans to use the PowerPC 405 CPU model within a
-year to model the On Chip Controller (OCC), which has an embedded
-PPC405 CPU.  Therefore, this patch removes the PowerPC 405 CPU
-from the deprecated list.
+are available in the Git repository at:
 
-Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
-Acked-by: Cédric Le Goater <clg@redhat.com>
-Acked-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260505144621.1308457-1-milesg@linux.ibm.com
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
----
- docs/about/deprecated.rst | 9 ---------
- 1 file changed, 9 deletions(-)
+  https://gitlab.com/harshpb/qemu.git tags/pull-ppc-for-11.1-misc-20260703
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index cf3e1a007c..169c5dfe4f 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -206,15 +206,6 @@ in the QEMU object model anymore. ``Sun-UltraSparc-IIIi+`` and
- but for consistency these will get removed in a future release, too.
- Use ``Sun-UltraSparc-IIIi-plus`` and ``Sun-UltraSparc-IV-plus`` instead.
- 
--PPC 405 CPUs (since 10.0)
--'''''''''''''''''''''''''
--
--The PPC 405 CPU has no known users and the ``ref405ep`` machine was
--removed in QEMU 10.0. Since the IBM POWER [8-11] processors uses an
--embedded 405 for power management (OCC) and other internal tasks, it
--is theoretically possible to use QEMU to model them. Let's keep the
--CPU implementation for a while before removing all support.
--
- Power8E and Power8NVL CPUs and corresponding Pnv chips (since 10.1)
- '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
- 
--- 
-2.52.0
+for you to fetch changes up to f9d05801eb4acd6402d73cb25d498a2419920cf9:
 
+  ppc/pnv: add test to verify external DTB is honored (2026-07-03 10:07:21 +0530)
+
+----------------------------------------------------------------
+PPC queue for 2026-07-03
+* SLOF FW update to 20260627
+* ppc/pnv: external dtb fix and test addition
+* PHB code refactor for better maintainability
+* Revert deprecation of 405 CPUs
+* target/ppc: Expose TB offset of guest in Qemu monitor
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEa4EM1tK+EPOIPSFCRUTplPnWj7sFAmpHPNAACgkQRUTplPnW
+j7tkjQ/9FP3/sTw0MxhGdLItxurrEzu3f4jiDKpnjEIqiJInzYl/2fJKZU611PSp
+gydfdNhkr71TxuJggibAosEblcWRq9KqQXysDpNrJ8rqEIeLj0lv9/JigLTZqU3e
+vsfDmfdCAB7YTtpm6HkTYW81EPD0X8AwQqz4FCNDQ0zeNUBIU8IU/ARP2j80CTnm
+5xRK42aZb9CMYYIk3p8l4FuZmv6Y0Jf0daXM4WsEdHu9KjGvYr1glTY/lgblNPug
+kWIcjPqQ6x/hloYqxTTcsfJBnKfdaVppuh6LbJbgISsQIBzTqrD2HvEIpNFJRKnS
+1XGwLj6cMmm4u2tv3BF0yVDJCEff312n2VFskmOrCUJOR+g2UqDzMb4+7JOpufEn
+Fla38+a9H9ThdnUNaak8+KquHDOJzDAOugOdMvsID8KlJ/q3wrTTEUUImj5Bwyqz
+Gc7naNx+3D+BSiahDe4LP71ZFLrQJ/eYCj71for5xZNcZVOQ6IDhymEMUAcRzkt6
+2qICF6XmkYfuH+1113KMxG65NpKGEvktONQ6UpLWTubQ++BNK1Bt2v8PAWSis/d8
+EYg5M/R7RqhbxufIUDLXJIuxB3xuiVg+e+x/M8X0LffmYhPI1cuZPmth4/75IKL+
+9Vddgc1hSHX1EUjRyZpoK6WArOTNvUOZMEcAhGr/0NgK5O/1Z10=
+=1TRv
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------------
+Gautam Menghani (1):
+      target/ppc: Expose the TB offset of the guest in QEMU monitor
+
+Glenn Miles (1):
+      Revert "hw/ppc: Deprecate 405 CPUs"
+
+Jishnu Warrier (1):
+      hw/pci-host: Split PowerNV PHB5 code from PHB4 files
+
+Shivang Upadhyay (2):
+      ppc/pnv: avoid regenerating DTB if external DTB is present
+      ppc/pnv: add test to verify external DTB is honored
+
+Thomas Huth (2):
+      pseries: Update SLOF firmware image to release 20260627
+      docs/system/ppc/pseries: Update the link to the SLOF repository
+
+ docs/about/deprecated.rst              |   9 ----
+ docs/system/ppc/pseries.rst            |   2 +-
+ target/ppc/cpu.h                       |   1 +
+ hw/pci-host/pnv_phb4.c                 |   6 ---
+ hw/pci-host/pnv_phb4_pec.c             |  58 -------------------------
+ hw/pci-host/pnv_phb5.c                 |  23 ++++++++++
+ hw/pci-host/pnv_phb5_pec.c             |  77 +++++++++++++++++++++++++++++++++
+ hw/ppc/pnv.c                           |  10 +++--
+ hw/ppc/ppc.c                           |   5 +++
+ target/ppc/cpu_init.c                  |   5 ++-
+ hw/pci-host/meson.build                |   2 +
+ pc-bios/README                         |   2 +-
+ pc-bios/slof.bin                       | Bin 994176 -> 997576 bytes
+ roms/SLOF                              |   2 +-
+ tests/functional/ppc64/test_powernv.py |  19 ++++++++
+ 15 files changed, 140 insertions(+), 81 deletions(-)
+ create mode 100644 hw/pci-host/pnv_phb5.c
+ create mode 100644 hw/pci-host/pnv_phb5_pec.c
 
