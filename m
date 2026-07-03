@@ -4,54 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6A93C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:38:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 240D5C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:38:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfe5b-0005Gj-Vk; Fri, 03 Jul 2026 09:37:56 -0400
+	id 1wfe68-0005bG-Vw; Fri, 03 Jul 2026 09:38:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wfe5Z-0005GM-SD
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:37:53 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wfe5X-0002Jj-TO
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:37:53 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 62BC2596707;
- Fri, 03 Jul 2026 15:37:48 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id Y6KuKBC_oJyv; Fri,  3 Jul 2026 15:37:46 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 1C86359672E; Fri, 03 Jul 2026 15:37:46 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1AD8F59672D;
- Fri, 03 Jul 2026 15:37:46 +0200 (CEST)
-Date: Fri, 3 Jul 2026 15:37:46 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Maydell <peter.maydell@linaro.org>
-cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org
-Subject: Re: [PULL 40/41] ati-vga: fix ati_set_dirty address calculation
-In-Reply-To: <CAFEAcA88TQhP6HFOhrAMjRMXU3UPYcw_EGp-Fj5GfA6L_WdjFA@mail.gmail.com>
-Message-ID: <3f5fc513-1dab-078b-7f05-70f6fe2dedcd@eik.bme.hu>
-References: <20260512062142.67998-1-philmd@linaro.org>
- <20260512062142.67998-41-philmd@linaro.org>
- <CAFEAcA88TQhP6HFOhrAMjRMXU3UPYcw_EGp-Fj5GfA6L_WdjFA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfe67-0005ag-BT
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:38:27 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfe65-0002PE-Up
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:38:27 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-664c1406f91so699602d50.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 06:38:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783085905; cv=none;
+ d=google.com; s=arc-20260327;
+ b=KOcpn34vRPvNaVERPVrjdvRzmTFyzrT247fzkVzozG16+zXmEjqP3qinuZjKTtTpES
+ D16j9yj4MPdgeK21whe1uLhgFh6BzYVVvxrnKHEP0vesOOHTs3vJyywIaqGlSoTIaTmN
+ +4LXA8GMdCgZmYp7eUOLpByP3tNCeLG04jkEuXHg//juHDA7LUtnk11DeqkN1bx1lOoC
+ UURD/FesDJ6pdVJJFPyp3fdk9Tvs68VL/H408wuTspBaY6zq1CUhUX/RHfT+O/Bg3Cb+
+ VIZfJp6pwAz8JMBlqNERmusebTYPzdgHg8qO6PcHa74GSY7lHFS5ua2xIyh6ppTqx3qu
+ o65g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=YlCzQeiCTHWvHSq7Cx/s6bQ18JfhI2MRpZaHlMsqq1s=;
+ fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
+ b=iuQSUmAswfLAyMkH2EdUhgYoi24nW5/vYRZwO4OqhWug9V4Zwggqi9YAOKhzPuU1Gn
+ DPf7niCfQPPMu/F5Or6PbLArMW8JRYUqgxF8NTtjQsWq9G8Nq4vVAH3Dq0izpRhNcB6Z
+ OEFEm81XY9DcztWlhPA3jm73zEWoZcHnaeM6BWkKU0ni0pbe6VSO4Y3jbRQqa8MKOXKH
+ kStxBdyUqiFI/r7BJw527hRH9AWlCoHHMd0kimLTfa/EOklBFkKvfZlnDAzn6t9EajsA
+ k0/XDg9+KD/UCscGJFXjFDLvCHHObQksItLyj1MVo5Ig3J/o0pDjT/f4Hbpm/hOt6fCR
+ LPmg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783085905; x=1783690705; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=YlCzQeiCTHWvHSq7Cx/s6bQ18JfhI2MRpZaHlMsqq1s=;
+ b=C2VR28BtqABcPqZYasFlsC6xtx4V//peMjyzc6Hxw37gKmOkBIFUz6OWjD4IS8qtKO
+ Lct/8SAt0F/hgz7siAeGnetrNbu4ZwpncvlktdVlfZ2j1DOkjbVMOsLUFtmo09opIHmP
+ eX+FONrPwQoGcakU09CoT58Ra/XUntM/BKoncFYxzb5eeVAWKXAdAh+Cf0iLfUq2WMXo
+ NNIbWbjhWi4eUXFz9Z+vpYjYPGByMRCW/FdiHJxw/Zonk2Vq8offbQybtPA3kO5S3t08
+ PuCi1kYwhsgPkBqcSELQXpXl+0dKMnJDGEIX0SbkRqPNT66usQahebyeTdmVByS3srSb
+ Jw8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783085905; x=1783690705;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=YlCzQeiCTHWvHSq7Cx/s6bQ18JfhI2MRpZaHlMsqq1s=;
+ b=Y72A9pA1PmFKeoXhNMNdCye0omtbAQJ6woiTbzRceB54K2YeRgoqV+/3J1OLAT36wq
+ eC69/vqM065SY/SBLNqAFkUi6J57ym+ZmN9CQh6IaYOYdCVAjpo9hyyOcl+mjEp/uCBp
+ GX0+uqxXoIqTskAq1oTRycsOmp7kxcN7mcMLfv9T5kOuL4eILDedK7jLIFqbZuXOT81L
+ G0E+5ejyFwDwnubf9SVpXB4l825A94Lq+eyBRApfxX7IK6X6Shvlw1inyl3YIqpJUMVp
+ 2zzaXHj9+eA6PRgcCk+R/w135e1aPTtIRnAPVirvycOQbHAdusJznvkqbzF8/L+mUCH+
+ lDdg==
+X-Gm-Message-State: AOJu0YwOTjsuq8wRrBsuxWpj0ard2bGlmkgeS7K+sxQGBAoCQ1lSDViH
+ vyvEPCSNwfpFa+lW3yWj5n6x8/TFxkFK+lAhhc/2Hx9Z/j12aAjH7PzmR/FPTzTRkDQP/WmlonT
+ lBA9Pj2e2XNtoa86FxAA2rGCd1yhSB2ZBzUSm12S6NQ==
+X-Gm-Gg: AfdE7ckFCq4amEdSOU1wljcUV9c6nB2XMEtLp79DFyoLHtb2/5lzFKJcQYuJw40nBTD
+ 1Da7+M24+bUKy4zausT9FCfLM4+L6HoqLs6uVuRoceRq7wTJKlGfGL3ZWdTaG6BmZngWnhO2+Yb
+ UeEhJd7ECHnct9TTxI1bDvHk+aWIeGqzT19l+TA4o+wGjNUktVIPffEs0jF4bGqRyaXIxoAtXuA
+ ro7/VFCeYpeC0/3X3Qe34nd0xpuaz8agtPnnJf0tWx6Zr8Pah8yxm8ZqjafFvDf9T3pgkZ/g7Nm
+ +3Fx/6frf1LDXOvunz9EbJ65IzM4p77E/ATiosj68//Bfn1mjHpYynqY
+X-Received: by 2002:a05:690e:1917:b0:662:ebb0:36fa with SMTP id
+ 956f58d0204a3-665219ec54emr9868207d50.20.1783085904491; Fri, 03 Jul 2026
+ 06:38:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1789271932-1783085866=:40069"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+References: <20260702184019.3431139-1-peter.maydell@linaro.org>
+ <20260702184019.3431139-9-peter.maydell@linaro.org>
+ <0f59d1a1-986d-4a0f-b865-699c4674589c@linaro.org>
+In-Reply-To: <0f59d1a1-986d-4a0f-b865-699c4674589c@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 3 Jul 2026 14:38:12 +0100
+X-Gm-Features: AVVi8CdhDcwmTxHsZ8a_rD_aUCiGWFTd2_PYx69beSAqBSRLs441GWW8EpehnN0
+Message-ID: <CAFEAcA-o-mX8hzwOLBU+WhOP4uuvYDa+-H8fzHO6g0iM83g7Bg@mail.gmail.com>
+Subject: Re: [PATCH 08/11] target/arm: Add new feature
+ ARM_FEATURE_NO_NEON_TRAPS
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,82 +116,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---3866299591-1789271932-1783085866=:40069
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Fri, 3 Jul 2026, Peter Maydell wrote:
-> On Tue, 12 May 2026 at 07:30, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> From: Chad Jablonski <chad@jablonski.xyz>
->>
->> This fixes three bugs with the ati_set_dirty address calculation.
->>
->> First, vbe_start_addr is a word offset. All other values in the
->> calculation are byte offsets. It must be converted to bytes.
->>
->> Second, when setting the dirty region with memory_region_set_dirty
->> the vbe_start_addr is used to calculate the start of the dirty region.
->> This is a problem because the vbe_start_addr is the offset at which scan out
->> begins. This puts it in the visible screen coordinate system. The dirty
->> region however is in the virtual screen coordinate system. This can cause both
->> overmarking and missed updates. This is removed from the calculation.
->>
->> Third, when the start address of a blit is outside of the bounds check
->> the entire blit is missed and not set to dirty. This happens even if the
->> blit does partially overlap with the visible screen. The fix here is to
->> find the intersection of the visible screen and the blit and mark only
->> that region as dirty.
->>
->> This does not attempt to apply clipping to the blit. So there will be
->> overmarking in some cases.
->>
->> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
->> [balaton: drop excess parenthesis, use offsets instead of pointers]
->> Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
->> Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> Message-ID: <20260506153920.C6B27596978@zero.eik.bme.hu>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Thu, 2 Jul 2026 at 22:22, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> Hi; Coverity warns here about some "we did a 32 x 32 multiply
-> and put the result into a 64 bit calculation" issue here (CID 1660048):
-
-I've got the warnings but didn't have time to look at it yet.
-
->> ---
->>  hw/display/ati_2d.c | 24 +++++++++++++++++-------
->>  1 file changed, 17 insertions(+), 7 deletions(-)
->>
->> diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
->> index 504d1c57085..48498677c7e 100644
->> --- a/hw/display/ati_2d.c
->> +++ b/hw/display/ati_2d.c
->> @@ -69,18 +69,28 @@ typedef struct {
->>  static void ati_set_dirty(VGACommonState *vga, const ATI2DCtx *ctx)
->>  {
->>      DisplaySurface *ds = qemu_console_surface(vga->con);
->> +    unsigned int bypp = ctx->bpp / 8;
->> +    hwaddr dirty_start = ctx->dst_offset + ctx->dst.x * bypp +
->> +                         ctx->dst.y * ctx->dst_stride;
+> On 7/2/26 11:40, Peter Maydell wrote:
+> > +            } else if (!arm_feature(env, ARM_FEATURE_NO_NEON_TRAPS)) {
 >
-> dst.y is uint16_t and dst_stride is int, so we do the multiply
-> at 32-bits, and then the whole set of additions at 32-bits before
-> putting it into a 64-bit hwaddr.
->
-> Should we cast one of them to 64-bits to avoid the overflow,
-> or do we know here that these values can't actually be large
-> enough to overflow ?
+> Is the double negative really worth being able to limit the addition of the new feature to
+> cortex-a8?
 
-I think since the x,y values are limited (at about 16384 or so, we usually 
-apply mask when writing the regs) these should never overflow but we could 
-try to cast something to silence the warnings. I can try to make a patch 
-eventually unless someone else does it faster.
+Yeah, I was kind of on the fence about it myself. It's not so
+much the adding an extra ARM_FEATURE_NEON_TRAPS line to all our
+existing CPU types as also needing to do it on every new one we
+add in future -- having the default be the setting that's most
+likely to be correct for a new CPU felt a little better. But I
+suppose everybody cuts and pastes from an existing CPU type
+when adding a new one, so there's not much in it, and we're
+probably better keeping the feature as a simple "does this
+CPU have this" positive-sense one.
 
-Regards,
-BALATON Zoltan
---3866299591-1789271932-1783085866=:40069--
+-- PMM
 
