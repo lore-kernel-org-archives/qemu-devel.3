@@ -4,68 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBF64C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 10:26:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAEFFC43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 10:29:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfb68-0003jE-Fu; Fri, 03 Jul 2026 06:26:16 -0400
+	id 1wfb8g-0004FS-4Q; Fri, 03 Jul 2026 06:28:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1wfb64-0003iV-Fe
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 06:26:12 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1wfb62-0000Ov-6r
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 06:26:12 -0400
-Received: from loongson.cn (unknown [10.20.42.126])
- by gateway (Coremail) with SMTP id _____8Dxh_E5jkdqE04BAA--.7026S3;
- Fri, 03 Jul 2026 18:26:02 +0800 (CST)
-Received: from [10.20.42.126] (unknown [10.20.42.126])
- by front1 (Coremail) with SMTP id qMiowJBxbcI4jkdqMdu9AA--.30903S3;
- Fri, 03 Jul 2026 18:26:01 +0800 (CST)
-Subject: Re: [PATCH 2/2] MAINTAINERS: add LoongArch's maintainers
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: maobibo@loongson.cn
-References: <20260703095538.3211983-1-gaosong@loongson.cn>
- <20260703095538.3211983-3-gaosong@loongson.cn>
-From: lixianglai <lixianglai@loongson.cn>
-Message-ID: <32bec135-17a2-321f-f188-1c5644b7655e@loongson.cn>
-Date: Fri, 3 Jul 2026 18:25:52 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfb8e-0004F8-9Q
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 06:28:52 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfb8c-00018w-Pp
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 06:28:52 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-664b3831a20so571729d50.3
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 03:28:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783074529; cv=none;
+ d=google.com; s=arc-20260327;
+ b=QUXQODiYzfrp8bZzmKitwMaMWp/fkXeqUpykBx9ZNnq8ZQ31a+Os+vqZ75H6ZC+fKC
+ xeFyiNEF8VPAf1ff6PgOOT0HntgWNWa6C+fxCdUQfHua+T3/P3sRDMFQG2jCBcCVbx84
+ WZGAHSc4w5NG/r18lO7fWLfWZke82s6mxN0tAMtP8EghXeWIptDgoPLwUevhwnfWN0Yb
+ OBZuHbNpPblJGpkjVgMJWoB2S3gupEvgPL7O6nWo7CQAtC2IVyGhXz6dhbkif/P5dlKa
+ 4bxFfxS+54hKgAn1HEI49/3Ug5qhdKTm6UFsc4ruCRF2WU7Fmmhcz5BUxo/sJvo3epo3
+ mvpw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=BYRftQ1EhBxVHug1SZSh5KJBSBcocp+LBwne83O/SwQ=;
+ fh=FeUNyVy0JXs14mTB+gGbB94jqcY2l5K6l5EJSjhUgxs=;
+ b=HBdhIZJB9TJsb3/D2BeLB3R7UM1xgVGdOks0Ihs7p7B9IeYdFYtLMBeHYl6yIPJ0my
+ lwGmlETSBrlbJnFK2CgvrFRY8fEhXz3Go75Uzf2F0fmNvQ2eEJWZNrev41VzymtzsQFI
+ BmJLCR3rDjBZxm1X2dhjtcAhG4VbPwmLlM7UmNCcMelV1EFhGFPGIhdDxyYB/0VCqvmS
+ t6fG17BB4gLwKnPO2k46pbUhFbetfEL1KC/8z4DoPPR+Ujt0szhY5FwjQGCagqw7dCM4
+ rntnIgO0Z1/RhP1uBhROXVxfYo2rLQ+SnrxqYIcVuuagd2IMz5t/hOcgzOZHW0B+HyAJ
+ qt5Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783074529; x=1783679329; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BYRftQ1EhBxVHug1SZSh5KJBSBcocp+LBwne83O/SwQ=;
+ b=UTcpqx4Ok8ccMTmsgz9KmRXjcVU1Ja3ea+qAryH/H9YO925BZmBa1ocpX7m3zpD0Ba
+ D91i2S+StQfs0Jn3QGiudN6ObGQTAh2wtCmmbq47XdV14Gly1DRzVgS37FlFzY/5YZTx
+ TGQtXbvQGspcoCn6oyASKClX2bCjXtFSChV+OiIiKiLcxQTD6Lb/zxvRPuuwNT1iALXo
+ lc9kXnt6wdvO/Bf52rEBiwm7tB70PfipzOcPvmWi2Saw4M3YpfCdCRjCsZxoTNxjJU0j
+ anFAvEKttpEmuoC4XOKYbdMA2/BnXhdbjTD31a49gXkiXGE6DNsZVGgUPG3c5HdHaeri
+ VE3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783074529; x=1783679329;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BYRftQ1EhBxVHug1SZSh5KJBSBcocp+LBwne83O/SwQ=;
+ b=rWrLJad32wX089Z2GxZLd/zF3vzpPJahA22tbGtG46RYr69YAx9KB2IZC1+IzQPdwL
+ VMEa5TZYXjXEKYALAjsbClGMwDexV8DicoQjOy8Prv1rROayjyKPgRFGzrkDCZOS2FI0
+ IWl6kB6z3CSS3zoxOa8bFj4Le91zA8SygUWwsMcA0rSJzxsKfAn9yTTC95l7dnjMIMvw
+ LMd34MWMErdU2t65J2HLq/F7TMpB1Y011ogl7GCGrgzLLunWcwVv39/W2uByNKK1ZRua
+ kpWKGzqFz4iw6E073h50P3dRI46WybNui8LPr0m08IsZGXDYcNn1n6f64xctN2azsfnc
+ gGoA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpRpEaugyNgGjJxUrpjd9yLXQbNi6mPn57CyoJSrCp3iKJGTBTaXyIswr3X//txmmiCdJcc9DUtE3Gt@nongnu.org
+X-Gm-Message-State: AOJu0YwW7vKaNNzwfizoS59Y3wzAi/huve1aWm1+shyO/WbIpjWHAGDn
+ X9DP/HWYoODfJzxEBmJvNIRWxr2ZoMNRz9DrU34BH6XBhufpR9awuMAc45ZP85fau+LmHguwhkN
+ zuQJE3v8bmOaBn0g3mjrnNI6z2qkMYXbURd8J4yTGcQ==
+X-Gm-Gg: AfdE7clM/4oPhB3iVOSTOYWsR1rvy4HXo1c9QrIRLCJJ/L8QRKbTgQqL9aFyaXAM3gX
+ xDi5sLRwH3rYtSswj9PjltZGp2mt0Xq3ENgFaO2Nq67VGu8nJ11C2tDrtidH+TxIB/P0HoPoM+p
+ XeVMw+5d+fSsrxq9WucblD0fM1tIXeATPIjwlnssyzpsClmzd+hgIHrfNSaTsG3mdY55PRmstRg
+ f2q3UHNr5+pjPQ4bKISZkU6zqX+TxXedR8HoGHlzsIGkaON7RoESonUcmzajGtTswQAKL03lI0A
+ lC9dzJHzl+u7UxwPQrohZLbJCzaxEoYBk2etklgMGGojnRVhPk9bXtZj
+X-Received: by 2002:a05:690e:4802:b0:665:a0c:658d with SMTP id
+ 956f58d0204a3-66521a77dcemr7254782d50.28.1783074529194; Fri, 03 Jul 2026
+ 03:28:49 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20260703095538.3211983-3-gaosong@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowJBxbcI4jkdqMdu9AA--.30903S3
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7Gw15XFWkJFWkWrW3ArW8GrX_yoWDJFg_XF
- 42yws5Jr4DXF17J3yFvF93A3ZIqw48Za15ua1qqr4rJ343KrW5tryDtwnrua4ayrWjkrnx
- tanavrnIkw1rZosvyTuYvTs0mTUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbI8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
- 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzsqW
- UUUUU
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260628114925.418293-1-bin.meng@processmission.com>
+ <CAKmqyKMzUgs=1LMJZHoFUt1j2PSWTTKbAbg7gvzjZx83V041OQ@mail.gmail.com>
+In-Reply-To: <CAKmqyKMzUgs=1LMJZHoFUt1j2PSWTTKbAbg7gvzjZx83V041OQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 3 Jul 2026 11:28:38 +0100
+X-Gm-Features: AVVi8CejQaReLRSSrngSZYEkB3cfnGJyXv5vspWiZrG1P890gvTTyxXE5lAn_1I
+Message-ID: <CAFEAcA-WKMnBFks8vrp8YC-h=j8AGWGaU_nzXasdpXx9NgdLjw@mail.gmail.com>
+Subject: Re: [PATCH] docs/system/arm: Document Zynq Buildroot boot
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,38 +121,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Song Gao:
-> Add xianglai and bibo as maintainers for the loongarch architecture
+On Mon, 29 Jun 2026 at 00:29, Alistair Francis <alistair23@gmail.com> wrote=
+:
 >
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   MAINTAINERS | 3 +++
->   1 file changed, 3 insertions(+)
+> On Sun, Jun 28, 2026 at 9:51=E2=80=AFPM Bin Meng <bin.meng@processmission=
+.com> wrote:
+> >
+> > The Zynq board documentation only showed a generic direct kernel
+> > boot command.
+> >
+> > Add Buildroot ZC702 commands for booting through U-Boot proper
+> > with the generic loader and for direct Linux boot from the
+> > generated SD image.
+> >
+> > Signed-off-by: Bin Meng <bin.meng@processmission.com>
 >
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index ef4c3b5c5b..fe3a3c2b57 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -281,6 +281,8 @@ F: tests/tcg/hppa/
->   
->   LoongArch TCG CPUs
->   M: Song Gao <17746591750@163.com>
-> +M: Bibo Mao <maobibo@loongson.cn>
-> +R: Xianglai Li <lixianglai@loongson.cn>
->   S: Maintained
->   F: target/loongarch/
->   F: tests/docker/dockerfiles/debian-loongarch-cross.docker
-> @@ -1362,6 +1364,7 @@ LoongArch Machines
->   Virt
->   M: Song Gao <17746591750@163.com>
->   M: Bibo Mao <maobibo@loongson.cn>
-> +R: Xianglai Li <lixianglai@loongson.cn>
-Reviewed-by: Xianglai Li <lixianglai@loongson.cn>
+> Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-Thanks!
-Xianglai.
->   R: Jiaxun Yang <jiaxun.yang@flygoat.com>
->   S: Maintained
->   F: docs/system/loongarch/virt.rst
+> > +  $ qemu-system-arm -M xilinx-zynq-a9 -m 1G \
+> > +      -machine boot-mode=3Dsd \
+> > +      -display none -serial null -serial mon:stdio \
+> > +      -device loader,file=3Doutput/images/u-boot.bin,addr=3D0x04000000=
+,cpu-num=3D0 \
+>
+> I'm surprised you can't use -kernel here
 
+I think it's better in our docs to only use '-kernel' for
+booting an actual Linux kernel, and to use the generic
+loader when what you want is "load some other binary blob",
+even if -kernel's historic "do what I mean" handling means it
+would also be able to do the job.
+
+Applied to target-arm.next, thanks.
+
+-- PMM
 
