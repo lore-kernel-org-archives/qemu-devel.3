@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F335C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 17:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6210EC43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 17:05:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfhHY-0002Jg-CY; Fri, 03 Jul 2026 13:02:28 -0400
+	id 1wfhHR-0001Yb-TK; Fri, 03 Jul 2026 13:02:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wfhHV-00023C-Kv; Fri, 03 Jul 2026 13:02:26 -0400
+ id 1wfhHP-0001HU-Ao; Fri, 03 Jul 2026 13:02:19 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wfhHT-0003Vb-W7; Fri, 03 Jul 2026 13:02:25 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1wfhHN-0003Uu-Nv; Fri, 03 Jul 2026 13:02:19 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 663GJBvp3218109; Fri, 3 Jul 2026 17:02:20 GMT
+ 663GJ3DY3246599; Fri, 3 Jul 2026 17:02:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=msK2ymhbX4mceiZVL
- 8mPqeKiaC1qXvKagqwZM3qszgQ=; b=VSVk+6ksbuxhUV3NYmeSDEB9gm8HBXqC7
- mEwidb8MXcCxorcTrI9sESgUWncqdA7fPuVdd8lOFGm2AcjbtPAL8DmjhL/fAQ13
- V5N1tOfV/9xn+lX0/cp4xBzv0tnfxT3KGH+YLC6X14mSAywLBVNfuq7XL2PpYiju
- fL10olfQ1sssh2jaF05UCRHESDc5Dapfyuc55NqmwxoYWHbiz4LkYnygo0u9wk9o
- JSSjm8RuMf0aTBTt3ftfaVxn23GjAto8pn6k1aj3K+k3Hc0mXzp3kAgZTaDisK8j
- gBc9TJDWCBYUHWwz0b5uSOeSAEkpDIcyVgBxW/+cM9KRBP5dIShKA==
+ :mime-version:references:subject:to; s=pp1; bh=0tRrXI+I1z+661/MO
+ dlzZWSYaFNneyZuHHQqK5PBfkE=; b=oHP4S6foMIEfeY8eHrJUojCd2GNUbZKx8
+ hTnlNO/FZRtNHe7YbXhPPENvENxqD8ow9cVPmKd13iSxIE2/BFT0idoMTo+oCBEW
+ vU57dT70PtArzPTi4C4kHUpYxBLOPijS+yGbaPsu/YpZaJcLI+4C3xRjKOKMoZ+j
+ YM6dwKAYzCeEYQyEx7BejEMCi2rtptKPspIwNM7ZgP388sfxfcYdLfqBjRgqG2q6
+ /DIdgKnYjbkDVQpcf2SPZSvwnW0tiiRRmd7HQzAcBSVVQk5Alsd2vJFksPAbNrL2
+ J0MKEHyHUQ6H8alEVay/Rn3er6YXoLx7rM+UFs+px4dob6vC8zcDA==
 Received: from ppma22.wdc07v.mail.ibm.com
  (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26mk7rvg-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qafsxx-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 17:02:19 +0000 (GMT)
+ Fri, 03 Jul 2026 17:02:14 +0000 (GMT)
 Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663Gnbej001494;
- Fri, 3 Jul 2026 17:02:19 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7whtm9-1
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663GnlBr001538;
+ Fri, 3 Jul 2026 17:02:13 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7whtjq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 17:02:19 +0000 (GMT)
+ Fri, 03 Jul 2026 17:02:13 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 663H1iQn10945262
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 663H2Cb74260542
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 3 Jul 2026 17:01:44 GMT
+ Fri, 3 Jul 2026 17:02:12 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1B33C5805A;
- Fri,  3 Jul 2026 17:02:18 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id F147E5805C;
+ Fri,  3 Jul 2026 17:02:11 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3FB2458062;
- Fri,  3 Jul 2026 17:02:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0E84F58054;
+ Fri,  3 Jul 2026 17:02:09 +0000 (GMT)
 Received: from fedora-workstation.lan (unknown [9.61.75.28])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  3 Jul 2026 17:02:15 +0000 (GMT)
+ Fri,  3 Jul 2026 17:02:08 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
@@ -66,40 +66,43 @@ Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
  alifm@linux.ibm.com, brueckner@linux.ibm.com,
  pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-Subject: [PATCH v14 32/33] docs/specs: Add secure IPL documentation
-Date: Fri,  3 Jul 2026 13:00:29 -0400
-Message-ID: <20260703170032.1893204-33-zycai@linux.ibm.com>
+Subject: [PATCH v14 30/33] hw/s390x/ipl: Handle secure boot with multiple boot
+ devices
+Date: Fri,  3 Jul 2026 13:00:27 -0400
+Message-ID: <20260703170032.1893204-31-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260703170032.1893204-1-zycai@linux.ibm.com>
 References: <20260703170032.1893204-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX+wn/yUXXtfAb
- fGj6SlgqHjo4LQzc/qQvkIsu3C6OyfwrjcTIcN0JtdlXS7Zb3H3BCy9pAOajDvPghXWVJDY4c5v
- B7fSI4ACawJxcsUVJ+Anc3jdMuxkGx6pF1VXuxvliuJqCq+goDj5a6Fjhh7xlGzMPZs/j2kd1Kc
- /fRjCdJWSUFBNCu2eH8GFL1q3xBJM5Ds2KnPGpDNFW8zVeglR4dyOhOTF28xlP8xsjIp1tSxUCF
- MDjTIGbkjvHd8h4wcm1xcSeQBM3m3mJm5QzEnCZ36AMV6dc9laWF2+/Tsw6F6J4AfCluZyolI+F
- ppnBReNd50XC3BRmjEQ7hL2LWRKp1Hsln2w93vt6FcZ5Zkdk6zOWMBt1f7X5zat/VKCDCo3myCN
- 1Uf3Tzs6L26iCKmX1kjVq66ejpafv3adZrYjmOTzbDlFE8HHCkIXrfYBb6zkX7lOl7UUlV1U/nG
- KiRxkIMnco5YF2BBQmw==
-X-Proofpoint-GUID: XjRIBLwTo81nMR_p4Cq1wqJZ6hevNyro
-X-Authority-Analysis: v=2.4 cv=Z8bc2nRA c=1 sm=1 tr=0 ts=6a47eb1c cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX1H7oDtQVBu+h
+ /RT2TgJ2zpE0cQWydzL17W3K4+3ZvZ4PqVCoLafK9VKL4WPpbyuFOZ3SZ+K/Jje0FPutlEIXeP0
+ Wuw4YfmgjDQxwYFMJ6LrAlxNY5AejztCjjtSgBjgWoITBu+7S50C6wQmbf37INgHgpbMZ1zxkoy
+ 8fkSJH8149L0ABIrZkxbh+0kPP3r6EqGGlrHMkakpGLdKHWx+4buYuSb2DG54F4V+r3RVdupOLw
+ +l9f53WBEMghgS5E1wDdSohB9+Kxw+Vhnwr/kaqDoyrMUq1M1FtJ/Z7aOpkCymmMXN16LnXHoV1
+ QqyZCV8MvisUIcXlupt0IkllntsZqV9nHrFIYY0dQa8nF7yx13cnvNNDwkk1+ik6WxCVAyz19sf
+ AIFBLMz1JznSEdFmaJRCkO9l1xMKj2a5VWwG++XymTbyE22+mXJRObhfcAiFPdEHOW6SPrKOIf2
+ Aq5dRzXwsR0MOr4gVbg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfXyae9MfDtwzez
+ 1R9PRsU7vxQnSernjtIy0jk/CkweTrmYJeRBaTtAu0ZhoM/XuEDorJM2jPBjNkVi1nH5Rmu24YE
+ Hc6fig82r26iZo8e1TwIi13vc8VrH1U=
+X-Proofpoint-GUID: 8Q-8j5AKtJ5AR1g1Ez1crBX-442jX5-l
+X-Proofpoint-ORIG-GUID: 8Q-8j5AKtJ5AR1g1Ez1crBX-442jX5-l
+X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a47eb16 cx=c_pps
  a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=bKBM-sKadDDPLvLHMR0A:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX+ElUR/mBdaTe
- 6U/DRRMRCgvsSP+F4JvHqAuYdSSC4nUOr7YT3lh4awx8CQPUF3B/NgunJMd7mApvgtzVPPkLX9s
- /jaai1c1Ep9utfH1WolnAN4smEpNPwk=
-X-Proofpoint-ORIG-GUID: XjRIBLwTo81nMR_p4Cq1wqJZ6hevNyro
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=3-8onZzmVqWz2BGYPZQA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_03,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 spamscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030167
+ spamscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607030167
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -124,80 +127,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add documentation for secure IPL
+The current approach to enable secure boot relies on providing
+secure-boot and boot-certs parameters of s390-ccw-virtio machine
+type option, which apply to all boot devices.
 
-Signed-off-by: Collin Walling <walling@linux.ibm.com>
+With the possibility of multiple boot devices, secure boot expects all
+provided devices to be supported and eligible (e.g.,
+virtio-blk/virtio-scsi using the SCSI scheme).
+
+If multiple boot devices are provided and include an unsupported (e.g.,
+ECKD, VFIO) or a non-eligible (e.g., Net) device, the boot process will
+terminate with an error logged to the console.
+
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/specs/s390x-secure-ipl.rst | 55 +++++++++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+ hw/s390x/ipl.c          | 35 +++++++++++++++++++++++++++++++++--
+ pc-bios/s390-ccw/main.c |  3 ---
+ 2 files changed, 33 insertions(+), 5 deletions(-)
 
-diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-index db60c2262f..9d633413ae 100644
---- a/docs/specs/s390x-secure-ipl.rst
-+++ b/docs/specs/s390x-secure-ipl.rst
-@@ -1,5 +1,60 @@
- .. SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index a99d3e3306..1c9ae4d019 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -503,6 +503,37 @@ static void s390_set_secure_boot_flags(IplParameterBlock *iplb,
+     iplb->len = cpu_to_be32(S390_IPLB_MAX_LEN);
+ }
  
-+s390 Secure IPL
-+===============
++static bool s390_validate_secure_boot_device(int devtype, Error **errp)
++{
++    switch (devtype) {
++    case CCW_DEVTYPE_VFIO:
++       error_setg(errp, "Passthrough (vfio) CCW device does not support secure boot!");
++       return false;
++    case CCW_DEVTYPE_VIRTIO_NET:
++       error_setg(errp, "Virtio net boot device does not support secure boot!");
++       return false;
++    default:
++       return true;
++    }
++}
 +
-+Secure IPL (a.k.a. secure boot) enables s390-ccw virtual machines to
-+leverage qcrypto libraries and z/Architecture emulation to verify the
-+integrity of signed kernels. The qcrypto libraries are used to perform
-+certificate validation and signature-verification, whereas the
-+z/Architecture emulation is used to ensure secure IPL data has not
-+been tampered with, convey data between QEMU and guest code, and set up
-+the relevant secure IPL data structures with verification results.
++static void s390_apply_secure_boot(IplParameterBlock *iplb, int devtype,
++                                   bool secure_boot, bool audit_mode)
++{
++    Error *local_error = NULL;
 +
-+To find out more about using this feature, see
-+:doc:`documentation </system/s390x/secure-ipl>`.
++    if (!secure_boot && !audit_mode) {
++        return;
++    }
 +
-+Note that "guest code" will refer to the s390-ccw BIOS unless stated
-+otherwise.
++    if (!s390_validate_secure_boot_device(devtype, &local_error)) {
++        error_report_err(local_error);
++        exit(1);
++    }
 +
-+Both QEMU and guest code work in cooperation to perform secure IPL. The Secure
-+Code Loading Attributes Facility (SCLAF) is used to check the Secure Code
-+Loading Attribute Block (SCLAB) and ensure that secure IPL data has not
-+been tampered with. DIAGNOSE 'X'320' is invoked by guest code to query
-+the certificate store info and retrieve specific certificates from QEMU.
-+DIAGNOSE 'X'508' is used by guest code to leverage qcrypto libraries to
-+perform signature-verification in QEMU. Lastly, guest code generates and
-+appends an IPL Information Report Block (IIRB) at the end of the IPL
-+Parameter Block (IPLB), which is used by the kernel to store signed and
-+verified entries.
++    s390_set_secure_boot_flags(iplb, secure_boot, audit_mode);
++}
 +
-+The logical steps are as follows:
-+
-+- guest code reads data payload from disk (e.g. stage3 boot loader, kernel)
-+- guest code checks the validity of the SCLAB
-+- guest code invokes DIAG 508 subcode 1 and provides the payload
-+- QEMU handles DIAG 508 request by reading the payload and retrieving the
-+  certificate store
-+- QEMU DIAG 508 utilizes handler qcrypto libraries to perform
-+  signature-verification on the payload, attempting with each cert in the store
-+  (until success or exhausted)
-+- QEMU DIAG 508 returns:
-+
-+  - success: index of cert used to verify payload
-+  - failure: error code
-+
-+- guest code is expected to respond to this operation by:
-+
-+  - success: retrieves cert from store via DIAG 320 using returned index
-+  - failure: reports with warning (audit mode), aborts with error (secure mode)
-+
-+- guest code appends IIRB at the end of the IPLB
-+- guest code kicks off IPL
-+
-+More information regarding the respective DIAGNOSE commands and IPL data
-+structures are outlined within this document.
-+
-+
- s390 Certificate Store and Functions
- ------------------------------------
+ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+ {
+     CcwDevice *ccw_dev = NULL;
+@@ -559,8 +590,8 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+         s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
+         iplb->flags |= DIAG308_FLAGS_LP_VALID;
  
+-        s390_set_secure_boot_flags(iplb, s390_secure_boot_enabled(),
+-                                   s390_has_certificate());
++        s390_apply_secure_boot(iplb, devtype, s390_secure_boot_enabled(),
++                               s390_has_certificate());
+ 
+         return true;
+     }
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index 1bf77d1594..9623d5320f 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -305,9 +305,6 @@ static void ipl_ccw_device(void)
+     switch (cutype) {
+     case CU_TYPE_DASD_3990:
+     case CU_TYPE_DASD_2107:
+-        IPL_assert((boot_mode == ZIPL_BOOT_MODE_NORMAL),
+-                    "Passthrough (vfio) CCW device does not support secure boot!");
+-
+         dasd_ipl(blk_schid, cutype);
+         break;
+     case CU_TYPE_VIRTIO:
 -- 
 2.54.0
 
