@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 059EDC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 06:47:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB22C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 06:47:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfXeO-0007VZ-Fs; Fri, 03 Jul 2026 02:45:24 -0400
+	id 1wfXeL-0007Tq-Qp; Fri, 03 Jul 2026 02:45:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wfXeM-0007UX-I1; Fri, 03 Jul 2026 02:45:22 -0400
+ id 1wfXeK-0007TE-71; Fri, 03 Jul 2026 02:45:20 -0400
 Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wfXeK-0003vj-TW; Fri, 03 Jul 2026 02:45:22 -0400
+ id 1wfXeI-0003vj-Ga; Fri, 03 Jul 2026 02:45:19 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=O401hHrFNYFIcEA3cFPNrMDpV/6Yh+Zz6SFQLDt/491LtAdRS1ewSo8IjQ2l8CnMqk2xgVmTI2pm2QH0+y5K1k3yLBXBzNaCv4LUGWMjLtBg9Fq08BuCsv8h131AnFPHtEqye5VyCm4DQxSaXj2kMEVSCjmu2T2AmPN3jvTYQ9usL7blNgno/DH2sxB5dShW2TaeT11Fess00Q/YoNjoOnzoQKwFC9JzX3WsU8QZfMhCunXsJ712CCAdmoxToWxYTYpPWIfRQimDatVg7vrGJJ4xHNE5khq6mQu2jvysqRa9+MzKlALfFmZt9ST0bIYh+N/Xrfl9VBXlSAnxtaihCw==
+ b=A3vjy/wKPx9o8ae2LMeECTH0B/gRfE/j1+u5f310mFw4gJ0qdCEow+OmjGfCJvcimoA/HaU6xWRohZi+hAWP6KoYnal9fclHRm4MPDbmj8v1kHxyaA7u+lnOCselKKpEUuXGZhU9Dz5OOAyIpQ+f4ntMCX2E2XtSAl2Y5HddxqY+K61/4og4xBkdeIYI3ego9Fnxqdi1hxW+g5aivIuSjLwwaLLpZKoeXokDI9JRyyDghze/ylPg9kO4QbfFQUVpXxNwcvv+iXWTjsO1innBSyDCcoYG98WMFWQknAFQ+hWqVEXBJ/PB1Le2KjkRz6xyOS4V1zXV8xWtaZrd2s0WqQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lakpgZ2Q4MYJbV+Pu9olh0rvl8qptcjCupV8N9kxpE0=;
- b=eHbDbgvd74sMV55L9bi9CJ5uCnih4U1Yqdn9CWkvh3wNtuWNOVa6iXl0GxtvOU4ylHXq25LnjlAh/hGGw+2xmxvvxPxI78dTTLzz3z9WNW2VPmZLJvmBlJXR2DT486LNa+opQZZ+m2jahLdEdJlfm96Pu61/ywLRHi1PVH58mytaLFZrVO1JDVFaw7XwCjUnJHE7erqoXS3YuD7KBVjKppU9zsnOfsgAFfjd+5BBIQeNJMYX8jhfHJvtatZyhSbAufyN8+WNgrC/cSUfGifd1LrMN7BafSMPdA1TpttOgYKEbSgkiPXfUJszU2WZr0pcKGepWQxtDv2CnYk9xBbJKw==
+ bh=IG/mIx3zg1qz/S0rM2O+K049LYNd7vkISrmfOCt+G00=;
+ b=hf06giFkNeshVV3doezrr9744G1eOHn+uMRJ3VTtVruPLACR40QNDNAkYjqQL+HgtYTn0B7WGNF7f7OOCZeJww9J1shcAVYuLEfAGzXZorYULFTFqsVkx2dm1+HUwN4KQIp/JaQJpYn/+98EhlBBwD/xR3qYGF84A0U3jLII72UhX9LJDBszM04M4HAZgyphIqP1jn0juC6aB8J73rJQ+o+9eI/N4mXGmlAAL9RyiTIgvW3NR1/Yqfr2GJhw76/CbdSvoPaOYwbSIRMcIXz176MMWpKLH6JJlo2enUJYUnGVJh5OZZXYD2qLSLfu5XTgQB52nbLNfQViHDOMwEiPXw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lakpgZ2Q4MYJbV+Pu9olh0rvl8qptcjCupV8N9kxpE0=;
- b=XYaLXKoLQaOk1vHRdfLNgNSW1cE3n+IY0YD4vAr9rw2Xpxw/j/Pqc6xx4I1zPPrkAvBU6KsnR9NbOHKe+ldV5t8OfDcZvGp0IvA1ngmI+0ahPqq+XNo84pQl0ICV/xys+v7y0/vQHHQrhoiyxJVg21KnLrFvB9NSq4lTjX67CMjgN0JSAl3E9Hhz104zS7deeZjnM0VRU8FmELlh8pnfB5ucO0jkNqBjuxVwc3IxBmYUOmtK7XaD8K+DiMcv1v4BJ+M/KIkZ+p+q7mSLN5yaGkW3aP7JDVclQ+fnZ8Fqpi7UJ0rBeYdVr+7dRXy+88cGYvhpFp2l4XgnxTdbXzgtIg==
+ bh=IG/mIx3zg1qz/S0rM2O+K049LYNd7vkISrmfOCt+G00=;
+ b=jW9qPtA8TCHHS0q89Wyl3Lpcy4afSJiwg0mbKO1tSpvRbO9gZi3dzFf0w8Haorr9a+W33je8vc2jicDbTT+tb09YtAmRSrPWY0wWBXjO+qHVPVOPOfoOBtilpuP+QFr/LEKjb3Mt1qtKUBjHvS3wULS28Yu/n/hz0PcQuIydBxQW/klJH5qpK+/sChkbyQ4/I8zn4FC8LA5E3hsHG5/N9ACPL5U0Avz7IMTFt/dnn3F4xI0iTcPWeY765Ye6FZdDKNjbaAzkPZC9U/vRhIK9JUJUp3Rf+cXSYvxBqy2K4LpV5Fy28kRRFnTRIVC9dZzPDeYmIsmyYhNqbIQzirjkrw==
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
  by PUZPR06MB5499.apcprd06.prod.outlook.com (2603:1096:301:100::13)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.11; Fri, 3 Jul
- 2026 06:45:10 +0000
+ 2026 06:45:09 +0000
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0181.010; Fri, 3 Jul 2026
- 06:45:10 +0000
+ 06:45:09 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -51,13 +51,13 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 3/5] hw/misc/aspeed_scu: Add AST2700 SCUIO RNG control and
- data registers
-Thread-Topic: [PATCH v1 3/5] hw/misc/aspeed_scu: Add AST2700 SCUIO RNG control
- and data registers
-Thread-Index: AQHdCrd+iC79Vj4fL06LCsXU/z5kZA==
-Date: Fri, 3 Jul 2026 06:45:10 +0000
-Message-ID: <20260703064506.937904-4-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 2/5] hw/misc/aspeed_scu: Drop noisy unhandled read logs for
+ AST2700 SCU/SCUIO
+Thread-Topic: [PATCH v1 2/5] hw/misc/aspeed_scu: Drop noisy unhandled read
+ logs for AST2700 SCU/SCUIO
+Thread-Index: AQHdCrd9OX+OfxPUYkiIkU/UmZNxng==
+Date: Fri, 3 Jul 2026 06:45:09 +0000
+Message-ID: <20260703064506.937904-3-jamin_lin@aspeedtech.com>
 References: <20260703064506.937904-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260703064506.937904-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -68,61 +68,61 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|PUZPR06MB5499:EE_
-x-ms-office365-filtering-correlation-id: ccc1d50e-d538-4a22-2cf7-08ded8cea0d4
+x-ms-office365-filtering-correlation-id: de156685-4c32-4d8e-04a9-08ded8cea02e
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|366016|1800799024|23010399003|18002099003|22082099003|38070700021|56012099006;
-x-microsoft-antispam-message-info: frt1ZgidOk4iXYXjbkldlKc0BqoGP8e+o49bpLz6JsWU82rPalpBLtQD99gZhHNl4bjAGrSRB9Mz+6OIzNiNcVgqPIaL/lEgnTlYwjpcQ0kdV8CzPVd0CcivjWbJBez+QGX8NrlFUhbInbTvuYwzsyOHW2iVXJvtATWAJsP5pN8/rl7WniuUKE/Nd2EZP/6B5dOmUEXelwnf8jMWjQ/1dOjrc33iLzPnZTLJHkGu+w/oIoyjzB5qoir6nkhu5hDz48armVtYxO5qKQgKTtFsyufYkNh7mRQoHVfLFE+O46iRRTIr+Y8VgMuDHixlo2PRR3BhAujIpCybIdH9Y6KVCohbyadnX3Kqpp0esrNXDx6Wb5N+psJEX0fdBR3hLJ0B+5nWAeyB5MyL2JpAJLh9wbKrkosG3pxL/7WI0vIS1E6QUFhFPeOoOsOlxooDvxfAebGLzPj+M9VO+MJfhe9gULZWNAKST4DwCjOCadVfv4gqmhzyvkzLrvmq+cp9i0WFhWF9VZXD9exGsoseMASJs7QcnDEF2w4xS4m87SEGauD3UMIVVaB3x4Slkbf2wtcm+A+nny1ytU6UB0lMwUznFs+0uyVNsFLEiKNiMsxfEZVT5ZEQZuz585hCVM14gPdHS6G7x49gO/7b9s/j0sF1fJ7d9aUiRwUP7fL8kdillDKWxw42wV1OGkrn2ASitgIZ8nln2kX+EEgV+2hWu5AXaiU5WJBRceiRwOrKS4wv67Q=
+ ARA:13230040|376014|366016|1800799024|23010399003|18002099003|22082099003|38070700021|6133799003|56012099006;
+x-microsoft-antispam-message-info: KK6UfQn8735Nv9sphjsp01uqamyAsDqgWOPk2H1zC4KjuqZ0TcvjsJKZJ8nhttZwRPyb2vPwCBs3L3YRbHkpQLW4xACmYudAedlbDxcjWfcMf6e9a3mZEp5XlCLOy+xiAEqiqwWfycHbj33rvtZ8sJXT/rrnY1FE4QhxRcyO9gEpV1EZhKawkqIC84N962D/fnId9lWkysZ9eRpDzxGpgbY7o9NTArd7520JueWr0aRrH6DN8gkq4ORteO3iF+Sgnk56dKQkZBGijymfY0YPw5saKXi2S+eWBb9E9z+lx8S0fLXf6952rX7QP16BRXZsiXvjT+xddQ0XDD9D1Lq77mRpRmbc25cgBfDM6ziy7YxSAcFScNHn2c39tJuT/idN9+WxJbOV5n7e6WbbbsPMS+Umoj4cYXiE2DDI+GsYa8YNxBM95kGR1ub3FXdbWK3rN8Sce6mikXv79FIYkgipw18g+C63Ferad+YI7nExglyp4UPxyRDc9R5+jjkqdsDnG9qiocJaaSVApNzLpl0SCLhKiwqQJC8/C1jJq64ERjsS8enTFXs2q5PLp1ek7Nj5GhM+ibw80cdNCf23VETFMJOyY3LnBoIF4r9zAlu3hNbhOxy4AjDgl0CfY/6RCgalOAzDsEh0Mr9M7qm4+O/pneQ4A7ddytyPG8RlGp2g465VxZ6oI6+H3LAIRc/eHXssl6APO/4DLuVrH0/5D09zXqLJ6E813YsTqAbzhjb7YDw=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(18002099003)(22082099003)(38070700021)(56012099006);
+ SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(18002099003)(22082099003)(38070700021)(6133799003)(56012099006);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Ciq2hHYoAZg8FugU0+AthpMJb4BxlyED52Re0LNXUgxCr9zuZD8Jgd42OR?=
- =?iso-8859-1?Q?whYgHYQuZBb+jX8GLp16LrhbSaHjdElLLEfDxohoqZjLwYFDzikp4Ogdcx?=
- =?iso-8859-1?Q?EP+qI8XNMceyp6Kjiw9Vk20Zwz49uM1cVMnkaVtiyg4da2oo9kQgsB9c4W?=
- =?iso-8859-1?Q?qB37d1/QQQK5zpnoWXhpYEOm8QpwG92TVLcy8YIO30i/TKzXim+3ryYUSB?=
- =?iso-8859-1?Q?MlL3CL6wT0qFZeUxotkYm7qWmj5XY9BV6TndrDZa5i+c04/lJSRLg6cAsm?=
- =?iso-8859-1?Q?pn16QiGBNCh5tBtT+ZJo0KKwLn23qD7uyStjc6rnLfMlr2q2gOgj8x/DON?=
- =?iso-8859-1?Q?Pj50yVYdgs+xBYDMgBFNzB08oz2P1mhz8xA6+5NfCF+whKCCXfnTXkqviT?=
- =?iso-8859-1?Q?datLNus2OLkFHGltjeQ9V6XzvSVBhtBzv1NbbjH4MkGzDdf1UOP7duIRzE?=
- =?iso-8859-1?Q?J/fwqDA+CkW5rvlutaJsTVnYp97dFZaV11Mwq2gTpOXzoc8x074qj9Y0VC?=
- =?iso-8859-1?Q?L0TdjRM0HeHSUOOEeO+5O4cS33FI1W8ViOUNDWda6jCWuH9BLHaWmDnnv5?=
- =?iso-8859-1?Q?joR6g3R+Ra8u66G5Tyctruwrp+Kuxr4NrCNYZLYyjAaL8UBSkGgqoFMa6g?=
- =?iso-8859-1?Q?WGY7gVMytbByC4cZlKMC1EFmyUCiNKMLyolCNcF1UaIbv/iOlVA7PkM9KP?=
- =?iso-8859-1?Q?AbtnFWmpUmy+UeCO4S7sX+IspkjCQSkM8BL7avWJDgErSipm64FauvNX7E?=
- =?iso-8859-1?Q?BclvHWfbr3txOfQc9Q41TI7il9IObtgA8JPihVg17Nnhr0HmU0acXx5pNH?=
- =?iso-8859-1?Q?NmAKq5Y5PWCw0liisw49HvRaNuGaI5292tKZXZJt/YqO6uA1l3p1Xr9iSM?=
- =?iso-8859-1?Q?6g6UUCDVzl+HgXS9+In5quLFAbR70o24HbsSHmQP0rVfqqdcHDf0GE3lhr?=
- =?iso-8859-1?Q?Bu6vHt59OK7q0JwoXzaZQxxA7X/qyJlNU9PWO4bOCV69hUBsNOLgp5oLgL?=
- =?iso-8859-1?Q?V2BEjPC4T4DDuyjm0vEi0FXR3/YL4XL1ywR++ko85jQxzcVh6v83o4RgG6?=
- =?iso-8859-1?Q?vTwssIOu+qWSbEl95gJt+orLbil5CbS3vbd7nBmY/6OnjzNQOoh9T8Utmo?=
- =?iso-8859-1?Q?1ArYtksDFUpOLZAsmsyRXld/12auQJCyEfo+0eVeg+BMeUR8WXIJMG86J0?=
- =?iso-8859-1?Q?g1NySOtnOtSHRxDfMeWVWCBtY/UuYg7AYcdcFnnZQjsXsGjQ9zUGXK9NN6?=
- =?iso-8859-1?Q?Ms/4b3gUe5fKOm1qFoNiIjIIbZl7L0qGe+FHzi3Zo0xt9sJMAFWjJLzbrH?=
- =?iso-8859-1?Q?kTc/p2AggMa8GDbEAhPjmXU16+/iHWJePr8WS4ZwAWOJNLP4nPNTPVkQBH?=
- =?iso-8859-1?Q?gvNqNQ6sZgjOa8/hAmA7vUhPUEC2r0k9xGmfX7O+QWDW3oR4S8lY6whQj+?=
- =?iso-8859-1?Q?1WTjuxjS5Ts3+qGJEL1ebK+9qR1ZU6egFGULi5LNt9FVtUTCtCMyHIEVjA?=
- =?iso-8859-1?Q?7fs9CfhsuwZ6Y6n6NHe0wdh2klh1Gvs+ytZXWI2xmbk8P5Y0qeEq1UZWmd?=
- =?iso-8859-1?Q?ktICFd4lsgRxO69uBmR6ozHSHc7Gw+YClu/4O3S71Vsj5ODaZGWoFnxOk2?=
- =?iso-8859-1?Q?A8mvgudoXhT40q/BeHGe0UTaLdJrT9l7/l+e9jKO+hRiQKV6wA8HNAdprf?=
- =?iso-8859-1?Q?PAEbjyyAi16Vv60Pa3JQLTY5+pXB7SsxDSj31UnwCwnIFGSR8//7y3BZK+?=
- =?iso-8859-1?Q?UPmWWcPLzhqrm/71A/z/1NDh06oxuW2fvJehbl7MPYz8nEwQGilF9qofZE?=
- =?iso-8859-1?Q?phMoegBBdw=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?QMUtms06Uo4OOMKTh8Vv49A2sp9N7E03MlE1SBZlenYHnMX9wy+Jg9ng3Y?=
+ =?iso-8859-1?Q?Gj6EACQIFSxfu5W3EP14a189UXBnvM3Q9wAXTAJqCHvgEpO0o6AKJtc6iS?=
+ =?iso-8859-1?Q?ArMabr1gtHFi4C6jwyJ+8Kek4+SbVW7jY518sk47fLswrKBaI5x0hGYU0e?=
+ =?iso-8859-1?Q?6MhrAI60IiX1uOLxELY4ilO3KZYDA9UmpvYyi9oTdue5+C8Cke0u8CVXD4?=
+ =?iso-8859-1?Q?Oc2h4Dfd4lYW4IuOLLM7GBU0IMuii8wjKAohhj8/+ySoFsc/lOLIBlaId3?=
+ =?iso-8859-1?Q?In8KMjP/aLtYaTJlBDcGebkDQKXk5LtRM/otGVzBdN7WHUwdS93DbeK18K?=
+ =?iso-8859-1?Q?44gVqndJEN2FDVfEOhGejiLTS1aQj+qn8fz3m4/dhyOVihNTKMXmqogTw7?=
+ =?iso-8859-1?Q?N2Sr3T3od3sIzOoHzIm3QeZ0CGeeC2J4XjbEOH483S/mdqQm80Ds7/Wmq5?=
+ =?iso-8859-1?Q?cj03K//+MVtLUK8Mzo+h5PbTUpJ/v12jzjxH0vinI/VGbgPcVLaUbg+/aH?=
+ =?iso-8859-1?Q?iOUwMVQekf55/baQvQsCzPUmJmYdG8+TDUpaFDw8s7Yw7NPBlc+8sk2UGz?=
+ =?iso-8859-1?Q?1jcBAj4u0Tu7RWr1Lr1aybWmDAc+ye8Re5rD7SMqsF6Qiv+Wo9+4tuoc8F?=
+ =?iso-8859-1?Q?vXniLPirb7vPsUD9fY1MRQsbBregyspoNgHUpVCaDbCA22SjSdB180GYnm?=
+ =?iso-8859-1?Q?PY3Xaq4/Lt4f/Ij8vfEO0xDBgtdtcojUOJdQzxqKsuACKjF5oX2vMpdf1L?=
+ =?iso-8859-1?Q?tW9o1SQv6ZPzY5l7b0XlBfc7uQE8BF7UKTJdHXwBxc+yGwwVURc8r+jVVM?=
+ =?iso-8859-1?Q?VMakxGSdZ9uUS+8hrzdlWtwmj+atJ6DfUsvg4XthSW2Qoqeg/nLGDUhQLd?=
+ =?iso-8859-1?Q?HownIP8P1Vk6ypfSl/q73bN1nd3T4pkJ6BX8lI7oOwpTMcZXhrCi5KvBcy?=
+ =?iso-8859-1?Q?3PbpG+x3G1SnQAqB4KKFbyDdh8KeYhTv+m9Gf+O0DCPj3P0g2ZFQdpBCLo?=
+ =?iso-8859-1?Q?kmbYvx/Y2yze8rNeykRXpj+f0C2PL/1bl6RLWH8y1yF1a70UldK5mQq02q?=
+ =?iso-8859-1?Q?fWmg253EGLklM6Cd0ts6aoBCXWL+5T401STXBEN1gcNdLLz4V5wa8aMNqw?=
+ =?iso-8859-1?Q?1bMcuPquI3c4Bjw1bLJq7qsBHv8owDKQN/h14IY0ODVorlI9tDTAL65jTZ?=
+ =?iso-8859-1?Q?FpQrqCmAYyjwjVBTf/ZxHrTsIljIj3DXm71oIsgWZp4Cf2Gej5DTocomHg?=
+ =?iso-8859-1?Q?a0xiC7f5W57TvCAW+4wcBVgIHaGYkUQ1FYVqpHGf9wKRPjDdc6wwQ2UhtN?=
+ =?iso-8859-1?Q?78sZf7tNHVOxqCK690JgD8ImlmplAjyq5n8OgPdAgFcEptKWBrZuz4J1KL?=
+ =?iso-8859-1?Q?Z1+Y/2t45t29Z5QTD1IBN8sVllBZUGMipQgW4ZQ+CJlG+S4gxlHQNZ/tIb?=
+ =?iso-8859-1?Q?UTWCCceL63CpKB0LsI88HmBx7DEhkTWX/Bnq5/3gnOb031llRhtLcKmNEy?=
+ =?iso-8859-1?Q?jQgu17CWpO1ExeefQ//cLIrihCEtnTgZ+ekAr8nCZAXRMeLDRm/NmYEBRt?=
+ =?iso-8859-1?Q?GWIHuATyrXnOdzvmuT0i3LYVgQNAMGo6WPlEyiJKxlz4qUwRXCsVle/LNa?=
+ =?iso-8859-1?Q?nYAhTWLOs2kTIMAOD05znnRu41gJVFtEDHqXdMl3QpXX4P8QcT3ifvzqUU?=
+ =?iso-8859-1?Q?jC6Io7x41iTZPjdTs8uz5zDNvR8hOiBMVif6bgpBDuwEVAhO4AnhWoISJa?=
+ =?iso-8859-1?Q?k365vbVUMKWxBMlj6BwmGfUbMFFASUrfHP22aSMBCx/wO2meUnM4R84EMr?=
+ =?iso-8859-1?Q?ONCtMToaQw=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: q2kdrB3bJguSF1CBsV92/F+cqQ7MUDsyHc2igBNBlBxmr4L9pZk3qapZHlj/g1+GeaPz03UfrP80Qrknnbuy/N/f1YExj7RFh/qxk0YH7lNlNEAyCRXUT6/JsEy+mmD4gnRzWZ7avDHHuUYZJAahI/W0v9symbjQS6ly18DH7zTwO4N7zTCqklxhZlbqjT/fDIBR6As6sHW4oYgr5Iknhony8VbAv8474NQUSO3hxKC1ZySl2aBRuxQeN7fP2bA6g5+gnzcp/8zX4H0XVoViqg++Fx/oAQo14Nh8K3gbuUK95OI28xVeqwrh9IzmyFibM0H5cSWRX76IBKiCdl7g6Q==
+X-Exchange-RoutingPolicyChecked: dyMJahGziRMJo26CzamTtbpV3v8fDpPB7mdb3Y2lBQci4TMFTkcPnmR3DmoH9lfXcIB28zCwlx1Zzill2PFw4Zvmax8JmVUqh5RaynSGCpWufPqbR4ne1OZ64ulC7XcWHkCPBxwdxFYH0W6ZtBfvQuCrRMuM86XvYdHq73J9t9kPPcb26qpUREbECK1BNrZTePIbpwYflRTZP1MPBQnRjrl86cHD/FIl3vhLK1DkO/a3ecgakXjx6zGyvEzYmDF2pcieL1+2uypmp1FW2sPTOGuGNiNfJ37RPp6jRiKbEoI15GFnShBOIozj8rq+sOLZw1ZX8bILklfFAJBIpUf5SQ==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ccc1d50e-d538-4a22-2cf7-08ded8cea0d4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jul 2026 06:45:10.5690 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: de156685-4c32-4d8e-04a9-08ded8cea02e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jul 2026 06:45:09.5264 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: eyJ7q7Xgvf91QrSQb3CjUk5x2DMKaf2/xg0jKMcriBsJXxOPCdGW0cqwmWwrnTBkMTr28kYYtmqLJqb06ob0GFjw+Y3SsvN8PRpLdilVybc=
+X-MS-Exchange-CrossTenant-userprincipalname: +oxw1Lghg3LpOsWmcuJMYAOK/3xOdmuEKYWFGFHCWPS92ecMjE5m713/vKf2ZLQUOJgD956eoW1+N1TmnhtVgEwi7OOfmxfPfhUzfCpr2gE=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB5499
 Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -149,80 +149,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement basic behavior for RNG_CTRL and RNG_DATA:=0A=
+The AST2700 SCU/SCUIO read handlers currently emit LOG_GUEST_ERROR=0A=
+messages for all registers that are not explicitly handled.=0A=
 =0A=
-- RNG_CTRL allows guest to enable/disable the RNG via the DIS bit.=0A=
-  Only bits [0:3] and bit 5 are writable; other bits are masked.=0A=
-- The VLD bit (bit 31) is updated by the model to reflect the RNG=0A=
-  enable state, and is not writable by the guest.=0A=
-- When RNG is enabled, reads from RNG_DATA return a newly generated=0A=
-  random value.=0A=
-- When RNG is disabled, RNG_DATA return 0.=0A=
+However, most SCU registers are simple read-back registers without=0A=
+side effects, and do not require explicit handling in the read path.=0A=
+Returning the stored register value is sufficient.=0A=
 =0A=
-This provides a minimal functional model of the RNG sufficient for=0A=
-software that expects readable random data without modeling full=0A=
-hardware behavior.=0A=
+Emitting "Unhandled read" logs for these cases generates excessive=0A=
+and misleading noise during normal guest operation, making it harder=0A=
+to spot real issues.=0A=
+=0A=
+Remove the default unhandled read logging from the SCU and SCUIO read=0A=
+handlers to reduce log noise and align with common QEMU device model=0A=
+behavior for passive registers.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- hw/misc/aspeed_scu.c | 25 +++++++++++++++++++++++++=0A=
- 1 file changed, 25 insertions(+)=0A=
+ hw/misc/aspeed_scu.c | 14 --------------=0A=
+ 1 file changed, 14 deletions(-)=0A=
 =0A=
 diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c=0A=
-index ed7f5e648d..5dbf81c0ce 100644=0A=
+index fe731a28bd..ed7f5e648d 100644=0A=
 --- a/hw/misc/aspeed_scu.c=0A=
 +++ b/hw/misc/aspeed_scu.c=0A=
-@@ -160,6 +160,11 @@=0A=
- #define AST2700_SCU_CPU_SCRATCH_1   TO_REG(0x784)=0A=
- #define AST2700_SCU_VGA_SCRATCH_0   TO_REG(0x900)=0A=
+@@ -849,13 +849,6 @@ static uint64_t aspeed_ast2700_scu_read(void *opaque, =
+hwaddr offset,=0A=
+         return 0;=0A=
+     }=0A=
  =0A=
-+#define AST2700_SCUIO_RNG_CTRL          TO_REG(0xF0)=0A=
-+#define AST2700_SCUIO_RNG_CTRL_MASK     0x2F=0A=
-+#define AST2700_SCUIO_RNG_CTRL_DIS      BIT(0)=0A=
-+#define AST2700_SCUIO_RNG_CTRL_VLD      BIT(31)=0A=
-+#define AST2700_SCUIO_RNG_DATA          TO_REG(0xF4)=0A=
- #define AST2700_SCUIO_CLK_STOP_CTL_1    TO_REG(0x240)=0A=
- #define AST2700_SCUIO_CLK_STOP_CLR_1    TO_REG(0x244)=0A=
- #define AST2700_SCUIO_CLK_STOP_CTL_2    TO_REG(0x260)=0A=
-@@ -954,6 +959,14 @@ static uint64_t aspeed_ast2700_scuio_read(void *opaque=
+-    switch (reg) {=0A=
+-    default:=0A=
+-        qemu_log_mask(LOG_GUEST_ERROR,=0A=
+-                      "%s: Unhandled read at offset 0x%" HWADDR_PRIx "\n",=
+=0A=
+-                      __func__, offset);=0A=
+-    }=0A=
+-=0A=
+     trace_aspeed_ast2700_scu_read(offset, size, s->regs[reg]);=0A=
+     return s->regs[reg];=0A=
+ }=0A=
+@@ -961,13 +954,6 @@ static uint64_t aspeed_ast2700_scuio_read(void *opaque=
 , hwaddr offset,=0A=
          return 0;=0A=
      }=0A=
  =0A=
-+    switch (reg) {=0A=
-+    case AST2700_SCUIO_RNG_DATA:=0A=
-+        if (!(s->regs[AST2700_SCUIO_RNG_CTRL] & AST2700_SCUIO_RNG_CTRL_DIS=
-)) {=0A=
-+            s->regs[AST2700_SCUIO_RNG_DATA] =3D aspeed_scu_get_random();=
+-    switch (reg) {=0A=
+-    default:=0A=
+-        qemu_log_mask(LOG_GUEST_ERROR,=0A=
+-                      "%s: Unhandled read at offset 0x%" HWADDR_PRIx "\n",=
 =0A=
-+        }=0A=
-+        break;=0A=
-+    }=0A=
-+=0A=
+-                      __func__, offset);=0A=
+-    }=0A=
+-=0A=
      trace_aspeed_ast2700_scuio_read(offset, size, s->regs[reg]);=0A=
      return s->regs[reg];=0A=
  }=0A=
-@@ -977,6 +990,18 @@ static void aspeed_ast2700_scuio_write(void *opaque, h=
-waddr offset,=0A=
-     trace_aspeed_ast2700_scuio_write(offset, size, data);=0A=
- =0A=
-     switch (reg) {=0A=
-+    case AST2700_SCUIO_RNG_CTRL:=0A=
-+        data &=3D AST2700_SCUIO_RNG_CTRL_MASK;=0A=
-+        if (data & AST2700_SCUIO_RNG_CTRL_DIS) {=0A=
-+            data &=3D ~AST2700_SCUIO_RNG_CTRL_VLD;=0A=
-+            s->regs[AST2700_SCUIO_RNG_DATA] =3D 0;=0A=
-+        } else {=0A=
-+            s->regs[AST2700_SCUIO_RNG_DATA] =3D aspeed_scu_get_random();=
-=0A=
-+            data |=3D AST2700_SCUIO_RNG_CTRL_VLD;=0A=
-+        }=0A=
-+        s->regs[reg] =3D data;=0A=
-+        updated =3D true;=0A=
-+        break;=0A=
-     case AST2700_SCUIO_CLK_STOP_CTL_1:=0A=
-     case AST2700_SCUIO_CLK_STOP_CTL_2:=0A=
-         s->regs[reg] |=3D data;=0A=
 -- =0A=
 2.43.0=0A=
 
