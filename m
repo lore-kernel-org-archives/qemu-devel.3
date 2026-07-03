@@ -4,82 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AB0AC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63151C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:22:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfdlr-0000x8-Jc; Fri, 03 Jul 2026 09:17:31 -0400
+	id 1wfdqT-00024X-6D; Fri, 03 Jul 2026 09:22:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wfdll-0000uT-FK
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:17:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wfdqQ-00023y-Sw
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:22:14 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wfdlj-0007p8-LJ
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:17:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783084641;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kyfhA19MjQd2ohJedRIzqoH4SSddpDteTmZirxHlc1g=;
- b=VtnQTVLT7/7JzEcAyCniDv5AxQ1KaPjMtGLuFuJiQ/WGNQ62Lf+O4tQ7V7C7OOL2uXLDbj
- qemaC3dP9v1l46NRCYymOwPCLR6bOdOOpGcA1G6Zj74iUNGHumyJK7fbhUJWybFVZcoCEy
- lueyoagh8rwxII4PRJGj6CYqSTJY5yE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-395-_YWGWJteOZaBmBjB1X2pUw-1; Fri,
- 03 Jul 2026 09:17:17 -0400
-X-MC-Unique: _YWGWJteOZaBmBjB1X2pUw-1
-X-Mimecast-MFC-AGG-ID: _YWGWJteOZaBmBjB1X2pUw_1783084636
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 816E1188E196; Fri,  3 Jul 2026 13:17:14 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7CB6A30030D6; Fri,  3 Jul 2026 13:17:13 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 101B521E6920; Fri, 03 Jul 2026 15:17:11 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  "Dr. David
- Alan Gilbert" <dave@treblig.org>,  Markus Armbruster <armbru@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Alex
- =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>,
- Christian Brauner <brauner@kernel.org>,  devel@lists.libvirt.org,  Peter
- Krempa <pkrempa@redhat.com>
-Subject: Re: [PATCH v6 06/34] monitor: add 'chardev' property to Monitor
- base class
-In-Reply-To: <20260702160337.1910921-7-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 2 Jul 2026 17:03:09
- +0100")
-References: <20260702160337.1910921-1-berrange@redhat.com>
- <20260702160337.1910921-7-berrange@redhat.com>
-Date: Fri, 03 Jul 2026 15:17:11 +0200
-Message-ID: <87zf08usa0.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wfdqP-00025i-7o
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:22:14 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 663D8dY63195271
+ for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 13:22:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ pVHuRStHudNkoKHplW8emHlKSlT6Mn8WyW3SNIHJhMQ=; b=k8zYZcdoNUYdboo1
+ Esw3dLF12C0H5hRrfN2JOHjwIhB4GDNuPrp8AP27qkiOLkpNWD8lggRZ83OsHktI
+ KLgIh3qRVViEyJCOtKn7Wp4oDk7aw810SDUqNOTJFjyBgbkOaFKjlry2CDF28nIC
+ oke/3HzOGVebo86s71mcYaWOV8bX/HAhZWe0u2ZbN19bp99fpFkkONPDI/DyMBjv
+ wh7IodkJW4tyfts/NAw0H8tfOKU2saPn/ZxZAsHdYWrkI1iLcW5myz8KYtIm017p
+ 4M4qN9lehGsKsc3vdK06G4aXqqMiiUrSaH+sbB7hg/QWB1OgnKtnkxrG+JtR4l8A
+ GpmvJA==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f68jysbsm-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 13:22:09 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92158791d14so49784285a.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 06:22:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783084928; x=1783689728; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=pVHuRStHudNkoKHplW8emHlKSlT6Mn8WyW3SNIHJhMQ=;
+ b=VBO2ZgzrRrMVLQeh11sV8ipTDg+NcuSeDXRB+F5BhBkLgIBDDrED8Ep9nEIvpPexwt
+ zHimz3p2ml+H4/oSjZQLfpVBYaakU7UmSAULePGrG6n11IXzdNeEjqSzUkmsmvvlOUny
+ O2qw9upiVAe6khC2sLskXUMQszTkB6SChp1nmrnvbZuI/FkS4ygfyXI07xLwMCOj+Gf0
+ JaDfJj/htt18m+DmG8M8xGcTorwtixH4YBjE2pMCQVHMJgRYuQdkA5E67hIX3P7FK7GW
+ 0bhv6l6Itq6jtLkkGsc2Zpt2RBeHXc899oUatSkPt2SobJkyzHUgkWUd9QeOe+ToMSyA
+ JYUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783084928; x=1783689728;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=pVHuRStHudNkoKHplW8emHlKSlT6Mn8WyW3SNIHJhMQ=;
+ b=GTdobuhEHmYr8qqDgJzBcXU4eRONNCgPBILkLX6Qitdvni+8zhsce3zrEJEplpM+Ss
+ hfx4UNxX6I9Gxzv6UVWVDc5mYvhKEaO9asCiyHw/WoFKbTeutyvz1Ep/HpuUPayssv4d
+ /XTvlR3HKEudtZONcacxznkV6JemRlL2DRgWV4WgJwOLnKkFN/OEssOZbF3+6I1KepDD
+ +FP0bFeQqLYv40nilllXVSdJcBUCdLQt03pQpctTS40MPE3SomgVZ3HhIERj8gi8QpDw
+ ToKxRlUy0eRVrUbAL+nSJr0cXQdn/M8yLsrCwW07kV2JgycKk2Oyox24mAqmn+Od25ww
+ bYXw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+kJhBlU9oWUI2vjTDqGvCWSudg7BGNMM9zQY3Ux7Gsk1okQ7ZQjkOE3KF9weGzUqOV5ILP1IosRunj@nongnu.org
+X-Gm-Message-State: AOJu0YyW3SrrLE9SoFYui/OxLliCR2srfVwjvAPZzT51jt97TGslFGAa
+ hrQRrQuLcb8xQ9Q5+7QYyudyq+Srla4VrvDDlLiR9g4s0AVeWB/e2MJE4618N7PAuz/HnBQDOCL
+ jMrN891DevepvE6z33hIEsXXIu+0s7izN4g5JkyRZPe1ZTHr8lcGz5sZJUw==
+X-Gm-Gg: AfdE7cmQlYFD5Apmpxr8H1vWrM2yk6tjS6x/Z2ECepKdnvfqx0ps/1fHhgKISk0Tt7e
+ JKJqw+EPG+KxFL37AZlSvc2kWjNgxAgcYHldFpvXTdfka0jYYa7RsJt7nNTxFdxykQsT9E8AU9F
+ TV8hv38HK3C2CgZnfKBxJxHLo/n7H+1eekb+JY0CZQ55/2GKj9/ckf6tTREE4uLV7G3mxyshaYf
+ BWj6tvzOM9vltmAqYSlpWLZ5B2VP4NXbO3fYg9/IOEebF/NIyE1iktyga2r5/dJLTcHTFktttIC
+ T6iuYLbaf7VNgrAUDF+W9AHKFpW0ooVHmmQ2FSo0AowH4P6vKlTLXNgKGrxdZQ6aqU1sZCkreZq
+ /Nkk2xiAjTjpeofCPJqmUDqLrlBgh0JMzA/We0OHZALIQ
+X-Received: by 2002:a05:620a:269b:b0:92b:7420:bd7b with SMTP id
+ af79cd13be357-92e7b473345mr1225296585a.66.1783084928429; 
+ Fri, 03 Jul 2026 06:22:08 -0700 (PDT)
+X-Received: by 2002:a05:620a:269b:b0:92b:7420:bd7b with SMTP id
+ af79cd13be357-92e7b473345mr1225286885a.66.1783084927571; 
+ Fri, 03 Jul 2026 06:22:07 -0700 (PDT)
+Received: from [192.168.68.106] ([189.79.21.40])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-92e90cc18f1sm153855585a.40.2026.07.03.06.22.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 Jul 2026 06:22:07 -0700 (PDT)
+Message-ID: <da9d6da1-bc2a-4108-a522-5e8e41ad9c6f@oss.qualcomm.com>
+Date: Fri, 3 Jul 2026 10:22:02 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 06/24] target/riscv: move pmu.h to tcg subdir
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ Palmer Dabbelt <palmer@dabbelt.com>, Joel Stanley <joel@jms.id.au>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Michael Ellerman <mpe@kernel.org>,
+ Portia Stephens <portias@oss.tenstorrent.com>
+References: <20260702135128.1188021-1-daniel.barboza@oss.qualcomm.com>
+ <20260702135128.1188021-7-daniel.barboza@oss.qualcomm.com>
+ <374abf50-4593-4888-bb9c-2ef731b6d7a8@oss.qualcomm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <374abf50-4593-4888-bb9c-2ef731b6d7a8@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDEzMSBTYWx0ZWRfX9W776CCPEaBs
+ BC8QdN6dLC8YGjLw2UmlZNLn2lQi5Lt0ondjZqh9IQG4WoutKEfaMv23qilEcZzXyueBxg92Wzo
+ +yrh0Vbf6b1JssD2iu1ev6HYOKJpLf62iV4s7kJku7oXfYrOYWN5bR7+hKxV/gcLjl/jx+GYpey
+ M4apXpXTxueeiypJdGB0e1q7pHVL15t8XQt5iTcHqcM8DIns1J3B+70LGXSMMosmPaps5DmKBfw
+ ARAi2Ytl2QjnMtsNAgm9eW+yY3cGIIklaKR6TNvnJevOTphjQ4XyZxIXm1d8vvfvunCNBwjRJ17
+ ZreYj2JGTKvm1KEwdr1COzwikTjpnqdz+3u5vk/KSze0Nt1erS1fhtDFhX/Qkl8FVnT+SaPR39m
+ bEEynX4BnVaUOYOZ6PehJMEQaWQ7JHjcFOA5rDU/sxQMjuRdDz8qOvvP04Z4v9WS9G0PwVfSdGo
+ /H8CfdoAu8hU/EN7uKQ==
+X-Proofpoint-GUID: 2X6yoqRHsW3coGKJDRgwpP4qUsXacPgm
+X-Authority-Analysis: v=2.4 cv=QbFWeMbv c=1 sm=1 tr=0 ts=6a47b781 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=JF9118EUAAAA:8 a=2aFWFHZrbJ7EhV8P2DAA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=xVlTc564ipvMDusKsbsT:22
+X-Proofpoint-ORIG-GUID: 2X6yoqRHsW3coGKJDRgwpP4qUsXacPgm
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDEzMSBTYWx0ZWRfXxAkBi81Rnfkm
+ RUKGxbb+oJ+7STezj9g+0C+mcmMMtZzCFmEvLhnvonhF8/+w6cAS3LBqpecSABKhwCaR6l1xEw7
+ +h9JnrO8OFbAPjTzUr/EX6qEDDxdGpY=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 phishscore=0 malwarescore=0 suspectscore=0 clxscore=1015
+ bulkscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030131
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,136 +162,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> This is associates both QMP and HMP monitors with a character
-> device backend.
->
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Tested-by: Peter Krempa <pkrempa@redhat.com>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  chardev/char.c             |  3 ++-
->  gdbstub/system.c           |  4 ++--
->  include/monitor/monitor.h  |  4 ++--
->  monitor/hmp.c              | 10 ++++++--
->  monitor/monitor-internal.h |  2 ++
->  monitor/monitor.c          | 47 ++++++++++++++++++++++++++++++--------
->  monitor/qmp.c              | 18 ++++++++++-----
->  stubs/monitor-internal.c   |  2 +-
->  8 files changed, 67 insertions(+), 23 deletions(-)
->
-> diff --git a/chardev/char.c b/chardev/char.c
-> index c71ffa7963..22e5bae388 100644
-> --- a/chardev/char.c
-> +++ b/chardev/char.c
-> @@ -804,8 +804,9 @@ static Chardev *qemu_chr_new_from_name(const char *la=
-bel, const char *filename,
->      }
->=20=20
->      if (qemu_opt_get_bool(opts, "mux", 0)) {
-> +        const char *chardev_id =3D qemu_opts_id(opts);
->          assert(permit_mux_mon);
-> -        monitor_new_hmp(NULL, chr, true, &err);
-> +        monitor_new_hmp(NULL, chardev_id, true, &err);
->          if (err) {
->              error_report_err(err);
->              object_unparent(OBJECT(chr));
-> diff --git a/gdbstub/system.c b/gdbstub/system.c
-> index fda8ef9352..d681476f5e 100644
-> --- a/gdbstub/system.c
-> +++ b/gdbstub/system.c
-> @@ -387,9 +387,9 @@ bool gdbserver_start(const char *device, Error **errp)
->          qemu_add_vm_change_state_handler(gdb_vm_state_change, NULL);
->=20=20
->          /* Initialize a monitor terminal for gdb */
-> -        mon_chr =3D qemu_chardev_new(NULL, TYPE_CHARDEV_GDB,
-> +        mon_chr =3D qemu_chardev_new("gdbchrdev0", TYPE_CHARDEV_GDB,
->                                     NULL, NULL, &error_abort);
 
-This chardev now gets ID "gdbchrdev0" instead of id_generate(ID_CHR).
+On 7/3/2026 7:44 AM, Philippe Mathieu-Daudé wrote:
+> On 2/7/26 15:51, Daniel Henrique Barboza wrote:
+>> riscv_pmu_generate_fdt_node() can be moved to fdt_common.c since it has
+>> no PMU TCG internals.
+>>
+>> With this change we can remove pmu.h from 'virt.c', which is now
+>> becoming a tcg header since we're moving it to the tcg subdir.
+>>
+>> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+>> ---
+>>   hw/riscv/fdt-common.c         | 52 +++++++++++++++++++++++++++++++++++
+>>   hw/riscv/tt_atlantis.c        |  1 -
+>>   hw/riscv/virt.c               |  1 -
+>>   include/hw/riscv/fdt-common.h |  1 +
+>>   target/riscv/tcg/pmu.c        | 52 -----------------------------------
+>>   target/riscv/{ => tcg}/pmu.h  |  1 -
+>>   6 files changed, 53 insertions(+), 55 deletions(-)
+>>   rename target/riscv/{ => tcg}/pmu.h (95%)
+> 
+> Preferrably before patch #2 "target/riscv: move TCG only files to tcg
+> subdir" if not too much trouble:
 
-If you truly need this, you have to mention it in the commit message.
+Done.  The helper is now being moved before patch #2 and pmu.h is now being
+moved in patch #2.
 
-> -        monitor_new_hmp(NULL, mon_chr, false, &error_abort);
-> +        monitor_new_hmp(NULL, "gdbchrdev0", false, &error_abort);
+Thanks,
+Daniel
 
-If you don't, then passing mon_chr->label here should do the trick.
-
->      } else {
->          qemu_chr_fe_deinit(&gdbserver_system_state.chr, true);
->          mon_chr =3D gdbserver_system_state.mon_chr;
-> diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-> index 83723f705a..bfbeedec9b 100644
-> --- a/include/monitor/monitor.h
-> +++ b/include/monitor/monitor.h
-> @@ -29,9 +29,9 @@ bool monitor_cur_is_qmp(void);
->  void monitor_init_globals(void);
->  void monitor_init_globals_core(void);
->  char *monitor_compat_id(void);
-> -void monitor_new_qmp(const char *id, Chardev *chr,
-> +void monitor_new_qmp(const char *id, const char *chardev_id,
->                       bool pretty, Error **errp);
-> -void monitor_new_hmp(const char *id, Chardev *chr,
-> +void monitor_new_hmp(const char *id, const char *chardev_id,
->                       bool use_readline, Error **errp);
->  int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp);
->  int monitor_new_opts(QemuOpts *opts, Error **errp);
-> diff --git a/monitor/hmp.c b/monitor/hmp.c
-> index da11e56854..be59b6ca65 100644
-> --- a/monitor/hmp.c
-> +++ b/monitor/hmp.c
-> @@ -23,6 +23,7 @@
->   */
->=20=20
->  #include "qemu/osdep.h"
-> +#include "qapi/error.h"
->  #include <dirent.h>
->  #include "hw/core/qdev.h"
->  #include "hw/core/sysemu-cpu-ops.h"
-> @@ -1538,22 +1539,27 @@ static void monitor_readline_flush(void *opaque)
->      monitor_flush(&mon->parent_obj);
->  }
->=20=20
-> -void monitor_new_hmp(const char *id, Chardev *chr,
-> +void monitor_new_hmp(const char *id, const char *chardev_id,
->                       bool use_readline, Error **errp)
-
-You now pass a chardev ID instead of a Chardev *.
-
-I *guess* that's possible because chardev_new() asserts it's passed an
-ID.
-
-I should now check all callers of monitor_new_hmp() to make sure they
-pass the correct ID.  On a Friday afternoon.  I hoist the white flag.
-
-Such refactorings should be mentioned in the commit message.  Even
-better would be a separate patch.
-
->  {
-> +    ERRP_GUARD();
->      MonitorHMP *mon;
->      g_autofree char *autoid =3D id ? NULL : monitor_compat_id();
->      Object *obj =3D object_new_with_props(TYPE_MONITOR_HMP,
->                                          object_get_objects_root(),
->                                          id ? id : autoid,
->                                          errp,
-> +                                        "chardev", chardev_id,
->                                          NULL);
-> +
->      if (!obj) {
->          return;
->      }
-> +
->      mon =3D MONITOR_HMP(obj);
->=20=20
-> -    if (!qemu_chr_fe_init(&mon->parent_obj.chr, chr, errp)) {
-> +    monitor_complete(MONITOR(mon), errp);
-> +    if (*errp) {
->          object_unparent(OBJECT(mon));
->          return;
->      }
-
-[...]
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> 
 
 
