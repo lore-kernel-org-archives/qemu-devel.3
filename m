@@ -4,112 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09595C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 08:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46346C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 09:01:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfZjB-0002Qt-2D; Fri, 03 Jul 2026 04:58:29 -0400
+	id 1wfZl8-0003m1-Cp; Fri, 03 Jul 2026 05:00:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wfZj8-0002N4-VR
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 04:58:26 -0400
-Received: from mail-eastusazlp170120007.outbound.protection.outlook.com
- ([2a01:111:f403:c101::7] helo=BL0PR03CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wfZl5-0003hK-Ps; Fri, 03 Jul 2026 05:00:27 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wfZj7-0003BR-4q
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 04:58:26 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kJmX0SCZ4FM9JrIGLAR6r7diQLkPLDhLOky6SvGaHqUTcK4pMs4EsAJJPagbnouMNqhq+MsmbCEReYyN7fTVewHKHxAIkjRxFjPsCuhiC54atU1B2y3xCMQ0ThUyFSpag2LOsyTYPJ7TWFsnodreTpbrKmvQaHwDe93jMgMCycv58NpmLntdKSHfy6JQxAdFmkboVjTgNpQMB3Z1a9kVM1d/TGKK9LseBRdTcOCE5oDcDHVVIbHlY14vytd7juyjjD1NWSU7S1gMttGXpKrjAgmdhVsuli3NOK65qgMAj/X9Eb2hkN68w2wW4RkVNzwSSb3U1BDWp7RgtNgE9dGRKQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TXmp5JlrR/P7wJm3zDu+7x4pJVerlJCzinmSbDDJ4C4=;
- b=vsUbwMktFumExExr+jgdMI+M9p1jXGNplVwDi5NxlL0Lo93ZFxiINF9AlMEZ8j5kT250d2kGO0LmuaR5bBn2AnGBig6RKyhlxcyx8+nZ8bn2Xc7j0k22UyUN6uy+5hfRSZU5nU4bFGaLWWdZ2+ZEev/W3H7E4qaI9WiUlIYYgcivqaq7isqjy/MPpICFq/VIIoetw9vBm1slZcrCKJGNfrHP/PniugFoph6XJ2qIXJ0i5vFTibpBvQbt5fWDG+RYC/QiqWY/lSDz6Z7A3OWoMknaAw7WilllYB6yjmpPiO0jKbfnsFCThTLed4UnNKk60U+lT9Xhnvva7e7JIxAnCw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TXmp5JlrR/P7wJm3zDu+7x4pJVerlJCzinmSbDDJ4C4=;
- b=nCpxUkz0xsixkuXe/SU/rE/6borLDrsScOvOAQfolz4xEfpvSbyufESyKQXb/+SwGB7s/B1xywGs8vknf14TUXgyszD0T4nf/ATch52olzwttFr0FEmO3NQ36k5ou4KYp07+LYTh+eKbs1iSV03nJG+mkDtCfqffFXLmFfIYxUE=
-Received: from BN0PR08CA0004.namprd08.prod.outlook.com (2603:10b6:408:142::22)
- by SA1PR12MB7149.namprd12.prod.outlook.com (2603:10b6:806:29c::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Fri, 3 Jul
- 2026 08:58:19 +0000
-Received: from BN2PEPF00004FC0.namprd04.prod.outlook.com
- (2603:10b6:408:142:cafe::92) by BN0PR08CA0004.outlook.office365.com
- (2603:10b6:408:142::22) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.11 via Frontend Transport; Fri, 3
- Jul 2026 08:58:19 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BN2PEPF00004FC0.mail.protection.outlook.com (10.167.243.186) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.181.6 via Frontend Transport; Fri, 3 Jul 2026 08:58:18 +0000
-Received: from [172.31.37.251] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 3 Jul
- 2026 03:58:16 -0500
-Message-ID: <055c4b8e-f493-4b31-a557-062faad48832@amd.com>
-Date: Fri, 3 Jul 2026 14:28:13 +0530
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wfZl2-0004Bd-Dq; Fri, 03 Jul 2026 05:00:26 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6636ISRQ1761150; Fri, 3 Jul 2026 09:00:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=uMCbhtvci3QH9o/ymDSFhhHBmcQF
+ 1YKHKKH4JDEQ/50=; b=qn4E+nagpX3H27AtZejYNIMyRbFjWde2eMyD09nXY/fu
+ kfEJEecnn2t47YXmV4Tble8/VM6UGqBZILn1s4AZmJLutj5xChC2VAhtl8q2v3HU
+ sZMgiymZdadzpqx7DA7fnTPf0iugr4mri/ujXa4F7n76u7slEFzlNRGsMF4tDLro
+ 76jaGieemk7d9wsZPqdmwtRrDGnRKXlbc5St2Eh9mS3JdVoWWxmlNWBhL0PTTMQe
+ NcgDifF7A/+rym4Wa4zTMAuVnowRLIiZjzV/vErkRkC1pt9H4xRzySuqIcdksHGS
+ i4uZu0S3ZkkfJBTCZA4svhv3qJt6OCQ/9SNsIpsavw==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26mk5w0e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 03 Jul 2026 09:00:11 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6638nelw003261;
+ Fri, 3 Jul 2026 09:00:10 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2sukg1hd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 03 Jul 2026 09:00:10 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 663905cV42008836
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 3 Jul 2026 09:00:05 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C225020043;
+ Fri,  3 Jul 2026 09:00:05 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EAF962004B;
+ Fri,  3 Jul 2026 08:59:58 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.124.212.167])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  3 Jul 2026 08:59:58 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
+ Misbah Anjum N <misanjum@linux.ibm.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+Subject: [PATCH v4 RESEND 0/8] powerpc: Testcase improvements and Power8E/NVL
+ removal
+Date: Fri,  3 Jul 2026 14:29:47 +0530
+Message-ID: <20260703085955.2318600-1-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-CC: <sarunkod@amd.com>, <alejandro.j.jimenez@oracle.com>,
- <pbonzini@redhat.com>, <richard.henderson@linaro.org>, <mst@redhat.com>
-Subject: Re: [PATCH 4/4] amd_iommu: Use INTCAPXT for IOMMU event interrupts
-Content-Language: en-US
-To: Dongli Zhang <dongli.zhang@oracle.com>, <qemu-devel@nongnu.org>
-References: <20260609204403.323149-1-dongli.zhang@oracle.com>
- <20260609204403.323149-5-dongli.zhang@oracle.com>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <20260609204403.323149-5-dongli.zhang@oracle.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF00004FC0:EE_|SA1PR12MB7149:EE_
-X-MS-Office365-Filtering-Correlation-Id: ad791ce8-f587-4fe7-fe2b-08ded8e13a47
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|1800799024|82310400026|376014|23010399003|4143699003|11063799006|56012099006|18002099003|22082099003|6133799003|13003099007;
-X-Microsoft-Antispam-Message-Info: Cikls5F7feu30zRbhC5bVmilOFu9L6GmDRfG0AiOxl5jo07nFa4W8fgyELb68QFHrr28hIY3VtAnCIR9ZiMG6v9ook5t3g8JF8iPvQ3gmipLuyPr92/EUqPCOz9McdthnEyUZ73pCEBIp6d9ds2qm4WejoF64g8DFeZHqRHt1qcxllHZVETrqE0jv2wzFjaFIijITHgU4I3Hehm2uEPSHES3LDxF6gneidIE+TzaqqNS1gqb4+lLvOujswP22fzxFMJUB70pQA+j8Gte00n4CaVDaUE/C+/HSxfTVulxFTa/TW556+GQPiQFWqsjtX3UuDiDb97OfoXraBT7BbdYkO06dSlfTtc9LARaJYpbCD0kNMxl/e7ezXUIRSYFHDuoKjCb8PUD/LmnobN72Fgg6DBktxQVZI+MG11E22LRX/VQncLbAMte71gEOJGA60iS1WDuQukgSVDFLPOejz1x2xOxPI/CvBuxfr0BOI6anldDTxLmrUF9k5yllFcg5B4CL09wSw+XBXGPirju4ncogL0MobnowcVYicJ5r40J0DC0ObObKVzmIOjDnlCiJeXxVeTN+BnFRFG5h4yDkMrPrZYo2i58NL/loZEl4jFZQ54VJR6QLUfAB0nYqlgFiqTjf0bRqCX47Md/Z3ia/a364nbk+jwOnflY/3OSBtq9XnHJ3HIltWUTH+v5ghGZj52KusIP26A0F34VZ65xqH7G+A==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700016)(1800799024)(82310400026)(376014)(23010399003)(4143699003)(11063799006)(56012099006)(18002099003)(22082099003)(6133799003)(13003099007);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: ZYmIZ43XUEVz956zTQMS8GU/GUZOeUBGsLkBBT1Xy7K7p89DWBpgw0LmEHqNZHvWxP8SZzl4PYZ5FHl5HQHDi9v0cwRwoUGJtU2zD2bwn7g9j19KM5dfftJ4puoGjnplnAatI9Fs/S5EpYgvQpm3GTReDG+wN5lntTcCDhAybXhOeaM6cWb9HaXHxo3voF/H+ukt7TDFpCnKu6qfCXS52XBta5TUQc1Yy1ALi3SaXMgdetmJXnScbnYwQVcUxnYV3qFB0JC6qipYjyposdmU/SSOqw4BXRdNyJtTp6THoWYEqZeweNEHJu8w+CpoYeztqIo3z7paTv+daFVSpROg3DC4LXLSZLmCQX/oLoa/1wyweHT+Hje5MqHZixf4OZapLQSUe7NyqGTCYNZT7q+onbpVqUzJttMGv223AHrnhLUL5DdYyLrklCbnBqBiAbfn
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2026 08:58:18.9836 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ad791ce8-f587-4fe7-fe2b-08ded8e13a47
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF00004FC0.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7149
-Received-SPF: permerror client-ip=2a01:111:f403:c101::7;
- envelope-from=Sairaj.K@amd.com;
- helo=BL0PR03CU003.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDA4MyBTYWx0ZWRfXwDw+fLccSAVC
+ YOHXf1Mub2iPo9fvIBCs5s+dP6Tk9MUDRWlEXtpArZ7jIYRtZqQv+XKHpJUP43ZAsUJfAdV5cVB
+ /N8xG5d0aL5e+LqI7h3NC1lH1q4nvZXytEpsruQ/n/1+47i8z/Z5Euvb6ckurqjHr7I2vlws2uR
+ Fg4qvdcCkrK5U1BMhqb5ClIAR44unMaZ3PZN+W6N2+Bmy4weHJfZET00qjkeMhS2VhtBjbQzIjO
+ nfqnlPViCOMOaM2nTPkuZwmO9JLkqBj+JhTFmSZdxlEy+9KHrCSQrAMmmF6f3vQsMj36CE0psYU
+ y5EAUSg4x03x/twYDLpYmpLjpQdYY+HjSsFtxVRzuUwGovIWpDhu4RcuHOKCNXpAZIizB0EW6HM
+ 24sShQR5Leb7WF+mhYLq101cEQz0i1W8FQgPM/z6F8HjL7YY6or8cJmNoy83KMMeO9WmM4Dpydm
+ XMtvLJP9YXwifu43AOg==
+X-Proofpoint-GUID: SWVTBenURAVv_jwPHWyu4K-v10z7-v5j
+X-Authority-Analysis: v=2.4 cv=Z8bc2nRA c=1 sm=1 tr=0 ts=6a477a1b cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
+ a=20KFwNOVAAAA:8 a=p0WdMEafAAAA:8 a=MdZrTe2ayghipT-8awEA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDA4MyBTYWx0ZWRfX6mHoBgIhzt6h
+ O1ztCKyYwHwg40/UR5k1een7fk64JUbZi9cOIk947cPAyrsOSPepi+8K8TKTJaX8bhlZjyRmoBo
+ WKxnHVpA1Oh2R5BfguD267faozdW8Ko=
+X-Proofpoint-ORIG-GUID: QnKD0MYaUfdibC5RfWE_6y4L2epGOYmz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 adultscore=0 spamscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030083
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,47 +136,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Overview
+========
+
+This patch series merged two patch series sent earlier:
+	"Testcase improvements for PowerNV"
+	"Remove deprecated Power8E and 8NVL CPUs"
+since the Power8E removal series depended on the former due to pnv-spi test
+
+Broadly contains 3 changes:
+1. Testcase improvements:
+    Add a testcase to detect regression in remote interrupts when XIVE changes,
+    since such regression had occurred during Power11 XIVE changes:
+    https://lore.kernel.org/qemu-devel/baf6c854-832b-4a2e-922f-d34e6dadf821@redhat.com/
+
+    Also add Power11 chip and testcase in qtests, and fadump functional test
+
+2. Power8E/Power8NVL removal
+    Power8E and Power8NVL were deprecated since QEMU 10.1, with
+    commit 264a604e7163 ("target/ppc: Deprecate Power8E and Power8NVL")
+    
+    Hence, remove usage (chip and core types) of Power8E and 8NVL from PowerNV,
+    PSeries as well as testcases.
+
+3. Maintainer changes
+    Add myself as maintainer for PowerNV machine
+
+Testing
+=======
+
+* Git tree for testing: https://gitlab.com/adi-g15-ibm/qemu/tree/feat_maintainer-v4-resend
+* Gitlab pipeline: https://gitlab.com/adi-g15-ibm/qemu/-/pipelines/2649114622
+* Successful ppc64 functional tests, qtests, boot tests, builds at all commits
+
+Changelog
+=========
+v4-resend:
++ rebase on harsh's PR, https://gitlab.com/harshpb/qemu.git, tags/pull-ppc-for-11.1-misc-20260703
++ no changes to patches, merge conflicts fixed in #1 and #7
+
+v4:
++ #1: added cores=1, as suggested by cedric, no functional change
++ #3: remove unneeded headers, as suggested by cedric
++ #3: keep power10 xive2 test, as suggested by nikhil
+
+v3:
++ #3: use machine_type array in pnv_xscom_addr, as suggested by shivang, harsh and balaton 
+
+v2:
++ #1: put e1000e on socket 1, and disable it's cpu, as suggested by cedric
++ #1: pull out command fail checks into a helper, as suggested by shivang
++ #2: use g_autofree, suggested by cedric
++ #3: use g_autofree in tests updated
++ #8: remove G:, as suggested by daniel
++ rebased to upstream
+
+from previous split series:
++ #1: added checks to see if network is up and interrupts happened, based on shivang's review
++ #3: replaced common if-else-if check for machine type with pnv_get_machine_type
++ #7: added doc in removed-features, as suggested by cedric
++ #6,7: added rb from philippe
++ #8: new patch, maintainer change
+
+Aditya Gupta (8):
+  tests/functional: Add remote interrupts test for PowerNV
+  tests/qtest/pnv_spi: Test Power11 PNV_SPI
+  tests/qtest: Add Power11 chip & machine to qtests
+  tests/functional: Use default powernv machine instead of power10
+  ppc/pnv: Replace Power8E with Power11 for 'none' machine test
+  ppc/pnv: Remove Power8E and Power8NVL pnv chips
+  ppc/pnv: Remove Power8E and Power8NVL CPUs
+  MAINTAINERS: Add self as maintainer for PowerNV
+
+ MAINTAINERS                            |  2 +-
+ docs/about/deprecated.rst              |  9 ---
+ docs/about/removed-features.rst        |  8 +++
+ docs/system/ppc/powernv.rst            |  2 +-
+ docs/system/ppc/pseries.rst            |  2 +-
+ hw/ppc/pnv.c                           | 62 -----------------
+ hw/ppc/pnv_core.c                      |  2 -
+ hw/ppc/spapr_cpu_core.c                |  2 -
+ include/hw/ppc/pnv.h                   |  8 ---
+ target/ppc/cpu-models.c                |  6 --
+ target/ppc/cpu-models.h                |  4 --
+ target/ppc/cpu_init.c                  |  6 --
+ target/ppc/kvm.c                       |  4 +-
+ tests/functional/ppc64/test_fadump.py  |  2 +-
+ tests/functional/ppc64/test_powernv.py | 95 ++++++++++++++++++++++++++
+ tests/qtest/machine-none-test.c        |  2 +-
+ tests/qtest/pnv-host-i2c-test.c        | 10 ++-
+ tests/qtest/pnv-spi-seeprom-test.c     | 20 ++++--
+ tests/qtest/pnv-xive2-test.c           | 21 ++++--
+ tests/qtest/pnv-xscom-test.c           | 22 ++----
+ tests/qtest/pnv-xscom.h                | 38 +++++++----
+ 21 files changed, 175 insertions(+), 152 deletions(-)
 
 
-On 6/10/2026 2:13 AM, Dongli Zhang wrote:
-> When xtsup=on is exposed, Linux switches the AMD IOMMU event interrupt
-> setup to x2APIC mode and programs the INTCAPXT event register instead
-> of relying on the PCI MSI capability.
->
-> QEMU currently neither records writes to the INTCAPXT event register nor
-> uses the programmed event vector when raising an AMD IOMMU event interrupt.
-> As a result, DMA faults can be logged into the event log without
-> delivering the AMD-Vi event interrupt to the guest when xtsup=on.
->
-> Add the INTCAPXT event MMIO offset and accept guest writes to it. When
-> IntCapXT is enabled, build the AMD-Vi event interrupt MSI message from
-> the programmed INTCAPXT event register; otherwise keep the existing PCI
-> MSI fallback.
->
-> This patch intentionally only supports the INTCAPXT event interrupt path.
-> It does not add PPR or GA-log interrupt support.
->
-> Keep command completion wait interrupts on the existing PCI MSI path by
-> using a separate event interrupt helper for INTCAPXT delivery.
->
-> Send INTCAPXT event interrupts through the APIC MSI delivery hook so
-> KVM can handle x2APIC destination IDs above 255.
->
-> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-> ---
->   hw/i386/amd_iommu.c | 50 +++++++++++++++++++++++++++++++++++++++------
->   hw/i386/amd_iommu.h |  2 ++
->   2 files changed, 46 insertions(+), 6 deletions(-)
->
-
-Hi Dongli,
-
-The fix for this issue is already upstream
-https://lore.kernel.org/qemu-devel/20260302115130.5903-1-sarunkod@amd.com/
-
-You can drop this patch in the next version
-
-Thanks
-Sairaj
+base-commit: f9d05801eb4acd6402d73cb25d498a2419920cf9
+-- 
+2.55.0
 
 
