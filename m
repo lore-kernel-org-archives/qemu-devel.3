@@ -4,158 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30C20C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 14:02:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA544C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 14:04:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfeSa-0001ta-8P; Fri, 03 Jul 2026 10:01:40 -0400
+	id 1wfeUh-0002zb-Hr; Fri, 03 Jul 2026 10:03:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wfeSY-0001t9-7M
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 10:01:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wfeSU-0008Ef-Qo
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 10:01:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783087293;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ut9WNz3rk5Is2DBn8GolJnYJYtiL5WqBkLU4CGW0YFU=;
- b=Vr7Mf99/HjCPczk3PFTxZj69QnC3r1jlbM3yycuGqi3V42s0NLInKUQ5CzB5RFnzr7UwRe
- AeJ39LZJnHHm7X1PhzjIifYu5sHHJgtliTpz7uVoF02Q6sf1O9TPQi1L9XQUFUeij3hRPC
- nzwJj5WGD80ubarnbq1cQH0ayAa9Ef0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-376-XImEk6Z8PtK8Q-Gfsf5cwQ-1; Fri, 03 Jul 2026 10:01:31 -0400
-X-MC-Unique: XImEk6Z8PtK8Q-Gfsf5cwQ-1
-X-Mimecast-MFC-AGG-ID: XImEk6Z8PtK8Q-Gfsf5cwQ_1783087290
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-493caa3c54eso5980475e9.2
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 07:01:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfeUg-0002zE-5L
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 10:03:50 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfeUe-0000Sd-CI
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 10:03:49 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-37fc01a7835so495138a91.3
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 07:03:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783087427; cv=none;
+ d=google.com; s=arc-20260327;
+ b=fwdQrMKNclODfo5ztuyyY2foqcf21DGE9RVI8I4PaI06ws0C6YPGkzUKxTQitUFYLA
+ ZlfZVrOyNsASjWjKThTjrFbtJ+rydHLy6NHPLT6vBkEuGrj/oDhMaZXLXS+N+nmt9OHc
+ RVweg1N389Fa5VsQehnKouev6/TJDF2NtVVRuKG5BC/j16Eeu6q5BxBRz8hhsDq4GqCA
+ AvaIYV9NXcbb0+XRbIPehx5Vo64hG2Uxz8rPpv83QFXaEBc1RzIsDe+sTE1PycnIDgNM
+ 154eeiL5a8O1Cpx0hZ0PPXbWtjnAchvOHiGhoZE4y7nsUv2W78ipGJwh6XYS9lSB4MmY
+ VoPw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=HCfeo1erMVY2ghZo8oTLmgsr2P2JvPmWIeclpvCNHCs=;
+ fh=uuNB3HJ5lfFP196KPCH4BVFxtnvmD/oMG5FHYJFUI8s=;
+ b=FdNCtsAVyNyuU6H0+Z7mOahAkewQMDaSMyBRQK36Slic+xkt+Hh4pQN1tD+Rp4FIoj
+ OzipU6CEkPJ7QFVaBGLN8DMDPL4LsfvfLZAj8ao+80prhtW0wagn5ZRzEYhfHd0vjlEV
+ ipnc815cxlZGBIRpMlAHpQPJ8vUG46BGWPSLmAA0aqqRJX5DQXJhDVmbEJgLrZp4sqT4
+ csIUUETAogrRMQeuTyF4HTredWHUNlb+R17fQtQMMYIQFJB0e2CJMtS4ykalHQS52JCs
+ SK5JRQzYbj7Qopx8r7+gUk0/0cKG6lJFZJpTm3+FdwEJj2B55ZGc58iBWVahJrpiaMh3
+ CS0A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783087290; x=1783692090; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=ut9WNz3rk5Is2DBn8GolJnYJYtiL5WqBkLU4CGW0YFU=;
- b=GptDC944h1QqLc0HcA5dOD2FlfCFv1jC26LPo6eZPNMT91kp66xMZhRNqks83LBl+d
- 8zEet/9gylChws0ueLG3XNbB2tunLbkWlT3zQiamn7J+qqfCOvaqnWAORqHnqz7/8EDT
- 4v2HzmIihref0LNInPiRP5zc55qzGHABK2y9LMHn/esMlSjSzCq0zJfmNnCYlVsa+Jj9
- s2MVcBVU6pqGcMhXWLPX7N+M3D9dta6SceDkL29J+3p0TVGWvWd/MDUD2hd0PbdQiSok
- mVwJBv+gH8tjxj2DslAHoRTgW0VrVOjn5QJantzkcajGP3kTD8FUUV8saplJTuEwCLN3
- pQzQ==
+ d=linaro.org; s=google; t=1783087427; x=1783692227; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=HCfeo1erMVY2ghZo8oTLmgsr2P2JvPmWIeclpvCNHCs=;
+ b=m7zxtjzIuHvjXM3RETeVcoNDqNig/zyoC5fkf663yh0xXAHH5jLjQqDzoI9ZJQfkQq
+ B2viJBh7SOt6U+pDIxLslaRTCXdb0C7cUR6nfhfKYf8mkNDMB/wrTNjmqesgYrROFxOm
+ oFREW/qXw5/8YeDzOyieEhhDOcP8ZOz3WaGMSh9UXiHL4wGj4D1FcKg1pVLTWnrMuuzm
+ RCE03D9an191Z24thb4fIOHNGG1ED5PIBA3p8D9Ku2/f08xPxTFOKxsVb2oYWsOhyPTs
+ JRZtdlZXjpixbWpqB/gTIerYEyO73ka/1h3fHvZgYhEFrAUuCh3MdA0wyw94kHib8JQc
+ EH4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783087290; x=1783692090;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ut9WNz3rk5Is2DBn8GolJnYJYtiL5WqBkLU4CGW0YFU=;
- b=fKBLvRXL8FDp0xrEevv9IadSneo4QIl0yTBgFl01VQskKk+Jhfb+1I+znXtfalMXYE
- bK2snRxaI5t9dUQWQzfV4AIO2heU0RNGrQYMwmhOUHo1mTbUmRv3+Wuqo8sucOSbLOSQ
- sYKQMNjmg+KXcKtL+HRcPw8Rx3TOGESx7pnLY1LWPz6bKVdjBX5si2IC0Rt/Gy0gI+b+
- DGwMYrQL52Ba68wKY+tIVmaUcuGHW3+ZI5XsLmbC73l7KNxSx2DFCQ17YlLrZ8rmH0Pp
- 9JL6bkyqnVbGYR5RZoZWDYkGl5oKnzYykJ/o2wGhhVdyPuzCiOv1yVYsEgqsWHqArUfS
- Yr5Q==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/JEDdVnHCOPh6wIVoqp8cpK+h21CszItNR28Y54jLTUEhLX5F0cgz1lX3qCRaKMkx8YeOZv0TXYFym@nongnu.org
-X-Gm-Message-State: AOJu0Yz2kmyYkcl1jTNDeco8c7alfESzNNAGPO7fVwSGDpRkbN0yBYR/
- /W7GUKl96hbpfVSSMwqwMLcXKCz5Oo1c7hNMOzG8IXs3f8Lgfdo7cuSe8FIwl8uCGWSHnFOEKy9
- XFuVlQ0Y9QqCLxGN05RpAKk9U+NyUpAiqKk/lUh5cvRcKDl/lV3GGLC7g
-X-Gm-Gg: AfdE7cmYIfthiDZr7CdEwf3ACzoEMIeEcoirn/usGhxCiHVHw97e/mJaC6ltawOMV5K
- xyKiSSeeH94ObQjGnAqrVzPoy76QzVdm/ROh2fvIJCeZqL6T2/ByZQOEm4sIUJh7P5BMMpATmc4
- 2+bPGXVzHqVc8XQbwnvZjvok19YeU0M9t6lrnnDd4OnIlMn2aeqDMcBdHJWJzgSuolCLYlYofUk
- UnNcGSO2es+lhObHu4/tBBzlhMWg9LE9fkKHg4VWshjfkQaaK5t1Fs7wastNIbbDWhQ8OKKLobm
- yFh5mT8M+2+BmaczZZ1Gr/1LAuZ7yDzceAdFtD5J+hd5u0zJfeg63S0AYxsMk/qW3wESB99Q4HR
- utHU/yLM+Cm62DONzLpNc7xoctFG+8je/mmn7MQWSCgFwVUfYaQ==
-X-Received: by 2002:a05:600c:8716:b0:490:c024:2ec8 with SMTP id
- 5b1f17b1804b1-493d0de258amr611645e9.0.1783087290238; 
- Fri, 03 Jul 2026 07:01:30 -0700 (PDT)
-X-Received: by 2002:a05:600c:8716:b0:490:c024:2ec8 with SMTP id
- 5b1f17b1804b1-493d0de258amr611185e9.0.1783087289688; 
- Fri, 03 Jul 2026 07:01:29 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c636e9e9sm129906675e9.2.2026.07.03.07.01.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Jul 2026 07:01:29 -0700 (PDT)
-Message-ID: <9ea28269-924d-4996-a886-73f14cd31bee@redhat.com>
-Date: Fri, 3 Jul 2026 16:01:27 +0200
+ d=1e100.net; s=20251104; t=1783087427; x=1783692227;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=HCfeo1erMVY2ghZo8oTLmgsr2P2JvPmWIeclpvCNHCs=;
+ b=h1MhwB4OIL+vPucAcr5GRQowuMuBH2KQeFYopf99eLYpJNvZCnj5m+scZ51Z3tl0sM
+ s1QKw4aHKQn6VqfOwu1FsYqi69i+NkpRAbCglwTQHczKOKfrdQGTe/0ebzgd3jtn/2FN
+ eALeMt0JNI/VGMzWMDYVrz0rZdIzCzUtcwETR5Sk3/zeAUKYwpckaMs4c3uUpFI1YyY2
+ OSg1MiuARyTRLu/4m0/p2EJW5OwjeMWtrPXME+DNcmIU4Ptvt/g2/gCqy6C+jAyHaSv5
+ r3krvePaGWUS7hH7NiTU2KlfpEE0f7mc/sCmhR9GdR/Jiy5Jwi5hRxWGu+7/LRiSalaX
+ CHiQ==
+X-Gm-Message-State: AOJu0YzVzQ0o5qnqO8DvuSHGexEO7JjtgHgEVF0jCND/G2oD/U/xsu3L
+ oQ6C6CYk/hClell4Yobeh/TgUtzA0zh+7rMbTz9mt3hDKzI2mbmNF55PqpaGMGwgUfdRYlDaQUc
+ YYDmpfLiyRORvb0ANQSazAcZmp/UlHQkvmE0BmVVfgySkaYNMvPPx
+X-Gm-Gg: AfdE7cmI28P3AfgNxNucjBZzPot3Vp8PwyUzMvQ9FoWLWWTJ37prtDFiaPYZ0neW5Tz
+ NVe9RaCgVvcYD8521rRFczZJG6mUI70YRzAoapHoEeRQFTCfUFnnFmmvUeLvnZgHjV1NayZlb0V
+ oUFHgrvJCnc3xB+8u5t3y5OsYJIC09Uoryy3Yusc8KaSWx+COwZ8+RTlKVRrV7I0wyO7pHX4ZEg
+ cgJ/Emzc8AhuuPkQ5j63jDfbYyBUXDIm6TB/s96B0d2TbJxrLf99NjmD530ugW9rgmBKHMeeMKg
+ 5ZMCrdK5cVQqkoRoYmrfLk0O0npy3K1bmhA7mqOp1Jvht3wo6MARva9q
+X-Received: by 2002:a17:90b:5547:b0:37f:fd1f:d30f with SMTP id
+ 98e67ed59e1d1-380ba8d00eamr9928528a91.12.1783087426562; Fri, 03 Jul 2026
+ 07:03:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 08/23] migration: Run final save_query_pending at switchover
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Peter Xu <peterx@redhat.com>, "Jason J. Herne" <jjhern@linux.ibm.com>,
- Lukas Straub <lukasstraub2@web.de>, Fabiano Rosas <farosas@suse.de>
-References: <20260630043107.1511076-1-clg@redhat.com>
- <20260630043107.1511076-9-clg@redhat.com>
- <a82ece02-d9fd-4ea4-b934-a9bc5abde663@nvidia.com>
- <df58c2d0-cc0c-43c2-9dd3-ea0614de7d72@redhat.com>
- <e7bd3ab2-2eca-44d6-8a18-29cdbcb57768@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <e7bd3ab2-2eca-44d6-8a18-29cdbcb57768@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260703132528.4035684-1-peter.maydell@linaro.org>
+ <a5b9ebe1-dbf6-4581-9394-d879adcec419@tls.msk.ru>
+In-Reply-To: <a5b9ebe1-dbf6-4581-9394-d879adcec419@tls.msk.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 3 Jul 2026 15:03:34 +0100
+X-Gm-Features: AVVi8Ce_EHn78I6L6l-MQS8n1prRqVH0TbIBblbhS0wkHQUa_ACMxoGfLIUHAgI
+Message-ID: <CAFEAcA_XEKeR+hHOcmjBRsxrGL0vBh9xTs9guni+VuPwBcg2Xg@mail.gmail.com>
+Subject: Re: [PATCH] hw/9pfs: Check for error return from local_fid_fd()
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>, 
+ Greg Kurz <groug@kaod.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,44 +115,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->> The culprit appears to be patch 3:
->>
->>   migration: Run final save_query_pending at switchover
->>
->> I can reproduce the issue consistently with:
->>
->> while [ 1 ]; do
->>     QTEST_QEMU_BINARY=./build/qemu-system-s390x \
->>         ./build/tests/qtest/migration-test \
->>         --full -p /s390x/migration/colo/plain/secondary_failover_checkpoint || break
->> done
->>
->> The patch you proposed seems to fix the issue.
->>
->> Could you send it as a follow-up patch? 
-> 
-> To make sure I get it straight, you suggest to merge your pull request 
+On Fri, 3 Jul 2026 at 14:53, Michael Tokarev <mjt@tls.msk.ru> wrote:
+>
+> On 03.07.2026 16:25, Peter Maydell wrote:
+> > The local_fid_fd() function can fail (returning -1 if dirfd() fails);
+> > check for this explicitly rather than relying on something later on
+> > failing because it was passed a -1 file descriptor.
+> >
+> > This was flagged up by Coverity: CID 1660923, 1660924, 1660925
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >   hw/9pfs/9p-local.c | 12 ++++++++++++
+> >   1 file changed, 12 insertions(+)
+> >
+> > diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
+> > index ee592b62f8..8f27c562b5 100644
+> > --- a/hw/9pfs/9p-local.c
+> > +++ b/hw/9pfs/9p-local.c
+> > @@ -788,6 +788,9 @@ static int local_fstat(FsContext *fs_ctx, int fid_type,
+> >   {
+> >       int err, fd = local_fid_fd(fid_type, fs);
+> >
+> > +    if (fd < 0) {
+> > +        return fd;
+> > +    }
+> >       err = fstat(fd, stbuf);
+>
+> I think this is a wrong approach - if we're going to report error due to
+> a failed (local_)fstat call, we'll use errno which is not set in this
+> codepath.
+>
+> Instead we should check fd earlier.
 
-The merge request won't be merged as is. It's broken and I will
-have to resend with a fix or without this series.
+There is no earlier point. local_fid_fd() calls dirfd().
+dirfd() can fail, returning -1, so local_fid_fd() can
+fail, returning -1, so we should check it.
 
-> and then send a separate fix patch for that with a proper Fixes tag, right?
+> In this particular context, we don't check possible error return from
+> dirfd() - which should not return error in our case, as we know we have
+> valid opendir() handle (unless we really messed up our memory layout,
+> but in this case we've much bigger problem).
+>
+> Mayve
+>
+>   assert(dirft() >= 0)
+>
+> in local_fid_fd() will be better.
 
-We either handle the breakage with an extra patch like you proposed,
-which has to be sent and reviewed, or :
+I'm not generally a fan of "assert that this system or library
+call can't fail": it's making a claim about code we don't control
+and that doesn't document itself as providing that guarantee.
 
->> if Peter, Fabiano, Lukas
->> would prefer it to be integrated in the appropriate place, it
->> could be included in v5.
-We can address this in a v5 respin of the series by fixing it
-where it belongs: in patch 3. I think that's the right place,
-since bisect breaks at that point.
+> In general, seeing code like the suggested in this patch, prompts me
+> thinking that fd can normally be negative in this context, - and handle
+> this situation in other cases too.  But it really can't, and if it is,
+> it's an abnormal situation.
 
-Let's see what Peter and Fabiano think.
+This is just local_fid_fd() having the usual Unix style
+"returns an fd or -1 on error" semantics, same as open(2) does.
 
-
-Thanks,
-
-C.
-
+thanks
+-- PMM
 
