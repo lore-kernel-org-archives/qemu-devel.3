@@ -4,57 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17613C43602
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 11:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A59C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 11:43:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfcGr-0003La-3p; Fri, 03 Jul 2026 07:41:25 -0400
+	id 1wfcIL-0003sA-SG; Fri, 03 Jul 2026 07:42:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wfcGp-0003L9-9p
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 07:41:23 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wfcIJ-0003ro-Ho
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 07:42:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wfcGn-00082H-Le
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 07:41:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=pOLDR/CB0dS5d8cneXI0O+PzSGSOzQC1FUxlt5CpwZg=; b=vwNi9Rku+SiCayrTmGNp9LMIVe
- R3Sr1im1NaZ0nrZoP9v/M+ygskWS2H0aqexBoXcU5UH+Mgdoj0mH9+wvfZubMlHQGTXxR90Wc3z0o
- ZDDWyogmmOZsuJW3KF4MByxjAucRHMRBM7tR995T5YO9TzBGnBhJ2P4pqB+ikqLlN/+m5G9GLEFMt
- kQQcsby7dzEHNF6++BZrpvKgkBY09PZcg5QdLuPtT6/78Fs5V5DC5UB1/6o7IQGS68ZLI9lZF8iro
- JVdd4H+ipbwbdWyTZGQ5BQ9ixinvMEI/5f/ytiErQslzm6fns8tMwSee9XS/FBnhMaCi8Uf//ukde
- nPyDoQkVGBqo70t2L4bY7NHQsL+DWuZC3Xn2xClNN03oL6wmV1bxlibeUAsYGfatQEWmkR0wQ5TIK
- gl0FPveGaFzpvkp/ZtBaByeiRK8ZyP1XVnxz8QysBoN9ghsc/qto0wUKEyH7ArToXd1vXZejSrWHh
- 73RUCcy4RB/0vZKCpmyfR3jaNzp5+o8lFHt3vGh8NxQiztzT/E8lVhoNIZp1cRvCPHk9n2xI9g2pV
- qIOCBSVr8shYwpKKzNSBLlliElBY13EyWUI4nuCO+tUKy3wmPflILtXnBSwqvVe8U5VK/XWsbkXB0
- ZY3oliLmuQyN1SXnChSe4zWv1wFyVZrRpwCmd5zXI=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Cc: Greg Kurz <groug@kaod.org>
-Subject: Re: [PULL 3/9] 9pfs: local : Introduce local_fid_fd() helper
-Date: Fri, 03 Jul 2026 13:41:17 +0200
-Message-ID: <23160010.EfDdHjke4D@weasel>
-In-Reply-To: <CAFEAcA9h2QXi=9tTUpzSHVx8p+ZxtZYxFNiCQUHOu68W15buCQ@mail.gmail.com>
-References: <cover.1746438650.git.qemu_oss@crudebyte.com>
- <4f82ce8cd94f2601fb2b2e4cfe0cf5b44131817e.1746438650.git.qemu_oss@crudebyte.com>
- <CAFEAcA9h2QXi=9tTUpzSHVx8p+ZxtZYxFNiCQUHOu68W15buCQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wfcII-0000FE-4J
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 07:42:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783078972;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=S/i3P7l0GjLwORPYJ7bOcVGyyq2AtI+g2257Iy8jljk=;
+ b=OnOgqqp7mlo/CwivthefdsGSd+6sIEj8bBZjmpnSK4kjKPnexzlWyM/O+pOrzOK7zYCvyU
+ Cg9J69N35XI+NG8DI6qPU7Z7tTLZ2OEoZZzpqVbBU/fKDvaA3jgFtTNYifZCkMPu4X5puy
+ hx/Bbxa4l7+dVIihReDQcmzEMefT7NA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-573-RejvWbZkMXe3d_D_j_Rl6Q-1; Fri,
+ 03 Jul 2026 07:42:49 -0400
+X-MC-Unique: RejvWbZkMXe3d_D_j_Rl6Q-1
+X-Mimecast-MFC-AGG-ID: RejvWbZkMXe3d_D_j_Rl6Q_1783078968
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C14EF1921EF4; Fri,  3 Jul 2026 11:42:47 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4816B36F27; Fri,  3 Jul 2026 11:42:47 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B136821E6920; Fri, 03 Jul 2026 13:42:44 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  devel@lists.libvirt.org,  =?utf-8?Q?Marc-Andr?=
+ =?utf-8?Q?=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  "Dr.
+ David Alan Gilbert" <dave@treblig.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Christian Brauner <brauner@kernel.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Peter Krempa
+ <pkrempa@redhat.com>
+Subject: Re: [PATCH v5 05/35] monitor: minimal conversion of monitors to QOM
+In-Reply-To: <akZjVg5qKkkopoc7@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Thu, 2 Jul 2026 14:10:46 +0100")
+References: <20260624173752.2928717-1-berrange@redhat.com>
+ <20260624173752.2928717-6-berrange@redhat.com>
+ <87o6gs1buf.fsf@pond.sub.org> <akO58EjJf3xs4KmU@redhat.com>
+ <87tsqi4zk6.fsf@pond.sub.org> <akZjVg5qKkkopoc7@redhat.com>
+Date: Fri, 03 Jul 2026 13:42:44 +0200
+Message-ID: <87pl14wb7v.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,100 +96,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Friday, 3 July 2026 12:52:24 CEST Peter Maydell wrote:
-> On Mon, 5 May 2025 at 10:54, Christian Schoenebeck
-> 
-> <qemu_oss@crudebyte.com> wrote:
-> > From: Greg Kurz <groug@kaod.org>
-> > 
-> > Factor out duplicated code to a single helper. More users to come.
-> 
-> Hi; Coverity complains about the callsites of this new
-> 
-> helper (CID 1660923, 1660924, 1660925):
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Hi Peter,
+> On Wed, Jul 01, 2026 at 03:19:53PM +0200, Markus Armbruster wrote:
 
-I have seen these new CID reports. CID 1660926 (test code only) is a valid one
-where I already have a small patch prepared to be sent in the next few days.
+[...]
 
-However CID 1660923, 1660924, 1660925 are false positives AFAICS:
+>> Could we use id_generate()?
+>
+> Since we want to re-use the QemuOpts ID present in -monitor/-qmp,
+> I'm going to stick with "compat_monitorNNN" and get rid of
+> use of 'hmpcompatNN' and 'qmpcompatNN'.  id_generate() does not
+> help here because it forces a "#" prefix onto the ID which then
+> (intentionally) violates  id_wellformed() which object_new_xxx()
+> validates.
 
-> > +static int local_fid_fd(int fid_type, V9fsFidOpenState *fs)
-> > +{
-> > +    if (fid_type == P9_FID_DIR) {
-> > +        return dirfd(fs->dir.stream);
-> > +    } else {
-> > +        return fs->fd;
-> > +    }
-> > +}
-> 
-> dirfd() can fail and return -1, so this function is "returns a
-> file descriptor, or -1 on error"...
-
-That's the *old* helper function. Apparently you were replying on the wrong PR
-series (from 2025!).
-
-CID 1660923, 1660924, 1660925 were triggered by this change
-(9p queue 2026-06-29, [PULL 23/23] hw/9pfs/local: harden local_fid_fd() on FID
-types) [1]:
-
-[1] https://lore.kernel.org/qemu-devel/75893c058b21d87d1ec66bbd4e8bf84e1fd616d1.1782739719.git.qemu_oss@crudebyte.com/
-
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index 4708e170a4..ee592b62f8 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -775,8 +775,11 @@ static int local_fid_fd(int fid_type, V9fsFidOpenState *fs)
- {
-     if (fid_type == P9_FID_DIR) {
-         return dirfd(fs->dir.stream);
--    } else {
-+    } else if (fid_type == P9_FID_FILE) {
-         return fs->fd;
-+    } else {
-+        errno = EBADF;
-+        return -1;
-     }
- }
-
-However, that is just a last resort safety net! In 9p.c we are already
-checking via fid_has_valid_file_handle(), and in the local fs backend via
-local_has_valid_file_handle(), and in both cases would leave via error path. I
-have not identified any call path where we would not guard this, so we should
-never end up passing -1 as FD to a syscall.
-
-So this new EBADF / -1 path in local_fid_fd() is just to avoid undefined
-behaviour as a last resort measure, in case a guard was forgotten in future
-changes.
-
-> > +
-> > 
-> >  static int local_fstat(FsContext *fs_ctx, int fid_type,
-> >  
-> >                         V9fsFidOpenState *fs, struct stat *stbuf)
-> >  
-> >  {
-> > 
-> > -    int err, fd;
-> > -
-> > -    if (fid_type == P9_FID_DIR) {
-> > -        fd = dirfd(fs->dir.stream);
-> > -    } else {
-> > -        fd = fs->fd;
-> > -    }
-> > +    int err, fd = local_fid_fd(fid_type, fs);
-> > 
-> >      err = fstat(fd, stbuf);
-> 
-> ...but the callsites don't check for error, and instead can
-> feed -1 into fstat() or other functions, which isn't a valid
-> filedescriptor.
-
-But even then, a syscall receiving -1 for a FD argument would handle this
-gracefully by returning -1 and errno EBADF.
-
-/Christian
-
+A clean split between IDs provided by the user (must be id_wellformed())
+and IDs conjured up by the system (must come from id_generate()) would
+be nice.  But getting there would take some yak shaving.  I'm not asking
+you to try.  I'm okay with the solution in your v6.
 
 
