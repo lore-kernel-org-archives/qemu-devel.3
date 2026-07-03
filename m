@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE55AC44500
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 16:43:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C875C44501
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 16:43:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfgwp-0004f1-Et; Fri, 03 Jul 2026 12:41:03 -0400
+	id 1wfgxz-0006Kp-VA; Fri, 03 Jul 2026 12:42:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfgwn-0004d8-J9
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:41:01 -0400
+ id 1wfgxw-0006It-Ry
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:42:12 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfgwi-00017c-Sa
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:41:01 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1wfgxu-0001wH-Mu
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:42:12 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 663GInft498246
- for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 16:40:45 GMT
+ 663GIZFL489304
+ for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 16:41:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- gfohBGLaZbWwSsM8BLb51a9USAKrCnCAVyI6ZJxJiSc=; b=Oer6grjYf+qYDap2
- tm3ZHsY2rELicf475RKbnyf47gaPjbWFrr64K3N1G8xbqH1u7MT5fZiIrES18bmN
- BQoL9lugbDjHmrEpZ5C7n4+xz8ZWc1R4taIYMaKFanikp2ql+HmiUOdq52qWL/wk
- gDm13HjDx4HOdoVnwOldaF29NZpMTDXK1h61X3EtRtzXmIRrRJ2gZ9rsjn2nFlH4
- jwKSj4VhRzI/SzU+jRRBaBg62dH4t9BgzBrQipiI1aSb4m5XQr6IfpnXM/s0VRoa
- Ki06L85BQO31mjp2Cj8FistMaxetD/JEbSk1Z/SAu4ynmxvN00zpA139nN+Pfm+y
- 2Lam4Q==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f65qcjx12-1
+ Qw4cCSv0OfNGNoPPLFfy1LxGtAqB0K1HAPyDpQ8GAco=; b=dXqT2CTiU8EETd2O
+ QkkeAAJ67NritPQ9nJvjVWYGw7EKqz0oPh14oEWoD2J+wYfQuAORQWjL8ypZHNgv
+ ssvy1QJFAidv3WZv4JEWF5YCDmbC4d2TIdy0qk0y8+GxQCzdNc+0S63TD4+gSecZ
+ jcSBt1D2PQ9zfORlYlKpRLzA0nank3SqcdEKFVMPGoNns2MYnobMDAGzOH5qtIwQ
+ P3GaQi4YaAD6fKBK7b/ie18EN2VNfz3nTztoFiGKgCfgUmk7+gV6P0RArNJz7pdv
+ LyCmg/NoBAAaIya9UNs4sEh/waS9NnWQimB1pXuhaDBbCxAe1HQbMrn3pAh7Vv9f
+ 3jbeJQ==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6ckj101s-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 16:40:45 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-92e52306621so54390685a.1
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 09:40:45 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 16:41:59 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92158791d14so64952785a.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 09:41:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783096845; x=1783701645; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783096919; x=1783701719; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gfohBGLaZbWwSsM8BLb51a9USAKrCnCAVyI6ZJxJiSc=;
- b=V1O1bT0rUAWaQ7wLopl74IM/YKkCC4z4EModnBPQsiLBJ938FtUU8jhx7oHyNXkgOo
- +PIuw6afGAEoyl+YPgCGgAKTYWY90ZOonaf2Ea7nzIL+BLcwF8rB15ULcvRzAMyYp8S4
- qKfo4hsRrgME6LE5ScrIt8NhMYg30E4CK0fkv+DvEcagxnUP3Dz2/57Y16RRRyii/NHd
- P8RzpXFM0qNjnzlA+7izWMVDN/hiKoGRrZImqarlH/9JggibtWSW9ZpSMEuItWRxRzG0
- 0vFWK/nYga1Yw6i277QdWOqS+Vtf2BiVoCFfmLQL72sJObl2Kyjzu22xN4T7WmKg+kJG
- 5N8w==
+ bh=Qw4cCSv0OfNGNoPPLFfy1LxGtAqB0K1HAPyDpQ8GAco=;
+ b=MVzxHNshWS5je7xzk68JdpNDXCj4L+tUT5zqWVI7B+rVrKop1v3GllScnpKFci48Li
+ HWRD8L+JfX+Miwev+CYQrsWqoqSmbSsivp/+ALi8lK7+q5BIGQBOKyKvIhmisVyCBZEH
+ afbxGfr64D5HvMlOnmqHseCLao9zleu6hr4pxzE/12mswmdieyxZ+CFn4K4Ekye0fRrS
+ Sxmp/Dioe2SfScLvP4WKWj/5eDxtMkIojQrXTYT7TksxIsGE4gXbgo8ftZxW2ddTpZ1b
+ TxhbzQYK8IOqdppg0iVxrr/4C2PQOViFhMX2UIO9XBEQGEP+nVOzXDlzKtD2Sch8bkXT
+ DUDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783096845; x=1783701645;
+ d=1e100.net; s=20251104; t=1783096919; x=1783701719;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gfohBGLaZbWwSsM8BLb51a9USAKrCnCAVyI6ZJxJiSc=;
- b=ncwkhYoCCo7S5jktYfj0uRz6r473y9LOZxjwtaF9uaYOzQy2GAzZXMCJL5ciBWk1eM
- WeiZvQiMs36NWPaojQZ7yZBnMOxmQvl8+5Dmb+9J9F1B/0q97jwzST0ComnnPJ8N1RhL
- l3nm0n5Z7RaMpDhBbJjpaw9ukwFj/RP349uCCj5pjbTAbSvvwsktu40ZQydK1cSMWYSZ
- v9xHlzQoYTVQNgv2oZMG47hSBSbOpCTesGTa/7m+TH7lxrntym02Y7hAIvtDCBlyPGhP
- VX0iNw8vzVuMXpS14lrx3E82saDU6kRhP+CjAMhvXx1cueQs8IXA0Csl4g6khcJiBpF2
- jPiw==
-X-Gm-Message-State: AOJu0Yyx5zXDEbfOr1GkEEieJxSPmxtVOfXfU6Aji5+VYgTO3Xxrt4AB
- mIwa4UfFRctIi52mCfAHWJuGnyYdAdEATTxdfnL4In1ATEhN7+YbLk+/6peGibHmUQumH5qPaoo
- bd3hShFQiYGzJSpnifU1b3ZMsggz7vGVLujWnShFaT4faQJzVca2AYlnckD8ZY+KFfg==
-X-Gm-Gg: AfdE7clXUYkoTQ4qX8cQ2G03fw3Lm9xHwQPSH4dRwPXfyJpVXwpsdj4m3Bdak+9173Y
- dNfqZgBq0dIWghsukDjbojkWw/n7CFvXL8yPnrw17D1+NDXddedZObItcbImWVkglTyDNT/Oijm
- xPIYt28/Cny7OSpF+XK2+fYiy3TyEiOnTyTUnEgJJ2zR0+l+nBEnK9QwrGjRAS2beoGimBJKleG
- Lz9HrfcR6dJqI48UpQ8Fme30pOsRpyzJENr626PDGcLw2e0BqvsHSNEhDbb09HFOpsIEuik9OZ8
- rhIFF2xMIN5kyNXBr9H6Zvs8x1XYjyUTi9U+ARbjk0zovm15UKJO6Qpzd+tjhkCJt1YmtSjF6iV
- gt8c5fKE1l+R7t6Zq40pjuAvhGv+KOocMPVr9rMWtLV7E4gvtUFe0lqs7jXm4OJkEG8eR
-X-Received: by 2002:a05:620a:46a7:b0:92b:67e6:4b73 with SMTP id
- af79cd13be357-92e9a52b304mr19063085a.74.1783096844925; 
- Fri, 03 Jul 2026 09:40:44 -0700 (PDT)
-X-Received: by 2002:a05:620a:46a7:b0:92b:67e6:4b73 with SMTP id
- af79cd13be357-92e9a52b304mr19056485a.74.1783096844253; 
- Fri, 03 Jul 2026 09:40:44 -0700 (PDT)
+ bh=Qw4cCSv0OfNGNoPPLFfy1LxGtAqB0K1HAPyDpQ8GAco=;
+ b=gcdBKHD9zn2LTflvTR6WLTnEbAdx6UHX3JBpNqxroy7cLvm7XmP6yGUAlpDAEEhBOe
+ N2JHNof/cPbI2cdh5Cnu87V9NILGscPkxLG/xGAmFz5c3DFNEEscKXfGWQ8LkgHeNFQs
+ G5VujDsTcx4LZgiDUOq+XvrRcfSIB/veg62lGw6/lVirTO7pLOYzDr8JAHDuf+/38P20
+ Bl2FyYrghxMjMWPd/VzkNCvbZI4BbbBi7dTC4FRygMmPN4ziuL7eqopeykFAQ06ejX3B
+ VV3Fj58M4SrJ+RqQ4P73qN4wdlJIhLm2yQnxdYKUDDAtkFOvATIBUuRA1piL1gDtppZ8
+ NxXQ==
+X-Gm-Message-State: AOJu0YzXSxAF41KqO40sqyXJ4XSK8GLRnZa+ZA+TUO0HIn9bJxtjJIWs
+ em58P6tMa0mzJvRq0cLVUULfYHp3CBp6ZD3ocFHh1gbyZlsy6BsDXZeJaDQFx7Ju7WOOcPmEjIC
+ B/4KwPcoeqI4zSHsCMY4vNt2qLX+Ttx9wnIjDlYXFwZDaTGb1y2mJaF7bPmg85VXPhw==
+X-Gm-Gg: AfdE7cnSXr6ac7VD9bUUoMBDKEEK31IcFYZOGvdZERfRTB0lQKAwpltuDA2uuH+cUwX
+ E3mRxpzeWKcJR64lN5udNYr/f84vish5dS5QtfGz3DCC8b5ob2sAD7xgh7i49AHir19I39Ar4lh
+ DcFrCdRCV1aMNn0gLL95CjomuxYMxqgNRbMo2GHJD+izCPoMBOOt+Ytn/8cUNCNjYDJIxAQNXET
+ SeqdSfqbyyJyYKRA8F29iPq3jc/sO1VUw4iqVkDg2PusO8XTeJrR6dPXwHaJhrI4fzacs7yNXiB
+ +f4EitBDOYaTFgl3XQICH9QYhjX4osxLW5b1cKD3yGw/s8/qg64DxCTy8QpOfdJYwC/mLpnqzMV
+ 6iowJzMtoAcxEdgZGIo/VyglbgQpbzWy+Z4py/kHBIQFtsRYiCcTkrzXpsRWBcL8T7xOo
+X-Received: by 2002:a05:620a:6847:b0:92b:67e6:8acc with SMTP id
+ af79cd13be357-92e9a535a8bmr20662085a.70.1783096918949; 
+ Fri, 03 Jul 2026 09:41:58 -0700 (PDT)
+X-Received: by 2002:a05:620a:6847:b0:92b:67e6:8acc with SMTP id
+ af79cd13be357-92e9a535a8bmr20658485a.70.1783096918412; 
+ Fri, 03 Jul 2026 09:41:58 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47a9b4d850dsm754264f8f.0.2026.07.03.09.40.42
+ ffacd0b85a97d-47a9b4d850dsm764306f8f.0.2026.07.03.09.41.57
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 Jul 2026 09:40:43 -0700 (PDT)
+ Fri, 03 Jul 2026 09:41:57 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
@@ -96,41 +96,42 @@ Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 22/33] gdbstub/user: Directly call
- gdb_breakpoint_remove_all() in user mode
-Date: Fri,  3 Jul 2026 18:37:45 +0200
-Message-ID: <20260703163757.55500-23-philmd@oss.qualcomm.com>
+Subject: [PATCH v2 32/33] cpu: Rename CPUState @singlestep_enabled ->
+ @singlestep_flags
+Date: Fri,  3 Jul 2026 18:37:55 +0200
+Message-ID: <20260703163757.55500-33-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260703163757.55500-1-philmd@oss.qualcomm.com>
 References: <20260703163757.55500-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 8XbYSee3XAYatSMgBtfYDK9QkO2OJvnD
-X-Authority-Analysis: v=2.4 cv=Bb7oFLt2 c=1 sm=1 tr=0 ts=6a47e60d cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfXyZ5rk4IJNvFz
+ 6febD/tFwSqdLcN/V1e4qnvHNoYQGCVbLs699LJHL1nHw+Lxj3Yd7dsvtuQMW+5DLff4565+mJD
+ Tsxo3JIWqb0w4to5BY0ds+N0j2Uurcs=
+X-Authority-Analysis: v=2.4 cv=E8v9Y6dl c=1 sm=1 tr=0 ts=6a47e657 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=zxLOgqzoZ8asriTz2EMA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: 8XbYSee3XAYatSMgBtfYDK9QkO2OJvnD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfX4vn+PP+kjk8t
- Qir/LdjrtvuUWRQXRG+q7b8qzJVV9xv8lP5mp6USRFMgIbANaudKvVa3py9gisJct0LywL5wQiP
- A9WH1HjBqY2oK7hsqQBqIQD2O5EL4MDVu7wr3niY2lU1gT2wKuAW1WfO82yQKyZltkkF9Q9A5y0
- +NzmIyh+H8hqvQzLyZMPxZ9446bGJyp6DjvuHuu6/GZmHVaVNkwfJaTnFWqtiqGHplgEhlJyc4H
- 5CpmKJmsFLyVqNapgNDMbJlv9w2YenwIORrCHmHfEiCrnCz46U39flFhWCkGJqCIWIzJ5cmyKlP
- +O7dJP3F5fxRSVAvlhjKblel2NRGz37Azb4jaI/jbB1Nrg9xkj4gxeE8me4+C8pB+RGqomwVRCu
- CC6I6Jt9cBnqJ0tmAKgnUyCL+UMTXY8mFxASxaIqJDNhdPh8oJisDc7AL3mnPTtTJ53p2o+Z9tu
- raAkYzKw44yKQpEZEJQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfX66oqNquyn8uq
- P0w/4hzRHIPUucQ7tsPzy0WH/AEUokiV6BBLE1r016nXx68a7dnN+1/u6KqmUy8NJCBs+wxLlau
- YID/yIbFXaDtZCWEAY4s3AVMCZ9e4jA=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=Psl2LI6oLFdwa_E3teoA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: Mgz6nrBEtkMhRpMQ2E9PH-kKgzaT8AyM
+X-Proofpoint-GUID: Mgz6nrBEtkMhRpMQ2E9PH-kKgzaT8AyM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfX+6vteSt3TgTl
+ aZEcQq2q0EuyWABy9jratvroiI1SN23GfVyTHcclgcSVmjSbHA/66MQVk+OxsfI5iV3AeBYLv4x
+ VMDoTXZ5iLsvyKuJh+Vu0A0dFkQScYrlLUqDiBgVfVUlU+kQYdsSK3HXsDZpZDdcpNm9dVNr+Gv
+ TGfD1LEu4iVLhuSesxfIXSauGWdON8UrZsGxg2BK1OJNLlS6hLtf1DYp74weNw/Yq20eNtYimOA
+ eFg699nrSCldRXLSMtiC8+pZ7G1VuUFRgGNcjXEbdOSb3BiVKR46mFTmqENU6J4yk0gPK2cDMMI
+ zPoAh5akc/o0QSaFsgCJYv9tgZOJXMdTSrz9ziB6XJngKrs80wNj2zxqUsF+w1bRn0N2m9wv5Ma
+ 6pQo+QeDUIsP/Fy3kKj+u04mj4ClEa4ViA+vBIn6KF60cVNduXIvRvfi05qfx76Zo3xsTBzxi8B
+ Y6shDSNXB9NP03zpR3A==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_03,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- phishscore=0 adultscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
+ bulkscore=0 phishscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 suspectscore=0 adultscore=0 malwarescore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030164
 Received-SPF: pass client-ip=205.220.180.131;
@@ -157,30 +158,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No need to deref external methods with unused argument to
-end up calling a method defined in the same unit file, call
-it directly.
+CPUState::singlestep_enabled contains multiple flags since
+commit 60897d369f1 ("Debugger single step without interrupts").
+Use an unsigned type and rename the field to avoid mistakes.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- gdbstub/user.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/core/cpu.h        | 10 +++++-----
+ accel/kvm/kvm-all.c          |  2 +-
+ accel/tcg/cpu-exec.c         |  2 +-
+ accel/tcg/tcg-accel-ops-rr.c |  2 +-
+ cpu-target.c                 |  8 ++++----
+ target/arm/hvf/hvf.c         |  2 +-
+ target/ppc/translate.c       | 16 ++++++++--------
+ 7 files changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index 299388b9f71..90d6ee49fb5 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -557,7 +557,7 @@ static void disable_gdbstub(CPUState *thread_cpu)
-     close(gdbserver_user_state.fd);
-     gdbserver_user_state.fd = -1;
-     CPU_FOREACH(cpu) {
--        cpu_breakpoint_remove_all(cpu, BP_GDB);
-+        gdb_breakpoint_remove_all(cpu);
-         /* no cpu_watchpoint_remove_all for user-mode */
-         cpu_single_step(cpu, 0);
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index b8384639141..31f1d787352 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -440,7 +440,7 @@ struct qemu_work_item;
+  * @stopped: Indicates the CPU has been artificially stopped.
+  * @unplug: Indicates a pending CPU unplug request.
+  * @crash_occurred: Indicates the OS reported a crash (panic) for this CPU
+- * @singlestep_enabled: Flags for single-stepping.
++ * @singlestep_flags: Flags for single-stepping.
+  * @icount_extra: Instructions until next timer event.
+  * @cpu_ases: Pointer to array of CPUAddressSpaces (which define the
+  *            AddressSpaces this CPU has)
+@@ -505,7 +505,7 @@ struct CPUState {
+     int exclusive_context_count;
+     uint32_t cflags_next_tb;
+     uint32_t interrupt_request;
+-    int singlestep_enabled;
++    unsigned singlestep_flags;
+     int64_t icount_budget;
+     int64_t icount_extra;
+     uint64_t random_seed;
+@@ -1132,11 +1132,11 @@ void qemu_init_vcpu(CPUState *cpu);
+ /**
+  * cpu_single_step:
+  * @cpu: CPU to the flags for.
+- * @enabled: Flags to enable.
++ * @flags: Flags to enable.
+  *
+  * Enables or disables single-stepping for @cpu.
+  */
+-void cpu_single_step(CPUState *cpu, int enabled);
++void cpu_single_step(CPUState *cpu, unsigned flags);
+ 
+ /**
+  * cpu_single_stepping:
+@@ -1146,7 +1146,7 @@ void cpu_single_step(CPUState *cpu, int enabled);
+  */
+ static inline bool cpu_single_stepping(const CPUState *cpu)
+ {
+-    return cpu->singlestep_enabled;
++    return cpu->singlestep_flags;
+ }
+ 
+ int cpu_breakpoint_insert(CPUState *cpu, vaddr pc, BreakpointFlags flags,
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 963a4edd262..83cbd120a84 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -3815,7 +3815,7 @@ int kvm_update_guest_debug(CPUState *cpu, unsigned long reinject_trap)
+     if (cpu_single_stepping(cpu)) {
+         data.dbg.control |= KVM_GUESTDBG_ENABLE | KVM_GUESTDBG_SINGLESTEP;
+ 
+-        if (cpu->singlestep_enabled & SSTEP_NOIRQ) {
++        if (cpu->singlestep_flags & SSTEP_NOIRQ) {
+             data.dbg.control |= KVM_GUESTDBG_BLOCKIRQ;
+         }
      }
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 0386ac49551..257211235db 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -828,7 +828,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
+                 return true;
+             }
+ 
+-            if (unlikely(cpu->singlestep_enabled & SSTEP_NOIRQ)) {
++            if (unlikely(cpu->singlestep_flags & SSTEP_NOIRQ)) {
+                 /* Mask out external interrupts for this step. */
+                 interrupt_request &= ~CPU_INTERRUPT_SSTEP_MASK;
+             }
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index 5b132d3d5d8..cdaa3e11808 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -274,7 +274,7 @@ static void *rr_cpu_thread_fn(void *arg)
+             current_cpu = cpu;
+ 
+             qemu_clock_enable(QEMU_CLOCK_VIRTUAL,
+-                              (cpu->singlestep_enabled & SSTEP_NOTIMER) == 0);
++                              (cpu->singlestep_flags & SSTEP_NOTIMER) == 0);
+ 
+             if (cpu_can_run(cpu)) {
+                 int r;
+diff --git a/cpu-target.c b/cpu-target.c
+index 019906b32eb..4783845c9bf 100644
+--- a/cpu-target.c
++++ b/cpu-target.c
+@@ -28,12 +28,12 @@
+ 
+ /* enable or disable single step mode. EXCP_DEBUG is returned by the
+    CPU loop after each instruction */
+-void cpu_single_step(CPUState *cpu, int enabled)
++void cpu_single_step(CPUState *cpu, unsigned flags)
+ {
+-    if (cpu->singlestep_enabled != enabled) {
++    if (cpu->singlestep_flags != flags) {
+         trace_cpu_change_singlestep_flags(cpu->cpu_index,
+-                                          cpu->singlestep_enabled, enabled);
+-        cpu->singlestep_enabled = enabled;
++                                          cpu->singlestep_flags, flags);
++        cpu->singlestep_flags = flags;
+ 
+ #if !defined(CONFIG_USER_ONLY)
+         const AccelOpsClass *ops = cpus_get_accel();
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 640ef665593..f5dd7e8e029 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -2603,7 +2603,7 @@ int hvf_arch_vcpu_exec(CPUState *cpu)
+     flush_cpu_state(cpu);
+ 
+     do {
+-        if (!(cpu->singlestep_enabled & SSTEP_NOIRQ) &&
++        if (!(cpu->singlestep_flags & SSTEP_NOIRQ) &&
+             hvf_inject_interrupts(cpu)) {
+             return EXCP_INTERRUPT;
+         }
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 3f6d326cef3..06ed2adf105 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -198,7 +198,7 @@ struct DisasContext {
+     bool pmu_insn_cnt;
+     bool bhrb_enable;
+     ppc_spr_t *spr_cb; /* Needed to check rights for mfspr/mtspr */
+-    int singlestep_enabled;
++    int singlestep_flags;
+     uint32_t flags;
+     uint64_t insns_flags;
+     uint64_t insns_flags2;
+@@ -367,7 +367,7 @@ static void gen_debug_exception(DisasContext *ctx, bool rfi_type)
+ #if !defined(CONFIG_USER_ONLY)
+     if (ctx->flags & POWERPC_FLAG_DE) {
+         target_ulong dbsr = 0;
+-        if (ctx->singlestep_enabled & CPU_SINGLE_STEP) {
++        if (ctx->singlestep_flags & CPU_SINGLE_STEP) {
+             dbsr = DBCR0_ICMP;
+         } else {
+             /* Must have been branch */
+@@ -3645,7 +3645,7 @@ static void pmu_count_insns(DisasContext *ctx)
+ 
+ static inline bool use_goto_tb(DisasContext *ctx, target_ulong dest)
+ {
+-    if (unlikely(ctx->singlestep_enabled)) {
++    if (unlikely(ctx->singlestep_flags)) {
+         return false;
+     }
+     return translator_use_goto_tb(&ctx->base, dest);
+@@ -3653,7 +3653,7 @@ static inline bool use_goto_tb(DisasContext *ctx, target_ulong dest)
+ 
+ static void gen_lookup_and_goto_ptr(DisasContext *ctx)
+ {
+-    if (unlikely(ctx->singlestep_enabled)) {
++    if (unlikely(ctx->singlestep_flags)) {
+         gen_debug_exception(ctx, false);
+     } else {
+         /*
+@@ -6559,13 +6559,13 @@ static void ppc_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     ctx->pmu_insn_cnt = (hflags >> HFLAGS_INSN_CNT) & 1;
+     ctx->bhrb_enable = (hflags >> HFLAGS_BHRB_ENABLE) & 1;
+ 
+-    ctx->singlestep_enabled = 0;
++    ctx->singlestep_flags = 0;
+     if ((hflags >> HFLAGS_SE) & 1) {
+-        ctx->singlestep_enabled |= CPU_SINGLE_STEP;
++        ctx->singlestep_flags |= CPU_SINGLE_STEP;
+         ctx->base.max_insns = 1;
+     }
+     if ((hflags >> HFLAGS_BE) & 1) {
+-        ctx->singlestep_enabled |= CPU_BRANCH_STEP;
++        ctx->singlestep_flags |= CPU_BRANCH_STEP;
+     }
+ }
+ 
+@@ -6641,7 +6641,7 @@ static void ppc_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
+     }
+ 
+     /* Honor single stepping. */
+-    if (unlikely(ctx->singlestep_enabled & CPU_SINGLE_STEP)) {
++    if (unlikely(ctx->singlestep_flags & CPU_SINGLE_STEP)) {
+         bool rfi_type = false;
+ 
+         switch (is_jmp) {
 -- 
 2.53.0
 
