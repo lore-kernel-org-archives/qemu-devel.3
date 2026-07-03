@@ -4,115 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EAD4C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 02:33:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB559C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 02:34:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfTil-0002XB-1h; Thu, 02 Jul 2026 22:33:39 -0400
+	id 1wfTfa-0000Ba-C1; Thu, 02 Jul 2026 22:30:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wfTib-0002QM-Th
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 22:33:30 -0400
-Received: from mail-westus2azon11012023.outbound.protection.outlook.com
- ([52.101.48.23] helo=MW6PR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wfTfX-00008W-HF; Thu, 02 Jul 2026 22:30:19 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wfTiY-0004Os-UL
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 22:33:29 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V+2jjkASJtdlvqOM8D/tttSImHAFNG4kQ4SIeKYqNvGMZFPouZoB4n+zeHO2b6jRktD8odXn6WSUDR/ejfp2G7ojbJbd6hsdRrcu9AjPChyR3dWK5op43SWTlCM0VH+nCiXJoGNXbXBGKGh4CG9DN6TNblqoOZDxQpS5iMwxB3GsChRlAfngxIKXEIE6SuOcrVlbaOrQOPhJ2qMTxQvm29uIKA4bGjINxWGKnvnPnk0vxA8xDqqsZRrfqYo2bZVRQMYcVDtufDIDeuOWUKmIUEGpPBzW27ulS5aUqOfaUMR7AePXuoi9bchhXzzu+p0j/lCBF6eHT2BLV99jAQA2tw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=L+KOG1KdMd85cZMRosKUrWdpbxy+VfwG/wOknfNj8ZM=;
- b=xdhi7Ct+fHn8TBc5XY8ObEAWuIv+T/HhZSzn2j5+XJMMFMZpyBozzZWrkTVUUw+nz6h18mS63JmXYUPRwJmVJPbVWem8oXRKZ31iFESvUD3XTIojIRItmMSbDitqUEMJ8P3fysZ+R6aY2IQmFub3IEiQE4gyO1RrB2UzNROPHfGfBoAggZmvDD9f0r0d+wk4Mxutz3MfopQq4Tjo0+zAgJHitkJUptvj03bks5QOFpC4YcxPplIsLRHk9A6uOXozGB8bW7ivV+UqRS4jeO605EomRM/z7NGAibrqcetpQAYvM0+10e2naPiyJnZBRNlyH+8gUl3IpjsBnvvffnY1AQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=L+KOG1KdMd85cZMRosKUrWdpbxy+VfwG/wOknfNj8ZM=;
- b=oz2SYExPnxpEZgwzONxuS5QJOlf9pImTKATO/T3OPLXG23h3Yv8+Fvn5F01Pp5o/XneCyQ1hKL46sa/FTV1hsm5BjH8bvay/AceB9Lqu/4lZAi2GabxUT6HTlT/ARAMkm46yuRr4G3YrMqqYEaZ5Z+BNxEWXhcByrEubcv0POBA=
-Received: from DM6PR04CA0027.namprd04.prod.outlook.com (2603:10b6:5:334::32)
- by PH0PR12MB7905.namprd12.prod.outlook.com (2603:10b6:510:28b::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Fri, 3 Jul
- 2026 02:28:15 +0000
-Received: from CY4PEPF0000FCBE.namprd03.prod.outlook.com
- (2603:10b6:5:334:cafe::62) by DM6PR04CA0027.outlook.office365.com
- (2603:10b6:5:334::32) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.10 via Frontend Transport; Fri, 3
- Jul 2026 02:28:15 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- CY4PEPF0000FCBE.mail.protection.outlook.com (10.167.242.100) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.181.6 via Frontend Transport; Fri, 3 Jul 2026 02:28:15 +0000
-Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Thu, 2 Jul
- 2026 21:28:14 -0500
-Received: from [10.65.97.70] (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
- Transport; Thu, 2 Jul 2026 21:28:12 -0500
-Message-ID: <2117d301-4f7f-4f5a-a744-ec2422aacc7d@amd.com>
-Date: Fri, 3 Jul 2026 10:28:06 +0800
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wfTfV-0003S5-1z; Thu, 02 Jul 2026 22:30:19 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6631Iujb1151614; Fri, 3 Jul 2026 02:30:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=X6HKAkf8RA3YZ51Ru
+ q3a0g/ukNaNC9oVnBhA2kpOIww=; b=rf8kOdPw9k6ta11dRmoVJsv9ec14ZpHak
+ 1PJwZTflRMHs6qrg4u9vPQ2Zx/ouC40NJl1LwxPCVUL+rHV7ltsHuCQRkTOkcrrI
+ jyKKcjxBzsKXTUes0Mq8+umnoNf/IurIHsDCUiuD31GNCxiBBrtFczcVZWOiTeAP
+ yMx12d+zEIwPOWNnvh0SLXyLkw0SQe1DuO46PdzRE1+D/cfBxrquVRlykKYCgHZA
+ RB4irhk9r3wHgvW/hkIVhXSXP4zQ0SvEzr/y+rvENUTslUUWhEsIuG+LSRvXZ0Iw
+ xFZl6giVNFQ+wq4Awp/fmnZjLd9/PTyMUp+nQSSqWMfboSNkr1ahw==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26mk4hnb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 03 Jul 2026 02:30:13 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6632K3Vh013183;
+ Fri, 3 Jul 2026 02:30:12 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruqpywb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 03 Jul 2026 02:30:12 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6632UBfs23790172
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 3 Jul 2026 02:30:11 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7CA2658052;
+ Fri,  3 Jul 2026 02:30:11 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 677FC5805A;
+ Fri,  3 Jul 2026 02:30:09 +0000 (GMT)
+Received: from fedora-workstation.lan (unknown [9.61.151.121])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  3 Jul 2026 02:30:09 +0000 (GMT)
+From: Zhuoying Cai <zycai@linux.ibm.com>
+To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
+ jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
+ eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
+ alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+Subject: [PATCH v13 16/33] pc-bios/s390-ccw: Define memory for IPLB and
+ convert IPLB to pointers
+Date: Thu,  2 Jul 2026 22:29:14 -0400
+Message-ID: <20260703022933.1805010-17-zycai@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260703022933.1805010-1-zycai@linux.ibm.com>
+References: <20260703022933.1805010-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 00/10] hw/mem: add sp-mem device for Specific Purpose
- Memory
-To: Igor Mammedov <imammedo@redhat.com>, <mst@redhat.com>
-CC: <qemu-devel@nongnu.org>, <david@kernel.org>, <gourry@gourry.net>,
- <philmd@mailo.com>, <berrange@redhat.com>, <peterx@redhat.com>,
- <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>
-References: <20260623075051.3797975-1-FangSheng.Huang@amd.com>
- <20260625163444.23b168ac@imammedo>
-From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
-In-Reply-To: <20260625163444.23b168ac@imammedo>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000FCBE:EE_|PH0PR12MB7905:EE_
-X-MS-Office365-Filtering-Correlation-Id: e5e7d8c7-1d64-4640-bb0c-08ded8aabc84
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|376014|82310400026|1800799024|23010399003|4143699003|11063799006|18002099003|22082099003|56012099006|13003099007;
-X-Microsoft-Antispam-Message-Info: x+GO7GMJEqte7PMAz9W6fGp/bgodtlEOOZFcyVtUict6atJ5kIWIT77am3dRu43xZemXBeOExwCm+o6tkBzk+B3kn/MphM7tGP6zRTMaRMQcs5v8a8sJNpxNAZzQE0dlWABqGnzczBhIui7Gp5cT9o2GbZCHV37/6YvCp3fsucLeLcv4CcgHUK+LteRtFB9AJBQCTAltYpLaA0mn4F+P/PlweYnf5H0aeQeu6K7pw+/QRWBPGWsgaE5VuxYul/oh9fGeUniS4oMzJvuLn3eX27+5nWpyHvbwixWK4g9tboD7TUXhhfVvoPvEhR04G0izVS7L+wakT7lvAGkr4P68luNOSCdRaXen002IXZJaZjggRq2gNEM2EE5Tj4XBeN2aJKG0N/sIyAsbKX0vg5A+2y2cUpiSyuxcdIfUe7sok0djS/4fU5usECG0hG757GhIONtL3C9sHsQFNA7v8VlHgsyhPNckDI7eGKiOz8DQ8le0IFQ/xmsxTJtJbhjrynHoIGis8HDpBtNY4vwqKNKabsMNIlBsqEyzASrXzSmqNllLWFkkf0oexrqincqyQmUwinE5oiXZKJuxg55YZtHnN/vVSYGCr4+hB1pfUVBywc3bDNosfyxYkorgkMn7g8ap14jZKbfjaWTvwJp1h6Tdd8ftzUbsRLHwCoFtT773R5QHPfTE7BSrG+CRKoghVR2TXXEWCOLDt9ZOQzslvBDTNg==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700016)(376014)(82310400026)(1800799024)(23010399003)(4143699003)(11063799006)(18002099003)(22082099003)(56012099006)(13003099007);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: qtDg1/5dh5hglb1LnPBlZlsLHWvqtywdUyowAnrpe8+/VLs5Qaie9FYvBy7b369m4twwBKZBGka7CiujK+dRX6USYeAoS329gfpKeR3xl4PKxbgh8bH9UzDnlwHViUbx4FjNlBINKyZEqccqU8sXTqUUQlJLitIZdfQXCVe3qGbc962i48lsRoBX54qHd0INKcAqvmN+6UvX9UUXU9WwTl+M7sxMmdhfviEa9r0qYYPbe2KJuz/zPRt8mkN/CPlyIBE6Nowooat1kpslRnG2WoAV7MWpwTTDykIQFPvI87eqZH7ZjE/MCYQlkyv0bSlcrHgFtXCkmbuSLlZA1hLareeakoUhf5qacePOqv4iRJdwGVHKYWNzDdeuO0LJ8/B22rkn68cjsj3OfaC69iOv3YnOBCBx5y/SQOqf67XM47F98W77HIH7pKOlJ+x4FwwM
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2026 02:28:15.1162 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e5e7d8c7-1d64-4640-bb0c-08ded8aabc84
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000FCBE.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7905
-Received-SPF: permerror client-ip=52.101.48.23;
- envelope-from=FangSheng.Huang@amd.com;
- helo=MW6PR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDAyMCBTYWx0ZWRfXw12noKB55LHG
+ iFqfMooqcYSd5XMI3YGmCbU48MY6/JVmFla87IBUErt1NOWZvaktbfxX0eMpo6baz9OkIa8bRyq
+ qLH20hU5QwbYyaKDZp9VbrGEgGUMObAeW8cjG5X7iHVBaWxbtgctoDCMYZmLaNGkuHdYfefTIFf
+ W6Umw7tLKfbLUmO+14feT9R1PRWd+ecxvceSMI8NhcHbnxShJ7Y9tsadOSU/z+mgHAWEdaruEP/
+ fmJtKY3FTEbMZJjlfEeBqZ6inxddWIGVbe86EXMc8AOPeT3cHn0VLyHPeM9kbVqY5eRLA9+7iFA
+ JjKops0K4NAASLcJTkCkGquTL2piwA+kvDDRk3RYvj8Yi0UdmNr8xJvPKf8PIQguMWpn+zbWJY9
+ oYIUdmZsVOYzOSXcH1kTLYbHr0+UAVsjG46TDbkfGLmywgUSw0zm39avgx75xRxg5HTDgB8ugBN
+ FxqWvmLweepsM4w8PMA==
+X-Proofpoint-GUID: IIB9R3uyXrLsZMZhC5ikOhOlkzj_dVUl
+X-Authority-Analysis: v=2.4 cv=Z8bc2nRA c=1 sm=1 tr=0 ts=6a471eb5 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=_GZQR2ZoBes7ElOevS0A:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDAyMCBTYWx0ZWRfX0O8C8cVBFfNd
+ DCRGYi6fUHWdVvp+ggFOCseu/yBVipqd+/PHdo3vhb4tPTzjtc9jQLQORq+qTDIJiO9EJ8OQGgh
+ ucrLGW6FY0WZf5XUdeyce7EKwgdKdjA=
+X-Proofpoint-ORIG-GUID: IIB9R3uyXrLsZMZhC5ikOhOlkzj_dVUl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-03_01,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 adultscore=0 spamscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030020
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,154 +126,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Define a memory space for both IPL Parameter Block (IPLB) and
+IPL Information Report Block (IIRB) since IIRB is stored immediately
+following IPLB.
 
+Convert IPLB to pointer and it points to the start of the defined memory space.
+IIRB points to the end of IPLB.
 
-On 6/25/2026 10:34 PM, Igor Mammedov wrote:
-> On Tue, 23 Jun 2026 15:50:41 +0800
-> fanhuang <FangSheng.Huang@amd.com> wrote:
-> 
->> This series adds a TYPE_MEMORY_DEVICE subclass `sp-mem` for boot-time
->> SOFT_RESERVED guest memory, following the direction from the v7
->> thread [1] and the v8 / v9 / v10 / v11 / v12 / v13 reviews
->> [2][3][4][5][6][7].
-> 
-> review is done at this point,
-> I guess Michael will take it via his tree.
->
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
+---
+ include/hw/s390x/ipl/qipl.h |  6 ++++++
+ pc-bios/s390-ccw/iplb.h     |  5 +++--
+ pc-bios/s390-ccw/jump2ipl.c |  6 +++---
+ pc-bios/s390-ccw/main.c     | 34 +++++++++++++++++++---------------
+ pc-bios/s390-ccw/netmain.c  |  8 ++++----
+ 5 files changed, 35 insertions(+), 24 deletions(-)
 
-Hi Michael,
-
-All patches now carry Reviewed-by / Acked-by. Would it be possible to
-queue this for the 11.1 soft freeze (7/7)?
-
-Best regards,
-FangSheng Huang (Jerry)
-
->>
->> Background
->> ----------
->>
->> This series targets coherent CPU + accelerator shared-address-space
->> systems, where the accelerator's HBM is not a device-private
->> framebuffer behind a PCIe BAR but a tier of host system memory:
->> visible to the CPU in the platform physical address space, shared
->> coherently with the accelerator over the platform fabric, and bound
->> to a NUMA proximity domain set by platform firmware at boot fabric
->> training.
->>
->> For such a region to function correctly in the guest, two things
->> must hold simultaneously: the CPU memory subsystem has to see it in
->> the system memory map (so the CPU side can address it), and it has
->> to be reserved exclusively for the accelerator's driver (so the
->> kernel's general allocator does not hand SPM pages to unrelated
->> workloads). The SOFT_RESERVED memory type in E820 plus a matching
->> SRAT memory-affinity entry is the mechanism that delivers both: a
->> firmware-produced topology that the CPU memory subsystem honors and
->> the accelerator's driver consumes for its own range.
->>
->> Approach
->> --------
->>
->> The series introduces a new TYPE_MEMORY_DEVICE subclass `sp-mem`.
->> Each instance binds one host memory backend to a single NUMA
->> proximity domain and is boot-time only; placement, mapped-state
->> enforcement, and QMP introspection come from the existing
->> memory-device framework.
->>
->> Testing
->> -------
->>
->> Verified end-to-end on q35 + KVM, with both SeaBIOS and OVMF, for:
->>
->> - single sp-mem instance
->> - two sp-mem instances on different NUMA nodes
->>
->> Guest observations: /proc/iomem shows one SOFT_RESERVED entry per
->> sp-mem device, dmesg SRAT parsing reports the matching
->> memory_affinity entries with correct PXM, and the umbrella
->> HOTPLUGGABLE entry covers the remaining hotplug-memory window
->> without overlapping the sp-mem ranges.
->>
->> In-tree coverage: a bios-tables-test case validates the SRAT
->> partition for two sp-mem devices on distinct nodes, and an e820
->> fw_cfg test checks the SOFT_RESERVED range.
->>
->> Changes since v13
->> -----------------
->>
->>    - qapi: note that SpMemDeviceInfo's @size is in bytes.
->>    - pc: fix the indentation of the pc_sp_mem_plug() continuation line.
->>    - Collected the Reviewed-by / Acked-by tags from the v13 review.
->>
->> Previous versions
->> -----------------
->>
->>    v1: https://lore.kernel.org/qemu-devel/20250924103324.2074819-1-FangSheng.Huang@amd.com/
->>    v2: https://lore.kernel.org/qemu-devel/20251020090701.4036748-1-FangSheng.Huang@amd.com/
->>    v3: https://lore.kernel.org/qemu-devel/20251208105137.2058928-1-FangSheng.Huang@amd.com/
->>    v4: https://lore.kernel.org/qemu-devel/20251209093841.2250527-1-FangSheng.Huang@amd.com/
->>    v5: https://lore.kernel.org/qemu-devel/20260123024312.1601732-1-FangSheng.Huang@amd.com/
->>    v6: https://lore.kernel.org/qemu-devel/20260226105023.256568-1-FangSheng.Huang@amd.com/
->>    v7: https://lore.kernel.org/qemu-devel/20260306082735.1106690-1-FangSheng.Huang@amd.com/
->>    v8: https://lore.kernel.org/qemu-devel/20260527074215.229119-1-FangSheng.Huang@amd.com/
->>    v9: https://lore.kernel.org/qemu-devel/20260602084447.1100554-1-FangSheng.Huang@amd.com/
->>    v10: https://lore.kernel.org/qemu-devel/20260605104609.1739911-1-FangSheng.Huang@amd.com/
->>    v11: https://lore.kernel.org/qemu-devel/20260611100637.2460507-1-FangSheng.Huang@amd.com/
->>    v12: https://lore.kernel.org/qemu-devel/20260616090808.3047939-1-FangSheng.Huang@amd.com/
->>    v13: https://lore.kernel.org/qemu-devel/20260619111136.3481329-1-FangSheng.Huang@amd.com/
->>
->>    [1] v7 thread closeout:
->>        https://lore.kernel.org/qemu-devel/666a7ba1-5d3a-4732-b872-0d9fb2fe8461@amd.com/
->>    [2] v8 review:
->>        https://lore.kernel.org/qemu-devel/20260601105057.2d764e55@imammedo/
->>    [3] v9 review:
->>        https://lore.kernel.org/qemu-devel/20260602084447.1100554-1-FangSheng.Huang@amd.com/T/
->>    [4] v10 review:
->>        https://lore.kernel.org/qemu-devel/20260605104609.1739911-1-FangSheng.Huang@amd.com/T/
->>    [5] v11 review:
->>        https://lore.kernel.org/qemu-devel/20260611100637.2460507-1-FangSheng.Huang@amd.com/T/
->>    [6] v12 review:
->>        https://lore.kernel.org/qemu-devel/20260616090808.3047939-1-FangSheng.Huang@amd.com/T/
->>    [7] v13 review:
->>        https://lore.kernel.org/qemu-devel/20260619111136.3481329-1-FangSheng.Huang@amd.com/T/
->>
->> fanhuang (10):
->>    hw/mem: add sp-mem device for Specific Purpose Memory
->>    qapi, hmp: introspection for the sp-mem device
->>    i386/acpi-build: partition device_memory SRAT umbrella for sp-mem
->>    hw/i386: hook sp-mem into the pc machine plug path
->>    MAINTAINERS: cover sp-mem under Memory devices, add R: tag
->>    tests/acpi: add empty expected blobs for sp-mem SRAT test
->>    tests/acpi: add bios-tables-test case for sp-mem
->>    tests/acpi: generate expected blobs for sp-mem SRAT test
->>    tests/qtest: add e820 fw_cfg test
->>    tests/qtest: cover sp-mem SOFT_RESERVED e820 entry
->>
->>   MAINTAINERS                        |   3 +
->>   qapi/machine.json                  |  43 +++++++++-
->>   hw/i386/e820_memory_layout.h       |  11 +--
->>   include/hw/mem/sp-mem.h            |  33 ++++++++
->>   hw/core/machine-hmp-cmds.c         |  11 +++
->>   hw/i386/acpi-build.c               |  96 ++++++++++++++++++++-
->>   hw/i386/pc.c                       |  36 ++++++++
->>   hw/mem/sp-mem.c                    | 128 ++++++++++++++++++++++++++++
->>   tests/qtest/bios-tables-test.c     |  21 +++++
->>   tests/qtest/e820-test.c            | 129 +++++++++++++++++++++++++++++
->>   hw/i386/Kconfig                    |   2 +
->>   hw/mem/Kconfig                     |   4 +
->>   hw/mem/meson.build                 |   1 +
->>   tests/data/acpi/x86/q35/DSDT.spmem | Bin 0 -> 9910 bytes
->>   tests/data/acpi/x86/q35/SRAT.spmem | Bin 0 -> 384 bytes
->>   tests/qtest/meson.build            |   1 +
->>   16 files changed, 508 insertions(+), 11 deletions(-)
->>   create mode 100644 include/hw/mem/sp-mem.h
->>   create mode 100644 hw/mem/sp-mem.c
->>   create mode 100644 tests/qtest/e820-test.c
->>   create mode 100644 tests/data/acpi/x86/q35/DSDT.spmem
->>   create mode 100644 tests/data/acpi/x86/q35/SRAT.spmem
->>
->>
->> base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
-> 
+diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
+index 45d25264f4..9940f1457c 100644
+--- a/include/hw/s390x/ipl/qipl.h
++++ b/include/hw/s390x/ipl/qipl.h
+@@ -208,4 +208,10 @@ struct IplInfoReportBlock {
+ };
+ typedef struct IplInfoReportBlock IplInfoReportBlock;
+ 
++struct IplBlocks {
++    IplParameterBlock   iplb;
++    IplInfoReportBlock  iirb;
++};
++typedef struct IplBlocks IplBlocks;
++
+ #endif
+diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
+index 926e8eed5d..c92a3d0f0c 100644
+--- a/pc-bios/s390-ccw/iplb.h
++++ b/pc-bios/s390-ccw/iplb.h
+@@ -20,8 +20,9 @@
+ #include <string.h>
+ 
+ extern QemuIplParameters qipl;
+-extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
++extern IplParameterBlock *iplb;
+ extern bool have_iplb;
++extern IplBlocks ipl_blocks;
+ 
+ static inline bool manage_iplb(IplParameterBlock *iplb, bool store)
+ {
+@@ -61,7 +62,7 @@ static inline bool load_next_iplb(void)
+ 
+     qipl.index++;
+     next_iplb = (IplParameterBlock *) qipl.next_iplb;
+-    memcpy(&iplb, next_iplb, sizeof(IplParameterBlock));
++    memcpy(iplb, next_iplb, sizeof(IplParameterBlock));
+ 
+     qipl.chain_len--;
+     qipl.next_iplb = qipl.next_iplb + sizeof(IplParameterBlock);
+diff --git a/pc-bios/s390-ccw/jump2ipl.c b/pc-bios/s390-ccw/jump2ipl.c
+index 86321d0f46..fa2ca5cbe1 100644
+--- a/pc-bios/s390-ccw/jump2ipl.c
++++ b/pc-bios/s390-ccw/jump2ipl.c
+@@ -43,11 +43,11 @@ int jump_to_IPL_code(uint64_t address)
+      * The IPLB for QEMU SCSI type devices must be rebuilt during re-ipl. The
+      * iplb.devno is set to the boot position of the target SCSI device.
+      */
+-    if (iplb.pbt == S390_IPL_TYPE_QEMU_SCSI) {
+-        iplb.devno = qipl.index;
++    if (iplb->pbt == S390_IPL_TYPE_QEMU_SCSI) {
++        iplb->devno = qipl.index;
+     }
+ 
+-    if (have_iplb && !set_iplb(&iplb)) {
++    if (have_iplb && !set_iplb(iplb)) {
+         panic("Failed to set IPLB");
+     }
+ 
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index 26287cfd81..b8f836c682 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -24,7 +24,9 @@
+ static SubChannelId blk_schid = { .one = 1 };
+ static char loadparm_str[LOADPARM_LEN + 1];
+ QemuIplParameters qipl;
+-IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
++/* Ensure that IPLB and IIRB are page aligned and sequential in memory */
++IplBlocks ipl_blocks __attribute__((__aligned__(PAGE_SIZE)));
++IplParameterBlock *iplb;
+ bool have_iplb;
+ static uint16_t cutype;
+ LowCore *lowcore; /* Yes, this *is* a pointer to address 0 */
+@@ -53,7 +55,7 @@ void write_subsystem_identification(void)
+ void write_iplb_location(void)
+ {
+     if (cutype == CU_TYPE_VIRTIO && virtio_get_device_type() != VIRTIO_ID_NET) {
+-        lowcore->ptr_iplb = ptr2u32(&iplb);
++        lowcore->ptr_iplb = ptr2u32(iplb);
+     }
+ }
+ 
+@@ -213,14 +215,14 @@ static void boot_setup(void)
+     char lpmsg[] = "LOADPARM=[________]\n";
+     VDev *vdev = virtio_get_device();
+ 
+-    if (have_iplb && memcmp(iplb.loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
+-        ebcdic_to_ascii((char *) iplb.loadparm, loadparm_str, LOADPARM_LEN);
++    if (have_iplb && memcmp(iplb->loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
++        ebcdic_to_ascii((char *) iplb->loadparm, loadparm_str, LOADPARM_LEN);
+     } else {
+         sclp_get_loadparm_ascii(loadparm_str);
+     }
+ 
+     if (have_iplb) {
+-        vdev->ipl_type = iplb.pbt;
++        vdev->ipl_type = iplb->pbt;
+         menu_setup(vdev);
+     } else {
+         vdev->ipl_type = QEMU_DEFAULT_IPL;
+@@ -244,21 +246,21 @@ static bool find_boot_device(void)
+     switch (vdev->ipl_type) {
+     case S390_IPL_TYPE_CCW:
+         vdev->scsi_device_selected = false;
+-        debug_print_int("device no. ", iplb.ccw.devno);
+-        blk_schid.ssid = iplb.ccw.ssid & 0x3;
++        debug_print_int("device no. ", iplb->ccw.devno);
++        blk_schid.ssid = iplb->ccw.ssid & 0x3;
+         debug_print_int("ssid ", blk_schid.ssid);
+-        found = find_subch(iplb.ccw.devno);
++        found = find_subch(iplb->ccw.devno);
+         break;
+     case S390_IPL_TYPE_QEMU_SCSI:
+         vdev->scsi_device_selected = true;
+-        vdev->selected_scsi_device.channel = iplb.scsi.channel;
+-        vdev->selected_scsi_device.target = iplb.scsi.target;
+-        vdev->selected_scsi_device.lun = iplb.scsi.lun;
+-        blk_schid.ssid = iplb.scsi.ssid & 0x3;
+-        found = find_subch(iplb.scsi.devno);
++        vdev->selected_scsi_device.channel = iplb->scsi.channel;
++        vdev->selected_scsi_device.target = iplb->scsi.target;
++        vdev->selected_scsi_device.lun = iplb->scsi.lun;
++        blk_schid.ssid = iplb->scsi.ssid & 0x3;
++        found = find_subch(iplb->scsi.devno);
+         break;
+      case S390_IPL_TYPE_PCI:
+-        found = find_fid(iplb.pci.fid);
++        found = find_fid(iplb->pci.fid);
+         break;
+     default:
+         puts("Unsupported IPLB");
+@@ -377,10 +379,12 @@ static void probe_boot_device(void)
+ 
+ void main(void)
+ {
++    iplb = &ipl_blocks.iplb;
++
+     copy_qipl();
+     sclp_setup();
+     css_setup();
+-    have_iplb = store_iplb(&iplb);
++    have_iplb = store_iplb(iplb);
+     if (!have_iplb) {
+         boot_setup();
+         probe_boot_device();
+diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
+index 651cedf6ef..9b4dfd4638 100644
+--- a/pc-bios/s390-ccw/netmain.c
++++ b/pc-bios/s390-ccw/netmain.c
+@@ -528,11 +528,11 @@ static bool virtio_setup(void)
+      */
+     enable_mss_facility();
+ 
+-    if (have_iplb || store_iplb(&iplb)) {
+-        IPL_assert(iplb.pbt == S390_IPL_TYPE_CCW, "IPL_TYPE_CCW expected");
+-        dev_no = iplb.ccw.devno;
++    if (have_iplb || store_iplb(iplb)) {
++        IPL_assert(iplb->pbt == S390_IPL_TYPE_CCW, "IPL_TYPE_CCW expected");
++        dev_no = iplb->ccw.devno;
+         debug_print_int("device no. ", dev_no);
+-        net_schid.ssid = iplb.ccw.ssid & 0x3;
++        net_schid.ssid = iplb->ccw.ssid & 0x3;
+         debug_print_int("ssid ", net_schid.ssid);
+         found = find_net_dev(&schib, dev_no);
+     } else {
+-- 
+2.54.0
 
 
