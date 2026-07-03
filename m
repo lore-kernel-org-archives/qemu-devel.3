@@ -4,72 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F11C6C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 05:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26526C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 05:04:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfW1R-0007Fh-V7; Fri, 03 Jul 2026 01:01:06 -0400
+	id 1wfW4M-0008Le-KT; Fri, 03 Jul 2026 01:04:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wfW1P-0007FU-15
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 01:01:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1wfW4K-0008LG-LP; Fri, 03 Jul 2026 01:04:04 -0400
+Received: from [115.124.30.131] (helo=out30-131.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wfW1N-00076c-KM
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 01:01:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783054859;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gj1h4aqTMqklydgomnALwCo4Zptglih8XAoQ6YGvqhc=;
- b=WUKlSF4FpVoAGV+ICIjZDLlZDgCRrVkgYyU7L5gyzNFvOjcZQNNNg3GGiNaud5cCda/Ecr
- TxyA9FJmY5uh0wENiGePCW7w/MV0+LWZaZwa85MzSdGeYddfhc7nsQ0ILCdbkSLDiDVLde
- cmIjyjY3X9U0cGvKdLzhGXguVp7NOxc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-303-R3VxHDjSPhmFsWJ2Wg8B_g-1; Fri,
- 03 Jul 2026 01:00:57 -0400
-X-MC-Unique: R3VxHDjSPhmFsWJ2Wg8B_g-1
-X-Mimecast-MFC-AGG-ID: R3VxHDjSPhmFsWJ2Wg8B_g_1783054857
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CDC8718CC4AA
- for <qemu-devel@nongnu.org>; Fri,  3 Jul 2026 05:00:56 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.24])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DDD2D30030D1; Fri,  3 Jul 2026 05:00:55 +0000 (UTC)
-Date: Thu, 2 Jul 2026 20:49:30 +0200
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [GIT PULL 0/8] Dump patches for 2026-06-30
-Message-ID: <20260702184930.GA439863@fedora>
-References: <20260630-dump-v1-0-7df3087dffc9@redhat.com>
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1wfW4F-0007Zt-Cw; Fri, 03 Jul 2026 01:04:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1783055021; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=HPIktuUUdcEAxttrOkAov5VOnnyGa9D8Tl1X7gPVxF4=;
+ b=gO0IRPtImUSimbF3a6KGs/FuSO8FmgUXeOnVMxcpl4WU1O9UH11nZ4TDoPCUIKpjmq93eLzDacTlDJUrllttdipEFK03bOWPV+ToPPCi8UqqV9m+NK6gO7eUmpeDCR1kT7o7N1qJctatN1/t4QwUnkHzLtO7DJ3M+2lPZYxHYtk=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R701e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
+ MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=10; SR=0;
+ TI=SMTPD_---0X6I8Ms._1783055020; 
+Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
+ fp:SMTPD_---0X6I8Ms._1783055020 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 03 Jul 2026 13:03:41 +0800
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
+Date: Fri, 03 Jul 2026 13:03:37 +0800
+Subject: [PATCH v4 2/5] disas/riscv: Fix 6-bit immediate extraction
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Jv3DXxvj37KaT7zA"
-Content-Disposition: inline
-In-Reply-To: <20260630-dump-v1-0-7df3087dffc9@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_06_12=1.543,
- DKIMWL_WL_HIGH=-0.445, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260703-b4-disas-xthead-fix-riscv-next-v4-2-84c566330bc7@linux.alibaba.com>
+References: <20260703-b4-disas-xthead-fix-riscv-next-v4-0-84c566330bc7@linux.alibaba.com>
+In-Reply-To: <20260703-b4-disas-xthead-fix-riscv-next-v4-0-84c566330bc7@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: Christoph Muellner <christoph.muellner@vrull.eu>, 
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-riscv@nongnu.org, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ TANG Tiancheng <lyndra@linux.alibaba.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783055019; l=1149;
+ i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
+ bh=92Ky+ypMxNhxOQ+A9l2pZ8DMyyhB42A8DBJhN+/tWM4=;
+ b=H+8oAhNS8f/Kgl9KTAFScrZergwglD2zWseeMai93izRTK3kYlfzN49unN0V8D562Bpkv4oy8
+ 2OL9+aavx0xA8oY8QFaLzxchCvHEJBJIU5KFBysBuhj8CrWy81+dqTU
+X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
+ pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.131 (deferred)
+Received-SPF: pass client-ip=115.124.30.131;
+ envelope-from=lyndra@linux.alibaba.com;
+ helo=out30-131.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,30 +83,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+rv_codec_r2_imm6 is used for XThead instructions whose 6-bit
+immediate field is encoded in bits 25:20. The old expression
+left-shifted by 38 and then right-shifted by 60, so it kept only
+bits 25:22.
 
---Jv3DXxvj37KaT7zA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Use extract32() to decode bits 25:20 directly. This fixes the
+immediate printed for th.srri and th.tst.
 
-Applied, thanks.
+Fixes: 318df7238b9f ("disas/riscv: Add support for XThead* instructions")
+Suggested-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+---
+ disas/riscv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 7f1b26277378c225c963d8f435cc7a2fc6e4a0b8..fdf75a12ef0650a8fdf6e7b8ec0aa320303051a1 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -4546,7 +4546,7 @@ static uint32_t operand_zcmp_rlist(rv_inst inst)
+ 
+ static uint32_t operand_imm6(rv_inst inst)
+ {
+-    return (inst << 38) >> 60;
++    return extract32(inst, 20, 6);
+ }
+ 
+ static uint32_t operand_imm2(rv_inst inst)
 
---Jv3DXxvj37KaT7zA
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmpGsrkACgkQnKSrs4Gr
-c8jC8wf/XWU6tzwgfyaUDYSo+o6FLLmrHX7tv4sFgfZWlpdNQ5JdjAgII974p1z2
-eSXaqRv+tEEN1/anPvXxSW4YI3FX/k929nURE2WhrstBLL7nWzqGa/hpKCyRIbgF
-1gkRUutZMKFRtZoFEMXW8yUrV9rqF73Kp/Lk/6IguO0vQNq6JAW2+LURuCswjqV6
-75fAYQY3k6myzU2y47BV4ZphvsL7rBDK7fRhnNt0mUOWv5ksj7GJN0GEhyWWiJcN
-GWXf4G/m4I1dJEKbT3k9M7vrHlPjUGCk/Z0hsOwJii4vFl0p15gF+nzejqQwRY94
-cPFDlQ6vna76f2EMcwiZone4OHmdSw==
-=kliY
------END PGP SIGNATURE-----
-
---Jv3DXxvj37KaT7zA--
+-- 
+2.43.0
 
 
