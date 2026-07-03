@@ -4,116 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E47CC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 17:49:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FF22C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 17:51:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfhzq-0006VS-8q; Fri, 03 Jul 2026 13:48:14 -0400
+	id 1wfi2c-0007F6-OA; Fri, 03 Jul 2026 13:51:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wfhzj-0006Sn-1U; Fri, 03 Jul 2026 13:48:09 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wfi2b-0007Ej-S1
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 13:51:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wfhzf-0006Yh-B8; Fri, 03 Jul 2026 13:48:05 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 663GIna63236652; Fri, 3 Jul 2026 17:47:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=C+fSEQ
- YD48a5wdIevKQXiLLI15J1f52+wt8655YLZv0=; b=AHeyM+9/Mm1+VUGEHETIvV
- L4RAQGX8MyBhMfVSPbuxU6zDltxi15b6k4vExvJ7oQh1sjjtw8SkiauU41aVMcBo
- ANTNP+QHmsfCelzlKevAfgLTDY7m/pD2M5en/DyOJ9wQ6cKZ/v412d/t5Wk18jrp
- oUSCmOiXaZaosjh1mKuZ1ty1reKOJRsRgGPf59WcZx5Pp4M1QjMD51dowmrc2cZ8
- sh5Hd3i1EAjm65kcZ2LzwxtBAp9QACvn3bXkD84AtIu4xsCZy5LBDi6Xy+AX8B+7
- pYzzq8wd4wdL82do+i+u6q8BKtSv1UqshDb4Qt0PKEKKh4mj38aSruH5mo/OFCJg
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rffs95-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 17:47:59 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663HJaQR020398;
- Fri, 3 Jul 2026 17:47:58 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2u2gsrpa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 17:47:58 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 663Hlvsm12321322
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 3 Jul 2026 17:47:58 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8A5A25804E;
- Fri,  3 Jul 2026 17:47:57 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A542A5803F;
- Fri,  3 Jul 2026 17:47:55 +0000 (GMT)
-Received: from [9.61.65.1] (unknown [9.61.65.1])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  3 Jul 2026 17:47:55 +0000 (GMT)
-Message-ID: <462f8169-16ad-457e-8505-d12d9fe867dd@linux.ibm.com>
-Date: Fri, 3 Jul 2026 13:47:55 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wfi2a-0007JE-7G
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 13:51:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783101060;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=YJ50Xpg8KaWdrB20he/p9oQnBmilZze5lI/aVbghq3k=;
+ b=S7seGbW8srrn7QASUDsKN08kvJ/fFK7w1FZv/DOyn/Nppw/yovuD34Glrv6cVehM59xpHu
+ SVN3Q+PF2pYWhj98GsQACT0a20+SSXzU0vyqgZBulvSLtqgNJyDrgXokgd8NZ0VLBxEZHC
+ gMnpUEKdK/sN7OkJIY1joXipjIq6M0M=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-440-JJBo0zyVMPaZjNuwSG1yrg-1; Fri, 03 Jul 2026 13:50:57 -0400
+X-MC-Unique: JJBo0zyVMPaZjNuwSG1yrg-1
+X-Mimecast-MFC-AGG-ID: JJBo0zyVMPaZjNuwSG1yrg_1783101056
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-493c1bc7a70so7339215e9.1
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 10:50:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783101056; cv=none;
+ d=google.com; s=arc-20260327;
+ b=qIMV8iVtaRYagDL2/+TMDFRmo+2N+itlWmKY6AvMR7Iev7ahRAEbf/zziKyqlTutpy
+ WIoyVRmr3D9chpAb6ISXMbuUIRBFt/CiED/Z3Lr9U1bbYmkD9NJVo/4PU+Y6/DFSkTej
+ KrBmjSs/x1kccXpqU8r1365Kl71F+RvP7a/SxGo7tjnov8hg0/RqGTnHMcQYkFICR/tG
+ fK/JyuRunOPIihE0EvzrIBASiYqGqkCaRkHj5K0k+O4ts/qp14xkCpP2NKIEETCg6wmx
+ 7q+x38iZAaVk37Ms/919cUiyEEBPJrshPsP98rnc74qsYu9cwj/JhMtsEdgEnjSUOHSy
+ OipA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=YJ50Xpg8KaWdrB20he/p9oQnBmilZze5lI/aVbghq3k=;
+ fh=Y6ZVa2DAQ7N99Yz30qJegDSPM58qw0hum3KbRozMzY4=;
+ b=WaegIkXWRIqhQZr6SDBQdgTJ+IDJV5OF/Utj6GPOwstyPsYF4zu2Y5/BgFo54jH4ti
+ kzI6SBf+8EdhqDDemUJhcM8fQ2RO7+xkK2xtgN/YRbxVKyDYJayfuKddZIsF+2MREgrj
+ 4jpYc6caYjuDOf1MnrNFRP/yzgYsQl6reFcvBq/wp+NSFCwz2L1maJlx/5sEGxlKb6mq
+ OyAYfsHQ6YL7JATirINIj6kqAI3+tyXfvihKC9YRuY+LXM4cSd2/1ZnWad1U6R0PJOTU
+ HuWvTsidcI+ApfbGZ2PWxbAe7LYZxkaN8EbPEVx470kRtWUOmihUeJrdAP1YNi8DPzyL
+ sA+g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783101056; x=1783705856; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=YJ50Xpg8KaWdrB20he/p9oQnBmilZze5lI/aVbghq3k=;
+ b=nyck+KmW9zzn/6s1ZfjUJT12BpXnq6iAhLW0aN38TshBFjsQrqjB6FkC+kgmDKYnKo
+ M3mVOlX/MNz+QMski/KJMNm6xVs2hAPdGhQBPxr/J3Rpa5ktVyLViDDJykNfHxsaEU2Y
+ aRRsKLTqwlNrHEGX/6YuyL3NnUt2m8Q4S6gCFAHmGgm7QA/sQh4kDyxhxzuslI+2NQWw
+ jo9aikS+qPwYZDE35/yEJzpJL3n11T2xjFFrr/DiAkFAPmJHh9JepmL4uH9Vu8LNqLAK
+ gM3bBcDp/BOOSsXzOmp+N3lBoSg6H3wlmCm1m2nEtWkerKLyzrw4SbTHQEcmMjqhDhCq
+ Fltg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783101056; x=1783705856;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YJ50Xpg8KaWdrB20he/p9oQnBmilZze5lI/aVbghq3k=;
+ b=lF3KQ8fA03RVd/OhmhSPIXcHBmxinAHVzE+jDb1AKUoWt30UeTS8ZWIh2mmSP1Gb1e
+ KJlv/frhrUUYNbnR9Zy/JOAJLSYKd8P5gm4O+6u1nzLDRZALjSvlr3Q61B8SW0QL4GIv
+ 8J1j7q2iqkAn8C65qekr6MmcER5V0Id3mGKW1I5ymH5Itp1IBeu6g1/1DvhX7As44FL/
+ 8zUkG+ADWbk8Kkbeqli8KTG8vXBvVvBpZEa3SHlPq052j3yKaW+KHGI/wIIuRz64muq8
+ FBVeJd4vl2LF2mowFUcdTsnKmyR3fua5O6ViBJCc6XkmqSpjkzUyz5Y9ugZ4H8f2H+jp
+ Bt2Q==
+X-Gm-Message-State: AOJu0Yxeg6CB6EWxjKXo9Gr44/DJWA9fC4PfJSBEQ4hHInT6xbYwVv5P
+ Ji0o2TmDEu2Ld5CqqEuFmdE7y5cTZZA3DpF7+wxypH6wuUSeJ1JooxXMdMH0pvEzx2vPwrKktQr
+ MZ/wifOz1Zh6JxT7e/K/PDFWa69NGrfbE7gGir5XrZkL2PtLsTBi+wFeKGDEHO8lW3WSKitVD2Q
+ SREo9C8u4M77FnKjJG0QAjpjq6XpFCVsk=
+X-Gm-Gg: AfdE7clAfc+lTQOzsgcWlJQ2F/uHKFSiypc2iOhhb2D248B2B9C3XLO8TrH0VgIfDoc
+ /L0uiegiOH8/+Rwy88XKxRIEKnDt/UBP/AuVgi9yKgSa04KRizK5nNkJy7igdKgSj+yFoufc/09
+ YGfdpSs9IVQleZsViK11ryXNkPMQUqsYLHnwdR2pHwRT5dJUQhdqftS06xv7HBqZ88gjdfcdiB8
+ Ql0T9t0MMKkrNGso4rdxhHNvvIyY3ShK9eLxEP+dG36WPz3L2FYjI2lh+Ewc5lj2FbMNZE=
+X-Received: by 2002:a05:600c:154b:b0:493:b6c2:cd96 with SMTP id
+ 5b1f17b1804b1-493d11d9d42mr3114125e9.12.1783101056184; 
+ Fri, 03 Jul 2026 10:50:56 -0700 (PDT)
+X-Received: by 2002:a05:600c:154b:b0:493:b6c2:cd96 with SMTP id
+ 5b1f17b1804b1-493d11d9d42mr3113915e9.12.1783101055836; Fri, 03 Jul 2026
+ 10:50:55 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 24/33] pc-bios/s390-ccw: Add signed component address
- overlap checks
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
- richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
- jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260703170032.1893204-1-zycai@linux.ibm.com>
- <20260703170032.1893204-25-zycai@linux.ibm.com>
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <20260703170032.1893204-25-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a47f5cf cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=MHhQ7DiV7CNW8Tm783kA:9 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
-X-Proofpoint-ORIG-GUID: mv6L2sXLT-2NQFse7bLHras1PgncZdiI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE3MyBTYWx0ZWRfX/DnT8XrPA34T
- O6JxW4sVte4snuB8FavR0OfzsGh75ENQlUDVSDnK8ZvQctsP7+ue82KGA7DIGKSokYyH8uS7k6h
- XaXRm4u0lJEMWy5b59PWEiYdRgxnkFyfbvcIXiDKpiBoUk7iUO+NBaYNO5nF85eAj3BmnCyi9jf
- rxVizr3PU8Z8C3fAhu+u1UMrpSsaDM0iyeiq2p7w3eSdUWN5IHyLK9wDIRMwEPcoFzSFG6xoWrc
- 7GJR8RKqGmT3sSgBY16pwN3V4htQO/aWos63fCGn24w9m84s+mKwNHWEegfVoEtj5r0zlCBOf5F
- 9mvIvv49A3ha620ksMm3o1AN+vIuSjYiw1L+Yc0bAz1KyhJcepxJ2g2xM3hioq6SZRdVnIU/TBS
- 1zlXvU4ZqMx4OrwkbzCuk0Old/Apgc/WFRiHlNsah2CY2CDADYlyBX4R036T7kKCzuYwt+euQZh
- +//CcYmQ5O0pzxHTZaw==
-X-Proofpoint-GUID: mv6L2sXLT-2NQFse7bLHras1PgncZdiI
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE3MyBTYWx0ZWRfX+GryhQLBNxdP
- yWpot9zplA8leZ6k7BXPxnMTIytPzjfSTYcDGkrEyDeY4n8gAi5OyRPtnI4Hr+su/mTvyPYujCn
- ioGivsVyIgPkYIY+cn+zL5a/IlT4jMk=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-03_03,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
- spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030173
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
+ <20260417105618.3621-27-magnuskulke@linux.microsoft.com>
+ <CABgObfbS988oSPNOV4qLMcT1CPLAyu-NigwYPgZSgZq1ZY7fxA@mail.gmail.com>
+ <akfvt0nTdVKZFOmJ@example.com>
+In-Reply-To: <akfvt0nTdVKZFOmJ@example.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 3 Jul 2026 19:50:43 +0200
+X-Gm-Features: AVVi8Cc2ACvz9Ph4hCnMyq-PQo0PFOCu_awdNl7m7EQ8YKw-fQIeEH6Q5TpoBDY
+Message-ID: <CABgObfagW4TRZ5YcB-8SHizsjd2BafrcvTnu2fAkyV3_4_GT2A@mail.gmail.com>
+Subject: Re: [PATCH 26/34] accel/mshv: introduce SaveVMHandler
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>, 
+ Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <liuwe@microsoft.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Wei Liu <wei.liu@kernel.org>, Alex Williamson <alex@shazbot.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Marcelo Tosatti <mtosatti@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000000847c10655b89132"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,37 +144,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/26 1:00 PM, Zhuoying Cai wrote:
-> Add address range tracking and overlap checks to ensure that no
-> component overlaps with a signed component during secure IPL.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
+--0000000000000847c10655b89132
+Content-Type: text/plain; charset="UTF-8"
 
-...
+Il ven 3 lug 2026, 19:22 Magnus Kulke <magnuskulke@linux.microsoft.com> ha
+scritto:
 
-> --- a/pc-bios/s390-ccw/secure-ipl.h
-> +++ b/pc-bios/s390-ccw/secure-ipl.h
-> @@ -112,4 +112,10 @@ static inline bool verify_signature(IplDeviceComponentEntry comp_entry,
->      return false;
->  }
->  
-> +static inline bool intersects(uint64_t addr0, uint64_t size0,
-> +                              uint64_t addr1, uint64_t size1)
-> +{
-> +    return addr0 + size0 > addr1 && addr1 + size1 > addr0;
+> On Thu, Jul 02, 2026 at 10:50:17AM +0200, Paolo Bonzini wrote:
+> > Sorry, I forgot to reply about this one.
+> >
+> > It is not clear why you need to pause, since this is handled by common
+> > code. Are you not handling live migration yet? That should be handled at
+> > levels above QEMU, because users expect migration to be performed while
+> the
+> > VM runs, and the SaveVMHandler should just fail migration of the VM is
+> > running.
+> >
+> > Paolo
+> >
+>
+> Hey Paolo,
+>
+> I spent some time looking at this. it's a bit twisted. The un/pause()
+> calls are unfortunately named, they are merely freezing the progress of
+> the reference timer, which for any real-world workload is in fact
+> pausing the guest b/c if the timer doesn't progress an os would mostly
+> stall, waiting for ticks.
+>
 
-Another way to do this to avoid any possibility of u64 overflow
-would be to use subtraction:
+There are different "schools of thought" for that. Freezing introduces an
+incorrect timing on the destination, not freezing introduces a jump.
 
-if (addr1 > addr0)
-    return addr1 - addr0 < size0;
-return addr0 - addr1 < size1;
+If you choose to freeze that's fine, QEMU does the same for KVM even though
+KVM has alternative ioctls that allow not freezing.
 
-With something like that:
+But currently it's the wrong
+> place. I'll find some more fitting place to perform this ceremony.
+>
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+KVM uses a device for that, see kvnclock.c.
 
+Curiously the time-frozen source was obscuring another potentially more
+> serious bug. The mshv vcpu dispatch loop currently does not honor a
+> cpu->exit_request
+
+
+Was that related to the other patch that was touching the vcpu thread loop?
+
+Paolo
+
+like it is currently set after precopy:
+>
+> migration_completion_precopy()
+>   migration_stop_vm()
+>     vm_stop_force_state()
+>       vm_stop()
+>         do_vm_stop()
+>           pause_all_vcpus()
+>             cpu_pause()
+>               cpu_exit()
+>                 qatomic_store_release(&cpu->exit_request, true)
+>
+> The two bugs were sort of cancelling each other out. Since the source
+> guest was not busy, migrations were still succeeding, even though the
+> the vcpus were not actually "stopped" on the vcpu.
+>
+> I'll rework this a bit, and submit a revised version.
+>
+> best,
+>
+> magnus
+>
+>
+
+--0000000000000847c10655b89132
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il ven 3 lug 2026, 19:22 Magnus =
+Kulke &lt;<a href=3D"mailto:magnuskulke@linux.microsoft.com">magnuskulke@li=
+nux.microsoft.com</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
+04);padding-left:1ex">On Thu, Jul 02, 2026 at 10:50:17AM +0200, Paolo Bonzi=
+ni wrote:<br>
+&gt; Sorry, I forgot to reply about this one.<br>
+&gt; <br>
+&gt; It is not clear why you need to pause, since this is handled by common=
+<br>
+&gt; code. Are you not handling live migration yet? That should be handled =
+at<br>
+&gt; levels above QEMU, because users expect migration to be performed whil=
+e the<br>
+&gt; VM runs, and the SaveVMHandler should just fail migration of the VM is=
+<br>
+&gt; running.<br>
+&gt; <br>
+&gt; Paolo<br>
+&gt; <br>
+<br>
+Hey Paolo,<br>
+<br>
+I spent some time looking at this. it&#39;s a bit twisted. The un/pause()<b=
+r>
+calls are unfortunately named, they are merely freezing the progress of<br>
+the reference timer, which for any real-world workload is in fact<br>
+pausing the guest b/c if the timer doesn&#39;t progress an os would mostly<=
+br>
+stall, waiting for ticks.<br></blockquote></div></div><div dir=3D"auto"><br=
+></div><div dir=3D"auto">There are different &quot;schools of thought&quot;=
+ for that. Freezing introduces an incorrect timing on the destination, not =
+freezing introduces a jump.</div><div dir=3D"auto"><br></div><div dir=3D"au=
+to">If you choose to freeze that&#39;s fine, QEMU does the same for KVM eve=
+n though KVM has alternative ioctls that allow not freezing.</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote=
+_container"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">But currently=
+ it&#39;s the wrong<br>
+place. I&#39;ll find some more fitting place to perform this ceremony.<br><=
+/blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">KVM u=
+ses a device for that, see kvnclock.c.</div><div dir=3D"auto"><br></div><di=
+v dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">
+Curiously the time-frozen source was obscuring another potentially more<br>
+serious bug. The mshv vcpu dispatch loop currently does not honor a<br>
+cpu-&gt;exit_request</blockquote></div></div><div dir=3D"auto"><br></div><d=
+iv dir=3D"auto">Was that related to the other patch that was touching the v=
+cpu thread loop?</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</=
+div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote=
+ gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0=
+px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"> =
+like it is currently set after precopy:<br>
+<br>
+migration_completion_precopy()<br>
+=C2=A0 migration_stop_vm()<br>
+=C2=A0 =C2=A0 vm_stop_force_state()<br>
+=C2=A0 =C2=A0 =C2=A0 vm_stop()<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 do_vm_stop()<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pause_all_vcpus()<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu_pause()<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu_exit()<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qatomic_store_relea=
+se(&amp;cpu-&gt;exit_request, true)<br>
+<br>
+The two bugs were sort of cancelling each other out. Since the source<br>
+guest was not busy, migrations were still succeeding, even though the<br>
+the vcpus were not actually &quot;stopped&quot; on the vcpu.<br>
+<br>
+I&#39;ll rework this a bit, and submit a revised version.<br>
+<br>
+best,<br>
+<br>
+magnus<br>
+<br>
+</blockquote></div></div></div>
+
+--0000000000000847c10655b89132--
 
 
