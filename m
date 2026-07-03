@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1930EC43602
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 05:23:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2A10C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 05:23:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfWMW-0005TB-Og; Fri, 03 Jul 2026 01:22:53 -0400
+	id 1wfWMY-0005VL-NW; Fri, 03 Jul 2026 01:22:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wfWMU-0005So-VB; Fri, 03 Jul 2026 01:22:50 -0400
+ id 1wfWMV-0005T0-R5; Fri, 03 Jul 2026 01:22:51 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wfWMS-0005s0-2Q; Fri, 03 Jul 2026 01:22:50 -0400
+ id 1wfWMS-0005s1-0K; Fri, 03 Jul 2026 01:22:51 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6635LT8O018373
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6635LT8Q018373
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 3 Jul 2026 14:21:42 +0900 (JST)
+ Fri, 3 Jul 2026 14:21:44 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=SuGsYbGlKlc6b1DT5vt3OpkvoEjMGNIgH0RWbpVGexY=; 
+DKIM-Signature: a=rsa-sha256; bh=8Z+IPYMxREf+abkIImBqXakTaTGWJQ+kmZT646AKWUY=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1783056103; v=1;
- b=S20lgzeIrAK4H5mymbVMmwynLidXIEr8fLV0kex6TpzJb5R7oEizYlM/qZE1O+0g
- uFjFcXYzOE14hzhJFWsTFYQdrmv0K6in73PtRufsQ8r/GM5NKIH1s+recQO8juh2
- OaLEHIJBnUFgD+64n49UVucLVF9m+evAEg5zzgel4m7DkbrP1GMHAxna2ees1IG7
- 5bZ5m1XfKnCX5ZK+nZtBXgbqRIx9vn+a6hMl6pJd4EDLfwO1HrN2/08um2ZcPz8+
- LyZlj6HTfbSxhxolTgpyMFL4zAzoXqOeexN24QPRCs+XynFBalZt3684DJiym37y
- lwANSpgPCJHO5Vz6eFRBtg==
+ s=rs20250326; t=1783056104; v=1;
+ b=mHK+MzHFe5pufb2GxF26lI1muKh0LM+Rd1oFmcUJgWtJDzyFLEyjJTIMi9/UcG9e
+ b6m3yIJruONYSU9TQbQxLPoMEcnG0kf5jFjS2l+n6JAbeK31JNC+hybrwvXnkhJR
+ CG2PwqJugDdAZw7Gq+S+cEf1bBXJ2CehRXn6Zm+byZrqs5/zxSCr3J9Vj7FWVEYI
+ RsrkydzvZE6U7li2a+bESxJ0pFUF36jchgz9/3gCXYzrS6j6CtVSjPUfhtDrgTPY
+ OQIWzIYZLqeZ8afzJdDGh/Wrm8rVJU4n+foWkCyCwvP+A5ahHBTDWNDjflCsEBez
+ 8b8WsIzbrLT4qSjrTeLFkw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 03 Jul 2026 14:19:17 +0900
-Subject: [PATCH v2 1/7] hw/nvram/fw_cfg: Remove acpi-mr-restore
+Date: Fri, 03 Jul 2026 14:19:19 +0900
+Subject: [PATCH v2 3/7] system/memory: Remove the resized callback
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260703-ram-v2-1-7f07fc06fba9@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260703-ram-v2-3-7f07fc06fba9@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260703-ram-v2-0-7f07fc06fba9@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260703-ram-v2-0-7f07fc06fba9@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -73,13 +73,13 @@ Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-925f5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2570;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10859;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=rfWCLDHUcpahNgEC3SGqI/nzOlyqMecU43nGCyZYC8s=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5a7292uvb5fvrnm7tp9b5dvJte9v0uYEovO1uddvZ35h
- NFhQtvZjlIWBjEuBlkxRZaUot3cGtG1nwoT4ltg5rAygQxh4OIUgInUXWD4n3Q8Z7FJ9M3+/FlP
- yrWtlv46vnNK17JZ90Nzdlx6dcBGrpWRYeH/uf8fOdSpt8X3Xi7e9oZt790XTTtv/ZL4+X3x6UM
- KvHwA
+ bh=L+KVAMGTsaOt599iuSVgif1jV4HKCoTCrodEu6dG+Qg=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5a72wPp7bZLZ897U1e/sKCf4VvVg/3yNqKLXbesnyLwy
+ /id7LyJHaUsDGJcDLJiiiwpRbu5NaJrPxUmxLfAzGFlAhnCwMUpABPZrcPwP+Flw5Xje7OyFpQu
+ b3h/6c6hbJ/E5wdKXi42TboU9Oen+k+G/1nv1azc0lxehausvPHl3iWuB9z5xvNMzaIFN25JPG0
+ 5ix8A
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -105,73 +105,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The acpi-mr-restore property exists only for migration compatibility
-with QEMU 4.2, which is no longer a supported migration source.
+The previous change moved fw_cfg updates out of the RAMBlock resize
+callback, leaving the callback pointer unused. Remove the now-unused
+callback plumbing.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/hw/nvram/fw_cfg.h | 1 -
- hw/core/machine.c         | 1 -
- hw/nvram/fw_cfg.c         | 8 +-------
- 3 files changed, 1 insertion(+), 9 deletions(-)
+ include/system/memory.h   |  4 ----
+ include/system/ramblock.h |  7 +------
+ hw/core/loader.c          |  4 +---
+ system/memory.c           |  7 ++-----
+ system/physmem.c          | 24 ++++++------------------
+ 5 files changed, 10 insertions(+), 36 deletions(-)
 
-diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
-index 56f17a0bdcf7..6aad9aad7694 100644
---- a/include/hw/nvram/fw_cfg.h
-+++ b/include/hw/nvram/fw_cfg.h
-@@ -73,7 +73,6 @@ struct FWCfgState {
-     MemoryRegion dma_iomem;
+diff --git a/include/system/memory.h b/include/system/memory.h
+index e143c9c3f396..6a2d5f5f855f 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -1407,7 +1407,6 @@ bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
+  *        must be unique within any device
+  * @size: used size of the region.
+  * @max_size: max size of the region.
+- * @resized: callback to notify owner about used size change.
+  * @errp: pointer to Error*, to store an error if it happens.
+  *
+  * Note that this function does not do anything to cause the data in the
+@@ -1420,9 +1419,6 @@ bool memory_region_init_resizeable_ram(MemoryRegion *mr,
+                                        const char *name,
+                                        uint64_t size,
+                                        uint64_t max_size,
+-                                       void (*resized)(const char*,
+-                                                       uint64_t length,
+-                                                       void *host),
+                                        Error **errp);
+ #ifdef CONFIG_POSIX
  
-     /* restore during migration */
--    bool acpi_mr_restore;
-     uint64_t table_mr_size;
-     uint64_t linker_mr_size;
-     uint64_t rsdp_mr_size;
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 9a10e45aabd5..44803e884140 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -214,7 +214,6 @@ GlobalProperty hw_compat_4_2[] = {
-     { "usb-redir", "suppress-remote-wake", "off" },
-     { "qxl", "revision", "4" },
-     { "qxl-vga", "revision", "4" },
--    { "fw_cfg", "acpi-mr-restore", "false" },
-     { "virtio-device", "use-disabled-flag", "false" },
- };
- const size_t hw_compat_4_2_len = G_N_ELEMENTS(hw_compat_4_2);
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index 1d7d83542137..f4e3e50224ca 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -612,7 +612,7 @@ static bool fw_cfg_acpi_mr_restore(void *opaque)
-     mr_aligned = QEMU_IS_ALIGNED(s->table_mr_size, qemu_real_host_page_size()) &&
-                  QEMU_IS_ALIGNED(s->linker_mr_size, qemu_real_host_page_size()) &&
-                  QEMU_IS_ALIGNED(s->rsdp_mr_size, qemu_real_host_page_size());
--    return s->acpi_mr_restore && !mr_aligned;
-+    return !mr_aligned;
- }
- 
- static void fw_cfg_update_mr(FWCfgState *s, uint16_t key, size_t size)
-@@ -987,10 +987,6 @@ static void fw_cfg_machine_ready(struct Notifier *n, void *data)
-     qemu_register_reset(fw_cfg_machine_reset, s);
- }
- 
--static const Property fw_cfg_properties[] = {
--    DEFINE_PROP_BOOL("acpi-mr-restore", FWCfgState, acpi_mr_restore, true),
--};
+diff --git a/include/system/ramblock.h b/include/system/ramblock.h
+index 4435f8d55fe7..1a95fba87f0c 100644
+--- a/include/system/ramblock.h
++++ b/include/system/ramblock.h
+@@ -30,7 +30,6 @@ struct RAMBlock {
+     ram_addr_t offset;
+     ram_addr_t used_length;
+     ram_addr_t max_length;
+-    void (*resized)(const char*, uint64_t length, void *host);
+     uint32_t flags;
+     /* Protected by the BQL.  */
+     char idstr[256];
+@@ -244,7 +243,6 @@ static inline unsigned long int ramblock_recv_bitmap_offset(void *host_addr,
+  *  @size: the size in bytes of the ram block
+  *  @max_size: the maximum size of the block after resizing
+  *  @mr: the memory region where the ram block is
+- *  @resized: callback after calls to qemu_ram_resize
+  *  @ram_flags: RamBlock flags. Supported flags: RAM_SHARED, RAM_PMEM,
+  *              RAM_NORESERVE, RAM_PROTECTED, RAM_NAMED_FILE, RAM_READONLY,
+  *              RAM_READONLY_FD, RAM_GUEST_MEMFD
+@@ -257,13 +255,11 @@ static inline unsigned long int ramblock_recv_bitmap_offset(void *host_addr,
+  *  On success, return a pointer to the ram block.
+  *  On failure, return NULL.
+  */
+-typedef void (*qemu_ram_resize_cb)(const char *, uint64_t length, void *host);
 -
- static void fw_cfg_common_realize(DeviceState *dev, Error **errp)
+ RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
+                                    uint32_t ram_flags, const char *mem_path,
+                                    off_t offset, Error **errp);
+ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
+-                                 qemu_ram_resize_cb resized, MemoryRegion *mr,
++                                 MemoryRegion *mr,
+                                  uint32_t ram_flags, int fd, off_t offset,
+                                  bool grow,
+                                  Error **errp);
+@@ -273,7 +269,6 @@ RAMBlock *qemu_ram_alloc_from_ptr(ram_addr_t size, void *host,
+ RAMBlock *qemu_ram_alloc(ram_addr_t size, uint32_t ram_flags, MemoryRegion *mr,
+                          Error **errp);
+ RAMBlock *qemu_ram_alloc_resizeable(ram_addr_t size, ram_addr_t max_size,
+-                                    qemu_ram_resize_cb resized,
+                                     MemoryRegion *mr, Error **errp);
+ void qemu_ram_free(RAMBlock *block);
+ 
+diff --git a/hw/core/loader.c b/hw/core/loader.c
+index 14d56f52e4ec..147b872031eb 100644
+--- a/hw/core/loader.c
++++ b/hw/core/loader.c
+@@ -1068,9 +1068,7 @@ static void *rom_set_mr(Rom *rom, Object *owner, const char *name, bool ro)
+ 
+     rom->mr = g_malloc(sizeof(*rom->mr));
+     memory_region_init_resizeable_ram(rom->mr, owner, name,
+-                                      rom->romsize, rom->romsize,
+-                                      NULL,
+-                                      &error_fatal);
++                                      rom->romsize, rom->romsize, &error_fatal);
+     memory_region_set_readonly(rom->mr, ro);
+     vmstate_register_ram_global(rom->mr);
+ 
+diff --git a/system/memory.c b/system/memory.c
+index 8436668c181d..6ec4b4ebb20e 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1610,16 +1610,13 @@ bool memory_region_init_resizeable_ram(MemoryRegion *mr,
+                                        const char *name,
+                                        uint64_t size,
+                                        uint64_t max_size,
+-                                       void (*resized)(const char*,
+-                                                       uint64_t length,
+-                                                       void *host),
+                                        Error **errp)
  {
-     FWCfgState *s = FW_CFG(dev);
-@@ -1149,8 +1145,6 @@ static void fw_cfg_class_init(ObjectClass *klass, const void *data)
+     RAMBlock *rb;
  
-     device_class_set_legacy_reset(dc, fw_cfg_reset);
-     dc->vmsd = &vmstate_fw_cfg;
--
--    device_class_set_props(dc, fw_cfg_properties);
+     memory_region_init(mr, owner, name, size);
+     mr->ram = true;
+-    rb = qemu_ram_alloc_resizeable(size, max_size, resized, mr, errp);
++    rb = qemu_ram_alloc_resizeable(size, max_size, mr, errp);
+     return memory_region_set_ram_block(mr, rb);
  }
  
- static const TypeInfo fw_cfg_info = {
+@@ -1650,7 +1647,7 @@ bool memory_region_init_ram_from_fd(MemoryRegion *mr, Object *owner,
+     memory_region_init(mr, owner, name, size);
+     mr->ram = true;
+     mr->readonly = !!(ram_flags & RAM_READONLY);
+-    rb = qemu_ram_alloc_from_fd(size, size, NULL, mr, ram_flags, fd, offset,
++    rb = qemu_ram_alloc_from_fd(size, size, mr, ram_flags, fd, offset,
+                                 false, errp);
+     return memory_region_set_ram_block(mr, rb);
+ }
+diff --git a/system/physmem.c b/system/physmem.c
+index 9e5b50c5b1ca..54fe820ce828 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2032,9 +2032,6 @@ int qemu_ram_resize(RAMBlock *block, ram_addr_t newsize, Error **errp)
+          */
+         if (unaligned_size != memory_region_size(block->mr)) {
+             memory_region_set_size(block->mr, unaligned_size);
+-            if (block->resized) {
+-                block->resized(block->idstr, unaligned_size, block->host);
+-            }
+         }
+         return 0;
+     }
+@@ -2065,9 +2062,6 @@ int qemu_ram_resize(RAMBlock *block, ram_addr_t newsize, Error **errp)
+     physical_memory_set_dirty_range(block->offset, block->used_length,
+                                         DIRTY_CLIENTS_ALL);
+     memory_region_set_size(block->mr, unaligned_size);
+-    if (block->resized) {
+-        block->resized(block->idstr, unaligned_size, block->host);
+-    }
+     return 0;
+ }
+ 
+@@ -2297,7 +2291,7 @@ out_free:
+ 
+ #if defined(CONFIG_POSIX) && !defined(EMSCRIPTEN)
+ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
+-                                 qemu_ram_resize_cb resized, MemoryRegion *mr,
++                                 MemoryRegion *mr,
+                                  uint32_t ram_flags, int fd, off_t offset,
+                                  bool grow,
+                                  Error **errp)
+@@ -2356,7 +2350,6 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
+     new_block->mr = mr;
+     new_block->used_length = size;
+     new_block->max_length = max_size;
+-    new_block->resized = resized;
+     new_block->flags = ram_flags;
+     new_block->guest_memfd = -1;
+     new_block->host = file_ram_alloc(new_block, max_size, fd,
+@@ -2413,7 +2406,7 @@ RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
+         return NULL;
+     }
+ 
+-    block = qemu_ram_alloc_from_fd(size, size, NULL, mr, ram_flags, fd, offset,
++    block = qemu_ram_alloc_from_fd(size, size, mr, ram_flags, fd, offset,
+                                    false, errp);
+     if (!block) {
+         if (created) {
+@@ -2458,7 +2451,6 @@ static int qemu_ram_get_shared_fd(const char *name, bool *reused, Error **errp)
+ 
+ static
+ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+-                                  qemu_ram_resize_cb resized,
+                                   void *host, uint32_t ram_flags,
+                                   MemoryRegion *mr, Error **errp)
+ {
+@@ -2504,7 +2496,7 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+              * region if necessary.  The extra space will be usable after a
+              * guest reset.
+              */
+-            new_block = qemu_ram_alloc_from_fd(size, max_size, resized, mr,
++            new_block = qemu_ram_alloc_from_fd(size, max_size, mr,
+                                                ram_flags, fd, 0, reused, NULL);
+             if (new_block) {
+                 trace_qemu_ram_alloc_shared(name, new_block->used_length,
+@@ -2527,7 +2519,6 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+ 
+     new_block = g_malloc0(sizeof(*new_block));
+     new_block->mr = mr;
+-    new_block->resized = resized;
+     new_block->used_length = size;
+     new_block->max_length = max_size;
+     new_block->fd = -1;
+@@ -2547,8 +2538,7 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+ RAMBlock *qemu_ram_alloc_from_ptr(ram_addr_t size, void *host,
+                                    MemoryRegion *mr, Error **errp)
+ {
+-    return qemu_ram_alloc_internal(size, size, NULL, host, RAM_PREALLOC, mr,
+-                                   errp);
++    return qemu_ram_alloc_internal(size, size, host, RAM_PREALLOC, mr, errp);
+ }
+ 
+ RAMBlock *qemu_ram_alloc(ram_addr_t size, uint32_t ram_flags,
+@@ -2556,15 +2546,13 @@ RAMBlock *qemu_ram_alloc(ram_addr_t size, uint32_t ram_flags,
+ {
+     assert((ram_flags & ~(RAM_SHARED | RAM_NORESERVE | RAM_GUEST_MEMFD |
+                           RAM_PRIVATE)) == 0);
+-    return qemu_ram_alloc_internal(size, size, NULL, NULL, ram_flags, mr, errp);
++    return qemu_ram_alloc_internal(size, size, NULL, ram_flags, mr, errp);
+ }
+ 
+ RAMBlock *qemu_ram_alloc_resizeable(ram_addr_t size, ram_addr_t maxsz,
+-                                    qemu_ram_resize_cb resized,
+                                     MemoryRegion *mr, Error **errp)
+ {
+-    return qemu_ram_alloc_internal(size, maxsz, resized, NULL,
+-                                   RAM_RESIZEABLE, mr, errp);
++    return qemu_ram_alloc_internal(size, maxsz, NULL, RAM_RESIZEABLE, mr, errp);
+ }
+ 
+ static void reclaim_ramblock(RAMBlock *block)
 
 -- 
 2.54.0
