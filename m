@@ -4,114 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 378F0C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 04:46:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85B6BC43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 04:46:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfVlx-0002DW-L2; Fri, 03 Jul 2026 00:45:05 -0400
+	id 1wfVlu-0002C7-SC; Fri, 03 Jul 2026 00:45:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wfVlp-0002Ax-S8
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 00:44:58 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wfVln-0002Aj-Fg
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 00:44:56 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wfVlY-00038T-Uy
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 00:44:45 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wfVlY-00038k-QK
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 00:44:44 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6631IYFF1258027
- for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 04:44:26 GMT
+ 6631IU7J1202011
+ for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 04:44:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Jze7uN
- 1t8Q87hZgvj9n28xJcK3D8NSVqzbbbjPXeCnY=; b=h9/5B2kY0WwqhphkBjJnFa
- MFwXNlJ2HbdM/J/j31G1Ysr7mKdRX7j/h+7vSlhBpmrgaXJ1ZfXrvIHgeu+UPQMU
- qG9N+ww0njGwUZJ+dRVVHc2sTsRa7bzbCuvyFdwwHpe2Ib37Orl/RH4EcQN0H6qy
- uIOcT+ptskpXucdJbbPYPf5bOVmcJ+0lONAZrMvrkaAnafNrsc04I5gBlAAUatf6
- 9102Af0v5c72W1iv0LGbhpQTjSi7b6vjB2K+3s8V+wooXt+D6QkbkXY2lOA8x30O
- nQI8vi+N6whUKbSuEjr9T0XAbS1FX6f9GngOMdjnBbWXj+VtKOgYxTZ6gD4xCGpQ
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26n65deb-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=l8+tcnKQiXeRfQTZc
+ QsjFHwE0XWO4GEvExQ2EYO3Lic=; b=JwvIyUd7dHWn3RKwGA2Fw+WVkPVg8wDFw
+ OxeeziaqnNYrUfzP5O2S5j7ZVkP5b+0hl979AtHY8gemT9wATqp25Rh16jiWGHNe
+ sB3m+7AKbeULbewnlMTJKYkaY77Lz/2obhlGz/xkYM2yGlV5lci8CLTKfZocWXYZ
+ /xgz1HpOrCdqo9xjtZn603TdDQgC98WW2HyQorqbA0w2y+kfGDis/VUmVlzK6Dl1
+ 0XQ7+yzR0f8Ov/jeN/Z7IQEmgmi7aRqZVBcXF3RamJuk0E4zGzndZIA8YjaFTBNz
+ D/VQocCyAYfNyNTAaFMQHefKgo6/nEuExnE5v2zfAt0RTM+hoGe5g==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qacydj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 04:44:25 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6634YgVN003765
- for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 04:44:24 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7wf960-1
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 04:44:31 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6634YnEY030274
+ for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 04:44:30 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2sukf6j1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 04:44:24 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 04:44:30 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6634iMar51904942
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 04:44:22 GMT
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6634iQIw50528692
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 3 Jul 2026 04:44:26 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A2B8120043;
- Fri,  3 Jul 2026 04:44:22 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BC91520043;
+ Fri,  3 Jul 2026 04:44:26 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3920D20040;
- Fri,  3 Jul 2026 04:44:21 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5CC5620040;
+ Fri,  3 Jul 2026 04:44:25 +0000 (GMT)
 Received: from Mac-11.lan (unknown [9.39.22.184])
  by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  3 Jul 2026 04:44:20 +0000 (GMT)
+ Fri,  3 Jul 2026 04:44:25 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <th.huth@posteo.eu>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 5/7] docs/system/ppc/pseries: Update the link to the SLOF
- repository
-Date: Fri,  3 Jul 2026 10:14:00 +0530
-Message-ID: <20260703044402.79723-6-harshpb@linux.ibm.com>
+Cc: Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Aditya Gupta <adityag@linux.ibm.com>
+Subject: [PULL 7/7] ppc/pnv: add test to verify external DTB is honored
+Date: Fri,  3 Jul 2026 10:14:02 +0530
+Message-ID: <20260703044402.79723-8-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260703044402.79723-1-harshpb@linux.ibm.com>
 References: <20260703044402.79723-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDAzNyBTYWx0ZWRfX54ErectVdZQ+
- KdNVF0jilbN63WFu/iS6MwU4ZqRbXzrlFm2wjholWfHyeuzGiyluEFzABpnL/pRG+NejgbnFL/4
- zfKpA0IVL36Q8B+vm5cs8/E2qGpJE92Rlc4eS9P50/6PWM7NFMaL0d2fUCViTmPYI+BVgns0ue9
- JoHJXDJ3sjZll6YSBvWga6I3QLfBXK0rpLUnQ03Nf6b1dAe4uCd8ZlxDgatrT+40m4yMp9+8MKp
- 6+lEMW0QLi0ecKfQ/DQ/FHZ0P3HoM9HuhV2ixyJOPYFGvRuH/U6GNfm7pz75/XQ1P6qLD2cDdwx
- 1zQbYXEcMATMkiVupP7HW5QKkD8YIm6RleWVvpovj2RZNEfP65kcuZcjunEk8r4KHjIImt6X99u
- 56s6NegWRXYdnZow7Nortk6MWDPmHj+MgXJ3foHwxU/zGozYfMR9fcJcUnWOGbqJzzLCqFtvtC8
- YwqQQZCETqNE1YKFxjw==
-X-Authority-Analysis: v=2.4 cv=V45NF+ni c=1 sm=1 tr=0 ts=6a473e2a cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22
- a=VwQbUJbxAAAA:8 a=bgKrIEmzAAAA:8 a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8
- a=o83nqyVRAAAA:8 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=Gu1-tfeXWjnmNH9sa4gA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=Ifulqbl_J-1aL42CD9IR:22
-X-Proofpoint-ORIG-GUID: uViHL47gEUnMQ7kDb3LrTHmp0GLRBUsN
-X-Proofpoint-GUID: uViHL47gEUnMQ7kDb3LrTHmp0GLRBUsN
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDAzNyBTYWx0ZWRfX6Ou/xJFVK8DN
- 6MbfzfpM/RUjOVrFwoswKmbclIdKwKiRKDNAEGhMaAX+HlInO9K6Nttq6mkphZeCHb6v+N/Z1it
- lS4LvGtNqiFP+92iVEpINcxfDsHaO1w=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDAzNyBTYWx0ZWRfX3AFFh2FlCBVH
+ v1vOsUrvwqzFdEhtl1x8ECbkU7g2y1tCDyzYr1xtn9HewRGCangJDll4yBOMiisK2el4Ki5S7s5
+ WtI84xiJbPd0wkR9AJwE0H3j0JB0pGXto73VetlGGrzwNa8zdF0GDsCF4mZwB4kk2kU1eOkEr5K
+ vb1YlwY5YZRPEmuWhVp0ohBROZNSdrDln6/CZkJJwJEU5NB5TRMyeXKNrYEiiuojB49e7fsu+pJ
+ qD0I55OIV89IIccgJOvPZfPXiwjWrtxATm1V71rkeyvp227485tT3MAS3Gerg8CeAja4Pq/w+iw
+ pN4idPsKgopSkckaRKDhfYtlnGvWH+RQVmTpfSvMtHXZd1DcPk4LxizpHPDbSbdAzYK4BJONK1v
+ o/qtnKAs9UUXtPvMx4sqhnjlbZf4hRGBXR2J6pY0P7Dngkptn8xwzDt1tv0EhUloSeRc4QzQoju
+ ivn/NeusZFCCHk4F8Rw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDAzNyBTYWx0ZWRfX8zjb8ESzegZe
+ rISsy7/+LEcDkthrGCGfWEbuml3KzU3zYZEqYf71eZFeK0qcx9uFy0JMs3ggiS5W2nFM7yQc8gz
+ 38+alUeh6PWwjE4dJAo/jLNdG3kXBFM=
+X-Proofpoint-GUID: ckk86Xcz4A7MLeeOJYVBTA2cmAdtc932
+X-Proofpoint-ORIG-GUID: ckk86Xcz4A7MLeeOJYVBTA2cmAdtc932
+X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a473e2f cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=RAioF0-LDSMA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=NEAV23lmAAAA:8 a=ns4rDsgIVyfxSIRMX-EA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_01,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
- adultscore=0 clxscore=1015 impostorscore=0 malwarescore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030037
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ spamscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607030037
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,33 +124,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <th.huth@posteo.eu>
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
 
-SLOF has been moved to gitlab.com already a while ago. We updated
-the link in pc-bios/README in commit 7f98b4f25ed9 ("pseries: Update
-SLOF firmware image"), but forgot to update it in the manual, too.
+Test boots a powernv11 machine, using a custom dtb.
+Custom dtb has the following bootargs.
 
-Signed-off-by: Thomas Huth <th.huth@posteo.eu>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260702074842.4806-1-th.huth@posteo.eu
+    chosen {
+        bootargs = "hello world";
+    };
+
+Test Checks whether above bootargs make it to kernel's command line.
+
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260630103508.254000-3-shivangu@linux.ibm.com
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- docs/system/ppc/pseries.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/functional/ppc64/test_powernv.py | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/docs/system/ppc/pseries.rst b/docs/system/ppc/pseries.rst
-index bbc51aa7fc..107091a37f 100644
---- a/docs/system/ppc/pseries.rst
-+++ b/docs/system/ppc/pseries.rst
-@@ -43,7 +43,7 @@ Firmware
+diff --git a/tests/functional/ppc64/test_powernv.py b/tests/functional/ppc64/test_powernv.py
+index 0ea6c93e42..b5b2f0d158 100755
+--- a/tests/functional/ppc64/test_powernv.py
++++ b/tests/functional/ppc64/test_powernv.py
+@@ -27,6 +27,11 @@ class PowernvMachine(LinuxKernelTest):
+          'buildroot/qemu_ppc64le_powernv8-2025.02/rootfs.ext2'),
+         'aee2192b692077c4bde31cb56ce474424b358f17cec323d5c94af3970c9aada2')
  
- The pSeries platform in QEMU comes with 2 firmwares:
++    # testdtb for power11, which contains string "hello world" in command line
++    ASSET_SAMPLE_DTB = Asset(
++        ('https://github.com/roz3x/qemu/raw/refs/heads/sample-dtb/qemu-powernv11.dtb'),
++        'ea1271516264eea1eb58a067a99d0c2ca9528be8dc7d4e46bb2d5ae0d42fc568')
++
+     def do_test_linux_boot(self, command_line = KERNEL_COMMON_COMMAND_LINE):
+         self.require_accelerator("tcg")
+         kernel_path = self.ASSET_KERNEL.fetch()
+@@ -104,6 +109,20 @@ def do_test_ppc64_powernv(self, proc):
+         # Device detection output driven by udev probing is sometimes cut off
+         # from console output, suspect S14silence-console init script.
  
--`SLOF <https://github.com/aik/SLOF>`_ (Slimline Open Firmware) is an
-+`SLOF <https://gitlab.com/slof/slof>`_ (Slimline Open Firmware) is an
- implementation of the `IEEE 1275-1994, Standard for Boot (Initialization
- Configuration) Firmware: Core Requirements and Practices
- <https://standards.ieee.org/standard/1275-1994.html>`_.
++    def test_ppc64_powernv_external_dtb(self):
++        self.set_machine('powernv11')
++        self.require_accelerator("tcg")
++
++        kernel_path = self.ASSET_KERNEL.fetch()
++        sample_dtb_path = self.ASSET_SAMPLE_DTB.fetch()
++        self.vm.set_console()
++        self.vm.add_args('-kernel', kernel_path,
++                         '-dtb', sample_dtb_path)
++        self.vm.launch()
++
++        # check if custom dtb is reflected or not
++        wait_for_console_pattern(self, "Kernel command line: hello world", self.panic_message)
++
+     def test_powernv8(self):
+         self.set_machine('powernv8')
+         self.do_test_ppc64_powernv('P8')
 -- 
 2.52.0
 
