@@ -4,115 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5914AC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 17:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEF8BC43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 17:04:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfhIx-0006rT-A7; Fri, 03 Jul 2026 13:03:55 -0400
+	id 1wfhHN-00017B-4Y; Fri, 03 Jul 2026 13:02:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wfhIv-0006mM-Hu; Fri, 03 Jul 2026 13:03:53 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wfhHJ-0000hl-Vx; Fri, 03 Jul 2026 13:02:14 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wfhIt-0004S9-ON; Fri, 03 Jul 2026 13:03:53 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wfhHI-0003QU-4P; Fri, 03 Jul 2026 13:02:13 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 663GIhlF3497514; Fri, 3 Jul 2026 17:03:48 GMT
+ 663GJoER3218889; Fri, 3 Jul 2026 17:02:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=SueXvt
- yAWEnc7p8n2Ph+MV/r1F2LCAR94O+iOGY6QNc=; b=kWy6atxKcnTQ2guYqbr4Bl
- LnhBfP0ftVNl6lmpRnreQez64LcmkhQrLyZBdwtqbIT5JXK23xYd86NxdMoB9OMX
- xecRUlRSi9Q7lXlu6qcTgjZ+Bf1IBDVz7ucTV7TXNfet21EvQfjaVEQUcgBGuspd
- I6DlI7wUebYeXRDmYX1Un/Rshaqq5D1WCa1Am9pdrAuZVFH0eunbaEYeKt63+Q1K
- Lvy2K94PD1pEnRbtBla7CdgnPjPU0TMliyyA/ZWGVijG7W7nHtFGXJrb+gK8bsvJ
- 90FLzh0c1d8xm8zdxSezNYHtYLgYjBP2Ks1uwYyqB8c0vHtzpWx8uh7A2j/GtyVw
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qgg752-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=txdTEYrvtT1ygS0Xd
+ fiIeqSulEJRZdmxymBSb2Ff7T4=; b=Av38PHDfBFrWRekGAfmWXWHoPCbHUmOzT
+ EUd3yEOJc8jHMiX8p4RL9K6K5V0a9fLou1nWPoO1X6O25wjtuT63Oi7WQVmJScs2
+ V2y2RpOyjwom26XUAXcP7YM7lM4+bUrJXy/h503U1DVXprSTChXapsSw9ctRzNaq
+ /mj257xUaMT//PzHxpf7L+D4HsirH0Ce6+kcB120vw6Xxr0LNxSn5ERMpVYb7PgL
+ jY0gBXmm51r/H6uWK9Tl5ZM0zByQRM0Ldb3c6Xj9y6dA0hl7exeADcWwSUFbUuIK
+ VZWhvSEWcixKAk2MxJATPO3VDMulKTRDwaXgGAssiMpDuNUE1Mx3Q==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26mk7rue-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 17:03:47 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663GnbN1019653;
- Fri, 3 Jul 2026 17:03:46 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruqsyw2-1
+ Fri, 03 Jul 2026 17:02:07 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663Gndgj031499;
+ Fri, 3 Jul 2026 17:02:07 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhysgfh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 17:03:46 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 663H3j5V5112470
+ Fri, 03 Jul 2026 17:02:07 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 663H1WlW52691230
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 3 Jul 2026 17:03:46 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9DD2658056;
- Fri,  3 Jul 2026 17:03:45 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B407A5803F;
- Fri,  3 Jul 2026 17:03:43 +0000 (GMT)
-Received: from [9.61.65.1] (unknown [9.61.65.1])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  3 Jul 2026 17:03:43 +0000 (GMT)
-Message-ID: <0ec6576b-4efb-497f-b23e-1261189fc388@linux.ibm.com>
-Date: Fri, 3 Jul 2026 13:03:43 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 04/33] hw/s390x/ipl: Create certificate store
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
+ Fri, 3 Jul 2026 17:01:32 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 70B7458062;
+ Fri,  3 Jul 2026 17:02:05 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8D75D58054;
+ Fri,  3 Jul 2026 17:02:02 +0000 (GMT)
+Received: from fedora-workstation.lan (unknown [9.61.75.28])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  3 Jul 2026 17:02:02 +0000 (GMT)
+From: Zhuoying Cai <zycai@linux.ibm.com>
+To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
  jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
+ eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
+ alifm@linux.ibm.com, brueckner@linux.ibm.com,
  pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+Subject: [PATCH v14 28/33] hw/s390x/ipl: Set IPIB flags for secure IPL
+Date: Fri,  3 Jul 2026 13:00:25 -0400
+Message-ID: <20260703170032.1893204-29-zycai@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260703170032.1893204-1-zycai@linux.ibm.com>
 References: <20260703170032.1893204-1-zycai@linux.ibm.com>
- <20260703170032.1893204-5-zycai@linux.ibm.com>
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <20260703170032.1893204-5-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=RYqgzVtv c=1 sm=1 tr=0 ts=6a47eb73 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=-B5pnveW0ibvkdq23fEA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfXxfsvl6a0PGpZ
- +ocb5IvoyGqm41NcxekHHPCA6zTnlaEW9rfYSs71yFQydoovsvD2F5bIjme+Pkql4vQMGSESowS
- RTn5M4bPtoFr165qwwHrHE06qbZa1l0=
-X-Proofpoint-GUID: QZsxmbYuNr-2hBzJZibkmbz6vm0NpNg-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX6encAGeBcUrE
- dXDpDSUuS2U27JshtiZwbLAntgARBOsOMMPoyd2s71zCBLWfgRwN1oKoJw0z76xEkoJXd7G1RcY
- jPGCuznP9BgUKTnnxehLw+BGTvRmjp6HI2AnC67ALGT+1xcBt5uZQjsL0dNa119kp1H0BnXjWfq
- Pv7kG83+R6Q8MpfGuOZS+MrOmeVe3BuVChRHkOQ4sdgdNcAKHD8ofS1IR+e9mrQp/rDWK4ph3eY
- svRIjW3pu6lDUIFY8eEao1sNogAhBgqyuk7e1N9/7yTmJSD8YU/oy2xUObePCw8FKZlINtuSC6I
- tCqCshsz0I8gVp0cyII1JCxp7f07JgdkhA+H7ggJYIScTwardRzk1UYQr9hNBHuhGJlkTul/457
- fmV2JbCfdWfMYGKcW45Nk98fjAxufZGszSyFmXAWpy2MqUI1WLvn7ZCDELxhBKCaoFb8s4QwXTD
- 3q3ex1F7GA//qXWGnTA==
-X-Proofpoint-ORIG-GUID: QZsxmbYuNr-2hBzJZibkmbz6vm0NpNg-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfXwER/ah4YhrAw
+ YNAK/lkjNJQ+MMiz3Tg6CSx82tMCH8JAR62QYJdLXqaAs+o679Db5Uwiq4kRm1LerPcMgSFSa5G
+ CfFY3r4cQCjgYEIqMr11Xgwxe6HDCaGqC8z/RLHrPnBcvl7K7tiWptT5iH3V/wFPy108JbVGT4B
+ 4V25KSL8ysilAUFB1qNc8ZPHrLJkz73jXl0amh6BShAlEgDYjzkfBmazN6Gwk9XyaPg6G0Nd5e0
+ WUE8YIqIbqu8m7ZWo8FHXBrKDtThHRyoffwke+CHNwGIcStSjR49moVvEGk30XH7pWMrXUNXOas
+ AFdRfZQ2IY4gXoWECEzMaCAnzg24ISEVPkuvVb9Ov/xDC1+/wNs1P71bGWqlwB27wajnhHCAM8O
+ natVzhtg0pk5pkMDGafYSwkDUI45JD+bYpusnCKW0Zv+o5eJTVSJBM/EnwbzX82M8Pz62ROiZxN
+ 9YQhOg3XmPFSTEcmb4Q==
+X-Proofpoint-GUID: VgPH_Z93OZUOQYs5XOeR2VzEAADmN_t5
+X-Authority-Analysis: v=2.4 cv=Z8bc2nRA c=1 sm=1 tr=0 ts=6a47eb0f cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=MUQpW0jNMHjpGy_Q9scA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX0XkkLdcaw4KO
+ XF+Y7UMFx38XKnoasoqFoiwNcn7i3cUgqM2qwHufRqxBVfNf0ezitjK7QstQihtUe70MRYmGiO2
+ 3DRz2W52areRyqEImKrVV7+87yuUP7E=
+X-Proofpoint-ORIG-GUID: VgPH_Z93OZUOQYs5XOeR2VzEAADmN_t5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_03,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
- adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
+ clxscore=1015 adultscore=0 spamscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030167
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,105 +125,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/26 1:00 PM, Zhuoying Cai wrote:
-> Create a certificate store for boot certificates used for secure IPL.
-> 
-> Load certificates from the `boot-certs` parameter of s390-ccw-virtio
-> machine type option into the cert store.
-> 
-> Currently, only X.509 certificates in PEM format are supported, as the
-> QEMU command line accepts certificates in PEM format only.
-> 
-> The raw Base64 data is stored, as well as the certificate's size.  The
-> binary (DER) size is stored as well, which may later be utilized for
-> secure boot (signature verification).
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+If `-M secure-boot=on` is specified on the command line option, indicating
+true secure IPL enabled, set Secure-IPL bit and IPL-Information-Report
+bit on in IPIB Flags field, and trigger true secure IPL in the S390 BIOS.
 
-Looks like v14 was coming out as a I commented on v13...  Everything
-still applies here, so will repeat:
+Any error that occurs during true secure IPL will cause the IPL to
+terminate.
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
+---
+ hw/s390x/ipl.c | 28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
-With a few minor things below:
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index cd80e3057c..62a3c60530 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -467,15 +467,30 @@ static bool s390_has_certificate(void)
+     return ipl->cert_store.count > 0;
+ }
+ 
++static bool s390_secure_boot_enabled(void)
++{
++    return S390_CCW_MACHINE(qdev_get_machine())->secure_boot;
++}
++
+ static void s390_set_secure_boot_flags(IplParameterBlock *iplb,
+-                                       bool audit_mode)
++                                       bool secure_boot, bool audit_mode)
+ {
+-    if (!audit_mode) {
++    if (!secure_boot && !audit_mode) {
+         return;
+     }
+ 
+     /*
+-     * For audit mode, enable the IPL Information
++     * If secure-boot is enabled, then toggle the secure IPL flags (SIPL) to
++     * trigger secure boot in the s390 BIOS.
++     *
++     * Boot process will terminate if any error occurs during secure boot.
++     */
++    if (secure_boot) {
++        iplb->hdr_flags |= DIAG308_IPIB_FLAGS_SIPL;
++    }
++
++    /*
++     * For both secure boot and audit mode, enable the IPL Information
+      * Report (IPLIR) flag so that the firmware generates an IPL
+      * Information Report Block (IIRB).
+      *
+@@ -544,7 +559,8 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+         s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
+         iplb->flags |= DIAG308_FLAGS_LP_VALID;
+ 
+-        s390_set_secure_boot_flags(iplb, s390_has_certificate());
++        s390_set_secure_boot_flags(iplb, s390_secure_boot_enabled(),
++                                   s390_has_certificate());
+ 
+         return true;
+     }
+@@ -697,7 +713,9 @@ void s390_ipl_update_diag308(IplParameterBlock *iplb)
+          * The kernel does not preserve secure boot flags across a reboot.
+          * Re-apply them here based on the current machine configuration.
+          */
+-        s390_set_secure_boot_flags(&ipl->iplb, s390_has_certificate());
++        s390_set_secure_boot_flags(&ipl->iplb,
++                                   s390_secure_boot_enabled(),
++                                   s390_has_certificate());
+     }
+ 
+     update_machine_ipl_properties(iplb);
+-- 
+2.54.0
 
-> ---
->  docs/specs/index.rst            |   1 +
->  docs/specs/s390x-secure-ipl.rst |  20 +++
->  hw/s390x/cert-store.c           | 238 ++++++++++++++++++++++++++++++++
->  hw/s390x/cert-store.h           |  39 ++++++
->  hw/s390x/ipl.c                  |  10 ++
->  hw/s390x/ipl.h                  |   3 +
->  hw/s390x/meson.build            |   1 +
->  include/hw/s390x/ipl/qipl.h     |   2 +
->  8 files changed, 314 insertions(+)
->  create mode 100644 docs/specs/s390x-secure-ipl.rst
->  create mode 100644 hw/s390x/cert-store.c
->  create mode 100644 hw/s390x/cert-store.h
-> 
-> diff --git a/docs/specs/index.rst b/docs/specs/index.rst
-> index b7909a108a..76d439782c 100644
-> --- a/docs/specs/index.rst
-> +++ b/docs/specs/index.rst
-> @@ -40,3 +40,4 @@ guest hardware that is specific to QEMU.
->     riscv-aia
->     aspeed-intc
->     iommu-testdev
-> +   s390x-secure-ipl
-> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-> new file mode 100644
-> index 0000000000..d7c0d4eaac
-> --- /dev/null
-> +++ b/docs/specs/s390x-secure-ipl.rst
-> @@ -0,0 +1,20 @@
-> +.. SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +s390 Certificate Store and Functions
-> +------------------------------------
-> +
-> +s390 Certificate Store
-> +^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +A certificate store is implemented for s390-ccw guests to retain within
-> +memory all certificates provided by the user via the command-line, which
-> +are expected to be stored somewhere on the host's file system. The store
-> +will keep track of the number of certificates, their respective size,
-> +and a summation of the sizes.
-> +
-> +Each certificate is stroed in an S390IPLCertificate struct, which has a
-
-stored
-
-...
-
-> +static int update_cert_store(S390IPLCertificateStore *cert_store,
-> +                             S390IPLCertificate *cert)
-> +{
-> +    size_t data_buf_size;
-> +    size_t keyid_buf_size;
-> +    size_t hash_buf_size;
-> +    size_t cert_buf_size;
-> +
-> +    /* length field is word aligned for later DIAG use */
-> +    keyid_buf_size = ROUND_UP(CERT_KEY_ID_LEN, 4);
-> +    hash_buf_size = ROUND_UP(CERT_HASH_LEN, 4);
-> +    cert_buf_size = ROUND_UP(cert->der_size, 4);
-> +    data_buf_size = keyid_buf_size + hash_buf_size + cert_buf_size;
-> +
-> +    if (cert_store->largest_cert_size < data_buf_size) {
-> +        cert_store->largest_cert_size = data_buf_size;
-> +    }
-> +
-> +    if (cert_store->count >= MAX_CERTIFICATES) {
-> +        error_report("Cert store is full");
-> +        return -1;
-> +    }
-> +
-
-Seems we should check this first before updating largest_cert_size?
-
-I think ultimately it will not matter because we will exit anyway, but
-for debug may be useful to not have the largest_cert_size potentially
-clobbered by a cert that was never added.
 
