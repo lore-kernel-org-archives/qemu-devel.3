@@ -4,41 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9A58C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 05:05:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D1C1C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 05:05:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfW4P-0008OR-3v; Fri, 03 Jul 2026 01:04:09 -0400
+	id 1wfW4P-0008Of-L4; Fri, 03 Jul 2026 01:04:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1wfW4M-0008Ly-3u; Fri, 03 Jul 2026 01:04:06 -0400
+ id 1wfW4M-0008M5-Gw; Fri, 03 Jul 2026 01:04:06 -0400
 Received: from [115.124.30.98] (helo=out30-98.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1wfW4G-0007Zj-Ev; Fri, 03 Jul 2026 01:04:05 -0400
+ id 1wfW4G-0007Zg-F5; Fri, 03 Jul 2026 01:04:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1783055021; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=cFVSdKRxBxbWRYZb04r06GB3+hYX03AMc5Cn5Wd3z24=;
- b=nBReJgyvrYk9IoH1/H+WJwBtxQ9MbjOLKI5YfOFz/Aq9hMx7NC9RYl9LnLsEB5mEzt40bGKWCGYzv61c/HpmybZCI+H4bvZ1ugI3B4kP8Ql9THImt4IwsOVu4P1Hna2B94lzxvm90JkPsrGc3hKMddHSSeGcDjtJqcFzRf3PD9I=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R141e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
- MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0X6I8Mro_1783055020; 
+ t=1783055020; h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To;
+ bh=9Wta3rC7sfrG0e3gcxaRsalYud44a/QVpaRYkyPK5Vs=;
+ b=Qjq/2U8YqNCdLsptWDbWh9AUyVlZ30994imaXH8XKjT+EMdvtUMzXiCPvFKA/wbQgvyzSn05GzbPovp8RMW+dd2ttplY4mtPMRK37Xebi0yRfA1SamLCqz96pZHtM+vyymULhX5xMBWTA+XRKfSWmaj3nf8v902M46gHlpMf6cQ=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
+ MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=10; SR=0;
+ TI=SMTPD_---0X6I8MrX_1783055019; 
 Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0X6I8Mro_1783055020 cluster:ay36) by smtp.aliyun-inc.com;
+ fp:SMTPD_---0X6I8MrX_1783055019 cluster:ay36) by smtp.aliyun-inc.com;
  Fri, 03 Jul 2026 13:03:40 +0800
 From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Fri, 03 Jul 2026 13:03:36 +0800
-Subject: [PATCH v4 1/5] disas/riscv: Fix th.srri decoding
+Subject: [PATCH v4 0/5] disas/riscv: Fix immediate decoding and extraction
+Date: Fri, 03 Jul 2026 13:03:35 +0800
+Message-Id: <20260703-b4-disas-xthead-fix-riscv-next-v4-0-84c566330bc7@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260703-b4-disas-xthead-fix-riscv-next-v4-1-84c566330bc7@linux.alibaba.com>
-References: <20260703-b4-disas-xthead-fix-riscv-next-v4-0-84c566330bc7@linux.alibaba.com>
-In-Reply-To: <20260703-b4-disas-xthead-fix-riscv-next-v4-0-84c566330bc7@linux.alibaba.com>
+X-B4-Tracking: v=1; b=H4sIAKdCR2oC/5XNwWrDMAzG8VcpPk/FVhyn22nvMXqQbXkRdEmxM
+ 5NS8u5zC2OXjbLjJ8Tvf1WFs3BRL7urylylyDy1YZ92Kow0vTNIbFuhRqcdduAtRClUYF1Gpgh
+ JVshSQoWJ1wWCo+RIP0eMQTXknLl93ANvx7ZHKcucL/deNbfrN+0e0dWAhsEiHqgLxqN5Pcn0u
+ e7pJJ487cP8oW6Jij/soM1DFhvLjm1KPQ0HO/zFdv9ju8amYFOfjHfB9L+x27Z9AX3yCg6CAQA
+ A
+X-Change-ID: 20260623-b4-disas-xthead-fix-riscv-next-c6af6a09d2dc
 To: qemu-devel@nongnu.org
 Cc: Christoph Muellner <christoph.muellner@vrull.eu>, 
  LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, 
@@ -46,13 +50,14 @@ Cc: Christoph Muellner <christoph.muellner@vrull.eu>,
  Alistair Francis <Alistair.Francis@wdc.com>, 
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
  Richard Henderson <richard.henderson@linaro.org>, qemu-riscv@nongnu.org, 
- TANG Tiancheng <lyndra@linux.alibaba.com>
+ TANG Tiancheng <lyndra@linux.alibaba.com>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783055019; l=1506;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783055019; l=3746;
  i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=m/WPwWNlaTg0Hlf4CSq6Gcr7JvCTsC5AbG3EU9dKV6w=;
- b=m/Im9EVqiy+w/INOwFwixXl7AluNoPljDkvcCdPh92/2TevPcwAF1YVwDtfGcVDfV6dVIGVAB
- ajaERpPfX1qBf8M+D5flMUchuSTYWR84dMIijH00xhBaS4Kj170aHvf
+ bh=XxoPZ6tqW5OrwVmHuOeyr0F9T2iqTaZtLIKWWmepg/U=;
+ b=zcCbz6+mxIlj+JsPRQxKWnLMCkjiLD4ZmvQWacgltsif7yML8eD685xuFY8Zg0hVjko9q8QZF
+ ECKoAwsDonRADMrMdsGn5Zonmme4ct/0FSllSIr7KhWiA5814ruSOAT
 X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
  pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
 X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.98 (deferred)
@@ -81,43 +86,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-target/riscv/xthead.decode defines th.srri as funct6=000100 in
-bits 31:26, with the 6-bit immediate in bits 25:20.
+Fix two XThead immediate decoding issues in the RISC-V disassembler, fix
+vector immediate signedness handling, and make operand extraction more
+explicit.
 
-decode_xtheadbb() switches on bits 31:25, i.e. funct6 plus imm[5].
-Therefore valid th.srri encodings are 0001000 and 0001001. The
-current 0000100 and 0000101 cases use the wrong funct6 value and
-decode valid th.srri instructions as illegal.
+The first patch aligns th.srri decoding with target/riscv/xthead.decode:
+th_srri uses bits 31:26 as 000100 and bit 25 as shamt[5], while the
+disassembler switches on bits 31:25.
 
-Fix the cases to match funct6=000100 with both imm[5] values.
+The second patch extracts the full 6-bit immediate field for
+rv_codec_r2_imm6, which fixes the immediate printed for th.srri and
+th.tst.
 
-Fixes: 318df7238b9f ("disas/riscv: Add support for XThead* instructions")
-Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+The third patch makes operand_vimm() return int32_t, matching the signed
+5-bit vector immediate value it extracts.
+
+The fourth patch decodes unsigned 5-bit vector immediates with a separate
+codec, matching the target translator paths that zero-extend or truncate
+those fields.
+
+The fifth patch follows Richard's review suggestion by converting operand
+helper bit extraction to extract32() or sextract32(). Signed immediates use
+sextract32() on the sign-bearing field and combine it with the remaining
+extract32() fields.
+
+This series is based on Alistair's riscv-to-apply.next branch:
+64ce9ac18757 ("hw/riscv/riscv-iommu.c: always fault with SADE=0 and A=0")
+
+Testing:
+- Applied and tested on top of Alistair's riscv-to-apply.next branch.
+- Verified with an external test branch that adds unit coverage:
+  https://github.com/LLyndra/qemu.git b4-disas-riscv-v2-tests
+
+  The added tests cover XThead th.srri/th.tst immediate decoding,
+  signed vector immediates, unsigned vector immediate operands, and
+  signed base ISA I-immediate extraction.
+- Commands run:
+    ./configure --target-list=riscv64-softmmu --disable-docs \
+        --prefix=/tmp/qemu-riscv-disas-test --cross-prefix=
+    ninja -C build tests/unit/test-riscv-disas
+    build/tests/unit/test-riscv-disas --tap -k
+- Result:
+    test-riscv-disas passed: 37/37 TAP tests ok.
+
 ---
- disas/riscv-xthead.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Changes in v4:
+- Rebased on current Alistair's riscv-to-apply.next branch.
+- Folded Alex's extract32() suggestion into the 6-bit immediate
+  fix patch, so it directly uses extract32(inst, 20, 6).
+- Link to v3: https://lore.kernel.org/qemu-devel/20260701-b4-disas-xthead-fix-riscv-next-v3-0-fc4f5f1b6c15@linux.alibaba.com
 
-diff --git a/disas/riscv-xthead.c b/disas/riscv-xthead.c
-index fcca326d1c398a6745984b9f5d90fc5f7d54dfd9..2f2ddb8dd9a13e17a28539b4179cd10fa93c5941 100644
---- a/disas/riscv-xthead.c
-+++ b/disas/riscv-xthead.c
-@@ -315,8 +315,10 @@ void decode_xtheadbb(rv_decode *dec, rv_isa isa)
-                         op = rv_op_th_revw;
-                     }
-                     break;
--                case 0b0000100:
--                case 0b0000101: op = rv_op_th_srri; break;
-+                case 0b0001000:
-+                case 0b0001001:
-+                    op = rv_op_th_srri;
-+                    break;
-                 }
-                 break;
-             case 2: op = rv_op_th_ext; break;
+Changes in v3:
+- Updated the extract-helper cleanup patch to use sextract32() on the
+  sign-bearing field directly, as suggested by Richard.
+- Link to v2: https://lore.kernel.org/qemu-devel/20260701-b4-disas-xthead-fix-riscv-next-v2-0-e6e4ff5a7847@linux.alibaba.com
 
+Changes in v2:
+- Collected Reviewed-by tags from Daniel.
+- Kept the 6-bit immediate fix as a minimal correctness change.
+- Added a patch making the signed vector immediate helper return a signed
+  type.
+- Added a patch decoding unsigned vector immediates separately from signed
+  vector immediates.
+- Added a cleanup patch using extract32()/sextract32() for replaceable
+  operand helper field extraction, including split immediates, as
+  suggested by Richard.
+- Link to v1: https://lore.kernel.org/qemu-devel/20260626-b4-disas-xthead-fix-riscv-next-v1-0-74228a3c1b21@linux.alibaba.com
+
+---
+TANG Tiancheng (5):
+      disas/riscv: Fix th.srri decoding
+      disas/riscv: Fix 6-bit immediate extraction
+      disas/riscv: Use signed type for vector immediates
+      disas/riscv: Decode unsigned vector immediates as unsigned
+      disas/riscv: Use extract helpers for operand fields
+
+ disas/riscv-xthead.c |   6 +-
+ disas/riscv.c        | 263 +++++++++++++++++++++++++++------------------------
+ disas/riscv.h        |   1 +
+ 3 files changed, 142 insertions(+), 128 deletions(-)
+---
+base-commit: 64ce9ac18757d79f3b5b337f7bcbdd0dabef3ce1
+change-id: 20260623-b4-disas-xthead-fix-riscv-next-c6af6a09d2dc
+
+Best regards,
 -- 
-2.43.0
+TANG Tiancheng <lyndra@linux.alibaba.com>
 
 
