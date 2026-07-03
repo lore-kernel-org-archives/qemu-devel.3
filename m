@@ -4,167 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56B0FC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 12:09:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68E24C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 12:19:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfchi-0002J0-Rn; Fri, 03 Jul 2026 08:09:10 -0400
+	id 1wfcqf-0004Ep-OR; Fri, 03 Jul 2026 08:18:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wfchg-0002GQ-GD
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 08:09:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wfcqb-0004EI-S6; Fri, 03 Jul 2026 08:18:22 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wfchf-0000V1-3a
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 08:09:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783080546;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Q5IcB3IKIPWhgDhh6PrvtGDpcnohukrg0XTP7TxrRmg=;
- b=N/k9eWwPzpn1OJu52M/Et5NSWcdpylidnlgvlmMu8XZFkBAIcHVFOAclxrO3PnB/meaYf2
- JbSGmF9f7W+o0iSwmNVNRG57Y784koWEUWVTOVjwifEMga6xVP9Upoq8BwRkMCJO7W/3TB
- kVZ8TF9K3dZh7xQz3wQouZcGk2d+zZw=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-434-aKF7bzyUNpeGNO9Y6DhKZw-1; Fri, 03 Jul 2026 08:09:05 -0400
-X-MC-Unique: aKF7bzyUNpeGNO9Y6DhKZw-1
-X-Mimecast-MFC-AGG-ID: aKF7bzyUNpeGNO9Y6DhKZw_1783080544
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-492714d002cso3854725e9.0
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 05:09:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783080544; x=1783685344; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=Q5IcB3IKIPWhgDhh6PrvtGDpcnohukrg0XTP7TxrRmg=;
- b=eAXJHI9RfxXLrnOS1ujbodTXRPa0+ONZBb/8awdyxRx49X1prtANumSDwHc0Bl71WK
- vJ3rFW218TuqVvqCYHG2wb+pxYnvMh3Jr0z0IO5l22OlkuwoeGRrnN7tg8sUyzCP82nK
- Ho+yFSsyGqvePwHslZDoM/qmVxRDgIwON7y1qwZOPOWUqlCMAHkzgDGqXs/E3hPiJxbr
- LPmYpMD7awIE/JEaiCqxF34lvjoCQQ56tVCY4gA7T0xL6tA9b/Yc8O3phfEZlN9FFVvX
- K5OSyvAVlOjDXMnbjzkGjWFBtw/mt7mQdK8HDAs7Dnl70hrLn4af6/dkVrTyPtkDC+I+
- JCfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783080544; x=1783685344;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Q5IcB3IKIPWhgDhh6PrvtGDpcnohukrg0XTP7TxrRmg=;
- b=h1vhyGq6fDbd65u/Gqpf5wx8TAJBL4FpgdiZ6JL5T97zlEIdboLTaItBQu1Dx5egVi
- qFE1xTz9vQ+Rl+ZjqZNwv0zI2OSRdX0aN3aDAvliCPqiva+LIsL4PJ0B1W0+xeya/Vjm
- j8OdIL69IQx2hWprKE+9zUr3MoJKfmIUOxMMcGnd5w+0S5PzCpOJ81aH5GncvWxxolh4
- yjX5dd8lXTmlpMTAIx+jdDv5CUqlM270QFPxFrYaOEerjlN0JSCX0ded7FMIEnKzvceA
- 4HzX8szhlU4OAqzfeKclpglPg/w8TxRwK1smYp7nwESm3r2nORSimD4BAoRuU9E8Pfpx
- g9WQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9XcggshpDwz/OwVRGbOnrfX/n/Mhn1X5KheV6nZefMhrhE5IDn5w5NsJ70qIi9EVLd56jxFc2DCg6T@nongnu.org
-X-Gm-Message-State: AOJu0YwYyMX0WLNFE3uhXej+Yz8H4ebEKcS/iTUlGXYc2dDtOKT6Ehg2
- RZHGATWFv4ybnFuPmGha/2jTDde259SrCI+EYv8twG9jLDHPVFXjgme19+QZIVF5NX+m70DxMQy
- 9pTulDLkOxdQs38lx1BtjhLFR4E0sJlTSrFhgiemZ6lF7GXPDPijkVryy
-X-Gm-Gg: AfdE7cnJJKOIZYCeFx9+oj8JKE7Tf3HTl27sHqBOhmnVBbIqZaXK37HsUP3tS+4gf4n
- l+WKQcGSNuiAZeiMAvi+wOvV3fhEwpg5g0e1+StMtPEV4CcYbp7K8gb1d9BgIimOyDUyBDCJIRj
- btHLJiDF2U/HmSaVAynO+Ylg0f7tvb08VP38lAesoAyqgZdzUlbgQuaTMWGuW4sVJprRnlsGYFR
- P4lMgxeSL1nukYOMsRqCYvNU/muTrwwPBb8vXkLi/P3WVy0d2z3WQS7zRCZ4d1Wt8RnIm5jxljh
- Q5Q+eozPkPP4L6Vc4nCddWGGydxFXK2Glh0idLZ9ncTJlzLjbmYG0+D6ybfuxas5mnNzdTNWmbT
- h6bx5FUvarGuhbpbXK0xW3Pr/YlyFVsxnzpDfjXFjdXXZnTwatw==
-X-Received: by 2002:a05:600c:3484:b0:492:3237:ddf with SMTP id
- 5b1f17b1804b1-493c3cfafd0mr127404375e9.28.1783080543862; 
- Fri, 03 Jul 2026 05:09:03 -0700 (PDT)
-X-Received: by 2002:a05:600c:3484:b0:492:3237:ddf with SMTP id
- 5b1f17b1804b1-493c3cfafd0mr127403855e9.28.1783080543437; 
- Fri, 03 Jul 2026 05:09:03 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63b6f8csm115805355e9.11.2026.07.03.05.09.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Jul 2026 05:09:03 -0700 (PDT)
-Message-ID: <7d5bc446-9581-454c-a678-73c075af7fb1@redhat.com>
-Date: Fri, 3 Jul 2026 14:09:01 +0200
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wfcqY-0003WM-Ne; Fri, 03 Jul 2026 08:18:21 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6636JFf01762649; Fri, 3 Jul 2026 12:18:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=judqb5
+ Dv8h2rRURnjZiTaUuSLE2JmwTNnvgRpM+1qcE=; b=F8vt5R6AIe8nhGS+z/YqGx
+ 66ktKGeqk8tuJ3DgFXZhj9HOV8R1xVjk/sGnh4iwf12mh4oJXk8HWbyU/z8IiYHi
+ U7q3OnatoH2J5w/+4yPK5tD5R0jQ5nJC4KmpfofwaBhnHYolxbkqSz6Pwh1XY4TG
+ 0iRN+XdVLEJRgwU0d01B6Sq6nBWUZIIjb+58ibAn6vT0RZaV+3yvFxBip9sfckrl
+ U9TnW+paWeMbBKf/lfq0TQ02F5UAGGpRmR2lFwrdldf/sRYZwG9NweF2XVsXiFXa
+ x63CsjxgsVwIia0zIxawL8gr4VsQJ+macDtmqUnq22oqwFXBLP0IoVbMYB6lHX3g
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26mk6q2e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 03 Jul 2026 12:18:14 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663C4gY4017906;
+ Fri, 3 Jul 2026 12:18:14 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2sukgrw5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 03 Jul 2026 12:18:14 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 663CIDpd19923572
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 3 Jul 2026 12:18:13 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1ACB558065;
+ Fri,  3 Jul 2026 12:18:13 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 00F8558059;
+ Fri,  3 Jul 2026 12:18:11 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.9.239]) by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  3 Jul 2026 12:18:10 +0000 (GMT)
+Message-ID: <05e7789035f36a99cb01091993fb98b96d723d58.camel@linux.ibm.com>
+Subject: Re: [PATCH v13 26/33] pc-bios/s390-ccw: Add additional security
+ checks for secure boot
+From: Eric Farman <farman@linux.ibm.com>
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
+ jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+In-Reply-To: <20260703022933.1805010-27-zycai@linux.ibm.com>
+References: <20260703022933.1805010-1-zycai@linux.ibm.com>
+ <20260703022933.1805010-27-zycai@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 RESEND 8/8] MAINTAINERS: Add self as maintainer for
- PowerNV
-To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- devel@lists.libvirt.org, Misbah Anjum N <misanjum@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, kvm@vger.kernel.org,
- Gautam Menghani <gautam@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-References: <20260703085955.2318600-1-adityag@linux.ibm.com>
- <20260703085955.2318600-9-adityag@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260703085955.2318600-9-adityag@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Date: Fri, 03 Jul 2026 08:17:23 -0400
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDEyMCBTYWx0ZWRfX54q1vILnKETV
+ igVw0eE2mjSUqqjpZOgDGMyXlawK3MIPkDgotZQ4xTp6VWAHE1U9W2B4JJF1yWViql/t5GPjFW7
+ F3JvV/Tmo3WeZqp8EL0VYTnP5yRGlMPukCH/jNeKnSD6qela9td9DmCnGQhOjoya9V9fiY73azz
+ nIpF9Rdh7MOigo5iEhGM4kqiP0ZfXVth16zCXur5QetEMVgXy0iFrN/zcPz1kOMYHc8wJ4o3d6j
+ ru2/aMO/Y//O2OB+vR3tTot3e7P0uE7h8zFXFbcLCKactJMAaxa7Fqu1BZ8fy0hAH58wQ33Yoqq
+ OpAsqtCiPTVrqsyT6zxcZFD+kY0hdhie+Xk+GPMkskKmltn6XSXJNPhR1Tg6FMq6gL9xV+EPRbD
+ 4LWo9VChj2hZ4Nbsl+sl1YV4tU/n3USmJX4+mIks5H5XMyIkUfuHyNE+T21vcNGynA2O/u5+A88
+ PFnYOvY4o4xIA8rzCCA==
+X-Proofpoint-GUID: MVhbZloDOwVmKGd1WRJzSBrjnfoe7hXi
+X-Authority-Analysis: v=2.4 cv=Z8bc2nRA c=1 sm=1 tr=0 ts=6a47a886 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=XMBjRswBOKp5J3ctqEMA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDEyMCBTYWx0ZWRfX4naXse1tpehD
+ yupRZi4mVxQyILRII+HUngiqEVwMwG010E7RCvO5gZ4T0ZlrXDFxK06qcxwKXWDX/GAXG7fikpv
+ 1S7vW73Jl60MVZdYSI2RCMp8lKm5+DY=
+X-Proofpoint-ORIG-GUID: MVhbZloDOwVmKGd1WRJzSBrjnfoe7hXi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 adultscore=0 spamscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030120
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -180,33 +129,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/26 10:59, Aditya Gupta wrote:
-> Add myself as maintainer for PowerNV machine, and remove the
-> reviewer entry
-> 
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+On Thu, 2026-07-02 at 22:29 -0400, Zhuoying Cai wrote:
+> Add additional checks to ensure that components do not overlap with
+> signed components when loaded into memory.
+>=20
+> Add additional checks to ensure the load addresses of unsigned components
+> are greater than or equal to 0x2000.
+>=20
+> When the secure IPL code loading attributes facility (SCLAF) is installed=
+,
+> all signed components must contain a secure code loading attributes block
+> (SCLAB).
+>=20
+> The SCLAB provides further validation of information on where to load the
+> signed binary code from the load device, and where to start the execution
+> of the loaded OS code.
+>=20
+> When SCLAF is installed, its content must be evaluated during secure IPL.
+>=20
+> Add IPL Information Error Indicators (IIEI) and Component Error
+> Indicators (CEI) for IPL Information Report Block (IIRB).
+>=20
+> When SCLAF is installed, additional secure boot checks are performed
+> during zipl and store results of verification into IIRB.
+>=20
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
->   MAINTAINERS | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 97dcc78ded61..537b5cd895a2 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1663,7 +1663,7 @@ F: tests/functional/ppc64/test_tuxrun.py
->   
->   PowerNV (Non-Virtualized)
->   M: Nicholas Piggin <npiggin@gmail.com>
-> -R: Aditya Gupta <adityag@linux.ibm.com>
-> +M: Aditya Gupta <adityag@linux.ibm.com>
->   R: Glenn Miles <milesg@linux.ibm.com>
->   R: Harsh Prateek Bora <harshpb@linux.ibm.com>
->   L: qemu-ppc@nongnu.org
+>  include/hw/s390x/ipl/qipl.h   |  29 +++++-
+>  pc-bios/s390-ccw/sclp.h       |   1 +
+>  pc-bios/s390-ccw/secure-ipl.c | 179 +++++++++++++++++++++++++++++++++-
+>  pc-bios/s390-ccw/secure-ipl.h |  51 ++++++++++
+>  4 files changed, 255 insertions(+), 5 deletions(-)
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
