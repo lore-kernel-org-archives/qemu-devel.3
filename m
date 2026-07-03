@@ -4,142 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24ADDC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 02:08:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E2BFC43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 02:17:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfTJr-0007zI-Fa; Thu, 02 Jul 2026 22:07:55 -0400
+	id 1wfTS4-0001TC-QF; Thu, 02 Jul 2026 22:16:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfTJm-0007yv-TX
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 22:07:50 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfTJk-0006QU-13
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 22:07:50 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66319ap32356019
- for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 02:07:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- kdqNozVJTg5LLdjc+PWakoeB4IknaCmuEVX9AzK7Hvw=; b=ND532IVCIIQjsowZ
- nf57TruGUgj+6OU3lTm3OOL9S84PY9Z1yELnTB8/IgOiYfxV3PmfInuIJjBGuItQ
- HkTbCsIvOYn/T9sQvc7QXrAereXrXKjzBDntw5Y6OzTM67zYD81ePyaAkVGeG+4z
- YxA5zs/T2ADj1DGYv3AlgpXgl/07exhNgo5GFcAVIM7lId63HZo3/0g7svGxbiP2
- PSAvUbOv2RZcCc0+vo6Pqktr0sD4p7yvgFmlGCSgdzrLSnYL2g9WC64Mv4dhnMXu
- 9cj1vTNa3bQ12nHWmYrzYir8pztG0gcDRGvfC4IWIu5YafaisiQx/bfeZXqaSXlv
- om9/UQ==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5qfc36fv-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 02:07:43 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-915c364ae3bso6801485a.0
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 19:07:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wfTRy-0001SV-CO
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 22:16:18 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wfTRv-0008Gq-5q
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 22:16:17 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-698aa7ba320so171368a12.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 19:16:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783044973; cv=none;
+ d=google.com; s=arc-20260327;
+ b=htjxT5Kbr+8DGWXmTmGqlgPBRTA6ARCJQxafpwU4/9ui1KFqNtWGDmFSo2QhPEMJ99
+ t9kKcoj9JFOw9e03GkeqwTl2fBLQ2pPSUFK9fe2yimKuyzzyOxTLn6uIa/L4nHjjQvMU
+ jAT7NsMvV/jzkCNeBkr1gq0GpPZVqbJZoJJQjp05UbRYJfBx7F4UqVWBvmwxp0wIjM4T
+ 1UVYJhTw5A3RFnK/dmljlTMUEOS3QGUgrOHwgG8fNoHVdkjBOpfV+v2dvJpqOP9W2QKt
+ O9uMubpIz18SGNOb1Abs4fTm4wMcb8k/dLTKIEAAl1xO3lnMXDkRf4DlZDhnAs0FbYbA
+ GELQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Hi3BG2S4Oq2JxEk9R6XNSK8TycyPNIWjCMmsfwGzv9U=;
+ fh=KLHGcCjDFE8JakAsekM1idRm6q0Xvx801j4ETmug+Fk=;
+ b=ZtI/qLQEYVsrNgfIFWkG4msc5EqFp4fhbEPDcdbf/YWpBmyZMjn8sOJCBcvblzNcGB
+ zbDD0vKexTh11vuSUCOt5rZArE4IGhj+wC/7BiziPaGBlThXCgLOfJY9yQ9bLJIvZxWU
+ Doz06aJWcdqJez+8tGWbAL1q8J+aTYLFVAPVgBr9kKMP2I3FnxL3pLBmlaZhnuZeI5/U
+ R47FC76XC5eCfCLFgb0+m5n6YOwJrnONE1yHWrfB8gaoF+Trvd/I12JrfMNTg4zSxxgV
+ Qqhs2Ju0FPFVe/ajmLeLT3w7awlHJ0iL2QsELHUM7qFFU0hp24gT2DqZ4tccnofHiHwp
+ 3YYA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783044462; x=1783649262; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kdqNozVJTg5LLdjc+PWakoeB4IknaCmuEVX9AzK7Hvw=;
- b=OqkuKF0wlSXdGSZBFXiWsNrtPtK/4zPYZED6I3YGBvP0+soMwtcHlrwLHiFcYuPZ3Y
- suaIwwYbrghA5JxK4TyaXjYzAkNwwXXgY0V668lcvkl0i52AIfnrEH/4oUZix3ijFRUS
- de93Q+gvD5T4IyYTCJCRs1xlZfzYUTD19+hJJ98dpNZRbYe8qQ5qLNmyuBikZ7Wj+EL2
- IwZ9oZfXQNu+g0D0N6zC+VeIVw0ScN5rvp3bQhaTT3IvP3hWUCe9o8bMUV6+Hb+hD+m6
- LDwLfJyf0Ngggssr1910WbWXvzkk+mGfUidwm3x3YwEa+xDbOUCg3OY5CCW96wiDvZLu
- ENvw==
+ d=gmail.com; s=20251104; t=1783044973; x=1783649773; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hi3BG2S4Oq2JxEk9R6XNSK8TycyPNIWjCMmsfwGzv9U=;
+ b=RE18Eh+NJSQjdRosjdurdNruQ08k0iUZSlDPkDc+QffVD0/vBeD34S4cyEc3xgLfBD
+ WHOq9GwfEjadDq1bEHddWt1aIm5u/yr/ZJ32iihtARhJ8vQTdhUjpakQHsWdWgrd9jxi
+ erBvEhwT99mURuuHlI/JxfZuWhFUtq3/3K/Vwc0tR2h8573GpY9CmVAP8VjohZFVXotZ
+ dE5KUsUqfVeakEL6Vihw1wkqhhb3l5dTK0vuxjvBPoCTj0+Os0BnlrkwdA5Zn84ZPuz/
+ gHjzbyQpoArw/dHagDL+LFgaMebh5EyrQzI1uJ77Uqr4wu8y9jY0/YZVeoG7YT8DHcN3
+ hqGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783044462; x=1783649262;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kdqNozVJTg5LLdjc+PWakoeB4IknaCmuEVX9AzK7Hvw=;
- b=gfkSYCwj1+97INaunZkmL8PaiPAFAgVdOZqJFYrfFL8QQ2Xg4hM1s+J1Lg8sqpwlhP
- H7/FLzelFCvvNuRHGm+MoFSCDBtLo+M988ukqlgD1xSYEcCF2aHAU3ZfGRjuCqDlIY43
- RFoMcbSRG/x7deF4W6at3rdOVNiiA6AzS29uFoOiz8nnm5KvLFfOhhRfRRLBcA3aQKED
- 2MEzKp4TXiNNlBep//Pqcta2S6pB1oQDwpFriB8a2hY460EXi/Wk2IH9c+eozKkGnSOe
- XmDQzwZOLiaoWrEeV0Bp7ucivz71vm1OlZH5quCdEnIuJAiFnR8cABVEhWnZa7NOcevs
- 1olw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9VtowzpMYnZ04e8Ir7nuWTR+jOuMzap+fFBQxDI7x9DVPbnna5aYSxOcVDk3pFLXJYTl/0fMttgmD5@nongnu.org
-X-Gm-Message-State: AOJu0YzEfwTAbkyStMkFOFXZtmM7hp3ctZ4UDGuooP0nauJyE8z4Ie4E
- f8V+QLXJA6zGBYILDFPXS8VHrBG9oDrOxI2fGoA+KAgriqByor54Qs8qobkZyP8WtyRRDv9uzQn
- cGKbaiQCDFN0gZc1sJ0hVbgQjkwiBTLEApyZ3Ja+6aLrQWh2iioNo5WkQPA==
-X-Gm-Gg: AfdE7cl8kJTXbt96fqoAx8Ew6V7KXyqVctRHOGH9qSEfd199NI+tMGxDnouZ8LwcE3d
- ZbT854CxREWRVtrECTgtG+YzTDnx9JYNpS+KyPQA3nGsHZszWvMy6C3BnB2zth6C94Ec9l6c6nJ
- vhSIynPFU1dYJrM/FxQumO3TIn2lc/8/9kXiWBZZXKZNoqIwH1YTmvLVUsJGxTH2OPETinnCfZo
- zhSX5DtntfoEfR9NRcHVFAhTEDKx63ULDQ2yOCnWsNCvOlmJM/2UZ1gHdFZv19xleohthjU6ETJ
- uxDthpUn7c/cbNF24m2DGb5aq/5vc+Xnn5aFDOGww0bHahVFQZrjsVO4SdvTdLd7tvCNoMxxVoF
- 5zE0GgVAcRwLj/2UJejEvgiXH2NkwhBfgJHBRrC7qxoA9ZWCp7/UhtAv0uvR+7Q==
-X-Received: by 2002:a05:620a:25cc:b0:92e:68b9:6b50 with SMTP id
- af79cd13be357-92e785062ebmr1148773185a.57.1783044462179; 
- Thu, 02 Jul 2026 19:07:42 -0700 (PDT)
-X-Received: by 2002:a05:620a:25cc:b0:92e:68b9:6b50 with SMTP id
- af79cd13be357-92e785062ebmr1148771185a.57.1783044461510; 
- Thu, 02 Jul 2026 19:07:41 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-477db3dbacbsm14183030f8f.4.2026.07.02.19.07.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Jul 2026 19:07:40 -0700 (PDT)
-Message-ID: <28c14e21-9382-4d4b-bde0-622d4dca9bf9@oss.qualcomm.com>
-Date: Fri, 3 Jul 2026 04:07:39 +0200
+ d=1e100.net; s=20251104; t=1783044973; x=1783649773;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Hi3BG2S4Oq2JxEk9R6XNSK8TycyPNIWjCMmsfwGzv9U=;
+ b=YOdl7LACdRDeni9sly6Zc/mF7AJbqNMegfRD5KgsMfnI8AdhDyCZKXB1uZyN3Gx9M+
+ Noeg2tDQsWdFJY6lWUT+IpQ/tyDXWUXRskMdzcG54VnAM0fbtuLffJZISQw0GFFkptIr
+ 3JnrwB3oC8F7lwcN0x5UKzcP8golM2tjUWIXbq+QAwOUsbuHiAgm6B/Qi4HJSHIJnUPJ
+ WkerjvjwMoBcRrnpODs41434oQF263zSGBNW6vHKDBVHs4J4wO2bDmaTBTytuMMkzhhY
+ kYpdYkfwmEuE9lAFtX3wZ8yLAuEUGrHHUd+e5X/vzfSjrVPJJkWJ0h1KJzHV1CXsseZ2
+ kVZg==
+X-Gm-Message-State: AOJu0YxvBND3fV17Glf4HX5kpYBKq8AOP7GSE0sRXHpnjYvGXqeU9+Q/
+ qT5CQ38yNqca9zKRZakWqkVUwxP+2Qv9HSuIAii0xagHqlYkfQdR1vSTM3EKFt/i+DrvQgt3lQZ
+ J0Wc7FnfF9ikJf/lOS4OU3E/Sse5qifw=
+X-Gm-Gg: AfdE7clKOln/fp5JjFCARsyMkI7U89q2lkID+se6kmQlufIRP/qYj5qK2FKd52LvAaX
+ Z7kmIbMP9RtU7Ijz5YRHIKLi2zzQinoE/yUwU+GRLzQkJuiMtluwGIZliVn/m9N8CPOuJzXn5cE
+ rQvE8q6DEngLwtm5rsmUqnL6ae923yAg95kWHxv1O5kxKOMkbm/1v5LzRZrXT5evcepxvsig+TP
+ 78ycBsMT2tAlAUkZcUyshSte4rthcF6/9nUJ2YuMmpAk3UFmpYQD+iv00E/RYUEzifVUv6QWVfy
+ 44YGAOqlbk2LMDutU6e1pA0mBbI=
+X-Received: by 2002:aa7:cd75:0:b0:698:aeaf:2d9 with SMTP id
+ 4fb4d7f45d1cf-698c1039a8amr611045a12.2.1783044972587; Thu, 02 Jul 2026
+ 19:16:12 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 17/23] vfio/migration: Implement VFIO_PRECOPY_INFO_REINIT
- feature
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Avihai Horon <avihaih@nvidia.com>, Peter Xu <peterx@redhat.com>
-References: <20260630043107.1511076-1-clg@redhat.com>
- <20260630043107.1511076-18-clg@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260630043107.1511076-18-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: eVTEIanQH2nODYhu_5vsQI69Jf6alIwT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDAxOCBTYWx0ZWRfX6w7z+v9lc94v
- qozxseFAwnqljhZnSDecka0lXICWvIskMQYwJGrBrxvYIXDt+Ztet1HaS7NZz+KIXmteB4m/HCL
- 6Ypyzp02oiFXvPebIfLdrp1Xo4cUnoHE3lVYA9Tg2q9/Cixm8NqhAIBv5JN+GKxNHgom4Vgh+v+
- bFXAPSPv7gmFFgjsuLr4tQHQIA0OiIHnbMeXoXCOcj+mBS3J1Gxo3l2MBEkbooxLLt4tOCPPIql
- EBsVwxl9LWF4icG4lShtjkqnJ5btks+RZkzBUUZmaArKltUDjhedJoC8pVcqvOAgYDnfO9maMp3
- nbunX0Mh2AKXqdphdQOCgk2go/zIcPoYoX73HMjKpLR8zEV2wrVRKI+w1n4g5VHIAYXJBbSkj0B
- uw5lecmggN4UUOcvMgomsdio7T+4Ku9/Ix2RYD3e/3ZLqSmTk3aLGqXHfrfrxsEfmuSSZwqhFfU
- P0tFyxI/4vzjG2qaEDQ==
-X-Authority-Analysis: v=2.4 cv=dvXrzVg4 c=1 sm=1 tr=0 ts=6a47196f cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=VwQbUJbxAAAA:8 a=Ikd4Dj_1AAAA:8 a=20KFwNOVAAAA:8 a=5CnL1EQKMmUAPhqxv5sA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-GUID: eVTEIanQH2nODYhu_5vsQI69Jf6alIwT
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDAxOCBTYWx0ZWRfX7+CNPl4nEdZf
- 3m3oI9G94+auU+hzUMHVAcsLFSyFYJa4Bn2dWBcWldCnxjL/bCbxXJOzz1U8KD3QXNjkiXI5hC0
- c2pp8EKMvBKhbr554HrSotbXlqZkUFI=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-03_01,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 priorityscore=1501 adultscore=0 impostorscore=0
- bulkscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030018
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260701124034.552271-1-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260701124034.552271-1-daniel.barboza@oss.qualcomm.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 3 Jul 2026 12:15:44 +1000
+X-Gm-Features: AVVi8CdRN8JpEpdu-8OGjC9yOJHwoMtShyYL0ewZLKP3dioqEOfRzznMAYzFzP4
+Message-ID: <CAKmqyKPTWMmO4p0Rc1rfinDc0vP-JQkrR5X3UPkEuwvmv1dXjQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/riscv/riscv-iommu.c: fix fault type for spa_fetch()
+ faults
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
+ andrew.jones@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,62 +119,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/6/26 06:31, CÃ©dric Le Goater wrote:
-> From: Avihai Horon <avihaih@nvidia.com>
-> 
-> According to VFIO uAPI, precopy initial_bytes is considered as critical
-> data that should be transferred and loaded prior to moving to STOP_COPY
-> state to ensure precopy phase would be effective.
-> 
-> As currently defined, initial_bytes can only decrease as it's being read
-> from the data fd. However, there are cases where a new chunk of
-> initial_bytes should be transferred during precopy.
-> 
-> The new VFIO_PRECOPY_INFO_REINIT feature addresses this and allows
-> reporting a new value for initial_bytes regardless of any previously
-> reported values.
-> 
-> Implement VFIO_PRECOPY_INFO_REINIT feature:
-> 1. Opt-in for VFIO_DEVICE_FEATURE_MIG_PRECOPY_INFOv2 to make
->     VFIO_PRECOPY_INFO_REINIT available.
-> 2. Request a new switchover ACK if initial_bytes increases post of a
->     previous switchover ACK. This ensures the device is not moved to
->     STOP_COPY before initial_bytes has reached zero again.
-> 
-> Acked-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-> Link: https://lore.kernel.org/qemu-devel/20260622101214.25770-13-avihaih@nvidia.com
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+On Wed, Jul 1, 2026 at 10:41=E2=80=AFPM Daniel Henrique Barboza
+<daniel.barboza@oss.qualcomm.com> wrote:
+>
+> Under certain circunstances, like the one described in [1] and [2],
+> a read operation that faults will be logged as a write fault instead,
+> and vice-versa, if they happen after the translation phase in
+> riscv_iommu_spa_fetch().
+>
+> The first problem is that we're overwriting iotlb->perm with PTE flags,
+> so an IOMMU_RO access flag can be overwritten by whatever flags
+> the PTE has.  This will cause the wrong fault type to be thrown at
+> the end of the function in case a fault happens.
+>
+> To solve the iotlb->perm overwrite we'll bit_and the original
+> iotlb->perm access flags with the PTE access flags, preserving the
+> original access type.  So a IOMMU_RO access in a R+W PTE will result in
+> a IOMMU_RO perm.
+>
+> Second, the resulting fault is received by riscv_iommu_translate(), which
+> will then report the fault.  To do that we require a transaction type
+> (ttype).  We're prioritizing checking "perm & IOMMU_RW" to set a
+> UADDR_WR ttype, and then checking "perm & IOMMU_RO" to set UADDR_RD
+> ttype.  The issue with that is IOMMU_RO=3D1 and IOMMU_RW=3D3, thus checki=
+ng
+> "perm & IOMMU_RW" for a write then "perm & IOMMU_RO" for a read will
+> cause the read fault to always be diagnosed as write.
+>
+> Make the iotlb->perm matches more strict: "perm & IOMMU_RW" must be
+> exactly IOMMU_RW, ensuring that 'perm' has both flags.  Then we can
+> check perm & IOMMU_WO and perm & IOMMU_RO without worrying about
+> overlapping with the RW flag.
+>
+> [1] https://gitlab.com/qemu-project/qemu/-/work_items/3557
+> [2] https://gitlab.com/qemu-project/qemu/-/work_items/3577
+>
+> Fixes: 69a9ae4836 ("hw/riscv/riscv-iommu: add ATS support")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3557
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3577
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+Thanks!
+
+Applied to riscv-to-apply.next
+
+Alistair
+
 > ---
->   docs/devel/migration/vfio.rst     | 14 +++++++
->   hw/vfio/vfio-migration-internal.h |  1 +
->   hw/vfio/migration.c               | 68 ++++++++++++++++++++++++++++---
->   hw/vfio/trace-events              |  4 +-
->   4 files changed, 80 insertions(+), 7 deletions(-)
-
-
-> +/* Returns 1 on success, 0 if not supported and negative errno on failure */
-> +static int vfio_migration_set_precopy_info_v2(VFIODevice *vbasedev)
-> +{
-> +    uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature),
-> +                              sizeof(uint64_t))] = {};
-
-What is the point of using uint64_t[] here?
-
-> +    struct vfio_device_feature *feature = (struct vfio_device_feature *)buf;
+>  hw/riscv/riscv-iommu.c | 16 +++++++++++++---
+>  1 file changed, 13 insertions(+), 3 deletions(-)
+>
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index 974042d017..7f94ce152e 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -282,6 +282,7 @@ static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn,=
+ hwaddr addr, hwaddr *out)
+>  static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *=
+ctx,
+>      IOMMUTLBEntry *iotlb)
+>  {
+> +    IOMMUAccessFlags pte_perm;
+>      dma_addr_t addr, base;
+>      uint64_t satp, gatp, pte;
+>      bool en_s, en_g;
+> @@ -509,8 +510,16 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s,=
+ RISCVIOMMUContext *ctx,
+>              }
+>              /* Translation phase completed (GPA or SPA) */
+>              iotlb->translated_addr =3D base;
+> -            iotlb->perm =3D (pte & PTE_W) ? ((pte & PTE_R) ? IOMMU_RW : =
+IOMMU_WO)
+> -                                                         : IOMMU_RO;
 > +
-> +    feature->argsz = sizeof(buf);
-> +    feature->flags =
-> +        VFIO_DEVICE_FEATURE_SET | VFIO_DEVICE_FEATURE_MIG_PRECOPY_INFOv2;
-> +    if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
-> +        if (errno == ENOTTY) {
-> +            return 0;
-> +        }
-> +
-> +        return -errno;
-> +    }
-> +
-> +    return 1;
-> +}
-
+> +            /*
+> +             * Do a bit_and between the PTE bits and the original
+> +             * request flags to determine the exact permission we
+> +             * need, i.e. if the original request is RO and the
+> +             * PTE has RW flags the actual perm is RO.
+> +             */
+> +            pte_perm =3D (pte & PTE_W) ? ((pte & PTE_R) ? IOMMU_RW : IOM=
+MU_WO)
+> +                                     : IOMMU_RO;
+> +            iotlb->perm &=3D pte_perm;
+>
+>              /* Check MSI GPA address match */
+>              if (pass =3D=3D S_STAGE && (iotlb->perm & IOMMU_WO) &&
+> @@ -1727,7 +1736,8 @@ done:
+>      if (fault) {
+>          unsigned ttype =3D RISCV_IOMMU_FQ_TTYPE_PCIE_ATS_REQ;
+>
+> -        if (iotlb->perm & IOMMU_RW) {
+> +        if ((iotlb->perm & IOMMU_RW) =3D=3D IOMMU_RW
+> +            || iotlb->perm & IOMMU_WO) {
+>              ttype =3D RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
+>          } else if (iotlb->perm & IOMMU_RO) {
+>              ttype =3D RISCV_IOMMU_FQ_TTYPE_UADDR_RD;
+> --
+> 2.43.0
+>
+>
 
