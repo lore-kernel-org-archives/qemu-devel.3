@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0000C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 17:03:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BE4AC43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 17:03:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfhHG-0000Gs-Ey; Fri, 03 Jul 2026 13:02:10 -0400
+	id 1wfhHO-0001BK-8R; Fri, 03 Jul 2026 13:02:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wfhGg-0007rL-JB; Fri, 03 Jul 2026 13:01:38 -0400
+ id 1wfhGo-0007wJ-Q5; Fri, 03 Jul 2026 13:01:44 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wfhGe-0003E4-KD; Fri, 03 Jul 2026 13:01:34 -0400
+ id 1wfhGn-0003I9-08; Fri, 03 Jul 2026 13:01:42 -0400
 Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 663GJ8tq3237356; Fri, 3 Jul 2026 17:01:27 GMT
+ 663GJC8C3237374; Fri, 3 Jul 2026 17:01:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=5/C4+8
- Obu9t+F8Dno8hhZNl0p8nzU7MhbERiaRJZ0wY=; b=RaP7S/TGo/zrTHeH4iBQf9
- Z1CGjmOdUAzve4z+Ck7kkXeI1i+gwb24wH5HNCAen99LGFntQ78bLzRFxHEC0AsZ
- mlnRIHnyPsbT2JU8j3/u7JSvbeeERwv1vBoHZ3Lus5exKMrYib8VFntmf5394m62
- 19mmMQGjMSY98gZb/L1ZQq+CBUQGnFZ64IyvlwhGtr7uA59sXpx9BKniIkJ1QFAi
- ANXuqkPs0gazayHUZgGR/4Cn9PQpv/PGCRcCxe7ZhmaXe4szVIpJOnvfgatRiCt7
- AEQToPcSsyxWCcYxrR+BFA5wE4MxxU5CPTyFXjsc2qoYGpMZyJLOdKhueG0fcFjQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rffmf2-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=ctJOhT22+/282MyIP
+ iIB02l71QB2ubOQvkaLw2y81eg=; b=kHnSHv+PSHSfkIQ/wfQHEvMTaoiYJquuG
+ DnLDpvHHPZpSPOPSpGzYBN7N0CzrFKlWw5/rjJn5nLcDqSJ2GteVntvnys7IWZLH
+ wsS1yTl5KWvvcjKuI6q8O6wi/ZNm3FIPBukKjkmaP1ufukYviquDXeYjrP8VyRDf
+ HsmmaiAoKbqCIvad4UeLWUy8o1P0wA1m9vZMqy9pNAunIEdn003LSKFdsxXV2smt
+ yjbTkp6Lvi3WEtFQPlOy8OLFIs9nMWVx3mNMmW91xUwoRFe2sHYw1MdWCtoeTqbU
+ cKKMTh4h65LdiwSw2EEmBBkNKllq09WX8X9ixsX0V18N2L10IaYew==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rffmfj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 17:01:27 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663Gnavo020075;
- Fri, 3 Jul 2026 17:01:26 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2u2gsk61-1
+ Fri, 03 Jul 2026 17:01:36 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663GnlNv031533;
+ Fri, 3 Jul 2026 17:01:35 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhysgbc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 17:01:26 +0000 (GMT)
+ Fri, 03 Jul 2026 17:01:35 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 663H1PFL21955320
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 663H1YsD24969864
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 3 Jul 2026 17:01:25 GMT
+ Fri, 3 Jul 2026 17:01:34 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0B9B85805D;
- Fri,  3 Jul 2026 17:01:25 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4143A58064;
+ Fri,  3 Jul 2026 17:01:34 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 221655805A;
- Fri,  3 Jul 2026 17:01:22 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7B8EE5805D;
+ Fri,  3 Jul 2026 17:01:31 +0000 (GMT)
 Received: from fedora-workstation.lan (unknown [9.61.75.28])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  3 Jul 2026 17:01:21 +0000 (GMT)
+ Fri,  3 Jul 2026 17:01:31 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
@@ -67,35 +66,33 @@ Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
  alifm@linux.ibm.com, brueckner@linux.ibm.com,
  pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-Subject: [PATCH v14 15/33] s390x/ipl: Introduce IPL Information Report Block
- (IIRB)
-Date: Fri,  3 Jul 2026 13:00:12 -0400
-Message-ID: <20260703170032.1893204-16-zycai@linux.ibm.com>
+Subject: [PATCH v14 18/33] hw/s390x/ipl: Rework s390_ipl_map_iplb_chain for
+ certificate storage
+Date: Fri,  3 Jul 2026 13:00:15 -0400
+Message-ID: <20260703170032.1893204-19-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260703170032.1893204-1-zycai@linux.ibm.com>
 References: <20260703170032.1893204-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a47eae7 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=1NTGDykL02WXTEG3Jz0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: epEsYLIF0PWiVlE4c5ZLl9HdDRZbpa4B
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX+5fO2W1VXzsF
- YWFFqWWZ3wp2J2DLbtKmNHTcL83lRKAsE1j9js9is+X+p3zaOABRQV+DCChIRP/k1sNCa2B+PjA
- OrhRFOtekGN+ESFs/Xdfa1M84v3IP4rSYhjscMoUFUJvFLdniI95vcEaXTEYS0AUBWO0dbgxJfP
- CgpyAFLnXxIXGXpOWLlMBkR3cUrPr71ibMi6GA31LAjLPk0FgqD8GzgVOONHMpGzNQ3ytB6nizO
- USySKWUOwDcsEGM+qI22WvE57o5T/kNWWtRNA8KzLp0G7DKFHzgLWlCgPq3+LBvTO0ftNaHr0AC
- nEDxHvrQeaam5Yd4D019GPW4fbfZzp6I1QON7u9reYwRuhqYGzGmKq5g0xdw64Rr7T1l5fTrDwQ
- ArMkfZFLKPQhulX8Jc2VtWiEcOzKgJiPRw8pQ8/0VYYdSJpjgnodDgwXOTfp/3eyzxpVwmfehvP
- jMZ9UApTLww7yMkEqkg==
-X-Proofpoint-GUID: epEsYLIF0PWiVlE4c5ZLl9HdDRZbpa4B
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfXzVaE5Yk1h6mJ
- Ugu63QqQcG/S702K39Gn2uQ4bts5Guf5ArIEsZEW0UqtbNQtR2enBk34CNvFTKrDyQFoRQkfAKS
- AYwTqxYCk74qG/LF3KxlhbuVkMeBGrk=
+X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a47eaf0 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=6n7imOYxnT_JOqVJOMMA:9
+X-Proofpoint-ORIG-GUID: CXjJoy4biltOPI-mkJ0Yk7xUH5EsQRTM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX+KSnlbGa9KdB
+ SsOf726yvfdTMcbFdX02CV4WQnnrm3jeheBe3dF9p2Kmh82onpBxknt7KJLUFn8z5LYaiwpx40h
+ zIRNIlN7S6UP+g4zJf0jzWTQaICzi+3rO3ciRSofIMjv+T4x9+r5PXgHufQSdDv1I1jsXnKN+jD
+ G/ssjfUUjkKPWjUnhgFIndybqHFU5Hrw9P39uCve5FxeoDpMRi8skG0Bji8CbU9cD4BCHKbXvWk
+ Eq96MHkS2LLXAJvfrg2xi5QyzdtKslCajqkcweKnnRrro7pQ9+ugJooStR0Dnr+ua/gufVEvubL
+ quvOJybNVAD8VX+ORcgf5rpXT+nj2rcREyAZxYTmN8TcAae3I0/jzGosNLfQhCrWTol4gG4GnYF
+ WA1X7H8P0ClKvyEgJx8TyIy9WQeEL9/FMG0uD1a1SEvSH60ulmbgX1JCRK7xWnDOkydkaWDHo3c
+ 2PoKMGtTbMmi+ENJDeg==
+X-Proofpoint-GUID: CXjJoy4biltOPI-mkJ0Yk7xUH5EsQRTM
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX68o5tRa4TG3e
+ PAtzpfoRAsZImhUYSHrzuSyXCCbEBQivbi80Uvk0YettqH7s9PgehVWuBmvxE7KdxGGp5BNVdI/
+ GGlte0E8glJ+BrfrX+pAqeAPI84pmT8=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_03,2026-06-26_01,2025-10-01_01
@@ -128,132 +125,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The IPL information report block (IIRB) contains information used
-to locate IPL records and to report the results of signature verification
-of one or more secure components of the load device.
+Rework s390_ipl_map_iplb_chain to always allocate maximum memory for
+the IPLB chain, regardless of the number of boot devices. This space
+is also used to store certificates during secure boot, providing a
+safe location for certificates until the kernel reads them during boot.
 
-IIRB is stored immediately following the IPL Parameter Block. Results on
-component verification in any case (failure or success) are stored.
-
-The IIRB data is reserved and protected by the guest kernel during early
-boot to prevent it from being overwritten before the certificate data is
-permanently saved.
+Rename next_iplb to ipl_data to better reflect its multiple purposes:
+storing both IPLB chains and certificate data.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
-Reviewed-by: Collin Walling <walling@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 ---
- docs/specs/s390x-secure-ipl.rst | 21 +++++++++++
- include/hw/s390x/ipl/qipl.h     | 62 +++++++++++++++++++++++++++++++++
- 2 files changed, 83 insertions(+)
+ hw/s390x/ipl.c              | 17 +++++++++++++----
+ include/hw/s390x/ipl/qipl.h |  3 ++-
+ pc-bios/s390-ccw/iplb.h     |  4 ++--
+ 3 files changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-index a8be863548..850e4a7497 100644
---- a/docs/specs/s390x-secure-ipl.rst
-+++ b/docs/specs/s390x-secure-ipl.rst
-@@ -101,3 +101,24 @@ Subcode 1 - perform signature verification
-     * ``0x0302``: PKCS#7 format signature is invalid
-     * ``0x0402``: signature-verification failed
-     * ``0x0502``: length of Diag508SigVerifBlock is invalid
-+
-+IPL Information Report Block
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+The IPL Parameter Block (IPLB), utilized for IPL operation, is extended with an
-+IPL Information Report Block (IIRB), which contains the results from secure IPL
-+operations such as:
-+
-+* component data
-+* verification results
-+* certificate data
-+
-+During early boot, the guest kernel reserves the memory region
-+containing the IIRB. This preserves the data while the guest kernel is
-+operating and during re-IPL.
-+
-+The guest kernel uses the contents in the IIRB for:
-+
-+* Boot logging: reports which components were loaded and verified.
-+* kexec operations: builds the next kernel’s IPL report from the existing one.
-+* Keying: installs IPL certificates into the platform trusted keyring.
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index f9f14d7b67..af89005790 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -425,10 +425,9 @@ static S390PCIBusDevice *s390_get_pci_device(DeviceState *dev_st, int *devtype)
+     return pbdev;
+ }
+ 
+-static uint64_t s390_ipl_map_iplb_chain(IplParameterBlock *iplb_chain)
++static uint64_t s390_ipl_map_iplb_chain(IplParameterBlock *iplb_chain, uint16_t count)
+ {
+     S390IPLState *ipl = get_ipl_device();
+-    uint16_t count = be16_to_cpu(ipl->qipl.chain_len);
+     uint64_t len = sizeof(IplParameterBlock) * count;
+     uint64_t chain_addr = find_iplb_chain_addr(ipl->bios_start_addr, count);
+ 
+@@ -592,7 +591,7 @@ void s390_rebuild_iplb(uint16_t dev_index, IplParameterBlock *iplb)
+ static bool s390_init_all_iplbs(S390IPLState *ipl)
+ {
+     int iplb_num = 0;
+-    IplParameterBlock iplb_chain[7];
++    IplParameterBlock iplb_chain[MAX_BOOT_DEVS - 1] = { 0 };
+     DeviceState *dev_st = get_boot_device(0);
+     Object *machine = qdev_get_machine();
+ 
+@@ -638,12 +637,22 @@ static bool s390_init_all_iplbs(S390IPLState *ipl)
+             dev_st = get_boot_device(i);
+             s390_build_iplb(dev_st, &iplb_chain[i - 1]);
+         }
++    }
+ 
+-        ipl->qipl.next_iplb = cpu_to_be64(s390_ipl_map_iplb_chain(iplb_chain));
++    /*
++     * Allocate maximum space for IPLB chain and/or certificate storage.
++     * Once a valid boot device is found, this space will be used to store
++     * certificates if secure boot is enabled.
++     */
++    if (iplb_num > 1 || s390_has_certificate()) {
++        ipl->qipl.ipl_data = cpu_to_be64(s390_ipl_map_iplb_chain(iplb_chain,
++                                                                 MAX_BOOT_DEVS - 1));
+     }
+ 
+     return iplb_num;
+ }
++QEMU_BUILD_BUG_MSG(sizeof(IplParameterBlock) * (MAX_BOOT_DEVS - 1) != CERT_BUF_SIZE,
++                   "certificate buffer size is wrong");
+ 
+ static void update_machine_ipl_properties(IplParameterBlock *iplb)
+ {
 diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-index ed1a91182a..45d25264f4 100644
+index a2180719b1..58329fb5bc 100644
 --- a/include/hw/s390x/ipl/qipl.h
 +++ b/include/hw/s390x/ipl/qipl.h
-@@ -32,6 +32,9 @@ typedef enum S390IplType S390IplType;
- #define QEMU_DEFAULT_IPL S390_IPL_TYPE_CCW
+@@ -42,6 +42,7 @@ typedef enum S390IplType S390IplType;
+ #define S390_IPLB_MAX_LEN 4096
  
  #define MAX_CERTIFICATES  64
-+/* largest supported block size - same as VIRTIO_DASD_DEFAULT_BLOCK_SIZE */
-+#define VIRTIO_MAX_BLOCK_SIZE   4096
-+#define MAX_COMP_ENTRIES        ((VIRTIO_MAX_BLOCK_SIZE - 32) / 32)
- 
- /*
-  * The QEMU IPL Parameters will be stored at absolute address
-@@ -146,4 +149,63 @@ union IplParameterBlock {
++#define CERT_BUF_SIZE     (7 * 4096)
+ /* largest supported block size - same as VIRTIO_DASD_DEFAULT_BLOCK_SIZE */
+ #define VIRTIO_MAX_BLOCK_SIZE   4096
+ #define MAX_COMP_ENTRIES        ((VIRTIO_MAX_BLOCK_SIZE - 32) / 32)
+@@ -61,7 +62,7 @@ struct QemuIplParameters {
+     uint32_t boot_menu_timeout;
+     uint8_t  reserved3[2];
+     uint16_t chain_len;
+-    uint64_t next_iplb;
++    uint64_t ipl_data;
  } QEMU_PACKED;
- typedef union IplParameterBlock IplParameterBlock;
+ typedef struct QemuIplParameters QemuIplParameters;
  
-+struct IplInfoReportBlockHeader {
-+    uint32_t len;
-+    uint8_t  flags;
-+    uint8_t  reserved1[11];
-+};
-+typedef struct IplInfoReportBlockHeader IplInfoReportBlockHeader;
-+
-+struct IplInfoBlockHeader {
-+    uint32_t len;
-+    uint8_t  type;
-+    uint8_t  reserved1[11];
-+};
-+typedef struct IplInfoBlockHeader IplInfoBlockHeader;
-+
-+enum IplInfoBlockType {
-+    IPL_INFO_BLOCK_TYPE_CERTIFICATES = 1,
-+    IPL_INFO_BLOCK_TYPE_COMPONENTS = 2,
-+};
-+
-+struct IplSignatureCertificateEntry {
-+    uint64_t addr;
-+    uint64_t len;
-+};
-+typedef struct IplSignatureCertificateEntry IplSignatureCertificateEntry;
-+
-+struct IplSignatureCertificateList {
-+    IplInfoBlockHeader            ipl_info_header;
-+    IplSignatureCertificateEntry  cert_entries[MAX_CERTIFICATES];
-+};
-+typedef struct IplSignatureCertificateList IplSignatureCertificateList;
-+
-+#define S390_IPL_DEV_COMP_FLAG_SC  0x80
-+#define S390_IPL_DEV_COMP_FLAG_CSV 0x40
-+
-+struct IplDeviceComponentEntry {
-+    uint64_t addr;
-+    uint64_t len;
-+    uint8_t  flags;
-+    uint8_t  reserved1[5];
-+    uint16_t cert_index;
-+    uint8_t  reserved2[8];
-+};
-+typedef struct IplDeviceComponentEntry IplDeviceComponentEntry;
-+
-+struct IplDeviceComponentList {
-+    IplInfoBlockHeader       ipl_info_header;
-+    IplDeviceComponentEntry  device_entries[MAX_COMP_ENTRIES];
-+};
-+typedef struct IplDeviceComponentList IplDeviceComponentList;
-+
-+#define COMP_LIST_MAX   sizeof(IplDeviceComponentList)
-+#define CERT_LIST_MAX   sizeof(IplSignatureCertificateList)
-+
-+struct IplInfoReportBlock {
-+    IplInfoReportBlockHeader     hdr;
-+    uint8_t                      info_blks[COMP_LIST_MAX + CERT_LIST_MAX];
-+};
-+typedef struct IplInfoReportBlock IplInfoReportBlock;
-+
- #endif
+diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
+index c92a3d0f0c..c807e7f49b 100644
+--- a/pc-bios/s390-ccw/iplb.h
++++ b/pc-bios/s390-ccw/iplb.h
+@@ -61,11 +61,11 @@ static inline bool load_next_iplb(void)
+     }
+ 
+     qipl.index++;
+-    next_iplb = (IplParameterBlock *) qipl.next_iplb;
++    next_iplb = (IplParameterBlock *) qipl.ipl_data;
+     memcpy(iplb, next_iplb, sizeof(IplParameterBlock));
+ 
+     qipl.chain_len--;
+-    qipl.next_iplb = qipl.next_iplb + sizeof(IplParameterBlock);
++    qipl.ipl_data = qipl.ipl_data + sizeof(IplParameterBlock);
+ 
+     return true;
+ }
 -- 
 2.54.0
 
