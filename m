@@ -4,145 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C875C44501
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 16:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B29C2C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 16:57:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfgxz-0006Kp-VA; Fri, 03 Jul 2026 12:42:16 -0400
+	id 1wfhCU-0005eT-CT; Fri, 03 Jul 2026 12:57:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfgxw-0006It-Ry
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:42:12 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wfhCR-0005du-Do; Fri, 03 Jul 2026 12:57:11 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfgxu-0001wH-Mu
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:42:12 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 663GIZFL489304
- for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 16:41:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Qw4cCSv0OfNGNoPPLFfy1LxGtAqB0K1HAPyDpQ8GAco=; b=dXqT2CTiU8EETd2O
- QkkeAAJ67NritPQ9nJvjVWYGw7EKqz0oPh14oEWoD2J+wYfQuAORQWjL8ypZHNgv
- ssvy1QJFAidv3WZv4JEWF5YCDmbC4d2TIdy0qk0y8+GxQCzdNc+0S63TD4+gSecZ
- jcSBt1D2PQ9zfORlYlKpRLzA0nank3SqcdEKFVMPGoNns2MYnobMDAGzOH5qtIwQ
- P3GaQi4YaAD6fKBK7b/ie18EN2VNfz3nTztoFiGKgCfgUmk7+gV6P0RArNJz7pdv
- LyCmg/NoBAAaIya9UNs4sEh/waS9NnWQimB1pXuhaDBbCxAe1HQbMrn3pAh7Vv9f
- 3jbeJQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6ckj101s-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 16:41:59 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-92158791d14so64952785a.2
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 09:41:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783096919; x=1783701719; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Qw4cCSv0OfNGNoPPLFfy1LxGtAqB0K1HAPyDpQ8GAco=;
- b=MVzxHNshWS5je7xzk68JdpNDXCj4L+tUT5zqWVI7B+rVrKop1v3GllScnpKFci48Li
- HWRD8L+JfX+Miwev+CYQrsWqoqSmbSsivp/+ALi8lK7+q5BIGQBOKyKvIhmisVyCBZEH
- afbxGfr64D5HvMlOnmqHseCLao9zleu6hr4pxzE/12mswmdieyxZ+CFn4K4Ekye0fRrS
- Sxmp/Dioe2SfScLvP4WKWj/5eDxtMkIojQrXTYT7TksxIsGE4gXbgo8ftZxW2ddTpZ1b
- TxhbzQYK8IOqdppg0iVxrr/4C2PQOViFhMX2UIO9XBEQGEP+nVOzXDlzKtD2Sch8bkXT
- DUDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783096919; x=1783701719;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Qw4cCSv0OfNGNoPPLFfy1LxGtAqB0K1HAPyDpQ8GAco=;
- b=gcdBKHD9zn2LTflvTR6WLTnEbAdx6UHX3JBpNqxroy7cLvm7XmP6yGUAlpDAEEhBOe
- N2JHNof/cPbI2cdh5Cnu87V9NILGscPkxLG/xGAmFz5c3DFNEEscKXfGWQ8LkgHeNFQs
- G5VujDsTcx4LZgiDUOq+XvrRcfSIB/veg62lGw6/lVirTO7pLOYzDr8JAHDuf+/38P20
- Bl2FyYrghxMjMWPd/VzkNCvbZI4BbbBi7dTC4FRygMmPN4ziuL7eqopeykFAQ06ejX3B
- VV3Fj58M4SrJ+RqQ4P73qN4wdlJIhLm2yQnxdYKUDDAtkFOvATIBUuRA1piL1gDtppZ8
- NxXQ==
-X-Gm-Message-State: AOJu0YzXSxAF41KqO40sqyXJ4XSK8GLRnZa+ZA+TUO0HIn9bJxtjJIWs
- em58P6tMa0mzJvRq0cLVUULfYHp3CBp6ZD3ocFHh1gbyZlsy6BsDXZeJaDQFx7Ju7WOOcPmEjIC
- B/4KwPcoeqI4zSHsCMY4vNt2qLX+Ttx9wnIjDlYXFwZDaTGb1y2mJaF7bPmg85VXPhw==
-X-Gm-Gg: AfdE7cnSXr6ac7VD9bUUoMBDKEEK31IcFYZOGvdZERfRTB0lQKAwpltuDA2uuH+cUwX
- E3mRxpzeWKcJR64lN5udNYr/f84vish5dS5QtfGz3DCC8b5ob2sAD7xgh7i49AHir19I39Ar4lh
- DcFrCdRCV1aMNn0gLL95CjomuxYMxqgNRbMo2GHJD+izCPoMBOOt+Ytn/8cUNCNjYDJIxAQNXET
- SeqdSfqbyyJyYKRA8F29iPq3jc/sO1VUw4iqVkDg2PusO8XTeJrR6dPXwHaJhrI4fzacs7yNXiB
- +f4EitBDOYaTFgl3XQICH9QYhjX4osxLW5b1cKD3yGw/s8/qg64DxCTy8QpOfdJYwC/mLpnqzMV
- 6iowJzMtoAcxEdgZGIo/VyglbgQpbzWy+Z4py/kHBIQFtsRYiCcTkrzXpsRWBcL8T7xOo
-X-Received: by 2002:a05:620a:6847:b0:92b:67e6:8acc with SMTP id
- af79cd13be357-92e9a535a8bmr20662085a.70.1783096918949; 
- Fri, 03 Jul 2026 09:41:58 -0700 (PDT)
-X-Received: by 2002:a05:620a:6847:b0:92b:67e6:8acc with SMTP id
- af79cd13be357-92e9a535a8bmr20658485a.70.1783096918412; 
- Fri, 03 Jul 2026 09:41:58 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47a9b4d850dsm764306f8f.0.2026.07.03.09.41.57
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 Jul 2026 09:41:57 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- qemu-s390x@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>, alex.bennee@linaro.org,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 32/33] cpu: Rename CPUState @singlestep_enabled ->
- @singlestep_flags
-Date: Fri,  3 Jul 2026 18:37:55 +0200
-Message-ID: <20260703163757.55500-33-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260703163757.55500-1-philmd@oss.qualcomm.com>
-References: <20260703163757.55500-1-philmd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wfhCP-0001vy-FK; Fri, 03 Jul 2026 12:57:11 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 663GIkL53383279; Fri, 3 Jul 2026 16:57:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=7VvkWn
+ u2fx0s1eY8aakMYvspIGp+/Qg7OSUQSTHk1Tc=; b=fPSTjZrwcV9CbtOLvTwGGX
+ kJTbbhoOzLTukuBV2c2OOHQFSqngh/McfgWeJA+M4ya2k8fmdIziABX/VuVeYQsk
+ U3yGlDrsfVYgVrS0/4MlyXBoans0UI1rk+Wh6Hq6viZYbRGJT6ywB0r50+5lSIY6
+ vO0kxgh0GgW68HsuEsXVIHmgSyDXdGHyknlnVK+fkEK0mB7beYc5x2Uw9vpsmwGd
+ sGXhaCR9kAmKvdQsv0X/WexbBqXsC4ryki0f8W3h+MVQWUIg6b7niUnrFVQwQXV7
+ B/3BYT1HiVNkWRgMQC1ncGLb89CySMabcGgBWJ9tRJvy7PtYRiNIyJxYoFAv5GRg
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26peg9ur-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 03 Jul 2026 16:57:03 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663GnZli031463;
+ Fri, 3 Jul 2026 16:57:02 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhysftc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 03 Jul 2026 16:57:02 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 663Gv1BZ28181094
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 3 Jul 2026 16:57:01 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F0B515804E;
+ Fri,  3 Jul 2026 16:57:00 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EFCC25803F;
+ Fri,  3 Jul 2026 16:56:58 +0000 (GMT)
+Received: from [9.61.65.1] (unknown [9.61.65.1])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  3 Jul 2026 16:56:58 +0000 (GMT)
+Message-ID: <5c7a7c60-c874-41e1-9e47-28de61b7cc98@linux.ibm.com>
+Date: Fri, 3 Jul 2026 12:56:58 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 04/33] hw/s390x/ipl: Create certificate store
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
+ jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260703022933.1805010-1-zycai@linux.ibm.com>
+ <20260703022933.1805010-5-zycai@linux.ibm.com>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <20260703022933.1805010-5-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfXyZ5rk4IJNvFz
- 6febD/tFwSqdLcN/V1e4qnvHNoYQGCVbLs699LJHL1nHw+Lxj3Yd7dsvtuQMW+5DLff4565+mJD
- Tsxo3JIWqb0w4to5BY0ds+N0j2Uurcs=
-X-Authority-Analysis: v=2.4 cv=E8v9Y6dl c=1 sm=1 tr=0 ts=6a47e657 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=Psl2LI6oLFdwa_E3teoA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: Mgz6nrBEtkMhRpMQ2E9PH-kKgzaT8AyM
-X-Proofpoint-GUID: Mgz6nrBEtkMhRpMQ2E9PH-kKgzaT8AyM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfX+6vteSt3TgTl
- aZEcQq2q0EuyWABy9jratvroiI1SN23GfVyTHcclgcSVmjSbHA/66MQVk+OxsfI5iV3AeBYLv4x
- VMDoTXZ5iLsvyKuJh+Vu0A0dFkQScYrlLUqDiBgVfVUlU+kQYdsSK3HXsDZpZDdcpNm9dVNr+Gv
- TGfD1LEu4iVLhuSesxfIXSauGWdON8UrZsGxg2BK1OJNLlS6hLtf1DYp74weNw/Yq20eNtYimOA
- eFg699nrSCldRXLSMtiC8+pZ7G1VuUFRgGNcjXEbdOSb3BiVKR46mFTmqENU6J4yk0gPK2cDMMI
- zPoAh5akc/o0QSaFsgCJYv9tgZOJXMdTSrz9ziB6XJngKrs80wNj2zxqUsF+w1bRn0N2m9wv5Ma
- 6pQo+QeDUIsP/Fy3kKj+u04mj4ClEa4ViA+vBIn6KF60cVNduXIvRvfi05qfx76Zo3xsTBzxi8B
- Y6shDSNXB9NP03zpR3A==
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: qyr0JuEVp0pKXOhZ0VmunDertPk7UV1p
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX2HlRipmwgn1A
+ /GTqG8vQ2KiJRPDw8+S971HgVTVKT6jbfiAtuFfUNaPkQZbKYWAGw5rkJdF4aq3F2d0Xuk+3kyV
+ zH7L/4t0nuZDgPQiT5Tm4sDWLefxvp4=
+X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a47e9df cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=NoTqclVnJAl4llu3VHcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX/RAY+ajaOLoC
+ 6D59wfjlGlAU94OPOO352MeKVYS2mByucJxi7cSQwze5Q5kPS+A0Uj5t1ozTfyUA+aNX8UBytVu
+ iRF8M/PLLMMe9b0SFN53uqcarBJyZCqTPrAEWmQpdFiHubfakJMLl6yOu/UX19mg084vjkIteS3
+ dgISL9KZQZ+rX1EvppEVyH+CRNQf48PsGRBeDx8Fk9WC6o28m60OExb8TZA/7lvqoBwkNN+zfTV
+ GNjyC6MAJKmsqBLjkfXJUFwHyL755zP8BhVgAKfjxWSVILH//JYgHLlddo5hvk0VZGkHQd2AuOZ
+ y0j3FLBglB/sMbiDLus4iPkbvXjVNZTj6SIQPrG86BB6PWBgq4hq56RZFLYWy/eJwT2/ZEY3S7d
+ a2bHFNoC+uC5zu1Wd5PyhnyAAKtzYqm2X3lPNUoxgB5uSK3Rz4uO0EZXEOMjJjqFWg1uOnnr6Ky
+ hc8Vr0YPjEhG7QMq9gA==
+X-Proofpoint-ORIG-GUID: qyr0JuEVp0pKXOhZ0VmunDertPk7UV1p
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_03,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 suspectscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
+ spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030164
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030167
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,207 +129,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CPUState::singlestep_enabled contains multiple flags since
-commit 60897d369f1 ("Debugger single step without interrupts").
-Use an unsigned type and rename the field to avoid mistakes.
+On 7/2/26 10:29 PM, Zhuoying Cai wrote:
+> Create a certificate store for boot certificates used for secure IPL.
+> 
+> Load certificates from the `boot-certs` parameter of s390-ccw-virtio
+> machine type option into the cert store.
+> 
+> Currently, only X.509 certificates in PEM format are supported, as the
+> QEMU command line accepts certificates in PEM format only.
+> 
+> The raw Base64 data is stored, as well as the certificate's size.  The
+> binary (DER) size is stored as well, which may later be utilized for
+> secure boot (signature verification).
+> 
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/hw/core/cpu.h        | 10 +++++-----
- accel/kvm/kvm-all.c          |  2 +-
- accel/tcg/cpu-exec.c         |  2 +-
- accel/tcg/tcg-accel-ops-rr.c |  2 +-
- cpu-target.c                 |  8 ++++----
- target/arm/hvf/hvf.c         |  2 +-
- target/ppc/translate.c       | 16 ++++++++--------
- 7 files changed, 21 insertions(+), 21 deletions(-)
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index b8384639141..31f1d787352 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -440,7 +440,7 @@ struct qemu_work_item;
-  * @stopped: Indicates the CPU has been artificially stopped.
-  * @unplug: Indicates a pending CPU unplug request.
-  * @crash_occurred: Indicates the OS reported a crash (panic) for this CPU
-- * @singlestep_enabled: Flags for single-stepping.
-+ * @singlestep_flags: Flags for single-stepping.
-  * @icount_extra: Instructions until next timer event.
-  * @cpu_ases: Pointer to array of CPUAddressSpaces (which define the
-  *            AddressSpaces this CPU has)
-@@ -505,7 +505,7 @@ struct CPUState {
-     int exclusive_context_count;
-     uint32_t cflags_next_tb;
-     uint32_t interrupt_request;
--    int singlestep_enabled;
-+    unsigned singlestep_flags;
-     int64_t icount_budget;
-     int64_t icount_extra;
-     uint64_t random_seed;
-@@ -1132,11 +1132,11 @@ void qemu_init_vcpu(CPUState *cpu);
- /**
-  * cpu_single_step:
-  * @cpu: CPU to the flags for.
-- * @enabled: Flags to enable.
-+ * @flags: Flags to enable.
-  *
-  * Enables or disables single-stepping for @cpu.
-  */
--void cpu_single_step(CPUState *cpu, int enabled);
-+void cpu_single_step(CPUState *cpu, unsigned flags);
- 
- /**
-  * cpu_single_stepping:
-@@ -1146,7 +1146,7 @@ void cpu_single_step(CPUState *cpu, int enabled);
-  */
- static inline bool cpu_single_stepping(const CPUState *cpu)
- {
--    return cpu->singlestep_enabled;
-+    return cpu->singlestep_flags;
- }
- 
- int cpu_breakpoint_insert(CPUState *cpu, vaddr pc, BreakpointFlags flags,
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 963a4edd262..83cbd120a84 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -3815,7 +3815,7 @@ int kvm_update_guest_debug(CPUState *cpu, unsigned long reinject_trap)
-     if (cpu_single_stepping(cpu)) {
-         data.dbg.control |= KVM_GUESTDBG_ENABLE | KVM_GUESTDBG_SINGLESTEP;
- 
--        if (cpu->singlestep_enabled & SSTEP_NOIRQ) {
-+        if (cpu->singlestep_flags & SSTEP_NOIRQ) {
-             data.dbg.control |= KVM_GUESTDBG_BLOCKIRQ;
-         }
-     }
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 0386ac49551..257211235db 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -828,7 +828,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-                 return true;
-             }
- 
--            if (unlikely(cpu->singlestep_enabled & SSTEP_NOIRQ)) {
-+            if (unlikely(cpu->singlestep_flags & SSTEP_NOIRQ)) {
-                 /* Mask out external interrupts for this step. */
-                 interrupt_request &= ~CPU_INTERRUPT_SSTEP_MASK;
-             }
-diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-index 5b132d3d5d8..cdaa3e11808 100644
---- a/accel/tcg/tcg-accel-ops-rr.c
-+++ b/accel/tcg/tcg-accel-ops-rr.c
-@@ -274,7 +274,7 @@ static void *rr_cpu_thread_fn(void *arg)
-             current_cpu = cpu;
- 
-             qemu_clock_enable(QEMU_CLOCK_VIRTUAL,
--                              (cpu->singlestep_enabled & SSTEP_NOTIMER) == 0);
-+                              (cpu->singlestep_flags & SSTEP_NOTIMER) == 0);
- 
-             if (cpu_can_run(cpu)) {
-                 int r;
-diff --git a/cpu-target.c b/cpu-target.c
-index 019906b32eb..4783845c9bf 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -28,12 +28,12 @@
- 
- /* enable or disable single step mode. EXCP_DEBUG is returned by the
-    CPU loop after each instruction */
--void cpu_single_step(CPUState *cpu, int enabled)
-+void cpu_single_step(CPUState *cpu, unsigned flags)
- {
--    if (cpu->singlestep_enabled != enabled) {
-+    if (cpu->singlestep_flags != flags) {
-         trace_cpu_change_singlestep_flags(cpu->cpu_index,
--                                          cpu->singlestep_enabled, enabled);
--        cpu->singlestep_enabled = enabled;
-+                                          cpu->singlestep_flags, flags);
-+        cpu->singlestep_flags = flags;
- 
- #if !defined(CONFIG_USER_ONLY)
-         const AccelOpsClass *ops = cpus_get_accel();
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 640ef665593..f5dd7e8e029 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -2603,7 +2603,7 @@ int hvf_arch_vcpu_exec(CPUState *cpu)
-     flush_cpu_state(cpu);
- 
-     do {
--        if (!(cpu->singlestep_enabled & SSTEP_NOIRQ) &&
-+        if (!(cpu->singlestep_flags & SSTEP_NOIRQ) &&
-             hvf_inject_interrupts(cpu)) {
-             return EXCP_INTERRUPT;
-         }
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 3f6d326cef3..06ed2adf105 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -198,7 +198,7 @@ struct DisasContext {
-     bool pmu_insn_cnt;
-     bool bhrb_enable;
-     ppc_spr_t *spr_cb; /* Needed to check rights for mfspr/mtspr */
--    int singlestep_enabled;
-+    int singlestep_flags;
-     uint32_t flags;
-     uint64_t insns_flags;
-     uint64_t insns_flags2;
-@@ -367,7 +367,7 @@ static void gen_debug_exception(DisasContext *ctx, bool rfi_type)
- #if !defined(CONFIG_USER_ONLY)
-     if (ctx->flags & POWERPC_FLAG_DE) {
-         target_ulong dbsr = 0;
--        if (ctx->singlestep_enabled & CPU_SINGLE_STEP) {
-+        if (ctx->singlestep_flags & CPU_SINGLE_STEP) {
-             dbsr = DBCR0_ICMP;
-         } else {
-             /* Must have been branch */
-@@ -3645,7 +3645,7 @@ static void pmu_count_insns(DisasContext *ctx)
- 
- static inline bool use_goto_tb(DisasContext *ctx, target_ulong dest)
- {
--    if (unlikely(ctx->singlestep_enabled)) {
-+    if (unlikely(ctx->singlestep_flags)) {
-         return false;
-     }
-     return translator_use_goto_tb(&ctx->base, dest);
-@@ -3653,7 +3653,7 @@ static inline bool use_goto_tb(DisasContext *ctx, target_ulong dest)
- 
- static void gen_lookup_and_goto_ptr(DisasContext *ctx)
- {
--    if (unlikely(ctx->singlestep_enabled)) {
-+    if (unlikely(ctx->singlestep_flags)) {
-         gen_debug_exception(ctx, false);
-     } else {
-         /*
-@@ -6559,13 +6559,13 @@ static void ppc_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     ctx->pmu_insn_cnt = (hflags >> HFLAGS_INSN_CNT) & 1;
-     ctx->bhrb_enable = (hflags >> HFLAGS_BHRB_ENABLE) & 1;
- 
--    ctx->singlestep_enabled = 0;
-+    ctx->singlestep_flags = 0;
-     if ((hflags >> HFLAGS_SE) & 1) {
--        ctx->singlestep_enabled |= CPU_SINGLE_STEP;
-+        ctx->singlestep_flags |= CPU_SINGLE_STEP;
-         ctx->base.max_insns = 1;
-     }
-     if ((hflags >> HFLAGS_BE) & 1) {
--        ctx->singlestep_enabled |= CPU_BRANCH_STEP;
-+        ctx->singlestep_flags |= CPU_BRANCH_STEP;
-     }
- }
- 
-@@ -6641,7 +6641,7 @@ static void ppc_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
-     }
- 
-     /* Honor single stepping. */
--    if (unlikely(ctx->singlestep_enabled & CPU_SINGLE_STEP)) {
-+    if (unlikely(ctx->singlestep_flags & CPU_SINGLE_STEP)) {
-         bool rfi_type = false;
- 
-         switch (is_jmp) {
--- 
-2.53.0
+With a few minor things below:
+> +
+> +s390 Certificate Store
+> +^^^^^^^^^^^^^^^^^^^^^^
+> +
+> +A certificate store is implemented for s390-ccw guests to retain within
+> +memory all certificates provided by the user via the command-line, which
+> +are expected to be stored somewhere on the host's file system. The store
+> +will keep track of the number of certificates, their respective size,
+> +and a summation of the sizes.
+> +
+> +Each certificate is stroed in an S390IPLCertificate struct, which has a
+
+stored
+
+...
+
+> +static int update_cert_store(S390IPLCertificateStore *cert_store,
+> +                             S390IPLCertificate *cert)
+> +{
+> +    size_t data_buf_size;
+> +    size_t keyid_buf_size;
+> +    size_t hash_buf_size;
+> +    size_t cert_buf_size;
+> +
+> +    /* length field is word aligned for later DIAG use */
+> +    keyid_buf_size = ROUND_UP(CERT_KEY_ID_LEN, 4);
+> +    hash_buf_size = ROUND_UP(CERT_HASH_LEN, 4);
+> +    cert_buf_size = ROUND_UP(cert->der_size, 4);
+> +    data_buf_size = keyid_buf_size + hash_buf_size + cert_buf_size;
+> +
+> +    if (cert_store->largest_cert_size < data_buf_size) {
+> +        cert_store->largest_cert_size = data_buf_size;
+> +    }
+> +
+> +    if (cert_store->count >= MAX_CERTIFICATES) {
+> +        error_report("Cert store is full");
+> +        return -1;
+> +    }
+
+Seems we should check this first before updating largest_cert_size?
+
+I think ultimately it will not matter because we will exit anyway, but
+for debug may be useful to not have the largest_cert_size potentially
+clobbered by a cert that was never added.
+
 
 
