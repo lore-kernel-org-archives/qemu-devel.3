@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 042A5C44500
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 08:02:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF098C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 08:02:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfYqA-0004UQ-Iq; Fri, 03 Jul 2026 04:01:38 -0400
+	id 1wfYqA-0004UP-HM; Fri, 03 Jul 2026 04:01:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wfYq0-0004Ra-NB
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 04:01:33 -0400
+ id 1wfYpy-0004Ql-Gt
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 04:01:27 -0400
 Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wfYpy-0001gX-R1
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 04:01:28 -0400
+ id 1wfYpw-0001gX-EW
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 04:01:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1783065687; x=1814601687;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=bYXimPDPjWx48lnFAG4DCzOY+K7yAnsmiKAMaq78rzw=;
- b=ZBOvqPk6CR6mJXzhkJF1SWSUHmM0htlHESB5pLU8ARSTBQN5zDsUosm/
- nj4+cSub7NqrLSJCokBU41wquNdxbLepqnJO+S+WnMJpU0U+6iHxTu90Q
- fYpLD15t2UYqfty/fKstA+BnV6oc1gx/sPLkYadu9ces2vGmuzkDtZ2l2
- SXUQntAeQQBX6TuE2GJrnqQyzQzmEzWZSDK5ZVunj9gPmGNcNPd1YvcF6
- WH9QNfM+NVamDkFE9/HdGs60KinkvzA8SR613dl3eCq1pbjH2Fx9qg2nm
- 7hysHNzMRJ8kcGSCngJYE36AtExZ/y1fTVvlTBazX9PLJhzCbOFjfoXTd Q==;
-X-CSE-ConnectionGUID: ij22QdCaRbiEsXh7dBDgAQ==
-X-CSE-MsgGUID: 5/yuup/mR4yNqmUxM64fBA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11835"; a="94464656"
-X-IronPort-AV: E=Sophos;i="6.25,145,1779174000"; d="scan'208";a="94464656"
+ t=1783065684; x=1814601684;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=DMsHe08LLdFkjn5CUls4sliF0VMNmjWyKUrisuj/QnE=;
+ b=B14I7rSkCGcQDVhryVvz7NCUD+VorXZczH1YbVKBUFCMdUZPH/a+52TK
+ rTlzhaY93ZIJYnWoteVYHn4UzE2lMikZzP4z/xtlgwFiovWpXsHKbiYaV
+ h3saVofSOgiSp/sLoi3CCF9MYMihK3ob72S2kehn1yqBgdwtKW8ZrTHEs
+ hbq1ExVr/wbEMPcqugSNA5mIdjQRN/5gNdpbMHySJ88zMMg5MVDBizwvV
+ WJYU7xqWIlYK0k+9BfKwMfdZoiTUstugE5JroArvHnbpXwReOPXEC9JO7
+ jPmUkSkPu8lgWIsljf+OlvMoJNXGJnJEaVr+Vo9Em6SkNuzJZwTIoClLa A==;
+X-CSE-ConnectionGUID: x4FrTxDdQU2yOrDE6afchg==
+X-CSE-MsgGUID: vesHb063RAe98YkK8TNGBw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11835"; a="94464645"
+X-IronPort-AV: E=Sophos;i="6.25,145,1779174000"; d="scan'208";a="94464645"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2026 01:01:26 -0700
-X-CSE-ConnectionGUID: 3Ox7USkoRkG/2oOsB9nnKA==
-X-CSE-MsgGUID: UfBClxU5QuqKcgL0QeNliw==
+ 03 Jul 2026 01:01:20 -0700
+X-CSE-ConnectionGUID: l6QU4cYcSkmosi037VG1IQ==
+X-CSE-MsgGUID: 4QHsoytFS0uG9wS1avB6Kg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,145,1779174000"; d="scan'208";a="277379553"
+X-IronPort-AV: E=Sophos;i="6.25,145,1779174000"; d="scan'208";a="277379526"
 Received: from junjie-desk-dev.bj.intel.com ([10.238.152.71])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2026 01:01:23 -0700
+ 03 Jul 2026 01:01:17 -0700
 From: Junjie Cao <junjie.cao@intel.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowangio@gmail.com>,
@@ -56,13 +56,10 @@ Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowangio@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Fengyuan Yu <15fengyuan@gmail.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>, junjie.cao@intel.com
-Subject: [PATCH v1 1/3] tests/qtest/libqos: share Intel IOMMU test setup
- helpers
-Date: Fri,  3 Jul 2026 15:21:56 +0800
-Message-ID: <20260703072200.463082-2-junjie.cao@intel.com>
+Subject: [PATCH v1 0/3] tests/qtest: add Intel IOMMU IOTLB invalidation test
+Date: Fri,  3 Jul 2026 15:21:55 +0800
+Message-ID: <20260703072200.463082-1-junjie.cao@intel.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260703072200.463082-1-junjie.cao@intel.com>
-References: <20260703072200.463082-1-junjie.cao@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.9; envelope-from=junjie.cao@intel.com;
@@ -89,247 +86,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-iommu-intel-test.c keeps the iommu-testdev PCI setup (save_fn(),
-setup_qtest_pci_device()) and the VT-d command-line / capability
-helpers (qvtd_iommu_args(), qvtd_check_caps()) as file-local statics.
-A second Intel IOMMU test would have to copy them, which defeats the
-purpose of the shared qos-intel-iommu module.
+The iommu-testdev framework lets a qtest drive an emulated vIOMMU
+without a guest, and Intel translation tests already build on it [1].
+The next behaviour worth covering is invalidation: no in-tree qtest
+checks that any vIOMMU actually flushes a stale IOTLB entry.  This
+series adds that for VT-d.
 
-Move them into qos-intel-iommu so sibling tests can reuse them:
-save_fn() becomes qvtd_save_pci_dev() and setup_qtest_pci_device()
-becomes qvtd_setup_qtest_pci_device(); qvtd_iommu_args() and
-qvtd_check_caps() keep their names.
+Each case populates the IOTLB (map IOVA->PA_A, DMA), rewrites the leaf
+PTE to PA_B without invalidating and confirms the stale entry still
+serves PA_A, then invalidates and confirms a fresh walk reaches PA_B.
+Without the stale check, a device that never cached would also pass.
+Cases cover {legacy, scalable-slt, scalable-flt} x {global, domain,
+page}, driving vtd_process_inv_desc -> vtd_process_iotlb_desc ->
+vtd_iotlb_{global,domain,page}_invalidate.  Three more cases cache a
+second page to check page-selective scope: it survives for second-level
+and, as QEMU flushes first-stage entries domain-wide, is evicted for
+scalable-flt.
 
-No functional change: iommu-intel-test now calls the public
-qvtd_setup_qtest_pci_device() instead of its file-local copy.
+Patch 1 moves the VT-d setup helpers out of iommu-intel-test.c into the
+shared qos-intel-iommu module with no functional change; patch 2 adds
+the invalidation helpers; patch 3 adds the test.
 
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
----
- tests/qtest/iommu-intel-test.c       | 78 +---------------------------
- tests/qtest/libqos/qos-intel-iommu.c | 77 +++++++++++++++++++++++++++
- tests/qtest/libqos/qos-intel-iommu.h | 23 ++++++++
- 3 files changed, 101 insertions(+), 77 deletions(-)
+scalable-flt uses the legacy VTD_INV_DESC_IOTLB descriptor, the path
+QEMU runs for its unified IOTLB; PASID-selective PIOTLB and domain-level
+selectivity are left as follow-ups.
 
-diff --git a/tests/qtest/iommu-intel-test.c b/tests/qtest/iommu-intel-test.c
-index 703bbfef73..c2744def6f 100644
---- a/tests/qtest/iommu-intel-test.c
-+++ b/tests/qtest/iommu-intel-test.c
-@@ -24,82 +24,6 @@ static uint64_t intel_iommu_expected_gpa(uint64_t iova)
-     return (QVTD_PT_VAL & VTD_PAGE_MASK_4K) + (iova & 0xfff);
- }
- 
--static void save_fn(QPCIDevice *dev, int devfn, void *data)
--{
--    QPCIDevice **pdev = (QPCIDevice **) data;
--
--    *pdev = dev;
--}
--
--static QPCIDevice *setup_qtest_pci_device(QTestState *qts, QPCIBus **pcibus,
--                                          QPCIBar *bar)
--{
--    QPCIDevice *dev = NULL;
--
--    *pcibus = qpci_new_pc(qts, NULL);
--    g_assert(*pcibus != NULL);
--
--    qpci_device_foreach(*pcibus, IOMMU_TESTDEV_VENDOR_ID,
--                        IOMMU_TESTDEV_DEVICE_ID, save_fn, &dev);
--
--    g_assert(dev);
--    qpci_device_enable(dev);
--    *bar = qpci_iomap(dev, 0, NULL);
--    g_assert_false(bar->is_io);
--
--    return dev;
--}
--
--static const char *qvtd_iommu_args(QVTDTransMode mode)
--{
--    switch (mode) {
--    case QVTD_TM_SCALABLE_FLT:
--        return "-device intel-iommu,scalable-mode=on,fsts=on ";
--    case QVTD_TM_SCALABLE_PT:
--    case QVTD_TM_SCALABLE_SLT:
--        return "-device intel-iommu,scalable-mode=on ";
--    default:
--        return "-device intel-iommu ";
--    }
--}
--
--static bool qvtd_check_caps(QTestState *qts, QVTDTransMode mode)
--{
--    uint64_t ecap = qtest_readq(qts,
--                                Q35_HOST_BRIDGE_IOMMU_ADDR + DMAR_ECAP_REG);
--
--    /* All scalable modes require SMTS */
--    if (qvtd_is_scalable(mode) && !(ecap & VTD_ECAP_SMTS)) {
--        g_test_skip("ECAP.SMTS not supported");
--        return false;
--    }
--
--    switch (mode) {
--    case QVTD_TM_SCALABLE_PT:
--        if (!(ecap & VTD_ECAP_PT)) {
--            g_test_skip("ECAP.PT not supported");
--            return false;
--        }
--        break;
--    case QVTD_TM_SCALABLE_SLT:
--        if (!(ecap & VTD_ECAP_SSTS)) {
--            g_test_skip("ECAP.SSTS not supported");
--            return false;
--        }
--        break;
--    case QVTD_TM_SCALABLE_FLT:
--        if (!(ecap & VTD_ECAP_FSTS)) {
--            g_test_skip("ECAP.FSTS not supported");
--            return false;
--        }
--        break;
--    default:
--        break;
--    }
--
--    return true;
--}
--
- static void run_intel_iommu_translation(const QVTDTestConfig *cfg)
- {
-     QTestState *qts;
-@@ -124,7 +48,7 @@ static void run_intel_iommu_translation(const QVTDTestConfig *cfg)
-     }
- 
-     /* Setup and configure IOMMU-testdev PCI device */
--    dev = setup_qtest_pci_device(qts, &pcibus, &bar);
-+    dev = qvtd_setup_qtest_pci_device(qts, &pcibus, &bar);
-     g_assert(dev);
- 
-     g_test_message("### Intel IOMMU translation mode=%d ###", cfg->trans_mode);
-diff --git a/tests/qtest/libqos/qos-intel-iommu.c b/tests/qtest/libqos/qos-intel-iommu.c
-index f8ca4c871b..4095ac0917 100644
---- a/tests/qtest/libqos/qos-intel-iommu.c
-+++ b/tests/qtest/libqos/qos-intel-iommu.c
-@@ -11,6 +11,7 @@
- #include "qemu/osdep.h"
- #include "hw/i386/intel_iommu_internal.h"
- #include "tests/qtest/libqos/pci.h"
-+#include "tests/qtest/libqos/pci-pc.h"
- #include "qos-iommu-testdev.h"
- #include "qos-intel-iommu.h"
- 
-@@ -452,3 +453,79 @@ void qvtd_run_translation_case(QTestState *qts, QPCIDevice *dev,
-         }
-     }
- }
-+
-+const char *qvtd_iommu_args(QVTDTransMode mode)
-+{
-+    switch (mode) {
-+    case QVTD_TM_SCALABLE_FLT:
-+        return "-device intel-iommu,scalable-mode=on,fsts=on ";
-+    case QVTD_TM_SCALABLE_PT:
-+    case QVTD_TM_SCALABLE_SLT:
-+        return "-device intel-iommu,scalable-mode=on ";
-+    default:
-+        return "-device intel-iommu ";
-+    }
-+}
-+
-+bool qvtd_check_caps(QTestState *qts, QVTDTransMode mode)
-+{
-+    uint64_t ecap = qtest_readq(qts,
-+                                Q35_HOST_BRIDGE_IOMMU_ADDR + DMAR_ECAP_REG);
-+
-+    /* All scalable modes require SMTS */
-+    if (qvtd_is_scalable(mode) && !(ecap & VTD_ECAP_SMTS)) {
-+        g_test_skip("ECAP.SMTS not supported");
-+        return false;
-+    }
-+
-+    switch (mode) {
-+    case QVTD_TM_SCALABLE_PT:
-+        if (!(ecap & VTD_ECAP_PT)) {
-+            g_test_skip("ECAP.PT not supported");
-+            return false;
-+        }
-+        break;
-+    case QVTD_TM_SCALABLE_SLT:
-+        if (!(ecap & VTD_ECAP_SSTS)) {
-+            g_test_skip("ECAP.SSTS not supported");
-+            return false;
-+        }
-+        break;
-+    case QVTD_TM_SCALABLE_FLT:
-+        if (!(ecap & VTD_ECAP_FSTS)) {
-+            g_test_skip("ECAP.FSTS not supported");
-+            return false;
-+        }
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    return true;
-+}
-+
-+static void qvtd_save_pci_dev(QPCIDevice *dev, int devfn, void *data)
-+{
-+    QPCIDevice **pdev = (QPCIDevice **)data;
-+
-+    *pdev = dev;
-+}
-+
-+QPCIDevice *qvtd_setup_qtest_pci_device(QTestState *qts, QPCIBus **pcibus,
-+                                        QPCIBar *bar)
-+{
-+    QPCIDevice *dev = NULL;
-+
-+    *pcibus = qpci_new_pc(qts, NULL);
-+    g_assert(*pcibus != NULL);
-+
-+    qpci_device_foreach(*pcibus, IOMMU_TESTDEV_VENDOR_ID,
-+                        IOMMU_TESTDEV_DEVICE_ID, qvtd_save_pci_dev, &dev);
-+
-+    g_assert(dev);
-+    qpci_device_enable(dev);
-+    *bar = qpci_iomap(dev, 0, NULL);
-+    g_assert_false(bar->is_io);
-+
-+    return dev;
-+}
-diff --git a/tests/qtest/libqos/qos-intel-iommu.h b/tests/qtest/libqos/qos-intel-iommu.h
-index c6cacc5c3f..dd6f920464 100644
---- a/tests/qtest/libqos/qos-intel-iommu.h
-+++ b/tests/qtest/libqos/qos-intel-iommu.h
-@@ -182,4 +182,27 @@ void qvtd_run_translation_case(QTestState *qts, QPCIDevice *dev,
-                                QPCIBar bar, uint64_t iommu_base,
-                                const QVTDTestConfig *cfg);
- 
-+/*
-+ * qvtd_iommu_args - Build the -device intel-iommu command-line fragment
-+ *                   for the requested translation mode.
-+ */
-+const char *qvtd_iommu_args(QVTDTransMode mode);
-+
-+/*
-+ * qvtd_check_caps - Check whether the running QEMU exposes the ECAP bits
-+ *                   required by @mode.  Calls g_test_skip() and returns
-+ *                   false when a required capability is missing.
-+ */
-+bool qvtd_check_caps(QTestState *qts, QVTDTransMode mode);
-+
-+/*
-+ * qvtd_setup_qtest_pci_device - Create a QPCIBus, locate the iommu-testdev
-+ *                               PCI function, enable it and map BAR0.
-+ *
-+ * On success, *pcibus and *bar are populated and the returned QPCIDevice
-+ * must be released by the caller via g_free().
-+ */
-+QPCIDevice *qvtd_setup_qtest_pci_device(QTestState *qts, QPCIBus **pcibus,
-+                                        QPCIBar *bar);
-+
- #endif /* QTEST_LIBQOS_INTEL_IOMMU_H */
+[1] https://lore.kernel.org/qemu-devel/cover.1774421649.git.15fengyuan@gmail.com/
+
+Junjie Cao (3):
+  tests/qtest/libqos: share Intel IOMMU test setup helpers
+  tests/qtest/libqos: add Intel IOMMU invalidation helpers
+  tests/qtest: add IOTLB invalidation test for Intel IOMMU
+
+ MAINTAINERS                          |   1 +
+ tests/qtest/iommu-intel-inv-test.c   | 346 +++++++++++++++++++++++++++
+ tests/qtest/iommu-intel-test.c       |  78 +-----
+ tests/qtest/libqos/qos-intel-iommu.c | 185 ++++++++++++++
+ tests/qtest/libqos/qos-intel-iommu.h |  74 ++++++
+ tests/qtest/meson.build              |   2 +-
+ 6 files changed, 608 insertions(+), 78 deletions(-)
+ create mode 100644 tests/qtest/iommu-intel-inv-test.c
+
+
+base-commit: b4bdad7dcef623d2874df4e79e0be01075096c3b
 -- 
 2.43.0
 
