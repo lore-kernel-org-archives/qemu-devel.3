@@ -4,103 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03651C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:16:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AB0AC43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:17:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfdkj-0000eA-PD; Fri, 03 Jul 2026 09:16:21 -0400
+	id 1wfdlr-0000x8-Jc; Fri, 03 Jul 2026 09:17:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfdkF-0000dm-KN
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:15:53 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfdkD-0006ok-Ub
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:15:51 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-664dd23829eso509082d50.3
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 06:15:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783084548; cv=none;
- d=google.com; s=arc-20260327;
- b=jfh00DSHaweYYyVBTw0PmLhXECMpVk4XRCW5l5FVViJpz4iwOmpGJr5BZ/Bgz6Eb6n
- UpEFp8lk2Tisoslod7/lWoRpZ0+AZtNmXQOqKAZGZqbRujD9IyM+GX5x1QK9Tn9JYB7A
- oqjPNMckX6C6CuECBCToH1h4IqBEuyT1ACT/9u32W//hupr9tyPnUxxCGI7c+xqjSwjl
- ugRR5yJxLxwSGKHt8JUIbrhDycl8YVcccRZvN21gHuO1NAKhg2nbrtyMoGhOtwoh57KU
- lG1T2EdtP9A+irDFjpWJM7JK/3ZanP9IvLQ9IF03lHG0sPbOHYcB9+JXifxLu8gW1fsA
- UmwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ypX6y0SMNrtooa+4hHzPDKSXJdJ7uXsc9yFpBhQKCLg=;
- fh=7R/RZGD+m7OAV6ynsYAfWZ1IG1hYR0cKwZ0GYuuX0rE=;
- b=babJUcG6zzk12X33o/c+qfvqlF3sTiazLcYd9GkVs+Qdtbt+Rd2jUBolYvnG9AIIQy
- qiwrXkDYI+OaL+IUvK+m0AvKQJh7dW+Fj9euJPqg+TitOHRmwsp7ypMazVy6V7slrAf+
- HKMBhkLofNPHJTdsVtj3CB/OzKYL6PM8e9UUj5RR9BBIHaNX+NMbH5WkE/Fj+gTyUruC
- i9HQon2bSEhouz/JAZGo1c0nL/19fs0hMrQllmQW/0ynyrntykSdwGGYjv9r7b2n1Bej
- f9Q3Bwo7KbJ0N6fL1+HquCDw6DxzVRSNxOZLyejbZpmwX6wir123LCZ4zo3Ou6nFOseb
- jtbA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783084548; x=1783689348; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=ypX6y0SMNrtooa+4hHzPDKSXJdJ7uXsc9yFpBhQKCLg=;
- b=In+mA7SdevgdmqVPVHVJVVZq3zHG1EbflIYiVbcrPOD7dJrAMjhJGzaZBRJZ4EzP/j
- 7FSWTamj5Nlk6+7N8S1MYzkf0NiIA0I2lUecZl9YFiUrkpEqqtIscNs9AmnW0ymdMPTl
- FAmaegndAWSEAzhi5TlYJrble+q4mjEp5kOEIqI8GDkF+qRGiiQRafeuxog/uyfL+r7C
- I5+yhp2kZpBUxjYM/iWpZZL2JzmpIRiK4bGwwNoD+qlvx/ZZAmh6jP45pDnWC71H/X9B
- zoXWfdRlNNQJdquKwNarmGQzx9sqbk81cXU2JEnFS9vbxwPsVy8wlH8uajMhPIr8NqK1
- VGpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783084548; x=1783689348;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=ypX6y0SMNrtooa+4hHzPDKSXJdJ7uXsc9yFpBhQKCLg=;
- b=cdtTDgn1PH35hSUm40gCwlFB8YFfdE6GWlK/8JZJYX/gCwgBM57VusGeGuxGJEfLkV
- KPd7R8w/PTBwKZERd/pMi69MMf3tYdaRef+dTMrZLuasU97io+mg/j7iZYs45gXcFnV8
- J17Ll/sZRvBtC1s9Bpc2fAaoOi/SExtAQqDi3/T/IKmCO/3rb+uJDJfrnMOkwz50nGk2
- ZhQ9Xu2IMWNYay+wTUMVH9YhC7RpCDUKsMeiLv/RSBBeuTDlWiSduD4cEFaIRGmCcUYT
- +m3Ky3aFaOEXvfYIQw66BILBBdTN2uBbUiBJxgSnvrbjXq14uomEnUA4VevSxxc2pO4S
- y3ew==
-X-Gm-Message-State: AOJu0Yxa8JdYyGqzJrJ71xIiJJilt4/N9ZmKerfpRP0s6qgZDMBlu7P2
- tbDIhKkdPK+uZH6rRNytoqV3mIhEcDFZUi50Jaq1USjkQz++wDDLGBZtQn1lcwUA2ODTLUZ3Gbs
- hFrQ4Boelx4svWu6lJkubnPuVD7DBwAl/8hgwvBnJyg==
-X-Gm-Gg: AfdE7ckrLdxMZG3t02AquILsMejQwemRSgaUWFaz1f84K+f+/LZQ4FBfGXhffGcLsWG
- nYcxuIffXIR7Q2QQs34uPGdZ2UDOMORhZ35pB0VuBvS/e0mRwFFPL+Xw52U08/IvI5cwSVgghDg
- youDrGO4xBMMyMOVjEsUv71scIX6/0NicnwhiVSGjRd1g/dk/8t0LU0uhkJzThFc6HXnBCpt0GE
- QOz/G62mjqGuey1K/pL/LHUc2fOzTt5Kfhw0OkFv8d9Dq/jcJvXAqA2z6FGTGj3ii0nSoZ+gKwA
- CBsm7PkWTIqpTdSmeQW4854KWfn/OOp7OQjQdwlnsLjMT+mYpStbllTu
-X-Received: by 2002:a05:690e:1512:b0:664:dbfc:e468 with SMTP id
- 956f58d0204a3-665916765femr8379947d50.9.1783084547003; Fri, 03 Jul 2026
- 06:15:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wfdll-0000uT-FK
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:17:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wfdlj-0007p8-LJ
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:17:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783084641;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kyfhA19MjQd2ohJedRIzqoH4SSddpDteTmZirxHlc1g=;
+ b=VtnQTVLT7/7JzEcAyCniDv5AxQ1KaPjMtGLuFuJiQ/WGNQ62Lf+O4tQ7V7C7OOL2uXLDbj
+ qemaC3dP9v1l46NRCYymOwPCLR6bOdOOpGcA1G6Zj74iUNGHumyJK7fbhUJWybFVZcoCEy
+ lueyoagh8rwxII4PRJGj6CYqSTJY5yE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-395-_YWGWJteOZaBmBjB1X2pUw-1; Fri,
+ 03 Jul 2026 09:17:17 -0400
+X-MC-Unique: _YWGWJteOZaBmBjB1X2pUw-1
+X-Mimecast-MFC-AGG-ID: _YWGWJteOZaBmBjB1X2pUw_1783084636
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 816E1188E196; Fri,  3 Jul 2026 13:17:14 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7CB6A30030D6; Fri,  3 Jul 2026 13:17:13 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 101B521E6920; Fri, 03 Jul 2026 15:17:11 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  "Dr. David
+ Alan Gilbert" <dave@treblig.org>,  Markus Armbruster <armbru@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Alex
+ =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>,
+ Christian Brauner <brauner@kernel.org>,  devel@lists.libvirt.org,  Peter
+ Krempa <pkrempa@redhat.com>
+Subject: Re: [PATCH v6 06/34] monitor: add 'chardev' property to Monitor
+ base class
+In-Reply-To: <20260702160337.1910921-7-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 2 Jul 2026 17:03:09
+ +0100")
+References: <20260702160337.1910921-1-berrange@redhat.com>
+ <20260702160337.1910921-7-berrange@redhat.com>
+Date: Fri, 03 Jul 2026 15:17:11 +0200
+Message-ID: <87zf08usa0.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <cover.1746438650.git.qemu_oss@crudebyte.com>
- <23160010.EfDdHjke4D@weasel>
- <CAFEAcA-qtuM51VCzAr+VgsTVkEg1+CsgUNQofVZ0B_zzfodsxA@mail.gmail.com>
- <1964729.CQOukoFCf9@weasel>
-In-Reply-To: <1964729.CQOukoFCf9@weasel>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 3 Jul 2026 14:15:35 +0100
-X-Gm-Features: AVVi8CcQXLbd_0Z0-fLJE6KmroFUm1D9gjtE7IXG0XPOk3uib4FVvwSzAi8u-Rs
-Message-ID: <CAFEAcA_c9fgub436R+7u-Chmon3a=cfuLhzywi77XpLSRXPPPw@mail.gmail.com>
-Subject: Re: [PULL 3/9] 9pfs: local : Introduce local_fid_fd() helper
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,96 +95,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 3 Jul 2026 at 13:49, Christian Schoenebeck
-<qemu_oss@crudebyte.com> wrote:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+
+> This is associates both QMP and HMP monitors with a character
+> device backend.
 >
-> On Friday, 3 July 2026 14:21:29 CEST Peter Maydell wrote:
-> > On Fri, 3 Jul 2026 at 12:41, Christian Schoenebeck
-> >
-> > <qemu_oss@crudebyte.com> wrote:
-> > > So this new EBADF / -1 path in local_fid_fd() is just to avoid undefined
-> > > behaviour as a last resort measure, in case a guard was forgotten in
-> > > future
-> > > changes.
-> >
-> > That part is fine. What Coverity is warning about is the callsites:
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Tested-by: Peter Krempa <pkrempa@redhat.com>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  chardev/char.c             |  3 ++-
+>  gdbstub/system.c           |  4 ++--
+>  include/monitor/monitor.h  |  4 ++--
+>  monitor/hmp.c              | 10 ++++++--
+>  monitor/monitor-internal.h |  2 ++
+>  monitor/monitor.c          | 47 ++++++++++++++++++++++++++++++--------
+>  monitor/qmp.c              | 18 ++++++++++-----
+>  stubs/monitor-internal.c   |  2 +-
+>  8 files changed, 67 insertions(+), 23 deletions(-)
 >
-> I know, this is just the change that triggered Coverity's warning, because it
-> made Coverity think that this function might return -1, even though this
-> branch is actually *never* executed.
->
-> > > > > +
-> > > > >
-> > > > >  static int local_fstat(FsContext *fs_ctx, int fid_type,
-> > > > >
-> > > > >                         V9fsFidOpenState *fs, struct stat *stbuf)
-> > > > >
-> > > > >  {
-> > > > >
-> > > > > -    int err, fd;
-> > > > > -
-> > > > > -    if (fid_type == P9_FID_DIR) {
-> > > > > -        fd = dirfd(fs->dir.stream);
-> > > > > -    } else {
-> > > > > -        fd = fs->fd;
-> > > > > -    }
-> > > > > +    int err, fd = local_fid_fd(fid_type, fs);
-> > > > >
-> > > > >      err = fstat(fd, stbuf);
-> > > >
-> > > > ...but the callsites don't check for error, and instead can
-> > > > feed -1 into fstat() or other functions, which isn't a valid
-> > > > filedescriptor.
-> > >
-> > > But even then, a syscall receiving -1 for a FD argument would handle this
-> > > gracefully by returning -1 and errno EBADF.
-> >
-> > In practice, yes, but it's not a valid file descriptor. Coverity
-> > warns about it because it tends to mean "missing error handling",
-> > as here.
->
-> Yes, -1 is defined by POSIX as "invalid file descriptor". And that's the point
-> why the helper function would return it as last-resort result, because -1 is
-> well defined by POSIX to not be interchanged with a real file descriptor.
->
-> To make this clear: before this change, this helper could potentially return
-> garbage.
->
-> And yes, you can check for every -1 file descriptor just before passing it to
-> a syscall
+> diff --git a/chardev/char.c b/chardev/char.c
+> index c71ffa7963..22e5bae388 100644
+> --- a/chardev/char.c
+> +++ b/chardev/char.c
+> @@ -804,8 +804,9 @@ static Chardev *qemu_chr_new_from_name(const char *la=
+bel, const char *filename,
+>      }
+>=20=20
+>      if (qemu_opt_get_bool(opts, "mux", 0)) {
+> +        const char *chardev_id =3D qemu_opts_id(opts);
+>          assert(permit_mux_mon);
+> -        monitor_new_hmp(NULL, chr, true, &err);
+> +        monitor_new_hmp(NULL, chardev_id, true, &err);
+>          if (err) {
+>              error_report_err(err);
+>              object_unparent(OBJECT(chr));
+> diff --git a/gdbstub/system.c b/gdbstub/system.c
+> index fda8ef9352..d681476f5e 100644
+> --- a/gdbstub/system.c
+> +++ b/gdbstub/system.c
+> @@ -387,9 +387,9 @@ bool gdbserver_start(const char *device, Error **errp)
+>          qemu_add_vm_change_state_handler(gdb_vm_state_change, NULL);
+>=20=20
+>          /* Initialize a monitor terminal for gdb */
+> -        mon_chr =3D qemu_chardev_new(NULL, TYPE_CHARDEV_GDB,
+> +        mon_chr =3D qemu_chardev_new("gdbchrdev0", TYPE_CHARDEV_GDB,
+>                                     NULL, NULL, &error_abort);
 
-We don't need to check before every syscall. We just need to
-check the error return from functions that can fail after we
-call them. This function can fail (because dirfd() can fail), so
-we should explicitly check that.
+This chardev now gets ID "gdbchrdev0" instead of id_generate(ID_CHR).
 
->, even though I already explained that a) you never ever get there
-> because this check is already made at the higher level call stack
+If you truly need this, you have to mention it in the commit message.
 
-If fid_type cannot possibly be anything other than one of the
-two valid values (i.e. anything else would be a bug elsewhere in
-QEMU), then maybe we should have
+> -        monitor_new_hmp(NULL, mon_chr, false, &error_abort);
+> +        monitor_new_hmp(NULL, "gdbchrdev0", false, &error_abort);
 
-   switch (fid_type) {
-       case P9_FID_DIR:
-           return dirfd(fs->dir.stream);
-       case P9_FID_FILE:
-           return fs->fd;
-       default:
-           g_assert_not_reached();
-   }
+If you don't, then passing mon_chr->label here should do the trick.
 
-? That's the standard way we write "this isn't possible" and
-avoid it turning into doing weird stuff if it ever does happen.
+>      } else {
+>          qemu_chr_fe_deinit(&gdbserver_system_state.chr, true);
+>          mon_chr =3D gdbserver_system_state.mon_chr;
+> diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+> index 83723f705a..bfbeedec9b 100644
+> --- a/include/monitor/monitor.h
+> +++ b/include/monitor/monitor.h
+> @@ -29,9 +29,9 @@ bool monitor_cur_is_qmp(void);
+>  void monitor_init_globals(void);
+>  void monitor_init_globals_core(void);
+>  char *monitor_compat_id(void);
+> -void monitor_new_qmp(const char *id, Chardev *chr,
+> +void monitor_new_qmp(const char *id, const char *chardev_id,
+>                       bool pretty, Error **errp);
+> -void monitor_new_hmp(const char *id, Chardev *chr,
+> +void monitor_new_hmp(const char *id, const char *chardev_id,
+>                       bool use_readline, Error **errp);
+>  int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp);
+>  int monitor_new_opts(QemuOpts *opts, Error **errp);
+> diff --git a/monitor/hmp.c b/monitor/hmp.c
+> index da11e56854..be59b6ca65 100644
+> --- a/monitor/hmp.c
+> +++ b/monitor/hmp.c
+> @@ -23,6 +23,7 @@
+>   */
+>=20=20
+>  #include "qemu/osdep.h"
+> +#include "qapi/error.h"
+>  #include <dirent.h>
+>  #include "hw/core/qdev.h"
+>  #include "hw/core/sysemu-cpu-ops.h"
+> @@ -1538,22 +1539,27 @@ static void monitor_readline_flush(void *opaque)
+>      monitor_flush(&mon->parent_obj);
+>  }
+>=20=20
+> -void monitor_new_hmp(const char *id, Chardev *chr,
+> +void monitor_new_hmp(const char *id, const char *chardev_id,
+>                       bool use_readline, Error **errp)
 
-> , and b) that
-> every syscall handles -1 as file descriptor gracefully.
+You now pass a chardev ID instead of a Chardev *.
 
-> If you still think this was not a false positive, you are welcome to send a
-> patch.
+I *guess* that's possible because chardev_new() asserts it's passed an
+ID.
 
-I'll do that.
+I should now check all callers of monitor_new_hmp() to make sure they
+pass the correct ID.  On a Friday afternoon.  I hoist the white flag.
 
-thanks
--- PMM
+Such refactorings should be mentioned in the commit message.  Even
+better would be a separate patch.
+
+>  {
+> +    ERRP_GUARD();
+>      MonitorHMP *mon;
+>      g_autofree char *autoid =3D id ? NULL : monitor_compat_id();
+>      Object *obj =3D object_new_with_props(TYPE_MONITOR_HMP,
+>                                          object_get_objects_root(),
+>                                          id ? id : autoid,
+>                                          errp,
+> +                                        "chardev", chardev_id,
+>                                          NULL);
+> +
+>      if (!obj) {
+>          return;
+>      }
+> +
+>      mon =3D MONITOR_HMP(obj);
+>=20=20
+> -    if (!qemu_chr_fe_init(&mon->parent_obj.chr, chr, errp)) {
+> +    monitor_complete(MONITOR(mon), errp);
+> +    if (*errp) {
+>          object_unparent(OBJECT(mon));
+>          return;
+>      }
+
+[...]
+
 
