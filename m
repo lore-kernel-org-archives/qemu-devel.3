@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30596C44500
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 07:25:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D08BAC43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 07:25:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfYGW-0004bR-A8; Fri, 03 Jul 2026 03:24:48 -0400
+	id 1wfYH0-0004ld-LT; Fri, 03 Jul 2026 03:25:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wfYGV-0004bG-0r
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 03:24:47 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wfYGv-0004l7-HU
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 03:25:13 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wfYGT-0007GZ-Gn
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 03:24:46 -0400
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wfYGu-0007js-0q
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 03:25:13 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 963FF414A4;
- Fri,  3 Jul 2026 07:24:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D12A1F000E9;
- Fri,  3 Jul 2026 07:24:38 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id DBDB143E28;
+ Fri,  3 Jul 2026 07:25:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72FAE1F000E9;
+ Fri,  3 Jul 2026 07:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1783063481;
- bh=oJqDil7OS5ROlp87qsle/FSUFmdaE86eZF5JKQRdP5Y=;
+ s=k20260515; t=1783063510;
+ bh=fg9I6LfzaSTJat0z9YYpy+gFHFqUujhFpSbG1+Ibg8c=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=K4Gnty5KTeUpI3S1fPTjHuZPqY6wJx8Uoyo8dKIU9TN13+VFxNcrwed3fsjlVfXw4
- zbKNy8dXua+mvwY80b/y4gvWWklVnvFtKMN5L3/jimC9baO3g1ehrXmSF6jBfz/t5j
- R96NQfq0iDb9bKGrLeUcHqobyyMM7fIPbbGVxt89dEGzs+qjp4k/XCASmjd8h3YRws
- wLL4ZWWtvzs3kmYYi2jnha7EW+cf68zPCrltLQw25395mw+12iAN2OSHGm97S2TddZ
- WjYXAbJHxJ9G3M8wrg9Zmh+/BsJQjSHCcxkXXZjSgdC0pKawiBZkC/cPubSXePTc50
- XTImB0LIHrh/Q==
-Message-ID: <637d0f86-c56d-4443-b949-e9dc1266e6c3@kernel.org>
-Date: Fri, 3 Jul 2026 09:24:36 +0200
+ b=RNSpWTkbR62+cIazdmEvSGapMXJMdZiBGj/qkoSowBTqCFLyz/bgA1KveptumnZac
+ 93mdd9cncIlay+gWwkr53T1WMN6OccIUZZUagfVbcrnkBci5wh5mEkbp0akZXB1SkR
+ +oqqOucNpWvN1fR+qc4vIpR8R9AtlABkPXvcuQh1JCGTv9nhwEyLSfnbg05E2OrfLO
+ IXs4eREiv1CfJuZW9Q+u0bf5vSxDzLg1hDzuqj5nOZTbg6ayzZR4Q0kQKyLEqXPL3m
+ xtL6gYkMIREuOLNzLqQW1VodchW7KzdtwKCwa3Pqu3gpyS6EXCH0rRhHAGYsWzKVAg
+ /CGtypYFRxRGw==
+Message-ID: <034b48e1-83a4-466c-b02a-9ec482eea966@kernel.org>
+Date: Fri, 3 Jul 2026 09:25:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 01/10] hw/mem: add sp-mem device for Specific Purpose
- Memory
+Subject: Re: [PATCH v14 02/10] qapi, hmp: introspection for the sp-mem device
 To: fanhuang <FangSheng.Huang@amd.com>, qemu-devel@nongnu.org,
  imammedo@redhat.com, mst@redhat.com, gourry@gourry.net
 Cc: philmd@mailo.com, berrange@redhat.com, peterx@redhat.com,
  Zhigang.Luo@amd.com, Lianjie.Shi@amd.com
 References: <20260623075051.3797975-1-FangSheng.Huang@amd.com>
- <20260623075051.3797975-2-FangSheng.Huang@amd.com>
+ <20260623075051.3797975-3-FangSheng.Huang@amd.com>
 From: "David Hildenbrand (Arm)" <david@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=david@kernel.org; keydata=
@@ -91,11 +90,11 @@ Autocrypt: addr=david@kernel.org; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <20260623075051.3797975-2-FangSheng.Huang@amd.com>
+In-Reply-To: <20260623075051.3797975-3-FangSheng.Huang@amd.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=david@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=david@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -118,25 +117,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/23/26 09:50, fanhuang wrote:
-> Introduce a TYPE_MEMORY_DEVICE subclass `sp-mem` for boot-time
-> SOFT_RESERVED memory exposed to the guest with a per-device NUMA
-> proximity domain.
-> 
-> The device targets accelerator memory (HBM and similar) that the
-> firmware hands to the guest OS as SOFT_RESERVED memory, so a driver
-> in the guest -- rather than the kernel's general allocator -- owns
-> the range.
-> 
-> Usage:
-> 
->     -object memory-backend-ram,id=spm0,size=$SIZE
->     -numa node,nodeid=$N
->     -device sp-mem,id=dev0,memdev=spm0,node=$N[,addr=$GPA]
-> 
-> The device is boot-time only (no hotplug).
+> Add a SpMemDeviceInfo variant to MemoryDeviceInfo so `query-memory-devices`
+> reports each sp-mem instance (id, addr, size, node, memdev), and print it
+> from HMP `info memory-devices`.
 > 
 > Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
 > Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+> ---
 
 Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
 
