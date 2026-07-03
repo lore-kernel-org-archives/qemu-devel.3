@@ -4,114 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07468C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 02:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EAD4C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 02:33:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfTft-0000Zq-Db; Thu, 02 Jul 2026 22:30:41 -0400
+	id 1wfTil-0002XB-1h; Thu, 02 Jul 2026 22:33:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wfTfq-0000Si-VH; Thu, 02 Jul 2026 22:30:39 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wfTib-0002QM-Th
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 22:33:30 -0400
+Received: from mail-westus2azon11012023.outbound.protection.outlook.com
+ ([52.101.48.23] helo=MW6PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wfTfo-0003eV-IS; Thu, 02 Jul 2026 22:30:38 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6631IbCk1198947; Fri, 3 Jul 2026 02:30:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=WJxjjX
- 9wJkKZ3CWNCqWWebknA9krziv1TvE/B3vHlBk=; b=G+ABjQSxZbmzPDFiiQHEC/
- 4i9jS/GL5vAUD+9K7v8XJmQa+V187qOrn+SACmylYDCxQjvN1W58lI49helUNxRv
- uAgcnILuUl/Z7W5GhprvTxkyjvYyxSTmrZhwnPCkkxQbwESZckTR6k7/Uduz7pN4
- UpLdE+95xPOtawLKdnqHwEe//Z9ezCuzHu/upREdgoYhwU0habNAs8fvIv5rpUCz
- DrAP6jBE6ewFIeA6DchLuzmCl1R3pLvpuiwlLhjVWex2FNxw8PNXdKF7QDAHWaOz
- qvkJPcN1sH8mtWAIaCcamDA+oleTyZsj7xMQFGYOhzc36gTeDL5XW3hMPF+JZ2NQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rfcdv1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 02:30:33 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6632JcLx014885;
- Fri, 3 Jul 2026 02:30:32 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2u2gpm5y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 02:30:32 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6632UV4L32244254
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 3 Jul 2026 02:30:31 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9035C58062;
- Fri,  3 Jul 2026 02:30:31 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF65258052;
- Fri,  3 Jul 2026 02:30:29 +0000 (GMT)
-Received: from fedora-workstation.lan (unknown [9.61.151.121])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  3 Jul 2026 02:30:29 +0000 (GMT)
-From: Zhuoying Cai <zycai@linux.ibm.com>
-To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
- richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
- jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
- alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-Subject: [PATCH v13 25/33] s390x: Guest support for Secure-IPL Code Loading
- Attributes Facility (SCLAF)
-Date: Thu,  2 Jul 2026 22:29:23 -0400
-Message-ID: <20260703022933.1805010-26-zycai@linux.ibm.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260703022933.1805010-1-zycai@linux.ibm.com>
-References: <20260703022933.1805010-1-zycai@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wfTiY-0004Os-UL
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 22:33:29 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=V+2jjkASJtdlvqOM8D/tttSImHAFNG4kQ4SIeKYqNvGMZFPouZoB4n+zeHO2b6jRktD8odXn6WSUDR/ejfp2G7ojbJbd6hsdRrcu9AjPChyR3dWK5op43SWTlCM0VH+nCiXJoGNXbXBGKGh4CG9DN6TNblqoOZDxQpS5iMwxB3GsChRlAfngxIKXEIE6SuOcrVlbaOrQOPhJ2qMTxQvm29uIKA4bGjINxWGKnvnPnk0vxA8xDqqsZRrfqYo2bZVRQMYcVDtufDIDeuOWUKmIUEGpPBzW27ulS5aUqOfaUMR7AePXuoi9bchhXzzu+p0j/lCBF6eHT2BLV99jAQA2tw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=L+KOG1KdMd85cZMRosKUrWdpbxy+VfwG/wOknfNj8ZM=;
+ b=xdhi7Ct+fHn8TBc5XY8ObEAWuIv+T/HhZSzn2j5+XJMMFMZpyBozzZWrkTVUUw+nz6h18mS63JmXYUPRwJmVJPbVWem8oXRKZ31iFESvUD3XTIojIRItmMSbDitqUEMJ8P3fysZ+R6aY2IQmFub3IEiQE4gyO1RrB2UzNROPHfGfBoAggZmvDD9f0r0d+wk4Mxutz3MfopQq4Tjo0+zAgJHitkJUptvj03bks5QOFpC4YcxPplIsLRHk9A6uOXozGB8bW7ivV+UqRS4jeO605EomRM/z7NGAibrqcetpQAYvM0+10e2naPiyJnZBRNlyH+8gUl3IpjsBnvvffnY1AQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=L+KOG1KdMd85cZMRosKUrWdpbxy+VfwG/wOknfNj8ZM=;
+ b=oz2SYExPnxpEZgwzONxuS5QJOlf9pImTKATO/T3OPLXG23h3Yv8+Fvn5F01Pp5o/XneCyQ1hKL46sa/FTV1hsm5BjH8bvay/AceB9Lqu/4lZAi2GabxUT6HTlT/ARAMkm46yuRr4G3YrMqqYEaZ5Z+BNxEWXhcByrEubcv0POBA=
+Received: from DM6PR04CA0027.namprd04.prod.outlook.com (2603:10b6:5:334::32)
+ by PH0PR12MB7905.namprd12.prod.outlook.com (2603:10b6:510:28b::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Fri, 3 Jul
+ 2026 02:28:15 +0000
+Received: from CY4PEPF0000FCBE.namprd03.prod.outlook.com
+ (2603:10b6:5:334:cafe::62) by DM6PR04CA0027.outlook.office365.com
+ (2603:10b6:5:334::32) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.10 via Frontend Transport; Fri, 3
+ Jul 2026 02:28:15 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ CY4PEPF0000FCBE.mail.protection.outlook.com (10.167.242.100) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.181.6 via Frontend Transport; Fri, 3 Jul 2026 02:28:15 +0000
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Thu, 2 Jul
+ 2026 21:28:14 -0500
+Received: from [10.65.97.70] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
+ Transport; Thu, 2 Jul 2026 21:28:12 -0500
+Message-ID: <2117d301-4f7f-4f5a-a744-ec2422aacc7d@amd.com>
+Date: Fri, 3 Jul 2026 10:28:06 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a471ec9 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=s2GHSiDfQs-ooOV4uGMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: hl5ph_YE-dmjGXdaYefsBwFz9-Pd0M2h
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDAyMCBTYWx0ZWRfX6iBXPfhl2dlz
- CIlV7LAVMzz6aNEjMqRDY0itP0WPsIghf6K2+ntjwXDy8tgKXAUg4oTQizfqqyFYITuu0xvZ6gz
- HHU5qgv2T5Maj1+Lilq4539vDesY6GCeMJ90FGZYiw+qeQhLitvdeUR9FLTgyaN1im7VHnfZ4bK
- JzxE4nIj9+D2arCzvgniqMrT1UVaBrbnsU9ozFDBQh5iSNU65LZNC47WnHVGpQgil1HPmUmQhgh
- S5sjpmMfU5LP5JIATHN56kBki8mz6UDB/U3vBo7sGwnO58w2tbE6UAqCmRMRSZvPJivNs4qvCHB
- 1XQ9kFxfjM3BfFxclxg/HQmfNGYVL/m2y1URxEOXCXvPxkr6cr3FJOpR5PCPD2RuDX0AOK8l982
- lrHo8GYo13+hIfis82XdYTAIm0q0a3FHPvLuxuckl5KzvCCC1NDm7XI2fPPFa0/ZvuzMEXdfEvm
- hMFFwEDC7stIlCiuurQ==
-X-Proofpoint-GUID: hl5ph_YE-dmjGXdaYefsBwFz9-Pd0M2h
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDAyMCBTYWx0ZWRfX0pd/M0zG+2dx
- Olb3+iOws+3Oq2Volpcxn9gpWzlmtRnNh6AUJAQQzTt03n9sJTq7XRV4CVzIg4jbG0Nfn46KXd6
- LAaif75bjN0Bp314ybqQ19AG2Z+3qZs=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-03_01,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
- spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030020
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 00/10] hw/mem: add sp-mem device for Specific Purpose
+ Memory
+To: Igor Mammedov <imammedo@redhat.com>, <mst@redhat.com>
+CC: <qemu-devel@nongnu.org>, <david@kernel.org>, <gourry@gourry.net>,
+ <philmd@mailo.com>, <berrange@redhat.com>, <peterx@redhat.com>,
+ <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>
+References: <20260623075051.3797975-1-FangSheng.Huang@amd.com>
+ <20260625163444.23b168ac@imammedo>
+From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
+In-Reply-To: <20260625163444.23b168ac@imammedo>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000FCBE:EE_|PH0PR12MB7905:EE_
+X-MS-Office365-Filtering-Correlation-Id: e5e7d8c7-1d64-4640-bb0c-08ded8aabc84
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|376014|82310400026|1800799024|23010399003|4143699003|11063799006|18002099003|22082099003|56012099006|13003099007;
+X-Microsoft-Antispam-Message-Info: x+GO7GMJEqte7PMAz9W6fGp/bgodtlEOOZFcyVtUict6atJ5kIWIT77am3dRu43xZemXBeOExwCm+o6tkBzk+B3kn/MphM7tGP6zRTMaRMQcs5v8a8sJNpxNAZzQE0dlWABqGnzczBhIui7Gp5cT9o2GbZCHV37/6YvCp3fsucLeLcv4CcgHUK+LteRtFB9AJBQCTAltYpLaA0mn4F+P/PlweYnf5H0aeQeu6K7pw+/QRWBPGWsgaE5VuxYul/oh9fGeUniS4oMzJvuLn3eX27+5nWpyHvbwixWK4g9tboD7TUXhhfVvoPvEhR04G0izVS7L+wakT7lvAGkr4P68luNOSCdRaXen002IXZJaZjggRq2gNEM2EE5Tj4XBeN2aJKG0N/sIyAsbKX0vg5A+2y2cUpiSyuxcdIfUe7sok0djS/4fU5usECG0hG757GhIONtL3C9sHsQFNA7v8VlHgsyhPNckDI7eGKiOz8DQ8le0IFQ/xmsxTJtJbhjrynHoIGis8HDpBtNY4vwqKNKabsMNIlBsqEyzASrXzSmqNllLWFkkf0oexrqincqyQmUwinE5oiXZKJuxg55YZtHnN/vVSYGCr4+hB1pfUVBywc3bDNosfyxYkorgkMn7g8ap14jZKbfjaWTvwJp1h6Tdd8ftzUbsRLHwCoFtT773R5QHPfTE7BSrG+CRKoghVR2TXXEWCOLDt9ZOQzslvBDTNg==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700016)(376014)(82310400026)(1800799024)(23010399003)(4143699003)(11063799006)(18002099003)(22082099003)(56012099006)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: qtDg1/5dh5hglb1LnPBlZlsLHWvqtywdUyowAnrpe8+/VLs5Qaie9FYvBy7b369m4twwBKZBGka7CiujK+dRX6USYeAoS329gfpKeR3xl4PKxbgh8bH9UzDnlwHViUbx4FjNlBINKyZEqccqU8sXTqUUQlJLitIZdfQXCVe3qGbc962i48lsRoBX54qHd0INKcAqvmN+6UvX9UUXU9WwTl+M7sxMmdhfviEa9r0qYYPbe2KJuz/zPRt8mkN/CPlyIBE6Nowooat1kpslRnG2WoAV7MWpwTTDykIQFPvI87eqZH7ZjE/MCYQlkyv0bSlcrHgFtXCkmbuSLlZA1hLareeakoUhf5qacePOqv4iRJdwGVHKYWNzDdeuO0LJ8/B22rkn68cjsj3OfaC69iOv3YnOBCBx5y/SQOqf67XM47F98W77HIH7pKOlJ+x4FwwM
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2026 02:28:15.1162 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e5e7d8c7-1d64-4640-bb0c-08ded8aabc84
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000FCBE.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7905
+Received-SPF: permerror client-ip=52.101.48.23;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=MW6PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,137 +129,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The secure-IPL-code-loading-attributes facility (SCLAF)
-provides additional security during secure IPL.
 
-Availability of SCLAF is determined by byte 136 bit 3 of the
-SCLP Read Info block.
 
-This feature is available starting with the gen16 CPU model.
+On 6/25/2026 10:34 PM, Igor Mammedov wrote:
+> On Tue, 23 Jun 2026 15:50:41 +0800
+> fanhuang <FangSheng.Huang@amd.com> wrote:
+> 
+>> This series adds a TYPE_MEMORY_DEVICE subclass `sp-mem` for boot-time
+>> SOFT_RESERVED guest memory, following the direction from the v7
+>> thread [1] and the v8 / v9 / v10 / v11 / v12 / v13 reviews
+>> [2][3][4][5][6][7].
+> 
+> review is done at this point,
+> I guess Michael will take it via his tree.
+>
 
-Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Reviewed-by: Collin Walling <walling@linux.ibm.com>
----
- docs/specs/s390x-secure-ipl.rst     | 18 ++++++++++++++++++
- target/s390x/cpu_features.c         |  2 ++
- target/s390x/cpu_features_def.h.inc |  1 +
- target/s390x/cpu_models.c           |  3 +++
- target/s390x/gen-features.c         |  2 ++
- target/s390x/kvm/kvm.c              |  1 +
- 6 files changed, 27 insertions(+)
+Hi Michael,
 
-diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-index 850e4a7497..db60c2262f 100644
---- a/docs/specs/s390x-secure-ipl.rst
-+++ b/docs/specs/s390x-secure-ipl.rst
-@@ -122,3 +122,21 @@ The guest kernel uses the contents in the IIRB for:
- * Boot logging: reports which components were loaded and verified.
- * kexec operations: builds the next kernel’s IPL report from the existing one.
- * Keying: installs IPL certificates into the platform trusted keyring.
-+
-+Secure Code Loading Attributes Facility
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+The Secure Code Loading Attributes Facility (SCLAF) enhances system security
-+during the IPL by enforcing additional verification rules.
-+
-+When SCLAF is available, its behavior depends on the IPL mode. It introduces
-+verification of both signed and unsigned components to help ensure that only
-+authorized code is loaded during the IPL process. Any errors detected by SCLAF
-+are reported in the IIRB.
-+
-+Unsigned components are restricted to load addresses at or above absolute
-+storage address ``0x2000``.
-+
-+Signed components must include a Secure Code Loading Attribute Block (SCLAB),
-+which is appended at the very end of the component. The SCLAB defines security
-+attributes for handling the signed code.
-diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
-index 200bd8c15b..29ea3bfec2 100644
---- a/target/s390x/cpu_features.c
-+++ b/target/s390x/cpu_features.c
-@@ -120,6 +120,7 @@ void s390_fill_feat_block(const S390FeatBitmap features, S390FeatType type,
-      * - All SIE facilities because SIE is not available
-      * - DIAG318
-      * - Secure IPL Facility
-+     * - Secure IPL Code Loading Attributes Facility
-      *
-      * As VMs can move in and out of protected mode the CPU model
-      * doesn't protect us from that problem because it is only
-@@ -152,6 +153,7 @@ void s390_fill_feat_block(const S390FeatBitmap features, S390FeatType type,
-         break;
-     case S390_FEAT_TYPE_SCLP_FAC_IPL:
-         clear_be_bit(s390_feat_def(S390_FEAT_SIPL)->bit, data);
-+        clear_be_bit(s390_feat_def(S390_FEAT_SCLAF)->bit, data);
-         break;
-     default:
-         return;
-diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
-index bcf8a666e4..f6ba9e87e1 100644
---- a/target/s390x/cpu_features_def.h.inc
-+++ b/target/s390x/cpu_features_def.h.inc
-@@ -142,6 +142,7 @@ DEF_FEAT(CERT_STORE, "cstore", SCLP_FAC134, 5, "Certificate Store functions")
- 
- /* Features exposed via SCLP SCCB Facilities byte 136 - 137 (bit numbers relative to byte-136) */
- DEF_FEAT(SIPL, "sipl", SCLP_FAC_IPL, 1, "Secure-IPL facility")
-+DEF_FEAT(SCLAF, "sclaf", SCLP_FAC_IPL, 3, "Secure-IPL-code-loading-attributes facility")
- 
- /* Features exposed via SCLP CPU info. */
- DEF_FEAT(SIE_F2, "sief2", SCLP_CPU, 4, "SIE: interception format 2 (Virtual SIE)")
-diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-index a52e34aa95..7de727a256 100644
---- a/target/s390x/cpu_models.c
-+++ b/target/s390x/cpu_models.c
-@@ -264,6 +264,7 @@ bool s390_has_feat(S390Feat feat)
-         case S390_FEAT_SIE_PFMFI:
-         case S390_FEAT_SIE_IBS:
-         case S390_FEAT_SIPL:
-+        case S390_FEAT_SCLAF:
-         case S390_FEAT_CONFIGURATION_TOPOLOGY:
-             return false;
-             break;
-@@ -509,6 +510,8 @@ static void check_consistency(const S390CPUModel *model)
-         { S390_FEAT_DIAG_318, S390_FEAT_EXTENDED_LENGTH_SCCB },
-         { S390_FEAT_CERT_STORE, S390_FEAT_EXTENDED_LENGTH_SCCB },
-         { S390_FEAT_SIPL, S390_FEAT_EXTENDED_LENGTH_SCCB },
-+        { S390_FEAT_SCLAF, S390_FEAT_EXTENDED_LENGTH_SCCB },
-+        { S390_FEAT_SCLAF, S390_FEAT_SIPL },
-         { S390_FEAT_NNPA, S390_FEAT_VECTOR },
-         { S390_FEAT_RDP, S390_FEAT_LOCAL_TLB_CLEARING },
-         { S390_FEAT_UV_FEAT_AP, S390_FEAT_AP },
-diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-index bd2060ab93..c3e0c6ceff 100644
---- a/target/s390x/gen-features.c
-+++ b/target/s390x/gen-features.c
-@@ -722,6 +722,7 @@ static uint16_t full_GEN16_GA1[] = {
-     S390_FEAT_UV_FEAT_AP_INTR,
-     S390_FEAT_CERT_STORE,
-     S390_FEAT_SIPL,
-+    S390_FEAT_SCLAF,
- };
- 
- static uint16_t full_GEN17_GA1[] = {
-@@ -924,6 +925,7 @@ static uint16_t qemu_MAX[] = {
-     S390_FEAT_EXTENDED_LENGTH_SCCB,
-     S390_FEAT_CERT_STORE,
-     S390_FEAT_SIPL,
-+    S390_FEAT_SCLAF,
- };
- 
- /****** END FEATURE DEFS ******/
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 61ac6c84a0..52bbd560bd 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -2503,6 +2503,7 @@ bool kvm_s390_get_host_cpu_model(S390CPUModel *model, Error **errp)
- 
-     /* Some Secure IPL facilities are emulated by QEMU */
-     set_bit(S390_FEAT_SIPL, model->features);
-+    set_bit(S390_FEAT_SCLAF, model->features);
- 
-     /* Test for Ultravisor features that influence secure guest behavior */
-     query_uv_feat_guest(model->features);
--- 
-2.54.0
+All patches now carry Reviewed-by / Acked-by. Would it be possible to
+queue this for the 11.1 soft freeze (7/7)?
+
+Best regards,
+FangSheng Huang (Jerry)
+
+>>
+>> Background
+>> ----------
+>>
+>> This series targets coherent CPU + accelerator shared-address-space
+>> systems, where the accelerator's HBM is not a device-private
+>> framebuffer behind a PCIe BAR but a tier of host system memory:
+>> visible to the CPU in the platform physical address space, shared
+>> coherently with the accelerator over the platform fabric, and bound
+>> to a NUMA proximity domain set by platform firmware at boot fabric
+>> training.
+>>
+>> For such a region to function correctly in the guest, two things
+>> must hold simultaneously: the CPU memory subsystem has to see it in
+>> the system memory map (so the CPU side can address it), and it has
+>> to be reserved exclusively for the accelerator's driver (so the
+>> kernel's general allocator does not hand SPM pages to unrelated
+>> workloads). The SOFT_RESERVED memory type in E820 plus a matching
+>> SRAT memory-affinity entry is the mechanism that delivers both: a
+>> firmware-produced topology that the CPU memory subsystem honors and
+>> the accelerator's driver consumes for its own range.
+>>
+>> Approach
+>> --------
+>>
+>> The series introduces a new TYPE_MEMORY_DEVICE subclass `sp-mem`.
+>> Each instance binds one host memory backend to a single NUMA
+>> proximity domain and is boot-time only; placement, mapped-state
+>> enforcement, and QMP introspection come from the existing
+>> memory-device framework.
+>>
+>> Testing
+>> -------
+>>
+>> Verified end-to-end on q35 + KVM, with both SeaBIOS and OVMF, for:
+>>
+>> - single sp-mem instance
+>> - two sp-mem instances on different NUMA nodes
+>>
+>> Guest observations: /proc/iomem shows one SOFT_RESERVED entry per
+>> sp-mem device, dmesg SRAT parsing reports the matching
+>> memory_affinity entries with correct PXM, and the umbrella
+>> HOTPLUGGABLE entry covers the remaining hotplug-memory window
+>> without overlapping the sp-mem ranges.
+>>
+>> In-tree coverage: a bios-tables-test case validates the SRAT
+>> partition for two sp-mem devices on distinct nodes, and an e820
+>> fw_cfg test checks the SOFT_RESERVED range.
+>>
+>> Changes since v13
+>> -----------------
+>>
+>>    - qapi: note that SpMemDeviceInfo's @size is in bytes.
+>>    - pc: fix the indentation of the pc_sp_mem_plug() continuation line.
+>>    - Collected the Reviewed-by / Acked-by tags from the v13 review.
+>>
+>> Previous versions
+>> -----------------
+>>
+>>    v1: https://lore.kernel.org/qemu-devel/20250924103324.2074819-1-FangSheng.Huang@amd.com/
+>>    v2: https://lore.kernel.org/qemu-devel/20251020090701.4036748-1-FangSheng.Huang@amd.com/
+>>    v3: https://lore.kernel.org/qemu-devel/20251208105137.2058928-1-FangSheng.Huang@amd.com/
+>>    v4: https://lore.kernel.org/qemu-devel/20251209093841.2250527-1-FangSheng.Huang@amd.com/
+>>    v5: https://lore.kernel.org/qemu-devel/20260123024312.1601732-1-FangSheng.Huang@amd.com/
+>>    v6: https://lore.kernel.org/qemu-devel/20260226105023.256568-1-FangSheng.Huang@amd.com/
+>>    v7: https://lore.kernel.org/qemu-devel/20260306082735.1106690-1-FangSheng.Huang@amd.com/
+>>    v8: https://lore.kernel.org/qemu-devel/20260527074215.229119-1-FangSheng.Huang@amd.com/
+>>    v9: https://lore.kernel.org/qemu-devel/20260602084447.1100554-1-FangSheng.Huang@amd.com/
+>>    v10: https://lore.kernel.org/qemu-devel/20260605104609.1739911-1-FangSheng.Huang@amd.com/
+>>    v11: https://lore.kernel.org/qemu-devel/20260611100637.2460507-1-FangSheng.Huang@amd.com/
+>>    v12: https://lore.kernel.org/qemu-devel/20260616090808.3047939-1-FangSheng.Huang@amd.com/
+>>    v13: https://lore.kernel.org/qemu-devel/20260619111136.3481329-1-FangSheng.Huang@amd.com/
+>>
+>>    [1] v7 thread closeout:
+>>        https://lore.kernel.org/qemu-devel/666a7ba1-5d3a-4732-b872-0d9fb2fe8461@amd.com/
+>>    [2] v8 review:
+>>        https://lore.kernel.org/qemu-devel/20260601105057.2d764e55@imammedo/
+>>    [3] v9 review:
+>>        https://lore.kernel.org/qemu-devel/20260602084447.1100554-1-FangSheng.Huang@amd.com/T/
+>>    [4] v10 review:
+>>        https://lore.kernel.org/qemu-devel/20260605104609.1739911-1-FangSheng.Huang@amd.com/T/
+>>    [5] v11 review:
+>>        https://lore.kernel.org/qemu-devel/20260611100637.2460507-1-FangSheng.Huang@amd.com/T/
+>>    [6] v12 review:
+>>        https://lore.kernel.org/qemu-devel/20260616090808.3047939-1-FangSheng.Huang@amd.com/T/
+>>    [7] v13 review:
+>>        https://lore.kernel.org/qemu-devel/20260619111136.3481329-1-FangSheng.Huang@amd.com/T/
+>>
+>> fanhuang (10):
+>>    hw/mem: add sp-mem device for Specific Purpose Memory
+>>    qapi, hmp: introspection for the sp-mem device
+>>    i386/acpi-build: partition device_memory SRAT umbrella for sp-mem
+>>    hw/i386: hook sp-mem into the pc machine plug path
+>>    MAINTAINERS: cover sp-mem under Memory devices, add R: tag
+>>    tests/acpi: add empty expected blobs for sp-mem SRAT test
+>>    tests/acpi: add bios-tables-test case for sp-mem
+>>    tests/acpi: generate expected blobs for sp-mem SRAT test
+>>    tests/qtest: add e820 fw_cfg test
+>>    tests/qtest: cover sp-mem SOFT_RESERVED e820 entry
+>>
+>>   MAINTAINERS                        |   3 +
+>>   qapi/machine.json                  |  43 +++++++++-
+>>   hw/i386/e820_memory_layout.h       |  11 +--
+>>   include/hw/mem/sp-mem.h            |  33 ++++++++
+>>   hw/core/machine-hmp-cmds.c         |  11 +++
+>>   hw/i386/acpi-build.c               |  96 ++++++++++++++++++++-
+>>   hw/i386/pc.c                       |  36 ++++++++
+>>   hw/mem/sp-mem.c                    | 128 ++++++++++++++++++++++++++++
+>>   tests/qtest/bios-tables-test.c     |  21 +++++
+>>   tests/qtest/e820-test.c            | 129 +++++++++++++++++++++++++++++
+>>   hw/i386/Kconfig                    |   2 +
+>>   hw/mem/Kconfig                     |   4 +
+>>   hw/mem/meson.build                 |   1 +
+>>   tests/data/acpi/x86/q35/DSDT.spmem | Bin 0 -> 9910 bytes
+>>   tests/data/acpi/x86/q35/SRAT.spmem | Bin 0 -> 384 bytes
+>>   tests/qtest/meson.build            |   1 +
+>>   16 files changed, 508 insertions(+), 11 deletions(-)
+>>   create mode 100644 include/hw/mem/sp-mem.h
+>>   create mode 100644 hw/mem/sp-mem.c
+>>   create mode 100644 tests/qtest/e820-test.c
+>>   create mode 100644 tests/data/acpi/x86/q35/DSDT.spmem
+>>   create mode 100644 tests/data/acpi/x86/q35/SRAT.spmem
+>>
+>>
+>> base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
+> 
 
 
