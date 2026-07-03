@@ -4,57 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D849C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 00:05:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AC9AC43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 00:08:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfROm-0006Gw-Sl; Thu, 02 Jul 2026 20:04:53 -0400
+	id 1wfRRq-00077F-HG; Thu, 02 Jul 2026 20:08:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wfROd-0006GW-0y
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 20:04:44 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wfROa-0007Ev-0c
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 20:04:42 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 703FD59672E;
- Fri, 03 Jul 2026 02:04:37 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id DlCgDt-WskUz; Fri,  3 Jul 2026 02:04:30 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id E9CDC59672D; Fri, 03 Jul 2026 02:04:30 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E7F1059672C;
- Fri, 03 Jul 2026 02:04:30 +0200 (CEST)
-Date: Fri, 3 Jul 2026 02:04:30 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Keith Monahan <keith@techtravels.org>
-cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>, 
- Fam Zheng <fam@euphon.net>
-Subject: Re: [PATCH v2 3/4] hw/scsi/ncr53c710: rewrite the SCRIPTS engine
-In-Reply-To: <8d3f679a-3039-404e-879d-b97e1b58e090@techtravels.org>
-Message-ID: <41274750-6ed5-9525-75fc-59a82d2cd2cb@eik.bme.hu>
-References: <20260701213359.1855870-1-keith@techtravels.org>
- <20260701213359.1855870-4-keith@techtravels.org>
- <CAFEAcA_3vf5vrwoO0cGcdTsykU8uTf8386oyWki3iQ3Bje9Trw@mail.gmail.com>
- <8d3f679a-3039-404e-879d-b97e1b58e090@techtravels.org>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wfRRl-00076K-MZ
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 20:07:57 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wfRRj-0008Dv-FZ
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 20:07:57 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-693c51a8a19so40771a12.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 17:07:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783037271; cv=none;
+ d=google.com; s=arc-20260327;
+ b=pQppTGZYPQ8zOgDCMQAC7/ep+7RjYS7qKXlo8VylxgSp642btZ5r3SChZkYsGREDEm
+ yWlXAXtCojrSsC874b9fBWdOvJZyFLsVo1GoVI+8TtXf1RVVhsmbwDSkSuagHOz6bGZR
+ dCybdpg/NrZctXCaHoGoyMdU2P/3RPVYjtbNw8NMWCS+ziWazUmE7k/AZAx066hZSMl5
+ 64Gv9ZpLStaLKqV/sXpdSmZ/qP63bOyFnxeQw2vjl//FYbD8wKJQXCBpF6j35PhBtIgY
+ uRYPXIQwPu+c6HnLp7m9cNU3oZkDCtgKRAhiS7OlvwnHj229spmHHhSYKjsqVlGMxvAb
+ 0Qkg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=LsIVRyBGuModU7s/j97tfSkR9yWnGQ92IQpv7UDlGpI=;
+ fh=KLHGcCjDFE8JakAsekM1idRm6q0Xvx801j4ETmug+Fk=;
+ b=nuBBk110hdXt0KUzCuzG7UQKWnepks7usQPI9GAFw2djQt3y+1NWzoQTe+9OZLbmmZ
+ 4gxTDx1J5IKBLtL09o33Pp7rFUwRpHpgnR5fzc4fWDq52yoVZa1ECFfbfcCIxEuXZJmM
+ o8gSH+4GzMATDVitfif5iyiJN+xTM8Eh8SLCqrG11jrIwla+BkGlYslHW2UjXrDmgak+
+ j0otSMDj9rAg2XXyYGU90GMyjInsV+5uh2iAeETEaB1AzedqT89Lr0VLoLZhvo+QkUzL
+ 1W1ehMa+LNqDBQoGVc+f1sMaAqoS72pwNzXDm9HwRLaTPytEJFv6nlrtFlfO/Kk+oNUF
+ HYzw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783037271; x=1783642071; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LsIVRyBGuModU7s/j97tfSkR9yWnGQ92IQpv7UDlGpI=;
+ b=O6+kS37ZM+irrN4FTqBghlBu4AsRsRp+Awy8HvYLYlbTTlvZLoltfp5SLnVym3Ey0o
+ gkirFmjw1F76djwRgvaiqnfJVRdmk2dB7tke7AJE+pI5UTu0P0BLMhKtmS+SU8y360NT
+ sFmRz8h7jaah/NrQCjXxp5yLLmmurEFLUE6Rrt0OW5kYqUegluFp1FGyephbwee3pkat
+ 1KkoRWTgAJjgzEd2wMGkANjO/VOUI5onwXybHQfItSKjqcwjXhVJU6/0buu/1aoKFBWq
+ aKSc/LrmwoPiHXaUzdhVUmHRbC0mM2pDuqErYH7btElTdZHj2dFpRFWvM0Ys6OiOzM2C
+ e5bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783037271; x=1783642071;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=LsIVRyBGuModU7s/j97tfSkR9yWnGQ92IQpv7UDlGpI=;
+ b=MiZ45y1Xwxu2VrAcnh7J4oB06h4j9SlsNewzQe26gvue0GFMHWBK6hMzLEl3YoV/Wu
+ vHQjLUfvmDOmHty/JCgPhBjB60OIStP2UsOhvOZ7emesIpOIXIl/dRj5JvpidIXd+Zjg
+ siTc0+zlwjaIznM2mktTs3Mio4L1gABC6F8PAkrO2zIIbGiZDaiFwWxQPSuNCds0RXmb
+ xEmfDtkSvbJMmnWqN92gl2mID0+opNMfHVhghEu28Ky3ECa3I+HfW8k93Rc2f9mouCvj
+ 682d3RCSe0FEoFA0NDCgjdjmx1AEHTpyeBxcqK25nhymnipD57ZVZD4s+CP2aT1Y/GI7
+ DiuA==
+X-Gm-Message-State: AOJu0Yxch7YuAMcnJ+dhgi9+9Ug4Qjyi0QQV5sRagF+uAQb/gPRC/OCo
+ vKq4uuvpkT2fGodNk4BbntCDG2aac0GYvBiRd8Rvnp473UMz9OxWporfwEAujfLlc71xnNLUT9E
+ qRTi8gY1qrSqnsqSAah8m3k3dJSkUh78=
+X-Gm-Gg: AfdE7cmkaArImxrJKgrJS2VWm0sa2CrTYWjsn9Scf3CRhJvPrmp16wp9OaNalIRo6U1
+ Q3hdCKEGOVCw0dU9NcCkGYmYD35pMsIxX2Xv3t0Y2VjX7k5wxWIWgEQqsy7F6SIxDflzKaIneX+
+ C65bgkcxTgbMcU5ztk89yAGgbLwvaCXrluwMyjH2u0X2bjYAj3pXcX27ZO6sSX4bpQX5LxnhxwB
+ ujYAGukkGV7h0v3d9aT+CaMv2+1/wzdDMa8kBP2/1RNjQm4kz4VwABNhp7lYSx+JfvpDKuB1Kk+
+ 26SigHmcQiezVw9os0vCvoLThNu/etGJjt3vcw==
+X-Received: by 2002:a05:6402:11cb:b0:698:480b:2dd1 with SMTP id
+ 4fb4d7f45d1cf-6989f2f2915mr3730818a12.13.1783037271076; Thu, 02 Jul 2026
+ 17:07:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20260701124034.552271-1-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260701124034.552271-1-daniel.barboza@oss.qualcomm.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 3 Jul 2026 10:07:24 +1000
+X-Gm-Features: AVVi8Cc5PadjDBb9dMRS-7BQketjGIFwWX8MV3dRu7ug6pA-cNtFcyQAP9PFAd8
+Message-ID: <CAKmqyKP=9gTF4DdvXHLJCO7Lbor-=mC1K7+14yxUDxA1a=8meA@mail.gmail.com>
+Subject: Re: [PATCH] hw/riscv/riscv-iommu.c: fix fault type for spa_fetch()
+ faults
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
+ andrew.jones@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,335 +119,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2 Jul 2026, Keith Monahan wrote:
-> Peter,
+On Wed, Jul 1, 2026 at 10:41=E2=80=AFPM Daniel Henrique Barboza
+<daniel.barboza@oss.qualcomm.com> wrote:
 >
-> Thanks for going through it. I raised this originally in the v1 thread
-> and I am not sure it reached you, so let me lay it out here.
+> Under certain circunstances, like the one described in [1] and [2],
+> a read operation that faults will be logged as a write fault instead,
+> and vice-versa, if they happen after the translation phase in
+> riscv_iommu_spa_fetch().
 >
-> The size is real, but the more useful thing to flag is that reading this
-> as a diff against the old model will not give you an accurate view of
-> the change, because these are not two versions of one model. They are
-> two different implementations, and git is aligning text between them
-> that never shared any code.
+> The first problem is that we're overwriting iotlb->perm with PTE flags,
+> so an IOMMU_RO access flag can be overwritten by whatever flags
+> the PTE has.  This will cause the wrong fault type to be thrown at
+> the end of the function in case a fault happens.
 >
-> Three concrete ways they differ:
+> To solve the iotlb->perm overwrite we'll bit_and the original
+> iotlb->perm access flags with the PTE access flags, preserving the
+> original access type.  So a IOMMU_RO access in a R+W PTE will result in
+> a IOMMU_RO perm.
 >
-> 1. Different origin. The old model descends from Toni Wilen's UAE
->   implementation by way of Helge Deller. The new engine is derived from
->   QEMU's own lsi53c895a.c. They are unrelated codebases, so the delta
->   is not one evolving into the other, it is one file removed and a
->   different one added.
+> Second, the resulting fault is received by riscv_iommu_translate(), which
+> will then report the fault.  To do that we require a transaction type
+> (ttype).  We're prioritizing checking "perm & IOMMU_RW" to set a
+> UADDR_WR ttype, and then checking "perm & IOMMU_RO" to set UADDR_RD
+> ttype.  The issue with that is IOMMU_RO=3D1 and IOMMU_RW=3D3, thus checki=
+ng
+> "perm & IOMMU_RW" for a write then "perm & IOMMU_RO" for a read will
+> cause the read fault to always be diagnosed as write.
 >
-> 2. Different execution model. The old model runs SCRIPTS synchronously
->   inside the guest's register write, so completion interrupts come back
->   reentrantly. The new one runs the engine asynchronously and delivers
->   completion the way the chip actually does. That is a different control 
-> flow from top to bottom, not a local change.
+> Make the iotlb->perm matches more strict: "perm & IOMMU_RW" must be
+> exactly IOMMU_RW, ensuring that 'perm' has both flags.  Then we can
+> check perm & IOMMU_WO and perm & IOMMU_RO without worrying about
+> overlapping with the RW flag.
 >
-> 3. Different connection model. The old model is connected only, with no
->   target initiated disconnect or reselect. The new one implements
->   disconnect and reselect and the state machine around them. That is a
->   different device state machine, not a modified one.
+> [1] https://gitlab.com/qemu-project/qemu/-/work_items/3557
+> [2] https://gitlab.com/qemu-project/qemu/-/work_items/3577
 >
-> Because of those three, the two files do not line up function to
-> function or line to line. The diff is large and noisy precisely because
-> git has almost nothing to match, so it renders a wholesale replacement
-> as a wall of edits. You will not learn what actually changed by reading
-> the delta; the way to review this is to read ncr53c710.c as a new file
-> against the 53C710 manual, not as a patch on the old one.
+> Fixes: 69a9ae4836 ("hw/riscv/riscv-iommu: add ATS support")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3557
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3577
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-In that case maybe another approach could be to have a patch that replaces 
-old 710 model with a copy of lsi53c895a.c unchanged first (of course this 
-would remove it from compile so it can still be bisected or only include 
-this patch as interim for review that can then be squashed with next patch 
-on merge) then have the patch that rewrites the lsi53c895a.c model to 710 
-which would be a more useful patch to look at to show what's really 
-changed than the patch that's unreadable because it's diffing unrelated 
-codebase?
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-Regards,
-BALATON Zoltan
+Alistair
 
-> For what it is worth, I did try to get there incrementally first. It
-> took about a dozen fixes to the old model just to get the chip's own
-> driver to negotiate its first command, and it still would not boot
-> reliably, because the two blockers, connected only and synchronous
-> SCRIPTS, are structural and cannot be patched out in small local steps.
-> That is why I stopped treating the old code as a base: it has no path to
-> an HP-UX boot to build on.
+> ---
+>  hw/riscv/riscv-iommu.c | 16 +++++++++++++---
+>  1 file changed, 13 insertions(+), 3 deletions(-)
 >
-> I do appreciate that this is a large and complicated model, and that
-> reviewing it will take real time; I am not trying to wave that away. But
-> the incremental path would be worse on exactly that front. A series that
-> converted the old model into this one would be a long chain of patches
-> to write and a long chain to review, most of them touching code that is
-> thrown away by the end. Reviewing one coherent new file, even a big one,
-> is less work than reviewing however many steps it would take to get
-> there.
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index 974042d017..7f94ce152e 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -282,6 +282,7 @@ static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn,=
+ hwaddr addr, hwaddr *out)
+>  static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *=
+ctx,
+>      IOMMUTLBEntry *iotlb)
+>  {
+> +    IOMMUAccessFlags pte_perm;
+>      dma_addr_t addr, base;
+>      uint64_t satp, gatp, pte;
+>      bool en_s, en_g;
+> @@ -509,8 +510,16 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s,=
+ RISCVIOMMUContext *ctx,
+>              }
+>              /* Translation phase completed (GPA or SPA) */
+>              iotlb->translated_addr =3D base;
+> -            iotlb->perm =3D (pte & PTE_W) ? ((pte & PTE_R) ? IOMMU_RW : =
+IOMMU_WO)
+> -                                                         : IOMMU_RO;
+> +
+> +            /*
+> +             * Do a bit_and between the PTE bits and the original
+> +             * request flags to determine the exact permission we
+> +             * need, i.e. if the original request is RO and the
+> +             * PTE has RW flags the actual perm is RO.
+> +             */
+> +            pte_perm =3D (pte & PTE_W) ? ((pte & PTE_R) ? IOMMU_RW : IOM=
+MU_WO)
+> +                                     : IOMMU_RO;
+> +            iotlb->perm &=3D pte_perm;
 >
-> You really can't get THERE from HERE, which is why I took this approach.
+>              /* Check MSI GPA address match */
+>              if (pass =3D=3D S_STAGE && (iotlb->perm & IOMMU_WO) &&
+> @@ -1727,7 +1736,8 @@ done:
+>      if (fault) {
+>          unsigned ttype =3D RISCV_IOMMU_FQ_TTYPE_PCIE_ATS_REQ;
 >
-> Thanks,
-> Keith
->
-> On 7/2/2026 5:02 AM, Peter Maydell wrote:
->> On Wed, 1 Jul 2026 at 22:49, Keith Monahan <keith@techtravels.org> wrote:
->>> 
->>> Replace the NCR 53C710 model with a SCRIPTS engine derived from QEMU's
->>> LSI53C895A model (hw/scsi/lsi53c895a.c), another device in the same
->>> NCR/LSI SCRIPTS family, adapted to the 53C710: its register map, the
->>> single-byte DSTAT/SSTAT0 interrupt model, big-endian SCRIPTS and
->>> table-indirect fetch (the part sits on the big-endian PA-RISC LASI bus),
->>> and 24-bit DMA byte counts.  Behaviour follows the NCR 53C710 Data Manual
->>> (Jun 1992) and Programmer's Guide (Oct 1990).
->>> 
->>> The base engine supports connected I/O and reselection-interrupt
->>> disconnect, enough to install and boot Debian off the 710 with the Linux
->>> lasi700/53c700 driver and to boot NetBSD/hppa 9.4 and 10.1 (osiop) with
->>> disk and CD-ROM enumeration.  Reselection follows the 53C700 family:
->>> gated on the (re)selection interrupt enable (SIEN.SEL) alone, one-hot
->>> SDID, and an SFBR id bitmask in 700-compatibility mode.  SDTR/WDTR/PPR
->>> negotiation is declined with MESSAGE REJECT, which the 700-family drivers
->>> require to proceed: unlike the 8xx parts they leave the target to drive
->>> the phase after the reject.
->>> 
->>> The LASI glue (hw/scsi/lasi_ncr710.c) embeds one NCR710State by value.
->>> It gains the free_request SCSIBusInfo callback and request-queue init the
->>> core needs, renames the reselection timer to scripts_timer, and narrows
->>> the SCSI bus to the 8-bit inclusive maxima.
->>> 
->>> The migration format is incompatible with the model this replaces, so the
->>> vmstate version and minimum version are both raised.
->>> 
->>> Signed-off-by: Keith Monahan <keith@techtravels.org>
->>> ---
->>>   hw/scsi/lasi_ncr710.c |  117 +-
->>>   hw/scsi/lasi_ncr710.h |   12 +-
->>>   hw/scsi/ncr53c710.c   | 2795 +++++++++++++++--------------------------
->>>   hw/scsi/ncr53c710.h   |  276 ++--
->>>   hw/scsi/trace-events  |   43 +-
->>>   5 files changed, 1191 insertions(+), 2052 deletions(-)
->> 
->> I'm likely not going to be the one doing detailed review here, so
->> my opinion here is not necessarily 100% controlling, but from my
->> perspective this is still significantly too large to review, both
->> in raw size terms and because it has a lot of changes in it that
->> do not all need or want to be in the same patch.
->> 
->> Just looking through the very early stuff to show some examples
->> of changes that don't need to be in this patch:
->> 
->>> @@ -50,22 +48,22 @@ static uint64_t lasi_ncr710_reg_read(void *opaque, 
->>> hwaddr addr,
->>>       if (addr >= 0x100) {
->>>           hwaddr ncr_addr = addr - 0x100;
->>>           if (size == 1) {
->>> +            /*
->>> +             * Single byte access: flip the byte lane (PA-RISC big endian
->>> +             * access -> the chip's little endian register order).
->>> +             */
->>>               ncr_addr ^= 3;
->>> -            NCR710_DPRINTF("Reading value to LASI WRAPPER == 0x%lx%s, "
->>> -                           "val=0x%lx, size=%u\n",
->>> -                           addr - 0x100, size == 1 ? " (XORed)" : "",
->>> -                           val, size);
->>>               val = ncr710_reg_read(&s->ncr710, ncr_addr, size);
->>>           } else {
->>> +            /*
->>> +             * Multibyte access: gather little endian, no lane flip, so
->>> +             * the 24/32 bit registers assemble correctly.
->>> +             */
->>>               val = 0;
->> 
->> These are comment improvements to existing code. They don't need to be in
->> the big patch.
->>
->>>               for (unsigned i = 0; i < size; i++) {
->>>                   uint8_t byte_val = ncr710_reg_read(&s->ncr710, ncr_addr 
->>> + i, 1);
->>>                   val |= ((uint64_t)byte_val) << (i * 8);
->>> -                NCR710_DPRINTF("  Read byte %u from NCR addr 0x%lx: "
->>> -                               "0x%02x\n", i, ncr_addr + i, byte_val);
->>>               }
->>> -            NCR710_DPRINTF("  Reconstructed %u-byte value: 0x%lx\n",
->>> -                           size, val);
->> 
->> Here we drop some debug printfs. That can be done separately.
->>
->>>           }
->>>
->>>           trace_lasi_ncr710_reg_forward_read(addr, val);
->>> @@ -83,7 +81,13 @@ static void lasi_ncr710_reg_write(void *opaque, hwaddr 
->>> addr,
->>>
->>>       trace_lasi_ncr710_reg_write(addr, val, size);
->>> 
->>> -    if (addr <= 0x0F) {
->>> +    /*
->>> +     * 0x00..0x0f is the read only LASI module header 
->>> (ID/SVERSION/HVERSION) and
->>> +     * 0x10..0xff is unmapped module space; writes to both are ignored. 
->>> The
->>> +     * SCSI bus reset is driven through the chip's SCNTL1.RST at 
->>> forwarded
->>> +     * offset 0x101 (see ncr53c710.c), not through this window.
->>> +     */
->>> +    if (addr <= 0x0f) {
->>>           return;
->>>       }
->> 
->> This is a better explanatory comment. That's not something that
->> needs to be in the big patch.
->> 
->>> 
->>> @@ -92,16 +96,10 @@ static void lasi_ncr710_reg_write(void *opaque, hwaddr 
->>> addr,
->>>
->>>           if (size == 1) {
->>>               ncr_addr ^= 3;
->>> -            NCR710_DPRINTF("Writing value to LASI WRAPPER == 0x%lx%s, "
->>> -                           "val=0x%lx, size=%u\n",
->>> -                           addr - 0x100, size == 1 ? " (XORed)" : "",
->>> -                           val, size);
->>>               ncr710_reg_write(&s->ncr710, ncr_addr, val, size);
->>>           } else {
->>>               for (unsigned i = 0; i < size; i++) {
->>>                   uint8_t byte_val = (val >> (i * 8)) & 0xff;
->>> -                 NCR710_DPRINTF("  Writing byte %u to NCR addr 0x%lx: 
->>> 0x%02x\n",
->>> -                       i, ncr_addr + i, byte_val);
->>>                   ncr710_reg_write(&s->ncr710, ncr_addr + i, byte_val, 1);
->>>               }
->>>           }
->> 
->> Debug printfs being removed again.
->> 
->>> diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
->>> index 57967e7a84..57cd7d91a4 100644
->>> --- a/hw/scsi/ncr53c710.c
->>> +++ b/hw/scsi/ncr53c710.c
->>> @@ -1,599 +1,308 @@
->>>   /*
->>> - * QEMU NCR710 SCSI Controller
->>> + * QEMU NCR 53C710 SCSI I/O Processor emulation
->>>    *
->>> - * Copyright (c) 2025 Soumyajyotii Ssarkar 
->>> <soumyajyotisarkar23@gmail.com>
->>> - * This driver was developed during the Google Summer of Code 2025 
->>> program.
->> 
->> Generally speaking you shouldn't drop somebody's Copyright line.
->> Even if the code has been mostly rewritten, there's still some
->> of Soumyajyotii's code here, I expect.
->> 
->>> + * Copyright (c) 2026 Keith Monahan <keith@techtravels.org>
->>> + * Copyright (c) 2006 CodeSourcery (lsi53c895a.c, written by Paul Brook)
->>>    *
->>> - * NCR710 SCSI Controller implementation
->>> - * Based on the NCR53C710 Technical Manual Version 3.2, December 2000
->>> + * A rewrite of the QEMU NCR 53C710 model.  The 53C710 is an early member 
->>> of
->>> + * the NCR/LSI SCRIPTS processor family, so the SCRIPTS engine here is 
->>> derived
->>> + * from QEMU's LSI53C895A model and adapted to the 53C710's register map,
->>> + * single byte interrupt model, big endian SCRIPTS fetch (PA-RISC) and 24 
->>> bit
->>> + * DMA, per the NCR 53C710 Data Manual (Jun 1992) and Programmer's Guide
->>> + * (Oct 1990).
->>>    *
->>> - * Developed from an implementation of NCR53C710 by Helge Deller
->>> - * which was interim based on the implementation by Toni Wilen for UAE.
->>> + * Derived from hw/scsi/lsi53c895a.c (Copyright (c) 2006 CodeSourcery, 
->>> written
->>> + * by Paul Brook).
->>>    *
->>> - * SPDX-License-Identifier: GPL-2.0-or-later
->>> + * Replaces the 53C710 model written for Google Summer of Code 2025 by
->>> + * Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>, itself based on
->>> + * earlier NCR 53C710 work by Helge Deller and by Toni Wilen (for UAE).
->>>    *
->>> - * Contents:
->>> - * 1. Register Definitions
->>> - * 2. Register name functions
->>> - * 3. Parity functions
->>> - * 4. SCSI FIFO Structures
->>> - * 5. Scripts Misc functions
->>> - * 6. DMA functions
->>> - * 7. Scripts functions
->>> - * 8. Read and Write functions
->>> - * 9. QEMU Device model functions
->>> + * The only instantiated device is the LASI wrapper (lasi_ncr710.c), 
->>> which
->>> + * embeds one NCR710State by value and drives it through this file.
->>>    *
->>> + * SPDX-License-Identifier: GPL-2.0-or-later
->>>    */
->> 
->>> -/* SCNTL0 (0x00) - SCSI Control Register 0 */
->>> -#define NCR710_SCNTL0_TRG    0x01
->>> -#define NCR710_SCNTL0_AAP    0x02
->>> -#define NCR710_SCNTL0_EPG    0x04
->>> -#define NCR710_SCNTL0_EPC    0x08
->>> -#define NCR710_SCNTL0_WATN   0x10
->>> -#define NCR710_SCNTL0_START  0x20
->>> -#define NCR710_SCNTL0_ARB0   0x40
->>> -#define NCR710_SCNTL0_ARB1   0x80
->> 
->> 
->>> +/* SCNTL0 (0x00) */
->>> +#define NCR710_SCNTL0_TRG       0x01
->>> +#define NCR710_SCNTL0_AAP       0x02
->>> +#define NCR710_SCNTL0_EPG       0x04
->>> +#define NCR710_SCNTL0_EPC       0x08
->>> +#define NCR710_SCNTL0_WATN      0x10
->>> +#define NCR710_SCNTL0_START     0x20
->> 
->> These defines haven't actually changed, except that you've
->> reformatted the whitespace. If you want to adjust the whitespace,
->> that's a separate patch, but better still don't do that.
->> Then all this stuff doesn't appear in this patch at all
->> because it doesn't change.
->> 
->>> +static const char *const ncr710_reg_names[64] = {
->>> +    "SCNTL0", "SCNTL1", "SDID", "SIEN", "SCID", "SXFER", "SODL", "SOCL",
->>> +    "SFBR", "SIDL", "SBDL", "SBCL", "DSTAT", "SSTAT0", "SSTAT1", 
->>> "SSTAT2",
->>> +    "DSA0", "DSA1", "DSA2", "DSA3", "CTEST0", "CTEST1", "CTEST2", 
->>> "CTEST3",
->>> +    "CTEST4", "CTEST5", "CTEST6", "CTEST7", "TEMP0", "TEMP1", "TEMP2", 
->>> "TEMP3",
->>> +    "DFIFO", "ISTAT", "CTEST8", "LCRC", "DBC0", "DBC1", "DBC2", "DCMD",
->>> +    "DNAD0", "DNAD1", "DNAD2", "DNAD3", "DSP0", "DSP1", "DSP2", "DSP3",
->>> +    "DSPS0", "DSPS1", "DSPS2", "DSPS3", "SCRATCH0", "SCRATCH1", 
->>> "SCRATCH2",
->>> +    "SCRATCH3", "DMODE", "DIEN", "DWT", "DCNTL", "ADDER0", "ADDER1", 
->>> "ADDER2",
->>> +    "ADDER3",
->>> +};
->>> +
->>> +static const char *ncr710_reg_name(int offset)
->>>   {
->>> -    return (s->sien0 & NCR710_SSTAT0_SEL) != 0;
->>> +    return (offset >= 0 && offset < 64) ? ncr710_reg_names[offset] : 
->>> "???";
->>>   }
->> 
->> This is a rewrite of the old version of this function, to use
->> an array of strings instead of a big switch. It is definitely
->> nicer code, but this change can be done as its own patch.
->> 
->> 
->> Personally my experience is that it is much easier to
->> structure big changes into smaller pieces to start with,
->> rather than doing the big change first and then having
->> to break it up into smaller pieces later. Doing things
->> in smaller pieces makes it easier to isolate where bugs
->> or regressions are, both during development and later if
->> we need to git bisect once a change has landed.
->> 
->> thanks
->> -- PMM
+> -        if (iotlb->perm & IOMMU_RW) {
+> +        if ((iotlb->perm & IOMMU_RW) =3D=3D IOMMU_RW
+> +            || iotlb->perm & IOMMU_WO) {
+>              ttype =3D RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
+>          } else if (iotlb->perm & IOMMU_RO) {
+>              ttype =3D RISCV_IOMMU_FQ_TTYPE_UADDR_RD;
+> --
+> 2.43.0
 >
 >
 
