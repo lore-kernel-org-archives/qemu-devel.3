@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15C58C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 16:38:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C1DCC43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 16:39:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfgtz-0004hT-SA; Fri, 03 Jul 2026 12:38:07 -0400
+	id 1wfguw-0005og-9g; Fri, 03 Jul 2026 12:39:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfgty-0004h5-NV
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:38:06 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wfguu-0005nc-T2
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:39:04 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfgtv-0007Xs-MC
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:38:06 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1wfgus-0007wx-9d
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:39:04 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 663GIa4U511014
- for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 16:38:01 GMT
+ 663GIZex489308
+ for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 16:39:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=CJbRyshi9CsvFZ4EyOTGbI
- RPR1nYFWylHNhq29L8jDs=; b=HQ/AnxsvOl+2DvmLQyz6gg6qPLpEbmemGT7BHy
- 8peqIivB1NpOT/akxugRrc1RR4KX2i5Pow2/qVC7JwfU12NVf0indhzY9BE19vTX
- au/ZbuSoAdOKvDQmf0srhMW/eJK165hi6oZh0KHGVRSlouZsnsVkBSRyV3P7yukC
- IgcI3vkMn9krsI5+AZV05drWHREYLV9cd1TN6Yj5DpEtmNVFCsDo448IM/FxA5LI
- LvD01yHfQwyI/fClWUmdWrq+32Ws3gZPeh3pAV7qHflcyh8Ndg/3S+OwSHgKT8Wl
- bAJ2P69R7cL0bfH4FhkHAudEz+C/sop9ig2zVyAgl0L0uoVg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6a849k0d-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ J61D7vmFN/GCddU40nav9DK2OhgRp9ty5MKEmevp7T0=; b=I6cyRXlLwzbxEvBv
+ ONv2WTod0wL5gPOl1RUa8yw2FF9E51Ok9a9UZ/jjA2iO2vFFVD81m3dNSt2BZf5Y
+ 4wORhI7fmxO6x+WP0ipYyYTTBnnEUpVST+aC3U7H9EUTWM9PoYatYl/oxCJilmnZ
+ qMgRrnYFhrmqcSzAFaJa4u37u6f3536mVjyEhJDwOFe8iD607tgcwSi/zBHTPxNF
+ G7nrTSNcI1oM7tVFMdqoPAkFjoAc3AeZTfFn6Nc/wSrjfIVZQH/zhvDKxGm4qVEn
+ /b4zM20tY/uNlO8OqSqjQmR8tM311FE96O1+7vjx/7LDeKMx/kXulRvplbZ6rFqQ
+ yO8PCw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6ckj0yqn-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 16:38:01 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-92e623b0e95so64290085a.3
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 09:38:01 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 16:39:01 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-92ac0a54110so82002585a.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 09:39:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783096680; x=1783701480; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=CJbRyshi9CsvFZ4EyOTGbIRPR1nYFWylHNhq29L8jDs=;
- b=K5hvltpZf0zLJ7VS6lf16AI/RaxRu6Y9zKr2U5Pb1UmjbmwDpc00Qbt06L1zg6UgjS
- Ezg711C+rWQGxDGm0zVrHWySfIEFmI3XbNKAe0BWPOPFP3kl0qg/5FGagf9EQblJQxF+
- o+nZAOhOyDhGFhwc9LWqpTXqwZTffz93dudTb2A1CUDY7fguuFlxr7R9lr+7mbOixmeD
- 7E+NophSsk6afdWD5PT3GAgpFKuZk6ff2ZcJOln9FYb+eNcjIhIMh2SKgNM9X5V5JJFa
- MXlVfNAS6EIYPa6KtyFwLJrHvcIUZzRF+nGITIXyBflibcl78Ff/osQe0jLfvlrXbDd4
- z2/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783096680; x=1783701480;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1783096741; x=1783701541; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CJbRyshi9CsvFZ4EyOTGbIRPR1nYFWylHNhq29L8jDs=;
- b=KdkHFllW/SodRIqD33u1SS5bbDq1P8zdxbXKWqq4UkIPt6ND8kD2IXSjyIFCmfYJGE
- RFn/8q4oGyhrbehFDUN3C7V4XFjszoYkosOyU3/k2Bz9aBsGPUDoM7U0mDSwO3UCSEgY
- 7bx8ZHC6QHQl6MzuYBFiLPqQDpRZPsiTuvPHi/R44X86ij9GNNn+7cN2VLkuhQ+vUPsN
- q93jQVuqLovrdqP+57z36kR2kWvj7ZO19lic6M61ClPAsj9ww/TbW745AyJqZ/624H3v
- w3auKaKI6NSCxElh9OjCS/5i1Ww0xZ+qKgGUlLCOzQL4dHcYOLRaaDx/n2gd8VMrhgWI
- BMeQ==
-X-Gm-Message-State: AOJu0YxN8AWVRZ586OJYXcTEL+CxvUteD8GqB+sAAutxgXEoKSf0JQ78
- fuK3bnt5KwoYgMMHNWXs1nlP3evqHRfEH6QXMBVULntEzc+vtPxjaJQMll4zAzDj46zCHPjKMNN
- kfU6YsrZuYR/1Ou3u3zTLHkfYVa8bPZsg3PHMa/79pXyJvzn68l7PLKdUHvJjxzF9/A==
-X-Gm-Gg: AfdE7cnYx8ailw/VgK83bM4V3HaEPwCZKbn9gwH3lBzE3oX7Ww7T8DwKURnExkLgQdY
- mDskqwmP4Bl6+bnHv7DUNOfAAA7uKSI+dGWlYaOvssBJs6pmWTcXU58Nv/bdZ5Cfd5ubKIlQIkA
- m3rybTvvlWc92dm3ZcPi8KEWQCiCTl1sPzIfP8AZUHWyhh/gp3iLQuRYsRuY0rqQVHywZi6Lf64
- 45bA4mJvMLLlLkrb6FfbY7xuk1qiktD12cDgQ/kJ1gLxKtsENBm51PRi97QXSf/tKAIL/uYJzq7
- hT1yp1pzkLp4bnKf+hCPE4IzaPzGbqpBPZyos6LeMkkBHpGbKt96xWH9JuQmuJcpZ8hZ/2I09/V
- hJOwojNbr3F4ZqFgtqkNdX3GW+SeWw3R8q82ipYxxpR1l4QKJMsssZyDTRZdWfzkO57mE
-X-Received: by 2002:a05:620a:6186:b0:915:a894:1b43 with SMTP id
- af79cd13be357-92e9a3b6736mr27813785a.28.1783096680394; 
- Fri, 03 Jul 2026 09:38:00 -0700 (PDT)
-X-Received: by 2002:a05:620a:6186:b0:915:a894:1b43 with SMTP id
- af79cd13be357-92e9a3b6736mr27807985a.28.1783096679859; 
- Fri, 03 Jul 2026 09:37:59 -0700 (PDT)
+ bh=J61D7vmFN/GCddU40nav9DK2OhgRp9ty5MKEmevp7T0=;
+ b=dPAiv/5CG4F55mZ59FnMPNOIEjPnuxywBRCSsV1g1E/FJGZ/qIzLMuri1DwpvJeOqO
+ yjh+N6S7zTTzUcYD8+tHyJAMY5D5UfrcQUPtBr5159GewhLsQGizF1YKXfbvTQB/0/Kc
+ tYMiOI3y/ogXnZwfnck+6hCx6uDYy3CW8SDmnD3npO/Fv+1FlRZQDytUy8snCtrb+a9p
+ 5evjZ0WTfcK+jgx+ToG8hRmzOGKUFGxC1vzJ/Yb7tV9o2mFUkBF8MBH/9F2cAlZSlt4j
+ 7Ark1jznaFGTCKNizd2by8F3cMXI1FKgjPi0gcKImPtfF3s8KqfD5AEpJbGUv8AVWpHM
+ HRhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783096741; x=1783701541;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=J61D7vmFN/GCddU40nav9DK2OhgRp9ty5MKEmevp7T0=;
+ b=OvWc/UmrGDC0qraYmyTG8IujyTKB2w3WeC3tJCJqFRGA7DQljWindcW4EDpb6vWnCl
+ YKPEOqBAQy02Tc12wegjb1DR0UxAdLFQScrWiObJPRId2Drjf0Yl832Gf3KeuXFITxlS
+ 9P8RC8ZXwVsQWnbrwegOENtfUJUkFWwnbeTkYAXXJNobimfSLpYUUc8ytWj+HEKpKZj/
+ hIjbBaMsXWXuCdKpjpEWASSrezHpx2A+GGfVPHdOCvCn6/hCiv+hev4vpbwawGGTXhuS
+ dlvtkLH37s+cRIs1dIiEUspZxEZaCZileYpWNM/EHe7m+d20uLAN0yAlbiHgzkyD2uU3
+ tVEg==
+X-Gm-Message-State: AOJu0Yy+U8WspCJf16KbUHhbWmk8nu5zJ4qlINw/MGL0VipFpK3JfhS7
+ tgiWfbQEdRW0efrh7/KrrdboTcmfx7VyqoSQnw88b9Q8xgUs0qoTYSrqMultJDJIpGLvYK0b/A0
+ telFc3tneTZ8uzIqv9k1zIYH79Tc4Yka52f67yoZTcczgg5QCzIhA0BHoy+2rdcfrxA==
+X-Gm-Gg: AfdE7cnQePl+rkfDzj9Ln4XZk0kUP1lkjfSxyz/JA4zC83OAWzSAbr07ifzSj5+0zRc
+ T8PhDWYpbWARkAFbWVWrioamgegiqfd11jsSGFwBsZp9UOGbtFkggqr+TnUM7QIlWwCI5HwP1og
+ xukGOZqdtXhLgrjEsUS/AymKSOsZqwkjiMlJgB14MEGbanGQO31HNUFGcX5TRw7LdCd1VLj5kzL
+ XZkJ8SE+aHZUtbwo/7C7tHExK0u0dVkYXQq+EfVAogHnW410XeyEU45Kx2t/0iwF24Ct8Gh7DYM
+ LmcPil2Eie95a+wP6vvjAcaleyQgqe3WBGzL4cpJ9+p0AcmA0mkqETiBWxVoJ4FOUCpIXjRO9sg
+ fkyYNeXZCCsMlca91i8Q6MoKlXyVRomlnv10GJQnmbDuPP6mZNyQeYjr1UlnFDzvXJ83l
+X-Received: by 2002:a05:620a:44c2:b0:915:9a39:1d68 with SMTP id
+ af79cd13be357-92e9a35b22dmr27526685a.5.1783096740456; 
+ Fri, 03 Jul 2026 09:39:00 -0700 (PDT)
+X-Received: by 2002:a05:620a:44c2:b0:915:9a39:1d68 with SMTP id
+ af79cd13be357-92e9a35b22dmr27522985a.5.1783096739856; 
+ Fri, 03 Jul 2026 09:38:59 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c6381e4fsm168378615e9.8.2026.07.03.09.37.58
+ ffacd0b85a97d-47aa039bcdasm562551f8f.21.2026.07.03.09.38.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 Jul 2026 09:37:59 -0700 (PDT)
+ Fri, 03 Jul 2026 09:38:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
@@ -94,42 +96,45 @@ Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 00/33] accel: Unassorted cleanups around debugging
-Date: Fri,  3 Jul 2026 18:37:23 +0200
-Message-ID: <20260703163757.55500-1-philmd@oss.qualcomm.com>
+Subject: [PATCH v2 08/33] accel/whpx: Implement missing
+ AccelClass::gdbstub_supported_sstep_flags
+Date: Fri,  3 Jul 2026 18:37:31 +0200
+Message-ID: <20260703163757.55500-9-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260703163757.55500-1-philmd@oss.qualcomm.com>
+References: <20260703163757.55500-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: BeIKIXQ-3JSJSvzkzhjjgsN1aC5-ML1p
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfX0nE+8wCmrVZy
- A4bDkLev/tbm5HcUbkfPccs3Sp30JC2E7uCNvOobUgxVcbQu7bNxMMHLXp0CJsE+SVWt1hJj0r3
- D3fC6+QYkIk1v52Geq7UKj+ZZ3T2Bkw=
-X-Authority-Analysis: v=2.4 cv=a6QAM0SF c=1 sm=1 tr=0 ts=6a47e569 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfX2xqTN7iY6m9c
+ JagdMXTptZ8pIPhlSbnaZwvBz1iot21Yzr+s0qE0B7f7vbh6oingbIVBPlxO/I7O7lhSjZmhvJB
+ xOGZAWMITrySUoLw904nhYwBpk7PdxQ=
+X-Authority-Analysis: v=2.4 cv=E8v9Y6dl c=1 sm=1 tr=0 ts=6a47e5a5 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=u3oD29KnDJWlspFxzVoA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfX1m4K9nRZTL/n
- 3Rj1Qjlb21jew/vdsY9WA7yzhhqA+Y3otPNgT6pJOnZ9uncCyfwgAfebCk30D7B9gsXp4pNk58e
- efSWdVUJZze7zPp7imaIR0XzgJwH7pnyBZ+dxuALVgWv8rojUxBpV8GK1t5SvdV2v7Ru9Bllmvi
- 606iLkmvL70wVGfeKUpk9fOTR6j+fXLdthFCAvu5dlSdX+dBSAN4x+XGvZySUJFHOn7ZfbnbHBV
- U8VDARlh6A0vElcIQ+P0s25LgkpiOr9kTCBRsR1HjFrK7IV+dDljDViSVXMmfPrzMBNln5Tuy89
- ZkfCQ8IwEYp8cA3aFZMQF/B8Ae/0+Kiy0ppYALz5jiaAB7j1gACmuM75Z+b9OaXZymM8uohVKiE
- IO9Bu62IcTqeWiVa+pRyR4IBr8N+3P7CnJUzNhcR4YHFZ8we4RZ47FmqX3Wykw3D5aRXTa4ng55
- w5JZ4vnfGhqhSOOzVoA==
-X-Proofpoint-ORIG-GUID: BeIKIXQ-3JSJSvzkzhjjgsN1aC5-ML1p
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=glojBnVPa3CR4aLdIrwA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: HksTlOpZuUkcOf6iv9JAVj1e_hN0vmj3
+X-Proofpoint-GUID: HksTlOpZuUkcOf6iv9JAVj1e_hN0vmj3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfX/P1wS69PhK1G
+ LDc3w9O8yaspsrtRu4TkwY3Tx5c9aEFDLGsyPiWFiBR2KqPmycbokz7wb1I5OGpOstb6g/3KhTj
+ BatMnEJUZyy0K575RooVxFLaRNvkCRP8uptYYZjN36FZeJH5sa1o0I7CH6FDAJAOJm/YQIYLiEW
+ UKFz5qjEUkKZ/qSPhrNZJ6EztvsJN5G5o15CtHHZaHS10c06k16MxjVlJTyRCyvYlzGmRxwHj+M
+ IwFX1gJ6XxYIWIpiNjBj7V7DUrPzx58Na8RF41TL3P6TaJhOEuB43l9KXec0rEVtFjKjTU8xdIK
+ OY9OEr4+6a3RLf8jx0EElxCzSQ85vrknZ6ZnBfuX0p1zF6Lw9k35H98kn/UGLclo2dDHNS/UlCP
+ V1ISUzSz5IYLRGwuo/UoBjnHon06oa4tODichQrJp4TbAHdFNMOSH8+XgMKtEdp/iMtUnmqMv3R
+ ldjXXyWqNdFwnSZGndg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_03,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
- bulkscore=0 impostorscore=0 phishscore=0 spamscore=0 priorityscore=1501
+ bulkscore=0 phishscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 suspectscore=0 adultscore=0 malwarescore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030164
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -152,133 +157,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Missing review: 12-17 (AccelGdbConfig rework)
+Correct gdbstub support requires some gdbstub_supported_sstep_flags.
+Apparently missed in commit d7482ffe975 ("whpx: Added support for
+breakpoints and stepping"), even with the recent 19b48084f71 ("whpx:
+i386: re-enable guest debug support") fixes.
 
-Since v1:
-- Introduce AccelGdbConfig structure (Alex)
-- Dropped target-specific Breakpoint/Watchpoint changes
-  (Richard working on it)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/system/whpx-all.h   | 1 +
+ accel/whpx/whpx-common.c    | 1 +
+ target/arm/whpx/whpx-all.c  | 5 +++++
+ target/i386/whpx/whpx-all.c | 5 +++++
+ 4 files changed, 12 insertions(+)
 
-Refreshing the `split-accel' preparatory work; this series follows
-"accel: Preparatory cleanups for split-accel" from last year:
-https://lore.kernel.org/qemu-devel/20250703173248.44995-1-philmd@linaro.org/
-
-Nothing really noteworthy here, generic code refactoring with the
-objective to strengthen the various APIs, introducing few enums or
-headers.
-
-I'm quite pleased with the total diff-stat.
-
-Philippe Mathieu-Daudé (32):
-  cpu: Constify CPUState::cc (cached CPUClass pointer)
-  target/i386: Remove duplicate tlb_flush() call in cpu_post_load()
-  accel/tcg: Restrict tlb_protect/unprotect_code() to TCG
-  accel/hvf: Remove left-over comment
-  accel/mshv: Replace @dirty field by generic CPUState::vcpu_dirty field
-  gdbstub: Add trace event for STEP packet handler
-  gdbstub: Only return E22 when reverse GDB is not supported
-  accel/whpx: Implement missing
-    AccelClass::gdbstub_supported_sstep_flags
-  accel/kvm: Always define AccelOpsClass::supports_guest_debug
-  accel/kvm: Simplify kvm_init() w.r.t. TARGET_KVM_HAVE_GUEST_DEBUG
-  accel/kvm: Hold have_guest_debug in KVMState
-  gdbstub: Inline gdb_supports_guest_debug()
-  gdbstub: Move supported_sstep_flags in AccelGdbConfig structure
-  accel: Have each implementation return their AccelGdbConfig
-  gdbstub: Make default replay_mode value explicit in stubs
-  accel: Hold @can_reverse information in AccelGdbConfig
-  accel: Remove AccelOpsClass::supports_guest_debug
-  cpu: Move BREAKPOINT definitions to 'exec/breakpoint.h'
-  cpu: Define BreakpointFlags type
-  accel: Remove unnecessary 'inline' qualifier in remove_all_breakpoints
-  gdbstub/user: Directly call gdb_breakpoint_remove_all() in user mode
-  gdbstub: Reduce @type variable scope
-  gdbstub: Introduce GdbBreakpointType enumerator
-  accel: Use GdbBreakpointType enum
-  target/arm: Inline check_watchpoints() in arm_debug_check_watchpoint()
-  target/ppc: Ensure TCG is used in ppc_update_daw()
-  accel/tcg: Improve docstrings around TCGCPUOps::*watchpoint* handlers
-  cpu: Move CPUWatchpoint definition to 'exec/watchpoint.h'
-  cpu: Better name cpu_single_step() trace event
-  cpu: Introduce cpu_single_stepping() helper
-  cpu: Rename CPUState @singlestep_enabled -> @singlestep_flags
-  cpu: Only check SSTEP_ENABLE flag in cpu_single_stepping()
-
-Richard Henderson (1):
-  cpu: Move cpu_breakpoint_test out of line
-
- docs/system/gdb.rst                |  2 +-
- accel/kvm/kvm-cpus.h               | 12 ++++---
- accel/tcg/system-page-protection.h | 17 +++++++++
- gdbstub/internals.h                | 12 ++++---
- include/accel/accel-cpu-ops.h      | 10 +++---
- include/accel/accel-ops.h          |  5 ++-
- include/accel/tcg/cpu-ops.h        | 12 ++++---
- include/exec/breakpoint.h          | 26 ++++++++------
- include/exec/cputlb.h              |  8 ++---
- include/exec/watchpoint.h          | 20 +++++++++--
- include/gdbstub/enums.h            | 12 ++++---
- include/hw/core/cpu.h              | 57 +++++++++++-------------------
- include/qemu/accel.h               | 13 ++++---
- include/system/hvf_int.h           | 14 ++++----
- include/system/kvm.h               |  9 +++--
- include/system/mshv_int.h          |  1 -
- include/system/whpx-all.h          |  3 --
- target/arm/internals.h             |  6 ++--
- accel/accel-common.c               | 15 +++-----
- accel/hvf/hvf-accel-ops.c          | 23 ++++++------
- accel/hvf/hvf-all.c                |  8 ++---
- accel/kvm/kvm-accel-ops.c          |  7 ++--
- accel/kvm/kvm-all.c                | 52 ++++++++-------------------
- accel/mshv/mshv-all.c              | 18 +++++-----
- accel/tcg/cpu-exec-common.c        |  2 +-
- accel/tcg/cpu-exec.c               | 12 +++----
- accel/tcg/cputlb.c                 | 15 ++++----
- accel/tcg/tb-maint.c               |  1 +
- accel/tcg/tcg-accel-ops-rr.c       |  2 +-
- accel/tcg/tcg-accel-ops.c          | 31 ++++++++--------
- accel/tcg/tcg-all.c                | 28 +++++++--------
- accel/tcg/translate-all.c          |  3 +-
- accel/tcg/user-exec-stub.c         | 11 +++---
- accel/tcg/watchpoint.c             |  9 ++---
- accel/whpx/whpx-accel-ops.c        |  6 ----
- cpu-common.c                       | 23 +++++++++---
- cpu-target.c                       | 10 +++---
- gdbstub/gdbstub.c                  | 18 +++++-----
- gdbstub/system.c                   | 38 ++++++++------------
- gdbstub/user.c                     | 20 +++--------
- linux-user/riscv/cpu_loop.c        |  2 +-
- linux-user/s390x/cpu_loop.c        |  2 +-
- stubs/replay-mode.c                |  2 +-
- system/cpus.c                      |  2 +-
- system/watchpoint.c                |  8 ++---
- target/arm/hvf/hvf.c               | 27 +++++++-------
- target/arm/hyp_gdbstub.c           |  9 ++---
- target/arm/kvm.c                   | 14 ++++----
- target/arm/tcg/debug.c             | 44 ++++++++++-------------
- target/arm/tcg/mte_helper.c        |  3 +-
- target/arm/whpx/whpx-all.c         |  5 ---
- target/i386/hvf/hvf.c              | 13 +++----
- target/i386/kvm/kvm.c              | 15 ++++----
- target/i386/machine.c              |  1 -
- target/i386/mshv/mshv-cpu.c        |  6 ++--
- target/i386/whpx/whpx-all.c        | 13 +++----
- target/loongarch/kvm/kvm.c         | 10 +++---
- target/microblaze/translate.c      |  2 +-
- target/ppc/cpu.c                   |  4 ++-
- target/ppc/kvm.c                   | 20 ++++++-----
- target/ppc/translate.c             | 16 ++++-----
- target/riscv/cpu_helper.c          |  2 +-
- target/riscv/debug.c               | 12 +++----
- target/riscv/kvm/kvm-cpu.c         |  8 +++--
- target/s390x/kvm/kvm.c             | 11 +++---
- target/s390x/tcg/debug.c           |  3 +-
- target/xtensa/dbg_helper.c         |  2 +-
- target/xtensa/helper.c             |  1 +
- trace-events                       |  2 +-
- 69 files changed, 417 insertions(+), 433 deletions(-)
- create mode 100644 accel/tcg/system-page-protection.h
-
+diff --git a/include/system/whpx-all.h b/include/system/whpx-all.h
+index 4022571ffff..0e2d333e919 100644
+--- a/include/system/whpx-all.h
++++ b/include/system/whpx-all.h
+@@ -23,6 +23,7 @@ void whpx_arch_destroy_vcpu(CPUState *cpu);
+ void whpx_arch_accel_class_init(ObjectClass *oc);
+ 
+ /* called by whpx-accel-ops */
++int whpx_arch_gdbstub_sstep_flags(AccelState *as);
+ bool whpx_arch_supports_guest_debug(void);
+ 
+ #endif
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index 247e12db812..e3f93efc61f 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -527,6 +527,7 @@ static void whpx_accel_class_init(ObjectClass *oc, const void *data)
+     ac->init_machine = whpx_accel_init;
+     ac->pre_resume_vm = whpx_pre_resume_vm;
+     ac->allowed = &whpx_allowed;
++    ac->gdbstub_supported_sstep_flags = whpx_arch_gdbstub_sstep_flags;
+ 
+     object_class_property_add(oc, "kernel-irqchip", "on|off|split",
+         NULL, whpx_set_kernel_irqchip,
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 3079c6293c8..5208d7e1dfe 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -295,6 +295,11 @@ void whpx_translate_cpu_breakpoints(
+     /* Breakpoints aren’t supported on this platform */
+ }
+ 
++int whpx_arch_gdbstub_sstep_flags(AccelState *as)
++{
++    return 0;
++}
++
+ bool whpx_arch_supports_guest_debug(void) 
+ {
+     return false;
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index e626acef2f0..f6e1636a4e0 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -1853,6 +1853,11 @@ void whpx_apply_breakpoints(
+     }
+ }
+ 
++int whpx_arch_gdbstub_sstep_flags(AccelState *as)
++{
++    return SSTEP_ENABLE;
++}
++
+ bool whpx_arch_supports_guest_debug(void) 
+ {
+     return true;
 -- 
 2.53.0
 
