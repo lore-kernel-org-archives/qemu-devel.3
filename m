@@ -4,102 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BF94C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 10:47:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81091C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 10:48:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfbPy-0007Lg-Ph; Fri, 03 Jul 2026 06:46:46 -0400
+	id 1wfbR7-00082f-B3; Fri, 03 Jul 2026 06:47:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfbPx-0007Kh-Ef
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 06:46:45 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfbPv-0007UY-QI
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 06:46:45 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-6626b5ace23so2110824d50.0
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 03:46:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783075602; cv=none;
- d=google.com; s=arc-20260327;
- b=TVoKgFprFEia6Op83AYCOMNPgWaGYwWomMuDoSRVmeGKAro7Lx+Li779C5HyXQOOy/
- sLPqw9uC6KOUJxHkdu81/ZPBsZNf/jow1QUDeLEKHTmuIrAcqUS+WcAhd7bGp5kIEKvx
- CcwXnbCa+x1xpAKymgxemPoxLk2ueNOo0/bPS9Fl3XUIkJWlFJA+G8vdytapwRTvFV3s
- 0WLZZt+kK2hbWAWvM8NrwGlvbcaWo9CnFmBZ/jpsRLC02B8Zsqw6gsrUjGI4MrvsSuxs
- I9dTgTQXPAYMT2IMH1YxND9/N5+lIk5luZL+OJdo35DTrdcC3IyrH2D4wpE1zeiEtxkZ
- mBKg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=/1oN9NDaamuhHRrSeFKV/QD9wkCXZSvmScE7yxC50EU=;
- fh=Fb54Dv4QCRkweqzg7yG6muAVIAdP0ZjU/uO/KBHqsx4=;
- b=AaCXw3jnw7aQ+4JbyQZXpjXSjMHigKIK4DRpy60oQl6y/oWjsDQswGT1IG44teKAsX
- NBU+ty+4hhpjq3SMTQP9bZUIUDi+EOc/1NBr51jBtOscZglnbnJzrhOjWMrp2/Y+aIqL
- M0cP2cWL5K2oXJ4jthNxA+TwvSZ5WJVDJVeJ7HwkFabX8WUyYqd5yLF2M3Pl5Qaoy0eo
- gFAZvjcIh/XLuQ8k64iVxDFxmcki0/h+3IrCHZXMQQ/kEeAG5DpfJ0v9puMnQXQCk4JX
- AhXq/3POsZ2F3ZhmiU+aJ0J/MA9DUuVU0yE9886QMackQvZfTzvVYdNZadjH568jomzx
- jrtg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wfbR4-00082L-Ko
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 06:47:54 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wfbR3-0007mY-9Q
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 06:47:54 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6635sDuC3127095
+ for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 10:47:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 443cSqWdloM7YApDaIzfPGqcK3NtaDlVCay66unU1FI=; b=p68bqKnTahOnq+MM
+ jFcG6FaSHfM0g2DJtZHATKQqUU7bNciOwe8AIEdqfwrAg+091wakVwaNQXofAo2y
+ FZge4fM8x6mZokTbyorHHIFNB9LazQUUM/J7i4hl9T5tT98Tpx596p/zA7FjrxbB
+ KZtddxLMKnfNhhyvpWt55JkcWyV2y5AI2unhqNp0Aw0YyUsykbSn2qni74i3+yJs
+ Ha9HNGKItbQAqDr8lj8ULI3JM7EgN2oFIltI2J1Eglz2wXcSTym/WyfGkOXoxHk3
+ bW2ROjDfMfU8O90h+bn5jomTDZgj0jAdd+enPOlAXwo2uvyssiRXgqAJVFKT9TKy
+ 6P/UVw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5tpnm1u2-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 10:47:52 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92e53b8a302so43529685a.1
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 03:47:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783075602; x=1783680402; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/1oN9NDaamuhHRrSeFKV/QD9wkCXZSvmScE7yxC50EU=;
- b=WYo4emC1B0IRB3qAEcNIVH2Zul4Rsk9682kT35Tdpn74wMmwOmrO/qQ/RXu4L9hMhB
- 4Qi3tUZgYHvp+qntymgbPOQOFzrTOMZd/znOPybO96ma/R19d5iwz6U0cUZgy5LnIXSc
- ihOF4UQfoxPsW3+fo2QKqT04BmaOCue8y/YZO1SaEIDaV9dWeHSc0hHQG3IEcfFm32PU
- uCJhUV+EemZtiB7X9YRiD0XmA7tI1d2UXjyCEA8tAKcOuaQUiAbFdgT4IMTsbhN34zLq
- kg24sD3dIu/UTMqNutqxn1xQpl9kfLoeeAeJarEOnWPP7CZLNHG+OExesmxWnzuSvaRD
- ix4A==
+ d=oss.qualcomm.com; s=google; t=1783075671; x=1783680471; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=443cSqWdloM7YApDaIzfPGqcK3NtaDlVCay66unU1FI=;
+ b=DzTmaJOK9PW9PIAkJCQvWdef5NQyMIohXqd5Cy0SoILnqezhzHvkkkej3j52BoKMje
+ cWzvgbDRgw/ctHT98PJNtutI0THi5NeLR+/DoWh9LgChF5VC+Hoa1pZBSy5U0w0wegsR
+ 5yxnn3sJVx3my09ELC0AQ50HuDDAhnLjmayiLfbKz5RCHwGKbQKZjljqfGtYTU9W9yg3
+ cmQ4CJHbTMJqCxP2sLLVQUWMVdW7YZT7pm3wYBEg0PIHy8ZftyaALsANMmsqFO1vaS47
+ ua2STrYrLLRd45ywADlEtz9kbPu7o1eHDljRBknxn0LjcJcWh34Qd/gZOuGiToNC/JCn
+ 7Fmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783075602; x=1783680402;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/1oN9NDaamuhHRrSeFKV/QD9wkCXZSvmScE7yxC50EU=;
- b=UD6qgOfZtdZv6kzTSx4aWL3zfCNz3VPyq/4MRk3qmXpvZo2WV7kEJU7RGs88W/vH/m
- t41/ec42YRkMJ5vhscJpkd91xfBCrmO8BbV2W0+BmpKSas+gbO0ZAy/MlOKKiND+1kcm
- IntWsFXcW7ECjKCbN7wqjNlYqI5XFU5LlGHcGzoYg8WYYRXA8WogTu17uOdVU2xbc9Ul
- wxW84qRNXF4GSv3HsahAfZJjIWFgnv9QQSVx9YiYII3s/zaPvbOXRLvcbfAVojjYbgU+
- LaCZBa+CzVMoAJYPOf93o5/hhdPXlLFZpR6Mjb4bK97R3hSTOxww/8KSUbR/7AdGBfzS
- zPew==
-X-Gm-Message-State: AOJu0YwAhigKcbTS8ZGmE8C3JBmYrlii9GIy+ejwyDxNZxzuCGWR1tJW
- acTUcO3u1diPTjlKQTHZgM+L80xl2UzUV73ryEgJ5JUhGiZhTYgZjugr1fUIZHMt4SCqKa0xRMl
- dlzNQiAaGrbutloHMGqm22VzXN6EDn40AR5ZwbkcxPg==
-X-Gm-Gg: AfdE7cmOm89G8o5l79CUwqcwnfV3296O7QGtVHldECE7ouJ+Im/XdLTceuUbva4Unw5
- b8eA3JnClqzTZVWLykxoHpeQQa3m+tEKYnwUlTIjptoLl8jVkRUnsRN6weOnUrab+ZXgyRQ2khq
- HeOQ+TsFU59N+8EtD6RJsxsyIbezlbh0ZvZ8rZ2AeUI2GUi0A3x8MsQi2QuETAUx3mdcIqYVYCl
- K9CNIgW0LMvYv/gVp9pkIVq1V+Ug95De6KTujDfdWEkwi3lEjTPb0HaxUNqE8/QEJ2DEU1CSmvx
- iRF5BmwZ7ZPGzXMEZA/VdN1uijl1hW53TmHI3m4REujphU5fK2h/K0XP
-X-Received: by 2002:a05:690e:4812:b0:664:b335:ed44 with SMTP id
- 956f58d0204a3-66636942b98mr2216698d50.18.1783075601860; Fri, 03 Jul 2026
- 03:46:41 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783075671; x=1783680471;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=443cSqWdloM7YApDaIzfPGqcK3NtaDlVCay66unU1FI=;
+ b=SfzW9nNVimIrfaQlFRIx3DOjioa/sIO51Cv9IVepJLmQOk5gZd89u1M+N8FbupcrNa
+ 31T9WXalGL1XD8Yxx4naqxBbP5i1PqsEhcu2mR0wgwScExvJdKIYgnNz6cEXd0+rnEEK
+ y9ilOi1RzexvzHQo18xv6xlStG5ZfbX4YtrKp5LjBtWgc+B2rzdfoKtGQn6uDHab6g3u
+ jx6c4jJ48MaIIVLJwakEUyu0kYe1ETdtFWvvLDnqc/i3HjMeUwqXvgygPnp7ST2cs8R2
+ tLVr0WJiSxBD9Gz8clNqbkInQ+09RoMFxHCBE0mJeWW5HrO9OGdNcgMpfAWbXei5iIOp
+ o3aQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9+DsHMhcyyZtq6bsRflh3jmhU+wqVbvyRcxswRtPJw7jDaJR8KXWpXyRnjP3Euh1Gw6Ar/JMurEgYv@nongnu.org
+X-Gm-Message-State: AOJu0Yz1QFKED6zi4b66XxPWMUZVdexYW/x+iE9CC5nWCBF19mQPzK19
+ KZWZjGVKWD1oMOZsfbIMyuYWITxqyRqcH3OmqCNqFPfW8hH+loZONDOxHgXWsVP3nCGcA95Acw4
+ kx1AqLWYXvimFnBTrkiVJ6hQryb1D0pkEpfrLuBFujKUOVdbmT8gynXBfvA==
+X-Gm-Gg: AfdE7cnkS4Mg4Nn5FTH/cy2wBAxxZfk44aWJd35BSdOuz6iOsAEa0+V15Kfz/NAXIoc
+ IF5eKC7ix4tNXSdPjTZh5WJnb4eMQkjMFHPUzWfnmI9sgRUP+mxiyvQ9Os9Rbxgew9AMAmTGw8t
+ FXyz1KtsuA0qVZ01ua7VMGcz35GwBwxhtgg0gD9U+jccDU1SXSQoGwmpYRH3WyUU+2glHFsnvpR
+ Y9O6bTuekkvJgtVxwvGIT5mBNl8zledraOJpfNNWH6OWD8OvCb5OId69xtAkQo4YP9D2atdwvfU
+ oHka9GVDwN4gtA10Wr+k4k2FXh1jFgeYSN6FyxP/Yh4ttK86IqYD9M2y2jZDwYQxX6XT4ShEV8S
+ 0Zs6+blkqOPoP9JkzJ9NPX05RzkxHUS6hkOROmyqQ4iv6VBBg5CntUjXSHFRB1A==
+X-Received: by 2002:a05:620a:4612:b0:915:cda5:27fa with SMTP id
+ af79cd13be357-92e784e7e5emr1395745085a.58.1783075671486; 
+ Fri, 03 Jul 2026 03:47:51 -0700 (PDT)
+X-Received: by 2002:a05:620a:4612:b0:915:cda5:27fa with SMTP id
+ af79cd13be357-92e784e7e5emr1395742085a.58.1783075671017; 
+ Fri, 03 Jul 2026 03:47:51 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493cce12c40sm65180855e9.13.2026.07.03.03.47.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 Jul 2026 03:47:50 -0700 (PDT)
+Message-ID: <0e75de7b-8b61-4a99-8fbf-006c5df49457@oss.qualcomm.com>
+Date: Fri, 3 Jul 2026 12:47:49 +0200
 MIME-Version: 1.0
-References: <20260629131232.2487780-1-brian.cain@oss.qualcomm.com>
- <20260629131232.2487780-39-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260629131232.2487780-39-brian.cain@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 3 Jul 2026 11:46:29 +0100
-X-Gm-Features: AVVi8Cf1oTC4SAcL3uEjD_FXGZ9grw_1zN_FTflCWOb77iXV3owgOTiQEwsKxSQ
-Message-ID: <CAFEAcA_5cBGieaj2Ui_+8YeE_mUQL+9xZDAGHGm7d+QREo_+6w@mail.gmail.com>
-Subject: Re: [PULL v5 38/77] target/hexagon: Update TARGET_PAGE_BITS, stubs
- for modify_ssr/get_exe_mode
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 18/24] hw/riscv/riscv_hart.c isolate tcg only bits
+Content-Language: en-US
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ Palmer Dabbelt <palmer@dabbelt.com>
+References: <20260702135128.1188021-1-daniel.barboza@oss.qualcomm.com>
+ <20260702135128.1188021-19-daniel.barboza@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260702135128.1188021-19-daniel.barboza@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: AvYL9D-ECUcInJU2q1JjWHHO9xWKBbYJ
+X-Proofpoint-ORIG-GUID: AvYL9D-ECUcInJU2q1JjWHHO9xWKBbYJ
+X-Authority-Analysis: v=2.4 cv=UMft2ify c=1 sm=1 tr=0 ts=6a479358 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=JF9118EUAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=xVlTc564ipvMDusKsbsT:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDEwNCBTYWx0ZWRfX4L3brnFqaz88
+ cPNmc2Da3BpOeKsAgNQPb5GIDpwR6G2Wp5wEJAR3qRPf41zCNvP4bPbCrrPwV9IMfSqssRIq3gP
+ 6Y0piuU6Vw7rDypPIuLlw0Ozl33WP6k=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDEwNCBTYWx0ZWRfX6ysWd5bmXe9L
+ k5HSkYL0ZtBg3UZKIVaDNV3ZfST+/5dIttWPvaFKPYNks9kskfRZSo2v3UsGinBx4N0UgcXnujM
+ nDOkVuJYeYAE3RRJS4o/GYecTNDX7Qpd1O/sqY8+ZakFU13AsEkU1yVAHI6/8J/BJUxnhC4+FrT
+ v9njeQn8kqhYOqqfE3jKwbtTf3dx/v/Di/HASP9mCVVRAESx0xuloZLEbSbASnSyVe0fZZL/yYC
+ FSNa2UgiIaPxqbpiKHFIXPF/SGO5BsN6YtiL9Ltf3l2gnFPX9YpD/ZysCCRIdaByqlzbgBEZgwG
+ +D9dfspJXQz+ubpUipSLA9+rg0iG+924I46diUhXqXAIQzgYs07+T/CqLys83VsE19KF7KlGOrq
+ 12ik+3A/dQ51kxRiIDXM33k3htI0MLHBQvSa6aeoJ5D3V1oZWihJGgz4ywggybvukxKKhwlpqJQ
+ JoqOVvlTeuLnk0pwW+A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 spamscore=0 adultscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607030104
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,101 +158,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Jun 2026 at 14:13, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
->
-> Add hex_mmu.[ch], cpu mode helpers, and additional includes/stubs
-> that integrate the TLB device with the CPU model.
->
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+On 2/7/26 15:51, Daniel Henrique Barboza wrote:
+> riscv_cpu_register_csr_qtest_callback(), vcsr_call() and
+> csr_qtest_callback() are all TCG only and are not available in
+> --disable-tcg builds.
+> 
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
+>   hw/riscv/riscv_hart.c | 8 +++++---
+>   1 file changed, 5 insertions(+), 3 deletions(-)
 
-Hi; Coverity flagged up something that confused it in this
-commit (CID 1660927), and I don't really understand it either...
-
-> +void hex_tlb_lock(CPUHexagonState *env)
-> +{
-> +    qemu_log_mask(CPU_LOG_MMU, "hex_tlb_lock: " TARGET_FMT_ld "\n",
-> +                  env->threadId);
-> +    BQL_LOCK_GUARD();
-> +    g_assert((env->tlb_lock_count == 0) || (env->tlb_lock_count == 1));
-
-How does this tlb_lock_count variable work? Here we assert that
-it's 0 or 1, but it looks like these lock and unlock operations
-can be triggered by the guest and there's no obvious checks here
-that would forbid the guest e.g. locking multiple times in a
-row or unlocking when already unlocked so as to push the count
-out of the {0,1} valid range.
-
-> +
-> +    HexagonCPU *cpu = env_archcpu(env);
-> +    uint32_t syscfg = cpu->globalregs ?
-> +        hexagon_globalreg_read(cpu->globalregs, HEX_SREG_SYSCFG,
-> +                               env->threadId) : 0;
-> +    uint8_t tlb_lock = GET_SYSCFG_FIELD(SYSCFG_TLBLOCK, syscfg);
-> +    if (tlb_lock) {
-> +        if (env->tlb_lock_state == HEX_LOCK_QUEUED) {
-> +            env->next_PC += 4;
-> +            env->tlb_lock_count++;
-> +            env->tlb_lock_state = HEX_LOCK_OWNER;
-> +            SET_SYSCFG_FIELD(env, SYSCFG_TLBLOCK, 1);
-> +            return;
-> +        }
-> +        if (env->tlb_lock_state == HEX_LOCK_OWNER) {
-> +            qemu_log_mask(CPU_LOG_MMU | LOG_GUEST_ERROR,
-> +                          "Double tlblock at PC: 0x%" PRIx32
-> +                          ", thread may hang\n",
-> +                          env->next_PC);
-> +            env->next_PC += 4;
-> +            CPUState *cs = env_cpu(env);
-> +            cpu_interrupt(cs, CPU_INTERRUPT_HALT);
-> +            return;
-> +        }
-> +        env->tlb_lock_state = HEX_LOCK_WAITING;
-> +        CPUState *cs = env_cpu(env);
-> +        cpu_interrupt(cs, CPU_INTERRUPT_HALT);
-> +    } else {
-> +        env->next_PC += 4;
-> +        env->tlb_lock_count++;
-> +        env->tlb_lock_state = HEX_LOCK_OWNER;
-> +        SET_SYSCFG_FIELD(env, SYSCFG_TLBLOCK, 1);
-> +    }
-> +
-> +    if (qemu_loglevel_mask(CPU_LOG_MMU)) {
-> +        qemu_log_mask(CPU_LOG_MMU, "Threads after hex_tlb_lock:\n");
-> +        print_thread_states("\tThread");
-> +    }
-> +}
-> +
-> +void hex_tlb_unlock(CPUHexagonState *env)
-> +{
-> +    BQL_LOCK_GUARD();
-> +    g_assert((env->tlb_lock_count == 0) || (env->tlb_lock_count == 1));
-
-In particular, what trips up Coverity is that here we say that
-tlb_lock_count is either 0 or 1...
-
-> +
-> +    /* Nothing to do if the TLB isn't locked by this thread */
-> +    HexagonCPU *cpu = env_archcpu(env);
-> +    uint32_t syscfg = cpu->globalregs ?
-> +        hexagon_globalreg_read(cpu->globalregs, HEX_SREG_SYSCFG,
-> +                               env->threadId) : 0;
-> +    uint8_t tlb_lock = GET_SYSCFG_FIELD(SYSCFG_TLBLOCK, syscfg);
-> +    if ((tlb_lock == 0) ||
-> +        (env->tlb_lock_state != HEX_LOCK_OWNER)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "thread %" PRIu32 " attempted to tlbunlock"
-> +                      " without having the lock, tlb_lock state = %d\n",
-> +                      env->threadId, env->tlb_lock_state);
-> +        g_assert(env->tlb_lock_state != HEX_LOCK_WAITING);
-> +        return;
-> +    }
-> +
-> +    env->tlb_lock_count--;
-
-...and then here we unconditionally decrement it. If it was
-initially 0 then that will underflow this unsigned value.
-
-thanks
--- PMM
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
