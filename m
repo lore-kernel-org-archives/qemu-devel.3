@@ -4,100 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D96EC43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9344C44500
 	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 11:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfcEX-0001aD-Qz; Fri, 03 Jul 2026 07:39:01 -0400
+	id 1wfcEH-0001XM-8g; Fri, 03 Jul 2026 07:38:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfcEW-0001ZU-Ba
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 07:39:00 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfcEU-00070P-Tw
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 07:39:00 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-664d910cc75so510771d50.1
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 04:38:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783078737; cv=none;
- d=google.com; s=arc-20260327;
- b=k10JnolwqbXHBqkjIa9suudHHO3pYuLFOpOJYJAJY6pkSZrDroh5uU3n1XtWcKD+36
- F3HLt05CqJKihjr9k2F9Avu9+Qw04pdYnKl5Gszb8TWxGV/NnA520uC7jXv/H4QubXOF
- +WnhGP7uhZbw96CkDtKRpcY6H2qYUGkenwbLw5DYX2B7zWwb1NCzmSu0BMwY6i0/aqAq
- et3mVLHYXucEmeFhFE8KERgTRAwl57JhCGSheCo5IavQWOE1Kr5eFlgy/ERvTzNJQTaO
- KDtHu+OcKL9px7I2wZbdZztpOfhybAAuNLp5Cs5t2jorDUPVd53zISJ5kciSRK0MXQRb
- Radw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ESAkZY9kUQZRFrUWImfvof0NVQ+5tcC2Oz9nhd/9bPQ=;
- fh=sa54kRfqZCSJoqqovfbLshesdcnvoIzhJ6jhb/uDQ0k=;
- b=smQnH2U9/q3lH5zszRbV5DSkQY/kvuc+NJRlCMSKnbfh4UgRKUn8csJzahe3WV3AkQ
- amuB+Ni50eZNOkcVDKevioSPpJbnjljgU3MZkeb/yubXk1hjL5KsC9LGEf6o0S3uURQq
- L12w9NojRL2wZ+0ubEfF6EImKZ7xIf+wssV6l7oTSbQYXHEITbM8DjOUQJmpFHS2AZlg
- SEo7Ws5Liz2VWLtCW9TPb/P0GQDKzjVefAn8mopnQ4k6mRHLwCSrvSGTKkcw/WIwEV2p
- nS5itqg+m+vzMhJunBcG1s2BoiJJSTHoNX+MbDJOOFHagTqJQ6HeFUl/M2v9n0X3MV8C
- Qpvg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783078737; x=1783683537; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ESAkZY9kUQZRFrUWImfvof0NVQ+5tcC2Oz9nhd/9bPQ=;
- b=IouHPlhQLUTr3iWQcuw3S3HP1jN6bHqdBfKfBfX3lqtCjvVtzvqhisD0ZllWRmRsn0
- 5M/Knc98PWSJHgPY8bwYintJbcPqKg6ck9COXxh/romJLDOdxPjT5F/bMmJAGlibRMrW
- z3jGCEsROnHde1s7+GvRoJ+ichTTkKLfF88PJpEU6qYzbAArqi+IGoj/JA15K+y0r4Jv
- gfkGPQEuP8kMsvwAAMffKy5vG0IgP0ziRKaISiOtymWxxnC4Da4GNe/j2MKKvf6JyfoW
- tuGcvH/8QOKK9BnD0PtdK1VaK0M3gtvpvz55h6k2Kk0uxjdZvbO/0fSbqtyJHOY71/Qy
- aZ3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783078737; x=1783683537;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ESAkZY9kUQZRFrUWImfvof0NVQ+5tcC2Oz9nhd/9bPQ=;
- b=BUNPnSIcNFlgiDj0epRvfV3PrUsxaemX3cZYdO2OAt7lVfrYbH0KgMyB7k2BqIx9UU
- T/tOZpk/MZcf3zhyB4I/+/gW6O7Z33GSOx0jxq5r3aG7Iwyetadgg+q2ZLJJvLZ/G64T
- yap91X6DMdSlNQ4beca3+x4F7tIRGWc5HW6GtAcuer8PGhtmT5L6gqOd5XFB7GrLwxeS
- eYo9hqXKq0iPC5JiGUEuGt37tE3HnkVNumsWSj1W4sQBmaTq9+D9F9NNhrPQK5RidZSB
- UK8x9EgIaBP5uAAdp7zrgstU9YpN+KPYqAoOD/kqkfwZVteo/kA0OR5IjO0TSr7BkVPk
- JdTw==
-X-Gm-Message-State: AOJu0YzjyQow5hrZq8Z71EkQrodvr9nnwkVzBnDdVqe6O39F3UaLxh7z
- P7o7Aj9j4eXDQQBQCkfyf8qsspBkPN2g9RLZA4zq0qFFyAHNVbmDP4S/ujduPbnFETqvbtXVxwu
- YtIIVo3CiZPEMfwDf2OqgDXWUhK4vc6Xf9ymxgE+57A==
-X-Gm-Gg: AfdE7ckNpXQ0PVlY5ftPXrOiuV8t2OeS8z/0OPg2XFon7Qv5paDHyXc8PhIBCos/b39
- bX9Tczz0Zu2frME5XBn7Q1lxualfaElkD1uQoeIQGhHy/MYjbwyyn2SrvxUM5aTUAqeHiPGX6+1
- ZdNmu5n8qS1WGieRO0/5Ic1jx1HlxNHZrZIUdE780de9yOp+a4Z7SVgQjTwb0nwM7YgH7Gp0oh4
- BZpTYbmIEShq1d16XKnFlwjwKwjLoS7OtMXEanH8BWZzjrh7lzKUznGtnw2KtyBR0ZFJXP9lKBt
- qZhc66wA9Y4awOQIDo8sAzZr0M/cjFV7Mg3c9oI/ulK4IV1e0FOLQAqD
-X-Received: by 2002:a05:690e:169c:b0:664:c3aa:6701 with SMTP id
- 956f58d0204a3-665966b284fmr8882425d50.62.1783078737368; Fri, 03 Jul 2026
- 04:38:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wfcED-0001WX-Ly
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 07:38:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wfcEC-0006zg-0S
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 07:38:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783078717;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CREgDqzdZj7JfDlFIDeHOGar0tyKoeI7+AhBoIhNngA=;
+ b=ZIdJ9wLSyBXjbzJqP3JAX8ECpCys5dwnyqFPCL2JHC+/baJnRv0yxTiWOpxnkrLnAabwgy
+ ftKMvXeUI36wR5CIgOy7eJPuIEqgL95w6ZnHhhHicfZOmqu8a191um5SqOtjhfahTIYlIB
+ /PSdBzHQipWSeUxb8Hj/eQEkLuxUYZw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-O4H42y2dNUeI_IXvGwwC_A-1; Fri,
+ 03 Jul 2026 07:38:36 -0400
+X-MC-Unique: O4H42y2dNUeI_IXvGwwC_A-1
+X-Mimecast-MFC-AGG-ID: O4H42y2dNUeI_IXvGwwC_A_1783078715
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A22F51800350; Fri,  3 Jul 2026 11:38:34 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CE18130030D6; Fri,  3 Jul 2026 11:38:33 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4C06021E6920; Fri, 03 Jul 2026 13:38:31 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  "Dr. David
+ Alan Gilbert" <dave@treblig.org>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Christian
+ Brauner <brauner@kernel.org>,  devel@lists.libvirt.org
+Subject: Re: [PATCH v6 05/34] monitor: minimal conversion of monitors to QOM
+In-Reply-To: <20260702160337.1910921-6-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 2 Jul 2026 17:03:08
+ +0100")
+References: <20260702160337.1910921-1-berrange@redhat.com>
+ <20260702160337.1910921-6-berrange@redhat.com>
+Date: Fri, 03 Jul 2026 13:38:31 +0200
+Message-ID: <87tsqgwbew.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260622060507.83195-1-kchiu@axiado.com>
-In-Reply-To: <20260622060507.83195-1-kchiu@axiado.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 3 Jul 2026 12:38:45 +0100
-X-Gm-Features: AVVi8CdqE5HesgG9XkSgNZMh2VjMjlJrI1-r_iGIOpK7tGts463cgJtZx2lCbK0
-Message-ID: <CAFEAcA9aPwGf9acMvBMON+mNU+uyvMs33wrmAXxoTFR80vi-rQ@mail.gmail.com>
-Subject: Re: [PATCH v6 0/8] Add Axiado SoC AX3000 and EVK board
-To: Kuan-Jui Chiu <kchiu@axiado.com>
-Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,22 +92,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 22 Jun 2026 at 07:05, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+
+> This introduces a Monitor QOM object, with MonitorHMP and
+> MonitorQMP subclasses. This is the bare minimum conversion
+> of just the type declarations and replacing g_new/g_free
+> with object_new/object_unref. The Monitor base class is
+> abstract since only the HMP/QMP variants should ever be
+> created.
 >
-> This patchset introduces Axiado SoC AX3000 and a EVK SCM3003 for emulation
-> The model for Axiado SoC AX3000 supports
->   4 Cortex-A53 CPUs
->   Arm Generic Interrupt Controller v3
->   4 Cadence UARTs
->   1 SDHCI controller with PHY
->   8 Cadence GPIOs
+> When created through the existing QemuOpts interfaces, the
+> new internal QOM object will get assigned a dynamic ID with
+> the format "compat_monitorNNN" which is the historical
+> QemuOpts ID naming pattern.
 
-This causes 'make check' to fail. Please test this kind of
-thing before submission.
+Uh, sometimes the name isn't "compat_monitorNNN".
 
-Hint: running QEMU without any other arguments crashes:
- qemu-system-aarch64 -machine axiado-scm3003
+I'm not sure whether talking about QemuOpts helps or hurts here.  Let me
+try not to talk about it:
 
-thanks
--- PMM
+  This introduces abstract QOM type "monitor", with concrete subtypes
+  "monitor-hmp" and "monitor-qmp". This is the bare minimum conversion
+  of just the type declarations and replacing g_new/g_free with
+  object_new/object_unref.
+
+  Command line option -monitor now creates a monitor-hmp object
+  /objects/compat_monitorNNN in addition to the character device
+  /chardevs/compat_monitorNNN. NNN counts up from zero.
+
+  Exception: -monitor chardev:ID creates a monitor-hmp object
+  /objects/ID, and does not create a character device.
+
+  -qmp and -qmp-pretty work the same, except they create a monitor-qmp
+  object.
+
+  -mon now creates a monitor-hmp or monitor-qmp object /objects/ID if
+  the option argument provides an ID, else /objects/compat_monitorNNN.
+
+If you want to make the connection to QemuOpts ID, add
+
+  Note that the object's name in /objects/ matches the QemuOpts ID when
+  it exists.  The only case where it doesn't exist is -mon without ID.
+
+Finally, point to what's coming:
+
+  A future patch will make "monitor-hmp" and "monitor-qmp" work with
+  -object and object-add.
+
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+
 
