@@ -4,89 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C83DCC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03651C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:16:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfdbW-0007Xe-QB; Fri, 03 Jul 2026 09:06:53 -0400
+	id 1wfdkj-0000eA-PD; Fri, 03 Jul 2026 09:16:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
- id 1wfdbP-0007XJ-C5; Fri, 03 Jul 2026 09:06:43 -0400
-Received: from mx2.catap.net ([65.21.79.163])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
- id 1wfdbN-0000Tg-6C; Fri, 03 Jul 2026 09:06:43 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=PepPxaW
- 14fxg0o7IrpNHBlYdCh1KeHAXKb73RWqf2iYzFPaPyMXNDi4h8DSf12fTlWajw8+tT6P7S
- PtWAVZQX8R4/5rE4aEEvINilDlFxI51NyX7UDdP5t2/Ck2xKbLV0FTdD6Dvv5fI5CxB8iU
- 7PrJa5av46Qt9pQXyv7suHe7Ed/DWGrvX7RqmhlJWM4qEaVQyhbnNsc2qJLTnMmcKKKYp6
- xrLbOvs0+8zEeNuvYoRisfiYn9/OtyeFHXWtGXem8IjO4wvVNO0nVL/uwU0sFT1A91Zb2n
- s5fVazhmxUP1wryAs2PQ/k4KKyEhLQoc38CHbTNDD1J6DCkmpLvkq0Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=C
- qMc5yYWz7CDZKzBEUa5yhnEL8258a+LO8fWHAR/c54=;
- h=references:in-reply-to:
- subject:cc:to:from:date:dkim-signature:dkim-signature; d=mx.catap.net;
- b=VbHLhE2jO960G/vai3l8A21Wms9fdyDsmv9afRW7xgaJbyAaQ5b19fKey+Sb1KkTivU5
- rm6veF2PQTCa8+b3XwO8nIiqHOr4fE5o8fEl984iI2fQrhLTW+tHXxVBaDmdUd65sc1Z8d
- n4mwJOetQAAEx/PxMT+rV/OoBjE5TSwayGNykFPk+zZ42h0DeeaNe992bvxeUEzGMjqh11
- cImUzTUjDkfmo+/r6BfnfAViRKmkACrWaCP469v89f/6HqDvRqXzjhr9hJxRw1VEqP02GY
- W9iiG7HBqS4+D/opLatOVoZXFbYat6DOnHiI6hbgD2wCikgMicStOAGt+X6ahWPw==
-ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
- header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=cM8vX5JM; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=cHZJ4w2A;
- arc=none; iprev=pass; spf=none
- smtp.helo=postmaster@matebook.home.arpa; spf=softfail
- smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=CqMc5yYW
- z7CDZKzBEUa5yhnEL8258a+LO8fWHAR/c54=; h=references:in-reply-to:
- subject:cc:to:from:date; d=korins.ky;
- b=cM8vX5JMNa8FPyAhvdvG3VeMB7kbrA
- yqcHEaD46uc0Is1Jr32BeNPkH17tnyFSRlCAyohj8nYjAwlldbWLyh41TPR+67hkczy/Cm
- VV9jwFl6Y9JrHqc3wtiMhduGQF4cHr/+qLiX/BXQ3/5/AawVQ+Zkucd0sBqfjKGUO8buTv
- 0iRuWCfclRVFGdLGj1OIYVIzh2LQBUm5Xb2BUntL406fSSu2X8E7jnJXRYXkTRqpVCKQHL
- ItzwcMwEJumXBRMij1axURPz4pvU0d92+Wx/tdDtfJVs8bVUTpyyY0CM+mn0rRP00V4L5C
- F12dUDhiE2SoOzecfkyyrbjSAksDJZ6Q==
-DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=CqMc5yYWz7CDZKzBEUa5yhnEL8258a+LO8fWHAR/c54=; h=references:
- in-reply-to:subject:cc:to:from:date; d=korins.ky; b=cHZJ4w2Avbj9mQw+w5
- 9cGGuyk++qlbeqdtEkMMhtU0ijuAiGi56O0SEVhr8kQd5xVHYw7XupN6gsATh/5j7vAA==
-Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id 3661512c
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Fri, 3 Jul 2026 15:06:34 +0200 (CEST)
-Received: by matebook.home.arpa (OpenSMTPD) with ESMTP id 1505a724;
- Fri, 3 Jul 2026 15:06:32 +0200 (CEST)
-Date: Fri, 03 Jul 2026 15:06:32 +0200
-Message-ID: <871pdkmdd3.wl-kirill@korins.ky>
-From: Kirill A. Korinsky <kirill@korins.ky>
-To: Aditya Gupta <adityag@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Brad Smith <brad@comstyle.com>
-Subject: Re: [PATCH v3] powernv: boot OpenBSD on POWER9
-In-Reply-To: <a52771d5-0179-48de-a0e3-eac95192b789@linux.ibm.com>
-References: <20260702130152.89334-2-kirill@korins.ky>
- <a52771d5-0179-48de-a0e3-eac95192b789@linux.ibm.com>
-User-Agent: Wanderlust
-Mail-Followup-To: adityag@linux.ibm.com, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, npiggin@gmail.com,
- harshpb@linux.ibm.com, milesg@linux.ibm.com,
- rathc@linux.ibm.com, brad@comstyle.com,
- Kirill A. Korinsky <kirill@korins.ky>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfdkF-0000dm-KN
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:15:53 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfdkD-0006ok-Ub
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:15:51 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-664dd23829eso509082d50.3
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 06:15:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783084548; cv=none;
+ d=google.com; s=arc-20260327;
+ b=jfh00DSHaweYYyVBTw0PmLhXECMpVk4XRCW5l5FVViJpz4iwOmpGJr5BZ/Bgz6Eb6n
+ UpEFp8lk2Tisoslod7/lWoRpZ0+AZtNmXQOqKAZGZqbRujD9IyM+GX5x1QK9Tn9JYB7A
+ oqjPNMckX6C6CuECBCToH1h4IqBEuyT1ACT/9u32W//hupr9tyPnUxxCGI7c+xqjSwjl
+ ugRR5yJxLxwSGKHt8JUIbrhDycl8YVcccRZvN21gHuO1NAKhg2nbrtyMoGhOtwoh57KU
+ lG1T2EdtP9A+irDFjpWJM7JK/3ZanP9IvLQ9IF03lHG0sPbOHYcB9+JXifxLu8gW1fsA
+ UmwQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ypX6y0SMNrtooa+4hHzPDKSXJdJ7uXsc9yFpBhQKCLg=;
+ fh=7R/RZGD+m7OAV6ynsYAfWZ1IG1hYR0cKwZ0GYuuX0rE=;
+ b=babJUcG6zzk12X33o/c+qfvqlF3sTiazLcYd9GkVs+Qdtbt+Rd2jUBolYvnG9AIIQy
+ qiwrXkDYI+OaL+IUvK+m0AvKQJh7dW+Fj9euJPqg+TitOHRmwsp7ypMazVy6V7slrAf+
+ HKMBhkLofNPHJTdsVtj3CB/OzKYL6PM8e9UUj5RR9BBIHaNX+NMbH5WkE/Fj+gTyUruC
+ i9HQon2bSEhouz/JAZGo1c0nL/19fs0hMrQllmQW/0ynyrntykSdwGGYjv9r7b2n1Bej
+ f9Q3Bwo7KbJ0N6fL1+HquCDw6DxzVRSNxOZLyejbZpmwX6wir123LCZ4zo3Ou6nFOseb
+ jtbA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783084548; x=1783689348; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=ypX6y0SMNrtooa+4hHzPDKSXJdJ7uXsc9yFpBhQKCLg=;
+ b=In+mA7SdevgdmqVPVHVJVVZq3zHG1EbflIYiVbcrPOD7dJrAMjhJGzaZBRJZ4EzP/j
+ 7FSWTamj5Nlk6+7N8S1MYzkf0NiIA0I2lUecZl9YFiUrkpEqqtIscNs9AmnW0ymdMPTl
+ FAmaegndAWSEAzhi5TlYJrble+q4mjEp5kOEIqI8GDkF+qRGiiQRafeuxog/uyfL+r7C
+ I5+yhp2kZpBUxjYM/iWpZZL2JzmpIRiK4bGwwNoD+qlvx/ZZAmh6jP45pDnWC71H/X9B
+ zoXWfdRlNNQJdquKwNarmGQzx9sqbk81cXU2JEnFS9vbxwPsVy8wlH8uajMhPIr8NqK1
+ VGpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783084548; x=1783689348;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=ypX6y0SMNrtooa+4hHzPDKSXJdJ7uXsc9yFpBhQKCLg=;
+ b=cdtTDgn1PH35hSUm40gCwlFB8YFfdE6GWlK/8JZJYX/gCwgBM57VusGeGuxGJEfLkV
+ KPd7R8w/PTBwKZERd/pMi69MMf3tYdaRef+dTMrZLuasU97io+mg/j7iZYs45gXcFnV8
+ J17Ll/sZRvBtC1s9Bpc2fAaoOi/SExtAQqDi3/T/IKmCO/3rb+uJDJfrnMOkwz50nGk2
+ ZhQ9Xu2IMWNYay+wTUMVH9YhC7RpCDUKsMeiLv/RSBBeuTDlWiSduD4cEFaIRGmCcUYT
+ +m3Ky3aFaOEXvfYIQw66BILBBdTN2uBbUiBJxgSnvrbjXq14uomEnUA4VevSxxc2pO4S
+ y3ew==
+X-Gm-Message-State: AOJu0Yxa8JdYyGqzJrJ71xIiJJilt4/N9ZmKerfpRP0s6qgZDMBlu7P2
+ tbDIhKkdPK+uZH6rRNytoqV3mIhEcDFZUi50Jaq1USjkQz++wDDLGBZtQn1lcwUA2ODTLUZ3Gbs
+ hFrQ4Boelx4svWu6lJkubnPuVD7DBwAl/8hgwvBnJyg==
+X-Gm-Gg: AfdE7ckrLdxMZG3t02AquILsMejQwemRSgaUWFaz1f84K+f+/LZQ4FBfGXhffGcLsWG
+ nYcxuIffXIR7Q2QQs34uPGdZ2UDOMORhZ35pB0VuBvS/e0mRwFFPL+Xw52U08/IvI5cwSVgghDg
+ youDrGO4xBMMyMOVjEsUv71scIX6/0NicnwhiVSGjRd1g/dk/8t0LU0uhkJzThFc6HXnBCpt0GE
+ QOz/G62mjqGuey1K/pL/LHUc2fOzTt5Kfhw0OkFv8d9Dq/jcJvXAqA2z6FGTGj3ii0nSoZ+gKwA
+ CBsm7PkWTIqpTdSmeQW4854KWfn/OOp7OQjQdwlnsLjMT+mYpStbllTu
+X-Received: by 2002:a05:690e:1512:b0:664:dbfc:e468 with SMTP id
+ 956f58d0204a3-665916765femr8379947d50.9.1783084547003; Fri, 03 Jul 2026
+ 06:15:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
- helo=mx2.catap.net
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <cover.1746438650.git.qemu_oss@crudebyte.com>
+ <23160010.EfDdHjke4D@weasel>
+ <CAFEAcA-qtuM51VCzAr+VgsTVkEg1+CsgUNQofVZ0B_zzfodsxA@mail.gmail.com>
+ <1964729.CQOukoFCf9@weasel>
+In-Reply-To: <1964729.CQOukoFCf9@weasel>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 3 Jul 2026 14:15:35 +0100
+X-Gm-Features: AVVi8CcQXLbd_0Z0-fLJE6KmroFUm1D9gjtE7IXG0XPOk3uib4FVvwSzAi8u-Rs
+Message-ID: <CAFEAcA_c9fgub436R+7u-Chmon3a=cfuLhzywi77XpLSRXPPPw@mail.gmail.com>
+Subject: Re: [PULL 3/9] 9pfs: local : Introduce local_fid_fd() helper
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,43 +116,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 03 Jul 2026 14:49:23 +0200,
-Aditya Gupta <adityag@linux.ibm.com> wrote:
-> 
-> On 02/07/26 18:31, Kirill A. Korinsky wrote:
-> 
-> > <...snip...>
-> > 
-> > +
-> > +bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t *entry)
-> > +{
-> > +    uint64_t pats = cpu->env.spr[SPR_PTCR] & PTCR_PATS;
-> > +
-> > +    /*
-> > +     * Keep the existing ISA v3.0 PATS interpretation first.  OpenBSD/powernv
-> > +     * computes the value written to PTCR as ffs(PATMEMSZ) - 12, which writes 5
-> > +     * for its 64KiB LPID 0 partition table. If the existing interpretation
-> > +     * fails, accept that form only for the bare metal LPID 0 table.
-> > +     */
-> > +    if (ppc64_v3_get_pate_from_size(cpu, lpid, entry, 1ull << (pats + 12))) {
-> > +        return true;
-> > +    }
-> Thanks for the patch, though I still have a doubt here about PATS.
-> PowerISA says Partition Table Size=2^(12+PATS). But seems OpenBSD on PowerNV
-> populates PATS in such way that Partition Table Size=2^11 + PATS. Why does
-> OpenBSD populate PATS this way, or am I missing some document where
-> Partition
-> Table Size was 2^(11+PATS) ?
-> 
+On Fri, 3 Jul 2026 at 13:49, Christian Schoenebeck
+<qemu_oss@crudebyte.com> wrote:
+>
+> On Friday, 3 July 2026 14:21:29 CEST Peter Maydell wrote:
+> > On Fri, 3 Jul 2026 at 12:41, Christian Schoenebeck
+> >
+> > <qemu_oss@crudebyte.com> wrote:
+> > > So this new EBADF / -1 path in local_fid_fd() is just to avoid undefined
+> > > behaviour as a last resort measure, in case a guard was forgotten in
+> > > future
+> > > changes.
+> >
+> > That part is fine. What Coverity is warning about is the callsites:
+>
+> I know, this is just the change that triggered Coverity's warning, because it
+> made Coverity think that this function might return -1, even though this
+> branch is actually *never* executed.
+>
+> > > > > +
+> > > > >
+> > > > >  static int local_fstat(FsContext *fs_ctx, int fid_type,
+> > > > >
+> > > > >                         V9fsFidOpenState *fs, struct stat *stbuf)
+> > > > >
+> > > > >  {
+> > > > >
+> > > > > -    int err, fd;
+> > > > > -
+> > > > > -    if (fid_type == P9_FID_DIR) {
+> > > > > -        fd = dirfd(fs->dir.stream);
+> > > > > -    } else {
+> > > > > -        fd = fs->fd;
+> > > > > -    }
+> > > > > +    int err, fd = local_fid_fd(fid_type, fs);
+> > > > >
+> > > > >      err = fstat(fd, stbuf);
+> > > >
+> > > > ...but the callsites don't check for error, and instead can
+> > > > feed -1 into fstat() or other functions, which isn't a valid
+> > > > filedescriptor.
+> > >
+> > > But even then, a syscall receiving -1 for a FD argument would handle this
+> > > gracefully by returning -1 and errno EBADF.
+> >
+> > In practice, yes, but it's not a valid file descriptor. Coverity
+> > warns about it because it tends to mean "missing error handling",
+> > as here.
+>
+> Yes, -1 is defined by POSIX as "invalid file descriptor". And that's the point
+> why the helper function would return it as last-resort result, because -1 is
+> well defined by POSIX to not be interchanged with a real file descriptor.
+>
+> To make this clear: before this change, this helper could potentially return
+> garbage.
+>
+> And yes, you can check for every -1 file descriptor just before passing it to
+> a syscall
 
-I have no idea why OpenBSD does it but I see in powerpc64's pmap.c:
+We don't need to check before every syscall. We just need to
+check the error return from functions that can fail after we
+call them. This function can fail (because dirfd() can fail), so
+we should explicitly check that.
 
-#define PATMEMSZ	(64 * 1024)
-#define PATSIZE		(ffs(PATMEMSZ) - 12)
+>, even though I already explained that a) you never ever get there
+> because this check is already made at the higher level call stack
 
-which was introduced by this commit:
-https://github.com/openbsd/src/commit/dfe2a24332fd6769a7f9bb5806753189dae4d9c9
+If fid_type cannot possibly be anything other than one of the
+two valid values (i.e. anything else would be a bug elsewhere in
+QEMU), then maybe we should have
 
--- 
-wbr, Kirill
+   switch (fid_type) {
+       case P9_FID_DIR:
+           return dirfd(fs->dir.stream);
+       case P9_FID_FILE:
+           return fs->fd;
+       default:
+           g_assert_not_reached();
+   }
+
+? That's the standard way we write "this isn't possible" and
+avoid it turning into doing weird stuff if it ever does happen.
+
+> , and b) that
+> every syscall handles -1 as file descriptor gracefully.
+
+> If you still think this was not a false positive, you are welcome to send a
+> patch.
+
+I'll do that.
+
+thanks
+-- PMM
 
