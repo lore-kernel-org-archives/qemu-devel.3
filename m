@@ -4,108 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAEFFC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 10:29:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61B31C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 10:45:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfb8g-0004FS-4Q; Fri, 03 Jul 2026 06:28:54 -0400
+	id 1wfbNr-0005yl-DV; Fri, 03 Jul 2026 06:44:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfb8e-0004F8-9Q
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 06:28:52 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfb8c-00018w-Pp
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 06:28:52 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-664b3831a20so571729d50.3
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 03:28:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783074529; cv=none;
- d=google.com; s=arc-20260327;
- b=QUXQODiYzfrp8bZzmKitwMaMWp/fkXeqUpykBx9ZNnq8ZQ31a+Os+vqZ75H6ZC+fKC
- xeFyiNEF8VPAf1ff6PgOOT0HntgWNWa6C+fxCdUQfHua+T3/P3sRDMFQG2jCBcCVbx84
- WZGAHSc4w5NG/r18lO7fWLfWZke82s6mxN0tAMtP8EghXeWIptDgoPLwUevhwnfWN0Yb
- OBZuHbNpPblJGpkjVgMJWoB2S3gupEvgPL7O6nWo7CQAtC2IVyGhXz6dhbkif/P5dlKa
- 4bxFfxS+54hKgAn1HEI49/3Ug5qhdKTm6UFsc4ruCRF2WU7Fmmhcz5BUxo/sJvo3epo3
- mvpw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=BYRftQ1EhBxVHug1SZSh5KJBSBcocp+LBwne83O/SwQ=;
- fh=FeUNyVy0JXs14mTB+gGbB94jqcY2l5K6l5EJSjhUgxs=;
- b=HBdhIZJB9TJsb3/D2BeLB3R7UM1xgVGdOks0Ihs7p7B9IeYdFYtLMBeHYl6yIPJ0my
- lwGmlETSBrlbJnFK2CgvrFRY8fEhXz3Go75Uzf2F0fmNvQ2eEJWZNrev41VzymtzsQFI
- BmJLCR3rDjBZxm1X2dhjtcAhG4VbPwmLlM7UmNCcMelV1EFhGFPGIhdDxyYB/0VCqvmS
- t6fG17BB4gLwKnPO2k46pbUhFbetfEL1KC/8z4DoPPR+Ujt0szhY5FwjQGCagqw7dCM4
- rntnIgO0Z1/RhP1uBhROXVxfYo2rLQ+SnrxqYIcVuuagd2IMz5t/hOcgzOZHW0B+HyAJ
- qt5Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wfbNn-0005yL-U1
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 06:44:31 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wfbNm-0006lG-Er
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 06:44:31 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6636h0dx3144241
+ for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 10:44:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ EoptIEfXdRo5LJJfWXdH2s7nSRvlNiYy8UXZroeRxGs=; b=DtMH3R0fu+EYWG+4
+ vQoJ9WmKfxQni8jkxWbl7+J44FS/4Va3+tenGq8c7/6SSf8QUtCnrbMn3jpR9jd6
+ HKeRWO6Y6zGrr02WLBP5q4MoEZjWr8Tgx/VWaELW16/EM9/lNctSDR93GAcOMGUc
+ jl5CPLHqm6irWy+6kJyjZNU51oguwr6g/NYw5xJlA9qwugLkTOL3gm+MFpVv7hEX
+ kGEEZUCHIZfBrsn/3lIt4m3QA/dm3STN/zj75IKpGFvFiNMFcYIahLW510j4t8xS
+ RtSRwyzwWoUAFx7XX3bNcptKzWWteZi/ZhqQ5GXiZiFOq05l5PdEHNCw6lX007iS
+ JCCwUw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f682brvau-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 10:44:28 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-92ac0a54110so47883485a.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 03:44:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783074529; x=1783679329; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BYRftQ1EhBxVHug1SZSh5KJBSBcocp+LBwne83O/SwQ=;
- b=UTcpqx4Ok8ccMTmsgz9KmRXjcVU1Ja3ea+qAryH/H9YO925BZmBa1ocpX7m3zpD0Ba
- D91i2S+StQfs0Jn3QGiudN6ObGQTAh2wtCmmbq47XdV14Gly1DRzVgS37FlFzY/5YZTx
- TGQtXbvQGspcoCn6oyASKClX2bCjXtFSChV+OiIiKiLcxQTD6Lb/zxvRPuuwNT1iALXo
- lc9kXnt6wdvO/Bf52rEBiwm7tB70PfipzOcPvmWi2Saw4M3YpfCdCRjCsZxoTNxjJU0j
- anFAvEKttpEmuoC4XOKYbdMA2/BnXhdbjTD31a49gXkiXGE6DNsZVGgUPG3c5HdHaeri
- VE3A==
+ d=oss.qualcomm.com; s=google; t=1783075468; x=1783680268; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=EoptIEfXdRo5LJJfWXdH2s7nSRvlNiYy8UXZroeRxGs=;
+ b=DEZLP5QKrF1Rf8n4tCA0nuWXWsEVKK+UjqJrGFshDLiL0QiHcDEa6IJhSNQeAlztu9
+ 8vHJLzathcSCCwzc6ZwFpa276pYpoReYnPqOYxrB943ucI4drCs5/HpHmkRJgBsK/avJ
+ wpWftciLAm/rBhSFVA5OS+rCm19IVO8Bz1sHP+eDDb1WzaxoQcoJTsrC8F7gFasQivm1
+ bmQZSSgLc2d5xIWTASz3Mt+VZndcnR0qfXZaon0URLp0xQYjhSJp8gGvotAlmCFS4bwf
+ W3shXdc1cSUy20xThui5kAXUEkOoZ7Oc1kzgPDiFodp3YBU9Wdx1xViV/+1mkVjbNdXn
+ cjOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783074529; x=1783679329;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BYRftQ1EhBxVHug1SZSh5KJBSBcocp+LBwne83O/SwQ=;
- b=rWrLJad32wX089Z2GxZLd/zF3vzpPJahA22tbGtG46RYr69YAx9KB2IZC1+IzQPdwL
- VMEa5TZYXjXEKYALAjsbClGMwDexV8DicoQjOy8Prv1rROayjyKPgRFGzrkDCZOS2FI0
- IWl6kB6z3CSS3zoxOa8bFj4Le91zA8SygUWwsMcA0rSJzxsKfAn9yTTC95l7dnjMIMvw
- LMd34MWMErdU2t65J2HLq/F7TMpB1Y011ogl7GCGrgzLLunWcwVv39/W2uByNKK1ZRua
- kpWKGzqFz4iw6E073h50P3dRI46WybNui8LPr0m08IsZGXDYcNn1n6f64xctN2azsfnc
- gGoA==
+ d=1e100.net; s=20251104; t=1783075468; x=1783680268;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EoptIEfXdRo5LJJfWXdH2s7nSRvlNiYy8UXZroeRxGs=;
+ b=UUXo4zsQIshdPpWIxnhelXrkb3QlXLh/UJYqb7kVer9/vXECqOUcbz3fNaGYQjj0yN
+ GBfsvFRJfu0m1wyPH3rbDA19hWreta3yvs/v8lGDRUwiRD/GuQqmfyl/iKAt1BSeGssk
+ QHqF7JC9TI3sGRL1ZRoQtG63hCIARm0wZeoMri4wAl0UsUqw6b2MgN7JF4wKYh3pGWMA
+ NEyyk8WA6A/D5a4PQAmIw1sPABviEsZj6YaNMguVrXEjKAk2hiS+b5kWpbMNICReZ+fA
+ QOwPbmCJRmJUjFuMhOAlEcUT3pOE05Y3dYT5KgUguNtSYXNoUzJE8w0PzoBsdtDFxr2F
+ rJhA==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpRpEaugyNgGjJxUrpjd9yLXQbNi6mPn57CyoJSrCp3iKJGTBTaXyIswr3X//txmmiCdJcc9DUtE3Gt@nongnu.org
-X-Gm-Message-State: AOJu0YwW7vKaNNzwfizoS59Y3wzAi/huve1aWm1+shyO/WbIpjWHAGDn
- X9DP/HWYoODfJzxEBmJvNIRWxr2ZoMNRz9DrU34BH6XBhufpR9awuMAc45ZP85fau+LmHguwhkN
- zuQJE3v8bmOaBn0g3mjrnNI6z2qkMYXbURd8J4yTGcQ==
-X-Gm-Gg: AfdE7clM/4oPhB3iVOSTOYWsR1rvy4HXo1c9QrIRLCJJ/L8QRKbTgQqL9aFyaXAM3gX
- xDi5sLRwH3rYtSswj9PjltZGp2mt0Xq3ENgFaO2Nq67VGu8nJ11C2tDrtidH+TxIB/P0HoPoM+p
- XeVMw+5d+fSsrxq9WucblD0fM1tIXeATPIjwlnssyzpsClmzd+hgIHrfNSaTsG3mdY55PRmstRg
- f2q3UHNr5+pjPQ4bKISZkU6zqX+TxXedR8HoGHlzsIGkaON7RoESonUcmzajGtTswQAKL03lI0A
- lC9dzJHzl+u7UxwPQrohZLbJCzaxEoYBk2etklgMGGojnRVhPk9bXtZj
-X-Received: by 2002:a05:690e:4802:b0:665:a0c:658d with SMTP id
- 956f58d0204a3-66521a77dcemr7254782d50.28.1783074529194; Fri, 03 Jul 2026
- 03:28:49 -0700 (PDT)
+ AFNElJ+NUhGa8Y9qUEFz2K3tlqnN/Usza6TlHaNZvrlfYhjZjklgH4L/Qx77c6dy/Zc+WwrW4qystbgjlgym@nongnu.org
+X-Gm-Message-State: AOJu0YxOGKa2psaGqIzfWBffrgHtsTC3PpSoXuEKEB2N5tFOGURJpca/
+ UfcjR3ux0eUXQHwdJmmETLGv7Tiw22KFp+oKlwIdT6ct56j0s6NsT255knYPm0QIW00DYp2rKaf
+ k/5IhLCEoN44Hb7DII9EJyjfflQyaR6Snn+AKCFTPoSrJ4zEKNQKO1Kr7+w==
+X-Gm-Gg: AfdE7cnJSRONV9Ncg3jLfYm6+8tEzgJ1EfEgQCI4+8UZq7Mt8gYuhxuoHQmvvCe20Zf
+ Uf475fLDn+4wc7tsPxI7QbAkiy6d6UZJobSgtvWhvXV0jMmI9XG/bulypHa9ElqmRfqpj874BJf
+ iEvDiW8Aa9+no1fiHzJsNToFtVUcSLkjc+SMKFx2voeT4kC7VZoDIjqHa1SHFjC5/eV438+J70C
+ eQlgcLBe0iK6LKIU01Af73h6LmZgKOlUoi1aucCEfRq/m8cUO+FYVc5iGdqQCGdF3/0Fp5x0pBL
+ Ubwi5RvwDHSGQG6m6D8z8V7l624TKNNfCo2ve7sTfDwsUQ8pM8q3vhXTtvzUK/YY0wxNyXwFsmv
+ yjAuRrmfx7Fqe/tYizaYPW9nYAmNtRmUdD2P4buDpnowTDfzrCKsxFgz3PTyseQ==
+X-Received: by 2002:a05:620a:4016:b0:915:8f76:7ffa with SMTP id
+ af79cd13be357-92e782c6315mr1194923985a.45.1783075467790; 
+ Fri, 03 Jul 2026 03:44:27 -0700 (PDT)
+X-Received: by 2002:a05:620a:4016:b0:915:8f76:7ffa with SMTP id
+ af79cd13be357-92e782c6315mr1194919685a.45.1783075467262; 
+ Fri, 03 Jul 2026 03:44:27 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-477ddf0f433sm20334083f8f.32.2026.07.03.03.44.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 Jul 2026 03:44:26 -0700 (PDT)
+Message-ID: <374abf50-4593-4888-bb9c-2ef731b6d7a8@oss.qualcomm.com>
+Date: Fri, 3 Jul 2026 12:44:23 +0200
 MIME-Version: 1.0
-References: <20260628114925.418293-1-bin.meng@processmission.com>
- <CAKmqyKMzUgs=1LMJZHoFUt1j2PSWTTKbAbg7gvzjZx83V041OQ@mail.gmail.com>
-In-Reply-To: <CAKmqyKMzUgs=1LMJZHoFUt1j2PSWTTKbAbg7gvzjZx83V041OQ@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 3 Jul 2026 11:28:38 +0100
-X-Gm-Features: AVVi8CejQaReLRSSrngSZYEkB3cfnGJyXv5vspWiZrG1P890gvTTyxXE5lAn_1I
-Message-ID: <CAFEAcA-WKMnBFks8vrp8YC-h=j8AGWGaU_nzXasdpXx9NgdLjw@mail.gmail.com>
-Subject: Re: [PATCH] docs/system/arm: Document Zynq Buildroot boot
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 06/24] target/riscv: move pmu.h to tcg subdir
+Content-Language: en-US
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ Palmer Dabbelt <palmer@dabbelt.com>, Joel Stanley <joel@jms.id.au>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Michael Ellerman <mpe@kernel.org>,
+ Portia Stephens <portias@oss.tenstorrent.com>
+References: <20260702135128.1188021-1-daniel.barboza@oss.qualcomm.com>
+ <20260702135128.1188021-7-daniel.barboza@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260702135128.1188021-7-daniel.barboza@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDEwNCBTYWx0ZWRfXxIUQtTxvrWRH
+ 6P6Em8+uTOOG+gn73HncMf01GK/F7i0riB1acZgNtV0eVMjAx95cikr4z83OrGMmwNrKEKyoS0G
+ lRQ+lxG8Sci6jx1dHL8eeObLBs8AyWXgZxXm8fe65PYK2NqABLNGjWPefOIzMfYcArQIqcUg0Hx
+ A8bo9llKeOe0UrOrBZJcQRoEm5XQcENNO3/9TJupmXpI7Kel8DV9pHPft+dpqTJBQdO/C/+5ywo
+ ECcABX8x/BLDGfgmRCBYiGhFt+zzZfSLt/9i6duJ32u6NP5Oh0+pJgoqX4tBeJXul3UhaevNZm4
+ aRizqPM4Tr41oosf3uEkzK+tErT7V0d57CJx540XI1rOIJQlQNDsyeWJIsZ5wkgA6f42Wf7DIyq
+ r8OWfzliylrkJlkoix1njR9x5o/bfOK3cwgFEtCLYMpiBaY0LebPXLn9rSuPlTW6m1VVuNpwO8X
+ zD/UM6njcBb/JbNOYmg==
+X-Proofpoint-ORIG-GUID: bh791WSfdMixCA7DrhN9P34yGxueXIwC
+X-Authority-Analysis: v=2.4 cv=cc3iaHDM c=1 sm=1 tr=0 ts=6a47928c cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=JF9118EUAAAA:8 a=LfsA7Cq2GQzuzbZ-N0YA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=xVlTc564ipvMDusKsbsT:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDEwNCBTYWx0ZWRfXwWs/Ha0ptX5L
+ c4REhg6gRDs1qTC2unU1mPUzbFWqsZ5knWgIahPXxZFRG3PFgo2Xb6TDp3Tee4u6a6P2fLXHkKK
+ ClUcecgCphi8K1DFnAH/3uqI5J1dE24=
+X-Proofpoint-GUID: bh791WSfdMixCA7DrhN9P34yGxueXIwC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 adultscore=0 bulkscore=0 priorityscore=1501
+ phishscore=0 spamscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030104
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,38 +161,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Jun 2026 at 00:29, Alistair Francis <alistair23@gmail.com> wrote=
-:
->
-> On Sun, Jun 28, 2026 at 9:51=E2=80=AFPM Bin Meng <bin.meng@processmission=
-.com> wrote:
-> >
-> > The Zynq board documentation only showed a generic direct kernel
-> > boot command.
-> >
-> > Add Buildroot ZC702 commands for booting through U-Boot proper
-> > with the generic loader and for direct Linux boot from the
-> > generated SD image.
-> >
-> > Signed-off-by: Bin Meng <bin.meng@processmission.com>
->
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+On 2/7/26 15:51, Daniel Henrique Barboza wrote:
+> riscv_pmu_generate_fdt_node() can be moved to fdt_common.c since it has
+> no PMU TCG internals.
+> 
+> With this change we can remove pmu.h from 'virt.c', which is now
+> becoming a tcg header since we're moving it to the tcg subdir.
+> 
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
+>   hw/riscv/fdt-common.c         | 52 +++++++++++++++++++++++++++++++++++
+>   hw/riscv/tt_atlantis.c        |  1 -
+>   hw/riscv/virt.c               |  1 -
+>   include/hw/riscv/fdt-common.h |  1 +
+>   target/riscv/tcg/pmu.c        | 52 -----------------------------------
+>   target/riscv/{ => tcg}/pmu.h  |  1 -
+>   6 files changed, 53 insertions(+), 55 deletions(-)
+>   rename target/riscv/{ => tcg}/pmu.h (95%)
 
-> > +  $ qemu-system-arm -M xilinx-zynq-a9 -m 1G \
-> > +      -machine boot-mode=3Dsd \
-> > +      -display none -serial null -serial mon:stdio \
-> > +      -device loader,file=3Doutput/images/u-boot.bin,addr=3D0x04000000=
-,cpu-num=3D0 \
->
-> I'm surprised you can't use -kernel here
+Preferrably before patch #2 "target/riscv: move TCG only files to tcg
+subdir" if not too much trouble:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-I think it's better in our docs to only use '-kernel' for
-booting an actual Linux kernel, and to use the generic
-loader when what you want is "load some other binary blob",
-even if -kernel's historic "do what I mean" handling means it
-would also be able to do the job.
-
-Applied to target-arm.next, thanks.
-
--- PMM
 
