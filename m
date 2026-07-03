@@ -4,140 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 767BEC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 01:51:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12B02C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 01:59:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfT3R-0003uw-Jl; Thu, 02 Jul 2026 21:50:57 -0400
+	id 1wfTBD-0005sI-Km; Thu, 02 Jul 2026 21:58:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfT3O-0003to-Nh
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 21:50:54 -0400
+ id 1wfTBA-0005rp-Jd
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 21:58:56 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfT3N-0001vY-66
- for qemu-devel@nongnu.org; Thu, 02 Jul 2026 21:50:54 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1wfTB8-0003wA-UE
+ for qemu-devel@nongnu.org; Thu, 02 Jul 2026 21:58:56 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66319eEo2350837
- for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 01:50:51 GMT
+ 66319CbW2335885
+ for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 01:58:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- RXYfmwbcIWxRuFjhhZ/BzZQe4eA1g9Ze/Z6/fWdLjDE=; b=BWhFw2IUyvuMrEcz
- B4Ooq7WVb8ESHoBQ89J4M0LlWPSRCNn+5VsgxfdBel+q4iDezYebEwsAwTXJQ6la
- EZOOxNFyS7jPjaQkqz+uu9aLNKiqu8MQtI+N12TPT8gxxq7Eu/7JNH1dyjSA1azy
- bep5KgdUHgaCPm1oODBriIs6Qy8rYOOhMkNea+icqoWcH65yzWJzpCrpICx85MHp
- XTTOoJRBL3sCdgAfzQHrrEz/U7aJV96VBVyV0d10bhLQsAyV9ao+5mc4tRntHLlf
- HurLI9iKemi/B0SKSIWmGYA7B5MSzCe3+iTn5OXKo7/SrOC14hyYPlvjnU3p1vmN
- PIY2hQ==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5qnpax9h-1
+ slcSG0jn3aVJP0MKOXhWWRlhGWUlyVzCR1JYsC/oHHY=; b=GlLuX/GgYPiyXAn0
+ KVzJnebgSm8P4yVjEXmwE8QEg+ok8DAL+8OKNxlydiNYksauaZnoBCueaylqiQVf
+ D5LttQti9N2SoHexJ0M+LMByYte1e81MxGmg5qvGMQdSbo5uiHJe4QNnnEv/vB+/
+ 87G+0dWXdZpBwkddu6PQh29PTW4gUc/2cF8BpKjjCVBCaH1E5LLqFizeQ7YpwsUW
+ UPg5K+29LAFBTU58SOC4/G+sCvRD1IpGfwPQnUaq9zLAkWmWlHGuKB0FKRl4CuLn
+ 6etZVW/JZcsgN9BrH/mh+AGoKa0EscRv1aNxmDco1QoB+ssJHZdoefsPi6K+DF8G
+ TL4E+Q==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f60ey8jk0-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 01:50:50 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-91ed0e140c5so16033385a.0
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 18:50:50 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 01:58:53 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-92e68cb7a3eso14636585a.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 18:58:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783043450; x=1783648250; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783043932; x=1783648732; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=RXYfmwbcIWxRuFjhhZ/BzZQe4eA1g9Ze/Z6/fWdLjDE=;
- b=Ej/WohpYQcL4ThIJTzMdAgIOJJY23H3+/yEAb7V6TBj0+uoUG0MPLM5XQDRfyogTIs
- YH6uoTfMw6cBpGcqZKBbgCSbwg5rjqU+vUVE/XRnAGYmye3faZgDofblbKR/8Nvt11B5
- 1RCubGPNuEhJeUpfhVVB6cKJKw+s/8kT6m3VxkZLvXQM0UYLnnlhK5vG1h/Mj8V57dFm
- 8DPAqv9CdjucRV6S6C3Em7T0Osjb3RhbtMDxDZaHH5Stv1qntHBY4fKzv9lWs/5uHMO/
- n+OGpfKNZse66iw+kWzEexWRkjqrVArr0uwQGIH80BqaO7stOged5Ycc3QSrI9bM+owk
- 9eiw==
+ bh=slcSG0jn3aVJP0MKOXhWWRlhGWUlyVzCR1JYsC/oHHY=;
+ b=HfUUJ2WUeVAz0iUDABWxLqKzrIDJj0b3bN5RPrQOWA0NwFm7Z+EGuKNHyUZqd/li+S
+ Guvu+m14UAPq4DnFkfHb7n1q9rGewsbyxphyyDmg552Jwm/VchOLYQpGHx2Jm5drbdRd
+ EXt8IVYxif9ts2SkYXOrowUtTl5j8Br2sFsVBV/r5nZjA1CAxq6qAvjW6QxnlIAb+d3B
+ CCP/xSidzTcOEgh05UNwrGLDaeXyWDl6WHbJvbHHNQ/6m1p2oZSkd8PCL33p2Ftk1nPs
+ qoUuuPqrbyUf1biMbvsovHGfKIfhWHd3vFUQsyl8dStDAEXjNvpaMap57gkHpRDsB+rO
+ vxaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783043450; x=1783648250;
+ d=1e100.net; s=20251104; t=1783043932; x=1783648732;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=RXYfmwbcIWxRuFjhhZ/BzZQe4eA1g9Ze/Z6/fWdLjDE=;
- b=fx78u77tqU/+c7Cb3/WghurqY1ceor+BSAX4wto+wlP9dq4reC42eHIYBZAhkvJIO4
- xNzTGWwDff3aNd7Cr6jtr1s2KXl0QH+teP5Y8wzDsKszTWGIHiWL1XFmSLGde79/YRIc
- AIjGWWjk5ZN+ud1vlXENWBnLAznokiqtFavO4F09iBaT521fFNKxjFnOmvoClo7g3Qgu
- YJmDgGD1oECTdg0qdDt3DK01y7KIFN+ASbBGx/6enxLRT41tqZsx9bHhUTItxSBa2Vjj
- EhcfMVUlUIxRZUVZe4U92wriIIVI3H29yiXqmpTqavpACJ95gb2/X7wRE4WfdFP/V3BU
- BBng==
+ bh=slcSG0jn3aVJP0MKOXhWWRlhGWUlyVzCR1JYsC/oHHY=;
+ b=rqT8IHxdSN7ON9OZV8yRZr2ltEcHy03sK+6cwCGqk6oPLx0hfsQqkFPkgMcbJecTSR
+ 1eH+6y1iP8CMKs9phfYUZb2cK3iF39l5WXi5tQTg6KInENY4dvMYuxjRcm4u0FU0WOK8
+ rBajHpSRZWxdXjPXPwBhlgK1H8rUTNCPFf9klKySa/K3D7lpDSig6t7WfdrVF4+IR1wR
+ r48QieAZxijXIujY6bdIXNBbv2nLsI4ijWxGOd1E2fl0xlO8PO+2uvmwuhuWHgbYQ2TR
+ mDaxomYPrBkVMWdmhGMhUb3A29/TLII0kztrVG9YQq2SCt9LdNVlnzbtPxhG+wOjSBGl
+ oFvg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+h5y+0WsB3ri174iTiQVwElidUZRkUgVQ9Y9uI9WcYa/mbxkVWp4vEVi8Fr9lSMiqC4P1lkffb5ZDx@nongnu.org
-X-Gm-Message-State: AOJu0YweUa/4GFPbexO1r6+I8T8wwb1KQ9s7hwwP4q5lMgecasaoMeQm
- QTM/bL17s/hwPKdgNZfYJucMy4qQPq1mRh9yefPAx7Pl3OnmTnaU4IrOhyKQrV5ijdsGpm/DpwF
- T0DaWiVkVXwxV7MuOpA7aIuBU4oxo76aQluzXQ8t2Y2z7LPwDJkELWx5hcQ==
-X-Gm-Gg: AfdE7clZLJErjT8o7kBlig0H8jIG4bjaVxhthbbVka0bLaVfHYBbszlcxoNQPsQ8NIQ
- ebMAheYieh/1AsSimoCQM2Ac9wjUxgg2FPxE39ZQCgKCefw2azmkKZqNdGWFZ46X+yj/vh71Aub
- fKC4b90tCstaBo/SFNfQB/MiQj4mFf/+Dj0OtPE34sHhMOJQVDkipPvwNtXJLCMmVCSI5/rWRrG
- fVl5lKrUZZ90ps573fbMartnZZSmWkVmJCQqgEurv0C0Mct8gztIc4IcsrAqnQj3K/s8ukWdc8a
- aKcXaXD5WMOy/tSiKvg9tUD8tdfRpVdxXLCX3Mau6BvXM6s6iqxFS/8ZNxkE4IHQQpdn7ytNEQr
- 97OZ6u7m6BHesj1p/zLHJz0A8ySyjDuQl8e7MuJ3GgE2D/yWtzqMoJ42kJPO61w==
-X-Received: by 2002:a05:620a:318d:b0:92e:6b16:6a0a with SMTP id
- af79cd13be357-92e784d1671mr1149061385a.40.1783043450234; 
- Thu, 02 Jul 2026 18:50:50 -0700 (PDT)
-X-Received: by 2002:a05:620a:318d:b0:92e:6b16:6a0a with SMTP id
- af79cd13be357-92e784d1671mr1149059385a.40.1783043449752; 
- Thu, 02 Jul 2026 18:50:49 -0700 (PDT)
+ AFNElJ/3STVuj9DQBlMi+QBl62acEYZ8ZlSQ/GFLTCkywTj7c9Y2d9NsMhzEKxRknSSI2js7fnFSHFEoZtCs@nongnu.org
+X-Gm-Message-State: AOJu0YzP5lsiwMqNzAtoaEsBi0d3iA15vZIjwiCzkokcCS1iNuA/ZRnc
+ ZcJwlYHiDoAPoCYMINwCcw2ZyAQong58Id4trAjA2yOyDPNjrYBlfExEIux86ET8MBwfbHqGtqc
+ ls35kd55DLFngg5dXEf6BsbPp8+zIK6pc9BnUtJ1OIiKmn83kv07kRPlOpQ==
+X-Gm-Gg: AfdE7cnmaWmtDGVvKw9g6/OD4dlsjunK6H+HM10ZHKqXxkM1rdpQLNnMnc6N++qkp3l
+ D6zx0MJ092BJw2c/64v8is6IJF5mJiH8bCG/FeLtqtP5e/b9CpiCtKDefeYjuugpyI4ui5Dp3ND
+ hhZUDUAlbJUtc4A6w/xfLMVTZooJNZhCj98chSDa8cwHu6Xh6ZRCcucy1wsT53iDsiCwg8GppDh
+ 3tqgUaxZb6qEm8UJ4E+Jfqwt7/ihh7/TlzK0tsvSCR/IBSmxKqxwEzxpWx8t3EDV7NIuSK7xAKN
+ 6S0WEoUeZmIKzh6qUnB9300VF23gmAWRfGYic8ObgOkZizkQ/WmseSMNOiomXfbRc8dZgJxALoe
+ LQqBq87AtHb+pSVOyoRkqliApxmImT0Y7T4P+ROOY06EvrF9V1vpSuk4u7ghnwg==
+X-Received: by 2002:a05:620a:460d:b0:92e:59e3:855b with SMTP id
+ af79cd13be357-92e781d2147mr1139082685a.12.1783043932384; 
+ Thu, 02 Jul 2026 18:58:52 -0700 (PDT)
+X-Received: by 2002:a05:620a:460d:b0:92e:59e3:855b with SMTP id
+ af79cd13be357-92e781d2147mr1139081285a.12.1783043931968; 
+ Thu, 02 Jul 2026 18:58:51 -0700 (PDT)
 Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-477de3dc77bsm14302088f8f.33.2026.07.02.18.50.47
+ ffacd0b85a97d-477db3dbb79sm13399377f8f.2.2026.07.02.18.58.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Jul 2026 18:50:48 -0700 (PDT)
-Message-ID: <3919de88-1247-4057-916a-b9eae4e3fe9b@oss.qualcomm.com>
-Date: Fri, 3 Jul 2026 03:50:47 +0200
+ Thu, 02 Jul 2026 18:58:50 -0700 (PDT)
+Message-ID: <6db9c705-004d-4ce4-bc8f-3c264127578a@oss.qualcomm.com>
+Date: Fri, 3 Jul 2026 03:58:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 32/33] cpu: Rename CPUState @singlestep_enabled ->
- @singlestep_flags
+Subject: Re: [PATCH] target/hppa: Work around Fast TLB insert instruction for
+ HP-UX 9
 Content-Language: en-US
-To: Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-References: <20260630220100.1289-1-philmd@oss.qualcomm.com>
- <20260630220100.1289-33-philmd@oss.qualcomm.com>
- <7a32f990-4789-492a-b851-03658989fa70@intel.com>
+To: Helge Deller <deller@kernel.org>, richard.henderson@linaro.org,
+ qemu-devel@nongnu.org
+Cc: deller@gmx.de
+References: <20260702224241.29866-1-deller@kernel.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <7a32f990-4789-492a-b851-03658989fa70@intel.com>
+In-Reply-To: <20260702224241.29866-1-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDAxNiBTYWx0ZWRfXxExAOcZQqUNK
- OHcfG6rN11UCQXyMCSRWz9aBwuYe+JIOkxTqZYiq+WUmBLf7DtqCnqV7GCiFDrJUwOwtSp3rDhW
- 4T4tJ+el//HCkmkD2q0rpflQaCnUtRM=
-X-Authority-Analysis: v=2.4 cv=FoI1OWrq c=1 sm=1 tr=0 ts=6a47157a cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDAxNyBTYWx0ZWRfXynyNQBMTFhej
+ 0SwCYg9bt2MPbWpW4vQJXWbOIDZaWTTWhre7W3sJlgq8seOXRjud955RqdDwcO/Pt8anJJCklat
+ I4/6LQaPZMvINLbx6daItIXInk/CpZupTHjAOyjJHYUcbRfXLzUZcbiCegxSy/GU57qD0zbQLaS
+ 8CZ9bToctr3SJreGTKXCm7pljI8Hy6CxZ2OXjk09qa3fppH5weTDbeJwe12wguBjsiFWrxxPPgg
+ cPM14HgVOxkTafi6dE+r92UcTVV8qvM0dICzjTI+gdIQRrzcF64cVrX/6HIO/WOOY8rlpfQO28U
+ Moygb+opLky+AcfCP1f51Y26a0/jCl1wHwP/WzHnzg9cq7a9EyUvXXFdWwTDc8miwHE5NP8/ufb
+ n9/yvf9eGH/RxTpPiajRfIYu5Wld6tzIIZ4WFh5y2k2lBuwtDrIny16v3E28+CXpPVebZyp6K1n
+ L9F+p/H4lfQMtF6CF/A==
+X-Proofpoint-GUID: leLinhg0YcX7SkqcKX-YEMVZpk4FHO85
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDAxNyBTYWx0ZWRfX1b+sBodHWoBC
+ MJ8rUUJra+Fm7GvHDONk6KODbSzFmchawYLkbuEDmf+3nsAhAB5aZS9aBaLeve8SUXLa5qhqquu
+ jQ69bt7PzuMfPijDEAmgImQRYSN8om0=
+X-Authority-Analysis: v=2.4 cv=SPRykuvH c=1 sm=1 tr=0 ts=6a47175d cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=_IpcT5jvKFtfOkqrLEwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDAxNiBTYWx0ZWRfXymBpL1K+KM18
- k1KowHbvS26mu3wX3ZUNKuNsgNVh3mYOf1qrKhWxM+KWyQPdQp4Pt7fo25CYOEv0zqtIMQG0AkL
- n1up90n+JCvbnPEibI7HwlP283XYDpetIqRjbvJYenQuVvivZC0T6cCmlvF1dGOHHuhBeA9JN6L
- 1lUPAU2/XZzGPNGIKEjO4ndm2gsJJpoZRAYjLSU3uDKMJLQCbWWq3LbNF9qCRKJifKmwo6TSXtk
- vUmq94a1b3f2ZUEqbjZUc1lCJy6RsJZOQUot//KVeHsviC8Zad7Nd8dg7sN511P6X0YoscTHOBf
- sUKuXkJPspRqM+NeeNxpuWKd0ETtOEbeQo50GVDKfK5IskzVRDfvXIlduAKv0n+G7qZ/YNK+BHo
- jY5mj4vWJvVgs562vz1ThYw7YBLLWDW9JxJwpZTniCzLJyOUSzrTqSGS27grGFzYd2EfCopQP5X
- c8JcBqspCqkqN7p6g/A==
-X-Proofpoint-ORIG-GUID: ApZL4Yz1RWhWVPeHBz8aHSqdjJ8zOoP4
-X-Proofpoint-GUID: ApZL4Yz1RWhWVPeHBz8aHSqdjJ8zOoP4
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=_4O7u6jvMZz_MiRxEEsA:9 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: leLinhg0YcX7SkqcKX-YEMVZpk4FHO85
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_01,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 phishscore=0 bulkscore=0 spamscore=0 suspectscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607030016
+ clxscore=1015 adultscore=0 malwarescore=0 bulkscore=0 priorityscore=1501
+ lowpriorityscore=0 phishscore=0 spamscore=0 suspectscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030017
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -146,7 +138,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,33 +154,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/26 03:27, Xiaoyao Li wrote:
-> On 7/1/2026 6:00 AM, Philippe Mathieu-Daudé wrote:
->> CPUState::singlestep_enabled contains multiple flags since
->> commit 60897d369f1 ("Debugger single step without interrupts").
->> Rename to avoid mistakes.
->>
->> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
->> ---
->>   include/hw/core/cpu.h        |  8 ++++----
->>   accel/kvm/kvm-all.c          |  2 +-
->>   accel/tcg/cpu-exec.c         |  2 +-
->>   accel/tcg/tcg-accel-ops-rr.c |  2 +-
->>   cpu-target.c                 |  8 ++++----
->>   target/arm/hvf/hvf.c         |  2 +-
->>   target/ppc/translate.c       | 16 ++++++++--------
->>   7 files changed, 20 insertions(+), 20 deletions(-)
-
-
->> @@ -505,7 +505,7 @@ struct CPUState {
->>       int exclusive_context_count;
->>       uint32_t cflags_next_tb;
->>       uint32_t interrupt_request;
->> -    int singlestep_enabled;
->> +    int singlestep_flags;
+On 3/7/26 00:42, Helge Deller wrote:
+> From: Helge Deller <deller@gmx.de>
 > 
-> can we also change the type to uint32_t?
+> The HP-UX 9 kernel uses two TLB insert instructions (0x05315440 and
+> 0x05385400), which seem to be wrongly encoded fast TLB instructions, but
+> similiar to the non-fast instructions idtlba r17,(r9) and
+> idtlbp r24,(r9).
+> 
+> It's not clear, if those undocumented instructions were used by mistake,
+> or intentionally. Either way, this patch allows qemu to handle those
+> instructions, so that a HP-UX 9 boot-CD can now boot somewhat further (but
+> still crashes due to other reasons afterwards).
+> 
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> ---
+>   target/hppa/insns.decode |  4 ++--
+>   target/hppa/translate.c  | 11 +++++++++++
+>   2 files changed, 13 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
+> index 13c6a55bf2..837a0b73e6 100644
+> --- a/target/hppa/insns.decode
+> +++ b/target/hppa/insns.decode
+> @@ -162,8 +162,8 @@ ixtlbx          000001 b:5 r:5 sp:2 0100000 addr:1 0 00000      data=1
+>   ixtlbx          000001 b:5 r:5 ... 000000 addr:1 0 00000        \
+>                   sp=%assemble_sr3x data=0
+>   
+> -# pcxl and pcxl2 Fast TLB Insert instructions
+> -ixtlbxf         000001 00000 r:5 00 0 data:1 01000 addr:1 0 00000
+> +# pcxl and pcxl2 Fast TLB Insert instructions (with HP-UX 9 workaround)
+> +ixtlbxf           000001 b:5 r:5 0- 0 data:1 01000 addr:1 0 00000
+>   
+>   # pa2.0 tlb insert idtlbt and iitlbt instructions
+>   ixtlbt          000001 r2:5 r1:5 000 data:1 100000 0 00000    # idtlbt
+> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+> index 4e34822565..72bc881784 100644
+> --- a/target/hppa/translate.c
+> +++ b/target/hppa/translate.c
+> @@ -2666,6 +2666,17 @@ static bool trans_ixtlbxf(DisasContext *ctx, arg_ixtlbxf *a)
+>        *    return gen_illegal(ctx);
+>        */
+>   
+> +    /*
+> +     * The HP-UX 9 kernel uses two undocumented instructions 0x05315440 and
+> +     * 0x05385400, which seem to be wrongly encoded fast TLB instructions,
+> +     * similiar to idtlba r17,(r9) and idtlbp r24,(r9).
+> +     * To support HP-UX 9, check b against 0 (documented) and 9 (to allow the
+> +     * r9 case), and genenerate an illegal instruction trap otherwise.
 
-Good suggestion, sure.
+Typo "generate".
+
+> +     */
+> +    if (a->b != 0 && a->b != 9) {
+
+s/&&/||/?
+
+But since @b is not consumed otherwise, what about dropping it from
+the decoder instead?
+
+   ixtlbxf           000001 00000 r:5 0- 0 data:1 01000 addr:1 0 00000
+   ixtlbxf           000001 01001 r:5 0- 0 data:1 01000 addr:1 0 00000
+
+> +        return gen_illegal(ctx);
+> +    }
+> +
+>       atl = tcg_temp_new_i64();
+>       stl = tcg_temp_new_i64();
+>       addr = tcg_temp_new_i64();
 
 
