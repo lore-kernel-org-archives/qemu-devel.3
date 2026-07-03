@@ -4,106 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9F9FC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 05:38:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38722C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 05:47:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfWbJ-0003Ii-3x; Fri, 03 Jul 2026 01:38:09 -0400
+	id 1wfWk0-0004Uc-8I; Fri, 03 Jul 2026 01:47:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wfWbE-0003IA-3c
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 01:38:05 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wfWbB-0001Q5-Fr
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 01:38:03 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-698aa7ba3e6so381769a12.1
- for <qemu-devel@nongnu.org>; Thu, 02 Jul 2026 22:37:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783057078; cv=none;
- d=google.com; s=arc-20260327;
- b=hXwMxNIF+rty4wck3TnIR2P0hzcYljSF57bS0etoCysjFutwvA3A4rEagmMSTo5BCM
- LbWR6UIld5PNnJf4yICXjyKywRoJGT7egpANwwIV1jWRnQPB8qxJUR/8ebls9tqdJlBH
- FQr5pwssF0xh29aJU1lW3K8Fw17EIFlT+OZONXJ7HF6XtAN20CIdzu9ZWp8a1xEPxQ/0
- 1TZD0nIDM65+OMrCy2gBaQGiuyVihThdzyIpwGSSg1l1yo/AmUUTUUKYrmkmGa0h8ros
- fVF29POqLf0Qa6siDoyPUmnc3mKrgs7o8ZuKj7WuK66wjKaw7zqa6OjOK/XiKw5tp02m
- w6FQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=GivYgMkXrvPeyJM6z4daeIyp29wkIg8ZlMKrnTpJvsQ=;
- fh=KLHGcCjDFE8JakAsekM1idRm6q0Xvx801j4ETmug+Fk=;
- b=bEJAzLcYaD4w5zjx6dPDyQIw3tbGiVKdD7FWVRpmdTMwe423VZpPLr8A91cXaqMYr3
- /JqxxnCyWyuPCr+kBe8NpXawsRsJprUVzXBg3moiFIo8UHQHQZMFsPIkMgnKq7ZmvVa0
- rikXZ1MW0dPp8zWr/NIGjxnKiaM7AW5AtlxzojWdSly/K+vc7G8qvIQTZILccRuCT99c
- +KBM8aLxumHkVZWEz6zdWeENIqTH6wBu9ujwdeyMd2XlMJSW3xan6jqV8pbG8o40+ysb
- ewGHmB3gUrU8icBpU3+DxeMAIHe8ogIMivSex3YQYpGL0hIguCCVgRDZr7mALw74VStx
- gczA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783057078; x=1783661878; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GivYgMkXrvPeyJM6z4daeIyp29wkIg8ZlMKrnTpJvsQ=;
- b=dx1ePKwuXSoWaLT0Oq0jEVvGwhXsDiHje5yQhCKUzL5/2Lx9s6ZqbGmOkl2HIpT4l+
- mVqQe/cchsKgExn1E08exbAC4dBH5mWA+s9eGlNGmjXAXt9ZC01s30fUS+QVG9a5M/N3
- puIjySYqeDAmP+519yYXwVmZ+9+UxzopeSqw/PzrjNzwb+vWYSQgCnop0A6AS6yzUnsH
- 8YWo6SLMth8rF2L65z5XVctvNJ4lpPyNw7sH3wSsbcOxF5wX2YkHErCSfU7/fYNEtvOE
- BtpMVqpeFj4vBOraV4LqDoC3qQ29SvBTVRwM62KtnhJiVLTUhG9NhJVYTG6kJ11Dw3rQ
- 5qxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783057078; x=1783661878;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GivYgMkXrvPeyJM6z4daeIyp29wkIg8ZlMKrnTpJvsQ=;
- b=VyTtK7qLraISxRBMbhgGszA5RU3baK81ghzwhJMaWYEzFwFHg8Gl84BvBK5yDpSHUv
- xxdBFmU29kidqrrff7eioxV+Da9fVzBKxf02oK9hIgbRuLaWIN9MTyCPMeJCnjCsasD1
- ageRUe+W/gnpFaWMxhghxZRd+zPkyKUA0i59K20wDF8yUAwnlhfMCx6pswTlnZuTJGbH
- WsFogF91L0Fa6Fv+R0K9i0ozUBKbjsH79/Udi1XOHoNsLxBr4gVEDEsKSfScOtSRDpm6
- PSeBbJPsMye8G9Je5W/6WyTdBMJVNQ7bJ90Ko8XWOvqBOh9bgjtsc8b0ySwhfyD+T93Z
- rmjg==
-X-Gm-Message-State: AOJu0YzE2IZl2dDhyTDxT2SUPBCmL990dfXz6uRp0CETVlsW+mmtajwi
- g4M7W678TTMUysOTajZJNUBps+6PDqOExOd0aoNaTt8qVzyFNdXB9P+iB7RiSPLrbD5BZKmLwQa
- YYU8NeIZqQxTjOqrFsfgWiY+mHpNbP4o=
-X-Gm-Gg: AfdE7clxYKxv6qTrtGBNy912nj2Fv5Pj/B0yumjF5mBFO0PBnX4g/vIo1NdGdVUMW48
- UqbtHLUR6zpTobMTUe6LXF+ucJnOYWdShybp5CBN7ydizYtFPcutLSOD4FjjNdfpkA/1mpXQGr9
- n8kkiCYm9mymF/DITJ0QLoNnbaVgGFWylcSWciorKm/Rin5qlydKHCLPdddu7sFkK88TROY4RHC
- f+1AegjswDMDaCh41Hm7du4ZiYeMDIiSf56XCMBL/1S02nAycGDsQ/S9qNBoCFkPtrTW51QKTy5
- Q6NOknSS9jEo3V+Z4Lb5Lv4qSkc=
-X-Received: by 2002:a05:6402:5409:b0:697:df42:2633 with SMTP id
- 4fb4d7f45d1cf-6989f35319bmr3780592a12.24.1783057077863; Thu, 02 Jul 2026
- 22:37:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wfWja-0004Sh-2k; Fri, 03 Jul 2026 01:46:42 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wfWjW-0003RT-Al; Fri, 03 Jul 2026 01:46:40 -0400
+Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.183]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6635jovd036784
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 3 Jul 2026 14:46:05 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=gyPlnHk7ZCfzpCSpANopo+J6AuVgQP9h8XedmCtcNnQ=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1783057565; v=1;
+ b=LX3PEIsr3BpeOS3RXHyKoiPGOLqfD6NBpPCiVuR31XcFWWCbW5uUQpdegBKFqtgp
+ lvEAjqiX/yyoOGl43Wr/ef/BXRsyUSvcOmKJi76P1iUgBbEMPquZRiYQLwUde2/K
+ njBzVf2YWXqUMh7ZPiYpLN1Io6XCeC9PuVTVE0Po+qGzZqT/W8ExKjlE1WR7Zi30
+ CrNTLqSj8fPXxzL6Fw4zj7Y5qp8jtgmRSwAWWnQdJTBlQeJH+FG97zyAPynMs74i
+ QCd91hL3faEA00kzrNSo34GsbFAV5sYtZWDEEoaRv8AUGbrhMj6Wl+LbQu879mhK
+ 8NKEI9NsgPQGPFhGyIdtOA==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 03 Jul 2026 14:45:35 +0900
+Subject: [PATCH v5 4/8] scsi: Use qemu_get_runtime_dir()
 MIME-Version: 1.0
-References: <20260629165954.1018123-1-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260629165954.1018123-1-daniel.barboza@oss.qualcomm.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 3 Jul 2026 15:37:31 +1000
-X-Gm-Features: AVVi8Cfbd-3OZwnxzxdkhinTU_9CkJEKeW5OelNysCWLTS-1WjSaKO7Lf0I9jsw
-Message-ID: <CAKmqyKOzznSG8wNjmCLyroArEXvp0FirteP03h-1DKZ9RFRPDg@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv/riscv-iommu-sys.c: record fault on
- IOMMU-generated MSI write
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
- andrew.jones@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260703-run-v5-4-4521ac5a149e@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260703-run-v5-0-4521ac5a149e@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260703-run-v5-0-4521ac5a149e@rsg.ci.i.u-tokyo.ac.jp>
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Yan Vugenfirer <yan@daynix.com>, John Snow <jsnow@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ kvm@vger.kernel.org,
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.16-dev-925f5
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1899;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=dMm50xffZzydEvZmAnq95wWWm43dv6hh+L1xlYY2L7U=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5a7z7T8BKva8CT/QL2ot1OWhn/mty3qt6nkm91ju61Aq
+ XPj+tSOUhYGMS4GWTFFlpSi3dwa0bWfChPiW2DmsDKBDGHg4hSAibzVZWS4PGGxJc9TrXvmgduX
+ i/6Yvefjy8m8d2ddvX3hrpqziKDzc0aGDme7LxsUNs6U3sHWWpzI/vJld29uFefplIPvDl7K9T/
+ IAwA=
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,99 +93,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 30, 2026 at 3:02=E2=80=AFAM Daniel Henrique Barboza
-<daniel.barboza@oss.qualcomm.com> wrote:
->
-> The riscv-iommu spec requires that the IOMMU records its own generated
-> MSI write faults.
->
-> Fixes: 01c1caa9d1 ("hw/riscv/virt.c, riscv-iommu-sys.c: add MSIx support"=
-)
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3572
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+qemu_get_runtime_dir() is used to construct the default paths.
 
-Thanks!
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+ docs/tools/qemu-pr-helper.rst | 8 ++++----
+ scsi/qemu-pr-helper.c         | 6 +++---
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-Applied to riscv-to-apply.next
+diff --git a/docs/tools/qemu-pr-helper.rst b/docs/tools/qemu-pr-helper.rst
+index c32867cfc611..f92e2463f10f 100644
+--- a/docs/tools/qemu-pr-helper.rst
++++ b/docs/tools/qemu-pr-helper.rst
+@@ -61,14 +61,14 @@ Options
+ .. option:: -f, --pidfile=PATH
+ 
+   PID file when running as a daemon. By default the PID file
+-  is created in the system runtime state directory, for example
+-  :file:`/var/run/qemu-pr-helper.pid`.
++  is created in ``$XDG_RUNTIME_DIR/qemu-pr-helper.pid`` or
++  |LOCALSTATEDIR|\ ``/run/qemu-pr-helper.pid``.
+ 
+ .. option:: -k, --socket=PATH
+ 
+   path to the socket. By default the socket is created in
+-  the system runtime state directory, for example
+-  :file:`/var/run/qemu-pr-helper.sock`.
++  ``$XDG_RUNTIME_DIR/qemu-pr-helper.sock`` or
++  |LOCALSTATEDIR|\ ``/run/qemu-pr-helper.sock``.
+ 
+ .. option:: -T, --trace [[enable=]PATTERN][,events=FILE][,file=FILE]
+ 
+diff --git a/scsi/qemu-pr-helper.c b/scsi/qemu-pr-helper.c
+index 9dcd3ec7111e..3412fa3abbd2 100644
+--- a/scsi/qemu-pr-helper.c
++++ b/scsi/qemu-pr-helper.c
+@@ -76,10 +76,10 @@ static int gid = -1;
+ 
+ static void compute_default_paths(void)
+ {
+-    g_autofree char *state = qemu_get_local_state_dir();
++    g_autofree char *run = qemu_get_runtime_dir();
+ 
+-    socket_path = g_build_filename(state, "run", "qemu-pr-helper.sock", NULL);
+-    pidfile = g_build_filename(state, "run", "qemu-pr-helper.pid", NULL);
++    socket_path = g_build_filename(run, "qemu-pr-helper.sock", NULL);
++    pidfile = g_build_filename(run, "qemu-pr-helper.pid", NULL);
+ }
+ 
+ static void usage(const char *name)
 
-Alistair
+-- 
+2.54.0
 
-> ---
->  hw/riscv/riscv-iommu-sys.c | 16 +++++++++++++++-
->  hw/riscv/riscv-iommu.c     |  3 +--
->  hw/riscv/riscv-iommu.h     |  1 +
->  3 files changed, 17 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/riscv/riscv-iommu-sys.c b/hw/riscv/riscv-iommu-sys.c
-> index bf87b0b4ea..3314adeed2 100644
-> --- a/hw/riscv/riscv-iommu-sys.c
-> +++ b/hw/riscv/riscv-iommu-sys.c
-> @@ -26,6 +26,7 @@
->  #include "qemu/host-utils.h"
->  #include "qemu/module.h"
->  #include "qom/object.h"
-> +#include "target/riscv/cpu_bits.h"
->  #include "trace.h"
->
->  #include "riscv-iommu.h"
-> @@ -143,7 +144,20 @@ static void riscv_iommu_sysdev_send_MSI(RISCVIOMMUSt=
-ateSys *s,
->
->      address_space_stl_le(&address_space_memory, msi_addr,
->                           msi_data, MEMTXATTRS_UNSPECIFIED, &result);
-> -    trace_riscv_iommu_sys_msi_sent(vector, msi_addr, msi_data, result);
-> +
-> +    if (result =3D=3D MEMTX_OK) {
-> +        trace_riscv_iommu_sys_msi_sent(vector, msi_addr, msi_data, resul=
-t);
-> +    } else {
-> +        /* Record an access fault error in the fault queue */
-> +        struct riscv_iommu_fq_record ev =3D { 0 };
-> +        RISCVIOMMUState *iommu =3D &s->iommu;
-> +
-> +        ev.hdr =3D set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_CAUSE,
-> +                           RISCV_IOMMU_FQ_CAUSE_MSI_WR_FAULT);
-> +        ev.hdr =3D set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_TTYPE,
-> +                           RISCV_IOMMU_FQ_TTYPE_UADDR_WR);
-> +        riscv_iommu_fault(iommu, &ev);
-> +    }
->  }
->
->  static void riscv_iommu_sysdev_notify(RISCVIOMMUState *iommu,
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index c9687e01a8..a962926688 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -118,8 +118,7 @@ void riscv_iommu_notify(RISCVIOMMUState *s, int vec_t=
-ype)
->      }
->  }
->
-> -static void riscv_iommu_fault(RISCVIOMMUState *s,
-> -                              struct riscv_iommu_fq_record *ev)
-> +void riscv_iommu_fault(RISCVIOMMUState *s, struct riscv_iommu_fq_record =
-*ev)
->  {
->      uint32_t ctrl =3D riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQCSR);
->      uint32_t head =3D riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQH) & s-=
->fq_mask;
-> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-> index a778e86fb7..da70e8bfa8 100644
-> --- a/hw/riscv/riscv-iommu.h
-> +++ b/hw/riscv/riscv-iommu.h
-> @@ -103,6 +103,7 @@ void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iom=
-mu, PCIBus *bus,
->  void riscv_iommu_set_cap_igs(RISCVIOMMUState *s, riscv_iommu_igs_mode mo=
-de);
->  void riscv_iommu_reset(RISCVIOMMUState *s);
->  void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type);
-> +void riscv_iommu_fault(RISCVIOMMUState *s, struct riscv_iommu_fq_record =
-*ev);
->
->  typedef struct RISCVIOMMUContext RISCVIOMMUContext;
->  /* Device translation context state. */
-> --
-> 2.43.0
->
->
 
