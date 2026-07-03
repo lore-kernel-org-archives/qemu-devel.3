@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4AE0C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 10:22:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43EB2C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 10:23:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfb2S-0000ZE-0n; Fri, 03 Jul 2026 06:22:28 -0400
+	id 1wfb2R-0000ZC-0R; Fri, 03 Jul 2026 06:22:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wfb2P-0000Yp-V2
+ id 1wfb2P-0000YX-AS
  for qemu-devel@nongnu.org; Fri, 03 Jul 2026 06:22:25 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wfb2O-0007dH-3p
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 06:22:25 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1wfb2N-0007cG-8g
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 06:22:24 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxZ_FXjUdqlU0BAA--.7186S3;
+ by gateway (Coremail) with SMTP id _____8Ax+fBXjUdqlk0BAA--.7105S3;
  Fri, 03 Jul 2026 18:22:15 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJDxSMFTjUdqGNq9AA--.17889S3;
- Fri, 03 Jul 2026 18:22:12 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxSMFTjUdqGNq9AA--.17889S4;
+ Fri, 03 Jul 2026 18:22:15 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: maobibo@loongson.cn,
 	lixianglai@loongson.cn
-Subject: [PATCH 1/2] MAINTAINERS: update Song Gao's email address
-Date: Fri,  3 Jul 2026 17:55:37 +0800
-Message-Id: <20260703095538.3211983-2-gaosong@loongson.cn>
+Subject: [PATCH 2/2] MAINTAINERS: add LoongArch's maintainers
+Date: Fri,  3 Jul 2026 17:55:38 +0800
+Message-Id: <20260703095538.3211983-3-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20260703095538.3211983-1-gaosong@loongson.cn>
 References: <20260703095538.3211983-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxSMFTjUdqGNq9AA--.17889S3
+X-CM-TRANSID: qMiowJDxSMFTjUdqGNq9AA--.17889S4
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -64,49 +64,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update maintainer email from gaosong@loongson.cn to
-17746591750@163.com and add corresponding .mailmap entries.
+Add xianglai and bibo as maintainers for the loongarch architecture
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- .mailmap    | 1 +
- MAINTAINERS | 4 ++--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ MAINTAINERS | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/.mailmap b/.mailmap
-index 8ade2eed66..593b6c2c53 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -119,6 +119,7 @@ Roman Bolshakov <rbolshakov@ddn.com> <r.bolshakov@yadro.com>
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com> <sriram.yagnaraman@est.tech>
- Stefan Brankovic <stefan.brankovic@syrmia.com> <stefan.brankovic@rt-rk.com.com>
- Stefan Weil <sw@weilnetz.de> Stefan Weil <stefan@weilnetz.de>
-+Song Gao <17746591750@163.com> <gaosong@loongson.cn>
- Taylor Simpson <ltaylorsimpson@gmail.com> <tsimpson@quicinc.com>
- Yongbok Kim <yongbok.kim@mips.com> <yongbok.kim@imgtec.com>
- 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 97dcc78ded..ef4c3b5c5b 100644
+index ef4c3b5c5b..fe3a3c2b57 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -280,7 +280,7 @@ F: disas/hppa.c
- F: tests/tcg/hppa/
+@@ -281,6 +281,8 @@ F: tests/tcg/hppa/
  
  LoongArch TCG CPUs
--M: Song Gao <gaosong@loongson.cn>
-+M: Song Gao <17746591750@163.com>
+ M: Song Gao <17746591750@163.com>
++M: Bibo Mao <maobibo@loongson.cn>
++R: Xianglai Li <lixianglai@loongson.cn>
  S: Maintained
  F: target/loongarch/
  F: tests/docker/dockerfiles/debian-loongarch-cross.docker
-@@ -1360,7 +1360,7 @@ F: docs/devel/hexagon-sys.rst
- LoongArch Machines
- ------------------
+@@ -1362,6 +1364,7 @@ LoongArch Machines
  Virt
--M: Song Gao <gaosong@loongson.cn>
-+M: Song Gao <17746591750@163.com>
+ M: Song Gao <17746591750@163.com>
  M: Bibo Mao <maobibo@loongson.cn>
++R: Xianglai Li <lixianglai@loongson.cn>
  R: Jiaxun Yang <jiaxun.yang@flygoat.com>
  S: Maintained
+ F: docs/system/loongarch/virt.rst
 -- 
 2.47.3
 
