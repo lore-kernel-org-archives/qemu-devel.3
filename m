@@ -4,111 +4,163 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 549A8C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:56:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9220DC43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:57:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfeNY-0002uY-1L; Fri, 03 Jul 2026 09:56:28 -0400
+	id 1wfeMq-0002Ny-Ao; Fri, 03 Jul 2026 09:55:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wfeNW-0002ro-QJ; Fri, 03 Jul 2026 09:56:26 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wfeMn-0002MF-LD; Fri, 03 Jul 2026 09:55:41 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wfeNU-0006nD-J4; Fri, 03 Jul 2026 09:56:26 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6636IVjM1814281; Fri, 3 Jul 2026 13:56:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=NIaVn8
- Q4ETq3UDIiWWPhMcwd6cOsbEmENevq5rBx0U4=; b=eeR6Cjk103i2aHGT/A1wNe
- 81umwxU/LsGkcar0xKHSInzdEXHO6wVowc79ex73Lz1zKbUk0mxMcRvT3uxj2Dom
- FOGtRHecZ9o7r4UG9RJS3vnnznH8MP8CNpzqrxI+T4NhOInftfuwfQcd599L23iz
- bP4a6z4G1w/EW8sAwweUmEZxXOW1UcBqIGowuegZrnw+j5OofIlrEXJ3ED7TJ0n7
- bplHkU9AsKX+AshJ8GWTEE4bTZRJ24WuDP8PFgSIK3zW7D5mpIS1iZAoX9ovXsLK
- 7+atzFA49AMjxGhkNtAys1V0mnDW7aToBliqUeOrxXcsLSEbYSToMbkKuNi0/NSQ
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rff0f0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 13:56:22 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663DnisD009982;
- Fri, 3 Jul 2026 13:56:22 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhyrwn7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 13:56:22 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 663DuKQt22413864
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 3 Jul 2026 13:56:20 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B5D2A58043;
- Fri,  3 Jul 2026 13:56:20 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0EAAB58059;
- Fri,  3 Jul 2026 13:56:20 +0000 (GMT)
-Received: from [9.61.75.28] (unknown [9.61.75.28])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  3 Jul 2026 13:56:19 +0000 (GMT)
-Message-ID: <6fa4c5f7-0388-4acb-bacb-f929ecff1a09@linux.ibm.com>
-Date: Fri, 3 Jul 2026 09:56:19 -0400
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wfeMl-0006Tk-Ju; Fri, 03 Jul 2026 09:55:41 -0400
+Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6636s8pI2116633; Fri, 3 Jul 2026 06:55:18 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=proofpoint20171006; bh=iJShgEgCyiUOJ
+ oJzESgE9LFwEvVluiEosLvW/cYK32U=; b=m5dTPXcklqvVcJ+xuXJrlN/fC89MT
+ lo/KdkMWY2HoQ9wyT3/gxfhJVFOPI400p0FndT8pv4Qha6d9zg/57w8YBU39cLHx
+ RbmqYcDbc70hcHrd11F8BK7JMJrGccOPCTh4rQVTg2MqGzXptSpdMSB5YHXya1Ie
+ mrnx2GHzajNiEmdXF1w/rSvbwr5fJjpLPIzcNKWt814kVd94sJ8H9amkMjgMhmmR
+ F0+m8SVBcOyRQNdjE7HF/MK5pxLcG7JgSy+/nry4RS11kuGozlRRycPnr31MSENX
+ yslY38WwdiWEf/2BlVLfVL4J+MffOUutrOFz0Mfrozyv7+ZDq7QCcL9LA==
+Received: from cy7pr03cu001.outbound.protection.outlook.com
+ (mail-westcentralusazon11020081.outbound.protection.outlook.com
+ [40.93.198.81])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4f687kgs7g-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 03 Jul 2026 06:55:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZraqFYNrWp/nw9fFvW3BzFETnQyH4OHhuQu/amEIdGgc0xQ+S5EaUj9Vl2J8dZVFwttPZKTILFhZwZaS0ELz49OAjFCKm/PswNiSoFSTWsaOIN482mNWg9nE+rivGWhW25+JfnRRV9hVqvNv5zjhLJ4dmaDqU5IhYHkVuHX9iB8Zs/Tr67xHCTihU4Op7VnawrTna0WrVn48J+BzlOmLDfnUVFPaaI23fPfxTlESScVn5JO9tJK2r2ZtLSNJ9pmQtgPWqjI4BOtjO9z8HsD+E5pGP2QPjUnEpxpkQ8HYqJ9wD+opl1o4Al/IaFWkTJsm9TZHidIwM4kLqrSAByVejw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=iJShgEgCyiUOJoJzESgE9LFwEvVluiEosLvW/cYK32U=;
+ b=r9Rqf3Jlzcf9RVYEx5SkZIWBJRMTNKeQKxeHFn/QMf2b+taZKAtLpF2VBwjQZhTLXij2LX0/YbHIdD+ZJRxF8UucggVTms1DPHyvwxIkWjU18AgXv9HqOj755uaoNnk8nEXUCvRhs98S/+KhtB7GcFcNLAe0HY6t3n8+tHmG1OOD7ORO+jq+52Kjk0vajsuYApKNaebzPovqiBIeRKyLhZ07ypHixzmYngEZkRanep6jH00LlO8FQ9GV1/a9TPvB+hm3tM3mCAxJcltXdgxsojYX2pHK8eYkpkELA/V1GbCBTR1k+IRF3DepDsaH7UI9o2hk638Kf1KQ6TtW7wzAgQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=iJShgEgCyiUOJoJzESgE9LFwEvVluiEosLvW/cYK32U=;
+ b=czSZttRrLjltUwtEoj/OjCIQ0DVE4tj+nvVYvRzZ0yVhh9WcGyO9z4p020Nvgvj+qjahE3Z6R/3fzrEbVLcPzHxk9o6UbL9AhFrwNOueUgPx/htc/KNeHVDFXN3nZy/63U/LqpFkNuUIP5zugiApneeHwFLw13mXIybxsh7alYGY1rbNRsn68ziLQPnzN/atyfR+WcpX6dhOleMXJC06Kw0wxD0Dtr9t+ij7ViH0bb+Yy1G9T5weHnWRtW/E0RR34scOi4yvGK5+FlntojOOt3UrHj9J1sfzz2zwLIRVif6JdOcqoRxx1vuAti6tsdMow8BhQn/409RS23VyRAh0sQ==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by DSWPR02MB11394.namprd02.prod.outlook.com (2603:10b6:8:353::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Fri, 3 Jul 2026
+ 13:55:16 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0181.010; Fri, 3 Jul 2026
+ 13:55:16 +0000
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+To: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, philmd@mailo.com,
+ aurelien@aurel32.net, peter.maydell@linaro.org, pbonzini@redhat.com,
+ richard.henderson@linaro.org, berrange@redhat.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Subject: [PATCH v2 00/12] hw/acpi: convert object props to class props
+Date: Fri,  3 Jul 2026 14:53:02 +0100
+Message-ID: <20260703135512.3213964-1-mark.caveayland@nutanix.com>
+X-Mailer: git-send-email 2.43.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PA7P264CA0001.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:102:2d3::9) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 23/33] pc-bios/s390-ccw: Add signature verification
- for secure IPL in audit mode
-To: Eric Farman <farman@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260703022933.1805010-1-zycai@linux.ibm.com>
- <20260703022933.1805010-24-zycai@linux.ibm.com>
- <26e6d55b2ea246f2c2602ff911f459c7df8b57b0.camel@linux.ibm.com>
-Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <26e6d55b2ea246f2c2602ff911f459c7df8b57b0.camel@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a47bf87 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=b206u0OnBF6S4jO2i-UA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: nnL8fDoqutC_WTH0JTDJm9mt5AenR8XB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDEzNiBTYWx0ZWRfX6pwLMp6YNloy
- J5VksHhaZr/VVRd1how0IaRQ7Z+tQiuGbE7GhNEKb8cKrr5ZirWhTGALZvsDwxjqScpq8fftpiP
- XZv5sDhdTdRk0oFGZKxeJIQW0v5bIi45hjePBgHf8gHRGrQ4ZCumFBRqjAiupQU0hdlI7tZT5kf
- 855Sa7Qi9By4UoK6aFRtteNHWBp0sM9r/x+ynNCkPcW7mFCLvV7N1hFaXE6J39mimjw2a9MjdbJ
- QZ3AmWIuDxjWrstbsP9Bm+0IlxW42DqEtfO+xFdux+aXtbvvwatSVNj7hH0MsbXU0d3GOOmQc68
- v4HrTXNu2m0jWeh8qwHrxpZiIj+aGKnmWCCQY4j1FqzKyL8mt5vVjsZgoWgQJu+fyiF96r2TwG+
- 7y+Qn8UmQrnPlajeT82VFdzj9TOirA1v2a3IK/hxFjQ3l6JN2Mm06nA3aPsYnd6hju8CkPDbpD8
- Wh/XvgKvD641UOzXHQw==
-X-Proofpoint-GUID: nnL8fDoqutC_WTH0JTDJm9mt5AenR8XB
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDEzNiBTYWx0ZWRfX+hdKpO95pZpr
- fdaf+azzqshTsEXveYoJ+xkQhnmiLkLC35VIQVb9EfXSybhcVK5z4B3B7Gj9gVVDjyLjdohIDXT
- C1QA2mSCfhOFQUhI91R19UrM3ccI9WU=
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|DSWPR02MB11394:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7a043947-736c-44d4-5f7d-08ded90ab60a
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|7416014|1800799024|23010399003|366016|56012099006|6133799003|18002099003|921020;
+X-Microsoft-Antispam-Message-Info: ygjTPAgPSBEDzgNdFrzzMWgMZXAkyxGprQQE4bg20m+t8s2JbiXlyCquJ2Ki/YoBCT4Re7coQKvoclyzV694ur3i2Jn5n9jN7w6k2bJH36SSAt4Wwgi4p9o0Qazq5dg++vmBzeY2dvsfhfEyc9JZyrM1egbCl13Udt3DHi7aEu+7E1v3VgomJnjtI1t9wvly1JqutVjcApoWoxtxLUtkdq06UOcB+FYnSwxHqPmk8VfYvV+PvE/RxCwuhSon0fVItN7lHWGitUO8KwkM1v7SYp4+vs6shnTO9uSyWQY+SyW1aytjSEpnlpY8pLUidAj0GqVIptapJFd17GPK1Iyehff0cYHdjceXMg5YHVs5PeSjSHEZ6+8XRsKX5ZvOSCQ6oJ3fXMWxDPCMof7cYcCV9Un6PqeoNtIV3vawajg3M7vPXWyxIVrZa6eidO14l4lxCkuzaFcA4ROOKqW2gPu8BohepLVJ4Al/US88FTHo3NGDOZgpqRHcL8Q60i4LqSeK6z+69mJy9zTyEaQ3s4mSvV5E1tI86RqVEX3zmN0X4InWACx3w3xwGps1gPsRJ/KmxudJ/N7ghOEHZttvVQPzeCAJdQtfdc4rtAp48cVz6DJgMRG43jle4ZUjg6CTNb0nIQLye/j97xFUK1gzL/ojAmytgtIkpdRUe91AtT3ZsWbTcWyW2LdWW10XBncCc3eeSnmz2I9aI8GwLoBmWvcAsQ==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(23010399003)(366016)(56012099006)(6133799003)(18002099003)(921020);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?nk8YqBqqtkmlmixrJDjTCIEBzhC9546Dg/ZmM+deAn0+AuwuFyJ1XHXAv6sG?=
+ =?us-ascii?Q?niwpgKyjNiD6Bd2z7G9YnMm9Gs/EoGSbDQ3vFdwER7McEO/oOR8PXg77oJ5z?=
+ =?us-ascii?Q?VdkQXY92PkGaY9w2GZ3rR3bsQ/fd44UGlk6zDQ1bjzlP57rQ9bfZbmGB5v4/?=
+ =?us-ascii?Q?8cZ0lwd1Uk8DwbruVP2JowRIx+unku6JFrk6r1FgiWVIQP9flFpX2l8en7hQ?=
+ =?us-ascii?Q?Lk98xjaGOeEJ/0ULQpE4vwcwsHVw9EK1N1LnxybCZQDKprBQ3S3LFbp7acpN?=
+ =?us-ascii?Q?0RCHtgq4Ox1deah3JQYw7egZnN+lRXrT9MkNphU+A5eUn4fTu+RRi5sEQ3yg?=
+ =?us-ascii?Q?FMXyAwR1056yDzXCcI/psk1ifLHin6JiKU45RE7xV+1/z55CVQwLCahmcKSI?=
+ =?us-ascii?Q?yBrCz/af3fzYHF8b/8kWgGQamnV9L31Hj9L7HjOBm0xuH8qa4p8X6xn0BJYT?=
+ =?us-ascii?Q?oarCltzHWcBxHwZ12nqS1qkRc1iF7vbxiuE6Bgan0b0mqwO9pn1ckP78KXJj?=
+ =?us-ascii?Q?rJPZkS5AlSwWpwPKSION6tyJINO/0pWg8v6yN42ho2P+ycA/20LHfqNcmjKT?=
+ =?us-ascii?Q?YkxlEsDDbm5xaTsm4p3LwK3vZdCUh9mNLpkaDKYdaGgxfzaXJJlSaKcM+/l6?=
+ =?us-ascii?Q?gpIX5mcIPCfPOGclQKGAojbaDWE/nfT7Jq4kZGzrLU0DTqmVI5ZyffEsEYP9?=
+ =?us-ascii?Q?gPc2KCDlAw4qaD/N0tsg4bSbIKNG9smK8o64tcVa3C9xtsnieU+OZcQKhVzK?=
+ =?us-ascii?Q?R3/Y4X6QUGeyiVp0koE4OGMxq9Vjh6qaRwRWJ2O6a4puv6jg+UPPHpUOgM+8?=
+ =?us-ascii?Q?HVo9KpOmx/xd5GT0SjP4UtdAMKDvXxL844FsDlxAEa8m/aLgardfVsmANfrT?=
+ =?us-ascii?Q?ydHH8bsZArix2rK3eEAuXYVNaHVvOYKcXW5Si9VynoD50smdo/Rt1DMK7NVv?=
+ =?us-ascii?Q?g1PWcQcE9BQBaCYgpLM8rHp1lyisZ8+LTuuJ0VEAQYplOAWk/tu9UpYAxyKG?=
+ =?us-ascii?Q?fUatE+Yl7blwl8k8hkne4crW1kjv32bcAhHYU14fQ5MXcHi9Z29107NwkxCm?=
+ =?us-ascii?Q?2yFU1wixZbII4TXlYrw3KtQe0ERqHKZqo8zJqla2fmHqa2E2pqtUe9d5fShE?=
+ =?us-ascii?Q?NCoXApFLqyERu4HwwS1hM5vRSYkaGaaf74dF7nnYVmnvrnVGe3VtJs9Ihu5z?=
+ =?us-ascii?Q?Xjatu+R31GwdIKtuZZj9tbapWDImsGXexcHUZRKHxPU1+pyy6WHMzwsaX96m?=
+ =?us-ascii?Q?7ASiXAbjLN6AWKwKOO4CjjrfUiqDUUCHDf32m+vwctPAWrTfWuhFwg9tF0um?=
+ =?us-ascii?Q?xdKO9/yAAFPJGL2qBGysdOy/08RiFZfTAA4MD413fAubL36dyaPzBmCpnVV5?=
+ =?us-ascii?Q?a41dOB+OuK2ZqedjlIvTWfeco7Zkgva+1NF06XPrnnHXtGHX7azOrG4OjwxX?=
+ =?us-ascii?Q?nN4r1OgTLlBpJYFWKbi4FUldnKnNGep3mpnGALsSXWlRQEbKb7FiwfarUxt6?=
+ =?us-ascii?Q?28jsl1ZkJCvNHw3O4YT0ZpHWDxXCEldfW2S5H6dW+w7FylfRGbCSVVw9Xkc7?=
+ =?us-ascii?Q?o9kYEFJmm3PF4Zv0vIkm6pZJvUKseBmd0bstvHwtnhe03ifithj66fL36P1S?=
+ =?us-ascii?Q?rltJ3JyTscq953ABqTjE4mAzd765lq9UhUEFI3eTPbz/Dp7NkWy/0vIMT/FZ?=
+ =?us-ascii?Q?C74k/wNSqbnK59oXlgYcVBb1gqKraITkmCDG75KrrwnYRSVGa7oitTZqwThF?=
+ =?us-ascii?Q?/tVaZ0vPZ4y7VSiNABIscUxSGC+68hc=3D?=
+X-Exchange-RoutingPolicyChecked: hXzqUciilOn1rFRPfu+bFE9vdOt73hjIgk5GHk8r/aGGr9/BL+3VfMNBKvWVCPAXYtCov1/9oc0O4fW3PRacW/MzOo8MTEpirDSf5h78gXn+wqhj9agon6Xc+HUJVihMpYyeuQLAPQi7JZ8dhc8Dmuu7f47qF5y5YiIb1nddJW35UpfefPr5GSzmO6GgPcA9cgMHjFNgbpAH0vUhPWL2pnT+xCVIFFoeLsZiyALlJV+wuzT4sGz3BxvbuaZNo6QJzHoVbiNqyNS8bObKaiHIi8V6lRxk9oVRXslfYCCZ3E9wT4sWh45m+OTUa5PW+VTQUI847JSK13C8YJzMd/LOcQ==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7a043947-736c-44d4-5f7d-08ded90ab60a
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2026 13:55:16.2423 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8k51Fi7ZRehkmP3Md/UnLllke5J0DJPXBLVbYQNJ0rSlapQp2vM0z7uNyKklz35cuA3IzZeAf6/+QYFYk7txm2royKK4PCqLpkgwxRNjFhQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DSWPR02MB11394
+X-Proofpoint-GUID: J-7421HFLlIUPq9BGOdYqP4o5tXxC6cD
+X-Proofpoint-ORIG-GUID: J-7421HFLlIUPq9BGOdYqP4o5tXxC6cD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDEzNyBTYWx0ZWRfX8hEnHyVxP4fM
+ 65zDb0hccGgA2rV7o4mQscX8I3Si3V9OnL/G4ieKg+dR3ZsD/YaFm5S1MP0LWL2SHoZlh8ND2ST
+ fhd0q9DB09d4Nge+I5MHh3Ah4i5zR7q+O9WaXtM5M46C7nltX7Pbp8yzfrIS8nEHuwq+7U5UtgI
+ umSdkgO4N5Ggl27dBbvusaYHg0FpURL+aRA+ic5HkedmWs8fqIJlOefW8TXmQ+eUulrQY/bti7P
+ /m/rAU3MU/Gm6pVto9CNPmY0wfEeUp+vsR69WYUVFnAxclBSXlLm5xFxfEjK9bzexpTSRSL6UF+
+ psAFpWVKKOWtjAMxRE9QcSoo7IDqaUK5QbK3fteveotjJ3EUPmQkiO01e6nB2F3JsZlVFrG2Er9
+ nKWI87IEwJkFyazIeO0J4jlQxeRNmr4HHAz08FxCBWHgReSQh9/I2cVITltsc6PzyEsa9CB1SiC
+ Z98oZr6JgBxar8c5v6w==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDEzNyBTYWx0ZWRfX3SSdEdIAswyH
+ WlwQtuYij8iSMg4QttcvXFEo501mM7G3gKwAJeNk3mgUET5CvxiyujgweMg8x35bimpe0gO218m
+ ZtTs/Hbzs2DLFW5KfkhsdiHpyE90560=
+X-Authority-Analysis: v=2.4 cv=CYQ4Irrl c=1 sm=1 tr=0 ts=6a47bf46 cx=c_pps
+ a=vcV0SyA3r3yo/t37AMr7eA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=RAioF0-LDSMA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=dEe9Ve2bX-KnNSUMM2s9:22
+ a=mDV3o1hIAAAA:8 a=64Cc0HZtAAAA:8 a=vKcFq8QUBYrKBSkNEBgA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
- spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030136
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,306 +177,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/26 7:40 AM, Eric Farman wrote:
-> On Thu, 2026-07-02 at 22:29 -0400, Zhuoying Cai wrote:
->> Enable secure IPL in audit mode, which performs signature verification,
->> but any error does not terminate the boot process. Only warnings will be
->> logged to the console instead.
->>
->> Secure IPL in audit mode requires at least one certificate provided in
->> the key store along with necessary facilities (Secure IPL Facility,
->> Certificate Store Facility and secure IPL extension support).
->>
->> Note: Secure IPL in audit mode is implemented for the SCSI scheme of
->> virtio-blk/virtio-scsi devices.
->>
->> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
->> ---
->>  docs/system/s390x/secure-ipl.rst |  15 ++
->>  hw/s390x/ipl.c                   |   9 +
->>  pc-bios/s390-ccw/Makefile        |   2 +-
->>  pc-bios/s390-ccw/bootmap.c       |  27 +++
->>  pc-bios/s390-ccw/bootmap.h       |   9 +
->>  pc-bios/s390-ccw/jump2ipl.c      |   7 +
->>  pc-bios/s390-ccw/main.c          |  18 +-
->>  pc-bios/s390-ccw/s390-ccw.h      |  20 ++
->>  pc-bios/s390-ccw/sclp.c          |  27 +++
->>  pc-bios/s390-ccw/sclp.h          |   6 +
->>  pc-bios/s390-ccw/secure-ipl.c    | 363 +++++++++++++++++++++++++++++++
->>  pc-bios/s390-ccw/secure-ipl.h    | 115 ++++++++++
->>  12 files changed, 616 insertions(+), 2 deletions(-)
->>  create mode 100644 pc-bios/s390-ccw/secure-ipl.c
->>  create mode 100644 pc-bios/s390-ccw/secure-ipl.h
->>
-> 
-> ...snip...
-> 
->> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
->> index cd3d0776b0..7484429c9a 100644
->> --- a/pc-bios/s390-ccw/main.c
->> +++ b/pc-bios/s390-ccw/main.c
->> @@ -20,6 +20,7 @@
->>  #include "dasd-ipl.h"
->>  #include "clp.h"
->>  #include "virtio-pci.h"
->> +#include "secure-ipl.h"
->>  
->>  static SubChannelId blk_schid = { .one = 1 };
->>  static char loadparm_str[LOADPARM_LEN + 1];
->> @@ -383,6 +384,8 @@ static void probe_boot_device(void)
->>  
->>  void main(void)
->>  {
->> +    int vcssb_len;
->> +
->>      iplb = &ipl_blocks.iplb;
->>  
->>      copy_qipl();
->> @@ -394,7 +397,20 @@ void main(void)
->>          probe_boot_device();
->>      }
->>  
->> -    boot_mode = ZIPL_BOOT_MODE_NORMAL;
->> +    boot_mode = get_boot_mode(iplb->hdr_flags);
->> +    switch (boot_mode) {
->> +    case ZIPL_BOOT_MODE_SECURE_AUDIT:
->> +        if (!secure_ipl_supported()) {
->> +            panic("Unable to boot in audit mode");
->> +        }
->> +
->> +        vcssb_len = zipl_secure_get_vcssb();
->> +        if (vcssb_len == 0) {
->> +            panic("Failed to query certificate storage information!");
->> +        }
-> 
-> break? fallthrough?
-> 
+[Background: based upon Peter's feedback at
+ https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg07717.html I realised
+ that what we really need are object_class_property_add_*_ptr() equivalents to
+ the existing object_property_add_*_ptr() functions to make it easier to
+ convert existing properties.
 
-Thanks for catching this!
+ There are actually existing functions with these names that are already in use
+ but after observation these are really static properties, so these are renamed
+ to aid porting object props to class props, as well as making the difference
+ clearer.]
 
->> +    default:
->> +        break;
->> +    }
->>  
->>      while (have_iplb) {
->>          boot_setup();
->> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
->> index 5420443ad2..ca2737054d 100644
->> --- a/pc-bios/s390-ccw/s390-ccw.h
->> +++ b/pc-bios/s390-ccw/s390-ccw.h
->> @@ -40,6 +40,22 @@ typedef unsigned long long u64;
->>                              ((b) == 0 ? (a) : (MIN(a, b))))
->>  #endif
->>  
->> +/*
->> + * Round number down to multiple. Requires that d be a power of 2.
->> + * Works even if d is a smaller type than n.
->> + */
->> +#ifndef ROUND_DOWN
->> +#define ROUND_DOWN(n, d) ((n) & -(0 ? (n) : (d)))
->> +#endif
->> +
->> +/*
->> + * Round number up to multiple. Requires that d be a power of 2.
->> + * Works even if d is a smaller type than n.
->> + */
->> +#ifndef ROUND_UP
->> +#define ROUND_UP(n, d) ROUND_DOWN((n) + (d) - 1, (d))
->> +#endif
->> +
->>  #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
->>  
->>  #include "cio.h"
->> @@ -64,6 +80,8 @@ void sclp_print(const char *string);
->>  void sclp_set_write_mask(uint32_t receive_mask, uint32_t send_mask);
->>  void sclp_setup(void);
->>  void sclp_get_loadparm_ascii(char *loadparm);
->> +bool sclp_is_diag320_on(void);
->> +bool sclp_is_fac_ipl_flag_on(uint16_t fac_ipl_flag);
->>  int sclp_read(char *str, size_t count);
->>  
->>  /* bootmap.c */
->> @@ -71,9 +89,11 @@ void zipl_load(void);
->>  
->>  typedef enum ZiplBootMode {
->>      ZIPL_BOOT_MODE_NORMAL = 0,
->> +    ZIPL_BOOT_MODE_SECURE_AUDIT = 1,
->>  } ZiplBootMode;
->>  
->>  extern ZiplBootMode boot_mode;
->> +ZiplBootMode get_boot_mode(uint8_t hdr_flags);
->>  
->>  /* jump2ipl.c */
->>  void write_reset_psw(uint64_t psw);
->> diff --git a/pc-bios/s390-ccw/sclp.c b/pc-bios/s390-ccw/sclp.c
->> index 4a07de018d..48bdfedf1f 100644
->> --- a/pc-bios/s390-ccw/sclp.c
->> +++ b/pc-bios/s390-ccw/sclp.c
->> @@ -113,6 +113,33 @@ void sclp_get_loadparm_ascii(char *loadparm)
->>      }
->>  }
->>  
->> +bool sclp_is_diag320_on(void)
->> +{
->> +    ReadInfo *sccb = (void *)_sccb;
->> +
->> +    memset((char *)_sccb, 0, sizeof(ReadInfo));
->> +    sccb->h.length = SCCB_SIZE;
->> +    if (!sclp_service_call(SCLP_CMDW_READ_SCP_INFO, sccb)) {
->> +        return sccb->fac134 & SCCB_FAC134_DIAG320_BIT;
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->> +/* check if specified IPL facility flag is enabled */
->> +bool sclp_is_fac_ipl_flag_on(uint16_t fac_ipl_flag)
->> +{
->> +    ReadInfo *sccb = (void *)_sccb;
->> +
->> +    memset((char *)_sccb, 0, sizeof(ReadInfo));
->> +    sccb->h.length = SCCB_SIZE;
->> +    if (!sclp_service_call(SCLP_CMDW_READ_SCP_INFO, sccb)) {
->> +        return sccb->fac_ipl & fac_ipl_flag;
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->>  int sclp_read(char *str, size_t count)
->>  {
->>      ReadEventData *sccb = (void *)_sccb;
->> diff --git a/pc-bios/s390-ccw/sclp.h b/pc-bios/s390-ccw/sclp.h
->> index 64b53cad29..a8a41cd004 100644
->> --- a/pc-bios/s390-ccw/sclp.h
->> +++ b/pc-bios/s390-ccw/sclp.h
->> @@ -50,6 +50,8 @@ typedef struct SCCBHeader {
->>  } __attribute__((packed)) SCCBHeader;
->>  
->>  #define SCCB_DATA_LEN (SCCB_SIZE - sizeof(SCCBHeader))
->> +#define SCCB_FAC134_DIAG320_BIT 0x4
->> +#define SCCB_FAC_IPL_SIPL_BIT   0x4000
->>  
->>  typedef struct ReadInfo {
->>      SCCBHeader h;
->> @@ -57,6 +59,10 @@ typedef struct ReadInfo {
->>      uint8_t rnsize;
->>      uint8_t reserved[13];
->>      uint8_t loadparm[LOADPARM_LEN];
->> +    uint8_t reserved1[102];
->> +    uint8_t fac134;
->> +    uint8_t reserved2;
->> +    uint16_t fac_ipl;
->>  } __attribute__((packed)) ReadInfo;
->>  
->>  typedef struct SCCB {
->> diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
->> new file mode 100644
->> index 0000000000..2cfa16fb68
->> --- /dev/null
->> +++ b/pc-bios/s390-ccw/secure-ipl.c
->> @@ -0,0 +1,363 @@
->> +/*
->> + * S/390 Secure IPL
->> + *
->> + * Functions to support IPL in secure boot mode (DIAG 320, DIAG 508,
->> + * signature verification, and certificate handling).
->> + *
->> + * For secure IPL overview: docs/system/s390x/secure-ipl.rst
->> + * For secure IPL technical: docs/specs/s390x-secure-ipl.rst
->> + *
->> + * Copyright 2025 IBM Corp.
->> + * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include <stdlib.h>
->> +#include <string.h>
->> +#include <stdio.h>
->> +#include "s390-ccw.h"
->> +#include "sclp.h"
->> +#include "secure-ipl.h"
->> +
->> +static VCStorageSizeBlock vcssb __attribute__((__aligned__(8)));
->> +
->> +#define for_each_rb_entry(entry, list) \
->> +    for (entry = (void *)(list) + sizeof((list)->ipl_info_header); \
->> +         (void *)(entry) + sizeof(*(entry)) <= \
->> +         (void *)(list) + (list)->ipl_info_header.len; \
->> +         entry++)
->> +
->> +int zipl_secure_get_vcssb(void)
->> +{
->> +    /* avoid retrieving vcssb multiple times */
->> +    if (vcssb.length == VCSSB_LEN_VALID) {
->> +        goto out;
->> +    }
->> +
->> +    vcssb.length = VCSSB_LEN_VALID;
->> +    if (_diag320(&vcssb, DIAG_320_SUBC_QUERY_VCSI) != DIAG_320_RC_OK) {
->> +        vcssb.length = 0;
->> +    }
->> +
->> +out:
->> +    return vcssb.length;
->> +}
->> +
->> +static uint32_t request_certificate(uint8_t *cert_buf, uint8_t index)
->> +{
->> +    VCEntryHeader *vce_hdr;
->> +    struct vcb {
->> +        VCBlockHeader vcb_hdr;
->> +        struct vce {
->> +            VCEntryHeader vce_hdr;
->> +            uint8_t cert_buf[CERT_BUF_MAX_LEN];
->> +        } vce;
->> +    } __attribute__((__aligned__(PAGE_SIZE))) vcb = { 0 };
->> +
->> +    /*
->> +     * Request single entry
->> +     * Fill input fields of single-entry VCB
->> +     *
->> +     * First and last index must be equal because only one
->> +     * VCE per VCB is currently supported
->> +     */
->> +    vcb.vcb_hdr.in_len = ROUND_UP(vcssb.max_single_vcb_len, PAGE_SIZE);
-> 
-> Don't you need to convert max_single_vcb_len from be to cpu?
-> 
+Since the use of object props is effectively deprecated, here is an attempt
+to convert all use of object props in hw/acpi to class props. The eventual
+aim is to continue working through the codebase, removing all remaining uses
+of object props.
 
-I don't think we need to convert max_single_vcb_len here, but please
-correct me if I'm missing something. If I understand correctly, the
-fields are written and read in big-endian format, so no additional
-conversion should be necessary.
+The series is lightly tested: it passes "make check", GitLab CI and some
+simple local tests. I'm mostly interested for feedback on the conversion
+strategy, and to get a feel for the best way to merge this series since once
+the basic conversion patterns are in place, the same patterns can be applied
+elsewhere and it would be good to minimise the merge window for such changes.
 
->> +    vcb.vcb_hdr.first_vc_index = index;
->> +    vcb.vcb_hdr.last_vc_index = index;
->> +
->> +    if (_diag320(&vcb, DIAG_320_SUBC_STORE_VC) != DIAG_320_RC_OK) {
->> +        puts("Could not get certificate");
->> +        return 0;
->> +    }
->> +
->> +    if (vcb.vcb_hdr.out_len == sizeof(VCBlockHeader)) {
->> +        puts("No certificate entry");
->> +        return 0;
->> +    }
->> +
->> +    if (vcb.vcb_hdr.remain_ct != 0) {
->> +        panic("Not enough memory to store requested certificate");
->> +    }
->> +
->> +    vce_hdr = &vcb.vce.vce_hdr;
->> +    if (!(vce_hdr->flags & DIAG_320_VCE_FLAGS_VALID)) {
->> +        puts("Invalid certificate");
->> +        return 0;
->> +    }
->> +
->> +    memcpy(cert_buf, (uint8_t *)&vcb.vce + vce_hdr->cert_offset, vce_hdr->cert_len);
->> +
->> +    return vce_hdr->cert_len;
->> +}
->> +
-[...]
+Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+
+v2:
+- Add object_class_property_add_*_ptr() functions matching the existing
+  object_property_add_*_ptr() functions for class functions
+
+- Rework patch to use new functions instead of manually adding get/set
+  functions as part of the conversion
+
+- Ignore existing R-Bs since this approach is quite different to v1
+
+- Rebase onto master
+
+
+Mark Cave-Ayland (12):
+  qom/object.c: rename object_class_property_uint*_ptr() to
+    object_class_static_property_uint*_ptr()
+  qom/object.c: add object_class_property_add_uint8_ptr()
+  qom/object.c: add object_class_property_add_uint16_ptr()
+  qom/object.c: add object_class_property_add_uint32_ptr()
+  qom/object.c: add object_class_property_add_uint64_ptr()
+  hw/acpi/ich9.c: move initial property values into
+    ich9_reset_properties()
+  hw/isa/lpc_ich9.c: convert ich9_lpc_initfn() object props to class
+    props
+  hw/acpi/ich9.c: don't pass ICH9LPCPMRegs via opaque for
+    ACPI_PM_PROP_GPE0_BLK prop
+  hw/acpi/ich9.c: convert object props in ICH9_LPC_DEVICE to class props
+  hw/acpi/pcihp.c: convert ACPI_PCIHP_IO_BASE_PROP and
+    ACPI_PCIHP_IO_BASE_PROP to class props
+  hw/acpi/pcihp.c: convert ACPI_PCIHP_PROP_BSEL from object prop to
+    class prop
+  hw/acpi/piix4.c: convert object props in PIIX4_PM to class props
+
+ include/hw/acpi/ich9.h         |   4 +-
+ include/hw/pci/pci_bus.h       |   2 +
+ include/qom/object.h           |  20 ++++
+ hw/acpi/generic_event_device.c |  10 ++
+ hw/acpi/ich9.c                 |  79 ++++++++-----
+ hw/acpi/pci-bridge.c           |   9 +-
+ hw/acpi/pcihp.c                |  37 +++----
+ hw/acpi/piix4.c                |  51 ++++++---
+ hw/arm/virt-acpi-build.c       |   7 +-
+ hw/i386/acpi-build.c           |   7 +-
+ hw/isa/lpc_ich9.c              |  71 +++++++++---
+ hw/pci/pci.c                   |  32 ++++++
+ hw/riscv/spike.c               |   5 +-
+ qom/object.c                   | 196 ++++++++++++++++++++++++++++++++-
+ 14 files changed, 440 insertions(+), 90 deletions(-)
+
+-- 
+2.43.0
+
 
