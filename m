@@ -4,49 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42991C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F49AC43602
 	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 05:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfWMc-0005Y2-UL; Fri, 03 Jul 2026 01:22:59 -0400
+	id 1wfWMh-0005c3-JR; Fri, 03 Jul 2026 01:23:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wfWMZ-0005WF-TZ; Fri, 03 Jul 2026 01:22:55 -0400
+ id 1wfWMc-0005Xi-21; Fri, 03 Jul 2026 01:22:58 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wfWMX-0005w6-0j; Fri, 03 Jul 2026 01:22:55 -0400
+ id 1wfWMa-0005yH-47; Fri, 03 Jul 2026 01:22:57 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6635LT8N018373
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6635LT8S018373
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 3 Jul 2026 14:21:42 +0900 (JST)
+ Fri, 3 Jul 2026 14:21:45 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=eRgDwmfqLOROSsM7iDfNfv4dTa1BcJ8KBiEORkeKTHc=; 
+DKIM-Signature: a=rsa-sha256; bh=WU1hr20De0lfszJxA0uPYsBXpl0cfWRc8y3s2m5DLyo=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1783056102; v=1;
- b=JPcyGAj3IGq8xd9orzIITQJi+gi2gUCskbFRmBaBPLfurfUDsag8SmirzClB8To7
- 0TrJohL3Gh/OxsWy8VmFmegHgpVTvRHuEn+tA6xBqRwIlF5B72DhpYw80LWjK49C
- ZDUdV4fP1+p4SviIgGbM/rVEluugBRhaOQl2XwmxV2X3QSt6/Bq2saDPdUNW7fgR
- 52RHLJBlEirIoo/jk4A9Ufs/pADk7oC6aVWWcCfCYC3aK6jj44WybkqR9Z5mtTWk
- XrRrkrRhElS8A1rd+r2a8+hJKncVpMz8BkfkLh2r33DYO9iSzUaRaiVEDj8y7PUr
- qBmT70n9/whlLtWnyZRQZg==
+ s=rs20250326; t=1783056105; v=1;
+ b=gEgffcsnVdi4RhMOLhBBOniG1feoYZwJT9L5utV6OW+IZhP80LZjkYDeME0aTo3l
+ 1W16YXUzbn5FUpKcST6EH+3m8+bykMSx5KwFS4+QPzJyIng2Szk/RVurI+V/lIC5
+ qkyvSM6hexvMZdwVTbBuiqurNIwrIhX2Srp8j0je94K3O/xub+Bl4hxOpPHfEYSM
+ 1T/pl6z1nUPTVms6uMYKRsADoT7HwDZyomv04fuCLCZjUbeK/tj5Uv8mhZyXDeGn
+ 9Bq3BUNw6y9YyrczlqYF/RZWSQayNsUBMdD1hXSff9mmKwL4gso7ZztRW9IW3mux
+ skjYUOGS72p628LwPYl1kw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH v2 0/7] migration/ram: Assert RAMBlock stability while
- streaming RAM
-Date: Fri, 03 Jul 2026 14:19:16 +0900
-Message-Id: <20260703-ram-v2-0-7f07fc06fba9@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 03 Jul 2026 14:19:21 +0900
+Subject: [PATCH v2 5/7] system/physmem: Notify RAMBlock migratable and
+ idstr changes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/y2NQQqDMBBFryKzbkImFFu76j3ERYwTHUuNJCoV8
- e6NtszqwftvNogUmCI8sg0CLRzZDwn0JQPbmaElwU1i0ErnKp0I5i0aSw6vTil0NSRzDOT4c1b
- K6sdxrnuy0zE9jI7j5MN6vlnw8P5FxLO4oFDC6MZYlxfFDe/PEFtpWbKcxeRfq5fGyn6Eat/3L
- +7bNhe1AAAA
-X-Change-ID: 20260606-ram-dcef14f001fb
+Message-Id: <20260703-ram-v2-5-7f07fc06fba9@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260703-ram-v2-0-7f07fc06fba9@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260703-ram-v2-0-7f07fc06fba9@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -77,13 +74,13 @@ Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-925f5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2770;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4261;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=NNkYV0KyYReVgPGgyQOKUoe4QJmGzhT1a38kyn3oGx4=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5a72+0ve/+nVHHc23tBX1w+LfJai3yJbPn3vpW7OKeVz
- T4QePFjRykLgxgXg6yYIktK0W5ujejaT4UJ8S0wc1iZQIYwcHEKwEROzGFkeLbAjTX068LrLueM
- KswOfu42s9/yStvoa9CZhogPX4TWyDEyHFuz6vamT0kxGq9VE8uc3Vf8mGXD+dExUlaBL1hp15F
- HXAA=
+ bh=Vv3pUHunatuIlFi+mPBDZxRdUfxT6q4pEQh1tsUM+Qo=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5a726ND9w/dXfQpO81K6NZK4facBVzav74u1818Y1XX4
+ lIfGVLQUcrCIMbFICumyJJStJtbI7r2U2FCfAvMHFYmkCEMXJwCMBEnDYb/6fOf2K58tvDttid3
+ V5/6czJNMrJ+bnzsu6Kt7qe/pNmc+MTI8OLW3dSjm0Qmrrf/suSZ5XzV5Uv2CSTeWhm8qPuW4OU
+ dL5kB
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -109,68 +106,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RAM migration sends the RAMBlock list and sizes before transferring page
-contents. The RAM code cannot cope with migratable RAMBlocks being
-added, removed, renamed, made migratable/non-migratable, or resized
-while that stream is active, because the destination has already parsed
-the stream layout.
-
-Add RAMBlock notifier checks so such changes are caught immediately.
-Ignored RAMBlocks remain exempt because they are not represented in the
-RAM migration stream.
+The RAM migration code assumes that the set of migratable RAMBlocks and
+their idstr values do not change while migration is running. Add
+RAMBlockNotifier callbacks for RAM_MIGRATABLE flag and idstr changes so
+migration can detect attempts to make such changes at runtime and abort
+with a clear error.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
-Changes in v2:
-- Added patch "hw/nvram/fw_cfg: Remove acpi-mr-restore".
-- Added patch "hw/nvram/fw_cfg: Avoid resizing RAM at runtime".
-- Added patch "migration/ram: Fix ram_save_complete() return value".
-- Link to v1: https://lore.kernel.org/qemu-devel/20260611-ram-v1-0-a2dacf699718@rsg.ci.i.u-tokyo.ac.jp
+ include/system/ramlist.h |  6 ++++++
+ hw/core/numa.c           | 36 ++++++++++++++++++++++++++++++++++++
+ system/physmem.c         |  9 +++++++++
+ 3 files changed, 51 insertions(+)
 
----
-Akihiko Odaki (7):
-      hw/nvram/fw_cfg: Remove acpi-mr-restore
-      hw/nvram/fw_cfg: Avoid resizing RAM at runtime
-      system/memory: Remove the resized callback
-      system/physmem: Pass RAMBlock to RAMBlockNotifier callbacks
-      system/physmem: Notify RAMBlock migratable and idstr changes
-      migration/ram: Fix ram_save_complete() return value
-      migration/ram: Assert RAMBlock stability while streaming RAM
+diff --git a/include/system/ramlist.h b/include/system/ramlist.h
+index 32157cc84305..e96de5573eed 100644
+--- a/include/system/ramlist.h
++++ b/include/system/ramlist.h
+@@ -66,6 +66,9 @@ struct RAMBlockNotifier {
+                             void *host, size_t size, size_t max_size);
+     void (*ram_block_removed)(RAMBlockNotifier *n, const RAMBlock *rb,
+                               void *host, size_t size, size_t max_size);
++    void (*ram_block_set_migratable)(RAMBlockNotifier *n, const RAMBlock *rb);
++    void (*ram_block_unset_migratable)(RAMBlockNotifier *n, const RAMBlock *rb);
++    void (*ram_block_set_idstr)(RAMBlockNotifier *n, const RAMBlock *rb);
+     void (*ram_block_resized)(RAMBlockNotifier *n, RAMBlock *rb,
+                               size_t new_size);
+     QLIST_ENTRY(RAMBlockNotifier) next;
+@@ -81,6 +84,9 @@ void ram_block_notify_add(const RAMBlock *rb,
+                           void *host, size_t size, size_t max_size);
+ void ram_block_notify_remove(const RAMBlock *rb,
+                              void *host, size_t size, size_t max_size);
++void ram_block_notify_set_migratable(const RAMBlock *rb);
++void ram_block_notify_unset_migratable(const RAMBlock *rb);
++void ram_block_notify_set_idstr(const RAMBlock *rb);
+ void ram_block_notify_resize(RAMBlock *rb, size_t new_size);
+ 
+ GString *ram_block_format(void);
+diff --git a/hw/core/numa.c b/hw/core/numa.c
+index 40acb98bdd0b..0685cd1c6ccc 100644
+--- a/hw/core/numa.c
++++ b/hw/core/numa.c
+@@ -887,6 +887,42 @@ void ram_block_notify_remove(const RAMBlock *rb,
+     }
+ }
+ 
++void ram_block_notify_set_migratable(const RAMBlock *rb)
++{
++    RAMBlockNotifier *notifier;
++    RAMBlockNotifier *next;
++
++    QLIST_FOREACH_SAFE(notifier, &ram_list.ramblock_notifiers, next, next) {
++        if (notifier->ram_block_set_migratable) {
++            notifier->ram_block_set_migratable(notifier, rb);
++        }
++    }
++}
++
++void ram_block_notify_unset_migratable(const RAMBlock *rb)
++{
++    RAMBlockNotifier *notifier;
++    RAMBlockNotifier *next;
++
++    QLIST_FOREACH_SAFE(notifier, &ram_list.ramblock_notifiers, next, next) {
++        if (notifier->ram_block_unset_migratable) {
++            notifier->ram_block_unset_migratable(notifier, rb);
++        }
++    }
++}
++
++void ram_block_notify_set_idstr(const RAMBlock *rb)
++{
++    RAMBlockNotifier *notifier;
++    RAMBlockNotifier *next;
++
++    QLIST_FOREACH_SAFE(notifier, &ram_list.ramblock_notifiers, next, next) {
++        if (notifier->ram_block_set_idstr) {
++            notifier->ram_block_set_idstr(notifier, rb);
++        }
++    }
++}
++
+ void ram_block_notify_resize(RAMBlock *rb, size_t new_size)
+ {
+     RAMBlockNotifier *notifier;
+diff --git a/system/physmem.c b/system/physmem.c
+index 1427949b72cd..e8ec6a152af4 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1911,11 +1911,17 @@ bool qemu_ram_is_migratable(const RAMBlock *rb)
+ 
+ void qemu_ram_set_migratable(RAMBlock *rb)
+ {
++    /* Notify before modifying the ram block. */
++    ram_block_notify_set_migratable(rb);
++
+     rb->flags |= RAM_MIGRATABLE;
+ }
+ 
+ void qemu_ram_unset_migratable(RAMBlock *rb)
+ {
++    /* Notify before modifying the ram block. */
++    ram_block_notify_unset_migratable(rb);
++
+     rb->flags &= ~RAM_MIGRATABLE;
+ }
+ 
+@@ -1937,6 +1943,9 @@ void qemu_ram_set_idstr(RAMBlock *new_block, const char *name, DeviceState *dev)
+     assert(new_block);
+     assert(!new_block->idstr[0]);
+ 
++    /* Notify before modifying the ram block. */
++    ram_block_notify_set_idstr(new_block);
++
+     if (dev) {
+         char *id = qdev_get_dev_path(dev);
+         if (id) {
 
- include/hw/core/loader.h       |   1 +
- include/hw/nvram/fw_cfg.h      |   5 +-
- include/migration/misc.h       |   2 +-
- include/system/memory.h        |   4 --
- include/system/ramblock.h      |   7 +--
- include/system/ramlist.h       |  24 ++++++----
- block/block-ram-registrar.c    |   8 ++--
- hw/acpi/ghes.c                 |   6 ++-
- hw/acpi/vmgenid.c              |   1 +
- hw/arm/virt-acpi-build.c       |   3 +-
- hw/core/loader.c               |  14 +++---
- hw/core/machine.c              |   1 -
- hw/core/numa.c                 |  54 +++++++++++++++++----
- hw/display/ramfb.c             |   2 +-
- hw/i386/acpi-build.c           |   3 +-
- hw/isa/lpc_ich9.c              |   2 +
- hw/loongarch/virt-acpi-build.c |   3 +-
- hw/misc/vmcoreinfo.c           |   3 +-
- hw/nvram/fw_cfg.c              |  80 ++++++++++++++++++-------------
- hw/riscv/virt-acpi-build.c     |   3 +-
- hw/xen/xen-mapcache.c          |   6 +--
- migration/ram.c                | 106 +++++++++++++++++++++++++++--------------
- system/memory.c                |   7 +--
- system/physmem.c               |  40 +++++++---------
- target/i386/nvmm/nvmm-all.c    |   4 +-
- target/i386/sev.c              |   8 ++--
- util/vfio-helpers.c            |   7 +--
- 27 files changed, 247 insertions(+), 157 deletions(-)
----
-base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
-change-id: 20260606-ram-dcef14f001fb
-
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+-- 
+2.54.0
 
 
