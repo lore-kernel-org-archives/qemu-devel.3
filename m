@@ -4,127 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C87DC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 09:16:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B05A4C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 09:17:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfZzl-0006Qg-34; Fri, 03 Jul 2026 05:15:37 -0400
+	id 1wfa1E-000749-QL; Fri, 03 Jul 2026 05:17:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wfZzj-0006QU-O4; Fri, 03 Jul 2026 05:15:35 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wfa1D-00073x-0t
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 05:17:07 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wfZzg-0003Fm-MF; Fri, 03 Jul 2026 05:15:34 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6636IBgl1930444; Fri, 3 Jul 2026 09:15:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=3tbBQs
- MYUv1mO4u/Dzz1Dbo3TxiGu2Fjia/ijhGetHI=; b=D0lKoil5kCoi7gz8VAJdLY
- QV83mQVwEq4nn4jRqvO+ME/OIIKS2WpJXOhwBTqF8mjRbwdRb3mBYlAyCUnN41qi
- bDsLInPmLWT3CBuPf059NMiAz+jxdzALEv1E5oj+ktneoqkTywxgPhVjRH4UZzjd
- 4WSoaxIkCu75SlwoafiWDzSJevaXn1iT+6UvEsbMMEwmouxIPziUXlmC4+MUaKUb
- 9IY8uMeM06zaOnNoQBB7T1hEi9rEyg+hKS6URBURH20b/AyEjz35oUQYNS+mqdJG
- 0DQwaj93VbucdHxjaQ1c2LrmZ7P4xgfqv0gzL5hIXeTabYMX8bI3CMGM94nn/yWQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26peegas-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 09:15:26 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66394bWA014961;
- Fri, 3 Jul 2026 09:15:25 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2u2gqy2w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 09:15:25 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6639FOlT30540518
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 3 Jul 2026 09:15:25 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ABBB45804E;
- Fri,  3 Jul 2026 09:15:24 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DAE0958062;
- Fri,  3 Jul 2026 09:15:14 +0000 (GMT)
-Received: from [9.39.22.184] (unknown [9.39.22.184])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  3 Jul 2026 09:15:14 +0000 (GMT)
-Message-ID: <0712c1d5-12bb-467e-80a7-dfb516cd0bc6@linux.ibm.com>
-Date: Fri, 3 Jul 2026 14:45:12 +0530
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wfa1B-0003pG-5p
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 05:17:06 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6637ZgK13410048
+ for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 09:17:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ HFdkywTkmu+cO/GdHRntTLOjky0TWYm/hourhkaDIg0=; b=Mre73s6HT7Kq6gKa
+ y9oMy69QnakLLymIkOQMb26wo+dJojQ1/HaVJLa9C460Q6V0DrXsXyy8W4eWK2Yd
+ SWu5uZl99k/Vu1l+iZ0pi4MnbuErXwlj3ZKtvvNiYHcjiIjidzmq5gxc2RI75i29
+ 6YShkQHZYbg0FwBktLaHt8GKOLfVhq1Uq9id+gNzimQ5fF5zZv4Mn193EpJwlgR7
+ jdgbp0tQi5Ni95lZsTiHpiRFKqLOoYxnJuL2RlRVjVdvFS8t4BPbZvRg5mpAEiM9
+ UXIc7HbBet8daoh8WbLKBduQ5fKRk7GWN+FJy/c46C+03GjB+XZ5JYdMKhSw3LWh
+ FybI4g==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f68u30c3q-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 09:17:02 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-92e8004d60eso58133585a.1
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 02:17:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783070222; x=1783675022; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=HFdkywTkmu+cO/GdHRntTLOjky0TWYm/hourhkaDIg0=;
+ b=Rc7m+WhSca3Xts4WG2+/hBTma0C+HLYD0H7xEh5FC5duk26/Z0UizT5kjCKkxjWgug
+ fd4juI1bkeKIOx7NJjbQ9Ju069KtFfVP5a48OzLaQItL8xDyWAwu9xGp1EEUvU8njvaE
+ Zz8DtVZA/X2L13cVbIIXltClfcOcdGtUHryezDWSPPBouRXHI/sCYTltzLJ+J8IZr5wR
+ ddJfTe66TS3QLa2UO7WW57A1+1flI7495KFsdB4yAlrPsjoW8fYMTlbkxb0Zw8vXGx1i
+ j2+ECy3aM1RGj8NwrFvRhrmSKTyqdGE7CB+nNnHE62MeIv+9JMsKt6OrwNx5uE7PE4QP
+ +Jfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783070222; x=1783675022;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=HFdkywTkmu+cO/GdHRntTLOjky0TWYm/hourhkaDIg0=;
+ b=px6NnpWjrb2PQWTzSpAf7ET0PbAytrSPcmUXATHmPlUH0TaIbTWBa2JchEomvNK9pi
+ ni9DNvBOJjVlRjxz5hMqw/E7SIZUUsbPs7B63Px958iOd5knE7+2NfF8NJ4RY2JlVIiS
+ HAGcNwZNreXo3+rFM1NXuYF2a/KQ+aJ9Kg3kVY1LQ1ErbPGj8fFJAkPRcdm2YHpxn3JV
+ tzzppU4ADqykZzMuS0cg6NwiIte2mz6hW9tvpbwQaSS+Rpvyko4St75xAWWK2B9KkGZ9
+ kYi6dxQQyr/h0f+DTW76bVpbCEW4kAOJqVCv9/4mpwD+px40uJZ66Yt8FF2hQ+Bcuzg2
+ 9I8g==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/OLgoQAQh2b//qZoXRk2glENhbcTavEZZ5EIL+yz91KndSf9lmk8jX9/R7yZ4V9R+HgiyNa+O+Zt0P@nongnu.org
+X-Gm-Message-State: AOJu0YxWZ6J0q+FpGIuG5xPpvqeqK58d5cgMp+oxwTmexwzPuyX8XKVh
+ I6dIO3yWh5O9p4ZgT55NBCftM8h2cjN7sWft6Mq5S1sex3B9ocLsFwJWN1GU/ztaolMtKDyEuvf
+ VmiyJQbx+EMa+ibBYx+2hBvliFfz0LnFckXoDYMe/5glJrjQT7uv0Fdgwaw==
+X-Gm-Gg: AfdE7ckIQiXnvxa/dTYw/lVW/UveZLnDJlBZvWuuBb5901V8Nm0CwOs9cpGJanf2Mm6
+ R/XWdRcWy74pT8cag2GZW/sb57MB05uXrLRd7udGWaQeivYw3FpmetNYM5LL5U1b/z7biQP4lzT
+ 6N/fSh7GdOPCHfu3mixy/F6g7ecz7P6dTMEDCyWhCKGmGAnTXuzT8LN9+dGJGSa16gbpfl4mulx
+ lgwrhYaovq0URjO1oeDaCdxEttgA4q1OKibUjmtEY2E1nNC/Oh3+y/93eOSuy3+rLvRCv+YgVNI
+ pSiBCdc+nt1Xk1WxIXvHJc/ufoTJ/9njKoyhiq0NDrg1NQewrSzxp0K5IO5yw8tw+tdnV7Npt0K
+ P13e6b9COmoBdWwFNKqVNtg2IkLSizEkQMKSxbOfpze7kZ7D0XQYdlerd4+GYdw==
+X-Received: by 2002:a05:620a:628b:b0:92e:5444:9274 with SMTP id
+ af79cd13be357-92e7b017933mr1133752385a.30.1783070221716; 
+ Fri, 03 Jul 2026 02:17:01 -0700 (PDT)
+X-Received: by 2002:a05:620a:628b:b0:92e:5444:9274 with SMTP id
+ af79cd13be357-92e7b017933mr1133749685a.30.1783070221242; 
+ Fri, 03 Jul 2026 02:17:01 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-477db8a450bsm17544419f8f.10.2026.07.03.02.17.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 Jul 2026 02:17:00 -0700 (PDT)
+Message-ID: <dca7072f-6232-49fa-b8c9-dbb8f82b85a1@oss.qualcomm.com>
+Date: Fri, 3 Jul 2026 11:16:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 RESEND 8/8] MAINTAINERS: Add self as maintainer for
- PowerNV
-Content-Language: en-GB
-To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- Misbah Anjum N <misanjum@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-References: <20260703085955.2318600-1-adityag@linux.ibm.com>
- <20260703085955.2318600-9-adityag@linux.ibm.com>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20260703085955.2318600-9-adityag@linux.ibm.com>
+Subject: Re: [PULL 17/23] vfio/migration: Implement VFIO_PRECOPY_INFO_REINIT
+ feature
+Content-Language: en-US
+To: Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>
+References: <20260630043107.1511076-1-clg@redhat.com>
+ <20260630043107.1511076-18-clg@redhat.com>
+ <28c14e21-9382-4d4b-bde0-622d4dca9bf9@oss.qualcomm.com>
+ <30a8d3d6-bfdb-49fc-b891-ab09c0a3a692@nvidia.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <30a8d3d6-bfdb-49fc-b891-ab09c0a3a692@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: 7yK957c3BtcJN8HGpfKDET05hm62NInD
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDA4MyBTYWx0ZWRfX8oZKocDqatiM
- fggNpsAPjDZ8IEKwo0GdHrElHM52gROm/SprrDhKOedR9NN2JxkSFAfNNeadGn99ePBpO1XecfJ
- TbVJRUSpZQDfdJHNfc8q+FdzkrJE9uw=
-X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a477daf cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22
- a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=k8VJCrWnqjn4nz9fRZ0A:9
- a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDA4MyBTYWx0ZWRfX4VRab6r2FqOR
- OdZlCVAAoywhY5dousTB9VWFi9XSw0aerWU88q4aYgIoEvNf5RSNr5+mqwlpcBI6laymAjdBAic
- YCry5/Wo94GGHcAB/tc/yGwkaNTiVy3jSSta30s8IKlzTwDT4ePXIaGVHELb48cdtfDLk7NrAK2
- rQZEA5f+suNxCtBMU1NRC68zx5kd+xtDGLskC6OYnekrtufbqQEPCvS/EFsX+OylsmUvvGcJi75
- g07ncv+GkyDdnPlxmuR58BSreVUgF81PScIXGJrOp1Bw30WHH4P5PVC71rvjIudjRcv+TurFQZU
- b3s3neNrWgrcjTgQQtmhIwZoeYZfvKqJrWTNbiCUyi0CzlCsuucrFKGrwAOvvxw/3Kp0rWJ07eS
- MRpCzgvbIPALLPG8IQnbTQIvf0ciU/+i0OspIJTHDjHEFPjpPw/KolxRnOPjGOFb2kgyapsUelA
- GD6clAOoqBr3+w2G70g==
-X-Proofpoint-ORIG-GUID: Mi9rRut6CmiXDwluaUP-WceOSp8fPFnQ
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 83gO9YCcR835QWEf5GOEtZvrfW18ww4T
+X-Proofpoint-ORIG-GUID: 83gO9YCcR835QWEf5GOEtZvrfW18ww4T
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDA4NiBTYWx0ZWRfXwEdO8DFh9OGB
+ 3fOCTpblpbRyHju8lrevmUAkmgxnMCZhHMdxMorMM/fY1QGQK10KqtvTKuxACdXkipvRLZkiS6u
+ ZXpn3OFR3HYSQpdcbZfbUo98e8i5pgo=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDA4NiBTYWx0ZWRfX+6T9V12VhHmg
+ vbxP197q0eoCBvmlXW+bcVgjnF54ra12GHSN5jAqIAU0EDYK+bxdy4LSVADkcgq7HaMq2FwlMhZ
+ sSaxRj+uqUnGucaQjJY5nXxHPdC39yMvb+mzl9eZqBTbIWcXnrvNsxCweOcbCayRl7t8Rvv15fx
+ WJ0qM9GJkaI3R7ICeKTgdRqO50ar/vzM5Kgi7uPMMxvUsguVRkXVKd9VDuhOxyGiVyQvB7x/cDm
+ eSH0dOOZMOOR0DZzqwfRyDvgMX7MGlAt1pPe/DVhhMt73EAESLBj2v3LhamcIf+h1VehSBlD0ip
+ uju96UNMlnNkV1cQhYGsv/ZHxbHi1lCA1fq55k0kPGRoodFrZ7qXphDDAOXI1KmOMKQHtDI37Fa
+ OkZ6CVqwXQKEUtSzj/yydQG7pDiMDgSWnyLPZPukyTZjfRrRCcwRcEol+RmWlUKXVfVTavNCqMK
+ 9JtF1XGzjNj6npfFNsA==
+X-Authority-Analysis: v=2.4 cv=OaKoyBTY c=1 sm=1 tr=0 ts=6a477e0e cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=VwQbUJbxAAAA:8 a=Ikd4Dj_1AAAA:8 a=20KFwNOVAAAA:8 a=6OzB9O32XWKsRYI0ZnEA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
- spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030083
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ impostorscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 spamscore=0 phishscore=0 malwarescore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607030086
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -141,41 +159,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Aditya,
-
-On 03/07/26 2:29 pm, Aditya Gupta wrote:
-> Add myself as maintainer for PowerNV machine, and remove the
-> reviewer entry
+On 3/7/26 10:13, Avihai Horon wrote:
 > 
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> ---
->   MAINTAINERS | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> On 7/3/2026 5:07 AM, Philippe Mathieu-Daudé wrote:
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> On 30/6/26 06:31, CÃ©dric Le Goater wrote:
+>>> From: Avihai Horon <avihaih@nvidia.com>
+>>>
+>>> According to VFIO uAPI, precopy initial_bytes is considered as critical
+>>> data that should be transferred and loaded prior to moving to STOP_COPY
+>>> state to ensure precopy phase would be effective.
+>>>
+>>> As currently defined, initial_bytes can only decrease as it's being read
+>>> from the data fd. However, there are cases where a new chunk of
+>>> initial_bytes should be transferred during precopy.
+>>>
+>>> The new VFIO_PRECOPY_INFO_REINIT feature addresses this and allows
+>>> reporting a new value for initial_bytes regardless of any previously
+>>> reported values.
+>>>
+>>> Implement VFIO_PRECOPY_INFO_REINIT feature:
+>>> 1. Opt-in for VFIO_DEVICE_FEATURE_MIG_PRECOPY_INFOv2 to make
+>>>     VFIO_PRECOPY_INFO_REINIT available.
+>>> 2. Request a new switchover ACK if initial_bytes increases post of a
+>>>     previous switchover ACK. This ensures the device is not moved to
+>>>     STOP_COPY before initial_bytes has reached zero again.
+>>>
+>>> Acked-by: Peter Xu <peterx@redhat.com>
+>>> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+>>> Link: https://lore.kernel.org/qemu-devel/20260622101214.25770-13- 
+>>> avihaih@nvidia.com
+>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>>> ---
+>>>   docs/devel/migration/vfio.rst     | 14 +++++++
+>>>   hw/vfio/vfio-migration-internal.h |  1 +
+>>>   hw/vfio/migration.c               | 68 ++++++++++++++++++++++++++++---
+>>>   hw/vfio/trace-events              |  4 +-
+>>>   4 files changed, 80 insertions(+), 7 deletions(-)
+>>
+>>
+>>> +/* Returns 1 on success, 0 if not supported and negative errno on 
+>>> failure */
+>>> +static int vfio_migration_set_precopy_info_v2(VFIODevice *vbasedev)
+>>> +{
+>>> +    uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature),
+>>> +                              sizeof(uint64_t))] = {};
+>>
+>> What is the point of using uint64_t[] here?
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 97dcc78ded61..537b5cd895a2 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1663,7 +1663,7 @@ F: tests/functional/ppc64/test_tuxrun.py
->   
->   PowerNV (Non-Virtualized)
->   M: Nicholas Piggin <npiggin@gmail.com>
-> -R: Aditya Gupta <adityag@linux.ibm.com>
-> +M: Aditya Gupta <adityag@linux.ibm.com>
+> Since there is no data payload in this case, it's mainly for consistency 
+> with other VFIO_DEVICE_FEATURE ioctl call sites.
 
-Thanks for helping co-maintain PowerNV!
+Ah, I didn't noticed. Does the VFIO_DEVICE_FEATURE ioctl expect
+the buffer to be 64-bit aligned?
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-
-Hi Cedric,
-Any further review comments on the series or would be happy to provide 
-an ack?
-
-regards,
-Harsh
-
->   R: Glenn Miles <milesg@linux.ibm.com>
->   R: Harsh Prateek Bora <harshpb@linux.ibm.com>
->   L: qemu-ppc@nongnu.org
+> 
+> Thanks.
+> 
+>>
+>>> +    struct vfio_device_feature *feature = (struct 
+>>> vfio_device_feature *)buf;
+>>> +
+>>> +    feature->argsz = sizeof(buf);
+>>> +    feature->flags =
+>>> +        VFIO_DEVICE_FEATURE_SET | 
+>>> VFIO_DEVICE_FEATURE_MIG_PRECOPY_INFOv2;
+>>> +    if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
+>>> +        if (errno == ENOTTY) {
+>>> +            return 0;
+>>> +        }
+>>> +
+>>> +        return -errno;
+>>> +    }
+>>> +
+>>> +    return 1;
+>>> +}
+>>
 
 
