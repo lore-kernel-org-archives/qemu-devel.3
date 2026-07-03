@@ -4,166 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AD9EC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 549A8C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:56:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfeN3-0002X9-2T; Fri, 03 Jul 2026 09:55:57 -0400
+	id 1wfeNY-0002uY-1L; Fri, 03 Jul 2026 09:56:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wfeN0-0002UP-Pi; Fri, 03 Jul 2026 09:55:54 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wfeNW-0002ro-QJ; Fri, 03 Jul 2026 09:56:26 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wfeMz-0006Zu-49; Fri, 03 Jul 2026 09:55:54 -0400
-Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6635uKbI1995843; Fri, 3 Jul 2026 06:55:40 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wfeNU-0006nD-J4; Fri, 03 Jul 2026 09:56:26 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6636IVjM1814281; Fri, 3 Jul 2026 13:56:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=dR3+N2aw9U9kf+VthbZifqsWgG2Xp8bM7rKKEjNgm
- 3c=; b=UXVlWYOSOSVqVR5A3jGM4vwM9DI/0lydMDnFCmzvZHZntsrXWYKpiUINb
- MtVezAlVCbAmm2wvDkI/3dzCkmNSO0MbmcjYzp8QvjS4VHZdpsv7+NkH7wFwym+W
- iP87cjLR/IKjKxHrznfaJ7/luVDUqU+6O7z2xn1214cLCYTBgFSjvHz9FHs1x11a
- 7wrna4F5bHGQ/ZZxt6wefdKbLhxDcpk6tDhgYUvlaAfEw9fKNfPAf+v6eIPIMzfx
- bmoryhNWI4Jr4VC/FkglHAEexGlwleKN0NqG0K4YzU8nOYfBWh03N86qVAoUsevz
- tibVjtzfZ8zgK8vp+G0x4XIA7vIjQ==
-Received: from dm1pr04cu001.outbound.protection.outlook.com
- (mail-centralusazon11020104.outbound.protection.outlook.com [52.101.61.104])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4f5d5hcmbd-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 06:55:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aEI26aDQOO5svHPdwniZIGU8yLeGGBIgXF+tyEUjn26pPk97D6vz/hmu+3DoUXSsG4yfLIofK2oBuWu9vWqGY3furiqfIefXUPsa5PZuvrBJ13ZnpCxhDWki0CqUYlan0wdeSYn5Ljm6wBMVfn46puSn4XmGgnypXTU0aKDwMSVqjo8PUUPoQNdLIy/POd/ro1iuT2W6v7b2c4jx1nmJGYTLmSfCGwFgd2Wkbg+bhV+EborCDGK1kcLZVQS6DIFbbofnHHRYTi+/4lsOcDPqvTgoIws+QOC0i+6fG71y2X85QogfifKiLhCBgec67c5Y753xWdQ7SbA98IDipB5XCg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dR3+N2aw9U9kf+VthbZifqsWgG2Xp8bM7rKKEjNgm3c=;
- b=fybChRolBjtDp9NnXi8IauhE+/d32Gp7OupMPcgzV11Cxy+ByrVou7g+JZyvWx9n+Ny5R8tWMwumuT2DD/Z/jSEfasSfISuw+cRi5eecE6QH5XoM+6Ou6QCaKCcmVKaxPQmcqBhUxvYL+jP8XMFHubdtPcpYKpT83N6LHerfJgysfqc+VHiQo4p9g5dEsDuBPyyx6l7C5lIRxOYYapujFFW0U5HJtlnHO4KEc7vNmkLzDJvPkYF1UajILTvtH/S/T/8w/FN+LSS6nxc+4mU2KzrZTwgmq3mUmOgIQPWuPX1SOBqC3C6fvj/SUR12Hva7GonpOHpqKgKvP9/rEIRbAg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dR3+N2aw9U9kf+VthbZifqsWgG2Xp8bM7rKKEjNgm3c=;
- b=U96G048bKbhy1YqWrzu/s+9draBUnTQBMJ5oK195sVUgLHHw59E/NpKqPv+drFoKc2Gbt6CtioSMpiHDXmpepBSWtCksL1l5nz38ihX+/6R/nOcI+e0ql1mutnPFAhsHFvV+X4Lb2UoQqGHGvGm7vMa85U33Y61448CXJGG05STF09Z4aHa+egdlCt5N5icdQ7ykX1Nu2F7z1d202PC3E/eWav/W8vtDf2Yf0gjAXv3f57vdrbH2tq+zxdWSZCfqhrkXRerZcfmDDVA7Sz7HhtNxEz0tNlvKGLQMuW0lnn6ZFc0L+9kjWmWHpHTYFNhUnoDoAXGDNgwyhF1PwEUsqQ==
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by CY5PR02MB9016.namprd02.prod.outlook.com (2603:10b6:930:34::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Fri, 3 Jul
- 2026 13:55:38 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0181.010; Fri, 3 Jul 2026
- 13:55:38 +0000
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-To: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, philmd@mailo.com,
- aurelien@aurel32.net, peter.maydell@linaro.org, pbonzini@redhat.com,
- richard.henderson@linaro.org, berrange@redhat.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Subject: [PATCH v2 06/12] hw/acpi/ich9.c: move initial property values into
- ich9_reset_properties()
-Date: Fri,  3 Jul 2026 14:53:08 +0100
-Message-ID: <20260703135512.3213964-7-mark.caveayland@nutanix.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260703135512.3213964-1-mark.caveayland@nutanix.com>
-References: <20260703135512.3213964-1-mark.caveayland@nutanix.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PR1P264CA0173.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:102:344::19) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ :message-id:mime-version:references:subject:to; s=pp1; bh=NIaVn8
+ Q4ETq3UDIiWWPhMcwd6cOsbEmENevq5rBx0U4=; b=eeR6Cjk103i2aHGT/A1wNe
+ 81umwxU/LsGkcar0xKHSInzdEXHO6wVowc79ex73Lz1zKbUk0mxMcRvT3uxj2Dom
+ FOGtRHecZ9o7r4UG9RJS3vnnznH8MP8CNpzqrxI+T4NhOInftfuwfQcd599L23iz
+ bP4a6z4G1w/EW8sAwweUmEZxXOW1UcBqIGowuegZrnw+j5OofIlrEXJ3ED7TJ0n7
+ bplHkU9AsKX+AshJ8GWTEE4bTZRJ24WuDP8PFgSIK3zW7D5mpIS1iZAoX9ovXsLK
+ 7+atzFA49AMjxGhkNtAys1V0mnDW7aToBliqUeOrxXcsLSEbYSToMbkKuNi0/NSQ
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rff0f0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 03 Jul 2026 13:56:22 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663DnisD009982;
+ Fri, 3 Jul 2026 13:56:22 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhyrwn7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 03 Jul 2026 13:56:22 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 663DuKQt22413864
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 3 Jul 2026 13:56:20 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B5D2A58043;
+ Fri,  3 Jul 2026 13:56:20 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0EAAB58059;
+ Fri,  3 Jul 2026 13:56:20 +0000 (GMT)
+Received: from [9.61.75.28] (unknown [9.61.75.28])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  3 Jul 2026 13:56:19 +0000 (GMT)
+Message-ID: <6fa4c5f7-0388-4acb-bacb-f929ecff1a09@linux.ibm.com>
+Date: Fri, 3 Jul 2026 09:56:19 -0400
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|CY5PR02MB9016:EE_
-X-MS-Office365-Filtering-Correlation-Id: c0dc7379-ec89-4700-beb4-08ded90ac30e
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|7416014|1800799024|376014|23010399003|56012099006|22082099003|18002099003|921020;
-X-Microsoft-Antispam-Message-Info: +2RQ/GOtGHvUw3jKWP4C8rZWilowjm3h8ofyLe4LMkKikhgjQ2dGd5EWEZzeUZbIpipsbumw87tjmUo6J9jBMsZDrJogJsosH+33bOxxtCncZrAaebybE5KoOYCp+3CCHRbXI26sy2F+Dks0gC4TWb6c4N8PsMioWFIPOwwxVaBn7WL54d0vMrxovd3zjQpDqP25gJ6JIPVNmVINzX4VEy1AmVuRvsWoDh1th7pq436Uy54nWoN795/5+CQqIQNW7JzT4hKFOGbcUs+SJOrahyY7hL3/pHo1C7ImUtZ3Lu+uc/H0PQ1jDuE1HuSldfGHt5eeXz8F+5ozT3IWDg4qzGGl20w4YrdQzKLLopm0MeUKoGi4B7lazWKCjJnjCrbQnIyP3Q9xX0/ZJvBIvaeOogefMqxlIKYIHejPjkMxJYjwzm0q3vMl5agobjI3nEaIIAc/L1JWuk15usuwtL600UI/0D0J687QbQt3dT09bhaxSGzjUnhI+LBGC6TKPa9Yn1DuQEv8YJ2C1gVfX/EMNGz9WYr88dPRGwMZBg7Bgm8MwqN3SH3Wq9PS5OlPiHusfRwgODUGvilv+AbqROswLKDj8MUaL+1OO1OH/VBXFuu2rlI1SNtKEuHkRqjpiPgLDgzea932JKswqtA3ZgdPAB4NijyfOejqYH7CgMq8475cqpscALSbJwiW8tbY6B/QxoD4izwumo3T74gaWYGxMQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(1800799024)(376014)(23010399003)(56012099006)(22082099003)(18002099003)(921020);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?8JEz69sP9mgRc0zZD8OZZUE190Kl+QfooGlGoEjDACXerggcf/fok3USyUHe?=
- =?us-ascii?Q?EIRYPFodGk8yuK6ghHPB01WLYhJ7hd/QQ/UZUYVd+iO3vUwGWLKyX6oa13rX?=
- =?us-ascii?Q?+c8e8JQ6gMNOMHY06aYZbXr1/U1R19plrIRnlzOigxRR7J8U31TAQ5A+nb1H?=
- =?us-ascii?Q?7zbKhC0HnMz5WoB7TITyAhmwurPtXb73iALwIcI4BufR8iLV0ViRH7SiYcVY?=
- =?us-ascii?Q?pGzR0mLUN5qIE+jVrtp9J+AHxVD8McWm4Uy+D/CoMlDAqEyRmtg9rjZZOVRJ?=
- =?us-ascii?Q?eLCo1ZnlNKe/96XNVBvIekwM6QidLpLwdIuAbTI4a4706fEbSI59gGs3pE4/?=
- =?us-ascii?Q?eWxjyzg+Uuaf06BzmX1dx6h00Q5Aici3NwxTbk5ITWp+SFYQNwoVaR4i3qp8?=
- =?us-ascii?Q?zisvTQfxP6cZEN4xKyVNQGP360CNVM0diJBEDTCJVLYig4/Ai1sv4vI3oNVH?=
- =?us-ascii?Q?RanToCJT//JAM7pw2HQ6FGx7HuBbPOMhIuA3lEHA0pIrV2xM/FuK7DfUS3PM?=
- =?us-ascii?Q?XLgm9dzkVsSWNUoowg/cIPhz34Unbnds8WmdVZxrFth0Huxt6InumQnah+l8?=
- =?us-ascii?Q?zZZj4LqmuHPQ1Ufqt0b+WMXwNEQQN+CUtcKXgyUxQGI9qQUBt7qrWLCWafXC?=
- =?us-ascii?Q?Phrx6018ZuHXWYY4k0CEWMd6NNDybRWgPUCxCOL/D7IQWUKitSkliZwG6uKi?=
- =?us-ascii?Q?5qF+xYAK1uO01slxrQXbcZWD39tRYp9LP0vuJuPsO07PtxSjTCuCG6BuBQjA?=
- =?us-ascii?Q?nWk0O2IpTQYc1IM1NZQIADA+ob579nG/+LfHBOw8bzreAq6EasLxz49ueKMc?=
- =?us-ascii?Q?IKGLWOEL51cfubTjc5QVUXLoieXgpBlXV4mWnumwWAY88HaW9EGvWWzPW986?=
- =?us-ascii?Q?eF9H3FIMpd5SDeTz6yKpat/xRvY5zNUTFE2R6rdWOSDglZuWvCn4DjK6yEe9?=
- =?us-ascii?Q?9mvVOyRsA3Hxn59vGpvy+tccBvIDoKeufRlwnzVi0oPQvTxi8mVnesCBYZYK?=
- =?us-ascii?Q?LF3+knstVdOzKXq5+lYD96y4qfbDm+5E6RlZJhWMQcLxBcUALRdnj/aomaD+?=
- =?us-ascii?Q?PWdtzKtjJJ76YviFhMjxwWjFXdOhwjz/K3OqqI/5cwRqOgdlkZr6hZNsUcXN?=
- =?us-ascii?Q?8VvWSA1jDAIn6iZIvX7UnE5aOqbLaMWDA+dbHj5rJfU4e7clMgxPCitpc+x+?=
- =?us-ascii?Q?IwwFqoev4EOUClSYXWVslrMOLENbLX6vCC/GHI6qt5Umwy4UwIw7vlTCB70+?=
- =?us-ascii?Q?IuF8NkRUbkjUyttfz6BXr70bFslcdFTkwmxm3ubFnvBdsRlFfFsPsN+18hBs?=
- =?us-ascii?Q?r5aIL+eatrePtGfOrRbgFaDi/+iHDZZYyu7R57Xa2AoeQxvT8FYIzNcQY7YV?=
- =?us-ascii?Q?fj7RKI2xvwaluPwyneY/1Jz78tnSWZbWZ6ayJZj/u9BTqx4BgHuUS3n7M2s3?=
- =?us-ascii?Q?u+JDGcI+fIB/TP9CD7EooYVI+h+wKGDpAMPKefnK4XkrgvryLvjoBKSxo0wQ?=
- =?us-ascii?Q?FyUFx3b2Hh9l0WDYn4muco1P3mKy5QMKL2rqdPHB/mvWxf2EpJLYh3kUh1Mb?=
- =?us-ascii?Q?BXcBe9FsTklZuAh9s6hqjjHC3wmKXinatVQNPXpVRrvOJUQayCFWQ0Fhn8zR?=
- =?us-ascii?Q?Lj9zOFDW4g4PrAJnfCJDYmd5YaOWELXELTVGqbI8jKN+uixRB/KGn6tS4XA+?=
- =?us-ascii?Q?N/SOJNo5CFb764DshCCZobYf3qr4Qb4YS/fsodVLmyB35e53t1i+bcB35YxR?=
- =?us-ascii?Q?0osR3+Z+vTwzKiaUy5etUP6UDr0UZXw=3D?=
-X-Exchange-RoutingPolicyChecked: FLNEpD0Fv3AYU2IiBIP84HxtJ70EmE4cQCCYGh90Hw9FJxvWaTVADReY796rRuOlb83PtiLTbp04eofoZl4Amijjid+6T95tdJX3W1UVWq9NE2YF90hKndQZI/Iy3Ja45eohpLDvXtrFPPSpaf+7hwTengfT0v6VLjImwhOySiiya/2ivR2tOrBooowawwC78vWpUCsnO9rQYLfgR60qLPz0UW7EHxvsFvobZY39PVdFv0k6iq+2TChabKehtZ726ThDGRSMoI8L8ybxeiHHWGuVbonq7rzAr1O4FvwZhDwxCjUprerJwztagxAJJ6Rt7Oc0GTK1qmK+mvhJiMNsOg==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c0dc7379-ec89-4700-beb4-08ded90ac30e
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2026 13:55:37.9648 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6zi4knlOj/U+h14FlC3ZizaLdQoOvEoZes3YrzrisTuhCFUeZdIuXZg8h4ITGwDMCulzAh2GKsDnjZgrfaUC6YX9cqUHdltnuDl6cK0g9k8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR02MB9016
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDEzNyBTYWx0ZWRfX3BlQ97Chdaau
- iMQNe3sRgHyi50J+YkeLHImODihRjHNz63bgFIz5JI0pl7Imjv3pzI9w+2TAcbZMi/srs4/8fYt
- SgyfCXfHot6OJhe2TrA7GLlO36FDPocbbYBuco+pw9tMW0TTs/X9u0jakhnKa0IMy8Cv0qvvs9j
- SyWPy8tXEAnb4ShIygt18xscrGpUZh9LUT46ww2prLPn+XOoFkzyE9wIQ61mHYho6TpGDm1d5Wv
- w87YJRo7gi5aknzjiESJQPsIImzLzxP2fYNMusBXj+YeIay9ebEgMk74FLeaB6mmLQYmRBv962T
- VJ9jWB/Wry/OdzhS2N6Ihma7yJdllfmRFgm5N4IEnOkSKfJotpO1iDMK0uKA9L2B0bj+1kDoZbt
- bOzJBkVGfI6xk65yg3dkOol3M2YBlhWYgLZv8zeAsyenSen8rVN/pLrRUnK9xTWMsMCN1Hx8Jf6
- m2vX0+xTeaXkQLJ9UiA==
-X-Proofpoint-ORIG-GUID: XOgCNsExYx6Tbd6cSiRfckgeDzcLNu6I
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDEzNyBTYWx0ZWRfX2pJCDzDG7aMg
- +hTSA1qaXSDf/uybPcBbM4/zhnx9SmpiFwzboZm1Xh9vRN5mV1hdhwc5OufGBJ4kyfoHCtP8Ecj
- DneDXE+5u4qmD6GX+d5OGP9zBrjP8TY=
-X-Authority-Analysis: v=2.4 cv=EMM2FVZC c=1 sm=1 tr=0 ts=6a47bf5c cx=c_pps
- a=pRYMHFsXyG92p8CuKGQZlQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=RAioF0-LDSMA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=1L6crL_YRTbalZ11mEUO:22
- a=64Cc0HZtAAAA:8 a=cyJIeLrgMFebCcwQBtwA:9
-X-Proofpoint-GUID: XOgCNsExYx6Tbd6cSiRfckgeDzcLNu6I
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 23/33] pc-bios/s390-ccw: Add signature verification
+ for secure IPL in audit mode
+To: Eric Farman <farman@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260703022933.1805010-1-zycai@linux.ibm.com>
+ <20260703022933.1805010-24-zycai@linux.ibm.com>
+ <26e6d55b2ea246f2c2602ff911f459c7df8b57b0.camel@linux.ibm.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <26e6d55b2ea246f2c2602ff911f459c7df8b57b0.camel@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a47bf87 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=b206u0OnBF6S4jO2i-UA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: nnL8fDoqutC_WTH0JTDJm9mt5AenR8XB
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDEzNiBTYWx0ZWRfX6pwLMp6YNloy
+ J5VksHhaZr/VVRd1how0IaRQ7Z+tQiuGbE7GhNEKb8cKrr5ZirWhTGALZvsDwxjqScpq8fftpiP
+ XZv5sDhdTdRk0oFGZKxeJIQW0v5bIi45hjePBgHf8gHRGrQ4ZCumFBRqjAiupQU0hdlI7tZT5kf
+ 855Sa7Qi9By4UoK6aFRtteNHWBp0sM9r/x+ynNCkPcW7mFCLvV7N1hFaXE6J39mimjw2a9MjdbJ
+ QZ3AmWIuDxjWrstbsP9Bm+0IlxW42DqEtfO+xFdux+aXtbvvwatSVNj7hH0MsbXU0d3GOOmQc68
+ v4HrTXNu2m0jWeh8qwHrxpZiIj+aGKnmWCCQY4j1FqzKyL8mt5vVjsZgoWgQJu+fyiF96r2TwG+
+ 7y+Qn8UmQrnPlajeT82VFdzj9TOirA1v2a3IK/hxFjQ3l6JN2Mm06nA3aPsYnd6hju8CkPDbpD8
+ Wh/XvgKvD641UOzXHQw==
+X-Proofpoint-GUID: nnL8fDoqutC_WTH0JTDJm9mt5AenR8XB
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDEzNiBTYWx0ZWRfX+hdKpO95pZpr
+ fdaf+azzqshTsEXveYoJ+xkQhnmiLkLC35VIQVb9EfXSybhcVK5z4B3B7Gj9gVVDjyLjdohIDXT
+ C1QA2mSCfhOFQUhI91R19UrM3ccI9WU=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
+ spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030136
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -180,66 +125,306 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
----
- include/hw/acpi/ich9.h | 2 ++
- hw/acpi/ich9.c         | 8 ++++++--
- hw/isa/lpc_ich9.c      | 1 +
- 3 files changed, 9 insertions(+), 2 deletions(-)
+On 7/3/26 7:40 AM, Eric Farman wrote:
+> On Thu, 2026-07-02 at 22:29 -0400, Zhuoying Cai wrote:
+>> Enable secure IPL in audit mode, which performs signature verification,
+>> but any error does not terminate the boot process. Only warnings will be
+>> logged to the console instead.
+>>
+>> Secure IPL in audit mode requires at least one certificate provided in
+>> the key store along with necessary facilities (Secure IPL Facility,
+>> Certificate Store Facility and secure IPL extension support).
+>>
+>> Note: Secure IPL in audit mode is implemented for the SCSI scheme of
+>> virtio-blk/virtio-scsi devices.
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> ---
+>>  docs/system/s390x/secure-ipl.rst |  15 ++
+>>  hw/s390x/ipl.c                   |   9 +
+>>  pc-bios/s390-ccw/Makefile        |   2 +-
+>>  pc-bios/s390-ccw/bootmap.c       |  27 +++
+>>  pc-bios/s390-ccw/bootmap.h       |   9 +
+>>  pc-bios/s390-ccw/jump2ipl.c      |   7 +
+>>  pc-bios/s390-ccw/main.c          |  18 +-
+>>  pc-bios/s390-ccw/s390-ccw.h      |  20 ++
+>>  pc-bios/s390-ccw/sclp.c          |  27 +++
+>>  pc-bios/s390-ccw/sclp.h          |   6 +
+>>  pc-bios/s390-ccw/secure-ipl.c    | 363 +++++++++++++++++++++++++++++++
+>>  pc-bios/s390-ccw/secure-ipl.h    | 115 ++++++++++
+>>  12 files changed, 616 insertions(+), 2 deletions(-)
+>>  create mode 100644 pc-bios/s390-ccw/secure-ipl.c
+>>  create mode 100644 pc-bios/s390-ccw/secure-ipl.h
+>>
+> 
+> ...snip...
+> 
+>> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+>> index cd3d0776b0..7484429c9a 100644
+>> --- a/pc-bios/s390-ccw/main.c
+>> +++ b/pc-bios/s390-ccw/main.c
+>> @@ -20,6 +20,7 @@
+>>  #include "dasd-ipl.h"
+>>  #include "clp.h"
+>>  #include "virtio-pci.h"
+>> +#include "secure-ipl.h"
+>>  
+>>  static SubChannelId blk_schid = { .one = 1 };
+>>  static char loadparm_str[LOADPARM_LEN + 1];
+>> @@ -383,6 +384,8 @@ static void probe_boot_device(void)
+>>  
+>>  void main(void)
+>>  {
+>> +    int vcssb_len;
+>> +
+>>      iplb = &ipl_blocks.iplb;
+>>  
+>>      copy_qipl();
+>> @@ -394,7 +397,20 @@ void main(void)
+>>          probe_boot_device();
+>>      }
+>>  
+>> -    boot_mode = ZIPL_BOOT_MODE_NORMAL;
+>> +    boot_mode = get_boot_mode(iplb->hdr_flags);
+>> +    switch (boot_mode) {
+>> +    case ZIPL_BOOT_MODE_SECURE_AUDIT:
+>> +        if (!secure_ipl_supported()) {
+>> +            panic("Unable to boot in audit mode");
+>> +        }
+>> +
+>> +        vcssb_len = zipl_secure_get_vcssb();
+>> +        if (vcssb_len == 0) {
+>> +            panic("Failed to query certificate storage information!");
+>> +        }
+> 
+> break? fallthrough?
+> 
 
-diff --git a/include/hw/acpi/ich9.h b/include/hw/acpi/ich9.h
-index 019f0915c1..30990fcef5 100644
---- a/include/hw/acpi/ich9.h
-+++ b/include/hw/acpi/ich9.h
-@@ -81,6 +81,8 @@ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq);
- void ich9_pm_iospace_update(ICH9LPCPMRegs *pm, uint32_t pm_io_base);
- extern const VMStateDescription vmstate_ich9_pm;
- 
-+void ich9_pm_reset_properties(ICH9LPCPMRegs *pm);
-+
- void ich9_pm_add_properties(Object *obj, ICH9LPCPMRegs *pm);
- 
- void ich9_pm_device_pre_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
-diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-index 5c7dfb2c69..5e8f8a7eaf 100644
---- a/hw/acpi/ich9.c
-+++ b/hw/acpi/ich9.c
-@@ -388,9 +388,8 @@ static void ich9_pm_set_keep_pci_slot_hpc(Object *obj, bool value, Error **errp)
-     s->pm.keep_pci_slot_hpc = value;
- }
- 
--void ich9_pm_add_properties(Object *obj, ICH9LPCPMRegs *pm)
-+void ich9_pm_reset_properties(ICH9LPCPMRegs *pm)
- {
--    static const uint32_t gpe0_len = ICH9_PMIO_GPE0_LEN;
-     pm->acpi_memory_hotplug.is_enabled = true;
-     pm->disable_s3 = 0;
-     pm->disable_s4 = 0;
-@@ -398,6 +397,11 @@ void ich9_pm_add_properties(Object *obj, ICH9LPCPMRegs *pm)
-     pm->acpi_pci_hotplug.use_acpi_hotplug_bridge = true;
-     pm->keep_pci_slot_hpc = true;
-     pm->enable_tco = true;
-+}
-+
-+void ich9_pm_add_properties(Object *obj, ICH9LPCPMRegs *pm)
-+{
-+    static const uint32_t gpe0_len = ICH9_PMIO_GPE0_LEN;
- 
-     object_property_add_uint32_ptr(obj, ACPI_PM_PROP_PM_IO_BASE,
-                                    &pm->pm_io_base, OBJ_PROP_FLAG_READ);
-diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-index 9cec18a378..edf9783ec8 100644
---- a/hw/isa/lpc_ich9.c
-+++ b/hw/isa/lpc_ich9.c
-@@ -701,6 +701,7 @@ static void ich9_lpc_initfn(Object *obj)
-                                    &lpc->smi_negotiated_features,
-                                    OBJ_PROP_FLAG_READ);
- 
-+    ich9_pm_reset_properties(&lpc->pm);
-     ich9_pm_add_properties(obj, &lpc->pm);
- }
- 
--- 
-2.43.0
+Thanks for catching this!
 
+>> +    default:
+>> +        break;
+>> +    }
+>>  
+>>      while (have_iplb) {
+>>          boot_setup();
+>> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+>> index 5420443ad2..ca2737054d 100644
+>> --- a/pc-bios/s390-ccw/s390-ccw.h
+>> +++ b/pc-bios/s390-ccw/s390-ccw.h
+>> @@ -40,6 +40,22 @@ typedef unsigned long long u64;
+>>                              ((b) == 0 ? (a) : (MIN(a, b))))
+>>  #endif
+>>  
+>> +/*
+>> + * Round number down to multiple. Requires that d be a power of 2.
+>> + * Works even if d is a smaller type than n.
+>> + */
+>> +#ifndef ROUND_DOWN
+>> +#define ROUND_DOWN(n, d) ((n) & -(0 ? (n) : (d)))
+>> +#endif
+>> +
+>> +/*
+>> + * Round number up to multiple. Requires that d be a power of 2.
+>> + * Works even if d is a smaller type than n.
+>> + */
+>> +#ifndef ROUND_UP
+>> +#define ROUND_UP(n, d) ROUND_DOWN((n) + (d) - 1, (d))
+>> +#endif
+>> +
+>>  #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
+>>  
+>>  #include "cio.h"
+>> @@ -64,6 +80,8 @@ void sclp_print(const char *string);
+>>  void sclp_set_write_mask(uint32_t receive_mask, uint32_t send_mask);
+>>  void sclp_setup(void);
+>>  void sclp_get_loadparm_ascii(char *loadparm);
+>> +bool sclp_is_diag320_on(void);
+>> +bool sclp_is_fac_ipl_flag_on(uint16_t fac_ipl_flag);
+>>  int sclp_read(char *str, size_t count);
+>>  
+>>  /* bootmap.c */
+>> @@ -71,9 +89,11 @@ void zipl_load(void);
+>>  
+>>  typedef enum ZiplBootMode {
+>>      ZIPL_BOOT_MODE_NORMAL = 0,
+>> +    ZIPL_BOOT_MODE_SECURE_AUDIT = 1,
+>>  } ZiplBootMode;
+>>  
+>>  extern ZiplBootMode boot_mode;
+>> +ZiplBootMode get_boot_mode(uint8_t hdr_flags);
+>>  
+>>  /* jump2ipl.c */
+>>  void write_reset_psw(uint64_t psw);
+>> diff --git a/pc-bios/s390-ccw/sclp.c b/pc-bios/s390-ccw/sclp.c
+>> index 4a07de018d..48bdfedf1f 100644
+>> --- a/pc-bios/s390-ccw/sclp.c
+>> +++ b/pc-bios/s390-ccw/sclp.c
+>> @@ -113,6 +113,33 @@ void sclp_get_loadparm_ascii(char *loadparm)
+>>      }
+>>  }
+>>  
+>> +bool sclp_is_diag320_on(void)
+>> +{
+>> +    ReadInfo *sccb = (void *)_sccb;
+>> +
+>> +    memset((char *)_sccb, 0, sizeof(ReadInfo));
+>> +    sccb->h.length = SCCB_SIZE;
+>> +    if (!sclp_service_call(SCLP_CMDW_READ_SCP_INFO, sccb)) {
+>> +        return sccb->fac134 & SCCB_FAC134_DIAG320_BIT;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +/* check if specified IPL facility flag is enabled */
+>> +bool sclp_is_fac_ipl_flag_on(uint16_t fac_ipl_flag)
+>> +{
+>> +    ReadInfo *sccb = (void *)_sccb;
+>> +
+>> +    memset((char *)_sccb, 0, sizeof(ReadInfo));
+>> +    sccb->h.length = SCCB_SIZE;
+>> +    if (!sclp_service_call(SCLP_CMDW_READ_SCP_INFO, sccb)) {
+>> +        return sccb->fac_ipl & fac_ipl_flag;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>>  int sclp_read(char *str, size_t count)
+>>  {
+>>      ReadEventData *sccb = (void *)_sccb;
+>> diff --git a/pc-bios/s390-ccw/sclp.h b/pc-bios/s390-ccw/sclp.h
+>> index 64b53cad29..a8a41cd004 100644
+>> --- a/pc-bios/s390-ccw/sclp.h
+>> +++ b/pc-bios/s390-ccw/sclp.h
+>> @@ -50,6 +50,8 @@ typedef struct SCCBHeader {
+>>  } __attribute__((packed)) SCCBHeader;
+>>  
+>>  #define SCCB_DATA_LEN (SCCB_SIZE - sizeof(SCCBHeader))
+>> +#define SCCB_FAC134_DIAG320_BIT 0x4
+>> +#define SCCB_FAC_IPL_SIPL_BIT   0x4000
+>>  
+>>  typedef struct ReadInfo {
+>>      SCCBHeader h;
+>> @@ -57,6 +59,10 @@ typedef struct ReadInfo {
+>>      uint8_t rnsize;
+>>      uint8_t reserved[13];
+>>      uint8_t loadparm[LOADPARM_LEN];
+>> +    uint8_t reserved1[102];
+>> +    uint8_t fac134;
+>> +    uint8_t reserved2;
+>> +    uint16_t fac_ipl;
+>>  } __attribute__((packed)) ReadInfo;
+>>  
+>>  typedef struct SCCB {
+>> diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
+>> new file mode 100644
+>> index 0000000000..2cfa16fb68
+>> --- /dev/null
+>> +++ b/pc-bios/s390-ccw/secure-ipl.c
+>> @@ -0,0 +1,363 @@
+>> +/*
+>> + * S/390 Secure IPL
+>> + *
+>> + * Functions to support IPL in secure boot mode (DIAG 320, DIAG 508,
+>> + * signature verification, and certificate handling).
+>> + *
+>> + * For secure IPL overview: docs/system/s390x/secure-ipl.rst
+>> + * For secure IPL technical: docs/specs/s390x-secure-ipl.rst
+>> + *
+>> + * Copyright 2025 IBM Corp.
+>> + * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#include <stdlib.h>
+>> +#include <string.h>
+>> +#include <stdio.h>
+>> +#include "s390-ccw.h"
+>> +#include "sclp.h"
+>> +#include "secure-ipl.h"
+>> +
+>> +static VCStorageSizeBlock vcssb __attribute__((__aligned__(8)));
+>> +
+>> +#define for_each_rb_entry(entry, list) \
+>> +    for (entry = (void *)(list) + sizeof((list)->ipl_info_header); \
+>> +         (void *)(entry) + sizeof(*(entry)) <= \
+>> +         (void *)(list) + (list)->ipl_info_header.len; \
+>> +         entry++)
+>> +
+>> +int zipl_secure_get_vcssb(void)
+>> +{
+>> +    /* avoid retrieving vcssb multiple times */
+>> +    if (vcssb.length == VCSSB_LEN_VALID) {
+>> +        goto out;
+>> +    }
+>> +
+>> +    vcssb.length = VCSSB_LEN_VALID;
+>> +    if (_diag320(&vcssb, DIAG_320_SUBC_QUERY_VCSI) != DIAG_320_RC_OK) {
+>> +        vcssb.length = 0;
+>> +    }
+>> +
+>> +out:
+>> +    return vcssb.length;
+>> +}
+>> +
+>> +static uint32_t request_certificate(uint8_t *cert_buf, uint8_t index)
+>> +{
+>> +    VCEntryHeader *vce_hdr;
+>> +    struct vcb {
+>> +        VCBlockHeader vcb_hdr;
+>> +        struct vce {
+>> +            VCEntryHeader vce_hdr;
+>> +            uint8_t cert_buf[CERT_BUF_MAX_LEN];
+>> +        } vce;
+>> +    } __attribute__((__aligned__(PAGE_SIZE))) vcb = { 0 };
+>> +
+>> +    /*
+>> +     * Request single entry
+>> +     * Fill input fields of single-entry VCB
+>> +     *
+>> +     * First and last index must be equal because only one
+>> +     * VCE per VCB is currently supported
+>> +     */
+>> +    vcb.vcb_hdr.in_len = ROUND_UP(vcssb.max_single_vcb_len, PAGE_SIZE);
+> 
+> Don't you need to convert max_single_vcb_len from be to cpu?
+> 
+
+I don't think we need to convert max_single_vcb_len here, but please
+correct me if I'm missing something. If I understand correctly, the
+fields are written and read in big-endian format, so no additional
+conversion should be necessary.
+
+>> +    vcb.vcb_hdr.first_vc_index = index;
+>> +    vcb.vcb_hdr.last_vc_index = index;
+>> +
+>> +    if (_diag320(&vcb, DIAG_320_SUBC_STORE_VC) != DIAG_320_RC_OK) {
+>> +        puts("Could not get certificate");
+>> +        return 0;
+>> +    }
+>> +
+>> +    if (vcb.vcb_hdr.out_len == sizeof(VCBlockHeader)) {
+>> +        puts("No certificate entry");
+>> +        return 0;
+>> +    }
+>> +
+>> +    if (vcb.vcb_hdr.remain_ct != 0) {
+>> +        panic("Not enough memory to store requested certificate");
+>> +    }
+>> +
+>> +    vce_hdr = &vcb.vce.vce_hdr;
+>> +    if (!(vce_hdr->flags & DIAG_320_VCE_FLAGS_VALID)) {
+>> +        puts("Invalid certificate");
+>> +        return 0;
+>> +    }
+>> +
+>> +    memcpy(cert_buf, (uint8_t *)&vcb.vce + vce_hdr->cert_offset, vce_hdr->cert_len);
+>> +
+>> +    return vce_hdr->cert_len;
+>> +}
+>> +
+[...]
 
