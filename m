@@ -4,141 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10556C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 08:14:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6B0CC43602
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 08:33:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfZ20-000810-KP; Fri, 03 Jul 2026 04:13:52 -0400
+	id 1wfZKU-0002fC-NC; Fri, 03 Jul 2026 04:32:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wfZ1z-00080l-Dg
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 04:13:51 -0400
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wfZKN-0002eH-GT
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 04:32:52 -0400
+Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
+ ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wfZ1x-0005Ub-Q6
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 04:13:51 -0400
+ (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wfZKL-0001qP-Hy
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 04:32:51 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jqSXqSRVkr5L7yaidi8VfHt/SbhLU545CTjr/wmuEVkxg+kU4shLId+HQr53Sg72HXEXy1j/YnvMa/Laddw8Ljh0KPivgPzFsjPm8C2LHH/ze6a4AqaX2Mssvsz8yYHEDu7ir9hFJxtrLJ5y0w53GsSrmkO0Z0jX/nVQdkTtTVrVvzNyKg8Vaq8NCQ77SP7Gye08H6mCstl91swanvbzY9W/0tDLEbJFbQyE8/54jxFbktTudQJowgIvvQC1ZcpROm0sFCOTIw+dqS6pfn5IzWIXVvTTMscg12x5+rPvbr82Ib2LCoqgTLq09vt1fEG3TNVsHz4gwgVXNHTSS7Wf1Q==
+ b=sqgewsIbQ3fO3Zy9Zd65EtOsLg0ClKdqbCnDPGx4ftrtDdfk5vZBr9wZV0M/3RKDXDEKQzJhRcrlm6HVtOffCFlZBSN0LnSRjf8kKACQQvBx2qFGm8svDGqWFTUgjbHOFdUI5PRsY6RJU9ogFxbkaWYxt5G4CbWc5IC3bMe3uVbYnOb1OimncwCkO+eT3m945jzSYdMt7dmwr+iZ4x1cfZ0fw/1xYiYHO6wa+3KPweEZcMWZtoQl90qA4RJ2sfumh9w/DahKprQ2QWOVWyPCT9y7VpatkbY+T+HxhjFobl5pH9sdJtRaUJO7zBEUzcOApPla/airvekXWYMsbGxybw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EISBPc3oJJlZJCMyDkSp9Uin3qDxsYqbuXGHdY349Hw=;
- b=enFBoQjr1F9x/ZzIq0nLLYMHYV+S0Zhkdr3CA0hW3SPHqWqQKHUameiC+DJ2EmXMNczvVRbQiBHpPGpaMLfieX7IXzG7hDfZW9TBR3XynPQnHCcJCxEWdLzmc8Iw1St5bzrE+CxicavHbIC/U3LpFF4T7Y2Ga8w4AxVrjSf4clyoLWxlYWugMQmX7kj5TZ8Zj4PDQJUsTnsZ0ALifAQ5NnpR60Y5gj4Rrr4Xs7P8ozzcBmBe9JsRwy4hycjSq5L1gkPiZuU8r8YlXsYH4sNb1Ol94bie+ecad2TZXDTjVVrJKtr5MnljvBwaeAvFV8Aej78WoFaJWcCxw/lvz2MDsQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
+ bh=8HExA54w/nrt5YSz7e4dCiwLcBGXJvZaIdV46T01NN4=;
+ b=j9Y4rKRm/fFmMHVKxkafVN9VMyhuYyK1iL97u8NGv+wu5sPAdFEYTHFDFyyvGykDivOcKoffzhvbgCI7FuV2VBq29TvkMQVgOZwkvEs3K6INngDVltTh8wPWAH2WeHOSZ0Hb7Sc6+w3wtWhEp9c+/Z4ou/Tqgppx+cmJxHMyEkXxcVZOtTldiA9H56aPsXyLpXFbOpyf0jWWfTe36GOnK/CHza1b/+upMglWOXIeaDJHQb5H2x4Rkj298OZf5GAdzdAHIp9yy60WrkPqUx/rD0Rax0YySA/iMWCrOQNyO2Q9A9OhuWfKWQD9NzXYqPKwvvkpm1kj+O/sIvkbDSYm7A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EISBPc3oJJlZJCMyDkSp9Uin3qDxsYqbuXGHdY349Hw=;
- b=LW+fodzu2XJ9OztT7I2jjIRbO60rON8r1MZGIszkG8Q5TxpbWAaRaA4wE6PcL4imTlXxNHHNv4Xe2FqK7OD7AgxtfmQXJfDCpdP9qrvYqyj9EsbmUvFz39PwH43RDI6xkQ9uj00H9OQNC2QGf9pxWc+zu5H1QHJKDTgFrALpR18rUTyamL3hghogKVIsyGVCvlXREMxE/j0AaONubi1JSjCQTA/whoVzU8zn1RbTX+WD7x8wIMFYZdHqRtw87nthThdMH35fAn49QZhs3hS5050YWVf2Xlzq8sHcqGUu2AIOhyNaAVG2T2YMwstH4hC3ZEixdVCSTDzKkO5YjzDJbg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM4PR12MB5119.namprd12.prod.outlook.com (2603:10b6:5:392::10)
- by CY5PR12MB6478.namprd12.prod.outlook.com (2603:10b6:930:35::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Fri, 3 Jul
- 2026 08:13:41 +0000
-Received: from DM4PR12MB5119.namprd12.prod.outlook.com
- ([fe80::261:eff5:d149:2d56]) by DM4PR12MB5119.namprd12.prod.outlook.com
- ([fe80::261:eff5:d149:2d56%6]) with mapi id 15.21.0181.010; Fri, 3 Jul 2026
- 08:13:41 +0000
-Message-ID: <30a8d3d6-bfdb-49fc-b891-ab09c0a3a692@nvidia.com>
-Date: Fri, 3 Jul 2026 11:13:37 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 17/23] vfio/migration: Implement VFIO_PRECOPY_INFO_REINIT
- feature
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-References: <20260630043107.1511076-1-clg@redhat.com>
- <20260630043107.1511076-18-clg@redhat.com>
- <28c14e21-9382-4d4b-bde0-622d4dca9bf9@oss.qualcomm.com>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <28c14e21-9382-4d4b-bde0-622d4dca9bf9@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR3P281CA0191.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:a4::9) To DM4PR12MB5119.namprd12.prod.outlook.com
- (2603:10b6:5:392::10)
+ bh=8HExA54w/nrt5YSz7e4dCiwLcBGXJvZaIdV46T01NN4=;
+ b=bokv7qoJ3VQ3Ft0g9GMsmQituoQAvoIP69QlgGA7zR1eFz7RmWU/VVtPisDIcaM5/+yfwWFnlYyBgcMRKh24xhfz+h7hjYF2XQp0CPVhKf8DE30U6qO6m8YTw6sHCTH0H/udQYLQ7eLfRaL38tVJ1GxeNIdmv/YILBNmRFUolsw=
+Received: from MN0P220CA0019.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:52e::14)
+ by BY5PR12MB4164.namprd12.prod.outlook.com (2603:10b6:a03:207::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.11; Fri, 3 Jul
+ 2026 08:32:45 +0000
+Received: from BL6PEPF0001AB77.namprd02.prod.outlook.com
+ (2603:10b6:208:52e:cafe::35) by MN0P220CA0019.outlook.office365.com
+ (2603:10b6:208:52e::14) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.11 via Frontend Transport; Fri, 3
+ Jul 2026 08:32:44 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BL6PEPF0001AB77.mail.protection.outlook.com (10.167.242.170) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.181.6 via Frontend Transport; Fri, 3 Jul 2026 08:32:44 +0000
+Received: from [172.31.37.251] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 3 Jul
+ 2026 03:32:37 -0500
+Message-ID: <d926cf31-0ae0-49ca-bf10-a194634fd93a@amd.com>
+Date: Fri, 3 Jul 2026 14:02:34 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+CC: <sarunkod@amd.com>, <alejandro.j.jimenez@oracle.com>,
+ <pbonzini@redhat.com>, <richard.henderson@linaro.org>, <mst@redhat.com>
+Subject: Re: [PATCH 2/4] amd_iommu: Use full BDF when reporting page faults
+Content-Language: en-US
+To: Dongli Zhang <dongli.zhang@oracle.com>, <qemu-devel@nongnu.org>
+References: <20260609204403.323149-1-dongli.zhang@oracle.com>
+ <20260609204403.323149-3-dongli.zhang@oracle.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <20260609204403.323149-3-dongli.zhang@oracle.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR12MB5119:EE_|CY5PR12MB6478:EE_
-X-MS-Office365-Filtering-Correlation-Id: 20b06f89-5b0d-4cee-3539-08ded8dafe1b
+X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB77:EE_|BY5PR12MB4164:EE_
+X-MS-Office365-Filtering-Correlation-Id: 07f1291d-ad31-47e3-0276-08ded8dda796
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|366016|1800799024|376014|4133799003|4143699003|11063799006|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: QUB26iWeinE59PZKYQvZ6rVKnGBMBA+NDbxMBZj4vg9dmsrt8fgN4poG0zW8jLjkHyEpAhzTVUVGfcp+DFB9JGmsz4DykWeM+Of303rzlZHQETIo743QGpzn2NEMDF3WsIHZQkMMzfTmE2EEvh4IXWJxNo3H8H7Tt8I4jM2hzZHI0+OEME7DuIQNVZAR6Dn9RVN2ea8GDY3Ct7CxHAeYsd9Eafqu1LJpSeqZMAFE8PuWwdZLYpRmZ0Xz27+oLAbun7DikkgLmbFyVVYqnw2/HL0kgkZvGiriwEx+hXElP+nXD9lin8PqK7R7qZxmlZH6wHZnEocf6zNz+jNDP1YV5LC7uN8JkJLGCQJ5rvfbfLtBX0IKQu7IuvHIEPUAu4vjAW1TkAynfjUg/O+gZrCJ+eQYH77lkUDbFO8LZ/EJguqIm8AHVA3b1aXWUCrpz9lt7Ko//j2/MOTPyaiKGkGYH2VEYSH6WD3FCKwOvMc7Nm/9kGu2fyU8FhmZJ31VxO4u01csxKywfXtQBQLTltCnYkjxXyk9KAZz83PESFOZywrOXWoyMtXJr6KEe73+YxNm/Rc714UB721NOTHTqbg8hNEcUCE/EmE9t0dj8yp3uCAasrarRmCGB5zGNGULcIXbq/KTgjwyxi8Y0i3nEhDqc1X2x2+RHjdRPWbsZctosxU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM4PR12MB5119.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(4133799003)(4143699003)(11063799006)(56012099006)(18002099003)(22082099003);
+ ARA:13230040|82310400026|376014|36860700016|23010399003|1800799024|11063799006|4143699003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: dfgVrLb89rYv7LTGT0gU6KLKj/b9dk3sFLUlX/aKl12vhA6gZzntoo1wsvq6QVgkisxVp6TIw+oCmVd4dyf+zBHszBrfxymhLv11JNo2IeQeKIXr/kmz5ce1zNrSnnnft6x18NC/038MQfxsOispPjVU7q2wlXhzSqKjqOnLS5onepjsyO+kdLwYGhzD0mjGbi9Ebk8rwTupjhWrzdn5VdA1m1BrykPYsJXcJk8lpMcdfG4niokmYPO9duWNnBKH8/OD+KHzOywgyKNsP+vtrgJfvWgHJR5uDxbekkLa8LWA9dQ8fhE7LOzIClYtiF5oAZ0Ng0JsFY8isbjHIt6xAE5xlPgGBrM63nXD40DuX8p8TjdNOS2reg60kF0ANkd+Gm2XEQHehgh4ltVOHhO/mTIGEhESTPpKWqyFbIwCO7BrOIdZWLVzMB6X+tRb1E91nyNhzgufkzpb9H706FUDc2RMkx7Uf4yZy8TxgD/vOfT/tDUwRZzL6ptatlkSCXEWT+RYb6htjvsMx95WHZYwTFUnOlMRumCruVxv3819eww1RxOXGFzgA0oPQZsbhPViyPq6b6z2eHpACBHB0eKzm+wnVb/7XDOMHM6GH/9hRFDV3JCT1E4cb5XCl8AtLTxroaBh8rCb9DPnPWixOHSTdayqrZcqaIiZiDNM2YVabe4b+UkNfkQ/lTZqR//Se14Ke4T/A37V9jdgntlMfqRUMw==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(36860700016)(23010399003)(1800799024)(11063799006)(4143699003)(56012099006)(22082099003)(18002099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NEdhc3Q2QVpJdUtvaFpFUkczWktlb1g5ODc2MzNMU1dBYks3NkxQM0VnZVQx?=
- =?utf-8?B?Tms4VFhVUVNQQk94OVp1VXlxSTZVQ1V2K2JvMjZhOVh2WWZXczUvZjhjWkNl?=
- =?utf-8?B?ZTR4S3g4ajdiMmwxbXFHMXlJa1BjOVRXRE1HRExhaXNMU3I0ck5NWG5vNVAv?=
- =?utf-8?B?VW1xNmlwRWpuNWhHOENtdDg2YWFqWGUvbjlROURVbDQyODRLaUZMNDZNMUh3?=
- =?utf-8?B?TGRLVUVtR2I5L2VRdzQ1bjQzdkVIZ3lmVHA1dUNkV1M0cVZ0N1RSOVlDbXdv?=
- =?utf-8?B?blZoL2dQS3lnUm8yRTdKL055WnB0bGdTNFpwSXVoY3JpWC9XWFM5V1FlOVFO?=
- =?utf-8?B?b0dMblEvTkorRnVHN2RUcEhtRlVLWU45elZyOG10YUNDdHE0cFR5aGgrRytl?=
- =?utf-8?B?VTM0Q1BldlVXbGhFdkx0Wm5zcXVGaGNEbUpab2tYaUkzajArejJWSVdlK3FY?=
- =?utf-8?B?dUJKblgxRWs5bVQyVmVuaXhxQm5kVUlXYVBUL0pJUzBtN2Fmek9tMFhWNTBN?=
- =?utf-8?B?L2JwbmkrOW9jN0ZQZlhhVXZEOUEwdGx6alNSZ2tBS3k1Q3ZNcGVVYnMxRE5T?=
- =?utf-8?B?YlNlbEI3bGZlK1E2VEZzOW0xQ29xK2hzR1ZwQnh4WUEyODJmUDVmSkVvTjly?=
- =?utf-8?B?NlB3KzdCR0RtMm5vdGpsUk1Lbi8yTENvclFKYU81UitKaVpIZ3FMZU1zMWpo?=
- =?utf-8?B?eW5sOHhxbGZtRFYzY05yMVFTdlJaejVyUnFraGFrUWxqeDBPamN6VnZsVGN0?=
- =?utf-8?B?U2dJQzNIZU9BMVNSNW9qS0VFOE5CQUZsUTdhMkNlWGRnZ3hDdjZPdzdPcUJU?=
- =?utf-8?B?TmRBL3lDbkRQOE5XUmpJUyt4aUtMY0UvbGVoeUI1NEowSUZkMHRwaFJyeVF0?=
- =?utf-8?B?VVpqMFVCbk84NkorTUUvaWQ2bk5xOHRjU2FjeGVpOElOUzNHRnlXK29JSTRC?=
- =?utf-8?B?MENWQXpZVlBXbWxMTENzZ0tac29UektHUENvTVZPMTI1V2xnOE52Tlh3WXJa?=
- =?utf-8?B?TkF4TSt0TGJRUFhtOWRLdmY2ZnVMVmd1eG42R0ZSYzNqdzRlelVIditmSjQ2?=
- =?utf-8?B?T016dFZuRW1Nc2xhTm53a29XRTROZWZYYThEQTEvakVqS1BjKzcrSDBub2Vq?=
- =?utf-8?B?TDlTVUYyUmZYeFZyeEZ5d04yY1JteU5OVVdxRmdtRVNpaTMzclV2bUE1WEVF?=
- =?utf-8?B?bVV3WnkvWnZBYkVoNHFWbUF1bHN1MTQ3bytNdDI3UlFOSUVGUGxldW9wRFZj?=
- =?utf-8?B?QXJuMEUzcXhGa1RPVnBBQitwdzA2YUhNTDVWd285dGtPRGppL0VIRkxsaW9U?=
- =?utf-8?B?bHMvNk1RaWxFa3FOcmp2bzBSVms1OXorSmFpeXFRRExQZVBKN1c1ZzBHZW01?=
- =?utf-8?B?dUh3SnFPN1htZDZHd0w5WHpneU5SK1czY0M1WUF1Z0RLSnJZTGtFekRrK1N2?=
- =?utf-8?B?WXZpTEJwcUV6Q0JJTzJ4bVNXVWZVYmZ4QmFyck9UWEVkMEI4M0ZQcisvdWZx?=
- =?utf-8?B?SDBVNHRUQkpPRUhHcHJBcDk3anZuNFROT1hNMDNCZmE4QUsyblFJU3hjeEZT?=
- =?utf-8?B?SHp3TnFERW1COElZR0FaOW9TSDlocUJXbzVpSmZDV0ZqNDNKVUlZMDI3bjho?=
- =?utf-8?B?U2pxM0hvdTdEWkZib25uanpRVm1RV051QzdqY1hYZEo0UGVuYUZLWkVqdlJv?=
- =?utf-8?B?a04zUGlGMFJXejh5VzZFYkE1Wis2NEo4aDcyZXQwS1JadWg2SysxeW4wZFNM?=
- =?utf-8?B?djJvODdRcnAySkg1aEVJVW5MWGRLVWFpZ0libzdyNUcxb1NqSnd0aXdoZVlK?=
- =?utf-8?B?L28wQ21QSHFVOWtvZENhNitZdncvV0hodkZCUVhVaUd4T296OFhPNWpEWERJ?=
- =?utf-8?B?ZWZDbHRFWXlkZXNMVlgzSjRRaXBuYlJZb2dsajl1djRWb1VORkpISlpSd3Q1?=
- =?utf-8?B?RjdUSEdlZWgxRTBYWm1JMWdWZmtvOVNVUHZWWklLRFUrYy9McGlXdk44cFlr?=
- =?utf-8?B?amdqK01GZnlmMWlXSDlJUG0vY3VzR1FYd3A5UlZaMTFMQTlHM2E1QkIyaTM1?=
- =?utf-8?B?RGZtRWRhUG9LVDZsUEpWclJ6VllSZHNBdlUvb0J2ODhUcTJBVWdtTWw4LzB6?=
- =?utf-8?B?Y0U3SVR0bERxVXVLYzVRYzkvbE5vT0dkUXhra0Y4ZHlubEluNVNBZmNIQTZI?=
- =?utf-8?B?bXVCcUFROHRYcDZDTnBjZFFmRUFGYzNSOVFKdkZBQ0U5QktuTTdUZmpHK1d0?=
- =?utf-8?B?SkluYzZ4TldnYmxoNk83Ukg5Z1Rnb05IeklnK1JlMmJaZjRqMmdLRktyTHBY?=
- =?utf-8?B?dDRLeWN3UVJkb2dzK3BYdVhZMUpsbXNVaGJTZWZNMUNxUm5NbXNNdz09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 20b06f89-5b0d-4cee-3539-08ded8dafe1b
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5119.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2026 08:13:41.3393 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: eQP6KajCclttzBX4bJCPLamxIXLZQ5v5v/VarSRi0fkOpOup9MSxPl5t9U6oMJ6Bgv3YXZ7K/TbBPlBuQs+9hA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6478
-Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
- envelope-from=avihaih@nvidia.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-MS-Exchange-AntiSpam-MessageData-0: PHe4JvhRt0FHxbyc+chTn8euE9XBxEVnB0jCyfLWhXlMXRxvFK9VnYF4TBuXbK+OMXGmnkDR4+Z+303iOceByN3Dv/bAFREltdZ7UwVNHIIpccuQv9xcQA0iuoPDWYSoG/cQwoiKZLo+tQciwFEYo0eFtIVBCD37tHr3xVHZPUE2jSdeuIm69pe6lkDUi/S5fRtvsA8fTPqqPQCwAuaYJWEbJ/W4+ze4HePUPeqxpmKlcM25Sdc6cxqkt5jQP13yfdTFxgwYdfGJK8P8fWizEexf2GjAClEkIqmHFXQa9PyY/8C3mUxzsikDPB6hGoHmJjDsU60Q7KTAUGMl9/u7DlkhLyPNEe7H1OksqWMmbWqiJqiRv/8mw/xmfVJZWmLlF59bqd7CkSSWfvzK3CB8IkO7uSyGr1fmf/UVVLbycVsFZBoGyCBFpqQF1V0FdqHs
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2026 08:32:44.3750 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 07f1291d-ad31-47e3-0276-08ded8dda796
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB77.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4164
+Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+ envelope-from=Sairaj.K@amd.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,76 +126,104 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 7/3/2026 5:07 AM, Philippe Mathieu-Daudé wrote:
-> External email: Use caution opening links or attachments
->
->
-> On 30/6/26 06:31, CÃ©dric Le Goater wrote:
->> From: Avihai Horon <avihaih@nvidia.com>
->>
->> According to VFIO uAPI, precopy initial_bytes is considered as critical
->> data that should be transferred and loaded prior to moving to STOP_COPY
->> state to ensure precopy phase would be effective.
->>
->> As currently defined, initial_bytes can only decrease as it's being read
->> from the data fd. However, there are cases where a new chunk of
->> initial_bytes should be transferred during precopy.
->>
->> The new VFIO_PRECOPY_INFO_REINIT feature addresses this and allows
->> reporting a new value for initial_bytes regardless of any previously
->> reported values.
->>
->> Implement VFIO_PRECOPY_INFO_REINIT feature:
->> 1. Opt-in for VFIO_DEVICE_FEATURE_MIG_PRECOPY_INFOv2 to make
->>     VFIO_PRECOPY_INFO_REINIT available.
->> 2. Request a new switchover ACK if initial_bytes increases post of a
->>     previous switchover ACK. This ensures the device is not moved to
->>     STOP_COPY before initial_bytes has reached zero again.
->>
->> Acked-by: Peter Xu <peterx@redhat.com>
->> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
->> Link: 
->> https://lore.kernel.org/qemu-devel/20260622101214.25770-13-avihaih@nvidia.com
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->>   docs/devel/migration/vfio.rst     | 14 +++++++
->>   hw/vfio/vfio-migration-internal.h |  1 +
->>   hw/vfio/migration.c               | 68 ++++++++++++++++++++++++++++---
->>   hw/vfio/trace-events              |  4 +-
->>   4 files changed, 80 insertions(+), 7 deletions(-)
->
->
->> +/* Returns 1 on success, 0 if not supported and negative errno on 
->> failure */
->> +static int vfio_migration_set_precopy_info_v2(VFIODevice *vbasedev)
->> +{
->> +    uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature),
->> +                              sizeof(uint64_t))] = {};
->
-> What is the point of using uint64_t[] here?
 
-Since there is no data payload in this case, it's mainly for consistency 
-with other VFIO_DEVICE_FEATURE ioctl call sites.
-
-Thanks.
-
+On 6/10/2026 2:13 AM, Dongli Zhang wrote:
+> AMDVIAddressSpace->devfn only contains the PCI device/function number.
+> AMD-Vi event log entries require the full DeviceID, including the PCI
+> bus number.
 >
->> +    struct vfio_device_feature *feature = (struct 
->> vfio_device_feature *)buf;
->> +
->> +    feature->argsz = sizeof(buf);
->> +    feature->flags =
->> +        VFIO_DEVICE_FEATURE_SET | 
->> VFIO_DEVICE_FEATURE_MIG_PRECOPY_INFOv2;
->> +    if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
->> +        if (errno == ENOTTY) {
->> +            return 0;
->> +        }
->> +
->> +        return -errno;
->> +    }
->> +
->> +    return 1;
->> +}
+> When reporting IO page faults for devices behind a pcie-root-port, QEMU
+> logs the fault against the wrong requester. For example, a fault from
+> 01:00.0 is reported as 00:00.0 because only devfn is passed to
+> amdvi_page_fault().
 >
+> [root@vm ~]# lspci
+> ... ...
+> 01:00.0 Ethernet controller: Red Hat, Inc. Virtio 1.0 network device (rev 01)
+>
+> [   58.154050] pci 0000:00:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0000 address=0xc0000000 flags=0x000a]
+> [   58.156968] pci 0000:00:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0000 address=0xc0000000 flags=0x000a]
+>
+> Use the full BDF consistently for AMD-Vi address spaces and pass it to
+> page fault and page-table access error reporting.
+>
+> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+> ---
+>   hw/i386/amd_iommu.c | 15 +++++++++++----
+>   1 file changed, 11 insertions(+), 4 deletions(-)
+>
+> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+> index 997d02eab5..ca9d79bb51 100644
+> --- a/hw/i386/amd_iommu.c
+> +++ b/hw/i386/amd_iommu.c
+> @@ -87,6 +87,11 @@ typedef struct AMDVIIOTLBEntry {
+>       uint64_t page_mask;         /* physical page size  */
+>   } AMDVIIOTLBEntry;
+>   
+> +static uint16_t amdvi_as_devid(AMDVIAddressSpace *as)
+> +{
+> +    return PCI_BUILD_BDF(pci_bus_num(as->bus), as->devfn);
+> +}
+> +
+
+A better function name can be 'amdvi_get_as_devid'
+
+>   /*
+>    * These 'fault' reasons have an overloaded meaning since they are not only
+>    * intended for describing reasons that generate an IO_PAGE_FAULT as per the AMD
+> @@ -613,7 +618,7 @@ static inline uint64_t amdvi_get_pte_entry(AMDVIState *s, uint64_t pte_addr,
+>   
+>   static int amdvi_as_to_dte(AMDVIAddressSpace *as, uint64_t *dte)
+>   {
+> -    uint16_t devid = PCI_BUILD_BDF(pci_bus_num(as->bus), as->devfn);
+> +    uint16_t devid = amdvi_as_devid(as);
+>       AMDVIState *s = as->iommu_state;
+>   
+>       if (!amdvi_get_dte(s, devid, dte)) {
+> @@ -664,6 +669,7 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
+>   {
+>       IOMMUAccessFlags perms = amdvi_get_perms(dte);
+>   
+> +    uint16_t devid = amdvi_as_devid(as);
+>       uint8_t level, mode;
+>       uint64_t pte_addr;
+>   
+> @@ -719,7 +725,7 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
+>            * and walk down to the lower level.
+>            */
+>           pte_addr = NEXT_PTE_ADDR(*pte, level, address);
+> -        *pte = amdvi_get_pte_entry(as->iommu_state, pte_addr, as->devfn);
+> +        *pte = amdvi_get_pte_entry(as->iommu_state, pte_addr, devid);
+>   
+>           if (*pte == (uint64_t)-1) {
+>               /*
+> @@ -1763,6 +1769,7 @@ static void amdvi_page_walk(AMDVIAddressSpace *as, uint64_t *dte,
+>       uint8_t mode;
+>       uint64_t pte;
+>       int fetch_ret;
+> +    uint16_t devid = amdvi_as_devid(as);
+>   
+>       /* make sure the DTE has TV = 1 */
+>       if (!(dte[0] & AMDVI_DEV_TRANSLATION_VALID)) {
+> @@ -1796,7 +1803,7 @@ static void amdvi_page_walk(AMDVIAddressSpace *as, uint64_t *dte,
+>       if (fetch_ret < 0 || !IOMMU_PTE_PRESENT(pte) ||
+>           perms != (perms & amdvi_get_perms(pte))) {
+>   
+> -        amdvi_page_fault(as->iommu_state, as->devfn, addr, perms);
+> +        amdvi_page_fault(as->iommu_state, devid, addr, perms);
+>           trace_amdvi_page_fault(addr);
+>           return;
+>       }
+> @@ -1823,7 +1830,7 @@ static void amdvi_do_translate(AMDVIAddressSpace *as, hwaddr addr,
+>                                  bool is_write, IOMMUTLBEntry *ret)
+>   {
+>       AMDVIState *s = as->iommu_state;
+> -    uint16_t devid = PCI_BUILD_BDF(pci_bus_num(as->bus), as->devfn);
+> +    uint16_t devid = amdvi_as_devid(as);
+>       AMDVIIOTLBEntry *iotlb_entry = amdvi_iotlb_lookup(s, addr, devid);
+>       uint64_t entry[4];
+>       int dte_ret;
+
+Update the function amdvi_find_as_by_devid as well to use 
+amdvi_as_devid. Thanks Sairaj
 
