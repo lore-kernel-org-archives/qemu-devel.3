@@ -4,99 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B29C2C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 16:57:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11F77C43602
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 17:01:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfhCU-0005eT-CT; Fri, 03 Jul 2026 12:57:14 -0400
+	id 1wfhG4-0007bj-37; Fri, 03 Jul 2026 13:00:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wfhCR-0005du-Do; Fri, 03 Jul 2026 12:57:11 -0400
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wfhG2-0007bH-S6; Fri, 03 Jul 2026 13:00:54 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wfhCP-0001vy-FK; Fri, 03 Jul 2026 12:57:11 -0400
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wfhG0-0002z5-Vg; Fri, 03 Jul 2026 13:00:54 -0400
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 663GIkL53383279; Fri, 3 Jul 2026 16:57:04 GMT
+ 663GIVSF3382673; Fri, 3 Jul 2026 17:00:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=7VvkWn
- u2fx0s1eY8aakMYvspIGp+/Qg7OSUQSTHk1Tc=; b=fPSTjZrwcV9CbtOLvTwGGX
- kJTbbhoOzLTukuBV2c2OOHQFSqngh/McfgWeJA+M4ya2k8fmdIziABX/VuVeYQsk
- U3yGlDrsfVYgVrS0/4MlyXBoans0UI1rk+Wh6Hq6viZYbRGJT6ywB0r50+5lSIY6
- vO0kxgh0GgW68HsuEsXVIHmgSyDXdGHyknlnVK+fkEK0mB7beYc5x2Uw9vpsmwGd
- sGXhaCR9kAmKvdQsv0X/WexbBqXsC4ryki0f8W3h+MVQWUIg6b7niUnrFVQwQXV7
- B/3BYT1HiVNkWRgMQC1ncGLb89CySMabcGgBWJ9tRJvy7PtYRiNIyJxYoFAv5GRg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=/3eqHN
+ bv4aXfd+u4AnT0IFpGYmbYJdEcHut8ZRCL9ww=; b=CJMstgMXo3JSezsOJso6us
+ +8/BHt804qxhJf1oGpyJ2y8rdSdlZw1QzOxYUgWVSGju8lKZROcoLxDT2T/VXqhQ
+ EsQwExDHuqCnyO67H0xW5svdOfbD3hiOPMgplzYKiI7KbaSFZmS3DnKLRYRhiV5a
+ y2nDe907MXMLeh6uaKJUXgKNQgyYi0lK58W0FC37oUVqqtWv1zm4Ja4EUj+S5fYN
+ rQpdMU5sf8t8eguhdN+kPZsM/AVS2HJWlBP1QtunYl6fQOciSvcBiy8HT9a3xhj9
+ XKSH+vsVX+Wp72aX3SAtSUlMYzGqE7xMmniZMMSLH6yo1eOAmgg7znVvrU49Vrww
  ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26peg9ur-1
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26pegaat-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 16:57:03 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663GnZli031463;
- Fri, 3 Jul 2026 16:57:02 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2uhysftc-1
+ Fri, 03 Jul 2026 17:00:49 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663Gnjiu003106;
+ Fri, 3 Jul 2026 17:00:48 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhsnbe-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 16:57:02 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 663Gv1BZ28181094
+ Fri, 03 Jul 2026 17:00:48 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 663H0kfZ30212768
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 3 Jul 2026 16:57:01 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F0B515804E;
- Fri,  3 Jul 2026 16:57:00 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EFCC25803F;
- Fri,  3 Jul 2026 16:56:58 +0000 (GMT)
-Received: from [9.61.65.1] (unknown [9.61.65.1])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  3 Jul 2026 16:56:58 +0000 (GMT)
-Message-ID: <5c7a7c60-c874-41e1-9e47-28de61b7cc98@linux.ibm.com>
-Date: Fri, 3 Jul 2026 12:56:58 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 04/33] hw/s390x/ipl: Create certificate store
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
+ Fri, 3 Jul 2026 17:00:46 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C8D0A58054;
+ Fri,  3 Jul 2026 17:00:46 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D1DED58064;
+ Fri,  3 Jul 2026 17:00:43 +0000 (GMT)
+Received: from fedora-workstation.lan (unknown [9.61.75.28])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  3 Jul 2026 17:00:43 +0000 (GMT)
+From: Zhuoying Cai <zycai@linux.ibm.com>
+To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
  jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
+ eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
+ alifm@linux.ibm.com, brueckner@linux.ibm.com,
  pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260703022933.1805010-1-zycai@linux.ibm.com>
- <20260703022933.1805010-5-zycai@linux.ibm.com>
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <20260703022933.1805010-5-zycai@linux.ibm.com>
+Subject: [PATCH v14 03/33] crypto/x509-utils: Add helper functions for
+ certificate store
+Date: Fri,  3 Jul 2026 13:00:00 -0400
+Message-ID: <20260703170032.1893204-4-zycai@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260703170032.1893204-1-zycai@linux.ibm.com>
+References: <20260703170032.1893204-1-zycai@linux.ibm.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: qyr0JuEVp0pKXOhZ0VmunDertPk7UV1p
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX2HlRipmwgn1A
- /GTqG8vQ2KiJRPDw8+S971HgVTVKT6jbfiAtuFfUNaPkQZbKYWAGw5rkJdF4aq3F2d0Xuk+3kyV
- zH7L/4t0nuZDgPQiT5Tm4sDWLefxvp4=
-X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a47e9df cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-GUID: Yv2C452eEEAQ0GOhjb3GqRdeh2F6jPlb
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX1FtArYkvvtsC
+ G8bj/s8XrmahY53kIg/5YZfjXTFRwM3EUUCeb+eomb1VL3AJmZhXreg2Qygs7f9x4zPkDyDw1tO
+ CsMHyZLf5VAPLvka2IDDA+exWFna+CM=
+X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a47eac1 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
  a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=NoTqclVnJAl4llu3VHcA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX/RAY+ajaOLoC
- 6D59wfjlGlAU94OPOO352MeKVYS2mByucJxi7cSQwze5Q5kPS+A0Uj5t1ozTfyUA+aNX8UBytVu
- iRF8M/PLLMMe9b0SFN53uqcarBJyZCqTPrAEWmQpdFiHubfakJMLl6yOu/UX19mg084vjkIteS3
- dgISL9KZQZ+rX1EvppEVyH+CRNQf48PsGRBeDx8Fk9WC6o28m60OExb8TZA/7lvqoBwkNN+zfTV
- GNjyC6MAJKmsqBLjkfXJUFwHyL755zP8BhVgAKfjxWSVILH//JYgHLlddo5hvk0VZGkHQd2AuOZ
- y0j3FLBglB/sMbiDLus4iPkbvXjVNZTj6SIQPrG86BB6PWBgq4hq56RZFLYWy/eJwT2/ZEY3S7d
- a2bHFNoC+uC5zu1Wd5PyhnyAAKtzYqm2X3lPNUoxgB5uSK3Rz4uO0EZXEOMjJjqFWg1uOnnr6Ky
- hc8Vr0YPjEhG7QMq9gA==
-X-Proofpoint-ORIG-GUID: qyr0JuEVp0pKXOhZ0VmunDertPk7UV1p
+ a=20KFwNOVAAAA:8 a=GX81FK21qHpjiM7aGUoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfXwEZDXAg4csPu
+ UuhrnIKxNPOIKFSjL9UZLKU6ccW9iboCTUxX1PuT7CvFwGrykQKG6w4AZkIAsHOYGd6GWpz8KMN
+ dDaaMufTZ+ibMgpl7QNCpcEErbJCm2UW8VMjTlJOB4nOfay5vE0pLt6CQx0GlCT/Y7GdOBl4Ab8
+ NOLnjUAyyb0TY7LJXmmALccf6D7YOsEIO1Bgi9tK0w72wCmGkfAYQnOBAOp520S823mmoLRxQ9U
+ wkUEa4Yx+UuB+SgSWInI2297P/v3YcHPiz5IG/hHRJ4gvAQPO2yy4CPzeCUh7qDdhkolx/RrIZr
+ qoZ7FdO+QrCl+EvLJFmsdHnwW9p4nAaURUL8mDRQuswLiJ5duZLmDBmCv5NcfGCjXnrXuggpzEk
+ SffaOOezukwBCGuauBMHetnM8zrFg5lYVEvEIyWXC7G2fSMY1eIY5q2bzbR4fS8MgNE1vJzLi3+
+ nWMsTSKwwALOsGi2bmQ==
+X-Proofpoint-ORIG-GUID: Yv2C452eEEAQ0GOhjb3GqRdeh2F6jPlb
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_03,2026-06-26_01,2025-10-01_01
@@ -105,8 +104,8 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030167
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -129,69 +128,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/26 10:29 PM, Zhuoying Cai wrote:
-> Create a certificate store for boot certificates used for secure IPL.
-> 
-> Load certificates from the `boot-certs` parameter of s390-ccw-virtio
-> machine type option into the cert store.
-> 
-> Currently, only X.509 certificates in PEM format are supported, as the
-> QEMU command line accepts certificates in PEM format only.
-> 
-> The raw Base64 data is stored, as well as the certificate's size.  The
-> binary (DER) size is stored as well, which may later be utilized for
-> secure boot (signature verification).
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+Introduce new helper functions for x509 certificate, which will be used
+by the certificate store:
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+qcrypto_x509_convert_cert_der() - converts a certificate from PEM to DER format
 
-With a few minor things below:
-> +
-> +s390 Certificate Store
-> +^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +A certificate store is implemented for s390-ccw guests to retain within
-> +memory all certificates provided by the user via the command-line, which
-> +are expected to be stored somewhere on the host's file system. The store
-> +will keep track of the number of certificates, their respective size,
-> +and a summation of the sizes.
-> +
-> +Each certificate is stroed in an S390IPLCertificate struct, which has a
+These functions provide support for certificate format conversion.
 
-stored
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+---
+ crypto/x509-utils.c         | 49 +++++++++++++++++++++++++++++++++++++
+ include/crypto/x509-utils.h | 21 ++++++++++++++++
+ 2 files changed, 70 insertions(+)
 
-...
-
-> +static int update_cert_store(S390IPLCertificateStore *cert_store,
-> +                             S390IPLCertificate *cert)
-> +{
-> +    size_t data_buf_size;
-> +    size_t keyid_buf_size;
-> +    size_t hash_buf_size;
-> +    size_t cert_buf_size;
-> +
-> +    /* length field is word aligned for later DIAG use */
-> +    keyid_buf_size = ROUND_UP(CERT_KEY_ID_LEN, 4);
-> +    hash_buf_size = ROUND_UP(CERT_HASH_LEN, 4);
-> +    cert_buf_size = ROUND_UP(cert->der_size, 4);
-> +    data_buf_size = keyid_buf_size + hash_buf_size + cert_buf_size;
-> +
-> +    if (cert_store->largest_cert_size < data_buf_size) {
-> +        cert_store->largest_cert_size = data_buf_size;
-> +    }
-> +
-> +    if (cert_store->count >= MAX_CERTIFICATES) {
-> +        error_report("Cert store is full");
-> +        return -1;
-> +    }
-
-Seems we should check this first before updating largest_cert_size?
-
-I think ultimately it will not matter because we will exit anyway, but
-for debug may be useful to not have the largest_cert_size potentially
-clobbered by a cert that was never added.
-
+diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+index 6176a88653..68cf008938 100644
+--- a/crypto/x509-utils.c
++++ b/crypto/x509-utils.c
+@@ -81,6 +81,46 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+     return ret;
+ }
+ 
++int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
++                                  uint8_t **result, size_t *resultlen,
++                                  Error **errp)
++{
++    int ret = -1;
++    int rc;
++    gnutls_x509_crt_t crt;
++    gnutls_datum_t datum = {.data = cert, .size = size};
++    gnutls_datum_t datum_der = {.data = NULL, .size = 0};
++
++    rc = gnutls_x509_crt_init(&crt);
++    if (rc < 0) {
++        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
++        return ret;
++    }
++
++    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
++    if (rc != 0) {
++        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    rc = gnutls_x509_crt_export2(crt, GNUTLS_X509_FMT_DER, &datum_der);
++    if (rc != 0) {
++        error_setg(errp, "Failed to convert certificate to DER format: %s",
++                   gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    *resultlen = datum_der.size;
++    *result = g_memdup2(datum_der.data, datum_der.size);
++
++    ret = 0;
++
++cleanup:
++    gnutls_x509_crt_deinit(crt);
++    g_free(datum_der.data);
++    return ret;
++}
++
+ #else /* ! CONFIG_GNUTLS */
+ 
+ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+@@ -93,4 +133,13 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+     return -1;
+ }
+ 
++int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
++                                  uint8_t **result,
++                                  size_t *resultlen,
++                                  Error **errp)
++{
++    error_setg(errp, "GNUTLS is required to export X.509 certificate");
++    return -1;
++}
++
+ #endif /* ! CONFIG_GNUTLS */
+diff --git a/include/crypto/x509-utils.h b/include/crypto/x509-utils.h
+index 1e99661a71..91ae79fb03 100644
+--- a/include/crypto/x509-utils.h
++++ b/include/crypto/x509-utils.h
+@@ -19,4 +19,25 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+                                       size_t *resultlen,
+                                       Error **errp);
+ 
++/**
++ * qcrypto_x509_convert_cert_der
++ * @cert: pointer to the raw certificate data in PEM format
++ * @size: size of the certificate
++ * @result: output location for the allocated buffer for the certificate
++ *          in DER format
++ *          (the function allocates memory which must be freed by the caller)
++ * @resultlen: pointer to the size of the buffer (will be updated with the
++ *             actual size of the DER-encoded certificate)
++ * @errp: error pointer
++ *
++ * Convert the given @cert from PEM to DER format.
++ *
++ * Returns: 0 on success,
++ *         -1 on error.
++ */
++int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
++                                  uint8_t **result,
++                                  size_t *resultlen,
++                                  Error **errp);
++
+ #endif
+-- 
+2.54.0
 
 
