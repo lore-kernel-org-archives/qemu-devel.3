@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FDC0C43602
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 05:48:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CAB4C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 05:49:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfWkf-0004gI-0k; Fri, 03 Jul 2026 01:47:49 -0400
+	id 1wfWki-0004mk-Qc; Fri, 03 Jul 2026 01:47:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wfWje-0004T2-Ll; Fri, 03 Jul 2026 01:46:49 -0400
+ id 1wfWje-0004T5-Mi; Fri, 03 Jul 2026 01:46:51 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wfWjW-0003RC-9B; Fri, 03 Jul 2026 01:46:42 -0400
+ id 1wfWjW-0003RI-9i; Fri, 03 Jul 2026 01:46:43 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6635jovg036784
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6635jovc036784
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 3 Jul 2026 14:46:06 +0900 (JST)
+ Fri, 3 Jul 2026 14:46:05 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=EqLrzd0wk4wQt8kZtdYvKx4Ux02VoKxLULvtV8vK5iI=; 
+DKIM-Signature: a=rsa-sha256; bh=AHPqD+tIyvCHf3qXm6SUnzMux+ljEiTqoyGn4fIigmE=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1783057566; v=1;
- b=ol/yOEFXkLqxZKT138XTi0RPqzGWeSdUAsXKXdg8GCzTlVKDN3rng6sex4AqrqaQ
- 2hGk/cB8ScfhVDWi8QjLiRJWzcgWwEuxlrR3hKRwMFt6L1/4/2ZjB/I4ZXn2QjiY
- 6QPwojJ/sPvsiByGAg2GaR1lQ5RekGPd1CDMwjvhJ2ngkwg0EHVkALJoLa3IO77a
- kzXNrLz1qD9FIqHTCFiiLa0hVhwS9FokETKVTp7RcRDjh2mH8JV3wvyfea2jMsrx
- EYjZ7xkgB5kKv1rQH6xrav7C7ecgmNPwna30gYBfR+Zon9p1whnmos6+9DTFJXnF
- tMKfokQ55sJGCH7ayy09FQ==
+ s=rs20250326; t=1783057565; v=1;
+ b=EaQ5rD4QME4Y6T4PNn79HZe6/AMCFKkVexl82lrxW/xH2oIhzVEPuLDKsit3dfNA
+ 8NjNuVJN0G1CQXByhQqECRsnq6HjqrQ9N34bs146NLtyC7Q416tujnB6zlN1vpxS
+ E6cZHoa1udTptlZyDTcDHHNbzkQWaHI+BXWXg/owslV4pWpLey43q202FCkwqn+6
+ 5GOVCyrHXHvr+PxqsYUahPc81bC8/8YkqQlEU4xuyam/8JCh+u/JrYuu/Orz63gg
+ Oycn1yTbf1NwenkRjOcGNxHh715g/8/fKmyVDYRYalCQbBN6JClWnaxwa0VeYqOr
+ aNC5THDiD/aKG9NFfOQsMw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 03 Jul 2026 14:45:38 +0900
-Subject: [PATCH v5 7/8] util: Remove qemu_get_local_state_dir()
+Date: Fri, 03 Jul 2026 14:45:34 +0900
+Subject: [PATCH v5 3/8] qga: Use qemu_get_runtime_dir()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260703-run-v5-7-4521ac5a149e@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260703-run-v5-3-4521ac5a149e@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260703-run-v5-0-4521ac5a149e@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260703-run-v5-0-4521ac5a149e@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org, qemu-block@nongnu.org,
@@ -61,13 +61,13 @@ To: qemu-devel@nongnu.org, qemu-block@nongnu.org,
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-925f5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1713;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3665;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=K0UJNUosHhV8leUj3w42aWRtcOxU75tjw8UPDyAhTPQ=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5a7z8xXT0L25769+ybs1lPvbx9nKl9pe3m8+sPfo5Vnv
- u7icUnL7ihlYRDjYpAVU2RJKdrNrRFd+6kwIb4FZg4rE8gQBi5OAZhI7TJGhoeNouIlgTc25R8q
- zph9K4jt9BIJXqbdYWK9ai9jz5U942FkmPQnM5jvFudNnecWPsamYXe4NpUfnyrFPft4w5zLsnE
- m7AA=
+ bh=0QIwFy8bP77AKijAc2rWm/vQXhRd9FL/+60FhfkdcVY=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5a7z5SraqZHZnpsvdvj9zrCZl+udcEWPQ/OjAO85SWyr
+ R6WW6d0lLIwiHExyIopsqQU7ebWiK79VJgQ3wIzh5UJZAgDF6cATIT5D8P/3F/sL01XPAoKtu5f
+ 8D/hkXJorOzf2L1JWz9OuydbsFZVkeGf6hlPj8yF6stvVITfX2Wc8IalI/2D1CXlU3d9TgR/Pfi
+ RDwA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -93,72 +93,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are no users of the function anymore.
+qemu_get_runtime_dir() is used to construct the default state directory.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/qemu/osdep.h |  8 --------
- util/oslib-posix.c   |  6 ------
- util/oslib-win32.c   | 10 ----------
- 3 files changed, 24 deletions(-)
+ docs/conf.py             | 2 ++
+ docs/interop/qemu-ga.rst | 5 +++--
+ docs/meson.build         | 6 +++++-
+ qga/main.c               | 8 ++++----
+ 4 files changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index d64cebdf5ec5..47436e0e027f 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -709,14 +709,6 @@ bool qemu_set_blocking(int fd, bool block, Error **errp);
-  */
- void qemu_clear_cloexec(int fd);
+diff --git a/docs/conf.py b/docs/conf.py
+index 7e35d2158d30..cafe8fd37b59 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -169,9 +169,11 @@
+ # environment variable is not set is for the benefit of readthedocs
+ # style document building; our Makefile always sets the variable.
+ confdir = os.getenv('CONFDIR', "/etc/qemu")
++localstatedir = os.getenv('LOCALSTATEDIR', "/var/local")
  
--/* Return a dynamically allocated directory path that is appropriate for storing
-- * local state.
-- *
-- * The caller is responsible for releasing the value returned with g_free()
-- * after use.
-- */
--char *qemu_get_local_state_dir(void);
--
- /**
-  * qemu_get_runtime_dir:
-  *
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index d03399063999..69db96ab9556 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -314,12 +314,6 @@ void qemu_clear_cloexec(int fd)
-     assert(f != -1);
+ vars = {
+     "CONFDIR": confdir,
++    "LOCALSTATEDIR": localstatedir,
+     "VER_MACHINE_DEPRECATION_VERSION": ver_machine_deprecation_version,
+     "VER_MACHINE_DELETION_VERSION": ver_machine_deletion_version,
+ }
+diff --git a/docs/interop/qemu-ga.rst b/docs/interop/qemu-ga.rst
+index d16cc1b9f078..c9b0a7b387f2 100644
+--- a/docs/interop/qemu-ga.rst
++++ b/docs/interop/qemu-ga.rst
+@@ -72,7 +72,8 @@ Options
+ 
+ .. option:: -f, --pidfile=PATH
+ 
+-  Specify pid file (default is ``/var/run/qemu-ga.pid``).
++  Specify pid file (default is ``$XDG_RUNTIME_DIR/qemu-ga.pid`` or
++  |LOCALSTATEDIR|\ ``/run/qemu-ga.pid``).
+ 
+ .. option:: -F, --fsfreeze-hook=PATH
+ 
+@@ -86,7 +87,7 @@ Options
+ .. option:: -t, --statedir=PATH
+ 
+   Specify the directory to store state information (absolute paths only,
+-  default is ``/var/run``).
++  default is ``$XDG_RUNTIME_DIR`` or |LOCALSTATEDIR|\ ``/run``).
+ 
+ .. option:: -v, --verbose
+ 
+diff --git a/docs/meson.build b/docs/meson.build
+index a8d893681ecd..89a707a77b8a 100644
+--- a/docs/meson.build
++++ b/docs/meson.build
+@@ -4,7 +4,11 @@ sphinx_build = find_program(fs.parent(python.full_path()) / 'sphinx-build',
+ # Check if tools are available to build documentation.
+ build_docs = false
+ if sphinx_build.found()
+-  SPHINX_ARGS = ['env', 'CONFDIR=' + qemu_confdir, sphinx_build, '-q', '-j', 'auto']
++  SPHINX_ARGS = [
++    'env',
++    'CONFDIR=' + qemu_confdir, 'LOCALSTATEDIR=' + get_option('localstatedir'),
++    sphinx_build, '-q', '-j', 'auto'
++  ]
+   # If we're making warnings fatal, apply this to Sphinx runs as well
+   if get_option('werror')
+     SPHINX_ARGS += [ '-W', '-Dkerneldoc_werror=1' ]
+diff --git a/qga/main.c b/qga/main.c
+index fd19c7037db1..215541ee86c9 100644
+--- a/qga/main.c
++++ b/qga/main.c
+@@ -48,7 +48,7 @@
+ #define QGA_VIRTIO_PATH_DEFAULT "/dev/virtio-ports/org.qemu.guest_agent.0"
+ #endif /* CONFIG_BSD */
+ #define QGA_SERIAL_PATH_DEFAULT "/dev/ttyS0"
+-#define QGA_STATE_RELATIVE_DIR  "run"
++#define QGA_STATE_RELATIVE_DIR  ""
+ #else
+ #define QGA_VIRTIO_PATH_DEFAULT "\\\\.\\Global\\org.qemu.guest_agent.0"
+ #define QGA_STATE_RELATIVE_DIR  "qemu-ga"
+@@ -157,12 +157,12 @@ static void stop_agent(GAState *s, bool requested);
+ static void
+ init_dfl_pathnames(void)
+ {
+-    g_autofree char *state = qemu_get_local_state_dir();
++    g_autofree char *run = qemu_get_runtime_dir();
+ 
+     g_assert(dfl_pathnames.state_dir == NULL);
+     g_assert(dfl_pathnames.pidfile == NULL);
+-    dfl_pathnames.state_dir = g_build_filename(state, QGA_STATE_RELATIVE_DIR, NULL);
+-    dfl_pathnames.pidfile = g_build_filename(state, QGA_STATE_RELATIVE_DIR, "qemu-ga.pid", NULL);
++    dfl_pathnames.state_dir = g_build_filename(run, QGA_STATE_RELATIVE_DIR, NULL);
++    dfl_pathnames.pidfile = g_build_filename(run, QGA_STATE_RELATIVE_DIR, "qemu-ga.pid", NULL);
  }
  
--char *
--qemu_get_local_state_dir(void)
--{
--    return get_relocated_path(CONFIG_QEMU_LOCALSTATEDIR);
--}
--
- char *
- qemu_get_runtime_dir(void)
- {
-diff --git a/util/oslib-win32.c b/util/oslib-win32.c
-index 5887cea12aec..e052f3a9deb1 100644
---- a/util/oslib-win32.c
-+++ b/util/oslib-win32.c
-@@ -230,16 +230,6 @@ int qemu_get_thread_id(void)
-     return GetCurrentThreadId();
- }
- 
--char *
--qemu_get_local_state_dir(void)
--{
--    const char * const *data_dirs = g_get_system_data_dirs();
--
--    g_assert(data_dirs && data_dirs[0]);
--
--    return g_strdup(data_dirs[0]);
--}
--
- char *
- qemu_get_runtime_dir(void)
- {
+ static void quit_handler(int sig)
 
 -- 
 2.54.0
