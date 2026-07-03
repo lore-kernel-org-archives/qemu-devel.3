@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD539C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 19:33:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F86C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 19:33:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfjcq-0003y6-Po; Fri, 03 Jul 2026 15:32:36 -0400
+	id 1wfjcp-0003xa-MI; Fri, 03 Jul 2026 15:32:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wfjcm-0003x5-Rx
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 15:32:32 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wfjcl-0003wW-CH
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 15:32:31 -0400
 Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wfjcl-0000wr-C3
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 15:32:32 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wfjck-0000vK-1Y
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 15:32:31 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id B5800600B0;
- Fri,  3 Jul 2026 19:32:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E6C1F000E9;
+ by tor.source.kernel.org (Postfix) with ESMTP id 70016600AF;
  Fri,  3 Jul 2026 19:32:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED891F000E9;
+ Fri,  3 Jul 2026 19:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1783107150;
- bh=gZ0FwzXuCMbgNXwhRz4tKMQ7UBdngg5+eQSXSvYinEM=;
+ s=k20260515; t=1783107149;
+ bh=JxLmEtpifa7F3Gz8AbUWjkhW2lzFna7h9PEJJmElfgY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hD80Lh7FZ7q8ecuCQJC8WFetgJI4BG6SaTpGwL++Uo7DknKUuRF52HNEPT0MQGYTE
- GaXhTiDEBTDBnC67e9j5q2Colnr1Srbeb/6u6pI4xIPnkatH/rDL/QRa2sabAvtE9F
- Oq8w0P4QY63GjpPlJxr/SRRvuDbkknqfTTBY4o17MwVCPf3nKZNE7d6iq5bLv0YRli
- y2hyN+mtEKw/pKIqUjA9Mh4rUur1enqGc5QxZI912efmrtP9f9Z0GF98pJcQBqS2cz
- 6/TDGTIoX6QbuqGMELZsycPpXJyLG9cgnqLI3BK6CxldmVrbmGjpO+I/KMkDFlSP5c
- kCUml0YYR10Tg==
+ b=aBC8DtFxa1Q/8qWzDUz1zreBAr71K2IM6aG7A1/lhVbA+Se0BBh+8TrMYdTEWrMwc
+ oFfodv2Is+VWICNEcEx79Y7Py0aZtgY5UkY2Nc/2taSmVbYmLfmgd1qlkGYh1U/8JI
+ Q+f1IdLHR7/lPjQ5+soA0EHw9KP44wn6G3hDndE3c72iV5vjl3A4DS5xVWUHRj38iz
+ ew7a+ZU7rmhPJvIPRdsyMFu/c+tOnMz4JoXOtkJZWmiCRGP1dZswnd2Jggyrvx1yEM
+ n0UKcNMiJxn93CM59rRozsEdt+KN2RSxpnAOQ7M0Yq4kWJbLoKtKYnVYXs1LrUnzzr
+ 22PGQWAfDFm7A==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>
-Subject: [PATCH 2/4] target/hppa: Delay MMU update until TLB protection bits
- were set
-Date: Fri,  3 Jul 2026 21:32:22 +0200
-Message-ID: <20260703193224.33135-3-deller@kernel.org>
+Subject: [PATCH 1/4] target/hppa: Work-around for Fast TLB insert instruction
+ on HP-UX 9
+Date: Fri,  3 Jul 2026 21:32:21 +0200
+Message-ID: <20260703193224.33135-2-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260703193224.33135-1-deller@kernel.org>
 References: <20260703193224.33135-1-deller@kernel.org>
@@ -71,40 +71,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-On a 32-bit HPPA CPU, the TLB update for a data translation happens with
-two consecutive instructions: IDTLBA and IDTLBP. The former sets the
-target page address, while the second sets the protection bits.
-There is no need to update the MMU after setting the address bits only,
-so delay the final update of the MMU until after the execution of the
-second instruction when the protection bits are known too.
+The HP-UX 9 kernel uses two TLB insert instructions (0x05315440 and
+0x05385400), which seem to be wrongly encoded fast TLB instructions, but
+similiar to the non-fast instructions idtlba r17,(r9) and
+idtlbp r24,(r9).
+
+It's not clear, if those undocumented instructions were used by mistake,
+or intentionally. Either way, this patch allows qemu to handle those
+instructions, so that a HP-UX 9 boot-CD can now boot somewhat further (but
+still crashes due to other reasons afterwards).
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- target/hppa/translate.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/hppa/insns.decode | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 4e34822565..002189ddfb 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -2570,7 +2570,7 @@ static bool trans_ixtlbx(DisasContext *ctx, arg_ixtlbx *a)
-     }
+diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
+index 13c6a55bf2..f700fe472e 100644
+--- a/target/hppa/insns.decode
++++ b/target/hppa/insns.decode
+@@ -164,6 +164,8 @@ ixtlbx          000001 b:5 r:5 ... 000000 addr:1 0 00000        \
  
-     /* Exit TB for TLB change if mmu is enabled.  */
--    if (ctx->tb_flags & PSW_C) {
-+    if (ctx->tb_flags & PSW_C && !a->addr) {
-         ctx->base.is_jmp = DISAS_IAQ_N_STALE;
-     }
-     return nullify_end(ctx);
-@@ -2687,7 +2687,7 @@ static bool trans_ixtlbxf(DisasContext *ctx, arg_ixtlbxf *a)
-     }
+ # pcxl and pcxl2 Fast TLB Insert instructions
+ ixtlbxf         000001 00000 r:5 00 0 data:1 01000 addr:1 0 00000
++# workaround for non-standard encoding as used in HP-UX 9
++ixtlbxf         000001 01001 r:5 01 0 data:1 01000 addr:1 0 00000
  
-     /* Exit TB for TLB change if mmu is enabled.  */
--    if (ctx->tb_flags & PSW_C) {
-+    if (ctx->tb_flags & PSW_C && !a->addr) {
-         ctx->base.is_jmp = DISAS_IAQ_N_STALE;
-     }
-     return nullify_end(ctx);
+ # pa2.0 tlb insert idtlbt and iitlbt instructions
+ ixtlbt          000001 r2:5 r1:5 000 data:1 100000 0 00000    # idtlbt
 -- 
 2.54.0
 
