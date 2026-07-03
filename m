@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEACFC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 17:15:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14EFAC43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 17:15:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfhTK-000554-Pg; Fri, 03 Jul 2026 13:14:38 -0400
+	id 1wfhTk-00057q-Eb; Fri, 03 Jul 2026 13:15:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wfhTJ-00054O-2D; Fri, 03 Jul 2026 13:14:37 -0400
+ id 1wfhTh-00056z-Vx; Fri, 03 Jul 2026 13:15:02 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wfhTH-00015T-ES; Fri, 03 Jul 2026 13:14:36 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1wfhTd-0001Hv-13; Fri, 03 Jul 2026 13:15:01 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 663GIxTk3246496; Fri, 3 Jul 2026 17:14:32 GMT
+ 663GJ8ui3237356; Fri, 3 Jul 2026 17:14:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=7geKnB
- aK4d3tGjto7U7G/URbCf1iGpnLJ+VZ+bfKjTc=; b=fGz+r0aboxtHquHhenToZd
- eFPEwiYu1DlctQlGmpUYe8gyQSvq9bXKCCA4ZpEnS49FuCeFcizESytYmtJ7UvA5
- tt4eQ/LZOz3Slb8+R9QEPE8qBWu6mA+3bYG7LdEFPAGqxuLcMkTzRdNaXN8I06Iz
- nq3Xrk7y5jaKAVSTlmQ6fmUv26QittB2gZhA5GozJGq6zq3Nirq4PAsPJwACs1Gp
- DEQJnLExViokLu7QSY9Af0r6mvfsqiBERO4S6toi/RoMh8zjahQBzNuDRpAqEgD+
- CgZUBbdUnWxFeWgNwbzRNKVyUjxz11cPsfc3mYxGst1M0whQE2jnvQ5vGffHDu5Q
+ :message-id:mime-version:references:subject:to; s=pp1; bh=3rhY09
+ ycpQx/iwKRL7d5pVajmQA6orIFA3/RqLyFZfE=; b=fW8TiQYMOzhNMQ3xVdrw53
+ oXAjpPMWOmdJpnkl5DvzQj1PJo25/Zst7mNatAnigNUcL5r8TllYI9aa73ID1WMM
+ LRJFvAU+6UPUAN485hytMvVyQtpih1G8s/36XNLi3vK+Ub+aY0jB5lvuYvoAhpiG
+ fFT/6GtCLn66ODU2LznxQemDjVSbxsGOZwGFnKg/QrZTMZBFEL2g9gyxxz2/v/Pe
+ Gpz8I8Pqy/EL+1HWA8KOEcBGX5KawImWOtn9xbOeQGRjWF+3ieg5x0la1T6i8p7e
+ LePZoBoUHFsnau91t+7+enMy4qSiw2m6Dx3ONm4zkLshFdYJfMl7YR0HlKq9x1Pw
  ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qafu7t-1
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rffntr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 17:14:31 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663H4dvM004691;
- Fri, 3 Jul 2026 17:14:30 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruqt13g-1
+ Fri, 03 Jul 2026 17:14:53 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663H4dpU020321;
+ Fri, 3 Jul 2026 17:14:52 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhsqh0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 17:14:30 +0000 (GMT)
+ Fri, 03 Jul 2026 17:14:52 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
  [10.39.53.233])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 663HETWo30474752
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 663HEpr916712194
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 3 Jul 2026 17:14:29 GMT
+ Fri, 3 Jul 2026 17:14:51 GMT
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5E6B55804E;
- Fri,  3 Jul 2026 17:14:29 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1BE055803F;
+ Fri,  3 Jul 2026 17:14:51 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 743345803F;
- Fri,  3 Jul 2026 17:14:27 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 252A958054;
+ Fri,  3 Jul 2026 17:14:49 +0000 (GMT)
 Received: from [9.61.65.1] (unknown [9.61.65.1])
  by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  3 Jul 2026 17:14:27 +0000 (GMT)
-Message-ID: <22717672-1ea4-415a-8176-442ba4191ed2@linux.ibm.com>
-Date: Fri, 3 Jul 2026 13:14:26 -0400
+ Fri,  3 Jul 2026 17:14:48 +0000 (GMT)
+Message-ID: <d29358bc-c306-45d1-8505-49cb9691f483@linux.ibm.com>
+Date: Fri, 3 Jul 2026 13:14:48 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 25/33] s390x: Guest support for Secure-IPL Code
- Loading Attributes Facility (SCLAF)
+Subject: Re: [PATCH v14 19/33] s390x: Guest support for Secure-IPL Facility
 To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
@@ -73,40 +72,39 @@ Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
  pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
 References: <20260703170032.1893204-1-zycai@linux.ibm.com>
- <20260703170032.1893204-26-zycai@linux.ibm.com>
-Content-Language: en-US
+ <20260703170032.1893204-20-zycai@linux.ibm.com>
 From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260703170032.1893204-26-zycai@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <20260703170032.1893204-20-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX4r9+qAO2QVUR
- Wy7bUQ6jBxC/yf/2mFI8pZcYp6LoifJWgzcH3QZI47RPTXC+46+kvmA/sOQEn5eqFF6mMYSSffh
- NvonMqxMAECBLOmbjmbNbsJhpqXGoE2RF7zNw+mzQpYcg+niJdgTvLo9ruoNK9lfo56+lQfWdAH
- JPpHpasc8Kx6p5yUYT6NBOeGim+6zRjiqPpekMhg1+GLBrB7YemGDpnkPE3xNeNmO6hqYzmjMTb
- /nqe+lUiCs7XI90IvnXJyuBmIAN98EEqMnixtrAjJe7hWp19rdJ5e0Rfh8GyuwhMJAL8sVxvDDl
- 9dkykarwayDmlI3MPk38eFGepA+a+qnGyUBXTlkxe6dmV+nXFzPhexSAAC8B2DOZ/8BMhRrlVTU
- v24qtwsUlIhMlYkPJu9fAZNItlNJdXD01VtTyuX6rAC7b7xR2h5Wa3A1nzLM9HZm76w26TkLTsw
- ufW6BZ3GM/qMlf1J/ig==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX6JxZsmo2gF9Y
- vG2R1MAFGY9wqN9Nmjq76qbCDfvReLqwHzGWtgA0wf4iftoPFSV0bpkL2da/CPiQmc/CNZkcSmX
- /q9QoMkwSL5hRm3vr0u6P1MLTMOJAGg=
-X-Proofpoint-GUID: NGuZ7a7kxe45xXA-7cLGIAH_6LmigwS0
-X-Proofpoint-ORIG-GUID: NGuZ7a7kxe45xXA-7cLGIAH_6LmigwS0
-X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a47edf7 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a47ee0d cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=_qA_cWUWTuH2iE62fMgA:9 a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=87MjNmDPHvOGOkPE-qcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: s_M9Y-pmiFIQd4bzOUk__SIIS9nOEOkM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfXyf0KBVBgO7Ct
+ GKXOx0H2A9gDKTJb5m8ZGX5shRwFe728pr0jv+Vg9Ls3QN1kdFs/jD/VwPSX7FoU1fB19d/jnoX
+ TaPXdNWRU8XK/0LqN5N72hrpeA3R7HTrzfGi9uFbxfuI0IkIfawKy9R60J22s9ISLAhpPAncphA
+ F5LvuuDinDFGNSEq6urgnDC/hjoGnN10BJ2953GkBW1LQI/3neR3U/GAa5PLzqyqXIMjVn74xwp
+ Xv80tEM0C4nB7A8JhbnJrWdig27Q2d6M7oTnKRlpnR0wygh/AdOles63k+clRSPinQSUkkjgxt+
+ Gnc3BbcGnKuMTWf8jabLBPSQuHrdcfCRWDVK+9B6gdCTSpU9ytJFTKmEpGLJL9D0StrDIdH+5Sv
+ x6dpLVtL126fbcS2uL/+lTynrEm6bvAHlAAPa3Lg3ng1QVX2OStJA0SMdTKCeW5mrMmfu2qYg9s
+ RaAMDQWSHNssUdyH0xA==
+X-Proofpoint-GUID: s_M9Y-pmiFIQd4bzOUk__SIIS9nOEOkM
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX2aoRy0ge+vXR
+ 8rws6otegiPJh7SZqv2fnE/IaGMOG4054p3bDI2LqS8KiWLJqHMX3yqCg4VWJyYfMEJImZQf1d9
+ WXyqL0mDWTxhXGe4Sa0KZv2fTP+BTfs=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_03,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607030167
+ clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
+ spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030167
 Received-SPF: pass client-ip=148.163.158.5;
  envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -132,22 +130,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/3/26 1:00 PM, Zhuoying Cai wrote:
-> The secure-IPL-code-loading-attributes facility (z)
-> provides additional security during secure IPL.
+> Introduce Secure-IPL (SIPL) facility.
 > 
-> Availability of SCLAF is determined by byte 136 bit 3 of the
-> SCLP Read Info block.
+> Use fac_ipl to represent bytes 136 and 137 for IPL device facilities
+> of the SCLP Read Info block.
 
 SCLP Read SCP Info
 
-> 
-> This feature is available starting with the gen16 CPU model.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> Reviewed-by: Collin Walling <walling@linux.ibm.com>
-
+Otherwise,
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
 
 
 
