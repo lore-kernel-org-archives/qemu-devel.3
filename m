@@ -4,149 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0B05C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:41:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08115C43602
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfe8g-0006Th-NN; Fri, 03 Jul 2026 09:41:06 -0400
+	id 1wfe9f-0006yM-6r; Fri, 03 Jul 2026 09:42:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfe8e-0006TL-LV
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:41:04 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfe8c-00035J-LY
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:41:04 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 663BXGEe3053231
- for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 13:40:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- GhSkT0qETZlktSSSoOw1Hz95L63CmjbQR0XhmCz039g=; b=Bp5s5svcReYN+vFE
- ZfUWhMDkjyYDb773sgpkMbrKe3GKarJco8OHV8hUsoQg2xv4sHURn8wO/XrWEWS6
- BuqNR9RVZU9/TaAXQkD87prZZnX+FVADxZc2ExFlft0HOlskoOEoelwtEBHLQiMd
- fNayRSS6ujrbyAFEhsz90WUKkPN884B7akIREgrpxk/RQsnk0nfFu3cHw/sD87KB
- 0V2ZcDYmVdH6+bZ7mKuPy9XyrlesMZ76IAUUUlT9kZVGc0RQV1xRym+SMBOFi6zc
- cd1XC2TVO2olKYyfe4CRAAiXSn/xSJcou4K0h2/3gDOo87f6i9eNO9JELYDlCEDz
- X32zZQ==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f67j01p2q-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 13:40:59 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-92e52306621so43644985a.1
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 06:40:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfe9Y-0006y5-3K
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:42:00 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfe9W-0003UT-4T
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:41:59 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-664db84f074so671423d50.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 06:41:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783086117; cv=none;
+ d=google.com; s=arc-20260327;
+ b=PQ1yazp1y77fDTL1ZvY8l2AwgryClhhU4enL74vfJ0c4Cd/hVqVobVAqQyD2jYhD0g
+ LUEghHasCpCghH0N0D4q3cvp7+ZgrYxr0l6UoayKJM1zaA3VjOazBQ+c0dNuF1uLpvKW
+ mZzCRhHGzoyBxquEVVOyQZzwnX2yFyPrmZg+s+MtNDBKC6MxtxcICQx2eEB+3q7KR9eM
+ qlwBL8d4IcH7TCBXgOdWjguZsbNVpgNkX2pfll0YPwIdj3WxfOw/DcCUUHr12c4K/i1U
+ u6jO3bxriFREjGGgzeZvJZpx5j1OygOe1apapcuc/VLYBOonXFYOpCDcNWTyZFY51MhA
+ P6tw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=MKvtIzcJ7QiwmYwb4AyUMgrw/hcZWOoeOSRmEyF375Y=;
+ fh=DjAjrE5NJvYezeKxuUfizlcTg/Eru0iW1T6ZART3fRg=;
+ b=c9Baf5z+RMpeDuxRYWwMTgnd+TDDM/Dv795QWI4XNe8gdThOb0Cap7nwbtItwfO5Mn
+ ZX6qfpCjNUKC15E6Bi23p1c6RHowPndySJBn7DKAQopMkEYE3y95oqAZuH73MFbdX5SD
+ Co9a/RMSkHFxLe8DRR55iYVpU9tfMnFQ+m4O9veJZAMr0+UPGFa00e1lAxwlzAHIIF3i
+ QN0xDNWiym5Pyi79uL1Sza+lxXustAVgD3pBzJ9fpIppnwiVqd3B3fReGddigMh/Ge1k
+ 9N38+/MoN3bLM44bWG4bat4wxpJFFxaq6eJTABbBv8wefdvAnJFoyYQ+1BrhRolZWY0f
+ U14w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783086059; x=1783690859; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GhSkT0qETZlktSSSoOw1Hz95L63CmjbQR0XhmCz039g=;
- b=RKtV4nCGzFUAJ3zw2fTsC7LtPgFGlRjPM1TdqqRFP1RSo2LwKzLKQ8nEzXVnXOg118
- ZuJ8g6OwX3IYJA7Ht6eXb/+vaFzO0MfuZPUmOjfims5CtKeCp/Maog5l7hT/uryZKCBF
- /x+IyCxEBgqWdEBOPyqyy9kzrtoXK+jvyGxBu+spsns6zPGcPdEYFOHispMLRl7dGA32
- 54d2+eJOO+AxL39UwanacJKgaBTaX82ZFjeNHQZ6nCcdBwppEO/66S11wX31MXOS+vEq
- aS72pqo8FS/28/VC8nviSdmJXGlt5o1GK2EK4pwLos7ujUccnkGaudIN2feG9Tmgg/wB
- iu2w==
+ d=linaro.org; s=google; t=1783086117; x=1783690917; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MKvtIzcJ7QiwmYwb4AyUMgrw/hcZWOoeOSRmEyF375Y=;
+ b=bz7G7hnQmGc5n5Q8XcIEsU07qfYPDM8kakrtWN6dWT2p/tjg6n1SpRcm6bMNBMEFlY
+ 6qr66FwWKo5x+97Kps7XLITOkOpqff+w+7As6HL4ny1qHb2vsh8yI/t/i26+av63Bemy
+ xypFTJw0tV0bw9xVaxmbkd3MMqdjj0fViVq399pUMpQsPXUnknc3s98G4KmA2ab9WzKg
+ zhiKW39E0EQRWX23qRZT73VCEfBwfWwAP+xFdpSmQkI6XiNsNBRGD4nmlmO/hxWlDqt2
+ EhEV56oqX2n6bJW755pdxrGP0avGxilB7EvmFPP8WnWrlO1x7Ygl2TWcOTK1qsddgRmf
+ edXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783086059; x=1783690859;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GhSkT0qETZlktSSSoOw1Hz95L63CmjbQR0XhmCz039g=;
- b=dKVXkkkmimlgrwDf1O3PjE/DK4wKh1g3hqslz8672H8vrqvRrO3Q+KUXqnA5+x5SAv
- rXWbTop02iPBNg2Pfo5VTWXWNQXCqhliCxSop4xvRVla1wqg3QjpXL828t5IwVgsp0wm
- owc1OSRh8dTuAv/JgHtzWQOXRn2FBrEsF1iHGEVIBUkURM6pP3QARyNDyLk2Ljoq9Aqq
- EmpLFhBp/Wgr+ZyTQcON9UxvS05YHLthoymQwo4sEJUh+a/Fm6J+W2IkvrQGIbg2YNih
- Y3S9Yadou4m3YSTcvUP6VgOoejFhuBRk8EPMzo5TeI0/qqifJ1Y3NxPuu+EZr3d3bJL6
- vBZg==
+ d=1e100.net; s=20251104; t=1783086117; x=1783690917;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=MKvtIzcJ7QiwmYwb4AyUMgrw/hcZWOoeOSRmEyF375Y=;
+ b=qOAvexh4U3PlaPwaJUsklTJV1BEbLGn8s7UV4v/CVfdt6cUuUS9ix13F8OzIghDh9a
+ ylyOHE2HjleCIKHLlbSl8A3DeGzcMMA3704GRiavOgHgHmUduk8ufNq08JiqL85qleoR
+ gN6gws+0C/c9jU/emwTRGpYDjskcZV39gIkj273lLMS3JvhQvnP4oLEGMxDpcCFRHkid
+ q8SXr2G4P87BTxXeWCTUXbkzbQZ0DpNB61e5LrtxgGCX1UWzZxUad5yYjy0usx2MEz1X
+ 164Tz2QzlD1wZ7uSeWVTxaaWs+CWAKwCRmqh+KVa7KV40HTQREVdXt3tsLbFWiEG0MsJ
+ 2BQA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9PcOonIzUeQeipjRfc8xW4fLK+ovH0YC+Y0GiY6yKGKcdcdd8xIeSTt1FRebeROuFqpF1+VBdjZ7D0@nongnu.org
-X-Gm-Message-State: AOJu0YxZ5JnHVfYORWQfx7EKwUxMe2CMS2HAwaKe9jU9jx3r2kuhdNDv
- n8evpu/Reywl6m2C3UajE2S8TI39zSb8yLX75274pDi+vt2960fMq3He2Fy4Mjhb3kjwglYgBi8
- 9/btVnYUvS7DlJAzmfqysxbWIqDy8/uh/izPfIdJGhRGco7daeOItM2NxkQ==
-X-Gm-Gg: AfdE7cmx3rHWU5TSYI/hk600ZY55sIrr9Y80tjVqTZa7CoX2NW1qupfGowULP8FESMr
- 88nVHSjhJiNJNGVCS+0JMwz+sJu4hRMakSWtbeOfoH27Z//PAfeY6PvUeRAGz5DM3Zc4ZYlWBDY
- kMLtTbhzWdedyadW5P332Ubkdw1Uhl7WlAZrrTWWPU0zT8cLKHQcIiO2zdHJ6D0VMHm0Hmh+V2O
- 2D8KNeyxgcfaVl7ya6qGxZJFZQjupZrLCVxBk1RrqFQHscFHIQr4j5aQQzfEE5O3Q2K/s37C0FC
- jOlN6t3LTZ9yX2O7o+AjQ2mmXtWdjh+x5jgRoma5Yw2CvVCAmdK3+PSHVYDMcFJHC9LO7h1CvsC
- RIVtg9py9hqPH7gQ69oa5SwAv4sUKCDTYxantzcnldMRvPhfe6kWgHQDo4inv1w==
-X-Received: by 2002:a05:620a:4724:b0:915:688b:aba with SMTP id
- af79cd13be357-92e784d0f07mr1427289485a.35.1783086058407; 
- Fri, 03 Jul 2026 06:40:58 -0700 (PDT)
-X-Received: by 2002:a05:620a:4724:b0:915:688b:aba with SMTP id
- af79cd13be357-92e784d0f07mr1427283485a.35.1783086057881; 
- Fri, 03 Jul 2026 06:40:57 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493ccb4cafesm50441405e9.0.2026.07.03.06.40.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Jul 2026 06:40:57 -0700 (PDT)
-Message-ID: <8586b452-d22d-403c-a292-2c980919ae1c@oss.qualcomm.com>
-Date: Fri, 3 Jul 2026 15:40:55 +0200
+ AHgh+RoIjt/0o4cMr35+GzG1xS1pVf47FRuPH+cVGV3ST6q0aXDiVSL66syOaxVAmksbiuTmE/vsGg9doLUs@nongnu.org
+X-Gm-Message-State: AOJu0Yz20hTMzb+/1YF6y8OlLfOu5M4+ETbv4kvzhtlLoXnjHnhBAZS0
+ QfccSpumSuqEf50L9+HmAAaXSBGO1tpXx59CEmh6SqQ3Fh/nuOkFb9EZ4Zxjl05+i+c/94LPAkk
+ xOQ/Io6QnUQ0DQ0t0bsy/FIEeSwMnGegS39FP33L41Q==
+X-Gm-Gg: AfdE7cmGxKu9TY4uQa5gxUfEaubeX8Y40WlDGpH4TAzagC2LjnjrkKkClNcUEDgEaIM
+ fZ68v8wMKawoQbVgg2OKtMlX8BoDN1xZvYf13RtM/SJYpTIQyBtVBQlt3CFtb2m4MDI5WgwsWcX
+ 9bv6V1DbsoGvH6xq8bKlPPiZQCPEMB1PNuakMbPEY17n7aCAtAm+YixWRrKFD8PuSQvJlEMOghz
+ zOYn2y68rh+QfXlr5x8fCKoBpuGLchqdyVJW6X2LYaI+QsEWekFGuYzS+42ir34bSFr6yM8g4dE
+ UcEaFo9RAk0r+NIApAzqC+yRDCQDaqTWSp4kuW0Cj85DBrl7dnUimJql
+X-Received: by 2002:a05:690e:d50:b0:664:b3c0:6546 with SMTP id
+ 956f58d0204a3-66521d485b4mr9080394d50.57.1783086116633; Fri, 03 Jul 2026
+ 06:41:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 06/28] whpx: i386: re-enable guest debug support
-Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Bernhard Beschow <shentey@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Cameron Esfahani <dirty@apple.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Wei Liu <wei.liu@kernel.org>,
- Roman Bolshakov <rbolshakov@ddn.com>
-References: <20260223233950.96076-1-mohamed@unpredictable.fr>
- <20260223233950.96076-7-mohamed@unpredictable.fr>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260223233950.96076-7-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 8xzOitwmmEG9Jca1BYwx2Dpwg7_jsoIm
-X-Proofpoint-ORIG-GUID: 8xzOitwmmEG9Jca1BYwx2Dpwg7_jsoIm
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDEzNCBTYWx0ZWRfX3OZa5Ma8KQah
- 0lftTswWwUvN3fkzGFe3SsGAR2OmcxidrKJv9mkXB6BonpNtWX/BN3VatC5gzZjPlsQRG70bNM1
- PVC4f9BYomUR02LGWj+QU2l7kYm7uPk=
-X-Authority-Analysis: v=2.4 cv=Yuc/gYYX c=1 sm=1 tr=0 ts=6a47bbeb cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=KKAkSRfTAAAA:8 a=16nSAxT0Nq8VCJdvRCEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDEzNCBTYWx0ZWRfX5MDNAD3Cmj2g
- nMSUlbXRtj/8mXaoYYEfNao6/YQg9EjqsbBWiQIepzzS6Vzc6zsdQ7jqxlcPHbLS5uOcp68dSmS
- 5r/NqeQtc1HsLUcmym6Q5voTeoksIjYfmpjZRvx55ihsITF/fET1fZeup6KBAjp2yNprEB6tSV5
- Zc7hHVDctgfMVxSpGSEyohPTyAdx18/ILpCGvEIn57sStfystaK/OeRAThFenm65jnFEWx+cOBl
- 52KistPtO8pc1bwO9ZxGCa5esyYCNYeECQALEEQS8cUrI1+CVxCmSmR2CsfqjqRlMDAP9t3IMlX
- em8zNnGfGcVzIJ/F3grdmgcxWBty9kjgx8GermnDMRRDst7gaQwnrHSj5MabhOVmly5DsRxYCM2
- IB5MJM3/fRLTfVPVCVkb3g+hN+ueOMO7hg/yB6cLgzM0pdaQGaG/fkRNl3537WMczKUJ1ifYcY/
- HncHDQsLva0Z6Jnnasw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0
- bulkscore=0 clxscore=1015 adultscore=0 priorityscore=1501 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030134
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260512062142.67998-1-philmd@linaro.org>
+ <20260512062142.67998-41-philmd@linaro.org>
+ <CAFEAcA88TQhP6HFOhrAMjRMXU3UPYcw_EGp-Fj5GfA6L_WdjFA@mail.gmail.com>
+ <3f5fc513-1dab-078b-7f05-70f6fe2dedcd@eik.bme.hu>
+In-Reply-To: <3f5fc513-1dab-078b-7f05-70f6fe2dedcd@eik.bme.hu>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 3 Jul 2026 14:41:44 +0100
+X-Gm-Features: AVVi8CesxqFy4TWN5Isidye1YQ79FPNUfFNSn-KRx1y3BlBZphpgc2v37QLx0Y8
+Message-ID: <CAFEAcA8mL5QWNY8HfhMkVUu80J8OQRnfYhfGZzyTnrXFZoK-fg@mail.gmail.com>
+Subject: Re: [PULL 40/41] ati-vga: fix ati_set_dirty address calculation
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -163,150 +121,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mohamed,
+On Fri, 3 Jul 2026 at 14:37, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>
+> On Fri, 3 Jul 2026, Peter Maydell wrote:
+> > On Tue, 12 May 2026 at 07:30, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
+o.org> wrote:
+> >>
+> >> From: Chad Jablonski <chad@jablonski.xyz>
+> >>
+> >> This fixes three bugs with the ati_set_dirty address calculation.
+> >>
+> >> First, vbe_start_addr is a word offset. All other values in the
+> >> calculation are byte offsets. It must be converted to bytes.
+> >>
+> >> Second, when setting the dirty region with memory_region_set_dirty
+> >> the vbe_start_addr is used to calculate the start of the dirty region.
+> >> This is a problem because the vbe_start_addr is the offset at which sc=
+an out
+> >> begins. This puts it in the visible screen coordinate system. The dirt=
+y
+> >> region however is in the virtual screen coordinate system. This can ca=
+use both
+> >> overmarking and missed updates. This is removed from the calculation.
+> >>
+> >> Third, when the start address of a blit is outside of the bounds check
+> >> the entire blit is missed and not set to dirty. This happens even if t=
+he
+> >> blit does partially overlap with the visible screen. The fix here is t=
+o
+> >> find the intersection of the visible screen and the blit and mark only
+> >> that region as dirty.
+> >>
+> >> This does not attempt to apply clipping to the blit. So there will be
+> >> overmarking in some cases.
+> >>
+> >> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+> >> [balaton: drop excess parenthesis, use offsets instead of pointers]
+> >> Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+> >> Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
+> >> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> >> Message-ID: <20260506153920.C6B27596978@zero.eik.bme.hu>
+> >> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> >
+> > Hi; Coverity warns here about some "we did a 32 x 32 multiply
+> > and put the result into a 64 bit calculation" issue here (CID 1660048):
+>
+> I've got the warnings but didn't have time to look at it yet.
+>
+> >> ---
+> >>  hw/display/ati_2d.c | 24 +++++++++++++++++-------
+> >>  1 file changed, 17 insertions(+), 7 deletions(-)
+> >>
+> >> diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+> >> index 504d1c57085..48498677c7e 100644
+> >> --- a/hw/display/ati_2d.c
+> >> +++ b/hw/display/ati_2d.c
+> >> @@ -69,18 +69,28 @@ typedef struct {
+> >>  static void ati_set_dirty(VGACommonState *vga, const ATI2DCtx *ctx)
+> >>  {
+> >>      DisplaySurface *ds =3D qemu_console_surface(vga->con);
+> >> +    unsigned int bypp =3D ctx->bpp / 8;
+> >> +    hwaddr dirty_start =3D ctx->dst_offset + ctx->dst.x * bypp +
+> >> +                         ctx->dst.y * ctx->dst_stride;
+> >
+> > dst.y is uint16_t and dst_stride is int, so we do the multiply
+> > at 32-bits, and then the whole set of additions at 32-bits before
+> > putting it into a 64-bit hwaddr.
+> >
+> > Should we cast one of them to 64-bits to avoid the overflow,
+> > or do we know here that these values can't actually be large
+> > enough to overflow ?
+>
+> I think since the x,y values are limited (at about 16384 or so, we usuall=
+y
+> apply mask when writing the regs) these should never overflow but we coul=
+d
+> try to cast something to silence the warnings. I can try to make a patch
+> eventually unless someone else does it faster.
 
-On 24/2/26 00:39, Mohamed Mediouni wrote:
-> Fix what got broken several years ago by adding ops->supports_guest_debug
-> support as an architecture-specific function.
-> 
-> arm64 WHP doesn't currently provide support needed for this.
-> 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   accel/whpx/whpx-accel-ops.c | 8 ++++++++
->   include/system/whpx-all.h   | 4 ++++
->   target/arm/whpx/whpx-all.c  | 5 +++++
->   target/i386/whpx/whpx-all.c | 5 +++++
->   4 files changed, 22 insertions(+)
-> 
-> diff --git a/accel/whpx/whpx-accel-ops.c b/accel/whpx/whpx-accel-ops.c
-> index 50fadea0fd..b8f41544cb 100644
-> --- a/accel/whpx/whpx-accel-ops.c
-> +++ b/accel/whpx/whpx-accel-ops.c
-> @@ -17,6 +17,7 @@
->   
->   #include "system/whpx.h"
->   #include "system/whpx-internal.h"
-> +#include "system/whpx-all.h"
->   #include "system/whpx-accel-ops.h"
->   
->   static void *whpx_cpu_thread_fn(void *arg)
-> @@ -81,6 +82,12 @@ static bool whpx_vcpu_thread_is_idle(CPUState *cpu)
->       return !whpx_irqchip_in_kernel();
->   }
->   
-> +static bool whpx_supports_guest_debug(void)
-> +{
-> +    return whpx_arch_supports_guest_debug();
-> +}
-> +
-> +
->   static void whpx_accel_ops_class_init(ObjectClass *oc, const void *data)
->   {
->       AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
-> @@ -89,6 +96,7 @@ static void whpx_accel_ops_class_init(ObjectClass *oc, const void *data)
->       ops->kick_vcpu_thread = whpx_kick_vcpu_thread;
->       ops->cpu_thread_is_idle = whpx_vcpu_thread_is_idle;
->       ops->handle_interrupt = generic_handle_interrupt;
-> +    ops->supports_guest_debug = whpx_supports_guest_debug;
->   
->       ops->synchronize_post_reset = whpx_cpu_synchronize_post_reset;
->       ops->synchronize_post_init = whpx_cpu_synchronize_post_init;
-> diff --git a/include/system/whpx-all.h b/include/system/whpx-all.h
-> index f13cdf7f66..3db074c38c 100644
-> --- a/include/system/whpx-all.h
-> +++ b/include/system/whpx-all.h
-> @@ -17,4 +17,8 @@ void whpx_translate_cpu_breakpoints(
->       struct whpx_breakpoints *breakpoints,
->       CPUState *cpu,
->       int cpu_breakpoint_count);
-> +
-> +/* called by whpx-accel-ops */
-> +bool whpx_arch_supports_guest_debug(void);
-> +
->   #endif
-> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-> index 36c5e30a03..8d0ca794af 100644
-> --- a/target/arm/whpx/whpx-all.c
-> +++ b/target/arm/whpx/whpx-all.c
-> @@ -304,6 +304,11 @@ void whpx_translate_cpu_breakpoints(
->       /* Breakpoints aren’t supported on this platform */
->   }
->   
-> +bool whpx_arch_supports_guest_debug(void)
-> +{
-> +    return false;
-> +}
-> +
->   static void whpx_get_reg(CPUState *cpu, WHV_REGISTER_NAME reg, WHV_REGISTER_VALUE* val)
->   {
->       struct whpx_state *whpx = &whpx_global;
-> diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-> index 8210250dc3..e1f0fa5e77 100644
-> --- a/target/i386/whpx/whpx-all.c
-> +++ b/target/i386/whpx/whpx-all.c
-> @@ -1272,6 +1272,11 @@ void whpx_apply_breakpoints(
->       }
->   }
->   
-> +bool whpx_arch_supports_guest_debug(void)
-> +{
-> +    return true;
-> +}
-> +
->   /* Returns the address of the next instruction that is about to be executed. */
->   static vaddr whpx_vcpu_get_pc(CPUState *cpu, bool exit_context_valid)
->   {
+Ah, yeah, I see now that dst_stride comes from dst_pitch and that
+gets clamped to 0x3fff on writes. So I'm happy to mark this one
+as a false positive. You don't need to send a patch unless you think
+it makes the code clearer for a human reader.
 
-It seems we also need this to get gdbstub fully working:
+Since all that we're doing here is calculating guest addresses
+that we pass to memory_region_set_dirty(), the guest can't get
+us to do anything particularly bad even in the worst case.
 
--- >8 --diff --git a/include/system/whpx-all.h b/include/system/whpx-all.h
-index 4022571ffff..0e2d333e919 100644
---- a/include/system/whpx-all.h
-+++ b/include/system/whpx-all.h
-@@ -25,2 +25,3 @@ void whpx_arch_accel_class_init(ObjectClass *oc);
-  /* called by whpx-accel-ops */
-+int whpx_arch_gdbstub_sstep_flags(AccelState *as);
-  bool whpx_arch_supports_guest_debug(void);
-diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-index 247e12db812..e3f93efc61f 100644
---- a/accel/whpx/whpx-common.c
-+++ b/accel/whpx/whpx-common.c
-@@ -529,2 +529,3 @@ static void whpx_accel_class_init(ObjectClass *oc, 
-const void *data)
-      ac->allowed = &whpx_allowed;
-+    ac->gdbstub_supported_sstep_flags = whpx_arch_gdbstub_sstep_flags;
-
-diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-index 3079c6293c8..5208d7e1dfe 100644
---- a/target/arm/whpx/whpx-all.c
-+++ b/target/arm/whpx/whpx-all.c
-@@ -297,2 +297,7 @@ void whpx_translate_cpu_breakpoints(
-
-+int whpx_arch_gdbstub_sstep_flags(AccelState *as)
-+{
-+    return 0;
-+}
-+
-  bool whpx_arch_supports_guest_debug(void)
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index e626acef2f0..f6e1636a4e0 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -1855,2 +1855,7 @@ void whpx_apply_breakpoints(
-
-+int whpx_arch_gdbstub_sstep_flags(AccelState *as)
-+{
-+    return SSTEP_ENABLE;
-+}
-+
-  bool whpx_arch_supports_guest_debug(void)
----
-
-I'll post a patch in case you want to test.
-
-Regards,
-
-Phil.
+-- PMM
 
