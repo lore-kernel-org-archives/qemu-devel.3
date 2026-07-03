@@ -4,88 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70783C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 16:33:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15C58C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 16:38:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfgp1-0003To-SA; Fri, 03 Jul 2026 12:32:59 -0400
+	id 1wfgtz-0004hT-SA; Fri, 03 Jul 2026 12:38:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1wfgp0-0003Sk-87
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:32:58 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1wfgox-0005E2-MZ
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:32:57 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-c029505b389so263638066b.1
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 09:32:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wfgty-0004h5-NV
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:38:06 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wfgtv-0007Xs-MC
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:38:06 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 663GIa4U511014
+ for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 16:38:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=CJbRyshi9CsvFZ4EyOTGbI
+ RPR1nYFWylHNhq29L8jDs=; b=HQ/AnxsvOl+2DvmLQyz6gg6qPLpEbmemGT7BHy
+ 8peqIivB1NpOT/akxugRrc1RR4KX2i5Pow2/qVC7JwfU12NVf0indhzY9BE19vTX
+ au/ZbuSoAdOKvDQmf0srhMW/eJK165hi6oZh0KHGVRSlouZsnsVkBSRyV3P7yukC
+ IgcI3vkMn9krsI5+AZV05drWHREYLV9cd1TN6Yj5DpEtmNVFCsDo448IM/FxA5LI
+ LvD01yHfQwyI/fClWUmdWrq+32Ws3gZPeh3pAV7qHflcyh8Ndg/3S+OwSHgKT8Wl
+ bAJ2P69R7cL0bfH4FhkHAudEz+C/sop9ig2zVyAgl0L0uoVg==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6a849k0d-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 16:38:01 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-92e623b0e95so64290085a.3
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 09:38:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783096373; x=1783701173; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783096680; x=1783701480; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/7FC3+hcII7PbFGAgumtBIZjbzmSfLIy5pHfi3j33YY=;
- b=FQU3Gj/1bjxTGyAVSjhE4u9ImZpzNaGyIFQriTY/1i4cr3yo0UypvrO5JwTI556mhS
- g5KoEDtinSjvxwsCfJKzx+H3YtxMWuPA707L72JOR8y4PmOU9vpKwv6AuyH+P8A3Dlec
- Rh1L5Mt7wS6gVKY4hSfHYS1JiJhD+mjbV11sb2gJm21rkhbIrKnsdZA5RuYzHBUYs6Wm
- QRl9C9RLTe4CLYVP+xmLp2frpIa6hEKb/jSr5Pq8Wh4dEzevnEGv8nSmQsSyakJsPuqG
- fdatHKFfoRQnwawV4PMdgh5eOqdGiX++7ZEPBUKI+Jou0KUPmbB3c7haUqCT8QOi7Jvh
- bM/g==
+ bh=CJbRyshi9CsvFZ4EyOTGbIRPR1nYFWylHNhq29L8jDs=;
+ b=K5hvltpZf0zLJ7VS6lf16AI/RaxRu6Y9zKr2U5Pb1UmjbmwDpc00Qbt06L1zg6UgjS
+ Ezg711C+rWQGxDGm0zVrHWySfIEFmI3XbNKAe0BWPOPFP3kl0qg/5FGagf9EQblJQxF+
+ o+nZAOhOyDhGFhwc9LWqpTXqwZTffz93dudTb2A1CUDY7fguuFlxr7R9lr+7mbOixmeD
+ 7E+NophSsk6afdWD5PT3GAgpFKuZk6ff2ZcJOln9FYb+eNcjIhIMh2SKgNM9X5V5JJFa
+ MXlVfNAS6EIYPa6KtyFwLJrHvcIUZzRF+nGITIXyBflibcl78Ff/osQe0jLfvlrXbDd4
+ z2/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783096373; x=1783701173;
+ d=1e100.net; s=20251104; t=1783096680; x=1783701480;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/7FC3+hcII7PbFGAgumtBIZjbzmSfLIy5pHfi3j33YY=;
- b=V0Jc8Kp4ZUEdBrPFkKdp3gMK6J9WcQAf7h0nC0SjYsnBNUDKVHmQzZ1BRFAzOYC/V0
- 7loyzpXR5ylN35pVYbgXZNxamTiY3xEwPnEeXqXAuTpiyjM2e++wZkq6bdVkUY2bO2GV
- ARIGIQixZeF+I9BpXUQ7NUcNJ+Ym03briWlVWHYlo2ISolF5xhN/ykeZxNGL6nZjvPND
- jMH82EKCtgtqzgMqvkY4bveeA3yVflRPu0nd7Pi7yPPXmNeREEgID1pDqa0k/t3aAcS9
- Wm8xw6iMQSbGgojiJ2Q4oUtfeHcMXpLuTjznyDSeV+UF86MTq8Rk9dlCdW/f3yJFkX8s
- ti3w==
-X-Gm-Message-State: AOJu0Yx58QIZgdSwbFQq7TwuULNcQXQc6SeuBDxggtiyloDK0rNHUK3V
- 2+WvEYudLEwp8BGbpWC1rmQiTFsPCBMhhluJt7YfV1edsOHBICmGJNiysiRmKogpkIc=
-X-Gm-Gg: AfdE7clxHoJKjTvz3yu3FzaVHq6LJr8FTIjHVX7x1Bd373CACPsBR1tCl5byMEHIGqj
- Ex37+gc1RV8Ng8P89uWB37Gg7hO9Y3+ONWa6d/eOtBlweJtS5ouhK0V//JjenhSRFlzZfklf0kI
- LYFr3lpAPkkfso5BuXoZKAJXBQN4R2NVKzhlGu3uF3at/vICL3GBfOzQT96fwyunTAb+fajC22p
- TWST0FUavQtLU8CSOi78pYrjMgJsmhMj37IqvqkHvM87f12L4eZEeWXBFe0m3R9tr/p8nYnURqz
- lYjLooec4oKo4EYdtPhYte2+nur+73dwCf8/65xb2fiDOqDzOmlEQ6e788StVdktvIj4GXnl69B
- jJvw90HUaRz/+/qjufVpP66Pfw3NpeV9U0NNZ6MqU4n4ZbW1CPmIEwE3dsBbfjZ3gLkgC30HssY
- YsZ6lR4ebt5Gp7OmDA4r6dCWrWFHJcfLDpRzh63X2xWgCIPFt6rQIaJ11qILtXGcvja3egzkAG5
- TNnJuxRJilq48EmyN9tK0k55Ws=
-X-Received: by 2002:a17:907:e105:b0:c12:34c3:a452 with SMTP id
- a640c23a62f3a-c12c9b573d2mr154402466b.0.1783096372656; 
- Fri, 03 Jul 2026 09:32:52 -0700 (PDT)
-Received: from tulp.my.domain
- (2001-1c02-1a15-3000-ee82-4536-a8f2-9e22.cable.dynamic.v6.ziggo.nl.
- [2001:1c02:1a15:3000:ee82:4536:a8f2:9e22])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c12b62f38f3sm309931466b.57.2026.07.03.09.32.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 Jul 2026 09:32:52 -0700 (PDT)
-From: Roman Bogorodskiy <bogorodskiy@gmail.com>
+ bh=CJbRyshi9CsvFZ4EyOTGbIRPR1nYFWylHNhq29L8jDs=;
+ b=KdkHFllW/SodRIqD33u1SS5bbDq1P8zdxbXKWqq4UkIPt6ND8kD2IXSjyIFCmfYJGE
+ RFn/8q4oGyhrbehFDUN3C7V4XFjszoYkosOyU3/k2Bz9aBsGPUDoM7U0mDSwO3UCSEgY
+ 7bx8ZHC6QHQl6MzuYBFiLPqQDpRZPsiTuvPHi/R44X86ij9GNNn+7cN2VLkuhQ+vUPsN
+ q93jQVuqLovrdqP+57z36kR2kWvj7ZO19lic6M61ClPAsj9ww/TbW745AyJqZ/624H3v
+ w3auKaKI6NSCxElh9OjCS/5i1Ww0xZ+qKgGUlLCOzQL4dHcYOLRaaDx/n2gd8VMrhgWI
+ BMeQ==
+X-Gm-Message-State: AOJu0YxN8AWVRZ586OJYXcTEL+CxvUteD8GqB+sAAutxgXEoKSf0JQ78
+ fuK3bnt5KwoYgMMHNWXs1nlP3evqHRfEH6QXMBVULntEzc+vtPxjaJQMll4zAzDj46zCHPjKMNN
+ kfU6YsrZuYR/1Ou3u3zTLHkfYVa8bPZsg3PHMa/79pXyJvzn68l7PLKdUHvJjxzF9/A==
+X-Gm-Gg: AfdE7cnYx8ailw/VgK83bM4V3HaEPwCZKbn9gwH3lBzE3oX7Ww7T8DwKURnExkLgQdY
+ mDskqwmP4Bl6+bnHv7DUNOfAAA7uKSI+dGWlYaOvssBJs6pmWTcXU58Nv/bdZ5Cfd5ubKIlQIkA
+ m3rybTvvlWc92dm3ZcPi8KEWQCiCTl1sPzIfP8AZUHWyhh/gp3iLQuRYsRuY0rqQVHywZi6Lf64
+ 45bA4mJvMLLlLkrb6FfbY7xuk1qiktD12cDgQ/kJ1gLxKtsENBm51PRi97QXSf/tKAIL/uYJzq7
+ hT1yp1pzkLp4bnKf+hCPE4IzaPzGbqpBPZyos6LeMkkBHpGbKt96xWH9JuQmuJcpZ8hZ/2I09/V
+ hJOwojNbr3F4ZqFgtqkNdX3GW+SeWw3R8q82ipYxxpR1l4QKJMsssZyDTRZdWfzkO57mE
+X-Received: by 2002:a05:620a:6186:b0:915:a894:1b43 with SMTP id
+ af79cd13be357-92e9a3b6736mr27813785a.28.1783096680394; 
+ Fri, 03 Jul 2026 09:38:00 -0700 (PDT)
+X-Received: by 2002:a05:620a:6186:b0:915:a894:1b43 with SMTP id
+ af79cd13be357-92e9a3b6736mr27807985a.28.1783096679859; 
+ Fri, 03 Jul 2026 09:37:59 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493c6381e4fsm168378615e9.8.2026.07.03.09.37.58
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 03 Jul 2026 09:37:59 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Roman Bogorodskiy <bogorodskiy@gmail.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: [PATCH v2] qga: implement 'guest-get-fsinfo' for FreeBSD
-Date: Fri,  3 Jul 2026 18:31:07 +0200
-Message-ID: <20260703163107.46469-1-bogorodskiy@gmail.com>
-X-Mailer: git-send-email 2.52.0
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ qemu-s390x@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>, alex.bennee@linaro.org,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v2 00/33] accel: Unassorted cleanups around debugging
+Date: Fri,  3 Jul 2026 18:37:23 +0200
+Message-ID: <20260703163757.55500-1-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=bogorodskiy@gmail.com; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-GUID: BeIKIXQ-3JSJSvzkzhjjgsN1aC5-ML1p
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfX0nE+8wCmrVZy
+ A4bDkLev/tbm5HcUbkfPccs3Sp30JC2E7uCNvOobUgxVcbQu7bNxMMHLXp0CJsE+SVWt1hJj0r3
+ D3fC6+QYkIk1v52Geq7UKj+ZZ3T2Bkw=
+X-Authority-Analysis: v=2.4 cv=a6QAM0SF c=1 sm=1 tr=0 ts=6a47e569 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=u3oD29KnDJWlspFxzVoA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfX1m4K9nRZTL/n
+ 3Rj1Qjlb21jew/vdsY9WA7yzhhqA+Y3otPNgT6pJOnZ9uncCyfwgAfebCk30D7B9gsXp4pNk58e
+ efSWdVUJZze7zPp7imaIR0XzgJwH7pnyBZ+dxuALVgWv8rojUxBpV8GK1t5SvdV2v7Ru9Bllmvi
+ 606iLkmvL70wVGfeKUpk9fOTR6j+fXLdthFCAvu5dlSdX+dBSAN4x+XGvZySUJFHOn7ZfbnbHBV
+ U8VDARlh6A0vElcIQ+P0s25LgkpiOr9kTCBRsR1HjFrK7IV+dDljDViSVXMmfPrzMBNln5Tuy89
+ ZkfCQ8IwEYp8cA3aFZMQF/B8Ae/0+Kiy0ppYALz5jiaAB7j1gACmuM75Z+b9OaXZymM8uohVKiE
+ IO9Bu62IcTqeWiVa+pRyR4IBr8N+3P7CnJUzNhcR4YHFZ8we4RZ47FmqX3Wykw3D5aRXTa4ng55
+ w5JZ4vnfGhqhSOOzVoA==
+X-Proofpoint-ORIG-GUID: BeIKIXQ-3JSJSvzkzhjjgsN1aC5-ML1p
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-03_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
+ bulkscore=0 impostorscore=0 phishscore=0 spamscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030164
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,203 +152,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the qmp_guest_get_fsinfo() API for FreeBSD.
-To implement it, reuse build_fs_mount_list() which is already
-implemented for FreeBSD. Extend the FsMount type to include
-a string "fromname" attribute to store the disk the FS is mounted from.
+Missing review: 12-17 (AccelGdbConfig rework)
 
-Disk mapping info is not covered by this implementation.
+Since v1:
+- Introduce AccelGdbConfig structure (Alex)
+- Dropped target-specific Breakpoint/Watchpoint changes
+  (Richard working on it)
 
-Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
----
-Changes since v1:
+Refreshing the `split-accel' preparatory work; this series follows
+"accel: Preparatory cleanups for split-accel" from last year:
+https://lore.kernel.org/qemu-devel/20250703173248.44995-1-philmd@linaro.org/
 
- - Replace g_malloc0() with g_new0(.., 1) for GuestFilesystemInfo
+Nothing really noteworthy here, generic code refactoring with the
+objective to strengthen the various APIs, introducing few enums or
+headers.
 
+I'm quite pleased with the total diff-stat.
 
- qga/commands-bsd.c    | 62 ++++++++++++++++++++++++++++++++++++++++++-
- qga/commands-common.h |  1 +
- qga/commands-posix.c  |  3 +++
- qga/qapi-schema.json  | 12 ++++-----
- 4 files changed, 71 insertions(+), 7 deletions(-)
+Philippe Mathieu-Daudé (32):
+  cpu: Constify CPUState::cc (cached CPUClass pointer)
+  target/i386: Remove duplicate tlb_flush() call in cpu_post_load()
+  accel/tcg: Restrict tlb_protect/unprotect_code() to TCG
+  accel/hvf: Remove left-over comment
+  accel/mshv: Replace @dirty field by generic CPUState::vcpu_dirty field
+  gdbstub: Add trace event for STEP packet handler
+  gdbstub: Only return E22 when reverse GDB is not supported
+  accel/whpx: Implement missing
+    AccelClass::gdbstub_supported_sstep_flags
+  accel/kvm: Always define AccelOpsClass::supports_guest_debug
+  accel/kvm: Simplify kvm_init() w.r.t. TARGET_KVM_HAVE_GUEST_DEBUG
+  accel/kvm: Hold have_guest_debug in KVMState
+  gdbstub: Inline gdb_supports_guest_debug()
+  gdbstub: Move supported_sstep_flags in AccelGdbConfig structure
+  accel: Have each implementation return their AccelGdbConfig
+  gdbstub: Make default replay_mode value explicit in stubs
+  accel: Hold @can_reverse information in AccelGdbConfig
+  accel: Remove AccelOpsClass::supports_guest_debug
+  cpu: Move BREAKPOINT definitions to 'exec/breakpoint.h'
+  cpu: Define BreakpointFlags type
+  accel: Remove unnecessary 'inline' qualifier in remove_all_breakpoints
+  gdbstub/user: Directly call gdb_breakpoint_remove_all() in user mode
+  gdbstub: Reduce @type variable scope
+  gdbstub: Introduce GdbBreakpointType enumerator
+  accel: Use GdbBreakpointType enum
+  target/arm: Inline check_watchpoints() in arm_debug_check_watchpoint()
+  target/ppc: Ensure TCG is used in ppc_update_daw()
+  accel/tcg: Improve docstrings around TCGCPUOps::*watchpoint* handlers
+  cpu: Move CPUWatchpoint definition to 'exec/watchpoint.h'
+  cpu: Better name cpu_single_step() trace event
+  cpu: Introduce cpu_single_stepping() helper
+  cpu: Rename CPUState @singlestep_enabled -> @singlestep_flags
+  cpu: Only check SSTEP_ENABLE flag in cpu_single_stepping()
 
-diff --git a/qga/commands-bsd.c b/qga/commands-bsd.c
-index 94ff6fee6a..7f65f2b8db 100644
---- a/qga/commands-bsd.c
-+++ b/qga/commands-bsd.c
-@@ -20,6 +20,7 @@
- #include <sys/ucred.h>
- #include <sys/mount.h>
- #include <net/if_dl.h>
-+#include <sys/statvfs.h>
- #if defined(__NetBSD__) || defined(__OpenBSD__)
- #include <net/if_arp.h>
- #include <netinet/if_ether.h>
-@@ -28,7 +29,7 @@
- #endif
- #include <paths.h>
- 
--#if defined(CONFIG_FSFREEZE) || defined(CONFIG_FSTRIM)
-+#if defined(CONFIG_FSFREEZE) || defined(CONFIG_FSTRIM) || defined(__FreeBSD__)
- bool build_fs_mount_list(FsMountList *mounts, Error **errp)
- {
-     FsMount *mount;
-@@ -55,6 +56,7 @@ bool build_fs_mount_list(FsMountList *mounts, Error **errp)
- 
-         mount->dirname = g_strdup(mntp->f_mntonname);
-         mount->devtype = g_strdup(mntp->f_fstypename);
-+        mount->fromname = g_strdup(mntp->f_mntfromname);
-         mount->devmajor = major(mount->dev);
-         mount->devminor = minor(mount->dev);
-         mount->fsid = mntp->f_fsid;
-@@ -178,3 +180,61 @@ bool guest_get_hw_addr(struct ifaddrs *ifa, unsigned char *buf,
-     return true;
- }
- #endif /* HAVE_GETIFADDRS */
-+
-+#if defined(__FreeBSD__)
-+static GuestFilesystemInfo *build_guest_fsinfo(struct FsMount *mount,
-+                                               Error **errp)
-+{
-+    GuestFilesystemInfo *fs = g_new0(GuestFilesystemInfo, 1);
-+    struct statvfs buf;
-+    unsigned long used, nonroot_total, fr_size;
-+
-+    fs->mountpoint = g_strdup(mount->dirname);
-+    fs->type = g_strdup(mount->devtype);
-+    fs->name = g_strdup(g_path_get_basename(mount->fromname));
-+
-+    if (statvfs(fs->mountpoint, &buf) == 0) {
-+        fr_size = buf.f_frsize;
-+        used = buf.f_blocks - buf.f_bfree;
-+        nonroot_total = used + buf.f_bavail;
-+        fs->used_bytes = used * fr_size;
-+        fs->total_bytes = nonroot_total * fr_size;
-+        fs->total_bytes_privileged = buf.f_blocks * fr_size;
-+
-+        fs->has_total_bytes = true;
-+        fs->has_total_bytes_privileged = true;
-+        fs->has_used_bytes = true;
-+    }
-+
-+    return fs;
-+}
-+
-+GuestFilesystemInfoList *qmp_guest_get_fsinfo(Error **errp)
-+{
-+    FsMountList mounts;
-+    struct FsMount *mount;
-+    GuestFilesystemInfoList *ret = NULL;
-+    Error *local_err = NULL;
-+
-+    QTAILQ_INIT(&mounts);
-+    if (!build_fs_mount_list(&mounts, &local_err)) {
-+        error_propagate(errp, local_err);
-+        return NULL;
-+    }
-+
-+    QTAILQ_FOREACH(mount, &mounts, next) {
-+        g_debug("Building guest fsinfo for '%s'", mount->dirname);
-+
-+        QAPI_LIST_PREPEND(ret, build_guest_fsinfo(mount, &local_err));
-+        if (local_err) {
-+            error_propagate(errp, local_err);
-+            qapi_free_GuestFilesystemInfoList(ret);
-+            ret = NULL;
-+            break;
-+        }
-+    }
-+
-+    free_fs_mount_list(&mounts);
-+    return ret;
-+}
-+#endif /* __FreeBSD__ */
-diff --git a/qga/commands-common.h b/qga/commands-common.h
-index 263e7c0525..a07d0885f5 100644
---- a/qga/commands-common.h
-+++ b/qga/commands-common.h
-@@ -29,6 +29,7 @@ typedef struct FsMount {
- #if defined(__FreeBSD__)
-     dev_t dev;
-     fsid_t fsid;
-+    char *fromname;
- #endif
-     QTAILQ_ENTRY(FsMount) next;
- } FsMount;
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 837be51c40..837e285b6d 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -731,6 +731,9 @@ void free_fs_mount_list(FsMountList *mounts)
-          QTAILQ_REMOVE(mounts, mount, next);
-          g_free(mount->dirname);
-          g_free(mount->devtype);
-+#if defined(__FreeBSD__)
-+         g_free(mount->fromname);
-+#endif
-          g_free(mount);
-      }
- }
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index c57bc9a02f..8cd0ba048b 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -874,7 +874,7 @@
-   'data': [ 'ide', 'fdc', 'scsi', 'virtio', 'xen', 'usb', 'uml', 'sata',
-             'sd', 'unknown', 'ieee1394', 'ssa', 'fibre', 'raid', 'iscsi',
-             'sas', 'mmc', 'virtual', 'file-backed-virtual', 'nvme' ],
--  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
-+  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
- 
- ##
- # @GuestPCIAddress:
-@@ -892,7 +892,7 @@
- { 'struct': 'GuestPCIAddress',
-   'data': {'domain': 'int', 'bus': 'int',
-            'slot': 'int', 'function': 'int'},
--  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
-+  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
- 
- ##
- # @GuestCCWAddress:
-@@ -912,7 +912,7 @@
-            'ssid': 'int',
-            'subchno': 'int',
-            'devno': 'int'},
--  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
-+  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
- 
- ##
- # @GuestDiskAddress:
-@@ -942,7 +942,7 @@
-            'bus': 'int', 'target': 'int', 'unit': 'int',
-            '*serial': 'str', '*dev': 'str',
-            '*ccw-address': 'GuestCCWAddress'},
--  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
-+  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
- 
- ##
- # @GuestNVMeSmart:
-@@ -1063,7 +1063,7 @@
-   'data': {'name': 'str', 'mountpoint': 'str', 'type': 'str',
-            '*used-bytes': 'uint64', '*total-bytes': 'uint64',
-            '*total-bytes-privileged': 'uint64', 'disk': ['GuestDiskAddress']},
--  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
-+  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
- 
- ##
- # @guest-get-fsinfo:
-@@ -1077,7 +1077,7 @@
- ##
- { 'command': 'guest-get-fsinfo',
-   'returns': ['GuestFilesystemInfo'],
--  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
-+  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
- 
- ##
- # @guest-set-user-password:
+Richard Henderson (1):
+  cpu: Move cpu_breakpoint_test out of line
+
+ docs/system/gdb.rst                |  2 +-
+ accel/kvm/kvm-cpus.h               | 12 ++++---
+ accel/tcg/system-page-protection.h | 17 +++++++++
+ gdbstub/internals.h                | 12 ++++---
+ include/accel/accel-cpu-ops.h      | 10 +++---
+ include/accel/accel-ops.h          |  5 ++-
+ include/accel/tcg/cpu-ops.h        | 12 ++++---
+ include/exec/breakpoint.h          | 26 ++++++++------
+ include/exec/cputlb.h              |  8 ++---
+ include/exec/watchpoint.h          | 20 +++++++++--
+ include/gdbstub/enums.h            | 12 ++++---
+ include/hw/core/cpu.h              | 57 +++++++++++-------------------
+ include/qemu/accel.h               | 13 ++++---
+ include/system/hvf_int.h           | 14 ++++----
+ include/system/kvm.h               |  9 +++--
+ include/system/mshv_int.h          |  1 -
+ include/system/whpx-all.h          |  3 --
+ target/arm/internals.h             |  6 ++--
+ accel/accel-common.c               | 15 +++-----
+ accel/hvf/hvf-accel-ops.c          | 23 ++++++------
+ accel/hvf/hvf-all.c                |  8 ++---
+ accel/kvm/kvm-accel-ops.c          |  7 ++--
+ accel/kvm/kvm-all.c                | 52 ++++++++-------------------
+ accel/mshv/mshv-all.c              | 18 +++++-----
+ accel/tcg/cpu-exec-common.c        |  2 +-
+ accel/tcg/cpu-exec.c               | 12 +++----
+ accel/tcg/cputlb.c                 | 15 ++++----
+ accel/tcg/tb-maint.c               |  1 +
+ accel/tcg/tcg-accel-ops-rr.c       |  2 +-
+ accel/tcg/tcg-accel-ops.c          | 31 ++++++++--------
+ accel/tcg/tcg-all.c                | 28 +++++++--------
+ accel/tcg/translate-all.c          |  3 +-
+ accel/tcg/user-exec-stub.c         | 11 +++---
+ accel/tcg/watchpoint.c             |  9 ++---
+ accel/whpx/whpx-accel-ops.c        |  6 ----
+ cpu-common.c                       | 23 +++++++++---
+ cpu-target.c                       | 10 +++---
+ gdbstub/gdbstub.c                  | 18 +++++-----
+ gdbstub/system.c                   | 38 ++++++++------------
+ gdbstub/user.c                     | 20 +++--------
+ linux-user/riscv/cpu_loop.c        |  2 +-
+ linux-user/s390x/cpu_loop.c        |  2 +-
+ stubs/replay-mode.c                |  2 +-
+ system/cpus.c                      |  2 +-
+ system/watchpoint.c                |  8 ++---
+ target/arm/hvf/hvf.c               | 27 +++++++-------
+ target/arm/hyp_gdbstub.c           |  9 ++---
+ target/arm/kvm.c                   | 14 ++++----
+ target/arm/tcg/debug.c             | 44 ++++++++++-------------
+ target/arm/tcg/mte_helper.c        |  3 +-
+ target/arm/whpx/whpx-all.c         |  5 ---
+ target/i386/hvf/hvf.c              | 13 +++----
+ target/i386/kvm/kvm.c              | 15 ++++----
+ target/i386/machine.c              |  1 -
+ target/i386/mshv/mshv-cpu.c        |  6 ++--
+ target/i386/whpx/whpx-all.c        | 13 +++----
+ target/loongarch/kvm/kvm.c         | 10 +++---
+ target/microblaze/translate.c      |  2 +-
+ target/ppc/cpu.c                   |  4 ++-
+ target/ppc/kvm.c                   | 20 ++++++-----
+ target/ppc/translate.c             | 16 ++++-----
+ target/riscv/cpu_helper.c          |  2 +-
+ target/riscv/debug.c               | 12 +++----
+ target/riscv/kvm/kvm-cpu.c         |  8 +++--
+ target/s390x/kvm/kvm.c             | 11 +++---
+ target/s390x/tcg/debug.c           |  3 +-
+ target/xtensa/dbg_helper.c         |  2 +-
+ target/xtensa/helper.c             |  1 +
+ trace-events                       |  2 +-
+ 69 files changed, 417 insertions(+), 433 deletions(-)
+ create mode 100644 accel/tcg/system-page-protection.h
+
 -- 
-2.52.0
+2.53.0
 
 
