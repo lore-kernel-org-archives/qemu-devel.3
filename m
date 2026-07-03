@@ -4,78 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D08F2C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3453C43602
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 13:36:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfdtk-0003Kf-EA; Fri, 03 Jul 2026 09:25:40 -0400
+	id 1wfe3G-0004mL-Sb; Fri, 03 Jul 2026 09:35:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfdtd-0003Ji-GS
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:25:35 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1wfe3F-0004m2-GB
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:35:29 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wfdtb-0003Bp-Pl
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:25:33 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-493be1b9682so4776905e9.2
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 06:25:31 -0700 (PDT)
+ id 1wfe3D-0001V1-Pz
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 09:35:29 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-6662551100bso777626d50.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 06:35:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783085726; cv=none;
+ d=google.com; s=arc-20260327;
+ b=eltD9RfhL46+y31DoR0pajD3jQHVthbED+j/D7YQc0YvGH/CYOe1AIkI5WXDU8HFV7
+ Dq87l8AN8TkyayegWLIMOohyRTZhoH3Qhyv6ZPwL+nIv7WxayplnpCZdKJtE61Ub57pv
+ QsAG/gHL+e3QH3BTmlRFb3GckXjdg0iEosSddOueDK0Rn3w6eG6QB0BW6m3s3WCIhLM5
+ VAu+q92Dkqi3EfteqeLEtavY6gRbV7N3KUcqHkpnTLSIG4E/F16s3kkZzg6VvIWxdILc
+ fZVPhHUEBjfD5LuEooisSBTJMBLKnWpWqYS4sb/Qyo1tBX6xC7/NlTC4tisuZ38tnkG2
+ 8BoA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=2ZnG7QzwcOliIhXKPsIJ2MYdHzHVFB/ZwZoqJYHTYrM=;
+ fh=VBrmjQo+3JMrF2hCjPLys6sRPC3o2Zr9rll2YMuINOg=;
+ b=WnZaL9Q82Z/+ndV6ItrVDxiLKj3wE1obHr+XFWn1rLRshURSLzXBWH4VldVVvG6O3J
+ dycdtogPE8Sfk6T7aU2/TjWVo6UuWOMwOMR23mxnhRfUBFSzAab7kjSlhcCAG1OIBqLW
+ MwKBICv56rcsxWNVZLa5lY2f861QIaYSacTWRSJqHUAlweRlR3J6vDUHxIoqIc21N8Tj
+ NeWVYvW/weDnzDj6j8NLrThjSnSisJQKp93HN6APDR04BGmWdDfnSvIpyStsoyzmX8xu
+ reLeMBTHmMak3uLVv4X12HKah66qL+s/9cbEqDOU3jFCavVHsMtJZCH43BicubjNFx1K
+ 04jA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783085130; x=1783689930; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=K1WfYP/AVnGL9yCNhgkXBBOTZWvzXfb+5TR8YCleTrA=;
- b=P6vLQw/4kGmylrNdBi2gD+h82bljw5fosmk4v766a2VdOggIOKvO5QWeaqbN0yWV06
- E52gkO0s30n/dCXYI6c8ZZYsbO1D8spPZUr6VqU+89P6r8TXedJlJxaWqysVcMCKhV/W
- nJnxH+mORR5XafhOc2PCZC2+y/gcrisXwyXQTkRt5wuuzyboLTnfHZJNnwjY5GPsldwK
- HCK9ai8OJeGQ/8zw3rgO6rC7nCC5DOZaRWhXfkqBiHxYl3S6r0qLj/yzhNTAZyz4WxkU
- xpbL2kG7Icw71APehesVdsaUZW5BHgMn1izGZXgTZ93vy8tZEJtZOtRhjVyjA6jYvC95
- TryA==
+ d=linaro.org; s=google; t=1783085726; x=1783690526; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=2ZnG7QzwcOliIhXKPsIJ2MYdHzHVFB/ZwZoqJYHTYrM=;
+ b=cJbLaaKWqD3bGuSnN56gvXwdo6mpjFcRYjxdwA5vuiPfr4zHQZx3i9JuJDYwnnV3WK
+ 3uATdg8yhc6cTL8t9rpQtjQ656cKrBNTFWwfDLUPrumGR1iC3j8r97YeCk20v11KTJHv
+ klspsI88HFJpLgoXoORjISVi0jx1bA000uZX+cXI2o3t86X9/fY5K7OtakWUA4diZ4Xc
+ Fd2E7gPZOSZ+1foPe8p9FdulJ1+XQg1anH21uU+22Mp4qIYbASlw3q/jkZ2g8DSajyFZ
+ 3h+pZvopRuWNSSMavXBYLUrpVLLdjjPXbS0GSCucM6durboaHbSNYGhgywDR2AqXmkfm
+ DEZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783085130; x=1783689930;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1783085726; x=1783690526;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K1WfYP/AVnGL9yCNhgkXBBOTZWvzXfb+5TR8YCleTrA=;
- b=oBgvO1XDl4ryx46VaFLqKpT66WD840LgQG0zDlMg8Ju293YUGnDNblJulv+8PfGjjp
- BIE4NXD3t3c2LV/wNyy3K/3qMEQd9f6o0UyCUThjxd+bji4SF4EN/Mm85WRgLH7e2+HN
- Js6OWExh+juamwdI8khDef8BOQHgK4MONlTF4LlYSWjHxh4v7ORyK1tq/XKH5uc/q0Wk
- zaktaAFe0O2L8mEJV/5a1qV+Ba3O3Htu4/IfNoQYgKRL8rwApP7gmRMGQLk/vItE8GJB
- J0LkYGUhj/mSK7ma4A2XCe7Iy1niaUJYjbjsEwDAXZBEvfGrVM4ljKNhVEhiQVxtN/Ou
- A8Gg==
-X-Gm-Message-State: AOJu0Yz2nxmmzrmjwBj6iTKMrU76vEz5+IjKl1eRiF8BBqdsrZvFhZVA
- 8w+E3XXdquP1AbenDJcfXaZmJOvuKoyKsZK+I8Uo5mesYFBCmjH2hzUZ/38JQEixVo/gEfAE1GE
- 9aZHrjE1MWg==
-X-Gm-Gg: AfdE7clw9C5tPFONxlO7L66Z+MWq4zVkxo2kEz8bkhCIwRpI/6o7BRGPqHH2VtZJJcV
- hA22JYfTcgjmHwch6znwe5XGKo7CSNxck0yvNz2UQ6+4zEE2xObEnYdDiAk3EL8pGIGk4NHeI14
- qWcd5Lizwc0SF+XMURbheo0kNozhZ/8sU9ZlExPRAquf6BbV5npd3fcw4v4/8pKPsQov0fK/9dz
- WXkzdoNu6TCLkc+P9xWKdZsZ+K6Py2XrJUqJfDUHXBvqUSh+EBcJ95hxoLc//5qz1+vtkpXHkFe
- xPJEiS6db5ndosV0FOm6hoAv6Em0MgonT9aqMKlnlH5+RVhFHAKRWuq8/sQCit6MzxyC0W4qkdw
- l8gEDDfsZQeOsoDtTXXqT55iVParGD4LPUzKdcXDnLYSHVeWG4gH6CgHgkbevaxj2+adRiF6/Gr
- BXzeFXIw7fkjXOQAAbyCaWjAqeJvNGY6Dnf3NikBytKyNYH7sJt38eZqMnfxSXlWNHuwFWp6i5H
- 4GK6C00gRiTfVRZ1Gte+8tn9FZYfLPO
-X-Received: by 2002:a05:600c:1594:b0:493:bcba:46a4 with SMTP id
- 5b1f17b1804b1-493c2b7dc45mr85352095e9.20.1783085129757; 
- Fri, 03 Jul 2026 06:25:29 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-477db8a4b73sm17773242f8f.15.2026.07.03.06.25.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 Jul 2026 06:25:29 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>
-Subject: [PATCH] hw/9pfs: Check for error return from local_fid_fd()
-Date: Fri,  3 Jul 2026 14:25:28 +0100
-Message-ID: <20260703132528.4035684-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ bh=2ZnG7QzwcOliIhXKPsIJ2MYdHzHVFB/ZwZoqJYHTYrM=;
+ b=FCXR/alzd5AosjqbceJIxG1GvlzlwGfnZRhhh48UOC28na3kuPMX+fue0pJyL3MW5J
+ wTC3RexLi1Sr9p1/aDNE1p6PYlRPW+oigd/+Wg7xTasIF1W0WbhdoQCgvA6sLVvlCmnX
+ qlxhh9Y4Yx0AdwMdcpWPPjDVLRTD50dd/d2ktsS86tUhe9nKo8az4qtwxDq4joFF+tgR
+ /cMdoEcFjrG59Rmw+xt106cVErZ0WhxFH1JXrQa2xkwRe/uGBEunRNqus9FocGvOlb+F
+ 2XBTjiSiUSKh5s/YDCbQVN1hk0gEA9W6IO5zcOTgAi3YQc8v6lo6mjdjBIO/GJ1ERizd
+ xX7g==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrBT2mqfnHXklABk/KT+cEDaDj5xEvKmwPcnbxqy8fhEuxaLw+AOhwdt4Gu1jv1pp19Tl62/Ykd/+k/@nongnu.org
+X-Gm-Message-State: AOJu0Yw24CpoQk/ePzhvG5pPGAXyv0iW2F3rhJUkdFwg8UeGlYo3KYrE
+ GZ23jfo++5tYYGoLzZ6jVoOm0i/9+S3XgQlBpjTmIpUd7yTozJ8F+dnvoje78rMsa+5Il32eH8j
+ Xzq3OBmHQqMfOUkX4/8MCEDtyKhsb+knKwMMRUUqXVQ==
+X-Gm-Gg: AfdE7ck3li6ArUmG3cqIcmcs3HKYyg7T7SfdB4vHxTVZDr6ZrpcHWSeIV1ZlKQcbntY
+ J7D2g7jKh5rmbRKj3vbgMwBl64zAgtkCLCQlIykD62NSjLNP4DJjEzIN+Ra1zvghQPS3qXrZB5Y
+ 8IIuHjHRmrziNxpc00E5ZGzOCIIryxx33eMYKeMjgxVHF2bs/qqN32ztu9DcG86s30Lxgph+s+I
+ zP+1x6MOHcgnUDQawNDbV1HiZLijfj9zg4Fd01Q9Asa/L3QQ375RleJ24QhN444oznnQ0Kk8BWa
+ A8mU/fCOyzJnyVBSqncS7ubGoNcqjQsWAvASdJ0Xv4hwXzpBSHUGW/AA
+X-Received: by 2002:a05:690e:4503:10b0:664:ae68:ca0e with SMTP id
+ 956f58d0204a3-66521d1aa8amr7421060d50.84.1783085726219; Fri, 03 Jul 2026
+ 06:35:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+References: <20260702184019.3431139-1-peter.maydell@linaro.org>
+ <20260702184019.3431139-12-peter.maydell@linaro.org>
+ <d0222d0f-ee90-4d4a-bc60-71740a858543@linaro.org>
+In-Reply-To: <d0222d0f-ee90-4d4a-bc60-71740a858543@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 3 Jul 2026 14:35:14 +0100
+X-Gm-Features: AVVi8CdsTVA3m8eLOvENZMSqYyL3dvVpLl1r66klaFBXvX8hOthURpD7Xtp2zIU
+Message-ID: <CAFEAcA9_6Uf4WXc5qoqj63eBrf8sE=C7cMTpgTJDqqpVjHex1A@mail.gmail.com>
+Subject: Re: [PATCH 11/11] target/arm: Implement CPACR.D32DIS
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,62 +117,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The local_fid_fd() function can fail (returning -1 if dirfd() fails);
-check for this explicitly rather than relying on something later on
-failing because it was passed a -1 file descriptor.
+On Fri, 3 Jul 2026 at 00:36, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 7/2/26 11:40, Peter Maydell wrote:
+> > On some v7A CPUs, CPACR.D32DIS is a bit allowing the guest to make
+> > VFP instructions that touch registers D16..D31 UNDEF.  Whether the
+> > CPU implements this or not is IMPDEF, and the only two CPUs we
+> > implement which have this are the Cortex-A7 and Cortex-A9.  In v8A
+> > the bit is no longer defined at all.
+> >
+> > Since the only kind of trapping that needs to be done is a simple
+> > UNDEF, this is straightforward enough to implement.
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1499
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >   target/arm/cpu.h               |  4 ++++
+> >   target/arm/helper.c            | 19 ++++++++++++++++---
+> >   target/arm/tcg/cpu32-system.c  |  2 ++
+> >   target/arm/tcg/hflags.c        | 20 ++++++++++++++++++++
+> >   target/arm/tcg/translate-vfp.c |  4 ++--
+> >   target/arm/tcg/translate.c     |  1 +
+> >   target/arm/tcg/translate.h     |  1 +
+> >   7 files changed, 46 insertions(+), 5 deletions(-)
+>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>
+> > @@ -210,12 +210,12 @@ static void gen_update_fp_context(DisasContext *s)
+> >   /*
+> >    * Return true if a VFP insn is OK to access D16..D31, false if
+> >    * it should UNDEF. This checks whether the D16-D31 regs are
+> > - * implemented by the CPU. Eventually we will also check CPACR.D32DIS.
+> > + * implemented by the CPU, and whether CPACR.D32DIS permits access.
+> >    * Note that Neon insns accessing D16..D31 do not need to check D32DIS.
+> >    */
+> >   static bool vfp_d16_d31_ok(DisasContext *s)
+> >   {
+> > -    return dc_isar_feature(aa32_simd_r32, s);
+> > +    return dc_isar_feature(aa32_simd_r32, s) && !s->d32dis;
+> >   }
+>
+> Not that it matters much, but if we stored
+>
+>    s->invalid_dreg_mask = (d16_d31_ok ? 0 : 0x10);
+>
+> and pass in the mask of regs like so:
+>
+> static bool vfp_dregs_ok(DisasContext *s, int mask)
+> {
+>      return !(mask & s->invalid_dreg_mask);
+> }
+>
+> -    if (!dc_isar_feature(aa32_simd_r32, s) && ((vd | vm) & 0x10)) {
+> +    if (!vfp_dregs_ok(s, vd | vm)) {
+>
+> then we eliminate a couple of branches and some boilerplate.
 
-This was flagged up by Coverity: CID 1660923, 1660924, 1660925
+Mmm. We'd need to have separate masks for vfp and neon, though,
+otherwise somebody is going to be tempted to change all the
+uses in translate-neon.c to use this function.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/9pfs/9p-local.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index ee592b62f8..8f27c562b5 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -788,6 +788,9 @@ static int local_fstat(FsContext *fs_ctx, int fid_type,
- {
-     int err, fd = local_fid_fd(fid_type, fs);
- 
-+    if (fd < 0) {
-+        return fd;
-+    }
-     err = fstat(fd, stbuf);
-     if (err) {
-         return err;
-@@ -1055,6 +1058,9 @@ static int local_ftruncate(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
- {
-     int fd = local_fid_fd(fid_type, fs);
- 
-+    if (fd < 0) {
-+        return fd;
-+    }
-     return ftruncate(fd, size);
- }
- 
-@@ -1113,6 +1119,9 @@ static int local_futimens(FsContext *s, int fid_type, V9fsFidOpenState *fs,
- {
-     int fd = local_fid_fd(fid_type, fs);
- 
-+    if (fd < 0) {
-+        return fd;
-+    }
-     return qemu_futimens(fd, times);
- }
- 
-@@ -1196,6 +1205,9 @@ static int local_fsync(FsContext *ctx, int fid_type,
- {
-     int fd = local_fid_fd(fid_type, fs);
- 
-+    if (fd < 0) {
-+        return fd;
-+    }
-     if (datasync) {
-         return qemu_fdatasync(fd);
-     } else {
--- 
-2.43.0
-
+-- PMM
 
