@@ -4,180 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74DA3C44502
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 14:11:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89834C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 14:27:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfebS-0004SX-FT; Fri, 03 Jul 2026 10:10:50 -0400
+	id 1wfer4-0007Z1-RE; Fri, 03 Jul 2026 10:26:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wfebQ-0004Rm-Lz; Fri, 03 Jul 2026 10:10:48 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wfer3-0007U4-0x
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 10:26:57 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wfebO-0002du-HX; Fri, 03 Jul 2026 10:10:48 -0400
-Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6636sFtL2069494; Fri, 3 Jul 2026 07:10:36 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wfer0-0006Xn-4O
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 10:26:56 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 663D1HeL054343
+ for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 14:26:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=pDCGHeyNc4UNkJ1/2bM6/ZAyr1INWb/pNlWQQhIFa
- nQ=; b=bsCa9fOQa1qd2eLzHAQ6fL7XtHx6nFwfwdNB/KwG6rsCPMJWfMfdJyCm/
- PNDfedX7c/J4krDbxlXQ9ioIkgpkmW/q9+xGod2m1p+KvyQzguPiv9QF/3cZ0XKS
- kLp6pgPkLsOBqTSfvMMRMu6rfHJF4yXdzM6V82qGZoEIDqyqmmwGJzYU4JZmEaMO
- ZJWKW6jBJUXz5ARUhCZvGXUnYBhVMmge+xjCNKrP8zx5luCSp8p+d/241fy+4slu
- MTplZHHzFGr3bzTI/Aus1C8T6LKRTKoWOtfapTmYxlkEK+lMZvBjQDsCvSHGRT41
- Na0I7j0c1ULIuSamUxDQJYp1SAqeQ==
-Received: from bl2pr02cu003.outbound.protection.outlook.com
- (mail-eastusazon11021114.outbound.protection.outlook.com [52.101.52.114])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4f687k0ufp-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 07:10:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JeMw96BsXqfQrHbj7Gjb4GBJlA1lqKcDKLziH7Pc7jZiR0ci2Xd5EZySeFAkkKmdTtITho6Yk9aEp+FK/06JDxHdLeN03o5SmX65x9BCPfRPgoWy3RJRBjlmMIUhXIv7qUJYi/qme+cQEFevHmKw92I5Rq8Jy0obaiP5//wvJ8CLm9U+LqnRUMwFlr5GjsiWHRvsUf3pzOsufw9OAAdqTGzJ63YGJoCFYmQtZAXPJRDQVHOwfQ6ZJrTjdcv2jzzxOxJF4A3t7T4AM7bjJzn96oDzJuFMiCvIyQhUQtdRUBRCd9x2YjVt6GKnotWyHPjR+x4TMR6U5XjnwYMAPglR6g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pDCGHeyNc4UNkJ1/2bM6/ZAyr1INWb/pNlWQQhIFanQ=;
- b=bQCFHyhy1Q3UrajPzLT30+cqUyYqvozL6IJVgFHyCCZDrdQxKLGQMF0iNCm8oCwsVGuCHk2D5Jy+gjPvaRX6quj+mU5GnKgiPpu1meoQF07H284Hcvu5dJis+OseertKCrrkjG/skjli0CkmIjbeP1frUv5RZxIoiXJsWwC9OrHeFQMhyecPV56uO3UxLoNIUBCePnEONVwEkMbJ2O0Z3CiI0oXfzz/1IRXu3SD0JgBns0VVQPaKHMWHaLVKsFdqBa20xaZ4eAdekBtlknq0x5WS1rSWfsuZL21NH9pX+zk50gbAKQuO7IUcFUdcX6VczTpMzgv0RAd5RwnEl1zYcw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pDCGHeyNc4UNkJ1/2bM6/ZAyr1INWb/pNlWQQhIFanQ=;
- b=qAYjE5KrLn41tAA73wNv7U4TBK78vB4mzjA13AcwllPozqQAexr510lXj1e3KFQhmTDhrgwr6TGM0kqh5mkO6DrwNtl0k9GWhiSgL7XNd3QL9qW6x0+saXJPhu0DRV7Onc9riBUioQ3kCh4RZNYWGma0usvqvhBMR6rNWvHt/Bz8Xdu0+exfAMQkrigGDjEDcJMEdmU9C/A7dIqNjej1yIYJ3fIDx7OIKJbhroDRQbhmghqAz+Vt2ppo3qyaSLeAD9sgIW60p2h+T8CCHz53S1/UeffIJ7Cxka9N00ybsLozRKH7FBNPsNcU+aYrbwmzUgMpeDkZen6v2C0Np65hTA==
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by BL0PR02MB6483.namprd02.prod.outlook.com (2603:10b6:208:1cb::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.11; Fri, 3 Jul
- 2026 14:10:34 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0181.010; Fri, 3 Jul 2026
- 14:10:33 +0000
-Message-ID: <faaad8c7-e879-474f-8b32-a17d3af060cf@nutanix.com>
-Date: Fri, 3 Jul 2026 15:10:29 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] hw/adc/npcm7xx_adc.c: convert NPCM7XX_ADC object
- props to class props
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: kfting@nuvoton.com, wuhaotsh@google.com, alistair@alistair23.me,
- berrange@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20260625111201.1645847-1-mark.caveayland@nutanix.com>
- <20260625111201.1645847-2-mark.caveayland@nutanix.com>
- <CAFEAcA8or7xgrNvP2G_in3Y7TF_N4s4mxHoU+mPkS5-OsZLMug@mail.gmail.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-In-Reply-To: <CAFEAcA8or7xgrNvP2G_in3Y7TF_N4s4mxHoU+mPkS5-OsZLMug@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P265CA0083.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:2bd::20) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Owbz78uKnwRwhavIKjpjKyFK7eTJ5vvGWDJKxRHA2hE=; b=nQ/nXdOIDESWulTz
+ BSeJ7X6Xt0Uc8KHR58RvJM84nkK8uo1szeVFl09yZwc5Ok4t2ZajNmUb/M02ezz1
+ PtSjKYdKgxKlh5kcy70o/EEXUDKZcOipkJtbtjhI4YyVph55mrGqmQy78LMvFWQl
+ Udcqd0QEZsQ2Fip5c6Z+u4w5fs4rDAOSHme9GHe8Zofp2UJmzedqnCrZK30L9Rmf
+ 8ABc6wUOM96kTecqXX9CR8nbDEVfbFECnOzNIPXU17rFgvJv2sNHno0bobaIc822
+ 0AC+0YZ6F9q4lHluaNaQ3zOXD2CmqpqQlF5/loWYAvaFyd9cPfIhSiidaS2TfZ7D
+ uvFsdQ==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6dkkg8x0-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 14:26:51 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8f113592bf3so10043546d6.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 07:26:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783088811; x=1783693611; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Owbz78uKnwRwhavIKjpjKyFK7eTJ5vvGWDJKxRHA2hE=;
+ b=Klj2sMJDQkcg+ofU1X3Km7IuxiQ2qRL39Gd18hv/NkzaSKlYCRtStGJYKm4aZo5zSl
+ 26MCphdz66IW529A1lE0v2/W+U+XJdWYK/S/09P1Gcab/7I08UOCDIqpMJPdrEtI018Z
+ 27VMQU5nVn24EG21PMj+MBBocx2pFTvuCl/R1TZ6JVaBKP5bWMF5+FOpZia0ToVlmBGz
+ Mn5ygAi53CMXRSzQrifQpsKhpAMMT0aExLLP305N5VXgxdD78z7pmAB93A3jN6rosia0
+ YBOBj6HkUcH2QTzK/JeLdvfuFbNv3WRK2wAR7lvhuxDS0T6fqCpmQdWBJqyomt/cdeoY
+ Y+Cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783088811; x=1783693611;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Owbz78uKnwRwhavIKjpjKyFK7eTJ5vvGWDJKxRHA2hE=;
+ b=AdH2q7PWT8G8zkultHAlnief1mG0CG35tQLq1bBKM8WnQtej3ndxQFTBtvZOVnRzdI
+ wDJfhMC+wGTvyFhkX8MXZ6c5lQ3oCBJ/CaLjGw6qmbHn8O/kS6PncK5/VK3lKDm6FZGj
+ Tbxzq05wjsI1TIPFjTfTmD4QKfBfIGPhBCNkFGT/QeUNjoSPZx/c+AwW1/lRhiwry0uW
+ 0EutSKJbICM6Y0DIL1RhiIxVGPX6kqU0XhV/a69ZGB9Ibh/ATasdyur7z56G3HQkuCRc
+ yEOTQufxh8APsXlM+62vJJ/zHI6/v8U5Jg1bdwxy2SF2SEu3TgXSOpNBeaUT1lW5ABbh
+ 5WVQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqvFFoP2417SFurVg8ClYG3I11u0CZS0bW79/shTg14aPHsww2sY+45ScnvKxC5Pxwg0+t0uoMloP+L@nongnu.org
+X-Gm-Message-State: AOJu0YzP0OCHxFXkr2v4VdFTRmqVdoRG5NVjyB2foIWOYs8lLOFCCpKw
+ Cu1e3/nLKhKkaQL6/7oeo5Q+UglTSc0pOSiOx9UMamW+YNB1iiJXs0L0opWdK8BpXQxv55AlveB
+ o5UpvXbN0HFlyf7kl8MMBlijNECLnOZbOvEPzPfC2XqLkLi9Hm1ntTUxLGQ==
+X-Gm-Gg: AfdE7ck/wZWqvmmDNwz3eyqQa6UeCSY412ydZmIjBTv9MJqZRnYZQIc6zLWbLetB9PK
+ dBHP5/BTa7qXcbUQAZsHy4Ps44M3LB4gQu00nf02UJ67SrFmEtUaF/uiI88wGA5i9vpe+zVZjT8
+ CV6GNaizR+73oYpIx7Sfb9nuTh7ENj4SNY5lsPKiPQvoIpsKNDBdl04/Bn7IjQ1POBiojnVrm+g
+ h4ExsmlMQo7e20pd9zUvmyLJ2Wfgpj1vY48xl4ZUlFkIZqw1o8kYYgvGOb2vx9hjagXROzXAia/
+ 7NG3pu9wq+S8Q7rw880IgkSDT+ZJABB+u0sfWpP9dOAi9VLn6GXmflRswPiIOjLtJ3c8spm+GQd
+ lC0pTbJolzQb3XL3/jdwNi1VjOp/oWt/0e3rgbHzJOkZB
+X-Received: by 2002:a05:6214:ac5:b0:8f4:4d6:8ad7 with SMTP id
+ 6a1803df08f44-8f42353027dmr137440966d6.31.1783088811062; 
+ Fri, 03 Jul 2026 07:26:51 -0700 (PDT)
+X-Received: by 2002:a05:6214:ac5:b0:8f4:4d6:8ad7 with SMTP id
+ 6a1803df08f44-8f42353027dmr137440326d6.31.1783088810434; 
+ Fri, 03 Jul 2026 07:26:50 -0700 (PDT)
+Received: from [192.168.68.106] ([189.79.21.40])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8f471815818sm56866246d6.31.2026.07.03.07.26.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 Jul 2026 07:26:49 -0700 (PDT)
+Message-ID: <104fa6b5-fb9e-42b3-b74b-a31fc554ffc6@oss.qualcomm.com>
+Date: Fri, 3 Jul 2026 11:26:47 -0300
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|BL0PR02MB6483:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8b54cc4c-ebfd-4497-35a7-08ded90cd91b
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|23010399003|376014|22082099003|18002099003|6133799003|56012099006|4143699003;
-X-Microsoft-Antispam-Message-Info: +J0aTa05ubCHydJRnREqClk7ZLHR+Oo5qqS82JO/yhX1JNrO+pit3wzq6FvgPQA/qOsZNzjfel+GGhZWNCT1IlpFGnIBylWiuzSv9Uh4zHJkzQAq8yRx/ou7Is2BMOj8CM4tuY75blQU4a09OdfRvw/XoOG8ssrwj/L2JSsv9cWBQJCV4F9GLp83qquBVV19BSXm5CaRJrCnXV2WGxdh3iuicegt6Fj63YmdYwLL7EWs53qusnGE+k+npoY08dI/2fh8SnZpzGVcjpcYEt9JIQj7+aFo8CdaQnrZnVmjMfyXQLL6uHASDi6FXn5OYwXn4B04RcENXzxaObEEyDobLF+F3/VpNOcQ2nI5bOe13vZx8Anv6nKComnyQ8ievMPw3SS/JkVgLxBeZy4346qTIGZXtbqcoYfmH3rxyZn1R+432czTOuJn7gS18gfSlesD1XNc5i5l1bhJSpCU2FnKVDkuymWnW6ZTCdXq/nrvzHT6xiJnYRG8zIY/Fy4jcZpg/phY6tE8AtjDn0u9c/7ivj06QQ9MJmZQs9kUzuHcIeY1UkCCjlqrwFzO6Igxe6bYvLanX7bMB6XCE1E9k0FNkavJ/FCNw5LY4k8je0Ue5NY=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(22082099003)(18002099003)(6133799003)(56012099006)(4143699003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RkZGREwyM3dFK3JuMGs1dGgvRFFNZjFOVEtNUXJoN0Zrbm96cWNxTEF6NHVW?=
- =?utf-8?B?b2lsOWN5UUlhWVFkUkc2VzdhdjJzZGtBbSs0aXhBenI1SXV4K2o1Ums1T1Fu?=
- =?utf-8?B?Zm1reEdWQlNucloydnJXa3FuMFZ4WjNsTkNxTWVyU0ozd0kydEZZUTkzR1g0?=
- =?utf-8?B?UTlxR1pLekMvcmFGUkh2R1JRb3c5aHhuTEd3RG9GVDdaaUd1Mm80NDBLMkVK?=
- =?utf-8?B?Nm1jS2hyalRYMXcxZDVYQ0dtWEJKZlV6Yi9XYzZ0QzJlanUvbXptcXJWOUlN?=
- =?utf-8?B?eDhCRnQySENyQUtuZWZwZWZwRWpTMFJhK204ekR3cHV3WVZmdXZzV1NaZ0F3?=
- =?utf-8?B?N0tGeSttbnNzMmZORWl3ajdSTmRXSG1RemF6ZjJaZ09uNDRrSFlGRkZkV3lv?=
- =?utf-8?B?TUhCL0pnREx3K2YzSFc1dk5scXhwLzMvSFJHbnRJSXQrMGhLVW1EbkR1RjVq?=
- =?utf-8?B?VzFJOGtwcm8xbHVmRGxFV3hialdQVzRiK0VjR1VDMHNCRWZaaVIwYm1naTdK?=
- =?utf-8?B?SGYySWF5TDhwRHNFK2h6Mk1hNm90amtaUFo4d0FCMVhMM29FWnFSRkJqL080?=
- =?utf-8?B?YWpNdUgxV04rbktRWDV4bHZlV0NhUU12bWZmWVhpb2VheVJRaERtUmtPdWJB?=
- =?utf-8?B?M2ptbGMxaEovM2tNc0JuWXgraDdYT2l6TFAxY2t5cm0wMWpNakJlYWlMMUh5?=
- =?utf-8?B?OFZEU3U5Sk9uUnlXeGhhekpnNUkzUlY0djZESDVLVWZqZEFXVmpPT2hpVWd4?=
- =?utf-8?B?N2srdGg3MFRmVjRoZFdDbDRwOU5sOUdod0czVG5rK2pVVTExMjVFZUovUmtw?=
- =?utf-8?B?S0Y5TmNZUUpqRkZVUFVsdEtVNEE3WWVoWlFwRlVONnZOUWNsQ2RKRjJoa2JH?=
- =?utf-8?B?eHRpdjFoUXBSYUNWR3FRT05VcGY3WWJuMWVuaXUwV3Fzck9GdTBSdW00RGtQ?=
- =?utf-8?B?eHpWbE85cW1Jam5NV0UvZ29ZQS80S3R0MlpITzZ3dTBtdUNqRzg5d2o1a1ZE?=
- =?utf-8?B?cXVwMytRamQ4V094bm1jTEhVczF5ZkZMWEQvUSthNHh5RGI0a3pGckhEblhR?=
- =?utf-8?B?cS80YTF5Q09kWHp4b1NtSjA3ZEEvU1RlbzFNMW91dGdoQlVNMDdZbzNsVXpB?=
- =?utf-8?B?R01VSGRZUWNoVDN6bmFTd2pBVmlHbUphS1BraXkwYzhyRnd2ZFhjSW41Z3NP?=
- =?utf-8?B?V0xPQ1hhUk1iY29sR3R1K2dzanJYeFFwMDdkMUNNTGQzZCs3MjljYjhOM2Rq?=
- =?utf-8?B?Y1BXMHdhdWRKcnkyYTVRUzk2WkVTNVVETk9vaWtrcksvUnJmTllUYytpZXRu?=
- =?utf-8?B?S215SmFGZitMNzFTZHRXWGhlYTBIc2VWMmozaE5PNkNIZ3dZSjYzOUYxLzlK?=
- =?utf-8?B?aitUd1VRQmFLaUloRFdZbU9yeFlBUG5iK3NFN0FXUlBxOVAxVW9ldzBSenpF?=
- =?utf-8?B?czdIM3JvTzlNVEprNk1JejF6OFIxdkZCWFRhaEpFcTVZdEJNbGdyWitHcHRX?=
- =?utf-8?B?NnJwSHZOWElJN241UHM0TlhoalhRYXcyZmZHQUlGZ1NQZ2svSldIaU5PQzdL?=
- =?utf-8?B?R2x5V3pkWGZkZGlROVVKUFY4TGt1cm5XcUxYdTBPdlNGYkdyb1J6Y2I5NExD?=
- =?utf-8?B?YWtpa2JFTE5PRW1Ea3g5MWZMbkZiS3J5VnJHVGE2SkNCNFNyUmZGSXB4Rkd4?=
- =?utf-8?B?a2pmZmNsdlFXSXhrQ25NcXZ4WTlYUStRODVNd0k2c3I3aDEyMzJoWWkyNHJv?=
- =?utf-8?B?SThEWFBWemZGN1FoQTdlVCtDY0pDV0R5NHBiZFk4dEZPek91RXl3ai9xOGFw?=
- =?utf-8?B?K1VGODNCcll5SVdDQ0NMZFZERCtzd3NzVFZmSjlUcjZBejNlemR2VTFEOFRS?=
- =?utf-8?B?c0tuNUFRZDJLYlJJNDhGSENyenE0UnppbFVUWXNHenE1V3I1azBBTjBOaDdK?=
- =?utf-8?B?ZHRhTE9rdGRVcXlzakRWVzFXZzVjam9RSS9uTDFSTlJ0RWpVcEVTN1c4S3Fl?=
- =?utf-8?B?Z2x0Tllzd1c2SGhNQmluL1A2dEhRWEl1VlJVQ1BNQ2NGbXh0RHp1cWdpNkJT?=
- =?utf-8?B?Z21abFFDVWlYd1FnQUk4UzBXSGZvRDN2NUVaZm5DbUFMYXlJVCtwSklMeTlF?=
- =?utf-8?B?VngzeEVQV2cwTGI2UVdhS205ay8zYlVwY3VQVmVzZVgrb3lISGtINGpVS01Z?=
- =?utf-8?B?LzNNMk5hTjhtUjdvOXJCOGluZlV6eVNRYU5qRWc5RHhFbXBWLy9Xa0pFOXU3?=
- =?utf-8?B?NTJLYzE2MTRVN2dVWjJkRjlTVnVWVWZWL20wcldKREx3dEIzRU5wQy8wL01N?=
- =?utf-8?B?ek84SnJCdUU3cm5YVWVxTVJEUzR4UnQ2RmM4d3JtdXUrYlB2M1RFUkxoakIx?=
- =?utf-8?Q?z8U9GOPZ0b/uAzbQ=3D?=
-X-Exchange-RoutingPolicyChecked: K/KzAe0hZHMSzSW//6HRfJ6ulpLkYA8GiicScDWe9AdsKI7gSKZ5xo1VmvTW2jqSQImmGSRZpzxDaPWXtBKieAKcFBUBPZy70Qr8O5GDtoJttM5YJWPXeww+dUZdfRpEImaUpSXb2cvYeLoGN3b2sudYxRrgyadBPftunDWZTyymlvp+Bgo/avRLQjORJyKLQJBWfIAQHeioAVp0MbTU4FBK0FWNJSTkeKhYTdApZdupaD1dBipsDcbp1d+mJIkNdYsDmTCcrykLzwQho+C71bsN3abHlH0J8KkqHCq7xtYTx+tH+V9x9Zl9/0GS7Y1bdGXizFHkJ0Vt74LUo8fQDA==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8b54cc4c-ebfd-4497-35a7-08ded90cd91b
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2026 14:10:33.9113 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1QNF97p/I7qn+QxArjPsn8RHtrJbRisGUMKX2DL6X6FXLvTHhfSTDtE4O1cGsMqGwDbIkux2skodCMGNFcKQVHgKV4xiWhEfqv9zAIh+AHI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR02MB6483
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDEzOCBTYWx0ZWRfX41BodrYJmJCh
- aRuKMc+syc3TS5+ry8JDeY6GDb3Bkj6cGAgFKg4rP5UUf0D1Ogen7ue55LUSSePwmcIfK38S7/K
- vkCL6321yZ/HMkQ59uYcUTW0NMazUxJr3YKNBc8523s/wB8uX5xBX2v9zuJmfXm2r6/b+WTqRyf
- mZ/ccpyFvndh/LFiYnCbrqUBg2wuZKBBxK12RJmKLSZvjiBW08pz1m4KOVYcpe+bp26MNUo5rTj
- iJY8labUdJ3zZSEHHf9/+mNP9Y/S6A6DxgKrxAoj0sJKAjh3f5FF+1tM1mMahgjrOtBAIqGBfNT
- 6qW3ZthQ3SWusrw1lsrbw9yq1k+ttynIx8OOO5eAeAJ1vlQX2c3oUSUgoxL7k8JOJMwai0b8rjm
- jn07QKATjQc+uTvfWvkDIB4N8uIViwj3jTGpkjemct7HL7uC+Eve8iweGJTKXNePyTa7d4FsC+m
- rwOw9b6tRTWZIcxPl3w==
-X-Authority-Analysis: v=2.4 cv=EZz4hvmC c=1 sm=1 tr=0 ts=6a47c2dc cx=c_pps
- a=iJ0/73tnBOJCmN8OdmQeBQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=y4UcunY2MAxhM4LwGdWI:22
- a=GaQpPoNlAAAA:8 a=64Cc0HZtAAAA:8 a=hd8VEaDZGaa4IoOSaKAA:9 a=QEXdDO2ut3YA:10
- a=xF5q_uoM5gZT5J3czcBi:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDEzOCBTYWx0ZWRfX31gpBufZxRoo
- mp+n5LX7w6ImrvJAhi4vRWXz2aWvHAkaOoBayTWPYHIaO/lvs5q2+MZf5+iSevpuh9E3540Z4IM
- 3Yn/ZhSOPgt3U/3lNpLCUOH74kI0cNY=
-X-Proofpoint-ORIG-GUID: 8HcOWkCEtkYrEqf26HjjyzwE1pY8SjDH
-X-Proofpoint-GUID: 8HcOWkCEtkYrEqf26HjjyzwE1pY8SjDH
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 03/24] target/riscv/machine.c: do not migrate pmp state
+ with kvm
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ Palmer Dabbelt <palmer@dabbelt.com>
+References: <20260702135128.1188021-1-daniel.barboza@oss.qualcomm.com>
+ <20260702135128.1188021-4-daniel.barboza@oss.qualcomm.com>
+ <18ce4e8c-bb35-49c2-abee-9145a33d95ec@oss.qualcomm.com>
+ <10315dfc-37f1-40fb-bbf5-b2c5f460c956@oss.qualcomm.com>
+ <37525427-720b-48af-a906-8cc1062e7ed0@oss.qualcomm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <37525427-720b-48af-a906-8cc1062e7ed0@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE0MiBTYWx0ZWRfXzvKcu1s4NHr/
+ PjUjHPxTMx3W8qggwMXPGwNMIPI7BaUJ6G4t3JOlEZVPfiWo13FoUisltVHm+NR6TkWExVhyWLz
+ vUC8iLGLf7Z+c6BDUkeuKoSb48U0foqpVdNhz6WWG6OZbEw6sneBfCj2Q/F4oK913QaNJZrxTho
+ 0wUJUMviWlrjzlZ0/W67IjgqP2i1J6NE5am5ioSp/y/y03PANMozc5Dz2XuGslhmkVE75wScRRD
+ jMGWEolrSDtKLxMe9LPdUYtNMgZkSBOxG5gr4q3DLXa0R9FFmICo2usS0fpRoVnxY3YPm/gRvgu
+ OWpFTzVwIqujom8kEg7koDDHTJVcjMUFiKVnpo6DbF63t7/XnB2Kl6iL3Q5FTzrrux5kUUrnI+N
+ igK/x1yEgGLXW+jK3XqeSs0dhtAvJ4L1k7ftmFgf/waWIa0VNgFabHExuucDlEUQN1+dzG9fVAP
+ kAGGBxaSVd2DvixDLQA==
+X-Authority-Analysis: v=2.4 cv=LeUMLDfi c=1 sm=1 tr=0 ts=6a47c6ab cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=JF9118EUAAAA:8 a=pGLkceISAAAA:8 a=i4LRvFJOLUBMW-A5C7QA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
+ a=xVlTc564ipvMDusKsbsT:22
+X-Proofpoint-ORIG-GUID: Pa6HK8M9INNMYuWisUQCHpaEQZlP4Rsu
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE0MiBTYWx0ZWRfX+Cglr5iXb9Fz
+ CSspYE+q+JlaMJLv0xu4TJTzaV21xyX+k+JW6q/KfNlQGkLnlPrrPkjKlterZA7cxMguSM6iLv6
+ J4cnvpJl6V/0aP0u5L2AfzkEuT34Ojc=
+X-Proofpoint-GUID: Pa6HK8M9INNMYuWisUQCHpaEQZlP4Rsu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0
+ suspectscore=0 bulkscore=0 impostorscore=0 priorityscore=1501 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030142
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -193,145 +162,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/06/2026 09:26, Peter Maydell wrote:
 
-> On Thu, 25 Jun 2026 at 12:12, Mark Cave-Ayland
-> <mark.caveayland@nutanix.com> wrote:
+
+On 7/3/2026 10:58 AM, Philippe Mathieu-Daudé wrote:
+> On 3/7/26 15:46, Daniel Henrique Barboza wrote:
 >>
->> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+>>
+>> On 7/3/2026 7:58 AM, Philippe Mathieu-Daudé wrote:
+>>> On 2/7/26 15:51, Daniel Henrique Barboza wrote:
+>>>> The PMP emulation isn't present in the KVM driver.
+>>>>
+>>>> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>>>> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+>>>> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+>>>> ---
+>>>>   target/riscv/machine.c | 15 +++++++++++----
+>>>>   1 file changed, 11 insertions(+), 4 deletions(-)
+>>>>
+>>>> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+>>>> index ba96ceceef..e1cbcaa349 100644
+>>>> --- a/target/riscv/machine.c
+>>>> +++ b/target/riscv/machine.c
+>>>> @@ -20,6 +20,7 @@
+>>>>   #include "cpu.h"
+>>>>   #include "qemu/error-report.h"
+>>>>   #include "system/kvm.h"
+>>>> +#include "system/tcg.h"
+>>>>   #include "migration/cpu.h"
+>>>>   #include "exec/icount.h"
+>>>>   #include "target/riscv/debug.h"
+>>>> @@ -29,7 +30,11 @@ static bool pmp_needed(void *opaque)
+>>>>   {
+>>>>       RISCVCPU *cpu = opaque;
+>>>> -    return cpu->cfg.pmp;
+>>>> +    if (kvm_enabled()) {
+>>>> +        return false;
+>>>> +    }
+>>>> +
+>>>> +    return tcg_enabled() && cpu->cfg.pmp;
+>>>>   }
+>>>>   static int pmp_post_load(void *opaque, int version_id)
+>>>> @@ -39,10 +44,12 @@ static int pmp_post_load(void *opaque, int version_id)
+>>>>       int i;
+>>>>       uint8_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
+>>>
+>>> Maybe we can use:
+>>>
+>>>    if (!pmp_needed(opaque)) {
+>>>        return 0;
+>>>    }
+>>
+>> Hmmmm I thought that pmp_post_load() already infers pmp_needed() == true.
+>> In migration/main.rst we have:
+>>
 >> ---
->>   hw/adc/npcm7xx_adc.c | 77 ++++++++++++++++++++++++++++++++++++++++----
->>   1 file changed, 70 insertions(+), 7 deletions(-)
+>> The 'pre_load' and 'post_load' functions on subsections are only
+>> called if the subsection is loaded.
+>> ---
 >>
->> diff --git a/hw/adc/npcm7xx_adc.c b/hw/adc/npcm7xx_adc.c
->> index 3584c27c75..833e01a913 100644
->> --- a/hw/adc/npcm7xx_adc.c
->> +++ b/hw/adc/npcm7xx_adc.c
->> @@ -20,6 +20,8 @@
->>   #include "hw/core/qdev-properties.h"
->>   #include "hw/core/registerfields.h"
->>   #include "migration/vmstate.h"
->> +#include "qapi/error.h"
->> +#include "qapi/visitor.h"
->>   #include "qemu/log.h"
->>   #include "qemu/module.h"
->>   #include "qemu/timer.h"
->> @@ -229,7 +231,6 @@ static void npcm7xx_adc_init(Object *obj)
->>   {
->>       NPCM7xxADCState *s = NPCM7XX_ADC(obj);
->>       SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
->> -    int i;
+>> Hence we'll only execute the post_load() cb for a section/subsection if
+>> the section was transferred, and that is determined by the .needed cb.
+>> In this particular case we'll only reach pmp_post_load() if
+>> pmp_needed() is already true.
+> 
+> OK.
+> 
 >>
->>       sysbus_init_irq(sbd, &s->irq);
 >>
->> @@ -240,15 +241,63 @@ static void npcm7xx_adc_init(Object *obj)
->>       sysbus_init_mmio(sbd, &s->iomem);
->>       s->clock = qdev_init_clock_in(DEVICE(s), "clock", NULL, NULL, 0);
+>> Or am I wrong?  It has been awhile since I last read migration code and
+>> I'm not finding docs w.r.t how .needed and .pre/post_load interact
+>> with each other.
+> 
+> Maybe check 'if (cpu->cfg.pmp)' then? What confuses me is the
+> 'if (tcg_enabled)' since we already checked that in needed().
+
+That's in there because pmp_update_rule_addr() and pmp_update_rule_nums()
+are TCG only and it won't build with --disable-tcg.
+
+And now that I said it out loud maybe this would be clearer:
+
+static int pmp_post_load(void *opaque, int version_id)
+{
+#ifdef CONFIG_TCG
+     RISCVCPU *cpu = opaque;
+     CPURISCVState *env = &cpu->env;
+     int i;
+     uint8_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
+
+     for (i = 0; i < pmp_regions; i++) {
+         pmp_update_rule_addr(env, i);
+     }
+     pmp_update_rule_nums(env);
+#endif
+
+     return 0;
+}
+
+I just checked it and it works with --disable-tcg.  Let me know
+if you're ok with it and I'll change it for v4.
+
+
+Cheers,
+Daniel
+
+
+
+
+
+> 
 >>
->> -    for (i = 0; i < NPCM7XX_ADC_NUM_INPUTS; ++i) {
->> -        object_property_add_uint32_ptr(obj, "adci[*]",
->> -                &s->adci[i], OBJ_PROP_FLAG_READWRITE);
->> -    }
-> 
-> In the old style we get to use "adci[*]", which avoids the
-> boilerplate of creating and managing the string for the
-> name with the substituted-in integer value:
-> 
->          g_autofree char *adciprop = g_strdup_printf("adci[%u]", i);
-> 
-> Is there a way of keeping that with the new setup?
-
-I did include this functionality in v1 (see 
-patchew.org/QEMU/20260624153322.1470576-1-mark.caveayland@nutanix.com/20260624153322.1470576-2-mark.caveayland@nutanix.com/) 
-however Daniel suggested that we should discourage its use and so I 
-removed it for v2.
-
-Are there any known places where we are adding properties where we don't 
-have any loop variable available?
-
->> -    object_property_add_uint32_ptr(obj, "vref",
->> -            &s->vref, OBJ_PROP_FLAG_WRITE);
->>       npcm7xx_adc_calibrate(s);
->>   }
 >>
->> +static void npcm7xx_adc_get_input(Object *obj, Visitor *v,
->> +                                  const char *name, void *opaque,
->> +                                  Error **errp)
->> +{
->> +    NPCM7xxADCState *s = NPCM7XX_ADC(obj);
->> +    uint32_t idx, val;
->> +    int res;
->> +
->> +    res = sscanf(name, "adci[%u]", &idx);
->> +    if (res == EOF || res != 1) {
->> +        error_setg(errp, "unable to parse index from %s", name);
->> +        return;
->> +    }
->> +
->> +    val = s->adci[idx];
->> +    visit_type_uint32(v, name, &val, errp);
->> +}
->> +
->> +static void npcm7xx_adc_set_input(Object *obj, Visitor *v,
->> +                                  const char *name, void *opaque,
->> +                                  Error **errp)
->> +{
->> +    NPCM7xxADCState *s = NPCM7XX_ADC(obj);
->> +    uint32_t idx, val;
->> +    int res;
->> +
->> +    res = sscanf(name, "adci[%u]", &idx);
->> +    if (res == EOF || res != 1) {
->> +        error_setg(errp, "unable to parse index from %s", name);
->> +        return;
->> +    }
->> +
->> +    val = s->adci[idx];
->> +    if (!visit_type_uint32(v, name, &val, errp)) {
->> +        return;
->> +    }
->> +
->> +    s->adci[idx] = val;
->> +}
->> +
->> +static void npcm7xx_adc_set_vref(Object *obj, Visitor *v,
->> +                                 const char *name, void *opaque,
->> +                                 Error **errp)
->> +{
->> +    NPCM7xxADCState *s = NPCM7XX_ADC(obj);
->> +    uint32_t vref = s->vref;
->> +
->> +    if (!visit_type_uint32(v, name, &vref, errp)) {
->> +        return;
->> +    }
->> +
->> +    s->vref = vref;
->> +}
+>>
+>>>
+>>>> -    for (i = 0; i < pmp_regions; i++) {
+>>>> -        pmp_update_rule_addr(env, i);
+>>>> +    if (tcg_enabled()) {
+>>>
+>>> or use it here; also restrict pmp_regions variable scope?
+>>
+>> Just moved pmp_regions.  Thanks,
+>>
+>> Daniel
+>>
+>>>
+>>> Anyhow:
+>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>>>
+>>>> +        for (i = 0; i < pmp_regions; i++) {
+>>>> +            pmp_update_rule_addr(env, i);
+>>>> +        }
+>>>> +        pmp_update_rule_nums(env);
+>>>>       }
+>>>> -    pmp_update_rule_nums(env);
+>>>>       return 0;
+>>>>   }
+>>>
+>>> Since you are working in multi-accelerators frontier, keep in
+>>> mind in the future we might have some targets migrating between
+>>> different accelerators 🤯 :)
+>>
 > 
-> In the old code, we say "I want a uint32 property", and we get
-> one. In the new code we have to have a lot of code here that's
-> manually calling sscanf and doing visitor pattern stuff.
-> Is there a way to say "give me a uint32 property" and have
-> the implementation be done in common for the new style ?
-> 
->>   1 file changed, 70 insertions(+), 7 deletions(-)
-> 
-> This diffstat makes me want to say we haven't got the
-> APIs for doing this right yet.
-
-Thanks for your feedback. Thinking about this more I've decided that 
-what we really need is direct object_class_property_add_*_ptr() 
-equivalents to the existing object_property_add_*_ptr() functions to 
-help developers easily convert object props to class props.
-
-I've just posted the initial series at 
-https://patchew.org/QEMU/20260703135512.3213964-1-mark.caveayland@nutanix.com/ 
-so I'll re-send this patch with a "Based-on" tag for this series to show 
-the difference in the conversion.
-
-
-ATB,
-
-Mark.
 
 
