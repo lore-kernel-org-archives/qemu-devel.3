@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0007EC43602
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 042A5C44500
 	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 08:02:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfYqK-0004Xa-2F; Fri, 03 Jul 2026 04:01:48 -0400
+	id 1wfYqA-0004UQ-Iq; Fri, 03 Jul 2026 04:01:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wfYqE-0004Vn-Qb
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 04:01:46 -0400
+ id 1wfYq0-0004Ra-NB
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 04:01:33 -0400
 Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wfYqC-0001iw-5M
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 04:01:42 -0400
+ id 1wfYpy-0001gX-R1
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 04:01:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1783065700; x=1814601700;
+ t=1783065687; x=1814601687;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=UUmDZnLxHb/740hRe2mHgGyprZ7ToOyz1L+j8UIFURc=;
- b=nmknWGk0YD9m0BFgOEGnUf848BaU+kpJyBViDgbVfjqdUGehJ7xjWMsK
- Ujkg/H2aCE9/Xd0qladBSrqVG0IylQQrtQGI9M21yQfWhZ0AS3uIxGU7M
- IDEnhIiWG7sOXoaNZzHObzM7f+rWY8MRqJ6brA8C+vaMT3eGko7sb/V0H
- IiVbwuvcyL039oxb5T7jefkTR8tnjXmflNYsBNxacUS0huz3a0sWAInA5
- xlKz9Gzf99LihjKWnzElHfnoo16ytm1jfsiEwJj8W/OdlZUcmL1ZzgL9L
- RZdXBQV62VfCi7sZFwavOZaN6GstDaaXwRbiPqgLzn4Urs5+F7Cl43yVg Q==;
-X-CSE-ConnectionGUID: +nGwWnMXQZOW14lE8JMlnA==
-X-CSE-MsgGUID: MRhNTzvMRX2Honxt9tnE+Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11835"; a="94464689"
-X-IronPort-AV: E=Sophos;i="6.25,145,1779174000"; d="scan'208";a="94464689"
+ bh=bYXimPDPjWx48lnFAG4DCzOY+K7yAnsmiKAMaq78rzw=;
+ b=ZBOvqPk6CR6mJXzhkJF1SWSUHmM0htlHESB5pLU8ARSTBQN5zDsUosm/
+ nj4+cSub7NqrLSJCokBU41wquNdxbLepqnJO+S+WnMJpU0U+6iHxTu90Q
+ fYpLD15t2UYqfty/fKstA+BnV6oc1gx/sPLkYadu9ces2vGmuzkDtZ2l2
+ SXUQntAeQQBX6TuE2GJrnqQyzQzmEzWZSDK5ZVunj9gPmGNcNPd1YvcF6
+ WH9QNfM+NVamDkFE9/HdGs60KinkvzA8SR613dl3eCq1pbjH2Fx9qg2nm
+ 7hysHNzMRJ8kcGSCngJYE36AtExZ/y1fTVvlTBazX9PLJhzCbOFjfoXTd Q==;
+X-CSE-ConnectionGUID: ij22QdCaRbiEsXh7dBDgAQ==
+X-CSE-MsgGUID: 5/yuup/mR4yNqmUxM64fBA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11835"; a="94464656"
+X-IronPort-AV: E=Sophos;i="6.25,145,1779174000"; d="scan'208";a="94464656"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2026 01:01:39 -0700
-X-CSE-ConnectionGUID: cVdB8W08T9mWFN/p0ip/6Q==
-X-CSE-MsgGUID: ZiBgp63WQ6CE1oBZpZoqAw==
+ 03 Jul 2026 01:01:26 -0700
+X-CSE-ConnectionGUID: 3Ox7USkoRkG/2oOsB9nnKA==
+X-CSE-MsgGUID: UfBClxU5QuqKcgL0QeNliw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,145,1779174000"; d="scan'208";a="277379660"
+X-IronPort-AV: E=Sophos;i="6.25,145,1779174000"; d="scan'208";a="277379553"
 Received: from junjie-desk-dev.bj.intel.com ([10.238.152.71])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2026 01:01:36 -0700
+ 03 Jul 2026 01:01:23 -0700
 From: Junjie Cao <junjie.cao@intel.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowangio@gmail.com>,
@@ -56,10 +56,10 @@ Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowangio@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Fengyuan Yu <15fengyuan@gmail.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>, junjie.cao@intel.com
-Subject: [PATCH v1 3/3] tests/qtest: add IOTLB invalidation test for Intel
- IOMMU
-Date: Fri,  3 Jul 2026 15:21:58 +0800
-Message-ID: <20260703072200.463082-4-junjie.cao@intel.com>
+Subject: [PATCH v1 1/3] tests/qtest/libqos: share Intel IOMMU test setup
+ helpers
+Date: Fri,  3 Jul 2026 15:21:56 +0800
+Message-ID: <20260703072200.463082-2-junjie.cao@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260703072200.463082-1-junjie.cao@intel.com>
 References: <20260703072200.463082-1-junjie.cao@intel.com>
@@ -89,422 +89,247 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nothing in tree exercises IOTLB invalidation for any emulated vIOMMU:
-the existing iommu-testdev tests only check one-shot translation, so a
-regression that failed to flush a stale IOTLB entry would go unnoticed.
+iommu-intel-test.c keeps the iommu-testdev PCI setup (save_fn(),
+setup_qtest_pci_device()) and the VT-d command-line / capability
+helpers (qvtd_iommu_args(), qvtd_check_caps()) as file-local statics.
+A second Intel IOMMU test would have to copy them, which defeats the
+purpose of the shared qos-intel-iommu module.
 
-Add a test that drives the queued-invalidation path end to end
-(vtd_process_inv_desc -> vtd_process_iotlb_desc ->
-vtd_iotlb_{global,domain,page}_invalidate).  For each
-{legacy, scalable-slt, scalable-flt} x {global, domain, page}
-combination it:
+Move them into qos-intel-iommu so sibling tests can reuse them:
+save_fn() becomes qvtd_save_pci_dev() and setup_qtest_pci_device()
+becomes qvtd_setup_qtest_pci_device(); qvtd_iommu_args() and
+qvtd_check_caps() keep their names.
 
-  1. maps IOVA -> PA_A and DMAs, populating the IOTLB;
-  2. rewrites the leaf PTE to PA_B *without* invalidating and DMAs
-     again, asserting the stale entry is still served (MISMATCH);
-  3. submits the IOTLB invalidation plus a wait descriptor, then DMAs
-     and asserts the fresh page walk now reaches PA_B.
-
-Step 2 makes the flush observable: it fails loudly if the IOTLB
-is not actually caching the first translation.
-
-For scalable first-level (flt), QEMU keeps first- and second-level
-mappings in a single IOTLB that the legacy VTD_INV_DESC_IOTLB descriptor
-flushes for every level, so the test uses that descriptor across all
-modes.  PASID-selective invalidation (VTD_INV_DESC_PIOTLB, vtd_piotlb_*)
-is a separate path and is left for a follow-up.
-
-It also adds three page-selective cases that cache a second page and check
-its fate after invalidating the first: for second-level (legacy, scalable-slt)
-the second page survives, while for first-level (scalable-flt) QEMU flushes all
-first-stage entries of the domain, so it does not.  This distinguishes a
-page-selective flush from a domain-wide or global one.
+No functional change: iommu-intel-test now calls the public
+qvtd_setup_qtest_pci_device() instead of its file-local copy.
 
 Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 ---
- MAINTAINERS                        |   1 +
- tests/qtest/iommu-intel-inv-test.c | 346 +++++++++++++++++++++++++++++
- tests/qtest/meson.build            |   2 +-
- 3 files changed, 348 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/iommu-intel-inv-test.c
+ tests/qtest/iommu-intel-test.c       | 78 +---------------------------
+ tests/qtest/libqos/qos-intel-iommu.c | 77 +++++++++++++++++++++++++++
+ tests/qtest/libqos/qos-intel-iommu.h | 23 ++++++++
+ 3 files changed, 101 insertions(+), 77 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 97dcc78ded..906de6e39f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4103,6 +4103,7 @@ F: include/hw/i386/intel_iommu.h
- F: tests/functional/x86_64/test_intel_iommu.py
- F: tests/qtest/intel-iommu-test.c
- F: tests/qtest/iommu-intel-test.c
-+F: tests/qtest/iommu-intel-inv-test.c
+diff --git a/tests/qtest/iommu-intel-test.c b/tests/qtest/iommu-intel-test.c
+index 703bbfef73..c2744def6f 100644
+--- a/tests/qtest/iommu-intel-test.c
++++ b/tests/qtest/iommu-intel-test.c
+@@ -24,82 +24,6 @@ static uint64_t intel_iommu_expected_gpa(uint64_t iova)
+     return (QVTD_PT_VAL & VTD_PAGE_MASK_4K) + (iova & 0xfff);
+ }
  
- AMD-Vi Emulation
- M: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-diff --git a/tests/qtest/iommu-intel-inv-test.c b/tests/qtest/iommu-intel-inv-test.c
-new file mode 100644
-index 0000000000..1467eef647
---- /dev/null
-+++ b/tests/qtest/iommu-intel-inv-test.c
-@@ -0,0 +1,346 @@
-+/*
-+ * QTest for Intel IOMMU (VT-d) IOTLB invalidation via Invalidation Queue
-+ *
-+ * Validates that IOTLB invalidation descriptors submitted through the
-+ * queued invalidation interface correctly flush cached translations,
-+ * forcing the IOMMU to re-walk page tables on subsequent DMA.
-+ *
-+ * Copyright (c) 2026 Intel Corporation.
-+ *
-+ * Author: Junjie Cao <junjie.cao@intel.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "libqos/pci.h"
-+#include "libqos/pci-pc.h"
-+#include "hw/i386/intel_iommu_internal.h"
-+#include "hw/misc/iommu-testdev.h"
-+#include "libqos/qos-intel-iommu.h"
-+#include "libqos/qos-iommu-testdev.h"
-+
-+#define DMA_LEN                4
-+
-+/*
-+ * Second DMA target page, chosen to fall well outside any address used by
-+ * qos-intel-iommu's fixed structure layout.
-+ */
-+#define QVTD_PT_VAL_B          (QVTD_MEM_BASE + 0x00200000)
-+
-+/*
-+ * A second IOVA/target page for the page-selectivity test.  QVTD_IOVA_2 is
-+ * QVTD_IOVA + 4K: it shares the L4/L3/L2 walk built by
-+ * qvtd_build_translation() and differs only in the leaf (L1) slot, so mapping
-+ * it costs one extra leaf PTE.  QVTD_PT_VAL_2 is its distinct target page.
-+ */
-+#define QVTD_IOVA_2            (QVTD_IOVA + 0x1000)
-+#define QVTD_PT_VAL_2          (QVTD_MEM_BASE + 0x00300000)
-+
-+typedef enum {
-+    IOTLB_INV_GLOBAL,
-+    IOTLB_INV_DOMAIN,
-+    IOTLB_INV_PAGE,
-+} IOTLBInvGranularity;
-+
-+/*
-+ * Core invalidation test, parameterized by translation mode and
-+ * invalidation granularity.
-+ *
-+ * The iommu-testdev device performs DMA writes via the IOMMU (using the
-+ * IOVA) and verifies by reading back from the expected GPA directly.  If
-+ * the IOTLB is stale, the DMA write lands at the old PA while readback
-+ * uses the GPA we supply, causing a mismatch (ITD_DMA_ERR_MISMATCH).
-+ *
-+ * Test sequence:
-+ *   1. Setup translation: IOVA -> PA_A
-+ *   2. DMA(gpa=PA_A) -> success (IOTLB populates cache)
-+ *   3. Modify PTE: IOVA -> PA_B (no invalidation)
-+ *   4. DMA(gpa=PA_B) -> MISMATCH (stale IOTLB directs write to PA_A)
-+ *   5. Issue IOTLB invalidation + wait
-+ *   6. DMA(gpa=PA_B) -> success (cache flushed, fresh page walk)
-+ *
-+ * Phase 4 depends on QEMU's IOTLB caching the Phase 1 translation; if a
-+ * future change makes IOTLB caching lazy this assertion would no longer
-+ * exercise the stale-cache path.
-+ */
-+static void run_iotlb_inv_test(QVTDTransMode mode, IOTLBInvGranularity gran)
-+{
-+    QTestState *qts;
-+    QPCIBus *pcibus;
-+    QPCIDevice *dev;
-+    QPCIBar bar;
-+    uint32_t tail = 0;
-+    uint32_t result;
-+    uint64_t pa_a, pa_b;
-+
-+    if (!qtest_has_machine("q35")) {
-+        g_test_skip("q35 machine not available");
-+        return;
-+    }
-+
-+    qts = qtest_initf("-machine q35 -smp 1 -m 512 -net none "
-+                      "%s -device iommu-testdev",
-+                      qvtd_iommu_args(mode));
-+
-+    if (!qvtd_check_caps(qts, mode)) {
-+        qtest_quit(qts);
-+        return;
-+    }
-+
+-static void save_fn(QPCIDevice *dev, int devfn, void *data)
+-{
+-    QPCIDevice **pdev = (QPCIDevice **) data;
+-
+-    *pdev = dev;
+-}
+-
+-static QPCIDevice *setup_qtest_pci_device(QTestState *qts, QPCIBus **pcibus,
+-                                          QPCIBar *bar)
+-{
+-    QPCIDevice *dev = NULL;
+-
+-    *pcibus = qpci_new_pc(qts, NULL);
+-    g_assert(*pcibus != NULL);
+-
+-    qpci_device_foreach(*pcibus, IOMMU_TESTDEV_VENDOR_ID,
+-                        IOMMU_TESTDEV_DEVICE_ID, save_fn, &dev);
+-
+-    g_assert(dev);
+-    qpci_device_enable(dev);
+-    *bar = qpci_iomap(dev, 0, NULL);
+-    g_assert_false(bar->is_io);
+-
+-    return dev;
+-}
+-
+-static const char *qvtd_iommu_args(QVTDTransMode mode)
+-{
+-    switch (mode) {
+-    case QVTD_TM_SCALABLE_FLT:
+-        return "-device intel-iommu,scalable-mode=on,fsts=on ";
+-    case QVTD_TM_SCALABLE_PT:
+-    case QVTD_TM_SCALABLE_SLT:
+-        return "-device intel-iommu,scalable-mode=on ";
+-    default:
+-        return "-device intel-iommu ";
+-    }
+-}
+-
+-static bool qvtd_check_caps(QTestState *qts, QVTDTransMode mode)
+-{
+-    uint64_t ecap = qtest_readq(qts,
+-                                Q35_HOST_BRIDGE_IOMMU_ADDR + DMAR_ECAP_REG);
+-
+-    /* All scalable modes require SMTS */
+-    if (qvtd_is_scalable(mode) && !(ecap & VTD_ECAP_SMTS)) {
+-        g_test_skip("ECAP.SMTS not supported");
+-        return false;
+-    }
+-
+-    switch (mode) {
+-    case QVTD_TM_SCALABLE_PT:
+-        if (!(ecap & VTD_ECAP_PT)) {
+-            g_test_skip("ECAP.PT not supported");
+-            return false;
+-        }
+-        break;
+-    case QVTD_TM_SCALABLE_SLT:
+-        if (!(ecap & VTD_ECAP_SSTS)) {
+-            g_test_skip("ECAP.SSTS not supported");
+-            return false;
+-        }
+-        break;
+-    case QVTD_TM_SCALABLE_FLT:
+-        if (!(ecap & VTD_ECAP_FSTS)) {
+-            g_test_skip("ECAP.FSTS not supported");
+-            return false;
+-        }
+-        break;
+-    default:
+-        break;
+-    }
+-
+-    return true;
+-}
+-
+ static void run_intel_iommu_translation(const QVTDTestConfig *cfg)
+ {
+     QTestState *qts;
+@@ -124,7 +48,7 @@ static void run_intel_iommu_translation(const QVTDTestConfig *cfg)
+     }
+ 
+     /* Setup and configure IOMMU-testdev PCI device */
+-    dev = setup_qtest_pci_device(qts, &pcibus, &bar);
 +    dev = qvtd_setup_qtest_pci_device(qts, &pcibus, &bar);
+     g_assert(dev);
+ 
+     g_test_message("### Intel IOMMU translation mode=%d ###", cfg->trans_mode);
+diff --git a/tests/qtest/libqos/qos-intel-iommu.c b/tests/qtest/libqos/qos-intel-iommu.c
+index f8ca4c871b..4095ac0917 100644
+--- a/tests/qtest/libqos/qos-intel-iommu.c
++++ b/tests/qtest/libqos/qos-intel-iommu.c
+@@ -11,6 +11,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/i386/intel_iommu_internal.h"
+ #include "tests/qtest/libqos/pci.h"
++#include "tests/qtest/libqos/pci-pc.h"
+ #include "qos-iommu-testdev.h"
+ #include "qos-intel-iommu.h"
+ 
+@@ -452,3 +453,79 @@ void qvtd_run_translation_case(QTestState *qts, QPCIDevice *dev,
+         }
+     }
+ }
 +
-+    /*
-+     * The IOMMU translates an IOVA to a page base, then the page offset
-+     * from the IOVA is added.  So GPA = page_base + (IOVA & 0xfff).
-+     */
-+    pa_a = (QVTD_PT_VAL & VTD_PAGE_MASK_4K) + (QVTD_IOVA & 0xfff);
-+    pa_b = (QVTD_PT_VAL_B & VTD_PAGE_MASK_4K) + (QVTD_IOVA & 0xfff);
-+
-+    /* --- Phase 1: Setup and initial DMA (populates IOTLB) --- */
-+    qvtd_build_translation(qts, mode, dev->devfn);
-+    qvtd_program_regs(qts, Q35_HOST_BRIDGE_IOMMU_ADDR, mode);
-+
-+    qtest_memset(qts, pa_a, 0, DMA_LEN);
-+    qtest_memset(qts, pa_b, 0, DMA_LEN);
-+
-+    result = qos_iommu_testdev_trigger_dma(dev, bar, QVTD_IOVA, pa_a,
-+                                           DMA_LEN, 0);
-+    g_assert_cmpuint(result, ==, 0);
-+
-+    /* --- Phase 2: Modify PTE without invalidation -> stale IOTLB --- */
-+    qtest_writeq(qts, qvtd_leaf_pte_addr(QVTD_IOVA),
-+                 qvtd_make_leaf_pte(QVTD_PT_VAL_B & VTD_PAGE_MASK_4K, mode));
-+    qtest_memset(qts, pa_a, 0, DMA_LEN);
-+    qtest_memset(qts, pa_b, 0, DMA_LEN);
-+
-+    result = qos_iommu_testdev_trigger_dma(dev, bar, QVTD_IOVA, pa_b,
-+                                           DMA_LEN, 0);
-+    g_assert_cmpuint(result, ==, ITD_DMA_ERR_MISMATCH);
-+
-+    /* --- Phase 3: Invalidate IOTLB -> fresh page walk succeeds --- */
-+    switch (gran) {
-+    case IOTLB_INV_GLOBAL:
-+        tail = qvtd_submit_iotlb_global_inv(qts, Q35_HOST_BRIDGE_IOMMU_ADDR,
-+                                            tail);
-+        break;
-+    case IOTLB_INV_DOMAIN:
-+        tail = qvtd_submit_iotlb_domain_inv(qts, Q35_HOST_BRIDGE_IOMMU_ADDR,
-+                                            QVTD_DOMAIN_ID, tail);
-+        break;
-+    case IOTLB_INV_PAGE:
-+        tail = qvtd_submit_iotlb_page_inv(qts, Q35_HOST_BRIDGE_IOMMU_ADDR,
-+                                          QVTD_DOMAIN_ID, QVTD_IOVA, 0,
-+                                          tail);
-+        break;
++const char *qvtd_iommu_args(QVTDTransMode mode)
++{
++    switch (mode) {
++    case QVTD_TM_SCALABLE_FLT:
++        return "-device intel-iommu,scalable-mode=on,fsts=on ";
++    case QVTD_TM_SCALABLE_PT:
++    case QVTD_TM_SCALABLE_SLT:
++        return "-device intel-iommu,scalable-mode=on ";
++    default:
++        return "-device intel-iommu ";
 +    }
-+    tail = qvtd_submit_inv_wait_and_poll(qts, Q35_HOST_BRIDGE_IOMMU_ADDR,
-+                                         tail);
-+
-+    qtest_memset(qts, pa_a, 0, DMA_LEN);
-+    qtest_memset(qts, pa_b, 0, DMA_LEN);
-+
-+    result = qos_iommu_testdev_trigger_dma(dev, bar, QVTD_IOVA, pa_b,
-+                                           DMA_LEN, 0);
-+    g_assert_cmpuint(result, ==, 0);
-+
-+    g_free(dev);
-+    qpci_free_pc(pcibus);
-+    qtest_quit(qts);
 +}
 +
-+/*
-+ * Page-selectivity test: verify that a page-selective invalidation flushes
-+ * the named page and touches other cached pages only as far as the model
-+ * intends.  run_iotlb_inv_test() caches a single entry, so it cannot tell a
-+ * page-selective flush from a domain-wide or global one; this test caches two
-+ * pages in the same domain and checks the second one's fate.
-+ *
-+ * The expected fate of the second page depends on the translation level:
-+ *
-+ *   - second-level (legacy / scalable-slt): a page-selective descriptor
-+ *     evicts only the matching gfn, so IOVA_2 survives.
-+ *   - first-level (scalable-flt): QEMU invalidates all first-stage entries of
-+ *     the domain on a page-selective descriptor (vtd_hash_remove_by_page()
-+ *     returns true for any pgtt==FST entry of the domain, matching the VT-d
-+ *     spec for first-stage IOTLB invalidation), so IOVA_2 is flushed too.
-+ *
-+ * Method: map IOVA -> PA_A and IOVA_2 -> PA_A_2, DMA both to populate two
-+ * IOTLB entries, rewrite both leaf PTEs to PA_B* without invalidating, then
-+ * page-invalidate IOVA only.  IOVA always re-walks to PA_B.  For IOVA_2 we
-+ * verify the DMA against its *original* page PA_A_2: if the entry survived,
-+ * the stale cache still serves PA_A_2 (success); if it was flushed, the fresh
-+ * walk reaches PA_B_2 and mismatches PA_A_2.  So a survived entry gives
-+ * success and a flushed entry gives MISMATCH, and we assert whichever the
-+ * mode requires -- catching both an over-matching second-level flush and a
-+ * regression that stopped flushing first-stage entries domain-wide.
-+ */
-+static void run_page_selectivity_test(QVTDTransMode mode)
++bool qvtd_check_caps(QTestState *qts, QVTDTransMode mode)
 +{
-+    QTestState *qts;
-+    QPCIBus *pcibus;
-+    QPCIDevice *dev;
-+    QPCIBar bar;
-+    uint32_t tail = 0;
-+    uint32_t result;
-+    uint64_t pa_a, pa_b, pa_a2, pa_b2;
-+    bool fl_domain_wide = (mode == QVTD_TM_SCALABLE_FLT);
++    uint64_t ecap = qtest_readq(qts,
++                                Q35_HOST_BRIDGE_IOMMU_ADDR + DMAR_ECAP_REG);
 +
-+    if (!qtest_has_machine("q35")) {
-+        g_test_skip("q35 machine not available");
-+        return;
++    /* All scalable modes require SMTS */
++    if (qvtd_is_scalable(mode) && !(ecap & VTD_ECAP_SMTS)) {
++        g_test_skip("ECAP.SMTS not supported");
++        return false;
 +    }
 +
-+    qts = qtest_initf("-machine q35 -smp 1 -m 512 -net none "
-+                      "%s -device iommu-testdev",
-+                      qvtd_iommu_args(mode));
-+
-+    if (!qvtd_check_caps(qts, mode)) {
-+        qtest_quit(qts);
-+        return;
-+    }
-+
-+    dev = qvtd_setup_qtest_pci_device(qts, &pcibus, &bar);
-+
-+    pa_a = (QVTD_PT_VAL & VTD_PAGE_MASK_4K) + (QVTD_IOVA & 0xfff);
-+    pa_b = (QVTD_PT_VAL_B & VTD_PAGE_MASK_4K) + (QVTD_IOVA & 0xfff);
-+    pa_a2 = (QVTD_PT_VAL_2 & VTD_PAGE_MASK_4K) + (QVTD_IOVA_2 & 0xfff);
-+    pa_b2 = (QVTD_PT_VAL_B & VTD_PAGE_MASK_4K) + (QVTD_IOVA_2 & 0xfff);
-+
-+    /* --- Setup: IOVA -> PA_A (built by helper) and IOVA_2 -> PA_A_2 --- */
-+    qvtd_build_translation(qts, mode, dev->devfn);
-+    qtest_writeq(qts, qvtd_leaf_pte_addr(QVTD_IOVA_2),
-+                 qvtd_make_leaf_pte(QVTD_PT_VAL_2 & VTD_PAGE_MASK_4K, mode));
-+    qvtd_program_regs(qts, Q35_HOST_BRIDGE_IOMMU_ADDR, mode);
-+
-+    /* Populate both IOTLB entries. */
-+    qtest_memset(qts, pa_a, 0, DMA_LEN);
-+    qtest_memset(qts, pa_a2, 0, DMA_LEN);
-+    result = qos_iommu_testdev_trigger_dma(dev, bar, QVTD_IOVA, pa_a,
-+                                           DMA_LEN, 0);
-+    g_assert_cmpuint(result, ==, 0);
-+    result = qos_iommu_testdev_trigger_dma(dev, bar, QVTD_IOVA_2, pa_a2,
-+                                           DMA_LEN, 0);
-+    g_assert_cmpuint(result, ==, 0);
-+
-+    /* Rewrite both leaf PTEs to PA_B* without invalidating. */
-+    qtest_writeq(qts, qvtd_leaf_pte_addr(QVTD_IOVA),
-+                 qvtd_make_leaf_pte(QVTD_PT_VAL_B & VTD_PAGE_MASK_4K, mode));
-+    qtest_writeq(qts, qvtd_leaf_pte_addr(QVTD_IOVA_2),
-+                 qvtd_make_leaf_pte(QVTD_PT_VAL_B & VTD_PAGE_MASK_4K, mode));
-+
-+    /* Page-selective invalidation of IOVA only. */
-+    tail = qvtd_submit_iotlb_page_inv(qts, Q35_HOST_BRIDGE_IOMMU_ADDR,
-+                                      QVTD_DOMAIN_ID, QVTD_IOVA, 0, tail);
-+    tail = qvtd_submit_inv_wait_and_poll(qts, Q35_HOST_BRIDGE_IOMMU_ADDR,
-+                                         tail);
-+
-+    /* IOVA was flushed: fresh walk reaches PA_B. */
-+    qtest_memset(qts, pa_a, 0, DMA_LEN);
-+    qtest_memset(qts, pa_b, 0, DMA_LEN);
-+    result = qos_iommu_testdev_trigger_dma(dev, bar, QVTD_IOVA, pa_b,
-+                                           DMA_LEN, 0);
-+    g_assert_cmpuint(result, ==, 0);
-+
-+    /*
-+     * IOVA_2's fate, verified against its original page PA_A_2:
-+     *   - second-level: entry survives, stale cache serves PA_A_2 -> success;
-+     *   - first-level: entry was flushed domain-wide, fresh walk reaches
-+     *     PA_B_2 -> MISMATCH against PA_A_2.
-+     */
-+    qtest_memset(qts, pa_a2, 0, DMA_LEN);
-+    qtest_memset(qts, pa_b2, 0, DMA_LEN);
-+    result = qos_iommu_testdev_trigger_dma(dev, bar, QVTD_IOVA_2, pa_a2,
-+                                           DMA_LEN, 0);
-+    if (fl_domain_wide) {
-+        g_assert_cmpuint(result, ==, ITD_DMA_ERR_MISMATCH);
-+    } else {
-+        g_assert_cmpuint(result, ==, 0);
-+    }
-+
-+    g_free(dev);
-+    qpci_free_pc(pcibus);
-+    qtest_quit(qts);
-+}
-+
-+/*
-+ * scalable-flt is covered here even though, per the VT-d spec, first-level
-+ * mappings are invalidated with the PASID-based descriptor
-+ * (VTD_INV_DESC_PIOTLB).  QEMU keeps first- and second-level mappings in a
-+ * single IOTLB that the legacy VTD_INV_DESC_IOTLB descriptor flushes for
-+ * every level, so this test drives that descriptor across all modes.
-+ * PASID-selective (PIOTLB) invalidation is a separate path, left for a
-+ * follow-up.
-+ */
-+static const struct {
-+    const char *name;
-+    QVTDTransMode mode;
-+} trans_modes[] = {
-+    { "legacy",        QVTD_TM_LEGACY_TRANS },
-+    { "scalable-slt",  QVTD_TM_SCALABLE_SLT },
-+    { "scalable-flt",  QVTD_TM_SCALABLE_FLT },
-+};
-+
-+static const struct {
-+    const char *name;
-+    IOTLBInvGranularity gran;
-+} granularities[] = {
-+    { "global", IOTLB_INV_GLOBAL },
-+    { "domain", IOTLB_INV_DOMAIN },
-+    { "page",   IOTLB_INV_PAGE   },
-+};
-+
-+typedef struct {
-+    QVTDTransMode mode;
-+    IOTLBInvGranularity gran;
-+} TestCase;
-+
-+static void test_iotlb_inv(const void *opaque)
-+{
-+    const TestCase *tc = opaque;
-+
-+    run_iotlb_inv_test(tc->mode, tc->gran);
-+}
-+
-+static void test_page_selectivity(const void *opaque)
-+{
-+    const QVTDTransMode *mode = opaque;
-+
-+    run_page_selectivity_test(*mode);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    for (size_t m = 0; m < ARRAY_SIZE(trans_modes); m++) {
-+        for (size_t g = 0; g < ARRAY_SIZE(granularities); g++) {
-+            TestCase *tc = g_new(TestCase, 1);
-+            char *path;
-+
-+            tc->mode = trans_modes[m].mode;
-+            tc->gran = granularities[g].gran;
-+
-+            path = g_strdup_printf("/iommu-testdev/intel/iotlb-inv/%s-%s",
-+                                   granularities[g].name,
-+                                   trans_modes[m].name);
-+            qtest_add_data_func_full(path, tc, test_iotlb_inv, g_free);
-+            g_free(path);
++    switch (mode) {
++    case QVTD_TM_SCALABLE_PT:
++        if (!(ecap & VTD_ECAP_PT)) {
++            g_test_skip("ECAP.PT not supported");
++            return false;
 +        }
++        break;
++    case QVTD_TM_SCALABLE_SLT:
++        if (!(ecap & VTD_ECAP_SSTS)) {
++            g_test_skip("ECAP.SSTS not supported");
++            return false;
++        }
++        break;
++    case QVTD_TM_SCALABLE_FLT:
++        if (!(ecap & VTD_ECAP_FSTS)) {
++            g_test_skip("ECAP.FSTS not supported");
++            return false;
++        }
++        break;
++    default:
++        break;
 +    }
 +
-+    for (size_t m = 0; m < ARRAY_SIZE(trans_modes); m++) {
-+        QVTDTransMode *mode = g_new(QVTDTransMode, 1);
-+        char *path;
-+
-+        *mode = trans_modes[m].mode;
-+        path = g_strdup_printf(
-+            "/iommu-testdev/intel/iotlb-inv/page-selective/%s",
-+            trans_modes[m].name);
-+        qtest_add_data_func_full(path, mode, test_page_selectivity, g_free);
-+        g_free(path);
-+    }
-+
-+    return g_test_run();
++    return true;
 +}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 5e18b947c7..7da66802e1 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -99,7 +99,7 @@ qtests_i386 = \
-   (config_all_devices.has_key('CONFIG_AMD_IOMMU') ? ['amd-iommu-test'] : []) +             \
-   (config_all_devices.has_key('CONFIG_VTD') ? ['intel-iommu-test'] : []) +                 \
-   (config_all_devices.has_key('CONFIG_VTD') and
--   config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') ? ['iommu-intel-test'] : []) +      \
-+   config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') ? ['iommu-intel-test', 'iommu-intel-inv-test'] : []) +      \
-   (host_os != 'windows' and                                                                \
-    config_all_devices.has_key('CONFIG_ACPI_ERST') ? ['erst-test'] : []) +                   \
-   (config_all_devices.has_key('CONFIG_PCIE_PORT') and                                       \
++
++static void qvtd_save_pci_dev(QPCIDevice *dev, int devfn, void *data)
++{
++    QPCIDevice **pdev = (QPCIDevice **)data;
++
++    *pdev = dev;
++}
++
++QPCIDevice *qvtd_setup_qtest_pci_device(QTestState *qts, QPCIBus **pcibus,
++                                        QPCIBar *bar)
++{
++    QPCIDevice *dev = NULL;
++
++    *pcibus = qpci_new_pc(qts, NULL);
++    g_assert(*pcibus != NULL);
++
++    qpci_device_foreach(*pcibus, IOMMU_TESTDEV_VENDOR_ID,
++                        IOMMU_TESTDEV_DEVICE_ID, qvtd_save_pci_dev, &dev);
++
++    g_assert(dev);
++    qpci_device_enable(dev);
++    *bar = qpci_iomap(dev, 0, NULL);
++    g_assert_false(bar->is_io);
++
++    return dev;
++}
+diff --git a/tests/qtest/libqos/qos-intel-iommu.h b/tests/qtest/libqos/qos-intel-iommu.h
+index c6cacc5c3f..dd6f920464 100644
+--- a/tests/qtest/libqos/qos-intel-iommu.h
++++ b/tests/qtest/libqos/qos-intel-iommu.h
+@@ -182,4 +182,27 @@ void qvtd_run_translation_case(QTestState *qts, QPCIDevice *dev,
+                                QPCIBar bar, uint64_t iommu_base,
+                                const QVTDTestConfig *cfg);
+ 
++/*
++ * qvtd_iommu_args - Build the -device intel-iommu command-line fragment
++ *                   for the requested translation mode.
++ */
++const char *qvtd_iommu_args(QVTDTransMode mode);
++
++/*
++ * qvtd_check_caps - Check whether the running QEMU exposes the ECAP bits
++ *                   required by @mode.  Calls g_test_skip() and returns
++ *                   false when a required capability is missing.
++ */
++bool qvtd_check_caps(QTestState *qts, QVTDTransMode mode);
++
++/*
++ * qvtd_setup_qtest_pci_device - Create a QPCIBus, locate the iommu-testdev
++ *                               PCI function, enable it and map BAR0.
++ *
++ * On success, *pcibus and *bar are populated and the returned QPCIDevice
++ * must be released by the caller via g_free().
++ */
++QPCIDevice *qvtd_setup_qtest_pci_device(QTestState *qts, QPCIBus **pcibus,
++                                        QPCIBar *bar);
++
+ #endif /* QTEST_LIBQOS_INTEL_IOMMU_H */
 -- 
 2.43.0
 
