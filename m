@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EED8C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 17:01:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4513DC43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 17:01:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfhGB-0007ce-9G; Fri, 03 Jul 2026 13:01:03 -0400
+	id 1wfhGK-0007g6-VP; Fri, 03 Jul 2026 13:01:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wfhG7-0007cH-6X; Fri, 03 Jul 2026 13:00:59 -0400
+ id 1wfhGE-0007eZ-SE; Fri, 03 Jul 2026 13:01:08 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wfhG4-00030H-Pa; Fri, 03 Jul 2026 13:00:58 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1wfhGC-00032X-EE; Fri, 03 Jul 2026 13:01:06 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 663GIq5H3236660; Fri, 3 Jul 2026 17:00:52 GMT
+ 663GJCij3218123; Fri, 3 Jul 2026 17:01:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Fmu1qimShXKzAQkP0
- 6WB4AJ1WsO9gbtjFMVWt9TVSUk=; b=iPIJYlo3sAKBfyrxLPx6H+POH3SNtEW78
- lnMWMfPvR+PeM/fdY0FyFspy8Ur1to08nHGXC7P3IerKrGusd1quv55o/8lLqJrF
- +BHZw3hClvtrU9rRWUz+o+pHvN6l/6hP0XzbrEeMjCshiAWqyIvgOuT3Ft3eL7QW
- 37f5o3jmN1KlPk5qF8qSYk+469fUevTNZL7Ie7s/ghHSRVxQOV/l6z++/vKOsR8D
- AN2WgVqWqs5WT7+llkBYJQcFTRNzTHTpkFcqVh4KohSkDa7sS8suCxJIXURJX49T
- 3sGEFGA+PMr3X5n/epDywHpcbZ6yOAm3ua9z//P35rMSrkFWyC+Og==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26rffmdf-1
+ :mime-version:references:subject:to; s=pp1; bh=c4iH93wBW1NvzUVt5
+ L7Do94rqjQ67AL441bLHt0Hh7E=; b=AZh29pc8ASyBcBP+F9pz/LGsS8nyLgjmB
+ 48edY7IH/+JFao7R7l/LW5tEiiO5szBg1WgLE3S7RHOlGqCT//Q/SU0OZvKW1YM2
+ ykaIO3DJOyeNhaU9IfeTjPdtzyWY87bksC8jR50ennOwfH2zzPMX/hUhWvPgVRym
+ jgOjEhRMOQq43OHLCWyV3/BiR61XUHgCtHvzLxXI9kJyRM3zNCI1UFQvoynpQwy9
+ bBhGUwTxZDFM/4IWi/bulkZNIq2uDmiFR+qNB3qTaHVfYtPl0lvpEdxSMZgMxbJB
+ ggr9BBSOYgNBpSG8VRRQIHIFi+Ed8medpTA7bermqbb/h22btxtlg==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26mk7rps-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 17:00:52 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663GnaMo019640;
- Fri, 3 Jul 2026 17:00:51 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruqsy09-1
+ Fri, 03 Jul 2026 17:01:01 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663Gncgt025854;
+ Fri, 3 Jul 2026 17:01:00 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2sukhqpu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jul 2026 17:00:51 +0000 (GMT)
+ Fri, 03 Jul 2026 17:01:00 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 663H0oQj066076
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 663H0x0Q4194874
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 3 Jul 2026 17:00:50 GMT
+ Fri, 3 Jul 2026 17:00:59 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F12905805D;
- Fri,  3 Jul 2026 17:00:49 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 560E45805A;
+ Fri,  3 Jul 2026 17:00:59 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 226995805A;
- Fri,  3 Jul 2026 17:00:47 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 531EB58054;
+ Fri,  3 Jul 2026 17:00:56 +0000 (GMT)
 Received: from fedora-workstation.lan (unknown [9.61.75.28])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  3 Jul 2026 17:00:46 +0000 (GMT)
+ Fri,  3 Jul 2026 17:00:56 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
@@ -66,38 +66,38 @@ Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
  alifm@linux.ibm.com, brueckner@linux.ibm.com,
  pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-Subject: [PATCH v14 04/33] hw/s390x/ipl: Create certificate store
-Date: Fri,  3 Jul 2026 13:00:01 -0400
-Message-ID: <20260703170032.1893204-5-zycai@linux.ibm.com>
+Subject: [PATCH v14 07/33] s390x/diag: Implement DIAG 320 subcode 1
+Date: Fri,  3 Jul 2026 13:00:04 -0400
+Message-ID: <20260703170032.1893204-8-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260703170032.1893204-1-zycai@linux.ibm.com>
 References: <20260703170032.1893204-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a47eac4 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfXxzz3kIVMbnSQ
+ Hh8CR0oTkGbxIepkdtOODKFO1a70R+xU8yCFLhiFrMqNATdDk8jjcuAVaFRq09pcLMbMaKMnfSC
+ bbU0Ll8lIm21hR0ZWSuy4qUUqCxfP8ICmn4Hdc7I8RNnzRfLRjUODwrtTc6z9pqkg+wPEP3E1cC
+ ECexLmAgM0KA4dgS2BJ2s+o7Ib2cAfwBmocMdr+VyhTMJM1jNSMyMbErvbyDJOB/+pjVxvdg5yE
+ x+z/fR3vylejo7d5nXpC/JWIEFTYDlUflXtNZoleXlOild+zVBkC21VSXOqbfWPWseudaxfUsvr
+ F0YDUhR0g3xTwB9CG6ds+P/IFg9bkFfQnyA6riwpdcQsBZfjPF1NhNBN/RYdnB9+Prx9NmICGZv
+ XIWwWhYF1C4lbyGk1XjU1INu8TAxZESQlxyPkGkxd3pVKzR9vaQ5iGm5ndqa3cFXg+k46c+2UNH
+ DanLsRNxvhqM9+Cb4vQ==
+X-Proofpoint-GUID: Mzx1xfoUyfGYmPFQMf-aIX0UDVe64snl
+X-Authority-Analysis: v=2.4 cv=Z8bc2nRA c=1 sm=1 tr=0 ts=6a47eacd cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=U0tahsH2YktMir8Gk2YA:9
-X-Proofpoint-ORIG-GUID: aUojIjjdWOm7s8Qy4PN5BhJQnysaji53
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX6zwofUSbm7dV
- P+eaKNhNW2WzxS1PoGThzYH9Vlr930DDdug3O3xRkvfbUb7C0L6t1oAI+GuWIF48RCBGIuTrPwV
- sAc9K/95oCcP9jElSxCg+1quQBOx4y2tm7jJXd+PKYRZDEiswEG/D5vjzZFEk7++d3Yzqt+38GC
- wAu+Z7RbGyJWZC8p/IwUZMd28cfJYQmMAxu4vfurVzPS9EtFOmSA6SglQ4biqg/M9ln2o3xef3i
- SrP0IYDut6l2STytVtm8JXBdgxxJazgy7kKODXt6K/tgatRV2vq1dxEBWEUsGe6LFPIc+qmqKyB
- AW0CfXzI29ojQG4uNKsMYRayK2MFvRoZ3jYmqNSbjUd7Cy447ZAirz0lEVeoROhnLvsN52MHXZH
- HljoWVptuSA8pA56+n2Ip5of8dPcX24tMycDzlP8yH8nJ8rBpEj9dUjuIEvVxqIyFX3zmC+J1uD
- 5NvCUGC3yIyGJ8T5RQQ==
-X-Proofpoint-GUID: aUojIjjdWOm7s8Qy4PN5BhJQnysaji53
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX55SluAqVEU+A
- xvbYZax1DCnhEFfIjC6yctwgaaKnLyX2KMdK5kCI/AAFtOpaysKWRTWOIqv7avelSbOIoJQRMxR
- UtkRzkwT+wnLjeNRHYZQGBxQUzNQavs=
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=MguaJt8dR91BFOVN_IAA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NyBTYWx0ZWRfX3koCEfF2zJ1V
+ HD3CdqwHQyMjShVu1NKcnzPnckc3pV1p0X4Z5nchLase13fzgdeGF4zMkPF2bVEcprUTVDadkZI
+ lTG/WTOyMmPGdok46NqsheMulRY7wKE=
+X-Proofpoint-ORIG-GUID: Mzx1xfoUyfGYmPFQMf-aIX0UDVe64snl
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_03,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
- spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
+ clxscore=1015 adultscore=0 spamscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030167
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
@@ -124,446 +124,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create a certificate store for boot certificates used for secure IPL.
+DIAG 320 subcode 1 provides information needed to determine
+the amount of storage to store one or more certificates from the
+certificate store.
 
-Load certificates from the `boot-certs` parameter of s390-ccw-virtio
-machine type option into the cert store.
+Upon successful completion, this subcode returns information of the current
+cert store, such as the number of certificates stored and allowed in the cert
+store, amount of space may need to be allocate to store a certificate,
+etc for verification-certificate blocks (VCBs).
 
-Currently, only X.509 certificates in PEM format are supported, as the
-QEMU command line accepts certificates in PEM format only.
+The subcode value is denoted by setting the left-most bit
+of an 8-byte field.
 
-The raw Base64 data is stored, as well as the certificate's size.  The
-binary (DER) size is stored as well, which may later be utilized for
-secure boot (signature verification).
+The verification-certificate-storage-size block (VCSSB) contains
+the output data when the operation completes successfully. A VCSSB
+length of 4 indicates that no certificate are available in the cert
+store.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 ---
- docs/specs/index.rst            |   1 +
- docs/specs/s390x-secure-ipl.rst |  20 +++
- hw/s390x/cert-store.c           | 238 ++++++++++++++++++++++++++++++++
- hw/s390x/cert-store.h           |  39 ++++++
- hw/s390x/ipl.c                  |  10 ++
- hw/s390x/ipl.h                  |   3 +
- hw/s390x/meson.build            |   1 +
- include/hw/s390x/ipl/qipl.h     |   2 +
- 8 files changed, 314 insertions(+)
- create mode 100644 docs/specs/s390x-secure-ipl.rst
- create mode 100644 hw/s390x/cert-store.c
- create mode 100644 hw/s390x/cert-store.h
+ docs/specs/s390x-secure-ipl.rst | 12 +++++++
+ hw/s390x/cert-store.h           |  3 +-
+ include/hw/s390x/ipl/diag320.h  | 57 ++++++++++++++++++++++++++++++
+ target/s390x/diag.c             | 61 ++++++++++++++++++++++++++++++++-
+ 4 files changed, 130 insertions(+), 3 deletions(-)
 
-diff --git a/docs/specs/index.rst b/docs/specs/index.rst
-index b7909a108a..76d439782c 100644
---- a/docs/specs/index.rst
-+++ b/docs/specs/index.rst
-@@ -40,3 +40,4 @@ guest hardware that is specific to QEMU.
-    riscv-aia
-    aspeed-intc
-    iommu-testdev
-+   s390x-secure-ipl
 diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-new file mode 100644
-index 0000000000..d7c0d4eaac
---- /dev/null
+index 331d793008..d5d4c3a24d 100644
+--- a/docs/specs/s390x-secure-ipl.rst
 +++ b/docs/specs/s390x-secure-ipl.rst
-@@ -0,0 +1,20 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
+@@ -30,3 +30,15 @@ Subcode 0 - query installed subcodes
+     Returns a 256-bit installed subcodes mask (ISM) stored in the installed
+     subcodes block (ISB). This mask indicates which subcodes are currently
+     installed and available for use.
 +
-+s390 Certificate Store and Functions
-+------------------------------------
++Subcode 1 - query verification certificate storage information
++    Provides the information required to determine the amount of memory needed
++    to store one or more verification-certificates (VCs) from the certificate
++    store (CS).
 +
-+s390 Certificate Store
-+^^^^^^^^^^^^^^^^^^^^^^
++    Upon successful completion, this subcode returns various storage size values
++    for verification-certificate blocks (VCBs).
 +
-+A certificate store is implemented for s390-ccw guests to retain within
-+memory all certificates provided by the user via the command-line, which
-+are expected to be stored somewhere on the host's file system. The store
-+will keep track of the number of certificates, their respective size,
-+and a summation of the sizes.
-+
-+Each certificate is stroed in an S390IPLCertificate struct, which has a
-+name (converted to EBCDIC), size fields of PEM and DER data, and the raw
-+PEM Base64 data.
-+
-+Note: A maximum of 64 certificates are allowed to be stored in the certificate
-+store.
-diff --git a/hw/s390x/cert-store.c b/hw/s390x/cert-store.c
-new file mode 100644
-index 0000000000..aa2c1259eb
---- /dev/null
-+++ b/hw/s390x/cert-store.c
-@@ -0,0 +1,238 @@
-+/*
-+ * S390 certificate store implementation
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "cert-store.h"
-+#include "qapi/error.h"
-+#include "qemu/error-report.h"
-+#include "qemu/option.h"
-+#include "qemu/config-file.h"
-+#include "hw/s390x/ebcdic.h"
-+#include "hw/s390x/s390-virtio-ccw.h"
-+#include "qemu/cutils.h"
-+#include "crypto/x509-utils.h"
-+#include "qapi/qapi-types-machine-s390x.h"
-+
-+static BootCertificatesList *s390_get_boot_certs(void)
-+{
-+    return S390_CCW_MACHINE(qdev_get_machine())->boot_certs;
-+}
-+
-+static S390IPLCertificate *init_cert(char *path, Error **errp)
-+{
-+    int rc;
-+    size_t size;
-+    size_t der_len;
-+    char name[CERT_NAME_MAX_LEN];
-+    g_autofree char *buf = NULL;
-+    g_autofree gchar *filename = NULL;
-+    S390IPLCertificate *cert = NULL;
-+    g_autofree uint8_t *cert_der = NULL;
-+    Error *local_err = NULL;
-+
-+    filename = g_path_get_basename(path);
-+
-+    if (!g_file_get_contents(path, &buf, &size, NULL)) {
-+        error_setg(errp, "Failed to load certificate: %s", path);
-+        return NULL;
-+    }
-+
-+    rc = qcrypto_x509_convert_cert_der((uint8_t *)buf, size,
-+                                       &cert_der, &der_len, &local_err);
-+    if (rc != 0) {
-+        error_propagate_prepend(errp, local_err,
-+                                "Failed to initialize certificate: %s: ", path);
-+        return NULL;
-+    }
-+
-+    cert = g_new0(S390IPLCertificate, 1);
-+    cert->size = size;
-+    /*
-+     * Store DER length only - reused for size calculation.
-+     * cert_der is discarded because DER certificate data will be used once
-+     * and can be regenerated from cert->raw.
-+     */
-+    cert->der_size = der_len;
-+    /* store raw pointer - ownership transfers to cert */
-+    cert->raw = (uint8_t *)g_steal_pointer(&buf);
-+
-+    /*
-+     * Left justified certificate name with padding on the right with blanks.
-+     * Convert certificate name to EBCDIC.
-+     */
-+    strpadcpy(name, CERT_NAME_MAX_LEN, filename, ' ');
-+    ebcdic_put(cert->name, name, CERT_NAME_MAX_LEN);
-+
-+    return cert;
-+}
-+
-+static int update_cert_store(S390IPLCertificateStore *cert_store,
-+                             S390IPLCertificate *cert)
-+{
-+    size_t data_buf_size;
-+    size_t keyid_buf_size;
-+    size_t hash_buf_size;
-+    size_t cert_buf_size;
-+
-+    /* length field is word aligned for later DIAG use */
-+    keyid_buf_size = ROUND_UP(CERT_KEY_ID_LEN, 4);
-+    hash_buf_size = ROUND_UP(CERT_HASH_LEN, 4);
-+    cert_buf_size = ROUND_UP(cert->der_size, 4);
-+    data_buf_size = keyid_buf_size + hash_buf_size + cert_buf_size;
-+
-+    if (cert_store->largest_cert_size < data_buf_size) {
-+        cert_store->largest_cert_size = data_buf_size;
-+    }
-+
-+    if (cert_store->count >= MAX_CERTIFICATES) {
-+        error_report("Cert store is full");
-+        return -1;
-+    }
-+
-+    cert_store->certs[cert_store->count] = *cert;
-+    cert_store->total_bytes += data_buf_size;
-+    cert_store->count++;
-+
-+    return 0;
-+}
-+
-+static GPtrArray *get_cert_paths(Error **errp)
-+{
-+    struct stat st;
-+    BootCertificatesList *path_list = NULL;
-+    BootCertificatesList *list = NULL;
-+    gchar *cert_path;
-+    GDir *dir = NULL;
-+    const gchar *filename;
-+    bool is_empty;
-+    g_autoptr(GError) err = NULL;
-+    g_autoptr(GPtrArray) cert_path_builder = g_ptr_array_new_full(0, g_free);
-+
-+    path_list = s390_get_boot_certs();
-+
-+    for (list = path_list; list; list = list->next) {
-+        cert_path = list->value->path;
-+
-+        if (g_strcmp0(cert_path, "") == 0) {
-+            error_setg(errp, "Empty path in certificate path list is not allowed");
-+            goto fail;
-+        }
-+
-+        if (stat(cert_path, &st) != 0) {
-+            error_setg(errp, "Failed to stat path '%s': %s",
-+                       cert_path, g_strerror(errno));
-+            goto fail;
-+        }
-+
-+        if (S_ISREG(st.st_mode)) {
-+            if (!g_str_has_suffix(cert_path, ".pem")) {
-+                error_setg(errp, "Certificate file '%s' must have a .pem extension",
-+                           cert_path);
-+                goto fail;
-+            }
-+
-+            g_ptr_array_add(cert_path_builder, g_strdup(cert_path));
-+        } else if (S_ISDIR(st.st_mode)) {
-+            dir = g_dir_open(cert_path, 0, &err);
-+            if (dir == NULL) {
-+                error_setg(errp, "Failed to open directory '%s': %s",
-+                           cert_path, err->message);
-+
-+                goto fail;
-+            }
-+
-+            is_empty = true;
-+            while ((filename = g_dir_read_name(dir))) {
-+                is_empty = false;
-+
-+                if (g_str_has_suffix(filename, ".pem")) {
-+                    g_ptr_array_add(cert_path_builder,
-+                                    g_build_filename(cert_path, filename, NULL));
-+                } else {
-+                    warn_report("skipping '%s': not a .pem file", filename);
-+                }
-+            }
-+
-+            if (is_empty) {
-+                warn_report("'%s' directory is empty", cert_path);
-+            }
-+
-+            g_dir_close(dir);
-+        } else {
-+            error_setg(errp, "Path '%s' is neither a file nor a directory", cert_path);
-+            goto fail;
-+        }
-+    }
-+
-+    qapi_free_BootCertificatesList(path_list);
-+    return g_steal_pointer(&cert_path_builder);
-+
-+fail:
-+    qapi_free_BootCertificatesList(path_list);
-+    return NULL;
-+}
-+
-+static void s390_ipl_destroy_cert_store(S390IPLCertificateStore *cert_store)
-+{
-+    for (int i = 0; i < cert_store->count; i++) {
-+        g_free(cert_store->certs[i].raw);
-+    }
-+    memset(cert_store, 0, sizeof(*cert_store));
-+}
-+
-+void s390_ipl_create_cert_store(S390IPLCertificateStore *cert_store)
-+{
-+    GPtrArray *cert_path_builder;
-+    Error *err = NULL;
-+
-+    /* If cert store is already populated, then no work to do */
-+    if (cert_store->count) {
-+        return;
-+    }
-+
-+    cert_path_builder = get_cert_paths(&err);
-+    if (cert_path_builder == NULL) {
-+        error_report_err(err);
-+        exit(1);
-+    }
-+
-+    if (cert_path_builder->len == 0) {
-+        g_ptr_array_free(cert_path_builder, TRUE);
-+        return;
-+    }
-+
-+    if (cert_path_builder->len > MAX_CERTIFICATES) {
-+        error_report("Cert store exceeds maximum of %d certificates", MAX_CERTIFICATES);
-+        g_ptr_array_free(cert_path_builder, TRUE);
-+        exit(1);
-+    }
-+
-+    cert_store->largest_cert_size = 0;
-+    cert_store->total_bytes = 0;
-+
-+    for (int i = 0; i < cert_path_builder->len; i++) {
-+        g_autofree S390IPLCertificate *cert =
-+                    init_cert((char *) cert_path_builder->pdata[i],
-+                              &err);
-+        if (!cert) {
-+            error_report_err(err);
-+            g_ptr_array_free(cert_path_builder, TRUE);
-+            s390_ipl_destroy_cert_store(cert_store);
-+            exit(1);
-+        }
-+
-+        if (update_cert_store(cert_store, cert)) {
-+            g_ptr_array_free(cert_path_builder, TRUE);
-+            s390_ipl_destroy_cert_store(cert_store);
-+            exit(1);
-+        }
-+    }
-+
-+    g_ptr_array_free(cert_path_builder, TRUE);
-+}
++    The output is returned in the verification-certificate-storage-size block
++    (VCSSB). A VCSSB length of 4 indicates that no certificates are available
++    in the CS.
 diff --git a/hw/s390x/cert-store.h b/hw/s390x/cert-store.h
-new file mode 100644
-index 0000000000..7fc9503cb9
---- /dev/null
+index 7fc9503cb9..6f5ee63177 100644
+--- a/hw/s390x/cert-store.h
 +++ b/hw/s390x/cert-store.h
-@@ -0,0 +1,39 @@
-+/*
-+ * S390 certificate store
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+@@ -11,10 +11,9 @@
+ #define HW_S390_CERT_STORE_H
+ 
+ #include "hw/s390x/ipl/qipl.h"
++#include "hw/s390x/ipl/diag320.h"
+ #include "crypto/x509-utils.h"
+ 
+-#define CERT_NAME_MAX_LEN  64
+-
+ #define CERT_KEY_ID_LEN    QCRYPTO_HASH_DIGEST_LEN_SHA256
+ #define CERT_HASH_LEN      QCRYPTO_HASH_DIGEST_LEN_SHA256
+ 
+diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
+index aa04b699c6..d37d8eaa86 100644
+--- a/include/hw/s390x/ipl/diag320.h
++++ b/include/hw/s390x/ipl/diag320.h
+@@ -11,10 +11,67 @@
+ #define S390X_DIAG320_H
+ 
+ #define DIAG_320_SUBC_QUERY_ISM     0
++#define DIAG_320_SUBC_QUERY_VCSI    1
+ 
+ #define DIAG_320_RC_OK              0x0001
+ #define DIAG_320_RC_NOT_SUPPORTED   0x0102
++#define DIAG_320_RC_INVAL_VCSSB_LEN 0x0202
+ 
+ #define DIAG_320_ISM_QUERY_SUBCODES 0x80000000
++#define DIAG_320_ISM_QUERY_VCSI     0x40000000
 +
-+#ifndef HW_S390_CERT_STORE_H
-+#define HW_S390_CERT_STORE_H
-+
-+#include "hw/s390x/ipl/qipl.h"
-+#include "crypto/x509-utils.h"
++#define VCSSB_NO_VC     4
++#define VCSSB_LEN_VALID   128
 +
 +#define CERT_NAME_MAX_LEN  64
 +
-+#define CERT_KEY_ID_LEN    QCRYPTO_HASH_DIGEST_LEN_SHA256
-+#define CERT_HASH_LEN      QCRYPTO_HASH_DIGEST_LEN_SHA256
++struct VCStorageSizeBlock {
++    uint32_t length;
++    uint8_t reserved0[3];
++    uint8_t version;
++    uint32_t reserved1[6];
++    uint16_t total_vc_ct;
++    uint16_t max_vc_ct;
++    uint32_t reserved3[11];
++    uint32_t max_single_vcb_len;
++    uint32_t total_vcb_len;
++    uint32_t reserved4[10];
++};
++typedef struct VCStorageSizeBlock VCStorageSizeBlock;
 +
-+struct S390IPLCertificate {
++struct VCEntryHeader {
++    uint32_t len;
++    uint8_t flags;
++    uint8_t key_type;
++    uint16_t cert_idx;
 +    uint8_t name[CERT_NAME_MAX_LEN];
-+    size_t  size;
-+    size_t  der_size;
-+    uint8_t *raw;
++    uint8_t format;
++    uint8_t reserved0;
++    uint16_t keyid_len;
++    uint8_t reserved1;
++    uint8_t hash_type;
++    uint16_t hash_len;
++    uint32_t reserved2;
++    uint32_t cert_len;
++    uint32_t reserved3[2];
++    uint16_t hash_offset;
++    uint16_t cert_offset;
++    uint32_t reserved4[7];
 +};
-+typedef struct S390IPLCertificate S390IPLCertificate;
++typedef struct VCEntryHeader VCEntryHeader;
 +
-+struct S390IPLCertificateStore {
-+    uint16_t count;
-+    size_t   largest_cert_size;
-+    size_t   total_bytes;
-+    S390IPLCertificate certs[MAX_CERTIFICATES];
++struct VCBlockHeader {
++    uint32_t in_len;
++    uint32_t reserved0;
++    uint16_t first_vc_index;
++    uint16_t last_vc_index;
++    uint32_t reserved1[5];
++    uint32_t out_len;
++    uint8_t reserved2[4];
++    uint16_t stored_ct;
++    uint16_t remain_ct;
++    uint32_t reserved3[5];
 +};
-+typedef struct S390IPLCertificateStore S390IPLCertificateStore;
-+
-+void s390_ipl_create_cert_store(S390IPLCertificateStore *cert_store);
-+
-+#endif
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index 4cca21c621..09c24203c7 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -38,6 +38,7 @@
- #include "qemu/option.h"
- #include "qemu/ctype.h"
- #include "standard-headers/linux/virtio_ids.h"
-+#include "cert-store.h"
++typedef struct VCBlockHeader VCBlockHeader;
  
- #define KERN_IMAGE_START                0x010000UL
- #define LINUX_MAGIC_ADDR                0x010008UL
-@@ -453,6 +454,13 @@ void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp)
+ #endif
+diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+index 9f98e4b677..228956ab13 100644
+--- a/target/s390x/diag.c
++++ b/target/s390x/diag.c
+@@ -205,11 +205,52 @@ out:
      }
  }
  
-+S390IPLCertificateStore *s390_ipl_get_certificate_store(void)
++static int handle_diag320_query_vcsi(S390CPU *cpu, uint64_t addr, uint64_t r1,
++                                     uintptr_t ra, S390IPLCertificateStore *cs)
 +{
-+    S390IPLState *ipl = get_ipl_device();
++    g_autofree VCStorageSizeBlock *vcssb = NULL;
 +
-+    return &ipl->cert_store;
++    vcssb = g_new0(VCStorageSizeBlock, 1);
++    if (s390_cpu_virt_mem_read(cpu, addr, r1, vcssb, sizeof(*vcssb))) {
++        s390_cpu_virt_mem_handle_exc(cpu, ra);
++        return -1;
++    }
++
++    if (be32_to_cpu(vcssb->length) != VCSSB_LEN_VALID) {
++        return DIAG_320_RC_INVAL_VCSSB_LEN;
++    }
++
++    if (!cs->count) {
++        vcssb->length = cpu_to_be32(VCSSB_NO_VC);
++    } else {
++        vcssb->version = 0;
++        vcssb->total_vc_ct = cpu_to_be16(cs->count);
++        vcssb->max_vc_ct = cpu_to_be16(MAX_CERTIFICATES);
++        vcssb->max_single_vcb_len = cpu_to_be32(sizeof(VCBlockHeader) +
++                                                sizeof(VCEntryHeader) +
++                                                cs->largest_cert_size);
++        vcssb->total_vcb_len = cpu_to_be32(sizeof(VCBlockHeader) +
++                                           cs->count * sizeof(VCEntryHeader) +
++                                           cs->total_bytes);
++    }
++
++    if (s390_cpu_virt_mem_write(cpu, addr, r1, vcssb, be32_to_cpu(vcssb->length))) {
++        s390_cpu_virt_mem_handle_exc(cpu, ra);
++        return -1;
++    }
++    return DIAG_320_RC_OK;
 +}
 +
- static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
++QEMU_BUILD_BUG_MSG(sizeof(VCStorageSizeBlock) != VCSSB_LEN_VALID,
++                   "size of VCStorageSizeBlock is wrong");
++
+ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
  {
-     CcwDevice *ccw_dev = NULL;
-@@ -767,6 +775,8 @@ void s390_ipl_prepare_cpu(S390CPU *cpu)
-     cpu->env.psw.addr = ipl->start_addr;
-     cpu->env.psw.mask = IPL_PSW_MASK;
+     S390CPU *cpu = env_archcpu(env);
++    S390IPLCertificateStore *cs = s390_ipl_get_certificate_store();
+     uint64_t subcode = env->regs[r3];
+     uint64_t addr = env->regs[r1];
++    int rc;
  
-+    s390_ipl_create_cert_store(&ipl->cert_store);
+     if (env->psw.mask & PSW_MASK_PSTATE) {
+         s390_program_interrupt(env, PGM_PRIVILEGED, ra);
+@@ -231,7 +272,8 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+          * but the current set of subcodes can fit within a single word
+          * for now.
+          */
+-        uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES);
++        uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES |
++                                         DIAG_320_ISM_QUERY_VCSI);
+ 
+         if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism_word0, sizeof(ism_word0))) {
+             s390_cpu_virt_mem_handle_exc(cpu, ra);
+@@ -240,6 +282,23 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+ 
+         env->regs[r1 + 1] = DIAG_320_RC_OK;
+         break;
++    case DIAG_320_SUBC_QUERY_VCSI:
++        if (addr & 0x7) {
++            s390_program_interrupt(env, PGM_SPECIFICATION, ra);
++            return;
++        }
 +
-     if (!ipl->kernel || ipl->iplb_valid) {
-         cpu->env.psw.addr = ipl->bios_start_addr;
-         if (!ipl->iplb_valid) {
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index fac30763df..f5a49a4431 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -13,6 +13,7 @@
- #ifndef HW_S390_IPL_H
- #define HW_S390_IPL_H
- 
-+#include "cert-store.h"
- #include "target/s390x/cpu.h"
- #include "exec/target_page.h"
- #include "system/address-spaces.h"
-@@ -35,6 +36,7 @@ int s390_ipl_pv_unpack(struct S390PVResponse *pv_resp);
- void s390_ipl_prepare_cpu(S390CPU *cpu);
- IplParameterBlock *s390_ipl_get_iplb(void);
- IplParameterBlock *s390_ipl_get_iplb_pv(void);
-+S390IPLCertificateStore *s390_ipl_get_certificate_store(void);
- 
- enum s390_reset {
-     /* default is a reset not triggered by a CPU e.g. issued by QMP */
-@@ -63,6 +65,7 @@ struct S390IPLState {
-     IplParameterBlock iplb;
-     IplParameterBlock iplb_pv;
-     QemuIplParameters qipl;
-+    S390IPLCertificateStore cert_store;
-     uint64_t start_addr;
-     uint64_t compat_start_addr;
-     uint64_t bios_start_addr;
-diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
-index 57cc2a6be3..6b39ad012f 100644
---- a/hw/s390x/meson.build
-+++ b/hw/s390x/meson.build
-@@ -17,6 +17,7 @@ s390x_ss.add(files(
-   'sclpcpu.c',
-   'sclpquiesce.c',
-   'tod.c',
-+  'cert-store.c',
- ))
- s390x_ss.add(when: 'CONFIG_KVM', if_true: files(
-   'tod-kvm.c',
-diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-index 8d3c83a80b..ed1a91182a 100644
---- a/include/hw/s390x/ipl/qipl.h
-+++ b/include/hw/s390x/ipl/qipl.h
-@@ -31,6 +31,8 @@ typedef enum S390IplType S390IplType;
- 
- #define QEMU_DEFAULT_IPL S390_IPL_TYPE_CCW
- 
-+#define MAX_CERTIFICATES  64
++        if (!diag_parm_addr_valid(addr, sizeof(VCStorageSizeBlock), true)) {
++            s390_program_interrupt(env, PGM_ADDRESSING, ra);
++            return;
++        }
 +
- /*
-  * The QEMU IPL Parameters will be stored at absolute address
-  * 204 (0xcc) which means it is 32-bit word aligned but not
++        rc = handle_diag320_query_vcsi(cpu, addr, r1, ra, cs);
++        if (rc == -1) {
++            return;
++        }
++        env->regs[r1 + 1] = rc;
++        break;
+     default:
+         env->regs[r1 + 1] = DIAG_320_RC_NOT_SUPPORTED;
+         break;
 -- 
 2.54.0
 
