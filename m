@@ -4,149 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A81EC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 09:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CBE7C43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 09:24:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfa81-0002i3-CT; Fri, 03 Jul 2026 05:24:09 -0400
+	id 1wfa8B-0002jk-OO; Fri, 03 Jul 2026 05:24:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfa7z-0002hi-V5
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 05:24:07 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfa7x-0005ri-My
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 05:24:06 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6637Zv1e3410413
- for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 09:24:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- wfyTnT5jM0Dfotee9N7GYIMzJWZJb8180pLhqJQjo2Q=; b=bbm3qmkvNbJKZXFP
- iVI9+bxl07Ith4bgMIenja+bLYuY+sdAY32f+9ZpQHUSBYITHAODIElN5caZqgdU
- gE/SOXju79x/zyQiU7Ff4HbDj2jPt4FRmjiBH4MOxC74bKIxSorokMoK6n5Ki8Eo
- MszETB4PYb3eiq3xDc4AJvdlaOVzwgOGbm6eG0KTWB6H61wAdDYK7JFo/RReXbdx
- y9e2YQeAeDjOLARqc9k5z5cTNXmLv0ZMf6NZKMXLdbr8Ra4dxJLlSC98ckKuSDWo
- 80CyHPZVRktubIGJstuYGlCbFbgDuJrmWYONWn2+o379cj4gApER0FiPPlOANFJ3
- xz02Qw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f68u30d24-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 09:24:03 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-92e8004d60eso58933185a.1
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 02:24:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfa8B-0002jS-5n
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 05:24:19 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wfa89-0005tp-As
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 05:24:18 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-66628618509so498225d50.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 02:24:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783070656; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Ysaw1oDOPSGa/Rxc2Bvmqj3aC2H74ikgzVPn1TlfkaUIsSodYkyqyfiXyaYaKGQVgk
+ dsu58wfx4uzsI4ngNkLIqF7M6QVYJMtEcNk49F6lHyXH7+FKsoo8f2swPJf5EsS6BGia
+ /gjulZUUg8F9vfLQ9GuKR1Tv5wXXqvGX3zOmMMGEKfhjOHiazywaiUdWci7gNRvdu3V1
+ rrFrt02w3chukHIzuxMb8JAIIIT6cMjGIdAwaqxuWDUSVmCncGXMEwTMEWEmd5+7GesI
+ YZczcNBKWC1ZIHpqbJmlUt328QS94cbIAGrduKHsNLQlorP5UvaJBxZ4Vcx1E/uZu/Ho
+ SlWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=h44XTmF1r2IahND93ICYPnNi3Yr9s5Dy0jVRmDQ2BdI=;
+ fh=xXUECa7x/m9222uVR6doJyAafWA+wMRf05AlemDJ3Gc=;
+ b=IYDXkpdxEjDlPQbUzxJ1+HNTRAWYyilET2KKCJOU8KElhqPmRPacEOYidovmVTZuAK
+ Fbf1PO3Mj38El44diSW30Fq464tnkXnjs0X3GnyeQ+4UdBzBHQtvVRi+ZHJMYcQNPmG/
+ AjPCYp9g25Awr2jBvGC35IB2hXCPlZFH3MdfHfJzyJdZrlhPufQ5zTeBvmNrEGDj6EOr
+ cz8L6i6Tn1wFXT3p87yLkKIuqS/ftB0iWjuNbEm7WrRcyHwmspFIfHn1o+n0c1CfnQ5V
+ zslVJF4/LwyPJtQSECvFK1ZINuN72YnuE32n6Zr9MhgH9swbvFmvcknKmXmuH9aFN7gy
+ dUYw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783070642; x=1783675442; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=wfyTnT5jM0Dfotee9N7GYIMzJWZJb8180pLhqJQjo2Q=;
- b=Ip2h6k0sfK6fV1aRdYGp63fAcm0F29mND5jVHRL6XZUzhwGylY9EOGi8MhEPgTinRV
- h15BQJMShO5ebi67ahfM6TKnfMScTqOa5SjFaEbLx70kr4F84Hd6n+DyuA+1Bc6kzRFA
- udEUxL7OS7ep7sRyxb0qmL1C0isUkUk0Lcb1mVHReg26mz5ZpZ4nFkUGTRgkQKSrOe04
- WuSxTspOlQ7zxkrs0Up0+anJyYHr82+X7FImo5L1aNes1A38hwyyRtOhzp7qkaMmryZt
- pVdUIn1lcOT+tKzpRvw1i4gf6NNaEPr8JQS++vmB0nKF1wc9q4qUBfwI/aPSJWySuci4
- riCg==
+ d=linaro.org; s=google; t=1783070656; x=1783675456; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=h44XTmF1r2IahND93ICYPnNi3Yr9s5Dy0jVRmDQ2BdI=;
+ b=qeYrh9A/4eyEqnNo0TBC7C1LZxAOZJn/NjReBI5lWOIgdBg5H1Ijp1Dm60iviNreRA
+ xcrc/Gs6YxlhvwajQNMknuseFHCkC5U01SCA0Rj84bmOkEXRCLaLzKWqNYaGI7IyneVB
+ dg4R0YkN/tVFhD5AqDkvGUamWr4mcMX0g8Adxf2D1Qlnz03qBI4TbVfxCuazBH6Ks68z
+ iqRqjT6zplEHaHLihnENpy0lGUDTdF7PRzx2NznZ2VGBEvCDvXy89n0y14m5XbVE0fp8
+ L03q5cVga88hnWl29XrPbwDtaVPsJ6w76wf8Q/8LJlhQEJ8RDxTp8MqZiJfdfKql/1QH
+ soQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783070642; x=1783675442;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=wfyTnT5jM0Dfotee9N7GYIMzJWZJb8180pLhqJQjo2Q=;
- b=ZwbvVQDpGRcxNwWqQbHvrFZFRvln59QvZCfPMTWniKK7BNTOgScvWYhYHFIXxEVYhz
- MGRg+A7t2rD3ErqLunBHs1saaOAUuJJT5JhrrSxT6Sh+6E1mKLC0i+H8euhi+SuYYAcf
- cgDcQ6o/AksxWulhrUUi6hyFNPdTIxzArrduLDOBtJ3zEIKhFz4Ye8uCl/4ySAQq5srU
- m1pvCASvXaiv1Mig0fw1hWkW32g1BTlGwfbJxff5MDJudgcEnM0wY2/23WxXn0nhsoDW
- fEVtOFCc/50g1TvoIG7rzC/DlVx4t704NKY/D5y45wWi80X6TM5OKQx+HGBzBq5TaCkq
- qQPQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/xgrdRVJw/HQdgXAWPO7b+70n7TAJtFwYyZ3NxvwOhhANVyTfCc3JLtBywq0R6sBqjFSxt+/rxVwFI@nongnu.org
-X-Gm-Message-State: AOJu0YxO1HrErd+vUiV+Vh7fLWqjpXJtkK5nLBmoQyxUuVklZZ3aPBaZ
- WwK/aB4ggOZsgWgrf/0QKhCx13J9aK29JOoFZwNkIa2qN/iVSmdsR6VYNcNe4qNpg3QXfK7oQ0B
- MCzWSvqWHeo1atQNCx7fIUvMmda5DvV3vBQwCRPyaWwa2yciHlfe4nVTtYA==
-X-Gm-Gg: AfdE7cmAqrB+PfzPp6y5hLQ9C2ZZlyZPpTZTGHvpx6fy7h+7g/hF7K6jl/IYpFehP8k
- 37syzxSC4cBbs4iQ2MakypJIMpq9SnILtVqF8vJm+IR0hYWDuG38Agk3m8g1VgTTWbUK/8u9XtL
- n+G5xtgAJas7EKyMgshtvPFkI4vvqo7IzkVDyozy0gYHtiJFLr4D4QVAvN2+kx7BPSVTUIwmjFD
- fgSoJRr3sMnhXGZAPwtNzA44O0DyXKl5Mc4eS5K0FxI1rKjNST1BtAzTigNKmhLlIau2aRbI1rZ
- 4IkcrS+ZuavzuR6DbI478RUwZVFXlAALikcJLBl+jtzKyCvbNenGHQmkaDwe600SqHEYBQXEbdL
- nWRlBVMLudwJD/0960ug2PdgHg++TXHvXfJE7FgVH9IY6ZesekkTzs/4j9Ua6Nw==
-X-Received: by 2002:a05:620a:4555:b0:92e:44be:bbd2 with SMTP id
- af79cd13be357-92e7afb2399mr1079517785a.9.1783070642483; 
- Fri, 03 Jul 2026 02:24:02 -0700 (PDT)
-X-Received: by 2002:a05:620a:4555:b0:92e:44be:bbd2 with SMTP id
- af79cd13be357-92e7afb2399mr1079513585a.9.1783070642000; 
- Fri, 03 Jul 2026 02:24:02 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63bfba1sm134777755e9.15.2026.07.03.02.23.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Jul 2026 02:24:00 -0700 (PDT)
-Message-ID: <a987a022-377e-4a6b-b8fa-152dafc52120@oss.qualcomm.com>
-Date: Fri, 3 Jul 2026 11:23:59 +0200
+ d=1e100.net; s=20251104; t=1783070656; x=1783675456;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=h44XTmF1r2IahND93ICYPnNi3Yr9s5Dy0jVRmDQ2BdI=;
+ b=HhcyToxaPaf702Cep0I4qmR7g58vNHZgoehund7rS0rv8v5uhjfle1hHy4qt3ggWVb
+ l2ZnkrFRMgz+gHWGl9+J5NkYip346ul2olgxvA2Jtdz9gMMcW9AqbvVGUB2wJBI/c7N1
+ JpBHZOxYFAu8BhA34OrCeWkbcXdte/+Bi5kXbuTS3/spmlsLQGndC3UHjKa3mD4EOH35
+ m2gAtoft1yKKF5x3CS3t2Qyn66WDBX8dXFNxTLDc5mz/7DLQa9/UsR079Rr8hSBlF123
+ HDeIRyjPoPTarW1cyn2j41DimTSvb9z2EhxhptDkZXajgQGxfu2t8vYSTtw75DNBJj+p
+ EUxA==
+X-Gm-Message-State: AOJu0YzsFaxklG0IM5KqZY+W/H2ZyJZHIRr87J4XXv3NW993uHcBhN+n
+ Q3+20qUMWIYvns/RLpUt7QuOAAljw6nEk0A3LU8ivTUe5vlWmb0iuAjrEU/yhLAkG6ZW7YQa3tc
+ 5piLL+z37ByORkvnUDKh+p6+yWGH/ycDMr9tAMPwChQ==
+X-Gm-Gg: AfdE7cm+aA6faWM0B/mkSFWvgMEoRHO0ojz69K95SdSUSTAsuozteKjAoiSVpq79YVg
+ yWVCrT3PZw5X00f5m6s8FUA5E1/kPtps3hUbhiIL+LCz0gJkAqz22ZztgBjdH/kg/odkesZ0P6N
+ bC4kCc6iR4/YgSCZb+ftVyrntiyJSSPJvD3ZF7XUBG+/o+PHOefbb9+npqrmt0/od8Iy8BRIFKN
+ qKc9SU3AvkraVpNMsci/HgcPljwc857GFx2muvp4j20lh9au//J+jZfeuNg3Smt6TmAm2NUB0tE
+ s+ii1wZ6PfdM9J3Ilob1sCCWROBGVHuj+UzeZIf274LXwmFRBHsQKk5b
+X-Received: by 2002:a05:690e:1348:b0:664:baf3:f665 with SMTP id
+ 956f58d0204a3-66521b876f2mr9351439d50.64.1783070655716; Fri, 03 Jul 2026
+ 02:24:15 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 5/5] hw/arm/aspeed_ast27x0: Add unimplemented OTP
- controller MMIO regions for SSP/TSP
-Content-Language: en-US
-To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20260703064506.937904-1-jamin_lin@aspeedtech.com>
- <20260703064506.937904-6-jamin_lin@aspeedtech.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260703064506.937904-6-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: I9l_O7LueZ_vagNg0e6Ma6-3-W6fMrKz
-X-Proofpoint-ORIG-GUID: I9l_O7LueZ_vagNg0e6Ma6-3-W6fMrKz
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDA4OCBTYWx0ZWRfX9vjery6E4I20
- 0tSzaSQeqexl68ueO2+WxgJRpkedccNNCUU8vKCV7efUSL34gzRS6OThfOXQwQLhOFSWpvR7yXY
- EO5xTmxkw9lN78SZTrt02VkMHHEsixk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDA4OCBTYWx0ZWRfX6Mn21mPJNe3r
- a9tRBwW0Kxlr97pQL/tELDawHUc+s99kQ5nNPsKqNkxKoe+IK3Qqtu+V4dArnRDYlvbpuPsDNt1
- S4Of1eOh6vGKSul3Re0KFXgayIC56sHPZHCIEZeUZ+wfa43RNfxelkhuRtDQMiKqCUqLNc8WHfi
- OOvc1YLIZe0QZ2vj99G1RKqDI8tSq487LdTswEhX73DXGAYXbejDcvFLcqggICamrN4aXkaO+Nj
- LtDVxx2qc3D6yQVV9i50wGdF8xdP7mXeH1Fyd1vapASNi/C8XIkX0wbKu/EnzKeMBfOMKEf1I5T
- 4Ljeno4xm2zBJU/xzzEhaDj3GSMdArZw9T47TdTKCYVDeHPMJPoDaFxhKBWsDgQina7WlZPv8z3
- nIPVhRLJw8pLnZ9xWPjq140rbhFniSahiNp4Xib3+hK8YD5VBmPi7s9ACXBFDKvBVAcGXF8sQVG
- bB2QdILhm7HAe91rhdw==
-X-Authority-Analysis: v=2.4 cv=OaKoyBTY c=1 sm=1 tr=0 ts=6a477fb3 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=V2NxCb60AAAA:8 a=EUspDBNiAAAA:8 a=0ue78yuwkkn2aMjpMEwA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=3L6qF29SlnrayQqPM2jZ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
- priorityscore=1501 adultscore=0 spamscore=0 phishscore=0 malwarescore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607030088
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <rxuL-6ZdTjc0-X6Ez2rU4TPEObWUUb4HjRf6X2__bLs3i-9N2d5NX3HbQK2Zyrh5V2c1szltCX91cL-s-WHxX1XoBDSyx5_m6FCvmBmblIY=@proton.me>
+ <ad4b1u-MEfso3miW@redhat.com>
+ <0NssTF_XyAbzwx4DB1ecmeaWsoqoRMwGSrf6SCVUaBsAR3aN_FinUY8ucoU3PrTya2Jdf09HrEMWR9mwdFI0HW_ZF6SBe6gi6aIgrVpZd3g=@proton.me>
+ <CAFEAcA-BW-W0tD=_Cy6AR-E637h_Ryo0JBTHTzXqB3o3f71Rxg@mail.gmail.com>
+ <CAFEAcA_D3u900UDM5dzPrMvs1CF_XJD6HdgnKTvHXa0H=ysSbg@mail.gmail.com>
+In-Reply-To: <CAFEAcA_D3u900UDM5dzPrMvs1CF_XJD6HdgnKTvHXa0H=ysSbg@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 3 Jul 2026 10:24:04 +0100
+X-Gm-Features: AVVi8CdgJCjOZNTEPnMGUL64d0xFVB_1CIXAK9_tHmjrzNxdsRdBY48QtkfAdag
+Message-ID: <CAFEAcA_K5AvrrX3_rDHwOFFj-Hi9QSEsUJbpyqG6mxbUv+HdEQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/net/fsl_etsec: validate FCB offsets in process_tx_fcb()
+To: Feifan Qian <bea1e@proton.me>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Bernhard Beschow <shentey@gmail.com>, 
+ Jason Wang <jasowang@redhat.com>, "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>, 
+ "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -163,25 +120,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/26 08:45, Jamin Lin wrote:
-> The AST2700 SSP/TSP firmware accesses OTP MMIO regions that
-> are not yet implemented in QEMU.
-> 
-> This change adds unimplemented MMIO devices for the OTP and maps them to
-> their corresponding physical addresses in the SSP/TSP address space.
-> These stub devices allow QEMU to safely handle firmware
-> accesses and prevent spurious exceptions, while accurately reflecting
-> the hardware memory map.
-> 
-> No functional changes.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   include/hw/arm/aspeed_coprocessor.h | 1 +
->   include/hw/arm/aspeed_soc.h         | 1 +
->   hw/arm/aspeed_ast27x0-ssp.c         | 6 ++++++
->   hw/arm/aspeed_ast27x0-tsp.c         | 6 ++++++
->   4 files changed, 14 insertions(+)
+Since nobody else has taken this, I'm going to put it in via
+target-arm.next.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+thanks
+-- PMM
+
+On Mon, 29 Jun 2026 at 14:53, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> Ping again -- are PPC or net maintainers going to pick this up?
+>
+> thanks
+> -- PMM
+>
+> On Fri, 29 May 2026 at 15:18, Peter Maydell <peter.maydell@linaro.org> wrote:
+> >
+> > On Wed, 15 Apr 2026 at 05:08, Feifan Qian <bea1e@proton.me> wrote:
+> > >
+> > > The TX Frame Control Block (FCB) is prepended to a TX frame when
+> > > BD_TX_TOEUN is set. It contains two guest-controlled u8 offset
+> > > fields that process_tx_fcb() uses to locate L3/L4 headers within
+> > > the frame buffer:
+> > >
+> > >   l3_header_offset = FCB byte 3 (0..255)
+> > >   l4_header_offset = FCB byte 2 (0..255)
+> > >
+> > > These offsets are applied without any bounds check. When the
+> > > UDP-no-CTU branch is taken, the function writes zero to
+> > > l4_header[6] and l4_header[7]. With both offsets set to 0xFF the
+> > > write target is:
+> > >
+> > >   tx_buffer + 8 + 255 + 255 + 6/7 = tx_buffer + 525
+> > >
+> > > A malicious guest can therefore corrupt up to 509 bytes of heap
+> > > memory beyond a minimally-sized (16 B) TX frame.
+> > >
+> > > Fix: reject the frame and log a guest error when the minimum
+> > > required buffer length
+> > >
+> > >   8 (FCB) + l3_header_offset + l4_header_offset + 8
+> > >
+> > > exceeds tx_buffer_len. Move the l3_header and l4_header pointer
+> > > declarations past the new guard so that out-of-bounds pointers
+> > > are never materialised.
+> > >
+> > > Cc: qemu-stable@nongnu.org
+> > > Signed-off-by: Feifan Qian <bea1e@proton.me>
+> >
+> > This bug just got re-found by somebody recently, so:
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3517
+> >
+> > Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> >
+> > Jason, are you going to pick this one up, or one of the PPC
+> > folks? (I found it didn't quite apply cleanly for some reason,
+> > but I don't know why as that file hasn't changed in ages.)
+> >
+> > thanks
+> > -- PMM
 
