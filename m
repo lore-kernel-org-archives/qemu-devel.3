@@ -4,56 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4658EC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 12:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AF4EC43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 12:49:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfdKc-0002ft-WE; Fri, 03 Jul 2026 08:49:23 -0400
+	id 1wfdL7-0002wY-Uk; Fri, 03 Jul 2026 08:49:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wfdKR-0002dJ-TH
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 08:49:12 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wfdL1-0002sU-Ev; Fri, 03 Jul 2026 08:49:50 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wfdKQ-0006Wh-9i
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 08:49:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=7k02wn9H5OxlusR4rmESg5JXg7Dy0kQTJkZfM1tpxuE=; b=BuIJnZcee1wfsdFCgEaODR9Ggh
- 9JzAYCIp/HV8249icbXM9wj19Z8yGjSAaqXz/Rju3CNA7js8ZGz19SkiwNSeOHw57knPfa1881T7B
- XCOfeWsIj1j+8gUV75yyeqrYJD/yrp6DCfhACs2lKiDWSdgEO42DgSjcY2PbqZpBo3sjSO9/2dvLp
- 2Ldq7wavKg3k/bpswDrNIesFSq2LsTsgdc2oT1oFA/jgexT2j2PRXHSzpVs49irNLhNi0HkXPLXE1
- 5LziO8S3fyce6UVoiIlXUKRnCqPWEWxYV3+ifOhlLL0r1V3oIp/gqP7NQ/y0OXQQzloP03ozdsvRS
- il3omHlkeJ04v97wSMx+mpW0q5wu4gapEAufIH3aISM4LraKUYaV15P9o28ZKuMk3oP+eunGC8T0F
- F9lv048nHra5MlBk9bJoxJVF3f8+1Ojw6oUcCyGK7zD+t63uACrCFsiNjYaJwa1dSHmtPQG/v2e6N
- 4xBkQg2DvEtePSrqlK985x0mBa8TVfi6vqWiX/D+kDWka1LMi49cyC7iG2DqAvrFHdpZ0QWsJYtEh
- eDrYETYYOjtBbzNkN/OzmZ3iKg5I+Fh7HpLaim4zevR3FVPBFO0rdzkthe7tdxKIhYE+NIC8K4svQ
- izvfwn/Nl0p1r+cSxtRhLOw9Jx9O8uDBX/ATpVbYA=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PULL 3/9] 9pfs: local : Introduce local_fid_fd() helper
-Date: Fri, 03 Jul 2026 14:49:07 +0200
-Message-ID: <1964729.CQOukoFCf9@weasel>
-In-Reply-To: <CAFEAcA-qtuM51VCzAr+VgsTVkEg1+CsgUNQofVZ0B_zzfodsxA@mail.gmail.com>
-References: <cover.1746438650.git.qemu_oss@crudebyte.com>
- <23160010.EfDdHjke4D@weasel>
- <CAFEAcA-qtuM51VCzAr+VgsTVkEg1+CsgUNQofVZ0B_zzfodsxA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wfdKx-0006cQ-M4; Fri, 03 Jul 2026 08:49:46 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6636IUqS1813201; Fri, 3 Jul 2026 12:49:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=TTzA6S
+ mFvxF5wWJE/zEu50CxLp1rDLwUGtX1ay4KD5Q=; b=LFH1CYoua++Bf+yRZYjJCg
+ rJlQR5jf9ohiQ+TcAie8V5/VATdlueqtGCMEx1ytRCYbWOVIsw3bycom4lLdgXBJ
+ /fEyuk8kJu8zy4iSKELjpffdtLPRo8/kfSaBwEaQibO7SA3bNPjpaAmJ1j6afBDd
+ vWcuY7aoaCr0LG9NYA/WCTO1ZmDuDDDo4IOuHTOBUaPgcC0MePewgnGrH20GMqMZ
+ YEuSBDcefXsm8EtMHqeglrgwamlp1l3NPa4PqMwsDM+kuRAMSbMX2MXjgFUaLV73
+ 4PupUgvqWVL35HAMUIdrdVSWZjfUQr/d1ZXtSJ+pXDmtZ7whNdr/Tg7eG87W/8ZA
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26qaevk3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 03 Jul 2026 12:49:32 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 663CYZLw025924;
+ Fri, 3 Jul 2026 12:49:32 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7wgy75-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 03 Jul 2026 12:49:32 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 663CnSdt49021438
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 3 Jul 2026 12:49:28 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3F4E620043;
+ Fri,  3 Jul 2026 12:49:28 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C00D720040;
+ Fri,  3 Jul 2026 12:49:25 +0000 (GMT)
+Received: from [9.124.212.167] (unknown [9.124.212.167])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  3 Jul 2026 12:49:25 +0000 (GMT)
+Message-ID: <a52771d5-0179-48de-a0e3-eac95192b789@linux.ibm.com>
+Date: Fri, 3 Jul 2026 18:19:23 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] powernv: boot OpenBSD on POWER9
+To: "Kirill A. Korinsky" <kirill@korins.ky>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Brad Smith <brad@comstyle.com>
+References: <20260702130152.89334-2-kirill@korins.ky>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <20260702130152.89334-2-kirill@korins.ky>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDEyNiBTYWx0ZWRfX6iTvZXA0DW7l
+ m/zqe8gRDyxeG5PLbVPKfG3BatAu8+h3YJcnBj1lSQ/MFcWg+6gmjY0FtXH3Bt/Y3D2dlJCNhuA
+ Z66IsUxbBH2gYg1QnFRxjXyDxaBH2anP6USojqhXtXgCx7OUnnUgQjO+WcJ6RVnzz9sRhMN6LQM
+ FMAa/+LDUKnW8/WjepWTc+tzQ9Lq4uAOaS34EknQ308W7rb03fF6dIOvfgB5PdnQODxcB2dc9uP
+ 7VxCFZjjp6n2yJF9bpIaay/ntN1Wfigw9ce6CFf1TKKZaN8+XwaJgX3qQrneV7KJfzMO1HzycDV
+ FQCQk7cr8sTCsMCOuJfN1JPLyLBTapfz9LZUXAx2IjJq8HGrxH8kx08ZBA7n0YBnxpsbs/PeDKC
+ TUO+23kU4s6yXwNn6Jdxdma4E8snbwFaYqo1vcNeE3EkHwX+d+hAvxVdI1KsXdZ89eCBT26ib28
+ Q1RXIOEWSLso0FYoHJQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDEyNiBTYWx0ZWRfX8a5DfPcSWi3D
+ bc6h2jF6chjQ31dZTgYDNCJc/4p89zHC6SA20+vsHAKajNCqUuNLcaihYsNArzloOJzYVHf1qJW
+ vABppNa2bBlA1QZZUrbr3b90CkbJV6c=
+X-Proofpoint-GUID: yuJv-yj3PAAh1tU_jGOj7d0PkLiLSsUf
+X-Proofpoint-ORIG-GUID: OrapF7u5k7FzMcrfho7eTkAfcymow_RT
+X-Authority-Analysis: v=2.4 cv=WZ88rUhX c=1 sm=1 tr=0 ts=6a47afdd cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=7iU6MPg3lQ3xOPl0O5cA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607030126
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,104 +128,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Friday, 3 July 2026 14:21:29 CEST Peter Maydell wrote:
-> On Fri, 3 Jul 2026 at 12:41, Christian Schoenebeck
-> 
-> <qemu_oss@crudebyte.com> wrote:
-> > On Friday, 3 July 2026 12:52:24 CEST Peter Maydell wrote:
-[...]
-> > diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-> > index 4708e170a4..ee592b62f8 100644
-> > --- a/hw/9pfs/9p-local.c
-> > +++ b/hw/9pfs/9p-local.c
-> > @@ -775,8 +775,11 @@ static int local_fid_fd(int fid_type,
-> > V9fsFidOpenState *fs)> 
-> >  {
-> >  
-> >      if (fid_type == P9_FID_DIR) {
-> >      
-> >          return dirfd(fs->dir.stream);
-> > 
-> > -    } else {
-> > +    } else if (fid_type == P9_FID_FILE) {
-> > 
-> >          return fs->fd;
-> > 
-> > +    } else {
-> > +        errno = EBADF;
-> > +        return -1;
-> > 
-> >      }
-> >  
-> >  }
-> > 
-> > However, that is just a last resort safety net! In 9p.c we are already
-> > checking via fid_has_valid_file_handle(), and in the local fs backend via
-> > local_has_valid_file_handle(), and in both cases would leave via error
-> > path. I have not identified any call path where we would not guard this,
-> > so we should never end up passing -1 as FD to a syscall.
-> > 
-> > So this new EBADF / -1 path in local_fid_fd() is just to avoid undefined
-> > behaviour as a last resort measure, in case a guard was forgotten in
-> > future
-> > changes.
-> 
-> That part is fine. What Coverity is warning about is the callsites:
+On 02/07/26 18:31, Kirill A. Korinsky wrote:
 
-I know, this is just the change that triggered Coverity's warning, because it 
-made Coverity think that this function might return -1, even though this 
-branch is actually *never* executed.
+> <...snip...>
+>
+> +
+> +bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t *entry)
+> +{
+> +    uint64_t pats = cpu->env.spr[SPR_PTCR] & PTCR_PATS;
+> +
+> +    /*
+> +     * Keep the existing ISA v3.0 PATS interpretation first.  OpenBSD/powernv
+> +     * computes the value written to PTCR as ffs(PATMEMSZ) - 12, which writes 5
+> +     * for its 64KiB LPID 0 partition table. If the existing interpretation
+> +     * fails, accept that form only for the bare metal LPID 0 table.
+> +     */
+> +    if (ppc64_v3_get_pate_from_size(cpu, lpid, entry, 1ull << (pats + 12))) {
+> +        return true;
+> +    }
+Thanks for the patch, though I still have a doubt here about PATS.
+PowerISA says Partition Table Size=2^(12+PATS). But seems OpenBSD on PowerNV
+populates PATS in such way that Partition Table Size=2^11 + PATS. Why does
+OpenBSD populate PATS this way, or am I missing some document where 
+Partition
+Table Size was 2^(11+PATS) ?
 
-> > > > +
-> > > > 
-> > > >  static int local_fstat(FsContext *fs_ctx, int fid_type,
-> > > >  
-> > > >                         V9fsFidOpenState *fs, struct stat *stbuf)
-> > > >  
-> > > >  {
-> > > > 
-> > > > -    int err, fd;
-> > > > -
-> > > > -    if (fid_type == P9_FID_DIR) {
-> > > > -        fd = dirfd(fs->dir.stream);
-> > > > -    } else {
-> > > > -        fd = fs->fd;
-> > > > -    }
-> > > > +    int err, fd = local_fid_fd(fid_type, fs);
-> > > > 
-> > > >      err = fstat(fd, stbuf);
-> > > 
-> > > ...but the callsites don't check for error, and instead can
-> > > feed -1 into fstat() or other functions, which isn't a valid
-> > > filedescriptor.
-> > 
-> > But even then, a syscall receiving -1 for a FD argument would handle this
-> > gracefully by returning -1 and errno EBADF.
-> 
-> In practice, yes, but it's not a valid file descriptor. Coverity
-> warns about it because it tends to mean "missing error handling",
-> as here.
-
-Yes, -1 is defined by POSIX as "invalid file descriptor". And that's the point 
-why the helper function would return it as last-resort result, because -1 is 
-well defined by POSIX to not be interchanged with a real file descriptor.
-
-To make this clear: before this change, this helper could potentially return 
-garbage.
-
-And yes, you can check for every -1 file descriptor just before passing it to 
-a syscall, even though I already explained that a) you never ever get there 
-because this check is already made at the higher level call stack, and b) that 
-every syscall handles -1 as file descriptor gracefully.
-
-If you still think this was not a false positive, you are welcome to send a 
-patch.
-
-Thank you!
-
-/Christian
+Rest of the code looks good to me.
 
 
-
+Thanks,
+- Aditya G
 
 
