@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A3E4C43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 15:32:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33C8AC43458
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 15:43:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wffrD-0003Xz-0J; Fri, 03 Jul 2026 11:31:11 -0400
+	id 1wfg2O-0000HZ-5p; Fri, 03 Jul 2026 11:42:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <ebbe1432d1be2316c5c0096476beb0a43dad83df@kylie.crudebyte.com>)
- id 1wffrB-0003Xg-OP; Fri, 03 Jul 2026 11:31:09 -0400
+ (envelope-from <d6b574cdf4e54ff8a09597962e24ad93f49fbe63@kylie.crudebyte.com>)
+ id 1wfg2L-0000Gd-UO; Fri, 03 Jul 2026 11:42:42 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <ebbe1432d1be2316c5c0096476beb0a43dad83df@kylie.crudebyte.com>)
- id 1wffr6-0000Yk-Sd; Fri, 03 Jul 2026 11:31:09 -0400
+ (envelope-from <d6b574cdf4e54ff8a09597962e24ad93f49fbe63@kylie.crudebyte.com>)
+ id 1wfg2K-0006JP-Gi; Fri, 03 Jul 2026 11:42:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Message-Id:Cc:To:Subject:Date:From:Content-Type:
  Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
- Content-Description; bh=N4W0LJdQRwD4ETmwmY9B5dDVjq81cfRWAWEOEHWYBXM=; b=uFjOE
- 7zr35ZSP3OrT2lygioUZnGC1tsMSfyXLOBv55TokLQNv1vRMNCfLQyhNxpjKBOt4fF4MfXAYUGDQS
- 7ov17Pcxk4hlMfhpMzb3Kc83qQSEkpGqvh/8QN20VJBeG4C4Cwcu5Vf96EnvYMaAxcJWFv1LTVVDO
- N4m54OUSltAw9SZ/m+utPjF8FdpY6Jq1cgKmbRv0lCqFfoYlOlMZOcZLgyDqF2Tr7gS7tWoKdqCoh
- M3zT/QtljU6hPJE88ktAMjh9JHXp0NoBXixFO4izt0xMfmK3YNH7RzX0140Tk/1b00NAEPI07R4jw
- AjD7sJPEDembIYatZH2zDw95m4Ufm1TBvlE9ZcPXyNzUbwFE7XlIOzyYvyhaMKkk/lj5CnRgtGESr
- Ec8I8fE9LUaaim9I2L9bUoWuRc8KaBsXGfywFOU1pbnWOvGKbTvEsPGBhDXc/1tZ0Hyg28iRGO3pR
- U4g/A7iOM8Aqd6q3bKEYToY0ImcjJaQuVfu/4QVTV9vCKoZutRE6CbQp2aYAqStxr3QhbCxT4eMkN
- wMNEAfyhqMytDL0XCx0JGAFf7xC8vkTXKG8tHLuQ6bztmVmHmrU/VgU14aDOLXNFbXEffjGP6xZDN
- d+cdWJ2e9yiGt7AYGbnAwfdrSdfiBeIcgPsi2o3BO3CEQkPlkbCFkPKoXKipLA=;
+ Content-Description; bh=NnOvdRSiuet1q5N7DIxEuo5GXtmoQ3X/Bii1/D5YOj4=; b=E8TgH
+ A+tazWCXrdlY7ez/hNWkyBc+xC4v/LHcUY6+wjHAzV2YVhELmliy6YKN/Is4vMXNJPmvuRqrAjoyr
+ Tz9FESsYK/4Y8EqHrlc2rEyLdpeHNuBzyZv7V/Gy4WL/2G3ZbgL7YAgY8rVC/fiKwQgbso11waTZL
+ CM1AlWsl0x6MphiCaByEYzRARCpPr68qtiL+4AaTazzSf247ABrnMqasbQxSjbvp+7wrDDRH7XfjS
+ sipqFu+IKGKNQGq2m2Lg5IZ73nUfqiIyFr+dqhVlISAGa9+xb5u89sfTb0DYtDBEoF5pv+LXHlFo9
+ KS4iI7Xk0MrlM7sBrk3ld27tADg5x0KtBBx6n6YSjBt7/QX3CCjry5AAc+19+APeQBQFyWnOX2wKO
+ yPeqwUk0uiFyrNW4UTJb9GgQBEJcHjrh99x69iCHLaKmplbvPIzB03F3HgLZPvhvVAA2OIFzjQDRj
+ 148M+8POFPXyGVh47ZtZ59QMXWHwtOUWYGzYtwz7fkZu8dlucT511pfX/nrcYaakq2g7ZIuMY0VcX
+ f6MyrqfdJ7g/79DwuCu4BDlvkAV+E0YXSwdMQR4/LvZ+G63KDbdbA0z2FuCVznnEvAQ2pj302AkKV
+ UlfcZU+O8iammIv5Rh8NQqldfloRUs8lXmAn/QQh8RB/J44U9a+eFkOHb519oQ=;
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Fri, 3 Jul 2026 17:26:08 +0200
-Subject: [PATCH] tests/9p: reduce xattr size to 1k
+Date: Fri, 3 Jul 2026 17:38:10 +0200
+Subject: [PATCH] tests/9p: prevent potential error in do_local_xattr_limit()
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-Id: <E1wffqw-001Sc8-I9@kylie.crudebyte.com>
+ Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <E1wfg2F-001Sfn-Rr@kylie.crudebyte.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=ebbe1432d1be2316c5c0096476beb0a43dad83df@kylie.crudebyte.com;
+ envelope-from=d6b574cdf4e54ff8a09597962e24ad93f49fbe63@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -64,46 +64,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On host systems with ext4 and ea_inode capability not enabled, the max. size
-for xattr values is slightly below 4k, which caused the new xattr tests to
-fail on such host systems.
+The local fs backend driver tests require that a dummy file is
+created on the host side before running the xattr limit tests,
+otherwise the test will fail because the file is expected to exist.
 
-Reduce the xattr size for our tests to 1k to prevent them to fail on such
-host systems.
+The original call of g_file_set_contents() didn't check its
+return value, which might cause subsequent test checks to fail,
+making it harder to identify the root cause.
 
-Reported-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Fixes: 04a62cdfe8 ("tests/9p: add 3 xattr FID limit test cases (local fs driver)")
+Fix this by simply wrapping the call into a g_assert().
+
+Fixes: 04a62cdfe873 ("tests/9p: add 3 xattr FID limit test cases (local fs driver)")
+CID: 1660926
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- tests/qtest/virtio-9p-test.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ tests/qtest/virtio-9p-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index cfd3c02da4..938b5a4717 100644
+index cfd3c02da4..692a0e8e3f 100644
 --- a/tests/qtest/virtio-9p-test.c
 +++ b/tests/qtest/virtio-9p-test.c
-@@ -38,11 +38,17 @@
- /*
-  * xattr size to be used for xattr tests
-  *
-- * 64k is the max. xattr size supported by the Linux kernel, However btrfs
-- * for instance supports only 16219 bytes. So let's be conservative and
-- * just use 8k for the xattr tests.
-+ * 64k is the max. xattr size supported by the Linux kernel on high-level VFS
-+ * layer. However filesystems impose their own limits:
-+ *
-+ * - btrfs: 16219 bytes
-+ *
-+ * - ext4: blocksize - 56 bytes (~4KB) if no ea_inode capability enabled,
-+ *         64k if ea_inode enabled
-+ *
-+ * So let's be conservative and just use 1k for the xattr tests.
-  */
--#define TEST_XATTR_SIZE (8 * 1024)
-+#define TEST_XATTR_SIZE (1 * 1024)
+@@ -402,7 +402,7 @@ static void do_local_xattr_limit(QVirtio9P *v9p, int max_xattr)
+     /*
+      * this file must be created for the test to work with the 'local' fs driver
+      */
+-    g_file_set_contents(test_file, "", 0, NULL);
++    g_assert(g_file_set_contents(test_file, "", 0, NULL));
  
- static void pci_config(void *obj, void *data, QGuestAllocator *t_alloc)
- {
+     /* the actual test code shared with the 'synth' fs driver tests */
+     do_xattr_limit(v9p, max_xattr, false);
 -- 
 2.47.3
 
