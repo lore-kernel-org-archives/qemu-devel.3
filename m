@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75443C43602
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 16:40:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B3D3C44501
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 16:40:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfgvr-0000DZ-BQ; Fri, 03 Jul 2026 12:40:03 -0400
+	id 1wfgvp-0008TT-8c; Fri, 03 Jul 2026 12:40:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfgve-00081L-9G
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:39:53 -0400
+ id 1wfgvW-0007w3-S9
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:39:45 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wfgvW-0008KP-KI
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:39:48 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1wfgvP-0008Dx-1n
+ for qemu-devel@nongnu.org; Fri, 03 Jul 2026 12:39:41 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 663GJOxk477914
- for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 16:39:30 GMT
+ 663GIQTb446196
+ for <qemu-devel@nongnu.org>; Fri, 3 Jul 2026 16:39:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- YHmzSZVVsEvaI3vjx81RTf9QjIwrBBvLQ07wtGKj7d8=; b=FhwZ8krQbLMSh3Tk
- pWKUYJc8KXBcIBP8TB2ZTc27pK63NIr9G45KftBPxPRZTyk0g6Ab6M5nMQylPCH7
- sLF2fy1vU8P8G81HYJ98YVclPya84QafjsiVOi30weqlY5UpkhYUKlOOpd/peflg
- 55nGjeUXgwCNrfpYJb1myBS1OKvVRgcL6c7AmJQ2LQpM0wkCoL7XxMWTPFm8mfIr
- igyo24E4bbtbguCz8x8UzeXAy7AOc6CjtSF64IaJR667skWhIelCgPHgMUX04azs
- onIKxjOHzjR3sNT0PmClXsBxKssna56BaUmVpWvRarYhnUgqy1M+GAIc480DyMtJ
- NApetg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f60eybx2n-1
+ 6WT95Gph8Xg6aTkiLQdrIw1hlxRErYZ/kEcLb8sMdPQ=; b=W6GzltneyaqutTSF
+ i+UcKHj/6/qspt5vFTQDS0Xn80nNuVxNFj0LrcptVuGDDoOby1GAqqzMM7JMr2LV
+ o0/D4RwhLOyRjQ+8rHazNbJRSvb4T94K7QeB4MXJLQPV7QSKcwWCfmHRdTHLFY+E
+ JRUNGbMguvuNGlqsp8TXnzQZBjVVPEcimC3dH+ObS/bZyFInGYa8j1R8nWwubG4Y
+ Rh/yC23nEg1Bs5wiGk8TkO5JTQ8+appeTgrqQ0f46QhD16L5vBAemXCsH6Hz552D
+ 8CE4e7250jjHMqid1hrjaAhS/357UDNh75puXL98ghORjjswB9OIzexRI3L4P2qB
+ zryP6Q==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6b039ej3-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 16:39:30 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-92e55721a8cso67762685a.1
- for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 09:39:30 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 16:39:23 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-92e9a2b95b5so8600585a.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Jul 2026 09:39:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783096770; x=1783701570; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YHmzSZVVsEvaI3vjx81RTf9QjIwrBBvLQ07wtGKj7d8=;
- b=Puk0ARrSwFoHMbIIo/3pVv0Dq/Z+kUMAOCkitkGIJcjsPA4tE2v40WIgmDQYU0PO6L
- ipavBm4Wfp81bN9vYS1s4EaUPWe1gnkTbtdCyvUNlesuon5ir9StRXroJKZavoLSytmq
- oFq5BxDTYjjOwendrRB/3AnQ5ZBLu6Pjvy5ihVEyhUaEUJHl9V3XRQmHITDC4BKqvv8b
- Oelg7eopUr4gJSEdO2OLShN2EC6ftssGUu4DBh6gygWrAO7iuLm2rr5zOgEmQQ1/nEWv
- c2FOqft/JV5AbRcxGDjB8Qd7uc0YLgeB/fl5E5pFk7az7TbuaH45KGMW9Yl4gY+dVX2K
- MNNQ==
+ d=oss.qualcomm.com; s=google; t=1783096762; x=1783701562; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=6WT95Gph8Xg6aTkiLQdrIw1hlxRErYZ/kEcLb8sMdPQ=;
+ b=aH8jrxy5FwY0hVpl2w/cFbIPf5RY3gKiZbRUOgi9DVydFpvxkC2icYfg8yb0U5AulS
+ 7Yt0M0jfijvxzdJgcMwDpGEjHi9n8CbitkqWnM3yB4aEwdFjJIbbVogZS9jt/MBPAnaY
+ WVR4iCPRM508pG0oqeTP9hVrZ6p+7jufGVRRQ1bkJ5r3U8k13w/rfuSlvnAs1zC/KWtv
+ MjmQrE8xfWDl7mJUCoEogbspJANgKn99l8GHq3Yy91hnx1UU0to6vnqoM4UgHhyY9AAL
+ H0SEdytR2XX5ivWdtIYvI5jNYlmt/pTwbk2qfM/xo5mJjSisHQBWgGY5AVxuJ0MP9Z7J
+ mReg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783096770; x=1783701570;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=YHmzSZVVsEvaI3vjx81RTf9QjIwrBBvLQ07wtGKj7d8=;
- b=pJRxewxRUdpPRRafJMIvDWZ3oD9HQnNtYVuu8FQZREH+sXa66UZ3/HbQ1mxhQvGDpT
- N6fLZnLqimkahBcac8C6YMgVoM/q1Nnc/sWVvNdyLVGPSP8wSioX0Bxu3vUmVsWl7moI
- EQsiRdegQOHV9BzNRWTEBfzbTa9ot/SIxiWd0RrTJVucSpf96uYbN+S6syms0qWoNGE9
- FvMjppfyQywrJkt3HRLGedyfbQWVVZtTzJvdnWM0cmZ9qKIeGeGIDG+3fNPcpuIHsGR7
- uUq0qDzWXVtlcQfWdnLnX6sur7iiG8/jxYHjLqoyTx9fSLEEXKu0+HRJyUrB8QlkU4Sg
- 1MPQ==
-X-Gm-Message-State: AOJu0Yw14vuundgEfxLDtY6Daon1p+VSXpNnhoHFqqAgI0akg778noBi
- VqzcKonfEgIgEY1LLsvbmPhH9odc0y1ZWThDyJcbqIR1Fa5AptnYh6xOm+L7a0LIg302mAXvrJG
- x6+ItWwm2D05DMVnGZJrdHZGgd3biuMa0qCFPHC7r+kv/rM2pBIr+cSNh/GVatSXlZg==
-X-Gm-Gg: AfdE7cnf/YsHcQj5JYeJtMqKggzfWpA+qdoNik3BVQwb0/Dl7rA9HzAD6XlIXMBRKYw
- xeyw9BvW6J2FqCeuxdMDF+Ur4CbLrPB7IRcW4Ndjvk5pEfSyOMJEFvjs3x/h71LgVVn98/jO0Ne
- lHIlz6Qns5N4a8ADQgPNzi2hzaGKdbp+359VPv/0oUzjC6jT0hvsNtW0GKdDo1P4EMWJ3YhGyG1
- TXbXDjRVf33hAbN18yDpZnXR+xqEM85mlSyOWtKQonTjwa3fn/pY/7n0KssKjO/Ko03rWeKXXvd
- xaRgQ5ug+QymctXlXoe3aE2y+etQb3suVDgaeEFcl/0XHGDFWyeoPfhaifeILZN1Q/lfqE8g4dA
- ke+60vGYsEYRj90TSZh/odyW2InuMuWoN58vrzc4snk5Bf7a5pAI26V4GgLaSzAkM5DUp
-X-Received: by 2002:a05:620a:8399:b0:915:afa5:754 with SMTP id
- af79cd13be357-92e9a3133c3mr33826485a.2.1783096769817; 
- Fri, 03 Jul 2026 09:39:29 -0700 (PDT)
-X-Received: by 2002:a05:620a:8399:b0:915:afa5:754 with SMTP id
- af79cd13be357-92e9a3133c3mr33821985a.2.1783096769364; 
- Fri, 03 Jul 2026 09:39:29 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783096762; x=1783701562;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=6WT95Gph8Xg6aTkiLQdrIw1hlxRErYZ/kEcLb8sMdPQ=;
+ b=QYTmSC6yAIqs9u9zG7ckuVxBA2kfwQea/xNgu4MgvG/L++lIPtC+JXi2GOVgb94gMJ
+ 4Y2AJwvIFXr22gILxAQaor6Ywm2k/9BdmtulmwN72wzaicTgaOce5dmvb+kv0lMoZ3gR
+ lm+0m1aytYmq7EUBriqsbL63DrxCABUHwu7g6nJnzGhfUkIlWccq7Ik+iVxkkke6FOF2
+ jFK303hJ5aFMVXZLhgxbbz/sgjiA8w8pPah/Nz0E4bJw70JGHLwtWit6c7DPV9q/+fre
+ BZiwhON0z4uonjwjY+DIo0LNBp5msFnPzLvERmkea2NsKzoa5zc4NEMvucATVDqwTeXS
+ ZZXA==
+X-Gm-Message-State: AOJu0Yzd6y+opdv5ARdyxf8ft0GSMszWdeICOglje942mkHvrBZsUro0
+ 2eXaeZplLwwqPUF6kdV/vnrS1yoPgHoR5xJZK35VG3uYu27EThE3MC9svGP0fyghqm0GYcBsSIj
+ ZbXtiUuGJ929pMCCTW5TQEwMp106HJw33GRAgd2cWJrwQbhtQah/ux/5G+/E6ThW1Lw==
+X-Gm-Gg: AfdE7clPysD3eayyXYJi2imih9atoMrOTqpIxAfC1jNldYLxU4f9HjBlFPMZpgwYEdE
+ vCn14XuQymUSO20Xqg4lskA3pqXXeYeu4jeyL6bA1V5Op8CXk1K1BCf769vGtK11wIsAv5bPOfa
+ qFLO3rnZ0zlmdQNHJ39YeQDB7e6LC8TITnifid6LcyiHBUbloXspMP208JrpRYv9i3wdIw67UTH
+ /9elrP1hUyzgZtCJYgG1bgFcmu2I04POWyV6Cc28aFz3WDn4q+whusPWNjtrv3HWUTbmBFGE3MY
+ s0mUpFR/4JBGiMHqtg+Lma7GiLpWI4WcwNgJtnulYqi5+d7VMWAxxvGz5M2m5BxAN4NMdgh+ByE
+ M4YFGg+8AO0pBS0qtz6uchybxmY41Y1sW9FsCH9mYPAQjuBjL8XIvLQbkrtOrfvPmDg2D
+X-Received: by 2002:a05:620a:29c1:b0:914:afc1:c66d with SMTP id
+ af79cd13be357-92e9a2f76e3mr32468985a.11.1783096762419; 
+ Fri, 03 Jul 2026 09:39:22 -0700 (PDT)
+X-Received: by 2002:a05:620a:29c1:b0:914:afc1:c66d with SMTP id
+ af79cd13be357-92e9a2f76e3mr32463585a.11.1783096761900; 
+ Fri, 03 Jul 2026 09:39:21 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa0960af0sm520025f8f.30.2026.07.03.09.39.28
+ 5b1f17b1804b1-493c636ec8asm122240605e9.1.2026.07.03.09.39.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 Jul 2026 09:39:28 -0700 (PDT)
+ Fri, 03 Jul 2026 09:39:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
@@ -96,40 +97,40 @@ Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 12/33] gdbstub: Inline gdb_supports_guest_debug()
-Date: Fri,  3 Jul 2026 18:37:35 +0200
-Message-ID: <20260703163757.55500-13-philmd@oss.qualcomm.com>
+Subject: [PATCH v2 11/33] accel/kvm: Hold have_guest_debug in KVMState
+Date: Fri,  3 Jul 2026 18:37:34 +0200
+Message-ID: <20260703163757.55500-12-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260703163757.55500-1-philmd@oss.qualcomm.com>
 References: <20260703163757.55500-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfXwKDHh6YRBY+l
- PV63M4X+jhuFLIsbkPwcfIbqDNKUHiOx0j24hb2/EuBCI/PIIVewrWFXK6duAij31n/v5A2pRYu
- iwITkcpSqds1XX/jMHNNNeK3wDzU6JnbndXROeLgQu8u2Laa4RksFrLAL58iUbEGGjFXHa8lYQu
- DSsV9WF9thWpUK4qFbIEp50bCWvcp3TwkB2USJgNgYm62Jz6hSx1KCiTisceBGuj/d2zmeK3hvb
- VRilrZk0FQoP4bfmwMm+BeJKA0GCQF0kIiPiyh5tkQiLTqRDCDOwfcZeGyRQSJ7EYaaRwTm2A6F
- 2NhYYm+quqdPQ10C3c39GaAKUTvyily531Iy3+0mmgjmyketGUDZW99J8nmBwW2HsT25gLePqdX
- a5Or56temy9eREXfHqWXAm9A4qsGeq9EIsT5EjJQBSMqCFHSDoXRo6upqw5iIpYqoZd/yf7Sj3s
- w2YN3iEmdjdTVlfM/fw==
-X-Proofpoint-GUID: aA_ah61wr5Ob7uGoP9XMtledgc_t1_rt
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfX1OkjN7AejTbJ
- KdBc5Tx/W+49XtBBPghUq9XJZxqGgtJlhiF/Oo8Qedk+UZUEeIHHxgccA3NB+XBCeAyuCuNOD7l
- UOSHHWgs9OUFJVrRnQh0+5UIBMjOHNE=
-X-Authority-Analysis: v=2.4 cv=SPRykuvH c=1 sm=1 tr=0 ts=6a47e5c2 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfX1R4E1AHUNVwz
+ PoVqiNCH/9BVOc95XNmk1ujedW8uuOtNh6R16enwBjI78lDqmqFO7m9Rk+OYim3NFKswnRZ0Gom
+ WTumI/zPCKZVbLzeJwtGXYXbhcd1CN8=
+X-Proofpoint-GUID: lYnXfhJTWOlhSBSJvoMLzjVDpiWl43h1
+X-Authority-Analysis: v=2.4 cv=FoY1OWrq c=1 sm=1 tr=0 ts=6a47e5bb cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=mZCV-s_RuDa5I9ykUf4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: aA_ah61wr5Ob7uGoP9XMtledgc_t1_rt
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=O5kNlQXW-qQlE3Y8R88A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE2NCBTYWx0ZWRfX92TUmg+a3xFk
+ jFAFwddmpJT5bo4Q7zlXrOZP02ehYDi1fJGDuSMw6aU+DmtatMT9g8bfAxSmgICYHs2RNKNZfCc
+ 1WsDO64NNcEEEOInBuzDUb0SpH+5mUh6Zs3F0lVkXLBa/6R1EQNk5whxFhrvjt/R2h5Jx3IAkW8
+ FAyOevB9mlAXMtD3DYX5CfKvmVQJP8FrbkGL4B7XNFNJdeaISddxq6TyAJy8dt8vwId4GZx+/Xb
+ hL5B3gVUE9at5vdTLAKtKmz9VrW9oUfsCljrf+3wLwY8iRuh05mbq1NYsHDitTyJUrsRty6A/8k
+ RvWyYOE1xtyHqBzcywJI8tTwsAg1q+yQXv56NnXiKxP0TPc5Vl5GPTrZU3XyM1yPq9S8MCwvmzH
+ mkW8loZ9oU6zGKCMkAP3eWF6XUTBUISrg2pMFh9tycOZFpKUd/oLuFiPvCeTmmbB77yl0CBve3n
+ e2uabMuLIKWQUEOn64Q==
+X-Proofpoint-ORIG-GUID: lYnXfhJTWOlhSBSJvoMLzjVDpiWl43h1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_03,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 malwarescore=0 bulkscore=0 priorityscore=1501
- lowpriorityscore=0 phishscore=0 spamscore=0 suspectscore=0 impostorscore=0
+ phishscore=0 clxscore=1015 malwarescore=0 adultscore=0 suspectscore=0
+ spamscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030164
 Received-SPF: pass client-ip=205.220.180.131;
@@ -156,67 +157,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gdb_supports_guest_debug() is only required for system emulation,
-inline it there and remove the user emulation variant.
+Prefer to store per-accelerator variables in the per-accelerator
+state, rather than as static variables. This is a good practice
+to allow concurrent accelerators in the future.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- gdbstub/internals.h | 1 -
- gdbstub/system.c    | 4 +++-
- gdbstub/user.c      | 6 ------
- 3 files changed, 3 insertions(+), 8 deletions(-)
+ include/system/kvm_int.h | 1 +
+ accel/kvm/kvm-all.c      | 9 +++++----
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/gdbstub/internals.h b/gdbstub/internals.h
-index 9b25bf58b8e..60ddc146661 100644
---- a/gdbstub/internals.h
-+++ b/gdbstub/internals.h
-@@ -217,7 +217,6 @@ void gdb_syscall_handling(const char *syscall_packet);
-  * Break/Watch point support - there is an implementation for system
-  * and user mode.
-  */
--bool gdb_supports_guest_debug(void);
- int gdb_breakpoint_insert(CPUState *cs, int type, vaddr addr, vaddr len);
- int gdb_breakpoint_remove(CPUState *cs, int type, vaddr addr, vaddr len);
- void gdb_breakpoint_remove_all(CPUState *cs);
-diff --git a/gdbstub/system.c b/gdbstub/system.c
-index 2063b63b2f8..1179c82cb86 100644
---- a/gdbstub/system.c
-+++ b/gdbstub/system.c
-@@ -331,6 +331,8 @@ static void create_processes(GDBState *s)
-     gdb_create_default_process(s);
+diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
+index 0876aac938d..53bb0fcf180 100644
+--- a/include/system/kvm_int.h
++++ b/include/system/kvm_int.h
+@@ -118,6 +118,7 @@ struct KVMState
+ #endif
+     int max_nested_state_len;
+     int kvm_shadow_mem;
++    bool have_guest_debug;
+     bool kernel_irqchip_allowed;
+     bool kernel_irqchip_required;
+     OnOffAuto kernel_irqchip_split;
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 304467704ee..b6125125f82 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -104,7 +104,6 @@ bool kvm_readonly_mem_allowed;
+ bool kvm_vm_attributes_allowed;
+ bool kvm_msi_use_devid;
+ bool kvm_pre_fault_memory_supported;
+-static bool kvm_has_guest_debug;
+ static int kvm_sstep_flags;
+ static bool kvm_immediate_exit;
+ static uint64_t kvm_supported_memory_attributes;
+@@ -3038,10 +3037,10 @@ static int kvm_init(AccelState *as, MachineState *ms)
+         (kvm_check_extension(s, KVM_CAP_VM_ATTRIBUTES) > 0);
+ 
+ #ifdef TARGET_KVM_HAVE_GUEST_DEBUG
+-    kvm_has_guest_debug =
++    s->have_guest_debug =
+         (kvm_check_extension(s, KVM_CAP_SET_GUEST_DEBUG) > 0);
+ 
+-    if (kvm_has_guest_debug) {
++    if (s->have_guest_debug) {
+         kvm_sstep_flags = SSTEP_ENABLE;
+ 
+         int guest_debug_flags =
+@@ -3833,8 +3832,10 @@ int kvm_update_guest_debug(CPUState *cpu, unsigned long reinject_trap)
+ 
+ bool kvm_supports_guest_debug(void)
+ {
++    KVMState *s = KVM_STATE(as);
++
+     /* probed during kvm_init() */
+-    return kvm_has_guest_debug;
++    return s->have_guest_debug;
  }
  
-+static bool gdb_supports_guest_debug(void);
-+
- bool gdbserver_start(const char *device, Error **errp)
- {
-     Chardev *chr = NULL;
-@@ -627,7 +629,7 @@ int gdb_signal_to_target(int sig)
-  * Break/Watch point helpers
-  */
- 
--bool gdb_supports_guest_debug(void)
-+static bool gdb_supports_guest_debug(void)
- {
-     const AccelOpsClass *ops = cpus_get_accel();
-     if (ops->supports_guest_debug) {
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index 97eb13e796a..f7bc4e63dfd 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -796,12 +796,6 @@ bool gdb_can_reverse(void)
-  * Break/Watch point helpers
-  */
- 
--bool gdb_supports_guest_debug(void)
--{
--    /* user-mode == TCG == supported */
--    return true;
--}
--
- int gdb_breakpoint_insert(CPUState *cs, int type, vaddr addr, vaddr len)
- {
-     CPUState *cpu;
+ int kvm_insert_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len)
 -- 
 2.53.0
 
