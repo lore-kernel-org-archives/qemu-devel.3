@@ -4,91 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADBF4C43458
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 19:57:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A672EC43458
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 20:18:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wg6Tl-0001Y4-Hk; Sat, 04 Jul 2026 15:56:47 -0400
+	id 1wg6oB-00047O-Kx; Sat, 04 Jul 2026 16:17:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wg6Tf-0001Xb-73
- for qemu-devel@nongnu.org; Sat, 04 Jul 2026 15:56:39 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1wg6oA-00047G-M4
+ for qemu-devel@nongnu.org; Sat, 04 Jul 2026 16:17:50 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wg6Td-0002lh-Ky
- for qemu-devel@nongnu.org; Sat, 04 Jul 2026 15:56:38 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-3847e8b0f3aso345190a91.3
- for <qemu-devel@nongnu.org>; Sat, 04 Jul 2026 12:56:37 -0700 (PDT)
+ id 1wg6o9-0007rJ-4V
+ for qemu-devel@nongnu.org; Sat, 04 Jul 2026 16:17:50 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-c12758e75afso203148166b.1
+ for <qemu-devel@nongnu.org>; Sat, 04 Jul 2026 13:17:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783194996; x=1783799796; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783196267; x=1783801067; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=z0OSqNhMMeE+ZdGERI7cdk+gLghNfDYcwh0t9cxK7P4=;
- b=Y/CAqdMoRGZliVyN5V+8WTB/FGaQrqTeQbR02lIYNlhQKBBynekCG/3dSRwom5Cz1f
- nIgTh+dnh3TelFUDDWLeMw8m/4PElszuMfY5Ha5DN67s+g2Jz9A1QBEYX37x38XEU3YY
- XRv9Ic3XljdpqieNSfDGgr+F/0Az/XVssHj29CVZC9JIlehjRcSdFCQ2AdkXLvMRAoE1
- FjiMfW83QNofl187dElBJdHxLe/YHii6/f8TdPuxixidnh60bp2z3nCvsgVv3xIhZ7ES
- k3drbE+4PGBY5KQVoJhPfMJGjnFpyFwAZdkfJdRt8OGbViz6M7JctIyhlp2EXvgzG5t2
- D1hQ==
+ bh=6WRHxb3alsqngxScmUMRgIEvTsIFjqIte/j0dNVYqM0=;
+ b=f1mhAAqz46bMxAsqPtNzoE5Jp2zrcjNalv8Le0yxegz91N2+XHm2DkkuP6V02bMYpv
+ ewP4oEQTdY0KOd5eDpM3xcb2IJaGzeiiDpRYptcet+s0crWVNeHEEztjCDY/ZzxMPmB4
+ L9Wsl3mXdjJR5Zjp+v4V7oJjlGCQd9mhyqfQZEDYOI6X2hG5Nbm1pOZcbQudzoPe9Dh/
+ XH9mVcjc2aJ1rS2fSDqdtovkw6DS6lce+ppVK/1tG8FMFVTZhivgBd5+3n47ZkZ8zNXg
+ AmN2gpJO85L/14DzGkz+gXvsRvxZLIV6qNvvb2493H8qxXEK/zSZyv3rGl9EwlWeeEky
+ EwWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783194996; x=1783799796;
+ d=1e100.net; s=20251104; t=1783196267; x=1783801067;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=z0OSqNhMMeE+ZdGERI7cdk+gLghNfDYcwh0t9cxK7P4=;
- b=Yki0iJ3CWI6FANWuCVU7qX80U6FFxTNB1MBjpyjTZrMEnV2JVIqulc5uGmTGkzS1cQ
- u2PtOLTGyB8wZUWIuAiqTfzBtOgDnkIrwfSoBnRdJ6/sgI8mhT9nQHX90YW5V8Uo4Hox
- ZXHHLIrjZmA73iWUvnclkLnHyECHAKdpj6Ox9pvJZJMhNO1+A+z829x6lepYNk3zineA
- P3mbR5BonsmCRmZBtPGZbJNSo+OiSRUYvEYYqzNqXnGG8FuCTsRj4hgd3Fdm5li+n5Aq
- WxwTtXAF/RUh3CiExy9oJVvAKdMJy6LuvLYgsHbtw4wi4Uj9G/rVPE+PC+1gq1GxXcPC
- BBUg==
+ bh=6WRHxb3alsqngxScmUMRgIEvTsIFjqIte/j0dNVYqM0=;
+ b=FttuuCHge9mS7ef9GghQvO2UBVfHCeUhDgplNsUumWEzVktetd/hKxCF/9AOo31sMt
+ 17Apj/1KkbGeRg4/AkWOwt6GVERS4Nnwq0CcDTEB0dW3baqqAZhZajcxIO8pVhIaZytl
+ jbfZGWfvaGF2PulEa9uvlcO9mbIaQ/RVRRiKv8TyJOUYDK3IBAzh2QmS1icM+kILegyp
+ g4AWfZ5ILdK2y2rod77TT2nmkSEfUbP9p12fSP/DjMzXjO3Y2SMXypWpKLY2nFk3XBqH
+ DTZcQ157dHBJNdNHYLIPBZUvSDKo7FrdODhzrhbc1cQjhxnB0HnmeA0CXhGXuwaLhXkC
+ tmlA==
 X-Forwarded-Encrypted: i=1;
- AHgh+Roj2HwY1WZQdr56ODPFpw0dFusuidVuhdofWbP1mWEIPUQYLUcyA+9OTV5umB0GMiij6SAmTBIUq0rZ@nongnu.org
-X-Gm-Message-State: AOJu0Yz0d1Evvv2eOMwcPKXnNisVuvP1obFK/LTnXDQJVlH71jFqIyFf
- SV43R27/VN0AmzwOOI1+2gKZrZVC/zth1mMTuuUeGYANeDVCEBRRKP6EPNvclu46yW0=
-X-Gm-Gg: AfdE7cmZ62HhZ4uvPOmQkP2g3o3npDDJw2Ekz+W1m8KjXToGwD+tI6SPNxMAu/VraSd
- CoNuFfxS43A3w7lz4H2gQj0NN2PE4B4lhY1+H52lqM/kBpj8VYgQCU17tyvacWqgpXtvt4tgABE
- qfdrR05o5sRdf+WAjQGqPJD6iKxNBy7J3YES6fGJb7UvijtvHluWCDbLLOgm1yZkrkBDWfyLq2u
- lhCZJWKxxvPrbtX/uvUNqMZFtW3bJqz+wVu3Cs/AyJ3toB+xDYSTreP+Zer3sB8JHr7HN1tF+8+
- NJXl4gp5gRK4LjOdnhH7yzMStDBjaUIOboUBgGICy5nssDw7hmxuAREhd5zCMURtWzxPb/24miH
- GbVDvbugkAE2kimkl52F5a4WAkdbucQhGzC9MSTbkXGgzWkLUebV1zVweVGesNJRTRxBN89id3+
- lXyMvAwW3bEcaxvQ7hWJECD30LM1bYxpiJjmresVYtPkwz3/wtaoo97ks=
-X-Received: by 2002:a17:90b:1810:b0:37f:9ce1:cdaf with SMTP id
- 98e67ed59e1d1-3829f9deb8fmr4875880a91.29.1783194996218; 
- Sat, 04 Jul 2026 12:56:36 -0700 (PDT)
+ AFNElJ+O+84BZzt173ZdspeI9eMG1l0XJkURqBHrtMpaS1y+3ejG5PnTxT2Al6DCd/asOg2l0v4q25Nu6PmV@nongnu.org
+X-Gm-Message-State: AOJu0YycMBkTUtadJ2tNWYJ0MsKUCfusAPVXCdz9ECvCQCpodrhXFtc6
+ M2OEa8mF4fHoTHQ5OJlKXtVwlgcVL/fEbKFJOLC/B3mcf7A8cVdB2Dh5+S6E206TF34=
+X-Gm-Gg: AfdE7ckc+fAIB34DWcLhUFiCcJaXJBUbmcnOTYXbWkFKCRDv6Yhdwq8dqwYRJvtS+7A
+ HSDOJ7c8jgHH/JQk5WblEONapM4InsANPpi0HRpSk4A8rnPieAs+cKBx4Aji4pBnlgHZ3+pnEhg
+ 2dZ8Tfifh/c+zQmgH1DpAhBFS5845ufMrOgJ2v2KXcOXTzFV1sndboDDxEZUEjJg0xRci8ZlQwa
+ hTKwzKZjuWz5F3zKa7jQnAOEBK99NGoAxCB2runQsVHz3dEZhh1rRvHyz0jcTbMz4FlhfNBSVCt
+ O8O8Sp6OFVBSDm+gQdKtiXFrkLSPEEUhS6ggJlwxlcAPtU2bxTFYB3V8xjBEq6pWVIiFJCJvWut
+ XPW2mITc/ozluGlapDt6beEJqnNH92qApeebL/gnEFrASa3Ii6F6vwYASouTzXhVBMP3//X897K
+ NMQ33rMIfjLvljhZS7ygEX1kg4kXIU/BHg+E0HtBPABu2qFWoPYVW058M=
+X-Received: by 2002:a17:907:3e1f:b0:c12:9eb4:48bd with SMTP id
+ a640c23a62f3a-c12e6c7f62dmr126144666b.50.1783196266806; 
+ Sat, 04 Jul 2026 13:17:46 -0700 (PDT)
 Received: from [192.168.0.4] (71-212-39-188.tukw.qwest.net. [71.212.39.188])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3835bd053d1sm861340a91.2.2026.07.04.12.56.35
+ a640c23a62f3a-c12b6091ba1sm453006466b.17.2026.07.04.13.17.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 04 Jul 2026 12:56:35 -0700 (PDT)
-Message-ID: <498d4984-58fd-488d-b504-4fbee70cfc70@linaro.org>
-Date: Sat, 4 Jul 2026 12:56:33 -0700
+ Sat, 04 Jul 2026 13:17:45 -0700 (PDT)
+Message-ID: <e7de5b45-7c7e-4894-983d-c33310dd2a7b@linaro.org>
+Date: Sat, 4 Jul 2026 13:17:41 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 20/33] cpu: Define BreakpointFlags type
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Chao Liu <chao.liu.zevorn@gmail.com>, qemu-s390x@nongnu.org,
- Xiaoyao Li <xiaoyao.li@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
- alex.bennee@linaro.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20260703163757.55500-1-philmd@oss.qualcomm.com>
- <20260703163757.55500-21-philmd@oss.qualcomm.com>
+Subject: Re: [PATCH 1/4] target/hppa: Work-around for Fast TLB insert
+ instruction on HP-UX 9
+To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>
+References: <20260703193224.33135-1-deller@kernel.org>
+ <20260703193224.33135-2-deller@kernel.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260703163757.55500-21-philmd@oss.qualcomm.com>
+In-Reply-To: <20260703193224.33135-2-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,35 +106,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/26 09:37, Philippe Mathieu-Daudé wrote:
-> --- a/include/exec/breakpoint.h
-> +++ b/include/exec/breakpoint.h
-> @@ -12,6 +12,7 @@
->   #include "exec/vaddr.h"
->   #include "exec/memattrs.h"
+On 7/3/26 12:32, Helge Deller wrote:
+> From: Helge Deller <deller@gmx.de>
+> 
+> The HP-UX 9 kernel uses two TLB insert instructions (0x05315440 and
+> 0x05385400), which seem to be wrongly encoded fast TLB instructions, but
+> similiar to the non-fast instructions idtlba r17,(r9) and
+> idtlbp r24,(r9).
+> 
+> It's not clear, if those undocumented instructions were used by mistake,
+> or intentionally. Either way, this patch allows qemu to handle those
+> instructions, so that a HP-UX 9 boot-CD can now boot somewhat further (but
+> still crashes due to other reasons afterwards).
+> 
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> ---
+>   target/hppa/insns.decode | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
+> index 13c6a55bf2..f700fe472e 100644
+> --- a/target/hppa/insns.decode
+> +++ b/target/hppa/insns.decode
+> @@ -164,6 +164,8 @@ ixtlbx          000001 b:5 r:5 ... 000000 addr:1 0 00000        \
 >   
-> +typedef int BreakpointFlags;
->   /* Breakpoint/watchpoint flags */
->   #define BP_MEM_READ           0x01
->   #define BP_MEM_WRITE          0x02
-> @@ -28,7 +29,7 @@
+>   # pcxl and pcxl2 Fast TLB Insert instructions
+>   ixtlbxf         000001 00000 r:5 00 0 data:1 01000 addr:1 0 00000
+> +# workaround for non-standard encoding as used in HP-UX 9
+> +ixtlbxf         000001 01001 r:5 01 0 data:1 01000 addr:1 0 00000
 >   
->   typedef struct CPUBreakpoint {
->       vaddr pc;
-> -    int flags; /* BP_* */
-> +    BreakpointFlags flags;
->       QTAILQ_ENTRY(CPUBreakpoint) entry;
->   } CPUBreakpoint;
+>   # pa2.0 tlb insert idtlbt and iitlbt instructions
+>   ixtlbt          000001 r2:5 r1:5 000 data:1 100000 0 00000    # idtlbt
 
-Missing the replacement in CPUWatchpoint.
+It's either this or ignore the field entirely.
 
-> -void cpu_watchpoint_remove_all(CPUState *cpu, int mask);
-> +void cpu_watchpoint_remove_all(CPUState *cpu, BreakpointFlags flags);
-
-Please don't rename mask to flags.  Several instances.
-
-The arguments that are 'flags' are installed/compared exactly (==), and the arguments that 
-are 'mask' are used as bitmasks (&).
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
