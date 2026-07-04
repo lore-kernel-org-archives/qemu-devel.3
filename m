@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 763A4C43458
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 19:31:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 487ADC43458
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 19:36:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wg64n-0003Z9-Jq; Sat, 04 Jul 2026 15:30:57 -0400
+	id 1wg69g-0004q2-Lv; Sat, 04 Jul 2026 15:36:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wg64l-0003Yb-J1; Sat, 04 Jul 2026 15:30:55 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wg64j-0004af-Lh; Sat, 04 Jul 2026 15:30:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=C6Pg/+IORPXnNr+yqmdfhM4Ez2VDvmIdA8NElynuFXo=; b=p7ulJalh0mbdtUZtbxKE4AlhSw
- M6HAvkbqsIhcre7Qnz6kvavdjPLjnDQm+fPv4/QLnXjliVbxp0Xh06liI16SBC/YuaEM8sAsLUOqo
- L1pEhUGJoTtNLe+z2xb5RHl0lhyooYX2u7bobqoleLNtbPq1EFmcSeVNVixeedJgbXjthafyU80qU
- Sa1vHb791ptPjORy/kOSis4YmHosBJ2JB3eke54Of2IOfQR9QPmufKCeASghcSI6i4Eu0ofpfiBfs
- a6ARAOsCb8pWnax1H+MudUc0wJOhuV7KxvAdHbSBTiLQOUK1hFEYeZkg+jbQwXJV3XCy9hSPUUBFr
- wOQjMWsWETm3Nm67Zg+cLzk1EWD9fWQGtbl8u5CK5xP7kyq9O33qohGcw6CngXk70+Mm56rkdiDiC
- AOzkjn6f2KVz02NuIUFlAgqnL9L8TUzVHBKehnDIxO3Y9mqQsCBGOadU00Kh/iEzF7wSQdK8Jks6v
- cr+KuF+quARA5wRKifAQ05U7F4TrVkFRHsbKxRjpdSwgTxJZUsyvDDkBeZsJjEEsN0khcJXa55l54
- EwKqXNe+mdtsSC+ngcndL0GKzIYGUpkaO96o6r9/1dzxL/eW/wUJQlVx8BOnJFSGY+Svqo52QDm9x
- 85JaBYXV3DQuKQN2hj5gvr7bkJXsBRmt9ndXF7XVM=;
-Received: from [2a02:8012:2f01:0:b3f4:44c3:c2e7:b860]
- by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wg64b-0015BI-57; Sat, 04 Jul 2026 20:30:45 +0100
-Message-ID: <ebca8322-0e62-47bd-a4df-d5f52d5d4e39@ilande.co.uk>
-Date: Sat, 4 Jul 2026 20:30:46 +0100
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wg69e-0004pB-Mc
+ for qemu-devel@nongnu.org; Sat, 04 Jul 2026 15:35:58 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wg69d-0005SU-0b
+ for qemu-devel@nongnu.org; Sat, 04 Jul 2026 15:35:58 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-845b6d9bf39so1376901b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 04 Jul 2026 12:35:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783193755; x=1783798555; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LFWMJXpXmfVutf27mDlB7yuqabWZyQvznY7klb+92oY=;
+ b=cYQjZEfmQpJ09WjrrqMRn99u6qzvuthywIg423lKyvCdM3bJd6AIcIkSSPO2Bn34aH
+ SHM5LSeLU4gRwVEx8HUJb/P1YSboNmc1v022lKLhXPRjLVSGdRvScKOb+woQYN8SJP3f
+ fTqkJ4kPqqocpfCFE3KEUhjtOS0TVtgh6o4cx25eoHW15yvTIARyrqS8XmZs/Wn3si7y
+ fPnQBaDRvIgQTE1IoX4P7h2r+JKiFr7cRFmbE8RY6sNXBw7GLFctFjIci9Cd2b1RjOWy
+ jq/XKRUzUkuQ2+/vKFxrBrJmZ1kyHmFy4BE466Y4jJpNqYrb+1Ezp6LdzEApzhS4kMFt
+ YLdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783193755; x=1783798555;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LFWMJXpXmfVutf27mDlB7yuqabWZyQvznY7klb+92oY=;
+ b=BYgxNq70iARki2j+NV+2ZTOLjeh/MXbz2f6RdMytbkEHf8Td3JJ0C5sDcbza6IENNp
+ nr0wtX5zBC8j0kvpMXqQDmvyBT/7tp+27D4qLa1fjYxCRRhjqXRJ/MNxPkheN6UvIc3t
+ clgyHJ5+lnaxmVjRHKAxYEO7VjA++XASJXzo5zLbXso1RoisChuUWnhjc5XVQV3CUDmU
+ UmzkpwaxDLe+1n6wmZ4PmaaoOf4rn1wPPk9hqeKUfYDk7Z/eZjp7z3S3kfne0Hpb00cB
+ E1rsSZ/bPO2YNzv+RUxKRpwEhinWo2c9kZiGWCmZwlsLM/7y3TB/nZzyvGf225DRUnY2
+ aMBw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+Vt1afZlLgG8LX/OWcO374QaPcQT0ucMKD9+6QbVSHAl5TgtvBl92vC4c0jjA7RMFxjHRTfJ7vSNwg@nongnu.org
+X-Gm-Message-State: AOJu0Yw8tVCb/PtYbWFWUri5uUOecbuxEMWI/tjFXtoesuiIpfT9BYRQ
+ 42kNW0IbxB4E1cjKXdeD9iGUYC8KDDvSNK0HQNzxv3Ny1pZbOPBcV9S9BqCe6U48K8g=
+X-Gm-Gg: AfdE7clkTcBLzHeEp9vXDHkBkf1RI3B71AfbUISmQ8VshpdxxQeFgCTdvqaecAea2Ka
+ i83Z4l5rss7Mw5UTrpxpOP4v3c0gGoMt7nWvqtUsw+cRhnKgIInYvNzJwWhRRS+aUs4wMlV0C85
+ 6JomTGVtam2/gvwm5ZzzpF3Tcst/lSW+2qMdVWOVqGPQcS9EZGunJHR/MYHtAjbQteBorCN5ha4
+ LVu2SGa05H4ZmTi9k1iJGD4kIc5PjGU4u3cwULb6PumsJtQet39i2gLnweRAV0kRTtJ1HY0dQmW
+ 5hl/VjHEHGgfX99i80/ljKAimyVy5IN51XRaEvTSAj9oaEReSz/Qb1JIm/QnhqMK8aMgkBXU7uo
+ DoPoPSn0cvAfWjWLyRbiGwOfX9RbvOeyiez/zAQoZWFkv9kbYnAboyFycYtpEOZYDjMMMG7YWkl
+ RaVFlvf9psv08O2YLVd/n89JCn1w1dJ4Pp4Cz3PuSpbGOzAOqFmShAHcE=
+X-Received: by 2002:a05:6a00:2886:b0:845:e210:3771 with SMTP id
+ d2e1a72fcca58-847f86a5073mr3179723b3a.20.1783193754855; 
+ Sat, 04 Jul 2026 12:35:54 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-39-188.tukw.qwest.net. [71.212.39.188])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-847f6b609acsm1477923b3a.1.2026.07.04.12.35.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 04 Jul 2026 12:35:54 -0700 (PDT)
+Message-ID: <472e1c81-89ed-4db5-8719-b5629c0d3642@linaro.org>
+Date: Sat, 4 Jul 2026 12:35:51 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Matt Jacobson <mhjacobson@me.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>
-References: <20260702022927.46510-1-mhjacobson@me.com>
- <20260702022927.46510-5-mhjacobson@me.com>
+Subject: Re: [PATCH v2 12/33] gdbstub: Inline gdb_supports_guest_debug()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>, qemu-s390x@nongnu.org,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ alex.bennee@linaro.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260703163757.55500-1-philmd@oss.qualcomm.com>
+ <20260703163757.55500-13-philmd@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20260702022927.46510-5-mhjacobson@me.com>
+In-Reply-To: <20260703163757.55500-13-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:b3f4:44c3:c2e7:b860
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 4/5] hw/m68k: add working floppy controller for q800
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,152 +111,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02/07/2026 03:29, Matt Jacobson wrote:
-
-> Switch the Quadra 800 machine to the working SWIM2 floppy controller.
-> Hook up the HeadSel bit on the VIA to control the head selection (the
-> IWM does not handle this part itself).
+On 7/3/26 09:37, Philippe Mathieu-Daudé wrote:
+> gdb_supports_guest_debug() is only required for system emulation,
+> inline it there and remove the user emulation variant.
 > 
-> Signed-off-by: Matt Jacobson <mhjacobson@me.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 > ---
->   hw/m68k/q800.c            |  5 +++--
->   hw/misc/mac_via.c         | 16 ++++++++++++++++
->   include/hw/m68k/q800.h    |  4 ++--
->   include/hw/misc/mac_via.h |  3 +++
->   4 files changed, 24 insertions(+), 4 deletions(-)
+>   gdbstub/internals.h | 1 -
+>   gdbstub/system.c    | 4 +++-
+>   gdbstub/user.c      | 6 ------
+>   3 files changed, 3 insertions(+), 8 deletions(-)
+
+You're not inlining it, but making it private to system.c.
+
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
+
 > 
-> diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-> index ab64250c47..a6997ef802 100644
-> --- a/hw/m68k/q800.c
-> +++ b/hw/m68k/q800.c
-> @@ -47,7 +47,7 @@
->   #include "hw/audio/asc.h"
->   #include "hw/nubus/mac-nubus-bridge.h"
->   #include "hw/display/macfb.h"
-> -#include "hw/block/swim.h"
-> +#include "hw/block/swim2.h"
->   #include "net/net.h"
->   #include "net/util.h"
->   #include "qapi/error.h"
-> @@ -338,6 +338,7 @@ static void q800_machine_init(MachineState *machine)
->       /* VIA 1 */
->       object_initialize_child(OBJECT(machine), "via1", &m->via1,
->                               TYPE_MOS6522_Q800_VIA1);
-> +    m->via1.swim = &m->swim;
-
-This doesn't look right: in general we should avoid accessing a device state struct 
-directly unless it is absolutely unavoidable.
-
->       dinfo = drive_get(IF_MTD, 0, 0);
->       if (dinfo) {
->           qdev_prop_set_drive(DEVICE(&m->via1), "drive",
-> @@ -511,7 +512,7 @@ static void q800_machine_init(MachineState *machine)
->       /* SWIM floppy controller */
->   
->       object_initialize_child(OBJECT(machine), "swim", &m->swim,
-> -                            TYPE_SWIM);
-> +                            TYPE_SWIM2);
->       sysbus = SYS_BUS_DEVICE(&m->swim);
->       sysbus_realize(sysbus, &error_fatal);
->       memory_region_add_subregion(&m->macio, SWIM_BASE - IO_BASE,
-> diff --git a/hw/misc/mac_via.c b/hw/misc/mac_via.c
-> index 26ee230dcc..09197fe519 100644
-> --- a/hw/misc/mac_via.c
-> +++ b/hw/misc/mac_via.c
-> @@ -31,6 +31,7 @@
->   #include "hw/core/qdev-properties-system.h"
->   #include "system/block-backend.h"
->   #include "system/rtc.h"
-> +#include "hw/block/swim2.h"
->   #include "trace.h"
->   #include "qemu/log.h"
->   
-> @@ -1080,6 +1081,17 @@ static void mos6522_q800_via1_write(void *opaque, hwaddr addr, uint64_t val,
->       mos6522_write(ms, addr, val, size);
->   
->       switch (addr) {
-> +    case VIA_REG_A:
-> +    case VIA_REG_ANH: {
-> +        const bool sel = (ms->a & VIA1A_vHeadSel) != 0;
-> +
-> +        if (v1s->swim) {
-> +            swim2_set_sel(v1s->swim, sel);
-> +        }
-> +
-> +        break;
-> +    }
-
-Can you move this into a separate via1_swim_update(v1s) function as done for the rtc 
-and adb devices as below? If possible I'd like to minimise the per-device logic in 
-mos6522_q800_via1_write().
-
->       case VIA_REG_B:
->           via1_rtc_update(v1s);
->           via1_adb_update(v1s);
-> @@ -1224,6 +1236,10 @@ static void mos6522_q800_via1_reset_hold(Object *obj, ResetType type)
->   
->       /* Timer calibration hack */
->       v1s->timer_hack_state = 0;
-> +
-> +    if (v1s->swim) {
-> +        swim2_set_sel(v1s->swim, false);
-> +    }
-
-Given that SWIM2 is also a TYPE_DEVICE, you should be able to expose the sel signal 
-as a GPIO on the SWIM2 device in a similar way as to how "nubus-irq" is defined in 
-mos6522_q800_via2_init() but with just 1 signal. This allows you to connect the 
-signal with qdev_connect_gpio_out() (see hw/m68k/q800.c) and drive it using the qemu 
-IRQ functions, which should avoid having to reference the SWIM2 device itself 
-directly at all.
-
+> diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+> index 9b25bf58b8e..60ddc146661 100644
+> --- a/gdbstub/internals.h
+> +++ b/gdbstub/internals.h
+> @@ -217,7 +217,6 @@ void gdb_syscall_handling(const char *syscall_packet);
+>    * Break/Watch point support - there is an implementation for system
+>    * and user mode.
+>    */
+> -bool gdb_supports_guest_debug(void);
+>   int gdb_breakpoint_insert(CPUState *cs, int type, vaddr addr, vaddr len);
+>   int gdb_breakpoint_remove(CPUState *cs, int type, vaddr addr, vaddr len);
+>   void gdb_breakpoint_remove_all(CPUState *cs);
+> diff --git a/gdbstub/system.c b/gdbstub/system.c
+> index 2063b63b2f8..1179c82cb86 100644
+> --- a/gdbstub/system.c
+> +++ b/gdbstub/system.c
+> @@ -331,6 +331,8 @@ static void create_processes(GDBState *s)
+>       gdb_create_default_process(s);
 >   }
 >   
->   static void mos6522_q800_via1_realize(DeviceState *dev, Error **errp)
-> diff --git a/include/hw/m68k/q800.h b/include/hw/m68k/q800.h
-> index 77551b9592..2a20314d57 100644
-> --- a/include/hw/m68k/q800.h
-> +++ b/include/hw/m68k/q800.h
-> @@ -33,7 +33,7 @@
->   #include "hw/char/escc.h"
->   #include "hw/core/or-irq.h"
->   #include "hw/scsi/esp.h"
-> -#include "hw/block/swim.h"
-> +#include "hw/block/swim2.h"
->   #include "hw/nubus/mac-nubus-bridge.h"
->   #include "hw/display/macfb.h"
->   #include "hw/misc/djmemc.h"
-> @@ -59,7 +59,7 @@ struct Q800MachineState {
->       ESCCState escc;
->       OrIRQState escc_orgate;
->       SysBusESPState esp;
-> -    Swim swim;
-> +    SWIM2State swim;
->       MacNubusBridge mac_nubus_bridge;
->       MacfbNubusState macfb;
->       DJMEMCState djmemc;
-> diff --git a/include/hw/misc/mac_via.h b/include/hw/misc/mac_via.h
-> index 114f41db4c..e23735b47c 100644
-> --- a/include/hw/misc/mac_via.h
-> +++ b/include/hw/misc/mac_via.h
-> @@ -13,6 +13,7 @@
->   #include "hw/core/sysbus.h"
->   #include "hw/misc/mos6522.h"
->   #include "hw/input/adb.h"
-> +#include "hw/block/swim2.h"
->   #include "qom/object.h"
->   
->   
-> @@ -77,6 +78,8 @@ struct MOS6522Q800VIA1State {
->   
->       /* SETUPTIMEK hack */
->       int timer_hack_state;
+> +static bool gdb_supports_guest_debug(void);
 > +
-> +    SWIM2State *swim;
->   };
-
-
-ATB,
-
-Mark.
+>   bool gdbserver_start(const char *device, Error **errp)
+>   {
+>       Chardev *chr = NULL;
+> @@ -627,7 +629,7 @@ int gdb_signal_to_target(int sig)
+>    * Break/Watch point helpers
+>    */
+>   
+> -bool gdb_supports_guest_debug(void)
+> +static bool gdb_supports_guest_debug(void)
+>   {
+>       const AccelOpsClass *ops = cpus_get_accel();
+>       if (ops->supports_guest_debug) {
+> diff --git a/gdbstub/user.c b/gdbstub/user.c
+> index 97eb13e796a..f7bc4e63dfd 100644
+> --- a/gdbstub/user.c
+> +++ b/gdbstub/user.c
+> @@ -796,12 +796,6 @@ bool gdb_can_reverse(void)
+>    * Break/Watch point helpers
+>    */
+>   
+> -bool gdb_supports_guest_debug(void)
+> -{
+> -    /* user-mode == TCG == supported */
+> -    return true;
+> -}
+> -
+>   int gdb_breakpoint_insert(CPUState *cs, int type, vaddr addr, vaddr len)
+>   {
+>       CPUState *cpu;
 
 
