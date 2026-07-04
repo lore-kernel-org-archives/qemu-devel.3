@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A47B4C44500
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 21:44:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E5D1C43458
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 21:44:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wg86M-0007Xu-Gf; Sat, 04 Jul 2026 17:40:42 -0400
+	id 1wg86H-0007Un-9K; Sat, 04 Jul 2026 17:40:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wg86K-0007WA-6T; Sat, 04 Jul 2026 17:40:40 -0400
+ id 1wg86F-0007U7-FK; Sat, 04 Jul 2026 17:40:35 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wg86I-0007sw-BR; Sat, 04 Jul 2026 17:40:39 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1wg86D-0007sV-C9; Sat, 04 Jul 2026 17:40:35 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 664KmL4w2445986; Sat, 4 Jul 2026 21:40:30 GMT
+ 664KmLR12428175; Sat, 4 Jul 2026 21:40:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=vPbsf0
- fQDz21lLYPEu+ScWbC6o6g/o4YbVFU/Zd/T54=; b=Vec1AeHGmxyymkI2ujPDOJ
- sAmISdrxKXzlvKV6zAzrr7vPM8kXSIq/EDt8N8CBERbBo5BSYnmniiHklomsmDtH
- FMcvXAok3GyXvyUrz0HPySbWYjsXBsyJ2+X8Qth5DCiLjVw68uluCUFCDDz1GeSZ
- R9LpUmBKlsjOnmB7M5mDZ16fCFka0xwaBzR+bmeyd1tQbE79xl4dgaZiFKrivBlI
- U9rvSJD1uC9g+I7g6WFYtZsxD4chizzOYhAAf+pf8hECfOMZM/SpJ9//PTLzN70n
- CPUYPVp6PTJfzijO/iKk9B84f5ICamOss8GuXnp3XQjzjGba1xAPQFcPa8JjPkBw
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6rkdbc5e-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=ydvWns9K4xND5fNs1
+ Ky/vLAXUyZ8GaKQrQTv/A2mfWs=; b=gn2LUGF7nW2zLB+XjSN+OnkM8lxr32Sqo
+ TpaKUrFbRO9ByxJOqbg7T7S+0mq/QTRoLPpud6K0TkpL1xDXbr9GPoSD9NuiASNg
+ XGhXhhRPOLMTXniUZMBw92IHNYGwfXLRjiz+XYuZzpZAdkYLRygnEhfjHcfjHbOt
+ /CHTSPZTHMN7GXE6rjAFLG1W2m/UPKDS24laIS2yUW2mfOI/AoqGBIIAWq3YX2i0
+ mn3EvazTGL1+gvAmbH5K0Xfj2DtF5d9V7IUZQ6H6Bqkb41JuD5efaffZFF2IhJ3B
+ KWn0Gfbji551yP5Mwa77kxLxqek0GQAWMKBYU6SGjejLiRx/sEfZg==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6stsb7j1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 04 Jul 2026 21:40:28 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 664LYeq7013634;
- Sat, 4 Jul 2026 21:40:28 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruqxq8e-1
+ Sat, 04 Jul 2026 21:40:26 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 664LYu2m027749;
+ Sat, 4 Jul 2026 21:40:26 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7wpk2h-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 04 Jul 2026 21:40:28 +0000 (GMT)
+ Sat, 04 Jul 2026 21:40:26 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
  [10.39.53.231])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 664LeQ3h20054586
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 664LeOju21758624
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 4 Jul 2026 21:40:27 GMT
+ Sat, 4 Jul 2026 21:40:25 GMT
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D5C2C58056;
- Sat,  4 Jul 2026 21:40:26 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DA7A95805E;
+ by IMSVA (Postfix) with ESMTP id AFB4F58056;
  Sat,  4 Jul 2026 21:40:24 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B6C3858050;
+ Sat,  4 Jul 2026 21:40:22 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.17.215])
  by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Sat,  4 Jul 2026 21:40:24 +0000 (GMT)
+ Sat,  4 Jul 2026 21:40:22 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
@@ -67,43 +66,43 @@ Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
  alifm@linux.ibm.com, brueckner@linux.ibm.com,
  pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-Subject: [PATCH v15 15/33] s390x/ipl: Introduce IPL Information Report Block
- (IIRB)
-Date: Sat,  4 Jul 2026 17:39:31 -0400
-Message-ID: <20260704213950.2118823-16-zycai@linux.ibm.com>
+Subject: [PATCH v15 14/33] s390x/diag: Implement DIAG 508 subcode 1 for
+ signature verification
+Date: Sat,  4 Jul 2026 17:39:30 -0400
+Message-ID: <20260704213950.2118823-15-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260704213950.2118823-1-zycai@linux.ibm.com>
 References: <20260704213950.2118823-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=M7J97Sws c=1 sm=1 tr=0 ts=6a497dcc cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=1NTGDykL02WXTEG3Jz0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA0MDIyNCBTYWx0ZWRfX+pFW+/s4pUGv
- 0GIdhKtix0Ht+XZpsAo2r7cXNHnUxYmfw7vzpd6Vjrt6u3z+oUR60VvqYBAGwz934kAKZwfNg1K
- MUeiZxVKL9N8khxAnanUpOHWwDVuwzsFwdRqlS5vruUWReoF+CEKCEcBvjD4tKcpgJOKVnb8CQk
- vxOtZHzUAiOWzz6l7SZfBG4lhcNmAoZBe8IZKThHm01kBY3BoXJyDRds24+upd/h7Q8FTJnhXxn
- CVmtORFbbtFoRm7GCFZ8JJ+nY7ZqEfAqIVAw5JOMA63CQgASemVhGYIsZ0JOFDLbUBVNAJ78qvb
- fYXVPtkBdDL8C2x8rjieKT1fZy4L8h2/b/jWOdanQRMOvavUf/JLuoHQAdR4/i+VGk28xn7hdoq
- o/7BeHaqKjKarkM8CsujRpMSzixVW3eS8bjLY0lGc/tJqwSytXDOzS9/pdJdc5rW3nzHM2xiEsF
- Pv2X8tYItcZ6p7KKvFQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA0MDIyNCBTYWx0ZWRfX2kHno2qWAdQe
- XoiB+gJ4UwIV0j1Khb4kSG9Zk4h4+2BMz6AOGDqLWHS2xchEoOqgGof03wojPX5zr1XpCgXJhTO
- dSDHapFq/MJz68u8oIOfB7lcdXwBX1Y=
-X-Proofpoint-GUID: EZn6afhPLeUvQagMqQKmjXgrSlCpoiqn
-X-Proofpoint-ORIG-GUID: EZn6afhPLeUvQagMqQKmjXgrSlCpoiqn
+X-Proofpoint-ORIG-GUID: n1H9_ZBRFbwv1iOu5cQrUXuoDhyi2p7v
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA0MDIyNCBTYWx0ZWRfXyAreaZWhG1Ux
+ G+e/8fbi2x64tYy1MUj4zboy+HsXENth5UIuOxdyRxpjCYiDFHfj2XfQWxxLkkfpFhhwStQKtdx
+ jHUiw7TAToYux5zPj5PWbhrAK7aPsFM=
+X-Authority-Analysis: v=2.4 cv=DKW/JSNb c=1 sm=1 tr=0 ts=6a497dcb cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=K66z3tz1c1WH2lCF3KIA:9
+X-Proofpoint-GUID: n1H9_ZBRFbwv1iOu5cQrUXuoDhyi2p7v
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA0MDIyNCBTYWx0ZWRfX8e2fryoD3TDL
+ MQMIzlGZblveuOa/Xsl2QTKNiopyGuYeZ7kfPmHtYPrnKxK4WqT2Zn0/OS/ZTs0jeHnrXe5SX5X
+ Vf5rJ7XYAkWTydyhpvJI7zR5A7MIgr/3WnhcCvbilMc2uwo8jHh0wVvX80ROuWZXt/pXGCUlVSo
+ cvT09BEunKShkNZWsCB8ll8jQOKVeX9+LTKJRPEALIYzlCzrlr6ZkD4jZ/0ZSVuYHLA+G/RurmX
+ eJobO02RXX3VNaXjzegvsKlBCFqQxjjMW5MBgW/VYoGK5W+SCD6Jiq0X8zsPBmzd9xYYKgrFFsC
+ f9EdEBIkmuY3xVSfob/6Ze5LrYNIXPS89xY1O7IPOFk5HGhuefNSViEt6mDtE3FgCH6zs1GqUUh
+ TLC6Z8NSQgZVx+THzMCSdFj/9VM1Cdme3ZnYRi7Oi1EZrSPT4sdBcXOIbwN2Cda1OUWsGhx181n
+ Qs+ydXtIVO4jEqKbMbg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-04_03,2026-07-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 adultscore=0
- priorityscore=1501 bulkscore=0 spamscore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607040224
+ spamscore=0 bulkscore=0 clxscore=1015 phishscore=0 impostorscore=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607040224
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -128,132 +127,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The IPL information report block (IIRB) contains information used
-to locate IPL records and to report the results of signature verification
-of one or more secure components of the load device.
+From: Collin Walling <walling@linux.ibm.com>
 
-IIRB is stored immediately following the IPL Parameter Block. Results on
-component verification in any case (failure or success) are stored.
+DIAG 508 subcode 1 performs signature-verification on signed components.
+A signed component may be a Linux kernel image, or any other signed
+binary. **Verification of initrd is not supported.**
 
-The IIRB data is reserved and protected by the guest kernel during early
-boot to prevent it from being overwritten before the certificate data is
-permanently saved.
+The instruction call expects two item-pairs: an address of a device
+component, an address of the analogous signature file (in PKCS#7 DER format),
+and their respective lengths. All of this data should be encapsulated
+within a Diag508SigVerifBlock.
 
+The DIAG handler will read from the provided addresses
+to retrieve the necessary data, parse the signature file, then
+perform the signature-verification. Because there is no way to
+correlate a specific certificate to a component, each certificate
+in the store is tried until either verification succeeds, or all
+certs have been exhausted.
+
+A return code of 1 indicates success, and the index and length of the
+corresponding certificate will be set in the Diag508SigVerifBlock.
+The following values indicate failure:
+
+	0x0102: no certificates are available in the store
+	0x0202: component data is invalid
+	0x0302: PKCS#7 format signature is invalid
+	0x0402: signature-verification failed
+	0x0502: length of Diag508SigVerifBlock is invalid
+
+Signed-off-by: Collin Walling <walling@linux.ibm.com>
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
-Reviewed-by: Collin Walling <walling@linux.ibm.com>
 ---
- docs/specs/s390x-secure-ipl.rst | 21 +++++++++++
- include/hw/s390x/ipl/qipl.h     | 62 +++++++++++++++++++++++++++++++++
- 2 files changed, 83 insertions(+)
+ docs/specs/s390x-secure-ipl.rst |  17 +++++
+ include/hw/s390x/ipl/diag508.h  |  30 +++++++++
+ target/s390x/diag.c             | 111 +++++++++++++++++++++++++++++++-
+ 3 files changed, 157 insertions(+), 1 deletion(-)
 
 diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-index d8dcc77ba2..113acbeda9 100644
+index 776270d816..d8dcc77ba2 100644
 --- a/docs/specs/s390x-secure-ipl.rst
 +++ b/docs/specs/s390x-secure-ipl.rst
-@@ -101,3 +101,24 @@ Subcode 1 - perform signature verification
-     * ``0x0302``: PKCS#7 format signature is invalid
-     * ``0x0402``: signature-verification failed
-     * ``0x0502``: length of Diag508SigVerifBlock is invalid
-+
-+IPL Information Report Block
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+The IPL Parameter Block (IPLB), utilized for IPL operation, is extended with an
-+IPL Information Report Block (IIRB), which contains the results from secure IPL
-+operations such as:
-+
-+* component data
-+* verification results
-+* certificate data
-+
-+During early boot, the guest kernel reserves the memory region
-+containing the IIRB. This preserves the data while the guest kernel is
-+operating and during re-IPL.
-+
-+The guest kernel uses the contents in the IIRB for:
-+
-+* Boot logging: reports which components were loaded and verified.
-+* kexec operations: builds the next kernel’s IPL report from the existing one.
-+* Keying: installs IPL certificates into the platform trusted keyring.
-diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-index ed1a91182a..45d25264f4 100644
---- a/include/hw/s390x/ipl/qipl.h
-+++ b/include/hw/s390x/ipl/qipl.h
-@@ -32,6 +32,9 @@ typedef enum S390IplType S390IplType;
- #define QEMU_DEFAULT_IPL S390_IPL_TYPE_CCW
+@@ -84,3 +84,20 @@ that requires assistance from QEMU.
  
- #define MAX_CERTIFICATES  64
-+/* largest supported block size - same as VIRTIO_DASD_DEFAULT_BLOCK_SIZE */
-+#define VIRTIO_MAX_BLOCK_SIZE   4096
-+#define MAX_COMP_ENTRIES        ((VIRTIO_MAX_BLOCK_SIZE - 32) / 32)
+ Subcode 0 - query installed subcodes
+     Returns a 64-bit mask indicating which subcodes are supported.
++
++Subcode 1 - perform signature verification
++    Perform signature-verification on a signed component, using certificates
++    from the certificate store and leveraging qcrypto libraries to perform
++    this operation.
++
++    Note: verification of initrd is not supported.
++
++    A return code of 1 indicates success, and the index and length of the
++    corresponding certificate will be set in the Diag508SigVerifBlock.
++    The following values indicate failure:
++
++    * ``0x0102``: no certificates are available in the store
++    * ``0x0202``: component data is invalid
++    * ``0x0302``: PKCS#7 format signature is invalid
++    * ``0x0402``: signature-verification failed
++    * ``0x0502``: length of Diag508SigVerifBlock is invalid
+diff --git a/include/hw/s390x/ipl/diag508.h b/include/hw/s390x/ipl/diag508.h
+index 6281ad8299..bd967954b9 100644
+--- a/include/hw/s390x/ipl/diag508.h
++++ b/include/hw/s390x/ipl/diag508.h
+@@ -11,5 +11,35 @@
+ #define S390X_DIAG508_H
  
- /*
-  * The QEMU IPL Parameters will be stored at absolute address
-@@ -146,4 +149,63 @@ union IplParameterBlock {
- } QEMU_PACKED;
- typedef union IplParameterBlock IplParameterBlock;
+ #define DIAG_508_SUBC_QUERY_SUBC    0x0000
++#define DIAG_508_SUBC_SIG_VERIF     0x8000
++
++#define DIAG_508_RC_OK              0x0001
++#define DIAG_508_RC_NO_CERTS        0x0102
++#define DIAG_508_RC_INVAL_COMP_DATA 0x0202
++#define DIAG_508_RC_INVAL_PKCS7_SIG 0x0302
++#define DIAG_508_RC_FAIL_VERIF      0x0402
++#define DIAG_508_RC_INVAL_LEN       0x0502
++
++/*
++ * Maximum component and signature sizes for current secure boot implementation
++ * Not architecturally defined and may need to revisit if increased
++ */
++#define DIAG_508_MAX_COMP_LEN      0x10000000
++#define DIAG_508_MAX_SIG_LEN       4096
++
++struct Diag508SigVerifBlock {
++    uint32_t length;
++    uint8_t reserved0[3];
++    uint8_t version;
++    uint32_t reserved[2];
++    uint8_t cert_store_index;
++    uint8_t reserved1[7];
++    uint64_t cert_len;
++    uint64_t comp_len;
++    uint64_t comp_addr;
++    uint64_t sig_len;
++    uint64_t sig_addr;
++};
++typedef struct Diag508SigVerifBlock Diag508SigVerifBlock;
  
-+struct IplInfoReportBlockHeader {
-+    uint32_t len;
-+    uint8_t  flags;
-+    uint8_t  reserved1[11];
-+};
-+typedef struct IplInfoReportBlockHeader IplInfoReportBlockHeader;
-+
-+struct IplInfoBlockHeader {
-+    uint32_t len;
-+    uint8_t  type;
-+    uint8_t  reserved1[11];
-+};
-+typedef struct IplInfoBlockHeader IplInfoBlockHeader;
-+
-+enum IplInfoBlockType {
-+    IPL_INFO_BLOCK_TYPE_CERTIFICATES = 1,
-+    IPL_INFO_BLOCK_TYPE_COMPONENTS = 2,
-+};
-+
-+struct IplSignatureCertificateEntry {
-+    uint64_t addr;
-+    uint64_t len;
-+};
-+typedef struct IplSignatureCertificateEntry IplSignatureCertificateEntry;
-+
-+struct IplSignatureCertificateList {
-+    IplInfoBlockHeader            ipl_info_header;
-+    IplSignatureCertificateEntry  cert_entries[MAX_CERTIFICATES];
-+};
-+typedef struct IplSignatureCertificateList IplSignatureCertificateList;
-+
-+#define S390_IPL_DEV_COMP_FLAG_SC  0x80
-+#define S390_IPL_DEV_COMP_FLAG_CSV 0x40
-+
-+struct IplDeviceComponentEntry {
-+    uint64_t addr;
-+    uint64_t len;
-+    uint8_t  flags;
-+    uint8_t  reserved1[5];
-+    uint16_t cert_index;
-+    uint8_t  reserved2[8];
-+};
-+typedef struct IplDeviceComponentEntry IplDeviceComponentEntry;
-+
-+struct IplDeviceComponentList {
-+    IplInfoBlockHeader       ipl_info_header;
-+    IplDeviceComponentEntry  device_entries[MAX_COMP_ENTRIES];
-+};
-+typedef struct IplDeviceComponentList IplDeviceComponentList;
-+
-+#define COMP_LIST_MAX   sizeof(IplDeviceComponentList)
-+#define CERT_LIST_MAX   sizeof(IplSignatureCertificateList)
-+
-+struct IplInfoReportBlock {
-+    IplInfoReportBlockHeader     hdr;
-+    uint8_t                      info_blks[COMP_LIST_MAX + CERT_LIST_MAX];
-+};
-+typedef struct IplInfoReportBlock IplInfoReportBlock;
-+
  #endif
+diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+index 8bcf204268..0128d0caaa 100644
+--- a/target/s390x/diag.c
++++ b/target/s390x/diag.c
+@@ -619,9 +619,110 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+     }
+ }
+ 
++static bool diag_508_verify_sig(uint8_t *cert, size_t cert_size,
++                                uint8_t *comp, size_t comp_size,
++                                uint8_t *sig, size_t sig_size)
++{
++    g_autofree uint8_t *sig_pem = NULL;
++    size_t sig_size_pem;
++    int rc;
++
++    /*
++     * PKCS#7 signature with DER format
++     * Convert to PEM format for signature verification
++     *
++     * Ignore errors during qcrypto signature format conversion and verification
++     * Return false on any error, treating it as a verification failure
++     */
++    rc = qcrypto_pkcs7_convert_sig_pem(sig, sig_size, &sig_pem, &sig_size_pem, NULL);
++    if (rc < 0) {
++        return false;
++    }
++
++    rc = qcrypto_x509_verify_sig(cert, cert_size,
++                                 comp, comp_size,
++                                 sig_pem, sig_size_pem, NULL);
++    if (rc < 0) {
++        return false;
++    }
++
++    return true;
++}
++
++static int handle_diag508_sig_verif(CPUS390XState *env, uint64_t addr)
++{
++    int verified;
++    uint32_t svb_len;
++    uint64_t comp_len, comp_addr;
++    uint64_t sig_len, sig_addr;
++    g_autofree uint8_t *comp = NULL;
++    g_autofree uint8_t *sig = NULL;
++    g_autofree Diag508SigVerifBlock *svb = NULL;
++    size_t svb_size = sizeof(Diag508SigVerifBlock);
++    S390IPLCertificateStore *cs = s390_ipl_get_certificate_store();
++
++    if (!cs->count) {
++        return DIAG_508_RC_NO_CERTS;
++    }
++
++    svb = g_new0(Diag508SigVerifBlock, 1);
++    s390_ipl_read(env, addr, svb, svb_size);
++
++    svb_len = be32_to_cpu(svb->length);
++    if (svb_len != svb_size) {
++        return DIAG_508_RC_INVAL_LEN;
++    }
++
++    comp_len = be64_to_cpu(svb->comp_len);
++    comp_addr = be64_to_cpu(svb->comp_addr);
++    sig_len = be64_to_cpu(svb->sig_len);
++    sig_addr = be64_to_cpu(svb->sig_addr);
++
++    if (!comp_len || !comp_addr || comp_len > DIAG_508_MAX_COMP_LEN) {
++        if (comp_len > DIAG_508_MAX_COMP_LEN) {
++            warn_report("DIAG 0x508: component length %lu exceeds current maximum %u",
++                        comp_len, DIAG_508_MAX_COMP_LEN);
++        }
++        return DIAG_508_RC_INVAL_COMP_DATA;
++    }
++
++    if (!sig_len || !sig_addr || sig_len > DIAG_508_MAX_SIG_LEN) {
++        if (sig_len > DIAG_508_MAX_SIG_LEN) {
++            warn_report("DIAG 0x508: signature length %lu exceeds current maximum %u",
++                        sig_len, DIAG_508_MAX_SIG_LEN);
++        }
++        return DIAG_508_RC_INVAL_PKCS7_SIG;
++    }
++
++    comp = g_malloc0(comp_len);
++    s390_ipl_read(env, comp_addr, comp, comp_len);
++
++    sig = g_malloc0(sig_len);
++    s390_ipl_read(env, sig_addr, sig, sig_len);
++
++    for (int i = 0; i < cs->count; i++) {
++        verified = diag_508_verify_sig(cs->certs[i].raw,
++                                       cs->certs[i].size,
++                                       comp, comp_len,
++                                       sig, sig_len);
++        if (verified) {
++            svb->cert_store_index = i;
++            svb->cert_len = cpu_to_be64(cs->certs[i].der_size);
++            s390_ipl_write(env, addr, svb, svb_size);
++            return DIAG_508_RC_OK;
++        }
++    }
++
++    return DIAG_508_RC_FAIL_VERIF;
++}
++
++QEMU_BUILD_BUG_MSG(sizeof(Diag508SigVerifBlock) != 64,
++                   "size of Diag508SigVerifBlock is wrong");
++
+ void handle_diag_508(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+ {
+     uint64_t subcode = env->regs[r3];
++    uint64_t addr = env->regs[r1];
+     int rc;
+ 
+     if (env->psw.mask & PSW_MASK_PSTATE) {
+@@ -636,7 +737,15 @@ void handle_diag_508(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+ 
+     switch (subcode) {
+     case DIAG_508_SUBC_QUERY_SUBC:
+-        rc = 0;
++        rc = DIAG_508_SUBC_SIG_VERIF;
++        break;
++    case DIAG_508_SUBC_SIG_VERIF:
++        if (!diag_parm_addr_valid(addr, sizeof(Diag508SigVerifBlock), true)) {
++            s390_program_interrupt(env, PGM_ADDRESSING, ra);
++            return;
++        }
++
++        rc = handle_diag508_sig_verif(env, addr);
+         break;
+     default:
+         s390_program_interrupt(env, PGM_SPECIFICATION, ra);
 -- 
 2.54.0
 
