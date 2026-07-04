@@ -4,84 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B5CCC43458
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jul 2026 22:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C5F8C43458
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 00:44:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfmdx-0008Ec-As; Fri, 03 Jul 2026 18:45:57 -0400
+	id 1wfoTz-0006E0-5g; Fri, 03 Jul 2026 20:43:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bounce.2trqg2f9qk65se4=0mx28d1n08ij=l07orq7cnrwkkn@em1175899.techtravels.org>)
- id 1wfmdt-0008EN-Pe
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 18:45:55 -0400
-Received: from a3i384.smtp2go.com ([203.31.37.128])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wfoTx-0006DZ-M1; Fri, 03 Jul 2026 20:43:45 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bounce.2trqg2f9qk65se4=0mx28d1n08ij=l07orq7cnrwkkn@em1175899.techtravels.org>)
- id 1wfmds-0004U5-2L
- for qemu-devel@nongnu.org; Fri, 03 Jul 2026 18:45:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=techtravels.org;
- i=@techtravels.org; q=dns/txt; s=s1175899; t=1783118740; h=from :
- subject : to : message-id : date;
- bh=N5Qz6dllLKNJDBYao5BMJMG9ZXP9eOMJ/geX2rz3ut0=;
- b=Aq4F1DHlG1OSxa/iEc5QolgCxiTNe2Ryh4f/vaZL26I+0HhdA0/mI8mNg0x0MlP5BFhBp
- 3U0ifhG/hhjLfB+EHcdkxQY0hQSbJxxY5198Ra4xarYJVoLAVySELFIJIhKd3lRsfzwTWhf
- b5I8fFhVqXZQDgkOm8SDDhIGyC4BBJlr6b19mtGe/86XFyFLdqI/bWIPr65EF13KcYotX4V
- Ng8sbX4VijgfrY0nwmzIq1EBsTJYdsJjqXBBZJxjghuwEoZLhBWTtdbevKH4GKqiVw/2XEB
- esrn/DTHOZYSHIst0cpORH9RhRpXISwrJD1cy6dpHxgEmBaBK3vuubMjIgoA==
-Received: from [10.91.249.253] (helo=boxtwo.techtravels.org)
- by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
- (Exim 4.99.4) (envelope-from <keith@techtravels.org>)
- id 1wfmdb-FnQW0hPnR4y-BVwP; Fri, 03 Jul 2026 22:45:35 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=techtravels.org;
- s=mail; t=1783118728;
- bh=cHtFOx6bUc6ou1tMY0XAVNCbHcOZ1aRFCJXzBPi/JmU=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=Oh+TjdiFl0X5VAQJyNk1H9ZogLVJDThjHO3IXaC88lYN3e/QuLHtfRVJ6490UsOXt
- pPF0GXgzNbQ5TQfP99p0UH1E9G4d+4j/aBmzZoTdJdk8i6OIA/GGc8hN8nofMwpZSH
- TuO/CgSqLQmV9hZfiFH/WDcIK4uJ8QTfzOuz0SMH41H3U/avu/zrRQoKeSax+vi9kU
- nm1xGw6BOjt5zbwBdRKvAQRuQ0+rK9dqED1mNw8j4UoxMfFXpThx4T3+C+omEOKH4Y
- KkUpxDSrYYY8lnQ/IKIxYTrT8r31dlpvVTWfBXv9Aesuc3FR79riBkvUQ9BJJtJRP2
- uW20gRXI7dgUg==
-Received: from authenticated-user (boxtwo.techtravels.org [54.196.37.146])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by boxtwo.techtravels.org (Postfix) with ESMTPSA id 66ABD3F195;
- Fri,  3 Jul 2026 18:45:28 -0400 (EDT)
-Message-ID: <74e5958d-58d8-4519-82dc-52e598eb6d68@techtravels.org>
-Date: Fri, 3 Jul 2026 18:45:28 -0400
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wfoTv-0001f1-BE; Fri, 03 Jul 2026 20:43:45 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 663KmHlm3769482; Sat, 4 Jul 2026 00:43:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=sDmBu1
+ c6tAodC7YkUZ48MwiUHhLPc2yPQwxhrP+sKQM=; b=repAKFPK/RBrww5Urc1Hyj
+ yXiatEzgpm6mice+7gA1npU/A1pr4Mi3+VxkuV6mxm5+wcqtEFcPAQzNS01t8XQb
+ sN8s1Oh6WZlC8nS4Aat3oUufxPD5DOB6FnrbddmrQXwz11CpXYEjO2HoDi0lur6M
+ O7hQnP3I7X6BSTVwQW/zD7iOdgxmAhynQcx8OcQstBsiOg0f0ga2V1F8Qa0w2Ml0
+ MVnvDHuS3BrD2eiuPEg0j9ye8h+RXfTM8Q+QLraVLQkFF5Rv/jJZHV1bg7K6yW1U
+ C0U9u5UMPmhymGwOUbge3I5NCH2CfIJfHtdgN+BM0cnKa08eZttLYkxZrkveYvwA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26mk8x0n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 04 Jul 2026 00:43:41 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6640Yjsi020374;
+ Sat, 4 Jul 2026 00:43:41 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhtwuc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 04 Jul 2026 00:43:40 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6640hdDf21168874
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 4 Jul 2026 00:43:39 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B029F58056;
+ Sat,  4 Jul 2026 00:43:39 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 518E85803F;
+ Sat,  4 Jul 2026 00:43:39 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.19.96]) by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Sat,  4 Jul 2026 00:43:39 +0000 (GMT)
+Message-ID: <76c7a257398ff5bfa12168b372695de1bdf85fee.camel@linux.ibm.com>
+Subject: Re: [PATCH v13 23/33] pc-bios/s390-ccw: Add signature verification
+ for secure IPL in audit mode
+From: Eric Farman <farman@linux.ibm.com>
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Date: Fri, 03 Jul 2026 20:43:38 -0400
+In-Reply-To: <6fa4c5f7-0388-4acb-bacb-f929ecff1a09@linux.ibm.com>
+References: <20260703022933.1805010-1-zycai@linux.ibm.com>
+ <20260703022933.1805010-24-zycai@linux.ibm.com>
+ <26e6d55b2ea246f2c2602ff911f459c7df8b57b0.camel@linux.ibm.com>
+ <6fa4c5f7-0388-4acb-bacb-f929ecff1a09@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 3/4] hw/scsi/ncr53c710: rewrite the SCRIPTS engine
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>, BALATON Zoltan <balaton@eik.bme.hu>
-References: <20260701213359.1855870-1-keith@techtravels.org>
- <20260701213359.1855870-4-keith@techtravels.org>
- <CAFEAcA_3vf5vrwoO0cGcdTsykU8uTf8386oyWki3iQ3Bje9Trw@mail.gmail.com>
- <8d3f679a-3039-404e-879d-b97e1b58e090@techtravels.org>
- <CAFEAcA-s2xYKG5PiUqFufdgJgMxD1OccbHO9zcCH2+aXwkK70Q@mail.gmail.com>
-Content-Language: en-US
-From: Keith Monahan <keith@techtravels.org>
-In-Reply-To: <CAFEAcA-s2xYKG5PiUqFufdgJgMxD1OccbHO9zcCH2+aXwkK70Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Report-Abuse: Please forward a copy of this message, including all headers,
- to <abuse-report@smtp2go.com>
-Feedback-ID: 1175899m:1175899aieqF3d:1175899s5U9-VI9CJ
-X-smtpcorp-track: UfqSfaQjhvK_.qc_8_V0K7Dlq.u-OcDwGbXBw
-Received-SPF: pass client-ip=203.31.37.128;
- envelope-from=bounce.2trqg2f9qk65se4=0mx28d1n08ij=l07orq7cnrwkkn@em1175899.techtravels.org;
- helo=a3i384.smtp2go.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA0MDAwMSBTYWx0ZWRfX9JW7+RHEIokJ
+ wFRn8NECLUzfx7VNLBtLUXuifbO449cNxOBbXOJPl9DjRCwniuC15vYqH+0o3IrPCooucf8h5CZ
+ 1ttf1ZKUDTkfUjStim2CqjI7VH9Otm7lBJPbzOp6+7F8xufEozyuM80/7o6Utp7ciu1P8HJX4/V
+ EIaWVHOhwefVNIW7chRnHvGzNjH/7dcSx9d/YR4R/VoDiP07dCXZ7TY7Pdzd2S2XRX4NAse1tFW
+ wGcS8dmOxEWTgxz8oHp6aQ+HR9pgOGClM7k5CI+lVHdt59mYu44LTtumPATB5ZeuPSixraA5RLe
+ amtV6aYsFxl7Pfkupq//pCsdkRLYR7wFzSsdt1k6ZQfHDs2Pn4oLftMOEttvctEELPLVns5zGun
+ MQwny6L/r0JcjBLtWEghXua1sslacrYlvBJwvGd4wztSIsjaokZO5/MwXt8jjkWFln2LQXZ8pUz
+ VbMtUFmigcpttqXg/zg==
+X-Proofpoint-GUID: tp7ASl7FMv87FU2zXldbHd638dTe4ALq
+X-Authority-Analysis: v=2.4 cv=Z8bc2nRA c=1 sm=1 tr=0 ts=6a48573d cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=Lrc2qXfl7WQKukvHOm0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA0MDAwMSBTYWx0ZWRfX2dh2F7O32I4S
+ dzgWqlWujanJUdCqFB5GttGN9G5pJyXOYA1se4v/jKNwNuMdagozARFfg+fm4zU8Qw8MC9bbCQx
+ hKF67N4Z50xpVVQ4PBM7DywAgsj/Vh4=
+X-Proofpoint-ORIG-GUID: tp7ASl7FMv87FU2zXldbHd638dTe4ALq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-03_04,2026-07-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 adultscore=0 spamscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607040001
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,80 +125,324 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter,
+On Fri, 2026-07-03 at 09:56 -0400, Zhuoying Cai wrote:
+> On 7/3/26 7:40 AM, Eric Farman wrote:
+> > On Thu, 2026-07-02 at 22:29 -0400, Zhuoying Cai wrote:
+> > > Enable secure IPL in audit mode, which performs signature verificatio=
+n,
+> > > but any error does not terminate the boot process. Only warnings will=
+ be
+> > > logged to the console instead.
+> > >=20
+> > > Secure IPL in audit mode requires at least one certificate provided i=
+n
+> > > the key store along with necessary facilities (Secure IPL Facility,
+> > > Certificate Store Facility and secure IPL extension support).
+> > >=20
+> > > Note: Secure IPL in audit mode is implemented for the SCSI scheme of
+> > > virtio-blk/virtio-scsi devices.
+> > >=20
+> > > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> > > ---
+> > >  docs/system/s390x/secure-ipl.rst |  15 ++
+> > >  hw/s390x/ipl.c                   |   9 +
+> > >  pc-bios/s390-ccw/Makefile        |   2 +-
+> > >  pc-bios/s390-ccw/bootmap.c       |  27 +++
+> > >  pc-bios/s390-ccw/bootmap.h       |   9 +
+> > >  pc-bios/s390-ccw/jump2ipl.c      |   7 +
+> > >  pc-bios/s390-ccw/main.c          |  18 +-
+> > >  pc-bios/s390-ccw/s390-ccw.h      |  20 ++
+> > >  pc-bios/s390-ccw/sclp.c          |  27 +++
+> > >  pc-bios/s390-ccw/sclp.h          |   6 +
+> > >  pc-bios/s390-ccw/secure-ipl.c    | 363 +++++++++++++++++++++++++++++=
+++
+> > >  pc-bios/s390-ccw/secure-ipl.h    | 115 ++++++++++
+> > >  12 files changed, 616 insertions(+), 2 deletions(-)
+> > >  create mode 100644 pc-bios/s390-ccw/secure-ipl.c
+> > >  create mode 100644 pc-bios/s390-ccw/secure-ipl.h
+> > >=20
+> >=20
+> > ...snip...
+> >=20
+> > > diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+> > > index cd3d0776b0..7484429c9a 100644
+> > > --- a/pc-bios/s390-ccw/main.c
+> > > +++ b/pc-bios/s390-ccw/main.c
+> > > @@ -20,6 +20,7 @@
+> > >  #include "dasd-ipl.h"
+> > >  #include "clp.h"
+> > >  #include "virtio-pci.h"
+> > > +#include "secure-ipl.h"
+> > > =20
+> > >  static SubChannelId blk_schid =3D { .one =3D 1 };
+> > >  static char loadparm_str[LOADPARM_LEN + 1];
+> > > @@ -383,6 +384,8 @@ static void probe_boot_device(void)
+> > > =20
+> > >  void main(void)
+> > >  {
+> > > +    int vcssb_len;
+> > > +
+> > >      iplb =3D &ipl_blocks.iplb;
+> > > =20
+> > >      copy_qipl();
+> > > @@ -394,7 +397,20 @@ void main(void)
+> > >          probe_boot_device();
+> > >      }
+> > > =20
+> > > -    boot_mode =3D ZIPL_BOOT_MODE_NORMAL;
+> > > +    boot_mode =3D get_boot_mode(iplb->hdr_flags);
+> > > +    switch (boot_mode) {
+> > > +    case ZIPL_BOOT_MODE_SECURE_AUDIT:
+> > > +        if (!secure_ipl_supported()) {
+> > > +            panic("Unable to boot in audit mode");
+> > > +        }
+> > > +
+> > > +        vcssb_len =3D zipl_secure_get_vcssb();
+> > > +        if (vcssb_len =3D=3D 0) {
+> > > +            panic("Failed to query certificate storage information!"=
+);
+> > > +        }
+> >=20
+> > break? fallthrough?
+> >=20
+>=20
+> Thanks for catching this!
+>=20
+> > > +    default:
+> > > +        break;
+> > > +    }
+> > > =20
+> > >      while (have_iplb) {
+> > >          boot_setup();
+> > > diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.=
+h
+> > > index 5420443ad2..ca2737054d 100644
+> > > --- a/pc-bios/s390-ccw/s390-ccw.h
+> > > +++ b/pc-bios/s390-ccw/s390-ccw.h
+> > > @@ -40,6 +40,22 @@ typedef unsigned long long u64;
+> > >                              ((b) =3D=3D 0 ? (a) : (MIN(a, b))))
+> > >  #endif
+> > > =20
+> > > +/*
+> > > + * Round number down to multiple. Requires that d be a power of 2.
+> > > + * Works even if d is a smaller type than n.
+> > > + */
+> > > +#ifndef ROUND_DOWN
+> > > +#define ROUND_DOWN(n, d) ((n) & -(0 ? (n) : (d)))
+> > > +#endif
+> > > +
+> > > +/*
+> > > + * Round number up to multiple. Requires that d be a power of 2.
+> > > + * Works even if d is a smaller type than n.
+> > > + */
+> > > +#ifndef ROUND_UP
+> > > +#define ROUND_UP(n, d) ROUND_DOWN((n) + (d) - 1, (d))
+> > > +#endif
+> > > +
+> > >  #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
+> > > =20
+> > >  #include "cio.h"
+> > > @@ -64,6 +80,8 @@ void sclp_print(const char *string);
+> > >  void sclp_set_write_mask(uint32_t receive_mask, uint32_t send_mask);
+> > >  void sclp_setup(void);
+> > >  void sclp_get_loadparm_ascii(char *loadparm);
+> > > +bool sclp_is_diag320_on(void);
+> > > +bool sclp_is_fac_ipl_flag_on(uint16_t fac_ipl_flag);
+> > >  int sclp_read(char *str, size_t count);
+> > > =20
+> > >  /* bootmap.c */
+> > > @@ -71,9 +89,11 @@ void zipl_load(void);
+> > > =20
+> > >  typedef enum ZiplBootMode {
+> > >      ZIPL_BOOT_MODE_NORMAL =3D 0,
+> > > +    ZIPL_BOOT_MODE_SECURE_AUDIT =3D 1,
+> > >  } ZiplBootMode;
+> > > =20
+> > >  extern ZiplBootMode boot_mode;
+> > > +ZiplBootMode get_boot_mode(uint8_t hdr_flags);
+> > > =20
+> > >  /* jump2ipl.c */
+> > >  void write_reset_psw(uint64_t psw);
+> > > diff --git a/pc-bios/s390-ccw/sclp.c b/pc-bios/s390-ccw/sclp.c
+> > > index 4a07de018d..48bdfedf1f 100644
+> > > --- a/pc-bios/s390-ccw/sclp.c
+> > > +++ b/pc-bios/s390-ccw/sclp.c
+> > > @@ -113,6 +113,33 @@ void sclp_get_loadparm_ascii(char *loadparm)
+> > >      }
+> > >  }
+> > > =20
+> > > +bool sclp_is_diag320_on(void)
+> > > +{
+> > > +    ReadInfo *sccb =3D (void *)_sccb;
+> > > +
+> > > +    memset((char *)_sccb, 0, sizeof(ReadInfo));
+> > > +    sccb->h.length =3D SCCB_SIZE;
+> > > +    if (!sclp_service_call(SCLP_CMDW_READ_SCP_INFO, sccb)) {
+> > > +        return sccb->fac134 & SCCB_FAC134_DIAG320_BIT;
+> > > +    }
+> > > +
+> > > +    return 0;
+> > > +}
+> > > +
+> > > +/* check if specified IPL facility flag is enabled */
+> > > +bool sclp_is_fac_ipl_flag_on(uint16_t fac_ipl_flag)
+> > > +{
+> > > +    ReadInfo *sccb =3D (void *)_sccb;
+> > > +
+> > > +    memset((char *)_sccb, 0, sizeof(ReadInfo));
+> > > +    sccb->h.length =3D SCCB_SIZE;
+> > > +    if (!sclp_service_call(SCLP_CMDW_READ_SCP_INFO, sccb)) {
+> > > +        return sccb->fac_ipl & fac_ipl_flag;
+> > > +    }
+> > > +
+> > > +    return 0;
+> > > +}
+> > > +
+> > >  int sclp_read(char *str, size_t count)
+> > >  {
+> > >      ReadEventData *sccb =3D (void *)_sccb;
+> > > diff --git a/pc-bios/s390-ccw/sclp.h b/pc-bios/s390-ccw/sclp.h
+> > > index 64b53cad29..a8a41cd004 100644
+> > > --- a/pc-bios/s390-ccw/sclp.h
+> > > +++ b/pc-bios/s390-ccw/sclp.h
+> > > @@ -50,6 +50,8 @@ typedef struct SCCBHeader {
+> > >  } __attribute__((packed)) SCCBHeader;
+> > > =20
+> > >  #define SCCB_DATA_LEN (SCCB_SIZE - sizeof(SCCBHeader))
+> > > +#define SCCB_FAC134_DIAG320_BIT 0x4
+> > > +#define SCCB_FAC_IPL_SIPL_BIT   0x4000
+> > > =20
+> > >  typedef struct ReadInfo {
+> > >      SCCBHeader h;
+> > > @@ -57,6 +59,10 @@ typedef struct ReadInfo {
+> > >      uint8_t rnsize;
+> > >      uint8_t reserved[13];
+> > >      uint8_t loadparm[LOADPARM_LEN];
+> > > +    uint8_t reserved1[102];
+> > > +    uint8_t fac134;
+> > > +    uint8_t reserved2;
+> > > +    uint16_t fac_ipl;
+> > >  } __attribute__((packed)) ReadInfo;
+> > > =20
+> > >  typedef struct SCCB {
+> > > diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-=
+ipl.c
+> > > new file mode 100644
+> > > index 0000000000..2cfa16fb68
+> > > --- /dev/null
+> > > +++ b/pc-bios/s390-ccw/secure-ipl.c
+> > > @@ -0,0 +1,363 @@
+> > > +/*
+> > > + * S/390 Secure IPL
+> > > + *
+> > > + * Functions to support IPL in secure boot mode (DIAG 320, DIAG 508,
+> > > + * signature verification, and certificate handling).
+> > > + *
+> > > + * For secure IPL overview: docs/system/s390x/secure-ipl.rst
+> > > + * For secure IPL technical: docs/specs/s390x-secure-ipl.rst
+> > > + *
+> > > + * Copyright 2025 IBM Corp.
+> > > + * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
+> > > + *
+> > > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > > + */
+> > > +
+> > > +#include <stdlib.h>
+> > > +#include <string.h>
+> > > +#include <stdio.h>
+> > > +#include "s390-ccw.h"
+> > > +#include "sclp.h"
+> > > +#include "secure-ipl.h"
+> > > +
+> > > +static VCStorageSizeBlock vcssb __attribute__((__aligned__(8)));
+> > > +
+> > > +#define for_each_rb_entry(entry, list) \
+> > > +    for (entry =3D (void *)(list) + sizeof((list)->ipl_info_header);=
+ \
+> > > +         (void *)(entry) + sizeof(*(entry)) <=3D \
+> > > +         (void *)(list) + (list)->ipl_info_header.len; \
+> > > +         entry++)
+> > > +
+> > > +int zipl_secure_get_vcssb(void)
+> > > +{
+> > > +    /* avoid retrieving vcssb multiple times */
+> > > +    if (vcssb.length =3D=3D VCSSB_LEN_VALID) {
+> > > +        goto out;
+> > > +    }
+> > > +
+> > > +    vcssb.length =3D VCSSB_LEN_VALID;
+> > > +    if (_diag320(&vcssb, DIAG_320_SUBC_QUERY_VCSI) !=3D DIAG_320_RC_=
+OK) {
+> > > +        vcssb.length =3D 0;
+> > > +    }
+> > > +
+> > > +out:
+> > > +    return vcssb.length;
+> > > +}
+> > > +
+> > > +static uint32_t request_certificate(uint8_t *cert_buf, uint8_t index=
+)
+> > > +{
+> > > +    VCEntryHeader *vce_hdr;
+> > > +    struct vcb {
+> > > +        VCBlockHeader vcb_hdr;
+> > > +        struct vce {
+> > > +            VCEntryHeader vce_hdr;
+> > > +            uint8_t cert_buf[CERT_BUF_MAX_LEN];
+> > > +        } vce;
+> > > +    } __attribute__((__aligned__(PAGE_SIZE))) vcb =3D { 0 };
+> > > +
+> > > +    /*
+> > > +     * Request single entry
+> > > +     * Fill input fields of single-entry VCB
+> > > +     *
+> > > +     * First and last index must be equal because only one
+> > > +     * VCE per VCB is currently supported
+> > > +     */
+> > > +    vcb.vcb_hdr.in_len =3D ROUND_UP(vcssb.max_single_vcb_len, PAGE_S=
+IZE);
+> >=20
+> > Don't you need to convert max_single_vcb_len from be to cpu?
+> >=20
+>=20
+> I don't think we need to convert max_single_vcb_len here, but please
+> correct me if I'm missing something. If I understand correctly, the
+> fields are written and read in big-endian format, so no additional
+> conversion should be necessary.
 
-As you know, I did not start with a rewrite. I started exactly where you 
-are asking me to end up. I spent a large amount of effort trying to 
-morph the existing model into something correct one reviewable change at 
-a time: identifying, debugging, remediating, and reapplying fixes for 
-something on the order of a dozen distinct bugs, testing after each 
-round. That path still did not converge. Only after that did I pivot to 
-rebuilding from scratch, and that was its own effort: tracing, 
-debugging, and running hundreds of test cases before it actually worked.
+No, you're right... Got my wires crossed about qemu vs bios. Sorry about th=
+at.
 
-So reconstructing an incremental series now means manufacturing the 
-exact path I already tried and abandoned, except the intermediate 
-commits are throwaway by construction. They exist only to satisfy 
-review, not to reach a solution, since the working solution already 
-exists as the final commit.
-
-I am investigating the feasibility of creating a series of incremental 
-patches to morph the original 710 model into the new one, but I do not 
-yet know how cleanly that will map onto the current result, since the 
-structure is now quite different and some parts may not have a useful 
-intermediate form.
-
-The original 710 model likely borrowed from the 895 model, as did I when 
-I rebuilt it. So you are right: some of what I claim to be new code in 
-the diff could very well be the same 895 pattern the original author 
-already used as well. This may indeed reduce how much is genuinely new, 
-and I can look for other places where the same thing is true.
-
-There is also a real tradeoff in how the series can be sliced, and I 
-think it comes down to a choice I need you to make. I can aim for 
-smaller steps that each build but do not necessarily boot the guest, or 
-I can aim for steps that keep the model bootable at each stage, which 
-forces large chunks of the central core to land together as one atomic 
-commit. I do not think I can give you both at once.
-
-Which do you want? If every commit has to boot, some changes simply 
-cannot be separated, because the model likely only becomes functional 
-once the central control flow change lands.
-
-To be clear, choosing option 2 means the central patch is going to be large!
-
-Thanks,
-Keith
-
-On 7/3/2026 5:03 AM, Peter Maydell wrote:
-> On Thu, 2 Jul 2026 at 22:49, Keith Monahan <keith@techtravels.org> wrote:
->>
->> Peter,
->>
->> Thanks for going through it. I raised this originally in the v1 thread
->> and I am not sure it reached you, so let me lay it out here.
->>
->> The size is real, but the more useful thing to flag is that reading this
->> as a diff against the old model will not give you an accurate view of
->> the change, because these are not two versions of one model. They are
->> two different implementations, and git is aligning text between them
->> that never shared any code.
-> 
-> And yet, when I look at the diff I see clear things that are
-> just individual fixes or changes to the existing code.
-> Yes, there's a big change to the core, but it would be much
-> easier to see what that core change is if it was not all
-> thrown in with all the other parts too. (Just to check I
-> had another scroll through and there really is a ton of stuff
-> in there which is changes like "variable name changed from
-> 'operator' to 'xoperator' or "the constant names in all the
-> case statements lost their _REG suffix".)
-> 
-> Incidentally, even for "here is a completely new device model"
-> I would recommend structuring it as multiple patches, not a
-> single "here is the device" patch, when the device is this
-> complex.
-> 
-> -- PMM
-
+>=20
+> > > +    vcb.vcb_hdr.first_vc_index =3D index;
+> > > +    vcb.vcb_hdr.last_vc_index =3D index;
+> > > +
+> > > +    if (_diag320(&vcb, DIAG_320_SUBC_STORE_VC) !=3D DIAG_320_RC_OK) =
+{
+> > > +        puts("Could not get certificate");
+> > > +        return 0;
+> > > +    }
+> > > +
+> > > +    if (vcb.vcb_hdr.out_len =3D=3D sizeof(VCBlockHeader)) {
+> > > +        puts("No certificate entry");
+> > > +        return 0;
+> > > +    }
+> > > +
+> > > +    if (vcb.vcb_hdr.remain_ct !=3D 0) {
+> > > +        panic("Not enough memory to store requested certificate");
+> > > +    }
+> > > +
+> > > +    vce_hdr =3D &vcb.vce.vce_hdr;
+> > > +    if (!(vce_hdr->flags & DIAG_320_VCE_FLAGS_VALID)) {
+> > > +        puts("Invalid certificate");
+> > > +        return 0;
+> > > +    }
+> > > +
+> > > +    memcpy(cert_buf, (uint8_t *)&vcb.vce + vce_hdr->cert_offset, vce=
+_hdr->cert_len);
+> > > +
+> > > +    return vce_hdr->cert_len;
+> > > +}
+> > > +
+> [...]
 
