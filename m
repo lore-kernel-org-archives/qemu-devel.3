@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D927EC43458
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 21:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02E44C43458
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 21:42:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wg879-000199-FU; Sat, 04 Jul 2026 17:41:31 -0400
+	id 1wg85v-0007KC-1l; Sat, 04 Jul 2026 17:40:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wg877-00012W-KO; Sat, 04 Jul 2026 17:41:29 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wg85s-0007J7-Dm; Sat, 04 Jul 2026 17:40:12 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wg876-0000L2-3H; Sat, 04 Jul 2026 17:41:29 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1wg85q-0007RP-L2; Sat, 04 Jul 2026 17:40:12 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 664KmPSn2457478; Sat, 4 Jul 2026 21:41:02 GMT
+ 664KmKNV2593552; Sat, 4 Jul 2026 21:40:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=6WNQOqi+1oUHxWISO
- ZG/J6F/2F8CQj/Noj4OCS7AU3I=; b=d6SBFBi8hWyyUovflhsjGUgYkBFlqydPq
- O+qMYZPfE+CGxGXXFFWGtt79uerZKQYVQnC6VLiQPrMF6Tj6cb3ptqxXCVlLxFFM
- EGBws3hu/z/FHiMr5b/3PC4GCULFf3MiZoCc/CFMfGLrwuV0IZ6qDoGEnylp8604
- TpDLsohENrwUsrxxyO2TAHip5WJmN7h88iD3MwOhlSshmVkFAtMl51j6lUWKQQ2w
- 1O5bnAcngbVrj40L9Rv8MxXIMUtlrZgqd8j5PAzkLMtkVuglEV75tirh3YxqN9PP
- Lv7chU+jLCrit1KUSeeqZfz3pDBZtgeH6ikv7GejNvk9R1HBXZa5Q==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6qkn3hn9-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=SRItF3
+ Rpj3r/qWUSqrHn8Lr/8FzyN807OwVIui3tyWE=; b=cDSkWBSV0Ewn78Pc+VLfPJ
+ J+BWakgngNPgQjk/ISjDuP/wslLNS3ClniD8suv6+A9RiXFK4X4ohTW+fb/E9f9x
+ Al1GX8ZDjk05W9RgmXICb8qc4BHipcAabZthFG211MgAJfifrYl4KNehqax8vTEQ
+ Z4ZMVfCpz2xKGD9fcc0iN0REam3Gwj0E8vS+zRMGanbCY/2Q56WKuGXApRo7fjrP
+ Q4++W0YswWP1A5C386mOKhGZam/cN+fv6sgC3cc4I2j6kruHvYL1FH5GOxxiXfNG
+ UrK0tuNzGF0saNCGQXdkSndH/QvB/dycnFZtnPBwLJ3UdU7EmN/dmmtamG4fhmTw
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6sp3b8y3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 04 Jul 2026 21:41:02 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 664LYaCj027291;
- Sat, 4 Jul 2026 21:41:01 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2s7wpk45-1
+ Sat, 04 Jul 2026 21:40:01 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 664LYcgh013619;
+ Sat, 4 Jul 2026 21:40:00 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2ruqxq68-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 04 Jul 2026 21:41:01 +0000 (GMT)
+ Sat, 04 Jul 2026 21:40:00 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
  [10.39.53.231])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 664Lf00D25166358
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 664LdxiZ24445476
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 4 Jul 2026 21:41:00 GMT
+ Sat, 4 Jul 2026 21:39:59 GMT
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 390CB5805F;
- Sat,  4 Jul 2026 21:41:00 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E4B1E58045;
+ Sat,  4 Jul 2026 21:39:58 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1276758052;
- Sat,  4 Jul 2026 21:40:58 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CEE7058050;
+ Sat,  4 Jul 2026 21:39:56 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.17.215])
  by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Sat,  4 Jul 2026 21:40:57 +0000 (GMT)
+ Sat,  4 Jul 2026 21:39:56 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
@@ -66,50 +67,50 @@ Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
  alifm@linux.ibm.com, brueckner@linux.ibm.com,
  pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-Subject: [PATCH v15 30/33] hw/s390x/ipl: Handle secure boot with multiple boot
- devices
-Date: Sat,  4 Jul 2026 17:39:46 -0400
-Message-ID: <20260704213950.2118823-31-zycai@linux.ibm.com>
+Subject: [PATCH v15 02/33] crypto/x509-utils: Refactor with GNUTLS fallback
+Date: Sat,  4 Jul 2026 17:39:18 -0400
+Message-ID: <20260704213950.2118823-3-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260704213950.2118823-1-zycai@linux.ibm.com>
 References: <20260704213950.2118823-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Q/XiJY2a c=1 sm=1 tr=0 ts=6a497dee cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=NtokSpiRuqd3k76Znq0A:9
-X-Proofpoint-GUID: eN2lEfp4rIv0hE-mpvaJpfMLrn7ywyuv
-X-Proofpoint-ORIG-GUID: eN2lEfp4rIv0hE-mpvaJpfMLrn7ywyuv
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA0MDIyNCBTYWx0ZWRfX+J9XfCHb+PAn
- s//bMYW7kxw9oA0rJq/X8rjXydxJXWCQGUDCNFsEGtk1qLOAgfAYjcjG5TUp3uQXWeDZQwudtLi
- W87pdIKCCZAGxaLailHmiz7Hnj3PMIY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA0MDIyNCBTYWx0ZWRfXwycIg+SGOTmG
- TTITD0rt0V8TuV8TaCQQ2grv12Kg5MxfXHo87RCqVUBjkHPM/bXNaF3QzNR5oeZ9MRQsDb84iXZ
- LNHP+1weTfKBq/SHHINkq8u/MnifcaWZ0PgjBZ2EkDYlL0P26TWsnNL8o8UNAG12yzJTFn4KZ+Z
- o7iEhV0il5rxOtU7fv47cd/OZzXW22SjcG/j2I5hBB4bIBnhSRX82y9NN6B+q4Vc7eD3nAVwRWI
- 81shFidnWaoXGmq3NehAAsn+6+K8oSlV3xY/yXQBieON832HXdNihCF7OmiH8a2LdmPJBaI+ags
- K9uGMONMe4lz+CMPMHcFBrlH0PEXqvxVIQ4/Vt3sn+4MqSQ/1GqD6muTTp7hItUR3RdM/rxfEYa
- vTWXM/KPjoYyXLXKiPimioIyhw9ERFq8GK1gmejJG1Ekz6N21F4BLT8k2IHcbnW07nBBUPNIjPZ
- 3fx8yTXPmKk0kOumo2Q==
+X-Authority-Analysis: v=2.4 cv=KsJ9H2WN c=1 sm=1 tr=0 ts=6a497db1 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=20KFwNOVAAAA:8 a=FUyA0-9y5A7gcD0mOlIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA0MDIyNCBTYWx0ZWRfX5FlHeXlTLxOC
+ JdtmYlt89iC2PGjI0pHDjGrzvAth+l0r6a/DzK4VJp/crugDiR8V/c7ZMzowB2fh3LXylHPKSga
+ TCWKMrHTHko+Zl2CJK1KB+YRLYM1v5M=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA0MDIyNCBTYWx0ZWRfX3XxOeZFx0yJo
+ VLYQNUDXZmYqaulE7fUNbFb6CeBiJFy2AM0dUFLv+m/yK0ZgXJ2sDzYyCm7iTAxhX19rw5Ew35p
+ /qaUXKxRv/JU1rBwYglQ3HWG00K4Bw456C5W7fEYc2Yp3HABCi1LW2n/zkW31t97Ac9GqrORVmE
+ izcGbY5Q8IQnbsheTEZB/aGJcqvQBktf/zYpsPXEp25QIr0rig37Vh22FXnTQim4Oqf4w64DOkB
+ 4GkzWFq6MwRO74RrVohFUP4aMSDUwhO138dyJnqCCW7Ymjfrhzcgb6oAjGZ1DwG39B9KV5X8Gsz
+ 0Ug9G34BAcqvEHcVVUNP9vdVMUTdmkucsqc26Tknc0YvdyUe4XvmzwnVHUBCdSGzRoy7Toc/gM+
+ kkEuSrzoGu+lk2M5mQixkmcAYXDbNyknYC4kE4WiuKZRcy1537USS2fyGcYKkNb+btNF7n2yeIb
+ nWUKxMrEOWGANGjP81A==
+X-Proofpoint-ORIG-GUID: XiAuVlfzZMnaHwseH-dzdBX0vsu2Zmro
+X-Proofpoint-GUID: XiAuVlfzZMnaHwseH-dzdBX0vsu2Zmro
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-04_03,2026-07-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501
- bulkscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ impostorscore=0 malwarescore=0 spamscore=0 adultscore=0 clxscore=1015
+ suspectscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607040224
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,104 +127,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current approach to enable secure boot relies on providing
-secure-boot and boot-certs parameters of s390-ccw-virtio machine
-type option, which apply to all boot devices.
+Always compile x509-utils.c and add a fallback when GNUTLS is
+unavailable.
 
-With the possibility of multiple boot devices, secure boot expects all
-provided devices to be supported and eligible (e.g.,
-virtio-blk/virtio-scsi using the SCSI scheme).
-
-If multiple boot devices are provided and include an unsupported (e.g.,
-ECKD, VFIO) or a non-eligible (e.g., Net) device, the boot process will
-terminate with an error logged to the console.
+These functions will be needed in the s390x code regardless of whether
+GNUTLS is available.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 ---
- hw/s390x/ipl.c          | 40 ++++++++++++++++++++++++++++++++++++++--
- pc-bios/s390-ccw/main.c |  3 ---
- 2 files changed, 38 insertions(+), 5 deletions(-)
+ crypto/meson.build  |  2 +-
+ crypto/x509-utils.c | 16 ++++++++++++++++
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index 361107ba5b..b927db8446 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -503,6 +503,37 @@ static void s390_set_secure_boot_flags(IplParameterBlock *iplb,
-     iplb->len = cpu_to_be32(S390_IPLB_MAX_LEN);
+diff --git a/crypto/meson.build b/crypto/meson.build
+index b51597a879..fda85543de 100644
+--- a/crypto/meson.build
++++ b/crypto/meson.build
+@@ -22,12 +22,12 @@ crypto_ss.add(files(
+   'tlscredsx509.c',
+   'tlssession.c',
+   'rsakey.c',
++  'x509-utils.c',
+ ))
+ 
+ if gnutls.found()
+   crypto_ss.add(files(
+     'tlscredsbox.c',
+-    'x509-utils.c',
+   ))
+ endif
+ 
+diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+index 39bb6d4d8c..6176a88653 100644
+--- a/crypto/x509-utils.c
++++ b/crypto/x509-utils.c
+@@ -11,6 +11,8 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "crypto/x509-utils.h"
++
++#ifdef CONFIG_GNUTLS
+ #include <gnutls/gnutls.h>
+ #include <gnutls/crypto.h>
+ #include <gnutls/x509.h>
+@@ -78,3 +80,17 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+     gnutls_x509_crt_deinit(crt);
+     return ret;
  }
- 
-+static bool s390_validate_secure_boot_device(int devtype, Error **errp)
++
++#else /* ! CONFIG_GNUTLS */
++
++int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
++                                      QCryptoHashAlgo hash,
++                                      uint8_t *result,
++                                      size_t *resultlen,
++                                      Error **errp)
 +{
-+    switch (devtype) {
-+    case CCW_DEVTYPE_VFIO:
-+        error_setg(errp, "Passthrough (vfio) CCW device does not support secure boot!");
-+        return false;
-+    case CCW_DEVTYPE_VIRTIO_NET:
-+        error_setg(errp, "Virtio net boot device does not support secure boot!");
-+        return false;
-+    default:
-+        return true;
-+    }
++    error_setg(errp, "GNUTLS is required to get fingerprint");
++    return -1;
 +}
 +
-+static void s390_apply_secure_boot(IplParameterBlock *iplb, int devtype,
-+                                   bool secure_boot, bool audit_mode)
-+{
-+    Error *local_error = NULL;
-+
-+    if (!secure_boot && !audit_mode) {
-+        return;
-+    }
-+
-+    if (!s390_validate_secure_boot_device(devtype, &local_error)) {
-+        error_report_err(local_error);
-+        exit(1);
-+    }
-+
-+    s390_set_secure_boot_flags(iplb, secure_boot, audit_mode);
-+}
-+
- static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
- {
-     CcwDevice *ccw_dev = NULL;
-@@ -559,14 +590,19 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-         s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
-         iplb->flags |= DIAG308_FLAGS_LP_VALID;
- 
--        s390_set_secure_boot_flags(iplb, s390_secure_boot_enabled(),
--                                   s390_has_certificate());
-+        s390_apply_secure_boot(iplb, devtype, s390_secure_boot_enabled(),
-+                               s390_has_certificate());
- 
-         return true;
-     }
- 
-     pbdev = s390_get_pci_device(dev_st, &devtype);
-     if (pbdev) {
-+        if (s390_secure_boot_enabled() || s390_has_certificate()) {
-+            error_report("Virtio pci boot device does not support secure boot!");
-+            exit(1);
-+        }
-+
-         pci_lp = object_property_get_str(OBJECT(pbdev->pdev), "loadparm", NULL);
-         if (pci_lp && strlen(pci_lp) > 0) {
-             lp = pci_lp;
-diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index 1bf77d1594..9623d5320f 100644
---- a/pc-bios/s390-ccw/main.c
-+++ b/pc-bios/s390-ccw/main.c
-@@ -305,9 +305,6 @@ static void ipl_ccw_device(void)
-     switch (cutype) {
-     case CU_TYPE_DASD_3990:
-     case CU_TYPE_DASD_2107:
--        IPL_assert((boot_mode == ZIPL_BOOT_MODE_NORMAL),
--                    "Passthrough (vfio) CCW device does not support secure boot!");
--
-         dasd_ipl(blk_schid, cutype);
-         break;
-     case CU_TYPE_VIRTIO:
++#endif /* ! CONFIG_GNUTLS */
 -- 
 2.54.0
 
