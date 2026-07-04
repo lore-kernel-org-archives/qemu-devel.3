@@ -4,91 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 714FCC43458
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 21:44:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44B54C43458
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 21:44:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wg87U-000257-GA; Sat, 04 Jul 2026 17:41:52 -0400
+	id 1wg86L-0007Wg-17; Sat, 04 Jul 2026 17:40:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wg87Q-0001uf-Sa
- for qemu-devel@nongnu.org; Sat, 04 Jul 2026 17:41:48 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wg86J-0007Vl-Lb; Sat, 04 Jul 2026 17:40:39 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wg87P-0000Rs-Ak
- for qemu-devel@nongnu.org; Sat, 04 Jul 2026 17:41:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=MNrT69ag/E3Wm5Es+Ysjb3Ops57xqLuxx7ex8nFzL34=; b=W3MyaMtb/bKE/Yi6PLFt724l4E
- M4FyMZFiVDtPrzFGWRYYoqPlp2yT+mUemcYX0xPhBC5zW7j8pLlbv3puWIsPXb6GUsq6VcHCEQxxJ
- 7RkQPfNl5dmTlqVmviP66leUFd+ijjq5iwakpERWfA7HWwxBq8OpnQ+fq6jD7cBT4DJ7MUCr3B7fe
- svz216kkF/wEa8RdU8XV19GacgzE/pWju9IMq28CdeMuB9DtsZsxw6kRKBIJBe3+LDtLO4ybf+nnU
- c1pgJiMclWOWrbaaTOVhC6xpbIIa0aw6bKendvAmvy7ebSPdn1Nx1eZUArbylAQRXZyhjSyTAwr2h
- tgBtanxMwibdlP3x7pac7RvgBFFmReSAC4aD0LGrqxlNGLGuACvKXhIkDpEv1qcDnE3yY42cg+ViN
- 6r7F739X9YhYdLS91wubkqN8wg8EInIs6E5+PCi0szzvPiAXBITHMLEzux4LpD/HHgu0sOPWfOeyk
- EAM43TcNXnuJZs8uI86xDMfDRvtJBCgfnNNDwb7wG+X8fRyx8Z6ZT21eTTbq3b1CJ4007/OXfX7Bu
- 7FA1XbY5tLB1FsTewxzzTwAur1nCno3HaJq0QaPrAc/hadF0+L/ho1VYwvMe0fqqxOB64roAQVAC8
- SFENI+3oKRZYGw2Jpa73Ig0MxdxkaEmBzSCyCw8UA=;
-Received: from [2a02:8012:2f01:0:b3f4:44c3:c2e7:b860]
- by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wg87K-0015nK-BP; Sat, 04 Jul 2026 22:41:42 +0100
-Message-ID: <7e3536cd-8f02-420c-a85d-3cc027fcd660@ilande.co.uk>
-Date: Sat, 4 Jul 2026 22:41:44 +0100
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wg86H-0007sr-Mw; Sat, 04 Jul 2026 17:40:39 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 664KmZxR2457585; Sat, 4 Jul 2026 21:40:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=X6HKAkf8RA3YZ51Ru
+ q3a0g/ukNaNC9oVnBhA2kpOIww=; b=FlVXEoZDDrE5YjrG6OZfL3c6p4JqvYRLK
+ 5nlO5w26PUV4Yo+TKAgDDZD9dpqkfNeJTd7wGhnnG8biHGfIeDn4bZAymTJU12B/
+ au+tIWvTkb37KU3Y4X9YvVVUHkCFif7h4PKfirrklPSzSU5Yj4R3Vf0KCbyJ6oo5
+ RM5xfOK3wiyAXJ911tpQaxtWzc67nmqQKiz/C9QqeBALLKJIfmFEBHb4KX2RxOee
+ 1R8HOeWJdamRtLwkXxA/2O0AyISLViQV/xGTZkQ+W3lLUyp+9/u1XkCwOHWs0mgV
+ P++HXeTc+cLLScU0yQD9y+WaNMNY3+N4WjHAxsOpWCTJLMmcxwbfQ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6qkn3hm3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 04 Jul 2026 21:40:31 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 664LYatZ009682;
+ Sat, 4 Jul 2026 21:40:30 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2u2gxbta-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 04 Jul 2026 21:40:30 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 664LeTls24183470
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 4 Jul 2026 21:40:29 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 252B658052;
+ Sat,  4 Jul 2026 21:40:29 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0F26C5805E;
+ Sat,  4 Jul 2026 21:40:27 +0000 (GMT)
+Received: from fedora-workstation.ibmuc.com (unknown [9.61.17.215])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Sat,  4 Jul 2026 21:40:26 +0000 (GMT)
+From: Zhuoying Cai <zycai@linux.ibm.com>
+To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
+ jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
+ eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
+ alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+Subject: [PATCH v15 16/33] pc-bios/s390-ccw: Define memory for IPLB and
+ convert IPLB to pointers
+Date: Sat,  4 Jul 2026 17:39:32 -0400
+Message-ID: <20260704213950.2118823-17-zycai@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260704213950.2118823-1-zycai@linux.ibm.com>
+References: <20260704213950.2118823-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>
-References: <4b08f4e2-2274-409a-86d8-469c73e21579@linaro.org>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <4b08f4e2-2274-409a-86d8-469c73e21579@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:b3f4:44c3:c2e7:b860
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: docker-image-debian-all-test-cross errors
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Q/XiJY2a c=1 sm=1 tr=0 ts=6a497dcf cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=_GZQR2ZoBes7ElOevS0A:9
+X-Proofpoint-GUID: 6g_diFqvfCSsit4hTG34FWQdx3ZjL87r
+X-Proofpoint-ORIG-GUID: 6g_diFqvfCSsit4hTG34FWQdx3ZjL87r
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA0MDIyNCBTYWx0ZWRfX3gR03xVqtCWR
+ WHpJ/N7MaI3eaCGSurxXF8VNVpLukGWX+s/xt/fMOX5ciGkzmlpaBTb1DVeABC3Vdko9ELsnvrr
+ PirQHbX0aG1D8OrAf+w0R8XbPRIDbMY=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA0MDIyNCBTYWx0ZWRfX35Y/t6wtL5N7
+ 6ZHxiBUwejK2RLxZJ9V4JWm2mpmSDz42kxzweFq8InT1JHnpYETW4OSmSlJfqM5NBykO9MuiTk0
+ TmxDU5wO/CO8IAjATvrkL5PC2ZqM6bzeRUtxII/btwDZSZ7TQKZW/4c3nxTfO1Qu1aQsv/h5QR8
+ iofJG1ML+LFjxlxEsnBn6YYJPkUuSZpLtU4+7I0z/qT+rotpheotx7fv4C9WEzIgjtdoMEjS+BL
+ RRXSnyOznJDosBnU8ve7iZfW7+HEp7Yq3jAGQCEBFKzZ7P5ioY5/S1AGbWQcWBQh//v9gFwe+G2
+ FOSnpD3TpDX++sHHArNbb9Rh9RvM5RZZdaff6ziDcfgeJL1+AiH/xZL+lvoYk3Ro1FuhPlUow5/
+ AUK182msXH82uJ2BHKLQQYRLRRKz+ASpb2ksN60mTnIPSkNrIZ8cC2bceW5uNMkVMKvvhkedjEF
+ e6SQuUTh1smLviiKlDg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-04_03,2026-07-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501
+ bulkscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607040224
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,40 +126,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/07/2026 22:20, Richard Henderson wrote:
+Define a memory space for both IPL Parameter Block (IPLB) and
+IPL Information Report Block (IIRB) since IIRB is stored immediately
+following IPLB.
 
-> Has anyone else been seeing
-> 
-> Error: Failed to fetch http://deb.debian.org/debian/pool/main/d/dpkg/libdpkg- 
-> perl_1.22.21_all.deb  404  Not Found [IP: 151.101.22.132 80]
-> Error: Failed to fetch http://deb.debian.org/debian/pool/main/d/dpkg/dpkg- 
-> dev_1.22.21_all.deb  404  Not Found [IP: 151.101.22.132 80]
-> Error: Failed to fetch http://deb.debian.org/debian/pool/main/p/python3.13/ 
-> libpython3.13_3.13.5-2_amd64.deb  404 Not Found [IP: 151.101.22.132 80]
-> Error: Failed to fetch http://deb.debian.org/debian/pool/main/g/glibc/libc6- 
-> i386_2.41-12_amd64.deb  404  Not Found [IP: 151.101.22.132 80]
-> Error: Unable to fetch some archives, maybe run apt-get update or try with --fix- 
-> missing?
-> Error: building at STEP "RUN DEBIAN_FRONTEND=noninteractive eatmydata   apt install - 
-> y --no-install-recommends   clang  dpkg-dev  gdb-multiarch  libclang-rt-dev": while 
-> running runtime: exit status 100
-> make: *** [/home/rth/qemu/src/tests/docker/Makefile.include:43: docker-image-debian- 
-> all-test-cross] Error 100
-> 
-> This has been consistently failing for me for a couple of weeks...
->  
-> r~
+Convert IPLB to pointer and it points to the start of the defined memory space.
+IIRB points to the end of IPLB.
 
-I wonder if docker build has cached the existing layers, and since apt-get update 
-only runs in the first part of the Dockerfile then the subsequent layers try to 
-access an old base image?
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
+---
+ include/hw/s390x/ipl/qipl.h |  6 ++++++
+ pc-bios/s390-ccw/iplb.h     |  5 +++--
+ pc-bios/s390-ccw/jump2ipl.c |  6 +++---
+ pc-bios/s390-ccw/main.c     | 34 +++++++++++++++++++---------------
+ pc-bios/s390-ccw/netmain.c  |  8 ++++----
+ 5 files changed, 35 insertions(+), 24 deletions(-)
 
-Does running "docker builder prune" (possibly with --all) help at all? That should 
-purge the cache and force docker to rebuild all the layers again.
-
-
-ATB,
-
-Mark.
+diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
+index 45d25264f4..9940f1457c 100644
+--- a/include/hw/s390x/ipl/qipl.h
++++ b/include/hw/s390x/ipl/qipl.h
+@@ -208,4 +208,10 @@ struct IplInfoReportBlock {
+ };
+ typedef struct IplInfoReportBlock IplInfoReportBlock;
+ 
++struct IplBlocks {
++    IplParameterBlock   iplb;
++    IplInfoReportBlock  iirb;
++};
++typedef struct IplBlocks IplBlocks;
++
+ #endif
+diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
+index 926e8eed5d..c92a3d0f0c 100644
+--- a/pc-bios/s390-ccw/iplb.h
++++ b/pc-bios/s390-ccw/iplb.h
+@@ -20,8 +20,9 @@
+ #include <string.h>
+ 
+ extern QemuIplParameters qipl;
+-extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
++extern IplParameterBlock *iplb;
+ extern bool have_iplb;
++extern IplBlocks ipl_blocks;
+ 
+ static inline bool manage_iplb(IplParameterBlock *iplb, bool store)
+ {
+@@ -61,7 +62,7 @@ static inline bool load_next_iplb(void)
+ 
+     qipl.index++;
+     next_iplb = (IplParameterBlock *) qipl.next_iplb;
+-    memcpy(&iplb, next_iplb, sizeof(IplParameterBlock));
++    memcpy(iplb, next_iplb, sizeof(IplParameterBlock));
+ 
+     qipl.chain_len--;
+     qipl.next_iplb = qipl.next_iplb + sizeof(IplParameterBlock);
+diff --git a/pc-bios/s390-ccw/jump2ipl.c b/pc-bios/s390-ccw/jump2ipl.c
+index 86321d0f46..fa2ca5cbe1 100644
+--- a/pc-bios/s390-ccw/jump2ipl.c
++++ b/pc-bios/s390-ccw/jump2ipl.c
+@@ -43,11 +43,11 @@ int jump_to_IPL_code(uint64_t address)
+      * The IPLB for QEMU SCSI type devices must be rebuilt during re-ipl. The
+      * iplb.devno is set to the boot position of the target SCSI device.
+      */
+-    if (iplb.pbt == S390_IPL_TYPE_QEMU_SCSI) {
+-        iplb.devno = qipl.index;
++    if (iplb->pbt == S390_IPL_TYPE_QEMU_SCSI) {
++        iplb->devno = qipl.index;
+     }
+ 
+-    if (have_iplb && !set_iplb(&iplb)) {
++    if (have_iplb && !set_iplb(iplb)) {
+         panic("Failed to set IPLB");
+     }
+ 
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index 26287cfd81..b8f836c682 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -24,7 +24,9 @@
+ static SubChannelId blk_schid = { .one = 1 };
+ static char loadparm_str[LOADPARM_LEN + 1];
+ QemuIplParameters qipl;
+-IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
++/* Ensure that IPLB and IIRB are page aligned and sequential in memory */
++IplBlocks ipl_blocks __attribute__((__aligned__(PAGE_SIZE)));
++IplParameterBlock *iplb;
+ bool have_iplb;
+ static uint16_t cutype;
+ LowCore *lowcore; /* Yes, this *is* a pointer to address 0 */
+@@ -53,7 +55,7 @@ void write_subsystem_identification(void)
+ void write_iplb_location(void)
+ {
+     if (cutype == CU_TYPE_VIRTIO && virtio_get_device_type() != VIRTIO_ID_NET) {
+-        lowcore->ptr_iplb = ptr2u32(&iplb);
++        lowcore->ptr_iplb = ptr2u32(iplb);
+     }
+ }
+ 
+@@ -213,14 +215,14 @@ static void boot_setup(void)
+     char lpmsg[] = "LOADPARM=[________]\n";
+     VDev *vdev = virtio_get_device();
+ 
+-    if (have_iplb && memcmp(iplb.loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
+-        ebcdic_to_ascii((char *) iplb.loadparm, loadparm_str, LOADPARM_LEN);
++    if (have_iplb && memcmp(iplb->loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
++        ebcdic_to_ascii((char *) iplb->loadparm, loadparm_str, LOADPARM_LEN);
+     } else {
+         sclp_get_loadparm_ascii(loadparm_str);
+     }
+ 
+     if (have_iplb) {
+-        vdev->ipl_type = iplb.pbt;
++        vdev->ipl_type = iplb->pbt;
+         menu_setup(vdev);
+     } else {
+         vdev->ipl_type = QEMU_DEFAULT_IPL;
+@@ -244,21 +246,21 @@ static bool find_boot_device(void)
+     switch (vdev->ipl_type) {
+     case S390_IPL_TYPE_CCW:
+         vdev->scsi_device_selected = false;
+-        debug_print_int("device no. ", iplb.ccw.devno);
+-        blk_schid.ssid = iplb.ccw.ssid & 0x3;
++        debug_print_int("device no. ", iplb->ccw.devno);
++        blk_schid.ssid = iplb->ccw.ssid & 0x3;
+         debug_print_int("ssid ", blk_schid.ssid);
+-        found = find_subch(iplb.ccw.devno);
++        found = find_subch(iplb->ccw.devno);
+         break;
+     case S390_IPL_TYPE_QEMU_SCSI:
+         vdev->scsi_device_selected = true;
+-        vdev->selected_scsi_device.channel = iplb.scsi.channel;
+-        vdev->selected_scsi_device.target = iplb.scsi.target;
+-        vdev->selected_scsi_device.lun = iplb.scsi.lun;
+-        blk_schid.ssid = iplb.scsi.ssid & 0x3;
+-        found = find_subch(iplb.scsi.devno);
++        vdev->selected_scsi_device.channel = iplb->scsi.channel;
++        vdev->selected_scsi_device.target = iplb->scsi.target;
++        vdev->selected_scsi_device.lun = iplb->scsi.lun;
++        blk_schid.ssid = iplb->scsi.ssid & 0x3;
++        found = find_subch(iplb->scsi.devno);
+         break;
+      case S390_IPL_TYPE_PCI:
+-        found = find_fid(iplb.pci.fid);
++        found = find_fid(iplb->pci.fid);
+         break;
+     default:
+         puts("Unsupported IPLB");
+@@ -377,10 +379,12 @@ static void probe_boot_device(void)
+ 
+ void main(void)
+ {
++    iplb = &ipl_blocks.iplb;
++
+     copy_qipl();
+     sclp_setup();
+     css_setup();
+-    have_iplb = store_iplb(&iplb);
++    have_iplb = store_iplb(iplb);
+     if (!have_iplb) {
+         boot_setup();
+         probe_boot_device();
+diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
+index 651cedf6ef..9b4dfd4638 100644
+--- a/pc-bios/s390-ccw/netmain.c
++++ b/pc-bios/s390-ccw/netmain.c
+@@ -528,11 +528,11 @@ static bool virtio_setup(void)
+      */
+     enable_mss_facility();
+ 
+-    if (have_iplb || store_iplb(&iplb)) {
+-        IPL_assert(iplb.pbt == S390_IPL_TYPE_CCW, "IPL_TYPE_CCW expected");
+-        dev_no = iplb.ccw.devno;
++    if (have_iplb || store_iplb(iplb)) {
++        IPL_assert(iplb->pbt == S390_IPL_TYPE_CCW, "IPL_TYPE_CCW expected");
++        dev_no = iplb->ccw.devno;
+         debug_print_int("device no. ", dev_no);
+-        net_schid.ssid = iplb.ccw.ssid & 0x3;
++        net_schid.ssid = iplb->ccw.ssid & 0x3;
+         debug_print_int("ssid ", net_schid.ssid);
+         found = find_net_dev(&schib, dev_no);
+     } else {
+-- 
+2.54.0
 
 
