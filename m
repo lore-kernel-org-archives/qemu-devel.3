@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E252AC43458
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 01:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3E5C43458
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 01:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wfpOV-0005RX-3k; Fri, 03 Jul 2026 21:42:11 -0400
+	id 1wfpXj-00083B-TI; Fri, 03 Jul 2026 21:51:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1wfpOR-0005Qp-CX; Fri, 03 Jul 2026 21:42:07 -0400
-Received: from out162-62-57-64.mail.qq.com ([162.62.57.64])
+ id 1wfpXi-00082p-4g; Fri, 03 Jul 2026 21:51:42 -0400
+Received: from out162-62-57-87.mail.qq.com ([162.62.57.87])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1wfpOO-0003A6-0U; Fri, 03 Jul 2026 21:42:06 -0400
+ id 1wfpXe-0004ew-Kz; Fri, 03 Jul 2026 21:51:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1783129309; bh=8UiYExRzb0ydHhMSG377dt1h0betdwJy9fRX1ofXiqY=;
+ t=1783129884; bh=GIHkPAOxHMj8iB01CA8an103xT7On/NtJDLK2vjbVQw=;
  h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=fmhzg3Vy3MzZJ8JH3bOIFPkDi6/9X7cWKH2g2lTFHOahHzc6WmKnSXzFfqFmvOy8T
- 01jpRAhwaR1NIkbn1f/W9aQz9RdAe8vc2tSTiu0jKlKKWLWKPqWqOH7MlGpQpmICO8
- fRXa1ZH9ddhBsGWCyA0yC8JJm8523l6NSjzIyMu0=
+ b=UM/E432yn/TG5ejcdb4wxlqs5p59L0LWQloWrg5QoCpJgR+oSbujgqHYDSrl9O1Ba
+ UuOoSTrsvpUIl1qmS8mtNSAwKqLJEA682RzvAe2C+EyDnHROVln14ePHyx5kQH5unC
+ JWSwCAIqUPa+pAUIXSs4Ugz7JXunI/8ezJCXiiXI=
 Received: from [192.168.1.10] ([118.116.35.199])
- by newxmesmtplogicsvrsza53-0.qq.com (NewEsmtp) with SMTP
- id A6E95AAA; Sat, 04 Jul 2026 09:41:46 +0800
-X-QQ-mid: xmsmtpt1783129306tnvg1eiq5
-Message-ID: <tencent_3045B23CF7A9872F29FC351E24D8F9373F07@qq.com>
-X-QQ-XMAILINFO: OfxHHOU34G6ptlvlEDmH4PRFaanFNPFCKlyotBuh7s4PVoyjue7A+Q36rWhHRB
- 3ZamH7UgxDrYMwB19ZADRjw8UTWps8hVKQba2clRA1NsQ3dkxKX790W1sW4xPyeX18yhe8jzT3le
- rlsDZRj2nPM3vt9DE1GPpzCiFzjMJlTt0HUxpyqGkt9JgM0PJWC6Djw4ZWu9u3a/vZe3RhpEBEk+
- di5XKMFlnyeiMH/kIN73UsQQi3dTnSWNsCbIYD/HzPQiMzKbyDP6vo/Tz9IUxJf95tU16RjTcRbr
- Mmr+y/dWXCaxA0oeuSZEIJfZLk7cmh+ckwUBE4sQfkcEDicIsLSzwUzGsUW+vzcBHZZzJfv9mJ7A
- UnzlVzHElo//2awmuX/ecMu/7h3OhAHAH1p11muORXRC4bEKvlvsItI10NtpkF9+6h8knIeCtwQV
- Elb6HtbraiNgmpoQ0UZSc3971dlsbwh7u3S12mtqlGUQUWdbQABEkhT1yCmSBzBknrSSUMY5oRt3
- 5XGV0HlBRv4sXYVxX8iiDDarGoX1tpVat3j82d0MU3taEKwPoiDxmpOKFwVhru15nZtMEgBgOTwl
- 1Sy0kA45qJv9bKMzkB97YzsTo009InwZVH2M8nuyQ+Rvl8lGiehiY16vG0RYfDS9wZDndwi2Gkug
- E3Gso27ePPDus4EPkYY6fSHZo4lmhUBAy+bLqWr9PZydNKVcvMwHi36wxnNefeVjGC+AKlJymDfM
- TthXAP6kC328+dI0CzXx8/h4pgTs2YqV6XkzYGHfHgZYJUobZWAHfwEfc5aq4sIlmnSKzPs9Jczr
- HqJrAE2sJoELuG5tFMxzFDRywadIQwyHC17XB9u6l2iwd1RpKZ/cZBg/z/buHZuh0UcFk76PUbuQ
- XAvpcjbrKx5oDMH23NhQa7T4XqA0ytx2nlKz5yE/QlztN69YUcdDnc9pZ2WHBxTSLhSkF4iGxrWO
- F2NUekBldfZETTO2giouKVYqki3+dXg/AoIV+kg5TrGwY6FhWTsnQ4JuERoTYfH6N98etfj8SsHQ
- VloB10fw==
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
-X-OQ-MSGID: <7a9ca5f6910c5150bc3d0a8f36eb9d166e1ad6b4.camel@qq.com>
+ by newxmesmtplogicsvrsza73-0.qq.com (NewEsmtp) with SMTP
+ id CD60480A; Sat, 04 Jul 2026 09:51:22 +0800
+X-QQ-mid: xmsmtpt1783129882txar8jxck
+Message-ID: <tencent_C1EF85ECC23DFCE1482A6EAD0489775ED405@qq.com>
+X-QQ-XMAILINFO: MZtEYADUG4AgGJpEAz2RUHJc1Qm/RRVoeCwSdSAwqU5lk8K1I9ttUA/axA71On
+ E43sb03AY/oQiCbnueML+GFfxIbumVMOJnsWPDRwrPIJM3ooQhymp/mKkY0sZ15hHSJNlNDhDZlB
+ FSjEcKk4Req6EDO+6CDpOEzlgjTAp3OIBQg078f1f8rXx6DXPL2+8z3TxWoBNd+/ZDLObkImDFre
+ T1PBHVJ3cAgmxgBofZ1v5Cm9qciKES3CyQyj6EVR0lZ20bFAHSCzkZwqqLqY6o2K2lFj0O2UgiZZ
+ bqBr+n71sr0vRmnwCFiRbwfJdF6rqGi/cC+AZxnXp4URd1Mig2OHqVIuaBVNENV/DDxT3Kn+T8Lh
+ JIrSZTeKQZZ7aTNSzNlvRNu0P0OvYt41kBiHp6Mr8AJ/EZK7i6+B/ft8WnRlcp5/UiC9PeH/ZZYP
+ L5AvpQUW5/pWchjizviDJ6QiykZQRXfEgVobjQfJZoEa6GksxG/wPT2p8LSv+dmVnH6g23ulO+O3
+ 3t9zEvsVEj9lDuLPf9+SVNtDJizAvUnvi5d9NkTITPDQXnaqCTXe9BcyVyhSNGW5BPrnUfqdZRMK
+ THIBscnfH7uqWjhfVG7pBO7nzulW7Vn6eG8wCTaRs2BLI7S6zCTcra8SAh/ERCcduVJFOO8QrkFJ
+ mmEq6TIqV1Di6D5PEFF8tSZ3IZa14aXIT/3Np01w/5Yr6l8Gog53yuVYuuBqZQ0t9yDA1xExnc+H
+ dchwom5yjRdTLYHnJkcArH4mcVvj/TwlNURiUyEym4hB8je9Mz3isnA2YhAK5r7SdOpHbGGZqZp6
+ mJu/HLPjinCDe0CAiVSQUnGp0viWFKwQF5T/EwAQYWcY77SSGkg24uKOh3uam9VLRbxqIJDPLyH0
+ 4kWUfU3HGhIEVHGZ5R4GGNCtmO3a6p9Sc5kuop1XSGWl/ilcwGRXso2hX2CaxZxkzcH/pA/pCp3V
+ DRSGKBuEVHOFJMBjV3ENW4+gSwnbecsVakoV7TWWK3GyHvDcGfQN8YoJpmmDhEkk7gNWcfwVCkSj
+ jBpMNZDcrCVy/fs/NIToXU6xDHIi8nllimET2QoLdOz75TPnsXHLWoGw9cWodkQ7p5OMjK6Aw/0J
+ vqGBre
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+X-OQ-MSGID: <9026bc1ffe535da4755f3f0bdf820819ecd6b924.camel@qq.com>
 Subject: Re: [PATCH v2] riscv/virt: Add optional UART1
 From: Yanfeng Liu <yfliu2008@qq.com>
 To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>, 
  qemu-riscv@nongnu.org, peter.maydell@linaro.org
 Cc: qemu-devel@nongnu.org
-Date: Sat, 04 Jul 2026 09:41:46 +0800
+Date: Sat, 04 Jul 2026 09:51:22 +0800
 In-Reply-To: <24329582-f5cf-41de-aabe-c2c3d54f03ea@oss.qualcomm.com>
 References: <tencent_06551FAEA44CD75E915AE611FCA0C99CDD09@qq.com>
  <24329582-f5cf-41de-aabe-c2c3d54f03ea@oss.qualcomm.com>
@@ -59,16 +60,16 @@ Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.44.4-0ubuntu2.1 
 MIME-Version: 1.0
-Received-SPF: pass client-ip=162.62.57.64; envelope-from=yfliu2008@qq.com;
- helo=out162-62-57-64.mail.qq.com
+Received-SPF: pass client-ip=162.62.57.87; envelope-from=yfliu2008@qq.com;
+ helo=out162-62-57-87.mail.qq.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,13 +88,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Philippe,
 
-The v1 always creates UART1 carelessly, then Peter suggested following
-5d8a250f9068 (openrisc) and e7100972f2 (arm) to reduce guest breakage.
+Thank you!
 
-I looked around and noticed the pattern is used in arm/virt, arm/msf2-
-soc, arm/kzm, xrtensa/sim, and ppc/e500 etc.
+Actually v1 creates UART1 carelessly, then Peter suggested following
+5d8a250f9068 (openrisc) and e7100972f2 (arm) to reduce breakage of
+existing guests.
 
-Please give me clear direction here.
+I looked around and noticed the `if (serial_hd())` pattern is still
+used in arm/virt, arm/msf2-soc, arm/kzm, xrtensa/sim, and ppc/e500 etc.
+
+Guess I need consensus before moving ahead.
 
 Regards,
 Yanfeng
