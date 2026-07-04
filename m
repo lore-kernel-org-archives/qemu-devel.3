@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16D16C43458
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 19:47:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA470C43458
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 19:51:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wg6KS-0007Jv-VK; Sat, 04 Jul 2026 15:47:08 -0400
+	id 1wg6Ng-00083P-Km; Sat, 04 Jul 2026 15:50:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wg6KR-0007J9-Cq
- for qemu-devel@nongnu.org; Sat, 04 Jul 2026 15:47:07 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1wg6Nc-00082X-6b
+ for qemu-devel@nongnu.org; Sat, 04 Jul 2026 15:50:24 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wg6KO-0000Ed-A9
- for qemu-devel@nongnu.org; Sat, 04 Jul 2026 15:47:05 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-8454160043aso1581783b3a.3
- for <qemu-devel@nongnu.org>; Sat, 04 Jul 2026 12:47:03 -0700 (PDT)
+ id 1wg6Na-0001JL-Lf
+ for qemu-devel@nongnu.org; Sat, 04 Jul 2026 15:50:23 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2c821a50615so13206475ad.0
+ for <qemu-devel@nongnu.org>; Sat, 04 Jul 2026 12:50:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783194423; x=1783799223; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZfW/MWQ5OEHFOFus6Lt2Ftnka/RwbOJ2vEYeKxtAKzg=;
- b=bHLBaXSY8EiCGHE053p+8kWOb+W4zqVC7uk9iGslkpjczESrDxypzdRAwzjDnNhVuR
- kiBy1ZzfQiAcb8cfIlkTyROWynEJmcEMz2138rDByXRVFU3KQMvpYVGjDptvgfEOWwrS
- IJeJw1a33CFGso0U6D/YIFvph28uNiEvIH/lD7qKLQpFzlKXvsn4u1F3kkKw2Ek8w6zA
- wq3rXdo7dqUcoTUPt3tsOmivU15IBlX5HoZt3e8Va4F/WWgL62xk0gzCXuD13SbvmgYF
- f7qUTRu5LwAc5UuiLoP1fpQ1dRQD+kkQY/yj0IltBxdKghCKqWpN7eQ7W80eLku+60xb
- VoHg==
+ d=linaro.org; s=google; t=1783194621; x=1783799421; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=f8AqneuYZKjvIhU4ShAc1IXfueCmz4SLPvUVKeW3lSk=;
+ b=V2rlaSiLI3NGiwp/Sl6QoM0t5P8U4re0IBG5Zg3ISbMUUzbsKaWPiFqnlPcOQvsDhW
+ scJbgbAHr3gwJuxmq+sUExBAW4jTJ3cUDZbFLe/bVyovRv4imJ7AWfVabOeM3aIiLeJU
+ 1OI9pnuReTbfphZG/DcO6vLERu9727UqWmYEQFfqH8t5QSCqvzZEtx4ZmgzzvFcK1qHC
+ Q38KH/N6H4LArtHGwP5ex7zQeJOd7REKBLqlG87u0zpeUNbWs/b7uHI9pbw3C35Fn0fk
+ whWnzn/FOwlB8yOzqyZ93FKBA5EWxcgcJGCn4lGkB1b2QdGGNCpnofT5JzJItKCMPzBK
+ ujRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783194423; x=1783799223;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ZfW/MWQ5OEHFOFus6Lt2Ftnka/RwbOJ2vEYeKxtAKzg=;
- b=XCo01t/LDqR1m6zd98MTKqc9RrGHah1D0hGQjf1jL30ZJOV0Fk3rsUnDe8RIEPwy0a
- EkmYzom56Qr1N6vxHkw8yBHLrC4NJ1kfa525LoJBF3+vx5D66R/LVpAObtEL7yYIkRSa
- 2f/kBjXHbp1w1tkGxF/DEJdlVSePM4NTgCrkAqR5msXrbTpn94Z7B1Z3ZfVfVxhruZhQ
- SVR4IZuJUOoC1GjByYeZiodM7QaX2XqGnbnrC5ZyGe9d7W/OkxxYRpwWNBonOQVSxw70
- o49vbYPY/FtvAnOV85J4MY8wprGvGRbgguXJ94ODjwZ/evKvwujxwVnM1AcbvsZ3ESTV
- 2x+A==
+ d=1e100.net; s=20251104; t=1783194621; x=1783799421;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=f8AqneuYZKjvIhU4ShAc1IXfueCmz4SLPvUVKeW3lSk=;
+ b=JF6OKER5GBf/mFvE+Ebj6FMJG02+Z+7ahQyrdBlGjS523fC3jQIscMQF9Ad6qTxDqT
+ kL8XG5M+or3K5PZZ360xINwRZoXbAwmfhy0o6yRkRos5EfbKpMejib63b88k0aNxTku8
+ klvIvL2bNO8OqbrF8YzzjUp/+bf8xgkBQNs2ypXlgRUqaSUpzdMqYf8eL3UUJooCKyLw
+ g5zt99GA4vwxy7ZqDkCErAmfTh1phia+TaCEpJYDIjtrdozDe/eO8cerWWgaS24ngKfm
+ wiFT2QDV4Rk2GxDE8/jrhqXAASaKRbAG/f3UfEcIx/GWBalg9RO4LiXPZacSqe/Ns+Sk
+ CYKw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8/QNRRb0sE0wB6qOSSx/XBx2UW87A8Jp53El+qiSGn/gGetLx9/cy4RUGzz7MSDgrfbuK3FF5hejfW@nongnu.org
-X-Gm-Message-State: AOJu0Ywe2xgXTKnYVOK2vOoIWJ7oAV2beYkFBVMJ3tTSIfGOGE8fCrTG
- Pck1iy4HxK7VUDFdLG3Y6HB99a/pX2imJ/ETsWA2FtMDjJfk4PrwKIEp3gYTTEnB3gc=
-X-Gm-Gg: AfdE7cnL7OC6vbazIk/Y/+/rp3C4DAXzW5IvU1zWxgyd1c2iu5fq6TuXVxejPgLfDY4
- +hYfu/CdsnLgXTuwgrMHhZd0Eq3ZxDDR2OznyrcQfFidr0w+siRNzkVwsAtnE6lIW3WfZf4wBwx
- udQ1dP1iP6g2yOY2maqCzfwGJQuepE0L28FBU+eBApVGM9vKvgT3XDo5LtP9geG/RWL0VRXMGnN
- CM+N3dtuIA5Np3qDBWlu2UktJ+lIeOUVaWMgept5VcJfL5jD32bdE+OZGPyEp3hucc2IeiCbBbm
- lA32q4hQce2/5C8OLyRUQ8Z6xn1aYc63+NxyBjSIyLA/q/VbWOjiwzch4iyer8/E2JnP42NtGYS
- N6oFqNz1cLq2vuch1pik0acpO6fZ2y0AkGlWBmwjFbEtcGa8mhR4ilJTTcJsTBrc5WO1h1NSgG1
- hJu65VnEEm6uYTXKLGjE7l+WF3UNWaR92uPUS2m2/GUGSabaIl1NdVaMg=
-X-Received: by 2002:a05:6a21:62c7:b0:3bf:6c08:fb98 with SMTP id
- adf61e73a8af0-3c03e5ffb8emr4610035637.58.1783194422538; 
- Sat, 04 Jul 2026 12:47:02 -0700 (PDT)
+ AHgh+RrEFlpXdDtiI17EgFaImDJMAoD//5Pi5InIat2ymTjqlwk+DNPi08Ww7ecNn+DtqeuRjwZGacxcmuL+@nongnu.org
+X-Gm-Message-State: AOJu0YxLwk10+3KxVrnsV62FnKnO+R8Zo09vI9eVCFxw/0ONZ4xWVoOX
+ YZ6L/Y3oG34FD5hzOKBU+U8WHWtiiy5eyWCjiPfSKG1eQwsoW7m+zBEPdWTMJAMMfcg=
+X-Gm-Gg: AfdE7cmfxl69kJfh1NASUf7f94sMb4EoUXTaVuIz/qX8/t8BNXMGlKLY2zddel6ROtT
+ 1kbOF+2fDJ32wx96qCNuOVfYyTHmgFoCF/sh+raNKgAQNiLhRvbdSqYc4tgEJMXWNeyf6Pvapsr
+ uq5hiAY4F1dMgEHWzH0c/icS5PhdOwKBYn4ZDK6lhnDiBgBoCzzUBiQRe2/1OaIoH5Cgx7VMVJI
+ vt8ZCqTpa+9wCIGtQcWseQwINWQI1N9tF8qu9D2TDu80cRfUW+2285TQ/4WdpOyhcXMo1bAOkZu
+ iQ66mRR9G9IIb35bwQlHYYwfHQGoJ9I+1ETWQ8PjgaWQONxcDad0SeBE9RHd81TU/ySXIpUj8XD
+ 0c9nSS1g8L5pzkNFSrsmm+kUbsLwRaCYXkA7bQJO+M2FopzAmja5gnEtJJ7ji2OXuNxkkjjRGDV
+ qXvRj0mAvr8r4splBVY7xdA5/QzDPcvAXctmfJGXZR2+oX78vKlQbK61w=
+X-Received: by 2002:a17:903:2f81:b0:2ca:1bbe:c3d0 with SMTP id
+ d9443c01a7336-2cbb9f25511mr38055745ad.43.1783194620515; 
+ Sat, 04 Jul 2026 12:50:20 -0700 (PDT)
 Received: from [192.168.0.4] (71-212-39-188.tukw.qwest.net. [71.212.39.188])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c9e91b07646sm3834125a12.16.2026.07.04.12.47.00
+ d9443c01a7336-2cad7871697sm25975135ad.67.2026.07.04.12.50.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 04 Jul 2026 12:47:01 -0700 (PDT)
-Message-ID: <181be226-2ee1-49e2-b03b-e268735ce83c@linaro.org>
-Date: Sat, 4 Jul 2026 12:46:58 -0700
+ Sat, 04 Jul 2026 12:50:19 -0700 (PDT)
+Message-ID: <ce9c60c5-123a-4b02-bb9b-5415b8de1698@linaro.org>
+Date: Sat, 4 Jul 2026 12:50:17 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 14/33] accel: Have each implementation return their
+Subject: Re: [PATCH v2 16/33] accel: Hold @can_reverse information in
  AccelGdbConfig
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
@@ -82,21 +82,21 @@ Cc: Chao Liu <chao.liu.zevorn@gmail.com>, qemu-s390x@nongnu.org,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20260703163757.55500-1-philmd@oss.qualcomm.com>
- <20260703163757.55500-15-philmd@oss.qualcomm.com>
+ <20260703163757.55500-17-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260703163757.55500-15-philmd@oss.qualcomm.com>
+In-Reply-To: <20260703163757.55500-17-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,29 +113,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/3/26 09:37, Philippe Mathieu-Daudé wrote:
-> Hold the per-accelerator AccelGdbConfig in AccelState, set its
-> single @sstep_flags field inAccelClass::init_machine handlers.
-> 
-> Remove theAccelClass::gdbstub_supported_sstep_flags() getter
-> and inline the single accel_supported_gdbstub_sstep_flags() call
-> in gdb_init_gdbserver_state().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
-> ---
->   include/accel/accel-ops.h   |  5 ++---
->   include/qemu/accel.h        |  8 --------
->   include/system/whpx-all.h   |  1 -
->   accel/accel-common.c        | 10 ----------
->   accel/hvf/hvf-all.c         |  8 ++------
->   accel/kvm/kvm-all.c         | 17 ++---------------
->   accel/tcg/tcg-all.c         | 27 +++++++++++----------------
->   accel/whpx/whpx-common.c    |  1 -
->   gdbstub/gdbstub.c           |  2 +-
->   target/arm/whpx/whpx-all.c  |  5 -----
->   target/i386/whpx/whpx-all.c |  7 ++-----
->   11 files changed, 20 insertions(+), 71 deletions(-)
+> @@ -158,6 +158,7 @@ static int tcg_init_machine(AccelState *as, MachineState *ms)
+>            * them occurring every time we single step.
+>            */
+>           as->gdbstub.sstep_flags |= SSTEP_NOIRQ | SSTEP_NOTIMER;
+> +        as->gdbstub.can_reverse = true;
+>       }
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+This is under replay_mode == NONE.
+
+> -bool gdb_can_reverse(void)
+> -{
+> -    return replay_mode == REPLAY_MODE_PLAY;
+> -}
+
+This isn't.
+
 
 r~
 
