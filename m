@@ -4,99 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA470C43458
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 19:51:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE5CC43458
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 19:51:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wg6Ng-00083P-Km; Sat, 04 Jul 2026 15:50:28 -0400
+	id 1wg6OV-000053-Pk; Sat, 04 Jul 2026 15:51:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wg6Nc-00082X-6b
- for qemu-devel@nongnu.org; Sat, 04 Jul 2026 15:50:24 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wg6Na-0001JL-Lf
- for qemu-devel@nongnu.org; Sat, 04 Jul 2026 15:50:23 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2c821a50615so13206475ad.0
- for <qemu-devel@nongnu.org>; Sat, 04 Jul 2026 12:50:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783194621; x=1783799421; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=f8AqneuYZKjvIhU4ShAc1IXfueCmz4SLPvUVKeW3lSk=;
- b=V2rlaSiLI3NGiwp/Sl6QoM0t5P8U4re0IBG5Zg3ISbMUUzbsKaWPiFqnlPcOQvsDhW
- scJbgbAHr3gwJuxmq+sUExBAW4jTJ3cUDZbFLe/bVyovRv4imJ7AWfVabOeM3aIiLeJU
- 1OI9pnuReTbfphZG/DcO6vLERu9727UqWmYEQFfqH8t5QSCqvzZEtx4ZmgzzvFcK1qHC
- Q38KH/N6H4LArtHGwP5ex7zQeJOd7REKBLqlG87u0zpeUNbWs/b7uHI9pbw3C35Fn0fk
- whWnzn/FOwlB8yOzqyZ93FKBA5EWxcgcJGCn4lGkB1b2QdGGNCpnofT5JzJItKCMPzBK
- ujRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783194621; x=1783799421;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=f8AqneuYZKjvIhU4ShAc1IXfueCmz4SLPvUVKeW3lSk=;
- b=JF6OKER5GBf/mFvE+Ebj6FMJG02+Z+7ahQyrdBlGjS523fC3jQIscMQF9Ad6qTxDqT
- kL8XG5M+or3K5PZZ360xINwRZoXbAwmfhy0o6yRkRos5EfbKpMejib63b88k0aNxTku8
- klvIvL2bNO8OqbrF8YzzjUp/+bf8xgkBQNs2ypXlgRUqaSUpzdMqYf8eL3UUJooCKyLw
- g5zt99GA4vwxy7ZqDkCErAmfTh1phia+TaCEpJYDIjtrdozDe/eO8cerWWgaS24ngKfm
- wiFT2QDV4Rk2GxDE8/jrhqXAASaKRbAG/f3UfEcIx/GWBalg9RO4LiXPZacSqe/Ns+Sk
- CYKw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrEFlpXdDtiI17EgFaImDJMAoD//5Pi5InIat2ymTjqlwk+DNPi08Ww7ecNn+DtqeuRjwZGacxcmuL+@nongnu.org
-X-Gm-Message-State: AOJu0YxLwk10+3KxVrnsV62FnKnO+R8Zo09vI9eVCFxw/0ONZ4xWVoOX
- YZ6L/Y3oG34FD5hzOKBU+U8WHWtiiy5eyWCjiPfSKG1eQwsoW7m+zBEPdWTMJAMMfcg=
-X-Gm-Gg: AfdE7cmfxl69kJfh1NASUf7f94sMb4EoUXTaVuIz/qX8/t8BNXMGlKLY2zddel6ROtT
- 1kbOF+2fDJ32wx96qCNuOVfYyTHmgFoCF/sh+raNKgAQNiLhRvbdSqYc4tgEJMXWNeyf6Pvapsr
- uq5hiAY4F1dMgEHWzH0c/icS5PhdOwKBYn4ZDK6lhnDiBgBoCzzUBiQRe2/1OaIoH5Cgx7VMVJI
- vt8ZCqTpa+9wCIGtQcWseQwINWQI1N9tF8qu9D2TDu80cRfUW+2285TQ/4WdpOyhcXMo1bAOkZu
- iQ66mRR9G9IIb35bwQlHYYwfHQGoJ9I+1ETWQ8PjgaWQONxcDad0SeBE9RHd81TU/ySXIpUj8XD
- 0c9nSS1g8L5pzkNFSrsmm+kUbsLwRaCYXkA7bQJO+M2FopzAmja5gnEtJJ7ji2OXuNxkkjjRGDV
- qXvRj0mAvr8r4splBVY7xdA5/QzDPcvAXctmfJGXZR2+oX78vKlQbK61w=
-X-Received: by 2002:a17:903:2f81:b0:2ca:1bbe:c3d0 with SMTP id
- d9443c01a7336-2cbb9f25511mr38055745ad.43.1783194620515; 
- Sat, 04 Jul 2026 12:50:20 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-39-188.tukw.qwest.net. [71.212.39.188])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2cad7871697sm25975135ad.67.2026.07.04.12.50.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 04 Jul 2026 12:50:19 -0700 (PDT)
-Message-ID: <ce9c60c5-123a-4b02-bb9b-5415b8de1698@linaro.org>
-Date: Sat, 4 Jul 2026 12:50:17 -0700
+ (Exim 4.90_1)
+ (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
+ id 1wg6OP-0008T8-SM
+ for qemu-devel@nongnu.org; Sat, 04 Jul 2026 15:51:13 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
+ id 1wg6OO-0001SK-Dd
+ for qemu-devel@nongnu.org; Sat, 04 Jul 2026 15:51:13 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id D424860052;
+ Sat,  4 Jul 2026 19:51:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 6DEA3C19425;
+ Sat,  4 Jul 2026 19:51:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1783194662;
+ bh=MSWyeKV18llKahaHXG8bCvHMnKwOvm0niKB+BaZhvPU=;
+ h=From:Date:Subject:To:Cc:Reply-To:From;
+ b=WSJIgPondCybI7au3vOCZ60/FQWx1e0yzmVLDKE6ejz95yT5STDakME8FLJouBnQl
+ jWJbpnb6q2Orlp6IV5ifzpzVQCvdaFKWGV9bcNoJxL9FYgO32UZzJyHyzW1nd6tR8Y
+ LIjqsgqNB+ofLRHLEFGxtpryUAGAYEGiYMdEQdFGqmLau17JUbrcd7Woaga7iYfCzU
+ qxX1r6hAyWYEciJAQRqQsHEOwi//8bw+JmCEK3P68vj+5H+7O8pAlPO1rlIIs8mryh
+ n8BtMxbLuX+YV4LT7OPQAsLCbN29JUFRPBG1PgFpT8Y6yTi2J3ki04RO9ztzc+ZI7R
+ pXBU2rgtn0sJA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org
+ (localhost.localdomain [127.0.0.1])
+ by smtp.lore.kernel.org (Postfix) with ESMTP id 4CB9DC44500;
+ Sat,  4 Jul 2026 19:51:02 +0000 (UTC)
+From: Miao Wang via B4 Relay <devnull+shankerwangmiao.gmail.com@kernel.org>
+Date: Sun, 05 Jul 2026 03:50:49 +0800
+Subject: [PATCH] qemu-options: Enable the -enable-kvm option for loongarch
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 16/33] accel: Hold @can_reverse information in
- AccelGdbConfig
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Chao Liu <chao.liu.zevorn@gmail.com>, qemu-s390x@nongnu.org,
- Xiaoyao Li <xiaoyao.li@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
- alex.bennee@linaro.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20260703163757.55500-1-philmd@oss.qualcomm.com>
- <20260703163757.55500-17-philmd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260703163757.55500-17-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260705-add-loong64-kvm-v1-1-aa8b85ecfa32@gmail.com>
+X-B4-Tracking: v=1; b=H4sIABhkSWoC/x3MQQqAIBBA0avErBswKYOuEi2qGW2oNBQkiO6et
+ HyL/x9IHIUTDNUDkbMkCb6gqStYt9k7RqFi0Eob1asOZyI8QvDOtLjnE0n3Da+GFC8WSnVFtnL
+ /x3F63w+8SodGYQAAAA==
+X-Change-ID: 20260705-add-loong64-kvm-d271ec6d0ebf
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, b4-sent@kernel.org,
+ Miao Wang <shankerwangmiao@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=908;
+ i=shankerwangmiao@gmail.com; s=20250715; h=from:subject:message-id;
+ bh=PNPCtIMkRVK0W0qxTiHLb/6sHgdzlIg+LHyIGQMkZOg=;
+ b=owEBbQKS/ZANAwAKAbAx48p7/tluAcsmYgBqSWQdZbln0nBPF/MUEWhAJnBVvj68yui68kwBK
+ GJvZ7XYAlaJAjMEAAEKAB0WIQREqPWPgPJBxluezBOwMePKe/7ZbgUCaklkHQAKCRCwMePKe/7Z
+ bqDuEACEUUv91y0X4mn0YdQZQHfur01hnPvgiEzLB0f1/7J80m/76pFXdFe3hH3dUZSL/Wwcu/A
+ 45ktFdGifpq4YIXYhuuQzLI7ZAQ9htk8X3LyMIlx/8VCppdCsbAPr0yGqvmdaStJtxNDPjxApQ4
+ ATNAGFmmIiwI4a8BCmyvQX6ZIyqynVtVXOiPSnk7sH8Db/5SqmUlEnxdftVvUJ/icaDj+FUJH7c
+ a2wV+qxrCNBbFRxzgGhJBQIREYJvU7H5STL+YziUiSf0k4Deqku7srUoV53C+lbEBfb0t5BJlkr
+ xLsxMKjcunwB270wtrC/tDQonP94oSgdj9oltQmUnVydfYw0NNQY36Rpj3VJviTpCY7CrKPRT4g
+ ak6LsIERABRsaucVSeWT0ExaEuN+ewwmQccitbMgKccXl7k87yIlp3nORFAAh3i85Fr/PzSspj3
+ nmxeW4OVaVTX3r/c0COQk34h+AkRUXVaEHN3uALb0z2Ca/LZPY6OqXrxPcrLIubQOIVs+yvbhgb
+ 1KhDRutCkkTo0LbJzK+QzNqyjO+XIsO+FOt4QxdQwsfcJXvjtKwjIjuFXO/UoJHWzdZyGh0vcXB
+ JFjWwbgmwZCpDIstUM1paIRYXKOxlpQOhlc5vkf9t9lJM8eTNzQ/F9yWvuCCQmH3UN5DmAEyt0g
+ xyHQI1CMfJCzN3w==
+X-Developer-Key: i=shankerwangmiao@gmail.com; a=openpgp;
+ fpr=6FAEFF06B7D212A774C60BFDFA0D166D6632EF4A
+X-Endpoint-Received: by B4 Relay for shankerwangmiao@gmail.com/20250715
+ with auth_id=462
+X-Original-From: Miao Wang <shankerwangmiao@gmail.com>
+Received-SPF: pass client-ip=172.105.4.254;
+ envelope-from=devnull+shankerwangmiao.gmail.com@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ FREEMAIL_FORGED_REPLYTO=2.095, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,26 +99,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: shankerwangmiao@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/26 09:37, Philippe Mathieu-Daudé wrote:
-> @@ -158,6 +158,7 @@ static int tcg_init_machine(AccelState *as, MachineState *ms)
->            * them occurring every time we single step.
->            */
->           as->gdbstub.sstep_flags |= SSTEP_NOIRQ | SSTEP_NOTIMER;
-> +        as->gdbstub.can_reverse = true;
->       }
+From: Miao Wang <shankerwangmiao@gmail.com>
 
-This is under replay_mode == NONE.
+Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+---
+ qemu-options.hx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> -bool gdb_can_reverse(void)
-> -{
-> -    return replay_mode == REPLAY_MODE_PLAY;
-> -}
+diff --git a/qemu-options.hx b/qemu-options.hx
+index e44b47de68137120da9979fb081d0c108f13179c..c7dbbd01e73367380fcf653fa8d0d18795dde9a7 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -5164,7 +5164,7 @@ ERST
+ DEF("enable-kvm", 0, QEMU_OPTION_enable_kvm, \
+     "-enable-kvm     enable KVM full virtualization support\n",
+     QEMU_ARCH_ARM | QEMU_ARCH_I386 | QEMU_ARCH_MIPS | QEMU_ARCH_PPC |
+-    QEMU_ARCH_RISCV | QEMU_ARCH_S390X)
++    QEMU_ARCH_RISCV | QEMU_ARCH_S390X | QEMU_ARCH_LOONGARCH)
+ SRST
+ ``-enable-kvm``
+     Enable KVM full virtualization support. This option is only
 
-This isn't.
+---
+base-commit: 30e8a06b64aa58a3990ba39cb5d09531e7d265e0
+change-id: 20260705-add-loong64-kvm-d271ec6d0ebf
+
+Best regards,
+-- 
+Miao Wang <shankerwangmiao@gmail.com>
 
 
-r~
 
