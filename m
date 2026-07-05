@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E85AC43458
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4127BC43458
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:42:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgNw2-0005DT-UP; Sun, 05 Jul 2026 10:35:06 -0400
+	id 1wgNwj-0005gw-IU; Sun, 05 Jul 2026 10:35:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNw2-0005D6-2g
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwh-0005gV-3u
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNw0-00018Z-AJ
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:05 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwf-0001Rc-K8
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783262103;
+ s=mimecast20190719; t=1783262145;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=J0MKVmrch/pvBo8melADVF6zAaT/qDBqYQukgYg8kKY=;
- b=Z5rY2aXaq77kai6tMCjQTAPtR+35mvlZychgHPOoDxoKYTYaeuQrtdxgfq5E5EcSyWvbKh
- 5m9bqXWAv/mlFoQvfA/11noE+DnyOcuFNlMoDrmW7mhkZdaX/7i5+8v5s+WXLdheKfIZET
- Ve6QKeVl9GSsWrx9m+151BvDe4Flrok=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QyVIPTtjvDwClzpwMwcfeN9BG2/EOcSdSHSa/m2GmrU=;
+ b=atPfE1jJgXbexviBFIvQCRmwSpXqL8SjAM1c6uiBiK4kVX+JUo/di0la4+qS689JijFy+r
+ kZZI0lbg9MR4JP7tt/sMRqq4jKMQDTkULNKtOE1yeMyae4+lNChrUFX4csHBzTwsbj4YiU
+ VqX2xoAh7dz0j5u+C2Ysw6GcucX30FQ=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-38-gawYNeLzMmK22axxNY3Ysw-1; Sun, 05 Jul 2026 10:35:02 -0400
-X-MC-Unique: gawYNeLzMmK22axxNY3Ysw-1
-X-Mimecast-MFC-AGG-ID: gawYNeLzMmK22axxNY3Ysw_1783262101
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490a767c7dcso16872705e9.2
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:35:02 -0700 (PDT)
+ us-mta-638-yLS2rQVvPJeon93qAV8D9g-1; Sun, 05 Jul 2026 10:35:43 -0400
+X-MC-Unique: yLS2rQVvPJeon93qAV8D9g-1
+X-Mimecast-MFC-AGG-ID: yLS2rQVvPJeon93qAV8D9g_1783262143
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-493c20d0468so25557705e9.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:35:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783262101; x=1783866901; darn=nongnu.org;
+ d=redhat.com; s=google; t=1783262143; x=1783866943; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=J0MKVmrch/pvBo8melADVF6zAaT/qDBqYQukgYg8kKY=;
- b=AqC3vpB90IS4oCd4Hf3BlZKQc8WGYsccZtHYHoYhshz9PNR1wFTeFmDcBbPP8Y9hnF
- xfSWF8HsVslK/pirez0jy18A059TvS5dUGyk5DXQdip49ilSpBCAWkVUuuLjdRAksGym
- YGmvWOCphicAEvfjBuyTcWAyIOq7jzJgPw4Os6Cgcrz6oTyK7M7Mn6HY0sk3v0MV37Ty
- kIwEnlSoJkYt3R/G44Vxn6TmSVHKY1w3ZZ4YWXfQGG2vwDQtZofV0+1A4gbOY+jR9n2Y
- bOLqDkoZHCvteIbDpTvO3ESAe/MBBmhIGp4y01cw9ZpLBn0X2idDzm0WFQFohaXxMBZ+
- eLDg==
+ bh=QyVIPTtjvDwClzpwMwcfeN9BG2/EOcSdSHSa/m2GmrU=;
+ b=bY1n/loDfNew3S60n061fy793rDAms/BN0kFmnqYEWvsIGWOYonGlrgiDMLQvTvNzV
+ lmK/O6K8uXUBLiNxxMfdc9Fjg0lU1L0HsJCCYJ3Jrz/IUoxGoMi4fVdl2eYsqg2S3K/H
+ ZwfkOMPTRh5tjQO9YYH1tKMeURpLXvC+/daWgfCkSC/8H9G11jB1r5kzu0mavMIQXssL
+ SgFW4PCR45v4xaG951TyCRdT5vgLY7cqCml7+SBVg+b3p3TH5oW85mPayqLC50GqgYqm
+ tpYuksDXtT+tO/QF4nTovJ6E/OkwIU72b66zz6Ria1HXv6aluKl9Hfk9Bh2B74YCjtcQ
+ 7qqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783262101; x=1783866901;
+ d=1e100.net; s=20251104; t=1783262143; x=1783866943;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=J0MKVmrch/pvBo8melADVF6zAaT/qDBqYQukgYg8kKY=;
- b=JHNJOk3BEpAPZqAHinV2UH7BF9Ndrfhz83plZFuW5eJYG4ChnzKFHCSiPQXMMhvSmS
- pyYL4X4yrHR/vIl4ePt8/oiYmRapb6dE0xzhil0PNfzwo/nLLpTmp0kLJJv3QbtpQ0Js
- l/l+o1LMOYvCBNmliCkThr76Z0voDIIgFhvKOsdaewAeYraEh2jgZt94etS+6OaYpwnR
- nSFbtEnHcOC0n+Y7e3qYpCr/tQic+J9b5W3WAX3hA1VfXlZK0S7/8fcxfyQxG5DN9mgA
- k+iUVcWNY9Xbj0oxQ8XSKhUrQ5GQUeJx4b6RsWcwsdBWirjLiN7gV2fxS1Rxbb2r6Z9I
- rnTw==
-X-Gm-Message-State: AOJu0Yy9l/6YHajiac2cdGWS9bwdpY7iT06naAYZLA2sPgyhPffR7dWD
- Dv9f2L2hGcNZ5OCKdq2U3SsvjeQxJRNfkxDVG8KJqryctSOqQ9pjay76n/uB5FirIDSddrD42/b
- 2oqOiP85PP3tQ9eDIs8c0ADczxig1P9eM3HIhaqDvIMEQNqR9AeCzL0cvaAfrbBIIJEiaJnDOtc
- k17FThiizYzPJe5uh/2TNSOXfx6u9yO8tQBg==
-X-Gm-Gg: AfdE7ck+7isRdVwVyC7TQOn9fYL8Nqrv/UnIuwj1h7SY+mxgrg4mvddRglh7FO4J7+b
- NB+CN3HYIbXyic/6N35vO8teHHYU6ABwrkb/G7k/cVjMamuvC1uGDS/NeMbYhsD/ZNZKDarkH4s
- l/+GVMmlWHZvKQDia/9skVLGUO0vQJBkke7wpfYKumJAJTtsubV4AL9uDJhveK/A9sc2DwR+jJe
- kJUt1W0f39+ahOUkIgjKPFj6Y+yAImoBNc7qpbynX9gudu82H4fziaOoBoApLijQykdEBdxByCE
- i4KiidiIqjjLmFKR3vj9s9y5G6HX3Ucbcnhl/fWsO7Im9DNRGZ/LBK3JZghLhLZElhmQdCXpICb
- Sf1diozi84GZii8TM00HDR4uhv9UzHUwd
-X-Received: by 2002:a05:600c:c0d1:10b0:493:bb23:152a with SMTP id
- 5b1f17b1804b1-493d11fe189mr56804225e9.34.1783262100856; 
- Sun, 05 Jul 2026 07:35:00 -0700 (PDT)
-X-Received: by 2002:a05:600c:c0d1:10b0:493:bb23:152a with SMTP id
- 5b1f17b1804b1-493d11fe189mr56803945e9.34.1783262100356; 
- Sun, 05 Jul 2026 07:35:00 -0700 (PDT)
+ bh=QyVIPTtjvDwClzpwMwcfeN9BG2/EOcSdSHSa/m2GmrU=;
+ b=CTKGt1Ai3X1RDXt3Buz2mEz47eMQKWvZaCn927OERu7K8ObPToidlWHcNeu01/S6Dt
+ oK1B64dtamggzWk1Zr++K5JtUq7+8/CuvivbmljgkJYT4JH0EwT7qtZPKyRkb5DLGcP/
+ yTa7Q8v9xxBq+J+4Ttzecd0QhLERzmJj8c4NWorJbQ01o6fSo44PSGtQRUrYFI7Na7w0
+ 7/V0/Ktvf1a7ERG+O2Yb/1PVVxFYaa35drgIAosFECV4XXO82OFwondEoRn19Wvot8of
+ uVK05hXmjkYvXjGp25Xbz5QPeaCaefib3KRT5SU1Dw7GrxEDkjDmfWgiovgfDKMs80wk
+ swGQ==
+X-Gm-Message-State: AOJu0Yw1zD3vCjUTTfd2yecvwNKNZ4LQC9o0KIBSkcCKDe2iiTJsmXRJ
+ 9qUqsmKh+xQKt+r6vp4y3J2xqn42qlVxK2FmZbB7z1IjOST760Jzs2oXOuL0KFSfZwlOUXfJzcl
+ EgjEWwhWrGtXcc+CKIxBcHdCbATT2lXW5vMcI1zpDqIAajl7PLC3QNSzUwiqlT+IHG2/JcLLFp2
+ sxQXAQgHLSb0WBpUMKsWaiE6rze8XVk8DDhQ==
+X-Gm-Gg: AfdE7cnyTcY0coZEcu8TxaVN8d9q+NMt5w6NfdnEniJZp9/CGoRaxgyPEmrd/DTNTtI
+ 8a7McVp9t9yY88KKRONTmLQUIu8iIr5VttcDfmd965PF9hS+pHta+9p06DAkJ44FWmMZj4S7+Dc
+ GtN11MCl4vLP0MbuZRU0KWwSJk025LmnqbWix5PoJq6m5nXZzK8WVd3qE5ejJdrK2+O2k0bBAJz
+ P6krwt4/nkvfXjZFdlrLMJVgcGuKSVoyPus8c680EoASLKdFJatnQG2B7eDkNRgqdSPW2+5furY
+ v6ExoS1uunDbfWG0fd+ym1B17puGVzE+j+obgQFBzvPMxBnEnOMAaEQxbMVW5St5TwizjPFNQpI
+ IHDYP25wonA9pqYeQvcs/fPXKaUoYAM0u
+X-Received: by 2002:a05:600c:c4a5:b0:493:aab3:c09c with SMTP id
+ 5b1f17b1804b1-493d11fa9abmr78828685e9.28.1783262142607; 
+ Sun, 05 Jul 2026 07:35:42 -0700 (PDT)
+X-Received: by 2002:a05:600c:c4a5:b0:493:aab3:c09c with SMTP id
+ 5b1f17b1804b1-493d11fa9abmr78828345e9.28.1783262142119; 
+ Sun, 05 Jul 2026 07:35:42 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-68-31.inter.net.il. [80.230.68.31])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c0e92687sm301930125e9.0.2026.07.05.07.34.59
+ 5b1f17b1804b1-493bef23feasm283450795e9.2.2026.07.05.07.35.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Jul 2026 07:34:59 -0700 (PDT)
-Date: Sun, 5 Jul 2026 10:34:58 -0400
+ Sun, 05 Jul 2026 07:35:40 -0700 (PDT)
+Date: Sun, 5 Jul 2026 10:35:38 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- fanhuang <FangSheng.Huang@amd.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 08/44] i386/acpi-build: partition device_memory SRAT umbrella
- for sp-mem
-Message-ID: <78f08a0f47e787921d8beb78a5bade9a8a64400b.1783261895.git.mst@redhat.com>
+ GuoHan Zhao <zhaoguohan@kylinos.cn>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 24/44] vhost-user-base: free virtqueue array during cleanup
+Message-ID: <ed963d3967fd8e5ca551c1cc6fcbabaef010d72e.1783261895.git.mst@redhat.com>
 References: <cover.1783261895.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -123,144 +122,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: fanhuang <FangSheng.Huang@amd.com>
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-Restructure the device_memory SRAT umbrella entry into a per-kind
-partition: each TYPE_SP_MEM device gets an ENABLED entry at its own
-proximity_domain; the remaining sub-ranges get HOTPLUGGABLE | ENABLED
-placeholders at the highest PXM, preserving the existing umbrella
-convention.
+vhost-user-base stores the VirtQueue pointers in a GPtrArray, but its
+cleanup helper only deletes the VirtQueues and leaves the array itself
+allocated.
 
-Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Free the GPtrArray after deleting the queues and clear the pointer so
+cleanup remains safe if the error path reaches it with no queues to
+release.
+
+Fixes: 6275989647ef (virtio: split into vhost-user-base and vhost-user-device)
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260623075051.3797975-4-FangSheng.Huang@amd.com>
+Message-ID: <20260629092619.2607275-1-zhaoguohan@kylinos.cn>
 ---
- hw/i386/acpi-build.c | 96 ++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 92 insertions(+), 4 deletions(-)
+ hw/virtio/vhost-user-base.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 2ee061558c..8837b69687 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -52,6 +52,7 @@
- #include "migration/vmstate.h"
- #include "hw/mem/memory-device.h"
- #include "hw/mem/nvdimm.h"
-+#include "hw/mem/sp-mem.h"
- #include "system/numa.h"
- #include "system/reset.h"
- #include "hw/hyperv/vmbus-bridge.h"
-@@ -1351,6 +1352,96 @@ build_tpm_tcpa(GArray *table_data, BIOSLinker *linker, GArray *tcpalog,
- }
- #endif
+diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+index 39b5e637fc..6ac523f9eb 100644
+--- a/hw/virtio/vhost-user-base.c
++++ b/hw/virtio/vhost-user-base.c
+@@ -193,9 +193,13 @@ static void do_vhost_user_cleanup(VirtIODevice *vdev, VHostUserBase *vub)
+ {
+     vhost_user_cleanup(&vub->vhost_user);
  
-+typedef struct {
-+    uint64_t addr;
-+    uint64_t size;
-+    uint32_t node;
-+} SpMemRange;
-+
-+static int sp_mem_collect_ranges_cb(Object *obj, void *opaque)
-+{
-+    GArray *ranges = opaque;
-+    SpMemDevice *spm;
-+    MemoryDeviceClass *mdc;
-+    SpMemRange r;
-+
-+    if (!object_dynamic_cast(obj, TYPE_SP_MEM)) {
-+        return 0;
-+    }
-+    spm = SP_MEM(obj);
-+    mdc = MEMORY_DEVICE_GET_CLASS(MEMORY_DEVICE(spm));
-+    r.addr = mdc->get_addr(MEMORY_DEVICE(spm));
-+    r.size = memory_region_size(
-+                 host_memory_backend_get_memory(spm->hostmem));
-+    r.node = spm->node;
-+    g_array_append_val(ranges, r);
-+    return 0;
-+}
-+
-+static gint sp_mem_range_compare(gconstpointer a, gconstpointer b)
-+{
-+    const SpMemRange *range_a = a;
-+    const SpMemRange *range_b = b;
-+
-+    if (range_a->addr < range_b->addr) {
-+        return -1;
-+    }
-+    if (range_a->addr > range_b->addr) {
-+        return 1;
-+    }
-+    return 0;
-+}
-+
-+/*
-+ * Emit SRAT memory-affinity entries covering the device_memory region.
-+ *
-+ * For each plugged TYPE_SP_MEM device, emit an ENABLED entry at the
-+ * device's own proximity_domain.  All remaining sub-ranges (gaps
-+ * between sp-mem devices, leading and trailing padding, and ranges
-+ * occupied by other memory devices) are covered by HOTPLUGGABLE |
-+ * ENABLED placeholder entries at PXM = nb_numa_nodes - 1.
-+ */
-+static void build_srat_device_memory(GArray *table_data, MachineState *ms)
-+{
-+    g_autoptr(GArray) ranges = g_array_new(FALSE, TRUE, sizeof(SpMemRange));
-+    uint32_t hotplug_pxm = ms->numa_state->num_nodes - 1;
-+    uint64_t region_start, region_end;
-+    guint i;
-+
-+    region_start = ms->device_memory->base;
-+    region_end = region_start + memory_region_size(&ms->device_memory->mr);
-+
-+    object_child_foreach_recursive(qdev_get_machine(),
-+                                   sp_mem_collect_ranges_cb, ranges);
-+    g_array_sort(ranges, sp_mem_range_compare);
-+
-+    for (i = 0; i < ranges->len; i++) {
-+        SpMemRange *r = &g_array_index(ranges, SpMemRange, i);
-+
-+        if (region_start < r->addr) {
-+            build_srat_memory(table_data, region_start, r->addr - region_start,
-+                              hotplug_pxm,
-+                              MEM_AFFINITY_HOTPLUGGABLE |
-+                              MEM_AFFINITY_ENABLED);
+-    for (int i = 0; i < vub->num_vqs; i++) {
+-        VirtQueue *vq = g_ptr_array_index(vub->vqs, i);
+-        virtio_delete_queue(vq);
++    if (vub->vqs) {
++        for (int i = 0; i < vub->num_vqs; i++) {
++            VirtQueue *vq = g_ptr_array_index(vub->vqs, i);
++            virtio_delete_queue(vq);
 +        }
-+        build_srat_memory(table_data, r->addr, r->size, r->node,
-+                          MEM_AFFINITY_ENABLED);
-+        region_start = r->addr + r->size;
-+    }
-+
-+    /*
-+     * Cover the rest of the device_memory window that no sp-mem device
-+     * occupies. Keeping it HOTPLUGGABLE preserves the umbrella entry's
-+     * role for future pc-dimm / virtio-mem hot-add into this window.
-+     */
-+    if (region_start < region_end) {
-+        build_srat_memory(table_data, region_start, region_end - region_start,
-+                          hotplug_pxm,
-+                          MEM_AFFINITY_HOTPLUGGABLE |
-+                          MEM_AFFINITY_ENABLED);
-+    }
-+}
-+
- #define HOLE_640K_START  (640 * KiB)
- #define HOLE_640K_END   (1 * MiB)
- 
-@@ -1487,10 +1578,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
-      * providing _PXM method if necessary.
-      */
-     if (machine->device_memory) {
--        build_srat_memory(table_data, machine->device_memory->base,
--                          memory_region_size(&machine->device_memory->mr),
--                          nb_numa_nodes - 1,
--                          MEM_AFFINITY_HOTPLUGGABLE | MEM_AFFINITY_ENABLED);
-+        build_srat_device_memory(table_data, machine);
++        g_ptr_array_free(vub->vqs, true);
++        vub->vqs = NULL;
      }
  
-     acpi_table_end(linker, &table);
+     virtio_cleanup(vdev);
 -- 
 MST
 
