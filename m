@@ -4,66 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86142C43602
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 20:15:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88C89C43602
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 21:15:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgTEJ-0003HQ-1a; Sun, 05 Jul 2026 16:14:19 -0400
+	id 1wgUAb-0005ry-Ls; Sun, 05 Jul 2026 17:14:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kernel@0in.de>) id 1wgSfZ-0006Gw-Fo
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 15:38:25 -0400
-Received: from mout-p-202.mailbox.org ([80.241.56.172])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <kernel@0in.de>) id 1wgSfW-0006Oa-QC
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 15:38:25 -0400
-Received: from smtp102.mailbox.org (smtp102.mailbox.org
- [IPv6:2001:67c:2050:b231:465::102])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4gtd7p3pDtz9tFN;
- Sun,  5 Jul 2026 21:38:14 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=0in.de; s=MBO0001;
- t=1783280294;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=WlDpGJfEd3561hSi+Tj5FsRGcIYOmaKgBglzaimXtpU=;
- b=pJPTt2DiC81LNShq+5Y3wG2fnjxdexiNTv7ulCjGS6na6yvy1GO005rlrJvaSpUfhInOa/
- we21us+TrPICW7SXtMIi00OzGuGWLWLQKm9NP6402mJ6MmPZxvcwhXvZgJ0PjRc6w2UnrO
- 6+6tZcc2TcL3602fe2qF/zXbrWuwgZtKUgbuivgRzfuNEO1rJ4faFkBclCzBVmOwykc/2p
- 6fXzqa1gzIGwfYLQqq1eGG6b6FA/WriXYMbU60DPRAvO2GgBHt53Xp9rEiO1fUR98N8SM8
- 4pzO2yIV9kzFJklXRvy5dRhpTSZUwNvPYQdZHe52CI28UM2KVeKGts/TwkIXzw==
-Authentication-Results: outgoing_mbo_mout; dkim=none;
- spf=pass (outgoing_mbo_mout: domain of kernel@0in.de designates
- 2001:67c:2050:b231:465::102 as permitted sender) smtp.mailfrom=kernel@0in.de
-Content-Type: multipart/alternative;
- boundary="------------I1ODxRa0pzNNen8IKwgIi4DM"
-Message-ID: <3cb937dc-db7e-4e87-ab46-3a7ba754ef55@0in.de>
-Date: Sun, 5 Jul 2026 21:38:10 +0200
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1wgUAa-0005rl-Pa
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 17:14:32 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1wgUAZ-0006yq-41
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 17:14:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=W4Y5+txlh9eN0VqxVQfBZcAY0bVr+eOI6cvAuPHrIbQ=; b=QgoyD0+KImgvcguMWb6pahhJ6v
+ JTZCLmT/HDMK/5njyh0w5cvDDNvf0prPfpbvp94+9txgjaFuhxOFYibjABDwcb2+WAJHEj8Fxq0LI
+ uEEIXTjnb72Ic8d5wcOUO0a4yM0c+LyTtUXB21xW/dF6N+uA2AdSu1zjtG02cZ8/hpp4vPtXhXIWk
+ jcj+PRYrY7mRo91IgKawuJ3MNZH0fo92j1UyL5o/y3rQsfUBYsu9huOsHggnhMQiMEz7UUlzhZy4w
+ LgVoF/k/Xcj5+3MO9kJhCbvLikp6zmL0yXTKwlPskNorGhQDnA+62vrvfRRWM438nywhziXL3eS8b
+ 8CtrPua2YvgBMqk3tGYbwO9K3uqjZ5t0aDcmAhxwgf1E18RbNXrCK7fx/52S+OlexJOR6Wl1irjXb
+ 3GCRX54dm0WHmI+plqieV8q9QloF1bFb0Yl8Rs1jjfH21zCLCtZDwQsR/Ehe4QPbB78TThM7ESK2Y
+ qdXSk1F/RUIfX20b3Kl3NSDegyt4EcnuHDZyynpeuY78DQ0YPkhLlSeAk86/5ApjA3gfbKPJykpTl
+ 6abcjJ7qWd6Z2O1SKUG0gAWpjJ/NA1y2Ihvpkf7Dk12TMXeQ41hGQmzUQxaK7b2wKnYCqxTDHMziJ
+ TZZgZkZmjL6E2nB00y19dVdWrAkUyCdX8SXT+4PlI=;
+Received: from [2a02:8012:2f01:0:9cc8:2cd7:b4eb:bbd7]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1wgUAP-001DPo-NY; Sun, 05 Jul 2026 22:14:22 +0100
+Message-ID: <24d6a029-5f68-4314-820c-fb1786012fb4@ilande.co.uk>
+Date: Sun, 5 Jul 2026 22:14:23 +0100
 MIME-Version: 1.0
-From: Maximilian Senftleben <kernel@0in.de>
-Subject: [PATCH v4] input-linux: Add option to not grab a device upon guest
- startup
-To: qemu-devel@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, Marc-Andre Lureau <marcandre.lureau@redhat.com>,
- Justinien Bouron <justinien.bouron@gmail.com>
+User-Agent: Mozilla Thunderbird
+To: Michael Tokarev <mjt@tls.msk.ru>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>
+References: <4b08f4e2-2274-409a-86d8-469c73e21579@linaro.org>
+ <0403705b-9af4-4de1-8f66-c56befa5bae9@tls.msk.ru>
 Content-Language: en-US
-X-Rspamd-Queue-Id: 4gtd7p3pDtz9tFN
-Received-SPF: pass client-ip=80.241.56.172; envelope-from=kernel@0in.de;
- helo=mout-p-202.mailbox.org
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <0403705b-9af4-4de1-8f66-c56befa5bae9@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:9cc8:2cd7:b4eb:bbd7
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: docker-image-debian-all-test-cross errors
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 05 Jul 2026 16:14:17 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,336 +107,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------I1ODxRa0pzNNen8IKwgIi4DM
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+On 05/07/2026 10:07, Michael Tokarev wrote:
 
-Some workflows start a guest in the background and do not want evdev
-devices to be grabbed immediately.  In that case, the current behavior
-is annoying because the host loses control of the keyboard or mouse
-before the user actually wants to interact with the guest.
+> On 05.07.2026 00:20, Richard Henderson wrote:
+>> Has anyone else been seeing
+>>
+>> Error: Failed to fetch http://deb.debian.org/debian/pool/main/d/dpkg/ libdpkg- 
+>> perl_1.22.21_all.deb  404  Not Found [IP: 151.101.22.132 80]
+> ...
+> 
+> dpkg (and all related packages) has been upgraded from 1.22.21 to
+> 1.22.22 version quite a while (on Mar-2026).  Initially debian trixie
+> had dpkg 1.22.21.
+> 
+> I wonder where it is getting the old version reference from?
+> Should the previous layer be refreshed to point to the current trixie
+> point release?
+> 
+> /mjt
 
-Add a new boolean input-linux property, grab-on-startup.  When true,
-the device is grabbed during initialization, which keeps the existing
-behavior.  When false, the device remains ungrabbed until the toggle
-key combination is entered.
+If that is the case then I think you can fix it by doing a manual update of the base 
+image to pull in the latest update locally i.e. "docker pull 
+docker.io/library/debian:13-slim" and then rebuilding the docker images once again?
 
-Also make sure startup grabbing is skipped entirely when
-grab-on-startup is false, even if keys are already pressed during
-device initialization.  Without this, QEMU could still perform a delayed
-grab once those keys are released.
 
-This revives an earlier patch originally posted by Justinien Bouron and
-incorporates the follow-up review feedback.
+ATB,
 
-Link:https://patchew.org/QEMU/20240403055002.890760-1-justinien.bouron@gmail.com/
-Link:https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg04004.html
-Signed-off-by: Maximilian Senftleben YOUR NAME <YOUR EMAIL>
----
-This revives Justinien Bouron's earlier input-linux grab-on-startup
-patch:
+Mark.
 
-      https://patchew.org/QEMU/20240403055002.890760-1-justinien.bouron@gmail.com/
-
-Last known review state:
-- Marc-Andre Lureau asked for a resend with an updated commit message:
-      https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg04003.html
-- Markus Armbruster reviewed the QAPI schema and pointed out that the
-      delayed-grab path still needed to be skipped when keys are already
-      pressed at startup and grab-on-startup is false:
-      https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg04004.html
-- Daniel P. Berrange asked for a clearer motivation for the feature:
-      https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg01969.html
-
-Changes since v3:
-- Skip startup grabbing entirely when grab-on-startup is false, even if
-   keys are already pressed during initialization
-- Refresh the commit message to clarify the motivation for the option
-- Keep the QAPI documentation formatting requested in prior review and
-   update the since tag for the current development cycle
-
-  qapi/qom.json    | 14 +++++++++++++-
-  ui/input-linux.c | 27 +++++++++++++++++++++++++++
-  2 files changed, 40 insertions(+), 1 deletion(-)
-
-diff --git a/qapi/qom.json b/qapi/qom.json
-index dd45ac1087..e3eda5c1ec 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -558,13 +558,25 @@
-  # @grab-toggle: the key or key combination that toggles device grab
-  #     (default: ctrl-ctrl)
-  #
-+# @grab-on-startup: if true, grab the device immediately upon starting
-+#     the guest.  Otherwise, don't grab the device until the
-+#     combination is entered.  This does not influence other devices
-+#     even if grab_all is true, i.e. in the unlikely scenario where
-+#     device1 has grab_all=true + grab-on-startup=true and device2 has
-+#     grab-on-startup=false, only device1 is grabbed on startup, then,
-+#     once the grab combination is entered, grabbing is toggled off
-+#     for both devices (because device1 enforces the grab_all
-+#     property) until the combination is entered again at which point
-+#     both devices will be grabbed.  (default: true)  (since 11.1).
-+#
-  # Since: 2.6
-  ##
-  { 'struct': 'InputLinuxProperties',
-    'data': { 'evdev': 'str',
-              '*grab_all': 'bool',
-              '*repeat': 'bool',
--            '*grab-toggle': 'GrabToggleKeys' },
-+            '*grab-toggle': 'GrabToggleKeys',
-+            '*grab-on-startup': 'bool' },
-    'if': 'CONFIG_LINUX' }
-  
-  ##
-diff --git a/ui/input-linux.c b/ui/input-linux.c
-index f4eee1ffd7..767374e99a 100644
---- a/ui/input-linux.c
-+++ b/ui/input-linux.c
-@@ -43,6 +43,7 @@ struct InputLinux {
-      bool        grab_request;
-      bool        grab_active;
-      bool        grab_all;
-+    bool        grab_on_startup;
-      bool        keydown[KEY_CNT];
-      int         keycount;
-      int         wheel;
-@@ -394,12 +395,17 @@ static void input_linux_complete(UserCreatable *uc, Error **errp)
-      }
-  
-      qemu_set_fd_handler(il->fd, input_linux_event, NULL, il);
-+    if (!il->grab_on_startup) {
-+        goto skip_grab;
-+    }
-      if (il->keycount) {
-          /* delay grab until all keys are released */
-          il->grab_request = true;
-      } else {
-          input_linux_toggle_grab(il);
-      }
-+
-+skip_grab:
-      QTAILQ_INSERT_TAIL(&inputs, il, next);
-      il->initialized = true;
-      return;
-@@ -487,6 +493,21 @@ static void input_linux_set_grab_toggle(Object *obj, int value,
-      il->grab_toggle = value;
-  }
-  
-+static bool input_linux_get_grab_on_startup(Object *obj, Error **errp)
-+{
-+    InputLinux *il = INPUT_LINUX(obj);
-+
-+    return il->grab_on_startup;
-+}
-+
-+static void input_linux_set_grab_on_startup(Object *obj, bool value,
-+                                            Error **errp)
-+{
-+    InputLinux *il = INPUT_LINUX(obj);
-+
-+    il->grab_on_startup = value;
-+}
-+
-  static void input_linux_instance_init(Object *obj)
-  {
-  }
-@@ -494,6 +515,7 @@ static void input_linux_instance_init(Object *obj)
-  static void input_linux_class_init(ObjectClass *oc, const void *data)
-  {
-      UserCreatableClass *ucc = USER_CREATABLE_CLASS(oc);
-+    ObjectProperty *grab_on_startup_prop;
-  
-      ucc->complete = input_linux_complete;
-  
-@@ -510,6 +532,11 @@ static void input_linux_class_init(ObjectClass *oc, const void *data)
-                                     &GrabToggleKeys_lookup,
-                                     input_linux_get_grab_toggle,
-                                     input_linux_set_grab_toggle);
-+    grab_on_startup_prop = object_class_property_add_bool(
-+        oc, "grab-on-startup",
-+        input_linux_get_grab_on_startup,
-+        input_linux_set_grab_on_startup);
-+    object_property_set_default_bool(grab_on_startup_prop, true);
-  }
-  
-  static const TypeInfo input_linux_info = {
--- 2.53.0
-
---------------I1ODxRa0pzNNen8IKwgIi4DM
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  </head>
-  <body text="#000000" bgcolor="#FFFFFF">
-    <div class="moz-text-plain" wrap="true"
-      style="font-family: -moz-fixed; font-size: 12px;" lang="x-unicode">
-      <pre wrap="" class="moz-quote-pre">Some workflows start a guest in the background and do not want evdev
-devices to be grabbed immediately.  In that case, the current behavior
-is annoying because the host loses control of the keyboard or mouse
-before the user actually wants to interact with the guest.
-
-Add a new boolean input-linux property, grab-on-startup.  When true,
-the device is grabbed during initialization, which keeps the existing
-behavior.  When false, the device remains ungrabbed until the toggle
-key combination is entered.
-
-Also make sure startup grabbing is skipped entirely when
-grab-on-startup is false, even if keys are already pressed during
-device initialization.  Without this, QEMU could still perform a delayed
-grab once those keys are released.
-
-This revives an earlier patch originally posted by Justinien Bouron and
-incorporates the follow-up review feedback.
-
-Link: <a class="moz-txt-link-freetext"
-href="https://patchew.org/QEMU/20240403055002.890760-1-justinien.bouron@gmail.com/">https://patchew.org/QEMU/20240403055002.890760-1-justinien.bouron@gmail.com/</a>
-Link: <a class="moz-txt-link-freetext"
-href="https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg04004.html">https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg04004.html</a>
-Signed-off-by: Maximilian Senftleben YOUR NAME &lt;YOUR EMAIL&gt;
----
-This revives Justinien Bouron's earlier input-linux grab-on-startup
-patch:
-
-     <a class="moz-txt-link-freetext" href="https://patchew.org/QEMU/20240403055002.890760-1-justinien.bouron@gmail.com/">https://patchew.org/QEMU/20240403055002.890760-1-justinien.bouron@gmail.com/</a>
-
-Last known review state:
-- Marc-Andre Lureau asked for a resend with an updated commit message:
-     <a class="moz-txt-link-freetext" href="https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg04003.html">https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg04003.html</a>
-- Markus Armbruster reviewed the QAPI schema and pointed out that the
-     delayed-grab path still needed to be skipped when keys are already
-     pressed at startup and grab-on-startup is false:
-     <a class="moz-txt-link-freetext" href="https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg04004.html">https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg04004.html</a>
-- Daniel P. Berrange asked for a clearer motivation for the feature:
-     <a class="moz-txt-link-freetext" href="https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg01969.html">https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg01969.html</a>
-
-Changes since v3:
-- Skip startup grabbing entirely when grab-on-startup is false, even if
-  keys are already pressed during initialization
-- Refresh the commit message to clarify the motivation for the option
-- Keep the QAPI documentation formatting requested in prior review and
-  update the since tag for the current development cycle
-
- qapi/qom.json    | 14 +++++++++++++-
- ui/input-linux.c | 27 +++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+), 1 deletion(-)
-
-diff --git a/qapi/qom.json b/qapi/qom.json
-index dd45ac1087..e3eda5c1ec 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -558,13 +558,25 @@
- # @grab-toggle: the key or key combination that toggles device grab
- #     (default: ctrl-ctrl)
- #
-+# @grab-on-startup: if true, grab the device immediately upon starting
-+#     the guest.  Otherwise, don't grab the device until the
-+#     combination is entered.  This does not influence other devices
-+#     even if grab_all is true, i.e. in the unlikely scenario where
-+#     device1 has grab_all=true + grab-on-startup=true and device2 has
-+#     grab-on-startup=false, only device1 is grabbed on startup, then,
-+#     once the grab combination is entered, grabbing is toggled off
-+#     for both devices (because device1 enforces the grab_all
-+#     property) until the combination is entered again at which point
-+#     both devices will be grabbed.  (default: true)  (since 11.1).
-+#
- # Since: 2.6
- ##
- { 'struct': 'InputLinuxProperties',
-   'data': { 'evdev': 'str',
-             '*grab_all': 'bool',
-             '*repeat': 'bool',
--            '*grab-toggle': 'GrabToggleKeys' },
-+            '*grab-toggle': 'GrabToggleKeys',
-+            '*grab-on-startup': 'bool' },
-   'if': 'CONFIG_LINUX' }
- 
- ##
-diff --git a/ui/input-linux.c b/ui/input-linux.c
-index f4eee1ffd7..767374e99a 100644
---- a/ui/input-linux.c
-+++ b/ui/input-linux.c
-@@ -43,6 +43,7 @@ struct InputLinux {
-     bool        grab_request;
-     bool        grab_active;
-     bool        grab_all;
-+    bool        grab_on_startup;
-     bool        keydown[KEY_CNT];
-     int         keycount;
-     int         wheel;
-@@ -394,12 +395,17 @@ static void input_linux_complete(UserCreatable *uc, Error **errp)
-     }
- 
-     qemu_set_fd_handler(il-&gt;fd, input_linux_event, NULL, il);
-+    if (!il-&gt;grab_on_startup) {
-+        goto skip_grab;
-+    }
-     if (il-&gt;keycount) {
-         /* delay grab until all keys are released */
-         il-&gt;grab_request = true;
-     } else {
-         input_linux_toggle_grab(il);
-     }
-+
-+skip_grab:
-     QTAILQ_INSERT_TAIL(&amp;inputs, il, next);
-     il-&gt;initialized = true;
-     return;
-@@ -487,6 +493,21 @@ static void input_linux_set_grab_toggle(Object *obj, int value,
-     il-&gt;grab_toggle = value;
- }
- 
-+static bool input_linux_get_grab_on_startup(Object *obj, Error **errp)
-+{
-+    InputLinux *il = INPUT_LINUX(obj);
-+
-+    return il-&gt;grab_on_startup;
-+}
-+
-+static void input_linux_set_grab_on_startup(Object *obj, bool value,
-+                                            Error **errp)
-+{
-+    InputLinux *il = INPUT_LINUX(obj);
-+
-+    il-&gt;grab_on_startup = value;
-+}
-+
- static void input_linux_instance_init(Object *obj)
- {
- }
-@@ -494,6 +515,7 @@ static void input_linux_instance_init(Object *obj)
- static void input_linux_class_init(ObjectClass *oc, const void *data)
- {
-     UserCreatableClass *ucc = USER_CREATABLE_CLASS(oc);
-+    ObjectProperty *grab_on_startup_prop;
- 
-     ucc-&gt;complete = input_linux_complete;
- 
-@@ -510,6 +532,11 @@ static void input_linux_class_init(ObjectClass *oc, const void *data)
-                                    &amp;GrabToggleKeys_lookup,
-                                    input_linux_get_grab_toggle,
-                                    input_linux_set_grab_toggle);
-+    grab_on_startup_prop = object_class_property_add_bool(
-+        oc, "grab-on-startup",
-+        input_linux_get_grab_on_startup,
-+        input_linux_set_grab_on_startup);
-+    object_property_set_default_bool(grab_on_startup_prop, true);
- }
- 
- static const TypeInfo input_linux_info = {
-<div class="moz-txt-sig">-- 
-2.53.0
-</div></pre>
-    </div>
-  </body>
-</html>
-
---------------I1ODxRa0pzNNen8IKwgIi4DM--
 
