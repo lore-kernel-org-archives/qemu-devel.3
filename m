@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEEDEC44500
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FD42C43458
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:43:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgNvu-0005Bs-B5; Sun, 05 Jul 2026 10:34:58 -0400
+	id 1wgNwa-0005by-By; Sun, 05 Jul 2026 10:35:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNvs-0005BH-Sj
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:34:56 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwZ-0005bn-Kz
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNvr-00016m-1R
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:34:56 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwX-0001QP-Jd
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783262094;
+ s=mimecast20190719; t=1783262137;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OZ+hFgNQf8FoNmFlIkaqMaOQk1+bebbE5wXB+o3lSjg=;
- b=RrQ7Birkq5Qb0UrIxnMcqSatJ+KtLE+u2Q1G3Twmc0LF9INquD+B+HIpQPwSrKngZiNJG1
- IngmJFb/kPModUCqSxr3an1jawi8Q5J6tSD+1gFgYS98dEiig/y188N9cgrjshRKZ+vKDO
- rzQIX7MKQlvuZIMh7CTrELuAYnif6tQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=M/pDiHFNHl4AEoQzRlTnpmRpNB3vDThrml6JhOkf8EM=;
+ b=gmswQZ0BEk3XlnwzoHDrV3nXpiWK17FxtEmP+6x44QdLVzmIaqedhRLbeYkIQqZhjtfedv
+ +rQvm/ZBOt9R9AyxQRm914Pdu4zjerMXAE9m9D6byJQRXGiGDMAYYn7MBbSVXZsGGq2EpD
+ Q0T6sO3kaT2XOzzbYtdB8c/DFBNiKEI=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-558-8u3J8gsDOhK20fQaPLs2-Q-1; Sun, 05 Jul 2026 10:34:52 -0400
-X-MC-Unique: 8u3J8gsDOhK20fQaPLs2-Q-1
-X-Mimecast-MFC-AGG-ID: 8u3J8gsDOhK20fQaPLs2-Q_1783262091
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-493b0fe95b6so11366865e9.1
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:34:52 -0700 (PDT)
+ us-mta-196-o5XOPf4PM8Cbw4ivRKduFg-1; Sun, 05 Jul 2026 10:35:35 -0400
+X-MC-Unique: o5XOPf4PM8Cbw4ivRKduFg-1
+X-Mimecast-MFC-AGG-ID: o5XOPf4PM8Cbw4ivRKduFg_1783262134
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-475eba52438so1414667f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:35:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783262091; x=1783866891; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=OZ+hFgNQf8FoNmFlIkaqMaOQk1+bebbE5wXB+o3lSjg=;
- b=ZK2ibwWLBvGBFrcNcJKbU0ZJnZAI7XnW4K2jALBHtAgu9mfpJyvjy5KSX0fPG0D9K4
- 7il8SP5nZ1/xS00R1cxasu4B3bKQTgQYnhVLKDbLPEgahS4VhgpKf0K2JJPDGfNai7k0
- Y+sO+7RCYeRkZH8VIJwrwctHwIpbNcsKksMO7xTfH4uaw0owHHATXY6XyM/gieeRMxoj
- v3+JcdZ8zAYjwQS0bNY1Hp3jgsPFA7pRyvgtNbvQyRnV4bPLRmNq1iKFbT1B9vWzMK1u
- CJypEOB6W7EmwWmP4+QTJOfGTNhZdKV3O9dIQWOOJeA975cw+R/FQkvIwCTSuCLbYIYj
- CVVA==
+ d=redhat.com; s=google; t=1783262134; x=1783866934; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=M/pDiHFNHl4AEoQzRlTnpmRpNB3vDThrml6JhOkf8EM=;
+ b=KuGIBCB0JICuaYjGkp88GuN/f3DvqlXMKLtCXRIobBysORh+niT/U23SaM6KQ0MzyY
+ 7H8PJ3crTAUaa99SGmGo2lKNB6zw/omUOA6SG0QPOerqfOjCfMyc8D5hoCVZBB2MXXdJ
+ A159P2AhN2mp2opKccuer0FFsIpCCRfSJRDlpvC/Snv3cygedX0JiQq2vih9+VU+1Lwl
+ p04hNNnJc+t2BUTiQcAD0c/vECIjh52Sm2ltOPiZFFwJv7l+x/HKQQnJoD1b2bF9RYtY
+ I5L5i8hVuWxcXX72V5yqzevFUV1AKcg5hdYVcrobHAKBPXJ/ilbkUJ5tvYqe5LS1Rwcf
+ 6dyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783262091; x=1783866891;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OZ+hFgNQf8FoNmFlIkaqMaOQk1+bebbE5wXB+o3lSjg=;
- b=kYxxXuLJMt0KjSEMh6y7K0SjuI5jgYL/xXNWpkS3tDQsXGfzcajmfXhYLJRCP92L1q
- +8BVWCDbKaweWMkRin1lrQa5xT4i5sSfLstYaKgjdKD4Mc+EYkGUV1nE8ukc+ekNQcY3
- zZyqQ4K/B91xIssqCqFoF93DLCwbTp1C0F/3jcAPqQkqf6v3QGCoDL6rffX/iFNhYy7M
- I0o0JlGYVU2YPxLAAAN9lDY9bEoVNIFYVYAGZjZonhVJVgRkhNg+uWbve4Bv2AYs2Gaw
- XIHeM1BMN3jQsYOYNhfQkvh/DPOtfC/2Q9IB83oyBiqMMRLbMirwSylnfJWtW753TJsd
- koWQ==
-X-Gm-Message-State: AOJu0YwZwcDepIueAmm3EWU7CPkS1uw7ngP0+AEtF6w67++wlGN9PGmS
- VTeMxa3VJ7UnClMKg/s2eI2yIAiqyRAjjMIsF7aKXEyHHxdDHsf52Pob8vjzsM0bDL7YzuNh3Qe
- gG4X8/5Mo4Mpvq6EzhEzI9ZaYHadohPNil6nVGDAAhCJs1UaJNbNRgZoLPwjLOWW1MvKuMFeAiC
- RC3Xy6wR/bkSPactrZB5K8/e58xnFpUVelVQ==
-X-Gm-Gg: AfdE7cm6h44f8c4M/P+px93GXEnyVdab6ifXgZeWV57dP9TU/bgdM0Qx/2iPxG8O/xn
- zfOTiRi2j5mfsNlWkWB1y/9G4kL/g+POL0idccqgiBlmGcA6ZuGT4cm57BgX+D/nCz0OufxxgOa
- FGWdzIgjo5Y4/oHR9GAZAfusLFtCvDPHHYU2Sk2bsL8VZCtDHPC8NahiWIF545ubbh1ASBt0mfj
- M+G8ivqrnmhqzir0MyG5N8AQwr2oShXE4ME4QlH3QfJrsL9tluqOJ3lCR1rmn3JOUjryQDlKcwM
- 7BRDNnLHhqL5SplvnViF4lCtTEgvjPxMohvankcUcqpOshcTOjdLcvWwU8L9A/B3UClilHknhge
- VsFo/S5YNwspo/AzHzmkBPx4Tc/FIQ0Cn
-X-Received: by 2002:a05:600c:198d:b0:493:bb6b:5bb5 with SMTP id
- 5b1f17b1804b1-493d11db4c1mr78424215e9.13.1783262090987; 
- Sun, 05 Jul 2026 07:34:50 -0700 (PDT)
-X-Received: by 2002:a05:600c:198d:b0:493:bb6b:5bb5 with SMTP id
- 5b1f17b1804b1-493d11db4c1mr78423865e9.13.1783262090398; 
- Sun, 05 Jul 2026 07:34:50 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783262134; x=1783866934;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=M/pDiHFNHl4AEoQzRlTnpmRpNB3vDThrml6JhOkf8EM=;
+ b=Z8t7kOxYWAMw4BuQzrx3TDoYakE8Mj/jjPipvV1aYrL8icPtZWA7hpq6JDRrsiTbkb
+ ZOEoOwTdzQdJNB9u2Ry0kCsx+70oV4Qer3ehgt56XePiuE1SKEx8ifBewjNyE9xwuL7o
+ Rg0aWnH+DgqcbWGybhDN510VdIvGTENtYB1Wr8XlpT2d0MrQYGSEJRQ669p9bdJbIJV+
+ 4Bev9NOed707vEnNBVoYLyVQz4OWt64ZcsSSiXum0q8lLRDMNImSUilYRjkQ3faZgOyd
+ l6ZkJVFyUmi/gQfDD2kVJBF8QI4N8s9Y9HpLoE8MksTAC0yUvextrSV5rt4FV3OTXKsG
+ 9QXg==
+X-Gm-Message-State: AOJu0Yx/jG7F7fOOlOcyaUsSJsZL3jbf4oOwGFF2p1M8qA7rsCl/vVLM
+ aPewkCvpWlCh/7zvvXHBJBk8zHSXeHndHxCKGQP/TCz6ePp+RDYbRbxaXTetsYEMgstafvoddf4
+ 2+ADfAtrkwcaHlLLnRm3MrTaE/8i2FNoqLKwbFixbahasYhf3W5D5222JzmL88/gXhJbcizXV/c
+ 4GNxolu4FY8FmRvvRZKzKqhOUkdYEJnGX9jg==
+X-Gm-Gg: AfdE7ckkUf0XIctCVwHu0qFfQCRB71iUqvvdfuvJ+cUQf5/Gnc3jKeb/OHqXIgcRLhZ
+ LRYplzZCrvx4v7YZOK2mkIM9nwsst77MpKGo5qN13vNO3QujZQhVRGt2EWBEIYO47pyXVeB5EE7
+ YTSVf6auoTRvhDHK5sUIKXw96YLhcayyTrPh/lx3FJeuSQUvJT2LnBRAl6vsT9LjGkz+XQRGqv/
+ /Xye4LwAjFiCA12pFqnEpz5Dxpxv1bzRe4KDmlYJR4B7z88LAQzhuadx3CCcEyVM/pWqcHRxXqR
+ 4H5VAykm6/AUIKaoP9/Sdt6Adt+rUWanSBzpUW55RRwm5tKzU9UQhaKt37raVPPvNarignjmUKl
+ PRwnXQRm9abj6srv5Xq3LulY+s35BWmYp
+X-Received: by 2002:a5d:5e08:0:b0:475:f100:35f9 with SMTP id
+ ffacd0b85a97d-47aae0d9d11mr7273845f8f.54.1783262134425; 
+ Sun, 05 Jul 2026 07:35:34 -0700 (PDT)
+X-Received: by 2002:a5d:5e08:0:b0:475:f100:35f9 with SMTP id
+ ffacd0b85a97d-47aae0d9d11mr7273811f8f.54.1783262133890; 
+ Sun, 05 Jul 2026 07:35:33 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-68-31.inter.net.il. [80.230.68.31])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63bf7efsm299935025e9.14.2026.07.05.07.34.49
+ ffacd0b85a97d-47aa09608d4sm17272049f8f.25.2026.07.05.07.35.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Jul 2026 07:34:49 -0700 (PDT)
-Date: Sun, 5 Jul 2026 10:34:48 -0400
+ Sun, 05 Jul 2026 07:35:33 -0700 (PDT)
+Date: Sun, 5 Jul 2026 10:35:31 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Sairaj Kodilkar <sarunkod@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 04/44] amd_iommu: Decode IRTEs without bitfields
-Message-ID: <5bebd769ec33aaeafbdefa7aebc0ea016ba07f09.1783261895.git.mst@redhat.com>
+ Junjie Cao <junjie.cao@intel.com>,
+ Jason Wang <jasowangio@gmail.com>, Yi Liu <yi.l.liu@intel.com>,
+ =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@bull.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Tao Tang <tangtao1634@phytium.com.cn>
+Subject: [PULL 21/44] tests/qtest/libqos: share Intel IOMMU test setup helpers
+Message-ID: <302fec996c31ac312278a6a756d66d053b80d2fa.1783261895.git.mst@redhat.com>
 References: <cover.1783261895.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1783261895.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -124,286 +124,252 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-Interrupt remapping table entries are data stored in guest memory in
-little-endian format. Decoding them with bitfields depends on host bitfield
-layout and the value returned from dma_memory_read() is not portable to
-big-endian hosts.
+iommu-intel-test.c keeps the iommu-testdev PCI setup (save_fn(),
+setup_qtest_pci_device()) and the VT-d command-line / capability
+helpers (qvtd_iommu_args(), qvtd_check_caps()) as file-local statics.
+A second Intel IOMMU test would have to copy them, which defeats the
+purpose of the shared qos-intel-iommu module.
 
-Replace the legacy and GA IRTE bitfield definitions with explicit FIELD()
-definitions. Convert the guest memory values returned from dma_memory_read()
-with le32_to_cpu() or le64_to_cpu(), then extract relevant fields using
-FIELD_EX32() or FIELD_EX64() as appropriate to match the IRTE format.
+Move them into qos-intel-iommu so sibling tests can reuse them:
+save_fn() becomes qvtd_save_pci_dev() and setup_qtest_pci_device()
+becomes qvtd_setup_qtest_pci_device(); qvtd_iommu_args() and
+qvtd_check_caps() keep their names.
 
-Fixes: b44159fe0078 ("x86_iommu/amd: Add interrupt remap support when VAPIC is not enabled")
-Fixes: 135f866e609c ("x86_iommu/amd: Add interrupt remap support when VAPIC is enabled")
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+No functional change: iommu-intel-test now calls the public
+qvtd_setup_qtest_pci_device() instead of its file-local copy.
+
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260630220806.1758748-5-alejandro.j.jimenez@oracle.com>
+Message-ID: <20260703072200.463082-2-junjie.cao@intel.com>
 ---
- hw/i386/amd_iommu.h | 49 ------------------------
- hw/i386/amd_iommu.c | 93 +++++++++++++++++++++++++++++++++------------
- 2 files changed, 69 insertions(+), 73 deletions(-)
+ tests/qtest/libqos/qos-intel-iommu.h | 23 ++++++++
+ tests/qtest/iommu-intel-test.c       | 78 +---------------------------
+ tests/qtest/libqos/qos-intel-iommu.c | 77 +++++++++++++++++++++++++++
+ 3 files changed, 101 insertions(+), 77 deletions(-)
 
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index ca4440a4c1..687691ec1c 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -291,55 +291,6 @@
- #define AMDVI_DEV_LINT0_PASS_MASK       (1ULL << 62)
- #define AMDVI_DEV_LINT1_PASS_MASK       (1ULL << 63)
+diff --git a/tests/qtest/libqos/qos-intel-iommu.h b/tests/qtest/libqos/qos-intel-iommu.h
+index c6cacc5c3f..dd6f920464 100644
+--- a/tests/qtest/libqos/qos-intel-iommu.h
++++ b/tests/qtest/libqos/qos-intel-iommu.h
+@@ -182,4 +182,27 @@ void qvtd_run_translation_case(QTestState *qts, QPCIDevice *dev,
+                                QPCIBar bar, uint64_t iommu_base,
+                                const QVTDTestConfig *cfg);
  
--/* Interrupt remapping table fields (Guest VAPIC not enabled) */
--union irte {
--    uint32_t val;
--    struct {
--        uint32_t valid:1,
--                 no_fault:1,
--                 int_type:3,
--                 rq_eoi:1,
--                 dm:1,
--                 guest_mode:1,
--                 destination:8,
--                 vector:8,
--                 rsvd:8;
--    } fields;
--};
--
--/* Interrupt remapping table fields (Guest VAPIC is enabled) */
--union irte_ga_lo {
--  uint64_t val;
--
--  /* For int remapping */
--  struct {
--      uint64_t  valid:1,
--                no_fault:1,
--                /* ------ */
--                int_type:3,
--                rq_eoi:1,
--                dm:1,
--                /* ------ */
--                guest_mode:1,
--                destination:24,
--                rsvd_1:32;
--  } fields_remap;
--};
--
--union irte_ga_hi {
--  uint64_t val;
--  struct {
--      uint64_t  vector:8,
--                rsvd_2:48,
--                destination_hi:8;
--  } fields;
--};
--
--struct irte_ga {
--  union irte_ga_lo lo;
--  union irte_ga_hi hi;
--};
--
- #define TYPE_AMD_IOMMU_DEVICE "amd-iommu"
- OBJECT_DECLARE_SIMPLE_TYPE(AMDVIState, AMD_IOMMU_DEVICE)
- 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 291cb368a9..c7bf21b762 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -89,6 +89,11 @@ typedef struct AMDVIIOTLBKey {
-     uint16_t devid;
- } AMDVIIOTLBKey;
- 
-+typedef struct AMDVIIrteGA {
-+    uint64_t ga_lo;
-+    uint64_t ga_hi;
-+} AMDVIIrteGA;
-+
- /* XT IOMMU General Interrupt Control Register layout */
- FIELD(AMDVI_XT_GEN_INTR, DEST_MODE, 2, 1)
- FIELD(AMDVI_XT_GEN_INTR, DEST_LO, 8, 24)
-@@ -96,6 +101,37 @@ FIELD(AMDVI_XT_GEN_INTR, VECTOR, 32, 8)
- FIELD(AMDVI_XT_GEN_INTR, DELIVERY_MODE, 40, 1)
- FIELD(AMDVI_XT_GEN_INTR, DEST_HI, 56, 8)
- 
-+/* Interrupt Remapping Table Fields Formats */
-+
-+/* Basic 32-bit IRTE layout (GAEn=0) */
-+FIELD(AMDVI_IRTE, VALID, 0, 1)
-+FIELD(AMDVI_IRTE, SUP_IOPF, 1, 1)
-+FIELD(AMDVI_IRTE, INT_TYPE, 2, 3)
-+FIELD(AMDVI_IRTE, RQ_EOI, 5, 1)
-+FIELD(AMDVI_IRTE, DM, 6, 1)
-+FIELD(AMDVI_IRTE, GUEST_MODE, 7, 1)
-+FIELD(AMDVI_IRTE, DESTINATION, 8, 8)
-+FIELD(AMDVI_IRTE, VECTOR, 16, 8)
-+
-+/* 128-bit IRTE layout (GAEn=1) */
-+FIELD(AMDVI_IRTE_GA_LO, VALID, 0, 1)
-+FIELD(AMDVI_IRTE_GA_LO, SUP_IOPF, 1, 1)
-+FIELD(AMDVI_IRTE_GA_LO, INT_TYPE, 2, 3)
-+FIELD(AMDVI_IRTE_GA_LO, RQ_EOI, 5, 1)
-+FIELD(AMDVI_IRTE_GA_LO, DM, 6, 1)
-+FIELD(AMDVI_IRTE_GA_LO, GUEST_MODE, 7, 1)
 +/*
-+ * In the 128-bit IRTE format, XT mode uses IRTE_GA_LOW.Destination[23:0]
-+ * together with IRTE_GA_HI.DestinationHi[7:0] to construct a 32-bit x2APIC
-+ * destination.
-+ * Without XTEn (i.e. when x2APIC support is not enabled), only
-+ * IRTE_GA_LOW.Destination[7:0] is used.
++ * qvtd_iommu_args - Build the -device intel-iommu command-line fragment
++ *                   for the requested translation mode.
 + */
-+FIELD(AMDVI_IRTE_GA_LO, DESTINATION, 8, 24)
++const char *qvtd_iommu_args(QVTDTransMode mode);
 +
-+FIELD(AMDVI_IRTE_GA_HI, VECTOR, 0, 8)
-+FIELD(AMDVI_IRTE_GA_HI, DESTINATION_HI, 56, 8)
++/*
++ * qvtd_check_caps - Check whether the running QEMU exposes the ECAP bits
++ *                   required by @mode.  Calls g_test_skip() and returns
++ *                   false when a required capability is missing.
++ */
++bool qvtd_check_caps(QTestState *qts, QVTDTransMode mode);
 +
- uint64_t amdvi_extended_feature_register(AMDVIState *s)
- {
-     uint64_t feature = AMDVI_DEFAULT_EXT_FEATURES;
-@@ -1983,7 +2019,7 @@ static IOMMUTLBEntry amdvi_translate(IOMMUMemoryRegion *iommu, hwaddr addr,
++/*
++ * qvtd_setup_qtest_pci_device - Create a QPCIBus, locate the iommu-testdev
++ *                               PCI function, enable it and map BAR0.
++ *
++ * On success, *pcibus and *bar are populated and the returned QPCIDevice
++ * must be released by the caller via g_free().
++ */
++QPCIDevice *qvtd_setup_qtest_pci_device(QTestState *qts, QPCIBus **pcibus,
++                                        QPCIBar *bar);
++
+ #endif /* QTEST_LIBQOS_INTEL_IOMMU_H */
+diff --git a/tests/qtest/iommu-intel-test.c b/tests/qtest/iommu-intel-test.c
+index 703bbfef73..c2744def6f 100644
+--- a/tests/qtest/iommu-intel-test.c
++++ b/tests/qtest/iommu-intel-test.c
+@@ -24,82 +24,6 @@ static uint64_t intel_iommu_expected_gpa(uint64_t iova)
+     return (QVTD_PT_VAL & VTD_PAGE_MASK_4K) + (iova & 0xfff);
  }
  
- static int amdvi_get_irte(AMDVIState *s, MSIMessage *origin, uint64_t *dte,
--                          union irte *irte, uint16_t devid)
-+                          uint32_t *irte, uint16_t devid)
+-static void save_fn(QPCIDevice *dev, int devfn, void *data)
+-{
+-    QPCIDevice **pdev = (QPCIDevice **) data;
+-
+-    *pdev = dev;
+-}
+-
+-static QPCIDevice *setup_qtest_pci_device(QTestState *qts, QPCIBus **pcibus,
+-                                          QPCIBar *bar)
+-{
+-    QPCIDevice *dev = NULL;
+-
+-    *pcibus = qpci_new_pc(qts, NULL);
+-    g_assert(*pcibus != NULL);
+-
+-    qpci_device_foreach(*pcibus, IOMMU_TESTDEV_VENDOR_ID,
+-                        IOMMU_TESTDEV_DEVICE_ID, save_fn, &dev);
+-
+-    g_assert(dev);
+-    qpci_device_enable(dev);
+-    *bar = qpci_iomap(dev, 0, NULL);
+-    g_assert_false(bar->is_io);
+-
+-    return dev;
+-}
+-
+-static const char *qvtd_iommu_args(QVTDTransMode mode)
+-{
+-    switch (mode) {
+-    case QVTD_TM_SCALABLE_FLT:
+-        return "-device intel-iommu,scalable-mode=on,fsts=on ";
+-    case QVTD_TM_SCALABLE_PT:
+-    case QVTD_TM_SCALABLE_SLT:
+-        return "-device intel-iommu,scalable-mode=on ";
+-    default:
+-        return "-device intel-iommu ";
+-    }
+-}
+-
+-static bool qvtd_check_caps(QTestState *qts, QVTDTransMode mode)
+-{
+-    uint64_t ecap = qtest_readq(qts,
+-                                Q35_HOST_BRIDGE_IOMMU_ADDR + DMAR_ECAP_REG);
+-
+-    /* All scalable modes require SMTS */
+-    if (qvtd_is_scalable(mode) && !(ecap & VTD_ECAP_SMTS)) {
+-        g_test_skip("ECAP.SMTS not supported");
+-        return false;
+-    }
+-
+-    switch (mode) {
+-    case QVTD_TM_SCALABLE_PT:
+-        if (!(ecap & VTD_ECAP_PT)) {
+-            g_test_skip("ECAP.PT not supported");
+-            return false;
+-        }
+-        break;
+-    case QVTD_TM_SCALABLE_SLT:
+-        if (!(ecap & VTD_ECAP_SSTS)) {
+-            g_test_skip("ECAP.SSTS not supported");
+-            return false;
+-        }
+-        break;
+-    case QVTD_TM_SCALABLE_FLT:
+-        if (!(ecap & VTD_ECAP_FSTS)) {
+-            g_test_skip("ECAP.FSTS not supported");
+-            return false;
+-        }
+-        break;
+-    default:
+-        break;
+-    }
+-
+-    return true;
+-}
+-
+ static void run_intel_iommu_translation(const QVTDTestConfig *cfg)
  {
-     uint64_t irte_root, offset;
- 
-@@ -1998,7 +2034,8 @@ static int amdvi_get_irte(AMDVIState *s, MSIMessage *origin, uint64_t *dte,
-         return -AMDVI_IR_GET_IRTE;
+     QTestState *qts;
+@@ -124,7 +48,7 @@ static void run_intel_iommu_translation(const QVTDTestConfig *cfg)
      }
  
--    trace_amdvi_ir_irte_val(irte->val);
-+    *irte = le32_to_cpu(*irte);
-+    trace_amdvi_ir_irte_val(*irte);
+     /* Setup and configure IOMMU-testdev PCI device */
+-    dev = setup_qtest_pci_device(qts, &pcibus, &bar);
++    dev = qvtd_setup_qtest_pci_device(qts, &pcibus, &bar);
+     g_assert(dev);
  
-     return 0;
+     g_test_message("### Intel IOMMU translation mode=%d ###", cfg->trans_mode);
+diff --git a/tests/qtest/libqos/qos-intel-iommu.c b/tests/qtest/libqos/qos-intel-iommu.c
+index f8ca4c871b..4095ac0917 100644
+--- a/tests/qtest/libqos/qos-intel-iommu.c
++++ b/tests/qtest/libqos/qos-intel-iommu.c
+@@ -11,6 +11,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/i386/intel_iommu_internal.h"
+ #include "tests/qtest/libqos/pci.h"
++#include "tests/qtest/libqos/pci-pc.h"
+ #include "qos-iommu-testdev.h"
+ #include "qos-intel-iommu.h"
+ 
+@@ -452,3 +453,79 @@ void qvtd_run_translation_case(QTestState *qts, QPCIDevice *dev,
+         }
+     }
  }
-@@ -2010,8 +2047,9 @@ static int amdvi_int_remap_legacy(AMDVIState *iommu,
-                                   X86IOMMUIrq *irq,
-                                   uint16_t sid)
- {
-+    uint8_t int_type;
-+    uint32_t irte;
-     int ret;
--    union irte irte;
- 
-     /* get interrupt remapping table */
-     ret = amdvi_get_irte(iommu, origin, dte, &irte, sid);
-@@ -2019,32 +2057,33 @@ static int amdvi_int_remap_legacy(AMDVIState *iommu,
-         return ret;
-     }
- 
--    if (!irte.fields.valid) {
-+    if (!FIELD_EX32(irte, AMDVI_IRTE, VALID)) {
-         trace_amdvi_ir_target_abort("RemapEn is disabled");
-         return -AMDVI_IR_TARGET_ABORT;
-     }
- 
--    if (irte.fields.guest_mode) {
-+    if (FIELD_EX32(irte, AMDVI_IRTE, GUEST_MODE)) {
-         error_report_once("guest mode is not zero");
-         return -AMDVI_IR_ERR;
-     }
- 
--    if (irte.fields.int_type > AMDVI_IOAPIC_INT_TYPE_ARBITRATED) {
-+    int_type = FIELD_EX32(irte, AMDVI_IRTE, INT_TYPE);
-+    if (int_type > AMDVI_IOAPIC_INT_TYPE_ARBITRATED) {
-         error_report_once("reserved int_type");
-         return -AMDVI_IR_ERR;
-     }
- 
--    irq->delivery_mode = irte.fields.int_type;
--    irq->vector = irte.fields.vector;
--    irq->dest_mode = irte.fields.dm;
--    irq->redir_hint = irte.fields.rq_eoi;
--    irq->dest = irte.fields.destination;
-+    irq->delivery_mode = int_type;
-+    irq->vector = FIELD_EX32(irte, AMDVI_IRTE, VECTOR);
-+    irq->dest_mode = FIELD_EX32(irte, AMDVI_IRTE, DM);
-+    irq->redir_hint = FIELD_EX32(irte, AMDVI_IRTE, RQ_EOI);
-+    irq->dest = FIELD_EX32(irte, AMDVI_IRTE, DESTINATION);
- 
-     return 0;
- }
- 
- static int amdvi_get_irte_ga(AMDVIState *s, MSIMessage *origin, uint64_t *dte,
--                             struct irte_ga *irte, uint16_t devid)
-+                             AMDVIIrteGA *irte, uint16_t devid)
- {
-     uint64_t irte_root, offset;
- 
-@@ -2058,7 +2097,9 @@ static int amdvi_get_irte_ga(AMDVIState *s, MSIMessage *origin, uint64_t *dte,
-         return -AMDVI_IR_GET_IRTE;
-     }
- 
--    trace_amdvi_ir_irte_ga_val(irte->hi.val, irte->lo.val);
-+    irte->ga_lo = le64_to_cpu(irte->ga_lo);
-+    irte->ga_hi = le64_to_cpu(irte->ga_hi);
-+    trace_amdvi_ir_irte_ga_val(irte->ga_hi, irte->ga_lo);
-     return 0;
- }
- 
-@@ -2069,8 +2110,9 @@ static int amdvi_int_remap_ga(AMDVIState *iommu,
-                               X86IOMMUIrq *irq,
-                               uint16_t sid)
- {
-+    AMDVIIrteGA irte;
-+    uint8_t int_type;
-     int ret;
--    struct irte_ga irte;
- 
-     /* get interrupt remapping table */
-     ret = amdvi_get_irte_ga(iommu, origin, dte, &irte, sid);
-@@ -2078,30 +2120,33 @@ static int amdvi_int_remap_ga(AMDVIState *iommu,
-         return ret;
-     }
- 
--    if (!irte.lo.fields_remap.valid) {
-+    if (!FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, VALID)) {
-         trace_amdvi_ir_target_abort("RemapEn is disabled");
-         return -AMDVI_IR_TARGET_ABORT;
-     }
- 
--    if (irte.lo.fields_remap.guest_mode) {
-+    if (FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, GUEST_MODE)) {
-         error_report_once("guest mode is not zero");
-         return -AMDVI_IR_ERR;
-     }
- 
--    if (irte.lo.fields_remap.int_type > AMDVI_IOAPIC_INT_TYPE_ARBITRATED) {
-+    int_type = FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, INT_TYPE);
-+    if (int_type > AMDVI_IOAPIC_INT_TYPE_ARBITRATED) {
-         error_report_once("reserved int_type is set");
-         return -AMDVI_IR_ERR;
-     }
- 
--    irq->delivery_mode = irte.lo.fields_remap.int_type;
--    irq->vector = irte.hi.fields.vector;
--    irq->dest_mode = irte.lo.fields_remap.dm;
--    irq->redir_hint = irte.lo.fields_remap.rq_eoi;
-+    irq->delivery_mode = int_type;
-+    irq->vector = FIELD_EX64(irte.ga_hi, AMDVI_IRTE_GA_HI, VECTOR);
-+    irq->dest_mode = FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, DM);
-+    irq->redir_hint = FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, RQ_EOI);
-     if (iommu->xten) {
--        irq->dest = irte.lo.fields_remap.destination |
--                    (irte.hi.fields.destination_hi << 24);
-+        irq->dest = FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, DESTINATION) |
-+                    (FIELD_EX64(irte.ga_hi, AMDVI_IRTE_GA_HI, DESTINATION_HI)
-+                    << 24);
-     } else {
--        irq->dest = irte.lo.fields_remap.destination & 0xff;
-+        irq->dest = FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, DESTINATION) &
-+                    0xff;
-     }
- 
-     return 0;
++
++const char *qvtd_iommu_args(QVTDTransMode mode)
++{
++    switch (mode) {
++    case QVTD_TM_SCALABLE_FLT:
++        return "-device intel-iommu,scalable-mode=on,fsts=on ";
++    case QVTD_TM_SCALABLE_PT:
++    case QVTD_TM_SCALABLE_SLT:
++        return "-device intel-iommu,scalable-mode=on ";
++    default:
++        return "-device intel-iommu ";
++    }
++}
++
++bool qvtd_check_caps(QTestState *qts, QVTDTransMode mode)
++{
++    uint64_t ecap = qtest_readq(qts,
++                                Q35_HOST_BRIDGE_IOMMU_ADDR + DMAR_ECAP_REG);
++
++    /* All scalable modes require SMTS */
++    if (qvtd_is_scalable(mode) && !(ecap & VTD_ECAP_SMTS)) {
++        g_test_skip("ECAP.SMTS not supported");
++        return false;
++    }
++
++    switch (mode) {
++    case QVTD_TM_SCALABLE_PT:
++        if (!(ecap & VTD_ECAP_PT)) {
++            g_test_skip("ECAP.PT not supported");
++            return false;
++        }
++        break;
++    case QVTD_TM_SCALABLE_SLT:
++        if (!(ecap & VTD_ECAP_SSTS)) {
++            g_test_skip("ECAP.SSTS not supported");
++            return false;
++        }
++        break;
++    case QVTD_TM_SCALABLE_FLT:
++        if (!(ecap & VTD_ECAP_FSTS)) {
++            g_test_skip("ECAP.FSTS not supported");
++            return false;
++        }
++        break;
++    default:
++        break;
++    }
++
++    return true;
++}
++
++static void qvtd_save_pci_dev(QPCIDevice *dev, int devfn, void *data)
++{
++    QPCIDevice **pdev = (QPCIDevice **)data;
++
++    *pdev = dev;
++}
++
++QPCIDevice *qvtd_setup_qtest_pci_device(QTestState *qts, QPCIBus **pcibus,
++                                        QPCIBar *bar)
++{
++    QPCIDevice *dev = NULL;
++
++    *pcibus = qpci_new_pc(qts, NULL);
++    g_assert(*pcibus != NULL);
++
++    qpci_device_foreach(*pcibus, IOMMU_TESTDEV_VENDOR_ID,
++                        IOMMU_TESTDEV_DEVICE_ID, qvtd_save_pci_dev, &dev);
++
++    g_assert(dev);
++    qpci_device_enable(dev);
++    *bar = qpci_iomap(dev, 0, NULL);
++    g_assert_false(bar->is_io);
++
++    return dev;
++}
 -- 
 MST
 
