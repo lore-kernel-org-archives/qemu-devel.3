@@ -4,61 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA56DC43458
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 22:30:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 953CCC43458
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 22:43:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgVJx-0006mt-OG; Sun, 05 Jul 2026 18:28:17 -0400
+	id 1wgVYO-0004Me-1G; Sun, 05 Jul 2026 18:43:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1wgUwZ-0002Jx-6D; Sun, 05 Jul 2026 18:04:07 -0400
-Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wgVYI-0004Lr-Oa; Sun, 05 Jul 2026 18:43:07 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1wgUwU-0001xZ-4p; Sun, 05 Jul 2026 18:04:06 -0400
-Received: from smtp02.univ-lille.fr (smtp02.univ-lille.fr [194.254.129.96])
- by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4gthMG4RKMz85Xr;
- Mon,  6 Jul 2026 00:03:22 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1783289002;
- bh=3xM0zJ+GpozPi5npm+blxQXFgeoVFlkVVTWOOD7uzhE=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=F79uyxxIsvFTfjM3zUeMluxSlCTs5Pg/SEPnBjBy11N0eTVEEfwiZDetp/R7mHxS1
- QYUtj8NFjsa/sSvz8aztotzCeIHR18CGbuRx5IeDh+hDZkT213e5YiFBBrywIQvtpu
- REBTsNQHul5W3hxjmDnVdZ2Qi0CG4CJgH7ugvIvm4so7OBMK8W/ofKPsrucbluqzfO
- +BMxxfuxpSgztQEx+4RNtiYJC0XE5kMuwZLTmDhtk72DpTjlyMJPoaWjLYDyXmygEb
- jbPP07y8IT02NUqxdgBjD+rNIWY1huBaihTaOc740aJO3PHiq7oBIUDpECjDyO5tZc
- Nb08qpnkauEEg==
-Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
- [90.45.87.101]) (Authenticated sender: gilles.grimaud)
- by smtp02.univ-lille.fr (Postfix) with ESMTPSA id 4gthMG3F2pz6tBv;
- Mon,  6 Jul 2026 00:03:22 +0200 (CEST)
-From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-Subject: [PATCH RFC v1 5/9] hw/arm: add Raspberry Pi Pico RP2040 machine
-Date: Mon,  6 Jul 2026 00:03:16 +0200
-Message-ID: <20260705220320.90395-6-gilles.grimaud@univ-lille.fr>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260705220320.90395-1-gilles.grimaud@univ-lille.fr>
-References: <20260705220320.90395-1-gilles.grimaud@univ-lille.fr>
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wgVYC-00021U-LZ; Sun, 05 Jul 2026 18:43:03 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 665MIRLl1497660; Sun, 5 Jul 2026 22:42:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=65AI6v
+ gm2Auw8d1DdQcXwRDEXiVdkxs5GQKFk4wYn2U=; b=BSj5qlc6Vva1CCPh6uNFx/
+ 64NE3kPrTJQmmSxC70CY6YbbV9DxiPVgoc938WZ5uwR7kWpKn/Ro/kz+oc41cG3Y
+ nC0TzP9JFGk+AHgZ3wtw4X1lYu4NPVl3S8dIQgD0Q8Q7njAytV2latYJNy/87I3i
+ qF5xr8AXNkaGVt2I6kfTaQn+/GvycEaO4SVmjewAZBSFHZCWDoH11zXp3JHt5SOi
+ aurjQfZQuTd0QIRhxBydTikdGV/TmW39oatOGtkjaB2tUqU2Mbg1bmidHRiKkpvC
+ DvsjIz1j/066oTTyMWJuSjNk/jGClyz5uWjkM1yyxwgHSH+PgzigxW1+brA/pDmA
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6stsf2ck-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 05 Jul 2026 22:42:48 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 665MYi1h014434;
+ Sun, 5 Jul 2026 22:42:47 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7f6xtu2p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 05 Jul 2026 22:42:47 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 665Mgj9Q65798644
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sun, 5 Jul 2026 22:42:46 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C816C5805E;
+ Sun,  5 Jul 2026 22:42:45 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8741758051;
+ Sun,  5 Jul 2026 22:42:44 +0000 (GMT)
+Received: from [9.61.10.188] (unknown [9.61.10.188])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Sun,  5 Jul 2026 22:42:44 +0000 (GMT)
+Message-ID: <fde31728-e8c0-4f8d-877b-be05512ebd24@linux.ibm.com>
+Date: Sun, 5 Jul 2026 18:42:43 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.106;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v15 09/33] s390x/diag: Implement DIAG 320 subcode 2
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
+ david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260704213950.2118823-1-zycai@linux.ibm.com>
+ <20260704213950.2118823-10-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <20260704213950.2118823-10-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: xLK7ZeJBqiQX06qyijnQGPPAvDuWNgQl
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA1MDI0MSBTYWx0ZWRfX5AKsajbOtzb+
+ sKpNQotw6eebTlSPC4BtewrBb2tqX4Xjy8vi1jeTOBH3qppdjL0PczjpQoeqpOMSdusgpSvFC5V
+ b67KR84TymSVNoSD8zbnMcaTMKrXES4=
+X-Authority-Analysis: v=2.4 cv=DKW/JSNb c=1 sm=1 tr=0 ts=6a4adde8 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=34YKokWdcxE_t1s-m_UA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: xLK7ZeJBqiQX06qyijnQGPPAvDuWNgQl
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA1MDI0MSBTYWx0ZWRfXyB2KLFDCa0uX
+ W6+O3z+k/GRZ6Lg6WrpNS0E/+qH8/70Xiwt6flWnb13qStJrrPnmOOn0L9iJHOmQeZoMJqE4RQF
+ NlOG0crnUi4wjA8DU+C5u5TqvQPSl7wgWxtMR9Q3xV8Twhp4+ej3YItAqJ7qgBhwsp1Z9g+IJmi
+ Cz8q27zaidC6N52+fJQ9qfHZC9JbagX5XghKO4G+wr3IgS27ThtAYNnGYfQ0G7oLlPS11GbzXCw
+ +OsdF4DlK5YDhrwnZ4BDPHiyfdsWsfJt1P8OL4WDXdGlMsXqknIDlFGeR7av4zRFbvq7bv6swvl
+ ASrOsTeXTLc32dFAgQTmw4sWyUt/kTYDbbPejgIUsF066X2w/NY6bLl+i0Sj+Rlx/9Nq5fsG6qB
+ vWljfPl5VdwXzScFRmfT4VIvwh9z29ZAqs96x1fZIqiM82OOtqcxIUsxzyfBT/DfaVbiHgc0IJy
+ EN9k4LAUa8PQvXyGFyg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-05_02,2026-07-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 clxscore=1015 phishscore=0 impostorscore=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607050241
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 05 Jul 2026 18:28:16 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,2602 +130,500 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an RP2040 SoC model and a Raspberry Pi Pico board machine. The machine provides Cortex-M0+ cores, SRAM, XIP flash, UART0/UART1, DMA, a synthetic ROM boot path, optional external mask ROM loading through -bios, flash-file persistence, flash UID configuration, and -kernel loading for ELF, UF2 and raw images.
+Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
 
-The implementation follows the direction of Alex Bennée's 2022 RP2040/Pico RFC series while adapting the code to current QEMU APIs and the functional model developed here.
-
-Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
----
- MAINTAINERS                             |   20 +
- configs/devices/arm-softmmu/default.mak |    1 +
- hw/arm/Kconfig                          |   32 +
- hw/arm/meson.build                      |    2 +
- hw/arm/raspi_pico.c                     |  265 +++
- hw/arm/rp2040.c                         | 2052 +++++++++++++++++++++++
- hw/arm/trace-events                     |    3 +
- include/hw/arm/rp2040.h                 |  122 ++
- 8 files changed, 2497 insertions(+)
- create mode 100644 hw/arm/raspi_pico.c
- create mode 100644 hw/arm/rp2040.c
- create mode 100644 include/hw/arm/rp2040.h
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 97dcc78ded..104c02ff76 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1023,6 +1023,26 @@ F: docs/system/arm/raspi.rst
- F: tests/functional/arm/test_raspi2.py
- F: tests/functional/aarch64/test_raspi*.py
- 
-+Raspberry Pi Pico / RP2040
-+M: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-+R: Alex Bennée <alex.bennee@linaro.org>
-+L: qemu-arm@nongnu.org
-+S: Maintained
-+F: configs/devices/arm-softmmu/default.mak
-+F: docs/system/arm/raspi-pico.rst
-+F: hw/arm/raspi_pico.c
-+F: hw/arm/rp2040.c
-+F: hw/dma/rp2040_dma.c
-+F: hw/misc/rp2040_*.c
-+F: hw/ssi/rp2040_xip.c
-+F: include/hw/arm/rp2040.h
-+F: include/hw/dma/rp2040_dma.h
-+F: include/hw/misc/rp2040_*.h
-+F: include/hw/ssi/rp2040_xip.h
-+F: scripts/uf2-to-flash.py
-+F: tests/functional/arm/test_raspi_pico.py
-+F: tests/qtest/rp2040-*.c
-+
- Real View
- M: Peter Maydell <peter.maydell@linaro.org>
- L: qemu-arm@nongnu.org
-diff --git a/configs/devices/arm-softmmu/default.mak b/configs/devices/arm-softmmu/default.mak
-index 71cf164511..824d6ebfd9 100644
---- a/configs/devices/arm-softmmu/default.mak
-+++ b/configs/devices/arm-softmmu/default.mak
-@@ -33,6 +33,7 @@
- # CONFIG_OLIMEX_STM32_H405=n
- # CONFIG_MPS2=n
- # CONFIG_RASPI=n
-+# CONFIG_RASPI_PICO=n
- # CONFIG_DIGIC=n
- # CONFIG_SABRELITE=n
- # CONFIG_EMCRAFT_SF2=n
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 5f5c4899ad..125c36cc99 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -367,6 +367,38 @@ config RASPI
-     select BCM2835_SPI
-     select BCM2835_I2C
- 
-+config RASPI_PICO
-+    bool
-+    default y
-+    depends on TCG && ARM
-+    select RP2040
-+
-+config RP2040
-+    bool
-+    select ARM_V7M
-+    select PL011
-+    select RP2040_BUSCTRL
-+    select RP2040_CLOCKS
-+    select RP2040_DMA
-+    select RP2040_IOBANK0
-+    select RP2040_IOQSPI
-+    select RP2040_NYI
-+    select RP2040_PADS
-+    select RP2040_PLL
-+    select RP2040_PSM
-+    select RP2040_RESETS
-+    select RP2040_ROSC
-+    select RP2040_SIO
-+    select RP2040_SYSCFG
-+    select RP2040_SYSINFO
-+    select RP2040_TBMAN
-+    select RP2040_TIMER
-+    select RP2040_VREG
-+    select RP2040_WATCHDOG
-+    select RP2040_XIP
-+    select RP2040_XOSC
-+    select UNIMP
-+
- config STM32F100_SOC
-     bool
-     select ARM_V7M
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 4233a800be..0b79b9414a 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -11,6 +11,7 @@ arm_common_ss.add(when: 'CONFIG_NETDUINOPLUS2', if_true: files('netduinoplus2.c'
- arm_common_ss.add(when: 'CONFIG_OLIMEX_STM32_H405', if_true: files('olimex-stm32-h405.c'))
- arm_common_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx.c', 'npcm7xx_boards.c'))
- arm_common_ss.add(when: 'CONFIG_NPCM8XX', if_true: files('npcm8xx.c', 'npcm8xx_boards.c'))
-+arm_common_ss.add(when: 'CONFIG_RASPI_PICO', if_true: files('raspi_pico.c'))
- arm_common_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview.c'))
- arm_common_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa-ref.c'))
- arm_common_ss.add(when: 'CONFIG_STELLARIS', if_true: files('stellaris.c'))
-@@ -93,6 +94,7 @@ arm_common_ss.add(when: 'CONFIG_TEGRA241_CMDQV', if_true: files('tegra241-cmdqv.
- stub_ss.add(files('tegra241-cmdqv-stubs.c'))
- arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
- arm_common_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
-+arm_common_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040.c'))
- arm_common_ss.add(when: 'CONFIG_XEN', if_true: files(
-   'xen-stubs.c',
-   'xen-pvh.c',
-diff --git a/hw/arm/raspi_pico.c b/hw/arm/raspi_pico.c
-new file mode 100644
-index 0000000000..ea229214b0
---- /dev/null
-+++ b/hw/arm/raspi_pico.c
-@@ -0,0 +1,265 @@
-+/*
-+ * Raspberry Pi Pico machine
-+ *
-+ * Copyright (c) 2021 Linaro Ltd
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/units.h"
-+#include "qapi/error.h"
-+#include "hw/arm/boot.h"
-+#include "hw/arm/machines-qom.h"
-+#include "hw/arm/rp2040.h"
-+#include "hw/core/boards.h"
-+#include "hw/core/qdev-properties.h"
-+#include "qemu/cutils.h"
-+#include "system/address-spaces.h"
-+#include "system/system.h"
-+#include "qom/object.h"
-+
-+#define TYPE_RASPI_PICO_MACHINE MACHINE_TYPE_NAME("raspi-pico")
-+OBJECT_DECLARE_SIMPLE_TYPE(RaspiPicoMachineState, RASPI_PICO_MACHINE)
-+
-+struct RaspiPicoMachineState {
-+    MachineState parent_obj;
-+
-+    RP2040State soc;
-+    char *flash_file;
-+    char *flash_uid;
-+    uint64_t flash_uid_value;
-+    bool flash_uid_set;
-+    char *rosc_random_seed;
-+    uint64_t rosc_random_seed_value;
-+    bool rosc_random_seed_set;
-+    bool strict_uart_pins;
-+};
-+
-+static char *raspi_pico_get_flash_file(Object *obj, Error **errp)
-+{
-+    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
-+
-+    return g_strdup(s->flash_file ?: "");
-+}
-+
-+static void raspi_pico_set_flash_file(Object *obj, const char *value,
-+                                      Error **errp)
-+{
-+    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
-+
-+    g_free(s->flash_file);
-+    s->flash_file = g_strdup(value);
-+}
-+
-+static char *raspi_pico_get_flash_uid(Object *obj, Error **errp)
-+{
-+    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
-+
-+    return g_strdup(s->flash_uid ?: "");
-+}
-+
-+static void raspi_pico_set_flash_uid(Object *obj, const char *value,
-+                                     Error **errp)
-+{
-+    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
-+    const char *p;
-+    uint64_t uid;
-+    int i;
-+
-+    if (!value || !*value) {
-+        g_free(s->flash_uid);
-+        s->flash_uid = NULL;
-+        s->flash_uid_value = 0;
-+        s->flash_uid_set = false;
-+        return;
-+    }
-+
-+    p = g_str_has_prefix(value, "0x") || g_str_has_prefix(value, "0X") ?
-+        value + 2 : value;
-+    if (strlen(p) != 16) {
-+        error_setg(errp, "flash-uid must be exactly 16 hexadecimal digits");
-+        return;
-+    }
-+    for (i = 0; i < 16; i++) {
-+        if (!g_ascii_isxdigit(p[i])) {
-+            error_setg(errp, "invalid flash-uid '%s'", value);
-+            return;
-+        }
-+    }
-+    if (qemu_strtou64(p, NULL, 16, &uid) < 0) {
-+        error_setg(errp, "invalid flash-uid '%s'", value);
-+        return;
-+    }
-+
-+    g_free(s->flash_uid);
-+    s->flash_uid = g_strdup(value);
-+    s->flash_uid_value = uid;
-+    s->flash_uid_set = true;
-+}
-+
-+static char *raspi_pico_get_rosc_random_seed(Object *obj, Error **errp)
-+{
-+    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
-+
-+    return g_strdup(s->rosc_random_seed ?: "");
-+}
-+
-+static void raspi_pico_set_rosc_random_seed(Object *obj, const char *value,
-+                                            Error **errp)
-+{
-+    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
-+    uint64_t seed;
-+
-+    if (!value || !*value) {
-+        g_free(s->rosc_random_seed);
-+        s->rosc_random_seed = NULL;
-+        s->rosc_random_seed_value = 0;
-+        s->rosc_random_seed_set = false;
-+        return;
-+    }
-+
-+    if (qemu_strtou64(value, NULL, 0, &seed) < 0) {
-+        error_setg(errp, "invalid ROSC random seed '%s'", value);
-+        return;
-+    }
-+
-+    g_free(s->rosc_random_seed);
-+    s->rosc_random_seed = g_strdup(value);
-+    s->rosc_random_seed_value = seed;
-+    s->rosc_random_seed_set = true;
-+}
-+
-+static void raspi_pico_init(MachineState *machine)
-+{
-+    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(machine);
-+    MemoryRegion *system_memory = get_system_memory();
-+
-+    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_RP2040);
-+    qdev_prop_set_chr(DEVICE(&s->soc), "serial0", serial_hd(0));
-+    qdev_prop_set_chr(DEVICE(&s->soc), "serial1", serial_hd(1));
-+    qdev_prop_set_bit(DEVICE(&s->soc), "strict-uart-pins",
-+                      s->strict_uart_pins);
-+    qdev_prop_set_uint64(DEVICE(&s->soc.rosc), "random-seed",
-+                         s->rosc_random_seed_value);
-+    qdev_prop_set_bit(DEVICE(&s->soc.rosc), "random-seed-set",
-+                      s->rosc_random_seed_set);
-+    /*
-+     * BOOTSEL is not pressed by default on a Pico board, so the mask ROM sees
-+     * the QSPI SS input deasserted and tries to boot from external flash.
-+     */
-+    qdev_prop_set_uint32(DEVICE(&s->soc.sio), "gpio-hi-in", 1u << 1);
-+    if (s->flash_file) {
-+        qdev_prop_set_string(DEVICE(&s->soc.xip), "flash-file",
-+                             s->flash_file);
-+    }
-+    if (s->flash_uid_set) {
-+        qdev_prop_set_uint64(DEVICE(&s->soc.xip), "flash-uid",
-+                             s->flash_uid_value);
-+    }
-+    if (machine->firmware) {
-+        qdev_prop_set_string(DEVICE(&s->soc), "bootrom-file",
-+                             machine->firmware);
-+    }
-+    object_property_set_link(OBJECT(&s->soc), "memory",
-+                             OBJECT(system_memory), &error_fatal);
-+
-+    sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
-+
-+    /*
-+     * For now, -kernel images are loaded directly into the XIP window.
-+     * rp2040_xip_load_image() accepts ELF images first, then raw images.
-+     */
-+    rp2040_xip_load_image(&s->soc.xip, machine->kernel_filename,
-+                          &error_fatal);
-+    armv7m_load_kernel(s->soc.armv7m[0].cpu, NULL, RP2040_XIP_BASE, 2 * MiB);
-+    rp2040_xip_set_writable(&s->soc.xip, false);
-+}
-+
-+static void raspi_pico_machine_finalize(Object *obj)
-+{
-+    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
-+
-+    g_free(s->flash_file);
-+    g_free(s->flash_uid);
-+    g_free(s->rosc_random_seed);
-+}
-+
-+static bool raspi_pico_get_strict_uart_pins(Object *obj, Error **errp)
-+{
-+    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
-+
-+    return s->strict_uart_pins;
-+}
-+
-+static void raspi_pico_set_strict_uart_pins(Object *obj, bool value,
-+                                            Error **errp)
-+{
-+    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
-+
-+    s->strict_uart_pins = value;
-+}
-+
-+static void raspi_pico_machine_initfn(Object *obj)
-+{
-+    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
-+
-+    s->strict_uart_pins = true;
-+}
-+
-+static void raspi_pico_machine_class_init(ObjectClass *oc, const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    mc->desc = "Raspberry Pi Pico (Cortex-M0+)";
-+    mc->init = raspi_pico_init;
-+    mc->default_cpus = RP2040_NUM_CORES;
-+    mc->min_cpus = RP2040_NUM_CORES;
-+    mc->max_cpus = RP2040_NUM_CORES;
-+    mc->no_parallel = 1;
-+    mc->no_floppy = 1;
-+    mc->no_cdrom = 1;
-+
-+    object_class_property_add_str(oc, "flash-file",
-+                                  raspi_pico_get_flash_file,
-+                                  raspi_pico_set_flash_file);
-+    object_class_property_set_description(oc, "flash-file",
-+                                          "Load initial XIP flash contents "
-+                                          "from a raw host file");
-+    object_class_property_add_str(oc, "flash-uid",
-+                                  raspi_pico_get_flash_uid,
-+                                  raspi_pico_set_flash_uid);
-+    object_class_property_set_description(oc, "flash-uid",
-+                                          "Set the emulated external flash "
-+                                          "64-bit unique ID as 16 hex digits");
-+    object_class_property_add_str(oc, "rosc-random-seed",
-+                                  raspi_pico_get_rosc_random_seed,
-+                                  raspi_pico_set_rosc_random_seed);
-+    object_class_property_set_description(oc, "rosc-random-seed",
-+                                          "Use a deterministic seed for the "
-+                                          "ROSC RANDOMBIT stream; if unset, "
-+                                          "QEMU guest entropy is used");
-+    object_class_property_add_bool(oc, "strict-uart-pins",
-+                                   raspi_pico_get_strict_uart_pins,
-+                                   raspi_pico_set_strict_uart_pins);
-+    object_class_property_set_description(oc, "strict-uart-pins",
-+                                          "Require GPIO0/GPIO1 IO_BANK0 "
-+                                          "FUNCSEL=UART before UART0 reaches "
-+                                          "the host serial backend");
-+}
-+
-+static const TypeInfo raspi_pico_machine_info = {
-+    .name = TYPE_RASPI_PICO_MACHINE,
-+    .parent = TYPE_MACHINE,
-+    .instance_size = sizeof(RaspiPicoMachineState),
-+    .instance_init = raspi_pico_machine_initfn,
-+    .class_init = raspi_pico_machine_class_init,
-+    .instance_finalize = raspi_pico_machine_finalize,
-+    .interfaces = arm_machine_interfaces,
-+};
-+
-+static void raspi_pico_machine_init(void)
-+{
-+    type_register_static(&raspi_pico_machine_info);
-+}
-+type_init(raspi_pico_machine_init)
-diff --git a/hw/arm/rp2040.c b/hw/arm/rp2040.c
-new file mode 100644
-index 0000000000..aecfb9284b
---- /dev/null
-+++ b/hw/arm/rp2040.c
-@@ -0,0 +1,2052 @@
-+/*
-+ * RP2040 SoC emulation
-+ *
-+ * Copyright (c) 2021 Linaro Ltd
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/units.h"
-+#include "qapi/error.h"
-+#include "hw/arm/rp2040.h"
-+#include "hw/core/qdev-clock.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/core/loader.h"
-+#include "hw/misc/rp2040_nyi.h"
-+#include "hw/misc/unimp.h"
-+#include "fpu/softfloat.h"
-+#include "qemu/datadir.h"
-+#include "qemu/log.h"
-+#include "system/runstate.h"
-+#include "target/arm/cpu.h"
-+#include "target/arm/cpu-qom.h"
-+#include "trace.h"
-+
-+#include <math.h>
-+
-+#define RP2040_UART0_BASE 0x40034000
-+#define RP2040_UART0_IRQ  20
-+#define RP2040_UART1_BASE 0x40038000
-+#define RP2040_UART1_IRQ  21
-+#define RP2040_DMA_IRQ_0  11
-+#define RP2040_DMA_IRQ_1  12
-+#define RP2040_IO_IRQ_BANK0 13
-+#define RP2040_SIO_IRQ_PROC0 15
-+#define RP2040_SIO_IRQ_PROC1 16
-+#define RP2040_PROC1       1
-+
-+#define RP2040_BOOTROM_FUNC_TABLE_PTR_OFFSET 0x14
-+#define RP2040_BOOTROM_DATA_TABLE_PTR_OFFSET 0x16
-+#define RP2040_BOOTROM_TABLE_LOOKUP_PTR_OFFSET 0x18
-+#define RP2040_BOOTROM_LOOKUP_OFFSET 0x0100
-+#define RP2040_BOOTROM_STUBS_OFFSET 0x0120
-+#define RP2040_BOOTROM_FUNC_TABLE_OFFSET 0x0300
-+#define RP2040_BOOTROM_DATA_TABLE_OFFSET 0x0340
-+#define RP2040_BOOTROM_FLOAT_NYI_STUB_OFFSET 0x0360
-+#define RP2040_BOOTROM_DOUBLE_NYI_STUB_OFFSET 0x0380
-+#define RP2040_BOOTROM_FLOAT_TABLE_OFFSET 0x03c0
-+#define RP2040_BOOTROM_DOUBLE_TABLE_OFFSET 0x0460
-+#define RP2040_BOOTROM_FLOAT_STUBS_OFFSET 0x0600
-+#define RP2040_BOOTROM_DOUBLE_STUBS_OFFSET 0x0b00
-+#define RP2040_BOOTROM_FP_STUB_SIZE 36
-+#define RP2040_BOOTROM_HARDFAULT_EXIT_OFFSET 0x0f80
-+#define RP2040_BOOTROM_FUNC_TABLE_ENTRY_SIZE 4
-+#define RP2040_BOOTROM_DATA_TABLE_ENTRY_SIZE 4
-+#define RP2040_BOOTROM_NYI_CODE_LITERAL_OFFSET 20
-+#define RP2040_BOOTROM_HELPER_NOARG_CODE_LITERAL_OFFSET 8
-+#define RP2040_BOOTROM_HELPER_ARGS4_CODE_LITERAL_OFFSET 24
-+#define RP2040_BOOTROM_HELPER_ARGS3_CODE_LITERAL_OFFSET 20
-+#define RP2040_BOOTROM_FP_STUB_CODE_LITERAL_OFFSET 32
-+#define RP2040_BOOTROM_ROM_VERSION_OFFSET 0x13
-+#define RP2040_BOOTROM_SYNTHETIC_ROM_VERSION 2
-+#define RP2040_BOOTROM_FLOAT_TABLE_WORDS 32
-+
-+#define RP2040_SYNTHETIC_ROM_DBG_CMD  0x00
-+#define RP2040_SYNTHETIC_ROM_DBG_ARG0 0x04
-+#define RP2040_SYNTHETIC_ROM_DBG_ARG1 0x08
-+#define RP2040_SYNTHETIC_ROM_DBG_ARG2 0x0c
-+#define RP2040_SYNTHETIC_ROM_DBG_ARG3 0x10
-+#define RP2040_SYNTHETIC_ROM_DBG_RESULT0 0x14
-+#define RP2040_SYNTHETIC_ROM_DBG_RESULT1 0x18
-+#define RP2040_SYNTHETIC_ROM_DBG_RESULT2 0x1c
-+#define RP2040_SYNTHETIC_ROM_DBG_RESULT3 0x20
-+#define RP2040_SYNTHETIC_ROM_DBG_FLASH_COUNT0 0x40
-+
-+#define RP2040_SYNTHETIC_ROM_DBG_CMD_EXIT 0x54495845 /* "EXIT" */
-+
-+#define RP2040_SYNTHETIC_FP_CMD_MASK   0xffffff00
-+#define RP2040_SYNTHETIC_FP_CMD_FLOAT  0x80000000
-+#define RP2040_SYNTHETIC_FP_CMD_DOUBLE 0x80000100
-+
-+enum RP2040SyntheticFlashHelper {
-+    RP2040_SYNTHETIC_FLASH_CONNECT_INTERNAL_FLASH,
-+    RP2040_SYNTHETIC_FLASH_EXIT_XIP,
-+    RP2040_SYNTHETIC_FLASH_FLUSH_CACHE,
-+    RP2040_SYNTHETIC_FLASH_ENTER_CMD_XIP,
-+    RP2040_SYNTHETIC_FLASH_RANGE_ERASE,
-+    RP2040_SYNTHETIC_FLASH_RANGE_PROGRAM,
-+};
-+
-+#define RP2040_SF_TABLE_FADD            0x00
-+#define RP2040_SF_TABLE_FSUB            0x04
-+#define RP2040_SF_TABLE_FMUL            0x08
-+#define RP2040_SF_TABLE_FDIV            0x0c
-+#define RP2040_SF_TABLE_FCMP_FAST       0x10
-+#define RP2040_SF_TABLE_FCMP_FAST_FLAGS 0x14
-+#define RP2040_SF_TABLE_FSQRT           0x18
-+#define RP2040_SF_TABLE_FLOAT2INT       0x1c
-+#define RP2040_SF_TABLE_FLOAT2FIX       0x20
-+#define RP2040_SF_TABLE_FLOAT2UINT      0x24
-+#define RP2040_SF_TABLE_FLOAT2UFIX      0x28
-+#define RP2040_SF_TABLE_INT2FLOAT       0x2c
-+#define RP2040_SF_TABLE_FIX2FLOAT       0x30
-+#define RP2040_SF_TABLE_UINT2FLOAT      0x34
-+#define RP2040_SF_TABLE_UFIX2FLOAT      0x38
-+#define RP2040_SF_TABLE_FCOS            0x3c
-+#define RP2040_SF_TABLE_FSIN            0x40
-+#define RP2040_SF_TABLE_FTAN            0x44
-+#define RP2040_SF_TABLE_V3_FSINCOS      0x48
-+#define RP2040_SF_TABLE_FEXP            0x4c
-+#define RP2040_SF_TABLE_FLN             0x50
-+#define RP2040_SF_TABLE_FCMP_BASIC      0x54
-+#define RP2040_SF_TABLE_FATAN2          0x58
-+#define RP2040_SF_TABLE_INT642FLOAT     0x5c
-+#define RP2040_SF_TABLE_FIX642FLOAT     0x60
-+#define RP2040_SF_TABLE_UINT642FLOAT    0x64
-+#define RP2040_SF_TABLE_UFIX642FLOAT    0x68
-+#define RP2040_SF_TABLE_FLOAT2INT64     0x6c
-+#define RP2040_SF_TABLE_FLOAT2FIX64     0x70
-+#define RP2040_SF_TABLE_FLOAT2UINT64    0x74
-+#define RP2040_SF_TABLE_FLOAT2UFIX64    0x78
-+#define RP2040_SF_TABLE_FLOAT2DOUBLE    0x7c
-+
-+#define USBCTRL_ADDR_ENDP       0x00
-+#define USBCTRL_SIE_CTRL        0x4c
-+#define USBCTRL_SIE_STATUS      0x50
-+#define USBCTRL_INT_EP_CTRL     0x54
-+#define USBCTRL_BUFF_STATUS     0x58
-+#define USBCTRL_BUFF_CPU_HANDLE 0x5c
-+#define USBCTRL_EP_ABORT        0x60
-+#define USBCTRL_EP_ABORT_DONE   0x64
-+#define USBCTRL_EP_STALL_ARM    0x68
-+#define USBCTRL_NAK_POLL        0x6c
-+#define USBCTRL_EP_STATUS       0x70
-+#define USBCTRL_USB_MUXING      0x74
-+#define USBCTRL_USB_PWR         0x78
-+#define USBCTRL_USBPHY_DIRECT   0x7c
-+#define USBCTRL_USBPHY_TRIM     0x80
-+#define USBCTRL_INTR            0x8c
-+#define USBCTRL_INTE            0x90
-+#define USBCTRL_INTF            0x94
-+#define USBCTRL_INTS            0x98
-+
-+#define USBCTRL_SIE_STATUS_VBUS_DETECTED BIT(11)
-+
-+#define ATOMIC_ALIAS_MASK 0x3000
-+#define ATOMIC_XOR        0x1000
-+#define ATOMIC_SET        0x2000
-+#define ATOMIC_CLR        0x3000
-+
-+/*
-+ * Temporary boot ROM used until a faithful RP2040 boot ROM is requested.  It
-+ * uses SIO_CPUID to split core behavior: core 0 copies the 256-byte XIP
-+ * second-stage boot code into SRAM and branches to the SRAM copy; core 1 waits
-+ * in ROM for the Pico SDK launch FIFO sequence, echoes the received words,
-+ * installs VTOR/MSP, then branches to the received entry point.  Real RP2040
-+ * mask ROM performs more checks, but boot2 expects to run from SRAM while it
-+ * configures XIP.
-+ */
-+static const uint8_t rp2040_bootrom[] = {
-+    0x00, 0x20, 0x04, 0x20, /* initial SP: 0x20042000 */
-+    0x41, 0x00, 0x00, 0x00, /* reset handler: 0x00000041 */
-+    0xb3, 0x00, 0x00, 0x00, /* NMI handler: 0x000000b3 */
-+    0xb3, 0x00, 0x00, 0x00, /* HardFault handler: 0x000000b3 */
-+    0xb3, 0x00, 0x00, 0x00, /* reserved */
-+    0xb3, 0x00, 0x00, 0x00, /* reserved */
-+    0xb3, 0x00, 0x00, 0x00, /* reserved */
-+    0x00, 0x00, 0x00, 0x00, /* reserved */
-+    0x00, 0x00, 0x00, 0x00, /* reserved */
-+    0x00, 0x00, 0x00, 0x00, /* reserved */
-+    0x00, 0x00, 0x00, 0x00, /* reserved */
-+    0xb3, 0x00, 0x00, 0x00, /* SVC handler: 0x000000b3 */
-+    0x00, 0x00, 0x00, 0x00, /* reserved */
-+    0x00, 0x00, 0x00, 0x00, /* reserved */
-+    0xb3, 0x00, 0x00, 0x00, /* PendSV handler: 0x000000b3 */
-+    0xb3, 0x00, 0x00, 0x00, /* SysTick handler: 0x000000b3 */
-+    0x26, 0x4c,             /* ldr r4, [pc, #152] ; SIO_BASE */
-+    0x20, 0x68,             /* ldr r0, [r4] ; SIO_CPUID */
-+    0x00, 0x28,             /* cmp r0, #0 */
-+    0x13, 0xd1,             /* bne core1 path */
-+    0x25, 0x48,             /* ldr r0, [pc, #148] ; 0x10000000 */
-+    0x26, 0x49,             /* ldr r1, [pc, #152] ; 0x20041f00 */
-+    0x40, 0x22,             /* movs r2, #64 */
-+    0x03, 0x68,             /* ldr r3, [r0] */
-+    0x0b, 0x60,             /* str r3, [r1] */
-+    0x04, 0x30,             /* adds r0, #4 */
-+    0x04, 0x31,             /* adds r1, #4 */
-+    0x01, 0x3a,             /* subs r2, #1 */
-+    0xf9, 0xd1,             /* bne copy loop */
-+    0x23, 0x4b,             /* ldr r3, [pc, #140] ; launch entry */
-+    0x9e, 0x46,             /* mov lr, r3 */
-+    0x23, 0x48,             /* ldr r0, [pc, #140] ; 0x20041f01 */
-+    0x00, 0x47,             /* bx r0 */
-+    0x23, 0x48,             /* ldr r0, [pc, #140] ; 0x10000100 */
-+    0x23, 0x49,             /* ldr r1, [pc, #140] ; VTOR */
-+    0x08, 0x60,             /* str r0, [r1] */
-+    0x06, 0xc8,             /* ldm r0!, {r1, r2} */
-+    0x81, 0xf3, 0x08, 0x88, /* msr msp, r1 */
-+    0x10, 0x47,             /* bx r2 */
-+    0x21, 0x4d,             /* ldr r5, [pc, #132] ; sequence */
-+    0x00, 0x26,             /* movs r6, #0 */
-+    0x00, 0xf0, 0x1e, 0xf8, /* bl fifo_pop */
-+    0x03, 0x2e,             /* cmp r6, #3 */
-+    0x07, 0xd2,             /* bhs echo */
-+    0xb1, 0x00,             /* lsls r1, r6, #2 */
-+    0x6a, 0x58,             /* ldr r2, [r5, r1] */
-+    0x90, 0x42,             /* cmp r0, r2 */
-+    0x0c, 0xd0,             /* beq echo */
-+    0x00, 0x26,             /* movs r6, #0 */
-+    0x00, 0xf0, 0x1c, 0xf8, /* bl fifo_push */
-+    0xf3, 0xe7,             /* b core1 loop */
-+    0x03, 0x2e,             /* cmp r6, #3 */
-+    0x01, 0xd1,             /* bne maybe SP */
-+    0x07, 0x46,             /* mov r7, r0 */
-+    0x04, 0xe0,             /* b echo */
-+    0x04, 0x2e,             /* cmp r6, #4 */
-+    0x01, 0xd1,             /* bne save PC */
-+    0x03, 0x46,             /* mov r3, r0 */
-+    0x00, 0xe0,             /* b echo */
-+    0x05, 0x46,             /* mov r5, r0 */
-+    0x00, 0xf0, 0x10, 0xf8, /* bl fifo_push */
-+    0x01, 0x36,             /* adds r6, #1 */
-+    0x06, 0x2e,             /* cmp r6, #6 */
-+    0xe5, 0xd1,             /* bne core1 loop */
-+    0x12, 0x49,             /* ldr r1, [pc, #72] ; VTOR */
-+    0x0f, 0x60,             /* str r7, [r1] */
-+    0x83, 0xf3, 0x08, 0x88, /* msr msp, r3 */
-+    0x28, 0x47,             /* bx r5 */
-+    0xfe, 0xe7,             /* hang */
-+    0x09, 0x4c,             /* ldr r4, [pc, #36] ; SIO_BASE */
-+    0x20, 0x6d,             /* ldr r0, [r4, #0x50] */
-+    0x01, 0x21,             /* movs r1, #1 */
-+    0x08, 0x42,             /* tst r0, r1 */
-+    0xfb, 0xd0,             /* beq fifo_pop */
-+    0xa0, 0x6d,             /* ldr r0, [r4, #0x58] */
-+    0x70, 0x47,             /* bx lr */
-+    0x06, 0x4c,             /* ldr r4, [pc, #24] ; SIO_BASE */
-+    0x21, 0x6d,             /* ldr r1, [r4, #0x50] */
-+    0x02, 0x22,             /* movs r2, #2 */
-+    0x11, 0x42,             /* tst r1, r2 */
-+    0xfb, 0xd0,             /* beq fifo_push */
-+    0x60, 0x65,             /* str r0, [r4, #0x54] */
-+    0x70, 0x47,             /* bx lr */
-+    0x00, 0x00, 0x00, 0x00, /* core1 sequence[0] */
-+    0x00, 0x00, 0x00, 0x00, /* core1 sequence[1] */
-+    0x01, 0x00, 0x00, 0x00, /* core1 sequence[2] */
-+    0x00, 0x00, 0x00, 0xd0, /* SIO_BASE */
-+    0x00, 0x00, 0x00, 0x10, /* boot2 source: 0x10000000 */
-+    0x00, 0x1f, 0x04, 0x20, /* boot2 SRAM copy: 0x20041f00 */
-+    0x63, 0x00, 0x00, 0x00, /* post-boot2 launch entry: 0x00000063 */
-+    0x01, 0x1f, 0x04, 0x20, /* boot2 SRAM entry: 0x20041f01 */
-+    0x00, 0x01, 0x00, 0x10, /* application vectors: 0x10000100 */
-+    0x08, 0xed, 0x00, 0xe0, /* VTOR: 0xe000ed08 */
-+    0xd0, 0x00, 0x00, 0x00, /* core1 sequence table */
-+};
-+
-+static const struct {
-+    const char *name;
-+    hwaddr base;
-+    hwaddr size;
-+} rp2040_unimplemented[] = {
-+    { "rp2040.spi0",     0x4003c000, 0x4000 },
-+    { "rp2040.spi1",     0x40040000, 0x4000 },
-+    { "rp2040.i2c0",     0x40044000, 0x4000 },
-+    { "rp2040.i2c1",     0x40048000, 0x4000 },
-+    { "rp2040.adc",      0x4004c000, 0x4000 },
-+    { "rp2040.pwm",      0x40050000, 0x4000 },
-+    { "rp2040.rtc",      0x4005c000, 0x4000 },
-+    { "rp2040.pio0",     0x50200000, 0x10000 },
-+    { "rp2040.pio1",     0x50300000, 0x10000 },
-+};
-+
-+typedef struct RP2040BootromFunction {
-+    uint16_t code;
-+    const char *name;
-+    const uint8_t *impl;
-+    size_t impl_size;
-+    uint32_t code_literal_offset;
-+} RP2040BootromFunction;
-+
-+typedef struct RP2040BootromData {
-+    uint16_t code;
-+    uint16_t offset;
-+} RP2040BootromData;
-+
-+#define RP2040_ROM_TABLE_CODE(c1, c2) ((uint16_t)(c1) | ((uint16_t)(c2) << 8))
-+
-+static const uint8_t rp2040_bootrom_clz32[] = {
-+    0x00, 0x21, 0x00, 0x28, 0x01, 0xd1, 0x20, 0x20,
-+    0x70, 0x47, 0x00, 0x28, 0x02, 0xd4, 0x40, 0x00,
-+    0x01, 0x31, 0xfa, 0xe7, 0x08, 0x46, 0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_ctz32[] = {
-+    0x00, 0x21, 0x00, 0x28, 0x01, 0xd1, 0x20, 0x20,
-+    0x70, 0x47, 0x01, 0x22, 0x10, 0x42, 0x02, 0xd1,
-+    0x40, 0x08, 0x01, 0x31, 0xf9, 0xe7, 0x08, 0x46,
-+    0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_popcount32[] = {
-+    0x00, 0x21, 0x00, 0x28, 0x04, 0xd0, 0x01, 0x22,
-+    0x02, 0x40, 0x89, 0x18, 0x40, 0x08, 0xf8, 0xe7,
-+    0x08, 0x46, 0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_reverse32[] = {
-+    0x00, 0x21, 0x20, 0x22, 0x49, 0x00, 0x01, 0x23,
-+    0x03, 0x40, 0x19, 0x43, 0x40, 0x08, 0x01, 0x3a,
-+    0xf8, 0xd1, 0x08, 0x46, 0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_memcpy[] = {
-+    0x10, 0xb4, 0x03, 0x46, 0x00, 0x2a, 0x05, 0xd0,
-+    0x0c, 0x78, 0x04, 0x70, 0x01, 0x31, 0x01, 0x30,
-+    0x01, 0x3a, 0xf7, 0xe7, 0x18, 0x46, 0x10, 0xbc,
-+    0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_memset[] = {
-+    0x03, 0x46, 0x00, 0x2a, 0x03, 0xd0, 0x01, 0x70,
-+    0x01, 0x30, 0x01, 0x3a, 0xf9, 0xe7, 0x18, 0x46,
-+    0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_memcpy44[] = {
-+    0x10, 0xb4, 0x03, 0x46, 0x00, 0x2a, 0x05, 0xd0,
-+    0x0c, 0x68, 0x04, 0x60, 0x04, 0x31, 0x04, 0x30,
-+    0x01, 0x3a, 0xf7, 0xe7, 0x18, 0x46, 0x10, 0xbc,
-+    0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_memset4[] = {
-+    0x03, 0x46, 0x00, 0x2a, 0x03, 0xd0, 0x01, 0x60,
-+    0x04, 0x30, 0x01, 0x3a, 0xf9, 0xe7, 0x18, 0x46,
-+    0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_flash_noarg[] = {
-+    0x01, 0x49,             /* ldr r1, [pc, #4] ; function code */
-+    0x02, 0x48,             /* ldr r0, [pc, #8] ; debug base */
-+    0x01, 0x60,             /* str r1, [r0] */
-+    0x70, 0x47,             /* bx lr */
-+    0x00, 0x00, 0x00, 0x00, /* function code literal */
-+    0x00, 0x00, 0xff, 0x5f, /* 0x5fff0000 */
-+};
-+
-+static const uint8_t rp2040_bootrom_flash_args4[] = {
-+    0x10, 0xb5,             /* push {r4, lr} */
-+    0x04, 0x4c,             /* ldr r4, [pc, #16] ; debug base */
-+    0x60, 0x60,             /* str r0, [r4, #4] */
-+    0xa1, 0x60,             /* str r1, [r4, #8] */
-+    0xe2, 0x60,             /* str r2, [r4, #12] */
-+    0x23, 0x61,             /* str r3, [r4, #16] */
-+    0x02, 0x48,             /* ldr r0, [pc, #8] ; function code */
-+    0x20, 0x60,             /* str r0, [r4] */
-+    0x10, 0xbd,             /* pop {r4, pc} */
-+    0xc0, 0x46,             /* nop; align literal */
-+    0x00, 0x00, 0xff, 0x5f, /* 0x5fff0000 */
-+    0x00, 0x00, 0x00, 0x00, /* function code literal */
-+};
-+
-+static const uint8_t rp2040_bootrom_flash_args3[] = {
-+    0x10, 0xb5,             /* push {r4, lr} */
-+    0x03, 0x4c,             /* ldr r4, [pc, #12] ; debug base */
-+    0x60, 0x60,             /* str r0, [r4, #4] */
-+    0xa1, 0x60,             /* str r1, [r4, #8] */
-+    0xe2, 0x60,             /* str r2, [r4, #12] */
-+    0x02, 0x48,             /* ldr r0, [pc, #8] ; function code */
-+    0x20, 0x60,             /* str r0, [r4] */
-+    0x10, 0xbd,             /* pop {r4, pc} */
-+    0x00, 0x00, 0xff, 0x5f, /* 0x5fff0000 */
-+    0x00, 0x00, 0x00, 0x00, /* function code literal */
-+};
-+
-+static const uint8_t rp2040_bootrom_fp_stub[] = {
-+    0x10, 0xb5,             /* push {r4, lr} */
-+    0x06, 0x4c,             /* ldr r4, [pc, #24] ; debug base */
-+    0x60, 0x60,             /* str r0, [r4, #4] */
-+    0xa1, 0x60,             /* str r1, [r4, #8] */
-+    0xe2, 0x60,             /* str r2, [r4, #12] */
-+    0x23, 0x61,             /* str r3, [r4, #16] */
-+    0x04, 0x48,             /* ldr r0, [pc, #16] ; command */
-+    0x20, 0x60,             /* str r0, [r4] */
-+    0x60, 0x69,             /* ldr r0, [r4, #20] */
-+    0xa1, 0x69,             /* ldr r1, [r4, #24] */
-+    0xe2, 0x69,             /* ldr r2, [r4, #28] */
-+    0x23, 0x6a,             /* ldr r3, [r4, #32] */
-+    0x10, 0xbd,             /* pop {r4, pc} */
-+    0xc0, 0x46,             /* nop; align literal */
-+    0x00, 0x00, 0xff, 0x5f, /* 0x5fff0000 */
-+    0x00, 0x00, 0x00, 0x00, /* command literal */
-+};
-+
-+#define RP2040_BOOTROM_IMPL(_code, _name, _impl) \
-+    { _code, _name, _impl, sizeof(_impl), UINT32_MAX }
-+#define RP2040_BOOTROM_IMPL_CODE(_code, _name, _impl, _offset) \
-+    { _code, _name, _impl, sizeof(_impl), _offset }
-+#define RP2040_BOOTROM_NYI(_code, _name) \
-+    { _code, _name, NULL, 0, UINT32_MAX }
-+
-+static const RP2040BootromFunction rp2040_bootrom_functions[] = {
-+    RP2040_BOOTROM_IMPL_CODE(RP2040_ROM_TABLE_CODE('C', 'X'),
-+                             "flash_enter_cmd_xip",
-+                             rp2040_bootrom_flash_noarg,
-+                             RP2040_BOOTROM_HELPER_NOARG_CODE_LITERAL_OFFSET),
-+    RP2040_BOOTROM_IMPL_CODE(RP2040_ROM_TABLE_CODE('E', 'X'),
-+                             "flash_exit_xip",
-+                             rp2040_bootrom_flash_noarg,
-+                             RP2040_BOOTROM_HELPER_NOARG_CODE_LITERAL_OFFSET),
-+    RP2040_BOOTROM_IMPL_CODE(RP2040_ROM_TABLE_CODE('F', 'C'),
-+                             "flash_flush_cache",
-+                             rp2040_bootrom_flash_noarg,
-+                             RP2040_BOOTROM_HELPER_NOARG_CODE_LITERAL_OFFSET),
-+    RP2040_BOOTROM_IMPL_CODE(RP2040_ROM_TABLE_CODE('I', 'F'),
-+                             "connect_internal_flash",
-+                             rp2040_bootrom_flash_noarg,
-+                             RP2040_BOOTROM_HELPER_NOARG_CODE_LITERAL_OFFSET),
-+    RP2040_BOOTROM_IMPL_CODE(RP2040_ROM_TABLE_CODE('R', 'E'),
-+                             "flash_range_erase",
-+                             rp2040_bootrom_flash_args4,
-+                             RP2040_BOOTROM_HELPER_ARGS4_CODE_LITERAL_OFFSET),
-+    RP2040_BOOTROM_IMPL_CODE(RP2040_ROM_TABLE_CODE('R', 'P'),
-+                             "flash_range_program",
-+                             rp2040_bootrom_flash_args3,
-+                             RP2040_BOOTROM_HELPER_ARGS3_CODE_LITERAL_OFFSET),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('C', '4'), "memcpy44",
-+                        rp2040_bootrom_memcpy44),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('L', '3'), "clz32",
-+                        rp2040_bootrom_clz32),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('M', 'C'), "memcpy",
-+                        rp2040_bootrom_memcpy),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('M', 'S'), "memset",
-+                        rp2040_bootrom_memset),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('P', '3'), "popcount32",
-+                        rp2040_bootrom_popcount32),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('R', '3'), "reverse32",
-+                        rp2040_bootrom_reverse32),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('S', '4'), "memset4",
-+                        rp2040_bootrom_memset4),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('T', '3'), "ctz32",
-+                        rp2040_bootrom_ctz32),
-+    RP2040_BOOTROM_NYI(RP2040_ROM_TABLE_CODE('U', 'B'), "reset_usb_boot"),
-+};
-+
-+static const RP2040BootromData rp2040_bootrom_data[] = {
-+    { RP2040_ROM_TABLE_CODE('S', 'F'), RP2040_BOOTROM_FLOAT_TABLE_OFFSET + 2 },
-+    { RP2040_ROM_TABLE_CODE('S', 'D'), RP2040_BOOTROM_DOUBLE_TABLE_OFFSET + 2 },
-+};
-+
-+static const uint8_t rp2040_bootrom_lookup[] = {
-+    0x02, 0x88,             /* ldrh r2, [r0] */
-+    0x00, 0x2a,             /* cmp r2, #0 */
-+    0x05, 0xd0,             /* beq not_found */
-+    0x91, 0x42,             /* cmp r1, r2 */
-+    0x01, 0xd0,             /* beq found */
-+    0x04, 0x30,             /* adds r0, #4 */
-+    0xf8, 0xe7,             /* b loop */
-+    0x40, 0x88,             /* found: ldrh r0, [r0, #2] */
-+    0x70, 0x47,             /* bx lr */
-+    0x5f, 0x22,             /* not_found: movs r2, #0x5f */
-+    0x12, 0x06,             /* lsls r2, r2, #24 */
-+    0xff, 0x23,             /* movs r3, #0xff */
-+    0x1b, 0x04,             /* lsls r3, r3, #16 */
-+    0x1a, 0x43,             /* orrs r2, r3 ; 0x5fff0000 */
-+    0x11, 0x60,             /* str r1, [r2] */
-+    0x00, 0xbe,             /* bkpt #0 */
-+    0x00, 0x20,             /* movs r0, #0 */
-+    0x70, 0x47,             /* bx lr */
-+};
-+
-+static const uint8_t rp2040_bootrom_nyi_stub[] = {
-+    0x04, 0x49,             /* ldr r1, [pc, #16] ; function code */
-+    0x5f, 0x20,             /* movs r0, #0x5f */
-+    0x00, 0x06,             /* lsls r0, r0, #24 */
-+    0xff, 0x22,             /* movs r2, #0xff */
-+    0x12, 0x04,             /* lsls r2, r2, #16 */
-+    0x10, 0x43,             /* orrs r0, r2 ; 0x5fff0000 */
-+    0x01, 0x60,             /* str r1, [r0] */
-+    0x00, 0xbe,             /* bkpt #0 */
-+    0xfe, 0xe7,             /* b . */
-+    0xc0, 0x46,             /* nop; align literal */
-+    0x00, 0x00, 0x00, 0x00, /* function code literal */
-+};
-+
-+static const uint8_t rp2040_bootrom_hardfault_exit[] = {
-+    0xef, 0xf3, 0x08, 0x81, /* mrs r1, msp */
-+    0x8a, 0x69,             /* ldr r2, [r1, #24] ; stacked PC */
-+    0x13, 0x88,             /* ldrh r3, [r2] */
-+    0x04, 0x4c,             /* ldr r4, [pc, #16] ; 0xbe00 */
-+    0xa3, 0x42,             /* cmp r3, r4 */
-+    0x04, 0xd1,             /* bne hang */
-+    0x08, 0x68,             /* ldr r0, [r1] ; stacked R0/status */
-+    0x03, 0x4c,             /* ldr r4, [pc, #12] ; debug base */
-+    0x60, 0x60,             /* str r0, [r4, #4] */
-+    0x03, 0x48,             /* ldr r0, [pc, #12] ; EXIT command */
-+    0x20, 0x60,             /* str r0, [r4] */
-+    0xfe, 0xe7,             /* hang: b hang */
-+    0x00, 0x00,             /* align literal pool */
-+    0x00, 0xbe, 0x00, 0x00, /* 0xbe00 */
-+    0x00, 0x00, 0xff, 0x5f, /* 0x5fff0000 */
-+    0x45, 0x58, 0x49, 0x54, /* "EXIT" */
-+};
-+
-+static void rp2040_store_hword(uint8_t *rom, uint32_t offset, uint16_t value)
-+{
-+    rom[offset] = value;
-+    rom[offset + 1] = value >> 8;
-+}
-+
-+static void rp2040_store_word(uint8_t *rom, uint32_t offset, uint32_t value)
-+{
-+    rom[offset] = value;
-+    rom[offset + 1] = value >> 8;
-+    rom[offset + 2] = value >> 16;
-+    rom[offset + 3] = value >> 24;
-+}
-+
-+static bool rp2040_bootrom_fp_supported(uint32_t offset)
-+{
-+    switch (offset) {
-+    case RP2040_SF_TABLE_FADD:
-+    case RP2040_SF_TABLE_FSUB:
-+    case RP2040_SF_TABLE_FMUL:
-+    case RP2040_SF_TABLE_FDIV:
-+    case RP2040_SF_TABLE_FCMP_FAST:
-+    case RP2040_SF_TABLE_FCMP_FAST_FLAGS:
-+    case RP2040_SF_TABLE_FSQRT:
-+    case RP2040_SF_TABLE_FLOAT2INT:
-+    case RP2040_SF_TABLE_FLOAT2FIX:
-+    case RP2040_SF_TABLE_FLOAT2UINT:
-+    case RP2040_SF_TABLE_FLOAT2UFIX:
-+    case RP2040_SF_TABLE_INT2FLOAT:
-+    case RP2040_SF_TABLE_FIX2FLOAT:
-+    case RP2040_SF_TABLE_UINT2FLOAT:
-+    case RP2040_SF_TABLE_UFIX2FLOAT:
-+    case RP2040_SF_TABLE_FCOS:
-+    case RP2040_SF_TABLE_FSIN:
-+    case RP2040_SF_TABLE_FTAN:
-+    case RP2040_SF_TABLE_V3_FSINCOS:
-+    case RP2040_SF_TABLE_FEXP:
-+    case RP2040_SF_TABLE_FLN:
-+    case RP2040_SF_TABLE_FCMP_BASIC:
-+    case RP2040_SF_TABLE_FATAN2:
-+    case RP2040_SF_TABLE_INT642FLOAT:
-+    case RP2040_SF_TABLE_FIX642FLOAT:
-+    case RP2040_SF_TABLE_UINT642FLOAT:
-+    case RP2040_SF_TABLE_UFIX642FLOAT:
-+    case RP2040_SF_TABLE_FLOAT2INT64:
-+    case RP2040_SF_TABLE_FLOAT2FIX64:
-+    case RP2040_SF_TABLE_FLOAT2UINT64:
-+    case RP2040_SF_TABLE_FLOAT2UFIX64:
-+    case RP2040_SF_TABLE_FLOAT2DOUBLE:
-+        return true;
-+    default:
-+        return false;
-+    }
-+}
-+
-+static void rp2040_install_bootrom_fp_stub(uint8_t *rom, uint32_t offset,
-+                                          uint32_t command)
-+{
-+    memcpy(rom + offset, rp2040_bootrom_fp_stub,
-+           sizeof(rp2040_bootrom_fp_stub));
-+    rp2040_store_word(rom, offset + RP2040_BOOTROM_FP_STUB_CODE_LITERAL_OFFSET,
-+                      command);
-+}
-+
-+static void rp2040_install_synthetic_bootrom(void)
-+{
-+    g_autofree uint8_t *rom = g_malloc0(RP2040_ROM_SIZE);
-+    uint32_t func_base = RP2040_BOOTROM_STUBS_OFFSET;
-+    uint32_t func_table = RP2040_BOOTROM_FUNC_TABLE_OFFSET;
-+    uint32_t data_table = RP2040_BOOTROM_DATA_TABLE_OFFSET;
-+    uint32_t float_nyi = RP2040_BOOTROM_FLOAT_NYI_STUB_OFFSET | 1;
-+    uint32_t double_nyi = RP2040_BOOTROM_DOUBLE_NYI_STUB_OFFSET | 1;
-+    int i;
-+
-+    memcpy(rom, rp2040_bootrom, sizeof(rp2040_bootrom));
-+    memcpy(rom + RP2040_BOOTROM_HARDFAULT_EXIT_OFFSET,
-+           rp2040_bootrom_hardfault_exit,
-+           sizeof(rp2040_bootrom_hardfault_exit));
-+    rp2040_store_word(rom, 0x0c, RP2040_BOOTROM_HARDFAULT_EXIT_OFFSET | 1);
-+    rom[RP2040_BOOTROM_ROM_VERSION_OFFSET] =
-+        RP2040_BOOTROM_SYNTHETIC_ROM_VERSION;
-+    memcpy(rom + RP2040_BOOTROM_LOOKUP_OFFSET, rp2040_bootrom_lookup,
-+           sizeof(rp2040_bootrom_lookup));
-+
-+    rp2040_store_hword(rom, RP2040_BOOTROM_FUNC_TABLE_PTR_OFFSET,
-+                       RP2040_BOOTROM_FUNC_TABLE_OFFSET);
-+    rp2040_store_hword(rom, RP2040_BOOTROM_DATA_TABLE_PTR_OFFSET,
-+                       RP2040_BOOTROM_DATA_TABLE_OFFSET);
-+    rp2040_store_hword(rom, RP2040_BOOTROM_TABLE_LOOKUP_PTR_OFFSET,
-+                       RP2040_BOOTROM_LOOKUP_OFFSET | 1);
-+
-+    for (i = 0; i < ARRAY_SIZE(rp2040_bootrom_functions); i++) {
-+        const RP2040BootromFunction *func = &rp2040_bootrom_functions[i];
-+        uint32_t entry = func_base | 1;
-+
-+        if (func->impl) {
-+            memcpy(rom + func_base, func->impl, func->impl_size);
-+            if (func->code_literal_offset != UINT32_MAX) {
-+                rp2040_store_word(rom, func_base + func->code_literal_offset,
-+                                  func->code);
-+            }
-+            func_base += ROUND_UP(func->impl_size, 4);
-+        } else {
-+            memcpy(rom + func_base, rp2040_bootrom_nyi_stub,
-+                   sizeof(rp2040_bootrom_nyi_stub));
-+            rp2040_store_word(rom,
-+                              func_base +
-+                              RP2040_BOOTROM_NYI_CODE_LITERAL_OFFSET,
-+                              func->code);
-+            func_base += ROUND_UP(sizeof(rp2040_bootrom_nyi_stub), 4);
-+        }
-+
-+        rp2040_store_hword(rom, func_table +
-+                           i * RP2040_BOOTROM_FUNC_TABLE_ENTRY_SIZE,
-+                           func->code);
-+        rp2040_store_hword(rom, func_table +
-+                           i * RP2040_BOOTROM_FUNC_TABLE_ENTRY_SIZE + 2,
-+                           entry);
-+    }
-+
-+    memcpy(rom + RP2040_BOOTROM_FLOAT_NYI_STUB_OFFSET, rp2040_bootrom_nyi_stub,
-+           sizeof(rp2040_bootrom_nyi_stub));
-+    rp2040_store_word(rom, RP2040_BOOTROM_FLOAT_NYI_STUB_OFFSET +
-+                      RP2040_BOOTROM_NYI_CODE_LITERAL_OFFSET,
-+                      RP2040_ROM_TABLE_CODE('S', 'F'));
-+    memcpy(rom + RP2040_BOOTROM_DOUBLE_NYI_STUB_OFFSET, rp2040_bootrom_nyi_stub,
-+           sizeof(rp2040_bootrom_nyi_stub));
-+    rp2040_store_word(rom, RP2040_BOOTROM_DOUBLE_NYI_STUB_OFFSET +
-+                      RP2040_BOOTROM_NYI_CODE_LITERAL_OFFSET,
-+                      RP2040_ROM_TABLE_CODE('S', 'D'));
-+
-+    rom[RP2040_BOOTROM_FLOAT_TABLE_OFFSET] = RP2040_BOOTROM_FLOAT_TABLE_WORDS;
-+    rom[RP2040_BOOTROM_DOUBLE_TABLE_OFFSET] = RP2040_BOOTROM_FLOAT_TABLE_WORDS;
-+    for (i = 0; i < RP2040_BOOTROM_FLOAT_TABLE_WORDS; i++) {
-+        uint32_t table_offset = i * sizeof(uint32_t);
-+
-+        if (rp2040_bootrom_fp_supported(table_offset)) {
-+            uint32_t float_stub = RP2040_BOOTROM_FLOAT_STUBS_OFFSET +
-+                                  i * RP2040_BOOTROM_FP_STUB_SIZE;
-+            uint32_t double_stub = RP2040_BOOTROM_DOUBLE_STUBS_OFFSET +
-+                                   i * RP2040_BOOTROM_FP_STUB_SIZE;
-+
-+            rp2040_install_bootrom_fp_stub(rom, float_stub,
-+                                           RP2040_SYNTHETIC_FP_CMD_FLOAT |
-+                                           table_offset);
-+            rp2040_install_bootrom_fp_stub(rom, double_stub,
-+                                           RP2040_SYNTHETIC_FP_CMD_DOUBLE |
-+                                           table_offset);
-+            rp2040_store_word(rom, RP2040_BOOTROM_FLOAT_TABLE_OFFSET + 2 +
-+                              table_offset, float_stub | 1);
-+            rp2040_store_word(rom, RP2040_BOOTROM_DOUBLE_TABLE_OFFSET + 2 +
-+                              table_offset, double_stub | 1);
-+        } else {
-+            rp2040_store_word(rom, RP2040_BOOTROM_FLOAT_TABLE_OFFSET + 2 +
-+                              table_offset, float_nyi);
-+            rp2040_store_word(rom, RP2040_BOOTROM_DOUBLE_TABLE_OFFSET + 2 +
-+                              table_offset, double_nyi);
-+        }
-+    }
-+
-+    for (i = 0; i < ARRAY_SIZE(rp2040_bootrom_data); i++) {
-+        const RP2040BootromData *data = &rp2040_bootrom_data[i];
-+
-+        rp2040_store_hword(rom, data_table +
-+                           i * RP2040_BOOTROM_DATA_TABLE_ENTRY_SIZE,
-+                           data->code);
-+        rp2040_store_hword(rom, data_table +
-+                           i * RP2040_BOOTROM_DATA_TABLE_ENTRY_SIZE + 2,
-+                           data->offset);
-+    }
-+
-+    rom_add_blob_fixed("rp2040.bootrom", rom, RP2040_ROM_SIZE,
-+                       RP2040_ROM_BASE);
-+}
-+
-+static uint32_t rp2040_apply_atomic_alias(uint32_t old, uint32_t value,
-+                                          hwaddr alias)
-+{
-+    switch (alias) {
-+    case ATOMIC_XOR:
-+        return old ^ value;
-+    case ATOMIC_SET:
-+        return old | value;
-+    case ATOMIC_CLR:
-+        return old & ~value;
-+    default:
-+        return value;
-+    }
-+}
-+
-+static MemTxResult rp2040_powered_off_read(void *opaque, hwaddr addr,
-+                                           uint64_t *data, unsigned size,
-+                                           MemTxAttrs attrs)
-+{
-+    *data = 0;
-+    return MEMTX_ERROR;
-+}
-+
-+static MemTxResult rp2040_powered_off_write(void *opaque, hwaddr addr,
-+                                            uint64_t data, unsigned size,
-+                                            MemTxAttrs attrs)
-+{
-+    return MEMTX_ERROR;
-+}
-+
-+static const MemoryRegionOps rp2040_powered_off_ops = {
-+    .read_with_attrs = rp2040_powered_off_read,
-+    .write_with_attrs = rp2040_powered_off_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void rp2040_update_mempowerdown(RP2040State *s)
-+{
-+    uint32_t mempowerdown;
-+    int i;
-+
-+    if (!s->mempowerdown_ready) {
-+        return;
-+    }
-+
-+    mempowerdown = rp2040_syscfg_get_mempowerdown(&s->syscfg);
-+
-+    for (i = 0; i < ARRAY_SIZE(s->sram_poweroff); i++) {
-+        memory_region_set_enabled(&s->sram_poweroff[i],
-+                                  mempowerdown & BIT(i));
-+    }
-+
-+    memory_region_set_enabled(&s->usbctrl_dpram_poweroff,
-+                              mempowerdown & BIT(6));
-+    memory_region_set_enabled(&s->rom_poweroff, mempowerdown & BIT(7));
-+}
-+
-+static void rp2040_update_nmi(RP2040State *s)
-+{
-+    uint32_t nmi_mask = rp2040_syscfg_get_proc0_nmi_mask(&s->syscfg);
-+    bool nmi_level = false;
-+    int i;
-+
-+    for (i = 0; i < RP2040_NUM_IRQS; i++) {
-+        bool irq_level = s->irq_level[0][i];
-+        bool route_to_nmi = nmi_mask & BIT(i);
-+
-+        qemu_set_irq(s->cpu_irq[0][i], irq_level && !route_to_nmi);
-+        nmi_level |= irq_level && route_to_nmi;
-+    }
-+
-+    qemu_set_irq(s->nmi_irq[0], nmi_level);
-+}
-+
-+static void rp2040_syscfg_update(void *opaque)
-+{
-+    RP2040State *s = opaque;
-+
-+    rp2040_update_mempowerdown(s);
-+    rp2040_update_nmi(s);
-+}
-+
-+static void rp2040_start_core1_async_work(CPUState *cs, run_on_cpu_data data)
-+{
-+    ARMCPU *cpu = ARM_CPU(cs);
-+    CPUARMState *env = &cpu->env;
-+
-+    cpu_reset(cs);
-+    cpu->power_state = PSCI_ON;
-+    env->halt_reason = NOT_HALTED;
-+    arm_rebuild_hflags(env);
-+    cs->halted = 0;
-+    cpu_resume(cs);
-+}
-+
-+static bool rp2040_core1_powered_off(RP2040State *s)
-+{
-+    ARMCPU *cpu = s->armv7m[RP2040_PROC1].cpu;
-+
-+    return !cpu || cpu->power_state == PSCI_OFF;
-+}
-+
-+static void rp2040_start_core1(RP2040State *s)
-+{
-+    if (!s->armv7m[RP2040_PROC1].cpu ||
-+        !rp2040_core1_powered_off(s)) {
-+        return;
-+    }
-+
-+    async_run_on_cpu(CPU(s->armv7m[RP2040_PROC1].cpu),
-+                     rp2040_start_core1_async_work,
-+                     RUN_ON_CPU_NULL);
-+}
-+
-+static void rp2040_stop_core1_async_work(CPUState *cs, run_on_cpu_data data)
-+{
-+    ARMCPU *cpu = ARM_CPU(cs);
-+
-+    cpu->power_state = PSCI_OFF;
-+    cpu->env.halt_reason = HALT_PSCI;
-+    cs->halted = 1;
-+    cs->exception_index = EXCP_HLT;
-+}
-+
-+static void rp2040_stop_core1(RP2040State *s)
-+{
-+    if (!s->armv7m[RP2040_PROC1].cpu ||
-+        rp2040_core1_powered_off(s)) {
-+        return;
-+    }
-+
-+    async_run_on_cpu(CPU(s->armv7m[RP2040_PROC1].cpu),
-+                     rp2040_stop_core1_async_work,
-+                     RUN_ON_CPU_NULL);
-+}
-+
-+static void rp2040_psm_update(void *opaque)
-+{
-+    RP2040State *s = opaque;
-+    bool proc1_forced_off = rp2040_psm_get_frce_off(&s->psm) &
-+                            RP2040_PSM_PROC1;
-+
-+    if (proc1_forced_off) {
-+        rp2040_stop_core1(s);
-+    } else {
-+        rp2040_start_core1(s);
-+    }
-+}
-+
-+static const char *rp2040_bootrom_function_name(uint16_t code)
-+{
-+    int i;
-+
-+    for (i = 0; i < ARRAY_SIZE(rp2040_bootrom_functions); i++) {
-+        if (rp2040_bootrom_functions[i].code == code) {
-+            return rp2040_bootrom_functions[i].name;
-+        }
-+    }
-+
-+    return NULL;
-+}
-+
-+static void rp2040_init_float_status(float_status *status)
-+{
-+    *status = (float_status) { 0 };
-+    set_float_rounding_mode(float_round_nearest_even, status);
-+}
-+
-+static void rp2040_synthetic_fp_nyi(bool is_double, uint32_t offset)
-+{
-+    g_autofree char *detail = g_strdup_printf("%s table offset 0x%02" PRIx32,
-+                                              is_double ? "double" : "float",
-+                                              offset);
-+
-+    rp2040_log_nyi("bootrom", "floating-point helper", detail);
-+}
-+
-+static float rp2040_u32_to_host_float(uint32_t value)
-+{
-+    union {
-+        uint32_t u;
-+        float f;
-+    } v = { .u = value };
-+
-+    return v.f;
-+}
-+
-+static uint32_t rp2040_host_float_to_u32(float value)
-+{
-+    union {
-+        float f;
-+        uint32_t u;
-+    } v = { .f = value };
-+
-+    return v.u;
-+}
-+
-+static double rp2040_u64_to_host_double(uint64_t value)
-+{
-+    union {
-+        uint64_t u;
-+        double d;
-+    } v = { .u = value };
-+
-+    return v.d;
-+}
-+
-+static uint64_t rp2040_host_double_to_u64(double value)
-+{
-+    union {
-+        double d;
-+        uint64_t u;
-+    } v = { .d = value };
-+
-+    return v.u;
-+}
-+
-+static uint32_t rp2040_synthetic_fp_compare(double a, double b)
-+{
-+    if (isnan(a) || isnan(b)) {
-+        return 1;
-+    }
-+    if (a < b) {
-+        return -1;
-+    }
-+    if (a > b) {
-+        return 1;
-+    }
-+    return 0;
-+}
-+
-+static int32_t rp2040_synthetic_double_to_i32(double value)
-+{
-+    if (isnan(value)) {
-+        return 0;
-+    }
-+    if (value >= INT32_MAX) {
-+        return INT32_MAX;
-+    }
-+    if (value <= INT32_MIN) {
-+        return INT32_MIN;
-+    }
-+    return value;
-+}
-+
-+static uint32_t rp2040_synthetic_double_to_u32(double value)
-+{
-+    if (isnan(value) || value <= 0) {
-+        return 0;
-+    }
-+    if (value >= UINT32_MAX) {
-+        return UINT32_MAX;
-+    }
-+    return value;
-+}
-+
-+static int64_t rp2040_synthetic_double_to_i64(double value)
-+{
-+    if (isnan(value)) {
-+        return 0;
-+    }
-+    if (value >= 0x1p63) {
-+        return INT64_MAX;
-+    }
-+    if (value <= -0x1p63) {
-+        return INT64_MIN;
-+    }
-+    return value;
-+}
-+
-+static uint64_t rp2040_synthetic_double_to_u64(double value)
-+{
-+    if (isnan(value) || value <= 0) {
-+        return 0;
-+    }
-+    if (value >= 0x1p64) {
-+        return UINT64_MAX;
-+    }
-+    return value;
-+}
-+
-+static void rp2040_synthetic_float_op(RP2040State *s, uint32_t offset)
-+{
-+    float_status status;
-+    float32 a = make_float32(s->synthetic_rom_dbg_arg[0]);
-+    float32 b = make_float32(s->synthetic_rom_dbg_arg[1]);
-+    float host_a = rp2040_u32_to_host_float(s->synthetic_rom_dbg_arg[0]);
-+    float host_b = rp2040_u32_to_host_float(s->synthetic_rom_dbg_arg[1]);
-+    float32 r32;
-+    float64 r64;
-+    uint64_t r;
-+    double scaled;
-+
-+    rp2040_init_float_status(&status);
-+    memset(s->synthetic_rom_dbg_result, 0, sizeof(s->synthetic_rom_dbg_result));
-+    s->synthetic_rom_dbg_result[1] = 0;
-+
-+    switch (offset) {
-+    case RP2040_SF_TABLE_FADD:
-+        s->synthetic_rom_dbg_result[0] =
-+            float32_val(float32_add(a, b, &status));
-+        break;
-+    case RP2040_SF_TABLE_FSUB:
-+        s->synthetic_rom_dbg_result[0] =
-+            float32_val(float32_sub(a, b, &status));
-+        break;
-+    case RP2040_SF_TABLE_FMUL:
-+        s->synthetic_rom_dbg_result[0] =
-+            float32_val(float32_mul(a, b, &status));
-+        break;
-+    case RP2040_SF_TABLE_FDIV:
-+        s->synthetic_rom_dbg_result[0] =
-+            float32_val(float32_div(a, b, &status));
-+        break;
-+    case RP2040_SF_TABLE_FCMP_FAST:
-+    case RP2040_SF_TABLE_FCMP_FAST_FLAGS:
-+    case RP2040_SF_TABLE_FCMP_BASIC:
-+        s->synthetic_rom_dbg_result[0] =
-+            rp2040_synthetic_fp_compare(host_a, host_b);
-+        break;
-+    case RP2040_SF_TABLE_FSQRT:
-+        s->synthetic_rom_dbg_result[0] =
-+            float32_val(float32_sqrt(a, &status));
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2INT:
-+        s->synthetic_rom_dbg_result[0] =
-+            float32_to_int32_round_to_zero(a, &status);
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2FIX:
-+        scaled = ldexp((double)host_a, s->synthetic_rom_dbg_arg[1] & 0xff);
-+        s->synthetic_rom_dbg_result[0] =
-+            rp2040_synthetic_double_to_i32(scaled);
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2UINT:
-+        s->synthetic_rom_dbg_result[0] =
-+            float32_to_uint32_round_to_zero(a, &status);
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2UFIX:
-+        scaled = ldexp((double)host_a, s->synthetic_rom_dbg_arg[1] & 0xff);
-+        s->synthetic_rom_dbg_result[0] =
-+            rp2040_synthetic_double_to_u32(scaled);
-+        break;
-+    case RP2040_SF_TABLE_INT2FLOAT:
-+        s->synthetic_rom_dbg_result[0] =
-+            float32_val(int32_to_float32(s->synthetic_rom_dbg_arg[0],
-+                                         &status));
-+        break;
-+    case RP2040_SF_TABLE_FIX2FLOAT:
-+        r32 = float64_to_float32(make_float64(rp2040_host_double_to_u64(
-+                                  ldexp((double)(int32_t)
-+                                        s->synthetic_rom_dbg_arg[0],
-+                                        -(int)(s->synthetic_rom_dbg_arg[1] &
-+                                               0xff)))),
-+                                 &status);
-+        s->synthetic_rom_dbg_result[0] = float32_val(r32);
-+        break;
-+    case RP2040_SF_TABLE_UINT2FLOAT:
-+        s->synthetic_rom_dbg_result[0] =
-+            float32_val(uint32_to_float32(s->synthetic_rom_dbg_arg[0],
-+                                          &status));
-+        break;
-+    case RP2040_SF_TABLE_UFIX2FLOAT:
-+        r32 = float64_to_float32(make_float64(rp2040_host_double_to_u64(
-+                                  ldexp((double)
-+                                        s->synthetic_rom_dbg_arg[0],
-+                                        -(int)(s->synthetic_rom_dbg_arg[1] &
-+                                               0xff)))),
-+                                 &status);
-+        s->synthetic_rom_dbg_result[0] = float32_val(r32);
-+        break;
-+    case RP2040_SF_TABLE_FCOS:
-+        s->synthetic_rom_dbg_result[0] =
-+            rp2040_host_float_to_u32(cosf(host_a));
-+        break;
-+    case RP2040_SF_TABLE_FSIN:
-+        s->synthetic_rom_dbg_result[0] =
-+            rp2040_host_float_to_u32(sinf(host_a));
-+        s->synthetic_rom_dbg_result[1] =
-+            rp2040_host_float_to_u32(cosf(host_a));
-+        break;
-+    case RP2040_SF_TABLE_FTAN:
-+        s->synthetic_rom_dbg_result[0] =
-+            rp2040_host_float_to_u32(tanf(host_a));
-+        break;
-+    case RP2040_SF_TABLE_V3_FSINCOS:
-+        s->synthetic_rom_dbg_result[0] =
-+            rp2040_host_float_to_u32(sinf(host_a));
-+        s->synthetic_rom_dbg_result[1] =
-+            rp2040_host_float_to_u32(cosf(host_a));
-+        break;
-+    case RP2040_SF_TABLE_FEXP:
-+        s->synthetic_rom_dbg_result[0] =
-+            rp2040_host_float_to_u32(expf(host_a));
-+        break;
-+    case RP2040_SF_TABLE_FLN:
-+        s->synthetic_rom_dbg_result[0] =
-+            rp2040_host_float_to_u32(logf(host_a));
-+        break;
-+    case RP2040_SF_TABLE_FATAN2:
-+        s->synthetic_rom_dbg_result[0] =
-+            rp2040_host_float_to_u32(atan2f(host_a, host_b));
-+        break;
-+    case RP2040_SF_TABLE_INT642FLOAT:
-+        r = deposit64(s->synthetic_rom_dbg_arg[0], 32, 32,
-+                      s->synthetic_rom_dbg_arg[1]);
-+        r32 = int64_to_float32((int64_t)r, &status);
-+        s->synthetic_rom_dbg_result[0] = float32_val(r32);
-+        break;
-+    case RP2040_SF_TABLE_FIX642FLOAT:
-+        r = deposit64(s->synthetic_rom_dbg_arg[0], 32, 32,
-+                      s->synthetic_rom_dbg_arg[1]);
-+        r32 = float64_to_float32(make_float64(rp2040_host_double_to_u64(
-+                                  ldexp((double)(int64_t)r,
-+                                        -(int)(s->synthetic_rom_dbg_arg[2] &
-+                                               0xff)))),
-+                                 &status);
-+        s->synthetic_rom_dbg_result[0] = float32_val(r32);
-+        break;
-+    case RP2040_SF_TABLE_UINT642FLOAT:
-+        r = deposit64(s->synthetic_rom_dbg_arg[0], 32, 32,
-+                      s->synthetic_rom_dbg_arg[1]);
-+        r32 = uint64_to_float32(r, &status);
-+        s->synthetic_rom_dbg_result[0] = float32_val(r32);
-+        break;
-+    case RP2040_SF_TABLE_UFIX642FLOAT:
-+        r = deposit64(s->synthetic_rom_dbg_arg[0], 32, 32,
-+                      s->synthetic_rom_dbg_arg[1]);
-+        r32 = float64_to_float32(make_float64(rp2040_host_double_to_u64(
-+                                  ldexp((double)r,
-+                                        -(int)(s->synthetic_rom_dbg_arg[2] &
-+                                               0xff)))),
-+                                 &status);
-+        s->synthetic_rom_dbg_result[0] = float32_val(r32);
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2INT64:
-+        r = float32_to_int64_round_to_zero(a, &status);
-+        s->synthetic_rom_dbg_result[0] = r;
-+        s->synthetic_rom_dbg_result[1] = r >> 32;
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2FIX64:
-+        scaled = ldexp((double)host_a, s->synthetic_rom_dbg_arg[1] & 0xff);
-+        r = rp2040_synthetic_double_to_i64(scaled);
-+        s->synthetic_rom_dbg_result[0] = r;
-+        s->synthetic_rom_dbg_result[1] = r >> 32;
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2UINT64:
-+        r = float32_to_uint64_round_to_zero(a, &status);
-+        s->synthetic_rom_dbg_result[0] = r;
-+        s->synthetic_rom_dbg_result[1] = r >> 32;
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2UFIX64:
-+        scaled = ldexp((double)host_a, s->synthetic_rom_dbg_arg[1] & 0xff);
-+        r = rp2040_synthetic_double_to_u64(scaled);
-+        s->synthetic_rom_dbg_result[0] = r;
-+        s->synthetic_rom_dbg_result[1] = r >> 32;
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2DOUBLE:
-+        r64 = float32_to_float64(a, &status);
-+        r = float64_val(r64);
-+        s->synthetic_rom_dbg_result[0] = r;
-+        s->synthetic_rom_dbg_result[1] = r >> 32;
-+        break;
-+    default:
-+        s->synthetic_rom_dbg_result[0] = 0;
-+        rp2040_synthetic_fp_nyi(false, offset);
-+        break;
-+    }
-+}
-+
-+static void rp2040_synthetic_double_op(RP2040State *s, uint32_t offset)
-+{
-+    float_status status;
-+    uint64_t av = deposit64(s->synthetic_rom_dbg_arg[0], 32, 32,
-+                            s->synthetic_rom_dbg_arg[1]);
-+    uint64_t bv = deposit64(s->synthetic_rom_dbg_arg[2], 32, 32,
-+                            s->synthetic_rom_dbg_arg[3]);
-+    float64 a = make_float64(av);
-+    float64 b = make_float64(bv);
-+    double host_a = rp2040_u64_to_host_double(av);
-+    double host_b = rp2040_u64_to_host_double(bv);
-+    float64 r64;
-+    float32 r32;
-+    uint64_t r;
-+    double scaled;
-+
-+    rp2040_init_float_status(&status);
-+    memset(s->synthetic_rom_dbg_result, 0, sizeof(s->synthetic_rom_dbg_result));
-+
-+    switch (offset) {
-+    case RP2040_SF_TABLE_FADD:
-+        r64 = float64_add(a, b, &status);
-+        goto return_double;
-+    case RP2040_SF_TABLE_FSUB:
-+        r64 = float64_sub(a, b, &status);
-+        goto return_double;
-+    case RP2040_SF_TABLE_FMUL:
-+        r64 = float64_mul(a, b, &status);
-+        goto return_double;
-+    case RP2040_SF_TABLE_FDIV:
-+        r64 = float64_div(a, b, &status);
-+        goto return_double;
-+    case RP2040_SF_TABLE_FCMP_FAST:
-+    case RP2040_SF_TABLE_FCMP_FAST_FLAGS:
-+    case RP2040_SF_TABLE_FCMP_BASIC:
-+        s->synthetic_rom_dbg_result[0] =
-+            rp2040_synthetic_fp_compare(host_a, host_b);
-+        s->synthetic_rom_dbg_result[1] = 0;
-+        break;
-+    case RP2040_SF_TABLE_FSQRT:
-+        r64 = float64_sqrt(a, &status);
-+        goto return_double;
-+    case RP2040_SF_TABLE_FLOAT2INT:
-+        s->synthetic_rom_dbg_result[0] =
-+            float64_to_int32_round_to_zero(a, &status);
-+        s->synthetic_rom_dbg_result[1] = 0;
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2FIX:
-+        scaled = ldexp(host_a, s->synthetic_rom_dbg_arg[2] & 0xff);
-+        s->synthetic_rom_dbg_result[0] =
-+            rp2040_synthetic_double_to_i32(scaled);
-+        s->synthetic_rom_dbg_result[1] = 0;
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2UINT:
-+        s->synthetic_rom_dbg_result[0] =
-+            float64_to_uint32_round_to_zero(a, &status);
-+        s->synthetic_rom_dbg_result[1] = 0;
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2UFIX:
-+        scaled = ldexp(host_a, s->synthetic_rom_dbg_arg[2] & 0xff);
-+        s->synthetic_rom_dbg_result[0] =
-+            rp2040_synthetic_double_to_u32(scaled);
-+        s->synthetic_rom_dbg_result[1] = 0;
-+        break;
-+    case RP2040_SF_TABLE_INT2FLOAT:
-+        r64 = int32_to_float64(s->synthetic_rom_dbg_arg[0], &status);
-+        goto return_double;
-+    case RP2040_SF_TABLE_FIX2FLOAT:
-+        r64 = make_float64(rp2040_host_double_to_u64(
-+              ldexp((double)(int32_t)s->synthetic_rom_dbg_arg[0],
-+                    -(int)(s->synthetic_rom_dbg_arg[1] & 0xff))));
-+        goto return_double;
-+    case RP2040_SF_TABLE_UINT2FLOAT:
-+        r64 = uint32_to_float64(s->synthetic_rom_dbg_arg[0], &status);
-+        goto return_double;
-+    case RP2040_SF_TABLE_UFIX2FLOAT:
-+        r64 = make_float64(rp2040_host_double_to_u64(
-+              ldexp((double)s->synthetic_rom_dbg_arg[0],
-+                    -(int)(s->synthetic_rom_dbg_arg[1] & 0xff))));
-+        goto return_double;
-+    case RP2040_SF_TABLE_FCOS:
-+        r64 = make_float64(rp2040_host_double_to_u64(cos(host_a)));
-+        goto return_double;
-+    case RP2040_SF_TABLE_FSIN:
-+        r64 = make_float64(rp2040_host_double_to_u64(sin(host_a)));
-+        goto return_double;
-+    case RP2040_SF_TABLE_FTAN:
-+        r64 = make_float64(rp2040_host_double_to_u64(tan(host_a)));
-+        goto return_double;
-+    case RP2040_SF_TABLE_V3_FSINCOS:
-+        r = rp2040_host_double_to_u64(sin(host_a));
-+        s->synthetic_rom_dbg_result[0] = r;
-+        s->synthetic_rom_dbg_result[1] = r >> 32;
-+        r = rp2040_host_double_to_u64(cos(host_a));
-+        s->synthetic_rom_dbg_result[2] = r;
-+        s->synthetic_rom_dbg_result[3] = r >> 32;
-+        break;
-+    case RP2040_SF_TABLE_FEXP:
-+        r64 = make_float64(rp2040_host_double_to_u64(exp(host_a)));
-+        goto return_double;
-+    case RP2040_SF_TABLE_FLN:
-+        r64 = make_float64(rp2040_host_double_to_u64(log(host_a)));
-+        goto return_double;
-+    case RP2040_SF_TABLE_FATAN2:
-+        r64 = make_float64(rp2040_host_double_to_u64(atan2(host_a, host_b)));
-+        goto return_double;
-+    case RP2040_SF_TABLE_INT642FLOAT:
-+        r64 = int64_to_float64((int64_t)av, &status);
-+        goto return_double;
-+    case RP2040_SF_TABLE_FIX642FLOAT:
-+        r64 = make_float64(rp2040_host_double_to_u64(
-+              ldexp((double)(int64_t)av,
-+                    -(int)(s->synthetic_rom_dbg_arg[2] & 0xff))));
-+        goto return_double;
-+    case RP2040_SF_TABLE_UINT642FLOAT:
-+        r64 = uint64_to_float64(av, &status);
-+        goto return_double;
-+    case RP2040_SF_TABLE_UFIX642FLOAT:
-+        r64 = make_float64(rp2040_host_double_to_u64(
-+              ldexp((double)av,
-+                    -(int)(s->synthetic_rom_dbg_arg[2] & 0xff))));
-+        goto return_double;
-+    case RP2040_SF_TABLE_FLOAT2INT64:
-+        r = float64_to_int64_round_to_zero(a, &status);
-+        s->synthetic_rom_dbg_result[0] = r;
-+        s->synthetic_rom_dbg_result[1] = r >> 32;
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2FIX64:
-+        scaled = ldexp(host_a, s->synthetic_rom_dbg_arg[2] & 0xff);
-+        r = rp2040_synthetic_double_to_i64(scaled);
-+        s->synthetic_rom_dbg_result[0] = r;
-+        s->synthetic_rom_dbg_result[1] = r >> 32;
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2UINT64:
-+        r = float64_to_uint64_round_to_zero(a, &status);
-+        s->synthetic_rom_dbg_result[0] = r;
-+        s->synthetic_rom_dbg_result[1] = r >> 32;
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2UFIX64:
-+        scaled = ldexp(host_a, s->synthetic_rom_dbg_arg[2] & 0xff);
-+        r = rp2040_synthetic_double_to_u64(scaled);
-+        s->synthetic_rom_dbg_result[0] = r;
-+        s->synthetic_rom_dbg_result[1] = r >> 32;
-+        break;
-+    case RP2040_SF_TABLE_FLOAT2DOUBLE:
-+        r32 = float64_to_float32(a, &status);
-+        s->synthetic_rom_dbg_result[0] = float32_val(r32);
-+        s->synthetic_rom_dbg_result[1] = 0;
-+        break;
-+    default:
-+        s->synthetic_rom_dbg_result[0] = 0;
-+        s->synthetic_rom_dbg_result[1] = 0;
-+        rp2040_synthetic_fp_nyi(true, offset);
-+        break;
-+    }
-+    return;
-+
-+return_double:
-+    r = float64_val(r64);
-+    s->synthetic_rom_dbg_result[0] = r;
-+    s->synthetic_rom_dbg_result[1] = r >> 32;
-+}
-+
-+static bool rp2040_synthetic_fp_op(RP2040State *s, uint32_t command)
-+{
-+    uint32_t offset = command & 0xff;
-+
-+    switch (command & RP2040_SYNTHETIC_FP_CMD_MASK) {
-+    case RP2040_SYNTHETIC_FP_CMD_FLOAT:
-+        rp2040_synthetic_float_op(s, offset);
-+        return true;
-+    case RP2040_SYNTHETIC_FP_CMD_DOUBLE:
-+        rp2040_synthetic_double_op(s, offset);
-+        return true;
-+    default:
-+        return false;
-+    }
-+}
-+
-+static void rp2040_synthetic_flash_helper_hit(RP2040State *s,
-+                                              unsigned int helper,
-+                                              const char *name)
-+{
-+    uint32_t count;
-+
-+    g_assert(helper < RP2040_SYNTHETIC_ROM_FLASH_HELPER_COUNT);
-+
-+    count = ++s->synthetic_rom_flash_helper_count[helper];
-+    trace_rp2040_synthetic_flash_helper(name, count);
-+}
-+
-+static void rp2040_synthetic_rom_dbg_write(void *opaque, hwaddr addr,
-+                                           uint64_t value, unsigned size)
-+{
-+    RP2040State *s = opaque;
-+    hwaddr offset = addr & 0xfff;
-+    uint32_t command = value;
-+    uint16_t code = value;
-+    const char *name = rp2040_bootrom_function_name(code);
-+    char feature[64];
-+    char detail[64];
-+    Error *local_err = NULL;
-+
-+    switch (offset) {
-+    case RP2040_SYNTHETIC_ROM_DBG_ARG0:
-+    case RP2040_SYNTHETIC_ROM_DBG_ARG1:
-+    case RP2040_SYNTHETIC_ROM_DBG_ARG2:
-+    case RP2040_SYNTHETIC_ROM_DBG_ARG3:
-+        s->synthetic_rom_dbg_arg[(offset - RP2040_SYNTHETIC_ROM_DBG_ARG0) /
-+                                 sizeof(uint32_t)] = value;
-+        return;
-+    case RP2040_SYNTHETIC_ROM_DBG_CMD:
-+        break;
-+    default:
-+        rp2040_log_nyi("bootrom", "synthetic diagnostic register write",
-+                       "unknown register");
-+        return;
-+    }
-+
-+    if (rp2040_synthetic_fp_op(s, command)) {
-+        return;
-+    }
-+
-+    if (command == RP2040_SYNTHETIC_ROM_DBG_CMD_EXIT) {
-+        qemu_system_shutdown_request_with_code(SHUTDOWN_CAUSE_GUEST_SHUTDOWN,
-+                                               s->synthetic_rom_dbg_arg[0]);
-+        return;
-+    }
-+
-+    switch (code) {
-+    case RP2040_ROM_TABLE_CODE('C', 'X'):
-+        rp2040_synthetic_flash_helper_hit(
-+            s, RP2040_SYNTHETIC_FLASH_ENTER_CMD_XIP,
-+            "flash_enter_cmd_xip");
-+        rp2040_log_nyi("bootrom", "flash_enter_cmd_xip",
-+                       "synthetic helper does not reconfigure SSI hardware");
-+        return;
-+    case RP2040_ROM_TABLE_CODE('E', 'X'):
-+        rp2040_synthetic_flash_helper_hit(
-+            s, RP2040_SYNTHETIC_FLASH_EXIT_XIP, "flash_exit_xip");
-+        rp2040_log_nyi("bootrom", "flash_exit_xip",
-+                       "synthetic helper does not send serial flash commands");
-+        return;
-+    case RP2040_ROM_TABLE_CODE('F', 'C'):
-+        rp2040_synthetic_flash_helper_hit(
-+            s, RP2040_SYNTHETIC_FLASH_FLUSH_CACHE, "flash_flush_cache");
-+        rp2040_log_nyi("bootrom", "flash_flush_cache",
-+                       "XIP cache is not modeled");
-+        return;
-+    case RP2040_ROM_TABLE_CODE('I', 'F'):
-+        rp2040_synthetic_flash_helper_hit(
-+            s, RP2040_SYNTHETIC_FLASH_CONNECT_INTERNAL_FLASH,
-+            "connect_internal_flash");
-+        rp2040_log_nyi("bootrom", "connect_internal_flash",
-+                       "synthetic helper assumes the QSPI flash is connected");
-+        return;
-+    case RP2040_ROM_TABLE_CODE('R', 'E'):
-+        rp2040_synthetic_flash_helper_hit(
-+            s, RP2040_SYNTHETIC_FLASH_RANGE_ERASE, "flash_range_erase");
-+        if (!rp2040_xip_flash_range_erase(&s->xip,
-+                                          s->synthetic_rom_dbg_arg[0],
-+                                          s->synthetic_rom_dbg_arg[1],
-+                                          s->synthetic_rom_dbg_arg[2],
-+                                          s->synthetic_rom_dbg_arg[3],
-+                                          &local_err)) {
-+            warn_report_err(local_err);
-+        }
-+        return;
-+    case RP2040_ROM_TABLE_CODE('R', 'P'):
-+        rp2040_synthetic_flash_helper_hit(
-+            s, RP2040_SYNTHETIC_FLASH_RANGE_PROGRAM, "flash_range_program");
-+        if (!rp2040_xip_flash_range_program(&s->xip,
-+                                            s->synthetic_rom_dbg_arg[0],
-+                                            s->synthetic_rom_dbg_arg[1],
-+                                            s->synthetic_rom_dbg_arg[2],
-+                                            &local_err)) {
-+            warn_report_err(local_err);
-+        }
-+        return;
-+    }
-+
-+    snprintf(feature, sizeof(feature), "boot ROM function '%c%c'",
-+             code & 0xff, (code >> 8) & 0xff);
-+    snprintf(detail, sizeof(detail), "%s%s%s",
-+             name ? "SDK name: " : "",
-+             name ? name : "unknown lookup code",
-+             name ? "" : "");
-+    rp2040_log_nyi("bootrom", feature, detail);
-+}
-+
-+static uint64_t rp2040_synthetic_rom_dbg_read(void *opaque, hwaddr addr,
-+                                              unsigned size)
-+{
-+    RP2040State *s = opaque;
-+    hwaddr offset = addr & 0xfff;
-+
-+    if (offset >= RP2040_SYNTHETIC_ROM_DBG_ARG0 &&
-+        offset <= RP2040_SYNTHETIC_ROM_DBG_ARG3 &&
-+        QEMU_IS_ALIGNED(offset, sizeof(uint32_t))) {
-+        return s->synthetic_rom_dbg_arg[(offset -
-+                                         RP2040_SYNTHETIC_ROM_DBG_ARG0) /
-+                                        sizeof(uint32_t)];
-+    }
-+    if (offset >= RP2040_SYNTHETIC_ROM_DBG_RESULT0 &&
-+        offset <= RP2040_SYNTHETIC_ROM_DBG_RESULT3 &&
-+        QEMU_IS_ALIGNED(offset, sizeof(uint32_t))) {
-+        return s->synthetic_rom_dbg_result[(offset -
-+                                            RP2040_SYNTHETIC_ROM_DBG_RESULT0) /
-+                                           sizeof(uint32_t)];
-+    }
-+    if (offset >= RP2040_SYNTHETIC_ROM_DBG_FLASH_COUNT0 &&
-+        offset < RP2040_SYNTHETIC_ROM_DBG_FLASH_COUNT0 +
-+                 sizeof(s->synthetic_rom_flash_helper_count) &&
-+        QEMU_IS_ALIGNED(offset, sizeof(uint32_t))) {
-+        return s->synthetic_rom_flash_helper_count[
-+            (offset - RP2040_SYNTHETIC_ROM_DBG_FLASH_COUNT0) /
-+            sizeof(uint32_t)];
-+    }
-+
-+    rp2040_log_nyi("bootrom", "synthetic diagnostic register read",
-+                   "unsupported register");
-+    return 0;
-+}
-+
-+static const MemoryRegionOps rp2040_synthetic_rom_dbg_ops = {
-+    .read = rp2040_synthetic_rom_dbg_read,
-+    .write = rp2040_synthetic_rom_dbg_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void rp2040_set_irq(void *opaque, int irq, int level)
-+{
-+    RP2040State *s = opaque;
-+
-+    assert(irq >= 0 && irq < RP2040_NUM_IRQS);
-+    s->irq_level[0][irq] = level;
-+    rp2040_update_nmi(s);
-+}
-+
-+static void rp2040_update_uart_pins(RP2040State *s)
-+{
-+    pl011_set_tx_connected(&s->uart0,
-+                           !s->strict_uart_pins ||
-+                           s->uart0_tx_pin_enabled);
-+    pl011_set_rx_connected(&s->uart0,
-+                           !s->strict_uart_pins ||
-+                           s->uart0_rx_pin_enabled);
-+    pl011_set_tx_connected(&s->uart1,
-+                           !s->strict_uart_pins ||
-+                           s->uart1_tx_pin_enabled);
-+    pl011_set_rx_connected(&s->uart1,
-+                           !s->strict_uart_pins ||
-+                           s->uart1_rx_pin_enabled);
-+}
-+
-+static void rp2040_set_uart_pin(void *opaque, int pin, int level)
-+{
-+    RP2040State *s = opaque;
-+
-+    switch (pin) {
-+    case 0:
-+        s->uart0_tx_pin_enabled = level;
-+        break;
-+    case 1:
-+        s->uart0_rx_pin_enabled = level;
-+        break;
-+    case 2:
-+        s->uart1_tx_pin_enabled = level;
-+        break;
-+    case 3:
-+        s->uart1_rx_pin_enabled = level;
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    rp2040_update_uart_pins(s);
-+}
-+
-+static uint64_t rp2040_usbctrl_regs_read(void *opaque, hwaddr addr,
-+                                         unsigned size)
-+{
-+    RP2040State *s = opaque;
-+    hwaddr offset = addr & 0xfff;
-+    uint64_t value;
-+
-+    switch (offset) {
-+    case USBCTRL_SIE_STATUS:
-+        value = s->usbctrl_reg[offset / sizeof(uint32_t)] |
-+                USBCTRL_SIE_STATUS_VBUS_DETECTED;
-+        break;
-+    case USBCTRL_BUFF_CPU_HANDLE:
-+    case USBCTRL_EP_ABORT_DONE:
-+    case USBCTRL_INTR:
-+        value = s->usbctrl_reg[offset / sizeof(uint32_t)];
-+        break;
-+    case USBCTRL_INTS:
-+        value = (s->usbctrl_reg[USBCTRL_INTR / sizeof(uint32_t)] |
-+                 s->usbctrl_reg[USBCTRL_INTF / sizeof(uint32_t)]) &
-+                s->usbctrl_reg[USBCTRL_INTE / sizeof(uint32_t)];
-+        break;
-+    default:
-+        if (offset < sizeof(s->usbctrl_reg)) {
-+            value = s->usbctrl_reg[offset / sizeof(uint32_t)];
-+        } else {
-+            value = 0;
-+            rp2040_log_unimplemented_read("usbctrl_regs", size,
-+                                          RP2040_USBCTRL_REGS_BASE + addr,
-+                                          offset, value);
-+        }
-+        break;
-+    }
-+
-+    return value;
-+}
-+
-+static void rp2040_usbctrl_regs_write(void *opaque, hwaddr addr,
-+                                      uint64_t value64, unsigned size)
-+{
-+    RP2040State *s = opaque;
-+    hwaddr alias = addr & ATOMIC_ALIAS_MASK;
-+    hwaddr offset = addr & 0xfff;
-+    uint32_t value = value64;
-+    uint32_t old;
-+
-+    if (offset < sizeof(s->usbctrl_reg)) {
-+        old = s->usbctrl_reg[offset / sizeof(uint32_t)];
-+        s->usbctrl_reg[offset / sizeof(uint32_t)] =
-+            rp2040_apply_atomic_alias(old, value, alias);
-+    } else {
-+        rp2040_log_unimplemented_write("usbctrl_regs", size,
-+                                       RP2040_USBCTRL_REGS_BASE + addr,
-+                                       offset, value64);
-+    }
-+}
-+
-+static const MemoryRegionOps rp2040_usbctrl_regs_ops = {
-+    .read = rp2040_usbctrl_regs_read,
-+    .write = rp2040_usbctrl_regs_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void rp2040_soc_init(Object *obj)
-+{
-+    RP2040State *s = RP2040(obj);
-+    int i;
-+
-+    for (i = 0; i < RP2040_NUM_CORES; i++) {
-+        g_autofree char *name = g_strdup_printf("proc%d", i);
-+
-+        object_initialize_child(obj, name, &s->armv7m[i], TYPE_ARMV7M);
-+        qdev_prop_set_string(DEVICE(&s->armv7m[i]), "cpu-type",
-+                             ARM_CPU_TYPE_NAME("cortex-m0"));
-+        qdev_prop_set_uint32(DEVICE(&s->armv7m[i]), "num-irq", 32);
-+    }
-+    object_initialize_child(obj, "uart0", &s->uart0, TYPE_PL011);
-+    object_property_add_alias(obj, "serial0", OBJECT(&s->uart0), "chardev");
-+    object_initialize_child(obj, "uart1", &s->uart1, TYPE_PL011);
-+    object_property_add_alias(obj, "serial1", OBJECT(&s->uart1), "chardev");
-+
-+    object_initialize_child(obj, "xip", &s->xip, TYPE_RP2040_XIP);
-+    object_initialize_child(obj, "busctrl", &s->busctrl, TYPE_RP2040_BUSCTRL);
-+    object_initialize_child(obj, "clocks", &s->clocks, TYPE_RP2040_CLOCKS);
-+    object_initialize_child(obj, "dma", &s->dma, TYPE_RP2040_DMA);
-+    object_initialize_child(obj, "iobank0", &s->iobank0,
-+                            TYPE_RP2040_IOBANK0);
-+    object_initialize_child(obj, "ioqspi", &s->ioqspi, TYPE_RP2040_IOQSPI);
-+    object_initialize_child(obj, "pads-bank0", &s->pads_bank0,
-+                            TYPE_RP2040_PADS_BANK0);
-+    object_initialize_child(obj, "pads-qspi", &s->pads_qspi,
-+                            TYPE_RP2040_PADS_QSPI);
-+    object_initialize_child(obj, "pll-sys", &s->pll_sys, TYPE_RP2040_PLL);
-+    qdev_prop_set_string(DEVICE(&s->pll_sys), "trace-name",
-+                         "rp2040.pll_sys");
-+    qdev_prop_set_uint32(DEVICE(&s->pll_sys), "base", RP2040_PLL_SYS_BASE);
-+    qdev_prop_set_uint32(DEVICE(&s->pll_sys), "fallback-hz", 125000000);
-+
-+    object_initialize_child(obj, "pll-usb", &s->pll_usb, TYPE_RP2040_PLL);
-+    qdev_prop_set_string(DEVICE(&s->pll_usb), "trace-name",
-+                         "rp2040.pll_usb");
-+    qdev_prop_set_uint32(DEVICE(&s->pll_usb), "base", RP2040_PLL_USB_BASE);
-+    qdev_prop_set_uint32(DEVICE(&s->pll_usb), "fallback-hz", 48000000);
-+
-+    object_initialize_child(obj, "psm", &s->psm, TYPE_RP2040_PSM);
-+    object_initialize_child(obj, "resets", &s->resets, TYPE_RP2040_RESETS);
-+    object_initialize_child(obj, "rosc", &s->rosc, TYPE_RP2040_ROSC);
-+    object_initialize_child(obj, "sio", &s->sio, TYPE_RP2040_SIO);
-+    object_initialize_child(obj, "syscfg", &s->syscfg, TYPE_RP2040_SYSCFG);
-+    object_initialize_child(obj, "sysinfo", &s->sysinfo, TYPE_RP2040_SYSINFO);
-+    object_initialize_child(obj, "tbman", &s->tbman, TYPE_RP2040_TBMAN);
-+    object_initialize_child(obj, "timer", &s->timer, TYPE_RP2040_TIMER);
-+    object_initialize_child(obj, "vreg", &s->vreg, TYPE_RP2040_VREG);
-+    object_initialize_child(obj, "watchdog", &s->watchdog,
-+                            TYPE_RP2040_WATCHDOG);
-+    object_initialize_child(obj, "xosc", &s->xosc, TYPE_RP2040_XOSC);
-+
-+    s->irq = qemu_allocate_irqs(rp2040_set_irq, s, RP2040_NUM_IRQS);
-+    s->sysclk = clock_new(obj, "sysclk");
-+}
-+
-+static void rp2040_soc_realize(DeviceState *dev, Error **errp)
-+{
-+    RP2040State *s = RP2040(dev);
-+    Error *err = NULL;
-+    g_autofree char *filename = NULL;
-+    ssize_t image_size;
-+    int i;
-+
-+    if (!s->board_memory) {
-+        error_setg(errp, "memory property was not set");
-+        return;
-+    }
-+    qdev_prop_set_bit(DEVICE(&s->armv7m[RP2040_PROC1]), "start-powered-off",
-+                      s->bootrom_file != NULL);
-+
-+    if (!memory_region_init_rom(&s->rom, OBJECT(dev), "rp2040.rom",
-+                                RP2040_ROM_SIZE, errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(s->board_memory, RP2040_ROM_BASE, &s->rom);
-+    memory_region_init_io(&s->rom_poweroff, OBJECT(dev),
-+                          &rp2040_powered_off_ops, s,
-+                          "rp2040.rom.poweroff", RP2040_ROM_SIZE);
-+    memory_region_add_subregion_overlap(s->board_memory, RP2040_ROM_BASE,
-+                                        &s->rom_poweroff, 1);
-+    memory_region_set_enabled(&s->rom_poweroff, false);
-+    memory_region_init_io(&s->synthetic_rom_dbg, OBJECT(dev),
-+                          &rp2040_synthetic_rom_dbg_ops, s,
-+                          "rp2040.synthetic-rom-dbg",
-+                          RP2040_SYNTHETIC_ROM_DBG_SIZE);
-+    memory_region_add_subregion(s->board_memory,
-+                                RP2040_SYNTHETIC_ROM_DBG_BASE,
-+                                &s->synthetic_rom_dbg);
-+
-+    if (s->bootrom_file) {
-+        filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, s->bootrom_file);
-+        if (!filename) {
-+            error_setg(errp, "could not find RP2040 boot ROM image '%s'",
-+                       s->bootrom_file);
-+            return;
-+        }
-+
-+        image_size = load_image_targphys(filename, RP2040_ROM_BASE,
-+                                         RP2040_ROM_SIZE, errp);
-+        if (image_size < 0) {
-+            return;
-+        }
-+    } else {
-+        rp2040_install_synthetic_bootrom();
-+    }
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->xip), errp)) {
-+        return;
-+    }
-+    if (!s->bootrom_file) {
-+        rp2040_xip_set_synthetic_hardfault_vector(
-+            &s->xip, RP2040_BOOTROM_HARDFAULT_EXIT_OFFSET | 1);
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->xip), 0, RP2040_XIP_BASE);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->xip), 1, RP2040_XIP_CTRL_BASE);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->xip), 2, RP2040_XIP_SSI_BASE);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->xip), 3, RP2040_XIP_AUX_BASE);
-+    memory_region_add_subregion(get_system_memory(), RP2040_XIP_NOALLOC_BASE,
-+                                &s->xip.xip_noalloc);
-+    memory_region_add_subregion(get_system_memory(), RP2040_XIP_NOCACHE_BASE,
-+                                &s->xip.xip_nocache);
-+    memory_region_add_subregion(get_system_memory(),
-+                                RP2040_XIP_NOCACHE_NOALLOC_BASE,
-+                                &s->xip.xip_nocache_noalloc);
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->busctrl), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->busctrl), 0, RP2040_BUSCTRL_BASE);
-+
-+    object_property_set_link(OBJECT(&s->dma), "memory",
-+                             OBJECT(s->board_memory), &err);
-+    if (err != NULL) {
-+        error_propagate(errp, err);
-+        return;
-+    }
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->dma), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->dma), 0, RP2040_DMA_BASE);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->dma), 0, s->irq[RP2040_DMA_IRQ_0]);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->dma), 1, s->irq[RP2040_DMA_IRQ_1]);
-+    qdev_connect_gpio_out_named(DEVICE(&s->xip), "dreq-rx", 0,
-+                                qdev_get_gpio_in_named(DEVICE(&s->dma),
-+                                                       "dreq",
-+                                                       RP2040_DREQ_XIP_SSIRX));
-+    qdev_connect_gpio_out_named(DEVICE(&s->xip), "dreq-stream", 0,
-+                                qdev_get_gpio_in_named(DEVICE(&s->dma),
-+                                                       "dreq",
-+                                                       RP2040_DREQ_XIP_STREAM));
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->iobank0), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->iobank0), 0, RP2040_IOBANK0_BASE);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->iobank0), 0,
-+                       s->irq[RP2040_IO_IRQ_BANK0]);
-+    qdev_connect_gpio_out_named(DEVICE(&s->iobank0), "uart0-pin", 0,
-+                                qemu_allocate_irq(rp2040_set_uart_pin, s, 0));
-+    qdev_connect_gpio_out_named(DEVICE(&s->iobank0), "uart0-pin", 1,
-+                                qemu_allocate_irq(rp2040_set_uart_pin, s, 1));
-+    qdev_connect_gpio_out_named(DEVICE(&s->iobank0), "uart1-pin", 0,
-+                                qemu_allocate_irq(rp2040_set_uart_pin, s, 2));
-+    qdev_connect_gpio_out_named(DEVICE(&s->iobank0), "uart1-pin", 1,
-+                                qemu_allocate_irq(rp2040_set_uart_pin, s, 3));
-+
-+    object_property_set_link(OBJECT(&s->ioqspi), "xip", OBJECT(&s->xip),
-+                             &error_abort);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->ioqspi), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->ioqspi), 0, RP2040_IOQSPI_BASE);
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pads_bank0), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->pads_bank0), 0,
-+                    RP2040_PADS_BANK0_BASE);
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pads_qspi), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->pads_qspi), 0,
-+                    RP2040_PADS_QSPI_BASE);
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pll_sys), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->pll_sys), 0, RP2040_PLL_SYS_BASE);
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pll_usb), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->pll_usb), 0, RP2040_PLL_USB_BASE);
-+
-+    qdev_connect_clock_in(DEVICE(&s->clocks), "pll-sys",
-+                          qdev_get_clock_out(DEVICE(&s->pll_sys), "clk"));
-+    qdev_connect_clock_in(DEVICE(&s->clocks), "pll-usb",
-+                          qdev_get_clock_out(DEVICE(&s->pll_usb), "clk"));
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->clocks), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->clocks), 0, RP2040_CLOCKS_BASE);
-+    clock_set_source(s->sysclk, qdev_get_clock_out(DEVICE(&s->clocks),
-+                                                   "clk-sys"));
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->psm), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->psm), 0, RP2040_PSM_BASE);
-+    rp2040_psm_set_update_callback(&s->psm, rp2040_psm_update, s);
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->resets), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->resets), 0, RP2040_RESETS_BASE);
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->rosc), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->rosc), 0, RP2040_ROSC_BASE);
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sio), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->sio), 0, RP2040_SIO_BASE);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->sio), 0,
-+                       s->irq[RP2040_SIO_IRQ_PROC0]);
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->syscfg), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->syscfg), 0, RP2040_SYSCFG_BASE);
-+    rp2040_syscfg_set_update_callback(&s->syscfg, rp2040_syscfg_update, s);
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sysinfo), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->sysinfo), 0, RP2040_SYSINFO_BASE);
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->tbman), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->tbman), 0, RP2040_TBMAN_BASE);
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->timer), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->timer), 0, RP2040_TIMER_BASE);
-+    for (i = 0; i < 4; i++) {
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->timer), i, s->irq[i]);
-+    }
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->vreg), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->vreg), 0, RP2040_VREG_BASE);
-+
-+    qdev_connect_clock_in(DEVICE(&s->watchdog), "clk-ref",
-+                          qdev_get_clock_out(DEVICE(&s->clocks), "clk-ref"));
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->watchdog), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->watchdog), 0, RP2040_WATCHDOG_BASE);
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->xosc), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->xosc), 0, RP2040_XOSC_BASE);
-+
-+    for (i = 0; i < 4; i++) {
-+        g_autofree char *name = g_strdup_printf("rp2040.sram%d", i);
-+        g_autofree char *poweroff_name =
-+            g_strdup_printf("rp2040.sram%d.poweroff", i);
-+
-+        if (!memory_region_init_ram(&s->sram[i], OBJECT(dev), name,
-+                                    RP2040_SRAM_BANK_SIZE, errp)) {
-+            return;
-+        }
-+        memory_region_add_subregion(s->board_memory,
-+                                    RP2040_SRAM_BASE +
-+                                    i * RP2040_SRAM_BANK_SIZE,
-+                                    &s->sram[i]);
-+        memory_region_init_io(&s->sram_poweroff[i], OBJECT(dev),
-+                              &rp2040_powered_off_ops, s, poweroff_name,
-+                              RP2040_SRAM_BANK_SIZE);
-+        memory_region_add_subregion_overlap(s->board_memory,
-+                                            RP2040_SRAM_BASE +
-+                                            i * RP2040_SRAM_BANK_SIZE,
-+                                            &s->sram_poweroff[i], 1);
-+        memory_region_set_enabled(&s->sram_poweroff[i], false);
-+    }
-+
-+    if (!memory_region_init_ram(&s->sram[4], OBJECT(dev), "rp2040.sram4",
-+                                RP2040_SRAM_HI_SIZE, errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(s->board_memory, RP2040_SRAM4_BASE,
-+                                &s->sram[4]);
-+    memory_region_init_io(&s->sram_poweroff[4], OBJECT(dev),
-+                          &rp2040_powered_off_ops, s,
-+                          "rp2040.sram4.poweroff", RP2040_SRAM_HI_SIZE);
-+    memory_region_add_subregion_overlap(s->board_memory, RP2040_SRAM4_BASE,
-+                                        &s->sram_poweroff[4], 1);
-+    memory_region_set_enabled(&s->sram_poweroff[4], false);
-+
-+    if (!memory_region_init_ram(&s->sram[5], OBJECT(dev), "rp2040.sram5",
-+                                RP2040_SRAM_HI_SIZE, errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(s->board_memory, RP2040_SRAM5_BASE,
-+                                &s->sram[5]);
-+    memory_region_init_io(&s->sram_poweroff[5], OBJECT(dev),
-+                          &rp2040_powered_off_ops, s,
-+                          "rp2040.sram5.poweroff", RP2040_SRAM_HI_SIZE);
-+    memory_region_add_subregion_overlap(s->board_memory, RP2040_SRAM5_BASE,
-+                                        &s->sram_poweroff[5], 1);
-+    memory_region_set_enabled(&s->sram_poweroff[5], false);
-+
-+    if (!memory_region_init_ram(&s->usbctrl_dpram, OBJECT(dev),
-+                                "rp2040.usbctrl_dpram",
-+                                RP2040_USBCTRL_DPRAM_SIZE, errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(s->board_memory, RP2040_USBCTRL_DPRAM_BASE,
-+                                &s->usbctrl_dpram);
-+    memory_region_init_io(&s->usbctrl_dpram_poweroff, OBJECT(dev),
-+                          &rp2040_powered_off_ops, s,
-+                          "rp2040.usbctrl_dpram.poweroff",
-+                          RP2040_USBCTRL_DPRAM_SIZE);
-+    memory_region_add_subregion_overlap(s->board_memory,
-+                                        RP2040_USBCTRL_DPRAM_BASE,
-+                                        &s->usbctrl_dpram_poweroff, 1);
-+    memory_region_set_enabled(&s->usbctrl_dpram_poweroff, false);
-+
-+    s->mempowerdown_ready = true;
-+    rp2040_update_mempowerdown(s);
-+
-+    memory_region_init_io(&s->usbctrl_regs, OBJECT(dev),
-+                          &rp2040_usbctrl_regs_ops, s,
-+                          "rp2040.usbctrl_regs",
-+                          RP2040_USBCTRL_REGS_SIZE);
-+    memory_region_add_subregion(s->board_memory, RP2040_USBCTRL_REGS_BASE,
-+                                &s->usbctrl_regs);
-+
-+    for (i = 0; i < ARRAY_SIZE(rp2040_unimplemented); i++) {
-+        create_unimplemented_device(rp2040_unimplemented[i].name,
-+                                    rp2040_unimplemented[i].base,
-+                                    rp2040_unimplemented[i].size);
-+    }
-+
-+    for (i = 0; i < RP2040_NUM_CORES; i++) {
-+        int irq;
-+
-+        qdev_connect_clock_in(DEVICE(&s->armv7m[i]), "cpuclk", s->sysclk);
-+        g_autofree char *name = g_strdup_printf("rp2040.proc%d-memory", i);
-+
-+        memory_region_init_alias(&s->cpu_memory[i], OBJECT(dev), name,
-+                                 s->board_memory, 0,
-+                                 memory_region_size(s->board_memory));
-+        object_property_set_link(OBJECT(&s->armv7m[i]), "memory",
-+                                 OBJECT(&s->cpu_memory[i]), &err);
-+        if (err != NULL) {
-+            error_propagate(errp, err);
-+            return;
-+        }
-+
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->armv7m[i]), errp)) {
-+            return;
-+        }
-+        for (irq = 0; irq < RP2040_NUM_IRQS; irq++) {
-+            s->cpu_irq[i][irq] = qdev_get_gpio_in(DEVICE(&s->armv7m[i]),
-+                                                  irq);
-+        }
-+        s->nmi_irq[i] = qdev_get_gpio_in_named(DEVICE(&s->armv7m[i]),
-+                                               "NMI", 0);
-+    }
-+    rp2040_update_nmi(s);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->iobank0), 1,
-+                       s->cpu_irq[RP2040_PROC1][RP2040_IO_IRQ_BANK0]);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->sio), 1,
-+                       s->cpu_irq[RP2040_PROC1][RP2040_SIO_IRQ_PROC1]);
-+
-+    qdev_connect_clock_in(DEVICE(&s->uart0), "clk",
-+                          qdev_get_clock_out(DEVICE(&s->clocks), "clk-peri"));
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart0), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart0), 0, RP2040_UART0_BASE);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart0), 1, RP2040_UART0_BASE + 0x1000);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart0), 0, s->irq[RP2040_UART0_IRQ]);
-+    qdev_connect_gpio_out_named(DEVICE(&s->uart0), "dreq-tx", 0,
-+                                qdev_get_gpio_in_named(DEVICE(&s->dma),
-+                                                       "dreq",
-+                                                       RP2040_DREQ_UART0_TX));
-+    qdev_connect_gpio_out_named(DEVICE(&s->uart0), "dreq-rx", 0,
-+                                qdev_get_gpio_in_named(DEVICE(&s->dma),
-+                                                       "dreq",
-+                                                       RP2040_DREQ_UART0_RX));
-+
-+    qdev_connect_clock_in(DEVICE(&s->uart1), "clk",
-+                          qdev_get_clock_out(DEVICE(&s->clocks), "clk-peri"));
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart1), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart1), 0, RP2040_UART1_BASE);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart1), 1, RP2040_UART1_BASE + 0x1000);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart1), 0, s->irq[RP2040_UART1_IRQ]);
-+    qdev_connect_gpio_out_named(DEVICE(&s->uart1), "dreq-tx", 0,
-+                                qdev_get_gpio_in_named(DEVICE(&s->dma),
-+                                                       "dreq",
-+                                                       RP2040_DREQ_UART1_TX));
-+    qdev_connect_gpio_out_named(DEVICE(&s->uart1), "dreq-rx", 0,
-+                                qdev_get_gpio_in_named(DEVICE(&s->dma),
-+                                                       "dreq",
-+                                                       RP2040_DREQ_UART1_RX));
-+    rp2040_update_uart_pins(s);
-+}
-+
-+static const Property rp2040_soc_properties[] = {
-+    DEFINE_PROP_LINK("memory", RP2040State, board_memory, TYPE_MEMORY_REGION,
-+                     MemoryRegion *),
-+    DEFINE_PROP_STRING("bootrom-file", RP2040State, bootrom_file),
-+    DEFINE_PROP_BOOL("strict-uart-pins", RP2040State, strict_uart_pins, true),
-+};
-+
-+static void rp2040_soc_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = rp2040_soc_realize;
-+    device_class_set_props(dc, rp2040_soc_properties);
-+}
-+
-+static const TypeInfo rp2040_soc_info = {
-+    .name          = TYPE_RP2040,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RP2040State),
-+    .instance_init = rp2040_soc_init,
-+    .class_init    = rp2040_soc_class_init,
-+};
-+
-+static void rp2040_soc_types(void)
-+{
-+    type_register_static(&rp2040_soc_info);
-+}
-+type_init(rp2040_soc_types)
-diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-index 1b16f710fe..a888466ca0 100644
---- a/hw/arm/trace-events
-+++ b/hw/arm/trace-events
-@@ -1,5 +1,8 @@
- # See docs/devel/tracing.rst for syntax documentation.
- 
-+# rp2040.c
-+rp2040_synthetic_flash_helper(const char *name, uint32_t count) "helper %s count %" PRIu32
-+
- # omap1.c
- omap1_pwl_clocking_scheme(const char *scheme) "omap1 CLKM: clocking scheme set to %s"
- omap1_pwl_backlight(int output) "omap1 PWL: backlight now at %d/256"
-diff --git a/include/hw/arm/rp2040.h b/include/hw/arm/rp2040.h
-new file mode 100644
-index 0000000000..90504264c7
---- /dev/null
-+++ b/include/hw/arm/rp2040.h
-@@ -0,0 +1,122 @@
-+/*
-+ * RP2040 SoC emulation
-+ *
-+ * Copyright (c) 2021 Linaro Ltd
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_ARM_RP2040_H
-+#define HW_ARM_RP2040_H
-+
-+#include "hw/arm/armv7m.h"
-+#include "hw/char/pl011.h"
-+#include "hw/core/clock.h"
-+#include "hw/core/irq.h"
-+#include "hw/core/sysbus.h"
-+#include "hw/dma/rp2040_dma.h"
-+#include "hw/misc/rp2040_busctrl.h"
-+#include "hw/misc/rp2040_clocks.h"
-+#include "hw/misc/rp2040_iobank0.h"
-+#include "hw/misc/rp2040_ioqspi.h"
-+#include "hw/misc/rp2040_pads.h"
-+#include "hw/misc/rp2040_pll.h"
-+#include "hw/misc/rp2040_psm.h"
-+#include "hw/misc/rp2040_resets.h"
-+#include "hw/misc/rp2040_rosc.h"
-+#include "hw/misc/rp2040_sio.h"
-+#include "hw/misc/rp2040_syscfg.h"
-+#include "hw/misc/rp2040_sysinfo.h"
-+#include "hw/misc/rp2040_tbman.h"
-+#include "hw/misc/rp2040_timer.h"
-+#include "hw/misc/rp2040_vreg.h"
-+#include "hw/misc/rp2040_watchdog.h"
-+#include "hw/misc/rp2040_xosc.h"
-+#include "hw/ssi/rp2040_xip.h"
-+#include "qom/object.h"
-+
-+#define TYPE_RP2040 "rp2040"
-+OBJECT_DECLARE_SIMPLE_TYPE(RP2040State, RP2040)
-+
-+#define RP2040_ROM_BASE       0x00000000
-+#define RP2040_ROM_SIZE       (16 * KiB)
-+#define RP2040_XIP_BASE       0x10000000
-+#define RP2040_XIP_NOALLOC_BASE 0x11000000
-+#define RP2040_XIP_NOCACHE_BASE 0x12000000
-+#define RP2040_XIP_NOCACHE_NOALLOC_BASE 0x13000000
-+#define RP2040_SRAM_BASE      0x20000000
-+#define RP2040_SRAM_BANK_SIZE (64 * KiB)
-+#define RP2040_SRAM4_BASE     0x20040000
-+#define RP2040_SRAM5_BASE     0x20041000
-+#define RP2040_SRAM_LO_SIZE   (4 * RP2040_SRAM_BANK_SIZE)
-+#define RP2040_SRAM_HI_SIZE   (4 * KiB)
-+#define RP2040_USBCTRL_DPRAM_BASE 0x50100000
-+#define RP2040_USBCTRL_DPRAM_SIZE (4 * KiB)
-+#define RP2040_USBCTRL_REGS_BASE  0x50110000
-+#define RP2040_USBCTRL_REGS_SIZE  0x4000
-+#define RP2040_SYNTHETIC_ROM_DBG_BASE 0x5fff0000
-+#define RP2040_SYNTHETIC_ROM_DBG_SIZE 0x1000
-+#define RP2040_SYNTHETIC_ROM_FLASH_HELPER_COUNT 6
-+#define RP2040_NUM_CORES          2
-+#define RP2040_NUM_IRQS           32
-+
-+struct RP2040State {
-+    SysBusDevice parent_obj;
-+
-+    ARMv7MState armv7m[RP2040_NUM_CORES];
-+    PL011State uart0;
-+    PL011State uart1;
-+    RP2040BusCtrlState busctrl;
-+    RP2040ClocksState clocks;
-+    RP2040DmaState dma;
-+    RP2040IoBank0State iobank0;
-+    RP2040IoQspiState ioqspi;
-+    RP2040PadsBank0State pads_bank0;
-+    RP2040PadsQspiState pads_qspi;
-+    RP2040PllState pll_sys;
-+    RP2040PllState pll_usb;
-+    RP2040PsmState psm;
-+    RP2040ResetsState resets;
-+    RP2040RoscState rosc;
-+    RP2040SioState sio;
-+    RP2040SysCfgState syscfg;
-+    RP2040SysInfoState sysinfo;
-+    RP2040TbmanState tbman;
-+    RP2040TimerState timer;
-+    RP2040VregState vreg;
-+    RP2040WatchdogState watchdog;
-+    RP2040XoscState xosc;
-+    RP2040XipState xip;
-+
-+    MemoryRegion *board_memory;
-+    MemoryRegion cpu_memory[RP2040_NUM_CORES];
-+    MemoryRegion rom;
-+    MemoryRegion rom_poweroff;
-+    MemoryRegion sram[6];
-+    MemoryRegion sram_poweroff[6];
-+    MemoryRegion usbctrl_dpram;
-+    MemoryRegion usbctrl_dpram_poweroff;
-+    MemoryRegion usbctrl_regs;
-+    MemoryRegion synthetic_rom_dbg;
-+    uint32_t usbctrl_reg[0x100 / sizeof(uint32_t)];
-+    char *bootrom_file;
-+
-+    qemu_irq *irq;
-+    qemu_irq cpu_irq[RP2040_NUM_CORES][RP2040_NUM_IRQS];
-+    qemu_irq nmi_irq[RP2040_NUM_CORES];
-+    bool irq_level[RP2040_NUM_CORES][RP2040_NUM_IRQS];
-+    bool mempowerdown_ready;
-+    bool strict_uart_pins;
-+    bool uart0_tx_pin_enabled;
-+    bool uart0_rx_pin_enabled;
-+    bool uart1_tx_pin_enabled;
-+    bool uart1_rx_pin_enabled;
-+    uint32_t synthetic_rom_dbg_arg[4];
-+    uint32_t synthetic_rom_dbg_result[4];
-+    uint32_t synthetic_rom_flash_helper_count[
-+        RP2040_SYNTHETIC_ROM_FLASH_HELPER_COUNT];
-+
-+    Clock *sysclk;
-+};
-+
-+#endif
--- 
-2.53.0
+On 7/4/26 5:39 PM, Zhuoying Cai wrote:
+> DIAG 320 subcode 2 provides verification-certificates (VCs) that are in the
+> certificate store. Only X509 certificates in DER format and SHA-256 hash
+> type are recognized.
+>
+> The subcode value is denoted by setting the second-left-most bit
+> of an 8-byte field.
+>
+> The Verification Certificate Block (VCB) contains the output data
+> when the operation completes successfully. It includes a common
+> header followed by zero or more Verification Certificate Entries (VCEs),
+> depending on the VCB input length and the VC range (from the first VC
+> index to the last VC index) in the certificate store.
+>
+> Each VCE contains information about a certificate retrieved from
+> the S390IPLCertificateStore, such as the certificate name, key type,
+> key ID length, hash length, and the raw certificate data.
+> The key ID and hash are extracted from the raw certificate by the crypto API.
+>
+> Note: SHA2-256 VC hash type is required for retrieving the hash
+> (fingerprint) of the certificate.
+>
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> Reviewed-by: Eric Farman <farman@linux.ibm.com>
+> ---
+>   docs/specs/s390x-secure-ipl.rst |  24 +++
+>   include/hw/s390x/ipl/diag320.h  |  38 ++++
+>   target/s390x/diag.c             | 316 +++++++++++++++++++++++++++++++-
+>   3 files changed, 377 insertions(+), 1 deletion(-)
+>
+> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+> index 201cc74c7c..99052041c1 100644
+> --- a/docs/specs/s390x-secure-ipl.rst
+> +++ b/docs/specs/s390x-secure-ipl.rst
+> @@ -42,3 +42,27 @@ Subcode 1 - query verification certificate storage information
+>       The output is returned in the verification-certificate-storage-size block
+>       (VCSSB). A VCSSB length of 4 indicates that no certificates are available
+>       in the CS.
+> +
+> +Subcode 2 - store verification certificates
+> +    Provides VCs that are in the certificate store.
+> +
+> +    The output is provided in a VCB, which includes a common header followed by
+> +    zero or more verification-certificate entries (VCEs).
+> +
+> +    The instruction expects the cert store to maintain an origin of 1 for the
+> +    index (i.e. a retrieval of the first certificate in the store should be
+> +    denoted by setting first-VC to 1).
+> +
+> +    The first-VC and last-VC fields of the VCB specify the index range of
+> +    VCs to be stored in the VCB. Certs are stored sequentially, starting
+> +    with first-VC index. As each cert is stored, a "stored count" is
+> +    incremented. If there is not enough space to store all certs requested
+> +    by the index range, a "remaining count" will be recorded and no more
+> +    certificates will be stored.
+> +
+> +    Each VCE contains a header followed by information extracted from a
+> +    certificate within the certificate store. The information includes:
+> +    key-id, hash, and certificate data. This information is stored
+> +    contiguously in a VCE (with zero-padding). Following the header, the
+> +    key-id is immediately stored. The hash and certificate data follow and
+> +    may be accessed via the respective offset fields stored in the VCE.
+> diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
+> index d37d8eaa86..7fda2d44fd 100644
+> --- a/include/hw/s390x/ipl/diag320.h
+> +++ b/include/hw/s390x/ipl/diag320.h
+> @@ -12,19 +12,45 @@
+>   
+>   #define DIAG_320_SUBC_QUERY_ISM     0
+>   #define DIAG_320_SUBC_QUERY_VCSI    1
+> +#define DIAG_320_SUBC_STORE_VC      2
+>   
+>   #define DIAG_320_RC_OK              0x0001
+>   #define DIAG_320_RC_NOT_SUPPORTED   0x0102
+>   #define DIAG_320_RC_INVAL_VCSSB_LEN 0x0202
+> +#define DIAG_320_RC_INVAL_VCB_LEN   0x0204
+> +#define DIAG_320_RC_BAD_RANGE       0x0302
+>   
+>   #define DIAG_320_ISM_QUERY_SUBCODES 0x80000000
+>   #define DIAG_320_ISM_QUERY_VCSI     0x40000000
+> +#define DIAG_320_ISM_STORE_VC       0x20000000
+>   
+>   #define VCSSB_NO_VC     4
+>   #define VCSSB_LEN_VALID   128
+>   
+>   #define CERT_NAME_MAX_LEN  64
+>   
+> +/*
+> + * If the VCE flags indicate an invalid certificate,
+> + * the VCE length is set to 72, containing only the
+> + * first five fields of VCEntry.
+> + */
+> +#define VCE_INVALID_LEN 72
+> +
+> +#define DIAG_320_VCE_FLAGS_VALID                0x80
+> +
+> +typedef enum Diag320VceKeyType {
+> +    DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING = 0,
+> +    DIAG_320_VCE_KEYTYPE_ECDSA_P521 = 1,
+> +} Diag320VceKeyType;
+> +
+> +typedef enum Diag320VceFormat {
+> +    DIAG_320_VCE_FORMAT_X509_DER = 1,
+> +} Diag320VceFormat;
+> +
+> +typedef enum Diag320VceHashType {
+> +    DIAG_320_VCE_HASHTYPE_SHA2_256 = 1,
+> +} Diag320VceHashType;
+> +
+>   struct VCStorageSizeBlock {
+>       uint32_t length;
+>       uint8_t reserved0[3];
+> @@ -60,6 +86,12 @@ struct VCEntryHeader {
+>   };
+>   typedef struct VCEntryHeader VCEntryHeader;
+>   
+> +struct VCEntry {
+> +    VCEntryHeader vce_hdr;
+> +    uint8_t cert_buf[];
+> +};
+> +typedef struct VCEntry VCEntry;
+> +
+>   struct VCBlockHeader {
+>       uint32_t in_len;
+>       uint32_t reserved0;
+> @@ -74,4 +106,10 @@ struct VCBlockHeader {
+>   };
+>   typedef struct VCBlockHeader VCBlockHeader;
+>   
+> +struct VCBlock {
+> +    VCBlockHeader vcb_hdr;
+> +    uint8_t vce_buf[];
+> +};
+> +typedef struct VCBlock VCBlock;
+> +
+>   #endif
+> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+> index fad99e0269..452ac3ca79 100644
+> --- a/target/s390x/diag.c
+> +++ b/target/s390x/diag.c
+> @@ -17,13 +17,16 @@
+>   #include "s390x-internal.h"
+>   #include "hw/watchdog/wdt_diag288.h"
+>   #include "system/cpus.h"
+> +#include "hw/s390x/cert-store.h"
+>   #include "hw/s390x/ipl.h"
+>   #include "hw/s390x/ipl/diag320.h"
+>   #include "hw/s390x/s390-virtio-ccw.h"
+>   #include "system/kvm.h"
+>   #include "kvm/kvm_s390x.h"
+>   #include "target/s390x/kvm/pv.h"
+> +#include "qapi/error.h"
+>   #include "qemu/error-report.h"
+> +#include "crypto/x509-utils.h"
+>   
+>   
+>   static inline bool diag_parm_addr_valid(uint64_t addr, size_t size, bool write)
+> @@ -241,8 +244,306 @@ static int handle_diag320_query_vcsi(S390CPU *cpu, uint64_t addr, uint64_t r1,
+>       return DIAG_320_RC_OK;
+>   }
+>   
+> +static bool is_cert_valid(const S390IPLCertificate *cert)
+> +{
+> +    int rc;
+> +    Error *err = NULL;
+> +
+> +    rc = qcrypto_x509_check_cert_times(cert->raw, cert->size, &err);
+> +    if (rc != 0) {
+> +        error_report_err(err);
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+> +static int handle_key_id(VCEntry *vce, const S390IPLCertificate *cert)
+> +{
+> +    int rc;
+> +    g_autofree unsigned char *key_id_data = NULL;
+> +    size_t key_id_len;
+> +    Error *err = NULL;
+> +
+> +    rc = qcrypto_x509_get_cert_key_id(cert->raw, cert->size,
+> +                                      QCRYPTO_HASH_ALGO_SHA256,
+> +                                      &key_id_data, &key_id_len, &err);
+> +    if (rc < 0) {
+> +        error_report_err(err);
+> +        return 0;
+> +    }
+> +
+> +    if (sizeof(VCEntryHeader) + key_id_len > be32_to_cpu(vce->vce_hdr.len)) {
+> +        error_report("Unable to write key ID: exceeds buffer bounds");
+> +        return 0;
+> +    }
+> +
+> +    vce->vce_hdr.keyid_len = cpu_to_be16(key_id_len);
+> +
+> +    memcpy(vce->cert_buf, key_id_data, key_id_len);
+> +
+> +    return ROUND_UP(key_id_len, 4);
+> +}
+> +
+> +static int handle_hash(VCEntry *vce, const S390IPLCertificate *cert,
+> +                       uint16_t keyid_field_len)
+> +{
+> +    int rc;
+> +    uint16_t hash_offset;
+> +    g_autofree void *hash_data = NULL;
+> +    size_t hash_len;
+> +    Error *err = NULL;
+> +
+> +    hash_len = CERT_HASH_LEN;
+> +    hash_data = g_malloc0(hash_len);
+> +    rc = qcrypto_get_x509_cert_fingerprint(cert->raw, cert->size,
+> +                                           QCRYPTO_HASH_ALGO_SHA256,
+> +                                           hash_data, &hash_len, &err);
+> +    if (rc < 0) {
+> +        error_report_err(err);
+> +        return 0;
+> +    }
+> +
+> +    hash_offset = sizeof(VCEntryHeader) + keyid_field_len;
+> +    if (hash_offset + hash_len > be32_to_cpu(vce->vce_hdr.len)) {
+> +        error_report("Unable to write hash: exceeds buffer bounds");
+> +        return 0;
+> +    }
+> +
+> +    vce->vce_hdr.hash_len = cpu_to_be16(hash_len);
+> +    vce->vce_hdr.hash_type = DIAG_320_VCE_HASHTYPE_SHA2_256;
+> +    vce->vce_hdr.hash_offset = cpu_to_be16(hash_offset);
+> +
+> +    memcpy((uint8_t *)vce + hash_offset, hash_data, hash_len);
+> +
+> +    return ROUND_UP(hash_len, 4);
+> +}
+> +
+> +static int handle_cert(VCEntry *vce, const S390IPLCertificate *cert,
+> +                       uint16_t hash_field_len)
+> +{
+> +    int rc;
+> +    uint16_t cert_offset;
+> +    g_autofree uint8_t *cert_der = NULL;
+> +    size_t der_size;
+> +    Error *err = NULL;
+> +
+> +    rc = qcrypto_x509_convert_cert_der(cert->raw, cert->size,
+> +                                       &cert_der, &der_size, &err);
+> +    if (rc < 0) {
+> +        error_report_err(err);
+> +        return 0;
+> +    }
+> +
+> +    cert_offset = be16_to_cpu(vce->vce_hdr.hash_offset) + hash_field_len;
+> +    if (cert_offset + der_size > be32_to_cpu(vce->vce_hdr.len)) {
+> +        error_report("Unable to write certificate: exceeds buffer bounds");
+> +        return 0;
+> +    }
+> +
+> +    vce->vce_hdr.format = DIAG_320_VCE_FORMAT_X509_DER;
+> +    vce->vce_hdr.cert_len = cpu_to_be32(der_size);
+> +    vce->vce_hdr.cert_offset = cpu_to_be16(cert_offset);
+> +
+> +    memcpy((uint8_t *)vce + cert_offset, cert_der, der_size);
+> +
+> +    return ROUND_UP(der_size, 4);
+> +}
+> +
+> +static int get_key_type(const S390IPLCertificate *cert)
+> +{
+> +    int rc;
+> +    Error *err = NULL;
+> +
+> +    rc = qcrypto_x509_check_ecc_curve_p521(cert->raw, cert->size, &err);
+> +    if (rc == -1) {
+> +        error_report_err(err);
+> +        return -1;
+> +    }
+> +
+> +    return (rc == 1) ? DIAG_320_VCE_KEYTYPE_ECDSA_P521 :
+> +                       DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING;
+> +}
+> +
+> +static int build_vce_header(VCEntry *vce, const S390IPLCertificate *cert, int idx)
+> +{
+> +    int key_type;
+> +
+> +    vce->vce_hdr.len = cpu_to_be32(sizeof(VCEntryHeader));
+> +    vce->vce_hdr.cert_idx = cpu_to_be16(idx + 1);
+> +    memcpy(vce->vce_hdr.name, cert->name, CERT_NAME_MAX_LEN);
+> +
+> +    if (!is_cert_valid(cert)) {
+> +        return -1;
+> +    }
+> +
+> +    key_type = get_key_type(cert);
+> +    if (key_type == -1) {
+> +        return -1;
+> +    }
+> +    vce->vce_hdr.key_type = key_type;
+> +
+> +    return 0;
+> +}
+> +
+> +static int build_vce_data(VCEntry *vce, const S390IPLCertificate *cert,
+> +                          uint32_t vce_max_len)
+> +{
+> +    uint16_t keyid_field_len;
+> +    uint16_t hash_field_len;
+> +    uint32_t cert_field_len;
+> +    uint32_t vce_len;
+> +
+> +    vce->vce_hdr.len = cpu_to_be32(vce_max_len);
+> +
+> +    keyid_field_len = handle_key_id(vce, cert);
+> +    if (!keyid_field_len) {
+> +        return -1;
+> +    }
+> +
+> +    hash_field_len = handle_hash(vce, cert, keyid_field_len);
+> +    if (!hash_field_len) {
+> +        return -1;
+> +    }
+> +
+> +    cert_field_len = handle_cert(vce, cert, hash_field_len);
+> +    if (!cert_field_len) {
+> +        return -1;
+> +    }
+> +
+> +    vce_len = sizeof(VCEntryHeader) + keyid_field_len + hash_field_len + cert_field_len;
+> +    if (vce_len > vce_max_len) {
+> +        return -1;
+> +    }
+> +
+> +    vce->vce_hdr.flags |= DIAG_320_VCE_FLAGS_VALID;
+> +
+> +    /* Update vce length to reflect the actual size used by vce */
+> +    vce->vce_hdr.len = cpu_to_be32(vce_len);
+> +
+> +    return 0;
+> +}
+> +
+> +static int handle_diag320_store_vc(S390CPU *cpu, uint64_t addr, uint64_t r1, uintptr_t ra,
+> +                                   S390IPLCertificateStore *cs)
+> +{
+> +    g_autofree VCBlockHeader *vcb_hdr = NULL;
+> +    size_t remaining_space;
+> +    uint16_t first_vc_index;
+> +    uint16_t last_vc_index;
+> +    int cs_start_index;
+> +    int cs_end_index;
+> +    uint32_t vce_max_len;
+> +    uint32_t vce_len;
+> +    uint32_t in_len;
+> +
+> +    vcb_hdr = g_new0(VCBlockHeader, 1);
+> +    if (s390_cpu_virt_mem_read(cpu, addr, r1, vcb_hdr, sizeof(*vcb_hdr))) {
+> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
+> +        return -1;
+> +    }
+> +
+> +    in_len = be32_to_cpu(vcb_hdr->in_len);
+> +    first_vc_index = be16_to_cpu(vcb_hdr->first_vc_index);
+> +    last_vc_index = be16_to_cpu(vcb_hdr->last_vc_index);
+> +
+> +    if (in_len % TARGET_PAGE_SIZE != 0) {
+> +        return DIAG_320_RC_INVAL_VCB_LEN;
+> +    }
+> +
+> +    if (first_vc_index > last_vc_index) {
+> +        return DIAG_320_RC_BAD_RANGE;
+> +    }
+> +
+> +    vcb_hdr->out_len = sizeof(VCBlockHeader);
+> +
+> +    /*
+> +     * DIAG 320 subcode 2 expects to query a certificate store that
+> +     * maintains an index origin of 1. However, the S390IPLCertificateStore
+> +     * maintains an index origin of 0. Thus, the indices must be adjusted
+> +     * for correct access into the cert store. A couple of special cases
+> +     * must also be accounted for.
+> +     */
+> +
+> +    /* Both indices are 0; return header with no certs */
+> +    if (first_vc_index == 0 && last_vc_index == 0) {
+> +        goto out;
+> +    }
+> +
+> +    /* Normalize indices */
+> +    cs_start_index = (first_vc_index == 0) ? 0 : first_vc_index - 1;
+> +    cs_end_index = last_vc_index - 1;
+> +
+> +    /* Requested range is outside the cert store; return header with no certs */
+> +    if (cs_start_index >= cs->count || cs_end_index >= cs->count) {
+> +        goto out;
+> +    }
+> +
+> +    remaining_space = in_len - sizeof(VCBlockHeader);
+> +
+> +    for (int i = cs_start_index; i <= cs_end_index; i++) {
+> +        const S390IPLCertificate *cert = &cs->certs[i];
+> +        /*
+> +         * Each field of the VCE is word-aligned.
+> +         * Allocate enough space for the largest possible size for this VCE.
+> +         * As the certificate fields (key-id, hash, data) are parsed, the
+> +         * VCE's length field will be updated accordingly.
+> +         */
+> +        vce_max_len = sizeof(VCEntryHeader) + ROUND_UP(CERT_KEY_ID_LEN, 4) +
+> +                      ROUND_UP(CERT_HASH_LEN, 4) + ROUND_UP(cert->der_size, 4);
+> +        g_autofree VCEntry *vce = g_malloc0(vce_max_len);
+> +
+> +        /*
+> +         * Bit 0 of the VCE flags indicates whether the certificate is valid.
+> +         * The caller of DIAG320 subcode 2 is responsible for verifying that
+> +         * the VCE contains a valid certificate.
+> +         */
+> +        if (build_vce_header(vce, cert, i) || build_vce_data(vce, cert, vce_max_len)) {
+> +            /*
+> +             * Error occurs - VCE does not contain a valid certificate.
+> +             * Bit 0 of the VCE flags is 0 and the VCE length is set.
+> +             */
+> +            vce->vce_hdr.len = cpu_to_be32(VCE_INVALID_LEN);
+> +        }
+> +        vce_len = be32_to_cpu(vce->vce_hdr.len);
+> +
+> +        /*
+> +         * If there is no more space to store the cert,
+> +         * set the remaining verification cert count and
+> +         * break early.
+> +         */
+> +        if (remaining_space < vce_len) {
+> +            vcb_hdr->remain_ct = cpu_to_be16(last_vc_index - i);
+> +            break;
+> +        }
+> +
+> +        /* Write VCE */
+> +        if (s390_cpu_virt_mem_write(cpu, addr + vcb_hdr->out_len, r1, vce, vce_len)) {
+> +            s390_cpu_virt_mem_handle_exc(cpu, ra);
+> +            return -1;
+> +        }
+> +
+> +        vcb_hdr->out_len += vce_len;
+> +        remaining_space -= vce_len;
+> +        vcb_hdr->stored_ct++;
+> +    }
+> +    vcb_hdr->stored_ct = cpu_to_be16(vcb_hdr->stored_ct);
+> +
+> +out:
+> +    vcb_hdr->out_len = cpu_to_be32(vcb_hdr->out_len);
+> +
+> +    if (s390_cpu_virt_mem_write(cpu, addr, r1, vcb_hdr, sizeof(VCBlockHeader))) {
+> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
+> +        return -1;
+> +    }
+> +
+> +    return DIAG_320_RC_OK;
+> +}
+> +
+>   QEMU_BUILD_BUG_MSG(sizeof(VCStorageSizeBlock) != VCSSB_LEN_VALID,
+>                      "size of VCStorageSizeBlock is wrong");
+> +QEMU_BUILD_BUG_MSG(sizeof(VCBlock) != 64, "size of VCBlock is wrong");
+> +QEMU_BUILD_BUG_MSG(sizeof(VCEntry) != 128, "size of VCEntry is wrong");
+>   
+>   void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>   {
+> @@ -272,7 +573,8 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>            * for now.
+>            */
+>           uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES |
+> -                                         DIAG_320_ISM_QUERY_VCSI);
+> +                                         DIAG_320_ISM_QUERY_VCSI |
+> +                                         DIAG_320_ISM_STORE_VC);
+>   
+>           if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism_word0, sizeof(ism_word0))) {
+>               s390_cpu_virt_mem_handle_exc(cpu, ra);
+> @@ -298,6 +600,18 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>           }
+>           env->regs[r1 + 1] = rc;
+>           break;
+> +    case DIAG_320_SUBC_STORE_VC:
+> +        if (addr & ~TARGET_PAGE_MASK) {
+> +            s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+> +            return;
+> +        }
+> +
+> +        rc = handle_diag320_store_vc(cpu, addr, r1, ra, cs);
+> +        if (rc == -1) {
+> +            return;
+> +        }
+> +        env->regs[r1 + 1] = rc;
+> +        break;
+>       default:
+>           env->regs[r1 + 1] = DIAG_320_RC_NOT_SUPPORTED;
+>           break;
 
 
