@@ -4,100 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C480BC43458
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:36:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAEE6C44500
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:37:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgNvs-0005BB-NI; Sun, 05 Jul 2026 10:34:56 -0400
+	id 1wgNxL-0008S6-4F; Sun, 05 Jul 2026 10:36:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNvr-0005B0-KE
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:34:55 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNxB-0008Jf-Dp
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:36:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNvp-00016J-Um
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:34:55 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNxA-0001V5-25
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:36:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783262093;
+ s=mimecast20190719; t=1783262175;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SfP5ZteIZuG9MnPCQQceIltovRko4AplCnjjhfUb6nY=;
- b=K758yidreKpnAfc8ohGoa3T7XS+gO/KqybKiNwZLwpe/lSch+Ig9KLt58eorJlvUaebcl0
- KCt70nF4fYtCvf+8nnXa4xyYyTlnuHl4wF6p5gdFaMpj6dcBS89ptnzkrvPTsHfiIvLgFy
- 8M0Ab18upAh+xFbzDQmCyvTW5LBADfk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BKcbDf1CX3VPM01pSKKAbpI0+d2M2svaEBOIYsZZCWY=;
+ b=VqNlyIab1X++F19X+7bzdV4MP8SzPGCgtva4d97NUrdl6orG6aW2HmxGqyBsjHznE43fmf
+ 6IpKe+V+I9qtrhQBm6Brk7NtY3WMOnoxgqEG16NJF+K1x73W8Ul8LoTecGE259WL0szEsd
+ agTfEg3+P/LzE4kBLM24W/eZmeOJ9o4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-552-MNVOAvd5NeqBItOLfg3DvQ-1; Sun, 05 Jul 2026 10:34:50 -0400
-X-MC-Unique: MNVOAvd5NeqBItOLfg3DvQ-1
-X-Mimecast-MFC-AGG-ID: MNVOAvd5NeqBItOLfg3DvQ_1783262089
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-493c1bc7a70so17070015e9.1
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:34:49 -0700 (PDT)
+ us-mta-502-RcrcLSaDPSKmbcfblVv7SA-1; Sun, 05 Jul 2026 10:36:13 -0400
+X-MC-Unique: RcrcLSaDPSKmbcfblVv7SA-1
+X-Mimecast-MFC-AGG-ID: RcrcLSaDPSKmbcfblVv7SA_1783262172
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-4731a357b0aso1721366f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:36:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783262089; x=1783866889; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=SfP5ZteIZuG9MnPCQQceIltovRko4AplCnjjhfUb6nY=;
- b=e1eUuVAUpgn8Q+PAj3CR0VrlEffc5GHQ6AF3nbhaxaO0p5OUX5lyvskFLFRM2VhBHx
- o7d5PryUbqegQqThwJyEmf9hM5QcMTVYS0ADPWzBo77DvVAeY8p3ESMKYEmdBdkMDGAU
- 8X3nJrNBagX9TJpHDJdFA/MzgJl1XlXQ0GsjQ6d/S1ORTg4yHbxJkCB+GGbrjqmWIQ04
- p31sT5WIpdZCIRwBEDI9ix4JYC/9u8nijA/XTpZBXa4NOpe+/YaPFsLH/VDQTyFvfQTl
- EiuzMp31l2OZFesGIJJxZggTyYqifImUalEP6J9+X9AlRWZ4BM49qgSgI69elfuR06DI
- /vpA==
+ d=redhat.com; s=google; t=1783262172; x=1783866972; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=BKcbDf1CX3VPM01pSKKAbpI0+d2M2svaEBOIYsZZCWY=;
+ b=dRbXPIp0RUNuzlxmsMy+uwJnVCmYvNZsqkFMzeOzOw3kCo1UzTCmvpdBZKhT5lFVfK
+ IaSHsZJltX8nLUNr8aWKEIKvmPGdTzKYKvP1toX/jpaHXdioYDa0xfJhedN+C7lU1QHU
+ +gjH8JVfgJJeuTVsy4VoKXyrb9BgMRg/lo0V2o6Z3ynVMUL13MVNXA/Cv8qtU17jyIOD
+ TDleyw/CLwHDKkxtmuKMS3wDSWh2PpeC+ojy/4mtcHugCLKM8qek9uQncNfKLxb34An0
+ +IjJPqN/vcFHsGzte9aM6t6G7nqDHELjAOnBtfbCQJlmAIiVlG2r/Rym96YXC7YQ+fdg
+ yNrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783262089; x=1783866889;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SfP5ZteIZuG9MnPCQQceIltovRko4AplCnjjhfUb6nY=;
- b=aL4m33Rn03POx11OAiToJ+4xWyfqOnTO235JCOtWAmG8kEvHqjTP92xsYKjHpkgFlw
- ZLBxuDPts8Oi2L1a/WuRhiBADKLGbotV3EEO2zVWNlpdMHrDHEUkcEqhxBUlUFqUHdrg
- Idc2x6Kka65D5fd0y7zECQTKCyDVt9lXe3RdHpbzPNh/Zl7uAPZneMwbxPdaAMrLVb9d
- d9i/anvkNtdjc/eWUaGeJwFremlZiMrRFoMTJvY+77r7Q0y9b9dUlZLdM1wU7o+z5Ghw
- 2bva9tB0RB3r3kKhPK+G+bFZGD1KRgrAFdO94emWoZ/lf1ZDyMMHosj8RDRMKTeMVazP
- gTJA==
-X-Gm-Message-State: AOJu0YwNn2PMtflyLExty4ORVfjdEtGGHnN6UWfjLi9GU/5BSJzqp+cj
- lCpeDf05FOesmibeJOivlg8ANQ83raIrpa1ILja0DtZHOnF/C13MCP/CcHIPzpVD9wJXg137YiO
- Ctp/3ahkU5N0PhMS+VHY8aavVl7H4GG05/W+5Lqpf0xoUapPp+EY1G698sJ23zNTe8hcaOFLu1H
- HqLzEL0pOmhTH0EREgIF1Reo0XzInqxO5cUA==
-X-Gm-Gg: AfdE7cn+iUWdrutNL0gR7vzlG64ETqaCU8UBBGXCV7eT+fH+QDLkZr1ykH+byNrLMat
- Nq6amrbS8wCdqxCw7TGvLdsvdsrnp68CaeIeeZL3YyNy0cJ9UhN+SZl08eSxh+RJxDKhvhC9LKs
- 9E3lCkAIgZur2iDyL8OOzuc9YQfgfMZpJf1hL5Rw/7ZeHPuLYbSE45WtCroDJYuUxX++85lUUlF
- vS5ZU7TFa2JgzJl/idgVMnbNDIRCEclihtNRlRhvxkyPBlKaznA38xvBQyl6evVbupPckeuKK6u
- JTJmrzqGLYGEIzhgaHVHH3wfAUuR6Kgjm3LJHPozGuCg8iCXxEKS5Omo8VkuBSI9pJcot4Q9c7S
- uxLOIse6gsgaoxSMzcDWZ+LHwEnpr5MI8
-X-Received: by 2002:a05:600c:1992:b0:493:b91c:6bf with SMTP id
- 5b1f17b1804b1-493d11f149emr72442505e9.18.1783262088585; 
- Sun, 05 Jul 2026 07:34:48 -0700 (PDT)
-X-Received: by 2002:a05:600c:1992:b0:493:b91c:6bf with SMTP id
- 5b1f17b1804b1-493d11f149emr72442215e9.18.1783262088059; 
- Sun, 05 Jul 2026 07:34:48 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783262172; x=1783866972;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=BKcbDf1CX3VPM01pSKKAbpI0+d2M2svaEBOIYsZZCWY=;
+ b=aOcHaL2KNMW+iOREhYu6DlzDdWBP7OR5N93GT9s/3d1CbnHMbg/GHevqmWCerYsWJR
+ fhiIX9He9AcuQ2PZTn41WvxGj3ExhoRdPzdqQKjKuAIf7vZGXvBE99naqDNq2P3kafaO
+ X9URtfKvkyWm0GK3zbEy+8+gFB0JVYVaXF0PqMUaCueQvDdKdW6b+GZYu5rCA7Wie8pJ
+ fOZiOJDy+uNMv13qvrg2p9tafKF2qsK5Cef9CzVj4qTnwwSDHwVTVOQkoflOPd0zvCkG
+ NoHP0cX7K6z6FZ5Wh/wjrfXOUfZlYFF6K5IfElhDQyi0zhQL5VU0uSu8yE9ly2TDoMOA
+ Lmzw==
+X-Gm-Message-State: AOJu0YxNOLxzaeP0EqdEUF8plFjHTt/Whk1MfbQXjQWMb8WGwZ3JL7S3
+ YPohHH5t8aVKeQ+3ID7Q9hGP6H1GM3QhQ7enYw0APa3wOl6bC62RFlHaOlfVLMLRExp15v2HHCi
+ UiGo/CjOy8E0W6xZlBjjYZQLaj9/jALAuQG2RKsaeax+yRNjMvm2AOzEasQfnQ5oqh8U208Dh8X
+ hvPFJ+DZTAXYWTP6r6F8RgDN+3Br2J5QLz9w==
+X-Gm-Gg: AfdE7cmf1/NPeFrxFYe+ib/GmR1a4PKQzNXUgzi0/Zqn4FYJt45QyC6Z00y4asePNdD
+ N89Om/6qhJa8Fu3Wz5Q90MaXSMZB3tgM8RTmoEUdqgIESigLgbhh5bW1ePR1wSird7mUApDVR/K
+ a+OXQoC0CFqrQvWqw/m7aL/lxYfjsz1fcUw5TDUOHG9Tagm+TY2HTtfeCQleQW1hvinUWBYLeqI
+ eJ2VLOk4+XwJP7J/E0bShzE7hOSszHe2Klt7L9YEY85t5lTQDQhizrkQD5sDtcD/kP2X1+hmxUK
+ 8HRpl5JYyL5nh6L1hkoWYy2TrlUaVoAcURDjtYl7P87JD/ULDAwNWDC6zwjZ8CYdVsSI87hd0aE
+ tlLSY2Zw66uGyjoMnrznhNdcyvfcS/49i
+X-Received: by 2002:a05:6000:4811:b0:476:c622:d41f with SMTP id
+ ffacd0b85a97d-47aadc0b977mr8277572f8f.47.1783262172148; 
+ Sun, 05 Jul 2026 07:36:12 -0700 (PDT)
+X-Received: by 2002:a05:6000:4811:b0:476:c622:d41f with SMTP id
+ ffacd0b85a97d-47aadc0b977mr8277537f8f.47.1783262171513; 
+ Sun, 05 Jul 2026 07:36:11 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-68-31.inter.net.il. [80.230.68.31])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493ccdb566csm198342605e9.7.2026.07.05.07.34.46
+ ffacd0b85a97d-47aa039af67sm19443056f8f.17.2026.07.05.07.36.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Jul 2026 07:34:47 -0700 (PDT)
-Date: Sun, 5 Jul 2026 10:34:45 -0400
+ Sun, 05 Jul 2026 07:36:11 -0700 (PDT)
+Date: Sun, 5 Jul 2026 10:36:09 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Sairaj Kodilkar <sarunkod@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 03/44] amd_iommu: Decode XT interrupt control register without
- bitfields
-Message-ID: <83ec1c7fcb243c232186df790f5847808cc26982.1783261895.git.mst@redhat.com>
+ Igor Mammedov <imammedo@redhat.com>,
+ Eric Auger <eric.auger@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 37/44] tests: acpi: arm/virt: whitelist GTDT table
+Message-ID: <01ba94bb27b003d9421dec125137c5701d261c07.1783261895.git.mst@redhat.com>
 References: <cover.1783261895.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1783261895.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -125,114 +121,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Igor Mammedov <imammedo@redhat.com>
 
-The XT IOMMU General Interrupt Control Register is a guest-visible MMIO
-register. Decoding it with bitfields depends on host bitfield layout and is
-not portable to big-endian hosts.
-
-Fix this by removing union mmio_xt_intr and explicitly extracting fields
-with FIELD_EX64() from the full register value returned by amdvi_readq(),
-which has already been converted to host endianness.
-
-Using a designated initializer for X86IOMMUIrq also ensures fields not
-provided by the XT register (e.g. msi_addr_last_bits) are initialized before
-x86_iommu_irq_to_msi_message() uses them.
-
-CID: 1660056
-Fixes: cf0210df65aa ("amd_iommu: Generate XT interrupts when xt support is enabled")
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260630220806.1758748-4-alejandro.j.jimenez@oracle.com>
+Message-ID: <20260702145856.1539572-12-imammedo@redhat.com>
 ---
- hw/i386/amd_iommu.h | 14 --------------
- hw/i386/amd_iommu.c | 28 ++++++++++++++++++----------
- 2 files changed, 18 insertions(+), 24 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index 3cab04a6d4..ca4440a4c1 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -340,20 +340,6 @@ struct irte_ga {
-   union irte_ga_hi hi;
- };
- 
--union mmio_xt_intr {
--    uint64_t val;
--    struct {
--        uint64_t rsvd_1:2,
--                 destination_mode:1,
--                 rsvd_2:5,
--                 destination_lo:24,
--                 vector:8,
--                 delivery_mode:1,
--                 rsvd_3:15,
--                 destination_hi:8;
--    };
--};
--
- #define TYPE_AMD_IOMMU_DEVICE "amd-iommu"
- OBJECT_DECLARE_SIMPLE_TYPE(AMDVIState, AMD_IOMMU_DEVICE)
- 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index a0835a20d7..291cb368a9 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -34,6 +34,7 @@
- #include "hw/core/qdev-properties.h"
- #include "kvm/kvm_i386.h"
- #include "qemu/iova-tree.h"
-+#include "hw/core/registerfields.h"
- 
- struct AMDVIAddressSpace {
-     PCIBus *bus;                /* PCIBus (for bus number)              */
-@@ -88,6 +89,13 @@ typedef struct AMDVIIOTLBKey {
-     uint16_t devid;
- } AMDVIIOTLBKey;
- 
-+/* XT IOMMU General Interrupt Control Register layout */
-+FIELD(AMDVI_XT_GEN_INTR, DEST_MODE, 2, 1)
-+FIELD(AMDVI_XT_GEN_INTR, DEST_LO, 8, 24)
-+FIELD(AMDVI_XT_GEN_INTR, VECTOR, 32, 8)
-+FIELD(AMDVI_XT_GEN_INTR, DELIVERY_MODE, 40, 1)
-+FIELD(AMDVI_XT_GEN_INTR, DEST_HI, 56, 8)
-+
- uint64_t amdvi_extended_feature_register(AMDVIState *s)
- {
-     uint64_t feature = AMDVI_DEFAULT_EXT_FEATURES;
-@@ -194,17 +202,17 @@ static void amdvi_assign_andq(AMDVIState *s, hwaddr addr, uint64_t val)
- 
- static void amdvi_build_xt_msi_msg(AMDVIState *s, MSIMessage *msg)
- {
--    union mmio_xt_intr xt_reg;
--    struct X86IOMMUIrq irq;
-+    uint64_t xt_reg = amdvi_readq(s, AMDVI_MMIO_XT_GEN_INTR);
- 
--    xt_reg.val = amdvi_readq(s, AMDVI_MMIO_XT_GEN_INTR);
--
--    irq.vector = xt_reg.vector;
--    irq.delivery_mode = xt_reg.delivery_mode;
--    irq.dest_mode = xt_reg.destination_mode;
--    irq.dest = (xt_reg.destination_hi << 24) | xt_reg.destination_lo;
--    irq.trigger_mode = 0;
--    irq.redir_hint = 0;
-+    X86IOMMUIrq irq = {
-+        .vector = FIELD_EX64(xt_reg, AMDVI_XT_GEN_INTR, VECTOR),
-+        .delivery_mode = FIELD_EX64(xt_reg, AMDVI_XT_GEN_INTR, DELIVERY_MODE),
-+        .dest_mode = FIELD_EX64(xt_reg, AMDVI_XT_GEN_INTR, DEST_MODE),
-+        .dest = (FIELD_EX64(xt_reg, AMDVI_XT_GEN_INTR, DEST_HI) << 24) |
-+                 FIELD_EX64(xt_reg, AMDVI_XT_GEN_INTR, DEST_LO),
-+        .trigger_mode = 0,
-+        .redir_hint = 0,
-+    };
- 
-     x86_iommu_irq_to_msi_message(&irq, msg);
- }
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..3e9be28cc4 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/aarch64/virt/GTDT",
 -- 
 MST
 
