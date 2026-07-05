@@ -4,98 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0E5DC43458
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E341AC43458
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:43:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgNwu-0006TS-Mj; Sun, 05 Jul 2026 10:36:00 -0400
+	id 1wgNy5-000198-Qs; Sun, 05 Jul 2026 10:37:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNws-0006HP-QS
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:58 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNxV-0000Gj-3x
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:36:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwr-0001Sm-9A
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:58 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNxT-0001fh-2A
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:36:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783262156;
+ s=mimecast20190719; t=1783262192;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BTnu3PjGzlRsbS7CoAoKXq3Veho6h75memFBiQUlhOk=;
- b=JFCluPdgF02Bws47lDsMpPjypyWDYQfYhE8HHIWJJJDlUtisSjjkqpLicRk72r9hO5ilAH
- byTxig/GtEjRZizs/kc8yKIF4f7d2XnnqcuLR1Ze4rLn6mn+a5gpCucZi4N9//kTsjuIdP
- YnPjd2oQzRFJ8aIdDoY8WdS6Enn9xeI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=BjMFqW79037KEcA6woZu4YBB6Us4nSIWQgh4q3aTCq4=;
+ b=A5pd3iX9fSxUmkVwXXblN5f3jXpIfj6z3iNyVfRozrUHjmxdPPlPPDyYkZf4FPdwWPR7x7
+ wjsABR12kmJTRMyLiGjfd7dh7dSTcsvC6E8Cscj5i3xOx1H8lVw1H1yVedEi0eLSrhenvS
+ bpzWMfcOderyt+c5E3KGMrkQ3rHEPtc=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-N8m50B3EOdW40o-qt17iYg-1; Sun, 05 Jul 2026 10:35:53 -0400
-X-MC-Unique: N8m50B3EOdW40o-qt17iYg-1
-X-Mimecast-MFC-AGG-ID: N8m50B3EOdW40o-qt17iYg_1783262152
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-493c526df6bso14963285e9.3
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:35:53 -0700 (PDT)
+ us-mta-452-tB97wdO8Npq4qFcsRU5ljA-1; Sun, 05 Jul 2026 10:36:31 -0400
+X-MC-Unique: tB97wdO8Npq4qFcsRU5ljA-1
+X-Mimecast-MFC-AGG-ID: tB97wdO8Npq4qFcsRU5ljA_1783262190
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-492488f8583so21531995e9.2
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:36:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783262152; x=1783866952; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=BTnu3PjGzlRsbS7CoAoKXq3Veho6h75memFBiQUlhOk=;
- b=XzjyKjd+6HPndr612TOvzKR5z01GgcJ6TC9AxjJsCiInXVJCJauog6vm87frOPIqi3
- WBP/n6vfUK4SW3540z3QEDJxMkEGb9zpLjwiY9M6EFD6lMlBqfzbRVebWXHUJeBBKui0
- ebiX5PgRhqG13IriEVRbM88Vhjck36BUYi1EcHgACj0+YWoific2dFcoCXrzttTnEzvt
- q7hOtox9NAG1cvVWCLJh64bzeoERnoimujzcNjWUcAZ6Na4Lm+uirOBRkcQUyyFhgdyt
- DmV5h6t86XJquan91SwdUzlf3FyQrhP/KJnQnjRe2PqWkQYyZtId9nvQOf9dC6y3kd5a
- +foA==
+ d=redhat.com; s=google; t=1783262190; x=1783866990; darn=nongnu.org;
+ h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BjMFqW79037KEcA6woZu4YBB6Us4nSIWQgh4q3aTCq4=;
+ b=XT5zuMfo0gVABQspnCbKU6JDILJh3mse3EdowHuV7NbKbhcXqFxbKqA2AAc7Tl2R24
+ R5Uf+BcujeP4DtsN8SvkABXzkMx1PSPtYijWAnId4mwRaobmap5kZbQ2O97CP6/dQlWI
+ 70+d+n41OqM4TH9poG0Zx4bi2FbycHVJ2am80HX227e9GcaUY1n1pplyldQ2lLBZvCG/
+ ksn/6tPJc7Wx/G6LMRSypgimIiWhlxXRc2vrDUCWZfHaPMGogrAq8apnfIGU1hfbRaxX
+ RMoadSlh9K9BlRw+aLtQ6YtXM/K4fDNa/nGXNxPEdwCEMtZb+1AI6Awh66hSQjnCnjki
+ Js5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783262152; x=1783866952;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=BTnu3PjGzlRsbS7CoAoKXq3Veho6h75memFBiQUlhOk=;
- b=WEoaG/Nhmuyyz8jMf6g+pCY1xlowyL7/REZgj5tOX8pmMy0kXQ/6sUyk1MagKzLNoS
- 2BvD+Rf7mXGOtZAV7yyJdFB9vebK6Db2wx+aaE06bqRwrssK/Yzud0hp3yLgGd5SlRXi
- +0GcTdIcniQPqNb9TaBGW4KDxuAhT8lS3RCvSpnfQzI/E40WsXW2Mdw8cDR5Gl2xYZ6G
- jcFrMkpc91I5oztol2X17Yg2XHdwiEsEHgihRM74PCxkCVBjie69S+BpbAH6wTQcOT0l
- VNuN9O5YUVFCtOXVjbiN/KdU+5zhjqjBcYtgs1AhjOgBhBOY+Boa4DctoDh8jJFPG7Z6
- raIg==
-X-Gm-Message-State: AOJu0YzidydZ7PmNvInfd/0CuThGiim75ciU45etTmuFglItQQU0Yv7i
- d0fAx0lH767MYLupBNCyivh+YnvKY0Zgj6WWyTvOJg4EtKvQLRHmMsbhftL/mOAH1YIyBPRLZjY
- eZPd5DTd/SKZtQnznydPKOfa8SqmxATN8tA9JRDz1nvgl5kUwBRJGwvsuTO/OcZZMpmr4HopHVe
- sP7cOn2T8DJr3nG3fRGfsjSJT6rdjnvKJlPQ==
-X-Gm-Gg: AfdE7ckDakykMT3/5eLb55dqvUtBQC51viyKNXOTFU5BhnqJMRGQs8+rRiECMw8Hojd
- GcdDR6Q9WttFj7drb6kCDCChM1ET3OJ6RnyC5edkkpz9l+ZJCWEhu+RrKcxoSj6IapcBisy/WDb
- 5wI1YLhsXFDAXYTkOkdhd29AIXkNAqDwm5fsCC0Tek9KnMr2RLi+I2hGoUREuhbO1HPS4gB5Pxk
- pGYeevZldDDTPZkyoiSLBFKzB/PCc98DPqVIqNOG2jS4t9qWoqa3WMpJSTIQCzuZCj/aYko0nLW
- prMnS0u/pMA9fewPObV7iEUmWSpT2deZCxh4EFuV0hhkdtZE9dF/1o6j4JU8NNfYF7UPFV7h8f6
- fUH0jFujpTBr7Kkh5+5HXsYuPrLC2g4qC
-X-Received: by 2002:a5d:5509:0:b0:478:19e7:22a2 with SMTP id
- ffacd0b85a97d-47aac4eb421mr5845194f8f.25.1783262151774; 
- Sun, 05 Jul 2026 07:35:51 -0700 (PDT)
-X-Received: by 2002:a5d:5509:0:b0:478:19e7:22a2 with SMTP id
- ffacd0b85a97d-47aac4eb421mr5845165f8f.25.1783262151150; 
- Sun, 05 Jul 2026 07:35:51 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783262190; x=1783866990;
+ h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BjMFqW79037KEcA6woZu4YBB6Us4nSIWQgh4q3aTCq4=;
+ b=YZa5ruXVC6pUyHzpat7jQRqICrszKqbHylNd/jlCM7btKNTVM0BDfVu6OcMYbmt0jc
+ Ho6fbxQGM6ZSCshNR7gsRKC0Lg3gPGro+BOlZgbrwZQlI/SxQqGpgSg3LNfLHBDhiM/H
+ 0frmDlPuiXM52+yR/JerQbHpr4xNkjG/btLazDvEJIXTIEnspwnVTEB+cLN/3rMhvkBv
+ SyX8iBo+XieLCiWePsrb1prx6lgLc3B3gUjI/DRQLgBvWvuqQ4lBNjb0ZTGh02MdFOyl
+ jObFIFJ1S6pNv95tsGjCIg7/ATogSP76CJn9iTKMjZpS9DopItMgZlZzgvaZFMrs0XhU
+ WBWQ==
+X-Gm-Message-State: AOJu0Yw1uWxCYdPBfhoa5R39E30E6rOYcVaXgA0wtkkMQtQLKEI54Ozj
+ +wMY1s/PDUK8E8rilOESj+879LJpUojYTsB2eAm5ys/aZHJPlWn5G0wHDQfcv464U96X68l69Rw
+ 2pdX1V0/LJnQmC4P4wsSxYzoww60PlYJd4QdaG6ny1m5HtC8ZuO5R9hEQeIfKn7HIwSIWA1IXBW
+ aNglj8Grsbdm8Ku3mFmNM7Y6G+Hu1zudBvsA==
+X-Gm-Gg: AfdE7cnsjF9NRJaaF6Kabsfq7APWD/xdgNF15PSdBNLwYwVhdbpsuxUStc9kA0hbsUF
+ HdZuArGzzKvj/XNJ45xAK2euYMNVCXYqhgupVPQy81Vh47Lgl/3ZdsFiujSWcIKER2aW55PlH7c
+ v1s89dLCK0fF50VwnUO5RIuvSwL7V+v9Tfkpx/Ak3aIIGzHwINJXq3A3CrZ0/Xp5t0IRDGT4RA4
+ Yxcbda3i5ERi3MhtBpxlcKTYPhHOFSI3xle6G/AKgZh+JOu2q8kmF+iV782m/n3f8Ci+/lcn/qD
+ /BfVvylq3GYy70Jqe1Mt5bugQc/4/f6OgLQPnxQtFr2lhSwmQnDSums9bBrwISGwG1DJMJuQnwl
+ /2dCMTaueVTXPfzYGzdzmCIDzrLy9c66v
+X-Received: by 2002:a05:600c:6388:b0:493:c35c:b4d1 with SMTP id
+ 5b1f17b1804b1-493d11cf29emr82314985e9.7.1783262190201; 
+ Sun, 05 Jul 2026 07:36:30 -0700 (PDT)
+X-Received: by 2002:a05:600c:6388:b0:493:c35c:b4d1 with SMTP id
+ 5b1f17b1804b1-493d11cf29emr82314725e9.7.1783262189587; 
+ Sun, 05 Jul 2026 07:36:29 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-68-31.inter.net.il. [80.230.68.31])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa039afacsm15387892f8f.19.2026.07.05.07.35.49
+ ffacd0b85a97d-47a9e4d8410sm16406890f8f.15.2026.07.05.07.36.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Jul 2026 07:35:50 -0700 (PDT)
-Date: Sun, 5 Jul 2026 10:35:49 -0400
+ Sun, 05 Jul 2026 07:36:29 -0700 (PDT)
+Date: Sun, 5 Jul 2026 10:36:27 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org
-Subject: [PULL 28/44] arm: add tracing events to sbsa_gwdt
-Message-ID: <88e1d327fdb73e22479c97139fb237dabf6788ff.1783261895.git.mst@redhat.com>
-References: <cover.1783261895.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, stefanha@redhat.com
+Subject: [PULL 00/44] pci, vhost, virtio, iommu: features, fixes, cleanups
+Message-ID: <cover.1783261895.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1783261895.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
@@ -106,7 +98,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,102 +114,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Igor Mammedov <imammedo@redhat.com>
+I hope I didn't miss any features for the freeze. If yours
+is missing, pls holler.
 
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+There are some (old) bugs that have been reported and will
+I hope get fixed before the release, I will focus on that
+after the freeze.
+
+
+
+The following changes since commit 7f2007d1924565c7a38b2c6ba01ebc1a85db0a49:
+
+  Merge tag 'pull-qobject-2026-07-02' of https://repo.or.cz/qemu/armbru into staging (2026-07-03 07:42:51 +0200)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+
+for you to fetch changes up to 32a90850e1e4222091df07b4b46d5f46a8b90d24:
+
+  virtio-net: validate RSS indirections_len in post_load (2026-07-05 09:06:13 -0400)
+
+----------------------------------------------------------------
+pci, vhost, virtio, iommu: features, fixes, cleanups
+
+A new sp-mem device
+New tests for vtd
+New seg-max-adjust flag for vhost-user-blk
+Watchdog support for arm/virt
+
+Fixes, cleanups all over the place.
+
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260702145856.1539572-3-imammedo@redhat.com>
----
- hw/watchdog/sbsa_gwdt.c  | 8 ++++++++
- hw/watchdog/trace-events | 9 +++++++++
- 2 files changed, 17 insertions(+)
 
-diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
-index b739a3ce3c..acb970e8b3 100644
---- a/hw/watchdog/sbsa_gwdt.c
-+++ b/hw/watchdog/sbsa_gwdt.c
-@@ -24,6 +24,7 @@
- #include "migration/vmstate.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
-+#include "trace.h"
- 
- static const VMStateDescription vmstate_sbsa_gwdt = {
-     .name = "sbsa-gwdt",
-@@ -62,6 +63,7 @@ static uint64_t sbsa_gwdt_rread(void *opaque, hwaddr addr, unsigned int size)
-         qemu_log_mask(LOG_GUEST_ERROR, "bad address in refresh frame read :"
-                         " 0x%x\n", (int)addr);
-     }
-+    trace_sbsa_gwdt_refresh_read(addr, ret);
-     return ret;
- }
- 
-@@ -93,6 +95,7 @@ static uint64_t sbsa_gwdt_read(void *opaque, hwaddr addr, unsigned int size)
-         qemu_log_mask(LOG_GUEST_ERROR, "bad address in control frame read :"
-                         " 0x%x\n", (int)addr);
-     }
-+    trace_sbsa_gwdt_control_read(addr, ret);
-     return ret;
- }
- 
-@@ -127,6 +130,7 @@ static void sbsa_gwdt_rwrite(void *opaque, hwaddr offset, uint64_t data,
-                              unsigned size) {
-     SBSA_GWDTState *s = SBSA_GWDT(opaque);
- 
-+    trace_sbsa_gwdt_refresh_write(offset, data);
-     if (offset == SBSA_GWDT_WRR) {
-         s->wcs &= ~(SBSA_GWDT_WCS_WS0 | SBSA_GWDT_WCS_WS1);
- 
-@@ -141,6 +145,7 @@ static void sbsa_gwdt_write(void *opaque, hwaddr offset, uint64_t data,
-                              unsigned size) {
-     SBSA_GWDTState *s = SBSA_GWDT(opaque);
- 
-+    trace_sbsa_gwdt_control_write(offset, data);
-     switch (offset) {
-     case SBSA_GWDT_WCS:
-         s->wcs = data & SBSA_GWDT_WCS_EN;
-@@ -180,6 +185,7 @@ static void wdt_sbsa_gwdt_reset(DeviceState *dev)
- {
-     SBSA_GWDTState *s = SBSA_GWDT(dev);
- 
-+    trace_sbsa_gwdt_reset();
-     timer_del(s->timer);
- 
-     s->wcs  = 0;
-@@ -196,10 +202,12 @@ static void sbsa_gwdt_timer_sysinterrupt(void *opaque)
- 
-     if (!(s->wcs & SBSA_GWDT_WCS_WS0)) {
-         s->wcs |= SBSA_GWDT_WCS_WS0;
-+        trace_sbsa_gwdt_ws0_asserted();
-         sbsa_gwdt_update_timer(s, TIMEOUT_REFRESH);
-         qemu_set_irq(s->irq, 1);
-     } else {
-         s->wcs |= SBSA_GWDT_WCS_WS1;
-+        trace_sbsa_gwdt_ws1_asserted();
-         qemu_log_mask(CPU_LOG_RESET, "Watchdog timer expired.\n");
-         /*
-          * Reset the watchdog only if the guest gets notified about
-diff --git a/hw/watchdog/trace-events b/hw/watchdog/trace-events
-index d85b3ca769..b388f7b250 100644
---- a/hw/watchdog/trace-events
-+++ b/hw/watchdog/trace-events
-@@ -42,3 +42,12 @@ k230_wdt_interrupt(void) "K230 WDT interrupt"
- k230_wdt_reset(void) "K230 WDT system reset"
- k230_wdt_restart(void) "K230 WDT restart"
- k230_wdt_reset_device(void) "K230 WDT device reset"
-+
-+#sbsa_gwdt.c
-+sbsa_gwdt_refresh_read(uint64_t addr, uint32_t value) "[0x%" PRIx64 "] -> 0x%" PRIx32
-+sbsa_gwdt_refresh_write(uint64_t addr, uint64_t value) "[0x%" PRIx64 "] <- 0x%" PRIx64
-+sbsa_gwdt_control_read(uint64_t addr, uint32_t value) "[0x%" PRIx64 "] -> 0x%" PRIx32
-+sbsa_gwdt_control_write(uint64_t addr, uint64_t value) "[0x%" PRIx64 "] <- 0x%" PRIx64
-+sbsa_gwdt_ws0_asserted(void) "WS0 signal is asserted"
-+sbsa_gwdt_ws1_asserted(void) "WS1 signal is asserted"
-+sbsa_gwdt_reset(void) "reset watchdog to default state"
--- 
-MST
+----------------------------------------------------------------
+Alejandro Jimenez (4):
+      amd_iommu: Return int from page walk status helpers
+      amd_iommu: Decode XT interrupt control register without bitfields
+      amd_iommu: Decode IRTEs without bitfields
+      amd_iommu: Fix endianness handling for command buffer entries
+
+David Hoppenbrouwers (1):
+      amd_iommu: Fix opcode reported in invalid command handling
+
+Demi Marie Obenour (1):
+      vhost-user: Guarantee that memory regions do not overlap
+
+GuoHan Zhao (3):
+      vhost-user-base: free virtqueue array during cleanup
+      vhost-user-base: clean up vhost_dev on realize failure
+      vhost-user-scmi: free vhost virtqueue array on cleanup
+
+Igor Mammedov (13):
+      arm: sbsa_gwdt: fixup default "clock-frequency"
+      arm: add tracing events to sbsa_gwdt
+      arm: sbsa_gwdt: rename device type to sbsa-gwdt
+      arm: virt: create sbsa-gwdt watchdog
+      arm: sbsa-gwdt: add 'wdat' option
+      acpi: introduce WDAT table for GWDT
+      arm: virt: add support for WDAT based watchdog
+      tests: acpi: arm/virt: whitelist new WDAT table
+      tests: acpi: arm/virt: add WDAT table test case
+      tests: acpi: arm/virt: update expected WDAT blob
+      tests: acpi: arm/virt: whitelist GTDT table
+      tests: acpi: arm/virt: add GTDT watchdog table test case
+      tests: acpi: arm/virt: update expected GTDT blob
+
+Junjie Cao (4):
+      tests/qtest/libqos: share Intel IOMMU test setup helpers
+      tests/qtest/libqos: add Intel IOMMU invalidation helpers
+      tests/qtest: add IOTLB invalidation test for Intel IOMMU
+      virtio-net: validate RSS indirections_len in post_load
+
+Laurent Vivier (1):
+      hw/char/virtio-serial-bus: fix guest-triggerable OOM in control_out()
+
+Sergei Heifetz (1):
+      vhost-user-blk: add seg-max-adjust flag
+
+Stefan Hajnoczi (3):
+      vhost-user.rst: clarify when rings are started
+      libvhost-user: look for available vq buffers upon SET_VRING_KICK
+      vhost-user: inject kick after SET_VRING_KICK
+
+fanhuang (10):
+      hw/mem: add sp-mem device for Specific Purpose Memory
+      qapi, hmp: introspection for the sp-mem device
+      i386/acpi-build: partition device_memory SRAT umbrella for sp-mem
+      hw/i386: hook sp-mem into the pc machine plug path
+      MAINTAINERS: cover sp-mem under Memory devices, add R: tag
+      tests/acpi: add empty expected blobs for sp-mem SRAT test
+      tests/acpi: add bios-tables-test case for sp-mem
+      tests/acpi: generate expected blobs for sp-mem SRAT test
+      tests/qtest: add e820 fw_cfg test
+      tests/qtest: cover sp-mem SOFT_RESERVED e820 entry
+
+helei (1):
+      hw/virtio-crypto: enforce max akcipher key length
+
+lizhaoxin04 (1):
+      vdpa: fix use-after-free of vqs in vhost_vdpa_device_unrealize
+
+no92 (1):
+      intel_iommu: Correctly set pt bit in extended capability register
+
+ MAINTAINERS                               |   4 +
+ docs/interop/vhost-user.rst               |  47 +++-
+ docs/system/arm/virt.rst                  |  24 +++
+ qapi/machine.json                         |  43 +++-
+ hw/i386/amd_iommu.h                       |  63 ------
+ hw/i386/e820_memory_layout.h              |  11 +-
+ include/hw/acpi/wdat-gwdt.h               |  19 ++
+ include/hw/arm/virt.h                     |   3 +
+ include/hw/mem/sp-mem.h                   |  33 +++
+ include/hw/virtio/vhost-user-blk.h        |   1 +
+ include/hw/watchdog/sbsa_gwdt.h           |   3 +-
+ tests/qtest/libqos/qos-intel-iommu.h      |  74 +++++++
+ hw/acpi/wdat-gwdt-stub.c                  |  16 ++
+ hw/acpi/wdat-gwdt.c                       |  99 +++++++++
+ hw/arm/virt-acpi-build.c                  |  51 ++++-
+ hw/arm/virt.c                             |  48 +++++
+ hw/block/vhost-user-blk.c                 |  12 ++
+ hw/char/virtio-serial-bus.c               |  34 +--
+ hw/core/machine-hmp-cmds.c                |  11 +
+ hw/core/sysbus-fdt.c                      |   2 +
+ hw/i386/acpi-build.c                      |  96 ++++++++-
+ hw/i386/amd_iommu.c                       | 168 ++++++++++-----
+ hw/i386/intel_iommu.c                     |   4 +-
+ hw/i386/pc.c                              |  36 ++++
+ hw/mem/sp-mem.c                           | 128 +++++++++++
+ hw/net/virtio-net.c                       |  21 +-
+ hw/virtio/vdpa-dev.c                      |   3 +-
+ hw/virtio/vhost-user-base.c               |  21 +-
+ hw/virtio/vhost-user-scmi.c               |  12 +-
+ hw/virtio/vhost-user.c                    |  24 ++-
+ hw/virtio/virtio-crypto.c                 |   6 +
+ hw/watchdog/sbsa_gwdt.c                   |  24 ++-
+ subprojects/libvhost-user/libvhost-user.c |  19 +-
+ tests/qtest/bios-tables-test.c            |  62 ++++++
+ tests/qtest/e820-test.c                   | 129 +++++++++++
+ tests/qtest/iommu-intel-inv-test.c        | 346 ++++++++++++++++++++++++++++++
+ tests/qtest/iommu-intel-test.c            |  78 +------
+ tests/qtest/libqos/qos-intel-iommu.c      | 185 ++++++++++++++++
+ hw/acpi/meson.build                       |   2 +
+ hw/arm/Kconfig                            |   1 +
+ hw/i386/Kconfig                           |   2 +
+ hw/mem/Kconfig                            |   4 +
+ hw/mem/meson.build                        |   1 +
+ hw/watchdog/trace-events                  |   9 +
+ tests/data/acpi/aarch64/virt/GTDT.gwdt    | Bin 0 -> 132 bytes
+ tests/data/acpi/aarch64/virt/WDAT.wdat    | Bin 0 -> 260 bytes
+ tests/data/acpi/x86/q35/DSDT.spmem        | Bin 0 -> 9910 bytes
+ tests/data/acpi/x86/q35/SRAT.spmem        | Bin 0 -> 384 bytes
+ tests/qtest/meson.build                   |   3 +-
+ 49 files changed, 1715 insertions(+), 267 deletions(-)
+ create mode 100644 include/hw/acpi/wdat-gwdt.h
+ create mode 100644 include/hw/mem/sp-mem.h
+ create mode 100644 hw/acpi/wdat-gwdt-stub.c
+ create mode 100644 hw/acpi/wdat-gwdt.c
+ create mode 100644 hw/mem/sp-mem.c
+ create mode 100644 tests/qtest/e820-test.c
+ create mode 100644 tests/qtest/iommu-intel-inv-test.c
+ create mode 100644 tests/data/acpi/aarch64/virt/GTDT.gwdt
+ create mode 100644 tests/data/acpi/aarch64/virt/WDAT.wdat
+ create mode 100644 tests/data/acpi/x86/q35/DSDT.spmem
+ create mode 100644 tests/data/acpi/x86/q35/SRAT.spmem
 
 
