@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD4DDC43458
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3DC5C43458
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:41:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgNwU-0005Yq-8j; Sun, 05 Jul 2026 10:35:34 -0400
+	id 1wgNxY-0000Fg-RF; Sun, 05 Jul 2026 10:36:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwR-0005Wk-K9
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:31 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNxE-0008QE-Gq
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:36:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwQ-0001Pd-25
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:31 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNxD-0001VU-5p
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:36:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783262129;
+ s=mimecast20190719; t=1783262178;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=XNytVY+RK4HHxAkd8Avgx+3Crv9VVEXYr/YVFcZH3Jg=;
- b=NAdXtUJsgDGMVM7ExL72J5RGj1dc0/ZP4J3DrhjdGKiQDm9fEYfP5R3aBX7/5vjktXA9hl
- EMdUI+SlicBmPClQoXffC9drKn7Vgk9jZXLtM0+xIRAp8PAYwPzBKWye4zvih7lHizkUbj
- royw+idZGLU1cnPBi00ZC6zLB7aSyBE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lZJhrzwj0rR5P5+aXZ0Vf5nhibC8oR9PHvHBDPY2UrI=;
+ b=WeANrcFHVAK/xoA5CXvy5Im5e61hWyrt0SrhWEWAACDfUAdN4SsUApPRx36DlTNLSjl/bQ
+ 36sqff8TV1cd3smhhOrSGXfnCHbUQd96V+CmfJy6xcFR+fSSlE8ngqgr36+0b8HY4OagKW
+ PUFbEH8+smgzpeqdMsw6pNV3BJEnEUw=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-416-iY6jdKFbNcmjgU5sHZjN4g-1; Sun, 05 Jul 2026 10:35:28 -0400
-X-MC-Unique: iY6jdKFbNcmjgU5sHZjN4g-1
-X-Mimecast-MFC-AGG-ID: iY6jdKFbNcmjgU5sHZjN4g_1783262127
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-47d81cf0c4cso183316f8f.2
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:35:27 -0700 (PDT)
+ us-mta-326-ww4I156mO5C5I6dofQUpXA-1; Sun, 05 Jul 2026 10:36:16 -0400
+X-MC-Unique: ww4I156mO5C5I6dofQUpXA-1
+X-Mimecast-MFC-AGG-ID: ww4I156mO5C5I6dofQUpXA_1783262174
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-493bf840a69so15255875e9.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:36:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783262127; x=1783866927; darn=nongnu.org;
+ d=redhat.com; s=google; t=1783262174; x=1783866974; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=XNytVY+RK4HHxAkd8Avgx+3Crv9VVEXYr/YVFcZH3Jg=;
- b=niV39JKzkeHWAmJ+6wTtBuRXU3HuILD9lfPJCFBPgRHfD17oF/fq0GDnnEQovaIPIB
- 6YyBw5RIVs1nQOJQsHjZCdN/zjNLy9zujKWv/9E5LNKv+QxxxXLrNuK/YiknebmTtgKb
- qFEsRzGmp7LuiylfYACbAWUYE3eOwK3tJMDCBirc+/FrD93rnCqCFS3eEZGLJC5C5OL5
- uo6JM0TMOHt4ggHdayV6eR0PeVgg/U9DheDD7eV7R/D56kR81qMuJdBVA2oZR6oiFN2z
- WHptTyow7lIFU3yM5VB9gPwHmmEg1aT74ukFZLXnbwnVOnRZ3XMYO5mYzdtg/5CzB4H5
- 1f/w==
+ bh=lZJhrzwj0rR5P5+aXZ0Vf5nhibC8oR9PHvHBDPY2UrI=;
+ b=pPNEvjSdW2uU9xD93ki2k9Nb13sQ2po1L+GPtKdkRccyCTZ8ZnOytOX4gFHbMsAuhK
+ vIHQKasiKgrLDEdC3aFf8+otCTk/FxEYuG0kuMgdk4YiA7lNO6sJuSXwgBf598N3ojwy
+ SJ733n7yyprsz3ttJzd2jYL0wwXjJtDn/qwcGEKfj7I6yuoHQ5by2J5W+JqQli5B7UXa
+ TYtX7Uyzo33KKAUyM8vaoc4p5WYy8KnlSkeCxORSjVS6JmfnStPl0las2PCd0LXCjKf9
+ 64s3mt6t4dtag2trUwilIMuIp7RI3BR5hHvsmEIvupChFap+um3bHHXaeAxTgmniQn3g
+ gz1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783262127; x=1783866927;
+ d=1e100.net; s=20251104; t=1783262174; x=1783866974;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XNytVY+RK4HHxAkd8Avgx+3Crv9VVEXYr/YVFcZH3Jg=;
- b=Lrd5Or2IBRoDqJyVs2HtaNrBRHWdSdh4Wf3T/TnQoMjt5kaNOeYlYDiUZMKQX+hY4j
- +8BHuxG2YC4QxUaNMkQNJsPj0i8j4UXs7Qb2V0ESVeXVywHpSFGT/MfsUYmVdeqSMavC
- 7CXgzNJtgre3BkXHlhABFptC0Od6Nc7kos3hfreoWW7ZO1jXUb3mj6DRRtzX64RPWYCx
- 1tKlo+PGX2Vspi5PrlA7oDLr3gmJXGX7BkNPx7cZLOzP/psX4LKorQtXlNTdq+hOnZDM
- d9D2hQIemPE9S6EAaUcygYK41F3QpEucipONAamLIoxw0hEUR1oJrOe3CDTz5/XDxETa
- knmQ==
-X-Gm-Message-State: AOJu0YzmA/FIgIIR29zU2TGKUvS7B/XiUW5LSUE/7cg/VOsDNAkggV/V
- vpe+AZBjKeTQp8REABF8ymkcAX4d/X5VrF9CfWmhmx6hQV7RnD0IOqi4NLsp3y0+2sCmkb0troD
- gkX2WS2PzB+R//cp/yF6j48LFSbzaF4+VH82YAzQCJeV8hV2b2VhcEC+Z6ALd5bQkvg/NCW9pzb
- ydqOrZJCxlUFd3c4T7VSI7Uas2M1ai+IdTZA==
-X-Gm-Gg: AfdE7cmVYos+H9V/KONMIilE5BZSdYTAGGggm4vW3IcUB59mgi5e0J2wOTH1rDyyEbR
- bOAAbrYm4wgOIDquvfYkWrZjAp6aukQGPbvvLj2CqS4FVNMWZIhDrW5Obt1mRg1+XTSsNZge6b8
- 8I6fglvL+AKgeL48tDA6Tzc8Ms/Zlh+tzv7smE1GUqMSaqfqm/aWdebdP0QIB/CDvhwDLxJSJOn
- 6BP65HTbAHke5635wHaC7Ms6NAtUo2B9CcsDARHQ5QeS/sxR8+v5H+2UmMupYkICC+lFMCyHVRL
- oAyRucyftvSCeWXcKUO6Kex5csA7dPYgP5lBbMKkxtAPbpmx/kIGiHOEkybXIQjeqcZUVVQQIAk
- TctKSSfz2WD7LkarJfXsLwINE49leUKzY
-X-Received: by 2002:a05:600c:c0d1:20b0:493:cfc8:12e7 with SMTP id
- 5b1f17b1804b1-493d11f38e9mr57690155e9.25.1783262126763; 
- Sun, 05 Jul 2026 07:35:26 -0700 (PDT)
-X-Received: by 2002:a05:600c:c0d1:20b0:493:cfc8:12e7 with SMTP id
- 5b1f17b1804b1-493d11f38e9mr57689845e9.25.1783262126219; 
- Sun, 05 Jul 2026 07:35:26 -0700 (PDT)
+ bh=lZJhrzwj0rR5P5+aXZ0Vf5nhibC8oR9PHvHBDPY2UrI=;
+ b=gmsmzARFRfj5S1CgXu5kupzeCpO4Xt4n1ZZxe5nqFwBxlhx0JwxIESjtD4aTp9l4ua
+ IavRPoCFXf3FBkYJuAU2WCEuTdfeyhSn1yw5BwWa1K3e4npI+yst+VmgdEk9BboAy+/E
+ 5KQkdTEWeAWUZt0+MPT14J1AmRmEJGEj8Fo3dSbsg5I4dkYylRPHHC5i/G6dIWMZm0Gd
+ rKbvH3oudKgmhuaa+mqOBqhKEgdIdrY+4I+OVxxg8nRCzj37PHVQyJdyviGI9MiWo3q6
+ SkGEESkSAIc6nvCvoqO/sZit3Xg9ejLCfr4DTi7HzReOj58Hncm7CHijqoGt8a1Bud2q
+ 9SGA==
+X-Gm-Message-State: AOJu0YzbknvkR/jO0qQgz0uE1eN5j1HkSq8s0s1LGq3hG/cdkmAvdopJ
+ Q0PSMWm7aLJGjQoPDRPHqczfI8Sn6EG+oKmvHKeCxHB5/S1zIWWbesHaUF0ut6PjUl0DVrqmERy
+ 0fSb2e9y81vm5EQjnr3vAo1mos0JVc6hCkB4V26nZJXp9E5LYhKwoM8gK8Nk8imXVY0B15gBUBg
+ vj19SclskOcM4/Omwz6YNTAMRYaNcnDUxgHA==
+X-Gm-Gg: AfdE7ckBRXBf6CSvyhNHmmpT0zmGIQDVumzXAM+GYAFqDl9rlVDHHYkeav/4isycNm5
+ TZ16dJ5VJCu87EFnuRjd3U5n0AvotSTQFiUPMRUcEPMPzNe5IRXnLvQbg4aSzkrLnMcKUFMsku6
+ URI0Zh5S0w6yWGCAs71m8AoHiS9sl5vfClmGdMd7OnBrfuFo0OLNyxKPT6YAeS/x9ISPOlxkPtY
+ QE3VnNmDQZgPLiHyjacDNaKvGC/mEOSI6X6PGZ908mmesC306kSDI+z8Mau2aaFTGWCz5FgtMMU
+ W/lQgGkyglkv3Q5B30IBVujhKutsyjqlTuUvK5JP1mmM8mSvcnUaE9q0MjT80lrokM7G4xw9nkx
+ K/7q7/qVUeXAEu3tApN/VbDb5zbDb6cNy
+X-Received: by 2002:a05:600c:528c:b0:493:c194:4e7a with SMTP id
+ 5b1f17b1804b1-493d11d3d1dmr77545925e9.3.1783262174145; 
+ Sun, 05 Jul 2026 07:36:14 -0700 (PDT)
+X-Received: by 2002:a05:600c:528c:b0:493:c194:4e7a with SMTP id
+ 5b1f17b1804b1-493d11d3d1dmr77545465e9.3.1783262173594; 
+ Sun, 05 Jul 2026 07:36:13 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-68-31.inter.net.il. [80.230.68.31])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493ccb4cafesm195863905e9.0.2026.07.05.07.35.25
+ 5b1f17b1804b1-493ccdab3a8sm231862935e9.6.2026.07.05.07.36.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Jul 2026 07:35:25 -0700 (PDT)
-Date: Sun, 5 Jul 2026 10:35:24 -0400
+ Sun, 05 Jul 2026 07:36:13 -0700 (PDT)
+Date: Sun, 5 Jul 2026 10:36:11 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 18/44] libvhost-user: look for available vq buffers upon
- SET_VRING_KICK
-Message-ID: <1ace07171a4f772afd85a419bcd55fe56631966f.1783261895.git.mst@redhat.com>
+ Igor Mammedov <imammedo@redhat.com>,
+ Eric Auger <eric.auger@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 38/44] tests: acpi: arm/virt: add GTDT watchdog table test case
+Message-ID: <c2a283fe9989a1839e931daf664f192339f5ce7e.1783261895.git.mst@redhat.com>
 References: <cover.1783261895.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -120,63 +119,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Igor Mammedov <imammedo@redhat.com>
 
-When a vring is started the back-end must look for available vq buffers
-and process them. This scenario can happen if the back-end is stopped
-with unprocessed available buffers and then started again.
-
-The inflight I/O tracking code already did this, but it should also be
-done when inflight I/O tracking is not enabled.
-
-Move the code and make it robust in case of EINTR or EAGAIN.
-
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260604201029.250450-3-stefanha@redhat.com>
+Message-ID: <20260702145856.1539572-13-imammedo@redhat.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ tests/qtest/bios-tables-test.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index d2df50e3d0..2c35bddd6f 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -1390,11 +1390,6 @@ vu_check_queue_inflights(VuDev *dev, VuVirtq *vq)
-         vq->counter = vq->resubmit_list[0].counter + 1;
-     }
- 
--    /* in case of I/O hang after reconnecting */
--    if (eventfd_write(vq->kick_fd, 1)) {
--        return -1;
--    }
--
-     return 0;
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index cee3dff31f..5cc526510a 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -2314,6 +2314,24 @@ static void test_acpi_aarch64_virt_tcg_wdat(void)
+     free_test_data(&data);
  }
  
-@@ -1436,6 +1431,20 @@ vu_set_vring_kick_exec(VuDev *dev, VhostUserMsg *vmsg)
-         vu_panic(dev, "Failed to check inflights for vq: %d\n", index);
-     }
- 
-+    /* Inject a kick to look for available vq buffers */
-+    if (dev->vq[index].kick_fd != -1) {
-+        int ret;
++static void test_acpi_aarch64_virt_tcg_gtdt_wd(void)
++{
++    test_data data = {
++        .machine = "virt",
++        .arch = "aarch64",
++        .variant = ".gwdt",
++        .tcg_only = true,
++        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
++        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
++        .ram_start = 0x40000000ULL,
++        .scan_len = 128ULL * MiB,
++    };
 +
-+        do {
-+            ret = eventfd_write(dev->vq[index].kick_fd, 1);
-+        } while (ret != 0 && errno == EINTR);
++    test_acpi_one("-cpu cortex-a57 -device sbsa-gwdt", &data);
++    free_test_data(&data);
++}
 +
-+        if (ret != 0 && errno != EAGAIN /* already readable */) {
-+            vu_panic(dev, "Failed to inject kick during SET_VRING_KICK "
-+                     "on vq: %d with error: %m\n", index);
-+        }
-+    }
-+
-     return false;
- }
- 
+ static void test_acpi_q35_viot(void)
+ {
+     test_data data = {
+@@ -2935,6 +2953,8 @@ int main(int argc, char *argv[])
+             }
+             qtest_add_func("acpi/virt/acpi-watchdog",
+                            test_acpi_aarch64_virt_tcg_wdat);
++            qtest_add_func("acpi/virt/gwdt-watchdog",
++                           test_acpi_aarch64_virt_tcg_gtdt_wd);
+         }
+     } else if (strcmp(arch, "riscv64") == 0) {
+         if (has_tcg && qtest_has_device("virtio-blk-pci")) {
 -- 
 MST
 
