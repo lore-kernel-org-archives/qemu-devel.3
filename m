@@ -4,53 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 119DAC43458
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 15:49:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28005C44501
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 15:49:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgP4Y-0007dS-3m; Sun, 05 Jul 2026 11:47:58 -0400
+	id 1wgP4Y-0007dV-C9; Sun, 05 Jul 2026 11:47:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wgP4W-0007dA-Sk
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wgP4W-0007d2-HV
  for qemu-devel@nongnu.org; Sun, 05 Jul 2026 11:47:56 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wgP4V-00017r-Fu
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wgP4V-00014r-15
  for qemu-devel@nongnu.org; Sun, 05 Jul 2026 11:47:56 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id AE8DF4191B;
- Sun,  5 Jul 2026 15:47:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668441F000E9;
+ by tor.source.kernel.org (Postfix) with ESMTP id 4503D61383;
  Sun,  5 Jul 2026 15:47:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBFE1F000E9;
+ Sun,  5 Jul 2026 15:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1783266473;
- bh=g7jmObg3vUtjcnfbCYcy5VGxGEmBC7WjT8cy9vhrEwM=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=EE0/tjbFng33KikscDA9NrAjBdv2QAOH2K6/XrKwGEjUkFnsRjTHcFLKkz8jOUyHO
- tPxCs79DwUTkrU2dTX64aW9TWfSnhHtwFqGYKihuHoX1BFZsCJ5gbbLUmczZrdJpM8
- UZyQGikOSy2eCTjGjiwg7cjJAAl74Uyq4ewCg0FBeEXDN8ofsckoeGm03HZnj68ksB
- IADUcd6w/mf7yEP18r7w3OcwXoiic/ifozHrYK4l3KJsBm4wYkWzK7+3m80JhCaFLy
- 3yQNZ0MIKKNYQvRkjsGjK7aUXJ1nR2Rjnz1mr/5u/qqFUcJz0k2n40H5jOynvTQPZt
- /yXEJyzKJuqIQ==
+ s=k20260515; t=1783266472;
+ bh=KyCpJPad1dUHUvbx2U/xBHir4K3PT/9hxkv8OUhQMVM=;
+ h=From:To:Cc:Subject:Date;
+ b=nwX9n+UdRzG1IjhtcsEpm4wRzNyPdPgSe5/LsqKquY53RPSFXGT9hKXU4nzYMX6iF
+ ss69oUQi6xXfJ5UkkazoWdCVlJMB8Zd7QNKeobbkzs/ZI1xZKd7gXf+UkdHRG7I8kO
+ wGE2pgSzFf6ZegDmjYWJzrIQoThHVJIUCUE4Ht8QdRq9p04V2Kbvsk6oyOaKmpdWs6
+ dmOuMDsxq8PKz6HKP7+4GAyf/y8b7gSXTpUN4dwAsBSooSbLjNMUy+6diyK8EeA/A5
+ WfsmUEWrBHkYWLM72YHHyGgY9TazVTYNTgm64lFkieFCrSgh4NKE5j8XMRVRkxAdn8
+ Rrq575wccJhaA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org,
 	Stefan Hajnoczi <stefanha@gmail.com>
 Cc: Helge Deller <deller@gmx.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 1/4] target/hppa: Work-around for Fast TLB insert instruction
- on HP-UX 9
-Date: Sun,  5 Jul 2026 17:47:45 +0200
-Message-ID: <20260705154749.7368-2-deller@kernel.org>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 0/4] Hppa fixes for v11.1 patches
+Date: Sun,  5 Jul 2026 17:47:44 +0200
+Message-ID: <20260705154749.7368-1-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260705154749.7368-1-deller@kernel.org>
-References: <20260705154749.7368-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -74,36 +70,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-The HP-UX 9 kernel uses two TLB insert instructions (0x05315440 and
-0x05385400), which seem to be wrongly encoded fast TLB instructions, but
-similiar to the non-fast instructions idtlba r17,(r9) and
-idtlbp r24,(r9).
+The following changes since commit 7f2007d1924565c7a38b2c6ba01ebc1a85db0a49:
 
-It's not clear, if those undocumented instructions were used by mistake,
-or intentionally. Either way, this patch allows qemu to handle those
-instructions, so that a HP-UX 9 boot-CD can now boot somewhat further (but
-still crashes due to other reasons afterwards).
+  Merge tag 'pull-qobject-2026-07-02' of https://repo.or.cz/qemu/armbru into staging (2026-07-03 07:42:51 +0200)
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/hppa/insns.decode | 2 ++
- 1 file changed, 2 insertions(+)
+are available in the Git repository at:
 
-diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
-index 13c6a55bf2..f700fe472e 100644
---- a/target/hppa/insns.decode
-+++ b/target/hppa/insns.decode
-@@ -164,6 +164,8 @@ ixtlbx          000001 b:5 r:5 ... 000000 addr:1 0 00000        \
- 
- # pcxl and pcxl2 Fast TLB Insert instructions
- ixtlbxf         000001 00000 r:5 00 0 data:1 01000 addr:1 0 00000
-+# workaround for non-standard encoding as used in HP-UX 9
-+ixtlbxf         000001 01001 r:5 01 0 data:1 01000 addr:1 0 00000
- 
- # pa2.0 tlb insert idtlbt and iitlbt instructions
- ixtlbt          000001 r2:5 r1:5 000 data:1 100000 0 00000    # idtlbt
+  https://github.com/hdeller/qemu-hppa.git tags/hppa-fixes-for-v11.1-pull-request
+
+for you to fetch changes up to 90ce9a41508d4368d16334f7d1d8a9ed9bfa3747:
+
+  target/hppa: Update SeaBIOS-hppa to version 25 (2026-07-05 17:42:14 +0200)
+
+----------------------------------------------------------------
+Updates for hppa architecture for qemu v11.1
+
+A few patches to fix TLB for HP-UX 9, and a lasi irq fix,
+as well as a new SeaBIOS-hppa v25 firmware.
+
+----------------------------------------------------------------
+
+Helge Deller (3):
+  target/hppa: Work-around for Fast TLB insert instruction on HP-UX 9
+  target/hppa: Delay MMU update until TLB protection bits were set
+  target/hppa: Update SeaBIOS-hppa to version 25
+
+Keith Monahan (1):
+  hw/misc/lasi: derive IRR from pending and unmasked requests
+
+ hw/misc/lasi.c              |  25 +++++++++++++++++++------
+ pc-bios/hppa-firmware.img   | Bin 632780 -> 633992 bytes
+ pc-bios/hppa-firmware64.img | Bin 665208 -> 666392 bytes
+ roms/seabios-hppa           |   2 +-
+ target/hppa/insns.decode    |   2 ++
+ target/hppa/translate.c     |   4 ++--
+ 6 files changed, 24 insertions(+), 9 deletions(-)
+
 -- 
 2.54.0
 
