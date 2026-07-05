@@ -4,72 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BA9FC43458
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 08:39:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A230C43602
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 09:08:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgIMh-00053h-Kb; Sun, 05 Jul 2026 04:38:15 -0400
+	id 1wgIpd-0002NB-JJ; Sun, 05 Jul 2026 05:08:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1wgIMf-00053H-Ef; Sun, 05 Jul 2026 04:38:13 -0400
-Received: from out162-62-57-210.mail.qq.com ([162.62.57.210])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wgIpb-0002N0-FL
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 05:08:08 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1wgIMb-0004Ka-R9; Sun, 05 Jul 2026 04:38:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1783240677; bh=sRWiZQefGv8WeptAlHH3G8SJBlcfpjAileWd9a1oEfE=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=OvL57mF2rxqb6MiXblUGiMOrj8FBM5fkOsxt5Lo8CRNTY7FZ7TwB3dTf1uvQ68Zgj
- W96WqY7qbklVZXC0oiluGGv0fIAhhpp5blhEcmIYWVN0DyA8lExQtzgif/jMAOxvu/
- /lkz88U+xqM9EIfRjrHyCec/CJhitGRXrJTrK4jU=
-Received: from [192.168.1.10] ([118.116.35.199])
- by newxmesmtplogicsvrszb51-1.qq.com (NewEsmtp) with SMTP
- id 97729437; Sun, 05 Jul 2026 16:37:55 +0800
-X-QQ-mid: xmsmtpt1783240675tf068a468
-Message-ID: <tencent_A1FCB4C882DC8F1F98A462D6F490DCE75309@qq.com>
-X-QQ-XMAILINFO: MTHjzKFGhY7IJLgJhXfExtWpIlF6PQOvZ/A4sVOpfnljFlxRAK+12cJxyzGp+p
- BWqByUHdGswnH6LrBO3jcocLS8iGFx6OJsxP7vXl6JaXGJ1VkaV/sAFJNfPyZ481I8lTT19rgM2D
- Ha2tHu55h/wsR+B6W0bT5h0dYFt2P0NEE5M78sx9nC564xvalGsktU3mK+asNKiwYaiC0fMHfR9O
- RAF69UKugFOMmCWf4UnDzD66B+R0u9mH2DjYXzv7lEdvqKGhPmIlAw0loTpg7R8yTGWckUfhF1aL
- OFQ5pCTZq1Cle/2Rg7oKklB1liQgGlPNM4aJq6r/7zq6algdVxCPy1ouy9iTBQ4MnXfIrxsJGmXM
- MBLNv3gaZvpJjoJk+4x07gkGscJgdQyxHREUBQV40j0hX67QPDGuKWI5I+FVhR3nQ9MBkP0dKu6a
- lR81cLUXc/JtDdAl47tiKuFKkddTrDAdpYzoV5QXxlq1rtNfsP73+zTneEq8W3xnQStUZTf1zDvk
- iEnMpCJgC4HZcioU+vOOYcMnWoOWueERtM+ZGlPu/4uYpFIXhf5YqMNGRZa+Aq7uPOxIz2qhYAaF
- TnIxWL1197gaxUe3vtPHAOJ4QO6zBylT5Y5H7w+wg2sF7zfNxBeLMaeo7B6TFmSkdsqkokTccmVq
- t8hMvIPSFWsIVse/ygsYRU0+sWJiAIRXj+x1cuuemxaeu9SeWyvavNkwycYji2KG8h/v1puddF7I
- yyDc3bVVhqEtyfqVXIDRIMXCi75h+Zr9x3Z7/omfDq6sC22dncVbYMIBj/pOjhqgV9zPd7hlzvnm
- Y41MxlfZrDUgL38eRdQ8N9KHmz/3Ksu22C8YRv2Oq/mPGkE1yAG14VnPDbpvg+5JXSsje28nyYWj
- xqyYs1VeTDdv/JVetQK1k9Xw3SRc/CSXQ9yFZWhCFpjdeCXB3IyzRLVVu5Y3rZGeCNwpeAISTwhK
- JHlsrvnjI7jBRqLHczyZKT44NhPVxQ96TtfCkb0MOSpa/SxGPUq/4Q0fwE9S6fqlCIwDKaL4bCdA
- p6u/p9IA==
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-X-OQ-MSGID: <42ff47f5510e4e5fc1f47c5062887af34f045372.camel@qq.com>
-Subject: Re: [PATCH v2] riscv/virt: Add optional UART1
-From: Yanfeng Liu <yfliu2008@qq.com>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>, 
- qemu-riscv@nongnu.org, peter.maydell@linaro.org
-Cc: qemu-devel@nongnu.org
-Date: Sun, 05 Jul 2026 16:37:54 +0800
-In-Reply-To: <tencent_C1EF85ECC23DFCE1482A6EAD0489775ED405@qq.com>
-References: <tencent_06551FAEA44CD75E915AE611FCA0C99CDD09@qq.com>
- <24329582-f5cf-41de-aabe-c2c3d54f03ea@oss.qualcomm.com>
- <tencent_C1EF85ECC23DFCE1482A6EAD0489775ED405@qq.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4-0ubuntu2.1 
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wgIpX-00070n-GU
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 05:08:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1783242444; bh=0RO59H/kfH1vD1PlafAyDvZUQUmtgmxBNRAyD748hr4=;
+ h=Date:Subject:To:References:From:In-Reply-To;
+ b=aY8ccYKVuMbz/qCs1gslbcrYMenhEUvT/KPTkwtywkVVz0rzDngK6KZ4eqijWFxiz
+ 28MO2ep0zPL0PYpOSUkAoJLlckb1NQc1jRi2+5N/NkrAGsNhAYs868g8NVaspaJqYD
+ q+/OPu7V5TFyGrZ8+evGuhGMb1cws+/zwM3IIJAINKyb0zwIpGrawkceK5flGpw1Af
+ /5cCTCtAklXfGlkjmUkZ1u1O7gGYw4lNPiFA7YY4tM3DP7jLpzilMDoSeXJ+ALmmO3
+ OGpiAiQFc2ZZsQfO2Ov9jlonYhZDKn0X14nnosxjcR+OU4aB3i5dqTVYzoyAiIVbRY
+ bTEW8IoSjnZqw==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 5CB061BE250;
+ Sun, 05 Jul 2026 12:07:24 +0300 (MSK)
+Message-ID: <0403705b-9af4-4de1-8f66-c56befa5bae9@tls.msk.ru>
+Date: Sun, 5 Jul 2026 12:07:51 +0300
 MIME-Version: 1.0
-Received-SPF: pass client-ip=162.62.57.210; envelope-from=yfliu2008@qq.com;
- helo=out162-62-57-210.mail.qq.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: docker-image-debian-all-test-cross errors
+To: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>
+References: <4b08f4e2-2274-409a-86d8-469c73e21579@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <4b08f4e2-2274-409a-86d8-469c73e21579@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,101 +110,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 05.07.2026 00:20, Richard Henderson wrote:
+> Has anyone else been seeing
+> 
+> Error: Failed to fetch http://deb.debian.org/debian/pool/main/d/dpkg/ 
+> libdpkg-perl_1.22.21_all.deb  404  Not Found [IP: 151.101.22.132 80]
+...
 
-Resending below as I haven't seen this in mail list.
+dpkg (and all related packages) has been upgraded from 1.22.21 to
+1.22.22 version quite a while (on Mar-2026).  Initially debian trixie
+had dpkg 1.22.21.
 
-On Sat, 2026-07-04 at 09:51 +0800, Yanfeng Liu wrote:
->=20
-> Philippe,
->=20
-> Thank you!
->=20
-> Actually v1 creates UART1 carelessly, then Peter suggested following
-> 5d8a250f9068 (openrisc) and e7100972f2 (arm) to reduce breakage of
-> existing guests.
->=20
-> I looked around and noticed the `if (serial_hd())` pattern is still
-> used in arm/virt, arm/msf2-soc, arm/kzm, xrtensa/sim, and ppc/e500
-> etc.
->=20
-> Guess I need consensus before moving ahead.
->=20
-> Regards,
-> Yanfeng
->=20
->=20
-> On Fri, 2026-07-03 at 11:31 +0200, Philippe Mathieu-Daud=C3=A9 wrote:
-> > Hi,
-> >=20
-> > On 3/7/26 06:24, Yanfeng Liu wrote:
-> > > This adds optional UART1 to RiscV virt board if required at
-> > > runtime to simplify multicore development.
-> > >=20
-> > > Note that UART0 remains default serial_hd(0) and it is:
-> > >=20
-> > > - the lowest address UART
-> > > - first serial in DTB
-> > > - behind /aliases/serial0 in DTB
-> > > - the /chosen/stdout-path in DTB
-> > >=20
-> > > Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
-> > > ---
-> > > =C2=A0 docs/system/riscv/virt.rst |=C2=A0 5 ++++-
-> > > =C2=A0 hw/riscv/virt-acpi-build.c | 12 ++++++++----
-> > > =C2=A0 hw/riscv/virt.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 | 39 ++++++++++++++++++++++++++++---
-> > > --
-> > > -----
-> > > =C2=A0 include/hw/riscv/virt.h=C2=A0=C2=A0=C2=A0 |=C2=A0 3 +++
-> > > =C2=A0 4 files changed, 44 insertions(+), 15 deletions(-)
-> >=20
-> >=20
-> > > @@ -1567,6 +1579,13 @@ static void virt_machine_init(MachineState
-> > > *machine)
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0, qdev_get_gp=
-io_in(mmio_irqchip, UART0_IRQ), 399193,
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 serial_hd(0), =
-DEVICE_LITTLE_ENDIAN);
-> > > =C2=A0=20
-> > > +=C2=A0=C2=A0=C2=A0 if (serial_hd(1)) {
-> >=20
-> > Checking for chardev backend connected to map a peripheral block
-> > is an anti-pattern; the block exists on HW regardless.
-> >=20
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 serial_mm_init(system_mem=
-ory, s-
-> > > >memmap[VIRT_UART1].base,
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0=
-, qdev_get_gpio_in(mmio_irqchip, UART1_IRQ),
-> > > 399193,
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s=
-erial_hd(1), DEVICE_LITTLE_ENDIAN);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->uart1_present =3D true=
-;
-> >=20
-> > Thus we want to always instantiate all UART peripherals.
-> >=20
-> > If you drop the uart1_present field then the patch LGTM.
-> >=20
-> > > +=C2=A0=C2=A0=C2=A0 }
-> > > +
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sysbus_create_simple("goldfish_rtc", s=
--
-> > > > memmap[VIRT_RTC].base,
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qdev_get_gpio_=
-in(mmio_irqchip, RTC_IRQ));
-> > > =C2=A0=20
-> > > diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-> > > index 18a2a323a3..7d57c8292e 100644
-> > > --- a/include/hw/riscv/virt.h
-> > > +++ b/include/hw/riscv/virt.h
-> > > @@ -59,6 +59,7 @@ struct RISCVVirtState {
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int aia_guests;
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 char *oem_id;
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 char *oem_table_id;
-> > > +=C2=A0=C2=A0=C2=A0 bool uart1_present;
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 OnOffAuto acpi;
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const MemMapEntry *memmap;
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct GPEXHost *gpex_host;
+I wonder where it is getting the old version reference from?
+Should the previous layer be refreshed to point to the current trixie
+point release?
 
+/mjt
 
