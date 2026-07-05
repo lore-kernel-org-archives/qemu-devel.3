@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C827EC43602
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4E8CC43458
 	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 22:29:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgVJy-0006nO-IR; Sun, 05 Jul 2026 18:28:18 -0400
+	id 1wgVJy-0006nT-Uw; Sun, 05 Jul 2026 18:28:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1wgUwh-0002Kb-OT; Sun, 05 Jul 2026 18:04:15 -0400
+ id 1wgUwu-0002M5-5z; Sun, 05 Jul 2026 18:04:28 -0400
 Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1wgUwf-00023z-B9; Sun, 05 Jul 2026 18:04:15 -0400
+ id 1wgUwp-00024x-8K; Sun, 05 Jul 2026 18:04:27 -0400
 Received: from smtp02.univ-lille.fr (smtp02.univ-lille.fr [194.254.129.96])
- by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4gthMG5SXNz85Y8;
- Mon,  6 Jul 2026 00:03:22 +0200 (CEST)
+ by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4gthMH0W69z85Y9;
+ Mon,  6 Jul 2026 00:03:23 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1783289002;
- bh=I276WTA6G0GTG7SVq12SCXUkN5WyJYKylq0Yh4aKdhw=;
+ s=dkim; t=1783289003;
+ bh=OSguJ2MZHcJvX+sOIaneNSiE1GwVJO2D8ODtTYZVbr0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=sdTftEEMyRhEhJyXXrNcxskUcjxuB4VetDQMOCXr57LKWiHklkhq2SOdFf7lAJhjL
- OIJ4gJfgCU2I40INosvrO3mzDSaePtHaOXbMbhTQSfYHIV6aAn7rFXtz1E7tndewJ8
- 7P4hSq2eB4vfaaEAXJYrdY4sU0ywUiFu3KttZbGaKp1OaPLEzuvxScIsCVbeCpL+Sc
- PPr8IpG4aaZJx+m6aXSh6s3J0WawRlAV2BuhJbxkJIbcnzc/n0P5/4QDnhSQIL395w
- ZiPG7PVbkfSxY8rlujml2Jo+bPILVDLjlPEjQHQUfti5GjTcp3nakuodW/94v8Mxr/
- VrFksDg3VePdw==
+ b=r8nChRzdDMLqf3UdyCd1r8pdkOYXTJEI5Wk4gEQdWxFcztEBiQ5OX2sNVq7haFCfP
+ x1RSLy1T852rx//G42eKSIm+6HmuFi2s7hOFOUIUP75aVnDlM9wqq9IkhUCTM+56FE
+ kX2kgbcAN/AaEATd9fQgsXjqEXCwZjCYBSfuVlcGhyyMbIpv9rSHsyUUHwBb1guZpp
+ 4Gq3Iv3hE9i0bGiAbdqTp8DxOP4aeT5RP/ji8JAe5P6dJLgYAP4QpP6lpeeDrCVDVn
+ AWM1I2vXzASIXdjSdLFepJ3PdiljolZhsbka2/hBKkYMdTjNZgh5cG7kuTPasxmbIl
+ zT0xHuzYAVrDg==
 Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
  [90.45.87.101]) (Authenticated sender: gilles.grimaud)
- by smtp02.univ-lille.fr (Postfix) with ESMTPSA id 4gthMG4LP5z6sT6;
+ by smtp02.univ-lille.fr (Postfix) with ESMTPSA id 4gthMG6SgHz6sT6;
  Mon,  6 Jul 2026 00:03:22 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-Subject: [PATCH RFC v1 6/9] scripts: add UF2 to RP2040 flash image converter
-Date: Mon,  6 Jul 2026 00:03:17 +0200
-Message-ID: <20260705220320.90395-7-gilles.grimaud@univ-lille.fr>
+Subject: [PATCH RFC v1 8/9] tests/functional: add Raspberry Pi Pico tests
+Date: Mon,  6 Jul 2026 00:03:19 +0200
+Message-ID: <20260705220320.90395-9-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260705220320.90395-1-gilles.grimaud@univ-lille.fr>
 References: <20260705220320.90395-1-gilles.grimaud@univ-lille.fr>
@@ -72,482 +72,1330 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a helper script that converts RP2040 UF2 payloads into raw flash images. This mirrors the machine's UF2 loading path and is useful when preparing persistent flash-file inputs outside QEMU.
+Add functional Raspberry Pi Pico tests covering synthetic ROM startup, UART output, flash persistence, UF2 loading, DMA/UART paths, dual-core startup, flash helper shortcuts, random source configuration and selected Pico SDK-style workloads.
 
 Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 ---
- scripts/uf2-to-flash.py | 462 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 462 insertions(+)
- create mode 100755 scripts/uf2-to-flash.py
+ tests/functional/arm/meson.build        |    2 +
+ tests/functional/arm/test_raspi_pico.py | 1289 +++++++++++++++++++++++
+ 2 files changed, 1291 insertions(+)
+ create mode 100644 tests/functional/arm/test_raspi_pico.py
 
-diff --git a/scripts/uf2-to-flash.py b/scripts/uf2-to-flash.py
-new file mode 100755
-index 0000000000..f1c0fcbbbb
+diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
+index 61b00932db..0e3bebd5dc 100644
+--- a/tests/functional/arm/meson.build
++++ b/tests/functional/arm/meson.build
+@@ -22,6 +22,7 @@ test_arm_timeouts = {
+   'cubieboard' : 360,
+   'orangepi' : 540,
+   'quanta_gsj' : 240,
++  'raspi_pico' : 30,
+   'raspi2' : 120,
+   'replay' : 240,
+   'tuxrun' : 240,
+@@ -30,6 +31,7 @@ test_arm_timeouts = {
+ 
+ tests_arm_system_quick = [
+   'migration',
++  'raspi_pico',
+ ]
+ 
+ tests_arm_system_thorough = [
+diff --git a/tests/functional/arm/test_raspi_pico.py b/tests/functional/arm/test_raspi_pico.py
+new file mode 100644
+index 0000000000..c0ddc018b8
 --- /dev/null
-+++ b/scripts/uf2-to-flash.py
-@@ -0,0 +1,462 @@
++++ b/tests/functional/arm/test_raspi_pico.py
+@@ -0,0 +1,1289 @@
 +#!/usr/bin/env python3
++#
++# Functional test that checks the Raspberry Pi Pico machine.
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+"""
-+uf2-to-flash.py
-+
-+Convert a Raspberry Pi Pico UF2 file into a raw flash image.
-+
-+This tool implements the simple and practical conversion model used for
-+QEMU-style emulation:
-+
-+    UF2 target address 0x10000000 + offset  ->  flash image offset
-+
-+The output file is not a FAT image. It is a raw representation of the
-+external QSPI flash contents after UF2 programming.
-+
-+Supported input model:
-+    - RP2040 / Pico 1 UF2 files, family ID 0xE48BFF56.
-+    - RP2350 / Pico 2 UF2 files are detected and converted linearly,
-+      but RP2350 partition remapping is not implemented.
-+
-+Usage:
-+    scripts/uf2-to-flash.py firmware.uf2 flash.img
-+    scripts/uf2-to-flash.py flash.img firmware.uf2
-+
-+If the two arguments are provided in reverse order, the .uf2 extension is
-+used to detect the input file.
-+"""
-+
 +import os
-+import sys
++import socket
 +import struct
++import subprocess
++import time
++
++from qemu_test import QemuSystemTest, wait_for_console_pattern
 +
 +
-+UF2_MAGIC_START0 = 0x0A324655
-+UF2_MAGIC_START1 = 0x9E5D5157
-+UF2_MAGIC_END = 0x0AB16F30
++class RaspiPicoMachine(QemuSystemTest):
 +
-+UF2_BLOCK_SIZE = 512
-+UF2_HEADER_SIZE = 32
++    UF2_MAGIC_START0 = 0x0A324655
++    UF2_MAGIC_START1 = 0x9E5D5157
++    UF2_MAGIC_END = 0x0AB16F30
++    UF2_FLAG_FAMILY_ID_PRESENT = 0x00002000
++    RP2040_FAMILY_ID = 0xE48BFF56
 +
-+FLAG_NOT_MAIN_FLASH = 0x00000001
-+FLAG_FAMILY_ID_PRESENT = 0x00002000
++    def set_direct_uart_machine(self):
++        self.set_machine('raspi-pico')
++        self.vm.set_machine('raspi-pico,strict-uart-pins=off')
 +
-+RP2040_FAMILY_ID = 0xE48BFF56
++    def pipico_rom(self):
++        rom = os.getenv('QEMU_TEST_PIPICO_ROM')
++        if rom:
++            if os.path.exists(rom):
++                return rom
++            self.skipTest(f'QEMU_TEST_PIPICO_ROM does not exist: {rom}')
 +
-+# Usual RP2350 / Pico 2 family IDs.
-+# They are detected for diagnostics. This script does not implement
-+# RP2350 partition table remapping.
-+RP2350_FAMILY_IDS = {
-+    0xE48BFF58: "rp2350-arm-secure",
-+    0xE48BFF59: "rp2350-arm-nonsecure",
-+    0xE48BFF5A: "rp2350-riscv",
-+    0xE48BFF5B: "data-or-absolute",
-+}
++        rom = os.path.join(os.getcwd(), 'pc-bios', 'pipico.rom')
++        if os.path.exists(rom):
++            return rom
 +
-+XIP_BASE = 0x10000000
++        self.skipTest('pipico.rom not available; set QEMU_TEST_PIPICO_ROM')
 +
-+# RP2040 UF2 flash window: 0x10000000 .. 0x11000000
-+PICO1_FLASH_WINDOW_SIZE = 16 * 1024 * 1024
++    # Minimal Cortex-M0+ raw image linked for XIP at 0x10000000. It contains a
++    # vector table and writes "PICO UART OK\n" to UART0 at 0x40034000.
++    UART_TEST_BIN = bytes([
++        0x00, 0x20, 0x04, 0x20, 0x09, 0x00, 0x00, 0x10,
++        0x07, 0x48, 0x08, 0x4a, 0x11, 0x78, 0x00, 0x29,
++        0x02, 0xd0, 0x01, 0x60, 0x01, 0x32, 0xf9, 0xe7,
++        0xfe, 0xe7, 0x50, 0x49, 0x43, 0x4f, 0x20, 0x55,
++        0x41, 0x52, 0x54, 0x20, 0x4f, 0x4b, 0x0a, 0x00,
++        0x00, 0x40, 0x03, 0x40, 0x1a, 0x00, 0x00, 0x10,
++    ])
 +
-+# RP2350 UF2 flash window: 0x10000000 .. 0x12000000
-+PICO2_FLASH_WINDOW_SIZE = 32 * 1024 * 1024
++    # Arms TIMER alarm 0, waits for the NVIC IRQ0 handler to run, then writes
++    # "TIMER OK\n" to UART0.
++    TIMER_ALARM_TEST_BIN = bytes([
++        0x00, 0x20, 0x04, 0x20, 0x45, 0x00, 0x00, 0x10,
++        0x6d, 0x00, 0x00, 0x10, 0x6d, 0x00, 0x00, 0x10,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++        0x6f, 0x00, 0x00, 0x10,
++        0x14, 0x48, 0x00, 0x21, 0x01, 0x60, 0x14, 0x48,
++        0x01, 0x21, 0x01, 0x60, 0x13, 0x4c, 0x61, 0x63,
++        0xa1, 0x63, 0xa2, 0x6a, 0x64, 0x23, 0xd2, 0x18,
++        0x22, 0x61, 0x0e, 0x48, 0x01, 0x68, 0x00, 0x29,
++        0xfb, 0xd0, 0x0f, 0x48, 0x00, 0xf0, 0x07, 0xf8,
++        0xfe, 0xe7, 0x0c, 0x48, 0x01, 0x21, 0x41, 0x63,
++        0x08, 0x48, 0x01, 0x60, 0x70, 0x47, 0x0b, 0x4a,
++        0x01, 0x78, 0x00, 0x29, 0x02, 0xd0, 0x11, 0x60,
++        0x01, 0x30, 0xf9, 0xe7, 0x70, 0x47, 0xc0, 0x46,
++        0x54, 0x49, 0x4d, 0x45, 0x52, 0x20, 0x4f, 0x4b,
++        0x0a, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20,
++        0x00, 0xe1,
++        0x00, 0xe0, 0x00, 0x40, 0x05, 0x40, 0x8c, 0x00,
++        0x00, 0x10, 0x00, 0x40, 0x03, 0x40,
++    ])
 +
++    # Verifies the RP2040 SIO view seen from core 0: CPUID, FIFO ready bit,
++    # read-on-empty sticky flag and write-one-to-clear behavior.
++    SIO_FIFO_TEST_BIN = bytes([
++        0x00, 0x20, 0x04, 0x20, 0x11, 0x00, 0x00, 0x10,
++        0x3b, 0x00, 0x00, 0x10, 0x3b, 0x00, 0x00, 0x10,
++        0x18, 0x4c, 0x20, 0x68, 0x00, 0x28, 0x10, 0xd1,
++        0x20, 0x6d, 0x02, 0x21, 0x08, 0x42, 0x0c, 0xd0,
++        0xa0, 0x6d, 0x20, 0x6d, 0x08, 0x21, 0x08, 0x42,
++        0x07, 0xd0, 0x21, 0x65, 0x20, 0x6d, 0x08, 0x42,
++        0x03, 0xd1, 0x11, 0x48, 0x00, 0xf0, 0x05, 0xf8,
++        0xfe, 0xe7, 0x10, 0x48, 0x00, 0xf0, 0x01, 0xf8,
++        0xfe, 0xe7, 0x0f, 0x4a, 0x01, 0x78, 0x00, 0x29,
++        0x02, 0xd0, 0x11, 0x60, 0x01, 0x30, 0xf9, 0xe7,
++        0x70, 0x47, 0xc0, 0x46, 0x53, 0x49, 0x4f, 0x20,
++        0x43, 0x4f, 0x52, 0x45, 0x30, 0x20, 0x4f, 0x4b,
++        0x0a, 0x00, 0x53, 0x49, 0x4f, 0x20, 0x43, 0x4f,
++        0x52, 0x45, 0x30, 0x20, 0x46, 0x41, 0x49, 0x4c,
++        0x0a, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xd0,
++        0x54, 0x00, 0x00, 0x10, 0x62, 0x00, 0x00, 0x10,
++        0x00, 0x40, 0x03, 0x40,
++    ])
 +
-+def print_help() -> None:
-+    """Print a minimal usage message."""
++    # Verifies the RP2040 SIO hardware divider: unsigned and signed division,
++    # division by zero, result save/restore writes, and CSR READY/DIRTY.
++    SIO_DIVIDER_TEST_BIN = bytes([
++        0x00, 0x20, 0x04, 0x20, 0x09, 0x00, 0x00, 0x10,
++        0x37, 0x4c, 0x64, 0x20, 0x20, 0x66, 0x07, 0x20,
++        0x60, 0x66, 0xa0, 0x6f, 0x35, 0x4a, 0x90, 0x42,
++        0x00, 0xd0, 0x4b, 0xe0, 0x60, 0x6f, 0x34, 0x4a,
++        0x90, 0x42, 0x00, 0xd0, 0x46, 0xe0, 0xa0, 0x6f,
++        0x30, 0x4a, 0x90, 0x42, 0x00, 0xd0, 0x41, 0xe0,
++        0x20, 0x6f, 0x30, 0x4a, 0x90, 0x42, 0x00, 0xd0,
++        0x3c, 0xe0, 0xa0, 0x6f, 0x2e, 0x4a, 0x90, 0x42,
++        0x00, 0xd0, 0x37, 0xe0, 0x2d, 0x48, 0xa0, 0x66,
++        0x07, 0x20, 0xe0, 0x66, 0x60, 0x6f, 0x2c, 0x4a,
++        0x90, 0x42, 0x00, 0xd0, 0x2e, 0xe0, 0x20, 0x6f,
++        0x2a, 0x4a, 0x90, 0x42, 0x00, 0xd0, 0x29, 0xe0,
++        0x29, 0x48, 0x20, 0x66, 0x00, 0x20, 0x60, 0x66,
++        0x60, 0x6f, 0x27, 0x4a, 0x90, 0x42, 0x00, 0xd0,
++        0x20, 0xe0, 0x20, 0x6f, 0x25, 0x4a, 0x90, 0x42,
++        0x00, 0xd0, 0x1b, 0xe0, 0x24, 0x48, 0x60, 0x67,
++        0x24, 0x48, 0x20, 0x67, 0xa0, 0x6f, 0x19, 0x4a,
++        0x90, 0x42, 0x00, 0xd0, 0x12, 0xe0, 0x60, 0x6f,
++        0x1f, 0x4a, 0x90, 0x42, 0x00, 0xd0, 0x0d, 0xe0,
++        0x20, 0x6f, 0x1e, 0x4a, 0x90, 0x42, 0x00, 0xd0,
++        0x08, 0xe0, 0xa0, 0x6f, 0x14, 0x4a, 0x90, 0x42,
++        0x00, 0xd0, 0x03, 0xe0, 0x1a, 0x48, 0x00, 0xf0,
++        0x05, 0xf8, 0xfe, 0xe7, 0x19, 0x48, 0x00, 0xf0,
++        0x01, 0xf8, 0xfe, 0xe7, 0x18, 0x4a, 0x01, 0x78,
++        0x00, 0x29, 0x02, 0xd0, 0x11, 0x60, 0x01, 0x30,
++        0xf9, 0xe7, 0x70, 0x47, 0x53, 0x49, 0x4f, 0x20,
++        0x44, 0x49, 0x56, 0x20, 0x4f, 0x4b, 0x0a, 0x00,
++        0x53, 0x49, 0x4f, 0x20, 0x44, 0x49, 0x56, 0x20,
++        0x46, 0x41, 0x49, 0x4c, 0x0a, 0x00, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0xd0, 0x03, 0x00, 0x00, 0x00,
++        0x02, 0x00, 0x00, 0x00, 0x0e, 0x00, 0x00, 0x00,
++        0x01, 0x00, 0x00, 0x00, 0x9c, 0xff, 0xff, 0xff,
++        0xfe, 0xff, 0xff, 0xff, 0xf2, 0xff, 0xff, 0xff,
++        0x34, 0x12, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff,
++        0xdd, 0xcc, 0xbb, 0xaa, 0x44, 0x33, 0x22, 0x11,
++        0xcc, 0x00, 0x00, 0x10, 0xd8, 0x00, 0x00, 0x10,
++        0x00, 0x40, 0x03, 0x40,
++    ])
 +
-+    program_name = os.path.basename(sys.argv[0])
++    # Verifies the initial PSM PROC1 force-off state, the derived DONE bit,
++    # and the RP2040 atomic SET/CLR aliases used by the Pico SDK.
++    PSM_PROC1_TEST_BIN = bytes([
++        0x00, 0x20, 0x04, 0x20, 0x11, 0x00, 0x00, 0x10,
++        0x4b, 0x00, 0x00, 0x10, 0x4b, 0x00, 0x00, 0x10,
++        0x19, 0x4c, 0x1a, 0x4d, 0x1a, 0x4e, 0x20, 0x68,
++        0x28, 0x42, 0x16, 0xd1, 0x30, 0x68, 0x28, 0x42,
++        0x13, 0xd0, 0x18, 0x49, 0x0d, 0x60, 0x20, 0x68,
++        0x28, 0x42, 0x0e, 0xd0, 0x30, 0x68, 0x28, 0x42,
++        0x0b, 0xd1, 0x15, 0x49, 0x0d, 0x60, 0x20, 0x68,
++        0x28, 0x42, 0x06, 0xd1, 0x30, 0x68, 0x28, 0x42,
++        0x03, 0xd0, 0x12, 0x48, 0x00, 0xf0, 0x05, 0xf8,
++        0xfe, 0xe7, 0x11, 0x48, 0x00, 0xf0, 0x01, 0xf8,
++        0xfe, 0xe7, 0x10, 0x4a, 0x01, 0x78, 0x00, 0x29,
++        0x02, 0xd0, 0x11, 0x60, 0x01, 0x30, 0xf9, 0xe7,
++        0x70, 0x47, 0xc0, 0x46, 0x50, 0x53, 0x4d, 0x20,
++        0x4f, 0x4b, 0x0a, 0x00, 0x50, 0x53, 0x4d, 0x20,
++        0x46, 0x41, 0x49, 0x4c, 0x0a, 0x00, 0x00, 0x00,
++        0x04, 0x00, 0x01, 0x40, 0x00, 0x00, 0x01, 0x00,
++        0x0c, 0x00, 0x01, 0x40, 0x04, 0x20, 0x01, 0x40,
++        0x04, 0x30, 0x01, 0x40, 0x64, 0x00, 0x00, 0x10,
++        0x6c, 0x00, 0x00, 0x10, 0x00, 0x40, 0x03, 0x40,
++    ])
 +
-+    print("Usage:")
-+    print(f"  {program_name} firmware.uf2 flash.img")
-+    print()
-+    print("Convert a Raspberry Pi Pico UF2 file into a raw flash image.")
-+    print("Exactly one argument must have the .uf2 extension, the other")
-+    print("is used as the raw flash output file.")
-+    print()
-+    print("Examples:")
-+    print(f"  {program_name} blink.uf2 flash.img")
-+    print(f"  {program_name} flash.raw blink.uf2")
++    # Core 0 sends the Pico SDK multicore_launch_core1_raw() FIFO sequence to
++    # synthetic ROM on core 1. Core 1 echoes the sequence, jumps to the
++    # supplied entry point, calls send_ack() using the supplied stack, and
++    # sends 0xd01e back through FIFO.
++    CORE1_WORKING_TEST_BIN = bytes([
++        0x00, 0x20, 0x04, 0x20, 0x11, 0x00, 0x00, 0x10,
++        0x55, 0x00, 0x00, 0x10, 0x55, 0x00, 0x00, 0x10,
++        0x2f, 0x4c, 0x00, 0x27, 0x06, 0x2f, 0x0b, 0xd0,
++        0xb8, 0x00, 0x2e, 0x4e, 0x36, 0x58, 0x30, 0x46,
++        0x00, 0xf0, 0x22, 0xf8, 0x00, 0xf0, 0x1a, 0xf8,
++        0xb0, 0x42, 0x13, 0xd1, 0x01, 0x37, 0xf1, 0xe7,
++        0x00, 0xf0, 0x14, 0xf8, 0x28, 0x49, 0x88, 0x42,
++        0x0c, 0xd1, 0x28, 0x48, 0x00, 0xf0, 0x1a, 0xf8,
++        0xfe, 0xe7, 0x00, 0xf0, 0x01, 0xf8, 0xfe, 0xe7,
++        0x00, 0xb5, 0x21, 0x4c, 0x22, 0x48, 0x00, 0xf0,
++        0x0b, 0xf8, 0x00, 0xbd, 0x22, 0x48, 0x00, 0xf0,
++        0x0d, 0xf8, 0xfe, 0xe7, 0x20, 0x6d, 0x01, 0x21,
++        0x08, 0x42, 0xfb, 0xd0, 0xa0, 0x6d, 0x70, 0x47,
++        0x21, 0x6d, 0x02, 0x22, 0x11, 0x42, 0xfb, 0xd0,
++        0x60, 0x65, 0x70, 0x47, 0x1b, 0x4a, 0x01, 0x78,
++        0x00, 0x29, 0x02, 0xd0, 0x11, 0x60, 0x01, 0x30,
++        0xf9, 0xe7, 0x70, 0x47,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++        0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10,
++        0x00, 0x10, 0x04, 0x20, 0x43, 0x00, 0x00, 0x10,
++        0x63, 0x6f, 0x72, 0x65, 0x20, 0x30, 0x20, 0x61,
++        0x6e, 0x64, 0x20, 0x63, 0x6f, 0x72, 0x65, 0x20,
++        0x31, 0x20, 0x77, 0x6f, 0x72, 0x6b, 0x69, 0x6e,
++        0x67, 0x20, 0x21, 0x0a, 0x00, 0x43, 0x4f, 0x52,
++        0x45, 0x31, 0x20, 0x57, 0x4f, 0x52, 0x4b, 0x49,
++        0x4e, 0x47, 0x20, 0x46, 0x41, 0x49, 0x4c, 0x0a,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xd0,
++        0x84, 0x00, 0x00, 0x10, 0x1e, 0xd0, 0x00, 0x00,
++        0x9c, 0x00, 0x00, 0x10, 0xb9, 0x00, 0x00, 0x10,
++        0x00, 0x40, 0x03, 0x40,
++    ])
 +
++    # No-SDK regression derived from the Pico SDK flash_safe_execute smoke
++    # test. Core 0 launches core 1 through the synthetic ROM FIFO protocol,
++    # core 1 installs a FIFO IRQ lockout handler, core 0 takes a SIO spinlock,
++    # locks out core 1, calls the synthetic flash_range_erase/program helpers,
++    # verifies XIP contents and helper counters, then releases core 1.
++    FLASH_SAFE_MULTICORE_TEST_BIN = bytes.fromhex(
++        '00200420010100108b0200108b02001000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '4701001000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '00f03cf800f050f8704800f095f840bf6f4800f0aaf800f050f86e4800f08cf8'
++        '40bf6d4800f0a1f800f043f86b4800f0a3f8fee76a486b4901606b486b490160'
++        '62b620bffde71fb4744600f07df85f49884210d15e4800f06ff820bf6448016d'
++        '01200142f9d000f06ff85a49884202d1594800f061f80fbc01b0204730b55d4c'
++        '06252068002803d100f066f840bf206800f052f840bf00f057f82168884274d1'
++        '0434013dedd130bd5348016800296cd07047514800210160704770b54f480021'
++        '002201231b028154013101329a42fad14b4c4c48606001200003a0600020e060'
++        '202020614848206048480021002201231b02855cff26b54247d101329a42f8d1'
++        '404860603d48a06001200002e060404820603e480021002201231b02855c8d42'
++        '33d1013101329a42f8d1206d01282cd1606d012829d170bd0eb52d490a6d0223'
++        '1a42fbd048650ebd0eb529490a6d01231a42fbd0886d0ebd0fb525490a6d0123'
++        '1a4201d0886df9e70fbd10b50446fff7ebffa04209d110bd06b526490278002a'
++        '02d00a600130f9e706bd2348fff7f4fffee7c046000000000000000001000000'
++        '000000100010042035010010464c4153482053414645204f4b0a00464c415348'
++        '2053414645204641494c0a00edfecefa0100cefaefbecefa0200cefaac020010'
++        '08ed00e00000001000e100e000000100000000d094020010000100d000000020'
++        '0000ff5f0010100052450000001010105250000000400340bb020010'
++    )
 +
-+def get_extension(path: str) -> str:
-+    """Return the lowercase extension of a path."""
++    # Similar to FLASH_SAFE_MULTICORE_TEST_BIN, but after locking out core 1
++    # in SRAM it starts a page program through the low-level SSI path and
++    # verifies that an XIP read while the flash is busy raises HardFault.
++    FLASH_BUSY_LOCKOUT_TEST_BIN = bytes.fromhex(
++        '0020042001010010e5010010e501001000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        'e501001000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '664800f066f800f027f800f00ff800f02ef8634800f03df840bf624800f052f8'
++        '614800f056f800f027f85be030b55f4c06252068002803d100f03bf840bf2068'
++        '00f027f840bf00f02cf82168884249d10434013dedd130bd55485649564a9042'
++        '04d203680b6004300431f8e7704753480168002936d0704751485249524a9042'
++        '04d203680b6004300431f8e74d48013000470eb54d490a6d02231a42fbd04865'
++        '0ebd0eb549490a6d01231a42fbd0886d0ebd0fb545490a6d01231a4201d0886d'
++        'f9e70fbd10b50446fff7ebffa04209d110bd06b53e490278002a02d00a600130'
++        'f9e706bd3b48fff7f4fffee73a483b490160002141603a49314a891a314a8918'
++        'c16038483449016037485a210160374c0120a060206106202066002020610120'
++        '2061022020661020206610202066002020665a202066002020612d4800782d48'
++        '1f49401a1f49401800f009f8fee72a481b49401a1b49401800f001f8fee71c49'
++        '0278002a02d00a600130f9e77047c046464c4153482042555359204c4f434b4f'
++        '5554204f4b0a00464c4153482042555359204e4f204641554c540a00c1040010'
++        'edfecefa0100cefad304001064040010fc0200100010002064040010000100d0'
++        'ec01001000010020fc020010000000d000400340930400100000002000200420'
++        '4f02001008ed00e0000200200000001800101010870200107002001000100420'
++        '0111002000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000013110020'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000000000000'
++        '0000000000000000000000000000000000000000000000000000000012481349'
++        '016013481349016062b620bffde71fb4744600f012f81049884204d10f4800f0'
++        '05f820bffde70fbc01b020470c490a6d02231a42fbd04865704709490a6d0123'
++        '1a42fbd0886d704708ed00e00010002000e100e000000100edfecefa0100cefa'
++        '000000d0000000000000000001000000001000200010042001110020464c4153'
++        '482042555359204c4f434b4f5554204f4b0a00464c4153482042555359204c4f'
++        '434b4f5554204641494c0a00464c4153482042555359204e4f204641554c540a'
++        '00464c41534820425553592053544152540a00464c4153482042555359204c4f'
++        '434b45440a00c046'
++    )
 +
-+    return os.path.splitext(path)[1].lower()
++    # Calls synthetic boot ROM helpers through the RP2040 rom_table_lookup()
++    # ABI and verifies bit, byte-memory, and word-memory helper results.
++    BOOTROM_HELPERS_TEST_BIN = bytes([
++        0x00, 0x20, 0x04, 0x20, 0x09, 0x00, 0x00, 0x10,
++        0x00, 0xf0, 0x11, 0xf8, 0x00, 0x28, 0x03, 0xd1,
++        0x48, 0x48, 0x00, 0xf0, 0x70, 0xf8, 0xfe, 0xe7,
++        0x47, 0x48, 0x00, 0xf0, 0x6c, 0xf8, 0xfe, 0xe7,
++        0x10, 0xb5, 0x46, 0x48, 0x00, 0x88, 0x46, 0x4b,
++        0x1b, 0x88, 0x98, 0x47, 0x10, 0xbd, 0x30, 0xb5,
++        0x44, 0x49, 0xff, 0xf7, 0xf5, 0xff, 0x04, 0x46,
++        0x43, 0x48, 0xa0, 0x47, 0x10, 0x28, 0x58, 0xd1,
++        0x42, 0x49, 0xff, 0xf7, 0xed, 0xff, 0x04, 0x46,
++        0x41, 0x48, 0xa0, 0x47, 0x08, 0x28, 0x50, 0xd1,
++        0x40, 0x49, 0xff, 0xf7, 0xe5, 0xff, 0x04, 0x46,
++        0x3f, 0x48, 0xa0, 0x47, 0x0f, 0x28, 0x48, 0xd1,
++        0x3e, 0x49, 0xff, 0xf7, 0xdd, 0xff, 0x04, 0x46,
++        0x3d, 0x48, 0xa0, 0x47, 0x3c, 0x49, 0x88, 0x42,
++        0x3f, 0xd1, 0x3c, 0x49, 0xff, 0xf7, 0xd4, 0xff,
++        0x04, 0x46, 0x3b, 0x48, 0x5a, 0x21, 0x04, 0x22,
++        0xa0, 0x47, 0x39, 0x4d, 0x28, 0x78, 0x5a, 0x28,
++        0x33, 0xd1, 0xe8, 0x78, 0x5a, 0x28, 0x30, 0xd1,
++        0x36, 0x49, 0xff, 0xf7, 0xc5, 0xff, 0x04, 0x46,
++        0x35, 0x4d, 0x36, 0x48, 0x28, 0x60, 0x36, 0x48,
++        0x29, 0x46, 0x04, 0x22, 0xa0, 0x47, 0x33, 0x49,
++        0x00, 0x68, 0x88, 0x42, 0x21, 0xd1, 0x33, 0x49,
++        0xff, 0xf7, 0xb6, 0xff, 0x04, 0x46, 0x32, 0x48,
++        0x32, 0x49, 0x02, 0x22, 0xa0, 0x47, 0x30, 0x4d,
++        0x28, 0x68, 0x88, 0x42, 0x15, 0xd1, 0x68, 0x68,
++        0x88, 0x42, 0x12, 0xd1, 0x2e, 0x49, 0xff, 0xf7,
++        0xa7, 0xff, 0x04, 0x46, 0x2d, 0x4d, 0x2e, 0x48,
++        0x28, 0x60, 0x2e, 0x48, 0x68, 0x60, 0x2e, 0x48,
++        0x29, 0x46, 0x02, 0x22, 0xa0, 0x47, 0x2a, 0x49,
++        0x00, 0x68, 0x88, 0x42, 0x01, 0xd1, 0x00, 0x20,
++        0x30, 0xbd, 0x01, 0x20, 0x30, 0xbd, 0x29, 0x4a,
++        0x01, 0x78, 0x00, 0x29, 0x02, 0xd0, 0x11, 0x60,
++        0x01, 0x30, 0xf9, 0xe7, 0x70, 0x47, 0xc0, 0x46,
++        0x42, 0x4f, 0x4f, 0x54, 0x52, 0x4f, 0x4d, 0x20,
++        0x48, 0x45, 0x4c, 0x50, 0x45, 0x52, 0x53, 0x20,
++        0x4f, 0x4b, 0x0a, 0x00, 0x42, 0x4f, 0x4f, 0x54,
++        0x52, 0x4f, 0x4d, 0x20, 0x48, 0x45, 0x4c, 0x50,
++        0x45, 0x52, 0x53, 0x20, 0x46, 0x41, 0x49, 0x4c,
++        0x0a, 0x00, 0x00, 0x00, 0x08, 0x01, 0x00, 0x10,
++        0x1c, 0x01, 0x00, 0x10, 0x14, 0x00, 0x00, 0x00,
++        0x18, 0x00, 0x00, 0x00, 0x50, 0x33, 0x00, 0x00,
++        0x0f, 0xf0, 0xf0, 0xf0, 0x4c, 0x33, 0x00, 0x00,
++        0x00, 0x00, 0xf0, 0x00, 0x54, 0x33, 0x00, 0x00,
++        0x00, 0x80, 0x00, 0x00, 0x52, 0x33, 0x00, 0x00,
++        0x01, 0x00, 0x00, 0x80, 0x4d, 0x53, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0x20, 0x4d, 0x43, 0x00, 0x00,
++        0x10, 0x00, 0x00, 0x20, 0x44, 0x33, 0x22, 0x11,
++        0x20, 0x00, 0x00, 0x20, 0x53, 0x34, 0x00, 0x00,
++        0x30, 0x00, 0x00, 0x20, 0x5a, 0x5a, 0xa5, 0xa5,
++        0x43, 0x34, 0x00, 0x00, 0x40, 0x00, 0x00, 0x20,
++        0x88, 0x77, 0x66, 0x55, 0xcc, 0xbb, 0xaa, 0x99,
++        0x50, 0x00, 0x00, 0x20, 0x00, 0x40, 0x03, 0x40,
++    ])
 +
++    # Calls synthetic RP2040 boot ROM SF/SD table helpers directly and checks
++    # representative single/double arithmetic and conversion results.
++    BOOTROM_FLOAT_TEST_BIN = bytes([
++        0x00, 0x20, 0x04, 0x20, 0x09, 0x00, 0x00, 0x10,
++        0x4a, 0x4c, 0x23, 0x78, 0x65, 0x78, 0x2d, 0x02,
++        0x2b, 0x43, 0xa5, 0x78, 0x2d, 0x04, 0x2b, 0x43,
++        0xe5, 0x78, 0x2d, 0x06, 0x2b, 0x43, 0x1c, 0x46,
++        0x45, 0x48, 0x46, 0x49, 0xa0, 0x47, 0x46, 0x4a,
++        0x90, 0x42, 0x62, 0xd1, 0x45, 0x4c, 0x23, 0x78,
++        0x65, 0x78, 0x2d, 0x02, 0x2b, 0x43, 0xa5, 0x78,
++        0x2d, 0x04, 0x2b, 0x43, 0xe5, 0x78, 0x2d, 0x06,
++        0x2b, 0x43, 0x1c, 0x46, 0x3e, 0x48, 0x40, 0x49,
++        0xa0, 0x47, 0x40, 0x4a, 0x90, 0x42, 0x50, 0xd1,
++        0x3f, 0x4c, 0x23, 0x78, 0x65, 0x78, 0x2d, 0x02,
++        0x2b, 0x43, 0xa5, 0x78, 0x2d, 0x04, 0x2b, 0x43,
++        0xe5, 0x78, 0x2d, 0x06, 0x2b, 0x43, 0x1c, 0x46,
++        0x38, 0x48, 0x3a, 0x49, 0xa0, 0x47, 0x33, 0x4a,
++        0x90, 0x42, 0x3e, 0xd1, 0x38, 0x4c, 0x23, 0x78,
++        0x65, 0x78, 0x2d, 0x02, 0x2b, 0x43, 0xa5, 0x78,
++        0x2d, 0x04, 0x2b, 0x43, 0xe5, 0x78, 0x2d, 0x06,
++        0x2b, 0x43, 0x1c, 0x46, 0x2a, 0x48, 0xa0, 0x47,
++        0x00, 0x28, 0x2e, 0xd1, 0x31, 0x4a, 0x91, 0x42,
++        0x2b, 0xd1, 0x31, 0x4c, 0x23, 0x78, 0x65, 0x78,
++        0x2d, 0x02, 0x2b, 0x43, 0xa5, 0x78, 0x2d, 0x04,
++        0x2b, 0x43, 0xe5, 0x78, 0x2d, 0x06, 0x2b, 0x43,
++        0x1c, 0x46, 0x00, 0x20, 0x2b, 0x49, 0x00, 0x22,
++        0x2b, 0x4b, 0xa0, 0x47, 0x00, 0x28, 0x18, 0xd1,
++        0x2a, 0x4a, 0x91, 0x42, 0x15, 0xd1, 0x2a, 0x4c,
++        0x23, 0x78, 0x65, 0x78, 0x2d, 0x02, 0x2b, 0x43,
++        0xa5, 0x78, 0x2d, 0x04, 0x2b, 0x43, 0xe5, 0x78,
++        0x2d, 0x06, 0x2b, 0x43, 0x1c, 0x46, 0x00, 0x20,
++        0x20, 0x49, 0xa0, 0x47, 0x23, 0x4a, 0x90, 0x42,
++        0x03, 0xd1, 0x23, 0x48, 0x00, 0xf0, 0x05, 0xf8,
++        0xfe, 0xe7, 0x22, 0x48, 0x00, 0xf0, 0x01, 0xf8,
++        0xfe, 0xe7, 0x21, 0x4a, 0x01, 0x78, 0x00, 0x29,
++        0x02, 0xd0, 0x11, 0x60, 0x01, 0x30, 0xf9, 0xe7,
++        0x70, 0x47, 0xc0, 0x46, 0x42, 0x4f, 0x4f, 0x54,
++        0x52, 0x4f, 0x4d, 0x20, 0x46, 0x4c, 0x4f, 0x41,
++        0x54, 0x20, 0x4f, 0x4b, 0x0a, 0x00, 0x42, 0x4f,
++        0x4f, 0x54, 0x52, 0x4f, 0x4d, 0x20, 0x46, 0x4c,
++        0x4f, 0x41, 0x54, 0x20, 0x46, 0x41, 0x49, 0x4c,
++        0x0a, 0x00, 0x00, 0x00, 0xc2, 0x03, 0x00, 0x00,
++        0x00, 0x00, 0xa0, 0x3f, 0x00, 0x00, 0x20, 0x40,
++        0x00, 0x00, 0x70, 0x40, 0xca, 0x03, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0xf0, 0x40,
++        0xce, 0x03, 0x00, 0x00, 0x00, 0x00, 0x40, 0x40,
++        0x3e, 0x04, 0x00, 0x00, 0x00, 0x00, 0xf4, 0x3f,
++        0x62, 0x04, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x3f,
++        0x00, 0x00, 0x10, 0x40, 0x00, 0x00, 0x16, 0x40,
++        0xde, 0x04, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x3f,
++        0x0c, 0x01, 0x00, 0x10, 0x1e, 0x01, 0x00, 0x10,
++        0x00, 0x40, 0x03, 0x40,
++    ])
 +
-+def detect_input_output(arguments: list[str]) -> tuple[str, str]:
-+    """
-+    Detect the UF2 input file and the raw image output file.
++    # Exercises DMA channel 0 as a synchronous memory copy engine, then as a
++    # fill engine by keeping READ_ADDR fixed and incrementing WRITE_ADDR.
++    DMA_TEST_BIN = bytes([
++        0x00, 0x20, 0x04, 0x20, 0x11, 0x00, 0x00, 0x10,
++        0x95, 0x00, 0x00, 0x10, 0x95, 0x00, 0x00, 0x10,
++        0x2e, 0x4c, 0x2f, 0x4d, 0x01, 0x23, 0x9b, 0x02,
++        0x1b, 0x19, 0x2e, 0x48, 0x28, 0x60, 0x2e, 0x48,
++        0x68, 0x60, 0x01, 0x20, 0x00, 0x03, 0x18, 0x60,
++        0x25, 0x60, 0x10, 0x20, 0x40, 0x19, 0x60, 0x60,
++        0x02, 0x20, 0xa0, 0x60, 0x29, 0x48, 0xe0, 0x60,
++        0x28, 0x69, 0x26, 0x49, 0x88, 0x42, 0x25, 0xd1,
++        0x68, 0x69, 0x25, 0x49, 0x88, 0x42, 0x21, 0xd1,
++        0x18, 0x68, 0x01, 0x21, 0x08, 0x42, 0x1d, 0xd0,
++        0x19, 0x60, 0x18, 0x68, 0x08, 0x42, 0x19, 0xd1,
++        0x21, 0x48, 0x28, 0x62, 0x20, 0x20, 0x40, 0x19,
++        0x20, 0x60, 0x30, 0x20, 0x40, 0x19, 0x60, 0x60,
++        0x03, 0x20, 0xa0, 0x60, 0x1d, 0x48, 0xe0, 0x60,
++        0x1b, 0x49, 0x28, 0x6b, 0x88, 0x42, 0x09, 0xd1,
++        0x68, 0x6b, 0x88, 0x42, 0x06, 0xd1, 0xa8, 0x6b,
++        0x88, 0x42, 0x03, 0xd1, 0x18, 0x48, 0x00, 0xf0,
++        0x09, 0xf8, 0xfe, 0xe7, 0x17, 0x48, 0x00, 0xf0,
++        0x05, 0xf8, 0xfa, 0xe7, 0x16, 0x48, 0x00, 0xf0,
++        0x01, 0xf8, 0xf6, 0xe7, 0x15, 0x4a, 0x01, 0x78,
++        0x00, 0x29, 0x02, 0xd0, 0x11, 0x60, 0x01, 0x30,
++        0xf9, 0xe7, 0x70, 0x47, 0x44, 0x4d, 0x41, 0x20,
++        0x4f, 0x4b, 0x0a, 0x00, 0x44, 0x4d, 0x41, 0x20,
++        0x46, 0x41, 0x49, 0x4c, 0x0a, 0x00, 0x44, 0x4d,
++        0x41, 0x20, 0x46, 0x41, 0x55, 0x4c, 0x54, 0x0a,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50,
++        0x00, 0x00, 0x00, 0x20, 0x44, 0x33, 0x22, 0x11,
++        0xdd, 0xcc, 0xbb, 0xaa, 0x39, 0x80, 0x1f, 0x00,
++        0xaa, 0x55, 0xaa, 0x55, 0x29, 0x80, 0x1f, 0x00,
++        0xac, 0x00, 0x00, 0x10, 0xb4, 0x00, 0x00, 0x10,
++        0xbe, 0x00, 0x00, 0x10, 0x00, 0x40, 0x03, 0x40,
++    ])
 +
-+    The arguments may be passed in either order, provided exactly one of them
-+    has the .uf2 extension.
-+    """
++    # Exercises UART0 paced DMA. Channel 0 first sends a trace string through
++    # UART0 TX DREQ and waits for DMA IRQ0. It then receives "HELLO" through
++    # UART0 RX DREQ, waits for DMA IRQ0 again, verifies the bytes in SRAM, and
++    # sends the success string through UART0 TX DREQ.
++    DMA_UART_TEST_BIN = bytes.fromhex(
++        '0020042071000010350100103501001000000000000000000000000000000000'
++        '0000000000000000000000003501001000000000000000003501001035010010'
++        '3501001035010010350100103501001035010010350100103501001035010010'
++        '3501001035010010350100102901001072b63d481021c1623c49016303218164'
++        '3b493c480022d24302603b4802603b48016062b63a480f2100f019f839480521'
++        '00f023f837483849052203780c78a34208d101300131013af7d134480c2100f0'
++        '06f837e032480e2100f001f832e010b50c4600f018f82f4a1060234b53609460'
++        '2d4bd36000f018f810bd10b50c4600f00af8284a1c4b136050609460274bd360'
++        '00f00af810bd264a00231360254a01231360254a13607047214a136801242342'
++        '01d130bff9d070471e48016801601c480160704730bffde7444d412055415254'
++        '2054524143450a48454c4c4f444d412055415254204f4b0a444d412055415254'
++        '204641494c0a000000400340010300000008000080e100e080e200e000e100e0'
++        '3801001010000020470100104c010010580100100000005011000a0021800a00'
++        '000000200004005004040050'
++    )
 +
-+    if len(arguments) != 2:
-+        print_help()
-+        sys.exit(2)
++    # Same UART paced DMA test as DMA_UART_TEST_BIN, but using UART1 at
++    # 0x40038000 and DREQ_UART1_TX/RX.
++    DMA_UART1_TEST_BIN = bytes.fromhex(
++        '0020042071000010350100103501001000000000000000000000000000000000'
++        '0000000000000000000000003501001000000000000000003501001035010010'
++        '3501001035010010350100103501001035010010350100103501001035010010'
++        '3501001035010010350100102901001072b63e481021c1623d49016303218164'
++        '3c493d480022d24302603c4802603c48016062b63b48102100f019f83a480521'
++        '00f023f838483949052203780c78a34208d101300131013af7d135480d2100f0'
++        '06f837e033480f2100f001f832e010b50c4600f018f8304a1060244b53609460'
++        '2e4bd36000f018f810bd10b50c4600f00af8294a1d4b136050609460284bd360'
++        '00f00af810bd274a00231360264a01231360264a13607047224a136801242342'
++        '01d130bff9d070471f48016801601d480160704730bffde7444d412055415254'
++        '312054524143450a48454c4c4f444d41205541525431204f4b0a444d41205541'
++        '525431204641494c0a00000000800340010300000008000080e100e080e200e0'
++        '00e100e03801001010000020480100104d0100105a0100100000005011000b00'
++        '21800b00000000200004005004040050'
++    )
 +
-+    first_path, second_path = arguments
-+    first_ext = get_extension(first_path)
-+    second_ext = get_extension(second_path)
++    BOOT2_W25Q080_BIN = bytes.fromhex(
++        '00b5324b212058609868022188439860'
++        'd860186158612e4b0021996002215961'
++        '0121f02299502b491960012199603520'
++        '00f044f80222904214d00621196600f0'
++        '34f8196e01211966002018661a6600f0'
++        '2cf8196e196e196e052000f02ff80121'
++        '0842f9d1002199601b49196000215960'
++        '1a491b48016001219960eb211966a021'
++        '196600f012f800219960164914480160'
++        '0121996001bc002800d0004712481349'
++        '086003c880f30888084703b5996a0420'
++        '0142fbd001200142f8d103bd02b51866'
++        '1866fff7f2ff186e186e02bd00000240'
++        '000000180000070000035f0021220000'
++        'f4000018222000a00001001008ed00e0'
++        '00000000000000000000000074b24e7a'
++    )
 +
-+    if first_ext == ".uf2" and second_ext != ".uf2":
-+        return first_path, second_path
++    @staticmethod
++    def make_xip_elf(payload):
++        return RaspiPicoMachine.make_xip_elf_with_phdrs(payload, ())
 +
-+    if second_ext == ".uf2" and first_ext != ".uf2":
-+        print("Reversed arguments detected: using the .uf2 file as input.")
-+        return second_path, first_path
++    @staticmethod
++    def make_xip_elf_with_phdrs(payload, extra_phdrs):
++        load_addr = 0x10000000
++        payload_off = 0x100
++        phnum = 1 + len(extra_phdrs)
 +
-+    print("Error: unable to determine which file is the UF2 input.")
-+    print("Exactly one argument must have the .uf2 extension.")
-+    print()
-+    print_help()
-+    sys.exit(2)
-+
-+
-+def read_uf2_blocks(path: str):
-+    """
-+    Yield all 512-byte blocks from a UF2 file.
-+
-+    Raises ValueError if the file size is not a multiple of 512 bytes.
-+    """
-+
-+    file_size = os.path.getsize(path)
-+
-+    if file_size == 0:
-+        raise ValueError("empty file")
-+
-+    if file_size % UF2_BLOCK_SIZE != 0:
-+        raise ValueError(
-+            f"invalid UF2 file size: {file_size} bytes; "
-+            f"expected a multiple of {UF2_BLOCK_SIZE}"
++        elf_header = struct.pack(
++            '<16sHHIIIIIHHHHHH',
++            b'\x7fELF\x01\x01\x01' + b'\x00' * 9,
++            2,          # ET_EXEC
++            40,         # EM_ARM
++            1,          # EV_CURRENT
++            load_addr,
++            52,         # e_phoff
++            0,          # e_shoff
++            0x05000200, # EABI version 5, soft-float
++            52,         # e_ehsize
++            32,         # e_phentsize
++            phnum,
++            0,
++            0,
++            0,
++        )
++        phdr = struct.pack(
++            '<IIIIIIII',
++            1,          # PT_LOAD
++            payload_off,
++            load_addr,
++            load_addr,
++            len(payload),
++            len(payload),
++            5,          # PF_R | PF_X
++            4,
 +        )
 +
-+    with open(path, "rb") as input_file:
-+        physical_block_index = 0
++        phdrs = phdr + b''.join(extra_phdrs)
++        padding = bytes(payload_off - 52 - len(phdrs))
++        return elf_header + phdrs + padding + payload
 +
-+        while True:
-+            block = input_file.read(UF2_BLOCK_SIZE)
++    @classmethod
++    def make_xip_elf_with_empty_sram_load(cls, payload):
++        sram_phdr = struct.pack(
++            '<IIIIIIII',
++            1,          # PT_LOAD
++            0,          # p_offset is ignored when p_filesz is zero
++            0x20000000,
++            0x20000000,
++            0,
++            0x1000,
++            6,          # PF_R | PF_W
++            4,
++        )
++        return cls.make_xip_elf_with_phdrs(payload, (sram_phdr,))
 +
-+            if not block:
-+                break
++    @classmethod
++    def make_uf2(cls, payload, target=0x10000000):
++        payload_size = len(payload)
++        block = bytearray(512)
 +
-+            physical_block_index += 1
++        if payload_size > 476:
++            raise ValueError('single-block test UF2 payload is too large')
 +
-+            if len(block) != UF2_BLOCK_SIZE:
-+                raise ValueError(
-+                    f"incomplete block at physical index {physical_block_index}"
-+                )
-+
-+            yield physical_block_index, block
-+
-+
-+def analyze_uf2(uf2_path: str) -> dict:
-+    """
-+    Analyze a UF2 file and extract main-flash pages.
-+
-+    Returns a dictionary containing:
-+        - pages: mapping from flash offset to payload bytes
-+        - family_ids: detected family IDs
-+        - warnings: non-fatal problems
-+        - errors: fatal format problems
-+        - min_offset / max_end_offset: occupied flash range
-+    """
-+
-+    pages: dict[int, bytes] = {}
-+    warnings: list[str] = []
-+    errors: list[str] = []
-+
-+    family_ids: set[int] = set()
-+    valid_block_count = 0
-+    non_uf2_block_count = 0
-+    ignored_not_main_flash_count = 0
-+
-+    min_offset = None
-+    max_end_offset = 0
-+
-+    announced_num_blocks = None
-+    seen_block_numbers: set[int] = set()
-+
-+    for physical_index, block in read_uf2_blocks(uf2_path):
-+        (
-+            magic_start0,
-+            magic_start1,
-+            flags,
-+            target_address,
++        struct.pack_into(
++            '<IIIIIIII',
++            block,
++            0,
++            cls.UF2_MAGIC_START0,
++            cls.UF2_MAGIC_START1,
++            cls.UF2_FLAG_FAMILY_ID_PRESENT,
++            target,
 +            payload_size,
-+            block_number,
-+            num_blocks,
-+            family_or_file_size,
-+        ) = struct.unpack_from("<IIIIIIII", block, 0)
-+
-+        (magic_end,) = struct.unpack_from("<I", block, UF2_BLOCK_SIZE - 4)
-+
-+        if (
-+            magic_start0 != UF2_MAGIC_START0
-+            or magic_start1 != UF2_MAGIC_START1
-+            or magic_end != UF2_MAGIC_END
-+        ):
-+            non_uf2_block_count += 1
-+            errors.append(
-+                f"block {physical_index}: invalid UF2 magic values"
-+            )
-+            continue
-+
-+        valid_block_count += 1
-+
-+        if announced_num_blocks is None:
-+            announced_num_blocks = num_blocks
-+        elif num_blocks != announced_num_blocks:
-+            warnings.append(
-+                f"block {physical_index}: inconsistent numBlocks "
-+                f"({num_blocks}, expected {announced_num_blocks})"
-+            )
-+
-+        if block_number in seen_block_numbers:
-+            warnings.append(
-+                f"block {physical_index}: duplicated blockNo {block_number}"
-+            )
-+
-+        seen_block_numbers.add(block_number)
-+
-+        if flags & FLAG_NOT_MAIN_FLASH:
-+            ignored_not_main_flash_count += 1
-+            continue
-+
-+        if not (flags & FLAG_FAMILY_ID_PRESENT):
-+            errors.append(
-+                f"block {physical_index}: missing family ID; Pico boot ROM "
-+                f"expects a family ID"
-+            )
-+            continue
-+
-+        family_id = family_or_file_size
-+        family_ids.add(family_id)
-+
-+        if payload_size != 256:
-+            errors.append(
-+                f"block {physical_index}: payloadSize={payload_size}; "
-+                f"expected 256 for Pico UF2 files"
-+            )
-+            continue
-+
-+        if target_address % 256 != 0:
-+            errors.append(
-+                f"block {physical_index}: target address is not "
-+                f"256-byte aligned: 0x{target_address:08x}"
-+            )
-+            continue
-+
-+        pico2_window_end = XIP_BASE + PICO2_FLASH_WINDOW_SIZE
-+        if not (XIP_BASE <= target_address < pico2_window_end):
-+            errors.append(
-+                f"block {physical_index}: target address outside Pico "
-+                f"flash window: 0x{target_address:08x}"
-+            )
-+            continue
-+
-+        flash_offset = target_address - XIP_BASE
-+
-+        if flash_offset + payload_size > PICO2_FLASH_WINDOW_SIZE:
-+            errors.append(
-+                f"block {physical_index}: page exceeds Pico 2 flash window: "
-+                f"offset=0x{flash_offset:x}, size={payload_size}"
-+            )
-+            continue
-+
-+        if flash_offset in pages:
-+            warnings.append(
-+                f"block {physical_index}: duplicated flash page at offset "
-+                f"0x{flash_offset:x}; last occurrence wins"
-+            )
-+
-+        payload = block[UF2_HEADER_SIZE:UF2_HEADER_SIZE + payload_size]
-+        pages[flash_offset] = payload
-+
-+        if min_offset is None or flash_offset < min_offset:
-+            min_offset = flash_offset
-+
-+        if flash_offset + payload_size > max_end_offset:
-+            max_end_offset = flash_offset + payload_size
-+
-+    if valid_block_count == 0:
-+        errors.append("no valid UF2 block found")
-+
-+    if (announced_num_blocks is not None
-+            and len(seen_block_numbers) != announced_num_blocks):
-+        warnings.append(
-+            f"observed {len(seen_block_numbers)} distinct blockNo values, "
-+            f"but numBlocks announces {announced_num_blocks}"
++            0,
++            1,
++            cls.RP2040_FAMILY_ID,
 +        )
++        block[32:32 + payload_size] = payload
++        struct.pack_into('<I', block, 512 - 4, cls.UF2_MAGIC_END)
 +
-+    return {
-+        "pages": pages,
-+        "family_ids": family_ids,
-+        "warnings": warnings,
-+        "errors": errors,
-+        "valid_block_count": valid_block_count,
-+        "non_uf2_block_count": non_uf2_block_count,
-+        "ignored_not_main_flash_count": ignored_not_main_flash_count,
-+        "min_offset": min_offset,
-+        "max_end_offset": max_end_offset,
-+    }
++        return bytes(block)
 +
++    @classmethod
++    def make_bootable_uart_uf2(cls):
++        return cls.make_uf2(cls.make_bootable_image(cls.UART_TEST_BIN))
 +
-+def diagnose_family_ids(
-+    family_ids: set[int],
-+    warnings: list[str],
-+    errors: list[str],
-+) -> None:
-+    """
-+    Diagnose UF2 family IDs with respect to Pico 1 and Pico 2.
++    @classmethod
++    def make_bootable_uart_elf(cls):
++        return cls.make_xip_elf(cls.make_bootable_image(cls.UART_TEST_BIN))
 +
-+    RP2040 is accepted as the strict Pico 1 case.
-+    RP2350 IDs are accepted with a warning because partition remapping is not
-+    implemented.
-+    """
++    @staticmethod
++    def relocate_xip_payload(payload):
++        relocated = bytearray(payload)
++        payload_end = 0x10000000 + len(payload)
 +
-+    if not family_ids:
-+        errors.append("no usable family ID found")
-+        return
++        for off in range(0, len(relocated) - 3, 4):
++            value = struct.unpack_from('<I', relocated, off)[0]
++            if 0x10000000 <= value <= payload_end:
++                struct.pack_into('<I', relocated, off, value + 0x100)
 +
-+    if len(family_ids) > 1:
-+        family_list = ", ".join(
-+            f"0x{value:08x}" for value in sorted(family_ids)
-+        )
-+        warnings.append(f"multiple family IDs found: {family_list}")
++        return bytes(relocated)
 +
-+    for family_id in sorted(family_ids):
-+        if family_id == RP2040_FAMILY_ID:
-+            continue
++    @classmethod
++    def make_bootable_image(cls, payload):
++        return cls.BOOT2_W25Q080_BIN + cls.relocate_xip_payload(payload)
 +
-+        if family_id in RP2350_FAMILY_IDS:
-+            warnings.append(
-+                f"family ID 0x{family_id:08x} detected "
-+                f"({RP2350_FAMILY_IDS[family_id]}): this is probably a "
-+                f"Pico 2 / RP2350 UF2 file. Linear conversion is performed, "
-+                f"but RP2350 partition remapping is not implemented."
-+            )
-+        else:
-+            warnings.append(
-+                f"unknown or non-Pico family ID: 0x{family_id:08x}"
-+            )
++    # Copies a small routine to SRAM, erases/programs flash through the SSI
++    # registers, polls status once, then verifies the programmed bytes via XIP.
++    FLASH_TEST_BIN = bytes([
++        0x00, 0x20, 0x04, 0x20, 0x11, 0x00, 0x00, 0x10,
++        0x00, 0x00, 0x00, 0x00, 0x29, 0x00, 0x00, 0x10,
++        0x3c, 0x48, 0x3d, 0x49, 0x3d, 0x4a, 0x91, 0x42,
++        0x04, 0xd2, 0x0b, 0x68, 0x03, 0x60, 0x04, 0x31,
++        0x04, 0x30, 0xf8, 0xe7, 0x3a, 0x48, 0x00, 0x47,
++        0xfe, 0xe7, 0xc0, 0x46, 0x00, 0xf0, 0x44, 0xf8,
++        0x38, 0x4c, 0x39, 0x4d, 0x01, 0x20, 0x20, 0x60,
++        0x20, 0x20, 0x28, 0x60, 0x00, 0x20, 0x28, 0x60,
++        0x10, 0x20, 0x28, 0x60, 0x00, 0x20, 0x28, 0x60,
++        0x00, 0x20, 0x20, 0x60, 0x00, 0xf0, 0x3d, 0xf8,
++        0x00, 0xf0, 0x32, 0xf8, 0x2f, 0x4c, 0x30, 0x4d,
++        0x01, 0x20, 0x20, 0x60, 0x02, 0x20, 0x28, 0x60,
++        0x00, 0x20, 0x28, 0x60, 0x10, 0x20, 0x28, 0x60,
++        0x00, 0x20, 0x28, 0x60, 0x46, 0x20, 0x28, 0x60,
++        0x4c, 0x20, 0x28, 0x60, 0x41, 0x20, 0x28, 0x60,
++        0x53, 0x20, 0x28, 0x60, 0x48, 0x20, 0x28, 0x60,
++        0x00, 0x20, 0x20, 0x60, 0x00, 0xf0, 0x21, 0xf8,
++        0x24, 0x49, 0x08, 0x78, 0x46, 0x28, 0x0f, 0xd1,
++        0x48, 0x78, 0x4c, 0x28, 0x0c, 0xd1, 0x88, 0x78,
++        0x41, 0x28, 0x09, 0xd1, 0xc8, 0x78, 0x53, 0x28,
++        0x06, 0xd1, 0x08, 0x79, 0x48, 0x28, 0x03, 0xd1,
++        0x1d, 0x48, 0x00, 0xf0, 0x18, 0xf8, 0xfe, 0xe7,
++        0x1c, 0x48, 0x00, 0xf0, 0x14, 0xf8, 0xfe, 0xe7,
++        0x16, 0x4c, 0x17, 0x4d, 0x01, 0x20, 0x20, 0x60,
++        0x06, 0x20, 0x28, 0x60, 0x00, 0x20, 0x20, 0x60,
++        0x70, 0x47, 0x12, 0x4c, 0x12, 0x4d, 0x01, 0x20,
++        0x20, 0x60, 0x05, 0x20, 0x28, 0x60, 0x28, 0x68,
++        0x00, 0x20, 0x20, 0x60, 0x70, 0x47, 0x12, 0x4a,
++        0x01, 0x78, 0x00, 0x29, 0x02, 0xd0, 0x11, 0x60,
++        0x01, 0x30, 0xf9, 0xe7, 0x70, 0x47, 0x46, 0x4c,
++        0x41, 0x53, 0x48, 0x20, 0x4f, 0x4b, 0x0a, 0x00,
++        0x46, 0x4c, 0x41, 0x53, 0x48, 0x20, 0x46, 0x41,
++        0x49, 0x4c, 0x0a, 0x00, 0x00, 0x00, 0x00, 0x20,
++        0x2c, 0x00, 0x00, 0x10, 0x2c, 0x01, 0x00, 0x10,
++        0x01, 0x00, 0x00, 0x20, 0x10, 0x00, 0x00, 0x18,
++        0x60, 0x00, 0x00, 0x18, 0x00, 0x10, 0x00, 0x10,
++        0xee, 0x00, 0x00, 0x10, 0xf8, 0x00, 0x00, 0x10,
++        0x00, 0x40, 0x03, 0x40,
++    ])
 +
-+    if RP2040_FAMILY_ID not in family_ids:
-+        warnings.append(
-+            "no RP2040 / Pico 1 family ID found (0xe48bff56); "
-+            "the output may not be a strict Pico 1 flash image."
-+        )
-+
-+
-+def build_flash_image(pages: dict[int, bytes], occupied_size: int) -> bytearray:
-+    """
-+    Build a raw flash image initialized with erased flash bytes, 0xff.
-+
-+    Only the occupied part is emitted:
-+        output size = highest written offset + payload size
-+    """
-+
-+    image = bytearray([0xFF] * occupied_size)
-+
-+    for flash_offset, payload in pages.items():
-+        image[flash_offset:flash_offset + len(payload)] = payload
-+
-+    return image
-+
-+
-+def human_size(byte_count: int) -> str:
-+    """Return a human-readable size string."""
-+
-+    if byte_count < 1024:
-+        return f"{byte_count} B"
-+
-+    if byte_count < 1024 * 1024:
-+        return f"{byte_count / 1024:.1f} KiB"
-+
-+    return f"{byte_count / (1024 * 1024):.2f} MiB"
-+
-+
-+def main() -> None:
-+    """Program entry point."""
-+
-+    uf2_path, image_path = detect_input_output(sys.argv[1:])
-+
-+    try:
-+        analysis = analyze_uf2(uf2_path)
-+    except OSError as error:
-+        print(f"UF2 file access error: {error}")
-+        sys.exit(1)
-+    except ValueError as error:
-+        print(f"UF2 format error: {error}")
-+        sys.exit(1)
-+
-+    pages = analysis["pages"]
-+    family_ids = analysis["family_ids"]
-+    warnings = analysis["warnings"]
-+    errors = analysis["errors"]
-+
-+    diagnose_family_ids(family_ids, warnings, errors)
-+
-+    if not pages:
-+        errors.append("no main-flash page to write")
-+
-+    if analysis["max_end_offset"] > PICO1_FLASH_WINDOW_SIZE:
-+        warnings.append(
-+            "image exceeds the Pico 1 flash window "
-+            "0x10000000..0x11000000; it is not strict Pico 1 compatible"
-+        )
-+
-+    if errors:
-+        print("Conversion refused: UF2 format problems were found.")
-+        for error in errors:
-+            print(f"ERROR: {error}")
-+        for warning in warnings:
-+            print(f"WARNING: {warning}")
-+        sys.exit(1)
-+
-+    occupied_size = analysis["max_end_offset"]
-+    image = build_flash_image(pages, occupied_size)
-+
-+    try:
-+        with open(image_path, "wb") as output_file:
-+            output_file.write(image)
-+    except OSError as error:
-+        print(f"Output image write error: {error}")
-+        sys.exit(1)
-+
-+    programmed_size = sum(len(payload) for payload in pages.values())
-+
-+    print(f"UF2 input: {uf2_path}")
-+    print(f"Raw output: {image_path}")
-+    print(f"Valid UF2 blocks: {analysis['valid_block_count']}")
-+    print("Ignored NOT_MAIN_FLASH blocks: "
-+          f"{analysis['ignored_not_main_flash_count']}")
-+    print(f"Written flash pages: {len(pages)}")
-+    print(
-+        f"Actually programmed bytes: {programmed_size} "
-+        f"({human_size(programmed_size)})"
-+    )
-+    print(
-+        f"Occupied flash size: {occupied_size} "
-+        f"({human_size(occupied_size)})"
++    # Copies a small routine to SRAM, then exercises the ROM-style flash
++    # command path: QSPI chip select is forced through IO_QSPI, bytes are
++    # exchanged through the XIP SSI data register, and the result is verified
++    # through the XIP flash window.
++    FLASH_IOQSPI_CS_TEST_BIN = bytes.fromhex(
++        '00200420090000104f485049504a914204d20b68036004310430f8e74a480130'
++        '0047c0464b4c002020604b4c4b4820604b4c01202060474c206000f047f800f0'
++        '5ff8202000f054f8002000f051f8102000f04ef8002000f04bf800f056f800f0'
++        '3ef800f033f800f04bf8022000f040f8002000f03df8102000f03af8002000f0'
++        '37f8512000f034f8532000f031f8502000f02ef8492000f02bf800f036f800f0'
++        '1ef83049087851280cd14878532809d18878502806d1c878492803d12a4800f0'
++        '29f8fee7294800f025f8fee700b500f017f8062000f00cf800f017f800bd00b5'
++        '00f00ef8052000f003f800f00ef800bd1f4a10601f4b18680028fcd010687047'
++        '1d4902200002086070471b490320000208607047194a0178002902d011600130'
++        'f9e77047494f5153504920464c415348204f4b0a00494f5153504920464c4153'
++        '48204641494c0a00000000202400001080010010080000180000001800000700'
++        '1000001800100010240100103501001060000018240000180c80014000400340'
 +    )
 +
-+    if family_ids:
-+        family_id_list = ", ".join(
-+            f"0x{value:08x}" for value in sorted(family_ids)
-+        )
-+        print(f"Family ID(s): {family_id_list}")
++    # Attempts a page program without write enable, then verifies the target
++    # byte is still in the erased state.
++    FLASH_NO_WEL_TEST_BIN = bytes([
++        0x00, 0x20, 0x04, 0x20, 0x11, 0x00, 0x00, 0x10,
++        0x00, 0x00, 0x00, 0x00, 0x11, 0x00, 0x00, 0x10,
++        0x1e, 0x48, 0x1f, 0x49, 0x1f, 0x4a, 0x91, 0x42,
++        0x04, 0xd2, 0x0b, 0x68, 0x03, 0x60, 0x04, 0x31,
++        0x04, 0x30, 0xf8, 0xe7, 0x19, 0x48, 0x01, 0x30,
++        0x00, 0x47, 0xc0, 0x46, 0x1a, 0x4c, 0x1b, 0x4d,
++        0x01, 0x20, 0x20, 0x61, 0x02, 0x20, 0x28, 0x60,
++        0x00, 0x20, 0x28, 0x60, 0x10, 0x20, 0x28, 0x60,
++        0x00, 0x20, 0x28, 0x60, 0xa5, 0x20, 0x28, 0x60,
++        0x00, 0x20, 0x20, 0x61, 0x14, 0x49, 0x08, 0x78,
++        0xff, 0x28, 0x03, 0xd1, 0x13, 0x48, 0x00, 0xf0,
++        0x05, 0xf8, 0xfe, 0xe7, 0x12, 0x48, 0x00, 0xf0,
++        0x01, 0xf8, 0xfe, 0xe7, 0x11, 0x4a, 0x01, 0x78,
++        0x00, 0x29, 0x02, 0xd0, 0x11, 0x60, 0x01, 0x30,
++        0xf9, 0xe7, 0x70, 0x47, 0x4e, 0x4f, 0x20, 0x57,
++        0x45, 0x4c, 0x20, 0x4f, 0x4b, 0x0a, 0x00, 0x4e,
++        0x4f, 0x20, 0x57, 0x45, 0x4c, 0x20, 0x46, 0x41,
++        0x49, 0x4c, 0x0a, 0x00, 0x00, 0x00, 0x00, 0x20,
++        0x2c, 0x00, 0x00, 0x10, 0xb0, 0x00, 0x00, 0x10,
++        0x00, 0x00, 0x00, 0x18, 0x60, 0x00, 0x00, 0x18,
++        0x00, 0x10, 0x00, 0x10, 0x74, 0x00, 0x00, 0x10,
++        0x7f, 0x00, 0x00, 0x10, 0x00, 0x40, 0x03, 0x40,
++    ])
 +
-+    if warnings:
-+        print()
-+        print("Warnings:")
-+        for warning in warnings:
-+            print(f"- {warning}")
++    # Programs 0x00, then attempts to program 0xff without erase and verifies
++    # that NOR semantics preserve the old & new result.
++    FLASH_OLD_AND_NEW_TEST_BIN = bytes([
++        0x00, 0x20, 0x04, 0x20, 0x11, 0x00, 0x00, 0x10,
++        0x00, 0x00, 0x00, 0x00, 0x11, 0x00, 0x00, 0x10,
++        0x30, 0x48, 0x31, 0x49, 0x31, 0x4a, 0x91, 0x42,
++        0x04, 0xd2, 0x0b, 0x68, 0x03, 0x60, 0x04, 0x31,
++        0x04, 0x30, 0xf8, 0xe7, 0x2b, 0x48, 0x01, 0x30,
++        0x00, 0x47, 0xc0, 0x46, 0x00, 0xf0, 0x18, 0xf8,
++        0x00, 0x20, 0x00, 0xf0, 0x24, 0xf8, 0x00, 0xf0,
++        0x1a, 0xf8, 0x00, 0xf0, 0x11, 0xf8, 0xff, 0x20,
++        0x00, 0xf0, 0x1d, 0xf8, 0x00, 0xf0, 0x13, 0xf8,
++        0x25, 0x49, 0x08, 0x78, 0x00, 0x28, 0x03, 0xd1,
++        0x24, 0x48, 0x00, 0xf0, 0x25, 0xf8, 0xfe, 0xe7,
++        0x23, 0x48, 0x00, 0xf0, 0x21, 0xf8, 0xfe, 0xe7,
++        0x22, 0x4c, 0x23, 0x4d, 0x01, 0x20, 0x20, 0x61,
++        0x06, 0x20, 0x28, 0x60, 0x70, 0x47, 0x1f, 0x4c,
++        0x1f, 0x4d, 0x01, 0x20, 0x20, 0x61, 0x05, 0x20,
++        0x28, 0x60, 0x28, 0x68, 0x70, 0x47, 0x1b, 0x4c,
++        0x1b, 0x4d, 0x06, 0x46, 0x01, 0x20, 0x20, 0x61,
++        0x02, 0x20, 0x28, 0x60, 0x00, 0x20, 0x28, 0x60,
++        0x10, 0x20, 0x28, 0x60, 0x00, 0x20, 0x28, 0x60,
++        0x2e, 0x60, 0x00, 0x20, 0x20, 0x61, 0x70, 0x47,
++        0x14, 0x4a, 0x01, 0x78, 0x00, 0x29, 0x02, 0xd0,
++        0x11, 0x60, 0x01, 0x30, 0xf9, 0xe7, 0x70, 0x47,
++        0x4f, 0x4c, 0x44, 0x20, 0x41, 0x4e, 0x44, 0x20,
++        0x4e, 0x45, 0x57, 0x20, 0x4f, 0x4b, 0x0a, 0x00,
++        0x4f, 0x4c, 0x44, 0x20, 0x41, 0x4e, 0x44, 0x20,
++        0x4e, 0x45, 0x57, 0x20, 0x46, 0x41, 0x49, 0x4c,
++        0x0a, 0x00, 0xc0, 0x46, 0x00, 0x00, 0x00, 0x20,
++        0x2c, 0x00, 0x00, 0x10, 0xf8, 0x00, 0x00, 0x10,
++        0x00, 0x10, 0x00, 0x10, 0xb0, 0x00, 0x00, 0x10,
++        0xc0, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x18,
++        0x60, 0x00, 0x00, 0x18, 0x00, 0x40, 0x03, 0x40,
++    ])
++
++    FLASH_PERSIST_READER_BIN = bytes([
++        0x00, 0x20, 0x04, 0x20, 0x11, 0x00, 0x00, 0x10,
++        0x00, 0x00, 0x00, 0x00, 0x11, 0x00, 0x00, 0x10,
++        0x16, 0x49, 0x08, 0x78, 0x46, 0x28, 0x0f, 0xd1,
++        0x48, 0x78, 0x4c, 0x28, 0x0c, 0xd1, 0x88, 0x78,
++        0x41, 0x28, 0x09, 0xd1, 0xc8, 0x78, 0x53, 0x28,
++        0x06, 0xd1, 0x08, 0x79, 0x48, 0x28, 0x03, 0xd1,
++        0x0f, 0x48, 0x00, 0xf0, 0x05, 0xf8, 0xfe, 0xe7,
++        0x0e, 0x48, 0x00, 0xf0, 0x01, 0xf8, 0xfe, 0xe7,
++        0x0d, 0x4a, 0x01, 0x78, 0x00, 0x29, 0x02, 0xd0,
++        0x11, 0x60, 0x01, 0x30, 0xf9, 0xe7, 0x70, 0x47,
++        0x50, 0x45, 0x52, 0x53, 0x49, 0x53, 0x54, 0x20,
++        0x4f, 0x4b, 0x0a, 0x00, 0x50, 0x45, 0x52, 0x53,
++        0x49, 0x53, 0x54, 0x20, 0x46, 0x41, 0x49, 0x4c,
++        0x0a, 0x00, 0xc0, 0x46, 0x00, 0x10, 0x00, 0x10,
++        0x50, 0x00, 0x00, 0x10, 0x5c, 0x00, 0x00, 0x10,
++        0x00, 0x40, 0x03, 0x40,
++    ])
++
++    # Installs a vector table in SRAM, starts a page program, then performs
++    # an XIP read while the emulated flash is busy. The HardFault handler
++    # runs from SRAM and prints the expected message.
++    FLASH_BUSY_HARDFAULT_BIN = bytes([
++        0x00, 0x20, 0x04, 0x20, 0x11, 0x00, 0x00, 0x10,
++        0x00, 0x00, 0x00, 0x00, 0x29, 0x00, 0x00, 0x10,
++        0x2a, 0x48, 0x2b, 0x49, 0x2b, 0x4a, 0x91, 0x42,
++        0x04, 0xd2, 0x0b, 0x68, 0x03, 0x60, 0x04, 0x31,
++        0x04, 0x30, 0xf8, 0xe7, 0x28, 0x48, 0x00, 0x47,
++        0xfe, 0xe7, 0xc0, 0x46, 0x27, 0x48, 0x28, 0x49,
++        0x01, 0x60, 0x25, 0x49, 0x41, 0x60, 0x00, 0x21,
++        0x81, 0x60, 0x13, 0xa1, 0x01, 0x31, 0xc1, 0x60,
++        0x24, 0x4a, 0x10, 0x60, 0x00, 0xf0, 0x16, 0xf8,
++        0x23, 0x4c, 0x24, 0x4d, 0x01, 0x20, 0x20, 0x60,
++        0x02, 0x20, 0x28, 0x60, 0x00, 0x20, 0x28, 0x60,
++        0x10, 0x20, 0x28, 0x60, 0x00, 0x20, 0x28, 0x60,
++        0x58, 0x20, 0x28, 0x60, 0x00, 0x20, 0x20, 0x60,
++        0x1d, 0x49, 0x08, 0x78, 0x10, 0xa0, 0x00, 0xf0,
++        0x0f, 0xf8, 0xfe, 0xe7, 0x18, 0x4c, 0x19, 0x4d,
++        0x01, 0x20, 0x20, 0x60, 0x06, 0x20, 0x28, 0x60,
++        0x00, 0x20, 0x20, 0x60, 0x70, 0x47, 0xc0, 0x46,
++        0x05, 0xa0, 0x00, 0xf0, 0x01, 0xf8, 0xfe, 0xe7,
++        0x14, 0x4a, 0x01, 0x78, 0x00, 0x29, 0x02, 0xd0,
++        0x11, 0x60, 0x01, 0x30, 0xf9, 0xe7, 0x70, 0x47,
++        0x48, 0x41, 0x52, 0x44, 0x46, 0x41, 0x55, 0x4c,
++        0x54, 0x20, 0x4f, 0x4b, 0x0a, 0x00, 0xc0, 0x46,
++        0x4e, 0x4f, 0x20, 0x46, 0x41, 0x55, 0x4c, 0x54,
++        0x0a, 0x00, 0xc0, 0x46, 0x00, 0x00, 0x00, 0x20,
++        0x2c, 0x00, 0x00, 0x10, 0xe8, 0x00, 0x00, 0x10,
++        0x01, 0x00, 0x00, 0x20, 0x00, 0x01, 0x00, 0x20,
++        0x00, 0x20, 0x04, 0x20, 0x08, 0xed, 0x00, 0xe0,
++        0x10, 0x00, 0x00, 0x18, 0x60, 0x00, 0x00, 0x18,
++        0x00, 0x10, 0x00, 0x10, 0x00, 0x40, 0x03, 0x40,
++    ])
++
++    # Starts a page program from SRAM, leaves the flash busy, then branches
++    # back to XIP on core 0. The expected result is a core 0 HardFault handled
++    # by the SRAM vector table.
++    FLASH_BUSY_CORE0_XIP_FAULT_BIN = bytes.fromhex(
++        '002004200900001038483949394a914204d20b68036004310430f8e733480130'
++        '0047354800f044f8fee7c0462f483349016005a101314160002181601aa10131'
++        'c1602f4a1060c0462e4c002020602e4c2e4820602e4c012020602a4c206000f0'
++        '15f8022000f017f8002000f014f8202000f011f8002000f00ef85a2000f00bf8'
++        '234c0020206023480130004700b5062000f001f800bd204a1060204b18680028'
++        'fcd010687047c04605a000f001f8fee71b4a0178002902d011600130f9e77047'
++        '434f5245302058495020484152444641554c54204f4b0a00434f524530205849'
++        '50204e4f204641554c540a00000000202c00001024010010d800001000200420'
++        '08ed00e008000018000000180000070010000018220000106000001824000018'
++        '00400340'
++    )
++
++    # Launches core 1 into a small XIP loop through the synthetic ROM FIFO
++    # protocol. Core 0 then starts a page program from SRAM. The expected
++    # result is a core 1 HardFault handled by the shared SRAM vector table.
++    FLASH_BUSY_CORE1_XIP_FAULT_BIN = bytes.fromhex(
++        '002004200900001056485749574a914204d20b68036004310430f8e751480130'
++        '0047534800f001f8fee752490a6802231a42fbd0504908607047c04649484f49'
++        '016004a1013141600021816030a10131c160c046002000f017f8002000f014f8'
++        '012000f011f83f4800f00ef8444800f00bf8444800f008f800f017f83c498842'
++        '4ad100f01af8fee710b5044600f005f800f00bf8a0423fd110bd36490a680223'
++        '1a42fbd034490860704732490a6801231a42fbd034490868704700b5334c0020'
++        '2060334c33482060334c012020602f4c2060062000f013f8022000f010f80020'
++        '00f00df8302000f00af8002000f007f8a52000f004f8284c0020206000bd274a'
++        '1060274b18680028fcd010687047c04607a000f005f8fee70ba000f001f8fee7'
++        '204a0178002902d011600130f9e77047434f5245312058495020484152444641'
++        '554c54204f4b0a00434f5245312058495020484152444641554c54204641494c'
++        '0a00c046000000203c000010a801001001101ec0500000d0540000d000200420'
++        '0010042023000010580000d00800001800000018000007001000001860000018'
++        '2400001800400340'
++    )
++
++    def test_uart0(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('uart-test.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(self.UART_TEST_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'PICO UART OK')
++
++    def test_uart0_elf(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('uart-test.elf')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_uart_elf())
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'PICO UART OK')
++
++    def test_uart0_elf_with_empty_sram_load_segment(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('uart-test-empty-sram.elf')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_xip_elf_with_empty_sram_load(
++                self.make_bootable_image(self.UART_TEST_BIN)))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'PICO UART OK')
++
++    def test_timer_alarm_irq(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('timer-alarm-test.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.TIMER_ALARM_TEST_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'TIMER OK')
++
++    def test_sio_fifo_core0_status(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('sio-fifo-test.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.SIO_FIFO_TEST_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'SIO CORE0 OK')
++
++    def test_sio_divider(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('sio-divider-test.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.SIO_DIVIDER_TEST_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'SIO DIV OK')
++
++    def test_psm_proc1_force_off(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('psm-proc1-test.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.PSM_PROC1_TEST_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'PSM OK')
++
++    def test_core1_rom_launch_ack(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('core1-working-test.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.CORE1_WORKING_TEST_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'core 0 and core 1 working !')
++
++    def test_flash_safe_multicore_lockout(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('flash-safe-multicore-test.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.FLASH_SAFE_MULTICORE_TEST_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'FLASH SAFE OK')
++
++    def test_flash_busy_multicore_lockout_hardfault(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('flash-busy-lockout-test.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.FLASH_BUSY_LOCKOUT_TEST_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'FLASH BUSY LOCKOUT OK')
++
++    def test_synthetic_bootrom_helpers(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('bootrom-helpers-test.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.BOOTROM_HELPERS_TEST_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'BOOTROM HELPERS OK')
++
++    def test_synthetic_bootrom_float_helpers(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('bootrom-float-test.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.BOOTROM_FLOAT_TEST_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'BOOTROM FLOAT OK')
++
++    def test_dma_copy_and_fill(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('dma-test.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(self.DMA_TEST_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'DMA OK')
++
++    def test_dma_uart_tx_rx(self):
++        image = self.scratch_file('dma-uart-test.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(self.DMA_UART_TEST_BIN))
++
++        guest_sock, qemu_sock = socket.socketpair()
++        os.set_inheritable(qemu_sock.fileno(), True)
++        qemu = subprocess.Popen([
++            self.qemu_bin,
++            '-machine', 'raspi-pico,strict-uart-pins=off',
++            '-kernel', image,
++            '-chardev', f'socket,id=console,fd={qemu_sock.fileno()}',
++            '-serial', 'chardev:console',
++            '-display', 'none',
++        ], cwd=os.path.dirname(os.getenv('MESON_BUILD_ROOT')),
++           pass_fds=(qemu_sock.fileno(),))
++        qemu_sock.close()
++        guest_sock.settimeout(10)
++        data = b''
++        try:
++            while b'DMA UART TRACE' not in data:
++                data += guest_sock.recv(1)
++            time.sleep(5.0)
++            guest_sock.sendall(b'HELLO\r')
++            while b'DMA UART OK' not in data:
++                data += guest_sock.recv(1)
++        finally:
++            qemu.terminate()
++            qemu.wait(timeout=2)
++            guest_sock.close()
++        self.assertIn(b'DMA UART OK', data)
++
++    def test_dma_uart1_tx_rx(self):
++        image = self.scratch_file('dma-uart1-test.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(self.DMA_UART1_TEST_BIN))
++
++        guest_sock, qemu_sock = socket.socketpair()
++        os.set_inheritable(qemu_sock.fileno(), True)
++        qemu = subprocess.Popen([
++            self.qemu_bin,
++            '-machine', 'raspi-pico,strict-uart-pins=off',
++            '-kernel', image,
++            '-serial', 'null',
++            '-chardev', f'socket,id=uart1,fd={qemu_sock.fileno()}',
++            '-serial', 'chardev:uart1',
++            '-display', 'none',
++        ], cwd=os.path.dirname(os.getenv('MESON_BUILD_ROOT')),
++           pass_fds=(qemu_sock.fileno(),))
++        qemu_sock.close()
++        guest_sock.settimeout(10)
++        data = b''
++        try:
++            while b'DMA UART1 TRACE' not in data:
++                data += guest_sock.recv(1)
++            time.sleep(5.0)
++            guest_sock.sendall(b'HELLO\r')
++            while b'DMA UART1 OK' not in data:
++                data += guest_sock.recv(1)
++        finally:
++            qemu.terminate()
++            qemu.wait(timeout=2)
++            guest_sock.close()
++        self.assertIn(b'DMA UART1 OK', data)
++
++    def test_flash_file_uart0(self):
++        flash = self.scratch_file('flash.bin')
++        with open(flash, 'wb') as flash_file:
++            flash_file.write(self.make_bootable_image(self.UART_TEST_BIN))
++
++        self.set_direct_uart_machine()
++        self.vm.set_machine(
++            f'raspi-pico,strict-uart-pins=off,flash-file={flash}')
++        self.vm.set_console()
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'PICO UART OK')
++
++    def test_uart0_uf2(self):
++        uf2 = self.scratch_file('uart-test.uf2')
++
++        with open(uf2, 'wb') as uf2_file:
++            uf2_file.write(self.make_bootable_uart_uf2())
++
++        self.set_direct_uart_machine()
++        self.vm.set_console()
++        self.vm.add_args('-kernel', uf2)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'PICO UART OK')
++
++    def test_flash_file_uart0_overlayed_by_uf2_kernel(self):
++        uf2 = self.scratch_file('uart-test.uf2')
++        flash = self.scratch_file('flash.bin')
++
++        with open(uf2, 'wb') as uf2_file:
++            uf2_file.write(self.make_bootable_uart_uf2())
++        with open(flash, 'wb') as flash_file:
++            flash_file.write(bytes([0xff]) * 512)
++
++        self.set_direct_uart_machine()
++        self.vm.set_machine(
++            f'raspi-pico,strict-uart-pins=off,flash-file={flash}')
++        self.vm.set_console()
++        self.vm.add_args('-kernel', uf2)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'PICO UART OK')
++
++    def test_flash_program(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('flash-program.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(self.FLASH_TEST_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'FLASH OK')
++
++    def test_flash_program_with_ioqspi_cs(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('flash-ioqspi-cs.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.FLASH_IOQSPI_CS_TEST_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'IOQSPI FLASH OK')
++
++    def launch_flash_file(self, name, flash, pattern, kernel=None,
++                          extra_args=()):
++        vm = self.get_vm(name=name)
++
++        vm.set_machine(f'raspi-pico,strict-uart-pins=off,flash-file={flash}')
++        vm.set_console()
++        vm.add_args(*extra_args)
++        if kernel:
++            vm.add_args('-kernel', kernel)
++        vm.launch()
++        wait_for_console_pattern(self, pattern, vm=vm)
++        vm.shutdown()
++
++    def test_flash_file_kernel_overlay_persists(self):
++        uf2 = self.scratch_file('uart-test.uf2')
++        flash = self.scratch_file('flash.bin')
++
++        with open(uf2, 'wb') as uf2_file:
++            uf2_file.write(self.make_bootable_uart_uf2())
++        with open(flash, 'wb') as flash_file:
++            flash_file.write(bytes([0xff]) * 512)
++
++        self.set_direct_uart_machine()
++        self.launch_flash_file('overlay-write', flash, 'PICO UART OK', uf2)
++        self.launch_flash_file('overlay-read', flash, 'PICO UART OK')
++
++    def test_bootrom_uf2_kernel_without_flash_file(self):
++        uf2 = self.scratch_file('bootrom-uart-test.uf2')
++        rom = self.pipico_rom()
++
++        with open(uf2, 'wb') as uf2_file:
++            uf2_file.write(self.make_bootable_uart_uf2())
++
++        self.set_direct_uart_machine()
++        self.vm.set_console()
++        self.vm.add_args('-bios', rom, '-kernel', uf2)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'PICO UART OK')
++
++    def test_bootrom_elf_kernel_without_flash_file(self):
++        elf = self.scratch_file('bootrom-uart-test.elf')
++        rom = self.pipico_rom()
++
++        with open(elf, 'wb') as elf_file:
++            elf_file.write(self.make_bootable_uart_elf())
++
++        self.set_direct_uart_machine()
++        self.vm.set_console()
++        self.vm.add_args('-bios', rom, '-kernel', elf)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'PICO UART OK')
++
++    def test_bootrom_flash_file_uf2_kernel_persists(self):
++        uf2 = self.scratch_file('bootrom-uart-test.uf2')
++        flash = self.scratch_file('flash.bin')
++        rom = self.pipico_rom()
++
++        with open(uf2, 'wb') as uf2_file:
++            uf2_file.write(self.make_bootable_uart_uf2())
++        with open(flash, 'wb') as flash_file:
++            flash_file.write(bytes([0xff]) * 512)
++
++        self.set_direct_uart_machine()
++        self.launch_flash_file('bootrom-overlay-write', flash,
++                               'PICO UART OK', uf2,
++                               extra_args=('-bios', rom))
++        self.launch_flash_file('bootrom-overlay-read', flash,
++                               'PICO UART OK',
++                               extra_args=('-bios', rom))
++
++    def test_flash_file_guest_writes_persist(self):
++        flash = self.scratch_file('flash.bin')
++        program = self.scratch_file('flash-program.bin')
++        reader = self.scratch_file('flash-reader.bin')
++
++        with open(flash, 'wb') as flash_file:
++            flash_file.write(bytes([0xff]) * 512)
++        with open(program, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(self.FLASH_TEST_BIN))
++        with open(reader, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.FLASH_PERSIST_READER_BIN))
++
++        self.set_direct_uart_machine()
++        self.launch_flash_file('guest-write', flash, 'FLASH OK', program)
++        self.launch_flash_file('guest-read', flash, 'PERSIST OK', reader)
++
++    def test_flash_program_without_write_enable(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('flash-no-wel.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.FLASH_NO_WEL_TEST_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'NO WEL OK')
++
++    def test_flash_program_old_and_new(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('flash-old-and-new.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.FLASH_OLD_AND_NEW_TEST_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'OLD AND NEW OK')
++
++    def test_flash_busy_xip_hardfault(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('flash-hardfault.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.FLASH_BUSY_HARDFAULT_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'HARDFAULT OK')
++
++    def test_flash_busy_core0_xip_fetch_hardfault(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('flash-busy-core0-xip-fault.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.FLASH_BUSY_CORE0_XIP_FAULT_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'CORE0 XIP HARDFAULT OK')
++
++    def test_flash_busy_core1_xip_fetch_hardfault(self):
++        self.set_direct_uart_machine()
++
++        image = self.scratch_file('flash-busy-core1-xip-fault.bin')
++        with open(image, 'wb') as image_file:
++            image_file.write(self.make_bootable_image(
++                self.FLASH_BUSY_CORE1_XIP_FAULT_BIN))
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', image)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'CORE1 XIP HARDFAULT OK')
 +
 +
-+if __name__ == "__main__":
-+    main()
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.53.0
 
