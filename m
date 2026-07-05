@@ -4,114 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AADF4C43458
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jul 2026 21:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5842C44500
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 04:39:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wg862-0007Pk-UB; Sat, 04 Jul 2026 17:40:23 -0400
+	id 1wgEbl-0004fa-MY; Sun, 05 Jul 2026 00:37:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wg860-0007OY-UA; Sat, 04 Jul 2026 17:40:20 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wg85y-0007bf-N4; Sat, 04 Jul 2026 17:40:20 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 664KmUEG2446189; Sat, 4 Jul 2026 21:40:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=wQ+il+
- s9Xg/o08k/00pPOPcbrUnAgwjkgTF3VysbxK4=; b=YpgA5uODhlmGhVJ/t4aij5
- BiAZyqDI7stT4sQ5PuCVIdGbo6RVvNzt+6FpuZxOKngmglyGz6iZqQF/hjyGnmau
- 2UcKWeZ6ngeO+DCGZbeAQAeIRlstKTcpSpbrEUzNAvt7RoqmCRg/nEICbKHJvxQF
- AAY6G7hydfHAFMbxVe3sftOq+XYjhZ2RdtCO9L9HLUloURPI1RHDRsEugQi7iZUc
- M7eGokR1A7p8dCldji5VooUZAuYcUqzHmxNIhJ5C3sEaur71shV1BXrcCNeKreQa
- mpTU0J5705sHDZhTBt57o3Om8zLOVrcT5n0FYeBra4wf+cs79EUhqKCj8enOgYOQ
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6rkdbc4m-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 04 Jul 2026 21:40:14 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 664LYm4I025660;
- Sat, 4 Jul 2026 21:40:13 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f2tbhxdq7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 04 Jul 2026 21:40:13 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 664LeCZY18809506
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 4 Jul 2026 21:40:12 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E884A5805E;
- Sat,  4 Jul 2026 21:40:11 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EFA4E58045;
- Sat,  4 Jul 2026 21:40:09 +0000 (GMT)
-Received: from fedora-workstation.ibmuc.com (unknown [9.61.17.215])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Sat,  4 Jul 2026 21:40:09 +0000 (GMT)
-From: Zhuoying Cai <zycai@linux.ibm.com>
-To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
- richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
- jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
- alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-Subject: [PATCH v15 08/33] crypto/x509-utils: Add helper functions for DIAG
- 320 subcode 2
-Date: Sat,  4 Jul 2026 17:39:24 -0400
-Message-ID: <20260704213950.2118823-9-zycai@linux.ibm.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260704213950.2118823-1-zycai@linux.ibm.com>
-References: <20260704213950.2118823-1-zycai@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wgEbj-0004eb-Gc
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 00:37:31 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wgEbh-0003x1-Fi
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 00:37:30 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2cc6dd436c6so4874885ad.2
+ for <qemu-devel@nongnu.org>; Sat, 04 Jul 2026 21:37:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783226248; x=1783831048; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=E9ndt7/Xaf78gbnm5ds/w+OXU431kvwyAI4qL6QO88k=;
+ b=wsMY2mNOYuPLulFUuO3Dlh4yKKS/tdt504sZLYOaeLl9TIu890GAthrvxB+JN7gyOj
+ t1chpfmlpiwmXxQZtLy9u0tcZMlDd+jYQRLED8aXyC50pG1llinxt5HO1DNuYydzX8LS
+ s97AuG9ngyltdyMpcjOoxPozEeRAhf6u7u4if6VKOGHJuU6AeL8pYwc+Y6mTGATMnZ5V
+ c4SE95KaoscSwnIVwNYTr856W5Fns8TkCn+u72jWVT7E16yfIsrY5FC5ftO4unCFVC+1
+ i66qsNwDHlIbDJKeI7RRNlIPabXYZzoxNVmKtwsLr3Hiibp/pfR0KlCQFQ7lwCE95r4Q
+ Eagg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783226248; x=1783831048;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=E9ndt7/Xaf78gbnm5ds/w+OXU431kvwyAI4qL6QO88k=;
+ b=lxynHeOx8drbWC26Mqy5O2f5bOL0u9uQxkZNTLL3SPA2CrKnmwBOyFn88JhT2WP4Ri
+ fP3bwnSXaxazx0ahmcf6fnlP6zl1HgzRsGrE7vMWIv8ULLGHmMHegg+uvwHUxOIPxiPv
+ MZHDbE/YY515g6fid7sxT0laZOWyATaOEfmG2KdVEL0wZWZFddcWbQVFrir0bund2qcP
+ 76VjHEbzMA0TaGSmhVuZuxJNY/7zUttSxbD0RIUnthxeQXdC5kI/+cdhA5TP6c7KIStg
+ bqd9n3Mjoi7eEuRJAbQuhlEuL32HMf+OG/R7UB2WZGcwNeL1azrhZnCTzSCmI3LOFSMm
+ 1lmQ==
+X-Gm-Message-State: AOJu0YzKPW/B1QDQd0HSuT0TpMtNEkE4xeuYEgdn7MRHDYv0BtgjcTrb
+ 6iS6ywS3R0x3qoYD8Wjl0XWkR2U9ztCYknYprgFBlUlP5B4/WI0/1gO0ZDkQoAkiCFdidaR22CF
+ 3iq0z
+X-Gm-Gg: AfdE7cni//WfTFgnkBfF37c2XrXDHGNVDJdIwVlDvUhl4YrlAOokHoeYSwAfUmOasHr
+ BE/nURtH1ivR9YtDGUL5Atv4+aHjGd3Ur8hYWMljdOo1tTb1cu3V1efDQX2dj0M6T109upM0Gd6
+ 0G5qid0g8JspjepMD4o+S7nlcmuADi0g19u9qo/FTA4mkZbvl4DQT+hTXvld0I9YOC+9Z1eW6Gf
+ N/pJGu/7PUNs9y38ivckJAxh6NVnL0RcbNRWxBhNvqU06wQ8R6pXVfOHHPsXagvYE0qALfhA/HE
+ 0n/2BbLMFl9S7QwUAgkKdCXCpQIM1i5kicceAnNqqQl0cLuE4nUZ9Q91ZERsammpnSH+/YofqEY
+ 0kovNs8VVSaesHWdVtD/9BIhfrTokWiju3BpRyT4Jd4PQafJJ9nd4vz+77vhSCdtgn1Y4wW2nUn
+ +emeKBdsh96iVvZdBvcZGRbTXkFmqq9tgkcLoZgZA3aYcGhjM0zoBZhD0Ujw==
+X-Received: by 2002:a17:902:db0b:b0:2ca:6514:9201 with SMTP id
+ d9443c01a7336-2cbb9e2441amr46886065ad.15.1783226247981; 
+ Sat, 04 Jul 2026 21:37:27 -0700 (PDT)
+Received: from stoup.. (71-212-39-188.tukw.qwest.net. [71.212.39.188])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2cad712ca17sm29863785ad.28.2026.07.04.21.37.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 04 Jul 2026 21:37:27 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ qemu-s390x@nongnu.org, philmd@oss.qualcomm.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH v2 01/46] cpu: Move BREAKPOINT definitions to
+ 'exec/breakpoint.h'
+Date: Sat,  4 Jul 2026 21:36:40 -0700
+Message-ID: <20260705043725.1373137-2-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260705043725.1373137-1-richard.henderson@linaro.org>
+References: <20260705043725.1373137-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=M7J97Sws c=1 sm=1 tr=0 ts=6a497dbe cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=20KFwNOVAAAA:8 a=cx8EP_J7U0ANkHmDKVUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA0MDIyNCBTYWx0ZWRfX6r1PNIWraAVb
- zVyKRfTqr0eRYVmGESz1MXhgUw6UxJk2XviUhwKIk+GtIjLG9I3iuSoRaFNcdI5B9kpw8CJnhCx
- qnMVUPsyW3B9Xib2wKJvAafFsNRGUd4LZGqEY0OswwIL7buLCwAtzibrKboG88cKOluxofIcC+o
- Jq9QCWTk1mWAaqrqtTO+59uTyms4vWpHSfsToy5iof9RMyI8zsQsF8uNpsGsIbCqddwaB5ysYI6
- 8Q+ZIFZgLsi0cIQB9eyhZO5XaKhT9M7Hw+0pZYVAwXcRQhKJGBF4NN/YzmuZL1JcuErYzasXy0u
- r1mqq0h9JIu0Y3v9a/nJtFEdZ/Au5vSztzGXlwPw4gUGWafS5tAhvW2hceN9ecPfuEKiEjhRFAP
- sm3AxRh8IsjOzxy0F6N5MrPhou+4ooAPCPmBBzK3/Ny2YnrHNsI2/aYI4qJ9yPe+lMrdmOQc12i
- MdF+Yydo7Z6puwNAHzA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA0MDIyNCBTYWx0ZWRfX8txjtNnsguUO
- UHWkdknfM8SlDhOMHr6e5t8qDCCigG5Kn4OZRY8bDI8DDfKF84EO1QddgE3RRddu5rTqSFFHhXQ
- X/PBfXCoY6e9YcCZFa48hUyNV8DrTNQ=
-X-Proofpoint-GUID: 30FGK5zN8PtaNc11bcmerI4NvR046TZM
-X-Proofpoint-ORIG-GUID: 30FGK5zN8PtaNc11bcmerI4NvR046TZM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-04_03,2026-07-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 adultscore=0
- priorityscore=1501 bulkscore=0 spamscore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607040224
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,344 +104,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce new helper functions to extract certificate metadata:
+From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-qcrypto_x509_check_cert_times() - validates the certificate's validity period against the current time
-qcrypto_x509_get_cert_key_id() - extracts the key ID from the certificate
-qcrypto_x509_check_ecc_curve_p521() - determines the ECC public key algorithm uses P-521 curve
-
-These functions provide support for metadata extraction and validity checking
-for X.509 certificates.
-
-Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Acked-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260630220100.1289-18-philmd@oss.qualcomm.com>
 ---
- crypto/x509-utils.c         | 236 ++++++++++++++++++++++++++++++++++++
- include/crypto/x509-utils.h |  51 ++++++++
- 2 files changed, 287 insertions(+)
+ include/exec/breakpoint.h | 14 ++++++++++++++
+ include/hw/core/cpu.h     | 14 --------------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
-index 68cf008938..d0e0384e9c 100644
---- a/crypto/x509-utils.c
-+++ b/crypto/x509-utils.c
-@@ -27,6 +27,16 @@ static const int qcrypto_to_gnutls_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
-     [QCRYPTO_HASH_ALGO_RIPEMD160] = GNUTLS_DIG_RMD160,
- };
+diff --git a/include/exec/breakpoint.h b/include/exec/breakpoint.h
+index 95f0482e6d..cc6fedd09f 100644
+--- a/include/exec/breakpoint.h
++++ b/include/exec/breakpoint.h
+@@ -12,6 +12,20 @@
+ #include "exec/vaddr.h"
+ #include "exec/memattrs.h"
  
-+static const int qcrypto_to_gnutls_keyid_flags_map[] = {
-+    [QCRYPTO_HASH_ALGO_MD5] = -1,
-+    [QCRYPTO_HASH_ALGO_SHA1] = GNUTLS_KEYID_USE_SHA1,
-+    [QCRYPTO_HASH_ALGO_SHA224] = -1,
-+    [QCRYPTO_HASH_ALGO_SHA256] = GNUTLS_KEYID_USE_SHA256,
-+    [QCRYPTO_HASH_ALGO_SHA384] = -1,
-+    [QCRYPTO_HASH_ALGO_SHA512] = GNUTLS_KEYID_USE_SHA512,
-+    [QCRYPTO_HASH_ALGO_RIPEMD160] = -1,
-+};
++/* Breakpoint/watchpoint flags */
++#define BP_MEM_READ           0x01
++#define BP_MEM_WRITE          0x02
++#define BP_MEM_ACCESS         (BP_MEM_READ | BP_MEM_WRITE)
++#define BP_STOP_BEFORE_ACCESS 0x04
++/* 0x08 currently unused */
++#define BP_GDB                0x10
++#define BP_CPU                0x20
++#define BP_ANY                (BP_GDB | BP_CPU)
++#define BP_HIT_SHIFT          6
++#define BP_WATCHPOINT_HIT_READ  (BP_MEM_READ << BP_HIT_SHIFT)
++#define BP_WATCHPOINT_HIT_WRITE (BP_MEM_WRITE << BP_HIT_SHIFT)
++#define BP_WATCHPOINT_HIT       (BP_MEM_ACCESS << BP_HIT_SHIFT)
 +
- int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
-                                       QCryptoHashAlgo alg,
-                                       uint8_t *result,
-@@ -121,6 +131,210 @@ cleanup:
-     return ret;
- }
+ typedef struct CPUBreakpoint {
+     vaddr pc;
+     int flags; /* BP_* */
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 59d601465b..c3959607df 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -1138,20 +1138,6 @@ void qemu_init_vcpu(CPUState *cpu);
+  */
+ void cpu_single_step(CPUState *cpu, int enabled);
  
-+int qcrypto_x509_check_cert_times(uint8_t *cert, size_t size, Error **errp)
-+{
-+    int rc;
-+    int ret = -1;
-+    gnutls_x509_crt_t crt;
-+    gnutls_datum_t datum = {.data = cert, .size = size};
-+    time_t now = time(NULL);
-+    time_t exp_time;
-+    time_t act_time;
-+
-+    if (now == ((time_t)-1)) {
-+        error_setg_errno(errp, errno, "Cannot get current time");
-+        return ret;
-+    }
-+
-+    rc = gnutls_x509_crt_init(&crt);
-+    if (rc < 0) {
-+        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
-+        return ret;
-+    }
-+
-+    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
-+    if (rc != 0) {
-+        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
-+        goto cleanup;
-+    }
-+
-+    exp_time = gnutls_x509_crt_get_expiration_time(crt);
-+    if (exp_time == ((time_t)-1)) {
-+        error_setg(errp, "Failed to get certificate expiration time");
-+        goto cleanup;
-+    }
-+    if (exp_time < now) {
-+        error_setg(errp, "The certificate has expired");
-+        goto cleanup;
-+    }
-+
-+    act_time = gnutls_x509_crt_get_activation_time(crt);
-+    if (act_time == ((time_t)-1)) {
-+        error_setg(errp, "Failed to get certificate activation time");
-+        goto cleanup;
-+    }
-+    if (act_time > now) {
-+        error_setg(errp, "The certificate is not yet active");
-+        goto cleanup;
-+    }
-+
-+    ret = 0;
-+
-+cleanup:
-+    gnutls_x509_crt_deinit(crt);
-+    return ret;
-+}
-+
-+static int qcrypto_x509_get_pk_algorithm(uint8_t *cert, size_t size, Error **errp)
-+{
-+    int rc;
-+    int ret = -1;
-+    unsigned int bits;
-+    gnutls_x509_crt_t crt;
-+    gnutls_datum_t datum = {.data = cert, .size = size};
-+
-+    rc = gnutls_x509_crt_init(&crt);
-+    if (rc < 0) {
-+        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
-+        return ret;
-+    }
-+
-+    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
-+    if (rc != 0) {
-+        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
-+        goto cleanup;
-+    }
-+
-+    rc = gnutls_x509_crt_get_pk_algorithm(crt, &bits);
-+    if (rc < 0) {
-+        error_setg(errp, "Unknown public key algorithm %d", rc);
-+        goto cleanup;
-+    }
-+
-+    ret = rc;
-+
-+cleanup:
-+    gnutls_x509_crt_deinit(crt);
-+    return ret;
-+}
-+
-+int qcrypto_x509_get_cert_key_id(uint8_t *cert, size_t size,
-+                                 QCryptoHashAlgo hash_alg,
-+                                 uint8_t **result,
-+                                 size_t *resultlen,
-+                                 Error **errp)
-+{
-+    int rc;
-+    int ret = -1;
-+    gnutls_x509_crt_t crt;
-+    gnutls_datum_t datum = {.data = cert, .size = size};
-+
-+    if (hash_alg >= G_N_ELEMENTS(qcrypto_to_gnutls_hash_alg_map)) {
-+        error_setg(errp, "Unknown hash algorithm %d", hash_alg);
-+        return ret;
-+    }
-+
-+    if (hash_alg >= G_N_ELEMENTS(qcrypto_to_gnutls_keyid_flags_map) ||
-+        qcrypto_to_gnutls_keyid_flags_map[hash_alg] == -1) {
-+        error_setg(errp, "Unsupported key id flag %d", hash_alg);
-+        return ret;
-+    }
-+
-+    rc = gnutls_x509_crt_init(&crt);
-+    if (rc < 0) {
-+        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
-+        return ret;
-+    }
-+
-+    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
-+    if (rc != 0) {
-+        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
-+        goto cleanup;
-+    }
-+
-+    *resultlen = gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[hash_alg]);
-+    if (*resultlen == 0) {
-+        error_setg(errp, "Failed to get hash algorithm length: %s", gnutls_strerror(rc));
-+        goto cleanup;
-+    }
-+
-+    *result = g_malloc0(*resultlen);
-+    if (gnutls_x509_crt_get_key_id(crt,
-+                                   qcrypto_to_gnutls_keyid_flags_map[hash_alg],
-+                                   *result, resultlen) != 0) {
-+        error_setg(errp, "Failed to get key ID from certificate");
-+        g_clear_pointer(result, g_free);
-+        goto cleanup;
-+    }
-+
-+    ret = 0;
-+
-+cleanup:
-+    gnutls_x509_crt_deinit(crt);
-+    return ret;
-+}
-+
-+static int qcrypto_x509_get_ecc_curve(uint8_t *cert, size_t size, Error **errp)
-+{
-+    int rc;
-+    int ret = -1;
-+    gnutls_x509_crt_t crt;
-+    gnutls_datum_t datum = {.data = cert, .size = size};
-+    gnutls_ecc_curve_t curve_id;
-+    gnutls_datum_t x = {.data = NULL, .size = 0};
-+    gnutls_datum_t y = {.data = NULL, .size = 0};
-+
-+    rc = gnutls_x509_crt_init(&crt);
-+    if (rc < 0) {
-+        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
-+        return ret;
-+    }
-+
-+    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
-+    if (rc != 0) {
-+        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
-+        goto cleanup;
-+    }
-+
-+    rc = gnutls_x509_crt_get_pk_ecc_raw(crt, &curve_id, &x, &y);
-+    if (rc != 0) {
-+        error_setg(errp, "Failed to get ECC public key curve: %s", gnutls_strerror(rc));
-+        goto cleanup;
-+    }
-+
-+    ret = curve_id;
-+
-+cleanup:
-+    gnutls_x509_crt_deinit(crt);
-+    g_free(x.data);
-+    g_free(y.data);
-+    return ret;
-+}
-+
-+int qcrypto_x509_check_ecc_curve_p521(uint8_t *cert, size_t size, Error **errp)
-+{
-+    int algo;
-+    int curve_id;
-+
-+    algo = qcrypto_x509_get_pk_algorithm(cert, size, errp);
-+    if (algo != GNUTLS_PK_ECDSA) {
-+        return 0;
-+    }
-+
-+    curve_id = qcrypto_x509_get_ecc_curve(cert, size, errp);
-+    if (curve_id == -1) {
-+        error_setg(errp, "Failed to get ECC curve");
-+        return -1;
-+    }
-+
-+    if (curve_id == GNUTLS_ECC_CURVE_INVALID) {
-+        error_setg(errp, "Invalid ECC curve");
-+        return -1;
-+    }
-+
-+    return curve_id == GNUTLS_ECC_CURVE_SECP521R1;
-+}
-+
- #else /* ! CONFIG_GNUTLS */
- 
- int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
-@@ -142,4 +356,26 @@ int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
-     return -1;
- }
- 
-+int qcrypto_x509_check_cert_times(uint8_t *cert, size_t size, Error **errp)
-+{
-+    error_setg(errp, "GNUTLS is required to get certificate times");
-+    return -1;
-+}
-+
-+int qcrypto_x509_get_cert_key_id(uint8_t *cert, size_t size,
-+                                 QCryptoHashAlgo hash_alg,
-+                                 uint8_t **result,
-+                                 size_t *resultlen,
-+                                 Error **errp)
-+{
-+    error_setg(errp, "GNUTLS is required to get key ID");
-+    return -1;
-+}
-+
-+int qcrypto_x509_check_ecc_curve_p521(uint8_t *cert, size_t size, Error **errp)
-+{
-+    error_setg(errp, "GNUTLS is required to determine ecc curve");
-+    return -1;
-+}
-+
- #endif /* ! CONFIG_GNUTLS */
-diff --git a/include/crypto/x509-utils.h b/include/crypto/x509-utils.h
-index 91ae79fb03..fcace73c49 100644
---- a/include/crypto/x509-utils.h
-+++ b/include/crypto/x509-utils.h
-@@ -40,4 +40,55 @@ int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
-                                   size_t *resultlen,
-                                   Error **errp);
- 
-+/**
-+ * qcrypto_x509_check_cert_times
-+ * @cert: pointer to the raw certificate data
-+ * @size: size of the certificate
-+ * @errp: error pointer
-+ *
-+ * Check whether the activation and expiration times of @cert
-+ * are valid at the current time.
-+ *
-+ * Returns: 0 if the certificate times are valid,
-+ *         -1 on error.
-+ */
-+int qcrypto_x509_check_cert_times(uint8_t *cert, size_t size, Error **errp);
-+
-+/**
-+ * qcrypto_x509_get_cert_key_id
-+ * @cert: pointer to the raw certificate data
-+ * @size: size of the certificate
-+ * @hash_alg: the hash algorithm flag
-+ * @result: output location for the allocated buffer for key ID
-+ *          (the function allocates memory which must be freed by the caller)
-+ * @resultlen: pointer to the size of the buffer
-+ *             (will be updated with the actual size of key id)
-+ * @errp: error pointer
-+ *
-+ * Retrieve the key ID from the @cert based on the specified @hash_alg.
-+ *
-+ * Returns: 0 if key ID was successfully stored in @result,
-+ *         -1 on error.
-+ */
-+int qcrypto_x509_get_cert_key_id(uint8_t *cert, size_t size,
-+                                 QCryptoHashAlgo hash_alg,
-+                                 uint8_t **result,
-+                                 size_t *resultlen,
-+                                 Error **errp);
-+
-+/**
-+ * qcrypto_x509_check_ecc_curve_p521
-+ * @cert: pointer to the raw certificate data
-+ * @size: size of the certificate
-+ * @errp: error pointer
-+ *
-+ * Determine whether the ECC public key in the given certificate uses the P-521
-+ * curve.
-+ *
-+ * Returns: 0 if ECC public key does not use P521 curve.
-+ *          1 if ECC public key uses P521 curve.
-+ *         -1 on error.
-+ */
-+int qcrypto_x509_check_ecc_curve_p521(uint8_t *cert, size_t size, Error **errp);
-+
- #endif
+-/* Breakpoint/watchpoint flags */
+-#define BP_MEM_READ           0x01
+-#define BP_MEM_WRITE          0x02
+-#define BP_MEM_ACCESS         (BP_MEM_READ | BP_MEM_WRITE)
+-#define BP_STOP_BEFORE_ACCESS 0x04
+-/* 0x08 currently unused */
+-#define BP_GDB                0x10
+-#define BP_CPU                0x20
+-#define BP_ANY                (BP_GDB | BP_CPU)
+-#define BP_HIT_SHIFT          6
+-#define BP_WATCHPOINT_HIT_READ  (BP_MEM_READ << BP_HIT_SHIFT)
+-#define BP_WATCHPOINT_HIT_WRITE (BP_MEM_WRITE << BP_HIT_SHIFT)
+-#define BP_WATCHPOINT_HIT       (BP_MEM_ACCESS << BP_HIT_SHIFT)
+-
+ int cpu_breakpoint_insert(CPUState *cpu, vaddr pc, int flags,
+                           CPUBreakpoint **breakpoint);
+ int cpu_breakpoint_remove(CPUState *cpu, vaddr pc, int flags);
 -- 
-2.54.0
+2.43.0
 
 
