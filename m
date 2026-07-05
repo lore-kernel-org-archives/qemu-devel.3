@@ -4,97 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BB07C43458
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:36:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C480BC43458
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:36:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgNwY-0005bM-Tn; Sun, 05 Jul 2026 10:35:38 -0400
+	id 1wgNvs-0005BB-NI; Sun, 05 Jul 2026 10:34:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwY-0005b3-32
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:38 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNvr-0005B0-KE
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:34:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwV-0001Q7-TN
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:37 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNvp-00016J-Um
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:34:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783262135;
+ s=mimecast20190719; t=1783262093;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u90+7BA/9+gBWZCPusQaFHx03QikGWcwz/+Bmxojzyc=;
- b=TcFVAXnsu7wMPN9NXNNa2WsWJGOBTrVf0qC7jW+oaXdXPfNYtyRBGPskqUhbeUNGeT2lCi
- D43r3lvNE4qrGG51TPVJWMKglLbtDH4uOwg8VRTLukp/UB8IU8iNWFBf1hl/WWqJ7i9VAn
- 9Jl7TpeVJ3q5LcbwZ7fjYHstqoi8awU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SfP5ZteIZuG9MnPCQQceIltovRko4AplCnjjhfUb6nY=;
+ b=K758yidreKpnAfc8ohGoa3T7XS+gO/KqybKiNwZLwpe/lSch+Ig9KLt58eorJlvUaebcl0
+ KCt70nF4fYtCvf+8nnXa4xyYyTlnuHl4wF6p5gdFaMpj6dcBS89ptnzkrvPTsHfiIvLgFy
+ 8M0Ab18upAh+xFbzDQmCyvTW5LBADfk=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-320-l9_Ou6ijOvyiKLtZjP1MWQ-1; Sun, 05 Jul 2026 10:35:33 -0400
-X-MC-Unique: l9_Ou6ijOvyiKLtZjP1MWQ-1
-X-Mimecast-MFC-AGG-ID: l9_Ou6ijOvyiKLtZjP1MWQ_1783262132
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-46fb9079a04so837815f8f.3
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:35:33 -0700 (PDT)
+ us-mta-552-MNVOAvd5NeqBItOLfg3DvQ-1; Sun, 05 Jul 2026 10:34:50 -0400
+X-MC-Unique: MNVOAvd5NeqBItOLfg3DvQ-1
+X-Mimecast-MFC-AGG-ID: MNVOAvd5NeqBItOLfg3DvQ_1783262089
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-493c1bc7a70so17070015e9.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:34:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783262132; x=1783866932; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=u90+7BA/9+gBWZCPusQaFHx03QikGWcwz/+Bmxojzyc=;
- b=Da7p81iM1RR+/o1IxcEgcdrHb4s9VpZ5h7PHqPRrLbCc5Y/pGP+H+M/foS5dOZuwKr
- FFMorUSCe9gjGLklGWrIHphXCTRfEydE/MAwZrvrwQmOjJBZATyhwX4YeZWpGZ3ZvW2j
- 7hQLlvmgtlGcRzNSz8YhXF6NuGpGQUcvEf3bYM/uJiopDdaPQFVhTRO2KqCMr1jDjfD+
- lxydeX9SquLqIZa3zPFOzO7Ie4JnXH9TUO/DN1qxfzwBa1JpNDURYPE81IhaDHraUJ+r
- f+mLrfZLHjAAWaV/f7W8IEiyACRCxQ9rBUsJmRC3OGBtn6WJBPYsV/XNk7Nrdd/BEk+4
- 9+RQ==
+ d=redhat.com; s=google; t=1783262089; x=1783866889; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=SfP5ZteIZuG9MnPCQQceIltovRko4AplCnjjhfUb6nY=;
+ b=e1eUuVAUpgn8Q+PAj3CR0VrlEffc5GHQ6AF3nbhaxaO0p5OUX5lyvskFLFRM2VhBHx
+ o7d5PryUbqegQqThwJyEmf9hM5QcMTVYS0ADPWzBo77DvVAeY8p3ESMKYEmdBdkMDGAU
+ 8X3nJrNBagX9TJpHDJdFA/MzgJl1XlXQ0GsjQ6d/S1ORTg4yHbxJkCB+GGbrjqmWIQ04
+ p31sT5WIpdZCIRwBEDI9ix4JYC/9u8nijA/XTpZBXa4NOpe+/YaPFsLH/VDQTyFvfQTl
+ EiuzMp31l2OZFesGIJJxZggTyYqifImUalEP6J9+X9AlRWZ4BM49qgSgI69elfuR06DI
+ /vpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783262132; x=1783866932;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=u90+7BA/9+gBWZCPusQaFHx03QikGWcwz/+Bmxojzyc=;
- b=Bk4GjSRrkrxN48pbYo/kXAeA/wdhTXclJEgeedpxG/A233pcp8+zUgo6Iswqi/e0+u
- FQIIzCWYILbUmry/uZr/P90SXG4zEgzw6O9fHoEy7gxZCB8tRVeuaIyuCSF4OgqrG0jA
- RrJb9Do1rXJCmYNHjP53Byfo4gB6ao+A6+1JAPkLpy26Q4s+C0VBiDFFGSUMsMw+bhfA
- fWCTPwZHcMAckl/U/PJz8foFBjhMgvCoCGw8CeinOHLYHUrHH3ldh59URtCQUSYys0zq
- cMukE9UfbvoX5CHizaz4i95QHD0bNs2R7L7BziErsKejHQnCh3ut4DtYD4ULndgzg/eK
- RFgg==
-X-Gm-Message-State: AOJu0YzIT+gyD3uRPBfsrrLnFgkvV65/UZXY062sYjZcVnEIDt1hVIIT
- oHtkpVY+GixLA/rOImbQqfp5UsZe1PUXVK9/wf68dNAa7Yz5jg3j89+tw6V6ifzwSK5PukU39I0
- Pw0rT++UE30t1FW1CxyhrhbCfUH7ykV56mGWDXaajqDA1XV/fGvB504lm548yWvm2L9g7js6TeV
- +zn/JgY3YwTN2Sgc59QL39JmdCl4c2yC3uLQ==
-X-Gm-Gg: AfdE7cnc3vYznUzvqHXRBoPTuo5+O2s6NSLsc4zIs2D1JHcnc8nIAZ69OTJ0vUqDWGQ
- 74/nYcRp54wdCZ0+MOGvMzViTCPKkDhUjMA0VlZ4oaGVgxiab8ZnbRo9cv3l3A+PIkKgjLSZN14
- RmvqHWtgQtZKigpbMbIBBcyuLV8Z1TvRIgiSxZUhzxEHIpsypSxC+118+T6gxSNpDNcZGpvGrer
- B7pyNZtlhjtgt51tRRxaIEG2nmvQBURJdOklC2wWvK/Q+K6j+0P2QXTU2AbyeXlX8gLKNpnvp+D
- KotUUq6JrCwXI4QtZjU4hrIozdffYuuJGxrimxNFxh+aq1XYWOEfO4MGu4ON0r5Ea5EqutjMYSy
- 93dkoX7O1mdgLqKnKfeXA+kFPmMmnkGn2
-X-Received: by 2002:adf:f3c4:0:b0:465:ba53:a006 with SMTP id
- ffacd0b85a97d-47aacf86305mr5419711f8f.23.1783262131673; 
- Sun, 05 Jul 2026 07:35:31 -0700 (PDT)
-X-Received: by 2002:adf:f3c4:0:b0:465:ba53:a006 with SMTP id
- ffacd0b85a97d-47aacf86305mr5419682f8f.23.1783262131104; 
- Sun, 05 Jul 2026 07:35:31 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783262089; x=1783866889;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SfP5ZteIZuG9MnPCQQceIltovRko4AplCnjjhfUb6nY=;
+ b=aL4m33Rn03POx11OAiToJ+4xWyfqOnTO235JCOtWAmG8kEvHqjTP92xsYKjHpkgFlw
+ ZLBxuDPts8Oi2L1a/WuRhiBADKLGbotV3EEO2zVWNlpdMHrDHEUkcEqhxBUlUFqUHdrg
+ Idc2x6Kka65D5fd0y7zECQTKCyDVt9lXe3RdHpbzPNh/Zl7uAPZneMwbxPdaAMrLVb9d
+ d9i/anvkNtdjc/eWUaGeJwFremlZiMrRFoMTJvY+77r7Q0y9b9dUlZLdM1wU7o+z5Ghw
+ 2bva9tB0RB3r3kKhPK+G+bFZGD1KRgrAFdO94emWoZ/lf1ZDyMMHosj8RDRMKTeMVazP
+ gTJA==
+X-Gm-Message-State: AOJu0YwNn2PMtflyLExty4ORVfjdEtGGHnN6UWfjLi9GU/5BSJzqp+cj
+ lCpeDf05FOesmibeJOivlg8ANQ83raIrpa1ILja0DtZHOnF/C13MCP/CcHIPzpVD9wJXg137YiO
+ Ctp/3ahkU5N0PhMS+VHY8aavVl7H4GG05/W+5Lqpf0xoUapPp+EY1G698sJ23zNTe8hcaOFLu1H
+ HqLzEL0pOmhTH0EREgIF1Reo0XzInqxO5cUA==
+X-Gm-Gg: AfdE7cn+iUWdrutNL0gR7vzlG64ETqaCU8UBBGXCV7eT+fH+QDLkZr1ykH+byNrLMat
+ Nq6amrbS8wCdqxCw7TGvLdsvdsrnp68CaeIeeZL3YyNy0cJ9UhN+SZl08eSxh+RJxDKhvhC9LKs
+ 9E3lCkAIgZur2iDyL8OOzuc9YQfgfMZpJf1hL5Rw/7ZeHPuLYbSE45WtCroDJYuUxX++85lUUlF
+ vS5ZU7TFa2JgzJl/idgVMnbNDIRCEclihtNRlRhvxkyPBlKaznA38xvBQyl6evVbupPckeuKK6u
+ JTJmrzqGLYGEIzhgaHVHH3wfAUuR6Kgjm3LJHPozGuCg8iCXxEKS5Omo8VkuBSI9pJcot4Q9c7S
+ uxLOIse6gsgaoxSMzcDWZ+LHwEnpr5MI8
+X-Received: by 2002:a05:600c:1992:b0:493:b91c:6bf with SMTP id
+ 5b1f17b1804b1-493d11f149emr72442505e9.18.1783262088585; 
+ Sun, 05 Jul 2026 07:34:48 -0700 (PDT)
+X-Received: by 2002:a05:600c:1992:b0:493:b91c:6bf with SMTP id
+ 5b1f17b1804b1-493d11f149emr72442215e9.18.1783262088059; 
+ Sun, 05 Jul 2026 07:34:48 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-68-31.inter.net.il. [80.230.68.31])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa039b126sm16303035f8f.24.2026.07.05.07.35.29
+ 5b1f17b1804b1-493ccdb566csm198342605e9.7.2026.07.05.07.34.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Jul 2026 07:35:30 -0700 (PDT)
-Date: Sun, 5 Jul 2026 10:35:28 -0400
+ Sun, 05 Jul 2026 07:34:47 -0700 (PDT)
+Date: Sun, 5 Jul 2026 10:34:45 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, qemu-stable@nongnu.org,
- Amit Shah <amit@kernel.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 20/44] hw/char/virtio-serial-bus: fix guest-triggerable OOM in
- control_out()
-Message-ID: <36b37f8494800ed9c5d4b6ef03924bd1636cb810.1783261895.git.mst@redhat.com>
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Sairaj Kodilkar <sarunkod@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 03/44] amd_iommu: Decode XT interrupt control register without
+ bitfields
+Message-ID: <83ec1c7fcb243c232186df790f5847808cc26982.1783261895.git.mst@redhat.com>
 References: <cover.1783261895.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1783261895.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -106,7 +109,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,104 +125,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-A malicious guest can craft virtqueue descriptors with arbitrary lengths.
-control_out() calls iov_size() on the guest-supplied scatter-gather list
-and passes the result directly to g_malloc(), allowing a guest to force
-QEMU to attempt multi-gigabyte allocations and crash the host process.
+The XT IOMMU General Interrupt Control Register is a guest-visible MMIO
+register. Decoding it with bitfields depends on host bitfield layout and is
+not portable to big-endian hosts.
 
-Fix this by copying at most sizeof(struct virtio_console_control) into a
-stack-local variable instead of allocating a buffer sized by the guest.
-handle_control_message() only accesses the fixed-size id, event, and
-value fields, so no data beyond the struct was ever needed.
+Fix this by removing union mmio_xt_intr and explicitly extracting fields
+with FIELD_EX64() from the full register value returned by amdvi_readq(),
+which has already been converted to host endianness.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3585
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Using a designated initializer for X86IOMMUIrq also ensures fields not
+provided by the XT register (e.g. msi_addr_last_bits) are initialized before
+x86_iommu_irq_to_msi_message() uses them.
+
+CID: 1660056
+Fixes: cf0210df65aa ("amd_iommu: Generate XT interrupts when xt support is enabled")
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260622161144.2883799-1-lvivier@redhat.com>
+Message-ID: <20260630220806.1758748-4-alejandro.j.jimenez@oracle.com>
 ---
- hw/char/virtio-serial-bus.c | 34 +++++++---------------------------
- 1 file changed, 7 insertions(+), 27 deletions(-)
+ hw/i386/amd_iommu.h | 14 --------------
+ hw/i386/amd_iommu.c | 28 ++++++++++++++++++----------
+ 2 files changed, 18 insertions(+), 24 deletions(-)
 
-diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-index cd234dc6db..c1973f0248 100644
---- a/hw/char/virtio-serial-bus.c
-+++ b/hw/char/virtio-serial-bus.c
-@@ -344,22 +344,16 @@ void virtio_serial_throttle_port(VirtIOSerialPort *port, bool throttle)
- }
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 3cab04a6d4..ca4440a4c1 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -340,20 +340,6 @@ struct irte_ga {
+   union irte_ga_hi hi;
+ };
  
- /* Guest wants to notify us of some event */
--static void handle_control_message(VirtIOSerial *vser, void *buf, size_t len)
-+static void handle_control_message(VirtIOSerial *vser,
-+                                   struct virtio_console_control *gcpkt)
+-union mmio_xt_intr {
+-    uint64_t val;
+-    struct {
+-        uint64_t rsvd_1:2,
+-                 destination_mode:1,
+-                 rsvd_2:5,
+-                 destination_lo:24,
+-                 vector:8,
+-                 delivery_mode:1,
+-                 rsvd_3:15,
+-                 destination_hi:8;
+-    };
+-};
+-
+ #define TYPE_AMD_IOMMU_DEVICE "amd-iommu"
+ OBJECT_DECLARE_SIMPLE_TYPE(AMDVIState, AMD_IOMMU_DEVICE)
+ 
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index a0835a20d7..291cb368a9 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -34,6 +34,7 @@
+ #include "hw/core/qdev-properties.h"
+ #include "kvm/kvm_i386.h"
+ #include "qemu/iova-tree.h"
++#include "hw/core/registerfields.h"
+ 
+ struct AMDVIAddressSpace {
+     PCIBus *bus;                /* PCIBus (for bus number)              */
+@@ -88,6 +89,13 @@ typedef struct AMDVIIOTLBKey {
+     uint16_t devid;
+ } AMDVIIOTLBKey;
+ 
++/* XT IOMMU General Interrupt Control Register layout */
++FIELD(AMDVI_XT_GEN_INTR, DEST_MODE, 2, 1)
++FIELD(AMDVI_XT_GEN_INTR, DEST_LO, 8, 24)
++FIELD(AMDVI_XT_GEN_INTR, VECTOR, 32, 8)
++FIELD(AMDVI_XT_GEN_INTR, DELIVERY_MODE, 40, 1)
++FIELD(AMDVI_XT_GEN_INTR, DEST_HI, 56, 8)
++
+ uint64_t amdvi_extended_feature_register(AMDVIState *s)
  {
-     VirtIODevice *vdev = VIRTIO_DEVICE(vser);
-     struct VirtIOSerialPort *port;
-     VirtIOSerialPortClass *vsc;
--    struct virtio_console_control cpkt, *gcpkt;
-+    struct virtio_console_control cpkt;
-     uint8_t *buffer;
-     size_t buffer_len;
+     uint64_t feature = AMDVI_DEFAULT_EXT_FEATURES;
+@@ -194,17 +202,17 @@ static void amdvi_assign_andq(AMDVIState *s, hwaddr addr, uint64_t val)
  
--    gcpkt = buf;
--
--    if (len < sizeof(cpkt)) {
--        /* The guest sent an invalid control packet */
--        return;
--    }
--
-     cpkt.event = virtio_lduw_p(vdev, &gcpkt->event);
-     cpkt.value = virtio_lduw_p(vdev, &gcpkt->value);
- 
-@@ -457,41 +451,27 @@ static void control_in(VirtIODevice *vdev, VirtQueue *vq)
- 
- static void control_out(VirtIODevice *vdev, VirtQueue *vq)
+ static void amdvi_build_xt_msi_msg(AMDVIState *s, MSIMessage *msg)
  {
-+    struct virtio_console_control cpkt;
-     VirtQueueElement *elem;
-     VirtIOSerial *vser;
--    uint8_t *buf;
-     size_t len;
+-    union mmio_xt_intr xt_reg;
+-    struct X86IOMMUIrq irq;
++    uint64_t xt_reg = amdvi_readq(s, AMDVI_MMIO_XT_GEN_INTR);
  
-     vser = VIRTIO_SERIAL(vdev);
- 
--    len = 0;
--    buf = NULL;
-     for (;;) {
--        size_t cur_len;
+-    xt_reg.val = amdvi_readq(s, AMDVI_MMIO_XT_GEN_INTR);
 -
-         elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
-         if (!elem) {
-             break;
-         }
+-    irq.vector = xt_reg.vector;
+-    irq.delivery_mode = xt_reg.delivery_mode;
+-    irq.dest_mode = xt_reg.destination_mode;
+-    irq.dest = (xt_reg.destination_hi << 24) | xt_reg.destination_lo;
+-    irq.trigger_mode = 0;
+-    irq.redir_hint = 0;
++    X86IOMMUIrq irq = {
++        .vector = FIELD_EX64(xt_reg, AMDVI_XT_GEN_INTR, VECTOR),
++        .delivery_mode = FIELD_EX64(xt_reg, AMDVI_XT_GEN_INTR, DELIVERY_MODE),
++        .dest_mode = FIELD_EX64(xt_reg, AMDVI_XT_GEN_INTR, DEST_MODE),
++        .dest = (FIELD_EX64(xt_reg, AMDVI_XT_GEN_INTR, DEST_HI) << 24) |
++                 FIELD_EX64(xt_reg, AMDVI_XT_GEN_INTR, DEST_LO),
++        .trigger_mode = 0,
++        .redir_hint = 0,
++    };
  
--        cur_len = iov_size(elem->out_sg, elem->out_num);
--        /*
--         * Allocate a new buf only if we didn't have one previously or
--         * if the size of the buf differs
--         */
--        if (cur_len > len) {
--            g_free(buf);
--
--            buf = g_malloc(cur_len);
--            len = cur_len;
-+        len = iov_to_buf(elem->out_sg, elem->out_num, 0, &cpkt, sizeof(cpkt));
-+        if (len == sizeof(cpkt)) {
-+            handle_control_message(vser, &cpkt);
-         }
--        iov_to_buf(elem->out_sg, elem->out_num, 0, buf, cur_len);
- 
--        handle_control_message(vser, buf, cur_len);
-         virtqueue_push(vq, elem, 0);
-         g_free(elem);
-     }
--    g_free(buf);
-     virtio_notify(vdev, vq);
+     x86_iommu_irq_to_msi_message(&irq, msg);
  }
- 
 -- 
 MST
 
