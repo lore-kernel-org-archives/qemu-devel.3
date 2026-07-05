@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60D5AC44500
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:41:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD4DDC43458
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:41:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgNwo-0005xv-E5; Sun, 05 Jul 2026 10:35:54 -0400
+	id 1wgNwU-0005Yq-8j; Sun, 05 Jul 2026 10:35:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwm-0005su-6o
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:52 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwR-0005Wk-K9
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwk-0001Ru-Lb
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:51 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwQ-0001Pd-25
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783262150;
+ s=mimecast20190719; t=1783262129;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=S/TONRYQ3N3aydVgfUlml6h82IkxOyVKOC3903eRb38=;
- b=XoB3CUgs8WEMeDK52rPscy2QMMZHbKC5zGmkYwdsMiO/ZSHuF/dlvmQNGx4S0pe4/uF+6a
- pFPAuRNv+tT74DaUx+6z/Tx1nuPNSvc60ByTOKkRkuJSjj1aggX6ASSZ80EWg5cNugMl3N
- x/OkSFyzVeb1603zhI8iXr+0aTAdyOU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XNytVY+RK4HHxAkd8Avgx+3Crv9VVEXYr/YVFcZH3Jg=;
+ b=NAdXtUJsgDGMVM7ExL72J5RGj1dc0/ZP4J3DrhjdGKiQDm9fEYfP5R3aBX7/5vjktXA9hl
+ EMdUI+SlicBmPClQoXffC9drKn7Vgk9jZXLtM0+xIRAp8PAYwPzBKWye4zvih7lHizkUbj
+ royw+idZGLU1cnPBi00ZC6zLB7aSyBE=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-FLLKoaEDMLOTjPizFybO8w-1; Sun, 05 Jul 2026 10:35:48 -0400
-X-MC-Unique: FLLKoaEDMLOTjPizFybO8w-1
-X-Mimecast-MFC-AGG-ID: FLLKoaEDMLOTjPizFybO8w_1783262148
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-493caa3c54eso18814385e9.2
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:35:48 -0700 (PDT)
+ us-mta-416-iY6jdKFbNcmjgU5sHZjN4g-1; Sun, 05 Jul 2026 10:35:28 -0400
+X-MC-Unique: iY6jdKFbNcmjgU5sHZjN4g-1
+X-Mimecast-MFC-AGG-ID: iY6jdKFbNcmjgU5sHZjN4g_1783262127
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-47d81cf0c4cso183316f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:35:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783262147; x=1783866947; darn=nongnu.org;
+ d=redhat.com; s=google; t=1783262127; x=1783866927; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=S/TONRYQ3N3aydVgfUlml6h82IkxOyVKOC3903eRb38=;
- b=aNaYzvSClOVuB7Hg/O8IsBkVFf6Q2bvoqOp2iRUDEoW4FkDNYgHG2bkSBb7P6CrBBc
- DJjIRN8rRDEOnU5hA5hbGxUSmMupJM5l7Sh/d5mgYPDBil42oVfGB8GEEmGiKf9q6NTx
- /GmsskM63nAnn7SkUeM94Yf6ZB2JlzO4aZkhwPj+GgXu5b9VKe/lJzO0qxxTx06VhTWC
- eHXOyou8sQt12a1F10cGjBvQIvRYTfcb8i9vO9e2UvKVGRZj0qUoYyqYcsCx2M1UOSKj
- OtrqZYDdsqqLsAbXJOI1SApQruXk0fg6sxnT6sGWPxVz01oMykfLLPjiShbh9Eq8cExQ
- JyEA==
+ bh=XNytVY+RK4HHxAkd8Avgx+3Crv9VVEXYr/YVFcZH3Jg=;
+ b=niV39JKzkeHWAmJ+6wTtBuRXU3HuILD9lfPJCFBPgRHfD17oF/fq0GDnnEQovaIPIB
+ 6YyBw5RIVs1nQOJQsHjZCdN/zjNLy9zujKWv/9E5LNKv+QxxxXLrNuK/YiknebmTtgKb
+ qFEsRzGmp7LuiylfYACbAWUYE3eOwK3tJMDCBirc+/FrD93rnCqCFS3eEZGLJC5C5OL5
+ uo6JM0TMOHt4ggHdayV6eR0PeVgg/U9DheDD7eV7R/D56kR81qMuJdBVA2oZR6oiFN2z
+ WHptTyow7lIFU3yM5VB9gPwHmmEg1aT74ukFZLXnbwnVOnRZ3XMYO5mYzdtg/5CzB4H5
+ 1f/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783262147; x=1783866947;
+ d=1e100.net; s=20251104; t=1783262127; x=1783866927;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=S/TONRYQ3N3aydVgfUlml6h82IkxOyVKOC3903eRb38=;
- b=WeTOQJfNcrvdTqICs6GkcViyWz153G0e525jwVpP7yuyxeq6/ZZJqdWF/kRWc1Bibp
- +2LHrKBBZHNZZtB5jwtpG9iZk4xHVvnNPNoZ52m1idJtVGbDzJ1YXBOQ1y/gUddc40PV
- qs2T2Mg3rNsIfmN3J0MgMLaf5WVNyNuDk0hGti7GbBVFQjZ1iHn7polhaUjvQaoMRXQC
- t8RV27FtOZBEV7bG6ucFZZWE5J4xxL8G2pNanvzQsjFvfx5mjxieuRq8/9Gj/bzGinXW
- B2KLWi89s3plUFCMScg/JEN+0vEGQwRgtkqu45BK6oREAKCVYY2/1cBj5A1BBOxhV+43
- f+1g==
-X-Gm-Message-State: AOJu0Yw8hBV8U6dO4tgxt1G/M63w5CwAFsfhq+58nAMCx7m7HvUbz8vw
- IP6rKic4BY+hKjQIlNT7nBbDNnIch9irW9mRAv5ounkOWsA6TbitoqgM2qRXvsXoDre36on3wZY
- uwyjNtUs+wDvgRV8rfmZ9bBpwFlDZBPyoLTm60mHS5hrHJTLo1X084wPeTgVzfaY1TBu44S2FJQ
- Vd8L5ccD1MGd0vp7N7BszbpEusc0xa0VfJbw==
-X-Gm-Gg: AfdE7cnVnCNK3gHQbjgEkV0351f3ihGiwFTp2euO+Fi1qR1tqkONA0EfKztAJ6JGSa1
- eBFrWZeAdJ6MI2NgKbYT4Ux80sghirhvGxFruWQG8x0FkGHJ49W8ljQ2hCGS0ThKnuhduWEdzH2
- c59/lpouq8ux8kluNraXNpPN13Wjk6q77GMBGixvfFnoDx2I0Ts76fkFNpR5fkpjKHJTR6/GH77
- NnKTXWEMesqLfGspwxqBXuJpg0BXIGj/AfoKVW+GGXE//h9fefamKbWY7LK6FvI3wOVfaKIto0b
- eut7CEfArrJRy/Z1FQeqKNeQFZnO4AYlDbOzG4cpmWpj0wMki5PT8fmnSGLrI12sa7GsL8XBsM5
- 1RtrhSC/Bgj04SBN4MWzMXiLt5lON/lm1
-X-Received: by 2002:a05:600c:5897:b0:492:4cce:53e2 with SMTP id
- 5b1f17b1804b1-493d11d0775mr52669955e9.3.1783262147470; 
- Sun, 05 Jul 2026 07:35:47 -0700 (PDT)
-X-Received: by 2002:a05:600c:5897:b0:492:4cce:53e2 with SMTP id
- 5b1f17b1804b1-493d11d0775mr52669555e9.3.1783262146820; 
- Sun, 05 Jul 2026 07:35:46 -0700 (PDT)
+ bh=XNytVY+RK4HHxAkd8Avgx+3Crv9VVEXYr/YVFcZH3Jg=;
+ b=Lrd5Or2IBRoDqJyVs2HtaNrBRHWdSdh4Wf3T/TnQoMjt5kaNOeYlYDiUZMKQX+hY4j
+ +8BHuxG2YC4QxUaNMkQNJsPj0i8j4UXs7Qb2V0ESVeXVywHpSFGT/MfsUYmVdeqSMavC
+ 7CXgzNJtgre3BkXHlhABFptC0Od6Nc7kos3hfreoWW7ZO1jXUb3mj6DRRtzX64RPWYCx
+ 1tKlo+PGX2Vspi5PrlA7oDLr3gmJXGX7BkNPx7cZLOzP/psX4LKorQtXlNTdq+hOnZDM
+ d9D2hQIemPE9S6EAaUcygYK41F3QpEucipONAamLIoxw0hEUR1oJrOe3CDTz5/XDxETa
+ knmQ==
+X-Gm-Message-State: AOJu0YzmA/FIgIIR29zU2TGKUvS7B/XiUW5LSUE/7cg/VOsDNAkggV/V
+ vpe+AZBjKeTQp8REABF8ymkcAX4d/X5VrF9CfWmhmx6hQV7RnD0IOqi4NLsp3y0+2sCmkb0troD
+ gkX2WS2PzB+R//cp/yF6j48LFSbzaF4+VH82YAzQCJeV8hV2b2VhcEC+Z6ALd5bQkvg/NCW9pzb
+ ydqOrZJCxlUFd3c4T7VSI7Uas2M1ai+IdTZA==
+X-Gm-Gg: AfdE7cmVYos+H9V/KONMIilE5BZSdYTAGGggm4vW3IcUB59mgi5e0J2wOTH1rDyyEbR
+ bOAAbrYm4wgOIDquvfYkWrZjAp6aukQGPbvvLj2CqS4FVNMWZIhDrW5Obt1mRg1+XTSsNZge6b8
+ 8I6fglvL+AKgeL48tDA6Tzc8Ms/Zlh+tzv7smE1GUqMSaqfqm/aWdebdP0QIB/CDvhwDLxJSJOn
+ 6BP65HTbAHke5635wHaC7Ms6NAtUo2B9CcsDARHQ5QeS/sxR8+v5H+2UmMupYkICC+lFMCyHVRL
+ oAyRucyftvSCeWXcKUO6Kex5csA7dPYgP5lBbMKkxtAPbpmx/kIGiHOEkybXIQjeqcZUVVQQIAk
+ TctKSSfz2WD7LkarJfXsLwINE49leUKzY
+X-Received: by 2002:a05:600c:c0d1:20b0:493:cfc8:12e7 with SMTP id
+ 5b1f17b1804b1-493d11f38e9mr57690155e9.25.1783262126763; 
+ Sun, 05 Jul 2026 07:35:26 -0700 (PDT)
+X-Received: by 2002:a05:600c:c0d1:20b0:493:cfc8:12e7 with SMTP id
+ 5b1f17b1804b1-493d11f38e9mr57689845e9.25.1783262126219; 
+ Sun, 05 Jul 2026 07:35:26 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-68-31.inter.net.il. [80.230.68.31])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493ccdab3a8sm231828705e9.6.2026.07.05.07.35.45
+ 5b1f17b1804b1-493ccb4cafesm195863905e9.0.2026.07.05.07.35.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Jul 2026 07:35:46 -0700 (PDT)
-Date: Sun, 5 Jul 2026 10:35:44 -0400
+ Sun, 05 Jul 2026 07:35:25 -0700 (PDT)
+Date: Sun, 5 Jul 2026 10:35:24 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- lizhaoxin04 <lizhaoxin04@baidu.com>, Miao Kezhan <miaokezhan@baidu.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 26/44] vdpa: fix use-after-free of vqs in
- vhost_vdpa_device_unrealize
-Message-ID: <e03463812e74d1befc8d7f6f158eca531e2d6406.1783261895.git.mst@redhat.com>
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 18/44] libvhost-user: look for available vq buffers upon
+ SET_VRING_KICK
+Message-ID: <1ace07171a4f772afd85a419bcd55fe56631966f.1783261895.git.mst@redhat.com>
 References: <cover.1783261895.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -122,49 +120,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: lizhaoxin04 <lizhaoxin04@baidu.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-vhost_vdpa_device_unrealize() frees s->dev.vqs before
-vhost_dev_cleanup(), but vhost_dev_cleanup() still accesses hdev->vqs
-while tearing down virtqueues. This leads to a use-after-free and may
-crash QEMU with SIGSEGV during vDPA hot-unplug.
+When a vring is started the back-end must look for available vq buffers
+and process them. This scenario can happen if the back-end is stopped
+with unprocessed available buffers and then started again.
 
-Save the vqs pointer in a local variable, call vhost_dev_cleanup(),
-and free it afterward. This matches the cleanup pattern used by
-vhost-scsi.
+The inflight I/O tracking code already did this, but it should also be
+done when inflight I/O tracking is not enabled.
 
-Fixes: b430a2bd23 ("vdpa: add vdpa-dev support")
-Co-developed-by: Miao Kezhan <miaokezhan@baidu.com>
-Signed-off-by: Li Zhaoxin <lizhaoxin04@baidu.com>
+Move the code and make it robust in case of EINTR or EAGAIN.
+
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260622100145.18924-1-lizhaoxin04@baidu.com>
+Message-ID: <20260604201029.250450-3-stefanha@redhat.com>
 ---
- hw/virtio/vdpa-dev.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ subprojects/libvhost-user/libvhost-user.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
-index 94188d37bb..089a77f4d0 100644
---- a/hw/virtio/vdpa-dev.c
-+++ b/hw/virtio/vdpa-dev.c
-@@ -172,6 +172,7 @@ static void vhost_vdpa_device_unrealize(DeviceState *dev)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
-+    struct vhost_virtqueue *vqs = s->dev.vqs;
-     int i;
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index d2df50e3d0..2c35bddd6f 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -1390,11 +1390,6 @@ vu_check_queue_inflights(VuDev *dev, VuVirtq *vq)
+         vq->counter = vq->resubmit_list[0].counter + 1;
+     }
  
-     virtio_set_status(vdev, 0);
-@@ -183,8 +184,8 @@ static void vhost_vdpa_device_unrealize(DeviceState *dev)
-     virtio_cleanup(vdev);
+-    /* in case of I/O hang after reconnecting */
+-    if (eventfd_write(vq->kick_fd, 1)) {
+-        return -1;
+-    }
+-
+     return 0;
+ }
  
-     g_free(s->config);
--    g_free(s->dev.vqs);
-     vhost_dev_cleanup(&s->dev);
-+    g_free(vqs);
-     g_free(s->vdpa.shared);
-     qemu_close(s->vhostfd);
-     s->vhostfd = -1;
+@@ -1436,6 +1431,20 @@ vu_set_vring_kick_exec(VuDev *dev, VhostUserMsg *vmsg)
+         vu_panic(dev, "Failed to check inflights for vq: %d\n", index);
+     }
+ 
++    /* Inject a kick to look for available vq buffers */
++    if (dev->vq[index].kick_fd != -1) {
++        int ret;
++
++        do {
++            ret = eventfd_write(dev->vq[index].kick_fd, 1);
++        } while (ret != 0 && errno == EINTR);
++
++        if (ret != 0 && errno != EAGAIN /* already readable */) {
++            vu_panic(dev, "Failed to inject kick during SET_VRING_KICK "
++                     "on vq: %d with error: %m\n", index);
++        }
++    }
++
+     return false;
+ }
+ 
 -- 
 MST
 
