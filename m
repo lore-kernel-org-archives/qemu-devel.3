@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC005C43458
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 21:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B3A8C43458
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 22:00:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgUrv-0007ph-Bf; Sun, 05 Jul 2026 17:59:19 -0400
+	id 1wgUrm-0007DR-6n; Sun, 05 Jul 2026 17:59:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgUrt-0007mb-9y
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 17:59:17 -0400
+ id 1wgUrk-0007Bw-RL
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 17:59:08 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgUrr-0000KG-KG
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 17:59:17 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1wgUri-0000Dy-DE
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 17:59:08 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 665LxE4n2868067
- for <qemu-devel@nongnu.org>; Sun, 5 Jul 2026 21:59:14 GMT
+ 665Hhe272342195
+ for <qemu-devel@nongnu.org>; Sun, 5 Jul 2026 21:59:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- e9dI60VL+YjzzhVjIatuzq+x8DZHXeIawZtKVfZQSRU=; b=nfgvrMUT4coR8XiH
- oZDkTSqT9CNx95GuIRYLHM6TOc2gDpx0K23F/Pg4R9SCrgmrtIHdxbfbiKqt8EUu
- WBrP+t6lZR/pTqTPN1M5YQvPmf/qOi66F+JtYqU2w1XnoSoMwZCeljPB1EeH/hY1
- kPMV8XO5E6Y7oejpLczalRrLY4uNf1K291QtyldLt7NdtEX09SYUtgfUCFSrXVGi
- jL1ChzHjkLTEKZq2kgq2HOX0pGKnbXTCNHOQtKamhp/FHDnVDmpkVFSccocP/YJH
- dpVSgLyfBuM5A8s0E7NfIDXYQSxpYiqR3qV2ZBDUhUVGFe3WB9Kxgh6uLAtxGq+q
- hWOsvg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6s4sum65-1
+ 7po3aHpbm6lp9kLWdYsA4Vft5rv/zKl30ZI6OZDSLmk=; b=gW6DNfywMno9gUwh
+ UT8gPkggwBz6QnihPkLTH4NoxV1tW/JlYEltyqEN8OChrqK3rQFSBmaUbrI43s8K
+ MYrnim17Mk1idilV3oRKDxMsu2wH/hwHFcprNw3iInE+P868zLCUHFWOZn9kRj3t
+ 69IU8uwYjf0sYRsTjei2bqUYMRVC8SjpWOaVuSGkkNTtpvQDxTR3MSjpNNO+iiUt
+ TqQNT20MkpC1zUHZr4830UOiA4GNp9X3/ktxSGO8wiYXNYOhu/0i0EHQw198Na/Y
+ cg0epYJasYggD5XJ/YYcqAq9zBfy5feRjoo0MzkOo4Qg17vYrKUfmB8VphG7R2t4
+ 8Nrp3A==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6td3bgkp-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 21:59:13 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-92e538afe65so228423685a.3
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 14:59:13 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 21:59:04 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-92e538afe65so228419285a.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 14:59:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783288752; x=1783893552; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783288744; x=1783893544; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=e9dI60VL+YjzzhVjIatuzq+x8DZHXeIawZtKVfZQSRU=;
- b=FGtqf46jjqYcKY6SNfRJufl1Xk12PkcXgp1D4zkGUnUnM7bosxekRxvqS2sI6sYQo4
- SDOKuQZnAvh1T9HwJZFV8S91mgdciT9YLbaQeYcJ6eQSq8M3lpoxyDq7u31hSbjrx3j0
- jN1eAw02G35BhQMOyU3PUBYtkh6uA6RC4cCuXgKs1zCwOi8LphZQir7rPcMErD7IOO36
- 5Vq1b7yLxuWrXfEcAQIg6N0WPAoLZ+Fc1wScVfslj+uelRAed+0TI12TCVMRAwAOUEI4
- 6dDLUN+QXoCd5M2zrokx4YAZqrS68rKPAwgexhqaouRyjVf4QXoqeyufH17qoBR/0P2Q
- GNkg==
+ bh=7po3aHpbm6lp9kLWdYsA4Vft5rv/zKl30ZI6OZDSLmk=;
+ b=E60mWKfWKEMMrayy0Fut6Ui5CjQUPE4k/6t4F+0l6dzv+UFgWfzJv0cB6PZ+kbBIeK
+ u+3MmMmWs368vO5LozO1drNxAS8reOeMcwJVuF4yCmP4rDY0FGKzaqrdHG587mua2vdS
+ TUBaJAU+hTYCi0npfiv4sq7ayJFWPrUdTUTA2HZQ6QjMYB05a1WmnUQArt4Om4KwcXmF
+ 7KnkSXDadoVq7Oq6t3NxrWIm0lj0NkPWruDy1AbXKz6OfVz4ikGMW7CU8WNrMzfWkXWz
+ xB9I+AW4untNIxe5fzkdkenv+1sRM9Zk2bB4kW77hQm3PHOR5FauxXETfKamQc52LxUV
+ X/7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783288752; x=1783893552;
+ d=1e100.net; s=20251104; t=1783288744; x=1783893544;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=e9dI60VL+YjzzhVjIatuzq+x8DZHXeIawZtKVfZQSRU=;
- b=SWLuoNEyzAXkXXRKWTT9HCbQ2tjyTomf4MqE57fO1wzFvigu10gxcsxjk680tZfPfa
- yrcT9B1/mk7wNNZkkVFnuNVx0Rf6v5EUe80fibP7riQG1krc7WRo3PfWXd42n1jXJMYX
- 0HFbRzYTPWfDhQVEqFlVCZuIhk4tKLAR0Qf9QUfj8KcqXfEbFc4PWaIgvuu6w3sRRNde
- tfIlT8FPwb2SS43Iz+4LIzW7Xgin8Mfdf+IHRKCSVIBEwNIikLkLv8f6l2c3vtTsXgdU
- Sb+RRZMZC+bSVJwWgJAXkiS9qttDvg09dA8DRAGg/f7WfN6XijtU3ItBRika5LKvINPH
- NGYg==
-X-Gm-Message-State: AOJu0YwOhrrqIexA7E4jub6Qe3d1RBE2p3xXbbZKHif6tZRftgdQ5s79
- hno3n51vBxoQqtr2W3gNYfVRjY/SdG+rWDmXfCpa7AOewCS6oCTEqprycU27VMFmj60Xqp3aEoO
- Z+NNRyGTWd3YRuqcDus2XjlTlqIcan+7TX3mjcfi7NOGVMn8jH/iLcpuIs38A7b1zDg==
-X-Gm-Gg: AfdE7cmHuBewKtnev4CO+CYQjQtkJg/JPgT8JtEPEKzuqa8RPHnZNL9R0xkvIQ6h4o7
- v6csoh+q1D9GI/qaUDuNrABEgqDLqrM5bJkjIq91gFyCXpLU2CojFa18eFSrrUj1vQ+vUkJ73cL
- qxbB6zSrK8zOOCt7EpowA2y/+vYdedeeSPkuP6dupMTphBxH+TQ0NhJUtKQAW6u6mV4p4YQmhAp
- tTQiafmXZvsd9q6JcMl3gx6ASj/hF+XwESFLt13l4Cn5BWXWxBD29DAxT5QHPQcQ3SJv9IE959F
- urogS8X6yTr9Oqec6gV95iy6MVyPF+HlK63rrzEdP6AUNo+0DnSPePIqCNDYl4Ynwv/BKbwfq8E
- sjKOPfC3wM/P713ze4aEFEB5Uo2cwS/G4L/sPoQ01vnCWKy7VDh2DF2nm6iBKqcFo6XPX
-X-Received: by 2002:a05:620a:468d:b0:92e:8405:7ae8 with SMTP id
- af79cd13be357-92e9a343946mr1087960585a.4.1783288751181; 
- Sun, 05 Jul 2026 14:59:11 -0700 (PDT)
-X-Received: by 2002:a05:620a:468d:b0:92e:8405:7ae8 with SMTP id
- af79cd13be357-92e9a343946mr1087957585a.4.1783288750736; 
- Sun, 05 Jul 2026 14:59:10 -0700 (PDT)
+ bh=7po3aHpbm6lp9kLWdYsA4Vft5rv/zKl30ZI6OZDSLmk=;
+ b=mFsmHfqH7p8j9mwLhmzotJeU/nMzSubh+sdxbe4C1qVdLwxJc7upMLgSWhfzD910ZT
+ rqVo6P/4CdoK4QLpyCidmN8E1APhS1JOndhCoZJz5V0pssM6QKYXFieiSt2gQ98czGTq
+ htmZqd7AZSB/uiMnpxKpjLX8NluJ+g0+BMB0b8uCBTs3Q4x7HqyNkZqS+CO3KPJRdBvR
+ VEhO/gNFkbAIHfoCWPgj/1HlixuXlWK651rYiBc+Didf/+eTfk38klTlKrDSp1qFUfYi
+ eYnVTgGGHOm02mAFupPCz2APcoEQzK6/uwMZHBx9qjoY31u7qvBOoqhV5iLYBO8cPyvo
+ sH6Q==
+X-Gm-Message-State: AOJu0YydTiJNK2tZ+PQw4vMSagEkKYfgNsmoStGJYT8dPhZl3qeMv25i
+ HqfN8BNBo5WsBauQH65yQdH3lnEF5VPtVVW9wTqwqOElViMgIBuOH1siHcOw/3ZU6WsaOr1BDbN
+ qUZ1+Dm5tPfQI9IAu2DNuyATyZTzLJOmwesAV0+N2PRmS5dFPlQqxv+HVy8YSMmGw8Q==
+X-Gm-Gg: AfdE7clVhYB/hqq8xJQcivHUbqoyQy7qqkWtmHraYxG8OXBU7Dc08qH/j7t35j8v/pr
+ 5S2JbyygWMzHjrmcIniJltKzTfAIYOMlOIqtxrYbqy+E3JtCb0kkGgbD80qliArbaP7e8j2E+HE
+ 5/g8Kb7qxfUd9+iLYjc/UpbPocPyusn2Rl3g0wRJSpJf6qpNyNwmwycRBwgnnt5MC9IWqJqIMKC
+ IZnQBjYxVUFFLiyhG9L5cpA7e3+TtsTBDz0EhW3RBoNWCMSA/1oAiY61B7u+ceD9YWTh6HLbjIZ
+ JCtwl8iIAegaojm7Z2HCYEv8QwVvBfYMYFneVL/OvSCxdSpUQKjblTJtHRtFEi93wjQaMMW74/1
+ 5e6wXjK8O1cIuGakXmx4S4j9sQBCWhbj98tPcGiUMrhOr71tcmFM355GJXNtVXgThc2dq
+X-Received: by 2002:a05:620a:1a27:b0:92e:73fc:154c with SMTP id
+ af79cd13be357-92e9a3446e4mr1258430385a.7.1783288743728; 
+ Sun, 05 Jul 2026 14:59:03 -0700 (PDT)
+X-Received: by 2002:a05:620a:1a27:b0:92e:73fc:154c with SMTP id
+ af79cd13be357-92e9a3446e4mr1258428285a.7.1783288743305; 
+ Sun, 05 Jul 2026 14:59:03 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa039afacsm17947977f8f.19.2026.07.05.14.59.09
+ ffacd0b85a97d-47aa0a558easm19130659f8f.27.2026.07.05.14.59.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 05 Jul 2026 14:59:10 -0700 (PDT)
+ Sun, 05 Jul 2026 14:59:02 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Chao Liu <chao.liu.zevorn@gmail.com>, alex.bennee@linaro.org,
@@ -95,41 +95,40 @@ Cc: Chao Liu <chao.liu.zevorn@gmail.com>, alex.bennee@linaro.org,
  Richard Henderson <richard.henderson@linaro.org>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 13/32] gdbstub: Move supported_sstep_flags in
- AccelGdbConfig structure
-Date: Sun,  5 Jul 2026 23:57:09 +0200
-Message-ID: <20260705215729.62196-14-philmd@oss.qualcomm.com>
+Subject: [PATCH v3 12/32] gdbstub: Reduce gdb_supports_guest_debug() scope
+Date: Sun,  5 Jul 2026 23:57:08 +0200
+Message-ID: <20260705215729.62196-13-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260705215729.62196-1-philmd@oss.qualcomm.com>
 References: <20260705215729.62196-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA1MDIzOCBTYWx0ZWRfX/mvoEoJMz3DL
- KgfSd5BHadgdowA2MIlZ/7ff6WhvqRt7VqhExayy+N+CO27uh6SZxWQ0xHZnCvO6z0caav48BMa
- iUMjv9vd+/r6SA1jI7m0z8cG/BcDq00=
-X-Proofpoint-ORIG-GUID: ceM6cqJ2oiacCtSi7UAKYq8LYQBZBVVo
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA1MDIzOCBTYWx0ZWRfXyr3Xq8kHjBLo
- n5169/d+kXQKBzl2Z9S4XCXe+0USVgAUApfJwHg0iXkuE6mPMOGWhZnOBRytV5JImnQRX3+xSDw
- Epgdvp0HFoz4/1gtEll/LrRMPwWQaemEnxaXBcdrPUgqkvcI0MQyE8fgHUNd3aUFMacc8K89mID
- y2Up5sTqRDzISOCAeBFUJ062fXJf5GqLd9Ax1iutyVjePm3fMyvxNzWTOsNMcm531XeJrWM1QAh
- BE0vJw15tU1fNMdXGxGQ6iKHVfHXywoSZN6587lRfP7LRf2CJOmLslUvnFqLyQJ7jLDE8KyX+d2
- gqjoFRvTX7v/7aap0WLTTexSvpq8GspysYcUq1h57d/qiflmbGc0l5HGOmGhRVMWtQ6vRmTz/fM
- Qu5zepoRO7G6XaN3RpVCiNDXDl1cskyEan3b0szF9dyPEa3+4fR/1ikIIpFbA68dSJkpUld3CSh
- 6V8s5PgIqZSqdjw2aew==
-X-Proofpoint-GUID: ceM6cqJ2oiacCtSi7UAKYq8LYQBZBVVo
-X-Authority-Analysis: v=2.4 cv=ZfQt8MVA c=1 sm=1 tr=0 ts=6a4ad3b1 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA1MDIzOCBTYWx0ZWRfX9mGtTEbLC1cw
+ e3y19Ma/W2GJBp9cxhcCGSzPiP9k4E7CB8kG8Ny8ctKow1jTmzSLHMgrC+Ar1aP4lJ9aiiA9ftP
+ PkLdWuO3VhihseE1WoYYTUQQvDwPTrw=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA1MDIzOCBTYWx0ZWRfX7aLY12FzyKXV
+ V0BHbEv2iqc8MxhKrQINOWFWpQflDdtWE2KIEW2jjbh1+BrGBFSnNU5RCVY38Yq87MUNGd5g3vT
+ vOE8gl3FzeBK6VuUVw3B+hBWyU4qhFOYdLGOYXzBgqiMxx2ca5SSzmckP5VhAjoswfXFZorn6LH
+ CKmjlrAoDpOX2rRx0zq5dNBnig8iuJnNfxhxGGa/PnIh+GcL0uuJ4+0eZQrNa4Z7F0sSekpKbmV
+ DcHvbDKVmMP+LwKu61v678OKuPSae3yH98qChlxZCDb+9SMEQ9YYl0ZI3+ZuwzIOx7SRROQijEk
+ JgNiEkPf8Z8nFqE+DcbNmwZiCM1FCj0z/lrhjmhOt7k7nTF/KMXyGhTB9MTtPqTRK1T+pEDwv4O
+ K1/rvGSGFxySl3ME1r+7ofeQGaT42EfGCGSHD6FU4Fy/Lg8jwUiub6TDRaYYBL1T5pGCY70gY/L
+ /vfUNBto/C0sUEUbzWw==
+X-Proofpoint-GUID: 3nWJI4Vf-h37MTFPUFfdytLEbhXKl9Ge
+X-Proofpoint-ORIG-GUID: 3nWJI4Vf-h37MTFPUFfdytLEbhXKl9Ge
+X-Authority-Analysis: v=2.4 cv=b9GCJNGx c=1 sm=1 tr=0 ts=6a4ad3a8 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=-SUpAgEnhvh4vktFIKIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=EGoLRYcDdwmvoyRlCl8A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-05_02,2026-07-03_01,2025-10-01_01
+ definitions=2026-07-05_01,2026-07-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 impostorscore=0 adultscore=0 phishscore=0
- priorityscore=1501 clxscore=1015 suspectscore=0 malwarescore=0 spamscore=0
+ impostorscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 clxscore=1015
+ phishscore=0 malwarescore=0 adultscore=0 priorityscore=1501 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607050238
 Received-SPF: pass client-ip=205.220.168.131;
@@ -156,100 +155,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-supported_sstep_flags are per-accelerators. Move them
-to a new AccelGdbConfig structure, still in GDBState.
+gdb_supports_guest_debug() is only required for system emulation,
+reduce its scope by making it private; remove the user emulation
+variant.
 
-Suggested-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- gdbstub/internals.h  |  3 ++-
- include/qemu/accel.h |  9 +++++++++
- gdbstub/gdbstub.c    | 10 +++++-----
- 3 files changed, 16 insertions(+), 6 deletions(-)
+ gdbstub/internals.h | 1 -
+ gdbstub/system.c    | 4 +++-
+ gdbstub/user.c      | 6 ------
+ 3 files changed, 3 insertions(+), 8 deletions(-)
 
 diff --git a/gdbstub/internals.h b/gdbstub/internals.h
-index 60ddc146661..0444dee2246 100644
+index 9b25bf58b8e..60ddc146661 100644
 --- a/gdbstub/internals.h
 +++ b/gdbstub/internals.h
-@@ -9,6 +9,7 @@
- #ifndef GDBSTUB_INTERNALS_H
- #define GDBSTUB_INTERNALS_H
- 
-+#include "qemu/accel.h"
- #include "exec/cpu-common.h"
- 
- /*
-@@ -83,8 +84,8 @@ typedef struct GDBState {
-     int process_num;
-     GString *str_buf;
-     GByteArray *mem_buf;
-+    AccelGdbConfig accel_config;
-     int sstep_flags;
--    int supported_sstep_flags;
-     /*
-      * Whether we are allowed to send a stop reply packet at this moment.
-      * Must be set off after sending the stop reply itself.
-diff --git a/include/qemu/accel.h b/include/qemu/accel.h
-index d3638c7bfda..052b4c59313 100644
---- a/include/qemu/accel.h
-+++ b/include/qemu/accel.h
-@@ -73,6 +73,15 @@ bool accel_cpu_common_realize(CPUState *cpu, Error **errp);
+@@ -217,7 +217,6 @@ void gdb_syscall_handling(const char *syscall_packet);
+  * Break/Watch point support - there is an implementation for system
+  * and user mode.
   */
- void accel_cpu_common_unrealize(CPUState *cpu);
- 
-+/**
-+ * struct AccelGdbConfig - gdbstub configuration for an accelerator.
-+ *
-+ * @sstep_flags: Set SSTEP_* flags that accelerator supports for guest debug.
-+ */
-+typedef struct AccelGdbConfig {
-+    unsigned sstep_flags;
-+} AccelGdbConfig;
-+
- /**
-  * accel_supported_gdbstub_sstep_flags:
-  *
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index f54415a9db7..06b712562c5 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -72,9 +72,9 @@ void gdb_init_gdbserver_state(void)
-      * By default try to use no IRQs and no timers while single
-      * stepping so as to make single stepping like a typical ICE HW step.
-      */
--    gdbserver_state.supported_sstep_flags = accel_supported_gdbstub_sstep_flags();
-+    gdbserver_state.accel_config.sstep_flags = accel_supported_gdbstub_sstep_flags();
-     gdbserver_state.sstep_flags = SSTEP_ENABLE | SSTEP_NOIRQ | SSTEP_NOTIMER;
--    gdbserver_state.sstep_flags &= gdbserver_state.supported_sstep_flags;
-+    gdbserver_state.sstep_flags &= gdbserver_state.accel_config.sstep_flags;
+-bool gdb_supports_guest_debug(void);
+ int gdb_breakpoint_insert(CPUState *cs, int type, vaddr addr, vaddr len);
+ int gdb_breakpoint_remove(CPUState *cs, int type, vaddr addr, vaddr len);
+ void gdb_breakpoint_remove_all(CPUState *cs);
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index 2063b63b2f8..1179c82cb86 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -331,6 +331,8 @@ static void create_processes(GDBState *s)
+     gdb_create_default_process(s);
  }
  
- /* writes 2*len+1 bytes in buf */
-@@ -1537,12 +1537,12 @@ static void handle_query_qemu_sstepbits(GArray *params, void *user_ctx)
++static bool gdb_supports_guest_debug(void);
++
+ bool gdbserver_start(const char *device, Error **errp)
  {
-     g_string_printf(gdbserver_state.str_buf, "ENABLE=%x", SSTEP_ENABLE);
+     Chardev *chr = NULL;
+@@ -627,7 +629,7 @@ int gdb_signal_to_target(int sig)
+  * Break/Watch point helpers
+  */
  
--    if (gdbserver_state.supported_sstep_flags & SSTEP_NOIRQ) {
-+    if (gdbserver_state.accel_config.sstep_flags & SSTEP_NOIRQ) {
-         g_string_append_printf(gdbserver_state.str_buf, ",NOIRQ=%x",
-                                SSTEP_NOIRQ);
-     }
+-bool gdb_supports_guest_debug(void)
++static bool gdb_supports_guest_debug(void)
+ {
+     const AccelOpsClass *ops = cpus_get_accel();
+     if (ops->supports_guest_debug) {
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index 97eb13e796a..f7bc4e63dfd 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -796,12 +796,6 @@ bool gdb_can_reverse(void)
+  * Break/Watch point helpers
+  */
  
--    if (gdbserver_state.supported_sstep_flags & SSTEP_NOTIMER) {
-+    if (gdbserver_state.accel_config.sstep_flags & SSTEP_NOTIMER) {
-         g_string_append_printf(gdbserver_state.str_buf, ",NOTIMER=%x",
-                                SSTEP_NOTIMER);
-     }
-@@ -1560,7 +1560,7 @@ static void handle_set_qemu_sstep(GArray *params, void *user_ctx)
- 
-     new_sstep_flags = gdb_get_cmd_param(params, 0)->val_ul;
- 
--    if (new_sstep_flags  & ~gdbserver_state.supported_sstep_flags) {
-+    if (new_sstep_flags & ~gdbserver_state.accel_config.sstep_flags) {
-         gdb_put_packet("E22");
-         return;
-     }
+-bool gdb_supports_guest_debug(void)
+-{
+-    /* user-mode == TCG == supported */
+-    return true;
+-}
+-
+ int gdb_breakpoint_insert(CPUState *cs, int type, vaddr addr, vaddr len)
+ {
+     CPUState *cpu;
 -- 
 2.53.0
 
