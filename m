@@ -4,99 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FD42C43458
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:43:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6076BC43458
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:43:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgNwa-0005by-By; Sun, 05 Jul 2026 10:35:40 -0400
+	id 1wgNx2-0007ow-QN; Sun, 05 Jul 2026 10:36:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwZ-0005bn-Kz
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:39 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNx1-0007OK-9F
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:36:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwX-0001QP-Jd
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:39 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwy-0001To-Tq
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:36:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783262137;
+ s=mimecast20190719; t=1783262164;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M/pDiHFNHl4AEoQzRlTnpmRpNB3vDThrml6JhOkf8EM=;
- b=gmswQZ0BEk3XlnwzoHDrV3nXpiWK17FxtEmP+6x44QdLVzmIaqedhRLbeYkIQqZhjtfedv
- +rQvm/ZBOt9R9AyxQRm914Pdu4zjerMXAE9m9D6byJQRXGiGDMAYYn7MBbSVXZsGGq2EpD
- Q0T6sO3kaT2XOzzbYtdB8c/DFBNiKEI=
+ bh=/hrhP2vErrhnWdlJ9qXwUQ+a7VJaYAqlc0qLDKyd82o=;
+ b=iJNYvUlkTowvPLpWShOXi9xDE4gtQqHHzRZwtwKnUTh4Z7KZ4xwpRNrAjiypEyRkZULuu6
+ r6mHcei9l32HDr9nHxmA+lYZBO3kqplHSkAYnrfACY+3EtEqX05mV8gC2DYUVH+cE2gsnZ
+ kdDHwSvTiTXmpMnc6P/ME1TqynTBVWM=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-196-o5XOPf4PM8Cbw4ivRKduFg-1; Sun, 05 Jul 2026 10:35:35 -0400
-X-MC-Unique: o5XOPf4PM8Cbw4ivRKduFg-1
-X-Mimecast-MFC-AGG-ID: o5XOPf4PM8Cbw4ivRKduFg_1783262134
+ us-mta-412-5v0jtE-JMUGdHGT7tQE30Q-1; Sun, 05 Jul 2026 10:36:02 -0400
+X-MC-Unique: 5v0jtE-JMUGdHGT7tQE30Q-1
+X-Mimecast-MFC-AGG-ID: 5v0jtE-JMUGdHGT7tQE30Q_1783262161
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-475eba52438so1414667f8f.3
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:35:35 -0700 (PDT)
+ ffacd0b85a97d-472a798fc7cso1004196f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:36:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783262134; x=1783866934; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=M/pDiHFNHl4AEoQzRlTnpmRpNB3vDThrml6JhOkf8EM=;
- b=KuGIBCB0JICuaYjGkp88GuN/f3DvqlXMKLtCXRIobBysORh+niT/U23SaM6KQ0MzyY
- 7H8PJ3crTAUaa99SGmGo2lKNB6zw/omUOA6SG0QPOerqfOjCfMyc8D5hoCVZBB2MXXdJ
- A159P2AhN2mp2opKccuer0FFsIpCCRfSJRDlpvC/Snv3cygedX0JiQq2vih9+VU+1Lwl
- p04hNNnJc+t2BUTiQcAD0c/vECIjh52Sm2ltOPiZFFwJv7l+x/HKQQnJoD1b2bF9RYtY
- I5L5i8hVuWxcXX72V5yqzevFUV1AKcg5hdYVcrobHAKBPXJ/ilbkUJ5tvYqe5LS1Rwcf
- 6dyA==
+ d=redhat.com; s=google; t=1783262161; x=1783866961; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=/hrhP2vErrhnWdlJ9qXwUQ+a7VJaYAqlc0qLDKyd82o=;
+ b=goCmst/brLPMj8KmZ9ge60tLK6IeL7A+sQ2B/jaWnyOaZrVaGQBGUijmDbvyRD+nCO
+ 8lCrAB6gpWQz+M3lqF/fA4LM6jTtnpVIVd1zOZYsqOWalL0iBh4z7KEwqDzthRlkoEis
+ ph6FutNt8qd0xUb4BApsgHkAVa64MTGa40WxKUZUc0wJ/0GM6nL7sN39KkT/hWWt/zRP
+ PIbkYkNPtzrHHVHiS7xrrRuRAaF4p0d9jjdChCn58wQJXu8MrFviRK5YcqtrNzzOkORK
+ Bow+PrDaplrF++b/O4jzQ8kvT2LZfwT9jYzRnK2y/KD7ZzB3u1TdX84PG3p3nir4hHHT
+ DV+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783262134; x=1783866934;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=M/pDiHFNHl4AEoQzRlTnpmRpNB3vDThrml6JhOkf8EM=;
- b=Z8t7kOxYWAMw4BuQzrx3TDoYakE8Mj/jjPipvV1aYrL8icPtZWA7hpq6JDRrsiTbkb
- ZOEoOwTdzQdJNB9u2Ry0kCsx+70oV4Qer3ehgt56XePiuE1SKEx8ifBewjNyE9xwuL7o
- Rg0aWnH+DgqcbWGybhDN510VdIvGTENtYB1Wr8XlpT2d0MrQYGSEJRQ669p9bdJbIJV+
- 4Bev9NOed707vEnNBVoYLyVQz4OWt64ZcsSSiXum0q8lLRDMNImSUilYRjkQ3faZgOyd
- l6ZkJVFyUmi/gQfDD2kVJBF8QI4N8s9Y9HpLoE8MksTAC0yUvextrSV5rt4FV3OTXKsG
- 9QXg==
-X-Gm-Message-State: AOJu0Yx/jG7F7fOOlOcyaUsSJsZL3jbf4oOwGFF2p1M8qA7rsCl/vVLM
- aPewkCvpWlCh/7zvvXHBJBk8zHSXeHndHxCKGQP/TCz6ePp+RDYbRbxaXTetsYEMgstafvoddf4
- 2+ADfAtrkwcaHlLLnRm3MrTaE/8i2FNoqLKwbFixbahasYhf3W5D5222JzmL88/gXhJbcizXV/c
- 4GNxolu4FY8FmRvvRZKzKqhOUkdYEJnGX9jg==
-X-Gm-Gg: AfdE7ckkUf0XIctCVwHu0qFfQCRB71iUqvvdfuvJ+cUQf5/Gnc3jKeb/OHqXIgcRLhZ
- LRYplzZCrvx4v7YZOK2mkIM9nwsst77MpKGo5qN13vNO3QujZQhVRGt2EWBEIYO47pyXVeB5EE7
- YTSVf6auoTRvhDHK5sUIKXw96YLhcayyTrPh/lx3FJeuSQUvJT2LnBRAl6vsT9LjGkz+XQRGqv/
- /Xye4LwAjFiCA12pFqnEpz5Dxpxv1bzRe4KDmlYJR4B7z88LAQzhuadx3CCcEyVM/pWqcHRxXqR
- 4H5VAykm6/AUIKaoP9/Sdt6Adt+rUWanSBzpUW55RRwm5tKzU9UQhaKt37raVPPvNarignjmUKl
- PRwnXQRm9abj6srv5Xq3LulY+s35BWmYp
-X-Received: by 2002:a5d:5e08:0:b0:475:f100:35f9 with SMTP id
- ffacd0b85a97d-47aae0d9d11mr7273845f8f.54.1783262134425; 
- Sun, 05 Jul 2026 07:35:34 -0700 (PDT)
-X-Received: by 2002:a5d:5e08:0:b0:475:f100:35f9 with SMTP id
- ffacd0b85a97d-47aae0d9d11mr7273811f8f.54.1783262133890; 
- Sun, 05 Jul 2026 07:35:33 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783262161; x=1783866961;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=/hrhP2vErrhnWdlJ9qXwUQ+a7VJaYAqlc0qLDKyd82o=;
+ b=qigxIupcDIYgOF0nUgb6zLtgY7qqhA2eeQ+9qVkML1q8OPYRP+UWlc/XYHlUUjk2V2
+ j2blPTXg071Bq/BjowW91NAI8FTYBelMtK5gKNWjEqNdRgYs2fLAkWJc77Aq/i5D64/u
+ G8yeP10nMaF6rsmPI+oUTKv/ZeH8bB5ea191NgRVt3O3xfHXHfbDjYyUTxOiYd4fYsGJ
+ Six5bc2MM2k9OsaAaeGs6viaJG1XoGXGCX8WhoB4+1TyHQpz5l2WYQR54MBY56AocBVl
+ prsWSbdV9rTJHxKu2xiSVD93pW7nx7ldX7dLqkN0vHf8CSqBYoBbgsKxFDuomK6cCTD+
+ dHVA==
+X-Gm-Message-State: AOJu0YxXXcDw/CHILKE4rcw0Wio+EN4ofpdy5q68z64nnkgPj+HZKk0g
+ Le7L3yGmThYrFB/4WxgjI/lBqwEU/Z2XJNN2z2SyO1SJ2zbiBiodjkx4yYb4bC5AQ5AWmV0gc0a
+ STphW98O0RG1coErzf3Kec8GcWkARFb/a4ISJfs+DH63UzyHnebwSqT/y//1pYAubr2OMM9klB7
+ tPESOvGVHOLDUVa+uCOeSgplYXepAWyavVNg==
+X-Gm-Gg: AfdE7cm7CPrz2olx+7iqWe6PAg3ZuHA6f3SsNVt3orIDNwS4dHiCtGzMJiNZLjzO4hf
+ 34fAS5xczk9IumDIQa7xJcmxeatM8asXdsQfgX2AJnRs87Yx/81Gg9RK/qpOhIgQCJVfZkEDYQc
+ AnG19IamCYRSxUH2KHW1FEtsw3KM01GP56UWVnL8sfGaK9Hq+mRr75QAHe8rfm3PWzb871KBn70
+ VGDr+J0tFmwgSfRRsP+GZm3a+YrbVidnO3Orofrsw27wOQJZP3G1gu+BVlAXQrgCwL3tXPAVWqy
+ rZYMGAxszNr+DswzAfhrDu8Dfn4LtH1U2Krv2nRhBlSD7j3QiPRU3mwaPPromU4omwDtR7mFHnn
+ ifGm36zkElo7R2fJnYOq0BFCYW9bStyUb
+X-Received: by 2002:a05:6000:61e:b0:475:f0f0:9eca with SMTP id
+ ffacd0b85a97d-47aad35e8b4mr8420846f8f.53.1783262161362; 
+ Sun, 05 Jul 2026 07:36:01 -0700 (PDT)
+X-Received: by 2002:a05:6000:61e:b0:475:f0f0:9eca with SMTP id
+ ffacd0b85a97d-47aad35e8b4mr8420803f8f.53.1783262160780; 
+ Sun, 05 Jul 2026 07:36:00 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-68-31.inter.net.il. [80.230.68.31])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa09608d4sm17272049f8f.25.2026.07.05.07.35.32
+ ffacd0b85a97d-47aa039ad21sm16547173f8f.20.2026.07.05.07.35.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Jul 2026 07:35:33 -0700 (PDT)
-Date: Sun, 5 Jul 2026 10:35:31 -0400
+ Sun, 05 Jul 2026 07:36:00 -0700 (PDT)
+Date: Sun, 5 Jul 2026 10:35:58 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Junjie Cao <junjie.cao@intel.com>,
- Jason Wang <jasowangio@gmail.com>, Yi Liu <yi.l.liu@intel.com>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@bull.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [PULL 21/44] tests/qtest/libqos: share Intel IOMMU test setup helpers
-Message-ID: <302fec996c31ac312278a6a756d66d053b80d2fa.1783261895.git.mst@redhat.com>
+ Igor Mammedov <imammedo@redhat.com>,
+ Eric Auger <eric.auger@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 32/44] acpi: introduce WDAT table for GWDT
+Message-ID: <beadd272c10289c0086d66fc5d1a0c5229127916.1783261895.git.mst@redhat.com>
 References: <cover.1783261895.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1783261895.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -124,252 +123,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Igor Mammedov <imammedo@redhat.com>
 
-iommu-intel-test.c keeps the iommu-testdev PCI setup (save_fn(),
-setup_qtest_pci_device()) and the VT-d command-line / capability
-helpers (qvtd_iommu_args(), qvtd_check_caps()) as file-local statics.
-A second Intel IOMMU test would have to copy them, which defeats the
-purpose of the shared qos-intel-iommu module.
+Add build_gwdt_wdat() to generate a Watchdog Action Table
+designed for SBSA Generic Watchdog Timer.
 
-Move them into qos-intel-iommu so sibling tests can reuse them:
-save_fn() becomes qvtd_save_pci_dev() and setup_qtest_pci_device()
-becomes qvtd_setup_qtest_pci_device(); qvtd_iommu_args() and
-qvtd_check_caps() keep their names.
-
-No functional change: iommu-intel-test now calls the public
-qvtd_setup_qtest_pci_device() instead of its file-local copy.
-
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260703072200.463082-2-junjie.cao@intel.com>
+Message-ID: <20260702145856.1539572-7-imammedo@redhat.com>
 ---
- tests/qtest/libqos/qos-intel-iommu.h | 23 ++++++++
- tests/qtest/iommu-intel-test.c       | 78 +---------------------------
- tests/qtest/libqos/qos-intel-iommu.c | 77 +++++++++++++++++++++++++++
- 3 files changed, 101 insertions(+), 77 deletions(-)
+ include/hw/acpi/wdat-gwdt.h | 19 +++++++
+ hw/acpi/wdat-gwdt-stub.c    | 16 ++++++
+ hw/acpi/wdat-gwdt.c         | 99 +++++++++++++++++++++++++++++++++++++
+ hw/acpi/meson.build         |  2 +
+ 4 files changed, 136 insertions(+)
+ create mode 100644 include/hw/acpi/wdat-gwdt.h
+ create mode 100644 hw/acpi/wdat-gwdt-stub.c
+ create mode 100644 hw/acpi/wdat-gwdt.c
 
-diff --git a/tests/qtest/libqos/qos-intel-iommu.h b/tests/qtest/libqos/qos-intel-iommu.h
-index c6cacc5c3f..dd6f920464 100644
---- a/tests/qtest/libqos/qos-intel-iommu.h
-+++ b/tests/qtest/libqos/qos-intel-iommu.h
-@@ -182,4 +182,27 @@ void qvtd_run_translation_case(QTestState *qts, QPCIDevice *dev,
-                                QPCIBar bar, uint64_t iommu_base,
-                                const QVTDTestConfig *cfg);
- 
+diff --git a/include/hw/acpi/wdat-gwdt.h b/include/hw/acpi/wdat-gwdt.h
+new file mode 100644
+index 0000000000..42339e031e
+--- /dev/null
++++ b/include/hw/acpi/wdat-gwdt.h
+@@ -0,0 +1,19 @@
 +/*
-+ * qvtd_iommu_args - Build the -device intel-iommu command-line fragment
-+ *                   for the requested translation mode.
-+ */
-+const char *qvtd_iommu_args(QVTDTransMode mode);
-+
-+/*
-+ * qvtd_check_caps - Check whether the running QEMU exposes the ECAP bits
-+ *                   required by @mode.  Calls g_test_skip() and returns
-+ *                   false when a required capability is missing.
-+ */
-+bool qvtd_check_caps(QTestState *qts, QVTDTransMode mode);
-+
-+/*
-+ * qvtd_setup_qtest_pci_device - Create a QPCIBus, locate the iommu-testdev
-+ *                               PCI function, enable it and map BAR0.
++ * GWDT Watchdog Action Table (WDAT) definition
 + *
-+ * On success, *pcibus and *bar are populated and the returned QPCIDevice
-+ * must be released by the caller via g_free().
++ * Copyright Red Hat, Inc. 2026
++ * Author(s): Igor Mammedov <imammedo@redhat.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+QPCIDevice *qvtd_setup_qtest_pci_device(QTestState *qts, QPCIBus **pcibus,
-+                                        QPCIBar *bar);
++#ifndef QEMU_HW_ACPI_WDAT_GWDT_H
++#define QEMU_HW_ACPI_WDAT_GWDT_H
 +
- #endif /* QTEST_LIBQOS_INTEL_IOMMU_H */
-diff --git a/tests/qtest/iommu-intel-test.c b/tests/qtest/iommu-intel-test.c
-index 703bbfef73..c2744def6f 100644
---- a/tests/qtest/iommu-intel-test.c
-+++ b/tests/qtest/iommu-intel-test.c
-@@ -24,82 +24,6 @@ static uint64_t intel_iommu_expected_gpa(uint64_t iova)
-     return (QVTD_PT_VAL & VTD_PAGE_MASK_4K) + (iova & 0xfff);
- }
- 
--static void save_fn(QPCIDevice *dev, int devfn, void *data)
--{
--    QPCIDevice **pdev = (QPCIDevice **) data;
--
--    *pdev = dev;
--}
--
--static QPCIDevice *setup_qtest_pci_device(QTestState *qts, QPCIBus **pcibus,
--                                          QPCIBar *bar)
--{
--    QPCIDevice *dev = NULL;
--
--    *pcibus = qpci_new_pc(qts, NULL);
--    g_assert(*pcibus != NULL);
--
--    qpci_device_foreach(*pcibus, IOMMU_TESTDEV_VENDOR_ID,
--                        IOMMU_TESTDEV_DEVICE_ID, save_fn, &dev);
--
--    g_assert(dev);
--    qpci_device_enable(dev);
--    *bar = qpci_iomap(dev, 0, NULL);
--    g_assert_false(bar->is_io);
--
--    return dev;
--}
--
--static const char *qvtd_iommu_args(QVTDTransMode mode)
--{
--    switch (mode) {
--    case QVTD_TM_SCALABLE_FLT:
--        return "-device intel-iommu,scalable-mode=on,fsts=on ";
--    case QVTD_TM_SCALABLE_PT:
--    case QVTD_TM_SCALABLE_SLT:
--        return "-device intel-iommu,scalable-mode=on ";
--    default:
--        return "-device intel-iommu ";
--    }
--}
--
--static bool qvtd_check_caps(QTestState *qts, QVTDTransMode mode)
--{
--    uint64_t ecap = qtest_readq(qts,
--                                Q35_HOST_BRIDGE_IOMMU_ADDR + DMAR_ECAP_REG);
--
--    /* All scalable modes require SMTS */
--    if (qvtd_is_scalable(mode) && !(ecap & VTD_ECAP_SMTS)) {
--        g_test_skip("ECAP.SMTS not supported");
--        return false;
--    }
--
--    switch (mode) {
--    case QVTD_TM_SCALABLE_PT:
--        if (!(ecap & VTD_ECAP_PT)) {
--            g_test_skip("ECAP.PT not supported");
--            return false;
--        }
--        break;
--    case QVTD_TM_SCALABLE_SLT:
--        if (!(ecap & VTD_ECAP_SSTS)) {
--            g_test_skip("ECAP.SSTS not supported");
--            return false;
--        }
--        break;
--    case QVTD_TM_SCALABLE_FLT:
--        if (!(ecap & VTD_ECAP_FSTS)) {
--            g_test_skip("ECAP.FSTS not supported");
--            return false;
--        }
--        break;
--    default:
--        break;
--    }
--
--    return true;
--}
--
- static void run_intel_iommu_translation(const QVTDTestConfig *cfg)
- {
-     QTestState *qts;
-@@ -124,7 +48,7 @@ static void run_intel_iommu_translation(const QVTDTestConfig *cfg)
-     }
- 
-     /* Setup and configure IOMMU-testdev PCI device */
--    dev = setup_qtest_pci_device(qts, &pcibus, &bar);
-+    dev = qvtd_setup_qtest_pci_device(qts, &pcibus, &bar);
-     g_assert(dev);
- 
-     g_test_message("### Intel IOMMU translation mode=%d ###", cfg->trans_mode);
-diff --git a/tests/qtest/libqos/qos-intel-iommu.c b/tests/qtest/libqos/qos-intel-iommu.c
-index f8ca4c871b..4095ac0917 100644
---- a/tests/qtest/libqos/qos-intel-iommu.c
-+++ b/tests/qtest/libqos/qos-intel-iommu.c
-@@ -11,6 +11,7 @@
- #include "qemu/osdep.h"
- #include "hw/i386/intel_iommu_internal.h"
- #include "tests/qtest/libqos/pci.h"
-+#include "tests/qtest/libqos/pci-pc.h"
- #include "qos-iommu-testdev.h"
- #include "qos-intel-iommu.h"
- 
-@@ -452,3 +453,79 @@ void qvtd_run_translation_case(QTestState *qts, QPCIDevice *dev,
-         }
-     }
- }
++#include "hw/acpi/aml-build.h"
++#include "hw/watchdog/sbsa_gwdt.h"
 +
-+const char *qvtd_iommu_args(QVTDTransMode mode)
++void build_gwdt_wdat(GArray *table_data, BIOSLinker *linker, const char *oem_id,
++                     const char *oem_table_id, uint64_t rbase, uint64_t cbase,
++                     uint64_t freq);
++
++#endif /* QEMU_HW_ACPI_WDAT_GWDT_H */
+diff --git a/hw/acpi/wdat-gwdt-stub.c b/hw/acpi/wdat-gwdt-stub.c
+new file mode 100644
+index 0000000000..4d43783f70
+--- /dev/null
++++ b/hw/acpi/wdat-gwdt-stub.c
+@@ -0,0 +1,16 @@
++/*
++ * Copyright Red Hat, Inc. 2026
++ * Author(s): Igor Mammedov <imammedo@redhat.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/acpi/wdat-gwdt.h"
++
++void build_gwdt_wdat(GArray *table_data, BIOSLinker *linker, const char *oem_id,
++                     const char *oem_table_id, uint64_t rbase, uint64_t cbase,
++                     uint64_t freq)
 +{
-+    switch (mode) {
-+    case QVTD_TM_SCALABLE_FLT:
-+        return "-device intel-iommu,scalable-mode=on,fsts=on ";
-+    case QVTD_TM_SCALABLE_PT:
-+    case QVTD_TM_SCALABLE_SLT:
-+        return "-device intel-iommu,scalable-mode=on ";
-+    default:
-+        return "-device intel-iommu ";
-+    }
++    g_assert_not_reached();
 +}
+diff --git a/hw/acpi/wdat-gwdt.c b/hw/acpi/wdat-gwdt.c
+new file mode 100644
+index 0000000000..b30566ef6a
+--- /dev/null
++++ b/hw/acpi/wdat-gwdt.c
+@@ -0,0 +1,99 @@
++/*
++ * SBSA GWDT Watchdog Action Table (WDAT)
++ *
++ * Copyright Red Hat, Inc. 2026
++ * Author(s): Igor Mammedov <imammedo@redhat.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+bool qvtd_check_caps(QTestState *qts, QVTDTransMode mode)
++#include "qemu/osdep.h"
++#include "hw/acpi/aml-build.h"
++#include "hw/acpi/wdat-gwdt.h"
++#include "hw/acpi/wdat.h"
++#include "hw/watchdog/sbsa_gwdt.h"
++
++#define GWDT_REG(base, reg_offset, reg_width) { \
++                 .space_id = AML_AS_SYSTEM_MEMORY, \
++                 .address = base + reg_offset, .bit_width = reg_width, \
++                 .access_width = AML_DWORD_ACC };
++
++/*
++ *   "Hardware Watchdog Timers Design Specification"
++ *       https://uefi.org/acpi 'Watchdog Action Table (WDAT)'
++ */
++void build_gwdt_wdat(GArray *table_data, BIOSLinker *linker, const char *oem_id,
++                     const char *oem_table_id, uint64_t rbase, uint64_t cbase,
++                     uint64_t freq)
 +{
-+    uint64_t ecap = qtest_readq(qts,
-+                                Q35_HOST_BRIDGE_IOMMU_ADDR + DMAR_ECAP_REG);
++    AcpiTable table = { .sig = "WDAT", .rev = 1, .oem_id = oem_id,
++                        .oem_table_id = oem_table_id };
 +
-+    /* All scalable modes require SMTS */
-+    if (qvtd_is_scalable(mode) && !(ecap & VTD_ECAP_SMTS)) {
-+        g_test_skip("ECAP.SMTS not supported");
-+        return false;
-+    }
++    struct AcpiGenericAddress wrr =  GWDT_REG(rbase, 0x0, 32);
++    struct AcpiGenericAddress wor_l =  GWDT_REG(cbase, SBSA_GWDT_WOR, 32);
++    struct AcpiGenericAddress wcs =  GWDT_REG(cbase, SBSA_GWDT_WCS, 32);
 +
-+    switch (mode) {
-+    case QVTD_TM_SCALABLE_PT:
-+        if (!(ecap & VTD_ECAP_PT)) {
-+            g_test_skip("ECAP.PT not supported");
-+            return false;
-+        }
-+        break;
-+    case QVTD_TM_SCALABLE_SLT:
-+        if (!(ecap & VTD_ECAP_SSTS)) {
-+            g_test_skip("ECAP.SSTS not supported");
-+            return false;
-+        }
-+        break;
-+    case QVTD_TM_SCALABLE_FLT:
-+        if (!(ecap & VTD_ECAP_FSTS)) {
-+            g_test_skip("ECAP.FSTS not supported");
-+            return false;
-+        }
-+        break;
-+    default:
-+        break;
-+    }
++    acpi_table_begin(&table, table_data);
++    build_append_int_noprefix(table_data, 0x20, 4); /* Watchdog Header Length */
++    /*
++     * PCI location fields are set to 0xff to indicate
++     * that the watchdog is not a PCI device.
++     */
++    build_append_int_noprefix(table_data, 0xff, 2); /* PCI Segment */
++    build_append_int_noprefix(table_data, 0xff, 1); /* PCI Bus Number */
++    build_append_int_noprefix(table_data, 0xff, 1); /* PCI Device Number */
++    build_append_int_noprefix(table_data, 0xff, 1); /* PCI Function Number */
++    build_append_int_noprefix(table_data, 0, 3);    /* Reserved */
++    /*
++     * WDAT spec: "The clock interval that the WDT uses must be
++     * greater than or equal to 1 millisecond."
++     */
++    g_assert(freq <= 1000);
++    /* Timer Period, ms */
++    build_append_int_noprefix(table_data, 1000 / freq, 4);
++    /*
++     * WDAT spec: "The time-out period before the WDT fires is recommended
++     * to be at least 5 minutes."
++     * Set max count to 10min and min count to 5sec.
++     */
++    build_append_int_noprefix(table_data, 600 * freq, 4); /* Maximum Count */
++    build_append_int_noprefix(table_data, 5 * freq, 4);   /* Minimum Count */
++    /*
++     * WATCHDOG_ENABLED | WATCHDOG_STOPPED_IN_SLEEP_STATE
++     */
++    build_append_int_noprefix(table_data, 0x81, 1); /* Watchdog Flags */
++    build_append_int_noprefix(table_data, 0, 3);    /* Reserved */
++    /*
++     * watchdog instruction entries
++     */
++    build_append_int_noprefix(table_data, 8, 4);
++    /* Action table: WCS (control/status) register actions */
++    build_append_wdat_ins(table_data, WDAT_ACTION_QUERY_RUNNING_STATE,
++        WDAT_INS_READ_VALUE,
++        wcs, 0x1, 0x1);
++    build_append_wdat_ins(table_data, WDAT_ACTION_SET_RUNNING_STATE,
++        WDAT_INS_WRITE_VALUE | WDAT_INS_PRESERVE_REGISTER,
++        wcs, 1, 0x00000001);
++    build_append_wdat_ins(table_data, WDAT_ACTION_QUERY_STOPPED_STATE,
++        WDAT_INS_READ_VALUE,
++        wcs, 0x0, 0x00000001);
++    build_append_wdat_ins(table_data, WDAT_ACTION_SET_STOPPED_STATE,
++        WDAT_INS_WRITE_VALUE | WDAT_INS_PRESERVE_REGISTER,
++        wcs, 0x0, 0x00000001);
++    build_append_wdat_ins(table_data, WDAT_ACTION_QUERY_WATCHDOG_STATUS,
++        WDAT_INS_READ_VALUE,
++        wcs, 0x4, 0x00000004);
++    /* WOR (offset) and WRR (refresh) register actions */
++    build_append_wdat_ins(table_data, WDAT_ACTION_SET_COUNTDOWN_PERIOD,
++        WDAT_INS_WRITE_COUNTDOWN,
++        wor_l, 0, 0xffffffff);
++    /* WRR: any write refreshes the watchdog, value is ignored */
++    build_append_wdat_ins(table_data, WDAT_ACTION_RESET,
++        WDAT_INS_WRITE_VALUE,
++        wrr, 0x1, 0x1);
++    build_append_wdat_ins(table_data, WDAT_ACTION_SET_WATCHDOG_STATUS,
++        WDAT_INS_WRITE_VALUE | WDAT_INS_PRESERVE_REGISTER,
++        wrr, 0x4, 0x4);
 +
-+    return true;
++    acpi_table_end(linker, &table);
 +}
-+
-+static void qvtd_save_pci_dev(QPCIDevice *dev, int devfn, void *data)
-+{
-+    QPCIDevice **pdev = (QPCIDevice **)data;
-+
-+    *pdev = dev;
-+}
-+
-+QPCIDevice *qvtd_setup_qtest_pci_device(QTestState *qts, QPCIBus **pcibus,
-+                                        QPCIBar *bar)
-+{
-+    QPCIDevice *dev = NULL;
-+
-+    *pcibus = qpci_new_pc(qts, NULL);
-+    g_assert(*pcibus != NULL);
-+
-+    qpci_device_foreach(*pcibus, IOMMU_TESTDEV_VENDOR_ID,
-+                        IOMMU_TESTDEV_DEVICE_ID, qvtd_save_pci_dev, &dev);
-+
-+    g_assert(dev);
-+    qpci_device_enable(dev);
-+    *bar = qpci_iomap(dev, 0, NULL);
-+    g_assert_false(bar->is_io);
-+
-+    return dev;
-+}
+diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
+index 0c7bfb278a..09ad488a04 100644
+--- a/hw/acpi/meson.build
++++ b/hw/acpi/meson.build
+@@ -31,11 +31,13 @@ acpi_ss.add(when: 'CONFIG_ACPI_ERST', if_true: files('erst.c'))
+ acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'))
+ stub_ss.add(files('ipmi-stub.c'))
+ stub_ss.add(files('acpi-x86-stub.c'))
++acpi_ss.add(when: 'CONFIG_WDT_SBSA', if_true: files('wdat-gwdt.c'))
+ if have_tpm
+   acpi_ss.add(files('tpm.c'))
+ endif
+ stub_ss.add(files('acpi-stub.c', 'aml-build-stub.c', 'ghes-stub.c'))
+ stub_ss.add(files('pci-bridge-stub.c'))
++stub_ss.add(files('wdat-gwdt-stub.c'))
+ system_ss.add_all(when: 'CONFIG_ACPI', if_true: acpi_ss)
+ system_ss.add(when: 'CONFIG_GHES_CPER', if_true: files('ghes_cper.c'))
+ stub_ss.add(files('ghes_cper_stub.c'))
 -- 
 MST
 
