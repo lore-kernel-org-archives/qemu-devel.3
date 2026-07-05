@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57822C44500
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92D7EC43602
 	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 14:36:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgNwg-0005gI-Vh; Sun, 05 Jul 2026 10:35:47 -0400
+	id 1wgNw6-0005E7-Et; Sun, 05 Jul 2026 10:35:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwf-0005fZ-6Q
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:45 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNw4-0005Dq-Fs
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNwc-0001Qo-GW
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:44 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wgNw2-000193-Lq
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 10:35:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783262141;
+ s=mimecast20190719; t=1783262106;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=cb8hvZGlfsx1UPYS1D+IEIOgWAqyKvl7ucGxLQHLN/U=;
- b=iwBu/xbIfyjUDgT7ht56qXHA/+l0Es6ltZi06Qnn17V7/qnT8w0wRsZKVQ8cDNy7eAxiXi
- SilwEDwCJWJoNc8uSDy5S76ho+BxMrqvo2BOFYsJKf2/pP7tRSTjG5QXiKkHnZstEnI92Y
- u5TYmA0tJN4cZRKOT/rJn4XixMXhLzQ=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8m9Fd1JZ474Z+kDkH9U0m9q8ELzUr5+kmXzicQoBzoo=;
+ b=LcX8OpFwBSpRV4XbWB5wfUpwMXLFhEiPaP45v47PSpLuMRjIvcWRnUWKiM8UwcoVQC9Iy/
+ f6080VFyF2FB+RoGB42A9V3s4EVXZ78QAxZptB/YeU3oSJ/sLrB/2zpQqyZw+eCJZKkWg1
+ kxUSGihKCewXnYERX+M9+aJinE0ZVzU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-6Qwd_404PXGuzqM8yAfKtg-1; Sun, 05 Jul 2026 10:35:40 -0400
-X-MC-Unique: 6Qwd_404PXGuzqM8yAfKtg-1
-X-Mimecast-MFC-AGG-ID: 6Qwd_404PXGuzqM8yAfKtg_1783262139
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-49244130073so14047255e9.1
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:35:40 -0700 (PDT)
+ us-mta-616-PYHrcTiBNd2YRkVDV3qkxw-1; Sun, 05 Jul 2026 10:35:04 -0400
+X-MC-Unique: PYHrcTiBNd2YRkVDV3qkxw-1
+X-Mimecast-MFC-AGG-ID: PYHrcTiBNd2YRkVDV3qkxw_1783262103
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4926596eebcso13163365e9.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 07:35:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783262139; x=1783866939; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=cb8hvZGlfsx1UPYS1D+IEIOgWAqyKvl7ucGxLQHLN/U=;
- b=XYtBujgBJT5br59m3PaamFVOPAI54nJ/Nzn2BnMa6JcnBkCWLIzWCFMv3jrDg+WOK/
- se3UidF2Jwt5k7RV0V3kWvKRxZZsyBAOX6HpChMMjMBf5Zh92ffsYvoD+uWUWx8IMaF3
- u/sdn7olsTniGilKX6XQP7S9D80pFvPiNS241Isy/NzKsN8kzIDyvypbMGgCqgbSuRO8
- whrVONAWzHfioSqmfp95OoSeI3+xV782u6wXFU2TXMEyFq3tkpHzo5CFXwUC+V8TuWwx
- 57QaI39RJ6UtIMN9A06s6vd+CyLbSS14NnphhvxDfHwY9vGzvL0Dr+GzQdlLgw8zf+fk
- R+/g==
+ d=redhat.com; s=google; t=1783262103; x=1783866903; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=8m9Fd1JZ474Z+kDkH9U0m9q8ELzUr5+kmXzicQoBzoo=;
+ b=PjLefHVRmDXgj8m8v5bUx9HjHUqT3F5EoWbIp1wO56Em4wsei0OdennA7yyYG6e4id
+ K7ZIOo3WXel086+bG5Vp2IyVbsnSIUHRIcueScwA9YeSMumAMVXECqtMl0wBzWPq3oJ1
+ sN4j8kO4Ecn+v67t9bsd3/5j2Y7Htl8PZng1MOtBKzSKkowF5eeE8iZzlPUzvyyu1qlB
+ 2Q6gUMmf28mBTqmIoPkBDyZeASiZ9q0ozaNYSnhIedyh/tbyriR94FaeahiFlXsyk2N8
+ lSAKPdWUKj5YR0Qdi8pnO97ojfdHLopxlxBiOMHOKbRikEEs3Fyadu9o0cIDaYShXU0O
+ X1vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783262139; x=1783866939;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cb8hvZGlfsx1UPYS1D+IEIOgWAqyKvl7ucGxLQHLN/U=;
- b=hOD1o8FrawwaeQFrT+eFP8+risAXu0b8MaIZh8XJuft1RvaChkGD4knABayeU2yKGR
- FHch4lZpYTeS4AaxXbGWxSelcTp+mu2jS9pMMT3Vnd4VQueFRWqMpL/80RLA4UZZxFXP
- 66Xoy/rk3uX8tT8mibf0HkC7b73Yh8s0uzcGcXuiw7m38TDFY2TV8oyVfRMuhpQyaim7
- Le7W1P2bolezjkubCo2fTNvMUeHNl3kDNjxwy6bmdLYzSET0EzP+GtznDpYWurAwETKJ
- yl4NiA+mDMrvf02+q3zfuLktwysXZSA/4HV/vAM6TYQhcyliOx/zjMHWvVv0DUjgxS9s
- kqQw==
-X-Gm-Message-State: AOJu0YzaOEyKdn5C4XlGFM2L624mxMi7LPQS3RulR3fc2dRqC9rKVLUs
- JZGsfX4GfIL151tLVnsd2L9lehgd8T+smmWRS8JVTuyuGZ5rHX2mQ/NqtcwfFk/au5T9ZZYFyGt
- UpEqMWYlmeCD4ZpFeXJxuVnMLCqbJhCsZ3tUqj2ihJgGs5bw8tQOv95jk1+o0+aWKo8xKiI4pO9
- 6yDOhmOzq6Rg5CS+NbK4ImP7XuCialfk9RhQ==
-X-Gm-Gg: AfdE7clbk4lx9yfEUNk4mYIHdo95v+EcZ5YO8N/9Cj0Q4L+iw38gBjSbGsJzeIyqcr2
- 3y+S/oUvosaZTZVe5MWUtF7bIl1f5cctgur+Zu5j9u5LPkXOJ4KPfr2KrMPuXlX23hW3fayvbaE
- zlIjEH6qSU82SwI3p7VF+HRaAYGvJP+YTmKd4p5YUJfn+frVXVVO4b8DKh4Nth3THVbqST+Ien6
- iZX6Sz8f0HuRgVTr0PyqUclLaadLooo7jFzOEP4PodLBhOgoN7jOwBP2mmJT+HF+pVAySiVY4yJ
- ZKM3tZWlOOCjCVf7qshLcSz6zM6GFFGYbSAIZ6so93Lz0H/TVEZ7allIu7LRxQnNBOA2VZoz1rW
- WKbIp6PlG0nYh8oQ1RzIIgNrLZ1f50mcE
-X-Received: by 2002:a05:600c:a010:b0:493:c8f7:3631 with SMTP id
- 5b1f17b1804b1-493d5e61de8mr37295935e9.22.1783262139217; 
- Sun, 05 Jul 2026 07:35:39 -0700 (PDT)
-X-Received: by 2002:a05:600c:a010:b0:493:c8f7:3631 with SMTP id
- 5b1f17b1804b1-493d5e61de8mr37295535e9.22.1783262138509; 
- Sun, 05 Jul 2026 07:35:38 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783262103; x=1783866903;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=8m9Fd1JZ474Z+kDkH9U0m9q8ELzUr5+kmXzicQoBzoo=;
+ b=GNlnMUCI1QTNafufwMza6bYt3kSL3ybFmQv+qAmlwukJJdo/EPqlL+MtHjnOSkrbmN
+ CCTGYgZn43yhWCfygQrJGwdDztc1bghbyp+y+4V6qGdezE051eg6sG4XDR2YIR66L0v0
+ M+KUf0vF7ByHy0R8Rn1ofa2VUmoClk9hp7/Z0nbofNBHxAxJoQ1Isz+iEf0Y3LrdZjHq
+ QEttQEkEq9L7f3gS0LpPUr5Vd4ofnyfj6FMCb8AiMGgQWSiP7mTZVIfuFyT4zjky6MjF
+ a9jITQlYMf3XYQiR/YmTI2UfYobABR6Bh0yM0n3Z4hSeh693oLukRv2TmHCAGlT6IiHA
+ 7c+A==
+X-Gm-Message-State: AOJu0Yw1s0mqO118U3yUH4UJyZYkxVLmysIS7ldT5ZlDxSkkIUZFvn4T
+ gvN8Nxz88qPgKnFgxhqayEp4/Y5O2eIotsHF0e29v70qTLkI5JFkGtTBKnbT4C54EILku3VKVNY
+ N1POdDoP4poZ6aCjLD5xFxor6Br7m0NbZQvSa1x5NLintW4hz0Aucue6u7hY8YfEZ8WlgWcrzDL
+ 1k+USqukvSFfpClhpHrfUVix7Lzo7eWNdA8w==
+X-Gm-Gg: AfdE7ck0DGSLBdkRZsWYfSKTUnZ4f4m/uNOwJQ9d7Ws1bViSNclvzZokUt5732ezt3X
+ Iohbd46ecBJbRWZRiKKXi7DKWoOcagYfgZuWeO7caLQ1Ui5HqQWzldm9Oj++IEqF+iOmeTGHb+8
+ PHoueAU18cFNstyh9xtbyljDva8iFVn2W/65HjLpQ27DebJ63rrQvFBsqKEm9jkgdbwjr1trX0b
+ sduoi+RS5va/45vIzNuIZkaC60xhR1YKBpAgkvk4y7ZKvUML7RR0jlZ9SEcen4pY1Daj4i0HmRU
+ 43cgaEu4xAZj2yKJzK7CWrrHUgb2E/lwZvkiRWuNZfzorn97l/2phgA/sBChyYg8mqFJktXdM1a
+ VT9yLv4nsm2Px+4BrZIJarkzW6GZs3tK/
+X-Received: by 2002:a05:600c:154f:b0:492:3754:15f2 with SMTP id
+ 5b1f17b1804b1-493d11f703dmr76966555e9.32.1783262103257; 
+ Sun, 05 Jul 2026 07:35:03 -0700 (PDT)
+X-Received: by 2002:a05:600c:154f:b0:492:3754:15f2 with SMTP id
+ 5b1f17b1804b1-493d11f703dmr76966225e9.32.1783262102623; 
+ Sun, 05 Jul 2026 07:35:02 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-68-31.inter.net.il. [80.230.68.31])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63ba971sm481411445e9.13.2026.07.05.07.35.37
+ 5b1f17b1804b1-493ccdab3a8sm231740435e9.6.2026.07.05.07.35.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Jul 2026 07:35:38 -0700 (PDT)
-Date: Sun, 5 Jul 2026 10:35:36 -0400
+ Sun, 05 Jul 2026 07:35:02 -0700 (PDT)
+Date: Sun, 5 Jul 2026 10:35:00 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Junjie Cao <junjie.cao@intel.com>,
- Jason Wang <jasowangio@gmail.com>, Yi Liu <yi.l.liu@intel.com>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@bull.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 23/44] tests/qtest: add IOTLB invalidation test for Intel IOMMU
-Message-ID: <a3fbd2b524b9847e5c3eebf64089bd5af6a660b2.1783261895.git.mst@redhat.com>
+ fanhuang <FangSheng.Huang@amd.com>, Igor Mammedov <imammedo@redhat.com>,
+ "David Hildenbrand (Arm)" <david@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 09/44] hw/i386: hook sp-mem into the pc machine plug path
+Message-ID: <a597e6791f6ebf2b012f54462d0c44c33a781334.1783261895.git.mst@redhat.com>
 References: <cover.1783261895.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -122,427 +123,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: fanhuang <FangSheng.Huang@amd.com>
 
-Nothing in tree exercises IOTLB invalidation for any emulated vIOMMU:
-the existing iommu-testdev tests only check one-shot translation, so a
-regression that failed to flush a stale IOTLB entry would go unnoticed.
+Add the pc machine hookup for TYPE_SP_MEM so each sp-mem instance is
+placed by the memory-device framework and reported to the guest as
+E820_SOFT_RESERVED.
 
-Add a test that drives the queued-invalidation path end to end
-(vtd_process_inv_desc -> vtd_process_iotlb_desc ->
-vtd_iotlb_{global,domain,page}_invalidate).  For each
-{legacy, scalable-slt, scalable-flt} x {global, domain, page}
-combination it:
-
-  1. maps IOVA -> PA_A and DMAs, populating the IOTLB;
-  2. rewrites the leaf PTE to PA_B *without* invalidating and DMAs
-     again, asserting the stale entry is still served (MISMATCH);
-  3. submits the IOTLB invalidation plus a wait descriptor, then DMAs
-     and asserts the fresh page walk now reaches PA_B.
-
-Step 2 makes the flush observable: it fails loudly if the IOTLB
-is not actually caching the first translation.
-
-For scalable first-level (flt), QEMU keeps first- and second-level
-mappings in a single IOTLB that the legacy VTD_INV_DESC_IOTLB descriptor
-flushes for every level, so the test uses that descriptor across all
-modes.  PASID-selective invalidation (VTD_INV_DESC_PIOTLB, vtd_piotlb_*)
-is a separate path and is left for a follow-up.
-
-It also adds three page-selective cases that cache a second page and check
-its fate after invalidating the first: for second-level (legacy, scalable-slt)
-the second page survives, while for first-level (scalable-flt) QEMU flushes all
-first-stage entries of the domain, so it does not.  This distinguishes a
-page-selective flush from a domain-wide or global one.
-
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260703072200.463082-4-junjie.cao@intel.com>
+Message-ID: <20260623075051.3797975-5-FangSheng.Huang@amd.com>
 ---
- MAINTAINERS                        |   1 +
- tests/qtest/iommu-intel-inv-test.c | 346 +++++++++++++++++++++++++++++
- tests/qtest/meson.build            |   2 +-
- 3 files changed, 348 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/iommu-intel-inv-test.c
+ hw/i386/e820_memory_layout.h | 11 ++++++-----
+ hw/i386/pc.c                 | 36 ++++++++++++++++++++++++++++++++++++
+ hw/i386/Kconfig              |  2 ++
+ 3 files changed, 44 insertions(+), 5 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 5ee7c1f601..cbdfce4866 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4106,6 +4106,7 @@ F: include/hw/i386/intel_iommu.h
- F: tests/functional/x86_64/test_intel_iommu.py
- F: tests/qtest/intel-iommu-test.c
- F: tests/qtest/iommu-intel-test.c
-+F: tests/qtest/iommu-intel-inv-test.c
+diff --git a/hw/i386/e820_memory_layout.h b/hw/i386/e820_memory_layout.h
+index b50acfa201..6ef169db9c 100644
+--- a/hw/i386/e820_memory_layout.h
++++ b/hw/i386/e820_memory_layout.h
+@@ -10,11 +10,12 @@
+ #define HW_I386_E820_MEMORY_LAYOUT_H
  
- AMD-Vi Emulation
- M: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-diff --git a/tests/qtest/iommu-intel-inv-test.c b/tests/qtest/iommu-intel-inv-test.c
-new file mode 100644
-index 0000000000..1467eef647
---- /dev/null
-+++ b/tests/qtest/iommu-intel-inv-test.c
-@@ -0,0 +1,346 @@
-+/*
-+ * QTest for Intel IOMMU (VT-d) IOTLB invalidation via Invalidation Queue
-+ *
-+ * Validates that IOTLB invalidation descriptors submitted through the
-+ * queued invalidation interface correctly flush cached translations,
-+ * forcing the IOMMU to re-walk page tables on subsequent DMA.
-+ *
-+ * Copyright (c) 2026 Intel Corporation.
-+ *
-+ * Author: Junjie Cao <junjie.cao@intel.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "libqos/pci.h"
-+#include "libqos/pci-pc.h"
-+#include "hw/i386/intel_iommu_internal.h"
-+#include "hw/misc/iommu-testdev.h"
-+#include "libqos/qos-intel-iommu.h"
-+#include "libqos/qos-iommu-testdev.h"
-+
-+#define DMA_LEN                4
-+
-+/*
-+ * Second DMA target page, chosen to fall well outside any address used by
-+ * qos-intel-iommu's fixed structure layout.
-+ */
-+#define QVTD_PT_VAL_B          (QVTD_MEM_BASE + 0x00200000)
-+
-+/*
-+ * A second IOVA/target page for the page-selectivity test.  QVTD_IOVA_2 is
-+ * QVTD_IOVA + 4K: it shares the L4/L3/L2 walk built by
-+ * qvtd_build_translation() and differs only in the leaf (L1) slot, so mapping
-+ * it costs one extra leaf PTE.  QVTD_PT_VAL_2 is its distinct target page.
-+ */
-+#define QVTD_IOVA_2            (QVTD_IOVA + 0x1000)
-+#define QVTD_PT_VAL_2          (QVTD_MEM_BASE + 0x00300000)
-+
-+typedef enum {
-+    IOTLB_INV_GLOBAL,
-+    IOTLB_INV_DOMAIN,
-+    IOTLB_INV_PAGE,
-+} IOTLBInvGranularity;
-+
-+/*
-+ * Core invalidation test, parameterized by translation mode and
-+ * invalidation granularity.
-+ *
-+ * The iommu-testdev device performs DMA writes via the IOMMU (using the
-+ * IOVA) and verifies by reading back from the expected GPA directly.  If
-+ * the IOTLB is stale, the DMA write lands at the old PA while readback
-+ * uses the GPA we supply, causing a mismatch (ITD_DMA_ERR_MISMATCH).
-+ *
-+ * Test sequence:
-+ *   1. Setup translation: IOVA -> PA_A
-+ *   2. DMA(gpa=PA_A) -> success (IOTLB populates cache)
-+ *   3. Modify PTE: IOVA -> PA_B (no invalidation)
-+ *   4. DMA(gpa=PA_B) -> MISMATCH (stale IOTLB directs write to PA_A)
-+ *   5. Issue IOTLB invalidation + wait
-+ *   6. DMA(gpa=PA_B) -> success (cache flushed, fresh page walk)
-+ *
-+ * Phase 4 depends on QEMU's IOTLB caching the Phase 1 translation; if a
-+ * future change makes IOTLB caching lazy this assertion would no longer
-+ * exercise the stale-cache path.
-+ */
-+static void run_iotlb_inv_test(QVTDTransMode mode, IOTLBInvGranularity gran)
+ /* e820 types */
+-#define E820_RAM        1
+-#define E820_RESERVED   2
+-#define E820_ACPI       3
+-#define E820_NVS        4
+-#define E820_UNUSABLE   5
++#define E820_RAM           1
++#define E820_RESERVED      2
++#define E820_ACPI          3
++#define E820_NVS           4
++#define E820_UNUSABLE      5
++#define E820_SOFT_RESERVED 0xefffffff
+ 
+ struct e820_entry {
+     uint64_t address;
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 73a625327c..2bacece249 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -63,6 +63,7 @@
+ #include "hw/i386/kvm/xen_gnttab.h"
+ #include "hw/i386/kvm/xen_xenstore.h"
+ #include "hw/mem/memory-device.h"
++#include "hw/mem/sp-mem.h"
+ #include "e820_memory_layout.h"
+ #include "trace.h"
+ #include "sev.h"
+@@ -1285,11 +1286,43 @@ static void pc_hv_balloon_plug(HotplugHandler *hotplug_dev,
+     memory_device_plug(MEMORY_DEVICE(dev), MACHINE(hotplug_dev));
+ }
+ 
++static void pc_sp_mem_pre_plug(HotplugHandler *hotplug_dev,
++                               DeviceState *dev, Error **errp)
 +{
-+    QTestState *qts;
-+    QPCIBus *pcibus;
-+    QPCIDevice *dev;
-+    QPCIBar bar;
-+    uint32_t tail = 0;
-+    uint32_t result;
-+    uint64_t pa_a, pa_b;
++    MachineState *ms = MACHINE(hotplug_dev);
++    SpMemDevice *spm = SP_MEM(dev);
 +
-+    if (!qtest_has_machine("q35")) {
-+        g_test_skip("q35 machine not available");
++    if (ms->numa_state && spm->node >= ms->numa_state->num_nodes) {
++        error_setg(errp,
++                   "'node' property value %" PRIu32
++                   " exceeds the number of NUMA nodes (%d)",
++                   spm->node, ms->numa_state->num_nodes);
 +        return;
 +    }
-+
-+    qts = qtest_initf("-machine q35 -smp 1 -m 512 -net none "
-+                      "%s -device iommu-testdev",
-+                      qvtd_iommu_args(mode));
-+
-+    if (!qvtd_check_caps(qts, mode)) {
-+        qtest_quit(qts);
-+        return;
-+    }
-+
-+    dev = qvtd_setup_qtest_pci_device(qts, &pcibus, &bar);
-+
-+    /*
-+     * The IOMMU translates an IOVA to a page base, then the page offset
-+     * from the IOVA is added.  So GPA = page_base + (IOVA & 0xfff).
-+     */
-+    pa_a = (QVTD_PT_VAL & VTD_PAGE_MASK_4K) + (QVTD_IOVA & 0xfff);
-+    pa_b = (QVTD_PT_VAL_B & VTD_PAGE_MASK_4K) + (QVTD_IOVA & 0xfff);
-+
-+    /* --- Phase 1: Setup and initial DMA (populates IOTLB) --- */
-+    qvtd_build_translation(qts, mode, dev->devfn);
-+    qvtd_program_regs(qts, Q35_HOST_BRIDGE_IOMMU_ADDR, mode);
-+
-+    qtest_memset(qts, pa_a, 0, DMA_LEN);
-+    qtest_memset(qts, pa_b, 0, DMA_LEN);
-+
-+    result = qos_iommu_testdev_trigger_dma(dev, bar, QVTD_IOVA, pa_a,
-+                                           DMA_LEN, 0);
-+    g_assert_cmpuint(result, ==, 0);
-+
-+    /* --- Phase 2: Modify PTE without invalidation -> stale IOTLB --- */
-+    qtest_writeq(qts, qvtd_leaf_pte_addr(QVTD_IOVA),
-+                 qvtd_make_leaf_pte(QVTD_PT_VAL_B & VTD_PAGE_MASK_4K, mode));
-+    qtest_memset(qts, pa_a, 0, DMA_LEN);
-+    qtest_memset(qts, pa_b, 0, DMA_LEN);
-+
-+    result = qos_iommu_testdev_trigger_dma(dev, bar, QVTD_IOVA, pa_b,
-+                                           DMA_LEN, 0);
-+    g_assert_cmpuint(result, ==, ITD_DMA_ERR_MISMATCH);
-+
-+    /* --- Phase 3: Invalidate IOTLB -> fresh page walk succeeds --- */
-+    switch (gran) {
-+    case IOTLB_INV_GLOBAL:
-+        tail = qvtd_submit_iotlb_global_inv(qts, Q35_HOST_BRIDGE_IOMMU_ADDR,
-+                                            tail);
-+        break;
-+    case IOTLB_INV_DOMAIN:
-+        tail = qvtd_submit_iotlb_domain_inv(qts, Q35_HOST_BRIDGE_IOMMU_ADDR,
-+                                            QVTD_DOMAIN_ID, tail);
-+        break;
-+    case IOTLB_INV_PAGE:
-+        tail = qvtd_submit_iotlb_page_inv(qts, Q35_HOST_BRIDGE_IOMMU_ADDR,
-+                                          QVTD_DOMAIN_ID, QVTD_IOVA, 0,
-+                                          tail);
-+        break;
-+    }
-+    tail = qvtd_submit_inv_wait_and_poll(qts, Q35_HOST_BRIDGE_IOMMU_ADDR,
-+                                         tail);
-+
-+    qtest_memset(qts, pa_a, 0, DMA_LEN);
-+    qtest_memset(qts, pa_b, 0, DMA_LEN);
-+
-+    result = qos_iommu_testdev_trigger_dma(dev, bar, QVTD_IOVA, pa_b,
-+                                           DMA_LEN, 0);
-+    g_assert_cmpuint(result, ==, 0);
-+
-+    g_free(dev);
-+    qpci_free_pc(pcibus);
-+    qtest_quit(qts);
++    memory_device_pre_plug(MEMORY_DEVICE(dev), ms, errp);
 +}
 +
-+/*
-+ * Page-selectivity test: verify that a page-selective invalidation flushes
-+ * the named page and touches other cached pages only as far as the model
-+ * intends.  run_iotlb_inv_test() caches a single entry, so it cannot tell a
-+ * page-selective flush from a domain-wide or global one; this test caches two
-+ * pages in the same domain and checks the second one's fate.
-+ *
-+ * The expected fate of the second page depends on the translation level:
-+ *
-+ *   - second-level (legacy / scalable-slt): a page-selective descriptor
-+ *     evicts only the matching gfn, so IOVA_2 survives.
-+ *   - first-level (scalable-flt): QEMU invalidates all first-stage entries of
-+ *     the domain on a page-selective descriptor (vtd_hash_remove_by_page()
-+ *     returns true for any pgtt==FST entry of the domain, matching the VT-d
-+ *     spec for first-stage IOTLB invalidation), so IOVA_2 is flushed too.
-+ *
-+ * Method: map IOVA -> PA_A and IOVA_2 -> PA_A_2, DMA both to populate two
-+ * IOTLB entries, rewrite both leaf PTEs to PA_B* without invalidating, then
-+ * page-invalidate IOVA only.  IOVA always re-walks to PA_B.  For IOVA_2 we
-+ * verify the DMA against its *original* page PA_A_2: if the entry survived,
-+ * the stale cache still serves PA_A_2 (success); if it was flushed, the fresh
-+ * walk reaches PA_B_2 and mismatches PA_A_2.  So a survived entry gives
-+ * success and a flushed entry gives MISMATCH, and we assert whichever the
-+ * mode requires -- catching both an over-matching second-level flush and a
-+ * regression that stopped flushing first-stage entries domain-wide.
-+ */
-+static void run_page_selectivity_test(QVTDTransMode mode)
++static void pc_sp_mem_plug(HotplugHandler *hotplug_dev,
++                           DeviceState *dev, Error **errp)
 +{
-+    QTestState *qts;
-+    QPCIBus *pcibus;
-+    QPCIDevice *dev;
-+    QPCIBar bar;
-+    uint32_t tail = 0;
-+    uint32_t result;
-+    uint64_t pa_a, pa_b, pa_a2, pa_b2;
-+    bool fl_domain_wide = (mode == QVTD_TM_SCALABLE_FLT);
++    SpMemDevice *spm = SP_MEM(dev);
++    MemoryDeviceClass *mdc = MEMORY_DEVICE_GET_CLASS(MEMORY_DEVICE(dev));
++    uint64_t addr, size;
 +
-+    if (!qtest_has_machine("q35")) {
-+        g_test_skip("q35 machine not available");
-+        return;
-+    }
++    memory_device_plug(MEMORY_DEVICE(dev), MACHINE(hotplug_dev));
 +
-+    qts = qtest_initf("-machine q35 -smp 1 -m 512 -net none "
-+                      "%s -device iommu-testdev",
-+                      qvtd_iommu_args(mode));
-+
-+    if (!qvtd_check_caps(qts, mode)) {
-+        qtest_quit(qts);
-+        return;
-+    }
-+
-+    dev = qvtd_setup_qtest_pci_device(qts, &pcibus, &bar);
-+
-+    pa_a = (QVTD_PT_VAL & VTD_PAGE_MASK_4K) + (QVTD_IOVA & 0xfff);
-+    pa_b = (QVTD_PT_VAL_B & VTD_PAGE_MASK_4K) + (QVTD_IOVA & 0xfff);
-+    pa_a2 = (QVTD_PT_VAL_2 & VTD_PAGE_MASK_4K) + (QVTD_IOVA_2 & 0xfff);
-+    pa_b2 = (QVTD_PT_VAL_B & VTD_PAGE_MASK_4K) + (QVTD_IOVA_2 & 0xfff);
-+
-+    /* --- Setup: IOVA -> PA_A (built by helper) and IOVA_2 -> PA_A_2 --- */
-+    qvtd_build_translation(qts, mode, dev->devfn);
-+    qtest_writeq(qts, qvtd_leaf_pte_addr(QVTD_IOVA_2),
-+                 qvtd_make_leaf_pte(QVTD_PT_VAL_2 & VTD_PAGE_MASK_4K, mode));
-+    qvtd_program_regs(qts, Q35_HOST_BRIDGE_IOMMU_ADDR, mode);
-+
-+    /* Populate both IOTLB entries. */
-+    qtest_memset(qts, pa_a, 0, DMA_LEN);
-+    qtest_memset(qts, pa_a2, 0, DMA_LEN);
-+    result = qos_iommu_testdev_trigger_dma(dev, bar, QVTD_IOVA, pa_a,
-+                                           DMA_LEN, 0);
-+    g_assert_cmpuint(result, ==, 0);
-+    result = qos_iommu_testdev_trigger_dma(dev, bar, QVTD_IOVA_2, pa_a2,
-+                                           DMA_LEN, 0);
-+    g_assert_cmpuint(result, ==, 0);
-+
-+    /* Rewrite both leaf PTEs to PA_B* without invalidating. */
-+    qtest_writeq(qts, qvtd_leaf_pte_addr(QVTD_IOVA),
-+                 qvtd_make_leaf_pte(QVTD_PT_VAL_B & VTD_PAGE_MASK_4K, mode));
-+    qtest_writeq(qts, qvtd_leaf_pte_addr(QVTD_IOVA_2),
-+                 qvtd_make_leaf_pte(QVTD_PT_VAL_B & VTD_PAGE_MASK_4K, mode));
-+
-+    /* Page-selective invalidation of IOVA only. */
-+    tail = qvtd_submit_iotlb_page_inv(qts, Q35_HOST_BRIDGE_IOMMU_ADDR,
-+                                      QVTD_DOMAIN_ID, QVTD_IOVA, 0, tail);
-+    tail = qvtd_submit_inv_wait_and_poll(qts, Q35_HOST_BRIDGE_IOMMU_ADDR,
-+                                         tail);
-+
-+    /* IOVA was flushed: fresh walk reaches PA_B. */
-+    qtest_memset(qts, pa_a, 0, DMA_LEN);
-+    qtest_memset(qts, pa_b, 0, DMA_LEN);
-+    result = qos_iommu_testdev_trigger_dma(dev, bar, QVTD_IOVA, pa_b,
-+                                           DMA_LEN, 0);
-+    g_assert_cmpuint(result, ==, 0);
-+
-+    /*
-+     * IOVA_2's fate, verified against its original page PA_A_2:
-+     *   - second-level: entry survives, stale cache serves PA_A_2 -> success;
-+     *   - first-level: entry was flushed domain-wide, fresh walk reaches
-+     *     PA_B_2 -> MISMATCH against PA_A_2.
-+     */
-+    qtest_memset(qts, pa_a2, 0, DMA_LEN);
-+    qtest_memset(qts, pa_b2, 0, DMA_LEN);
-+    result = qos_iommu_testdev_trigger_dma(dev, bar, QVTD_IOVA_2, pa_a2,
-+                                           DMA_LEN, 0);
-+    if (fl_domain_wide) {
-+        g_assert_cmpuint(result, ==, ITD_DMA_ERR_MISMATCH);
-+    } else {
-+        g_assert_cmpuint(result, ==, 0);
-+    }
-+
-+    g_free(dev);
-+    qpci_free_pc(pcibus);
-+    qtest_quit(qts);
++    addr = mdc->get_addr(MEMORY_DEVICE(dev));
++    size = memory_region_size(host_memory_backend_get_memory(spm->hostmem));
++    e820_add_entry(addr, size, E820_SOFT_RESERVED);
 +}
 +
-+/*
-+ * scalable-flt is covered here even though, per the VT-d spec, first-level
-+ * mappings are invalidated with the PASID-based descriptor
-+ * (VTD_INV_DESC_PIOTLB).  QEMU keeps first- and second-level mappings in a
-+ * single IOTLB that the legacy VTD_INV_DESC_IOTLB descriptor flushes for
-+ * every level, so this test drives that descriptor across all modes.
-+ * PASID-selective (PIOTLB) invalidation is a separate path, left for a
-+ * follow-up.
-+ */
-+static const struct {
-+    const char *name;
-+    QVTDTransMode mode;
-+} trans_modes[] = {
-+    { "legacy",        QVTD_TM_LEGACY_TRANS },
-+    { "scalable-slt",  QVTD_TM_SCALABLE_SLT },
-+    { "scalable-flt",  QVTD_TM_SCALABLE_FLT },
-+};
-+
-+static const struct {
-+    const char *name;
-+    IOTLBInvGranularity gran;
-+} granularities[] = {
-+    { "global", IOTLB_INV_GLOBAL },
-+    { "domain", IOTLB_INV_DOMAIN },
-+    { "page",   IOTLB_INV_PAGE   },
-+};
-+
-+typedef struct {
-+    QVTDTransMode mode;
-+    IOTLBInvGranularity gran;
-+} TestCase;
-+
-+static void test_iotlb_inv(const void *opaque)
-+{
-+    const TestCase *tc = opaque;
-+
-+    run_iotlb_inv_test(tc->mode, tc->gran);
-+}
-+
-+static void test_page_selectivity(const void *opaque)
-+{
-+    const QVTDTransMode *mode = opaque;
-+
-+    run_page_selectivity_test(*mode);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    for (size_t m = 0; m < ARRAY_SIZE(trans_modes); m++) {
-+        for (size_t g = 0; g < ARRAY_SIZE(granularities); g++) {
-+            TestCase *tc = g_new(TestCase, 1);
-+            char *path;
-+
-+            tc->mode = trans_modes[m].mode;
-+            tc->gran = granularities[g].gran;
-+
-+            path = g_strdup_printf("/iommu-testdev/intel/iotlb-inv/%s-%s",
-+                                   granularities[g].name,
-+                                   trans_modes[m].name);
-+            qtest_add_data_func_full(path, tc, test_iotlb_inv, g_free);
-+            g_free(path);
-+        }
-+    }
-+
-+    for (size_t m = 0; m < ARRAY_SIZE(trans_modes); m++) {
-+        QVTDTransMode *mode = g_new(QVTDTransMode, 1);
-+        char *path;
-+
-+        *mode = trans_modes[m].mode;
-+        path = g_strdup_printf(
-+            "/iommu-testdev/intel/iotlb-inv/page-selective/%s",
-+            trans_modes[m].name);
-+        qtest_add_data_func_full(path, mode, test_page_selectivity, g_free);
-+        g_free(path);
-+    }
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 93175baa87..56ff860e21 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -100,7 +100,7 @@ qtests_i386 = \
-   (config_all_devices.has_key('CONFIG_AMD_IOMMU') ? ['amd-iommu-test'] : []) +             \
-   (config_all_devices.has_key('CONFIG_VTD') ? ['intel-iommu-test'] : []) +                 \
-   (config_all_devices.has_key('CONFIG_VTD') and
--   config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') ? ['iommu-intel-test'] : []) +      \
-+   config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') ? ['iommu-intel-test', 'iommu-intel-inv-test'] : []) +      \
-   (host_os != 'windows' and                                                                \
-    config_all_devices.has_key('CONFIG_ACPI_ERST') ? ['erst-test'] : []) +                   \
-   (config_all_devices.has_key('CONFIG_PCIE_PORT') and                                       \
+ static void pc_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+                                           DeviceState *dev, Error **errp)
+ {
+     if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
+         pc_memory_pre_plug(hotplug_dev, dev, errp);
++    } else if (object_dynamic_cast(OBJECT(dev), TYPE_SP_MEM)) {
++        pc_sp_mem_pre_plug(hotplug_dev, dev, errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+         x86_cpu_pre_plug(hotplug_dev, dev, errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+@@ -1326,6 +1359,8 @@ static void pc_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+ {
+     if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
+         pc_memory_plug(hotplug_dev, dev, errp);
++    } else if (object_dynamic_cast(OBJECT(dev), TYPE_SP_MEM)) {
++        pc_sp_mem_plug(hotplug_dev, dev, errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+         x86_cpu_plug(hotplug_dev, dev, errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+@@ -1370,6 +1405,7 @@ static HotplugHandler *pc_get_hotplug_handler(MachineState *machine,
+                                              DeviceState *dev)
+ {
+     if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM) ||
++        object_dynamic_cast(OBJECT(dev), TYPE_SP_MEM) ||
+         object_dynamic_cast(OBJECT(dev), TYPE_CPU) ||
+         object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI) ||
+         object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
+diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+index 12473acaa7..e27d8816e5 100644
+--- a/hw/i386/Kconfig
++++ b/hw/i386/Kconfig
+@@ -84,6 +84,7 @@ config I440FX
+     select PCI_I440FX
+     select PIIX
+     select DIMM
++    select SP_MEM
+     select SMBIOS
+     select SMBIOS_LEGACY
+     select FW_CFG_DMA
+@@ -113,6 +114,7 @@ config Q35
+     select LPC_ICH9
+     select AHCI_ICH9
+     select DIMM
++    select SP_MEM
+     select SMBIOS
+     select FW_CFG_DMA
+ 
 -- 
 MST
 
