@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5BA5C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 22:35:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57ECDC44500
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 22:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgru9-0004JP-Pl; Mon, 06 Jul 2026 18:35:09 -0400
+	id 1wgru3-0003mg-Uz; Mon, 06 Jul 2026 18:35:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wgru1-0003d4-FZ
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:35:01 -0400
+ id 1wgrtv-0003Gn-Hr
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:34:55 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wgrtx-0005fF-Qu
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:35:01 -0400
+ id 1wgrtt-0005el-AY
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:34:55 -0400
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666KEEfq1665540
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 22:34:45 GMT
+ 666KEDZX1665496
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 22:34:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=e+K9PYLSzS0
- 8otbTm5AobwDrMpFhGzfH908jnmnC4ag=; b=jpcenHQzfdZZViObPaDpJuqBMA+
- weTwx5krqUOxYfttDYGil7jkzsKuulG2pM/qL1ZDOybqpImvnsMPlhDCTFVGCs5n
- wwzHhzSArjwEsqlPgOo2TxK+1YC3z8Zj0W59xLHhTqcEuSX01MsqbFMO/qkpXOn2
- dBF+S7QJXEijiiFP6Dt3rf4vT1ul/JDqmFYnJbUHIlBWyCEKKt4gHWc9pqjh+imn
- 5ka0VCl2yJ6XBhyU3bUxEiILFkLGtszaK0nWzdgYpTRe00DJLwKmw0j3+o6HeO75
- Owh5f3NDOdYBlu7v2sR6UrFxurw/qoOR2EYUOL57zAeZ9vxLGZs0jTko/lA==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8a3gu6gj-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=7jTe2F8wXYX
+ ezGaAD2OjYhElMvD/jt/evY/DpV8G1gM=; b=Q+WUJO3YxnsbZAUVKvlsavwaEOs
+ zX+y98vrKDy9xYrD5S8Uhjc+1sSX3kgbKxLZc6/vTqDfk60VmYnjfdzC1SAchKNs
+ N1F9QqmaORJcHL8hkAITSWgEKlopKNdC+ytWRdZWPnQkUqp3NOWtR+JIs9ENi5FC
+ GcnJXnMM47eR/B21xbCaPQTFDM12sF+YHsLDLf3PJPN7myu6or2isWYCip6wMFO9
+ HgIz5Zy3TwqlwFPuKnTh1UKeOZK0agURtT9mGi2k0mEKTGsGlZaCXF/JNPc/XT2L
+ vVIr5z8evpTyera8nw4OzMGqfjB3kYg+q5TSC13dLcK6V40BXQ8R06PGRHQ==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8a3gu6g4-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 22:34:45 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-c8924f4d0a4so5025969a12.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 15:34:45 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 22:34:41 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-3810e5c5871so6294846a91.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 15:34:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783377285; x=1783982085; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783377280; x=1783982080; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=e+K9PYLSzS08otbTm5AobwDrMpFhGzfH908jnmnC4ag=;
- b=TGs1KQbz7xB+m+JWWKoyxMscqyS2dyMxVcXAz/ofKprmlUY7GCLAc9BZCCd84//pIV
- O+qSpSLjZFI0Sg5VcFGMtbPNgjpithT3wyPHEbtOWJR/1c78nPqf1FTnn3iHcRu4a96+
- MppOZRl9dPLWW1SPPySasn3SHQxbE9bksj5/JwIxnq7KwuQwN9/8iBllMTZCxr6T22Gx
- eWXbqrUP0VgdBErs+fkENoL+V56BSE9feBteqCuNUxyYfRGC95n3ctOu2myTpiGjA4MN
- q3ezdFadib80nMHEfQ+8LlL7LTnJhY2NAzxu29NaQVbRAvwzqQOa91Z2R/9ELqmaMosA
- x0RA==
+ :message-id:reply-to;
+ bh=7jTe2F8wXYXezGaAD2OjYhElMvD/jt/evY/DpV8G1gM=;
+ b=jBUUEStgg8TMRL9TxgJB9zRM50obT/UrGuRTuk14Q+zKrCNbptN8n78CiJH+HQVJe9
+ x5KrKzIAMGNRtYtFqyeOydzJR9bznwM18xlUs/3Cs2Gy67lHSg59goTBKp3zfSAoqDio
+ eEOL1wBAONnHUCvKvl+oMqpYrecW1hFJUGwhJ6ppOZrCELm//hBW6srb2w1ia+Ldp+l4
+ 1vkkKzw6ws6LY96q0ZouO9NBi4UC1L9jTTznIlTpkdRNbxPnb0YCWaleJ+uHlmXR2gyO
+ OOpPmi4vgrGJ4ZIux/qihND7Nf+P0eGDv2z4VFvSKQ22LHblvLTy632sqD2ZCl8gid2q
+ jHwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783377285; x=1783982085;
+ d=1e100.net; s=20251104; t=1783377280; x=1783982080;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=e+K9PYLSzS08otbTm5AobwDrMpFhGzfH908jnmnC4ag=;
- b=n+2MJPkP1wh/r/7En/YQZ6mwS5Km9cZ2lh3uiS8CJQ6ynS77t2WyyswzuvDh05J6VN
- 5vXCoBbVsZPuyPcwUIvj0PSUfYD+kTI6MQfMaQK72tBzmOJzISRi0ijGeiqKmsVQgOwX
- MAqrbmAkMxgvjRUdAIkIjTK/qtI64+aZVas8UIXW6p7eZA/K0x5nwY5VjUMnhHBcG6pT
- ooII31mDt8bw/+JW0sa9cCH0VyGV3oR130189w2EkqNf9z54vL9oom/9R/iBjKbmrqY2
- cIPuf5XeDVpyL2QResqT+RdYfyVHaxiCB7KPrWBI544zu/iF/nmkbnIENTgk0hNkVik/
- y5gQ==
-X-Gm-Message-State: AOJu0YxoUwIVO6tVHzWuZaeZ2zI1+OBelbC620d7oqLDTBjRmK9q0Dwo
- 61f8OGU4iOVcogawA1TwEa4eaq66AOlAq0QQo4e8CHlIErROY3K/zIU2vYfR0UnIXKsST2nwki2
- lxnBj3Kxt073StLA3m/zb6mhh3656TOQKbl1C1f9NR4lu/gm+iIFirxASZSmSAwMcKw==
-X-Gm-Gg: AfdE7cnS9x+hG68QMSPRpvOLXzhNuRzFtbKTWa48r/2DyuGgHXGtctRfGcSgSwnw3N0
- Wf2pGo/z4obrhqSNd+aYtwjQ7UMy3ZrzrqXx4O5k7M8MS5f3s8M9gggtGxeAHtvzRdBJVttjViN
- BvkAxg5BD13Nz2wORsekD6E2AVJo0SRLwhYlPSCvvgAknfJre3jnSN9a23f2gB1Mb93HTbSXS2o
- bZvVGeyg11u14lDbrAAbyHKS2RIR9MAomzxWCHRhkkGXvMHcFeTXzg87QHOqDm4qvw3Vaf3V97e
- F3NRlKGQbjahhDspCYLUfD01XVeeljWeXXQyD8QIEy0DoTfjlEZRDKzfVLb9vkrEH6cf7wyky+b
- wnnR60Fcf1G/L8OO4T6HG4juXMCzGMjUAr3x1sHpNEZUlBhV1GVchkFqcfYhJ8wu/6F2v1Yh9lM
- QovPjrIw==
-X-Received: by 2002:a05:6a21:3988:b0:3bf:6c08:fb8e with SMTP id
- adf61e73a8af0-3c08eecc5f1mr2903223637.48.1783377284602; 
- Mon, 06 Jul 2026 15:34:44 -0700 (PDT)
-X-Received: by 2002:a05:6a21:3988:b0:3bf:6c08:fb8e with SMTP id
- adf61e73a8af0-3c08eecc5f1mr2903189637.48.1783377284169; 
- Mon, 06 Jul 2026 15:34:44 -0700 (PDT)
+ :to:cc:subject:date:message-id:reply-to;
+ bh=7jTe2F8wXYXezGaAD2OjYhElMvD/jt/evY/DpV8G1gM=;
+ b=AKyUo9DBV5dHFElYB+C6S+QhkMAmRSDbJkllaxaY/bt9yx+hSgbjl6RWbWMyAtFzjz
+ i/L8/eiPsk1Xm9j4NIHs2b5lx+ivt4Pn13aNPSzEKoHaNmGQe2qyNU8HNlKzeglI/yyi
+ gS/owqUdbVhQx53ao0AEHKOz0hwRyoTa8iTMTUwb4mDnQ/9EFd00nhec3hfVzWGz87tG
+ jmPx3Ll9l3eA9Wiv+exx12giy7e7UDr8Js3cdqIF7+Ov3EN55XIl+efam+IUs1dDKZFL
+ /oSdAvZVgTbdbY9vVVqorH9m7gm0NIot2zK3QwVymqfZMyQuiw6+9/H31bjp8bxRXQ15
+ 6c2Q==
+X-Gm-Message-State: AOJu0YzAeXNZyERZuLhFrr++B4C4P/waMj6KSDziLM8AJlOByfAr/UPQ
+ LHqxzhO90YokuOjDQJc845wkz+wY2O3nexme3EI1H7k8aw2YExs7MU8XwISGQ4QpLV8SqMEVMcd
+ XxJfCPnaEqC4v6nSZTc42U35nXssVk+I28T40bns8Ba8SwGtclugQH99FWRGDVeQArQ==
+X-Gm-Gg: AfdE7cmPOCIlbMnxcB0qCnJAH1i+uiL4hEQL4TStYRpHsi0wHIJNzPHa9xmXEOGFwzv
+ BATBHWjIu2Nml/ofAF+JvJwx9y5f9hRXmuEvvPqO/e+7CPukZA+juEXtTMqN8YVftFsY6WdJw9t
+ fYqzvzSdpHNxAH2xgb8ln/zbC5MUfiujIGf6ScHPFgZDiuGsLhM7JzyNVxRhs1GuOH9ZOdOLd0p
+ d22rrSPcAq9OjlQeNqaQl/C9VjbAuWiGXybqEyXmNI+HBeHYBdyhHtCRF99TtkQEjsyDQkXdIUw
+ puL9/34boa+0LWfYFHIEi5GDs87qLNCnHSyMf8udh8feEHnHCMWe12z6plLbspaeUwWKFzUpoeC
+ zFj1o4TnWPVEdfbtdAPJw2sIYxKZGPwN0S15oB9vTm3hmz5lrWykgRzrn9R9fGTTxCGJQBrSFGJ
+ f036M5IA==
+X-Received: by 2002:a17:90b:2805:b0:387:e0db:3d8c with SMTP id
+ 98e67ed59e1d1-387e0db439fmr72653a91.39.1783377280476; 
+ Mon, 06 Jul 2026 15:34:40 -0700 (PDT)
+X-Received: by 2002:a17:90b:2805:b0:387:e0db:3d8c with SMTP id
+ 98e67ed59e1d1-387e0db439fmr72622a91.39.1783377279893; 
+ Mon, 06 Jul 2026 15:34:39 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-31174ac0557sm977244eec.26.2026.07.06.15.34.42
+ 5a478bee46e88-31174ac0557sm977244eec.26.2026.07.06.15.34.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 15:34:43 -0700 (PDT)
+ Mon, 06 Jul 2026 15:34:39 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -102,32 +102,32 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 34/91] tests/tcg/aarch64: user tests
-Date: Mon,  6 Jul 2026 15:32:46 -0700
-Message-ID: <20260706223343.988769-35-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v3 31/91] tests/tcg/multiarch: declare user tests
+Date: Mon,  6 Jul 2026 15:32:43 -0700
+Message-ID: <20260706223343.988769-32-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: JTdMY6G8u8GQCdtfr-JTHRdiTyXT1Xjq
-X-Proofpoint-ORIG-GUID: JTdMY6G8u8GQCdtfr-JTHRdiTyXT1Xjq
-X-Authority-Analysis: v=2.4 cv=CPYamxrD c=1 sm=1 tr=0 ts=6a4c2d85 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-GUID: TAsg0eJAwkudbqpV5MIfMer3O-UwgIcE
+X-Proofpoint-ORIG-GUID: TAsg0eJAwkudbqpV5MIfMer3O-UwgIcE
+X-Authority-Analysis: v=2.4 cv=CPYamxrD c=1 sm=1 tr=0 ts=6a4c2d81 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
- a=g1GwtVotfdDKb34erH4A:9 a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDIyNyBTYWx0ZWRfX+yQjUVFO/Yky
- gOB70tiQs7DaZskF4L8HsyZIOLuswXAvNfe2EjZOuCePX4/B1MDUt+BnHHBYO16U/NIHOoeacWU
- jeBn7HBVbcbjiYAOnynI4WBo1n+l0NQ/0ibmIJOhYroHCbF9fs3/sOwcYUNcRKfQHILBrOIbs7f
- OepjfNIKgLU16SZR/5NSK60hnsZ6op1ZTZiVMNEwLAKQQeE6F3yNnQ3JGCNGq2huNmUrFt9JKdT
- v+szog9Qro2WHokzeKnG3ThXpjuAU9RXR+U0/ROzZum3EL6UOBSwxCKYL2f8i/w03ZHGOx1Kxnk
- vv7VXxTcxuggAvL0D2PHieYNT+05soEPbFFBJZxWoQaV5pvEeXx8U+6yv8pbMmRzYEFIQ4yvBEh
- sbIpnpEnI6Z6VutC9cmOEfhtStg0w7rVeu7pmOZ+aGWojJj7oDxMWQZ66VSygT/KBCLGOT0Wxxi
- 3vIglOskdLKuz6rV32w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDIyNyBTYWx0ZWRfX6VHP3RqUYpGE
- VDulUcLtJWbucadyRt80JaS1GQl1fsjdIANS9f1Yied8l7f/a6tSKOfGPdHTQuXbeaLRUsWGMx/
- uOvXmCURkQBQ4AHmdqStwkV8R3OEp98=
+ a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=mDV3o1hIAAAA:8
+ a=EUspDBNiAAAA:8 a=uKfjV-O4eVn7gy5AOlIA:9 a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDIyNyBTYWx0ZWRfX2Xh6dqWN2cxx
+ NFpn6vxbYAwdGNdjxSeaBt0pXU8XQYXLVxPnmqHo6SskiolLmcLJZx6CNJrUjdPJeB5AeV3drjh
+ 6mbIrnxiizQhwJtkFrBS0ZF1aZdzqUJcRqD9xZULuNnRAIsffW3F3WFpxH/DIYsNj9vS5R/EupS
+ r6Uk8OYkg6ulg7GTy7xRBg7PsQZzy+pn3PQUW+UUkt8mActJtwYEU8px48t2Q7gskyPVAqL0WMJ
+ ig4Oc2BSP1O99xB2hLAIE8RFaznPAHEcBBZdmM9YCH69Pq4eix3AcIv19Gh2lTy3XKoTA4dNTJd
+ yzG5se5xEZOMJOzT+4YPlp+Tbw5iD+vuvv9oebakv5gWajE1z+xp1EMGHL6rpWlhjOlWtMNc8K8
+ nwxXmis9PaOXjbd7L3ymLyS2D5BHYffSXPLtZywlz7Iv2nXZw9EXRSh2mL5/6u4EjUf3r2xJ1hy
+ EnE6ZEb+XI54whjQwlQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDIyNyBTYWx0ZWRfX1clOePUzuP2e
+ IJOO6ilRzRHUKWFtXzAEjbylHuPRdO6mCPIIwzoDdBndNQBgwlKmB+jxi6kdBxvE9HakqJ+9YFa
+ mBrjNjNbveA1YJTQ/E53M3je2yLO0B0=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-06_03,2026-07-06_02,2025-10-01_01
@@ -161,226 +161,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+At this point, those tests are just declared and not used yet.
+
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/aarch64/meson.build | 193 ++++++++++++++++++++++++++++++++++
- tests/tcg/meson.build         |   3 +
- 2 files changed, 196 insertions(+)
- create mode 100644 tests/tcg/aarch64/meson.build
+ tests/tcg/meson.build           |   7 ++
+ tests/tcg/multiarch/meson.build | 147 ++++++++++++++++++++++++++++++++
+ tests/tcg/multiarch/sha1.ref    |   1 +
+ 3 files changed, 155 insertions(+)
+ create mode 100644 tests/tcg/multiarch/meson.build
+ create mode 100644 tests/tcg/multiarch/sha1.ref
 
-diff --git a/tests/tcg/aarch64/meson.build b/tests/tcg/aarch64/meson.build
-new file mode 100644
-index 00000000000..0fa49959473
---- /dev/null
-+++ b/tests/tcg/aarch64/meson.build
-@@ -0,0 +1,193 @@
-+cc = 'aarch64-linux-gnu-gcc'
-+cc_dockerfile = 'debian-all-test-cross'
-+cc_docker_arch = ['aarch64', 'x86_64']
-+
-+cc_feat_cflags = {
-+  'aes': '-march=armv8-a+aes',
-+  'sve': '-march=armv8.1-a+sve',
-+  'sve2': '-march=armv8.1-a+sve2',
-+  'v8.2': '-march=armv8.2-a',
-+  'v8.3': '-march=armv8.3-a',
-+  'v8.5': '-march=armv8.5-a',
-+  'bti':  '-mbranch-protection=standard',
-+  'mte':  '-march=armv8.5-a+memtag',
-+  'sme':  '-Wa,-march=armv9-a+sme',
-+}
-+
-+gdb_feat_version = {
-+  'sme-tiles': '14.1',
-+  'mte': '15.1',
-+  'mte-baremetal': '16.0',
-+}
-+
-+tests = []
-+
-+# Multi arch tests
-+tests += tcg_tests['multiarch-linux-user']['tests']
-+
-+# Base architecture tests
-+tests += {
-+  '../arm/fcvt.c': {'cflags': '-lm', 'expected_output': 'fcvt.ref'},
-+  'pcalign-a64.c': {},
-+  'lse2-fault.c': {},
-+  'test-2248.c': {},
-+  'test-2150.c': {},
-+}
-+
-+tests += {'dcpop.c': {'cc_feat': 'v8.2'}}
-+tests += {'dcpodp.c': {'cc_feat': 'v8.5'}}
-+
-+# Pauth Tests
-+cpu_max = ['-cpu', 'max']
-+cpu_neoverse = ['-cpu', 'neoverse-v1']
-+tests += {
-+  'test-2375.c': {'cc_feat': 'v8.3'},
-+  'pauth-1.c': {'cc_feat': 'v8.3', 'qemu_args': cpu_max},
-+  'pauth-2.c': {'cc_feat': 'v8.3', 'qemu_args': cpu_max},
-+  # Choose a cpu with FEAT_Pauth but without FEAT_FPAC for pauth-[45].
-+  'pauth-4.c': {'cc_feat': 'v8.3', 'qemu_args': cpu_neoverse},
-+  'pauth-5.c': {'cc_feat': 'v8.3', 'qemu_args': cpu_neoverse},
-+}
-+
-+# BTI Tests
-+# bti-1 tests the elf notes, so we require special compiler support.
-+f = ['-fno-stack-protector', '-nostdlib']
-+tests += {
-+  'bti-1.c': {'cc_feat': 'bti', 'cflags': f},
-+  'bti-3.c': {'cc_feat': 'bti', 'cflags': f},
-+}
-+# bti-2 tests PROT_BTI, so no special compiler support required.
-+tests += {'bti-2.c': {}}
-+
-+# MTE Tests
-+tests += {
-+  'mte-1.c': {'cc_feat': 'mte'},
-+  'mte-2.c': {'cc_feat': 'mte'},
-+  'mte-3.c': {'cc_feat': 'mte'},
-+  'mte-4.c': {'cc_feat': 'mte'},
-+  'mte-5.c': {'cc_feat': 'mte'},
-+  'mte-6.c': {'cc_feat': 'mte'},
-+  'mte-7.c': {'cc_feat': 'mte'},
-+  'mte-8.c': {'cc_feat': 'mte'},
-+  'mte-9.c': {'cc_feat': 'mte'},
-+  'mte-10.c': {'cc_feat': 'mte'},
-+}
-+tests += {
-+  'mte-8.c': {
-+    'gdb_test': ['--test', files('gdbstub/test-mte.py'), '--', '--mode=user'],
-+    'gdb_feat': 'mte',
-+  }
-+}
-+
-+# SME Tests
-+tests += {
-+  'sme-outprod1.c': {'cc_feat': 'sme'},
-+  'sme-smopa-1.c': {'cc_feat': 'sme'},
-+  'sme-smopa-2.c': {'cc_feat': 'sme'},
-+  'sme-fmopa-1.c': {'cc_feat': 'sme'},
-+  'sme-fmopa-2.c': {'cc_feat': 'sme'},
-+  'sme-fmopa-3.c': {'cc_feat': 'sme'},
-+}
-+sysregs_sme = 'sysregs-sme'
-+tests += {
-+  'sysregs.c': {
-+    'exe_name': sysregs_sme,
-+    'cc_feat': 'sme',
-+    'gdb_test': ['--test', files('gdbstub/test-sme.py'), '--',
-+                 'test_sme', '--gdb_basic_za_test'],
-+  }
-+}
-+tests += {
-+  'sysregs.c': {
-+    'test_name': 'sysregs-sme-tile-slice',
-+    'exe_name': sysregs_sme,
-+    'gdb_test': ['--test', files('gdbstub/test-sme.py'), '--',
-+                 'test_sme', '--gdb_tile_slice_test'],
-+    'gdb_feat': 'sme-tiles',
-+  }
-+}
-+tests += {
-+  'sysregs.c': {
-+    'test_name': 'sysregs-sme2',
-+    'exe_name': sysregs_sme,
-+    'gdb_test': ['--test', files('gdbstub/test-sme2.py')],
-+  }
-+}
-+
-+# GCS Tests
-+tests += {
-+  'gcsstr.c': {},
-+  'gcspushm.c': {},
-+  'gcsss.c': {},
-+}
-+
-+# System Registers Tests
-+tests += {'sysregs.c': {}}
-+
-+# Crypto Tests
-+tests += {'test-aes.c': {'cc_feat': 'aes'}}
-+
-+# Vector SHA1
-+# Work around compiler false-positive warning, as we do for the 'sha1' test
-+tests += {'../multiarch/sha1.c': {
-+            'exe_name': 'sha1-vector',
-+            'cflags': ['-O3', '-Wno-stringop-overread'],
-+            'expected_output': '../multiarch/sha1.ref',
-+         }}
-+
-+# Vector versions of sha512 (-O3 triggers vectorisation)
-+tests += {'../multiarch/sha512.c': {
-+            'exe_name': 'sha512-vector',
-+            'cflags': ['-O3'],
-+         }}
-+
-+# SVE Tests
-+tests += {
-+  'sve-ioctls.c': {'cc_feat': 'sve'},
-+  '../multiarch/sha512.c': {
-+     'exe_name': 'sha512-sve',
-+     'cc_feat': 'sve',
-+  },
-+  'sve-str.c': {'cc_feat': 'sve', 'cflags': ['-O1']},
-+}
-+tests += {
-+  'sysregs.c': {
-+    'exe_name': 'sysregs-sve',
-+    'cc_feat': 'sve',
-+    'gdb_test': ['--test', files('gdbstub/test-sve.py')],
-+  },
-+  'sve-ioctls.c': {
-+    'gdb_test': ['--test', files('gdbstub/test-sve-ioctl.py')],
-+  },
-+}
-+
-+# SVE2 Tests
-+tests += {'test-826.c': {'cc_feat': 'sve2'}}
-+
-+# Semihosting tests
-+# Add -I path for semicall.h
-+semihosting_cflags = ['-I', meson.current_source_dir()]
-+
-+tests += {
-+  '../multiarch/arm-compat-semi/semiconsole.c': {
-+    'cflags': semihosting_cflags,
-+    'wrapper': [prog_run_with_input, 'X'],
-+  },
-+  '../multiarch/arm-compat-semi/semihosting.c': {'cflags': semihosting_cflags},
-+}
-+
-+if 'qemu-aarch64' in emulators
-+  tcg_tests += {
-+    'aarch64-linux-user': {
-+      'cc': cc,
-+      'cc_dockerfile': cc_dockerfile,
-+      'cc_docker_arch': cc_docker_arch,
-+      'cc_feat_cflags': cc_feat_cflags,
-+      'folder': 'aarch64',
-+      'gdb_arch': 'aarch64',
-+      'gdb_feat_version': gdb_feat_version,
-+      'qemu': emulators['qemu-aarch64'],
-+      'tests': tests,
-+    }
-+  }
-+endif
 diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index ea81426f905..50ec5af4906 100644
+index 9fa97627eec..0dd0efb92dc 100644
 --- a/tests/tcg/meson.build
 +++ b/tests/tcg/meson.build
-@@ -133,6 +133,9 @@ foreach target: ['multiarch-linux-user', 'multiarch-softmmu']
-   tcg_tests += {target: {'tests': tests + plugin_tests}}
- endforeach
+@@ -85,11 +85,18 @@ docker_supported = run_command(docker_wrapper, 'probe',
+ # plugins come first, as we need to build the list
+ test_plugins = {}
+ subdir('plugins')
++# multiarch comes second, so it can be referenced by other arch after
++subdir('multiarch')
  
-+# Now let's go through all architectures
-+subdir('aarch64')
-+
  image_targets = {}
  exe_targets = []
  # Finally, we can create all test executables and test targets
+ foreach target, plan: tcg_tests
++  if target.startswith('multiarch-')
++    # those tests are included by architecture files if needed
++    continue
++  endif
++
+   # Detect duplicated executables/tests, and report an error to force user to
+   # choose how to deal with it.
+   built_tests = {}
+diff --git a/tests/tcg/multiarch/meson.build b/tests/tcg/multiarch/meson.build
+new file mode 100644
+index 00000000000..99af41b3fcc
+--- /dev/null
++++ b/tests/tcg/multiarch/meson.build
+@@ -0,0 +1,147 @@
++tests = []
++
++float_helpers = files('libs/float_helpers.c')[0]
++float_cflags = [float_helpers, '-lm']
++
++# GCC versions 12/13/14/15 at least incorrectly complain about
++# "'SHA1Transform' reading 64 bytes from a region of size 0"; see the gcc bug
++# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106709
++# Since this is just a standard piece of library code we've borrowed for a
++# TCG test case, suppress the warning rather than trying to modify the
++# code to work around the compiler.
++sha1_cflags = ['-Wno-stringop-overread', '-Wno-unknown-warning-option']
++
++# multiarch src path are written to be included from any other arch folder,
++# so all arch can directly add those tests without any modification.
++multiarch = meson.current_source_dir()
++
++tests += {
++  multiarch/'catch-syscalls.c': {},
++  multiarch/'float_convd.c': {
++    'cflags': float_cflags,
++    'expected_output': 'float_convd.ref',
++  },
++  multiarch/'float_convs.c': {
++    'cflags': float_cflags,
++    'expected_output': 'float_convs.ref',
++  },
++  multiarch/'float_madds.c': {
++    'cflags': float_cflags,
++    'expected_output': 'float_madds.ref',
++  },
++  multiarch/'fnmsub.c': {'cflags': ['-lm']},
++  multiarch/'follow-fork-mode.c': {},
++  multiarch/'late-attach.c': {},
++  multiarch/'munmap-pthread.c': {'cflags': ['-lpthread']},
++  multiarch/'overflow.c': {},
++  multiarch/'prot-none.c': {},
++  multiarch/'segfault.c': {},
++  multiarch/'sha1.c': {
++    'cflags': sha1_cflags,
++    'expected_output': multiarch/'sha1.ref'
++  },
++  multiarch/'sha512.c': {},
++  multiarch/'sigbus.c': {},
++  multiarch/'signals.c': {'cflags': ['-lrt', '-lpthread']},
++  multiarch/'sigreturn-sigmask.c': {'cflags': ['-lpthread']},
++  multiarch/'tb-link.c': {'cflags': ['-lpthread']},
++  multiarch/'test-mmap.c': {},
++  multiarch/'testthread.c': {'cflags': ['-lpthread']},
++  multiarch/'threadcount.c': {'cflags': ['-lpthread']},
++}
++
++# Linux tests
++tests += {
++  multiarch/'linux/linux-madvise.c': {},
++  multiarch/'linux/linux-shmat-maps.c': {},
++  multiarch/'linux/linux-shmat-null.c': {},
++  multiarch/'linux/linux-sigrtminmax.c': {},
++  multiarch/'linux/linux-test.c': {},
++  multiarch/'linux/test-vma.c': {},
++}
++
++# GDB tests
++tests += {
++  multiarch/'sha1.c': {
++    'gdb_test': ['--test', files('gdbstub/sha1.py')],
++  },
++}
++tests += {
++  multiarch/'sha1.c': {
++    'test_name': 'qxfer-auxv-read',
++    'gdb_test': ['--test', files('gdbstub/test-qxfer-auxv-read.py')],
++  },
++}
++tests += {
++  multiarch/'sha1.c': {
++    'test_name': 'proc-mappings',
++    'gdb_test': ['--test', files('gdbstub/test-proc-mappings.py')],
++  },
++}
++tests += {
++  multiarch/'segfault.c': {
++    'test_name': 'qxfer-siginfo-read',
++    'gdb_test': ['--test', files('gdbstub/test-qxfer-siginfo-read.py')],
++  },
++  multiarch/'testthread.c': {
++    'test_name': 'thread-breakpoint',
++    'gdb_test': ['--test', files('gdbstub/test-thread-breakpoint.py')],
++  },
++  multiarch/'sha512.c': {
++    'test_name': 'registers',
++    'gdb_test': ['--test', files('gdbstub/registers.py')],
++  },
++  multiarch/'prot-none.c': {
++    'gdb_test': ['--test', files('gdbstub/prot-none.py')],
++    'env_var': 'PROT_NONE_PY=1',
++  },
++  multiarch/'catch-syscalls.c': {
++    'gdb_test': ['--test', files('gdbstub/catch-syscalls.py')],
++  },
++  multiarch/'late-attach.c': {
++    'gdb_test': ['--no-suspend', '--test', files('gdbstub/late-attach.py')],
++    'env_var': 'LATE_ATTACH_PY=1',
++  },
++}
++
++tests += {
++  multiarch/'follow-fork-mode.c': {
++    'test_name': 'follow-fork-mode-child',
++    'gdb_test': ['--test', files('gdbstub/follow-fork-mode-child.py')],
++  },
++}
++tests += {
++  multiarch/'follow-fork-mode.c': {
++    'test_name': 'follow-fork-mode-parent',
++    'gdb_test': ['--test', files('gdbstub/follow-fork-mode-parent.py')],
++  },
++}
++
++# Specific plugin tests
++# Test plugin memory access instrumentation
++tests += {
++  multiarch/'plugin/test-plugin-mem-access.c': {
++    'plugin_test': {
++      'plugin': 'mem',
++      'args': ['print-accesses=true']
++    },
++    'wrapper': [prog_check_plugin_output,
++                find_program('plugin/regex-compare.sh')],
++  },
++  multiarch/'plugin/test-plugin-set-pc.c': {
++    'plugin_test': {
++      'plugin': 'setpc',
++    }
++  },
++  multiarch/'test-plugin-syscall-filter.c': {
++    'plugin_test': {
++      'plugin': 'syscall',
++    }
++  },
++}
++
++tcg_tests += {
++  'multiarch-linux-user': {
++    'tests': tests
++  }
++}
+diff --git a/tests/tcg/multiarch/sha1.ref b/tests/tcg/multiarch/sha1.ref
+new file mode 100644
+index 00000000000..4a8a114634f
+--- /dev/null
++++ b/tests/tcg/multiarch/sha1.ref
+@@ -0,0 +1 @@
++SHA1=15dd99a1991e0b3826fede3deffc1feba42278e6
 -- 
 2.47.3
 
