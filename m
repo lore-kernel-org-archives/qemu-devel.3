@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB5D1C43602
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD786C43458
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:38:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggiI-0006zs-QT; Mon, 06 Jul 2026 06:38:10 -0400
+	id 1wggiD-0006zm-Dz; Mon, 06 Jul 2026 06:38:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggi7-0006xC-Ld
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:00 -0400
-Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
+ id 1wggi8-0006xd-W8
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:01 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggi5-0003EV-M4
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:37:59 -0400
-Received: by mail-wm1-x341.google.com with SMTP id
- 5b1f17b1804b1-493c83474ddso26354035e9.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:37:56 -0700 (PDT)
+ id 1wggi6-0003F5-4K
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:00 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-493ae59eca6so20656195e9.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:37:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783334275; x=1783939075; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=Uuv/Xq1+VXgJvtaRfjzAEoh8NWvGfR0T7UoX7olQwLs=;
- b=KQzqjkbFQBmgjLtMVNnMAUXJRpu+wtdh86yEbNn9CSIDe35ycqSvudBErZw9pRrJy0
- xyheE7DwJxzPuQM4PpzoEUtbICDUhZ7ItOdQJJ3bM3IuZgyRos7jiR2eSM96Mda3Xvdm
- QLPAUSHUeXWPNyWiHsPLRzlZ61qloR3DUE07qbxoUjHi+W4BlII5IA2bC4H2d/rIItu/
- Yi2Em9QrL9Bq0LBBkD6639DCTO9otfdyXLDOYQgwH6D8N1mQI/3RWdWOwTTPuvwQpdN/
- 0Cd3tVeGCXJ03CTmW+5UkBrNgEmb4LSyo7Yq5MHEjGd8O3ouY98/1SELeFNeZ+VRE41K
- oLlQ==
+ d=linaro.org; s=google; t=1783334276; x=1783939076; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=+97oten0hNNuTAbNo9fRI3B+bvLWCRDF1yKEOcFHQOk=;
+ b=hdjYnLEUCClZXmkMa/0N89Fsg/JbPb7SkcTCZrcrqRW8+yF5tLBmTRdNm7Izjeul5Y
+ 9JEAGHSJMczC0y9KEzbhLdKHO/M2bLndK7q5TbTIkg0u1kJMA+xHqac/ue/KkixQU0Hp
+ 0apIBSCWxX1iusOehkhxBHvuaD1XEQh5OJocBqaDcSmESDMDpkCYHEvOXZxjmZeswtMN
+ t3zyUpFOYuhDlKooI4fO2AqcACuwANpTDshwVWBhgttu/M7kvcrOGynfp4mC7Du33ia+
+ diB/XweUUTz26MI0YH0Rv5ARDk8d4o6G7xHmTc6nE/l2elFD75mDbGtOpKgE0nEW4q/H
+ bRsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783334275; x=1783939075;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Uuv/Xq1+VXgJvtaRfjzAEoh8NWvGfR0T7UoX7olQwLs=;
- b=JectXZf1sjNsQAYmJZ1BKopq2VjTchXPyzdV+0kLVQ9L6D3oT7Bp1JlSjGEZFjWrUI
- OfK4ryhcZYShHsYvwzojMhKk/56B7gHJ5FbSUPYesSDlxWatG4EvZ8KvfOx+TG1T5/2c
- FxTaH4tWhluzg5v0uzJ0nWTK/MvloF4O+lArGiF3PB0mWvBmKoEComHwtwwG6FdirIFR
- GIXQM/mHE7hEFYu2gZTDa4ASm34dy2py4rd2IcXdC4A6N1k4K5ESUy6lXOEYYtHjmqms
- M9YkHPIJFCGtQr3C5JzBGgxfm0kQEO7OUH7ZCImkCHqBzMAxnPGUpxmR1Szev0GAKGD2
- pLzw==
-X-Gm-Message-State: AOJu0Yw4ofwm6Twu/dHWq8cn6yg8Ov+ywHV8kGyAeSgWeLuOHlu1Pi7+
- oyaAZtNCr0HATwak1EOJ2Na7G7phC/OmzhysAypqHVCxpbgEtqIRPgBrvOysaoaPF9hmN3fKRJo
- I/TPBz8VyM+VK
-X-Gm-Gg: AfdE7clmBht1UitDkNuMKb+2yamQV3RLAaz9u/MUYZ2qTx0YChEVVrFt600kWN0pgr9
- uzkt5vWHocqL7SU2ytb6QzN/L5tCTqQ/62eipRLf6ayUsW5i44kCTzVTO268ivOVda2nYebJWCh
- HuRlqJGNd4NAhIsdRe6gTN70EhueX9vrC8IcWPgG7poPGxsGJzIUqlPT+ZL1G7d5dmHwoUy4zjd
- 8K/1uOdBHB37DaZsyUfKqtsiAoI2ANRDSvE3ueHEDBcYOQ3UPLtAaExIKl8R1ut5GUhZJtRKHti
- xInh2ugopIx7KBou9/ebWHYdg0kfWIq43EkpzkCMzzZIR3I3vOa5TSh7BeoT7j0F3+yQ80iZLK0
- a1OD09gn+zmEZAfztTYGN5K1Gw/c739wN5obXaoz65h9LlocfX6j0aRNLAD2SN2C1FzsvW75k/t
- jFAxQjt7X4eqWrLs6CmDoisGTIP2/5iMlanTUTD2Sdh46hM9Es5zmhE8nPeFootaqBtDDYkHHUK
- rOoKFlLPvJ9B5zDwqpvcw==
-X-Received: by 2002:a05:600c:6792:b0:493:b4cf:d37f with SMTP id
- 5b1f17b1804b1-493d11d7dd2mr109868445e9.16.1783334274725; 
- Mon, 06 Jul 2026 03:37:54 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783334276; x=1783939076;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=+97oten0hNNuTAbNo9fRI3B+bvLWCRDF1yKEOcFHQOk=;
+ b=m7ztgYEMzZm0a8eQR7RQzSdAH4lhn4V62EMsfIk57v6ekjc8bqmVYvrJa/iDdWlM2R
+ E5nFS75wKFxdp+53BwVEOfxnkPpKgeCjE7qc75DgMac6lJHHxududjb8vnLDfVQR42Au
+ NO130QuEI6QWlaxwiN+9DyH/mm6LJFgSHPNBgM18t1iVFkyJuavKt5jE6r1188c72eQt
+ 9fBdzlnF10IjpT0IDcHHsVNUU4B27+qDwNTxEqyfk+LD7pUz8mtg11im4W96jSLtnO8j
+ qr49z+IjDlpGEXAt7hTtYdbKYiJhopvUZ/nQrLQHvh56tK1LAFR9F5etKDr0/YaD2z4E
+ zFXQ==
+X-Gm-Message-State: AOJu0YwM+5+tW8/3oC1XrE2cA1ILGnbztkLb0cPWivGMNp7I7D4+yPf5
+ jY0DXDp1q3k7q6wY+eKxtumUWiJBZptWQou29r3Q5chl5QgNCj/+0MvP1/YbV9XOimZV32dkxJC
+ wYrAznc4tjg==
+X-Gm-Gg: AfdE7clCCIILC12Gp5vhm4DgYp/RN/DAkkZ8N0RmDOsyi5CcWruLHlPBgmkK12fQuY8
+ 2CxdLNOtIumEJNd9HFJwmhvd+Nq7HVgQAZ1e5KJP1XNRZHekPXzc34TFuP1TUCu0VP4mUB0F66W
+ WYK0VzsptZTPm2dvNygFvri5NxyXoIPgpTn5aWgkv504T1gv16UvqkYZ5qgbNjKoKT82rAW16IB
+ FT+EMRmbmr/f7SiziCArlIIAYZ9P0K4Z6vOnm5W1oSC//V1r1fubbxJy4Yf8egPMRxpU4fVLaAD
+ QDDl8pOZn1FjLvH/69FREPcV4V4ns77G80aHqDdlpxe7y8JvmyiDZ6AER0kQG7/rn11kw7zEjd4
+ 7OVFlw7+l3i8HucQKXBtxPXYWMNTRGM04XJzuKIjlRs1s0jaNcBgPId0iSf7A0clK4wUHzxphVp
+ 4SdLaKUM2060dhkjlcuxik37qXuo4ekbos5xZtS8NoGpX5S2m05tYO8jeSoEo/NxjyLw52JVRD1
+ c1lgX7y139uOacio5cw5Q==
+X-Received: by 2002:a05:600c:8b76:b0:493:d21f:8f98 with SMTP id
+ 5b1f17b1804b1-493d21f9075mr97100765e9.36.1783334276480; 
+ Mon, 06 Jul 2026 03:37:56 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.37.53
+ 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.37.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 03:37:54 -0700 (PDT)
+ Mon, 06 Jul 2026 03:37:55 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/49] target-arm queue
-Date: Mon,  6 Jul 2026 11:37:03 +0100
-Message-ID: <20260706103752.320511-1-peter.maydell@linaro.org>
+Subject: [PULL 02/49] hw/arm/smmuv3-accel: Fix veventq read returning true on
+ EAGAIN/EINTR
+Date: Mon,  6 Jul 2026 11:37:05 +0100
+Message-ID: <20260706103752.320511-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260706103752.320511-1-peter.maydell@linaro.org>
+References: <20260706103752.320511-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::341;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x341.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,175 +102,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; here's hopefully the last pullreq for arm before softfreeze.
-There's a mix here of bug fixes of various kinds plus support
-for emulation of a few new CPU features.
+From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-thanks
--- PMM
+smmuv3_accel_event_read_validate() returns true for EAGAIN/EINTR, but
+no data has been read into the buffer. Callers treat true as success and
+proceed to use the uninitialized buffer.
 
+Change the return type to int with three distinct states:
+  0  — success, buf is populated and valid
+  1  — EAGAIN/EINTR, no data available
+ -1  — error, @errp set
 
-The following changes since commit 4ee536fac748b70e6f3d8568ddd20cfbaa9cf7bf:
+Resolves: Coverity CID 1660057
+Fixes: d4aea0f75b ("hw/arm/smmuv3-accel: Introduce common helper for veventq read")
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Message-id: 20260625122843.107584-1-skolothumtho@nvidia.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/arm/smmuv3-accel-stubs.c |  6 +++---
+ hw/arm/smmuv3-accel.c       | 30 ++++++++++++++++++++----------
+ hw/arm/smmuv3-accel.h       |  4 ++--
+ hw/arm/tegra241-cmdqv.c     | 11 ++++++++---
+ 4 files changed, 33 insertions(+), 18 deletions(-)
 
-  Merge tag 'firmware-20260704-pull-request' of https://gitlab.com/kraxel/qemu into staging (2026-07-05 08:42:47 +0200)
+diff --git a/hw/arm/smmuv3-accel-stubs.c b/hw/arm/smmuv3-accel-stubs.c
+index 147ae06163..b8dd7e7b89 100644
+--- a/hw/arm/smmuv3-accel-stubs.c
++++ b/hw/arm/smmuv3-accel-stubs.c
+@@ -47,10 +47,10 @@ bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp)
+     return true;
+ }
+ 
+-bool smmuv3_accel_event_read_validate(IOMMUFDVeventq *veventq, uint32_t type,
+-                                      void *buf, size_t size, Error **errp)
++int smmuv3_accel_event_read_validate(IOMMUFDVeventq *veventq, uint32_t type,
++                                     void *buf, size_t size, Error **errp)
+ {
+-    return true;
++    return 0;
+ }
+ 
+ 
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+index 5e83dbd8ee..91aca1aa14 100644
+--- a/hw/arm/smmuv3-accel.c
++++ b/hw/arm/smmuv3-accel.c
+@@ -441,8 +441,13 @@ bool smmuv3_accel_issue_inv_cmd(SMMUv3State *bs, void *cmd, SMMUDevice *sdev,
+                    sizeof(Cmd), &entry_num, cmd, errp);
+ }
+ 
+-bool smmuv3_accel_event_read_validate(IOMMUFDVeventq *veventq, uint32_t type,
+-                                      void *buf, size_t size, Error **errp)
++/*
++ * Returns  0 on success (buf is populated and valid).
++ * Returns  1 if the read should be retried (EAGAIN/EINTR).
++ * Returns -1 on error with @errp set.
++ */
++int smmuv3_accel_event_read_validate(IOMMUFDVeventq *veventq, uint32_t type,
++                                     void *buf, size_t size, Error **errp)
+ {
+     uint32_t last_seq = veventq->last_event_seq;
+     uint32_t id = veventq->veventq_id;
+@@ -452,22 +457,22 @@ bool smmuv3_accel_event_read_validate(IOMMUFDVeventq *veventq, uint32_t type,
+     bytes = read(veventq->veventq_fd, buf, size);
+     if (bytes <= 0) {
+         if (errno == EAGAIN || errno == EINTR) {
+-            return true;
++            return 1;
+         }
+         error_setg(errp, "vEVENTQ(type %u id %u): read failed (%m)", type, id);
+-        return false;
++        return -1;
+     }
+     hdr = (struct iommufd_vevent_header *)buf;
+     if (bytes == sizeof(*hdr) &&
+         (hdr->flags & IOMMU_VEVENTQ_FLAG_LOST_EVENTS)) {
+         error_setg(errp, "vEVENTQ(type %u id %u): overflowed", type, id);
+         veventq->event_start = false;
+-        return false;
++        return -1;
+     }
+     if (bytes < size) {
+         error_setg(errp, "vEVENTQ(type %u id %u): short read(%zd/%zd bytes)",
+                           type, id, bytes, size);
+-        return false;
++        return -1;
+     }
+     /* Check sequence in hdr for lost events if any */
+     if (veventq->event_start && (hdr->sequence - last_seq != 1)) {
+@@ -476,7 +481,7 @@ bool smmuv3_accel_event_read_validate(IOMMUFDVeventq *veventq, uint32_t type,
+     }
+     veventq->last_event_seq = hdr->sequence;
+     veventq->event_start = true;
+-    return true;
++    return 0;
+ }
+ 
+ static void smmuv3_accel_event_read(void *opaque)
+@@ -488,13 +493,18 @@ static void smmuv3_accel_event_read(void *opaque)
+         struct iommu_vevent_arm_smmuv3 vevent;
+     } buf;
+     Error *local_err = NULL;
++    int ret;
+ 
+-    if (!smmuv3_accel_event_read_validate(veventq,
+-                                          IOMMU_VEVENTQ_TYPE_ARM_SMMUV3, &buf,
+-                                          sizeof(buf), &local_err)) {
++    ret = smmuv3_accel_event_read_validate(veventq,
++                                           IOMMU_VEVENTQ_TYPE_ARM_SMMUV3, &buf,
++                                           sizeof(buf), &local_err);
++    if (ret < 0) {
+         warn_report_err_once(local_err);
+         return;
+     }
++    if (ret > 0) {
++        return; /* EAGAIN/EINTR */
++    }
+     smmuv3_propagate_event(s, (Evt *)&buf.vevent);
+ }
+ 
+diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+index dd755c394d..ea11d513cc 100644
+--- a/hw/arm/smmuv3-accel.h
++++ b/hw/arm/smmuv3-accel.h
+@@ -97,8 +97,8 @@ bool smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
+                                 Error **errp);
+ void smmuv3_accel_idr_override(SMMUv3State *s);
+ bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp);
+-bool smmuv3_accel_event_read_validate(IOMMUFDVeventq *veventq, uint32_t type,
+-                                      void *buf, size_t size, Error **errp);
++int smmuv3_accel_event_read_validate(IOMMUFDVeventq *veventq, uint32_t type,
++                                     void *buf, size_t size, Error **errp);
+ void smmuv3_accel_reset(SMMUv3State *s);
+ SMMUv3AccelCmdqvType smmuv3_accel_cmdqv_type(Object *obj);
+ 
+diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+index 29c488e0e4..7223aa9d1d 100644
+--- a/hw/arm/tegra241-cmdqv.c
++++ b/hw/arm/tegra241-cmdqv.c
+@@ -841,13 +841,18 @@ static void tegra241_cmdqv_event_read(void *opaque)
+         struct iommu_vevent_tegra241_cmdqv vevent;
+     } buf;
+     Error *local_err = NULL;
++    int ret;
+ 
+-    if (!smmuv3_accel_event_read_validate(veventq,
+-                                          IOMMU_VEVENTQ_TYPE_TEGRA241_CMDQV,
+-                                          &buf, sizeof(buf), &local_err)) {
++    ret = smmuv3_accel_event_read_validate(veventq,
++                                           IOMMU_VEVENTQ_TYPE_TEGRA241_CMDQV,
++                                           &buf, sizeof(buf), &local_err);
++    if (ret < 0) {
+         warn_report_err_once(local_err);
+         return;
+     }
++    if (ret > 0) {
++        return; /* EAGAIN/EINTR */
++    }
+ 
+     if (buf.vevent.lvcmdq_err_map[0] || buf.vevent.lvcmdq_err_map[1]) {
+         cmdqv->vintf_cmdq_err_map[0] =
+-- 
+2.43.0
 
-are available in the Git repository at:
-
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260706
-
-for you to fetch changes up to 3455eac92d3e4b70bc222d98268f092efd4f1934:
-
-  target/arm: Define fields for NSACR (2026-07-06 11:32:01 +0100)
-
-----------------------------------------------------------------
-target-arm queue:
- * hw/net/fsl_etsec: validate FCB offsets in process_tx_fcb()
- * hw/arm/smmuv3-accel: Fix veventq read returning true on EAGAIN/EINTR
- * target/arm: Only evaluate SCR_EL3.PIEN if ARM_FEATURE_EL3 is present
- * hw/arm: use cortex-a9 mpcore base for CBAR on npcm7xx machines
- * docs/specs/fw_cfg: Document all architecture register layouts
- * hw/nvram/fw_cfg: Simplify functions so board models don't have
-   the opportunity to create non-standard fw_cfg register layouts
- * hw/misc: use tracepoints rather than DPRINTF in imx ccm models
- * hw/arm: add support for shim loading
- * docs/system/arm: Document Zynq Buildroot boot
- * target/arm: Report correct syndrome to AArch32 EL2 for trapped
-   Neon/VFP insns
- * target/arm: implement WFET to not be a NOP
- * target/arm: Emulate FEAT_SME_MOP4
- * target/arm: Emulate FEAT_FPRCVT
- * target/arm: Emulate FEAT_SSVE_FEXPA
-
-----------------------------------------------------------------
-Alex Bennée (7):
-      hw/arm: use cortex-a9 mpcore base for CBAR on npcm7xx machines
-      tests/functional: update anacapa-bmc image
-      target/arm: do not clear halting reason in has_work helper
-      target/arm: ensure we create the wxft_timer for all modes
-      target/arm: implements SEV/SEVL for all modes
-      target/arm: enable WFE sleeping for A-profile
-      target/arm: implement WFET
-
-Bin Meng (1):
-      docs/system/arm: Document Zynq Buildroot boot
-
-Feifan Qian (1):
-      hw/net/fsl_etsec: validate FCB offsets in process_tx_fcb()
-
-Gerd Hoffmann (3):
-      hw/nvram: add load_image_to_fw_cfg_file()
-      hw/i386: switch shim loading to load_image_to_fw_cfg_file
-      hw/arm: add support for shim loading
-
-Jason Wright (1):
-      target/arm/hvf: seed NO_RAW ID registers from isar.idregs[] on vCPU init
-
-Jim MacArthur (6):
-      target/arm/tcg: Implement new instructions for FPRCVT
-      target/arm/tcg: Allow vector FP conversions with FPRCVT
-      target/arm/tcg/cpu64.c: Add FEAT_FPRCVT to cpu_max
-      linux-user/aarch64/elfload.c: Add FPRCVT
-      docs/system/arm: Add FEAT_FPRCVT to A-profile support
-      tests/tcg/arm: Tests for new FPRCVT instructions
-
-Oliver Upton (1):
-      target/arm: Only evaluate SCR_EL3.PIEN if ARM_FEATURE_EL3 is present
-
-Peter Maydell (10):
-      docs/specs/fw_cfg: Document all architecture register layouts
-      hw/nvram/fw_cfg: Enforce standard layout for fw_cfg_init_mem_dma()
-      hw/nvram/fw_cfg: Enforce standard layout for x86 fw_cfg I/O ports
-      hw/nvram/fw_cfg: Remove support for I/O port fw_cfg without DMA
-      hw/nvram/fw_cfg: Document fw_cfg_init_mem_nodma()
-      hw/misc/imx31_ccm: Replace DPRINTF with trace events
-      target/arm: Separate out Neon from VFP access checks
-      target/arm: Separate syndrome functions for A32 and A64
-      target/arm: Report correct syndrome to AArch32 EL2 for trapped Neon/VFP insns
-      target/arm: Define fields for NSACR
-
-Richard Henderson (16):
-      target/arm: Implement and enable FEAT_SSVE_FEXPA for -cpu max
-      target/arm: Implement FMOP4 (non-widening) for float32
-      target/arm: Implement FMOP4 (non-widening) for float16
-      target/arm: Implement FMOP4 (non-widening) for float64
-      target/arm: Implement BFMOP4 (non-widening)
-      target/arm: Implement BFMOP4 (widening)
-      target/arm: Implement FMOP4 (widening, 2-way fp16 to fp32)
-      target/arm: Implement FMOP4 (widening, 4-way fp8 to fp32)
-      target/arm: Implement FMOP4A (widening, 2-way, FP8 to FP16)
-      target/arm: Implement SMOP4[AS] (2-way)
-      target/arm: Implement SMOP4[AS] (4-way)
-      target/arm: Implement SUMOP4[AS]
-      target/arm: Implement UMOP4[AS] (2-way)
-      target/arm: Implement UMOP4[AS] (4-way)
-      target/arm: Implement USMOP4[AS]
-      target/arm: Enable FEAT_SME_MOP4 for -cpu max
-
-Shameer Kolothum (1):
-      hw/arm/smmuv3-accel: Fix veventq read returning true on EAGAIN/EINTR
-
-jack wang (2):
-      hw/misc/imx_ccm: Replace DPRINTF with trace events
-      hw/misc/imx25_ccm: Replace DPRINTF with trace events
-
- docs/specs/fw_cfg.rst                       |  28 +-
- docs/system/arm/emulation.rst               |   3 +
- docs/system/arm/xlnx-zynq.rst               |  54 +++-
- hw/arm/boot.c                               |   6 +
- hw/arm/npcm7xx.c                            |   2 +-
- hw/arm/smmuv3-accel-stubs.c                 |   6 +-
- hw/arm/smmuv3-accel.c                       |  30 ++-
- hw/arm/smmuv3-accel.h                       |   4 +-
- hw/arm/tegra241-cmdqv.c                     |  11 +-
- hw/arm/virt.c                               |   2 +-
- hw/i386/fw_cfg.c                            |   3 +-
- hw/i386/microvm.c                           |   3 +-
- hw/i386/pc.c                                |   3 +-
- hw/i386/x86-common.c                        |  15 +-
- hw/loongarch/fw_cfg.c                       |   3 +-
- hw/misc/imx25_ccm.c                         |  32 +--
- hw/misc/imx31_ccm.c                         |  33 +--
- hw/misc/imx_ccm.c                           |  18 +-
- hw/misc/trace-events                        |  23 ++
- hw/net/fsl_etsec/rings.c                    |  27 +-
- hw/nvram/fw_cfg.c                           |  44 +++-
- hw/riscv/virt.c                             |   3 +-
- include/hw/arm/boot.h                       |   1 +
- include/hw/core/sysemu-cpu-ops.h            |   3 +
- include/hw/nvram/fw_cfg.h                   |  73 +++++-
- linux-user/aarch64/elfload.c                |   3 +
- target/arm/cpu-features.h                   |  45 ++++
- target/arm/cpu.c                            |  25 +-
- target/arm/cpu.h                            |   2 +-
- target/arm/helper.c                         |  10 +-
- target/arm/hvf/hvf.c                        |  10 +-
- target/arm/hvf/sysreg.c.inc                 |   2 +-
- target/arm/internals.h                      |   8 +
- target/arm/ptw.c                            |   9 +-
- target/arm/syndrome.h                       |  28 +-
- target/arm/tcg/a32.decode                   |   5 +-
- target/arm/tcg/a64.decode                   |  20 +-
- target/arm/tcg/cpu64.c                      |   3 +
- target/arm/tcg/fp8_helper.c                 |  32 +++
- target/arm/tcg/helper-defs.h                |   3 +-
- target/arm/tcg/helper-fp8-defs.h            |   3 +
- target/arm/tcg/helper-sme-defs.h            |  49 ++++
- target/arm/tcg/op_helper.c                  | 258 ++++++++++++++++--
- target/arm/tcg/sme.decode                   |  45 ++++
- target/arm/tcg/sme_helper.c                 | 390 ++++++++++++++++++++++++++++
- target/arm/tcg/t16.decode                   |   4 +-
- target/arm/tcg/t32.decode                   |   4 +-
- target/arm/tcg/translate-a32.h              |   1 +
- target/arm/tcg/translate-a64.c              | 139 +++++++---
- target/arm/tcg/translate-neon.c             |  74 +++---
- target/arm/tcg/translate-sme.c              | 130 ++++++++++
- target/arm/tcg/translate-sve.c              |  21 +-
- target/arm/tcg/translate-vfp.c              |  60 +++--
- target/arm/tcg/translate.c                  |  34 +--
- target/arm/tcg/translate.h                  |  23 ++
- target/arm/tcg/vec_internal.h               |   8 +
- tests/functional/arm/test_aspeed_anacapa.py |   4 +-
- tests/tcg/aarch64/Makefile.target           |  14 +-
- tests/tcg/arm/fcvt.c                        |   7 +
- 59 files changed, 1576 insertions(+), 327 deletions(-)
 
