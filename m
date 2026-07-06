@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24F37C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FEDCC43602
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 22:40:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgryD-0003Ib-77; Mon, 06 Jul 2026 18:39:21 -0400
+	id 1wgryQ-0005TF-2h; Mon, 06 Jul 2026 18:39:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wgry9-0002q0-QX
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:39:17 -0400
+ id 1wgryO-0005A3-2w
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:39:32 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wgry8-0007Bb-0j
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:39:17 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wgryM-0007Fc-2Y
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:39:31 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666KDvv31566461
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 22:39:05 GMT
+ 666KEIqD1639870
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 22:39:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=NyU/5WffZBE
- NLyPeBzCqpp8oOqt1j8JnR15jOhVyAak=; b=NBcPq4MuSRpzkyKqlXm3g6pMCp7
- Bb5Wknodjmat7rH8upzKBiPqQFzy5TV1R0aKjH1QKYXx3mW1sO9FwSZR1615SLjJ
- RoCIjYEl9LH7BnykSheyiyUI452HcTqoouSREWdU/1gwKjFDXzVJIhsOWu+BQwti
- 9JQ8HIxWdhHV6uEYYMQ3d7O3NweeTYWd/V04R8YkUWhAZIY6fFYQzDedxuwTe1to
- D6WxYjFJ9REFF6UcoPsCsu2jeL9KBhXlKSoRI1bsUHkssZXiCjyZWJ7brhXDAIBM
- nVxdtYKhAyHjEFDchvNpNIhMeswBW3tpWPjxE9iTIXC2CQ20vHnI/baLAqg==
+ :mime-version:references:subject:to; s=qcppdkim1; bh=TKGK/S7SA/w
+ 2mbBIQ2/YAkKqm2FNLQSV8RwZ+9lY2dM=; b=jfuUNWXdqwRyNVjyD/mrfLC65uz
+ Ix+SymNTNksS4hmdEkL9X3HLu1ES/l9x2QobKVorO3nqfLKNUk9FH0n2lYiAXbE5
+ DWFHAxkZih/Y5pWpdcGG950CxnmEZtu8wNcVZUxWQJLQe/GSnamMMWatTPNUe6J2
+ B2cTOpO4H3vLG0YimuMmqiZ+LV9yn5QTWBrOUAeSKq6S+YUSAwdqpfCEuZQbcJtb
+ 6xrnkfd8KBZcf17pCFO2aZ6KwRVkfkwwmcJovZuaBtzVL9q7tjsQjYpaTC155BcR
+ +IvR9VrivaH6Um6wI4ATZRLRecZvR+UAIMJ2aqj2fheK71ky8R9IcFRg2wA==
 Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
  [209.85.215.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f87q7ku22-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8a3r35cb-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 22:39:04 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 22:39:18 +0000 (GMT)
 Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-c9667280edeso4253859a12.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 15:39:04 -0700 (PDT)
+ 41be03b00d2f7-c85798977dcso5206248a12.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 15:39:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783377544; x=1783982344; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783377558; x=1783982358; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NyU/5WffZBENLyPeBzCqpp8oOqt1j8JnR15jOhVyAak=;
- b=hsMVPeo3bbAGZhI0dItbE3YxsH+HZkYDZ0smMWaNl3HrlfvIGAd5ypcgVN02dWPHMR
- r5AzlNBuQr7JzuIHGXsBulLjo0oVkAZTUqySwWUaRWj6wAnGLyHCBsOGBb1JTyT+zfGf
- MkgUgDUsB030FgnP3U9uwr9uql1kH1LTF1b+2nLYSfYr+R/b0oszkvw8i4Fuk4E0awRU
- Tfh4a5KYYRCZ9R+6T3FvZb4S4ZkUOh6E9fMu29oP8/iP5Dd8njRbMSzHGAOszOmsotl1
- je7+He2ptSUIf54P1c8y8AGgxw04TUgNkMxkFXMERtOQwMsOh5TCcUdrWUYCv0Gw3b3y
- Z1Wg==
+ bh=TKGK/S7SA/w2mbBIQ2/YAkKqm2FNLQSV8RwZ+9lY2dM=;
+ b=ZzlkkaUKM2ZJQJP28jNNaIGSj3OYzeCjOztEzi5vyLcmRV0pTXwAHAPY0oInhOZsaT
+ J3BxftgtJFmN0v9C34Oy96T1twLHJp+rGbaz7VpKNUzbGXa6vNiWXbcADPuyNp9GJsXL
+ Zujq5h3u5AA1WrWYQpBIaNERNkQzgYkKNdhC/dQS18ClRNthTuYI25crMKrGuigVCF45
+ 8N5CpMrxZuRnxZQ8aVydiGWJOLgFq+p/h0n6iMdPJ7bcMFza4McNod1OhviP/8fDTRQq
+ 4HD24DPH6XqzLi8LF9QbM0O6qunKHqGpkbHmvU3k3i5QKzRLUlgH7jo7dfSl7mIiMtrE
+ snpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783377544; x=1783982344;
+ d=1e100.net; s=20251104; t=1783377558; x=1783982358;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=NyU/5WffZBENLyPeBzCqpp8oOqt1j8JnR15jOhVyAak=;
- b=Iyki5ZfBKo1C2GGhU05AIdTAWEgscqWetMkQjx1Xbo11qWYiJ9gtO3bYdTukjr04/1
- 9Nmn2AuxzmsJ4FiJT6rE6ofgjPPB698hicli6N39XKoba9EGOS4w/wl1/1LH5w5kpXCq
- AoBvvC+aM3uG/JV5WvcaXtH168wcoic8DfZLZAOaWWD6D0PO8SkdcG9NWD/sjlug6Kf7
- DdPwsWTb+pewa0rigbE6m0wpwVcer+QxGzCLtAZo55COIriddH5PtGWI+kB7YlncKhAS
- vEr74HWPCUE0Up/eC/OlhbQLMJYMnwLBJZbHylVYZKP83bSvwddH4kavCNQsdb7aPB1G
- C3HA==
-X-Gm-Message-State: AOJu0YwjOD+naek6x4W5OKtMe54Of+/9SBdOBLbffouz+woODTEZifsx
- /QfEe4WCd7+WswLS3ocKkXPAkhwmK7SzCKclRtATSH2prVFldsegCMoxA1tH8yQWmHPJV89sVld
- 0k6dq5+QZZOxehmCuK9IG5qePhr7oqQ7ZVH9nhgezXfwknC6joeowLHrM7RLRT9L7iw==
-X-Gm-Gg: AfdE7ck4uB1DqU3UIiv/+5MP39nE5qJ304l157TzGV4ArJSiesCFO94NMacqMhD9L1L
- vMl9SSPuCPwCOIJq2CUoBvgAfJf9aXGfTVNMBkWfbWTTrgSgmkPGQTzLbMQmA2k4gU19h/G2opj
- jlaaj/qBtbpoIOnjaccx9fj9wD9ur2AoYXrXd7mK38Resp/m6B9cnZ6al8ESdthL3pEHN0GJWfV
- afD6J/slKnrSn2l7n9p3L3QJalM5HlpWWFabJw9lc/1zmJHd31Mp84Vgaj3K/0j+hy1Ca/IwsS2
- BgArRM5b8B+tNxHQR4YEJmft51aknpxbmNi+hfgARZm91RFHuF6iFfZU5ygmmK4fYeCGd7XJcHq
- Pum+/v6t3i7HBBKXg+MVzIm0+nFEPD6YKT13bR0F7eD84A0AKDDAmYCEIvIhTGY+XA+0kW6xC8L
- yyuggkFg==
-X-Received: by 2002:a05:6a20:9188:b0:3bf:aa1a:d2ef with SMTP id
- adf61e73a8af0-3c08effb0e9mr2996786637.56.1783377543616; 
- Mon, 06 Jul 2026 15:39:03 -0700 (PDT)
-X-Received: by 2002:a05:6a20:9188:b0:3bf:aa1a:d2ef with SMTP id
- adf61e73a8af0-3c08effb0e9mr2996754637.56.1783377543054; 
- Mon, 06 Jul 2026 15:39:03 -0700 (PDT)
+ bh=TKGK/S7SA/w2mbBIQ2/YAkKqm2FNLQSV8RwZ+9lY2dM=;
+ b=qx8FdL9oA2T8yEwh4my2WOoAxAgOmSjcTJoK8PrWe41R8Y2/vatAKeNlpTavPS6M2+
+ TNnL4iBWufmJxY/gxlbQ9Y4CVFZJk7UMQp7Vsotq5KRAKP52PUQNwxnXq9ZzYit9F+6J
+ KX1xQYVnSzRVPwGdRRbMF/k4e3Uc8csQNxr6WAFX++qPniGJAvjOAOxOPedP9c60fKT/
+ UfwHzmjIz/kOxfWUWL6Agy6jYsO0H7f3mMs/tBnRHaRxfY+o+94j/IP1EC9qUgDkZg1Q
+ lmqPY64Ct8fzYpqz1KtakLye1fWJ2KVtjZM78F5ZFU5KBHM3oCG0f7ruK0ZoshRo03Tr
+ Gx5A==
+X-Gm-Message-State: AOJu0YyAO9JUVIiHoNrPUZSaAyoGPP7BsikBjszEDN/FBJnCz13rvAA6
+ ItxJsT/p09lC0wlrW/TxIsv/f8weFa5D8WBCvYF07ov9t9LO8fx/Jlh3G1b1NrwqnEYcMjCt5f3
+ TJ91Bbz7SK2KR6Y3CZ5oO74LN2N9WE5W1/KXUCGoanQ1+IadyYzU1qRA0jBisTHdisQ==
+X-Gm-Gg: AfdE7ckiWml/G6lwBJM6tzUUDQG9C1L08wQrETpSPjcNUDyXZ9+A0+EMOtu0/sCMPVn
+ tVOcjUuMxttcZX+7SDZp9K3zPTg/f3ltwMhm0nsmnz+49mCK9IFNcMW12cyoJVCtOCbwIy4GMHh
+ mbALXKppcF1+YuOh0FRA4zkBJtyak+6yi0q7IvSAd5yMGypPZjPzYu/7eHyi/BGgZE7d3kRBqsi
+ MMDlj60XCcnU0hBF4P2IogSu9a8XX4SFTfxL4ws94gW98m5KW3aESzcPwB8/MI1PwwamNAFNW9q
+ DNrf5Bn9YiMXT99i2B3Ubh3tFezWt2x2HV0OBscJxyTB+tw+gWcwu5xCaJJauBGuCoPdYTeWf3a
+ XYALiJ+PIYDoUFYav3in8S0SWqswzUORLopF4ZX+ulrjEqWrMmTvKUwUlFNF090E5Cq4CGjXp6i
+ pRHjvouw==
+X-Received: by 2002:a05:6a21:4d8b:b0:3bf:6c08:fb81 with SMTP id
+ adf61e73a8af0-3c08ef5f0dfmr2909886637.49.1783377558000; 
+ Mon, 06 Jul 2026 15:39:18 -0700 (PDT)
+X-Received: by 2002:a05:6a21:4d8b:b0:3bf:6c08:fb81 with SMTP id
+ adf61e73a8af0-3c08ef5f0dfmr2909837637.49.1783377557331; 
+ Mon, 06 Jul 2026 15:39:17 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b659d8da9sm1399484c88.14.2026.07.06.15.39.01
+ a92af1059eb24-13b659d8da9sm1399484c88.14.2026.07.06.15.39.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 15:39:02 -0700 (PDT)
+ Mon, 06 Jul 2026 15:39:16 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -102,38 +102,39 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 69/91] tests/tcg/ppc64: remove dependency on qemu/compiler.h
-Date: Mon,  6 Jul 2026 15:33:21 -0700
-Message-ID: <20260706223343.988769-70-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v3 76/91] tests/tcg/s390x/head64.S: declare _exit symbol after
+ main
+Date: Mon,  6 Jul 2026 15:33:28 -0700
+Message-ID: <20260706223343.988769-77-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDIyOCBTYWx0ZWRfX+Qm93LEV7Gux
- ieDR26kBtm1QSRHIq4K5BLLW+mU+NhjhrH3D4cA3/6nfbLMs68UoQr45ZNhT08rUwdGxbfgBmvf
- 9EoHtfY42XsNVhM2BdWoizHIyawij7SzruZ+UZMIssbEX/p59Zbw5npBSQy2ZzhtAbZqARxxcTV
- hXZ7+b6Tq1KRkoBQUE6QjvS3KGIaM98rDPF072CSEWxHZZaVlrjq5x8nUDvXZ9Yj/tZI3DRNMp6
- tPrtBupQVbERtGlS/QMcfJ3jct0ejsvcphN1FcmOCkB/Rsznf4q2DOPIwABrVTJDlRMIqA4bpqT
- 2aRo1fPhfGYwOEExPloi995zabvHWLb39P3kR6Llp4FutIQ1+nx8AZlBuWPntrQrMyCsqo9Ms6T
- 3mS6w+ODthMNvsB+WeXLn0lM2xDHsoMg3QoMiF1wt/+3qTZcIZnVrQkU0PLN8bX3ihdCdskKX7o
- aHI9w6FdDN/S1DiWMaA==
-X-Proofpoint-ORIG-GUID: qCBhkLyV27sGT7dwrp1nTzE1iXRmo8bt
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDIyOCBTYWx0ZWRfX9Yvapur/+OuH
- xXpIDzve3SNDBsi13Qjuk2soN1MVtYi6SZOeCNnnleZYSWUQVyxexYy+yiiiQixEJbX6nG+LjkD
- zTAecPMx/AkyOkbnKMvMresVxvP9bvc=
-X-Proofpoint-GUID: qCBhkLyV27sGT7dwrp1nTzE1iXRmo8bt
-X-Authority-Analysis: v=2.4 cv=f9N4wuyM c=1 sm=1 tr=0 ts=6a4c2e88 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDIyOCBTYWx0ZWRfX5lrNR0kaQank
+ +yU06ansjuHx+/g2xAjD2Jri5na0KYueGmgTLmG19HTIS7GLa5QXOd1BkjrYpw5PUmnBtP8UFPi
+ HI1kRwjrNwZwuoGFlK3YDBtUvZ/36rB/PAcRetnIQ7Ndedr+9jiFkrNFTA7P7sSMxmVwzI2rznV
+ csNr110nDcYb0jXGahf72JDUP3ZaI2hYLH2IeY3qlCxeXWttoMFs+yswls+I4iG+Q0G/fc1tnFl
+ sE0jCKaadyB9/tfVS1ro9wsXxpDIS8Np4y+kuEuU7SBz0khjUZEQ5+9m3VJZ8NAwgTzHxEDPBc7
+ iVnyYz10K5/Lypku8vqG4T3IewNcPK6pTTZyKgimO1oOmagQ3rln2Q/YDvF8yMrzxiA/VROc/2I
+ hucbJzCf/PhXrQCjRgAsy22tZrBxrZub9YQJaLJRlkbqa5qKlE+iOBoxWDemlkcgDf2+upl51fZ
+ AF51FhmUCxxMJZw0+9Q==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDIyOCBTYWx0ZWRfX7C/Nws0GMlyi
+ SESS3f/QumagULcxFo7sjOZkYebCmKgnfDlnAd/B6+OnU59KJ1TZguYvxrYvktHjfVHY6TpA5JQ
+ /7chaTANSqNWh8gt06YkC4pYeGlMda4=
+X-Proofpoint-GUID: hox4PMmHQNNRKmIBjtvh2lztuQRfb7f2
+X-Proofpoint-ORIG-GUID: hox4PMmHQNNRKmIBjtvh2lztuQRfb7f2
+X-Authority-Analysis: v=2.4 cv=OKcXGyaB c=1 sm=1 tr=0 ts=6a4c2e96 cx=c_pps
  a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8
- a=T-6bIZUQfWNMp-6iug0A:9 a=x9snwWr2DeNwDh03kgHS:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=EUspDBNiAAAA:8
+ a=8B6s6JjS6HUdPQ4oQ2UA:9 a=x9snwWr2DeNwDh03kgHS:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-06_03,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 impostorscore=0 bulkscore=0 suspectscore=0
- clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 malwarescore=0
+ lowpriorityscore=0 adultscore=0 malwarescore=0 clxscore=1015 suspectscore=0
+ spamscore=0 phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060228
 Received-SPF: pass client-ip=205.220.180.131;
@@ -161,91 +162,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace definition of vector attribute, remove unlikely, and detect
-endianness from __BYTE_ORDER__.
+tests/tcg/multiarch/gdbstub/registers.py expects to find this symbol to
+compare state of registers before and after execution. Define it
+explicitly.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/ppc64/vector.c      | 11 ++++++-----
- tests/tcg/ppc64/vsx_f2i_nan.c |  7 ++++---
- 2 files changed, 10 insertions(+), 8 deletions(-)
+ tests/tcg/s390x/head64.S | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tests/tcg/ppc64/vector.c b/tests/tcg/ppc64/vector.c
-index cbf4ae93323..70491d59251 100644
---- a/tests/tcg/ppc64/vector.c
-+++ b/tests/tcg/ppc64/vector.c
-@@ -1,6 +1,7 @@
- #include <assert.h>
- #include <stdint.h>
--#include "qemu/compiler.h"
-+
-+#define vector __attribute__((altivec(vector__)))
- 
- int main(void)
- {
-@@ -15,28 +16,28 @@ int main(void)
-     vector __uint128_t vbc_qi_src;
- 
-     asm("vextractbm %0, %1" : "=r" (result_wi) : "v" (vbc_bi_src));
--#if HOST_BIG_ENDIAN
-+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-     assert(result_wi == 0b1101111111000011);
- #else
-     assert(result_wi == 0b1100001111111011);
- #endif
- 
-     asm("vextracthm %0, %1" : "=r" (result_wi) : "v" (vbc_hi_src));
--#if HOST_BIG_ENDIAN
-+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-     assert(result_wi == 0b10010011);
- #else
-     assert(result_wi == 0b11001001);
- #endif
- 
-     asm("vextractwm %0, %1" : "=r" (result_wi) : "v" (vbc_wi_src));
--#if HOST_BIG_ENDIAN
-+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-     assert(result_wi == 0b0011);
- #else
-     assert(result_wi == 0b1100);
- #endif
- 
-     asm("vextractdm %0, %1" : "=r" (result_wi) : "v" (vbc_di_src));
--#if HOST_BIG_ENDIAN
-+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-     assert(result_wi == 0b10);
- #else
-     assert(result_wi == 0b01);
-diff --git a/tests/tcg/ppc64/vsx_f2i_nan.c b/tests/tcg/ppc64/vsx_f2i_nan.c
-index 94b1a4eb02d..6a9d54faf52 100644
---- a/tests/tcg/ppc64/vsx_f2i_nan.c
-+++ b/tests/tcg/ppc64/vsx_f2i_nan.c
-@@ -1,5 +1,6 @@
- #include <stdio.h>
--#include "qemu/compiler.h"
-+
-+#define vector __attribute__((altivec(vector__)))
- 
- typedef vector float vsx_float32_vec_t;
- typedef vector double vsx_float64_vec_t;
-@@ -104,7 +105,7 @@ static inline vsx_uint64_vec_t vsx_mask_out_float32_vec_to_uint64_vec(
- static inline vsx_int32_vec_t vsx_mask_out_float64_vec_to_int32_vec(
-     vsx_int32_vec_t v)
- {
--#if HOST_BIG_ENDIAN
-+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-     const vsx_int32_vec_t valid_lanes_mask = {-1, 0, -1, 0};
- #else
-     const vsx_int32_vec_t valid_lanes_mask = {0, -1, 0, -1};
-@@ -209,7 +210,7 @@ static inline int test_vsx_conv_##SRC_T##_vec_to_##DEST_T##_vec(         \
-     const int test_result =                                              \
-         vsx_##DEST_T##_all_eq(expected_result, actual_result);           \
-                                                                          \
--    if (unlikely(test_result == 0)) {                                    \
-+    if (test_result == 0) {                                    \
-         fputs("FAIL: Conversion of " #SRC_T " vector to " #DEST_T        \
-               " vector failed\n", stdout);                               \
-         fputs("Source values: ", stdout);                                \
+diff --git a/tests/tcg/s390x/head64.S b/tests/tcg/s390x/head64.S
+index 4fe288388ab..0523fcacb33 100644
+--- a/tests/tcg/s390x/head64.S
++++ b/tests/tcg/s390x/head64.S
+@@ -14,6 +14,8 @@ main_pre:
+     aghi %r15,-160                     /* reserve stack for C code */
+     brasl %r14,sclp_setup
+     brasl %r14,main
++.global _exit
++_exit:
+     larl %r1,success_psw               /* check main() return code */
+     ltgr %r2,%r2
+     je 0f
 -- 
 2.47.3
 
