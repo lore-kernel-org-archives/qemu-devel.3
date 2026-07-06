@@ -4,143 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78166C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81226C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:07:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgeL4-0006rN-Tw; Mon, 06 Jul 2026 04:06:02 -0400
+	id 1wgeM4-0007Fk-VG; Mon, 06 Jul 2026 04:07:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wgeL0-0006pE-Qs
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:05:58 -0400
-Received: from mail-centralusazon11011005.outbound.protection.outlook.com
- ([52.101.62.5] helo=DM5PR21CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wgeM2-0007E2-TZ
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:07:03 -0400
+Received: from smtpout8.mo536.mail-out.ovh.net ([51.210.91.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wgeKy-0001mL-Dk
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:05:57 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=De1BuORZxT0gkQv7kUqx5NV7bAKW9b0ep3tZzyJXj9+Jr2dkq2n2kWZsfBD+ieyUzXILLIvN/U9uMzPUVDnlurhqJXt4Impc9lcLIdG8ud4g/ryKVVv6KXEPlSMJEmQ+rBh94o10XBNhk4USqjuG28Ke69SR7MlJ4rhnlZOKOqScZlJsmwiiNbvM+aDOgEV/NnFjaV8qZKRfVrhIBHXRDUJMr/nIo35iJsMdrL+i9IauYzoIq2Oq22NJ55NWCDUHjpQMPHams2kouVQe65W7AEkm3iRkEQBzAMfzwkPT6NILfdVL8fLwsSZ50Ls/10zIImSX7saTBtMwfht+79lpTg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MPoy6mfNs5atxOii/qX+3/j//pz8PCNgwj6d/7ndG8w=;
- b=FxXL7dqYXYI1dSbhY9tEkF2RJ4s6/EoUI8oHF4EXxpQvCmTAtiiNw/zJgtOmJTq7LkZKASMTK0hIcm1DyR12RE029vkzQOGuM1B1mAqFIlvizc+DsXqyjq18o9uKbwUCGJEjO13oeTpsXgP7jX6GGIVNq0SkmbxY/BP32Yx3+ngn8znXAOZlmitzbgdJvSRvrKHz4hJU8K7VllBHk4VJtXGc10bkWwmea8/2Cv6LrUKNAkqKImjD3BkCw64Z+36foO3vqekk/N8llOCvHjViSBtjrZ+CX/cwFrJLfVO8nRuy2urK5KrVSvQbPx8KsB+E1UgqfeLS/QYrqVCDL4H5nQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MPoy6mfNs5atxOii/qX+3/j//pz8PCNgwj6d/7ndG8w=;
- b=XaZJJZ1pI0v0VkyhsEEmwVtD67JVqaBKB47KuHo14jqS7PGxj7TOPb/W1WgMjUkNM6IZgOcUvkglDF5blESLBotImMJTdXrMe6gnNiNp1u4SR3JA2JOHRGtc7ZWb4UIgNyGT9wqbaPmDZIPX7CTfFls+a0cVe56Tjyy98mElXmmMeLlQYpbhsmb7qzuIXd2tJmSJ2nGqTTO8xZgX/6dok3xSbq1o4tG+UulxrbBhMel7OiAL2Wfx2dkj5MGm4AuCp15G50HJ1vglD4/U8En8P1iAgfyri8i6JLkt1e4tAjuhB6C9vZfcR5kbspaof4nvAswYrPFe24im21ZWjggPBA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM4PR12MB5119.namprd12.prod.outlook.com (2603:10b6:5:392::10)
- by MW6PR12MB8834.namprd12.prod.outlook.com (2603:10b6:303:23c::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Mon, 6 Jul 2026
- 08:00:48 +0000
-Received: from DM4PR12MB5119.namprd12.prod.outlook.com
- ([fe80::261:eff5:d149:2d56]) by DM4PR12MB5119.namprd12.prod.outlook.com
- ([fe80::261:eff5:d149:2d56%6]) with mapi id 15.21.0181.012; Mon, 6 Jul 2026
- 08:00:47 +0000
-Message-ID: <da6a564e-8fa8-41fe-b818-99582e246f1f@nvidia.com>
-Date: Mon, 6 Jul 2026 11:00:40 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 08/23] migration: Run final save_query_pending at switchover
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Peter Xu <peterx@redhat.com>, "Jason J. Herne" <jjhern@linux.ibm.com>,
- Lukas Straub <lukasstraub2@web.de>, Fabiano Rosas <farosas@suse.de>
-References: <20260630043107.1511076-1-clg@redhat.com>
- <20260630043107.1511076-9-clg@redhat.com>
- <a82ece02-d9fd-4ea4-b934-a9bc5abde663@nvidia.com>
- <df58c2d0-cc0c-43c2-9dd3-ea0614de7d72@redhat.com>
- <e7bd3ab2-2eca-44d6-8a18-29cdbcb57768@nvidia.com>
- <9ea28269-924d-4996-a886-73f14cd31bee@redhat.com>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <9ea28269-924d-4996-a886-73f14cd31bee@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR2P281CA0162.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:99::12) To DM4PR12MB5119.namprd12.prod.outlook.com
- (2603:10b6:5:392::10)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wgeLz-000267-Nw
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:07:02 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [57.128.106.70])
+ by mo536.mail-out.ovh.net (Postfix) with ESMTPS id 4gtxlf3VZDz826P;
+ Mon,  6 Jul 2026 08:06:54 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alexander.hansen@9elements.com>; Mon,  6 Jul 2026 08:06:54 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.101.74])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4gtxlf0Ksqz7t8l; Mon,  6 Jul 2026 08:06:54 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.0])
+ (Authenticated sender: clg@kaod.org)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 393361B436D6;
+ Mon,  6 Jul 2026 08:06:51 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-110S00453dc6de7-f585-4933-9ae3-c9a8cdbae867,
+ 85E5B3372E37D114A8148E0C2423338A4BE4238A) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <1ad9b0b5-e98f-4552-bc2d-6db76dfcd1ee@kaod.org>
+Date: Mon, 6 Jul 2026 10:06:49 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR12MB5119:EE_|MW6PR12MB8834:EE_
-X-MS-Office365-Filtering-Correlation-Id: 280f224d-8081-42fd-660d-08dedb34b01d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|23010399003|1800799024|376014|4143699003|56012099006|11063799006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: xbsZ6QGSOzYQVqiipXvII166WkKoAXATf/lip2NYW8OVhKWAP7FVzwgTSKAnHL3DyHfPdlhrP+AaQdlgTG9SJkoTA2Wp8WrZ8k+GfRlM48agnkkgXSB2g/vTnWynw0Mq/8KAVvM1eWT6fB/F8I1oiNnmkQa3ju8e/oDmAKNDDrIQRJs1kvJtMhJ4LnLlJWe7SeMZJlVR6lV9+CH1Re+GGTwYtvVKWvbEYOkrLDfyfc7us+0BKegH4mGGn/6K4iQ4vPhJAUZFnnJvWQuO8c+uE/0DMz0novEBEHcWhGqBKQgKf2xMKkWErDrBNwIzk8Z4kj2vQhoZpCcLnM46zVi7AYbKaMgoohaolEcjLgvNe1F4BLquwtqF8IXzDbcL59qRXpQHi9TORrxyzBm11ME0YUenvsMZDSelGmZXiVLNFWqpn4NNvLaZCjNj9f17HmeO5TO2PCCJTywLZrKEkKZfLBHeeAPbw2R1WuLA8z6tmyRvgFete1ifVAx1eAkhThJwuBcXBLoiMTza59NfhhZjee0iOCzuRzvyuKISeEObl4cvA4TQ1wTZca3HjA9HaIEVP9NG01fz+LuRJSpOv+f87t+zQNNz9yxsAjH2aU+hrw/tMHRnus7UJOCmwR76faToYmIAEzVXmjzpKi9EwuXlJcX5b1GzTIcx78kuQIq7pys=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM4PR12MB5119.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(4143699003)(56012099006)(11063799006)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dGQ4VGxGcElmMnA2M2dsenlhY3ZqTkZHTkxkbnFoZjNDN2VYWXFzMmZGSnJs?=
- =?utf-8?B?R1Btdk8vUmdJQzcxMU9Ud21Qc2Zzb1JuV09yZjQ4Q0hwVmRqQ2hOTHJxQzdR?=
- =?utf-8?B?dTllZjBhZWY4K3dDUSs5SmdTSlNtMkxwdVQ0aldCZVlXeVFUcG5qWXk4VXBr?=
- =?utf-8?B?bUU2Q3hSY0REWjZwaVE0UlduNEQ0V3pCdUdaMHNrNmtYRlljd29RZVJJcExz?=
- =?utf-8?B?aDRNdjBidDVCdDBtb0RoelduMG5SM1l0cnZZWG1xblZ3OVdhaDkyRzQvSUJL?=
- =?utf-8?B?MmQzYXdhd1VkR0UyUEtxcU9mUElFSWpFazR4akdkR1hrcElWZjBuSzk1VlU5?=
- =?utf-8?B?OE9qRWRyN25JQkV3L2pyNkMrZGgxdVdKOHUyclNkVWJsYXcvQTBMbG1HN29D?=
- =?utf-8?B?amNQR0pSOEZMTlJnTllxY25PZzZ6cmZNU3hQOXFadkduUjFYK2tjQTRxNkF1?=
- =?utf-8?B?b0NwK0k5TEFQQ05MMEZ5UWRFS2pSK2hsQkFvbG00amh4S3d1eGRENlZ4WDFZ?=
- =?utf-8?B?bTQ3N0RpMTVYK0E5ZjYrbWZzMkxRMERBY1Y3NXZ0VjN0WFZvbVo0bTIybURH?=
- =?utf-8?B?M0xzVTU5bjV2azJIUHA1bTU1U24wOFRPd252ZEtwVjloNFhOWndjL205b2Js?=
- =?utf-8?B?QWZTZWt0eHdZSmxKTUJNRmtiTVhkYXJHUkxNU3owSlE3aUY4SzM4dTZkaHZG?=
- =?utf-8?B?OVdiWWRFN3BlWWxiYmlSak1jeWVWUkR2bVl0THNFcFRScm9Ddlk5YWFpYVEr?=
- =?utf-8?B?aGt2RGRVbzdsalRQYW56L050ditXMFB2alh1UVlFTHZxb0lUekJyV0FlNjZv?=
- =?utf-8?B?UXUyYWxhZE9pSUFjK0ZxK3dsZ01RSXl5TzlJME52bUhYRDdmNkU0RCtIUUpY?=
- =?utf-8?B?MjBpdUU2VWl1NS9vY01JWDltTjBnUjVEc04yaXNKdFNLYlBzU2NrZXJiMno1?=
- =?utf-8?B?QVRLQ01aVEp3T201Rkl4dXFEU2IwcWtUV2Eya3h4dTBzb3E2d1Zwc0MzbW5z?=
- =?utf-8?B?Y3NmdW1rdFVGdUNWR2FaZlkyK1paUGV4ckFKek5ydGxOSWFIQXdTTHVzdlRp?=
- =?utf-8?B?Nmg1Mlc4aTVRaGVkT0NMZ082YXZYQzM1aU5RS2p5OTNFeUJTajRtQUJ1bkR4?=
- =?utf-8?B?MGl1cDkyZG82dkE0RTUxK1dHNzdZQms4Z2lBd2RTRnh2ckM4UmlMTlpZOFly?=
- =?utf-8?B?VzRiV0xGSEJZU3VraEhHMlVwUnV6UzBJQVk5aFhRbGJjSjZUL2pLOGJJSFoz?=
- =?utf-8?B?WXZPMWNuekxXaEVRb2lqNUpXRE9iWlY3SkNpTmNmdjc1WXNzcm9VL05XMUJ6?=
- =?utf-8?B?RE1pWlVtTWdsMDZUZ0pGVzBJNWVHek5tUlBySVRNN01MOXQ0ZGd1M1JTRTVv?=
- =?utf-8?B?djM3NzI0WURMQVFuTFB6eUhsR2JlbnY5dEZNQ1hZRlNLV1VWTFVvZkdpeXZs?=
- =?utf-8?B?MGkyL3U3dWJWcW9Td3hOdmVRazJkbkRYSDVDcXZoTHg2Z3FVU2VJc2I2YnpS?=
- =?utf-8?B?VWw0VHc5Y0EyZjhVTDdhUTFpS1E5MUJLMDVXZWZZWjFkbFZwVWRuNWV5aU5r?=
- =?utf-8?B?dlZPdDVNZW10ZDdLaHJlS0ZIWm9DV1QyQzlUeUsvYnpjNkJLV3FyM1g2WW5z?=
- =?utf-8?B?VVdKTmdUa3AydVZsVzlPb3cxcWxGMTBQczhEeURNeFZnNVFBUTlhdWk5ZGgx?=
- =?utf-8?B?dDhtMkJHOVNtNEtPY2hnNU5QLzZGVWx6TEhTQlVzSUdZR3ZIODg3QjZOYWdO?=
- =?utf-8?B?V3BMbGVLVDR2RzczaEtKMElsMmc3OC9QZWpvOTFLN3R2YVprdW5XT1lZckFS?=
- =?utf-8?B?YTZzMmg3WGhGa2xSZlNGSmFBbnFHbktUbDBRUUVCMUhqR2NhNlVEcHIzV2xC?=
- =?utf-8?B?OHZGcTVhV29qMWNsUWhJaFVwZGh3M2F1ZlpsNDVmQTBnNUdGTDNIZ3F2TjI5?=
- =?utf-8?B?TXQ2bTRZckphM2FHcjlzcndlUmhITEh4bGMvUkNIMEtrU2xEaUdpMFljdlBX?=
- =?utf-8?B?ZldBS3VqUTNvNHQ2RjZvaEl0Tmw0WWcxUitKZXYzZFBYSWdKMG9wTkRCRXJV?=
- =?utf-8?B?SE1YT1ZTMTNIWUdCOS8xam84MEg2MjJMdklIMjI0WUhMVXFyR2FqRGt4QjIr?=
- =?utf-8?B?TmYzbXhPejZ2YkFLbFlBNDR1MGw4MGNCdHdQczU5VkNRSFk5bTdyTDY1R1Zz?=
- =?utf-8?B?OTU3SUROb2RVbUdWUFpGMjdMaWVpZHd6RjliMnhiYmFUM0RtNnpyRDNoL1V2?=
- =?utf-8?B?ZjgyQkZCUHpjalpmOWc4NzhLN3oxTlJ5TXNOL0xOWEN5RXhWMUM3RTdpUmRG?=
- =?utf-8?B?a2hxRFRxSldGVTkxZVJ4ME4vOEE3RFNZS2JxcTZtYlYzK0xweUd6dz09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 280f224d-8081-42fd-660d-08dedb34b01d
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5119.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 08:00:47.5339 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: aY0TlvzWx4j8XHzvJ2N6tV9fBErA0OEqBy+vbaYz4TAg2IdBhdXOxi3lbOG8EVLVXW219lZl21bREs9zcEUiqQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB8834
-Received-SPF: permerror client-ip=52.101.62.5; envelope-from=avihaih@nvidia.com;
- helo=DM5PR21CU001.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 8/8] test/functional: anacapa: test ADC128D818
+To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alexander Hansen <alexander.hansen@9elements.com>,
+ William de Abreu Pinho <williampinho@meta.com>,
+ Emmanuel Blot <eblot@meta.com>, qemu-arm@nongnu.org,
+ Corey Minyard <cminyard@mvista.com>
+References: <20260701-i2c-adc128d818-anacapa-v5-0-fe8292d86b38@free.fr>
+ <20260701-i2c-adc128d818-anacapa-v5-8-fe8292d86b38@free.fr>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260701-i2c-adc128d818-anacapa-v5-8-fe8292d86b38@free.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 7070088465244859437
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFeh+gB3y7VoxEN0SzBgfPMPMnPkNg4RTltI45OCkWIVWWAP5nGfbrH8vlIrvQVC8fhOIinNTHY0c5Qgjragv0OG0g2NYTZfBkkcIzEIE4Cc3A7s6YzBShCKMovz7tDwv4tx67oa7LBbw8gN//w9MeI8HnPu7xfc4+bLtLyGE2Rh/dTmAsB64MR9wQ2Fao6Z7x/JxxnhEVBmhTN6ybVD5UW3k8ojHkScUp8l2BMHUvufxsC/TqTSKFDJ5r2q0QTXh+deilWn9IW0wqejuW5lOlCR3jp0rIP0a9PNs0wR238/EViNq6RCMfdWkD7+zs4+xQUb8OaJNe03h/gAPL49weBrHanbFCmAv8uB79ViYOgBNxegGavRihiySzFjtc4emhHue/OAnTDfkoznsrwAGZPB5V3Kspe3VpUofAalrVInbZt8Jr9fQ84eIdZ4S4QYJkWotr+IW1mzxtnFsIGyw+Hqw6FrwVDIPzwGQK9ihM4WJN1/6PuWoxNpZwvjkGlHCbZ9crsgOJBEOBtS9WW/vmInEbgq1YQQFHszp5HfTI88wbqFK9YYzhWB3icL6KTfs5WiNSqKGNNT6/f8/t6PQPbrJjCku3GJXDege/yLu1090I/UrsWkiU5imwyd106f8nRt7XOkGH422baaWbHli/yWJRI2ixtR5jfM6OdbACYaw
+DKIM-Signature: a=rsa-sha256; bh=WAjn3amkZVXFmC+tRxqujawMsxmiAYugBResNjLb4xA=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1783325216; v=1;
+ b=MBUIaITTNCg4n7x4Zq7HGxhPmfQ5hVxb6uIGo7bKTFoG2A7B+hgpKcsC1H6I24rmkixfV3VM
+ 7uSR5X0Ur4DY8GrruZ4UMFxgq3hyxrhzbeQbB99V92mz0I+8du+hctVa+xfUhW4cy5vS3F6OCdZ
+ etwSrj1hQOaqmTSOdTVzWy0XnrK5wm6OCz5ULiJZl66ieOOLWOwBWEbADzfEHKuSrH5znq8G2He
+ Kon0+Wtjxbd/aYBhY1yWO0OI8XUUQO4Lcgz9T1icmpV18/DKwHpVhIC1OQi4vXo91aop3/bR9yD
+ 3/FO4hA/Hs+ePBd8H8rJ+N+mVUP00nvRldKpGg5vRLIcw==
+Received-SPF: pass client-ip=51.210.91.17; envelope-from=clg@kaod.org;
+ helo=smtpout8.mo536.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,56 +138,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 7/1/26 19:28, Emmanuel Blot wrote:
+> Verify the ADC128D818 on the Anacapa R-PDB (i2c8 mux channel 0): two
+> channels are driven with distinct voltages and each is checked to be
+> reported back independently through the kernel hwmon interface, and the
+> channel 0 limit registers are validated.
+> 
+> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+> ---
+>   tests/functional/arm/test_aspeed_anacapa.py | 69 ++++++++++++++++++++++++++---
+>   1 file changed, 63 insertions(+), 6 deletions(-)
+> 
+> diff --git a/tests/functional/arm/test_aspeed_anacapa.py b/tests/functional/arm/test_aspeed_anacapa.py
+> index 2b72e46b0e..49fab7ad09 100644
+> --- a/tests/functional/arm/test_aspeed_anacapa.py
+> +++ b/tests/functional/arm/test_aspeed_anacapa.py
+> @@ -2,24 +2,81 @@
+>   #
+>   # Functional test that boots the ASPEED machines
+>   #
+> +# Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
+> +#
+>   # SPDX-License-Identifier: GPL-2.0-or-later
+>   
+> +import re
+> +import time
+> +
+>   from qemu_test import Asset
+> +from qemu_test import exec_command_and_wait_for_pattern
+>   from aspeed import FacebookAspeedTest
+>   
+>   
+>   class AnacapaMachine(FacebookAspeedTest):
+>   
+>       ASSET_ANACAPA_FLASH = Asset(
+> -        'https://github.com/legoater/qemu-aspeed-boot/raw/c5f585f9f57843c0dc95e3865a57d92ec39cbb0b/images/anacapa-bmc/openbmc-20260616025349/obmc-phosphor-image-anacapa-20260616025349.static.mtd.xz',
+> -        'de3841fb6ed3085aec6424358ee6efc4b8ee85688361e5aa1987fd1acb7d3fb4')
+> +        "https://github.com/legoater/qemu-aspeed-boot/raw/c5f585f9f57843c0dc95e3865a57d92ec39cbb0b/images/anacapa-bmc/openbmc-20260616025349/obmc-phosphor-image-anacapa-20260616025349.static.mtd.xz",
+> +        "de3841fb6ed3085aec6424358ee6efc4b8ee85688361e5aa1987fd1acb7d3fb4",
+> +    )
+> +
+> +    ADC128D818_QOM_PATH = \
+> +        "/machine/soc/i2c/bus[8]/aspeed.i2c.bus.8/0x72/i2c.0/0x1f"
+> +    ADC128D818_MUX_CHANNEL = "/sys/bus/i2c/devices/8-0072/channel-0"
+> +    PROMPT = "root@anacapa:~#"
+>   
+>       def test_arm_ast2600_anacapa_openbmc(self):
+>           image_path = self.uncompress(self.ASSET_ANACAPA_FLASH)
+>   
+> -        self.do_test_arm_aspeed_openbmc('anacapa-bmc', image=image_path,
+> -                                        uboot='2019.04', cpu_id='0xf00',
+> -                                        soc='AST2600 rev A3')
+> +        self.do_test_arm_aspeed_openbmc(
+> +            "anacapa-bmc",
+> +            image=image_path,
+> +            uboot="2019.04",
+> +            cpu_id="0xf00",
+> +            soc="AST2600 rev A3",
+> +        )
+>   
+> -if __name__ == '__main__':
+> +        exec_command_and_wait_for_pattern(self, "root", "Password:")
+> +        exec_command_and_wait_for_pattern(self, "0penBmc", "#")
+> +
+> +        self.adc_hwmon = self.resolve_adc128d818_hwmon()
+> +        self.assertIn(b"adc128d818", self.read_adc128d818("name"))
+> +
+> +        adc = self.ADC128D818_QOM_PATH
+> +        for ch0_mv, ch1_mv in ((108, 2000), (1280, 500)):
+> +            self.vm.cmd("qom-set", path=adc, property="ain0", value=ch0_mv)
+> +            self.vm.cmd("qom-set", path=adc, property="ain1", value=ch1_mv)
+> +            self.wait_adc128d818_value("in0_input", ch0_mv)
+> +            self.wait_adc128d818_value("in1_input", ch1_mv)
+> +
+> +        self.assertIn(b"2551", self.read_adc128d818("in0_max"))
+> +        self.assertRegex(self.read_adc128d818("in0_min"), rb"(?m)^0\r*$")
+> +
+> +    def resolve_adc128d818_hwmon(self):
+> +        out = self.read_adc128d818_console(
+> +            f"basename $(readlink {self.ADC128D818_MUX_CHANNEL})"
+> +        )
+> +        match = re.search(rb"i2c-(\d+)", out)
+> +        self.assertIsNotNone(match, "could not resolve ADC128D818 i2c bus")
+> +        bus = int(match.group(1))
+> +        return f"/sys/bus/i2c/devices/{bus}-001f/hwmon/hwmon*"
+> +
+> +    def read_adc128d818_console(self, command):
+> +        return exec_command_and_wait_for_pattern(self, command, self.PROMPT)
+> +
+> +    def read_adc128d818(self, attr):
+> +        return self.read_adc128d818_console(f"cat {self.adc_hwmon}/{attr}")
+> +
+> +    def wait_adc128d818_value(self, attr, expected, timeout=20):
 
-On 7/3/2026 5:01 PM, Cédric Le Goater wrote:
-> External email: Use caution opening links or attachments
->
->
->>> The culprit appears to be patch 3:
->>>
->>>   migration: Run final save_query_pending at switchover
->>>
->>> I can reproduce the issue consistently with:
->>>
->>> while [ 1 ]; do
->>>     QTEST_QEMU_BINARY=./build/qemu-system-s390x \
->>>         ./build/tests/qtest/migration-test \
->>>         --full -p 
->>> /s390x/migration/colo/plain/secondary_failover_checkpoint || break
->>> done
->>>
->>> The patch you proposed seems to fix the issue.
->>>
->>> Could you send it as a follow-up patch?
->>
->> To make sure I get it straight, you suggest to merge your pull request
->
-> The merge request won't be merged as is. It's broken and I will
-> have to resend with a fix or without this series.
->
->> and then send a separate fix patch for that with a proper Fixes tag, 
->> right?
->
-> We either handle the breakage with an extra patch like you proposed,
-> which has to be sent and reviewed, or :
->
->>> if Peter, Fabiano, Lukas
->>> would prefer it to be integrated in the appropriate place, it
->>> could be included in v5.
-> We can address this in a v5 respin of the series by fixing it
-> where it belongs: in patch 3. I think that's the right place,
-> since bisect breaks at that point.
->
-> Let's see what Peter and Fabiano think.
+20s ...
 
-Hi Cedric,
+> +        needle = str(expected).encode()
+> +        deadline = time.monotonic() + timeout
+> +        while time.monotonic() < deadline:
+> +            if needle in self.read_adc128d818(attr):
+> +                return
+> +            time.sleep(2)
 
-I got the v5 ready to submit (it has the COLO fix + two new patches on 
-top: one to refactor migration_completion_precopy to return bool and 
-another to fix switchover typos).
+The first read of hwmon should already trigger a fresh read. If a sleep
+is required, which I doubt, please do it once and then assert.
 
-Would you like me to send it?
+Thanks,
 
-Thanks.
+C.
+
+> +        self.fail(f"{attr} did not reach {expected}")
+> +
+> +
+> +if __name__ == "__main__":
+>       FacebookAspeedTest.main()
+> 
 
 
