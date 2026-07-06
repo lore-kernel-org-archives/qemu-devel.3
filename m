@@ -4,106 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88415C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 16:55:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A10EC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 16:56:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgmaz-0006NS-AZ; Mon, 06 Jul 2026 12:55:01 -0400
+	id 1wgmb5-0006PE-9f; Mon, 06 Jul 2026 12:55:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wgmav-0006Mf-7N
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:54:57 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wgmat-0002z2-4M
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:54:56 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666FICY8611101; Mon, 6 Jul 2026 16:54:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=8ss3E40EI0rdnZNYw
- r0CI94r9B9laz4ljhng878AcOM=; b=Ug2INCj3UZ0M5qAAz/UN3FVKXG7d8ZcQ9
- lKRIcwqWjWYw+NLxfrN4TFWWJO4Vin1/kazXpWhXdXtJgAGDIbT07HRK9uqhQoS/
- ZBWEqfMlEP5GVYs+ay92b/bHivUi7uxEb2353RsIIFAZOziKMgaAPzKcmjwCz3zz
- nxUcP3F26Cpii9d0WAdMubob/YXXtFegEY7HoOCm4ZB69Lhicu9JKEs/NwyZNLWV
- 7R7Y9ytoBOfU3WhGLZ2umvj3Ijy26E1bK+ivebdqseN44TbG+JIteQXYEqE1s+jU
- 6nmBWG52ueKzfCzheynyXuzUUg8raTd58dU2Rl6atyT996jGrHNHg==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6sp3jhvm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 16:54:52 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 666GnePA012929;
- Mon, 6 Jul 2026 16:54:51 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f7cvvxkkr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 16:54:51 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 666GsncT30278238
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 6 Jul 2026 16:54:49 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9834720040;
- Mon,  6 Jul 2026 16:54:49 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4F54620043;
- Mon,  6 Jul 2026 16:54:49 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.111.23.52])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  6 Jul 2026 16:54:49 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v2 3/3] Revert "tests/tcg: skip the vma-pthread test on CI"
-Date: Mon,  6 Jul 2026 18:51:25 +0200
-Message-ID: <20260706165445.57418-4-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260706165445.57418-1-iii@linux.ibm.com>
-References: <20260706165445.57418-1-iii@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1wgmax-0006N5-71
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:54:59 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1wgmau-0002zV-NE
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:54:58 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-664d7863920so2510775d50.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 09:54:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783356895; cv=none;
+ d=google.com; s=arc-20260327;
+ b=MsN4L5DEuWyWSBLb9yAb4P8xPX4/QHOihK5g/VdTVAzovU84Cz+Uvvy09kcicr27dB
+ jwqxjK/KIW/1T+3ptiLq7dL+bJPCDswHyXnFK/RkQwxA1Oet9Eo5Ra8UiHen0zwREzCM
+ Lmyhfj+8n06H2DXcvPz+Sqg/JKbMcieP53ehTxqcFwOSbfCpRA0/0xRtOtzCCu3J59f3
+ r3jQf6aj9QUHl7Xr5MYfz9MaxzytcWV7+ZUaCJhp8jLBSjYVugtKCQ+3NzHnX6L9sJOC
+ XEXPhrZYLjMDaW1wWGjnb1vdew4y9Tz74fiN/J9Jk6I6TCyZxwASGuyrN05Jw1NXnHNA
+ rDFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=w7gAOENDBDPo4Yn8gSfzizyDrJ8SqcYZd8BGWxgHac4=;
+ fh=Hj6uv8y9pScMIq2JrMfop23xCTfT3pWPuZDoihMpXz4=;
+ b=qUG1bCrrrN1nTpkXM6nO7bh2Iwv0cx+GAQ/wffwzF62l2n1I+s0lg1r4Fg/oIq8zgf
+ LCKbRbhrFRfpGqwrrpkZ7iZdO8DrlxMDfYcxtlneJQ05YJRp61QnDaiglCgryyXpeQqr
+ Wx6LlKT2MVA8DDsyE+A8/kWJnKhwZDisCSvbA3zY5/x62B3PKyEp2hxtQJC4myV25EEp
+ 9ozYHh/l08g6Z1JAERFLSzWiEqWy/DtaYPD02X+j8bjVHDW9q5F8T4Zu4EBkSKzHTvNT
+ LdDBkG9CBvYNGEXq7kAIROVWq6NF43cHPz8/5UrapXwHEyJfIiYklMh8VLUudl7Z0r12
+ l9pw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783356895; x=1783961695; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=w7gAOENDBDPo4Yn8gSfzizyDrJ8SqcYZd8BGWxgHac4=;
+ b=AqeZ6uMghPeFK+3/qoFTKaf1vIC0FyMM/CWm8Y0rxbYp0nj35F7qFZCmmmYwMJzRE8
+ r8uxJu7IkQhZGGI5Yxvzu7Te+OLcHlEjhQn2RTaTziXpMagu9JYDtU3pN5+c4nC71EO7
+ lVFuwUHn11hH4JZWXZRgnS2D/t9TwLnOXwwMSlTgAYA+sAl5MVJZJOWpVR0chlaeq6Te
+ yXt16lHcTEMmTO0TPnOi7Lisk+XeK2NAv7kUvUnuEn8X5vHI/ZpnrSMsg3/eTMXY7pVK
+ AX0uKhxel/Q0YpQhJbfy/QJZ23nT3jore3D1rgmwJKULWmf5828FexnjQjgIOFDFs8/M
+ 8/8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783356895; x=1783961695;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=w7gAOENDBDPo4Yn8gSfzizyDrJ8SqcYZd8BGWxgHac4=;
+ b=mon55Vp7RFuf2AeoZypS/KJ1owpobrkNLjIb5Ci1/BBsh5OnYmG7/PLI/n6J1ejzyG
+ 57X1wXF3RGeOrz/mVSwY2zjsHeIhK67ixU1TrEryn4bW7lnHO+jmc8fOjZE450oHL9DG
+ ApOeFzqKpwT5Lhr8h5PppvqBcl7Y/q6/AlIcWfP3bO96ZruHK1NoyY1zkobr0p9sMEh5
+ mkZaxyYE0r4FhCdPyqmLBtN8OD6eh0G7sD/RQEyP4DL+9cvEJIKkHtNs4JiX5abXUZxD
+ /k8pPZDZUpcZlcW1xZkpe81Wur6H/WQy2Oea78mSmI1dpu84nYQCrzvJRyKuV23LV47i
+ aumQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqBbFFFnn832CM4+xPrLKdZa9CO0CH0LWuaZO1ra+xV7IT6j+aXn3/qRLctXMgZm4opE50GwFfaKhrV@nongnu.org
+X-Gm-Message-State: AOJu0YwiAx2BN2jYy1H28WIObGjihcnd3DE2TVGj+eLX35YGsMs0Efil
+ f1FOP4wy+EDsG3Bb6ohvJPSo0uwUezGVoPCdOgXK/lPLn6KqvHa5EYgGPxHb9KdS379vBpepRmd
+ OKzP14xPi7CG/YCmRs1OyG0Kjm/6/NvdroyBfvio=
+X-Gm-Gg: AfdE7cl9mYB6qZDtOMUTC8eC7dWOPbjPAqJ37V2iHMh5jQvYip8UMIsS85f9ydkWCB9
+ bWXK9bxxxW4MKxNmiRDljXg5NcGlZAPUw5KpV8EiPyeO5UJ3QrqkohQKwNXitOeF1H2c1EHPybG
+ lgTYvc7PEBJf0o0L3aeFP/S9++GkUnhOZ8KxW0UITbJ7pOMHFhg5hyAjtvKtmW8d3zMhDz2LkFn
+ g5Bp3RkoKyB6t9rVNMbUg75c1zMnuvjDt4uPjRTCQPq0Hzu+YvhJbk8vwfFACTTdr2YzwZIGb8d
+ JQ==
+X-Received: by 2002:a05:690e:d85:b0:667:7633:2b0e with SMTP id
+ 956f58d0204a3-6677f7ca2bbmr1226686d50.0.1783356895038; Mon, 06 Jul 2026
+ 09:54:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=KsJ9H2WN c=1 sm=1 tr=0 ts=6a4bdddc cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=MR-Jva-bgZzsNAeRGaEA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE3MCBTYWx0ZWRfX+sYkR9KsTOqo
- xaVd7PT9rVgv/+zaveTThbx2lCZ2I1BRBsAD/MF6sTVzzyl/cZRVCrw8rs9HQK5Lr0cCZF6Qezp
- 6u0Y/pV8gmFqY2t0x4rq+rm8e4x/KjE=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE3MCBTYWx0ZWRfXyze3i9fhFwrL
- olG7vzKaob/PoQ6PSvDpvCJzgEgIuzvEhqTWh5CjU999j0YG3UcW8tIQxgbCXH9yVA77GMco6ul
- z2RUszI6Ker7/vIa8IO4jpNt4jyjVBzZPRpYhYPtq1rUgrmmLrDwOKSHQmjkOkZXg+LiaFO56pS
- nURnXaVaOHxQRed1NI2sUd4w078wBvqP86FVCg+cOzCY7SDl0LLVNepN0g8R/Awfve+r07jnCaK
- 0rMA4undyIX8SFF1HKdPtu2/Nma/3Nvjbm6gPMOfYfnmQwg57DUshcRonDPKMmNA756enVb9kyD
- qvO/YX9N9qMqbabzoeaASw1TWRbwFO+aSjheXPQawHZsK7HdcjXfwfmly8x3O8I24X5MUa+8i5j
- 188vhSc+13xXTp4t0khpGgu8CefPPrq/5umwwXyK8WDijwErPGPA8dqBf6V12yII5HYmiadMnwZ
- Gkvko4t08r0vZY1L1tg==
-X-Proofpoint-ORIG-GUID: tXsNdLv-uI2uGb5-u1DrvYcJAePr6Lw4
-X-Proofpoint-GUID: tXsNdLv-uI2uGb5-u1DrvYcJAePr6Lw4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-06_02,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 spamscore=0 adultscore=0 clxscore=1015
- suspectscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060170
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260630135729.466264-1-bin.meng@processmission.com>
+ <20260630135729.466264-2-bin.meng@processmission.com>
+ <a8ed5d83-0cf5-4bf5-b6af-9cd9f2d1f9f4@oss.qualcomm.com>
+In-Reply-To: <a8ed5d83-0cf5-4bf5-b6af-9cd9f2d1f9f4@oss.qualcomm.com>
+From: Bin Meng <bmeng.cn@gmail.com>
+Date: Tue, 7 Jul 2026 00:54:43 +0800
+X-Gm-Features: AVVi8CfXPobH0YboXlI1tVG_faDij0mUohbOnFhAZGshVEuEXrnG1nnogx0lJS8
+Message-ID: <CAEUhbmWhkMK9mkeOtD2T4sQ30N2fau1Tt3C1yeRf5rzHg63Nmw@mail.gmail.com>
+Subject: Re: [PATCH 01/10] hw/block: m25p80: Fix dummy byte handling for
+ Winbond flash
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
+ Alistair Francis <alistair@alistair23.me>, Hanna Reitz <hreitz@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,37 +123,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that the page_check_range() race condition is fixed, let
-vma-pthread run on CI again.
+HI Philippe,
 
-This reverts commit 5842de51573fdbd7299ab4b33d64b7446cc07649.
+On Mon, Jul 6, 2026 at 3:50=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> Hi Bin,
+>
+> On 30/6/26 15:57, Bin Meng wrote:
+> > The m25p80 model uses s->needed_bytes to track how many bytes a
+> > controller must send after an opcode before the flash model can enter
+> > the data phase. For address-bearing commands this includes the address
+> > bytes. For fast-read commands it also includes the dummy phase.
+> >
+> > The tricky part is that flash datasheets describe the dummy phase in
+> > clock cycles, while the QEMU SSI interface advances the flash model one
+> > transferred byte at a time. The dummy clock count therefore has to be
+> > converted to the number of SSI bytes that the controller will actually
+> > emit.
+> >
+> > Some controllers have drivers that push these dummy bytes into a FIFO.
+> > Other controllers are programmed with a dummy-cycle count and generate
+> > the clocks themselves. The flash model still has to use the same byte
+> > count that a FIFO-style controller or the Linux spi-mem layer would use=
+,
+> > otherwise the model waits too long and drops the first data bytes.
+> >
+> > Let's fix the inconsistency from the flash side first. We start from an
+> > easy one, the Winbond flashes.
+> >
+> > Per the Windbond W25Q256JV datasheet [1] instrunction set table
+>
+> "instruction"
+>
+> > (chapter 8.1.2, 8.1.3, 8.1.4, 8.1.5), fix the wrong number of
+> > dummy bytes needed for fast read commands.
+> >
+> > [1] https://www.winbond.com/resource-files/w25q256jv%20spi%20revb%20092=
+02016.pdf
+> >
+> > Fixes: fe8477052831 ("m25p80: Fix QIOR/DIOR handling for Winbond")
+> > Fixes: 3830c7a460b8 ("m25p80: Fix WINBOND fast read command handling")
+> > Fixes: cf6f1efe0b57 ("m25p80: Fast read commands family changes")
+> > Signed-off-by: Bin Meng <bin.meng@processmission.com>
+> > ---
+> >
+> >   hw/block/m25p80.c | 4 ++--
+> >   1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+> > index 4a4cda6602..59ecb32c0a 100644
+> > --- a/hw/block/m25p80.c
+> > +++ b/hw/block/m25p80.c
+> > @@ -1004,7 +1004,7 @@ static void decode_fast_read_cmd(Flash *s)
+> >           s->needed_bytes +=3D 1;
+> >           break;
+> >       case MAN_WINBOND:
+> > -        s->needed_bytes +=3D 8;
+> > +        s->needed_bytes +=3D 1;
+>
+> hw/block/m25p80.c-1224-    case FAST_READ:
+> hw/block/m25p80.c-1225-    case FAST_READ4:
+> hw/block/m25p80.c:1226:        decode_fast_read_cmd(s);
+>
+> This method is handling 2 distinct commands. Should we pass the
+> address count by argument? (IIUC that alters the dummy clock count)
+>
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- tests/tcg/multiarch/Makefile.target | 9 ---------
- 1 file changed, 9 deletions(-)
+Per the datasheet, the only difference is 3-byte address vs. 4-byte
+address. The number of dummy cycles are the same.
 
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-index 508149d57bd..ab4bf9c5d53 100644
---- a/tests/tcg/multiarch/Makefile.target
-+++ b/tests/tcg/multiarch/Makefile.target
-@@ -60,15 +60,6 @@ tb-link: LDFLAGS+=-lpthread
- # code to work around the compiler.
- sha1: CFLAGS+=-Wno-stringop-overread -Wno-unknown-warning-option
- 
--# The vma-pthread seems very sensitive on gitlab and we currently
--# don't know if its exposing a real bug or the test is flaky.
--ifneq ($(GITLAB_CI),)
--run-vma-pthread: vma-pthread
--	$(call skip-test, $<, "flaky on CI?")
--run-plugin-vma-pthread-with-%: vma-pthread
--	$(call skip-test, $<, "flaky on CI?")
--endif
--
- run-test-mmap: test-mmap
- 	$(call run-test, test-mmap, $(QEMU) $<, $< (default))
- 
--- 
-2.54.0
+> >           break;
+> >       case MAN_NUMONYX:
+> >           s->needed_bytes +=3D numonyx_extract_cfg_num_dummies(s);
+> > @@ -1099,7 +1099,7 @@ static void decode_qio_read_cmd(Flash *s)
+> >       switch (get_man(s)) {
+> >       case MAN_WINBOND:
+> >           s->needed_bytes +=3D WINBOND_CONTINUOUS_READ_MODE_CMD_LEN;
+> > -        s->needed_bytes +=3D 4;
+> > +        s->needed_bytes +=3D 2;
+>
+> Ditto:
+>
+> hw/block/m25p80.c-1257-    case QIOR:
+> hw/block/m25p80.c-1258-    case QIOR4:
+>
+> >           break;
+> >       case MAN_SPANSION:
+> >           s->needed_bytes +=3D SPANSION_CONTINUOUS_READ_MODE_CMD_LEN;
+>
 
+Regards,
+Bin
 
