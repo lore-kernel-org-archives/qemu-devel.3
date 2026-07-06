@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78483C44501
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 23:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2AA6C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 23:02:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgsJJ-0001Tb-2l; Mon, 06 Jul 2026 19:01:09 -0400
+	id 1wgsJK-0001Uo-F0; Mon, 06 Jul 2026 19:01:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3rzNMagYKCqATITUSRGOOGLE.COMQEMU-DEVELNONGNU.ORG@flex--titusr.bounces.google.com>)
- id 1wgsJH-0001SA-7O
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 19:01:07 -0400
+ <3sDNMagYKCqEUJUVTSHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--titusr.bounces.google.com>)
+ id 1wgsJI-0001Sr-Fu
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 19:01:08 -0400
 Received: from mail-pg1-x549.google.com ([2607:f8b0:4864:20::549])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3rzNMagYKCqATITUSRGOOGLE.COMQEMU-DEVELNONGNU.ORG@flex--titusr.bounces.google.com>)
- id 1wgsJF-000746-E3
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 19:01:06 -0400
+ <3sDNMagYKCqEUJUVTSHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--titusr.bounces.google.com>)
+ id 1wgsJG-00074Z-V8
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 19:01:08 -0400
 Received: by mail-pg1-x549.google.com with SMTP id
- 41be03b00d2f7-c860544c077so9783845a12.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 16:01:04 -0700 (PDT)
+ 41be03b00d2f7-c891ed872ddso5608860a12.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 16:01:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1783378864; x=1783983664; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:from:subject
- :message-id:references:mime-version:in-reply-to:date:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=6fU0aRx9V9/Af1UMElRogGHAdUuCSDaABAHFfvVjCok=;
- b=RXTeyjJAb/QcY/5DhSxT8F4TmzZNhx9AgsZFUpNrHdAGfUE0n6LtooNIjAnM+6m/o8
- 4mFw3wZ+0GH7Va7cGfA3qo2U6lhmRwasJIftDwIZyOjg7LR90Wr0eB1Mfya7Oyrv7lVX
- uwxwDRdY5jQeA/XgutAWKM57ZqviGah5n0hwmYdi/bSW2fffpHhs+HY8EoogqbPQoq+S
- YDq2rY10tjNqCz/53gjkhY7WsAKNur7pMBpnZm5zUjr3jJVdAlxEpRM97QS/QIWxiUJv
- LikJqEpuZ7rakMQQ3hlwRgh2PDRXa1WI0/y0Eyn68QQW+dOCwkR5g0Le20USSoybdpuY
- GCZw==
+ d=google.com; s=20251104; t=1783378865; x=1783983665; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=OLTxskLBXDENLFyN1dtTBrLCPkP5BiKim3I9wu6aM8I=;
+ b=eK8IDoXn2tYfArPwudUQm3xcm2eekmsquiVXnBrkHpbk2+sMQ3OxOEVs2saQXHzg7y
+ PO88NxajZYJ1idE6tslnBd/26k3UmKMH6XXiGGwuDe11V6raPTRCuiJPv+dFmRr1z7cn
+ xCCjXBDIlnqgVW3mIg6Pm2YqdRc0vdUyWIuC+jZk+PXCwOpeOjc2L3Him7+5P112vf6+
+ N9KH6Mg2ZWnpWJoSER6bqKBvyOs2MX1LkcUeWlRGfpJHtUS33mk8J3dFP9xsELe9doNw
+ Vepofy11j899W9Vo2Ya43OdArXOx9Mhk9xdAlwGrpHw6RR9QobMI/ImPEj29n54DFzsn
+ kx8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783378864; x=1783983664;
- h=content-transfer-encoding:content-type:cc:to:from:subject
- :message-id:references:mime-version:in-reply-to:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=6fU0aRx9V9/Af1UMElRogGHAdUuCSDaABAHFfvVjCok=;
- b=EhGcMiH4J12HedbWOHtIAxx7AdOl2eOo4AxaUwG5uWMEPgVcdP4dcAs8MQMPevVg8w
- Dj3NyKm6qH8HT3u1EA98wjnPjJmJxD41gjeiI5DkCX+mpmPpe92ge/FTer7+BXCyRInn
- ApEMkZVPhtn3zKEDraOp45zxrVqPHPgEwXefFJgsWOQ6axKhZIbyGKLN+8Xnc/xHJ4u2
- aFlIeML6SeKQrsdYCuJmkrlNats48jU7rpO0Ur7kIu81Au/Y+VfB4j6GWMt2pLHiX9Sp
- S1HkJtCSYe99goEE1oZTFaovVswb3miNeYYD7QsVqf7xp3nr1fgjIyThw4Z6HYUZb83i
- ZhNg==
+ d=1e100.net; s=20251104; t=1783378865; x=1783983665;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OLTxskLBXDENLFyN1dtTBrLCPkP5BiKim3I9wu6aM8I=;
+ b=XU1r7LppgxgaTc+lGULBU8C0u/UBSG/xbtSeVI0YMu9wGZhMSM/O5WfjObwo/WEliU
+ jJ6D4pM9cEfp8vm7stIXINNfVa2+MTcrS+WYmN2GoPzkQtFNmEtXnpJyOPjafstbaET/
+ eT3CcDEYhmfGdb/wEwlGHekBL1OWG779paZepbeUTXCOl5SJ5As35c7KwWa3mpkl9fQM
+ xrLxsn4VXLmSjyYK+RoCxvo0MVTlxY9sgcUmK8IEwyQBNuvkKPa5IM08W/BGxh+Z5dL+
+ J30+AKXtwenvxOySYgpG7KTESlLiXfLhlOjSxtkrs6NuJM9KRNVPlbSHc6V/cSuB4ew+
+ seyQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RopEtUE30yPa6lGAFWP1hTyspnXqBRd5+Rw/Cuh2b78scoYK38jDoNK6EPNUJD5OX85N3itrNmoHJZP@nongnu.org
-X-Gm-Message-State: AOJu0Yy1kIeizX/OsXUPWuiCC7QNhGCLQV8rquFiC6EEVQNJMqfDMzJc
- d1QUAjGwXaeTw98apW4yd+VFMPNbzgfgzXRmQ+P/XVbEG/4eV+92LXJHIVkBeG977Rk+pcYdG5B
- dLPXVbA==
-X-Received: from dybhh38.prod.google.com
- ([2002:a05:7301:2926:b0:30f:1d9a:8ad6])
+ AHgh+RoGIB7Ydp2pqRuUPXg6ySYorsXZ5y/zhCIleL1DztjUkI4mPKUaFxd52wu335PZCzfhmzPi9vmFAysR@nongnu.org
+X-Gm-Message-State: AOJu0YwzoGfyfNkyj9cIQtU1bkSD6tI/H+rfQZibyWxjphUQEMRugJPJ
+ 06dVNJm8nGkD1jQLlKseKifWEAf5VZTSVmScJZn1LstV48qBZU2XHWvOF/9waMb14Vt5DpWXhhJ
+ oGRROhA==
+X-Received: from dlea16-n1.prod.google.com
+ ([2002:a05:701b:4210:10b0:13b:3fa1:5d80])
  (user=titusr job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a21:a94:b0:3bf:49c8:f63
- with SMTP id adf61e73a8af0-3c08ee392edmr3310349637.37.1783378863541; Mon, 06
- Jul 2026 16:01:03 -0700 (PDT)
-Date: Mon,  6 Jul 2026 23:00:53 +0000
+ 2002:a05:6a21:7116:b0:3bf:e291:496c
+ with SMTP id adf61e73a8af0-3c08edb1d45mr3167471637.17.1783378864356; Mon, 06
+ Jul 2026 16:01:04 -0700 (PDT)
+Date: Mon,  6 Jul 2026 23:00:54 +0000
 In-Reply-To: <20260706230056.1888992-1-titusr@google.com>
 Mime-Version: 1.0
 References: <20260706230056.1888992-1-titusr@google.com>
 X-Mailer: git-send-email 2.55.0.rc2.803.g1fd1e6609c-goog
-Message-ID: <20260706230056.1888992-5-titusr@google.com>
-Subject: [PATCH 4/5] hw/i2c: smbus: increase MAX_DATA_LEN
+Message-ID: <20260706230056.1888992-6-titusr@google.com>
+Subject: [PATCH 5/5] hw/i2c: pmbus: add Linear11 format helpers
 From: Titus Rwantare <titusr@google.com>
 To: peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com, 
  imaginos32@gmail.com, wuhaotsh@google.com, philmd@mailo.com, 
- titusr <titusr@google.com>
+ Titus Rwantare <titusr@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2607:f8b0:4864:20::549;
- envelope-from=3rzNMagYKCqATITUSRGOOGLE.COMQEMU-DEVELNONGNU.ORG@flex--titusr.bounces.google.com;
+ envelope-from=3sDNMagYKCqEUJUVTSHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--titusr.bounces.google.com;
  helo=mail-pg1-x549.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
+X-Spam_score_int: -94
+X-Spam_score: -9.5
 X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-9.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ FUZZY_MILLION=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
  USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,59 +97,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: titusr <titusr@google.com>
-
-The 32 byte payload was raised to 255 for block reads in the SMBus 3.0
-specification. SMBus does not provide a way for devices to declare which
-version of the spec they are designed to so we must allow newer devices
-to return as much data as they allow.
-
-Specification: https://smbus.org/specs/SMBus_3_3_20240512.pdf
-
-> 6.5.7 Block Write/Read
-The Block Write begins with a slave address and a write condition. After th=
-e command code the host issues a byte count which describes how many more b=
-ytes will follow in the message. If a slave has 20 bytes to send, the byte =
-count field will have the value 20 (14h), followed by the 20 bytes of data.=
- The byte count does not include the PEC byte. The byte count may be 0. A B=
-lock Read or Block Write is allowed to transfer a maximum of 255 data bytes=
-.
-
 Signed-off-by: Titus Rwantare <titusr@google.com>
 ---
- hw/i2c/smbus_slave.c         | 4 ++--
- include/hw/i2c/smbus_slave.h | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ hw/i2c/pmbus_device.c         | 12 +++++++++
+ include/hw/i2c/pmbus_device.h | 46 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 58 insertions(+)
 
-diff --git a/hw/i2c/smbus_slave.c b/hw/i2c/smbus_slave.c
-index cfb61c879e..407a118d24 100644
---- a/hw/i2c/smbus_slave.c
-+++ b/hw/i2c/smbus_slave.c
-@@ -217,8 +217,8 @@ bool smbus_vmstate_needed(SMBusDevice *dev)
-=20
- const VMStateDescription vmstate_smbus_device =3D {
-     .name =3D TYPE_SMBUS_DEVICE,
--    .version_id =3D 1,
--    .minimum_version_id =3D 1,
-+    .version_id =3D 2,
-+    .minimum_version_id =3D 2,
-     .fields =3D (const VMStateField[]) {
-         VMSTATE_I2C_SLAVE(i2c, SMBusDevice),
-         VMSTATE_INT32(mode, SMBusDevice),
-diff --git a/include/hw/i2c/smbus_slave.h b/include/hw/i2c/smbus_slave.h
-index 86bfe0a79e..59522ff1b1 100644
---- a/include/hw/i2c/smbus_slave.h
-+++ b/include/hw/i2c/smbus_slave.h
-@@ -64,7 +64,7 @@ struct SMBusDeviceClass {
-     uint8_t (*receive_byte)(SMBusDevice *dev);
- };
-=20
--#define SMBUS_DATA_MAX_LEN 34  /* command + len + 32 bytes of data.  */
-+#define SMBUS_DATA_MAX_LEN 257  /* command + len + 255 bytes of data.  */
-=20
- struct SMBusDevice {
-     /* The SMBus protocol is implemented on top of I2C.  */
---=20
+diff --git a/hw/i2c/pmbus_device.c b/hw/i2c/pmbus_device.c
+index 8befc27895..5039975520 100644
+--- a/hw/i2c/pmbus_device.c
++++ b/hw/i2c/pmbus_device.c
+@@ -39,6 +39,12 @@ uint16_t pmbus_data2linear_mode(uint16_t value, int exp)
+     return value >> exp;
+ }
+ 
++uint16_t pmbus_data2linear11(uint16_t value, int exp)
++{
++    return (uint16_t)((exp & 0x1F) << 11 |
++        (pmbus_data2linear_mode(value, exp) & 0x7FF));
++}
++
+ uint16_t pmbus_milliunits2linear_mode(uint32_t value, int exp)
+ {
+     uint32_t ret;
+@@ -58,6 +64,12 @@ uint16_t pmbus_milliunits2linear_mode(uint32_t value, int exp)
+     return ret;
+ }
+ 
++uint16_t pmbus_milliunits2linear11(uint32_t value, int exp)
++{
++    return (uint16_t)((exp & 0x1F) << 11 |
++        (pmbus_milliunits2linear_mode(value, exp) & 0x7FF));
++}
++
+ uint16_t pmbus_linear_mode2data(uint16_t value, int exp)
+ {
+     /* D = L * 2^e */
+diff --git a/include/hw/i2c/pmbus_device.h b/include/hw/i2c/pmbus_device.h
+index 9f3569e997..44cd908fe7 100644
+--- a/include/hw/i2c/pmbus_device.h
++++ b/include/hw/i2c/pmbus_device.h
+@@ -477,10 +477,56 @@ uint32_t pmbus_direct_mode2data(PMBusCoefficients c, uint16_t value);
+  *
+  * L = D * 2^(-e)
+  *
++ * Exponent is retrieved from VOUT_MODE register
++ *
++ *   7   6   5   4   3   2   1   0
++ * +---+---+---+---+---+---+---+---+
++ * | 0 | 0 | 0 |       N           |
++ * +---+---+---+---+---+---+---+---+
++ *   |_______|   |_______________|
++ *     Mode          Exponent (N)
++ *    = 000b
++ *
+  * @return uint16
+  */
+ uint16_t pmbus_data2linear_mode(uint16_t value, int exp);
+ 
++/**
++ * Convert sensor values to linear11 format
++ *
++ *   L = e << 11 | D * 2^(-e)
++ *
++ *  |        Data Byte High             |        Data Byte Low          |
++ *  +---+---+---+---+---+   +---+---+---+---+---+---+---+---+---+---+---+
++ *  | 7 | 6 | 5 | 4 | 3 |   | 2 | 1 | 0 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
++ *  +---+---+---+---+---+   +---+---+---+---+---+---+---+---+---+---+---+
++ *  | MSB               |   | MSB                                       |
++ *  |_________ _________|   |_____________________ _____________________|
++ *            N                                   Y
++ *         Exponent                            Mantissa
++ *
++ * @return uint16
++ */
++uint16_t pmbus_data2linear11(uint16_t value, int exp);
++
++/**
++ * Convert sensor values in milliunits to linear11 format
++ *
++ *   L = e << 11 | D * 2^(-e)
++ *
++ *  |        Data Byte High             |        Data Byte Low          |
++ *  +---+---+---+---+---+   +---+---+---+---+---+---+---+---+---+---+---+
++ *  | 7 | 6 | 5 | 4 | 3 |   | 2 | 1 | 0 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
++ *  +---+---+---+---+---+   +---+---+---+---+---+---+---+---+---+---+---+
++ *  | MSB               |   | MSB                                       |
++ *  |_________ _________|   |_____________________ _____________________|
++ *            N                                   Y
++ *         Exponent                            Mantissa
++ *
++ * @return uint16
++ */
++uint16_t pmbus_milliunits2linear11(uint32_t value, int exp);
++
+ /**
+  * Convert milliunit sensor value to linear mode format
+  *
+-- 
 2.55.0.rc2.803.g1fd1e6609c-goog
 
 
