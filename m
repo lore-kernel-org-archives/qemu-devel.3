@@ -4,142 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CFE1C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 21:16:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3075C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 21:16:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgqfL-0000io-Hq; Mon, 06 Jul 2026 17:15:47 -0400
+	id 1wgqfz-0001H5-SD; Mon, 06 Jul 2026 17:16:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wgqfJ-0000cx-7z
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 17:15:45 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1wgqfs-0001FC-4U; Mon, 06 Jul 2026 17:16:21 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wgqfH-0004zz-2Y
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 17:15:44 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666KE5A91428858
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 21:15:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 7J360fr0h2cquQi8sYQEPhrVWL1/GVFYapo2HnFl984=; b=lib/EDVkic1XrskQ
- zqJHlU1KNL3iHp/8/chgNvxzAUo9VJb8Z4wBr4LzHOjhAdQHacGgjGu2bFip1+Je
- er6nKkt9EAEz6gFVru/qceVrSgbRThHVficwG6zDoDmfwZZq6tZB9r5Jg5iXrMDD
- RgxZ5ayxRosrzFSpdXnD6XGU86UsTt5DuC9E7qV9LpGFXOIhxCMJ5g4Azn504Ei1
- JNL2etiaZJA/zTaKD7RUoBwogDCXKJ3AqJX3IiSL+oss96lSZ0NmVZjDh38W9k8j
- AY33dRSfT89kmua9RFlQ8xuBSaDlBC0WWV1/TT7jqryzyYG+gwqoc3NO0IEtM6RD
- r4JcEQ==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f87rxujg8-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 21:15:41 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-847ad67cc51so3477898b3a.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 14:15:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783372541; x=1783977341; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7J360fr0h2cquQi8sYQEPhrVWL1/GVFYapo2HnFl984=;
- b=gfZsuy/JwEG08lHKP0VqlJF5JwZMKmevb5Od1SAO4tp9xbzSi2+gQfJCrFWUAIxunJ
- 6SZueAx5PCBXODzVrN/10uKcjba6Tztyp99f0ZAlihPrQHSpYCaZvVv9vQv8Hn6K8n1u
- lT+T1FWd832ttU8hh1z0QQPdUQi+frJ0vTefixTINRF/OsxaOSOWbgCZY+ckZY2KJbc0
- BXrr7Od7SJ88quq/ni6IJaYiW+cP3Eavgvj9/yi23HfhTBCtFI9ESL7oUVYGgQu14mIp
- 1TKkn5Q28YevXRqTLMIYMHpC6DCZAlNvAXF+RfxemdG6WXcL9F/bOKkR1wGtGqlfM4zV
- 5JwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783372541; x=1783977341;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7J360fr0h2cquQi8sYQEPhrVWL1/GVFYapo2HnFl984=;
- b=Z1bl/vhPeGDQ+VKiVwGjAlbfBYjeAJ7gz77IA2V4dK4TBwbBexw06bI+CrZZbSVEjj
- 5o5H6l1cIr2penOg8hl1UHLUJa4ws5I97wTlIevNwbMWKBGultlSppqo6YTud02sPMaG
- InTZR69GaewaxwSDjWe6wSAAvxyyuiVCa6y21SH7B+7L8M0pVC6fOBQojP4aU53sPsDA
- vU6FQ7ZG1uLtWK9H50GnkYvjWaCdFHcgxfYCPZsFoZhqjjI5XMKcqNTSqQa7lI5faG5j
- N6LPC6Bra/9WD4fwdsPgKA8bbzmZXBTo0Q6SCrpXa5i0IQyjf/UFIqELAKh9VN00O7mI
- M7eQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+Ro2XtKzv0rFu7XvjTf8tN40ammCd/amYj1Bb7TQoXzatgh0EzJMJtVPjrWxPBx1/FpZgBvUM79Hb+gT@nongnu.org
-X-Gm-Message-State: AOJu0YzIYia0UwECC84enehBdYA1RKLSUujBPG4rRVWOnrQaLS7R4UFQ
- rS6w6ygPMpZSdXa5DXT4mIb7XDjCSEO54EW5vL284yeqnnMTlF8EDy98AcRStwuYDhY8nxWEVGB
- RTjyOn7x+xHz+HXzsQKeBey0+Px1dP7jlHZ2auCgErdcUIex5Vj3wFV28yw==
-X-Gm-Gg: AfdE7clvSTu2m2sPbaeVWA3RgJbfsiJ+GzFqT9Bn3IwBxqDyV+Bq0uRHO/tvbnfoIDZ
- 7k7745D8Qp4N4EHinKBFsJXxZO3sNiyXzdTUYWpEyCkuTP+Nvn1Y9Z9pbizitN30UINB1w9iXPU
- MJf9dnStyN/8gXg7zUAsSpXZQxqTLZpsbbcUnaPAsKudiUyemdU+RhfRvFwCf/fFhOUIXMvNprY
- xwLp5ziT3wVQSTn/DPUFPVg1eqNg0AYAqT58x8sU6P4Eym82fvqBH5ZZF64I6G+UE7fSITTwjKe
- VTUTbh+wVDDjVDq528ijnWmpcMR9tTHRLl7W0G89J2yycQZgWsjrBvvgGn2xszl9i9pj8049H/j
- kuowfjJy/JO+I5fm0EqUaZZF8y/4jiHOa6cluMa1tPBlGFAv7XMb4udwjYA8NUji39pWkbVkjX5
- lIZZ0=
-X-Received: by 2002:a05:6a21:b85:b0:3bf:9cbd:9a36 with SMTP id
- adf61e73a8af0-3c08ed94fc8mr3105127637.26.1783372540489; 
- Mon, 06 Jul 2026 14:15:40 -0700 (PDT)
-X-Received: by 2002:a05:6a21:b85:b0:3bf:9cbd:9a36 with SMTP id
- adf61e73a8af0-3c08ed94fc8mr3105091637.26.1783372540020; 
- Mon, 06 Jul 2026 14:15:40 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-31174a56d4dsm371510eec.14.2026.07.06.14.15.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Jul 2026 14:15:39 -0700 (PDT)
-Message-ID: <9cc6ae91-9379-4469-8109-f3aed3f0f4b1@oss.qualcomm.com>
-Date: Mon, 6 Jul 2026 14:15:38 -0700
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1wgqfq-00056R-65; Mon, 06 Jul 2026 17:16:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=kOsomt8mCr62O+0LhqBZdVk01ekIvRUdGGbbg6oOnj0=; b=iuV+ClKc29vYY1vlEv2S056iPp
+ G2qea4n5qMAuIggSMamaMBIcm39lm9+dq1JrRAq2FY8ZRLErqzAcgOqSEQxZNUMh8zfNliJ8iG2ty
+ Umi6FWcENHsCoGr37bZP/4v8LkZrZQTtbIUL6x/eZx2f4l2ZeFKKpnKbk/F7vGuFiJowmy90Ai+Wz
+ HdegY8NWjvKuHevCeKNvQMKdWQ56+8/VBAtXSrh92djz1LxQnEyo7HaNfQG3oqM8J47qvMZq4vJDF
+ CG/0rSRHTvYL3tENHbw+nXnWySndbYBjnk46ugNjNEvxAV/njN2UMIYgam3Rt5smljWUcx7V7JQxJ
+ vtCIvS6XX07es4wdrobyOxf+aUjG/1sMTVPNXiyO1/Zw93PCrDLhTTjEeZZnOf/wu/Ep4b1GgL4WW
+ GAxlEmsB1RsX/XpkvH8gSOnIrrHGguMPAPS/RfdZvQIPYH2GEEnJFPzbxIh5AgEwGa5gfqnC0d9Bv
+ 2IbwzOJ9HT1GqeEN04VvLVoXeik0PZ/ulTvoMXGhDL43NX6Ke/QwacTEmCZBRCCHcodDv16q3ssqw
+ fv3fLdX3tAsq1rPVwRWoVFOGrXWTyZXpJ+ryoam5oSNIFVWBLdpxH0M55BbvqpPEWX865JT51j2ZH
+ bLTsvqwmq7G+o5j5wnUOaHGlG26KwOdslWhAcYFNQ=;
+Received: from [2a02:8012:2f01:0:76dc:834a:3475:8909]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1wgqfd-001Nj0-VO; Mon, 06 Jul 2026 22:16:06 +0100
+Message-ID: <c7b0d42c-4243-4f52-88ec-7f1deac160fc@ilande.co.uk>
+Date: Mon, 6 Jul 2026 22:16:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/9p: reduce xattr size to 1k
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>
-References: <E1wffqw-001Sc8-I9@kylie.crudebyte.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
+ QEMU Trivial <qemu-trivial@nongnu.org>, Michael Tokarev <mjt@tls.msk.ru>
+References: <20260309181452.83702-1-thuth@redhat.com>
+ <00c4ab4b-a58b-4de4-8e41-566b2cb7f920@redhat.com>
+ <124bd918-f2ab-43e2-bd2d-fc824de62c40@tls.msk.ru>
+ <fcbe3d7f-64d4-4b13-b930-a81e77db4784@ilande.co.uk>
+ <df7a091c-a8a1-416a-acf3-28a0cbd8dd2f@redhat.com>
+ <c7d6b801-449e-4f55-9c1d-ebec7a0e9595@redhat.com>
+ <c0cd50bd-e054-48b6-af54-1050e13bb720@ilande.co.uk>
+ <baf0b727-d53c-4717-b4e8-9c8603b2fa75@oss.qualcomm.com>
+ <a60309be-c514-4b22-8970-ecfcf2b4fde7@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <E1wffqw-001Sc8-I9@kylie.crudebyte.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: rDugSTBva_XYShHB0PLdrlcJ_BTL9WHN
-X-Authority-Analysis: v=2.4 cv=Hv1G3UTS c=1 sm=1 tr=0 ts=6a4c1afd cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=K92WTf5yAAAA:8 a=STDx42bSIwQV5gvF0D0A:9 a=QEXdDO2ut3YA:10
- a=zc0IvFSfCIW2DFIPzwfm:22 a=X9ok8FpLfHEzVMsE4qxm:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDIxNCBTYWx0ZWRfXy+3nQePx2lOI
- v/hFb2QLLmyrFx3kxFPuUEfagW9R8AU97w5VqBSVy/Wu0bbbm7AX1q68KgATaRcqjhCp1IbaDdr
- FDA9ItbTVV0+h6n7sjeKt4ShCJGL3Mg=
-X-Proofpoint-GUID: rDugSTBva_XYShHB0PLdrlcJ_BTL9WHN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDIxNCBTYWx0ZWRfXzMD9rJv5XFwP
- 9FnQsDp2082X0YJoBOJa5Qz7X1xh9ElPL/l2npG9Fr294rVDgXnlm76WV7wH7IPGm9E4pVmRoA7
- K66s1yusNCJALMP5XwJfaMt2SkSyIu4i+ulDe4Klz1+2SuIKe5m2Pq12MsXX0nyEIU8Zk40lxND
- sJnQhBqM20Y6XFwQVybUExU8eoY7TyLft4wrIg3Sn9u+8F6+Y3/O0UdSY0g2NPcpttYfgEMp47c
- WHhavSYb5GQTNpWgtHBbbQpTw4sypc67WZSj1ATevuTefRcxkqouGaIBvwOKiMUTVDGm4AvCkVr
- 2+T06aSqzVPIlqXX1YTJemZtO0stTKLKpqaf2rvRUIKjmN6LhNLIlHM3nTrfeZxviE9AWuhDhCu
- e52wagHuGO5rlys9F1g7agzT3eUlK3cmyXbl3m76UBTphrno/BTHyvxOk3nWWrRuW++/qCWIVGy
- BDcSN7PNMliX0jmaaSg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-06_03,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- spamscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060214
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <a60309be-c514-4b22-8970-ecfcf2b4fde7@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:76dc:834a:3475:8909
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v2] hw/sparc64/sun4u: Mark unusable PCI busses as full to
+ ease device plugging
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,29 +114,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/2026 8:26 AM, Christian Schoenebeck wrote:
-> On host systems with ext4 and ea_inode capability not enabled, the max. size
-> for xattr values is slightly below 4k, which caused the new xattr tests to
-> fail on such host systems.
-> 
-> Reduce the xattr size for our tests to 1k to prevent them to fail on such
-> host systems.
-> 
-> Reported-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> Fixes: 04a62cdfe8 ("tests/9p: add 3 xattr FID limit test cases (local fs driver)")
-> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> ---
->  tests/qtest/virtio-9p-test.c | 14 ++++++++++----
->  1 file changed, 10 insertions(+), 4 deletions(-)
-> 
+On 06/07/2026 21:29, Philippe Mathieu-Daudé wrote:
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Tested-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> On 6/7/26 19:29, Philippe Mathieu-DaudÃ© wrote:
+>> Hi,
+>>
+>> On 30/6/26 00:20, Mark Cave-Ayland wrote:
+>>> On 29/06/2026 14:43, Thomas Huth wrote:
+>>>
+>>>> On 09/06/2026 08.02, Thomas Huth wrote:
+>>>>> On 08/06/2026 23.29, Mark Cave-Ayland wrote:
+>>>>>> On 08/06/2026 09:26, Michael Tokarev wrote:
+>>>>>>
+>>>>>>> On 30.04.2026 12:50, Thomas Huth wrote:
+>>>>>>>> On 09/03/2026 19.14, Thomas Huth wrote:
+>>>>>>>>> From: Thomas Huth <thuth@redhat.com>
+>>>>>>>>>
+>>>>>>>>> When trying to plug a PCI device to a Sparc64 machine, you currently
+>>>>>>>>> have to specify the right bus ("bus=pciB"), otherwise you get this error:
+>>>>>>>>>
+>>>>>>>>>   $ qemu-system-sparc64 -device virtio-scsi-pci
+>>>>>>>>>   qemu-system-sparc64: -device virtio-scsi-pci: PCI: no slot/ function
+>>>>>>>>>   available for virtio-scsi-pci, all in use or reserved
+>>>>>>>>>
+>>>>>>>>> This is quite annoying for the unexperienced users, and it also breaks
+>>>>>>>>> e.g. the iotests ("make check-block") when running with qemu- system- sparc64.
+>>>>>>>>>
+>>>>>>>>> Mark the non-usable PCI busses as full now, so that QEMU can automatically
+>>>>>>>>> plug new PCI devices to the right "pciB" bus.
+>>>>>>>>>
+>>>>>>>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>>>>>>>> ---
+>>>>>>>>>   v2: Do the change in the machine code, not in the sabre device
+>>>>>>>>>
+>>>>>>>>>   hw/sparc64/sun4u.c | 7 +++++++
+>>>>>>>>>   1 file changed, 7 insertions(+)
+>>>>>>>>>
+>>>>>>>>> diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+>>>>>>>>> index b8bda1eb816..37539535c6c 100644
+>>>>>>>>> --- a/hw/sparc64/sun4u.c
+>>>>>>>>> +++ b/hw/sparc64/sun4u.c
+>>>>>>>>> @@ -723,6 +723,13 @@ static void sun4uv_init(MemoryRegion *address_space_mem,
+>>>>>>>>>       fw_cfg_add_i16(fw_cfg, FW_CFG_SPARC64_DEPTH, graphic_depth);
+>>>>>>>>>       qemu_register_boot_set(fw_cfg_boot_set, fw_cfg);
+>>>>>>>>> +
+>>>>>>>>> +    /*
+>>>>>>>>> +     * Mark internal PCI busses as full so that the plugging of additional
+>>>>>>>>> +     * PCI devices happens on the right bus that still has free slots:
+>>>>>>>>> +     */
+>>>>>>>>> +    qbus_mark_full(&pci_bus->qbus);
+>>>>>>>>> +    qbus_mark_full(&pci_busA->qbus);
+>>>>>>>>>   }
+>>>>>>>>>   enum {
+>>>>>>>>
+>>>>>>>> Friendly ping!
+>>>>>>>
+>>>>>>> This, being a simple change, somehow has not been reviewed still, so
+>>>>>>> it's sitting in the queue...
+>>>>>>
+>>>>>> Yes, apologies - I've been absolutely flat out recently, and I've got a note to 
+>>>>>> take a look at this and Peter's patch as soon as I can.
+>>>>>>
+>>>>>> Is this fixing an urgent issue with "make check-block" or similar?
+>>>>>
+>>>>> It's not urgent since this has been broken forever, but yes, it fixes "make 
+>>>>> check- block" for the case where sparc64 is the only available target during 
+>>>>> "configure -- target-list=sparc64-softmmu" and thus the iotests run with qemu- 
+>>>>> system-sparc64.
+>>>> Ping!
+>>>>
+>>>> While it's not urgent, soft-freeze date is in a week, so it would be nice to get 
+>>>> this merged before it misses another release ... WDYT?
+>>>
+>>> Hi Thomas,
+>>>
+>>> I'm still playing catch-up a bit here, but I can't immediately find my notes on 
+>>> using pciA under QEMU. I think if it fixes the iotests then go ahead and merge it 
+>>> for now, which gives me time in freeze to investigate any reported issues.
+> 
+> 
+>> Anyway, back to the problem here, the first part is indeed as noticed
+>> Thomas to use qbus_mark_full() for the root bus:
+>>
+>> -- >8 --
+>> diff --git a/hw/pci-host/sabre.c b/hw/pci-host/sabre.c
+>> index cd2328ad53f..6a8d0b6c6d2 100644
+>> --- a/hw/pci-host/sabre.c
+>> +++ b/hw/pci-host/sabre.c
+>> @@ -400,6 +400,9 @@ static void sabre_realize(DeviceState *dev, Error **errp)
+>>       s->bridgeA = PCI_BRIDGE(pci_dev);
+>>       pci_bridge_map_irq(s->bridgeA, "pciA", pci_simbaA_map_irq);
+>>       pci_realize_and_unref(pci_dev, phb->bus, &error_fatal);
+>> +
+>> +    /* Only in-built Simba APBs can exist on the root bus */
+>> +    qbus_mark_full(&phb->bus->qbus);
+>>   }
+>>
+>>   static void sabre_init(Object *obj)
+>> diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+>> index d69ed9a81ac..b65f3d1a140 100644
+>> --- a/hw/sparc64/sun4u.c
+>> +++ b/hw/sparc64/sun4u.c
+>> @@ -546,7 +546,7 @@ static void sun4uv_init(MemoryRegion *address_space_mem,
+>>       unsigned int i;
+>>       uint64_t initrd_addr, initrd_size, kernel_addr, kernel_size, kernel_entry;
+>>       SabreState *sabre;
+>> -    PCIBus *pci_bus, *pci_busA, *pci_busB;
+>> +    PCIBus *pci_busA, *pci_busB;
+>>       PCIDevice *ebus, *pci_dev;
+>>       SysBusDevice *s;
+>>       DeviceState *iommu, *dev;
+>> @@ -588,14 +588,13 @@ static void sun4uv_init(MemoryRegion *address_space_mem,
+>>               qdev_get_gpio_in_named(DEVICE(cpu), "ivec-irq", i));
+>>       }
+>>
+>> -    pci_bus = PCI_HOST_BRIDGE(sabre)->bus;
+>>       pci_busA = pci_bridge_get_sec_bus(sabre->bridgeA);
+>>       pci_busB = pci_bridge_get_sec_bus(sabre->bridgeB);
+>>
+>> -    /* Only in-built Simba APBs can exist on the root bus, slot 0 on busA is
+>> -       reserved (leaving no slots free after on-board devices) however slots
+>> -       0-3 are free on busB */
+>> -    pci_bus_set_slot_reserved_mask(pci_bus, 0xfffffffc);
+>> +    /*
+>> +     * Slot 0 on busA is reserved (leaving no slots free after on-board
+>> +     * devices) however slots 0-3 are free on busB
+>> +     */
+>>       pci_bus_set_slot_reserved_mask(pci_busA, 0xfffffff1);
+>>       pci_bus_set_slot_reserved_mask(pci_busB, 0xfffffff0);
+>>
+>> ---
+>>
+>> I'm still looking at the 2nd part, the reserved slots.
+> 
+> (Because with this patch, the test passes as we can plug devices from
+> the command line, but they end plugged on pciA instead of pciB -- thus
+> the 2nd part missing).
 
-Looks good for me, and fix the failure observed.
-In case you want the test to be more complete, you may try to detect
-ea_node presence, and adapt the size to it.
+Thanks for taking a look, Phil. IIRC the reason I added slot_reserved_mask was so 
+that it was possible to populate pciA programatically in sun4uv_init(), and then 
+enable the mask so that specifying an additional PCI device using -device on the 
+command line without an explict PCI bus would cause the automatic allocation to place 
+the device on pciB.
 
-Regards,
-Pierrick
+
+ATB,
+
+Mark.
+
 
