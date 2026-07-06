@@ -4,109 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2056C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 17:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3BD1C43602
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 17:29:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgn76-0003h2-OO; Mon, 06 Jul 2026 13:28:12 -0400
+	id 1wgn8D-0005Vp-BJ; Mon, 06 Jul 2026 13:29:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wgn74-0003gP-OV
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:28:10 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wgn8B-0005Qb-Mh
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:29:19 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wgn72-000305-JS
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:28:10 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-66493875766so4923012d50.0
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 10:28:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783358886; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wgn8A-0003AT-2w
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:29:19 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-80e4455ba39so529527b3.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 10:29:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783358957; cv=none;
  d=google.com; s=arc-20260327;
- b=ZVGhIJiMY6Ujbix9fjQeT4xqwj+1OQrp0f2NMuyHHZbjkamKt4yCW44jhEdzLwv1/u
- E6PaBOjrk+eXOSqCyEGY0QAmMYEWQQhLUtyh2rDWVg6fAk8VjIfp1n5/x/gwAuE5Z3bc
- 39T9my2F0nCFCZrzTiievUPhHD5WNfBPRJYUR/F74eEBo8ZOp+9V6GYwTDmM2xljYN6e
- nCBPMPGOoog7Jsr6qWxdqa4Zs/RTz0s2q14Q9ZG5OZ1Se/Kk2Fn06oRzJAZcQ1s2n1UE
- 9hFQBTccIvPTa/BUIueW7EUyJ3wswXZ08JUPaikbncw/D0A81YrkOwqFVsvq4ATY4dtx
- C9rw==
+ b=rCrYvf0kpBEDoJfBHQl7poArVOamPJGPpnmGnXuyVPhZUdG6XKtqUJ0PMM8R92A5Vs
+ j0ZCGdD0LfE/Tpfnm5gfai2cOQoPGkKbKnmB2bNhQPpdiZZD2Sm3gRHbEmXN2yM3wg8z
+ a4Lum90HjnDzeJtxcVOgazXYpMsjqjFGMq3sWqq/ddGAx8OpG7Gey+hNTWHz28o4y487
+ JgWx+3vCKq3fOuRqsv/GGnHGfXTlJ8cZ8+126iDUn0EP6lM8DS+1lDHZiwKUqDUbqxPw
+ sofuwAj9a+QY83rw2nyMrVwzRNy38ZbXZLbOXbY148K+ISe5BWU2hWUqDz85PZE6OOIf
+ P8Zg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=cV8jyNViLscs0Onpr029wrq4ZKuWT+tA/3BeKUtyGmU=;
- fh=zS2BaSG8zlK8ywMRAK4zJMoTCD+hzz4cwxLOHCFDTeM=;
- b=brr13ltBUpVBjJQDXPUv0o9FSwmXMkvf8pqmBgKiCTbhKjcwoNex0JASSTJCXpiSHw
- AB7pHxTZYhwB1d2VUDEqLmrGtf6YbS+uDtGRuv9NyMl8pLw4qwebuVw5o/gv4okWUma/
- hna5wiQnvI2wAF2lIegzSg31uxiya28Am3XO8AESrZOgbtwCtCVbc4qUoBrHHtGFZxik
- ABkOB6xeenxjlrtRQjFtgUp3in7ERfxw8x6ylwq9aK3g8VqrFsR/dHng+ki6QSfMXvoI
- LXTQ/Jk3Cf2UWQpRYAJzdceH705A0lQaUuyRYIduaa85+ntK5BoZqWEhnzDJLMqBysxQ
- u6uA==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=iClZscjiedIVC78pseYr2AnsDA+R5QCV3UOX/EOYR0Y=;
+ fh=WEJ15tX9epTWjJ2VmR8iecZlI58qJeOauJBn5MjM3cU=;
+ b=jV0DBfDsiFbhBjPo0nvKmmofnN5HRS6+PXLS2F4Dbw513rQX8/PuS7SybiMBqLMCYd
+ HEHrp5YZnUH7wjanNLIPnm3prlN83DYydtIZ1xg5oMTzfisjpBxAtSkUDU17BjM/LYHJ
+ z6Ug01a+rIO8wSPOtGmhSHnwsx3adpK8buU0xEWmY54HVkbXfAOrepv8SHB1gUD4OKij
+ k9d2Ih/T0IVNKMBpl5Otmoo1FazxkW+jW67ujP+/tTO3mub/vxjP0y7CMoEiAr1AcxsV
+ +uB2Ilpu8bb2apGoYuoa1ihG/wczxFhCt/WW98axFFlNy6lg3LJw+I4dhjtHfs+Xag5H
+ 3C1Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783358886; x=1783963686; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cV8jyNViLscs0Onpr029wrq4ZKuWT+tA/3BeKUtyGmU=;
- b=WfzuN1EIXbi8v3inw22kkVL97nweXeRWZjev77nYl4r2U2wQDff8TKsRaC1Vy1a7fx
- 2gkq/pW/oH2bbwX1b9sOjZiJaSz8GmA4H3YhRGaOdd7VTxOZ5f67WTojKkMqAHA05wEe
- x75qopgkdbHiXbZh/NwM/lUu3rTFnhAi0FnCabI7a+pBN7JH9zIpO1vOo5CRs2EzSn8m
- 7YoFzV1aN0VoYeaY4NrUHVuTzi/hzonckQgUpA4fwEiirPmUYmmMslo+Lv3tUXX0k7+V
- 5M+SXl9pEMh9EACa7lmra4B8LYoNigf9ahRn/1X5TRcjdPvkHOiCjrWuVvk+HJVw+h9+
- IKhQ==
+ d=linaro.org; s=google; t=1783358957; x=1783963757; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=iClZscjiedIVC78pseYr2AnsDA+R5QCV3UOX/EOYR0Y=;
+ b=eoAbHW+rWldDmc83LTA8zHpLS9vvXsMS6p8LeXWdSeQiqIC3omxGcX3wknwYVTAjKd
+ QRTXSHvdF/4+1mCOZxu+8LWQTgzLMQjcAAgGn8cEcriUgyjWhFxvDkp6euvZ6xNgasOC
+ ZucDuZS87G3tBw+OIftN+LulYqAB+I+nHutnWV2Bi312T46fxrS10VoEMlvN3zpWXfbJ
+ OXUUQrB6z68898P1KH8+dB8hJ4B0XuUh6v9WZk1VbRaX9OUGM0NL1gW6SyDsOnfd/xYs
+ ND3E2w/vYt8aXyK9cwM3Pw8Lg0x1nYYt1QfAHplNswURSuLyteUYJa95hiFUxzgchsEX
+ nTIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783358886; x=1783963686;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cV8jyNViLscs0Onpr029wrq4ZKuWT+tA/3BeKUtyGmU=;
- b=HIAyFVeGrNEdO5E9rjW1FGptgtpJXBo7p82grvfTYT3K96yn6KFI1CwihLV4gsH9SH
- D+oeKMkL3yWzvwB4+fXOVrkh4HvftYkq5qSEeZT/aE2UeM48JNWUSFJUs/lZxZkavsjq
- JLM36oO5yyi50Q5QORyIGUAw4nIjHW/oPrZvrdU5VesxuxCVDyYID3WMjC92HygKZvkj
- JMAhGl1dnqv/JvEOYDTwHLffN1CH1S2HGcu/r7T5r8BZhZl7gzq2H+8N00KGjSAw79/R
- 0voG+8RDBaH51/lKgUzt2dZI9P6Kpyz+MT3B7SjpU/ouO/wpOaUQvXNtakqtuP7r+jjq
- oFoA==
+ d=1e100.net; s=20251104; t=1783358957; x=1783963757;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iClZscjiedIVC78pseYr2AnsDA+R5QCV3UOX/EOYR0Y=;
+ b=hlhFpgI41K002AujhxUntUEWUfa7FwDPln+MwIq52WVfJLFbFLuCd66MS67ieAWjGo
+ Qap9AGKa2qwYSGv7Ml0jixMa3M3DmQaeOiHr98Pr8K2oeIVlwCe3+sK38KwfCp21Y9n0
+ LgTFtzhB5eFGFpmtb+9au+YpFYhh94AyJn6VJXdLw6wkwph2P8nPc5wtpU1IegJCNAnY
+ yF9Fpn2RIAw6Cjd4TbItHNqdVbUD6x5bH5HSlOwj07R8XoNsShFF89ddhGOY/+TPRHci
+ q96M/ZyRDPgq2rlg3naLMasAUfe8vWqKFKpPoyIWDnrsWebhn6NQCXBo6x2Pzl3D0auS
+ vM0w==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqK+T4vX/Pt6eXEU/E92BKzvb7hZP1Y+3q6ZPwKfro0CbXfFfXp//12min9dr2C7NmdZ0j+Y7XsOJIo@nongnu.org
-X-Gm-Message-State: AOJu0YzvsC4mE1llTLGhEVsSc3N/xJk88FOEn9dTMv022KyiCH+pEjiL
- 3zFxDemvO71zapZUlV0ZwVwgFRp/4e6r6zptqxTDO7Bq2796K7h6vSIdFstCnA3mIS4QcXlFpZB
- p0YZFTnHo6zNZ+WTKJPiKc88aUyHIEIo=
-X-Gm-Gg: AfdE7cleVUJELS4Tebt+4qrbkgwxxhiTScZZzgTUYr0X1Ok3AtN+Ma9JyM43N4dzUFa
- OtPhhxJSzdMY6LY791rlL9anquKH4QKTbwm+FGw/uy239cpP/EMbMhN93aIZPTK1WZbolaKGcLo
- Kbh3apR/lpx958ql4gBPecfnFZ5S9xc7EsrcmHT6g49zBRA9tBYOh2GJ546ljprIkzGlDcD4c+p
- VWSiX9eeDzMg3JMEr6JLe+0m3HsEOGXmiPVN3wIL9EhiOldYNxpsuBahiRhNPe2tsDFf9gOUbp3
- hw==
-X-Received: by 2002:a53:d685:0:b0:664:ae68:33b2 with SMTP id
- 956f58d0204a3-6677fd4b544mr1013371d50.83.1783358886093; Mon, 06 Jul 2026
- 10:28:06 -0700 (PDT)
+ AHgh+RoRYPh/AG1btsBDq5mmQ54FETr+lyE+E0nqJUd88bzMPjGEf39h0OhOUTomDtmDc2wiUK+6g9LEcpUD@nongnu.org
+X-Gm-Message-State: AOJu0Ywujj2d8uiLaDW9Z5eL+74GWSwgiImkDefAGq9agQI4BbDrTZKn
+ aKEvmwdHXwyvAaV8sTFxbSL/WshtsmZLkCDFOvjgUSICmW2ZAT1TedbWtkqJGyTlZJtSHtz5X1W
+ ZHhUtnjDlAulEVvCJzHhgPS0z6cIwwXNkakRj3Em7UMqjYOCXJmGo
+X-Gm-Gg: AfdE7cm2DCCqDYLAq7EvVV0YUzJ6Ujxvv43u8b91GHzJh6weOOJoGVtng4eCquHVtlY
+ Pz3NZ++FbhslZDp58uLStjhFlzTie0Txg+lR0i/kTHVJt7m29gRN+kir3ZWpr+kuUMcpRyMMzpj
+ n25lhWo5/xYqn8v1ZEoX6Fq2T/5LwcsKhCMFMkQO2Tcs9+E4t7MCOKa8rxzS+n+QSt/rLlgFhQ2
+ aFZLLrvXUOdUo0phSezxUmifKUlVulcSB9wQ6HL7QjuKvmbMQEzqh/fzYIOFkKt8XVafmG5sw49
+ UeK+8oy+O51gF2p5GxHxDw8MHAv9vdTtmleRghXfBjvBvqkEFoVCjKoG
+X-Received: by 2002:a05:690c:386:b0:7dc:1c56:2901 with SMTP id
+ 00721157ae682-815ba02f022mr153648007b3.1.1783358956663; Mon, 06 Jul 2026
+ 10:29:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260630135729.466264-1-bin.meng@processmission.com>
- <20260630135729.466264-7-bin.meng@processmission.com>
- <7410bfdc-e1b8-4cb7-8e55-5908104290de@oss.qualcomm.com>
-In-Reply-To: <7410bfdc-e1b8-4cb7-8e55-5908104290de@oss.qualcomm.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Tue, 7 Jul 2026 01:27:54 +0800
-X-Gm-Features: AVVi8CccFIzUZROxlZgb0GI4aUt9U36EcUho8WC8MDPxu4g_CtnqYTPxLYxPjxs
-Message-ID: <CAEUhbmVs_=483r+fW1dy7seJ4Hh=eYhSGVku5BTsAxn=qwynsA@mail.gmail.com>
-Subject: Re: [PATCH 06/10] hw/ssi: xilinx_spips: Fix dummy phase handling
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+References: <20260702160640.3875666-1-clg@redhat.com>
+ <20260706082023.7ee830b8@shazbot.org>
+ <3f799ad7-08a5-44c7-b6bf-b143da038593@redhat.com>
+ <CAFEAcA9wOZhn41Twz9zzCBD4MAET2+gbF71kUKnr7r6TXfhjuw@mail.gmail.com>
+ <20260706094241.1457bbc6@shazbot.org>
+ <CAFEAcA-d9CJhfJQ2B1h+mZTPphc7SKk8yjCuGH4RWYT9J=EATw@mail.gmail.com>
+ <20260706111632.64266244@shazbot.org>
+In-Reply-To: <20260706111632.64266244@shazbot.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 6 Jul 2026 18:29:04 +0100
+X-Gm-Features: AVVi8CcJSeUECnvXAjs5-pAw_6n-fWNKrjVxx9Nfe5kiYTX4fIMTgiuUsCcIX2Q
+Message-ID: <CAFEAcA-Xcw0FJAgFJ2U7YXxS2cXEsgddAPH_0cajp5rAdjCy+g@mail.gmail.com>
+Subject: Re: [PATCH] vfio/listener: Only warn on misalignment for VFIO-owned
+ regions
+To: Alex Williamson <alex@shazbot.org>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
+ qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>, 
+ Stefan Berger <stefanb@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,185 +124,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 6, 2026 at 4:11=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
+On Mon, 6 Jul 2026 at 18:16, Alex Williamson <alex@shazbot.org> wrote:
 >
-> On 30/6/26 15:57, Bin Meng wrote:
-> > The ZynqMP generic FIFO encodes dummy phases as a number of
-> > dummy cycles. QEMU's SSI bus transfers whole bytes, so the
-> > controller model must convert the programmed cycle count to the
-> > number of SSI byte transfers needed for the selected SPI, dual SPI
-> > or quad SPI mode.
-> >
-> > The legacy Xilinx QSPI snoop paths had the opposite problem after
-> > the m25p80 dummy handling was fixed. They still treated each dummy
-> > byte queued through the FIFO as a request to generate several SSI
-> > transfers based on the current link width. The flash model now
-> > consumes dummy phases as byte counts, so the manual FIFO path should
-> > forward one SSI transfer per dummy byte.
-> >
-> > Update the Xilinx QSPI dummy accounting consistently for the generic
-> > FIFO, manual FIFO and LQSPI direct-read paths. Also make the command
-> > table report the dummy byte counts consumed by m25p80 for dual and
-> > quad output reads, and account for the mode byte before LQSPI data
-> > reads begin.
-> >
-> > This matches the ZynqMP TRM (ug1085, v2.2 [1]) description of the
-> > generic FIFO dummy cycle entry and keeps the controller side aligned
-> > with the flash model's dummy byte ownership.
-> >
-> > The description of the genenic command fifo register says:
-> >
-> >    When [receive, transmit, data_xfer] =3D [0,0,1], the [immediate_data=
-]
-> >    field represents the number of dummy cycle sent on the SPI interface=
-.
-> >
-> > [1] https://www.xilinx.com/support/documentation/user_guides/ug1085-zyn=
-q-ultrascale-trm.pdf
-> >      table 24=E2=80=9022, an example of Generic FIFO Contents for Quad =
-I/O Read Command (EBh)
-> >
-> > Fixes: ef06ca3946e2 ("xilinx_spips: Add support for RX discard and RX d=
-rain")
-> > Fixes: c95997a39de6 ("xilinx_spips: Add support for the ZynqMP Generic =
-QSPI")
-> > Signed-off-by: Bin Meng <bin.meng@processmission.com>
-> > ---
-> >
-> >   include/hw/ssi/xilinx_spips.h |   2 +-
-> >   hw/ssi/xilinx_spips.c         | 120 ++++++++++++++++++++++++---------=
--
-> >   2 files changed, 88 insertions(+), 34 deletions(-)
+> On Mon, 6 Jul 2026 17:12:35 +0100
+> Peter Maydell <peter.maydell@linaro.org> wrote:
 >
->
-> > diff --git a/hw/ssi/xilinx_spips.c b/hw/ssi/xilinx_spips.c
-> > index f6e717bc01..fa98dc2dd8 100644
-> > --- a/hw/ssi/xilinx_spips.c
-> > +++ b/hw/ssi/xilinx_spips.c
-> > @@ -192,6 +192,10 @@
-> >       FIELD(GQSPI_GF_SNAPSHOT, EXPONENT, 9, 1)
-> >       FIELD(GQSPI_GF_SNAPSHOT, DATA_XFER, 8, 1)
-> >       FIELD(GQSPI_GF_SNAPSHOT, IMMEDIATE_DATA, 0, 8)
-> > +#define GQSPI_GF_MODE_SPI     1
-> > +#define GQSPI_GF_MODE_DSPI    2
-> > +#define GQSPI_GF_MODE_QSPI    3
->
->
-> > @@ -457,6 +461,7 @@ static void xlnx_zynqmp_qspips_flush_fifo_g(XlnxZyn=
-qMPQSPIPS *s)
-> >           int i;
+> > On Mon, 6 Jul 2026 at 16:42, Alex Williamson <alex@shazbot.org> wrote:
+> > >
+> > > On Mon, 6 Jul 2026 16:27:46 +0100
+> > > Peter Maydell <peter.maydell@linaro.org> wrote:
+> > > > It seems very unlikely that anything not page-aligned is going
+> > > > to be a sensible target for DMA ops from a device: the main
+> > > > reason to have a non-page-aligned or non-page-sized region is that
+> > > > it's the way we've chosen to implement a device, or it's some
+> > > > "RAM but not general-purpose RAM" thing. If there's a path to
+> > > > warn/error if it's actually used for a DMA op that would be worthwhile,
+> > >
+> > > But for a vfio-pci device there is no DMA op, it either gets mapped
+> > > into the IOMMU for direct access to the device or not.  This is the
+> > > point at which that decision is made.
 > >
-> >           if (!s->regs[R_GQSPI_DATA_STS]) {
-> > +            uint32_t prev_gf_snapshot =3D s->regs[R_GQSPI_GF_SNAPSHOT]=
-;
-> >               uint8_t imm;
-> >
-> >               s->regs[R_GQSPI_GF_SNAPSHOT] =3D fifo32_pop(&s->fifo_g);
-> > @@ -484,7 +489,54 @@ static void xlnx_zynqmp_qspips_flush_fifo_g(XlnxZy=
-nqMPQSPIPS *s)
-> >                   }
-> >                   s->regs[R_GQSPI_DATA_STS] =3D 1ul << imm;
-> >               } else {
-> > -                s->regs[R_GQSPI_DATA_STS] =3D imm;
-> > +                /*
-> > +                 * When [receive, transmit, data_xfer] =3D [0,0,1], it=
- represents
-> > +                 * the number of dummy cycle sent on the SPI interface=
-. We need
-> > +                 * to convert the number of dummy cycles to bytes acco=
-rding to
-> > +                 * the SPI mode being used.
-> > +                 *
-> > +                 * Ref: ug1085 v2.2 (December 2020) table 24=E2=80=902=
-2, an example of
-> > +                 *      Generic FIFO Contents for Quad I/O Read Comman=
-d (EBh)
-> > +                 */
-> > +                if (!ARRAY_FIELD_EX32(s->regs, GQSPI_GF_SNAPSHOT, TRAN=
-SMIT) &&
-> > +                    !ARRAY_FIELD_EX32(s->regs, GQSPI_GF_SNAPSHOT, RECI=
-EVE)) {
-> > +                    uint8_t spi_mode =3D ARRAY_FIELD_EX32(s->regs, GQS=
-PI_GF_SNAPSHOT, SPI_MODE);
-> > +                    /*
-> > +                     * Some ZynqMP GQSPI drivers, such as Linux, use t=
-he data
-> > +                     * bus width in the dummy GENFIFO entry only to co=
-nfigure
-> > +                     * the controller mode. The immediate value is alr=
-eady
-> > +                     * the number of dummy cycles for the dummy phase,=
- which
-> > +                     * follows the address bus width. Reuse the previo=
-us TX
-> > +                     * phase mode to convert cycles to SSI bytes.
-> > +                     *
-> > +                     * This does not make the model Linux-only. U-Boot=
- emits
-> > +                     * the dummy entry with op->dummy.buswidth, so the=
- entry
-> > +                     * mode already matches the dummy phase. Its opcod=
-e and
-> > +                     * address phases are immediate entries, not DATA_=
-XFER TX
-> > +                     * entries, so the override below is not taken for=
- U-Boot.
-> > +                     */
-> > +                    if (FIELD_EX32(prev_gf_snapshot, GQSPI_GF_SNAPSHOT=
-,
-> > +                                   DATA_XFER) &&
-> > +                        FIELD_EX32(prev_gf_snapshot, GQSPI_GF_SNAPSHOT=
-,
-> > +                                   TRANSMIT) &&
-> > +                        !FIELD_EX32(prev_gf_snapshot, GQSPI_GF_SNAPSHO=
-T,
-> > +                                    RECIEVE)) {
-> > +                        spi_mode =3D FIELD_EX32(prev_gf_snapshot,
-> > +                                              GQSPI_GF_SNAPSHOT, SPI_M=
-ODE);
-> > +                    }
-> > +
-> > +                    if (spi_mode =3D=3D GQSPI_GF_MODE_QSPI) {
-> > +                        s->regs[R_GQSPI_DATA_STS] =3D ROUND_UP(imm * 4=
-, 8) / 8;
-> > +                    } else if (spi_mode =3D=3D GQSPI_GF_MODE_DSPI) {
-> > +                        s->regs[R_GQSPI_DATA_STS] =3D ROUND_UP(imm * 2=
-, 8) / 8;
-> > +                    } else if (spi_mode =3D=3D GQSPI_GF_MODE_SPI) {
-> > +                        s->regs[R_GQSPI_DATA_STS] =3D ROUND_UP(imm * 1=
-, 8) / 8;
-> > +                    } else {
-> > +                        qemu_log_mask(LOG_GUEST_ERROR, "Unknown SPI MO=
-DE: 0x%x ", spi_mode);
+> > Why is small RAM different from MMIO register regions here?
+> > Those also you're not going to be able to have a device do
+> > direct memory access to.
 >
-> Is it safe to let the previous s->regs[R_GQSPI_DATA_STS] value?
+> There's a precedent for bare metal, peer-to-peer DMA is less reliable
+> and drivers don't typically have blind faith in it working.
+> Peer-to-peer DMA also has specific use cases, drivers don't arbitrarily
+> pick a peer device to DMA to, they have specific use cases and target
+> regions are inherently sized and aligned appropriately.
 
-Yes, the previous value remains zero and won't pass the sanity check
-below (see /* Zero length transfer check */)
+Sure, but if a guest does try it then it's going to fall over.
+This is exactly the same as if it tries to do DMA to a small
+MemoryRegion that we happen to have implemented as backed by
+RAM rather than MMIO functions. In both cases the QEMU implementation
+of the device is fine, and the guest has done something silly.
 
->
-> Alternatively simpler as:
->
->   if (spi_mode) {
->       s->regs[R_GQSPI_DATA_STS] =3D 2 * (spi_mode - 1) * imm;
+> Here we have RAM and we're trying to determine whether it's RAM that
+> could be allocated as a DMA buffer or expect a DMA access from a
+> device.
 
-No, imm should be divided by 8 as we are counting bytes here, not cycles.
+I think that there are no examples of memory-backed MemoryRegions
+that aren't page-aligned that are going to expect a DMA access.
+So a reasonable proxy test for "is this RAM that could expect
+a DMA access" is "is it page aligned and at least a page in size?".
+All blocks of real for-the-guest RAM will satisfy that.
 
->
-> > +                    }
-> > +                } else {
-> > +                    s->regs[R_GQSPI_DATA_STS] =3D imm;
-> > +                }
-> >               }
-> >           }
-> >           /* Zero length transfer check */
-> > @@ -550,7 +602,7 @@ static void xlnx_zynqmp_qspips_flush_fifo_g(XlnxZyn=
-qMPQSPIPS *s)
-> >       }
-> >   }
->
+> Commit 851d6d1a0ff2 spelled out that we could have declared these sorts
+> of regions as RAM device, solving the problem with a simple test, but
+> that wasn't well received (for reasons I don't remember), so we were
+> forced to create this mechanism and maintenance issue.
 
-Regards,
-Bin
+Isn't a RAM device for "this MemoryRegion is backed by memory from
+some actual host hardware device"? In this case it is not, so
+not a good fit. But either way, if the RAM-device MR is not page
+aligned then the guest can't DMA to it either. So "is this a RAM
+device or not" doesn't seem like the test you want for whether
+you want to flag a problem.
+
+thanks
+-- PMM
 
