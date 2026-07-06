@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5160DC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:44:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4DE1C44501
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:44:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggj0-00085a-Bl; Mon, 06 Jul 2026 06:38:54 -0400
+	id 1wggis-0007cS-Gt; Mon, 06 Jul 2026 06:38:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiq-0007Vx-64
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:44 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wggiZ-00078s-94
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:29 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggin-0003XW-N3
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:43 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-493ba701891so22644065e9.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:41 -0700 (PDT)
+ id 1wggiX-0003TA-Jg
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:27 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-493d1e8aa46so14425325e9.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783334320; x=1783939120; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=8k8eqVcYkRAHjMMhhMtpbFzS2zs5ffXVgQxhGMJdJEM=;
- b=rpDTAkJH3i/bM7IXFcivNReoL9/kUYs4k2H3F7gp31BuJiX/Nvwj0OnSsTfYSGHWqx
- bDO8BVrtCOZ8n10cd8byE49ndyCnkqRd6NqEJhSzF1azX0CYJSisUPHDMTiPuFGJaO4y
- bvEkvdpJ7bgPHuYofFYI3qht5RT5fCtJss+AJ+/uO3sEF6AF3ScSoRazg2MMtEELsWmf
- 4B1xfvX6a9lzadEcFpC7d8I0bkNHoHNT8Ehu32wFjTZiaR6u/T8a941ZMrXuZwmmKm1k
- +cOyeseagpbrcTqrcMA3MGlwCEOHvHdtbEMzYb+qGNpZ6rSoV8hrzHjzUglweGrTvyTY
- iEHA==
+ d=linaro.org; s=google; t=1783334304; x=1783939104; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=8l3yST6GZrvLVJku6YOM2ND9IxJ3TA/gXvQHEv8TIoA=;
+ b=hamHxj3g/NbP0kBBXpdzY4pDngitVDL+qXVaSfNHMLKKRcLw5D7bNLpEtCnFuIuNEF
+ GEQ93ZImhcAM7ccFjZJMkj9NXHZz/HQM30CGO+qs6mg6puAWkegveZnMMc2IPuwJaDKX
+ iyvSUXy1xmlb2q14sPW58wod9ngcod3+AYZeFzIyrP1AcfHHUBAKKVz9svnf/UT8U7/i
+ srAABdHwuI+TzIwS8fN7g9CZpGMsZN5Lf3E8RSAgjqgGfk0lFBLSNWEtE0MiufN+Z/eA
+ FKONSDDqM2HQz9hf4iO/4UrnR0W2IW/KQNrmyaa7DEsPx7RCJD2ZrGOLLqgUIFC8fbJz
+ ZEqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783334320; x=1783939120;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=8k8eqVcYkRAHjMMhhMtpbFzS2zs5ffXVgQxhGMJdJEM=;
- b=lIMK1q2mHN7z0jwQ8JnM6iUMiK0sBfowXKZX2dayfG+N44JV14rfKQu1U5ExA/N2Fm
- 8VcwxbwyMd0NfHQlFQj/E92Wcluturtcc9hJ+plMqcl+37hgvwQtzEFFQdXMFm6EG8+k
- XXNUmBSsRvnOT60WhktlajiLrd8asHCFAKGwTSr77uEqF6ezSvQNfIPDRsrOk/G0v5MY
- p4gXE5BAZRzjd7W9myaI2yVs8KePGr3qFz8GSNtzsaUO3nAWrNYEflHZdEaGDKwvqWnl
- PYApBlPA3T9f22zE/EFJO/bQMM8yuOKT3r4TurVJraNcXet5cAUUrNiupTUrkC+Kmzph
- EpPw==
-X-Gm-Message-State: AOJu0YxZJugdxQTI94NAsE/T/GeKe3ZneNaf67Zat2paxTyNcRIHOpHZ
- jGoraEBZ4BMQEcFMSvqyAAg1fwVyvbF/UNL3QNjo8oRy1UAhq6vh0PGgiSwZcCFtZi3ptMyBH8K
- 9vjJ+k/e8Ag==
-X-Gm-Gg: AfdE7ck7uncxvhW9JHC3dRiq1QOG4tz5j5dnMKDNq+eMQQO3Ceq3iRuAhMKCVSgLER0
- FB29R4oG6jofFgW6KTTwG/ZiXUy3rUPQv2GABeQ+aHokcIlT629WMNOxv+o4a352mPhTl6mvZiA
- qDstrnyfBgxY43FJGzC+qUDkw34FLPw2uaZQfcXwP5OOVEsc0O/YBO+JHhoTCubjeufB5d/DQ2t
- tZzW7rPuu68i5fvAJlduggbW6pmXUKEhDrrzWVGfYTH2n2+bZrCx/FlJ0aZBEcyqKbbMNY0wWj9
- OLp/1cB/ZD+XGu0/vmy+MHq9mwzNG5jRaLA1i9xmxdeh81iS+JJqgi4vDmDLOROfXk6xyOzFwLV
- Ro/XfYosYxr3c5Kuipc/vNQel2dOYB/MsVx4hgOLOYwFF5Bnd/UPwnDX7oVJ8QaAA0Xb1I846tT
- XS/SrUk6vK3XhX/tZeXg+HAzAKvUoYAdM279aVwOGoq4n4YC6LQOewvPXFmLkXOWBoHKJbDEW8z
- gibVM+SxkGlKV1ct/Tbng==
-X-Received: by 2002:a05:600c:19d2:b0:493:a96b:fa0b with SMTP id
- 5b1f17b1804b1-493de00875amr11045705e9.24.1783334320153; 
- Mon, 06 Jul 2026 03:38:40 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783334304; x=1783939104;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=8l3yST6GZrvLVJku6YOM2ND9IxJ3TA/gXvQHEv8TIoA=;
+ b=G4+l7tUnGoZAvKlmbDwGhiEkUkJYUaq4XFLaBNxUQ+X/vTj/8ncxl1JVxE2AfMpykm
+ JG06/jr+jGhgqcbDVdC2tlLGHv9otHyLnS8xL9Wv2iwZEjDh7LbowjD8hcE2CM09hi3K
+ rt2fIG2PRj3yzjzAWUuTtelRt3Og8e5sDjdVHbtKBNxYtBuXvaJBGvBxegfpQnXeclCP
+ vpurpfAJf2v2eCcaN7TQqMbY6ebO4IXf8cgNMm38kTVZkkbgSBuK0UsE75IfYND8p1VH
+ 0wBHFecufFYQFtAjavo/ptcLctj/AEJTDdG6A3kPoSKmaXejVArcnX7qibRYxJZhGHpl
+ yZWA==
+X-Gm-Message-State: AOJu0Yz91chmntDvriAtEigS+IU8jQ/3cik1FisVj3PJDSBnmPj0dl5J
+ GGLNu5pS2Z6vL7nS9lwHyYYuRmrOgdPQ7UR09Qxk04APq0ULvBBCqbZbp/+nHAluqkhka24hkNJ
+ 6j3c08b1nUA==
+X-Gm-Gg: AfdE7ck9Geh5Yr7PKDZmDxmamZ8tf5nkd824Spyi5YoHPHOSLqJYQFSXua2RhX/heao
+ udKAfcQF1lC40kvcsF5gnzd1rBRiY85evaCuxZhPsm8RuJLPiOaoMcR6bywGKejWdp/oT0qN0Sw
+ 2yAuRZdnxB89QB2jrWywl4yOg7qTruGrmyLteGbNZ4J+28Xpo7zxt6k/ID0DXPseAVET6VCIj94
+ tsj0Cou0WYts5/KrqC47GzuFFVBnBE1HkMH4ZJ0LX33Mz2lMTcEg/ZbxGX65/BBq7heoO+Pmr/p
+ GAPbpVU+2nvRSxAeGYV2RU7kcuXxM2nO9em+jJCqizEq4VbHs5pLPoJp6fAsMWPNfhXex2S7bmi
+ 0mRhkAMFsh/88mGA6rsFO0E5mGo6bwKZfOMaAv0qtPw3KZrPTVJzO2HudJSKqPG9HpFHQHNNX3A
+ AlJ00dXseG/ydgNEsovif9EGeRPcxDwEneQoi+1N7UysL0KSFd3YXQMNP+oCOYTIfer+y0W/SUD
+ fijMlHSubKSyTsNI9Gchw==
+X-Received: by 2002:a05:600c:8010:b0:493:bb2e:11a5 with SMTP id
+ 5b1f17b1804b1-493d11d7e1emr111726935e9.15.1783334304088; 
+ Mon, 06 Jul 2026 03:38:24 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.39
+ 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.23
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 03:38:39 -0700 (PDT)
+ Mon, 06 Jul 2026 03:38:23 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 44/49] target/arm: Implement USMOP4[AS]
-Date: Mon,  6 Jul 2026 11:37:47 +0100
-Message-ID: <20260706103752.320511-45-peter.maydell@linaro.org>
+Subject: [PULL 27/49] hw/nvram: add load_image_to_fw_cfg_file()
+Date: Mon,  6 Jul 2026 11:37:30 +0100
+Message-ID: <20260706103752.320511-28-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260706103752.320511-1-peter.maydell@linaro.org>
 References: <20260706103752.320511-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,70 +103,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260702204314.79224-15-richard.henderson@linaro.org
+Function is simliar to load_image_to_fw_cfg() but loads the
+image into a named fw_cfg file instead of fixed keys.
+
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260521112806.504961-2-kraxel@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/helper-sme-defs.h | 5 +++++
- target/arm/tcg/sme.decode        | 3 +++
- target/arm/tcg/sme_helper.c      | 5 +++++
- target/arm/tcg/translate-sme.c   | 5 +++++
- 4 files changed, 18 insertions(+)
+ hw/nvram/fw_cfg.c         | 22 ++++++++++++++++++++++
+ include/hw/nvram/fw_cfg.h | 15 +++++++++++++++
+ 2 files changed, 37 insertions(+)
 
-diff --git a/target/arm/tcg/helper-sme-defs.h b/target/arm/tcg/helper-sme-defs.h
-index 60bc3c6e9b..7fc7129e54 100644
---- a/target/arm/tcg/helper-sme-defs.h
-+++ b/target/arm/tcg/helper-sme-defs.h
-@@ -399,3 +399,8 @@ DEF_HELPER_FLAGS_4(sme_umop4a_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(sme_umop4s_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(sme_umop4a_dh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(sme_umop4s_dh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+
-+DEF_HELPER_FLAGS_4(sme_usmop4a_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sme_usmop4s_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sme_usmop4a_dh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sme_usmop4s_dh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index aca6a79be3..53e7e67feb 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -1128,3 +1128,6 @@ SUMOP4_dh       1010 0000 111. ...0 0000 00.. ..0. 1...         @mop4_o3
+diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
+index a9d45adb2d..b057d870c0 100644
+--- a/hw/nvram/fw_cfg.c
++++ b/hw/nvram/fw_cfg.c
+@@ -1139,6 +1139,28 @@ void load_image_to_fw_cfg(FWCfgState *fw_cfg, uint16_t size_key,
+     fw_cfg_add_bytes(fw_cfg, data_key, data, size);
+ }
  
- UMOP4_sb        1000 0001 001. ...0 1000 00.. ..0. 00..         @mop4_o2
- UMOP4_dh        1010 0001 111. ...0 0000 00.. ..0. 1...         @mop4_o3
++void load_image_to_fw_cfg_file(FWCfgState *fw_cfg,
++                               const char *fw_cfg_name,
++                               const char *image_name)
++{
++    GMappedFile *mapped_file;
++    GError *gerr = NULL;
 +
-+USMOP4_sb       1000 0001 000. ...0 1000 00.. ..0. 00..         @mop4_o2
-+USMOP4_dh       1010 0001 110. ...0 0000 00.. ..0. 1...         @mop4_o3
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index f5fa69841d..23bb816b6a 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -2985,4 +2985,9 @@ IMOP4_4WAY(umop4s_sb, -, int32_t, uint8_t, uint8_t)
- IMOP4_4WAY(umop4a_dh, +, int64_t, uint16_t, uint16_t)
- IMOP4_4WAY(umop4s_dh, -, int64_t, uint16_t, uint16_t)
++    if (image_name == NULL) {
++        return;
++    }
++
++    mapped_file = g_mapped_file_new(image_name, false, &gerr);
++    if (!mapped_file) {
++        error_report("qemu: error reading %s: %s",
++                     image_name, gerr->message);
++        exit(1);
++    }
++    fw_cfg_add_file(fw_cfg, fw_cfg_name,
++                    g_mapped_file_get_contents(mapped_file),
++                    g_mapped_file_get_length(mapped_file));
++}
++
+ static void fw_cfg_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
+index b75858025f..20e2c7190e 100644
+--- a/include/hw/nvram/fw_cfg.h
++++ b/include/hw/nvram/fw_cfg.h
+@@ -399,4 +399,19 @@ void load_image_to_fw_cfg(FWCfgState *fw_cfg, uint16_t size_key,
+                           uint16_t data_key, const char *image_name,
+                           bool try_decompress);
  
-+IMOP4_4WAY(usmop4a_sb, +, int32_t, uint8_t, int8_t)
-+IMOP4_4WAY(usmop4s_sb, -, int32_t, uint8_t, int8_t)
-+IMOP4_4WAY(usmop4a_dh, +, int64_t, uint16_t, int16_t)
-+IMOP4_4WAY(usmop4s_dh, -, int64_t, uint16_t, int16_t)
++/**
++ * load_image_to_fw_cfg_file() - Load an image file into an fw_cfg entry
++ *                               identified by fw_cfg file name.
++ * @fw_cfg:         The firmware config instance to store the data in.
++ * @fw_cfg_name:    The name of the fw_cfg (pseudo) file.
++ * @image_name:     The name of the image file to load. If it is NULL, the
++ *                  function returns without doing anything.
++ *
++ * In case of failure, the function prints an error message to stderr and the
++ * process exits with status 1.
++ */
++void load_image_to_fw_cfg_file(FWCfgState *fw_cfg,
++                               const char *fw_cfg_name,
++                               const char *image_name);
 +
- #undef IMOP4_4WAY
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index b14aac2c17..dcc4690fba 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -2127,3 +2127,8 @@ TRANS_FEAT(UMOP4_sb, aa64_sme_mop4, do_mop4_int, a, MO_32,
-            a->s ? gen_helper_sme_umop4s_sb : gen_helper_sme_umop4a_sb)
- TRANS_FEAT(UMOP4_dh, aa64_sme_mop4_i16i64, do_mop4_int, a, MO_64,
-            a->s ? gen_helper_sme_umop4s_dh : gen_helper_sme_umop4a_dh)
-+
-+TRANS_FEAT(USMOP4_sb, aa64_sme_mop4, do_mop4_int, a, MO_32,
-+           a->s ? gen_helper_sme_usmop4s_sb : gen_helper_sme_usmop4a_sb)
-+TRANS_FEAT(USMOP4_dh, aa64_sme_mop4_i16i64, do_mop4_int, a, MO_64,
-+           a->s ? gen_helper_sme_usmop4s_dh : gen_helper_sme_usmop4a_dh)
+ #endif
 -- 
 2.43.0
 
