@@ -4,101 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 774BEC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:40:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 480F4C43602
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:40:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggju-0002BV-2q; Mon, 06 Jul 2026 06:39:50 -0400
+	id 1wggii-0007Hh-SY; Mon, 06 Jul 2026 06:38:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggjs-00023K-7f
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:39:48 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ id 1wggig-0007EN-HQ
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:34 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggjq-0003vK-8y
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:39:47 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-664c7dc6830so2127698d50.0
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:39:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783334385; cv=none;
- d=google.com; s=arc-20260327;
- b=oCQMgAs6cA8HuI/pKuIdjvR9q8Ti6/qtgdUEoS2j7A0vEBLizOqGcfIOzYAHwLpsyx
- LB883FlOYWIx9mEyS28K0nZ058qI37PihS6AWx7Nne8qCPg4niEheEdYrKDIMPGlj9ze
- K2/6kIUemXBPckmIMZ2j/Kp494Sw70M2DUF5nYVoo7V6lQs+W4gGrNV8z7x7DEJzQCdc
- M0+3YJ9MIvuQk/+tp0ALTySJ7kKkrWS8Xl8zxHWVOGUHm4czxUNreu6khvYLubHy2lvi
- NHN6KfJ95SUnR1ydAZDVQbqhjxPB4GJrmVugH4qezpmCKtIT2HYNWAcpO+mCkF/VH6A6
- Vssw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=3Mjb9mX869EBGtrKsAmi8SRPr2VxURoFvZfrQyutlSk=;
- fh=yNpAJAiJFxM9jaY/7wWb6zKDIRoN7oDZYQ1Tc5d+UTI=;
- b=PAHIJ++gLPWG8kKAhoKs0JuxijVXI3/sqosYpbM659/4xbSpVQI4NBqTdjWgEBj0NE
- kohk6R6QAHjFkYP+2U5v6/0WAf8aQ+DdRZShYNNCW64Mjhn5J8L9mPI2nD7xBsEpDLIf
- Ox6CV08uPsLDyZmlKR9/8JTZJuVpQquniKacLsTwu5WZm9kvj0gWequzGiDc5rM6LeiD
- IIcF1Xx1D8hu0Q9qwsHl9HeZhB6uygHKmIKDLCBlZZAnMSQm9l06osvSYqq9+JQgvsxF
- UxRgWubkKQRXr1V4zVs/go0O5yeP+pvJcUafO6ml62K2uHbmHOQ9K3myumemRE4eby3J
- PSeA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ id 1wggie-0003Ui-Mj
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:34 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-493b7612475so26287905e9.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783334385; x=1783939185; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3Mjb9mX869EBGtrKsAmi8SRPr2VxURoFvZfrQyutlSk=;
- b=esPMjE6cqQuKr/PlBmbFM4BpfY5xaTe0hluEFhAhREeAIk8Tn9LuvMjco8zvahTz6U
- j7/nfRSuZjvuBBD6rcZKI6HcsxDsz8dHEkczY1G4QBusxaLFZKrqse7FvgLiHglWjUkt
- 71jwtMDL51Xs/sheFCGwt0KhiRvY36cT3MCiPav9zmNdNtx1RW+/9ZAhlBHCQzZuZlvh
- rnt9p8jUQL3s8OxOrxIjn2byaKucQn9Ub+d87OHF8ych1htgufG0V2bluI9YjuxPS6Yu
- CDywdLPHm9hBydOV6k8r1e/IkFfKKy735KrKaMPh8H8tgmd+splU6sE8zvQQGKA54Mpn
- 7FSA==
+ d=linaro.org; s=google; t=1783334311; x=1783939111; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=Pgsqydvu9sqRLWAJKvWtPpQxGrfm9SnVqtdBC2x5d1s=;
+ b=yBKurZ5cdlcxC0HC8lCWJuN2GRamZoWzZWbqXGRl4113Qy7/IWFW+X36lbUQoWitbi
+ mSpDIXJ+eu1zqjt92AB09rmQMO/WEwvnjy1XCvMy5OwGdG8TQC6YSn8VXgebfxxrvVtN
+ 4g1eji61dI0bpGg94ny2KlnNXqk/rSv9dXzK7x/Fi8NSSbLTCAe5G5vV7Ui/GUIkDqA+
+ BUnX4KFvAI0ay5hkSxRpcga7kgiSPHYZQg5ngVn634MjX9PGKU/Ecj85z0kckLoZj8Mv
+ QyCf7P6GwIq2d4W1qNSSUgFSkLkg9l6BV3zHUMPqM3a/WNSNcmFBV2S/KEoMElomv/s4
+ rG0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783334385; x=1783939185;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3Mjb9mX869EBGtrKsAmi8SRPr2VxURoFvZfrQyutlSk=;
- b=c9+9T5OQIxUROWyO2GyX3J0mo9bDhhMVnCguDHI9i8swteWS7IIPSCArko7MnaY35v
- +6R1UFoNm2wYPBQdfKiZ7aggLFAGhqSjm5Ogv5T4DsW4lNC0K4oKYBHOLBApYghRM96B
- zhtyHuWBeQDPg/K6Xld8skN40nqfXIER/JMCeksuan33zOC0D7aOHcpkzLX4Yj5Pz7wT
- 7wLslvCt/6v0+ZZ6pkXMnzJP0KvZpvyXdhgOQ190KA3CgM7+/H/mHjzQEaG5P4jVvLf1
- 80SHzfZuzpLWWGpmugYaYe5AmGtA2mTQ1nNUP0+s536YlszP3byIRi3IJAYsOAjUN5Yn
- QS8A==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rq2En6W3xb264NBv0uiuJAgw9d22D8z9yY98Ey+SSkcEe89LCxIodibMS1Phv9/FxRVh5EzlarJQLJY@nongnu.org
-X-Gm-Message-State: AOJu0YwyOqloySzJIaWg/D7HpXsZSjjHU7paBDx3qIrrxO0BkBDNqN8S
- YO1GVGRzGYGBbeG7kgxDWYMpzF1+IW51f+5V5BINLivm8glF2FGuwLDfeu/3KDPhX/7+whZsC/h
- Cbu3Gc6l91jK6KArLD0F8CO7t8sZ2pTDzrf7MAHQSew==
-X-Gm-Gg: AfdE7ckwChYNj7GURvTnIQe5+22cF2Gksk4TNxGd8KGQ9ZmgOjmBpzk7MsThxfE8ftz
- sM4jCuoyr+tNFg7xz7QBFeQfQlhr1r7USurBmM8uMWPkRpKcL0VR9jpJmFp93h+C6IM/9pV9rHm
- voOPMvt+ywxKS1IQlEBILowQIZnBCLuScxrTGmhexY4NkojZy5hJsTOMhwgT5dg4xkb+iok4EWG
- DpANQxgK2xkT5V82sEUq+hJjAC+L9H1bWI0R64grbNk52INox1FYrpado6aJ0viprMNYZklCIXn
- j8eGyqK/NaEayWJ0oOWskz+VaZs7TeDhMSVPDuxAPA3Z4qUFi5GDDxyfjQoFQjHYyC8=
-X-Received: by 2002:a05:690e:4083:b0:65d:dca1:ff89 with SMTP id
- 956f58d0204a3-6677fa0c67fmr69497d50.12.1783334384869; Mon, 06 Jul 2026
- 03:39:44 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260705224407.32464-1-gilles.grimaud@univ-lille.fr>
- <CAFEAcA9Heev=ydTzO2u3EzeF_2q7dytOF8=67qF8ZMMY6Ky2Tw@mail.gmail.com>
- <877bn8wgou.fsf@draig.linaro.org>
-In-Reply-To: <877bn8wgou.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1783334311; x=1783939111;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Pgsqydvu9sqRLWAJKvWtPpQxGrfm9SnVqtdBC2x5d1s=;
+ b=cduuxgUE9z+eUXZGgKm389PbCm/WW2PZlAMUUIiCmmOTx9xz5pAgtrJfZdGMlzxGmS
+ 0LC9gh25ue0+8kB+bFHKRhYmeproaBTytMohNrDNn1nBIcfWzdxHPm6myrbWuMBU5VJy
+ BBMZYMVl6Ql0b4YT0ToRZX8G60NXO4gN5bqGp+KIagBlP1wvTo19VfTO2dZ2c3cwCXCv
+ Ba61ZET6Uf8r2eXyz3TLfuNu/VeLwkKIgri7aWNJjlRKAhmUM5Q9JSh/YwZCQ0jmHA6i
+ 45x4YvWFzcCkO8YAsIDGuJBdiAF4XByfkZR3hO/DljjS9w3wnWZaCTzNiNJ/ejpQugw3
+ Zeww==
+X-Gm-Message-State: AOJu0YyV1WxVceZp5QX5QmfZDef4dPZkfOPLFVKtM45oyDUB+xzwCB2V
+ ARwFQPHKnFj7tjZuA7c/voE8EgmVYaDBH1AohtHWubCbXFijESFem85lQh03ZM/z3Ox7mggYu91
+ Bns767JaDCw==
+X-Gm-Gg: AfdE7cl++Ce4MDoevLAJsSkCQ0JSjY7LOn3r2h9liifevTJreBEX56SbqnpF/Ei4IYW
+ AbHZ4/5IwmyZAdre/tmBNXVK74hGKVSdSilIUa7FhLNVd07WWt9dMUAAObqBWmLpgtaMCaJPLM4
+ MFU9XxH9yYR4q33FJCq4/4AVWf36YxMitvRY+FdMXzYw+awL9drigZZW7WLoOlNKXzuqcFjkwYq
+ bxxIAY9WsIoXscU3R+Q5zaMQLKWr3mxS9ExZmgm3KXeJKoZBYUSOeCmInUZBg8a9gg76IZzEZpz
+ k3EksWO6FVEPpwI6tYGice7qRz9uaA8+CRyn/J+hxOaZsvmq4filGaRYuOd5UCPQxAuP7i7HdIa
+ aFp4f1Dzfy32wooO1jH/Am4y7qPd731rZhAFgRsU87OHDJ9ZPAbYl6rOcT06mhNxLNv+OrMTKuL
+ ZBouWQ621njL9ISSTZIJ6tIGQQEWjQ25vyZmsAAMyKQfgKqDdVxw+bP3FGeXc8YVtM0QhHVHBWF
+ 0+Dq5T4Ot+NcIIfp5zz4IBitL5jXbPg
+X-Received: by 2002:a05:600c:c0d1:20b0:493:cfc8:12e7 with SMTP id
+ 5b1f17b1804b1-493d11f38e9mr84141875e9.25.1783334311323; 
+ Mon, 06 Jul 2026 03:38:31 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.30
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Jul 2026 03:38:30 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 6 Jul 2026 11:39:33 +0100
-X-Gm-Features: AVVi8Cdd5HhGK9IEOKZ6VhKNHcrP0xdbz80OPDfZcXClq3e3sKicAlLn9WjK3Vw
-Message-ID: <CAFEAcA_2G-CogeB=8cFs37PNdYL88_PcsD6eNehev8A3XNH82w@mail.gmail.com>
-Subject: Re: [RFC PATCH] target/arm: report M-profile BKPT to gdbstub when
- attached
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: Gilles Grimaud <gilles.grimaud@univ-lille.fr>, qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+To: qemu-devel@nongnu.org
+Subject: [PULL 34/49] target/arm: Implement BFMOP4 (non-widening)
+Date: Mon,  6 Jul 2026 11:37:37 +0100
+Message-ID: <20260706103752.320511-35-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260706103752.320511-1-peter.maydell@linaro.org>
+References: <20260706103752.320511-1-peter.maydell@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,63 +100,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 6 Jul 2026 at 11:33, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
-e:
->
-> Peter Maydell <peter.maydell@linaro.org> writes:
->
-> > On Sun, 5 Jul 2026 at 23:44, Gilles Grimaud
-> > <gilles.grimaud@univ-lille.fr> wrote:
-> >>
-> >> While working on Raspberry Pi Pico/RP2040 support, I noticed that Pico=
- SDK
-> >> programs deliberately execute BKPT from _exit(). On real hardware this=
- is
-> >> useful when a debug probe is attached: returning from main() stops the
-> >> debugger at the program exit point.
-> >>
-> >> Under QEMU this currently does not behave like the debug-probe case. F=
-or
-> >> M-profile guests, the BKPT instruction is routed through the architect=
-ural
-> >> guest debug exception path. Without halting debug, that path should re=
-main a
-> >> guest-visible DebugMonitor exception when DebugMonitor is enabled, or =
-escalate
-> >> towards HardFault otherwise. This patch deliberately leaves that no-de=
-bugger
-> >> architectural path unchanged.
-> >>
-> >> The problem addressed here is the case where GDB is connected to QEMU'=
-s
-> >> gdbstub. In that situation, firmware that uses BKPT as a debugger stop=
- point
-> >> should stop in the attached debugger. Instead, the M-profile guest cur=
-rently
-> >> continues down the guest exception path and may end in HardFault/locku=
-p rather
-> >> than reporting a clean trap to GDB.
-> >>
-> >> This is not specific to the RP2040 machine model. It is a generic
-> >> Cortex-M/gdbstub interaction: firmware that uses BKPT as a debugger st=
-op point
-> >> should be reported to the attached debugger, while keeping the guest
-> >> architectural exception path when no debugger is attached.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-> > No other architecture, CPU or board in QEMU needs to do this,
-> > so my instinct is to say that M-profile should not be special here.
-> > Richard, Alex: how do we usually handle breakpoint insns for the
-> > gdbstub ?
->
-> For TCG guests we never insert BKPT instructions and treat the system as
-> having infinite hardware breakpoints.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260702204314.79224-5-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/cpu-features.h        |  5 ++++
+ target/arm/tcg/helper-sme-defs.h |  4 +++
+ target/arm/tcg/sme.decode        |  1 +
+ target/arm/tcg/sme_helper.c      | 42 ++++++++++++++++++++++++++++++++
+ target/arm/tcg/translate-sme.c   |  8 ++++++
+ 5 files changed, 60 insertions(+)
 
-This isn't about gdbstub-inserted breakpoints, it's about
-what happens when the guest code has a breakpoint insn in it
-already (either hardcoded, or also could happen if we're running
-gdb inside the guest). That's something that can happen for any
-CPU type.
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index a07151e634..b4138e976b 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1807,6 +1807,11 @@ isar_feature_aa64_sme_f16f16_or_f8f16(const ARMISARegisters *id)
+     return isar_feature_aa64_sme_f16f16(id) || isar_feature_aa64_sme_f8f16(id);
+ }
+ 
++static inline bool isar_feature_aa64_sme_mop4_b16b16(const ARMISARegisters *id)
++{
++    return isar_feature_aa64_sme_mop4(id) && isar_feature_aa64_sme_b16b16(id);
++}
++
+ static inline bool isar_feature_aa64_sme_mop4_f16f16(const ARMISARegisters *id)
+ {
+     return isar_feature_aa64_sme_mop4(id) && isar_feature_aa64_sme_f16f16(id);
+diff --git a/target/arm/tcg/helper-sme-defs.h b/target/arm/tcg/helper-sme-defs.h
+index 8a2ff88d49..05ccb0d1e2 100644
+--- a/target/arm/tcg/helper-sme-defs.h
++++ b/target/arm/tcg/helper-sme-defs.h
+@@ -367,3 +367,7 @@ DEF_HELPER_FLAGS_5(sme_ah_fmop4s_ss, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst,
+ DEF_HELPER_FLAGS_5(sme_fmop4a_dd, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(sme_fmop4s_dd, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(sme_ah_fmop4s_dd, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
++
++DEF_HELPER_FLAGS_5(sme_bfmop4a_hh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_5(sme_bfmop4s_hh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_5(sme_ah_bfmop4s_hh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index 3b7d8e9430..6021803ca0 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -1101,6 +1101,7 @@ LUTI4_s_4b      1100 0000 1001 101     1 00 00 00 ....0 zd:5    \
+ @mop4_o3        .... .... ... m:1 .... .... .. n:1 ... . s:1 . zad:3 \
+                 &mop4 zm=%mop4_zm zn=%mop4_zn
+ 
++BFMOP4_hh       1000 0001 001. ...0 0000 00.. ..0. 100.         @mop4_o1
+ FMOP4_hh        1000 0001 000. ...0 0000 00.. ..0. 100.         @mop4_o1
+ FMOP4_ss        1000 0000 000. ...0 0000 00.. ..0. 00..         @mop4_o2
+ FMOP4_dd        1000 0000 110. ...0 0000 00.. ..0. 1...         @mop4_o3
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 81ec7ccfa1..0de7dd84e5 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -2761,3 +2761,45 @@ void HELPER(sme_ah_fmop4s_dd)(void *vza, void *vzn, void *vzm,
+ {
+     sme_mop4(vza, vzn, vzm, fpst, desc, sizeof(float64), inner_ah_fmop4s_dd);
+ }
++
++static void inner_bfmop4a_hh(void *vd, void *vn, void *vm, void *vinfo)
++{
++    bfloat16 *d = vd, *n = vn, *m = vm;
++    float_status *fpst = vinfo;
++
++    *d = bfloat16_muladd(*n, *m, *d, 0, fpst);
++}
++
++void HELPER(sme_bfmop4a_hh)(void *vza, void *vzn, void *vzm,
++                            float_status *fpst, uint32_t desc)
++{
++    sme_mop4(vza, vzn, vzm, fpst, desc, sizeof(bfloat16), inner_bfmop4a_hh);
++}
++
++static void inner_bfmop4s_hh(void *vd, void *vn, void *vm, void *vinfo)
++{
++    bfloat16 *d = vd, *n = vn, *m = vm;
++    float_status *fpst = vinfo;
++
++    *d = bfloat16_muladd(bfloat16_chs(*n), *m, *d, 0, fpst);
++}
++
++void HELPER(sme_bfmop4s_hh)(void *vza, void *vzn, void *vzm,
++                            float_status *fpst, uint32_t desc)
++{
++    sme_mop4(vza, vzn, vzm, fpst, desc, sizeof(bfloat16), inner_bfmop4s_hh);
++}
++
++static void inner_ah_bfmop4s_hh(void *vd, void *vn, void *vm, void *vinfo)
++{
++    bfloat16 *d = vd, *n = vn, *m = vm;
++    float_status *fpst = vinfo;
++
++    *d = bfloat16_muladd(*n, *m, *d, float_muladd_negate_product, fpst);
++}
++
++void HELPER(sme_ah_bfmop4s_hh)(void *vza, void *vzn, void *vzm,
++                               float_status *fpst, uint32_t desc)
++{
++    sme_mop4(vza, vzn, vzm, fpst, desc, sizeof(bfloat16), inner_ah_bfmop4s_hh);
++}
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index b6c49b9993..f833975875 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -2025,6 +2025,14 @@ static bool do_mop4_fp(DisasContext *s, arg_mop4 *a, MemOp esz,
+     return true;
+ }
+ 
++static gen_helper_gvec_3_ptr * const bfmop4_hh[3] = {
++    gen_helper_sme_bfmop4a_hh,
++    gen_helper_sme_bfmop4s_hh,
++    gen_helper_sme_ah_bfmop4s_hh
++};
++TRANS_FEAT(BFMOP4_hh, aa64_sme_mop4_b16b16,
++           do_mop4_fp, a, MO_16, FPST_ZA, bfmop4_hh)
++
+ static gen_helper_gvec_3_ptr * const fmop4_hh[3] = {
+     gen_helper_sme_fmop4a_hh,
+     gen_helper_sme_fmop4s_hh,
+-- 
+2.43.0
 
-thanks
--- PMM
 
