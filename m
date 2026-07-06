@@ -4,133 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A96BC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:56:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56720C43602
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:59:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgf7u-0004gb-Gd; Mon, 06 Jul 2026 04:56:30 -0400
+	id 1wgfAR-0007kI-PZ; Mon, 06 Jul 2026 04:59:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wgf7d-0004J5-OK
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:56:16 -0400
-Received: from mail-centralusazlp170110009.outbound.protection.outlook.com
- ([2a01:111:f403:c111::9] helo=DM5PR21CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgfA6-0007hZ-6I
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:58:51 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wgf7b-0007bL-V4
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:56:13 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XqruzEbY6FCJIUV4dbWmkPTDpRNtpttb1u36Oi58QsbFTsYCoil8qT7UNSnMLzQ1pEHyyJPqV4aQXOSiuC4ZT/GUG+3RSCCxVJtWhdfbMJZP92xjlWekjDFXlAghKWBT1THNZxO8boUJTFG8vpw4PDEPQ8ouyXIhc3sYPMXNro8MEDAKWhnGcDSkvBzRkuUJrrwnXtc9KT46tqexQrp2QlyrhubHHSQQoPVTfON7X2hAUtejUXziEJhegzX81LcOUOKCsDi/CmeIb8PqBbP0BHw/OpOFIwYtYjW76pyW6qM5lhUKS+EX91uZyQhdqhpDLW8JyGfp2BBTdVRlRL1iDw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PtAI1XdYXMIVpBeae6tW8YjeCPXTl4ECpp7lyYmAQEQ=;
- b=s2dGAlXwlb/CnaM2NMlTXCKgK4PyTimZJcH/uCCgCSPPxdVEhnPkdtIxaf3sUkY7/FIBrf4W+m3MyujrPQA/kKjn0utzh/YRqLXEGA+wgoWxlx2OG6K8rIA0GB4LwCIcWd/Pb8zcQX99l/XOnA7ZyQ7iaHKbPJ5vKjvOBHfW1Vb0QQb9myhpjCOO6XTsyesOq+i/KXzs1c/bJ3F9tExW94JSh6TaFC3+8KK8SqCl5dNHMPjFgDimqFumcNyATxyCbdOatfkiF+mmOQpEgK+q3yusC4KdDzmcL0FKFazkVvn/UpdfhHyk0cErSeye1qzfiL1YCkjLQRkTvBGlJGuUyg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PtAI1XdYXMIVpBeae6tW8YjeCPXTl4ECpp7lyYmAQEQ=;
- b=hLmkJYmpJ2r8Hk2kBO53tEjFRizuErGUjgi8uzLLUv1DkZZ/1Pw+mY2Ewk2q3OTDM/Kj5aZhoI7KBtoN2ePOybcbQRYkS2l5xTb7qvbJE5gMRwV9NveeC92tcuDz/67uEdv98/QqSShRJyJWcsCHa0+nbqzrSEoX43C6jIG/JWVmUA2vLwQiA44MvsYOGnDIPiUbhNb2yFbw5qYUjQs7ZAS4dE1Q5mFrX/KoLpOt2ax/3vxOOGmbT73Z/BVrQjUCVN/VgBU47xs1imHGa/lFcz4m3bZXgdQMB4gIQg3IX9jjdML9ib1aNOVxkwIjOLdtRuF5D61IhuAJATSrkcoJhQ==
-Received: from CH0PR03CA0243.namprd03.prod.outlook.com (2603:10b6:610:e5::8)
- by PH0PR12MB5629.namprd12.prod.outlook.com (2603:10b6:510:141::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Mon, 6 Jul 2026
- 08:56:00 +0000
-Received: from CH1PEPF0000AD7B.namprd04.prod.outlook.com
- (2603:10b6:610:e5:cafe::b) by CH0PR03CA0243.outlook.office365.com
- (2603:10b6:610:e5::8) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.13 via Frontend Transport; Mon, 6
- Jul 2026 08:55:59 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- CH1PEPF0000AD7B.mail.protection.outlook.com (10.167.244.58) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.181.6 via Frontend Transport; Mon, 6 Jul 2026 08:55:59 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 6 Jul
- 2026 01:55:43 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 6 Jul
- 2026 01:55:42 -0700
-Received: from vdi.nvidia.com (10.127.8.9) by mail.nvidia.com (10.129.68.10)
- with Microsoft SMTP Server id 15.2.2562.20 via Frontend Transport; Mon, 6 Jul
- 2026 01:55:36 -0700
-From: Avihai Horon <avihaih@nvidia.com>
-To: <qemu-devel@nongnu.org>
-CC: Alex Williamson <alex@shazbot.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
- <clg@redhat.com>, Peter Xu <peterx@redhat.com>, Fabiano Rosas
- <farosas@suse.de>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>, Zhao Liu
- <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>, "Christian
- Borntraeger" <borntraeger@linux.ibm.com>, Jason Herne
- <jjherne@linux.ibm.com>, Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- "Cornelia Huck" <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- "Vladimir Sementsov-Ogievskiy" <vsementsov@yandex-team.ru>, John Snow
- <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>, Lukas Straub
- <lukasstraub2@web.de>, Maor Gottlieb <maorg@nvidia.com>, Avihai Horon
- <avihaih@nvidia.com>
-Subject: [PATCH v5 16/16] migration: Fix "switchover" used as a verb in
- comments and docs
-Date: Mon, 6 Jul 2026 11:52:11 +0300
-Message-ID: <20260706085211.13905-17-avihaih@nvidia.com>
-X-Mailer: git-send-email 2.21.3
-In-Reply-To: <20260706085211.13905-1-avihaih@nvidia.com>
-References: <20260706085211.13905-1-avihaih@nvidia.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgfA2-0008ME-PR
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:58:44 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6668jEHT3624558
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 08:58:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 1/uqlUN1ub4XwzyuuWJTFRRxsZAcHXJ1jXD/sNb1VG0=; b=DCjSalQ58JxokhEm
+ U6ZLiXahjrVuPYorsek6C+98NrkzbJfiqY9RpRzv8DLsvr0+kPnn6/v6FT5y8xyP
+ 3rbzbAagbPJvWGUx0iqyeP2FzpMeOwLPGJcnAJYMUFRd+kGWoBJgLrfJYBvdbc2x
+ tqsnfgBrg6DJq463o6biAk0BzzGTsbJ2ks3m2U6UTh+80dFVkOl//Ialf/B2npIO
+ ysFokguz8g3xOyIDywGNZD0trcv4qZefZyTY9MqMbWOLsuWwhxn1oUVwnuo//G0T
+ YPoWA2CTvoECIhrN1tuLD0bwywTCF99CH8baeDoSLDkI6AY2AcvGqlDDC18QlhHc
+ hnBRZg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6s4swhmw-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 08:58:40 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-92e820609d9so195892185a.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 01:58:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783328319; x=1783933119; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1/uqlUN1ub4XwzyuuWJTFRRxsZAcHXJ1jXD/sNb1VG0=;
+ b=Fo86IY+i8DWhTm/gZ+VEq+hsunuCklREGbL9AEcZknTy82/cM3BR1o4/DxHphvC8WI
+ XEsFmd5WFZCD46f5q4GXg/ojjR778GcqRWuhpHIgwUAZZhfZKoynbrNdxsx5uYRldarp
+ 3B6kUsMgEqiTTfMn1zEHtJdPh3MSApBF5dQCZixzu/RfSR9B2cohRviLCVILOzrMcouv
+ 9hB3wARtr+3zXnfbOUFk1VbK5UD97xN1x/jhmvzEJirNFIQamoif7hm1I7i0cf6q1mUb
+ RhjBGln7yZ8qKAnunG3JUshOnEsBa7mhngobxWx2wSGxxghTo9Pp8C+pDZgfA10OHpJI
+ t7ZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783328319; x=1783933119;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1/uqlUN1ub4XwzyuuWJTFRRxsZAcHXJ1jXD/sNb1VG0=;
+ b=cyDdRnWP4rO+XMYqr9JhScA/a5ZJ7F6oSQqB4sEsyP6IOEXrUrUfNz6ipicC2IsPYT
+ iTMMOhyVYl/EQPEdGm8ZUXi2o7Q/+yIto+uZvGTcp2Z8weIwWkLVE0QpEUrNo3COcJ6F
+ Hv2EYMQWQ50s4K9R5Hg2F4CL2odolaPxRYJ2+5M7+Hg3AntjNi7Kjv3VM9YV/XR8ojKU
+ z5qi1x12o+ZjgRFo7GTiEdBqjJ9jJiJcAA1CEvx4ISERUo4h4bVOdWNtaI3VUKBlJGUS
+ buuuZtQ6jVHCGMIpTch64yEt0U4F3wgz3S/XiyKxS2f7Wj2TOZdNBtgnS+P7i4tGJcYp
+ LZZw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqnKzh5SZfj9O9eWz0/FiaI0TjHwS87FEQwd94GGsbMSfRmPRlw+QeESjkkce4Eov3wN46PiKJkxna7@nongnu.org
+X-Gm-Message-State: AOJu0YyT0x8BpLoeVugET/WdyKC3w+mCJdCx5JzWqNvmAI18qeyNunUp
+ /Y7EeGnmjwlcxcf+eeTxopip6sk28WuFkB6t8m/NYdSfVkm8qrKdlPM+OQfdZPnXoUNqu/Mf+4i
+ NZKOhA7+9GNozFm2nQcLR6z+CQvfA8EEXkBYVFCshD01kMV7h1RNw/gWpgQ==
+X-Gm-Gg: AfdE7cnPZLQoxUA/MQk/LH+TSPQMM2MysUNzODVBU9fArMbxo9EEhjKHdOkcuA3cjl7
+ f33DUEj5IJaEDaTcgmyRgHLGr+AIlnvP5AKwFTYXx0M/Qt4M1iGcG+GHlKwLfZ2S7lfh15v7BnU
+ 2bckbngzZ9mz84/I2S91xVkxN9l9HKu/1UWqnQfUCb/L6XQkxdMyNWQpUZaCTVCe5R6Q2Xa4ENU
+ bumKx2lU5bwFDJ5VoNspm5Iu6cEJNJHnxrRv4s5HuLPn8vlfgSwvSSO3+m1mGQj8PR/WDUOHO2E
+ utSQe/flQZjbP1LqgUjnTOzQja5EEEkQ6UlA58ctEViRUJ0RqFxCr6Y4JZiM+hIRKXnxazc/xVw
+ PlRTkmKXbPA10ULTvcA31zm1bKqB5uP65g8JYheiwFpnqIq4pro7XdUY3clyRAA==
+X-Received: by 2002:a05:620a:462b:b0:92e:4bc9:6ebc with SMTP id
+ af79cd13be357-92e9a3e1c50mr1281645785a.28.1783328319460; 
+ Mon, 06 Jul 2026 01:58:39 -0700 (PDT)
+X-Received: by 2002:a05:620a:462b:b0:92e:4bc9:6ebc with SMTP id
+ af79cd13be357-92e9a3e1c50mr1281644885a.28.1783328319061; 
+ Mon, 06 Jul 2026 01:58:39 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c12b629a1d4sm683632366b.39.2026.07.06.01.58.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Jul 2026 01:58:38 -0700 (PDT)
+Message-ID: <931f68f9-16c1-4057-8b7c-35ff27f8113a@oss.qualcomm.com>
+Date: Mon, 6 Jul 2026 10:58:37 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ati-vga: Include vga state in the blit context
+Content-Language: en-US
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
+ Chad Jablonski <chad@jablonski.xyz>
+References: <20260619140408.6CF98596948@zero.eik.bme.hu>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260619140408.6CF98596948@zero.eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD7B:EE_|PH0PR12MB5629:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2c2047dd-8b3f-4ebd-ad79-08dedb3c6661
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|82310400026|36860700016|7416014|376014|1800799024|56012099006|11063799006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: +LeJzWE6rTdjsBuH3r1JaR7na5QF+wQ9bg8lFBFWLW4ioVzF3isGGsPWsRHbvt1m/walRuHMaVGVMq4bxFBNZQs6drEs/vipRhYvvjPf6YY8eqnPJgccwJ70CRM15SWz1KKBpSvwMXYmuPdkV9xDWQ1rHw8Xl4XCku5efTSzLDR7Te6kLYxSyFbrAnQNB8sUTPIIj9BAJ+osdzenCUJFwowByMpnkdDUtTk4bODDpWygypUfSDFbhQIApkBSnfGpXOlrcDYzQY2hrRB88SQxnY929zWM7tzVUfjPpkEhAwyU7WyOl47bBdNMKauyCbnPtxcVnTQjEmHdCrCZZM/Stz1ghWiPU4SrLp55IQtsnDJVQYJG0Kd8UkiFJ3LHsFxkfvXpglLMe9S2UVpWSCdkd1nWxufJ4NH75YKBKJ+4Sgc9F4Z8QH7TX7BpvMV3ltxLGNcciinqUeUv2PEjUsj2VeimaNCjUzn7ZCiZsdlriJIe9m/ar/tRT6qHQ1zXA5NQgEapFjsaUTsn1qJr32GfI868AO02pxxJbpd6nqD8R03JuOm5V0xmJfb1uWtUW0dxIkGRdoFsJLC3dtNyQ/Gh0p81vOgOyuhJYM+ECGyJ6wBsw/cxr2lI1qwGd7hsZrrySdhX8eo4higfT4TInHsnd5XvgpLOBWJXv0yFjbry07yVohrQVkC/SGb+aC/5y1fqrsZHFabFbK487mwb2vBa0g==
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(23010399003)(82310400026)(36860700016)(7416014)(376014)(1800799024)(56012099006)(11063799006)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: fQjyCd2z1KW5roJqW8Nouq6jGnfSLfRV1jnptAnZ/MdikgTxsxURpTAnMu7YcoRbgpptpXT7rUVrwg7X+XqQ9gaUh8C4MoVqPYGEEwu/9e0wwW4oM5mZh/CrJeGsZXCHUmNCQgr6Goi6jGNr+Gg3Pod/aW4PR25p/o1oqYIbJ5cp+2kNIxKhPoJpKf1BgwKZ3PNjwNq+aBzxD+G+gddpRLU5LKf2vktlsJu3uU3nZ7vA2tt+qYdBTMmH4KM2WpUyN3sTUHl3O/wkL7CpjDIuXYDnBkRxKkTFJjnqzsSqD1yHzw1doT5GJ0u1E4dNr3Th3Khi52MtVxAeF+f6aB1SwqmaanvPFAbH2gpAipxSKTi5cid6fCgqhgECknzIyDwlKYQXaTZzLZdPf7uXZFgLL3Tv1FPJdrNMOzJLkQq6QD46Lxbol46ptRq3J+Ez71aI
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 08:55:59.3681 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2c2047dd-8b3f-4ebd-ad79-08dedb3c6661
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD7B.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB5629
-Received-SPF: permerror client-ip=2a01:111:f403:c111::9;
- envelope-from=avihaih@nvidia.com;
- helo=DM5PR21CU001.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA5MCBTYWx0ZWRfX9TeS/5rvB1WU
+ mY1bkXDsT3h13xlzB2/7DTWWZcPklNspvqjnHGqpJ5awyTIZsHS20XG6cqlJXRxESoWp+moumV0
+ wIoWsa+XUxC7tCbMjVu+6Qh6AIkkup8=
+X-Proofpoint-ORIG-GUID: Pqj6kKfCrHKmDExkBPuZyQDt8_h1IGZM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA5MCBTYWx0ZWRfXzEDf3ubxnqWL
+ 1m8+CSv0cRimE2XdpM1oJH/9PUlZwZiEa8BEK32oWtanIfZrXec4/fq7MjmZpEa0arPEzKAQPdz
+ R/9L19kN3AQ1G/hIYWBRs/fDz6WbGt8uZnv+uOBLFWM799paSbPe38Wja/IeICfd2hl73rv0DLN
+ XH3/9ogRwY8ORJEn+Jbq9t+ReE1J6a8WHTtN4H0AkdOIX4p8lozxAIwgrwDu5sRoHmDVo34CXrx
+ uP8HhDidI33ilN9PhqmTRkkQMW3KSkhMa+L45Z6yFj+ZYL4WiLr0UZlWBltoBpShSf8xalkpH+p
+ +LEwGzCk5hN6o7rFVq6vL2MGUIfKA8AM2JaXX6ZQUgT9DMBBOg9oSEbgz3qdRGioyIdKGbFytZm
+ uogFtsKEudxmEjbvKld5POaCxDd5vni9rFrwPR420HJnowKUkMirdpfAnWcnuJzSFJoHR78nQJj
+ i658vBFM6zc7AyU4/Lg==
+X-Proofpoint-GUID: Pqj6kKfCrHKmDExkBPuZyQDt8_h1IGZM
+X-Authority-Analysis: v=2.4 cv=ZfQt8MVA c=1 sm=1 tr=0 ts=6a4b6e40 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=2f6ENiU84E2-asKVN40A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-05_02,2026-07-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 clxscore=1015 suspectscore=0 malwarescore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060090
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,104 +154,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Switchover" is a noun; the verb form is "switch over".  Replace all
-instances where "switchover" was incorrectly used as a verb in comments
-and documentation.
+On 19/6/26 16:04, BALATON Zoltan wrote:
+> The vga state is needed by several functions using the blit context so
+> just include it in the context instead of passing it separately.
+> 
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+>   hw/display/ati_2d.c | 38 ++++++++++++++++++--------------------
+>   1 file changed, 18 insertions(+), 20 deletions(-)
 
-Signed-off-by: Avihai Horon <avihaih@nvidia.com>
----
- qapi/migration.json   | 4 ++--
- migration/migration.h | 6 +++---
- migration/migration.c | 4 ++--
- migration/savevm.c    | 2 +-
- 4 files changed, 8 insertions(+), 8 deletions(-)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-diff --git a/qapi/migration.json b/qapi/migration.json
-index d2f42c4b0f..66bd900465 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -509,7 +509,7 @@
- #
- # @switchover-ack: If enabled, migration will not stop the source VM
- #     and complete the migration until the destination has
--#     acknowledged that it is OK to switchover.  The acknowledgement
-+#     acknowledged that it is OK to switch over.  The acknowledgement
- #     may depend, for example, on some device's data being loaded in
- #     the destination before doing switchover.  This can reduce
- #     downtime if devices that support this capability are present.
-@@ -919,7 +919,7 @@
- #     migration can use during switchover phase, in bytes per
- #     second.  **Note:** this does not limit the bandwidth during
- #     switchover, but only for calculations when making decisions to
--#     switchover.  By default, this value is zero, which means QEMU
-+#     switch over.  By default, this value is zero, which means QEMU
- #     will estimate the bandwidth automatically.  This can be set
- #     when the estimated value is not accurate, while the user is
- #     able to guarantee such bandwidth is available when switching
-diff --git a/migration/migration.h b/migration/migration.h
-index 44bce199cd..631421c784 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -496,12 +496,12 @@ struct MigrationState {
-      * migration progresses, the devices on the destination acknowledge
-      * switchover, decreasing the counter. When the counter reaches zero, a
-      * single ACK message is sent to the source via the return path, indicating
--     * that it's OK to switchover.
-+     * that it's OK to switch over.
-      *
-      * In new switchover-ack, the source is the one that keeps track of a
-      * pending ACKs counter. As migration progresses, the destination sends ACK
-      * message per-device via the return path, which decrements the source
--     * counter. When the counter reaches zero, it's OK to switchover. During
-+     * counter. When the counter reaches zero, it's OK to switch over. During
-      * precopy, source-side devices may request additional ACKs, which increment
-      * the counter again.
-      *
-@@ -521,7 +521,7 @@ struct MigrationState {
-     /*
-      * Indicates the number of pending ACKs from the destination. The value may
-      * increase or decrease during precopy as new ACKs are requested or
--     * received. When zero is reached, it's OK to switchover. In legacy
-+     * received. When zero is reached, it's OK to switch over. In legacy
-      * switchover-ack, it's initialized to 1 and decreased to zero upon ACK.
-      */
-     uint32_t switchover_ack_pending_num;
-diff --git a/migration/migration.c b/migration/migration.c
-index 7d5acd93c3..9736c14458 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3293,7 +3293,7 @@ static bool migration_iteration_next_ready(MigrationState *s,
-                                            MigPendingData *pending)
- {
-     /*
--     * If the estimated values already suggest us to switchover, mark this
-+     * If the estimated values already suggest us to switch over, mark this
-      * iteration finished, time to do a slow sync.
-      */
-     if (pending->total_bytes <= s->threshold_size) {
-@@ -3418,7 +3418,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
-             migration_iteration_go_next(s, &pending);
-         }
- 
--        /* Check can switchover after qemu_savevm_query_pending() */
-+        /* Check if we can switch over after qemu_savevm_query_pending() */
-         can_switchover = migration_can_switchover(s);
- 
-         /* Should we switch to postcopy now? */
-diff --git a/migration/savevm.c b/migration/savevm.c
-index bbb8d2b47c..34dd06f9f7 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2509,7 +2509,7 @@ static int loadvm_postcopy_handle_switchover_start(Error **errp)
- 
- /*
-  * If legacy switchover-ack is enabled but no device uses it, need to send an
-- * ACK to source that it's OK to switchover.
-+ * ACK to source that it's OK to switch over.
-  */
- static int loadvm_switchover_ack_no_users_legacy(MigrationIncomingState *mis,
-                                                  Error **errp)
--- 
-2.40.1
-
+and queued.
 
