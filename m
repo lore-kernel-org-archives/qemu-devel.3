@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54F17C44500
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:54:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72271C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:54:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgf5N-0008N4-Un; Mon, 06 Jul 2026 04:53:53 -0400
+	id 1wgf5G-0008KP-Np; Mon, 06 Jul 2026 04:53:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wgf4z-0008Gm-BP
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:53:29 -0400
-Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
+ id 1wgf4f-0008Cv-IC
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:53:18 -0400
+Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wgf4x-0006Yp-Jg
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:53:29 -0400
+ id 1wgf4d-0006Tm-1t
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:53:09 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Zx2W+pi02EzWdOl+zihL0ITGtZ7KYvLPx+3uDYS8IEHYdQFM6DtDVfQI6Lf41eCNWzu6qqt6fmaIPyhvvOKhMfuC7jshtNh0JLHXxeGClvou9P9bJFuImEIIOYdLXPAcXd8AzsP6UCibLsyQEHmxHqhb/iM1pPIsd0NrleuSFttSyn59VuRuwic/c/i2huk0yMwjK+L8Z53WEgcjNXBegX7aRMZGlHz1jXHnUsHhGg8mBrmRuk5fRqIVmScb8VD/beZK3MDvWGtD18u8e/SsZym+bdYgAJXYor5nrcOhi6ocZnec7XJD02KHMhY+2ykm74dkU3Ke6gdOF6cbUu/UYA==
+ b=GoPbRtyzPkPBRNcOz3Zf/olqYwcMIcVpiLbUjeXLPKYX2Kg17cpN4R1yQRAr3xj4AlKmFtkoPPumxTmia2oBMDTOX3ByHoUPH4psNqbgIGIIvJJ/BqeB7qVjPXNNeInzsDVUMH5v4vTp+quai96sGXpF+00z77slKhhiei7gKMZuHiGNaZ4JXUDg9Nh/q1Y1qEiXSWFLe13+MYR53Z3NMegLR5O+IgWOV+gADHyrUrl62Uf2JHkTY1ecBIocWhbHRg/kpdBceRR6s3lmPxba3WtBx1HH2d7f6DI1zDv7WVC3ONHnTTUtAKH60o2Yhb0xwsOzfgyo9n6rr3ikeEV/EA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NF3gMty1G1PyvVQQMVI44QkzCoGXyDH1wcmUrgvBb3k=;
- b=SFWSQ+/WOTkYwdNOahP+BXOrog04EVKG2OxnNX6TVGnx0WSNuxRbl3pJ1eiXw5inX1Vbwp6AAeMDM9qKbUqbXU/nxpJlD97rgTheBgck1TarGb1u8klRnLAi5a/Or/vJbbEPoO3uHRuBl8Pzc8gRP0p8Ow+li4encnl3/C/Y/631mFNalwRo7Bt6WFp7F37P4dGpouggBzaMl8D0HT+84Zu+4j8oKDBj57ciWLOEFuohH0yTahlErU8iYh5rr60cBhLfMlQWrldImk5pScbcXGDf7/KrvJj5N1zgm7souzWFNRDUIFwNRnn9Dn5EOL1gc2n3SMu2Fmrty+GlHoFxLg==
+ bh=wD3LOwMNfBP3KwVhgyllRQaaVEfMDr+FkJucylR5Xrs=;
+ b=nWMJ2mhYJQHwPOSB31p9BFcLCLgOa8qoMSfsyOBaF7rNxxObBJSgcehs/xTcs+Ud+1jcdRYdUTbU/Lu9KCBJIbmzNM3D1zrCBjZa7tn1yuzYuUYWxh3mSVnLoSBZp2RhFXXb4/G2EB/b7ffOviU/ZKKGLA/UeXH/Y0/Fg5f/oP4jpihblQVZoSeswNxV0RNSX4Mjca+2hIBgAx3q7bDbCalbamTs5wj2j5pra7NJZlvoaKcwwlmqkRWdHCCcRmz0gmQQ9SuY68zbAtPjFBAWUHAr9Bu92Zn2NZvcEZno8D5r/autXj3Ueq5FUhobgwWRjyiHQMUXjTXf8EkoQRw3jg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NF3gMty1G1PyvVQQMVI44QkzCoGXyDH1wcmUrgvBb3k=;
- b=myeg4n9M9CariMJz2cnJ5eGKxSkJEKSBCiHXXxlI06mKQ6HfvgbxsTMDYV0pgZh2RS8hKECKAxVWIOiltQ9+YSA8cGsalvLRWzyhiJWUpImAZuoOWE5Lovsq4DBpc64Qck9g1PU8XVTzBdHRwWkFDThdb+BfOLJ3NWlxT/fAEXAM6a8anlti4kehfo/kFtzfpJJVLI/2W6CKQd0GwhLgN3bpduUuIU3N5a4Or+ZWeodbu3WS39eoMPNFqspKgMDMSJPfok94G6rIIjNO/TWJKdgaHnGzt6/Pozdw4O/WWMN6AGBTagwQgGO9VgYrbQR5sf+0zenSaz52t5YMdFdIxw==
-Received: from DS7PR03CA0200.namprd03.prod.outlook.com (2603:10b6:5:3b6::25)
- by IA0PPF64A94D5DF.namprd12.prod.outlook.com (2603:10b6:20f:fc04::bd0) with
+ bh=wD3LOwMNfBP3KwVhgyllRQaaVEfMDr+FkJucylR5Xrs=;
+ b=gFwrbbX7+0ePr9QJUOkfeqyTe06ZyXYrZLnWS2TUvBMClbjVkatgWQcHH9nmSsYbm5su66riQ/gxhmnTE87HabwP/gStjKOeay1UG3Ccb2oK8fL5QRYcFJM77MQOz+KhQFPPNTt0piWLPM2UUc9W02cc4l/mKuFduQwD5ltlUz/dX76fK3/92jxrwmSKxTdpQ4mZkPlLwVLO0Dii19kDoswEzbUike43S9JDV5gEZEAlM8JBEIEF7M9jCcZcezP9LxRH+6OAvWnHPNFXERbNsgkK1fe8g6OUFpkRJJKw2zhsBhYpA1vpHDleUfWB/Lg9Twr+R9eLum8DmvtU6B09TQ==
+Received: from CH0PR03CA0267.namprd03.prod.outlook.com (2603:10b6:610:e5::32)
+ by CY5PR12MB6300.namprd12.prod.outlook.com (2603:10b6:930:f::8) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Mon, 6 Jul 2026
- 08:53:17 +0000
-Received: from DS2PEPF00003442.namprd04.prod.outlook.com
- (2603:10b6:5:3b6:cafe::85) by DS7PR03CA0200.outlook.office365.com
- (2603:10b6:5:3b6::25) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.8 via Frontend Transport; Mon, 6
- Jul 2026 08:53:16 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.11; Mon, 6 Jul
+ 2026 08:53:00 +0000
+Received: from CH1PEPF0000AD7B.namprd04.prod.outlook.com
+ (2603:10b6:610:e5:cafe::f) by CH0PR03CA0267.outlook.office365.com
+ (2603:10b6:610:e5::32) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.13 via Frontend Transport; Mon, 6
+ Jul 2026 08:52:59 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- DS2PEPF00003442.mail.protection.outlook.com (10.167.17.69) with Microsoft
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CH1PEPF0000AD7B.mail.protection.outlook.com (10.167.244.58) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.181.6 via Frontend Transport; Mon, 6 Jul 2026 08:53:16 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ 15.21.181.6 via Frontend Transport; Mon, 6 Jul 2026 08:52:59 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 6 Jul
- 2026 01:53:01 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ 2026 01:52:43 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 6 Jul
- 2026 01:53:01 -0700
+ 2026 01:52:43 -0700
 Received: from vdi.nvidia.com (10.127.8.9) by mail.nvidia.com (10.129.68.10)
  with Microsoft SMTP Server id 15.2.2562.20 via Frontend Transport; Mon, 6 Jul
- 2026 01:52:55 -0700
+ 2026 01:52:37 -0700
 From: Avihai Horon <avihaih@nvidia.com>
 To: <qemu-devel@nongnu.org>
 CC: Alex Williamson <alex@shazbot.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
@@ -84,53 +84,51 @@ CC: Alex Williamson <alex@shazbot.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  "Vladimir Sementsov-Ogievskiy" <vsementsov@yandex-team.ru>, John Snow
  <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>, Lukas Straub
  <lukasstraub2@web.de>, Maor Gottlieb <maorg@nvidia.com>, Avihai Horon
- <avihaih@nvidia.com>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>
-Subject: [PATCH v5 01/16] migration: Propagate errors in
- migration_completion_precopy()
-Date: Mon, 6 Jul 2026 11:51:56 +0300
-Message-ID: <20260706085211.13905-2-avihaih@nvidia.com>
+ <avihaih@nvidia.com>
+Subject: [PATCH v5 00/16] Make switchover-ack re-usable and add VFIO precopy
+ REINIT feature
+Date: Mon, 6 Jul 2026 11:51:55 +0300
+Message-ID: <20260706085211.13905-1-avihaih@nvidia.com>
 X-Mailer: git-send-email 2.21.3
-In-Reply-To: <20260706085211.13905-1-avihaih@nvidia.com>
-References: <20260706085211.13905-1-avihaih@nvidia.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
 X-NV-OnPremToCloud: ExternallySecured
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS2PEPF00003442:EE_|IA0PPF64A94D5DF:EE_
-X-MS-Office365-Filtering-Correlation-Id: f502663f-59e6-4202-cc39-08dedb3c051e
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD7B:EE_|CY5PR12MB6300:EE_
+X-MS-Office365-Filtering-Correlation-Id: 14cad6db-23a4-4143-54bc-08dedb3bfb29
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|7416014|82310400026|376014|36860700016|18002099003|22082099003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info: 6ilmclyjkD+v3VcrG6V0c7fEkuirKCRaB+l0KBjDfg/B3GgoHpM5Em1JONmcWHUUjP0r0bwmz3LROlKcPUL5ezA8ktcZBHHa+Z6XSW2BQYLR8p31cqAmWiKPlzLrr6S2beehjt2lPt5KejmRpkHvMyNsSwRKZE1AOxXUK5icA8mIbUZpKmVGNy1QDc5uAIYKt5Hsn6U4wCx7PxGoqDKlZWkF0oiVBEzg3jJLHrvVb9+Sgo9hYjep824ILBoF7e0GjDigJaCU73vfZHS6GrW0OdUJ+0WRfofdy/jLABp6VocdJYL9P49noU/8PD0TLTJE7zsGVwWill5Dr5Gl4D1SYoWI/GtqJQDs7QhaRh5g391zW40JXTtzGbuzyFV6MJccAGcLql9aeShg+MR83Uh3VxrYBjIunE7GGHMRoOtYMif2vAQ30GkTqr9WC43ERRs9C+/mAojmmR+GXzzhy+dF7095r+xcU26GhwhKIzZwycmpliw/1fTNU9Rc46U2QMFF0pV+fNX2bWiBJsR5ByD2xcPrEkr6UqC/BezLkiaxQvELw+Ct3LMayYuD5+uulSbheaFofrc5iIx7lS8yC4k+asUU2Giz7JsfTT99cSj67/7HMCdu18eyjlD5h+IxzLh3PoKHWU/yYVwMv3R15hQO3DycGBgdjjHpXsxDpeYQWAk9LyiuCLmkBVB71WCg4Vd0tex1TsiQ4WaEIE+CObLzOQ==
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(7416014)(82310400026)(376014)(36860700016)(18002099003)(22082099003)(56012099006)(11063799006);
+ ARA:13230040|23010399003|7416014|376014|82310400026|36860700016|1800799024|13003099007|18002099003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info: J/P336dsLeUvy3h646DIcCvWiuSZwCllTRnOl0AWlBNPHNmaaHJZvHmd+kMGiLxOqu0z0Zr8A3sKtpMwHOdVKQTzGhtxHq07anGflPxC2xM4VEJHTAy3r4x5mcOZXxt1GV3ln/8duo2uSRyWE5hcCUrp5tEKmbHljHY8XvFZ/otbE7fapBjNufbirvN4518hJW7rCPcUff1qFhCq6pxECI8Vvj67hVy8lGU7EoMv64eaRogqcVUhqfYOcMdVKi+sANm7PyXT2Gjj7dLbjL7y39PgPw+mCzWZkO4QoEKJCR53bjrP9c4ql+hDapN9uFzGrC0LUO4Au9wUWfrr3ew9hNEVLBtsmkTkV9lhubWtGOYNNNgq5E7WfTQ6m3SHzE7RWF1nZJMTF0jHKXkScVv+6Hz0C0GFZfb6LzJNBZA5+/EU4R1aYSlMUqNolVlQF+rHHrqzMR7SgUzmuXlSB7/5fQ3lIov2Fz1Sh0PB8szkB6qXxbOVaQYivWOdWQhA18y70bZfCvZ/RMBzwkcPhLVgDmW6ubjjLct+ccCyPRAha9i6wO0iBw6YZ//aoUv/FxJzrowcrZcnkA7UDRX2h0QsusPwdUWboz9v3o/VPRE9MuTwiEo2AaEeb5NNNFWh1wV0kpr3NUNYHl9uT6wn3e4ufa2C35OB0C63hs1pHRALEyuOzMxUWdm0lyh3d5ic7qpJ92AoLSF96OuqgqtW5fsKig==
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(23010399003)(7416014)(376014)(82310400026)(36860700016)(1800799024)(13003099007)(18002099003)(11063799006)(56012099006);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: WLkmElSwo5YttnnmFmqZn8Usqyv9uYH3OqzonwPVWMgXQdaD/VGhW5q8zFTXw0JeLub0PXOIiiOJZRaAcMmr+ulYXreYRL+3EpDZCZy2QyWKWQzlBaErJQXUTSlhf1FOYRy29EqVnYNZoPXw6QpcC6a5PqfbVTYfqYIiV0BtNKASRO/OSobZGEadb49TIPmCxVenzl5Xw+JUwPArbzdLv0H0ovd0ou29V/m0/EY9FpysnEJi8O5RErwg2Aru2jKmXWVjE0PYbq1EbmCl+zrPTK0BuffM+nFbnp2oLKfLmjCMhzDlheb+r1FzD/RJjCQWTFFUkSytw3RmS5FzLmUpEJMayaUIV4JUs6BpIcZY0bfVuU3+6qcyXvD+DrNTkv7ZwhU+UdYicyX4s7Ac5bxhnNRNWJw0TpFn1BNICyxbQdewUPeHCsgJk/MvV0//JJV/
+X-MS-Exchange-AntiSpam-MessageData-0: lZpRCl6WNMRXH0NeknQjeqpl6Emm0QVfXwXr8jFahF/p2Oj/VnfynkLjLla4qprlhkG5PO+GKtUAFt0wVk1CY9YT++xQQUDHmrB1TfjMF+9c9wcaHHdsPqqNo3qDLgW/2nz0Fw/fc8xwqZ8tx5/AYfmX0mU1clP3clDOvp3heK8lvgpsFSQtMq0AbDa12OvN7yerOw3FcFt/ehkmDsGXVLSdriukjvFcl1gHj0r3PKPMKg+JFnUVs523UhjH6q16RQNx9Fwg9XsJCsm+1JbLw6sOiyUlUNx2gQVQiwvAk8Pixg1I3xKLKJpaC6l5I51lt3wF+pAekV/FxGI6/fMltAAIQbPRu0fKTaM3EmX17NdhB2oH1gNMU2QAHO+opIPywyuh2zu8IyInkxi+VuzxbYdf7V7f+3GRLrSXvWLzI5oDBbKI7iktBSBAmekAfqf1
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 08:53:16.2172 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f502663f-59e6-4202-cc39-08dedb3c051e
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 08:52:59.4616 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 14cad6db-23a4-4143-54bc-08dedb3bfb29
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS2PEPF00003442.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD7B.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PPF64A94D5DF
-Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6300
+Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
  envelope-from=avihaih@nvidia.com;
- helo=PH0PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ helo=CH1PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,151 +144,207 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-migration_completion_precopy() doesn't propagate errors to migration
-core which leads to error information loss. Fix that.
+Hello,
 
-This prepares for a follow-up where migration_switchover_start() can
-fail on switchover-ack and still report a useful error.
+Changes from v4 [5]:
+* Rebased on top of master.
+* Patch #1: Applied Cedric's change to error_prepend() message.
+* Patch #3, #7 and #8 - Fixed COLO regression (removed R-b tags due to
+  the changes).
+* Added patch to refactor migration_completion_precopy() to return bool.
+  (Philippe/Peter)
+* Added patch to fix "switchover" misuse as verb. (Markus)
+* Collected R-bs.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Avihai Horon <avihaih@nvidia.com>
----
- migration/savevm.h    |  2 +-
- migration/migration.c | 13 ++++++++-----
- migration/savevm.c    | 29 +++++++++++++++++------------
- 3 files changed, 26 insertions(+), 18 deletions(-)
+Changes from v3 [4]:
+* Rebased on top of master.
+* Patch #7: Moved switchover-ack-legacy machine compat entry to patch
+  #14. (Peter)
+* Collected R-bs.
 
-diff --git a/migration/savevm.h b/migration/savevm.h
-index 96fdf96d4e..b6bb4fa977 100644
---- a/migration/savevm.h
-+++ b/migration/savevm.h
-@@ -44,7 +44,7 @@ void qemu_savevm_state_header(QEMUFile *f);
- int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy);
- void qemu_savevm_state_cleanup(void);
- void qemu_savevm_state_complete_postcopy(QEMUFile *f);
--int qemu_savevm_state_complete_precopy(MigrationState *s);
-+int qemu_savevm_state_complete_precopy(MigrationState *s, Error **errp);
- void qemu_savevm_query_pending(MigPendingData *pending, bool exact);
- int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy);
- bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp);
-diff --git a/migration/migration.c b/migration/migration.c
-index 0f56432d90..7e0a0bea7a 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -2820,7 +2820,7 @@ static bool migration_switchover_start(MigrationState *s, Error **errp)
-     return true;
- }
- 
--static int migration_completion_precopy(MigrationState *s)
-+static int migration_completion_precopy(MigrationState *s, Error **errp)
- {
-     int ret;
- 
-@@ -2829,16 +2829,17 @@ static int migration_completion_precopy(MigrationState *s)
-     if (!migrate_mode_is_cpr()) {
-         ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
-         if (ret < 0) {
-+            error_setg_errno(errp, -ret, "Failed to stop the VM");
-             goto out_unlock;
-         }
-     }
- 
--    if (!migration_switchover_start(s, NULL)) {
-+    if (!migration_switchover_start(s, errp)) {
-         ret = -EFAULT;
-         goto out_unlock;
-     }
- 
--    ret = qemu_savevm_state_complete_precopy(s);
-+    ret = qemu_savevm_state_complete_precopy(s, errp);
- out_unlock:
-     bql_unlock();
-     return ret;
-@@ -2875,7 +2876,7 @@ static void migration_completion(MigrationState *s)
-     Error *local_err = NULL;
- 
-     if (s->state == MIGRATION_STATUS_ACTIVE) {
--        ret = migration_completion_precopy(s);
-+        ret = migration_completion_precopy(s, &local_err);
-     } else if (s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
-         migration_completion_postcopy(s);
-     } else {
-@@ -2906,7 +2907,9 @@ static void migration_completion(MigrationState *s)
-     return;
- 
- fail:
--    if (qemu_file_get_error_obj(s->to_dst_file, &local_err)) {
-+    if (local_err) {
-+        migrate_error_propagate(s, local_err);
-+    } else if (qemu_file_get_error_obj(s->to_dst_file, &local_err)) {
-         migrate_error_propagate(s, local_err);
-     } else if (ret) {
-         error_setg_errno(&local_err, -ret, "Error in migration completion");
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 23adaf9dd9..7e2a0c2b4a 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1771,28 +1771,34 @@ int qemu_savevm_state_non_iterable(QEMUFile *f, Error **errp)
-     return 0;
- }
- 
--int qemu_savevm_state_complete_precopy(MigrationState *s)
-+int qemu_savevm_state_complete_precopy(MigrationState *s, Error **errp)
- {
-+    ERRP_GUARD();
-     QEMUFile *f = s->to_dst_file;
--    Error *local_err = NULL;
-     int ret;
- 
-     ret = qemu_savevm_state_complete_precopy_iterable(f, false);
-     if (ret) {
-+        qemu_file_get_error_obj(f, errp);
-+        error_prepend(errp, "Failed to save iterable device state: ");
-         return ret;
-     }
- 
--    /* TODO: pass error upper */
--    ret = qemu_savevm_state_non_iterable(f, &local_err);
-+    ret = qemu_savevm_state_non_iterable(f, errp);
-     if (ret) {
--        migrate_error_propagate(s, error_copy(local_err));
--        error_report_err(local_err);
-         return ret;
-     }
- 
-     qemu_savevm_state_end_precopy(s, f);
- 
--    return qemu_fflush(f);
-+    ret = qemu_fflush(f);
-+    if (ret) {
-+        qemu_file_get_error_obj(f, errp);
-+        error_prepend(errp, "Failed to flush QEMUFile: ");
-+        return ret;
-+    }
-+
-+    return 0;
- }
- 
- void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
-@@ -1874,13 +1880,12 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
-     }
- 
-     ret = qemu_file_get_error(f);
--    if (ret == 0) {
--        qemu_savevm_state_complete_precopy(ms);
--        ret = qemu_file_get_error(f);
--    }
--    if (ret != 0) {
-+    if (ret) {
-         error_setg_errno(errp, -ret, "Error while writing VM state");
-+        goto cleanup;
-     }
-+
-+    ret = qemu_savevm_state_complete_precopy(ms, errp);
- cleanup:
-     qemu_savevm_state_cleanup();
- 
+Changes from v2 [3]:
+* Rebased on top of master.
+* Patch #1: Added Error **errp parameter to
+  qemu_savevm_state_complete_precopy(). (Peter)
+* Added new patch that replaces migration_bitmap_sync() with
+  migration_bitmap_sync_precopy() in ram_postcopy_send_discard_bitmap().
+  (Peter)
+* Patch #2:
+  - Dropped dirty sync from ram_postcopy_send_discard_bitmap(). (Peter)
+  - Added explanatory comment to qemu_savevm_query_pending_final() call
+    site for precopy and postcopy case. (Peter)
+  - Removed skipping of final pending query for cmma, vfio and block
+    dirty bitmap, and updated mig_stats.dirty_bytes_total
+    unconditionally. (Peter)
+* Patch #6: Rephrased switchover-ack QAPI documentation and fixed
+  return-path markup. (Markus)
+* Patch #7: Moved new switchover-ack requests check during switchover
+  inside qemu_savevm_query_pending_final() and used local
+  switchover_ack_pending counter instead of global one. (Peter)
+* Patch #9: Changed vfio_migration_init() to return bool. (Philippe)
+* Collected R-bs.
+
+Changes from v1 [2]:
+* Rebased on top of master.
+* Added a new patch that runs a final save_query_pending at switchover
+  (replace RAM specific code). (Peter)
+* Dropped patches #1 and #2 as they were already taken by Cedric (in
+  some way or another).
+* Patch #3: Used Error variable of migration_completion() instead of
+  adding a new one in migration_completion_precopy(). (Cedric, Peter)
+* Patch #6: Dropped renaming of qemu_loadvm_approve_switchover to legacy
+  since in next patch it's renamed back again. (Peter)
+* Patch #7: 
+  - Rephrased switchover-ack QAPI documentation to be more general and
+    not mention number of ACKs sent. (Peter)
+  - Dropped the new request_switchover_ack SaveVMHandler and instead
+    requested switchover ACKs via save_query_pending SaveVMHandler.
+    (Peter)
+  - Added documentation comment for legacy/new switchover-ack. (Peter)
+* Patch #8: Adjusted according to changes in patch #7.
+* Dropped patch #9 since the scenario that it comes to solve can't
+  really happen (kept only the part that extracts sending of
+  INIT_DATA_SENT flag to a helper). (Peter, Cedric)
+* Patch #10: Used error_prepend() to add error prefix in
+  vfio_migration_init(). (Cedric)
+* Patch #11-13: Adjusted according to changes in patch #7.
+* Patch #12: Added explanation about VFIO_PRECOPY_INFO_REINIT and an
+  example to vfio migration documentation. (Peter)
+* Collected R-bs.
+
+===
+
+This series adds support for the kernel VFIO_PRECOPY_INFO_REINIT feature
+[1], which can reduce migration downtime in some VFIO precopy scenarios
+(see the Tests section below). Supporting it requires refactoring
+switchover-ack and making it re-usable; that work comes first.
+
+=== Background ===
+
+Switchover-ack is a mechanism to synchronize between source and
+destination QEMU during migration to prevent the source from switching
+over prematurely.
+
+VFIO uses switchover-ack to ensure switchover happens only after
+destination side has loaded the precopy initial bytes. This is important
+for VFIO, as otherwise downtime could be impacted and be higher.
+
+In its current state, switchover-ack is a one-time mechanism, meaning
+that switchover is acked only once and past that another ACK cannot be
+requested again. This was sufficient until now, as VFIO precopy initial
+bytes was defined to be monotonically decreasing. Thus, when precopy
+initial bytes reached zero for all VFIO devices, a single ACK would be
+sent and its validity would hold.
+
+=== Problem ===
+
+Now the new VFIO_PRECOPY_INFO_REINIT feature allows precopy initial
+bytes to be re-initialized during precopy. Specifically, it means that
+initial bytes can grow after reaching zero, which would invalidate a
+previously sent switchover ACK.
+
+=== Solution ===
+
+To support VFIO_PRECOPY_INFO_REINIT, this series makes switchover-ack
+re-usable and allows devices to request another switchover ACK when
+needed.
+
+In the new mechansim, switchover ACK can be requested for a specific
+device and in different times, so switchover ACK is changed to be
+per-device (instead of a single ACK for all devices) and source side is
+the one who does the pending ACKs accounting (instead of destination
+side).
+
+The old (legacy) switchover-ack mechanism is kept for backward
+compatibility and is turned on by a compatibility property for older
+machines.
+
+With that infrastructure in place, VFIO uses the new switchover-ack path
+and implements VFIO_PRECOPY_INFO_REINIT.
+
+=== Tests ===
+
+Functional and performance tests were run.
+
+Performance tests were done by migrating a single VM with:
+* 8 GB RAM
+* 4 mlx5 VFIO devices:
+  - One device with 1GB of device data (stopcopy data) that runs
+    workload during precopy so VFIO_PRECOPY_INFO_REINIT is exercised
+    (generate new initial_bytes chunks during precopy).
+  - The other 3 devices are idle.
+
+In this setup, VFIO_PRECOPY_INFO_REINIT reduced total migration downtime by
+about 43%, and downtime attributed to the busy VFIO device by about 67%:
+
+With VFIO_PRECOPY_INFO_REINIT:
+  1335ms total (~520ms from the VFIO device running the workload).
+
+Without VFIO_PRECOPY_INFO_REINIT:
+  2352ms total (~1600ms from the VFIO device running the workload).
+
+Functional tests covered the main code paths and combinations, including
+legacy and new switchover-ack across versions, for example:
+* Migration between QEMU 11.0 (old binary) and 11.1 (new binary).
+* Migration between two 11.1 binaries with different machine versions.
+* Migration when the VFIO device has no VFIO_PRECOPY_INFO_REINIT.
+* Migration when the VFIO device has no VFIO precopy support.
+
+=== Patch Breakdown ===
+
+* Patches 1-8,14-16: Migration cleanups and the new switchover-ack mechanism
+* Patches 9-13: VFIO cleanups and VFIO_PRECOPY_INFO_REINIT
+
+Thanks.
+
+[1] https://lore.kernel.org/all/20260317161753.18964-1-yishaih@nvidia.com/
+[2] https://lore.kernel.org/qemu-devel/20260505081423.28326-1-avihaih@nvidia.com/
+[3] https://lore.kernel.org/qemu-devel/20260602092621.382-1-avihaih@nvidia.com/
+[4] https://lore.kernel.org/qemu-devel/20260609075812.32067-1-avihaih@nvidia.com/
+[5] https://lore.kernel.org/qemu-devel/20260622101214.25770-1-avihaih@nvidia.com/
+
+Avihai Horon (16):
+  migration: Propagate errors in migration_completion_precopy()
+  migration/ram: Use migration_bitmap_sync_precopy() for postcopy
+    discard
+  migration: Run final save_query_pending at switchover
+  migration: Log the approver in qemu_loadvm_approve_switchover()
+  migration: Replace switchover_ack_needed SaveVMHandler
+  migration: Rename switchover-ack code to legacy
+  migration: Make switchover-ack re-usable
+  migration: Fail migration if switchover-ack is requested after
+    switchover decision
+  vfio/migration: Extract VFIO_MIG_FLAG_DEV_INIT_DATA_SENT sending to
+    helper
+  vfio/migration: Add Error ** parameter to vfio_migration_init()
+  vfio/migration: Add new switchover-ack mechanism
+  vfio/migration: Implement VFIO_PRECOPY_INFO_REINIT feature
+  vfio/migration: Check VFIO_PRECOPY_INFO_REINIT during switchover
+  migration: Enable new switchover-ack
+  migration: Refactor migration_completion_precopy() to return bool
+  migration: Fix "switchover" used as a verb in comments and docs
+
+ docs/devel/migration/vfio.rst      |  17 ++-
+ qapi/migration.json                |  16 +--
+ hw/vfio/vfio-migration-internal.h  |   2 +
+ include/migration/client-options.h |   1 +
+ include/migration/misc.h           |   2 +
+ include/migration/register.h       |  56 ++++----
+ migration/migration.h              |  34 ++++-
+ migration/savevm.h                 |  11 +-
+ hw/core/machine.c                  |   1 +
+ hw/s390x/s390-stattrib.c           |   2 +-
+ hw/vfio/migration.c                | 204 +++++++++++++++++++++++------
+ migration/block-dirty-bitmap.c     |  11 +-
+ migration/colo.c                   |  14 ++
+ migration/migration.c              |  98 +++++++++-----
+ migration/options.c                |   9 ++
+ migration/ram.c                    |  40 +++---
+ migration/savevm.c                 | 195 +++++++++++++++++----------
+ hw/vfio/trace-events               |   7 +-
+ migration/trace-events             |   9 +-
+ 19 files changed, 511 insertions(+), 218 deletions(-)
+
 -- 
 2.40.1
 
