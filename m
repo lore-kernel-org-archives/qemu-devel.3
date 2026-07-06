@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ABF8C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A666C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:42:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggip-0007UW-Dd; Mon, 06 Jul 2026 06:38:43 -0400
+	id 1wggif-0007E3-VN; Mon, 06 Jul 2026 06:38:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiT-00076U-Qt
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:24 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1wggiR-00073P-4N
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:22 -0400
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiQ-0003Qi-TR
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:21 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-493c52cde9eso29627095e9.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:17 -0700 (PDT)
+ id 1wggiO-0003KT-Kl
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:18 -0400
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-493c59f740cso19655155e9.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783334296; x=1783939096; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783334291; x=1783939091; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=v/UwCQS2eNQSRnaSr3MMhfV2p8lUEGh6xQ596ua5JSo=;
- b=JK/1fXc3N9EWvseBdU7sQmEO9JtWVvgb19GvodPYZ9p13Z0Wf6t9EwaAoLrd4pDYH7
- 7ooF9SJyy0BXsYeqJaRw06sPPAV2UbKkFu/4OoeIlcUOiHWCaKJ6eAMMsK4CrhJBmI0M
- Gpoyda5YyornRgKIayCAqwX1D7ca7tE7rWHGcbukh8LYBLLB4BhQJJRO91+pW96NSuZt
- 7WM/YeWbF63s628EUgopu2TKCR4oEdqJxa9OC16xoq1t92e94uYYMxS2ax6cTJ034/8W
- nG4StvdW1HFWOkhrNknkWZ2K8oeO+gWXBVsRbgm0MpzYvKdvB+wrLLTvxS+7M58ao0LE
- jfEA==
+ :reply-to; bh=+wrMWj5qI1NLseeZ04VrSRvuInkOzHOMvMqTvd4qMTs=;
+ b=JMsIhyY/HrGPEOM6wcu98NjEUZLWOS82b1q8hy4HijeffHxwEBzMl1r63939fE/92a
+ LGH8lclfiW7QvR+bqBqRix6BAlIyKbghsG0XZ2N+YdpHZPKhSGATCkjvwp8xCrlqxQiC
+ LUM3A7TXUso16jd0ngz8yeAfDoTIx9AAi8Ooceraz6+7f6DkcaGvLirKH3Z9Z8RTvA7c
+ NUDE6uw0jyazARz2qCONKzYEtMxR/BJXGsDtNT6soUsmCAvzkzELGWz9Q/Mgny1Fjm0L
+ G5HKzfK+2+fY2qXC5V/XAYsMDd0oXb2RDJzlMId9rIL4bP/JVUZuWH4K26L4SMNk0J7E
+ Iv6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783334296; x=1783939096;
+ d=1e100.net; s=20251104; t=1783334291; x=1783939091;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=v/UwCQS2eNQSRnaSr3MMhfV2p8lUEGh6xQ596ua5JSo=;
- b=rqLWLnswXJo8raiZ0dD7Bfg+MUBqaZznHQVNrsqyDCSa6cSZFNlKQRlvE73C8VucJC
- 2U5pebiWQva06R3uaGGxFIVij7gck/fIbfcwEKorLMvsX+L2+sE32sjJAJgCNceq0ksR
- xJRS7CU+Mkgy7U1QJ3BvA/oMsk9VaNxxum44cMB7qmUupvygREHdCBvljlje5piKmHpA
- UpxE60RfHgY81RXPdXqXYli/oiiuVLE/bB96C/rCckcwkCppZTj6YTlZaZvY9jF+vXOX
- 93eankQBN/wiP2UHRoYc1R0alRez7fcu7zBWYm9qtHoeI4pLUCkDvrHAcjKGn8lylnNW
- Tj/Q==
-X-Gm-Message-State: AOJu0Yxs6Lo+ad1GXXs/DWt1/DQiOf+pju7BG37bt4zjmQ64EQOmoYsT
- yIXc2wL0ZBP12Z+gCTRPcEMbgfEY3t2OpGmpU/J90aCqm+euq/R/jbksHBh3zymfQhBEuXy7Xbb
- ShHIBy3hPNQ==
-X-Gm-Gg: AfdE7ckqtBbXLxrS6hN9yJuTgn8tDNDioolR64QP47oggW7hoSeXPy4bIQ4O313YH+A
- CGJ4kQohRvNMWTV/m6x6NuRbMDPw50v8vtBdGXwXy286lukyVpQy4rjxbIHDr/DxBidv2YbawFB
- 3n6uEj1+AQhXxGSfVkFYDVlkoQHrCDTG7Lcc9R6ekpr1MSa6rPOT5AZ1aoPvShJx1mKYFicxcty
- kTNY+jMJAJlVAeBeqYuW32WlMBhDdCpzNkVE2IV8b+XUDCTydZqNWqzhFE/3oea4duTeewxesXA
- GeoX+UROpRsaJUPU0O79WMQ6VPoZAMFWavFBeJEBkjd6Mu/AB4fkZWT3uY1ctCpqFET4At7+56m
- 0QJ3HVSZxB+8TLWZjPV/HXyzSqCuR10nWB5C+t7CbBjEdthF4ePzJt4MMCWT1Za1fSrBY6ti1lc
- 343jD95KD6q6JxfeArSm4zyt+ZYUxvmfoMUcISOGv/kWIKt0KacqlUl99LnUiAPKcAMS+zcTnJ5
- WcxheMXBZm3pAmSVxuRLg==
-X-Received: by 2002:a05:600c:37cd:b0:493:c82d:f3fb with SMTP id
- 5b1f17b1804b1-493d11f6d3fmr122048755e9.28.1783334296100; 
- Mon, 06 Jul 2026 03:38:16 -0700 (PDT)
+ bh=+wrMWj5qI1NLseeZ04VrSRvuInkOzHOMvMqTvd4qMTs=;
+ b=o7FJIOLbUkeV1UyItYUatRJMpHHSSWOUDk3feu1zd6pSciD9jdtalxf46UJZ2uzH9y
+ yCgIPmZjDn2dFY4Be5zyqYQKnNkj97rX2pSJi/qCcWvUPWWBMFXgcdZlVYxDJCEY8WbC
+ jasMoX6Qt/aBeCfJi09uFU0MrK7Z2kkpUdv6iymG5g5sm5cIBlxJvoEzMbp3dwqX5sXQ
+ LHdf1RiKYe3GTfUG9PVsf/CDPDk/34wPt5Ju7lNCo2zs1Dh7P7lE30tjUsUQraFS7KC/
+ NtouQK35DtEWQ1C29uX35AlSSgr4M5sqfD2xQ707U7fPZc8Enl+fp3/rMjdvAphaNVBN
+ 6jkg==
+X-Gm-Message-State: AOJu0Yz7VAO7zJ+tX68ynLpTYavpSMYWwteuLYwwFEvycGXuF6UV3ajH
+ H/Bvilhe1Zoz24N4CDK+7I83p+f6zR+k8LKNWl2mWIvwrv7uk4FElSg8ajMv5Wvc/UWc8du67gK
+ gDsfOLvLpllW+
+X-Gm-Gg: AfdE7cmpEU7OENjjzmIP/eT/fEoaa/TZCLKtATu4B/wDt6HuEOzNAw0qpKB6w4cT169
+ 8DQL5jtRqugxamqC5tTd0JRtMQcuD7qOwvs1yD/cVp+T6hH+gw7MnoZ4jXFZOSUs9sMVyMtVMa7
+ tXNbyF/Z2XCxgFJxmVhso5+2pUjgln4xmIqh43xwuNwnQPqSAS16IpUGv+ld3Nb+mub0YNQWEp8
+ MAl3AI0m9ngCGwvGiS8vWUDx8jokSIgh9L0TLY98jgqCf7Brz+bCnZP4SobRBrZA0bzroJNos9l
+ h2EddV6r3opvPqJdmN5KzNa3upoq2mFKNdlYrRhVTD3h4DVkmT3lvj5LeiLz49tCA3R2h3W/eNk
+ dt/K6HsuPVTJN8d9/xEKLilDz/8q8kc3jv/YWQZF0GArlUvSTvX/24gEn+ZZYW5BXQNhpXATV7z
+ KzKjCA8c3AZbE7trGMSYmflgDZ0tvWSAEzifyWTJ6ahybrrMh0Um+F8ziCLCTJvpW2aFCLdwysL
+ Jcj67YfF9lNZ34A4jZdAQ==
+X-Received: by 2002:a05:600c:620e:b0:493:bed7:6d7c with SMTP id
+ 5b1f17b1804b1-493d30d39d8mr88797895e9.25.1783334291413; 
+ Mon, 06 Jul 2026 03:38:11 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.14
+ 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 03:38:14 -0700 (PDT)
+ Mon, 06 Jul 2026 03:38:10 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 20/49] hw/nvram/fw_cfg: Enforce standard layout for x86 fw_cfg
- I/O ports
-Date: Mon,  6 Jul 2026 11:37:23 +0100
-Message-ID: <20260706103752.320511-21-peter.maydell@linaro.org>
+Subject: [PULL 17/49] target/arm: implement WFET
+Date: Mon,  6 Jul 2026 11:37:20 +0100
+Message-ID: <20260706103752.320511-18-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260706103752.320511-1-peter.maydell@linaro.org>
 References: <20260706103752.320511-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x341.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,132 +101,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The fw_cfg_init_io_dma() function allows the caller to specify the
-base port number of the selector/data register and the base port
-number of the DMA address register separately. No caller actually
-uses this: they all pass in base + 4 for the dma_iobase.
+From: Alex Bennée <alex.bennee@linaro.org>
 
-To reduce the risk of unnecessary variation in what different x86
-machine types use as their fw_cfg register layout, remove the
-dma_iobase argument from fw_cfg_init_io_dma(), and have the function
-always use the same "DMA port is base port + 4" layout.
+Now we have the event stream and SEV/SEVL implemented we can finally
+enable WFET for Aarch64.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+To avoid issues with QEMU's incomplete ldst exclusive handling causing
+potential deadlocks in common WFE enabled locking patterns we take
+advantage of the architectures flexibility and treat being in the
+exclusive region as a reason to exit.
+
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
-Message-id: 20260529174639.451353-4-peter.maydell@linaro.org
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20260624103049.884930-8-alex.bennee@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/i386/fw_cfg.c          |  3 +--
- hw/i386/microvm.c         |  3 +--
- hw/i386/pc.c              |  3 +--
- hw/nvram/fw_cfg.c         |  8 ++++----
- include/hw/nvram/fw_cfg.h | 17 +++++++++++++++--
- 5 files changed, 22 insertions(+), 12 deletions(-)
+ target/arm/tcg/helper-defs.h   |  1 +
+ target/arm/tcg/op_helper.c     | 94 ++++++++++++++++++++++++++++++++++
+ target/arm/tcg/translate-a64.c | 15 +++---
+ 3 files changed, 103 insertions(+), 7 deletions(-)
 
-diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
-index 2876490f06..d422302c1c 100644
---- a/hw/i386/fw_cfg.c
-+++ b/hw/i386/fw_cfg.c
-@@ -127,8 +127,7 @@ FWCfgState *fw_cfg_arch_create(MachineState *ms,
-     const CPUArchIdList *cpus = mc->possible_cpu_arch_ids(ms);
-     int nb_numa_nodes = ms->numa_state->num_nodes;
- 
--    fw_cfg = fw_cfg_init_io_dma(FW_CFG_IO_BASE, FW_CFG_IO_BASE + 4,
--                                &address_space_memory);
-+    fw_cfg = fw_cfg_init_io_dma(FW_CFG_IO_BASE, &address_space_memory);
-     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, boot_cpus);
- 
-     /* FW_CFG_MAX_CPUS is a bit confusing/problematic on x86:
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index 779741ec76..e7adab7d2e 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -320,8 +320,7 @@ static void microvm_memory_init(MicrovmMachineState *mms)
-         e820_add_entry(0x100000000ULL, x86ms->above_4g_mem_size, E820_RAM);
-     }
- 
--    fw_cfg = fw_cfg_init_io_dma(FW_CFG_IO_BASE, FW_CFG_IO_BASE + 4,
--                                &address_space_memory);
-+    fw_cfg = fw_cfg_init_io_dma(FW_CFG_IO_BASE, &address_space_memory);
- 
-     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, machine->smp.cpus);
-     fw_cfg_add_i16(fw_cfg, FW_CFG_MAX_CPUS, machine->smp.max_cpus);
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 73a625327c..6d000e2dba 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -568,8 +568,7 @@ void xen_load_linux(PCMachineState *pcms)
- 
-     assert(MACHINE(pcms)->kernel_filename != NULL);
- 
--    fw_cfg = fw_cfg_init_io_dma(FW_CFG_IO_BASE, FW_CFG_IO_BASE + 4,
--                                &address_space_memory);
-+    fw_cfg = fw_cfg_init_io_dma(FW_CFG_IO_BASE, &address_space_memory);
-     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
-     rom_set_fw(fw_cfg);
- 
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index 59cf92293c..f68191553b 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -1019,15 +1019,14 @@ static void fw_cfg_common_realize(DeviceState *dev, Error **errp)
-     qemu_add_machine_init_done_notifier(&s->machine_ready);
+diff --git a/target/arm/tcg/helper-defs.h b/target/arm/tcg/helper-defs.h
+index 99ebd75494..0077aeb4e2 100644
+--- a/target/arm/tcg/helper-defs.h
++++ b/target/arm/tcg/helper-defs.h
+@@ -56,6 +56,7 @@ DEF_HELPER_1(setend, void, env)
+ DEF_HELPER_2(wfi, void, env, i32)
+ DEF_HELPER_2(wfe, void, env, i32)
+ DEF_HELPER_2(wfit, void, env, i32)
++DEF_HELPER_2(wfet, void, env, i32)
+ DEF_HELPER_1(yield, void, env)
+ DEF_HELPER_1(pre_hvc, void, env)
+ DEF_HELPER_2(pre_smc, void, env, i32)
+diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+index 3321e29898..c4433be2ed 100644
+--- a/target/arm/tcg/op_helper.c
++++ b/target/arm/tcg/op_helper.c
+@@ -641,6 +641,100 @@ void HELPER(wfe)(CPUARMState *env, uint32_t insn_len)
+ #endif
  }
  
--FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
--                                AddressSpace *dma_as)
-+FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, AddressSpace *dma_as)
++void HELPER(wfet)(CPUARMState *env, uint32_t rd)
++{
++#ifdef CONFIG_USER_ONLY
++    /*
++     * As for WFIT make it NOP here, because trying to raise EXCP_HLT
++     * would trigger an abort.
++     */
++    return;
++#else
++    CPUState *cs = env_cpu(env);
++    uint32_t excp;
++    int target_el;
++    ARMCPU *cpu;
++    uint64_t cntval, timeout, offset, cntvct, nexttick;
++    int64_t next_event;
++
++    /*
++     * As for WFE if the event register is already set we can consume
++     * the event and return immediately.
++     */
++    if (qatomic_xchg(&env->event_register, false)) {
++        return;
++    }
++
++    /*
++     * Don't bother to go into our "low power state" if
++     * we would just wake up immediately.
++     *
++     * We want the value that we would get if we read CNTVCT_EL0 from
++     * the current exception level, so the direct_access offset, not
++     * the indirect_access one. Compare the pseudocode LocalTimeoutEvent(),
++     * which calls VirtualCounterTimer().
++     */
++    cntval = gt_get_countervalue(env);
++    offset = gt_direct_access_timer_offset(env, GTIMER_VIRT);
++    cntvct = cntval - offset;
++    timeout = env->xregs[rd];
++    if (cpu_has_work(cs) || cntvct >= timeout) {
++        return;
++    }
++
++    /* We might sleep, so now we check to see if we should trap */
++    target_el = check_wfx_trap(env, true, &excp);
++    if (target_el) {
++        env->pc -= 4;
++        raise_exception(env, excp, syn_wfx(1, 0xe, rd, true, WFET, false), target_el);
++    }
++
++    /*
++     * If the CPU has entered the exclusive region we could sleep
++     * until the global monitor moves from Exclusive to Open Access.
++     * However it would be expensive for QEMU to fully model the
++     * global monitor and not doing so would potentially trigger
++     * deadlocks in WFE enabled locking code. However as WFE is a hint
++     * instruction the architecture allows for the PE to leave
++     * low-power state for any reason. QEMU chooses to treat being in
++     * an exclusive region as such and return directly.
++     */
++    if (env->exclusive_addr != -1) {
++        return;
++    }
++
++    /*
++     * Finally work out if the timeout or event stream will kick in
++     * earlier.
++     *
++     * The WFET should time out when CNTVCT_EL0 >= the specified value.
++     */
++    cpu = env_archcpu(env);
++    if (uadd64_overflow(timeout, offset, &nexttick)) {
++        nexttick = UINT64_MAX;
++    }
++    if (nexttick > INT64_MAX / gt_cntfrq_period_ns(cpu)) {
++        nexttick = INT64_MAX;
++    }
++
++    next_event = gt_calc_next_event_stream(env);
++    if (next_event > 0 && next_event < nexttick) {
++        timer_mod(cpu->wfxt_timer, next_event);
++    } else {
++        if (nexttick == INT64_MAX) {
++            timer_mod_ns(cpu->wfxt_timer, INT64_MAX);
++        } else {
++            timer_mod(cpu->wfxt_timer, nexttick);
++        }
++    }
++
++    env->halt_reason = HALT_WFE;
++    cs->exception_index = EXCP_HLT;
++    cs->halted = 1;
++    cpu_loop_exit(cs);
++#endif
++}
++
+ void HELPER(yield)(CPUARMState *env)
  {
-     DeviceState *dev;
-     SysBusDevice *sbd;
-     FWCfgIoState *ios;
-     FWCfgState *s;
-     MemoryRegion *iomem = get_system_io();
--    bool dma_requested = dma_iobase && dma_as;
-+    bool dma_requested = dma_as;
- 
-     dev = qdev_new(TYPE_FW_CFG_IO);
-     if (!dma_requested) {
-@@ -1048,7 +1047,8 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
-         /* 64 bits for the address field */
-         s->dma_as = dma_as;
-         s->dma_addr = 0;
--        memory_region_add_subregion(iomem, dma_iobase, &s->dma_iomem);
-+        /* DMA register ioport is always at base + 4 */
-+        memory_region_add_subregion(iomem, iobase + 4, &s->dma_iomem);
+     CPUState *cs = env_cpu(env);
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index cdf843984d..69648ad94b 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -2195,14 +2195,15 @@ static bool trans_WFET(DisasContext *s, arg_WFET *a)
+         return false;
      }
  
-     return s;
-diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
-index 45a3747908..be3fb5f8aa 100644
---- a/include/hw/nvram/fw_cfg.h
-+++ b/include/hw/nvram/fw_cfg.h
-@@ -305,8 +305,21 @@ bool fw_cfg_add_file_from_generator(FWCfgState *s,
-                                     Object *parent, const char *part,
-                                     const char *filename, Error **errp);
+-    /*
+-     * We rely here on our WFE implementation being a NOP, so we
+-     * don't need to do anything different to handle the WFET timeout
+-     * from what trans_WFE does.
+-     */
+-    if (!(tb_cflags(s->base.tb) & CF_PARALLEL)) {
+-        s->base.is_jmp = DISAS_WFE;
++    if (s->ss_active) {
++        /* Act like a NOP under architectural singlestep */
++        return true;
+     }
++
++    gen_a64_update_pc(s, 4);
++    gen_helper_wfet(tcg_env, tcg_constant_i32(a->rd));
++    /* Go back to the main loop to check for interrupts */
++    s->base.is_jmp = DISAS_EXIT;
+     return true;
+ }
  
--FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
--                                AddressSpace *dma_as);
-+/**
-+ * fw_cfg_init_io_dma:
-+ * @iobase: x86 port number which is the base of the fw_cfg port range
-+ * @dma_as: the device will do DMA to/from this AddressSpace
-+ *
-+ * Create a fw_cfg device and map it into the specified I/O port range.
-+ *
-+ * This creates a device with the x86 PC standard port I/O layout:
-+ * - Selector Register IOport: @iobase
-+ * - Data Register IOport:     @iobase + 1
-+ * - DMA Address IOport:       @iobase + 4
-+ *
-+ * Returns the device object.
-+ */
-+FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, AddressSpace *dma_as);
- FWCfgState *fw_cfg_init_mem_nodma(hwaddr ctl_addr, hwaddr data_addr,
-                                   unsigned data_width);
- /**
 -- 
 2.43.0
 
