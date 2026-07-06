@@ -4,81 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E00BC43602
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 13:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C98B9C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 13:43:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgjWw-0003YW-UO; Mon, 06 Jul 2026 09:38:46 -0400
+	id 1wgjaN-0004XF-4n; Mon, 06 Jul 2026 09:42:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wgjWh-0003WZ-Iv
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:38:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dengler@linux.ibm.com>)
+ id 1wgjaJ-0004WJ-DZ; Mon, 06 Jul 2026 09:42:07 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wgjWf-000487-HR
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:38:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783345099;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pQdPqY+wAikWN3gwvCmtBFpcuv1uTbeL+chUHITrhLQ=;
- b=O/SGJIkSwm/5VIQpkUofV+XifLtAr1LjQqFKXyb1cVNAngKNUkrHXqfl3Z4MW+1HBu6pVl
- tAt/njrO+F1Jyt8uF/TVocNJ7SXn8yGXwER/JojKKRDys/3awBTFBllvUw9Iw0CPsEL0FD
- OCu9qiE2RNkGuYHtJr7YNT/+zAVVJIE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-102-L3VOiqcPOryYK7074rxmeg-1; Mon,
- 06 Jul 2026 09:38:13 -0400
-X-MC-Unique: L3VOiqcPOryYK7074rxmeg-1
-X-Mimecast-MFC-AGG-ID: L3VOiqcPOryYK7074rxmeg_1783345092
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9D66A18052E5; Mon,  6 Jul 2026 13:38:11 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.48.165])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2E4553000715; Mon,  6 Jul 2026 13:38:07 +0000 (UTC)
-Date: Mon, 6 Jul 2026 14:38:04 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org
-Subject: Re: [PATCH v6 33/34] qemu-options: document new monitor-hmp and
- monitor-qmp objects
-Message-ID: <akuvvI6hUu0d7wWH@redhat.com>
-References: <20260702160337.1910921-1-berrange@redhat.com>
- <20260702160337.1910921-34-berrange@redhat.com>
- <87echgpesc.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <dengler@linux.ibm.com>)
+ id 1wgjaI-00053F-1B; Mon, 06 Jul 2026 09:42:07 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 666BIvwM042139; Mon, 6 Jul 2026 13:42:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=f1zyI2
+ N5BiStVzfRR+ln8Poq2VHM34y/RkM1l6h5T2Q=; b=ogmiglOAWqvSgGb1FSW4r0
+ hME9blWdn3+RHqEJN8cxSHyLOzYGvaHR93tSwgl/imbKSKfeJt/Ig3Jd/YWtQks3
+ VKZBqe1NQydnb9jHI3Q2eXaCIWGP9+Hp+X91WAy7CgBHhXAEVsczp5VpLgc7O+Jh
+ 0x0R9EZzA8y9TNk6WcIlK2nfWlKisNf+ZrD/zpBo2RecPlCTwzSe+MiMn07zbV6N
+ OnFdYl2XU4V3RHcL2jWCfW6UyAdigMqyANwyVBQDEGgV+SPuJmWIp83Q8BOrfGQW
+ IGlg0txZf7x5aaGymdfuPqZ2FIxx9/cwkAlvnST8+5JHq7mCfMcK8BM4aWxBVZug
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6qkn9sje-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jul 2026 13:42:02 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 666DYnUA031829;
+ Mon, 6 Jul 2026 13:42:01 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f7e0h5pr4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jul 2026 13:42:01 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 666DfvGZ48365828
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 6 Jul 2026 13:41:57 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AD5FB20043;
+ Mon,  6 Jul 2026 13:41:57 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 434D620040;
+ Mon,  6 Jul 2026 13:41:57 +0000 (GMT)
+Received: from [9.111.8.43] (unknown [9.111.8.43])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  6 Jul 2026 13:41:57 +0000 (GMT)
+Message-ID: <aef2ba66-407f-4206-9fd3-838b7a23c63e@linux.ibm.com>
+Date: Mon, 6 Jul 2026 15:41:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 03/21] target/s390x: Move cpacf sha512 code into a new
+ file
+To: Harald Freudenberger <freude@linux.ibm.com>
+Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ thuth@redhat.com, berrange@redhat.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, linux-s390@vger.kernel.org,
+ borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
+References: <20260706094317.17032-1-freude@linux.ibm.com>
+ <20260706094317.17032-4-freude@linux.ibm.com>
+From: Holger Dengler <dengler@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <20260706094317.17032-4-freude@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87echgpesc.fsf@pond.sub.org>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Q/XiJY2a c=1 sm=1 tr=0 ts=6a4bb0aa cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=rt_gzxHzaU2pJR2MlBgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: aaYHxcZODM1zdNBiEPdMHM9Xx3YQ7pbW
+X-Proofpoint-ORIG-GUID: aaYHxcZODM1zdNBiEPdMHM9Xx3YQ7pbW
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDEzNiBTYWx0ZWRfX5ZBUgpuGlUzn
+ dKji45y2hPPOVzhskTwWAX4R5gfNvF3eFihCnUsqdX9/MLLgj6oOLLUjDRHqXaIyuGDqXOf4bdo
+ gAJQ6vziDGg5FNcoYAgJuxdYgzAd2Dg=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDEzNiBTYWx0ZWRfX5C+imzUMg/x+
+ bnau44Dg/H9ql+ORh86f4h1zptnyr4LFiPTXpEfXtUbWI6kVBp7uo7Cn6UJHmf+JAVnERHVZ1ev
+ oBIAd+HXLUZ3TwFh7rGZXufJCeh1doaj7in4vYr4K4p+ovfgeJx35Iv0KBMvK8hgb7n5bFwzGFT
+ QolIFNXbnyw2BXht3n6LMnJ+mptLSEE1cMcKfz4DFLCwxhwqapBZJ+yGgD4kMvRfS6DvSmyLocA
+ HlqU7I+EelydQclRRTlPuNNykt8VM+QlDBSL9Og/EskxoCO+RuT3nKvvkzYjsERR4ThvevNmxmY
+ o9mCb/FUEK0m/Kvb4MpvR9SjenjClJOwWL912e0cTOXPYhIaXpPCGGo10IqfyQGBllIfdIG8kNT
+ nX5D2xZTZ+aA3ORoKqiWx3EqDyJofY3YSVjLM4tu+jBr2JZDZXC027UQ+jhUE9CQxCMxkhUMZwx
+ KJdDRTbJT8HYeNMXkXA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-06_01,2026-07-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501
+ bulkscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060136
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=dengler@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,164 +124,23 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 06, 2026 at 12:56:35PM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+On 7/6/26 11:42, Harald Freudenberger wrote:
+> Move the cpacf sha512 implementation into a new file
+> cpacf_sha512.c. Add this new file to the build and use the cpacf.h
+> header file storing function the prototypes.
 > 
-> > Add new docs for the `-object monitor-hmp` and `-object monitor-qmp`
-> > options, updating `-mon` to state that it is legacy syntax sugar
-> > for the new `-object` args.
-> >
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >  qemu-options.hx | 61 ++++++++++++++++++++++++++++++++++++++++++++++---
-> >  1 file changed, 58 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/qemu-options.hx b/qemu-options.hx
-> > index e44b47de68..1aa548c39b 100644
-> > --- a/qemu-options.hx
-> > +++ b/qemu-options.hx
-> > @@ -4955,6 +4955,11 @@ SRST
-> >      port). The default device is ``vc`` in graphical mode and ``stdio``
-> >      in non graphical mode. Use ``-monitor none`` to disable the default
-> >      monitor.
-> > +
-> > +    The use of ``-monitor dev`` is syntax sugar for creating a character
-> 
-> For what it's worth, Wikipedia redirects "syntax sugar" to "syntactic
-> sugar", and uses only the latter in the article.
+> Tested-by: Holger Dengler <dengler@linux.ibm.com>
+> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
+> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
 
-Ok will use that
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
 
-> 
-> Could also use "shorthand".  Matter of taste.
-> 
-> > +    device from ``dev`` and pairing it with ``-object monitor-hmp``.
-> > +    Both the character device and monitor object will be given an ID
-> > +    ``compat_monitorNNN`` where ``NNN`` is a counter starting from 0.
-> >  ERST
-> >  DEF("qmp", HAS_ARG, QEMU_OPTION_qmp, \
-> >      "-qmp dev        like -monitor but opens in 'control' mode\n",
-> > @@ -4966,9 +4971,10 @@ SRST
-> >  
-> >          -qmp tcp:localhost:4444,server=on,wait=off
-> >  
-> > -    Not all options are configurable via this syntax; for maximum
-> > -    flexibility use the ``-mon`` option and an accompanying ``-chardev``.
-> > -
-> > +    The use of ``-monitor dev`` is syntax sugar for creating a character
-> 
-> Pasto, you mean ``-qmp dev``.
-
-/face-palm
-
-> 
-> > +    device from ``dev`` and pairing it with ``-object monitor-qmp``.
-> > +    Both the character device and monitor object will be given an ID
-> > +    ``compat_monitorNNN`` where ``NNN`` is a counter starting from 0.
-> >  ERST
-> >  DEF("qmp-pretty", HAS_ARG, QEMU_OPTION_qmp_pretty, \
-> >      "-qmp-pretty dev like -qmp but uses pretty JSON formatting\n",
-> > @@ -4997,6 +5003,16 @@ SRST
-> >        -mon chardev=mon1,mode=control,pretty=on
-> >  
-> >      enables the QMP monitor on localhost port 4444 with pretty-printing.
-> > +
-> > +    The use of ``-mon mode=readline`` is historical syntax sugar
-> 
-> What does "historical" mean?  The next patch replaces it by
-> "deprecated".  Suggest to scratch it here.
-
-ok.
-
-
-> > @@ -5747,6 +5763,45 @@ SRST
-> >      they are specified. Note that the 'id' property must be set. These
-> >      objects are placed in the '/objects' path.
-> >  
-> > +    ``-object monitor-hmp,id=id,chardev=chardev_id,readline=on|off``
-> > +        Set up a monitor running the Human Monitor Protocol,
-> > +        connected to the chardev ``chardev_id``.
-> > +
-> > +        The ``id`` parameter is a unique ID that can be used
-> > +        to dynamically delete the monitor at runtime. Note
-> > +        that monitors created using the historical syntax
-> > +        will be allocated IDs following the pattern ``hmpcompatNN``.
-> 
-> ``compat_monitorNNN``
-> 
-> > +        Mixing ``-object`` with the historical monitor syntax is
-> > +        discouraged.
-> 
-> Clearer, I think: "with -monitor and -mon".
-> 
-> The next patch deprecates -mon, and then this could become just "with
-> -monitor".
-
-ok
-
-> 
-> > +
-> > +        The ``readline`` parameter, which defaults to ``on``,
-> > +        controls whether the monitor provides line editing.
-> > +
-> > +    ``-object monitor-qmp,id=id,chardev=chardev_id,pretty=on|off,close-action=none|delete``
-> > +        Set up a monitor running the QEMU Monitor Protocol,
-> > +        connected to the chardev ``chardev_id``.
-> > +
-> > +        The ``id`` parameter is a unique ID that can be used
-> > +        to dynamically delete the monitor at runtime. Note
-> > +        that monitors created using the historical syntax
-> > +        will be allocated IDs following the pattern ``qmpcompatNN``.
-> 
-> ``compat_monitorNNN``
-> 
-> > +        Mixing ``-object`` with the historical monitor syntax is
-> > +        discouraged.
-> 
-> "with -qmp, -qmp-pretty, and -mon".
-> 
-> The next patch deprecates -mon, and then this could become just "with
-> -qmp and -qmp-pretty".
-
-ok
-
-> 
-> > +
-> > +        The ``pretty`` parameter, which defaults to ``off``,
-> > +        controls whether the monitor responses are pretty
-> > +        printed as multi-line indented JSON, as opposed to
-> > +        constrained to a single line without extraneous
-> > +        whitespace.
-> > +
-> > +        The ``close-action`` parameter, which defaults to ``none``,
-> > +        controls what happens when the connection to the monitor
-> > +        is terminated by the user. If set to ``delete``, then the
-> > +        ``monitor-qmp`` object and its associated character
-> > +        device are both immediately deleted. This can be useful
-> > +        if an extra monitor was hotplugged for a specific task
-> 
-> Comma after task?
-
-I don't think its needed, but people are horribly inconsistent in
-use of , before and in English no matter what.
-
-> 
-> > +        and should be unplugged when completed.
-> > +
-> >      ``-object memory-backend-file,id=id,size=size,mem-path=dir,share=on|off,discard-data=on|off,merge=on|off,dump=on|off,prealloc=on|off,host-nodes=host-nodes,policy=default|preferred|bind|interleave,align=align,offset=offset,readonly=on|off,rom=on|off|auto``
-> >          Creates a memory file backend object, which can be used to back
-> >          the guest RAM with huge pages.
-> 
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Mit freundlichen Grüßen / Kind regards
+Holger Dengler
 
 
