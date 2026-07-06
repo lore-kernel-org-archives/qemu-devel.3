@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F2E3C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:40:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24FE5C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:40:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggie-0007DD-Tn; Mon, 06 Jul 2026 06:38:32 -0400
+	id 1wggiw-0007qr-E9; Mon, 06 Jul 2026 06:38:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiJ-00071G-3e
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:12 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1wggiq-0007WM-OT
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:45 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiH-0003Hh-9T
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:10 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-493b691cb44so19838245e9.0
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:08 -0700 (PDT)
+ id 1wggip-0003Xz-0u
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:44 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-493c00f74baso17404915e9.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783334288; x=1783939088; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783334321; x=1783939121; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NrrPXpQHnc6Y4zWwDDuOjNrSPtslvAcCIqaUGcEI2EU=;
- b=kEe2GIU36NNEv+Pu6zm2M4zZqQKCi5lAKMQqFCL/qL6ejP9rxQISbvUVBdaLJQaLah
- OWoqHRjIFVjZxEw0tZ0MdVHNgF6QCse+7/XIL46YMe5ibznupIwOpPWDBVgpGbJS+Buh
- Nr4+jYZISeKDvsYRJ0dH2BVspfK/tHr3oJydcAn9QEivYGE5qfmi8YtNvBoDVTO7vCC8
- YHULl/mFkiFkxi4FagEEu+S7wUT/goy6CaRG81DZ1rKV5sNSJEByZkTxOaayZK4I987a
- AhTApYSfFJ0IOdQnq3e9iAstyDZWX2M99XxPsJpAssI3HvggN5yn5omn5/l53Al98Ema
- 3Ohw==
+ :reply-to; bh=F4FecMS9cYuiefvro8EfTSYY+87Ud/V+uwe0L9x0kOw=;
+ b=fkp809Yre4Fm2Afg9AHT+6zOM5NPGVAqxu0xPfzX971AD00WJzSAZtsmraWw8brTUi
+ 8QiHVKedZlZivhbBRyyXkwKLNjcQFjSRjqEE9FbpdumTOTe2JGzgAg0e7c0qnMKPiS/x
+ BCL5cdMbltWUNFTXq/AYugDR/wbrWLUeMXY8YkLoj+GNGqF0DL0Co2G7qoYrQy6TiM6n
+ Vxvdf/dkaiJTSyPPTB5zVloZ+kPUXVCJ0WGHcOpl9wzIla2PuVnnLWNwiVfVQxtT0B+B
+ txRMhQm4sOpt/S/n2gQMl/NPlEbo/3eggaEX8jEsZr59YpRSAHTqJnjNE0cVkUiQVwXm
+ eENA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783334288; x=1783939088;
+ d=1e100.net; s=20251104; t=1783334321; x=1783939121;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=NrrPXpQHnc6Y4zWwDDuOjNrSPtslvAcCIqaUGcEI2EU=;
- b=Wad81rI/IAyaxASdU/e9tK7vi1DN9/tYf0THz00GSBeWUKb+6dXrhz77rMtUEx/WoM
- kPo/2bzpgmOaCRBrsQUoC1p8BE/zi+mNEE2E5yljbMk9D+sIRVh2KaYMoYD25MEGaczw
- B0M48JIzo8B/LOvMmtCPV15JyDnVBxuAISksDja5TIPIfu/75Ub5y1lDy+kAEezzSqX9
- 1Y9gU0HEsXYTR3pbQbg1QP7S3HNx4zTEZkO/EG3khZpQXHIiZ3u5DphON4hpU04TuOzI
- 4K4/dHcZqrG8ITzr2HOsqijJ7kUxlztMg1LWnlzi2KIMMHfknXZQ0v6DTZ/7VRCVJogf
- 6HvA==
-X-Gm-Message-State: AOJu0YyinneZFa7fch/Bl+CtcVmMRHx3zGd/t+A2aYKzFg0CWEHxqWPq
- Y3CZsmNCFFXBRb5ZCOErW13bnH7FKMFsCro8nclBRY52h1fMpyGrizcBJ7wi6WSRWRWlgGpwp1k
- mZSSsppskkw==
-X-Gm-Gg: AfdE7cmOTStL1j75MVPW45cj0s1zsJnk6sAk5wi9c53bZwAU6kQQ1g6nNQZoDzsvMWj
- Hy65GzgWIn9gORAc94DW0+JOskaWZ5KlG/KeW79/GFCkdO8gYu388lwY1Zz+jMoyL4Vxy88R/xH
- +rZZUC+CPS8D5g39wQIz6ckZH5ERH3coAS8zqFOPAYdeeK3qcKDcoAspQw9M+7aHwbqLUDHJ+/6
- ZxM2xihsiA6UIUTBTOMHzmNes1IU8HHH7+nApFqzWkVuaK0WWyFNbiOxhSfGawKar8uGeFoseCd
- IjKJMyap40KNHlbBI2CzZZe/06VDjy5krEmO4ujsbBjUAhXdJlygf6BE4QPu01qRFzNtXOZnOUn
- e1DIu+pnLHjnKN3mp19PgFaoyYuNuA6taVjzfU/tr/Hh0Q6OnaKXKJlOvqNTHCsb5ASoUtKrkxG
- IhprHM0KFrdxKeIMk9NEQloBRHlyF8YqpucoMI8qUwm5Y+RIrzZKXhAB0SgNzqJUCDBVYULwfLI
- KoGZ3ucGmJzkeSx2P2Kl/euhxy0miXf
-X-Received: by 2002:a05:600c:63c3:b0:493:bc4a:fb56 with SMTP id
- 5b1f17b1804b1-493d1203ee0mr85270445e9.39.1783334287648; 
- Mon, 06 Jul 2026 03:38:07 -0700 (PDT)
+ bh=F4FecMS9cYuiefvro8EfTSYY+87Ud/V+uwe0L9x0kOw=;
+ b=AGu28gLvQxuM2Qj2noUnAng/ENNfmJx4xndqxWjO86W5LJ7CuvSEMYFdGN5Beqv7Jy
+ Fb+KRw8JpCW4kXcWX4K2dEi3jDcu5iEZYtY5dZ1esFT0EXt9NS2INwLFEjooZMSM1H3H
+ PLFlnK2wPFuWeTHDkLma4QZh3U+34PJHE9D1eeFlz3bjwXp307LOghogKgMZxZyb0KEh
+ dR+AIGSR1p1Fen7L70Tqps/ecrWtcBSzbO4F6J4aPEljiCUGP3IdLM9fXVympoAOyaxE
+ ynYtrSVO2gKuDaiU8RZMaE+rd4bJXiIFP7Iy5HgsITJyhSYEOj7vM/GgBjNNFTBg3UqL
+ qW2A==
+X-Gm-Message-State: AOJu0Yzfb3rFyVIr1ZJTgiYeYzBNwlDX2/H9RQPRtuOa6N8t6JLDbcQD
+ jeO1EkaOHgug33GAVZbyhV5MEHtaumlq2mojfufc3G8NCFesFIr/VUuI28hJdq6ZJxg0nqLcwBV
+ gyCNDfIJ9Ig==
+X-Gm-Gg: AfdE7ckwNT6LSPorXSBrCfgNcdA7xySfp3alO127vyYZwMOtuRVmP0U5ZETGoLmjhlW
+ x30mGm2YG98Rn9Fq6L70buXXsJxrieTuqH55jyYsgpclcQMpKs8+i2/P5UIfSR0klmYVQ/rcLCG
+ pGRPVM7RC4RXiA/oo/u7WklUXLSlr4FYIvRx1uIBgPDCjwDU23p/D6bjfLa+qK3X2t/xMMgz1H0
+ 8/0XK9yBcdoDxtyBH3y/gq4OLbETa9hbZWlSqwI39rZTwQ9bnw/jufYo6JZHdBoEuD4kC9FlxXR
+ KfT/ew1UfVhfW3fMWl8BRxbuuWgECg/zVPZ7Bgd48YNpNfZYSiTKufgu9bmKsjsLSWUWLepzqTH
+ mU9TL7fgBmfu+NEQCGs/rV3v3ecSqs0KP4Op1kmcgLKp+zcSgsvFJKsiQ/+6yDj2Io9CWguGDEM
+ 52Fv2wZJQL4jmem5jPU7pFLvOzKQ4Dy0UKSnCMS40J3NGU0GjnD0HXQvbA1kgqTmXamm9wtj0/4
+ o9GnKeXL0CV26kGIgmKJQ==
+X-Received: by 2002:a05:600c:800f:b0:493:d078:796 with SMTP id
+ 5b1f17b1804b1-493d11dea05mr105303715e9.17.1783334321615; 
+ Mon, 06 Jul 2026 03:38:41 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.06
+ 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 03:38:07 -0700 (PDT)
+ Mon, 06 Jul 2026 03:38:40 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 14/49] target/arm: ensure we create the wxft_timer for all modes
-Date: Mon,  6 Jul 2026 11:37:17 +0100
-Message-ID: <20260706103752.320511-15-peter.maydell@linaro.org>
+Subject: [PULL 45/49] target/arm: Enable FEAT_SME_MOP4 for -cpu max
+Date: Mon,  6 Jul 2026 11:37:48 +0100
+Message-ID: <20260706103752.320511-46-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260706103752.320511-1-peter.maydell@linaro.org>
 References: <20260706103752.320511-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,51 +100,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-We don't want to just use it for timeouts as we will calculate which
-will comes first. Remove the wxft feature test in favour of the
-broader architecture checks.
-
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260624103049.884930-5-alex.bennee@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260702204314.79224-16-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.c | 6 +++++-
- target/arm/cpu.h | 2 +-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ docs/system/arm/emulation.rst | 1 +
+ linux-user/aarch64/elfload.c  | 1 +
+ target/arm/tcg/cpu64.c        | 1 +
+ 3 files changed, 3 insertions(+)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 26bd21aa86..7143118708 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2273,7 +2273,11 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-     }
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 2864e25294..4f413d69ef 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -175,6 +175,7 @@ the following architecture extensions:
+ - FEAT_SME_F8F32 (SME2 ZA-targeting FP8 multiply-accumulate, dot product, and outer product to single-precision instructions)
+ - FEAT_SME_I16I64 (16-bit to 64-bit integer widening outer product instructions)
+ - FEAT_SME_LUTv2 (Lookup table instructions with 4-bit indices and 8-bit elements)
++- FEAT_SME_MOP4 (Quarter-tile outer product instructions)
+ - FEAT_SSVE_AES (Streaming SVE Mode Advanced Encryption Standard and 128-bit polynomial multiply long instructions)
+ - FEAT_SSVE_FEXPA (Streaming FEXPA instruction)
+ - FEAT_SSVE_FP8DOT2 (SVE2 FP8 2-way dot product to half-precision instructions in Streaming SVE mode)
+diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
+index 850bfb8666..64e25a04e3 100644
+--- a/linux-user/aarch64/elfload.c
++++ b/linux-user/aarch64/elfload.c
+@@ -176,6 +176,7 @@ abi_ulong get_elf_hwcap(CPUState *cs)
+     GET_FEATURE_ID(aa64_ssve_aes, ARM_HWCAP_A64_SME_AES);
+     GET_FEATURE_ID(aa64_ssve_fexpa, ARM_HWCAP_A64_SME_SFEXPA);
+     GET_FEATURE_ID(aa64_fprcvt, ARM_HWCAP_A64_FPRCVT);
++    GET_FEATURE_ID(aa64_sme_mop4, ARM_HWCAP_A64_SME_SMOP4);
  
- #ifndef CONFIG_USER_ONLY
--    if (tcg_enabled() && cpu_isar_feature(aa64_wfxt, cpu)) {
-+    /*
-+     * We use the wfxt_timer for timeouts and event stream so we
-+     * enable from V6K up. There is no event stream on M-profile.
-+     */
-+    if (tcg_enabled() && arm_feature(env, ARM_FEATURE_V6K)) {
-         cpu->wfxt_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-                                        arm_wfxt_timer_cb, cpu);
-     }
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 84d33e87dc..03a30afcbe 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -967,7 +967,7 @@ struct ArchCPU {
-      * pmu_op_finish() - it does not need other handling during migration
-      */
-     QEMUTimer *pmu_timer;
--    /* Timer used for WFxT timeouts */
-+    /* Timer used for WFxT timeouts OR event stream events */
-     QEMUTimer *wfxt_timer;
+     return hwcaps;
+ }
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index e0d701a85c..8a3ebf6321 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1385,6 +1385,7 @@ void aarch64_max_tcg_initfn(Object *obj)
  
-     /* GPIO outputs for generic timer */
+     t = GET_IDREG(isar, ID_AA64SMFR0);
+     t = FIELD_DP64(t, ID_AA64SMFR0, SFEXPA, 1);   /* FEAT_SSVE_FEXPA */
++    t = FIELD_DP64(t, ID_AA64SMFR0, SMOP4, 1);    /* FEAT_SME_MOP4 */
+     t = FIELD_DP64(t, ID_AA64SMFR0, AES, 1);      /* FEAT_SSVE_AES */
+     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP2, 1);   /* FEAT_SSVE_FP8DOT2 */
+     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP4, 1);   /* FEAT_SSVE_FP8DOT4 */
 -- 
 2.43.0
 
