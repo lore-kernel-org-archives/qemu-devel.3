@@ -4,106 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D15DCC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 04:11:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45FE9C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 04:14:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgafv-000758-Vf; Mon, 06 Jul 2026 00:11:20 -0400
+	id 1wgaiH-0008Eb-KH; Mon, 06 Jul 2026 00:13:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wgafo-00072S-4m
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 00:11:12 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1wgaiD-0008Dp-MW
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 00:13:41 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wgafj-0007yM-Ss
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 00:11:10 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-697564cb69eso4972552a12.0
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 21:11:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783311066; cv=none;
+ id 1wgaiB-0008Nx-7X
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 00:13:41 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-69532288224so4568165a12.0
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 21:13:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783311218; cv=none;
  d=google.com; s=arc-20260327;
- b=Fmudi5p0IyGO7QeChd8vdLupsOAnMYaiS+xWKArqVa2YYU6e4HD6tn+/aby5FPbOXa
- VhtfouCamN4+rJuR0X0BW1KgUTPrzJYc8ReoA5qL8ZgkoLGWYBrnD6uVwFRS1mD1sS/8
- j04lGSSYxrVV4SXksFQyS63HKE2bLnp8c5Y0KzizQpb0zCUS9jyrdc0Kz1IXND7M72xQ
- ooJHoUBwz+/E3bWYCC9J3QSGzmNWX/laUuRLRsrWXvqy2DQrAi8X7zb9d+NgFbZbCDVx
- Mo8LsYrD2omqxfuYwgBnKRXMqLMRqn86iiiVxm67vf9XSD04Bmc5DbxTiT4xPZYaQu1I
- YA0Q==
+ b=jVy+jseq1p+l18SKraDQL4xPY9VOLOpXZqDGqA58d7Y+OZeipXhqGBadJrnyV/uwXb
+ QTK7tF8oRlmO2Xx9/w9NrxTQI7jxfGK3gQZjusErzbYxJx4AmoO3TTjk04P8CW36fWNY
+ 55r24AUf2+dgE66eG3xigba4Icvwp33bvRWqBuBSYpsK1CVFOpKTMQ727FX1i2J/hUL5
+ AbiYG3E88eNBXuoMBEqJY8Yujz14bKOgeZdPN2tELnGPmO5DGNmAQpJE/WPZBfQR46U1
+ BIMsoY1XEQOHR/b7dQpTisjz8OGSDJTbrHJTnkU6zSWWmwow+JX1ZlRFBI0Sir93Ip5r
+ J8JQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=7HxEleNdpcq/puEELEg1OY61bl0n76N0fS35a2/nEw4=;
- fh=Prymync7ZSBr0IFL8FwogwtkowYyFbANXTDCE0RlisE=;
- b=M9gJ/FZ5AhCrd1ZZHhFyjU6ObauwzGly8Njq81Aocf6TwII2xQ9rlEJxr/ZxIthtTg
- SU1xRJ3Kh3HmfImwoVCMwa8rVVjZ3hP+elXqqhXffnEqvXp1yc0w4fjRoDiCJdFqqY/m
- DHf+GwDyIVaSVOrxoEZxQNvhkAJRVbVDrcuq6/5cocSCIyb75elaCd/wC/dh1DONllmK
- xQAkwcPv8B/NHVF/81QMW6hjx6/s5ayc0xpNQEc2uoosYJeTYRwK/GRn2fcA3YfW4PA2
- eNsro9joFK/6d+DnKjzTpYUI8X90V0NLy0KJzCVve+z14WYdVyD4TZ+NkfckTVWWz2rq
- XySw==; darn=nongnu.org
+ bh=sATuXxprBdPcwRNXmrAzxvCj8IuCwss2kxcHcmpfN5A=;
+ fh=KLHGcCjDFE8JakAsekM1idRm6q0Xvx801j4ETmug+Fk=;
+ b=BZyATHuubpNJabgEWtJLXEk3U9zBiF15VVCAiF7eeSSNrZO3KgNEnz1fv3rVdP+TWW
+ Z5vbhhYwf6l86phIyUR7Imm6C4zHsquUeMwPsL3msy8AVvqKmUxGvXr/uqhFESugOjHJ
+ x3H23+et+SgXfcG/4ijdW5G7uGgqgoVwDc+m+uSoVAvjBSwv/r+5VY87GH0wlfdimkk2
+ njwnU9xc/w9+j7jld43bJRBOjNyOiBcTF4qcTG34vqV1RHR6TbQUCM5rLRDyziTU8eWS
+ fK2QeuB96iPCtrCdzcnbazYVu3nPvFLoU4vRPNRBn41pevtLST8mDJtje830q5oagP4P
+ o6rQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783311066; x=1783915866; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=7HxEleNdpcq/puEELEg1OY61bl0n76N0fS35a2/nEw4=;
- b=Ye4RIcov7KsOEp1XdCkXVcCCqJ50gK4BWzi1cB3maDQKXnA67ec4zcskCRsr0AObCp
- TYYPJ4VjBhHmv5agq3QcfeWiu+bDAa0jR2qgMofDDZ4BX0Kclwu612Dc6LAaR1tDdAZo
- Nea+4xhAPogRMtnGEZbXaT87fSfolOnC5jVTQlixZeyLexuUs+FWxFUAIub8KGQ393op
- Gq19Qd/mePnQmT+Pg4aKcrgYL0qXJ6YwXQggRvq+MUNh0MNXjsY2J5h4mNN1xSfKtXE8
- 9oKfMQ0BhyBlNluO0Tfdmgho6xdPNJ2ejqCXFPElvo5sgkPsOtE4sAVW/FhX+baicqJM
- 54Yw==
+ d=gmail.com; s=20251104; t=1783311218; x=1783916018; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sATuXxprBdPcwRNXmrAzxvCj8IuCwss2kxcHcmpfN5A=;
+ b=W7gbcyww9mQO4+9V7QnBHDAVkSLVRiFotzQM2z1uRyaqYzgp72ED9pHL66nESl+xvF
+ I1jU4Vsp7kcctH1jJ8W3Vm28sipCSn5Nzj6YPpBCcbv7P4NlTQtkrQmjHInMHYO4hutd
+ Ls0mmKIxhLm8jGnfaSlAPJrEPk848y2a74CMS0dZRDZTQaRxy0lz5c3O7YYGiYD+aggt
+ EgS7A7SYvgQo7dF2dE4ofSQUjEOf6Zy7Rdziu8PH5HWC4O5IkA/aEMXUgi/UASnmi7kE
+ MKdzJVfoqLCGlEAUM6X2Ldw8mIkazr1RAkC+TWMpZeuM4y7vdEQbyo9PwZr+TPY5fYcr
+ xDxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783311066; x=1783915866;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=7HxEleNdpcq/puEELEg1OY61bl0n76N0fS35a2/nEw4=;
- b=sXJwK6IbK5pE7Kvm5F76GHW0zNjB+YJNhfvbZ0gyKVzWx/GuUOltDdBl/ByAXqw8eC
- 0JK/TbZF2lS2cITLJaJ68qx1mg9oTF0BuQYgkS3N7Smb9fthdbOE5mmc6Wo9ARnfaYEm
- PCHdSikTxTGl7CkpkqJGyZoLd9/kJBRI1hyDF+aDi2aT1Tp2tK/iXGzEtm7pSCZ5lWSb
- 1cyfzIaZfHNTAFIPC4zSaOCJfDtgoK48jw5HRl2KZZGoKvYwy9AVR46eYGYM8Sk1TVL+
- FlBgxmZKmR1T4Is28FH6GbEWZmLr0OjPYYwOaA/aGcnJIh21zEN3aBr2ym8VjENAmqXt
- 5voQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rqt2PXwazgjAp4/pdffzHzBKHQH7Ute5lUY0h2iXwKGXxNKKe4m+h5pskCFW3guhCKeNu8oFz51q/iZ@nongnu.org
-X-Gm-Message-State: AOJu0YzhWK05yv8OM1vyWRuLe6/Fyl+43pO2jwb1kZt4p3D5tXITSia8
- TrrZeSjDEQ/MqKOuj3n2tVIPTDAHkXipnMQs0qY6DmGVWQeJrm45A0m2mgsvxBDN6Z+POcxI1jl
- 1V0TeR0OH+PT7e520g2G0D8J2hL2KhwE=
-X-Gm-Gg: AfdE7cnYo4bkztkPn6Dcp28HalMMHcOkszSSHaGa5YtYWMmDTZ1cQMB7oJaQiUzpGhJ
- J/sz17Tu6ptnoseLnfMUUng1R9ybm1xedNzJ0rrzgSHyyJWOQL06BTWrPpzyUek/zdDOOQi8g/v
- jmQ9u2Sa0i5iLVHTLgOiMtBjvva5xP+kF3AfO6ddlBAxikssYqPbqJwMlN/OmYZhf5xrd5RsLhz
- UKZU3ubN8CfjqVYbHpA0MK4V+RVwFVPewkhfB8XGQpd4vpkkrpD4pMzsHfP89lyp5I+t7XEOpFW
- JBjko9EPjFDlTIa0GkyHQtszq9/ILOXOqYEr0Q==
-X-Received: by 2002:a05:6402:3908:b0:698:3e99:815a with SMTP id
- 4fb4d7f45d1cf-69a1a4c094bmr2715772a12.38.1783311065710; Sun, 05 Jul 2026
- 21:11:05 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783311218; x=1783916018;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=sATuXxprBdPcwRNXmrAzxvCj8IuCwss2kxcHcmpfN5A=;
+ b=B2qsdu97B/BRBgn65346wnTPrRosJDU8SsIUAf5o40jQ78xYhK1/zz3AxMVMHdwc0Z
+ gmdBdWpjgK5ktj7EjvkcnRkwzm+EdQttUFVC6W29aidI8dbt6Vh0lFSHzpc9jbcSgfI9
+ purn6I61FOTMP3fZfk1wHAT5HBXrvx8o7J+OJau61lFqYapePsOQH8AgwowLfgqZpHMD
+ +/haU6xHAag4eDUZeVjxmH4hkSQEaEkR9om9JXBsYWnhYFgcZLZbTxfpgPbxgVdFC9HU
+ BnSB/Nq/FyLxbn6IGoy5TbrpHvPtbW0n7psKL+KCLb2g0OZgKJQtaQq7rfhKXpcBVgYx
+ w22w==
+X-Gm-Message-State: AOJu0Yw+WKKe9ktsGTTEMoUwXYwrYxMxOaSN9+jl5hFzDxkmuTCw9Ecx
+ DxUWY2G7m0GTeWB4ACISHIW6ps8z0RFTxRTuEJU4NnSsn5eGnqWrgzKNpoMd6ULc3xGGzKw0ANF
+ 3ERFh8iKDFiNgZLm8kwojuJ+oiFNGESk=
+X-Gm-Gg: AfdE7ckWjetaj0J54mFr1CycdHo2YjjtWJN8SHvjHMr2Dk00J39TX6sFjPIgDl9SlkE
+ ZIUGLaV3fEIIdAipHzFioGSL1VkzLqRlfGosRyingCGUH9pSoC7eY9a2FderqLxlV5Xp8i3xheg
+ nqfzx5u+ia+Kmd7FBzmnIoYbv4zoi9SGOuvi30UhlUgxxBmvhMkt0SoXCnHjIQQSoeknxIWaGyF
+ vf2hV+z+6nBlXv/wV6Zukm6kEXjtFhymnw2Un9XFEN4rbVUf0+Ss0BG3ujkccYaD9m0KixJr8cp
+ 9zEmRIhrDimKUbrEFlFvZSa5ejnqHq3AZt6NTA==
+X-Received: by 2002:a05:6402:4489:b0:698:3b7c:7e42 with SMTP id
+ 4fb4d7f45d1cf-69a1a3ba0cfmr2879971a12.34.1783311217584; Sun, 05 Jul 2026
+ 21:13:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260618093827.3507-1-cp0613@linux.alibaba.com>
- <20260618093827.3507-5-cp0613@linux.alibaba.com>
-In-Reply-To: <20260618093827.3507-5-cp0613@linux.alibaba.com>
+References: <20260701092241.307801-1-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260701092241.307801-1-daniel.barboza@oss.qualcomm.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 6 Jul 2026 14:10:39 +1000
-X-Gm-Features: AVVi8CdAeWtetyAQk_qrrsZ1ircuBVcHeYNWKbPeiByd5CkQfkXfp2U6MM-auzE
-Message-ID: <CAKmqyKP1DUuLBxLhsqVXa8Bsk_x_r=rg+-08dOg46fkEO2W0rQ@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] tests/qtest: Add RISC-V ACPI bios tables test for
- CXL
-To: Chen Pei <cp0613@linux.alibaba.com>
-Cc: jic23@kernel.org, pbonzini@redhat.com, palmer@dabbelt.com, 
- alistair.francis@wdc.com, liwei1518@gmail.com, 
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
- chao.liu.zevorn@gmail.com, sunilvl@ventanamicro.com, dave.jiang@intel.com, 
- alison.schofield@intel.com, imammedo@redhat.com, mst@redhat.com, 
- guoren@kernel.org, qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- linux-cxl@vger.kernel.org
+Date: Mon, 6 Jul 2026 14:13:11 +1000
+X-Gm-Features: AVVi8CdJc2aezC2057AV0lDmLvCNO2MP8v2URijod0e1Ci73sHoDjNrAk79nh4E
+Message-ID: <CAKmqyKOSHDeN+oC9ewTHmEh1tZ-mrDn_qn6mqZ=CQu1S=5aa4A@mail.gmail.com>
+Subject: Re: [PATCH] hw/riscv/riscv-iommu.c: set ftype and iova in
+ riscv_iommu_ctx()
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
+ andrew.jones@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -127,187 +119,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 18, 2026 at 7:39=E2=80=AFPM Chen Pei <cp0613@linux.alibaba.com>=
- wrote:
+On Wed, Jul 1, 2026 at 7:23=E2=80=AFPM Daniel Henrique Barboza
+<daniel.barboza@oss.qualcomm.com> wrote:
 >
-> Add test_acpi_riscv64_virt_tcg_cxl() to verify that enabling CXL on
-> the RISC-V virt machine produces correct ACPI tables, including the
-> ACPI0017 CXLM device with _DEP in the DSDT and the CEDT table.
+> We're hardcoding faulting type as READ, where it could very well be a
+> write access, and we're not recording the faulting addr/iova.
 >
-> The test boots with cxl=3Don, one pxb-cxl bus (bus_nr=3D12), a CXL root
-> port, a cxl-type3 persistent memory device, and a fixed memory window,
-> mirroring the existing x86 q35 CXL test pattern.
+> A note was added in the fault_type logic because I wasn't able to
+> trivially handle a probable code repeitition it in this same patch.
+> Something to do in a later date.
 >
-> Since pxb-cxl is a root bus, using -cdrom causes QEMU to auto-plug the
-> cdrom drive into pxb-cxl, triggering "Only PCI/PCIe bridges can be
-> plugged into pxb-cxl".  The ISO is instead attached explicitly via a
-> virtio-scsi-pci controller on pcie.0, following the same approach as
-> test_acpi_aarch64_virt_tcg_pxb().
->
-> Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3564
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  tests/data/acpi/riscv64/virt/CEDT.cxl | Bin 0 -> 108 bytes
->  tests/data/acpi/riscv64/virt/DSDT.cxl | Bin 0 -> 6212 bytes
->  tests/qtest/bios-tables-test.c        |  54 ++++++++++++++++++++++++++
->  3 files changed, 54 insertions(+)
->  create mode 100644 tests/data/acpi/riscv64/virt/CEDT.cxl
->  create mode 100644 tests/data/acpi/riscv64/virt/DSDT.cxl
+>  hw/riscv/riscv-iommu.c | 29 +++++++++++++++++++++++------
+>  1 file changed, 23 insertions(+), 6 deletions(-)
 >
-> diff --git a/tests/data/acpi/riscv64/virt/CEDT.cxl b/tests/data/acpi/risc=
-v64/virt/CEDT.cxl
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..81d746dfb09ccb147e26bb640=
-60404ca3191d097
-> GIT binary patch
-> literal 108
-> zc-nJzbqUE~U|?VjaPoKd2v%^42yj*a0!E-1hz+6{7!(+IKx!BefCEf2LP-snumA^?
-> O0aMEg#QH!C(hmS*@&^F`
->
-> literal 0
-> Hc-jL100001
->
-> diff --git a/tests/data/acpi/riscv64/virt/DSDT.cxl b/tests/data/acpi/risc=
-v64/virt/DSDT.cxl
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..45999636a05a16f68d1f418a5=
-8d9b80a8a62c9bd
-> GIT binary patch
-> literal 6212
-> zc-pO)%WoS+9LHzvjqR-0&f0Mj=3Djrqzae%_tantltHTF7bT*Zm;rVlBV91*2z8`P#y
-> z5CtJh4?H3sYJ<3NaYa=3DA0Zs@65?r`dLI_kOZd^FR0U;rUnO)o2Z@QIw$VS?ovFG=3Dl
-> z`E1tSkGJfUm&#coLJv!e_M9_bI$yKL<)#TCR9hXbkKfiVG@Mdn`SzS{1Bf-|D&<7c
-> zu2p1bO2isxDrLE^7MD^_8HclnHKEG<+ur{2?c=3DlO>{&19`I+h&88jgyoTZ`>k2P$&
-> zsL6fZNu`YBJKd_>vg9hoO<6frvD-_iJN8*wneQy&lv5IW3WX`eid$$$?Zqlr7CM!x
-> zX2=3D+5)mUo(ene=3DR;m#Usl$~;VB9!Vitjw=3DF55KzlL3Q)a*PnfR`g1KktfjM|#OjOJ
-> zR@aYQd};0aD{EI*Z^~(>kIPAm`q_GWx$_J4MLFr@?xY>g_SBa9=3DS{7(fZd3EP=3Dpo~
-> zG46{9wIWI?Vj?KQ2nA)pml5`76aq8CK^fD&4Bek`G%!OC%BcA=3Dy8IcFff-#v87sbw
-> zh(F_4U`8Y;W5bsb^=3DC{4W<-NBZuv4|t&EC354&}B)D~*8J=3D?iBYO*$I#NF}Zt*g*}
-> z<h4ws;nW?i6_pQ&(m3isK-2+_I<2B60;1H#;?Fu5kaaL1s}PhG=3DBz^jS%)}l_QRSD
-> z+yCv8Kc*@w<+K?xiw}&L+R5BfX~8hPSxoh%Qcn#U{Tt#n@q+wxl*O8ORa_RU@+dkV
-> z!diW)cm8GLRywZ7cXovOw+OGTsq-q*rfM4@b!OU~utF2*gl@`FLU`j^J<S`K^m=3DYx
-> zVYeIh^4+l^w{oJ>(|kiiUL|(BVc#rax3bXbX}+OhuQI>e4f|%%h48IF7n*OVF4~ms
-> zuAj4uIJ=3D0mi#fZPGeVpZ;*2n7ggK+c870mrb4HmnMw~I?j4@}7IlGCon>f3fvzs{$
-> z;xvfUU`~TM<HQ*!&Ny?%nbRarlQ>Q0G?_C&oC)GgFlT}}lf;=3DM&LndtnX`vDdx*1#
-> zIeVDXB2J4qE#|bCGew*!;!H7TiaFE7nI_IObEcWImpFTgvzIx0nKMJ28RE<^XNEcZ
-> zh_jD4`<SzjIs1vTpE&!Ov!6K!h;x8A2bgn!IkUu>CC)5!W|?!4I0uPykU0mLbBH*H
-> zh;xWJhnRDiIERUIm^p`;bA&iYh;xKFN0@VzI7f+dlsQM4bBs90h;xiN$CxumoH^pm
-> zF=3DwvL>D{=3DWGoE=3D@UJYj3_cwNScHU~Wt@jclWV%8=3D>?*dr+dF4!H4(Fy>ho^fcH6e=
-d
-> z%qJU*j;(L53%h(S-&`>7Y+X|By<GjR@K0`J`qOhair=3D01<)Zg${O7+eUH)OS`pt<?
-> zhOCo6{kOSp=3D(27?9%J%Y*igHbH&%??O4GW#by<5;rMmCso4t3p+_$~gEVWnTC)Cp1
-> zLbbY$71e5%^~X+V$^l2^Q3Xt@x}%CmH6|63N}tr!ZhQS+(wj@IF~7a;sT=3Dms0<nJ<
-> zh<&s`?3V@Jt=3DSdd*(&0=3DCxNY=3D`c3D|oD!}EcFv=3Dcz??Bs6Sk;G@f(*vah_NO;Zs5=
-Q
-> zRS<p^1gRiM1;Hu^RzZ*of>aQ!f?yQ{sUS!N!72z=3DL68c9R1mC!U=3D;+ZAV>wlDhO6V
-> zkP3oS5Uhe=3D6$GguNCm+v2v$Lm3W8J+tb$+_1gRiM1;Hu^RzZ*of>aQ!f?yQ{sUS!N
-> z!72z=3DL68c9R1mC!U=3D;+ZAV>wlDhO6VkP3oS5Uhe=3D6$GguNCm+v2v$Lm3W8J+tb$+_
-> z1gRiM1;Hu^RzZ*of>aQ!f?yQ{sUS!N!72z=3DL68c9R1mC!U=3D;+ZAV>wlDhO6VkP3oS
-> z5Uhe=3D6$GguNCm+v2v$Lm3W8J+tb$+_1gRiM1;Hu^RzZ*of>aQ!f?yQ{sUS!N!72z=3D
-> zL68c9R1mC!U=3D;+ZAV>wlDhO6VkP3oS5Uhe=3D6$GguNCm+v2v$KkOU7*2rJ~qYt_SZ{
-> zJ{L7^wDnJjxGRAqiqldQueI8c?`USY{j6Btg4GsQPmwpD_SLwX?v8M83}Wx=3DQX1x?
-> zERtQp9{E^f9D71zbp7z2Nn)2d(kMGsy?MZ!^TE`Qe>jt`SMLn`Ssnb|t~R^3u88ea
-> zSo3zvx2t-6#vu)CYjwfEBjoVT&Cba^;Ff4VTa4J}=3Dd1LzOg*bF&(zYUcHvp|Kwmvh
-> z%XF)!?qb`BXQtG8%_h9{-v4*)@87?;K7Ienmu7tNqk3n(S~IzIMcYotLRwmvlJY;~
-> Cu_#Oc
->
-> literal 0
-> Hc-jL100001
->
-> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-tes=
-t.c
-> index 510751799e..4625b76692 100644
-> --- a/tests/qtest/bios-tables-test.c
-> +++ b/tests/qtest/bios-tables-test.c
-> @@ -2194,6 +2194,56 @@ static void test_acpi_riscv64_virt_tcg(void)
->      free_test_data(&data);
->  }
->
-> +#ifdef CONFIG_POSIX
-> +static void test_acpi_riscv64_virt_tcg_cxl(void)
-> +{
-> +    gchar *tmp_path =3D g_dir_make_tmp("qemu-test-cxl.XXXXXX", NULL);
-> +    gchar *params;
-> +
-> +    test_data data =3D {
-> +        .machine =3D "virt",
-> +        .arch =3D "riscv64",
-> +        .tcg_only =3D true,
-> +        .uefi_fl1 =3D "pc-bios/edk2-riscv-code.fd",
-> +        .uefi_fl2 =3D "pc-bios/edk2-riscv-vars.fd",
-> +        .ram_start =3D 0x80000000ULL,
-> +        .scan_len =3D 128ULL * MiB,
-> +        .variant =3D ".cxl",
-> +    };
-> +
-> +    /*
-> +     * While using -cdrom, the cdrom would auto-plug into pxb-cxl becaus=
-e
-> +     * its bus is also a root bus, triggering "Only PCI/PCIe bridges can=
- be
-> +     * plugged into pxb-cxl".  Attach the ISO explicitly to a scsi contr=
-oller
-> +     * on pcie.0 instead, following the same pattern as
-> +     * test_acpi_aarch64_virt_tcg_pxb().
-> +     */
-> +    params =3D g_strdup_printf("-cpu rva22s64"
-> +                             " -machine cxl=3Don"
-> +                             " -device pcie-root-port,chassis=3D1,id=3Dp=
-ci.1,bus=3Dpcie.0"
-> +                             " -device virtio-scsi-pci,id=3Dscsi0,bus=3D=
-pci.1"
-> +                             " -drive file=3Dtests/data/uefi-boot-images=
-/"
-> +                             "bios-tables-test.riscv64.iso.qcow2,"
-> +                             "if=3Dnone,media=3Dcdrom,id=3Ddrive-scsi0-0=
--0-1,readonly=3Don"
-> +                             " -device scsi-cd,bus=3Dscsi0.0,scsi-id=3D0=
-,"
-> +                             "drive=3Ddrive-scsi0-0-0-1,id=3Dscsi0-0-0-1=
-,bootindex=3D1"
-> +                             " -object memory-backend-file,id=3Dcxl-mem1=
-,mem-path=3D%s,size=3D256M"
-> +                             " -object memory-backend-file,id=3Dlsa1,mem=
--path=3D%s,size=3D256M"
-> +                             " -device pxb-cxl,bus_nr=3D12,bus=3Dpcie.0,=
-id=3Dcxl.1"
-> +                             " -device cxl-rp,port=3D0,bus=3Dcxl.1,id=3D=
-rp1,chassis=3D0,slot=3D2"
-> +                             " -device cxl-type3,bus=3Drp1,persistent-me=
-mdev=3Dcxl-mem1,lsa=3Dlsa1"
-> +                             " -M cxl-fmw.0.targets.0=3Dcxl.1,cxl-fmw.0.=
-size=3D4G,"
-> +                             "cxl-fmw.0.interleave-granularity=3D8k",
-> +                             tmp_path, tmp_path);
-> +    test_acpi_one(params, &data);
-> +
-> +    g_free(params);
-> +    g_assert(g_rmdir(tmp_path) =3D=3D 0);
-> +    g_free(tmp_path);
-> +    free_test_data(&data);
-> +}
-> +#endif /* CONFIG_POSIX */
-> +
->  static void test_acpi_aarch64_virt_tcg(void)
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index 70eede3f14..690c21289f 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -1330,6 +1330,7 @@ static void riscv_iommu_ctx_inval(RISCVIOMMUState *=
+s, GHFunc func,
+>  /* Find or allocate translation context for a given {device_id, process_=
+id} */
+>  static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOMMUState *s,
+>                                            unsigned devid, unsigned proce=
+ss_id,
+> +                                          IOMMUAccessFlags perm, uint64_=
+t iova,
+>                                            void **ref)
 >  {
->      test_data data =3D {
-> @@ -2888,6 +2938,10 @@ int main(int argc, char *argv[])
->                             test_acpi_riscv64_virt_tcg_numamem);
->              qtest_add_func("acpi/virt/acpispcr",
->                             test_acpi_riscv64_virt_tcg_acpi_spcr);
-> +#ifdef CONFIG_POSIX
-> +            qtest_add_func("acpi/virt/cxl",
-> +                           test_acpi_riscv64_virt_tcg_cxl);
-> +#endif
->          }
->      } else if (strcmp(arch, "loongarch64") =3D=3D 0) {
->          if (has_tcg && qtest_has_machine("virt")) {
+>      GHashTable *ctx_cache;
+> @@ -1339,6 +1340,7 @@ static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOMM=
+UState *s,
+>          .process_id =3D process_id,
+>      };
+>      unsigned mode =3D get_field(s->ddtp, RISCV_IOMMU_DDTP_MODE);
+> +    uint32_t fault_type;
+>
+>      ctx_cache =3D g_hash_table_ref(s->ctx_cache);
+>
+> @@ -1381,8 +1383,21 @@ static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOM=
+MUState *s,
+>      g_hash_table_unref(ctx_cache);
+>      *ref =3D NULL;
+>
+> -    riscv_iommu_report_fault(s, ctx, RISCV_IOMMU_FQ_TTYPE_UADDR_RD,
+> -                             fault, !!process_id, 0, 0);
+> +    /*
+> +     * TODO: (1) do we need to distinguish other fault types
+> +     * for ctx fetching and (2) evaluate putting the 'fault_type'
+> +     * logic inside riscv_iommu_report_fault() - there's at
+> +     * least one other place (end of riscv_iommu_translate())
+> +     * that does something similar.
+> +     */
+> +    if (perm & IOMMU_RO) {
+> +        fault_type =3D RISCV_IOMMU_FQ_TTYPE_UADDR_RD;
+> +    } else {
+> +        fault_type =3D RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
+> +    }
+> +
+> +    riscv_iommu_report_fault(s, ctx, fault_type, fault,
+> +                             !!process_id, iova, 0);
+>
+>      g_free(ctx);
+>      return NULL;
+> @@ -2128,6 +2143,8 @@ static void riscv_iommu_process_dbg(RISCVIOMMUState=
+ *s)
+>      uint64_t ctrl =3D riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_TR_REQ_CT=
+L);
+>      unsigned devid =3D get_field(ctrl, RISCV_IOMMU_TR_REQ_CTL_DID);
+>      unsigned pid =3D get_field(ctrl, RISCV_IOMMU_TR_REQ_CTL_PID);
+> +    IOMMUAccessFlags perm =3D ctrl & RISCV_IOMMU_TR_REQ_CTL_NW
+> +                            ? IOMMU_RO : IOMMU_RW;
+>      RISCVIOMMUContext *ctx;
+>      void *ref;
+>
+> @@ -2135,7 +2152,7 @@ static void riscv_iommu_process_dbg(RISCVIOMMUState=
+ *s)
+>          return;
+>      }
+>
+> -    ctx =3D riscv_iommu_ctx(s, devid, pid, &ref);
+> +    ctx =3D riscv_iommu_ctx(s, devid, pid, perm, iova, &ref);
+>      if (ctx =3D=3D NULL) {
+>          riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_TR_RESPONSE,
+>                                   RISCV_IOMMU_TR_RESPONSE_FAULT |
+> @@ -2143,7 +2160,7 @@ static void riscv_iommu_process_dbg(RISCVIOMMUState=
+ *s)
+>      } else {
+>          IOMMUTLBEntry iotlb =3D {
+>              .iova =3D iova,
+> -            .perm =3D ctrl & RISCV_IOMMU_TR_REQ_CTL_NW ? IOMMU_RO : IOMM=
+U_RW,
+> +            .perm =3D perm,
+>              .addr_mask =3D ~0,
+>              .target_as =3D NULL,
+>          };
+> @@ -2482,7 +2499,7 @@ static MemTxResult riscv_iommu_trap_write(void *opa=
+que, hwaddr addr,
+>      /* FIXME: PCIe bus remapping for attached endpoints. */
+>      devid |=3D s->bus << 8;
+>
+> -    ctx =3D riscv_iommu_ctx(s, devid, 0, &ref);
+> +    ctx =3D riscv_iommu_ctx(s, devid, 0, IOMMU_RW, addr, &ref);
+>      if (ctx =3D=3D NULL) {
+>          res =3D MEMTX_ACCESS_ERROR;
+>      } else {
+> @@ -2784,7 +2801,7 @@ static IOMMUTLBEntry riscv_iommu_memory_region_tran=
+slate(
+>      };
+>      uint32_t devid =3D riscv_iommu_space_devid(as);
+>
+> -    ctx =3D riscv_iommu_ctx(as->iommu, devid, iommu_idx, &ref);
+> +    ctx =3D riscv_iommu_ctx(as->iommu, devid, iommu_idx, flag, addr, &re=
+f);
+>      if (ctx =3D=3D NULL) {
+>          /* Translation disabled or invalid. */
+>          iotlb.addr_mask =3D 0;
 > --
-> 2.50.1
+> 2.43.0
 >
 >
 
