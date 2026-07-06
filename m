@@ -4,117 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1524C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 16:22:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE591C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 16:22:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgm5M-0004Wm-8N; Mon, 06 Jul 2026 12:22:20 -0400
+	id 1wgm5o-0004gf-Fm; Mon, 06 Jul 2026 12:22:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1wgm5C-0004VW-Tx; Mon, 06 Jul 2026 12:22:14 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1wgm5n-0004gV-7O
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:22:47 -0400
+Received: from mail-japaneastazon11022100.outbound.protection.outlook.com
+ ([52.101.126.100] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1wgm59-0000U3-TG; Mon, 06 Jul 2026 12:22:10 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666FIiNS508456; Mon, 6 Jul 2026 16:22:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=KdHCrxnhdxsWJvphidg5qiyZ5fv32z
- O6lbZf+kB1V7Y=; b=rAJlar5hyfFU56ZnQdS/9kyPRhet+VmURS4UR3oyOQj10U
- MQt8vD0c9nL2FrIZhbBh1xWs+SJVn3iCDGUEFxdS9Gk5Oyfu3tqqHZKH0nZqIZ3M
- ALBX9FuHcgSGjdY4rkmPw2RrKXcgGp6AngHzXD1NFCTsxhPDbjy+r/NY3Yn/LbW2
- C4Eo7U6bF2QDMfxpP/1b7mbDwM5Bus1IBznOL1i1yTN2TTEn5XJeL2zW4rOm7sUE
- zbaQa0C3CDrDZsqSSG8HAtDXSbmR5FtUXXOuCJ6KQRhHueEv71sAql0/IxtBFkug
- CFj9DkT882w43mBaNNfV4GM2z+zKfDHHAsYvGv+g==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6sw4jb26-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 16:22:02 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 666GJe5s028904;
- Mon, 6 Jul 2026 16:22:02 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7cgpxh08-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 16:22:01 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 666GLwxH51511576
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 6 Jul 2026 16:21:58 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0731C20049;
- Mon,  6 Jul 2026 16:21:58 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 28BF620040;
- Mon,  6 Jul 2026 16:21:48 +0000 (GMT)
-Received: from [9.67.146.25] (unknown [9.67.146.25])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  6 Jul 2026 16:21:47 +0000 (GMT)
-Content-Type: multipart/alternative;
- boundary="------------K0Sw7wT3rQg2fuoD0Vq5oFk0"
-Message-ID: <b1276790-9829-4a0f-9a28-fdd34f81881e@linux.ibm.com>
-Date: Mon, 6 Jul 2026 21:51:45 +0530
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1wgm5k-0000ZV-Gh
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:22:46 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=vYq0St9ZG2BB0KWXG9WGqz5Iiwp3ZLqp0GgJFgpHBY6vWFBVh/cAdP+3lwWBIqVzvYEkkhkjbqHguvPmH8eDA/mHJ4l62nfUYDuXAdWwOE2euEKP8aHSyi3PtrleWSjkdnHm/ikGGzMaAavxGhzJhlFhkM6barapQF8ICHW7UkHJGp7MsJWXL/Xyqnji51A53CMiDJ5QnEwI40/1nKtCWG9NSfo2QjASCsBleewcM4ZtJIzYwikV6ql8jFiynSaaWnLIvjtgt8YJ3kQdvRXlnyVAIV3M0XTvwf9oIvbTqUgNQEbVnXKO0iOLnk+G9m/2beBZMUSlBwfJP+p8lwhVRA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=J8k2T+oxZlUbB/TYHiMMnGHnrAbb0xGyzoxJUsIq4pw=;
+ b=VQ576YpqaN9a/dlYeunakwqooctTxNT5bkQygnyOc63OMLMjxVYtc6cH0K0Fz/af6LC8DYI+cEBDYMORP8g6Gl5oukPoVYN7gn3D0EGIpGUTZfiSAyLBfmwzOGUtOtGDQU2C0rUzE2ifmc5pTDW9sQEu3BJmtkPOY9qggRqi+rLjD9G0O2P+Id9+ag+EfJUGk86FuyJBHI+6Z5W5TnSwJByevU79KDOG8vExYNMUVjQr+kIbFVNDrejs/sZ0Dq8wbkusx5SYAlD2cUzlKg8jxyEDmlt96cWRFKoJPn9CjxbGgPux2XOM9DhRSKasxZZuQKUj8pF9nUk+ImWFZ69jww==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=J8k2T+oxZlUbB/TYHiMMnGHnrAbb0xGyzoxJUsIq4pw=;
+ b=fCtXP4VUYbyCBQycCYsoj+PHhFM3Ja7Ip2lSs4A2DvuOA1a2pSYG98hFvGbrMVMvxHGDtSR88PUEGGawu+JDJjHXQB+r1tfTZskpVfmEhj9hMkpBqEoPud+0kJJ1jHyTVpz2usbQqa3WtPNDZ4Rl5GMgnuPu6qwyy0hoE8FbfMtmohYTXW+rdHOV8+ZetqmkqyTDmdIeeoIpnRlOFNT6UpcvjUNOjyJ+pvq0l3ojrFemORki4fdrMabRgQeL/feZPhYcJEKh6OHInkGi1mgcJDiNLIMUxdjJlDESRJi4ElTXYUR/GnVFtZIywDHijIZ9edJTy/2l1U2ts5zd2y8j4Q==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
+ by TYSPR02MB6586.apcprd02.prod.outlook.com (2603:1096:400:42b::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Mon, 6 Jul
+ 2026 16:17:33 +0000
+Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
+ ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
+ ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0181.012; Mon, 6 Jul 2026
+ 16:17:31 +0000
+From: Bin Meng <bin.meng@processmission.com>
+To: QEMU <qemu-devel@nongnu.org>
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH] gitlab-ci: Remove job building OpenSBI firmware binaries
+Date: Tue,  7 Jul 2026 00:17:16 +0800
+Message-Id: <20260706161716.29488-1-bin.meng@processmission.com>
+X-Mailer: git-send-email 2.34.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SI3PR02CA0002.apcprd02.prod.outlook.com
+ (2603:1096:4:295::12) To KL1PR02MB4977.apcprd02.prod.outlook.com
+ (2603:1096:820:71::8)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 11/28] target/ppc: Move fixed-point byte-reversal
- store insns to decodetree
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com,
- richard.henderson@linaro.org, peter.maydell@linaro.org, stefanha@redhat.com
-Cc: milesg@linux.ibm.com, vishalc@linux.ibm.com, tshah@linux.ibm.com,
- shivangu@linux.ibm.com, ojaswin@linux.ibm.com, aboorvad@linux.ibm.com,
- amachhiw@linux.ibm.com, sv@linux.ibm.com, shivani@linux.ibm.com,
- mkchauras@gmail.com, uverma@linux.ibm.com
-References: <20260520160728.2283628-1-rathc@linux.ibm.com>
- <20260520160728.2283628-12-rathc@linux.ibm.com>
-Content-Language: en-US
-From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-In-Reply-To: <20260520160728.2283628-12-rathc@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: VIvg5cY7KoWh_KLccGvoa2HDYheNBnn1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE2NiBTYWx0ZWRfX/zKwj97fgIN3
- fKWTr8Nt/+AEIdflqNbYvN4R2Da65gg/29zkrj/0+NJbIst3uLflu7BI+XOkHnP1szllG/CYdyt
- 3qoQO6li58IQqwx27c92r8I/UxGcbCv7t17u0IZoqSIlByzPhn8C0YTheC5lDau4IutpVMIHq5P
- aNVC/peCwDAcCcWHYw+HQnge0r0vIfvGqRLxNL11znVF+pUyIkgNzn+Ui5uhAyW1JUgld3jVErZ
- q7eWdo38qDbpQ0ErJgkTqegcq+fWKhQkYhhYm5WcpKwmkFz1rkCUlrxO4wNGtYExxDw7VbsH1zc
- njVHkf/uEWR4AMvPtyaYP0pbLbZaG1Zadus/+72GHUSUcOs/pMDLc4AxxQJmX6FfPjcmtra6gre
- 4YqeCkmCDVkHlW6gs2q3PIrsIHQ3lNj/EdaJ4cKNPJ3j4rqW2AxXPCxPXIEl7yfbiOc2pa7WkmP
- djufs30SoDhU1ownfQw==
-X-Proofpoint-ORIG-GUID: sPstOVkQTUq7nQzpqkhleGj1ZVU5Z1TX
-X-Authority-Analysis: v=2.4 cv=FqQ1OWrq c=1 sm=1 tr=0 ts=6a4bd62b cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=r77TgQKjGQsHNAKrUKIA:9 a=VnNF1IyMAAAA:8
- a=W5bMDWzCAKVaO9EUQNcA:9 a=QEXdDO2ut3YA:10 a=XjGAUUzDke6TOz208osA:9
- a=efSUNRCYC4QxrvPL:21 a=_W_S_7VecoQA:10 a=lqcHg5cX4UMA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE2NiBTYWx0ZWRfX8MoNczsMbGnV
- 9aMPh6lt6x32IP+YH7pzCNyTS8LWNXZ8fefnLZ9aPlkD3p2T8qc3KNapkgtHrLtJLEa5+04ktFC
- 9BTIKg+kPTSEu0phVIIm97swqIap2Wo=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-06_02,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 clxscore=1011 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 spamscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060166
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=nikhilks@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYSPR02MB6586:EE_
+X-MS-Office365-Filtering-Correlation-Id: 81848719-fb0e-4289-5ea1-08dedb7a1492
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|34096008|366016|23010399003|1800799024|10070799003|20046099003|18002099003|3023799007|5023799004|56012099006|6133799003;
+X-Microsoft-Antispam-Message-Info: HkLEsXQj9YUyxN32RAR/CuvsKOLDkCVnBTCb8gW7at/1QiNaDfR30PQha85OwBzQIonLCSmwPNizud1c6f9ygrefWWeMNf69hiq51y5iShePBvYwECjkM1PxTsmnSA9ju9eU7gE1SxQ+L09RgJGKoI8Pn/XPvByqXXTRqXGiWTfN2h7t877idF+rBUDqG5jziuCgXfoQxUhwMgs95vfroyzmD4j8kZfHeOeKtuj9iIAjeiln4f60zyyYt2y2bwEF5e9RyFW2QWRh+ANuluzokCFvrr84NTcIyHkNTZBVcj0DYwpW1wyZJA7YW0RjIy693L1S1D0FdUW/hXnJUn4oVULt0Ogy2aBodrS/2hjUNFSgv4d4/dB7XAQ99xQlfr94ZecYLrFSG5mqhs3GBzMwHFCtqHtGAO3C7WhEfrsAjrhEN8pOBoE3w61b5Yq6gZV7pc6jH2HI/zi4qs6Ryiw5tjE+pAtFQSfE0R4Zqb2A5NcyGZeTJpl8osD4y3JsP+4DTmbe6wKYxqfWTPXysCFvP7GQ6qKhWspu6T2egsG0J/bu/N9cVTjJBWBfH7ybq/NdXx5dOnk+tKfX/JzaNbQSdioVoLJ9KtxzEyIOceYk4gW9bWHj0K6FExv6/2PcRraFHmdjsdhjcTMYNB1csIiH02ZxCCfy5sWipa8pa2MW+zI=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(34096008)(366016)(23010399003)(1800799024)(10070799003)(20046099003)(18002099003)(3023799007)(5023799004)(56012099006)(6133799003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NGNZK3hlQWRjUmlUWFUwZitFYVNjOXpyZXg1d294dHgrUnlXazVuM1pmNFhv?=
+ =?utf-8?B?OUIwZ2tPMGFSV2tMODMzNFcxTGtEYU9pV09XcEhXai9wMlJoVzUxczVUcFlt?=
+ =?utf-8?B?ZEtMN3JLQ2k2S3hlUiswQWZxTnRxbWhFcG1mM2F4MERqZUJmZS9tQWNiTVRS?=
+ =?utf-8?B?MUY2TkxLYVluN2kvYzlOR3NHdVFPampZQmFKaGVLTHVKYzc0WXhtYmcyL2xJ?=
+ =?utf-8?B?cTR0N29odVZ4cmhKczNoVXk4dUlWTXlFeUZ6c2pxNlo4Yy9OK09MR0NVWlZk?=
+ =?utf-8?B?c0FaM3gyL1F0WGJ1Tlh3aTJUQVUybU5uU3ZqeTM5VHZ4YzUxRTk2NEJvVWtW?=
+ =?utf-8?B?SXFUR3d3cGZjUDBzV3ZQOWF3Nll4dWQ2TXZEZnQrWkRnMG5rbVZKcWZTN0ZW?=
+ =?utf-8?B?dmN4cThIRllOa1NxY3h1dFg2SjhOVDBpeVBoMGUrUlZkOHYvcVhxTlVqdllC?=
+ =?utf-8?B?ZXFKNTVCQkpwLzV1anhxQWRlQnJxRXhJQ3VjNDBYM01VeGk0U1MxekVLTnVv?=
+ =?utf-8?B?cWlNSzRoTGVhNkdNaDdNaVQrbE05dDJJYUNHaXdDU2FhZ3ZxbkZTYnhKQ3I1?=
+ =?utf-8?B?QnZEYnlualBHK2ZXMFVXY2k2SGNSSzhLcjEyR1RjUnl5aUY5ajE1MUh2dWpm?=
+ =?utf-8?B?Vnd0Z05yNXZ0V2hiaFNEa0NLNXZMYzRvL2JtMmoxUnh1ZmZVTmw5TERDTUxV?=
+ =?utf-8?B?Zm5lWm9CODBWQVRzeDZMRllwSWJLQjhXRzBqUlVacTJQb1kxVDczTnJnTC9U?=
+ =?utf-8?B?SzhMY2VBcXdmRDhLQnhuNDlVcXpUcmhzT0NmTnBDN3pDaStycTM3V214ZlVh?=
+ =?utf-8?B?c3hqWHJmSVcyc2dFZlBTdnJUdEJ5Z2Y4OTVDNUZJejBlNlhMNjc4OEZBZ01X?=
+ =?utf-8?B?RGZSSHByTlpxZGdPYlZ1T0FlbWV0S0duUERqSmk5SVBqZ1BLUTlRSjhOTytD?=
+ =?utf-8?B?UDMyQU50MWhtbFM4MTdyM1QrbTF3eGt6ZVUzVjhCZXIveUticmk1ZEQwQkxL?=
+ =?utf-8?B?K0MzbGdONDJBSExrUE9iVmNmQ3hjR3lBVmpWUyswK0YyZk1adVpLRjd1Y0x2?=
+ =?utf-8?B?Zi9Hd0EzYkRqVUlId05TOGRveXlTcXVKREtvdGZWSm9HM2xRUXNLejkyRU5M?=
+ =?utf-8?B?aWpjbmhrTW53SVNYUmkzM1UzYXEyd1dRNEUvUlFrZXpDdjdZVnV4L3dRd0ts?=
+ =?utf-8?B?bHlIdkJCZmdxRGMzZUZUSWx2QWRxM0NJcHk3WFFyejZsNlNheXJRYWY0cGNn?=
+ =?utf-8?B?YzBJWEVrcVpuUlN5aDI0VjVyRW0xMk5yWGNqMzJwWVJOQTF3SGlmNFVyUExi?=
+ =?utf-8?B?VjRvQjhVSGJNWlJ4cFpDaU05czl6dm5xcDNTWmg0VFNjV29zNTF0YUx1S284?=
+ =?utf-8?B?ZjREQlZtNFdKN3NWUkVUK3RLZTRBSUtKMTFyQlRCTUtuTUl2QUVGbzQ1bzkw?=
+ =?utf-8?B?RUdEYlp1b05LWnVHLzk3RUhUUDVRVmNqYVFxcmpOQXlHUG9nbnJNcTA4emk2?=
+ =?utf-8?B?bXdVd29ySmF6OG5sTkRKUFBaVmNmcHZ5RmVBeklTRS9KOXhEUnZ4cnBrYktC?=
+ =?utf-8?B?eTl3cjRaYldjTDNEUGlKUVlZM0hadmtaVExYcDFhMWZURnZGa1JNWFgwdVZv?=
+ =?utf-8?B?amNDVUJ2bmtnVjU5QWhNTG5ROHhjbG5KT0MrVzIzbEFPekVyMjllTSs1YTVq?=
+ =?utf-8?B?VWE5eld2ZzdJSDZ5ZHJsRGI0WGFiS0NueGJBWmpMUDV4UUZpV1lGZzBYa3Ey?=
+ =?utf-8?B?Ni81K2R6N3ZYQkFLb2E5ZlFRNmFJVFFZa01GMDJBS1BuVkMrbFlTVkUwWi9w?=
+ =?utf-8?B?L29aUEhvYVM2SGkwOEdwUjlmL0pmQi94R1poSjg2SldRYTdOM01XQllWWU9S?=
+ =?utf-8?B?TmhTL0F3T1dlL3QvWkl2ZTlSRko3cWtqL0JzVzdjdDZxUHlsR3Zlb0U4bUVF?=
+ =?utf-8?B?eDF5OFVxcXNmY1Q5cnlUZnpjQjVTaGh1M2lndHFLUWc3QlkzdTNqczZhSFR2?=
+ =?utf-8?B?WFlOb2lDS053YkdmNEl2NXpseXdKUnV5QmpvZEtaNERQSkhVWHVuK0lhN2tM?=
+ =?utf-8?B?SlBzaWh1T1hQRm8vdk5oNXByVHZVYVpVU2J6MkhpeW5rbGlkbUU5TVRrUnNh?=
+ =?utf-8?B?TlZWN1NuOFlEc3h0Qk1IemVKT3NFcFFXR3N1UDRMRkVDcFhDY1BzNStxOWxr?=
+ =?utf-8?B?YTc1dSt6b0VVdUt1Z2JEaDk1dTRDYlhWN1JRbGRjbDg4d1lxc05vQU5QSUtU?=
+ =?utf-8?B?VXhJREtMTmhHWFJRSldVbE14QUR1dDJYZDVxWWZPVkIrUUhnRkZHSi95R3BO?=
+ =?utf-8?B?UDJabjZuek1pT0dERUNiUWM0MHlDeUFteHY0TkdFcjBOb3VrYmlacXJkQXZh?=
+ =?utf-8?Q?JKaPKwgtcnrh9cX0=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 81848719-fb0e-4289-5ea1-08dedb7a1492
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 16:17:31.4212 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: yMmq1AZquDvt1IQ8VL2WMT6dcQOfD2KNC+NpWAHuOjvQVEjhdDGDe/f+LU1zvTMhvcLHgJiOZh2kF701tuy0abfjkUF3T0Dqsi6MGMSbeFA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR02MB6586
+Received-SPF: pass client-ip=52.101.126.100;
+ envelope-from=bin.meng@processmission.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,500 +152,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------K0Sw7wT3rQg2fuoD0Vq5oFk0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+The OpenSBI firmware build job follows the same pattern as the EDK2 job
+[1] that was removed earlier [2]: it exists to produce firmware binaries
+from CI artifacts, but those outputs are not consumed by the tree.
 
-The commit message mentions removing the |GEN_TX| macro, but it's likely 
-a typo for |GEN_STX|.
-Rest the patch looks fine to me.
-|
-|Thanks,
-~ Nikhil
+Remove the job definition and its project include to avoid maintaining
+bitrotting container and firmware build logic.
 
-On 20/05/26 21:37, Chinmay Rath wrote:
-> From: Amit Machhiwal<amachhiw@linux.ibm.com>
->
-> Move the below PPC instructions to decodetree specification:
->
->    st{d,h,w}brx, st{d,w,h,b}cix				: X-form
->
-> The changes were verified by validating that the TCG micro-ops generated
-> by those insns remain the same. These TCG micro-ops were captured with
-> the `-d op,in_asm` QEMU flag.
->
-> Additionally, remove GEN_TX and GEN_STX_E macros as they are no longer
-> used anywhere else.
->
-> Signed-off-by: Amit Machhiwal<amachhiw@linux.ibm.com>
-> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
-> [cr: ppc32 build fix, EA calc fix]
-> ---
->   target/ppc/insn32.decode                   |  8 +++
->   target/ppc/translate.c                     | 52 +++-----------
->   target/ppc/translate/fixedpoint-impl.c.inc | 79 ++++++++++++++++++++++
->   3 files changed, 95 insertions(+), 44 deletions(-)
->
-> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index 44ef814fb9..4a28fad64b 100644
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -372,6 +372,14 @@ STVDX           011111 ..... ..... ..... 0010010001 -   @X
->   STSKU           111110 ..... ..... ............. 0 11   @DD
->   STCXU           111110 ..... ..... ............. 1 11   @DD
->   
-> +STDBRX		011111 ..... ..... ..... 1010010100 -	@X
-> +STDCIX		011111 ..... ..... ..... 1111110101 -	@X
-> +STWCIX		011111 ..... ..... ..... 1110010101 -	@X
-> +STHCIX		011111 ..... ..... ..... 1110110101 -	@X
-> +STBCIX		011111 ..... ..... ..... 1111010101 -	@X
-> +STHBRX		011111 ..... ..... ..... 1110010110 -	@X
-> +STWBRX		011111 ..... ..... ..... 1010010110 -	@X
-> +
->   ### Fixed-Point Compare Instructions
->   
->   CMP             011111 ... - . ..... ..... 0000000000 - @X_bfl
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index 1fc2cd0b14..7bfbba85d0 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -2529,23 +2529,6 @@ GEN_LDX_HVRM(lhzcix, ld16u, 0x15, 0x19, PPC_CILDST)
->   GEN_LDX_HVRM(lbzcix, ld8u, 0x15, 0x1a, PPC_CILDST)
->   #endif
->   
-> -/***                              Integer store                            ***/
-> -#define GEN_STX_E(name, stop, opc2, opc3, type, type2, chk)                   \
-> -static void glue(gen_, name##x)(DisasContext *ctx)                            \
-> -{                                                                             \
-> -    TCGv EA;                                                                  \
-> -    chk(ctx);                                                                 \
-> -    gen_set_access_type(ctx, ACCESS_INT);                                     \
-> -    EA = tcg_temp_new();                                                      \
-> -    gen_addr_reg_index(ctx, EA);                                              \
-> -    gen_qemu_##stop(ctx, cpu_gpr[rS(ctx->opcode)], EA);                       \
-> -}
-> -#define GEN_STX(name, stop, opc2, opc3, type)                                 \
-> -    GEN_STX_E(name, stop, opc2, opc3, type, PPC_NONE, CHK_NONE)
-> -
-> -#define GEN_STX_HVRM(name, stop, opc2, opc3, type)                            \
-> -    GEN_STX_E(name, stop, opc2, opc3, type, PPC_NONE, CHK_HVRM)
-> -
->   #define GEN_STEPX(name, stop, opc2, opc3)                                     \
->   static void glue(gen_, name##epx)(DisasContext *ctx)                          \
->   {                                                                             \
-> @@ -2565,12 +2548,6 @@ GEN_STEPX(stw, DEF_MEMOP(MO_UL), 0x1F, 0x04)
->   GEN_STEPX(std, DEF_MEMOP(MO_UQ), 0x1d, 0x04)
->   #endif
->   
-> -#if defined(TARGET_PPC64)
-> -GEN_STX_HVRM(stdcix, st64_i64, 0x15, 0x1f, PPC_CILDST)
-> -GEN_STX_HVRM(stwcix, st32, 0x15, 0x1c, PPC_CILDST)
-> -GEN_STX_HVRM(sthcix, st16, 0x15, 0x1d, PPC_CILDST)
-> -GEN_STX_HVRM(stbcix, st8, 0x15, 0x1e, PPC_CILDST)
-> -#endif
->   /***                Integer load and store with byte reverse               ***/
->   
->   /* lhbrx */
-> @@ -2582,15 +2559,8 @@ GEN_LDX(lwbr, ld32ur, 0x16, 0x10, PPC_INTEGER);
->   #if defined(TARGET_PPC64)
->   /* ldbrx */
->   GEN_LDX_E(ldbr, ld64ur_i64, 0x14, 0x10, PPC_NONE, PPC2_DBRX, CHK_NONE);
-> -/* stdbrx */
-> -GEN_STX_E(stdbr, st64r_i64, 0x14, 0x14, PPC_NONE, PPC2_DBRX, CHK_NONE);
->   #endif  /* TARGET_PPC64 */
->   
-> -/* sthbrx */
-> -GEN_STX(sthbr, st16r, 0x16, 0x1C, PPC_INTEGER);
-> -/* stwbrx */
-> -GEN_STX(stwbr, st32r, 0x16, 0x14, PPC_INTEGER);
-> -
->   /***                    Integer load and store multiple                    ***/
->   
->   /* lmw */
-> @@ -5117,9 +5087,17 @@ static int64_t dw_compose_ea(DisasContext *ctx, int x)
->               return true;                            \
->           }                                           \
->       } while (0)
-> +#define REQUIRE_HVRM(CTX)                               \
-> +    do {                                                \
-> +        if (unlikely(ctx->pr || !ctx->hv || ctx->dr)) { \
-> +            gen_priv_opc(CTX);                          \
-> +            return true;                                \
-> +        }                                               \
-> +    } while (0)
->   #else
->   #define REQUIRE_SV(CTX) do { gen_priv_opc(CTX); return true; } while (0)
->   #define REQUIRE_HV(CTX) do { gen_priv_opc(CTX); return true; } while (0)
-> +#define REQUIRE_HVRM(CTX) do { gen_priv_opc(CTX); return true; } while (0)
->   #endif
->   
->   /*
-> @@ -5791,20 +5769,6 @@ GEN_LDEPX(lw, DEF_MEMOP(MO_UL), 0x1F, 0x00)
->   GEN_LDEPX(ld, DEF_MEMOP(MO_UQ), 0x1D, 0x00)
->   #endif
->   
-> -#undef GEN_STX_E
-> -#define GEN_STX_E(name, stop, opc2, opc3, type, type2, chk)                   \
-> -GEN_HANDLER_E(name##x, 0x1F, opc2, opc3, 0x00000000, type, type2),
-> -
-> -#if defined(TARGET_PPC64)
-> -GEN_STX_E(stdbr, st64r_i64, 0x14, 0x14, PPC_NONE, PPC2_DBRX, CHK_NONE)
-> -GEN_STX_HVRM(stdcix, st64_i64, 0x15, 0x1f, PPC_CILDST)
-> -GEN_STX_HVRM(stwcix, st32, 0x15, 0x1c, PPC_CILDST)
-> -GEN_STX_HVRM(sthcix, st16, 0x15, 0x1d, PPC_CILDST)
-> -GEN_STX_HVRM(stbcix, st8, 0x15, 0x1e, PPC_CILDST)
-> -#endif
-> -GEN_STX(sthbr, st16r, 0x16, 0x1C, PPC_INTEGER)
-> -GEN_STX(stwbr, st32r, 0x16, 0x14, PPC_INTEGER)
-> -
->   #undef GEN_STEPX
->   #define GEN_STEPX(name, ldop, opc2, opc3)                                     \
->   GEN_HANDLER_E(name##epx, 0x1F, opc2, opc3,                                    \
-> diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-> index 9f669894a3..25a60d3d3a 100644
-> --- a/target/ppc/translate/fixedpoint-impl.c.inc
-> +++ b/target/ppc/translate/fixedpoint-impl.c.inc
-> @@ -566,6 +566,85 @@ TRANS(ADDIC_, do_add_D, false, true, false, true);
->   TRANS(SLD, do_shift_X_rc, tcg_gen_shl_tl);
->   TRANS(SRD, do_shift_X_rc, tcg_gen_shr_tl);
->   
-> +static bool do_stxx(DisasContext *ctx, arg_X *a,
-> +                       void(*op)(DisasContext *, TCGv, TCGv), bool is_hvrm)
-> +{
-> +    TCGv ea;
-> +
-> +    if (is_hvrm) {
-> +            REQUIRE_HVRM(ctx);
-> +    }
-> +
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +    ea = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-> +    op(ctx, cpu_gpr[a->rt], ea);
-> +
-> +    return true;
-> +}
-> +
-> +TRANS(STHBRX, do_stxx, gen_qemu_st16r, 0);
-> +TRANS(STWBRX, do_stxx, gen_qemu_st32r, 0);
-> +
-> +static bool trans_STDBRX(DisasContext *ctx, arg_STDBRX *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +    REQUIRE_INSNS_FLAGS2(ctx, DBRX);
-> +#if defined(TARGET_PPC64)
-> +    return do_stxx(ctx, a, gen_qemu_st64r_i64, false);
-> +#else
-> +    qemu_build_not_reached();
-> +#endif
-> +    return true;
-> +}
-> +
-> +static bool trans_STDCIX(DisasContext *ctx, arg_STDCIX *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +    REQUIRE_INSNS_FLAGS(ctx, CILDST);
-> +#if defined(TARGET_PPC64)
-> +    return do_stxx(ctx, a, gen_qemu_st64_i64, true);
-> +#else
-> +    qemu_build_not_reached();
-> +#endif
-> +    return true;
-> +}
-> +
-> +static bool trans_STWCIX(DisasContext *ctx, arg_STWCIX *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +    REQUIRE_INSNS_FLAGS(ctx, CILDST);
-> +#if defined(TARGET_PPC64)
-> +    return do_stxx(ctx, a, gen_qemu_st32, true);
-> +#else
-> +    qemu_build_not_reached();
-> +#endif
-> +    return true;
-> +}
-> +
-> +static bool trans_STHCIX(DisasContext *ctx, arg_STHCIX *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +    REQUIRE_INSNS_FLAGS(ctx, CILDST);
-> +#if defined(TARGET_PPC64)
-> +    return do_stxx(ctx, a, gen_qemu_st16, true);
-> +#else
-> +    qemu_build_not_reached();
-> +#endif
-> +    return true;
-> +}
-> +
-> +static bool trans_STBCIX(DisasContext *ctx, arg_STBCIX *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +    REQUIRE_INSNS_FLAGS(ctx, CILDST);
-> +#if defined(TARGET_PPC64)
-> +    return do_stxx(ctx, a, gen_qemu_st8, true);
-> +#else
-> +    qemu_build_not_reached();
-> +#endif
-> +    return true;
-> +}
-> +
->   static bool trans_SUBFIC(DisasContext *ctx, arg_D *a)
->   {
->       gen_op_arith_subf(ctx, cpu_gpr[a->rt], cpu_gpr[a->ra],
---------------K0Sw7wT3rQg2fuoD0Vq5oFk0
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+[1] 71920809ceab ("gitlab-ci.yml: Add jobs to build EDK2 firmware binaries")
+[2] 690ceb71936f ("gitlab-ci: Remove job building EDK2 firmware binaries")
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>The commit message mentions removing the <code
-        data-path-to-node="4,1,0" data-index-in-node="57">GEN_TX</code>
-      macro, but it's likely a typo for <code data-path-to-node="4,1,0"
-        data-index-in-node="98">GEN_STX</code>.<br>
-      Rest the patch looks fine to me.<br>
-      <code data-path-to-node="4,1,0" data-index-in-node="98"><br>
-      </code>Thanks,<br>
-      ~ Nikhil</p>
-    <div class="moz-cite-prefix">On 20/05/26 21:37, Chinmay Rath wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:20260520160728.2283628-12-rathc@linux.ibm.com">
-      <pre wrap="" class="moz-quote-pre">From: Amit Machhiwal <a class="moz-txt-link-rfc2396E" href="mailto:amachhiw@linux.ibm.com">&lt;amachhiw@linux.ibm.com&gt;</a>
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
 
-Move the below PPC instructions to decodetree specification:
-
-  st{d,h,w}brx, st{d,w,h,b}cix				: X-form
-
-The changes were verified by validating that the TCG micro-ops generated
-by those insns remain the same. These TCG micro-ops were captured with
-the `-d op,in_asm` QEMU flag.
-
-Additionally, remove GEN_TX and GEN_STX_E macros as they are no longer
-used anywhere else.
-
-Signed-off-by: Amit Machhiwal <a class="moz-txt-link-rfc2396E" href="mailto:amachhiw@linux.ibm.com">&lt;amachhiw@linux.ibm.com&gt;</a>
-Signed-off-by: Chinmay Rath <a class="moz-txt-link-rfc2396E" href="mailto:rathc@linux.ibm.com">&lt;rathc@linux.ibm.com&gt;</a>
-[cr: ppc32 build fix, EA calc fix]
 ---
- target/ppc/insn32.decode                   |  8 +++
- target/ppc/translate.c                     | 52 +++-----------
- target/ppc/translate/fixedpoint-impl.c.inc | 79 ++++++++++++++++++++++
- 3 files changed, 95 insertions(+), 44 deletions(-)
 
-diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index 44ef814fb9..4a28fad64b 100644
---- a/target/ppc/insn32.decode
-+++ b/target/ppc/insn32.decode
-@@ -372,6 +372,14 @@ STVDX           011111 ..... ..... ..... 0010010001 -   @X
- STSKU           111110 ..... ..... ............. 0 11   @DD
- STCXU           111110 ..... ..... ............. 1 11   @DD
- 
-+STDBRX		011111 ..... ..... ..... 1010010100 -	@X
-+STDCIX		011111 ..... ..... ..... 1111110101 -	@X
-+STWCIX		011111 ..... ..... ..... 1110010101 -	@X
-+STHCIX		011111 ..... ..... ..... 1110110101 -	@X
-+STBCIX		011111 ..... ..... ..... 1111010101 -	@X
-+STHBRX		011111 ..... ..... ..... 1110010110 -	@X
-+STWBRX		011111 ..... ..... ..... 1010010110 -	@X
-+
- ### Fixed-Point Compare Instructions
- 
- CMP             011111 ... - . ..... ..... 0000000000 - @X_bfl
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 1fc2cd0b14..7bfbba85d0 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -2529,23 +2529,6 @@ GEN_LDX_HVRM(lhzcix, ld16u, 0x15, 0x19, PPC_CILDST)
- GEN_LDX_HVRM(lbzcix, ld8u, 0x15, 0x1a, PPC_CILDST)
- #endif
- 
--/***                              Integer store                            ***/
--#define GEN_STX_E(name, stop, opc2, opc3, type, type2, chk)                   \
--static void glue(gen_, name##x)(DisasContext *ctx)                            \
--{                                                                             \
--    TCGv EA;                                                                  \
--    chk(ctx);                                                                 \
--    gen_set_access_type(ctx, ACCESS_INT);                                     \
--    EA = tcg_temp_new();                                                      \
--    gen_addr_reg_index(ctx, EA);                                              \
--    gen_qemu_##stop(ctx, cpu_gpr[rS(ctx-&gt;opcode)], EA);                       \
--}
--#define GEN_STX(name, stop, opc2, opc3, type)                                 \
--    GEN_STX_E(name, stop, opc2, opc3, type, PPC_NONE, CHK_NONE)
--
--#define GEN_STX_HVRM(name, stop, opc2, opc3, type)                            \
--    GEN_STX_E(name, stop, opc2, opc3, type, PPC_NONE, CHK_HVRM)
--
- #define GEN_STEPX(name, stop, opc2, opc3)                                     \
- static void glue(gen_, name##epx)(DisasContext *ctx)                          \
- {                                                                             \
-@@ -2565,12 +2548,6 @@ GEN_STEPX(stw, DEF_MEMOP(MO_UL), 0x1F, 0x04)
- GEN_STEPX(std, DEF_MEMOP(MO_UQ), 0x1d, 0x04)
- #endif
- 
--#if defined(TARGET_PPC64)
--GEN_STX_HVRM(stdcix, st64_i64, 0x15, 0x1f, PPC_CILDST)
--GEN_STX_HVRM(stwcix, st32, 0x15, 0x1c, PPC_CILDST)
--GEN_STX_HVRM(sthcix, st16, 0x15, 0x1d, PPC_CILDST)
--GEN_STX_HVRM(stbcix, st8, 0x15, 0x1e, PPC_CILDST)
--#endif
- /***                Integer load and store with byte reverse               ***/
- 
- /* lhbrx */
-@@ -2582,15 +2559,8 @@ GEN_LDX(lwbr, ld32ur, 0x16, 0x10, PPC_INTEGER);
- #if defined(TARGET_PPC64)
- /* ldbrx */
- GEN_LDX_E(ldbr, ld64ur_i64, 0x14, 0x10, PPC_NONE, PPC2_DBRX, CHK_NONE);
--/* stdbrx */
--GEN_STX_E(stdbr, st64r_i64, 0x14, 0x14, PPC_NONE, PPC2_DBRX, CHK_NONE);
- #endif  /* TARGET_PPC64 */
- 
--/* sthbrx */
--GEN_STX(sthbr, st16r, 0x16, 0x1C, PPC_INTEGER);
--/* stwbrx */
--GEN_STX(stwbr, st32r, 0x16, 0x14, PPC_INTEGER);
--
- /***                    Integer load and store multiple                    ***/
- 
- /* lmw */
-@@ -5117,9 +5087,17 @@ static int64_t dw_compose_ea(DisasContext *ctx, int x)
-             return true;                            \
-         }                                           \
-     } while (0)
-+#define REQUIRE_HVRM(CTX)                               \
-+    do {                                                \
-+        if (unlikely(ctx-&gt;pr || !ctx-&gt;hv || ctx-&gt;dr)) { \
-+            gen_priv_opc(CTX);                          \
-+            return true;                                \
-+        }                                               \
-+    } while (0)
- #else
- #define REQUIRE_SV(CTX) do { gen_priv_opc(CTX); return true; } while (0)
- #define REQUIRE_HV(CTX) do { gen_priv_opc(CTX); return true; } while (0)
-+#define REQUIRE_HVRM(CTX) do { gen_priv_opc(CTX); return true; } while (0)
- #endif
- 
- /*
-@@ -5791,20 +5769,6 @@ GEN_LDEPX(lw, DEF_MEMOP(MO_UL), 0x1F, 0x00)
- GEN_LDEPX(ld, DEF_MEMOP(MO_UQ), 0x1D, 0x00)
- #endif
- 
--#undef GEN_STX_E
--#define GEN_STX_E(name, stop, opc2, opc3, type, type2, chk)                   \
--GEN_HANDLER_E(name##x, 0x1F, opc2, opc3, 0x00000000, type, type2),
--
--#if defined(TARGET_PPC64)
--GEN_STX_E(stdbr, st64r_i64, 0x14, 0x14, PPC_NONE, PPC2_DBRX, CHK_NONE)
--GEN_STX_HVRM(stdcix, st64_i64, 0x15, 0x1f, PPC_CILDST)
--GEN_STX_HVRM(stwcix, st32, 0x15, 0x1c, PPC_CILDST)
--GEN_STX_HVRM(sthcix, st16, 0x15, 0x1d, PPC_CILDST)
--GEN_STX_HVRM(stbcix, st8, 0x15, 0x1e, PPC_CILDST)
--#endif
--GEN_STX(sthbr, st16r, 0x16, 0x1C, PPC_INTEGER)
--GEN_STX(stwbr, st32r, 0x16, 0x14, PPC_INTEGER)
--
- #undef GEN_STEPX
- #define GEN_STEPX(name, ldop, opc2, opc3)                                     \
- GEN_HANDLER_E(name##epx, 0x1F, opc2, opc3,                                    \
-diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-index 9f669894a3..25a60d3d3a 100644
---- a/target/ppc/translate/fixedpoint-impl.c.inc
-+++ b/target/ppc/translate/fixedpoint-impl.c.inc
-@@ -566,6 +566,85 @@ TRANS(ADDIC_, do_add_D, false, true, false, true);
- TRANS(SLD, do_shift_X_rc, tcg_gen_shl_tl);
- TRANS(SRD, do_shift_X_rc, tcg_gen_shr_tl);
- 
-+static bool do_stxx(DisasContext *ctx, arg_X *a,
-+                       void(*op)(DisasContext *, TCGv, TCGv), bool is_hvrm)
-+{
-+    TCGv ea;
-+
-+    if (is_hvrm) {
-+            REQUIRE_HVRM(ctx);
-+    }
-+
-+    gen_set_access_type(ctx, ACCESS_INT);
-+    ea = do_ea_calc(ctx, a-&gt;ra, cpu_gpr[a-&gt;rb]);
-+    op(ctx, cpu_gpr[a-&gt;rt], ea);
-+
-+    return true;
-+}
-+
-+TRANS(STHBRX, do_stxx, gen_qemu_st16r, 0);
-+TRANS(STWBRX, do_stxx, gen_qemu_st32r, 0);
-+
-+static bool trans_STDBRX(DisasContext *ctx, arg_STDBRX *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+    REQUIRE_INSNS_FLAGS2(ctx, DBRX);
-+#if defined(TARGET_PPC64)
-+    return do_stxx(ctx, a, gen_qemu_st64r_i64, false);
-+#else
-+    qemu_build_not_reached();
-+#endif
-+    return true;
-+}
-+
-+static bool trans_STDCIX(DisasContext *ctx, arg_STDCIX *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+    REQUIRE_INSNS_FLAGS(ctx, CILDST);
-+#if defined(TARGET_PPC64)
-+    return do_stxx(ctx, a, gen_qemu_st64_i64, true);
-+#else
-+    qemu_build_not_reached();
-+#endif
-+    return true;
-+}
-+
-+static bool trans_STWCIX(DisasContext *ctx, arg_STWCIX *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+    REQUIRE_INSNS_FLAGS(ctx, CILDST);
-+#if defined(TARGET_PPC64)
-+    return do_stxx(ctx, a, gen_qemu_st32, true);
-+#else
-+    qemu_build_not_reached();
-+#endif
-+    return true;
-+}
-+
-+static bool trans_STHCIX(DisasContext *ctx, arg_STHCIX *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+    REQUIRE_INSNS_FLAGS(ctx, CILDST);
-+#if defined(TARGET_PPC64)
-+    return do_stxx(ctx, a, gen_qemu_st16, true);
-+#else
-+    qemu_build_not_reached();
-+#endif
-+    return true;
-+}
-+
-+static bool trans_STBCIX(DisasContext *ctx, arg_STBCIX *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+    REQUIRE_INSNS_FLAGS(ctx, CILDST);
-+#if defined(TARGET_PPC64)
-+    return do_stxx(ctx, a, gen_qemu_st8, true);
-+#else
-+    qemu_build_not_reached();
-+#endif
-+    return true;
-+}
-+
- static bool trans_SUBFIC(DisasContext *ctx, arg_D *a)
- {
-     gen_op_arith_subf(ctx, cpu_gpr[a-&gt;rt], cpu_gpr[a-&gt;ra],
-</pre>
-    </blockquote>
-  </body>
-</html>
+ MAINTAINERS                     |  2 -
+ .gitlab-ci.d/opensbi.yml        | 88 ---------------------------------
+ .gitlab-ci.d/opensbi/Dockerfile | 34 -------------
+ .gitlab-ci.d/qemu-project.yml   |  1 -
+ 4 files changed, 125 deletions(-)
+ delete mode 100644 .gitlab-ci.d/opensbi.yml
+ delete mode 100644 .gitlab-ci.d/opensbi/Dockerfile
 
---------------K0Sw7wT3rQg2fuoD0Vq5oFk0--
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 97dcc78ded..59707bf2a7 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4117,8 +4117,6 @@ R: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+ L: qemu-riscv@nongnu.org
+ S: Supported
+ F: pc-bios/opensbi-*
+-F: .gitlab-ci.d/opensbi.yml
+-F: .gitlab-ci.d/opensbi/
+ 
+ Clock framework
+ M: Luc Michel <luc@lmichel.fr>
+diff --git a/.gitlab-ci.d/opensbi.yml b/.gitlab-ci.d/opensbi.yml
+deleted file mode 100644
+index 42f137d624..0000000000
+--- a/.gitlab-ci.d/opensbi.yml
++++ /dev/null
+@@ -1,88 +0,0 @@
+-# All jobs needing docker-opensbi must use the same rules it uses.
+-.opensbi_job_rules:
+-  rules:
+-    # Forks don't get pipelines unless QEMU_CI=1 or QEMU_CI=2 is set
+-    - if: '$QEMU_CI != "1" && $QEMU_CI != "2" && $CI_PROJECT_NAMESPACE != "qemu-project"'
+-      when: never
+-
+-    # In forks, if QEMU_CI=1 is set, then create manual job
+-    # if any files affecting the build output are touched
+-    - if: '$QEMU_CI == "1" && $CI_PROJECT_NAMESPACE != "qemu-project"'
+-      changes:
+-        - .gitlab-ci.d/opensbi.yml
+-        - .gitlab-ci.d/opensbi/Dockerfile
+-        - roms/opensbi/*
+-      when: manual
+-
+-    # In forks, if QEMU_CI=1 is set, then create manual job
+-    # if the branch/tag starts with 'opensbi'
+-    - if: '$QEMU_CI == "1" && $CI_PROJECT_NAMESPACE != "qemu-project" && $CI_COMMIT_REF_NAME =~ /^opensbi/'
+-      when: manual
+-
+-    # In forks, if QEMU_CI=1 is set, then create manual job
+-    # if the last commit msg contains 'OpenSBI' (case insensitive)
+-    - if: '$QEMU_CI == "1" && $CI_PROJECT_NAMESPACE != "qemu-project" && $CI_COMMIT_MESSAGE =~ /opensbi/i'
+-      when: manual
+-
+-    # Scheduled runs on mainline don't get pipelines except for the special Coverity job
+-    - if: '$CI_PROJECT_NAMESPACE == $QEMU_CI_UPSTREAM && $CI_PIPELINE_SOURCE == "schedule"'
+-      when: never
+-
+-    # Run if any files affecting the build output are touched
+-    - changes:
+-        - .gitlab-ci.d/opensbi.yml
+-        - .gitlab-ci.d/opensbi/Dockerfile
+-        - roms/opensbi/*
+-      when: on_success
+-
+-    # Run if the branch/tag starts with 'opensbi'
+-    - if: '$CI_COMMIT_REF_NAME =~ /^opensbi/'
+-      when: on_success
+-
+-    # Run if the last commit msg contains 'OpenSBI' (case insensitive)
+-    - if: '$CI_COMMIT_MESSAGE =~ /opensbi/i'
+-      when: on_success
+-
+-docker-opensbi:
+-  extends: .opensbi_job_rules
+-  stage: containers
+-  image: docker:latest
+-  services:
+-    - docker:dind
+-  variables:
+-    GIT_DEPTH: 3
+-    IMAGE_TAG: $CI_REGISTRY_IMAGE:opensbi-cross-build
+-  before_script:
+-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+-    - until docker info; do sleep 1; done
+-  script:
+-    - docker pull $IMAGE_TAG || true
+-    - docker build --cache-from $IMAGE_TAG --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+-                                           --tag $IMAGE_TAG .gitlab-ci.d/opensbi
+-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+-    - docker push $IMAGE_TAG
+-
+-build-opensbi:
+-  extends: .opensbi_job_rules
+-  stage: build
+-  needs: ['docker-opensbi']
+-  artifacts:
+-    when: on_success
+-    paths: # 'artifacts.zip' will contains the following files:
+-      - pc-bios/opensbi-riscv32-generic-fw_dynamic.bin
+-      - pc-bios/opensbi-riscv64-generic-fw_dynamic.bin
+-      - opensbi32-generic-stdout.log
+-      - opensbi32-generic-stderr.log
+-      - opensbi64-generic-stdout.log
+-      - opensbi64-generic-stderr.log
+-  image: $CI_REGISTRY_IMAGE:opensbi-cross-build
+-  variables:
+-    GIT_DEPTH: 3
+-  script: # Clone the required submodules and build OpenSBI
+-    - git submodule update --init roms/opensbi
+-    - export JOBS=$(($(getconf _NPROCESSORS_ONLN) + 1))
+-    - echo "=== Using ${JOBS} simultaneous jobs ==="
+-    - make -j${JOBS} -C roms/opensbi clean
+-    - make -j${JOBS} -C roms opensbi32-generic 2>&1 1>opensbi32-generic-stdout.log | tee -a opensbi32-generic-stderr.log >&2
+-    - make -j${JOBS} -C roms/opensbi clean
+-    - make -j${JOBS} -C roms opensbi64-generic 2>&1 1>opensbi64-generic-stdout.log | tee -a opensbi64-generic-stderr.log >&2
+diff --git a/.gitlab-ci.d/opensbi/Dockerfile b/.gitlab-ci.d/opensbi/Dockerfile
+deleted file mode 100644
+index 5ccf4151f4..0000000000
+--- a/.gitlab-ci.d/opensbi/Dockerfile
++++ /dev/null
+@@ -1,34 +0,0 @@
+-#
+-# Docker image to cross-compile OpenSBI firmware binaries
+-#
+-FROM ubuntu:18.04
+-
+-MAINTAINER Bin Meng <bmeng.cn@gmail.com>
+-
+-# Install packages required to build OpenSBI
+-RUN apt update \
+-    && \
+-    \
+-    DEBIAN_FRONTEND=noninteractive \
+-    apt install --assume-yes --no-install-recommends \
+-        build-essential \
+-        ca-certificates \
+-        git \
+-        make \
+-	python3 \
+-        wget \
+-    && \
+-    \
+-    rm -rf /var/lib/apt/lists/*
+-
+-# Manually install the kernel.org "Crosstool" based toolchains for gcc-8.3
+-RUN wget -O - \
+-    https://mirrors.edge.kernel.org/pub/tools/crosstool/files/bin/x86_64/8.3.0/x86_64-gcc-8.3.0-nolibc-riscv32-linux.tar.xz \
+-    | tar -C /opt -xJ
+-RUN wget -O - \
+-    https://mirrors.edge.kernel.org/pub/tools/crosstool/files/bin/x86_64/8.3.0/x86_64-gcc-8.3.0-nolibc-riscv64-linux.tar.xz \
+-    | tar -C /opt -xJ
+-
+-# Export the toolchains to the system path
+-ENV PATH="/opt/gcc-8.3.0-nolibc/riscv32-linux/bin:${PATH}"
+-ENV PATH="/opt/gcc-8.3.0-nolibc/riscv64-linux/bin:${PATH}"
+diff --git a/.gitlab-ci.d/qemu-project.yml b/.gitlab-ci.d/qemu-project.yml
+index 104a147b2d..72d02bc65b 100644
+--- a/.gitlab-ci.d/qemu-project.yml
++++ b/.gitlab-ci.d/qemu-project.yml
+@@ -11,7 +11,6 @@ default:
+ include:
+   - local: '/.gitlab-ci.d/base.yml'
+   - local: '/.gitlab-ci.d/stages.yml'
+-  - local: '/.gitlab-ci.d/opensbi.yml'
+   - local: '/.gitlab-ci.d/containers.yml'
+   - local: '/.gitlab-ci.d/crossbuilds.yml'
+   - local: '/.gitlab-ci.d/buildtest.yml'
+-- 
+2.34.1
 
 
