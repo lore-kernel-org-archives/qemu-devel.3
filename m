@@ -4,134 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 064BAC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 20:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D908C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 20:44:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgqAE-00007o-79; Mon, 06 Jul 2026 16:43:38 -0400
+	id 1wgqB3-0000QT-J2; Mon, 06 Jul 2026 16:44:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgqA4-00006s-Uv
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:43:29 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wgqAp-0000MU-SJ
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:44:19 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgqA3-0006Yk-6T
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:43:28 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1wgqAo-0006eG-7O
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:44:15 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666KF22v1667353
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 20:43:20 GMT
+ 666KDwZn1478003
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 20:44:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- mw0ZosaQxShWjJD/jE1atDqLE8jtwZU3wcQuPMzcUVI=; b=QYPuW9nCeduIOWEs
- wvzUY7L1xTSR8/ETfkOiEoC493gexVoAFoJrvp6QskX8cejzJ2ul1ieS8+eriFIE
- GiCEF7c0HEJ6Jy0H35ro4yQ213R4+QlJeH2oJ8NlLZ9uhfl8yEpkWYwRq45nSG7y
- Rxlh24ukVfw4MHEhoptOcn53I/7TlIHs7Bc+fEo6zB/8J7nqYigMQulkA8cApQlj
- c9svbzdWKjgr1pMWW+xdfcQA5Fxp3KszqcR0Xev6GF3koeDl1D90HDu63Haoli3H
- voJSVPr7Ird9CmfBbWM7ZUpT1kRhF0cahYrRdf80XxJWZn8d0TY392KcIa9NhZVp
- 7/c08Q==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8a3gtuhj-1
+ 9xGhwWrpbe2L+1gr+533gIOCrY3WBXla9nGBSKL6CmQ=; b=nzaSt06SI2ZXrGhG
+ Z2mQkF4PGaI2CW6aNbm9vxUJmCoQGXjKxhNa9x/s8LbJSgPf+XkdBKr7DEG4jd9f
+ L8i8AaGCLZCJz6DA3URPxJjXT83q3flSFp5WInOUfhYzv1sJ7x7TIr6pP4RQlT1Z
+ l0vVoFgp3tmGDtR4/3HpgmjneuK5uzVlIwysKiBGr9UrKAMl2eLoznmm/A7qetau
+ 8FnY0IQSiKdsS+SLhJl0Y/1ts2bAGyZwxw5+R3ONHRTZ291/fDQCeqKAD2N4A6pB
+ 5WKRM7ztWkvR5Qfw7EOnHO8tzIMIF8hNqtXlrIg18BTLJ1NVrByfFkSNjz+ui7BB
+ wijkpg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f88hsb9b5-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 20:43:19 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c0199faafso39260681cf.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 13:43:19 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 20:44:04 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92e56b2b350so699377085a.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 13:44:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783370599; x=1783975399; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mw0ZosaQxShWjJD/jE1atDqLE8jtwZU3wcQuPMzcUVI=;
- b=ctYeDsAbibixNJFOBv2rZHQpqmebtwixhoH9ZNdG1pBwrYH5HsA0O8kwCnc27XFlxY
- EdV7xQk0dFlUfy1gb9zVsex7C3bPuO3BJl/mu0b3vgYjrT45s6peIrSRevGKunFGptqu
- qg6y6plym3ovJkelbbkdRajTF3CjeLhGAbSeUo6TRsKUFJn/cYbzA06PprHKbROlCI6O
- CvJ9+omO3DQVwlP4Mu5XCq0757LegT7NpAjih26AKu8bENAq6HwQ42NqmHOQ+xixx/MH
- 4NpEx92ohMYojOfJ9X8ty6PljCkxKz8uT8WNv9nejCGHHVurTUFgy9XquhLHeppCmW8N
- tSDA==
+ d=oss.qualcomm.com; s=google; t=1783370644; x=1783975444; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=9xGhwWrpbe2L+1gr+533gIOCrY3WBXla9nGBSKL6CmQ=;
+ b=XcJAi6MtscZmc3RjrnC9oRzennyrg0QzJfdtIM90J3JJQs0Fu6ZXi2/t/OsW/ao7mj
+ XZK7bEWLgW3EM5GglAwkoBXf9L686bZidFcwfmTpS8AAs4enSFDOaz8iz4PgVDtnKxfj
+ 9iN4WUTgb8dnktkvhdcmQYWAwYfivsLRQpd97wGMVk5nKvXOMSKgtqFVXSFmA61OsW1Z
+ U/vBNxh0cc1rw0BjEOVPG4XV3eD7O3qf/KSO+aTCnmgG0aZL+WD3588TIUkknP66/X+S
+ cgdrFsOt6ZKQLq5rNYyW6bxAWAYYYQXFGaRqICjDlJRjI399/YHye+CAHYHkDpuAo1AC
+ o5eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783370599; x=1783975399;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mw0ZosaQxShWjJD/jE1atDqLE8jtwZU3wcQuPMzcUVI=;
- b=D9RJP+NxOK+T4crSkaGNUbnl9irPPDGj8Fawl9UX3kWWneZguEqyeyVnGpQRilZiHc
- H8M14Wr6WzwCOXwmAoPMaa6G2qj55ks8PFFa0Rs7S6gHcKhiVERx3mvMa1YcXk+8hdas
- oFAIbQnPtsq872U54xEVdFoyMAFzvcxyUAA/oWWpQOmkUJBQw+o/mPQXxZ2DZExkFvXY
- s4xmUJdJWxB7EkHh3P/0ah/APAzBaBV13NJxkTtgxiK/BEW2eVF0ZvF1n2oKrWXE04jD
- msFwB2nS/9FV87oQqgGClRTq/OHfjBMqx3QvjSKpLm9oKRhMMD6j/vYc+9ViR2pIcL6q
- vFpw==
+ d=1e100.net; s=20251104; t=1783370644; x=1783975444;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=9xGhwWrpbe2L+1gr+533gIOCrY3WBXla9nGBSKL6CmQ=;
+ b=VZt4s/iVrqeLSwTHzXYuXffM+rdrTQgidzORYtlba3kL/6uIjnK7VPoAlquJSZNB3p
+ 7DP+H/oFIwbeweALsEnGVGfACqRxpqBSIh8Fv7fCYnHtklClpFaK0nB40wZ68kAlrNab
+ 2kMBcHa+Pz7RpH/63PkHusp34FDvUqAsD6fLgL1sGZr/a1CdY+KYu6hRNtjvtDpbKduO
+ fPnNqVDpnEDQfWdMam67W6JwifF7RNGpfdGNtBafycwtwV37N1ix9YgXDGoeEdLYQe51
+ TAwCH6fPWOIna1V+0xoe6B2B+LncxQvgrx/6DnWjLTWskpsUgLO5VFZNcmairl1EAhk1
+ AKDw==
 X-Forwarded-Encrypted: i=1;
- AHgh+Ro5P8029AAl+6ml9Mb8k/kLfRepa6f5VmXj0qDp20JMVHQUh/oLTh0pkh6ptBSISAaNk2LllQhVYCOs@nongnu.org
-X-Gm-Message-State: AOJu0YxxFpxr+NEVS1q7S+E6KHy11TtRQmv8oWuyqm6MV+bBui8s4OAX
- q0aGQmLiEUTdMZ8W41x15AU4odaDDFEIGvHDGIQn/s3iZF7XxWTjkNmFJr1YJlfhGg/bwv9mDdi
- 9hab4nVAR8PKVtvdNIb8J4re4spOA3e4oyMarttEYEZ3cO2hg549Zql93hg==
-X-Gm-Gg: AfdE7cm8+So2Cb/Y1Rybo4f2px5t0hck885NUp+xlj07GEEXBlHUCoYXArVxfdDmofj
- n6npzu/HabS1cYRfUKhpENaixIBAfr2OulQVFTzcNdrF+bNfv5CYCq/allTQoM2+RWCowu2I3jL
- rvgH5KUYvOo06qAHWH+1zdHDV9FRk8ahjJZlOZIceuV7TMo9X5nYKf/GX44XiyOcxxsEuEghe7d
- J7zknGluv3DC/ApRVjqDxdX3n+qeq01qQA1OpDcik/ctf/310704rwQ8SrELaYy3oWV2j7/L9PR
- Nbgf7RDr1ny0icRH6jvbcIatHvXGoF8nEwAC+dCRSaEMbndsIWCpDtcehWor3qiJ3TNsCZ/J5GI
- lcWay55X+x/cM+6N8YxRx7feK6M6B/qJNWfiKWv/fmYJClPZMbix1TZrU35rcXw==
-X-Received: by 2002:a05:620a:8803:b0:92e:9d63:a6f4 with SMTP id
- af79cd13be357-92ebb4e3acdmr294859485a.18.1783370598771; 
- Mon, 06 Jul 2026 13:43:18 -0700 (PDT)
-X-Received: by 2002:a05:620a:8803:b0:92e:9d63:a6f4 with SMTP id
- af79cd13be357-92ebb4e3acdmr294855385a.18.1783370598188; 
- Mon, 06 Jul 2026 13:43:18 -0700 (PDT)
+ AHgh+Ro2IVzLnkZkwV5FYisNOaKZSy9Mr+VO0rHz6vA9FhPEFDxRw6eg6Rm8QNgRknLcmT8JiN1wb22ivgfb@nongnu.org
+X-Gm-Message-State: AOJu0YxRKt7qHpZ1hwF3XRG3jt2yvzdk1jdeowCgN7RJA0DAmnbKnlQl
+ NYlOaCUKL1COuHupZVdfCzkByEmScFo+mrTvV37R00Iici0lD/a/WxNuEoJ7L8UNgwHQJ0W6jwY
+ MCdGzToQFb/7J7Kwfo6jqgjPo8U/oO6LhDm8169GCHrton9aQuW02KnZNoZ/pNWDaDg==
+X-Gm-Gg: AfdE7cmuP1iXGODNfh8nDU7GR9pb/uRom8ubSwHmKO0WjKvecPVq8rtgR1nqFxh5gnO
+ l+9or0UffW3su1eJMJmth2GcCxsmh8NnMLnF692qUh6Kn4LnLQ8hX3DW3515XC5otKs9uvJwGiZ
+ 1Ur78oCgZVCflwGkApF9fylQKwTef0hfzGVjuLj6vV01DC4MfK8frbKa/FTgVC31oaq+DA4ORnm
+ LPi9KbJ9BwHTEgLgq5IM2G2oxyU/I+Pvqc/4V9Poi+p8Vi2rmVZCMb9Tr2T3pyYnne2mlQHWUTf
+ BVklR1YSB5N0tm+qTxurm0hkVdBX2TK8K7Q2NcIHBei8pK3MSvlVYn5tcv3/418zhSgmVBH+NNX
+ v5lWKEsLHtqu1lrNIfyZB3oqFeQeW8+KocBu1gQhtwlGPICwxugi6f8xQJuwfQQ==
+X-Received: by 2002:a05:620a:4086:b0:92e:7d1f:d3aa with SMTP id
+ af79cd13be357-92ebb500799mr294956485a.31.1783370644143; 
+ Mon, 06 Jul 2026 13:44:04 -0700 (PDT)
+X-Received: by 2002:a05:620a:4086:b0:92e:7d1f:d3aa with SMTP id
+ af79cd13be357-92ebb500799mr294949285a.31.1783370642937; 
+ Mon, 06 Jul 2026 13:44:02 -0700 (PDT)
 Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa0a55be4sm24817002f8f.31.2026.07.06.13.43.17
+ ffacd0b85a97d-47a9e4d843csm26690593f8f.14.2026.07.06.13.44.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Jul 2026 13:43:17 -0700 (PDT)
-Message-ID: <aaee2b54-01df-48ca-9c83-796069767ca1@oss.qualcomm.com>
-Date: Mon, 6 Jul 2026 22:43:16 +0200
+ Mon, 06 Jul 2026 13:44:02 -0700 (PDT)
+Message-ID: <71ed76a7-f52e-4412-9e75-da9aae1f6b28@oss.qualcomm.com>
+Date: Mon, 6 Jul 2026 22:44:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/usb/dev-wacom: Don't write off end of buffer
+Subject: Re: [PATCH] hw/net/vmxnet3: Correct bounds check on tx queue index
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20260706182034.1003176-1-peter.maydell@linaro.org>
+Cc: Jason Wang <jasowangio@gmail.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>
+References: <20260706175408.905362-1-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260706182034.1003176-1-peter.maydell@linaro.org>
+In-Reply-To: <20260706175408.905362-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: _aQzpBrE3s4I7GE1j6h4QhWhIp4a5FhH
-X-Proofpoint-ORIG-GUID: _aQzpBrE3s4I7GE1j6h4QhWhIp4a5FhH
-X-Authority-Analysis: v=2.4 cv=CPYamxrD c=1 sm=1 tr=0 ts=6a4c1367 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-ORIG-GUID: IGStGgOYHR9vllDnno3fAkkPhUP46zKD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDIwOSBTYWx0ZWRfX37dN90Gy89iL
+ DD3GOoBBdXT0CV1RNkBf72Q0oP3jKs8kbpSJqcY3Dk3WAJnOFuXIrjWHesoaCpk5CWoBvSiVUG3
+ dOr16+YhlYfqkokm8Dsd+nkqJOHo0U11hT7m8X7/be+9hS6vxeGuLdG2YpHjhToTXw3liG3HQPL
+ 19iYizUEuwZvVQW8s3r2U5kmlVHQj8E1032jOSZCfOW/791UarudE9DuWawpGt6N40BBHL48nil
+ aDPTQK+rV2Ljre93UgMjlX4lD8iZ/Gj+iiTWUl6i37sWb2Aw0LPObN0PG5eBvqJ88HZPE/2oGPN
+ XMTqva+oU4wl+oyGTbHxZZQN9Ib8pXvODZ0rinaAmSKKXb+JkKVui2Zl1Nozx8xd/Spv3T8nGc4
+ 3EbwpkueEvvPxe/OTp+CncCKrrr2qKAq+mHvNI4TmL+4PZ7hAuBf9fBm+M664T/CxbPNTOu3VYp
+ 92lhRG6HYuA08HPWSUg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDIwOSBTYWx0ZWRfX7eB70Zy/TWsy
+ s01eneEE+juz2djye3holLZ1H06Qh2+HaSWn7B+oHX++GvYylupFdcixgb/8/f3s5FmlnDgX3jU
+ 6Mm8gLG6ALGOaIJMPTqrTcQgTUVMtiM=
+X-Authority-Analysis: v=2.4 cv=XIwAjwhE c=1 sm=1 tr=0 ts=6a4c1394 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
  a=p0WdMEafAAAA:8 a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=Qp4y8eNqsPY20014W8oA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDIwOSBTYWx0ZWRfX+bCzUC9y+5AX
- geGRefewHY8P+FSl2uV1cCRWQE9I/BQshAh348abZNcLL+yjWguWf6JYQulkCEXxgJ1f1s7mO9E
- SFNl5EnLwGKWBB20fOyXr94DIGo2f2gJ8JVN3bQVNN9oRni6SmtGt724t+z7p0b7cS9tMxefArK
- Jvnf4AcDW3hn1MA7DnYiaJPJ4SxNVDJEN50ypR0dW/ZE2XICVhZMzZTOqLoVoan/m0CzPbUlT6G
- XbE4N+OfMw3quCKwNvZ8DGp4uCmzFDLiKKg0DkDPkosN7Ci3EacRjnScR8vEYuUiyiL0CT+yaY5
- ZUBKKEG0Kzm1K3M07CvCE5pttBbJVK5HABp6ql6dAfIhwXbnQDVyYI3bKXJVxWkwqbitMa7UXxM
- 2SH+oHTknzGAQE2Uru0m36espSf6ZPh7vYcCpbDNxXC5DcQxqb0VodupKrHAikh70kWYJ1tjNTA
- iCy5P1NFBb1IMPNYVsQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDIwOSBTYWx0ZWRfX1uqtsVcty1ac
- o6mNky75MkvzCCu/MqSvc/Ie3g/gcCMVHiQXCkYPor1073XkoT9DdXer49Off49tNQ2JWnzE3ZM
- mWW/ZwAutmJbcPCCu5ivY8QLM/3N77s=
+ a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: IGStGgOYHR9vllDnno3fAkkPhUP46zKD
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-06_03,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
- malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 spamscore=0
+ adultscore=0 clxscore=1015 bulkscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 lowpriorityscore=0 spamscore=0 phishscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060209
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -154,44 +155,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/7/26 20:20, Peter Maydell wrote:
-> In usb_wacom_handle_data() we allocate a buffer with a size
-> determined by the transfer size requested by the guest.  We then fill
-> it in by calling either usb_mouse_poll() or usb_wacom_poll(), both of
-> which functions take a length and return an actual length, which we
-> pass to usb_packet_copy().  However, usb_mouse_poll() doesn't check
-> the buffer size as it fills in the buffer, so if the guest passes an
-> overly short transfer size then it will write off the end of the
-> allocated buffer.
-> 
-> Check the length is at least big enough for the minimum 3 byte
-> packet and return nothing if it is not, as usb_wacom_poll() does.
+On 6/7/26 19:54, Peter Maydell wrote:
+> In vmxnet3_io_bar0_write(), we try to bounds-check the TX queue index
+> provided by the guest against the total number of queues.  However,
+> we have an off-by-one error: the valid indexes are from 0 to
+> txq_num-1, so we need a "<" comparison, not "<=".
 > 
 > Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3672
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3780
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/usb/dev-wacom.c | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/hw/usb/dev-wacom.c b/hw/usb/dev-wacom.c
-> index c69e247f7b..895edcc17e 100644
-> --- a/hw/usb/dev-wacom.c
-> +++ b/hw/usb/dev-wacom.c
-> @@ -285,6 +285,10 @@ static int usb_mouse_poll(USBWacomState *s, uint8_t *buf, int len)
->           b |= 0x04;
->       }
->   
-> +    if (len < 3) {
+>   hw/net/vmxnet3.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Maybe log GUEST_ERROR? Anyway:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
-> +        return 0;
-> +    }
-> +
->       buf[0] = b;
->       buf[1] = dx;
->       buf[2] = dy;
-
 
