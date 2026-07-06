@@ -4,139 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE591C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 16:22:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B22DC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 16:24:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgm5o-0004gf-Fm; Mon, 06 Jul 2026 12:22:48 -0400
+	id 1wgm78-00060W-4I; Mon, 06 Jul 2026 12:24:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wgm5n-0004gV-7O
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:22:47 -0400
-Received: from mail-japaneastazon11022100.outbound.protection.outlook.com
- ([52.101.126.100] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wgm75-0005yD-U5
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:24:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wgm5k-0000ZV-Gh
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:22:46 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vYq0St9ZG2BB0KWXG9WGqz5Iiwp3ZLqp0GgJFgpHBY6vWFBVh/cAdP+3lwWBIqVzvYEkkhkjbqHguvPmH8eDA/mHJ4l62nfUYDuXAdWwOE2euEKP8aHSyi3PtrleWSjkdnHm/ikGGzMaAavxGhzJhlFhkM6barapQF8ICHW7UkHJGp7MsJWXL/Xyqnji51A53CMiDJ5QnEwI40/1nKtCWG9NSfo2QjASCsBleewcM4ZtJIzYwikV6ql8jFiynSaaWnLIvjtgt8YJ3kQdvRXlnyVAIV3M0XTvwf9oIvbTqUgNQEbVnXKO0iOLnk+G9m/2beBZMUSlBwfJP+p8lwhVRA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=J8k2T+oxZlUbB/TYHiMMnGHnrAbb0xGyzoxJUsIq4pw=;
- b=VQ576YpqaN9a/dlYeunakwqooctTxNT5bkQygnyOc63OMLMjxVYtc6cH0K0Fz/af6LC8DYI+cEBDYMORP8g6Gl5oukPoVYN7gn3D0EGIpGUTZfiSAyLBfmwzOGUtOtGDQU2C0rUzE2ifmc5pTDW9sQEu3BJmtkPOY9qggRqi+rLjD9G0O2P+Id9+ag+EfJUGk86FuyJBHI+6Z5W5TnSwJByevU79KDOG8vExYNMUVjQr+kIbFVNDrejs/sZ0Dq8wbkusx5SYAlD2cUzlKg8jxyEDmlt96cWRFKoJPn9CjxbGgPux2XOM9DhRSKasxZZuQKUj8pF9nUk+ImWFZ69jww==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=J8k2T+oxZlUbB/TYHiMMnGHnrAbb0xGyzoxJUsIq4pw=;
- b=fCtXP4VUYbyCBQycCYsoj+PHhFM3Ja7Ip2lSs4A2DvuOA1a2pSYG98hFvGbrMVMvxHGDtSR88PUEGGawu+JDJjHXQB+r1tfTZskpVfmEhj9hMkpBqEoPud+0kJJ1jHyTVpz2usbQqa3WtPNDZ4Rl5GMgnuPu6qwyy0hoE8FbfMtmohYTXW+rdHOV8+ZetqmkqyTDmdIeeoIpnRlOFNT6UpcvjUNOjyJ+pvq0l3ojrFemORki4fdrMabRgQeL/feZPhYcJEKh6OHInkGi1mgcJDiNLIMUxdjJlDESRJi4ElTXYUR/GnVFtZIywDHijIZ9edJTy/2l1U2ts5zd2y8j4Q==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by TYSPR02MB6586.apcprd02.prod.outlook.com (2603:1096:400:42b::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Mon, 6 Jul
- 2026 16:17:33 +0000
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0181.012; Mon, 6 Jul 2026
- 16:17:31 +0000
-From: Bin Meng <bin.meng@processmission.com>
-To: QEMU <qemu-devel@nongnu.org>
-Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH] gitlab-ci: Remove job building OpenSBI firmware binaries
-Date: Tue,  7 Jul 2026 00:17:16 +0800
-Message-Id: <20260706161716.29488-1-bin.meng@processmission.com>
-X-Mailer: git-send-email 2.34.1
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SI3PR02CA0002.apcprd02.prod.outlook.com
- (2603:1096:4:295::12) To KL1PR02MB4977.apcprd02.prod.outlook.com
- (2603:1096:820:71::8)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wgm74-0000qm-AR
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:24:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783355045;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Zs8DOaeL0nMMZkOTKtCEE9asrMHhE8ROz+qzcsyJUYA=;
+ b=eLDcLW+/KBaptGEGLrhxSCVoZPWpTUeL+h7RRtTfC74yIkvIFcEog+tjPGT3/mz8NEKeJG
+ sHJcF9xCedCJo4hM3hK7tcpcyS7A/06M+gKXeqwrAa4Q+W43u9yTU+SNZeYUbEjDxyrXHo
+ n3hZtSiMhzWxMwPu4Le+laVpVOqUyfc=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-357-smjSQOi6Ow-I1JV8MVBWSw-1; Mon, 06 Jul 2026 12:24:03 -0400
+X-MC-Unique: smjSQOi6Ow-I1JV8MVBWSw-1
+X-Mimecast-MFC-AGG-ID: smjSQOi6Ow-I1JV8MVBWSw_1783355043
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-915f6ff639aso582181285a.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 09:24:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783355043; x=1783959843; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Zs8DOaeL0nMMZkOTKtCEE9asrMHhE8ROz+qzcsyJUYA=;
+ b=s8uyRvjWqkhfMEEj9FuUj2BwaD/BfuoKVvv+JFido1QnvpDqcRkrp/yMvMLbovpYys
+ j8jOoFpwzswDC3C3MpYjSFhE1tFZ8X3e2P+Z8VOeoRk/aBK/w0+PHMRlgKisLkkf0pIK
+ SLQDhkmIta4XzJfdAF6r4BfKpZRBwVqwc9VwkFu/dHTtMTTljA131Cyp7FP6wyiHe8uZ
+ dIrjPHImV1LQZ5H7qrvzOmrlw5w25wQB2tnkaICatHoyHYYgjkjORBIFaBVybWTeCq2H
+ 7qxaQjAE16DoaHMKijO8qJi4NsFZdK0jAvxKjztEOrxX+pC7kZR2ZB7FiApeQfT9Yf9r
+ r2Fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783355043; x=1783959843;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Zs8DOaeL0nMMZkOTKtCEE9asrMHhE8ROz+qzcsyJUYA=;
+ b=pJPw1zbVbR0boqDvBLEMcBWeHWFvSyekiyYQKXmPukXkD1grCkFyC5UEFgHvZVk2pZ
+ 5+nCqnOAnmNuHa/kZ/Otwq1l9qYFX5+Lm7dWGQdaa4/Dbz++SK/VFcNmLmjyHbBOq+Ns
+ YRagZoA5vA3ROX4WXjKIhLKWa+y90R7D8KevOTS8sOyfgmJrRcCzoM0xK7nfUrnDMcdj
+ DHo/32tBVP2Ghkdube0kFZh8tEYA41q49oR1KSJUl255FnyzCQRZZzigYOxzCrdaPAQG
+ o3dHJxLpkEFLUBJ+6YP0X78PMoSO+gN0p9rT5ksHpT/nECkaO/Zio0eNjJiwOeX14TqL
+ AOHQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rq1kliQSZKltuOJQq//ykLUqbTtHGz71u68QgjuPG4rQfR1sqf84bZE/5syx0ZH74YA4Dpt+dFibk7L@nongnu.org
+X-Gm-Message-State: AOJu0YwmYkzOOg/6UDjruX52lud9ikSLVFjVj2r/0/FOqU6CjTP9qr1d
+ BaqgFqAn7SNOPDfy7FxZMCXv0nJmAnStXa5//gnsjAO3aS2TfZ6NCn5o+8bNrjqb6VjTDFT3pSF
+ fc2YZO3/z8jxwpFoWwVcvaS2w8E4neEItW0tWIOwt+uhkUQhwbOY1+V7t
+X-Gm-Gg: AfdE7cnrjt+aW5LLw5ypcXo2Z1oQyuoHny/lBFrAMXYVvUmDAZ/NPplkUq77aKM5xRp
+ 3z/H1xdvf+zFOiyTK44W7okOTOXpeisWuBbSon0hrfuhISDleU//O5aBw3D2DgVtudErE6iFgW8
+ 8kjuK0JKts28RqB/zBhEGf3qbdKFnuiWJFt+EG1rMxMg1M4X15Ghc3CK2exG+FWNwvYB9OEHde+
+ d1NlfVQHnHykqwFY60eC10I31tURrEKCwlgexG1TwQTsy9NzibWz18QCIQwCyWSxaQjnNZNQrgP
+ c6OyQK1zd6QkyyPA9mnbUKTHxd5/oPbhEl0rjx+GGanSkQfqcNMmBCVKXR1/8HTwpzfeo1KX32p
+ 3csw=
+X-Received: by 2002:a05:620a:1981:b0:92b:6805:91bf with SMTP id
+ af79cd13be357-92ebb5b87c3mr183140885a.71.1783355042690; 
+ Mon, 06 Jul 2026 09:24:02 -0700 (PDT)
+X-Received: by 2002:a05:620a:1981:b0:92b:6805:91bf with SMTP id
+ af79cd13be357-92ebb5b87c3mr183136785a.71.1783355042071; 
+ Mon, 06 Jul 2026 09:24:02 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-92e90cbe3e2sm966036385a.35.2026.07.06.09.24.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Jul 2026 09:24:01 -0700 (PDT)
+Date: Mon, 6 Jul 2026 12:23:49 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex@shazbot.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/2] vfio/migration: Parallelize device state transitions
+Message-ID: <akvWlciUvxjDbBBZ@x1.local>
+References: <cover.1779217494.git.maciej.szmigiero@oracle.com>
+ <743f03758d2a30df4093db140ccdd0f91f69bd7e.1779217494.git.maciej.szmigiero@oracle.com>
+ <871peqtm5t.fsf@suse.de> <ah3eheRXN1QJAGj_@x1.local>
+ <ac677bf9-1372-4905-a0b8-874a74be07be@maciej.szmigiero.name>
+ <ah86Z0r5sMnxwgo-@x1.local>
+ <c739f4fe-1f43-45c4-b98f-109366526405@maciej.szmigiero.name>
+ <e79a3746-9c7e-46a5-ad81-537b9d3affdb@maciej.szmigiero.name>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYSPR02MB6586:EE_
-X-MS-Office365-Filtering-Correlation-Id: 81848719-fb0e-4289-5ea1-08dedb7a1492
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|34096008|366016|23010399003|1800799024|10070799003|20046099003|18002099003|3023799007|5023799004|56012099006|6133799003;
-X-Microsoft-Antispam-Message-Info: HkLEsXQj9YUyxN32RAR/CuvsKOLDkCVnBTCb8gW7at/1QiNaDfR30PQha85OwBzQIonLCSmwPNizud1c6f9ygrefWWeMNf69hiq51y5iShePBvYwECjkM1PxTsmnSA9ju9eU7gE1SxQ+L09RgJGKoI8Pn/XPvByqXXTRqXGiWTfN2h7t877idF+rBUDqG5jziuCgXfoQxUhwMgs95vfroyzmD4j8kZfHeOeKtuj9iIAjeiln4f60zyyYt2y2bwEF5e9RyFW2QWRh+ANuluzokCFvrr84NTcIyHkNTZBVcj0DYwpW1wyZJA7YW0RjIy693L1S1D0FdUW/hXnJUn4oVULt0Ogy2aBodrS/2hjUNFSgv4d4/dB7XAQ99xQlfr94ZecYLrFSG5mqhs3GBzMwHFCtqHtGAO3C7WhEfrsAjrhEN8pOBoE3w61b5Yq6gZV7pc6jH2HI/zi4qs6Ryiw5tjE+pAtFQSfE0R4Zqb2A5NcyGZeTJpl8osD4y3JsP+4DTmbe6wKYxqfWTPXysCFvP7GQ6qKhWspu6T2egsG0J/bu/N9cVTjJBWBfH7ybq/NdXx5dOnk+tKfX/JzaNbQSdioVoLJ9KtxzEyIOceYk4gW9bWHj0K6FExv6/2PcRraFHmdjsdhjcTMYNB1csIiH02ZxCCfy5sWipa8pa2MW+zI=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(34096008)(366016)(23010399003)(1800799024)(10070799003)(20046099003)(18002099003)(3023799007)(5023799004)(56012099006)(6133799003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NGNZK3hlQWRjUmlUWFUwZitFYVNjOXpyZXg1d294dHgrUnlXazVuM1pmNFhv?=
- =?utf-8?B?OUIwZ2tPMGFSV2tMODMzNFcxTGtEYU9pV09XcEhXai9wMlJoVzUxczVUcFlt?=
- =?utf-8?B?ZEtMN3JLQ2k2S3hlUiswQWZxTnRxbWhFcG1mM2F4MERqZUJmZS9tQWNiTVRS?=
- =?utf-8?B?MUY2TkxLYVluN2kvYzlOR3NHdVFPampZQmFKaGVLTHVKYzc0WXhtYmcyL2xJ?=
- =?utf-8?B?cTR0N29odVZ4cmhKczNoVXk4dUlWTXlFeUZ6c2pxNlo4Yy9OK09MR0NVWlZk?=
- =?utf-8?B?c0FaM3gyL1F0WGJ1Tlh3aTJUQVUybU5uU3ZqeTM5VHZ4YzUxRTk2NEJvVWtW?=
- =?utf-8?B?SXFUR3d3cGZjUDBzV3ZQOWF3Nll4dWQ2TXZEZnQrWkRnMG5rbVZKcWZTN0ZW?=
- =?utf-8?B?dmN4cThIRllOa1NxY3h1dFg2SjhOVDBpeVBoMGUrUlZkOHYvcVhxTlVqdllC?=
- =?utf-8?B?ZXFKNTVCQkpwLzV1anhxQWRlQnJxRXhJQ3VjNDBYM01VeGk0U1MxekVLTnVv?=
- =?utf-8?B?cWlNSzRoTGVhNkdNaDdNaVQrbE05dDJJYUNHaXdDU2FhZ3ZxbkZTYnhKQ3I1?=
- =?utf-8?B?QnZEYnlualBHK2ZXMFVXY2k2SGNSSzhLcjEyR1RjUnl5aUY5ajE1MUh2dWpm?=
- =?utf-8?B?Vnd0Z05yNXZ0V2hiaFNEa0NLNXZMYzRvL2JtMmoxUnh1ZmZVTmw5TERDTUxV?=
- =?utf-8?B?Zm5lWm9CODBWQVRzeDZMRllwSWJLQjhXRzBqUlVacTJQb1kxVDczTnJnTC9U?=
- =?utf-8?B?SzhMY2VBcXdmRDhLQnhuNDlVcXpUcmhzT0NmTnBDN3pDaStycTM3V214ZlVh?=
- =?utf-8?B?c3hqWHJmSVcyc2dFZlBTdnJUdEJ5Z2Y4OTVDNUZJejBlNlhMNjc4OEZBZ01X?=
- =?utf-8?B?RGZSSHByTlpxZGdPYlZ1T0FlbWV0S0duUERqSmk5SVBqZ1BLUTlRSjhOTytD?=
- =?utf-8?B?UDMyQU50MWhtbFM4MTdyM1QrbTF3eGt6ZVUzVjhCZXIveUticmk1ZEQwQkxL?=
- =?utf-8?B?K0MzbGdONDJBSExrUE9iVmNmQ3hjR3lBVmpWUyswK0YyZk1adVpLRjd1Y0x2?=
- =?utf-8?B?Zi9Hd0EzYkRqVUlId05TOGRveXlTcXVKREtvdGZWSm9HM2xRUXNLejkyRU5M?=
- =?utf-8?B?aWpjbmhrTW53SVNYUmkzM1UzYXEyd1dRNEUvUlFrZXpDdjdZVnV4L3dRd0ts?=
- =?utf-8?B?bHlIdkJCZmdxRGMzZUZUSWx2QWRxM0NJcHk3WFFyejZsNlNheXJRYWY0cGNn?=
- =?utf-8?B?YzBJWEVrcVpuUlN5aDI0VjVyRW0xMk5yWGNqMzJwWVJOQTF3SGlmNFVyUExi?=
- =?utf-8?B?VjRvQjhVSGJNWlJ4cFpDaU05czl6dm5xcDNTWmg0VFNjV29zNTF0YUx1S284?=
- =?utf-8?B?ZjREQlZtNFdKN3NWUkVUK3RLZTRBSUtKMTFyQlRCTUtuTUl2QUVGbzQ1bzkw?=
- =?utf-8?B?RUdEYlp1b05LWnVHLzk3RUhUUDVRVmNqYVFxcmpOQXlHUG9nbnJNcTA4emk2?=
- =?utf-8?B?bXdVd29ySmF6OG5sTkRKUFBaVmNmcHZ5RmVBeklTRS9KOXhEUnZ4cnBrYktC?=
- =?utf-8?B?eTl3cjRaYldjTDNEUGlKUVlZM0hadmtaVExYcDFhMWZURnZGa1JNWFgwdVZv?=
- =?utf-8?B?amNDVUJ2bmtnVjU5QWhNTG5ROHhjbG5KT0MrVzIzbEFPekVyMjllTSs1YTVq?=
- =?utf-8?B?VWE5eld2ZzdJSDZ5ZHJsRGI0WGFiS0NueGJBWmpMUDV4UUZpV1lGZzBYa3Ey?=
- =?utf-8?B?Ni81K2R6N3ZYQkFLb2E5ZlFRNmFJVFFZa01GMDJBS1BuVkMrbFlTVkUwWi9w?=
- =?utf-8?B?L29aUEhvYVM2SGkwOEdwUjlmL0pmQi94R1poSjg2SldRYTdOM01XQllWWU9S?=
- =?utf-8?B?TmhTL0F3T1dlL3QvWkl2ZTlSRko3cWtqL0JzVzdjdDZxUHlsR3Zlb0U4bUVF?=
- =?utf-8?B?eDF5OFVxcXNmY1Q5cnlUZnpjQjVTaGh1M2lndHFLUWc3QlkzdTNqczZhSFR2?=
- =?utf-8?B?WFlOb2lDS053YkdmNEl2NXpseXdKUnV5QmpvZEtaNERQSkhVWHVuK0lhN2tM?=
- =?utf-8?B?SlBzaWh1T1hQRm8vdk5oNXByVHZVYVpVU2J6MkhpeW5rbGlkbUU5TVRrUnNh?=
- =?utf-8?B?TlZWN1NuOFlEc3h0Qk1IemVKT3NFcFFXR3N1UDRMRkVDcFhDY1BzNStxOWxr?=
- =?utf-8?B?YTc1dSt6b0VVdUt1Z2JEaDk1dTRDYlhWN1JRbGRjbDg4d1lxc05vQU5QSUtU?=
- =?utf-8?B?VXhJREtMTmhHWFJRSldVbE14QUR1dDJYZDVxWWZPVkIrUUhnRkZHSi95R3BO?=
- =?utf-8?B?UDJabjZuek1pT0dERUNiUWM0MHlDeUFteHY0TkdFcjBOb3VrYmlacXJkQXZh?=
- =?utf-8?Q?JKaPKwgtcnrh9cX0=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 81848719-fb0e-4289-5ea1-08dedb7a1492
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 16:17:31.4212 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yMmq1AZquDvt1IQ8VL2WMT6dcQOfD2KNC+NpWAHuOjvQVEjhdDGDe/f+LU1zvTMhvcLHgJiOZh2kF701tuy0abfjkUF3T0Dqsi6MGMSbeFA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR02MB6586
-Received-SPF: pass client-ip=52.101.126.100;
- envelope-from=bin.meng@processmission.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <e79a3746-9c7e-46a5-ad81-537b9d3affdb@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,188 +126,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The OpenSBI firmware build job follows the same pattern as the EDK2 job
-[1] that was removed earlier [2]: it exists to produce firmware binaries
-from CI artifacts, but those outputs are not consumed by the tree.
+On Thu, Jul 02, 2026 at 08:36:32PM +0200, Maciej S. Szmigiero wrote:
+> I looked more deeply into this and even prototyped a similar new design.
 
-Remove the job definition and its project include to avoid maintaining
-bitrotting container and firmware build logic.
+Sorry for a late response; off work most of last week.
 
-[1] 71920809ceab ("gitlab-ci.yml: Add jobs to build EDK2 firmware binaries")
-[2] 690ceb71936f ("gitlab-ci: Remove job building EDK2 firmware binaries")
+> 
+> However, in the end I think that running VFIO state transitions in
+> parallel with other non-VFIO cb() handlers just isn't safe.
+> 
+> For example, on the migration source, the second transition is
+> PRE_COPY_P2P -> STOP_COPY.
+> PRE_COPY_P2P is the last state during migration that still allows the
+> device to accept DMA and similar interactions, while STOP_COPY is
+> already the "quiescent" state.
+> 
+> So if a VFIO has already reached STOP_COPY but a non-VFIO device
+> callback still hasn't finished, then any DMA/MMIO/P2P transaction from
+> that "unfinished" device to the VFIO device would now hit a VFIO device
+> that no longer can accept such transactions.
+> This may result in hard-to-debug memory corruption during live migration.
 
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Do you have any solid example of this problem?
 
----
+AFAIU, P2P in VFIO state's term only means P2P DMAs _between_ host VFIO
+devices, nothing to do with emulated.
 
- MAINTAINERS                     |  2 -
- .gitlab-ci.d/opensbi.yml        | 88 ---------------------------------
- .gitlab-ci.d/opensbi/Dockerfile | 34 -------------
- .gitlab-ci.d/qemu-project.yml   |  1 -
- 4 files changed, 125 deletions(-)
- delete mode 100644 .gitlab-ci.d/opensbi.yml
- delete mode 100644 .gitlab-ci.d/opensbi/Dockerfile
+I am not aware of any P2P that can be initiated from emulated devices, even
+if it exists, it is only P2P from guest perspective not host: it will
+become host operations finally from processor side.  I really don't think
+it's a concern.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 97dcc78ded..59707bf2a7 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4117,8 +4117,6 @@ R: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
- L: qemu-riscv@nongnu.org
- S: Supported
- F: pc-bios/opensbi-*
--F: .gitlab-ci.d/opensbi.yml
--F: .gitlab-ci.d/opensbi/
- 
- Clock framework
- M: Luc Michel <luc@lmichel.fr>
-diff --git a/.gitlab-ci.d/opensbi.yml b/.gitlab-ci.d/opensbi.yml
-deleted file mode 100644
-index 42f137d624..0000000000
---- a/.gitlab-ci.d/opensbi.yml
-+++ /dev/null
-@@ -1,88 +0,0 @@
--# All jobs needing docker-opensbi must use the same rules it uses.
--.opensbi_job_rules:
--  rules:
--    # Forks don't get pipelines unless QEMU_CI=1 or QEMU_CI=2 is set
--    - if: '$QEMU_CI != "1" && $QEMU_CI != "2" && $CI_PROJECT_NAMESPACE != "qemu-project"'
--      when: never
--
--    # In forks, if QEMU_CI=1 is set, then create manual job
--    # if any files affecting the build output are touched
--    - if: '$QEMU_CI == "1" && $CI_PROJECT_NAMESPACE != "qemu-project"'
--      changes:
--        - .gitlab-ci.d/opensbi.yml
--        - .gitlab-ci.d/opensbi/Dockerfile
--        - roms/opensbi/*
--      when: manual
--
--    # In forks, if QEMU_CI=1 is set, then create manual job
--    # if the branch/tag starts with 'opensbi'
--    - if: '$QEMU_CI == "1" && $CI_PROJECT_NAMESPACE != "qemu-project" && $CI_COMMIT_REF_NAME =~ /^opensbi/'
--      when: manual
--
--    # In forks, if QEMU_CI=1 is set, then create manual job
--    # if the last commit msg contains 'OpenSBI' (case insensitive)
--    - if: '$QEMU_CI == "1" && $CI_PROJECT_NAMESPACE != "qemu-project" && $CI_COMMIT_MESSAGE =~ /opensbi/i'
--      when: manual
--
--    # Scheduled runs on mainline don't get pipelines except for the special Coverity job
--    - if: '$CI_PROJECT_NAMESPACE == $QEMU_CI_UPSTREAM && $CI_PIPELINE_SOURCE == "schedule"'
--      when: never
--
--    # Run if any files affecting the build output are touched
--    - changes:
--        - .gitlab-ci.d/opensbi.yml
--        - .gitlab-ci.d/opensbi/Dockerfile
--        - roms/opensbi/*
--      when: on_success
--
--    # Run if the branch/tag starts with 'opensbi'
--    - if: '$CI_COMMIT_REF_NAME =~ /^opensbi/'
--      when: on_success
--
--    # Run if the last commit msg contains 'OpenSBI' (case insensitive)
--    - if: '$CI_COMMIT_MESSAGE =~ /opensbi/i'
--      when: on_success
--
--docker-opensbi:
--  extends: .opensbi_job_rules
--  stage: containers
--  image: docker:latest
--  services:
--    - docker:dind
--  variables:
--    GIT_DEPTH: 3
--    IMAGE_TAG: $CI_REGISTRY_IMAGE:opensbi-cross-build
--  before_script:
--    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
--    - until docker info; do sleep 1; done
--  script:
--    - docker pull $IMAGE_TAG || true
--    - docker build --cache-from $IMAGE_TAG --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
--                                           --tag $IMAGE_TAG .gitlab-ci.d/opensbi
--    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
--    - docker push $IMAGE_TAG
--
--build-opensbi:
--  extends: .opensbi_job_rules
--  stage: build
--  needs: ['docker-opensbi']
--  artifacts:
--    when: on_success
--    paths: # 'artifacts.zip' will contains the following files:
--      - pc-bios/opensbi-riscv32-generic-fw_dynamic.bin
--      - pc-bios/opensbi-riscv64-generic-fw_dynamic.bin
--      - opensbi32-generic-stdout.log
--      - opensbi32-generic-stderr.log
--      - opensbi64-generic-stdout.log
--      - opensbi64-generic-stderr.log
--  image: $CI_REGISTRY_IMAGE:opensbi-cross-build
--  variables:
--    GIT_DEPTH: 3
--  script: # Clone the required submodules and build OpenSBI
--    - git submodule update --init roms/opensbi
--    - export JOBS=$(($(getconf _NPROCESSORS_ONLN) + 1))
--    - echo "=== Using ${JOBS} simultaneous jobs ==="
--    - make -j${JOBS} -C roms/opensbi clean
--    - make -j${JOBS} -C roms opensbi32-generic 2>&1 1>opensbi32-generic-stdout.log | tee -a opensbi32-generic-stderr.log >&2
--    - make -j${JOBS} -C roms/opensbi clean
--    - make -j${JOBS} -C roms opensbi64-generic 2>&1 1>opensbi64-generic-stdout.log | tee -a opensbi64-generic-stderr.log >&2
-diff --git a/.gitlab-ci.d/opensbi/Dockerfile b/.gitlab-ci.d/opensbi/Dockerfile
-deleted file mode 100644
-index 5ccf4151f4..0000000000
---- a/.gitlab-ci.d/opensbi/Dockerfile
-+++ /dev/null
-@@ -1,34 +0,0 @@
--#
--# Docker image to cross-compile OpenSBI firmware binaries
--#
--FROM ubuntu:18.04
--
--MAINTAINER Bin Meng <bmeng.cn@gmail.com>
--
--# Install packages required to build OpenSBI
--RUN apt update \
--    && \
--    \
--    DEBIAN_FRONTEND=noninteractive \
--    apt install --assume-yes --no-install-recommends \
--        build-essential \
--        ca-certificates \
--        git \
--        make \
--	python3 \
--        wget \
--    && \
--    \
--    rm -rf /var/lib/apt/lists/*
--
--# Manually install the kernel.org "Crosstool" based toolchains for gcc-8.3
--RUN wget -O - \
--    https://mirrors.edge.kernel.org/pub/tools/crosstool/files/bin/x86_64/8.3.0/x86_64-gcc-8.3.0-nolibc-riscv32-linux.tar.xz \
--    | tar -C /opt -xJ
--RUN wget -O - \
--    https://mirrors.edge.kernel.org/pub/tools/crosstool/files/bin/x86_64/8.3.0/x86_64-gcc-8.3.0-nolibc-riscv64-linux.tar.xz \
--    | tar -C /opt -xJ
--
--# Export the toolchains to the system path
--ENV PATH="/opt/gcc-8.3.0-nolibc/riscv32-linux/bin:${PATH}"
--ENV PATH="/opt/gcc-8.3.0-nolibc/riscv64-linux/bin:${PATH}"
-diff --git a/.gitlab-ci.d/qemu-project.yml b/.gitlab-ci.d/qemu-project.yml
-index 104a147b2d..72d02bc65b 100644
---- a/.gitlab-ci.d/qemu-project.yml
-+++ b/.gitlab-ci.d/qemu-project.yml
-@@ -11,7 +11,6 @@ default:
- include:
-   - local: '/.gitlab-ci.d/base.yml'
-   - local: '/.gitlab-ci.d/stages.yml'
--  - local: '/.gitlab-ci.d/opensbi.yml'
-   - local: '/.gitlab-ci.d/containers.yml'
-   - local: '/.gitlab-ci.d/crossbuilds.yml'
-   - local: '/.gitlab-ci.d/buildtest.yml'
+My limited understanding of VFIO's P2P state is: when switching to P2P
+state, the VFIO device can still accept P2P DMA from other devices, but
+never initiating P2P DMAs, and the latter sentence is critical, it means
+the real quiecent state of the whole system happens after the last VFIO
+device switching to P2P state: then it means none of the VFIO devices can
+initiate P2P DMA anymore, whole system is quiesced.  That happens earlier
+than reaching any of the cb()s here, because VFIO's prepare_cb() does that
+P2P state switch.
+
+Thanks,
+
 -- 
-2.34.1
+Peter Xu
 
 
