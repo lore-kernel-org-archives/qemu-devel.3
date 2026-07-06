@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5E31C44500
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 22:46:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A937C43602
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 22:46:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgs3a-0001tW-CA; Mon, 06 Jul 2026 18:44:54 -0400
+	id 1wgs3i-0001z4-Ma; Mon, 06 Jul 2026 18:45:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1wgs3Z-0001sp-KH
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:44:53 -0400
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wgs3g-0001vd-Iv; Mon, 06 Jul 2026 18:45:00 -0400
 Received: from fhigh-b8-smtp.messagingengine.com ([202.12.124.159])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1wgs3Y-0000x0-4B
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:44:53 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 508F47A01DD;
- Mon,  6 Jul 2026 18:44:51 -0400 (EDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wgs3f-00010Q-63; Mon, 06 Jul 2026 18:45:00 -0400
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 0E9EB7A01E4;
+ Mon,  6 Jul 2026 18:44:58 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Mon, 06 Jul 2026 18:44:51 -0400
+ by phl-compute-01.internal (MEProxy); Mon, 06 Jul 2026 18:44:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1783377891; x=
- 1783464291; bh=3APf4nwAux95GbU1jGRozkoBxabTHnbgGvUjZhM48/k=; b=A
- U0JahiMDag9vowZr8hklBxoaCRirBuytn6AjN4c1bxQQ751vrUlbwTdcNhuL0pvm
- y5slbgknHUkLQkKaFUkNXEtI/Tg3sKMRlxKtosfwXuVMScqEMhlu4fU43SV9DuNu
- N4W4j99ape538KlkMbfiRRNhyI1QJUZzf24f7Velf611zQtTjJ5XsY8eFbNKaSGi
- pOEUC1hDfacDBHZ8rD3yjbm99CKGm1qk76L2yhHzss4T1hAsES/39iCmP3WxkChE
- DFJLH4pVDQxdVCJPa0yPM9xgbTi0CX7fcxAyFz+m/IPPZEOVmJMABsO4GElzq1NG
- as7skRID1U3zB8mbwLSAg==
+ :reply-to:subject:subject:to:to; s=fm1; t=1783377897; x=
+ 1783464297; bh=68I28SvF6NliEu1oHD4j7MXavEgdixjiWJFe+FDCopk=; b=K
+ Dda73KgTa8MPQJ1/pfJzy4UoeY1O5DkGkyfPBY6ZZexn2tfYKPOxCdOG4nU7PK1N
+ vkJN3NGFBiCYoIAsRFpOz4xp0Kc4pF101NthevyAXB82VsqyEY/TmumoFMiIYM6d
+ 5Cjv5SPmlAMJzAXLOaqs9ESuDbBNsRpbihNxIsQQOnpbuAry+rWwlR0Gvu/aX9na
+ ap+h2jKPeuqAUXT6un+D2J/Pyb3v3aVF8tE4CYnfWya1oYHuwVMZJh+9F1lLeQUb
+ i8EsoHR2hjbY6FIXeRBrIVY1nw9Id/4vpr2Q8AydC81xwdWBX6fv/XCQ4w1+x+ve
+ 554RuEjRu1EnswPsqAZ4g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm2; t=1783377891; x=1783464291; bh=3
- APf4nwAux95GbU1jGRozkoBxabTHnbgGvUjZhM48/k=; b=FlhRjctmtm9r0hDku
- eKMzYQGNy9UH5yReNZieW2DZtgloUiJdv34LeCEG+uAt8kAftn5F2oC1KFz3tpwl
- FYWMPkhwbJmqy2a0EBlu3r6zfa3/Y6qflDhdSQO8tJ+U/ITkCumqhjA7xFXcIlaj
- pn5WjkO9tZwCozVO8x8lt/uzEEKZ2p+cVg3a3Vc7o/kzihG6Mz5TZBkuTGFXiv25
- IeiDQ1hTroRpDKaAXUy6HeC6RyRTD9qjWHwaMOqgioW6UUVc192E2M8+hphUC0nW
- sKVgzhzW+L6eU7sYBoBZ1Wz6SE4TMgNGNweNutBj+0POnUOKTENwpsdsMn8q4Yl2
- fNJUA==
-X-ME-Sender: <xms:4i9MaoqZ_XyOzOHrCAdzX_EpFZkVfsBxXvwmNEvbSdkxqo2AQx4FTw>
- <xme:4i9Mapl6VNbNYC0rxsp4Rqy7VXx8UGwalkJe9rzEblpBanMn_t6d5GxhaPKShQf2Y
- ZsqjNpnRE7lfcyChfM8yb0PdrOLtlssApgRCK2Z4W7xX_eM1I3xsQs>
-X-ME-Received: <xmr:4i9MasMfMuk_RI1pSVQjXRTBeRXiJIkYmnlc-A13_U7ysjsuM4RvCHCC9e034bGMwYeI4hY2YtKudgUffdCXY_3khO322KfozN7-cBaJfWDljYFkwF56sLa9Vg>
-X-ME-Proxy-Cause: dmFkZTEBar+xcPJ6TGk2BRFD+/PQr7WZKLLnzl1lVSCdlSIyG0uCVLY82Gs7M5B5GndyFB
- O/P0+eD2zh/XrQgDHxqg00p15q5Qzw7PIbLGVkgQfI5ah8WSj2rr7xsbk02s3QNueEyg1P
- uHxCWWE7GNu317gk6JJEmbd3+/oen3y+m0Z15/F78rk451OEixAYafgzZVoxR9YsiHTnsi
- pkl5vDKm1IAyDDaEn/THuzeN7lX4xDLhr5j8Z6HscItNeJ4zDsnoQOgY57OGYvnzGv3L7c
- Ix4dWml9kPIpVOZvBZLF5TfBYx6q2yDYcVFI9eF2o7kl9f8NN4MyRbYzFs1rZrzVp7Rfps
- 0QSzfeKXNci3ClHwdXmBPdy1XLY+biLGq/yWixuUXbxv8iHBHOBjKQgBZ/E07SeIGvYrcV
- y5zDCRqFINEiRbN8hGLvpczjPy8W6C3P7GbjsRLxU9AdWG6xGQFxvu4gCJJqAEYsrkij6Q
- NXkJs8SV7Fg8YoHZgJx9XPZbQ1n2GpNGdTo27i1Jrc7sKnZ+Lr5hHxfOwz3JXZw+OeEutq
- vY3LmgNnRvVSGSrjyATn/9jB90ln/tlFRPUqd0DM9zhmaQ+GgfUAAKuXOmdvZDDRbo19NZ
- Y6bWusunLNE8at1bwcHgkeTyrnkS0WD2qXJVQNKei4QeuFsbxD0vSZGrPHrA
-X-ME-Proxy: <xmx:4i9MalO8crOwC8HdvGScl5L_ZQ85dqFxwLMQnDAHAR04_MDZnHQUBA>
- <xmx:4i9Malid1P4fU3FU0Oxw4mAe1Dscw_P3eXbxIZMofEquJuI_dVwLbw>
- <xmx:4i9Maqt8s3Fb4QUVKv6Z_PDV4P_qt2UKPMm9sSbJbzXPKAieXFCQ1A>
- <xmx:4i9MajSLxipsZy7Qni5Xh-D8fK-VMnbUDz2zsssHMEH6cyOhqbVMHA>
- <xmx:4y9MavvnT6MmXyV9lSS1JBjaAeQ5GzIvVkilrreUIH3EvLWcS2PMSKnT>
+ :x-me-sender:x-sasl-enc; s=fm2; t=1783377897; x=1783464297; bh=6
+ 8I28SvF6NliEu1oHD4j7MXavEgdixjiWJFe+FDCopk=; b=NNf6IlYTBR+jupXLv
+ naOqkNdpXcBULzpQOV70shL23mc1UIRGHwd7UwSTilDAQmcsGY3cIqj4tNyq2cyD
+ ZLtg3sht/XTuG+405kV9qrmk7/Z7jndzVN2cJ5/lqaZmcJME9wA/Spb981+s5ig/
+ LWA+hMozPK/BhrIHM91A9OJrcAGbM/4w4jH0386iWimYy+QNDTAVkzKG00vtxune
+ TsUW0lqqVP/wp4fMAn4WRuUt/XmMcKSSM1cCtaXtjoURisqzRyqIggu5jetuKZP5
+ 0UjJ5TqW4eFGwUpEDhsi5MQVC8y7VeS6Zp/AZzJZ3iWd5dzveIlXMBg1JaB0m2oX
+ i6pNA==
+X-ME-Sender: <xms:6S9ManmG-G9BpAJ81biJWh7Ipu4GQJjRitzEI47cLlGtC7QDYusPvQ>
+ <xme:6S9Mam315bu_qxmLq5nevTeEg-2bfeWRbjBQIdv19U30p2dMZgqmpxtDJifAXKLZT
+ dZ-SADAz-337LLI7ZWN3j4K06EmeKTxdW5K1BcXRz8O17LFwfZVkvw>
+X-ME-Received: <xmr:6S9Mav29qOQjBqbOreGLcflv4H9dcDfU2b5TvwTdUJajdu_jKEPCy79d1Eznuk-dIOkqPi4iTRe0q1G6pB6W2kde40woJKskygXLCHPUkTO_RWMuL0axdXDOAw>
+X-ME-Proxy-Cause: dmFkZTEHwWeRLRRHVATDLNRfGQdRW51BWy91UTgjZ9xms8WPZJx8wttvEDTZHq3D5TFnJS
+ JpcAgiFleC6RH6VVkO7NFh7cPeOyvzTMt8kiBIgMvJ4O82Cb5ONjBhLhNCgmFcZiXZbuu8
+ tK0hyFWfL+mY2UOnglFNd3yTMYCJhcfGnABldkkx3GjyDaCcoIFX8hAst1GxVzxmhbXW0k
+ F8UIcTspuQlxCQXcrxEh4GVVUAX4dzjd0CDDWTl+p5dr6SaWjo/RsLcOrG7kStv357ZQCZ
+ GlA7ExVk+WvZJzn98nWFkIGSyJXQk3XeuIUuoACpyYvPYfpBzamyJfg8xH90ZKXdZL/5kQ
+ e6JB+z8bdnVehlFxKYjqhN43n/Yepf7lb03MFXgjI+TCR4VnK5zDVTR4x8z/z2Rg0w2Zs6
+ fzyueak0zm6DcC66vLttGwMpcAfQe3vN7+lWEDaDlE5nQxLEeEonCCZRXa262Y08B2eb+y
+ TdxypRWlFKYay+jvVJ9UzTObwyNNA0leOV8BObPHLUnPUelLGtWPNbwcXX+N7okpLybHlK
+ h02OY06+jvMTQOpyFHMJllWTGtp9EOAa2eDgArO69C78EXpj0zz/hkZnbXCazF7QG7lL4K
+ Q9aq3p2RcJ0KnE51h8jKAEPirZL9kvHG7AyAxyPXMyui/Zr2qlkKVYYVhIlg
+X-ME-Proxy: <xmx:6S9MagoTerR_4ZKkdbj9x8a5QIlJG_02gX5Suoz9IPYGfc4VtnOM3w>
+ <xmx:6S9MajjsakUrtwu_u5MitJ61zPtpJQfaiHiOhc3c3PGpmtlaQmj1-A>
+ <xmx:6S9Mak-Z7f_E8lT8frPF3zNveGhPCXZvhKrU34skTrdI4ZGJOrxbog>
+ <xmx:6S9ManVwO8hcVeBvepamK8-fNnMceMmnYiI0oYXzcG8v1dZI0lFw0A>
+ <xmx:6S9Mah6YkTdf0lL2yuV0DgUMOCWMcAr1UHFv8Ahc7bLPJJi5oCg_r_cz>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jul 2026 18:44:49 -0400 (EDT)
+ 6 Jul 2026 18:44:56 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
- Peter Xu <peterx@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Klaus Jensen <k.jensen@samsung.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PULL 03/11] tests/functional/migration: add VM launch/configure hooks
-Date: Tue,  7 Jul 2026 00:44:15 +0200
-Message-ID: <20260706224426.14156-4-its@irrelevant.dk>
+ Klaus Jensen <k.jensen@samsung.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
+Subject: [PULL 06/11] hw/nvme: set CQE.sq_id earlier in nvme_process_sq
+Date: Tue,  7 Jul 2026 00:44:18 +0200
+Message-ID: <20260706224426.14156-7-its@irrelevant.dk>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260706224426.14156-1-its@irrelevant.dk>
 References: <20260706224426.14156-1-its@irrelevant.dk>
@@ -109,62 +110,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Introduce configure_machine, launch_source_vm and assert_dest_vm
-methods to allow child classes to override some pieces of
-source/dest VMs creation, start and check logic.
+Instead of filling req->cqe.sq_id in nvme_post_cqes, let's set it earlier
+in nvme_process_sq.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+This shouldn't cause any issues, because req->cqe.sq_id never changes
+during lifetime of req.
+
+This will help us for migration support.
+
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
 Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- tests/functional/migration.py | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ hw/nvme/ctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/functional/migration.py b/tests/functional/migration.py
-index 3b7674af3b68..4344e03be417 100644
---- a/tests/functional/migration.py
-+++ b/tests/functional/migration.py
-@@ -40,19 +40,36 @@ def assert_migration(self, src_vm, dst_vm):
-         self.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
-         self.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 386a698ba858..92825022a4a9 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -1535,7 +1535,6 @@ static void nvme_post_cqes(void *opaque)
  
-+    # Can be overridden by subclasses to configure both source/dest VMs.
-+    def configure_machine(self, vm):
-+        vm.add_args('-nodefaults')
-+
-+    # Can be overridden by subclasses to prepare the source VM before
-+    # migration, e.g. by running some workload inside the source VM
-+    # to see if it continues to run properly after migration.
-+    def launch_source_vm(self, vm):
-+        vm.launch()
-+
-+    # Can be overridden by subclasses to check the destination VM after
-+    # migration, e.g. by checking if the workload is still running after
-+    # migration.
-+    def assert_dest_vm(self, vm):
-+        pass
-+
-     def migrate_vms(self, dst_uri, src_uri, dst_vm, src_vm):
-         dst_vm.qmp('migrate-incoming', uri=dst_uri)
-         src_vm.qmp('migrate', uri=src_uri)
-         self.assert_migration(src_vm, dst_vm)
-+        self.assert_dest_vm(dst_vm)
+         sq = req->sq;
+         req->cqe.status = cpu_to_le16((req->status << 1) | cq->phase);
+-        req->cqe.sq_id = cpu_to_le16(sq->sqid);
+         req->cqe.sq_head = cpu_to_le16(sq->head);
+         addr = cq->dma_addr + (cq->tail << NVME_CQES);
+         ret = pci_dma_write(PCI_DEVICE(n), addr, (void *)&req->cqe,
+@@ -7875,6 +7874,7 @@ static void nvme_process_sq(void *opaque)
+         QTAILQ_REMOVE(&sq->req_list, req, entry);
+         QTAILQ_INSERT_TAIL(&sq->out_req_list, req, entry);
+         nvme_req_clear(req);
++        req->cqe.sq_id = cpu_to_le16(sq->sqid);
+         req->cqe.cid = cmd.cid;
+         memcpy(&req->cmd, &cmd, sizeof(NvmeCmd));
  
-     def migrate(self, dst_uri, src_uri=None):
-         dst_vm = self.get_vm('-incoming', 'defer', name="dst-qemu")
--        dst_vm.add_args('-nodefaults')
-+        self.configure_machine(dst_vm)
-         dst_vm.launch()
- 
-         src_vm = self.get_vm(name="src-qemu")
--        src_vm.add_args('-nodefaults')
--        src_vm.launch()
-+        self.configure_machine(src_vm)
-+        self.launch_source_vm(src_vm)
- 
-         if src_uri is None:
-             src_uri = dst_uri
 -- 
 2.53.0
 
