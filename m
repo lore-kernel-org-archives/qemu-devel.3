@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F2AC44501
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F2E3C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:40:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggip-0007Uh-Mg; Mon, 06 Jul 2026 06:38:43 -0400
+	id 1wggie-0007DD-Tn; Mon, 06 Jul 2026 06:38:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiT-00076V-T0
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:24 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1wggiJ-00071G-3e
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:12 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiR-0003O7-07
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:21 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4938d5f86f3so18285015e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:14 -0700 (PDT)
+ id 1wggiH-0003Hh-9T
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:10 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-493b691cb44so19838245e9.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783334294; x=1783939094; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783334288; x=1783939088; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=vaarXhZ2gUUxnXrUImuA3SXpHAUC7gm2EOhq4j7dpug=;
- b=nXHS57vTHt5GOPGlzwnt3rvJmsjr/Vdfmp+teMdEM7iIrseihQBS4YtvQaVyl0PPLz
- ryX6IEZpnXDnEihlG9oRK9Ei4gavK/eut/OdNyIjMpZ5UbJ2vG8wtO2eO0es927yxfEG
- f57kciV7iAg28uxpbOT5NChX2YuCaJ+KupfZt90WEdYxqxzuQ1l0lyTo56nBdIQjK4SN
- UUsBg1HMUb/pT8YWQD1Vbk90ocDy8CcFBCgmDmOq8/+WAKQ9H3FB6puXYg741AAzEfok
- BGJafRjh7sbEkxD6c98DCwuDSelhEedFXEW4T8EW2XsqnqnbyZAONKLIsBnOAKOGjbw0
- QxMg==
+ :reply-to; bh=NrrPXpQHnc6Y4zWwDDuOjNrSPtslvAcCIqaUGcEI2EU=;
+ b=kEe2GIU36NNEv+Pu6zm2M4zZqQKCi5lAKMQqFCL/qL6ejP9rxQISbvUVBdaLJQaLah
+ OWoqHRjIFVjZxEw0tZ0MdVHNgF6QCse+7/XIL46YMe5ibznupIwOpPWDBVgpGbJS+Buh
+ Nr4+jYZISeKDvsYRJ0dH2BVspfK/tHr3oJydcAn9QEivYGE5qfmi8YtNvBoDVTO7vCC8
+ YHULl/mFkiFkxi4FagEEu+S7wUT/goy6CaRG81DZ1rKV5sNSJEByZkTxOaayZK4I987a
+ AhTApYSfFJ0IOdQnq3e9iAstyDZWX2M99XxPsJpAssI3HvggN5yn5omn5/l53Al98Ema
+ 3Ohw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783334294; x=1783939094;
+ d=1e100.net; s=20251104; t=1783334288; x=1783939088;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=vaarXhZ2gUUxnXrUImuA3SXpHAUC7gm2EOhq4j7dpug=;
- b=dZg2KxVJ/GM/psj/e4RmJFmAQh35CYEaHaZT2Iy/g3g59yxmdcjslEfSA02q3H4GjQ
- RLxWPUZZh5dbJOtXNwr1AEeN1nQzGoHHSnPHo6rjgcTYJQ9yWXAT2MLfvVcN+dW8S2A2
- 3eYFrTxaWRXOrt5/j9bqVbbEpqT/NIJ0DUS1rLN9p4/jTf1bhDCHvDKYCmvzyfoRVFje
- Xk28J+NRzi/mGChJjhImlGga9tyvbmvLEjmMOj+J2HtkyNmp7yCnCJ++pbgrivJ6LL9h
- dkUA7vOVTWmUMV4Z4kmDdlX0/4AOyVs3u1//v4ejuOK56Gi+n0DLPDoECT+wKTfACDci
- 1BSQ==
-X-Gm-Message-State: AOJu0YxnBVnlzr0xgdhIlPxBmxeKtlkHsQsfByHf1ZpfopvD/O91rPqp
- EGk91v/31icfHoHME9moIhaDUddBs12PcjVcc5Sig0HySIfx4yLJX8wkctcoCbQTh87FJP76o2r
- xNvzVzuBasQ==
-X-Gm-Gg: AfdE7ckZQFvlc/hQbFYiwZEPAj6GcDwRSXlTtZcH4ZJx5L8OAMYWbBBAYiqdxcyCB2U
- X9ILHIwAGKGpx96VThvZPau9iID9hdvxNF4OI6viV0fL2AcZsOGhYBbn88E4z1+tB4CZ2dE8t8/
- X9ijAaQyWcErCJGpEGouZMBrNRbCxcI36QUfADxh5s9+p+0ggXEJU9XSjD9fTf3beSgzcXVVZz8
- iK66Eijysu8hOlohcysFYOJo2MD5FVk+W92fABY4XesNG69l4MnaHVZdRStzmfkupAblxvs64n6
- Uu4cfK7JHlCMiPiGQsK3PPDea7riXcxHbILEMg2Xty5WT0oYiDlJqz3i1fhfSRxK0yGY9Vq+KSh
- ZQYjG+R3dtsKItLidNTB7DdjttXLdfxcmXedTkETi9zuixC8+rMJXpnwxOO2joGDRDv2rqLr1pS
- FB8ISqEklpUgvh6qqRdo3gx9WLUSt50JehivyXswj+oaoRzvqFR09OlF1jtA7eZwyApYdCGrJwt
- nNZjIKmXR/I7nTspeb0bg==
-X-Received: by 2002:a05:600c:628d:b0:493:c2ac:58f with SMTP id
- 5b1f17b1804b1-493decbf152mr1099655e9.8.1783334293621; 
- Mon, 06 Jul 2026 03:38:13 -0700 (PDT)
+ bh=NrrPXpQHnc6Y4zWwDDuOjNrSPtslvAcCIqaUGcEI2EU=;
+ b=Wad81rI/IAyaxASdU/e9tK7vi1DN9/tYf0THz00GSBeWUKb+6dXrhz77rMtUEx/WoM
+ kPo/2bzpgmOaCRBrsQUoC1p8BE/zi+mNEE2E5yljbMk9D+sIRVh2KaYMoYD25MEGaczw
+ B0M48JIzo8B/LOvMmtCPV15JyDnVBxuAISksDja5TIPIfu/75Ub5y1lDy+kAEezzSqX9
+ 1Y9gU0HEsXYTR3pbQbg1QP7S3HNx4zTEZkO/EG3khZpQXHIiZ3u5DphON4hpU04TuOzI
+ 4K4/dHcZqrG8ITzr2HOsqijJ7kUxlztMg1LWnlzi2KIMMHfknXZQ0v6DTZ/7VRCVJogf
+ 6HvA==
+X-Gm-Message-State: AOJu0YyinneZFa7fch/Bl+CtcVmMRHx3zGd/t+A2aYKzFg0CWEHxqWPq
+ Y3CZsmNCFFXBRb5ZCOErW13bnH7FKMFsCro8nclBRY52h1fMpyGrizcBJ7wi6WSRWRWlgGpwp1k
+ mZSSsppskkw==
+X-Gm-Gg: AfdE7cmOTStL1j75MVPW45cj0s1zsJnk6sAk5wi9c53bZwAU6kQQ1g6nNQZoDzsvMWj
+ Hy65GzgWIn9gORAc94DW0+JOskaWZ5KlG/KeW79/GFCkdO8gYu388lwY1Zz+jMoyL4Vxy88R/xH
+ +rZZUC+CPS8D5g39wQIz6ckZH5ERH3coAS8zqFOPAYdeeK3qcKDcoAspQw9M+7aHwbqLUDHJ+/6
+ ZxM2xihsiA6UIUTBTOMHzmNes1IU8HHH7+nApFqzWkVuaK0WWyFNbiOxhSfGawKar8uGeFoseCd
+ IjKJMyap40KNHlbBI2CzZZe/06VDjy5krEmO4ujsbBjUAhXdJlygf6BE4QPu01qRFzNtXOZnOUn
+ e1DIu+pnLHjnKN3mp19PgFaoyYuNuA6taVjzfU/tr/Hh0Q6OnaKXKJlOvqNTHCsb5ASoUtKrkxG
+ IhprHM0KFrdxKeIMk9NEQloBRHlyF8YqpucoMI8qUwm5Y+RIrzZKXhAB0SgNzqJUCDBVYULwfLI
+ KoGZ3ucGmJzkeSx2P2Kl/euhxy0miXf
+X-Received: by 2002:a05:600c:63c3:b0:493:bc4a:fb56 with SMTP id
+ 5b1f17b1804b1-493d1203ee0mr85270445e9.39.1783334287648; 
+ Mon, 06 Jul 2026 03:38:07 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.11
+ 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 03:38:11 -0700 (PDT)
+ Mon, 06 Jul 2026 03:38:07 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/49] docs/specs/fw_cfg: Document all architecture register
- layouts
-Date: Mon,  6 Jul 2026 11:37:21 +0100
-Message-ID: <20260706103752.320511-19-peter.maydell@linaro.org>
+Subject: [PULL 14/49] target/arm: ensure we create the wxft_timer for all modes
+Date: Mon,  6 Jul 2026 11:37:17 +0100
+Message-ID: <20260706103752.320511-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260706103752.320511-1-peter.maydell@linaro.org>
 References: <20260706103752.320511-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,68 +101,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We implement the fw_cfg device for more architectures and machines
-that we let on about in our documentation.  Luckily most of the new
-ones (notably riscv and loongarch) have followed the straightforward
-layout that the Arm virt board picked.
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Restructure the documentation to present this as the "standard"
-layout, followed by the other layouts used by various other boards
-for historical reasons.  This adds PA-RISC, SPARC, PPC and MIPS.
+We don't want to just use it for timeouts as we will calculate which
+will comes first. Remove the wxft feature test in favour of the
+broader architecture checks.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260529174639.451353-2-peter.maydell@linaro.org
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Message-id: 20260624103049.884930-5-alex.bennee@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/specs/fw_cfg.rst | 28 ++++++++++++++++++++++++----
- 1 file changed, 24 insertions(+), 4 deletions(-)
+ target/arm/cpu.c | 6 +++++-
+ target/arm/cpu.h | 2 +-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/docs/specs/fw_cfg.rst b/docs/specs/fw_cfg.rst
-index 31ae31576b..7e2fe0851d 100644
---- a/docs/specs/fw_cfg.rst
-+++ b/docs/specs/fw_cfg.rst
-@@ -84,15 +84,35 @@ increasing address order, similar to memcpy().
- Register Locations
- ------------------
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 26bd21aa86..7143118708 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2273,7 +2273,11 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+     }
  
-+For a memory-mapped fw_cfg device, the standard register layout is:
-+
-+    * base address : Data Register (64 bit)
-+    * base address + 8 : Selector Register (16 bit)
-+    * base address + 16 : DMA Address Register (64 bit)
-+
-+Some architectures or machines have a different layout for historical reasons:
-+
- x86, x86_64
-     * Selector Register IOport: 0x510
-     * Data Register IOport:     0x511
-     * DMA Address IOport:       0x514
+ #ifndef CONFIG_USER_ONLY
+-    if (tcg_enabled() && cpu_isar_feature(aa64_wfxt, cpu)) {
++    /*
++     * We use the wfxt_timer for timeouts and event stream so we
++     * enable from V6K up. There is no event stream on M-profile.
++     */
++    if (tcg_enabled() && arm_feature(env, ARM_FEATURE_V6K)) {
+         cpu->wfxt_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+                                        arm_wfxt_timer_cb, cpu);
+     }
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 84d33e87dc..03a30afcbe 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -967,7 +967,7 @@ struct ArchCPU {
+      * pmu_op_finish() - it does not need other handling during migration
+      */
+     QEMUTimer *pmu_timer;
+-    /* Timer used for WFxT timeouts */
++    /* Timer used for WFxT timeouts OR event stream events */
+     QEMUTimer *wfxt_timer;
  
--Arm
--    * Selector Register address: Base + 8 (2 bytes)
--    * Data Register address:     Base + 0 (8 bytes)
--    * DMA Address address:       Base + 16 (8 bytes)
-+PA-RISC:
-+    * base address : Selector Register (16 bit)
-+    * base address + 4 : Data Register (8 bit)
-+
-+32-bit SPARC, PPC ``g3beige``, ``mac99``, ``prep``:
-+   * base address : Selector Register (16 bit)
-+   * base address + 2 : Data Register (8 bit)
-+
-+64-bit SPARC:
-+    * base address : Selector Register (16 bit)
-+    * base address + 1 : Data Register (8 bit)
-+
-+MIPS ``loongson3-virt`` machine:
-+    * base address : Selector Register (16 bit)
-+    * base address + 8 : Data Register (64 bit)
-+
- 
- ACPI Interface
- --------------
+     /* GPIO outputs for generic timer */
 -- 
 2.43.0
 
