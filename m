@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08F5BC44500
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACA5EC43602
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:41:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggie-0007D6-OJ; Mon, 06 Jul 2026 06:38:32 -0400
+	id 1wggis-0007e1-WD; Mon, 06 Jul 2026 06:38:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiS-00073S-Ej
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:22 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1wggie-0007DF-Tj
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:32 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiP-0003Pr-2d
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:20 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-493bc8fda98so31423445e9.0
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:15 -0700 (PDT)
+ id 1wggid-0003UL-3t
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:32 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-493b1710405so17303405e9.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783334295; x=1783939095; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Ura28sdkKYPryMO+LtMRN/uw8MB+2Afo0UvbdUwSUV0=;
- b=VDtJYrsbeQTip2aJDhjdRS1uh83O//kOGZSjEf3Bc+k/VlPrLjmu008hvewM+N263Z
- X8IeGJ7TKxlsth6ML7kEjXk9WKtfL6P28lCLwJgC1sDwCAziIOhQdxJIdUBsBKU6pv94
- Gjb/Fyg7X9w4cjnTd1tuM/ohkH5H4pX1M8ZtcPvqhSjbAv0GPbIqcIHngp5V6Lj4FaPO
- MH5QH/elBIChwEPWi/ql1fPOE0mUEjRgBNLQXqJHCmWkfYs/Jp9T6QvP2lzEK058VNgn
- dacAF8ly9HOG1X0SjSRRAgRAMl9xRnImoN78fxw5Hm+6BFlZDBg5appAwVMbTLO6jj0P
- UcgQ==
+ d=linaro.org; s=google; t=1783334310; x=1783939110; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=Rs1VDjr5PB3VP0zb1dNRY2Ym5YO2bAgk5HVrjMi0WPk=;
+ b=dGAqekcJjLfjxzBN+vISZEHi1UiG93SLdzlwOGyMRTpJSDSn5M/V4SrzgEAR0h86Y2
+ /EOZn1MA//2TuSDwuNhCYyOvmr/zBKEdCHssyU8NfLTwqkJB+3EgFkpHhDgBgiXUy57A
+ 0iLrD7no17vNnNTWKFi5kcpaZdun1JYh2ZaU0wSz8puMMdhk9kDYPPZfQfrwKADaaRMB
+ 7qyc/Guv5tBzKqSYbEKUM6BNGp3MNU/U1r+SPqH6+8pFHlOiBSnjdqlGKLsJ5fsAZHfr
+ VmReK6uvbsIS5DawmHTw2GmRB7qY4M+9ilKeOIxSACScF1SMbYHMgJPuYaMF++kj14VA
+ BdZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783334295; x=1783939095;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Ura28sdkKYPryMO+LtMRN/uw8MB+2Afo0UvbdUwSUV0=;
- b=AYn+Xx58yLhrm4oI6YmkRkk7V3TSJMQcij4eyz5bfV0iQP483fQgjqUZ5ixqPvkzWu
- qvDh38nH5z9f5j1Zxa1tk3zCnUSf0OUQFPkPEcnqf7tak9LIlGbwUXGgMbuV3xnvbA4u
- dfietOJsdXNrOa2A2vBUHOXpfDD8XNSkLhQgevJxGJAJCxpoc7rey4HHeQ5V2pYBL1+8
- yf3HONEO65XolY1suZcjQ78met5rtXgTkblhjohrq7yvkAGAA3/w4SW9++gPbHvkBLhu
- 58FwXkn3nvFhQ7suOeKs96eZcie6CLTDcWtWuJNjEhw24PktABPoGthlnNQ7vtgOQwyE
- 9tyw==
-X-Gm-Message-State: AOJu0YxtI+WRp/7S30wEQVzloaspago/DK0SN2umWXvM0b7sfY1aSUir
- OrGP3DUN0J1y1xCuYZM7zJ7vEEfLwb+tDjAeNEr4io0xk5SxxghMNIhOIOmCZLqseEyFsrw5nD2
- v3BwW6G+B7w==
-X-Gm-Gg: AfdE7cnBq0ApJqoeqZJcjTvaxYlgltyKppsI2d0/aZ1VKOCwNPL9lgNJ7rhmsfYtLxo
- 3GDAmwmYhrdPOs/jsOtSZBBvY0IKgMI+5SIo99Ik0Y4kyq32ctMj6kF+3+1vRJESaFa1vpwJgYP
- 86nNtXVdtjYwie4LnNkJYXPdNFPreDQUEp1IhFg+D59xVhUuj5uLqOibM8jW3/RyW510eQseAit
- rDzM3taB2e32fPGAyuxXH88I0CISqixHW412lLu7vBHFiL1o8eSKP5eFuFk+WbWpYWvz0aqFbAi
- hQ87uhdYCcG6KN5CtbKnbmhFZHZu7g9IvwRSsEp5X0bxLe9/4h4wWa3jyXOA/P8CPpTZf0lM8fk
- cP6X1KmaFZkV0JPAEJ0wyAdlQ5RNMD2mR1YpJ7W3wajmrR2cuuliXZwj2aTTkRXLpVzPoenIXD/
- ECM3lk4H1SPvXai9/WDpFy0zU7g/VOLFnwIVEeGhaf9Llads/BZgSmOYbzRBrEBdyriafQtQXO3
- GOw4A2sAZSIWbkb4Fsv0g==
-X-Received: by 2002:a05:600c:5394:b0:492:7101:3d88 with SMTP id
- 5b1f17b1804b1-493d11f0ce5mr107854775e9.24.1783334294645; 
- Mon, 06 Jul 2026 03:38:14 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783334310; x=1783939110;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Rs1VDjr5PB3VP0zb1dNRY2Ym5YO2bAgk5HVrjMi0WPk=;
+ b=sFrWTqTNaxEzvcbZ3QW/JhuDN2n5gySStOf7XcG5gAZaOe02Wi9jnzlyt1fVN0vt3r
+ KlEuet87OSIoZVsKwuKqbrrQSfjvT3j7ay+ll4gkqF6c4cKrysbZHci3+BHUGAD+TA4/
+ xTckWhGNEtBcKaebmHH7o7nM1g3GRlZDuWvB3GA/jh0yFZO7Cl7gcG1N2q9MkysMssRP
+ UzzYEEVlXCsTUA2xZBo6SegiG9j9tA87ODghKDupDHuzLgxL+KW/Imi/eTKv49EI2v7i
+ X9pajHE7SJLKKLi2fugOuSivYvDaC+RVLgPxVey8qoYZdwNBirKARyDIB2OTsDGh5TFr
+ gVww==
+X-Gm-Message-State: AOJu0YyXn2DAakbEpWJBFFTMYYE+VdpOds1bNcI7h98dBdh/Qb2rJ53q
+ I4OyOEW+Wu9hE39w9peiOfZP0rziY4tDw9s3gZeSHKxEx5W+FcuWvcv2Hg76TbAmT8LbaOwQpSp
+ iRrYpaE734A==
+X-Gm-Gg: AfdE7ck4t6tYgYlLqgyIkBICzV4xCAkbyePOfsOuBQDn4902IE1fkP8y8Ux5dsCOw7L
+ ta/RHbAe/VJG1wjwX/MfG6NFIYwK7JvgyVV161HSq6WNBp3KUC3CPGgtyMAMhEUof+RnKhxttp5
+ gowARw9F2iMgAeMoFPmL8hfy99T+5yGC/ZMDKFyygrD6OG1k3yG7bvhC7mEEK6WHfy8lFqmKHZ5
+ 8whrl4Kvu7upXUYNSW6mzVbFFiZIVouUNgIaDXLiUxpc1piFeT7PtCtA9DISe8lRjrckgNvq2sq
+ ZgZdS/4sG/jUrsvk5qjDSj02UjXIAKmDnyuNCoQK0Mxcs4AelSrFP4mGS/aGoPgiWBipaf4z6gq
+ s6cKYXcj0wiAg3oHZ72X3YpiQBSbkJmO2bK+/v4zkkOTiQ9CbMa8bSsfQo5ywC3lwu7l5GzFR8p
+ WgHoLq07sXMoySBDoeftYqa2v43qN9hbnsx4XBj/u7ooN5m9y8mOAILdnWlsZUOjrgN/Hf+hkL/
+ BNk2eJIKHNPCLd0aG9kYyZJvo8c4YVJ
+X-Received: by 2002:a7b:cd13:0:b0:493:bc4a:9547 with SMTP id
+ 5b1f17b1804b1-493d1204c74mr77508365e9.39.1783334309644; 
+ Mon, 06 Jul 2026 03:38:29 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.13
+ 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.28
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 03:38:13 -0700 (PDT)
+ Mon, 06 Jul 2026 03:38:29 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 19/49] hw/nvram/fw_cfg: Enforce standard layout for
- fw_cfg_init_mem_dma()
-Date: Mon,  6 Jul 2026 11:37:22 +0100
-Message-ID: <20260706103752.320511-20-peter.maydell@linaro.org>
+Subject: [PULL 32/49] target/arm: Implement FMOP4 (non-widening) for float16
+Date: Mon,  6 Jul 2026 11:37:35 +0100
+Message-ID: <20260706103752.320511-33-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260706103752.320511-1-peter.maydell@linaro.org>
 References: <20260706103752.320511-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,131 +100,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently fw_cfg_init_mem_dma() allows the caller to customize the
-register layout, by specifying separately the offsets for control,
-data and DMA registers, plus the width of the data register.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-In practice, all the boards using this function specify the same
-standard layout: "base + 8, base, 8, base + 16", meaning that the
-data register is 8 bytes and the registers are data at offset 0,
-control/selector at offset 8, and DMA at offset 16.
-
-Allowing every board to be different is gratuitous and useless
-variation which leads to code in guest OSes having architecture
-ifdeffery to cope with it.  Avoid potentially introducing any more of
-this by removing all the arguments from fw_cfg_init_mem_dma(), so
-that the callers only specify the base address.
-
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260702204314.79224-3-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260529174639.451353-3-peter.maydell@linaro.org
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/arm/virt.c             |  2 +-
- hw/loongarch/fw_cfg.c     |  3 +--
- hw/nvram/fw_cfg.c         | 10 ++++------
- hw/riscv/virt.c           |  3 +--
- include/hw/nvram/fw_cfg.h | 23 ++++++++++++++++++++---
- 5 files changed, 27 insertions(+), 14 deletions(-)
+ target/arm/cpu-features.h        |  5 ++++
+ target/arm/tcg/helper-sme-defs.h |  4 +++
+ target/arm/tcg/sme.decode        |  3 +++
+ target/arm/tcg/sme_helper.c      | 42 ++++++++++++++++++++++++++++++++
+ target/arm/tcg/translate-sme.c   |  8 ++++++
+ 5 files changed, 62 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index d8d27f2ef6..abee62fcbc 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1944,7 +1944,7 @@ static FWCfgState *create_fw_cfg(const VirtMachineState *vms, AddressSpace *as)
-     FWCfgState *fw_cfg;
-     char *nodename;
- 
--    fw_cfg = fw_cfg_init_mem_dma(base + 8, base, 8, base + 16, as);
-+    fw_cfg = fw_cfg_init_mem_dma(base, as);
-     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, (uint16_t)ms->smp.cpus);
- 
-     nodename = g_strdup_printf("/fw-cfg@%" PRIx64, base);
-diff --git a/hw/loongarch/fw_cfg.c b/hw/loongarch/fw_cfg.c
-index d2a79efbf7..4c976ce1e5 100644
---- a/hw/loongarch/fw_cfg.c
-+++ b/hw/loongarch/fw_cfg.c
-@@ -23,8 +23,7 @@ FWCfgState *virt_fw_cfg_init(ram_addr_t ram_size, MachineState *ms)
-     int max_cpus = ms->smp.max_cpus;
-     int smp_cpus = ms->smp.cpus;
- 
--    fw_cfg = fw_cfg_init_mem_dma(VIRT_FWCFG_BASE + 8, VIRT_FWCFG_BASE, 8,
--                                 VIRT_FWCFG_BASE + 16, &address_space_memory);
-+    fw_cfg = fw_cfg_init_mem_dma(VIRT_FWCFG_BASE, &address_space_memory);
-     fw_cfg_add_i16(fw_cfg, FW_CFG_MAX_CPUS, (uint16_t)max_cpus);
-     fw_cfg_add_i64(fw_cfg, FW_CFG_RAM_SIZE, (uint64_t)ram_size);
-     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, (uint16_t)smp_cpus);
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index 1d7d835421..59cf92293c 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -1088,13 +1088,11 @@ static FWCfgState *fw_cfg_init_mem_internal(hwaddr ctl_addr,
-     return s;
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index e480995cc6..a1a4f37277 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1807,6 +1807,11 @@ isar_feature_aa64_sme_f16f16_or_f8f16(const ARMISARegisters *id)
+     return isar_feature_aa64_sme_f16f16(id) || isar_feature_aa64_sme_f8f16(id);
  }
  
--FWCfgState *fw_cfg_init_mem_dma(hwaddr ctl_addr,
--                                hwaddr data_addr, uint32_t data_width,
--                                hwaddr dma_addr, AddressSpace *dma_as)
-+FWCfgState *fw_cfg_init_mem_dma(hwaddr base_addr, AddressSpace *dma_as)
- {
--    assert(dma_addr && dma_as);
--    return fw_cfg_init_mem_internal(ctl_addr, data_addr, data_width,
--                                    dma_addr, dma_as);
-+    assert(dma_as);
-+    return fw_cfg_init_mem_internal(base_addr + 8, base_addr, 8,
-+                                    base_addr + 16, dma_as);
++static inline bool isar_feature_aa64_sme_mop4_f16f16(const ARMISARegisters *id)
++{
++    return isar_feature_aa64_sme_mop4(id) && isar_feature_aa64_sme_f16f16(id);
++}
++
+ /*
+  * Feature tests for "does this exist in either 32-bit or 64-bit?"
+  */
+diff --git a/target/arm/tcg/helper-sme-defs.h b/target/arm/tcg/helper-sme-defs.h
+index 9e1f09ce5b..ec7389d2ae 100644
+--- a/target/arm/tcg/helper-sme-defs.h
++++ b/target/arm/tcg/helper-sme-defs.h
+@@ -356,6 +356,10 @@ DEF_HELPER_FLAGS_5(sme2_sel_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32, i32)
+ DEF_HELPER_FLAGS_5(sme2_sel_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32, i32)
+ DEF_HELPER_FLAGS_5(sme2_sel_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32, i32)
+ 
++DEF_HELPER_FLAGS_5(sme_fmop4a_hh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_5(sme_fmop4s_hh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_5(sme_ah_fmop4s_hh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
++
+ DEF_HELPER_FLAGS_5(sme_fmop4a_ss, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(sme_fmop4s_ss, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(sme_ah_fmop4s_ss, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index 5a3d47cdfe..227f3d7790 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -1094,7 +1094,10 @@ LUTI4_s_4b      1100 0000 1001 101     1 00 00 00 ....0 zd:5    \
+ %mop4_zm        17:3 !function=times_2_plus_16
+ %mop4_zn        6:3  !function=times_2
+ 
++@mop4_o1        .... .... ... m:1 .... .... .. n:1 ... . s:1 ... zad:1 \
++                &mop4 zm=%mop4_zm zn=%mop4_zn
+ @mop4_o2        .... .... ... m:1 .... .... .. n:1 ... . s:1 .. zad:2 \
+                 &mop4 zm=%mop4_zm zn=%mop4_zn
+ 
++FMOP4_hh        1000 0001 000. ...0 0000 00.. ..0. 100.         @mop4_o1
+ FMOP4_ss        1000 0000 000. ...0 0000 00.. ..0. 00..         @mop4_o2
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index b08d91e6de..c4d149f7f7 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -2636,6 +2636,48 @@ void sme_mop4(void *vza, void *vzn, void *vzm, void *fn_opaque,
+     }
  }
  
- FWCfgState *fw_cfg_init_mem_nodma(hwaddr ctl_addr, hwaddr data_addr,
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index b68067cfdd..bd9f77aad3 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1109,8 +1109,7 @@ static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
++static void inner_fmop4a_hh(void *vd, void *vn, void *vm, void *vinfo)
++{
++    float16 *d = vd, *n = vn, *m = vm;
++    float_status *fpst = vinfo;
++
++    *d = float16_muladd(*n, *m, *d, 0, fpst);
++}
++
++void HELPER(sme_fmop4a_hh)(void *vza, void *vzn, void *vzm,
++                           float_status *fpst, uint32_t desc)
++{
++    sme_mop4(vza, vzn, vzm, fpst, desc, sizeof(float16), inner_fmop4a_hh);
++}
++
++static void inner_fmop4s_hh(void *vd, void *vn, void *vm, void *vinfo)
++{
++    float16 *d = vd, *n = vn, *m = vm;
++    float_status *fpst = vinfo;
++
++    *d = float16_muladd(float16_chs(*n), *m, *d, 0, fpst);
++}
++
++void HELPER(sme_fmop4s_hh)(void *vza, void *vzn, void *vzm,
++                           float_status *fpst, uint32_t desc)
++{
++    sme_mop4(vza, vzn, vzm, fpst, desc, sizeof(float16), inner_fmop4s_hh);
++}
++
++static void inner_ah_fmop4s_hh(void *vd, void *vn, void *vm, void *vinfo)
++{
++    float16 *d = vd, *n = vn, *m = vm;
++    float_status *fpst = vinfo;
++
++    *d = float16_muladd(*n, *m, *d, float_muladd_negate_product, fpst);
++}
++
++void HELPER(sme_ah_fmop4s_hh)(void *vza, void *vzn, void *vzm,
++                              float_status *fpst, uint32_t desc)
++{
++    sme_mop4(vza, vzn, vzm, fpst, desc, sizeof(float16), inner_ah_fmop4s_hh);
++}
++
+ static void inner_fmop4a_ss(void *vd, void *vn, void *vm, void *vinfo)
  {
-     FWCfgState *fw_cfg;
+     float32 *d = vd, *n = vn, *m = vm;
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index aab5eab9df..d19cd274ac 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -2025,6 +2025,14 @@ static bool do_mop4_fp(DisasContext *s, arg_mop4 *a, MemOp esz,
+     return true;
+ }
  
--    fw_cfg = fw_cfg_init_mem_dma(base + 8, base, 8, base + 16,
--                                 &address_space_memory);
-+    fw_cfg = fw_cfg_init_mem_dma(base, &address_space_memory);
-     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, (uint16_t)ms->smp.cpus);
- 
-     return fw_cfg;
-diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
-index 56f17a0bdc..45a3747908 100644
---- a/include/hw/nvram/fw_cfg.h
-+++ b/include/hw/nvram/fw_cfg.h
-@@ -309,9 +309,26 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
-                                 AddressSpace *dma_as);
- FWCfgState *fw_cfg_init_mem_nodma(hwaddr ctl_addr, hwaddr data_addr,
-                                   unsigned data_width);
--FWCfgState *fw_cfg_init_mem_dma(hwaddr ctl_addr,
--                                hwaddr data_addr, uint32_t data_width,
--                                hwaddr dma_addr, AddressSpace *dma_as);
-+/**
-+ * fw_cfg_init_mem_dma:
-+ * @base_addr: address to map the device at
-+ * @as: the device will do DMA to/from this AddressSpace
-+ *
-+ * Create and map a fw_cfg device at the specified base address.
-+ *
-+ * This always creates a device with DMA support, and the "standard"
-+ * register layout:
-+ *  - offset 0 : data, 64 bits
-+ *  - offset 8 : selector, 16 bits
-+ *  - offset 16 : DMA address, 64 bits
-+ *
-+ * The device will be created, configured and realized, and its
-+ * memory regions for the registers will be mapped at the specified
-+ * address.
-+ *
-+ * Returns the device object.
-+ */
-+FWCfgState *fw_cfg_init_mem_dma(hwaddr base_addr, AddressSpace *dma_as);
- 
- FWCfgState *fw_cfg_find(void);
- bool fw_cfg_dma_enabled(void *opaque);
++static gen_helper_gvec_3_ptr * const fmop4_hh[3] = {
++    gen_helper_sme_fmop4a_hh,
++    gen_helper_sme_fmop4s_hh,
++    gen_helper_sme_ah_fmop4s_hh
++};
++TRANS_FEAT(FMOP4_hh, aa64_sme_mop4_f16f16,
++           do_mop4_fp, a, MO_16, FPST_ZA_F16, fmop4_hh)
++
+ static gen_helper_gvec_3_ptr * const fmop4_ss[3] = {
+     gen_helper_sme_fmop4a_ss,
+     gen_helper_sme_fmop4s_ss,
 -- 
 2.43.0
 
