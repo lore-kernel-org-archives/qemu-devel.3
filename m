@@ -4,110 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55D3BC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 09:07:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B50DC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 09:22:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgfIX-0002o2-Dg; Mon, 06 Jul 2026 05:07:29 -0400
+	id 1wgfWF-0005bZ-QB; Mon, 06 Jul 2026 05:21:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wgfIU-0002nh-Mz
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:07:26 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wgfIS-0002RC-UM
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:07:26 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-68bd9fce347so5193571a12.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 02:07:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783328843; cv=none;
- d=google.com; s=arc-20260327;
- b=QYhTwJYdaWGgOmXZpTSYfh49OLF8BuefeBk3wGEnS/sSPi6A4P8P5g0jLDg/9wNe4z
- S05qcCILi0EpksFQMv2V8ybPDtix5pWVgTBTv3EbJWBmfpnrNgGFXiDELGJfEQ4UiUp2
- x2km8s9rCeitR4ufH350Ptg6UWgTuP6F+R09o20Mjn07tjyeoKGtL7M78DqSTTTeBOKW
- MbOzYyHG6jR3EJavVgmKR9ECKktBJHz8G8W38o8SGEB2u4T0LU0mzAqdz/mhPGA7E7y8
- CjGhvbFMtzfhZW7FTFQXNF4SYfVxIAmEEo5o+wzjIzVzJvlhT11TaWit39+KoRx9zXvZ
- T9QQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=f90l64fomCI4Q4i3aw+fYgZpIzi6PAm4mu8P3ZZO/Po=;
- fh=hCe7fhTvWgm7aze1oINXwc4Q2ljHDCj1vM1faYlyM2g=;
- b=p05g7FHA5nab61wiUXZo+O9sRQ/Hi1qljzEwgML6ui7bvZYUO5Fk0vDeCrOxJJwuJn
- y8XMfYYtfllnDoZt91nwUeE2M+XiDvhbG1GKVkUcetmF7RL2aLZ0Wi6QjvwbY0qcVreq
- duXd+khA8WPK/eiFvYZS0JEKQMOoCRa0mMIwPwJvl7V2A3wLbWjmfDCjWyszIuFkx1xQ
- ShinzrqPgw2UPel4psVxiZOdXykLyzBAQYzbNYcwYv6oG4Ta+Vl+++Nr8GAphisJJv7l
- xYHXkKz7hIfgr9ZJ0GDsmnE77MRCbunFxCbnNXqoar5gV+n5arSMECHQhRXVm30AObjD
- Wy7A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783328843; x=1783933643; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f90l64fomCI4Q4i3aw+fYgZpIzi6PAm4mu8P3ZZO/Po=;
- b=VaBtdY0iqkw9lMvfQEJ6DAen9faES/vUu0Okv5948v8fHwUVxhLBRjYcZJ/m4oDaBh
- CnpP9jmAhFJYBZfGbRvl56OQHKj9dc9pRA44/u2kVohBsJQ9WqNlYryVbvwfelz1Yn7n
- RlL8Bc5yo9VuYay8yfaj/BD2og378E8V2mwPVWIr2vdIdmmpsDtAqUcT93MlzAnNORGV
- oc2mc36TkPhyMSByGWOs+jSr7rcVK94py0m+tgn4NtRQN0dlbgd7RBu9mMs4DVPuFxy6
- xc0mfIxh+dGO4ZEwYzol3hA4U1g9z4/x97WKprYtIDdW7MjiykZf0dc19OtrtLs5cc+q
- CleA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783328843; x=1783933643;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=f90l64fomCI4Q4i3aw+fYgZpIzi6PAm4mu8P3ZZO/Po=;
- b=GRo7Sp5FC9QzIz0pzN1BZvDgN3BH+VyKRdHykkzaRQT3MuyttLaJFvecnBCyY1s4Xr
- jS5VAjHzEKUQ6uj+Tke8lMD5scO8bvXqCCKyHlQR+SqFOZ44qy0OWEToKqn3+nGHc5aq
- TQtGks2Eq3gtov+pmPKeipPAQixh9Pz6AkeyPoG1lyxdLSTMzOGPb9Njq6sbzCVQ2rC5
- lawoDO5c421BoLJixWaQjpkPfJBm+7nKAwOZBpoUcCN7aCfEtPquWruGhRiGnhJ2ceXo
- pWp1QAUgPHuE1gKMUojcgYzIwiag9TObACvjVwpLOQUg3oVA2kWv3FfREo2ms2UT9xYz
- /4FQ==
-X-Gm-Message-State: AOJu0Yxp0hH3+rsXX7i4GdBOlusbWdF06qcov6xPLEpe3cvMiWSM2oEx
- c88nbOQ+HR2leiRkuU1/limcixbMfPHqKeQf2B8sucj/xrEUbE+YtgkMX2E/GqZ7SMOhW18DgGd
- kDiQEOB/smD6ZNhJ6OEtE7A5BQXVD3+E=
-X-Gm-Gg: AfdE7cnBKjuAFrfwBwrMQ0IeB5Fld8yfWEDewyFUK4+p6bhMzw+IGhvpB+wPosH7llL
- 7OysTpDbYkaRrGFL7sR72l6s/Mjbmjubrd9N+DHD8Xz+7ubg6W8Nd3j9SxS6wyDIm0Bi4CHaQ0i
- 39Ihq0Fvk4mvlhcj473Rlq+TZ9dVsHqbKidUY0CrRD6lILxAvfYpqppI3xLhd/F2wYJNMI1U9jC
- gBche2bGnAOsbFVadFO8IfFcHg9GXHusRZ9KcyGJ2lqOXtyP7In3GDiftXQ7Oloiq2PWzi7
-X-Received: by 2002:a05:6402:3814:b0:698:81ab:c61a with SMTP id
- 4fb4d7f45d1cf-69a1a2ae0e1mr3135125a12.23.1783328843130; Mon, 06 Jul 2026
- 02:07:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1wgfW6-0005XY-AN; Mon, 06 Jul 2026 05:21:32 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1wgfW2-00062m-R4; Mon, 06 Jul 2026 05:21:29 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6669IeQp3151957; Mon, 6 Jul 2026 09:21:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=wU6/MMjwjB0BkBCx1
+ IfFQAJuEoWaRUMgU9dhKWG3AUM=; b=cBO/INllvkzI3oMnLHcL/ezcOBn+/mUmy
+ tZYjhhMRdnX8PXZxjRWRNv8N6af/ombZFpCGfG2+pQCTuEMX7bY33soe3OEPZghM
+ Y/wGtOeS8ZSiKmtOLQOI6nzMWgiTITmHJIYA/GXY2nMgD3DTIw3S9ESFfSitNaU5
+ h/GfiaE2DX91atUKHR8GzYnAVAUERN+8kV8HchJJqr1RJlLvEkPweAHtAWvZo4Nx
+ +DeXqByrumkJA2u6+CAxEtgidzgARMnJoZbQL5fUAJCnzpVlm0tkQnnK6IISLOJO
+ DlslTDEMbuCp6J8tCsLEtZn5jpGeOaDs5Be5gVY2ibCTVXFbTsuEw==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6rkdhakk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jul 2026 09:21:22 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6669JaQ5023092;
+ Mon, 6 Jul 2026 09:21:22 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f7cvvw2x4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jul 2026 09:21:22 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6669LLJm15597948
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 6 Jul 2026 09:21:21 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0387C5805F;
+ Mon,  6 Jul 2026 09:21:21 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B4F5E5805C;
+ Mon,  6 Jul 2026 09:21:18 +0000 (GMT)
+Received: from b35lp69.lnxne.boe (unknown [9.87.84.240])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  6 Jul 2026 09:21:18 +0000 (GMT)
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ David Hildenbrand <david@kernel.org>, qemu-stable@nongnu.org
+Subject: [PATCH 3/5] s390x/pci: Shrink RPCIT ranges to registered window
+Date: Mon,  6 Jul 2026 11:19:07 +0200
+Message-ID: <20260706091909.864405-4-borntraeger@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260706091909.864405-1-borntraeger@linux.ibm.com>
+References: <20260706091909.864405-1-borntraeger@linux.ibm.com>
 MIME-Version: 1.0
-References: <20260624070851.13342-1-zhangckid@gmail.com>
- <20260624070851.13342-3-zhangckid@gmail.com>
- <87o6gx1yg4.fsf@pond.sub.org>
- <CAK3tnv+YGdTPOgGSwz-KO22E_-UaaABmEKwTqrsuE7no91pXEQ@mail.gmail.com>
- <877bnhvda2.fsf@pond.sub.org>
-In-Reply-To: <877bnhvda2.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Mon, 6 Jul 2026 17:06:46 +0800
-X-Gm-Features: AVVi8Cdb6Nzow7vWGMYOKtOJe0kRdl-ubSzH-AuxVL3aP0aDmB2YOWNqHIcaH3M
-Message-ID: <CAK3tnvKT1=_3KKq-790h5hpTDMU=2S3F-U5h4+BWUL=V1nWprA@mail.gmail.com>
-Subject: Re: [PATCH V9 02/17] iothread: introduce iothread_ref/unref to track
- attached devices
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, 
- Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=M7J97Sws c=1 sm=1 tr=0 ts=6a4b7392 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
+ a=Ky1VarMbmfzgHUieTBwA:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA5NCBTYWx0ZWRfX2pasrzLcnqP2
+ vF+NbNMWNbSliM3p8FVIzOYL9bzI3ohW7y8kmI+RJXzrWGW/08NjQBPtwTu7G3CBKWISsDSCc6+
+ 5xpF/LYyn26aWrRHdLF1xaVS8up81S0wllwUZzeHKJ5J8Ax+v/E61P1JO1lZFvhiZsz/IPbDHJD
+ LM7VpPya5qYUIt5XpQZuiTO9xJ3RmvwxIjQoc6ubTDCa4x9qnRWjb57a0wqwpRhTXgpoSPyH5YR
+ T0oyUYMKXwCACC45OvPsB6efMqXX1yYyP3NBpLfsP0TMfCJIxREWWGF1LTQRyqsfmDlTSRHSteW
+ D/JqRsLLPBO8typodAR7qAYIKpcXYxe+zEimW3XWEfhq+R7RtVpaygWccDJC6S+qEk8z5yA05WV
+ DFcJEK88Z90kcOHKphSxaKT26MtUEHKKeov+UZ4zJTN7kr0iEidQKQG24iEgVHXWiN5GW6/2Nbe
+ H4gOk4NRZulaGHQaVuA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA5NCBTYWx0ZWRfX8ufeRTxpwAJk
+ JMfjLeDjgoMLiKiVxa5lAvlBFZg7bzowqKzbkf2ojx+gEEBO25IDnLcZwRqNmvaz7xSwG1ZSB+w
+ AjM6oDml+krsMgutE0t2LAE7gAqiDHs=
+X-Proofpoint-GUID: km2QphYQS93sYXzaiQORMWG4oYVSVMoU
+X-Proofpoint-ORIG-GUID: km2QphYQS93sYXzaiQORMWG4oYVSVMoU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-06_01,2026-07-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1011 adultscore=0
+ priorityscore=1501 bulkscore=0 spamscore=0 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060094
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,80 +126,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 29, 2026 at 6:42=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Zhang Chen <zhangckid@gmail.com> writes:
->
-> > On Fri, Jun 26, 2026 at 4:46=E2=80=AFPM Markus Armbruster <armbru@redha=
-t.com> wrote:
-> >>
-> >> Looks like you missed my review of v8.  I'm replaying my review
-> >> comments.
-> >
-> > Oh, my fault, very sorry about that, focused on other patch's comments =
-fixes.
->
-> Happens :)
->
-> > Thank you for your detailed explanation.
-> >
-> > I will address your comments in next version.
-> > Expect the:
-> >   IOThreadHolder *h =3D QAPI_CLONE(IOThreadHolder, holder);
-> >
-> > Same as your estimate, this doesn't seem worthwhile.
->
-> Replacing hand-written code by QAPI_CLONE() is worth a try.
->
-> I additionally described how to avoid the copy entirely instead, but
-> advised against it.
->
-> > And the same issue in the [ PATCH V8 14/15] comments:
-> > static IOThreadHolderList *iothread_get_holders_list(IOThread *iothread=
-)
-> >
-> >> If iothread->holders was a IOThreadHolderList instead of a GList, this
-> >> loop could be QAPI_CLONE(IOThreadHolderList, iothread->holders) instea=
-d.
-> >
-> > If we change the GList *holders to the IOThreadHolderList *holders,
-> > This means that we have to reimplement the  GList related API,
-> > for example the "g_list_prepend", "g_list_find_custom" and the
-> > "g_list_delete_link"
-> >
-> > This doesn't seem worthwhile.
->
-> The replacement for g_list_prepend() would be trivial:
->
->     h->next =3D iothread->holders;
->     iothread->holders =3D h;
->
-> iothread_unref() would turn into simple loop to find and delete the
-> matching list element.  iothread_get_holders_list()'s similarly simple
-> loop around QAPI_CLONE() would turn into a single QAPI_CLONE().
-> Basically the same amount of code, I think.
->
-> Your solution already exists, which is a valid argument.
->
-> Mine stays within QAPI instead of mixing GList and QAPI.  Also a valid
-> argument.
->
-> Use your judgement.  I'd try to avoid the mixing.
+From: Matthew Rosato <mjrosato@linux.ibm.com>
 
-Make sense, I will change the GList code to QAPI code in the next version.
+Today, if a RPCIT instruction is presented from the guest whose range
+exceeds the previously-registered IOAT, QEMU will process the range
+so long as 1) the specified range at least partially overlaps with
+what was previously registered and 2) the guest has valid IOAT entries
+in its table.  If the entries are not present (invalid), then the
+RPCIT will unnecessarily spend time reporting the invalid
+region/segment entries.
 
-By the way, do you think it's OK to make this series based on Daniel's
-V5 patches
-for the monitor QOM part.
-https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg06427.html
+Optimize this path by exiting immediately if the requested range falls
+completely outside of the previously-registered range or if the
+requested range ends before it starts (which would only occur if the
+guest-specified address + length would overflow a u64).  Otherwise,
+clamp the request to only the portion of the range that overlaps with
+what was previously registered, effectively ignoring the portion
+outside of the registered range.
 
-This allows us to delete some of the code and directly use the monitor as Q=
-OM.
-https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg07323.html
+Cc: qemu-stable@nongnu.org
+Fixes: 5d1abf2344 ("s390x/pci: enforce zPCI state checking")
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+---
+ hw/s390x/s390-pci-inst.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-Thanks
-Chen
+diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
+index ef20f7645e..b7de23c7d2 100644
+--- a/hw/s390x/s390-pci-inst.c
++++ b/hw/s390x/s390-pci-inst.c
+@@ -770,10 +770,16 @@ int rpcit_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
+         goto err;
+     }
+ 
+-    if (end < iommu->pba || start > iommu->pal) {
++    if (end < start || end < iommu->pba || start > iommu->pal) {
+         error = ERR_EVENT_OORANGE;
+         goto err;
+     }
++    /*
++     * If the specified range at least partially overlaps the registered
++     * aperture, clamp the request to the aperture and ignore the rest.
++     */
++    sstart = MAX(start, iommu->pba);
++    end = MIN(end, iommu->pal + 1);
+ 
+  retry:
+     start = sstart;
+-- 
+2.53.0
 
->
 
