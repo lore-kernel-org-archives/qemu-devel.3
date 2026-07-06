@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E763C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 22:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72FD2C43602
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 22:38:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgrxG-00076H-Mt; Mon, 06 Jul 2026 18:38:22 -0400
+	id 1wgrtx-0003M2-2R; Mon, 06 Jul 2026 18:34:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wgrxC-0006T4-06
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:38:18 -0400
+ id 1wgrtM-0002js-SZ
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:34:22 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wgrxA-0006oE-Cl
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:38:17 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1wgrtJ-0005Z2-Px
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:34:19 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666KE3iP1626296
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 22:38:15 GMT
+ 666KEFCe1639585
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 22:34:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=PL1tmjXQJaH
- Yi9rntN5Kduzn4R+hBPgU4Jwf2jlR6Pk=; b=pNhtRYe8IlbLEGkoO+QFQDU7rkb
- lhH4P2fo4YYUGC6oMLL0uRqzvFCUsdsfQPFLeP4/4Oo8oJKzPl0PP9j1BzMuurMG
- F41qwRFt/LuDY46py/ckGc6m8jbXbqTcCzZkp9+lvGI5A3xpmmP1EKaC9022xCwD
- R/NBCuKNxNe1D+0kPDky6+OT4CEMb5YtYLPPOhqo2+kbhvXu9VfhF7yWRNP8JhhS
- QEocelboEL+9LGtp/o+04kzXtHp9dx5hWwkhF3mlGwLGx/0Ru9xj9+yTqhlrTxnW
- KeCNXSnk1AqXmmmm5RfiPrdIKrzdULNtUs3LJLuxDPPtFWduDXUemy/aa3w==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f88h9bnkf-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ C4LXwc1IKBO0b4v+TXq/28u4cQKHTTklGaZ6DOI3drI=; b=NqC7Ujery1xotxtC
+ Lwu2UomdyPLxbWlqCiKcocwIGL6X9PuAa+EdEfgYj949LGBD+cHvpCyELFoIOMtO
+ F41KpeDQ9R1VUfTvERlTVemTUxUOSBKkcDKSGvc4gbNx04CiktsCInaYjqlgRLF/
+ 01E4UGccNQ6Exyn4h3YFAb9H4iwGFaqFKaDhQf73OYf8MWoyD7/scjrdkHMui1Fh
+ xNCWYdNOL4admJmLvhCRG3G8N2tKHWrHzFxntCmbi/m+uwR9IuZuPAdCFUUiWGtP
+ jazYaQsq9coHvMfPC3W2UzpWPyXeajHImF0fPyrzQtQxRj1cRoNQq2ZdRExegK3J
+ 7s3Cnw==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8a3r34rg-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 22:38:15 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c890bac374eso5449948a12.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 15:38:15 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 22:34:16 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-c8894570b58so2483556a12.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 15:34:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783377494; x=1783982294; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=PL1tmjXQJaHYi9rntN5Kduzn4R+hBPgU4Jwf2jlR6Pk=;
- b=PEf17Yo4ZW6RM5s4ZzmY/lReUdROvg6yCc75Av5FmJsMMDMi6S/YkYarljJDlaQ4m+
- 6wvNjuBBw4CY33gRaPdc77alceIv6rL2uqWIeYQlk2nOF9A3NuuCWZru7XOlT4gOfjKG
- CcI6rYckcxmwVUy3+XkKlwpt8ESLe3MyspN/HEczLD32C9Ho2+Q19WBijuFMWcQaWfyv
- lZZxsB12EP4vZat3MYLTJeLRHCLCix3WgeKFow68B4Mkah9CAu1ALgbgLnkrr/lnCW//
- 4L0UzmcUJtbqkyHtPIy5ut2JBN1U0wKMlOkCqcbeogFs4pWk/7wDJdM71huTfzqEey47
- 4bVw==
+ d=oss.qualcomm.com; s=google; t=1783377255; x=1783982055; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=C4LXwc1IKBO0b4v+TXq/28u4cQKHTTklGaZ6DOI3drI=;
+ b=WQSlGDO1OFUENzf43WqRGJzOFPAF3XrRUNmD3ykXXDKqRFMiJCkC7xxu5jB+WWZR9G
+ cksHcKb7UO/Sjkcb+R+uBpJO4kUcwx3eKgZS1TMmx1NOVNkX/eTxKhzmbpExQLLYFcmq
+ AIwUghq00kTPYyH+EFAH8zJPaDD9EIFRDWlqu5xpj3uIlL7f/15UZqq9Jpma9FTYmoRu
+ ZDxV4lHdB0OoZntE3ITTz0dMXHTnfMxN9AlGHdg9ikxCYGN2iVOpJTAnmgFCkdW+d/wm
+ 5CS2SQ0+n+bcpIW933+fnmEsD9QRdNFH/UdzCqqi1bH2fsjCZZOpciXX1UCwczNwasIr
+ ubVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783377494; x=1783982294;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=PL1tmjXQJaHYi9rntN5Kduzn4R+hBPgU4Jwf2jlR6Pk=;
- b=Wf9lr3wEHro0pqCg5O7CMtIe+mNIKdE1kEeV2b8pgHsChXufW7zAoFaN0nyRTXW8Rm
- Gc6xEzUcAcPt9Cx23bwgZKj6KtpEr1UqVzaQjLtYQrXKUj0pM258Nya68rhctHXCj/qx
- 4ybaDEjgfqoz5WCqlQYkckMDVoHykg0+78FIJI8YZNo/6lnCj0PuebaSgcyjQv5bgcOu
- V/Z0M38mviZO6wh/MCjzt7DSm0pnIhYZZ74GDyvTCjTUD04qL8FkdJiBTIvhDClfJ4FS
- S6Ng6PzUcWz2t3hCH0GRbnwdbVtJ4EEtepInkFX7ioZTvRtaYacnkhfciL4YCbbrBMtz
- 1HPw==
-X-Gm-Message-State: AOJu0YyN6mJZYS8yEGD8M6UdHkNjkALbLFiiUCs8ZBp9Jt/2ZOM/eAx5
- KiT7Fm9ZBxRT4HOHLp+DwFKZyzPEaCcMIN/HL2MntjQKV8kC8EkviGxTeCx4PLE+gI8YMm4O4/A
- aS7jtR1/0T+xsxBLCasjDp363Kn9d5Ro1DfFJNoSoqITk5kWArh3V9j7QDvMwH1HQuw==
-X-Gm-Gg: AfdE7cnCURSoi2rsQYbMjBOe2RMl6Nk3RDqnDUWhFwLt48B4guntJ+atlMhOeOyZVIO
- iuiucGCY4Qawwae7n0I5Mf4DcmKvEaP2OGDnBOnLjpto42gTYIgIlanIxvUAeFmZuzV6d/sqxOk
- qKTnF45CbwxA24IeAcfiJ/Ysta12NtSsNHUiPUvpDK0Swlb+IlbOSyuLnPUy2GRWOy6udVBEVUy
- chiwqxuyrHoxMYRNQ0stWm/1ACNAZDnSXam3K/f7Bt6nNS+sdqKa3kLsQU3obd4hDgcjOtAatGa
- csLrPRpLhKtfFjOxtx/TF1CgsiBSBYMKQLGdveypCQ5wfID2DK01UiggjND8dzAN85dlk+KQtLe
- XEyRdKZ31fgMLO9aRmJkmmzNfKNepAeIWhwQuxjW4eynJW2Fq3eaY+8RZekBP9nGNUQy1LMrrNg
- JU+dEXMw==
-X-Received: by 2002:a05:6a21:e097:b0:3b4:888f:b3f7 with SMTP id
- adf61e73a8af0-3c08eebaaf5mr2872702637.42.1783377494411; 
- Mon, 06 Jul 2026 15:38:14 -0700 (PDT)
-X-Received: by 2002:a05:6a21:e097:b0:3b4:888f:b3f7 with SMTP id
- adf61e73a8af0-3c08eebaaf5mr2872675637.42.1783377493947; 
- Mon, 06 Jul 2026 15:38:13 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783377255; x=1783982055;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=C4LXwc1IKBO0b4v+TXq/28u4cQKHTTklGaZ6DOI3drI=;
+ b=o859V2424MPJiYCHK2xOnNJ7c8vnvWUtJHl3LRinuahf91k9d6JXxTKWnAjVgyoAlU
+ DDWKiX7nDIpB8po+No637nShGBo9cyHV+BzgEIHaB2xwx+sUifwvemGb+fXbGrALfMKB
+ iB1rNb+25mKv24RQ+JRp10Eo2ghiiW6hN4MyNlD6h0mfGfB4wW0AjUjy04XA+5CV5vEY
+ z7zIwMnnBT2ChkyeNrPNFqRBxG8/pMnbTMu1jMeAiKde9dOUjXbb+SiBq8m0bFuyLEVD
+ zREuiOulkrGrUgbVFHJNuKEnZSDMdD1321DjRfPQGA6QsOSXRCo8JTcxfhY/fn+C4yyL
+ DZ1Q==
+X-Gm-Message-State: AOJu0YzQwqrBrbX62P0jFNiYu6u6woPQUFUxHDeAoGg44uttMw1DWhJj
+ dVNsUn0heBihvHdB13hq/ftOuvU0f6h7mwAb7WKUAI3eXlJQ3puYXmfrNI5BcN9cbGWTOucotE9
+ OS0ffiHTRxX/seeoDEoWqs+i0nxa2VX7JiiqI1TpP2JdsinokQJajYCPYrT8lzz3gtg==
+X-Gm-Gg: AfdE7cmWmBSxHpQgPHMrcGYAd5QrFYLpWLTDXxbpU+n05C1qz5fw+NH4tQXMso3qPaz
+ Sq7KkUioMvia9yxt8reEz1Mo7kH+ylWaE6UaQXH24ypHQCkRNZoXZbbn3vDlAu0Te9pjNvBeMU+
+ OpWms75Ype/GL2Q4GXgKUWZsut/uYTK1EilWgpzZQbagH3nE8r7Hu/EkeFn6+oD+CgBwGLlm/Gm
+ MT9FXiRs7IuRz2LuQMiAhHyinW/rtCCEAEEp9PEz96hmVsoGxlKzbL61FP+UeRwuEstpwBPePYs
+ erEgA/Fy7878oNieS0UFal7rPTnOmm21gTFp6yK0kxLhfol5N98Vgt1/Ukb8MhFnm3fh42ZK9kv
+ PSMM50Ha1Ea0dHFJ6KHxdCl2lSJnrInf83qyMjoYlrsd35notj6jLx5uNBFIUiHj0M3sZaqQv3c
+ /u82rXgQ==
+X-Received: by 2002:a05:6a20:728a:b0:3aa:f9cb:d438 with SMTP id
+ adf61e73a8af0-3c08ed57871mr3035203637.21.1783377255203; 
+ Mon, 06 Jul 2026 15:34:15 -0700 (PDT)
+X-Received: by 2002:a05:6a20:728a:b0:3aa:f9cb:d438 with SMTP id
+ adf61e73a8af0-3c08ed57871mr3035165637.21.1783377254765; 
+ Mon, 06 Jul 2026 15:34:14 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b659d8da9sm1399484c88.14.2026.07.06.15.38.12
+ 5a478bee46e88-31174ac0557sm977244eec.26.2026.07.06.15.34.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 15:38:13 -0700 (PDT)
+ Mon, 06 Jul 2026 15:34:14 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -102,41 +104,43 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 45/91] tests/tcg/multiarch/sha1.c: fix big endian
- implementation
-Date: Mon,  6 Jul 2026 15:32:57 -0700
-Message-ID: <20260706223343.988769-46-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v3 14/91] tests/tcg/meson.build: add default flag for testing
+ compiler support
+Date: Mon,  6 Jul 2026 15:32:26 -0700
+Message-ID: <20260706223343.988769-15-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: p1iCU4CU0JWJm1ZEu-qTdHxxyPONGays
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDIyOCBTYWx0ZWRfXyNqBnxmgrqg3
- j4LE0CSTqeP6CbTIeSMW8PLILQ3sc3caj64uijq+hT4qhMkxVqvrpdhnHXwo6/9fgf0OCMxRUJh
- Qsl+231g+Ko0Bz5mIM6gqV0OeHfzHMs=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDIyOCBTYWx0ZWRfX6kb5Pt9/GxfJ
- Z8hWRfeNtnhihur1EZMBixZl+/jCrvCDSdSPtfd6DnR9RYsJ4apwJVVB6SvXbdhqcaGTgncMdLZ
- +hAdKyPRelAsxOfvexCl8Nb/yeSvxP4UwBrYXFDedeAd/TTc0608Mojo4dJsRANnZssZsqZdaGk
- hd9JbgB9kW5p5AEG4dywgIFUi+ZQht1zEND5cOotLf4/SsuZL1UCgha1eWQUF6rh41XoCg2SiIn
- /TaPztjq4ZDjuQtr0F1qkiB28HZvsUV1d81j133o5d1M7sy26oLeqxxSCfI0/kCSVMQp6UBFypz
- NVLpZPB/lDpZB9lT6W9rcX8t7ZvCthC0iJrZoNQTAypptQOAv9vk9lcaHUw1c79akkybXNPjqe4
- kGemu8v7Ia6gAhlO1wDC6Bw9cURLVD99ml4XA4KyTIuxB9SxJ8fKgH6cnz7MOkk7IyMKhr+tECy
- hvQHTjgLW96+Dl+ttlA==
-X-Proofpoint-GUID: p1iCU4CU0JWJm1ZEu-qTdHxxyPONGays
-X-Authority-Analysis: v=2.4 cv=GulyPE1C c=1 sm=1 tr=0 ts=6a4c2e57 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8
- a=0eg9nERfSt1gVPs494UA:9 a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDIyNyBTYWx0ZWRfX1ICjDCPWWuo3
+ lT9fthonAaa/vd//835Z644WlbbR/CnbQmK71sM6U7rXyTcoaH6kKxxh8zm4wdKiM+/gH9X2adk
+ vAXMIBl67uPu7u4sCb8ZBlMb2xSQo347hy6dl+ozh4y3tfrOGfz13ml7NrbBvhyOQGrnaOZRrr4
+ GnHmozyEMIL/sJEPt/lbPHu8oC0f+1kQujbKVzMkUZbdEvMLhSJqIvyOy/0Ear9R2wixN7JO641
+ RIBoN9JNB+RckqFIP2lXJ9+wm6OHwO4g5h633vdyv5s3QLe9TgBvzGvOa2N0VzmpeHSK3DbetoG
+ Xf8zxGLdbdE6PNh1z6yfq2qc7cOZ5ZOyFGMe3EZecTQrbU6U9rDXqg2dMY27oz6bpljwhVPLe9S
+ js2WJ5Ltbfj7RMCRCdh2wwa8VZKljBU4Gu64HQfr28VOBmGrZ5HnWx7oGnxobdfKyFXoIIZ/XDi
+ qbHr8WR4PDNdD1u91pg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDIyNyBTYWx0ZWRfXzRtH/aM44SsC
+ iYPGNDhGjN+0DIKbbbqqeyFWv6KpzbzlaGVHhh5AYe7bhztI4MiEJRJyvW/eTDRsG69gFSEnMI0
+ 8htHsp01oFB3Jl3t2EUVyg3NkIZvu7w=
+X-Proofpoint-GUID: x_9ZYyv_8flkq0ooFtPABp_J1bIBmeJO
+X-Proofpoint-ORIG-GUID: x_9ZYyv_8flkq0ooFtPABp_J1bIBmeJO
+X-Authority-Analysis: v=2.4 cv=OKcXGyaB c=1 sm=1 tr=0 ts=6a4c2d68 cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=rodC9k6DH4pmb89SaOYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=zgiPjhLxNE0A:10 a=x9snwWr2DeNwDh03kgHS:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-06_03,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 clxscore=1015 malwarescore=0 impostorscore=0
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0
+ lowpriorityscore=0 adultscore=0 malwarescore=0 clxscore=1015 suspectscore=0
+ spamscore=0 phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060228
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060227
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0b-0031df01.pphosted.com
@@ -162,30 +166,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All big endian targets were returning a wrong value due to this.
+This global variable can be used as cflags when checking if a compiler
+supports specific flags.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/multiarch/sha1.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tests/tcg/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tests/tcg/multiarch/sha1.c b/tests/tcg/multiarch/sha1.c
-index 0081bd76577..6cebad2951d 100644
---- a/tests/tcg/multiarch/sha1.c
-+++ b/tests/tcg/multiarch/sha1.c
-@@ -48,10 +48,10 @@ void SHA1Final(unsigned char digest[20], SHA1_CTX* context);
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 7b439ee027b..7c20f97241f 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -1,3 +1,4 @@
++cc_check_args = ['-xc', '/dev/null', '-o', '/dev/null', '-c']
+ env = find_program('env')
  
- /* blk0() and blk() perform the initial expand. */
- /* I got the idea of expanding during the round function from SSLeay */
--#if BYTE_ORDER == LITTLE_ENDIAN
-+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
- #define blk0(i) (block->l[i] = (rol(block->l[i],24)&0xFF00FF00) \
-     |(rol(block->l[i],8)&0x00FF00FF))
--#elif BYTE_ORDER == BIG_ENDIAN
-+#elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
- #define blk0(i) block->l[i]
- #else
- #error "Endianness not defined!"
+ gdb_progs = ['gdb-multiarch', 'gdb']
 -- 
 2.47.3
 
