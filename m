@@ -4,98 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EE32C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 15:43:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49E6EC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 15:58:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wglT7-0001aN-4u; Mon, 06 Jul 2026 11:42:49 -0400
+	id 1wglhL-0005v5-Cc; Mon, 06 Jul 2026 11:57:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
- id 1wglT4-0001Zh-LQ; Mon, 06 Jul 2026 11:42:46 -0400
-Received: from fhigh-a3-smtp.messagingengine.com ([103.168.172.154])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
- id 1wglT2-0003Pz-Rn; Mon, 06 Jul 2026 11:42:46 -0400
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfhigh.phl.internal (Postfix) with ESMTP id CE80B1400139;
- Mon,  6 Jul 2026 11:42:43 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-05.internal (MEProxy); Mon, 06 Jul 2026 11:42:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm1; t=1783352563;
- x=1783438963; bh=d2bMpgtxyXzRsGkt5jHRk4xdPjDxTeSXbPbSUGmLYeE=; b=
- SSeUImQzzdbjeMlwjhqOi0h5/TXOlrTxmqGvgOyqROC14itDgFhbtSCgOdv2ivCY
- cAp7Lsyw+xj2Ulte8dawdXK9AALiKtIJ8XQupin4LIQkhGKPS/10tZYWyNZJOuIg
- f7vwpYYuAnuqaj2vRvWelPa5oTiRw5ZIialeHkQ16m+8OJ5ZhiLGh3I6VGsG4reG
- v/2ThQPS81Flwr5i9G54NnRmxQ/kpfZgBHwDjX36Lg1g1HpPH3mJE8pKHt5iqJ5G
- voo8W/qauaDK4jto6Mv5f9zkx3xWBSsKpe9FAjKJRBuwNby7DZwFuASCU7QyHSUR
- leIysGzYfF9F+Hgs7yW0cg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783352563; x=
- 1783438963; bh=d2bMpgtxyXzRsGkt5jHRk4xdPjDxTeSXbPbSUGmLYeE=; b=Q
- GI7qjtPmqHp4gbx8lVvl9e1oUGCnqNE+L28bo41Tw+Jn3yWcpbQaWu5hfyBTaJOD
- B+KzLTmkB+/oYE/jtzmF2tDaQyC36kRS0GK04NcV+/bPiYER54qgEef215akBeBn
- 06Kg5SQLvwjGd+0a9QcbvOIhWvfWnBMzWx10HeDXIqaKbLNGiDEW8Id+9GNLMTSG
- 02b1r+O0jXCE/lFZxLQ/y5nFWSVv7LjiE6FYcLWe5JyBhrBqPuwMsyH0gAQzWaXV
- 1zZ/XPe9+Q6qR4jIVISCXpMTUtDLfGryxY3qztVOhg1vfdsQC7i2LRqvTc7Rz4lB
- NRaYjFGe4hTAan9G1BeUQ==
-X-ME-Sender: <xms:88xLaj0acTb4msndVw_jcfCZsQDxcb8lYl_4ibtJGLQCsavwj4j02A>
- <xme:88xLakX-xOBZVpC2JPqldqE5Y5N44HwLToI2NUcJkfAm-_gs8zo5tZjEbhKYHxcDv
- I5Lbp5dgwfj91aoKvtUipjsaTlL3OvvUKprJ_5_9_-ZBosV4qcYkw>
-X-ME-Received: <xmr:88xLamIdMtloEIv9xFXEZfibQiIP8HVos41QtD57C02NO8-VWxpDpk1rIUU>
-X-ME-Proxy-Cause: dmFkZTGW7exPy/qJBiVeOe+xSIkO2oH2qd31DVyugJssjwOqkBcoJG48BJIJlZUdG4iK4G
- nyN+kWubq+zI1vAbPIcr355yjHZ4vanDEpagH599zn/7SR5hXpz3fIbHp+n9Z2Yv8HHody
- SOuSzerGpQg5UFqZuDi60TkmFZzHcyZAYKGB4uT1zXbF8JiWTFIQlpNcKVZp2JPyvZqsQs
- 0BAVC3CKFJ4IJO5n12Ce6PJlWZI7BOv6r/rYND9DOK3muDWkIq1x7kaVejg6jDuzEi5tKY
- pOuyKA2WFj0fYC1MLAIb/knA+9daJ2KnHWeRQTfBsDjcqnAUMsH3g/AGTJN2tk+auqRaaf
- qyR0vptv1yfjo8YwM3Oh0cINEHgrmDdpV5zxVMlO70OxCR2JaVigb6rw83TNUaUSKYPMNu
- +WVgYU9kob8py0y+sdEHs0OYFd9yToHO1wiP2fdHej8svAVRHmTagunC2YDVIcjtxlvC9F
- g6qIy7HzSk8+KppuAXKqRPkQ6EymnUSyKuGUwuiPgBtjWgfY3vUK2WVCEmHpATDUZX96XC
- AKeLm2NMLbQDFMYUfyrkIaNMo2XEh6NDFcY/ygxgtI/jaRvfXW/f1QCosldwqMRFwuEmL2
- U7D3fcNBIH6FVfXK+ctv1BlQW8zByRLJlrOAOUdbsoi8TV0oYL/cvoayLaLQ
-X-ME-Proxy: <xmx:88xLau38wyGyQblueNW48bEK6Z15CHXVW8YR0G8yAes08NFUxtq_Rg>
- <xmx:88xLak5z4G3TMjuTaNH8v8WCJSKmjt9Hmu78Nk7kkkcJORqyDgp78A>
- <xmx:88xLav-LXrKwbnGHA9HGQwp6okXGPp0G2iTwvCWu-f9do8jU8D5sbQ>
- <xmx:88xLajUR94j8cjvGcdN-Aog07ujXWm1w4BHhEFULn3Mylg3S-UmBEg>
- <xmx:88xLagaprHktYNbPAsj1kXHCdMjFtPRWWXXnNbEtD2GVSTndQejlS4PU>
-Feedback-ID: i03f14258:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jul 2026 11:42:42 -0400 (EDT)
-Date: Mon, 6 Jul 2026 09:42:41 -0600
-From: Alex Williamson <alex@shazbot.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, Eric Auger
- <eric.auger@redhat.com>, Stefan Berger <stefanb@linux.ibm.com>,
- alex@shazbot.org
-Subject: Re: [PATCH] vfio/listener: Only warn on misalignment for VFIO-owned
- regions
-Message-ID: <20260706094241.1457bbc6@shazbot.org>
-In-Reply-To: <CAFEAcA9wOZhn41Twz9zzCBD4MAET2+gbF71kUKnr7r6TXfhjuw@mail.gmail.com>
-References: <20260702160640.3875666-1-clg@redhat.com>
- <20260706082023.7ee830b8@shazbot.org>
- <3f799ad7-08a5-44c7-b6bf-b143da038593@redhat.com>
- <CAFEAcA9wOZhn41Twz9zzCBD4MAET2+gbF71kUKnr7r6TXfhjuw@mail.gmail.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1wglhH-0005uj-74
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 11:57:27 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1wglhF-0007ne-8z
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 11:57:26 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-664db84f074so3675307d50.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 08:57:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783353444; cv=none;
+ d=google.com; s=arc-20260327;
+ b=LGOioWIQahvDGBV9lxtN3sjHgoLs1ZlEIWIvb5RcYHqQzxLh+ZdUKrGzdbDkFAsx4R
+ kyHQfHdfrhiKOcjciXDFcd6rQqbEo0G1QReze/B1LkP3HZvIaLNbU02xxrEct5VzYz2X
+ 9p3S2fOQkgUMSn7IvBFAkr2v7zpXj62e/jJGps0soDR3EKPfpedp6yTtU86+Mc8QvRrM
+ KMZ8zBUL+tVfZ8flPq+sugBy2+dlpG9+lAaPNCxgTxS0Mwe1C6jGAMVGTKqCbYUr5YjO
+ uyna+fc1xkcS66R2DfPtZlgInHL2yH/FLkA7b7kmZ+um2IvUlh27wExl7Tx5YEzm6NZh
+ L5KQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=XHMK11sn2xcOUC3ORuS9gAKlJwygajoOmdtUiJ93OFc=;
+ fh=MzamvxXwUTR7dHYyd0S+NxCuFahI9MSoRpNt5he91fw=;
+ b=rjmgvkqkLJ5r6HP+tJkRz5vCdSGkw2exg2D9IWrTGjB9u52NPVbv1qUZHZ5VwuoRIU
+ ahjt52/yGn9wCtmRziFLeECh1pI0SxxR6V6Vwlc8K6XZUcLJ4egaFK26b4G6+aj5iSVJ
+ Y/WZR1kAQu72legz6oCwLpv6xhQWKE52dWu7EF5+5Ho7cGkbucmh943OnqDyyCRcuQv/
+ jEJcxeQ+AYeH7bokR7ReDJ9whze05zLFmP9c/zrUriXKZpIqpAAh/z9h01tpaPWSMTGp
+ IuKi4ZyJwBrKdbul5tsaU0JBlDqQsXhXwAVTK0Nfb4OtE32uznuCU1DXlZPzKZh+yzQM
+ zsBA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783353444; x=1783958244; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XHMK11sn2xcOUC3ORuS9gAKlJwygajoOmdtUiJ93OFc=;
+ b=PxtQiNSP4ePggc9blhxxPWbjmEdAWiyj08EdalE5JScQ3B6mOzy5q8MjlguOzXDkZs
+ s6dXTRoeUpkMQ/D8cTep7y35TsTqd1sgFbMFgcdDPrWE9zFfa/3xzE/vq5Y5FPclkpKC
+ KiHNsDpUbE4q2PLgpp1vtWNMRpnft6bNVgqKVNXeWSSZuj4rnVzTCm4qybH+YDaPbJvz
+ uwXLvK/WCauig9rVNNY3KrSFzt0A7pwLpclQk5uVb9CdFO6EBDItHjH5V6HLRwLQGHna
+ oPDW5CoA8lrbxE7G/kXS2EixLspkc3kBEDx6aUQpzyEidAUUxjLzAHKPoZ7hD2DR+ZFP
+ EzPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783353444; x=1783958244;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XHMK11sn2xcOUC3ORuS9gAKlJwygajoOmdtUiJ93OFc=;
+ b=VCBm2RXhuyN56uRYsBctyHhmgw2ybSla3GAvMtdF23PQ7kuB01A0462FutdyuTS+OF
+ 2wcRNBpMzZn+0fT5O6bQYdmYqNFaJZxuCG239z/ZEW8ptSEm2chYITBCZKTqThXHYp2e
+ gG9gC6sgwQ6x8czfV1NL/oiM5hkr69JIo4Kopf510P5li3GsO3RcNog77FoJT4WTeNcf
+ bMscNEL2hGHuQ6Lf266okB2Tz4tfpxv0LisSN+8qs5tAUjK86+o9qSsPoSseC5ejflpF
+ Sig86dSJDn5uYSfHKs2q58CjxYLgioMl3+Uz7y8BrD2IILh30z6PJB0rd/hUofTVkewz
+ qQVw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoqyySKHEEpUuNcreA9wmqgyTKp9k3zYM8GlxkGgXvjl40d1vOnMlCY9Xax6l5nnTI6nz+A+MeDXqSP@nongnu.org
+X-Gm-Message-State: AOJu0YzHNT50a5jiUYY3H6yfgIIdOND04H1a+lSzmzwHjSFxRtsG6zoU
+ J/c0oUV0fum6AAqHvGbMS2Y5CVsvKFiNNVk+mleE47FT7QbTzlQZ874zeMlsE3u9IwPD8x9wrfh
+ OlBMd+0FQt2T2rHfkwMH/qNoAd9/y4aE=
+X-Gm-Gg: AfdE7clFm+tls/mgp7sHV49ciQoEl4XMuu8SkFYWQID9Md63GwKxmQoOMVXo2SiS5qP
+ S0kwTBTXl+07WeytpTgrSRVKd2zB1q2G47v0f/RKgTRTah86NPQS+pN/V9881SDlljwGJr73s02
+ 5dcoWaaMV1PFrIhZuzk7YOiFrWq9pk7VDweIaeohgb0w88jij9hfalEg28NONo4fNtbceM/nZsi
+ ln8Y+KWG0thx+2yBTeQeaNkOjwV/CizkkYwrUQECkAQum+Ay+acuh1IRwT/HyRSevjXOlVABOjk
+ EQ==
+X-Received: by 2002:a05:690e:1a06:b0:664:e429:dd2b with SMTP id
+ 956f58d0204a3-6677fc83c05mr817257d50.63.1783353443993; Mon, 06 Jul 2026
+ 08:57:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+References: <5be16244-7148-4691-8ee2-669a71b0a1a4@redhat.com>
+ <mhng-FD339FD6-9FC0-4E9C-9303-6F4211BB5A7A@Palmers-MacBook-Pro.local>
+In-Reply-To: <mhng-FD339FD6-9FC0-4E9C-9303-6F4211BB5A7A@Palmers-MacBook-Pro.local>
+From: Bin Meng <bmeng.cn@gmail.com>
+Date: Mon, 6 Jul 2026 23:57:12 +0800
+X-Gm-Features: AVVi8CddUBhw_3oONW6F37Yp80CXBcZd5hHzZdQhSBHmsMc9p4JIU49NNBDH-zU
+Message-ID: <CAEUhbmVFZW3CFNxYKhoiVg9Xz_ZtOCJZR==Bf_4jjpbZX9hRfQ@mail.gmail.com>
+Subject: Re: OpenSBI docker image RISC-V crosstool gcc URLs 404
+To: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: thuth@redhat.com, stefanha@gmail.com, qemu-devel@nongnu.org, 
+ philmd@mailo.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=103.168.172.154; envelope-from=alex@shazbot.org;
- helo=fhigh-a3-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,73 +119,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 6 Jul 2026 16:27:46 +0100
-Peter Maydell <peter.maydell@linaro.org> wrote:
+On Fri, Jul 3, 2026 at 12:27=E2=80=AFAM Palmer Dabbelt <palmer@dabbelt.com>=
+ wrote:
+>
+> On Thu, 02 Jul 2026 05:12:47 PDT (-0700), thuth@redhat.com wrote:
+> > On 02/07/2026 12.30, Stefan Hajnoczi wrote:
+> >> Hi,
+> >> The docker-opensbi job has started failing because the crosstool gcc
+> >> URLs in .gitlab-ci.d/opensbi/Dockerfile are not working:
+> >>
+> >> #8 [3/4] RUN wget -O -
+> >> https://mirrors.edge.kernel.org/pub/tools/crosstool/files/bin/x86_64/8=
+.3.0/x86_64-gcc-8.3.0-nolibc-riscv32-linux.tar.xz
+> >> | tar -C /opt -xJ
+> >> #8 0.510 --2026-07-02 10:11:48--
+> >> https://mirrors.edge.kernel.org/pub/tools/crosstool/files/bin/x86_64/8=
+.3.0/x86_64-gcc-8.3.0-nolibc-riscv32-linux.tar.xz
+> >> #8 0.511 Resolving mirrors.edge.kernel.org
+> >> (mirrors.edge.kernel.org)... 142.0.200.124, 2605:f480:58:1:0:1994:3:14
+> >> #8 0.579 Connecting to mirrors.edge.kernel.org
+> >> (mirrors.edge.kernel.org)|142.0.200.124|:443... connected.
+> >> #8 0.643 HTTP request sent, awaiting response... 404 Not Found
+> >> #8 0.805 2026-07-02 10:11:49 ERROR 404: Not Found.
+> >> #8 0.805
+> >> #8 0.805 xz: (stdin): File format not recognized
+> >> #8 0.805 tar: Child returned status 1
+> >> #8 0.805 tar: Error is not recoverable: exiting now
+> >>
+> >> https://gitlab.com/qemu-project/qemu/-/jobs/15145227587
+> >>
+> >> Maybe it's time to upgrade to a newer gcc version that is still availa=
+ble?
+>
+> There's been a kernel.org bug that dropped some files, so maybe they'll
+> just come back?
+>
+> https://status.linuxfoundation.org/incidents/3y1k8b4ky71t
+>
+> > Remind me, why do we build the openbsi image in the *QEMU* CI at all? W=
+e
+> > don't do that for any other subprojects in the roms/ folder, do we?
+>
+> I remember messing with this at some point, but it's been a long time so
+> I don't know why we'd be doing it this way vs another.  It's possible
+> this is just because there's no standard RISC-V platform, so we have to
+> build firmware images for each (which would make firmware distribution
+> more complicated).
+>
 
-> On Mon, 6 Jul 2026 at 16:12, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
-> >
-> > On 7/6/26 16:20, Alex Williamson wrote: =20
-> > > On Thu,  2 Jul 2026 18:06:40 +0200
-> > > C=C3=A9dric Le Goater <clg@redhat.com> wrote:
-> > > =20
-> > >> Any device on the board can have non-page-aligned memory regions. The
-> > >> VFIO listener should not warn about misalignment for regions that are
-> > >> not VFIO-related.
-> > >>
-> > >> Replace the vfio_known_safe_misalignment() whitelist with a
-> > >> vfio_get_vfio_device() ownership check: only warn when a VFIO device=
-'s
-> > >> own region is misaligned. For all other regions, emit a trace event
-> > >> and silently skip. Extract the misalignment test into a
-> > >> vfio_section_misaligned() helper for readability.
-> > >>
-> > >> Note: vfio_get_vfio_device() currently only covers VFIO PCI devices,
-> > >> including vfio-user-pci.  Other VFIO backends (AP, CCW) don't expose
-> > >> memory regions through this path so this is sufficient for now. =20
-> > >
-> > > I thought the whole point was to warn when there are non-vfio devices
-> > > that we cannot insert into the DMA map.  851d6d1a0ff2 added tpm-crb-c=
-md
-> > > to an ignore list because it's not a DMA target.  The intention of th=
-at
-> > > ignore list was to continue to evaluate devices that are misaligned
-> > > and either add them to the ignore list or determine they could be a
-> > > valid DMA target and correct the alignment. =20
-> >
-> > If the goal was to use the VFIO listener to catch all misaligned region=
-s,
-> > and potentially fix them, we should reconsider that approach :
-> >
-> >    https://lore.kernel.org/qemu-devel/20260701080843.2418461-1-clg@redh=
-at.com/
-> >
-> > As Peter pointed out, regions that are not page-aligned regions are val=
-id :
-> >
-> >    https://lore.kernel.org/qemu-devel/CAFEAcA-QHJ=3DHaBc5WSLLap8NdDw+tt=
-y4EFfGt6cmmNOK6e_m7w@mail.gmail.com/
-> >
-> > and aligning them would require a machine compat for migration. =20
->=20
-> It seems very unlikely that anything not page-aligned is going
-> to be a sensible target for DMA ops from a device: the main
-> reason to have a non-page-aligned or non-page-sized region is that
-> it's the way we've chosen to implement a device, or it's some
-> "RAM but not general-purpose RAM" thing. If there's a path to
-> warn/error if it's actually used for a DMA op that would be worthwhile,
+The CI job to build OpenSBI was suggested by Philippe, with the reason
+to follow what we built EDK2 bios (commit 71920809ceabed) at that
+time.
 
-But for a vfio-pci device there is no DMA op, it either gets mapped
-into the IOMMU for direct access to the device or not.  This is the
-point at which that decision is made.
+https://lore.kernel.org/qemu-devel/f92f1ec7-ac03-a012-f232-32c533beb9d2@red=
+hat.com/
 
-> but as it stands I think all this warning will ever cause us to
-> do is add more entries to its whitelist every time it complains.
+Given the EDK2 job has been dropped in commit 690ceb71, I believe we
+should drop the OpenSBI job too. I can prepare a patch.
 
-IMO, that's ok.  That's the purpose.  We're up to one whole class of
-device so far, we don't care about mapping failures to TPM devices.  If
-some day this does fire on something we care about, especially a
-regression, it'll earn its keep.  It doesn't seem like an excessive
-burden yet. Thanks,
-
-Alex
+Regards,
+Bin
 
