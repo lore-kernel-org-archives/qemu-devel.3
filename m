@@ -4,108 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A259C43602
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 17:55:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8174C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 18:02:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgnWG-0004x8-FT; Mon, 06 Jul 2026 13:54:12 -0400
+	id 1wgndy-00080E-4t; Mon, 06 Jul 2026 14:02:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wgnWD-0004wh-Oz
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:54:10 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ id 1wgndu-000801-An
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 14:02:06 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wgnWA-000889-Om
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:54:09 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-66628618509so4331512d50.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 10:54:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783360444; cv=none;
+ id 1wgnds-0001mZ-Hx
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 14:02:05 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-66771ded50aso1561656d50.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 11:02:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783360923; cv=none;
  d=google.com; s=arc-20260327;
- b=sYOH5sWNY7qZZkPJLhpRMx4zhLfosys1LICE040Bwe8LXmTIl6eaAnT3WAXTnHnqkt
- Csr/xGtgveabf6/gR/m9i5Z6dCh/Q70HxqiTHC8siUjDbLzL0X05YO4ti2RCztLI5NTF
- C2f+duj2Ta/5osgiueGkkVwPDCMqjZRhr3h42G1rqQiImnFwV9g/x4HeeTvazwCcCAlT
- H9pm2pOzdV6V4227uhVHmX39aDgPO4VgF3oovnsj4wj34Nit88WJMyxmggZOyyA0HHdO
- OefirGSzoJzQ6DcwC7ckh0Dpa4BiQhZLYC1+abfeMEqUVQc4PEyDA+ymOPWg+ycqvePI
- +MhA==
+ b=eeJ4esZ/d2gNRZ+B3lhBShr9LrTGQxHGH+ouOrNZ0FNOzX+4RvzH9+B5dD8TssLYWi
+ Nxfs7KHj/nVq5vS0aJmyGc4tFTMztrviFCrykpCQ2KFld6ijcwYCZzi0A0VszEnWeobl
+ 1N44Ytx7AEA+tmOEFAP+tqp+LDJIV4wR/cnqZxR/FDo/pyj/Boi5evSl+9z7pmYi5VJJ
+ aAF8BA60oHPF8gc6RN10vIS0DJFoC4xyJmlv4mTKVtfOElNJucyg38lDJpmtNIacfyGa
+ Uvp1Y5k2F9ZoAjRqk4MVd5vShwOZfK5RbMhXo2+Bb/l63dFhej2PlMbTDonWpC5nHwNL
+ 4vcQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=KPWU9zMPY6i0aneOZqqbvFptRwD37tmJvOurkiWj2m0=;
- fh=0mFKHTj7rKUBAFer4LtI90Y9CGG/Wq18PIkiexg+q+E=;
- b=mr0+Nf7cJpEyhldYTa6TC6ckZbqhdPxmdEcmhjsQke6jYmVZzfNDtwg9zeuY8uquQz
- 2FXYv4f7wWbeUNYx2jj/5R473P5YDxGApirSMMpl4LKs4cW7mhGvEQhl9Qcqm20az6kT
- gH8hOMqKeLurpzCWtFH1ypF2LizOegSyesbHpOhafFBkz1i1Z0ibUNSHJKLJki7BVyCX
- bvPZ/QBL0aPDj3LpwGdoMOGzuOwKqK2RBqRScfO09v4tIaSkrIR8c4ahRCLF7LbrIT1o
- Sk38nZp2FApmYraUD9cthEF/h0UILOis+JEpYWtH/y89VgC4W6byEazRDdKjBbdjpdlb
- jlzw==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=PRIo7JX0dg5nMUku49n19GTUy24gWyqUZVrYxKU3tXA=;
+ fh=Uguf3R8TxHhR5mHh7gfIcuDS6LQ7EA6DU0T80F8k7F4=;
+ b=T20bpbbWoQWlXgtPr9UYo+6ApjTljdXDC217DyCQQeQkHqKg9Z9yXWZPYWQwU2OVwj
+ wNJZyphrx0xBQwAYAsebtkUFvKBLSsHjPncRjr5+/Fi7SSNOaKkgQvC5Lj0TNR9oH3VX
+ XX1zTMEsy3jj7KcJjcyOvkuE4096jiIyfua9onGIq+flfYMSskQLTHRaeRd8DjCjg783
+ E8A7A8Rv3xj6okAKV1z1LENJGS6Eg08hRI5gM5jUqD6uhzHEP0WnGHAKJsMcwPjbkmxV
+ M8uLfawx4DTdlYe22+ll9lVKSKffU1RuRCU57dp88FVLjfriihN4P9nAuoDVkZ+uaL2m
+ Okaw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783360444; x=1783965244; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KPWU9zMPY6i0aneOZqqbvFptRwD37tmJvOurkiWj2m0=;
- b=m9fAYk5OwB2kPQROqrNY1pAE3F5tppIxqzE9HAee5sFhBOmBlB/tGwDwTxAulB9MV0
- vLt+1zbr7dBXfCZZocDTaQ4LrhFZZ8/QXorZnU1KZxwXoJP4mvYC/W5GQCwTFa4Zrjil
- UGtVW87pzlp2isuAxDSRTIK3GHcqfa9e5EaGDexK3AScv/rrQii4qZRCPW6zjlj7cbCG
- xn+rUQde+bAvbYO3h8qoXB/f6RE6P4MVIfSxVKGa98jFhdGqapNFy9SG3IJ2a99IloP5
- cJuGWnd1f+MPv46yRxfM/14Xro9/FZy5Nfe0SlbgEq+cOZsKcJMMwXKsyhnx0yqZZujJ
- 6qhg==
+ d=linaro.org; s=google; t=1783360923; x=1783965723; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=PRIo7JX0dg5nMUku49n19GTUy24gWyqUZVrYxKU3tXA=;
+ b=AKTnACYctvYfiHYUgBslpPf6cIs7f8k+PUc9bE8vWqtpD6G2vWUVS/EIoJqRBm1cii
+ kJ/Wyv+ddMoLDHazWw4QLDdV7eqs71cSDCQvnwysweXlfSsAmpCUEW9V+CYGrqLgyaiN
+ uce4+4PXrSon39b3eWsY5lwKBnvmuLSLLH3f7iMgcN3HGHB5FG38/0ZB9LlaxQo8rrAd
+ OMKB4bfLNuP4RRlZrLeD2cMS9B/jGYkXL2h+HHCRM3cDYdLEgBa4KOILfsnYNdgXbwDe
+ Xv1NH49gU7FqrXQfi1AdexSvhfxG5OmP1M9f6D6OFELT81Qc0C7ao8IuWbYVoEHI49ID
+ GjMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783360444; x=1783965244;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=KPWU9zMPY6i0aneOZqqbvFptRwD37tmJvOurkiWj2m0=;
- b=rEvH3vjHDidU0LvGNUiO/OXqG/Q/FDnyXQlWrkpyv1tDTCqZNyhzs3zXp1+zeJ68pz
- ZsCgo1hUOD71pFIJyESQJTJzzyUfOy42QYiCdXlUpCQ6GK2y/h+L0Qchlm0qpsJgZBLV
- +kDb+Ht+u+A7WrGeC9eynvHqXh7sfWjbCK7RK6+H+F5aq3krLL0RIiHkoMJfd/e/rw7u
- 1Ecz01VoXwlBFhmaOpr+QeTk7XU4KcDuL8bi7JNGWo3Sksws75+TDoPFAfn3UYZPoaHR
- bXTtJU/4E85j5/zkM4N/x9m+w0K8kVOOCfrvgfm7zg71fF0WC1jQA/r0qyFQ1NpXvXQw
- Hk8Q==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrQrwAWvEeWGp5pqWBcD+txjlqtLlmUtPfJkqDOKpY6yyki/K5a3biY+gin5Q+DRnGvsoGjJg+2/TjY@nongnu.org
-X-Gm-Message-State: AOJu0YyrfqoExutdGTi5j6Ykkw+g66ux0CbvBO30lh4qA7J4QcIG74xk
- UBCl7MZFnei2Pxeot8qMTaTebF2niYNp+8ne1ODosNzCQYfkYQ1ZZKOcM+7o7nfoZEHXzpN6Mfg
- eZv+upDMjwDcqLr7IxaCu4jgUvWjA5/R7mO9eMqnkzg==
-X-Gm-Gg: AfdE7cnypbq2eimi6+ZA7MuEyAnFjm9n/FYnryl9kjEixR40VNpxZN/LUNddL9zh+LX
- KzORB2fORPEYKX2semYhcitHSL9MUazAvJU6gn0koTujm8OvplY+Cp1xeYiEhHlXW0FsF+9foqE
- BF2UEbR2j35J682LlRGmBLbXyMqK3ltPvBjWzCSHdzCfR8608cLoSnMQ+Et29DaPIer8DvXmXgs
- 7T8h6SZeal4laPH6mfBKX0qwL0q47eGkZo7UPz99khj38IFYUjImrk/MjZiCab5NlVIUIzKmDJR
- CLa1DLFhzzqZsfewucfoJbMHRo9rjrkRof0hySk0NKC70kPHYODS4XLi
-X-Received: by 2002:a05:690e:d54:b0:664:b27c:2b4f with SMTP id
- 956f58d0204a3-6677fb0362bmr1453001d50.5.1783360443902; Mon, 06 Jul 2026
- 10:54:03 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783360923; x=1783965723;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PRIo7JX0dg5nMUku49n19GTUy24gWyqUZVrYxKU3tXA=;
+ b=fWcqfOhDBHYdjLGn/meBIaG4kWVKJ1SREjm6hWYAXfrLOJRjjodQiybKJYaxYbA/9X
+ b+d6kzofTTBvOp5QoXcC4CT9cePWjfNSXlWCruPb/i5LopXiHgdHVCLUKyWKjremkhhr
+ LvLNGlESFNwh36/9jRpYXvmvSaDeWrTyyIj9MjvV9XJVDy4jpnkzpy5gWJwR64OGtm3z
+ TIyxHzLU6kbF4+uRMOty8zCPwwDDIgUtA8H5A5Xk+x3F4Ud1znAzTzAjbLmHaRb7yHX9
+ 0hMdqVx3wwehrAILWQRfZKQsKN361/b0HHxNwRNkGm4ZJkMLTFRZybi05gljxPT7yj/9
+ 8INA==
+X-Gm-Message-State: AOJu0YwYz3aBxsMgf0NcGdJY0it9qCaeK3jgKika5jJoQoORH3yJ91u4
+ QetINLFSAn+rC5Q3/Pin4Sg5zoR7mkMIm8Q94/WIH/BXBnMEC58FUKfJzXU1CviA7NYPMaZ2tcX
+ WAB282xx70jdXnYzF6zKmsoTlLi3MVpFMJvf1OQYHJZmPBDg4K093xBQ=
+X-Gm-Gg: AfdE7cnCoLteetOxNz1lyeR/BOnZNo58jO4Vl06tOnfciHSI/NQsXs/HyKXTPaSYlaO
+ jqI+zGHbkv9voVW0pfE8dgjHZYD2dEWNKeJXPYKes1+0ejUMjL1n9pri/FXJa4CA1UBnkuBqlR1
+ 0uTsR+uId9EcRRT9GNDl09C5VAOWgINm5ePDS84iWreSZba0ldJ+2UY3qEWQy1rOfaLgr7GGT+N
+ GokrK916yPLOsBybri5MzD0yWogItDbgzAunoCHqxcFQ1eFQw7loVIL9/sgwz4gSuGA2iZ2Wv+e
+ xdTLY6p1A3S+UZNHhfhsB0ab7Wb0lIxxWXVZJIqPXRU45ZQ6NBFlWWEJ
+X-Received: by 2002:a05:690e:4384:b0:664:ae68:33b6 with SMTP id
+ 956f58d0204a3-6677fab6bdbmr1025383d50.18.1783360922998; Mon, 06 Jul 2026
+ 11:02:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260309181452.83702-1-thuth@redhat.com>
- <00c4ab4b-a58b-4de4-8e41-566b2cb7f920@redhat.com>
- <124bd918-f2ab-43e2-bd2d-fc824de62c40@tls.msk.ru>
- <fcbe3d7f-64d4-4b13-b930-a81e77db4784@ilande.co.uk>
- <df7a091c-a8a1-416a-acf3-28a0cbd8dd2f@redhat.com>
- <c7d6b801-449e-4f55-9c1d-ebec7a0e9595@redhat.com>
- <c0cd50bd-e054-48b6-af54-1050e13bb720@ilande.co.uk>
- <baf0b727-d53c-4717-b4e8-9c8603b2fa75@oss.qualcomm.com>
-In-Reply-To: <baf0b727-d53c-4717-b4e8-9c8603b2fa75@oss.qualcomm.com>
+References: <aQtAotYvzFY0Vpft@tcarey.uk>
+In-Reply-To: <aQtAotYvzFY0Vpft@tcarey.uk>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 6 Jul 2026 18:53:52 +0100
-X-Gm-Features: AVVi8Ccn38g7Hit4O71HuRDN6SsoLBDmlWqjIzpdjYQIdM1Emf0YXyQjCdJ7I8k
-Message-ID: <CAFEAcA_oFFEyRfXjRZR7+nLOE5fgzDi1kHQop=s1Q4EzYvaVxg@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/sparc64/sun4u: Mark unusable PCI busses as full to
- ease device plugging
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Thomas Huth <thuth@redhat.com>, 
- qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>, 
- QEMU Trivial <qemu-trivial@nongnu.org>, Michael Tokarev <mjt@tls.msk.ru>
+Date: Mon, 6 Jul 2026 19:01:51 +0100
+X-Gm-Features: AVVi8CdEi8FKEYPhkair-aJKrhlg57NL3yfupk2uerP5WenNEBPJ8zfSByZfCoM
+Message-ID: <CAFEAcA_ZDvuCKGrGZuUYFQKL-7cG3dcNVgyo55P-WRMas6e4VQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/misc/edu: restrict dma access to dma buffer
+To: Torin Carey <torin@tcarey.uk>
+Cc: qemu-devel@nongnu.org, Jiri Slaby <jslaby@suse.cz>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -128,24 +113,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 6 Jul 2026 at 18:29, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
-> - Bus capacity is odd. We have a generic Bus-class @max_dev field but
->    do not use it with PCI variants. If set, it limit the instances
->    capacity. The capacity is tracked in the instance state, and when
->    no @max_dev is set the only way to mark a bus full is using the
->    qbus_mark_full() helper. Then if we remove devices, the bus remains
->    full, and there is no helper to restore available slots.
+On Wed, 5 Nov 2025 at 14:39, Torin Carey <torin@tcarey.uk> wrote:
+>
+> The EDU device doesn't enforce any bound checks on the addresses provided,
+> allowing users of the device to perform arbitrary reads and writes to QEMU's
+> address space.
+>
+> Signed-off-by: Torin Carey <torin@tcarey.uk>
+> ---
+>  hw/misc/edu.c | 24 ++++++++++++++----------
+>  1 file changed, 14 insertions(+), 10 deletions(-)
 
-The qbus_mark_full() function is intended for the use case where
-a machine has a bus which in real hardware is entirely internal,
-so you have something like an I2C bus which has some on-board
-I2C devices connected to it, but there's no external socket
-that the user could add more to the bus for. The idea is that
-the machine model creates all the devices for this bus, then
-marks it as full. The devices never get removed from the bus,
-because they're hardwired in, not user-unpluggable.
+This patch got lost because of a tangent conversation, but the
+bug was recently re-reported as
+https://gitlab.com/qemu-project/qemu/-/work_items/3852
+and I think the patch itself is good and we should apply it.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3852
+Fixes: 7b608e5d6c1 ("hw: misc: edu: use qemu_log_mask instead of hw_error")
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
+
+> diff --git a/hw/misc/edu.c b/hw/misc/edu.c
+> index cece633e11..a4b01269e8 100644
+> --- a/hw/misc/edu.c
+> +++ b/hw/misc/edu.c
+> @@ -103,7 +103,7 @@ static void edu_lower_irq(EduState *edu, uint32_t val)
+>      }
+>  }
+>
+> -static void edu_check_range(uint64_t xfer_start, uint64_t xfer_size,
+> +static bool edu_check_range(uint64_t xfer_start, uint64_t xfer_size,
+>                  uint64_t dma_start, uint64_t dma_size)
+>  {
+>      uint64_t xfer_end = xfer_start + xfer_size;
+> @@ -115,13 +115,15 @@ static void edu_check_range(uint64_t xfer_start, uint64_t xfer_size,
+>       */
+>      if (dma_end >= dma_start && xfer_end >= xfer_start &&
+>          xfer_start >= dma_start && xfer_end <= dma_end) {
+> -        return;
+> +        return true;
+>      }
+>
+>      qemu_log_mask(LOG_GUEST_ERROR,
+>                    "EDU: DMA range 0x%016"PRIx64"-0x%016"PRIx64
+>                    " out of bounds (0x%016"PRIx64"-0x%016"PRIx64")!",
+>                    xfer_start, xfer_end - 1, dma_start, dma_end - 1);
+> +
+> +    return false;
+>  }
+>
+>  static dma_addr_t edu_clamp_addr(const EduState *edu, dma_addr_t addr)
+> @@ -148,16 +150,18 @@ static void edu_dma_timer(void *opaque)
+>
+>      if (EDU_DMA_DIR(edu->dma.cmd) == EDU_DMA_FROM_PCI) {
+>          uint64_t dst = edu->dma.dst;
+> -        edu_check_range(dst, edu->dma.cnt, DMA_START, DMA_SIZE);
+> -        dst -= DMA_START;
+> -        pci_dma_read(&edu->pdev, edu_clamp_addr(edu, edu->dma.src),
+> -                edu->dma_buf + dst, edu->dma.cnt);
+> +        if (edu_check_range(dst, edu->dma.cnt, DMA_START, DMA_SIZE)) {
+> +            dst -= DMA_START;
+> +            pci_dma_read(&edu->pdev, edu_clamp_addr(edu, edu->dma.src),
+> +                         edu->dma_buf + dst, edu->dma.cnt);
+> +        }
+>      } else {
+>          uint64_t src = edu->dma.src;
+> -        edu_check_range(src, edu->dma.cnt, DMA_START, DMA_SIZE);
+> -        src -= DMA_START;
+> -        pci_dma_write(&edu->pdev, edu_clamp_addr(edu, edu->dma.dst),
+> -                edu->dma_buf + src, edu->dma.cnt);
+> +        if (edu_check_range(src, edu->dma.cnt, DMA_START, DMA_SIZE)) {
+> +            src -= DMA_START;
+> +            pci_dma_write(&edu->pdev, edu_clamp_addr(edu, edu->dma.dst),
+> +                          edu->dma_buf + src, edu->dma.cnt);
+> +        }
+>      }
+>
+>      edu->dma.cmd &= ~EDU_DMA_RUN;
 
