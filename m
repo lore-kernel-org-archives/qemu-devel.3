@@ -4,68 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75901C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 02:26:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7AB9C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 02:34:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgZ1R-0007s2-St; Sun, 05 Jul 2026 22:25:25 -0400
+	id 1wgZ9x-0001Cx-J8; Sun, 05 Jul 2026 22:34:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wgZ1O-0007rp-De
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 22:25:23 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wgZ1L-0004q6-Nh
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 22:25:22 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8Bxmuv_EUtquD8AAA--.1192S3;
- Mon, 06 Jul 2026 10:25:03 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJDxTsf9EUtq2acBAA--.10198S3;
- Mon, 06 Jul 2026 10:25:01 +0800 (CST)
+ (Exim 4.90_1) (envelope-from <17746591750@163.com>)
+ id 1wgZ9v-0001Bd-CV
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 22:34:11 -0400
+Received: from m16.mail.163.com ([220.197.31.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <17746591750@163.com>)
+ id 1wgZ9s-0006b5-T0
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 22:34:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Subject:To:From:Message-ID:Date:MIME-Version:
+ Content-Type; bh=4EEJ0WmsjuwzKBYxRHztNtnGyQsc+Ilb7majJ8PQcn8=;
+ b=aEvDlEqsrT8MLfnMV8SGWcYLNzjToWmEjM4W4BOA1lFGPcl0anw/UWuX/TbTKc
+ cQ21gnHKK8BVNU1kye4fS9dadPq0hKtD6jX0WA2zFzQw60xudAc4iS5vL7qZ4gPy
+ +J7wIhONhXet6Solk2G2HzjZsO6SDsl2A2C8l2L4Z1en4=
+Received: from [10.2.10.30] (unknown [])
+ by gzga-smtp-mtada-g0-2 (Coremail) with SMTP id
+ _____wBXX8xdE0tqv5MrHw--.35710S2; 
+ Mon, 06 Jul 2026 10:30:54 +0800 (CST)
 Subject: Re: [PATCH 1/2] MAINTAINERS: update Song Gao's email address
-From: gaosong <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: maobibo@loongson.cn, lixianglai@loongson.cn, Song Gao <17746591750@163.com>
+To: gaosong <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: maobibo@loongson.cn, lixianglai@loongson.cn
 References: <20260703095538.3211983-1-gaosong@loongson.cn>
  <20260703095538.3211983-2-gaosong@loongson.cn>
-Message-ID: <a5f5c914-9e76-44a3-642d-2008c9067652@loongson.cn>
-Date: Mon, 6 Jul 2026 10:27:28 +0800
+ <a5f5c914-9e76-44a3-642d-2008c9067652@loongson.cn>
+From: Song Gao <17746591750@163.com>
+Message-ID: <7d30c98f-2d74-f12c-65e1-dc7d76139e45@163.com>
+Date: Mon, 6 Jul 2026 10:30:53 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20260703095538.3211983-2-gaosong@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
+In-Reply-To: <a5f5c914-9e76-44a3-642d-2008c9067652@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-CM-TRANSID: qMiowJDxTsf9EUtq2acBAA--.10198S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7tFW3Xr1rXw1fXF15Cr1fXwc_yoW8ArWUpr
- Z3C3WFkry0qw4UAr1YgFyqkrnrX395Krn7XryDt34Fqr98Zw1rXry5t3Z2yFZ7Xa4rCayj
- v3s2934av3WqyFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-2.97, SPF_HELO_NONE=0.001,
+X-CM-TRANSID: _____wBXX8xdE0tqv5MrHw--.35710S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7tFW3Xr1xur47Zr4DXrW5Wrg_yoW8CF4Upa
+ yfGa1FkFy0qw1UAr1YgFyDKrnrJ395KFn7XryDt34jqr98Zw1rXr15t3WIkF97Xa4rCayj
+ v3s29a4av3WDAFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRbVy3UUUUU=
+X-Originating-IP: [114.242.206.180]
+X-CM-SenderInfo: jprxlkywvzilivq6il2tof0z/xtbC0B5JUmpLE17NIQAA3V
+Received-SPF: pass client-ip=220.197.31.2; envelope-from=17746591750@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FROM_LOCAL_DIGITS=0.001,
+ FROM_LOCAL_HEX=0.006, NICE_REPLY_A=-2.97, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,52 +79,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-�� 2026/7/3 ����5:55, Song Gao д��:
-> Update maintainer email from gaosong@loongson.cn to
-> 17746591750@163.com and add corresponding .mailmap entries.
+
+在 2026/7/6 上午10:27, gaosong 写道:
+> 在 2026/7/3 下午5:55, Song Gao 写道:
+>> Update maintainer email from gaosong@loongson.cn to
+>> 17746591750@163.com and add corresponding .mailmap entries.
+>>
+>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>> ---
+>>   .mailmap    | 1 +
+>>   MAINTAINERS | 4 ++--
+>>   2 files changed, 3 insertions(+), 2 deletions(-)
+> Reviewed-by: Song Gao <gaosong@loongson.cn>
 >
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   .mailmap    | 1 +
->   MAINTAINERS | 4 ++--
->   2 files changed, 3 insertions(+), 2 deletions(-)
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+Reviwed-by:  Song Gao <17746591750@163.com>
 
 Thanks.
 Song Gao
-> diff --git a/.mailmap b/.mailmap
-> index 8ade2eed66..593b6c2c53 100644
-> --- a/.mailmap
-> +++ b/.mailmap
-> @@ -119,6 +119,7 @@ Roman Bolshakov <rbolshakov@ddn.com> <r.bolshakov@yadro.com>
->   Sriram Yagnaraman <sriram.yagnaraman@ericsson.com> <sriram.yagnaraman@est.tech>
->   Stefan Brankovic <stefan.brankovic@syrmia.com> <stefan.brankovic@rt-rk.com.com>
->   Stefan Weil <sw@weilnetz.de> Stefan Weil <stefan@weilnetz.de>
-> +Song Gao <17746591750@163.com> <gaosong@loongson.cn>
->   Taylor Simpson <ltaylorsimpson@gmail.com> <tsimpson@quicinc.com>
->   Yongbok Kim <yongbok.kim@mips.com> <yongbok.kim@imgtec.com>
->   
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 97dcc78ded..ef4c3b5c5b 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -280,7 +280,7 @@ F: disas/hppa.c
->   F: tests/tcg/hppa/
->   
->   LoongArch TCG CPUs
-> -M: Song Gao <gaosong@loongson.cn>
-> +M: Song Gao <17746591750@163.com>
->   S: Maintained
->   F: target/loongarch/
->   F: tests/docker/dockerfiles/debian-loongarch-cross.docker
-> @@ -1360,7 +1360,7 @@ F: docs/devel/hexagon-sys.rst
->   LoongArch Machines
->   ------------------
->   Virt
-> -M: Song Gao <gaosong@loongson.cn>
-> +M: Song Gao <17746591750@163.com>
->   M: Bibo Mao <maobibo@loongson.cn>
->   R: Jiaxun Yang <jiaxun.yang@flygoat.com>
->   S: Maintained
+> Thanks.
+> Song Gao
+>> diff --git a/.mailmap b/.mailmap
+>> index 8ade2eed66..593b6c2c53 100644
+>> --- a/.mailmap
+>> +++ b/.mailmap
+>> @@ -119,6 +119,7 @@ Roman Bolshakov <rbolshakov@ddn.com> 
+>> <r.bolshakov@yadro.com>
+>>   Sriram Yagnaraman <sriram.yagnaraman@ericsson.com> 
+>> <sriram.yagnaraman@est.tech>
+>>   Stefan Brankovic <stefan.brankovic@syrmia.com> 
+>> <stefan.brankovic@rt-rk.com.com>
+>>   Stefan Weil <sw@weilnetz.de> Stefan Weil <stefan@weilnetz.de>
+>> +Song Gao <17746591750@163.com> <gaosong@loongson.cn>
+>>   Taylor Simpson <ltaylorsimpson@gmail.com> <tsimpson@quicinc.com>
+>>   Yongbok Kim <yongbok.kim@mips.com> <yongbok.kim@imgtec.com>
+>>   diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 97dcc78ded..ef4c3b5c5b 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -280,7 +280,7 @@ F: disas/hppa.c
+>>   F: tests/tcg/hppa/
+>>     LoongArch TCG CPUs
+>> -M: Song Gao <gaosong@loongson.cn>
+>> +M: Song Gao <17746591750@163.com>
+>>   S: Maintained
+>>   F: target/loongarch/
+>>   F: tests/docker/dockerfiles/debian-loongarch-cross.docker
+>> @@ -1360,7 +1360,7 @@ F: docs/devel/hexagon-sys.rst
+>>   LoongArch Machines
+>>   ------------------
+>>   Virt
+>> -M: Song Gao <gaosong@loongson.cn>
+>> +M: Song Gao <17746591750@163.com>
+>>   M: Bibo Mao <maobibo@loongson.cn>
+>>   R: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>>   S: Maintained
 
 
