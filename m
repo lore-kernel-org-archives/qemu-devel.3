@@ -4,132 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56720C43602
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AECF9C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 09:00:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgfAR-0007kI-PZ; Mon, 06 Jul 2026 04:59:08 -0400
+	id 1wgfBH-0008KN-Rp; Mon, 06 Jul 2026 04:59:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgfA6-0007hZ-6I
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:58:51 -0400
+ id 1wgfBF-0008K8-CO
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:59:57 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgfA2-0008ME-PR
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:58:44 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1wgfBD-0000F8-NQ
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:59:57 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6668jEHT3624558
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 08:58:40 GMT
+ 6668N2d04072465
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 08:59:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 1/uqlUN1ub4XwzyuuWJTFRRxsZAcHXJ1jXD/sNb1VG0=; b=DCjSalQ58JxokhEm
- U6ZLiXahjrVuPYorsek6C+98NrkzbJfiqY9RpRzv8DLsvr0+kPnn6/v6FT5y8xyP
- 3rbzbAagbPJvWGUx0iqyeP2FzpMeOwLPGJcnAJYMUFRd+kGWoBJgLrfJYBvdbc2x
- tqsnfgBrg6DJq463o6biAk0BzzGTsbJ2ks3m2U6UTh+80dFVkOl//Ialf/B2npIO
- ysFokguz8g3xOyIDywGNZD0trcv4qZefZyTY9MqMbWOLsuWwhxn1oUVwnuo//G0T
- YPoWA2CTvoECIhrN1tuLD0bwywTCF99CH8baeDoSLDkI6AY2AcvGqlDDC18QlhHc
- hnBRZg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6s4swhmw-1
+ K3ht6EUOPtOUljnYz6XeEjLZNZS2GzokZUyIMxkvDE0=; b=dsipl/AWwMCc0rqS
+ WZN19qCktKSkKsIe1Qy9OZD5kcx+H6yQiO/bAJWWQYC9LAxnCmEB3EKIcH5Ej6b+
+ y8oCypB75ao7HeS/c/BXfuL22GarQC+o4eQosT+aFCZlL99py3I3a8lkEyhpJjLY
+ ljRteYWh29vDC5elBZf+bCAVebdG9UNRiyUOiLJFq+ieOVySt0i2prjpYiI4ApZ/
+ vK3kRTqpEDu7ZBmC8jSdFlOclDY1UNI1yyczhstZDi8HQeTvzbRxGcOI61sZI/Pm
+ FZo+nKkvA0P1fr1LiPw7mB7DbqRIYCEASaslDt/qZLzX0IKzq2HALDn5jo9ItLih
+ mYEajg==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f88t884ss-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 08:58:40 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-92e820609d9so195892185a.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 01:58:40 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 08:59:53 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-92ac0a54110so301224085a.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 01:59:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783328319; x=1783933119; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783328393; x=1783933193; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1/uqlUN1ub4XwzyuuWJTFRRxsZAcHXJ1jXD/sNb1VG0=;
- b=Fo86IY+i8DWhTm/gZ+VEq+hsunuCklREGbL9AEcZknTy82/cM3BR1o4/DxHphvC8WI
- XEsFmd5WFZCD46f5q4GXg/ojjR778GcqRWuhpHIgwUAZZhfZKoynbrNdxsx5uYRldarp
- 3B6kUsMgEqiTTfMn1zEHtJdPh3MSApBF5dQCZixzu/RfSR9B2cohRviLCVILOzrMcouv
- 9hB3wARtr+3zXnfbOUFk1VbK5UD97xN1x/jhmvzEJirNFIQamoif7hm1I7i0cf6q1mUb
- RhjBGln7yZ8qKAnunG3JUshOnEsBa7mhngobxWx2wSGxxghTo9Pp8C+pDZgfA10OHpJI
- t7ZQ==
+ bh=K3ht6EUOPtOUljnYz6XeEjLZNZS2GzokZUyIMxkvDE0=;
+ b=eicM4PF6MHHgvw4xG8JYNQNCL1fX0ZNaw6fFnXirJ4QifXkR2QeYMScS2EgIp68fgo
+ zC9ucqKb4bybGrgE+dUB6xOZFuVq4AlY4pN31nUZkXZIp9CTc1v8KqYPqmqtZFaJDM3d
+ PgFgtwfBL48xV6FNUwksh7thdmSzxMFwhFQlLva8cOmNWTr7tsZqfTCVRZdG4NU0BE60
+ WFb5THgJl38bKV/oFetvzb/KZqMVn39/KkZk9wNrNjA5xIJzwjJDXtI0c5DjPlbStsnI
+ piMLvqCj6KJj6Eg7rX8vw/KT3WmHNjh+UlG1lJryv96z+7xQXEew34+EaZeJGuDVxpt/
+ ZILg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783328319; x=1783933119;
+ d=1e100.net; s=20251104; t=1783328393; x=1783933193;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1/uqlUN1ub4XwzyuuWJTFRRxsZAcHXJ1jXD/sNb1VG0=;
- b=cyDdRnWP4rO+XMYqr9JhScA/a5ZJ7F6oSQqB4sEsyP6IOEXrUrUfNz6ipicC2IsPYT
- iTMMOhyVYl/EQPEdGm8ZUXi2o7Q/+yIto+uZvGTcp2Z8weIwWkLVE0QpEUrNo3COcJ6F
- Hv2EYMQWQ50s4K9R5Hg2F4CL2odolaPxRYJ2+5M7+Hg3AntjNi7Kjv3VM9YV/XR8ojKU
- z5qi1x12o+ZjgRFo7GTiEdBqjJ9jJiJcAA1CEvx4ISERUo4h4bVOdWNtaI3VUKBlJGUS
- buuuZtQ6jVHCGMIpTch64yEt0U4F3wgz3S/XiyKxS2f7Wj2TOZdNBtgnS+P7i4tGJcYp
- LZZw==
+ bh=K3ht6EUOPtOUljnYz6XeEjLZNZS2GzokZUyIMxkvDE0=;
+ b=MYh61t9DfLhyHvuSo/+bgE2S1TqqsKnkSwPHoDYn3t319Yih4i+07tTSDROgUGW+f8
+ gV8Xt/Zlce/v1R84lAc2fmTUDMYBdjvx4+1b8BnBaCx5PUFwQszmwUDVD64D71EAoDaT
+ 5BXGpXxK0vFAqGJSwL3WxTjThJgo2Xm2Y4msHN6icKMX2rARvMb/YmHbKI1NxFPDBI+q
+ httoONay2RbX5aDSY4GPD3srhpcRXsf2px3F69P41wFWmAz/+XDnRpI3v/+hjNCbszoo
+ vJ9PPQ8/U+TmFWIGBfc0j4fbMTDvQfizPYHd4NdKrwZwaU4/9yj8aprGTrDqUmRCYKxm
+ VUkw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqnKzh5SZfj9O9eWz0/FiaI0TjHwS87FEQwd94GGsbMSfRmPRlw+QeESjkkce4Eov3wN46PiKJkxna7@nongnu.org
-X-Gm-Message-State: AOJu0YyT0x8BpLoeVugET/WdyKC3w+mCJdCx5JzWqNvmAI18qeyNunUp
- /Y7EeGnmjwlcxcf+eeTxopip6sk28WuFkB6t8m/NYdSfVkm8qrKdlPM+OQfdZPnXoUNqu/Mf+4i
- NZKOhA7+9GNozFm2nQcLR6z+CQvfA8EEXkBYVFCshD01kMV7h1RNw/gWpgQ==
-X-Gm-Gg: AfdE7cnPZLQoxUA/MQk/LH+TSPQMM2MysUNzODVBU9fArMbxo9EEhjKHdOkcuA3cjl7
- f33DUEj5IJaEDaTcgmyRgHLGr+AIlnvP5AKwFTYXx0M/Qt4M1iGcG+GHlKwLfZ2S7lfh15v7BnU
- 2bckbngzZ9mz84/I2S91xVkxN9l9HKu/1UWqnQfUCb/L6XQkxdMyNWQpUZaCTVCe5R6Q2Xa4ENU
- bumKx2lU5bwFDJ5VoNspm5Iu6cEJNJHnxrRv4s5HuLPn8vlfgSwvSSO3+m1mGQj8PR/WDUOHO2E
- utSQe/flQZjbP1LqgUjnTOzQja5EEEkQ6UlA58ctEViRUJ0RqFxCr6Y4JZiM+hIRKXnxazc/xVw
- PlRTkmKXbPA10ULTvcA31zm1bKqB5uP65g8JYheiwFpnqIq4pro7XdUY3clyRAA==
-X-Received: by 2002:a05:620a:462b:b0:92e:4bc9:6ebc with SMTP id
- af79cd13be357-92e9a3e1c50mr1281645785a.28.1783328319460; 
- Mon, 06 Jul 2026 01:58:39 -0700 (PDT)
-X-Received: by 2002:a05:620a:462b:b0:92e:4bc9:6ebc with SMTP id
- af79cd13be357-92e9a3e1c50mr1281644885a.28.1783328319061; 
- Mon, 06 Jul 2026 01:58:39 -0700 (PDT)
+ AHgh+RrsAGqFPlZHlCmo9HQSYeAPLU1IMxuD0NMtprA8YtRYKFgXhWZa5YhjrIKTMcTTdnwc88qEX3h5Pg4j@nongnu.org
+X-Gm-Message-State: AOJu0YyaivulhhgGE55G3abmmVa4ny+XpL1cneTokHz9ifqQavYFVypw
+ BnEOkLlrlIsLwCxW2tmO06JErwY3woftFV0VoTCJfH8zNgWgHF3VFKlDMbpI/4XcH34Calp7PRm
+ /q+lXHHw09uGz1BzcaV6RYD73bveHEvWOHAvz7+KplZbfhGLBaJe1C8C7mg==
+X-Gm-Gg: AfdE7cmWPmcqQf9L0WX25ZjA9EIgVe/7XJpXXfsgnBTb22IHOC/vCtU+vbvr/xfgTXu
+ XWePkWy60Sy+dxLqIBn9c+IqBZV0aYc+yffNXSL+/ys6pI5zSr9ZSOFaYe+MUvef5nB1KQdIQ5X
+ V+JyFUoxbz31DPKFDiH4m1/EyVjLG4+CrSV3y9WemFTHX4D1rqSCBNnWc3LX4vaoWl7ja77BFnO
+ w/eZkle8NtPOrZC+kbBPAyD+WkgIcchsqoritrtnrU+B9SrTZH2EsAN0Ecea/yxTmLmWeJ5ZAU9
+ o9ePYPfHhBvF9TRyN9KS0N1qZdxQnpi4ThhEgUIv5GUAc59UOL7mbpuU/tJDM4iloAK4gqY3DLX
+ 80OJzW44dIhkciE230gb8GS5KMsDnn9xMxGtkMrwx8Is/yDom+KK8s5IZNTaXIg==
+X-Received: by 2002:a05:620a:4621:b0:92b:6805:eae7 with SMTP id
+ af79cd13be357-92e9a51eedcmr1166699785a.68.1783328392703; 
+ Mon, 06 Jul 2026 01:59:52 -0700 (PDT)
+X-Received: by 2002:a05:620a:4621:b0:92b:6805:eae7 with SMTP id
+ af79cd13be357-92e9a51eedcmr1166697985a.68.1783328392088; 
+ Mon, 06 Jul 2026 01:59:52 -0700 (PDT)
 Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c12b629a1d4sm683632366b.39.2026.07.06.01.58.37
+ a640c23a62f3a-c12b62c779dsm683576966b.53.2026.07.06.01.59.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Jul 2026 01:58:38 -0700 (PDT)
-Message-ID: <931f68f9-16c1-4057-8b7c-35ff27f8113a@oss.qualcomm.com>
-Date: Mon, 6 Jul 2026 10:58:37 +0200
+ Mon, 06 Jul 2026 01:59:51 -0700 (PDT)
+Message-ID: <b7e519d9-4711-4a99-bd6d-f818ea415283@oss.qualcomm.com>
+Date: Mon, 6 Jul 2026 10:59:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ati-vga: Include vga state in the blit context
+Subject: Re: [PATCH] hw/scsi/mptsas: Reset doorbell state on reset
 Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
- Chad Jablonski <chad@jablonski.xyz>
-References: <20260619140408.6CF98596948@zero.eik.bme.hu>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
+References: <20260629185035.2138238-1-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260619140408.6CF98596948@zero.eik.bme.hu>
+In-Reply-To: <20260629185035.2138238-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA5MCBTYWx0ZWRfX9TeS/5rvB1WU
- mY1bkXDsT3h13xlzB2/7DTWWZcPklNspvqjnHGqpJ5awyTIZsHS20XG6cqlJXRxESoWp+moumV0
- wIoWsa+XUxC7tCbMjVu+6Qh6AIkkup8=
-X-Proofpoint-ORIG-GUID: Pqj6kKfCrHKmDExkBPuZyQDt8_h1IGZM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA5MCBTYWx0ZWRfXzEDf3ubxnqWL
- 1m8+CSv0cRimE2XdpM1oJH/9PUlZwZiEa8BEK32oWtanIfZrXec4/fq7MjmZpEa0arPEzKAQPdz
- R/9L19kN3AQ1G/hIYWBRs/fDz6WbGt8uZnv+uOBLFWM799paSbPe38Wja/IeICfd2hl73rv0DLN
- XH3/9ogRwY8ORJEn+Jbq9t+ReE1J6a8WHTtN4H0AkdOIX4p8lozxAIwgrwDu5sRoHmDVo34CXrx
- uP8HhDidI33ilN9PhqmTRkkQMW3KSkhMa+L45Z6yFj+ZYL4WiLr0UZlWBltoBpShSf8xalkpH+p
- +LEwGzCk5hN6o7rFVq6vL2MGUIfKA8AM2JaXX6ZQUgT9DMBBOg9oSEbgz3qdRGioyIdKGbFytZm
- uogFtsKEudxmEjbvKld5POaCxDd5vni9rFrwPR420HJnowKUkMirdpfAnWcnuJzSFJoHR78nQJj
- i658vBFM6zc7AyU4/Lg==
-X-Proofpoint-GUID: Pqj6kKfCrHKmDExkBPuZyQDt8_h1IGZM
-X-Authority-Analysis: v=2.4 cv=ZfQt8MVA c=1 sm=1 tr=0 ts=6a4b6e40 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA5MCBTYWx0ZWRfX9GTgt9QEscoG
+ bPih8pm8SUwhN41C432GyUZ/VpDhw0rkeCdwFMRvKy8XqOL0HLfyHoYARSbQFHHa6k3l/FTVUnI
+ Ixx+faYHs267u4FRhTgqqwY2LtfafOg=
+X-Proofpoint-GUID: MkrG49J5CEEjW1zNszD-0PQ1AH6ftco5
+X-Authority-Analysis: v=2.4 cv=C6zZDwP+ c=1 sm=1 tr=0 ts=6a4b6e89 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=2f6ENiU84E2-asKVN40A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=p0WdMEafAAAA:8 a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=BxYp5kjD7oKxsPU3rKwA:9
+ a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: MkrG49J5CEEjW1zNszD-0PQ1AH6ftco5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA5MCBTYWx0ZWRfXzxMa65qTTdk1
+ 5mMfs4x8glhZ0tUbZKx2f/iC3PCgRqWmQN+TvpgXKq91u2078OANiaXO+6xeg7s/7nXLWDbj5Ec
+ B58KC7/gotI3ByeiSxyHEyT21OzuECdA0Z/Jri4nG6OC0UflmTZStmATsyh0jrqSHsHtxzYAXDY
+ yTtwse2G0mfvUkuW6/26bl1+dFOGWxTh9wusYzaWkaAqywJMYkaWvoAt0h4JmChNbX4zdmVDc1W
+ FBUqjUqB+RY+qZsjHSPCOqdIj+0mJ+EGGPauEs30axQ2tPNoZAwwK9ZSjWW0x9fhdB/Jut/eKSV
+ NdFUwBfWhkDlW7k9Y7mKIoaQOuAoeGxnUnSl2bS+e735od6vMWqJnZjtYJv+5LcKzkRaQuwuQ4k
+ puoS8dkkZmhcskRAgfx5x9UaQCo7wKzsytCBncOzsEeHUfkDriU33kPYlbK0J+S7n5rGjaN98Ag
+ rvBV6+rY87Z3Xz4eOzQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-05_02,2026-07-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 impostorscore=0 adultscore=0 phishscore=0
- priorityscore=1501 clxscore=1015 suspectscore=0 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060090
+ impostorscore=0 phishscore=0 clxscore=1015 spamscore=0 adultscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607060090
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -154,16 +155,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/6/26 16:04, BALATON Zoltan wrote:
-> The vga state is needed by several functions using the blit context so
-> just include it in the context instead of passing it separately.
+On 29/6/26 20:50, Peter Maydell wrote:
+> Currently the mptsas reset function clears intr_status, but it
+> doesn't reset the doorbell state machine.  This means that the state
+> machine and the interrupt state get out of sync, and the guest can
+> trigger an assertion failure in mptsas_doorbell_read() where
+> s->doorbell_state is still DOORBELL_READ but s->intr_status does not
+> have MPI_HIS_DOORBELL_INTERRUPT set.
 > 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Fix this by having reset also reset the doorbell state.  Strictly
+> speaking we don't need to also clear doorbell_reply_idx and
+> doorbell_reply_size, because those are only read when in
+> DOORBELL_READ state, and the code always sets them up before
+> transitioning into that state.  But it's less confusing to clear them
+> out on reset.
+> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/304
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/display/ati_2d.c | 38 ++++++++++++++++++--------------------
->   1 file changed, 18 insertions(+), 20 deletions(-)
+> Disclaimer: this fixes the fuzzer repro case, and I have
+> run "make check" and "make check-functional", but I'm pretty
+> sure neither of those actually exercises the mptsas device...
+> ---
+>   hw/scsi/mptsas.c | 4 ++++
+>   1 file changed, 4 insertions(+)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
-and queued.
+Queued via hw-misc tree, thanks.
 
