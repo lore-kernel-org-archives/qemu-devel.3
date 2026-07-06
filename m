@@ -4,92 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 947DFC44500
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 12:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEDA2C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 13:00:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgiqE-0005uN-IN; Mon, 06 Jul 2026 08:54:30 -0400
+	id 1wgiw1-0000fw-RO; Mon, 06 Jul 2026 09:00:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wgipz-0005qq-Dn
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 08:54:18 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wgivo-0000dR-Je
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:00:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wgipy-0007zF-2F
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 08:54:15 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wgivm-0001XB-St
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:00:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783342453;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1783342813;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mnMduQI4JzxWh7DFwl+Ge03blT1Jvh4bKa8/9Kbe0yI=;
- b=TkDujxIZSTGhvI3Usrfv/T4z1Va8Lmtc4fxFdI6PWi6o6bn/WIOaQSgA/PR+CF+KQ+URm/
- zgzg8cAe45GIe3vkx12BvbTQzAUKGn6Hs+KHfFpLYO5EA7rCpadePxhAYgkGAl8P+qihiL
- vX0XeO5fDcMGZGUrhE2BhynKnaCQMLo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=r7wsWgUASH/v7DI1r9pfMh0B6itUVPl4lKAWn7rsK7M=;
+ b=TzRQ0C7NgIK6iQgJRIq2/ZNAg50cqnQodMw9ZVD4GDc79ZejxMOwdZr1mKhU7WxmVv2M0A
+ I9IYi5h5WtD3uYdCVINPxYpyFpMmIL/xdTaHMiXUUHM9AVtD9jah5VX6KY+N0oOO06sw6E
+ nYOivYy8qh8WAIcs4ChkLgHvOfllrMA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-jJdAaHZJPySxLGTV_LBjCQ-1; Mon,
- 06 Jul 2026 08:54:12 -0400
-X-MC-Unique: jJdAaHZJPySxLGTV_LBjCQ-1
-X-Mimecast-MFC-AGG-ID: jJdAaHZJPySxLGTV_LBjCQ_1783342451
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-BuPG-YCaPlqrgtHaQuiWFw-1; Mon,
+ 06 Jul 2026 09:00:10 -0400
+X-MC-Unique: BuPG-YCaPlqrgtHaQuiWFw-1
+X-Mimecast-MFC-AGG-ID: BuPG-YCaPlqrgtHaQuiWFw_1783342809
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3072118052F9; Mon,  6 Jul 2026 12:54:11 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.3])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1169836512; Mon,  6 Jul 2026 12:54:09 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 06 Jul 2026 16:53:48 +0400
-Subject: [PATCH 1/5] i386/tdx: fix uninitialized variable warning in
- tdx_check_features
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A213B1955DE1; Mon,  6 Jul 2026 13:00:08 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.48.165])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2CEE03000B4C; Mon,  6 Jul 2026 13:00:04 +0000 (UTC)
+Date: Mon, 6 Jul 2026 14:00:01 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org
+Subject: Re: [PATCH v6 01/34] qom: replace 'can_be_deleted' with
+ 'prepare_delete'
+Message-ID: <akum0a48LrMa0bJt@redhat.com>
+References: <20260702160337.1910921-1-berrange@redhat.com>
+ <20260702160337.1910921-2-berrange@redhat.com>
+ <87mrw8y3s3.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260706-fix-v1-1-4b83a70e9f3b@redhat.com>
-References: <20260706-fix-v1-0-4b83a70e9f3b@redhat.com>
-In-Reply-To: <20260706-fix-v1-0-4b83a70e9f3b@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=902;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=Kjaz1rel2sNl+d5VT2IglyjxLokjkl6yFaJ2/HKSzoY=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqS6VnYhFFHkp+YuIdTnf12RCW5HTzJn2F8kIu0
- UerFQ6AQPeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCakulZwAKCRDa6OEJdZac
- 5XD3EACUpaHxCQl9UJsJGOh2BXvqFVl6jDj38+2BJRXkR90lAoyWnP1ovKmRtnOQM3/7mDXAaod
- lsJS4vGb1Y7Y8xF2l7IyfOmaVedA35VA2nggnoDwJVbJzALyvcDBtHuBvIpcs6Hd1vJl+6fANUi
- IDU1ovdjpHn39BlS4M5VjucnumTy5pfC2UZz1mi+sAy9Oijr31OX7bIB/7N28/AEdMBpjacFid/
- YmLaA5Sch7P2AZzy3muspPSf4919k2nPABU4xvM3Fr5nKnYX7wa3GSf4SrpnOyGxTzHELAmqf0O
- ltlqDrdo/XevIXh1TkIAZzfhNVMiQDBVkWqo7e0ZqQnbs4a3G2gnch3hNrnfZtYi19KGOI6/tpG
- BLNxvvIqWtGlMlOXoPx+3lNrb/Bjy9wsuHg/GGnlvXzp/LUzcKw7HffIuBKT/8N/x71Bdw96Zzb
- LwzSZgvZj5B39lsb+TYPdoptEJJ02B2+rg/BCa0MAGPLags8qN5DVK/QexYoRw88ybl2o98MT78
- Wc/kK8GdmX0DNnE9CqnXdDNZcSApCz6Fo8aHV7FNb6yf29dHecnd+dp2fMjKu6ZM+iLkH6dqPr/
- kLko9KTWZnCGFN0RDMNeYRuxE3NoivcSlE5vKRAkkvu+hbYvnz7Npb19dwPdGFgWT6FyY9+kdjA
- Yi9b0qmwuvYoyww==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87mrw8y3s3.fsf@pond.sub.org>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,36 +92,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-tdx_fetch_cpuid() only sets the output ret parameter on the error
-path. GCC cannot prove that r is always initialized before use in
-the caller, triggering -Werror=maybe-uninitialized.
+On Fri, Jul 03, 2026 at 08:40:28AM +0200, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > While most objects can perform all their cleanup in the finalizer
+> > method, there can be interactions with other resources / subsystems
+> > / threads which require that some cleanup be performed on an user
+> > creatable object before unparenting it and entering finalization.
+> >
+> > The current 'can_be_deleted' method runs in the deletion path and
+> > is intended to be used to block deletion. While it could be used
+> > to perform cleanup tasks, its name suggests it should be free of
+> > side-effects.
+> >
+> > Generalize this by renaming it to 'prepare_delete', explicitly
+> > allowing for cleanup to be provided. Existing users of 'can_be_deleted'
+> > are re-written, which provides them with more detailed/tailored error
+> > messages.
+> 
+> Old message:
+> 
+>         error_setg(errp, "object '%s' is in use, can not be deleted", id);
+> 
+> New messages:
+> 
+>         error_setg(errp, "Cryptodev backend '%s' is still in use",
+>         error_setg(errp, "Host memory backend '%s' is still mapped",
+>         error_setg(errp, "IOMMUFD backend '%s' still has %d users",
+>         error_setg(errp, "Throttle group '%s' still has multiple references",
+>     error_setg(errp, "Deleting CAN bus device '%s' is not supported",
+>     error_setg(errp, "Deleting main loop '%s' is not supported",
+> 
+> All now mention what kind of object it is.  Users could probably figure
+> this out from context easily.  Welcome small improvement.
+> 
+> The two unconditional ones become more accurate: they now report "not
+> supported" instead of "in use".
+> 
+> The other four lose "can not be deleted".  Users can probably figure
+> this out from context.  Still, I lean towards error messages like "Can't
+> DO-SOMETHING because REASON" until that becomes overly verbose.  What do
+> you think?
 
-Initialize r to -1 to silence the warning.
+I'll change them as follows:
 
-Fixes: 228e40f33048 ("i386/tdx: Fetch and validate CPUID of TD guest")
-Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
----
- target/i386/kvm/tdx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+  -        error_setg(errp, "Cryptodev backend '%s' is still in use",
+  +        error_setg(errp,
+  +                   "Cannot delete cryptodev backend '%s' that is in use",
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index c9c3b05d5fe..8294dbde3aa 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -887,7 +887,7 @@ static int tdx_check_features(X86ConfidentialGuest *cg, CPUState *cs)
-     FeatureWordInfo *wi;
-     FeatureWord w;
-     bool mismatch = false;
--    int r;
-+    int r = -1;
- 
-     fetch_cpuid = tdx_fetch_cpuid(cs, &r);
-     if (!fetch_cpuid) {
 
+  -        error_setg(errp, "Host memory backend '%s' is still mapped",
+  +        error_setg(errp,
+  +                   "Cannot delete host memory backend '%s' which is mapped",
+
+
+  -        error_setg(errp, "IOMMUFD backend '%s' still has %d users",
+  +        error_setg(errp, "Can not delete IOMMUFD backend '%s' with %d users",
+
+
+  -        error_setg(errp, "Throttle group '%s' still has multiple references",
+  +        error_setg(errp,
+  +                   "Cannot delete throttle group '%s' with active references",
+
+
+With regards,
+Daniel
 -- 
-2.55.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
