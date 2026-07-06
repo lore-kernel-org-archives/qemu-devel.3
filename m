@@ -4,98 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74399C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 09:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A1E7C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 09:28:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgfY6-0000Bj-6o; Mon, 06 Jul 2026 05:23:34 -0400
+	id 1wgfcS-0001Vx-Hx; Mon, 06 Jul 2026 05:28:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wgfY4-00005w-M4
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:23:32 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ id 1wgfcQ-0001VC-SU
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:28:02 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wgfY3-0006P7-6R
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:23:32 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-664dd23829eso2344412d50.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 02:23:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783329810; cv=none;
+ id 1wgfcP-0007PM-9I
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:28:02 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-81062fdeaf5so48376527b3.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 02:28:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783330080; cv=none;
  d=google.com; s=arc-20260327;
- b=ZQmXYD4vLcbVjLXmuGZiF7Johc5VvTTGCF80+mtqz6dPfNUgaZRntC+8iWI7rwNMuo
- QI7EhIS8nNWmD0rq1lu3XUtXwEIyXlTGHrb5t6pxDbTO2V5A3jEq9T7s/+3RyEX3E2x1
- gMxssjOsppAmrgICTF5H8Ib112t1MY8j7r86aBDjitcfcrm0N3oAuoC8DRKGfqamuNtF
- 6AjMvDNIZUNaiSnnxOFTaNdTgVLNgxATUy2TDBzwvAT7K3XKS18YB+kSKH+MBBKeYRqA
- S1/ekvK1MyhBmznoM8tTIL2TuPpzY8R4ibXVrinV/KBLoF64ytoKbOw1WbN5gsNYB/dZ
- QX3A==
+ b=YastpgKPvThOhAQuHqrhbcLAnkJn3pWLVzfGAgAnOsiC67WWI5OlPFBugpAVYWDfEJ
+ i1EK+zwViJ5kbsG5ExSbCI40whda+JX7IuNKIXXIyazZWqQSBhU/hD4uliR9jN01nHO5
+ MX5iGXhnhtAujVr5sJ23nP1YiPRKycofdVTViAulA6KDsIpAcgNvCVlRNLEQEtGrlPXw
+ 5TX7qUpSOIWp3O7bVZi0iRiRPnMwVrznuyRdwKc5C99YMVef3aZbanrXMbvnVQWNsSPi
+ mrlSPTBhaaQQEFdA6hg1IlfKQps6832UN0FtEG0QmEZZDrgmb8l5wjhFktaxwvlx4zJa
+ WSRA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=yqsE9oL4j2+upRkRgQlld5auIFgbcSheHBEj5Xu/ZwY=;
- fh=sa54kRfqZCSJoqqovfbLshesdcnvoIzhJ6jhb/uDQ0k=;
- b=C7WP1k/EDy4ovDAeEyAAmSNgmAttNcTqYF6tfMAmjARMmzHKxuCnWCwOgiF7pIZFGb
- GfbUOjDtcHUV3DQUa8LSBw4LPxdcvUJqilvZVEO8fzJWBrUvNyHCy8RXIt6RiDmJM/fQ
- lfPOOFC+T6J6TWnYnaVYwNgUqH1m1+5wbFcpdNYq9Wt+dqQnzvtpKiMLXSY4HcVJh4Pn
- 5vwRvAr5bwiLrQLMb99ZEufoDaZnzZneiz3ETvM/D6G/0yXGYuQFxBdwjwjqG5Ts836W
- j+i5cVHNGMdkLEGXmETSs+dHQ4r6ph5BclIyLDP9Nf39blZTZHsUYmVwUu5m10m6//vG
- zaNg==; darn=nongnu.org
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :dkim-signature;
+ bh=bh7GO0M+dUyn53qu8M6jvvi+CwUOmFEEXyMs+kH1nh4=;
+ fh=flhR8/bgiG0FvX3F1MReVVIluz4JmXYFysTtzYhTvBI=;
+ b=alvG0c1mc4Kw14cFPP6YkGlr/22TR1MVIiaoqW0AroSqCvDCaqeTHB6aomccu6pWzh
+ uzz281bYuU1fIMQqQJsp0IArtPRauFYCWg+6rCQ0vuJfnqXlPEeEjZ3MYrl5WheYPkzB
+ yLXWSBtVbWo2t4GvXoPnacGVe46U/MPCq673i21YMWtKWNmv30uPBdZRCNeFwJfcS83q
+ SGUCNzU5wBsNmhKgPF85RynpKXtRcfJ/PwTVuotqww9NSbP4vsIQxA/UV85sBEvwkEsy
+ HbrMLTHJSkMEsRZq6eliK86O1KhAWF9bCi9++Tk8Rfuvi9+ZHekED+SMPHMjVYU4I1P7
+ DtCg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783329810; x=1783934610; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=yqsE9oL4j2+upRkRgQlld5auIFgbcSheHBEj5Xu/ZwY=;
- b=fGeXOM4VUuClRjyr1ieUf5t5nYJHJfSnl68pLiFWLOtsXS+CRWl8uvsx0cd1EopAvU
- I1l4rv0J0hgP4a8w2CM7sKP2JIjsH1bnjEviTQRpcqMckupAW+sja7hNSiWMKvy+lGFi
- 4bk3TGwzB4UppWf6ej6edNn3Gp4cr98LPyf5fmC7LxMDoa7uWg63htarGuw8VX39L8KI
- mhuSGeGGDM9ef7B+QIMQYBy0RnAoRd6b+3Z7pnB4mgqmvlM2hxgNHKIZH7avLGhpRQWU
- fHaWvoAPTIV1TcizVjND1/7Ho3Gcbh8xjR9NhxoONyT11/TcfY5MfDxwWAL/afTsL241
- jkgw==
+ d=linaro.org; s=google; t=1783330080; x=1783934880; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bh7GO0M+dUyn53qu8M6jvvi+CwUOmFEEXyMs+kH1nh4=;
+ b=xTQkbI1WYJx73srelCDf8vHmGyzfRf4+B6X0idMMzvaOnOJpkJBK0oZtEmDjyrDZpA
+ lgfuQMbhWUCENhvAcN/JbsYKay/Zano0jM8ejPZbBYqJT6YiNNs53O2tJtgKBGQSKBYd
+ AVRvwI7ZbsjfMsfXamB7xfhk1QRa7nEQzi0JhA4AXTlC6JAwtaWy5H1zSDqwCafPLXsL
+ X+AM6stS4V5zwigSqDu1Tqnu8K5A3zAo8nkpx60+YlYLIU7W7yCTXntmQTUnHFdsiWQ/
+ StjWxFmsZhsxFvp15+ReBrqJeRg+0vkyQj2dygwlxkiKlkKtFuDm5uRICLjfEKWcJpE+
+ HAhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783329810; x=1783934610;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=yqsE9oL4j2+upRkRgQlld5auIFgbcSheHBEj5Xu/ZwY=;
- b=gmS7vJAdDFlDzfdpLLWbgayKku+OZNQ335Lt/aVEw/IRyTTEi/gd4qg97fqQTNJwbr
- 64y7pf3cdDh6jXIRJ6ukdvDDLnpsmyIy7gNwfN/No2l5owt8Q5Sxc9sefqpTKtmHe7E3
- Qpssd0N5YLzbJsfMjxcTXsJNFXuGGt+fcF8NxSj0Uo68he82LiXxD+swjfKk7bLL6ERG
- /UphKlu2IWQ5VhiVswiuJb9Dkw8JwID/cdA738FMsFEgXc8sadGtIFixy5plumQ4M7+k
- sxmEb9Ea05hHNXdn74eR+4d8MxBLkq2tKIkCD2uTM6/nczBmXTIq9Fsx6+s7q3JD5tom
- eO9Q==
-X-Gm-Message-State: AOJu0YxvfCN02o3Ptj3QSwiJAN3aWW1J+xUTYcUTeSeUCO5uRQNsuqtV
- 1VFkIeAGFWGMmtKOe3cIZ6H0LcQHcemiOZDZvw+BbxPQDNCIvkZ4VdOAP9XWgowL7R1hvF7Ie2M
- ESpRILqSWgNrTVrC4XKSHY5ckSn5uA59VAN5bjVtV1g==
-X-Gm-Gg: AfdE7cnvl8ufRi1wlQXPRu4i1/NAwvVIHFu7O1TFfUx+N9K4U7TKFq+3cg58ChP66RV
- lovefhXzI+fUILYHN+XK+RpT5+Llc89SrGPUMyfSKiyWBxTE+9zLPi1/eHQChpn1+uEotHU5let
- iuws7zvqhvVio5gYwsY3sDWoR56kezAMjq6dTh1h6kpRPTIp+ISWF/9z+vSohQZ9zY76eW9Pj34
- ap2YYvKPqV9lEC32cODOW6P5F9rz1/e1A9AV7+GTTvQBBX94jGeRY5okcCzOOCoBQoGxSYhxuWJ
- CJzFoQVa19KPlPZ6I2/Zapdh1xUptGojBEf+YFVeybxUFXR0LOsWQUcs
-X-Received: by 2002:a05:690e:1501:b0:664:c928:5d51 with SMTP id
- 956f58d0204a3-66652df348amr9086281d50.28.1783329807818; Mon, 06 Jul 2026
- 02:23:27 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783330080; x=1783934880;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bh7GO0M+dUyn53qu8M6jvvi+CwUOmFEEXyMs+kH1nh4=;
+ b=pc8WQvzYJxmB0bxpogOMbT70nxdiI+afLtWWa2xKcrqyioDwmhNWektTlAybPGMX8+
+ QOIU9y8ubJ9vPtjf8cjW6iXkBfiC9r4M1nIUKYT431oXkxtRJXLzS7Ueykud/sEPPPia
+ x8Lo3J4EL2oBtEZRvGMnPz9BjKV2od5OpufWn8GQYEB1CFMu5fzn9tp+M8Q4Q8rHqIL4
+ Nb/KD0MnUFv/F8+d23WglAcx4Z/1ujLdjWCrnswnUOSbdv9jCHqrdqr8ZemOJLeR2dLE
+ opkD6AVJfvFpG6aTfEUG4cmsPnu54Lof88HE9uMxdpsq8gDMsfzMA0oTdENdT67Uql6o
+ qXgg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rol+Vb7vAkkE54VoVzw75S66DAIVMhS+Kt8s+DQ8KdpAHVUwtzK4Bn5M3BZscgzQqbiDD+9oLeY9lFL@nongnu.org
+X-Gm-Message-State: AOJu0YyAZwP3uYxHZPqojCcVU4rdDz7uzk9jC4LXqogqJpkufnaEAtzn
+ A98lKDZLtxJGIxGpc5X3Dq603reE2Q/GAFYS5SYSjafYVrB3mFJyd9W/2SWhSGe7Wa+Xsw21dsm
+ 9dELHGGITocaoAGk+W/tn6yoft6OvQbVW2hZouHho3P44ylzZ30y4
+X-Gm-Gg: AfdE7cnsW1Rnf4+cMfsiHEsuAtn2afDz8mxHN4z3AqsU3bcfbqi85DqnQfiBif3IXD3
+ 70IbDsYkhaiut9whO/z6iTCu6A6JA+t/sNyc0VfvvS95GgB5mt7oJrxjzcJAOeZKbPMAKbjDMjr
+ CCUzVsJxn7oDb167FbxObxjJrUS0t0J/B4i4iEdh2O/Wri4npLyzFUyv0GlFVBawFvdeMRtjTi+
+ oUKfOdjL+JTLwIHIlpRJrbIeEMs/lo0xNTVKdH702Hd96BTPVDJ81Y+dGK01pe6jAzgd27EjYXq
+ QK92qS1ukMooPFHtaJYf3HTSUw+tNjZSJFojPOYPzTuxqS4S4CDC50Ug
+X-Received: by 2002:a05:690c:9b04:b0:7e9:ea36:f256 with SMTP id
+ 00721157ae682-815bbf9a729mr136861567b3.17.1783330079837; Mon, 06 Jul 2026
+ 02:27:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260622060507.83195-1-kchiu@axiado.com>
- <CAFEAcA9aPwGf9acMvBMON+mNU+uyvMs33wrmAXxoTFR80vi-rQ@mail.gmail.com>
- <ae7c1ca5-2268-4b19-8ca8-188974497955@axiado.com>
-In-Reply-To: <ae7c1ca5-2268-4b19-8ca8-188974497955@axiado.com>
+References: <20260702184019.3431139-1-peter.maydell@linaro.org>
+In-Reply-To: <20260702184019.3431139-1-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 6 Jul 2026 10:23:16 +0100
-X-Gm-Features: AVVi8Cc8xsmR0_aNip1B6U89tY771scAEfnpl1RrRh6hqe0qLXqsJe0Raymmrkw
-Message-ID: <CAFEAcA_4zrzjZq0EzsiRudBkwjM9bTai992QyDhzULnSOv2=pQ@mail.gmail.com>
-Subject: Re: [PATCH v6 0/8] Add Axiado SoC AX3000 and EVK board
-To: Kuan-Jui Chiu <kchiu@axiado.com>
-Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com
+Date: Mon, 6 Jul 2026 10:27:47 +0100
+X-Gm-Features: AVVi8CfhMYfADXeJQl5yBNylrzjffkP2MsnyWfKd6aqVUCS5WOQ1TE_aXbHW39s
+Message-ID: <CAFEAcA9m-yPx0HZTLjQFR1vZYmAZyXgrkBfbAuJKA9oh1vetNw@mail.gmail.com>
+Subject: Re: [PATCH 00/11] target/arm: Fix some Neon trapping corner cases
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,44 +114,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 6 Jul 2026 at 03:38, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
+On Thu, 2 Jul 2026 at 19:40, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
+> There are a couple of corner cases in trapping of A32 Neon insns that
+> have been kicking around as issues in the bug tracker for ages; I
+> got round to fixing them today. They're related in that they both
+> need us to distinguish Neon from VFP insns at the point of checking
+> for traps.
 >
-> Peter Maydell =E6=96=BC 2026/7/3 =E4=B8=8B=E5=8D=88 07:38 =E5=AF=AB=E9=81=
-=93:
-> > CAUTION: This email originated from outside of the organization. Do not=
- click links or open attachments unless you recognize the sender and know t=
-he content is safe.
-> >
-> >
-> > On Mon, 22 Jun 2026 at 07:05, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
-> >> This patchset introduces Axiado SoC AX3000 and a EVK SCM3003 for emula=
-tion
-> >> The model for Axiado SoC AX3000 supports
-> >>    4 Cortex-A53 CPUs
-> >>    Arm Generic Interrupt Controller v3
-> >>    4 Cadence UARTs
-> >>    1 SDHCI controller with PHY
-> >>    8 Cadence GPIOs
-> > This causes 'make check' to fail. Please test this kind of
-> > thing before submission.
-> >
-> > Hint: running QEMU without any other arguments crashes:
-> >   qemu-system-aarch64 -machine axiado-scm3003
+> The first one is a bug, where we aren't reporting the correct syndrome
+> information for A32 VFP and Neon insns that are trapped to AArch32
+> EL2. These have COPROC and TA fields in the syndrome which we weren't
+> filling in correctly. (When the trap goes to AArch64 EL2, the fields
+> are RES0, which we do get right.) It's pretty obscure, though, and I
+> know of no guest software which might actually care about distinguishing
+> Neon from VFP insns in the hyp trap handler, so I don't think it worth
+> backporting to stable.
 >
-> Hi PMM
+> The second one is a missing optional feature: there is a CPACR.ASEDIS
+> bit that lets software force Neon insns to UNDEF, and also a hyp trap
+> bit HCPTR.TACE that lets the hypervisor force Neon insns to trap to
+> it. These are architecturally optional but in practice implemented on
+> all CPUs except for the Cortex-A8.
 >
-> Does you mean this patch set is not buildable or it must be passed
-> without any other arguments?
+> The third one is another missing optional feature: CPACR.D32DIS lets
+> software force VFP (not Neon) insns that use D16..D31 to trap. This
+> is rather obscure as it goes away in v8A, and of the CPUs we implement
+> it's only present in the Cortex-A7 and Cortex-A9.
+>
+> -- PMM
+>
+> Peter Maydell (11):
+>   target/arm: Separate out Neon from VFP access checks
+>   target/arm: Separate syndrome functions for A32 and A64
+>   target/arm: Report correct syndrome to AArch32 EL2 for trapped
+>     Neon/VFP insns
+>   target/arm: Define fields for NSACR
 
-I mean that the code you add must not cause our standard
-test suite (which you can run with "make check" and
-"make check-functional") to fail. One of the things it does
-involves running every board model with no extra arguments.
+I'm going to take these four patches into target-arm.next, since
+the "wrong syndrome" is a bug, and the fourth patch is an
+uncontroversial little cleanup.
 
-More generally, regardless of what command line arguments the
-user gives, QEMU should not crash. If the arguments don't
-make sense, report an error message.
+>   target/arm: Handle NSACR.NSASEDIS in CPACR accesses
+>   target/arm: Handle NSACR.NSASEDIS in HCPTR accesses
+>   target/arm: Update confusing comment in cpacr_write()
+>   target/arm: Add new feature ARM_FEATURE_NO_NEON_TRAPS
+>   target/arm: Implement CPACR.ASEDIS and HCPTR.TASE
+>   target/arm: Pull VFP "can we use D16-D31" checks out into a function
+>   target/arm: Implement CPACR.D32DIS
 
+These ones had review issues I need to address, and they're
+more on the "feature" side than the "bug fix" side, so they've
+missed the boat for 11.1. I'll do a v2 at some point so we
+can get them into 11.2.
+
+thanks
 -- PMM
 
