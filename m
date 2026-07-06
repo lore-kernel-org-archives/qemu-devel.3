@@ -4,81 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24107C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:45:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4248C43602
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:45:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggoO-0005qw-38; Mon, 06 Jul 2026 06:44:28 -0400
+	id 1wggiu-0007iA-Po; Mon, 06 Jul 2026 06:38:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wggoN-0005ki-21
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:44:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wggoK-00054L-90
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:44:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783334662;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ztVGJRpB/Q0INkoyQwYZNizKjVvw75WM/deVUbClIGA=;
- b=dUGKoqLIvhkkk0Mdm9sfY0mpapqn2NL1vJvsUb/0HwWlH0cjJNyFzNdCU1j0P7cieZ9gqN
- fbYk32KGW4G6ZzFbiKSZ5OEva6irLu3/UiaYPawUauw6ZgFIT6QDW3IC7oaHOE/532lFbt
- z+9UlHeUUR6Fbbp5yuuB3pJPWlxtIO0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-wmusdj17Pmqz9VAyW7OMYA-1; Mon,
- 06 Jul 2026 06:44:19 -0400
-X-MC-Unique: wmusdj17Pmqz9VAyW7OMYA-1
-X-Mimecast-MFC-AGG-ID: wmusdj17Pmqz9VAyW7OMYA_1783334658
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 910F21955EBC; Mon,  6 Jul 2026 10:44:17 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 090501956047; Mon,  6 Jul 2026 10:44:16 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5F40721E6920; Mon, 06 Jul 2026 12:44:14 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
- <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  "Michael S .
- Tsirkin" <mst@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  Jason Wang
- <jasowang@redhat.com>,  Fam Zheng <fam@euphon.net>
-Subject: Re: [PATCH V9 02/17] iothread: introduce iothread_ref/unref to
- track attached devices
-In-Reply-To: <CAK3tnvKT1=_3KKq-790h5hpTDMU=2S3F-U5h4+BWUL=V1nWprA@mail.gmail.com>
- (Zhang Chen's message of "Mon, 6 Jul 2026 17:06:46 +0800")
-References: <20260624070851.13342-1-zhangckid@gmail.com>
- <20260624070851.13342-3-zhangckid@gmail.com>
- <87o6gx1yg4.fsf@pond.sub.org>
- <CAK3tnv+YGdTPOgGSwz-KO22E_-UaaABmEKwTqrsuE7no91pXEQ@mail.gmail.com>
- <877bnhvda2.fsf@pond.sub.org>
- <CAK3tnvKT1=_3KKq-790h5hpTDMU=2S3F-U5h4+BWUL=V1nWprA@mail.gmail.com>
-Date: Mon, 06 Jul 2026 12:44:14 +0200
-Message-ID: <87jyr8pfcx.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wggio-0007RL-08
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:42 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wggil-0003Wl-Q3
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:41 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-493ae59eca6so20662195e9.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783334318; x=1783939118; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=5VkK9k74ebQRJ38950Z9aIqi2wp8L5ul2wcu1BDzewM=;
+ b=WFrP3v+xXM3tVdH+koPgYCMS4aRam2k6DgNzYrC7GQvrEMPvXBJrzIV+23VOxofmQZ
+ wARgHpSLrzzdSG5jRzMBUqfXSjQKrLz6/3UB6KjKUNClwaQpFKh5JxP7toARy1knXgdJ
+ iR0f5v/lXSKaB5gPNBypMGcBZWdMFC3EsQQ0uACguESjJHb4rnCKUcgezcMOQJc8cTlm
+ fgCsoQT4Z0ixYIicoTDUAzwcW16448/sHKgJKFPfuEfDU49lCGgSGP2sGSsrscM61Uwh
+ StzSM647Rkh2jJyb/NVUy0R+wh6QVIxVyHoeDsmIQGKDvqqFWNl+OZijDi9ikdSp3W5z
+ FgrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783334318; x=1783939118;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=5VkK9k74ebQRJ38950Z9aIqi2wp8L5ul2wcu1BDzewM=;
+ b=KDsc7tO8cPWUlpn+SbSOI5Moqvl8JJ3wkBUjiYpy8bthTtaB3qiVFwfHR3ALbkMshg
+ iHrENALzRuzt7t4suCt4xPHDXuk8XQgl8+u2p68Cty4JK6+zr9E2HUWf5+sy/ymr1SyH
+ 13CVtR5CtwCtn0MFm70aL8/78bNYhjrt/Kc6+BrpXNOkLQgyMBm671EHT7w0BtnfIsFQ
+ 9N0w2uw5gXCOTNfULsjJvj402EqkCQhJZHyV+ySBtcMzHGi/ZrEZaw+osZOonLTEtpsk
+ yX7dRhmTMt+pQVG+JH+DZglq/J87qQEI1xRF0u7HUWDHeE5YssQMcP9knoje6TwXkX8w
+ 6YnA==
+X-Gm-Message-State: AOJu0YzVTkm0bnMWBHT63frDI9rPLoTUtDI6gVpIU7s7f9s2cLZG/KKV
+ Gdt6U9sgfpsGe1+dnNpegSnRy+dvg8pW8pQinhUWnk0yoPlJFQRkDiimmgJZkL1aCzRHee+BBbD
+ xNQL2C922Dw==
+X-Gm-Gg: AfdE7clnKl1afu6owm+kLx194lSEi/Oz/QVgFhpVVFs3MuSX6dxmz1l51N0zmK9bmB4
+ h5Gh9vapWtwsVl8j8CTva021H54gZFhe5KqJGxLRfBzLbidtVMQjKEu9Mg9+IvWu3yiSwjYQXpX
+ 7udd6BiLLujppYK4z2b+UIMX/QXW3qxia5kQpFbUuzCbpxx13XPiP5i+0rIVqtb5E24hu/fL03q
+ Qf8ldsCOQO1x1q2jhx0JJfRP+ZkOvVIuQcx65+3O1qciM2IkbVs3pCTNVqfp/bID5ZxMwNQBeLx
+ ldtuEysbaHE0f5EfDBkMTm7ThbO3QD9n4yZfqRBxjcZtXvlzGE3nhIr1IzAs0THcAf38lAmmBi2
+ VybkgPDlV+ol4RtD6Tbe+DPZhA1AJ1DcSLdQ9n3Kazd1P28x0G/2A2kplZw3zmkF9h11zVckef7
+ sh4ohXvi6h+lFjH42JtPdFrqSwrbw2N4el0K/l6YzaMZdTD+AW7ooV4KZYMQ7tCVOSzTha3vFqN
+ zBxYLld5mquo8DSVriMyw==
+X-Received: by 2002:a05:600c:19c7:b0:493:b3ba:84b4 with SMTP id
+ 5b1f17b1804b1-493d11f5b11mr125569365e9.29.1783334318278; 
+ Mon, 06 Jul 2026 03:38:38 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.37
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Jul 2026 03:38:37 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 42/49] target/arm: Implement UMOP4[AS] (2-way)
+Date: Mon,  6 Jul 2026 11:37:45 +0100
+Message-ID: <20260706103752.320511-43-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260706103752.320511-1-peter.maydell@linaro.org>
+References: <20260706103752.320511-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,18 +100,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhang Chen <zhangckid@gmail.com> writes:
+From: Richard Henderson <richard.henderson@linaro.org>
 
-[...]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260702204314.79224-13-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/tcg/helper-sme-defs.h | 3 +++
+ target/arm/tcg/sme.decode        | 2 ++
+ target/arm/tcg/sme_helper.c      | 3 +++
+ target/arm/tcg/translate-sme.c   | 3 +++
+ 4 files changed, 11 insertions(+)
 
-> By the way, do you think it's OK to make this series based on Daniel's
-> V5 patches
-> for the monitor QOM part.
-> https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg06427.html
->
-> This allows us to delete some of the code and directly use the monitor as QOM.
-> https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg07323.html
-
-I think that makes sense.
+diff --git a/target/arm/tcg/helper-sme-defs.h b/target/arm/tcg/helper-sme-defs.h
+index 3da40d9f33..38b23690d1 100644
+--- a/target/arm/tcg/helper-sme-defs.h
++++ b/target/arm/tcg/helper-sme-defs.h
+@@ -382,6 +382,9 @@ DEF_HELPER_FLAGS_5(sme_ah_fmop4s_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env,
+ 
+ DEF_HELPER_FLAGS_4(sme_smop4a_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(sme_smop4s_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(sme_umop4a_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(sme_umop4s_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++
+ DEF_HELPER_FLAGS_4(sme_smop4a_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(sme_smop4s_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(sme_smop4a_dh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index aef3fae8db..fbc85b8206 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -1118,6 +1118,8 @@ FMOP4A_sb       1000 0000 001. ...0 0000 00.. ..00 00..         @mop4_o2_s0
+ FMOP4A_hb       1000 0000 001. ...0 0000 00.. ..00 100.         @mop4_o1_s0
+ 
+ SMOP4_sh        1000 0000 000. ...0 1000 00.. ..0. 10..         @mop4_o2
++UMOP4_sh        1000 0001 000. ...0 1000 00.. ..0. 10..         @mop4_o2
++
+ SMOP4_sb        1000 0000 000. ...0 1000 00.. ..0. 00..         @mop4_o2
+ SMOP4_dh        1010 0000 110. ...0 0000 00.. ..0. 1...         @mop4_o3
+ 
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 5a9e3b8398..fd085850ed 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -2953,6 +2953,9 @@ void HELPER(sme_##NAME)(void *vza, void *vzn, void *vzm, uint32_t desc) \
+ IMOP4_2WAY(smop4a_sh, +, int32_t, int16_t, int16_t)
+ IMOP4_2WAY(smop4s_sh, -, int32_t, int16_t, int16_t)
+ 
++IMOP4_2WAY(umop4a_sh, +, int32_t, uint16_t, uint16_t)
++IMOP4_2WAY(umop4s_sh, -, int32_t, uint16_t, uint16_t)
++
+ #undef IMOP4_2WAY
+ 
+ #define IMOP4_4WAY(NAME, OP, TYPED, TYPEN, TYPEM)                       \
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index fce07b2565..a8fcb0630d 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -2110,6 +2110,9 @@ static bool do_mop4_int(DisasContext *s, arg_mop4 *a, MemOp esz,
+ 
+ TRANS_FEAT(SMOP4_sh, aa64_sme_mop4, do_mop4_int, a, MO_32,
+            a->s ? gen_helper_sme_smop4s_sh : gen_helper_sme_smop4a_sh)
++TRANS_FEAT(UMOP4_sh, aa64_sme_mop4, do_mop4_int, a, MO_32,
++           a->s ? gen_helper_sme_umop4s_sh : gen_helper_sme_umop4a_sh)
++
+ TRANS_FEAT(SMOP4_sb, aa64_sme_mop4, do_mop4_int, a, MO_32,
+            a->s ? gen_helper_sme_smop4s_sb : gen_helper_sme_smop4a_sb)
+ TRANS_FEAT(SMOP4_dh, aa64_sme_mop4_i16i64, do_mop4_int, a, MO_64,
+-- 
+2.43.0
 
 
