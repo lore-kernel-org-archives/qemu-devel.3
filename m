@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B525EC44500
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E67C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:41:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggir-0007Xf-KI; Mon, 06 Jul 2026 06:38:45 -0400
+	id 1wggir-0007W5-Bq; Mon, 06 Jul 2026 06:38:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiS-00073R-Ab
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:22 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1wggin-0007R9-OL
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:41 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiQ-0003R0-S5
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:20 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-493ae59eca6so20659005e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:17 -0700 (PDT)
+ id 1wggik-0003WX-Vn
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:41 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-493c55d5c7aso27577375e9.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783334297; x=1783939097; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783334317; x=1783939117; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=mEqVNkIeQWef5D3Dm101yBk+cfniIq8WOWmVgto3zPU=;
- b=nBOkPEV/yqREBAabv5wrhPDheCOHObOEJMflpR271CTc5o1mutU9vHKCPRsoYlpNv7
- 6yhCCJPdai2GYSri9dkO3en8QRbn7szEkgo9Z7ybKm+Bg1GzLRl7dniMIPLZz4ocI4ri
- Dr/o8oNdDzYd0oaj6dImIv38FSaoiTG17z6wZix1PnwS8ruYbWQ0kdPhNGTIKFviEPwe
- sbR6lmzDwcYBeCyOCioPKgdTXSuhBcgONm/hk+q4B6eB8apVSZfJzHHzjk+kXhsFPtMY
- 8y0QN/0cdbbNhRDd8Uvmj3p25ydt5niebQxFnWLtkv3JARYVsRu2FCQTedInCUmrfVsV
- YE1A==
+ :reply-to; bh=SzAZgvAhDLLRTgNUADlWm2n67mSAFWUklRqCzz3wzmU=;
+ b=oo5JICLvyixkyhFXMXXqImNRR3dwiGl4MtkRo7Ww0gikM5O1XaicccOBW1O/4zLfok
+ iZjOCcGqrLIe8L6TggRw++yplNo6Wty9EOJc5xSgQp4epTJyZQAVz0JfRk+7LD9aml4w
+ dA5RSndOOFIon3Z2ucOIjZd+bschjhQtWZEpN/bQmDZFB+azy0k98aFqWNnG59RUUgl3
+ sNsRM7t/7XTQH56Yx3MqgQYGeIflH2jLqlGwYAQtzLhkfOL5S8FQVpS19QpRfT7H+vWj
+ ufaVSMOsq1O6UOcRtn7a2WTy87EMAS6mRMo8xGy/aDYt2PDY6N8ztoQ09IN6jTXpFScU
+ KGyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783334297; x=1783939097;
+ d=1e100.net; s=20251104; t=1783334317; x=1783939117;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=mEqVNkIeQWef5D3Dm101yBk+cfniIq8WOWmVgto3zPU=;
- b=CVaO2AwHlpWCpGM80qEayPgg1sTi9dFJSKBZKndh0gBPNa4kLbHmgoVcsHezfewxSF
- LqTRZ2SB6A1gzwKKPNKc0kdYIN97uEZMlzfWE53jyKUCLuOFmBqxaPE0MHc5GZ7G4zOV
- BsP+uDqRTNNCD4QeZz0MrQ5JUatk7LbJ935LStEIgid+oCAXeDqAmqjQcQXXokINibdy
- DTqMG1jk9jmIFQ3ONpUl3kRnz432nW6Lt5b4NB3MtHP07myk3r4ulfTo/1aWMyImoG5w
- cDwD+IIv9G+E6S4WUrUoNLMREgJ7qg1Tc8sYMGyS4s1QWRSIReLP9O17UqdD7HVnbPK9
- MKiw==
-X-Gm-Message-State: AOJu0YwRKxV9Lk9VGBtwuthZ5EoHBwhikVYtZO9oBqEzc1c3CSdWGUL/
- HEwO8NSfwMvbpwEymolNR2K/Q2H6/parZfz96GKyHncnE6TdLMCr4ay9uliEN2Pq5MD/EApwdLL
- Rtf4d8dQs8g==
-X-Gm-Gg: AfdE7cnGDAYejeWd6CQVkThacLZ3uQQp0pC+PFzo0PlYIKaHxthPfa3riMtlMeP0zsU
- 6w94Sg42gEixjArGRAWCOq1cnggJMwatBLLGCIM0oi29k83lkdvAy4Xm1Tiow7CF791wqOhRqFs
- sFVKj/9kL+nDagXfOIenzCLp52hx/dSIs+KIC83pEe2gedBP5zdeBhBVL0dNCxULmnco3VN+FUy
- 7UoiZ6yt8swbhV6MQ0BPtlXdd/qZhK+OCyxN6aTsNArQFyrUiQKRBnMTpzF7laOmrlqdwak9JDm
- b+BSBgzNagyuvVTwg9yIIccqcVTTCwPwaBjvJs02CAaCxhJdlzTEfp/HawdjrvnTQvbaOIIzpTO
- UgZyi6CvJv7zDtbTEVeVi9lRrJpDtfHmi8EIoG0Qs2QJhczs1jeUQSG1H5PhQffqmFrYFe8OPry
- FPyWdYFQDnnij9MvdaQmfhUO4qOq+GjsiKnWMaZM5Ee+ZvgDMKzUYrM+PBSobi/2IlrOUyCKy/r
- CykXKQ1I4rWtA1Cowdguw==
-X-Received: by 2002:a05:600c:628b:b0:492:3237:ddf with SMTP id
- 5b1f17b1804b1-493d162bb31mr99509525e9.28.1783334296829; 
- Mon, 06 Jul 2026 03:38:16 -0700 (PDT)
+ bh=SzAZgvAhDLLRTgNUADlWm2n67mSAFWUklRqCzz3wzmU=;
+ b=eQDxKSo4Tb8SxIPKQ4KA3sd3kH7FTU+5NiKVO3a8P8LSbKM/EEkSbTS44y9PprJiDF
+ hhvq6GwOK7Cnv1RNXqu2JVyNyRkKFESlKffuhW/lDvOmvKmx4DMmWcqr1K5C7D/u7b3t
+ a7nv8A2NrFzPTcDDzti2WrGyDrrQ+H2hFC7su5DPJdlgMAEnRRjmI51eWpwURmxhqG4K
+ 9xn+lLQIQOM5IRTW2jwU2YzVwNplQAC223TfJEyWSNX9WmeLUlE/4UZ70esOKk7rBo9W
+ lpkyAxUzj+/Ij4iRmSYIr119KB2v0SzARtCNXItS/AJmPi0vZkKB/hMw1lUJZvJYrg96
+ rXnA==
+X-Gm-Message-State: AOJu0YyeGGmE+zyKuq6gDw7o/X4qBZ2JvHnNnjrGlUBnul28w5sQVtf2
+ SfnX+XNFMuGcA7955hkB75D//neqmAfmNHn4ei9kwEIZ/939CG/lbKQOZbctMGgZYnIDTJaf8nk
+ Mcvk3Obpz6Q==
+X-Gm-Gg: AfdE7ckKRoESfPPZeQn/28szwnDnFhnEbW/MDpVdmh9l2bOApghP4Tgzf0SriXDsG6g
+ gRrsLXBFuOCuVsfi5EpqU7UubzE4w9IwIR8o3fRcIUUstaGz+Bff1ltpIV65YL5QRbZlb9JnfK+
+ 340fAbcRvdlA0thNtB2diMwTjfWqsBIPeSCBlgOgtp+zbgEu7kEUwIs6zFyY+BvNK4JyWueJuBo
+ /v/iuCxgAxzqzohggZDAgzaEgwqFlsmX0AmqFhVono675vyx9uAkUtYWXQPlollQ28dPmPp3WSI
+ bLCpi+BUY2wXVFvRaPV9N+9/wVGMr70onZHjutX16fGm0xbOt8zgo4YrEaIWd5PZlAS45CWG3AM
+ w7I7ALwfseeh6yZhhcOx0cDO+xHJi3Imxz0FnWS3GON+NRAc+MUa+8SQFlOm9Dtp007OBmn+r3j
+ 4P9awiHnDk2YoPZ8/tYGFxAjwoxb4xQMDi4tJ7WuCSVGEsUAz57p/JZkBup5N1XSyHY9enp+UXB
+ /vqxeK3DrgZ08XkhDBMU/Gx01dTi/2r
+X-Received: by 2002:a05:600c:4a22:b0:493:c3e0:c4 with SMTP id
+ 5b1f17b1804b1-493d11f1593mr69431615e9.22.1783334317534; 
+ Mon, 06 Jul 2026 03:38:37 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.16
+ 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 03:38:16 -0700 (PDT)
+ Mon, 06 Jul 2026 03:38:36 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/49] hw/nvram/fw_cfg: Remove support for I/O port fw_cfg
- without DMA
-Date: Mon,  6 Jul 2026 11:37:24 +0100
-Message-ID: <20260706103752.320511-22-peter.maydell@linaro.org>
+Subject: [PULL 41/49] target/arm: Implement SUMOP4[AS]
+Date: Mon,  6 Jul 2026 11:37:44 +0100
+Message-ID: <20260706103752.320511-42-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260706103752.320511-1-peter.maydell@linaro.org>
 References: <20260706103752.320511-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,45 +100,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently fw_cfg_init_io_dma() allows the caller to pass a NULL
-dma_as argument, which causes it to create a fw_cfg without
-the DMA port or DMA support. None of the callers use this
-capability: they all pass &address_space_memory.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-We don't really want to leave the door open for some future x86
-machine type which doesn't support DMA for the fw_cfg device, so
-remove this, and instead make the function assert that it has a
-non-NULL dma_as argument, like fw_cfg_init_mem_dma().
-
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260702204314.79224-12-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
-Message-id: 20260529174639.451353-5-peter.maydell@linaro.org
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/nvram/fw_cfg.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ target/arm/tcg/helper-sme-defs.h | 5 +++++
+ target/arm/tcg/sme.decode        | 3 +++
+ target/arm/tcg/sme_helper.c      | 5 +++++
+ target/arm/tcg/translate-sme.c   | 5 +++++
+ 4 files changed, 18 insertions(+)
 
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index f68191553b..a9d45adb2d 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -1026,12 +1026,10 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, AddressSpace *dma_as)
-     FWCfgIoState *ios;
-     FWCfgState *s;
-     MemoryRegion *iomem = get_system_io();
--    bool dma_requested = dma_as;
+diff --git a/target/arm/tcg/helper-sme-defs.h b/target/arm/tcg/helper-sme-defs.h
+index 070a1a2c1d..3da40d9f33 100644
+--- a/target/arm/tcg/helper-sme-defs.h
++++ b/target/arm/tcg/helper-sme-defs.h
+@@ -386,3 +386,8 @@ DEF_HELPER_FLAGS_4(sme_smop4a_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(sme_smop4s_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(sme_smop4a_dh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(sme_smop4s_dh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
 +
-+    assert(dma_as);
++DEF_HELPER_FLAGS_4(sme_sumop4a_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(sme_sumop4s_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(sme_sumop4a_dh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(sme_sumop4s_dh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index 16f86a9d2d..aef3fae8db 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -1120,3 +1120,6 @@ FMOP4A_hb       1000 0000 001. ...0 0000 00.. ..00 100.         @mop4_o1_s0
+ SMOP4_sh        1000 0000 000. ...0 1000 00.. ..0. 10..         @mop4_o2
+ SMOP4_sb        1000 0000 000. ...0 1000 00.. ..0. 00..         @mop4_o2
+ SMOP4_dh        1010 0000 110. ...0 0000 00.. ..0. 1...         @mop4_o3
++
++SUMOP4_sb       1000 0000 001. ...0 1000 00.. ..0. 00..         @mop4_o2
++SUMOP4_dh       1010 0000 111. ...0 0000 00.. ..0. 1...         @mop4_o3
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 11d9d509ec..5a9e3b8398 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -2972,4 +2972,9 @@ IMOP4_4WAY(smop4s_sb, -, int32_t, int8_t, int8_t)
+ IMOP4_4WAY(smop4a_dh, +, int64_t, int16_t, int16_t)
+ IMOP4_4WAY(smop4s_dh, -, int64_t, int16_t, int16_t)
  
-     dev = qdev_new(TYPE_FW_CFG_IO);
--    if (!dma_requested) {
--        qdev_prop_set_bit(dev, "dma_enabled", false);
--    }
- 
-     object_property_add_child(OBJECT(qdev_get_machine()), TYPE_FW_CFG,
-                               OBJECT(dev));
++IMOP4_4WAY(sumop4a_sb, +, int32_t, int8_t, uint8_t)
++IMOP4_4WAY(sumop4s_sb, -, int32_t, int8_t, uint8_t)
++IMOP4_4WAY(sumop4a_dh, +, int64_t, int16_t, uint16_t)
++IMOP4_4WAY(sumop4s_dh, -, int64_t, int16_t, uint16_t)
++
+ #undef IMOP4_4WAY
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index 6f3806f4de..fce07b2565 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -2114,3 +2114,8 @@ TRANS_FEAT(SMOP4_sb, aa64_sme_mop4, do_mop4_int, a, MO_32,
+            a->s ? gen_helper_sme_smop4s_sb : gen_helper_sme_smop4a_sb)
+ TRANS_FEAT(SMOP4_dh, aa64_sme_mop4_i16i64, do_mop4_int, a, MO_64,
+            a->s ? gen_helper_sme_smop4s_dh : gen_helper_sme_smop4a_dh)
++
++TRANS_FEAT(SUMOP4_sb, aa64_sme_mop4, do_mop4_int, a, MO_32,
++           a->s ? gen_helper_sme_sumop4s_sb : gen_helper_sme_sumop4a_sb)
++TRANS_FEAT(SUMOP4_dh, aa64_sme_mop4_i16i64, do_mop4_int, a, MO_64,
++           a->s ? gen_helper_sme_sumop4s_dh : gen_helper_sme_sumop4a_dh)
 -- 
 2.43.0
 
