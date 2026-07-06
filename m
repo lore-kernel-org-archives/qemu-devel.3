@@ -4,108 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42450C43602
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 20:36:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E69BC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 20:41:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgq2u-000691-B6; Mon, 06 Jul 2026 16:36:04 -0400
+	id 1wgq8G-00089X-0R; Mon, 06 Jul 2026 16:41:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wgq2s-00062Z-LA
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:36:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgq8D-00089I-V4
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:41:33 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wgq2q-0002ME-Gc
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:36:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783370158;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3/e1k4vcry+BiCc1qvIDQSQP6/GcJ5oKM1W7IvvGS5A=;
- b=LanuWpts2BGfBBH3s6JXVABpiCSj1A4xLBlo3MFsCQCPNYotWwDi2JAaujJVkx+Hv80wSl
- mUzxdr7ip7WyVXqwgd62j/xA1oRHKMljvQ5UxYH96GxaEIYiJHXJgr0JyTcFy9xh7yNxsi
- 0yuSHFWRpsc/59dwzmILOxYdVWaCipQ=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-364-sAd9tyPdMXy1QEcTYvRKuw-1; Mon, 06 Jul 2026 16:35:57 -0400
-X-MC-Unique: sAd9tyPdMXy1QEcTYvRKuw-1
-X-Mimecast-MFC-AGG-ID: sAd9tyPdMXy1QEcTYvRKuw_1783370156
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-92e632390d2so629634185a.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 13:35:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgq8B-00057J-Pb
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:41:33 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 666KF1YG1656373
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 20:41:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ mC/ouaJ/6jYSZyShGSmXUgMchsuIYmBL+NUFF6tRwJY=; b=HLSncU18EuNrVm0u
+ F+m7ZTwi7BXPL14pZ0uYsSTBo2KTTjVSOC5nBo5mIsiW2gDofS61QZI9VHWhj7ud
+ c1c4bzwFluz2zWLC/3n2mwqd0Iex7nnrZV9cSHKNMoqDoTacPDFZNxKsaPnj4dJ4
+ SCL+lMH+8YmZyXx0kpMEvPVkNUqhWz0wfpW6pkZ7aRYTUt8aAgBQA+YANJyqJFez
+ Na9bmjxwrjrPHutr0oLhZVYJykQy0/yaizhPRTUCkKa4Nb7HgzZ1yTgkV2N+sE9B
+ tKTnNI9vFG9qAimoxFuuNA8IhEuX7wOSm2Cz+DtRXbdswjOVf3Pk3ohvDr7puE56
+ R3LbJg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f89qpjw03-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 20:41:29 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-92e82060977so26651085a.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 13:41:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783370156; x=1783974956; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=3/e1k4vcry+BiCc1qvIDQSQP6/GcJ5oKM1W7IvvGS5A=;
- b=aI/NzcAvNURrFzuCNT1lJqaORdZj1qnmEXydN/srD2C1Ud7ahS1zIrDoeAfh6+TO2Q
- GGQzkBX0VrwXN+fxN4uZU6+kCBTmnThEcObRqzei7G1eVmwdbBRSmekRsH3uHHmBK3qX
- ayAHCdsBudobVTINYRD+rHkq+GNuMAIbfMteVmPXxPmq5jZFU2mU0D10TjajR+/rT/1F
- VDtG3Kp1aXvBODZIl7il22m7fJxL/NSEjN3HqcD6OEoO/7uaqpw69VL1Yc1s2CZNEKXt
- Ss99nKzeTTN0QqmFzb1b3jftb4ETsLIOmnEeSm4YazjA7GN+2PVR1/P7H+BjN6oI48Rh
- JnQQ==
+ d=oss.qualcomm.com; s=google; t=1783370488; x=1783975288; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mC/ouaJ/6jYSZyShGSmXUgMchsuIYmBL+NUFF6tRwJY=;
+ b=Brktj+QrUnnBxbtyrcRvOrvnqflXrMJUWzrI1m9Fc5G7/90MH+4NjQJ24eKAPBIGcG
+ 9sI7dqcrrQIefOso2e0nWsjejb73YYq/fuQ0z0VImw8I55FiR8GVED9XNpmHjGlH39LO
+ inaGeCVbWWFd75NydtIWNiaskEaEoH9/beEhzeyiga4pll0cfTe6phNS50mxNdyP+L+8
+ BgcecrT1tMozU5i05ilqQH7HY3XZsAlItxnbuoO/rd8mo8VKZ8QCJBR10m1Vx6ZjeHgg
+ YCKujvcC33HoRNWN0IA5N/zfw4mfKJNZGT/IfIflOVnI2lxMakLAh7jOVqC+CxSPI4bj
+ aonA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783370156; x=1783974956;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=3/e1k4vcry+BiCc1qvIDQSQP6/GcJ5oKM1W7IvvGS5A=;
- b=L9icr/Wb6M4VRmXP6esIJjMjAVEpWk6CDD/Nhhg+benwOhdxuxNRWabZe0MXWzj7pJ
- EwmniASEiMjkSy+SKBgklAZ+Jc2OZVFZ5shI+KStCCe62kOJ4pR1yc8cCjxvJrITETYU
- Rwu2fWZYFPZd3np7j8xxKk2v6Bft02mncuHE5StgR891PRdTWcpw1U8dyUlWet7i/a/q
- H0OAguh5NN4KVnhducZepaHQYv8hmeRu6KUAgYVvkdHD3e1q91BmJUJaktoOswTd6Rek
- UqyiifNJrTwNadF1s0bp9xnYKRsD3KhHWsFRTiYd9Ig7a8jeV7kXuL13idut68AyX+Oi
- 5ipg==
-X-Gm-Message-State: AOJu0YyCywTeqqnQG4yc7FCXmbxvWOTIyIc7LMrbygRKPhmzH5bQ6aLJ
- K3EvnHqn+W4zSEA+gq5ay++jD6u87QXeP8wVXiEWY0ishMPHRdz6GJKUbmUgeDHtT+dlGLMaQKd
- IzOzzUBtw+aTDysbaDgUy4rUAqtEkiTmQE+jKTNYEr0dJUPmu4UJKzVrS
-X-Gm-Gg: AfdE7ckJOoO7dZzbrF/lZJDF8fs/DUBdmLFmlwaELSvzckbzsLBuOxQsLzB+rptsXdq
- OKoIbUQRn7QFqPNEN7MaMwKN5yF58WfM/fcdxNNj21zm5WsYjQM2nkE07mMeKMtLGyaO4zjMfrv
- kNXwmRxD4HY8mM6nk/oAkZN0tBJK/pMt2KD7CL+CFmw08tiTEUhK+MG56K8oap9r6q9PJeNbVP6
- sJngl2CsdJ5m6q3LfF/4YwyawCI6DURkUvad9eaWiLlhBfALb/ufNKVGLpiYWbkqmwS9Uo/DfIl
- iRnReCO2nObsDzvDvsR6AueOm5u3fECf/+TeMri6jVjtvGYLmbKh5TBKiPTRqEyxtD+OOGgjUKO
- KmmWftBzvUrzjSYmUzWg6t6y13U6Gv5J9MQv+NVJmk1maKruGS8mCkk4YC75crODB50N69A==
-X-Received: by 2002:a05:620a:4041:b0:915:cb40:f774 with SMTP id
- af79cd13be357-92ebb57f369mr292560585a.31.1783370156102; 
- Mon, 06 Jul 2026 13:35:56 -0700 (PDT)
-X-Received: by 2002:a05:620a:4041:b0:915:cb40:f774 with SMTP id
- af79cd13be357-92ebb57f369mr292555385a.31.1783370155380; 
- Mon, 06 Jul 2026 13:35:55 -0700 (PDT)
-Received: from x1.local
- (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8f4718141e6sm144943416d6.24.2026.07.06.13.35.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 13:35:54 -0700 (PDT)
-Date: Mon, 6 Jul 2026 16:35:53 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Aadeshveer Singh <aadeshveer07@gmail.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com,
- philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com
-Subject: Re: [RFC PATCH v2 6/7] migration: add support for fault thread to
- load pages from disk
-Message-ID: <akwRqYY3vfzafZ_X@x1.local>
-References: <20260630081940.611092-1-aadeshveer07@gmail.com>
- <20260630081940.611092-7-aadeshveer07@gmail.com>
+ d=1e100.net; s=20251104; t=1783370488; x=1783975288;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mC/ouaJ/6jYSZyShGSmXUgMchsuIYmBL+NUFF6tRwJY=;
+ b=GldkKPTf7Jy29MWGmv+OwKyaVGokpQ/BLCYiGhh66A8DcjoIinE91krP3WTAf+1vxB
+ 4K3jgt/FBnKqKvIg1G972T1bPlKVEMTthXXCjcUV1mQ5a4rOWXZ84p5rVo9PeUOXxk2T
+ aB05ITIF5cVCY2kF9r/Of9FmUh7C+8BYh3aUUX6+RphSAaf9B+4vfEp9goyfper0cF9Z
+ JA5Og2Gsx4yY4hdnq2lpWsTQBRPocGpd8g8EFCZ2TA8jyyjZAHD+qTaCqVEWY0bCfaHE
+ ePTbp+Ov0HwjxQ0A26oFQuwBoLhVQDa/llpFDLEQtmptizooyXoEjp30KByw9yjSrpdR
+ chLw==
+X-Gm-Message-State: AOJu0Yxj8p0HcNW4YJDIPWV+Eh8Hj+RxsQSZ9VqewuhjE2vSWGGNXfDA
+ hSMjsLDxG4yomPTY2fDJXgCeMj6xT31gmQgDD/ro11R7C+HbAzuVWptOW+nV6tbSP7S83y2z1//
+ +W7DoAv2QZ3VHQyvkbXDcPf2A9Jz/IHYRjQFaPQKhfOc/hgNFPNISsJqMDg==
+X-Gm-Gg: AfdE7cmSg2TKKpOxu2mLEadQsz+V5YRgxFCuynAnJHeyR3SwtLj+umMhYyMf9Ww5ugQ
+ 4yPyFgcaym3wW8+hOCC3kVFrknARlWZWbG7ETIEn9TCnKcBcmvoMH54e75bmXO0IYIiP64rSa/M
+ Lq4yjP3CH4GsUS0oM/4ee794hvH7J+S8tTuMxYoVblX2iMGV/UappMXDDobEiXsJAb8G9Np2Ad5
+ AOZ/+70eI+36XmRDIketiN3tLgHrtGMOuPJfH5U/BoPfPkm7HoTAgXt8CMHFHflgOKssegDGFOm
+ j+RzsG55vLevjdc7lGk6cTTf7T0oSoRnnJ9IaLjyXRTflkBWNAXkjYD57rp/vX4gyQ+OltTCSCX
+ dcOnKPNszZndpJ4z26fiQFwKL4i6D454BX5A5/Gimmp5ysVcCuEpb50L6w6Gykw==
+X-Received: by 2002:a05:620a:2781:b0:911:e11e:dc0d with SMTP id
+ af79cd13be357-92e8b504841mr2129475585a.24.1783370488248; 
+ Mon, 06 Jul 2026 13:41:28 -0700 (PDT)
+X-Received: by 2002:a05:620a:2781:b0:911:e11e:dc0d with SMTP id
+ af79cd13be357-92e8b504841mr2129471385a.24.1783370487594; 
+ Mon, 06 Jul 2026 13:41:27 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493e00c6a65sm20664955e9.1.2026.07.06.13.41.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Jul 2026 13:41:26 -0700 (PDT)
+Message-ID: <aeb90e22-dd44-4de2-b1c7-b3b81c131031@oss.qualcomm.com>
+Date: Mon, 6 Jul 2026 22:41:25 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260630081940.611092-7-aadeshveer07@gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v16 12/21] target/mips: add Octeon HSH COP2 helpers
+Content-Language: en-US
+To: James Hilliard <james.hilliard1@gmail.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
+ Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno
+ <aurelien@aurel32.net>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Huacai Chen <chenhuacai@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260608-mips-octeon-missing-insns-v2-v16-0-daef7a0d8b04@gmail.com>
+ <20260608-mips-octeon-missing-insns-v2-v16-12-daef7a0d8b04@gmail.com>
+ <346b848d-465b-4560-9615-bd0575967b29@oss.qualcomm.com>
+ <CADvTj4r0MwV7csi5iXrNyX10xqC=XAOZ-EfdfyLDC-JrzzGD9A@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <CADvTj4r0MwV7csi5iXrNyX10xqC=XAOZ-EfdfyLDC-JrzzGD9A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=c6qbhx9l c=1 sm=1 tr=0 ts=6a4c12f9 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=amipSYqKS6PejS6ytuQA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-ORIG-GUID: cWQCDB6nTj38dsxNymIg1b7G55aM-n5h
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDIwOSBTYWx0ZWRfX/DWCkdXy66y2
+ ojaHb25svKs/L1gYE56TuvR3ugSds/S+qW0Qj/YKgXSBV4uGasZQyiHP/9/V2IZiPTgzy2X6PiE
+ TOeV3Dytim6OQZEr2KbDLHXwPG/2HEP+MHG4p6viflR1tXksW5M5xGRC7RUqZjEU2U1xFVa2fyy
+ /Kcmccjq7xQw5RiJwz5Pj4vGNinFhajh2s9FY2DadxUY/SdZLXNOOOSNaazBknzR88sv2AxQ3Ox
+ UYK/UDug6pVlXDdwKJFEDfLS4YEyycmCSbwh40OsWOeD+r3WDQ7tPIZH5gvOop3o3yXJnTjG86j
+ Hma171K2KI8FtBFRxoaz9oaGCtqgWH6R6U57o04JJ1XCg11Z0mM/OzfENtDLJOdOdR1X834Mz+p
+ bkTeq2Ddst/0elOhIZvV8IHlt6KUPHeYPjKX5RhqVoOhYLEFJQq4qrvhOJcKx/3baMkOr7HaTL0
+ mlKYPzzgIOG7hW/QlZQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDIwOSBTYWx0ZWRfX73KzkuMTaEPn
+ qpEdjgvhOqAukPY8WBTEaufE1dlcFF4sv1xv8TACASGN+TBZgtXfDKPgmRaUegwwz9KP1IgSt7f
+ kox0lnTLt60X1VJynTrPCRFtOnxpvYE=
+X-Proofpoint-GUID: cWQCDB6nTj38dsxNymIg1b7G55aM-n5h
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-06_03,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 impostorscore=0 phishscore=0 adultscore=0
+ lowpriorityscore=0 priorityscore=1501 clxscore=1015 spamscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607060209
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- URG_BIZ=0.573 autolearn=no autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,295 +162,301 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 30, 2026 at 01:49:39PM +0530, Aadeshveer Singh wrote:
-> In fast snapshot load, we would like to serve faults as soon as possible
-> hence loading pages directly instead of requesting a source
+On 6/7/26 20:13, James Hilliard wrote:
+> On Mon, Jul 6, 2026 at 10:57 AM Philippe Mathieu-Daudé
+> <philmd@oss.qualcomm.com> wrote:
+>>
+>> Hi James,
+>>
+>> On 8/6/26 20:59, James Hilliard wrote:
+>>> Add helper support for the Octeon HSH hash selectors. This includes the
+>>> base HSH data/IV windows, MD5, SHA1, SHA256, and SHA512 transform paths,
+>>> and the shared HSH/SHA512 register-window readback and write operations.
+>>>
+>>> The SHA512 path shares the wide HSH register bank with SHA3, SNOW3G, and
+>>> ZUC. Keep the aliased readback and write paths centralized so selector
+>>> decode can route register accesses through these helpers when side
+>>> effects are required.
+>>>
+>>> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+>>> ---
+>>> Changes v13 -> v14:
+>>>     - Keep HSH narrow DAT/IV state updates in the low 32-bit halves of the
+>>>       architectural HSH register bank so paired selector transfers preserve
+>>>       the wide shared-window state.
+>>>
+>>> Changes v10 -> v13:
+>>>     - Keep the 0x0057 SDK compatibility path as an explicit STARTSHA1
+>>>       compatibility helper instead of a generic STARTSHA name.
+>>>
+>>> Changes v9 -> v10:
+>>>     - Remove references to shared-mode tracking; aliased state is kept in the
+>>>       architectural HSH register banks.
+>>>
+>>> Changes v8 -> v9:
+>>>     - Split HSH/SHA helpers into their own COP2 helper patch.
+>>>     - Replace generic selector dispatch with per-operation HSH helpers.
+>>>     - Keep shared-window readback and write helpers grouped with HSH.
+>>>     - Add matching helper.h declarations with the helper implementation.
+>>> ---
+>>>    target/mips/helper.h            |   5 +
+>>>    target/mips/tcg/octeon_crypto.c | 375 ++++++++++++++++++++++++++++++++++++++++
+>>>    2 files changed, 380 insertions(+)
+>>>
+>>> diff --git a/target/mips/helper.h b/target/mips/helper.h
+>>> index 71b7a2b30e..834f2d0769 100644
+>>> --- a/target/mips/helper.h
+>>> +++ b/target/mips/helper.h
+>>> @@ -69,6 +69,11 @@ DEF_HELPER_2(octeon_cp2_mt_des3_dec, void, env, i64)
+>>>    DEF_HELPER_2(octeon_cp2_mt_camellia_fl, void, env, i64)
+>>>    DEF_HELPER_2(octeon_cp2_mt_camellia_flinv, void, env, i64)
+>>>    DEF_HELPER_2(octeon_cp2_mt_camellia_round, void, env, i64)
+>>> +DEF_HELPER_2(octeon_cp2_mt_hsh_startsha1_compat, void, env, i64)
+>>> +DEF_HELPER_2(octeon_cp2_mt_hsh_startmd5, void, env, i64)
+>>> +DEF_HELPER_2(octeon_cp2_mt_hsh_startsha256, void, env, i64)
+>>> +DEF_HELPER_2(octeon_cp2_mt_hsh_startsha, void, env, i64)
+>>> +DEF_HELPER_2(octeon_cp2_mt_hsh_startsha512, void, env, i64)
+>>>
+>>>    /* microMIPS functions */
+>>>    DEF_HELPER_4(lwm, void, env, tl, tl, i32)
+>>> diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
+>>> index 67959618cc..9523c84667 100644
+>>> --- a/target/mips/tcg/octeon_crypto.c
+>>> +++ b/target/mips/tcg/octeon_crypto.c
+>>> @@ -153,6 +153,348 @@ static void octeon_gfm_mul64_uia2(const uint64_t x[2], const uint64_t y[2],
+>>>        out[1] = revbit64(res);
+>>>    }
+>>>
+>>> +static inline uint32_t octeon_hsh_get32(const uint64_t *regs,
+>>> +                                        unsigned int index)
+>>> +{
+>>> +    return regs[index];
+>>> +}
+>>> +
+>>> +static inline void octeon_hsh_set32(uint64_t *regs, unsigned int index,
+>>> +                                    uint32_t value)
+>>> +{
+>>> +    regs[index] = (regs[index] & ~(uint64_t)UINT32_MAX) | value;
+>>> +}
+>>> +
+>>> +static inline void octeon_hsh_set_pair(uint64_t *regs, unsigned int index,
+>>> +                                       uint64_t value)
+>>> +{
+>>> +    octeon_hsh_set32(regs, index * 2, value >> 32);
+>>> +    octeon_hsh_set32(regs, index * 2 + 1, value);
+>>> +}
+>>> +
+>>> +static void octeon_md5_transform(MIPSOcteonCryptoState *crypto)
+>>> +{
+>>> +    static const uint32_t k[64] = {
+>>> +        0xd76aa478U, 0xe8c7b756U, 0x242070dbU, 0xc1bdceeeU,
+>>> +        0xf57c0fafU, 0x4787c62aU, 0xa8304613U, 0xfd469501U,
+>>> +        0x698098d8U, 0x8b44f7afU, 0xffff5bb1U, 0x895cd7beU,
+>>> +        0x6b901122U, 0xfd987193U, 0xa679438eU, 0x49b40821U,
+>>> +        0xf61e2562U, 0xc040b340U, 0x265e5a51U, 0xe9b6c7aaU,
+>>> +        0xd62f105dU, 0x02441453U, 0xd8a1e681U, 0xe7d3fbc8U,
+>>> +        0x21e1cde6U, 0xc33707d6U, 0xf4d50d87U, 0x455a14edU,
+>>> +        0xa9e3e905U, 0xfcefa3f8U, 0x676f02d9U, 0x8d2a4c8aU,
+>>> +        0xfffa3942U, 0x8771f681U, 0x6d9d6122U, 0xfde5380cU,
+>>> +        0xa4beea44U, 0x4bdecfa9U, 0xf6bb4b60U, 0xbebfbc70U,
+>>> +        0x289b7ec6U, 0xeaa127faU, 0xd4ef3085U, 0x04881d05U,
+>>> +        0xd9d4d039U, 0xe6db99e5U, 0x1fa27cf8U, 0xc4ac5665U,
+>>> +        0xf4292244U, 0x432aff97U, 0xab9423a7U, 0xfc93a039U,
+>>> +        0x655b59c3U, 0x8f0ccc92U, 0xffeff47dU, 0x85845dd1U,
+>>> +        0x6fa87e4fU, 0xfe2ce6e0U, 0xa3014314U, 0x4e0811a1U,
+>>> +        0xf7537e82U, 0xbd3af235U, 0x2ad7d2bbU, 0xeb86d391U,
+>>> +    };
+>>> +    static const uint8_t s[64] = {
+>>> +        7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
+>>> +        5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
+>>> +        4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
+>>> +        6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21,
+>>> +    };
+>>> +    uint32_t m[16];
+>>> +    uint32_t a, b, c, d;
+>>> +    uint32_t aa, bb, cc, dd;
+>>> +    int i;
+>>> +
+>>> +    for (i = 0; i < 16; i++) {
+>>> +        m[i] = bswap32(octeon_hsh_get32(crypto->hsh_dat, i));
+>>> +    }
+>>> +
+>>> +    a = bswap32(octeon_hsh_get32(crypto->hsh_iv, 0));
+>>> +    b = bswap32(octeon_hsh_get32(crypto->hsh_iv, 1));
+>>> +    c = bswap32(octeon_hsh_get32(crypto->hsh_iv, 2));
+>>> +    d = bswap32(octeon_hsh_get32(crypto->hsh_iv, 3));
+>>
+>> The MD5 algorithm is little-endian, so I think for these we want
+>> cpu_to_le32(), ...
 > 
-> Add postcopy_mapped_ram_load_page() function which serves single page
-> fault by reading the snapshot file. It uses bitmap_test_and_clear_atomic
-> on pending_bmap to coordinate between threads so each page is loaded
-> exactly once. Non-zero pages are read using qemu_get_buffer_at into a
-> temporary page (for loading page atomically), which is then placed using
-> postcopy_place_page. Zero pages are placed directly using
-> postcopy_place_page_zero.
+> Looking at the CN71XX manual, I think the current handling matches the
+> architectural HSH register view.  The HSH DAT/IV narrow selectors build
+> HASHDAT/HASHIV words from GPR halves, and the SHA-512 wide selectors move
+> whole GPR values into HASHDAT/HASHIV.  These are COP2 register values,
+> not target-memory byte arrays.
 > 
-> Update postcopy_ram_fault_thread to call postcopy_mapped_ram_load_page
-> instead of requesting source in case of fast snapshot load. to_src_file
-> check is bypassed in fast snapshot load case as there is no source.
+> The manual calls out MD5 specially: HASHDAT/HASHIV are in the big-endian
+> HSH register-word order, while MD5 is little-endian, so the MD5 operation
+> byte-swaps HASHDAT/HASHIV on entry and exit.  That is what the current
+> bswap32() calls model.
+
+This call works on little endian hosts, because the target CPU is only
+built for big-endian in user-mode. I don't expect your tests to pass on
+a big-endian host, because we don't want to swap in this case.
+
+See in include/qemu/bswap.h:
+
+  60  * Endianness conversion functions between host cpu and specified 
+endianness.
+  63  *
+  64  * uint16_t le16_to_cpu(uint16_t v);
+  65  * uint32_t le32_to_cpu(uint32_t v);
+  66  * uint64_t le64_to_cpu(uint64_t v);
+  67  * uint16_t be16_to_cpu(uint16_t v);
+  68  * uint32_t be32_to_cpu(uint32_t v);
+  69  * uint64_t be64_to_cpu(uint64_t v);
+  70  *
+  71  * Convert the value @v from the specified format to the native
+  72  * endianness of the host CPU by byteswapping if necessary, and
+  73  * return the converted value.
+  74  *
+  75  * uint16_t cpu_to_le16(uint16_t v);
+  76  * uint32_t cpu_to_le32(uint32_t v);
+  77  * uint64_t cpu_to_le64(uint64_t v);
+  78  * uint16_t cpu_to_be16(uint16_t v);
+  79  * uint32_t cpu_to_be32(uint32_t v);
+  80  * uint64_t cpu_to_be64(uint64_t v);
+  81  *
+  82  * Convert the value @v from the native endianness of the host CPU
+  83  * to the specified format by byteswapping if necessary, and return
+  84  * the converted value.
+
 > 
-> Add postcopy-blocktime support by calling mark_postcopy_blocktime_begin
-> on every fault. We need to aqcuire the page_request_mutex lock and check
-> the recv bitmap to make sure we prevent a race condition when a fault
-> occurs but before the fault thread can mark the page for tracking the
-> eager thread loads in the page making us fail the assert for recv bitmap
-> being clear while marking in mark_postcopy_blocktime_begin().
+>>> +    aa = a;
+>>> +    bb = b;
+>>> +    cc = c;
+>>> +    dd = d;
+>>> +
+>>> +    for (i = 0; i < 64; i++) {
+>>> +        uint32_t f, g, tmp;
+>>> +
+>>> +        if (i < 16) {
+>>> +            f = (b & c) | ((~b) & d);
+>>> +            g = i;
+>>> +        } else if (i < 32) {
+>>> +            f = (d & b) | ((~d) & c);
+>>> +            g = (5 * i + 1) & 0xf;
+>>> +        } else if (i < 48) {
+>>> +            f = b ^ c ^ d;
+>>> +            g = (3 * i + 5) & 0xf;
+>>> +        } else {
+>>> +            f = c ^ (b | (~d));
+>>> +            g = (7 * i) & 0xf;
+>>> +        }
+>>> +
+>>> +        tmp = d;
+>>> +        d = c;
+>>> +        c = b;
+>>> +        b = b + rol32(a + f + k[i] + m[g], s[i]);
+>>> +        a = tmp;
+>>> +    }
+>>> +
+>>> +    a += aa;
+>>> +    b += bb;
+>>> +    c += cc;
+>>> +    d += dd;
+>>> +    octeon_hsh_set32(crypto->hsh_iv, 0, bswap32(a));
+>>> +    octeon_hsh_set32(crypto->hsh_iv, 1, bswap32(b));
+>>> +    octeon_hsh_set32(crypto->hsh_iv, 2, bswap32(c));
+>>> +    octeon_hsh_set32(crypto->hsh_iv, 3, bswap32(d));
+>>
+>> ... and le32_to_cpu() here.
+>>
+>>> +}
+>>> +
+>>> +static void octeon_sha1_transform(MIPSOcteonCryptoState *crypto)
+>>> +{
+>>> +    uint32_t w[80];
+>>> +    uint32_t a, b, c, d, e;
+>>> +    uint32_t orig[5];
+>>> +    int i;
+>>> +
+>>> +    for (i = 0; i < 16; i++) {
+>>> +        w[i] = octeon_hsh_get32(crypto->hsh_dat, i);
+>>> +    }
+>>> +    for (i = 16; i < 80; i++) {
+>>> +        w[i] = rol32(w[i - 3] ^ w[i - 8] ^ w[i - 14] ^ w[i - 16], 1);
+>>> +    }
+>>> +
+>>> +    for (i = 0; i < 5; i++) {
+>>> +        orig[i] = octeon_hsh_get32(crypto->hsh_iv, i);
+>>> +    }
+>>
+>> SHA is big-endian so we are good, but watch out this CPU could switch
+>> endianness.
+>>
+>> Maybe safer to use cpu_to_be32() and be32_to_cpu()?
 > 
-> Allocate another channel in postcopy_temp_pages_setup(like the preempt
-> case), for both the fault thread and eager thread to load pages
-> independently.
+> For SHA-1, SHA-256, and SHA-512, the manual pseudo-code feeds the HSH
+> register words directly into the SHA operation and does not describe a
+> similar byte-swap.  So using cpu_to_be32()/be32_to_cpu() here would
+> byte-swap based on host endianness, which is not the architectural HSH
+> operation.
 > 
-> Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
-> ---
->  migration/postcopy-ram.c | 121 +++++++++++++++++++++++++++++++++------
->  1 file changed, 104 insertions(+), 17 deletions(-)
+>>> +    a = orig[0];
+>>> +    b = orig[1];
+>>> +    c = orig[2];
+>>> +    d = orig[3];
+>>> +    e = orig[4];
+>>> +
+>>> +    for (i = 0; i < 80; i++) {
+>>> +        uint32_t f, k, temp;
+>>> +
+>>> +        if (i < 20) {
+>>> +            f = (b & c) | ((~b) & d);
+>>> +            k = 0x5a827999;
+>>> +        } else if (i < 40) {
+>>> +            f = b ^ c ^ d;
+>>> +            k = 0x6ed9eba1;
+>>> +        } else if (i < 60) {
+>>> +            f = (b & c) | (b & d) | (c & d);
+>>> +            k = 0x8f1bbcdc;
+>>> +        } else {
+>>> +            f = b ^ c ^ d;
+>>> +            k = 0xca62c1d6;
+>>> +        }
+>>> +
+>>> +        temp = rol32(a, 5) + f + e + k + w[i];
+>>> +        e = d;
+>>> +        d = c;
+>>> +        c = rol32(b, 30);
+>>> +        b = a;
+>>> +        a = temp;
+>>> +    }
+>>> +
+>>> +    orig[0] += a;
+>>> +    orig[1] += b;
+>>> +    orig[2] += c;
+>>> +    orig[3] += d;
+>>> +    orig[4] += e;
+>>> +    for (i = 0; i < 5; i++) {
+>>> +        octeon_hsh_set32(crypto->hsh_iv, i, orig[i]);
+>>> +    }
+>>> +}
+>>> +
+>>> +static void octeon_sha256_transform(MIPSOcteonCryptoState *crypto)
+>>> +{
+>>
+>> (ditto)
+>>
+>>> +}
+>>> +
+>>> +static void octeon_sha512_transform(MIPSOcteonCryptoState *crypto)
+>>> +{
+>>
+>> (ditto)
+>>
+>>> +}
 > 
-> diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-> index 96a65aa976..be9edac572 100644
-> --- a/migration/postcopy-ram.c
-> +++ b/migration/postcopy-ram.c
-> @@ -949,6 +949,68 @@ int postcopy_wake_shared(struct PostCopyFD *pcfd,
->                         pagesize);
->  }
->  
-> +/**
-> + * postcopy_mapped_ram_load_page() - Load a page to given host address.
-> + * @mis: Migration Incoming State.
-> + * @rb: RAMBlock from where page is loaded.
-> + * @rb_offset: Offset of page in RAMBlock.
-> + * @haddr: Base of page where to load in page.
-> + * @channel: Used to identify between threads and use corresponding temp.
-
-Missing @errp.
-
-> + *
-> + * Load a page from RAMBlock at offset at given host address. Used by postcopy
-> + * ram fault thread and eager thread in fast snapshot load case.
-> + *
-> + * Return: True on success.
-> + */
-> +static bool postcopy_mapped_ram_load_page(MigrationIncomingState *mis,
-> +                                          RAMBlock *rb, ram_addr_t rb_offset,
-> +                                          uint64_t haddr, int channel,
-> +                                          Error **errp)
-> +{
-> +    void *place_source = mis->postcopy_tmp_pages[channel].tmp_huge_page;
-> +    size_t page;
-> +    size_t read;
-> +
-> +    page = rb_offset / qemu_ram_pagesize(rb);
-
-Yes, here it is correct to use qemu_ram_pagesize().
-
-> +
-> +    if (bitmap_test_and_clear_atomic(rb->pending_bmap, page, 1)) {
-> +        if (test_bit(page, rb->file_bmap)) {
-
-We'll need to be careful here when you add huge page support, because
-file_bmap so far is guest-psize based.  This line will start to break for
-huge pages, I am not sure if this is the bug you hit when developing huge
-page support, maybe yes?
-
-Not sure how you resolved it there if this is the case, but one idea is
-when postcopy-ram is enabled, you can convert the per-guest-psize bitmap
-into per-host-psize bitmap (when any bit set within the huge page range,
-set the bit in the new bitmap), then here it will be correct.
-
-> +            /*
-> +             * This can happen concurrently, but it's thread-safe because
-> +             * qemu_get_buffer_at() is thread-safe, and the caller will be using
-> +             * different temporary buffers.
-> +             */
-> +            read = qemu_get_buffer_at(mis->from_src_file, place_source,
-> +                                      qemu_ram_pagesize(rb),
-> +                                      rb->pages_offset + rb_offset);
-> +
-> +            if (read != qemu_ram_pagesize(rb)) {
-> +                error_setg(errp, "Could not read page %zu from RAM Block %s",
-> +                           page, rb->idstr);
-> +                return false;
-> +            }
-> +
-> +            if (postcopy_place_page(mis, (void *)haddr, place_source, rb)) {
-> +                error_setg(errp,
-> +                           "Failed to place page %zu from RAM Block %s at "
-> +                           "address %" PRIu64,
-> +                           page, rb->idstr, haddr);
-> +                return false;
-> +            }
-> +
-
-Nit: unnecessary newline.
-
-> +        } else {
-> +            if (postcopy_place_page_zero(mis, (void *)haddr, rb)) {
-> +                error_setg(errp,
-> +                           "Failed to place zero page %zu from RAM Block %s at "
-> +                           "address %" PRIu64,
-> +                           page, rb->idstr, haddr);
-> +                return false;
-> +            }
-> +        }
-> +    }
-> +    return true;
-> +}
-> +
->  /*
->   * NOTE: @tid is only used when postcopy-blocktime feature is enabled, and
->   * also optional: when zero is provided, the fault accounting will be ignored.
-> @@ -1279,6 +1341,7 @@ static void *postcopy_ram_fault_thread(void *opaque)
->      int ret;
->      size_t index;
->      RAMBlock *rb = NULL;
-> +    Error *local_err = NULL;
->  
->      trace_postcopy_ram_fault_thread_entry();
->      rcu_register_thread();
-> @@ -1320,11 +1383,13 @@ static void *postcopy_ram_fault_thread(void *opaque)
->              break;
->          }
->  
-> -        if (!mis->to_src_file) {
-> +        if (!migrate_mapped_ram() && !mis->to_src_file) {
->              /*
-> -             * Possibly someone tells us that the return path is
-> -             * broken already using the event. We should hold until
-> -             * the channel is rebuilt.
-> +             * Possibly someone tells us that the return path is broken already
-> +             * using the event. We should hold until the channel is rebuilt.
-> +             * Fast snapshot load doesn't support pause and recover, because
-> +             * it's not necessary: we can fail right away when QEMU just booted
-> +             * with nothing to lose.
->               */
->              postcopy_pause_fault_thread(mis);
->          }
-> @@ -1387,18 +1452,37 @@ static void *postcopy_ram_fault_thread(void *opaque)
->                                                  qemu_ram_get_idstr(rb),
->                                                  rb_offset,
->                                                  msg.arg.pagefault.feat.ptid);
-> +
-> +            if (migrate_mapped_ram()) {
-> +                /* Load page directly in case of fast snapshot load */
-> +                WITH_QEMU_LOCK_GUARD(&mis->page_request_mutex) {
-> +                    if (!ramblock_recv_bitmap_test(
-> +                            rb, (void *)msg.arg.pagefault.address)) {
-> +                        mark_postcopy_blocktime_begin(
-> +                            msg.arg.pagefault.address,
-> +                            msg.arg.pagefault.feat.ptid, rb);
-> +                    }
-> +                }
-
-This part needs some more thought.
-
-First of all, if the page is set already in receivedmap, it means it's
-already installed, we shouldn't bother postcopy_mapped_ram_load_page().
-
-But the problem is not only about that.
-
-So far looks like the blocktime feature relies on the receivedmap, then it
-means the easy way for this series is to support receivedmap too.  Then
-with receivedmap, we should unify the receivedmap detection rather than
-testing the bit at multiple places.
-
-Say, you can provide a small helper like this:
-
-diff --git a/migration/migration.c b/migration/migration.c
-index 278cad502a..79f737bc69 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -573,12 +573,10 @@ int migrate_send_rp_message_req_pages(MigrationIncomingState *mis,
-     return migrate_send_rp_message(mis, msg_type, msglen, bufc);
- }
-
--int migrate_send_rp_req_pages(MigrationIncomingState *mis,
--                              RAMBlock *rb, ram_addr_t start, uint64_t haddr,
--                              uint32_t tid)
-+bool postcopy_page_received(MigrationIncomingState *mis, RAMBlock *rb,
-+                            ram_addr_t start, uint64_t haddr, uint32_t tid)
- {
--    void *aligned = (void *)(uintptr_t)ROUND_DOWN(haddr, qemu_ram_pagesize(rb));
--    bool received = false;
-+    bool received;
-
-     WITH_QEMU_LOCK_GUARD(&mis->page_request_mutex) {
-         received = ramblock_recv_bitmap_test_byte_offset(rb, start);
-@@ -598,11 +596,20 @@ int migrate_send_rp_req_pages(MigrationIncomingState *mis,
-         }
-     }
-
-+    return received;
-+}
-+
-+int migrate_send_rp_req_pages(MigrationIncomingState *mis,
-+                              RAMBlock *rb, ram_addr_t start, uint64_t haddr,
-+                              uint32_t tid)
-+{
-+    void *aligned = (void *)(uintptr_t)ROUND_DOWN(haddr, qemu_ram_pagesize(rb));
-+
-     /*
-      * If the page is there, skip sending the message.  We don't even need the
-      * lock because as long as the page arrived, it'll be there forever.
-      */
--    if (received) {
-+    if (postcopy_page_received(mis, rb, start, aligned, tid)) {
-         return 0;
-     }
-
-Then I think we can use postcopy_page_received() here to avoid duplicating
-the code.
-
-It means with your feature we will also maintain the tree of page_requested
-but I think it's fine; if we really want we can make that optional based on
-whether mapped-ram enabled, but not yet required.
-
-PS: I feel like there was a bug in existing code passing "haddr" (rather
-than "aligned") into mark_postcopy_blocktime_begin() in the current impl of
-migrate_send_rp_req_pages().  Please help to check if it's an issue, if
-true we can have a separate patch fixing that first.  In general, I think
-we should use a page-aligned address in both the tree and blocktime.
-
-> +                if (!postcopy_mapped_ram_load_page(
-> +                        mis, rb, rb_offset, msg.arg.pagefault.address,
-> +                        RAM_CHANNEL_POSTCOPY, &local_err)) {
-> +                    error_report_err(local_err);
-> +                    break;
-> +                }
-> +            } else {
->  retry:
-> -            /*
-> -             * Send the request to the source - we want to request one
-> -             * of our host page sizes (which is >= TPS)
-> -             */
-> -            ret = postcopy_request_page(mis, rb, rb_offset,
-> -                                        msg.arg.pagefault.address,
-> -                                        msg.arg.pagefault.feat.ptid);
-> -            if (ret) {
-> -                /* May be network failure, try to wait for recovery */
-> -                postcopy_pause_fault_thread(mis);
-> -                goto retry;
-> +                /*
-> +                 * Send the request to the source - we want to request one
-> +                 * of our host page sizes (which is >= TPS)
-> +                 */
-> +                ret = postcopy_request_page(mis, rb, rb_offset,
-> +                                            msg.arg.pagefault.address,
-> +                                            msg.arg.pagefault.feat.ptid);
-> +                if (ret) {
-> +                    /* May be network failure, try to wait for recovery */
-> +                    postcopy_pause_fault_thread(mis);
-> +                    goto retry;
-> +                }
->              }
->          }
->  
-> @@ -1470,8 +1554,11 @@ static int postcopy_temp_pages_setup(MigrationIncomingState *mis, Error **errp)
->      unsigned i, channels;
->      void *temp_page;
->  
-> -    if (migrate_postcopy_preempt()) {
-> -        /* If preemption enabled, need extra channel for urgent requests */
-> +    if (migrate_postcopy_preempt() || migrate_mapped_ram()) {
-> +        /*
-> +         * If preemption enabled or it is fast snapshot load, need extra channel
-> +         * for urgent requests/faults
-> +         */
->          mis->postcopy_channels = RAM_CHANNEL_MAX;
->      } else {
->          /* Both precopy/postcopy on the same channel */
-> -- 
-> 2.54.0
-> 
-
--- 
-Peter Xu
 
 
