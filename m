@@ -4,114 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17DFFC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 12:27:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C795C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 12:27:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgiPU-0002Ja-A0; Mon, 06 Jul 2026 08:26:52 -0400
+	id 1wgiQ3-0002R8-ER; Mon, 06 Jul 2026 08:27:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dengler@linux.ibm.com>)
- id 1wgiPS-0002JG-Uo; Mon, 06 Jul 2026 08:26:50 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dengler@linux.ibm.com>)
- id 1wgiPR-0007kv-FY; Mon, 06 Jul 2026 08:26:50 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666BIQhQ3447697; Mon, 6 Jul 2026 12:26:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=hzloyd
- 7p/2Wzx0QUJxr6FRX8Je7l5Xm93r2lV//8uoc=; b=GaS7jsyLK0ERjGPi+Hx3TK
- 2GSpGSO18NR0oE2ejURg6uXUyFgWYfEi+7bhu85kYvCE9nr55xIHGf4qyfN1QlAd
- Ikdb58uCO1nBHaVEfNL8lcr46TEMZvw6FqjpwiDaZXalUD9Dg1L86BWTGj2YBY0C
- x7IsfW2ETOIp4hFmuWNARHG94frrYUifOuCzLf0u2p4Tcv/hl6Yoof1SgWilqNro
- GVIe20Q9xJ7aNluiduMrHyn7ZPIYlCDTdmWhbf/FeYALWigXx0HvjyksZDtElGKE
- GlnzunWONLNJqFyYApZ2BzjDMT9q1I0PB00esrB9vZlKAhI/40TD45BnxanyNhgg
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6stshup7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 12:26:44 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 666CJciX030483;
- Mon, 6 Jul 2026 12:26:43 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7eqfw9jf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 12:26:43 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 666CQe5I51380522
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 6 Jul 2026 12:26:40 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E834B2004B;
- Mon,  6 Jul 2026 12:26:39 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7AB6120040;
- Mon,  6 Jul 2026 12:26:39 +0000 (GMT)
-Received: from [9.111.8.43] (unknown [9.111.8.43])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  6 Jul 2026 12:26:39 +0000 (GMT)
-Message-ID: <28950379-427f-4b23-8247-721d25291799@linux.ibm.com>
-Date: Mon, 6 Jul 2026 14:26:39 +0200
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1wgiQ1-0002QQ-Ly
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 08:27:25 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wgiQ0-0007t2-3r
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 08:27:25 -0400
+Received: from example.com (unknown [167.220.208.42])
+ by linux.microsoft.com (Postfix) with ESMTPSA id DF6B120B716B;
+ Mon,  6 Jul 2026 05:27:15 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com DF6B120B716B
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1783340838;
+ bh=0bAE7c2UQvxx+xpDxsMBlky0481qvgVvFroyD0YvywE=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=P/o155POu/lW5xHvHnk+F46gd9B3Gw9IgKeuoDInbSWSopXv4i0t8c4I7SgLaPvol
+ i0LiobnSb92e6Gy9RN9VGNsJmQBHvmjNtwOqHKEcfjjt5lROStYPFq8NVRY3HYVpxO
+ lUf+wO6rIymOYbLMmKx02Uld5g0sQIBTWTgOceRI=
+Date: Mon, 6 Jul 2026 14:27:16 +0200
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, aastharawat@microsoft.com,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Aastha Rawat <aastharawat@linux.microsoft.com>,
+ magnuskulke@microsoft.com, Anirudh.Rayabharam@microsoft.com,
+ liuwe@microsoft.com, doru.blanzeanu@microsoft.com
+Subject: Re: [PATCH] accel/mshv: mitigate early boot vcpu exit race
+Message-ID: <akufJAci7WqN4JSB@example.com>
+References: <20260521133433.48463-1-magnuskulke@linux.microsoft.com>
+ <26d4e782-ebbf-4a4f-a5f7-6fe107cc083f@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 01/21] target/s390x: Fix wrong address handling in
- address loops
-To: Harald Freudenberger <freude@linux.ibm.com>
-Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- thuth@redhat.com, berrange@redhat.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, linux-s390@vger.kernel.org,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
-References: <20260706094317.17032-1-freude@linux.ibm.com>
- <20260706094317.17032-2-freude@linux.ibm.com>
-From: Holger Dengler <dengler@linux.ibm.com>
-Content-Language: en-US, de-DE
-In-Reply-To: <20260706094317.17032-2-freude@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 2E0q2gMvM8wE0EOVMPe5jUEK9mgRdk5L
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDEyNSBTYWx0ZWRfX9DGogk4eMUjH
- R0e9UxMwBBA69xRv6mj9P06qAv8uCtU5q23j0+krdNrASLlsw0CyV0pE+0NA0QtUS0i5VXIqPCs
- AIcikyfm2R9ntn/N6vElq12Q8nF7Vzs=
-X-Authority-Analysis: v=2.4 cv=DKW/JSNb c=1 sm=1 tr=0 ts=6a4b9f04 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=sR4FTfRTi0JzboByPSsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 2E0q2gMvM8wE0EOVMPe5jUEK9mgRdk5L
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDEyNSBTYWx0ZWRfX48b2OgbuCXWb
- uHaPKmy8f2Q/ORXtQ9ANuCO5r9IS3DhRRiLdmq3r0GKfQezuensuF7Xn8325EQPaaMdOo1EliY+
- 03DJ2DLAS4xJ7IHadK4/xDQvFN4M2enxJhQJRXpiiLVErFStwgVYV1qsbz1d4NX8xgkUzIQC1hP
- 4/r6qRsFt+bhuyStwCQeRokqWsR70tDlRVAmXoLUwcKgxPIByboe4ELZ2OSxAKESKUpj0XgTOUa
- q4Yg5Z9dFVnsLAXZ23GpmpOnQEPdQzlds1h38XWUzmJhxPbV6JHmhYFOQ8lKW5uDjvlNC/l0ziO
- B/lGDOIb2GO4GUAao4wWnn7YvKHGdt6wjs5JoFHh+Rs+1ZEhJCWJnOtglcharzuIO2cdflhAIjJ
- yCoXJ8EEnc1vpDnRCzp5NssXadYtSGvOiwQuNEstIO9RmvdjOu+inecQGe0m/7tQ+hQvyb/4l2A
- qEPoH7ERzsdjpOMsrqQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-06_01,2026-07-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 clxscore=1015 phishscore=0 impostorscore=0
- priorityscore=1501 adultscore=0 lowpriorityscore=0 suspectscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607060125
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=dengler@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <26d4e782-ebbf-4a4f-a5f7-6fe107cc083f@redhat.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,25 +70,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/6/26 11:42, Harald Freudenberger wrote:
-> The loop increments addr by the element stride (+= 4) before calling
-
-+= 4? The code says += 8. Which one is correct? Please correct, if 
-necessary.
-
-> wrap_address, but then overwrites the loop addr with the wrapped
-> value. On the next iteration the stride is applied to the wrapped
-> address of the previous element, not to the original unwrapped
-> address. This results in every element after the first is read from a
-> wrong (wrapped) address.
+On Thu, Jun 25, 2026 at 03:15:16PM +0200, Paolo Bonzini wrote:
 > 
-> Fixes: 9f17bfdab4 ("target/s390x: support SHA-512 extensions")
-> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+> These two should not be needed.  The sequence of events is:
+> 
+> - exit from here
+> 
+> - "while (!cpu->unplug || cpu_can_run(cpu))" is still true
+> 
+> - qemu_process_cpu_events() runs:
+>   - set exit_request == false
+>   - cpu_thread_is_idle(cpu) is false due to cpu->stop == true
+>   - qemu_process_cpu_events_common() runs:
+>     - sets cpu->thread_kicked == false
+>     - qemu_cpu_stop() sets cpu->stopped == true
+> 
+> - cpu_can_run(cpu) is now false, so mshv_cpu_exec() does not run
+> 
+> - ... but !cpu->unplug is true -> another run around the loop
+> 
+> - now cpu_thread_is_idle(cpu) is true, so the thread goes to sleep.
+> 
+> > +            ret = EXCP_INTERRUPT;
+> > +            break;
+> > +        }
+> 
+> 
+> Also, for cleanliness I'd put the lines after the "if (cpu->accel->dirty)"
+> immediately below.
+> 
+> 
+> > +/*
+> > + * mshv-custom kick implementation:
+> > + *
+> > + * We set cpu->exit_request before the SIG_IPI is delivered to the vcpu
+> > + * thread (as part of cpus_kick_thread()). It is consumed in the
+> > + * mshv_cpu_exec loop.
+> > + */
+> > +static void mshv_kick_vcpu_thread(CPUState *cpu)
+> > +{
+> > +    qatomic_set_mb(&cpu->exit_request, true);
+> > +    cpus_kick_thread(cpu);
+> > +}
+> > +
+> 
+> This should not be necessary, either.  In recent versions of QEMU,
+> cpu->exit_request is set appropriately by cpu_exit(); see commits
+> ac6c8a390b4 and f8217ae54e4 and nearby.
+> 
+> Accelerators can write cpu->exit_request, but only within the accelerator
+> thread if they want to kick themselves out of cpu_exec(). For example, KVM
+> does this to run kvm_arch_process_async_events(); but MSHV does not have
+> anything similar.
+> 
+> Paolo
 
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+I see, we indeed just need to honor cpu->exit_request in the loop and
+break out if it is set, this only seems to be address the issue that the
+patch was attempting to fix. Since we also need to it for the migration
+case, I submit a revised patch as part of a migration series, so we can
+abandon this one.
 
--- 
-Mit freundlichen Grüßen / Kind regards
-Holger Dengler
+thanks!
 
+magnus
 
