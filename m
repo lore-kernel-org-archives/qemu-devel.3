@@ -4,84 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55AEFC44501
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 22:46:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FAA5C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 22:46:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgs3h-0001xT-BS; Mon, 06 Jul 2026 18:45:01 -0400
+	id 1wgs3X-0001kp-7Z; Mon, 06 Jul 2026 18:44:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wgs3e-0001uZ-QA; Mon, 06 Jul 2026 18:44:58 -0400
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1wgs3V-0001ds-5G
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:44:49 -0400
 Received: from fhigh-b8-smtp.messagingengine.com ([202.12.124.159])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wgs3d-0000yl-8I; Mon, 06 Jul 2026 18:44:58 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 179707A01DB;
- Mon,  6 Jul 2026 18:44:56 -0400 (EDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1wgs3T-0000vT-2U
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:44:48 -0400
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 47AED7A01DB;
+ Mon,  6 Jul 2026 18:44:44 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Mon, 06 Jul 2026 18:44:56 -0400
+ by phl-compute-09.internal (MEProxy); Mon, 06 Jul 2026 18:44:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1783377895; x=
- 1783464295; bh=C33rOZh3CoainYRieTpjM0jlcmLSHcuqY5ULDaTI+q8=; b=j
- 8wOHw+CbZBtLsdQqsXwXuSz76D5DjasHZKHbkz6B5GietnesVCvxIEkhuWy3TCTL
- iGbN7gdpQAtq1rubGup6675iboix+0S5vW69igUdcX5hnPajkh81vAGX2q+aZp2R
- 7RyidXH4I84x/7YYP3EWKS3hW9f5VfjmuhTLPPRw4hub4hEa9SJy/oob8NnA5hbA
- qJWc/eo7bopZdN7/+rQc/9kLGXeTha/7nO8XfdLteTUKm/T0S3nt5dQ+j26urZCs
- 3E/A7SBf5eqBzB4cFxX2piVqlbwva51Zm/2dt5KO6I8cGrLSGXhoqXXNfIhfTp2Q
- //qRTTNgQ9f4AvUXp1CmA==
+ :from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to; s=fm1; t=1783377884; x=1783464284; bh=yeBC7FIMRe
+ hpqrkuC16VlFlySy7lL9rLahK+B23Gv6U=; b=BzspeR19MPHp5pYwyVcEJJx2Td
+ d+uu6ZfOHZexhKo9FcxlWX1q/tHBUe1yj/SVFkDCRtsQQljiLahstmz4GrcMNJW2
+ RimtG343CvD8EbxzjEnRu68gl4+WA4oQEGzgPt2mVoX48pJfHLAKK2ZdC0DRNZdb
+ 2izr/9EnbnXkg/E8O4/UuPUTsSoWKnYW2Je3wsTVdBgMPhDD4Q9VZN6sk6py3tRv
+ U+dcLtVqPZsnFCUXj518mvNcXUaAGgJTE9i4BDP8hOcZOgMYhDWEv0VklSYPO+Tk
+ laQd13QTFvQ1r+uppp3m1KM6PJSCMvv2Ekrx63LJF9diRTh4zUp1acAsOyzQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm2; t=1783377895; x=1783464295; bh=C
- 33rOZh3CoainYRieTpjM0jlcmLSHcuqY5ULDaTI+q8=; b=TisbtbdgeFZSBoI3y
- lXtE7gLvrV/SBHVeVLYFaoyErUxMo3+uQaOgInh/C8+oyDoYj0oIPgyTxrwVOXd1
- q31mnupBQhgNtDha3EXIoq0O/HgNi11ttb1Q5IUhLpKBJPYIJdV/SKQghlb0oaSl
- lygE4NsuaI+joafOXOnDDoGYPtDDed3UFsuCx6TPw66lzhaLbFmVPiHR29RDMNfI
- PcFTI/PK53M53fvGtBeP1fSIBr6kevFGewSC+/1C7xyiTUWdtjabYZXuRH48BPcv
- HsbTsQH4JN69TQK9nku6sT6A9hf7SEpZE6Wi77kZEX/oRIovAm5OWbudMPnweumT
- zva+A==
-X-ME-Sender: <xms:5y9MasmITr8e8M9vFyoSjmYZXNzR6Ug-jEYdxJsosSgDRIRSUc6F5g>
- <xme:5y9Man3RWEtPCgSRK3hg9ReFjUAiu1iWkHDaHM30ceDtvMFa-Z-zXL6j0VQBlW-SE
- 4v0iLzKvikx9y4vxBJhc-rJIjfW5ZRiYPvxQ6hhesQ0jZW4ZjfMMA>
-X-ME-Received: <xmr:5y9Mas3QBunFxra9fx_sfu-PK67uu4TrfJZR0sZxULfxcJVyNXX75NWqljYsfam56Au4z74WjD_OWaH4OUVO17Y9Aqzo8ODPKdBlEpUmALysWa1iwQZcAhyAXw>
-X-ME-Proxy-Cause: dmFkZTFj5JQpqUxJDcUJ2sWCsKZKclPuT2bVB0FQRjAKIF/sKDLIeA//H/SeuNaNsjsyI/
- GLovIo1aiXSUcVFWzisNrFSjyButVeujuMJk3VZ3IDFeCssXdFFEWUGnPDYbOHrceoCBwt
- PdKgkdL50wU/Kuc2nXFaj9t58LBXlQ4p+egWMertNslLurP+Gzi2ngjrnO4NmxwVp3q0Gu
- podh3AKtGUg+x1TtnfBbfnMUe5kA1K2nN9DRBU3fCZO1vv5XOO+7/JlEq0i4CES6GCR0vD
- hV1pA1aerjW9YEabuc5sq43NfFDlKcLEXtgRzp0jwDe7Yjs1HqLdvCEIdxeBfq8fBzmcsC
- Hi3yJheuLEcDsUbdy09eYWogjKa5102zF+QeYBF++bdjJgcwXJ5HrORSUj9O6mGTAKphHQ
- sBQb3NDHwNSa6pVOe6sKNLiHQMQWOiegin8hxNrBvTgB3EI8yYvQjegHYxgXYieCnwLmBL
- bKAEsn2se6O1ktpcHZmXmdiZAi609ARQA3yxDUPb9cgd0UfzC0VMGCchite5+322mwynVt
- /6dZjQYQprrdRWPFVrl4g6p+iO6sJNJEvKf6kvdllFkitiX/sr2BRK4heQU1go8WTnb1cD
- x0n4dz8L5esU+WSaFhDBDwmR+DhjqNyf8F4z3EaNqSDsInUEgT7+MVE8RzfA
-X-ME-Proxy: <xmx:5y9Mapr1Ls3mYDGKCOHgt5T5WMbYm-qX2NTFgItTR6B19lL8kDzaLQ>
- <xmx:5y9MaojDvApNGZ-a7LZ3o1JRmNaOB0b05JId-98-yFRjLiJe-qrKJw>
- <xmx:5y9Mal8m-Gj8fy6hL0Rr4vQ8zPqYCH800oYHQGc8W5a9Izl1yVmTtg>
- <xmx:5y9MakXgNedywZVT_p8TWtSqlJViJmXjSVqMO3kLeZzoMoWgpBgBwA>
- <xmx:5y9Maq4zFBQRC8RrLz9B0GEqhL0qI3w_JynZKLOFVf4PUUZdP0cjYeSN>
+ :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+ 1783377884; x=1783464284; bh=yeBC7FIMRehpqrkuC16VlFlySy7lL9rLahK
+ +B23Gv6U=; b=pyiCMBG748CxqpFKW2o5vNNncbzhkmTHdWlfWslLGYvff6t7YQU
+ K+ObBsI2XkGkekj2h95HhdAFqc/NodbU8vJNb8Sefn/K2/L0b1anHLQSBU3w9iI1
+ +KP3ltEzjdgqdnsM0xrGfestvAwUhVNJGlEB6Vlrrx+NJhSaZxWWBiTRHz5AtrF2
+ o+4VCSrT0Lcj7TxTNPn+BqMC2GgHdO9QSvgq+eyJAfAdRFs+uTSQbmgLSs1N+4Pk
+ X6f1pVQr2hgb2wssYN0/LkmGyULebU5nBw4RY9qb3ADgT78iaujKPqoiRy1T9++p
+ UkQMGTYh3RFeajbuxH5COcbUxmlhImuprsA==
+X-ME-Sender: <xms:2i9Maj9pOAEYKhaCucN8hYgcbtGIHE1BlwtDESoOkxKAK2z3SowF4A>
+ <xme:2i9MakBVP3miRs3PO0zubu3MwHUA7nDRFQ7xf8jrrHGu5JVxTD7HaXK83dLd7OHQS
+ o9Q3A2fszuNUNh7oqNPqDeQnL05JwHO9f_uT86kzcenJWbKy3r4aL4>
+X-ME-Received: <xmr:2i9MagJ_I3n7SV5_glFLSu2nlQ2OYec4EvaX2BfrpuOBLVicqEKaEUKGyvRH8fOy-rAkbwcsZqUSkgj1lXG-67AqyWJPlRqdc3dhEbUuCfHIfm3yLI32yGmrFQ>
+X-ME-Proxy-Cause: dmFkZTEO5hwNQoOH/0f5WnSkyBa9t1/w/yqxfQMgHL36qSwzHETqiXsQBP5WH1VMWa1nA5
+ wMpRJ9FNCdTNaIWXMSd9CZOFY6YNpb/s4w0wa2COlAHJzIg9dN4ea19puM5FYhqJ0PqUmf
+ odz5xkACWFQeej3vgdhIsu24Z6S2G/LNvqUh+XFcaxFeR9gQ50XSRu7cg/Rf8qvlee49AB
+ SIJXQStdzZEvcRoFYDVQZcHNoF1Ghr7bMLBUHyBHjW/3bvYSiuOyEvg0GVC0ekTtQEztqs
+ tDCjB+DGfq5ATEqRrLu2dqrZg5ay7dDrpdvLNLQoVbTla2YUpfM2lG41zRqN8ftBSS2lmK
+ QKoQFx20HIt2j0Et6nx4t3jMTqMWcQRTjYZoA1MF/dyqPTpI9z1bcNaWDFOgDLYk4Sl/PO
+ m+cgmfPlnhUejNGgPSc9C2hpQEuxJh2kp3DS9ieT7zi61pep5G1KH5NbwVCABoCLRkGeAJ
+ r7kFKVgpSei7qOqQ5CfSTh+9waKk063MbdZnpYYMKFQCFNEYRHDG3V42D6r7tF3xUZeTqG
+ rO+1OpzLaH1Kf2ytso1dzH7kRx8J9Mb+M4jy1o5uSGpm3KnVF2Y63WIzbEyYcxJDHWuaVx
+ o7ieAXl20VM0bVs0L/I45xHXce2+lVA61Tw2UF1THcMCG/xh/rCoOxVZlafg
+X-ME-Proxy: <xmx:2i9MannX4vuij318Z7hvw4b-HlIRRRmEwsYyoE_ixG8GYBBb7jNXdQ>
+ <xmx:2i9MauF8NtMsjqzkhHu9A0TV8rE3T8zTJdcb5iXhsokVwoxU5huJJA>
+ <xmx:2i9ManHVmwgNldCtVljrKmmTbl0hDeD8PNMlKWvDuFYHFrnE8ZVfXg>
+ <xmx:2i9MarPiqtim7ccy_8ILOBOZvJ05-MS6xQc_tnwoFCqkXQNY-hqKhw>
+ <xmx:3C9MagRIVxPt8FBtii_3QJpJx9BfW0TyBlE6jHyigUW2219w61I67gqm>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jul 2026 18:44:54 -0400 (EDT)
+ 6 Jul 2026 18:44:42 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
- Klaus Jensen <k.jensen@samsung.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
-Subject: [PULL 05/11] hw/nvme: split nvme_init_sq/nvme_init_cq into helpers
-Date: Tue,  7 Jul 2026 00:44:17 +0200
-Message-ID: <20260706224426.14156-6-its@irrelevant.dk>
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: [PULL 00/11] hw/nvme queue
+Date: Tue,  7 Jul 2026 00:44:12 +0200
+Message-ID: <20260706224426.14156-1-its@irrelevant.dk>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260706224426.14156-1-its@irrelevant.dk>
-References: <20260706224426.14156-1-its@irrelevant.dk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=202.12.124.159; envelope-from=its@irrelevant.dk;
@@ -108,119 +101,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-We will make a benefit from this split in later patches.
+Hi,
 
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/ctrl.c | 59 +++++++++++++++++++++++++++++++-------------------
- 1 file changed, 37 insertions(+), 22 deletions(-)
+The following changes since commit 4ee536fac748b70e6f3d8568ddd20cfbaa9cf7bf:
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index d2096eb49d97..386a698ba858 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -4869,18 +4869,14 @@ static uint16_t nvme_del_sq(NvmeCtrl *n, NvmeRequest *req)
-     return NVME_SUCCESS;
- }
- 
--static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl *n, uint64_t dma_addr,
--                         uint16_t sqid, uint16_t cqid, uint16_t size)
-+static void __nvme_init_sq(NvmeSQueue *sq)
- {
-+    NvmeCtrl *n = sq->ctrl;
-+    uint16_t sqid = sq->sqid;
-+    uint16_t cqid = sq->cqid;
-     int i;
-     NvmeCQueue *cq;
- 
--    sq->ctrl = n;
--    sq->dma_addr = dma_addr;
--    sq->sqid = sqid;
--    sq->size = size;
--    sq->cqid = cqid;
--    sq->head = sq->tail = 0;
-     sq->io_req = g_new0(NvmeRequest, sq->size);
- 
-     QTAILQ_INIT(&sq->req_list);
-@@ -4910,6 +4906,18 @@ static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl *n, uint64_t dma_addr,
-     n->sq[sqid] = sq;
- }
- 
-+static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl *n, uint64_t dma_addr,
-+                         uint16_t sqid, uint16_t cqid, uint16_t size)
-+{
-+    sq->ctrl = n;
-+    sq->dma_addr = dma_addr;
-+    sq->sqid = sqid;
-+    sq->size = size;
-+    sq->cqid = cqid;
-+    sq->head = sq->tail = 0;
-+    __nvme_init_sq(sq);
-+}
-+
- static uint16_t nvme_create_sq(NvmeCtrl *n, NvmeRequest *req)
- {
-     NvmeSQueue *sq;
-@@ -5570,25 +5578,16 @@ static uint16_t nvme_del_cq(NvmeCtrl *n, NvmeRequest *req)
-     return NVME_SUCCESS;
- }
- 
--static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
--                         uint16_t cqid, uint16_t vector, uint16_t size,
--                         uint16_t irq_enabled)
-+static void __nvme_init_cq(NvmeCQueue *cq)
- {
-+    NvmeCtrl *n = cq->ctrl;
-     PCIDevice *pci = PCI_DEVICE(n);
-+    uint16_t cqid = cq->cqid;
- 
--    if (msix_present(pci) && irq_enabled) {
--        msix_vector_use(pci, vector);
-+    if (msix_present(pci) && cq->irq_enabled) {
-+        msix_vector_use(pci, cq->vector);
-     }
- 
--    cq->ctrl = n;
--    cq->cqid = cqid;
--    cq->size = size;
--    cq->dma_addr = dma_addr;
--    cq->phase = 1;
--    cq->irq_enabled = irq_enabled;
--    cq->vector = vector;
--    cq->head = cq->tail = 0;
--    QTAILQ_INIT(&cq->req_list);
-     QTAILQ_INIT(&cq->sq_list);
-     if (n->dbbuf_enabled) {
-         cq->db_addr = n->dbbuf_dbs + (cqid << 3) + (1 << 2);
-@@ -5605,6 +5604,22 @@ static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
-                                  &DEVICE(cq->ctrl)->mem_reentrancy_guard);
- }
- 
-+static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
-+                         uint16_t cqid, uint16_t vector, uint16_t size,
-+                         uint16_t irq_enabled)
-+{
-+    cq->ctrl = n;
-+    cq->cqid = cqid;
-+    cq->size = size;
-+    cq->dma_addr = dma_addr;
-+    cq->phase = 1;
-+    cq->irq_enabled = irq_enabled;
-+    cq->vector = vector;
-+    cq->head = cq->tail = 0;
-+    QTAILQ_INIT(&cq->req_list);
-+    __nvme_init_cq(cq);
-+}
-+
- static uint16_t nvme_create_cq(NvmeCtrl *n, NvmeRequest *req)
- {
-     NvmeCQueue *cq;
--- 
-2.53.0
+  Merge tag 'firmware-20260704-pull-request' of https://gitlab.com/kraxel/qemu into staging (2026-07-05 08:42:47 +0200)
 
+are available in the Git repository at:
+
+  https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20260707
+
+for you to fetch changes up to cfb6c95706998be9a6606d80e03f088c0f5b7b42:
+
+  hw/nvme: add namespace hotplug support (2026-07-07 00:39:42 +0200)
+
+----------------------------------------------------------------
+nvme queue
+
+----------------------------------------------------------------
+Alexander Mikhalitsyn (8):
+      tests/functional/migration: add VM launch/configure hooks
+      hw/nvme: add migration blockers for non-supported cases
+      hw/nvme: split nvme_init_sq/nvme_init_cq into helpers
+      hw/nvme: set CQE.sq_id earlier in nvme_process_sq
+      hw/nvme: unmap req->sg earlier in nvme_enqueue_req_completion
+      hw/nvme: add basic live migration support
+      tests/functional/x86_64: add migration test for NVMe device
+      tests/qtest/nvme-test: add migration test with full CQ
+
+Jesper Wendel Devantier (1):
+      hw/nvme: fix FDP set FDP events
+
+Keith Busch (1):
+      hw/nvme: ensure sgl forward progress
+
+mr-083 (1):
+      hw/nvme: add namespace hotplug support
+
+ MAINTAINERS                                    |    1 +
+ hw/nvme/ctrl.c                                 | 1240 ++++++++++++++++++++++--
+ hw/nvme/ns.c                                   |  172 ++++
+ hw/nvme/nvme.h                                 |   21 +-
+ hw/nvme/subsys.c                               |    2 +
+ hw/nvme/trace-events                           |   10 +
+ include/block/nvme.h                           |   12 +
+ tests/functional/migration.py                  |   23 +-
+ tests/functional/x86_64/meson.build            |    1 +
+ tests/functional/x86_64/test_nvme_migration.py |  172 ++++
+ tests/qtest/nvme-test.c                        |  419 ++++++++
+ 11 files changed, 1989 insertions(+), 84 deletions(-)
+ create mode 100755 tests/functional/x86_64/test_nvme_migration.py
 
