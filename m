@@ -4,46 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1537C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 16:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98BF7C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 16:30:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgmC2-0007Lj-CF; Mon, 06 Jul 2026 12:29:14 -0400
+	id 1wgmBy-0007Jg-5K; Mon, 06 Jul 2026 12:29:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wgmBz-0007KL-2x
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:29:11 -0400
+ id 1wgmBw-0007J8-Oh
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:29:08 -0400
 Received: from inva020.nxp.com ([92.121.34.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wgmBx-0002NL-I6
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:29:10 -0400
+ id 1wgmBv-0002Mk-0U
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:29:08 -0400
 Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 1BA061A00A9;
- Mon,  6 Jul 2026 18:29:05 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 4DA241A0096;
+ Mon,  6 Jul 2026 18:29:03 +0200 (CEST)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id E39761A00A5;
- Mon,  6 Jul 2026 18:29:04 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 179111A0087;
+ Mon,  6 Jul 2026 18:29:03 +0200 (CEST)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 081871800071;
- Tue,  7 Jul 2026 00:29:03 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 3A7B01800071;
+ Tue,  7 Jul 2026 00:29:02 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCHv2 5/7] hw/misc: Extend i.MX8MP CCM with Cortex-M7 clock outputs
-Date: Mon,  6 Jul 2026 21:58:57 +0530
-Message-Id: <20260706162859.3361063-6-gaurav.sharma_7@nxp.com>
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>
+Subject: [PATCHv2 0/7] hw/arm: Adding Cortex-M7 Asymmetric Multiprocessing
+ boot support for i.MX8MP
+Date: Mon,  6 Jul 2026 21:58:52 +0530
+Message-Id: <20260706162859.3361063-1-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260706162859.3361063-1-gaurav.sharma_7@nxp.com>
-References: <20260706162859.3361063-1-gaurav.sharma_7@nxp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Virus-Scanned: ClamAV using ClamSMTP
 Received-SPF: pass client-ip=92.121.34.13;
@@ -68,76 +65,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add cm7_cpuclk (24 MHz) and cm7_refclk (32.768 kHz) clock outputs
-to the i.MX8MP CCM. These are required by the ARMv7M model to boot
-the Cortex-M7 core in an AMP configuration.
+Changes in v1:
+
+This series adds Asymmetric Multiprocessing (AMP) boot support for
+the Cortex-M7 core on the i.MX8MP SoC. The M7 firmware can be loaded
+and started from Linux running on the Cortex-A53 cores via the
+remoteproc framework.
+
+The series introduces the following peripheral models needed for AMP:
+  - GPC (General Power Controller)
+  - GPR (General Purpose Registers)
+  - SRC (System Reset Controller) authored by Bernhard Beschow <shentey@gmail.com>
+  - MU (Messaging Unit)
+  - Extends the CCM with M7 clock outputs and wires into the i.MX8MP SoC
+  - Enable Cortex-M7 boot in i.MX8MP EVK functional test
+
+Changes in v2:
+
+- Removed the usage of device_class_set_legacy_reset in imx8mp gpc,gpr,mu and
+  src.
+- Removed the usage of 'smp' , 'maxcpus' and 'enable-cm7' to make the
+  invocation simpler.
+- Cleaned up imx8mp_src by removing redundant/unused code.
+- Updated Maintainers and improved the imx8mp documentation
 
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/misc/imx8mp_ccm.c         | 9 +++++++++
- include/hw/misc/imx8mp_ccm.h | 3 +++
- 2 files changed, 12 insertions(+)
 
-diff --git a/hw/misc/imx8mp_ccm.c b/hw/misc/imx8mp_ccm.c
-index 911911ed86..5530c924b5 100644
---- a/hw/misc/imx8mp_ccm.c
-+++ b/hw/misc/imx8mp_ccm.c
-@@ -12,17 +12,24 @@
- #include "qemu/log.h"
- 
- #include "hw/misc/imx8mp_ccm.h"
-+#include "hw/core/qdev-clock.h"
- #include "migration/vmstate.h"
- 
- #include "trace.h"
- 
- #define CKIH_FREQ 16000000 /* 16MHz crystal input */
- 
-+#define IMX8MP_CM7_CPUCLK_HZ 24000000ULL   /* osc_24m */
-+#define IMX8MP_CM7_REFCLK_HZ 32768ULL      /* osc_32k */
-+
- static void imx8mp_ccm_reset(DeviceState *dev)
- {
-     IMX8MPCCMState *s = IMX8MP_CCM(dev);
- 
-     memset(s->ccm, 0, sizeof(s->ccm));
-+
-+    clock_set_hz(s->cm7_cpuclk, IMX8MP_CM7_CPUCLK_HZ);
-+    clock_set_hz(s->cm7_refclk, IMX8MP_CM7_REFCLK_HZ);
- }
- 
- #define CCM_INDEX(offset)   (((offset) & ~(hwaddr)0xF) / sizeof(uint32_t))
-@@ -88,6 +95,8 @@ static void imx8mp_ccm_init(Object *obj)
-     SysBusDevice *sd = SYS_BUS_DEVICE(obj);
-     IMX8MPCCMState *s = IMX8MP_CCM(obj);
- 
-+    s->cm7_cpuclk = qdev_init_clock_out(DEVICE(obj), "cm7_cpuclk");
-+    s->cm7_refclk = qdev_init_clock_out(DEVICE(obj), "cm7_refclk");
-     memory_region_init_io(&s->iomem,
-                           obj,
-                           &imx8mp_set_clr_tog_ops,
-diff --git a/include/hw/misc/imx8mp_ccm.h b/include/hw/misc/imx8mp_ccm.h
-index 685c8582ff..c6ede6928c 100644
---- a/include/hw/misc/imx8mp_ccm.h
-+++ b/include/hw/misc/imx8mp_ccm.h
-@@ -9,6 +9,7 @@
- #ifndef IMX8MP_CCM_H
- #define IMX8MP_CCM_H
- 
-+#include "hw/core/clock.h"
- #include "hw/misc/imx_ccm.h"
- #include "qom/object.h"
- 
-@@ -25,6 +26,8 @@ struct IMX8MPCCMState {
-     MemoryRegion iomem;
- 
-     uint32_t ccm[CCM_MAX];
-+    Clock *cm7_cpuclk;
-+    Clock *cm7_refclk;
- };
- 
- #endif /* IMX8MP_CCM_H */
+Bernhard Beschow (1):
+  hw/misc: Add SRC (System Reset Controller) to i.MX8MP
+
+Gaurav Sharma (6):
+  hw/misc: Add i.MX8MP GPC (General Power Controller) IP
+  hw/misc: Add GPR (General Purpose Register) IP to iMX8MP
+  hw/misc: Add MU (Messaging Unit) IP to i.MX8MP device model
+  hw/misc: Extend i.MX8MP CCM with Cortex-M7 clock outputs
+  hw/arm: Enable Cortex-M7 AMP boot on i.MX8MP
+  tests/functional: Enable Cortex-M7 boot in i.MX8MP EVK functional test
+
+ MAINTAINERS                                 |  13 +-
+ docs/system/arm/imx8m.rst                   | 188 ++++++++++-
+ hw/arm/Kconfig                              |   4 +
+ hw/arm/fsl-imx8mp.c                         | 220 ++++++++++++-
+ hw/arm/imx8mp-evk.c                         |   3 +-
+ hw/misc/Kconfig                             |  12 +
+ hw/misc/imx8mp_ccm.c                        |   9 +
+ hw/misc/imx8mp_gpc.c                        | 146 +++++++++
+ hw/misc/imx8mp_gpr.c                        | 153 +++++++++
+ hw/misc/imx8mp_mu.c                         | 328 ++++++++++++++++++++
+ hw/misc/imx8mp_src.c                        | 275 ++++++++++++++++
+ hw/misc/meson.build                         |   4 +
+ hw/misc/trace-events                        |   5 +
+ include/hw/arm/fsl-imx8mp.h                 |  29 +-
+ include/hw/misc/imx8mp_ccm.h                |   3 +
+ include/hw/misc/imx8mp_gpc.h                |  34 ++
+ include/hw/misc/imx8mp_gpr.h                |  56 ++++
+ include/hw/misc/imx8mp_mu.h                 |  53 ++++
+ include/hw/misc/imx8mp_src.h                |  31 ++
+ tests/functional/aarch64/test_imx8mp_evk.py |   1 -
+ 20 files changed, 1539 insertions(+), 28 deletions(-)
+ create mode 100644 hw/misc/imx8mp_gpc.c
+ create mode 100644 hw/misc/imx8mp_gpr.c
+ create mode 100644 hw/misc/imx8mp_mu.c
+ create mode 100644 hw/misc/imx8mp_src.c
+ create mode 100644 include/hw/misc/imx8mp_gpc.h
+ create mode 100644 include/hw/misc/imx8mp_gpr.h
+ create mode 100644 include/hw/misc/imx8mp_mu.h
+ create mode 100644 include/hw/misc/imx8mp_src.h
+
 -- 
 2.34.1
 
