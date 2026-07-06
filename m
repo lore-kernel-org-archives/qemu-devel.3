@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D7C5C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:39:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23E51C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:39:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggio-0007Rn-LO; Mon, 06 Jul 2026 06:38:42 -0400
+	id 1wggiB-0006zQ-H8; Mon, 06 Jul 2026 06:38:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiF-000701-Bd
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:10 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1wggi7-0006xB-HV
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:00 -0400
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiD-0003GU-46
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:06 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-490cf3000f0so28924035e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:04 -0700 (PDT)
+ id 1wggi5-0003Ew-Mi
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:37:59 -0400
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-493d3135f62so9043145e9.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:37:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783334283; x=1783939083; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783334275; x=1783939075; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=bAvW1IPTU6EfP0gh4hmPVnQQil1eg3LocjPyetNdf2A=;
- b=XzcriO0hqff1zqAS+J8h1TCaqoSkak1qE+p+zVxzjCm1hQac0gafMIx/nZb3yojjAY
- XIOrYm4Q+XKE666ivJRuYtxjR9Ur7ku5gGDrTyjjG00kMi9PHgiUrZ5MOAjA8J9qJXVS
- Nj4sc8CtHK5nR+kILyMrHcKP6y//JKAT1wHjsFq4j+slbV2EazR+6gHTeJ2PsAI4+C74
- yBNhi96jqepgtSFnw9PmsdLldGcdK8zsy0P6mNP17jbHxeS5bPXGdPjDCzDNrMNfpGO5
- n63e9NDrgV53+KmeQNtM71mxhgyGAV5SzCut90L7NnspkmUkjVXroYjNBluf4GXc1WXx
- 4zqg==
+ :reply-to; bh=n+h4KcNRD+h0hC6MoEK/ijKM0u4LLci0opUR0sXDBd0=;
+ b=i+jpamjD6YMHW89Hqp9qFtmMkqf3R7gwgWrO2iu5g2nYjXuJzFwg9PyjBWVOOwWsqQ
+ cnaozvVenJf7QqjnCypMXjq7Jq42Pez6K7L5xFFMMnhWrxM9j8ucaBUMMoYmSSE6yaVF
+ 1RbT9OguUrC7a55SlHtm4Ddz6rZf2r72INRMAjz/GCjq6/phVKj2RXcbabjEXzSZxJDP
+ ex2crZGMo6ZHvKHQck7CF7bUYT9t1HdE78YtxXxiLEvjF4mom2BiFlbETCjCr1Tw0caa
+ x6mA9rnUlG+8WMncQ9kNsNTVrKeGMmUNcfYmvztm79b2N1sch+12jzpyLrjXE3xbCdXn
+ ZFRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783334283; x=1783939083;
+ d=1e100.net; s=20251104; t=1783334275; x=1783939075;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=bAvW1IPTU6EfP0gh4hmPVnQQil1eg3LocjPyetNdf2A=;
- b=KaktaOADGUaH+cHSb/NP8hDAYWaxfwX83FHK0zhuhhqSoZg+8q6201B+K44bOvHpGn
- Agt/v52YxOtxtm/3iixkpUX2qwwNfyRu22eaGZGHNlo8cCWfkAFhgz/ZSsBlFFn4odrx
- GpSaUHRwLyQ0Xovc5EuUSLpM9KKwPvnojF0UBb7YvxMg/U4Aiqc5aPnmkSO2q0QVBGoe
- g70rRDzGdam5h4AuxjJ7LZvs4q85jelv6IrZpDMiMrechPWhfx/4sGudo0x1jTl1rn+5
- V9jSpl05bCfS+YhJ532h3BC1BAEqxUVd54IcHt0SSUnE9/aGpUwYpUkPQcN1jMSBHlp0
- 68fg==
-X-Gm-Message-State: AOJu0YyvMGI+UGxq/nQgZvEWs9dnHGtZQ6LQXszH7J8NZP4OecVg5tG3
- PDYQL7JnQf6pmvBcCflQwxgC6qodxEhHUaGNUd4hcm6pG+hQ/yUBXNT16FoxC7mHBZzvkoOEUU5
- vlkL/RGhflQ==
-X-Gm-Gg: AfdE7ckJqRUw5cXT2ltmUYkFP+qxI7ALhCogPQsSIRatVHmQClcPYPoFof7DwOU6kvi
- IkCCpgmlvIYt74KCbblR8ODluSz9SShNCpDqxPRWiUNMZNTRCzOuoepKfsEdSqEbqOW4yfFvJ7Y
- q4+wJR8mCr7Kzon8W7VQd5VRN4g2J3AtmvEelrxBjrcRpdXMzzvyxYdSCryxmmfZv4d2ld0LPR3
- uAlRcwNDzNd7a2ZgpSnfY7WGJVbqdwbge2iid/bAoDoCG2rNe33A8Uxz8DtD5ENXHcWBFW6PJUP
- MwtzEOsmJLVSQGs0LUX4xpXGS8vLtzirfm98JLFuV0g6FK7l2p2l3T3Hw4iDdKPh38kG1ViGpSj
- x6vafT/O7Q0E73rk+efnkMS5W3o2aWKNGeFUvzWhhqs5xID3nkxGG2twEVcVK+zS46QFaC1C6xn
- 9PeCbc7bVbv++/xwbIQu3P0NtBN80W4ctHIGf8dea4cgmfRJKTUnnHTRZAWhG+ngbXsikjJ0Ebr
- 5Vu8DaQGr4E+23Obq8CKw==
-X-Received: by 2002:a05:600c:3f0a:b0:492:4a50:41fe with SMTP id
- 5b1f17b1804b1-493d11f05a3mr111330895e9.22.1783334283299; 
- Mon, 06 Jul 2026 03:38:03 -0700 (PDT)
+ bh=n+h4KcNRD+h0hC6MoEK/ijKM0u4LLci0opUR0sXDBd0=;
+ b=YsFC25jq7K4hQ46IZVoYikFi/Y4Wo2XmUp/FYlgggXaO4jgFI/XogdZ35e1otESkF2
+ d7BY4kVXPY/symBSwqI5BIVxdWySX9z1pJWrkeLuSgU4ofpSR2jKrog+n7r5Q08VbRET
+ yaiTmnOAyuURvOxaWdQs922ylqUpmVYWpF3WDIvIYKRJZk8UQWsJYHPOI1cMrpAa8LeO
+ WF7kS815RZaJm9oEL39XWrlSRR8v1q4ffXIKHrn2fA3yqzQrKl3u3WePPCy9Owdj5k5m
+ 0XOL+rrSYAe/vCT7pjTXa9dv7OtLmUusA4iIL5cVIrrGSxCb4yetnKaUT708Hxny//bg
+ i9tw==
+X-Gm-Message-State: AOJu0Yy5nFK0249aGowcbxQh0KreiRa79g5KCuINWFvtndiF8U61+Irq
+ gMiisSGn9F0GjB0QnEwrayfor8qstXdMs46rRsYd3ESJ04IylJ0kSVs/aZ8pv3f1iGN2IuvMro3
+ mnkUHVe+mmWaW
+X-Gm-Gg: AfdE7cm8qmgO6og2XjSf8E0v7pCOGgADTP2uTp8uFZfRE62ZDxAfFO0bD6PwP+LmKAW
+ fLNO79vo4q6kwRVmDwqevo/RG6FP0CAwL261poEqo+ZzbTJqiSOojhEpTQcVs6oVcxgx6nq5DRx
+ hYcmu4OxgMa8+A2mWsePZHsF5hNdTNQ2uW9H2nZXUsXB8Yk5A1wJCMFmW1t6y+N8xc8XHYt/fdU
+ 0+jWDMRqTF0v38kob812OhFeYfGSteqmLeJwDLZLDlh0e/6TxUlJAnJkdePzlsxBa35R+n/dHAe
+ 4HYE3MTVVrEArd94/EFlzJQXWsnObRNcergmRMWPZv7k/0Wh8C8IMc+vb46Np1IIHmrYgWBigrF
+ UYFGPFp0LLyRFrLbM6jtvj4q1hd6hqgzweSAz9XfcrXF84f+drmCuE9qK7VnK7p9pLsyQVXpBk2
+ qUldlhqH5pZx8r93KOLj88nHxCIsSG2A4SqBVy8VeczRBajdzXShpuaYfyDTtvn1Od/GLLtXoEA
+ jTrXBY58MNgzxKbYZVZWg==
+X-Received: by 2002:a05:600c:c4a6:b0:492:70f4:8d1e with SMTP id
+ 5b1f17b1804b1-493d526d4admr79840495e9.11.1783334275481; 
+ Mon, 06 Jul 2026 03:37:55 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.02
+ 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.37.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 03:38:02 -0700 (PDT)
+ Mon, 06 Jul 2026 03:37:54 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/49] tests/tcg/arm: Tests for new FPRCVT instructions
-Date: Mon,  6 Jul 2026 11:37:12 +0100
-Message-ID: <20260706103752.320511-10-peter.maydell@linaro.org>
+Subject: [PULL 01/49] hw/net/fsl_etsec: validate FCB offsets in
+ process_tx_fcb()
+Date: Mon,  6 Jul 2026 11:37:04 +0100
+Message-ID: <20260706103752.320511-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260706103752.320511-1-peter.maydell@linaro.org>
 References: <20260706103752.320511-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x341.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,82 +101,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jim MacArthur <jim.macarthur@linaro.org>
+From: Feifan Qian <bea1e@proton.me>
 
-We autodetect the presence of FPRCVT in the test cross compiler,
-which is a recent feature in GCC and not supported by many distros
-yet. If this is in place, we compile the existing fcvt.c test with
-an extra compiler flag which uses the new SIMD instructions; the
-output from the test is unchanged.
+The TX Frame Control Block (FCB) is prepended to a TX frame when
+BD_TX_TOEUN is set. It contains two guest-controlled u8 offset
+fields that process_tx_fcb() uses to locate L3/L4 headers within
+the frame buffer:
 
-The existing [US]CVTF instructions do not have a test, so no new
-tests are added for the SIMD versions. They have been tested manually
-to check the new SIMD versions produce the same numerical results as
-the existing versions.
+  l3_header_offset = FCB byte 3 (0..255)
+  l4_header_offset = FCB byte 2 (0..255)
 
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-Message-id: 20260630-jmac-fprcvt-v3-6-f4840d5e0a7f@linaro.org
+These offsets are applied without any bounds check. When the
+UDP-no-CTU branch is taken, the function writes zero to
+l4_header[6] and l4_header[7]. With both offsets set to 0xFF the
+write target is:
+
+  tx_buffer + 8 + 255 + 255 + 6/7 = tx_buffer + 525
+
+A malicious guest can therefore corrupt up to 509 bytes of heap
+memory beyond a minimally-sized (16 B) TX frame.
+
+Fix: reject the frame and log a guest error when the minimum
+required buffer length
+
+  8 (FCB) + l3_header_offset + l4_header_offset + 8
+
+exceeds tx_buffer_len. Move the l3_header and l4_header pointer
+declarations past the new guard so that out-of-bounds pointers
+are never materialised.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3517
+Signed-off-by: Feifan Qian <bea1e@proton.me>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/tcg/aarch64/Makefile.target | 14 +++++++++++++-
- tests/tcg/arm/fcvt.c              |  7 +++++++
- 2 files changed, 20 insertions(+), 1 deletion(-)
+ hw/net/fsl_etsec/rings.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
-index 6203ac9b51..32f2689273 100644
---- a/tests/tcg/aarch64/Makefile.target
-+++ b/tests/tcg/aarch64/Makefile.target
-@@ -28,9 +28,21 @@ config-cc.mak: Makefile
- 	    $(call cc-option,-march=armv8.5-a,              CROSS_CC_HAS_ARMV8_5); \
- 	    $(call cc-option,-mbranch-protection=standard,  CROSS_CC_HAS_ARMV8_BTI); \
- 	    $(call cc-option,-march=armv8.5-a+memtag,       CROSS_CC_HAS_ARMV8_MTE); \
--	    $(call cc-option,-Wa$(COMMA)-march=armv9-a+sme $$fnia, CROSS_AS_HAS_ARMV9_SME)) 3> config-cc.mak
-+	    $(call cc-option,-Wa$(COMMA)-march=armv9-a+sme $$fnia, CROSS_AS_HAS_ARMV9_SME); \
-+	    $(call cc-option,-march=armv9-a+fprcvt,         CROSS_CC_HAS_ARMV9_FPRCVT)) 3> config-cc.mak
- -include config-cc.mak
+diff --git a/hw/net/fsl_etsec/rings.c b/hw/net/fsl_etsec/rings.c
+index 6d2bf71b52..c8fc5d55d1 100644
+--- a/hw/net/fsl_etsec/rings.c
++++ b/hw/net/fsl_etsec/rings.c
+@@ -177,16 +177,31 @@ static void tx_padding_and_crc(eTSEC *etsec, uint32_t min_frame_len)
+ static void process_tx_fcb(eTSEC *etsec)
+ {
+     uint8_t flags = (uint8_t)(*etsec->tx_buffer);
+-    /* L3 header offset from start of frame */
++    /* L3 header offset from start of frame (FCB byte 3) */
+     uint8_t l3_header_offset = (uint8_t)*(etsec->tx_buffer + 3);
+-    /* L4 header offset from start of L3 header */
++    /* L4 header offset from start of L3 header (FCB byte 2) */
+     uint8_t l4_header_offset = (uint8_t)*(etsec->tx_buffer + 2);
+-    /* L3 header */
+-    uint8_t *l3_header = etsec->tx_buffer + 8 + l3_header_offset;
+-    /* L4 header */
+-    uint8_t *l4_header = l3_header + l4_header_offset;
++    uint8_t *l3_header;
++    uint8_t *l4_header;
+     int csum = 0;
  
-+ifneq ($(CROSS_CC_HAS_ARMV9_FPRCVT),)
-+AARCH64_TESTS += fcvt-fprcvt
-+fcvt-fprcvt: LDFLAGS += -lm
-+fcvt-fprcvt: CFLAGS += $(CROSS_CC_HAS_ARMV9_FPRCVT) -DFPRCVT
-+fcvt-fprcvt: fcvt.c
-+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
-+run-fcvt-fprcvt: fcvt-fprcvt
-+	$(call run-test,$<,$(QEMU) $<)
-+	$(call diff-out,$<,$(AARCH64_SRC)/fcvt.ref)
-+endif
++    /*
++     * Validate FCB header offsets before pointer arithmetic. The highest
++     * byte accessed is l4_header[7], at offset
++     *   8 (FCB size) + l3_header_offset + l4_header_offset + 7
++     * from tx_buffer. Drop the frame if this exceeds the buffer length.
++     */
++    if (etsec->tx_buffer_len < 8u + l3_header_offset + l4_header_offset + 8u) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "eTSEC: FCB offsets exceed frame length, dropping\n");
++        return;
++    }
 +
- ifneq ($(CROSS_CC_HAS_ARMV8_2),)
- AARCH64_TESTS += dcpop
- dcpop: CFLAGS += $(CROSS_CC_HAS_ARMV8_2)
-diff --git a/tests/tcg/arm/fcvt.c b/tests/tcg/arm/fcvt.c
-index ecebbb0247..7c0cc4367e 100644
---- a/tests/tcg/arm/fcvt.c
-+++ b/tests/tcg/arm/fcvt.c
-@@ -171,8 +171,14 @@ static void convert_single_to_integer(void)
- #if defined(__arm__)
-         /* asm("vcvt.s32.f32 %s0, %s1" : "=t" (output) : "t" (input)); */
-         output = input;
-+#else
-+#ifdef FPRCVT
-+        asm("fcvtzs d0, %s1\r\n"
-+            "fmov %0, d0" :
-+            "=r" (output) : "w" (input));
- #else
-         asm("fcvtzs %0, %s1" : "=r" (output) : "w" (input));
-+#endif
- #endif
-         print_int64(i, output);
-     }
-@@ -425,6 +431,7 @@ int main(int argc, char *argv[argc])
-     convert_double_to_integer();
-     convert_half_to_integer();
- 
++    /* L3 header */
++    l3_header = etsec->tx_buffer + 8 + l3_header_offset;
++    /* L4 header */
++    l4_header = l3_header + l4_header_offset;
 +
-     /* And now with ARM alternative FP16 */
- #if defined(__arm__)
-     asm("vmrs r1, fpscr\n\t"
+     /* if packet is IP4 and IP checksum is requested */
+     if (flags & FCB_TX_IP && flags & FCB_TX_CIP) {
+         csum |= CSUM_IP;
 -- 
 2.43.0
 
