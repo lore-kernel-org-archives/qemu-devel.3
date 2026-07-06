@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B5D0C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 12:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4687C44500
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 12:53:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wginr-0000nm-6c; Mon, 06 Jul 2026 08:52:03 -0400
+	id 1wgio1-0001CN-1L; Mon, 06 Jul 2026 08:52:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wgcQX-0002sq-9m
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 02:03:33 -0400
-Received: from [115.124.28.124] (helo=out28-124.mail.aliyun.com)
+ id 1wgcQX-0002tH-UC
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 02:03:34 -0400
+Received: from [115.124.28.220] (helo=out28-220.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wgcQR-0005Rv-99
+ id 1wgcQR-0005Ro-7D
  for qemu-devel@nongnu.org; Mon, 06 Jul 2026 02:03:33 -0400
-X-Alimail-AntiSpam: AC=CONTINUE; BC=0.07436273|-1; CH=green;
- DM=|CONTINUE|false|; DS=CONTINUE|ham_alarm|0.0135109-3.74173e-05-0.986452;
- FP=7603985663140579731|0|0|0|0|-1|-1|-1; HT=maildocker-contentspam033037021130;
- MF=zhang_wei@open-hieco.net; NM=1; PH=DS; RN=7; RT=7; SR=0;
- TI=SMTPD_---.iEESttH_1783317367; 
+X-Alimail-AntiSpam: AC=CONTINUE; BC=0.07436259|-1; CH=green;
+ DM=|CONTINUE|false|; DS=CONTINUE|ham_alarm|0.0304456-0.000448784-0.969106;
+ FP=16428971096157982427|0|0|0|0|-1|-1|-1;
+ HT=maildocker-contentspam033068005250; MF=zhang_wei@open-hieco.net; NM=1;
+ PH=DS; RN=6; RT=6; SR=0; TI=SMTPD_---.iEEStoh_1783317363; 
 Received: from localhost.localdomain(mailfrom:zhang_wei@open-hieco.net
- fp:SMTPD_---.iEESttH_1783317367 cluster:ay29) by smtp.aliyun-inc.com;
- Mon, 06 Jul 2026 13:56:07 +0800
+ fp:SMTPD_---.iEEStoh_1783317363 cluster:ay29) by smtp.aliyun-inc.com;
+ Mon, 06 Jul 2026 13:56:03 +0800
 From: zhang_wei@open-hieco.net
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, "Michael S . Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Tina Zhang <zhang_wei@open-hieco.net>, Yanjing Zhou <zhouyanjing@hygon.cn>
-Subject: [PATCH v1 7/9] hw/i386: Apply AMD IOMMU HT GPA hole to Hygon
-Date: Mon,  6 Jul 2026 13:55:28 +0800
-Message-ID: <20260706055530.1752094-8-zhang_wei@open-hieco.net>
+ Tina Zhang <zhang_wei@open-hieco.net>
+Subject: [PATCH v1 1/9] target/i386: Sync AMD CPUID aliases for Hygon
+Date: Mon,  6 Jul 2026 13:55:22 +0800
+Message-ID: <20260706055530.1752094-2-zhang_wei@open-hieco.net>
 X-Mailer: git-send-email 2.43.7
 In-Reply-To: <20260706055530.1752094-1-zhang_wei@open-hieco.net>
 References: <20260706055530.1752094-1-zhang_wei@open-hieco.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.124 (deferred)
-Received-SPF: pass client-ip=115.124.28.124;
- envelope-from=zhang_wei@open-hieco.net; helo=out28-124.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.220 (deferred)
+Received-SPF: pass client-ip=115.124.28.220;
+ envelope-from=zhang_wei@open-hieco.net; helo=out28-220.mail.aliyun.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -52,7 +52,7 @@ X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 06 Jul 2026 08:51:41 -0400
+X-Mailman-Approved-At: Mon, 06 Jul 2026 08:51:50 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,127 +69,242 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Tina Zhang <zhang_wei@open-hieco.net>
 
-QEMU reserves the HyperTransport special GPA range near the 1 TiB
-boundary only for AMD vCPUs.  That range is reserved by the AMD IOMMU
-GPA layout, and Linux validates VFIO DMA mappings against IOMMU reserved
-regions.
+AMD defines CPUID[0x80000001].EDX bits as aliases for a subset of
+CPUID[1].EDX.  QEMU currently synchronizes those aliases only when the
+guest CPU vendor is AuthenticAMD.
 
-If guest RAM, hotplug address space, or 64-bit MMIO windows overlap the
-range, VFIO DMA_MAP can fail with -EINVAL or the IOMMU can report faults
-such as INVALID_DEVICE_REQUEST.
+Hygon Dhyana uses the HygonGenuine vendor string, but implements the
+same AMD-compatible extended CPUID feature aliases.  This can leave QEMU
+advertising a feature in CPUID[1].EDX while the matching extended alias
+in CPUID[0x80000001].EDX stays clear, for example MMX.  Windows guests
+with Hyper-V enabled can fail to start the Hyper-V hypervisor when
+exposed to that inconsistent CPUID state.
 
-The Linux AMD IOMMU driver also handles Hygon systems and reserves the HT
-range unless the IOMMU advertises FEATURE_HT_RANGE_IGNORE.  Treat Hygon
-vCPUs as using the same AMD IOMMU HT GPA-hole layout in QEMU's PC memory
-layout code.
+Apply the alias synchronization to Hygon CPUs as well.  Gate the new
+behavior with x-hygon-vendor-abi-fixes and disable it for pc-11.0 and
+older machine types, because the CPUID result is guest-visible ABI and
+must remain migration-compatible.
 
-This changes the guest physical memory map for Hygon, so gate the new
-Hygon behavior with x-hygon-vendor-abi-fixes.  pc-11.0 and older machine
-types keep the previous Hygon memory layout, while the existing
-enforce_amd_1tb_hole compatibility keeps the old AMD behavior for pc/q35
-<= 7.0.
+Add qtest coverage for the Dhyana model, including the
+Hygon vendor ABI fixes property.
 
-Add functional coverage for Dhyana on the current q35 machine type and
-for the pc-q35-11.0 compatibility case.
-
-Signed-off-by: Yanjing Zhou <zhouyanjing@hygon.cn>
 Signed-off-by: Tina Zhang <zhang_wei@open-hieco.net>
 ---
- hw/i386/pc.c                                  | 18 +++++++---
- .../functional/x86_64/test_mem_addr_space.py  | 36 +++++++++++++++++++
- 2 files changed, 49 insertions(+), 5 deletions(-)
+ hw/i386/pc.c                        |  4 +-
+ target/i386/cpu.c                   | 23 +++++++--
+ target/i386/cpu.h                   | 12 +++++
+ tests/qtest/test-x86-cpuid-compat.c | 76 +++++++++++++++++++++++++++++
+ 4 files changed, 111 insertions(+), 4 deletions(-)
 
 diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 11dade642f..4c029d6a4b 100644
+index 73a625327c..11dade642f 100644
 --- a/hw/i386/pc.c
 +++ b/hw/i386/pc.c
-@@ -735,6 +735,12 @@ static hwaddr pc_max_used_gpa(PCMachineState *pcms, uint64_t pci_hole64_size)
- #define AMD_ABOVE_1TB_START  (AMD_HT_END + 1)
- #define AMD_HT_SIZE          (AMD_ABOVE_1TB_START - AMD_HT_START)
+@@ -73,7 +73,9 @@
+ #include "hw/xen/xen-bus.h"
+ #endif
  
-+static bool x86_cpu_has_amd_iommu_ht_gpa_hole(const X86CPU *cpu)
+-GlobalProperty pc_compat_11_0[] = {};
++GlobalProperty pc_compat_11_0[] = {
++    { TYPE_X86_CPU, "x-hygon-vendor-abi-fixes", "false" },
++};
+ const size_t pc_compat_11_0_len = G_N_ELEMENTS(pc_compat_11_0);
+ 
+ GlobalProperty pc_compat_10_2[] = {};
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 5805d33ab9..32b8bc9ebd 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -8608,6 +8608,20 @@ uint32_t cpu_x86_virtual_addr_width(CPUX86State *env)
+     }
+ }
+ 
++/*
++ * AMD CPUs define CPUID[0x80000001].EDX aliases for selected CPUID[1].EDX
++ * feature bits.  Hygon Dhyana follows the same extended feature alias rules.
++ * Enable the corrected Hygon behavior only for machine types where Hygon
++ * vendor ABI fixes are on.
++ */
++static bool x86_cpu_has_amd_cpuid_aliases(const X86CPU *cpu)
 +{
-+    return IS_AMD_CPU(&cpu->env) ||
-+           (IS_HYGON_CPU(&cpu->env) && cpu->hygon_vendor_abi_fixes);
++    const CPUX86State *env = &cpu->env;
++
++    return IS_AMD_CPU(env) ||
++           (cpu->hygon_vendor_abi_fixes && IS_HYGON_CPU(env));
 +}
 +
- void pc_memory_init(PCMachineState *pcms,
-                     MemoryRegion *system_memory,
-                     MemoryRegion *rom_memory,
-@@ -759,12 +765,14 @@ void pc_memory_init(PCMachineState *pcms,
-     linux_boot = (machine->kernel_filename != NULL);
+ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+                    uint32_t *eax, uint32_t *ebx,
+                    uint32_t *ecx, uint32_t *edx)
+@@ -10147,10 +10161,11 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+         }
+     }
  
-     /*
--     * The HyperTransport range close to the 1T boundary is unique to AMD
--     * hosts with IOMMUs enabled. Restrict the ram-above-4g relocation
--     * to above 1T to AMD vCPUs only. @enforce_amd_1tb_hole is only false in
--     * older machine types (<= 7.0) for compatibility purposes.
-+     * The HyperTransport range close to the 1T boundary is reserved by the
-+     * AMD IOMMU GPA layout.  Apply the ram-above-4g relocation only to vCPUs
-+     * that use that layout. @enforce_amd_1tb_hole preserves older AMD
-+     * machine types (<= 7.0), and x-hygon-vendor-abi-fixes preserves older
-+     * Hygon machine types (<= 11.0).
+-    /* On AMD CPUs, some CPUID[8000_0001].EDX bits must match the bits on
+-     * CPUID[1].EDX.
++    /*
++     * CPUs that use AMD-compatible extended CPUID aliases must keep selected
++     * CPUID[0x80000001].EDX bits synchronized with CPUID[1].EDX.
       */
--    if (IS_AMD_CPU(&cpu->env) && pcmc->enforce_amd_1tb_hole) {
-+    if (x86_cpu_has_amd_iommu_ht_gpa_hole(cpu) &&
-+        pcmc->enforce_amd_1tb_hole) {
-         /* Bail out if max possible address does not cross HT range */
-         if (pc_max_used_gpa(pcms, pci_hole64_size) >= AMD_HT_START) {
-             x86ms->above_4g_mem_start = AMD_ABOVE_1TB_START;
-diff --git a/tests/functional/x86_64/test_mem_addr_space.py b/tests/functional/x86_64/test_mem_addr_space.py
-index 61b4a190b4..e4b4aee008 100755
---- a/tests/functional/x86_64/test_mem_addr_space.py
-+++ b/tests/functional/x86_64/test_mem_addr_space.py
-@@ -208,6 +208,24 @@ def test_phybits_low_tcg_q35_71_amd(self):
-         self.assertEqual(self.vm.exitcode(), 1, "QEMU exit code should be 1")
-         self.assertRegex(self.vm.get_log(), r'phys-bits too low')
+-    if (IS_AMD_CPU(env)) {
++    if (x86_cpu_has_amd_cpuid_aliases(cpu)) {
+         env->features[FEAT_8000_0001_EDX] &= ~CPUID_EXT2_AMD_ALIASES;
+         env->features[FEAT_8000_0001_EDX] |= (env->features[FEAT_1_EDX]
+            & CPUID_EXT2_AMD_ALIASES);
+@@ -10810,6 +10825,8 @@ static const Property x86_cpu_properties[] = {
+     DEFINE_PROP_BOOL("cpuid-0xb", X86CPU, enable_cpuid_0xb, true),
+     DEFINE_PROP_BOOL("x-vendor-cpuid-only", X86CPU, vendor_cpuid_only, true),
+     DEFINE_PROP_BOOL("x-vendor-cpuid-only-v2", X86CPU, vendor_cpuid_only_v2, true),
++    DEFINE_PROP_BOOL("x-hygon-vendor-abi-fixes", X86CPU,
++                     hygon_vendor_abi_fixes, true),
+     DEFINE_PROP_BOOL("x-amd-topoext-features-only", X86CPU, amd_topoext_features_only, true),
+     DEFINE_PROP_BOOL("lmce", X86CPU, enable_lmce, false),
+     DEFINE_PROP_BOOL("l3-cache", X86CPU, enable_l3_cache, true),
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index e6a197602d..3e75b03609 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1281,6 +1281,9 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_VENDOR_ZHAOXIN1   "CentaurHauls"
+ #define CPUID_VENDOR_ZHAOXIN2   "  Shanghai  "
  
-+    def test_phybits_low_tcg_q35_hygon(self):
-+        """
-+        Check that Dhyana on the default q35 machine follows the AMD IOMMU
-+        HT reserved GPA range on new machine types.
-+        """
-+        self.ensure_64bit_binary()
-+        self.set_machine('q35')
-+        self.vm.add_args('-S', '-cpu', 'Dhyana,phys-bits=40',
-+                         '-m', '512,slots=1,maxmem=976G',
-+                         '-display', 'none',
-+                         '-object', 'memory-backend-ram,id=mem1,size=1G',
-+                         '-device', 'pc-dimm,id=vm0,memdev=mem1')
-+        self.vm.set_qmp_monitor(enabled=False)
-+        self.vm.launch()
-+        self.vm.wait()
-+        self.assertEqual(self.vm.exitcode(), 1, "QEMU exit code should be 1")
-+        self.assertRegex(self.vm.get_log(), r'phys-bits too low')
-+
-     def test_phybits_ok_tcg_q35_70_amd(self):
-         """
-         Same as q35-7.0 AMD case except that here we check that QEMU can
-@@ -225,6 +243,24 @@ def test_phybits_ok_tcg_q35_70_amd(self):
-         self.vm.shutdown()
-         self.assertNotRegex(self.vm.get_log(), r'phys-bits too low')
++#define CPUID_VENDOR_HYGON_1  0x6f677948 /* "Hygo" */
++#define CPUID_VENDOR_HYGON_2  0x6e65476e /* "nGen" */
++#define CPUID_VENDOR_HYGON_3  0x656e6975 /* "uine" */
+ #define CPUID_VENDOR_HYGON    "HygonGenuine"
  
-+    def test_phybits_ok_tcg_q35_110_hygon(self):
-+        """
-+        Same as the default q35 Dhyana case except that here we check that
-+        the q35-11.0 compatibility setting keeps the old memory layout.
-+        """
-+        self.ensure_64bit_binary()
-+        self.set_machine('pc-q35-11.0')
-+        self.vm.add_args('-S', '-cpu', 'Dhyana,phys-bits=40',
-+                         '-m', '512,slots=1,maxmem=976G',
-+                         '-display', 'none',
-+                         '-object', 'memory-backend-ram,id=mem1,size=1G',
-+                         '-device', 'pc-dimm,id=vm0,memdev=mem1')
-+        self.vm.set_qmp_monitor(enabled=False)
-+        self.vm.launch()
-+        time.sleep(self.DELAY_Q35_BOOT_SEQUENCE)
-+        self.vm.shutdown()
-+        self.assertNotRegex(self.vm.get_log(), r'phys-bits too low')
+ #define IS_INTEL_CPU(env) ((env)->cpuid_vendor1 == CPUID_VENDOR_INTEL_1 && \
+@@ -1289,6 +1292,9 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define IS_AMD_CPU(env) ((env)->cpuid_vendor1 == CPUID_VENDOR_AMD_1 && \
+                          (env)->cpuid_vendor2 == CPUID_VENDOR_AMD_2 && \
+                          (env)->cpuid_vendor3 == CPUID_VENDOR_AMD_3)
++#define IS_HYGON_CPU(env) ((env)->cpuid_vendor1 == CPUID_VENDOR_HYGON_1 && \
++                           (env)->cpuid_vendor2 == CPUID_VENDOR_HYGON_2 && \
++                           (env)->cpuid_vendor3 == CPUID_VENDOR_HYGON_3)
+ #define IS_ZHAOXIN1_CPU(env) \
+     ((env)->cpuid_vendor1 == CPUID_VENDOR_ZHAOXIN1_1 && \
+      (env)->cpuid_vendor2 == CPUID_VENDOR_ZHAOXIN1_2 && \
+@@ -2461,6 +2467,12 @@ struct ArchCPU {
+      */
+     bool vendor_cpuid_only_v2;
+ 
++    /*
++     * Enable Hygon vendor ABI fixes for new machine types.  Old machine
++     * types disable this to preserve guest-visible CPU ABI.
++     */
++    bool hygon_vendor_abi_fixes;
 +
-     def test_phybits_ok_tcg_q35_71_amd(self):
-         """
-         Same as q35-7.1 AMD case except that here we check that QEMU can
+     /* Only advertise TOPOEXT features that AMD defines */
+     bool amd_topoext_features_only;
+ 
+diff --git a/tests/qtest/test-x86-cpuid-compat.c b/tests/qtest/test-x86-cpuid-compat.c
+index 17c0965827..b7f8834052 100644
+--- a/tests/qtest/test-x86-cpuid-compat.c
++++ b/tests/qtest/test-x86-cpuid-compat.c
+@@ -113,6 +113,21 @@ typedef struct FeatureTestArgs {
+     bool expected_value;
+ } FeatureTestArgs;
+ 
++typedef struct BoolPropTestArgs {
++    /* Test name */
++    const char *name;
++    /* CPU type */
++    const char *cpu;
++    /* CPU features (may be NULL) */
++    const char *cpufeat;
++    /* machine type (may be NULL to use default machine) */
++    const char *machine;
++    /* CPU property to read */
++    const char *property;
++    /* expected value of the property */
++    bool expected_value;
++} BoolPropTestArgs;
++
+ /* Get the value for a feature word in a X86CPUFeatureWordInfo list */
+ static uint32_t get_feature_word(QList *features, uint32_t eax, uint32_t ecx,
+                                  const char *reg)
+@@ -170,6 +185,38 @@ static void test_feature_flag(const void *data)
+     g_free(cmdline);
+ }
+ 
++static void test_bool_prop(const void *data)
++{
++    const BoolPropTestArgs *args = data;
++    char *cmdline;
++    char *save;
++    char *path;
++    bool value;
++
++    cmdline = g_strdup_printf("-cpu %s", args->cpu);
++
++    if (args->cpufeat) {
++        save = cmdline;
++        cmdline = g_strdup_printf("%s,%s", cmdline, args->cpufeat);
++        g_free(save);
++    }
++    if (args->machine) {
++        save = cmdline;
++        cmdline = g_strdup_printf("-machine %s %s", args->machine, cmdline);
++        g_free(save);
++    }
++
++    qtest_start(cmdline);
++    path = get_cpu0_qom_path();
++    value = qom_get_bool(path, args->property);
++    qtest_end();
++
++    g_assert_cmpint(value, ==, args->expected_value);
++
++    g_free(path);
++    g_free(cmdline);
++}
++
+ static void test_plus_minus_subprocess(void)
+ {
+     char *path;
+@@ -407,6 +454,28 @@ static const FeatureTestArgs feature_tests[] = {
+         "max", "mmx=off",
+         1, 0, "EDX", 23, false,
+     },
++    {
++        "x86/cpuid/features/dhyana/ext-mmx",
++        "Dhyana", NULL,
++        0x80000001, 0, "EDX", 23, true,
++    },
++    {
++        "x86/cpuid/features/dhyana/ext-mmx/compat-off",
++        "Dhyana", "x-hygon-vendor-abi-fixes=off",
++        0x80000001, 0, "EDX", 23, false,
++    },
++};
++
++static const BoolPropTestArgs bool_prop_tests[] = {
++    {
++        "x86/cpuid/props/dhyana/hygon-vendor-abi-fixes/default",
++        "Dhyana", NULL, NULL, "x-hygon-vendor-abi-fixes", true,
++    },
++    {
++        "x86/cpuid/props/dhyana/hygon-vendor-abi-fixes/pc-i440fx-11.0",
++        "Dhyana", NULL, "pc-i440fx-11.0",
++        "x-hygon-vendor-abi-fixes", false,
++    },
+ };
+ 
+ int main(int argc, char **argv)
+@@ -433,6 +502,13 @@ int main(int argc, char **argv)
+         qtest_add_data_func(feature_tests[i].name,
+                             &feature_tests[i], test_feature_flag);
+     }
++    for (int i = 0; i < ARRAY_SIZE(bool_prop_tests); i++) {
++        if (!qtest_has_cpu_model(bool_prop_tests[i].cpu)) {
++            continue;
++        }
++        qtest_add_data_func(bool_prop_tests[i].name,
++                            &bool_prop_tests[i], test_bool_prop);
++    }
+ 
+     return g_test_run();
+ }
 -- 
 2.43.7
 
