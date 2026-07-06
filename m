@@ -4,99 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B9DBC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 03:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E59C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 04:10:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgZhR-00079L-2A; Sun, 05 Jul 2026 23:08:49 -0400
+	id 1wgae1-0006Nh-Jd; Mon, 06 Jul 2026 00:09:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wgZhP-000795-EH
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 23:08:47 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1wgadw-0006Mr-6F
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 00:09:16 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wgZhN-0005Es-PL
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 23:08:47 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-6989c0ec3c5so4926614a12.2
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 20:08:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783307324; cv=none;
+ id 1wgadt-0007S0-MJ
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 00:09:15 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-697bd21fdc2so4121923a12.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 21:09:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783310952; cv=none;
  d=google.com; s=arc-20260327;
- b=npazLHDKNERuyKy7/NLYBBLQ6Cuu97p4iB8jxXpVbNo3zAmTxC6mDbZc8D1rGOuoAb
- RCz7AmholBnzXiw6iuMs7UPpONZVVLJzp0LfLxtB8yp8R4FvPTm+FgJnPEHBnxq1Vz2z
- a/LVakN6LzfE/8ObXlJvqHMi17Yn50g7J2F07ORvg4Y3hE56XFLfd+edcShdrIWjStZA
- 5Da1beli8PST9RBkMEns7doQagQDLBIVpFGr9Ytz3uTUAHRlfPHfyAzxBOSND5kYUAjX
- yDGbtoyMRLMzQ/93V22Z77zoO0OstUvuC+8DRmneuR8KDOx+/TbR8BZ1iHqp5kVZ8Q68
- nTqw==
+ b=mwmaS0CNwoDbOhH75gSCnAFaN0semL8o13Rk5cuTFLeU6GVampMkLbxFS7PfdE0jLk
+ Tufa6ylmG1P0DPWiW5BPktY+bsHUOWz5Bl0kIClWufhRmm3U1icGKu5irP4hrNUHVIre
+ 4/Ig4P1tsujBXUUok+f2/CVDHih8v5paZGsSJLXPTkqNKWG36vw4Bl5zB7a25kr4NPjW
+ 5kV/qppd6GyT3odNu+P6B68Bt2Quu1A8x4oBETO/PoD0nUgLQ3N1oty8JAhTyFAcAJi4
+ AkHFoSmH8ER666W0+j2zXMjEhfq3OkDET6nU3Dg/lUMqxgbqiKPA/w0lbqD+QGuQCFBA
+ VKKw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=+fEU8KCl5H6eCgChunSpz0tlr6WLAYy/RfoYgPqJ93U=;
- fh=KLHGcCjDFE8JakAsekM1idRm6q0Xvx801j4ETmug+Fk=;
- b=ErjijVppEavJbGm+flz44PSx3C89CdWSXwDVbT10e8fzRk/n715aERe2gpH0rDuHpM
- QY66Vqia79cBNVsl0gmAmgAzaVcSerbjERx0G0zYfKqqdwAva4LrO4+BCTc3jolEJveD
- ojBB4mTVlOvVJL3WsItNCelewSuvYyYN1OumigtLh7X9vM26l7FbJTaKxizZsnUD9yiV
- MXhANkQGKxn4fN6SW5U26vTQIH3DnxzLkD9RyOUs38CLBMszTZbW6GSLqT1E14z87tbS
- GSqCWp4KrF79UqRREuryn0nmvI8gj448NfnX1nWTWVKfrbDy1963ptQNVB+U5kDg3vrY
- ZofQ==; darn=nongnu.org
+ bh=MiXEQr4owAYISSihhr8G6Y9h0iA4WKSim5kG94sRBpM=;
+ fh=U8+Yw6uyjHZrjP2AEdBEZwPT+05yX8i19cXUJbK9ebI=;
+ b=QtYQoaHgMvtkEm0HkF2y/wdQ8CC0oCbE0jpXmKNmuH6tXQSn1dpIL0ax8aRG13QH0e
+ l8ax4ELLk+CSLpWcHxvN9NAyU7a7j3uoaiZrwWKN8VPQDy+hf8uUEPh6a8rQ4gYNM5G1
+ 6mOHyy8zjDx6cub4YZze94MQG3sA4NglXf6UGk5OWnEMhaSe6WRGQmwngu6PZJ3/d5ax
+ 69PHc8ELSOiNhr4bVfQIDcSYWLYsgmN8BE+8HWby/v5EbnVpjdIuHzBT0TBJ2wQol26o
+ 0EgCT/jQDi4SboYRgGC1Rjgvw0aoh8Ke3KFfRV9Hsqtmypn06P3Cm59Jpp2Urnv3sn2w
+ oHdw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783307324; x=1783912124; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=+fEU8KCl5H6eCgChunSpz0tlr6WLAYy/RfoYgPqJ93U=;
- b=B/9cJx4ltGuI50ppsSMqAq4rwoIszSxwaWDMV6ta5jlJwbDHnrJWVei3UV1/ByqQzl
- L2FpkzUp1Sv6x32HCXagQipCGxEBURtEQQmKmaHbO/e423ZMVJvljXFHvZEs3XsreVyk
- Uf7gnI9B95JXr0Q2dnSxy+MYAGyU7P5C7BYuPb2K+JIO92TOKtTFHYZMl6B1ssyMbnss
- l3TOWoeuA3wOwnW3Sm6oui87reD/d2Ry4IoC47COTZf6ep/h6O+xx+R0Cw6zB/UK0N0h
- GSjDvb+R+odnSNpOSR0pnXkdi+pTNXmwt/gsdP2Li4mc35YWBe8VxPSK9e1NlCxd6tz8
- ++NA==
+ d=gmail.com; s=20251104; t=1783310952; x=1783915752; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MiXEQr4owAYISSihhr8G6Y9h0iA4WKSim5kG94sRBpM=;
+ b=H+o1YvEKW7zp5lzQpF05T38d5wtq9gZSl9GqEY90xpv6Wsf/M1Z6agLtQ6eKlXPvg4
+ ZC7Wh/OgWknl4RXhYB5xUDNK7MsAysBh0DDHLQzZTjkJt2aMwOeTQCL/gyE0EvbKsdnZ
+ S9ENKMMxMkXkzNYb35J/rJslEEKgVtQ1H1Hfj5GE/pGNaOVfBRHupbQwYvtN+PSyg2mH
+ mePff+/LT6m7KkPIIN+m7q8QyzjP75tZ4F8d+xhpzW3e7N34PE060RNs97QDifNjVW59
+ umFCfk5n9/XhgUnuQSszbg1zNB+aJqmN7BVMzIwJM9ZfTmYhBKZL5ZiUli1ZvXtlt4z3
+ +pTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783307324; x=1783912124;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=+fEU8KCl5H6eCgChunSpz0tlr6WLAYy/RfoYgPqJ93U=;
- b=cyjWXzXLBAk4H3g18+iGyEe6vp62IBg8OdzjAHqAB8G0q0vRtrdVzIyxqdZ1ngAkpj
- tcO4RosvRH3m8SSt05qefXz0iM+RlvrCnbfX3ddgTpheSIfc/WFRleNidU6BOzk4lSEF
- 2Fk9t5bmJRuqofc3YLCSlQ43umP1HG0BXoePo9g33UDisSaCo9Kj8ysskY4Y3eE4vWl1
- KiaNqKFGrAAoo3UQQtcUV47rDZ3tvfh7irO0AsbtYYNwfQP5z6L/yeIGF+VqAORve33q
- 8XNurgZbKSp0crhP58Dxv2FPwk0mC7TGVKK0r1voo3e5XS34/Cut20zDUrqjZaQ5vZ4C
- ChFA==
-X-Gm-Message-State: AOJu0Yxjj1+ehb/ZKKSCrU1BuIyJ4ImkI0xFO7cNzAT9wWmuXNeKqYFi
- OWrhNU0QQr5uOahgUsN398MyAGTjtxOEwQ7iEBlzZAmhPFGy4EeUnu2KKsN4NoLVGb6f+dRxwr5
- zKc5m7DkvWotvxMfgFR11YSNGvwL/2aE=
-X-Gm-Gg: AfdE7cm4V3yvivyjcI/4c/0B09ANYo+DylS5oJLm6JDYTx8kN1lxVuUYAbwMBIiIHMn
- QfTv9FmdERBUUW8Pns+TSeURmsatylqG/y6S35wKC929vrMsSlIKMB+MJxgXUgSrRldpG5vuZ5i
- LclKv+jyAB6ASvQInDU750oCCgDZxZy+PNowNPhcDdMLle6SW5leu46b79ncptuEglZJCe2Of9c
- 3HWpfgd8lIU8ID7Y1F6M5HZd9IEu6EeMB7Jbfy3MVHn94m07mhZSsSAInkiR3IV0y5heG/LZPY7
- E2oZbVBbZTlSVoKR0fJKclqW1kQ=
-X-Received: by 2002:a17:907:199a:b0:c12:6b39:2211 with SMTP id
- a640c23a62f3a-c12e6bacc2amr292762066b.43.1783307323952; Sun, 05 Jul 2026
- 20:08:43 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783310952; x=1783915752;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=MiXEQr4owAYISSihhr8G6Y9h0iA4WKSim5kG94sRBpM=;
+ b=sA+0gDI2sWRGz06Kz9OQodEbMMFTKPQiATm2qZc7tsM2C3WmbH15CcDyIQlENTyyap
+ FMTjst75JaHybOUoVtPvDccdiEmJj68K/War1DIqmjy+HHNhtQcwowHyRy7rYjr+KR/8
+ Z+KFpg7Kq4i2lCFkXKJi2Bz/kdDmriQAfN1PBlPG+jKtoEoEv5vt99kjB+m28Hi+cJXI
+ Y9rU3VNP5TYDSXoWaUc95jg0GfpRxlbfdsBwU4gv+LAkRGtWkoHA1CoaVvAtlwDeolvL
+ SjOI6RUBJFUnt24ui15QtH4yk7HOfhz2r/byzJAZ4vhqFzPAnr8s0qeTdHA6Xq78xbGl
+ THeg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqQqOc/VaBV0SgXbCHk+dik8KRMWmw+lraMIiCJY/r93kqQ+X8OkOs0a7QX675sHdB82oVk70yMuQ7N@nongnu.org
+X-Gm-Message-State: AOJu0YxH/XetJ2g7WrayWG7d+Cqz4SYUeXfUD1k/Lwq10LJbMKlA35qr
+ qZYwHBvzOPMRjKr8E7PKXXBKTeAXB5nN0+z5BMaffWtV3h52JkudFCymWLBY/8OjN6ZIaGo6u75
+ nbKA+1GMX8NBrxVkUae893nd8Aj3rLZw=
+X-Gm-Gg: AfdE7cn8ev0fWz7+kunFe1qb0vklcewzNcwZlGJZOsaI2Te8thFTnTeSeI4PB115dHU
+ Eo/EFhMKu7uYFKjUUnd6Sn9iRIQzMCZm07r6WHzquxO0/SoXVuuWaFsYZhaM7YlXP0oPzjJjEHx
+ 9ElASc/o7+xaADLAVEbRk/D0A5ZoncU0STQ/W5dfPzzSJQbiS9SbasjRl5qLTsk5UyYV6y1xR1e
+ PvR7/4IGBSy0lUeuaZIaiS7mJFQBQvpP9x2qFikJPbGyAfF7PXFefgU7FUyNfz9Jjdleub1wplC
+ Ue+tREMpB9Rs8RRCila+ZjZ3nSk=
+X-Received: by 2002:a05:6402:e93:b0:698:9e5e:5df8 with SMTP id
+ 4fb4d7f45d1cf-69a1a259f0dmr2299615a12.7.1783310952145; Sun, 05 Jul 2026
+ 21:09:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260630172110.1866951-1-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260630172110.1866951-1-daniel.barboza@oss.qualcomm.com>
+References: <20260618093827.3507-1-cp0613@linux.alibaba.com>
+ <20260618093827.3507-3-cp0613@linux.alibaba.com>
+In-Reply-To: <20260618093827.3507-3-cp0613@linux.alibaba.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 6 Jul 2026 13:08:17 +1000
-X-Gm-Features: AVVi8Ccdi79T6SUC83q1XLITGdUO1uVOoYJimnQlmR7mht-O6CxrqPbB0WU5uU4
-Message-ID: <CAKmqyKNRq+jhcXN8yn5U+iWXeio6Qh612dZSDJAWZHjtafMxpw@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv/riscv-iommu: forbid GATE/SADE if caps.AMO_HWADD
- is zero
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
- andrew.jones@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>
+Date: Mon, 6 Jul 2026 14:08:45 +1000
+X-Gm-Features: AVVi8CewtI9RIpsTitTFWsRRd_ktSzcX7xuAlCj13Q8fkYKxPVLaaeH4zsp3B6I
+Message-ID: <CAKmqyKNmFdJRUegowCGggk+4fOmY7vBxOH+_gnmTSpNhyqWqHg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] hw/riscv/virt-acpi-build: Add _DEP to ACPI0017 for
+ CXL host bridge dependency
+To: Chen Pei <cp0613@linux.alibaba.com>
+Cc: jic23@kernel.org, pbonzini@redhat.com, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, liwei1518@gmail.com, 
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
+ chao.liu.zevorn@gmail.com, sunilvl@ventanamicro.com, dave.jiang@intel.com, 
+ alison.schofield@intel.com, imammedo@redhat.com, mst@redhat.com, 
+ guoren@kernel.org, qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ linux-cxl@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -120,59 +126,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 1, 2026 at 3:22=E2=80=AFAM Daniel Henrique Barboza
-<daniel.barboza@oss.qualcomm.com> wrote:
+On Thu, Jun 18, 2026 at 7:40=E2=80=AFPM Chen Pei <cp0613@linux.alibaba.com>=
+ wrote:
 >
-> When capabilities.AMO_HWADD isn't set, DC.tc.GADE and DC.tc.SADE are
-> reserved bits and setting them throws a DDT_MISCONFIGURED error.
+> On RISC-V QEMU virt platform with CXL enabled, the probe ordering
+> of acpi_pci_root (ACPI0016) and cxl_acpi (ACPI0017) is not
+> guaranteed. If cxl_acpi probes before acpi_pci_root has attached
+> the CXL host bridges, the CXL port topology will be incomplete
+> because to_cxl_host_bridge() silently skips devices whose PCI root
+> is not yet ready.
 >
-> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3549
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Add a _DEP object to the ACPI0017 device in the DSDT, declaring
+> its dependency on the ACPI0016 CXL host bridge devices. This tells
+> the OS to defer ACPI0017 enumeration until all ACPI0016 devices
+> have been attached by acpi_pci_root.
+>
+> This requires a corresponding kernel change to call
+> acpi_dev_clear_dependencies() in acpi_pci_root_add().
 
-Thanks!
-
-Applied to riscv-to-apply.next
+What happens to kernels that don't have this change?
 
 Alistair
 
+>
+> The resulting DSDT fragment (iasl -d output) for a single CXL host
+> bridge at bus 0x01 looks like:
+>
+>   Device (CXLM)
+>   {
+>       Name (_HID, "ACPI0017")
+>       Name (_DEP, Package (0x01)
+>       {
+>           \_SB.PC01
+>       })
+>       Method (_STA, 0, NotSerialized)
+>       {
+>           Return (0x0B)
+>       }
+>       ...
+>   }
+>
+> Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
 > ---
->  hw/riscv/riscv-iommu-bits.h | 1 +
->  hw/riscv/riscv-iommu.c      | 5 +++++
->  2 files changed, 6 insertions(+)
+>  hw/riscv/virt-acpi-build.c | 32 ++++++++++++++++++++++++++++++++
+>  1 file changed, 32 insertions(+)
 >
-> diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-> index a938fd3eb4..2e8bc19dca 100644
-> --- a/hw/riscv/riscv-iommu-bits.h
-> +++ b/hw/riscv/riscv-iommu-bits.h
-> @@ -86,6 +86,7 @@ struct riscv_iommu_pq_record {
->  #define RISCV_IOMMU_CAP_SV57X4          BIT_ULL(19)
->  #define RISCV_IOMMU_CAP_MSI_FLAT        BIT_ULL(22)
->  #define RISCV_IOMMU_CAP_MSI_MRIF        BIT_ULL(23)
-> +#define RISCV_IOMMU_CAP_AMO_HWAD        BIT_ULL(24)
->  #define RISCV_IOMMU_CAP_ATS             BIT_ULL(25)
->  #define RISCV_IOMMU_CAP_T2GPA           BIT_ULL(26)
->  #define RISCV_IOMMU_CAP_IGS             GENMASK_ULL(29, 28)
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index c9687e01a8..891a56e731 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -416,6 +416,11 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s,=
- RISCVIOMMUContext *ctx,
->          const bool ade =3D
->              ctx->tc & (pass ? RISCV_IOMMU_DC_TC_GADE : RISCV_IOMMU_DC_TC=
-_SADE);
->
-> +        if (ade && !(s->cap & RISCV_IOMMU_CAP_AMO_HWAD)) {
-> +            /* GADE/SADE are reserved bits if AMO_HWAD is cleared.  */
-> +            return RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED;
+> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+> index 309d64b322..3598e55243 100644
+> --- a/hw/riscv/virt-acpi-build.c
+> +++ b/hw/riscv/virt-acpi-build.c
+> @@ -510,6 +510,38 @@ static void build_dsdt(GArray *table_data,
+>      if (s->cxl_devices_state.is_enabled) {
+>          Aml *cxl_dev =3D aml_device("CXLM");
+>          aml_append(cxl_dev, aml_name_decl("_HID", aml_string("ACPI0017")=
+));
+> +
+> +        /*
+> +         * Declare a _DEP on every ACPI0016 CXL host bridge so the OS
+> +         * defers ACPI0017 enumeration until acpi_pci_root has attached
+> +         * the CXL host bridges. Without this, cxl_acpi may probe before
+> +         * to_cxl_host_bridge() can resolve the PCI root and the CXL
+> +         * port topology comes up empty.
+> +         */
+> +        if (s->pci_bus) {
+> +            PCIBus *bus;
+> +            uint32_t num_cxl_hbs =3D 0;
+> +
+> +            QLIST_FOREACH(bus, &s->pci_bus->child, sibling) {
+> +                if (pci_bus_is_root(bus) && pci_bus_is_cxl(bus)) {
+> +                    num_cxl_hbs++;
+> +                }
+> +            }
+> +
+> +            if (num_cxl_hbs > 0) {
+> +                Aml *dep_pkg =3D aml_package(num_cxl_hbs);
+> +
+> +                QLIST_FOREACH(bus, &s->pci_bus->child, sibling) {
+> +                    if (pci_bus_is_root(bus) && pci_bus_is_cxl(bus)) {
+> +                        aml_append(dep_pkg,
+> +                                   aml_name("\\_SB.PC%.02X",
+> +                                            pci_bus_num(bus)));
+> +                    }
+> +                }
+> +                aml_append(cxl_dev, aml_name_decl("_DEP", dep_pkg));
+> +            }
 > +        }
 > +
->          /* Address range check before first level lookup */
->          if (!sc[pass].step) {
->              const uint64_t va_len =3D va_skip + va_bits;
+>          Aml *method =3D aml_method("_STA", 0, AML_NOTSERIALIZED);
+>          aml_append(method, aml_return(aml_int(0x0B)));
+>          aml_append(cxl_dev, method);
 > --
-> 2.43.0
+> 2.50.1
 >
 >
 
