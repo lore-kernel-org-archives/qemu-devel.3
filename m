@@ -4,130 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75831C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C181BC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:47:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgeys-0004Q5-0K; Mon, 06 Jul 2026 04:47:10 -0400
+	id 1wgez6-0004WV-Hd; Mon, 06 Jul 2026 04:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wgexh-0004H2-HH; Mon, 06 Jul 2026 04:46:03 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wgeyg-0004N3-0T; Mon, 06 Jul 2026 04:47:00 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wgexf-0004bJ-OA; Mon, 06 Jul 2026 04:45:57 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZPx6pZZnbj4sxXhl2uCjPPxDof5NBwgZLx+nEnCwVAKL0D1KKn52zYcFYKgfC3LCBYiItnzTyw7NYopy/o3+gn4+RZKzqURusT/R9BXll4DItGV4Ykxq+BhdnbPDGOeMMqMLeyYkbFpcX9k4adP6Q3K5B3N4bsRNqFNhmVT6LsUGu+d0gftqJNIhhQhMZU7OFsZLALgTsqPVIYIv02/RX38AmB3LQMFWxYU7LRO0X8MbB9hUn1TNQCqDLwCeQ9CIg8zwXqXdUkbvG8fr/tSKQvqPIocP7VFK/KOpl7pbliZVTjtQcehiF1HJkwZasOKd6JyO2rZfgPjgPoWJZ5UVjQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=h/+q68TMkR9cYYOfNcbXTlZ0YPWQiqdzMUS7bfEGuok=;
- b=rKAt0exlHJkg8z2oZpo9c+f77jGMD1O0OvAab/fSyKmutx00qhO+0iwPL7gcMvIo/YkKND4J5kpHT/4oEXwVwoXQ4dgWK/X4cruN7Zcn7d6OV5T0lEvmLK2A4+/0T5xGdoFmOZuEocVZcEtf3vT9BVMb8sxJ8+wGV+b/jx9XXtSv0JfVwqc19mSDBdDFX2/O6YiiVKHa9eweOPFCaF2b0mkYK8uBRlaJP8pE+ouerWO0QHZnPa2MK75alkc8hf2IC25621xKmReMijiadwQwWfgJRUOztlytU3bgMQHRTmYVksEYuTUty+v+pwGffVC+OQjOS5T6CYR27ggtSLh/cQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=h/+q68TMkR9cYYOfNcbXTlZ0YPWQiqdzMUS7bfEGuok=;
- b=LVEWKjVwH/ExsvxViScSlLf3uDlFER/LDs4epyhC9QoSZCysVAoQX0PUEZ2tmMF5k7unecJQ5dSI7Ph3H9XyiuubVOEy/V9NZRGIh6YgCUtOLuMxnETuq4A2wi5Rdg6xEDBwER6kURZx744cAj3fTeRmstFU7zpIX4U4f7VJxrwrAyO+TaAVCw4yCwfv/cPz2ufRPIXdacRcfiKpufWr+tlGJSoDppIVVfhSQFekBdgimGklmcZwqlkoJyfsGciJV+S9OaEi8ECdFhvPR47q3DHQ4GX4jaPHmsUYNAazOWtou5nOgmjVIYGNlelbBUBAqZIlZlFLRGDoHm4SeJicWA==
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by TYZPR06MB6639.apcprd06.prod.outlook.com (2603:1096:400:45b::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.11; Mon, 6 Jul
- 2026 08:45:41 +0000
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0181.010; Mon, 6 Jul 2026
- 08:45:41 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 0/4] Refactor AST2700 SCU preparation for coprocessors
-Thread-Topic: [PATCH v1 0/4] Refactor AST2700 SCU preparation for coprocessors
-Thread-Index: AQHdDSPTNeWdLxD24kereOpLPDH1vw==
-Date: Mon, 6 Jul 2026 08:45:41 +0000
-Message-ID: <20260706084540.1988785-1-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|TYZPR06MB6639:EE_
-x-ms-office365-filtering-correlation-id: c2c9e151-0184-4ad8-e4f5-08dedb3af600
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|23010399003|376014|366016|1800799024|38070700021|18002099003|56012099006;
-x-microsoft-antispam-message-info: aOnFcPVfqzIj6GaeAQFw3CaKkuMD5Q1mRCp1bWDav8rZcN/w76mK+DVD0AO+ST68N3Wd8sMFoSVBZ0vOoRxWupl4km+gcCTiLPW5J3v6Vz24aGccf5SaghdHDNKBdItyjcfM4A2VmcbpZ3JA/VP4qLL8c+GIt+XaDDeVUvYWP26iuXX59VwPUOJvjYxi7NhbyoaFZr8ZlKShp0D9rB8wZBzTquhqg7md3qRB0hTFvvfrqn1xTChAvQA5y6hcPLRJypQaQHk1ynZQrVUdJRd7VbXw700AKAPYmc9zYKDOPE18Pi9BwXZ70DTJ9nKVyjqGDP+gnO0HCRL/354G3cUueSns1416EpIw8de3f/sVzwpkiACFD9YJsItStYCGmVKkJHun9gzK/3H8BzyOs4yg3eTq0mKEnJfC5ZCXd+W+cdhh4l/2q3bxy9Lav75HzHJ3xDd4vqo6JFqwY4iI3R0xgAcYlFn0zt7FVb/BQDh4bt1RePuNqvba9t178Pa8KixJWOWJvQutuX5Ema0WmHNPZdrn4VuSEQjKE02tSURgskS3gZM3wqln0t0pdOxUK5ZlsC13lVdvdhnuwcUPV0NxBNDF/wqMgvXZUHC0iJ5AF5RDGkBu5XtJKxq5MpuyyRuH0y4GjWVZZzt5vxAnzItOeyeB9wDC6iJBvwZdljgF3AW3BOpM+aE9laAiT3F8zE7WgRVkU8aQriXn4BxUc0qgznknjtiyyccOsXKTJy+9B9Y=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(38070700021)(18002099003)(56012099006);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?wY/rtkvYzicHwgcP1L4+VXUNFNm1DWjJ6lx50A1rTHeuNGnVgygx+JV694?=
- =?iso-8859-1?Q?b7vQtGEiwYWUzv7uuZHoV3+o95t/kGdulj/YfCyDMq4s0BG4/t/5aP34Jr?=
- =?iso-8859-1?Q?0tcud++NkH/x/GjxB28RzsA3bIsavZlWxX38F9GXvRAMDMi5jFANomGWnt?=
- =?iso-8859-1?Q?YpYSSDo2ylgNJGEaQsTO82AUKQrd/LdzWnefVt/VLyQ+V1KKdw0eK3ifkQ?=
- =?iso-8859-1?Q?PbYP7EgyeWaPXYCmgVPXR5cXt4MB74uukAaGRK8IBTMcwhlYscyOq8WCYX?=
- =?iso-8859-1?Q?XkAsUicDD71yZ+U6eCyTstOqvmIytC4nF5K3BLB5qjUsVK7HIxNstb/G9K?=
- =?iso-8859-1?Q?guqOM7ibx3g/4ZMwGp26aX8dOw2WDP5vUiFlXW/+Anxg/RGpMUIcC7WoV6?=
- =?iso-8859-1?Q?pqOwsUOZRMiO1pAC2xCefvAKpUFHxN+dRhFgQpy36tyYRCW91kk5jyhT4B?=
- =?iso-8859-1?Q?qCwhQrOzAM15ZVpY+XsM+l6L1xMeNw3l2UVrIU1FphU4RktHIvAgIACslH?=
- =?iso-8859-1?Q?G7J/hKAY8U0DrbnLLMwf51JX5v9jTcgEBhICsjtjNEJdi+HbFvt7/wU/Nz?=
- =?iso-8859-1?Q?drSMQherG1CGccHXNcONn3em6zOgRClVtkyvzLxnbi/KuUlg6InHhceFdv?=
- =?iso-8859-1?Q?kJPDT07Aj6ifOwdRgo3iIExjPr6LuQ+nG7kuH9BKYjLoFaIPZ/0eicOYRd?=
- =?iso-8859-1?Q?qmoGzD2pqNAcv+jSsFLOK7+1exfNUOMfALbKQjSYxKSaQc4veESby1LmrY?=
- =?iso-8859-1?Q?b/0Y9GEEFwvXZEnzDCBr1O/Iw8TS1j0RPJvBI1eNGU05QU5pbXZrPri1yp?=
- =?iso-8859-1?Q?y2c9LwEqkh9ygOJVtXQuN0d2wiCxlAMaSZAz/5N7SQOLc7LYqDmixAbpX3?=
- =?iso-8859-1?Q?9/ULt+bqInTT5Qfps+5inL6gF9FjBjXdmLnzHTuS+PLdmd8LjATFUisWXp?=
- =?iso-8859-1?Q?KMAWSqiS/y9Lxxgkwaf0aSS4y/yuE6UYfEVt4Xf/C0g37cITBmjp4+Sfy/?=
- =?iso-8859-1?Q?sIDgBNHNkiK283dmMKYKHmv5NzvsbGKAwe3W03eJuTRAOQOC9g4E/oy3jt?=
- =?iso-8859-1?Q?C9v659NwruJ6IeTZvsXArg3RUAK43MdnNbnWKOfQTqpA1QklOftP0XpeUS?=
- =?iso-8859-1?Q?H0Kx6d6q18JSeHFGXvRm8dYp0M4OG4a7Ro17LpFD/26Ogteh+O71GbRobo?=
- =?iso-8859-1?Q?9at3SnyRs8S5XkyAbvmDgr1+RJzwfG5hszmHbZOWf3piCmejXoou89yU8A?=
- =?iso-8859-1?Q?Z/VKb8O1nXs5EPytO4vz6wm9quHk6YdSnuBr5Wfv1LNaRLGOWHUbd80esX?=
- =?iso-8859-1?Q?TuPEnuv+9lIVY49A3CzpmTCnp64+2iyxZsuiU5d2dGbHsv0CpK/Z/t/A3J?=
- =?iso-8859-1?Q?VYKOoQMa6fKS6jU/0bDEHA6wEz/O4Z3wruShrdjeM4UvqkAoJj9ctCNnT7?=
- =?iso-8859-1?Q?3dJKTquu2VVfTgSLcjnzT4pyIwIyMFOJh6t4g7SfgqOndVMFf1nO1aCIKw?=
- =?iso-8859-1?Q?nNjH/CIog57B5AphdrxmTGLe5XQkdXxjo4MBrv5OapVkuzgkmy34xN2+j4?=
- =?iso-8859-1?Q?7Pr4GRyOaFcvQLjCkzYut2ftNU5XcCXc2nLUVmwLKHw4UCJwKLkcnt00ke?=
- =?iso-8859-1?Q?aAREhf32xeruzfUVTxSHtxg0BpMBrIcc6lFjPoKbqhJ6yac4Pcq+2Ihdvz?=
- =?iso-8859-1?Q?JroSAPR0XH7XNOS3QLL3FJqaT9akwg9/29CvWiUQ2zH5ajB7bRYrD0POUd?=
- =?iso-8859-1?Q?yyjM5tzLFUJf69nPhA5AmQijxl/NdvypKmlJDasChY6kbxVebwdZCvUNod?=
- =?iso-8859-1?Q?6O91gDFh8Q=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wgeyd-0004t4-Qs; Mon, 06 Jul 2026 04:46:57 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 665MICUx2197646; Mon, 6 Jul 2026 08:46:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Ie1+he
+ nrbuBUITEqyhb/C1jsytJ2vCrz2vuo1jXwDn0=; b=dEe23vV0/mPm4SJQ7z66Xh
+ 5D/kq97M0NaDo5/t1BcU92jrKpb9X1uEPVqukB6uXsL/o4RC0ezLC1lLd6WL3BV5
+ y8qXtRn0yt74qukIYWs36fH9tC7I8B1WyDRRfOKcBcR/nOuXm/VWyQ2TbsOZ56ws
+ GMsxIMemUxVd0sZahJituIev5lfuC0FCp4pF3vvMedopIlYnMPTDGGTHAP468gOu
+ 1IrbxylQIL05A5TqGsc4M8+uTGhSMyQyKQMuAIJl1IFvkX7+3bYYxWvn9FKG3CCA
+ FfXd0l9MEFEdZBRNeP7DrztcMdSqVLMAiWt95gzhdn5d1tfNun0pFTxm/z9rfiTA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6sw4ggny-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jul 2026 08:46:52 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6668Yah7007089;
+ Mon, 6 Jul 2026 08:46:51 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f7e0h4psm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jul 2026 08:46:51 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6668koH220775466
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 6 Jul 2026 08:46:50 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4E1335805A;
+ Mon,  6 Jul 2026 08:46:50 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BD90C58054;
+ Mon,  6 Jul 2026 08:46:47 +0000 (GMT)
+Received: from [9.123.8.229] (unknown [9.123.8.229])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon,  6 Jul 2026 08:46:47 +0000 (GMT)
+Message-ID: <b75abeab-969d-4866-ae5c-4ac424394adf@linux.ibm.com>
+Date: Mon, 6 Jul 2026 14:15:26 +0530
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: IMzGKsqfNkW6cTquS3yESJWZSLyY+ECPF6plxLfIoKOh8K+9HuhZ52+671aFsoKPZ5K7q8zKllOw4MV4WnUvkNSsgSm50+kcp+xJ11DWXZIR2E/SZ5An3BveATS4ylcQJAeBXyphpzzlYjdsyQTH/wZx5mfRozEbBJri0QI2gR6mXRTV5FKNvPAylWv3z+0lbqQu3pw/OED0zPiIXjXF5joY5gyTW1MfX7jh3cP3c/5z237YexI32k4AymQbyu9wxkQuLz76rBzWzUcoO0m9lx7qi69H/zZ+xa0FzzCK83PjMpBZih7qiqKCrunhCrj1o1nv1i0l8pwHx1yx1rbk5g==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c2c9e151-0184-4ad8-e4f5-08dedb3af600
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jul 2026 08:45:41.4762 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Jpvh65kmKn4s1nCJsselwpN7MXXvokqxNhfyKgS1bau7jHdb6GGXPwQQ1qthjI4A+klN3e4UzS4QmC9KnDtUKdEV3Rg/Jj6VJ6HI6SyCH60=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB6639
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 02/28] target/ppc: Migrate atomic loads to decodetree
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, nikhilks@linux.ibm.com
+Cc: milesg@linux.ibm.com, shivangu@linux.ibm.com, harshpb@linux.ibm.com,
+ adityag@linux.ibm.com
+References: <20260520160728.2283628-1-rathc@linux.ibm.com>
+ <20260520160728.2283628-3-rathc@linux.ibm.com>
+Content-Language: en-US
+From: Chinmay Rath <rathc@linux.ibm.com>
+In-Reply-To: <20260520160728.2283628-3-rathc@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: tU6uTSiFU2AyBMugMuHr09UAOXzIvVWI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA4MyBTYWx0ZWRfXyfA/SH02+i9D
+ cqp/9GB3Nby/PwSzIe7MIDZKDlR2zHdHL2PnOrTCwmw9sjmcuNFD270g3Tgv3PbLEgJAEO11xKI
+ B9hHw4x5SW1+jQrPo72wYnT7JVtUPaoNcY2LMaMmUCu8lVH2JKlPT48QXilSEAYecaQl9VU4nXv
+ tGQweepkVBWrunD7PhSqi5X2fAQx8/q2+7yzZA35oVeGgrn75kqNerQ+8TzJ08P3ZP7FCdlQv24
+ umX2bMtHPml62CAUtGL0zEzkvGBfEG3WCVxXc/7Mq6HqhAMt363m0+K0dPKJ4DnsK5b/oF7wyg5
+ ihQofryi6u5TUUe2pjpAfgSIRIEaDa53uv2SQ3pqaj1yHLYB9eESPOlnxhlgFuY7D0SPDYLVtrg
+ 7JmBvfpRxADqmqwqakgZQr5RbmeBLS345GB2Njl9cKioYfQfts2CeW6QdFXb9P228UjBI6DFjhF
+ mqEZl6UBSbeKBfBtz7w==
+X-Proofpoint-ORIG-GUID: tU6uTSiFU2AyBMugMuHr09UAOXzIvVWI
+X-Authority-Analysis: v=2.4 cv=FqQ1OWrq c=1 sm=1 tr=0 ts=6a4b6b7c cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=JGJutt_2QnLkHhJhs3YA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA4MyBTYWx0ZWRfX8t/UfRWwE5X7
+ LPjRTDM1PDcZ/H+PtUpaqhd+n4QDLPTQagFh3GLAe8A8CQRF2ivemzF+8i0Z9lBd3YH3eI7wxcI
+ nQsUGi3lbJLqWxvEZwWrTLGPvgXr+XU=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-05_02,2026-07-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 suspectscore=0 spamscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060083
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -144,66 +124,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The original AST2700 FC support series [1] is fairly large, making it=0A=
-difficult to review all changes together.=0A=
-=0A=
-To help speed up the review process, this series extracts the SCU-related=
-=0A=
-refactoring into a standalone prerequisite series.=0A=
-=0A=
-Compared with the original series, the SCU preparation patch has been=0A=
-split into three smaller patches:=0A=
-=0A=
-Introduce Aspeed2700SCUState.=0A=
-Convert AST1700/AST27x0 users to the new SCU subclass.=0A=
-Move the SCU link property into the AST27x0-specific coprocessor=0A=
-implementation.=0A=
-=0A=
-In addition, the SCUIO reset handling has been separated into an=0A=
-independent patch.=0A=
-=0A=
-This series contains no functional changes. It is purely a refactoring=0A=
-to isolate AST2700-specific SCU support from the generic implementation=0A=
-and prepare for the subsequent AST2700 FC support.=0A=
-=0A=
-This series depends on:=0A=
-=0A=
-https://patchwork.ozlabs.org/project/qemu-devel/cover/20260706052701.114174=
-0-1-jamin_lin@aspeedtech.com/=0A=
-=0A=
-Supersedes the following patches from the original FC support series [1]:=
-=0A=
-=0A=
-Patch 1:=0A=
-https://patchwork.ozlabs.org/project/qemu-devel/patch/20260417032837.266412=
-2-2-jamin_lin@aspeedtech.com/=0A=
-=0A=
-Patch 2:=0A=
-https://patchwork.ozlabs.org/project/qemu-devel/patch/20260417032837.266412=
-2-3-jamin_lin@aspeedtech.com/=0A=
-=0A=
-[1] Original AST2700 FC support series:=0A=
-https://patchwork.ozlabs.org/project/qemu-devel/cover/20260417032837.266412=
-2-1-jamin_lin@aspeedtech.com/=0A=
-=0A=
-Jamin Lin (4):=0A=
-  hw/misc/aspeed_scu: Introduce Aspeed2700SCUState=0A=
-  hw/arm/aspeed: Use Aspeed2700SCUState for AST2700 users=0A=
-  hw/arm/aspeed_ast27x0: Move SCU link into AST27x0 coprocessors=0A=
-  hw/misc/aspeed_scu: Add separate reset handler for AST2700 SCUIO=0A=
-=0A=
- include/hw/arm/aspeed_ast1700.h     |  2 +-=0A=
- include/hw/arm/aspeed_coprocessor.h |  5 +++--=0A=
- include/hw/arm/aspeed_soc.h         |  1 +=0A=
- include/hw/misc/aspeed_scu.h        |  5 +++++=0A=
- hw/arm/aspeed_ast27x0-fc.c          |  4 ++--=0A=
- hw/arm/aspeed_ast27x0-ssp.c         | 19 +++++++++++++++----=0A=
- hw/arm/aspeed_ast27x0-tsp.c         | 19 +++++++++++++++----=0A=
- hw/arm/aspeed_ast27x0.c             | 16 ++++++++--------=0A=
- hw/arm/aspeed_coprocessor_common.c  |  2 --=0A=
- hw/misc/aspeed_scu.c                | 20 ++++++++++++++++++--=0A=
- 10 files changed, 68 insertions(+), 25 deletions(-)=0A=
-=0A=
--- =0A=
-2.43.0=0A=
+
+On 5/20/26 21:37, Chinmay Rath wrote:
+> From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+>
+> Migrate load-and-reserve instructions (lbarx, lharx, lwarx, ldarx,
+> lqarx) to decodetree using the X-form layout.
+>
+> A shared helper (do_load_locked) is introduced for standard-width
+> variants, while LQARX is handled separately due to its 128-bit
+> semantics and register pairing constraints.
+>
+> The implementation preserves legacy behavior, including:
+>    - Reservation granularity and overwrite semantics
+>    - Alignment requirements
+>    - Invalid instruction cases for LQARX
+>
+> Testing:
+>    - Verified TCG equivalence with legacy implementation
+>
+> Signed-off-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> [cr: ppc32 build fix, using @X_rc for decode]
+> ---
+>   target/ppc/insn32.decode |   7 ++
+>   target/ppc/translate.c   | 142 ++++++++++++++++++++++-----------------
+>   2 files changed, 87 insertions(+), 62 deletions(-)
+>
+> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+> index 342e65dadf..26948e08a7 100644
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -1309,6 +1309,13 @@ XVF64GERNN      111011 ... -- .... 0 ..... 11111010 ..-  @XX3_at xa=%xx_xa_pair
+>   ##Extend Sign Word and Shift Left Immediate XS-form
+>   EXTSWSLI         011111 ..... ..... ..... 110111101 . .         @XS
+>   
+> +## Load and Reserve Instructions
+> +LBARX           011111 ..... ..... ..... 0000110100 .   @X_rc
+> +LHARX           011111 ..... ..... ..... 0001110100 .   @X_rc
+> +LWARX           011111 ..... ..... ..... 0000010100 .   @X_rc
+> +LDARX           011111 ..... ..... ..... 0001010100 .   @X_rc
+> +LQARX           011111 ..... ..... ..... 0100010100 .   @X_rc
+> +
+>   ## Vector Division Instructions
+>   
+>   VDIVSW          000100 ..... ..... ..... 00110001011    @VX
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index e802414fca..3f009cd9ca 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -2947,30 +2947,6 @@ static void gen_isync(DisasContext *ctx)
+>       ctx->base.is_jmp = DISAS_EXIT_UPDATE;
+>   }
+>   
+> -static void gen_load_locked(DisasContext *ctx, MemOp memop)
+> -{
+> -    TCGv gpr = cpu_gpr[rD(ctx->opcode)];
+> -    TCGv t0 = tcg_temp_new();
+> -
+> -    gen_set_access_type(ctx, ACCESS_RES);
+> -    gen_addr_reg_index(ctx, t0);
+> -    tcg_gen_qemu_ld_tl(gpr, t0, ctx->mem_idx, DEF_MEMOP(memop) | MO_ALIGN);
+> -    tcg_gen_mov_tl(cpu_reserve, t0);
+> -    tcg_gen_movi_tl(cpu_reserve_length, memop_size(memop));
+> -    tcg_gen_mov_tl(cpu_reserve_val, gpr);
+> -}
+> -
+> -#define LARX(name, memop)                  \
+> -static void gen_##name(DisasContext *ctx)  \
+> -{                                          \
+> -    gen_load_locked(ctx, memop);           \
+> -}
+> -
+> -/* lwarx */
+> -LARX(lbarx, MO_UB)
+> -LARX(lharx, MO_UW)
+> -LARX(lwarx, MO_UL)
+> -
+>   static void gen_fetch_inc_conditional(DisasContext *ctx, MemOp memop,
+>                                         TCGv EA, TCGCond cond, int addend)
+>   {
+> @@ -3219,42 +3195,9 @@ STCX(sthcx_, MO_UW)
+>   STCX(stwcx_, MO_UL)
+>   
+>   #if defined(TARGET_PPC64)
+> -/* ldarx */
+> -LARX(ldarx, MO_UQ)
+>   /* stdcx. */
+>   STCX(stdcx_, MO_UQ)
+>   
+> -/* lqarx */
+> -static void gen_lqarx(DisasContext *ctx)
+> -{
+> -    int rd = rD(ctx->opcode);
+> -    TCGv EA, hi, lo;
+> -    TCGv_i128 t16;
+> -
+> -    if (unlikely((rd & 1) || (rd == rA(ctx->opcode)) ||
+> -                 (rd == rB(ctx->opcode)))) {
+> -        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+> -        return;
+> -    }
+> -
+> -    gen_set_access_type(ctx, ACCESS_RES);
+> -    EA = tcg_temp_new();
+> -    gen_addr_reg_index(ctx, EA);
+> -
+> -    /* Note that the low part is always in RD+1, even in LE mode.  */
+> -    lo = cpu_gpr[rd + 1];
+> -    hi = cpu_gpr[rd];
+> -
+> -    t16 = tcg_temp_new_i128();
+> -    tcg_gen_qemu_ld_i128(t16, EA, ctx->mem_idx, DEF_MEMOP(MO_128 | MO_ALIGN));
+> -    tcg_gen_extr_i128_i64(lo, hi, t16);
+> -
+> -    tcg_gen_mov_tl(cpu_reserve, EA);
+> -    tcg_gen_movi_tl(cpu_reserve_length, 16);
+> -    tcg_gen_st_tl(hi, tcg_env, offsetof(CPUPPCState, reserve_val));
+> -    tcg_gen_st_tl(lo, tcg_env, offsetof(CPUPPCState, reserve_val2));
+> -}
+> -
+>   /* stqcx. */
+>   static void gen_stqcx_(DisasContext *ctx)
+>   {
+> @@ -5741,6 +5684,86 @@ static bool trans_EXTSWSLI(DisasContext *ctx, arg_XS *a)
+>       return true;
+>   }
+>   
+> +/*
+> + * Load-and-reserve core
+> + */
+> +static bool do_load_locked(DisasContext *ctx, arg_X_rc *a, MemOp memop)
+> +{
+> +    TCGv EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+> +    TCGv gpr = cpu_gpr[a->rt];
+> +
+> +    gen_set_access_type(ctx, ACCESS_RES);
+> +
+> +    tcg_gen_qemu_ld_tl(gpr, EA, ctx->mem_idx, memop | MO_ALIGN);
+> +
+> +    tcg_gen_mov_tl(cpu_reserve, EA);
+> +    tcg_gen_movi_tl(cpu_reserve_length, memop_size(memop));
+> +
+> +    tcg_gen_mov_tl(cpu_reserve_val, gpr);
+> +
+> +    return true;
+> +}
+> +
+> +static bool trans_LBARX(DisasContext *ctx, arg_LBARX *a)
+> +{
+> +    REQUIRE_INSNS_FLAGS2(ctx, ATOMIC_ISA206);
+> +    return do_load_locked(ctx, a, DEF_MEMOP(MO_UB));
+> +}
+> +
+> +static bool trans_LHARX(DisasContext *ctx, arg_LHARX *a)
+> +{
+> +    REQUIRE_INSNS_FLAGS2(ctx, ATOMIC_ISA206);
+> +    return do_load_locked(ctx, a, DEF_MEMOP(MO_UW));
+> +}
+> +
+> +static bool trans_LWARX(DisasContext *ctx, arg_LWARX *a)
+> +{
+> +    return do_load_locked(ctx, a, DEF_MEMOP(MO_UL));
+> +}
+> +
+> +static bool trans_LDARX(DisasContext *ctx, arg_LDARX *a)
+> +{
+> +    REQUIRE_64BIT(ctx);
+> +    return do_load_locked(ctx, a, DEF_MEMOP(MO_UQ));
+> +}
+For the above 4 trans_XXX() handlers making use of do_load_locked(), 
+please use TRANS, TRANS64, TRANS_FLAGS, etc macros.
+
+Thanks,
+Chinmay
+> +
+> +static bool trans_LQARX(DisasContext *ctx, arg_LQARX *a)
+> +{
+> +    REQUIRE_64BIT(ctx);
+> +    REQUIRE_INSNS_FLAGS2(ctx, ISA207S);
+> +#if defined(TARGET_PPC64)
+> +    TCGv EA;
+> +    TCGv_i128 t16;
+> +    /* Must use even register and avoid overlap */
+> +    if (unlikely((a->rt & 1) || (a->rt == a->ra) || (a->rt == a->rb))) {
+> +        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+> +        return true;
+> +    }
+> +
+> +    gen_set_access_type(ctx, ACCESS_RES);
+> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+> +    t16 = tcg_temp_new_i128();
+> +
+> +    tcg_gen_qemu_ld_i128(t16, EA, ctx->mem_idx,
+> +                         DEF_MEMOP(MO_128 | MO_ALIGN));
+> +
+> +    tcg_gen_extr_i128_i64(cpu_gpr[a->rt + 1],
+> +                         cpu_gpr[a->rt],
+> +                         t16);
+> +
+> +    tcg_gen_mov_tl(cpu_reserve, EA);
+> +    tcg_gen_movi_tl(cpu_reserve_length, 16);
+> +
+> +    tcg_gen_st_i64(cpu_gpr[a->rt],
+> +                   tcg_env, offsetof(CPUPPCState, reserve_val));
+> +    tcg_gen_st_i64(cpu_gpr[a->rt + 1],
+> +                   tcg_env, offsetof(CPUPPCState, reserve_val2));
+> +#else
+> +    qemu_build_not_reached();
+> +#endif
+> +    return true;
+> +}
+> +
+>   #include "translate/fixedpoint-impl.c.inc"
+>   
+>   #include "translate/fp-impl.c.inc"
+> @@ -5853,9 +5876,6 @@ GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
+>   GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
+>   GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
+>   GEN_HANDLER(isync, 0x13, 0x16, 0x04, 0x03FFF801, PPC_MEM),
+> -GEN_HANDLER_E(lbarx, 0x1F, 0x14, 0x01, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+> -GEN_HANDLER_E(lharx, 0x1F, 0x14, 0x03, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+> -GEN_HANDLER(lwarx, 0x1F, 0x14, 0x00, 0x00000000, PPC_RES),
+>   GEN_HANDLER_E(lwat, 0x1F, 0x06, 0x12, 0x00000001, PPC_NONE, PPC2_ISA300),
+>   GEN_HANDLER_E(stwat, 0x1F, 0x06, 0x16, 0x00000001, PPC_NONE, PPC2_ISA300),
+>   GEN_HANDLER_E(stbcx_, 0x1F, 0x16, 0x15, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+> @@ -5864,8 +5884,6 @@ GEN_HANDLER2(stwcx_, "stwcx.", 0x1F, 0x16, 0x04, 0x00000000, PPC_RES),
+>   #if defined(TARGET_PPC64)
+>   GEN_HANDLER_E(ldat, 0x1F, 0x06, 0x13, 0x00000001, PPC_NONE, PPC2_ISA300),
+>   GEN_HANDLER_E(stdat, 0x1F, 0x06, 0x17, 0x00000001, PPC_NONE, PPC2_ISA300),
+> -GEN_HANDLER(ldarx, 0x1F, 0x14, 0x02, 0x00000000, PPC_64B),
+> -GEN_HANDLER_E(lqarx, 0x1F, 0x14, 0x08, 0, PPC_NONE, PPC2_LSQ_ISA207),
+>   GEN_HANDLER2(stdcx_, "stdcx.", 0x1F, 0x16, 0x06, 0x00000000, PPC_64B),
+>   GEN_HANDLER_E(stqcx_, 0x1F, 0x16, 0x05, 0, PPC_NONE, PPC2_LSQ_ISA207),
+>   #endif
 
