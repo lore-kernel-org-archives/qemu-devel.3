@@ -4,106 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45FE9C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 04:14:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B08AFC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 05:01:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgaiH-0008Eb-KH; Mon, 06 Jul 2026 00:13:45 -0400
+	id 1wgbRk-00005V-QI; Mon, 06 Jul 2026 01:00:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wgaiD-0008Dp-MW
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 00:13:41 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wgbRY-0008WT-Aa
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 01:00:33 -0400
+Received: from mail-pg1-x544.google.com ([2607:f8b0:4864:20::544])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wgaiB-0008Nx-7X
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 00:13:41 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-69532288224so4568165a12.0
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 21:13:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783311218; cv=none;
- d=google.com; s=arc-20260327;
- b=jVy+jseq1p+l18SKraDQL4xPY9VOLOpXZqDGqA58d7Y+OZeipXhqGBadJrnyV/uwXb
- QTK7tF8oRlmO2Xx9/w9NrxTQI7jxfGK3gQZjusErzbYxJx4AmoO3TTjk04P8CW36fWNY
- 55r24AUf2+dgE66eG3xigba4Icvwp33bvRWqBuBSYpsK1CVFOpKTMQ727FX1i2J/hUL5
- AbiYG3E88eNBXuoMBEqJY8Yujz14bKOgeZdPN2tELnGPmO5DGNmAQpJE/WPZBfQR46U1
- BIMsoY1XEQOHR/b7dQpTisjz8OGSDJTbrHJTnkU6zSWWmwow+JX1ZlRFBI0Sir93Ip5r
- J8JQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=sATuXxprBdPcwRNXmrAzxvCj8IuCwss2kxcHcmpfN5A=;
- fh=KLHGcCjDFE8JakAsekM1idRm6q0Xvx801j4ETmug+Fk=;
- b=BZyATHuubpNJabgEWtJLXEk3U9zBiF15VVCAiF7eeSSNrZO3KgNEnz1fv3rVdP+TWW
- Z5vbhhYwf6l86phIyUR7Imm6C4zHsquUeMwPsL3msy8AVvqKmUxGvXr/uqhFESugOjHJ
- x3H23+et+SgXfcG/4ijdW5G7uGgqgoVwDc+m+uSoVAvjBSwv/r+5VY87GH0wlfdimkk2
- njwnU9xc/w9+j7jld43bJRBOjNyOiBcTF4qcTG34vqV1RHR6TbQUCM5rLRDyziTU8eWS
- fK2QeuB96iPCtrCdzcnbazYVu3nPvFLoU4vRPNRBn41pevtLST8mDJtje830q5oagP4P
- o6rQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wgbRW-0001km-4r
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 01:00:32 -0400
+Received: by mail-pg1-x544.google.com with SMTP id
+ 41be03b00d2f7-c9e607d81fcso1297744a12.2
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 22:00:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783311218; x=1783916018; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sATuXxprBdPcwRNXmrAzxvCj8IuCwss2kxcHcmpfN5A=;
- b=W7gbcyww9mQO4+9V7QnBHDAVkSLVRiFotzQM2z1uRyaqYzgp72ED9pHL66nESl+xvF
- I1jU4Vsp7kcctH1jJ8W3Vm28sipCSn5Nzj6YPpBCcbv7P4NlTQtkrQmjHInMHYO4hutd
- Ls0mmKIxhLm8jGnfaSlAPJrEPk848y2a74CMS0dZRDZTQaRxy0lz5c3O7YYGiYD+aggt
- EgS7A7SYvgQo7dF2dE4ofSQUjEOf6Zy7Rdziu8PH5HWC4O5IkA/aEMXUgi/UASnmi7kE
- MKdzJVfoqLCGlEAUM6X2Ldw8mIkazr1RAkC+TWMpZeuM4y7vdEQbyo9PwZr+TPY5fYcr
- xDxA==
+ d=gmail.com; s=20251104; t=1783314028; x=1783918828; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=CH9zxXaJecOaIafp6Y6g5MamIPgX8tEUj6zW19omUb8=;
+ b=DVlPfhyMEvbniFeXKopU6zglyD9GbVgStVXNK6RxwoXjheNkYuCFWgEPgEND8PuPYQ
+ KJkLkoKCE2cgqnEzdcPqDEh1H+P39RsmZ70Q05Ptcj+QAXw6j0Y+YPeizM4GrDRR6brE
+ sD1+mjA4IUZ3D7rBxTmzBL1TJ8gHpeyJUhshiYQEot7ispBiE0TR3JPBYDirmX6up6F3
+ TXMOmZqeVGmD7Q0Xx94SvkBUEZCpYKoqX54dLsh4BkqTaW2p81Q6NykcgNJoGzPRHCJJ
+ heA/GFWn/ajfmUy4cajCt0WdzC+B+S2pd+U00KubqfOP524gGhk1nqkfF64THhep3K3r
+ stAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783311218; x=1783916018;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=sATuXxprBdPcwRNXmrAzxvCj8IuCwss2kxcHcmpfN5A=;
- b=B2qsdu97B/BRBgn65346wnTPrRosJDU8SsIUAf5o40jQ78xYhK1/zz3AxMVMHdwc0Z
- gmdBdWpjgK5ktj7EjvkcnRkwzm+EdQttUFVC6W29aidI8dbt6Vh0lFSHzpc9jbcSgfI9
- purn6I61FOTMP3fZfk1wHAT5HBXrvx8o7J+OJau61lFqYapePsOQH8AgwowLfgqZpHMD
- +/haU6xHAag4eDUZeVjxmH4hkSQEaEkR9om9JXBsYWnhYFgcZLZbTxfpgPbxgVdFC9HU
- BnSB/Nq/FyLxbn6IGoy5TbrpHvPtbW0n7psKL+KCLb2g0OZgKJQtaQq7rfhKXpcBVgYx
- w22w==
-X-Gm-Message-State: AOJu0Yw+WKKe9ktsGTTEMoUwXYwrYxMxOaSN9+jl5hFzDxkmuTCw9Ecx
- DxUWY2G7m0GTeWB4ACISHIW6ps8z0RFTxRTuEJU4NnSsn5eGnqWrgzKNpoMd6ULc3xGGzKw0ANF
- 3ERFh8iKDFiNgZLm8kwojuJ+oiFNGESk=
-X-Gm-Gg: AfdE7ckWjetaj0J54mFr1CycdHo2YjjtWJN8SHvjHMr2Dk00J39TX6sFjPIgDl9SlkE
- ZIUGLaV3fEIIdAipHzFioGSL1VkzLqRlfGosRyingCGUH9pSoC7eY9a2FderqLxlV5Xp8i3xheg
- nqfzx5u+ia+Kmd7FBzmnIoYbv4zoi9SGOuvi30UhlUgxxBmvhMkt0SoXCnHjIQQSoeknxIWaGyF
- vf2hV+z+6nBlXv/wV6Zukm6kEXjtFhymnw2Un9XFEN4rbVUf0+Ss0BG3ujkccYaD9m0KixJr8cp
- 9zEmRIhrDimKUbrEFlFvZSa5ejnqHq3AZt6NTA==
-X-Received: by 2002:a05:6402:4489:b0:698:3b7c:7e42 with SMTP id
- 4fb4d7f45d1cf-69a1a3ba0cfmr2879971a12.34.1783311217584; Sun, 05 Jul 2026
- 21:13:37 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783314028; x=1783918828;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=CH9zxXaJecOaIafp6Y6g5MamIPgX8tEUj6zW19omUb8=;
+ b=e3tOiABmOS4lgn2D/S1Y/g7r6QL7slq+J6JBB9EVv9X10JFeisnEvFvw+r1N7d3HQ3
+ cWXAkcoXlY9teChmN7twoD1+IIJ+4KE+1rhsGBVqvU5pFemBWawh3kY2wA7KNTO1qOqZ
+ QEHHoZ7jC0NaqIenJGua5jDPjvQt+XyItNIEWO1cmq+y3HSy45IJdUnAWBEy2ocZgYCQ
+ Ktzy2gp4Gh0HQrerZxtNHTdKjM2OibiP7J4H3I+j6Mb4gpekwaGIqgENZI1kxt1ZAJ4x
+ GOlMK2JrTQaQ1nwMv6Nf47Gr1AkhXA8fcxw0kclObD256GOYAX8Eqs/yAcj0R96130AJ
+ F7dQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rpi/ZWgi528cuQQJFgJsQZweut7u6JG2/2KltZb4M0/+vRr1Dnk5/WiKQp1QybCzMlhduSiOX3taMVo@nongnu.org
+X-Gm-Message-State: AOJu0YwTI7Ob64q7EVArmmhq4DWh3C073vvgkosKltM6JeVDrkdP2kkm
+ KeynvoTfbVMn23L52Hf+hLDU5HYAZUzN/r3KJ5aqfgMBCxRM4HGODjVp
+X-Gm-Gg: AfdE7cl85XO97YBRToZlRmu+r3gWnV5xc9g9mtTcL9nGiw2dnjolMHEf53a+GVlAQt8
+ /192aexgQR5rCBOD7EV8WSiq/49X+dQwwQvfV/WmMsJVlJTZYmWuX4Eg8RxdD0El7va1ujpu/rh
+ XlOKNjqT1H520svham/tbtHrfxgJCP03V3mOph6aMoc9qhpJ3XkgNdJ4fVMCRa2aMKmXKg0Lmu3
+ P1/C6mnEpB/7770fZ/XGeEKMHc7B7YaFkkDmrVyGQZUpNPSVUdzMVqebmgRbbF4yRZl0Mdg1+7p
+ lU7JJMvHpILhTIvTjvLwblZj3lc/2Dhjiictq4ZGFhHPvCDAaXo5DzyS+u/f7VtLdIhITcnRGn8
+ F2TcnXtC/quXEVj5sAuG7rV/z0YrfLKWEsHtk39RQpNfPhfM7fjzV5OgaEadyBi5TLKVDmhJhL0
+ CW0DpaoYR9cPgUpFvmCT6ey3Juk+dlmtque1pN5XzdaRguHqzV7qqnvKtlRkk=
+X-Received: by 2002:a05:6a21:32a3:b0:3b4:b24e:27b4 with SMTP id
+ adf61e73a8af0-3c03e1ff0b4mr10957041637.1.1783314027728; 
+ Sun, 05 Jul 2026 22:00:27 -0700 (PDT)
+Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-30f1cbfc285sm38937415eec.5.2026.07.05.22.00.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 05 Jul 2026 22:00:27 -0700 (PDT)
+Date: Mon, 6 Jul 2026 13:00:24 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, bin.meng@windriver.com,
+ vivahavey@gmail.com, 
+ Alvin Chang <alvinga@andestech.com>, Yu-Ming Chang <yumin686@andestech.com>, 
+ Joel Stanley <joel@jms.id.au>
+Subject: Re: [RFC PATCH 04/25] target/riscv/debug: Fix icount trigger
+ privilege check
+Message-ID: <aksuyTm7d3N7URTj@ChaodeMacBook-Pro.local>
+References: <20260114044701.1173347-1-npiggin@gmail.com>
+ <20260114044701.1173347-5-npiggin@gmail.com>
 MIME-Version: 1.0
-References: <20260701092241.307801-1-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260701092241.307801-1-daniel.barboza@oss.qualcomm.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 6 Jul 2026 14:13:11 +1000
-X-Gm-Features: AVVi8CdJc2aezC2057AV0lDmLvCNO2MP8v2URijod0e1Ci73sHoDjNrAk79nh4E
-Message-ID: <CAKmqyKOSHDeN+oC9ewTHmEh1tZ-mrDn_qn6mqZ=CQu1S=5aa4A@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv/riscv-iommu.c: set ftype and iova in
- riscv_iommu_ctx()
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
- andrew.jones@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260114044701.1173347-5-npiggin@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::544;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pg1-x544.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,133 +111,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 1, 2026 at 7:23=E2=80=AFPM Daniel Henrique Barboza
-<daniel.barboza@oss.qualcomm.com> wrote:
->
-> We're hardcoding faulting type as READ, where it could very well be a
-> write access, and we're not recording the faulting addr/iova.
->
-> A note was added in the fault_type logic because I wasn't able to
-> trivially handle a probable code repeitition it in this same patch.
-> Something to do in a later date.
->
-> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3564
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
+On Wed, Jan 14, 2026 at 02:46:37PM +0800, Nicholas Piggin wrote:
+> The check_itrigger_priv() did not check privilege bits properly. Move
+> all priv checks into functions and have the icount check follow the same
+> form as the others.
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->  hw/riscv/riscv-iommu.c | 29 +++++++++++++++++++++++------
->  1 file changed, 23 insertions(+), 6 deletions(-)
->
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 70eede3f14..690c21289f 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -1330,6 +1330,7 @@ static void riscv_iommu_ctx_inval(RISCVIOMMUState *=
-s, GHFunc func,
->  /* Find or allocate translation context for a given {device_id, process_=
-id} */
->  static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOMMUState *s,
->                                            unsigned devid, unsigned proce=
-ss_id,
-> +                                          IOMMUAccessFlags perm, uint64_=
-t iova,
->                                            void **ref)
->  {
->      GHashTable *ctx_cache;
-> @@ -1339,6 +1340,7 @@ static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOMM=
-UState *s,
->          .process_id =3D process_id,
->      };
->      unsigned mode =3D get_field(s->ddtp, RISCV_IOMMU_DDTP_MODE);
-> +    uint32_t fault_type;
->
->      ctx_cache =3D g_hash_table_ref(s->ctx_cache);
->
-> @@ -1381,8 +1383,21 @@ static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOM=
-MUState *s,
->      g_hash_table_unref(ctx_cache);
->      *ref =3D NULL;
->
-> -    riscv_iommu_report_fault(s, ctx, RISCV_IOMMU_FQ_TTYPE_UADDR_RD,
-> -                             fault, !!process_id, 0, 0);
-> +    /*
-> +     * TODO: (1) do we need to distinguish other fault types
-> +     * for ctx fetching and (2) evaluate putting the 'fault_type'
-> +     * logic inside riscv_iommu_report_fault() - there's at
-> +     * least one other place (end of riscv_iommu_translate())
-> +     * that does something similar.
-> +     */
-> +    if (perm & IOMMU_RO) {
-> +        fault_type =3D RISCV_IOMMU_FQ_TTYPE_UADDR_RD;
-> +    } else {
-> +        fault_type =3D RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
+>  target/riscv/debug.c | 82 ++++++++++++++++++++------------------------
+>  1 file changed, 37 insertions(+), 45 deletions(-)
+> 
+> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+> index c92bd9860e..2effbb49af 100644
+> --- a/target/riscv/debug.c
+> +++ b/target/riscv/debug.c
+> @@ -306,48 +306,50 @@ static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
+>   * Check the privilege level of specific trigger matches CPU's current privilege
+>   * level.
+>   */
+> +static bool type2_priv_match(CPURISCVState *env, target_ulong tdata1)
+> +{
+> +    /* type 2 trigger cannot be fired in VU/VS mode */
+> +    if (env->virt_enabled) {
+> +        return false;
 > +    }
+> +    /* check U/S/M bit against current privilege level */
+> +    return (((tdata1 >> 3) & 0b1011) & BIT(env->priv));
+> +}
 > +
-> +    riscv_iommu_report_fault(s, ctx, fault_type, fault,
-> +                             !!process_id, iova, 0);
->
->      g_free(ctx);
->      return NULL;
-> @@ -2128,6 +2143,8 @@ static void riscv_iommu_process_dbg(RISCVIOMMUState=
- *s)
->      uint64_t ctrl =3D riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_TR_REQ_CT=
-L);
->      unsigned devid =3D get_field(ctrl, RISCV_IOMMU_TR_REQ_CTL_DID);
->      unsigned pid =3D get_field(ctrl, RISCV_IOMMU_TR_REQ_CTL_PID);
-> +    IOMMUAccessFlags perm =3D ctrl & RISCV_IOMMU_TR_REQ_CTL_NW
-> +                            ? IOMMU_RO : IOMMU_RW;
->      RISCVIOMMUContext *ctx;
->      void *ref;
->
-> @@ -2135,7 +2152,7 @@ static void riscv_iommu_process_dbg(RISCVIOMMUState=
- *s)
->          return;
->      }
->
-> -    ctx =3D riscv_iommu_ctx(s, devid, pid, &ref);
-> +    ctx =3D riscv_iommu_ctx(s, devid, pid, perm, iova, &ref);
->      if (ctx =3D=3D NULL) {
->          riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_TR_RESPONSE,
->                                   RISCV_IOMMU_TR_RESPONSE_FAULT |
-> @@ -2143,7 +2160,7 @@ static void riscv_iommu_process_dbg(RISCVIOMMUState=
- *s)
->      } else {
->          IOMMUTLBEntry iotlb =3D {
->              .iova =3D iova,
-> -            .perm =3D ctrl & RISCV_IOMMU_TR_REQ_CTL_NW ? IOMMU_RO : IOMM=
-U_RW,
-> +            .perm =3D perm,
->              .addr_mask =3D ~0,
->              .target_as =3D NULL,
->          };
-> @@ -2482,7 +2499,7 @@ static MemTxResult riscv_iommu_trap_write(void *opa=
-que, hwaddr addr,
->      /* FIXME: PCIe bus remapping for attached endpoints. */
->      devid |=3D s->bus << 8;
->
-> -    ctx =3D riscv_iommu_ctx(s, devid, 0, &ref);
-> +    ctx =3D riscv_iommu_ctx(s, devid, 0, IOMMU_RW, addr, &ref);
->      if (ctx =3D=3D NULL) {
->          res =3D MEMTX_ACCESS_ERROR;
->      } else {
-> @@ -2784,7 +2801,7 @@ static IOMMUTLBEntry riscv_iommu_memory_region_tran=
-slate(
->      };
->      uint32_t devid =3D riscv_iommu_space_devid(as);
->
-> -    ctx =3D riscv_iommu_ctx(as->iommu, devid, iommu_idx, &ref);
-> +    ctx =3D riscv_iommu_ctx(as->iommu, devid, iommu_idx, flag, addr, &re=
-f);
->      if (ctx =3D=3D NULL) {
->          /* Translation disabled or invalid. */
->          iotlb.addr_mask =3D 0;
-> --
-> 2.43.0
->
->
+> +static bool type6_priv_match(CPURISCVState *env, target_ulong tdata1)
+> +{
+> +    if (env->virt_enabled) {
+> +        /* check VU/VS bit against current privilege level */
+> +        return (((tdata1 >> 23) & 0b11) & BIT(env->priv));
+> +    } else {
+> +        /* check U/S/M bit against current privilege level */
+> +        return (((tdata1 >> 3) & 0b1011) & BIT(env->priv));
+> +    }
+> +}
+The new logic looks correct to me, but now it uses open-coded shifts
+and masks to check the privilege bits.
+
+Since we already have these bits defined in debug.h, like `TYPE2_U/S/M`,
+`TYPE6_VU/VS/U/S/M` and `ITRIGGER_VU/VS/U/S/M`, I think it would be
+better to use those masks through a small helper instead of spelling
+out `>> 3`, `>> 6`, `>> 23` and `0b1011` here.
+
+That would make the code easier to read and maintain later.
+
+like:
+
+```
+static bool trigger_priv_bit_match(target_ulong tdata1,
+                                   target_ulong u_mask,
+                                   target_ulong s_mask,
+                                   target_ulong m_mask,
+                                   target_ulong priv)
+{
+    switch (priv) {
+    case PRV_U:
+        return (tdata1 & u_mask) != 0;
+    case PRV_S:
+        return (tdata1 & s_mask) != 0;
+    case PRV_M:
+        return (tdata1 & m_mask) != 0;
+    default:
+        g_assert_not_reached();
+    }
+}
+
+static bool trigger_vpriv_bit_match(target_ulong tdata1,
+                                    target_ulong vu_mask,
+                                    target_ulong vs_mask,
+                                    target_ulong priv)
+{
+    switch (priv) {
+    case PRV_U:
+        return (tdata1 & vu_mask) != 0;
+    case PRV_S:
+        return (tdata1 & vs_mask) != 0;
+    default:
+        return false;
+    }
+}
+```
+
+So we can call it this way:
+
+```
+static bool type2_priv_match(CPURISCVState *env, target_ulong tdata1)
+{
+    /* type 2 trigger cannot be fired in VU/VS mode */
+    if (env->virt_enabled) {
+        return false;
+    }
+
+    return trigger_priv_bit_match(tdata1, TYPE2_U, TYPE2_S, TYPE2_M,
+                                  env->priv);
+}
+
+static bool type6_priv_match(CPURISCVState *env, target_ulong tdata1)
+{
+    if (env->virt_enabled) {
+        return trigger_vpriv_bit_match(tdata1, TYPE6_VU, TYPE6_VS,
+                                       env->priv);
+    }
+
+    return trigger_priv_bit_match(tdata1, TYPE6_U, TYPE6_S, TYPE6_M,
+                                  env->priv);
+}
+
+static bool icount_priv_match(CPURISCVState *env, target_ulong tdata1)
+{
+    if (env->virt_enabled) {
+        return trigger_vpriv_bit_match(tdata1, ITRIGGER_VU, ITRIGGER_VS,
+                                       env->priv);
+    }
+
+    return trigger_priv_bit_match(tdata1, ITRIGGER_U, ITRIGGER_S, ITRIGGER_M,
+                                  env->priv);
+}
+```
+
+And I don't mean going back to `get_field(mask) == env->priv`; that pattern
+is easy to get wrong for `PRV_U == 0`. The helper should just test the mask
+selected by the current privilege.
+
+Thanks,
+Chao
+> +
+> +static bool icount_priv_match(CPURISCVState *env, target_ulong tdata1)
+> +{
+> +    if (env->virt_enabled) {
+> +        /* check VU/VS bit against current privilege level */
+> +        return (((tdata1 >> 25) & 0b11) & BIT(env->priv));
+> +    } else {
+> +        /* check U/S/M bit against current privilege level */
+> +        return (((tdata1 >> 6) & 0b1011) & BIT(env->priv));
+> +    }
+> +}
+> +
+>  static bool trigger_priv_match(CPURISCVState *env, trigger_type_t type,
+>                                 int trigger_index)
+>  {
+> -    target_ulong ctrl = env->tdata1[trigger_index];
+> +    target_ulong tdata1 = env->tdata1[trigger_index];
+>  
+>      switch (type) {
+>      case TRIGGER_TYPE_AD_MATCH:
+> -        /* type 2 trigger cannot be fired in VU/VS mode */
+> -        if (env->virt_enabled) {
+> -            return false;
+> -        }
+> -        /* check U/S/M bit against current privilege level */
+> -        if ((ctrl >> 3) & BIT(env->priv)) {
+> -            return true;
+> -        }
+> -        break;
+> +        return type2_priv_match(env, tdata1);
+>      case TRIGGER_TYPE_AD_MATCH6:
+> -        if (env->virt_enabled) {
+> -            /* check VU/VS bit against current privilege level */
+> -            if ((ctrl >> 23) & BIT(env->priv)) {
+> -                return true;
+> -            }
+> -        } else {
+> -            /* check U/S/M bit against current privilege level */
+> -            if ((ctrl >> 3) & BIT(env->priv)) {
+> -                return true;
+> -            }
+> -        }
+> -        break;
+> +        return type6_priv_match(env, tdata1);
+>      case TRIGGER_TYPE_INST_CNT:
+> -        if (env->virt_enabled) {
+> -            /* check VU/VS bit against current privilege level */
+> -            if ((ctrl >> 25) & BIT(env->priv)) {
+> -                return true;
+> -            }
+> -        } else {
+> -            /* check U/S/M bit against current privilege level */
+> -            if ((ctrl >> 6) & BIT(env->priv)) {
+> -                return true;
+> -            }
+> -        }
+> -        break;
+> +        return icount_priv_match(env, tdata1);
+>      case TRIGGER_TYPE_INT:
+>      case TRIGGER_TYPE_EXCP:
+>      case TRIGGER_TYPE_EXT_SRC:
+> @@ -665,17 +667,7 @@ itrigger_set_count(CPURISCVState *env, int index, int value)
+>  
+>  static bool check_itrigger_priv(CPURISCVState *env, int index)
+>  {
+> -    target_ulong tdata1 = env->tdata1[index];
+> -    if (env->virt_enabled) {
+> -        /* check VU/VS bit against current privilege level */
+> -        return (get_field(tdata1, ITRIGGER_VS) == env->priv) ||
+> -               (get_field(tdata1, ITRIGGER_VU) == env->priv);
+> -    } else {
+> -        /* check U/S/M bit against current privilege level */
+> -        return (get_field(tdata1, ITRIGGER_M) == env->priv) ||
+> -               (get_field(tdata1, ITRIGGER_S) == env->priv) ||
+> -               (get_field(tdata1, ITRIGGER_U) == env->priv);
+> -    }
+> +    return icount_priv_match(env, index);
+>  }
+>  
+>  bool riscv_itrigger_enabled(CPURISCVState *env)
+> -- 
+> 2.51.0
+> 
+> 
 
