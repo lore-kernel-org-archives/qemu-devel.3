@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEBF5C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B525EC44500
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggie-0007D9-Oe; Mon, 06 Jul 2026 06:38:32 -0400
+	id 1wggir-0007Xf-KI; Mon, 06 Jul 2026 06:38:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiT-00076S-LU
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:24 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1wggiS-00073R-Ab
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:22 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiR-0003RD-DD
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:21 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-493ce08a75bso11700425e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:19 -0700 (PDT)
+ id 1wggiQ-0003R0-S5
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:20 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-493ae59eca6so20659005e9.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783334298; x=1783939098; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783334297; x=1783939097; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=mMkiwEUG4Wl0/WEutzF4slqN/GL92jnEWOIdJPN4nXk=;
- b=rJZAKyOMruq8OZ0VnSZ2CsHwpuatgTXC6Lmy6LX33XjklxtliCiq4FP4nCKdUf02GZ
- 8TmhhxaVPEWlAfJSrB+9ZrMzTld8JumNnZ/0QPR0JwG3HjlrW0a8yqpJ6n3SJZzYfHeV
- yu06D8Qz3pgfpQ4/MrOm0EXVR7CCJZg1a2xEFyqOl5MLX6YuBamnKhu0rUBGmkp8oIrF
- WW2cg0UWSbf6Vzt+YGi9FvxCwtcT46WPTbt/jRw2w8Zm6PbS1B5Hw8w/CWfnRczmw0/k
- XbgIp3Kb5LowwgHgFqRPJPb4EcJPWxLQJPkrjgfyPS4DrTakmAf0fSswAGaStMimpnlh
- ZKTQ==
+ :reply-to; bh=mEqVNkIeQWef5D3Dm101yBk+cfniIq8WOWmVgto3zPU=;
+ b=nBOkPEV/yqREBAabv5wrhPDheCOHObOEJMflpR271CTc5o1mutU9vHKCPRsoYlpNv7
+ 6yhCCJPdai2GYSri9dkO3en8QRbn7szEkgo9Z7ybKm+Bg1GzLRl7dniMIPLZz4ocI4ri
+ Dr/o8oNdDzYd0oaj6dImIv38FSaoiTG17z6wZix1PnwS8ruYbWQ0kdPhNGTIKFviEPwe
+ sbR6lmzDwcYBeCyOCioPKgdTXSuhBcgONm/hk+q4B6eB8apVSZfJzHHzjk+kXhsFPtMY
+ 8y0QN/0cdbbNhRDd8Uvmj3p25ydt5niebQxFnWLtkv3JARYVsRu2FCQTedInCUmrfVsV
+ YE1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783334298; x=1783939098;
+ d=1e100.net; s=20251104; t=1783334297; x=1783939097;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=mMkiwEUG4Wl0/WEutzF4slqN/GL92jnEWOIdJPN4nXk=;
- b=jEVj9da4xguRufDUdf7H+fGmqzkGKJtjLhMPZPthFYVDHyqvFHd5gJBdryN81f+FmQ
- rUkDFnkosal2vVM1JPj5AKuxyiQdFFoeD/qeiAe+GjtVeR4ukfNgSHF/IHbVb/8WnyCN
- fduNo/iOQo9NUkfjzZmAzaTfeQ5xqeAppwh6L0q5Tv8eE8nBVOeQkiGUx3FaGQtzRuHE
- mJxf26KBZtXktr6EfaUtVXWIr2GhmAS6JgiFcaWg63KOMDkWr7Bl6CpwcBa/fxo+awJQ
- K1fwcBkgaxfUG6jT21B9b5XRcCfVjG3nYXHZTn//XOjsqoDOZC2E/yIH+gEHoSW/WyRC
- PS5Q==
-X-Gm-Message-State: AOJu0YwExit7WZRseTsJzfe+2E/l+/oOCFknVx8aPr+28xA06kaTN5It
- 4sdXTWyvhiRAtFw1fDeHcQ6+RAKZzBMpj+GSLSgJcHo0RHOGgmB0sjcfYwU7ZzIUMzXfRruBnQB
- IUanpvBPvAQ==
-X-Gm-Gg: AfdE7cmKaNImATKsbU/RxDbSHJ8qDUI6N6W4JTyPgiHBt+cUWdHUP+7t17AmM30p7u3
- vQz/UBjyT4NRVJe7WgBwF0wMD099Lapb00v9kyGnPgJgAQD64X/LcHREd5ak0wGZ5FRxT8g9yZP
- py6D/OC5Znq95NGAGmdV6sg4wh684eOGDllxla8kwFGy42Jvva20/4sb2KeJCrmHQ543nmXrOI1
- W+zb+8wz/5fBAV1hYxHWu0f22eV3hZIRz80z0Z+kWB4JSE8snKtmDngqNVotLlFe9zBOMkjKTmF
- Q0OpNH3BjByBz5LgxMaKJMzWBbCrHMOX95nE4y/f+zrL/d5URXXOZT16uM6lp1zw9u5RD0G25Yd
- AnP6CHtofNtrpFAPVDsspBwaQLOrUflEVP8v7w03TrjZtATxHwuLBd5ujNEBPv40ASckmO46KJ2
- n5VkEz/MBZjxNi6QPjl2p6w6YhRc7atV6vnsDtPf8eDcCNv2Xl/O5ljihGJOvxW6JJ01mYpVXPR
- 6r78DxEsjA7GGUQTR/DrkBGr3uLHQvc
-X-Received: by 2002:a05:600c:190c:b0:493:c633:9cf1 with SMTP id
- 5b1f17b1804b1-493d3c17832mr92178385e9.3.1783334297674; 
- Mon, 06 Jul 2026 03:38:17 -0700 (PDT)
+ bh=mEqVNkIeQWef5D3Dm101yBk+cfniIq8WOWmVgto3zPU=;
+ b=CVaO2AwHlpWCpGM80qEayPgg1sTi9dFJSKBZKndh0gBPNa4kLbHmgoVcsHezfewxSF
+ LqTRZ2SB6A1gzwKKPNKc0kdYIN97uEZMlzfWE53jyKUCLuOFmBqxaPE0MHc5GZ7G4zOV
+ BsP+uDqRTNNCD4QeZz0MrQ5JUatk7LbJ935LStEIgid+oCAXeDqAmqjQcQXXokINibdy
+ DTqMG1jk9jmIFQ3ONpUl3kRnz432nW6Lt5b4NB3MtHP07myk3r4ulfTo/1aWMyImoG5w
+ cDwD+IIv9G+E6S4WUrUoNLMREgJ7qg1Tc8sYMGyS4s1QWRSIReLP9O17UqdD7HVnbPK9
+ MKiw==
+X-Gm-Message-State: AOJu0YwRKxV9Lk9VGBtwuthZ5EoHBwhikVYtZO9oBqEzc1c3CSdWGUL/
+ HEwO8NSfwMvbpwEymolNR2K/Q2H6/parZfz96GKyHncnE6TdLMCr4ay9uliEN2Pq5MD/EApwdLL
+ Rtf4d8dQs8g==
+X-Gm-Gg: AfdE7cnGDAYejeWd6CQVkThacLZ3uQQp0pC+PFzo0PlYIKaHxthPfa3riMtlMeP0zsU
+ 6w94Sg42gEixjArGRAWCOq1cnggJMwatBLLGCIM0oi29k83lkdvAy4Xm1Tiow7CF791wqOhRqFs
+ sFVKj/9kL+nDagXfOIenzCLp52hx/dSIs+KIC83pEe2gedBP5zdeBhBVL0dNCxULmnco3VN+FUy
+ 7UoiZ6yt8swbhV6MQ0BPtlXdd/qZhK+OCyxN6aTsNArQFyrUiQKRBnMTpzF7laOmrlqdwak9JDm
+ b+BSBgzNagyuvVTwg9yIIccqcVTTCwPwaBjvJs02CAaCxhJdlzTEfp/HawdjrvnTQvbaOIIzpTO
+ UgZyi6CvJv7zDtbTEVeVi9lRrJpDtfHmi8EIoG0Qs2QJhczs1jeUQSG1H5PhQffqmFrYFe8OPry
+ FPyWdYFQDnnij9MvdaQmfhUO4qOq+GjsiKnWMaZM5Ee+ZvgDMKzUYrM+PBSobi/2IlrOUyCKy/r
+ CykXKQ1I4rWtA1Cowdguw==
+X-Received: by 2002:a05:600c:628b:b0:492:3237:ddf with SMTP id
+ 5b1f17b1804b1-493d162bb31mr99509525e9.28.1783334296829; 
+ Mon, 06 Jul 2026 03:38:16 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
  5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.16
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 03:38:17 -0700 (PDT)
+ Mon, 06 Jul 2026 03:38:16 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 22/49] hw/nvram/fw_cfg: Document fw_cfg_init_mem_nodma()
-Date: Mon,  6 Jul 2026 11:37:25 +0100
-Message-ID: <20260706103752.320511-23-peter.maydell@linaro.org>
+Subject: [PULL 21/49] hw/nvram/fw_cfg: Remove support for I/O port fw_cfg
+ without DMA
+Date: Mon,  6 Jul 2026 11:37:24 +0100
+Message-ID: <20260706103752.320511-22-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260706103752.320511-1-peter.maydell@linaro.org>
 References: <20260706103752.320511-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,49 +102,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The last few commits have added doc comments for all the fw_cfg_init*
-functions except for fw_cfg_init_mem_nodma().  Fill in the gap by
-adding a doc comment for it.
+Currently fw_cfg_init_io_dma() allows the caller to pass a NULL
+dma_as argument, which causes it to create a fw_cfg without
+the DMA port or DMA support. None of the callers use this
+capability: they all pass &address_space_memory.
+
+We don't really want to leave the door open for some future x86
+machine type which doesn't support DMA for the fw_cfg device, so
+remove this, and instead make the function assert that it has a
+non-NULL dma_as argument, like fw_cfg_init_mem_dma().
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
-Message-id: 20260529174639.451353-6-peter.maydell@linaro.org
+Message-id: 20260529174639.451353-5-peter.maydell@linaro.org
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/nvram/fw_cfg.h | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ hw/nvram/fw_cfg.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
-index be3fb5f8aa..b75858025f 100644
---- a/include/hw/nvram/fw_cfg.h
-+++ b/include/hw/nvram/fw_cfg.h
-@@ -320,6 +320,24 @@ bool fw_cfg_add_file_from_generator(FWCfgState *s,
-  * Returns the device object.
-  */
- FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, AddressSpace *dma_as);
+diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
+index f68191553b..a9d45adb2d 100644
+--- a/hw/nvram/fw_cfg.c
++++ b/hw/nvram/fw_cfg.c
+@@ -1026,12 +1026,10 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, AddressSpace *dma_as)
+     FWCfgIoState *ios;
+     FWCfgState *s;
+     MemoryRegion *iomem = get_system_io();
+-    bool dma_requested = dma_as;
 +
-+/**
-+ * fw_cfg_init_mem_nodma:
-+ *
-+ * @ctl_addr: address of the selector register
-+ * @data_addr: address of the data address
-+ * @data_width: width of the data register in bytes
-+ *
-+ * Create a fw_cfg device without DMA support, and map its
-+ * registers at the specified addresses.
-+ *
-+ * Do not use this function in code for a board type that didn't
-+ * already support the fw_cfg device. All new board types should
-+ * include DMA support and use the standard register layout -- use
-+ * fw_cfg_init_mem_dma() instead.
-+ *
-+ * Returns the device object.
-+ */
- FWCfgState *fw_cfg_init_mem_nodma(hwaddr ctl_addr, hwaddr data_addr,
-                                   unsigned data_width);
- /**
++    assert(dma_as);
+ 
+     dev = qdev_new(TYPE_FW_CFG_IO);
+-    if (!dma_requested) {
+-        qdev_prop_set_bit(dev, "dma_enabled", false);
+-    }
+ 
+     object_property_add_child(OBJECT(qdev_get_machine()), TYPE_FW_CFG,
+                               OBJECT(dev));
 -- 
 2.43.0
 
