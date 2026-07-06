@@ -4,60 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE5BBC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 11:47:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96B8BC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 11:50:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wghmu-00065n-D5; Mon, 06 Jul 2026 07:47:00 -0400
+	id 1wghq5-0000m1-Jh; Mon, 06 Jul 2026 07:50:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1wghmi-00063V-RV
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:46:51 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1wghme-0003kR-AR
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:46:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gibson.dropbear.id.au; s=202606; t=1783338385;
- bh=0pso4x8EQK6VOqPdj4WxEMjQRHmB2RgOpXm9uZiWMow=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=BVt0SaX2T0+4ptTr3/AksorYlvVCQbVcghm8fxNyzT+aIs36LV64Wej5DqRvVee4z
- aFfCqT/wDfEblVpk9OtH2Sx2orlrSnsxhmpqVoWRFkDgcg2mMoRLceGLEnw9D3PFi7
- /SC+ypQLurA4p++b7mQw4lG973KHbzZw06G2NithHwN6i4Nj+mLNhrRQFOzYsekJ/z
- o24w2HPwKyM1OJynwLMnEswTc2GrcbTR2RYvcR0fy9eN3nEj9q1ipSOw0sN3uHZrLB
- F7B5ltPNhBPZ5rWqnwtYFZlViKW6si3nTL/tY0w3RTuC23nQxRdTLBdw3wYdiJJ+kt
- 8cFTDvnnG/+mw==
-Received: by gandalf.ozlabs.org (Postfix, from userid 1007)
- id 4gv2cx6JcFz4wJs; Mon, 06 Jul 2026 21:46:25 +1000 (AEST)
-Date: Mon, 6 Jul 2026 21:46:19 +1000
-From: David Gibson <david@gibson.dropbear.id.au>
-To: Utkarsh Verma <uverma@linux.ibm.com>
-Cc: Alexey Kardashevskiy <aik@ozlabs.ru>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, th.huth@posteo.eu,
- nnmlinux@linux.ibm.com, sbhat@linux.ibm.com, harshpb@linux.ibm.com
-Subject: Re: VW ELF loader
-Message-ID: <akuViylBcKiXMbjH@zatzit>
-References: <f881c2e7-be92-9695-6e19-2dd88cbc63c1@ozlabs.ru>
- <99254c26-0b41-4efc-b1cd-ad1e19576f32@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>)
+ id 1wghq2-0000k4-Kz; Mon, 06 Jul 2026 07:50:14 -0400
+Received: from smtpx.feld.cvut.cz ([2001:718:2:1516::210:153]
+ helo=smtpx.fel.cvut.cz)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>)
+ id 1wghpz-0004VP-Ax; Mon, 06 Jul 2026 07:50:14 -0400
+Received: from localhost (unknown [192.168.200.27])
+ by smtpx.fel.cvut.cz (Postfix) with ESMTP id 9313C1662B;
+ Mon, 06 Jul 2026 13:50:02 +0200 (CEST)
+X-Virus-Scanned: IMAP STYX AMAVIS
+Received: from smtpx.fel.cvut.cz ([192.168.200.2])
+ by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
+ with ESMTP id RBYDT1sX9--Q; Mon,  6 Jul 2026 13:50:01 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
+ s=felmail; t=1783338256;
+ bh=CZwBV97eGUbAzqXmCYBT7gftrTK0/zgKDJ2ZFaLmZS4=;
+ h=From:To:Subject:Date:Cc:References:In-Reply-To:From;
+ b=s7CsxiVBWhFZtlGM0bHUkM4vxlzip36NgR2LgM/Ze4Sc6d1T9nZBDwdasC635Y9Og
+ WzzFkbDRLAPcuZvVigJM2TQNHHsMGdX/J1ykGTOEDM3lrtsk2zcSHAAuRyuzwrQf7L
+ DIJP6r02cUzf61XRseyBrh8u9WaZYgbbxUNxIkQjRi7baZFbynlHIJrgk8cddwFPsJ
+ I5sv+FliPyFqRGm1GrD3Yu0NTTtFbRnHooZ5aCuV7HswV4ZFgKf9uRiYor5qCkOihG
+ J3/d9oMlT0JxMGzXcoVmnHmyvdCZ47QlQJh7T6O3v0ZtzfzxNbL5rR+GpvUVe9jr5h
+ mOEL8Wxv1n3zQ==
+Received: from baree.pikron.com (static-84-242-78-234.bb.vodafone.cz
+ [84.242.78.234])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: pisa)
+ by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id 7560016462;
+ Mon, 06 Jul 2026 13:44:15 +0200 (CEST)
+From: Pavel Pisa <pisa@fel.cvut.cz>
+To: Bernhard Beschow <shentey@gmail.com>
+Subject: Re: [PATCH v2 0/5] hw/arm/fsl-imx8mp: Add inital FlexCAN support
+Date: Mon, 6 Jul 2026 13:44:14 +0200
+User-Agent: KMail/1.9.10
+Cc: qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "Philippe =?utf-8?q?Mathieu-Daud=C3=A9?=" <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Matyas Bobek <matyas.bobek@gmail.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>,
+ Jason Wang <jasowang@redhat.com>,
+ "Jean-Christophe Dubois" <jcd@tribudubois.net>,
+ Francisco Iglesias <francisco.iglesias@amd.com>
+References: <20260702184038.178196-1-shentey@gmail.com>
+In-Reply-To: <20260702184038.178196-1-shentey@gmail.com>
+X-KMail-QuotePrefix: > 
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="VIE21t0VnofKrBxl"
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Content-Disposition: inline
-In-Reply-To: <99254c26-0b41-4efc-b1cd-ad1e19576f32@linux.ibm.com>
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=dgibson@gandalf.ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Message-Id: <202607061344.14505.pisa@fel.cvut.cz>
+Received-SPF: pass client-ip=2001:718:2:1516::210:153;
+ envelope-from=pisa@fel.cvut.cz; helo=smtpx.fel.cvut.cz
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, NICE_REPLY_A=-2.97, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,111 +91,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Dear Bernhard,
 
---VIE21t0VnofKrBxl
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thursday 02 of July 2026 20:40:33 Bernhard Beschow wrote:
+> Now that FlexCAN emulation has landed in master, let's add it to imx8mp-evk
+> as well. While the real i.MX8M Plus supports CAN FD which isn't emulated
+> yet, the non-FD mode works well under Linux: It is possible to use `cangen`
+> and `candump` either way on the host and on the guest, as described in
+> docs/system/devices/can.rst.
+>
+> This series consists of five patches where the first four are preparations.
+> The last patch integrates FlexCAN into the i.MX8M Plus SoC and EVK board.
+> The first preparation addresses the review comment from [1], and could be
+> applied independently.
+>
+> It would be nice if this series could make it into 11.1.
+>
+> Testing done:
+> * Start imx8mp-evk and run `cangen can0` there. Observe on the host that
+> `candump vcan0` prints the traffic.
+> * `make check`
+>
+> v2:
+> Thanks for the very helpful and super quick review, Phil! Here we go:
+> * Add patch "hw/net/can/flexcan: Wire clock control module via link
+> property" * Have separate MemoryRegionOps for 32 and 64 bit
+>
+> [1]
+> https://lore.kernel.org/qemu-devel/77d5891c-de12-467e-8746-02fe43121e3e@oss
+>.qualcomm.com/ ---
+> base-commit: a59157f98f0b69b0bbdb26bc15fbc4d6c8060799
+>
+> Bernhard Beschow (5):
+>   hw/net/can/flexcan: Wire clock control module via link property
+>   hw/net/can/flexcan: Subclass TYPE_CAN_FLEXCAN
+>   hw/arm/imx8mp-evk: Open code DEFINE_MACHINE_AARCH64
+>   hw/arm/imx8mp-evk: Introduce FslImx8mpEvkState
+>   hw/arm: Add basic FlexCAN3 support to TYPE_FSL_IMX8MP and imx8mp-evk
+>
+>  docs/system/arm/imx8m.rst   |  1 +
+>  include/hw/arm/fsl-imx8mp.h |  8 ++++
+>  include/hw/net/flexcan.h    |  4 +-
+>  hw/arm/fsl-imx6.c           |  5 ++-
+>  hw/arm/fsl-imx8mp.c         | 38 ++++++++++++++++
+>  hw/arm/imx8mp-evk.c         | 64 ++++++++++++++++++++++-----
+>  hw/misc/imx8mp_ccm.c        |  3 ++
+>  hw/net/can/flexcan.c        | 88 ++++++++++++++++++++++++++++++-------
+>  hw/arm/Kconfig              |  1 +
+>  9 files changed, 182 insertions(+), 30 deletions(-)
 
-On Mon, Jul 06, 2026 at 02:37:48PM +0530, Utkarsh Verma wrote:
-> +Thomas, Narayana, Shiva, Harsh - FYI
->=20
-> Hi Alexey, David and Paolo,
-> Reviving this thread as would like to add the disk boot support by loading
-> GRUB.
+Thanks for the work. I have tested the series on the top
+of your imx8mp-flexcan branch, commit
 
-Good luck, but I'm afraid I no longer have any interest in, or time to
-commit to looking at ppc qemu stuff.
+  3b7289419cac5b712faeadf6b4a6203579d08f76
 
->=20
-> On 2/1/20 7:09 PM, Alexey Kardashevskiy wrote:
-> > Hi!
-> >=20
-> > In my effort to "kill SLOF" (the PPC pseries guest firmware), I
-> > proceeded to the stage when QEMU needs to load GRUB from the disk. The
-> > current workaround is to read it from qcow2, save in a file and then
-> > call load_elf(). Not nice.
-> >=20
-> > 2 problems with that.
-> >=20
-> > 1. when load_elf calls address_space_write() - I need to know where and
-> > how much RAM was used to mark this memory "used" for the OF client
-> > interface (/memory@0/available FDT property). So I'll need "preload()"
-> > hook.
-> >=20
-> > 2. (bigger) GRUB comes from PReP partition which is 8MB. load_elf{32|64}
-> > consumes filename, not a memory pointer nor a "read_fn" callback - so I
-> > thought I need a "read_fn" callback.
-> >=20
-> > And then I discovered that load_elf actually maps the passed file. And
-> > here I got lost.
-> >=20
-> > Why does not load_elf just map the entire file and parse the bits? It
-> > still reads chunks with seek+read and then it maps the file in a loop
-> > potentially multiple times - is this even correct? Passing "fd" around
-> > is weird.
-> >=20
-> > Why ROMs are different from "-kernel"?
-> >=20
-> > If I want to solve 1 and 2 of my problem, should I just cut-n-paste
-> > load_elf and tweak bits rather then add more parameters to already
-> > 15-parameters long prototypes?
-> > Or I could read GRUB from qcow2 into the memory and change the rest to
-> > parse ELF from memory (mapped from a ELF file or read from qcow2)?
-> To rectify the mentioned issues, would like to implement a custom ELF loa=
-der
-> for ppc that can load the elf from the buffer and claim the memory for ea=
-ch
-> program header segment.
->=20
-> It was attempted earlier in v6 (Patch 6/6) and v7 (Patch 5/5) , but later
-> dropped for reasons unknown to me:
-> v6:
-> https://lore.kernel.org/qemu-devel/20200203032943.121178-1-aik@ozlabs.ru/
-> v7: https://lore.kernel.org/qemu-devel/20200220061622.15064-1-aik@ozlabs.=
-ru/
->=20
-> I believe disk boot is a worthwhile addition to VOF. It would make the
-> pseries machine type fully usable without SLOF for the most common case:
-> booting from a distro qcow2 image with a PReP partition containing GRUB.
->=20
-> >=20
-> >=20
-> >=20
-> > Thanks,
-> >=20
-> > ps. VW =3D=3D very weird, indeed :)
-> >=20
->=20
-> Regards,
-> Utkarsh Verma
->=20
+with our test setup for iMX6
 
---=20
-David Gibson (he or they)	| I'll have my music baroque, and my code
-david AT gibson.dropbear.id.au	| minimalist, thank you, not the other way
-				| around.
-http://www.ozlabs.org/~dgibson
+  qemu-system-arm -m 1G -M sabrelite -smp 4 ...
 
---VIE21t0VnofKrBxl
-Content-Type: application/pgp-signature; name=signature.asc
+and it worked as intended. I have looked at all patches
+from your series and I do not see anything problematic.
 
------BEGIN PGP SIGNATURE-----
+You can add my confirmation to the series and or individual
+patches
 
-iQIzBAEBCgAdFiEEO+dNsU4E3yXUXRK2zQJF27ox2GcFAmpLlX4ACgkQzQJF27ox
-2GfMfhAAhJUkd1uEDSyemR8pS3iQ7AVJ5fXqusxiG01w6MvJKtFZLbjUwSy+4TgK
-5XnHJSipReBle58AT+UtZa5u912YP42/C7zOZa06X423tIa0dpAtjKpTtRlNZJZX
-r0YAcNItxyuB7Xzf+D2AmVPXP4x+SJiVMmNRzcZvIgPNiOJIs4rt1hgBQxh3ApcC
-yJiQTnhUur9OzPCKcbaqPIAJcIx/J63T5VrcRl/zWFl4RVugMKu2Iy9Wir2jM/+m
-YizfRuU8XgDCnI9K5lGQXjwBbLNZL2XCRxkMHazXIzA5VkxfitZwg0MArnonIyXj
-yW5qQrpetmo+p2ULOi/eOfW8J1HgFCFkzeF73hIz2xq7Yq0VDhbSwYM8mv6KgIyc
-qu6Tz3StsvzL/kqZulm6laTuVhzJjr3Zxc+3cPFikZZDn7chTXHGfMSgYerrsZCP
-8SimyR6pqwRHJFTxhjLC0xtRLjIh5ezeS+1694H4+xSJqqpr+Gdoq2Hga0+xgEZm
-SBM/nkE4hd85rovAV++aNBtT4dvBpifjPvBFeTrGZMmX28RECc3E2e+z17IxaTTg
-nIQzUgeqQRxMirq/bLxPfP2+cP1oSk0VzyPjTTU+yw1rVNlvadiJTmfEdtpscF3E
-PuS1kfMsybCr5+xXt8ijHTNnJ7+svhttmwpJczlXkQQ0OS3/9Y8=
-=Aahq
------END PGP SIGNATURE-----
+Acked-by: Pavel Pisa <pisa@fel.cvut.cz>
+Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
 
---VIE21t0VnofKrBxl--
+By the way, I have noticed your iMX53 branch. We have some
+old kits for this because we used it for yet another generation
+of medical infusion system prototypes/instruments fully
+functional demonstrators but before final HW design with
+safety.
+
+The fully realized and produced systems with iMX1 there
+https://www.pikron.com/pages/devel/medinst.html
+
+Functional demonstrators with iMX53 there
+https://onimed.cz/wp-content/uploads/2021/02/medicina.png
+
+Best wishes,
+
+                Pavel
+
+                Pavel Pisa
+    phone:      +420 603531357
+    e-mail:     pisa@cmp.felk.cvut.cz
+    Department of Control Engineering FEE CVUT
+    Karlovo namesti 13, 121 35, Prague 2
+    university: http://control.fel.cvut.cz/
+    personal:   http://cmp.felk.cvut.cz/~pisa
+    social:     https://social.kernel.org/ppisa
+    projects:   https://www.openhub.net/accounts/ppisa
+    CAN related:http://canbus.pages.fel.cvut.cz/
+    RISC-V education: https://comparch.edu.cvut.cz/
+    Open Technologies Research Education and Exchange Services
+    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
 
