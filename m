@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73247C43602
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69EB0C43458
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 16:29:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgmC0-0007L2-MQ; Mon, 06 Jul 2026 12:29:12 -0400
+	id 1wgmC0-0007L1-HP; Mon, 06 Jul 2026 12:29:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wgmBz-0007Ke-Ok
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:29:11 -0400
+ id 1wgmBy-0007Jh-HS
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:29:10 -0400
 Received: from inva020.nxp.com ([92.121.34.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wgmBy-0002NZ-BB
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:29:11 -0400
+ id 1wgmBv-0002Mp-IJ
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 12:29:10 -0400
 Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 6FA191A00AC;
- Mon,  6 Jul 2026 18:29:05 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id A46201A0095;
+ Mon,  6 Jul 2026 18:29:03 +0200 (CEST)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 438001A00B6;
- Mon,  6 Jul 2026 18:29:05 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 6A8841A0087;
+ Mon,  6 Jul 2026 18:29:03 +0200 (CEST)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id B9852180008C;
- Tue,  7 Jul 2026 00:29:04 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 8D9C3180004C;
+ Tue,  7 Jul 2026 00:29:02 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCHv2 7/7] tests/functional: Enable Cortex-M7 boot in i.MX8MP EVK
- functional test
-Date: Mon,  6 Jul 2026 21:58:59 +0530
-Message-Id: <20260706162859.3361063-8-gaurav.sharma_7@nxp.com>
+Subject: [PATCHv2 1/7] hw/misc: Add i.MX8MP GPC (General Power Controller) IP
+Date: Mon,  6 Jul 2026 21:58:53 +0530
+Message-Id: <20260706162859.3361063-2-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260706162859.3361063-1-gaurav.sharma_7@nxp.com>
 References: <20260706162859.3361063-1-gaurav.sharma_7@nxp.com>
@@ -67,66 +66,322 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the i.MX8MP EVK functional test to enable the Cortex-M7 core
-by setting maxcpus=5 and enabling the fsl-imx8mp.enable-cm7 property
-The i.MX8MP SoC model makes the Cortex-M7 optional and disabled by default.
+Add a minimal emulation of the i.MX8MP General Power Controller
+and wire it into the i.MX8MP SoC model.
+The GPC manages power domains and clock-gating behavior for cores on the i.MX8MP SoC.
+This is needed to support AMP boot of the Cortex-M7 core from Linux.
 
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 ---
- MAINTAINERS                                 | 13 ++++---------
- tests/functional/aarch64/test_imx8mp_evk.py |  1 -
- 2 files changed, 4 insertions(+), 10 deletions(-)
+ docs/system/arm/imx8m.rst    |   1 +
+ hw/arm/Kconfig               |   1 +
+ hw/arm/fsl-imx8mp.c          |  10 +++
+ hw/misc/Kconfig              |   3 +
+ hw/misc/imx8mp_gpc.c         | 146 +++++++++++++++++++++++++++++++++++
+ hw/misc/meson.build          |   1 +
+ include/hw/arm/fsl-imx8mp.h  |   2 +
+ include/hw/misc/imx8mp_gpc.h |  34 ++++++++
+ 8 files changed, 198 insertions(+)
+ create mode 100644 hw/misc/imx8mp_gpc.c
+ create mode 100644 include/hw/misc/imx8mp_gpc.h
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 97dcc78ded..fe921a28de 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -921,29 +921,24 @@ F: hw/pci-host/designware.c
- F: include/hw/pci-host/designware.h
- F: docs/system/arm/mcimx7d-sabre.rst
+diff --git a/docs/system/arm/imx8m.rst b/docs/system/arm/imx8m.rst
+index afbc33b2f4..00325c2413 100644
+--- a/docs/system/arm/imx8m.rst
++++ b/docs/system/arm/imx8m.rst
+@@ -25,6 +25,7 @@ following devices:
+  * 6 General Purpose Timers
+  * Secure Non-Volatile Storage (SNVS) including an RTC
+  * Clock Tree
++ * General Power Controller (GPC)
  
--MCIMX8MM-EVK / iMX8MM
-+MCIMX8MP-EVK / MCIMX8MM-EVK
-+M: Bernhard Beschow <shentey@gmail.com>
- M: Gaurav Sharma <gaurav.sharma_7@nxp.com>
- L: qemu-arm@nongnu.org
- S: Maintained
- F: hw/arm/fsl-imx8mm.c
- F: hw/arm/imx8mm-evk.c
--F: include/hw/arm/fsl-imx8mm.h
--F: docs/system/arm/imx8m.rst
--F: tests/functional/aarch64/test_imx8mm_evk.py
--
--MCIMX8MP-EVK / i.MX8MP
--M: Bernhard Beschow <shentey@gmail.com>
--L: qemu-arm@nongnu.org
--S: Maintained
- F: hw/arm/imx8mp-evk.c
- F: hw/arm/fsl-imx8mp.c
- F: hw/misc/imx8mp_*.c
- F: hw/pci-host/fsl_imx8m_phy.c
- F: hw/rtc/rs5c372.c
-+F: include/hw/arm/fsl-imx8mm.h
- F: include/hw/arm/fsl-imx8mp.h
- F: include/hw/misc/imx8mp_*.h
- F: include/hw/pci-host/fsl_imx8m_phy.h
- F: docs/system/arm/imx8m.rst
-+F: tests/functional/aarch64/test_imx8mm_evk.py
- F: tests/functional/aarch64/test_imx8mp_evk.py
- F: tests/qtest/rs5c372-test.c
+ Boot options
+ ------------
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 5f5c4899ad..0205a279d9 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -602,6 +602,7 @@ config FSL_IMX8MP
+     select ARM_GIC
+     select FSL_IMX8MP_ANALOG
+     select FSL_IMX8MP_CCM
++    select FSL_IMX8MP_GPC
+     select IMX
+     select IMX_FEC
+     select IMX_I2C
+diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
+index 7c03ed3c34..d68d816bf1 100644
+--- a/hw/arm/fsl-imx8mp.c
++++ b/hw/arm/fsl-imx8mp.c
+@@ -204,6 +204,8 @@ static void fsl_imx8mp_init(Object *obj)
  
-diff --git a/tests/functional/aarch64/test_imx8mp_evk.py b/tests/functional/aarch64/test_imx8mp_evk.py
-index 99ddcdef83..6046c573d5 100755
---- a/tests/functional/aarch64/test_imx8mp_evk.py
-+++ b/tests/functional/aarch64/test_imx8mp_evk.py
-@@ -53,7 +53,6 @@ def test_aarch64_imx8mp_evk_usdhc(self):
-         self.set_machine('imx8mp-evk')
-         self.vm.set_console(console_index=1)
-         self.vm.add_args('-m', '2G',
--                         '-smp', '4',
-                          '-kernel', self.kernel_path,
-                          '-initrd', self.initrd_path,
-                          '-dtb', self.dtb_path,
+     object_initialize_child(obj, "snvs", &s->snvs, TYPE_IMX7_SNVS);
+ 
++    object_initialize_child(obj, "gpc", &s->gpc, TYPE_IMX8MP_GPC);
++
+     for (i = 0; i < FSL_IMX8MP_NUM_UARTS; i++) {
+         g_autofree char *name = g_strdup_printf("uart%d", i + 1);
+         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
+@@ -422,6 +424,13 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(gicdev, serial_table[i].irq));
+     }
+ 
++    /* GPC */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpc), errp)) {
++        return;
++    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpc), 0,
++                    fsl_imx8mp_memmap[FSL_IMX8MP_GPC].addr);
++
+     /* GPTs */
+     object_property_set_int(OBJECT(&s->gpt5_gpt6_irq), "num-lines", 2,
+                             &error_abort);
+@@ -686,6 +695,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MP_CCM:
+         case FSL_IMX8MP_GIC_DIST:
+         case FSL_IMX8MP_GIC_REDIST:
++        case FSL_IMX8MP_GPC:
+         case FSL_IMX8MP_GPIO1 ... FSL_IMX8MP_GPIO5:
+         case FSL_IMX8MP_GPT1 ... FSL_IMX8MP_GPT6:
+         case FSL_IMX8MP_ECSPI1 ... FSL_IMX8MP_ECSPI3:
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 1543ee6653..7aedca3614 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -101,6 +101,9 @@ config FSL_IMX8MP_ANALOG
+ config FSL_IMX8MP_CCM
+     bool
+ 
++config FSL_IMX8MP_GPC
++    bool
++
+ config STM32_RCC
+     bool
+ 
+diff --git a/hw/misc/imx8mp_gpc.c b/hw/misc/imx8mp_gpc.c
+new file mode 100644
+index 0000000000..9d8b93779d
+--- /dev/null
++++ b/hw/misc/imx8mp_gpc.c
+@@ -0,0 +1,146 @@
++/*
++ * i.MX 8M Plus GPC(General Power Controller)
++ *
++ * Copyright (c) 2026, NXP Semiconductors
++ * Author: Gaurav Sharma <gaurav.sharma_7@nxp.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++
++#include "qemu/osdep.h"
++#include "hw/core/resettable.h"
++#include "hw/misc/imx8mp_gpc.h"
++#include "migration/vmstate.h"
++
++#define IMX8MP_GPC_ACK_BIT31 0x80000000u
++
++#define IMX8MP_GPC_STAT_BUSY_BIT (1u << 5)
++
++static uint64_t imx8mp_gpc_read(void *opaque, hwaddr offset, unsigned size)
++{
++    IMX8MPGPCState *s = opaque;
++    uint32_t idx = offset >> 2;
++
++    if (size != 4 || (offset & 3) || offset >= IMX8MP_GPC_MMIO_SIZE) {
++        return 0;
++    }
++
++    /*
++     * CM7 firmware polls GPC+0xD8 and loops while bit5 is 1.
++     * Emulate "ready" by forcing bit5 low on reads.
++     */
++    if (idx == IMX8MP_GPC_PU_PGC_SW_PUP_REQ) {
++        return s->regs[idx] & ~IMX8MP_GPC_STAT_BUSY_BIT;
++    }
++
++    return s->regs[idx];
++}
++
++static void imx8mp_gpc_write(void *opaque, hwaddr offset, uint64_t value, unsigned size)
++{
++    IMX8MPGPCState *s = opaque;
++    uint32_t idx = offset >> 2;
++
++    if (size != 4 || (offset & 3) || offset >= IMX8MP_GPC_MMIO_SIZE) {
++        return;
++    }
++
++    /*
++     * CM7 firmware sets bit15 in GPC+0x190 and then polls until the value
++     * becomes negative (bit31 set). Emulate the hardware ACK by forcing
++     * bit31 high on writes to this register.
++     */
++    if (idx == IMX8MP_GPC_POLL_REG) {
++        s->regs[idx] = ((uint32_t)value) | IMX8MP_GPC_ACK_BIT31;
++    } else {
++        s->regs[idx] = (uint32_t)value;
++    }
++
++}
++
++static const MemoryRegionOps imx8mp_gpc_ops = {
++    .read = imx8mp_gpc_read,
++    .write = imx8mp_gpc_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    .unaligned = false,
++    },
++};
++
++static ResettablePhases imx8mp_gpc_parent_phases;
++
++static void imx8mp_gpc_reset_enter(Object *obj, ResetType type)
++{
++    IMX8MPGPCState *s = IMX8MP_GPC(obj);
++
++    if (imx8mp_gpc_parent_phases.enter) {
++        imx8mp_gpc_parent_phases.enter(obj, type);
++    }
++
++    memset(s->regs, 0, sizeof(s->regs));
++
++    /*
++     * Unblock CM7 firmware polling loop: return a negative value at 0x190.
++     * Any value with bit31 set works.
++     */
++    s->regs[IMX8MP_GPC_POLL_REG] = IMX8MP_GPC_ACK_BIT31;
++
++    /* Default "ready" for the earlier poll at 0xD8: ensure busy bit is clear */
++    s->regs[IMX8MP_GPC_PU_PGC_SW_PUP_REQ] = 0x00000000;
++
++}
++
++static void imx8mp_gpc_reset_hold(Object *obj, ResetType type)
++{
++    if (imx8mp_gpc_parent_phases.hold) {
++        imx8mp_gpc_parent_phases.hold(obj, type);
++    }
++}
++
++static const VMStateDescription imx8mp_gpc_vmstate = {
++    .name = TYPE_IMX8MP_GPC,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32_ARRAY(regs, IMX8MPGPCState, IMX8MP_GPC_MMIO_SIZE / 4),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static void imx8mp_gpc_init(Object *obj)
++{
++    IMX8MPGPCState *s = IMX8MP_GPC(obj);
++    memory_region_init_io(&s->iomem, obj, &imx8mp_gpc_ops, s,
++                          TYPE_IMX8MP_GPC, IMX8MP_GPC_MMIO_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
++}
++
++static void imx8mp_gpc_class_init(ObjectClass *oc, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    ResettableClass *rc = RESETTABLE_CLASS(oc);
++
++    resettable_class_set_parent_phases(rc,
++                                       imx8mp_gpc_reset_enter,
++                                       imx8mp_gpc_reset_hold,
++                                       NULL,
++                                       &imx8mp_gpc_parent_phases);
++
++    dc->vmsd = &imx8mp_gpc_vmstate;
++    dc->desc = "i.MX8MP GPC(General Power Controller)";
++}
++
++static const TypeInfo imx8mp_gpc_info[] = {
++    {
++    .name = TYPE_IMX8MP_GPC,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(IMX8MPGPCState),
++    .instance_init = imx8mp_gpc_init,
++    .class_init = imx8mp_gpc_class_init,
++    }
++};
++
++DEFINE_TYPES(imx8mp_gpc_info);
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 23265f6035..849da705dd 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -59,6 +59,7 @@ system_ss.add(when: 'CONFIG_ECCMEMCTL', if_true: files('eccmemctl.c'))
+ system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_pmu.c', 'exynos4210_clk.c', 'exynos4210_rng.c'))
+ system_ss.add(when: 'CONFIG_FSL_IMX8MP_ANALOG', if_true: files('imx8mp_analog.c'))
+ system_ss.add(when: 'CONFIG_FSL_IMX8MP_CCM', if_true: files('imx8mp_ccm.c'))
++system_ss.add(when: 'CONFIG_FSL_IMX8MP_GPC', if_true: files('imx8mp_gpc.c'))
+ system_ss.add(when: 'CONFIG_IMX', if_true: files(
+   'imx25_ccm.c',
+   'imx31_ccm.c',
+diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
+index 3b6183ed1d..51630cfd3b 100644
+--- a/include/hw/arm/fsl-imx8mp.h
++++ b/include/hw/arm/fsl-imx8mp.h
+@@ -17,6 +17,7 @@
+ #include "hw/misc/imx7_snvs.h"
+ #include "hw/misc/imx8mp_analog.h"
+ #include "hw/misc/imx8mp_ccm.h"
++#include "hw/misc/imx8mp_gpc.h"
+ #include "hw/net/imx_fec.h"
+ #include "hw/core/or-irq.h"
+ #include "hw/pci-host/designware.h"
+@@ -54,6 +55,7 @@ struct FslImx8mpState {
+ 
+     ARMCPU             cpu[FSL_IMX8MP_NUM_CPUS];
+     GICv3State         gic;
++    IMX8MPGPCState     gpc;
+     IMXGPTState        gpt[FSL_IMX8MP_NUM_GPTS];
+     IMXGPIOState       gpio[FSL_IMX8MP_NUM_GPIOS];
+     IMX8MPCCMState     ccm;
+diff --git a/include/hw/misc/imx8mp_gpc.h b/include/hw/misc/imx8mp_gpc.h
+new file mode 100644
+index 0000000000..49a040e0c9
+--- /dev/null
++++ b/include/hw/misc/imx8mp_gpc.h
+@@ -0,0 +1,34 @@
++/*
++ * i.MX 8M Plus GPC(General Power Controller)
++ *
++ * Copyright (c) 2026, NXP Semiconductors
++ * Author: Gaurav Sharma <gaurav.sharma_7@nxp.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++
++#ifndef IMX8MP_GPC_H
++#define IMX8MP_GPC_H
++
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
++
++#define IMX8MP_GPC_MMIO_SIZE 0x1000
++
++#define TYPE_IMX8MP_GPC "imx8mp.gpc"
++
++OBJECT_DECLARE_SIMPLE_TYPE(IMX8MPGPCState, IMX8MP_GPC)
++
++enum IMX8MPGPCRegisters {
++    IMX8MP_GPC_PU_PGC_SW_PUP_REQ = 0x0D8 / 4,
++    IMX8MP_GPC_POLL_REG          = 0x190 / 4,
++};
++
++struct IMX8MPGPCState {
++    SysBusDevice parent_obj;
++    MemoryRegion iomem;
++    uint32_t regs[IMX8MP_GPC_MMIO_SIZE / 4];
++};
++
++#endif /* IMX8MP_GPC_H */
 -- 
 2.34.1
 
