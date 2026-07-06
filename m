@@ -4,135 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6AF3C43602
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 09:01:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81C8FC43602
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 09:05:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgfC8-0000mo-M5; Mon, 06 Jul 2026 05:00:52 -0400
+	id 1wgfGE-00028F-D1; Mon, 06 Jul 2026 05:05:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgfBp-0000b9-Io
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:00:35 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wgfG6-00027V-0V
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:04:58 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgfBm-0000g9-Nl
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:00:31 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1wgfG4-0001ob-7R
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:04:57 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66641TUC3616929
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 09:00:29 GMT
+ 66694IVE4180021
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 09:04:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- M8o03K34IN6HUYTRNHYAq0K51TbMW8VZZxntZfzIYSU=; b=M2IS++Q6xFJ6TwID
- 1RnDJKkbZMn1LmFFYMxkQrD4u3jWA+i1Qg4B4Ysuuckpvj+AMw9hQ2bJ2pdIQoIx
- W7tuLq8jYVFcKcdjcvfvtDJ7oezlqc/F9ajom8rbIOhP5VCcJ1O8heZv0gN+T4WK
- 5jYpTURAEGMGmVjvv8oCYgzYS8fjLoKmB3UhISCeV21/P1ztXFEdRRmrzSZBvmUc
- 53TVMdjxIhVl5n76tWC32Re6EBZVUmnFccbyJvSIgFst6ZyFxJAX6RxINJZoxV1u
- FNzuYC68dY/wvPS+nkVPrOxV1LPlfNUPMxBBUQMjSOtZNpBZQ8stGcRvFy6Fyi4m
- HKkH3Q==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6s64nhtr-1
+ 8hM5NDsWI62UiMADgHE4LtrKZ59WA72p4p+zomlO8LA=; b=lIvPym1bw55XE32f
+ kauu4TfkCFIVOSKgLqaIVxuskngIKh6s3/GPlMEPEtnv0rvoSSEaMbZd451upKG/
+ iuCMl5It7LC6GqkA1YRERfjgGx5mUVOJu0K+NK2Y7vadUrOuxr5PwDG/5E83NFRe
+ 8W0l+wJY8ROd1RJGec7WZF/KXE0rPcMPjYUR4DW8YYuRhQCYFKOOqQPxV5K2QLoc
+ vuaHGGnepWiL+MAQhf6dCZ2QSa/00a7UvxqJ99aGzwb2aTAEdwgjWdFAk0o8x9Y8
+ 476AFu13RmIv91gT+2QJ7afjMS3sFsGEci56S6h4WHiWGJXPDylQYPX7Phjx9tYx
+ vcg+vA==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6txena27-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 09:00:29 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-92e7ee64b25so474924385a.0
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 02:00:29 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 09:04:53 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-92e538afe65so263344385a.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 02:04:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783328429; x=1783933229; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=M8o03K34IN6HUYTRNHYAq0K51TbMW8VZZxntZfzIYSU=;
- b=XQWftvKjnHEjnqPwp89s/MST0Sbqxh7To31a3dso8ltH/SQ/XBsJsOhuwURQXs6zTH
- LyTkyDp3iolJQMC7No2nxR+LPYfMi/enjX5m0RTBqxbUZrmlNIfEORmmUIazF41euWhn
- 80pKAZvYV0+A5rkCl79O4zJiM9VGXFSAlKBdX8N1JoK+OBlqUlG46M4zkz+hLVwZc5pi
- YUmmyM323qP1gTH+eK9ZNiFfjWiBfqjUWveqE15Saz4Vk5LI1WQaJsGui10zyIf8F5Bc
- tARRJml1RAZPRkwWYM5/hImevjy9EGHYZRr+WBpO+5vpQNZ3S8RTIegKPe9WBptQV+Nr
- ab2g==
+ d=oss.qualcomm.com; s=google; t=1783328693; x=1783933493; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8hM5NDsWI62UiMADgHE4LtrKZ59WA72p4p+zomlO8LA=;
+ b=hdGzi4VrRtmUe0SRxhclOWKyPRFBKdEk/tRb+O/WOMh67JCSAvX/L2KcDu+CB81Kn+
+ X2tPzXUdKWz7MWjbPSA3eC8QV9oAnTcESq7X9UOzkNpaWgCTlA4GPLQXSG+PeJLQ+ktJ
+ pbWsnWKsK1j9oy8zGvLy5BVArJiL/9E/znqBkZfs9vwXvoBEgz1+1jVBG87FEi4aIRKT
+ /aW+2TKvKAvYlFLCopnYGVcmWaRC2pKiAzLdOEaryP7P/vqsXgoGqKWIShFRrbiGAZuc
+ cYK9fdoww4XXXmPyRHPgQF/wQeD67NdL3lgrqXiPbLzSaM7lnSB3Qnxv7VoPPMziyyk8
+ 5ysw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783328429; x=1783933229;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=M8o03K34IN6HUYTRNHYAq0K51TbMW8VZZxntZfzIYSU=;
- b=JeriwD7UqQzPCkIysblVe392MxD9gi7/CDHcRvSQ3PCCeP5pfLMMVUFqt3CcJRqpkg
- pJSd/oMAscFSQG+1kMNoMLJOdDYlCoEkRCNR8Qqd5/zmFNSoi7oBs+A9McKwOmfBHLks
- O1VyAPYlgN0nvxu0dHbkOyr1EisvqNTNE2/UafNx2N4CAgFRVJVf0flxWPJ+r5aT4Ozo
- u9/OYjSOeyDebNWBi9JWtlCn/pEkekh1Kc0uoaDb1IMNH3NZ8rPrTgyiIwIuzJW/2S79
- 7x8TSdFc1twVZOVtTht7HhTCBiJMMkeUFQl47cJEKhsAWkvZotZmpZ24s0FuYDt664rd
- AJHg==
+ d=1e100.net; s=20251104; t=1783328693; x=1783933493;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8hM5NDsWI62UiMADgHE4LtrKZ59WA72p4p+zomlO8LA=;
+ b=ONEqyRy3pInuXgUI2vlJzmOlfwaLRUNcVKT6a1oxShfbA+xBkQIZvoG7P0IC4YBfkS
+ DDUohE4iGhiBxzpt14GIOFEqOKhF6vadziN7Jv7CRFeM0OJVodLSJqqfMf922LVSq7uM
+ YO0/jxssh1Huoa5bszvczcKWuePN/2SreN0OX9EL7hEivK+2qlj953SUXho7hbPznrLw
+ WxFIdbxHshArwA+qNPl9sRv6iKFbZ5JG02+fp5Gdtld41shWbZkUxA4QMHmQ2Tz0YVtv
+ zvwlV4dxSMaMehJrRjNmtBFAZkVl92YGUIAFKQs5qR63jpR0J3UzsLMWgP1s0wOm1XWw
+ //eQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RprHTjDjx1qSoBu9JKEiKN5kVsJvGQWgk0ASSeorPv+rULZVkPlt54vdiQm45asIL1DIPGwKFlByf60@nongnu.org
-X-Gm-Message-State: AOJu0Yxz7un7DZBSGz5gEv2f1F8J4efHbnFAe5tqLnmS323oj0CNVzfT
- bbDyhlI8XG1LbFFUgnUKScK/fAm5i8Q9rZLYFZtJyx9T12u1wNNjKuf6YVWCMhPsqdiuiOw+PGH
- vv+oXxP/smOJ3/vbaKaNEa9O7AmFpWLoxrG5uv4bhrjcAPORQV8W3/N2f3g==
-X-Gm-Gg: AfdE7ck5+odGAffyyetbSNCWS9cXkHdx6uIeLGDAiBXJ3hy+wvIN9G8igPwbxMY1kI3
- Fq4SSrquuQuvc2otBtleepA1TPv9s+2RkigRcPZl4vbLOYWKMiqZk9bXOOL1qU9d1RblmTagHJt
- GxZRl0zJR9hVKm5VxQUFxmYF5xKQcssOgY8L0e6ILp7FIOwdLKD2qX4fjUfigJp6WkqoJNHcIMl
- 0OI8gAUumJmezK0ofyZ+McQyz7BX5huwEUUWdoZSdsES/ghEHZvpvMCWua55QUQnQUxG9XfnTfR
- PgdyGizAvmJqX6bJIECT3BpVT6mqhipvZ3K+OibiIyBR63aksMVFBJSP2zh47fzRoplhA13Nzsw
- YzV3pOTSihugbtct5zrjo0Rtd00gb4rmckHlkW6e0xcKdmZBih+ATAFgdEntonQ==
-X-Received: by 2002:a05:620a:44c2:b0:92e:5137:2830 with SMTP id
- af79cd13be357-92e9a4d281cmr1200675785a.72.1783328428157; 
- Mon, 06 Jul 2026 02:00:28 -0700 (PDT)
-X-Received: by 2002:a05:620a:44c2:b0:92e:5137:2830 with SMTP id
- af79cd13be357-92e9a4d281cmr1200667985a.72.1783328427554; 
- Mon, 06 Jul 2026 02:00:27 -0700 (PDT)
+ AHgh+RqfjnMJbWDm2btWpuFcl5PB70RekIVGpViDAy9VXSadtoK/YvqOcyDaKN0nH3B134P1Efcg4oheBSrC@nongnu.org
+X-Gm-Message-State: AOJu0YzzgPxnUfRM0W/Sw1f0jNGxiXC6jK0632QDlAiT2jWdKEzXXgmJ
+ lUnCRQBhEnekd7eiPS3D/+U+WBZ1IAE3CQyFlHfWS9PJpmc9DN/RS5tJizNJ3lBZ4Yodi0xT7+I
+ GwYGQYTzf7xM8s67OORPd/NzAwKojaipYMGT+tfDpqsv2Fv4M9mhIv3K9ZA==
+X-Gm-Gg: AfdE7clfu8WOgJGrqz4NCqOfDCmQDEXKdzM5GC9H840Bk1clEnIUHJEEM/HKYrt+PrT
+ fbID/uHApXb/0l4aA0UGdx1uAeciZ2iswpyfHRGHgFpYIrifQ5A2kkgiMIjr4C27ZtPzG4+pfnA
+ 19SwODtjjGpK0GfUn295rywIMaQmLP2IxPqZCD5XocmGAriRhIgRfnGuS2OCzza9y40lasA7WQj
+ qSgM7dhj2LcgbFcNHYslJ/cISLsJH6UW/LZkNAdsS4i2hTI5Md+GMtQu6vn/YQzuzmgYkJre0DY
+ kB1uOaxi2EnWaCGkAyUwHPeh4svisHuCOLlinNRnGzbPCoXXYkep7Vv2Kc89PeHjcmu/F71hdBD
+ MQ5eNpsmYt2Cwc1R4Y6GIHelFD6+8dhnq9+mv94N3lLHTx6l42gjgEjBkQcHToA==
+X-Received: by 2002:a05:620a:4550:b0:92e:7427:ef59 with SMTP id
+ af79cd13be357-92e9a344d65mr1267784885a.11.1783328692621; 
+ Mon, 06 Jul 2026 02:04:52 -0700 (PDT)
+X-Received: by 2002:a05:620a:4550:b0:92e:7427:ef59 with SMTP id
+ af79cd13be357-92e9a344d65mr1267781785a.11.1783328692085; 
+ Mon, 06 Jul 2026 02:04:52 -0700 (PDT)
 Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c12b62f38f3sm707917766b.57.2026.07.06.02.00.26
+ a640c23a62f3a-c12b628efefsm706014566b.32.2026.07.06.02.04.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Jul 2026 02:00:26 -0700 (PDT)
-Message-ID: <adad2ea3-fce1-47d8-98ae-bae37c1a4a08@oss.qualcomm.com>
-Date: Mon, 6 Jul 2026 11:00:25 +0200
+ Mon, 06 Jul 2026 02:04:50 -0700 (PDT)
+Message-ID: <3764063e-f832-4d4e-bc0e-1758ce1a04f5@oss.qualcomm.com>
+Date: Mon, 6 Jul 2026 11:04:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/hyperv: Avoid crash if hyperv_find_cpu() passed
- invalid vp_index
+Subject: Re: [PATCH v5] hw/net: fix e1000e/igb ip_len inflation by Ethernet
+ minimum-frame padding
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: "Maciej S . Szmigiero" <maciej.szmigiero@oracle.com>
-References: <20260630084855.2319838-1-peter.maydell@linaro.org>
+To: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>, qemu-devel@nongnu.org
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Jason Wang <jasowang@redhat.com>
+References: <20260629-net-tx-pkt-ip-length-padding-v5-1-16760e30252e@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260630084855.2319838-1-peter.maydell@linaro.org>
+In-Reply-To: <20260629-net-tx-pkt-ip-length-padding-v5-1-16760e30252e@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA5MCBTYWx0ZWRfX/3Y925WPaIMA
- wPqdPZxydikpyKNDh0KVi4bEnOWvPmsBgwsa+fwmXK10LeHwyReoTqKCNQlPPKNwNPUURBq21m+
- AEeG4omMCY12Sv6HFb1g6eCqefj9Ie/ha5aN44oI4CEcKWlrUvOfI6c5rgI8I0w8hRCw6ewe9rw
- HXTzVxmsoXvm69qCnGXpC9JrSynch7tIni4dXG0ya+8Y5eYg+PxRMwLa0tZ+j+jS2UZ1zcJoLOJ
- RuVk4RYNG3mmyzNJNKAWw3w03wx8aMBnDot0ypO01fRrkNF6/d/mjli/6nSifVjaUe6yNG2CoGl
- a8lcO1gmh26XSKz9frQiqdldyrz0oo/zT4NGGYQCXSC5/q4j1XYfKc7Vlcpf9ZM6wddIZtYPSz2
- K9lizKKdkoaY8iKnhrWUuqU6qaRnpGWl89NxXfN2AAbtflTxsV5Pxx2pGz50WiSeUawu48QO6UQ
- kd4TuvjuEhvdft+BtWw==
-X-Authority-Analysis: v=2.4 cv=VvITxe2n c=1 sm=1 tr=0 ts=6a4b6ead cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA5MSBTYWx0ZWRfX46qPm3OKbkV+
+ czE1QRlzvWFk7Ng6wvuQF9hwr4UgFT00jz4FP5/q9CGl91UmbktUeNg4dQAq9eLYNLYxaQT5Htr
+ ixebXSlOESjEaihP3iqqkMIfuqAHEpU=
+X-Proofpoint-GUID: JzBq5P9_R4NzfQFN4zmkyo9HhwKR-Ss7
+X-Proofpoint-ORIG-GUID: JzBq5P9_R4NzfQFN4zmkyo9HhwKR-Ss7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA5MSBTYWx0ZWRfX8TOInpp5wJTI
+ dtvmOAdKKNjrGsAheRoKTaid46vZc0JIUnYaJDzn6xbJohFH7/nPvoZFT1Z96h74Zp39yfkEeLb
+ avUuKInSfkhsayybjXX6zdlpk1KO/zGFRseS4enge4iNOYAOMeYvnEwIXpNdRSakzdj7QcZFDoi
+ 6XZz8CiK45YlTv1ZVSSYFIPPX7g41ULpM8UaUX4Hfp3nW5W0YORjVJqhkawqZji8SxXvstQrTWx
+ JM/RguSx0pE3+q3DT8kZIzEI9FmL7ysSZZF6z+a6iabGUFOqnnq0v0iHQptKm7oiUgM6s8mDMab
+ 7if9DthiMMYV6cL+UOBDWnttpRqm7UaOPFgMN0Fg6BRf2288E8T4/uh8h9VJz+MQp5ArvCYk5hH
+ 6e9Qur3hM/e49ryU8uwjNzWqWM6YA1uh/nYm5vQ4U3bgzynVdG6rwqr2bFkNhzw8D6S+gnStci+
+ zxrIRUbUQ9nxZPpqlCQ==
+X-Authority-Analysis: v=2.4 cv=HLLz0Itv c=1 sm=1 tr=0 ts=6a4b6fb5 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=p0WdMEafAAAA:8 a=KKAkSRfTAAAA:8 a=eNRvlODAyYeRk_z16H8A:9 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: Qgw0OP5xA4xdKabRBmipRu6I_XmxQimO
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA5MCBTYWx0ZWRfX/qM3FyhOPzbK
- Fp/gXLPUsXiLUTDO29w8T0ZVtWZW/lW7cLH8ZnLNiOaxcBt7rqM95H1qvbefT72aivvNCFmLWiJ
- cKgRI1YnWB8r8xcjiomcTUtzVjEAR5o=
-X-Proofpoint-GUID: Qgw0OP5xA4xdKabRBmipRu6I_XmxQimO
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=20KFwNOVAAAA:8
+ a=EUspDBNiAAAA:8 a=erkUBNL0EEqovBnOwPgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=Fg1AiH1G6rFz08G2ETeA:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-05_02,2026-07-03_01,2025-10-01_01
+ definitions=2026-07-06_01,2026-07-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0 adultscore=0
- priorityscore=1501 lowpriorityscore=0 phishscore=0 clxscore=1015
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607060090
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ bulkscore=0 priorityscore=1501 clxscore=1015 suspectscore=0 impostorscore=0
+ phishscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060091
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -155,29 +157,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/6/26 10:48, Peter Maydell wrote:
-> The hyperv_find_cpu() function finds a CPU from a CPU index; this is
-> basically a wrapper around qemu_get_cpu().  It is allowed to fail, in
-> which case it returns NULL, which its caller handles.  However, it
-> includes an assertion check which accidentally assumes the CPU
-> pointer is non-NULL.
+On 29/6/26 17:21, Sanjeeva Yerrapureddy wrote:
+> When a guest transmits a short Ethernet frame, iov_size() returns the
+> padded wire length including any bytes added to reach the Ethernet
+> minimum frame size of 60 bytes.  net_tx_pkt_rebuild_payload() uses
+> this inflated size as payload_len.  net_tx_pkt_update_ip_hdr_checksum()
+> then overwrites the IPv4 Total Length field with payload_len +
+> l3_hdr_len, inflating it by the padding.  The receiver interprets
+> Ethernet padding as IP payload, producing a malformed packet.
 > 
-> We could assert only if cs != NULL, but the assertion here is not
-> doing anything interesting -- hyperv_vp_index() is a trivial wrapper
-> returning cs->cpu_index, so this is effectively asserting that
-> qemu_get_cpu() did what it claims to do, i.e.  returned us the CPU
-> matching the index we gave it.  qemu_get_cpu() is a simple "iterate
-> through list and find matching CPU" which is unlikely to be buggy,
-> and we don't feel the need to sanity-check it in any of our other
-> many uses of it.  Drop the assertion entirely.
+> Fix by removing the ip_len write from net_tx_pkt_update_ip_hdr_checksum()
+> so it only recomputes the checksum, and moving the ip_len assignment
+> into net_tx_pkt_update_ip_checksums() where it is only performed for
+> TSO (where ip_len must be derived from payload_len since the guest sets
+> ip_len=0 per Intel 82574 datasheet §7.3.4 for super-packets the host
+> will segment).
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3568
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Both e1000e and igb already call net_tx_pkt_update_ip_hdr_checksum()
+> from their IXSM paths, so both are corrected by this single common-
+> layer change.
+> 
+> Signed-off-by: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
 > ---
-> Checked only with make check / check-functional...
+> Thank you Akihiko for the review of v4. I agree that avoiding two
+> similar functions is cleaner. v5 moves the ip_len write into
+> net_tx_pkt_update_ip_checksums() (the TSO path that already owns it)
+> and strips it from net_tx_pkt_update_ip_hdr_checksum(), which becomes a
+> pure checksum recomputation. The net effect is that both e1000e and igb
+> IXSM paths are corrected automatically without any device-layer change.
+> 
+> Changes in v5:
+> - Remove the ip_len write from net_tx_pkt_update_ip_hdr_checksum() so
+>    it only recomputes the checksum.
+> - Move the ip_len assignment into net_tx_pkt_update_ip_checksums() (the
+>    TSO path), which already called net_tx_pkt_update_ip_hdr_checksum()
+>    immediately after. The comment and the ip_len line are restored to
+>    their upstream positions.
+> - Remove net_tx_pkt_update_ip_hdr_checksum_only() entirely — no longer
+>    needed.
+> - Revert the e1000e IXSM path to its original call of
+>    net_tx_pkt_update_ip_hdr_checksum(). Because that function no longer
+>    inflates ip_len, igb (which already calls the same function) is also
+>    corrected with no additional change.
+> - Link to v4: https://lore.kernel.org/qemu-devel/20260628-net-tx-pkt-ip-length-padding-v4-1-829b36db5adb@gmail.com
+> 
+> Changes in v4:
+> - Add net_tx_pkt_update_ip_hdr_checksum_only(); call it from the e1000e
+>    IXSM path to avoid inflating ip_len.
+> - Link to v3: https://lore.kernel.org/qemu-devel/20260627-net-tx-pkt-ip-length-padding-v3-1-e860dabadd3f@gmail.com
+> 
+> Changes in v3:
+> - Architectural redesign: three-case fallback logic in
+>    net_tx_pkt_rebuild_payload() plus net_tx_pkt_set_payload_len() API;
+>    e1000e pre-sets payload_len from PAYLEN descriptor field.
+> - Link to v2: https://lore.kernel.org/qemu-devel/20260625-net-tx-pkt-ip-length-padding-v2-1-287d0ba59ec1@gmail.com
+> 
+> Changes in v2:
+> - Fix iov_copy() to use raw_payload_len and net_tx_pkt_get_total_len()
+>    to use iov_size() to preserve correct wire frame size.
+> - Link to v1: https://lore.kernel.org/qemu-devel/20260624-net-tx-pkt-ip-length-padding-v1-1-7a22fe9b4e40@gmail.com
+> 
+> On the relationship to the short-packet receive-path discussion
+> (Peter Maydell):
+> https://lore.kernel.org/qemu-devel/CAFEAcA_UhmCxJc16CHE=4ZR1+PA0=4-29=fEe+d+iUmhLTzpuQ@mail.gmail.com/
+> 
+> The linked thread concerns the receive path. This patch addresses only
+> the transmit path: the IXSM offload path was overwriting a correctly
+> set guest ip_len with an inflated value that included Ethernet padding.
+> No changes to padding behaviour or the receive path are made.
+> 
+> To: qemu-devel@nongnu.org
+> Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>
+> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Cc: Jason Wang <jasowang@redhat.com>
 > ---
->   hw/hyperv/hyperv.c | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
+>   hw/net/net_tx_pkt.c | 7 +++----
+>   1 file changed, 3 insertions(+), 4 deletions(-)
 
-Queued via hw-misc tree, thanks.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
