@@ -4,79 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD37AC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 17:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A259C43602
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 17:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgnWO-0004yi-6j; Mon, 06 Jul 2026 13:54:20 -0400
+	id 1wgnWG-0004x8-FT; Mon, 06 Jul 2026 13:54:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wgnWI-0004xw-6H
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:54:17 -0400
-Received: from mail-wm2-x01.google.com ([2a00:1450:4864:31::1])
+ id 1wgnWD-0004wh-Oz
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:54:10 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wgnWF-0008BF-EG
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:54:13 -0400
-Received: by mail-wm2-x01.google.com with SMTP id
- 5b1f17b1804b1-492367e8e15so2904115e9.0
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 10:54:10 -0700 (PDT)
+ id 1wgnWA-000889-Om
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:54:09 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-66628618509so4331512d50.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 10:54:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783360444; cv=none;
+ d=google.com; s=arc-20260327;
+ b=sYOH5sWNY7qZZkPJLhpRMx4zhLfosys1LICE040Bwe8LXmTIl6eaAnT3WAXTnHnqkt
+ Csr/xGtgveabf6/gR/m9i5Z6dCh/Q70HxqiTHC8siUjDbLzL0X05YO4ti2RCztLI5NTF
+ C2f+duj2Ta/5osgiueGkkVwPDCMqjZRhr3h42G1rqQiImnFwV9g/x4HeeTvazwCcCAlT
+ H9pm2pOzdV6V4227uhVHmX39aDgPO4VgF3oovnsj4wj34Nit88WJMyxmggZOyyA0HHdO
+ OefirGSzoJzQ6DcwC7ckh0Dpa4BiQhZLYC1+abfeMEqUVQc4PEyDA+ymOPWg+ycqvePI
+ +MhA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=KPWU9zMPY6i0aneOZqqbvFptRwD37tmJvOurkiWj2m0=;
+ fh=0mFKHTj7rKUBAFer4LtI90Y9CGG/Wq18PIkiexg+q+E=;
+ b=mr0+Nf7cJpEyhldYTa6TC6ckZbqhdPxmdEcmhjsQke6jYmVZzfNDtwg9zeuY8uquQz
+ 2FXYv4f7wWbeUNYx2jj/5R473P5YDxGApirSMMpl4LKs4cW7mhGvEQhl9Qcqm20az6kT
+ gH8hOMqKeLurpzCWtFH1ypF2LizOegSyesbHpOhafFBkz1i1Z0ibUNSHJKLJki7BVyCX
+ bvPZ/QBL0aPDj3LpwGdoMOGzuOwKqK2RBqRScfO09v4tIaSkrIR8c4ahRCLF7LbrIT1o
+ Sk38nZp2FApmYraUD9cthEF/h0UILOis+JEpYWtH/y89VgC4W6byEazRDdKjBbdjpdlb
+ jlzw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783360449; x=1783965249; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=4OIK9WKKZKKZfelXewT5MvGZeOSsUrYOpZM3HF+Zsx8=;
- b=UnvT6JejLLJ+JNZATQB/qd9mPbXofbSVcuplFy6XYp4574X6l22HdwomRmQpyDctvG
- RxdCT1VMDZXT58qiTpWYdElOEBG8scCGJ6JY+qxy1J9jmM+AWul2Q932DOYZYFznhv9A
- nx92Lv6jq9S3e3SKf/hst4rvdbIZ2MX5u9+kM/vMqV2d5bUBPi2t7uvenqM6qj8y685W
- 59kf/pkIMe2MixNihuSuwxOYWfjVQMbroxi8O3sREiOTiMhdCxdkgJNizFw/grCtpVFZ
- sSt6RADDnfAMnuw1lZzhdjwOm+H+MoyHt4QXlDiuMYy2GpBgM0NL2JDpk6HNfC8H18GY
- O2Jg==
+ d=linaro.org; s=google; t=1783360444; x=1783965244; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KPWU9zMPY6i0aneOZqqbvFptRwD37tmJvOurkiWj2m0=;
+ b=m9fAYk5OwB2kPQROqrNY1pAE3F5tppIxqzE9HAee5sFhBOmBlB/tGwDwTxAulB9MV0
+ vLt+1zbr7dBXfCZZocDTaQ4LrhFZZ8/QXorZnU1KZxwXoJP4mvYC/W5GQCwTFa4Zrjil
+ UGtVW87pzlp2isuAxDSRTIK3GHcqfa9e5EaGDexK3AScv/rrQii4qZRCPW6zjlj7cbCG
+ xn+rUQde+bAvbYO3h8qoXB/f6RE6P4MVIfSxVKGa98jFhdGqapNFy9SG3IJ2a99IloP5
+ cJuGWnd1f+MPv46yRxfM/14Xro9/FZy5Nfe0SlbgEq+cOZsKcJMMwXKsyhnx0yqZZujJ
+ 6qhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783360449; x=1783965249;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=4OIK9WKKZKKZfelXewT5MvGZeOSsUrYOpZM3HF+Zsx8=;
- b=fdks3swpn0+fvvUeqUol+hickYIUc1ArLAtY75ttCi10GPS/9WinPJQV6Ss4ANSuFU
- u1Ef2lj5s2LyK64YibI38/s1Z1sYdNIL2TRf50/vNqkA/+KFHprGwShRuv3E7JXFdkAG
- EBTdqdvdZFfWkt6OV50ETSJJdXlQPzrTb1hXujXXoMaH3MFknU5CQWgtLA2JcAFvDyro
- b9upyTGL8XivgPgnUXbJzI0tNKpLtCmyrFL0nas0DiALGo0pjp3rUp+F/tAtvHjzuP80
- Ee2goAc/YPFjUcwvzaXzhUjAm7THy03yfxXloopjL+cRGucwaWVvFl4vqVubecoDP4C6
- ky4A==
-X-Gm-Message-State: AOJu0Ywt6XQChUgPtz2i8DMD+YbQ9EepAOf0IoGvTNAxC29Hpp3unNSL
- A4J1QbDGwGngB21r4+mPyd0Jhi4hLDlw4XxLrfJaIr9wSQZXWhk0OWV5+loR7YcDkwAZFrorYg4
- UtRZF6X6L4bq0
-X-Gm-Gg: AfdE7cmc1LatZyX2WlsOBDN6SBrdGlcvIaAVpr14/iOepx8ZbqfltutBYds6wtc33wz
- DHOACEzkdZjjZ253gZPc+hv3WsLOb3bPgngUFpdbd0aXg4Vlq81ImClm7Yb9U8ghmU8aEpAp6aH
- 12bCoXZ32sv7dqWftNsi617kzBli19a1QqMPdzZhWcXRvbj/6oWmQJuFxZUU49wXqT0Grg1cvr0
- ITqI/wvX4liE5tnym4cSi0Vlj1inFHvOKnRlKO8t0Fgt4KGNhBdXT9Wiq+rEEp8CyS58zUclX3x
- eNWCNIX9FP1Xxb9eh4xCeckynw7Y6fED1qzcKkxU5eJhOzOXVTUjLi5hDKWpW8Ayha7/IPWi1Js
- uE8yTY7H0mOvPC94LdWX7heVCJcggB4YRecZk3vOLAYX04V6iM7Et5vbKWMZ4wE0jz777qYyz+V
- p5J/BxDBMPnUbd84v7EN1l5vTbqUuywxTi044CTqv8r+hm+m9sW1xJsZc6WOqKZavlYhGj87g83
- enjjFSqhMZSrXVU4/EuNg==
-X-Received: by 2002:a5d:6991:0:b0:477:80fa:f44d with SMTP id
- ffacd0b85a97d-47de66db347mr1040520f8f.40.1783360449457; 
- Mon, 06 Jul 2026 10:54:09 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa039b0cesm26392533f8f.22.2026.07.06.10.54.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 10:54:08 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowangio@gmail.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>
-Subject: [PATCH] hw/net/vmxnet3: Correct bounds check on tx queue index
-Date: Mon,  6 Jul 2026 18:54:08 +0100
-Message-ID: <20260706175408.905362-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20251104; t=1783360444; x=1783965244;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=KPWU9zMPY6i0aneOZqqbvFptRwD37tmJvOurkiWj2m0=;
+ b=rEvH3vjHDidU0LvGNUiO/OXqG/Q/FDnyXQlWrkpyv1tDTCqZNyhzs3zXp1+zeJ68pz
+ ZsCgo1hUOD71pFIJyESQJTJzzyUfOy42QYiCdXlUpCQ6GK2y/h+L0Qchlm0qpsJgZBLV
+ +kDb+Ht+u+A7WrGeC9eynvHqXh7sfWjbCK7RK6+H+F5aq3krLL0RIiHkoMJfd/e/rw7u
+ 1Ecz01VoXwlBFhmaOpr+QeTk7XU4KcDuL8bi7JNGWo3Sksws75+TDoPFAfn3UYZPoaHR
+ bXTtJU/4E85j5/zkM4N/x9m+w0K8kVOOCfrvgfm7zg71fF0WC1jQA/r0qyFQ1NpXvXQw
+ Hk8Q==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrQrwAWvEeWGp5pqWBcD+txjlqtLlmUtPfJkqDOKpY6yyki/K5a3biY+gin5Q+DRnGvsoGjJg+2/TjY@nongnu.org
+X-Gm-Message-State: AOJu0YyrfqoExutdGTi5j6Ykkw+g66ux0CbvBO30lh4qA7J4QcIG74xk
+ UBCl7MZFnei2Pxeot8qMTaTebF2niYNp+8ne1ODosNzCQYfkYQ1ZZKOcM+7o7nfoZEHXzpN6Mfg
+ eZv+upDMjwDcqLr7IxaCu4jgUvWjA5/R7mO9eMqnkzg==
+X-Gm-Gg: AfdE7cnypbq2eimi6+ZA7MuEyAnFjm9n/FYnryl9kjEixR40VNpxZN/LUNddL9zh+LX
+ KzORB2fORPEYKX2semYhcitHSL9MUazAvJU6gn0koTujm8OvplY+Cp1xeYiEhHlXW0FsF+9foqE
+ BF2UEbR2j35J682LlRGmBLbXyMqK3ltPvBjWzCSHdzCfR8608cLoSnMQ+Et29DaPIer8DvXmXgs
+ 7T8h6SZeal4laPH6mfBKX0qwL0q47eGkZo7UPz99khj38IFYUjImrk/MjZiCab5NlVIUIzKmDJR
+ CLa1DLFhzzqZsfewucfoJbMHRo9rjrkRof0hySk0NKC70kPHYODS4XLi
+X-Received: by 2002:a05:690e:d54:b0:664:b27c:2b4f with SMTP id
+ 956f58d0204a3-6677fb0362bmr1453001d50.5.1783360443902; Mon, 06 Jul 2026
+ 10:54:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::1;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x01.google.com
+References: <20260309181452.83702-1-thuth@redhat.com>
+ <00c4ab4b-a58b-4de4-8e41-566b2cb7f920@redhat.com>
+ <124bd918-f2ab-43e2-bd2d-fc824de62c40@tls.msk.ru>
+ <fcbe3d7f-64d4-4b13-b930-a81e77db4784@ilande.co.uk>
+ <df7a091c-a8a1-416a-acf3-28a0cbd8dd2f@redhat.com>
+ <c7d6b801-449e-4f55-9c1d-ebec7a0e9595@redhat.com>
+ <c0cd50bd-e054-48b6-af54-1050e13bb720@ilande.co.uk>
+ <baf0b727-d53c-4717-b4e8-9c8603b2fa75@oss.qualcomm.com>
+In-Reply-To: <baf0b727-d53c-4717-b4e8-9c8603b2fa75@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 6 Jul 2026 18:53:52 +0100
+X-Gm-Features: AVVi8Ccn38g7Hit4O71HuRDN6SsoLBDmlWqjIzpdjYQIdM1Emf0YXyQjCdJ7I8k
+Message-ID: <CAFEAcA_oFFEyRfXjRZR7+nLOE5fgzDi1kHQop=s1Q4EzYvaVxg@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/sparc64/sun4u: Mark unusable PCI busses as full to
+ ease device plugging
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Thomas Huth <thuth@redhat.com>, 
+ qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>, 
+ QEMU Trivial <qemu-trivial@nongnu.org>, Michael Tokarev <mjt@tls.msk.ru>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,32 +128,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In vmxnet3_io_bar0_write(), we try to bounds-check the TX queue index
-provided by the guest against the total number of queues.  However,
-we have an off-by-one error: the valid indexes are from 0 to
-txq_num-1, so we need a "<" comparison, not "<=".
+On Mon, 6 Jul 2026 at 18:29, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+> - Bus capacity is odd. We have a generic Bus-class @max_dev field but
+>    do not use it with PCI variants. If set, it limit the instances
+>    capacity. The capacity is tracked in the instance state, and when
+>    no @max_dev is set the only way to mark a bus full is using the
+>    qbus_mark_full() helper. Then if we remove devices, the bus remains
+>    full, and there is no helper to restore available slots.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3780
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/net/vmxnet3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The qbus_mark_full() function is intended for the use case where
+a machine has a bus which in real hardware is entirely internal,
+so you have something like an I2C bus which has some on-board
+I2C devices connected to it, but there's no external socket
+that the user could add more to the bus for. The idea is that
+the machine model creates all the devices for this bus, then
+marks it as full. The devices never get removed from the bus,
+because they're hardwired in, not user-unpluggable.
 
-diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
-index 97156dd33b..8569484b2f 100644
---- a/hw/net/vmxnet3.c
-+++ b/hw/net/vmxnet3.c
-@@ -1079,7 +1079,7 @@ vmxnet3_io_bar0_write(void *opaque, hwaddr addr,
-         int tx_queue_idx =
-             VMW_MULTIREG_IDX_BY_ADDR(addr, VMXNET3_REG_TXPROD,
-                                      VMXNET3_REG_ALIGN);
--        if (tx_queue_idx <= s->txq_num) {
-+        if (tx_queue_idx < s->txq_num) {
-             vmxnet3_process_tx_queue(s, tx_queue_idx);
-         } else {
-             qemu_log_mask(LOG_GUEST_ERROR, "vmxnet3: Illegal TX queue %d/%d\n",
--- 
-2.43.0
-
+thanks
+-- PMM
 
