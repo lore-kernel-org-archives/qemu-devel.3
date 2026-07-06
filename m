@@ -4,142 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E69BC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 20:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 064BAC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 20:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgq8G-00089X-0R; Mon, 06 Jul 2026 16:41:36 -0400
+	id 1wgqAE-00007o-79; Mon, 06 Jul 2026 16:43:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgq8D-00089I-V4
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:41:33 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wgqA4-00006s-Uv
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:43:29 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgq8B-00057J-Pb
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:41:33 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1wgqA3-0006Yk-6T
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:43:28 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666KF1YG1656373
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 20:41:29 GMT
+ 666KF22v1667353
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 20:43:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- mC/ouaJ/6jYSZyShGSmXUgMchsuIYmBL+NUFF6tRwJY=; b=HLSncU18EuNrVm0u
- F+m7ZTwi7BXPL14pZ0uYsSTBo2KTTjVSOC5nBo5mIsiW2gDofS61QZI9VHWhj7ud
- c1c4bzwFluz2zWLC/3n2mwqd0Iex7nnrZV9cSHKNMoqDoTacPDFZNxKsaPnj4dJ4
- SCL+lMH+8YmZyXx0kpMEvPVkNUqhWz0wfpW6pkZ7aRYTUt8aAgBQA+YANJyqJFez
- Na9bmjxwrjrPHutr0oLhZVYJykQy0/yaizhPRTUCkKa4Nb7HgzZ1yTgkV2N+sE9B
- tKTnNI9vFG9qAimoxFuuNA8IhEuX7wOSm2Cz+DtRXbdswjOVf3Pk3ohvDr7puE56
- R3LbJg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f89qpjw03-1
+ mw0ZosaQxShWjJD/jE1atDqLE8jtwZU3wcQuPMzcUVI=; b=QYPuW9nCeduIOWEs
+ wvzUY7L1xTSR8/ETfkOiEoC493gexVoAFoJrvp6QskX8cejzJ2ul1ieS8+eriFIE
+ GiCEF7c0HEJ6Jy0H35ro4yQ213R4+QlJeH2oJ8NlLZ9uhfl8yEpkWYwRq45nSG7y
+ Rxlh24ukVfw4MHEhoptOcn53I/7TlIHs7Bc+fEo6zB/8J7nqYigMQulkA8cApQlj
+ c9svbzdWKjgr1pMWW+xdfcQA5Fxp3KszqcR0Xev6GF3koeDl1D90HDu63Haoli3H
+ voJSVPr7Ird9CmfBbWM7ZUpT1kRhF0cahYrRdf80XxJWZn8d0TY392KcIa9NhZVp
+ 7/c08Q==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8a3gtuhj-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 20:41:29 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-92e82060977so26651085a.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 13:41:29 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 20:43:19 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51c0199faafso39260681cf.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 13:43:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783370488; x=1783975288; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783370599; x=1783975399; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mC/ouaJ/6jYSZyShGSmXUgMchsuIYmBL+NUFF6tRwJY=;
- b=Brktj+QrUnnBxbtyrcRvOrvnqflXrMJUWzrI1m9Fc5G7/90MH+4NjQJ24eKAPBIGcG
- 9sI7dqcrrQIefOso2e0nWsjejb73YYq/fuQ0z0VImw8I55FiR8GVED9XNpmHjGlH39LO
- inaGeCVbWWFd75NydtIWNiaskEaEoH9/beEhzeyiga4pll0cfTe6phNS50mxNdyP+L+8
- BgcecrT1tMozU5i05ilqQH7HY3XZsAlItxnbuoO/rd8mo8VKZ8QCJBR10m1Vx6ZjeHgg
- YCKujvcC33HoRNWN0IA5N/zfw4mfKJNZGT/IfIflOVnI2lxMakLAh7jOVqC+CxSPI4bj
- aonA==
+ bh=mw0ZosaQxShWjJD/jE1atDqLE8jtwZU3wcQuPMzcUVI=;
+ b=ctYeDsAbibixNJFOBv2rZHQpqmebtwixhoH9ZNdG1pBwrYH5HsA0O8kwCnc27XFlxY
+ EdV7xQk0dFlUfy1gb9zVsex7C3bPuO3BJl/mu0b3vgYjrT45s6peIrSRevGKunFGptqu
+ qg6y6plym3ovJkelbbkdRajTF3CjeLhGAbSeUo6TRsKUFJn/cYbzA06PprHKbROlCI6O
+ CvJ9+omO3DQVwlP4Mu5XCq0757LegT7NpAjih26AKu8bENAq6HwQ42NqmHOQ+xixx/MH
+ 4NpEx92ohMYojOfJ9X8ty6PljCkxKz8uT8WNv9nejCGHHVurTUFgy9XquhLHeppCmW8N
+ tSDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783370488; x=1783975288;
+ d=1e100.net; s=20251104; t=1783370599; x=1783975399;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=mC/ouaJ/6jYSZyShGSmXUgMchsuIYmBL+NUFF6tRwJY=;
- b=GldkKPTf7Jy29MWGmv+OwKyaVGokpQ/BLCYiGhh66A8DcjoIinE91krP3WTAf+1vxB
- 4K3jgt/FBnKqKvIg1G972T1bPlKVEMTthXXCjcUV1mQ5a4rOWXZ84p5rVo9PeUOXxk2T
- aB05ITIF5cVCY2kF9r/Of9FmUh7C+8BYh3aUUX6+RphSAaf9B+4vfEp9goyfper0cF9Z
- JA5Og2Gsx4yY4hdnq2lpWsTQBRPocGpd8g8EFCZ2TA8jyyjZAHD+qTaCqVEWY0bCfaHE
- ePTbp+Ov0HwjxQ0A26oFQuwBoLhVQDa/llpFDLEQtmptizooyXoEjp30KByw9yjSrpdR
- chLw==
-X-Gm-Message-State: AOJu0Yxj8p0HcNW4YJDIPWV+Eh8Hj+RxsQSZ9VqewuhjE2vSWGGNXfDA
- hSMjsLDxG4yomPTY2fDJXgCeMj6xT31gmQgDD/ro11R7C+HbAzuVWptOW+nV6tbSP7S83y2z1//
- +W7DoAv2QZ3VHQyvkbXDcPf2A9Jz/IHYRjQFaPQKhfOc/hgNFPNISsJqMDg==
-X-Gm-Gg: AfdE7cmSg2TKKpOxu2mLEadQsz+V5YRgxFCuynAnJHeyR3SwtLj+umMhYyMf9Ww5ugQ
- 4yPyFgcaym3wW8+hOCC3kVFrknARlWZWbG7ETIEn9TCnKcBcmvoMH54e75bmXO0IYIiP64rSa/M
- Lq4yjP3CH4GsUS0oM/4ee794hvH7J+S8tTuMxYoVblX2iMGV/UappMXDDobEiXsJAb8G9Np2Ad5
- AOZ/+70eI+36XmRDIketiN3tLgHrtGMOuPJfH5U/BoPfPkm7HoTAgXt8CMHFHflgOKssegDGFOm
- j+RzsG55vLevjdc7lGk6cTTf7T0oSoRnnJ9IaLjyXRTflkBWNAXkjYD57rp/vX4gyQ+OltTCSCX
- dcOnKPNszZndpJ4z26fiQFwKL4i6D454BX5A5/Gimmp5ysVcCuEpb50L6w6Gykw==
-X-Received: by 2002:a05:620a:2781:b0:911:e11e:dc0d with SMTP id
- af79cd13be357-92e8b504841mr2129475585a.24.1783370488248; 
- Mon, 06 Jul 2026 13:41:28 -0700 (PDT)
-X-Received: by 2002:a05:620a:2781:b0:911:e11e:dc0d with SMTP id
- af79cd13be357-92e8b504841mr2129471385a.24.1783370487594; 
- Mon, 06 Jul 2026 13:41:27 -0700 (PDT)
+ bh=mw0ZosaQxShWjJD/jE1atDqLE8jtwZU3wcQuPMzcUVI=;
+ b=D9RJP+NxOK+T4crSkaGNUbnl9irPPDGj8Fawl9UX3kWWneZguEqyeyVnGpQRilZiHc
+ H8M14Wr6WzwCOXwmAoPMaa6G2qj55ks8PFFa0Rs7S6gHcKhiVERx3mvMa1YcXk+8hdas
+ oFAIbQnPtsq872U54xEVdFoyMAFzvcxyUAA/oWWpQOmkUJBQw+o/mPQXxZ2DZExkFvXY
+ s4xmUJdJWxB7EkHh3P/0ah/APAzBaBV13NJxkTtgxiK/BEW2eVF0ZvF1n2oKrWXE04jD
+ msFwB2nS/9FV87oQqgGClRTq/OHfjBMqx3QvjSKpLm9oKRhMMD6j/vYc+9ViR2pIcL6q
+ vFpw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Ro5P8029AAl+6ml9Mb8k/kLfRepa6f5VmXj0qDp20JMVHQUh/oLTh0pkh6ptBSISAaNk2LllQhVYCOs@nongnu.org
+X-Gm-Message-State: AOJu0YxxFpxr+NEVS1q7S+E6KHy11TtRQmv8oWuyqm6MV+bBui8s4OAX
+ q0aGQmLiEUTdMZ8W41x15AU4odaDDFEIGvHDGIQn/s3iZF7XxWTjkNmFJr1YJlfhGg/bwv9mDdi
+ 9hab4nVAR8PKVtvdNIb8J4re4spOA3e4oyMarttEYEZ3cO2hg549Zql93hg==
+X-Gm-Gg: AfdE7cm8+So2Cb/Y1Rybo4f2px5t0hck885NUp+xlj07GEEXBlHUCoYXArVxfdDmofj
+ n6npzu/HabS1cYRfUKhpENaixIBAfr2OulQVFTzcNdrF+bNfv5CYCq/allTQoM2+RWCowu2I3jL
+ rvgH5KUYvOo06qAHWH+1zdHDV9FRk8ahjJZlOZIceuV7TMo9X5nYKf/GX44XiyOcxxsEuEghe7d
+ J7zknGluv3DC/ApRVjqDxdX3n+qeq01qQA1OpDcik/ctf/310704rwQ8SrELaYy3oWV2j7/L9PR
+ Nbgf7RDr1ny0icRH6jvbcIatHvXGoF8nEwAC+dCRSaEMbndsIWCpDtcehWor3qiJ3TNsCZ/J5GI
+ lcWay55X+x/cM+6N8YxRx7feK6M6B/qJNWfiKWv/fmYJClPZMbix1TZrU35rcXw==
+X-Received: by 2002:a05:620a:8803:b0:92e:9d63:a6f4 with SMTP id
+ af79cd13be357-92ebb4e3acdmr294859485a.18.1783370598771; 
+ Mon, 06 Jul 2026 13:43:18 -0700 (PDT)
+X-Received: by 2002:a05:620a:8803:b0:92e:9d63:a6f4 with SMTP id
+ af79cd13be357-92ebb4e3acdmr294855385a.18.1783370598188; 
+ Mon, 06 Jul 2026 13:43:18 -0700 (PDT)
 Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493e00c6a65sm20664955e9.1.2026.07.06.13.41.26
+ ffacd0b85a97d-47aa0a55be4sm24817002f8f.31.2026.07.06.13.43.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Jul 2026 13:41:26 -0700 (PDT)
-Message-ID: <aeb90e22-dd44-4de2-b1c7-b3b81c131031@oss.qualcomm.com>
-Date: Mon, 6 Jul 2026 22:41:25 +0200
+ Mon, 06 Jul 2026 13:43:17 -0700 (PDT)
+Message-ID: <aaee2b54-01df-48ca-9c83-796069767ca1@oss.qualcomm.com>
+Date: Mon, 6 Jul 2026 22:43:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 12/21] target/mips: add Octeon HSH COP2 helpers
+Subject: Re: [PATCH] hw/usb/dev-wacom: Don't write off end of buffer
 Content-Language: en-US
-To: James Hilliard <james.hilliard1@gmail.com>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno
- <aurelien@aurel32.net>, Aleksandar Rikalo <arikalo@gmail.com>,
- Huacai Chen <chenhuacai@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20260608-mips-octeon-missing-insns-v2-v16-0-daef7a0d8b04@gmail.com>
- <20260608-mips-octeon-missing-insns-v2-v16-12-daef7a0d8b04@gmail.com>
- <346b848d-465b-4560-9615-bd0575967b29@oss.qualcomm.com>
- <CADvTj4r0MwV7csi5iXrNyX10xqC=XAOZ-EfdfyLDC-JrzzGD9A@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20260706182034.1003176-1-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <CADvTj4r0MwV7csi5iXrNyX10xqC=XAOZ-EfdfyLDC-JrzzGD9A@mail.gmail.com>
+In-Reply-To: <20260706182034.1003176-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=c6qbhx9l c=1 sm=1 tr=0 ts=6a4c12f9 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-GUID: _aQzpBrE3s4I7GE1j6h4QhWhIp4a5FhH
+X-Proofpoint-ORIG-GUID: _aQzpBrE3s4I7GE1j6h4QhWhIp4a5FhH
+X-Authority-Analysis: v=2.4 cv=CPYamxrD c=1 sm=1 tr=0 ts=6a4c1367 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=amipSYqKS6PejS6ytuQA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: cWQCDB6nTj38dsxNymIg1b7G55aM-n5h
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDIwOSBTYWx0ZWRfX/DWCkdXy66y2
- ojaHb25svKs/L1gYE56TuvR3ugSds/S+qW0Qj/YKgXSBV4uGasZQyiHP/9/V2IZiPTgzy2X6PiE
- TOeV3Dytim6OQZEr2KbDLHXwPG/2HEP+MHG4p6viflR1tXksW5M5xGRC7RUqZjEU2U1xFVa2fyy
- /Kcmccjq7xQw5RiJwz5Pj4vGNinFhajh2s9FY2DadxUY/SdZLXNOOOSNaazBknzR88sv2AxQ3Ox
- UYK/UDug6pVlXDdwKJFEDfLS4YEyycmCSbwh40OsWOeD+r3WDQ7tPIZH5gvOop3o3yXJnTjG86j
- Hma171K2KI8FtBFRxoaz9oaGCtqgWH6R6U57o04JJ1XCg11Z0mM/OzfENtDLJOdOdR1X834Mz+p
- bkTeq2Ddst/0elOhIZvV8IHlt6KUPHeYPjKX5RhqVoOhYLEFJQq4qrvhOJcKx/3baMkOr7HaTL0
- mlKYPzzgIOG7hW/QlZQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDIwOSBTYWx0ZWRfX73KzkuMTaEPn
- qpEdjgvhOqAukPY8WBTEaufE1dlcFF4sv1xv8TACASGN+TBZgtXfDKPgmRaUegwwz9KP1IgSt7f
- kox0lnTLt60X1VJynTrPCRFtOnxpvYE=
-X-Proofpoint-GUID: cWQCDB6nTj38dsxNymIg1b7G55aM-n5h
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=p0WdMEafAAAA:8 a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=Qp4y8eNqsPY20014W8oA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDIwOSBTYWx0ZWRfX+bCzUC9y+5AX
+ geGRefewHY8P+FSl2uV1cCRWQE9I/BQshAh348abZNcLL+yjWguWf6JYQulkCEXxgJ1f1s7mO9E
+ SFNl5EnLwGKWBB20fOyXr94DIGo2f2gJ8JVN3bQVNN9oRni6SmtGt724t+z7p0b7cS9tMxefArK
+ Jvnf4AcDW3hn1MA7DnYiaJPJ4SxNVDJEN50ypR0dW/ZE2XICVhZMzZTOqLoVoan/m0CzPbUlT6G
+ XbE4N+OfMw3quCKwNvZ8DGp4uCmzFDLiKKg0DkDPkosN7Ci3EacRjnScR8vEYuUiyiL0CT+yaY5
+ ZUBKKEG0Kzm1K3M07CvCE5pttBbJVK5HABp6ql6dAfIhwXbnQDVyYI3bKXJVxWkwqbitMa7UXxM
+ 2SH+oHTknzGAQE2Uru0m36espSf6ZPh7vYcCpbDNxXC5DcQxqb0VodupKrHAikh70kWYJ1tjNTA
+ iCy5P1NFBb1IMPNYVsQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDIwOSBTYWx0ZWRfX1uqtsVcty1ac
+ o6mNky75MkvzCCu/MqSvc/Ie3g/gcCMVHiQXCkYPor1073XkoT9DdXer49Off49tNQ2JWnzE3ZM
+ mWW/ZwAutmJbcPCCu5ivY8QLM/3N77s=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-06_03,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 impostorscore=0 phishscore=0 adultscore=0
- lowpriorityscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607060209
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ impostorscore=0 adultscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060209
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -162,301 +154,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/7/26 20:13, James Hilliard wrote:
-> On Mon, Jul 6, 2026 at 10:57 AM Philippe Mathieu-Daudé
-> <philmd@oss.qualcomm.com> wrote:
->>
->> Hi James,
->>
->> On 8/6/26 20:59, James Hilliard wrote:
->>> Add helper support for the Octeon HSH hash selectors. This includes the
->>> base HSH data/IV windows, MD5, SHA1, SHA256, and SHA512 transform paths,
->>> and the shared HSH/SHA512 register-window readback and write operations.
->>>
->>> The SHA512 path shares the wide HSH register bank with SHA3, SNOW3G, and
->>> ZUC. Keep the aliased readback and write paths centralized so selector
->>> decode can route register accesses through these helpers when side
->>> effects are required.
->>>
->>> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
->>> ---
->>> Changes v13 -> v14:
->>>     - Keep HSH narrow DAT/IV state updates in the low 32-bit halves of the
->>>       architectural HSH register bank so paired selector transfers preserve
->>>       the wide shared-window state.
->>>
->>> Changes v10 -> v13:
->>>     - Keep the 0x0057 SDK compatibility path as an explicit STARTSHA1
->>>       compatibility helper instead of a generic STARTSHA name.
->>>
->>> Changes v9 -> v10:
->>>     - Remove references to shared-mode tracking; aliased state is kept in the
->>>       architectural HSH register banks.
->>>
->>> Changes v8 -> v9:
->>>     - Split HSH/SHA helpers into their own COP2 helper patch.
->>>     - Replace generic selector dispatch with per-operation HSH helpers.
->>>     - Keep shared-window readback and write helpers grouped with HSH.
->>>     - Add matching helper.h declarations with the helper implementation.
->>> ---
->>>    target/mips/helper.h            |   5 +
->>>    target/mips/tcg/octeon_crypto.c | 375 ++++++++++++++++++++++++++++++++++++++++
->>>    2 files changed, 380 insertions(+)
->>>
->>> diff --git a/target/mips/helper.h b/target/mips/helper.h
->>> index 71b7a2b30e..834f2d0769 100644
->>> --- a/target/mips/helper.h
->>> +++ b/target/mips/helper.h
->>> @@ -69,6 +69,11 @@ DEF_HELPER_2(octeon_cp2_mt_des3_dec, void, env, i64)
->>>    DEF_HELPER_2(octeon_cp2_mt_camellia_fl, void, env, i64)
->>>    DEF_HELPER_2(octeon_cp2_mt_camellia_flinv, void, env, i64)
->>>    DEF_HELPER_2(octeon_cp2_mt_camellia_round, void, env, i64)
->>> +DEF_HELPER_2(octeon_cp2_mt_hsh_startsha1_compat, void, env, i64)
->>> +DEF_HELPER_2(octeon_cp2_mt_hsh_startmd5, void, env, i64)
->>> +DEF_HELPER_2(octeon_cp2_mt_hsh_startsha256, void, env, i64)
->>> +DEF_HELPER_2(octeon_cp2_mt_hsh_startsha, void, env, i64)
->>> +DEF_HELPER_2(octeon_cp2_mt_hsh_startsha512, void, env, i64)
->>>
->>>    /* microMIPS functions */
->>>    DEF_HELPER_4(lwm, void, env, tl, tl, i32)
->>> diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
->>> index 67959618cc..9523c84667 100644
->>> --- a/target/mips/tcg/octeon_crypto.c
->>> +++ b/target/mips/tcg/octeon_crypto.c
->>> @@ -153,6 +153,348 @@ static void octeon_gfm_mul64_uia2(const uint64_t x[2], const uint64_t y[2],
->>>        out[1] = revbit64(res);
->>>    }
->>>
->>> +static inline uint32_t octeon_hsh_get32(const uint64_t *regs,
->>> +                                        unsigned int index)
->>> +{
->>> +    return regs[index];
->>> +}
->>> +
->>> +static inline void octeon_hsh_set32(uint64_t *regs, unsigned int index,
->>> +                                    uint32_t value)
->>> +{
->>> +    regs[index] = (regs[index] & ~(uint64_t)UINT32_MAX) | value;
->>> +}
->>> +
->>> +static inline void octeon_hsh_set_pair(uint64_t *regs, unsigned int index,
->>> +                                       uint64_t value)
->>> +{
->>> +    octeon_hsh_set32(regs, index * 2, value >> 32);
->>> +    octeon_hsh_set32(regs, index * 2 + 1, value);
->>> +}
->>> +
->>> +static void octeon_md5_transform(MIPSOcteonCryptoState *crypto)
->>> +{
->>> +    static const uint32_t k[64] = {
->>> +        0xd76aa478U, 0xe8c7b756U, 0x242070dbU, 0xc1bdceeeU,
->>> +        0xf57c0fafU, 0x4787c62aU, 0xa8304613U, 0xfd469501U,
->>> +        0x698098d8U, 0x8b44f7afU, 0xffff5bb1U, 0x895cd7beU,
->>> +        0x6b901122U, 0xfd987193U, 0xa679438eU, 0x49b40821U,
->>> +        0xf61e2562U, 0xc040b340U, 0x265e5a51U, 0xe9b6c7aaU,
->>> +        0xd62f105dU, 0x02441453U, 0xd8a1e681U, 0xe7d3fbc8U,
->>> +        0x21e1cde6U, 0xc33707d6U, 0xf4d50d87U, 0x455a14edU,
->>> +        0xa9e3e905U, 0xfcefa3f8U, 0x676f02d9U, 0x8d2a4c8aU,
->>> +        0xfffa3942U, 0x8771f681U, 0x6d9d6122U, 0xfde5380cU,
->>> +        0xa4beea44U, 0x4bdecfa9U, 0xf6bb4b60U, 0xbebfbc70U,
->>> +        0x289b7ec6U, 0xeaa127faU, 0xd4ef3085U, 0x04881d05U,
->>> +        0xd9d4d039U, 0xe6db99e5U, 0x1fa27cf8U, 0xc4ac5665U,
->>> +        0xf4292244U, 0x432aff97U, 0xab9423a7U, 0xfc93a039U,
->>> +        0x655b59c3U, 0x8f0ccc92U, 0xffeff47dU, 0x85845dd1U,
->>> +        0x6fa87e4fU, 0xfe2ce6e0U, 0xa3014314U, 0x4e0811a1U,
->>> +        0xf7537e82U, 0xbd3af235U, 0x2ad7d2bbU, 0xeb86d391U,
->>> +    };
->>> +    static const uint8_t s[64] = {
->>> +        7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
->>> +        5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
->>> +        4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
->>> +        6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21,
->>> +    };
->>> +    uint32_t m[16];
->>> +    uint32_t a, b, c, d;
->>> +    uint32_t aa, bb, cc, dd;
->>> +    int i;
->>> +
->>> +    for (i = 0; i < 16; i++) {
->>> +        m[i] = bswap32(octeon_hsh_get32(crypto->hsh_dat, i));
->>> +    }
->>> +
->>> +    a = bswap32(octeon_hsh_get32(crypto->hsh_iv, 0));
->>> +    b = bswap32(octeon_hsh_get32(crypto->hsh_iv, 1));
->>> +    c = bswap32(octeon_hsh_get32(crypto->hsh_iv, 2));
->>> +    d = bswap32(octeon_hsh_get32(crypto->hsh_iv, 3));
->>
->> The MD5 algorithm is little-endian, so I think for these we want
->> cpu_to_le32(), ...
+On 6/7/26 20:20, Peter Maydell wrote:
+> In usb_wacom_handle_data() we allocate a buffer with a size
+> determined by the transfer size requested by the guest.  We then fill
+> it in by calling either usb_mouse_poll() or usb_wacom_poll(), both of
+> which functions take a length and return an actual length, which we
+> pass to usb_packet_copy().  However, usb_mouse_poll() doesn't check
+> the buffer size as it fills in the buffer, so if the guest passes an
+> overly short transfer size then it will write off the end of the
+> allocated buffer.
 > 
-> Looking at the CN71XX manual, I think the current handling matches the
-> architectural HSH register view.  The HSH DAT/IV narrow selectors build
-> HASHDAT/HASHIV words from GPR halves, and the SHA-512 wide selectors move
-> whole GPR values into HASHDAT/HASHIV.  These are COP2 register values,
-> not target-memory byte arrays.
+> Check the length is at least big enough for the minimum 3 byte
+> packet and return nothing if it is not, as usb_wacom_poll() does.
 > 
-> The manual calls out MD5 specially: HASHDAT/HASHIV are in the big-endian
-> HSH register-word order, while MD5 is little-endian, so the MD5 operation
-> byte-swaps HASHDAT/HASHIV on entry and exit.  That is what the current
-> bswap32() calls model.
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3672
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/usb/dev-wacom.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/hw/usb/dev-wacom.c b/hw/usb/dev-wacom.c
+> index c69e247f7b..895edcc17e 100644
+> --- a/hw/usb/dev-wacom.c
+> +++ b/hw/usb/dev-wacom.c
+> @@ -285,6 +285,10 @@ static int usb_mouse_poll(USBWacomState *s, uint8_t *buf, int len)
+>           b |= 0x04;
+>       }
+>   
+> +    if (len < 3) {
 
-This call works on little endian hosts, because the target CPU is only
-built for big-endian in user-mode. I don't expect your tests to pass on
-a big-endian host, because we don't want to swap in this case.
+Maybe log GUEST_ERROR? Anyway:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-See in include/qemu/bswap.h:
-
-  60  * Endianness conversion functions between host cpu and specified 
-endianness.
-  63  *
-  64  * uint16_t le16_to_cpu(uint16_t v);
-  65  * uint32_t le32_to_cpu(uint32_t v);
-  66  * uint64_t le64_to_cpu(uint64_t v);
-  67  * uint16_t be16_to_cpu(uint16_t v);
-  68  * uint32_t be32_to_cpu(uint32_t v);
-  69  * uint64_t be64_to_cpu(uint64_t v);
-  70  *
-  71  * Convert the value @v from the specified format to the native
-  72  * endianness of the host CPU by byteswapping if necessary, and
-  73  * return the converted value.
-  74  *
-  75  * uint16_t cpu_to_le16(uint16_t v);
-  76  * uint32_t cpu_to_le32(uint32_t v);
-  77  * uint64_t cpu_to_le64(uint64_t v);
-  78  * uint16_t cpu_to_be16(uint16_t v);
-  79  * uint32_t cpu_to_be32(uint32_t v);
-  80  * uint64_t cpu_to_be64(uint64_t v);
-  81  *
-  82  * Convert the value @v from the native endianness of the host CPU
-  83  * to the specified format by byteswapping if necessary, and return
-  84  * the converted value.
-
-> 
->>> +    aa = a;
->>> +    bb = b;
->>> +    cc = c;
->>> +    dd = d;
->>> +
->>> +    for (i = 0; i < 64; i++) {
->>> +        uint32_t f, g, tmp;
->>> +
->>> +        if (i < 16) {
->>> +            f = (b & c) | ((~b) & d);
->>> +            g = i;
->>> +        } else if (i < 32) {
->>> +            f = (d & b) | ((~d) & c);
->>> +            g = (5 * i + 1) & 0xf;
->>> +        } else if (i < 48) {
->>> +            f = b ^ c ^ d;
->>> +            g = (3 * i + 5) & 0xf;
->>> +        } else {
->>> +            f = c ^ (b | (~d));
->>> +            g = (7 * i) & 0xf;
->>> +        }
->>> +
->>> +        tmp = d;
->>> +        d = c;
->>> +        c = b;
->>> +        b = b + rol32(a + f + k[i] + m[g], s[i]);
->>> +        a = tmp;
->>> +    }
->>> +
->>> +    a += aa;
->>> +    b += bb;
->>> +    c += cc;
->>> +    d += dd;
->>> +    octeon_hsh_set32(crypto->hsh_iv, 0, bswap32(a));
->>> +    octeon_hsh_set32(crypto->hsh_iv, 1, bswap32(b));
->>> +    octeon_hsh_set32(crypto->hsh_iv, 2, bswap32(c));
->>> +    octeon_hsh_set32(crypto->hsh_iv, 3, bswap32(d));
->>
->> ... and le32_to_cpu() here.
->>
->>> +}
->>> +
->>> +static void octeon_sha1_transform(MIPSOcteonCryptoState *crypto)
->>> +{
->>> +    uint32_t w[80];
->>> +    uint32_t a, b, c, d, e;
->>> +    uint32_t orig[5];
->>> +    int i;
->>> +
->>> +    for (i = 0; i < 16; i++) {
->>> +        w[i] = octeon_hsh_get32(crypto->hsh_dat, i);
->>> +    }
->>> +    for (i = 16; i < 80; i++) {
->>> +        w[i] = rol32(w[i - 3] ^ w[i - 8] ^ w[i - 14] ^ w[i - 16], 1);
->>> +    }
->>> +
->>> +    for (i = 0; i < 5; i++) {
->>> +        orig[i] = octeon_hsh_get32(crypto->hsh_iv, i);
->>> +    }
->>
->> SHA is big-endian so we are good, but watch out this CPU could switch
->> endianness.
->>
->> Maybe safer to use cpu_to_be32() and be32_to_cpu()?
-> 
-> For SHA-1, SHA-256, and SHA-512, the manual pseudo-code feeds the HSH
-> register words directly into the SHA operation and does not describe a
-> similar byte-swap.  So using cpu_to_be32()/be32_to_cpu() here would
-> byte-swap based on host endianness, which is not the architectural HSH
-> operation.
-> 
->>> +    a = orig[0];
->>> +    b = orig[1];
->>> +    c = orig[2];
->>> +    d = orig[3];
->>> +    e = orig[4];
->>> +
->>> +    for (i = 0; i < 80; i++) {
->>> +        uint32_t f, k, temp;
->>> +
->>> +        if (i < 20) {
->>> +            f = (b & c) | ((~b) & d);
->>> +            k = 0x5a827999;
->>> +        } else if (i < 40) {
->>> +            f = b ^ c ^ d;
->>> +            k = 0x6ed9eba1;
->>> +        } else if (i < 60) {
->>> +            f = (b & c) | (b & d) | (c & d);
->>> +            k = 0x8f1bbcdc;
->>> +        } else {
->>> +            f = b ^ c ^ d;
->>> +            k = 0xca62c1d6;
->>> +        }
->>> +
->>> +        temp = rol32(a, 5) + f + e + k + w[i];
->>> +        e = d;
->>> +        d = c;
->>> +        c = rol32(b, 30);
->>> +        b = a;
->>> +        a = temp;
->>> +    }
->>> +
->>> +    orig[0] += a;
->>> +    orig[1] += b;
->>> +    orig[2] += c;
->>> +    orig[3] += d;
->>> +    orig[4] += e;
->>> +    for (i = 0; i < 5; i++) {
->>> +        octeon_hsh_set32(crypto->hsh_iv, i, orig[i]);
->>> +    }
->>> +}
->>> +
->>> +static void octeon_sha256_transform(MIPSOcteonCryptoState *crypto)
->>> +{
->>
->> (ditto)
->>
->>> +}
->>> +
->>> +static void octeon_sha512_transform(MIPSOcteonCryptoState *crypto)
->>> +{
->>
->> (ditto)
->>
->>> +}
-> 
+> +        return 0;
+> +    }
+> +
+>       buf[0] = b;
+>       buf[1] = dx;
+>       buf[2] = dy;
 
 
