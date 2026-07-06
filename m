@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DC1CC44501
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:43:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37271C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:43:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggig-0007EK-Gs; Mon, 06 Jul 2026 06:38:34 -0400
+	id 1wggip-0007UR-9G; Mon, 06 Jul 2026 06:38:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggia-000798-Qi
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:29 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1wggiJ-000717-3f
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:12 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiZ-0003Tb-8o
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:28 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-490cf3000f0so28927255e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:26 -0700 (PDT)
+ id 1wggiG-0003HY-DI
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:09 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-493bc8fda98so31422185e9.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783334306; x=1783939106; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783334287; x=1783939087; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Psw5RQ7bn8RFZkWZ5A+Dxh+A3qWZNnUc6p+gvL5S8h4=;
- b=aD/854QI9lpp68gPm97VvszcTu8WCLVML6IfEsBceNcBfh+jbpqlzYukmUrqLq9vUg
- n2nhFLOTV2zHzxlpdeKFcKsbXYRTelrDoojseLth1rPCLHst9wEqPy8ix+hoPWQE7c7y
- pBBdaYQ+6uauKjD/xjmPWvLqQhV5UitEc739E6ekwJa7A/9++nxH3yRuBVwc7mSO3bRa
- 142w2teCkd5mj/FV056uCTjm9NHlhtbyNb87o1LDoXK46xVNIGf46LYVeIQCbrdq64qv
- gfWZAX1ckzZaSU4iXxCgHrhScU93BVZU1mhBYDPrp/yj6tmjU7LqOcQQLx+4aaZ64rbp
- 7AfA==
+ :reply-to; bh=Eg2eRwi8fXdXbVGfTtLDKdMU/uLApKIx4jIhkKqt32Y=;
+ b=VNmvrYH/FzIITXk3etvMgIbCFDRAKGNtnxVe/XjFZXBsfLlg+hx/s/E4VBcJ8ayfAS
+ gkjKKcLYMjrH0t5P6k2ZbX4p4eFWPiJjJEo+0ItO/Cv7yxIFCyFEAISCUfVWmZLbNCR+
+ ev4F38YtqyBQkHhzc2jgoLOJikYp486uYwRAMzLAzpJVURBinJWJDi6qcvcVg3x0fKG0
+ ShZ7glfD1WxJykcYEvn6Q2LOlKm50Ms5X5aMMY2azAS+kYpaefO10GlYy1gjQXnvyVYf
+ zAli3uzv15ouQq9fpnUmf11nhszxrIgJXFLGOsn2mtetuEExJgPR4OS59MJ3Bq9BXvDq
+ lvng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783334306; x=1783939106;
+ d=1e100.net; s=20251104; t=1783334287; x=1783939087;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Psw5RQ7bn8RFZkWZ5A+Dxh+A3qWZNnUc6p+gvL5S8h4=;
- b=IwOacsjUIzA4YHEJ9RdT61ik1Ly6VEc8Y87SsaaAjexyh+q/twHKhSECehaiV4aNnM
- 92bfGrhDuOCDN1nYzVMSqfz/lq5Lw7QCrp4z4NJx3NkJ6Ehw9nOKTDjSlB37QmbuLAEN
- 3bbA/4hRsRVPBKqxkSDDpyHcCNyMcrq4CQYamomeNNafOKGLrR69jbSkmMLP2WGgQpBb
- VqbViOH00pOLdxyumoP+VzGRcmpvC+ryL5hTY6uQGc9MjJO6jOoOxVaG7o9YMRsBg8l9
- wb261jVUv2x2FBOd4Yr5wW7OaSYhO9N28ZYLn1DmM2At+CZqLF30LiAw7LGGUZiDXmFJ
- 7ATQ==
-X-Gm-Message-State: AOJu0YzVGuGm5vppI1FioZ16+VHMPC27ts+UMUFEmn4SmFp5yJzqP8Lz
- cDic+5luEIuAmtEAu6GisZRuaDOUfVxe25D9Q/LRbTNfXpfPOMA7w2CQjOcHnM0ldM25Mj34p8x
- SfxnT0jPxjg==
-X-Gm-Gg: AfdE7clLCCmjojRlvB/hsly0MPBo0FnVmzjmvUdx2eNWnwRA8BLJ9UiRRX8gIWSgUA+
- UaUnf9w3klOrqNvRVjyJIxLQKAjLY9yjc1OzbJku8uClJC96iaIkaYz4SNuwlgwoGoCjSnax7JP
- QpZcaqbDY29t2PP04hWEyNDiuFMD3fqFofbVPZ9h8zsP/Z+SEIV666FvpRMs29Mx1iAs9fndN20
- eqDGlWng+32ubVUOBmkCk/gQclWnA8iP0yh9FlbXMlq1qkyDQDbywB2wi/ZZ5KhqNRtD4tLDvaW
- yq/Mqi5OFcNOAx4YFnr5HhlEU7RBC7FcgqzqM/TTp9y7hC7J3udGYcsJcXzuUb+9vNx8+T2/dFG
- +VYICclsD7wRwrY5BjfExJZx6j6LU0wvt19tX+uF3btrCHUzKptdjIcufxW8b6lffxqxWTSfIHK
- R4g1CdgGv8KEZ1gvqrW8fmpGSOPSHUifqUB37P1fM5zdE3dfTRGphd3CACYHRGr6QDANWG39y/o
- EMs+oI3a3GDkiT1yvZFOw==
-X-Received: by 2002:a05:600c:3054:b0:493:bc4a:e7d3 with SMTP id
- 5b1f17b1804b1-493d11fbcbdmr70545505e9.39.1783334305672; 
- Mon, 06 Jul 2026 03:38:25 -0700 (PDT)
+ bh=Eg2eRwi8fXdXbVGfTtLDKdMU/uLApKIx4jIhkKqt32Y=;
+ b=o5Uq9NnpzrhS7zhdBxqojoObVBs+008rY9dOFAXnol+odGEET0VAfX0i52KRjjLC5b
+ KZ9zVQ78+fuYOLI/StZlh2l2BdvEY6A7RdFhGkMzl5PwyB22Vhy0CK8soGMZQqRu5t95
+ +ppPm/ESRWS87hKGCyF5OJipjW6ocrDTHwtofffuREL3qCCuWP2Q0Ehllf58Iha/YTmC
+ X2sQBJCeN1fVbrmFpbZ/S9LjwwVTySrQCIqXM7O8WrxsSgMfqEZzp7gRdFqaOo2thRCI
+ 5OrFBvGCISTigIbbcyDdlvTFORii8uS0Nhs+2rj1y2nGIVY4sk9AtTa5anMEdk0QDpUt
+ u5aw==
+X-Gm-Message-State: AOJu0Yx5Th9nRybOJivthELVNrAps6uH0hALaFPvgc67AcgwxRVELSh9
+ dLx3qih0OMVptJYOvU29m0MU2mvdFtq4cOSORTkPdRQMDPkhMhHU0MBf26bkVUD0DxnkdjHS592
+ yRBxOWzlW8Q==
+X-Gm-Gg: AfdE7cmURFKSvhsDW4MwmMKPZYpjGiuE7mNj3GIfeqV6ryacPjHOVKUj4TLSfYOLP4/
+ p9anW0mbytG7MRPvNcvscZ6jnzD6QcQikXgRvWYzNQmvlXrdigwKoi2JUvSAWXcZgrxhekhViQf
+ qLtFJS46WkOYZ6MKIHhS0Qcxz7/okVMQEA9qTwtgkQY4wivV2pE2byuH2MpvUi6VyFtQQteRYmZ
+ hvFQdFEVlzEnnORnMdREE5X8MTy1xXbPMA6GlOb5h0vDlimw54EEHW796IsYWfuzRr4LSTnXfBT
+ Becf2YFZWvHS5xCt4+XA0aS7xHk3ZM1fUWJIYqQE1iKjFplXMD6V8SUKgkApk7YxyGqBZSTs0h0
+ LTzoEHR8I/COVoJ1Zco1zRG8hXo58XUFMlMLcgFrYJCB6kHkJWQW6aYvotZQLLTGkbxbCsU/I3X
+ rB3ammBgGduguG/wOBTiKSO3N9xGBmSBN3DXmcSID/M2XMZ84254uPDOPRsfGK8fV0Ha5ZmG/uP
+ 8ZpYZ+fINYGBZeiBtXq+A==
+X-Received: by 2002:a05:600c:19d0:b0:493:b750:bd20 with SMTP id
+ 5b1f17b1804b1-493d11d7df8mr101826645e9.15.1783334286886; 
+ Mon, 06 Jul 2026 03:38:06 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.25
+ 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 03:38:25 -0700 (PDT)
+ Mon, 06 Jul 2026 03:38:06 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 29/49] hw/arm: add support for shim loading
-Date: Mon,  6 Jul 2026 11:37:32 +0100
-Message-ID: <20260706103752.320511-30-peter.maydell@linaro.org>
+Subject: [PULL 13/49] target/arm: do not clear halting reason in has_work
+ helper
+Date: Mon,  6 Jul 2026 11:37:16 +0100
+Message-ID: <20260706103752.320511-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260706103752.320511-1-peter.maydell@linaro.org>
 References: <20260706103752.320511-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,56 +102,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Add support for direct kernel boot with
-shim to the arm platform.
+The helper will be called multiple times as we exit a loop and until
+we actually restart (via arm_cpu_exec_halt) we should leave the
+condition the same.
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-id: 20260521112806.504961-4-kraxel@redhat.com
+Fixes: 6fd2fcdc61b (target/arm: teach arm_cpu_has_work about halting reasons)
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260624103049.884930-4-alex.bennee@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/boot.c         | 6 ++++++
- include/hw/arm/boot.h | 1 +
- 2 files changed, 7 insertions(+)
+ include/hw/core/sysemu-cpu-ops.h | 3 +++
+ target/arm/cpu.c                 | 4 ++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index 780b6be637..9b7553dde5 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -1161,6 +1161,11 @@ static void arm_setup_firmware_boot(ARMCPU *cpu, struct arm_boot_info *info)
-             fw_cfg_add_string(fw_cfg, FW_CFG_CMDLINE_DATA,
-                               info->kernel_cmdline);
-         }
-+
-+        if (info->shim_filename) {
-+            load_image_to_fw_cfg_file(fw_cfg, "etc/boot/shim",
-+                                      info->shim_filename);
-+        }
+diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
+index 8be6a84bd5..9a45596169 100644
+--- a/include/hw/core/sysemu-cpu-ops.h
++++ b/include/hw/core/sysemu-cpu-ops.h
+@@ -18,6 +18,9 @@
+ typedef struct SysemuCPUOps {
+     /**
+      * @has_work: Callback for checking if there is work to do.
++     *
++     * This function should be idempotent (i.e. not change state) as
++     * it will likely be queried multiple times before a CPU resumes.
+      */
+     bool (*has_work)(CPUState *cpu); /* MANDATORY NON-NULL */
+     /**
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 128c78f6cf..26bd21aa86 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -158,7 +158,6 @@ static bool arm_cpu_has_work(CPUState *cs)
+      * A wake-up event should only wake us if we are halted on a WFE
+      */
+     if (cpu->env.halt_reason == HALT_WFE && cpu->env.event_register) {
+-        cpu->env.halt_reason = NOT_HALTED;
+         return true;
      }
  
-     /*
-@@ -1195,6 +1200,7 @@ void arm_load_kernel(ARMCPU *cpu, MachineState *ms, struct arm_boot_info *info)
-      * doesn't support secure.
-      */
-     assert(!(info->secure_board_setup && kvm_enabled()));
-+    info->shim_filename = ms->shim_filename;
-     info->kernel_filename = ms->kernel_filename;
-     info->kernel_cmdline = ms->kernel_cmdline;
-     info->initrd_filename = ms->initrd_filename;
-diff --git a/include/hw/arm/boot.h b/include/hw/arm/boot.h
-index a2e22bda8a..94386fdbea 100644
---- a/include/hw/arm/boot.h
-+++ b/include/hw/arm/boot.h
-@@ -39,6 +39,7 @@ void armv7m_load_kernel(ARMCPU *cpu, const char *kernel_filename,
- /* arm_boot.c */
- struct arm_boot_info {
-     uint64_t ram_size;
-+    const char *shim_filename;
-     const char *kernel_filename;
-     const char *kernel_cmdline;
-     const char *initrd_filename;
+@@ -170,7 +169,6 @@ static bool arm_cpu_has_work(CPUState *cs)
+                            | CPU_INTERRUPT_NMI | CPU_INTERRUPT_VINMI | CPU_INTERRUPT_VFNMI
+                            | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ | CPU_INTERRUPT_VSERR
+                            | CPU_INTERRUPT_EXITTB)) {
+-        cpu->env.halt_reason = NOT_HALTED;
+         return true;
+     }
+ 
+@@ -882,6 +880,8 @@ bool arm_cpu_exec_halt(CPUState *cs)
+         if (cpu->wfxt_timer) {
+             timer_del(cpu->wfxt_timer);
+         }
++        /* clear the halt reason */
++        cpu->env.halt_reason = NOT_HALTED;
+     }
+     return leave_halt;
+ }
 -- 
 2.43.0
 
