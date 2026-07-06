@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F71EC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 14:01:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D29FC43602
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 14:01:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgjr4-00024x-8A; Mon, 06 Jul 2026 09:59:26 -0400
+	id 1wgjqu-0001sZ-8U; Mon, 06 Jul 2026 09:59:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wgjr2-00020d-50
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:59:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wgjqm-0001ri-6N
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:59:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wgjr0-0001gP-7m
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:59:23 -0400
+ id 1wgjqk-0001cv-LD
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:59:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783346359;
+ s=mimecast20190719; t=1783346346;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mt29ZQVUbe2Up6s5sG/8Pmks6U5SihHYd6xs+0JEVQA=;
- b=XYRAXp6wfpOW09wV3LGi1btkUwLIWuDUS0Vq1kPatzGIHjxD7ByLuzQegGzVT3wT0T+Sbv
- jvkphniKMddExMPdcavQP6ogAKzdWVbq+3eFNtmz2K3xpYXfBbqQVlVP12ImaSO8rBEjvh
- bGKGNse0YHfSEcKFdVwmsrLdFtRm2cA=
+ bh=zkjdrI725VspPVbuz3o4rBqZpOogPffuMLbDQ9eM+wg=;
+ b=PqPaLib1eh3ZZzQQeLaTkBKWi4vwv58e0ZnlAONwe/rcaDhK+i3QLVh5hTlB1v3fcH+QnF
+ ZikGesUN9B7QTCXPPVsHe0BqyqrZJugXcqhZgHfsZ1QYX4bBhIup3YwEQ5LAnTdSBHmbBN
+ jXef1a18Kdp2/FFNUGBET2kU41wvG28=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-f8Ze6XeDOpeiB0CXJ2b3lQ-1; Mon,
- 06 Jul 2026 09:59:16 -0400
-X-MC-Unique: f8Ze6XeDOpeiB0CXJ2b3lQ-1
-X-Mimecast-MFC-AGG-ID: f8Ze6XeDOpeiB0CXJ2b3lQ_1783346354
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-Zlxv7Q1LNYm56ZXJmd5V5Q-1; Mon,
+ 06 Jul 2026 09:59:04 -0400
+X-MC-Unique: Zlxv7Q1LNYm56ZXJmd5V5Q-1
+X-Mimecast-MFC-AGG-ID: Zlxv7Q1LNYm56ZXJmd5V5Q_1783346343
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C8A291802673; Mon,  6 Jul 2026 13:59:14 +0000 (UTC)
+ id 50C6F1805A0C; Mon,  6 Jul 2026 13:59:03 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.48.165])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 62D803000B4D; Mon,  6 Jul 2026 13:59:11 +0000 (UTC)
+ id 000B93000B4E; Mon,  6 Jul 2026 13:58:59 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org,
@@ -57,24 +57,23 @@ Cc: Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org,
  Markus Armbruster <armbru@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v7 11/35] monitor: move monitor_data_(init|destroy) into QOM
- init/finalize
-Date: Mon,  6 Jul 2026 14:57:59 +0100
-Message-ID: <20260706135824.2623960-12-berrange@redhat.com>
+Subject: [PATCH v7 08/35] monitor: add 'readline' property to HMP Monitor class
+Date: Mon,  6 Jul 2026 14:57:56 +0100
+Message-ID: <20260706135824.2623960-9-berrange@redhat.com>
 In-Reply-To: <20260706135824.2623960-1-berrange@redhat.com>
 References: <20260706135824.2623960-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,251 +90,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Start to take advantage of QOM, by using object init and finalize
-methods to replace monitor_data_init and monitor_data_destroy.
-
-A standalone helper is provided to enable the I/O thread for QMP
-where appropriate for the chardev backend.
+This determines whether a human monitor runs with readline for
+interactive use, or without readline for non-interactive use by
+the GDB stub.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Tested-by: Peter Krempa <pkrempa@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- monitor/hmp.c              |  6 +++--
- monitor/monitor-internal.h |  3 +--
- monitor/monitor.c          | 46 +++++++++++++-------------------------
- monitor/qmp-cmds.c         |  3 ---
- monitor/qmp.c              | 34 +++++++++++++++-------------
- 5 files changed, 40 insertions(+), 52 deletions(-)
+ monitor/hmp.c | 27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
 diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 5644c9c4f5..c03b91782c 100644
+index 34a39b071c..54fd25f220 100644
 --- a/monitor/hmp.c
 +++ b/monitor/hmp.c
-@@ -48,6 +48,10 @@ OBJECT_DEFINE_TYPE(MonitorHMP, monitor_hmp, MONITOR_HMP, MONITOR);
- 
- static void monitor_hmp_finalize(Object *obj)
+@@ -50,12 +50,37 @@ static void monitor_hmp_finalize(Object *obj)
  {
-+    MonitorHMP *mon = MONITOR_HMP(obj);
-+    if (mon->rs) {
-+        readline_free(mon->rs);
-+    }
  }
  
- static bool monitor_hmp_get_readline(Object *obj, Error **errp)
-@@ -1590,8 +1594,6 @@ void monitor_new_hmp(const char *id, const char *chardev_id,
-         return;
-     }
++static bool monitor_hmp_get_readline(Object *obj, Error **errp)
++{
++    MonitorHMP *mon = MONITOR_HMP(obj);
++
++    return mon->use_readline;
++}
++
++static void monitor_hmp_set_readline(Object *obj, bool val, Error **errp)
++{
++    MonitorHMP *mon = MONITOR_HMP(obj);
++
++    mon->use_readline = val;
++}
++
+ static void monitor_hmp_class_init(ObjectClass *cls, const void *data)
+ {
++    object_class_property_add_bool(cls, "readline",
++                                   monitor_hmp_get_readline,
++                                   monitor_hmp_set_readline);
+ }
  
--    monitor_data_init(&mon->parent_obj, false, false);
--
+ static void monitor_hmp_init(Object *obj)
+ {
++    MonitorHMP *hmp = MONITOR_HMP(obj);
++
++    /*
++     * Default to common case for external HMP use,
++     * as opposed to non-interactive internal use
++     * from gdbstub
++     */
++    hmp->use_readline = true;
+ }
+ 
+ static void monitor_command_cb(void *opaque, const char *cmdline,
+@@ -1550,6 +1575,7 @@ void monitor_new_hmp(const char *id, const char *chardev_id,
+                                         id ? id : autoid,
+                                         errp,
+                                         "chardev", chardev_id,
++                                        "readline", use_readline ? "yes" : "no",
+                                         NULL);
+ 
+     if (!obj) {
+@@ -1566,7 +1592,6 @@ void monitor_new_hmp(const char *id, const char *chardev_id,
+ 
+     monitor_data_init(&mon->parent_obj, false, false, false);
+ 
+-    mon->use_readline = use_readline;
      if (mon->use_readline) {
          mon->rs = readline_init(monitor_readline_printf,
                                  monitor_readline_flush,
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index d34f9be139..6a4c3b0f37 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -193,8 +193,7 @@ extern QemuMutex monitor_lock;
- extern MonitorList mon_list;
- 
- void monitor_complete(Monitor *mon, Error **errp);
--void monitor_data_init(Monitor *mon, bool is_qmp, bool use_io_thread);
--void monitor_data_destroy(Monitor *mon);
-+void monitor_iothread_init(Monitor *mon);
- int monitor_can_read(void *opaque);
- void monitor_list_append(Monitor *mon);
- void monitor_fdsets_cleanup(void);
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index db9243410a..9fe131983d 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -82,6 +82,10 @@ static void monitor_finalize(Object *obj)
-     Monitor *mon = MONITOR(obj);
- 
-     g_free(mon->chardev_id);
-+    g_free(mon->mon_cpu_path);
-+    qemu_chr_fe_deinit(&mon->chr, false);
-+    g_string_free(mon->outbuf, true);
-+    qemu_mutex_destroy(&mon->mon_lock);
- }
- 
- static char *monitor_get_chardev_id(Object *obj, Error **errp)
-@@ -108,6 +112,11 @@ static void monitor_class_init(ObjectClass *cls, const void *data)
- 
- static void monitor_init(Object *obj)
- {
-+    Monitor *mon = MONITOR(obj);
-+
-+    qemu_mutex_init(&mon->mon_lock);
-+    mon->is_qmp = !!object_dynamic_cast(obj, TYPE_MONITOR_QMP);
-+    mon->outbuf = g_string_new(NULL);
- }
- 
- Monitor *monitor_cur(void)
-@@ -639,38 +648,16 @@ void monitor_list_append(Monitor *mon)
-     qemu_mutex_unlock(&monitor_lock);
- 
-     if (mon) {
--        monitor_data_destroy(mon);
-         object_unparent(OBJECT(mon));
-     }
- }
- 
--static void monitor_iothread_init(void)
--{
--    mon_iothread = iothread_create("mon_iothread", &error_abort);
--}
--
--void monitor_data_init(Monitor *mon, bool is_qmp, bool use_io_thread)
-+void monitor_iothread_init(Monitor *mon)
- {
--    if (use_io_thread && !mon_iothread) {
--        monitor_iothread_init();
-+    if (!mon_iothread) {
-+        mon_iothread = iothread_create("mon_iothread", &error_abort);
-     }
--    qemu_mutex_init(&mon->mon_lock);
--    mon->is_qmp = is_qmp;
--    mon->outbuf = g_string_new(NULL);
--    mon->use_io_thread = use_io_thread;
--}
--
--void monitor_data_destroy(Monitor *mon)
--{
--    g_free(mon->mon_cpu_path);
--    qemu_chr_fe_deinit(&mon->chr, false);
--    if (monitor_is_qmp(mon)) {
--        monitor_data_destroy_qmp(container_of(mon, MonitorQMP, parent_obj));
--    } else {
--        readline_free(container_of(mon, MonitorHMP, parent_obj)->rs);
--    }
--    g_string_free(mon->outbuf, true);
--    qemu_mutex_destroy(&mon->mon_lock);
-+    mon->use_io_thread = true;
- }
- 
- void monitor_cleanup(void)
-@@ -688,7 +675,7 @@ void monitor_cleanup(void)
-      * Letting the iothread continue while shutting down the dispatcher
-      * means that new requests may still be coming in. This is okay,
-      * we'll just leave them in the queue without sending a response
--     * and monitor_data_destroy() will free them.
-+     * and object finalization will free them.
-      */
-     WITH_QEMU_LOCK_GUARD(&monitor_lock) {
-         qmp_dispatcher_co_shutdown = true;
-@@ -702,8 +689,8 @@ void monitor_cleanup(void)
-     /*
-      * We need to explicitly stop the I/O thread (but not destroy it),
-      * clean up the monitor resources, then destroy the I/O thread since
--     * we need to unregister from chardev below in
--     * monitor_data_destroy(), and chardev is not thread-safe yet
-+     * we need to unregister from chardev below in object
-+     * finalization, and chardev is not thread-safe yet
-      */
-     if (mon_iothread) {
-         iothread_stop(mon_iothread);
-@@ -718,7 +705,6 @@ void monitor_cleanup(void)
-         /* Permit QAPI event emission from character frontend release */
-         qemu_mutex_unlock(&monitor_lock);
-         monitor_flush(mon);
--        monitor_data_destroy(mon);
-         qemu_mutex_lock(&monitor_lock);
-         object_unparent(OBJECT(mon));
-     }
-diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
-index 0d9adad288..6cb0b587fb 100644
---- a/monitor/qmp-cmds.c
-+++ b/monitor/qmp-cmds.c
-@@ -168,8 +168,6 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
-     char *output = NULL;
-     MonitorHMP *hmp = MONITOR_HMP(object_new(TYPE_MONITOR_HMP));
- 
--    monitor_data_init(&hmp->parent_obj, false, false);
--
-     if (has_cpu_index) {
-         int ret = monitor_set_cpu(&hmp->parent_obj, cpu_index);
-         if (ret < 0) {
-@@ -186,7 +184,6 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
-     }
- 
- out:
--    monitor_data_destroy(&hmp->parent_obj);
-     object_unref(hmp);
-     return output;
- }
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index b300886f33..3574b9a339 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -73,8 +73,16 @@ QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
- 
- OBJECT_DEFINE_TYPE(MonitorQMP, monitor_qmp, MONITOR_QMP, MONITOR);
- 
-+static void monitor_qmp_cleanup_req_queue_locked(MonitorQMP *mon);
-+
- static void monitor_qmp_finalize(Object *obj)
- {
-+    MonitorQMP *mon = MONITOR_QMP(obj);
-+
-+    json_message_parser_destroy(&mon->parser);
-+    qemu_mutex_destroy(&mon->qmp_queue_lock);
-+    monitor_qmp_cleanup_req_queue_locked(mon);
-+    g_queue_free(mon->qmp_requests);
- }
- 
- static bool monitor_qmp_get_pretty(Object *obj, Error **errp)
-@@ -98,8 +106,15 @@ static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
-                                    monitor_qmp_set_pretty);
- }
- 
-+static void handle_qmp_command(void *opaque, QObject *req, Error *err);
- static void monitor_qmp_init(Object *obj)
- {
-+    MonitorQMP *mon = MONITOR_QMP(obj);
-+
-+    qemu_mutex_init(&mon->qmp_queue_lock);
-+    mon->qmp_requests = g_queue_new();
-+
-+    json_message_parser_init(&mon->parser, handle_qmp_command, mon, NULL);
- }
- 
- static bool qmp_oob_enabled(MonitorQMP *mon)
-@@ -522,14 +537,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
-     }
- }
- 
--void monitor_data_destroy_qmp(MonitorQMP *mon)
--{
--    json_message_parser_destroy(&mon->parser);
--    qemu_mutex_destroy(&mon->qmp_queue_lock);
--    monitor_qmp_cleanup_req_queue_locked(mon);
--    g_queue_free(mon->qmp_requests);
--}
--
- static void monitor_qmp_setup_handlers_bh(void *opaque)
- {
-     MonitorQMP *mon = opaque;
-@@ -572,14 +579,11 @@ void monitor_new_qmp(const char *id, const char *chardev_id,
-     qemu_chr_fe_set_echo(&mon->parent_obj.chr, true);
- 
-     /* Note: we run QMP monitor in I/O thread when @chr supports that */
--    monitor_data_init(&mon->parent_obj, true,
--                      qemu_chr_has_feature(mon->parent_obj.chr.chr,
--                                           QEMU_CHAR_FEATURE_GCONTEXT));
--
--    qemu_mutex_init(&mon->qmp_queue_lock);
--    mon->qmp_requests = g_queue_new();
-+    if (qemu_chr_has_feature(mon->parent_obj.chr.chr,
-+                             QEMU_CHAR_FEATURE_GCONTEXT)) {
-+        monitor_iothread_init(&mon->parent_obj);
-+    }
- 
--    json_message_parser_init(&mon->parser, handle_qmp_command, mon, NULL);
-     if (mon->parent_obj.use_io_thread) {
-         /*
-          * Make sure the old iowatch is gone.  It's possible when
 -- 
 2.55.0
 
