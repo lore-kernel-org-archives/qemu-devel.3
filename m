@@ -4,105 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F26C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 02:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75901C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 02:26:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgYgT-0005JS-Qo; Sun, 05 Jul 2026 22:03:45 -0400
+	id 1wgZ1R-0007s2-St; Sun, 05 Jul 2026 22:25:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wgYgM-0005J3-0A
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 22:03:38 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wgYgK-0001T2-FQ
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 22:03:37 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-698b899b4c8so2178775a12.0
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 19:03:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783303414; cv=none;
- d=google.com; s=arc-20260327;
- b=eyNxeplGc5XQR37kxzgqPaG2NuCjXqcX5ge2AdizDylpE00nIUMnjFhKTjHWrzZR2d
- O6MmFio5kcVJjW5JcSBrR+1WV+y3j335USyqZGQ3Mc9GpvCrm4aKak7g9dcqBI/rdBK7
- 3lIvkxbA7TZHm5OlRhO14okTHVl6KvMc8eGDJ1LeCIZA8CgRupa5O7GYiWDLfYMclcoX
- CKRtiPOmJl1T75Djxl4sfQGApkupioGjRKwIF+anCUegjBhLp2cmYF+vk/hGXNun3lbf
- KnI8dczOPk4w40wtT2DFxGJtcMIc5HD7M6Q9zUjcnhNm2lUZSCyCHMu2qHSmXV3JjUbb
- DaAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=cox4sR+7xsstieoFliuFvYqO+sAAaOQnZ9XxVg9v7Ds=;
- fh=MnNJvVdo/5nyIBFwY9JvsPpUstdtIQAX4imftEC7M30=;
- b=Q9XgLgReIDt9/nKaRand7v2vlLrvBajOK8+oCEERP50gIrBvHWPEwaBvwik8OalgIQ
- FVvgeZvY+gqNtVKtLytIMyq+imM0B0ngFxA9IxTkmou4MHwBVtJYGLmRp2mtXZQSZYtu
- CKZu/p8Ido6YNnGFdS1xPgb26jtH9sTMxYpcwb1IGK6LO72sWAeRWrxH6FxomrKajMlh
- 7SMBb4y8+sXvs/Fsgvqm1wESgZ3s2eaTOCHF6S7un7+mdBRodSGv7IOZ8r3/f309YrE0
- W0VYM8OhL3HNsrhODK59okczDJCMkpabueVoPWV4riHDhxSg+AZDmGW/dD7vZZ+Fkw9t
- nWnw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783303414; x=1783908214; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cox4sR+7xsstieoFliuFvYqO+sAAaOQnZ9XxVg9v7Ds=;
- b=LRIo9zKMD8mkItjaFP2TH3rO5mNBDaBnyCgz+k5MXvJ2Y/qwhLSwIfI5dw7btE64nu
- 3CqvrAADt0nkPguW/yhJdAIJmq0BZJMaxjAqoE62LQ2Axt9NeHzQKGwfAKDX0W/bli+G
- +L4oSJw6VBK6yLRYrYa1D68Y5EuYr7pGEaK0mrGbbqknpt+x123qQ4/YpipDgC1uzgh9
- TA5dX5VR/0eJ4BIC6fU32kflmSbx75XnSN7UI7KibFGJ3IEkrm9LZvbjAUlNOpAq7+xv
- Q6+9+4d4EBR9oQLKILSiIH+/0xD4Bi61CLmuqyz/bw0TLLm2ae8xCpqeHDlFZ18NtyWL
- wX9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783303414; x=1783908214;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cox4sR+7xsstieoFliuFvYqO+sAAaOQnZ9XxVg9v7Ds=;
- b=ZBDfcLTrANpN7GiC/4QL6uj5zG7F9qU7jX9Eo1wOCg+AZcdhjNBIemEaRp0FkNsIuc
- UMWAGzlxgU9HLDXOHMkPABQYrjokj1OLIxfoFNAbJ+YxmSVLHi1HACGHZvqZsHGaSS2E
- 8tBR9lf6qNN8uc1/FzOOE75SzX6zMNedT0GGOAwjYOH84+my4RDvzmO0VrfTLLc71e3l
- SE/3GPllO6ZQB/3cCceJsAcqk2O23VvBBNRra/K4u7YfjcNk26WMkg3UMqFohhmt0Clq
- 5V0NajGKmh7tKFzpyquFnKEEt/fAYrNaagYJqQTE5LET2lXZg5jKZvrz+7yRzMC+7Tns
- eIOQ==
-X-Gm-Message-State: AOJu0YwHEipWOzVkE9M/HvRaZvN8QTo7EcxQkCj8Kz4a1zLS4YKKiVpg
- PFagFPg60fHu/iPiuKVe2XcPtfZUBnlTyJWEusMptOt1SkxsFeFJgPkmUCeVazm+wJW0sJFXo7s
- clUAcYg7smnaAj6k50ynhWMbDZDPVn+A=
-X-Gm-Gg: AfdE7clnmZaS26To4YZXXET6orPDKvLjRM+/TEJBesxNVZWq6T/rxDe57Mso6l7mf/p
- nzF3FH4eQCyDnON7iMe0Va1CFL73vHCR2GQJpG5zNumTI7X0HS3OM4AeEaN4CJLOzwIjh0aadeO
- /QU7oVtQ8CuJC8meBi7IH7LFRitrnNpDf1hBW/Z4U8YtIncR6DzjGWoQOVAIK4zZgolBXSWdVAh
- luMkZjWwgfXE0oIKzdtyT/nrIII9RCW7jJheR0ewdjUvlSqnK0K0Kk9kn9x/50Uu3mcS/NGLu9c
- RdNZ7qcLz6CkAMc4ePmqJAgJ7kM=
-X-Received: by 2002:a05:6402:3227:b0:698:5f89:9a51 with SMTP id
- 4fb4d7f45d1cf-69a1a24beacmr3037151a12.5.1783303414439; Sun, 05 Jul 2026
- 19:03:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1wgZ1O-0007rp-De
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 22:25:23 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1wgZ1L-0004q6-Nh
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 22:25:22 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8Bxmuv_EUtquD8AAA--.1192S3;
+ Mon, 06 Jul 2026 10:25:03 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJDxTsf9EUtq2acBAA--.10198S3;
+ Mon, 06 Jul 2026 10:25:01 +0800 (CST)
+Subject: Re: [PATCH 1/2] MAINTAINERS: update Song Gao's email address
+From: gaosong <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: maobibo@loongson.cn, lixianglai@loongson.cn, Song Gao <17746591750@163.com>
+References: <20260703095538.3211983-1-gaosong@loongson.cn>
+ <20260703095538.3211983-2-gaosong@loongson.cn>
+Message-ID: <a5f5c914-9e76-44a3-642d-2008c9067652@loongson.cn>
+Date: Mon, 6 Jul 2026 10:27:28 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20260702203616.1795588-1-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260702203616.1795588-1-daniel.barboza@oss.qualcomm.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 6 Jul 2026 12:03:07 +1000
-X-Gm-Features: AVVi8CciTkPVGCrm1jYsQaLhcKQijELG9s_cJCEcUyhl0S4DWLNf_nswaJonQho
-Message-ID: <CAKmqyKMVqG7=bcUKZDuJFWxjwFvFVr6_=iGx1Apm_9c9zwu5-Q@mail.gmail.com>
-Subject: Re: [PATCH v2 0/1] hw/riscv/riscv-iommu.c: check for misaligned
- IOHGATP_PPN
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
- nutty.liu@hotmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+In-Reply-To: <20260703095538.3211983-2-gaosong@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJDxTsf9EUtq2acBAA--.10198S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7tFW3Xr1rXw1fXF15Cr1fXwc_yoW8ArWUpr
+ Z3C3WFkry0qw4UAr1YgFyqkrnrX395Krn7XryDt34Fqr98Zw1rXry5t3Z2yFZ7Xa4rCayj
+ v3s2934av3WqyFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-2.97, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,40 +82,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 3, 2026 at 6:37=E2=80=AFAM Daniel Henrique Barboza
-<daniel.barboza@oss.qualcomm.com> wrote:
+ÔÚ 2026/7/3 ÏÂÎç5:55, Song Gao Ð´µÀ:
+> Update maintainer email from gaosong@loongson.cn to
+> 17746591750@163.com and add corresponding .mailmap entries.
 >
-> Hi,
->
-> This new version fixes a blunder I made in v1 pointed by Chao and
-> Nutty - I was using the PPN value, instead of the page table base
-> address, to check for the 16kb alignment.
->
-> We no longer need to change qos-riscv-iommu.h because now we're doing
-> the right thing.
->
-> Changes from v1:
-> - use PPN_PHYS(iohgatp_ppn), i.e. the page table base address, to
->   check for the 16kb alignment
-> - v1 link: https://lore.kernel.org/qemu-devel/20260630203155.2103084-1-da=
-niel.barboza@oss.qualcomm.com/
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   .mailmap    | 1 +
+>   MAINTAINERS | 4 ++--
+>   2 files changed, 3 insertions(+), 2 deletions(-)
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-Thanks!
+Thanks.
+Song Gao
+> diff --git a/.mailmap b/.mailmap
+> index 8ade2eed66..593b6c2c53 100644
+> --- a/.mailmap
+> +++ b/.mailmap
+> @@ -119,6 +119,7 @@ Roman Bolshakov <rbolshakov@ddn.com> <r.bolshakov@yadro.com>
+>   Sriram Yagnaraman <sriram.yagnaraman@ericsson.com> <sriram.yagnaraman@est.tech>
+>   Stefan Brankovic <stefan.brankovic@syrmia.com> <stefan.brankovic@rt-rk.com.com>
+>   Stefan Weil <sw@weilnetz.de> Stefan Weil <stefan@weilnetz.de>
+> +Song Gao <17746591750@163.com> <gaosong@loongson.cn>
+>   Taylor Simpson <ltaylorsimpson@gmail.com> <tsimpson@quicinc.com>
+>   Yongbok Kim <yongbok.kim@mips.com> <yongbok.kim@imgtec.com>
+>   
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 97dcc78ded..ef4c3b5c5b 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -280,7 +280,7 @@ F: disas/hppa.c
+>   F: tests/tcg/hppa/
+>   
+>   LoongArch TCG CPUs
+> -M: Song Gao <gaosong@loongson.cn>
+> +M: Song Gao <17746591750@163.com>
+>   S: Maintained
+>   F: target/loongarch/
+>   F: tests/docker/dockerfiles/debian-loongarch-cross.docker
+> @@ -1360,7 +1360,7 @@ F: docs/devel/hexagon-sys.rst
+>   LoongArch Machines
+>   ------------------
+>   Virt
+> -M: Song Gao <gaosong@loongson.cn>
+> +M: Song Gao <17746591750@163.com>
+>   M: Bibo Mao <maobibo@loongson.cn>
+>   R: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>   S: Maintained
 
-Applied to riscv-to-apply.next
-
-Alistair
-
->
->
-> Daniel Henrique Barboza (1):
->   hw/riscv/riscv-iommu.c: check for misaligned IOHGATP_PPN
->
->  hw/riscv/riscv-iommu.c | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
->
-> --
-> 2.43.0
->
->
 
