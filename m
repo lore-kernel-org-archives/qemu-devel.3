@@ -4,118 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EC1AC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 13:13:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8DD2C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 13:13:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgj7f-000423-3x; Mon, 06 Jul 2026 09:12:31 -0400
+	id 1wgj83-00047y-2E; Mon, 06 Jul 2026 09:12:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wgj7d-00041k-8i; Mon, 06 Jul 2026 09:12:29 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wgj7y-00044s-W8
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:12:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wgj7b-0004iY-KX; Mon, 06 Jul 2026 09:12:28 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666BIUJL3465400; Mon, 6 Jul 2026 13:12:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=c/y6sl
- 2AC9ZXA3VdGh/npFnUtVe9a5t+tYPNgb7yWnw=; b=VeOm/uyG54NJH3s4az9GxW
- 1gGhjTfoaZqTCd2lzemyzQ49XdWHeKmrRPSWfaQouFjBfx0pRwePccZNKWMcwQc8
- GgPgBU4COw2UJuNp6i3Gd+/NoE7HGWStMfDs3/VQokX614/SzDX86yoE1QzsJmTl
- YgGzhJNfKD6uNo4GdDeI9rj3X0f4ZJwy0+43gmA4pldCiJzXIWwrH/9YVczAGs02
- uMB75uVoDNlAqzA7aUk6VNIB/3HkfN0BY+1v9EO45scOQVGuC32RIOfLLD239j9o
- CNXgsbaJZjseDOLm33rSdkxIgsLzG87ZZMkp/tB0rZDudr413EyAseemmuclPqLw
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6rkdj63u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 13:12:22 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 666D4ppI014737;
- Mon, 6 Jul 2026 13:12:21 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7eqfwf1v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 13:12:21 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 666DCKBL28312014
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 6 Jul 2026 13:12:20 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 79A225804E;
- Mon,  6 Jul 2026 13:12:20 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 448465803F;
- Mon,  6 Jul 2026 13:12:19 +0000 (GMT)
-Received: from [9.61.71.99] (unknown [9.61.71.99])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  6 Jul 2026 13:12:19 +0000 (GMT)
-Message-ID: <e53af8c6-b854-44c2-b61d-2317ea2c0bd6@linux.ibm.com>
-Date: Mon, 6 Jul 2026 09:12:18 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wgj7x-0004nw-Hf
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:12:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783343568;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oiMXy+sef7fXIQqddHMLeQSNpkSrRf9gK7M010QxRmU=;
+ b=c4UTt940+YNvennYgqm+0EcKSXseKDB9GwB6OV7EaLi8X/ZytRQCsvkKHMIMdUEcWz8Eil
+ giOWcEt6vCAR8zUF2CltscoG/TRG2Gv840nPzLGwJEdXBy8Dn66mYE+2TTdphbAoWlDRML
+ wdxjF0scaFZ9JjsAMKTS4SCm8gfq7As=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-_luqe1axNJiMgoWRWxIGhA-1; Mon,
+ 06 Jul 2026 09:12:45 -0400
+X-MC-Unique: _luqe1axNJiMgoWRWxIGhA-1
+X-Mimecast-MFC-AGG-ID: _luqe1axNJiMgoWRWxIGhA_1783343564
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 08A801955DC1; Mon,  6 Jul 2026 13:12:44 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7607B36535; Mon,  6 Jul 2026 13:12:43 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 966C421E6920; Mon, 06 Jul 2026 15:12:40 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: ~rongyichang <rongyichang@git.sr.ht>
+Cc: qemu-devel@nongnu.org,  ~rongyichang <rongyichang@xiaomi.com>,
+ marcandre.lureau@redhat.com,  eblake@redhat.com
+Subject: Re: [PATCH qemu] ui/sdl2: add grab-on-tablet option for absolute
+ input devices
+In-Reply-To: <178065435170.20548.15372728064868431795-0@git.sr.ht>
+ (rongyichang@git.sr.ht's message of "Fri, 05 Jun 2026 17:53:25 +0800")
+References: <178065435170.20548.15372728064868431795-0@git.sr.ht>
+Date: Mon, 06 Jul 2026 15:12:40 +0200
+Message-ID: <877bn8ntx3.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] s390x/sclp: reject invalid write event data headers
-To: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
- Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>, qemu-stable@nongnu.org,
- Hendrik Brueckner <brueckner@linux.ibm.com>
-References: <20260706091909.864405-1-borntraeger@linux.ibm.com>
- <20260706091909.864405-2-borntraeger@linux.ibm.com>
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <20260706091909.864405-2-borntraeger@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=M7J97Sws c=1 sm=1 tr=0 ts=6a4ba9b6 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=69wJf7TsAAAA:8
- a=VnNF1IyMAAAA:8 a=oAhc_OkXt0xxt9SrcpAA:9 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDEzMCBTYWx0ZWRfXyZIAVLz4Gj8/
- igtA+s1GM9cV9UXLJAPL6l6Qab9nH0d1MbAv/yKUox/LE5zACasB2YOKTNLgu71Xxys7Ep9nFVd
- WOrHR3948K1Ex8ie9IwTww5vAfx7KBYOrcqdqFMZXb8CsSuhyiVqKXz08hCJ5Signic1nk/lqJ/
- QE18T9Le0c8JZco4pw1NAL4DpvVrJYb280JsKvCaqJ+o4x10uLoqhPXEI+v+wDTLGVjJxEKoUUX
- vRnK3WaHGRmeVGdh6qM/W26IQY6YoPaQInLZAY6l8i173/9+CBh/WgPCOFxKENYch3Bhmg8m+xi
- 4uJgY64nyeG+SZBBaY4m38VVgQM5ktKHOLfQgJkcOKbCXA4p5Y9CiAvSIVS28bk9h9OZ4JYa0q/
- xjH0VMV76RVoVD/3Ifg/XRs27zEfRu6NbppcpOcs/Fen6d5t0fFm4cVvCplosu07LLdZUZ/iFFX
- Uxl5bsEYGHYIwoL930w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDEzMCBTYWx0ZWRfX5orYaT4lTFir
- RrKavWm5shGIkggvRVOuslf1js0pfeWMro3jxhsIVtrV+PVp7A2/ZsuNYJDV1Y0834wTKattFwD
- 436HKsqvf+4o8SSQkBih4sYRhtjrujM=
-X-Proofpoint-GUID: yKy9YCC356ryf3_7ua-QnoXoF4QghFZd
-X-Proofpoint-ORIG-GUID: yKy9YCC356ryf3_7ua-QnoXoF4QghFZd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-06_01,2026-07-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 adultscore=0
- priorityscore=1501 bulkscore=0 spamscore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060130
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,47 +86,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/6/26 5:19 AM, Christian Borntraeger wrote:
-> If a guest submits an sccb with a tiny header length but a large number
-> of event mask entries, the write_event_mask handler will
-> 1. return the wrong RC (ok instead of error)
-> 2. write to memory after the allocated sccb in qemu host memory.
-> 
-> Add the necessary checks.
-> 
-> Cc: qemu-stable@nongnu.org
-> Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-> Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+I apologize for the lateness of my review.
+
+~rongyichang <rongyichang@git.sr.ht> writes:
+
+> From: rongyichang <rongyichang@xiaomi.com>
+>
+> When using absolute coordinate input devices (e.g. virtio-tablet-device),
+> the SDL display backend implements a "soft grab" where the mouse is
+> automatically grabbed when it enters the window interior and ungrabbed
+> when it hits the window edge. This edge-ungrab behavior causes problems
+> in embedded emulation scenarios:
+>
+> 1. Mouse escapes the SDL window at edges
+> 2. SDL does not deliver BUTTONUP events for the escaped mouse
+> 3. The guest gets stuck in a pressed/touch-down state
+> 4. First click back into the window is silently dropped
+>
+> This issue is confirmed as a known SDL limitation (SDL issue #5301).
+>
+> Add a new -display sdl,grab-on-tablet=on option that makes absolute
+> coordinate devices use the same grab behavior as relative (mouse)
+> devices: user must click to grab, Ctrl+Alt+G to release, and no
+> automatic grab on window enter or edge-based ungrab/regrab.
+>
+> Signed-off-by: Yichang Rong <rongyichang@xiaomi.com>
 > ---
+>  qapi/ui.json    |  8 +++++++-
+>  qemu-options.hx |  9 +++++++--
+>  ui/sdl2.c       | 16 +++++++++++++---
+>  3 files changed, 27 insertions(+), 6 deletions(-)
+>
+> diff --git a/qapi/ui.json b/qapi/ui.json
+> index b2c42a7f57..454d9041bf 100644
+> --- a/qapi/ui.json
+> +++ b/qapi/ui.json
+> @@ -1477,10 +1477,16 @@
+>  # @grab-mod: Modifier keys that should be pressed together with the
+>  #     "G" key to release the mouse grab.
+>  #
+> +# @grab-on-tablet: When enabled, the mouse grab is required even for
+> +#     tablet (absolute) input devices.  This is useful when the guest
+> +#     OS uses a tablet device but you still want click-to-grab
+> +#     semantics (e.g. NuttX touchscreen emulation).
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Missing: (since 11.1)
 
->  hw/s390x/event-facility.c | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/hw/s390x/event-facility.c b/hw/s390x/event-facility.c
-> index fee286ea63..184c469bd3 100644
-> --- a/hw/s390x/event-facility.c
-> +++ b/hw/s390x/event-facility.c
-> @@ -286,6 +286,7 @@ static void read_event_data(SCLPEventFacility *ef, SCCB *sccb)
->  static void write_event_mask(SCLPEventFacility *ef, SCCB *sccb)
->  {
->      WriteEventMask *we_mask = (WriteEventMask *) sccb;
-> +    uint16_t sccb_length = be16_to_cpu(sccb->h.length);
->      uint16_t mask_length = be16_to_cpu(we_mask->mask_length);
->      sccb_mask_t tmp_mask;
+When would you still want click-to-grab semantics?  The commit message
+gives a fairly specific use case.  The doc comment gives only an
+example.  Is this good enough for users?
+
+> +#
+>  # Since: 7.1
+>  ##
+>  { 'struct'  : 'DisplaySDL',
+> -  'data'    : { '*grab-mod'   : 'HotKeyMod' } }
+> +  'data'    : { '*grab-mod'   : 'HotKeyMod',
+> +                '*grab-on-tablet' : 'bool' } }
 >  
-> @@ -294,6 +295,11 @@ static void write_event_mask(SCLPEventFacility *ef, SCCB *sccb)
->          return;
->      }
->  
-> +    if (sccb_length < sizeof(WriteEventMask) + 4 * mask_length) {
-> +        sccb->h.response_code = cpu_to_be16(SCLP_RC_INSUFFICIENT_SCCB_LENGTH);
-> +        return;
-> +    }
-> +
->      /*
->       * Note: We currently only support masks up to 8 byte length;
->       *       the remainder is filled up with zeroes. Older Linux
+>  ##
+>  # @DisplayType:
 
 
