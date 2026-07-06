@@ -4,111 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE694C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 11:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E95BC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 11:20:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgh77-0006FH-KW; Mon, 06 Jul 2026 07:03:49 -0400
+	id 1wghMj-0003In-H7; Mon, 06 Jul 2026 07:19:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wgh73-0006Eg-Bv; Mon, 06 Jul 2026 07:03:45 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wghMi-0003IQ-Ce
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:19:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wgh71-0001Mz-BF; Mon, 06 Jul 2026 07:03:44 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6669ILml3151332; Mon, 6 Jul 2026 11:03:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=5o5XWdgPq9rHSafYv
- Pw5xydqCTMb2BI5zpTiZWNKpss=; b=cc0aYpuegrCHexBRlwXausTuNnutnDtJ7
- peiu4tMR6JgdBoYX5xd5O02hkDFKCuU36t6s9/rfDHBI5yGwnVD0l63D8RQdNFZn
- ze4dAtdPtjUY7KRUFTBqxbwwrmzUlAa9hMRnhbbrkbW1o+skAUs+4obiBfC1QMG6
- pRsDKR0BE3EVD8/H4V0KGlH01324me1F4xp6ei3atGAdxbuSAzLVFvpZ8Hgp5ofz
- 6LSQa121xALZ+y0O3hYhBVgNF4LQJgGap10fdxqUfniFTJ5V9Qj6s2N/AxX2wQJN
- vzzMeN+fvJuDKhftyyQ4JOAERZZlmywenaCvUPjNCs09P0w1z8UGA==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6rkdhpa1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 11:03:39 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 666AncbU002940;
- Mon, 6 Jul 2026 11:03:39 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7eqfw1jj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 11:03:38 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 666B3YsV50397498
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 6 Jul 2026 11:03:34 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8D0EB2004F;
- Mon,  6 Jul 2026 11:03:34 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2484420040;
- Mon,  6 Jul 2026 11:03:34 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.111.23.52])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  6 Jul 2026 11:03:34 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Alex Crichton <alex@alexcrichton.com>,
- Ulrich Weigand <ulrich.weigand@de.ibm.com>, qemu-stable@nongnu.org
-Subject: [PATCH 1/1] accel/tcg: Retry page_check_range() on itree.start
- inconsistency
-Date: Mon,  6 Jul 2026 12:57:25 +0200
-Message-ID: <20260706110330.4150026-2-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260706110330.4150026-1-iii@linux.ibm.com>
-References: <20260706110330.4150026-1-iii@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wghMg-0005by-Uu
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:19:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783336794;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=TOYYYHcW4HvlYkKCkWv3vdVD2qGByTWBx92mCzRFrw4=;
+ b=WxDz/5lVU1i9HfJwXMAYdnLfkP5fLckh6DKU1Vh0Grq33MvGs9bsxshK9fCfmt0mlAZ1uA
+ x/I5jd0YN78aUz/vM9U39sx4PzFf0R9rp5N21BCjyezBofuW5nvooEK52/gcMgY8T88hSp
+ LHeTMQp6WQugog1V8oxH2plUi0H67O4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-178-x0Mfo1xVMxmuSuiC-76q0g-1; Mon, 06 Jul 2026 07:19:50 -0400
+X-MC-Unique: x0Mfo1xVMxmuSuiC-76q0g-1
+X-Mimecast-MFC-AGG-ID: x0Mfo1xVMxmuSuiC-76q0g_1783336789
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-490a767b782so22613145e9.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 04:19:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783336789; x=1783941589; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=TOYYYHcW4HvlYkKCkWv3vdVD2qGByTWBx92mCzRFrw4=;
+ b=uGumb/EX/JtvXLseJO1xrXULZrhWzo9yO0Wyfdr9hR5FrQfxZm/vvMOgcu6FdURNv1
+ FCnrfuLGuXf05b9f5hPbZGihBs5rDfdZEVqjwmenzA948L0rsn4hM9I5Ze7haFs/+VL+
+ Y2pcFkWO0aARwcoCmqa39Pp3aKG4IFVtyL5iLwq7Fx6VG+od8388FDX12ReRh7wjbHqv
+ H4Fb+y00+xOETWbpBqBWOVdEnHx4IMsgo7zAbdjsOaldb5CmVDNVvkJv4E3rzdL+zw2L
+ qK0XQYhTBLiqwffWgJLMyZM93vFEU3lonH5Z8Lr/7ztLkogI+XviTfQrnhawjfGZd31o
+ DpQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783336789; x=1783941589;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=TOYYYHcW4HvlYkKCkWv3vdVD2qGByTWBx92mCzRFrw4=;
+ b=dWn2+GB3bves4Ncyg+xhdOQ0zbPwV2LhClnB7akdBH8AKT7RRqYqxG/GHKY2tUs4ZR
+ 8Uo9ncMAADJx9PfuesV23i91y5rBbkJC8pwU/25/Y5LI3KQKWICPJQ3wslsl20V98flJ
+ fjEBmlW5NMtKT18wMETKMAMDnGBpbn6SB/bkB/TZHb1mFyfcinUxV5XqeaY8Y9XIWGqR
+ ulG4Jh6bU0Zzz+UXrdQfoFKDDr9PMdpiCHA0zMOW71HW1xClRgY4hITkRIzuo7/4qzhb
+ ZHU87eswAOJ52MgjnXQITYFBcdmMVITfYJMP5urDy4qQ1tYN1c9Nt58sa8e3t7jlVIUK
+ X+6A==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RopN+/RnInKmlPhl6yc6pG+A0aMh+1E4lqew2BUju25HJ2YAin0mxIJn2BYlgRWX3MYd5BUP3gt+Kim@nongnu.org
+X-Gm-Message-State: AOJu0Yz7aek7rV51WTtH52PNKM/vQh1J+/MrLM16yEIUbiUZozUJLVk7
+ 3MhNO5msLKSqdHnTg+FZ09PtufnOlJtGdFsQu1BSGUH4p2ujcF2rnLscu5z7WahNfvlzdTsdndB
+ FE5OOc9BmBVp6zPQkWAaFO8ih9md20OjW2ZIrnCPY4WkmxacZPu/MVStI
+X-Gm-Gg: AfdE7clj/zVL/mXLVO54xU26ZrTdlPWo9smHEidbHoHAo4bEWVJlpXwCyh0QeT5VaUc
+ veevwN+Lt/SHjTuR1wkJxINSdF7ibZdSIih4AgpGrQ1ES4bFZG6lkn/HtXncwCXRR6Dc26T2+3h
+ LJ3/So/Uh+nI3LHQbyfW+X/XRpaDnDoWGt3Iw36yTiNGyEArN7nCltIxjqtH3YZ3vMccksdWhvh
+ jxVzAyz0UWs7qSOiR1yIhYUktTP6z69I/0Acfa9VNTL246d07Tp4XHTNdrWP2XSvO/x6VQNv7ad
+ YR+dXVsh7O3uTXQL/SxUndeohS0ZrHHBScpGQCcnH0sv0X5gDN7pw0a3loLhpYEVhlCZAitGNG2
+ M5LtXBcbPoKJVr+Tn3oloT/1IGgMjdhRJ0I1nZUvQdMgQQJiuNw==
+X-Received: by 2002:a05:600c:19d0:b0:493:b750:bd20 with SMTP id
+ 5b1f17b1804b1-493d11d7df8mr103487395e9.15.1783336789490; 
+ Mon, 06 Jul 2026 04:19:49 -0700 (PDT)
+X-Received: by 2002:a05:600c:19d0:b0:493:b750:bd20 with SMTP id
+ 5b1f17b1804b1-493d11d7df8mr103486895e9.15.1783336789021; 
+ Mon, 06 Jul 2026 04:19:49 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493ccd9d620sm290252545e9.1.2026.07.06.04.19.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Jul 2026 04:19:48 -0700 (PDT)
+Message-ID: <948da227-22c5-4851-9584-433d5e6d5161@redhat.com>
+Date: Mon, 6 Jul 2026 13:19:47 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] backends/iommufd: Fix dev_id and type order in viommu
+ trace
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: eric.auger@redhat.com, peter.maydell@linaro.org, nicolinc@nvidia.com,
+ nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com
+References: <20260706103653.84243-1-skolothumtho@nvidia.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260706103653.84243-1-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=M7J97Sws c=1 sm=1 tr=0 ts=6a4b8b8b cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=NEAV23lmAAAA:8 a=vjliLWF1AAAA:8 a=VnNF1IyMAAAA:8
- a=69wJf7TsAAAA:8 a=EA-HjLQVFIEyDo_wN94A:9 a=3erKlr7R_9HjozMBkBTY:22
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDEwOSBTYWx0ZWRfX6U1bF4nvmn6Y
- diTthcFmJUILUuCXVRN/xPGx57xZ5Ey7p8ezFCvtJKwrT3l6y4ORiCo0RFazSztegiQ4hPvNbIZ
- emjxORTsrENxzyWtDdEda8TRBI4UfbLBwuirE+z9gbcNbzndaSiH0HSiJQhJoD8xnL24EJ2xdtQ
- PrsRPhC21Yz95uuPXhuFINDdfsYrYjT9zwMv8BR8L+sEwNtYyBHZFWY8xnedegKypqvQ9AVJCAn
- LMk3izNsJB56z4X6oPZ9BQj8gnDupn2+0i7XA+86kmUdSoUUPYU0ENqIgrygknJZLvcFU31ITfP
- +ZIgNZUthA0rjij1NvMY9Bkq3XpoYXQgtjxxmIAKkElhCY/o5tNUv3y7mkd49tvkLlh3Sujix+d
- El3ZJGKneooyCcz59NuxmsAYCKOT/Xk7effR5WW46eG3dBMwD3nT7vw8XEgHm0HmjnHr8E+XhVX
- DfjNf2L3dYZwNar/p7w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDEwOSBTYWx0ZWRfX0iLKMA/JaXgk
- 2PpsRlxVOyt1tCEh+CZHihLSsaeTFwhYQrtPMFaEwInTmlDyxtO/0rFGsdinsYrmStVONnvuEVL
- EU44rrV72NiH47jtWiZyIMBx++/HeD4=
-X-Proofpoint-GUID: S9Jx6w5OtwCy8RCS28Ac_A8aLPjRprTD
-X-Proofpoint-ORIG-GUID: S9Jx6w5OtwCy8RCS28Ac_A8aLPjRprTD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-06_01,2026-07-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1011 adultscore=0
- priorityscore=1501 bulkscore=0 spamscore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060109
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,100 +168,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-page_check_range() may race with pageflags_set_clear() as follows:
+On 7/6/26 12:36, Shameer Kolothum wrote:
+> The trace event receives dev_id before type, but its format string prints
+> them in the wrong order. Correct the order.
+> 
+> Fixes: f2d31df0d925 ("backends/iommufd: Introduce iommufd_backend_alloc_viommu")
+> Reported-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>   backends/trace-events | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/backends/trace-events b/backends/trace-events
+> index b63420b73e..009a25b0be 100644
+> --- a/backends/trace-events
+> +++ b/backends/trace-events
+> @@ -21,7 +21,7 @@ iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%
+>   iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
+>   iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t flags, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" flags=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+>   iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint64_t data_ptr, int ret) " iommufd=%d id=%u data_type=%u entry_len=%u entry_num=%u done_num=%u data_ptr=0x%"PRIx64" (%d)"
+> -iommufd_backend_alloc_viommu(int iommufd, uint32_t dev_id, uint32_t type, uint32_t hwpt_id, uint64_t data_ptr, uint32_t data_len, uint32_t viommu_id, int ret) " iommufd=%d type=%u dev_id=%u hwpt_id=%u data_ptr=0x%"PRIx64" data_len=0x%x viommu_id=%u (%d)"
+> +iommufd_backend_alloc_viommu(int iommufd, uint32_t dev_id, uint32_t type, uint32_t hwpt_id, uint64_t data_ptr, uint32_t data_len, uint32_t viommu_id, int ret) " iommufd=%d dev_id=%u type=%u hwpt_id=%u data_ptr=0x%"PRIx64" data_len=0x%x viommu_id=%u (%d)"
+>   iommufd_backend_alloc_vdev(int iommufd, uint32_t dev_id, uint32_t viommu_id, uint64_t virt_id, uint32_t vdev_id, int ret) " iommufd=%d dev_id=%u viommu_id=%u virt_id=0x%"PRIx64" vdev_id=%u (%d)"
+>   iommufd_viommu_alloc_eventq(int iommufd, uint32_t viommu_id, uint32_t type, uint32_t veventq_id, uint32_t veventq_fd, int ret) " iommufd=%d viommu_id=%u type=%u veventq_id=%u veventq_fd=%u (%d)"
+>   iommufd_backend_alloc_hw_queue(int iommufd, uint32_t viommu_id, uint32_t queue_type, uint32_t index, uint64_t addr, uint64_t size, uint32_t queue_id, int ret) " iommufd=%d viommu_id=%u queue_type=%u index=%u addr=0x%"PRIx64" size=0x%"PRIx64" queue_id=%u (%d)"
 
-    T1                                     T2
-    -------------------------------------  --------------------------------
-                                           p = pageflags_find(start, last);
-    interval_tree_remove(&p->itree, ...);
-    p->itree.start = last + 1;
-                                           if (start < p->itree.start) {
-                                               ret = false;
-    interval_tree_insert(&p->itree, ...);
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-leading to errors like
+Thanks,
 
-    fail indirect write 0x72f0a659aff0 (Bad address)
-
-in vma-pthread test. I am able to reliably reproduce this on a machine
-with 32 SMT threads as follows in about 25 seconds:
-
-    jobs=32; \
-    seq "$jobs" | \
-        time -p parallel \
-            --jobs="$jobs" \
-            --halt=now,done=1 \
-            --ungroup \
-            '
-                _={};
-                while ./qemu-s390x tests/tcg/s390x-linux-user/vma-pthread; do
-                    printf .;
-                done
-            '
-
-Also wasmtime project reported a similar failure pattern in their CI [1]
-with a similar reproducer [2].
-
-Fix by retrying under a lock. This makes the failure rate go down to
-roughly once in 50 seconds.
-
-[1] https://github.com/bytecodealliance/wasmtime/issues/10000
-[2] https://gist.github.com/alexcrichton/f14f23a892ffb9df2522754572d51b1c
-
-Reported-by: Alex Crichton <alex@alexcrichton.com>
-Reported-by: Ulrich Weigand <ulrich.weigand@de.ibm.com>
-Fixes: 67ff2186b0a4 ("accel/tcg: Use interval tree for user-only page tracking")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- accel/tcg/user-exec.c | 31 +++++++++++++++----------------
- 1 file changed, 15 insertions(+), 16 deletions(-)
-
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 7704e4017dd..b70955697fe 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -510,24 +510,23 @@ bool page_check_range(vaddr start, vaddr len, int flags)
-         PageFlagsNode *p = pageflags_find(start, last);
-         int missing;
- 
--        if (!p) {
--            if (!locked) {
--                /*
--                 * Lockless lookups have false negatives.
--                 * Retry with the lock held.
--                 */
--                mmap_lock();
--                locked = -1;
--                p = pageflags_find(start, last);
--            }
--            if (!p) {
--                ret = false; /* entire region invalid */
-+        /*
-+         * Lockless lookups race with pageflags_set_clear() and may have false
-+         * negatives:
-+         * - The node pageflags_find() was looking for could have been
-+         *   temporarily removed and not added back yet.
-+         * - pageflags_find() could have found a node which was subsequently
-+         *   removed and whose itree.start has been adjusted.
-+         */
-+        if (!p || start < p->itree.start) {
-+            if (locked) {
-+                ret = false;
-                 break;
-             }
--        }
--        if (start < p->itree.start) {
--            ret = false; /* initial bytes invalid */
--            break;
-+            /* Retry with the lock held. */
-+            mmap_lock();
-+            locked = -1;
-+            continue;
-         }
- 
-         missing = flags & ~p->flags;
--- 
-2.54.0
+C.
 
 
