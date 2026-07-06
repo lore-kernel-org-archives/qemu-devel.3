@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84991C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 576E0C44500
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:54:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgf69-0001Oy-3y; Mon, 06 Jul 2026 04:54:41 -0400
+	id 1wgf5W-0008VS-Cp; Mon, 06 Jul 2026 04:54:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wgf65-0001CY-5G
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:54:38 -0400
-Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
- ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
+ id 1wgf5U-0008Ti-T9
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:54:00 -0400
+Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wgf61-00073j-Ib
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:54:36 -0400
+ id 1wgf5S-0006oA-CO
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:54:00 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CaMKDJtYOsn3Np7nvHL5tIUMkOlrJGiEcHaTAv59f7itXZgJanuihrDQ0mcI7m6ImAwBxEg0W3xZVntHsn/jGWbB6tU6QB04iMQ4uXI9eT0W1NoH+2OaOgZhDbQjUz+ckbpWxJSHSay81JruYfJnG9RNm0lpxMZGcgvCmYJWwUORQCqt/hmysfXevUfMV22f1M/fangPbH/0kcVcwPBSThnkSp8HUwH69pvW5MuO+AK7SiCssOYQ+rAtO3d03SBWV8uA4ajdspd1fx7b9H9FDmhGqHbhnJvBaWYb873tXaQswooxwzlf7DJKlhdq3y1ZzVXFhrVNJlDdWu0XaBS2cQ==
+ b=Uk6iM+XJRPyVF8aLjG7rrmaorkNFRXS67A+KJBTVymcKtIGasl5jdfgz63EqF4a399ds1pymLuGcGG0lKZSQG0LVn6/ghaHufeWe+bKnLj46G9ZAuyZ1kERrI2b0mZmtm+Oxugb39P8iScF+OLD0KmbldJRap+DrT+P4FCfekQzDEfRxOVtM0e//9zxUdwgXahln12/6C4BKMEOS9ikQ81GqP3ldAAi7k/4jPKuzcunFGHCeeMm2y/btT7MHkmhWVH5KHkbvQEyKA/Rz9Zqtns6KMOB3lSUohE6V2ZOHfwoDfSJIipberiIx97QI2yaFiJwaCDRO4UqkL0toUnrbKA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aBBIGt3h+uziVhLIRHcrhjNCVufOCyAEoG3/IzvQeoY=;
- b=lnO90kdpXeAULZWmb0kMFQsE0FD4YNqVYVx0645IfqRc/k6blnNgZpQXWbTyFUTkVGO6pfg/vFHRA18uSum1F4I6QrrphQF1nnpJcnJiwEJ2whoosYeQDuAyDFh+Q6Ez6EruW6tkoTiSDyqjsO2B4E11vYQNmLMi95Wnm6OWSQs5t/eQKhb3salpl03J8fuO2Np2HJWO6oTzoqgi1M/sbhObXSzFMPFczNhMG4VwvhEdRuVFZt/xgwCbbwTfLOeMkoJSSaLu+V3HvEqyKqjtfN4Nx3fKDpJV/zcmbNNbyqG+GLdaxpadxNTxYF6AjBysRuzO2IPXZXW400YIKlxEIg==
+ bh=kqCQ/Jxi3xkd6aIwBpi6JyTRtpMrh1TeknGx8AzzqZo=;
+ b=E2nyOoZ3EnHfCBzTX2hZTAyvEpLwO/gOLDfaeBCezOo4cVOBqTHIkX2jpnpMF8lKmZD1zwcZDnRuIsAKIltwd5MsGgzzg4k99IGN+y4qhI6wNpeYwqcwCbdfvb9DAsc5WW9+jw9Benww3Gjd5N6/m27ANuuhOyWNMZEch7OY1ELlNxv7kxRe2A3adgw8vB4APmDSFltSVXz6ZSwpTRvHFKskuVG55bhms/QbmB/No8DwZv6wobhsRIoTlYr28ltr3ly/tGRkJj28sga3jT2cziYpBlT4kQRheRUwbnB9sC3ncJ4h+mvML4W4VMYmBqaqNZs+JfghjMLofAcOd5GITA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
@@ -35,18 +35,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aBBIGt3h+uziVhLIRHcrhjNCVufOCyAEoG3/IzvQeoY=;
- b=LWRJLbOxd9WCc5j6uzsJns/Qi/VLlkUUlG1aHn2m/Drmz0a5tCoVw4znK+6chUYQE8aXCzSZdNS94/Cbmvp4XdQhROcd1cDE4DNJoUsZFdIeEYewgXcRUJKUdh/pr8bdpWph55gIddpRMzP/vHdg7x12WzPQjYk0P6/x9tuQ5c6NZ07TCZallL1C2Jaq4LgBnmcgXLVRKop/00s+Z0JO2hKnCT7wjBXqCbf3OVDeGrDtMYZv+6ZOsh21WXIBrW71m8YVP/tE94ZoTXqvx0ikKK9ixifXNcwPAUkgW49VgRxH5Ge3eUOEmhMGmclZG4LNKN1NXghRpiRc1JRNtihHCA==
-Received: from CH0PR03CA0265.namprd03.prod.outlook.com (2603:10b6:610:e5::30)
- by MW4PR12MB7431.namprd12.prod.outlook.com (2603:10b6:303:225::22)
+ bh=kqCQ/Jxi3xkd6aIwBpi6JyTRtpMrh1TeknGx8AzzqZo=;
+ b=uKr5tv2Ah68RIDcN4jZbt/ahNXScbPjQQCoOqSMED1v1NI5HTBh5ZNWfimPP4L0Z5cdOJdXp/c6eUt26lwyd+mKQJPltGAN49HxpFk4f8rSA8sjwkIcIvn8FlxV1eKlO2Epj4Xrrg0dpzMgeumntcGBJHXt2YEXbIBLCydu8qpu93dWVC5kd9NsIve/zs6L/sB3p9d+hnAoR52/SaBa2iwMaoYSDAiTj7VT8Mj1E8D9uqoyV49awTbtjmyfS240S1lnusV8kCUI8LGJP669ld0SQPvfsDAugC1DDHwe3HlVNDEKk++mA4DmNBGpWQfGkwFAdK/G+iNYkpUXD5Hdtwg==
+Received: from CH2PR18CA0040.namprd18.prod.outlook.com (2603:10b6:610:55::20)
+ by LV8PR12MB9408.namprd12.prod.outlook.com (2603:10b6:408:208::7)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Mon, 6 Jul
- 2026 08:54:23 +0000
-Received: from CH1PEPF0000AD7B.namprd04.prod.outlook.com
- (2603:10b6:610:e5:cafe::10) by CH0PR03CA0265.outlook.office365.com
- (2603:10b6:610:e5::30) with Microsoft SMTP Server (version=TLS1_3,
+ 2026 08:53:46 +0000
+Received: from CH1PEPF0000AD76.namprd04.prod.outlook.com
+ (2603:10b6:610:55:cafe::37) by CH2PR18CA0040.outlook.office365.com
+ (2603:10b6:610:55::20) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.13 via Frontend Transport; Mon, 6
- Jul 2026 08:54:22 +0000
+ Jul 2026 08:53:46 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
@@ -55,20 +55,20 @@ Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
  216.228.117.161 as permitted sender) receiver=protection.outlook.com;
  client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
 Received: from mail.nvidia.com (216.228.117.161) by
- CH1PEPF0000AD7B.mail.protection.outlook.com (10.167.244.58) with Microsoft
+ CH1PEPF0000AD76.mail.protection.outlook.com (10.167.244.53) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.181.6 via Frontend Transport; Mon, 6 Jul 2026 08:54:22 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ 15.21.181.6 via Frontend Transport; Mon, 6 Jul 2026 08:53:46 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
  (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 6 Jul
- 2026 01:54:10 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ 2026 01:53:27 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail204.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 6 Jul
- 2026 01:54:09 -0700
+ 2026 01:53:27 -0700
 Received: from vdi.nvidia.com (10.127.8.9) by mail.nvidia.com (10.129.68.10)
  with Microsoft SMTP Server id 15.2.2562.20 via Frontend Transport; Mon, 6 Jul
- 2026 01:54:03 -0700
+ 2026 01:53:21 -0700
 From: Avihai Horon <avihaih@nvidia.com>
 To: <qemu-devel@nongnu.org>
 CC: Alex Williamson <alex@shazbot.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
@@ -85,9 +85,9 @@ CC: Alex Williamson <alex@shazbot.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>, Lukas Straub
  <lukasstraub2@web.de>, Maor Gottlieb <maorg@nvidia.com>, Avihai Horon
  <avihaih@nvidia.com>
-Subject: [PATCH v5 07/16] migration: Make switchover-ack re-usable
-Date: Mon, 6 Jul 2026 11:52:02 +0300
-Message-ID: <20260706085211.13905-8-avihaih@nvidia.com>
+Subject: [PATCH v5 03/16] migration: Run final save_query_pending at switchover
+Date: Mon, 6 Jul 2026 11:51:58 +0300
+Message-ID: <20260706085211.13905-4-avihaih@nvidia.com>
 X-Mailer: git-send-email 2.21.3
 In-Reply-To: <20260706085211.13905-1-avihaih@nvidia.com>
 References: <20260706085211.13905-1-avihaih@nvidia.com>
@@ -97,38 +97,39 @@ Content-Type: text/plain
 X-NV-OnPremToCloud: ExternallySecured
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD7B:EE_|MW4PR12MB7431:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8a1ee5d2-0c8b-4bfd-6701-08dedb3c2cce
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD76:EE_|LV8PR12MB9408:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4f8f5f60-7512-45dc-54ae-08dedb3c16e7
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|36860700016|7416014|376014|23010399003|56012099006|5023799004|11063799006|6133799003|22082099003|18002099003|3023799007;
-X-Microsoft-Antispam-Message-Info: 7HHjpxI97PtWWad2ws4XAuqiEb0g9zRxseELmsTd7GUvtgnBaH0WFfw/ZdzPj6e6UJsvr0VovZjBI2s2saiFN8FgLNvby9jzrHkrmDTJSukLaixI4XMiVmcTY2pt0lQJCMVP0eAyXIJiP+u68oNJxasnbgpBUg/lijch3lNGFx+X15I+eREeJ4WBlj151HHlwK8hEqa5AVvBS/GOblk7TGpSojjk/e7+bbwnNpqeseiUtWf8gCdrq2TEdlsQzTwoubvwvjKtN7azaXi3DNUHSpKPlAigtVWZ8B/13UXdW1E94VEyplOiqHClp64kwcdFg1oeQZegXlI99RQcsVr65CgBzRKqaAoMfbu3J6Oz2gHkM8wtQ74lDC4quKFgTcsa8GX00+lIoPibZhl82XDqcG6ZDt3TSTK5f5yKMmz5UBySfLFrlUvrr2MeveXDJj4Wvji+Hr8KjnwFZRHj+ZQO0CCei6G8XmiWCxo/Eymaf/euB55SnDdaM8IVy/NMyv+b5SZHmNKIgapD/6yaW/OFJ+16lgqMh9zBTinci5cXRchTbHqacFvkaWcviKyFx87g6l/Rh06zfuzU7obg6xTgyp8+hHTMaIF7f9ucrynfmdRIf/6jg5fsr/D5+vwQMaWL7rXceS/hRKbWYY1zsKrXjlEU7Tl7kYGHRb9/UCCYetWorIHI825bVN829PwV9CK9yGtAMPeoUdojOpKHgt26wA==
+ ARA:13230040|376014|7416014|36860700016|1800799024|82310400026|23010399003|5023799004|56012099006|11063799006|6133799003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: fuoZmpgLTrNTnEgOJsjjDQm8MDiq1fPK9ogm9OKywH8VRp8Xaoug7YxFLJY9srnxHqCZ9AcZhHagXwVkQXE563NKOdDi6VVBmU26R/66kqzA9/ieQXsCjIn3M8i4+OgmmZjV81bcRBvbhTFQ0YMtuZuWqk6EIH5coOf3pVhXacRElzUE8hDGwVkdp1Q+tWbqNb8gOBdNMExw6lTrrm3Q3iiPHg1B/MD0lHAbPcmYkFZYZ9jYSWfyZvJCi4sa9+xhFyHs8vfcp1GKcOgRUaPGsn5VqiGho3w+CeWQQfBTMrZu4+ipiAUhkXysPsWr3ZxlbqrQrj0yFAA5s/9UsqBhsoNXZy8aUnLdNqqaKyU0+3wRPlRgaUQW3fblw9NA1YNFLngJVbMhJ8iQZJcheoKLTST0B98FeDC8ontolQjjXWkuIlCUTEkizpZ941indvl1Ctn5YDu2sgQiYf9jtQKmk1+ZwqPPvtA/vhn7TV1gEJgF1yzyoOF1ZvTOgOf6673C4BfPbJjgx+FH9D+OC5u3/FNBruQxg6KzzhZNpMLr1jhT8hpmVFWpCvexZ+bp5tGH2+7j4FJJfpZ9DnWqGELTwuqMabqlf0l2efl/7DuIjJy9PvYSe501skAZMRInjEtv/gUlXF/j3AwXqmhRf0bEvlgiq3o6oxmRkjiSUUcUGQ/isB6XD2w2I8bZQBA5jYoL7DZRVw0wkuIuZvKsxhC2uw==
 X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(36860700016)(7416014)(376014)(23010399003)(56012099006)(5023799004)(11063799006)(6133799003)(22082099003)(18002099003)(3023799007);
+ SFS:(13230040)(376014)(7416014)(36860700016)(1800799024)(82310400026)(23010399003)(5023799004)(56012099006)(11063799006)(6133799003)(18002099003)(22082099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: ttZtceQ+FgeW9H/HOwAimZEA7HFjRU2sSKTFpCOcXp/O5s3Cg91j3B/yEDS8bg/O3kpocz14EuCXmpEFQsa1pkaMdvVviGxfL5fOi9GDOkDODAXhuPdRbJDw6HTrERztn9oGuCFGVxbdj3zoaQmwNPkNLXBhHvg72m0yTMnArMfItq2D19mNHfwt478csIzhNbzagnityR+p6C8ySUI4mJj5izRzTUsVldYFWIEBlVow0wSv14rQFzBWWMlYBJ3G+IrVyh5Pf2IFWc6ceMK4kJKKfH8cbRhXX76RhZlmwNJhfOY3uR9co6167/flQ7HORH54ZAryeWGJkfP47WR5rxF3PYBkxTdAworapJFOQ4JPuJMHyxpxu/ZGoGa02Nq8FUWQ4s7GYrAEBYy/jIBDB1Vl2J2ZBAHBnvnkg3dduyM+gekSB9QXopg8fuRfKCgj
+X-MS-Exchange-AntiSpam-MessageData-0: kbDAYnnO5PpDq5B8u2z/iENfTMaL6OsfoqUpS8o2WCNTaHV1CCTuILy+27kxGLH/vpbxuGY4VPROQWSzbexai7WBTaiJRhcvSQ8HiHBDSODMhzX5e3bsaB5fT27b8/QIndcdYTZKd85ZPyslYU30rQZsGGY0wNSNxo7zIGJivVjomPnSP2al2pG1TkeQ+tspVQqe1MlRTO9Sj0wskiDj0AjFqC03OKTrBzwJOJYvQyk7hNYBNDLWvugkbynPsd4hGf7XiJlXxTQR6CSk0oTc4YVlSCBFr06PPwzeYKbS01pI0LXEaibhMmZzaj0xx/7VEK6+DfGQGcSJNRoXwSa9QCGm5a+qu50vi87gLjbu93IQTZqGEPqecqUukf3hejCl+fs8ziQdxNQ8dkgg/EjXSl3LIiqEqVhPih4F9Lh8xU/r2PYg3uO0Z3jSck1Un4yu
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 08:54:22.7852 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8a1ee5d2-0c8b-4bfd-6701-08dedb3c2cce
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 08:53:46.0404 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4f8f5f60-7512-45dc-54ae-08dedb3c16e7
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD7B.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD76.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7431
-Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9408
+Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
  envelope-from=avihaih@nvidia.com;
- helo=PH7PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ helo=CH4PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,449 +145,418 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Switchover-ack is a mechanism to synchronize between source and
-destination QEMU during migration to prevent the source from switching
-over prematurely.
+Before switchover, the source needs one last exact pending query so
+modules can flush dirty state. This is currently done ad hoc in modules
+handlers. For example, RAM syncs its dirty bitmap in its save_complete
+handler.
 
-VFIO uses switchover-ack to ensure switchover happens only after
-destination side has loaded the precopy initial bytes. This is important
-for VFIO, as otherwise downtime could be impacted and be higher.
+This should be a general concept relevant for any module, so extract it
+to migration core instead by running a final save_query_pending before
+switchover.
 
-In its current state, switchover-ack is a one-time mechanism, meaning
-that switchover is acked only once and past that another ACK cannot be
-requested again. This was sufficient until now, as VFIO precopy initial
-bytes was defined to be monotonically decreasing. Thus, when precopy
-initial bytes reached zero for all VFIO devices, a single ACK would be
-sent and its validity would hold.
+The final query requires special handling by modules (e.g., it's called
+with BQL locked, during VM stop), so extend save_query_pending
+SaveVMHandlers callback and qemu_savevm_query_pending() with a "final"
+flag so migration modules can tell the last pending query during
+switchover from periodic iteration queries.
 
-However, now the new VFIO_PRECOPY_INFO_REINIT feature allows precopy
-initial bytes to be re-initialized during precopy. Specifically, it
-means that initial bytes can grow after reaching zero, which would
-invalidate a previously sent switchover ACK.
+Call final pending query also in COLO checkpoint, which needs to flush
+dirty state before the checkpoint's live state is saved. Unlike a
+regular switchover, COLO reaches completion repeatedly for every
+checkpoint, so this must be done on each one.
 
-To solve this, make switchover-ack reusable and allow devices to request
-switchover ACKs when needed via the save_query_pending SaveVMHandler.
-
-Since now switchover ACK can be requested for a specific device and in
-different times, make switchover ACK per-device (instead of a single ACK
-for all devices) and let source side do the pending ACKs accounting.
-
-Keep the legacy switchover-ack mechanism for backward compatibility and
-turn it on by a compatibility property for older machines. Enable the
-property until VFIO implements the new switchover-ack.
-
-Acked-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 ---
- qapi/migration.json                | 14 ++++----
- include/migration/client-options.h |  1 +
- include/migration/register.h       |  2 ++
- migration/migration.h              | 32 ++++++++++++++++--
- migration/savevm.h                 |  6 ++--
- migration/colo.c                   |  2 +-
- migration/migration.c              | 37 ++++++++++++++-------
- migration/options.c                | 10 ++++++
- migration/savevm.c                 | 53 +++++++++++++++++++++++-------
- migration/trace-events             |  5 +--
- 10 files changed, 124 insertions(+), 38 deletions(-)
+ include/migration/register.h   | 41 ++++++++++++++++++----------------
+ migration/savevm.h             |  3 ++-
+ hw/s390x/s390-stattrib.c       |  2 +-
+ hw/vfio/migration.c            | 11 ++++++---
+ migration/block-dirty-bitmap.c | 11 ++++++---
+ migration/colo.c               | 10 +++++++++
+ migration/migration.c          | 14 ++++++++++--
+ migration/ram.c                | 40 +++++++++++++++++++--------------
+ migration/savevm.c             | 20 +++++++++++++----
+ hw/vfio/trace-events           |  2 +-
+ migration/trace-events         |  2 +-
+ 11 files changed, 104 insertions(+), 52 deletions(-)
 
-diff --git a/qapi/migration.json b/qapi/migration.json
-index e8756308cf..d2f42c4b0f 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -508,14 +508,12 @@
- #     (since 7.1)
- #
- # @switchover-ack: If enabled, migration will not stop the source VM
--#     and complete the migration until an ACK is received from the
--#     destination that it's OK to do so.  Exactly when this ACK is
--#     sent depends on the migrated devices that use this feature.  For
--#     example, a device can use it to make sure some of its data is
--#     sent and loaded in the destination before doing switchover.
--#     This can reduce downtime if devices that support this capability
--#     are present.  'return-path' capability must be enabled to use
--#     it.  (since 8.1)
-+#     and complete the migration until the destination has
-+#     acknowledged that it is OK to switchover.  The acknowledgement
-+#     may depend, for example, on some device's data being loaded in
-+#     the destination before doing switchover.  This can reduce
-+#     downtime if devices that support this capability are present.
-+#     Capability @return-path must be enabled to use it.  (since 8.1)
- #
- # @dirty-limit: If enabled, migration will throttle vCPUs as needed to
- #     keep their dirty page rate within @vcpu-dirty-limit.  This can
-diff --git a/include/migration/client-options.h b/include/migration/client-options.h
-index 289c9d7762..78b1daa1a6 100644
---- a/include/migration/client-options.h
-+++ b/include/migration/client-options.h
-@@ -13,6 +13,7 @@
- 
- /* properties */
- bool migrate_send_switchover_start(void);
-+bool migrate_switchover_ack_legacy(void);
- 
- /* capabilities */
- 
 diff --git a/include/migration/register.h b/include/migration/register.h
-index a61c4236d2..5825eb30cb 100644
+index 5e5e0ee432..6f632123f1 100644
 --- a/include/migration/register.h
 +++ b/include/migration/register.h
-@@ -23,6 +23,8 @@ typedef struct MigPendingData {
-     uint64_t postcopy_bytes;
-     /* Amount of pending bytes can be transferred only in stopcopy */
-     uint64_t stopcopy_bytes;
-+    /* Number of new pending switchover ACKs */
-+    uint32_t switchover_ack_pending;
-     /*
-      * Total pending data, modules do not need to update this field, it
-      * will be automatically calculated by migration core API.
-diff --git a/migration/migration.h b/migration/migration.h
-index 570349d858..44bce199cd 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -487,6 +487,29 @@ struct MigrationState {
+@@ -171,6 +171,28 @@ typedef struct SaveVMHandlers {
       */
-     uint8_t clear_bitmap_shift;
+     bool (*is_active_iterate)(void *opaque);
  
-+    /*
-+     * This decides whether to use legacy switchover-ack or new switchover-ack.
-+     * The main difference between them is that the former allows acknowledging
-+     * switchover only once while the latter multiple times.
++    /**
++     * @save_query_pending
 +     *
-+     * In legacy, the destination keeps track of a pending ACKs counter. As
-+     * migration progresses, the devices on the destination acknowledge
-+     * switchover, decreasing the counter. When the counter reaches zero, a
-+     * single ACK message is sent to the source via the return path, indicating
-+     * that it's OK to switchover.
++     * This estimates the remaining data to transfer on the source side.
 +     *
-+     * In new switchover-ack, the source is the one that keeps track of a
-+     * pending ACKs counter. As migration progresses, the destination sends ACK
-+     * message per-device via the return path, which decrements the source
-+     * counter. When the counter reaches zero, it's OK to switchover. During
-+     * precopy, source-side devices may request additional ACKs, which increment
-+     * the counter again.
++     * When @exact is true, a module must report accurate results.  When
++     * @exact is false, a module may report estimates.
 +     *
-+     * In both legacy and new schemes, we rely on per-device protocol to request
-+     * switchover ACK from the destination-side counterpart.
++     * It's highly recommended that modules implement a faster version of
++     * the query path (for example, by proper caching on the counters) if
++     * an accurate query will be time-consuming.
++     *
++     * @opaque: data pointer passed to register_savevm_live()
++     * @pending: pointer to a MigPendingData struct
++     * @exact: set to true for an accurate (slow) query
++     * @final: set to true for the final query during switchover. When final is
++     * true, the query is called with BQL locked. Otherwise, it's called with
++     * BQL unlocked.
 +     */
-+    bool switchover_ack_legacy;
++    void (*save_query_pending)(void *opaque, MigPendingData *pending,
++                               bool exact, bool final);
 +
-     /*
-      * This save hostname when out-going migration starts
+     /* This runs outside the BQL in the migration case, and
+      * within the lock in the savevm case.  The callback had better only
+      * use data that is local to the migration thread or protected
+@@ -210,25 +232,6 @@ typedef struct SaveVMHandlers {
       */
-@@ -496,10 +519,13 @@ struct MigrationState {
-     JSONWriter *vmdesc;
+     bool (*save_postcopy_prepare)(QEMUFile *f, void *opaque, Error **errp);
  
-     /*
--     * Indicates whether an ACK from the destination that it's OK to do
--     * switchover has been received.
-+     * Indicates the number of pending ACKs from the destination. The value may
-+     * increase or decrease during precopy as new ACKs are requested or
-+     * received. When zero is reached, it's OK to switchover. In legacy
-+     * switchover-ack, it's initialized to 1 and decreased to zero upon ACK.
-      */
--    bool switchover_acked;
-+    uint32_t switchover_ack_pending_num;
-+
-     /* Is this a rdma migration */
-     bool rdma_migration;
- 
+-    /**
+-     * @save_query_pending
+-     *
+-     * This estimates the remaining data to transfer on the source side.
+-     *
+-     * When @exact is true, a module must report accurate results.  When
+-     * @exact is false, a module may report estimates.
+-     *
+-     * It's highly recommended that modules implement a faster version of
+-     * the query path (for example, by proper caching on the counters) if
+-     * an accurate query will be time-consuming.
+-     *
+-     * @opaque: data pointer passed to register_savevm_live()
+-     * @pending: pointer to a MigPendingData struct
+-     * @exact: set to true for an accurate (slow) query
+-     */
+-    void (*save_query_pending)(void *opaque, MigPendingData *pending,
+-                               bool exact);
+-
+     /**
+      * @load_state
+      *
 diff --git a/migration/savevm.h b/migration/savevm.h
-index 44424be347..fb92d3bc85 100644
+index b6bb4fa977..81abd96dda 100644
 --- a/migration/savevm.h
 +++ b/migration/savevm.h
-@@ -45,8 +45,10 @@ int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy);
+@@ -45,7 +45,8 @@ int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy);
  void qemu_savevm_state_cleanup(void);
  void qemu_savevm_state_complete_postcopy(QEMUFile *f);
  int qemu_savevm_state_complete_precopy(MigrationState *s, Error **errp);
--void qemu_savevm_query_pending_iter(MigPendingData *pending, bool exact);
--void qemu_savevm_query_pending_final(MigPendingData *pending);
-+void qemu_savevm_query_pending_iter(MigrationState *s, MigPendingData *pending,
-+                                    bool exact);
-+void qemu_savevm_query_pending_final(MigrationState *s,
-+                                     MigPendingData *pending);
+-void qemu_savevm_query_pending(MigPendingData *pending, bool exact);
++void qemu_savevm_query_pending_iter(MigPendingData *pending, bool exact);
++void qemu_savevm_query_pending_final(MigPendingData *pending);
  int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy);
  bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp);
  void qemu_savevm_state_end(QEMUFile *f);
+diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
+index c334714b31..b0f04eb30c 100644
+--- a/hw/s390x/s390-stattrib.c
++++ b/hw/s390x/s390-stattrib.c
+@@ -190,7 +190,7 @@ static int cmma_save_setup(QEMUFile *f, void *opaque, Error **errp)
+ }
+ 
+ static void cmma_state_pending(void *opaque, MigPendingData *pending,
+-                               bool exact)
++                               bool exact, bool final)
+ {
+     S390StAttribState *sas = S390_STATTRIB(opaque);
+     S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index fb12b9717f..195498845e 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -622,13 +622,18 @@ static void vfio_state_pending_sync(VFIODevice *vbasedev)
+ }
+ 
+ static void vfio_state_pending(void *opaque, MigPendingData *pending,
+-                               bool exact)
++                               bool exact, bool final)
+ {
+     VFIODevice *vbasedev = opaque;
+     VFIOMigration *migration = vbasedev->migration;
+     uint64_t precopy_size, stopcopy_size;
+ 
+-    if (exact) {
++    /*
++     * The final pending query runs during switchover downtime. VFIO does not
++     * need a fresh device pending-data query then to get the latest dirty
++     * data, so avoid the extra work and report the cached counters below.
++     */
++    if (exact && !final) {
+         vfio_state_pending_sync(vbasedev);
+     }
+ 
+@@ -646,7 +651,7 @@ static void vfio_state_pending(void *opaque, MigPendingData *pending,
+ 
+     trace_vfio_state_pending(vbasedev->name, migration->stopcopy_size,
+                              migration->precopy_init_size,
+-                             migration->precopy_dirty_size, exact);
++                             migration->precopy_dirty_size, exact, final);
+ }
+ 
+ static bool vfio_is_active_iterate(void *opaque)
+diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
+index 7ef3759e53..cba54e25cd 100644
+--- a/migration/block-dirty-bitmap.c
++++ b/migration/block-dirty-bitmap.c
+@@ -767,13 +767,16 @@ static int dirty_bitmap_save_complete(QEMUFile *f, void *opaque)
+ }
+ 
+ static void dirty_bitmap_state_pending(void *opaque, MigPendingData *data,
+-                                       bool exact)
++                                       bool exact, bool final)
+ {
+     DBMSaveState *s = &((DBMState *)opaque)->save;
+     SaveBitmapState *dbms;
+     uint64_t pending = 0;
+ 
+-    bql_lock();
++    /* Final pending query is called with BQL locked */
++    if (!final) {
++        bql_lock();
++    }
+ 
+     QSIMPLEQ_FOREACH(dbms, &s->dbms_list, entry) {
+         uint64_t gran = bdrv_dirty_bitmap_granularity(dbms->bitmap);
+@@ -783,7 +786,9 @@ static void dirty_bitmap_state_pending(void *opaque, MigPendingData *data,
+         pending += DIV_ROUND_UP(sectors * BDRV_SECTOR_SIZE, gran);
+     }
+ 
+-    bql_unlock();
++    if (!final) {
++        bql_unlock();
++    }
+ 
+     trace_dirty_bitmap_state_pending(pending);
+ 
 diff --git a/migration/colo.c b/migration/colo.c
-index 08632d5e4a..0cef0f6b0e 100644
+index 2d36f933cf..08632d5e4a 100644
 --- a/migration/colo.c
 +++ b/migration/colo.c
-@@ -473,7 +473,7 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
-      * state is saved. Unlike a regular switchover, COLO reaches completion
-      * repeatedly for every checkpoint, so this must be done on each one.
-      */
--    qemu_savevm_query_pending_final(&pending);
-+    qemu_savevm_query_pending_final(s, &pending);
+@@ -409,6 +409,7 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
+                                           QEMUFile *fb)
+ {
+     Error *local_err = NULL;
++    MigPendingData pending = {};
+     int ret = -1;
  
+     colo_send_message(s->to_dst_file, COLO_MESSAGE_CHECKPOINT_REQUEST,
+@@ -465,6 +466,15 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
+     if (migrate_auto_converge()) {
+         mig_throttle_counter_reset();
+     }
++
++    /*
++     * Run the final pending query so migration modules can flush their dirty
++     * state (e.g., RAM syncs its dirty bitmap) before this checkpoint's live
++     * state is saved. Unlike a regular switchover, COLO reaches completion
++     * repeatedly for every checkpoint, so this must be done on each one.
++     */
++    qemu_savevm_query_pending_final(&pending);
++
      /*
       * Only save VM's live state, which not including device state.
+      * TODO: We may need a timeout mechanism to prevent COLO process
 diff --git a/migration/migration.c b/migration/migration.c
-index 1d3387da0f..2b625da114 100644
+index 7e0a0bea7a..442f950c43 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -1713,7 +1713,9 @@ int migrate_init(MigrationState *s, Error **errp)
-     s->vm_old_state = -1;
-     s->iteration_initial_bytes = 0;
-     s->threshold_size = 0;
--    s->switchover_acked = false;
-+    /* Legacy switchover-ack sends a single ACK for all devices */
-+    qatomic_set(&s->switchover_ack_pending_num,
-+                migrate_switchover_ack_legacy() ? 1 : 0);
-     s->rdma_migration = false;
- 
-     /*
-@@ -2207,7 +2209,7 @@ void migration_request_switchover_ack_legacy(const char *requester)
+@@ -2793,12 +2793,22 @@ static bool migration_switchover_prepare(MigrationState *s)
+ static bool migration_switchover_start(MigrationState *s, Error **errp)
  {
-     MigrationIncomingState *mis = migration_incoming_get_current();
+     ERRP_GUARD();
++    MigPendingData pending = {};
  
--    if (!migrate_switchover_ack()) {
-+    if (!migrate_switchover_ack() || !migrate_switchover_ack_legacy()) {
-         return;
+     if (!migration_switchover_prepare(s)) {
+         error_setg(errp, "Switchover is interrupted");
+         return false;
      }
  
-@@ -2463,9 +2465,18 @@ static void *source_return_path_thread(void *opaque)
-             break;
- 
-         case MIG_RP_MSG_SWITCHOVER_ACK:
--            ms->switchover_acked = true;
--            trace_source_return_path_thread_switchover_acked();
-+        {
-+            uint32_t pending_num;
++    /*
++     * The final query to the whole system on dirty data to make sure we
++     * collect the latest status of the VM.  For precopy, source QEMU will
++     * dump all the dirty data during switchover.  For postcopy, this will
++     * properly update all the dirty bitmaps to finally generate the
++     * correct discard bitmaps; see ram_postcopy_send_discard_bitmap().
++     */
++    qemu_savevm_query_pending_final(&pending);
 +
-+            pending_num = qatomic_dec_fetch(&ms->switchover_ack_pending_num);
-+            trace_source_return_path_thread_switchover_acked(pending_num);
-+            if (pending_num == UINT32_MAX) {
-+                error_setg(&err, "Switchover ack pending num underflowed");
-+                goto out;
-+            }
-+
-             break;
-+        }
- 
-         default:
-             break;
-@@ -2822,7 +2833,7 @@ static bool migration_switchover_start(MigrationState *s, Error **errp)
-      * properly update all the dirty bitmaps to finally generate the
-      * correct discard bitmaps; see ram_postcopy_send_discard_bitmap().
-      */
--    qemu_savevm_query_pending_final(&pending);
-+    qemu_savevm_query_pending_final(s, &pending);
- 
      /* Inactivate disks except in COLO */
      if (!migrate_colo()) {
-@@ -3272,7 +3283,7 @@ static bool migration_can_switchover(MigrationState *s)
-         return true;
-     }
- 
--    return s->switchover_acked;
-+    return qatomic_read(&s->switchover_ack_pending_num) == 0;
- }
- 
- /* Migration thread iteration status */
-@@ -3311,12 +3322,13 @@ static bool migration_iteration_next_ready(MigrationState *s,
-     return false;
- }
- 
--static void migration_iteration_go_next(MigPendingData *pending)
-+static void migration_iteration_go_next(MigrationState *s,
-+                                        MigPendingData *pending)
- {
+         /*
+@@ -3291,7 +3301,7 @@ static void migration_iteration_go_next(MigPendingData *pending)
      /*
       * Do a slow sync first before boosting the iteration count.
       */
--    qemu_savevm_query_pending_iter(pending, true);
-+    qemu_savevm_query_pending_iter(s, pending, true);
+-    qemu_savevm_query_pending(pending, true);
++    qemu_savevm_query_pending_iter(pending, true);
  
      /*
       * Update the dirty information for the whole system for this
-@@ -3362,12 +3374,12 @@ static MigIterateState migration_iteration_run(MigrationState *s)
-     Error *local_err = NULL;
-     bool in_postcopy = (s->state == MIGRATION_STATUS_POSTCOPY_DEVICE ||
-                         s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE);
--    bool can_switchover = migration_can_switchover(s);
-+    bool can_switchover;
-     MigPendingData pending = { };
+@@ -3342,7 +3352,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
      bool complete_ready;
  
      /* Fast path - get the estimated amount of pending data */
--    qemu_savevm_query_pending_iter(&pending, false);
-+    qemu_savevm_query_pending_iter(s, &pending, false);
+-    qemu_savevm_query_pending(&pending, false);
++    qemu_savevm_query_pending_iter(&pending, false);
  
      if (in_postcopy) {
          /*
-@@ -3408,9 +3420,12 @@ static MigIterateState migration_iteration_run(MigrationState *s)
-          * during postcopy phase.
-          */
-         if (migration_iteration_next_ready(s, &pending)) {
--            migration_iteration_go_next(&pending);
-+            migration_iteration_go_next(s, &pending);
-         }
+diff --git a/migration/ram.c b/migration/ram.c
+index 55aa9b47dc..8918b2f03b 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -2686,9 +2686,6 @@ void ram_postcopy_send_discard_bitmap(MigrationState *ms)
  
-+        /* Check can switchover after qemu_savevm_query_pending() */
-+        can_switchover = migration_can_switchover(s);
-+
-         /* Should we switch to postcopy now? */
-         if (can_switchover && postcopy_should_start(s, &pending)) {
-             if (postcopy_start(s, &local_err)) {
-diff --git a/migration/options.c b/migration/options.c
-index 5cbfd29099..4c9b25372e 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -110,6 +110,9 @@ const Property migration_properties[] = {
-                      preempt_pre_7_2, false),
-     DEFINE_PROP_BOOL("multifd-clean-tls-termination", MigrationState,
-                      multifd_clean_tls_termination, true),
-+    /* Use legacy until VFIO implements new switchover-ack */
-+    DEFINE_PROP_BOOL("switchover-ack-legacy", MigrationState,
-+                     switchover_ack_legacy, true),
+     RCU_READ_LOCK_GUARD();
  
-     /* Migration parameters */
-     DEFINE_PROP_UINT8("x-throttle-trigger-threshold", MigrationState,
-@@ -467,6 +470,13 @@ bool migrate_rdma(void)
-     return s->rdma_migration;
+-    /* This should be our last sync, the src is now paused */
+-    migration_bitmap_sync_precopy(true);
+-
+     /* Easiest way to make sure we don't resume in the middle of a host-page */
+     rs->pss[RAM_CHANNEL_PRECOPY].last_sent_block = NULL;
+     rs->last_seen_block = NULL;
+@@ -3376,10 +3373,6 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+     rs->last_stage = !migration_in_colo_state();
+ 
+     WITH_RCU_READ_LOCK_GUARD() {
+-        if (!migration_in_postcopy()) {
+-            migration_bitmap_sync_precopy(true);
+-        }
+-
+         ret = rdma_registration_start(f, RAM_CONTROL_FINISH);
+         if (ret < 0) {
+             qemu_file_set_error(f, ret);
+@@ -3442,25 +3435,38 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+     return qemu_fflush(f);
  }
  
-+bool migrate_switchover_ack_legacy(void)
-+{
-+    MigrationState *s = migrate_get_current();
+-static void ram_state_pending(void *opaque, MigPendingData *pending,
+-                              bool exact)
++static void ram_state_pending_sync(bool exact, bool final)
+ {
+-    RAMState **temp = opaque;
+-    RAMState *rs = *temp;
+-    uint64_t remaining_size;
+-
+     /*
+      * Sync is not needed either with: (1) a fast query, or (2) after
+      * postcopy has started (no new dirty will generate anymore).
+      */
+-    if (exact && !migration_in_postcopy()) {
++    if (!exact || migration_in_postcopy()) {
++        return;
++    }
 +
-+    return s->switchover_ack_legacy;
++    /* Final pending query is called with BQL locked */
++    if (!final) {
+         bql_lock();
+-        WITH_RCU_READ_LOCK_GUARD() {
+-            migration_bitmap_sync_precopy(false);
+-        }
++    }
++
++    WITH_RCU_READ_LOCK_GUARD() {
++        migration_bitmap_sync_precopy(final);
++    }
++
++    if (!final) {
+         bql_unlock();
+     }
 +}
 +
- typedef enum WriteTrackingSupport {
-     WT_SUPPORT_UNKNOWN = 0,
-     WT_SUPPORT_ABSENT,
++static void ram_state_pending(void *opaque, MigPendingData *pending,
++                              bool exact, bool final)
++{
++    RAMState **temp = opaque;
++    RAMState *rs = *temp;
++    uint64_t remaining_size;
+ 
++    ram_state_pending_sync(exact, final);
+     remaining_size = rs->migration_dirty_pages * TARGET_PAGE_SIZE;
+ 
+     if (migrate_postcopy_ram()) {
 diff --git a/migration/savevm.c b/migration/savevm.c
-index 804c76e3bd..1f6e696c50 100644
+index 7e2a0c2b4a..74d622583e 100644
 --- a/migration/savevm.c
 +++ b/migration/savevm.c
 @@ -1801,7 +1801,8 @@ int qemu_savevm_state_complete_precopy(MigrationState *s, Error **errp)
      return 0;
  }
  
--static void qemu_savevm_query_pending(MigPendingData *pending, bool exact,
-+static void qemu_savevm_query_pending(MigrationState *s,
-+                                      MigPendingData *pending, bool exact,
-                                       bool final)
+-void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
++static void qemu_savevm_query_pending(MigPendingData *pending, bool exact,
++                                      bool final)
  {
      SaveStateEntry *se;
-@@ -1827,22 +1828,35 @@ static void qemu_savevm_query_pending(MigPendingData *pending, bool exact,
+ 
+@@ -1814,7 +1815,7 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
+         if (!qemu_savevm_state_active(se)) {
+             continue;
+         }
+-        se->ops->save_query_pending(se->opaque, pending, exact);
++        se->ops->save_query_pending(se->opaque, pending, exact, final);
+     }
+ 
+     pending->total_bytes = pending->precopy_bytes +
+@@ -1826,13 +1827,24 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
       * close to reality when this got invoked frequently while iterating.
       */
      mig_stats.dirty_bytes_total = pending->total_bytes;
--    trace_qemu_savevm_query_pending(exact, final, pending->precopy_bytes,
--                                    pending->stopcopy_bytes,
--                                    pending->postcopy_bytes,
--                                    pending->total_bytes);
-+
-+    if (migrate_switchover_ack() && !migrate_switchover_ack_legacy() &&
-+        pending->switchover_ack_pending) {
-+        /*
-+         * NOTE: Currently we rely on per-device protocol to request switchover
-+         * ACK from the device on the destination side.
-+         */
-+        qatomic_add(&s->switchover_ack_pending_num,
-+                    pending->switchover_ack_pending);
-+    }
-+
-+    trace_qemu_savevm_query_pending(
-+        exact, final, pending->precopy_bytes, pending->stopcopy_bytes,
-+        pending->postcopy_bytes, pending->total_bytes,
-+        pending->switchover_ack_pending,
-+        qatomic_read(&s->switchover_ack_pending_num));
+-
+-    trace_qemu_savevm_query_pending(exact, pending->precopy_bytes,
++    trace_qemu_savevm_query_pending(exact, final, pending->precopy_bytes,
+                                     pending->stopcopy_bytes,
+                                     pending->postcopy_bytes,
+                                     pending->total_bytes);
  }
  
--void qemu_savevm_query_pending_iter(MigPendingData *pending, bool exact)
-+void qemu_savevm_query_pending_iter(MigrationState *s, MigPendingData *pending,
-+                                    bool exact)
- {
--    qemu_savevm_query_pending(pending, exact, false);
-+    qemu_savevm_query_pending(s, pending, exact, false);
- }
- 
--void qemu_savevm_query_pending_final(MigPendingData *pending)
-+void qemu_savevm_query_pending_final(MigrationState *s, MigPendingData *pending)
- {
-     g_assert(bql_locked());
- 
--    qemu_savevm_query_pending(pending, true, true);
-+    qemu_savevm_query_pending(s, pending, true, true);
- }
- 
- void qemu_savevm_state_cleanup(void)
-@@ -2487,7 +2501,7 @@ static int loadvm_switchover_ack_no_users_legacy(MigrationIncomingState *mis,
- {
-     int ret;
- 
--    if (!migrate_switchover_ack()) {
-+    if (!migrate_switchover_ack() || !migrate_switchover_ack_legacy()) {
-         return 0;
-     }
- 
-@@ -3169,7 +3183,7 @@ int qemu_load_device_state(QEMUFile *f, Error **errp)
-     return 0;
- }
- 
--int qemu_loadvm_approve_switchover(const char *approver)
-+static int qemu_loadvm_approve_switchover_legacy(const char *approver)
- {
-     MigrationIncomingState *mis = migration_incoming_get_current();
- 
-@@ -3188,6 +3202,23 @@ int qemu_loadvm_approve_switchover(const char *approver)
-     return migrate_send_rp_switchover_ack(mis);
- }
- 
-+int qemu_loadvm_approve_switchover(const char *approver)
++void qemu_savevm_query_pending_iter(MigPendingData *pending, bool exact)
 +{
-+    MigrationIncomingState *mis = migration_incoming_get_current();
-+
-+    if (!migrate_switchover_ack()) {
-+        return 0;
-+    }
-+
-+    if (migrate_switchover_ack_legacy()) {
-+        return qemu_loadvm_approve_switchover_legacy(approver);
-+    }
-+
-+    trace_loadvm_approve_switchover(approver);
-+
-+    return migrate_send_rp_switchover_ack(mis);
++    qemu_savevm_query_pending(pending, exact, false);
 +}
 +
- bool qemu_loadvm_load_state_buffer(const char *idstr, uint32_t instance_id,
-                                    char *buf, size_t len, Error **errp)
++void qemu_savevm_query_pending_final(MigPendingData *pending)
++{
++    g_assert(bql_locked());
++
++    qemu_savevm_query_pending(pending, true, true);
++}
++
+ void qemu_savevm_state_cleanup(void)
  {
+     SaveStateEntry *se;
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index 4c28b3291c..fa2204f002 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -176,7 +176,7 @@ vfio_save_device_config_state(const char *name) " (%s)"
+ vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+ vfio_save_iterate_start(const char *name) " (%s)"
+ vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer size %"PRIu64
+-vfio_state_pending(const char *name, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size, bool exact) " (%s) stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64 " exact %d"
++vfio_state_pending(const char *name, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size, bool exact, bool final) " (%s) stopcopy size %"PRIu64", precopy initial size %"PRIu64", precopy dirty size %"PRIu64", exact %d, final %d"
+ vfio_vmstate_change(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+ vfio_vmstate_change_prepare(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+ 
 diff --git a/migration/trace-events b/migration/trace-events
-index a6b8c31ee1..f5339f4193 100644
+index de99d976ab..1c9212d3e2 100644
 --- a/migration/trace-events
 +++ b/migration/trace-events
 @@ -7,7 +7,7 @@ qemu_loadvm_state_section_partend(uint32_t section_id) "%u"
  qemu_loadvm_state_post_main(int ret) "%d"
  qemu_loadvm_state_section_startfull(uint32_t section_id, const char *idstr, uint32_t instance_id, uint32_t version_id) "%u(%s) %u %u"
  qemu_savevm_send_packaged(void) ""
--qemu_savevm_query_pending(bool exact, bool final, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy, uint64_t total) "exact=%d, final=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64", total=%"PRIu64
-+qemu_savevm_query_pending(bool exact, bool final, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy, uint64_t total, uint32_t switchover_ack_pending, uint32_t total_switchover_ack_pending) "exact=%d, final=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64", total=%"PRIu64", collected switchover ack pending=%"PRIu32", total switchover ack pending=%"PRIu32
+-qemu_savevm_query_pending(bool exact, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy, uint64_t total) "exact=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64", total=%"PRIu64
++qemu_savevm_query_pending(bool exact, bool final, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy, uint64_t total) "exact=%d, final=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64", total=%"PRIu64
+ loadvm_state_switchover_ack_needed(unsigned int switchover_ack_pending_num) "Switchover ack pending num=%u"
  loadvm_state_setup(void) ""
  loadvm_state_cleanup(void) ""
- loadvm_handle_cmd_packaged(unsigned int length) "%u"
-@@ -24,6 +24,7 @@ loadvm_postcopy_ram_handle_discard_header(const char *ramid, uint16_t len) "%s:
- loadvm_process_command(const char *s, uint16_t len) "com=%s len=%d"
- loadvm_process_command_ping(uint32_t val) "0x%x"
- loadvm_approve_switchover_legacy(const char *approver, unsigned int switchover_ack_pending_num_legacy) "Approver %s, switchover_ack_pending_num_legacy %u"
-+loadvm_approve_switchover(const char *approver) "Approver %s"
- postcopy_ram_listen_thread_exit(void) ""
- postcopy_ram_listen_thread_start(void) ""
- qemu_savevm_send_postcopy_advise(void) ""
-@@ -189,7 +190,7 @@ source_return_path_thread_loop_top(void) ""
- source_return_path_thread_pong(uint32_t val) "0x%x"
- source_return_path_thread_shut(uint32_t val) "0x%x"
- source_return_path_thread_resume_ack(uint32_t v) "%"PRIu32
--source_return_path_thread_switchover_acked(void) ""
-+source_return_path_thread_switchover_acked(uint32_t pending_num) "switchover_ack_pending_num %" PRIu32
- source_return_path_thread_postcopy_package_loaded(void) ""
- migration_thread_low_pending(uint64_t pending) "%" PRIu64
- migrate_transferred(uint64_t transferred, uint64_t time_spent, uint64_t bandwidth, uint64_t avail_bw, uint64_t size) "transferred %" PRIu64 " time_spent %" PRIu64 " bandwidth %" PRIu64 " switchover_bw %" PRIu64 " max_size %" PRId64
 -- 
 2.40.1
 
