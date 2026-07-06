@@ -4,80 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3C9DC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 11:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28B4DC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 11:56:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wghrN-0001Ye-AG; Mon, 06 Jul 2026 07:51:37 -0400
+	id 1wghvl-0002Ws-Rh; Mon, 06 Jul 2026 07:56:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wghrH-0001YF-IK
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:51:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wghvf-0002Vv-Oe
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:56:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wghrG-00050g-7Q
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:51:31 -0400
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wghvd-0005wo-46
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:56:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783338689;
+ s=mimecast20190719; t=1783338957;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=6MZeVVmFL+eaMn/AIwJDbn1+Nrnqjph+bxM7usbiNTo=;
- b=fRVdC/rQArVGEDHPSCscAbN1tzwXtTj0dnTtTJBd4qH7cnHrtFUht8sOhpn6sRnmGFkF39
- GSHyp5yf7z14rO9nffF1gXJ2HfEkXlpN3+ZSAfjN0tq1OmbNor5D8/YNb8eKs15Q01X7ks
- giK6TpWJwU3Kk3TPs4rtENQyiQPwlwE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-185-FBV5qYOOOjKZ1L1QYtkYug-1; Mon,
- 06 Jul 2026 07:51:23 -0400
-X-MC-Unique: FBV5qYOOOjKZ1L1QYtkYug-1
-X-Mimecast-MFC-AGG-ID: FBV5qYOOOjKZ1L1QYtkYug_1783338682
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D08071955F73; Mon,  6 Jul 2026 11:51:21 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 32FA41956049; Mon,  6 Jul 2026 11:51:21 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Harald Freudenberger <freude@linux.ibm.com>,
- richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- thuth@redhat.com, berrange@redhat.com
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com
-Subject: Re: [PATCH v10 10/21] target/s390x: Base support for cpacf
- protected keys
-In-Reply-To: <20260706094317.17032-11-freude@linux.ibm.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20260706094317.17032-1-freude@linux.ibm.com>
- <20260706094317.17032-11-freude@linux.ibm.com>
-User-Agent: Notmuch/0.40 (https://notmuchmail.org)
-Date: Mon, 06 Jul 2026 13:51:19 +0200
-Message-ID: <87v7asjpzc.fsf@redhat.com>
+ bh=lgYVW59/fDsCyALounqfA/qP/ubVHf62vYUx92E9MTY=;
+ b=YQofZYOtlcksjTWPpDTfp5lOBNeu6bFAcb/uTB0fzs109YuE0cIMWy/Z04u0r0OoffyxGQ
+ uhzj2NfZIDaukQBZGGwPZbiKrosrobP0ynYsJoBeGB75LX3K6t05MjVmjoiKzsb8E7JPdl
+ PHHqKllDpd++/8ItNfTj1SSmDG0x6GQ=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-184-4J3JW7SHM4-MSmH2TUp1JQ-1; Mon, 06 Jul 2026 07:55:55 -0400
+X-MC-Unique: 4J3JW7SHM4-MSmH2TUp1JQ-1
+X-Mimecast-MFC-AGG-ID: 4J3JW7SHM4-MSmH2TUp1JQ_1783338954
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-493caa3c54eso25572815e9.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 04:55:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783338954; x=1783943754; darn=nongnu.org;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=lgYVW59/fDsCyALounqfA/qP/ubVHf62vYUx92E9MTY=;
+ b=tooZ/JWhy/4LMnqwybIp0cw1R4EyiBZpgHH6fySNElR0anZsAakNUN3fz+FDEp5Ctk
+ NF26kIm1lGCm0of+ns9TExM8X6MaFsVq3yAQ9ajQR9u5uDYnroJtZL7wKr8XrY/2OCyQ
+ MyXwdqHQKwjOjaBpXL78l496Os4yLP+CRwiNS8oSBa8jt9LddU1qaQftAccsWATieVkx
+ fVX0TzKM9RxjQOx8L8KxFgmOMMzL1peV53an8bgtJulyCewrUunA1v8qwp0LIlI5aZFW
+ uJf/DkOD/+QIyFaAsGZeMbkFiNqmd7yeBXkAM7CdbSHQD6SwvS9/IV2wJ9PmtH3eGrfx
+ JwYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783338954; x=1783943754;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lgYVW59/fDsCyALounqfA/qP/ubVHf62vYUx92E9MTY=;
+ b=h3MYZxvX6jLwTRGlZmq6iCKEL4dWUsvGuT3XKRc8CJmocCYTQ0o41t+z3sg4SD0VTf
+ 8MGA4gp3OlMQnXcu5l0aTWGKifn7j0Lq6OJbifgNt/Yjt2JxUYs9MnlvqosHvQgajVJb
+ xPeD9X9riCVEK9BEtUeoKrP3YxpmCaUDL+cjShU9IurgM/xEvvnrh0aqpGpLipABNTBL
+ oC+irht3biufRN+8xPGwbLu56uphfIFkvw5zqRcv9GsbPZQLDyWFvufMk9PPvM8tiYWy
+ xGhSPcHNX7xPFP99jh3W8RJz15nkzYnHUY3HQClZutAH1jCteffc4b1WoxCKSBkkT7FE
+ 9Tng==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rq0tHGkYU5e3bt5wP+Uwm2IwJkFYonJ0/sEcRD8/Fq32Kdkq9+HtEzx2QC8+XuR61ZNakLtVl53z3p9@nongnu.org
+X-Gm-Message-State: AOJu0YxXObB+7FGcu8dKrj4Bgo4+tgVz4z5Wl7v+64SH3svOF/LIjCSe
+ Xded4sdQQK3rv4eqN4hQrq3PzXmrUSgNxWTRy0Gx1PNIH45H+aMk28ZUpZ+uOb5uuniihJlIAWs
+ AOhv7gyQis8OGdI8Y5Sp6F/pZCK7635ZNx92BXPVj3cvJ4GfGnKfvxPN1
+X-Gm-Gg: AfdE7ckgi+YztfU4q7BdZgKIrvNq61sU4tbEiXIt7Xn6/gAg7uVtLCC+fz9tTLV287p
+ F8m1+ckbaoqvAxPvORyx88iopUeY8oJis0aVH6s4JWfH/py4JB0iEcQHFJt1z3UEuS6qNsrZUiK
+ PbI9C9rlbluAt1Lw96MwuT8sVrWJJ6uLWQnGn1UJU5zsroU0tEpkouG8HGX3P6+vfCgMhTZDhDr
+ JEES61TOyHKUN1Pv534Y0Z/kRzUGDY+fRKruJ1nN0QOqWiC1+LSwTo7TN+ptqfVjPRZ06FFqIfd
+ Lwe3xR0A3db3zc4O53CQYk2Memg2i3+d9UM4mrFgo18mdajMg0AbaDGPMyxdB1NEi6vwUyx6Aca
+ uQ3sKRNQX5371gUpekHK8YDD3vlFcZxvEN0ZkVNCiRHpcUPrfhD2l8X8a/2vQ
+X-Received: by 2002:a05:600c:4708:b0:493:bc4a:d5f5 with SMTP id
+ 5b1f17b1804b1-493df0885dbmr902635e9.39.1783338953941; 
+ Mon, 06 Jul 2026 04:55:53 -0700 (PDT)
+X-Received: by 2002:a05:600c:4708:b0:493:bc4a:d5f5 with SMTP id
+ 5b1f17b1804b1-493df0885dbmr902355e9.39.1783338953586; 
+ Mon, 06 Jul 2026 04:55:53 -0700 (PDT)
+Received: from rh (p200300f6af371400309b667846b924fb.dip0.t-ipconnect.de.
+ [2003:f6:af37:1400:309b:6678:46b9:24fb])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493c63ba971sm608724945e9.13.2026.07.06.04.55.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Jul 2026 04:55:53 -0700 (PDT)
+Date: Mon, 6 Jul 2026 13:55:51 +0200 (CEST)
+From: Sebastian Ott <sebott@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+cc: Eric Auger <eauger@redhat.com>, 
+ Jonathan Cameron <jonathan.cameron@huawei.com>, 
+ Alireza Sanaee <alireza.sanaee@huawei.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Cornelia Huck <cohuck@redhat.com>, qemu-arm@nongnu.org, 
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 0/3] arm: demuxed ID registers (CCSIDR_EL1)
+In-Reply-To: <CAFEAcA_0KOc_4DHioDbXKrAy-R45PEyDg1iS_dz7XgB0=0m9jg@mail.gmail.com>
+Message-ID: <45959999-1382-1ea8-355e-d088754f2896@redhat.com>
+References: <20260702133606.34529-1-sebott@redhat.com>
+ <CAFEAcA_0KOc_4DHioDbXKrAy-R45PEyDg1iS_dz7XgB0=0m9jg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,37 +122,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 06 2026, Harald Freudenberger <freude@linux.ibm.com> wrote:
+Hello Peter,
 
-> Add base support for cpacf protected key handling.
+On Fri, 3 Jul 2026, Peter Maydell wrote:
+> On Thu, 2 Jul 2026 at 14:36, Sebastian Ott <sebott@redhat.com> wrote:
+>>
+>> Handle the demuxed ID register CCSIDR_EL1 as part of the
+>> idregs array. V3 of this series was posted here:
+>> https://lore.kernel.org/qemu-devel/20260622135627.40573-1-sebott@redhat.com/
+>>
+>> Changes V3->V4:
+>> * added R-B from Eric
+>> * incorporated suggestions from Eric
 >
-> The qemu version provided here is only a fake intended to make
-> protected key available for developing and testing purpose:
-> * The protected key is 'derived' from the clear key by xoring
->   the fixed pattern 0xAAAA... onto the key value.
-> * The AES Wrapping Key Verification Pattern is a fixed
->   value of 32 bytes 0xFACEFACE...
->
-> Add preprocessor defines for the xor pattern and wkvp used to
-> construct ('encrypt') a protected key from a clear key value with
-> this implementation. Also add some static functions to 'encrypt'
-> from clear key to protected key and 'decrypt' back to cpacf_aes.c.
->
-> The preprocessor defines shall be used later in testcases to
-> construct and decode protected keys.
+> Hi; there's no description in this cover letter of
+> what the series is trying to accomplish. Could you
+> explain a bit what the motivation is, please?
 
-Hmm... so does that mean that we only provide the protected key handling
-in the !KVM case for people who want to run via tcg for some development
-purposes? Does the user actually get some kind of notice in that case,
-if for example they run with !KVM due to some configuration hiccup? IOW,
-do users get some clue that they are running with a fake placeholder
-implementation, other than the setup being slow?
+Sure!
 
->
-> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-> ---
->  target/s390x/tcg/cpacf.h     | 25 +++++++++++++++++++++++
->  target/s390x/tcg/cpacf_aes.c | 39 ++++++++++++++++++++++++++++++++++++
->  2 files changed, 64 insertions(+)
+"
+To support efforts to generalize handling of writable System ID Registers
+[1] this series addresses the demuxed registers that are kept outside of
+ARMISARegisters namely CSSELR_EL1.
+
+CSSELR_EL1 is moved within ARMISARegisters and accessors to retrieve
+and set the demuxed values are provided. Initial values are gathered via
+the usual KVM_GET_ONE_REG ioctl.
+"
+
+Thanks,
+Sebastian
+
+[1] https://lore.kernel.org/qemu-arm/20260616132625.1732031-1-eric.auger@redhat.com/
 
 
