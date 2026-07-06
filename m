@@ -4,144 +4,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58598C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBCD3C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:12:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgePJ-0008Fy-0i; Mon, 06 Jul 2026 04:10:25 -0400
+	id 1wgeRV-0000Zk-Jt; Mon, 06 Jul 2026 04:12:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgePH-0008Ec-O9
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:10:23 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wgeRK-0000Z2-P4
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:12:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgePE-0003GF-Sh
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:10:23 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66641Swb3459096
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 08:10:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- NCqjXVBAcphH6bgcVF/FSO75xoQ/plzIdNFfJIMVrsY=; b=eu3qy3rS5QeAtwpE
- JfAPe8inwcPZ0eOYYFj3lJZ1Qzc9iIA4ELDEwSShdxqkq55zh4EQCQqI70sorDuD
- gfvB/t6GSZco1640nw5Na1jq32rEt25qiUvwPrtDU2PC2yd3i8UXtNAoHN9kYVnR
- SL/YdDLedbeG489oeKEFWYsAfTmZqHk9axfN3QnmYvbjD1QMeIjaf3a+/rc24UBy
- a4to5ig9ii+b4AFJPjdvhhS0o9tR2otz6NQg01llcL5Uu5H74SSIW0dG/Hwnnpjr
- YoE4WjYtSBbU84KTeB+bV33jsInfJCa+wQQaHAkCouVAgyCOqtnpAQtyOJbTraZI
- 6XKcTA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6uf8529n-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 08:10:18 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-92e632390d2so523777385a.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 01:10:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wgeRJ-0003pA-3a
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:12:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783325545;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Uo/O0O1RJMmY7YeJKeU5/ESZMuoTNQ2k26P/rCwzal8=;
+ b=TzAJHmk13pUx78rOv/qUpdNsldOw/Xs9sy0DEtDVpZJprfYe++yHGCyr6VXB7iLy9qa1ZX
+ zCl14hIK9lxReuL7gRElGhD5unxd3dovOl/Xb3UBuBnTnlMyEITnK+2TD3Z4k8+GIhZtdM
+ 5yn4UYYE2fFjTG7meb59b+FFkBdDUAY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-145-l7SiFvzhNo6-rgQsyZasbA-1; Mon, 06 Jul 2026 04:12:24 -0400
+X-MC-Unique: l7SiFvzhNo6-rgQsyZasbA-1
+X-Mimecast-MFC-AGG-ID: l7SiFvzhNo6-rgQsyZasbA_1783325543
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47248bd8bc0so2206995f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 01:12:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783325418; x=1783930218; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=NCqjXVBAcphH6bgcVF/FSO75xoQ/plzIdNFfJIMVrsY=;
- b=P/GCTI/jYqj3O4DFLri/KG9db/0UuwviQ0Hkx6B4ChyqQrSFQBiUaRT8gN9P8Gm37r
- OxSPTNVULEHWHIuVWOfe1UwygQtxuFLjWRfKBD7nv56a3/TTboonwVlBmVMQftG/ZHjZ
- 8wRZgttcO1SZ7iDWGcFKENfpoy25WO+mx/HIoauont7ZG2lOjX/huLbvPVqsR15OY3gc
- vcUZTygDiEHeShKXZERDl7cITX1opVwXKAixk/FyitEwMdqV06O3xWF8xdsOO2LFPBS5
- cNNo5vwJ+LeGqMGX3t9lRkUI2IL6TMjKUfThC2j0KkQoKI+uChLbSKHyXs2Qbc5wPnk9
- UlyA==
+ d=redhat.com; s=google; t=1783325543; x=1783930343; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=Uo/O0O1RJMmY7YeJKeU5/ESZMuoTNQ2k26P/rCwzal8=;
+ b=Iv/cH2QuDqpl25176dysPdOVlDSjMOK24qiQAYuL7blqCldy0u/smsXRmEGLhGs48v
+ dRtyO6EZoDFQUIsfP7DTgAEhhUPezUH0MsfNq5cNKjSZwAYYYMuoDAvQYg9dYFHMb77x
+ t1ctoGD4bi3oCn/aYMYtDnTj+IPb5J3C2h10ZIiXy6YZ9bmdcSI/DjJ3EzkmYcktGYcb
+ Jhr2nFDvoH5GQnek5PbB4iW53Znevhrnf3HIONXU4gHBc49ImCUGJaS+NFUpiJQEGVWJ
+ SJnG8nHIVznV4U4gU+84NM/H2a+7G7+QpWyGkZG3xgldLEanUWYsOa3Uv08RrHpnGzYr
+ Wt6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783325418; x=1783930218;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1783325543; x=1783930343;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=NCqjXVBAcphH6bgcVF/FSO75xoQ/plzIdNFfJIMVrsY=;
- b=UDrpr3Oz0XjfRUXHbyjwOw05zS47Yqh/3xPk7A0Sm/HWEy3t2KBPcHUlG3oGGzDnqW
- OuEI/Snl0U57uptUQVx7Ai7k4ZiXLF9PyvAJpgKOAM+cL4Vb5HloTyUpwFTSxS7KEutn
- Bl5c4jC7GauTAQDoTorMfkbYbo7Sw1VF/IZAf2FsvX5pzkkY9Dxnbbu+RdIf5d8X6pEr
- Pkl1EWQxSaVw0JAlsFxF5VN83efql4af8z3Pqgoo49q0BQPQJh70qUnOw6zbO+s1o6En
- Nea6uIZEahRnwudvVx3fq0iakJA7+uNMGEi/VGerJR63VgH1KL6zpHhkQlPvRjSD5tMz
- JBDA==
+ bh=Uo/O0O1RJMmY7YeJKeU5/ESZMuoTNQ2k26P/rCwzal8=;
+ b=UYzPmVXB3sCse6xzYEw0Op5Gchv9V6Vxx7oFVbKqAelNXX1Iqkg5OuXOeWjPbyb8f4
+ mAl7YQ9ryFBtG4TnrqALEBH8VTK6HVDYjC0OQ46jm7gK3d8FzOzhdWJYwjhnVFpQOtrY
+ sU0Rdm5CMsuL/m63FTAi2TlxEWL7dj/B5Vf7dtgPxCeQNhjozyoh/V9Po6iE4U3PDctl
+ fDAimk051odKg8v9ukUj96EbRONjTIg1iS67gr+IPRelUs+RaKXofo14nKUPpVRK+Dww
+ 9IYwQDzydN0sJcSjskbc6w2bWyVoxaf0GGLwDKfRaHG3pKY2sqCt079Y+E4UFj4TQEVA
+ JB5w==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoHWl6zYzxvXjN/gfUBeJLRAUvDNQ3lWc4FPYyJhEmYSXCVQOQzXja35HV0arjv6qvRShilBchCIIpD@nongnu.org
-X-Gm-Message-State: AOJu0YyxZ4Z8LMIeDPdNCLTf4MBf15vwr5x4VXwkCLtJPyr8aQyv8nrE
- CTNPh+Qn3P9qLu72kLLjcRgJ16Qyvh4w3FhXYAj4y6Q4KDz1WkWzFGGY4it5oZA5QFb642Zl4gP
- y4NqoTHdkyCjMFMiyDK/oz1UlePF7dcecfWMhCzxYzMlY32QTHt+0PbN8vQ==
-X-Gm-Gg: AfdE7ckz/iPSm1nUfXPCUC1kP5e/l3tM9C82+SPDtxrMjpDZardsv9te/PZlY+85NrV
- 8rkkis3Qi654a2j34fH8spn8vgkbw5cGT1zzZPqx1zmSO1v9/bNgK1PhNwYcr7aWd79bi/is3ft
- CCKw5AptE8yXCblXxGAb3kHWyyEg29RzCkFrKM1DkzN32YYU3cfe+8kETXY7VK3wxns2OUTlHZg
- kj+RJIHsR5/vwyjSKzirC8kKL0fvfNB+aVotV0J79bCWv+5v9cCHG+n7j5YGkH+a1ftHEzQVAjA
- pm1PcD7f/fyIgSkCClUwiLS5NP2nfiTfjknqw3SsemGYvj8j6M8GPHZagA8pqV5eIcK8mCk95sO
- xgwKOonq6GZ9dCTjuASX9JRoO3Zm2X3DlcG71JnYoaJ5c8KsG+ngjoiogg5wSRA==
-X-Received: by 2002:a05:620a:450f:b0:92e:8a8d:ec1f with SMTP id
- af79cd13be357-92e9a350504mr1294561285a.24.1783325417885; 
- Mon, 06 Jul 2026 01:10:17 -0700 (PDT)
-X-Received: by 2002:a05:620a:450f:b0:92e:8a8d:ec1f with SMTP id
- af79cd13be357-92e9a350504mr1294558085a.24.1783325417409; 
- Mon, 06 Jul 2026 01:10:17 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c12b628d632sm682303466b.31.2026.07.06.01.10.16
+ AHgh+RoTzNkH5+FNlTvV+O/IJ/lmHt0UIbyYEijBGs/WYMvj9xi1PwyQkLJ+xu/4n95ewWVFXqVZZWxhoFsm@nongnu.org
+X-Gm-Message-State: AOJu0YwDVgNz5S1gNJ0FwT7iOaL+1f3ixnlsWMRejKBF31FrVPX6/HP3
+ PgTvQ9gWYcOou7/fu0jPWZatytfjg3P33Ti0CYW8laKM4CrvLFv32IJTICkUiadvXJQHW6oGbIF
+ MYZtyTR64DkX8LRGCmVnZdY9LoVKNoj/+0jnEbIvB8Iub0Ue1wY/248pi
+X-Gm-Gg: AfdE7ckeyf3rJzNDJKzNoVVCx/M3vIklbES5wE2/ruUivB/91iMMwYq8oj/f16njSyK
+ Xk8nHfvVNa+RJ5gKvTJl7U7PUOiPgyZcq3pdUJEYs4ggkZfS1NfDyxl6cCZErNNX4s1eN6yQYei
+ mmxJpytl8NdG70sLtRB/YNRtXXVStb5N5MWNBhp2BP4c8Dy0D5Ubz85OBjWVY0nPTh6/BZ/a4Pl
+ zv4FMlAj3B+SbDI4/YzYf4x2RqsqO/cQwm9jyERkNHhwO7LdyRylg67qQVFGZBYBtAK2hC4eDZh
+ sUW7OlmtUOIzB3fz7r98ZLpC9tRJS9pUd8h7bkn5CJOf0PZTFrHsnWpSxzQpX6Vs7+NQGaHhMui
+ aUVXLWhBE7BBiJDztD7zPY9jtGsUS8pW1nDa8bRS4WC4pQnQx5A==
+X-Received: by 2002:a05:6000:4697:b0:46f:558:a42a with SMTP id
+ ffacd0b85a97d-47aac209676mr7606589f8f.34.1783325540212; 
+ Mon, 06 Jul 2026 01:12:20 -0700 (PDT)
+X-Received: by 2002:a05:6000:4697:b0:46f:558:a42a with SMTP id
+ ffacd0b85a97d-47aac209676mr7606565f8f.34.1783325539729; 
+ Mon, 06 Jul 2026 01:12:19 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47aa039af67sm26422081f8f.17.2026.07.06.01.12.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Jul 2026 01:10:16 -0700 (PDT)
-Message-ID: <7410bfdc-e1b8-4cb7-8e55-5908104290de@oss.qualcomm.com>
-Date: Mon, 6 Jul 2026 10:10:15 +0200
+ Mon, 06 Jul 2026 01:12:19 -0700 (PDT)
+Message-ID: <34f987ad-6664-4458-8d14-c0a8e337281f@redhat.com>
+Date: Mon, 6 Jul 2026 10:12:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/10] hw/ssi: xilinx_spips: Fix dummy phase handling
-Content-Language: en-US
-To: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
-Cc: Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-References: <20260630135729.466264-1-bin.meng@processmission.com>
- <20260630135729.466264-7-bin.meng@processmission.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260630135729.466264-7-bin.meng@processmission.com>
+Subject: Re: [PULL 08/23] migration: Run final save_query_pending at switchover
+To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Peter Xu <peterx@redhat.com>, "Jason J. Herne" <jjhern@linux.ibm.com>,
+ Lukas Straub <lukasstraub2@web.de>, Fabiano Rosas <farosas@suse.de>
+References: <20260630043107.1511076-1-clg@redhat.com>
+ <20260630043107.1511076-9-clg@redhat.com>
+ <a82ece02-d9fd-4ea4-b934-a9bc5abde663@nvidia.com>
+ <df58c2d0-cc0c-43c2-9dd3-ea0614de7d72@redhat.com>
+ <e7bd3ab2-2eca-44d6-8a18-29cdbcb57768@nvidia.com>
+ <9ea28269-924d-4996-a886-73f14cd31bee@redhat.com>
+ <da6a564e-8fa8-41fe-b818-99582e246f1f@nvidia.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <da6a564e-8fa8-41fe-b818-99582e246f1f@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: TtX_TSudRL29zTPv27V_x6RSLlteVpW2
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA4MSBTYWx0ZWRfX048MX7ywD1rF
- IHbSgqAVsh1B8xrGgp3Mm69Dkh2CkwHIOhkOA1OjkuoDvZSPQSWii1KqS3bNZ1RQj4IWKFF5TJi
- oECcuFGTjBIdNWX/ToIFOxMZGC8w6b8=
-X-Authority-Analysis: v=2.4 cv=Z4Tc2nRA c=1 sm=1 tr=0 ts=6a4b62ea cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=Am4ss40yAAAA:8 a=FRSEYCzRAAAA:8 a=ZmCK42fXN8tGheKeWVsA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=lf-hbUz_c89dky27wAWH:22
- a=H4N_Y-AU75W7NKDNhZlT:22
-X-Proofpoint-GUID: TtX_TSudRL29zTPv27V_x6RSLlteVpW2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA4MSBTYWx0ZWRfX2+9lqCdsfhrP
- pw6YaWwt6VtNypO7RZX7E5WsmWdZGF7bhf8jbMhRzc9O7rAQqIROkos9RxaXUux+5zwsKalqQVV
- VAZHytSyYoGAvNCgwvydSWMxKIq1tsy/OugaaQzOS+AmsGzqe2h9J5pALZGyv6Odcje/dv7XVrd
- pvGLjbREDF+Hxnbwq5kjYs66nd10dRGt7OoeG4ie/eVl45HKAHx5P+oTCJaHjwx2WVvAqAMM3YC
- wLsfhgqyuJDfopKHeEFHQoD6iuwFcTzURvqU7dY4e3BJkxRq0dattVC117HiN1LMIM7RcDPnHEo
- bLhDAgtrFXvmu/a3TelJN6TLcDu6ndLENZPLcJNB+/YCzffOVBTfqmWFS1s4I6qjysUzm+vNcSg
- kBigTyRe/OkVKeX99sJwG2Pqnv909e9EOCQxuQqXTira+UF3E8j+1O+36OXXeJp6goqKuVqPBwR
- bCV/wsuVs4LO5eTehUw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-05_02,2026-07-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 spamscore=0 priorityscore=1501 adultscore=0
- lowpriorityscore=0 phishscore=0 impostorscore=0 clxscore=1015 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060081
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,134 +173,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/6/26 15:57, Bin Meng wrote:
-> The ZynqMP generic FIFO encodes dummy phases as a number of
-> dummy cycles. QEMU's SSI bus transfers whole bytes, so the
-> controller model must convert the programmed cycle count to the
-> number of SSI byte transfers needed for the selected SPI, dual SPI
-> or quad SPI mode.
+On 7/6/26 10:00, Avihai Horon wrote:
 > 
-> The legacy Xilinx QSPI snoop paths had the opposite problem after
-> the m25p80 dummy handling was fixed. They still treated each dummy
-> byte queued through the FIFO as a request to generate several SSI
-> transfers based on the current link width. The flash model now
-> consumes dummy phases as byte counts, so the manual FIFO path should
-> forward one SSI transfer per dummy byte.
+> On 7/3/2026 5:01 PM, Cédric Le Goater wrote:
+>> External email: Use caution opening links or attachments
+>>
+>>
+>>>> The culprit appears to be patch 3:
+>>>>
+>>>>   migration: Run final save_query_pending at switchover
+>>>>
+>>>> I can reproduce the issue consistently with:
+>>>>
+>>>> while [ 1 ]; do
+>>>>     QTEST_QEMU_BINARY=./build/qemu-system-s390x \
+>>>>         ./build/tests/qtest/migration-test \
+>>>>         --full -p /s390x/migration/colo/plain/secondary_failover_checkpoint || break
+>>>> done
+>>>>
+>>>> The patch you proposed seems to fix the issue.
+>>>>
+>>>> Could you send it as a follow-up patch?
+>>>
+>>> To make sure I get it straight, you suggest to merge your pull request
+>>
+>> The merge request won't be merged as is. It's broken and I will
+>> have to resend with a fix or without this series.
+>>
+>>> and then send a separate fix patch for that with a proper Fixes tag, right?
+>>
+>> We either handle the breakage with an extra patch like you proposed,
+>> which has to be sent and reviewed, or :
+>>
+>>>> if Peter, Fabiano, Lukas
+>>>> would prefer it to be integrated in the appropriate place, it
+>>>> could be included in v5.
+>> We can address this in a v5 respin of the series by fixing it
+>> where it belongs: in patch 3. I think that's the right place,
+>> since bisect breaks at that point.
+>>
+>> Let's see what Peter and Fabiano think.
 > 
-> Update the Xilinx QSPI dummy accounting consistently for the generic
-> FIFO, manual FIFO and LQSPI direct-read paths. Also make the command
-> table report the dummy byte counts consumed by m25p80 for dual and
-> quad output reads, and account for the mode byte before LQSPI data
-> reads begin.
+> Hi Cedric,
 > 
-> This matches the ZynqMP TRM (ug1085, v2.2 [1]) description of the
-> generic FIFO dummy cycle entry and keeps the controller side aligned
-> with the flash model's dummy byte ownership.
+> I got the v5 ready to submit (it has the COLO fix + two new patches on top: one to refactor migration_completion_precopy to return bool and another to fix switchover typos).
 > 
-> The description of the genenic command fifo register says:
-> 
->    When [receive, transmit, data_xfer] = [0,0,1], the [immediate_data]
->    field represents the number of dummy cycle sent on the SPI interface.
-> 
-> [1] https://www.xilinx.com/support/documentation/user_guides/ug1085-zynq-ultrascale-trm.pdf
->      table 24‐22, an example of Generic FIFO Contents for Quad I/O Read Command (EBh)
-> 
-> Fixes: ef06ca3946e2 ("xilinx_spips: Add support for RX discard and RX drain")
-> Fixes: c95997a39de6 ("xilinx_spips: Add support for the ZynqMP Generic QSPI")
-> Signed-off-by: Bin Meng <bin.meng@processmission.com>
-> ---
-> 
->   include/hw/ssi/xilinx_spips.h |   2 +-
->   hw/ssi/xilinx_spips.c         | 120 ++++++++++++++++++++++++----------
->   2 files changed, 88 insertions(+), 34 deletions(-)
+> Would you like me to send it?
 
+sure. sooner the better !
 
-> diff --git a/hw/ssi/xilinx_spips.c b/hw/ssi/xilinx_spips.c
-> index f6e717bc01..fa98dc2dd8 100644
-> --- a/hw/ssi/xilinx_spips.c
-> +++ b/hw/ssi/xilinx_spips.c
-> @@ -192,6 +192,10 @@
->       FIELD(GQSPI_GF_SNAPSHOT, EXPONENT, 9, 1)
->       FIELD(GQSPI_GF_SNAPSHOT, DATA_XFER, 8, 1)
->       FIELD(GQSPI_GF_SNAPSHOT, IMMEDIATE_DATA, 0, 8)
-> +#define GQSPI_GF_MODE_SPI     1
-> +#define GQSPI_GF_MODE_DSPI    2
-> +#define GQSPI_GF_MODE_QSPI    3
+Thanks,
 
+C.
 
-> @@ -457,6 +461,7 @@ static void xlnx_zynqmp_qspips_flush_fifo_g(XlnxZynqMPQSPIPS *s)
->           int i;
->   
->           if (!s->regs[R_GQSPI_DATA_STS]) {
-> +            uint32_t prev_gf_snapshot = s->regs[R_GQSPI_GF_SNAPSHOT];
->               uint8_t imm;
->   
->               s->regs[R_GQSPI_GF_SNAPSHOT] = fifo32_pop(&s->fifo_g);
-> @@ -484,7 +489,54 @@ static void xlnx_zynqmp_qspips_flush_fifo_g(XlnxZynqMPQSPIPS *s)
->                   }
->                   s->regs[R_GQSPI_DATA_STS] = 1ul << imm;
->               } else {
-> -                s->regs[R_GQSPI_DATA_STS] = imm;
-> +                /*
-> +                 * When [receive, transmit, data_xfer] = [0,0,1], it represents
-> +                 * the number of dummy cycle sent on the SPI interface. We need
-> +                 * to convert the number of dummy cycles to bytes according to
-> +                 * the SPI mode being used.
-> +                 *
-> +                 * Ref: ug1085 v2.2 (December 2020) table 24‐22, an example of
-> +                 *      Generic FIFO Contents for Quad I/O Read Command (EBh)
-> +                 */
-> +                if (!ARRAY_FIELD_EX32(s->regs, GQSPI_GF_SNAPSHOT, TRANSMIT) &&
-> +                    !ARRAY_FIELD_EX32(s->regs, GQSPI_GF_SNAPSHOT, RECIEVE)) {
-> +                    uint8_t spi_mode = ARRAY_FIELD_EX32(s->regs, GQSPI_GF_SNAPSHOT, SPI_MODE);
-> +                    /*
-> +                     * Some ZynqMP GQSPI drivers, such as Linux, use the data
-> +                     * bus width in the dummy GENFIFO entry only to configure
-> +                     * the controller mode. The immediate value is already
-> +                     * the number of dummy cycles for the dummy phase, which
-> +                     * follows the address bus width. Reuse the previous TX
-> +                     * phase mode to convert cycles to SSI bytes.
-> +                     *
-> +                     * This does not make the model Linux-only. U-Boot emits
-> +                     * the dummy entry with op->dummy.buswidth, so the entry
-> +                     * mode already matches the dummy phase. Its opcode and
-> +                     * address phases are immediate entries, not DATA_XFER TX
-> +                     * entries, so the override below is not taken for U-Boot.
-> +                     */
-> +                    if (FIELD_EX32(prev_gf_snapshot, GQSPI_GF_SNAPSHOT,
-> +                                   DATA_XFER) &&
-> +                        FIELD_EX32(prev_gf_snapshot, GQSPI_GF_SNAPSHOT,
-> +                                   TRANSMIT) &&
-> +                        !FIELD_EX32(prev_gf_snapshot, GQSPI_GF_SNAPSHOT,
-> +                                    RECIEVE)) {
-> +                        spi_mode = FIELD_EX32(prev_gf_snapshot,
-> +                                              GQSPI_GF_SNAPSHOT, SPI_MODE);
-> +                    }
-> +
-> +                    if (spi_mode == GQSPI_GF_MODE_QSPI) {
-> +                        s->regs[R_GQSPI_DATA_STS] = ROUND_UP(imm * 4, 8) / 8;
-> +                    } else if (spi_mode == GQSPI_GF_MODE_DSPI) {
-> +                        s->regs[R_GQSPI_DATA_STS] = ROUND_UP(imm * 2, 8) / 8;
-> +                    } else if (spi_mode == GQSPI_GF_MODE_SPI) {
-> +                        s->regs[R_GQSPI_DATA_STS] = ROUND_UP(imm * 1, 8) / 8;
-> +                    } else {
-> +                        qemu_log_mask(LOG_GUEST_ERROR, "Unknown SPI MODE: 0x%x ", spi_mode);
-
-Is it safe to let the previous s->regs[R_GQSPI_DATA_STS] value?
-
-Alternatively simpler as:
-
-  if (spi_mode) {
-      s->regs[R_GQSPI_DATA_STS] = 2 * (spi_mode - 1) * imm;
-
-> +                    }
-> +                } else {
-> +                    s->regs[R_GQSPI_DATA_STS] = imm;
-> +                }
->               }
->           }
->           /* Zero length transfer check */
-> @@ -550,7 +602,7 @@ static void xlnx_zynqmp_qspips_flush_fifo_g(XlnxZynqMPQSPIPS *s)
->       }
->   }
 
