@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67A8DC43602
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 20:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B14CC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 20:03:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgpWb-0007g9-QJ; Mon, 06 Jul 2026 16:02:41 -0400
+	id 1wgpWb-0007fT-0H; Mon, 06 Jul 2026 16:02:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
- id 1wgpWa-0007f4-Gz
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:02:40 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1wgpWZ-0007eF-8U
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:02:39 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
- id 1wgpWX-0005hj-Km
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:02:40 -0400
+ id 1wgpWX-0005hk-Kl
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:02:39 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 72FBE43D62;
+ by tor.source.kernel.org (Postfix) with ESMTP id 65098600C3;
  Mon,  6 Jul 2026 20:02:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 5901CC2BCFC;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 15545C2BCB8;
  Mon,  6 Jul 2026 20:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1783368155;
- bh=/+aw3KY94YQLZRUTZtKQep0hejmqgJPAahDnbK29mBQ=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
- b=tMmc+3YzYOHLiEYQvgfnlbuF8Q2msXyLHWuqL7nJnQallFzhuoCzr2iLSmC30pRUu
- J2J9Cgtxm1q0ZmFboGsVwzIXY6nHAjTcdKE/gCby6aVQbW6L+0ZbFuLn9Brd4ZfhcI
- 8qvTdRXO0prRqC+2y0IFZizZpO8yIixQCFmqqPVgmu2lo99B9Wg0+1sF8eqM9okwWM
- pmpuEs42HGhPTBXiCPRmJ2ELk3y9ay2XQZJ45/mnE+bitYtTOt6geMRCu/pbdE1KP7
- 2yiqcRVE32G/Zv6lNg8vVD269Um1u3JvilHLfPX8fzcuxu3z+5my09mFfgt3m3GSIB
- FCGa8QyJiST4Q==
+ bh=EwaW3pLq+EWjGl8zIVn1ure7hbbIgZjUsSKbTMpSl9w=;
+ h=From:Subject:Date:To:Cc:Reply-To:From;
+ b=ZSvqNQF1tp1OZnH0/zXfkArS+ha/v87Pzwa6wyfI23s0/ygwhDIoupDoPB1Hr2on3
+ rqDRQ1OzhZ5zO6wBM7phObGnpu7Q1/T0XFDfDxoX7TAofwOVRhZO4x7hWFbiAuiQmi
+ z+R1G5uXU+amFkT49Pp6d5axOw4XXnkSb1aWuIvbKWsS1Ckzoq8CrdPHyJmuvbN/kE
+ kj4PjZoJ3gy8XYdbVnkPZkjF4pcH4sCMHlVMBOmPmINHd5kgGbvNIdD/TE5nSB8BDl
+ RRFv3B2nzRz5i0MPk/BfkJKCZ9Aoppv5B52NBFvTYWseoTCsXZqWqup5RWqMOvNoLD
+ emVw0Q5IMREtw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org
  (localhost.localdomain [127.0.0.1])
- by smtp.lore.kernel.org (Postfix) with ESMTP id 4802EC43602;
- Mon,  6 Jul 2026 20:02:35 +0000 (UTC)
+ by smtp.lore.kernel.org (Postfix) with ESMTP id E552EC43458;
+ Mon,  6 Jul 2026 20:02:34 +0000 (UTC)
 From: Miao Wang via B4 Relay <devnull+shankerwangmiao.gmail.com@kernel.org>
-Date: Tue, 07 Jul 2026 04:02:06 +0800
-Subject: [PATCH v2 6/6] target/loongarch: vstelm: Fix reading from vector
- registers
+Subject: [PATCH v2 0/6] target/loongarch: Fixes for endianness problems in
+ vector instruction emulation
+Date: Tue, 07 Jul 2026 04:02:00 +0800
+Message-Id: <20260707-loong64-be-v2-0-8634f93c1dc9@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260707-loong64-be-v2-6-8634f93c1dc9@gmail.com>
-References: <20260707-loong64-be-v2-0-8634f93c1dc9@gmail.com>
-In-Reply-To: <20260707-loong64-be-v2-0-8634f93c1dc9@gmail.com>
+X-B4-Tracking: v=1; b=H4sIALkJTGoC/23MQQ7CIBCF4as0s3YMEAHrynuYLpBO20na0oAhm
+ oa7i127/F/yvh0SRaYEt2aHSJkTh7WGOjXgJ7eOhNzXBiWUEVZInENYR3PBJ6Hrh6uT2lg9SKi
+ HLdLA7wN7dLUnTq8QP4ed5W/9y2SJAltve6NJCNPa+7g4ns8+LNCVUr5AqYrkpAAAAA==
+X-Change-ID: 20260701-loong64-be-adf8a15675f1
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Miao Wang <shankerwangmiao@gmail.com>, b4-sent@kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3495;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2330;
  i=shankerwangmiao@gmail.com; s=20250715; h=from:subject:message-id;
- bh=2iuxs5risliYf2dBgG2FUXCXbQZaaq0rhiN1iTetazE=;
- b=owEBbQKS/ZANAwAKAbAx48p7/tluAcsmYgBqTAnYQ2//ZPQz0sCn6Kt+i4UQWMvWeLUaa0kCz
- qpXjNKgVg2JAjMEAAEKAB0WIQREqPWPgPJBxluezBOwMePKe/7ZbgUCakwJ2AAKCRCwMePKe/7Z
- buDfEACiHGv8hm5H9imnVFk6uM1MX/2A9+udugFDce0onU8pQHccJUFWLNJ8PvteKMh6v+3pAzS
- dx0f3LttNqvXV1MsY5H+RHsHaEo/NrdxsK6BstDanvR7tv6CidZVo/kih/NElfS/CziC5R8Eys6
- qsSuzAbn6rdg1ce/6Fi0mu3HVR0sXnB6tYgHhy2G1oAB+yOAk+iO7lPHiA3Rjt/+ZTqQuDfYDox
- CD0QfLpPG/kLhB3ztSG2dwcLwvlreBspYjjJP1A+N4/R3hW5MHPO7Mmj7TEI9OkS40xYy2L2ycj
- 4Ccu6UHVRY0EfvdSUMlnL4r19TqZqjsJZ5bskJFcuimXuh1pyBOtloTsXrynK3QVtaEOw0w8cGy
- 4fRIWnaujOd/RQBt25z/Gq4VZ8E7Gex5fPRWr8snTntfoEWs9JRB+9UfSc3Q4ptFBmoqOwSaRiN
- XYCCaGYsAu8sP76MM3fTZn8PYG2ccx+7Ac0o+eNe8orw2HnibmzVDPU8PQvSLlNIppmEaBc3p0s
- yOjHAriTrwzAufyk1fwNCydpqcgaphSH9fKA9vZbfVNGsEP134kxwSj9Gc5p2bafGJHKHOvLeqI
- TpP+K8rueFGBlNC0vdz2p+OhHD7jyb+gj+C/+g+l/IbjElpHw8hgRn6kuYMz85asOQ2bdp+4ROs
- KCb2aCpl2hLMR+Q==
+ bh=EwaW3pLq+EWjGl8zIVn1ure7hbbIgZjUsSKbTMpSl9w=;
+ b=owEBbQKS/ZANAwAKAbAx48p7/tluAcsmYgBqTAnOa/5OZrGymVeNI7kxHd8DfHOKVnvA8o9t/
+ hxfVydtGj2JAjMEAAEKAB0WIQREqPWPgPJBxluezBOwMePKe/7ZbgUCakwJzgAKCRCwMePKe/7Z
+ btlgD/0VfCXdMOds3aYqYTAjqrRwMfTh6eeh/DeUK2neQHDN6W8+iMvpz2c5VqkGlqRu9MGo9ME
+ 2H8mefJ5CdOVMhzhMVWxfOE7UajBqpgzqOWfRgm5gLughE+RrzAEja0BLcU/56B7Z4OiRUczKEF
+ ez0RyxmvbLav25lFlGd/CFYwpYh+mLvNBtrMI+N9Pu5sIes7GiIEJrEQrDD63WM7bYF0QAvhQPn
+ nVaz2d1ASkLlQAtmJg7ZkOQZ7LvQmn+8fVRO+HwDPmcTt7NEnC9GkMBNXKNj8l9x18L0YBCmsaJ
+ gQWuWr8cTJm8PfolGsk1txNVIxEOj9+d3CJSD7/AKonJmiv6CXdhpBEm9+gmn21zgM7yJuI28V6
+ LUHyo5cFm9Wu1N78ewggUGHbW/FW90AGrJMWlGAljg9jrm6QEJAsZvQVlyuvBod+UTCLNukPs5/
+ T7MxHuBp2UdNaM6zAOJDgQr0ubpatX12euTV/sk+L289eaaGpMA9YVf0GHkkbdVI871gSfZlwud
+ tqXjKRsxHK+hqEBsL2dEKDf2qVveGchaCWwKpEF9AfI1U7Q549RSm91Fl/Q6QKquijow8tbi4jT
+ VkWjLRJrMmmFTEghSTR1nL+GOx90NWxKEQhI3+GfQif9yJuVSrhgOSGzpTYTtOiKt5pYrUhANBs
+ JYWQNNmvMl4JY3Q==
 X-Developer-Key: i=shankerwangmiao@gmail.com; a=openpgp;
  fpr=6FAEFF06B7D212A774C60BFDFA0D166D6632EF4A
 X-Endpoint-Received: by B4 Relay for shankerwangmiao@gmail.com/20250715
  with auth_id=462
 X-Original-From: Miao Wang <shankerwangmiao@gmail.com>
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
  envelope-from=devnull+shankerwangmiao.gmail.com@kernel.org;
- helo=sea.source.kernel.org
+ helo=tor.source.kernel.org
 X-Spam_score_int: 0
 X-Spam_score: -0.0
 X-Spam_bar: /
@@ -103,85 +105,57 @@ Reply-To: shankerwangmiao@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Miao Wang <shankerwangmiao@gmail.com>
+The current implementation of vector instruction emulation in loongarch
+target works illy on big endianness hosts. It can be reproduced using
+the test cases from gcc [1]. One can cross-compile the target
+loongarch64-linux-user for s390x and use qemu-s390x to run the compiled
+qemu to test loongarch64 emulation on big endian hosts.
 
-When reading data from vector registers, endianess should be in
-consideration. Use tcg_gen_ld<len>_i64() functions to read an integer
-in certain length at a certain offset from vector registers into an i64
-temporary variable. tcg_gen_ld_i64() cannot achieve this on big endian
-hosts. When writing data to guest memory, endianess should also be
-declared using the MO_LE flag for tcg_gen_qemu_st_i64().
+Possible reproduce steps are:
 
-Fixes: 4a26512f01e0 ("target/loongarch: Implement xvld xvst")
-Fixes: 843b627a395a ("target/loongarch: Implement vld vst")
+1. Install s390x cross toolchains and qemu-s390x
+2. Compile qemu using ./configure --target-list=loongarch64-linux-user --cross-prefix=s390x-linux-gnu-
+3. Install loongarch64 cross toolchains to compile the test cases. To
+   get an accurate result, the test cases should be compiled using -O0.
+   To make the error output of the test cases readable and meaningful,
+   printf() should be replaced with a version without any vectorization
+   optimizations, since the endianness problems will prevent printf()
+   with lsx optimizations from working correctly
+4. Use qemu-s390x ./qemu-loongarch64 /path/to/test_case.exe to test the
+   cases on big endianness hosts.
+
+With this patch series, all the tests in [1] can pass.
+
+[1]: under gcc/testsuite/gcc.target/loongarch/vector in the gcc source
+
 Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
 ---
- target/loongarch/tcg/insn_trans/trans_vec.c.inc | 33 ++++++++++++++-----------
- 1 file changed, 18 insertions(+), 15 deletions(-)
+Changes in v2:
+- Use QEMU_ALIGNED(128) on the whole VReg struct according to Philippe's
+  suggestion.
+- Update Fixes: tag in the first patch.
+- Link to v1: https://lore.kernel.org/qemu-devel/20260701-loong64-be-v1-0-9c7d65e00697@gmail.com
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-index 91b1e15b61cac5d119892df1abd2ecf8a4c8e59d..3cac981be1dba11db46744f88e851838aea651cd 100644
---- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-@@ -5423,7 +5423,8 @@ TRANS(xvldrepl_w, LASX, do_xvldrepl, MO_32)
- TRANS(xvldrepl_d, LASX, do_xvldrepl, MO_64)
- 
- static bool do_vstelm_vl(DisasContext *ctx,
--                         arg_vr_ii *a, uint32_t oprsz, MemOp mop)
-+                         arg_vr_ii *a, uint32_t oprsz, MemOp mop,
-+                         void (*func)(TCGv, TCGv_ptr, tcg_target_long))
- {
-     TCGv addr;
-     TCGv_i64 val;
-@@ -5436,29 +5437,31 @@ static bool do_vstelm_vl(DisasContext *ctx,
-     val = tcg_temp_new_i64();
- 
-     addr = make_address_i(ctx, addr, a->imm);
--    tcg_gen_ld_i64(val, tcg_env, vec_reg_offset(a->vd, a->imm2, mop));
--    tcg_gen_qemu_st_i64(val, addr, ctx->mem_idx, mop);
-+    func(val, tcg_env, vec_reg_offset(a->vd, a->imm2, mop));
-+    tcg_gen_qemu_st_i64(val, addr, ctx->mem_idx, mop | MO_LE);
-     return true;
- }
- 
--static bool do_vstelm(DisasContext *ctx, arg_vr_ii *a, MemOp mop)
-+static bool do_vstelm(DisasContext *ctx, arg_vr_ii *a, MemOp mop,
-+                      void (*func)(TCGv, TCGv_ptr, tcg_target_long))
- {
--    return do_vstelm_vl(ctx, a, 16, mop);
-+    return do_vstelm_vl(ctx, a, 16, mop, func);
- }
- 
--static bool do_xvstelm(DisasContext *ctx, arg_vr_ii *a, MemOp mop)
-+static bool do_xvstelm(DisasContext *ctx, arg_vr_ii *a, MemOp mop,
-+                       void (*func)(TCGv, TCGv_ptr, tcg_target_long))
- {
--    return do_vstelm_vl(ctx, a, 32, mop);
-+    return do_vstelm_vl(ctx, a, 32, mop, func);
- }
- 
--TRANS(vstelm_b, LSX, do_vstelm, MO_8)
--TRANS(vstelm_h, LSX, do_vstelm, MO_16)
--TRANS(vstelm_w, LSX, do_vstelm, MO_32)
--TRANS(vstelm_d, LSX, do_vstelm, MO_64)
--TRANS(xvstelm_b, LASX, do_xvstelm, MO_8)
--TRANS(xvstelm_h, LASX, do_xvstelm, MO_16)
--TRANS(xvstelm_w, LASX, do_xvstelm, MO_32)
--TRANS(xvstelm_d, LASX, do_xvstelm, MO_64)
-+TRANS(vstelm_b, LSX, do_vstelm, MO_8,  tcg_gen_ld8u_i64)
-+TRANS(vstelm_h, LSX, do_vstelm, MO_16, tcg_gen_ld16u_i64)
-+TRANS(vstelm_w, LSX, do_vstelm, MO_32, tcg_gen_ld32u_i64)
-+TRANS(vstelm_d, LSX, do_vstelm, MO_64, tcg_gen_ld_i64)
-+TRANS(xvstelm_b, LASX, do_xvstelm, MO_8,  tcg_gen_ld8u_i64)
-+TRANS(xvstelm_h, LASX, do_xvstelm, MO_16, tcg_gen_ld16u_i64)
-+TRANS(xvstelm_w, LASX, do_xvstelm, MO_32, tcg_gen_ld32u_i64)
-+TRANS(xvstelm_d, LASX, do_xvstelm, MO_64, tcg_gen_ld_i64)
- 
- static bool gen_lasx_memory(DisasContext *ctx, arg_vr_i *a,
-                             void (*func)(DisasContext *, int, TCGv))
+---
+Miao Wang (6):
+      target/loongarch: make VReg aligned to 16 bytes
+      target/loongarch: Fix offset calculation in vector registers
+      target/loongarch: gen_vreplve: Fix offset calculation
+      target/loongarch: gen_xvreplve0: Fix elem0 offset calculation
+      target/loongarch: do_vldrepl_vl: Fix endianness when reading from guest memory
+      target/loongarch: vstelm: Fix reading from vector registers
 
+ target/loongarch/cpu.h                          |  2 +-
+ target/loongarch/tcg/insn_trans/trans_vec.c.inc | 39 +++++++++++++------------
+ target/loongarch/tcg/translate.c                |  6 ++--
+ 3 files changed, 25 insertions(+), 22 deletions(-)
+---
+base-commit: 30e8a06b64aa58a3990ba39cb5d09531e7d265e0
+change-id: 20260701-loong64-be-adf8a15675f1
+
+Best regards,
 -- 
-2.49.0
+Miao Wang <shankerwangmiao@gmail.com>
 
 
 
