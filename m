@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96586C43602
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58AF3C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:44:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggif-0007E2-Uf; Mon, 06 Jul 2026 06:38:33 -0400
+	id 1wggis-0007bG-6a; Mon, 06 Jul 2026 06:38:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiX-00078d-RO
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:28 -0400
+ id 1wggiT-00076T-Md
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:24 -0400
 Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiV-0003Sg-AK
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:24 -0400
+ id 1wggiR-0003RQ-VT
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:21 -0400
 Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-493d3135e9bso9791455e9.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:22 -0700 (PDT)
+ 5b1f17b1804b1-493c2c0b9a8so25871645e9.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783334302; x=1783939102; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783334298; x=1783939098; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=y/0Zd7CUzH0PPeoSVODnw+EEXZ3iP23Jw7rMZzP5HjM=;
- b=ISgee2/O2fHt+kQL2LcAtYx1B/xiS9y2P1YUXQH80OkpwuS3VJ6kPdRWMQjG7/YmyD
- BDI23yDwc/OR+5DNCR7eXJJo2CorCiI87t0INsbeuIVnLY02o32fqryNs6GlZDkV4/nM
- TIE0tyNBzbPGo6SUmwtokYMVliuEMYBeNnMBHuhUMgYherShqKkoh+bmv7aiopD/wzk5
- 1YEtnWrRjhlp6o27rPVhYHwLw67IO9WXEcNIOykbsdvK0d9BSuibWw8xiZA5y2pRURwm
- L7HXMiHf0ZeedN1nTwalnFI2nOU1WhRJ8niX7lGB/S2bD3/4zsbDBZxaeihg0+skKW/a
- YBgw==
+ :reply-to; bh=umLdS5gBN/eDnp3kIhJOVCqi4IixifjbGJbrrXBV5Rw=;
+ b=Ae9rSSpJygK3uNxsYCw+81NPIJ/RIf90QNAFLlAU3U+g6yaoHSFrt+IQu03Fbqm8/I
+ CcmgapKCSpMOJd+QlwxMge5dHIC7iLddSGNU52FbKBNu7piE6MG8AbpCz6lYJvxTmb/X
+ 7FxkNWwwf/pja0/EhQw9P7gMaMc0TqhFoIeC+hO2tEfZ6CG6Q9drC4y14gamsmBqAgx6
+ 1m2UDVeFS2r6UQLOwZwjpipw3eUVbuNiXvhYt2OgwnbZl5gxSABQeMPx1gEcrDrs3HCf
+ 7IfKKQB+QjmeTZdHGl/axrXd+a21XiF2wdz3aZOaipW9szU+y2ZXqSBMsa+C+c+ge3A5
+ jvcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783334302; x=1783939102;
+ d=1e100.net; s=20251104; t=1783334298; x=1783939098;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=y/0Zd7CUzH0PPeoSVODnw+EEXZ3iP23Jw7rMZzP5HjM=;
- b=bSvEJptadwdT7oRHGM2lrAazrLHzo3NSNNfkBDRPs2B1Jk7N87TWdDwqNjySoegcOY
- qSxIztAkk41WjGoXxuLI/Q5/P7BXJp889WSmbC0AchKjFnMbebH5rftWs1MwCZibHp6N
- GXeDm25Zl7JgW/Vd8iZtgZwMtBcgLPJ8AFPTCv/8B9b+YsRiGLNNoN4EgDO2YE78DGrr
- lxPoukBrz1LqoOxgkj86dWsIoKmzItxCk0+6pv5aZTx4KG6kHBl/87VcXSokVFeRpiGj
- jabaHCroP7ToxJdCl0s46qnZ9dn/q8lqQHaP8VgSICMLky3RLWCVXZbEVkgntFtXqPRn
- UYaA==
-X-Gm-Message-State: AOJu0Yz0/2n6/WdZOF8SgCINvGbVZOFPbjJrfX0st1vmG+FH/OIhnL0M
- GuUPc7qjcGg4CbH7lBan4O6A8rzxB30i2Fu3PAi0RFUx8E7Utqy7Ef3yUxleOqrl1lkNikSyHgC
- nJ4V6yX3fQQ==
-X-Gm-Gg: AfdE7cmM0+PCt13WwofYkX2yhYHF0p4NRS495NVDzinNxJENmyYkM+AcpFmyjxb1mYG
- +NwoaYDLI44cAHTPVXCZXzaRm/RRNBYiLJIK+gdPEFs9+/7LAjUx2uiQQ0af1KEdnhxkJiASKMU
- Qk2RPtdfHH2g4FWllmhDhI4DY/VAFC8glduTzlfY0mYN/N2XzjVNDokqfaBa929UB/ztm7WDCn4
- c8sEuK3f+61Z+g/CrHurKRD+pRGDKfto+RJ0V6aoAZPUbM/n/jk46kcfaO/NkD20lsSNQH7BNd/
- ia5YusSUwYSn7nf2k0wcO8c7lQLm7ynHBi0VY98WT8fb5XfrdKljbhy4VJlIJOq6LDTrV31Ki/b
- zuF9pt9Kf/Xc8Rkl7ScAeBYX5KLfQG05yJHvd977WPaZ36UOHKNOU3cZT+1BXAcr4A3Z+7MQWWA
- 0mwJ9ZPS4nZGjiVSSWTLx/1K689HNW2oMshWSxxlOkJDvYZPXQFVIUjSFiPZ+RFnCaRSWUVRhZY
- 4+5doMBuoPCu0HtpPzUhQ==
-X-Received: by 2002:a05:600c:4e92:b0:493:c337:db18 with SMTP id
- 5b1f17b1804b1-493d11d81a4mr124399575e9.16.1783334301957; 
- Mon, 06 Jul 2026 03:38:21 -0700 (PDT)
+ :cc:subject:date:message-id:reply-to;
+ bh=umLdS5gBN/eDnp3kIhJOVCqi4IixifjbGJbrrXBV5Rw=;
+ b=LbTcDT8IzoDS1774YNGIyPqG2L7RAqIshdfUNhk/CyCUFmf/mWnZ+gd4yTx8W5VkNb
+ /dJb3pYRqYDY2127waNVwJQ4ORvSMp2y/9qcHpgEeqOBCg9028XVshXeKN3S1VIng7Bt
+ 0Ex1B9kSysK4KcMcthVRn0ntGgdLonchrlmKVcE/1vQOHmQTiqKa2nPNHU3kwohI8qYZ
+ b5TLX76qRPvnZPoKDhl6fBWHmXDzAsKJLvsGlnB/vVrwytdyA2bXOtKQmBHzpfRjtqPn
+ H3bYYCPJIcPNG2fw+lJ4TyhCQe3f0Cvj/B0lB8j7AUw+5/usc/si4s/dd2iFCNlthjXv
+ gO+g==
+X-Gm-Message-State: AOJu0YwOjgj/ed1RRa6QMUkrQHiEQBTyHskSobjo9wDq8VobRuDgJuO0
+ nK1NuIrKC+71C8KlVfmMMRgDSNJvDu2yHuK7KNJhxSXpMxW9baCCTOVsmajcS3xQHxtR2NLsvo/
+ 7IIKgLIEUnQ==
+X-Gm-Gg: AfdE7cnSw+578imBTv8NJXNH665Gz02nCjVahFfez5mBYTZ3l4Gzm9Jo78fPSyeBtjb
+ jHagQ8MshdJ+F3iPtxDj90fj0mz3H8wCMRgFSft2ZQnYRI79rI0nWgGWEDuKaR96pRpxbXk0Rwe
+ NvbalfSUKlyHUniw4ckbMMtDNYZmN1TjcPKdNfFlUdz0siK2F+gLLmGKK5E4LH+3MDBXvMp+U34
+ UoR8V35ErAmz7De/xQH0HQay1Y3d4Gg3lG6s4OVeoeOTPFupzs5RpTSflr3uswOZSV06YbLJGOi
+ 2HXnOcl0U0AggwTzuaDA6se02qrRKhX6wiRPzJ1Hh0jZHc10MLAaADUt1LfPf/ty7E2RqCOe6PQ
+ L+vsc5SXD9S6rG+kcY3PGa5BWMtnWO2FVB7O9fiZxiKw76d5oknI2W2DsZ3GoSAxgBPJBk3lAUQ
+ LF8U1UK5iKoW5NN+LWndD+shw+04mbn2+xsoYXZJ367yWIyH0b9gDayjPKi+EhzeIWZD9h5f2vL
+ +wzBAVVfS4pflS/mKMImw==
+X-Received: by 2002:a05:600c:3110:b0:492:28be:6098 with SMTP id
+ 5b1f17b1804b1-493d11d8025mr126177205e9.11.1783334298474; 
+ Mon, 06 Jul 2026 03:38:18 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.21
+ 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 03:38:21 -0700 (PDT)
+ Mon, 06 Jul 2026 03:38:17 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/49] hw/misc/imx31_ccm: Replace DPRINTF with trace events
-Date: Mon,  6 Jul 2026 11:37:28 +0100
-Message-ID: <20260706103752.320511-26-peter.maydell@linaro.org>
+Subject: [PULL 23/49] hw/misc/imx_ccm: Replace DPRINTF with trace events
+Date: Mon,  6 Jul 2026 11:37:26 +0100
+Message-ID: <20260706103752.320511-24-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260706103752.320511-1-peter.maydell@linaro.org>
 References: <20260706103752.320511-1-peter.maydell@linaro.org>
@@ -101,146 +100,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: jack wang <163wangjack@gmail.com>
+
 Signed-off-by: jack wang <163wangjack@gmail.com>
-[PMM: Remove stray loss of a brace; use trace.h]
+[PMM: trace include is just "trace.h"]
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/misc/imx31_ccm.c  | 33 +++++++++------------------------
- hw/misc/trace-events | 10 ++++++++++
- 2 files changed, 19 insertions(+), 24 deletions(-)
+ hw/misc/imx_ccm.c    | 18 +++---------------
+ hw/misc/trace-events |  4 ++++
+ 2 files changed, 7 insertions(+), 15 deletions(-)
 
-diff --git a/hw/misc/imx31_ccm.c b/hw/misc/imx31_ccm.c
-index 339458e859..8d620711dd 100644
---- a/hw/misc/imx31_ccm.c
-+++ b/hw/misc/imx31_ccm.c
-@@ -16,21 +16,10 @@
- #include "migration/vmstate.h"
- #include "qemu/log.h"
+diff --git a/hw/misc/imx_ccm.c b/hw/misc/imx_ccm.c
+index 9403c5daa3..9f34f9b7b3 100644
+--- a/hw/misc/imx_ccm.c
++++ b/hw/misc/imx_ccm.c
+@@ -14,18 +14,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/misc/imx_ccm.h"
  #include "qemu/module.h"
-+#include "trace.h"
- 
- #define CKIH_FREQ 26000000 /* 26MHz crystal input */
- 
--#ifndef DEBUG_IMX31_CCM
--#define DEBUG_IMX31_CCM 0
+-
+-#ifndef DEBUG_IMX_CCM
+-#define DEBUG_IMX_CCM 0
 -#endif
 -
 -#define DPRINTF(fmt, args...) \
 -    do { \
--        if (DEBUG_IMX31_CCM) { \
--            fprintf(stderr, "[%s]%s: " fmt , TYPE_IMX31_CCM, \
+-        if (DEBUG_IMX_CCM) { \
+-            fprintf(stderr, "[%s]%s: " fmt , TYPE_IMX_CCM, \
 -                                             __func__, ##args); \
 -        } \
 -    } while (0)
--
- static const char *imx31_ccm_reg_name(uint32_t reg)
- {
-     static char unknown[20];
-@@ -120,7 +109,7 @@ static uint32_t imx31_ccm_get_pll_ref_clk(IMXCCMState *dev)
-         freq = CKIH_FREQ;
++#include "trace.h"
+ 
+ 
+ uint32_t imx_ccm_get_clock_frequency(IMXCCMState *dev, IMXClk clock)
+@@ -37,7 +26,7 @@ uint32_t imx_ccm_get_clock_frequency(IMXCCMState *dev, IMXClk clock)
+         freq = klass->get_clock_frequency(dev, clock);
      }
  
--    DPRINTF("freq = %u\n", freq);
-+    trace_imx31_ccm_get_pll_ref_clk(freq);
+-    DPRINTF("(clock = %d) = %u\n", clock, freq);
++    trace_imx_ccm_get_clock_frequency(clock, freq);
  
      return freq;
  }
-@@ -133,7 +122,7 @@ static uint32_t imx31_ccm_get_mpll_clk(IMXCCMState *dev)
-     freq = imx_ccm_calc_pll(s->reg[IMX31_CCM_MPCTL_REG],
-                             imx31_ccm_get_pll_ref_clk(dev));
+@@ -64,8 +53,7 @@ uint32_t imx_ccm_calc_pll(uint32_t pllreg, uint32_t base_freq)
+     freq = ((2 * (base_freq >> 10) * (mfi * mfd + mfn)) /
+             (mfd * pd)) << 10;
  
--    DPRINTF("freq = %u\n", freq);
-+    trace_imx31_ccm_get_mpll_clk(freq);
- 
-     return freq;
- }
-@@ -150,7 +139,7 @@ static uint32_t imx31_ccm_get_mcu_main_clk(IMXCCMState *dev)
-         freq = imx31_ccm_get_mpll_clk(dev);
-     }
- 
--    DPRINTF("freq = %u\n", freq);
-+    trace_imx31_ccm_get_mcu_main_clk(freq);
+-    DPRINTF("(pllreg = 0x%08x, base_freq = %u) = %d\n", pllreg, base_freq,
+-            freq);
++    trace_imx_ccm_calc_pll(pllreg, base_freq, freq);
  
      return freq;
  }
-@@ -163,7 +152,7 @@ static uint32_t imx31_ccm_get_hclk_clk(IMXCCMState *dev)
-     freq = imx31_ccm_get_mcu_main_clk(dev)
-            / (1 + EXTRACT(s->reg[IMX31_CCM_PDR0_REG], MAX));
- 
--    DPRINTF("freq = %u\n", freq);
-+    trace_imx31_ccm_get_hclk_clk(freq);
- 
-     return freq;
- }
-@@ -176,7 +165,7 @@ static uint32_t imx31_ccm_get_ipg_clk(IMXCCMState *dev)
-     freq = imx31_ccm_get_hclk_clk(dev)
-            / (1 + EXTRACT(s->reg[IMX31_CCM_PDR0_REG], IPG));
- 
--    DPRINTF("freq = %u\n", freq);
-+    trace_imx31_ccm_get_ipg_clk(freq);
- 
-     return freq;
- }
-@@ -201,7 +190,7 @@ static uint32_t imx31_ccm_get_clock_frequency(IMXCCMState *dev, IMXClk clock)
-         break;
-     }
- 
--    DPRINTF("Clock = %d) = %u\n", clock, freq);
-+    trace_imx31_ccm_get_clock_frequency(clock, freq);
- 
-     return freq;
- }
-@@ -210,8 +199,6 @@ static void imx31_ccm_reset(DeviceState *dev)
- {
-     IMX31CCMState *s = IMX31_CCM(dev);
- 
--    DPRINTF("()\n");
--
-     memset(s->reg, 0, sizeof(uint32_t) * IMX31_CCM_MAX_REG);
- 
-     s->reg[IMX31_CCM_CCMR_REG]   = 0x074b0b7d;
-@@ -244,8 +231,7 @@ static uint64_t imx31_ccm_read(void *opaque, hwaddr offset, unsigned size)
-                       HWADDR_PRIx "\n", TYPE_IMX31_CCM, __func__, offset);
-     }
- 
--    DPRINTF("reg[%s] => 0x%" PRIx32 "\n", imx31_ccm_reg_name(offset >> 2),
--            value);
-+    trace_imx31_ccm_read(imx31_ccm_reg_name(offset >> 2), value);
- 
-     return (uint64_t)value;
- }
-@@ -255,8 +241,7 @@ static void imx31_ccm_write(void *opaque, hwaddr offset, uint64_t value,
- {
-     IMX31CCMState *s = (IMX31CCMState *)opaque;
- 
--    DPRINTF("reg[%s] <= 0x%" PRIx32 "\n", imx31_ccm_reg_name(offset >> 2),
--            (uint32_t)value);
-+    trace_imx31_ccm_write(imx31_ccm_reg_name(offset >> 2), value);
- 
-     switch (offset >> 2) {
-     case IMX31_CCM_CCMR_REG:
 diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index 13f120d140..c9a868b3ef 100644
+index 99910fc068..3449ad9527 100644
 --- a/hw/misc/trace-events
 +++ b/hw/misc/trace-events
-@@ -284,6 +284,16 @@ imx25_ccm_get_clock_frequency(unsigned clock, uint32_t freq) "(clock = %d) = %u"
- imx25_ccm_read(const char *reg, uint32_t value) "reg[%s] => 0x%" PRIx32
- imx25_ccm_write(const char *reg, uint32_t value) "reg[%s] <= 0x%" PRIx32
+@@ -237,6 +237,10 @@ iotkit_secctl_s_write(uint32_t offset, uint64_t data, unsigned size) "IoTKit Sec
+ iotkit_secctl_ns_read(uint32_t offset, uint64_t data, unsigned size) "IoTKit SecCtl NS regs read: offset 0x%x data 0x%" PRIx64 " size %u"
+ iotkit_secctl_ns_write(uint32_t offset, uint64_t data, unsigned size) "IoTKit SecCtl NS regs write: offset 0x%x data 0x%" PRIx64 " size %u"
  
-+# imx31_ccm.c
-+imx31_ccm_get_mpll_clk(uint32_t freq) "freq = %u"
-+imx31_ccm_get_pll_ref_clk(uint32_t freq) "freq = %u"
-+imx31_ccm_get_mcu_main_clk(uint32_t freq) "freq = %u"
-+imx31_ccm_get_hclk_clk(uint32_t freq) "freq = %u"
-+imx31_ccm_get_ipg_clk(uint32_t freq) "freq = %u"
-+imx31_ccm_get_clock_frequency(unsigned clock, uint32_t freq) "(clock = %u) = %u"
-+imx31_ccm_read(const char *reg, uint32_t value) "reg[%s] => 0x%" PRIx32
-+imx31_ccm_write(const char *reg, uint32_t value) "reg[%s] <= 0x%" PRIx32
++# imx_ccm.c
++imx_ccm_get_clock_frequency(uint32_t clock, uint32_t freq) "(clock = %u) = %u"
++imx_ccm_calc_pll(uint32_t pllreq, uint32_t base_freq, uint32_t freq) "(pllreg = 0x%08x, base_freq = %u) = %u"
 +
- # iotkit-sysinfo.c
- iotkit_sysinfo_read(uint64_t offset, uint64_t data, unsigned size) "IoTKit SysInfo read: offset 0x%" PRIx64 " data 0x%" PRIx64 " size %u"
- iotkit_sysinfo_write(uint64_t offset, uint64_t data, unsigned size) "IoTKit SysInfo write: offset 0x%" PRIx64 " data 0x%" PRIx64 " size %u"
+ # imx6_ccm.c
+ imx6_analog_get_periph_clk(uint32_t freq) "freq = %u Hz"
+ imx6_analog_get_pll2_clk(uint32_t freq) "freq = %u Hz"
 -- 
 2.43.0
 
