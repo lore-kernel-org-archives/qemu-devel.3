@@ -4,129 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 818C8C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05525C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:34:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggXx-0004Et-Iz; Mon, 06 Jul 2026 06:27:30 -0400
+	id 1wgge9-0005Tj-Ku; Mon, 06 Jul 2026 06:33:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wggX6-00048I-3K; Mon, 06 Jul 2026 06:26:41 -0400
-Received: from smtpout1.mo2.mail-out.ovh.net ([79.137.123.219])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wggX2-0000B6-5v; Mon, 06 Jul 2026 06:26:35 -0400
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net [51.255.22.22])
- by mo2.mail-out.ovh.net (Postfix) with ESMTPS id 4gv0rd50rVz4PdJ;
- Mon,  6 Jul 2026 10:26:25 +0000 (UTC)
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net. [127.0.0.1])
- by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alistair@alistair23.me>; Mon,  6 Jul 2026 10:26:25 +0000 (UTC)
-Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.249.132])
- by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gv0rd2nHHz7tN8;
- Mon,  6 Jul 2026 10:26:25 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.6])
- (Authenticated sender: clg@kaod.org)
- by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 003692403D62; Mon,  6 Jul 2026 10:26:22 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-104R005c79a61f4-ca71-4ec7-9f6c-ea91f26e8f3e,
- 85E5B3372E37D114A8148E0C2423338A4BE4238A) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <5b4da868-bbda-4a80-8776-d4724bdad061@kaod.org>
-Date: Mon, 6 Jul 2026 12:26:22 +0200
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wggdy-0005SU-US
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:33:43 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wggdx-0001vn-6k
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:33:42 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-493c83474ddso26318815e9.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:33:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783334019; x=1783938819; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=q0rqZ8DzQgMhw+yZoWl4RA7L9y8b3UQYzzJkK/9Xpog=;
+ b=MbjssHVe/QCKJEUlshLOqFhYObhf0iDxyuYzHINXe7jH0RGYXGyF8WWPH+FdaqYvmg
+ BKIN22PWlRVZ5U1XmIq/rpMOgQd6q8AG+qIigmV82G0WSuImur0t8DBuDX5W13OTTqlo
+ UkeCty0r9JMF/HxARRL6KFh6QCGwnAs+kWMAuYp26/oWtcrv7fe0Bz9ZH9gry01hycQj
+ 7Ymvr+VixvN4K+LxTnNBDsODxTcm4Lf/FJ36nH13L9Hngo4K8iuatHzYGYNm5gOafxIB
+ UdR+cQq/Q9UTIQPG6SLVyQQ+oE419/7fPiCBUN3v5VfgA8MyVwhxMa53vvo7HbZx+27J
+ 9Qsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783334019; x=1783938819;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=q0rqZ8DzQgMhw+yZoWl4RA7L9y8b3UQYzzJkK/9Xpog=;
+ b=DpKYHHBhdLx7pqw4Uoz++wi/cv6ruJtLzc5KY8mAJsxqQ4+Tj6mk5yOLslVgo4utzQ
+ NibXaoRoCmYWxRw5RaYE10RHMDxxYtKjf+N9eqJNZqobJ4P9QlXBIoDerVxpCMTK28GG
+ Oae35BRe7MdVvXNXLlsSE/m/fOQp116P6+FrACk7E+EgOjMBo84AySNZ8scoC4V008hK
+ obLf1WquGUJq6ONxR2W/sb7tj7Fa7KNSYFnlGn6wXxru0JHj3kfdMsLyXVj+AvAkw16d
+ uighM0qbxJDoG9PdCDiQl8aOW8kjn4nUZhTRIJanlUo4WENpgnFLm0aV/mgTVgp/9T2i
+ VqEg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rpr2VDQJeAGO+VZYpkTJVgu01Yws6zFKHJeFb7f2aG1eaTPccgpOk7LxYqlFnD1PE/O8Nhg3IJm8Qio@nongnu.org
+X-Gm-Message-State: AOJu0YxFVzoE+4dYLM1cXOTAjBcasRFlyQrkfw0MB2ALBo+10EHjipI5
+ t4XlU/N4dq4HOWw6hED1NMDS9jJDdVTkL9LNy2AmBbm2gNVHvEUz8gxE9vjXwiHH6Ho=
+X-Gm-Gg: AfdE7ckG11xleOzcTQhEuQ8hwoCJSSAVC9Thp8bGLrFpfFpcWFr2hqaPbWmzsDqzvSw
+ Rf0XkqM9SzP1CTiqdlLtg2Cz7HGXngkeLMwmW2CUK2e/w+WQ6KQ76u7wQdQnTnBAWcah2kBxm7N
+ sXAVP7Fjl3mX1EwdfILNbUwlI9sJjWU9zlyDXNOCTMNe/Mkrke+k8NtuXgotP/JT7ujN6XjnjhH
+ Fy2ZSGgLiPhck6JLjW9rByZvasq5MFCl9kit3eUNfNHKkTfMs+tIpUFyyM7hckx1+Zvf3USIvlg
+ JdKVJ12Jz/oVcp17aZaL2jZ2SrKqLBQdniWtGljLVV4lroebvry1t3U8gvm4UnryBtjwe7GhqTt
+ oUyBGj8Fi2VX8bBo8J4RU9zdvIt+N1jw+B86OZhgjL3f3q5xVLb4SXJNJ+VuzN24ivMOqkFlPl0
+ uXT92EBFbpC4/W
+X-Received: by 2002:a05:600d:8654:20b0:493:bfea:2786 with SMTP id
+ 5b1f17b1804b1-493d11f6d34mr81656625e9.32.1783334019166; 
+ Mon, 06 Jul 2026 03:33:39 -0700 (PDT)
+Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493bef183e7sm436267335e9.2.2026.07.06.03.33.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Jul 2026 03:33:38 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 4AA1D5F83B;
+ Mon, 06 Jul 2026 11:33:37 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Gilles Grimaud <gilles.grimaud@univ-lille.fr>,  qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org,  Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [RFC PATCH] target/arm: report M-profile BKPT to gdbstub when
+ attached
+In-Reply-To: <CAFEAcA9Heev=ydTzO2u3EzeF_2q7dytOF8=67qF8ZMMY6Ky2Tw@mail.gmail.com>
+ (Peter Maydell's message of "Mon, 6 Jul 2026 10:21:31 +0100")
+References: <20260705224407.32464-1-gilles.grimaud@univ-lille.fr>
+ <CAFEAcA9Heev=ydTzO2u3EzeF_2q7dytOF8=67qF8ZMMY6Ky2Tw@mail.gmail.com>
+User-Agent: mu4e 1.14.2; emacs 30.1
+Date: Mon, 06 Jul 2026 11:33:37 +0100
+Message-ID: <877bn8wgou.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/10] hw/{block,ssi}: Fix spi-nor flash dummy byte
- handling
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
-Cc: Alistair Francis <alistair@alistair23.me>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Hanna Reitz <hreitz@redhat.com>, Hao Wu <wuhaotsh@google.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- Kane Chen <kane_chen@aspeedtech.com>, Kevin Wolf <kwolf@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Tyrone Ting <kfting@nuvoton.com>, qemu-arm@nongnu.org, qemu-block@nongnu.org
-References: <20260630135729.466264-1-bin.meng@processmission.com>
- <bb4b7240-ea2c-4738-80e1-83e259f3ef4b@oss.qualcomm.com>
- <0830c96b-9fde-4b0c-89ff-f6c0bed60725@kaod.org>
- <6c097a17-efeb-4299-839c-f2ec890423d3@oss.qualcomm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <6c097a17-efeb-4299-839c-f2ec890423d3@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 9426315496858168459
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTECX6Wj2R9cnEpK+SCHm7+S7sS+caW+HS9zB8yY5wJTXsh6k/Ng+A5jde8MvwdMiE6zo1HB9T3Vbn0Vdh98AQZBa7jueEiwSvtBdifBkQlJ5xubDqszFDwf6UtU43ySBbBlxXKE0r530R9R92KGp3U2zqv9U8iR9RrAVz0H7crGpZwpwpSDkQ5OIOtiDeUn0c4MInH8NJnquUfWHZYFlp/qaLwu9mfPMjpHR1WY6kiaVeCLzXxXslAYRLcsOEeC1vWuz5Ihp9s2qSRVunxySio+D+zEYyD9xZ7y3WGdNGNzka+0UrX6X11Ha4MBbtkRKfBqHNuY4egVSavI9E9qxVXBC7uZzgTfsqA0owH7kP7PKw8eIRZS5cttC3xTB4aL+Vvovk+pmZID+4sGQ8VICaJx4CaO/unuYVzYFOXqy29GsGE264fabYBHdts7bbuKYwseG3IR9+J8aBcvRRiG8DprkGltnBq7NoUo69ATiacb6DKW+YU/LhvVFTDcYI7yXeYj9cPPOte+pE3yNFGIxY9z0Pe27LcKYmLG+IvMiwpvp2oy0poQ9jnQjC4HH1p4eBggB/R78u1MSGceRJxbkKXycdULGYcCZWsFtlNk/Y4uG/KlAP1jec+XM0esL+4M0RiTaOUtHYrdbPgnEg2aPbrSz7i9+lqy+X5qfgDDj3ZtNg
-DKIM-Signature: a=rsa-sha256; bh=ShWuKLIVrLb0eFuKqlDpLy3evTHtFPAYcg6XSKRB4WI=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1783333588; v=1;
- b=OZ4fGEWgZT0ILHDoy8xEMinUTK/F4RnVejCcvNZ7wnJw6GoF8nUtTqjOjvTLh9gCAXjuBl/X
- qz4gR12el5viYPbt82xiRTdrlne0uwnwFmhtrE7DYwnDx+Ie5jgwkf51BLnT4ey6D7jq1QMJFyF
- 5koWBBaJjR1mZd1SU64dZ3yiwKcYFPwxMBPrQ9vUufZMsJDtImkQk/Rxs98RSJo6BScrWmY5CQi
- QUGmLcC4x5zYDTtZjVO6TbpKRDUnm5hkfLkrNLVN2iWY2zQKwbjXwpLbkIsU/dpWzp9rDqtk/Py
- jK0/dlTp/wIla2nBOhpLACDF9hA2HRHvTsz7qjnz0wUYg==
-Received-SPF: pass client-ip=79.137.123.219; envelope-from=clg@kaod.org;
- helo=smtpout1.mo2.mail-out.ovh.net
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,67 +108,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/6/26 11:58, Philippe Mathieu-Daudé wrote:
-> On 6/7/26 10:40, CÃ©dric Le Goater wrote:
->> On 7/6/26 10:19, Philippe Mathieu-Daudé wrote:
->>> Hi Bin,
->>>
->>> On 30/6/26 15:57, Bin Meng wrote:
->>>>
->>>> This series fixes dummy-cycle accounting for SPI NOR fast-read
->>>> operations across the m25p80 flash model and several SSI controller
->>>> models.
->>>>
->>>> The root problem is that the affected code paths mixed two different
->>>> units. Flash datasheets and controller registers often describe
->>>> fast-read dummy phases in clock cycles, while the SSI bus interface used
->>>> by these models transfers byte-sized words to the flash. As a result,
->>>> some paths treated cycle counts as byte counts directly, and other paths
->>>> compensated in controller-specific ways that duplicated flash command
->>>> semantics.
->>>
->>>
->>>> The final patch documents the intended ownership boundary: flash models
->>>> own command semantics and dummy-byte consumption, while controller
->>>> models own hardware-generated dummy phases and cycle-to-byte conversion.
->>>
->>> I'd blame the API. I'd feel safer having the block/ layer use bit
->>> cycles, and a core layer converting bits to bytes when calling the
->>> SSI layer. Maybe too late to improve. The documentation you added
->>> is helpful, but I'm pretty sure we'll introduce more regressions.
->>> Anyway, thanks for your work :)
->>>
->>>> Some background:
->>>>
->>>> While recently working on some device modeling, I hit this issue
->>>> again. I then realized that I had sent a fix series for it more than
->>>> five years ago, but it never made it upstream.
->>>>
->>>> This series picks up that old work, refreshes it against the current
->>>> tree, and fixes several issues in the SPI controller models. The original
->>>> series is available at [1]. I have tried to verify all the SPI controller
->>>> changes by booting real-world guest software to ensure the change does
->>>> not break anything.
->>>>
->>>> [1] https://lore.kernel.org/qemu-devel/20210114150902.11515-1- bmeng.cn@gmail.com/
->>>
->>> (Could we add this as a functional test?)
+Peter Maydell <peter.maydell@linaro.org> writes:
+
+> On Sun, 5 Jul 2026 at 23:44, Gilles Grimaud
+> <gilles.grimaud@univ-lille.fr> wrote:
 >>
->> Nearly all aspeed machines will test these changes when booting.
-> 
-> Are you saying that currently the Aspeed tests pass without this
-> series?
-> 
+>> While working on Raspberry Pi Pico/RP2040 support, I noticed that Pico S=
+DK
+>> programs deliberately execute BKPT from _exit(). On real hardware this is
+>> useful when a debug probe is attached: returning from main() stops the
+>> debugger at the program exit point.
+>>
+>> Under QEMU this currently does not behave like the debug-probe case. For
+>> M-profile guests, the BKPT instruction is routed through the architectur=
+al
+>> guest debug exception path. Without halting debug, that path should rema=
+in a
+>> guest-visible DebugMonitor exception when DebugMonitor is enabled, or es=
+calate
+>> towards HardFault otherwise. This patch deliberately leaves that no-debu=
+gger
+>> architectural path unchanged.
+>>
+>> The problem addressed here is the case where GDB is connected to QEMU's
+>> gdbstub. In that situation, firmware that uses BKPT as a debugger stop p=
+oint
+>> should stop in the attached debugger. Instead, the M-profile guest curre=
+ntly
+>> continues down the guest exception path and may end in HardFault/lockup =
+rather
+>> than reporting a clean trap to GDB.
+>>
+>> This is not specific to the RP2040 machine model. It is a generic
+>> Cortex-M/gdbstub interaction: firmware that uses BKPT as a debugger stop=
+ point
+>> should be reported to the attached debugger, while keeping the guest
+>> architectural exception path when no debugger is attached.
+>>
+>> Expose a small gdbstub helper to test whether a CPU is visible to an att=
+ached
+>> debugger. When an M-profile BKPT instruction is executed with such a deb=
+ugger
+>> attached, leave the translated block with EXCP_DEBUG so the existing gdb=
+stub
+>> stop path reports a trap to GDB.
+>>
+>> Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+>> ---
+>>  gdbstub/gdbstub.c      | 13 ++++++++++++-
+>>  include/exec/gdbstub.h |  6 ++++++
+>>  target/arm/tcg/debug.c |  9 +++++++++
+>>  3 files changed, 27 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+>> index c3c944e965..9f259fc005 100644
+>> --- a/gdbstub/gdbstub.c
+>> +++ b/gdbstub/gdbstub.c
+>> @@ -237,6 +237,18 @@ static GDBProcess *gdb_get_cpu_process(CPUState *cp=
+u)
+>>      return gdb_get_process(gdb_get_cpu_pid(cpu));
+>>  }
+>>
+>> +bool gdb_cpu_is_attached(CPUState *cpu)
+>> +{
+>> +    GDBProcess *process;
+>> +
+>> +    if (!gdbserver_state.init || !cpu) {
+>> +        return false;
+>> +    }
+>> +
+>> +    process =3D gdb_get_cpu_process(cpu);
+>> +    return process && process->attached;
+>> +}
+>
+> No other architecture, CPU or board in QEMU needs to do this,
+> so my instinct is to say that M-profile should not be special here.
+> Richard, Alex: how do we usually handle breakpoint insns for the
+> gdbstub ?
 
-They do, and they also pass with the series.
+For TCG guests we never insert BKPT instructions and treat the system as
+having infinite hardware breakpoints.
 
-The series fixes the dummy-cycle emulation and removes the ugly
-workarounds currently used by several SPI controller models,
-which rely on snooping transfers. This issue has been reported
-a few times in the past, with tentative fixes, but this is the
-first proposal that addresses it cleanly.
+From what I can tell we should only route the debug event to an external
+monitor if the right DHCSR and DEMCR bits are set. Even then the spec
+has a lot of behaviour with is IMPDEF.
 
-Thanks,
+I think the v7M rules are different to the v7a/v8a ones.
 
-C.
+>
+> -- PMM
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
