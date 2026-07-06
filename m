@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96B8BC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 11:50:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3C9DC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 11:51:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wghq5-0000m1-Jh; Mon, 06 Jul 2026 07:50:18 -0400
+	id 1wghrN-0001Ye-AG; Mon, 06 Jul 2026 07:51:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>)
- id 1wghq2-0000k4-Kz; Mon, 06 Jul 2026 07:50:14 -0400
-Received: from smtpx.feld.cvut.cz ([2001:718:2:1516::210:153]
- helo=smtpx.fel.cvut.cz)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>)
- id 1wghpz-0004VP-Ax; Mon, 06 Jul 2026 07:50:14 -0400
-Received: from localhost (unknown [192.168.200.27])
- by smtpx.fel.cvut.cz (Postfix) with ESMTP id 9313C1662B;
- Mon, 06 Jul 2026 13:50:02 +0200 (CEST)
-X-Virus-Scanned: IMAP STYX AMAVIS
-Received: from smtpx.fel.cvut.cz ([192.168.200.2])
- by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
- with ESMTP id RBYDT1sX9--Q; Mon,  6 Jul 2026 13:50:01 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
- s=felmail; t=1783338256;
- bh=CZwBV97eGUbAzqXmCYBT7gftrTK0/zgKDJ2ZFaLmZS4=;
- h=From:To:Subject:Date:Cc:References:In-Reply-To:From;
- b=s7CsxiVBWhFZtlGM0bHUkM4vxlzip36NgR2LgM/Ze4Sc6d1T9nZBDwdasC635Y9Og
- WzzFkbDRLAPcuZvVigJM2TQNHHsMGdX/J1ykGTOEDM3lrtsk2zcSHAAuRyuzwrQf7L
- DIJP6r02cUzf61XRseyBrh8u9WaZYgbbxUNxIkQjRi7baZFbynlHIJrgk8cddwFPsJ
- I5sv+FliPyFqRGm1GrD3Yu0NTTtFbRnHooZ5aCuV7HswV4ZFgKf9uRiYor5qCkOihG
- J3/d9oMlT0JxMGzXcoVmnHmyvdCZ47QlQJh7T6O3v0ZtzfzxNbL5rR+GpvUVe9jr5h
- mOEL8Wxv1n3zQ==
-Received: from baree.pikron.com (static-84-242-78-234.bb.vodafone.cz
- [84.242.78.234])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wghrH-0001YF-IK
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:51:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wghrG-00050g-7Q
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:51:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783338689;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6MZeVVmFL+eaMn/AIwJDbn1+Nrnqjph+bxM7usbiNTo=;
+ b=fRVdC/rQArVGEDHPSCscAbN1tzwXtTj0dnTtTJBd4qH7cnHrtFUht8sOhpn6sRnmGFkF39
+ GSHyp5yf7z14rO9nffF1gXJ2HfEkXlpN3+ZSAfjN0tq1OmbNor5D8/YNb8eKs15Q01X7ks
+ giK6TpWJwU3Kk3TPs4rtENQyiQPwlwE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-185-FBV5qYOOOjKZ1L1QYtkYug-1; Mon,
+ 06 Jul 2026 07:51:23 -0400
+X-MC-Unique: FBV5qYOOOjKZ1L1QYtkYug-1
+X-Mimecast-MFC-AGG-ID: FBV5qYOOOjKZ1L1QYtkYug_1783338682
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: pisa)
- by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id 7560016462;
- Mon, 06 Jul 2026 13:44:15 +0200 (CEST)
-From: Pavel Pisa <pisa@fel.cvut.cz>
-To: Bernhard Beschow <shentey@gmail.com>
-Subject: Re: [PATCH v2 0/5] hw/arm/fsl-imx8mp: Add inital FlexCAN support
-Date: Mon, 6 Jul 2026 13:44:14 +0200
-User-Agent: KMail/1.9.10
-Cc: qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "Philippe =?utf-8?q?Mathieu-Daud=C3=A9?=" <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Matyas Bobek <matyas.bobek@gmail.com>,
- Vikram Garhwal <vikram.garhwal@bytedance.com>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>,
- Jason Wang <jasowang@redhat.com>,
- "Jean-Christophe Dubois" <jcd@tribudubois.net>,
- Francisco Iglesias <francisco.iglesias@amd.com>
-References: <20260702184038.178196-1-shentey@gmail.com>
-In-Reply-To: <20260702184038.178196-1-shentey@gmail.com>
-X-KMail-QuotePrefix: > 
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D08071955F73; Mon,  6 Jul 2026 11:51:21 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 32FA41956049; Mon,  6 Jul 2026 11:51:21 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Harald Freudenberger <freude@linux.ibm.com>,
+ richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ thuth@redhat.com, berrange@redhat.com
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ linux-s390@vger.kernel.org, dengler@linux.ibm.com,
+ borntraeger@linux.ibm.com, fcallies@linux.ibm.com
+Subject: Re: [PATCH v10 10/21] target/s390x: Base support for cpacf
+ protected keys
+In-Reply-To: <20260706094317.17032-11-freude@linux.ibm.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20260706094317.17032-1-freude@linux.ibm.com>
+ <20260706094317.17032-11-freude@linux.ibm.com>
+User-Agent: Notmuch/0.40 (https://notmuchmail.org)
+Date: Mon, 06 Jul 2026 13:51:19 +0200
+Message-ID: <87v7asjpzc.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-Message-Id: <202607061344.14505.pisa@fel.cvut.cz>
-Received-SPF: pass client-ip=2001:718:2:1516::210:153;
- envelope-from=pisa@fel.cvut.cz; helo=smtpx.fel.cvut.cz
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, NICE_REPLY_A=-2.97, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,100 +93,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dear Bernhard,
+On Mon, Jul 06 2026, Harald Freudenberger <freude@linux.ibm.com> wrote:
 
-On Thursday 02 of July 2026 20:40:33 Bernhard Beschow wrote:
-> Now that FlexCAN emulation has landed in master, let's add it to imx8mp-evk
-> as well. While the real i.MX8M Plus supports CAN FD which isn't emulated
-> yet, the non-FD mode works well under Linux: It is possible to use `cangen`
-> and `candump` either way on the host and on the guest, as described in
-> docs/system/devices/can.rst.
+> Add base support for cpacf protected key handling.
 >
-> This series consists of five patches where the first four are preparations.
-> The last patch integrates FlexCAN into the i.MX8M Plus SoC and EVK board.
-> The first preparation addresses the review comment from [1], and could be
-> applied independently.
+> The qemu version provided here is only a fake intended to make
+> protected key available for developing and testing purpose:
+> * The protected key is 'derived' from the clear key by xoring
+>   the fixed pattern 0xAAAA... onto the key value.
+> * The AES Wrapping Key Verification Pattern is a fixed
+>   value of 32 bytes 0xFACEFACE...
 >
-> It would be nice if this series could make it into 11.1.
+> Add preprocessor defines for the xor pattern and wkvp used to
+> construct ('encrypt') a protected key from a clear key value with
+> this implementation. Also add some static functions to 'encrypt'
+> from clear key to protected key and 'decrypt' back to cpacf_aes.c.
 >
-> Testing done:
-> * Start imx8mp-evk and run `cangen can0` there. Observe on the host that
-> `candump vcan0` prints the traffic.
-> * `make check`
+> The preprocessor defines shall be used later in testcases to
+> construct and decode protected keys.
+
+Hmm... so does that mean that we only provide the protected key handling
+in the !KVM case for people who want to run via tcg for some development
+purposes? Does the user actually get some kind of notice in that case,
+if for example they run with !KVM due to some configuration hiccup? IOW,
+do users get some clue that they are running with a fake placeholder
+implementation, other than the setup being slow?
+
 >
-> v2:
-> Thanks for the very helpful and super quick review, Phil! Here we go:
-> * Add patch "hw/net/can/flexcan: Wire clock control module via link
-> property" * Have separate MemoryRegionOps for 32 and 64 bit
->
-> [1]
-> https://lore.kernel.org/qemu-devel/77d5891c-de12-467e-8746-02fe43121e3e@oss
->.qualcomm.com/ ---
-> base-commit: a59157f98f0b69b0bbdb26bc15fbc4d6c8060799
->
-> Bernhard Beschow (5):
->   hw/net/can/flexcan: Wire clock control module via link property
->   hw/net/can/flexcan: Subclass TYPE_CAN_FLEXCAN
->   hw/arm/imx8mp-evk: Open code DEFINE_MACHINE_AARCH64
->   hw/arm/imx8mp-evk: Introduce FslImx8mpEvkState
->   hw/arm: Add basic FlexCAN3 support to TYPE_FSL_IMX8MP and imx8mp-evk
->
->  docs/system/arm/imx8m.rst   |  1 +
->  include/hw/arm/fsl-imx8mp.h |  8 ++++
->  include/hw/net/flexcan.h    |  4 +-
->  hw/arm/fsl-imx6.c           |  5 ++-
->  hw/arm/fsl-imx8mp.c         | 38 ++++++++++++++++
->  hw/arm/imx8mp-evk.c         | 64 ++++++++++++++++++++++-----
->  hw/misc/imx8mp_ccm.c        |  3 ++
->  hw/net/can/flexcan.c        | 88 ++++++++++++++++++++++++++++++-------
->  hw/arm/Kconfig              |  1 +
->  9 files changed, 182 insertions(+), 30 deletions(-)
+> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+> ---
+>  target/s390x/tcg/cpacf.h     | 25 +++++++++++++++++++++++
+>  target/s390x/tcg/cpacf_aes.c | 39 ++++++++++++++++++++++++++++++++++++
+>  2 files changed, 64 insertions(+)
 
-Thanks for the work. I have tested the series on the top
-of your imx8mp-flexcan branch, commit
-
-  3b7289419cac5b712faeadf6b4a6203579d08f76
-
-with our test setup for iMX6
-
-  qemu-system-arm -m 1G -M sabrelite -smp 4 ...
-
-and it worked as intended. I have looked at all patches
-from your series and I do not see anything problematic.
-
-You can add my confirmation to the series and or individual
-patches
-
-Acked-by: Pavel Pisa <pisa@fel.cvut.cz>
-Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
-
-By the way, I have noticed your iMX53 branch. We have some
-old kits for this because we used it for yet another generation
-of medical infusion system prototypes/instruments fully
-functional demonstrators but before final HW design with
-safety.
-
-The fully realized and produced systems with iMX1 there
-https://www.pikron.com/pages/devel/medinst.html
-
-Functional demonstrators with iMX53 there
-https://onimed.cz/wp-content/uploads/2021/02/medicina.png
-
-Best wishes,
-
-                Pavel
-
-                Pavel Pisa
-    phone:      +420 603531357
-    e-mail:     pisa@cmp.felk.cvut.cz
-    Department of Control Engineering FEE CVUT
-    Karlovo namesti 13, 121 35, Prague 2
-    university: http://control.fel.cvut.cz/
-    personal:   http://cmp.felk.cvut.cz/~pisa
-    social:     https://social.kernel.org/ppisa
-    projects:   https://www.openhub.net/accounts/ppisa
-    CAN related:http://canbus.pages.fel.cvut.cz/
-    RISC-V education: https://comparch.edu.cvut.cz/
-    Open Technologies Research Education and Exchange Services
-    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
 
