@@ -4,95 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EB53C43602
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:36:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A9E9C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:38:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgeoF-00017b-RM; Mon, 06 Jul 2026 04:36:11 -0400
+	id 1wgepn-0001bV-25; Mon, 06 Jul 2026 04:37:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wgeo6-00016m-Qs
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:36:03 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wgeo4-00020y-Ud
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:36:02 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-493b77b150aso25842715e9.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 01:35:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783326957; x=1783931757; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=wxluw9D1uD+htvCsZ+y0++M6PqdGer7BFSTpmNYZbv8=;
- b=PYdtevvtk/s46TNjHqM/mavfKgzN5e6ikDos0cEXMLJiJdHYSDtUcZ32ft1TH65TYV
- iq0+eFvNfU6hNks8fkDgBrJ4CoBjdu5WItu0moFtEd2XBPxz7NI1DThFxVDZLhkn3sNR
- NZPbVtX20l41z9EDhQRtzPBjIFUE/GnL2TXoXUQt0xfW8PRgWt+jLLNYhw4ovC9O5Fld
- QPa+FpvDp0tHKeyaJKrau3L+JNZtdyeTOLNyLBJvCfoPxSztal8LRMYqgaZsjLP+vecX
- a6GoQO/k+fnG6mCwKBv9O1tbBB5GFYzlgZy1OQggBj52PYMpYlEnaWZ1+GgiX/4sTqZ8
- +a3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783326957; x=1783931757;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=wxluw9D1uD+htvCsZ+y0++M6PqdGer7BFSTpmNYZbv8=;
- b=qE/FwN5W81anBkQ7zMixqoQWk/tmQC1i2VgC50GQ6gST4UMzkx76Oq+E258cmpBU+p
- rxjaf0PzbXWXoh7JGPmwWvWa9lM6n+U1msogrPOY66uk+YVZvNZOqpamnKNlIGZDawT3
- 7Lz6al6uB7zAhNtnG/BeYWXyyBPBgLzrvzqTG/UEYpkLPyzRdXr0hdmiExd1/DiF713W
- UyDKwp2dJBELWhzaYCNYlgzSVEHJLEUpD2hK/p9x257Peh1jbJbcRWc2PrJ5UwP3JwaM
- P3HaKb648xdVW7WQkOjXMUUErmaNm57oP8rt+62Wq0tPyuOqF3BLDz8sa+oqFV86WiJ9
- mrTw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RopR7N6RQbFaOcmnhG750VEWpKkOAR1xADeddYzzJmbXfs/rlMfxOLcKth9VApIFC8FJwVYi/zoUSfp@nongnu.org
-X-Gm-Message-State: AOJu0YwBfLGwBpXOY2fqlZHPDz4ExhXfMR1fUXu4KBJxVhTNUqzzpMRG
- aN2/5ktRKjGZB67+WXQDzM8VESfKvLIGjARbEaXPGrXCljVjK4XpravjGKYeIcyGiiY=
-X-Gm-Gg: AfdE7cmib/StlNVtti/eoGF3rCTvEkKJJAt0zNgcWY+185TEkZVS0t4F+Qtv+rqSpCA
- /m7NhscrYAZ5L5qfilL6ZjaZ4cykYONrRBXxMTYfZOdJDj2f8u1JJbUZJ856hSvVR5UUro9ryTv
- E2+pzynhxv41RkqKBaGcbC7BkIkLXu5l2kJm399zM3JaR/ZYvpTFBMFpy2cy65XDaUeMDVhFuZU
- 1Je/ACYFcXzuAhR8g5C9rF4N5DKXLWn/4BqsNNyZOZi6cb+XPBkR/WOFj38BF0C3kSKf7QTK7qK
- OPkq+UY2epVJcHaj18xuRomNVTxDbyRt0T6i7BZDPj+fWoC9Ho5N/ykB/2vCdJ9mB3F0I/rviij
- StEP578PbK5H88IGCwNzRoDQ1GsA6/ZhhBeSradn/DUv8JgVpH9Q92XynDRv0wdIgOpw+6Uii09
- heS7eayytjQqox
-X-Received: by 2002:a05:600c:c167:b0:493:a570:df7d with SMTP id
- 5b1f17b1804b1-493d11f4b8dmr101023285e9.20.1783326957191; 
- Mon, 06 Jul 2026 01:35:57 -0700 (PDT)
-Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63ba971sm587027985e9.13.2026.07.06.01.35.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 01:35:56 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id ED6515F83B;
- Mon, 06 Jul 2026 09:35:54 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: Michael Tokarev <mjt@tls.msk.ru>,  Richard Henderson
- <richard.henderson@linaro.org>,  qemu-devel <qemu-devel@nongnu.org>
-Subject: Re: docker-image-debian-all-test-cross errors
-In-Reply-To: <24d6a029-5f68-4314-820c-fb1786012fb4@ilande.co.uk> (Mark
- Cave-Ayland's message of "Sun, 5 Jul 2026 22:14:23 +0100")
-References: <4b08f4e2-2274-409a-86d8-469c73e21579@linaro.org>
- <0403705b-9af4-4de1-8f66-c56befa5bae9@tls.msk.ru>
- <24d6a029-5f68-4314-820c-fb1786012fb4@ilande.co.uk>
-User-Agent: mu4e 1.14.2; emacs 30.1
-Date: Mon, 06 Jul 2026 09:35:54 +0100
-Message-ID: <87cxx0wm51.fsf@draig.linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wgepM-0001Xc-GG; Mon, 06 Jul 2026 04:37:23 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wgepJ-0002Q5-CS; Mon, 06 Jul 2026 04:37:18 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6667M1Id1497686; Mon, 6 Jul 2026 08:37:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ejIZgP
+ BH5jc4yIQXVtPYBu8jSdyspTvLVBb3CI2Rb6A=; b=p01CWW/iZUZKhQXx0GiEmC
+ qwWBSAP+DMA1s+4IGs83bmcxaK2yIpjD8PPucrEM7vvuZs1wbuyKCT7dvRjzAX2H
+ alOIO4fjRpx3ibGc+tvqklsevVE7N6Rb4w+Hb3mzm5d8SwJv4QOedu6fAUBf68Wf
+ qmKvf7Xc+9XoFd6Inbo8/cwRHTPl7EjHLHY0KdHvo7BOJDG6vVXR4TCVDzMS+fOu
+ MLI8jcx8psmclkdMtY35ceyXkSTVJKiG3rs6z5xflPL3105Dduq0eApP06RsrKqN
+ PkAnlGrO30ahoURlTeslNMKISnh6/0mK9uZosXj3Ne68hkAw4V2hN0lcp8iLSLUg
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6stsh0mw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jul 2026 08:37:04 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6668Yk7p032686;
+ Mon, 6 Jul 2026 08:37:03 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7f6xvefm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jul 2026 08:37:03 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6668b0kw16384306
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 6 Jul 2026 08:37:00 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0C9A120043;
+ Mon,  6 Jul 2026 08:37:00 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1B0352004E;
+ Mon,  6 Jul 2026 08:36:58 +0000 (GMT)
+Received: from shivang.upadyay (unknown [9.123.12.247])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  6 Jul 2026 08:36:57 +0000 (GMT)
+Message-ID: <01f03069db4b48499c0f138e8afa9b0971e863b4.camel@linux.ibm.com>
+Subject: Re: [PATCH v3] powernv: boot OpenBSD on POWER9
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: adityag@linux.ibm.com, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ npiggin@gmail.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
+ rathc@linux.ibm.com, brad@comstyle.com, "Kirill A.Korinsky"
+ <kirill@korins.ky>
+Date: Mon, 06 Jul 2026 14:06:57 +0530
+In-Reply-To: <871pdkmdd3.wl-kirill@korins.ky>
+References: <20260702130152.89334-2-kirill@korins.ky>
+ <a52771d5-0179-48de-a0e3-eac95192b789@linux.ibm.com>
+ <871pdkmdd3.wl-kirill@korins.ky>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: emCCSy-2dpNeGOrvYsz6QvaXhXHc_lfr
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA4MyBTYWx0ZWRfX/yWKKNloAJqf
+ AQlC5OyYdcA5uszpk+F5D8/von8/kbCgM22lkcIaTc4kHrZmXdePYvCLonqM5RQQsXoHkx5TdiN
+ EFDYuIgqxrFx8Vzn1fVgi5hVBUt7ReA=
+X-Authority-Analysis: v=2.4 cv=DKW/JSNb c=1 sm=1 tr=0 ts=6a4b6931 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=NEAV23lmAAAA:8
+ a=TbeAMaP54blmARleNrcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: Y6HaNC4MIAYMJ78kFSsg6Hny6RGQdMVQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA4MyBTYWx0ZWRfX9VmQG12hPVba
+ cuCh/XsR2pcVKTE/T+33vsK18+VkZ1szu3Rhw3LQPhGTKavcNQzakggcFDM3xOnGdQKtDCHo9Lj
+ IBeONyPd219ldsaZdRq46q4Np7hoCWltG4y0Gufr1GgAOAyT4nDONuEDm4ivGmSUDhbsVJr0gfg
+ q8OKTFkpuHtkRbm2pwGBu1WY/KDYK4h8y3GBFtWkc2nEwXypjObWvgVrmmqh/0KRETrXaj3IAU4
+ JqORjolpnBp5ff2pn4HscV6mo6g/hcUUC52Zl3SyukwbXxRJRWFsKTDHPqs1kEMUlCmoYas4rmn
+ GwhbR9UbbqLgVXROU4QtodTxbiiNPJCrwGwD6d9kWVqz2ER/Dq0RkiW0W1VSYQpnekVrdufLVT4
+ pnmappC6g0HZuBto5hTQFd52QAO1RcSju8qQv0mgPRlX4PXcBmRsp6v2QlfcX44P+ajPw7fRh2Y
+ gTo9VSw/M81h0wkxpog==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-05_02,2026-07-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 clxscore=1011 phishscore=0 impostorscore=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607060083
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,45 +127,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk> writes:
+On Fri, 2026-07-03 at 15:06 +0200, Kirill A.Korinsky wrote:
+> I have no idea why OpenBSD does it but I see in powerpc64's pmap.c:
+>=20
+> #define PATMEMSZ	(64 * 1024)
+> #define PATSIZE		(ffs(PATMEMSZ) - 12)
+Hi,
 
-> On 05/07/2026 10:07, Michael Tokarev wrote:
->
->> On 05.07.2026 00:20, Richard Henderson wrote:
->>> Has anyone else been seeing
->>>
->>> Error: Failed to fetch
->>> http://deb.debian.org/debian/pool/main/d/dpkg/ libdpkg-
->>> perl_1.22.21_all.deb=C2=A0 404=C2=A0 Not Found [IP: 151.101.22.132 80]
->> ...
->> dpkg (and all related packages) has been upgraded from 1.22.21 to
->> 1.22.22 version quite a while (on Mar-2026).=C2=A0 Initially debian trix=
-ie
->> had dpkg 1.22.21.
->> I wonder where it is getting the old version reference from?
->> Should the previous layer be refreshed to point to the current trixie
->> point release?
->> /mjt
->
-> If that is the case then I think you can fix it by doing a manual
-> update of the base image to pull in the latest update locally i.e.
-> "docker pull docker.io/library/debian:13-slim" and then rebuilding the
-> docker images once again?
+This seems like a bug in openbsd to me.
+PowerISAv3.1 under PTCR says,
+=09
 
-You can always trigger a local build:
+	4:51 PATB  | Partition Table Base
+	59:63 PATS | Partition Table Size=3D2^12+PATS , PATS=E2=89=A424
 
-  make docker-image-all-test-cross NOCACHE=3D1
+I think the developer was perhaps wanted a LOG2 functions instead of
+ffs (which is just LOG2, but 1-indexed). IMO, this should better
+handled on OS side.
 
-it looks like the source tree build of images has been broken again as
-UNCHECKED_GOALS isn't being honoured for me.
+Thanks.
 
->
->
-> ATB,
->
-> Mark.
+>=20
+> which was introduced by this commit:
+> https://github.com/openbsd/src/commit/dfe2a24332fd6769a7f9bb5806753189dae=
+4d9c9
+>=20
+> --
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
