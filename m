@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A937C43602
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 22:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EB01C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 22:46:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgs3i-0001z4-Ma; Mon, 06 Jul 2026 18:45:02 -0400
+	id 1wgs3a-0001tV-B3; Mon, 06 Jul 2026 18:44:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wgs3g-0001vd-Iv; Mon, 06 Jul 2026 18:45:00 -0400
+ id 1wgs3X-0001pt-TI; Mon, 06 Jul 2026 18:44:51 -0400
 Received: from fhigh-b8-smtp.messagingengine.com ([202.12.124.159])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wgs3f-00010Q-63; Mon, 06 Jul 2026 18:45:00 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 0E9EB7A01E4;
- Mon,  6 Jul 2026 18:44:58 -0400 (EDT)
+ id 1wgs3W-0000wZ-A5; Mon, 06 Jul 2026 18:44:51 -0400
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id CB55D7A01E4;
+ Mon,  6 Jul 2026 18:44:48 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-01.internal (MEProxy); Mon, 06 Jul 2026 18:44:58 -0400
+ by phl-compute-06.internal (MEProxy); Mon, 06 Jul 2026 18:44:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1783377897; x=
- 1783464297; bh=68I28SvF6NliEu1oHD4j7MXavEgdixjiWJFe+FDCopk=; b=K
- Dda73KgTa8MPQJ1/pfJzy4UoeY1O5DkGkyfPBY6ZZexn2tfYKPOxCdOG4nU7PK1N
- vkJN3NGFBiCYoIAsRFpOz4xp0Kc4pF101NthevyAXB82VsqyEY/TmumoFMiIYM6d
- 5Cjv5SPmlAMJzAXLOaqs9ESuDbBNsRpbihNxIsQQOnpbuAry+rWwlR0Gvu/aX9na
- ap+h2jKPeuqAUXT6un+D2J/Pyb3v3aVF8tE4CYnfWya1oYHuwVMZJh+9F1lLeQUb
- i8EsoHR2hjbY6FIXeRBrIVY1nw9Id/4vpr2Q8AydC81xwdWBX6fv/XCQ4w1+x+ve
- 554RuEjRu1EnswPsqAZ4g==
+ :reply-to:subject:subject:to:to; s=fm1; t=1783377888; x=
+ 1783464288; bh=LWbOE8SiKBTE7BDcBZIXw60DedsTrZ4otCCNMbHXrKQ=; b=l
+ Tz7TNrnnKcyasUW9E1cITzj1RtSMx8kHL48Bk7HuJ0BZQtpMfcEiDUAQ8JzAyX/J
+ DX7QKvy0T8ykFA/LSB5DsJVX2VnTGLKoirgDIkcoKfNv5rfP/HKB9u+m+/bPDSUp
+ 2jtRwQ5F3hb6QxYIL08b3bRsm0tJtbo/XR+An9PDQO8SXMa7BWe4r1aBtOL/LGfu
+ yQwqetj+ZQ+5nuTQ99kp35FT8j6vH/C1HP5DombFhd907Efw3hh4kTOz10tZ2cDZ
+ 6MpAZHvkDRlE4ijRuPetzdSvz72kidj16TAHcySfDsBOjYR/9YBplwCuhzP7LvqW
+ zmphcAVmE7vwPIeR4WteQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm2; t=1783377897; x=1783464297; bh=6
- 8I28SvF6NliEu1oHD4j7MXavEgdixjiWJFe+FDCopk=; b=NNf6IlYTBR+jupXLv
- naOqkNdpXcBULzpQOV70shL23mc1UIRGHwd7UwSTilDAQmcsGY3cIqj4tNyq2cyD
- ZLtg3sht/XTuG+405kV9qrmk7/Z7jndzVN2cJ5/lqaZmcJME9wA/Spb981+s5ig/
- LWA+hMozPK/BhrIHM91A9OJrcAGbM/4w4jH0386iWimYy+QNDTAVkzKG00vtxune
- TsUW0lqqVP/wp4fMAn4WRuUt/XmMcKSSM1cCtaXtjoURisqzRyqIggu5jetuKZP5
- 0UjJ5TqW4eFGwUpEDhsi5MQVC8y7VeS6Zp/AZzJZ3iWd5dzveIlXMBg1JaB0m2oX
- i6pNA==
-X-ME-Sender: <xms:6S9ManmG-G9BpAJ81biJWh7Ipu4GQJjRitzEI47cLlGtC7QDYusPvQ>
- <xme:6S9Mam315bu_qxmLq5nevTeEg-2bfeWRbjBQIdv19U30p2dMZgqmpxtDJifAXKLZT
- dZ-SADAz-337LLI7ZWN3j4K06EmeKTxdW5K1BcXRz8O17LFwfZVkvw>
-X-ME-Received: <xmr:6S9Mav29qOQjBqbOreGLcflv4H9dcDfU2b5TvwTdUJajdu_jKEPCy79d1Eznuk-dIOkqPi4iTRe0q1G6pB6W2kde40woJKskygXLCHPUkTO_RWMuL0axdXDOAw>
-X-ME-Proxy-Cause: dmFkZTEHwWeRLRRHVATDLNRfGQdRW51BWy91UTgjZ9xms8WPZJx8wttvEDTZHq3D5TFnJS
- JpcAgiFleC6RH6VVkO7NFh7cPeOyvzTMt8kiBIgMvJ4O82Cb5ONjBhLhNCgmFcZiXZbuu8
- tK0hyFWfL+mY2UOnglFNd3yTMYCJhcfGnABldkkx3GjyDaCcoIFX8hAst1GxVzxmhbXW0k
- F8UIcTspuQlxCQXcrxEh4GVVUAX4dzjd0CDDWTl+p5dr6SaWjo/RsLcOrG7kStv357ZQCZ
- GlA7ExVk+WvZJzn98nWFkIGSyJXQk3XeuIUuoACpyYvPYfpBzamyJfg8xH90ZKXdZL/5kQ
- e6JB+z8bdnVehlFxKYjqhN43n/Yepf7lb03MFXgjI+TCR4VnK5zDVTR4x8z/z2Rg0w2Zs6
- fzyueak0zm6DcC66vLttGwMpcAfQe3vN7+lWEDaDlE5nQxLEeEonCCZRXa262Y08B2eb+y
- TdxypRWlFKYay+jvVJ9UzTObwyNNA0leOV8BObPHLUnPUelLGtWPNbwcXX+N7okpLybHlK
- h02OY06+jvMTQOpyFHMJllWTGtp9EOAa2eDgArO69C78EXpj0zz/hkZnbXCazF7QG7lL4K
- Q9aq3p2RcJ0KnE51h8jKAEPirZL9kvHG7AyAxyPXMyui/Zr2qlkKVYYVhIlg
-X-ME-Proxy: <xmx:6S9MagoTerR_4ZKkdbj9x8a5QIlJG_02gX5Suoz9IPYGfc4VtnOM3w>
- <xmx:6S9MajjsakUrtwu_u5MitJ61zPtpJQfaiHiOhc3c3PGpmtlaQmj1-A>
- <xmx:6S9Mak-Z7f_E8lT8frPF3zNveGhPCXZvhKrU34skTrdI4ZGJOrxbog>
- <xmx:6S9ManVwO8hcVeBvepamK8-fNnMceMmnYiI0oYXzcG8v1dZI0lFw0A>
- <xmx:6S9Mah6YkTdf0lL2yuV0DgUMOCWMcAr1UHFv8Ahc7bLPJJi5oCg_r_cz>
+ :x-me-sender:x-sasl-enc; s=fm2; t=1783377888; x=1783464288; bh=L
+ WbOE8SiKBTE7BDcBZIXw60DedsTrZ4otCCNMbHXrKQ=; b=aeSdOOEtdHhWdooMs
+ TqTE4nv99540P/ImacjmZFf5GBRSLorZXUWogh5cCScDXayczO+2QHnKGodQVtZw
+ 4WSSBsOEcSdCC5muP4lCSwCQcmBO1EqP17cVAYj92aVchh2ochfGKWfxppBUlEAa
+ 3aXpjjJ5TYNkz2OWhHnHDIratPytPFby+4Oq0CsUX9xAQYFnmVHflEbfqd2WzVxi
+ NtoC5F1CVw3X4TDIeCnXmyf5Iz8ecRNGWFaknMMfDmECxdD+R9WSQigajEFhXAEM
+ gKs9azjZ/fbMgf/XhEAs9eZiLF07OqBgzmrTcNQGtdpJJTxLnrANop0eaJ6LH+EL
+ VrHqg==
+X-ME-Sender: <xms:4C9MavN7MoiBiG8pW7j9RyjdDR0c-zbJmZb9_9eZID2q9AfLjhACTg>
+ <xme:4C9MaqbOgGhmVEoXaWBHIsUk90sLVdE3MFlKairgSqo2LGNpgesY-Yjl60yutsoWc
+ Zor4gFvYM8gUPt00BYBj6euF_FTWJicHDywxWXsw_ZBML1WceYuU3Q>
+X-ME-Received: <xmr:4C9Mau8ckHb_O279k99QRfdI2I5ub_fVUCTcNAD9IUCWxEIf07qRtZL1Z3N5VLgH0uxiQjwrwLmsXN7HSTyje744jep5mK2kN711Psz6cniGbbF_x64j2uY8yg>
+X-ME-Proxy-Cause: dmFkZTGFBpywmipUNxqz7T25qNH2oFLWY3g2g2IYbd+a9NZ5PpDTzOXx5JVDMxv2l0k/rP
+ Op8DOnueC7GUN1f+KdSrev4NwwyMoYqNOwq40rgiBIuAngiPnVcWGmD4iyZmLQQexgV30/
+ AqGZVGLAhMshNTq3tK5SWUxKXqUvvJz6ST9lexsuPYigR1n/8VpuvdjBzoGXsJTB2VXzWk
+ OMUszQP3oXhgh2d3zJFmqzGaKLeum1kObyrB8pjHEvd6sPFHvINGSxiUijAx/xjYnxdftn
+ 6ngxU68dld0btl9LKTMjBW9EkFIflcc2TLWmzEn0lttUhZM8u5JLx6ngc+Q/iURs3LZ+nL
+ SQRYNA8yYb2QNvhbZiF2LcFjRH74/UEmHoSf3j2xMaSN0IO7wiVj0OTdIhcId3xOwDSlfn
+ iyUfMZ2qZxz8UX0eSbH82eMURTH8OhKo7aizWP7NY3u1OJWxepfKASy+VZVm9wtOzdZQmE
+ DQEtx6KrlLW6dphF27aBDtJ8zrrAFhlhYYl+Xye3Y71YxlTaccSQMLR9NedEUdCo29qyPJ
+ mTLHuUVGtL2YBbu5HmjcFp1qUsYsJ7dB6rcNUCoRQ1OwrLojL1RYuaf3JQX3SgB0JZSyzr
+ UYGy+K+6TfVMgEipcgsXE78AU3UqBxDwOgfl/xLLS9vl4OethBKtJlSZh+jA
+X-ME-Proxy: <xmx:4C9MarTyelunGBiYobtKq4wwvM7kB-q6hlS5rtAjuyS0T9wkxbMaWw>
+ <xmx:4C9MaodH_bL9HBtajsWoxT57_q4LM3vB6f9hbzI7S0Z9kjrqxb_D4g>
+ <xmx:4C9MatS_A_c4-_YbkeVqAVF1G3Ms5MZ-NBv1j2ByD2OIbfbDKoWPIQ>
+ <xmx:4C9MakL9fpYMmcURH2rZoD4MHplsRCKAI4YtRBy9eT95yeV3kXycvg>
+ <xmx:4C9MakrLFy70b-esl33KvB1nOPo2IM-ripIgWs26IU7U8FOD4C5gz2w_>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jul 2026 18:44:56 -0400 (EDT)
+ 6 Jul 2026 18:44:47 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
- Klaus Jensen <k.jensen@samsung.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
-Subject: [PULL 06/11] hw/nvme: set CQE.sq_id earlier in nvme_process_sq
-Date: Tue,  7 Jul 2026 00:44:18 +0200
-Message-ID: <20260706224426.14156-7-its@irrelevant.dk>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Keith Busch <kbusch@kernel.org>,
+ qemu-stable@nongnu.org, Feifan Qian <bea1e@proton.me>,
+ boy juju <agx1657748706@gmail.com>, Klaus Jensen <k.jensen@samsung.com>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ qemu-block@nongnu.org
+Subject: [PULL 02/11] hw/nvme: ensure sgl forward progress
+Date: Tue,  7 Jul 2026 00:44:14 +0200
+Message-ID: <20260706224426.14156-3-its@irrelevant.dk>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260706224426.14156-1-its@irrelevant.dk>
 References: <20260706224426.14156-1-its@irrelevant.dk>
@@ -108,44 +108,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+From: Keith Busch <kbusch@kernel.org>
 
-Instead of filling req->cqe.sq_id in nvme_post_cqes, let's set it earlier
-in nvme_process_sq.
+A degenerate host can create segment loops of zero-byte data descriptors
+that the controller never breaks out of. While the spec allows zero
+length segments, it provides no guidance on handling loops. It
+makes no sense for a host to submit such a descriptor anyway since it
+can and trivially should point to the next transfer segment, so don't
+even try to work with such behavior. Just reject the command,
+terminating the loop.
 
-This shouldn't cause any issues, because req->cqe.sq_id never changes
-during lifetime of req.
-
-This will help us for migration support.
-
+Cc: qemu-stable@nongnu.org
+Reported-by: Feifan Qian <bea1e@proton.me>
+Reported-by: boy juju <agx1657748706@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/nvme/ctrl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/nvme/ctrl.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 386a698ba858..92825022a4a9 100644
+index d60a680dbc15..7845e59e4b08 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -1535,7 +1535,6 @@ static void nvme_post_cqes(void *opaque)
+@@ -1090,6 +1090,8 @@ static uint16_t nvme_map_sgl(NvmeCtrl *n, NvmeSg *sg, NvmeSglDescriptor sgl,
+     }
  
-         sq = req->sq;
-         req->cqe.status = cpu_to_le16((req->status << 1) | cq->phase);
--        req->cqe.sq_id = cpu_to_le16(sq->sqid);
-         req->cqe.sq_head = cpu_to_le16(sq->head);
-         addr = cq->dma_addr + (cq->tail << NVME_CQES);
-         ret = pci_dma_write(PCI_DEVICE(n), addr, (void *)&req->cqe,
-@@ -7875,6 +7874,7 @@ static void nvme_process_sq(void *opaque)
-         QTAILQ_REMOVE(&sq->req_list, req, entry);
-         QTAILQ_INSERT_TAIL(&sq->out_req_list, req, entry);
-         nvme_req_clear(req);
-+        req->cqe.sq_id = cpu_to_le16(sq->sqid);
-         req->cqe.cid = cmd.cid;
-         memcpy(&req->cmd, &cmd, sizeof(NvmeCmd));
+     for (;;) {
++        size_t prev_len = len;
++
+         switch (NVME_SGL_TYPE(sgld->type)) {
+         case NVME_SGL_DESCR_TYPE_SEGMENT:
+         case NVME_SGL_DESCR_TYPE_LAST_SEGMENT:
+@@ -1170,6 +1172,17 @@ static uint16_t nvme_map_sgl(NvmeCtrl *n, NvmeSg *sg, NvmeSglDescriptor sgl,
+         if (status) {
+             goto unmap;
+         }
++
++        /*
++         * Reject if this segment made no forward progress. The host should
++         * have skipped linking an empty segment. While not strictly spec
++         * compliant, allowing this makes it easy for a pathological host to
++         * create an infinite loop.
++         */
++        if (len == prev_len) {
++            status = NVME_INVALID_SGL_SEG_DESCR | NVME_DNR;
++            goto unmap;
++        }
+     }
  
+ out:
 -- 
 2.53.0
 
