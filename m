@@ -4,82 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80EE7C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:57:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 909A8C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 11:00:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgh0I-0003u5-Jt; Mon, 06 Jul 2026 06:56:46 -0400
+	id 1wgh3c-0004R8-8Z; Mon, 06 Jul 2026 07:00:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wgh0G-0003tg-Qh
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:56:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wgh0F-0008HC-5D
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:56:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783335401;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Vb213gF4C1olZ4rMUxWyuCPnNlN8iNimI/aAnA5L4dQ=;
- b=f14M7H4F/+U4/B3CmbJUEpZt8lFhtL9FioJfmFKSmSCT0GMt6xeF/ijfXFD0XHg4dTL2qz
- Jh23OBSUEcpKRHFms2Tz1cmSH2KfXnbf4e0t8dnRZ13qKosGalqEwP8HXLNo9ktbfvr4xl
- nOMqAZ8F04suvRwGiAd0jJf0CEBYWZc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-i9sO_tKyOaKFGhhcMWCaqA-1; Mon,
- 06 Jul 2026 06:56:40 -0400
-X-MC-Unique: i9sO_tKyOaKFGhhcMWCaqA-1
-X-Mimecast-MFC-AGG-ID: i9sO_tKyOaKFGhhcMWCaqA_1783335399
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE81C1955F15; Mon,  6 Jul 2026 10:56:38 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B8146180028B; Mon,  6 Jul 2026 10:56:37 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3E61821E6920; Mon, 06 Jul 2026 12:56:35 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  "Dr. David
- Alan Gilbert" <dave@treblig.org>,  Markus Armbruster <armbru@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Alex
- =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>,
- Christian Brauner <brauner@kernel.org>,  devel@lists.libvirt.org
-Subject: Re: [PATCH v6 33/34] qemu-options: document new monitor-hmp and
- monitor-qmp objects
-In-Reply-To: <20260702160337.1910921-34-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 2 Jul 2026 17:03:36
- +0100")
-References: <20260702160337.1910921-1-berrange@redhat.com>
- <20260702160337.1910921-34-berrange@redhat.com>
-Date: Mon, 06 Jul 2026 12:56:35 +0200
-Message-ID: <87echgpesc.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wgh3L-0004Qh-5s
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:59:56 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wgh3J-0000Fe-G7
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:59:54 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-493c1950518so19179935e9.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:59:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783335592; x=1783940392; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=oZDyBugNpW9V/0gKwcrIHrQmiK/JotB4UPTEgdY38Xo=;
+ b=jtIcmyuMgRZWwJ3QRJ6CmmlT0ZYJ5oxblO55wcoPsuMSKiZsybVfgklUFFJJV0juH+
+ aYZoiYfoXydK64yefWDLb2dsJdkx9yjCxzvtOCPw5f8KRKKJy/CNd7Qj8Gw6CSMXvfZt
+ lMGtwBJqvMkDLmjCj97bApZk97CbmDWKXpF67CQJ4eLAeZAaWw0pj9hSFSVUqZGrMQw4
+ XewPtgOrIqEaVe5I5p5dA+HLfZi2PKA+sIEFiQIFe+P0aU7ALW5b/lI14Ll5U1OAoWSf
+ y92J3zefcN0spVo6/o6RFu9hHa+HtBJOoS3w4eroIMicGSW6WesXh8yON9T9SSjMm2Ds
+ caSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783335592; x=1783940392;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oZDyBugNpW9V/0gKwcrIHrQmiK/JotB4UPTEgdY38Xo=;
+ b=LQOuDKrlmEYKpeYdYFl1VALRQPwWk5GWlUjouxjb7Uaw1oHFZngxsRSGQhDFhCIvni
+ GnOeMPzpO1GbVt/KbkDdu2KYPpLsd6Rp4VRR06NzuHGi6EtfjGF8sfSFbvLlr2akMDHi
+ VfGdiUs3qZ3XUnbCT8ADsDA6taB7Nx58U9q9XQ/lSzfxuqip/uW0ePxS2J2Vxdm5e+qK
+ 2C64nHhNg/g5LYsFi1tPGG7yr2GuX4vmkgFxm5/vh337cyC7Rc4VWKziZx4k3a2KnwKM
+ LkS60LyaM5UwjEICBEja70i/JkZjkCoBsa/Rl1qGAkb9IXQHeystXb2OUjJ5T+1loM3M
+ vAng==
+X-Gm-Message-State: AOJu0YxhKwLq5VpVrDNlyAOdwhQSx9hus29Rsa27PmOo8YablaGIXcI2
+ IMqRC2wE6cP0nz0rrLd9QqUzU0OkBPKc71LZzBupnbkKStWJ4LCdG1/gDT1ulwMfKgk=
+X-Gm-Gg: AfdE7ckLsvbkGSoxYaEQbHGpKcrgGoLYyrzTo6rkWsb+sLVH16fiQTIYD8V8XDYMm+X
+ zV5OY4ih4mlgyChqlRDugs1kXEPH7uN1NiwIFNDMFpHrDbiZDcy2RFtY2dyOi3ZMlZD4YASUz8n
+ PtjPP/EzLG6tYUP03akoaDo7gen68+GaVUWqLYutAzCC3PSnooWr36qUWTXLSsNP3zaTBQ/u6Xr
+ w6/bncf+J1jyvplysP9pVxDsKPFXz0qU3HhgusDc7EE4M+RVIoG4Iv9YUM0QPbemLfUgRU29E3B
+ lbs41o3JSI4tI9enfTSj7Is9B3BamQZAJN34S0lf+KmAu17/rl7oCmQoonj30bUwnDJNi3B6/8H
+ ldyzqN1wmtJtKI1gecZpAxwHRf4Ewr9YkHda0lFIeYf5M3KuI/xAyzqYbLDLJPI7OWW9YW7y4FF
+ jTIRQ9MRMDzUPA
+X-Received: by 2002:a05:600c:530c:b0:493:b4a3:5ab0 with SMTP id
+ 5b1f17b1804b1-493dececd3fmr1470525e9.13.1783335591606; 
+ Mon, 06 Jul 2026 03:59:51 -0700 (PDT)
+Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493ccdab27dsm257399355e9.4.2026.07.06.03.59.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Jul 2026 03:59:50 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id EB7445F83B;
+ Mon, 06 Jul 2026 11:59:49 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [RFC PATCH] target/sparc: remove unused helper_debug
+Date: Mon,  6 Jul 2026 11:59:48 +0100
+Message-ID: <20260706105948.740881-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,148 +101,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+A long time ago we used to check for breakpoints within the target
+loops. Since b5cf7428416 (accel/tcg: Remove
+TranslatorOps.breakpoint_check) this is not longer required. Remove
+the old helper.
 
-> Add new docs for the `-object monitor-hmp` and `-object monitor-qmp`
-> options, updating `-mon` to state that it is legacy syntax sugar
-> for the new `-object` args.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  qemu-options.hx | 61 ++++++++++++++++++++++++++++++++++++++++++++++---
->  1 file changed, 58 insertions(+), 3 deletions(-)
->
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index e44b47de68..1aa548c39b 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -4955,6 +4955,11 @@ SRST
->      port). The default device is ``vc`` in graphical mode and ``stdio``
->      in non graphical mode. Use ``-monitor none`` to disable the default
->      monitor.
-> +
-> +    The use of ``-monitor dev`` is syntax sugar for creating a character
+Fixes: b5cf7428416 (accel/tcg: Remove TranslatorOps.breakpoint_check)
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ target/sparc/helper.h | 1 -
+ target/sparc/helper.c | 8 --------
+ 2 files changed, 9 deletions(-)
 
-For what it's worth, Wikipedia redirects "syntax sugar" to "syntactic
-sugar", and uses only the latter in the article.
-
-Could also use "shorthand".  Matter of taste.
-
-> +    device from ``dev`` and pairing it with ``-object monitor-hmp``.
-> +    Both the character device and monitor object will be given an ID
-> +    ``compat_monitorNNN`` where ``NNN`` is a counter starting from 0.
->  ERST
->  DEF("qmp", HAS_ARG, QEMU_OPTION_qmp, \
->      "-qmp dev        like -monitor but opens in 'control' mode\n",
-> @@ -4966,9 +4971,10 @@ SRST
->=20=20
->          -qmp tcp:localhost:4444,server=3Don,wait=3Doff
->=20=20
-> -    Not all options are configurable via this syntax; for maximum
-> -    flexibility use the ``-mon`` option and an accompanying ``-chardev``.
-> -
-> +    The use of ``-monitor dev`` is syntax sugar for creating a character
-
-Pasto, you mean ``-qmp dev``.
-
-> +    device from ``dev`` and pairing it with ``-object monitor-qmp``.
-> +    Both the character device and monitor object will be given an ID
-> +    ``compat_monitorNNN`` where ``NNN`` is a counter starting from 0.
->  ERST
->  DEF("qmp-pretty", HAS_ARG, QEMU_OPTION_qmp_pretty, \
->      "-qmp-pretty dev like -qmp but uses pretty JSON formatting\n",
-> @@ -4997,6 +5003,16 @@ SRST
->        -mon chardev=3Dmon1,mode=3Dcontrol,pretty=3Don
->=20=20
->      enables the QMP monitor on localhost port 4444 with pretty-printing.
-> +
-> +    The use of ``-mon mode=3Dreadline`` is historical syntax sugar
-
-What does "historical" mean?  The next patch replaces it by
-"deprecated".  Suggest to scratch it here.
-
-> +    for the new ``-object monitor-hmp`` option, each use of which
-> +    creates an object with the ID ``compat_monitorNNN`` where ``NNN`` is
-> +    a counter starting from 0.
-> +
-> +    The use of ``-mon mode=3Dcontrol`` is historical syntax sugar
-> +    for the new ``-object monitor-qmp`` option, each use of which
-> +    creates an object with the ID ``compat_monitorNNN`` where ``NNN`` is
-> +    a counter starting from 0.
->  ERST
->=20=20
->  DEF("debugcon", HAS_ARG, QEMU_OPTION_debugcon, \
-> @@ -5747,6 +5763,45 @@ SRST
->      they are specified. Note that the 'id' property must be set. These
->      objects are placed in the '/objects' path.
->=20=20
-> +    ``-object monitor-hmp,id=3Did,chardev=3Dchardev_id,readline=3Don|off=
-``
-> +        Set up a monitor running the Human Monitor Protocol,
-> +        connected to the chardev ``chardev_id``.
-> +
-> +        The ``id`` parameter is a unique ID that can be used
-> +        to dynamically delete the monitor at runtime. Note
-> +        that monitors created using the historical syntax
-> +        will be allocated IDs following the pattern ``hmpcompatNN``.
-
-``compat_monitorNNN``
-
-> +        Mixing ``-object`` with the historical monitor syntax is
-> +        discouraged.
-
-Clearer, I think: "with -monitor and -mon".
-
-The next patch deprecates -mon, and then this could become just "with
--monitor".
-
-> +
-> +        The ``readline`` parameter, which defaults to ``on``,
-> +        controls whether the monitor provides line editing.
-> +
-> +    ``-object monitor-qmp,id=3Did,chardev=3Dchardev_id,pretty=3Don|off,c=
-lose-action=3Dnone|delete``
-> +        Set up a monitor running the QEMU Monitor Protocol,
-> +        connected to the chardev ``chardev_id``.
-> +
-> +        The ``id`` parameter is a unique ID that can be used
-> +        to dynamically delete the monitor at runtime. Note
-> +        that monitors created using the historical syntax
-> +        will be allocated IDs following the pattern ``qmpcompatNN``.
-
-``compat_monitorNNN``
-
-> +        Mixing ``-object`` with the historical monitor syntax is
-> +        discouraged.
-
-"with -qmp, -qmp-pretty, and -mon".
-
-The next patch deprecates -mon, and then this could become just "with
--qmp and -qmp-pretty".
-
-> +
-> +        The ``pretty`` parameter, which defaults to ``off``,
-> +        controls whether the monitor responses are pretty
-> +        printed as multi-line indented JSON, as opposed to
-> +        constrained to a single line without extraneous
-> +        whitespace.
-> +
-> +        The ``close-action`` parameter, which defaults to ``none``,
-> +        controls what happens when the connection to the monitor
-> +        is terminated by the user. If set to ``delete``, then the
-> +        ``monitor-qmp`` object and its associated character
-> +        device are both immediately deleted. This can be useful
-> +        if an extra monitor was hotplugged for a specific task
-
-Comma after task?
-
-> +        and should be unplugged when completed.
-> +
->      ``-object memory-backend-file,id=3Did,size=3Dsize,mem-path=3Ddir,sha=
-re=3Don|off,discard-data=3Don|off,merge=3Don|off,dump=3Don|off,prealloc=3Do=
-n|off,host-nodes=3Dhost-nodes,policy=3Ddefault|preferred|bind|interleave,al=
-ign=3Dalign,offset=3Doffset,readonly=3Don|off,rom=3Don|off|auto``
->          Creates a memory file backend object, which can be used to back
->          the guest RAM with huge pages.
+diff --git a/target/sparc/helper.h b/target/sparc/helper.h
+index 3a7f7dc1296..f943b6f5522 100644
+--- a/target/sparc/helper.h
++++ b/target/sparc/helper.h
+@@ -25,7 +25,6 @@ DEF_HELPER_FLAGS_2(tick_set_count, TCG_CALL_NO_RWG, void, ptr, i64)
+ DEF_HELPER_FLAGS_3(tick_get_count, TCG_CALL_NO_WG, i64, env, ptr, int)
+ DEF_HELPER_FLAGS_2(tick_set_limit, TCG_CALL_NO_RWG, void, ptr, i64)
+ #endif
+-DEF_HELPER_1(debug, void, env)
+ DEF_HELPER_1(save, void, env)
+ DEF_HELPER_1(restore, void, env)
+ DEF_HELPER_FLAGS_3(udiv, TCG_CALL_NO_WG, i64, env, tl, tl)
+diff --git a/target/sparc/helper.c b/target/sparc/helper.c
+index 8de261b0e30..57ff395f2b3 100644
+--- a/target/sparc/helper.c
++++ b/target/sparc/helper.c
+@@ -41,14 +41,6 @@ void helper_raise_exception(CPUSPARCState *env, int tt)
+     cpu_loop_exit(cs);
+ }
+ 
+-void helper_debug(CPUSPARCState *env)
+-{
+-    CPUState *cs = env_cpu(env);
+-
+-    cs->exception_index = EXCP_DEBUG;
+-    cpu_loop_exit(cs);
+-}
+-
+ #ifdef TARGET_SPARC64
+ void helper_tick_set_count(void *opaque, uint64_t count)
+ {
+-- 
+2.47.3
 
 
