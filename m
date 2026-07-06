@@ -4,127 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15BA6C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 13:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91386C44500
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 13:48:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgjgI-00025C-6v; Mon, 06 Jul 2026 09:48:18 -0400
+	id 1wgjgP-0003Al-O7; Mon, 06 Jul 2026 09:48:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgjgD-0001WB-Hz
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:48:13 -0400
+ id 1wgjgN-0002s9-4C
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:48:23 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgjgB-0006no-MD
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:48:13 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1wgjgK-0006ok-Gu
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:48:22 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666AxCeP238118
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 13:48:10 GMT
+ 666Ax7hi245529
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 13:48:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- rjq83pfJV2nVYU3+zqImMenwqXneWXWnmXXzu7JibtA=; b=jsMcmOaCMke+BwdC
- LDFhB2BQ43RAPwj+7fHV9s/LDXoC7K6BaQrCct/HNRHpiDggmLBK2Kh/39vQxK5R
- qafXIblzM51mNLV1ejhTgWycLZeqpHh1ugdEL/xCQnT0FFrcOwYkFIZ+uDN1W+2l
- fIAuvR5a9kf4s7AlhsiqDjGWZcKe2xSh8+4Y+VsIQPC92BaktXuZifqv/DU71Amx
- 1sOwkJ1nHo5U4QENkwY5JP91+EZq2pyek7B2m4tu/ntYoKT+pg7UkLdtiQo+lEl7
- d5WBg1NW+JabedP5kJgMLEudWDrR4MmH8/jSLySKC68ARrPYjzuYzHCTdb+iGrcu
- zdpRLg==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f88t898u1-1
+ PJwFDn/oYUlgyh+vrkNeWnLqkInjmkCBFCNkS7Cm5xc=; b=COTkm4oLssADz64k
+ 1OlTwuzLvJ6Myng/W6BviftDXTGTZzhnKbaqCm+0Fn4Omhh1EJxB/SGC2Z4Y9ZTH
+ Ml2XSxMne7Kb7Ppd8G1N4X+6mz9tUpb1PVmPqrlJLhKs1vXiTGkP2nVElYesvy2k
+ vzP+3zoqVUD9pifaO+e05ep7khywUjwG/8hw/lW9dnOSlkQB2dOltpPAbFANYuyQ
+ EOesVkN+ALcLoZQVwwepw4Bau9alQxih9WtuSug/wnSmJXVHDffuDGAiyArgArFS
+ FUfpG5mtMPiUnruy8PV/5QTeLcpiSziBbhuylGlcttVnt8EJP3D7W01n5oia8zcj
+ DziIXg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8a98guf3-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 13:48:10 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-92d1cae5740so351150085a.0
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 06:48:10 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 13:48:19 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-92e61b38eddso552004285a.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 06:48:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783345689; x=1783950489; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783345698; x=1783950498; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=rjq83pfJV2nVYU3+zqImMenwqXneWXWnmXXzu7JibtA=;
- b=ErSPQGi/QYihqyogiGDtzx3P10HZmybCG58olVOJFrM48ujZ+3M4HAPDzf7zfcm4ax
- DsPMrwZ3e4YUx657iItwsl5sIRmLKtmSS4fzC0r8shyo5n+FBT40F2oTl0NMy7MQhykx
- OkPpAgszlD1qWmlO3AW2CkDT6FFr8Mf7vQIlaHK1sKALxLvUe7jN/eXAVg/GJcJKo6mq
- d1Hvi8COVws6dBTNdfyxINZzp9KyBzEyevquUrT4eB1QKBHJvAoshIbHjzdlSBiuBNGx
- 5rbC7GPe55o0X6EJs1IbLgSS9ulp9dCUhUB+QRQDeB8WEJ/c4oWEl/URVzxq5BClFOYe
- UzDQ==
+ :reply-to; bh=PJwFDn/oYUlgyh+vrkNeWnLqkInjmkCBFCNkS7Cm5xc=;
+ b=Vf0sCN/ADhahDaFe9ZblZs0Mm3a6FJPhaQdVQeQbWITwxGiNmpOQ+hnC2S1LhwL+s4
+ erG6JQSpjH9c2F/LGH2QFuMR0UfD1hSs8pNW6PUqH5JAaSCnf9sXXynBEBRq+0HFYpXz
+ 2JFibjI3aPE6d9ccwV56NgrkMqGaVhN0tIouh3l0JPF43fA5F62zBAsHgLO2h6RcY3Ut
+ sLwl+cDhk9kh/PfhBRaaFvp+1tyGgrOcuDlxuIvKLJtYFNOKHq3CEMVlsGuXbOtv95dq
+ pRcpK96Ii7VKcrfznXqPziJCB3N4RzI2LzWobY1vRrWIROmHqB0hxTWLc59H+pwJIl7G
+ iRcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783345689; x=1783950489;
+ d=1e100.net; s=20251104; t=1783345698; x=1783950498;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=rjq83pfJV2nVYU3+zqImMenwqXneWXWnmXXzu7JibtA=;
- b=Y9bwnb7gTGQ7Iz1jNBrkyOE5ys6DYJrmeZ7C8ok0F/OOMsbiXscwe3DF+1m7UR1gD3
- fWAe96fwqEd6YBf2P9BxBQi+P03PLKp9Ko8fWys8nEyZo1xU69ih83B8rpqw7w/7NQ9J
- p9tP5+e9VlgUwsggiW5XiUA9XO3AT86eCDPKm/niBW17Wwzf9/w3e7q2whfkV8WXq+ED
- W5QTS0d2S6FWQS7ds4cnuxL38hX6wpSu8g9cYHDnS07kt1kAiK6GsOo5luBZUOHtCSzC
- nfafYbFnYh39inn7fyfV4aZGn+/seP306brLL7SG0JLND1Sue3i9ovpR7GHdiR0x5P4w
- ciWA==
-X-Gm-Message-State: AOJu0Yytx5ocOnafzp/njc6WUuNepZcwsTHyZqOVodunw+ItFIGWh7FC
- /Qt+GGPaW21Tz6qZoZ8DwkYsZaw/S1CsSH4+R5ZAdZ7enjJA3meX3JGCKrCjnrr7Q02/2rDOQqX
- YkVCZ7ipAAaBWd864ynT0JXpfc/1aJDXtPnJDroQeDvQnxIJBnpEtlQ2eVeZQLTlmkQ==
-X-Gm-Gg: AfdE7clzkn585lzJgd0RYsPHifBkwlEE59Q7jHAihp96BcWvOuvb/49Btjj/Ocoh+rq
- sIidYkRUUsPPrKJK7HKoUjiCcvJhUGf94sIt0c8JTIdIZSYmt70ssi2P8bwYxDeEiOskGc4V+wR
- qaW7nhR4lBCX/ZVER5EXlqzatzWCc0iLlUw85s3dJszGs1tuXhryoqrTTqgricQoG0QQPNV3Vqe
- zUfZoGg120JjtjANRJ4QAap/f0zZxGIH+VzcAkBksEk12IY+ETRZ2jKwUVramaRi4MJ6WhoaUCB
- LN7DDpLr2vpZvW69bUUYpTwRJgo30bKcDTi0O3zQemIprdN2/CtQgdr/OQXydUtLPW638GzedgE
- 31wI03uhBiN7NcrGtjT/Rjj3CWHNuWaPuVFhE8cDIpv2Ap89HK5LEK+WkvQ==
-X-Received: by 2002:a05:620a:1997:b0:92e:7533:ef67 with SMTP id
- af79cd13be357-92ebb568212mr88266985a.20.1783345688998; 
- Mon, 06 Jul 2026 06:48:08 -0700 (PDT)
-X-Received: by 2002:a05:620a:1997:b0:92e:7533:ef67 with SMTP id
- af79cd13be357-92ebb568212mr88261285a.20.1783345688392; 
- Mon, 06 Jul 2026 06:48:08 -0700 (PDT)
+ bh=PJwFDn/oYUlgyh+vrkNeWnLqkInjmkCBFCNkS7Cm5xc=;
+ b=RY46VHBgVX12EF20Eegk6Oc9kftS6SnhPeuFMdrg+jeReZDyLW5/0N8//b0lb08oV1
+ 9X0TD/kO9cV6IJPQP7yp4nxCXWRcnJ5GhZedOrTNgfMRMDeHrQF91ziWfz4a1DOdVjvk
+ T4/623iWCowD1vhv96LohY47CN0PscIPCdCUVltc4jzc9SwcxvH0ALqO3qfRJiWXx6yZ
+ ZGiZjTZaQzd/K4rTki9zx4EgS1jPjxc+IXnSFgRQEYM0sUCOSwsa6s1yd0F4IyCA0a69
+ 3mUcO61tXzrSjFD9OQRWkSU4QnW2xsbx4vQ8ViCjdb3YI3FpA8iylWWN9UKSk4Fw6vyz
+ +EeA==
+X-Gm-Message-State: AOJu0YyxfruoyHPtP7YNrpeNUHzyWNs40SDlJUgLKqwh/Pe8TFybkv7r
+ u1xyuI7/59qwGH0E3DOUgTcYH0EFhtEGQ0jeBBYlrfMyoB+5d/tVtCnOSFxNtjloAICc0KfM9w/
+ 1Ml9PysLAWHyKx5jwnGWEXanMWjaYPPyu7kBN7Wxc88D0l83cbc/usdOQVhROCGKbiA==
+X-Gm-Gg: AfdE7cmiG2inKjwR6HmXNBBkwnTHvZ87J2uy8W/yT/fLHSv7sIFDBxFu+Zzq7cnkxUg
+ Fa2fu5k/u6yddH+PMBGbNN8LBD68REACjC/Kb2rW9prkkRTQ4XlHTh+RjB9u9MXHgtfPg6USx2K
+ nygNfZZsjP3fb3J8D3zLOJPwIXzlhgWYFNtZGzvTQ8Hb0C+3KmdfgykKov28mGva/deWBS6P8Yl
+ sNPLXYD1wE0dlCeELrhwRZsI/gnVUzoMhSoTh8AG7G4lyNHSX9piG5Lz8fVVfHirQwWGg/5gDCi
+ c/xzgd+cbUfgXfvLCl9FGiyRRnpjRsLygdxW8A5uJpo7N0TBuV+LDUeHfcokSUSkZ3RpZ3BcjNM
+ 3mCldKGIpQH+wmwW6KgCz0untXMwizwVDyW8GV3AF04Kz+Z6I77DOgvHSyQ==
+X-Received: by 2002:a05:620a:808c:b0:92e:5554:a80e with SMTP id
+ af79cd13be357-92ebb5601acmr86657585a.39.1783345697848; 
+ Mon, 06 Jul 2026 06:48:17 -0700 (PDT)
+X-Received: by 2002:a05:620a:808c:b0:92e:5554:a80e with SMTP id
+ af79cd13be357-92ebb5601acmr86651285a.39.1783345697190; 
+ Mon, 06 Jul 2026 06:48:17 -0700 (PDT)
 Received: from localhost.localdomain (1.171.88.92.rev.sfr.net. [92.88.171.1])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493bef1807asm323576865e9.1.2026.07.06.06.48.07
+ ffacd0b85a97d-47aa0f21543sm23819551f8f.35.2026.07.06.06.48.15
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 06 Jul 2026 06:48:07 -0700 (PDT)
+ Mon, 06 Jul 2026 06:48:16 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/32] accel: Hold @can_reverse information in AccelGdbConfig
-Date: Mon,  6 Jul 2026 15:45:12 +0200
-Message-ID: <20260706134527.84808-18-philmd@oss.qualcomm.com>
+Subject: [PULL 18/32] accel: Remove AccelOpsClass::supports_guest_debug
+Date: Mon,  6 Jul 2026 15:45:13 +0200
+Message-ID: <20260706134527.84808-19-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260706134527.84808-1-philmd@oss.qualcomm.com>
 References: <20260706134527.84808-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE0MSBTYWx0ZWRfXwRxaVh2gV/d2
- fq0n1FD7PwOSWYEIC2PsNULQmdChirAaobKT3NtWqKvXvj4t0tTjD6SqFP7+d0J6wEiGBDeat9q
- 8P3at0Kt/SRiDfeTOMmO6SylmHfRMYQ=
-X-Proofpoint-GUID: LdvtBKb-0TRU8IVdFeqKV5zDQDIvusxx
-X-Authority-Analysis: v=2.4 cv=C6zZDwP+ c=1 sm=1 tr=0 ts=6a4bb21a cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=PLEY+c9/kVlxBKEpvFYBUQ==:17
+X-Authority-Analysis: v=2.4 cv=SpigLvO0 c=1 sm=1 tr=0 ts=6a4bb223 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=PLEY+c9/kVlxBKEpvFYBUQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=Zu86EXcvoz0JJFEs46oA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: LdvtBKb-0TRU8IVdFeqKV5zDQDIvusxx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE0MSBTYWx0ZWRfXyXj08RRAUf5c
- NV1IDGuPuWO7HyRZd+HwupTGVjkdjw154/QYDncL0FTrd6Nehea94zmax74cmTHK3HtrWyeKgSP
- cWB+kZ+MVjKmCHPC4zNQx1XZl4K37uqy0P5+aegXcxNvboFS1r2run5Xzw7v4YXSdYbWtbSxK3U
- YCNMcRMB/lUci/BGuZO4YLK5ishb+7qHduR4a2mu+dn4dmgZaTWjDPMpZGLJA46bglmkcH85DWH
- f1BIoh7mVOW9ZcIWnP9TnanG5y9s/m04BZ730Qjy4HOyV94fY6Emrn6wA3Z3V8+IHtVOquBhwh8
- H76hgrCC8ZE6GEqcmOxBIWZedb85wDcCYQoWAKGvNQpqyBW3ooYns1hJdASSpbVLNC3wz3G7Lpn
- qQhHeXCnNy6nmhDLwRIgY3VZ/Gysgg9WBiV4+wHGuE462g+AZLidxKAEapKsabOfyFW2bfioBHk
- yYgQBWZ8G2qlQhAeqkw==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=u5zfA1t3EaNT3PtHZxEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE0MSBTYWx0ZWRfX+1bEVRQrdJVX
+ 2zT2KTsw8N8W8eU7ZMbQ75L2YpeAEarJwXT1jBYhKPoi5ZUYEn04TdvhkG8D3WcnweHrh+cnFUH
+ Uv7aOyl9Va363MTcQcyZQUs0ayt4VbsHa52k+nx/LVyZFcfN2cBD9jLMo6Ufa9HXRAlar6+KO9a
+ gYRorft6S/+5m++C36tStK59DHISjKx7NOhwXWTEAkEy4KbVlFUbILpJ7Wq0/2bxrAP33974krR
+ d9+5T4ExRaK9fFfyzqq/a5Q9lnxTx3vN5NEUnDNBXIsUM6Lyb9LAyFs9eJSxlOufzGslYiAI7rl
+ y3EkJItkrr0CZ1WIHwsJlWf18/8o2SwkMVYo9/znSX/c/Lf9HZnZBH9tehLrOMzShfiA+EjMl6U
+ Dej2C0OaXlmwjWbMMCtkfFr5IsneyQEXSqi4ncrqKsHq5hM9m5+mUD+tvntUzPF5PN0xCzU3V3J
+ GLjCaeHSOUdT24EpqLQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE0MSBTYWx0ZWRfX+mEjZ+31wzIt
+ +ME76D06dIVTmNa5W/1hbLLIwbWe0P5uf2zbFoeLAV9UpHtmEh5DYxuUnFJ4RYXS9qR6vnvfJxt
+ ibjs1I7ADopJCEzoi3IHa54Nz8YdlWw=
+X-Proofpoint-GUID: PipPyxZCczzqFVQhP8fP88zsKMPHuxut
+X-Proofpoint-ORIG-GUID: PipPyxZCczzqFVQhP8fP88zsKMPHuxut
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-06_01,2026-07-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0 clxscore=1015 spamscore=0 adultscore=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607060141
+ malwarescore=0 priorityscore=1501 spamscore=0 clxscore=1015 phishscore=0
+ bulkscore=0 adultscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060141
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -149,119 +148,342 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hold @can_reverse in AccelGdbConfig, set it when initializing
-AccelState in AccelClass::init_machine handlers (only TCG sets
-it). Remove gdb_can_reverse() as now unused.
+Now accelerators hold the 'guest debug supported' information
+in their state, accessible by the common code. No need to call
+a per-accelerator handler, simply check for the SSTEP_ENABLE
+in AccelGdbConfig::sstep_flags.
+
+Remove all AccelOpsClass::supports_guest_debug implementations,
+inline gdb_supports_guest_debug() and remove the now unnecessary
+KVMState::have_guest_debug field.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-ID: <20260705215729.62196-17-philmd@oss.qualcomm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260705215729.62196-18-philmd@oss.qualcomm.com>
 ---
- gdbstub/internals.h  | 1 -
- include/qemu/accel.h | 2 ++
- accel/tcg/tcg-all.c  | 3 +++
- gdbstub/gdbstub.c    | 4 ++--
- gdbstub/system.c     | 5 -----
- gdbstub/user.c       | 6 ------
- 6 files changed, 7 insertions(+), 14 deletions(-)
+ docs/system/gdb.rst           |  2 +-
+ accel/kvm/kvm-cpus.h          |  1 -
+ include/accel/accel-cpu-ops.h |  1 -
+ include/qemu/accel.h          |  2 ++
+ include/system/hvf_int.h      |  5 -----
+ include/system/kvm_int.h      |  1 -
+ include/system/whpx-all.h     |  3 ---
+ accel/accel-common.c          |  5 +++++
+ accel/hvf/hvf-accel-ops.c     |  1 -
+ accel/kvm/kvm-accel-ops.c     |  1 -
+ accel/kvm/kvm-all.c           | 13 +------------
+ accel/tcg/tcg-accel-ops.c     |  6 ------
+ accel/whpx/whpx-accel-ops.c   |  6 ------
+ gdbstub/system.c              | 13 +------------
+ target/arm/hvf/hvf.c          |  5 -----
+ target/arm/whpx/whpx-all.c    |  5 -----
+ target/i386/hvf/hvf.c         |  5 -----
+ target/i386/whpx/whpx-all.c   |  5 -----
+ 18 files changed, 10 insertions(+), 70 deletions(-)
 
-diff --git a/gdbstub/internals.h b/gdbstub/internals.h
-index 0444dee2246..0b74ea4000f 100644
---- a/gdbstub/internals.h
-+++ b/gdbstub/internals.h
-@@ -154,7 +154,6 @@ CPUState *gdb_first_attached_cpu(void);
- void gdb_append_thread_id(CPUState *cpu, GString *buf);
- int gdb_get_cpu_index(CPUState *cpu);
- unsigned int gdb_get_max_cpus(void); /* both */
--bool gdb_can_reverse(void); /* system emulation, stub for user */
- int gdb_target_sigtrap(void); /* user */
+diff --git a/docs/system/gdb.rst b/docs/system/gdb.rst
+index d50470b135e..b6d8f8e77da 100644
+--- a/docs/system/gdb.rst
++++ b/docs/system/gdb.rst
+@@ -54,7 +54,7 @@ While GDB can always fall back to inserting breakpoints into memory
+ accelerator. For TCG system emulation we advertise an infinite number
+ of hardware assisted breakpoints and watchpoints. For other
+ accelerators it will depend on if support has been added (see
+-supports_guest_debug and related hooks in AccelOpsClass).
++the AccelGdbConfig structure).
  
- void gdb_create_default_process(GDBState *s);
+ As TCG cannot track all memory accesses in user-mode there is no
+ support for watchpoints.
+diff --git a/accel/kvm/kvm-cpus.h b/accel/kvm/kvm-cpus.h
+index 688511151c8..3185659562d 100644
+--- a/accel/kvm/kvm-cpus.h
++++ b/accel/kvm/kvm-cpus.h
+@@ -16,7 +16,6 @@ void kvm_destroy_vcpu(CPUState *cpu);
+ void kvm_cpu_synchronize_post_reset(CPUState *cpu);
+ void kvm_cpu_synchronize_post_init(CPUState *cpu);
+ void kvm_cpu_synchronize_pre_loadvm(CPUState *cpu);
+-bool kvm_supports_guest_debug(void);
+ int kvm_insert_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len);
+ int kvm_remove_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len);
+ void kvm_remove_all_breakpoints(CPUState *cpu);
+diff --git a/include/accel/accel-cpu-ops.h b/include/accel/accel-cpu-ops.h
+index 9c07a903ea0..b23a0606c7e 100644
+--- a/include/accel/accel-cpu-ops.h
++++ b/include/accel/accel-cpu-ops.h
+@@ -84,7 +84,6 @@ struct AccelOpsClass {
+     int64_t (*get_elapsed_ticks)(void);
+ 
+     /* gdbstub hooks */
+-    bool (*supports_guest_debug)(void);
+     int (*update_guest_debug)(CPUState *cpu);
+     int (*insert_breakpoint)(CPUState *cpu, int type, vaddr addr, vaddr len);
+     int (*remove_breakpoint)(CPUState *cpu, int type, vaddr addr, vaddr len);
 diff --git a/include/qemu/accel.h b/include/qemu/accel.h
-index 3b01d55741b..8e0c3dfe088 100644
+index 8e0c3dfe088..6f65f1cb89a 100644
 --- a/include/qemu/accel.h
 +++ b/include/qemu/accel.h
-@@ -77,9 +77,11 @@ void accel_cpu_common_unrealize(CPUState *cpu);
-  * struct AccelGdbConfig - gdbstub configuration for an accelerator.
-  *
-  * @sstep_flags: Set SSTEP_* flags that accelerator supports for guest debug.
-+ * @can_reverse: Whether reverse mode is supported.
-  */
- typedef struct AccelGdbConfig {
-     unsigned sstep_flags;
-+    bool can_reverse;
+@@ -84,4 +84,6 @@ typedef struct AccelGdbConfig {
+     bool can_reverse;
  } AccelGdbConfig;
  
++bool accel_supports_guest_debug(AccelState *accel);
++
  #endif /* QEMU_ACCEL_H */
-diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
-index d30b53cd3b7..7186c10cf02 100644
---- a/accel/tcg/tcg-all.c
-+++ b/accel/tcg/tcg-all.c
-@@ -159,6 +159,9 @@ static int tcg_init_machine(AccelState *as, MachineState *ms)
-          */
-         as->gdbstub.sstep_flags |= SSTEP_NOIRQ | SSTEP_NOTIMER;
-     }
-+    if (replay_mode == REPLAY_MODE_PLAY) {
-+        as->gdbstub.can_reverse = true;
-+    }
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index 58fb865ebae..d64f4942556 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -104,11 +104,6 @@ void hvf_arch_remove_all_hw_breakpoints(void);
+  */
+ int hvf_update_guest_debug(CPUState *cpu);
  
-     page_init();
-     tb_htable_init();
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 6c4fa065638..0a328b0dd48 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -1376,7 +1376,7 @@ static void handle_step(GArray *params, void *user_ctx)
+-/*
+- * Return whether the guest supports debugging.
+- */
+-bool hvf_arch_supports_guest_debug(void);
+-
+ bool hvf_arch_cpu_realize(CPUState *cpu, Error **errp);
+ uint32_t hvf_arch_get_default_ipa_bit_size(void);
+ uint32_t hvf_arch_get_max_ipa_bit_size(void);
+diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
+index 53bb0fcf180..0876aac938d 100644
+--- a/include/system/kvm_int.h
++++ b/include/system/kvm_int.h
+@@ -118,7 +118,6 @@ struct KVMState
+ #endif
+     int max_nested_state_len;
+     int kvm_shadow_mem;
+-    bool have_guest_debug;
+     bool kernel_irqchip_allowed;
+     bool kernel_irqchip_required;
+     OnOffAuto kernel_irqchip_split;
+diff --git a/include/system/whpx-all.h b/include/system/whpx-all.h
+index 4022571ffff..d018e67e4f7 100644
+--- a/include/system/whpx-all.h
++++ b/include/system/whpx-all.h
+@@ -22,7 +22,4 @@ void whpx_translate_cpu_breakpoints(
+ void whpx_arch_destroy_vcpu(CPUState *cpu);
+ void whpx_arch_accel_class_init(ObjectClass *oc);
  
- static void handle_backward(GArray *params, void *user_ctx)
- {
--    if (!gdb_can_reverse()) {
-+    if (!gdbserver_state.accel_config.can_reverse) {
-         gdb_put_packet("E22");
-         return;
-     }
-@@ -1684,7 +1684,7 @@ static void handle_query_supported(GArray *params, void *user_ctx)
-         g_string_append(gdbserver_state.str_buf, ";qXfer:features:read+");
-     }
- 
--    if (gdb_can_reverse()) {
-+    if (gdbserver_state.accel_config.can_reverse) {
-         g_string_append(gdbserver_state.str_buf,
-             ";ReverseStep+;ReverseContinue+");
-     }
-diff --git a/gdbstub/system.c b/gdbstub/system.c
-index 1179c82cb86..2e8c457097b 100644
---- a/gdbstub/system.c
-+++ b/gdbstub/system.c
-@@ -479,11 +479,6 @@ unsigned int gdb_get_max_cpus(void)
-     return ms->smp.max_cpus;
+-/* called by whpx-accel-ops */
+-bool whpx_arch_supports_guest_debug(void);
+-
+ #endif
+diff --git a/accel/accel-common.c b/accel/accel-common.c
+index f31d68a9b78..00a400243f0 100644
+--- a/accel/accel-common.c
++++ b/accel/accel-common.c
+@@ -70,6 +70,11 @@ void accel_init_interfaces(AccelClass *ac)
+     accel_init_cpu_interfaces(ac);
  }
  
--bool gdb_can_reverse(void)
++bool accel_supports_guest_debug(AccelState *accel)
++{
++    return accel->gdbstub.sstep_flags & SSTEP_ENABLE;
++}
++
+ void accel_cpu_instance_init(CPUState *cpu)
+ {
+     if (cpu->cc->accel_cpu && cpu->cc->accel_cpu->cpu_instance_init) {
+diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+index dd2b45b7cb5..ecc0cd1b558 100644
+--- a/accel/hvf/hvf-accel-ops.c
++++ b/accel/hvf/hvf-accel-ops.c
+@@ -369,7 +369,6 @@ static void hvf_accel_ops_class_init(ObjectClass *oc, const void *data)
+     ops->remove_breakpoint = hvf_remove_breakpoint;
+     ops->remove_all_breakpoints = hvf_remove_all_breakpoints;
+     ops->update_guest_debug = hvf_update_guest_debug;
+-    ops->supports_guest_debug = hvf_arch_supports_guest_debug;
+ 
+     ops->get_vcpu_stats = hvf_get_vcpu_stats;
+ };
+diff --git a/accel/kvm/kvm-accel-ops.c b/accel/kvm/kvm-accel-ops.c
+index d7967bc922f..45330327909 100644
+--- a/accel/kvm/kvm-accel-ops.c
++++ b/accel/kvm/kvm-accel-ops.c
+@@ -105,7 +105,6 @@ static void kvm_accel_ops_class_init(ObjectClass *oc, const void *data)
+     ops->synchronize_pre_loadvm = kvm_cpu_synchronize_pre_loadvm;
+     ops->handle_interrupt = generic_handle_interrupt;
+ 
+-    ops->supports_guest_debug = kvm_supports_guest_debug;
+ #ifdef TARGET_KVM_HAVE_GUEST_DEBUG
+     ops->update_guest_debug = kvm_update_guest_debug_ops;
+     ops->insert_breakpoint = kvm_insert_breakpoint;
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index ceb0b33abdd..b03488ebac3 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -3036,10 +3036,7 @@ static int kvm_init(AccelState *as, MachineState *ms)
+         (kvm_check_extension(s, KVM_CAP_VM_ATTRIBUTES) > 0);
+ 
+ #ifdef TARGET_KVM_HAVE_GUEST_DEBUG
+-    s->have_guest_debug =
+-        (kvm_check_extension(s, KVM_CAP_SET_GUEST_DEBUG) > 0);
+-
+-    if (s->have_guest_debug) {
++    if (kvm_check_extension(s, KVM_CAP_SET_GUEST_DEBUG) > 0) {
+         as->gdbstub.sstep_flags = SSTEP_ENABLE;
+ 
+         int guest_debug_flags =
+@@ -3829,14 +3826,6 @@ int kvm_update_guest_debug(CPUState *cpu, unsigned long reinject_trap)
+     return data.err;
+ }
+ 
+-bool kvm_supports_guest_debug(void)
 -{
--    return replay_mode == REPLAY_MODE_PLAY;
+-    KVMState *s = KVM_STATE(as);
+-
+-    /* probed during kvm_init() */
+-    return s->have_guest_debug;
 -}
 -
- /*
-  * Softmmu specific command helpers
-  */
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index f7bc4e63dfd..299388b9f71 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -786,12 +786,6 @@ unsigned int gdb_get_max_cpus(void)
-     return max_cpus;
+ int kvm_insert_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len)
+ {
+     struct kvm_sw_breakpoint *bp;
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index c179cd4adeb..927af6c1db0 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -109,11 +109,6 @@ void tcg_handle_interrupt(CPUState *cpu, int mask)
+     }
  }
  
--/* replay not supported for user-mode */
--bool gdb_can_reverse(void)
+-static bool tcg_supports_guest_debug(void)
+-{
+-    return true;
+-}
+-
+ /* Translate GDB watchpoint type to a flags value for cpu_watchpoint_* */
+ static inline int xlat_gdb_type(CPUState *cpu, int gdbtype)
+ {
+@@ -221,7 +216,6 @@ static void tcg_accel_ops_init(AccelClass *ac)
+     }
+ 
+     ops->cpu_reset_hold = tcg_cpu_reset_hold;
+-    ops->supports_guest_debug = tcg_supports_guest_debug;
+     ops->insert_breakpoint = tcg_insert_breakpoint;
+     ops->remove_breakpoint = tcg_remove_breakpoint;
+     ops->remove_all_breakpoints = tcg_remove_all_breakpoints;
+diff --git a/accel/whpx/whpx-accel-ops.c b/accel/whpx/whpx-accel-ops.c
+index b8f41544cbe..ca5a119521a 100644
+--- a/accel/whpx/whpx-accel-ops.c
++++ b/accel/whpx/whpx-accel-ops.c
+@@ -82,11 +82,6 @@ static bool whpx_vcpu_thread_is_idle(CPUState *cpu)
+     return !whpx_irqchip_in_kernel();
+ }
+ 
+-static bool whpx_supports_guest_debug(void)
+-{
+-    return whpx_arch_supports_guest_debug();
+-}
+-
+ 
+ static void whpx_accel_ops_class_init(ObjectClass *oc, const void *data)
+ {
+@@ -96,7 +91,6 @@ static void whpx_accel_ops_class_init(ObjectClass *oc, const void *data)
+     ops->kick_vcpu_thread = whpx_kick_vcpu_thread;
+     ops->cpu_thread_is_idle = whpx_vcpu_thread_is_idle;
+     ops->handle_interrupt = generic_handle_interrupt;
+-    ops->supports_guest_debug = whpx_supports_guest_debug;
+ 
+     ops->synchronize_post_reset = whpx_cpu_synchronize_post_reset;
+     ops->synchronize_post_init = whpx_cpu_synchronize_post_init;
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index 2e8c457097b..bf7aa1ac234 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -331,8 +331,6 @@ static void create_processes(GDBState *s)
+     gdb_create_default_process(s);
+ }
+ 
+-static bool gdb_supports_guest_debug(void);
+-
+ bool gdbserver_start(const char *device, Error **errp)
+ {
+     Chardev *chr = NULL;
+@@ -345,7 +343,7 @@ bool gdbserver_start(const char *device, Error **errp)
+         return false;
+     }
+ 
+-    if (!gdb_supports_guest_debug()) {
++    if (!accel_supports_guest_debug(current_accel())) {
+         error_setg(errp, "gdbstub: current accelerator doesn't "
+                    "support guest debugging");
+         return false;
+@@ -624,15 +622,6 @@ int gdb_signal_to_target(int sig)
+  * Break/Watch point helpers
+  */
+ 
+-static bool gdb_supports_guest_debug(void)
+-{
+-    const AccelOpsClass *ops = cpus_get_accel();
+-    if (ops->supports_guest_debug) {
+-        return ops->supports_guest_debug();
+-    }
+-    return false;
+-}
+-
+ int gdb_breakpoint_insert(CPUState *cs, int type, vaddr addr, vaddr len)
+ {
+     const AccelOpsClass *ops = cpus_get_accel();
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 8b902c68829..e16457c3cfb 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -2900,8 +2900,3 @@ void hvf_arch_update_guest_debug(CPUState *cpu)
+ 
+     hvf_arch_set_traps(cpu);
+ }
+-
+-bool hvf_arch_supports_guest_debug(void)
+-{
+-    return true;
+-}
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 3079c6293c8..00a5de8cdc1 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -295,11 +295,6 @@ void whpx_translate_cpu_breakpoints(
+     /* Breakpoints aren’t supported on this platform */
+ }
+ 
+-bool whpx_arch_supports_guest_debug(void) 
 -{
 -    return false;
 -}
 -
- /*
-  * Break/Watch point helpers
-  */
+ void whpx_arch_destroy_vcpu(CPUState *cpu)
+ {
+     /* currently empty on Arm */
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index 2d1a943b96c..19ad64a1d93 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -1066,8 +1066,3 @@ void hvf_arch_remove_all_hw_breakpoints(void)
+ void hvf_arch_update_guest_debug(CPUState *cpu)
+ {
+ }
+-
+-bool hvf_arch_supports_guest_debug(void)
+-{
+-    return false;
+-}
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 467ac6bed45..11b5d1fc607 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -1853,11 +1853,6 @@ void whpx_apply_breakpoints(
+     }
+ }
+ 
+-bool whpx_arch_supports_guest_debug(void) 
+-{
+-    return true;
+-}
+-
+ void whpx_arch_destroy_vcpu(CPUState *cpu)
+ {
+     X86CPU *x86cpu = X86_CPU(cpu);
 -- 
 2.53.0
 
