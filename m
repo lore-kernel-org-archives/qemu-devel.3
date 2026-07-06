@@ -4,111 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 520C3C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:25:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DAC5C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:25:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgedw-0004Me-Ga; Mon, 06 Jul 2026 04:25:34 -0400
+	id 1wgee2-0004On-Rz; Mon, 06 Jul 2026 04:25:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wgedb-0004H5-Uw
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:25:13 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wgedf-0004IN-VD
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:25:15 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wgedY-0007bB-UL
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:25:10 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1wgedd-0007nU-QD
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:25:15 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 665MK1552253170
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 08:25:07 GMT
+ 665MIAch2303805; Mon, 6 Jul 2026 08:25:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=t5D5LojTRkhsNV0Va
- cTwcO50oWidnyZRmMzprf1lVzc=; b=k7DvjZ+Ii3bghfgVMQyva04116e4hLwf5
- /512BG0Qo12IDKUtg1lQGF7kg/gmG22qgHMErzDEZfno7ZiGGmYFvgN4HwIRu6q3
- OeQ4kaZKU+Y8DmWnkmVFktCZz8JBvCB7neVhFtbuzXvcXbpOHamvcvgr+vgdOzTc
- 0C2kzgC92Z/3YfGRVpX12bbIzzqbZp3Yobp63D8M/G0IMbTXHjMeNdYeriWCoUaU
- paN8w5E9iCDIXiC6Un4T4l3mEhHgRm7fm6KSLUe7nYCNAioBYNNqADCq3OibGf5v
- JsLPV+HNt+Zc/xuqZSfn4zi5Ua6qObG+YsfFqpRp1zy3EyE9RtDRw==
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ZrWZF6
+ 7EJZz5UCvw2a0cf2k3To3fDxxI0YU8eFddmRU=; b=keD53DsF5Dfrs7/3RM5wKH
+ jo/MHHXc66PbQPRCKl5u3pf3WnnTy25DrNao5YeBOVMSFTcffTk944UL5ffi+UM4
+ ZmQdEdsWvxhLhr7eAunxjZ+iT/q0gH0Id7x0kdz+MCCDB0nrCz+8mTchMdfI0V9L
+ dn+FbAaG1tIdOlWJzMjcN3wSVFyFnsRQSkjEj3zgTeMs8BlnHc7y/2oEKuhUKi3L
+ z6C3CEuI/IbTb/kIUgEqtW9qST9dzYZbRyxc5pOSbnFglE9CV3owHWn7wmTS6yiG
+ Qjr/gB6VXkl4Z3zfRe6CpK4Fcjy6wG4OLmY6/xvnGp/Yw1CwDhsrw4kZm+eFOLeA
+ ==
 Received: from ppma12.dal12v.mail.ibm.com
  (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6qkn8jsu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 08:25:06 +0000 (GMT)
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6sp3gfr5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jul 2026 08:25:12 +0000 (GMT)
 Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6668JZah011023
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 08:25:06 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7cgpvxj3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 08:25:06 +0000 (GMT)
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6668Jc7E011038;
+ Mon, 6 Jul 2026 08:25:11 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7cgpvxje-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jul 2026 08:25:11 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6668P2qG29360602
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6668P7VQ13566460
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 6 Jul 2026 08:25:02 GMT
+ Mon, 6 Jul 2026 08:25:07 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 80AF82004B;
- Mon,  6 Jul 2026 08:25:02 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id AC3192004B;
+ Mon,  6 Jul 2026 08:25:07 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 84EBA20043;
- Mon,  6 Jul 2026 08:25:01 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id AF66520040;
+ Mon,  6 Jul 2026 08:25:06 +0000 (GMT)
 Received: from mac.bl1-in.ibm.com (unknown [9.123.1.190])
  by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  6 Jul 2026 08:25:01 +0000 (GMT)
+ Mon,  6 Jul 2026 08:25:06 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: Aditya Gupta <adityag@linux.ibm.com>,
- Misbah Anjum N <misanjum@linux.ibm.com>,
- Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-Subject: [PULL 3/8] tests/qtest: Add Power11 chip & machine to qtests
-Date: Mon,  6 Jul 2026 13:54:46 +0530
-Message-ID: <20260706082451.59299-4-harshpb@linux.ibm.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Misbah Anjum N <misanjum@linux.ibm.com>
+Subject: [PULL 7/8] ppc/pnv: Remove Power8E and Power8NVL CPUs
+Date: Mon,  6 Jul 2026 13:54:50 +0530
+Message-ID: <20260706082451.59299-8-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260706082451.59299-1-harshpb@linux.ibm.com>
 References: <20260706082451.59299-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Q/XiJY2a c=1 sm=1 tr=0 ts=6a4b6662 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=KsJ9H2WN c=1 sm=1 tr=0 ts=6a4b6668 cx=c_pps
  a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=RAioF0-LDSMA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=jlYlrgOtAAFGYfj3CJAA:9
-X-Proofpoint-GUID: grqyfWZmQiIctYLllpTyB_UK2kJgtb7t
-X-Proofpoint-ORIG-GUID: grqyfWZmQiIctYLllpTyB_UK2kJgtb7t
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA4MyBTYWx0ZWRfX/Ol4EbnNxa37
- cQFyoPe1nXU6cH+ALr5ULLpBgRtkrbfCc05Ngo9sdGCIuZUbeNRKfaHN7U2FV0unySn3yO8vvCQ
- cZc6jZQt5KwmIE/vRDuyK4GG8GdcZWg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA4MyBTYWx0ZWRfXxcV5LKf37/BE
- L7XWpvy/4ypOjIHOrZR0DApA3muxWRXYXnzrpafD1AhLuriZXnuj3PUjRoZ/P1sW4WbFpXvTt7D
- btaPOeesJNmPJ7p4Yhf7ggCBTQJskzAAk7km0NCag8bvofbT8pZgJ3IdDfXB279nYMQUi4ygRPS
- rSsUL+nAcPIijOKHydKs6DxZ45Skcah0B4KsQmBzSM6QtpyZ4lvMBqHiPwtRYJqSJ+iDQKtZIXb
- 2UfH+gQygwkQTqZ0H3lXKOPF994kMM9/pFCzggtwnskA6GsNu0WY5xsxUFIaAkh2O610QJfmo3W
- dxXLE/yLTCYIOgA0f2eVSpBvIbEyZGgkpCSVax20xfMoP3CHmG3b9GLiftFfK226wWEYkezLTbr
- MM0YNLHBozcEpnWZXmR6vHZjQH/g75kiCdXlYzxj1K2HsdoqtaQ/gtPochGaSUceNvyZuBT18+D
- MRbIDDMqjSpb2lqckuw==
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=EUspDBNiAAAA:8 a=D9DhIS6rGg1hnALM87YA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA4MyBTYWx0ZWRfX0jQC8sUY3Ndu
+ cPm/fRY3jGaN2ZBthw7OoI+B7ct/RbRyODuWzst7LP2FHFwsvUUYG0VoUOek52mPVvLsGYodsme
+ TtmGLo6DG2t8CxDLcBGqn+LnioAI/ds=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA4MyBTYWx0ZWRfXxZviVRbE/SyC
+ eG3+qy6SLrvHjnSzkTKhdVYhFAIZHUB3kKfdNuu96GrbBDE3TnjZKFfKkrxdpdM5rkjfLCnq/NO
+ /4jMA+0gx4PHuaZMq7v/xsj0AR4bPC15hAdnD/uDUaEriVQ9ioP4Sn7R7oOmsQNcTjGJlv3dcSc
+ K0cgfMkOuhHOwLdkJTEMuWYhwYYtJeuKg6Z8C5MayE35Rywwue/Qz9e+RGcQjtd80v/75/WGoxs
+ +6q0kABW/bjqJtf3okissunVg84+nE9oIc9me28r6XDoR+rzppBfxT0s42qjWk7lgIi/Rq8kdnd
+ cmpoOcuniAsr2jlWiVMaiKDS6cDBJ6IFzyT7DBht817hADGq2ss9pHz0fBbN78jF8OZmPrAPh5A
+ utd8VIcajZ1DSWq2YDrPOENG8k1R2j8zVAovuN0mFKxWl9TPlVLavw9NVuC41vq5xw3oYLVxN4t
+ QekChUDD+m48L6vQCaA==
+X-Proofpoint-ORIG-GUID: QzbwiaSxIXOLaJcATPxsZjLXXs8sGO6z
+X-Proofpoint-GUID: QzbwiaSxIXOLaJcATPxsZjLXXs8sGO6z
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-05_02,2026-07-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501
- bulkscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ impostorscore=0 malwarescore=0 spamscore=0 adultscore=0 clxscore=1015
+ suspectscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060083
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, TVD_SUBJ_WIPE_DEBT=1.004 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,244 +128,171 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Aditya Gupta <adityag@linux.ibm.com>
 
-Previously the machines/chips tested by qtest was till Power10, update
-the tests to also test PowerNV11 and Power11 PNV Chip
+Power8E and Power8NVL were deprecated since QEMU 10.1, with
+commit 264a604e7163 ("target/ppc: Deprecate Power8E and Power8NVL")
 
-Since if-else-if ladder was common pattern to get machine type,
-implement pnv_get_machine_type so new processor cases can be implemented
-in one location in pnv_get_machine_type
+Remove the corresponding 8E and 8NVL CPU cores from spapr/pseries
 
-While at it, also add g_autofree to allocation by g_strdup_printf in
-modified tests
+Also, with no use of 8E and 8NVL, in powernv chips or spapr cores,
+remove the CPU definitions for the cores
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Tested-by: Misbah Anjum N <misanjum@linux.ibm.com>
-Reviewed-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260703085955.2318600-4-adityag@linux.ibm.com
+Link: https://lore.kernel.org/qemu-devel/20260703085955.2318600-8-adityag@linux.ibm.com
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- tests/qtest/pnv-xscom.h            | 29 ++++++++++++++++++++++++++---
- tests/qtest/pnv-host-i2c-test.c    | 10 ++++------
- tests/qtest/pnv-spi-seeprom-test.c |  2 +-
- tests/qtest/pnv-xive2-test.c       | 21 +++++++++++++++++----
- tests/qtest/pnv-xscom-test.c       | 22 +++++-----------------
- 5 files changed, 53 insertions(+), 31 deletions(-)
+ docs/about/deprecated.rst       | 9 ---------
+ docs/about/removed-features.rst | 8 ++++++++
+ docs/system/ppc/pseries.rst     | 2 +-
+ target/ppc/cpu-models.h         | 4 ----
+ hw/ppc/spapr_cpu_core.c         | 2 --
+ target/ppc/cpu-models.c         | 6 ------
+ target/ppc/cpu_init.c           | 6 ------
+ target/ppc/kvm.c                | 4 +---
+ 8 files changed, 10 insertions(+), 31 deletions(-)
 
-diff --git a/tests/qtest/pnv-xscom.h b/tests/qtest/pnv-xscom.h
-index 5aa1701ea7..8e882dac9d 100644
---- a/tests/qtest/pnv-xscom.h
-+++ b/tests/qtest/pnv-xscom.h
-@@ -17,6 +17,7 @@ typedef enum PnvChipType {
-     PNV_CHIP_POWER8NVL,   /* AKA Naples */
-     PNV_CHIP_POWER9,      /* AKA Nimbus */
-     PNV_CHIP_POWER10,
-+    PNV_CHIP_POWER11,
- } PnvChipType;
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 169c5dfe4f..ef1d7b9ea8 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -206,15 +206,6 @@ in the QEMU object model anymore. ``Sun-UltraSparc-IIIi+`` and
+ but for consistency these will get removed in a future release, too.
+ Use ``Sun-UltraSparc-IIIi-plus`` and ``Sun-UltraSparc-IV-plus`` instead.
  
- typedef struct PnvChip {
-@@ -60,15 +61,23 @@ static const PnvChip pnv_chips[] = {
-         .first_core = 0x0,
-         .num_i2c    = 4,
-     },
-+    {
-+        .chip_type  = PNV_CHIP_POWER11,
-+        .cpu_model  = "Power11",
-+        .xscom_base = 0x000603fc00000000ull,
-+        .cfam_id    = 0x220da04980000000ull,
-+        .first_core = 0x0,
-+        .num_i2c    = 0,
-+    },
- };
- 
- static inline uint64_t pnv_xscom_addr(const PnvChip *chip, uint32_t pcba)
- {
-     uint64_t addr = chip->xscom_base;
- 
--    if (chip->chip_type == PNV_CHIP_POWER10) {
--        addr |= ((uint64_t) pcba << 3);
--    } else if (chip->chip_type == PNV_CHIP_POWER9) {
-+    if ((chip->chip_type == PNV_CHIP_POWER11) ||
-+        (chip->chip_type == PNV_CHIP_POWER10) ||
-+        (chip->chip_type == PNV_CHIP_POWER9)) {
-         addr |= ((uint64_t) pcba << 3);
-     } else {
-         addr |= (((uint64_t) pcba << 4) & ~0xffull) |
-@@ -77,4 +86,18 @@ static inline uint64_t pnv_xscom_addr(const PnvChip *chip, uint32_t pcba)
-     return addr;
- }
- 
-+static const char *pnv_get_machine_type(enum PnvChipType chip_type)
-+{
-+    static const char *const machine_types[] = {
-+         [PNV_CHIP_POWER8]  = "powernv8",
-+         [PNV_CHIP_POWER9]  = "powernv9",
-+         [PNV_CHIP_POWER10] = "powernv10",
-+         [PNV_CHIP_POWER11] = "powernv11",
-+     };
-+
-+    g_assert(chip_type <= PNV_CHIP_POWER11);
-+
-+    return machine_types[chip_type];
-+}
-+
- #endif /* PNV_XSCOM_H */
-diff --git a/tests/qtest/pnv-host-i2c-test.c b/tests/qtest/pnv-host-i2c-test.c
-index 51e613ebdc..5fd54f9de7 100644
---- a/tests/qtest/pnv-host-i2c-test.c
-+++ b/tests/qtest/pnv-host-i2c-test.c
-@@ -402,15 +402,14 @@ static void reset_all(QTestState *qts, const PnvChip *chip)
- static void test_host_i2c(const void *data)
- {
-     const PnvChip *chip = data;
-+    const char *machine = pnv_get_machine_type(chip->chip_type);
-     QTestState *qts;
--    const char *machine = "powernv8";
-     PnvI2cCtlr ctlr;
-     PnvI2cDev pca9552;
-     PnvI2cDev pca9554;
- 
--    if (chip->chip_type == PNV_CHIP_POWER9) {
--        machine = "powernv9";
--    } else if (chip->chip_type == PNV_CHIP_POWER10) {
-+    /* i2c is initialised for rainier in case of P10 */
-+    if (chip->chip_type == PNV_CHIP_POWER10) {
-         machine = "powernv10-rainier";
-     }
- 
-@@ -473,10 +472,9 @@ static void add_test(const char *name, void (*test)(const void *data))
-     int i;
- 
-     for (i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
--        char *tname = g_strdup_printf("pnv-xscom/%s/%s", name,
-+        g_autofree char *tname = g_strdup_printf("pnv-xscom/%s/%s", name,
-                                       pnv_chips[i].cpu_model);
-         qtest_add_data_func(tname, &pnv_chips[i], test);
--        g_free(tname);
-     }
- }
- 
-diff --git a/tests/qtest/pnv-spi-seeprom-test.c b/tests/qtest/pnv-spi-seeprom-test.c
-index 1a78e8d966..8bb30eb649 100644
---- a/tests/qtest/pnv-spi-seeprom-test.c
-+++ b/tests/qtest/pnv-spi-seeprom-test.c
-@@ -77,7 +77,7 @@ static void test_spi_seeprom(const void *data)
-     const PnvChip *chip = data;
-     QTestState *qts = NULL;
-     g_autofree char *tmp_path = NULL;
--    const char *machine = "powernv10";
-+    const char *machine = pnv_get_machine_type(chip->chip_type);
-     int ret;
-     int fd;
- 
-diff --git a/tests/qtest/pnv-xive2-test.c b/tests/qtest/pnv-xive2-test.c
-index 5313d4ef18..9f67a00668 100644
---- a/tests/qtest/pnv-xive2-test.c
-+++ b/tests/qtest/pnv-xive2-test.c
-@@ -14,6 +14,7 @@
- #include "libqtest.h"
- 
- #include "pnv-xive2-common.h"
-+#include "pnv-xscom.h"
- #include "hw/intc/pnv_xive2_regs.h"
- #include "hw/ppc/xive_regs.h"
- #include "hw/ppc/xive2_regs.h"
-@@ -544,14 +545,16 @@ static void test_hw_group_irq_backlog(QTestState *qts)
-     g_assert_cmphex(lsmfb, ==, 0xFF);
- }
- 
--static void test_xive(void)
-+static void test_xive(const void *data)
- {
-+    const PnvChip *chip = data;
-+    const char *machine = pnv_get_machine_type(chip->chip_type);
-     QTestState *qts;
- 
--    qts = qtest_initf("-M powernv10 -smp %d,cores=1,threads=%d -nographic "
-+    qts = qtest_initf("-M %s -smp %d,cores=1,threads=%d -nographic "
-                       "-nodefaults -serial mon:stdio -S "
-                       "-d guest_errors -trace '*xive*'",
--                      SMT, SMT);
-+                      machine, SMT, SMT);
-     init_xive(qts);
- 
-     test_hw_irq(qts);
-@@ -580,6 +583,16 @@ static void test_xive(void)
- int main(int argc, char **argv)
- {
-     g_test_init(&argc, &argv, NULL);
--    qtest_add_func("xive2", test_xive);
-+
-+    for (int i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
-+        /* xive2 exists from Power10 onwards */
-+        if (pnv_chips[i].chip_type < PNV_CHIP_POWER10) {
-+            continue;
-+        }
-+
-+        g_autofree char *tname = g_strdup_printf("pnv-xive2/%s",
-+                pnv_chips[i].cpu_model);
-+        qtest_add_data_func(tname, &pnv_chips[i], test_xive);
-+    }
-     return g_test_run();
- }
-diff --git a/tests/qtest/pnv-xscom-test.c b/tests/qtest/pnv-xscom-test.c
-index c814c0f4f5..94b50c071c 100644
---- a/tests/qtest/pnv-xscom-test.c
-+++ b/tests/qtest/pnv-xscom-test.c
-@@ -28,15 +28,9 @@ static void test_xscom_cfam_id(QTestState *qts, const PnvChip *chip)
- static void test_cfam_id(const void *data)
- {
-     const PnvChip *chip = data;
--    const char *machine = "powernv8";
-+    const char *machine = pnv_get_machine_type(chip->chip_type);
-     QTestState *qts;
- 
--    if (chip->chip_type == PNV_CHIP_POWER9) {
--        machine = "powernv9";
--    } else if (chip->chip_type == PNV_CHIP_POWER10) {
--        machine = "powernv10";
--    }
+-Power8E and Power8NVL CPUs and corresponding Pnv chips (since 10.1)
+-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 -
-     qts = qtest_initf("-M %s -accel tcg -cpu %s",
-                       machine, chip->cpu_model);
-     test_xscom_cfam_id(qts, chip);
-@@ -57,7 +51,8 @@ static void test_cfam_id(const void *data)
- 
- static void test_xscom_core(QTestState *qts, const PnvChip *chip)
- {
--    if (chip->chip_type == PNV_CHIP_POWER10) {
-+    if ((chip->chip_type == PNV_CHIP_POWER10) ||
-+        (chip->chip_type == PNV_CHIP_POWER11)) {
-         uint32_t first_core_thread_state =
-                  PNV_XSCOM_P10_EC_BASE(chip->first_core) + 0x412;
-         uint64_t thread_state;
-@@ -84,14 +79,8 @@ static void test_xscom_core(QTestState *qts, const PnvChip *chip)
- static void test_core(const void *data)
- {
-     const PnvChip *chip = data;
-+    const char *machine = pnv_get_machine_type(chip->chip_type);
-     QTestState *qts;
--    const char *machine = "powernv8";
+-The Power8E and Power8NVL variants of Power8 are not really useful anymore
+-in qemu, and are old and unmaintained now.
 -
--    if (chip->chip_type == PNV_CHIP_POWER9) {
--        machine = "powernv9";
--    } else if (chip->chip_type == PNV_CHIP_POWER10) {
--        machine = "powernv10";
--    }
+-The CPUs as well as corresponding Power8NVL and Power8E PnvChips will also
+-be considered deprecated.
+-
+ System emulator machines
+ ------------------------
  
-     qts = qtest_initf("-M %s -accel tcg -cpu %s",
-                       machine, chip->cpu_model);
-@@ -104,10 +93,9 @@ static void add_test(const char *name, void (*test)(const void *data))
-     int i;
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index d1bea4d75b..f7a2aa326d 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -1038,6 +1038,14 @@ initial RISC-V QEMU port. Its usage was always been unclear: users don't know
+ what to expect from a CPU called 'any', and in fact the CPU does not do anything
+ special that isn't already done by the default CPUs rv32/rv64.
  
-     for (i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
--        char *tname = g_strdup_printf("pnv-xscom/%s/%s", name,
-+        g_autofree char *tname = g_strdup_printf("pnv-xscom/%s/%s", name,
-                                       pnv_chips[i].cpu_model);
-         qtest_add_data_func(tname, &pnv_chips[i], test);
--        g_free(tname);
++Power8E and Power8NVL CPUs (removed in 11.1)
++''''''''''''''''''''''''''''''''''''''''''''
++
++The Power8E and Power8NVL variants of Power8 are not really useful anymore
++in qemu, and are old and unmaintained.
++Hence, the CPUs as well as corresponding Power8NVL and Power8E PnvChips have
++been removed
++
+ System accelerators
+ -------------------
+ 
+diff --git a/docs/system/ppc/pseries.rst b/docs/system/ppc/pseries.rst
+index 107091a37f..8bd8eae617 100644
+--- a/docs/system/ppc/pseries.rst
++++ b/docs/system/ppc/pseries.rst
+@@ -16,7 +16,7 @@ Supported devices
+ 
+  * Multi processor support for many Power processors generations:
+    - POWER7, POWER7+
+-   - POWER8, POWER8NVL
++   - POWER8
+    - POWER9
+    - Power10
+    - Power11
+diff --git a/target/ppc/cpu-models.h b/target/ppc/cpu-models.h
+index a439eb37ee..ef019cdb1f 100644
+--- a/target/ppc/cpu-models.h
++++ b/target/ppc/cpu-models.h
+@@ -341,12 +341,8 @@ enum {
+     CPU_POWERPC_POWER7_v23         = 0x003F0203,
+     CPU_POWERPC_POWER7P_BASE       = 0x004A0000,
+     CPU_POWERPC_POWER7P_v21        = 0x004A0201,
+-    CPU_POWERPC_POWER8E_BASE       = 0x004B0000,
+-    CPU_POWERPC_POWER8E_v21        = 0x004B0201,
+     CPU_POWERPC_POWER8_BASE        = 0x004D0000,
+     CPU_POWERPC_POWER8_v20         = 0x004D0200,
+-    CPU_POWERPC_POWER8NVL_BASE     = 0x004C0000,
+-    CPU_POWERPC_POWER8NVL_v10      = 0x004C0100,
+     CPU_POWERPC_POWER9_BASE        = 0x004E0000,
+     CPU_POWERPC_POWER9_DD1         = 0x004E1100,
+     CPU_POWERPC_POWER9_DD20        = 0x004E1200,
+diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
+index 41e37103c0..9a9351991c 100644
+--- a/hw/ppc/spapr_cpu_core.c
++++ b/hw/ppc/spapr_cpu_core.c
+@@ -408,8 +408,6 @@ static const TypeInfo spapr_cpu_core_type_infos[] = {
+     DEFINE_SPAPR_CPU_CORE_TYPE("power7_v2.3"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power7p_v2.1"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power8_v2.0"),
+-    DEFINE_SPAPR_CPU_CORE_TYPE("power8e_v2.1"),
+-    DEFINE_SPAPR_CPU_CORE_TYPE("power8nvl_v1.0"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
+diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
+index 26b6debcfc..aa13654e83 100644
+--- a/target/ppc/cpu-models.c
++++ b/target/ppc/cpu-models.c
+@@ -734,12 +734,8 @@
+                 "POWER7 v2.3")
+     POWERPC_DEF("power7p_v2.1",  CPU_POWERPC_POWER7P_v21,            POWER7,
+                 "POWER7+ v2.1")
+-    POWERPC_DEPRECATED_CPU("power8e_v2.1",  CPU_POWERPC_POWER8E_v21, POWER8,
+-                "POWER8E v2.1", "CPU is unmaintained.")
+     POWERPC_DEF("power8_v2.0",   CPU_POWERPC_POWER8_v20,             POWER8,
+                 "POWER8 v2.0")
+-    POWERPC_DEPRECATED_CPU("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10, POWER8,
+-                "POWER8NVL v1.0", "CPU is unmaintained.")
+     POWERPC_DEF("power9_v2.0",   CPU_POWERPC_POWER9_DD20,            POWER9,
+                 "POWER9 v2.0")
+     POWERPC_DEF("power9_v2.2",   CPU_POWERPC_POWER9_DD22,            POWER9,
+@@ -918,9 +914,7 @@ PowerPCCPUAlias ppc_cpu_aliases[] = {
+     { "power7", "power7_v2.3" },
+     { "power7+", "power7p_v2.1" },
+     { "power7+_v2.1", "power7p_v2.1" },
+-    { "power8e", "power8e_v2.1" },
+     { "power8", "power8_v2.0" },
+-    { "power8nvl", "power8nvl_v1.0" },
+     { "power9", "power9_v2.2" },
+     { "power10", "power10_v2.0" },
+     { "power11", "power11_v2.0" },
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 8cab5e12b6..f404c7e549 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -6311,12 +6311,6 @@ static bool ppc_pvr_match_power8(PowerPCCPUClass *pcc, uint32_t pvr, bool best)
+         if (base == CPU_POWERPC_POWER8_BASE) {
+             return true;
+         }
+-        if (base == CPU_POWERPC_POWER8E_BASE) {
+-            return true;
+-        }
+-        if (base == CPU_POWERPC_POWER8NVL_BASE) {
+-            return true;
+-        }
      }
- }
- 
+     if (base != pcc_base) {
+         return false;
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index b94c2997a0..78a1c4a839 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -2437,9 +2437,7 @@ static bool kvmppc_power8_host(void)
+ #ifdef TARGET_PPC64
+     {
+         uint32_t base_pvr = CPU_POWERPC_POWER_SERVER_MASK & mfpvr();
+-        ret = (base_pvr == CPU_POWERPC_POWER8E_BASE) ||
+-              (base_pvr == CPU_POWERPC_POWER8NVL_BASE) ||
+-              (base_pvr == CPU_POWERPC_POWER8_BASE);
++        ret = (base_pvr == CPU_POWERPC_POWER8_BASE);
+     }
+ #endif /* TARGET_PPC64 */
+     return ret;
 -- 
 2.52.0
 
