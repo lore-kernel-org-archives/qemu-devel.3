@@ -4,107 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60440C44500
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 09:47:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E841BC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 09:55:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgfra-0004I2-N2; Mon, 06 Jul 2026 05:43:42 -0400
+	id 1wgg2Q-0005VI-Cg; Mon, 06 Jul 2026 05:54:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wgfrU-0004EC-DM; Mon, 06 Jul 2026 05:43:36 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgg2I-0005UX-9P
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:54:47 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wgfrP-0003yE-NP; Mon, 06 Jul 2026 05:43:36 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6669IPa03783398; Mon, 6 Jul 2026 09:43:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=F+UMGpZQYY5oCtCad
- l4DVVSQMMO7Tg14YadLoyTOYQE=; b=ivihnyrz/F8lgQvPQ0D/DyR844NxwS+VZ
- ua+38yDxOCrEg8OVynQ4MQMpK1G/MHU6bK/xg6CyNzPmVT18GUcheytrBKL+9+Rk
- Mg5+74/YzY0HhlGZx152cAgBHT96BJpb+c6SVnGPyErv00sFGPAqvcEk8RFzid5o
- OfrRTAWIlVMkVwbEuPFXfcUU2BqidbwqJt42YCUwL4JxHtgZoxeZTaWCX1VgEHxh
- g+8o5g8yEaDLkES9lpecUfxfgQyQiKGUxsn/sEo+sONvKwNn1iSMiLdlKEvypaeJ
- rlFC11eESCBq+8elI+6i4gyPL8dCzXor7iYRn98vwCg5jfTf3dp+w==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6sw4gqwt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 09:43:22 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6669YdvM030257;
- Mon, 6 Jul 2026 09:43:21 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7f6xvnqg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 09:43:21 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6669hIh138470016
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 6 Jul 2026 09:43:18 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 132542004B;
- Mon,  6 Jul 2026 09:43:18 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E13B020043;
- Mon,  6 Jul 2026 09:43:17 +0000 (GMT)
-Received: from funtu2.ibm.com (unknown [9.111.193.81])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  6 Jul 2026 09:43:17 +0000 (GMT)
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- thuth@redhat.com, berrange@redhat.com
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
- dengler@linux.ibm.com, borntraeger@linux.ibm.com,
- fcallies@linux.ibm.com, cohuck@redhat.com
-Subject: [PATCH v10 10/21] target/s390x: Base support for cpacf protected keys
-Date: Mon,  6 Jul 2026 11:43:03 +0200
-Message-ID: <20260706094317.17032-11-freude@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260706094317.17032-1-freude@linux.ibm.com>
-References: <20260706094317.17032-1-freude@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgg2G-00072w-2V
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:54:46 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66693xua107755
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 09:54:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ FItJHwZ8IcH0nmshCcvaLDrdFzmOxSnTwNdZjMgYL+o=; b=WlVYoBcnstWFi8+z
+ nc4QYub/roAFS8Kbumotp4MG6YsL15FPDTu3SkPwBaCJ9rRB7kaej+hoUIxkhLX/
+ 9J5lP0MckfB91nk2JzW1XL5BmoLPhP9DYBjRl782W+U4q5Eq41LfbI6XC5AOXLYn
+ k++tznNsBIXpfEX3hhAE+nIK2SMdp1pNJmpF17D8x+brjI1PiB4BA57X6MwBKI9T
+ 8YCWpKpwf9CQMWkjbt/yKtiFGyDCeIWyqEbo8hw+vhqos4qW75o5BSE+Ljj5i5YR
+ jueM7ri4Z/nq6nYfz26SkX8TptwWlVEXlCgxFXg8h7vmNLpAn6syAfGM8G92d08H
+ Kthifw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f891ur9fc-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 09:54:35 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92e82060977so293068585a.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 02:54:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783331675; x=1783936475; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FItJHwZ8IcH0nmshCcvaLDrdFzmOxSnTwNdZjMgYL+o=;
+ b=XYx2wLyyT6Kpl4U1NgT3aOLUZiM2RT2OkhtaHy8E+fi3j3HK+iQ10CkZqmXVHryNPm
+ FWnqqSKTAYlWNXxZMk70r4LOlXat2WnqqI/OxdMQ9ARhthwSpc7N4SaQDZRGZTXMbJ1S
+ nke244vP8rDX4feVhfcwvgakfPgvt34+ISa4BrxL8JVQTR7pOPLNOB6XCE8O2nGliofo
+ 7l+6qITqIoqNJ7qr18eVFoWbupvQ8Yzf+Z8UAfnFcbW0x82y2NrsVUXFMke5E8u/ZJYP
+ 2qDQwfjQG4DVz26Fb1SCgDcT6VzWKBEo9eVP3SJBMOFeWWlq5QNgw9tAJg2SvjSzv++p
+ ocVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783331675; x=1783936475;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FItJHwZ8IcH0nmshCcvaLDrdFzmOxSnTwNdZjMgYL+o=;
+ b=lvOsA0s+nJU3fXagmHPDY/MKc6/fvm/Jrw8+xQI3zt89FC71no7VSakRfxh9QhEbCj
+ aOqEOw0D6YGKWoiFmuyuScTbKxOJxoiE8ilB+jbPkIDIWAHDkb47U8TtWtfqA+Y5+4Hi
+ nu53ArXtJzW+iV8jiJp7WgWZpK7KxtFqEZywxmNtMKqej4vbt4Ky9uNPRMKEbMPV8Qz/
+ Re5cX0kRKLrxbkA64FGXwsA+cctTBPBJO5OYrShwbn3xcTI4qFppHrQg8+JxIhuJRH1u
+ WN4+6SXU3u2NxfDlGxsYHyh05IvP42Mx/dZiDXTpo6Cyenejk5BLqmpoXW8x+xYeEF/m
+ JO5Q==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrYOHv2p1KfaumgWEZaikCzSS8tcCBfT0fW5TcfT6cZkXOeE3PL9Q0joAp7yVXiMC7r8J3znsb/E7EX@nongnu.org
+X-Gm-Message-State: AOJu0YxiH9QbmNlGpsR4XmNX1AoUcp2JLXsL3FMf39zMym5dUKOJcO8i
+ wDlEIPGdYYVvX+q8smpjRF1n4JHfkkuuRxhEb2P/pOjqSjaRfUeh8PC0SNuqoQwPfNY+2ZwsTH/
+ NgZy5qVOtN+gwvFUzOzrRSph9nP1unK9DVCyJgAIbNKirn1PJIK+s7ai4rA==
+X-Gm-Gg: AfdE7ck7d+O4rt5kVfGjol5GmacLF+eM0kKd3zuMUn8Mobn6lbIvCjo9ito8T/FMrMe
+ Gf9JI1ckLapjkvCLk0tti33J91mno+5PD51YUe8NOXw/+E8DeYz335qY/M4mjAX6b9qRS0kjuDR
+ McV0fGjWrL2+ydR1lcE5fubKnvSOgo0oSxOqT8M9beALjuvpaJD6juHNK5JwlWuo4wYPmzTT7b5
+ vjAAU12A+d4m5xPnRP2BPRt5y5eDtdN2DNmYi9vAMe0KPMujrhHfgEkdGwmP8KrDdEOy2uC+XTx
+ /whljExUesmVLqRu5hWOo2c+7mxS0RnuuCpcOybA+nzdRtguyWxnmOh6AEBkslcdAasYJw9jhcZ
+ QfSaSW7k/iP1VCeAq4i8SBZY7wY8UKOcWen+NLGlRk99M+3cWqFt2nxG8MFam1Q==
+X-Received: by 2002:a05:620a:8804:b0:918:7e9e:de74 with SMTP id
+ af79cd13be357-92e8b4ba8ddmr1035943785a.17.1783331674784; 
+ Mon, 06 Jul 2026 02:54:34 -0700 (PDT)
+X-Received: by 2002:a05:620a:8804:b0:918:7e9e:de74 with SMTP id
+ af79cd13be357-92e8b4ba8ddmr1035941485a.17.1783331674333; 
+ Mon, 06 Jul 2026 02:54:34 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-69a19d79906sm3904779a12.14.2026.07.06.02.54.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Jul 2026 02:54:33 -0700 (PDT)
+Message-ID: <2412f8a1-84d7-4d23-bede-4cac49f6a412@oss.qualcomm.com>
+Date: Mon, 6 Jul 2026 11:54:32 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 3/4] hw/arm/aspeed_ast27x0: Move SCU link into AST27x0
+ coprocessors
+Content-Language: en-US
+To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20260706084540.1988785-1-jamin_lin@aspeedtech.com>
+ <20260706084540.1988785-4-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260706084540.1988785-4-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: pTsxVVqC9Bs1EizzAavB_vsjS68Atfja
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA5NCBTYWx0ZWRfX6q5fxfOtNokB
- fM4mthAwMY346pZij64DOUHo/Me1LYMNU9nZhBalOjBUwUdMn8xuKAC1R10jIuJwUKh78w9zij3
- dup3fKshpK6oZJm6bFT4Wih6G9xHPjJrX66IUJndiN9OssOYgAAA/f+YUk0KBLR8OcnjiAHwTYm
- BkB2fYe+ZAD78iNN80TouHnBwFQFmjbZRoE1SQj8Sc4FRoEOjZruzeWbjn8vf9qcvc1uAO9Mxjs
- 5E0L5GWCo+y0kR4hf9xi5AWMDu69zIM3o+jJ44d8YoiFgT1xaR2uUbrZzzg8HUor+ja0acUJ12Y
- jAK57/qO65vfhOtWvNDetOq1WkVFqDsabPAgg9Yoa6bvRfmvp1IYVEdzikxL+K6o37p1geOJOQF
- 6iyfwbdU/HYzdWDNpjW7bcuGQ6vZbqkBMzXGxQNM1mAFrUbM5FP9fOZo1MYlGKggpT2zk/4/f27
- Q8j2m9TluLh1RiAtmGA==
-X-Proofpoint-ORIG-GUID: pTsxVVqC9Bs1EizzAavB_vsjS68Atfja
-X-Authority-Analysis: v=2.4 cv=FqQ1OWrq c=1 sm=1 tr=0 ts=6a4b78ba cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=pDJEeJrE-AQHYYEhGn0A:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA5NCBTYWx0ZWRfXzEXoPrD85wdt
- HBPSE8kqX1k24KQPr7MZyI+HjY+4FwISN90VpcyLWkLQBWQl6eaizTATLy/DCXvDgK0ygg96v+0
- WslPovQHMz1ePKr0ziWZK4EOVNxvMk8=
+X-Proofpoint-GUID: 6lPKEgmfoxlO0suRg6dq9qMnFCMJdm8b
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDEwMCBTYWx0ZWRfXzqxP09Z7/fCi
+ /po7pIOx35X2DvDFyIgnFHzn1X+lPk6V/Jkt4M7f9Jg4Uadn/8CnmIfBhu0jtCJMy8IWbO1f7IT
+ GO8foNrQfpjcQ90wMoQ7uMBoNMoBtbU=
+X-Authority-Analysis: v=2.4 cv=Mo1iLWae c=1 sm=1 tr=0 ts=6a4b7b5b cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=V2NxCb60AAAA:8 a=EUspDBNiAAAA:8 a=lYaixF1Ub9yBDHAr5aoA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=3L6qF29SlnrayQqPM2jZ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDEwMCBTYWx0ZWRfX9doBCraY3FI1
+ BUKqymEMF6qpP8rJSiO4hpf5lQZKtt9fNNX182mZgizpgw5ptcnK3BLp/TyUki5+Ijn+Zq9YyCN
+ pnrrv8eJypzutrZUIfyjo4Ad7KXnh45Y2aLdP2Ky13QUir4upYY2oDxTJkSCn/H+nvKyJyxIfiF
+ mi00gztR+u3dTOUnGUZUtMR5t0GuqKL6iV3U2z1A80mxmFwI5AUnlCK87UZzO9h2ysaU9GAmxYN
+ AjebVZIa9wuRKGD1bahYnpgrIpEGPcOBTiZk/nVXJBMvyL67HChpfDigyh2LZ+Ua2ENBXiFyswb
+ tzJqPyClW3BMLntuU9h+f+XNoTPnoUyOYs4iignDWDBAeu25lKgeqp+nImnxWGWo9nCwvXEjngJ
+ d4tabteA3LxcwoK99PWOsLNXj5046gh7TfmD3w6eaqczs49U39GiPrapAuhhRaMMcQ1LzCMNuO1
+ 4QPVpOGHXfzJVeJQh/w==
+X-Proofpoint-ORIG-GUID: 6lPKEgmfoxlO0suRg6dq9qMnFCMJdm8b
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-06_01,2026-07-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 spamscore=0 phishscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 adultscore=0 priorityscore=1501
+ suspectscore=0 spamscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060094
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=freude@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060100
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,111 +162,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add base support for cpacf protected key handling.
+On 6/7/26 10:45, Jamin Lin wrote:
+> The SCU link is only needed by the AST27x0 SSP/TSP coprocessors for their
+> AST2700-specific SCU alias window.
+> 
+> Move the link property from the common AspeedCoprocessorState into
+> Aspeed27x0CoprocessorState, so the generic coprocessor model no longer
+> contains an AST2700-specific dependency.
+> 
+> Also validate that the SCU link has been provided during device realize
+> before accessing it.
+> 
+> No functional change.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   include/hw/arm/aspeed_coprocessor.h |  5 +++--
+>   hw/arm/aspeed_ast27x0-ssp.c         | 19 +++++++++++++++----
+>   hw/arm/aspeed_ast27x0-tsp.c         | 19 +++++++++++++++----
+>   hw/arm/aspeed_coprocessor_common.c  |  2 --
+>   4 files changed, 33 insertions(+), 12 deletions(-)
 
-The qemu version provided here is only a fake intended to make
-protected key available for developing and testing purpose:
-* The protected key is 'derived' from the clear key by xoring
-  the fixed pattern 0xAAAA... onto the key value.
-* The AES Wrapping Key Verification Pattern is a fixed
-  value of 32 bytes 0xFACEFACE...
-
-Add preprocessor defines for the xor pattern and wkvp used to
-construct ('encrypt') a protected key from a clear key value with
-this implementation. Also add some static functions to 'encrypt'
-from clear key to protected key and 'decrypt' back to cpacf_aes.c.
-
-The preprocessor defines shall be used later in testcases to
-construct and decode protected keys.
-
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
----
- target/s390x/tcg/cpacf.h     | 25 +++++++++++++++++++++++
- target/s390x/tcg/cpacf_aes.c | 39 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 64 insertions(+)
-
-diff --git a/target/s390x/tcg/cpacf.h b/target/s390x/tcg/cpacf.h
-index e585b77766..df7f258443 100644
---- a/target/s390x/tcg/cpacf.h
-+++ b/target/s390x/tcg/cpacf.h
-@@ -254,4 +254,29 @@ int cpacf_aes_xts(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-                   uint64_t *src_ptr_reg, uint64_t *src_len_reg,
-                   uint32_t type, uint8_t fc, uint8_t mod);
- 
-+/*
-+ * Support for protected key cpacf functions. Note that this is
-+ * a fake implementation intended for debugging and development.
-+ * Do not use for production load !
-+ */
-+
-+/*
-+ * Hard coded pattern xored with the AES clear key
-+ * to 'produce' the protected key.
-+ */
-+#define PROTKEY_XOR_PATTERN { \
-+    0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, \
-+    0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, \
-+    0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, \
-+    0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA }
-+
-+/*
-+ * Hard coded wkvp ("Wrapping Key Verification Pattern")
-+ */
-+#define PROTKEY_WKVP { \
-+    0x0F, 0x0A, 0x0C, 0x0E, 0x0F, 0x0A, 0x0C, 0x0E, \
-+    0x0F, 0x0A, 0x0C, 0x0E, 0x0F, 0x0A, 0x0C, 0x0E, \
-+    0x0F, 0x0A, 0x0C, 0x0E, 0x0F, 0x0A, 0x0C, 0x0E, \
-+    0x0F, 0x0A, 0x0C, 0x0E, 0x0F, 0x0A, 0x0C, 0x0E }
-+
- #endif /* S390X_CPACF_H */
-diff --git a/target/s390x/tcg/cpacf_aes.c b/target/s390x/tcg/cpacf_aes.c
-index 4a28cc3d7c..6702006b66 100644
---- a/target/s390x/tcg/cpacf_aes.c
-+++ b/target/s390x/tcg/cpacf_aes.c
-@@ -461,3 +461,42 @@ int cpacf_aes_xts(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
- 
-     return !len ? 0 : 3;
- }
-+
-+/*
-+ * Support for protected key cpacf functions. Note that this is
-+ * a fake implementation intended for debugging and development.
-+ * Do not use for production load !
-+ */
-+
-+/*
-+ * Hard coded pattern xored with the AES clear key
-+ * to 'produce' the protected key.
-+ */
-+static const uint8_t protkey_xor_pattern[32] = PROTKEY_XOR_PATTERN;
-+
-+/*
-+ * Hard coded wkvp ("Wrapping Key Verification Pattern")
-+ */
-+static const uint8_t protkey_wkvp[32] = PROTKEY_WKVP;
-+
-+/*
-+ * 'encrypt' the clear key value into a protected key
-+ * by xor-ing the protkey_xor_pattern onto it.
-+ */
-+static void encrypt_clrkey(uint8_t *key, int keysize)
-+{
-+    for (int i = 0; i < keysize; i++) {
-+        key[i] ^= protkey_xor_pattern[i];
-+    }
-+}
-+
-+/*
-+ * 'decrypt' the protected key by reverting the xor
-+ * of the protkey_xor_pattern onto the clear key value.
-+ */
-+static void decrypt_protkey(uint8_t *key, int keysize)
-+{
-+    for (int i = 0; i < keysize; i++) {
-+        key[i] ^= protkey_xor_pattern[i];
-+    }
-+}
--- 
-2.43.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
