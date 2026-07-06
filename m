@@ -4,86 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB7E4C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 12:28:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0BB4C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 12:41:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgiQy-0003CD-GD; Mon, 06 Jul 2026 08:28:26 -0400
+	id 1wgidR-0006dE-Ac; Mon, 06 Jul 2026 08:41:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wgiQx-0003Bc-8J
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 08:28:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wgidP-0006cm-SZ
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 08:41:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wgiQv-0008CV-G9
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 08:28:23 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wgidN-0003Re-JZ
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 08:41:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783340899;
+ s=mimecast20190719; t=1783341672;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FZzSbm7Ez8GEPaBEfn/F46GcrexUMxp3tIXA7R9WRP4=;
- b=aJxdFBzw+vCT2kvjWuOvd8KDeO/MOLNngEpWmKu2SXqbXVAN+jUeeIpW+wKXjOeIQkaPPL
- nA8t5IGGtH+9gciQvo5QtVC260jggUL9oUNw4xIFGmyX5BcbdwITQR2dFmcI+0WnpkFK7+
- e3357D0cgsJqXgGWUXTuw/ZoHo/z08o=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=QLC6x+9zBUwRED6dFvVyoWGWDc8ORTDu0ZeXm6hXJro=;
+ b=aRWRPzt2hgd+aejNZyTfw2ZtSyLvgwLOtMpg+lcL2w6wph5szf8U6OAWOXNtI7Djb9Sq1s
+ LYgBFslGmI4CNstbUxat2MKeN8XE0b4s6zS1SclDZibOSjCxQa2R2o0O44lZPj2hzK21i9
+ By/wYvjfx6ldce1JU7NmDitPtC8TpfE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-491-_YMTVc6jMCKsXf5Oy3TLOg-1; Mon,
- 06 Jul 2026 08:28:18 -0400
-X-MC-Unique: _YMTVc6jMCKsXf5Oy3TLOg-1
-X-Mimecast-MFC-AGG-ID: _YMTVc6jMCKsXf5Oy3TLOg_1783340896
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-378-i5Gneoz2MBWrVo1KneRUPw-1; Mon,
+ 06 Jul 2026 08:41:09 -0400
+X-MC-Unique: i5Gneoz2MBWrVo1KneRUPw-1
+X-Mimecast-MFC-AGG-ID: i5Gneoz2MBWrVo1KneRUPw_1783341668
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 45FA41955F11; Mon,  6 Jul 2026 12:28:15 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4EA961956087; Mon,  6 Jul 2026 12:28:14 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C90E421E6920; Mon, 06 Jul 2026 14:28:11 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Khushit Shah <khushit.shah@nutanix.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,  "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>,  "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- Eric Auger <eric.auger@redhat.com>,  Cornelia Huck <cohuck@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,  Richard Henderson
- <richard.henderson@linaro.org>,  Marc Zyngier <maz@kernel.org>,  Oliver
- Upton <oliver.upton@linux.dev>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Andrea Bolognani <abologna@redhat.com>,  Jiri
- Denemark <jdenemar@redhat.com>,  Gavin Shan <gshan@redhat.com>,  Shameer
- Kolothum <skolothumtho@nvidia.com>,  Sebastian Ott <sebott@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Jinqian Yang
- <yangjinqian1@huawei.com>,  Shaju Abraham <shaju.abraham@nutanix.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,  Sandesh Patel
- <sandesh.patel@nutanix.com>
-Subject: Re: [RFC PATCH v2 23/29] target/arm/qmp: add query-arm-cpu-props-info
-In-Reply-To: <17B524D0-6D08-4ECF-93FC-E38EB0F8F6D7@nutanix.com> (Khushit
- Shah's message of "Fri, 19 Jun 2026 11:54:19 +0000")
-References: <20260605083358.1320563-1-khushit.shah@nutanix.com>
- <20260605083358.1320563-24-khushit.shah@nutanix.com>
- <87o6h6hofm.fsf@pond.sub.org>
- <17B524D0-6D08-4ECF-93FC-E38EB0F8F6D7@nutanix.com>
-Date: Mon, 06 Jul 2026 14:28:11 +0200
-Message-ID: <87bjcknvz8.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B098F1955DCD; Mon,  6 Jul 2026 12:41:07 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DA92736535; Mon,  6 Jul 2026 12:41:06 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: freude@linux.ibm.com
+Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ thuth@redhat.com, berrange@redhat.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, linux-s390@vger.kernel.org, dengler@linux.ibm.com,
+ borntraeger@linux.ibm.com, fcallies@linux.ibm.com
+Subject: Re: [PATCH v10 10/21] target/s390x: Base support for cpacf
+ protected keys
+In-Reply-To: <26e04f8752e3235d6e8819cad1a5d9df@linux.ibm.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20260706094317.17032-1-freude@linux.ibm.com>
+ <20260706094317.17032-11-freude@linux.ibm.com> <87v7asjpzc.fsf@redhat.com>
+ <26e04f8752e3235d6e8819cad1a5d9df@linux.ibm.com>
+User-Agent: Notmuch/0.40 (https://notmuchmail.org)
+Date: Mon, 06 Jul 2026 14:41:04 +0200
+Message-ID: <87se5wjnof.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
 X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -101,106 +93,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I apologize for taking so long to reply.
+On Mon, Jul 06 2026, Harald Freudenberger <freude@linux.ibm.com> wrote:
 
-Khushit Shah <khushit.shah@nutanix.com> writes:
+> On 2026-07-06 13:51, Cornelia Huck wrote:
+>> On Mon, Jul 06 2026, Harald Freudenberger <freude@linux.ibm.com> wrote:
+>> 
+>>> Add base support for cpacf protected key handling.
+>>> 
+>>> The qemu version provided here is only a fake intended to make
+>>> protected key available for developing and testing purpose:
+>>> * The protected key is 'derived' from the clear key by xoring
+>>>   the fixed pattern 0xAAAA... onto the key value.
+>>> * The AES Wrapping Key Verification Pattern is a fixed
+>>>   value of 32 bytes 0xFACEFACE...
+>>> 
+>>> Add preprocessor defines for the xor pattern and wkvp used to
+>>> construct ('encrypt') a protected key from a clear key value with
+>>> this implementation. Also add some static functions to 'encrypt'
+>>> from clear key to protected key and 'decrypt' back to cpacf_aes.c.
+>>> 
+>>> The preprocessor defines shall be used later in testcases to
+>>> construct and decode protected keys.
+>> 
+>> Hmm... so does that mean that we only provide the protected key 
+>> handling
+>> in the !KVM case for people who want to run via tcg for some 
+>> development
+>> purposes? Does the user actually get some kind of notice in that case,
+>> if for example they run with !KVM due to some configuration hiccup? 
+>> IOW,
+>> do users get some clue that they are running with a fake placeholder
+>> implementation, other than the setup being slow?
+>> 
+>
+> Well, there are 2 paths leading to protected use:
+> 1) you have a secure key and want to 'derive' a protected key from that
+>     to operate faster. This is for example the case now when you have an
+>     PAES encrypted filesystem.
+>     In such a case you need a crypto card with the Master Key setting
+>     fitting to when your secure key was generated.
+>     -> this is not a practical way for qemu on !KVM as you need a crypto
+>     card AND the s390 firmware stack.
 
->> On 19 Jun 2026, at 2:55=E2=80=AFPM, Markus Armbruster <armbru@redhat.com=
-> wrote:
->>=20
->> !-------------------------------------------------------------------|
->>  CAUTION: External Email
->>=20
->> |-------------------------------------------------------------------!
->>=20
->> Khushit Shah <khushit.shah@nutanix.com> writes:
->>=20
->>> Introduce 'query-arm-cpu-props-info' QMP command. This command returns
->>> information about ARM CPU model properties, including their name, type,
->>> supported values on the given host, and composite parent if any.
->>>=20
->>> This provides management layer necessary information to determine
->>> migration compatibility off a VM on different host.
->
-> Note: s/off/of.
->
->>>=20
->>> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
->>> ---
->>> qapi/misc-arm.json              | 41 ++++++++++++++++
->>> stubs/qmp-arm-gic.c             |  6 +++
->>> target/arm/arm-cpu-props-stub.c | 13 +++++
->>> target/arm/arm-cpu-props.c      | 85 +++++++++++++++++++++++++++++++++
->>> target/arm/arm-cpu-props.h      |  5 ++
->>> target/arm/arm-qmp-cmds.c       | 44 +++++++++++++++++
->>> target/arm/cpu-idregs.c         | 71 +++++++++++++++++++++++++++
->>> target/arm/cpu-idregs.h         |  8 ++++
->>> 8 files changed, 273 insertions(+)
->>>=20
->>> diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
->>> index 4dc66d00e5..1a3fb140c4 100644
->>> --- a/qapi/misc-arm.json
->>> +++ b/qapi/misc-arm.json
->>> @@ -46,6 +46,47 @@
->>> ##
->>> { 'command': 'query-gic-capabilities', 'returns': ['GICCapability'] }
->>>=20
->>> +##
->>> +# @CpuPropInfo:
->>=20
->> CpuPropertyInfo for consistency with type names such as ObjectPropertyIn=
-fo.
->
-> Acked.=20
->
->>> +#
->>> +# Information about a specific ARM CPU model property.
->>> +#
->>> +# @name: the name of the property
->>> +#
->>> +# @type: the type of the property, any of ('string', 'boolean',
->>> +#     'number').
->>> +#
->>> +# @supported-values: the set of values the host hardware supports
->>> +#     for the property, a list of strings.
->>=20
->> I figure the set of values depends on the host, i.e. it isn't known at
->> compile time.  Correct?
->>=20
->
-> Yes, correct.
->
->> Are the possible property names known at compile time?
->
-> Yes, property names are known at compile time.
+Nod.
 
-Why can't we use a struct then?
+> 2) you 'derive' a protected key from a clear key value. On a s390 system
+>     this is done via the privileged instruction PCKMO. On this qemu with
+>     !KVM this is the fake I implemented.
+>     In general it is absolutely not recommended to go this path as the 
+> source
+>     of the key is/was/needs to stay in OS memory. So you don't win any
+>     security by using protected keys this way - in fact you would have
+>     done better to just use the clear key as it is. Please note also, 
+> that
+>     by default this path on a s390 system is disabled - however, for 
+> testing
+>     purpose there are ways to use it this way.
+>     However, this is exactly what this implementation here is for. For 
+> testing
+>     purpose you may 'derive' a protected key from clear key or any other 
+> way
+>     as the algorithm to derive is clear documented here. And then you can 
+> play
+>     around and run tests with protected key implementations.
 
-    { 'struct': ...
-      'data': {
-          'PROP1': 'TYPE1',
-          'PROP2': 'TYPE2',
-          ... } }
+Yes, and it is useful for that.
 
->> List of strings is fine when the values are strings.  When they're not,
->> the interface requires its users to parse strings, which is something we
->> try hard to avoid in QAPI/QMP.
 >
-> Okay, then I think we can do this with flat union discriminated with=20
-> =E2=80=9Ctype=E2=80=9D (changing it to enum) :
->    boolean: [=E2=80=98bool=E2=80=99]
->    string: [=E2=80=99str=E2=80=99]
->    number: ['NumRange=E2=80=99] where NumRange: {=E2=80=98min=E2=80=99: u=
-int64, =E2=80=98max=E2=80=99: uint64}
+> I see your point: How can a innocent user see that his/her vm is running 
+> with
+> this fake installation instead of the real one. The answer is:
+> If the source of the protected key is a secure key - then there is no 
+> path
+> on the faked implementation to get a hand on a protected key.
+> If the source of the protected key is a clear key - honestly does it 
+> even
+> matter which implementation is then running?
 >
-> Range form to handle numeric properties with no restrictions.
->
-> Does this look reasonable to you?
+> Hopefully I could explain the difference.
 
-Yes, this is a reasonable way to do dynamic typing in QAPI.
+Yes, thanks.
 
-I still need to understand why you you dynamic types here.
-
-[...]
+It seems we have similar cases for other archs, so let's just keep it as
+it is now.
 
 
