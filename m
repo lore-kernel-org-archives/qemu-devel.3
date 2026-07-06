@@ -4,101 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A1E7C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 09:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A26AEC43602
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 09:30:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgfcS-0001Vx-Hx; Mon, 06 Jul 2026 05:28:04 -0400
+	id 1wgff5-0002Kw-O2; Mon, 06 Jul 2026 05:30:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wgfcQ-0001VC-SU
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:28:02 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ id 1wgfel-0002EH-IE
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:30:27 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wgfcP-0007PM-9I
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:28:02 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-81062fdeaf5so48376527b3.0
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 02:28:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783330080; cv=none;
+ id 1wgfej-0008BB-CO
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 05:30:26 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-664d35b4777so3948133d50.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 02:30:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783330223; cv=none;
  d=google.com; s=arc-20260327;
- b=YastpgKPvThOhAQuHqrhbcLAnkJn3pWLVzfGAgAnOsiC67WWI5OlPFBugpAVYWDfEJ
- i1EK+zwViJ5kbsG5ExSbCI40whda+JX7IuNKIXXIyazZWqQSBhU/hD4uliR9jN01nHO5
- MX5iGXhnhtAujVr5sJ23nP1YiPRKycofdVTViAulA6KDsIpAcgNvCVlRNLEQEtGrlPXw
- 5TX7qUpSOIWp3O7bVZi0iRiRPnMwVrznuyRdwKc5C99YMVef3aZbanrXMbvnVQWNsSPi
- mrlSPTBhaaQQEFdA6hg1IlfKQps6832UN0FtEG0QmEZZDrgmb8l5wjhFktaxwvlx4zJa
- WSRA==
+ b=a70zKIqtueek3lMOkA/x6c+KzZxu/uwBC1VpYw0uoCyo7/6t+m20ph6sgkk7fN0myB
+ Hu36qqeQpGB9L6o6pLpaQJXW5GhVRiZa4FMoJWja376kNJ6QK+X9r3CWoII9xFglTW1T
+ UaNyUUo15QVL34Xkh7yr+3IMhMkTDOeqt/Plwktdpmf1hZfgpY3MKtSH2DawdsB1SQMg
+ QifWxJEL/Uc6SYIk2RVpXtD93V0e+qed27W0ELR1Ac0CNEM/cepeo9zOtUy0vX74l9Og
+ HjlEuJHmUzF1udB0mDBZz4NvBUDm3jmomnS6JyoR3Cp+011u0XKX41xRblISfsGCtMj4
+ 5ELw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :dkim-signature;
- bh=bh7GO0M+dUyn53qu8M6jvvi+CwUOmFEEXyMs+kH1nh4=;
- fh=flhR8/bgiG0FvX3F1MReVVIluz4JmXYFysTtzYhTvBI=;
- b=alvG0c1mc4Kw14cFPP6YkGlr/22TR1MVIiaoqW0AroSqCvDCaqeTHB6aomccu6pWzh
- uzz281bYuU1fIMQqQJsp0IArtPRauFYCWg+6rCQ0vuJfnqXlPEeEjZ3MYrl5WheYPkzB
- yLXWSBtVbWo2t4GvXoPnacGVe46U/MPCq673i21YMWtKWNmv30uPBdZRCNeFwJfcS83q
- SGUCNzU5wBsNmhKgPF85RynpKXtRcfJ/PwTVuotqww9NSbP4vsIQxA/UV85sBEvwkEsy
- HbrMLTHJSkMEsRZq6eliK86O1KhAWF9bCi9++Tk8Rfuvi9+ZHekED+SMPHMjVYU4I1P7
- DtCg==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=1laCnAkCmus+RdL3WBsb/PkScrDxrayjVQoHHNn4lhM=;
+ fh=Rqj0BkhYVitrTp0C4VYnwdrjvLJ1P7MFwU8PrOExr5w=;
+ b=V95jNCxFfz9PqrhcqxfjWQ8Fza932rtT5DlASQKYj5RiJuFieCLN2qCT0YSJwXrETN
+ AUXHYyQXiP+v+6bALNXFZh8pBCrTMIYl0pt6Whuwz6UZC/29/uf/jx1qflf4XVKe1mGj
+ z8RbcgF/LzqEwp7oQ9/UG/8Yw3VanCNTJI8kyQVL+PIHb6A6tabj1LCuGIXaC4zlvzEI
+ XFnAqU1hz2Tw0DdNAfH6uI2Qw+a5QFtlCWtGvdDF8LQbmPg5i3V7kI8up2mS1PHfymc+
+ ZodzCdNyjsfRbm4YJgy5dkDvSNSiwFz8Q4ce1mZbdnxrSJcTjolDM9f17t31m8H/iBFV
+ BHYQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783330080; x=1783934880; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bh7GO0M+dUyn53qu8M6jvvi+CwUOmFEEXyMs+kH1nh4=;
- b=xTQkbI1WYJx73srelCDf8vHmGyzfRf4+B6X0idMMzvaOnOJpkJBK0oZtEmDjyrDZpA
- lgfuQMbhWUCENhvAcN/JbsYKay/Zano0jM8ejPZbBYqJT6YiNNs53O2tJtgKBGQSKBYd
- AVRvwI7ZbsjfMsfXamB7xfhk1QRa7nEQzi0JhA4AXTlC6JAwtaWy5H1zSDqwCafPLXsL
- X+AM6stS4V5zwigSqDu1Tqnu8K5A3zAo8nkpx60+YlYLIU7W7yCTXntmQTUnHFdsiWQ/
- StjWxFmsZhsxFvp15+ReBrqJeRg+0vkyQj2dygwlxkiKlkKtFuDm5uRICLjfEKWcJpE+
- HAhA==
+ d=linaro.org; s=google; t=1783330223; x=1783935023; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=1laCnAkCmus+RdL3WBsb/PkScrDxrayjVQoHHNn4lhM=;
+ b=rN2Xr0EF6pApaaCCdUZvoWig40H87hgumFqA5blBfEklaJ7h3iylzP6NYioz0zOQ1Z
+ F80soNo2ydRHvfnSA3wmE4HsxFsb1F/BewCCVUSvNySAJ6yfeRHtBk2GZmc53PVXSrls
+ i5BKGP6fnkyRfMWV6tFlyE56Z+iTabWbaTUiHf4nysAM8h/HxL8gYn5y0U+Jc0LZ/315
+ BL7pgTifOzlynnrjrdSllVIK9PDhbwiuidXh42/X2j6Qb1dHZF4l9y+yaaDe6VXbnXgs
+ oyHlBlxe3zW37/e1M3mB842jX8RkbjPV2gjDJ7xa8O76BN2qy1Os6UykhUSqWMRxfSDk
+ xE8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783330080; x=1783934880;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bh7GO0M+dUyn53qu8M6jvvi+CwUOmFEEXyMs+kH1nh4=;
- b=pc8WQvzYJxmB0bxpogOMbT70nxdiI+afLtWWa2xKcrqyioDwmhNWektTlAybPGMX8+
- QOIU9y8ubJ9vPtjf8cjW6iXkBfiC9r4M1nIUKYT431oXkxtRJXLzS7Ueykud/sEPPPia
- x8Lo3J4EL2oBtEZRvGMnPz9BjKV2od5OpufWn8GQYEB1CFMu5fzn9tp+M8Q4Q8rHqIL4
- Nb/KD0MnUFv/F8+d23WglAcx4Z/1ujLdjWCrnswnUOSbdv9jCHqrdqr8ZemOJLeR2dLE
- opkD6AVJfvFpG6aTfEUG4cmsPnu54Lof88HE9uMxdpsq8gDMsfzMA0oTdENdT67Uql6o
- qXgg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rol+Vb7vAkkE54VoVzw75S66DAIVMhS+Kt8s+DQ8KdpAHVUwtzK4Bn5M3BZscgzQqbiDD+9oLeY9lFL@nongnu.org
-X-Gm-Message-State: AOJu0YyAZwP3uYxHZPqojCcVU4rdDz7uzk9jC4LXqogqJpkufnaEAtzn
- A98lKDZLtxJGIxGpc5X3Dq603reE2Q/GAFYS5SYSjafYVrB3mFJyd9W/2SWhSGe7Wa+Xsw21dsm
- 9dELHGGITocaoAGk+W/tn6yoft6OvQbVW2hZouHho3P44ylzZ30y4
-X-Gm-Gg: AfdE7cnsW1Rnf4+cMfsiHEsuAtn2afDz8mxHN4z3AqsU3bcfbqi85DqnQfiBif3IXD3
- 70IbDsYkhaiut9whO/z6iTCu6A6JA+t/sNyc0VfvvS95GgB5mt7oJrxjzcJAOeZKbPMAKbjDMjr
- CCUzVsJxn7oDb167FbxObxjJrUS0t0J/B4i4iEdh2O/Wri4npLyzFUyv0GlFVBawFvdeMRtjTi+
- oUKfOdjL+JTLwIHIlpRJrbIeEMs/lo0xNTVKdH702Hd96BTPVDJ81Y+dGK01pe6jAzgd27EjYXq
- QK92qS1ukMooPFHtaJYf3HTSUw+tNjZSJFojPOYPzTuxqS4S4CDC50Ug
-X-Received: by 2002:a05:690c:9b04:b0:7e9:ea36:f256 with SMTP id
- 00721157ae682-815bbf9a729mr136861567b3.17.1783330079837; Mon, 06 Jul 2026
- 02:27:59 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783330223; x=1783935023;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1laCnAkCmus+RdL3WBsb/PkScrDxrayjVQoHHNn4lhM=;
+ b=bnef02uWM8o97Zxs5ynuIDl6XZWm18uEuCtx6xydb6hdnhQXPwBMNEMs9maX9Aql1H
+ 6b4Gk5Txyns0sJv6V+F/SBzJ9Zhu56tvsaC5AyjenLap/67r5rzFx3gEm0ZE/i1RPdQi
+ ThJHfSn418hZYppExgKQ4whYBWomlWtsbSyp9MSPMoSq8MBoSxgyF0tjkxBjYdZUsw/S
+ Sp3y9lnxJNy9gDI0Nimw4x496Ar9FNMlieW2rc4ICJRLAbdbUoEkt34UkQQk8wBy4hK1
+ LrPG3eXhwc+57ti12Nq/Z1jyFYfY87mJEokIgZRtqygONxhZKqs/ruV/9OdcQodSz2u/
+ 1KuQ==
+X-Gm-Message-State: AOJu0Yy2IunsoWMQjyvbtJrAReI/EC1lF0Dn5sjO90Nbw/A2l/4jwIeX
+ vpm2TQm0odImrh3IeO4zLe+o1gBBq2Um+oEnScpmd6ETucmp0Jihvj+EsY52CWAKOCQwvGLHNd0
+ KQ/ejkykHxUDK/utwxG597U6jPsccA36LFwql7fPq0Q==
+X-Gm-Gg: AfdE7cm7AO+2Y3rR8IUMvwGOV4fQlI1O4RU+mJMogfcmkkpBtleHFOt8wCsoGeVpZGY
+ 2rRekBO+qQ+noR8C9CjYkxyEJo+9aDJtj0u4C6lLik/jf9jwz+PUl0RAuV7pj61Po0xl2caEAZt
+ N6LTwhTfLsGnAhAVpJSTp3bO6xQ97gEWUoHYr23rOFkmhuoaSG/jV4BZhpmYi58unXiJEj0K3aL
+ NFgUnyQlm5tctjLULjib+ojuSw4Q2FGThnXOex9RJfRf/2JT+WjHvCVvEqaqzQ9KNC3Ype5VB0w
+ D4EZGN5DYFA6NUVP/x8Q5zh8Zzp5aVg+9kYteBLidxdu42/LcQXx/UpFuSYTYL8O3mA=
+X-Received: by 2002:a05:690e:4594:20b0:665:9b8:5511 with SMTP id
+ 956f58d0204a3-66652f12b8cmr7455519d50.55.1783330221096; Mon, 06 Jul 2026
+ 02:30:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260702184019.3431139-1-peter.maydell@linaro.org>
-In-Reply-To: <20260702184019.3431139-1-peter.maydell@linaro.org>
+References: <20260614222131.5795-1-imaginos32@gmail.com>
+ <CAFEAcA-GGP6aALn4Az5By31q1R3d75Mm+p_YXN0y=tO3GxDYrg@mail.gmail.com>
+In-Reply-To: <CAFEAcA-GGP6aALn4Az5By31q1R3d75Mm+p_YXN0y=tO3GxDYrg@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 6 Jul 2026 10:27:47 +0100
-X-Gm-Features: AVVi8CfhMYfADXeJQl5yBNylrzjffkP2MsnyWfKd6aqVUCS5WOQ1TE_aXbHW39s
-Message-ID: <CAFEAcA9m-yPx0HZTLjQFR1vZYmAZyXgrkBfbAuJKA9oh1vetNw@mail.gmail.com>
-Subject: Re: [PATCH 00/11] target/arm: Fix some Neon trapping corner cases
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Date: Mon, 6 Jul 2026 10:30:09 +0100
+X-Gm-Features: AVVi8CcnHyWnWA_521BYg5tnYcX-wz5ImmOdHDjWlLfTsHur1pAt6keYnGyTYZU
+Message-ID: <CAFEAcA8zLzVLzTq-EJQ9+OpxytMdPuFkUbOF7xjmY0JrhPhYhA@mail.gmail.com>
+Subject: Re: [PATCH] hw/i2c: pmbus: NUL-terminate strings received via block
+ write
+To: imaginos <imaginos32@gmail.com>
+Cc: qemu-devel@nongnu.org, Titus Rwantare <titusr@google.com>, 
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,60 +118,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2 Jul 2026 at 19:40, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> There are a couple of corner cases in trapping of A32 Neon insns that
-> have been kicking around as issues in the bug tracker for ages; I
-> got round to fixing them today. They're related in that they both
-> need us to distinguish Neon from VFP insns at the point of checking
-> for traps.
->
-> The first one is a bug, where we aren't reporting the correct syndrome
-> information for A32 VFP and Neon insns that are trapped to AArch32
-> EL2. These have COPROC and TA fields in the syndrome which we weren't
-> filling in correctly. (When the trap goes to AArch64 EL2, the fields
-> are RES0, which we do get right.) It's pretty obscure, though, and I
-> know of no guest software which might actually care about distinguishing
-> Neon from VFP insns in the hyp trap handler, so I don't think it worth
-> backporting to stable.
->
-> The second one is a missing optional feature: there is a CPACR.ASEDIS
-> bit that lets software force Neon insns to UNDEF, and also a hyp trap
-> bit HCPTR.TACE that lets the hypervisor force Neon insns to trap to
-> it. These are architecturally optional but in practice implemented on
-> all CPUs except for the Cortex-A8.
->
-> The third one is another missing optional feature: CPACR.D32DIS lets
-> software force VFP (not Neon) insns that use D16..D31 to trap. This
-> is rather obscure as it goes away in v8A, and of the CPUs we implement
-> it's only present in the Cortex-A7 and Cortex-A9.
->
-> -- PMM
->
-> Peter Maydell (11):
->   target/arm: Separate out Neon from VFP access checks
->   target/arm: Separate syndrome functions for A32 and A64
->   target/arm: Report correct syndrome to AArch32 EL2 for trapped
->     Neon/VFP insns
->   target/arm: Define fields for NSACR
+Ping: Titus, could you review this patch, please? It would be
+good to get a fix into the upcoming release.
 
-I'm going to take these four patches into target-arm.next, since
-the "wrong syndrome" is a bug, and the fourth patch is an
-uncontroversial little cleanup.
+I think on another thread you said also you had some patches
+to upstream to fix the "guest asks for data multiple times
+but never actually reads it" potential issue ?
 
->   target/arm: Handle NSACR.NSASEDIS in CPACR accesses
->   target/arm: Handle NSACR.NSASEDIS in HCPTR accesses
->   target/arm: Update confusing comment in cpacr_write()
->   target/arm: Add new feature ARM_FEATURE_NO_NEON_TRAPS
->   target/arm: Implement CPACR.ASEDIS and HCPTR.TASE
->   target/arm: Pull VFP "can we use D16-D31" checks out into a function
->   target/arm: Implement CPACR.D32DIS
-
-These ones had review issues I need to address, and they're
-more on the "feature" side than the "bug fix" side, so they've
-missed the boat for 11.1. I'll do a v2 at some point so we
-can get them into 11.2.
 
 thanks
 -- PMM
+
+
+On Mon, 22 Jun 2026 at 11:18, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Sun, 14 Jun 2026 at 23:22, imaginos <imaginos32@gmail.com> wrote:
+> >
+> > The PMBus string registers (e.g. MFR_MODEL on the ADM1266) are writable
+> > by the guest. pmbus_receive_block() can fill the destination field
+> > completely, leaving no NUL terminator. When the value is later read back,
+> > pmbus_send_string() calls strlen() on it, which reads past the end of the
+> > array and returns a length that trips
+> >
+> >     g_assert(len + pmdev->out_buf_len < SMBUS_DATA_MAX_LEN);
+> >
+> > aborting QEMU. This is guest-triggerable.
+> >
+> > Add pmbus_receive_string(), the write-side mirror of pmbus_send_string(),
+> > which reserves the last byte of the destination so the stored value is
+> > always NUL-terminated, and use it for the ADM1266 MFR string registers.
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3388
+> > Signed-off-by: imaginos <imaginos32@gmail.com>
+>
+> Thanks for looking at this. Notably, the bug report in #3388 makes
+> a completely incorrect claim about what its repro case is actually
+> doing. The repro case does the "write 32 bytes to trash the NUL
+> terminator, then try to read back", which is what this patch addresses.
+>
+> I'll let the pmbus maintainers review the patch from a technical
+> point of view.
+>
+> -- PMM
 
