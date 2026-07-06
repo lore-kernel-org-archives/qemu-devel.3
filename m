@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A51FEC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 22:45:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A7DEC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 22:45:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgs3f-0001v7-7q; Mon, 06 Jul 2026 18:44:59 -0400
+	id 1wgs3v-0002IE-Ne; Mon, 06 Jul 2026 18:45:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wgs3d-0001uB-Fq; Mon, 06 Jul 2026 18:44:57 -0400
+ id 1wgs3u-0002GB-RN; Mon, 06 Jul 2026 18:45:14 -0400
 Received: from fout-b2-smtp.messagingengine.com ([202.12.124.145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wgs3b-0000yW-A5; Mon, 06 Jul 2026 18:44:57 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfout.stl.internal (Postfix) with ESMTP id 0BF061D0019A;
- Mon,  6 Jul 2026 18:44:54 -0400 (EDT)
+ id 1wgs3s-0001IR-BT; Mon, 06 Jul 2026 18:45:14 -0400
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfout.stl.internal (Postfix) with ESMTP id 037C31D001A0;
+ Mon,  6 Jul 2026 18:45:10 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Mon, 06 Jul 2026 18:44:54 -0400
+ by phl-compute-01.internal (MEProxy); Mon, 06 Jul 2026 18:45:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1783377893; x=
- 1783464293; bh=5VWvCrV1Tc3tNKrgFFIAsHgM/VO34Wk/bRBMZdeiKMM=; b=B
- q+uwpTEN4nB1K7E5+kBLCNyxYQScxECqHdmo5LBGfmudcboNp2Myq5RTTepklpJg
- Fv4g3UnIjOTZrdZi58XY2Z6g2L9FgqSi0n1LcmnSDSWXwQnjrZDheuB9IjsI7Ywz
- 5kKc2gJp810TKlXqm5h4yuLciAMh91hyQN+0DsDvNE/KWb0vskb6Fj4g28I2tHQU
- SiVn9XzHccqITslSuUMb/kmevuGK9P8MAr1V2JH7MhqE9fLNPZnA5+LxAnb+Iq/T
- CGgaQEtkG/7649f2a6HbWSjPIlscdUgQCuhBwzDMrznIlme3en30lCF7hmkJXUI6
- q0fx/5MdD3bJn6NxuFHAA==
+ :reply-to:subject:subject:to:to; s=fm1; t=1783377910; x=
+ 1783464310; bh=dkwpCF19oN1zTVemqGjoa4hHaHi7pYuc15wMZDftZss=; b=n
+ 8ZUaubnnfJEpGxHejFNtgjzzoBT21zd/yPFBKDdlMScFQU9e3yhnBFqmvoL0kdgc
+ 6E+dLOA29CguSZxnOX7W8P04KiLvgWYtwFzpR62KeLV+JtDob+1WeupPcz61z+He
+ hCyic2iR5NiEi1howqUtgVx9I/46aGOgX5X3PgMs0fQYg1xiGJymlZaNbqTd9wFh
+ 8QT2UOXJec8HclBo/j26k5q0Q5WfUa3NsGK8lP96dW4uBbiXzaO7i+lTpf4hTXT+
+ VaJ+67p3ZOai2Q/OHeR3e+4EIJ+ProCTGdwaHAJ9kf0xwpmF7B+S2hQ5J7rHr+ka
+ 8U0GwOHykzLiJMxRIS3Kg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm2; t=1783377893; x=1783464293; bh=5
- VWvCrV1Tc3tNKrgFFIAsHgM/VO34Wk/bRBMZdeiKMM=; b=bgRc2dwTWoxK9B66J
- vanr2mKLPoo/zr0AUNtopMsIJcRLkRFSj3IgVXfLYYvU2twInghzLZDDLyiZPEGm
- WhVUp7wWe0NhlV0pL8vl7rncxZN+ZxMBBkPRFSWSAVkF4G7c/4lVTgMuTnFZc8Hf
- Gev2I2Y1256rD+M3daob0ijZJ8UyK1ok3Wzbw1QOGBcn5o7/p9Uh9SqmcrRE9uuR
- GSw2y4tN9eLL1uF8CrY19IO+R2anpT0psRu2qIf43+O5PDjHnqC1hF4I6QMLFsN4
- wmabCJZxbWlOXIuWMFQplYeu0tyfH8wvAMBEP8FCdUWon07BX0MEx3ybC/YFyXU+
- s+XuA==
-X-ME-Sender: <xms:5S9Mang5cbEGvrqwfv5lVjS2DJRuouEsu_ZeD7MmnJekSxHLgSMqPg>
- <xme:5S9Mav4aXEiPVFc3OZ26IzY6shOi1LVJDco-YRFlia4jQWIsUoAZm0Zp34KNGNwwG
- dxDhSVUfjXmukCqeCMVTwvfTM_q0F4hf4jZ0_tDBPoGyOSZuo-LmA>
-X-ME-Received: <xmr:5S9MakHNaoVndpQDd6qhP1z-2xWTgGjiffcRQUaRm0i0sLTFEzuokALmFd9ti_kH2p6BIcbTsFgchMyR1HS16f_tBcmn5RFN41_qXuwQVgdMsmxfi3-gjTp2Dg>
-X-ME-Proxy-Cause: dmFkZTECAh4m0OxgoGkgiRC+isJUP1GDqnIO5UvUOWif0bQdjPXB8qf1GZ0hHupTDw4R0Y
- g4mitjEJUEwEak/fEVpJ3XdKJwV0M29eYINll4VGi0GLuYpFdQvU7g3fLsndCqVAoXlSA2
- fJ9DNBS8taF/f1VxYX64HMHD2uh/IXyGFce7JruI/qWIL7fAJ/T2UfbBi2iBDDO/ZrArI0
- UH2dyvWfd6nJlU49f2ukXEjjFgACuhiWXgWCQrE4kDYzmMHRkIN+qEu9HbnfildN69oXiZ
- PxVlZ9B9zMrq0W1FRie4V10xhzbLCTAL6A1M8qp7WD5EzbKNNgklY03slvRtLYDyRub/On
- 6FsL4XPn/mp5oU0rqJnPsAOCCLfh7Ad1ldvIEC/54tMUOgqZ6O/cFr4ndNXWcTYPgsjH0B
- voSG5cVhUwwF1I5ivlKHctYa5BgIvsX/UWos2I+ErVyf/+JIsOkZvxxsp36v27ornmwJ3l
- PrOdoRmqghBonzFpuo/EK+bOc52Joao8700To8vpPOtfTdx0AbwfdH/VexqTFGzlTY+3Ca
- ZgYNlrY5LbnYczL/2ZgjlLFZR+YKsRQ/Pw+NWcO55RxbjSpjTxlBn6kjLrrGMPaad12+RX
- AoKg7Jk/cxop07Vqy9KKPAbbXVIyFD2xJ3jN0eA6V0SJpnEG7kVoKe+bwxeg
-X-ME-Proxy: <xmx:5S9MapI1_xU2FrYf5_i-8aaSKJV1iVquAWGYZKzYUOJ5HHf1h6gyzA>
- <xmx:5S9Mapg0tG4Issfwk-vj5C_GbkrKe7FbAm_sgWNUqSlWFJ-0sCPN9g>
- <xmx:5S9MavkxyYhi5Uh-M2iEf-XTIbJPvvVCbO8JCLUGhwKe5K9IM4mn_A>
- <xmx:5S9MaoWTpkZoegW-TATj9HX26-PB7FryBR5E2JkSlwr04Kbi0dEtpg>
- <xmx:5S9MahqC8rb57J7SXIUkb7FLBp0kBYLmKN-zrPaB4zHjv16P06Kxb4Xp>
+ :x-me-sender:x-sasl-enc; s=fm2; t=1783377910; x=1783464310; bh=d
+ kwpCF19oN1zTVemqGjoa4hHaHi7pYuc15wMZDftZss=; b=EKQhzVFxeIwfA+miJ
+ K8w6ObT12EZ8eerFOOuzxpsspcqnjtuaIzsvHmhCEVjtSu8cml3rdvqk15cm+cUV
+ hQ5RJjkg2IQ5o/nb2L7ec1WC4HbHWzY+UdESoyV2jTWt6zyJ5b6Hx8u5e/uBi4Tp
+ ByWzWV7ggmu2Fz/m4SZV9xLOXnpxKzX9YcLA58XiQYZdZfEP2o1fHqHqN2LPLhRq
+ QlkMTKGjYp1WbjkvNATmsukzy6wsQKSqBHdihfhVfW7tQjuL3KqjG2KlK6DMFo7M
+ EEL0HzVzS6/d7Cwx89T3k7KZnZHnDoSTeMybPC9SHuWAFl/kEw+cjR80/vkNeLkz
+ dAj6w==
+X-ME-Sender: <xms:9i9MaqqfBtf5GTyUSiEwOJYFVOZgO33zILHyuiM2t9di7TOvfXs7IQ>
+ <xme:9i9MakiK4RTqiAXO4QZGIqxGACjdhO9NegsJ-IUO2SMM1ssrvHpP9VN9CIv6A7XXz
+ _06hVD4FkTZYb3wI54yXIlz2_ez4lzKC5cw3227EMNfUzEKT8BzOOA>
+X-ME-Received: <xmr:9i9MasOrb0BHRp34S5vqDHw5PU0ZkIHw_f_zkNz2R6jnvThdxw_HPLu162LsB5proWesDqnf5U4tf8KMvivbo-ouf2r8Rr0SUa9TzIZbIjnBB6ICs2-C2ldVAw>
+X-ME-Proxy-Cause: dmFkZTET5nCFT/MuVvE4xAefAzoQyvBHR+RkHY9ixFObea2t0bJM1174F9XqtsnVozRuyR
+ EWxsKAqJK84tStfgTS5bGvHVkH/oh3XdJEnmZ56oHn7QWgM37UKpg+9zZ153tudqGfKeg6
+ wN1YwB/QsoP9U8TXcYjJRg3HcQCsv5s/2GBHLYvMj9kvs0pP96jQj1braT3PWbJBSkcJqo
+ nmTEwFzT16ZvkfnECKe+AKNhsekQuE0DS1+zLQkhBWmmM4oTRiAdjt37S4aq6K0PqyREkf
+ ojAVDd+PI7ULxjBfmMqPAGVcBfF2fj0mBU+h/YCRWwQbOcAayGdy0fOLhMAJ8NJN1ZTeTW
+ fJe7GnTlNWaaHYghyAKKITk0613wl8sPHHIVK/hvXbjWn6aH/f4/oU7CCscIYPBqT6658K
+ w3n4ShvQoj8Z7U1uQ4dqAso+Dl0SyLR069cNWI4UUkFmM1+eq1jyQWykbsl9iKPcWatiI9
+ iShMnAhW5CB+zXlXXqEFLFAL1PR96ynu+DFVcajnp+g39MWYDzbQ6F/4OkDH7EFTqVIMW1
+ /zDBfDUwSx0AMWS9VuSWCeSAk5kx0PfcnpeyWj+MwJK5A8U7JTtrpY9RnAu6JrNmwwOxYr
+ JVG1nYND7Nc1wJllWvvke9jyMRXGXPLeANSXuWZ83Z8UXttkb4YUuTyLfs0w
+X-ME-Proxy: <xmx:9i9Mauy-0vLMHpXlSpTxSiXRL5Ed6Rg3q-quPm4qV5kQLRo5TCEXKw>
+ <xmx:9i9MauqLJC0nNqJHkM-S8IfORQGHOnDn91VvzGMe4O4VzhIa6TjaGg>
+ <xmx:9i9MauMLqijrKjlUkNiY4IbLGj-6o-XavTfFCGrsLKle1Gn8G4Q6AA>
+ <xmx:9i9MaieY4yxXp0UR2Or0nf-COdvEGLvQ_jZzrchJhs0m5a5JRNnNQw>
+ <xmx:9i9MaigfuPuB_71Gj6hMDRjKmdLjaM8-k61kdtwhia6a_uUVr2ffdW_3>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jul 2026 18:44:51 -0400 (EDT)
+ 6 Jul 2026 18:45:09 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
- Klaus Jensen <k.jensen@samsung.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, Fam Zheng <fam@euphon.net>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Klaus Jensen <k.jensen@samsung.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-block@nongnu.org
-Subject: [PULL 04/11] hw/nvme: add migration blockers for non-supported cases
-Date: Tue,  7 Jul 2026 00:44:16 +0200
-Message-ID: <20260706224426.14156-5-its@irrelevant.dk>
+Subject: [PULL 10/11] tests/qtest/nvme-test: add migration test with full CQ
+Date: Tue,  7 Jul 2026 00:44:22 +0200
+Message-ID: <20260706224426.14156-11-its@irrelevant.dk>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260706224426.14156-1-its@irrelevant.dk>
 References: <20260706224426.14156-1-its@irrelevant.dk>
@@ -112,327 +112,470 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Let's block migration for cases we don't support:
-- SR-IOV
-- CMB
-- PMR
-- SPDM
+As suggested by Stefan [1], let's add a migration test to cover
+rare scenario when CQ is full of non-processed CQEs and migration
+happens.
 
-No functional changes here, because NVMe migration is
-not supported at all as of this commit.
+To run this test:
+$ meson test -C build 'qtest-x86_64/qos-test'
 
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Link: https://lore.kernel.org/qemu-devel/20260408183529.GB319710@fedora/ [1]
+Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
 Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Acked-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/nvme/ctrl.c       | 212 +++++++++++++++++++++++++++++++++++++++++++
- hw/nvme/nvme.h       |   3 +
- include/block/nvme.h |  12 +++
- 3 files changed, 227 insertions(+)
+ tests/qtest/nvme-test.c | 419 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 419 insertions(+)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 7845e59e4b08..d2096eb49d97 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -209,6 +209,7 @@
- #include "hw/pci/msix.h"
- #include "hw/pci/pcie_sriov.h"
- #include "system/spdm-socket.h"
-+#include "migration/blocker.h"
- #include "migration/vmstate.h"
+diff --git a/tests/qtest/nvme-test.c b/tests/qtest/nvme-test.c
+index 4aec1651e6e2..f9395cc252b2 100644
+--- a/tests/qtest/nvme-test.c
++++ b/tests/qtest/nvme-test.c
+@@ -8,9 +8,12 @@
+  */
  
- #include "nvme.h"
-@@ -252,6 +253,7 @@ static const bool nvme_feature_support[NVME_FID_MAX] = {
-     [NVME_COMMAND_SET_PROFILE]      = true,
-     [NVME_FDP_MODE]                 = true,
-     [NVME_FDP_EVENTS]               = true,
-+    /* if you add something here, please update nvme_set_migration_blockers() */
- };
- 
- static const uint32_t nvme_feature_cap[NVME_FID_MAX] = {
-@@ -4616,6 +4618,7 @@ static uint16_t nvme_io_mgmt_send(NvmeCtrl *n, NvmeRequest *req)
-         return 0;
-     case NVME_IOMS_MO_RUH_UPDATE:
-         return nvme_io_mgmt_send_ruh_update(n, req);
-+    /* if you add something here, please update nvme_set_migration_blockers() */
-     default:
-         return NVME_INVALID_FIELD | NVME_DNR;
-     };
-@@ -7545,6 +7548,10 @@ static uint16_t nvme_security_receive(NvmeCtrl *n, NvmeRequest *req)
- 
- static uint16_t nvme_directive_send(NvmeCtrl *n, NvmeRequest *req)
- {
-+    /*
-+     * When adding a new dtype handling here,
-+     * please also update nvme_set_migration_blockers().
-+     */
-     return NVME_INVALID_FIELD | NVME_DNR;
+ #include "qemu/osdep.h"
++#include <glib/gstdio.h>
++#include "qemu/bswap.h"
+ #include "qemu/module.h"
+ #include "qemu/units.h"
+ #include "libqtest.h"
++#include "libqtest-single.h"
+ #include "libqos/qgraph.h"
+ #include "libqos/pci.h"
+ #include "block/nvme.h"
+@@ -142,6 +145,420 @@ static void nvmetest_pmr_reg_test(void *obj, void *data, QGuestAllocator *alloc)
+     qpci_iounmap(pdev, pmr_bar);
  }
  
-@@ -9256,6 +9263,205 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
-     }
- }
- 
-+#define BLOCKER_FEATURES_MAX_LEN 256
++typedef struct nvme_ctrl nvme_ctrl;
 +
-+static inline void nvme_add_blocker_feature(char *blocker_features,
-+                                            const char *feature)
++typedef struct nvme_queue {
++    nvme_ctrl *ctrl;
++    uint64_t doorbell;
++    uint32_t size;
++} nvme_queue;
++
++typedef struct nvme_cq {
++    nvme_queue common;
++    uint64_t phys_cqe; /* NvmeCqe* */
++    uint16_t head;
++    uint8_t phase;
++} nvme_cq;
++
++typedef struct nvme_sq {
++    nvme_queue common;
++    uint64_t phys_sqe; /* NvmeCmd* */
++    nvme_cq *cq;
++    uint16_t head;
++    uint16_t tail;
++} nvme_sq;
++
++struct nvme_ctrl {
++    QGuestAllocator *alloc;
++    QPCIDevice *pdev;
++    QPCIBar bar;
++
++    uint32_t db_stride;
++
++    nvme_sq admin_sq;
++    nvme_cq admin_cq;
++};
++
++#define PHYS_ADDR_OF_FIELD(T, base_phys_addr, field) \
++    ((uint64_t)&((T *)(base_phys_addr))->field)
++
++#define PHYS_ADDR_OF(T, base_phys_addr, accessor) \
++    ((uint64_t)&((T *)(base_phys_addr))accessor)
++
++static void nvme_init_queue_common(nvme_ctrl *ctrl, nvme_queue *q,
++                                   uint16_t db_idx, uint32_t size)
 +{
-+    if (strlen(blocker_features) > 0) {
-+        g_strlcat(blocker_features, ", ", BLOCKER_FEATURES_MAX_LEN);
-+    }
-+    g_strlcat(blocker_features, feature, BLOCKER_FEATURES_MAX_LEN);
++    q->ctrl = ctrl;
++    q->doorbell = (sizeof(NvmeBar) + db_idx * ctrl->db_stride);
++    g_test_message(" q %p db_idx %u doorbell 0x%" PRIx64, q, db_idx, q->doorbell);
++    q->size = size;
 +}
 +
-+static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
-+                                        Error **errp)
++static void nvme_init_sq(nvme_ctrl *ctrl, nvme_sq *sq, uint16_t db_idx,
++                         uint32_t size, nvme_cq *cq)
 +{
-+    uint64_t unsupported_cap, cap = ldq_le_p(&n->bar.cap);
-+    char blocker_features[BLOCKER_FEATURES_MAX_LEN] = "";
-+    bool adm_cmd_security_checked = false;
-+    bool cmd_io_mgmt_checked = false;
-+    bool cmd_zone_checked = false;
++    nvme_init_queue_common(ctrl, &sq->common, db_idx, size);
 +
-+    /*
-+     * Idea of this function is simple, we iterate over all Command Sets and
-+     * for each supported command we provide a special handling logic to
-+     * determine if we should block migration or not.
-+     *
-+     * For instance, we have NVME_ADM_CMD_NS_ATTACHMENT and it is always
-+     * available to the guest, but if there is only 1 namespace, then it is
-+     * safe to allow migration, but if there are more, then we need to block
-+     * migration because we don't handle this in migration code yet.
-+     */
-+    for (int opcode = 0; opcode < ARRAY_SIZE(n->cse.acs); opcode++) {
-+        /* Is command supported? */
-+        if (!n->cse.acs[opcode]) {
-+            continue;
-+        }
++    sq->phys_sqe = guest_alloc(ctrl->alloc, sizeof(NvmeCmd) * size);
++    g_assert(sq->phys_sqe);
 +
-+        switch (opcode) {
-+        case NVME_ADM_CMD_DELETE_SQ:
-+        case NVME_ADM_CMD_CREATE_SQ:
-+        case NVME_ADM_CMD_GET_LOG_PAGE:
-+        case NVME_ADM_CMD_DELETE_CQ:
-+        case NVME_ADM_CMD_CREATE_CQ:
-+        case NVME_ADM_CMD_IDENTIFY:
-+        case NVME_ADM_CMD_ABORT:
-+        case NVME_ADM_CMD_SET_FEATURES:
-+        case NVME_ADM_CMD_GET_FEATURES:
-+        case NVME_ADM_CMD_ASYNC_EV_REQ:
-+        case NVME_ADM_CMD_DBBUF_CONFIG:
-+        case NVME_ADM_CMD_FORMAT_NVM:
-+        case NVME_ADM_CMD_DIRECTIVE_SEND:
-+        case NVME_ADM_CMD_DIRECTIVE_RECV:
-+            break;
-+        case NVME_ADM_CMD_NS_ATTACHMENT: {
-+            int namespaces_num = 0;
-+            for (int i = 1; i <= NVME_MAX_NAMESPACES; i++) {
-+                NvmeNamespace *ns = nvme_subsys_ns(n->subsys, i);
-+                if (!ns) {
-+                    continue;
-+                }
-+
-+                namespaces_num++;
-+            }
-+
-+            if (namespaces_num > 1) {
-+                nvme_add_blocker_feature(blocker_features,
-+                                         "Namespace Attachment");
-+            }
-+
-+            break;
-+        }
-+        case NVME_ADM_CMD_VIRT_MNGMT:
-+            if (n->params.sriov_max_vfs) {
-+                nvme_add_blocker_feature(blocker_features, "SR-IOV");
-+            }
-+
-+            break;
-+        case NVME_ADM_CMD_SECURITY_SEND:
-+        case NVME_ADM_CMD_SECURITY_RECV:
-+            if (adm_cmd_security_checked) {
-+                break;
-+            }
-+
-+            if (pci_dev->spdm_port) {
-+                nvme_add_blocker_feature(blocker_features, "SPDM");
-+            }
-+
-+            adm_cmd_security_checked = true;
-+
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+    }
-+
-+    for (int opcode = 0; opcode < ARRAY_SIZE(n->cse.iocs.nvm); opcode++) {
-+        if (!n->cse.iocs.nvm[opcode]) {
-+            continue;
-+        }
-+
-+        switch (opcode) {
-+        case NVME_CMD_FLUSH:
-+        case NVME_CMD_WRITE:
-+        case NVME_CMD_READ:
-+        case NVME_CMD_COMPARE:
-+        case NVME_CMD_WRITE_ZEROES:
-+        case NVME_CMD_DSM:
-+        case NVME_CMD_VERIFY:
-+        case NVME_CMD_COPY:
-+            break;
-+        case NVME_CMD_IO_MGMT_RECV:
-+        case NVME_CMD_IO_MGMT_SEND:
-+            if (cmd_io_mgmt_checked) {
-+                break;
-+            }
-+
-+            /* check for NVME_IOMS_MO_RUH_UPDATE */
-+            if (n->subsys->params.fdp.enabled) {
-+                nvme_add_blocker_feature(blocker_features, "FDP");
-+            }
-+
-+            cmd_io_mgmt_checked = true;
-+
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+    }
-+
-+    for (int opcode = 0; opcode < ARRAY_SIZE(n->cse.iocs.zoned); opcode++) {
-+        /*
-+         * If command isn't supported or we have the same command
-+         * in n->cse.iocs.nvm, then we can skip it here.
-+         */
-+        if (!n->cse.iocs.zoned[opcode] || n->cse.iocs.nvm[opcode]) {
-+            continue;
-+        }
-+
-+        switch (opcode) {
-+        case NVME_CMD_ZONE_APPEND:
-+        case NVME_CMD_ZONE_MGMT_SEND:
-+        case NVME_CMD_ZONE_MGMT_RECV:
-+            if (cmd_zone_checked) {
-+                break;
-+            }
-+
-+            for (int i = 1; i <= NVME_MAX_NAMESPACES; i++) {
-+                NvmeNamespace *ns = nvme_subsys_ns(n->subsys, i);
-+                if (!ns) {
-+                    continue;
-+                }
-+
-+                if (ns->params.zoned) {
-+                    nvme_add_blocker_feature(blocker_features,
-+                                             "Zoned Namespace");
-+                    break;
-+                }
-+            }
-+
-+            cmd_zone_checked = true;
-+
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+    }
-+
-+    /*
-+     * Try our best to explicitly detect all not supported caps,
-+     * to let users know what features cause migration to be blocked,
-+     * but in case we miss handling here, everything else will be
-+     * covered by unsupported_cap check.
-+     */
-+    if (NVME_CAP_CMBS(cap)) {
-+        nvme_add_blocker_feature(blocker_features, "CMB");
-+        cap &= ~((uint64_t)CAP_CMBS_MASK << CAP_CMBS_SHIFT);
-+    }
-+
-+    if (NVME_CAP_PMRS(cap)) {
-+        nvme_add_blocker_feature(blocker_features, "PMR");
-+        cap &= ~((uint64_t)CAP_PMRS_MASK << CAP_PMRS_SHIFT);
-+    }
-+
-+    unsupported_cap = cap & ~NVME_MIGRATION_SUPPORTED_CAP_BITS;
-+    if (unsupported_cap) {
-+        nvme_add_blocker_feature(blocker_features, "unknown capability");
-+    }
-+
-+    assert(n->migration_blocker == NULL);
-+    if (strlen(blocker_features) > 0) {
-+        error_setg(&n->migration_blocker,
-+                   "Migration is not supported for %s", blocker_features);
-+        if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
-+            return false;
-+        }
-+    }
-+
-+    return true;
++    g_test_message("sq %p db_idx %u sqe 0x%" PRIx64, sq, db_idx, sq->phys_sqe);
++    sq->cq = cq;
++    sq->head = 0;
++    sq->tail = 0;
 +}
 +
- static int nvme_init_subsys(NvmeCtrl *n, Error **errp)
- {
-     int cntlid;
-@@ -9361,6 +9567,10 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
- 
-         n->subsys->namespaces[ns->params.nsid] = ns;
-     }
++static void nvme_init_cq(nvme_ctrl *ctrl, nvme_cq *cq, uint16_t db_idx,
++                         uint32_t size)
++{
++    nvme_init_queue_common(ctrl, &cq->common, db_idx, size);
 +
-+    if (!nvme_set_migration_blockers(n, pci_dev, errp)) {
++    cq->phys_cqe = guest_alloc(ctrl->alloc, sizeof(NvmeCqe) * size);
++    g_assert(cq->phys_cqe);
++
++    g_test_message("cq %p db_idx %u cqe 0x%" PRIx64, cq, db_idx, cq->phys_cqe);
++    cq->head = 0;
++    cq->phase = 1;
++}
++
++static int nvme_cqe_pending(nvme_cq *cq)
++{
++    uint16_t status = qtest_readw(
++        cq->common.ctrl->pdev->bus->qts,
++        PHYS_ADDR_OF(NvmeCqe, cq->phys_cqe, [cq->head].status));
++    return (status & 1) == cq->phase;
++}
++
++static int nvme_is_cqe_success(NvmeCqe *cqe)
++{
++    return (le16_to_cpu(cqe->status) >> 1) == NVME_SUCCESS;
++}
++
++static NvmeCqe nvme_handle_cqe(nvme_sq *sq)
++{
++    nvme_cq *cq = sq->cq;
++    uint64_t phys_cqe = PHYS_ADDR_OF(
++                            NvmeCqe, cq->phys_cqe, [cq->head]); /* NvmeCqe* */
++    NvmeCqe cqe;
++    uint16_t cq_next_head;
++
++    g_assert(nvme_cqe_pending(cq));
++
++    qtest_memread(sq->common.ctrl->pdev->bus->qts, phys_cqe, &cqe, sizeof(cqe));
++
++    cq_next_head = (cq->head + 1) % cq->common.size;
++    g_test_message("cq %p head %u -> %u", cq, cq->head, cq_next_head);
++    if (cq_next_head < cq->head) {
++        cq->phase ^= 1;
++    }
++    cq->head = cq_next_head;
++
++    if (cqe.sq_head != sq->head) {
++        sq->head = cqe.sq_head;
++        g_test_message("sq %p head = %u", sq, sq->head);
++    }
++
++    qpci_io_writel(cq->common.ctrl->pdev, cq->common.ctrl->bar,
++                   cq->common.doorbell, cq->head);
++
++    return cqe;
++}
++
++static NvmeCqe nvme_wait(nvme_sq *sq)
++{
++    int i;
++    bool ready = false;
++
++    for (i = 0; i < 10; i++) {
++        if (nvme_cqe_pending(sq->cq)) {
++            ready = true;
++            break;
++        }
++
++        g_usleep(1000);
++    }
++
++    g_assert(ready);
++
++    return nvme_handle_cqe(sq);
++}
++
++static uint64_t nvme_get_next_sqe(nvme_sq *sq, uint8_t opcode,
++                                  uint16_t cid, uint64_t prp1)
++{
++    uint64_t phys_sqe = PHYS_ADDR_OF(NvmeCmd, sq->phys_sqe, [sq->tail]);
++
++    if (((sq->tail + 1) % sq->common.size) == sq->head) {
++        /* no space in SQ */
++        g_test_message("%s head %d tail %d", __func__, sq->head, sq->tail);
++        g_assert_not_reached();
++        return 0;
++    }
++
++    qtest_memset(sq->common.ctrl->pdev->bus->qts,
++                 phys_sqe, 0, sizeof(NvmeCmd));
++
++    #define GUEST_MEM_WRITE(fn, phys_addr, val) \
++        fn(sq->common.ctrl->pdev->bus->qts, phys_addr, (val))
++
++    GUEST_MEM_WRITE(qtest_writeb,
++                    PHYS_ADDR_OF_FIELD(NvmeCmd, phys_sqe, opcode), opcode);
++    GUEST_MEM_WRITE(qtest_writew,
++                    PHYS_ADDR_OF_FIELD(NvmeCmd, phys_sqe, cid), cid);
++    GUEST_MEM_WRITE(qtest_writeq,
++                    PHYS_ADDR_OF_FIELD(NvmeCmd, phys_sqe, dptr.prp1), prp1);
++
++    #undef GUEST_MEM_WRITE
++
++    g_test_message("sq %p next_sqe %u sqe 0x%" PRIx64, sq, sq->tail, phys_sqe);
++    return phys_sqe;
++}
++
++static void nvme_commit_sqe(nvme_sq *sq)
++{
++    g_test_message("sq %p commit sqe tail %u", sq, sq->tail);
++    sq->tail = (sq->tail + 1) % sq->common.size;
++    qpci_io_writel(sq->common.ctrl->pdev, sq->common.ctrl->bar,
++                   sq->common.doorbell, sq->tail);
++}
++
++static uint64_t nvme_admin_identify_ctrl(nvme_ctrl *ctrl,
++                                         uint16_t cid, bool no_wait)
++{
++    uint64_t phys_cmd_identify; /* NvmeCmd* */
++    uint64_t phys_identify; /* NvmeIdCtrl* */
++    NvmeCqe cqe;
++
++    g_test_message("sending req cid %u no_wait %d", cid, no_wait);
++
++    phys_identify = guest_alloc(ctrl->alloc, sizeof(NvmeIdCtrl));
++    g_assert(phys_identify);
++
++    phys_cmd_identify = nvme_get_next_sqe(&ctrl->admin_sq,
++                                          NVME_ADM_CMD_IDENTIFY, cid,
++                                          phys_identify);
++    g_assert(phys_cmd_identify);
++
++    #define GUEST_MEM_WRITE(fn, phys_addr, val) \
++        fn(ctrl->pdev->bus->qts, phys_addr, (val))
++
++    GUEST_MEM_WRITE(qtest_writel,
++                    PHYS_ADDR_OF_FIELD(NvmeCmd, phys_cmd_identify, nsid), 0);
++    GUEST_MEM_WRITE(qtest_writel,
++                    PHYS_ADDR_OF_FIELD(NvmeIdentify, phys_cmd_identify, cns),
++                    NVME_ID_CNS_CTRL);
++
++    #undef GUEST_MEM_WRITE
++
++    nvme_commit_sqe(&ctrl->admin_sq);
++
++    if (no_wait) {
++        return phys_identify;
++    }
++
++    cqe = nvme_wait(&ctrl->admin_sq);
++    g_assert(nvme_is_cqe_success(&cqe));
++    g_assert(le16_to_cpu(cqe.cid) == cid);
++
++    return phys_identify;
++}
++
++static void nvme_wait_ready(nvme_ctrl *ctrl, int val)
++{
++    int i;
++
++    for (i = 0; i < 10; i++) {
++        uint32_t csts = qpci_io_readl(ctrl->pdev, ctrl->bar, NVME_REG_CSTS);
++        g_test_message("%s: csts %x", __func__, csts);
++
++        if (NVME_CSTS_RDY(csts) == val) {
++            return;
++        }
++
++        g_usleep(1000);
++    }
++
++    g_assert_not_reached();
++}
++
++static void test_migrate_setup_nvme_ctrl(nvme_ctrl *ctrl)
++{
++    uint64_t cap;
++
++    /* disable controller */
++    qpci_io_writel(ctrl->pdev, ctrl->bar, NVME_REG_CC, 0);
++    nvme_wait_ready(ctrl, 0);
++
++    cap = qpci_io_readq(ctrl->pdev, ctrl->bar, NVME_REG_CAP);
++    ctrl->db_stride = 4 << NVME_CAP_DSTRD(cap);
++
++    nvme_init_cq(ctrl, &ctrl->admin_cq, 1, 2 /* CQEs num */);
++    nvme_init_sq(ctrl, &ctrl->admin_sq, 0, 4 /* SQEs num */, &ctrl->admin_cq);
++
++    qpci_io_writel(ctrl->pdev, ctrl->bar, NVME_REG_AQA,
++        ((ctrl->admin_cq.common.size - 1) << AQA_ACQS_SHIFT) |
++        ((ctrl->admin_sq.common.size - 1) << AQA_ASQS_SHIFT)
++    );
++
++    qpci_io_writeq(ctrl->pdev, ctrl->bar,
++                   NVME_REG_ASQ, (uint64_t)ctrl->admin_sq.phys_sqe);
++    qpci_io_writeq(ctrl->pdev, ctrl->bar,
++                   NVME_REG_ACQ, (uint64_t)ctrl->admin_cq.phys_cqe);
++
++    /* enable controller */
++    {
++        uint32_t cc = 0;
++        NVME_SET_CC_EN(cc, 1);
++        qpci_io_writel(ctrl->pdev, ctrl->bar, NVME_REG_CC, cc);
++    }
++
++    nvme_wait_ready(ctrl, 1);
++}
++
++typedef struct test_migrate_req {
++    uint16_t cid;
++    bool handle_cqe;
++    uint64_t phys_identify; /* NvmeIdCtrl* */
++} test_migrate_req;
++
++static void test_migrate_send_nvme_reqs(nvme_ctrl *ctrl, test_migrate_req *reqs,
++                                        int num)
++{
++    int i;
++
++    for (i = 0; i < num; i++) {
++        reqs[i].phys_identify = nvme_admin_identify_ctrl(ctrl, reqs[i].cid,
++                                                         !reqs[i].handle_cqe);
++        g_assert(reqs[i].phys_identify);
++
++        if (reqs[i].handle_cqe) {
++            guest_free(ctrl->alloc, reqs[i].phys_identify);
++        }
++    }
++}
++
++static void test_migrate_check_nvme(nvme_ctrl *ctrl,
++                                    test_migrate_req *reqs, int num)
++{
++    int i;
++
++    for (i = 0; i < num; i++) {
++        NvmeCqe cqe;
++
++        if (reqs[i].handle_cqe) {
++            continue;
++        }
++
++        cqe = nvme_wait(&ctrl->admin_sq);
++        g_assert(nvme_is_cqe_success(&cqe));
++
++        g_assert_cmpint(le16_to_cpu(cqe.cid), ==, reqs[i].cid);
++
++        #define GUEST_MEM_READB(phys_addr) \
++                    qtest_readb(ctrl->pdev->bus->qts, (phys_addr))
++
++        g_assert_cmpint(GUEST_MEM_READB(
++            PHYS_ADDR_OF_FIELD(NvmeIdCtrl, reqs[i].phys_identify, ieee[0])),
++            ==, 0x0);
++        g_assert_cmpint(GUEST_MEM_READB(
++            PHYS_ADDR_OF_FIELD(NvmeIdCtrl, reqs[i].phys_identify, ieee[1])),
++            ==, 0x54);
++        g_assert_cmpint(GUEST_MEM_READB(
++            PHYS_ADDR_OF_FIELD(NvmeIdCtrl, reqs[i].phys_identify, ieee[2])),
++            ==, 0x52);
++
++        #undef GUEST_MEM_READB
++
++        guest_free(ctrl->alloc, reqs[i].phys_identify);
++    }
++}
++
++static void test_migrate(void *obj, void *data, QGuestAllocator *alloc)
++{
++    g_autofree gchar *tmpfs = NULL;
++    GError *err = NULL;
++    g_autofree gchar *mig_path = NULL;
++    g_autofree gchar *uri = NULL;
++    GString *dest_cmdline;
++    QTestState *to;
++    QDict *rsp;
++    QNvme *nvme = obj;
++    QPCIDevice *pdev = &nvme->dev;
++    g_autofree nvme_ctrl *ctrl = NULL;
++    test_migrate_req test_reqs[] = {
++        { 123, true },
++        { 456, false },
++        { 300, false },
++        { 333, false }
++    };
++
++    if (qpci_check_buggy_msi(pdev)) {
 +        return;
 +    }
++
++    /* create temporary dir and prepare unix socket path for migration */
++    tmpfs = g_dir_make_tmp("nvme-test-XXXXXX", &err);
++    if (!tmpfs) {
++        g_test_message("Can't create temporary directory in %s: %s",
++                       g_get_tmp_dir(), err->message);
++        g_error_free(err);
++    }
++    g_assert(tmpfs);
++
++    mig_path = g_strdup_printf("%s/socket.mig", tmpfs);
++    uri = g_strdup_printf("unix:%s", mig_path);
++
++    /* enable NVMe PCI device */
++    qpci_device_enable(pdev);
++
++    ctrl = g_malloc0(sizeof(*ctrl));
++    ctrl->alloc = alloc;
++    ctrl->pdev = pdev;
++    ctrl->bar = qpci_iomap(ctrl->pdev, 0, NULL);
++    g_assert(pdev->bus->qts == global_qtest);
++
++    test_migrate_setup_nvme_ctrl(ctrl);
++    test_migrate_send_nvme_reqs(ctrl, test_reqs, ARRAY_SIZE(test_reqs));
++
++    qpci_iounmap(ctrl->pdev, ctrl->bar);
++
++    dest_cmdline = g_string_new(qos_get_current_command_line());
++    g_string_append_printf(dest_cmdline, " -incoming %s", uri);
++
++    /* Create destination VM */
++    to = qtest_init(dest_cmdline->str);
++
++    /* Get access to PCI device from destination VM */
++    nvme = qos_allocate_objects(to, &ctrl->alloc);
++    pdev = &nvme->dev;
++    ctrl->pdev = pdev;
++    ctrl->bar = qpci_iomap(ctrl->pdev, 0, NULL);
++    g_assert(pdev->bus->qts == to);
++
++    /* Migrate VM */
++    rsp = qmp("{ 'execute': 'migrate', 'arguments': { 'uri': %s } }", uri);
++    g_assert(qdict_haskey(rsp, "return"));
++    qobject_unref(rsp);
++
++    /* Wait when source VM is stopped */
++    qmp_eventwait("STOP");
++
++    /* Copy guest physical memory allocator state */
++    migrate_allocator(alloc, ctrl->alloc);
++
++    /* Wait for destination VM to become alive */
++    qtest_qmp_eventwait(to, "RESUME");
++
++    test_migrate_check_nvme(ctrl, test_reqs, ARRAY_SIZE(test_reqs));
++
++    qpci_iounmap(ctrl->pdev, ctrl->bar);
++
++    qtest_quit(to);
++    g_unlink(mig_path);
++    g_rmdir(tmpfs);
++    g_string_free(dest_cmdline, true);
++}
++
+ static void nvme_register_nodes(void)
+ {
+     QOSGraphEdgeOptions opts = {
+@@ -168,6 +585,8 @@ static void nvme_register_nodes(void)
+     });
+ 
+     qos_add_test("reg-read", "nvme", nvmetest_reg_read_test, NULL);
++
++    qos_add_test("migrate", "nvme", test_migrate, NULL);
  }
  
- static void nvme_exit(PCIDevice *pci_dev)
-@@ -9413,6 +9623,8 @@ static void nvme_exit(PCIDevice *pci_dev)
-     }
- 
-     memory_region_del_subregion(&n->bar0, &n->iomem);
-+
-+    migrate_del_blocker(&n->migration_blocker);
- }
- 
- static const Property nvme_props[] = {
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 9de9f347c542..40a9726546dc 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -675,6 +675,9 @@ typedef struct NvmeCtrl {
- 
-     /* Socket mapping to SPDM over NVMe Security In/Out commands */
-     int spdm_socket;
-+
-+    /* Migration-related stuff */
-+    Error *migration_blocker;
- } NvmeCtrl;
- 
- typedef enum NvmeResetType {
-diff --git a/include/block/nvme.h b/include/block/nvme.h
-index e4e7be51205e..17a7c7818d77 100644
---- a/include/block/nvme.h
-+++ b/include/block/nvme.h
-@@ -141,6 +141,18 @@ enum NvmeCapMask {
- #define NVME_CAP_SET_CMBS(cap, val)   \
-     ((cap) |= (uint64_t)((val) & CAP_CMBS_MASK)   << CAP_CMBS_SHIFT)
- 
-+#define NVME_MIGRATION_SUPPORTED_CAP_BITS ( \
-+      ((uint64_t)CAP_MQES_MASK   << CAP_MQES_SHIFT)   \
-+    | ((uint64_t)CAP_CQR_MASK    << CAP_CQR_SHIFT)    \
-+    | ((uint64_t)CAP_AMS_MASK    << CAP_AMS_SHIFT)    \
-+    | ((uint64_t)CAP_TO_MASK     << CAP_TO_SHIFT)     \
-+    | ((uint64_t)CAP_DSTRD_MASK  << CAP_DSTRD_SHIFT)  \
-+    | ((uint64_t)CAP_NSSRS_MASK  << CAP_NSSRS_SHIFT)  \
-+    | ((uint64_t)CAP_CSS_MASK    << CAP_CSS_SHIFT)    \
-+    | ((uint64_t)CAP_MPSMIN_MASK << CAP_MPSMIN_SHIFT) \
-+    | ((uint64_t)CAP_MPSMAX_MASK << CAP_MPSMAX_SHIFT) \
-+)
-+
- enum NvmeCapCss {
-     NVME_CAP_CSS_NCSS    = 1 << 0,
-     NVME_CAP_CSS_IOCSS   = 1 << 6,
+ libqos_init(nvme_register_nodes);
 -- 
 2.53.0
 
