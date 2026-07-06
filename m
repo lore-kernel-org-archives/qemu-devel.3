@@ -4,114 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 079FCC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 16:59:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA654C43602
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 17:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgmf2-0002As-CV; Mon, 06 Jul 2026 12:59:16 -0400
+	id 1wgmtO-00052l-10; Mon, 06 Jul 2026 13:14:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wgmer-0002A5-D5; Mon, 06 Jul 2026 12:59:02 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgmtM-00051x-6N
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:14:00 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wgmep-0003uZ-4z; Mon, 06 Jul 2026 12:59:00 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666FIKEl4049958; Mon, 6 Jul 2026 16:58:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=FU47t6
- qHFKE7f5sjxdUD9NOkHhMxqMmv/RJZv2Wiml0=; b=rWQSuTEZJwigXxfsWW1sdq
- K0Y9vWjyJ35aP+7qFHe8CV3+bEjapUCsscka3A2j0M5PkvYyogJhIxNDEdNtbR2h
- FeHUmrdZoPQViQAJUY/yDr+wyXAboGykMAceNq9Tq996rarlS5VRKrYcSe3tNc5g
- ZL6kafNlBAK6v4iPuTszhzcQY//HQdvsv2vHtoj7cKICDntThHYfzwqAPmEnCFct
- AFg3exlpdSoWhWW/Pv135zKujBOnX7V7qDJzypTrWmQqYSJkhKQVwfBlhC05CP4q
- Azc/x5KgbUEmNcKPZEXaB2YXDAjT6+c+HPd4MXZCOUQEz6UTIUizl1qjfFIrV8Kw
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6stsk0xd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 16:58:55 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 666Gnn36027017;
- Mon, 6 Jul 2026 16:58:54 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7eqfx7pw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 16:58:54 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 666GwqYp51577188
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 6 Jul 2026 16:58:52 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 77A0920043;
- Mon,  6 Jul 2026 16:58:52 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 25B0C20040;
- Mon,  6 Jul 2026 16:58:52 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.23.52])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  6 Jul 2026 16:58:52 +0000 (GMT)
-Message-ID: <5bed6bb7-0648-40a0-8afc-7360bc662e01@linux.ibm.com>
-Date: Mon, 6 Jul 2026 18:58:51 +0200
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgmtK-0008QB-Ix
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:13:59 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 666FF1YF980438
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 17:13:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ VN/vcnKzW+VARZhIMFotAYFESbMpXEqXKN6UrmWIZZY=; b=ReGpco95/HubK5D7
+ JT+/zaSgoD2Iwf/jbtMaA+K+ujIcSqgJfQD4NVyYMLNb68nvC5PoCFQxCBupSai5
+ D30GlbGxOSDf0NMyqd7J9Pck9zfOD72ElEJtevEtGqJ2y80TvOMjwGNbPBW6TGHv
+ zg7kHZ/tHoEGzQLPYBHGgK2mDet1V2W4LlHwOED3zp6tCISILXKz90HKmfy6hjC7
+ H4KdQlDiA3UFfQ0hR8Qhh2YghdTF5RmxNn/IQ2urDrRz/wr8VzhgCmM3zKg3cXoP
+ 1zuzBx06/sgRzXYEDGOhBxam61e7oGQO6HZknHWYObJ5wUAfvb6fT1m4gdR11tZK
+ 7Qixcg==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f89kgt6e1-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 17:13:55 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8efad04d884so69915696d6.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 10:13:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783358034; x=1783962834; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=VN/vcnKzW+VARZhIMFotAYFESbMpXEqXKN6UrmWIZZY=;
+ b=iZVCRcoUkj1El28g6N41LPRv3E5diaLZ2JDHh0w4NUy7hNQM/2rGaJOCYQ3WE08i9n
+ Wr1n94lcf/l+NiGJ335H3HO2+Td6S449B0T/lBLAzau+yoFi8P0TITT8iPHf/W4EUZfe
+ 9N4MrJyHdbTX6F0i5LU89CDI/t64/6fDXzfYs1YyLn/JKCTeA1PFhslr9fxFvrCaYB/d
+ cmCS7xK1iGz4+rxHSjuyUj3Qm9bBddFPuKkCCeUZSlIBtKwRtcB8C0DvV3JVwVyE20Yg
+ Fp9Fxw71ESiyL+xQaf/VNH4ElyYKilYb3zXGlJqIOllAPztOfAJN0r5cCj6J2J4O5TID
+ 5f9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783358034; x=1783962834;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=VN/vcnKzW+VARZhIMFotAYFESbMpXEqXKN6UrmWIZZY=;
+ b=Td/WqM19GCH8ZZX7cs+0nigyBZzccDMkpoTfNQK1njUj9eDVaqIAnxvL+fAf3N7T92
+ xzhZMDjq8+Vg4peUiz6nahkW8rAa3eERmUGTp1trYshuLX0s/D0icHO5LL/f2kjBZNBc
+ Epxm8+ASzYyfPIGNfrY/NoWQJCydT4w6H5vQGn1JC0B56IPRRvHzJSjZ5HW2iCUVQ2g/
+ bGtA1EJqgeGAAt+Di+lUU7VE5dqmnW5n+1pGhK8aqMqt78yctys/yu1wjbLdmsP2sDlg
+ qY8jAoyKQP6Pk9qQg/oeGCudxaf3lVh0uZIsA32T/FyEO6/Xj2Clg+SCY46lhOu37jpc
+ jv/A==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqogFV2iEKpaWGxS/W/Ai051x3AaySFW/gRBjwdsByeQiKB9oXUOsv0rXQiH/qBNcYi1/ytq4OIeIdO@nongnu.org
+X-Gm-Message-State: AOJu0YzcJ2NuCdWPw7EmVVN7G8s7c+j3mAJQlf5DVek8iFGx2XRqFuSl
+ 7K3WPSqxYvaC2bt1hlDU4E6xJRZMQKynmCj5gkbcaxV/r6+QI01mzAMvy9bdR2eVsoEP+5GNINh
+ HwzcJv/nEE2RruhFkFDxLV0BCkeOICDATsz6+QSrROn7EK+lZIGxO1EkgfQ==
+X-Gm-Gg: AfdE7cnJ106/7fJE3f5BFlVnVTqwr6YTBUFi5J/8ZwntjQOY6Fcounhy4nBSkBoPOmt
+ COueBTb1zCKLJLX4YmBpkZp+5/qMZgfyfKxkPpdsgja+rowdp5lyMOXNvyDGPvDFGYkTUe0C9Vg
+ SuQ7ug68PCWSrFXo2wT6BrjPgBMEy//XFeT4IATVS5nuwTxOuWdnu26y9nh4YYmi/w0p4HwtFve
+ TVrnnn8uIr+axvCkzGDdY4cCrbZioXMklurSfPRhQ18vqaSrjdUG/wGfuYMmtcFkcvg39lF86W9
+ rWBKwQKG8LOUHqqRJ6dURG6+q2kWwiJ2nDuhFGQ+eJ2xCsBg1yyxnfi3xRM5L0pITy9hPQvAk/h
+ xzlHIBQox5muTWNhnFJTI6/pNiwtc/xPwt2BWyGPG2zUct7o7er86I5+ocFULXw==
+X-Received: by 2002:a05:620a:4710:b0:914:7b4f:cf5b with SMTP id
+ af79cd13be357-92ebb54cf33mr199010485a.16.1783358034213; 
+ Mon, 06 Jul 2026 10:13:54 -0700 (PDT)
+X-Received: by 2002:a05:620a:4710:b0:914:7b4f:cf5b with SMTP id
+ af79cd13be357-92ebb54cf33mr199005585a.16.1783358033780; 
+ Mon, 06 Jul 2026 10:13:53 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47aa0960634sm27805980f8f.26.2026.07.06.10.13.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Jul 2026 10:13:53 -0700 (PDT)
+Message-ID: <c3c65bce-f8fe-43fe-b3b5-dd81742a2d4e@oss.qualcomm.com>
+Date: Mon, 6 Jul 2026 19:13:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] accel/tcg: Make PageFlagsNodes' start and last
- immutable
-To: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Crichton <alex@alexcrichton.com>,
- Ulrich Weigand <ulrich.weigand@de.ibm.com>, qemu-stable@nongnu.org
-References: <20260706165445.57418-1-iii@linux.ibm.com>
- <20260706165445.57418-2-iii@linux.ibm.com>
+Subject: Re: [PATCH] gitlab-ci: Remove job building OpenSBI firmware binaries
 Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260706165445.57418-2-iii@linux.ibm.com>
+To: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
+Cc: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260706161716.29488-1-bin.meng@processmission.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260706161716.29488-1-bin.meng@processmission.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: _nZ_URZzVssv5B19yy22GajMBChaQH_4
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE3MCBTYWx0ZWRfXzC1pl+AnWR7j
- a3tlHHoZa4g+HSC99+gu84t94P6aVFN5n6Rf6dDGdrcUx2NngnYbVsJN395kfuiv5F4MmUCOXbR
- q62vSP3Qj8tQRqFGzvnPaOEQ/M/VmrE=
-X-Authority-Analysis: v=2.4 cv=DKW/JSNb c=1 sm=1 tr=0 ts=6a4bdecf cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=NEAV23lmAAAA:8
- a=VnNF1IyMAAAA:8 a=vjliLWF1AAAA:8 a=69wJf7TsAAAA:8 a=-4y--ymCcz8KILmWNH4A:9
- a=QEXdDO2ut3YA:10 a=3erKlr7R_9HjozMBkBTY:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: _nZ_URZzVssv5B19yy22GajMBChaQH_4
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE3MCBTYWx0ZWRfXxxfUcX7XHD0f
- t7oBNIF3EhNXfYftmIORaDEY9RIvKxMpdrp5w+ofDq9WGkGeYGaqDRgPeF2/d5mNrdZxCCGL11l
- THtht2jd9MjLmza6+lIH9LJMa54u+v1DL0iWIGoAFjeODy1Nst8GppbaMfbk2nqn91EJ8TDMX5s
- W3FgQpzDCOD+f63qpaIxf3vU+xOKRQtc1BTl0xKYcZIygCPJE+SR8rHwBJY/zak8lvnUEu7yX3r
- gRKC/yp00eElxT5duz4oOLnUXX+6zIahOUldBP/jTj5MfJrkwEPenhE5vzi2+PqU/D/hCRZZtvp
- 042LBMHrM/3TLDzD3amMLqBLs94oHLHEe+bnE9UbuLP+FW1QbpUFwWdKoByrV9lDkqol1uyGhaS
- VNcj+ZGsZS2uNUi6J7VJx8aLjcEilk2nz0zZl8DawZ1hNcC5n/NNOMdgNNO5X35RUg801ZMhaLx
- 1aafVnPzVl9Tsm47New==
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: b7lF56bjE6nGrAQtx3zxX2Dg_Idd_uiV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE3NCBTYWx0ZWRfX10lOjKgAz7/A
+ EvkJQeElBrvp+kuOepbZzUPlIny8TivEv3vzsU0KCywT48d9F5hKDmGwNuMT6XWzb93D6wxQWal
+ hrqP7p8MhuKUET/t6BRXVy4dLt02EaKfv4Xe/qF5OowvqsaxOJjJABeY1sTpfl6gZELi/+CSWr7
+ frNjd/ok1ZsE+f5Lj7X3ZsBdGeYNWIMXdM2DWoe6tBi7Jx8QdT1IP5Pt/e5spa+v+CucpOJFgMU
+ WlxJK0kGnpe4HF6JkY644IQSiKQTgCzWyLHA/46pXdyODRbYAs1GNLQAbE9HSHj0eD2LhpDLmza
+ U6vLcJR8+OMf5muSWMzXqvwESe/V/yOXN4ppuyS9NfMFAZbIK0KF9FdBIN/GjCmrG+3QEaCycQ+
+ jTJzUnvXKULKtev4NiUwtFThvmv2iZqF1v+EAq/Js1OpPx7Hksd2gbyRLvzIEl+CZuB1Rrtplyb
+ Ihw565MwPFjWwSwIhsA==
+X-Proofpoint-ORIG-GUID: b7lF56bjE6nGrAQtx3zxX2Dg_Idd_uiV
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE3NCBTYWx0ZWRfX7VcDFYRZ4Yr5
+ j7RfPKpv3kIHyNDuhIdTuko3mMks75DYgLOGV1kSYHGB++L37lAWZetSY5IwzJBESNeQP4IJYQ+
+ s+w2VK197LBoh8++JJ2aI7RMETrajVw=
+X-Authority-Analysis: v=2.4 cv=c6Sbhx9l c=1 sm=1 tr=0 ts=6a4be253 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8 a=LfsA7Cq2GQzuzbZ-N0YA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22 a=H4N_Y-AU75W7NKDNhZlT:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-06_02,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 clxscore=1015 phishscore=0 impostorscore=0
- priorityscore=1501 adultscore=0 lowpriorityscore=0 suspectscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ adultscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607060170
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ definitions=main-2607060174
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,181 +156,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 7/6/26 18:51, Ilya Leoshkevich wrote:
-> page_check_range() may race with pageflags_set_clear() as follows:
+On 6/7/26 18:17, Bin Meng wrote:
+> The OpenSBI firmware build job follows the same pattern as the EDK2 job
+> [1] that was removed earlier [2]: it exists to produce firmware binaries
+> from CI artifacts, but those outputs are not consumed by the tree.
 > 
->      T1                                     T2
->      -------------------------------------  --------------------------------
->                                             p = pageflags_find(start, last);
->      interval_tree_remove(&p->itree, ...);
->      p->itree.start = last + 1;
->                                             if (start < p->itree.start) {
->                                                 ret = false;
->      interval_tree_insert(&p->itree, ...);
+> Remove the job definition and its project include to avoid maintaining
+> bitrotting container and firmware build logic.
 > 
-> leading to errors like
+> [1] 71920809ceab ("gitlab-ci.yml: Add jobs to build EDK2 firmware binaries")
+> [2] 690ceb71936f ("gitlab-ci: Remove job building EDK2 firmware binaries")
 > 
->      fail indirect write 0x72f0a659aff0 (Bad address)
+> Signed-off-by: Bin Meng <bin.meng@processmission.com>
 > 
-> in vma-pthread test. I am able to reliably reproduce this on a machine
-> with 32 SMT threads as follows in about 25 seconds:
-> 
->      jobs=32; \
->      seq "$jobs" | \
->          time -p parallel \
->              --jobs="$jobs" \
->              --halt=now,done=1 \
->              --ungroup \
->              '
->                  _={};
->                  while ./qemu-s390x tests/tcg/s390x-linux-user/vma-pthread; do
->                      printf .;
->                  done
->              '
-> 
-> Also wasmtime project reported a similar failure pattern in their CI [1]
-> with a similar reproducer [2].
-> 
-> There are other races like this. In general, region bounds mutating
-> underneath the reader are very hard to reason about. So fix this by
-> preventing mutations and creating copies instead. Use RCU guards in
-> readers to avoid uses-after-frees.
-> 
-> Now, when the reader finds a node, it may fearlessly access its fields
-> and be certain that at some point in time the respective region had the
-> respective bounds and permissions. The downside is slightly more
-> expensive mprotect(), but complexity reduction is worth it.
-> 
-> Lockless field accesses should probably be wrapped in qatomic_read(),
-> but this is a pre-existing issue, so do not change it here.
-> 
-> [1] https://github.com/bytecodealliance/wasmtime/issues/10000
-> [2] https://gist.github.com/alexcrichton/f14f23a892ffb9df2522754572d51b1c
-> 
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 > ---
->   accel/tcg/user-exec.c | 37 +++++++++++++++++++++----------------
->   1 file changed, 21 insertions(+), 16 deletions(-)
 > 
-> diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-> index 7704e4017dd..55761cacf65 100644
-> --- a/accel/tcg/user-exec.c
-> +++ b/accel/tcg/user-exec.c
-> @@ -239,13 +239,16 @@ void page_dump(FILE *f)
->   
->   int page_get_flags(vaddr address)
->   {
-> -    PageFlagsNode *p = pageflags_find(address, address);
-> +    PageFlagsNode *p;
-> +
-> +    RCU_READ_LOCK_GUARD();
->   
->       /*
->        * See util/interval-tree.c re lockless lookups: no false positives but
->        * there are false negatives.  If we find nothing, retry with the mmap
->        * lock acquired.
->        */
-> +    p = pageflags_find(address, address);
->       if (p) {
->           return p->flags;
->       }
-> @@ -301,15 +304,15 @@ static void pageflags_create_merge(vaddr start, vaddr last, int flags)
->   
->       if (prev) {
->           if (next) {
-> -            prev->itree.last = next->itree.last;
-> +            pageflags_create(prev->itree.start, next->itree.last, flags);
->               g_free_rcu(next, rcu);
->           } else {
-> -            prev->itree.last = last;
-> +            pageflags_create(prev->itree.start, last, flags);
->           }
-> -        interval_tree_insert(&prev->itree, &pageflags_root);
-> +        g_free_rcu(prev, rcu);
->       } else if (next) {
-> -        next->itree.start = start;
-> -        interval_tree_insert(&next->itree, &pageflags_root);
-> +        pageflags_create(start, next->itree.last, flags);
-> +        g_free_rcu(next, rcu);
->       } else {
->           pageflags_create(start, last, flags);
->       }
-> @@ -371,8 +374,8 @@ static bool pageflags_set_clear(vaddr start, vaddr last,
->       if (set_flags != merge_flags) {
->           if (p_start < start) {
->               interval_tree_remove(&p->itree, &pageflags_root);
-> -            p->itree.last = start - 1;
-> -            interval_tree_insert(&p->itree, &pageflags_root);
-> +            pageflags_create(p_start, start - 1, p_flags);
-> +            g_free_rcu(p, rcu);
->   
->               if (last < p_last) {
->                   if (merge_flags & PAGE_VALID) {
-> @@ -394,11 +397,11 @@ static bool pageflags_set_clear(vaddr start, vaddr last,
->               }
->               if (last < p_last) {
->                   interval_tree_remove(&p->itree, &pageflags_root);
-> -                p->itree.start = last + 1;
-> -                interval_tree_insert(&p->itree, &pageflags_root);
-> +                pageflags_create(last + 1, p_last, p_flags);
->                   if (merge_flags & PAGE_VALID) {
->                       pageflags_create(start, last, merge_flags);
->                   }
-> +                g_free_rcu(p, rcu);
->               } else {
->                   if (merge_flags & PAGE_VALID) {
->                       p->flags = merge_flags;
-> @@ -419,8 +422,8 @@ static bool pageflags_set_clear(vaddr start, vaddr last,
->       if (set_flags == p_flags) {
->           if (start < p_start) {
->               interval_tree_remove(&p->itree, &pageflags_root);
-> -            p->itree.start = start;
-> -            interval_tree_insert(&p->itree, &pageflags_root);
-> +            pageflags_create(start, p_last, p_flags);
-> +            g_free_rcu(p, rcu);
->           }
->           if (p_last < last) {
->               start = p_last + 1;
-> @@ -432,8 +435,8 @@ static bool pageflags_set_clear(vaddr start, vaddr last,
->       /* Maybe split out head and/or tail ranges with the original flags. */
->       interval_tree_remove(&p->itree, &pageflags_root);
->       if (p_start < start) {
-> -        p->itree.last = start - 1;
-> -        interval_tree_insert(&p->itree, &pageflags_root);
-> +        pageflags_create(p_start, start - 1, p_flags);
-> +        g_free_rcu(p, rcu);
->   
->           if (p_last < last) {
->               goto restart;
-> @@ -442,8 +445,8 @@ static bool pageflags_set_clear(vaddr start, vaddr last,
->               pageflags_create(last + 1, p_last, p_flags);
->           }
->       } else if (last < p_last) {
-> -        p->itree.start = last + 1;
-> -        interval_tree_insert(&p->itree, &pageflags_root);
-> +        pageflags_create(last + 1, p_last, p_flags);
-> +        g_free_rcu(p, rcu);
->       } else {
->           g_free_rcu(p, rcu);
->           goto restart;
-> @@ -505,6 +508,8 @@ bool page_check_range(vaddr start, vaddr len, int flags)
->           return false; /* wrap around */
->       }
->   
-> +    RCU_READ_LOCK_GUARD();
-> +
->       locked = have_mmap_lock();
->       while (true) {
->           PageFlagsNode *p = pageflags_find(start, last);
+>   MAINTAINERS                     |  2 -
+>   .gitlab-ci.d/opensbi.yml        | 88 ---------------------------------
+>   .gitlab-ci.d/opensbi/Dockerfile | 34 -------------
+>   .gitlab-ci.d/qemu-project.yml   |  1 -
+>   4 files changed, 125 deletions(-)
+>   delete mode 100644 .gitlab-ci.d/opensbi.yml
+>   delete mode 100644 .gitlab-ci.d/opensbi/Dockerfile
 
-Sorry, I forgot to include the tags:
-
-Reported-by: Alex Crichton <alex@alexcrichton.com>
-Reported-by: Ulrich Weigand <ulrich.weigand@de.ibm.com>
-Fixes: 67ff2186b0a4 ("accel/tcg: Use interval tree for user-only page 
-tracking")
-Cc: qemu-stable@nongnu.org
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
