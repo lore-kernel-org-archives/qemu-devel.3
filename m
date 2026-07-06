@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94A22C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD3AAC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:42:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggiv-0007lp-8v; Mon, 06 Jul 2026 06:38:49 -0400
+	id 1wggih-0007Ep-3R; Mon, 06 Jul 2026 06:38:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggis-0007eP-W1
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:47 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wggiH-00070J-6P
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:10 -0400
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggiq-0003YW-Jp
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:46 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-493bb510ce4so21476865e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:44 -0700 (PDT)
+ id 1wggiF-0003H7-Fa
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:08 -0400
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-493d3135f62so9044355e9.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783334323; x=1783939123; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783334286; x=1783939086; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=R7PJftppVr1IHdKZiJeYYAXnb9UTupGaY68HGzluVjE=;
- b=mUUHq5duMcgpDblKF+rt/WTo27v6gLickbC2ppcJCYqYNHVbL2aYGIF/EkwAsTQ20C
- 5DNWEMwz5yoV/GJ6bW/pHjiS8u3hFVK8eMuyN6MJkrz4h1s5K+VFbHSxKBBTnRY1h/SQ
- +Iyk9nbISW9RIS14hqdk3n5TzUuCxk+vluvfRFa+RCKtHj7dwr7/bJYpTzT/zgA28Y2R
- Mt9CuvV5emlJkTcAICDMHIk/5cFLkhNxi0zDtBs7z0dXFWU3KFKLpehgfbo04eGu+fEK
- IaYYoUbKhGZRXTFiYpHjwvboZjof/QF7lIZ/DXOJDS3PAplbb9+cYD8bfregTysVi2XN
- DRvA==
+ :reply-to; bh=pPkWKKHOnNoHHo33e/HALhEFjRT3a0i7uwqrWO34aA8=;
+ b=OVyD9sFKKUX4VtPZnconS6+O/crh+ux80hDvTLLKav5gmAl5XjqWxJGiqQGFdvtiyS
+ C3hn+fTFo5IxB5Ct/0dgVHOgLV4Kixwh5/gMAnsC0ePRQaqgPYP1wz6c++WluCirp1hY
+ IoL2vm5aGtiJVUpWN4UTikqyyzQaKnixoYjKOThJzV/5vbQ8EbBeMfa9Ft7nFaODpQXK
+ ZzzEocxEemDNlxG68SYqBEIkya46qGDQ4dz3XwhWQgnLaAZkfKF64/s5S8r1d+U33jDl
+ DwVSJpJdnuiAgDFUyXmRJLOVef0D7OWhYpZ+k7i6tKpy13nHHWmp2m9LGybLphfpIbPt
+ QoMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783334323; x=1783939123;
+ d=1e100.net; s=20251104; t=1783334286; x=1783939086;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=R7PJftppVr1IHdKZiJeYYAXnb9UTupGaY68HGzluVjE=;
- b=mhzRatUYxKTVmfwk/+5j0/W31w7lfuwyeKeXfYGgKW0XMS3BasJbRnnux8ZN5bnUg9
- htfoaFF5fZa4KMUDyBZFre0xmN0RrGvggKJyNafW8dASKxrZHtvsLA+yyIxT7NRhFOjx
- BtLA6m8WzyzwqnaSIxB8JyYRFxG06OQj4X8e7rKmUVVkSOAc//zvMJBZ3dJxUelwa3P8
- Ely5mC+rp9q7zxTKtKOWf8zsOi+yPwhz2KQzf2W8pn9AvhAQWikq81DaB+Du4BCkgInc
- GLkIIn7m+PW+TTPIIdVmHeMDsRwfhJhyjFq/36lLuiRvNCTA97zR/AqJZZFf4Ekd4UDR
- tneA==
-X-Gm-Message-State: AOJu0YxknPVx5gmR7cJg4ECie7Xaf+vm/mB1jUUb0KCdR+MJTYCSvNeP
- Q6mJIMYy31JA5J+B5/bcFnZoQcEJQKkyFK3u91S12O8Vhar80/mq9QeVXK5EXl2Ne4C+QD3nm93
- L+tH581v9mQ==
-X-Gm-Gg: AfdE7ckqUPNJofo21Hz6TTIcWQUMau+w83xhQunawvsIOhiigL+KiVftHaLg1xHXA28
- C4kaAlpkfLhrngT0CfuyGUUZvDHoir92KRZWLIE3XyiPI7NuRVDJ9E5ehkAj42jCIeEst94WyhZ
- fZp5rBVWb12lGH4q0o4YcCuBiofpdCk0t3y2Wfepb81IdA8FU9wtwcCV2nkkd9Eycm1NgH53iAu
- 1y7eKR0TYFpRtqFEvAMjbe86hI8gebIWndgtEMWikQdzHafydG0Fn/ln4apeTF/BNpZ4wOS2iou
- 93UEmjR7gUire6oHypPLPrVnGPqAWnANj9KaCyKTgUNjj35M2ntTP+MGWJHeyTyFiMknG/ID4AG
- EErYeZ0dpFcXzwW1ruEDZogI6CGconL0+c/EI/qpvjKLRIyopPaOUofZqnCYBxX6yro4M4bLDuw
- aWpndXys3KfelfXZzBhMq6ISLG74ic5G/KT3tZ0Qfj9xVN+wEyUWEkKkYzb09KELMkbOjywQzg8
- leRx4msJTiHffghA7AVlQ==
-X-Received: by 2002:a05:600c:a305:b0:493:d1e0:a4f1 with SMTP id
- 5b1f17b1804b1-493d1e0a802mr80481415e9.0.1783334323199; 
- Mon, 06 Jul 2026 03:38:43 -0700 (PDT)
+ bh=pPkWKKHOnNoHHo33e/HALhEFjRT3a0i7uwqrWO34aA8=;
+ b=q74C67Mdf8HGEeg4sKvk089KyQJCGTHJPLexmtVjC34f00DfeuOOffA7U3jlJZWAUg
+ tB/bFsY6uhk1EFvqH7A2YFmERVG1z5MliJ3fDqrWLtGZstjQ7wQuWUE1ti0gqgQkywyh
+ Nr8nJz58oxKq1Ct8z6MOqj6H/raMPKuJxaNQg+a0XhFZQRMAcJxU5nJlvYIGeqdCpz7Y
+ J3hC8gPZOxtSt0xluF/Vhe9WBXPiwLwdo7ap6U+CTEPrOXrgWa4dYn3rhlJhWYC9KUtM
+ JVEzaQdlEAGjKT2yEQjj2K3rwW6deJ2UQFnS5XTM5P/moFxNLcdMUDtrou5d2U4m+Op0
+ cSUA==
+X-Gm-Message-State: AOJu0YzmQhmANbp23/dH9h1dyVotTQqVgiEseGA/18aEGh1RN7HNXGhf
+ zQd/BY0UDK4nHiEjsZCWppT7cJOuciGqjp4sGXRYbegKJHvUzWTVJWTWCsjH5eMQ+WiOTIvlWPe
+ GR5FU7bSrueEl
+X-Gm-Gg: AfdE7ckmMJvg8IXibwkHZMNrFEAcH6DBKIhQNCYjRgGezamLEefdscIwGmRs5wGfvEU
+ CeLm63232aEKp2MCQ7xws/z6AlaIMSn98hNbQwk79QZ18s2ncoPAPP2emI8Y3pelFzMd1HA+cOs
+ yESXKFAmne69Vc+jQVBTcsU9l+/oypF/f/fBSy9at+/GLyUmJzGrz3AF6nbngb5ZqjFoTo04YKR
+ ygL9+9rYcrVaad3vmppy4778QY02cz93T7i5j3Z7YsSws1bYFVvErw+8/ZDmuJuOOOrPdJPt8NX
+ XXaWq5AQhyLJP+ePw5yyPiLVfnJe8Zh+1xoT45sy9J+BoSvxeHBB4GPcqgULCaGXlzkSk9ItNfX
+ Zy+XPQ7sJLhe24lfcsAEPnO3Yg7u6VF6G3gtpmmd52dp7peuDCjv5ieLjVxlnn40F9G9EepHRTK
+ 82TacVhviGiUyt4/eJOEVoIEevJiU76QRHWD+lhwiUmuMvRb7ffC2Mf/ttc7/a4g+MR+b4X3wDv
+ GNp1a4S+oUfdAc/uf7jAQ==
+X-Received: by 2002:a05:600c:64c6:b0:492:4363:e7eb with SMTP id
+ 5b1f17b1804b1-493d11f8d5fmr103470215e9.32.1783334286075; 
+ Mon, 06 Jul 2026 03:38:06 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.42
+ 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.05
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 03:38:42 -0700 (PDT)
+ Mon, 06 Jul 2026 03:38:05 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 47/49] target/arm: Separate syndrome functions for A32 and A64
-Date: Mon,  6 Jul 2026 11:37:50 +0100
-Message-ID: <20260706103752.320511-48-peter.maydell@linaro.org>
+Subject: [PULL 12/49] tests/functional: update anacapa-bmc image
+Date: Mon,  6 Jul 2026 11:37:15 +0100
+Message-ID: <20260706103752.320511-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260706103752.320511-1-peter.maydell@linaro.org>
 References: <20260706103752.320511-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,98 +101,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we have one syn_fp_access_trap() which we use for fp
-traps from A64 and from VFP and Neon A32. This means that A64
-has to specify arguments that are always fixed for it (coproc
-and is_16bit) and A32 can't specify arguments it needs to (TA).
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Split it up into syn_a64_fp_access_trap() and
-syn_a32_fp_access_trap(). This is a refactor with no
-behavioural change.
+The initial version had the wrong DTB which caused issues with image
+corruption [1]. Update to the latest version.
 
+[1] https://github.com/legoater/qemu-aspeed-boot/pull/7
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20260624103049.884930-3-alex.bennee@linaro.org
+Suggested-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260702184019.3431139-3-peter.maydell@linaro.org
 ---
- target/arm/syndrome.h          | 28 ++++++++++++++++++++++------
- target/arm/tcg/translate-a64.c |  2 +-
- target/arm/tcg/translate-vfp.c |  2 +-
- 3 files changed, 24 insertions(+), 8 deletions(-)
+ tests/functional/arm/test_aspeed_anacapa.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
-index 0eb54c15ce..2a6fa903f2 100644
---- a/target/arm/syndrome.h
-+++ b/target/arm/syndrome.h
-@@ -345,21 +345,37 @@ static inline uint32_t syn_cp15_rrt_trap(int cv, int cond, int opc1, int crm,
+diff --git a/tests/functional/arm/test_aspeed_anacapa.py b/tests/functional/arm/test_aspeed_anacapa.py
+index 27f8bd8b56..b16c6035c9 100644
+--- a/tests/functional/arm/test_aspeed_anacapa.py
++++ b/tests/functional/arm/test_aspeed_anacapa.py
+@@ -11,8 +11,8 @@
+ class AnacapaMachine(FacebookAspeedTest):
  
- /*
-  * ISS encoding for an exception from an access to a register of
-- * instruction resulting from the FPEN or TFP traps.
-+ * instruction resulting from the FPEN or TFP traps. Note that
-+ * the TA and COPROC fields are only valid when an AArch32 insn
-+ * traps to AArch32 EL2; they are RES0 for traps to AArch64.
-  */
--FIELD(FP_ISS, COPROC, 0, 4) /* ARMv7 only */
-+FIELD(FP_ISS, COPROC, 0, 4)
-+FIELD(FP_ISS, TA, 5, 1)
- FIELD(FP_ISS, COND, 20, 4)
- FIELD(FP_ISS, CV, 24, 1)
+     ASSET_ANACAPA_FLASH = Asset(
+-        'https://github.com/legoater/qemu-aspeed-boot/raw/3fa3212827b04be4034d43b5adeef57c27d6ab18/images/anacapa-bmc/openbmc-20260512025228/obmc-phosphor-image-anacapa-20260512025228.static.mtd.xz',
+-        '2232e241abcfb6d4f6b82cb6c378ce5ce05e364aac6d118785c2b6cc33fe43f3')
++        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/master/images/anacapa-bmc/openbmc-20260616025349/obmc-phosphor-image-anacapa-20260616025349.static.mtd.xz',
++        'de3841fb6ed3085aec6424358ee6efc4b8ee85688361e5aa1987fd1acb7d3fb4')
  
--static inline uint32_t syn_fp_access_trap(int cv, int cond, bool is_16bit,
--                                          int coproc)
-+static inline uint32_t syn_a64_fp_access_trap(int cv, int cond)
- {
--    /* AArch32 FP trap or any AArch64 FP/SIMD trap: TA == 0 */
-+    /* AArch64 FP/SIMD trap: TA and coproc are RES0, insn is 64 bits */
-     uint32_t res = syn_set_ec(0, EC_ADVSIMDFPACCESSTRAP);
--    res = FIELD_DP32(res, SYNDROME, IL, !is_16bit);
-+    res = FIELD_DP32(res, SYNDROME, IL, 1);
- 
-     res = FIELD_DP32(res, FP_ISS, CV, cv);
-     res = FIELD_DP32(res, FP_ISS, COND, cond);
-+
-+    return res;
-+}
-+
-+static inline uint32_t syn_a32_fp_access_trap(int cv, int cond,
-+                                              int ta, int coproc)
-+{
-+    /* AArch32 VFP or Neon trap: TA and coproc valid, insn is 64 bits */
-+    uint32_t res = syn_set_ec(0, EC_ADVSIMDFPACCESSTRAP);
-+    res = FIELD_DP32(res, SYNDROME, IL, 1);
-+
-+    res = FIELD_DP32(res, FP_ISS, CV, cv);
-+    res = FIELD_DP32(res, FP_ISS, COND, cond);
-+    res = FIELD_DP32(res, FP_ISS, TA, ta);
-     res = FIELD_DP32(res, FP_ISS, COPROC, coproc);
- 
-     return res;
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 69648ad94b..1780490065 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -1439,7 +1439,7 @@ static bool fp_access_check_only(DisasContext *s)
-         s->fp_access_checked = -1;
- 
-         gen_exception_insn_el(s, 0, EXCP_UDEF,
--                              syn_fp_access_trap(1, 0xe, false, 0),
-+                              syn_a64_fp_access_trap(1, 0xe),
-                               s->fp_excp_el);
-         return false;
-     }
-diff --git a/target/arm/tcg/translate-vfp.c b/target/arm/tcg/translate-vfp.c
-index 6f6b234c9a..7474973952 100644
---- a/target/arm/tcg/translate-vfp.c
-+++ b/target/arm/tcg/translate-vfp.c
-@@ -228,7 +228,7 @@ static bool vfp_access_check_a(DisasContext *s, bool ignore_vfp_enabled)
-          * this field to 0xA.
-          */
-         int coproc = arm_dc_feature(s, ARM_FEATURE_V8) ? 0 : 0xa;
--        uint32_t syn = syn_fp_access_trap(1, 0xe, false, coproc);
-+        uint32_t syn = syn_a32_fp_access_trap(1, 0xe, 0, coproc);
- 
-         gen_exception_insn_el(s, 0, EXCP_UDEF, syn, s->fp_excp_el);
-         return false;
+     def test_arm_ast2600_anacapa_openbmc(self):
+         image_path = self.uncompress(self.ASSET_ANACAPA_FLASH)
 -- 
 2.43.0
 
