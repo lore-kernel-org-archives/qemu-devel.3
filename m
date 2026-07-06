@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CAB1C44500
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DC1CC44501
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:43:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wggit-0007gN-Ty; Mon, 06 Jul 2026 06:38:47 -0400
+	id 1wggig-0007EK-Gs; Mon, 06 Jul 2026 06:38:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggim-0007Nb-Nm
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:40 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1wggia-000798-Qi
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:29 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wggij-0003Vy-CB
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:40 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-493b61b52b6so19449985e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:36 -0700 (PDT)
+ id 1wggiZ-0003Tb-8o
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:28 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-490cf3000f0so28927255e9.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:38:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783334316; x=1783939116; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783334306; x=1783939106; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=VHdBugLZUkVPDrBYTqD633IxuT9ll0hpLXYvZbK3TXQ=;
- b=XMrH98MG/jAwPF+xB6KTf6Crpn7ddyvgs1tjzK/oJ/XLN8a9qN5Hy8pn4sd3tQYmA8
- SzpHIzcor2lOgQswhyz5tIbxpJ/+xd8N6kFV1MzOpHHA+rJg5e0zulhayojrAyVeCXL6
- 2z/emWb3yt5oGKzqvDxr14FCHqYhmKxIP8Q45vpeZ1VZ3KB8FCwRePO7eIyy7MW8VCY3
- wa2qBX41hJNbRnuHzA6LXEBuIzNxqHdq8IKBRZlGep3Uqy8FRWRXPElru/nCyeRAe4Q6
- AeOuRoTQWkbutRHkS7f0WOJ99QzFeR2FA5OU0WdNkO33X3xw/f4gnK4uv3FQtYJUwt4k
- 9qxQ==
+ :reply-to; bh=Psw5RQ7bn8RFZkWZ5A+Dxh+A3qWZNnUc6p+gvL5S8h4=;
+ b=aD/854QI9lpp68gPm97VvszcTu8WCLVML6IfEsBceNcBfh+jbpqlzYukmUrqLq9vUg
+ n2nhFLOTV2zHzxlpdeKFcKsbXYRTelrDoojseLth1rPCLHst9wEqPy8ix+hoPWQE7c7y
+ pBBdaYQ+6uauKjD/xjmPWvLqQhV5UitEc739E6ekwJa7A/9++nxH3yRuBVwc7mSO3bRa
+ 142w2teCkd5mj/FV056uCTjm9NHlhtbyNb87o1LDoXK46xVNIGf46LYVeIQCbrdq64qv
+ gfWZAX1ckzZaSU4iXxCgHrhScU93BVZU1mhBYDPrp/yj6tmjU7LqOcQQLx+4aaZ64rbp
+ 7AfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783334316; x=1783939116;
+ d=1e100.net; s=20251104; t=1783334306; x=1783939106;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=VHdBugLZUkVPDrBYTqD633IxuT9ll0hpLXYvZbK3TXQ=;
- b=YqpKq8CNtUyPjj4I2v96GsBd4RR39SIMVqYyGXAy8Ymn0syr6HzEJUD17gZy3tAqi0
- Pr17JmCMyfWKwRdHP9U328jdUWGKCx7JFdjZyi0m7AAnda+ESoCUKHLeigsFenqmOP0w
- IKkFeyiTJGdjX3HNJXu6efKpxZ750myVcy/gmVLhogMevmCZ1kObP8MGcDqtbSLqCjIt
- 8oo253uNZOGPa0maziT9k3yN/QjQpDZLXr/qT3dEuTHkS6pnximBYmstN67PxeT2xT65
- BxuWG8PMPrmDw2xWicKrnrPe+rhZEQeYjQ1MazaZz2WIOWBKxo5TdPnIuRnuvE4x6p9q
- YC0A==
-X-Gm-Message-State: AOJu0YxPIYMKZFS+iEUo6qAb/2DJQ7cPcSjybOuj4bmp7spRdXXcAjNV
- amVvBp7lUsKpieZs3789+ukazGz5cc9VkS+ik2pqQB8ot73LOmrqDujEsRe5IAOD8TGIS2AAuwu
- GTpSitQUjPQ==
-X-Gm-Gg: AfdE7cm/SDFJRaVEDVi+eGqa38us1vAUCGiPzl4MiK7oN40sENet2iQCV4DRZTfM8Mh
- rHf+U5gahGurtcw15rRkPyIjExgjvNJ6p76r6JuSQnptAfHLrSXKjkgzi0qp+aVdP0Af16xVQ4z
- d5AiUwXSJmC8iR2AlbIbFDYTJpHEQsrBFFUUnTJKYIdy3SlViEtSewmP7I3GRR48Mib463bBDrM
- V+UxjhwrSz7M6K5z8giNwxDCu8Sc3+++xBzm4Ep85K1a664qs0PDRw/oc1jL0aeEteiE5zf3vXB
- JUMoDR8ivN6FrKMtgPgt7K3PWxQYFcKEDfn8ZOVFCqNXQ2MQ+noIyb76+ap447D4x97+4EGbTCw
- nDzmWkBJ7rEj11dOydW9sI3tmA+6tiRNE/UhWJ6F+l1F85gx6wmlaNw8bg3wBdOR203/bshPvhX
- a82s9MwRGqAXux1t0/IbfCzVHGaw0/cuCNzIkPbktEEWU+Y4nXwQD4HVvPwibABftZGnGgqodY+
- P0Mim3NIA6WIkQ/RRZYNA==
-X-Received: by 2002:a05:600c:314f:b0:490:b7e6:bd1d with SMTP id
- 5b1f17b1804b1-493d11d8186mr110688915e9.16.1783334315754; 
- Mon, 06 Jul 2026 03:38:35 -0700 (PDT)
+ :cc:subject:date:message-id:reply-to;
+ bh=Psw5RQ7bn8RFZkWZ5A+Dxh+A3qWZNnUc6p+gvL5S8h4=;
+ b=IwOacsjUIzA4YHEJ9RdT61ik1Ly6VEc8Y87SsaaAjexyh+q/twHKhSECehaiV4aNnM
+ 92bfGrhDuOCDN1nYzVMSqfz/lq5Lw7QCrp4z4NJx3NkJ6Ehw9nOKTDjSlB37QmbuLAEN
+ 3bbA/4hRsRVPBKqxkSDDpyHcCNyMcrq4CQYamomeNNafOKGLrR69jbSkmMLP2WGgQpBb
+ VqbViOH00pOLdxyumoP+VzGRcmpvC+ryL5hTY6uQGc9MjJO6jOoOxVaG7o9YMRsBg8l9
+ wb261jVUv2x2FBOd4Yr5wW7OaSYhO9N28ZYLn1DmM2At+CZqLF30LiAw7LGGUZiDXmFJ
+ 7ATQ==
+X-Gm-Message-State: AOJu0YzVGuGm5vppI1FioZ16+VHMPC27ts+UMUFEmn4SmFp5yJzqP8Lz
+ cDic+5luEIuAmtEAu6GisZRuaDOUfVxe25D9Q/LRbTNfXpfPOMA7w2CQjOcHnM0ldM25Mj34p8x
+ SfxnT0jPxjg==
+X-Gm-Gg: AfdE7clLCCmjojRlvB/hsly0MPBo0FnVmzjmvUdx2eNWnwRA8BLJ9UiRRX8gIWSgUA+
+ UaUnf9w3klOrqNvRVjyJIxLQKAjLY9yjc1OzbJku8uClJC96iaIkaYz4SNuwlgwoGoCjSnax7JP
+ QpZcaqbDY29t2PP04hWEyNDiuFMD3fqFofbVPZ9h8zsP/Z+SEIV666FvpRMs29Mx1iAs9fndN20
+ eqDGlWng+32ubVUOBmkCk/gQclWnA8iP0yh9FlbXMlq1qkyDQDbywB2wi/ZZ5KhqNRtD4tLDvaW
+ yq/Mqi5OFcNOAx4YFnr5HhlEU7RBC7FcgqzqM/TTp9y7hC7J3udGYcsJcXzuUb+9vNx8+T2/dFG
+ +VYICclsD7wRwrY5BjfExJZx6j6LU0wvt19tX+uF3btrCHUzKptdjIcufxW8b6lffxqxWTSfIHK
+ R4g1CdgGv8KEZ1gvqrW8fmpGSOPSHUifqUB37P1fM5zdE3dfTRGphd3CACYHRGr6QDANWG39y/o
+ EMs+oI3a3GDkiT1yvZFOw==
+X-Received: by 2002:a05:600c:3054:b0:493:bc4a:e7d3 with SMTP id
+ 5b1f17b1804b1-493d11fbcbdmr70545505e9.39.1783334305672; 
+ Mon, 06 Jul 2026 03:38:25 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.34
+ 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.38.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 03:38:34 -0700 (PDT)
+ Mon, 06 Jul 2026 03:38:25 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 39/49] target/arm: Implement SMOP4[AS] (2-way)
-Date: Mon,  6 Jul 2026 11:37:42 +0100
-Message-ID: <20260706103752.320511-40-peter.maydell@linaro.org>
+Subject: [PULL 29/49] hw/arm: add support for shim loading
+Date: Mon,  6 Jul 2026 11:37:32 +0100
+Message-ID: <20260706103752.320511-30-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260706103752.320511-1-peter.maydell@linaro.org>
 References: <20260706103752.320511-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,90 +100,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
+Add support for direct kernel boot with
+shim to the arm platform.
+
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-id: 20260521112806.504961-4-kraxel@redhat.com
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260702204314.79224-10-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/helper-sme-defs.h |  3 +++
- target/arm/tcg/sme.decode        |  2 ++
- target/arm/tcg/sme_helper.c      | 16 ++++++++++++++++
- target/arm/tcg/translate-sme.c   | 18 ++++++++++++++++++
- 4 files changed, 39 insertions(+)
+ hw/arm/boot.c         | 6 ++++++
+ include/hw/arm/boot.h | 1 +
+ 2 files changed, 7 insertions(+)
 
-diff --git a/target/arm/tcg/helper-sme-defs.h b/target/arm/tcg/helper-sme-defs.h
-index 780b8f162a..ddf771e446 100644
---- a/target/arm/tcg/helper-sme-defs.h
-+++ b/target/arm/tcg/helper-sme-defs.h
-@@ -379,3 +379,6 @@ DEF_HELPER_FLAGS_5(sme_ah_bfmop4s_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env,
- DEF_HELPER_FLAGS_5(sme_fmop4a_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
- DEF_HELPER_FLAGS_5(sme_fmop4s_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
- DEF_HELPER_FLAGS_5(sme_ah_fmop4s_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
+diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+index 780b6be637..9b7553dde5 100644
+--- a/hw/arm/boot.c
++++ b/hw/arm/boot.c
+@@ -1161,6 +1161,11 @@ static void arm_setup_firmware_boot(ARMCPU *cpu, struct arm_boot_info *info)
+             fw_cfg_add_string(fw_cfg, FW_CFG_CMDLINE_DATA,
+                               info->kernel_cmdline);
+         }
 +
-+DEF_HELPER_FLAGS_4(sme_smop4a_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sme_smop4s_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index 4b7a99e203..20a2febd63 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -1116,3 +1116,5 @@ FMOP4_sh        1000 0001 001. ...0 0000 00.. ..0. 00..         @mop4_o2
++        if (info->shim_filename) {
++            load_image_to_fw_cfg_file(fw_cfg, "etc/boot/shim",
++                                      info->shim_filename);
++        }
+     }
  
- FMOP4A_sb       1000 0000 001. ...0 0000 00.. ..00 00..         @mop4_o2_s0
- FMOP4A_hb       1000 0000 001. ...0 0000 00.. ..00 100.         @mop4_o1_s0
-+
-+SMOP4_sh        1000 0000 000. ...0 1000 00.. ..0. 10..         @mop4_o2
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index 123f459342..32fe867a3b 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -2938,3 +2938,19 @@ void HELPER(sme_ah_fmop4s_sh)(void *vza, void *vzn, void *vzm,
- {
-     sme_mop4(vza, vzn, vzm, env, desc, sizeof(float32), inner_ah_fmop4s_sh);
- }
-+
-+#define IMOP4_2WAY(NAME, OP, TYPED, TYPEN, TYPEM)                       \
-+static void inner_##NAME(void *vd, void *vn, void *vm, void *vinfo)     \
-+{                                                                       \
-+    TYPEN *n = vn; TYPEM *m = vm; TYPED *d = vd;                        \
-+    *d OP##= (TYPED)n[0] * m[0] + (TYPED)n[1] * m[1];                   \
-+}                                                                       \
-+void HELPER(sme_##NAME)(void *vza, void *vzn, void *vzm, uint32_t desc) \
-+{                                                                       \
-+    sme_mop4(vza, vzn, vzm, NULL, desc, sizeof(TYPED), inner_##NAME);   \
-+}
-+
-+IMOP4_2WAY(smop4a_sh, +, int32_t, int16_t, int16_t)
-+IMOP4_2WAY(smop4s_sh, -, int32_t, int16_t, int16_t)
-+
-+#undef IMOP4_2WAY
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index b198c7c855..b948591dd3 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -2092,3 +2092,21 @@ TRANS_FEAT(FMOP4A_sb, aa64_sme_mop4_f8f32,
-            do_mop4_fp8, a, MO_32, gen_helper_sme_fmop4a_sb)
- TRANS_FEAT(FMOP4A_hb, aa64_sme_mop4_f8f16,
-            do_mop4_fp8, a, MO_16, gen_helper_sme_fmop4a_hb)
-+
-+static bool do_mop4_int(DisasContext *s, arg_mop4 *a, MemOp esz,
-+                        gen_helper_gvec_3 *fn)
-+{
-+    if (sme_smza_enabled_check(s)) {
-+        int svl = streaming_vec_reg_size(s);
-+        uint32_t desc = simd_desc(svl, svl, (a->m << 1) | a->n);
-+        TCGv_ptr za = get_tile(s, esz, a->zad);
-+        TCGv_ptr zn = vec_full_reg_ptr(s, a->zn);
-+        TCGv_ptr zm = vec_full_reg_ptr(s, a->zm);
-+
-+        fn(za, zn, zm, tcg_constant_i32(desc));
-+    }
-+    return true;
-+}
-+
-+TRANS_FEAT(SMOP4_sh, aa64_sme_mop4, do_mop4_int, a, MO_32,
-+           a->s ? gen_helper_sme_smop4s_sh : gen_helper_sme_smop4a_sh)
+     /*
+@@ -1195,6 +1200,7 @@ void arm_load_kernel(ARMCPU *cpu, MachineState *ms, struct arm_boot_info *info)
+      * doesn't support secure.
+      */
+     assert(!(info->secure_board_setup && kvm_enabled()));
++    info->shim_filename = ms->shim_filename;
+     info->kernel_filename = ms->kernel_filename;
+     info->kernel_cmdline = ms->kernel_cmdline;
+     info->initrd_filename = ms->initrd_filename;
+diff --git a/include/hw/arm/boot.h b/include/hw/arm/boot.h
+index a2e22bda8a..94386fdbea 100644
+--- a/include/hw/arm/boot.h
++++ b/include/hw/arm/boot.h
+@@ -39,6 +39,7 @@ void armv7m_load_kernel(ARMCPU *cpu, const char *kernel_filename,
+ /* arm_boot.c */
+ struct arm_boot_info {
+     uint64_t ram_size;
++    const char *shim_filename;
+     const char *kernel_filename;
+     const char *kernel_cmdline;
+     const char *initrd_filename;
 -- 
 2.43.0
 
