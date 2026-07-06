@@ -4,83 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CA75C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 13:20:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C371FC44500
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 13:23:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgjEk-0005nq-GG; Mon, 06 Jul 2026 09:19:50 -0400
+	id 1wgjIA-000728-JD; Mon, 06 Jul 2026 09:23:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wgjEh-0005nB-HT
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:19:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgjI2-00070H-7z
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:23:14 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wgjEe-0006jS-EC
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:19:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783343980;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+3yuCGrdR8KJwKPA7Evi1/o5nynk0M3WzQOJycX3Vl4=;
- b=J7+77xWDZAuKzjIXp5hqymN3YeBqRZqXPqQcLyX+42fjfXSfiN91EcxOqk6x8EHqu310/f
- VeLEXNRMtr+8uw0dAZ3CTvoD9CV1xOOy/jQrjrQpylbdksZW6vEmVZllvDAj/g+xRB8+Vr
- 6alP9vQlYqpBTAmi2TiUKRi/ceIEcwc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-331-pqi2ISgUO0yw4i6F7_ZaIA-1; Mon,
- 06 Jul 2026 09:19:37 -0400
-X-MC-Unique: pqi2ISgUO0yw4i6F7_ZaIA-1
-X-Mimecast-MFC-AGG-ID: pqi2ISgUO0yw4i6F7_ZaIA_1783343975
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3DC991955F1A; Mon,  6 Jul 2026 13:19:35 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.48.165])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 84BAF3653A; Mon,  6 Jul 2026 13:19:31 +0000 (UTC)
-Date: Mon, 6 Jul 2026 14:19:28 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org,
- Peter Krempa <pkrempa@redhat.com>
-Subject: Re: [PATCH v6 06/34] monitor: add 'chardev' property to Monitor base
- class
-Message-ID: <akurYJQF6WPocUoX@redhat.com>
-References: <20260702160337.1910921-1-berrange@redhat.com>
- <20260702160337.1910921-7-berrange@redhat.com>
- <87zf08usa0.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgjI0-0007kD-Pi
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:23:13 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 666AxGBC369006
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 13:23:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ l1Vypo44nuoRmMbGeAqxoVIXpWzcYN9VIKeAKT/VOA8=; b=olQhxO8jWfyHYwcX
+ srKflWX+RKAKB3C8OiSR+DN35bgay62AKpZD6THeOkF9mhsHe4F4NIVwhLFOnI1R
+ bQ7v6FSBeKPoHJc08fP2ppDTBCyC+sYbbZ+52qPh1EZ4Ryuujhv+XwKcQL07Rc9L
+ ZuZn2BoDz7ZJW7D7SJGN+ELXHjRzPhIzAEhlOnufwBNKhV4HNjaau2KFTodXTMJN
+ honzxe74qzqVLzVPf8dOnvD+ZuMcOBcUm5E5AhTNsbuGZwt7QTCnldQIRj6/08hp
+ DoiOC2B2WioVW/wAgR40O88lYgaaQM/3fsQNilJp6PHjBflSCgUQcoSFGs4a8QwW
+ fgFF3Q==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f88h998d6-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 13:23:10 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-92e55721a8cso309826485a.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 06:23:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783344190; x=1783948990; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=l1Vypo44nuoRmMbGeAqxoVIXpWzcYN9VIKeAKT/VOA8=;
+ b=CYo99EvjQy6kM6SExQXeXGDCMiU+X6cEpdM81SPhoPi6yaRLcOZKw2fBA+g5iQsnV5
+ a7PdpPKSyAnt4x7zMYYE6np5dO13rHXYsd4nGeVRYIr3gQ0f8tb4MOL+lwaqIdDl38My
+ EoaSl2AaxRh4pl8bPTt9nTJOpYT/GmUZUkQEU0N8V7y1MIrhGF81S8sR5CtjYVXy7+dT
+ pU2g54RHqDUttCgrLj9zsUga55Zhup2KWUULnvVJppuZJlP2sSh6npgy3Tr5t6tKm73P
+ objKGGF2S4PVjmzYJz/5O+9Sp5+S6KC4TUO081EoX7su3nTDT50/uFFiFPY5Bi2X5Czo
+ T6jA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783344190; x=1783948990;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=l1Vypo44nuoRmMbGeAqxoVIXpWzcYN9VIKeAKT/VOA8=;
+ b=YX/6yRnQ4E/r5BLsZBDj7rqMWW4getrsN8Fb6r4QM2lxmQAqm2lw89p1PCJ430IjWl
+ uKJH++bLPx0gJKX/pBP3Ls5QnMbAMTi52CooKhCQHecChqhhC2fBHEudDN7kd7mWEN/U
+ FV5EgSlTke1crcf5nC8VIDlNoRc+kkzA9UNtmwzwCwYhLOHrMDgYdBPF5opT6dhFF5da
+ brXZ2ER6CobMm90LNXh46pcHG4YjDk1lRvq+pJn5pQBfsbHXtT2BK6YDN9q89/ImSq4b
+ 22kF/HxcQmS8b2Kzinsj4wtRiJZf/2V/NKTUqU+9pX7p0rRHXe53I5p4RlPA19DsDlNr
+ asYA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrhyhSb2WQ/+hfJMNJsfzgTSC473bljXRY7kMLLcYXIqVfsPYjahuGBKhnbbf/6wITnVqL97cdpbHGW@nongnu.org
+X-Gm-Message-State: AOJu0Yx/qc1rnuPZ7OlzekQ/RC0B7iZDzGuz1bu576c5LS5VEXPbvNnO
+ bWmkaDU9IYDWCNX1MwYlU1WdzIBnpv9PAE7Ddt52OJhz+eGV7IZeagZ65hddvH2Dx6FW7d77Teh
+ zac5vQicvvcCbuxTXTCrYtPRyUliNNLxJx5zMgenejtu5X6rIAqrQbIsu7w==
+X-Gm-Gg: AfdE7cm7ZrmMrvgdIl2ssC18CzxoeKsM2+BfcBu+EyzaJMrFdEJ1s6s6vJbxlCWVm77
+ KpcaPRk3peHicrL77G14v2546PlPIzt36Per2Svek2HWs1+80frP6IK5/ngG2XS9UWBVRei9P37
+ tNsL+/TKQv/uJ7ElXtyWDGkWC66aMZsQx23E05OoDBitTkn58l7aNUlbNUgpgVO1iBuRTbdF/Ph
+ 4aGq6lVmW0il1PUFPBozt2A1evTdLBqRELYk9E+CnEj7wbpkmsUGYAEoBE47yhzPNzELpxUP+eX
+ v6adIW0sgynmbsnMX0ZvSbHZ30WNugUe5c7xTCy/pve3JbjTXMQO6agNP06UrJ3p0dhpwo7w82G
+ Wq8fHP2pKHWJwG6GHHzMfDqVsDvKGzqYf7NZtxdLg0GUU1ua/aQ==
+X-Received: by 2002:a05:620a:178c:b0:92b:6805:91a5 with SMTP id
+ af79cd13be357-92ebb5af395mr74245185a.61.1783344190121; 
+ Mon, 06 Jul 2026 06:23:10 -0700 (PDT)
+X-Received: by 2002:a05:620a:178c:b0:92b:6805:91a5 with SMTP id
+ af79cd13be357-92ebb5af395mr74240385a.61.1783344189497; 
+ Mon, 06 Jul 2026 06:23:09 -0700 (PDT)
+Received: from [10.237.61.207] (1.171.88.92.rev.sfr.net. [92.88.171.1])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493c636ea60sm328344375e9.3.2026.07.06.06.23.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Jul 2026 06:23:08 -0700 (PDT)
+Message-ID: <df5c8b9f-26e2-4286-87f3-8f45288f247e@oss.qualcomm.com>
+Date: Mon, 6 Jul 2026 15:23:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/5] hw/net/can/flexcan: Wire clock control module via
+ link property
+Content-Language: en-US
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Matyas Bobek <matyas.bobek@gmail.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>, Paolo Bonzini
+ <pbonzini@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Pavel Pisa <pisa@cmp.felk.cvut.cz>,
+ Jason Wang <jasowang@redhat.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Francisco Iglesias <francisco.iglesias@amd.com>
+References: <20260702184038.178196-1-shentey@gmail.com>
+ <20260702184038.178196-2-shentey@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260702184038.178196-2-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87zf08usa0.fsf@pond.sub.org>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Proofpoint-ORIG-GUID: G0qNoe9mDdozc-OaFGFgd9l2dXHj00HS
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDEzNyBTYWx0ZWRfX+6t12MJHtynq
+ QKzjwbu69XTdFGG8ins/lfO6apajEvkojA4cn/95kflIXht84gnW3lwONGyTXUvtL7rAZRBWgo9
+ qLcK8OHq3P1uu5FsFSqJ0c6xJnNxHaI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDEzNyBTYWx0ZWRfX60RcGp0D/kST
+ vNaSGORSHuUAZEj5QttTAsTkk8HSE5oE4eO6j60OgKaN6CgTO7Lr+1E0i+JPC+zFOl+4FK5Cl/a
+ Gng4s76s8HphhRV2UYacFK2kxMn9xGMWl2la7XRbpvKjuSZeP9BdbNdOLBbpM/XNRHCom5IFQrf
+ Su1iy58bLo1XmxHwXW+bi35aWlBJu1QUsD/LPYNPkZwnkukWhhfk5eb/VbQrN3y1AUDiSxJQNGv
+ MYoisufSFbsEjJHxT1nWaWXIBbPiZ5LtbHI8XTk6254l532nyv8Bno9LmuAQZjwdRxKwxiEWyTh
+ XVq1mmVMtlVIztlMlpFwjGD+2f7emSKuhwDKKOyc/so97kUxHj2Cd1x4/HzLFa+2Nc8UkzTRZ70
+ VD5rH+KZk7HMgeAMEalZC+ZAk1Em+J0Z6X3+UNehYxQzXTWBT5Obdh/CHtnosiwGNxYZaKynH8k
+ 9PlHif5Ix91yEzDUeYw==
+X-Proofpoint-GUID: G0qNoe9mDdozc-OaFGFgd9l2dXHj00HS
+X-Authority-Analysis: v=2.4 cv=GulyPE1C c=1 sm=1 tr=0 ts=6a4bac3e cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=PLEY+c9/kVlxBKEpvFYBUQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=3vsBvid6nmlQ9tsTqnQA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-06_01,2026-07-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 clxscore=1015 malwarescore=0 impostorscore=0
+ priorityscore=1501 suspectscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060137
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,100 +161,22 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 03, 2026 at 03:17:11PM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+On 2/7/26 20:40, Bernhard Beschow wrote:
+> When wiring struct FlexcanState to the clock control module, it is
+> currently necessary to reach into its private data. Moreover, when
+> forgetting to wire the clock control module, QEMU will crash after the
+> guest has already started. Fix both by letting struct FlexcanState
+> expose a link property whose sanity is checked at realize time.
 > 
-> > This is associates both QMP and HMP monitors with a character
-> > device backend.
-> >
-> > Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > Tested-by: Peter Krempa <pkrempa@redhat.com>
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >  chardev/char.c             |  3 ++-
-> >  gdbstub/system.c           |  4 ++--
-> >  include/monitor/monitor.h  |  4 ++--
-> >  monitor/hmp.c              | 10 ++++++--
-> >  monitor/monitor-internal.h |  2 ++
-> >  monitor/monitor.c          | 47 ++++++++++++++++++++++++++++++--------
-> >  monitor/qmp.c              | 18 ++++++++++-----
-> >  stubs/monitor-internal.c   |  2 +-
-> >  8 files changed, 67 insertions(+), 23 deletions(-)
-> >
-> > diff --git a/chardev/char.c b/chardev/char.c
-> > index c71ffa7963..22e5bae388 100644
-> > --- a/chardev/char.c
-> > +++ b/chardev/char.c
-> > @@ -804,8 +804,9 @@ static Chardev *qemu_chr_new_from_name(const char *label, const char *filename,
-> >      }
-> >  
-> >      if (qemu_opt_get_bool(opts, "mux", 0)) {
-> > +        const char *chardev_id = qemu_opts_id(opts);
-> >          assert(permit_mux_mon);
-> > -        monitor_new_hmp(NULL, chr, true, &err);
-> > +        monitor_new_hmp(NULL, chardev_id, true, &err);
-> >          if (err) {
-> >              error_report_err(err);
-> >              object_unparent(OBJECT(chr));
-> > diff --git a/gdbstub/system.c b/gdbstub/system.c
-> > index fda8ef9352..d681476f5e 100644
-> > --- a/gdbstub/system.c
-> > +++ b/gdbstub/system.c
-> > @@ -387,9 +387,9 @@ bool gdbserver_start(const char *device, Error **errp)
-> >          qemu_add_vm_change_state_handler(gdb_vm_state_change, NULL);
-> >  
-> >          /* Initialize a monitor terminal for gdb */
-> > -        mon_chr = qemu_chardev_new(NULL, TYPE_CHARDEV_GDB,
-> > +        mon_chr = qemu_chardev_new("gdbchrdev0", TYPE_CHARDEV_GDB,
-> >                                     NULL, NULL, &error_abort);
-> 
-> This chardev now gets ID "gdbchrdev0" instead of id_generate(ID_CHR).
-> 
-> If you truly need this, you have to mention it in the commit message.
+> Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+>   hw/arm/fsl-imx6.c    |  3 ++-
+>   hw/net/can/flexcan.c | 10 ++++++++--
+>   2 files changed, 10 insertions(+), 3 deletions(-)
 
-Not required.
-
-> 
-> > -        monitor_new_hmp(NULL, mon_chr, false, &error_abort);
-> > +        monitor_new_hmp(NULL, "gdbchrdev0", false, &error_abort);
-> 
-> If you don't, then passing mon_chr->label here should do the trick.
-
-Yes.
-
-
-
-> > @@ -1538,22 +1539,27 @@ static void monitor_readline_flush(void *opaque)
-> >      monitor_flush(&mon->parent_obj);
-> >  }
-> >  
-> > -void monitor_new_hmp(const char *id, Chardev *chr,
-> > +void monitor_new_hmp(const char *id, const char *chardev_id,
-> >                       bool use_readline, Error **errp)
-> 
-> You now pass a chardev ID instead of a Chardev *.
-> 
-> I *guess* that's possible because chardev_new() asserts it's passed an
-> ID.
-> 
-> I should now check all callers of monitor_new_hmp() to make sure they
-> pass the correct ID.  On a Friday afternoon.  I hoist the white flag.
-> 
-> Such refactorings should be mentioned in the commit message.  Even
-> better would be a separate patch.
-
-I'll switch to a separate commit for this.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
