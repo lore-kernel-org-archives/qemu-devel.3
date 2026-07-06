@@ -4,134 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68538C43602
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4D5FC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:50:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgeys-0004Qn-Co; Mon, 06 Jul 2026 04:47:10 -0400
+	id 1wgf26-0007V5-DB; Mon, 06 Jul 2026 04:50:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wgey2-0004J8-Ha; Mon, 06 Jul 2026 04:46:25 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgf1q-0007P7-Bn
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:50:18 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wgexm-0004bJ-Mt; Mon, 06 Jul 2026 04:46:16 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=g5kdzznajawNa+/ZCylJL9H/gxtOsN6AugJtAnxwPi/JxSYYvy3i44Bg6F1pkpufqyUC6glaYzux8qnpEDROAy8TAw4ug6JEIcSEflzlxQzE0mhkAmVaXUUJN+D4vvRZfxvdDgMfRKUC9pwzxo/DFPw8fldylzsBSXFTf85S5Msb8WnNnXmjnoqUBlbzEiY+KqevgYOOEKOmWO1zEyqCuVZ/leV46yJaMf2YEExi/8QRv5ddrfve4TbGJBh2CseqV4C4pZo2B+Dg0XzgqrDQ/4klK0iht2LJu3EnaCAfwZNQVkpaMbaTbbQcDL3OtibwhITpSzHeqULoCeMSZh2syA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7SJdgXrVVKGozOG1z6Gfjf/h3vp0XYDFmNqk/PxwYlM=;
- b=kiIxszkgjp1kBQnYefsRfkJqXtFguo4Dofnk0xbYq98aj04cMxxPZ2GbBTJnXIUqKc9sLBMGGK1pXlx4nFmdFujYlrk4ig/c/kLDrMwxn+9Lbw5xZyVai4gHN5GjVB5Wh/BojzxkRCcBFCUsdWz5kHtP8cMVorUPoAXeKfCDiFhRTh10CD7DaXwRrOg2j/+SZcX6I25XybpgIklVpW1tIsYeK792JQiIrpb+vY/EVcwu2vNsZfzoIR3l4ZzYZ472caBtH4izeA0oSsXmCjayV1hxcWXU7PUmfAJbCdhvrXxaFPRJy62y5EY/MOe6E31K199GY1GEG4sxCtNxz93ziQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7SJdgXrVVKGozOG1z6Gfjf/h3vp0XYDFmNqk/PxwYlM=;
- b=eXXQ1Z3GNvPORXJ2Zs2qFy/7NhkTlpxpSf8g5jWQ2EgAEH7ZF+LYoe6YBrTbADHlQlOvm5KcdNHmusU4hA7VShNeYNxTEWcqBP2xVD4dZVAj2zJmml5FjQMjV6tPJ7MsOoutBTz3Lv5gjFPeOkocPvQ+VgNpQ3EVQOabsYTnbMB/iM7pCJtfLV/NVCHDDLMCUahat9sUiArbSD5noC09sqe5T5IXapzxXNLHDM9tihet4VVh3EIxApYK/y0LNuGokc5BfVvxWIx9NLf6szTsosuWzDlrA/KohK4zwt3LTlUmXQoSgn+KDN/RcGHjkGOZlrDIP0xwvM+gcprKN5tmlA==
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by TYZPR06MB6639.apcprd06.prod.outlook.com (2603:1096:400:45b::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.11; Mon, 6 Jul
- 2026 08:45:46 +0000
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0181.010; Mon, 6 Jul 2026
- 08:45:46 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 4/4] hw/misc/aspeed_scu: Add separate reset handler for
- AST2700 SCUIO
-Thread-Topic: [PATCH v1 4/4] hw/misc/aspeed_scu: Add separate reset handler
- for AST2700 SCUIO
-Thread-Index: AQHdDSPWrkZvoV9KiE+QvT9fW/hI7g==
-Date: Mon, 6 Jul 2026 08:45:45 +0000
-Message-ID: <20260706084540.1988785-5-jamin_lin@aspeedtech.com>
-References: <20260706084540.1988785-1-jamin_lin@aspeedtech.com>
-In-Reply-To: <20260706084540.1988785-1-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|TYZPR06MB6639:EE_
-x-ms-office365-filtering-correlation-id: 0388d37a-69c4-452a-fe35-08dedb3af8b2
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|23010399003|376014|366016|1800799024|38070700021|18002099003|22082099003|56012099006;
-x-microsoft-antispam-message-info: Y/Ey27PKax4ckkWK2m0j7AEcXBZP4stNP02MxyJiQwNCrRYpLKsED6U227JZIzaamjUUs3ctOgya25hT/XflF5/U0IAritKYkM/1ipF10Sy/noKy5JbL/ClQ3HKd2Zt3Iu+pdSgscsWjfpot0rAK1PUAHiTe/FXlq+PM7wd/4NNwGavtftHZ8unUB+l+OdFaEmVpbHAH4433GMxF2j1E3eJ9fJKAxXokCDRpqe0NoKDzD6nuHT5+gl2C1Zt6Wk8HEhagm3nqpbxpzgCy7QSr6mq145DHsYiIo5iUn/owN1mg9BvRuifxVI3/5aabT5OfgXcvYPpyLZ7qbiJMumsqJzEglKKybwTV5TZ/VwWOV7wk9SPnfBByFYtdc3ssriKIF6Hhv12DHI2TkIlVXmZPGsOEs1hoxZhr9gui5yD/PhwKgHpzE38NthwqCCKe/qTgQ8F57vwd8Y3e36U4VY8q0hhSfyOJ3I0L3Dwlg74vLsLuTUCWdxw7A8Q5+bzs5OLcPZ0tBpdn0vTvHCt5i6A0oGljCpO7OoTGOvlPtMiwF4RA5n6IQ7wcQWLQFIFL7ArJXxPJNNb9ZT0kQsG9DBvjD5TwyAeDuzZvqo2Gg++CnQwPSl92j85lFAIs1Ev7By+I4SyakwhuQf2xVFMyvKJ1iTE9DdueIJDfboodjbjl4D37U+VJSapBjDOUvUSQ4gloIFxRBuGog/TKVe0jfycXisvoJeLKGSk64Rs1ol7/VfI=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(38070700021)(18002099003)(22082099003)(56012099006);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?RnL7RowHYea7wF9pFwnMvSnLBMKK2YgfZXoh4JNIoZy7lpSpD1bAt+b7NV?=
- =?iso-8859-1?Q?IBe18oIAoTlDaiYvKVgZswpzOUQE56ap+P9wLU6X3Z5dx4FWsLabQ6EUR6?=
- =?iso-8859-1?Q?X6ouTaVuO8v+VGhIdOIrk2aiHlGZqLAWY1YqhyzQGNT4QWvuEUlXiN0YAN?=
- =?iso-8859-1?Q?QXAeJTWK9c8R7zItRYcDnI1InC0RL9NUmsk7Wwxyvx0xJjtdXGgF+WayZj?=
- =?iso-8859-1?Q?+tw0K+Yh7e1vKHpONM2fUwttWGi1FIV/PqYfmBgyuzMcSNF2PIiqZzW0UR?=
- =?iso-8859-1?Q?XuYiowMJDzOjYQp6TGu5bw2H2tlqf2UnIGBqBLjG6H+X2TeQbpQlLKlgj/?=
- =?iso-8859-1?Q?uwdVHL1AA3S7xUeQDMAK3ZmW/1AdZsEpxQDABFNOArMkDS0/SsRlvnrS71?=
- =?iso-8859-1?Q?Fh8XvwRJ/keAG2wdFkYoxq0gh4a3axeJpEfs/kttI0FTEZAf9YMe6tHuYI?=
- =?iso-8859-1?Q?mlZq5d+8ppR4dmQpR7U0NhmWmobKAenlg9kzMBtUkrgUqviwD1dP8A88ry?=
- =?iso-8859-1?Q?PNi5D1r4rtfuC9hKabIHtgSQgMV9dTZN2+Q5+kj+UXywoZ7FM9I8Mar5h5?=
- =?iso-8859-1?Q?jserDHjbd80njU7YlDn5c8LJ7pWhbcdWmOpznEKSjPhOPjZYCcZXXU302c?=
- =?iso-8859-1?Q?qV9rEMXAtzCmpZrlGMLt1y9A2jwessnnFH0Gv3YVv4+iCeS+LOuyH7N5yO?=
- =?iso-8859-1?Q?/OusWxQtR794TsgNS5HPyGqj0L8p7rf8NLsaxRTN6eLPPu4YSsQrtH4sWB?=
- =?iso-8859-1?Q?oH66GbI8BSNBEaSYieBPdX8ozlI1AM5GFovqdEtukdEiXdil8HEfyOHRmg?=
- =?iso-8859-1?Q?tIw5QpsbH/miaNb+KajZKKMNPrLH0acRKQ23a36njVExYuzTgvmcvtSCvh?=
- =?iso-8859-1?Q?6Knc7Kp2xeNDNb1q+1rWuhrFfU5dMkEchkNwJqsXbKnPE0QL/TVdutQq2n?=
- =?iso-8859-1?Q?R5k7vx4e5ux37MJg7W07csIzaLQQ46lIdwfrnUQzJxBhNpTtSTA4gOZLB7?=
- =?iso-8859-1?Q?/Jf5+IIISimnJdH+BASVwFb0aIGEc4/qCu3oVXhNZpSK2/406oTb1Pb3SJ?=
- =?iso-8859-1?Q?FLMheqk7SGbxxSSzS+9r1NguejFYc7zotUhm1aqElQQXxrRJMkHOq+Roeo?=
- =?iso-8859-1?Q?SDkbTf6XKzO+fn3l7K8q+sgS9rxqNazvmw9XS/XVMTcmIXTW/JTKIcGfuc?=
- =?iso-8859-1?Q?sweaVUH0AwiPz9U/LAdYZoXn0WIXQfnQ+CvnuhVZ2ICq3NoZaAwOLzeGrI?=
- =?iso-8859-1?Q?g07RzWhqp5WJ5sKKOt9O+XSukBoxf1CVQa0T63E5XpiyJfP314dHzLamFT?=
- =?iso-8859-1?Q?ifWRFiGXb0PwGhx9b7W8FgskiR4gbQ1GW7d+dtZ47IKFXdcEaZ//un++p3?=
- =?iso-8859-1?Q?UpOmlbO8yJMyCBFAg2gGuPJ59obpXLkg3UGuQK7586mXdzQFglxZxeXVwT?=
- =?iso-8859-1?Q?O+0une+ksAGGF/druUR4cyMJ012dc26HVLbmXEj6u3eeAbNJ17R7iu7wrX?=
- =?iso-8859-1?Q?Yv9HygmEisP5CB7+tVxfdDVSq7t2cSHst+FlITscoqHTrkKpWnNbmUlJZi?=
- =?iso-8859-1?Q?DGQMjY2c3EIxXh4N5gU1YIqKyV0G+8AkPfx0t0du5aWwbVALi1r97iOtkv?=
- =?iso-8859-1?Q?XPRyEULfiGBUC57k8GVQCQpmHeBywqcFY4bWkO0NyvteuBv1MYMMlpfiBW?=
- =?iso-8859-1?Q?8JT50Ki5/UNhNRjoYB9tW5v2bR5qDLBex8oqTYLqILeAHAe9lCLVNJPKjg?=
- =?iso-8859-1?Q?/D2RbEG9cfJVbq7X6J/RN3rJ+Cc+9pNbOcgEzOSa+0MbdrJwKvuq9L1xnf?=
- =?iso-8859-1?Q?EVntooncww=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgf1g-0005SM-PB
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:50:07 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66678FTa3976365
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 08:50:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ yAJ/WAjBBhxnZrFkR8h9XF6NW8huKSmbSlUmWLT3HwE=; b=Nq3nCibUBPiKX0N5
+ JOvPKou7H9zt1ggkgsVzQXc0XiHT/EeKAXEKDfBj3/8cft5XA1L8vMUjNrYZL6FR
+ 2HOLfdHEiYdO9o1tMAw55UV9umRC8COZ718V67CoJVmg3h7cRHbJGge2J2O7yC6T
+ s0qtnAmClQMudQvgyq0s9rOdXXcdkkBJi24WSDzQU7xtyjd3Gln7ZAzLiPvrC+er
+ WWzm2szzvnT93nVghP0opcSOEJqGhYS2OGW/nzFaKx15ii+xibKM5ziQe2rdOKqE
+ iU6rXBQBLVTSJd9vAywbQ0s9LYD/jIaE/SGDTNtNw48EXcP69h7P5oQhOHVi7o+p
+ kNHyEA==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f87q7gd7f-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 08:50:02 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8ee2847cbd4so32258616d6.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 01:50:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783327802; x=1783932602; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yAJ/WAjBBhxnZrFkR8h9XF6NW8huKSmbSlUmWLT3HwE=;
+ b=bhqPAvB3dNUCPFiAL2p8mapsl2DMx/6CD/sQ5zOOHoDZe3DzPAROy2yatOWiibL2B2
+ PvrZa8tnd59M9L1q1pRrstdW0Sy8LVDdJ6yA1kxeMfNgjMLf9cfu5TW7DsDUX/3RUvZ6
+ AkM/4dZ6YunVMOEO1E7DGUcaLFwcq5v1H59bUWr8pbsX5J0qWxfIU3QgzUi8KyugNr4y
+ 1kz/P2zdpBQMVnFeCAXeMEV/22cSKpqOvcX2wjRyVH3x7nwweSA5qeJFShxTtIaNHtux
+ O15qlfev6aPJMvEJjZk/omyz0UxDV7wUULGZVD2Pu9QxIyapiJ/wEbEIbmXw9UarPd6t
+ 79RA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783327802; x=1783932602;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yAJ/WAjBBhxnZrFkR8h9XF6NW8huKSmbSlUmWLT3HwE=;
+ b=T9MwdPpPDSx/arD+df0m5PGmcgTxSE/VD663N86+jN4LB6OZYP1exGIBVQMTJFunAf
+ TnSjd3d1wV7jxOyxoUc84101VZnLHXI13Ubydsl1berLZi/HYyDqg79DNxl1Hkh9hT1W
+ pXwmkNNblBtkT5oH2Xf0ANI8maQVCnVv5PUZ1ICxc9NkLAndrz4F0aQYXDSp3jGUR+Ri
+ AeBt/og/taiKlitr2OdNiQiyMb8IQky//4uGzA5XQ51qxgwTDjHBDmy09NrLT2TdaFFu
+ 1xkDMlQ3k+IwPmkkRLm7m2geUvGztdKGbn/vUtSk2C82TU/A3xnTP1x6Hwvy3ZjBgo+b
+ 4kcQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rrck6GWBBiXXepUUF9Gg1xpsSsTQW6KWx7DQgYvLXBFykJrpVj1QYqZtaq7ctVja1nw8IgToQeErhkC@nongnu.org
+X-Gm-Message-State: AOJu0Yw/fqHLh7dsUQosZFwGBIpz9zbDn+KMAoII9yeP5YsBHbvMv5Ut
+ E/Y8he3bunJ7y/QOrZaCNYroiQlzy5PkjUl02pSYyNiQrXspHIFBTb+ZJ3sgkDsVd1IxLm3bkXY
+ CLusCgluTNhM1mPn6GmJdBVn5DZWQXrqI7Y8RelxBQ8MmjG0Q6Hrn7eTryba0zsMn9g==
+X-Gm-Gg: AfdE7clRiCwFvZ6JmlbEnKrhFAL5bEDgBwK4O2cjK2oEuH3S2odOhhT8th9Iyx7gL9X
+ MBbAzz1UR5+Ptpn0DotXMJ8pTrCQ+GfBua6dgMnYMZ1YoD1HedbJlRSGVw/O5i0OEEbqEqgGgqW
+ lPA9urLWjN97QdP9hPOFln9NpYZ5Dk/0gslZAtzdijbKGDOuTK4MKA5cjjPBO0nCvXYIY7Q+fOO
+ uMCNZuS63S/8t67H69gxHhZ6tKEmbvcZGvckNurPU/98OdlV+qZH0/Ptc7iBenGenI7LQ7G9JGu
+ Q3LVzMOyReth/rJe64qnNP0BhGnEhuBhrp+Syau+1PZlyfTgfKHEJOBvclj4OtNv5wjxK+G3rkC
+ 4cjUluUWz9jJ0aqB0DNG37wYAybYcRdxtcJwuL7ki7v3pUdW3ui8CaO/C3dJrLg==
+X-Received: by 2002:a05:620a:2946:b0:92e:6c15:24cd with SMTP id
+ af79cd13be357-92e9a34ad8emr1317807185a.15.1783327801820; 
+ Mon, 06 Jul 2026 01:50:01 -0700 (PDT)
+X-Received: by 2002:a05:620a:2946:b0:92e:6c15:24cd with SMTP id
+ af79cd13be357-92e9a34ad8emr1317804985a.15.1783327801213; 
+ Mon, 06 Jul 2026 01:50:01 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c12b62f54c8sm697370666b.55.2026.07.06.01.50.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Jul 2026 01:50:00 -0700 (PDT)
+Message-ID: <d950f0c1-aad9-4fd2-9aaf-52edc8a1e2a7@oss.qualcomm.com>
+Date: Mon, 6 Jul 2026 10:49:59 +0200
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: eM1uxkpz9dJI54MFfuhkwG8K36NRkvaHySucWnJplHbTfDoud7riNClAmUk7uue15eqSDi5TGkVvq++AUtoizrw97qcQW69lOhswxSJhb8jgeO1JA4nj1dTyv3LeUgd/OtnCFNwak0QtpcOb/O5FZrA8t/cu/w6fPjioHLQvT7kbZot4cJeOpX7HFsWN+5xi0dY7WAj5y7XP19adYoqSxwQzK3KI1rdK7adavmfcUMfS1xAM4IFzcI0ECFwqGeqdVJTt5xsJN1wyO8DIlXuWwORFCtWvtiTvUBUI50a55GDxDolievIdjtRMQjCMXisfRdPJQZWhEwe0seBl/XXUbQ==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0388d37a-69c4-452a-fe35-08dedb3af8b2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jul 2026 08:45:45.9925 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: mtvi+804T7kvpCvhCASP2qCqoBC/F0KKdB201I4VxD40B563s/CeWPbpjRjCABeP6+Ktb8VkTX5af4NzeoGA1QwF/NuqxB0rJP7/btYTqVM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB6639
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] target/sh4: add tests for sh4 fipr and ftrv
+ instructions
+Content-Language: en-US
+To: Randy Schifflin <randy.schifflin@gmail.com>, qemu-devel@nongnu.org
+Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, qemu-trivial@nongnu.org
+References: <20260629-fixup-sh4-tcg-fpu-instructions-b4-v1-0-4356b305f971@gmail.com>
+ <20260629-fixup-sh4-tcg-fpu-instructions-b4-v1-1-4356b305f971@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260629-fixup-sh4-tcg-fpu-instructions-b4-v1-1-4356b305f971@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA4OCBTYWx0ZWRfX/uQNSPRZJTyi
+ 09bGUpLbv5QI+fOaYGjAVSyhpBSknONLQIlMgt4p3AseGAxrXkmo3xe9EfoGcp0ditUmVfF2WO5
+ wIYPcYMcDD1d0e9y9Gh4grd3T6V1O2tiuVqSxo/nwKX3qC5jdmOlu5chDDWLbh4/4UdxZU52K53
+ QP7zOh45Di2bKc2bPiJqhANQdL7FOIjLb0eGcrvl6caoNVRHMM5dYoSWFJhUx50+C+ZBVaX/VlI
+ qrb2Pd0jy/KKg2HPBkmsELtx0O5WI2NOT34r4eBjRoiy2LC3ccgLEbelVEGdTcHYcHuFbTQWmlW
+ sPqdonmEP39VzhLX+5/j24bWqHZqNJEyPN06Sb+w47eEwyApZaihTnQ00lwd3R3B4OOqdW3+4hn
+ 0cunjNcK/miK4CduSQJwSnVyhYm78eJPEmyrgF9sO/AcHaANCrHLFYnY6zNX+a/8ENVBAmyOupC
+ anWC1N0vj5FJv0KkP7Q==
+X-Proofpoint-ORIG-GUID: hU6U10xm0q0GYMXxTpaEYptZFSENr3UR
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA4OCBTYWx0ZWRfX/dBgX+58nzkr
+ HWZtmhO/frdQMmu4XVvb9i/yvO/OVKq5VbusLtXgovTYGbquueA+9wR36Gd09rcY7D8kEHdWBxF
+ 3uJyVFoEnNrM2ZqEp1TKjfzJmZRPUTA=
+X-Proofpoint-GUID: hU6U10xm0q0GYMXxTpaEYptZFSENr3UR
+X-Authority-Analysis: v=2.4 cv=f9N4wuyM c=1 sm=1 tr=0 ts=6a4b6c3a cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=pGLkceISAAAA:8 a=09hUy3Lx6XOzbbffWhEA:9 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-05_02,2026-07-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 adultscore=0 impostorscore=0 bulkscore=0 suspectscore=0
+ clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060088
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,59 +155,266 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a dedicated reset handler for SCUIO.=0A=
-=0A=
-Previously, SCU and SCUIO shared the same reset handler. This no longer=0A=
-fits the AST2700 design, where SCU uses the Aspeed2700SCUState subclass=0A=
-and will handle coprocessor-related control in future changes.=0A=
-=0A=
-Since these controls are defined in SCU (not SCUIO), SCU and SCUIO=0A=
-should not share the same reset logic.=0A=
-=0A=
-This change gives SCUIO its own reset handler and prepares for upcoming=0A=
-SCU-specific functionality.=0A=
-=0A=
-No functional change.=0A=
-=0A=
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
----=0A=
- hw/misc/aspeed_scu.c | 12 +++++++++++-=0A=
- 1 file changed, 11 insertions(+), 1 deletion(-)=0A=
-=0A=
-diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c=0A=
-index efe1d6315b..ca93c3699d 100644=0A=
---- a/hw/misc/aspeed_scu.c=0A=
-+++ b/hw/misc/aspeed_scu.c=0A=
-@@ -1069,6 +1069,16 @@ static const uint32_t ast2700_a0_resets_io[ASPEED_AS=
-T2700_SCU_NR_REGS] =3D {=0A=
-     [AST2700_SCUIO_FREQ_CNT_CTL]        =3D 0x00000080,=0A=
- };=0A=
- =0A=
-+static void aspeed_ast2700_scuio_reset_hold(Object *obj, ResetType type)=
-=0A=
-+{=0A=
-+    AspeedSCUState *s =3D ASPEED_SCU(obj);=0A=
-+    AspeedSCUClass *asc =3D ASPEED_SCU_GET_CLASS(obj);=0A=
-+=0A=
-+    memcpy(s->regs, asc->resets, asc->nr_regs * 4);=0A=
-+    s->regs[AST2700_SILICON_REV] =3D s->silicon_rev;=0A=
-+    s->regs[AST2700_HW_STRAP1] =3D s->hw_strap1;=0A=
-+}=0A=
-+=0A=
- static void aspeed_2700_scuio_class_init(ObjectClass *klass, const void *d=
-ata)=0A=
- {=0A=
-     DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
-@@ -1076,7 +1086,7 @@ static void aspeed_2700_scuio_class_init(ObjectClass =
-*klass, const void *data)=0A=
-     AspeedSCUClass *asc =3D ASPEED_SCU_CLASS(klass);=0A=
- =0A=
-     dc->desc =3D "ASPEED 2700 System Control Unit I/O";=0A=
--    rc->phases.hold =3D aspeed_ast2700_scu_reset_hold;=0A=
-+    rc->phases.hold =3D aspeed_ast2700_scuio_reset_hold;=0A=
-     asc->resets =3D ast2700_a0_resets_io;=0A=
-     asc->calc_hpll =3D aspeed_2600_scu_calc_hpll;=0A=
-     asc->get_apb =3D aspeed_2700_scuio_get_apb_freq;=0A=
--- =0A=
-2.43.0=0A=
+Hi,
+
+On 29/6/26 23:49, Randy Schifflin wrote:
+> Add tests for the TCG generation of the sh4-specific `fipr`
+> and `ftrv` instructions.
+> 
+> Signed-off-by: Randy Schifflin <randy.schifflin@gmail.com>
+> ---
+>   tests/tcg/sh4/Makefile.target |  7 +++
+>   tests/tcg/sh4/test-fpu-fipr.c | 64 ++++++++++++++++++++++++++++
+>   tests/tcg/sh4/test-fpu-ftrv.c | 99 +++++++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 170 insertions(+)
+
+Could you fix using the QEMU Coding Style (see docs/devel/style.rst)
+and resubmit? Using ./scripts/checkpatch.pl triggers:
+
+9/17 Checking commit 8a09e8d17f84 (target/sh4: add tests for sh4 fipr 
+and ftrv instructions)
+ERROR: open brace '{' following function declarations go on the next line
+#32: FILE: tests/tcg/sh4/test-fpu-fipr.c:7:
++static void single_precision_mode(void) {
+
+ERROR: do not use C99 // comments
+#34: FILE: tests/tcg/sh4/test-fpu-fipr.c:9:
++    // Read FPSCR register
+
+ERROR: do not use C99 // comments
+#36: FILE: tests/tcg/sh4/test-fpu-fipr.c:11:
++    // Set precision mode to single-precision
+
+ERROR: do not use C99 // comments
+#38: FILE: tests/tcg/sh4/test-fpu-fipr.c:13:
++    // Write FPSCR register
+
+ERROR: trailing whitespace
+#39: FILE: tests/tcg/sh4/test-fpu-fipr.c:14:
++    asm volatile("lds %0, fpscr" : : "r" (fpscr)); $
+
+ERROR: open brace '{' following function declarations go on the next line
+#42: FILE: tests/tcg/sh4/test-fpu-fipr.c:17:
++static float fipr(const float v1[4], const float v2[4]) {
+
+ERROR: do not use C99 // comments
+#44: FILE: tests/tcg/sh4/test-fpu-fipr.c:19:
++    // Perform inner product of fv4 and fv8
+
+ERROR: do not use C99 // comments
+#45: FILE: tests/tcg/sh4/test-fpu-fipr.c:20:
++    // Result is stored in the last float register of the last vector 
+argument
+
+ERROR: code indent should never use tabs
+#55: FILE: tests/tcg/sh4/test-fpu-fipr.c:30:
++        "fipr^Ifv4,fv8\n" // (fr4,fr5,fr6,fr7) dot (fr8,fr9,fr10,fr11)$
+
+ERROR: do not use C99 // comments
+#55: FILE: tests/tcg/sh4/test-fpu-fipr.c:30:
++        "fipr	fv4,fv8\n" // (fr4,fr5,fr6,fr7) dot (fr8,fr9,fr10,fr11)
+
+ERROR: do not use C99 // comments
+#56: FILE: tests/tcg/sh4/test-fpu-fipr.c:31:
++        "fmov fr11,%0\n"   // Result in fr11
+
+ERROR: trailing whitespace
+#57: FILE: tests/tcg/sh4/test-fpu-fipr.c:32:
++        : "=f" (fout) $
+
+ERROR: line over 90 characters
+#58: FILE: tests/tcg/sh4/test-fpu-fipr.c:33:
++        : "f" (v1[0]), "f" (v1[1]), "f" (v1[2]), "f" (v1[3]), "f" 
+(v2[0]), "f" (v2[1]), "f" (v2[2]), "f" (v2[3]));
+
+ERROR: line over 90 characters
+#64: FILE: tests/tcg/sh4/test-fpu-fipr.c:39:
++    // The SH4 manual specifies `fipr` is only available when FPSCR 
+register precision-mode (PR) bit is 0
+
+ERROR: do not use C99 // comments
+#64: FILE: tests/tcg/sh4/test-fpu-fipr.c:39:
++    // The SH4 manual specifies `fipr` is only available when FPSCR 
+register precision-mode (PR) bit is 0
+
+ERROR: open brace '{' following function declarations go on the next line
+#101: FILE: tests/tcg/sh4/test-fpu-ftrv.c:6:
++static void single_precision_mode(void) {
+
+ERROR: do not use C99 // comments
+#103: FILE: tests/tcg/sh4/test-fpu-ftrv.c:8:
++    // Read FPSCR register
+
+ERROR: do not use C99 // comments
+#105: FILE: tests/tcg/sh4/test-fpu-ftrv.c:10:
++    // Set precision mode to single-precision
+
+ERROR: do not use C99 // comments
+#107: FILE: tests/tcg/sh4/test-fpu-ftrv.c:12:
++    // Write FPSCR register
+
+ERROR: trailing whitespace
+#108: FILE: tests/tcg/sh4/test-fpu-ftrv.c:13:
++    asm volatile("lds %0, fpscr" : : "r" (fpscr)); $
+
+ERROR: do not use C99 // comments
+#111: FILE: tests/tcg/sh4/test-fpu-ftrv.c:16:
++// Set XMTRX registers to a doubling scale matrix
+
+ERROR: open brace '{' following function declarations go on the next line
+#112: FILE: tests/tcg/sh4/test-fpu-ftrv.c:17:
++static void xmtrx_scale_2(void) {
+
+ERROR: do not use C99 // comments
+#114: FILE: tests/tcg/sh4/test-fpu-ftrv.c:19:
++        "fldi0 fr0\n" // Pair dr0 (fr0, fr1) = zero,zero
+
+ERROR: do not use C99 // comments
+#117: FILE: tests/tcg/sh4/test-fpu-ftrv.c:22:
++        "fadd fr2,fr2\n" // Pair dr2 (fr2,fr3) = two,zero
+
+ERROR: do not use C99 // comments
+#120: FILE: tests/tcg/sh4/test-fpu-ftrv.c:25:
++        "fmov fr2,fr5\n" // Pair dr4 (fr4, fr5) = zero,two
+
+ERROR: do not use C99 // comments
+#122: FILE: tests/tcg/sh4/test-fpu-ftrv.c:27:
++        // Enable pair-write
+
+ERROR: trailing whitespace
+#123: FILE: tests/tcg/sh4/test-fpu-ftrv.c:28:
++        "fschg\n" $
+
+ERROR: do not use C99 // comments
+#124: FILE: tests/tcg/sh4/test-fpu-ftrv.c:29:
++        // matrix[0][0] = 2.0
+
+ERROR: do not use C99 // comments
+#125: FILE: tests/tcg/sh4/test-fpu-ftrv.c:30:
++        // matrix[0][1] = 0.0
+
+ERROR: trailing whitespace
+#126: FILE: tests/tcg/sh4/test-fpu-ftrv.c:31:
++        "fmov dr2,xd0\n" $
+
+ERROR: do not use C99 // comments
+#127: FILE: tests/tcg/sh4/test-fpu-ftrv.c:32:
++        // matrix[0][2] = 0.0
+
+ERROR: do not use C99 // comments
+#128: FILE: tests/tcg/sh4/test-fpu-ftrv.c:33:
++        // matrix[0][3] = 0.0
+
+ERROR: do not use C99 // comments
+#130: FILE: tests/tcg/sh4/test-fpu-ftrv.c:35:
++        // matrix[1][0] = 0.0
+
+ERROR: do not use C99 // comments
+#131: FILE: tests/tcg/sh4/test-fpu-ftrv.c:36:
++        // matrix[1][1] = 2.0
+
+ERROR: do not use C99 // comments
+#133: FILE: tests/tcg/sh4/test-fpu-ftrv.c:38:
++        // matrix[1][2] = 0.0
+
+ERROR: do not use C99 // comments
+#134: FILE: tests/tcg/sh4/test-fpu-ftrv.c:39:
++        // matrix[1][3] = 0.0
+
+ERROR: do not use C99 // comments
+#136: FILE: tests/tcg/sh4/test-fpu-ftrv.c:41:
++        // matrix[2][0] = 0.0
+
+ERROR: do not use C99 // comments
+#137: FILE: tests/tcg/sh4/test-fpu-ftrv.c:42:
++        // matrix[2][1] = 0.0
+
+ERROR: do not use C99 // comments
+#139: FILE: tests/tcg/sh4/test-fpu-ftrv.c:44:
++        // matrix[2][2] = 2.0
+
+ERROR: do not use C99 // comments
+#140: FILE: tests/tcg/sh4/test-fpu-ftrv.c:45:
++        // matrix[2][3] = 0.0
+
+ERROR: do not use C99 // comments
+#142: FILE: tests/tcg/sh4/test-fpu-ftrv.c:47:
++        // matrix[3][0] = 0.0
+
+ERROR: do not use C99 // comments
+#143: FILE: tests/tcg/sh4/test-fpu-ftrv.c:48:
++        // matrix[3][1] = 0.0
+
+ERROR: do not use C99 // comments
+#145: FILE: tests/tcg/sh4/test-fpu-ftrv.c:50:
++        // matrix[3][2] = 0.0
+
+ERROR: do not use C99 // comments
+#146: FILE: tests/tcg/sh4/test-fpu-ftrv.c:51:
++        // matrix[3][3] = 2.0
+
+ERROR: do not use C99 // comments
+#148: FILE: tests/tcg/sh4/test-fpu-ftrv.c:53:
++        // Disable pair-write
+
+ERROR: line over 90 characters
+#155: FILE: tests/tcg/sh4/test-fpu-ftrv.c:60:
++// The SH4 manual specifies `ftrv` is only available when FPSCR 
+register precision-mode (PR) bit is 0, aka single-precision
+
+ERROR: do not use C99 // comments
+#155: FILE: tests/tcg/sh4/test-fpu-ftrv.c:60:
++// The SH4 manual specifies `ftrv` is only available when FPSCR 
+register precision-mode (PR) bit is 0, aka single-precision
+
+ERROR: do not use C99 // comments
+#156: FILE: tests/tcg/sh4/test-fpu-ftrv.c:61:
++// Transform vector vin by xmtrx; store result in vector vout
+
+ERROR: open brace '{' following function declarations go on the next line
+#157: FILE: tests/tcg/sh4/test-fpu-ftrv.c:62:
++static void ftrv(const float vin[4], float vout[4]) {
+
+ERROR: trailing whitespace
+#158: FILE: tests/tcg/sh4/test-fpu-ftrv.c:63:
++    asm volatile("fmov %4,fr0\n" $
+
+ERROR: trailing whitespace
+#159: FILE: tests/tcg/sh4/test-fpu-ftrv.c:64:
++                 "fmov %5,fr1\n" $
+
+ERROR: trailing whitespace
+#160: FILE: tests/tcg/sh4/test-fpu-ftrv.c:65:
++                 "fmov %6,fr2\n" $
+
+ERROR: trailing whitespace
+#161: FILE: tests/tcg/sh4/test-fpu-ftrv.c:66:
++                 "fmov %7,fr3\n" $
+
+ERROR: trailing whitespace
+#163: FILE: tests/tcg/sh4/test-fpu-ftrv.c:68:
++                 "fmov fr0,%0\n" $
+
+ERROR: trailing whitespace
+#164: FILE: tests/tcg/sh4/test-fpu-ftrv.c:69:
++                 "fmov fr1,%1\n" $
+
+ERROR: trailing whitespace
+#165: FILE: tests/tcg/sh4/test-fpu-ftrv.c:70:
++                 "fmov fr2,%2\n" $
+
+ERROR: trailing whitespace
+#166: FILE: tests/tcg/sh4/test-fpu-ftrv.c:71:
++                 "fmov fr3,%3" $
+
+WARNING: line over 80 characters
+#167: FILE: tests/tcg/sh4/test-fpu-ftrv.c:72:
++                 : "=f" (vout[0]), "=f" (vout[1]), "=f" (vout[2]), "=f" 
+(vout[3])
+
+WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+   tests/tcg/sh4/test-fpu-fipr.c
+   tests/tcg/sh4/test-fpu-ftrv.c
+total: 57 errors, 2 warnings, 173 lines checked
+
 
