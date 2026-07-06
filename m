@@ -4,142 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA654C43602
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 17:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 206E8C44502
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 17:17:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgmtO-00052l-10; Mon, 06 Jul 2026 13:14:02 -0400
+	id 1wgmvx-0005xP-1e; Mon, 06 Jul 2026 13:16:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgmtM-00051x-6N
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:14:00 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
+ id 1wgmvu-0005ws-UN; Mon, 06 Jul 2026 13:16:38 -0400
+Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgmtK-0008QB-Ix
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:13:59 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666FF1YF980438
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 17:13:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- VN/vcnKzW+VARZhIMFotAYFESbMpXEqXKN6UrmWIZZY=; b=ReGpco95/HubK5D7
- JT+/zaSgoD2Iwf/jbtMaA+K+ujIcSqgJfQD4NVyYMLNb68nvC5PoCFQxCBupSai5
- D30GlbGxOSDf0NMyqd7J9Pck9zfOD72ElEJtevEtGqJ2y80TvOMjwGNbPBW6TGHv
- zg7kHZ/tHoEGzQLPYBHGgK2mDet1V2W4LlHwOED3zp6tCISILXKz90HKmfy6hjC7
- H4KdQlDiA3UFfQ0hR8Qhh2YghdTF5RmxNn/IQ2urDrRz/wr8VzhgCmM3zKg3cXoP
- 1zuzBx06/sgRzXYEDGOhBxam61e7oGQO6HZknHWYObJ5wUAfvb6fT1m4gdR11tZK
- 7Qixcg==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f89kgt6e1-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 17:13:55 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8efad04d884so69915696d6.0
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 10:13:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783358034; x=1783962834; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=VN/vcnKzW+VARZhIMFotAYFESbMpXEqXKN6UrmWIZZY=;
- b=iZVCRcoUkj1El28g6N41LPRv3E5diaLZ2JDHh0w4NUy7hNQM/2rGaJOCYQ3WE08i9n
- Wr1n94lcf/l+NiGJ335H3HO2+Td6S449B0T/lBLAzau+yoFi8P0TITT8iPHf/W4EUZfe
- 9N4MrJyHdbTX6F0i5LU89CDI/t64/6fDXzfYs1YyLn/JKCTeA1PFhslr9fxFvrCaYB/d
- cmCS7xK1iGz4+rxHSjuyUj3Qm9bBddFPuKkCCeUZSlIBtKwRtcB8C0DvV3JVwVyE20Yg
- Fp9Fxw71ESiyL+xQaf/VNH4ElyYKilYb3zXGlJqIOllAPztOfAJN0r5cCj6J2J4O5TID
- 5f9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783358034; x=1783962834;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=VN/vcnKzW+VARZhIMFotAYFESbMpXEqXKN6UrmWIZZY=;
- b=Td/WqM19GCH8ZZX7cs+0nigyBZzccDMkpoTfNQK1njUj9eDVaqIAnxvL+fAf3N7T92
- xzhZMDjq8+Vg4peUiz6nahkW8rAa3eERmUGTp1trYshuLX0s/D0icHO5LL/f2kjBZNBc
- Epxm8+ASzYyfPIGNfrY/NoWQJCydT4w6H5vQGn1JC0B56IPRRvHzJSjZ5HW2iCUVQ2g/
- bGtA1EJqgeGAAt+Di+lUU7VE5dqmnW5n+1pGhK8aqMqt78yctys/yu1wjbLdmsP2sDlg
- qY8jAoyKQP6Pk9qQg/oeGCudxaf3lVh0uZIsA32T/FyEO6/Xj2Clg+SCY46lhOu37jpc
- jv/A==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqogFV2iEKpaWGxS/W/Ai051x3AaySFW/gRBjwdsByeQiKB9oXUOsv0rXQiH/qBNcYi1/ytq4OIeIdO@nongnu.org
-X-Gm-Message-State: AOJu0YzcJ2NuCdWPw7EmVVN7G8s7c+j3mAJQlf5DVek8iFGx2XRqFuSl
- 7K3WPSqxYvaC2bt1hlDU4E6xJRZMQKynmCj5gkbcaxV/r6+QI01mzAMvy9bdR2eVsoEP+5GNINh
- HwzcJv/nEE2RruhFkFDxLV0BCkeOICDATsz6+QSrROn7EK+lZIGxO1EkgfQ==
-X-Gm-Gg: AfdE7cnJ106/7fJE3f5BFlVnVTqwr6YTBUFi5J/8ZwntjQOY6Fcounhy4nBSkBoPOmt
- COueBTb1zCKLJLX4YmBpkZp+5/qMZgfyfKxkPpdsgja+rowdp5lyMOXNvyDGPvDFGYkTUe0C9Vg
- SuQ7ug68PCWSrFXo2wT6BrjPgBMEy//XFeT4IATVS5nuwTxOuWdnu26y9nh4YYmi/w0p4HwtFve
- TVrnnn8uIr+axvCkzGDdY4cCrbZioXMklurSfPRhQ18vqaSrjdUG/wGfuYMmtcFkcvg39lF86W9
- rWBKwQKG8LOUHqqRJ6dURG6+q2kWwiJ2nDuhFGQ+eJ2xCsBg1yyxnfi3xRM5L0pITy9hPQvAk/h
- xzlHIBQox5muTWNhnFJTI6/pNiwtc/xPwt2BWyGPG2zUct7o7er86I5+ocFULXw==
-X-Received: by 2002:a05:620a:4710:b0:914:7b4f:cf5b with SMTP id
- af79cd13be357-92ebb54cf33mr199010485a.16.1783358034213; 
- Mon, 06 Jul 2026 10:13:54 -0700 (PDT)
-X-Received: by 2002:a05:620a:4710:b0:914:7b4f:cf5b with SMTP id
- af79cd13be357-92ebb54cf33mr199005585a.16.1783358033780; 
- Mon, 06 Jul 2026 10:13:53 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa0960634sm27805980f8f.26.2026.07.06.10.13.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Jul 2026 10:13:53 -0700 (PDT)
-Message-ID: <c3c65bce-f8fe-43fe-b3b5-dd81742a2d4e@oss.qualcomm.com>
-Date: Mon, 6 Jul 2026 19:13:52 +0200
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
+ id 1wgmvs-0000f0-Rz; Mon, 06 Jul 2026 13:16:38 -0400
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfout.phl.internal (Postfix) with ESMTP id 6FEDCEC019B;
+ Mon,  6 Jul 2026 13:16:35 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-04.internal (MEProxy); Mon, 06 Jul 2026 13:16:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm1; t=1783358195;
+ x=1783444595; bh=Qi2hFhZRWnynHEOZ3uKAYDWZ5mtD8/edMhnXoiEb4Cc=; b=
+ Qr5FvnjiJaUXHPgl8GOraEReUUFiXQJegrXRgHQky5PtWdj0RvHOr+4tkpA6HJwD
+ 7Lh6sdBAbYTIBqBwSJwm5CLIp9qKqx5POQkx1vK4ewwsiEfaaEaXhCVDgbWQuaNP
+ QwuWRPLxhFnpeePaKB12pkV1znVxUTWUacfbaJUJGM+p9VfdyAe3Mj6DC2Vxymrg
+ vWfEnKXPGyF9y98gqKHu41wsYp7+slrERKgYZuqkd+MOYANsbfN7i4OKdpSMo/sw
+ F6yesAFAZ4vWAximSs+UZom2k5OnQNzJRkgitRvqq3j6e+DfLLnrSVspopC5d7JV
+ 7hSzwp0LyCPwWmpLGvOzIw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783358195; x=
+ 1783444595; bh=Qi2hFhZRWnynHEOZ3uKAYDWZ5mtD8/edMhnXoiEb4Cc=; b=g
+ 569d9LCnOEp0dZIqvOPqOjfHd7nll6SHxg4veIY3hjBwRrO55ftBv37jnTVCsj59
+ DPMt+Kcr8kzAEx+D7USlHwed6rxJu26Lugf/omQHp+5mMqG/K+IoNVcrfYaIYWqg
+ S/mI8PX1uDejZfPLIucATty3B9yhen0qEPTsEdRrr+xXeSodR5Y3bo6+dAvcm4mr
+ 01g2iWOHZ3IEX1uHjcqJQTCVz2s79r2GFec7xO+kQsPI817acJlQWwyT8S4Qs7Sw
+ Rah8Rg+iKf5/MaOo5AOffQLRuSQQlgq5U/xr6boj0GhFW20/901RRLTbpdaOSV2u
+ IjYG35QuSfo9L0U+PgEGw==
+X-ME-Sender: <xms:8uJLasduCXpTikeIofhDHAlU9oYf0YX_GWtsnMi3rYnlwKUxRpw_1Q>
+ <xme:8uJLagf5zB9hWUOmvh7fViZI6HZHAoiikVkfaETBT2STdzacfMHO4ubYPghqNukPP
+ UVh81IZISdr7b2wupB1nlGxeaFr-8AWhn5QkzYwmNwFTyY7mcpjcA>
+X-ME-Received: <xmr:8uJLavwtukFZFGs_HCkL0iAQMj-Lu2uDydj4KTUM_BAiLgUpc6T9Nopb7pU>
+X-ME-Proxy-Cause: dmFkZTFw1wR0YX/SPd5VeNq6ejKz0GEeIbrfiw9Wyb1J2Js7kSAx7d8RPaOmEG4OBP3I6N
+ eDFJPhn2w8h4LXYp8U31C3JvRz4DW85op4B6t6rAhg+mp8zk18Kn7Fouxb0GwOHI78gGIl
+ nNKam7ufyVUIFEhQcctc8d+kSQ4e/BnL+UaGpZks3/dIRRR4YOPDKS12s7hkom6EW+HbYf
+ 8fyAi8chOh/o3T7LkHoD2PgjR8RSR+3qVJGzNsIXZIWA/dQF9f2IEqlIp+Zalmyx+4fI0h
+ PDu5yRqoMMX3ljnnPO4EuaqFvrS44KMv+dtSe3MXIOrQB4lpDvD4QusRwM5YHNB1MxFCqW
+ fF3kn534ofalDocyJlN7g2lTSvnDe7rsPiz+bFn2ZL/O0xSzu5uTU3/EmPom0nF2dpdhHs
+ BcpLBwYtIqUYQxQqUw3HmpApeG+F616aiBH7LQ4fAEhnI+RYIi+w1CddvdRoKDSYZyAVpH
+ 9L9nSqEtuvASrZfbjlKfQJhZn2BRS80O61ualQBLORpbo/AHZ2LcAbzupb+etVk6MYLH9d
+ CNuHGCF88mhnecS/qaSk4HN4NwNiTJO25sLBbdSik9NDjuEOiHIHbwVvF4YyMwvQoBhRcB
+ 7h7t29hFd4ocU3IJy94D3ENko01SyqCmjwQ2hS+WYWQxrqDdCrmbdRyam64Q
+X-ME-Proxy: <xmx:8uJLan9qlbyordrVmDYBk-geqaQeGMAxf8MgUSBKLc-mnbHhwmJwXQ>
+ <xmx:8uJLanhGFSBr_FHifxYepxQ_AL833lPoTGzIjXbW7wj_RcxRD8d0rw>
+ <xmx:8uJLauEwTB-xnRiXxH6Zwhrdbg_y1C58h5nmqApuhle6PuKa8FDYEg>
+ <xmx:8uJLam9RoWjQIZmzxRdQvVsay20UcxAp1rhgYaScdbHuY694V_GgWQ>
+ <xmx:8-JLahCbd4hVQZFiGSxGZiGKYvtLRncQC479V-DVf8Zvv7_pSpb0En_z>
+Feedback-ID: i03f14258:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 Jul 2026 13:16:34 -0400 (EDT)
+Date: Mon, 6 Jul 2026 11:16:32 -0600
+From: Alex Williamson <alex@shazbot.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, Eric Auger
+ <eric.auger@redhat.com>, Stefan Berger <stefanb@linux.ibm.com>,
+ alex@shazbot.org
+Subject: Re: [PATCH] vfio/listener: Only warn on misalignment for VFIO-owned
+ regions
+Message-ID: <20260706111632.64266244@shazbot.org>
+In-Reply-To: <CAFEAcA-d9CJhfJQ2B1h+mZTPphc7SKk8yjCuGH4RWYT9J=EATw@mail.gmail.com>
+References: <20260702160640.3875666-1-clg@redhat.com>
+ <20260706082023.7ee830b8@shazbot.org>
+ <3f799ad7-08a5-44c7-b6bf-b143da038593@redhat.com>
+ <CAFEAcA9wOZhn41Twz9zzCBD4MAET2+gbF71kUKnr7r6TXfhjuw@mail.gmail.com>
+ <20260706094241.1457bbc6@shazbot.org>
+ <CAFEAcA-d9CJhfJQ2B1h+mZTPphc7SKk8yjCuGH4RWYT9J=EATw@mail.gmail.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitlab-ci: Remove job building OpenSBI firmware binaries
-Content-Language: en-US
-To: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
-Cc: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260706161716.29488-1-bin.meng@processmission.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260706161716.29488-1-bin.meng@processmission.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: b7lF56bjE6nGrAQtx3zxX2Dg_Idd_uiV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE3NCBTYWx0ZWRfX10lOjKgAz7/A
- EvkJQeElBrvp+kuOepbZzUPlIny8TivEv3vzsU0KCywT48d9F5hKDmGwNuMT6XWzb93D6wxQWal
- hrqP7p8MhuKUET/t6BRXVy4dLt02EaKfv4Xe/qF5OowvqsaxOJjJABeY1sTpfl6gZELi/+CSWr7
- frNjd/ok1ZsE+f5Lj7X3ZsBdGeYNWIMXdM2DWoe6tBi7Jx8QdT1IP5Pt/e5spa+v+CucpOJFgMU
- WlxJK0kGnpe4HF6JkY644IQSiKQTgCzWyLHA/46pXdyODRbYAs1GNLQAbE9HSHj0eD2LhpDLmza
- U6vLcJR8+OMf5muSWMzXqvwESe/V/yOXN4ppuyS9NfMFAZbIK0KF9FdBIN/GjCmrG+3QEaCycQ+
- jTJzUnvXKULKtev4NiUwtFThvmv2iZqF1v+EAq/Js1OpPx7Hksd2gbyRLvzIEl+CZuB1Rrtplyb
- Ihw565MwPFjWwSwIhsA==
-X-Proofpoint-ORIG-GUID: b7lF56bjE6nGrAQtx3zxX2Dg_Idd_uiV
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE3NCBTYWx0ZWRfX7VcDFYRZ4Yr5
- j7RfPKpv3kIHyNDuhIdTuko3mMks75DYgLOGV1kSYHGB++L37lAWZetSY5IwzJBESNeQP4IJYQ+
- s+w2VK197LBoh8++JJ2aI7RMETrajVw=
-X-Authority-Analysis: v=2.4 cv=c6Sbhx9l c=1 sm=1 tr=0 ts=6a4be253 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8 a=LfsA7Cq2GQzuzbZ-N0YA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22 a=H4N_Y-AU75W7NKDNhZlT:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-06_02,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015
- adultscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607060174
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=103.168.172.144; envelope-from=alex@shazbot.org;
+ helo=fout-a1-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,28 +114,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/7/26 18:17, Bin Meng wrote:
-> The OpenSBI firmware build job follows the same pattern as the EDK2 job
-> [1] that was removed earlier [2]: it exists to produce firmware binaries
-> from CI artifacts, but those outputs are not consumed by the tree.
-> 
-> Remove the job definition and its project include to avoid maintaining
-> bitrotting container and firmware build logic.
-> 
-> [1] 71920809ceab ("gitlab-ci.yml: Add jobs to build EDK2 firmware binaries")
-> [2] 690ceb71936f ("gitlab-ci: Remove job building EDK2 firmware binaries")
-> 
-> Signed-off-by: Bin Meng <bin.meng@processmission.com>
-> 
-> ---
-> 
->   MAINTAINERS                     |  2 -
->   .gitlab-ci.d/opensbi.yml        | 88 ---------------------------------
->   .gitlab-ci.d/opensbi/Dockerfile | 34 -------------
->   .gitlab-ci.d/qemu-project.yml   |  1 -
->   4 files changed, 125 deletions(-)
->   delete mode 100644 .gitlab-ci.d/opensbi.yml
->   delete mode 100644 .gitlab-ci.d/opensbi/Dockerfile
+On Mon, 6 Jul 2026 17:12:35 +0100
+Peter Maydell <peter.maydell@linaro.org> wrote:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> On Mon, 6 Jul 2026 at 16:42, Alex Williamson <alex@shazbot.org> wrote:
+> >
+> > On Mon, 6 Jul 2026 16:27:46 +0100
+> > Peter Maydell <peter.maydell@linaro.org> wrote:  
+> > > It seems very unlikely that anything not page-aligned is going
+> > > to be a sensible target for DMA ops from a device: the main
+> > > reason to have a non-page-aligned or non-page-sized region is that
+> > > it's the way we've chosen to implement a device, or it's some
+> > > "RAM but not general-purpose RAM" thing. If there's a path to
+> > > warn/error if it's actually used for a DMA op that would be worthwhile,  
+> >
+> > But for a vfio-pci device there is no DMA op, it either gets mapped
+> > into the IOMMU for direct access to the device or not.  This is the
+> > point at which that decision is made.  
+> 
+> Why is small RAM different from MMIO register regions here?
+> Those also you're not going to be able to have a device do
+> direct memory access to.
+
+There's a precedent for bare metal, peer-to-peer DMA is less reliable
+and drivers don't typically have blind faith in it working.
+Peer-to-peer DMA also has specific use cases, drivers don't arbitrarily
+pick a peer device to DMA to, they have specific use cases and target
+regions are inherently sized and aligned appropriately.
+
+Here we have RAM and we're trying to determine whether it's RAM that
+could be allocated as a DMA buffer or expect a DMA access from a
+device.
+
+Commit 851d6d1a0ff2 spelled out that we could have declared these sorts
+of regions as RAM device, solving the problem with a simple test, but
+that wasn't well received (for reasons I don't remember), so we were
+forced to create this mechanism and maintenance issue.
+
+> > > but as it stands I think all this warning will ever cause us to
+> > > do is add more entries to its whitelist every time it complains.  
+> >
+> > IMO, that's ok.  That's the purpose.  We're up to one whole class of
+> > device so far, we don't care about mapping failures to TPM devices.  If
+> > some day this does fire on something we care about, especially a
+> > regression, it'll earn its keep.  It doesn't seem like an excessive
+> > burden yet. Thanks,  
+> 
+> The reason we're having this conversation is because it just fired
+> again, and the warning gives the impression that the right thing
+> to do is to somehow change the misaligned memory region, not to
+> add something to the whitelist. That's already wasted several
+> people's time.
+
+Since being introduced 4 years ago, we've iterated on one class of
+device.  It doesn't feel like there's a persistent time sink here.
+
+> You could add a comment saying
+> 
+> /*
+>  * If this warning ever fires, then it will almost certainly
+>  * be because of a legitimately non-aligned RAM-backed
+>  * MemoryRegion that needs adding to the whitelist.
+>  */
+
+Personally I'd start with the error log itself, providing a hint that
+the region is presented as RAM but isn't sized/aligned for DMA from a
+vfio device, with a hint to mark it as safe if it is legitimately not a
+valid DMA target.  Thanks,
+
+Alex
 
