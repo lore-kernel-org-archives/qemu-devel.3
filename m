@@ -4,55 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95BC1C43458
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jul 2026 22:44:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28F1EC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 00:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgVZQ-0005BP-78; Sun, 05 Jul 2026 18:44:16 -0400
+	id 1wgXKX-0004oy-Ft; Sun, 05 Jul 2026 20:37:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1wgVZN-00053M-Gj; Sun, 05 Jul 2026 18:44:13 -0400
-Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1wgVZL-00029X-5W; Sun, 05 Jul 2026 18:44:13 -0400
-Received: from smtp02.univ-lille.fr (smtp02.univ-lille.fr [194.254.129.96])
- by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4gtjGJ2c3szBsVY;
- Mon,  6 Jul 2026 00:44:08 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1783291448;
- bh=YMmoU0jvgKSG+M2L3MmCP5eAIwuoW7CiBLxgNApfjXo=;
- h=From:To:Cc:Subject:Date:From;
- b=qgoTzMiycLdNT3P2Od9rhdT0UhJHNE2NvcPgh+FsY1pj3f3WBBESuJA6Vf3WkUv2V
- YmKKOVP8eOt3qTjJ7QQmWh7HVKJy+/KmpQr++bzhkkoUinh56gQv5TnyqmTA16WFPT
- +PkP5gY7vv9t3FUbXbC+x2urMKaDq24rPvLraLqWwGSk/nqPyw/5gZrGEFWHGWcJhU
- NbzuCI9wgsi4U7SQxBybKnjWwzzLX0P8yPG0Iwl/lKl49hZ/p8WFFcIPArYCBbbMlu
- b1tAttDGAoiATO5tXani2qRxnEzGo2CT/SoH3izcSHAgaWpb3EHwxiMNWWcq0pRf3I
- IqhRRqSNi4W3Q==
-Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
- [90.45.87.101]) (Authenticated sender: gilles.grimaud)
- by smtp02.univ-lille.fr (Postfix) with ESMTPSA id 4gtjGJ1T2hz6sT6;
- Mon,  6 Jul 2026 00:44:08 +0200 (CEST)
-From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-Subject: [RFC PATCH] target/arm: report M-profile BKPT to gdbstub when attached
-Date: Mon,  6 Jul 2026 00:44:07 +0200
-Message-ID: <20260705224407.32464-1-gilles.grimaud@univ-lille.fr>
-X-Mailer: git-send-email 2.55.0
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wgXKV-0004oc-FH
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 20:36:59 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wgXKT-0003r2-RG
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 20:36:59 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-383adaa461fso914908a91.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 17:36:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783298216; x=1783903016; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=z/Mrm/xAStmFh045e9yRYG+pscd+SFMM8U2/zFtcBpo=;
+ b=QONlbMuVGNUOhIYQOZ6n55iGILfgzSrrR+5MWVzkmo5rV1l7bdY+JKuAnX5jCLZXTh
+ X2Eyax+5AWZFJrfvUTmcAfPa5TyB1Beho7u3HY5zeNyfHXt7E+dxZoaYYG7KhJfuntNd
+ 5cCWQiDE17pk7ega0sUbWrUowrTJXZv8cfsSjDf+ARbUlyOQxXMK06LWgxT2uGEn2G9r
+ +VN1MoArsfIxEGzet/4qgYi6wf+1Rrf64HyDxCcxLIy0TMBKZlelgArBLrhJGpP8IkrR
+ BbSBD30zbBqkC6IhVW5Xcg+if8uetLL1PX2jaDn2Ze6RHQ/lqKn8Ts/kzQY5TiDfmTU0
+ JLGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783298216; x=1783903016;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=z/Mrm/xAStmFh045e9yRYG+pscd+SFMM8U2/zFtcBpo=;
+ b=jEQrjcY4OXv8Di0xt+G9vPCo6Iw7OMrV2NyDY6n3//d7U4h05muDtjmsMouCH4Wk8p
+ Zdv7crKVfk9vvu6Q3tckhP6iH4fPPgW9qAp5yOjihl7kUunfyZc0m4thNCoPn9oX988Y
+ Zt9/fm9OzYq5b5aJvfsmLD/7B7VlVClcKKSWOS6+lYb1HUI7fIjzOV6Jbg6SjtmAIUIF
+ WKdr9ZwyJCd5OdZrK1uuAWDqhpIzWiyWNHfbU1dzjx4gKgGq8LvLoGesYYZoFxPjeud7
+ nqGdYQsF1ouxacbvbcaBrCaqMq2rNEdVWa5hQar6jyKzqggkXkRZCHKnr34uyJcK1nph
+ VsXQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rr1VSZ3KsmVx65DUY9trv5xzOtUXyuFFWjoztGsspx0RrFAvU6UVWLJb1zRQZdj+mObcam/PmXE7B3u@nongnu.org
+X-Gm-Message-State: AOJu0YzJ8dz0on3oGryEzbzkNoeC+UomV6PxM6eGIAU16netnkfShVg5
+ qh09EtD8Z/pfxgYsGFV119JFq29EcZ89ffDC55/baclCgvksU4rmWxEK
+X-Gm-Gg: AfdE7cmZpfzoHVyRSrVAg4oHTcoSJrkhZBkfB0BJ0haycI5Z+EwaVvc7ipKw4qnQX/W
+ me1v+tDA5OPTb2wAFd27jdhHJYve6c6NmCJvme1kkr/dUq7Qlm3++tL6Fhe4Z4VfihYqXaxqSXI
+ td9pdCqD+mgXP5ASJ4fGxJGEsPDr72eRAARz/AjW5P24LKaljis7dkf0CD5mB21eQXOjprXACvl
+ 05+EgwrxkGBHn249of5UuaMnBYGBSlPl1Lw/0TFcYeZ3tN6BYFdy3OQNC3s9qG8AZ6/g2dHiRiT
+ MtGVUPGUNMVhaaEabFO6qYgLKruKdb8t9hdhlLSdAAjNIJrPdAH2dxG5ju7JIa5lz7vnLL4CaWd
+ h+YbtApLnVXzYzF1NSiLsk4A/Nnpp2LycDCMQPln960ylrck/v4TQPBeYUZQpftJFQc94UDnhBR
+ N2ZC+nEZjwesR8rDNlLpG+8mWwdsmAoQ==
+X-Received: by 2002:a17:90b:4b90:b0:382:3dcc:1487 with SMTP id
+ 98e67ed59e1d1-3829f00022amr7144799a91.25.1783298215737; 
+ Sun, 05 Jul 2026 17:36:55 -0700 (PDT)
+Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-30f3c8b19c7sm28844899eec.4.2026.07.05.17.36.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 05 Jul 2026 17:36:55 -0700 (PDT)
+From: alistair23@gmail.com
+X-Google-Original-From: alistair.francis@wdc.com
+To: alistair.francis@wdc.com, tangtao1634@phytium.com.cn, mst@redhat.com,
+ qemu-devel@nongnu.org
+Subject: [PATCH] hw/pci/pcie_doe: Check mailbox length for overflows
+Date: Mon,  6 Jul 2026 10:36:47 +1000
+Message-ID: <20260706003647.75945-1-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.82;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,122 +100,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While working on Raspberry Pi Pico/RP2040 support, I noticed that Pico SDK
-programs deliberately execute BKPT from _exit(). On real hardware this is
-useful when a debug probe is attached: returning from main() stops the
-debugger at the program exit point.
+From: Alistair Francis <alistair.francis@wdc.com>
 
-Under QEMU this currently does not behave like the debug-probe case. For
-M-profile guests, the BKPT instruction is routed through the architectural
-guest debug exception path. Without halting debug, that path should remain a
-guest-visible DebugMonitor exception when DebugMonitor is enabled, or escalate
-towards HardFault otherwise. This patch deliberately leaves that no-debugger
-architectural path unchanged.
+It was possible that a guest could overflow the `doe_cap->write_mbox`
+buffer by writing more then PCI_DOE_DW_SIZE_MAX dwords.
+`doe_cap->write_mbox_len` would continue to increment and there were no
+bounds checks on the length when offsetting into doe_cap->write_mbox.
 
-The problem addressed here is the case where GDB is connected to QEMU's
-gdbstub. In that situation, firmware that uses BKPT as a debugger stop point
-should stop in the attached debugger. Instead, the M-profile guest currently
-continues down the guest exception path and may end in HardFault/lockup rather
-than reporting a clean trap to GDB.
+This patch adds a check and reports a guest error if we would overflow.
 
-This is not specific to the RP2040 machine model. It is a generic
-Cortex-M/gdbstub interaction: firmware that uses BKPT as a debugger stop point
-should be reported to the attached debugger, while keeping the guest
-architectural exception path when no debugger is attached.
-
-Expose a small gdbstub helper to test whether a CPU is visible to an attached
-debugger. When an M-profile BKPT instruction is executed with such a debugger
-attached, leave the translated block with EXCP_DEBUG so the existing gdbstub
-stop path reports a trap to GDB.
-
-Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3679
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- gdbstub/gdbstub.c      | 13 ++++++++++++-
- include/exec/gdbstub.h |  6 ++++++
- target/arm/tcg/debug.c |  9 +++++++++
- 3 files changed, 27 insertions(+), 1 deletion(-)
+ hw/pci/pcie_doe.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index c3c944e965..9f259fc005 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -237,6 +237,18 @@ static GDBProcess *gdb_get_cpu_process(CPUState *cpu)
-     return gdb_get_process(gdb_get_cpu_pid(cpu));
- }
- 
-+bool gdb_cpu_is_attached(CPUState *cpu)
-+{
-+    GDBProcess *process;
-+
-+    if (!gdbserver_state.init || !cpu) {
-+        return false;
-+    }
-+
-+    process = gdb_get_cpu_process(cpu);
-+    return process && process->attached;
-+}
-+
- static CPUState *find_cpu(uint32_t thread_id)
- {
-     CPUState *cpu;
-@@ -2520,4 +2532,3 @@ void gdb_create_default_process(GDBState *s)
-     process->attached = false;
-     process->target_xml = NULL;
- }
--
-diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
-index 75eb4d9c36..6e5f75a1f3 100644
---- a/include/exec/gdbstub.h
-+++ b/include/exec/gdbstub.h
-@@ -59,6 +59,12 @@ void gdb_unregister_coprocessor_all(CPUState *cpu);
-  */
- bool gdbserver_start(const char *port_or_device, Error **errp);
- 
-+/**
-+ * gdb_cpu_is_attached() - return whether @cpu is visible to an attached GDB
-+ * @cpu: The CPU to test.
-+ */
-+bool gdb_cpu_is_attached(CPUState *cpu);
-+
- /**
-  * gdb_feature_builder_init() - Initialize GDBFeatureBuilder.
-  * @builder: The builder to be initialized.
-diff --git a/target/arm/tcg/debug.c b/target/arm/tcg/debug.c
-index 07a52643e7..2c60f1c49f 100644
---- a/target/arm/tcg/debug.c
-+++ b/target/arm/tcg/debug.c
-@@ -12,7 +12,9 @@
- #include "internals.h"
- #include "cpu-features.h"
- #include "cpregs.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "exec/watchpoint.h"
-+#include "exec/gdbstub.h"
- #include "system/tcg.h"
- 
- /* Return the Exception Level targeted by debug exceptions. */
-@@ -513,6 +515,7 @@ void arm_debug_excp_handler(CPUState *cs)
-  */
- void HELPER(exception_bkpt_insn)(CPUARMState *env, uint32_t syndrome)
- {
-+    CPUState *cs = env_cpu(env);
-     int debug_el = arm_debug_target_el(env);
-     int cur_el = arm_current_el(env);
- 
-@@ -535,6 +538,12 @@ void HELPER(exception_bkpt_insn)(CPUARMState *env, uint32_t syndrome)
-     if (debug_el < cur_el) {
-         debug_el = cur_el;
-     }
-+
-+    if (arm_feature(env, ARM_FEATURE_M) && gdb_cpu_is_attached(cs)) {
-+        cs->exception_index = EXCP_DEBUG;
-+        cpu_loop_exit(cs);
-+    }
-+
-     raise_exception(env, EXCP_BKPT, syndrome, debug_el);
- }
- 
+diff --git a/hw/pci/pcie_doe.c b/hw/pci/pcie_doe.c
+index 2210f86968..765ebea42c 100644
+--- a/hw/pci/pcie_doe.c
++++ b/hw/pci/pcie_doe.c
+@@ -356,8 +356,14 @@ void pcie_doe_write_config(DOECap *doe_cap,
+         if (size != DWORD_BYTE) {
+             return;
+         }
+-        doe_cap->write_mbox[doe_cap->write_mbox_len] = val;
+-        doe_cap->write_mbox_len++;
++        if (doe_cap->write_mbox_len < PCI_DOE_DW_SIZE_MAX) {
++            doe_cap->write_mbox[doe_cap->write_mbox_len] = val;
++            doe_cap->write_mbox_len++;
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "Mailbox write length (%d) is overflowing\n",
++                          doe_cap->write_mbox_len);
++        }
+         break;
+     case PCI_EXP_DOE_CAP:
+         /* fallthrough */
 -- 
-2.55.0
+2.54.0
 
 
