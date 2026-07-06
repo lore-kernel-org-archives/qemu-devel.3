@@ -4,116 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CC30C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 18:10:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74362C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 18:13:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgnlH-0001Cb-Q0; Mon, 06 Jul 2026 14:09:43 -0400
+	id 1wgnoo-0001vp-4R; Mon, 06 Jul 2026 14:13:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1wgnlA-0001Ba-Ph; Mon, 06 Jul 2026 14:09:36 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1wgnl8-0005Tz-IN; Mon, 06 Jul 2026 14:09:36 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666FIqxX756889; Mon, 6 Jul 2026 18:09:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=i50L/y
- LnXQB+MNtcUaDzYke8OAk/eOwbziA8V/DDwlQ=; b=qR3UfGoH0BdkTbFXA7eJy8
- Nz0s1zV0tHL00q+WaMxVuB1I/gyq2RKzKDV2tR0UYamFnw20l8FEPB+Aivb1Akqm
- aZVMcIH0bk1Fuiakg9gpxNziYP+yxsgtf7uJTPjhXXgLazQMAU6F72hntPivoHt1
- 7Fh8i9icZjz5sz+nLFS8NomNuVMB0wB4MGZRniFmxGGjiRuJWEOkw7QiWId1XvXK
- Wp17k6qfjLesOCHQYuK8W9R994x7Xc1z+64V+7vwbnjCUcGS18PYNJtWGVV+tPu7
- vgJDxofJxU1zJaafouL7gf0y5HMyIN2v3YW3kwPLvUPCMleCZW5HtVw9dhMgozbg
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6qknauuc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 18:09:30 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 666I4nTI027443;
- Mon, 6 Jul 2026 18:09:30 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f7cvvxuk5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 06 Jul 2026 18:09:29 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 666I9PGl44826898
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 6 Jul 2026 18:09:25 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B38F320049;
- Mon,  6 Jul 2026 18:09:25 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6BBB820040;
- Mon,  6 Jul 2026 18:09:17 +0000 (GMT)
-Received: from [9.67.146.25] (unknown [9.67.146.25])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  6 Jul 2026 18:09:16 +0000 (GMT)
-Message-ID: <85806173-0fb8-46d2-a69b-6743de12b2c5@linux.ibm.com>
-Date: Mon, 6 Jul 2026 23:39:15 +0530
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wgnom-0001vg-O2
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 14:13:21 -0400
+Received: from mail-vs1-xe2e.google.com ([2607:f8b0:4864:20::e2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wgnok-0006vI-N7
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 14:13:20 -0400
+Received: by mail-vs1-xe2e.google.com with SMTP id
+ ada2fe7eead31-7389cff36bdso742866137.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 11:13:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783361597; cv=none;
+ d=google.com; s=arc-20260327;
+ b=DYL5CsWm5/UYExe22E7cBn5ggL64CyZ35PFZmOQUN864SjqntIPTvte4NcsaVgeIDQ
+ 4zd9JJQ+WyueDc7zU8tv4SX4yUMx3rqjFwq361uiG5vAFrt20PcJX/wL4SlJDpfE+KSc
+ rl9bD4xZBO21XBgHDb6UKkDBBX1SPNsPa3vAZtc7xXEzDShjlTfQcenQao+K4OQ0SduF
+ iTHam5AtHjG9VCM+8ZjqvwT3+K/sEbTc01ZdrRpeuiTWmHx7y2sZbnCwZcISJfdqPbPH
+ Aap30gBT5TYvRgjnWSiyMCsjYd1+id1P71xnG8jePGojCeH98vq8udHgTKxWqzUvLEVE
+ IWSA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=4fiahFzfoASVOuykAmvuolHfkjiJ4pPViiTVmPhv//w=;
+ fh=dFNjeIM34xA3zqR45OBPnrD/e5PWqK0VcUjJJ1xW+t4=;
+ b=PT4ruam+rRTttapeARvH8lgBulKJxMF/7kCoWON+3QRHy6mqwUIYM5cjMo3IMTL9v1
+ QLHofZ9iXdDQqSovkrhe7UXwGYNQkf/cuRvQkfBEJOGtsSketHffe/eQW5LlxEPfCC05
+ 9OZrRe/swWalIu7L+ECX2dDLMAz2iuHt0UnQIonBU7Moljizo+YLr0idturgP9Chg4cz
+ KrO6cmt1zl6UzNxXBsk23A2F2NYb7IFmMjE1WNCPv44ytyhMh2W1ouzJ+u4qAm9njEmm
+ jA3CWg3WR+HSgPu0dxh+C2aeS/N+cc2fw01xTYkyUiQ67KDrsGF82CZXITsxvBkkJUvg
+ F71g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783361597; x=1783966397; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4fiahFzfoASVOuykAmvuolHfkjiJ4pPViiTVmPhv//w=;
+ b=k9VZWDQfPGJ8jounSpxVNboU5rxS2qTQGSHkAsbSXffBT7I8rm2MrzIOkIjxvcmrC9
+ zpJ4ZjaF9z0FuZjM0zdg2z0T8EfUxnjMaD90A9bM/czNIE+e1X9in098uU53WXYBAJ8/
+ lJCox/L1b1ERbAKVvJ/wU+Y71Ta86M6Cp/iymGtMNjPgjlxwL/2zBW7oYsP/gpVjGAgQ
+ /tE9JH+xeTTXLLIvWvV635Ef0T5WHEbFmVmQVtOBmHcPYGRG93+eD2Dk0xLv8YtczQtf
+ u7iaY/6GdFjtRfxwSwQv2IAfrkIr20D4hVGIPkplGi/0LmTqi9PmCyJZ0wT5t9hthycY
+ mb3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783361597; x=1783966397;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=4fiahFzfoASVOuykAmvuolHfkjiJ4pPViiTVmPhv//w=;
+ b=aQgrntJJr9n5NgmQi0auSp3exl6BTYizCk0LDa3zSHqlLcDZk4owkTTgESW+00uaQK
+ sBj74c65LSF+lzEZ/fQXLDIivjeOz1W43cGzAjxRbfwBEqz/fEdwee9F9K6d5+S9hT3L
+ WNYqQcxSK0supT8xAnVxZgZzh/jX6ty0U73FJntNO/AvCSjAHH4D8AT1U5bwHriFpS4S
+ OQD5CLGZ2seDBYORGKIjutHTrHer7OS+0P3aOhktJa8K64teygdEh8SD97ZkGYwJmv+9
+ og8l+5mTX5aiOyDnE40L+ndCk/yQmjR7XptMdUs/JTAxdTm56L7VfWkKgCE1+gRSvIYn
+ NibQ==
+X-Gm-Message-State: AOJu0Yxbdn1zcBu3oB/u5aKK1nuVwVbufftKCcUb3p1yd/mC5eslKpcJ
+ RdD6hdmx3iwbi7+ALhtoubfJjG14WtJ/+kLqYkNiV+/JgBUZnohg5ZsRgeoFDQC1GqTJlaXo/oF
+ cD8TiWXRVYDWC3EouZ593RPkN4MbxCWs=
+X-Gm-Gg: AfdE7ckyKCtn9oCVWC33lcKqflNXxJmW286Gt3YQSKML19SeQmXfbNAynh/F+cQhK3n
+ N0okcym4iziNqZwfKIP8JzUD/XvyUPivvxjzQiy/wIcStiaxOZviSFl1+tV3FHCE7/jpmgkX77o
+ ZLhZKIP27iH7PcgjGeVX1o3Vde+JUH4bLdxnu+TrzU7fmOCX26DvzRntVFLunE2n3KHnSnaqtOJ
+ 6Jd31BJmNu8CXJyEqMOo5hyUID1FZTSCQPaL9U67BC5KP/bhyYIfRRAvuVqbQda6KS8b7ICWvXD
+ k2/xFOr16GwJPtzwxDM96MwbYugHMsReK22/Etxu4dlFyTc98M7Vv/HMVausXi5NN0acjn8gJrK
+ 0KaeD8nHYLQieeuDC0AE4Uw==
+X-Received: by 2002:a05:6102:5789:b0:736:e617:b4f7 with SMTP id
+ ada2fe7eead31-744b7d8481dmr865056137.21.1783361597104; Mon, 06 Jul 2026
+ 11:13:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 22/28] target/ppc: Move Fixed-Point Load/Store String
- instructions to decodetree.
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com,
- richard.henderson@linaro.org, peter.maydell@linaro.org, stefanha@redhat.com
-Cc: milesg@linux.ibm.com, vishalc@linux.ibm.com, tshah@linux.ibm.com,
- shivangu@linux.ibm.com, ojaswin@linux.ibm.com, aboorvad@linux.ibm.com,
- amachhiw@linux.ibm.com, sv@linux.ibm.com, shivani@linux.ibm.com,
- mkchauras@gmail.com, uverma@linux.ibm.com
-References: <20260520160728.2283628-1-rathc@linux.ibm.com>
- <20260520160728.2283628-23-rathc@linux.ibm.com>
-Content-Language: en-US
-From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-In-Reply-To: <20260520160728.2283628-23-rathc@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=Q/XiJY2a c=1 sm=1 tr=0 ts=6a4bef5b cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=S40DjwmI8Mk8vhn0oP0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: VSKKtTwMwk8CpILL55PIlI6Z69KOQxEw
-X-Proofpoint-ORIG-GUID: j1V8jAtDLgKGF6V6ZuAtIFZ9GW0qpcqj
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE4MCBTYWx0ZWRfX8QvpmI41up7O
- XKdJ/ClIHqDhyqyxgxGv1TTBuI2OtQNPuVJKmjdTh7xCHEli8+uro5OLHrMntT36M35JZ7Ok23P
- BG0H7n+bioVkrD6GREVEJokGEfLOvj4=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE4MCBTYWx0ZWRfXywiSwGgWGAkB
- rAaPtR6fY0bdMRTGwOmejFurWT78zDkItDDEymCkuPaEz07F4X5wpvV/1Z8SZGh924zr75KrUcN
- HFB1qIyGbt8q7z2K9viIhNFjLODtb21DtqL4zHy5tiGfRa5fohJ2XrQ8O4tmWMpoxuDSHkuehOt
- Q9X6geDeFQ4vAoZNb1vrHTw0V4Q1Vt6nn9NpQ1xvdImZLBCMrheADoXIo5Fv4dv2cpVA0vu46iI
- fVd+cTr62qmrGjy/fEIs/hxWLC2fs41OXqFaK56Z3WNdL9M4RIBPrCMf43ru9HrwWZOyqN7yNFf
- FX5/JprCc6P5QX8836+akCGqcvYDlBPynKArPQ9RqXwBoU/MxksT+1Ap0u4/nNJxCdMESGyolm/
- upT6uG47nHOKdep6Nk2fa3QPOMcW4/XmCeD0M+OAjbGveavaJB0YicLTYHCMSPAQtwD2BeLU82g
- u2pIzKaSTw3Hr2c9gpA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-06_02,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501
- bulkscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060180
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=nikhilks@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+References: <20260608-mips-octeon-missing-insns-v2-v16-0-daef7a0d8b04@gmail.com>
+ <20260608-mips-octeon-missing-insns-v2-v16-12-daef7a0d8b04@gmail.com>
+ <346b848d-465b-4560-9615-bd0575967b29@oss.qualcomm.com>
+In-Reply-To: <346b848d-465b-4560-9615-bd0575967b29@oss.qualcomm.com>
+From: James Hilliard <james.hilliard1@gmail.com>
+Date: Mon, 6 Jul 2026 12:13:06 -0600
+X-Gm-Features: AVVi8Ccnfi6lPejTKbC4WJYp681LtbCOW08fW31GAod0NBBOd5BNvRGvPzew5b0
+Message-ID: <CADvTj4r0MwV7csi5iXrNyX10xqC=XAOZ-EfdfyLDC-JrzzGD9A@mail.gmail.com>
+Subject: Re: [PATCH v16 12/21] target/mips: add Octeon HSH COP2 helpers
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
+ Helge Deller <deller@gmx.de>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo <arikalo@gmail.com>, 
+ Huacai Chen <chenhuacai@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2e;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-vs1-xe2e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,329 +126,278 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Jul 6, 2026 at 10:57=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> Hi James,
+>
+> On 8/6/26 20:59, James Hilliard wrote:
+> > Add helper support for the Octeon HSH hash selectors. This includes the
+> > base HSH data/IV windows, MD5, SHA1, SHA256, and SHA512 transform paths=
+,
+> > and the shared HSH/SHA512 register-window readback and write operations=
+.
+> >
+> > The SHA512 path shares the wide HSH register bank with SHA3, SNOW3G, an=
+d
+> > ZUC. Keep the aliased readback and write paths centralized so selector
+> > decode can route register accesses through these helpers when side
+> > effects are required.
+> >
+> > Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+> > ---
+> > Changes v13 -> v14:
+> >    - Keep HSH narrow DAT/IV state updates in the low 32-bit halves of t=
+he
+> >      architectural HSH register bank so paired selector transfers prese=
+rve
+> >      the wide shared-window state.
+> >
+> > Changes v10 -> v13:
+> >    - Keep the 0x0057 SDK compatibility path as an explicit STARTSHA1
+> >      compatibility helper instead of a generic STARTSHA name.
+> >
+> > Changes v9 -> v10:
+> >    - Remove references to shared-mode tracking; aliased state is kept i=
+n the
+> >      architectural HSH register banks.
+> >
+> > Changes v8 -> v9:
+> >    - Split HSH/SHA helpers into their own COP2 helper patch.
+> >    - Replace generic selector dispatch with per-operation HSH helpers.
+> >    - Keep shared-window readback and write helpers grouped with HSH.
+> >    - Add matching helper.h declarations with the helper implementation.
+> > ---
+> >   target/mips/helper.h            |   5 +
+> >   target/mips/tcg/octeon_crypto.c | 375 +++++++++++++++++++++++++++++++=
++++++++++
+> >   2 files changed, 380 insertions(+)
+> >
+> > diff --git a/target/mips/helper.h b/target/mips/helper.h
+> > index 71b7a2b30e..834f2d0769 100644
+> > --- a/target/mips/helper.h
+> > +++ b/target/mips/helper.h
+> > @@ -69,6 +69,11 @@ DEF_HELPER_2(octeon_cp2_mt_des3_dec, void, env, i64)
+> >   DEF_HELPER_2(octeon_cp2_mt_camellia_fl, void, env, i64)
+> >   DEF_HELPER_2(octeon_cp2_mt_camellia_flinv, void, env, i64)
+> >   DEF_HELPER_2(octeon_cp2_mt_camellia_round, void, env, i64)
+> > +DEF_HELPER_2(octeon_cp2_mt_hsh_startsha1_compat, void, env, i64)
+> > +DEF_HELPER_2(octeon_cp2_mt_hsh_startmd5, void, env, i64)
+> > +DEF_HELPER_2(octeon_cp2_mt_hsh_startsha256, void, env, i64)
+> > +DEF_HELPER_2(octeon_cp2_mt_hsh_startsha, void, env, i64)
+> > +DEF_HELPER_2(octeon_cp2_mt_hsh_startsha512, void, env, i64)
+> >
+> >   /* microMIPS functions */
+> >   DEF_HELPER_4(lwm, void, env, tl, tl, i32)
+> > diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_c=
+rypto.c
+> > index 67959618cc..9523c84667 100644
+> > --- a/target/mips/tcg/octeon_crypto.c
+> > +++ b/target/mips/tcg/octeon_crypto.c
+> > @@ -153,6 +153,348 @@ static void octeon_gfm_mul64_uia2(const uint64_t =
+x[2], const uint64_t y[2],
+> >       out[1] =3D revbit64(res);
+> >   }
+> >
+> > +static inline uint32_t octeon_hsh_get32(const uint64_t *regs,
+> > +                                        unsigned int index)
+> > +{
+> > +    return regs[index];
+> > +}
+> > +
+> > +static inline void octeon_hsh_set32(uint64_t *regs, unsigned int index=
+,
+> > +                                    uint32_t value)
+> > +{
+> > +    regs[index] =3D (regs[index] & ~(uint64_t)UINT32_MAX) | value;
+> > +}
+> > +
+> > +static inline void octeon_hsh_set_pair(uint64_t *regs, unsigned int in=
+dex,
+> > +                                       uint64_t value)
+> > +{
+> > +    octeon_hsh_set32(regs, index * 2, value >> 32);
+> > +    octeon_hsh_set32(regs, index * 2 + 1, value);
+> > +}
+> > +
+> > +static void octeon_md5_transform(MIPSOcteonCryptoState *crypto)
+> > +{
+> > +    static const uint32_t k[64] =3D {
+> > +        0xd76aa478U, 0xe8c7b756U, 0x242070dbU, 0xc1bdceeeU,
+> > +        0xf57c0fafU, 0x4787c62aU, 0xa8304613U, 0xfd469501U,
+> > +        0x698098d8U, 0x8b44f7afU, 0xffff5bb1U, 0x895cd7beU,
+> > +        0x6b901122U, 0xfd987193U, 0xa679438eU, 0x49b40821U,
+> > +        0xf61e2562U, 0xc040b340U, 0x265e5a51U, 0xe9b6c7aaU,
+> > +        0xd62f105dU, 0x02441453U, 0xd8a1e681U, 0xe7d3fbc8U,
+> > +        0x21e1cde6U, 0xc33707d6U, 0xf4d50d87U, 0x455a14edU,
+> > +        0xa9e3e905U, 0xfcefa3f8U, 0x676f02d9U, 0x8d2a4c8aU,
+> > +        0xfffa3942U, 0x8771f681U, 0x6d9d6122U, 0xfde5380cU,
+> > +        0xa4beea44U, 0x4bdecfa9U, 0xf6bb4b60U, 0xbebfbc70U,
+> > +        0x289b7ec6U, 0xeaa127faU, 0xd4ef3085U, 0x04881d05U,
+> > +        0xd9d4d039U, 0xe6db99e5U, 0x1fa27cf8U, 0xc4ac5665U,
+> > +        0xf4292244U, 0x432aff97U, 0xab9423a7U, 0xfc93a039U,
+> > +        0x655b59c3U, 0x8f0ccc92U, 0xffeff47dU, 0x85845dd1U,
+> > +        0x6fa87e4fU, 0xfe2ce6e0U, 0xa3014314U, 0x4e0811a1U,
+> > +        0xf7537e82U, 0xbd3af235U, 0x2ad7d2bbU, 0xeb86d391U,
+> > +    };
+> > +    static const uint8_t s[64] =3D {
+> > +        7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
+> > +        5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
+> > +        4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
+> > +        6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21,
+> > +    };
+> > +    uint32_t m[16];
+> > +    uint32_t a, b, c, d;
+> > +    uint32_t aa, bb, cc, dd;
+> > +    int i;
+> > +
+> > +    for (i =3D 0; i < 16; i++) {
+> > +        m[i] =3D bswap32(octeon_hsh_get32(crypto->hsh_dat, i));
+> > +    }
+> > +
+> > +    a =3D bswap32(octeon_hsh_get32(crypto->hsh_iv, 0));
+> > +    b =3D bswap32(octeon_hsh_get32(crypto->hsh_iv, 1));
+> > +    c =3D bswap32(octeon_hsh_get32(crypto->hsh_iv, 2));
+> > +    d =3D bswap32(octeon_hsh_get32(crypto->hsh_iv, 3));
+>
+> The MD5 algorithm is little-endian, so I think for these we want
+> cpu_to_le32(), ...
 
-On 20/05/26 21:37, Chinmay Rath wrote:
-> From: Shivang Upadhyay <shivangu@linux.ibm.com>
->
-> Move below instructions to decodetree specification :
->
->          lsw{i, x},
->          stsw{i, x}                       : X-form
->
-> The changes were verified by validating that the tcg ops generated by
-> those instructions remain the same, which were captured with the '-d
-> in_asm,op' flag.
->
-> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->   target/ppc/helper.h                        |   6 +-
->   target/ppc/insn32.decode                   |   7 ++
->   target/ppc/mem_helper.c                    |   6 +-
->   target/ppc/translate.c                     | 102 --------------------
->   target/ppc/translate/fixedpoint-impl.c.inc | 103 +++++++++++++++++++++
->   5 files changed, 116 insertions(+), 108 deletions(-)
->
-> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-> index dacc4e223e..50493a72a5 100644
-> --- a/target/ppc/helper.h
-> +++ b/target/ppc/helper.h
-> @@ -45,9 +45,9 @@ DEF_HELPER_1(check_tlb_flush_global, void, env)
->   
->   DEF_HELPER_3(lmw, void, env, tl, i32)
->   DEF_HELPER_FLAGS_3(stmw, TCG_CALL_NO_WG, void, env, tl, i32)
-> -DEF_HELPER_4(lsw, void, env, tl, i32, i32)
-> -DEF_HELPER_5(lswx, void, env, tl, i32, i32, i32)
-> -DEF_HELPER_FLAGS_4(stsw, TCG_CALL_NO_WG, void, env, tl, i32, i32)
-> +DEF_HELPER_4(LSW, void, env, tl, i32, i32)
-> +DEF_HELPER_5(LSWX, void, env, tl, i32, i32, i32)
-> +DEF_HELPER_FLAGS_4(STSW, TCG_CALL_NO_WG, void, env, tl, i32, i32)
->   DEF_HELPER_FLAGS_3(DCBZ, TCG_CALL_NO_WG, void, env, tl, int)
->   #ifdef TARGET_PPC64
->   DEF_HELPER_FLAGS_2(DCBZL, TCG_CALL_NO_WG, void, env, tl)
-> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index f3a1f7970e..0ec9a4d5de 100644
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -527,6 +527,13 @@ CREQV           010011 ..... ..... ..... 0100100001 -  @X
->   CRANDC          010011 ..... ..... ..... 0010000001 -  @X
->   CRORC           010011 ..... ..... ..... 0110100001 -  @X
->   
-> +# Fixed Point Move Assist Instructions
-> +
-> +LSWI            011111 ..... ..... ..... 1 001010101 -  @X
-> +LSWX            011111 ..... ..... ..... 1 000010101 -  @X
-> +STSWI           011111 ..... ..... ..... 1 011010101 -  @X
-> +STSWX           011111 ..... ..... ..... 1 010010101 -  @X
-> +
->   # Fixed-Point Hash Instructions
->   
->   HASHST          011111 ..... ..... ..... 1011010010 .   @X_DW
-> diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
-> index 5d3d377261..303eec4ee5 100644
-> --- a/target/ppc/mem_helper.c
-> +++ b/target/ppc/mem_helper.c
-> @@ -190,7 +190,7 @@ static void do_lsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
->       env->gpr[reg] = val;
->   }
->   
-> -void helper_lsw(CPUPPCState *env, target_ulong addr,
-> +void helper_LSW(CPUPPCState *env, target_ulong addr,
->                   uint32_t nb, uint32_t reg)
->   {
->       do_lsw(env, addr, nb, reg, GETPC());
-> @@ -202,7 +202,7 @@ void helper_lsw(CPUPPCState *env, target_ulong addr,
->    * this is valid, but rA won't be loaded.  For now, I'll follow the
->    * spec...
->    */
-> -void helper_lswx(CPUPPCState *env, target_ulong addr, uint32_t reg,
-> +void helper_LSWX(CPUPPCState *env, target_ulong addr, uint32_t reg,
->                    uint32_t ra, uint32_t rb)
->   {
->       if (likely(xer_bc != 0)) {
-> @@ -218,7 +218,7 @@ void helper_lswx(CPUPPCState *env, target_ulong addr, uint32_t reg,
->       }
->   }
->   
-> -void helper_stsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
-> +void helper_STSW(CPUPPCState *env, target_ulong addr, uint32_t nb,
->                    uint32_t reg)
->   {
->       uintptr_t raddr = GETPC();
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index 85bdb7deab..fc107399db 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -2597,104 +2597,6 @@ static void gen_stmw(DisasContext *ctx)
->       gen_helper_stmw(tcg_env, t0, t1);
->   }
->   
-> -/***                    Integer load and store strings                     ***/
-> -
-> -/* lswi */
-> -/*
-> - * PowerPC32 specification says we must generate an exception if rA is
-> - * in the range of registers to be loaded.  In an other hand, IBM says
-> - * this is valid, but rA won't be loaded.  For now, I'll follow the
-> - * spec...
-> - */
-> -static void gen_lswi(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    TCGv_i32 t1, t2;
-> -    int nb = NB(ctx->opcode);
-> -    int start = rD(ctx->opcode);
-> -    int ra = rA(ctx->opcode);
-> -    int nr;
-> -
-> -    if (ctx->le_mode) {
-> -        gen_align_no_le(ctx);
-> -        return;
-> -    }
-> -    if (nb == 0) {
-> -        nb = 32;
-> -    }
-> -    nr = DIV_ROUND_UP(nb, 4);
-> -    if (unlikely(lsw_reg_in_range(start, nr, ra))) {
-> -        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_LSWX);
-> -        return;
-> -    }
-> -    gen_set_access_type(ctx, ACCESS_INT);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_register(ctx, t0);
-> -    t1 = tcg_constant_i32(nb);
-> -    t2 = tcg_constant_i32(start);
-> -    gen_helper_lsw(tcg_env, t0, t1, t2);
-> -}
-> -
-> -/* lswx */
-> -static void gen_lswx(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    TCGv_i32 t1, t2, t3;
-> -
-> -    if (ctx->le_mode) {
-> -        gen_align_no_le(ctx);
-> -        return;
-> -    }
-> -    gen_set_access_type(ctx, ACCESS_INT);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_reg_index(ctx, t0);
-> -    t1 = tcg_constant_i32(rD(ctx->opcode));
-> -    t2 = tcg_constant_i32(rA(ctx->opcode));
-> -    t3 = tcg_constant_i32(rB(ctx->opcode));
-> -    gen_helper_lswx(tcg_env, t0, t1, t2, t3);
-> -}
-> -
-> -/* stswi */
-> -static void gen_stswi(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    TCGv_i32 t1, t2;
-> -    int nb = NB(ctx->opcode);
-> -
-> -    if (ctx->le_mode) {
-> -        gen_align_no_le(ctx);
-> -        return;
-> -    }
-> -    gen_set_access_type(ctx, ACCESS_INT);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_register(ctx, t0);
-> -    if (nb == 0) {
-> -        nb = 32;
-> -    }
-> -    t1 = tcg_constant_i32(nb);
-> -    t2 = tcg_constant_i32(rS(ctx->opcode));
-> -    gen_helper_stsw(tcg_env, t0, t1, t2);
-> -}
-> -
-> -/* stswx */
-> -static void gen_stswx(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    TCGv_i32 t1, t2;
-> -
-> -    if (ctx->le_mode) {
-> -        gen_align_no_le(ctx);
-> -        return;
-> -    }
-> -    gen_set_access_type(ctx, ACCESS_INT);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_reg_index(ctx, t0);
-> -    t1 = tcg_temp_new_i32();
-> -    tcg_gen_trunc_tl_i32(t1, cpu_xer);
-> -    tcg_gen_andi_i32(t1, t1, 0x7F);
-> -    t2 = tcg_constant_i32(rS(ctx->opcode));
-> -    gen_helper_stsw(tcg_env, t0, t1, t2);
-> -}
->   
->   #if !defined(CONFIG_USER_ONLY)
->   static inline void gen_check_tlb_flush(DisasContext *ctx, bool global)
-> @@ -4940,10 +4842,6 @@ GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
->   GEN_HANDLER_E(dform3D, 0x3D, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
->   GEN_HANDLER(lmw, 0x2E, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
->   GEN_HANDLER(stmw, 0x2F, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
-> -GEN_HANDLER(lswi, 0x1F, 0x15, 0x12, 0x00000001, PPC_STRING),
-> -GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
-> -GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
-> -GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
->   /* ISA v3.0 changed the extended opcode from 62 to 30 */
->   GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
->   #if defined(TARGET_PPC64)
-> diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-> index 26b308e435..76b1011fad 100644
-> --- a/target/ppc/translate/fixedpoint-impl.c.inc
-> +++ b/target/ppc/translate/fixedpoint-impl.c.inc
-> @@ -585,6 +585,109 @@ TRANS(CRANDC, cr_logic_common, tcg_gen_andc_i32);
->   TRANS(CREQV, cr_logic_common, tcg_gen_eqv_i32);
->   TRANS(CRORC, cr_logic_common, tcg_gen_orc_i32);
->   
-> +
-> +/***                    Integer load and store strings                     ***/
-> +
-> +/* lswi */
-> +static bool trans_LSWI(DisasContext *ctx, arg_LSWI *a)
-> +{
-> +    TCGv t0;
-> +    TCGv_i32 t1, t2;
-> +    int nb = a->rb;
-> +    int start = a->rt;
-> +    int ra = a->ra;
-> +    int nr;
-> +
-> +    if (ctx->le_mode) {
-> +        gen_align_no_le(ctx);
-> +        return true;
-> +    }
-> +    if (nb == 0) {
-> +        nb = 32;
-> +    }
-> +    nr = DIV_ROUND_UP(nb, 4);
-> +    if (unlikely(lsw_reg_in_range(start, nr, ra))) {
-> +        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_LSWX);
-> +        return true;
-> +    }
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +    t0 = tcg_temp_new();
-> +    gen_addr_register(ctx, t0);
-> +    t1 = tcg_constant_i32(nb);
-> +    t2 = tcg_constant_i32(start);
-> +    gen_helper_LSW(tcg_env, t0, t1, t2);
-> +
-> +    return true;
-> +}
-> +
-> +/* lswx */
-> +static bool trans_LSWX(DisasContext *ctx, arg_LSWX *a)
-> +{
-> +    TCGv t0;
-> +    TCGv_i32 t1, t2, t3;
-> +
-> +    if (ctx->le_mode) {
-> +        gen_align_no_le(ctx);
-> +        return true;
-> +    }
-> +
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +    t0 = tcg_temp_new();
-> +    gen_addr_reg_index(ctx, t0);
-> +    t1 = tcg_constant_i32(a->rt);
-> +    t2 = tcg_constant_i32(a->ra);
-> +    t3 = tcg_constant_i32(a->rb);
-> +    gen_helper_LSWX(tcg_env, t0, t1, t2, t3);
-> +
-> +    return true;
-> +}
-> +
-> +/* stswi */
-> +static bool trans_STSWI(DisasContext *ctx, arg_STSWI *a)
-> +{
-> +    TCGv t0;
-> +    TCGv_i32 t1, t2;
-> +    int nb = a->rb;
-> +
-> +    if (ctx->le_mode) {
-> +        gen_align_no_le(ctx);
-> +        return true;
-> +    }
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +    t0 = tcg_temp_new();
-> +    gen_addr_register(ctx, t0);
-> +    if (nb == 0) {
-> +        nb = 32;
-> +    }
-> +    t1 = tcg_constant_i32(nb);
-> +    t2 = tcg_constant_i32(a->rt);
-> +    gen_helper_STSW(tcg_env, t0, t1, t2);
-> +
-> +    return true;
-> +}
-> +
-> +/* stswx */
-> +static bool trans_STSWX(DisasContext *ctx, arg_STSWX *a)
-> +{
-> +    TCGv t0;
-> +    TCGv_i32 t1, t2;
-> +
-> +    if (ctx->le_mode) {
-> +        gen_align_no_le(ctx);
-> +        return true;
-> +    }
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +    t0 = tcg_temp_new();
-> +    gen_addr_reg_index(ctx, t0);
-> +    t1 = tcg_temp_new_i32();
-> +    tcg_gen_trunc_tl_i32(t1, cpu_xer);
-> +    tcg_gen_andi_i32(t1, t1, 0x7F);
-> +    t2 = tcg_constant_i32(a->rt);
-> +    gen_helper_STSW(tcg_env, t0, t1, t2);
-> +
-> +    return true;
-> +}
-> +
+Looking at the CN71XX manual, I think the current handling matches the
+architectural HSH register view.  The HSH DAT/IV narrow selectors build
+HASHDAT/HASHIV words from GPR halves, and the SHA-512 wide selectors move
+whole GPR values into HASHDAT/HASHIV.  These are COP2 register values,
+not target-memory byte arrays.
 
-You are using gen_addr_register and gen_addr_reg_index, do_ea_calc instead.
+The manual calls out MD5 specially: HASHDAT/HASHIV are in the big-endian
+HSH register-word order, while MD5 is little-endian, so the MD5 operation
+byte-swaps HASHDAT/HASHIV on entry and exit.  That is what the current
+bswap32() calls model.
 
-Thanks
-~ Nikhil
+> > +    aa =3D a;
+> > +    bb =3D b;
+> > +    cc =3D c;
+> > +    dd =3D d;
+> > +
+> > +    for (i =3D 0; i < 64; i++) {
+> > +        uint32_t f, g, tmp;
+> > +
+> > +        if (i < 16) {
+> > +            f =3D (b & c) | ((~b) & d);
+> > +            g =3D i;
+> > +        } else if (i < 32) {
+> > +            f =3D (d & b) | ((~d) & c);
+> > +            g =3D (5 * i + 1) & 0xf;
+> > +        } else if (i < 48) {
+> > +            f =3D b ^ c ^ d;
+> > +            g =3D (3 * i + 5) & 0xf;
+> > +        } else {
+> > +            f =3D c ^ (b | (~d));
+> > +            g =3D (7 * i) & 0xf;
+> > +        }
+> > +
+> > +        tmp =3D d;
+> > +        d =3D c;
+> > +        c =3D b;
+> > +        b =3D b + rol32(a + f + k[i] + m[g], s[i]);
+> > +        a =3D tmp;
+> > +    }
+> > +
+> > +    a +=3D aa;
+> > +    b +=3D bb;
+> > +    c +=3D cc;
+> > +    d +=3D dd;
+> > +    octeon_hsh_set32(crypto->hsh_iv, 0, bswap32(a));
+> > +    octeon_hsh_set32(crypto->hsh_iv, 1, bswap32(b));
+> > +    octeon_hsh_set32(crypto->hsh_iv, 2, bswap32(c));
+> > +    octeon_hsh_set32(crypto->hsh_iv, 3, bswap32(d));
+>
+> ... and le32_to_cpu() here.
+>
+> > +}
+> > +
+> > +static void octeon_sha1_transform(MIPSOcteonCryptoState *crypto)
+> > +{
+> > +    uint32_t w[80];
+> > +    uint32_t a, b, c, d, e;
+> > +    uint32_t orig[5];
+> > +    int i;
+> > +
+> > +    for (i =3D 0; i < 16; i++) {
+> > +        w[i] =3D octeon_hsh_get32(crypto->hsh_dat, i);
+> > +    }
+> > +    for (i =3D 16; i < 80; i++) {
+> > +        w[i] =3D rol32(w[i - 3] ^ w[i - 8] ^ w[i - 14] ^ w[i - 16], 1)=
+;
+> > +    }
+> > +
+> > +    for (i =3D 0; i < 5; i++) {
+> > +        orig[i] =3D octeon_hsh_get32(crypto->hsh_iv, i);
+> > +    }
+>
+> SHA is big-endian so we are good, but watch out this CPU could switch
+> endianness.
+>
+> Maybe safer to use cpu_to_be32() and be32_to_cpu()?
+
+For SHA-1, SHA-256, and SHA-512, the manual pseudo-code feeds the HSH
+register words directly into the SHA operation and does not describe a
+similar byte-swap.  So using cpu_to_be32()/be32_to_cpu() here would
+byte-swap based on host endianness, which is not the architectural HSH
+operation.
+
+> > +    a =3D orig[0];
+> > +    b =3D orig[1];
+> > +    c =3D orig[2];
+> > +    d =3D orig[3];
+> > +    e =3D orig[4];
+> > +
+> > +    for (i =3D 0; i < 80; i++) {
+> > +        uint32_t f, k, temp;
+> > +
+> > +        if (i < 20) {
+> > +            f =3D (b & c) | ((~b) & d);
+> > +            k =3D 0x5a827999;
+> > +        } else if (i < 40) {
+> > +            f =3D b ^ c ^ d;
+> > +            k =3D 0x6ed9eba1;
+> > +        } else if (i < 60) {
+> > +            f =3D (b & c) | (b & d) | (c & d);
+> > +            k =3D 0x8f1bbcdc;
+> > +        } else {
+> > +            f =3D b ^ c ^ d;
+> > +            k =3D 0xca62c1d6;
+> > +        }
+> > +
+> > +        temp =3D rol32(a, 5) + f + e + k + w[i];
+> > +        e =3D d;
+> > +        d =3D c;
+> > +        c =3D rol32(b, 30);
+> > +        b =3D a;
+> > +        a =3D temp;
+> > +    }
+> > +
+> > +    orig[0] +=3D a;
+> > +    orig[1] +=3D b;
+> > +    orig[2] +=3D c;
+> > +    orig[3] +=3D d;
+> > +    orig[4] +=3D e;
+> > +    for (i =3D 0; i < 5; i++) {
+> > +        octeon_hsh_set32(crypto->hsh_iv, i, orig[i]);
+> > +    }
+> > +}
+> > +
+> > +static void octeon_sha256_transform(MIPSOcteonCryptoState *crypto)
+> > +{
+>
+> (ditto)
+>
+> > +}
+> > +
+> > +static void octeon_sha512_transform(MIPSOcteonCryptoState *crypto)
+> > +{
+>
+> (ditto)
+>
+> > +}
 
