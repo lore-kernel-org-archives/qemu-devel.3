@@ -4,81 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 909A8C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 11:00:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F09C0C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 11:01:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgh3c-0004R8-8Z; Mon, 06 Jul 2026 07:00:16 -0400
+	id 1wgh46-0004iG-Ez; Mon, 06 Jul 2026 07:00:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wgh3L-0004Qh-5s
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:59:56 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1wgh44-0004gO-Cw
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:00:40 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wgh3J-0000Fe-G7
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:59:54 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-493c1950518so19179935e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:59:53 -0700 (PDT)
+ id 1wgh42-0000a3-Ht
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:00:40 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-493b786d6c0so15158905e9.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 04:00:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783335592; x=1783940392; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=oZDyBugNpW9V/0gKwcrIHrQmiK/JotB4UPTEgdY38Xo=;
- b=jtIcmyuMgRZWwJ3QRJ6CmmlT0ZYJ5oxblO55wcoPsuMSKiZsybVfgklUFFJJV0juH+
- aYZoiYfoXydK64yefWDLb2dsJdkx9yjCxzvtOCPw5f8KRKKJy/CNd7Qj8Gw6CSMXvfZt
- lMGtwBJqvMkDLmjCj97bApZk97CbmDWKXpF67CQJ4eLAeZAaWw0pj9hSFSVUqZGrMQw4
- XewPtgOrIqEaVe5I5p5dA+HLfZi2PKA+sIEFiQIFe+P0aU7ALW5b/lI14Ll5U1OAoWSf
- y92J3zefcN0spVo6/o6RFu9hHa+HtBJOoS3w4eroIMicGSW6WesXh8yON9T9SSjMm2Ds
- caSg==
+ d=linaro.org; s=google; t=1783335637; x=1783940437; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=ACMcFZRjo2pLPoopeWKTBZZti+C4GgglbX4kSs9CRfA=;
+ b=kEdw+fkdlWTdbSzYInl9YKHX4UHDjfElkKIa0hV5U1O8vmmWHDCwxkNFvlEXty70nA
+ iYV5bfXpdn3EBIqWt1u4ls8QuV+AMrohKQMC9/CTHzlSTi59q7VawxnX/25ildZpM9LM
+ +91D1WsIN2cC5qtbIv1zz7mCEvoSLL6BLI5PmEYVrQXjp7dW0gdv1XIDP+4ynGivRPbe
+ dztp5lovSaMyuzc9meteUNif9SrKEYS0b6w64JIkk/WKNnOtZbiLI+bbL/Z/LXaeLalK
+ FjKA58YV/zrxgMmxvn4+zA565W87q5udCXz5V3ZH7d5KCJAd0FTqMmaM4tv1N3Rxmivd
+ 48Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783335592; x=1783940392;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oZDyBugNpW9V/0gKwcrIHrQmiK/JotB4UPTEgdY38Xo=;
- b=LQOuDKrlmEYKpeYdYFl1VALRQPwWk5GWlUjouxjb7Uaw1oHFZngxsRSGQhDFhCIvni
- GnOeMPzpO1GbVt/KbkDdu2KYPpLsd6Rp4VRR06NzuHGi6EtfjGF8sfSFbvLlr2akMDHi
- VfGdiUs3qZ3XUnbCT8ADsDA6taB7Nx58U9q9XQ/lSzfxuqip/uW0ePxS2J2Vxdm5e+qK
- 2C64nHhNg/g5LYsFi1tPGG7yr2GuX4vmkgFxm5/vh337cyC7Rc4VWKziZx4k3a2KnwKM
- LkS60LyaM5UwjEICBEja70i/JkZjkCoBsa/Rl1qGAkb9IXQHeystXb2OUjJ5T+1loM3M
- vAng==
-X-Gm-Message-State: AOJu0YxhKwLq5VpVrDNlyAOdwhQSx9hus29Rsa27PmOo8YablaGIXcI2
- IMqRC2wE6cP0nz0rrLd9QqUzU0OkBPKc71LZzBupnbkKStWJ4LCdG1/gDT1ulwMfKgk=
-X-Gm-Gg: AfdE7ckLsvbkGSoxYaEQbHGpKcrgGoLYyrzTo6rkWsb+sLVH16fiQTIYD8V8XDYMm+X
- zV5OY4ih4mlgyChqlRDugs1kXEPH7uN1NiwIFNDMFpHrDbiZDcy2RFtY2dyOi3ZMlZD4YASUz8n
- PtjPP/EzLG6tYUP03akoaDo7gen68+GaVUWqLYutAzCC3PSnooWr36qUWTXLSsNP3zaTBQ/u6Xr
- w6/bncf+J1jyvplysP9pVxDsKPFXz0qU3HhgusDc7EE4M+RVIoG4Iv9YUM0QPbemLfUgRU29E3B
- lbs41o3JSI4tI9enfTSj7Is9B3BamQZAJN34S0lf+KmAu17/rl7oCmQoonj30bUwnDJNi3B6/8H
- ldyzqN1wmtJtKI1gecZpAxwHRf4Ewr9YkHda0lFIeYf5M3KuI/xAyzqYbLDLJPI7OWW9YW7y4FF
- jTIRQ9MRMDzUPA
-X-Received: by 2002:a05:600c:530c:b0:493:b4a3:5ab0 with SMTP id
- 5b1f17b1804b1-493dececd3fmr1470525e9.13.1783335591606; 
- Mon, 06 Jul 2026 03:59:51 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783335637; x=1783940437;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ACMcFZRjo2pLPoopeWKTBZZti+C4GgglbX4kSs9CRfA=;
+ b=kPDsZchanxxXNdyVuxzN/4CBOhTQI4aKumwc+3Pr8iwA9/Ewcdm8fOrzWh7pqmORMS
+ GsKYCw00UjBQsUiDLG5AUjc0l++3PqQq40jD+44JmGL6V6zc88oSlSZkSFJSCuTg7a3/
+ HmHAAwHcpvn8OU4QGuorCNFBTcmgJxklp6FHH+RrsBjgRoUkGCO7gE9LFph3EMIEUHf4
+ FQTDxg1WqzWLHUHf9a4WiY+DS0WJHTf06elgytmj0iEBwnZrVNmEKqbMnF1IuMa23kie
+ YeqCXfvf3HyAzlSdwXefFTErtUSjb+B+GO6PSXgkXYmWWwGW7q+zX6IcjsHpf6ZZgt9V
+ 2CIA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RprQWK3EBFPKVNOesxM7ejNktI5bQeuTYtEo/jqnFXRCHo1X1CqGrxY5SBNnq4/F0FJynNYnNOt4+qs@nongnu.org
+X-Gm-Message-State: AOJu0YybZnt81VtJdJunfc+66BBLuirqhXsgUKJlSjpGOotYV0ULU8Ql
+ naonT/ixsz0sr29XqHCu4naInDZHdO7+lD7a948QpjiebZ0VU0jVpx9lVRx3fF45uo8=
+X-Gm-Gg: AfdE7ckh17I+sYYsQEvlujv7S4neaNUfDVG2Q5G/FWc2wr2CmTgXkoXrEZWyENvATG2
+ iLxgN3k0d0RchyqAaFeF0ZCuqCUpmOfuznnuuxCC9Z9QQDuOyDP688H2lsEWy9lqsr5pJHksicG
+ huEO5XA/QE9vLnTVzOb14HzPyTvi/760WjZLv+ScHTKGQvjMQLjy8hMdqwcL7AO1yeLZX64tWqe
+ CFRbjvoExjqluzTn1zPjrXehK5WswltE1PogwE5l8RVI54f21rSS9jfdBttJbeMjTZL1cpyoh84
+ uUfTg9YrcX89RtjhJL2M658L4lFNRNvoCvBkAY0b9Pq31HdS1sE1fwgGsBonT9EaYyhon5He8sc
+ C6p8qnY4vyJzMTcReIOtak2OEqlnJQ4LEe+FXAvlZiQducI0NpBQ4HevmPbbCU4hX4VCc1t5Vws
+ nzK4/xejvInxEu8y9jCz1gswk=
+X-Received: by 2002:a05:600c:8411:b0:493:a976:5c6e with SMTP id
+ 5b1f17b1804b1-493d11def4cmr103935365e9.16.1783335636898; 
+ Mon, 06 Jul 2026 04:00:36 -0700 (PDT)
 Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493ccdab27dsm257399355e9.4.2026.07.06.03.59.50
+ 5b1f17b1804b1-493c636ec8asm300931765e9.1.2026.07.06.04.00.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 03:59:50 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EB7445F83B;
- Mon, 06 Jul 2026 11:59:49 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [RFC PATCH] target/sparc: remove unused helper_debug
-Date: Mon,  6 Jul 2026 11:59:48 +0100
-Message-ID: <20260706105948.740881-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ Mon, 06 Jul 2026 04:00:36 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 554595F83B;
+ Mon, 06 Jul 2026 12:00:35 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Gilles Grimaud <gilles.grimaud@univ-lille.fr>,  qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org,  Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [RFC PATCH] target/arm: report M-profile BKPT to gdbstub when
+ attached
+In-Reply-To: <CAFEAcA_2G-CogeB=8cFs37PNdYL88_PcsD6eNehev8A3XNH82w@mail.gmail.com>
+ (Peter Maydell's message of "Mon, 6 Jul 2026 11:39:33 +0100")
+References: <20260705224407.32464-1-gilles.grimaud@univ-lille.fr>
+ <CAFEAcA9Heev=ydTzO2u3EzeF_2q7dytOF8=67qF8ZMMY6Ky2Tw@mail.gmail.com>
+ <877bn8wgou.fsf@draig.linaro.org>
+ <CAFEAcA_2G-CogeB=8cFs37PNdYL88_PcsD6eNehev8A3XNH82w@mail.gmail.com>
+User-Agent: mu4e 1.14.2; emacs 30.1
+Date: Mon, 06 Jul 2026 12:00:35 +0100
+Message-ID: <87y0fov0vg.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,50 +111,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A long time ago we used to check for breakpoints within the target
-loops. Since b5cf7428416 (accel/tcg: Remove
-TranslatorOps.breakpoint_check) this is not longer required. Remove
-the old helper.
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Fixes: b5cf7428416 (accel/tcg: Remove TranslatorOps.breakpoint_check)
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- target/sparc/helper.h | 1 -
- target/sparc/helper.c | 8 --------
- 2 files changed, 9 deletions(-)
+> On Mon, 6 Jul 2026 at 11:33, Alex Benn=C3=A9e <alex.bennee@linaro.org> wr=
+ote:
+>>
+>> Peter Maydell <peter.maydell@linaro.org> writes:
+>>
+>> > On Sun, 5 Jul 2026 at 23:44, Gilles Grimaud
+>> > <gilles.grimaud@univ-lille.fr> wrote:
+>> >>
+>> >> While working on Raspberry Pi Pico/RP2040 support, I noticed that Pic=
+o SDK
+>> >> programs deliberately execute BKPT from _exit(). On real hardware thi=
+s is
+>> >> useful when a debug probe is attached: returning from main() stops the
+>> >> debugger at the program exit point.
+>> >>
+>> >> Under QEMU this currently does not behave like the debug-probe case. =
+For
+>> >> M-profile guests, the BKPT instruction is routed through the architec=
+tural
+>> >> guest debug exception path. Without halting debug, that path should r=
+emain a
+>> >> guest-visible DebugMonitor exception when DebugMonitor is enabled, or=
+ escalate
+>> >> towards HardFault otherwise. This patch deliberately leaves that no-d=
+ebugger
+>> >> architectural path unchanged.
+>> >>
+>> >> The problem addressed here is the case where GDB is connected to QEMU=
+'s
+>> >> gdbstub. In that situation, firmware that uses BKPT as a debugger sto=
+p point
+>> >> should stop in the attached debugger. Instead, the M-profile guest cu=
+rrently
+>> >> continues down the guest exception path and may end in HardFault/lock=
+up rather
+>> >> than reporting a clean trap to GDB.
+>> >>
+>> >> This is not specific to the RP2040 machine model. It is a generic
+>> >> Cortex-M/gdbstub interaction: firmware that uses BKPT as a debugger s=
+top point
+>> >> should be reported to the attached debugger, while keeping the guest
+>> >> architectural exception path when no debugger is attached.
+>
+>> > No other architecture, CPU or board in QEMU needs to do this,
+>> > so my instinct is to say that M-profile should not be special here.
+>> > Richard, Alex: how do we usually handle breakpoint insns for the
+>> > gdbstub ?
+>>
+>> For TCG guests we never insert BKPT instructions and treat the system as
+>> having infinite hardware breakpoints.
+>
+> This isn't about gdbstub-inserted breakpoints, it's about
+> what happens when the guest code has a breakpoint insn in it
+> already (either hardcoded, or also could happen if we're running
+> gdb inside the guest). That's something that can happen for any
+> CPU type.
 
-diff --git a/target/sparc/helper.h b/target/sparc/helper.h
-index 3a7f7dc1296..f943b6f5522 100644
---- a/target/sparc/helper.h
-+++ b/target/sparc/helper.h
-@@ -25,7 +25,6 @@ DEF_HELPER_FLAGS_2(tick_set_count, TCG_CALL_NO_RWG, void, ptr, i64)
- DEF_HELPER_FLAGS_3(tick_get_count, TCG_CALL_NO_WG, i64, env, ptr, int)
- DEF_HELPER_FLAGS_2(tick_set_limit, TCG_CALL_NO_RWG, void, ptr, i64)
- #endif
--DEF_HELPER_1(debug, void, env)
- DEF_HELPER_1(save, void, env)
- DEF_HELPER_1(restore, void, env)
- DEF_HELPER_FLAGS_3(udiv, TCG_CALL_NO_WG, i64, env, tl, tl)
-diff --git a/target/sparc/helper.c b/target/sparc/helper.c
-index 8de261b0e30..57ff395f2b3 100644
---- a/target/sparc/helper.c
-+++ b/target/sparc/helper.c
-@@ -41,14 +41,6 @@ void helper_raise_exception(CPUSPARCState *env, int tt)
-     cpu_loop_exit(cs);
- }
- 
--void helper_debug(CPUSPARCState *env)
--{
--    CPUState *cs = env_cpu(env);
--
--    cs->exception_index = EXCP_DEBUG;
--    cpu_loop_exit(cs);
--}
--
- #ifdef TARGET_SPARC64
- void helper_tick_set_count(void *opaque, uint64_t count)
- {
--- 
-2.47.3
+So far nothing - there is a helper_debug in sparc which raises the
+internal EXCP_DEBUG exception but as far as I can tell it is never
+called.
 
+We could treat gdbstub as an external debug monitor but we don't
+currently model it as such.
+
+
+>
+> thanks
+> -- PMM
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
