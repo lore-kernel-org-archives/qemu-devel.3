@@ -4,130 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95970C44500
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 13:48:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15BA6C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 13:48:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgjg6-0000gU-OJ; Mon, 06 Jul 2026 09:48:07 -0400
+	id 1wgjgI-00025C-6v; Mon, 06 Jul 2026 09:48:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgjfn-0000PE-G5
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:47:49 -0400
+ id 1wgjgD-0001WB-Hz
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:48:13 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgjfl-0006fW-N5
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:47:47 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1wgjgB-0006no-MD
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 09:48:13 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666Ax8Qd391051
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 13:47:43 GMT
+ 666AxCeP238118
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 13:48:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- MvoQnDtozHt73wE+jbszXo6UD42kabePeJj9Cd77CHA=; b=KUFL9ARDSle9mYox
- S9lQlt34hA/AY5pHYTDFkA7noH1bBMysUAWj8CZ9nczmTmL+zhIu2VFj5kFIhg4V
- FbHWA3k1jHqnh1MwrhFL6Ll3fy9u/lrfX4QXtiBoJ2Ba/6UuPDMZEinpQ8TXplD9
- WLEwdPaZB7HirAzLjGe/bUQbbnnPRsHYWz6YRC2vhG5eK0T1nn4czNwq+WfqQT6c
- TmYACew5oKgfspnjG8E8OrFlND7/7NsUUVy8bTXFFtKuojhZmsoFK6lj6ZZq/IbK
- tTOjREDq/q8ISFeuuS/qVJch447/VrFCV26NJN3H13tqojY+3pFn5TO7GF7kkQjR
- JIi8ig==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f89kgs1ds-1
+ rjq83pfJV2nVYU3+zqImMenwqXneWXWnmXXzu7JibtA=; b=jsMcmOaCMke+BwdC
+ LDFhB2BQ43RAPwj+7fHV9s/LDXoC7K6BaQrCct/HNRHpiDggmLBK2Kh/39vQxK5R
+ qafXIblzM51mNLV1ejhTgWycLZeqpHh1ugdEL/xCQnT0FFrcOwYkFIZ+uDN1W+2l
+ fIAuvR5a9kf4s7AlhsiqDjGWZcKe2xSh8+4Y+VsIQPC92BaktXuZifqv/DU71Amx
+ 1sOwkJ1nHo5U4QENkwY5JP91+EZq2pyek7B2m4tu/ntYoKT+pg7UkLdtiQo+lEl7
+ d5WBg1NW+JabedP5kJgMLEudWDrR4MmH8/jSLySKC68ARrPYjzuYzHCTdb+iGrcu
+ zdpRLg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f88t898u1-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 13:47:43 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-92e68cb7a3eso564790585a.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 06:47:43 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 13:48:10 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-92d1cae5740so351150085a.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 06:48:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783345662; x=1783950462; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=MvoQnDtozHt73wE+jbszXo6UD42kabePeJj9Cd77CHA=;
- b=DRKh5+Mp1nJ6JgcQ6avE/IyP4igigcCjfzgcVVwkh4bcvfM8R7Zh5YkwaghhPgaYu7
- p727bboSbx+rWI+lZUe+OMOLyze6Zl5j0a/BkS5i5I99DE7P8USPj8Pv4NnjRmMMEIhJ
- 4pDfg/oRwms73aCA1roZA/5eB8KE5phvT/dAmzzH17jEqIukNPmvFxPuO/Clo7qSeztm
- EW8K3I8lGU77te8JIc4IOI7DREeV2D+38B+2+tC1wm78bUrgAOncTe8tuF9Fz4SDc7be
- tZ8gOUdl0VTNwTuQYmwgKSbC37e7RgdJCne7y9y+b56fKEJtUkv7T05jSe+u5xgcSv/A
- 0XgA==
+ d=oss.qualcomm.com; s=google; t=1783345689; x=1783950489; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=rjq83pfJV2nVYU3+zqImMenwqXneWXWnmXXzu7JibtA=;
+ b=ErSPQGi/QYihqyogiGDtzx3P10HZmybCG58olVOJFrM48ujZ+3M4HAPDzf7zfcm4ax
+ DsPMrwZ3e4YUx657iItwsl5sIRmLKtmSS4fzC0r8shyo5n+FBT40F2oTl0NMy7MQhykx
+ OkPpAgszlD1qWmlO3AW2CkDT6FFr8Mf7vQIlaHK1sKALxLvUe7jN/eXAVg/GJcJKo6mq
+ d1Hvi8COVws6dBTNdfyxINZzp9KyBzEyevquUrT4eB1QKBHJvAoshIbHjzdlSBiuBNGx
+ 5rbC7GPe55o0X6EJs1IbLgSS9ulp9dCUhUB+QRQDeB8WEJ/c4oWEl/URVzxq5BClFOYe
+ UzDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783345662; x=1783950462;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=MvoQnDtozHt73wE+jbszXo6UD42kabePeJj9Cd77CHA=;
- b=Hq9E2ogfHgqkRLQqjb7Y6bjeRjH5q1Qg0Av67H+CtbLOKHFH6kiVJtOFQq+2F2wpC4
- ADf/0fdxF7SaC68VEhFWgd/Il4qUUj8UGUZnhkUg2B8SjDn9vD6fLxIS3UecLErFzMdq
- ZyxIQr9h4X1wNuwZFOoUfsY6LOIDiG47yWEofcP6BdY6pHsdxK6EC+lZ/S9naOlv/GCe
- cNQgRGCdLesj/z1r8QVXuVoZNi+hgmvZHhYry7aa5Dd4SYnRol+3EhkWide3sceHr3ZO
- niKVhyoXEnjSCC4Eoml9BmAYZxNHtTMRUAqdATK4xvksSds83DtB88zfR6sVFVIdFcx+
- JKpA==
-X-Gm-Message-State: AOJu0Yw0Taxxq+QuO4bH/8P5nLw1AzB6pMv9I20EPethCegSQ6x2TsoU
- 8UcmQQOTxo68uqhRhzPuU0dqGTwq51dYn5Yn6G/rIiqBe+h/eGYyx4Lah4sFFDDmlimDWzrCvZv
- VkE3yukOsjW7JvFmf6Q0G7USHmEoAX0ucAJqpyAyTB2gjynaSX69bMqq6LWM8SPu3aw==
-X-Gm-Gg: AfdE7clB8oilHcigdfBtdSVqs55DvD7brdWql5AwFXAYkaPDQCbsS1BR5A+VVoQPaHS
- l1DqArhSu94FDE/zGxIEY5trb5xVwSHPppA4kyQL42D/bIh6TiUF/Oa1IxDgf8GqMz5Ij+1MiJC
- mSmKvZaeJWDSgZdBrAeLH43hXnz5NSZu9RizONGUfAOHhX8l8b14wNKh/1LR/uotwu4KGniH8B8
- HHwFgmg4E+sqeiRsP127V1zR1M3gj+hBnLfcyEEm82cSKkZkerguhx2AoXP6iEhm6b/rnlo80UJ
- FTXtRZMo1EzkKpZXrtKSgUu5ZWiwWrRax7A7GMkbrrDUQszoKG8r+kxSimv6wO6shyy3V2xgCAH
- DW7llvcG52/bRT8QOhoBd7NnkziYyBOIVdwC85CWGyJX9k2Yz6p+kEpaRrw==
-X-Received: by 2002:a05:620a:4694:b0:923:5e7:1664 with SMTP id
- af79cd13be357-92ebb557e2bmr84906285a.45.1783345662231; 
- Mon, 06 Jul 2026 06:47:42 -0700 (PDT)
-X-Received: by 2002:a05:620a:4694:b0:923:5e7:1664 with SMTP id
- af79cd13be357-92ebb557e2bmr84900785a.45.1783345661593; 
- Mon, 06 Jul 2026 06:47:41 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783345689; x=1783950489;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=rjq83pfJV2nVYU3+zqImMenwqXneWXWnmXXzu7JibtA=;
+ b=Y9bwnb7gTGQ7Iz1jNBrkyOE5ys6DYJrmeZ7C8ok0F/OOMsbiXscwe3DF+1m7UR1gD3
+ fWAe96fwqEd6YBf2P9BxBQi+P03PLKp9Ko8fWys8nEyZo1xU69ih83B8rpqw7w/7NQ9J
+ p9tP5+e9VlgUwsggiW5XiUA9XO3AT86eCDPKm/niBW17Wwzf9/w3e7q2whfkV8WXq+ED
+ W5QTS0d2S6FWQS7ds4cnuxL38hX6wpSu8g9cYHDnS07kt1kAiK6GsOo5luBZUOHtCSzC
+ nfafYbFnYh39inn7fyfV4aZGn+/seP306brLL7SG0JLND1Sue3i9ovpR7GHdiR0x5P4w
+ ciWA==
+X-Gm-Message-State: AOJu0Yytx5ocOnafzp/njc6WUuNepZcwsTHyZqOVodunw+ItFIGWh7FC
+ /Qt+GGPaW21Tz6qZoZ8DwkYsZaw/S1CsSH4+R5ZAdZ7enjJA3meX3JGCKrCjnrr7Q02/2rDOQqX
+ YkVCZ7ipAAaBWd864ynT0JXpfc/1aJDXtPnJDroQeDvQnxIJBnpEtlQ2eVeZQLTlmkQ==
+X-Gm-Gg: AfdE7clzkn585lzJgd0RYsPHifBkwlEE59Q7jHAihp96BcWvOuvb/49Btjj/Ocoh+rq
+ sIidYkRUUsPPrKJK7HKoUjiCcvJhUGf94sIt0c8JTIdIZSYmt70ssi2P8bwYxDeEiOskGc4V+wR
+ qaW7nhR4lBCX/ZVER5EXlqzatzWCc0iLlUw85s3dJszGs1tuXhryoqrTTqgricQoG0QQPNV3Vqe
+ zUfZoGg120JjtjANRJ4QAap/f0zZxGIH+VzcAkBksEk12IY+ETRZ2jKwUVramaRi4MJ6WhoaUCB
+ LN7DDpLr2vpZvW69bUUYpTwRJgo30bKcDTi0O3zQemIprdN2/CtQgdr/OQXydUtLPW638GzedgE
+ 31wI03uhBiN7NcrGtjT/Rjj3CWHNuWaPuVFhE8cDIpv2Ap89HK5LEK+WkvQ==
+X-Received: by 2002:a05:620a:1997:b0:92e:7533:ef67 with SMTP id
+ af79cd13be357-92ebb568212mr88266985a.20.1783345688998; 
+ Mon, 06 Jul 2026 06:48:08 -0700 (PDT)
+X-Received: by 2002:a05:620a:1997:b0:92e:7533:ef67 with SMTP id
+ af79cd13be357-92ebb568212mr88261285a.20.1783345688392; 
+ Mon, 06 Jul 2026 06:48:08 -0700 (PDT)
 Received: from localhost.localdomain (1.171.88.92.rev.sfr.net. [92.88.171.1])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493c6381e4fsm429542855e9.8.2026.07.06.06.47.40
+ 5b1f17b1804b1-493bef1807asm323576865e9.1.2026.07.06.06.48.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 06 Jul 2026 06:47:40 -0700 (PDT)
+ Mon, 06 Jul 2026 06:48:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 14/32] gdbstub: Move supported_sstep_flags in AccelGdbConfig
- structure
-Date: Mon,  6 Jul 2026 15:45:09 +0200
-Message-ID: <20260706134527.84808-15-philmd@oss.qualcomm.com>
+Subject: [PULL 17/32] accel: Hold @can_reverse information in AccelGdbConfig
+Date: Mon,  6 Jul 2026 15:45:12 +0200
+Message-ID: <20260706134527.84808-18-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260706134527.84808-1-philmd@oss.qualcomm.com>
 References: <20260706134527.84808-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: OwiT_ZnMO41N8aJ4bHlw949XLEkRUXek
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE0MCBTYWx0ZWRfXzNe6PI1inihu
- 6yBwT3WVt8W/FEm2qzmo/FiAPPXMp6EjVDAnsZuUZPFD3M/BQMzmCV/2bFM8tbq8IWYWygc/0Iy
- 58bBFJTwBUOj4OnJSJlrth94mg9rO5pWfLTb1cTQdyKanzxChRFIjQvTDU24Erh6uh0tCy0sGkq
- TB0Rxv+ABR85o1LVRuXOKP6Is0Je++uKZ8LuFKxB3K6OG+vqk8fdOrva+sIOVVoJ8DfpYOpOQkI
- Bc6kTy54JGTU42B09SpTr0x84C+WZQqcF13Cv5KkY3v0uE40jZq1MSS3FqtTiYyblprMP6Ylloo
- V8UcESpP5quPfIhT2uQw/G9wd3tUDUwsrFlT8UMsrJiKUswO2W1c8NJgqJAqdWzIP6yPvgDWeT1
- B8J3J7bvKhNsYx8mhbq1evdeHMiK51vFbi/2O8/YpuNjpZhkUVQjC0oNLg58MNR40h30LavYYtW
- wyrU+GA9JFeo95AzYLg==
-X-Proofpoint-ORIG-GUID: OwiT_ZnMO41N8aJ4bHlw949XLEkRUXek
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE0MCBTYWx0ZWRfX3m5s7W6oKu+y
- YsL0aF3cBxW1E48ufvWxik73adenUF6ABiYx0C3d6Z4E3/NsRev4cvWhsZkYceJOI2Ag6jcnPM4
- Gwxln+EDLby4f3fWO0Tm0Xu2Y2ytMm0=
-X-Authority-Analysis: v=2.4 cv=c6Sbhx9l c=1 sm=1 tr=0 ts=6a4bb1ff cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=PLEY+c9/kVlxBKEpvFYBUQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE0MSBTYWx0ZWRfXwRxaVh2gV/d2
+ fq0n1FD7PwOSWYEIC2PsNULQmdChirAaobKT3NtWqKvXvj4t0tTjD6SqFP7+d0J6wEiGBDeat9q
+ 8P3at0Kt/SRiDfeTOMmO6SylmHfRMYQ=
+X-Proofpoint-GUID: LdvtBKb-0TRU8IVdFeqKV5zDQDIvusxx
+X-Authority-Analysis: v=2.4 cv=C6zZDwP+ c=1 sm=1 tr=0 ts=6a4bb21a cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=PLEY+c9/kVlxBKEpvFYBUQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=-SUpAgEnhvh4vktFIKIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=Zu86EXcvoz0JJFEs46oA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: LdvtBKb-0TRU8IVdFeqKV5zDQDIvusxx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE0MSBTYWx0ZWRfXyXj08RRAUf5c
+ NV1IDGuPuWO7HyRZd+HwupTGVjkdjw154/QYDncL0FTrd6Nehea94zmax74cmTHK3HtrWyeKgSP
+ cWB+kZ+MVjKmCHPC4zNQx1XZl4K37uqy0P5+aegXcxNvboFS1r2run5Xzw7v4YXSdYbWtbSxK3U
+ YCNMcRMB/lUci/BGuZO4YLK5ishb+7qHduR4a2mu+dn4dmgZaTWjDPMpZGLJA46bglmkcH85DWH
+ f1BIoh7mVOW9ZcIWnP9TnanG5y9s/m04BZ730Qjy4HOyV94fY6Emrn6wA3Z3V8+IHtVOquBhwh8
+ H76hgrCC8ZE6GEqcmOxBIWZedb85wDcCYQoWAKGvNQpqyBW3ooYns1hJdASSpbVLNC3wz3G7Lpn
+ qQhHeXCnNy6nmhDLwRIgY3VZ/Gysgg9WBiV4+wHGuE462g+AZLidxKAEapKsabOfyFW2bfioBHk
+ yYgQBWZ8G2qlQhAeqkw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-06_01,2026-07-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015
- adultscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ impostorscore=0 phishscore=0 clxscore=1015 spamscore=0 adultscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607060140
+ definitions=main-2607060141
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -152,101 +149,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-supported_sstep_flags are per-accelerators. Move them
-to a new AccelGdbConfig structure, still in GDBState.
+Hold @can_reverse in AccelGdbConfig, set it when initializing
+AccelState in AccelClass::init_machine handlers (only TCG sets
+it). Remove gdb_can_reverse() as now unused.
 
-Suggested-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260705215729.62196-14-philmd@oss.qualcomm.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-ID: <20260705215729.62196-17-philmd@oss.qualcomm.com>
 ---
- gdbstub/internals.h  |  3 ++-
- include/qemu/accel.h |  9 +++++++++
- gdbstub/gdbstub.c    | 10 +++++-----
- 3 files changed, 16 insertions(+), 6 deletions(-)
+ gdbstub/internals.h  | 1 -
+ include/qemu/accel.h | 2 ++
+ accel/tcg/tcg-all.c  | 3 +++
+ gdbstub/gdbstub.c    | 4 ++--
+ gdbstub/system.c     | 5 -----
+ gdbstub/user.c       | 6 ------
+ 6 files changed, 7 insertions(+), 14 deletions(-)
 
 diff --git a/gdbstub/internals.h b/gdbstub/internals.h
-index 60ddc146661..0444dee2246 100644
+index 0444dee2246..0b74ea4000f 100644
 --- a/gdbstub/internals.h
 +++ b/gdbstub/internals.h
-@@ -9,6 +9,7 @@
- #ifndef GDBSTUB_INTERNALS_H
- #define GDBSTUB_INTERNALS_H
+@@ -154,7 +154,6 @@ CPUState *gdb_first_attached_cpu(void);
+ void gdb_append_thread_id(CPUState *cpu, GString *buf);
+ int gdb_get_cpu_index(CPUState *cpu);
+ unsigned int gdb_get_max_cpus(void); /* both */
+-bool gdb_can_reverse(void); /* system emulation, stub for user */
+ int gdb_target_sigtrap(void); /* user */
  
-+#include "qemu/accel.h"
- #include "exec/cpu-common.h"
- 
- /*
-@@ -83,8 +84,8 @@ typedef struct GDBState {
-     int process_num;
-     GString *str_buf;
-     GByteArray *mem_buf;
-+    AccelGdbConfig accel_config;
-     int sstep_flags;
--    int supported_sstep_flags;
-     /*
-      * Whether we are allowed to send a stop reply packet at this moment.
-      * Must be set off after sending the stop reply itself.
+ void gdb_create_default_process(GDBState *s);
 diff --git a/include/qemu/accel.h b/include/qemu/accel.h
-index d3638c7bfda..052b4c59313 100644
+index 3b01d55741b..8e0c3dfe088 100644
 --- a/include/qemu/accel.h
 +++ b/include/qemu/accel.h
-@@ -73,6 +73,15 @@ bool accel_cpu_common_realize(CPUState *cpu, Error **errp);
-  */
- void accel_cpu_common_unrealize(CPUState *cpu);
- 
-+/**
-+ * struct AccelGdbConfig - gdbstub configuration for an accelerator.
-+ *
-+ * @sstep_flags: Set SSTEP_* flags that accelerator supports for guest debug.
-+ */
-+typedef struct AccelGdbConfig {
-+    unsigned sstep_flags;
-+} AccelGdbConfig;
-+
- /**
-  * accel_supported_gdbstub_sstep_flags:
+@@ -77,9 +77,11 @@ void accel_cpu_common_unrealize(CPUState *cpu);
+  * struct AccelGdbConfig - gdbstub configuration for an accelerator.
   *
+  * @sstep_flags: Set SSTEP_* flags that accelerator supports for guest debug.
++ * @can_reverse: Whether reverse mode is supported.
+  */
+ typedef struct AccelGdbConfig {
+     unsigned sstep_flags;
++    bool can_reverse;
+ } AccelGdbConfig;
+ 
+ #endif /* QEMU_ACCEL_H */
+diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
+index d30b53cd3b7..7186c10cf02 100644
+--- a/accel/tcg/tcg-all.c
++++ b/accel/tcg/tcg-all.c
+@@ -159,6 +159,9 @@ static int tcg_init_machine(AccelState *as, MachineState *ms)
+          */
+         as->gdbstub.sstep_flags |= SSTEP_NOIRQ | SSTEP_NOTIMER;
+     }
++    if (replay_mode == REPLAY_MODE_PLAY) {
++        as->gdbstub.can_reverse = true;
++    }
+ 
+     page_init();
+     tb_htable_init();
 diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index f54415a9db7..06b712562c5 100644
+index 6c4fa065638..0a328b0dd48 100644
 --- a/gdbstub/gdbstub.c
 +++ b/gdbstub/gdbstub.c
-@@ -72,9 +72,9 @@ void gdb_init_gdbserver_state(void)
-      * By default try to use no IRQs and no timers while single
-      * stepping so as to make single stepping like a typical ICE HW step.
-      */
--    gdbserver_state.supported_sstep_flags = accel_supported_gdbstub_sstep_flags();
-+    gdbserver_state.accel_config.sstep_flags = accel_supported_gdbstub_sstep_flags();
-     gdbserver_state.sstep_flags = SSTEP_ENABLE | SSTEP_NOIRQ | SSTEP_NOTIMER;
--    gdbserver_state.sstep_flags &= gdbserver_state.supported_sstep_flags;
-+    gdbserver_state.sstep_flags &= gdbserver_state.accel_config.sstep_flags;
- }
+@@ -1376,7 +1376,7 @@ static void handle_step(GArray *params, void *user_ctx)
  
- /* writes 2*len+1 bytes in buf */
-@@ -1537,12 +1537,12 @@ static void handle_query_qemu_sstepbits(GArray *params, void *user_ctx)
+ static void handle_backward(GArray *params, void *user_ctx)
  {
-     g_string_printf(gdbserver_state.str_buf, "ENABLE=%x", SSTEP_ENABLE);
- 
--    if (gdbserver_state.supported_sstep_flags & SSTEP_NOIRQ) {
-+    if (gdbserver_state.accel_config.sstep_flags & SSTEP_NOIRQ) {
-         g_string_append_printf(gdbserver_state.str_buf, ",NOIRQ=%x",
-                                SSTEP_NOIRQ);
-     }
- 
--    if (gdbserver_state.supported_sstep_flags & SSTEP_NOTIMER) {
-+    if (gdbserver_state.accel_config.sstep_flags & SSTEP_NOTIMER) {
-         g_string_append_printf(gdbserver_state.str_buf, ",NOTIMER=%x",
-                                SSTEP_NOTIMER);
-     }
-@@ -1560,7 +1560,7 @@ static void handle_set_qemu_sstep(GArray *params, void *user_ctx)
- 
-     new_sstep_flags = gdb_get_cmd_param(params, 0)->val_ul;
- 
--    if (new_sstep_flags  & ~gdbserver_state.supported_sstep_flags) {
-+    if (new_sstep_flags & ~gdbserver_state.accel_config.sstep_flags) {
+-    if (!gdb_can_reverse()) {
++    if (!gdbserver_state.accel_config.can_reverse) {
          gdb_put_packet("E22");
          return;
      }
+@@ -1684,7 +1684,7 @@ static void handle_query_supported(GArray *params, void *user_ctx)
+         g_string_append(gdbserver_state.str_buf, ";qXfer:features:read+");
+     }
+ 
+-    if (gdb_can_reverse()) {
++    if (gdbserver_state.accel_config.can_reverse) {
+         g_string_append(gdbserver_state.str_buf,
+             ";ReverseStep+;ReverseContinue+");
+     }
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index 1179c82cb86..2e8c457097b 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -479,11 +479,6 @@ unsigned int gdb_get_max_cpus(void)
+     return ms->smp.max_cpus;
+ }
+ 
+-bool gdb_can_reverse(void)
+-{
+-    return replay_mode == REPLAY_MODE_PLAY;
+-}
+-
+ /*
+  * Softmmu specific command helpers
+  */
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index f7bc4e63dfd..299388b9f71 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -786,12 +786,6 @@ unsigned int gdb_get_max_cpus(void)
+     return max_cpus;
+ }
+ 
+-/* replay not supported for user-mode */
+-bool gdb_can_reverse(void)
+-{
+-    return false;
+-}
+-
+ /*
+  * Break/Watch point helpers
+  */
 -- 
 2.53.0
 
