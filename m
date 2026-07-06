@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 858E9C43602
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 11:39:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 248A3C44500
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 11:41:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wghej-0000jL-Qv; Mon, 06 Jul 2026 07:38:35 -0400
+	id 1wghgx-0002tI-Tx; Mon, 06 Jul 2026 07:40:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wgheh-0000in-Ed
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:38:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wghgw-0002tA-Mi
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:40:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wghef-0001dD-GY
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:38:31 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wghgu-0002Gv-2w
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 07:40:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783337908;
+ s=mimecast20190719; t=1783338046;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=C2prD0ld7gDaXuX+U75vgHb3OstsCHGqaP5WMZS+0S8=;
- b=Q+jnKEPufkY/6bOr+HISRecDytqLl0F1NRcQroJSQMOnN15NrT6QtgCcE95VS5q+eZBR+r
- ShHXPQh8AwOyaPHQPvEmZWAScvLUUiEl+d3XZMowY1F2f/ur2jRVFe0lPuswptAR/TQV1j
- MZnTMSv+CBmeRLou6+3w0HCZwB7ofek=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=H6cgTZkzMPjhiMOghI17jq8x3fxfTThxihGpxJ92rP4=;
+ b=gmKhaS8E2bdMKg6p7tHSsW3ZN0DoaHxwGc3dpgxeoT1Qqwh3T8121Wqop4dy/9fMaHSQ9B
+ 409Zco2kKyuRPFT/XHR2SnXyaBUv2UkLqHq3xz1/2PhwmvI5g9XRgX68N88AblkZ54q5ka
+ aUHH1GHY29a1H3PzFjE43StX40G7YFc=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-401-GyulweX4Nkqh-UnlYcNo1g-1; Mon, 06 Jul 2026 07:38:27 -0400
-X-MC-Unique: GyulweX4Nkqh-UnlYcNo1g-1
-X-Mimecast-MFC-AGG-ID: GyulweX4Nkqh-UnlYcNo1g_1783337906
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-493bdf90adaso21337755e9.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 04:38:27 -0700 (PDT)
+ us-mta-462-bk2khP3vOYuBZxBBMpvdlA-1; Mon, 06 Jul 2026 07:40:45 -0400
+X-MC-Unique: bk2khP3vOYuBZxBBMpvdlA-1
+X-Mimecast-MFC-AGG-ID: bk2khP3vOYuBZxBBMpvdlA_1783338044
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-475b0b4e8d5so2328198f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 04:40:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783337906; x=1783942706; darn=nongnu.org;
+ d=redhat.com; s=google; t=1783338044; x=1783942844; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=C2prD0ld7gDaXuX+U75vgHb3OstsCHGqaP5WMZS+0S8=;
- b=dQ34K9PX8AriJHKYeRM4fK62wkpZsFBmgz+T2LrHq9N3zP9MsxwCG21SxDjmR3avE9
- 9FrAuEaDs+pqFPElaOzaSfQCNhhv6aSAhBqce1MMrMn7kDNf9DgVHIxhu/TYl8mo6sMJ
- 42vhCii+eRXVCva7ZB2ecgeZJuG/OGkXedzW2mC7j5UxqZvFIOXoM7NShRQsiVs2N3GK
- U5WduBhfSEx18cjTsuDnsTJCkcsTPPnh0oMw/U5VkTpMWX1sxciAZlyij7boP4q5BpwE
- iupyHQKPVKdzW6d/5OZVWJeT+XCqq4kJv4HUJRkbRL0nTmVGTiHmkjALm6vBAjvUWSmj
- jcsw==
+ :content-type; bh=H6cgTZkzMPjhiMOghI17jq8x3fxfTThxihGpxJ92rP4=;
+ b=Zpe5h2EuxWu8nCh7XngF/vBmRyhcP1Tk9BR6LDYVLohzP0WJgsPBi8abn1lIZQLUTH
+ HQtxcHZ2Pu/mRg0aUNW4vTNLHxGrDrg3+BK2+HDnYsPMpTrJwJHPqcN/trP36BOqyG8Z
+ HSVNwmWMmhSMEnofV7nq66d0nQOs4zChIFbH8HiMP29OxY6+3J1uUZSRjKUflFT5arWE
+ rc4hvjow4vzTKPK0SA9ruM2sKPJa7CmTcFf7KeOPzX1iQdcqNa4TYkcckKmID0X5W4Mn
+ 1NLWGIS7w32rD2rgc/Y0FsO9mSsELcUKOGqNIzJH54CC/dxMHqmqt9dunz1qgXAU1f5M
+ LIwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783337906; x=1783942706;
+ d=1e100.net; s=20251104; t=1783338044; x=1783942844;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=C2prD0ld7gDaXuX+U75vgHb3OstsCHGqaP5WMZS+0S8=;
- b=GQM4tjBvC03IkjfhCY8dQcmTRmAAhb37itFh8bAGAeetiKYppo3L4cJJRf0sMeahn9
- R3dgbpRxWEG2G9G5HyYsXJUo+J3rDYp4vuwe25x1MpqNH1TOes4dVbSZtnAyxvQvTI3a
- 8QjqwN+bffQAWMReUJkhE4x5LuSOlacQ6NwV6rmvhvkNaaPMbt248z6LU6AvsIAIo9xM
- 6WxdZUt/VUCeGKSAaCrzY7KzJj6ztCcGmP6EClxYm6O2Pi70TAj7Y7YfOTxEzI01jdwz
- GOemBwvKq6mKY8Fp4sXucIDp9LYWAKwgYRyFkDtdXnl/ujpWIfVUVTY0hpMpk+3DyrNs
- kABg==
+ bh=H6cgTZkzMPjhiMOghI17jq8x3fxfTThxihGpxJ92rP4=;
+ b=FUJ+JJAhbgfXsOjjRc2o9ipqBSrCm294lpvUbZITRyEFUU3ENshRma2mzOsVOwoyt3
+ jl6BHTZD5BnMIwvgiNfbRGZmuRRKid0cVReYVNPOSs05fHJV7XQYjl33NeYlu0wj5stT
+ 8vwHGBkQghHiQpZJ9xPjcgZPKTbxFRVfe1n+I9Us4BFtcL4qmgr8qXwSKuO6adI7yYrV
+ c9PfrKPsr3vM4AoJjYqeUyLY134IGtpr40v/3RrwfJOtomNOCEM+uxa8P+HHghhAK3Oi
+ UyBqiM7GyIEsedneGpbUIpKxa2/Dx17LsaAFepeGg+Kv205Vdm148WpFEnSwbAqAdSit
+ Oc5Q==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpwvfN3CflS5Rjjh2xRzrB+7F1NMbM4+Zp99mlRuH/07zpFCfbO9AdNyT7jF+E0bmCyk3DvV6yZGULw@nongnu.org
-X-Gm-Message-State: AOJu0YxzCc6EjtTGyR7BI95VLaH9+cOKpz3TWbesWenJ7wZ/LPsZjtkx
- n0VWFUr30EijKPa814OH4/84iglGSrMMTKLm5HrZBeXxESttjaOa/Ylw50AJc9R5hbulVzQgGCL
- RWe4SPbjdY37JZ57uT8mjdPQdbXiXordgFbtX9m6T4ls75l+zCwYSnOia
-X-Gm-Gg: AfdE7ck6y0OJD2oSkf6sVyAjY2YfGgjOl47fn/mgavQS42iaf59Bgqza44RRjacUsC7
- SJVzmLVKQyGMnGsN2rNq0TmT4YlowOAlXDtHd8lQys1ZA/OZWTR8CnI56OiOHimlEEDUnr2f4Km
- JfqjHvKHpUEWo2Q7engeCjfBwUBbTD0WnsjtKQknvtg/vSjZ743R7S/MBXYrcYQtWhSbnk9n5wF
- xaFQgEKKsCZ8veRy3jqdk/CTFpC/LLiJms9yTVz96psbBRfTIiTzpOoBBwj0DISWv20034RtYwD
- GTJLWKUs8UhxFj4jCrLmM5I1PiN5zxrgLkt5vU72gMCBIibDnMUMEP4/ZxWGE5v4rIuB23ogV+b
- ygn5xMtv5iMB1K9gvEaPqX3GnnMmC1oxcMmWNZ5b1V5kka7YtUg==
-X-Received: by 2002:a05:600c:37cd:b0:493:9661:f55d with SMTP id
- 5b1f17b1804b1-493df09a412mr38115e9.30.1783337906130; 
- Mon, 06 Jul 2026 04:38:26 -0700 (PDT)
-X-Received: by 2002:a05:600c:37cd:b0:493:9661:f55d with SMTP id
- 5b1f17b1804b1-493df09a412mr37645e9.30.1783337905667; 
- Mon, 06 Jul 2026 04:38:25 -0700 (PDT)
+ AHgh+Ro7oQLHGGB3rgLywjW4nZH3Dq0mPl6peDpv3uU5xw4N/KhiblYZFbPz/Atu2V2LzSIrhEt6cB25IN5S@nongnu.org
+X-Gm-Message-State: AOJu0YxHwzEMRKHNWnXyYiFUOUeODMnoYulFAY/WlNo9jJQlpg02m7TG
+ 9NoVKu80iFWo574wK1XXBprtW6sB2sXwAFETdOUquuvXTRHXQZyebrPbHzIoedfa7oN0bz/Zodm
+ jjR/N603adzt+CX4RTA/gJYnVhTrFa4aulyE5PvmsLYaNApLPQ/YTIwp+
+X-Gm-Gg: AfdE7cnAHIDjOo14ke7kaQZ+QXNjjvLam9N7thQyOELlCKTFtByVx40OVsfLwIAunS2
+ FOQB3+szC5J688mz7t/3BiZ59NsQOVMaEV3cNdiktsooi2M3IWvxZSKUZqohlAToNX5ULq/BI5a
+ 9Kq03+zzCgQ+nIJNUyPhs33WrMDLL2XZJe85PLD5gSqrM2qCljwlZDpSSj2hDh7PLKJpzyXVm/m
+ ednyJUJOS9y5tx0Jz8WW2IVdP+8okh+6EuBEyBzBYPV6DgLnVokDQky7QrE+2AS/TfLSc/Ps9er
+ 5tmq3d27DlMGtz3MYuHIwkv99Hfdk66XBKpp4tyJEB4XKXE7AyUxHMogGz6OgvB78oI91QOxOxR
+ jsWCaREmQNUR62GTUMaVKYCjMrE2YZSdFC9rwmhf6G2hGBaWxug==
+X-Received: by 2002:a05:6000:1813:b0:475:f100:3600 with SMTP id
+ ffacd0b85a97d-47aae69dee3mr8497247f8f.61.1783338044028; 
+ Mon, 06 Jul 2026 04:40:44 -0700 (PDT)
+X-Received: by 2002:a05:6000:1813:b0:475:f100:3600 with SMTP id
+ ffacd0b85a97d-47aae69dee3mr8497185f8f.61.1783338043429; 
+ Mon, 06 Jul 2026 04:40:43 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493ccdb62d3sm298886345e9.8.2026.07.06.04.38.24
+ ffacd0b85a97d-47aa0f213e8sm21211461f8f.34.2026.07.06.04.40.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Jul 2026 04:38:25 -0700 (PDT)
-Message-ID: <442b0edc-232c-4eca-bd50-f5cc6078aa18@redhat.com>
-Date: Mon, 6 Jul 2026 13:38:23 +0200
+ Mon, 06 Jul 2026 04:40:42 -0700 (PDT)
+Message-ID: <7ceda49f-9696-4168-bdcb-d4949ee6f5aa@redhat.com>
+Date: Mon, 6 Jul 2026 13:40:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 15/16] migration: Refactor
- migration_completion_precopy() to return bool
+Subject: Re: [PATCH v5 03/16] migration: Run final save_query_pending at
+ switchover
 To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>,
@@ -107,7 +107,7 @@ Cc: Alex Williamson <alex@shazbot.org>, Peter Xu <peterx@redhat.com>,
  John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Lukas Straub <lukasstraub2@web.de>, Maor Gottlieb <maorg@nvidia.com>
 References: <20260706085211.13905-1-avihaih@nvidia.com>
- <20260706085211.13905-16-avihaih@nvidia.com>
+ <20260706085211.13905-4-avihaih@nvidia.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -153,17 +153,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260706085211.13905-16-avihaih@nvidia.com>
+In-Reply-To: <20260706085211.13905-4-avihaih@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -180,239 +180,431 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/6/26 10:52, Avihai Horon wrote:
-> migration_completion_precopy() reports its error through the Error
-> **errp argument, so its int return value carries no information beyond
-> success/failure. Convert it to return a bool, matching the common
-> convention.
+Peter, Lukas,
+
+On 7/6/26 10:51, Avihai Horon wrote:
+> Before switchover, the source needs one last exact pending query so
+> modules can flush dirty state. This is currently done ad hoc in modules
+> handlers. For example, RAM syncs its dirty bitmap in its save_complete
+> handler.
 > 
-> Convert its underlying helper qemu_savevm_state_complete_precopy()
-> likewise, and in turn qemu_savevm_state_non_iterable(), which it calls.
-> Adjust all callers accordingly.
+> This should be a general concept relevant for any module, so extract it
+> to migration core instead by running a final save_query_pending before
+> switchover.
 > 
-> Refactor and clean migration_completion() code too, which no longer
-> needs to track int return values.
+> The final query requires special handling by modules (e.g., it's called
+> with BQL locked, during VM stop), so extend save_query_pending
+> SaveVMHandlers callback and qemu_savevm_query_pending() with a "final"
+> flag so migration modules can tell the last pending query during
+> switchover from periodic iteration queries.
+> 
+> Call final pending query also in COLO checkpoint, which needs to flush
+> dirty state before the checkpoint's live state is saved. Unlike a
+> regular switchover, COLO reaches completion repeatedly for every
+> checkpoint, so this must be done on each one.
 > 
 > Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 > ---
->   migration/savevm.h    |  4 ++--
->   migration/migration.c | 35 ++++++++++++++---------------------
->   migration/savevm.c    | 32 +++++++++++++++-----------------
->   3 files changed, 31 insertions(+), 40 deletions(-)
-> 
-> diff --git a/migration/savevm.h b/migration/savevm.h
-> index 415198423f..f7dcdd7d1b 100644
-> --- a/migration/savevm.h
-> +++ b/migration/savevm.h
-> @@ -44,7 +44,7 @@ void qemu_savevm_state_header(QEMUFile *f);
->   int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy);
->   void qemu_savevm_state_cleanup(void);
->   void qemu_savevm_state_complete_postcopy(QEMUFile *f);
-> -int qemu_savevm_state_complete_precopy(MigrationState *s, Error **errp);
-> +bool qemu_savevm_state_complete_precopy(MigrationState *s, Error **errp);
->   void qemu_savevm_query_pending_iter(MigrationState *s, MigPendingData *pending,
->                                       bool exact);
->   bool qemu_savevm_query_pending_final(MigrationState *s,
-> @@ -74,7 +74,7 @@ int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis,
->                              Error **errp);
->   int qemu_load_device_state(QEMUFile *f, Error **errp);
->   int qemu_loadvm_approve_switchover(const char *approver);
-> -int qemu_savevm_state_non_iterable(QEMUFile *f, Error **errp);
-> +bool qemu_savevm_state_non_iterable(QEMUFile *f, Error **errp);
->   int qemu_savevm_state_non_iterable_early(QEMUFile *f,
->                                            JSONWriter *vmdesc,
->                                            Error **errp);
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 98603ee19c..7d5acd93c3 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -2659,8 +2659,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
->        */
->       qemu_savevm_send_postcopy_listen(fb);
->   
-> -    ret = qemu_savevm_state_non_iterable(fb, errp);
-> -    if (ret) {
-> +    if (!qemu_savevm_state_non_iterable(fb, errp)) {
->           error_prepend(errp, "Postcopy save non-iterable states failed: ");
->           goto fail_closefb;
->       }
-> @@ -2858,22 +2857,22 @@ static bool migration_switchover_start(MigrationState *s, Error **errp)
->       return true;
->   }
->   
-> -static int migration_completion_precopy(MigrationState *s, Error **errp)
-> +static bool migration_completion_precopy(MigrationState *s, Error **errp)
->   {
-> -    int ret;
-> +    bool ret = false;
->   
->       bql_lock();
->   
->       if (!migrate_mode_is_cpr()) {
-> -        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
-> -        if (ret < 0) {
-> -            error_setg_errno(errp, -ret, "Failed to stop the VM");
-> +        int r = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
-> +
-> +        if (r < 0) {
-> +            error_setg_errno(errp, -r, "Failed to stop the VM");
->               goto out_unlock;
->           }
->       }
->   
->       if (!migration_switchover_start(s, errp)) {
-> -        ret = -EFAULT;
->           goto out_unlock;
->       }
->   
-> @@ -2910,18 +2909,17 @@ static void migration_completion_postcopy(MigrationState *s)
->    */
->   static void migration_completion(MigrationState *s)
->   {
-> -    int ret = 0;
->       Error *local_err = NULL;
->   
->       if (s->state == MIGRATION_STATUS_ACTIVE) {
-> -        ret = migration_completion_precopy(s, &local_err);
-> +        if (!migration_completion_precopy(s, &local_err)) {
-> +            goto fail;
-> +        }
->       } else if (s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
->           migration_completion_postcopy(s);
->       } else {
-> -        ret = -1;
-> -    }
-> -
-> -    if (ret < 0) {
-> +        error_setg(&local_err, "Unexpected migration completion status %s",
-> +                   MigrationStatus_str(s->state));
->           goto fail;
->       }
->   
-> @@ -2945,12 +2943,7 @@ static void migration_completion(MigrationState *s)
->       return;
->   
->   fail:
-> -    if (local_err) {
-> -        migrate_error_propagate(s, local_err);
-> -    } else if (qemu_file_get_error_obj(s->to_dst_file, &local_err)) {
-> -        migrate_error_propagate(s, local_err);
-> -    } else if (ret) {
-> -        error_setg_errno(&local_err, -ret, "Error in migration completion");
-> +    if (local_err || qemu_file_get_error_obj(s->to_dst_file, &local_err)) {
->           migrate_error_propagate(s, local_err);
->       }
->   
-> @@ -3863,7 +3856,7 @@ static void *bg_migration_thread(void *opaque)
->           goto fail_with_bql;
->       }
->   
-> -    if (qemu_savevm_state_non_iterable(fb, &local_err)) {
-> +    if (!qemu_savevm_state_non_iterable(fb, &local_err)) {
->           error_prepend(&local_err, "Failed to save non-iterable devices ");
->           goto fail_with_bql;
->       }
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index f654a1c563..bbb8d2b47c 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -1737,13 +1737,12 @@ void qemu_savevm_state_end_precopy(MigrationState *s, QEMUFile *f)
->       qemu_savevm_state_vm_desc(s, f);
->   }
->   
-> -int qemu_savevm_state_non_iterable(QEMUFile *f, Error **errp)
-> +bool qemu_savevm_state_non_iterable(QEMUFile *f, Error **errp)
->   {
->       MigrationState *ms = migrate_get_current();
->       int64_t start_ts_each, end_ts_each;
->       JSONWriter *vmdesc = ms->vmdesc;
->       SaveStateEntry *se;
-> -    int ret;
->   
->       /* Making sure cpu states are synchronized before saving non-iterable */
->       cpu_synchronize_all_states();
-> @@ -1756,9 +1755,8 @@ int qemu_savevm_state_non_iterable(QEMUFile *f, Error **errp)
->   
->           start_ts_each = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
->   
-> -        ret = vmstate_save(f, se, vmdesc, errp);
-> -        if (ret) {
-> -            return ret;
-> +        if (vmstate_save(f, se, vmdesc, errp) < 0) {
-> +            return false;
->           }
->   
->           end_ts_each = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
-> @@ -1768,10 +1766,10 @@ int qemu_savevm_state_non_iterable(QEMUFile *f, Error **errp)
->   
->       trace_vmstate_downtime_checkpoint("src-non-iterable-saved");
->   
-> -    return 0;
-> +    return true;
->   }
->   
-> -int qemu_savevm_state_complete_precopy(MigrationState *s, Error **errp)
-> +bool qemu_savevm_state_complete_precopy(MigrationState *s, Error **errp)
->   {
->       ERRP_GUARD();
->       QEMUFile *f = s->to_dst_file;
-> @@ -1781,12 +1779,11 @@ int qemu_savevm_state_complete_precopy(MigrationState *s, Error **errp)
->       if (ret) {
->           qemu_file_get_error_obj(f, errp);
->           error_prepend(errp, "Failed to save iterable device state: ");
-> -        return ret;
-> +        return false;
->       }
->   
-> -    ret = qemu_savevm_state_non_iterable(f, errp);
-> -    if (ret) {
-> -        return ret;
-> +    if (!qemu_savevm_state_non_iterable(f, errp)) {
-> +        return false;
->       }
->   
->       qemu_savevm_state_end_precopy(s, f);
-> @@ -1795,10 +1792,10 @@ int qemu_savevm_state_complete_precopy(MigrationState *s, Error **errp)
->       if (ret) {
->           qemu_file_get_error_obj(f, errp);
->           error_prepend(errp, "Failed to flush QEMUFile: ");
-> -        return ret;
-> +        return false;
->       }
->   
-> -    return 0;
-> +    return true;
->   }
->   
->   static void qemu_savevm_query_pending(MigrationState *s,
-> @@ -1928,7 +1925,9 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
->           goto cleanup;
->       }
->   
-> -    ret = qemu_savevm_state_complete_precopy(ms, errp);
-> +    if (!qemu_savevm_state_complete_precopy(ms, errp)) {
-> +        ret = -1;
-> +    }
->   cleanup:
->       qemu_savevm_state_cleanup();
->   
-> @@ -1962,9 +1961,8 @@ int qemu_save_device_state(QEMUFile *f, Error **errp)
->           return ret;
->       }
->   
-> -    ret = qemu_savevm_state_non_iterable(f, errp);
-> -    if (ret) {
-> -        return ret;
-> +    if (!qemu_savevm_state_non_iterable(f, errp)) {
-> +        return -1;
->       }
->   
->       qemu_savevm_state_end(f);
+>   include/migration/register.h   | 41 ++++++++++++++++++----------------
+>   migration/savevm.h             |  3 ++-
+>   hw/s390x/s390-stattrib.c       |  2 +-
+>   hw/vfio/migration.c            | 11 ++++++---
+>   migration/block-dirty-bitmap.c | 11 ++++++---
+>   migration/colo.c               | 10 +++++++++
+>   migration/migration.c          | 14 ++++++++++--
+>   migration/ram.c                | 40 +++++++++++++++++++--------------
+>   migration/savevm.c             | 20 +++++++++++++----
+>   hw/vfio/trace-events           |  2 +-
+>   migration/trace-events         |  2 +-
+>   11 files changed, 104 insertions(+), 52 deletions(-)
+
+It'd be nice to have your R-b again. Patch is the same, it includes
+the colo fix.
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
+
+
+> 
+> diff --git a/include/migration/register.h b/include/migration/register.h
+> index 5e5e0ee432..6f632123f1 100644
+> --- a/include/migration/register.h
+> +++ b/include/migration/register.h
+> @@ -171,6 +171,28 @@ typedef struct SaveVMHandlers {
+>        */
+>       bool (*is_active_iterate)(void *opaque);
+>   
+> +    /**
+> +     * @save_query_pending
+> +     *
+> +     * This estimates the remaining data to transfer on the source side.
+> +     *
+> +     * When @exact is true, a module must report accurate results.  When
+> +     * @exact is false, a module may report estimates.
+> +     *
+> +     * It's highly recommended that modules implement a faster version of
+> +     * the query path (for example, by proper caching on the counters) if
+> +     * an accurate query will be time-consuming.
+> +     *
+> +     * @opaque: data pointer passed to register_savevm_live()
+> +     * @pending: pointer to a MigPendingData struct
+> +     * @exact: set to true for an accurate (slow) query
+> +     * @final: set to true for the final query during switchover. When final is
+> +     * true, the query is called with BQL locked. Otherwise, it's called with
+> +     * BQL unlocked.
+> +     */
+> +    void (*save_query_pending)(void *opaque, MigPendingData *pending,
+> +                               bool exact, bool final);
+> +
+>       /* This runs outside the BQL in the migration case, and
+>        * within the lock in the savevm case.  The callback had better only
+>        * use data that is local to the migration thread or protected
+> @@ -210,25 +232,6 @@ typedef struct SaveVMHandlers {
+>        */
+>       bool (*save_postcopy_prepare)(QEMUFile *f, void *opaque, Error **errp);
+>   
+> -    /**
+> -     * @save_query_pending
+> -     *
+> -     * This estimates the remaining data to transfer on the source side.
+> -     *
+> -     * When @exact is true, a module must report accurate results.  When
+> -     * @exact is false, a module may report estimates.
+> -     *
+> -     * It's highly recommended that modules implement a faster version of
+> -     * the query path (for example, by proper caching on the counters) if
+> -     * an accurate query will be time-consuming.
+> -     *
+> -     * @opaque: data pointer passed to register_savevm_live()
+> -     * @pending: pointer to a MigPendingData struct
+> -     * @exact: set to true for an accurate (slow) query
+> -     */
+> -    void (*save_query_pending)(void *opaque, MigPendingData *pending,
+> -                               bool exact);
+> -
+>       /**
+>        * @load_state
+>        *
+> diff --git a/migration/savevm.h b/migration/savevm.h
+> index b6bb4fa977..81abd96dda 100644
+> --- a/migration/savevm.h
+> +++ b/migration/savevm.h
+> @@ -45,7 +45,8 @@ int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy);
+>   void qemu_savevm_state_cleanup(void);
+>   void qemu_savevm_state_complete_postcopy(QEMUFile *f);
+>   int qemu_savevm_state_complete_precopy(MigrationState *s, Error **errp);
+> -void qemu_savevm_query_pending(MigPendingData *pending, bool exact);
+> +void qemu_savevm_query_pending_iter(MigPendingData *pending, bool exact);
+> +void qemu_savevm_query_pending_final(MigPendingData *pending);
+>   int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy);
+>   bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp);
+>   void qemu_savevm_state_end(QEMUFile *f);
+> diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
+> index c334714b31..b0f04eb30c 100644
+> --- a/hw/s390x/s390-stattrib.c
+> +++ b/hw/s390x/s390-stattrib.c
+> @@ -190,7 +190,7 @@ static int cmma_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>   }
+>   
+>   static void cmma_state_pending(void *opaque, MigPendingData *pending,
+> -                               bool exact)
+> +                               bool exact, bool final)
+>   {
+>       S390StAttribState *sas = S390_STATTRIB(opaque);
+>       S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index fb12b9717f..195498845e 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -622,13 +622,18 @@ static void vfio_state_pending_sync(VFIODevice *vbasedev)
+>   }
+>   
+>   static void vfio_state_pending(void *opaque, MigPendingData *pending,
+> -                               bool exact)
+> +                               bool exact, bool final)
+>   {
+>       VFIODevice *vbasedev = opaque;
+>       VFIOMigration *migration = vbasedev->migration;
+>       uint64_t precopy_size, stopcopy_size;
+>   
+> -    if (exact) {
+> +    /*
+> +     * The final pending query runs during switchover downtime. VFIO does not
+> +     * need a fresh device pending-data query then to get the latest dirty
+> +     * data, so avoid the extra work and report the cached counters below.
+> +     */
+> +    if (exact && !final) {
+>           vfio_state_pending_sync(vbasedev);
+>       }
+>   
+> @@ -646,7 +651,7 @@ static void vfio_state_pending(void *opaque, MigPendingData *pending,
+>   
+>       trace_vfio_state_pending(vbasedev->name, migration->stopcopy_size,
+>                                migration->precopy_init_size,
+> -                             migration->precopy_dirty_size, exact);
+> +                             migration->precopy_dirty_size, exact, final);
+>   }
+>   
+>   static bool vfio_is_active_iterate(void *opaque)
+> diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
+> index 7ef3759e53..cba54e25cd 100644
+> --- a/migration/block-dirty-bitmap.c
+> +++ b/migration/block-dirty-bitmap.c
+> @@ -767,13 +767,16 @@ static int dirty_bitmap_save_complete(QEMUFile *f, void *opaque)
+>   }
+>   
+>   static void dirty_bitmap_state_pending(void *opaque, MigPendingData *data,
+> -                                       bool exact)
+> +                                       bool exact, bool final)
+>   {
+>       DBMSaveState *s = &((DBMState *)opaque)->save;
+>       SaveBitmapState *dbms;
+>       uint64_t pending = 0;
+>   
+> -    bql_lock();
+> +    /* Final pending query is called with BQL locked */
+> +    if (!final) {
+> +        bql_lock();
+> +    }
+>   
+>       QSIMPLEQ_FOREACH(dbms, &s->dbms_list, entry) {
+>           uint64_t gran = bdrv_dirty_bitmap_granularity(dbms->bitmap);
+> @@ -783,7 +786,9 @@ static void dirty_bitmap_state_pending(void *opaque, MigPendingData *data,
+>           pending += DIV_ROUND_UP(sectors * BDRV_SECTOR_SIZE, gran);
+>       }
+>   
+> -    bql_unlock();
+> +    if (!final) {
+> +        bql_unlock();
+> +    }
+>   
+>       trace_dirty_bitmap_state_pending(pending);
+>   
+> diff --git a/migration/colo.c b/migration/colo.c
+> index 2d36f933cf..08632d5e4a 100644
+> --- a/migration/colo.c
+> +++ b/migration/colo.c
+> @@ -409,6 +409,7 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
+>                                             QEMUFile *fb)
+>   {
+>       Error *local_err = NULL;
+> +    MigPendingData pending = {};
+>       int ret = -1;
+>   
+>       colo_send_message(s->to_dst_file, COLO_MESSAGE_CHECKPOINT_REQUEST,
+> @@ -465,6 +466,15 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
+>       if (migrate_auto_converge()) {
+>           mig_throttle_counter_reset();
+>       }
+> +
+> +    /*
+> +     * Run the final pending query so migration modules can flush their dirty
+> +     * state (e.g., RAM syncs its dirty bitmap) before this checkpoint's live
+> +     * state is saved. Unlike a regular switchover, COLO reaches completion
+> +     * repeatedly for every checkpoint, so this must be done on each one.
+> +     */
+> +    qemu_savevm_query_pending_final(&pending);
+> +
+>       /*
+>        * Only save VM's live state, which not including device state.
+>        * TODO: We may need a timeout mechanism to prevent COLO process
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 7e0a0bea7a..442f950c43 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -2793,12 +2793,22 @@ static bool migration_switchover_prepare(MigrationState *s)
+>   static bool migration_switchover_start(MigrationState *s, Error **errp)
+>   {
+>       ERRP_GUARD();
+> +    MigPendingData pending = {};
+>   
+>       if (!migration_switchover_prepare(s)) {
+>           error_setg(errp, "Switchover is interrupted");
+>           return false;
+>       }
+>   
+> +    /*
+> +     * The final query to the whole system on dirty data to make sure we
+> +     * collect the latest status of the VM.  For precopy, source QEMU will
+> +     * dump all the dirty data during switchover.  For postcopy, this will
+> +     * properly update all the dirty bitmaps to finally generate the
+> +     * correct discard bitmaps; see ram_postcopy_send_discard_bitmap().
+> +     */
+> +    qemu_savevm_query_pending_final(&pending);
+> +
+>       /* Inactivate disks except in COLO */
+>       if (!migrate_colo()) {
+>           /*
+> @@ -3291,7 +3301,7 @@ static void migration_iteration_go_next(MigPendingData *pending)
+>       /*
+>        * Do a slow sync first before boosting the iteration count.
+>        */
+> -    qemu_savevm_query_pending(pending, true);
+> +    qemu_savevm_query_pending_iter(pending, true);
+>   
+>       /*
+>        * Update the dirty information for the whole system for this
+> @@ -3342,7 +3352,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
+>       bool complete_ready;
+>   
+>       /* Fast path - get the estimated amount of pending data */
+> -    qemu_savevm_query_pending(&pending, false);
+> +    qemu_savevm_query_pending_iter(&pending, false);
+>   
+>       if (in_postcopy) {
+>           /*
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 55aa9b47dc..8918b2f03b 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -2686,9 +2686,6 @@ void ram_postcopy_send_discard_bitmap(MigrationState *ms)
+>   
+>       RCU_READ_LOCK_GUARD();
+>   
+> -    /* This should be our last sync, the src is now paused */
+> -    migration_bitmap_sync_precopy(true);
+> -
+>       /* Easiest way to make sure we don't resume in the middle of a host-page */
+>       rs->pss[RAM_CHANNEL_PRECOPY].last_sent_block = NULL;
+>       rs->last_seen_block = NULL;
+> @@ -3376,10 +3373,6 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+>       rs->last_stage = !migration_in_colo_state();
+>   
+>       WITH_RCU_READ_LOCK_GUARD() {
+> -        if (!migration_in_postcopy()) {
+> -            migration_bitmap_sync_precopy(true);
+> -        }
+> -
+>           ret = rdma_registration_start(f, RAM_CONTROL_FINISH);
+>           if (ret < 0) {
+>               qemu_file_set_error(f, ret);
+> @@ -3442,25 +3435,38 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+>       return qemu_fflush(f);
+>   }
+>   
+> -static void ram_state_pending(void *opaque, MigPendingData *pending,
+> -                              bool exact)
+> +static void ram_state_pending_sync(bool exact, bool final)
+>   {
+> -    RAMState **temp = opaque;
+> -    RAMState *rs = *temp;
+> -    uint64_t remaining_size;
+> -
+>       /*
+>        * Sync is not needed either with: (1) a fast query, or (2) after
+>        * postcopy has started (no new dirty will generate anymore).
+>        */
+> -    if (exact && !migration_in_postcopy()) {
+> +    if (!exact || migration_in_postcopy()) {
+> +        return;
+> +    }
+> +
+> +    /* Final pending query is called with BQL locked */
+> +    if (!final) {
+>           bql_lock();
+> -        WITH_RCU_READ_LOCK_GUARD() {
+> -            migration_bitmap_sync_precopy(false);
+> -        }
+> +    }
+> +
+> +    WITH_RCU_READ_LOCK_GUARD() {
+> +        migration_bitmap_sync_precopy(final);
+> +    }
+> +
+> +    if (!final) {
+>           bql_unlock();
+>       }
+> +}
+> +
+> +static void ram_state_pending(void *opaque, MigPendingData *pending,
+> +                              bool exact, bool final)
+> +{
+> +    RAMState **temp = opaque;
+> +    RAMState *rs = *temp;
+> +    uint64_t remaining_size;
+>   
+> +    ram_state_pending_sync(exact, final);
+>       remaining_size = rs->migration_dirty_pages * TARGET_PAGE_SIZE;
+>   
+>       if (migrate_postcopy_ram()) {
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index 7e2a0c2b4a..74d622583e 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -1801,7 +1801,8 @@ int qemu_savevm_state_complete_precopy(MigrationState *s, Error **errp)
+>       return 0;
+>   }
+>   
+> -void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
+> +static void qemu_savevm_query_pending(MigPendingData *pending, bool exact,
+> +                                      bool final)
+>   {
+>       SaveStateEntry *se;
+>   
+> @@ -1814,7 +1815,7 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
+>           if (!qemu_savevm_state_active(se)) {
+>               continue;
+>           }
+> -        se->ops->save_query_pending(se->opaque, pending, exact);
+> +        se->ops->save_query_pending(se->opaque, pending, exact, final);
+>       }
+>   
+>       pending->total_bytes = pending->precopy_bytes +
+> @@ -1826,13 +1827,24 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
+>        * close to reality when this got invoked frequently while iterating.
+>        */
+>       mig_stats.dirty_bytes_total = pending->total_bytes;
+> -
+> -    trace_qemu_savevm_query_pending(exact, pending->precopy_bytes,
+> +    trace_qemu_savevm_query_pending(exact, final, pending->precopy_bytes,
+>                                       pending->stopcopy_bytes,
+>                                       pending->postcopy_bytes,
+>                                       pending->total_bytes);
+>   }
+>   
+> +void qemu_savevm_query_pending_iter(MigPendingData *pending, bool exact)
+> +{
+> +    qemu_savevm_query_pending(pending, exact, false);
+> +}
+> +
+> +void qemu_savevm_query_pending_final(MigPendingData *pending)
+> +{
+> +    g_assert(bql_locked());
+> +
+> +    qemu_savevm_query_pending(pending, true, true);
+> +}
+> +
+>   void qemu_savevm_state_cleanup(void)
+>   {
+>       SaveStateEntry *se;
+> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+> index 4c28b3291c..fa2204f002 100644
+> --- a/hw/vfio/trace-events
+> +++ b/hw/vfio/trace-events
+> @@ -176,7 +176,7 @@ vfio_save_device_config_state(const char *name) " (%s)"
+>   vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+>   vfio_save_iterate_start(const char *name) " (%s)"
+>   vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer size %"PRIu64
+> -vfio_state_pending(const char *name, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size, bool exact) " (%s) stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64 " exact %d"
+> +vfio_state_pending(const char *name, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size, bool exact, bool final) " (%s) stopcopy size %"PRIu64", precopy initial size %"PRIu64", precopy dirty size %"PRIu64", exact %d, final %d"
+>   vfio_vmstate_change(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+>   vfio_vmstate_change_prepare(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+>   
+> diff --git a/migration/trace-events b/migration/trace-events
+> index de99d976ab..1c9212d3e2 100644
+> --- a/migration/trace-events
+> +++ b/migration/trace-events
+> @@ -7,7 +7,7 @@ qemu_loadvm_state_section_partend(uint32_t section_id) "%u"
+>   qemu_loadvm_state_post_main(int ret) "%d"
+>   qemu_loadvm_state_section_startfull(uint32_t section_id, const char *idstr, uint32_t instance_id, uint32_t version_id) "%u(%s) %u %u"
+>   qemu_savevm_send_packaged(void) ""
+> -qemu_savevm_query_pending(bool exact, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy, uint64_t total) "exact=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64", total=%"PRIu64
+> +qemu_savevm_query_pending(bool exact, bool final, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy, uint64_t total) "exact=%d, final=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64", total=%"PRIu64
+>   loadvm_state_switchover_ack_needed(unsigned int switchover_ack_pending_num) "Switchover ack pending num=%u"
+>   loadvm_state_setup(void) ""
+>   loadvm_state_cleanup(void) ""
 
 
