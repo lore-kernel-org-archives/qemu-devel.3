@@ -4,136 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8069C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 07:16:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1026DC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 07:22:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgdYd-000321-Pm; Mon, 06 Jul 2026 03:16:13 -0400
+	id 1wgden-0004V0-J2; Mon, 06 Jul 2026 03:22:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgdYB-0002sJ-7G
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 03:15:34 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wgdeC-0004My-My
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 03:22:02 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wgdY9-0005jV-MX
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 03:15:30 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1wgdeB-0007MH-1z
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 03:21:44 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66641cmu3470529
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 07:15:28 GMT
+ 66678FB63976365
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 07:21:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- gi1Fij25IF/BxMQiriyDCprMGPns3iZg0M4nzWB6P7c=; b=jGx+dCZlxrXAtNCC
- vXg+2PBP25iGhfwPMxI6q0lQN2WeWW6hQAk4AT4bS4M0WlTYsRWfMg59uTvPsPtO
- eEvjeRla/ReP07fhvAE8YKz/2ZUWIMr0bin9JxDuHY80xMbtrOqYDx5a7TSfr5cW
- lvZllBOp92bzhGul3uKY3VdBOaopU05zBP/G2vGojgRKwgNM5A7HFvf25C6h58F/
- Ev2IAD/a+BtyhKPDuzUXj0r0n6JliwpkpLzCMIAwCLZbu/I+2HqKJnodT+HyjwC4
- GO5YdGpjOmm7bYajGeXqOXqWL7bb6ytcd7pQ0ExlWyTCuUIhJyY7fNMX7vyltHZP
- x1eCyg==
+ 6F71qfZ845X/x6cRIHWLh6qyt9/ZBJFHShkh1JQVSwI=; b=MYPTDLLrDM9EH1Lp
+ VTunfE4QXPYDhrt8SUy8IzsTSiM/bR1pmakvlgA7P9pdOYrk6sXep/jm9Vi0ph9X
+ 7qefdm9y62/gyXwtDG5kfA7k1bFeETIkn4d4lPub6GCj+lCagpqS//l+uh6f7PMr
+ pkkFsCMEHVHX6cz/f/5RvjdM2YllNIEqF71vsOU1ZfZjbYnPFWoglfv/78cVV1D7
+ ca0odBN1SWiAV0Udk+8osQlttPjxdNpJZpKRSooFRu+60Sz/4aj01pWnt9hVw3+4
+ EnLLoeYHctk2pi9F19A9s3nV6QvUfjzAt5Duny96MGL+aib50/0jV8uGyg1xpTx5
+ o18ziw==
 Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
  [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6txemv29-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f87q7g1f4-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 07:15:27 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 07:21:41 +0000 (GMT)
 Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-92e632390d2so517076985a.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 00:15:27 -0700 (PDT)
+ af79cd13be357-92e695a3b28so361441585a.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 00:21:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783322127; x=1783926927; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=gi1Fij25IF/BxMQiriyDCprMGPns3iZg0M4nzWB6P7c=;
- b=OwxxC10sc5up5FKtMEtBY6eQ89bYn0zAuMtdvBDTZEeNv2f09j7aJTymFISUxnPizx
- 2qw0aSa5V+5nqtGoxtZtzyMUjSHKQ5BvADCoXPaifKli4Z2I2HOIXgLZ+4cYhfGegW6W
- iPDXItW/t8PTkpAAGW3wb9kvuf4smRm6JVXV6WQ9PyY8Ytu5eQkx697fecfEm1l+Ypqo
- J3WVSIrAJSMUvsitPkiJGyS9/KEqP+dfUP7EyBs5QWA58/bCyp5j4P++qWIN2OMyQsZg
- 30SvdAxj57daP0N6KUFs5lBtXGCC9hNU6vc/KAKh1TeBv3jABF4Rt4MXHnUp4OUP/wyW
- qb8Q==
+ d=oss.qualcomm.com; s=google; t=1783322501; x=1783927301; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6F71qfZ845X/x6cRIHWLh6qyt9/ZBJFHShkh1JQVSwI=;
+ b=es+Utv5+bbdoDeWFO7CcCYVYeF740IIrX0Ht4UZL/5mfTxHERdqotFoMb0j4pGdPVg
+ 31kaVO7ldpm04csZkwFfHqUImuNwK/2G722WlITnbdFB4zpWuRUWvuv+0UFW68EetI/5
+ EBy2DEEeibJE7bk2hf5Wh1EvGvmjs3f8OyEsb+wLbAD4JIZW5Uz7wIVHVm+1GWpq88Pk
+ 7h3LzD4jkwKXtJp2G2jRoYSc//20PvczqGbjc1jMLxBfgMKYAevEVqlm6sIKcNAKnFiC
+ sXTZWQRwHx6Y3ZHjy/jWwTp/a2YDgYBhAiPlZh79H0qasjhfLqAkGjfukzp+sVfGLBEx
+ CZfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783322127; x=1783926927;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1783322501; x=1783927301;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=gi1Fij25IF/BxMQiriyDCprMGPns3iZg0M4nzWB6P7c=;
- b=C7JZ1FnolwJbQtjwdOWif3ufVUdN2EKbvT8xPdY4DTrAg2AG8PTKYtOo0CZ6r33HxS
- 6C883oS/eQ5Ct/ezJeBxhgJ7cNgffvAmL1OqhaHYVspD4kpSfjIT3YpBpHGItEb7IgNO
- gQEbQr9KrvEssVZ+/4XrJI2fEelR8nVUOWhzr9rdU8l6VKZ1cBXkK5TjV/3k7ZulQHDK
- 31JmESeRBP2DsV3H2wHbyoxMfYxFtFG3m8uZOytgkhqMMvMxwnyuBFi17A85qGZSKBKW
- pgLxjmCIa1y2nqQXdFBLvF5oIO75edFW+04CLpYxZD2ZkSjQaSOP8sOElh/a6nlmVJyu
- TRrA==
+ :reply-to;
+ bh=6F71qfZ845X/x6cRIHWLh6qyt9/ZBJFHShkh1JQVSwI=;
+ b=T+OapSgncIcdYQtHbdvJ7CC9R4bEB4GqDBhpJkfTZXhvQGeDJYZg8wdUXV0LaXTEUi
+ sqfRymwHLL1o98PHZGhjliFWfmKEtTbvX7me3EimCpN3cWwxki8xZEg33lZ2xlZqDMNX
+ DpEyoeEZVDsWBZXJ1izLGnFh+BPJ8sA9Y7o9AEVVy8V+7zIZw+JYuoFa6wLL+1Yz9hqy
+ 1uhRvD+ft0FnsHVYJ6E6yXXYd7KFTu+iMbbLhwwIx05nfn6J7q6AhTEBBmaMXvb1mrM4
+ vnvCNtN2A5u0ESMDYMToUFgxI+lwmv2RhmWE8LHit/Q64txG3wXJAAtVlBuWl+bL4tB2
+ 6Kpg==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rqi4wUsbGok3qcc5M10vUCCOq+3g3L9BDbgaw9r2cFyIGdqjvhpzeNcKwkBSXcJN11RUK+6nv7QuHwu@nongnu.org
-X-Gm-Message-State: AOJu0YxjLzEA3tUxEhjfeePB1PQmEdLa/GL0Dq2vnRG2BKp4Wu7JihHT
- F8TF8z7j66YZpwp3hmqA2o2M0S24RUgnU/tcdSJNRLLwsMURwwZqXUTcT+HyJ+kgrrCgkru2YR/
- EKpAznRg0C1LQJTiK6iPR5qAnEHQYSjE0TbRZtwFhKF4e3Y/zFT+Mj/+JOg==
-X-Gm-Gg: AfdE7cmOuONRV3Wnul6aRhFdezAJ74i5kkQUQBCzS8GAXR+zglpmm9b6KWrNlOUNvsv
- 2Ld41FnOre7iQxtFHH0BcLmImEuPtRqpa8CRdr2XzH3thzabBv0K5ELVdHkobzW/DZGiP99Qxjn
- Gkr401wxUOEVqRwhN9COLfk1x0m1757nI+MGxPTHF/ciYpivgBzHVg2qOst+E+KnWBswiNKsPTj
- tWNae6uG12POnFmWgqb1BVofUeIpCs4XqfSiGTeybBKUbl3vIps3LyUAn3xxnwf8g7HcbDRoNAx
- QaqacIN89ermzrKx5AR9kxC+UfWCFM85ZCraX0I718KKv6CGuG7YhSrQCp4o519tbBKXal3F2w+
- zUxaKrTebLMtlgPhXvy3s0MXA3j1oGixnSV0cft7SBZ1a58Ta0SuJcQwmXu18HA==
-X-Received: by 2002:a05:620a:45a5:b0:92e:71bb:d1ac with SMTP id
- af79cd13be357-92e9a34e02emr1235094785a.19.1783322126822; 
- Mon, 06 Jul 2026 00:15:26 -0700 (PDT)
-X-Received: by 2002:a05:620a:45a5:b0:92e:71bb:d1ac with SMTP id
- af79cd13be357-92e9a34e02emr1235091785a.19.1783322126401; 
- Mon, 06 Jul 2026 00:15:26 -0700 (PDT)
+ AHgh+RpSMQUsjOkz2BLYoJbkW6mxi2QtiiokzxBozWkGUtfXyP/bdgst4TCh/jkqSNvdlc7N/6ltvqnmq5Im@nongnu.org
+X-Gm-Message-State: AOJu0YwSKUIvoTQYPLu/TJhJJ7GWNEvKza5cC75jVqsfpHYxpYaB2IwW
+ Ov1N+TMfkJNiGrFe4b4fMW8wqPI43EbwsHRxfyH1wW0BnprG/0sMX/f/0i7wAiCHoNl6v0MWKHw
+ t6TRHOfnlooMEAUkAhZOQStSUOt1kSc4BJJCE9SCxQmM9AIHidOk4Hxs/FA==
+X-Gm-Gg: AfdE7cncemZhW8cvebOnG7sw5HdLtnRXnyY5QgusrJpe8BlWo7zx+d0hPvMcHoarLA9
+ DurUCBDbMx826cX2wvVXc/MbxiAG9ukliEJr2eGpUnv70QLnBjHl66SAJT9sHZvuhDYneiPnBfL
+ v/iATU/PktguYNE1wEBtBp+UV2AWEXeHwm5su3c3xlW3hmzaxlazjcrsRsxabZO3ZpPuk6Qbt7u
+ dwnDYi2p9jK2t71enub47q6R3BWtyJaYFrnz0scuxRebS6g/vEACC7K8l8PrSQpSfTx6bg7MCk5
+ zrqF1cdZvULU5ZDsmzMDxN4z+N797IRnigHPKg9ttSsHZ4GoDuv+dkvyRUYH1Am0GbVgOnINIKE
+ 8hkOCd/0+u8Drp1ZwbqhXvWgODj/PdABUrRZX99pOduYXvJofKn9h3/0w1QYpQA==
+X-Received: by 2002:a05:620a:261c:b0:92e:650f:c39c with SMTP id
+ af79cd13be357-92e8b25d442mr1623398785a.3.1783322500798; 
+ Mon, 06 Jul 2026 00:21:40 -0700 (PDT)
+X-Received: by 2002:a05:620a:261c:b0:92e:650f:c39c with SMTP id
+ af79cd13be357-92e8b25d442mr1623396985a.3.1783322500328; 
+ Mon, 06 Jul 2026 00:21:40 -0700 (PDT)
 Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c12b60f5e1asm658250666b.27.2026.07.06.00.15.25
+ ffacd0b85a97d-47aa0960816sm21398413f8f.29.2026.07.06.00.21.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Jul 2026 00:15:25 -0700 (PDT)
-Message-ID: <1306c52d-f4d2-4277-a190-ab452c089df0@oss.qualcomm.com>
-Date: Mon, 6 Jul 2026 09:15:24 +0200
+ Mon, 06 Jul 2026 00:21:39 -0700 (PDT)
+Message-ID: <ce8ebeb2-2509-48be-9ea1-afee614859a8@oss.qualcomm.com>
+Date: Mon, 6 Jul 2026 09:21:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/9] hw/rtc/mc146818rtc.c: convert date from object prop
- to class prop
+Subject: Re: [PATCH 1/9] hw/ide/ahci: cancel in-flight buffered reads on
+ command engine restart
 Content-Language: en-US
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, pbonzini@redhat.com,
- richard.henderson@linaro.org, mst@redhat.com, mtosatti@redhat.com,
- berrange@redhat.com, qemu-devel@nongnu.org
-References: <20260703090814.2993188-1-mark.caveayland@nutanix.com>
- <20260703090814.2993188-6-mark.caveayland@nutanix.com>
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: jsnow@redhat.com, qemu-block@nongnu.org
+References: <20260619112158.304782-1-den@openvz.org>
+ <20260619112158.304782-2-den@openvz.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260703090814.2993188-6-mark.caveayland@nutanix.com>
+In-Reply-To: <20260619112158.304782-2-den@openvz.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA3MSBTYWx0ZWRfXyEgVmsc7g418
- 052h3lMKfticxk56NrwWExJi+Tp3/8LXgAhvMFwYt178EP9gTg8CGkwAADh54NEyhJMw+9Z0KsV
- cnc1eumEUNoYdAPyFL6WkuB4lF71vAo=
-X-Proofpoint-GUID: E_dqZwqbnBMn-cny3DOIKBOS5XZ4K-cB
-X-Proofpoint-ORIG-GUID: E_dqZwqbnBMn-cny3DOIKBOS5XZ4K-cB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA3MSBTYWx0ZWRfX7LtjqDFhu87S
- 9MwYQayuTWwvtm53f95/k8pWzIgMtWk0Cni5ukqAjxCjNx2zC8T+yxlSQLk8DPvdM8+T6PFSrid
- PEEcZOMaEuzhRMrbIkoMK20AiDgQ4iQqlCyd11GAm7s9QO0ATQ6aqcJYmjH0N5ver/N4VHayfFc
- a9yOPHu4lCa9QgegA9jd8pVcnbSmDMJyBJUdun0bnuYF50X2i48u92PNKbf+VKgI8QstK4Xe0tV
- MknxGQSzCkbKBDxMDD/4ip5TM4eAi/T5PvVMTqFS1HXJOMCq6XHIzdCwCPF4cv26uigYS43+MM0
- 938gFd+spwT2HiMRKjpgP8H9xvwEBbwKVX7PbEkg/dOBrokRR8JXdbaTrXNpljHzhHHeC19o1hY
- tB1FbidcpFzrTUFegjfy4rxZeUav5ryzgaWgOO4SdylEZI5ZoIdz57PkmJ6wKb5UYzglCz3hyyJ
- WpZFrpDepBnPG6MpsGg==
-X-Authority-Analysis: v=2.4 cv=HLLz0Itv c=1 sm=1 tr=0 ts=6a4b560f cx=c_pps
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA3MSBTYWx0ZWRfX/zqGxCqTVf32
+ +ogZcKEpVZe3rASHw0ayoeGycxOITNPuwiaaTX3kqiIArwTA1H0zCv7foR+UDNRnN81OtJTBzac
+ pkwP2WoU97RvpVNFlJPPDQRuxFQdebW0xX8JTQjDynGo0NwAv/7KMW48Z3Uw5M+dvQ/kQaNEnIl
+ Ypm0HOl3H+yN8BKvQxlNdL8LxIXsz8fXhtCvRm2Lx5pNmJMIBcRDluyGZjXvQx1S2Lnhm0dVWfa
+ 2Qh64RB6MNlAuayhaDrRe+yfUkYYDD9846N5bmgn+bgSfHliR4WYVUCThzvJyeJrwsXyStAsjUL
+ zkOIWSKuu5B7+Mg8xVsIUYzvpkaURBfys+1ktWR9nxb3TPd+9Am9vM1C7khxSNVAE8SJ5bibDfs
+ 7hqf3ImeWRNCQmeo8Gimbv0HUfMqGeZlY2c1IJc2JHBkr6M+acNrGOfhOS802+zJwFtMJzYcD4Y
+ WqEZ2hpcZSAW/FwGqMQ==
+X-Proofpoint-ORIG-GUID: ccTe95N04Jw2nMZFk631mmIWQFdZqKFB
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA3MSBTYWx0ZWRfX37OvZqtY27G4
+ Ik9o+2EacNlZcFn3uKro/CpkvLJbQB3HweiQzQ+9r+h/vZNDL9/joVuYqENUwWK/tzaN9UIjTpE
+ +OdZCaQT4RX2VibqWuG81BjEcHRVrek=
+X-Proofpoint-GUID: ccTe95N04Jw2nMZFk631mmIWQFdZqKFB
+X-Authority-Analysis: v=2.4 cv=f9N4wuyM c=1 sm=1 tr=0 ts=6a4b5785 cx=c_pps
  a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=64Cc0HZtAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=6rqHouBjAAAA:8 a=OaVDtTZfmeb8DBWjp6AA:9 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=Hx1yvPaMooE3kwe23bt7:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-05_02,2026-07-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 clxscore=1015 suspectscore=0 impostorscore=0
- phishscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
+ lowpriorityscore=0 adultscore=0 impostorscore=0 bulkscore=0 suspectscore=0
+ clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060071
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -156,13 +155,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/26 11:07, Mark Cave-Ayland wrote:
-> This is to allow it to be the target of a class alias property.
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> ---
->   hw/rtc/mc146818rtc.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+Hi Denis,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+On 19/6/26 13:21, Denis V. Lunev via qemu development wrote:
+> ATAPI CD reads are issued through ide_buffered_readv()
+> (cd_read_sector() and ide_atapi_cmd_read_dma_cb() in hw/ide/atapi.c).
+> The PIO path discards the returned aiocb; the DMA path stores it in
+> s->bus->dma->aiocb.
+> 
+> A guest can stop and restart a port's command engine
+> (PxCMD.ST 1 -> 0 -> 1) while such a read is still in flight. Stopping
+> the engine unmaps the command list (ahci_unmap_clb_address()) and
+> restarting it re-maps the list and clears AHCIDevice.cur_cmd to NULL,
+> but nothing tears down the outstanding read. This path does not run
+> ide_reset(), so the drive's transfer state is preserved and the read
+> still completes. Its callbacks then dereference the stale or NULL
+> cur_cmd in the AHCI transfer helpers:
+> 
+>    PIO: cd_read_sector_cb() -> ide_atapi_cmd_reply_end() ->
+>         ide_transfer_start_norecurse() -> ahci_pio_transfer()
+> 
+>    DMA: ide_atapi_cmd_read_dma_cb() -> ahci_dma_rw_buf() ->
+>         ahci_populate_sglist()
+> 
+> Both crash with a NULL cur_cmd; the PIO variant has been seen in the
+> field.
+> 
+> Cancel the outstanding I/O when the command list is unmapped, reusing
+> ide_cancel_dma_sync() as the ATAPI DEVICE RESET command does. It runs
+> the completion callback with -ECANCELED (which tears down
+> s->bus->dma->aiocb for the DMA case) and orphans the buffered request,
+> so the eventual asynchronous completion is a no-op. Merely setting the
+> orphaned flag is not enough: it would leave s->bus->dma->aiocb pointing
+> at a freed aiocb that a later reset would cancel.
+> 
+> Fixes: 1d8c11d63154 ("ide: add support for IDEBufferedRequest")
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> ---
+>   hw/ide/ahci.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+> index c2b4432b94..8e3684cd3c 100644
+> --- a/hw/ide/ahci.c
+> +++ b/hw/ide/ahci.c
+> @@ -740,6 +740,9 @@ static bool ahci_map_clb_address(AHCIDevice *ad)
+>   
+>   static void ahci_unmap_clb_address(AHCIDevice *ad)
+>   {
+> +    /* Cancel in-flight reads that would complete against a cleared cur_cmd. */
+> +    ide_cancel_dma_sync(&ad->port.ifs[0]);
+
+ide_bus_active_if(&ad->port.ifs) would be safer, otherwise the
+patch looks reasonable.
+
+> +
+>       if (ad->lst == NULL) {
+>           trace_ahci_unmap_clb_address_null(ad->hba, ad->port_no);
+>           return;
+
 
