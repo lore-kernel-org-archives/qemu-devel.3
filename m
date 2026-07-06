@@ -4,78 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37A20C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 14:03:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B013C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 14:03:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgjsL-0005P1-Fr; Mon, 06 Jul 2026 10:00:45 -0400
+	id 1wgjt0-0000NH-0F; Mon, 06 Jul 2026 10:01:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wgjs8-0004vc-61
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 10:00:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wgjsy-0000KH-0z; Mon, 06 Jul 2026 10:01:24 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wgjs6-0002Hi-12
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 10:00:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783346429;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Se/0ZK7eItCJ4OQQs6rXy9bI6QA70Ng5Q+Ft7l1hvT0=;
- b=Dhd221vukdRpKkvcIyBaeI7CmxyUEBydt8By9bkU/iNaosT96XjaUL6Ywttk+j9lCW412z
- OI0U7+L0ODlB9hMkvYX21U5rEN40cdpic6rQyoCzEaIC6ipVvHyP82dQNoF15ry9yFK28v
- jNYM3mJTP+PkDbCPkRFk4S8ip+/7pVg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-f-hKBFTCNZ2o76mf8gZd_A-1; Mon,
- 06 Jul 2026 10:00:26 -0400
-X-MC-Unique: f-hKBFTCNZ2o76mf8gZd_A-1
-X-Mimecast-MFC-AGG-ID: f-hKBFTCNZ2o76mf8gZd_A_1783346424
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CCA911805A0B; Mon,  6 Jul 2026 14:00:24 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.48.165])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7FB523000B50; Mon,  6 Jul 2026 14:00:21 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Krempa <pkrempa@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v7 29/35] tests/functional: add e2e test for dynamic QMP
- monitor hotplug
-Date: Mon,  6 Jul 2026 14:58:17 +0100
-Message-ID: <20260706135824.2623960-30-berrange@redhat.com>
-In-Reply-To: <20260706135824.2623960-1-berrange@redhat.com>
-References: <20260706135824.2623960-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wgjsw-0002SM-A6; Mon, 06 Jul 2026 10:01:23 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 666BJke33467894; Mon, 6 Jul 2026 14:01:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ZMzsjs
+ QQX7OHb3CEPb+0O9WaNYeUoM4nuiXFiSfJUaY=; b=jeyenesryyrSZkK60cyeBJ
+ Wi3vHS5/HqYTIe1UY/XiURKy18FASnCTxqVHUvXS4gnpHIFNaeNyGBmrZKdY+VEy
+ Njf5gGbOGHgfco8GAh48AhOTEbjrkEhrIZuV2ZQ3QM9JfKPOTRGyPLwaklCgfjFd
+ kiXo7TNwGRHhduyKrQukzOFq+KHtL8wL1XREbDCIARxWZyE0zwxplT5VHHppZ2wR
+ GFgZj7UV0yOgizF6cV8MgfXzisYswasYsOwHvtqIdTh658LnBPZyMqwRn/3x7qQK
+ MjI58qlqnsYUWG5fvG90Poq2UkuIm0N1Nxe6NVEyfh8xY0CmMwJMEga1NC3OIROg
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6rkdjctj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jul 2026 14:01:20 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 666DndDl008250;
+ Mon, 6 Jul 2026 14:01:19 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7f6xwhd3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jul 2026 14:01:19 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 666E1G5Q27263318
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 6 Jul 2026 14:01:16 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 06DF72004B;
+ Mon,  6 Jul 2026 14:01:16 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 797A020040;
+ Mon,  6 Jul 2026 14:01:14 +0000 (GMT)
+Received: from shivang.upadyay (unknown [9.124.214.4])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  6 Jul 2026 14:01:14 +0000 (GMT)
+Message-ID: <ff009ea7aab34ce0f49de8e6a28d9745f437df7f.camel@linux.ibm.com>
+Subject: Re: [RFC PATCH 22/28] target/ppc: Move Fixed-Point Load/Store
+ String instructions to decodetree.
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: milesg@linux.ibm.com, harshpb@linux.ibm.com
+Date: Mon, 06 Jul 2026 19:31:13 +0530
+In-Reply-To: <a1b01852-701d-421d-a72e-0d357f40e16b@linux.ibm.com>
+References: <20260520160728.2283628-1-rathc@linux.ibm.com>
+ <20260520160728.2283628-23-rathc@linux.ibm.com>
+ <a1b01852-701d-421d-a72e-0d357f40e16b@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=M7J97Sws c=1 sm=1 tr=0 ts=6a4bb530 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VGsWule6AY4RDN8V-CQA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE0MSBTYWx0ZWRfX55xGt6+BLqPh
+ h6ed0JSJ1JCwhSH/BVSA8tIXzKwW+mHW+LC4IzWAo1hSQ0Cle3xO+W01o15JCjgT1hfVcNmeBIa
+ DaUalpg6pARvIaXxurmK0lkJt24FS2+o+UceX3h94enCgRZWfxONOBRKJhZsTeT/bZxJbTeLyXq
+ nPadjk/Ul04gocYWSaP8z6l04dMBQENrGC9CCXjzNw+W6EroQyxM/u+OyV/6hFp1ymbsllT0jHs
+ Elo4cPXTwh9sH0vxwQDvHKECBrsrk8Rw3sZsKXwG92UPZFJ883kM6eBfVlhcUWXPmE81asszM6W
+ H2Vx1g4agjhM5i704GCBtt83OVrQCgBbRk/PatQV08Fb0X1ZIb2AhdPilAkCRX/scxi26e1ZQUl
+ AiquNg+mlnMB5rxj6sTbI1tn2ChmtZLXg7SnzGEZRw7MjWJRgsF7pWfUSNqPZFp88DRZKWG2BDj
+ FRWO1ZRVjYfBrcyJAeA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE0MSBTYWx0ZWRfX7ip4Bb/aAht0
+ 1/mMFDZbELuQN7UIWBZckfU7vSJ/r2dRyFWkW2mabd5rVRy+VDgs/xJw1eVr9nwRYvhz+Vk4bl8
+ vE81oT/jxw/dCIC5LwL7hrlxeCoCWUs=
+X-Proofpoint-GUID: 4AnSCCQwyWXnDOpyoF6G24bUeGZHVqEW
+X-Proofpoint-ORIG-GUID: 4AnSCCQwyWXnDOpyoF6G24bUeGZHVqEW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-06_01,2026-07-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 adultscore=0
+ priorityscore=1501 bulkscore=0 spamscore=0 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060141
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,240 +125,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Brauner <brauner@kernel.org>
+On Mon, 2026-07-06 at 14:24 +0530, Chinmay Rath wrote:
+> > =C2=A0=C2=A0 GEN_HANDLER(lmw, 0x2E, 0xFF, 0xFF, 0x00000000, PPC_INTEGER=
+),
+> > =C2=A0=C2=A0 GEN_HANDLER(stmw, 0x2F, 0xFF, 0xFF, 0x00000000, PPC_INTEGE=
+R),
+> > -GEN_HANDLER(lswi, 0x1F, 0x15, 0x12, 0x00000001, PPC_STRING),
+> > -GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
+> > -GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
+> > -GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
+> Looks like you have missed adding those ^ PPC_STRING flag checks in
+> the=20
+> new trans_XXX() handlers.
+>=20
+> Regards,
+> Chinmay
 
-Add functional tests that exercise dynamic monitor hotplug with real
-socket connections:
+Thanks Chinmay, Great find. I'll send a fix asap.
 
-- Hotplug cycle: chardev-add a unix socket, object-add, connect to the
-  socket, receive the QMP greeting, negotiate capabilities, send
-  query-version, disconnect, remove the monitor and chardev, then repeat
-  the entire cycle a second time to verify cleanup and reuse.
-
-- Self-removal: a dynamically-added monitor sends object-del
-  targeting itself, verifying that the request is rejected
-
-- Large response: send query-qmp-schema on a dynamic monitor to
-  exercise the output buffer flush path with a large response payload.
-
-- Events after negotiation: trigger STOP/RESUME events via the main
-  monitor and verify they are delivered on the dynamic monitor.
-
-This complements the qtest unit tests by verifying that a real QMP
-client can connect to a dynamically-added monitor and exchange messages.
-
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[DB: modified to use object-add/object-del; adjust self-removal test
- to validate rejection of request]
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Tested-by: Peter Krempa <pkrempa@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- MAINTAINERS                                   |   1 +
- tests/functional/generic/meson.build          |   1 +
- .../generic/test_monitor_hotplug.py           | 168 ++++++++++++++++++
- 3 files changed, 170 insertions(+)
- create mode 100755 tests/functional/generic/test_monitor_hotplug.py
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 97dcc78ded..eb0f9fc9ba 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3669,6 +3669,7 @@ F: docs/interop/*qmp-*
- F: scripts/qmp/
- F: tests/qtest/qmp-test.c
- F: tests/qtest/qmp-cmd-test.c
-+F: tests/functional/generic/test_monitor_hotplug.py
- T: git https://repo.or.cz/qemu/armbru.git qapi-next
- 
- qtest
-diff --git a/tests/functional/generic/meson.build b/tests/functional/generic/meson.build
-index 09763c5d22..c94105c62e 100644
---- a/tests/functional/generic/meson.build
-+++ b/tests/functional/generic/meson.build
-@@ -4,6 +4,7 @@ tests_generic_system = [
-   'empty_cpu_model',
-   'info_usernet',
-   'linters',
-+  'monitor_hotplug',
-   'version',
-   'vnc',
- ]
-diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
-new file mode 100755
-index 0000000000..5d8a159eb0
---- /dev/null
-+++ b/tests/functional/generic/test_monitor_hotplug.py
-@@ -0,0 +1,168 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Functional test for dynamic QMP monitor hotplug
-+#
-+# Copyright (c) 2026 Christian Brauner
-+
-+import os
-+
-+from qemu_test import QemuSystemTest
-+
-+from qemu.qmp.legacy import QEMUMonitorProtocol
-+
-+
-+class MonitorHotplug(QemuSystemTest):
-+
-+    def setUp(self):
-+        super().setUp()
-+        sock_dir = self.socket_dir()
-+        self._sock_path = os.path.join(sock_dir.name, 'hotplug.sock')
-+
-+    def _add_monitor(self):
-+        """Create a chardev + monitor and return the socket path."""
-+        sock = self._sock_path
-+        self.vm.cmd('chardev-add', id='hotplug-chr', backend={
-+            'type': 'socket',
-+            'data': {
-+                'addr': {
-+                    'type': 'unix',
-+                    'data': {'path': sock}
-+                },
-+                'server': True,
-+                'wait': False,
-+            }
-+        })
-+        self.vm.cmd('object-add', id='hotplug-mon',
-+                    qom_type='monitor-qmp',
-+                    chardev='hotplug-chr')
-+        return sock
-+
-+    def _remove_monitor(self):
-+        """Remove the monitor + chardev."""
-+        self.vm.cmd('object-del', id='hotplug-mon')
-+        self.vm.cmd('chardev-remove', id='hotplug-chr')
-+
-+    def _connect_and_handshake(self, sock_path):
-+        """
-+        Connect to the dynamic monitor socket, perform the QMP
-+        greeting and capability negotiation, send a command, then
-+        disconnect.
-+        """
-+        qmp = QEMUMonitorProtocol(sock_path)
-+
-+        # connect(negotiate=True) receives the greeting, validates it,
-+        # and sends qmp_capabilities automatically.
-+        greeting = qmp.connect(negotiate=True)
-+        self.assertIn('QMP', greeting)
-+        self.assertIn('version', greeting['QMP'])
-+        self.assertIn('capabilities', greeting['QMP'])
-+
-+        # Send a real command to prove the session is fully functional
-+        resp = qmp.cmd_obj({'execute': 'query-version'})
-+        self.assertIn('return', resp)
-+        self.assertIn('qemu', resp['return'])
-+
-+        qmp.close()
-+
-+    def test_hotplug_cycle(self):
-+        """
-+        Hotplug a monitor, do the full QMP handshake, unplug it,
-+        then repeat the whole cycle a second time.
-+        """
-+        self.set_machine('none')
-+        self.vm.add_args('-nodefaults')
-+        self.vm.launch()
-+
-+        # First cycle
-+        sock = self._add_monitor()
-+        self._connect_and_handshake(sock)
-+        self._remove_monitor()
-+
-+        # Second cycle -- same ids, same path, must work
-+        sock = self._add_monitor()
-+        self._connect_and_handshake(sock)
-+        self._remove_monitor()
-+
-+    def test_self_removal(self):
-+        """
-+        A dynamically-added monitor sends object-del targeting
-+        itself.  Verify the request is rejected, but the monitor
-+        can still be deleted from outside its own context.
-+        """
-+        self.set_machine('none')
-+        self.vm.add_args('-nodefaults')
-+        self.vm.launch()
-+
-+        sock = self._add_monitor()
-+
-+        qmp = QEMUMonitorProtocol(sock)
-+        greeting = qmp.connect(negotiate=True)
-+        self.assertIn('QMP', greeting)
-+
-+        # Self-removal: the dynamic monitor raises error
-+        resp = qmp.cmd_obj({'execute': 'object-del',
-+                            'arguments': {'id': 'hotplug-mon'}})
-+        self.assertIn('error', resp)
-+
-+        qmp.close()
-+
-+        resp = self.vm.cmd('object-del', id='hotplug-mon')
-+
-+        # Clean up the chardev
-+        self.vm.cmd('chardev-remove', id='hotplug-chr')
-+
-+    def test_large_response(self):
-+        """
-+        Send a command with a large response (query-qmp-schema) on a
-+        dynamically-added monitor to exercise the output buffer flush
-+        path.
-+        """
-+        self.set_machine('none')
-+        self.vm.add_args('-nodefaults')
-+        self.vm.launch()
-+
-+        sock = self._add_monitor()
-+
-+        qmp = QEMUMonitorProtocol(sock)
-+        qmp.connect(negotiate=True)
-+
-+        resp = qmp.cmd_obj({'execute': 'query-qmp-schema'})
-+        self.assertIn('return', resp)
-+        self.assertIsInstance(resp['return'], list)
-+        self.assertGreater(len(resp['return']), 0)
-+
-+        qmp.close()
-+        self._remove_monitor()
-+
-+    def test_events_after_negotiation(self):
-+        """
-+        Verify that QMP events are delivered on a dynamically-added
-+        monitor after capability negotiation completes.
-+        """
-+        self.set_machine('none')
-+        self.vm.add_args('-nodefaults')
-+        self.vm.launch()
-+
-+        sock = self._add_monitor()
-+
-+        qmp = QEMUMonitorProtocol(sock)
-+        qmp.connect(negotiate=True)
-+
-+        # Trigger a STOP event via the main monitor, then read it
-+        # from the dynamic monitor.
-+        self.vm.cmd('stop')
-+        resp = qmp.pull_event(wait=True)
-+        self.assertEqual(resp['event'], 'STOP')
-+
-+        self.vm.cmd('cont')
-+        resp = qmp.pull_event(wait=True)
-+        self.assertEqual(resp['event'], 'RESUME')
-+
-+        qmp.close()
-+        self._remove_monitor()
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
--- 
-2.55.0
-
+~Shivang.
 
