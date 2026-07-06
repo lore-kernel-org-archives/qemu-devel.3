@@ -4,90 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 207D7C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 17:34:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED0BCC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 17:49:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgnCP-0007Ft-T9; Mon, 06 Jul 2026 13:33:42 -0400
+	id 1wgnRE-0002sZ-Lj; Mon, 06 Jul 2026 13:49:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wgnCI-0007E5-Af
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:33:34 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wgnCF-00045y-4N
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:33:34 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-493b966dd74so11226775e9.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 10:33:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783359209; x=1783964009; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=A0FNVhKwjG3aDw/GRmOzMnN8MY+Svb77ZDzchT5mAYc=;
- b=CK0y51EFpliVP2OZdPAeTlpHqiEYzCBkMs0ndn4VBYI2OW1A17PvwDY7t3r4sqiF6/
- z4By+HhfQuCvpiCdjCjACn9yfGQGIYW9y+O42tBWT2hGWdikQzdZvLE6uZwcbD3e9fIn
- yr1OrtI0nc7mf3JHFhlOWaWlejGBiJYewQp4hv3dAL1hZRVXFRUsEFtMAmfTuBWYnTfH
- 4nP1j2L8a/9tS0zwTBNW2eCnDnrGBQxyxQIbzhs3Mqc9YqKN6iNz5/B2W/c2NxI1RRUP
- B9hKpD1kwpUSWO+1dbJnSA2it9Z624oUZxIsVSqKGPPRwD/lLO/UZ4e4V1yDbIj8p596
- wFrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783359209; x=1783964009;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=A0FNVhKwjG3aDw/GRmOzMnN8MY+Svb77ZDzchT5mAYc=;
- b=ReC84f9MUp18sOaBfnfvcLkpwpExTGzL0cC2xRCLbvAe1J9eWPjrYM5nO3kM5vmzIc
- fiM1jY2n4QSSbpiNoOKts1fZOiOQObdcmmBNw55HkVSroG7toykMpBFzmNvNhtmRcYMJ
- JpXg3FjTaAR08PWsKAf46ltkH81fDf21pphBSr70KDvyoWVRHigiaLXP58NVKqnxv45C
- xefC4tjQwqMvJquO72XZn6yaRqO0KiwS0a10wPSJ7SYR0L8EsWVhECv3AYOVrELxYPXK
- x5gLQl86vFUKc+hjKrk2IBjHgrtl5LwFoYAppvPWdvk13suB+KyDm6qJKBLLm0mGmk5/
- /Dmg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rp7C5EhAB4am5G67k7raMeb68UI2EYLVc3h7KSX/TvQzujz6wOUfsgy2/7+9588BQErJsGRvX3JZ4sD@nongnu.org
-X-Gm-Message-State: AOJu0YyvOpFbSCFOl4ceqaK51Z1lnAKtkkyRhH/ruUJbc53sTUo5+mzQ
- VggH85+VNGYgbEmMwC3lcGsqGvEiz4XMvTHIYITeLukzE2ObETSn0gLParcdZ2NmsWY9yF3I3qy
- KKyunNYo5eA==
-X-Gm-Gg: AfdE7cniSyOeq83dvLWR147jmIBo936v2UAr3kaWeKQf7JQvV86lm4R1/NK2gx70jkg
- CYqsN+gVG49gqF4O+g2qewY76rI/lULwalTRyiWw3L5OM+8UPHkKy6U9z+B03yRgyKd3VVmhZ+W
- Z4Nb4Iuhmm44v7XDXSi+yjObdl4cD9BIXXMh9v1cO5cLAyK9ShTPrc1+wEW4Vu6Q91WmEKoWDdZ
- ErtOynxMlweWv97rwoi/fEjUxs5EDb6Sbe+2LbOuCEAirdA/7obbGQqhXR0T24ClALLWfFkv6Wn
- XdBCUCCzBXkvQFMNceF/zGCg7cEEoPI+x/sDOtf/x47F2SHBCnh9ZSeGNzo4Azsh0D4zgT/6SCw
- 6zIHmiq91mGPkP+hrQdGulPT0EQ/Uc0+DWdowvhPDUkj4yg6y4uifqOyoH8r1j2SQIYseG9d63G
- fawYwrHreMJVra7mbI8cD05ajvoyZzDu+6JDZDl1mdbdgoPJro5C1KNc0YKn+99dDDw6zDYzm+/
- MWdgrD+KPPupYz7FWjr7TBxMDw2V6Yv
-X-Received: by 2002:a05:600c:56c2:b0:493:d0b2:bc46 with SMTP id
- 5b1f17b1804b1-493df0786dfmr13669655e9.28.1783359209020; 
- Mon, 06 Jul 2026 10:33:29 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493e006b6besm467365e9.2.2026.07.06.10.33.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 10:33:28 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH 2/3] hw/display/exynos4210_fimd: Pass width to draw_line
- functions
-Date: Mon,  6 Jul 2026 18:33:23 +0100
-Message-ID: <20260706173324.804340-3-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260706173324.804340-1-peter.maydell@linaro.org>
-References: <20260706173324.804340-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wgnRA-0002nl-Q8; Mon, 06 Jul 2026 13:48:56 -0400
+Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
+ ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wgnR8-00071T-SM; Mon, 06 Jul 2026 13:48:56 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=QdtbVKAHoD5YMqo1gIUfsdYOIy5g3ftI9CVeIP5wfXirhttvr7cTNCeY2UpkF4fuIeDzFoEhhy24ZO3/HeXyyQj3ia40Enkojpqr2Hh01wu3MXV9jKRcwq01gsS5lUBdHajRPqbG3d2pYt54w5KUhTPnVBC1dodnT4FHkU9Ilrh0ohaFDAdYp2rudXFw74pjSM7aBYgIUVXMNRjlcrhwweqrOzaTJheNUgsOVtlHOsORchKS/JPZnwM1oe+wkNHl3v56Y6IwgMwsZAJrNBTgre65s36lZKMCRjHqgmxnapqOgkO50C2F7zXKldKl1ad8fO8h54s83oWUQ46nQk9e8w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TQt2aKZWFhuqu4BjrKyiEv+qpClc4hn2K6Ghc9loGH0=;
+ b=fC9llC8C0KQNRkIiAqG1mDkkLcpzavbNAC/1URdJJNDxByinSUaj2xabDpNjnVp7/r6F9tgvn4v6bF88Ery0q+RscZEGRvoQJkBYuRCtPJvS+u3nD9zuIqukoVXpN0D1CGT3mbjNG36trHJwpb0tVVGyyGc3VaIPsIBEMbwANbOcmW2gmjKkR1+G9n4jMg1f6EbvR0bFXWzApyX/YDm6n4Vb4t1IlCdHGojQGylxnS0WGF2I2KulxXOjOZU6Nmj4/FXArcHF5PfvxKuR+1HKboimUFsF08845LKhCNUJAiFkrJHRttM/XgIFneZIv9bwZ1lAVSX7TsmrqZuoOnf/Fg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TQt2aKZWFhuqu4BjrKyiEv+qpClc4hn2K6Ghc9loGH0=;
+ b=J/urSKZtQ8FKuTjCSmzZ7Scf2f+UN2klSkwHwtB0G5ab/aeopMRxzopVYJOr7o1RA+TSZNqzaqzb+bTbhQX9nKjXu/+AGx43Yq0/jaBKZ9MeaYyT0ZFQtAzvxwS6GWa/7wOm8zKxULpOEcHmCEpeEkcX2Yrfp+nHwjSwzMKbRIIdRQR6pMUY6bY3j8Q9e3+B92DhDTtjOoo2a1UQRTwU+Mk7xWDoiZMJx3LCfsn+ZiXbRJ5iWXG+f5cjR8iSetSt4t9eYeoXGJ9Aw8w6+p5IKRyotamtGRSVzpW+Z6lxBAAAY4VuZKJom/RvfLpNVYNiN6YeJg3O5y5B56LrDpGU1Q==
+Received: from SA1PR04CA0014.namprd04.prod.outlook.com (2603:10b6:806:2ce::20)
+ by MW3PR12MB4491.namprd12.prod.outlook.com (2603:10b6:303:5c::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.13; Mon, 6 Jul
+ 2026 17:48:44 +0000
+Received: from SN1PEPF0002529D.namprd05.prod.outlook.com
+ (2603:10b6:806:2ce:cafe::55) by SA1PR04CA0014.outlook.office365.com
+ (2603:10b6:806:2ce::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.13 via Frontend Transport; Mon, 6
+ Jul 2026 17:48:44 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ SN1PEPF0002529D.mail.protection.outlook.com (10.167.242.4) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.181.6 via Frontend Transport; Mon, 6 Jul 2026 17:48:44 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.43; Mon, 6 Jul
+ 2026 10:48:26 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Mon, 6 Jul 2026 10:48:25 -0700
+Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com
+ (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 6 Jul 2026 10:48:25 -0700
+Date: Mon, 6 Jul 2026 10:48:23 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <clg@redhat.com>, <nathanc@nvidia.com>,
+ <mochs@nvidia.com>, <jan@nvidia.com>
+Subject: Re: [PATCH] backends/iommufd: Fix dev_id and type order in viommu
+ trace
+Message-ID: <akvqZ92ADt1biIZY@Asurada-Nvidia>
+References: <20260706103653.84243-1-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20260706103653.84243-1-skolothumtho@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF0002529D:EE_|MW3PR12MB4491:EE_
+X-MS-Office365-Filtering-Correlation-Id: 863469a9-0968-42a9-543f-08dedb86d2e6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|376014|23010399003|1800799024|82310400026|18002099003|22082099003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info: LYkNmw3YXy50gsFgvV3MNFGg7U2Q5Bfg2YdE/bqMhXDN7mK2tB0QVKGYpXPQvsGWrzyr6ExtvNbU+iVS6/7WoN4B8ox8RiZhw7tbPiahPGk6rWKuJBZii3xVjjyUXEdCvmJYXMxSgUUfRZbiugh/fn0nQXFvuTUVey3oDqOTxeAfQUWNYgOPxs4XQEIMDUI/lvOdQuDhVAupaD9T8a9T94jcOuDrGXEDaBs3mDbIUNJNrF4RTRRk7gjq5EqUTDDRCU55a3iLCb/O5M4lHCrUyqq/O3mgKaYrNhw/pbL+z4BKPoBrKqB06ZE6UxOBHTd3atpEtBoilrLJO11Rc2Y8nsX6a+EQ8mWqf2M9e5PBbTj6WwzSR46EkXQ/NP/npPjHklogWMS7zwyDmTkUCcB54EoMV5pB8X2scwQV8CGjhoAGmzRtxsFH4wy6zPICdzODYDVSE8C0T9JTZAbnwoW3BfLpklapud4ZjOLKRZ1B+mjiLt6901i6p76DLrOC5fFDlNapl8ARQ+V798w24cGmJP5a0quNl5XJvNknfm9fU+whXpCALBtyfyHUyRd3QAMDgSksaglpTqHe/Pba8DzyAoVKlWFW7ZG3nUarMD0ZYYIoUSXCMFYQ657i3ZX/n/0di1BAG3i36ZmjwQNuKGvMX236Wta1jCIFjGopMbo5Aupeza3Ni/ry64oPMwkiFJcg
+X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(36860700016)(376014)(23010399003)(1800799024)(82310400026)(18002099003)(22082099003)(11063799006)(56012099006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: IJU3md5lg2jwTmAu69nWfQ4CzUsnP9JlPVocQgNyVNVhQrMiuFnp96N/Q4FmGgG5n9MncpOz41JIuknXm+vq8QF4cPf1/RBJa4bnaqXfBbIjKmcb4rHYBhYPBi3VbF4+mVzdRXUBSnMk0ojx2CxkrkG6SDFu/aM2dgkIJER5hMnjzS5eJ3sVsM/C5YHuloR2A1NnMTf5fu/xEOm5iFqtZolanXwnn5hEvFCL8jyBFSymc5XJI1p4pQCYghLryeJnlrnQNw6i8SerjmNWVz4CSeT/63rE96xyPXoiSpv0jyYJPVu+5C/yWaLjh4EvOQ0rIfr87u4jMX56AZjn14gjzftHXCwypE7IH5j7psd4zIP7hqdXsRzzemC3EtpcbQi+8aGc+TaAd3VSJaZgZLJYy9eDkNJZLTU+qgMuvTEK55dTwxYlw5CkLEOiut05lYF7
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 17:48:44.2638 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 863469a9-0968-42a9-543f-08dedb86d2e6
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF0002529D.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4491
+Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+ envelope-from=nicolinc@nvidia.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,101 +133,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The draw_line functions currently assume the width of the line they
-need to draw is w->rightbot_x - w->lefttop_x + 1, i.e.  the full
-width of the guest-programmed window.  We want to be able to clamp
-this to the overall screen size, which we can calculate in the
-calling function.
+On Mon, Jul 06, 2026 at 11:36:52AM +0100, Shameer Kolothum wrote:
+> The trace event receives dev_id before type, but its format string prints
+> them in the wrong order. Correct the order.
+> 
+> Fixes: f2d31df0d925 ("backends/iommufd: Introduce iommufd_backend_alloc_viommu")
+> Reported-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Refactor to do this calculation in the caller and pass the
-width as an argument to the draw_line functions.
-
-Stable CC because this is a prerequisite for an upcoming bugfix
-commit.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/display/exynos4210_fimd.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
-
-diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
-index 43ad5fa0b4..52f2285cf5 100644
---- a/hw/display/exynos4210_fimd.c
-+++ b/hw/display/exynos4210_fimd.c
-@@ -282,7 +282,7 @@ struct Exynos4210fimdWindow {
- 
-     pixel_to_rgb_func *pixel_to_rgb;
-     void (*draw_line)(Exynos4210fimdWindow *w, uint8_t *src, uint8_t *dst,
--            bool blend);
-+                      uint32_t width, bool blend);
-     uint32_t (*get_alpha)(Exynos4210fimdWindow *w, uint32_t pix_a);
-     uint16_t lefttop_x, lefttop_y;   /* VIDOSD0 register */
-     uint16_t rightbot_x, rightbot_y; /* VIDOSD1 register */
-@@ -784,9 +784,9 @@ exynos4210_fimd_blend_pixel(Exynos4210fimdWindow *w, rgba p_bg, rgba *ret)
- /* Draw line with index in palette table in RAM frame buffer data */
- #define DEF_DRAW_LINE_PALETTE(N) \
- static void glue(draw_line_palette_, N)(Exynos4210fimdWindow *w, uint8_t *src, \
--               uint8_t *dst, bool blend) \
-+                                        uint8_t *dst, uint32_t width, \
-+                                        bool blend)                   \
- { \
--    int width = w->rightbot_x - w->lefttop_x + 1; \
-     uint8_t *ifb = dst; \
-     uint8_t swap = (w->wincon & FIMD_WINCON_SWAP) >> FIMD_WINCON_SWAP_SHIFT; \
-     uint64_t data; \
-@@ -813,9 +813,8 @@ static void glue(draw_line_palette_, N)(Exynos4210fimdWindow *w, uint8_t *src, \
- /* Draw line with direct color value in RAM frame buffer data */
- #define DEF_DRAW_LINE_NOPALETTE(N) \
- static void glue(draw_line_, N)(Exynos4210fimdWindow *w, uint8_t *src, \
--                    uint8_t *dst, bool blend) \
-+                                uint8_t *dst, uint32_t width, bool blend) \
- { \
--    int width = w->rightbot_x - w->lefttop_x + 1; \
-     uint8_t *ifb = dst; \
-     uint8_t swap = (w->wincon & FIMD_WINCON_SWAP) >> FIMD_WINCON_SWAP_SHIFT; \
-     uint64_t data; \
-@@ -848,11 +847,10 @@ DEF_DRAW_LINE_NOPALETTE(32)
- 
- /* Special draw line routine for window color map case */
- static void draw_line_mapcolor(Exynos4210fimdWindow *w, uint8_t *src,
--                       uint8_t *dst, bool blend)
-+                               uint8_t *dst, uint32_t width, bool blend)
- {
-     rgba p, p_old;
-     uint8_t *ifb = dst;
--    int width = w->rightbot_x - w->lefttop_x + 1;
-     uint32_t map_color = w->winmap & FIMD_WINMAP_COLOR_MASK;
- 
-     do {
-@@ -1240,6 +1238,7 @@ static bool exynos4210_fimd_update(void *opaque)
-     uint8_t *host_fb_addr;
-     bool is_dirty = false;
-     uint32_t global_width;
-+    uint32_t window_width;
- 
-     if (!s || !s->console || !s->enabled ||
-         surface_bits_per_pixel(qemu_console_surface(s->console)) == 0) {
-@@ -1255,6 +1254,8 @@ static bool exynos4210_fimd_update(void *opaque)
-         if ((w->wincon & FIMD_WINCON_ENWIN) && w->host_fb_addr) {
-             scrn_height = w->rightbot_y - w->lefttop_y + 1;
-             scrn_width = w->virtpage_width;
-+            /* Number of bytes to actually draw */
-+            window_width = w->rightbot_x - w->lefttop_x + 1;
-             /* Total width of virtual screen page in bytes */
-             inc_size = scrn_width + w->virtpage_offsize;
-             host_fb_addr = w->host_fb_addr;
-@@ -1273,7 +1274,8 @@ static bool exynos4210_fimd_update(void *opaque)
-                     last_line = line;
-                     w->draw_line(w, host_fb_addr, s->ifb +
-                         w->lefttop_x * RGBA_SIZE + (w->lefttop_y + line) *
--                        global_width * RGBA_SIZE, blend);
-+                                 global_width * RGBA_SIZE,
-+                                 window_width, blend);
-                 }
-                 host_fb_addr += inc_size;
-                 fb_line_addr += inc_size;
--- 
-2.43.0
-
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 
