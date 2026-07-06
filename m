@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E61C6C44500
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6192C43458
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 20:03:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgpWd-0007gZ-Hq; Mon, 06 Jul 2026 16:02:43 -0400
+	id 1wgpWd-0007gX-5U; Mon, 06 Jul 2026 16:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
- id 1wgpWa-0007el-8o
+ id 1wgpWa-0007ek-61
  for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:02:40 -0400
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
- id 1wgpWX-0005hh-L2
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:02:40 -0400
+ id 1wgpWX-0005hg-L5
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 16:02:39 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 5D25242DF5;
+ by sea.source.kernel.org (Postfix) with ESMTP id 4AEAE435F9;
  Mon,  6 Jul 2026 20:02:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3F034C2BCF6;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2D150C2BCF5;
  Mon,  6 Jul 2026 20:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1783368155;
- bh=PGtILCCznYPPfwmkvHBVmzqvJj+eSX2Kce9+VmIen3k=;
+ bh=9HxzHKOVfC6LwhGTq7a0TLkV6OWHGgH78bnClOoowyk=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
- b=S0SvdHluG1Bg9+2N7bCMPVsyBby8so8b2KrZ38uFzhB28z8FSrDmMxVGlJjbw1aFc
- w6wgsHT5F7biNxwKPoGoZmWjeuh9Dn04PSVE0p+HrT4kIpmg6D+e5OBGBDZn9pQTDf
- +b06VdDl8NHY7ucDphNGND4yTTCYasOI9/9FTyuIao9Z00cnL0H2+jzyRi0I4L2rj5
- OrEIOuZNwewkyCcGCwYPQ2mlaSK3UCJZlW2gS46aqrIbeA/XrkFTnLtL7jZ6QaAS2Q
- euETctQWQDIEHLrxBBgEVHQDcQ35fCuoqZPqXZO0BwXTtQb5Ox0618w3E6njYtP9f4
- vJA2xb2CzYVdQ==
+ b=WO5+bIkPKEbkgKkpsK8p2P05WkgyYh73IAAmpQFxMhhF8LuTVZ6BuXCZNzutlpEtA
+ 4hOvCdcBqM3YwoMH+zJC7et+BYC96U4Od/WaNcZxSnxKy8TUW/AoQ555L/C3WzJq40
+ QNyHcjGaQVowvuDrheVaTu0Hed/Ya/c69vbzWNiNMH6n+VeaznGHCbltaqV/IvANae
+ tZj2PCQ5nMDzjmnflRdEcJ+ZR1jRi2ZANNvsDKIogcea9pTWPzTIqHvhvQKOWODI88
+ tdXYRxhymM5EYvXUlWZsFmkw11rSZezIAC+Pli1xrXmENareYCwPNv9yzD/vk5Pg0v
+ AtbRllOYCxgkQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org
  (localhost.localdomain [127.0.0.1])
- by smtp.lore.kernel.org (Postfix) with ESMTP id 2BA04C44500;
+ by smtp.lore.kernel.org (Postfix) with ESMTP id 0FBBFC44501;
  Mon,  6 Jul 2026 20:02:35 +0000 (UTC)
 From: Miao Wang via B4 Relay <devnull+shankerwangmiao.gmail.com@kernel.org>
-Date: Tue, 07 Jul 2026 04:02:04 +0800
-Subject: [PATCH v2 4/6] target/loongarch: gen_xvreplve0: Fix elem0 offset
- calculation
+Date: Tue, 07 Jul 2026 04:02:02 +0800
+Subject: [PATCH v2 2/6] target/loongarch: Fix offset calculation in vector
+ registers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260707-loong64-be-v2-4-8634f93c1dc9@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260707-loong64-be-v2-2-8634f93c1dc9@gmail.com>
 References: <20260707-loong64-be-v2-0-8634f93c1dc9@gmail.com>
 In-Reply-To: <20260707-loong64-be-v2-0-8634f93c1dc9@gmail.com>
 To: qemu-devel@nongnu.org
@@ -57,21 +57,21 @@ Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Miao Wang <shankerwangmiao@gmail.com>, b4-sent@kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1177;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1231;
  i=shankerwangmiao@gmail.com; s=20250715; h=from:subject:message-id;
- bh=JVeeeYSYmuNx8G6YkhYHh9AnFOY8pRrWSpHwtr34lFg=;
- b=owEBbQKS/ZANAwAKAbAx48p7/tluAcsmYgBqTAnYtNN+KK4/+Kng0gO/ykCyo9h6WMWH8ORYi
- 931tMbOTK2JAjMEAAEKAB0WIQREqPWPgPJBxluezBOwMePKe/7ZbgUCakwJ2AAKCRCwMePKe/7Z
- bgIHEACZbPxGekTV/dsvZToilBU6OYzCQ6YxQ7H3mRvz15AcFwb6xRW15l01VSuni97lRyfCSPg
- 6WRyxGdPLmQeJQej/2GCAOJ0A/yGqHcX/AbTtoRGdLPSjpX61XbPdQbczFE1bo3p3vOZ56wnwdO
- r+mLzaVDQSxf7EjrPmHYE8a13hC9PiD63LZ5zyL2mz5BVVS/dqhJmI3r8F4FKy8v9IWauhoPZwN
- J/MF7h2+jVaATqVZVbudhRfM5QC+URbSo2V5sfg+F1PQtF6dPwjswxj7/Afvbn7/P5PTdvJ0rH6
- g+Wwr2n7eLrX1cxAn1+zmVXPRx68u/Bof3brz0SMjrhr2cILsFRGLex0b7udrE7N+iy2VY0Zd0K
- TFVf8fiwYp2PdWDF5IQMX4mxY8+N2Y4RDB3OWedOk9XLQ3xF9RcfR0m4HWJbwAaTebqz+n/UExq
- uSY8LdCz7WgA3chP5BHNwKoIP81Hv+oSbvWfdOnfrXD2ldfegVGANlbwr+MNlGqwauXR6384Txz
- EAI7MsSqOQSTKosL21HZEbUhhSS+M9vwx5ZACrQv5J7uMTLiLp3cOgL7D1gW5JjGYoI5GRTfCv0
- MXpCuKPCliMzPvqxOx/bXTkUWi5feqGc3cnYuogs6LKx4HZveVvtqlFGx9vdj9MGpT2JnknkrSL
- OsbG5Jm9PZo3yXQ==
+ bh=V/jhXbT74YZEsNz79vjrDNku8mR/iHXLwWV1UlDe90E=;
+ b=owEBbQKS/ZANAwAKAbAx48p7/tluAcsmYgBqTAnYggITlpKUwRmFxh1aB05ohhyyRzmGoL2M+
+ CqtCJX5A46JAjMEAAEKAB0WIQREqPWPgPJBxluezBOwMePKe/7ZbgUCakwJ2AAKCRCwMePKe/7Z
+ bnmOEACnU5DLPMfDA5MFQ1iD4PapxQTzeGM5AH8+uDNVR6FyI2WMEp4xETs9/ks7vZF0xAZROdv
+ tK6T8i04iGtK6skVP0YBw0aEEIWQ3aLb9EcCtDNB9vTHHF6oOs5OAEAd4Vv3noMSdUGwEOGHUzX
+ dvW/isJeMnpOQjbKp+VKFiVecH5P88GnNawO1eNlnbuwcfRzbzckkTQ5LsjamjFgeqimhYRCD4F
+ i7BaycWHd6PkJdoPEWWo6sTc631d8Ma/2saWcIp/A7GiGE+2D36am/fRyccW0dpAwAz8/7hLZlT
+ qnJCnIbUFG9LJv1TnJ8dmOy/mtmOV424heF++hPA2tA/yShEt+gVLNKlP7su+16pYueRny/HtM9
+ aW9/OVQyPGE9lZuXOPwRTgW1BnN9qe7xYIIsnTzOTzWHDpoz4uX2hiymRKQFFWQ6a0UwKp4ruSJ
+ C05DNJ8znDMk3g2Rm38XSa7zMIJ7ygGptG3gzjNRaQyvQcauHxg3xxtIiu/9VpesUPL8ALP+Zvl
+ Cdl/uIsp21eqhkLh3GBULw8sT7UIcrBMAjXtDOf/W220FK942HvOcFHprE0vylo0QXFnt66+VGF
+ /bkpNBXXBw8G03IZNDVON67tEbgCoVFjZO1hvrjHeX6NjhxrvOu6FybiAVTjiTrz6J+0/IJk+K3
+ jhv6e61ii03LbiA==
 X-Developer-Key: i=shankerwangmiao@gmail.com; a=openpgp;
  fpr=6FAEFF06B7D212A774C60BFDFA0D166D6632EF4A
 X-Endpoint-Received: by B4 Relay for shankerwangmiao@gmail.com/20250715
@@ -105,31 +105,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Miao Wang <shankerwangmiao@gmail.com>
 
-When xvreplve0 is implemented, it should not be taken for granted that
-the first element of a vector register is at the starting point of the
-vector register on big endian hosts, vec_reg_offset() is used to fix
-this.
+When vector registers are extended to 256 bits long, the expected layout
+of the registers is storing two 128-bit integers in host endianness, as
+indicated in vec.h. So when the registers are visited in the unit of
+64-bit, the index should also be reversed.
 
-Fixes: df97f3380760 ("target/loongarch: Implement xvreplve xvinsve0 xvpickve")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Fixes: f5ce2c8f2c0a ("target/loongarch: Implement xvinsgr2vr xvpickve2gr")
 Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
 ---
- target/loongarch/tcg/insn_trans/trans_vec.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/loongarch/tcg/translate.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-index df0e809d544678490ca3ccfddab3fd4d74f7189a..03938b1f052335190cdc437fc2d453b4f4fe16a4 100644
---- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-@@ -5099,7 +5099,7 @@ static bool gen_xvreplve0(DisasContext *ctx, arg_vv *a, MemOp mop)
+diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
+index 124dce626954a85e5754de847ccba1796aebd8a6..ac4daadfdb5298a0850bdd0b1fce32407f1eeecc 100644
+--- a/target/loongarch/tcg/translate.c
++++ b/target/loongarch/tcg/translate.c
+@@ -41,11 +41,11 @@ static inline int vec_full_offset(int regno)
+ 
+ static inline int vec_reg_offset(int regno, int index, MemOp mop)
+ {
+-    const uint8_t size = 1 << mop;
++    const unsigned int size = memop_size(mop);
+     int offs = index * size;
+ 
+-    if (HOST_BIG_ENDIAN && size < 8 ) {
+-        offs ^= (8 - size);
++    if (HOST_BIG_ENDIAN && size < 16) {
++        offs ^= (16 - size);
      }
  
-     tcg_gen_gvec_dup_mem(mop, vec_full_offset(a->vd),
--                         vec_full_offset(a->vj), 32, 32);
-+                         vec_reg_offset(a->vj, 0, mop), 32, 32);
-     return true;
- }
- 
+     return offs + vec_full_offset(regno);
 
 -- 
 2.49.0
