@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2AA6C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 23:02:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF78C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 23:02:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgsJK-0001Uo-F0; Mon, 06 Jul 2026 19:01:10 -0400
+	id 1wgsJG-0001Rz-QF; Mon, 06 Jul 2026 19:01:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3sDNMagYKCqEUJUVTSHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--titusr.bounces.google.com>)
- id 1wgsJI-0001Sr-Fu
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 19:01:08 -0400
-Received: from mail-pg1-x549.google.com ([2607:f8b0:4864:20::549])
+ <3qzNMagYKCpwPEPQONCKKCHA.8KIMAIQ-9ARAHJKJCJQ.KNC@flex--titusr.bounces.google.com>)
+ id 1wgsJF-0001PU-0L
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 19:01:05 -0400
+Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3sDNMagYKCqEUJUVTSHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--titusr.bounces.google.com>)
- id 1wgsJG-00074Z-V8
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 19:01:08 -0400
-Received: by mail-pg1-x549.google.com with SMTP id
- 41be03b00d2f7-c891ed872ddso5608860a12.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 16:01:05 -0700 (PDT)
+ <3qzNMagYKCpwPEPQONCKKCHA.8KIMAIQ-9ARAHJKJCJQ.KNC@flex--titusr.bounces.google.com>)
+ id 1wgsJC-00073D-MD
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 19:01:04 -0400
+Received: by mail-pg1-x54a.google.com with SMTP id
+ 41be03b00d2f7-c8895156101so5405646a12.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 16:01:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1783378865; x=1783983665; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=OLTxskLBXDENLFyN1dtTBrLCPkP5BiKim3I9wu6aM8I=;
- b=eK8IDoXn2tYfArPwudUQm3xcm2eekmsquiVXnBrkHpbk2+sMQ3OxOEVs2saQXHzg7y
- PO88NxajZYJ1idE6tslnBd/26k3UmKMH6XXiGGwuDe11V6raPTRCuiJPv+dFmRr1z7cn
- xCCjXBDIlnqgVW3mIg6Pm2YqdRc0vdUyWIuC+jZk+PXCwOpeOjc2L3Him7+5P112vf6+
- N9KH6Mg2ZWnpWJoSER6bqKBvyOs2MX1LkcUeWlRGfpJHtUS33mk8J3dFP9xsELe9doNw
- Vepofy11j899W9Vo2Ya43OdArXOx9Mhk9xdAlwGrpHw6RR9QobMI/ImPEj29n54DFzsn
- kx8A==
+ d=google.com; s=20251104; t=1783378860; x=1783983660; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:from:subject:message-id
+ :mime-version:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=jJ/QGDIwxxWojel6t16Pw/gPL5Ob54izX9DwQJLsiuk=;
+ b=QMdzTDmvD4oyh6/kuvkV8qWLAq+j2GDzVmPVm6TYhzqaj3BbgrETgKg9t6ZsHe7ljw
+ mEQcKLbDgRvvgb/+TyXq46gSdkQFBlZopPY2PRbDSk7UJIQmfMKfjdIHJLjnZ3HCbMA9
+ RqsOh4ZgReJMn63wxXkP7FjX+3lkgvvOpSasF6UioKzRWHqaIjcq4gRgpMGfB2CEYB3/
+ zKQrwEdj5/9rp4rOhchOS/VQa/4Yhx7CmHgbEnBD70HG+XlMg7/g8T+PRIJnUpE2l1W9
+ EwTyPjbYaESkc1hQoMagKcp6KLAvKLsjIoJ2GkxMQ/JIM1RMAXtgmtyFd+mFNw2xwGjJ
+ ZkIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783378865; x=1783983665;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OLTxskLBXDENLFyN1dtTBrLCPkP5BiKim3I9wu6aM8I=;
- b=XU1r7LppgxgaTc+lGULBU8C0u/UBSG/xbtSeVI0YMu9wGZhMSM/O5WfjObwo/WEliU
- jJ6D4pM9cEfp8vm7stIXINNfVa2+MTcrS+WYmN2GoPzkQtFNmEtXnpJyOPjafstbaET/
- eT3CcDEYhmfGdb/wEwlGHekBL1OWG779paZepbeUTXCOl5SJ5As35c7KwWa3mpkl9fQM
- xrLxsn4VXLmSjyYK+RoCxvo0MVTlxY9sgcUmK8IEwyQBNuvkKPa5IM08W/BGxh+Z5dL+
- J30+AKXtwenvxOySYgpG7KTESlLiXfLhlOjSxtkrs6NuJM9KRNVPlbSHc6V/cSuB4ew+
- seyQ==
+ d=1e100.net; s=20251104; t=1783378860; x=1783983660;
+ h=content-transfer-encoding:cc:to:from:subject:message-id
+ :mime-version:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jJ/QGDIwxxWojel6t16Pw/gPL5Ob54izX9DwQJLsiuk=;
+ b=ThCgfOrLZeNmDLPPfmF8jV5D1FYu/MiKxFpP2fYPxl5NJQw3o3doa9dT63PCKDrSuA
+ zZuXCWrFyuHn7XwXZKkRas4oXTTHsME/NnCB5ZAeyk4Wap4b3B0NJHsbgvS9BkB73zQc
+ hcEeKF2gC9dQhDqU5VwRBXj1Khpy4wFVT/M/Jc6dsVtBzl/8IILmvnOeJqo9Uy5Kqyna
+ iA6cBHTCp+ucROdwjf9D+/DnTS7EDphKNJmeQqzcb+cOQ3S+/RivD2ZxddRZOgMpYJUC
+ HNl7qXzuEqpJJBhSduYNL7rpDDzgKZIJf2CSFG4ZWD7AWQJAgP9N0p/vc//S5OsUPAuC
+ iSHQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoGIB7Ydp2pqRuUPXg6ySYorsXZ5y/zhCIleL1DztjUkI4mPKUaFxd52wu335PZCzfhmzPi9vmFAysR@nongnu.org
-X-Gm-Message-State: AOJu0YwzoGfyfNkyj9cIQtU1bkSD6tI/H+rfQZibyWxjphUQEMRugJPJ
- 06dVNJm8nGkD1jQLlKseKifWEAf5VZTSVmScJZn1LstV48qBZU2XHWvOF/9waMb14Vt5DpWXhhJ
- oGRROhA==
-X-Received: from dlea16-n1.prod.google.com
- ([2002:a05:701b:4210:10b0:13b:3fa1:5d80])
+ AHgh+RrCFLEAR+fUcXD6MusQA+gl1GgxvI0iWWSIaMt/R5Fftqv+CaqKgM3isvYxs8Nnf7NDCeNnr79qAL9E@nongnu.org
+X-Gm-Message-State: AOJu0YwzMi7+lcDJ+CstFA2sNmgS3Lljo6JTUDSXVmm3/Nf8Lkp2WTds
+ xq1WBOdW/QKEuvRz8u0dUcJmhr0SlDquac9Qay2FLc8/qedmSI4P9SMWCFJk+l+ZW9ZX7tRgD4+
+ n01J+2g==
+X-Received: from dyw18.prod.google.com ([2002:a05:7300:8812:b0:30c:83f3:7370])
  (user=titusr job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a21:7116:b0:3bf:e291:496c
- with SMTP id adf61e73a8af0-3c08edb1d45mr3167471637.17.1783378864356; Mon, 06
- Jul 2026 16:01:04 -0700 (PDT)
-Date: Mon,  6 Jul 2026 23:00:54 +0000
-In-Reply-To: <20260706230056.1888992-1-titusr@google.com>
+ 2002:a05:6a20:d488:b0:3bf:983d:e9b4
+ with SMTP id adf61e73a8af0-3c08ee92daemr3189828637.33.1783378859741; Mon, 06
+ Jul 2026 16:00:59 -0700 (PDT)
+Date: Mon,  6 Jul 2026 23:00:49 +0000
 Mime-Version: 1.0
-References: <20260706230056.1888992-1-titusr@google.com>
 X-Mailer: git-send-email 2.55.0.rc2.803.g1fd1e6609c-goog
-Message-ID: <20260706230056.1888992-6-titusr@google.com>
-Subject: [PATCH 5/5] hw/i2c: pmbus: add Linear11 format helpers
+Message-ID: <20260706230056.1888992-1-titusr@google.com>
+Subject: [PATCH 0/5] hw/i2c: PMBus updates
 From: Titus Rwantare <titusr@google.com>
 To: peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com, 
  imaginos32@gmail.com, wuhaotsh@google.com, philmd@mailo.com, 
  Titus Rwantare <titusr@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::549;
- envelope-from=3sDNMagYKCqEUJUVTSHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--titusr.bounces.google.com;
- helo=mail-pg1-x549.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
+ envelope-from=3qzNMagYKCpwPEPQONCKKCHA.8KIMAIQ-9ARAHJKJCJQ.KNC@flex--titusr.bounces.google.com;
+ helo=mail-pg1-x54a.google.com
 X-Spam_score_int: -94
 X-Spam_score: -9.5
 X-Spam_bar: ---------
@@ -97,104 +96,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Titus Rwantare <titusr@google.com>
----
- hw/i2c/pmbus_device.c         | 12 +++++++++
- include/hw/i2c/pmbus_device.h | 46 +++++++++++++++++++++++++++++++++++
- 2 files changed, 58 insertions(+)
+This series adds various fixes to PMBus and SMBus support.
 
-diff --git a/hw/i2c/pmbus_device.c b/hw/i2c/pmbus_device.c
-index 8befc27895..5039975520 100644
---- a/hw/i2c/pmbus_device.c
-+++ b/hw/i2c/pmbus_device.c
-@@ -39,6 +39,12 @@ uint16_t pmbus_data2linear_mode(uint16_t value, int exp)
-     return value >> exp;
- }
- 
-+uint16_t pmbus_data2linear11(uint16_t value, int exp)
-+{
-+    return (uint16_t)((exp & 0x1F) << 11 |
-+        (pmbus_data2linear_mode(value, exp) & 0x7FF));
-+}
-+
- uint16_t pmbus_milliunits2linear_mode(uint32_t value, int exp)
- {
-     uint32_t ret;
-@@ -58,6 +64,12 @@ uint16_t pmbus_milliunits2linear_mode(uint32_t value, int exp)
-     return ret;
- }
- 
-+uint16_t pmbus_milliunits2linear11(uint32_t value, int exp)
-+{
-+    return (uint16_t)((exp & 0x1F) << 11 |
-+        (pmbus_milliunits2linear_mode(value, exp) & 0x7FF));
-+}
-+
- uint16_t pmbus_linear_mode2data(uint16_t value, int exp)
- {
-     /* D = L * 2^e */
-diff --git a/include/hw/i2c/pmbus_device.h b/include/hw/i2c/pmbus_device.h
-index 9f3569e997..44cd908fe7 100644
---- a/include/hw/i2c/pmbus_device.h
-+++ b/include/hw/i2c/pmbus_device.h
-@@ -477,10 +477,56 @@ uint32_t pmbus_direct_mode2data(PMBusCoefficients c, uint16_t value);
-  *
-  * L = D * 2^(-e)
-  *
-+ * Exponent is retrieved from VOUT_MODE register
-+ *
-+ *   7   6   5   4   3   2   1   0
-+ * +---+---+---+---+---+---+---+---+
-+ * | 0 | 0 | 0 |       N           |
-+ * +---+---+---+---+---+---+---+---+
-+ *   |_______|   |_______________|
-+ *     Mode          Exponent (N)
-+ *    = 000b
-+ *
-  * @return uint16
-  */
- uint16_t pmbus_data2linear_mode(uint16_t value, int exp);
- 
-+/**
-+ * Convert sensor values to linear11 format
-+ *
-+ *   L = e << 11 | D * 2^(-e)
-+ *
-+ *  |        Data Byte High             |        Data Byte Low          |
-+ *  +---+---+---+---+---+   +---+---+---+---+---+---+---+---+---+---+---+
-+ *  | 7 | 6 | 5 | 4 | 3 |   | 2 | 1 | 0 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
-+ *  +---+---+---+---+---+   +---+---+---+---+---+---+---+---+---+---+---+
-+ *  | MSB               |   | MSB                                       |
-+ *  |_________ _________|   |_____________________ _____________________|
-+ *            N                                   Y
-+ *         Exponent                            Mantissa
-+ *
-+ * @return uint16
-+ */
-+uint16_t pmbus_data2linear11(uint16_t value, int exp);
-+
-+/**
-+ * Convert sensor values in milliunits to linear11 format
-+ *
-+ *   L = e << 11 | D * 2^(-e)
-+ *
-+ *  |        Data Byte High             |        Data Byte Low          |
-+ *  +---+---+---+---+---+   +---+---+---+---+---+---+---+---+---+---+---+
-+ *  | 7 | 6 | 5 | 4 | 3 |   | 2 | 1 | 0 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
-+ *  +---+---+---+---+---+   +---+---+---+---+---+---+---+---+---+---+---+
-+ *  | MSB               |   | MSB                                       |
-+ *  |_________ _________|   |_____________________ _____________________|
-+ *            N                                   Y
-+ *         Exponent                            Mantissa
-+ *
-+ * @return uint16
-+ */
-+uint16_t pmbus_milliunits2linear11(uint32_t value, int exp);
-+
- /**
-  * Convert milliunit sensor value to linear mode format
-  *
--- 
+The maximum SMBus data length is increased to 257 bytes, (payload is 255 by=
+tes) to support SMBus 3.0 block transfers. SMBus devices don=E2=80=99t have=
+ to report their specification version, and this change allows us to enable=
+ newer PMBus devices that are based on top of SMBus 3.0.
+
+Additionally, this series:
+  - Adds the `DIV_ROUND_CLOSEST` helper macro, lifted from the linux implem=
+entation, to match the rounding in linux drivers.
+  - Adds PMBus helper functions to convert sensor values in milliunits to/f=
+rom linear mode format (Linear16).
+  - Adds helper functions for converting data to PMBus Linear11 format.
+  - Adds a fix that the PMBus output buffer is cleared on new write transac=
+tions to prevent stale data reads, this resolves an issue with guests perfo=
+rming incomplete reads.
+
+Changes to the adm1266 are in a separate patch series.
+
+Titus Rwantare (3):
+  osdep: add DIV_ROUND_CLOSEST
+  hw/i2c: pmbus: add milliunits linear mode functions
+  hw/i2c: pmbus: add Linear11 format helpers
+
+titusr (2):
+  hw/i2c: pmbus: clear output buffer on write
+  hw/i2c: smbus: increase MAX_DATA_LEN
+
+ hw/i2c/pmbus_device.c         | 61 +++++++++++++++++++++++++++++++++
+ hw/i2c/smbus_slave.c          |  4 +--
+ include/hw/i2c/pmbus_device.h | 64 +++++++++++++++++++++++++++++++++++
+ include/hw/i2c/smbus_slave.h  |  2 +-
+ include/qemu/osdep.h          | 14 ++++++++
+ tests/qtest/adm1266-test.c    | 10 +++---
+ 6 files changed, 148 insertions(+), 7 deletions(-)
+
+--=20
 2.55.0.rc2.803.g1fd1e6609c-goog
 
 
