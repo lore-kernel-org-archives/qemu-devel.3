@@ -4,141 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D645C43602
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 22:43:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 915D0C43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 22:44:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgs1d-0005dn-IS; Mon, 06 Jul 2026 18:42:53 -0400
+	id 1wgs2t-0001PI-35; Mon, 06 Jul 2026 18:44:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wgs1b-0005db-U5
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:42:51 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wgs2s-0001Ov-7y
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:44:10 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wgs1Y-0000As-Rf
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:42:51 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1wgs2q-0000ob-3f
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 18:44:09 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 666KE4Iv1428809
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 22:42:47 GMT
+ 666KDxq11478039
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 22:44:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=EHNCe780dCW
- 4cgG7+ZFoxdzYd4IEkiiZXjgZ9Qfb3u4=; b=JZISdOPBnj1nYsI0k0o1MXbFOdH
- hJKpB6lUch6t3AflJvMumOrMZtRfvEU9VDRepFj4hAqDXrIz8Y/u0hH9czE3P4rk
- Dx/GvY7HIbYoY0Chmt7fv23tbalp5dtD/oi1HGlu36NeXox+aQ/k+BCjp6GrBdDi
- h9kIkYZURBwjvK5Sze6Q20giFxfcSEMnhy4vN/bdm/7Oym6FF2BGTw8ppnGPJwup
- tv4gagyLvSL2e+PZmxkBirLkht7ORZxG1M3NbzcC/zZSB1LgjiBDjDHpFOdi9PJR
- 1TJLx6L4pPKWHOcyBCudtVode/ocjgscyidQ7qvP/TsSDQ0ondG5rrBdprg==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f87rxutvn-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ fZ66VI7tGRcrKslGsh/D/UErs7SdGdNUsf8wIezhHIw=; b=XoD480P22oIHrfcD
+ 0sWKT365rWb14lUCJDbaOeaLNGi6IMDvleCoiXrwV6KY6bapEKafwPr2k/XBQcLj
+ mQ69md5/h1RUqBrc9ZDOoBfMf6iEun0S54IMHN2uMT3ZdsLhBxY20RpQuwTBNgaC
+ /vBOyMWhOJhLd+YYXuvWuGBUob0fetSVVY9zJinbS3DzXAyc715bAMLzUHpTFtPJ
+ Xm7IfkDSqJ5/vZ2aQofMlpHhqisjV+3fg7Q0rgGl8O/uBQv9YIcwXz4sc+rq9vCs
+ CDqAB7NHTiJ6hmGLJZSL/SLOr2s0XQ9n2VFIkQcmzUhkxPz3aUn4klZ6Acyfepb0
+ cHDW3Q==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f88hsbn0s-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 22:42:47 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2caf4173b1cso67818355ad.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 15:42:47 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 22:44:06 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-3840994b0d2so73554a91.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 15:44:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783377766; x=1783982566; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=EHNCe780dCW4cgG7+ZFoxdzYd4IEkiiZXjgZ9Qfb3u4=;
- b=SQLNI3uPei1nqxT36IGcvBciLBVqjP/axPoG4l8RKTkoMWOqTB3E2GGsQnGtIF7/mO
- dpLl7MsfHXg9+L+0QwDwYZVyOaEET9PAQieB/LI/No7HRYkZeDbUFLGpN3R0+wt4nhxg
- GoTKOsyTxiTFcUI5H/f9muO1JAfNrOcyNsDhsPDlgDqHh1EijntFAaUQnw6g7KdkFI70
- k/JL68W15whyftfsuEKVOjdpmjqWWj4cy7DRktZdUac2Z3ctqLFbCd3fd07FrTxtlFRb
- PEF5w5u96iz17BnsU187wv3e0YXz5L+tRypqkrt62ky4fbuku3H3wkl/FOtun/k8xWwn
- xxMg==
+ d=oss.qualcomm.com; s=google; t=1783377846; x=1783982646; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fZ66VI7tGRcrKslGsh/D/UErs7SdGdNUsf8wIezhHIw=;
+ b=YeWakYpJqtIWnpqlk/ATLKWa+Ndn98jh7LcsNeNW2iNjhI3dlHZrQnL0mU8z26hdSt
+ Vb0OWSIFtucHjgSdAxcIe2+uUWYCPEExI0Hrme6GpIdB9oZxmPsrUd7J07Ri89Ul0EEh
+ 5mKn+Lx8wzb7bug1ve5J5dZokGVsY7Ad6NQ01Ie7DgNN/BPOrPvWA/3TDCp0OdFGZH8x
+ /y+sgiYmo4oZvL22z1OdE39Bj60mF8AtxvIspXpGF/zc1rrDzi961JcjpzTUaIGGn/EB
+ 0iJ5o/eU/CfSuP5TZ2CjVTHUAvel0TwER7lY0IEB9Oa2UtY8XqozGR6X4H2OzxWm/RLt
+ y03w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783377766; x=1783982566;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=EHNCe780dCW4cgG7+ZFoxdzYd4IEkiiZXjgZ9Qfb3u4=;
- b=rIdephGZxX2Yx2+3BkbFDece68NrA1S0L19Ki1ou9iagqBN3JLdE2YqwomPCp1H9y8
- qSYKf++GZHlk3y1mWMYxqn6a1qJckfmGogcgl5TojIDXIZfezM+gwIR2zFo+suJtvRH/
- VzyJX2PtMLsZs2KRqQ3kSvSoZvsqGR4SW9xIWMXdeIeo0pCVOHnWmWZzgHB3rHHwkP6x
- oprwagnvxZut3fF1AHtm9yQn82dPu8W+5Bw9mH/mq3P4YhsJE3aBEkfZXYzhpusLqqqr
- bGIsNriR58JjpblyI455V/AcS4xNX/cLtIQZIW9qgnJeeqD+PtWwf41yF3V22OOeP7I3
- OABw==
-X-Gm-Message-State: AOJu0YxaejvrXPRdhBdxtuuM8GpIJlO413LNbeKiKvzwE24whjcRxn/L
- /pJ9DA3ML4YKM1igNncdGsNU1R7OKzMd3oGyed0GbhWX2lkkCf4qDaIIDrx6SuGdv3C30sKXJNB
- NYXjYpN9r+ssV79hpyCrcx2bdb1U+MzXJ4Y4xqyNq1nAegwd0lmpjrIDvvIN7wHu13A==
-X-Gm-Gg: AfdE7cnLruoT5Bz9rycuWSpV1Gtq1GWf3bunyxCdOt6etc9A4gTL/9421XO4K8Tk37D
- tS22MR31SeTdMVs40kXSnc/OEIVPWd6/Kqev9vh/kairmx35pQBi7XFU/Gkm++QKrN6pTv8o3tl
- K8NBRMvU9pGCpsGfibB1tR5t98geRjwkGQUf+KjYEDmLC0Oil/YtHgkDLmaGL/b+uP62f4a3rSV
- 8SxUpTkCeVBD31o5BCiyxN8/aw+6gNE8uuB+WUclbFne+kyfevnq1q8vHFZApR1NPtQY0TZMN4l
- mqD0Q2A9uQuTnJKAIrL5Ks9X9hS/81unfKimBXJRYIRWFx9qlDSSlQqvHCeKo+OMMRz3GRvc61g
- Gq39290DIdcuWNT5tcKsvEvTsfzLxiibn2QKbXx96zrEdVKnwcpdsXgG99cYwsRA4ug1UGCGY46
- EE07H+cg==
-X-Received: by 2002:a05:6300:6715:b0:3c0:9c1b:d0b4 with SMTP id
- adf61e73a8af0-3c09c1bd4c3mr108812637.63.1783377766500; 
- Mon, 06 Jul 2026 15:42:46 -0700 (PDT)
-X-Received: by 2002:a05:6300:6715:b0:3c0:9c1b:d0b4 with SMTP id
- adf61e73a8af0-3c09c1bd4c3mr108764637.63.1783377766013; 
- Mon, 06 Jul 2026 15:42:46 -0700 (PDT)
-Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
+ d=1e100.net; s=20251104; t=1783377846; x=1783982646;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fZ66VI7tGRcrKslGsh/D/UErs7SdGdNUsf8wIezhHIw=;
+ b=j5o527cyjWOAZqfAtbsmis3oj5GXquZDvQsN+Hn8grqbJ0/1u9oJnKMTE4fy9ZDx+l
+ Rs3KMYNmdkFibqIok74u5fHDIRfl/e617luyqAi5phV3SmSOUhtyb31Xqk+9O8ei5pAs
+ PgrSYoYA+3/JjEWcfF7mdzr0ZlvqfRKKf6bh6J3cp3h5bAnkvSdJd6yWugBDUrQsdKTf
+ FT4g3ZXNS+ROXakBMnMenxWZEE05bN1Nwy+mG4GrXpK1oKDMtKgSuE7eRqXrMDbycIWP
+ v2+/4Y9Azrop7848BYZDcQ7Bz3RLgcc1O7g2AmCLN1rpdPMRo1AXAwM+B8+I7EuTTqVs
+ NzdA==
+X-Gm-Message-State: AOJu0Yzeju9uZkpjfYXGqCc/FzLPwMqBZMyrHCYHnH1hKKoQtaAYbPBp
+ fyfS+g/RmndOuQOMansezvB9rfPXJonbDmJQqMHg87iPLf2UHZuvQn7MSVtDC5W30sqVvNh2S57
+ 07tODNZtu9fmRRD6Zs4Jv6id8V9KBpLRYdrCgOc6nV/iTwiSMC0aStpYc9lUBkT5jXw==
+X-Gm-Gg: AfdE7cnzLOqwtaKXzoQcQdSVrrtTntPZNVYfsZ9J3x9EIm89fj/Z9iByyzH+99Jzr4H
+ bscBS9NGT5i3joUmP+SdIcGqoBPvfmuHrr6MnoH5Pb/LWMcMn2wePLA3jooWU8XkCrj1p40uQqu
+ vKM+VbKr1W7Smlp9aoYLGEJyUobuuWENCoMtL1Mdow+JRJzMT4ZZnl7rYeds0knKsA+oPk3ZK3Z
+ furQEIrirT5tlTQP4G9rflB3tGSG9B2AG6aU9YTkfDLalWnhGzLHnOizeWLi/W4pffFbciPtNqJ
+ 958HjixamFH7pAuDkqV7dsw58DT6BDsO87uidNGQK6UzYwkDoGcMVvFJyDLIPCp6rczm+XPprta
+ 801sg+w0Q26olYd2hFXT3WQDEd1FmWOzCYnbO/JdXaZsvQ0qM2IgHBoEC1Deg0awMDseaCvrYAg
+ BXmj4=
+X-Received: by 2002:a17:90b:2dc8:b0:36b:4d63:4a93 with SMTP id
+ 98e67ed59e1d1-387d8dee0fcmr221543a91.13.1783377845786; 
+ Mon, 06 Jul 2026 15:44:05 -0700 (PDT)
+X-Received: by 2002:a17:90b:2dc8:b0:36b:4d63:4a93 with SMTP id
+ 98e67ed59e1d1-387d8dee0fcmr221504a91.13.1783377845233; 
+ Mon, 06 Jul 2026 15:44:05 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b659d8da9sm1439200c88.14.2026.07.06.15.42.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 15:42:45 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Helge Deller <deller@gmx.de>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 82/91] tests/tcg/tricore: system tests
-Date: Mon,  6 Jul 2026 15:33:34 -0700
-Message-ID: <20260706223343.988769-83-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
+ 5a478bee46e88-31174a583bcsm1131423eec.19.2026.07.06.15.44.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Jul 2026 15:44:04 -0700 (PDT)
+Message-ID: <aa144aa5-1a3a-4b0d-bd4b-30c8924c1d3c@oss.qualcomm.com>
+Date: Mon, 6 Jul 2026 15:44:03 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: yovTA1v6resU8_tdq0rfW6g4I0BmWu8m
-X-Authority-Analysis: v=2.4 cv=Hv1G3UTS c=1 sm=1 tr=0 ts=6a4c2f67 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
- a=iSAnQysEVfHONktP1iMA:9 a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDIyOCBTYWx0ZWRfX4LWUXbEQ48lt
- iS/dnPUpOd567BqYEiQAqUGeZ33laR8TOdxGNmPLDdP2fPfNY+eyUyUJML1FKCz2+BBv04WPLQm
- 2al6XAcn/GL19BhqYVsCfXpn899j3UU=
-X-Proofpoint-GUID: yovTA1v6resU8_tdq0rfW6g4I0BmWu8m
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDIyOCBTYWx0ZWRfX4xrzGk866I7p
- 8GsIOoJ1bQqcog78zggrorRmLQh4uMl5oUZOoHONpaaNFCfGLjjoHO1NeXf8tjvNS6jak1DoiFC
- AzBedd3zVjBZUJFJeuHKNp+Vjv3naknCEM2LslBR3w60AqjMuNWpCMNK8JoleaspEmUon3eZD98
- 7/YRM6CeCBfahvaLSMLD2IUON4YhERmGZUv15gTVCFK9Cuc2Squ0ziFYFt39Fk8Z5QCL/Ni+KeH
- /MgUzKKnLmqDvgXW+szBAJjcYTa/Ev6ppe79aq91oEgzWNcti9f1dGkbUV9+xyxk9VRGsPzEx0o
- xBVGMYK8Y5ZkxrkWemRlQGezUG3tsY4RGLKjEV5r/268hHkY390Jfy/+5XyJA7XO5rWJDmGd2sh
- ozdEygV9LT4lSuqBLSrIp/cSrsFe+RKuWNVpGbSRMPIcHaEev/On/gGmtorslmgN6yY6nLZNK02
- SHdZ5KNV6+eIMclHu6Q==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/37] tests/tcg: run tests with meson
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>
+References: <20260626233918.158740-1-pierrick.bouvier@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260626233918.158740-1-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: NMTjCooBlRMsIcF6-VamlQq5vdi_92Ne
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDIyOSBTYWx0ZWRfX/cFOCLz9IsIl
+ uISJzJ6rgEpFBvIN22aWaPaxYA14g9vSu720nK43Af76VoNAos22t+6i9IxvgPYheh8KScbx21P
+ 8gP/NBbttcmaymrImNJGimjV5IPtjIN56lAo6rIKypCKSbzPHPssIjkOQ7LUaNzNTAr4dEqM6Cr
+ RMCKipB244Oa8f+44K5Ztdvm9xjJ3hDDzYMP1eP+m1uYeLN02s38tbY6cpMpPR0shK8E5it9rwT
+ D4T/EYLk7Sn7ZPABTNDGyrz4w61ohzMYG2AGzAq6q6wmvn0TaNAlPpxJWjMbH6081uAb67mbrUf
+ xiyJKgholRvm6FnpnKUwSHOTzbduZ6XUMCkwaUe7kzLJXtrFX0ohA3wIOPrwwIWS9b9tbeoHyTd
+ GCQYs3c0XDY39gNKCnGbwWuOV8w/uOydreHeW021yahD++8UqTdLJP8oTqQRkDQ/KH48SOMWkhA
+ CbwsBprWiTcVWnVYc2g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDIyOSBTYWx0ZWRfX8xBhJrnS5e04
+ ImrmGZ62TdthuPXlcDS0bHG59qB2cyNf8Yru1/TI78mrThVaG5oF/7WOC2W5oenzMu+zKLWSkCL
+ XiM+U6eOQWs9FwlRSS46NsMHIjrjmFs=
+X-Authority-Analysis: v=2.4 cv=XIwAjwhE c=1 sm=1 tr=0 ts=6a4c2fb6 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=5xVL20QGa_1HK4rKbeQA:9
+ a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: NMTjCooBlRMsIcF6-VamlQq5vdi_92Ne
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-06_03,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- spamscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ adultscore=0 clxscore=1015 bulkscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 lowpriorityscore=0 spamscore=0 phishscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060228
-Received-SPF: pass client-ip=205.220.168.131;
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060229
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -161,88 +162,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- tests/tcg/meson.build         |  1 +
- tests/tcg/tricore/meson.build | 56 +++++++++++++++++++++++++++++++++++
- 2 files changed, 57 insertions(+)
- create mode 100644 tests/tcg/tricore/meson.build
+On 6/26/2026 4:38 PM, Pierrick Bouvier wrote:
+> This series is an experiment to replace TCG tests makefiles with meson, with the
+> goal of having something more readable and maintainable in the long term.
+> Also it closes the gap that tcg tests had with the rest of tests, by integrating
+> them with meson directly.
+> 
+> It covers all existing tests for aarch64 architecture, including
+> user/system/multiarch-user/multiarch-system. I'll carry the effort to port all
+> other architectures once we agree on a base. We agreed with Alex to not merge
+> anything before all arch are covered.
+> 
+> It implements all requirements listed on original thread [1].
+> 
+> [1] https://lore.kernel.org/qemu-devel/87wlwfsay4.fsf@draig.linaro.org/
+> 
+> We also have for free:
+> - correct and complete dependencies for any test, including:
+>   scripts, c.inc, headers, reference files and binaries/plugins.
+> - catch test declaration issues at configure time vs test time.
+> - proper data types for variables instead of string expansion with make.
+> - we now build tests binaries by default with 'all' target.
+> - hopefully, better readability to your taste.
+> 
+> Main ideas for the current design are:
+> - make arch files as simple and explicit as possible. If it conflicts,
+>   always pick explicit, as long as we don't expose meson details.
+>   remove any kind of "skip, override, filter" logic.
+> - never expose custom_target and meson details in arch files.
+> - catch any spelling mistake on test or any dependency.
+> - keep complexity contained in tests/tcg/meson.build.
+> 
+> Usage:
+> 
+> ```
+> make check-tcg
+> make check-tcg-aarch64-linux-user
+> make check-tcg-aarch64-softmmu
+> make tcg-tests
+> 
+> from build folder:
+> ./pyvenv/bin/meson test --list --suite tcg
+> ninja clean
+> ./pyvenv/bin/meson test aarch64-softmmu-asid2 --verbose
+> ```
+> 
+> v2:
+> --
+> 
+> - s/mispell/misspell
+> - moved comment about why we remove 'lib' prefix for plugins
+> - if user declare a wrong entry in a dictionary, list possible keys
+> - build tests by default (with 'all' target), as long as cross compiler is
+>   natively installed, to avoid triggering a container build.
+> - reword some comments based on reviewers feedback
+> - always declare all tests and avoid "per config" errors (no 'if' in arch files)
+> - move compiler feature and gdb version checks directly in tests/tcg/meson.build
+> - add support for cross containers
+> - add top target 'tcg-tests' to rebuild all tests
+> 
+> Pierrick Bouvier (37):
+>   tests/tcg/multiarch/system/memory.c: remove unused variable
+>   tests/tcg/multiarch/plugin/check-plugin-output.sh: take test output as
+>     input
+>   tests/tcg/multiarch/plugin: rename check-plugin-output to
+>     regex-compare
+>   tests/tcg: introduce meson.build
+>   tests/tcg/meson.build: introduce exe_name
+>   tests/tcg/meson.build: introduce test_name
+>   tests/tcg/meson.build: introduce cflags
+>   tests/tcg/meson.build: introduce qemu_args
+>   tests/tcg/meson.build: introduce env_var
+>   tests/tcg/plugins: build list of test_plugins
+>   tests/tcg/meson.build: introduce plugin_test
+>   tests/tcg/meson.build: test gdb support and introduce gdb_arch
+>   tests/tcg/meson.build: introduce gdb_test
+>   tests/tcg/meson.build: add default flag for testing compiler support
+>   tests/tcg/meson.build: introduce wrapper
+>   tests/tcg/meson.build: introduce expected_output
+>   tests/tcg/meson.build: add wrapper run_and_check_forbidden_output
+>   tests/tcg/meson.build: add wrapper run_with_input
+>   tests/tcg/meson.build: add wrapper record_replay
+>   tests/tcg/meson.build: add wrapper check_plugin_output
+>   tests/tcg/aarch64: add user tests
+>   tests/tcg/aarch64: add system tests
+>   tests/tcg/multiarch: declare user tests
+>   tests/tcg/aarch64: add multiarch user tests
+>   tests/tcg/multiarch: declare system tests
+>   tests/tcg/aarch64: add multiarch system tests
+>   tests/tcg/meson.build: add generic plugin tests
+>   tests/tcg/meson.build: add logic to skip tests
+>   tests/tcg/meson.build: introduce cc_feat and cc_feat_cflags
+>   tests/tcg/meson.build: introduce gdb_feat and gdb_feat_version
+>   tests/tcg/meson.build: move gdb_arch support check
+>   tests/tcg/aarch64: delegate cc_feat and gdb_feat
+>   tests/tcg/meson.build: let test infrastructure detect compiler
+>   tests/docker/docker.py: return error code if probe fails
+>   tests/tcg/meson.build: introduce cc_dockerfile
+>   tests/tcg/aarch64: add container support
+>   tests/tcg/meson.build: add top-level 'tcg-tests' target
+> 
+>  tests/docker/docker.py                        |   1 +
+>  tests/meson.build                             |   2 +-
+>  tests/tcg/aarch64/meson.build                 | 193 +++++++++
+>  tests/tcg/aarch64/system/meson.build          | 101 +++++
+>  tests/tcg/meson.build                         | 402 ++++++++++++++++++
+>  tests/tcg/multiarch/Makefile.target           |   3 +-
+>  tests/tcg/multiarch/meson.build               | 149 +++++++
+>  .../multiarch/plugin/check-plugin-output.sh   |  36 --
+>  tests/tcg/multiarch/plugin/regex-compare.sh   |  28 ++
+>  tests/tcg/multiarch/sha1.ref                  |   1 +
+>  tests/tcg/multiarch/system/memory.c           |   3 +-
+>  tests/tcg/multiarch/system/meson.build        |  53 +++
+>  tests/tcg/plugins/meson.build                 |  11 +-
+>  tests/tcg/scripts/check_plugin_output.sh      |  19 +
+>  tests/tcg/scripts/record_replay.sh            |  16 +
+>  .../scripts/run_and_check_forbidden_output.sh |  19 +
+>  tests/tcg/scripts/run_and_diff.sh             |  15 +
+>  tests/tcg/scripts/run_with_input.sh           |  12 +
+>  18 files changed, 1019 insertions(+), 45 deletions(-)
+>  create mode 100644 tests/tcg/aarch64/meson.build
+>  create mode 100644 tests/tcg/aarch64/system/meson.build
+>  create mode 100644 tests/tcg/meson.build
+>  create mode 100644 tests/tcg/multiarch/meson.build
+>  delete mode 100755 tests/tcg/multiarch/plugin/check-plugin-output.sh
+>  create mode 100755 tests/tcg/multiarch/plugin/regex-compare.sh
+>  create mode 100644 tests/tcg/multiarch/sha1.ref
+>  create mode 100644 tests/tcg/multiarch/system/meson.build
+>  create mode 100755 tests/tcg/scripts/check_plugin_output.sh
+>  create mode 100755 tests/tcg/scripts/record_replay.sh
+>  create mode 100755 tests/tcg/scripts/run_and_check_forbidden_output.sh
+>  create mode 100755 tests/tcg/scripts/run_and_diff.sh
+>  create mode 100755 tests/tcg/scripts/run_with_input.sh
+> 
 
-diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 59e71d82c99..b2630176b7f 100644
---- a/tests/tcg/meson.build
-+++ b/tests/tcg/meson.build
-@@ -152,6 +152,7 @@ subdir('ppc64le')
- subdir('riscv64')
- subdir('s390x')
- subdir('sh4')
-+subdir('tricore')
- 
- image_targets = {}
- exe_targets = []
-diff --git a/tests/tcg/tricore/meson.build b/tests/tcg/tricore/meson.build
-new file mode 100644
-index 00000000000..6303d6a912c
---- /dev/null
-+++ b/tests/tcg/tricore/meson.build
-@@ -0,0 +1,56 @@
-+tests = []
-+
-+link_script = files('link.ld')[0]
-+crt0 = files('c'/'crt0-tc2x.S')
-+asmflags = ['-Wl,--mcpu=tc162',
-+            '-Wl,-T', link_script,
-+            '-mtc162',
-+            '-nostartfiles']
-+cflags = [asmflags, crt0]
-+qemu_args = ['-display', 'none',
-+             '-M', 'tricore_testboard',
-+             '-cpu', 'tc37x']
-+
-+# Multi arch tests are not supported
-+# tests += tcg_tests['multiarch-softmmu']['tests']
-+
-+setup_asm = {'cflags': asmflags, 'qemu_args': qemu_args}
-+setup_c = {'cflags': cflags, 'qemu_args': qemu_args}
-+
-+tests += {
-+  'asm/test_abs.S': setup_asm,
-+  'asm/test_bmerge.S': setup_asm,
-+  'asm/test_clz.S': setup_asm,
-+  'asm/test_crcn.S': setup_asm,
-+  'asm/test_dextr.S': setup_asm,
-+  'asm/test_dvstep.S': setup_asm,
-+  'asm/test_fadd.S': setup_asm,
-+  'asm/test_fmul.S': setup_asm,
-+  'asm/test_ftohp.S': setup_asm,
-+  'asm/test_ftoi.S': setup_asm,
-+  'asm/test_ftou.S': setup_asm,
-+  'asm/test_hptof.S': setup_asm,
-+  'asm/test_imask.S': setup_asm,
-+  'asm/test_insert.S': setup_asm,
-+  'asm/test_ld_bu.S': setup_asm,
-+  'asm/test_ld_h.S': setup_asm,
-+  'asm/test_madd.S': setup_asm,
-+  'asm/test_msub.S': setup_asm,
-+  'asm/test_muls.S': setup_asm,
-+  'c/test_boot_to_main.c': setup_c,
-+  'c/test_context_save_areas.c': setup_c,
-+}
-+
-+if 'qemu-system-tricore' in emulators
-+  tcg_tests += {
-+    'tricore-softmmu': {
-+      'cc': 'tricore-gcc',
-+      'cc_dockerfile': 'debian-tricore-cross',
-+      'cc_docker_arch': ['x86_64'],
-+      'folder': 'tricore',
-+      'gdb_arch': 'tricore',
-+      'qemu': emulators['qemu-system-tricore'],
-+      'tests': tests,
-+    }
-+  }
-+endif
--- 
-2.47.3
+sent v3, with support for all architectures:
+https://lore.kernel.org/qemu-devel/20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com/T/#
 
+Regards,
+Pierrick
 
