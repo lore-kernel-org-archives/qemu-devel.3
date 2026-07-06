@@ -4,110 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3BD1C43602
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 17:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D08AFC43458
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 17:30:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgn8D-0005Vp-BJ; Mon, 06 Jul 2026 13:29:21 -0400
+	id 1wgn8m-0006CQ-O2; Mon, 06 Jul 2026 13:29:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wgn8B-0005Qb-Mh
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:29:19 -0400
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wgn8A-0003AT-2w
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:29:19 -0400
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-80e4455ba39so529527b3.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 10:29:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783358957; cv=none;
- d=google.com; s=arc-20260327;
- b=rCrYvf0kpBEDoJfBHQl7poArVOamPJGPpnmGnXuyVPhZUdG6XKtqUJ0PMM8R92A5Vs
- j0ZCGdD0LfE/Tpfnm5gfai2cOQoPGkKbKnmB2bNhQPpdiZZD2Sm3gRHbEmXN2yM3wg8z
- a4Lum90HjnDzeJtxcVOgazXYpMsjqjFGMq3sWqq/ddGAx8OpG7Gey+hNTWHz28o4y487
- JgWx+3vCKq3fOuRqsv/GGnHGfXTlJ8cZ8+126iDUn0EP6lM8DS+1lDHZiwKUqDUbqxPw
- sofuwAj9a+QY83rw2nyMrVwzRNy38ZbXZLbOXbY148K+ISe5BWU2hWUqDz85PZE6OOIf
- P8Zg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=iClZscjiedIVC78pseYr2AnsDA+R5QCV3UOX/EOYR0Y=;
- fh=WEJ15tX9epTWjJ2VmR8iecZlI58qJeOauJBn5MjM3cU=;
- b=jV0DBfDsiFbhBjPo0nvKmmofnN5HRS6+PXLS2F4Dbw513rQX8/PuS7SybiMBqLMCYd
- HEHrp5YZnUH7wjanNLIPnm3prlN83DYydtIZ1xg5oMTzfisjpBxAtSkUDU17BjM/LYHJ
- z6Ug01a+rIO8wSPOtGmhSHnwsx3adpK8buU0xEWmY54HVkbXfAOrepv8SHB1gUD4OKij
- k9d2Ih/T0IVNKMBpl5Otmoo1FazxkW+jW67ujP+/tTO3mub/vxjP0y7CMoEiAr1AcxsV
- +uB2Ilpu8bb2apGoYuoa1ihG/wczxFhCt/WW98axFFlNy6lg3LJw+I4dhjtHfs+Xag5H
- 3C1Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgn8j-00067g-42
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:29:53 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgn8g-0003I6-Az
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 13:29:52 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 666FFC8c762341
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 17:29:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ L50LWVonixc/e87WUfMbnTbdyzuF1Mr8ooTNMgcXdO8=; b=mI51rWTGeyIJe6kx
+ vRtDju0pkcLhnO5032AE3SYTyB270JaKyzL8nQqfQjVWRs2YbZhunuGxzMAUrKgj
+ Cpo7ldE84Bvv4dcvj0VRv4iWnFAvk5Xo6GsuXaa9zLXDEDssziksowMy0qTnBrNL
+ SGDNySoyyIA9pXVU2Gv7dB/ilZvsSC5UaeGbQBpBRFfkQuqJip+ITzOxUkevNWTv
+ 8kYpjGr+TndaG8ubldJODdlhPEEM6WMh+xFGzXnltz/LXYJHFybbfvLIb40FXhio
+ dhQI7+ihM4HViAvA9+UnldiIfW1LS47TigimtQHjGAIGYie/1sPCf60qFmjnmy8r
+ 6Ta4QA==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f87rxtrwb-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 17:29:48 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92e66f9e2baso331632785a.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 10:29:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783358957; x=1783963757; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=iClZscjiedIVC78pseYr2AnsDA+R5QCV3UOX/EOYR0Y=;
- b=eoAbHW+rWldDmc83LTA8zHpLS9vvXsMS6p8LeXWdSeQiqIC3omxGcX3wknwYVTAjKd
- QRTXSHvdF/4+1mCOZxu+8LWQTgzLMQjcAAgGn8cEcriUgyjWhFxvDkp6euvZ6xNgasOC
- ZucDuZS87G3tBw+OIftN+LulYqAB+I+nHutnWV2Bi312T46fxrS10VoEMlvN3zpWXfbJ
- OXUUQrB6z68898P1KH8+dB8hJ4B0XuUh6v9WZk1VbRaX9OUGM0NL1gW6SyDsOnfd/xYs
- ND3E2w/vYt8aXyK9cwM3Pw8Lg0x1nYYt1QfAHplNswURSuLyteUYJa95hiFUxzgchsEX
- nTIA==
+ d=oss.qualcomm.com; s=google; t=1783358987; x=1783963787; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=L50LWVonixc/e87WUfMbnTbdyzuF1Mr8ooTNMgcXdO8=;
+ b=KTesA6/jW8GZ8y7A4CSKfS3E2ymKdpJ8ca0aZQwSx1NZH3D5608oCGyceA4cRRT/d5
+ 42hx+UgYBs5IN6Ed/SMzx3hPwRXMstZbRmPNSb2heLJ1Q1nrWXHI8I0HN2qUvCrJWe8N
+ fM6qShEfhA8x7LGe03iLbaSe7WdzALIFmuPPF1katbEVfeRGEGNmXaHzIVC6B77CWzw7
+ YPXImPvL7GPeapkSXZsrTHxWqAMjxY0UvZN9m8TVworxoxOjv0khMKlLTt/w65Bi32+F
+ z/8q4DeCpzZsyp6gake/mbtqEG1g8royrr6TPQ/QBMlHJmvkO/XnPpCYhQ9h1ptRQ/zt
+ Er8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783358957; x=1783963757;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iClZscjiedIVC78pseYr2AnsDA+R5QCV3UOX/EOYR0Y=;
- b=hlhFpgI41K002AujhxUntUEWUfa7FwDPln+MwIq52WVfJLFbFLuCd66MS67ieAWjGo
- Qap9AGKa2qwYSGv7Ml0jixMa3M3DmQaeOiHr98Pr8K2oeIVlwCe3+sK38KwfCp21Y9n0
- LgTFtzhB5eFGFpmtb+9au+YpFYhh94AyJn6VJXdLw6wkwph2P8nPc5wtpU1IegJCNAnY
- yF9Fpn2RIAw6Cjd4TbItHNqdVbUD6x5bH5HSlOwj07R8XoNsShFF89ddhGOY/+TPRHci
- q96M/ZyRDPgq2rlg3naLMasAUfe8vWqKFKpPoyIWDnrsWebhn6NQCXBo6x2Pzl3D0auS
- vM0w==
+ d=1e100.net; s=20251104; t=1783358987; x=1783963787;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=L50LWVonixc/e87WUfMbnTbdyzuF1Mr8ooTNMgcXdO8=;
+ b=mv+Vz2Hhg5Lxh2D4NYLP4xAQTRssfZSVQgfmcbiPTr4YSarqOK8W0J9xa4lljP5eU/
+ F6S0Q+b/p75aW1uEbHZ+7gARvqCZbZb0Stu+IWVJjfu0ZZ7ADSr3TqDswvK8SJfDG85V
+ im0NtyMfe+z7YvUWzg9e+DA4KuuEQY9QlheWVNikorRwcoUoMtuTtm3/7fGl5RSvi5A0
+ 3xE0vzAh1Bs371rYnkYEPzF6qLw5DG1YzxCbwr4G0BILRKmbEIBUXVrVO6E9mXNRNJJu
+ ps44R6qGS6+nxW35xXmH6frqCW66JSExH9w/eauQ3fZk7B+/PiOd/iSJuHnjsjSIg0hz
+ KoKA==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoRYPh/AG1btsBDq5mmQ54FETr+lyE+E0nqJUd88bzMPjGEf39h0OhOUTomDtmDc2wiUK+6g9LEcpUD@nongnu.org
-X-Gm-Message-State: AOJu0Ywujj2d8uiLaDW9Z5eL+74GWSwgiImkDefAGq9agQI4BbDrTZKn
- aKEvmwdHXwyvAaV8sTFxbSL/WshtsmZLkCDFOvjgUSICmW2ZAT1TedbWtkqJGyTlZJtSHtz5X1W
- ZHhUtnjDlAulEVvCJzHhgPS0z6cIwwXNkakRj3Em7UMqjYOCXJmGo
-X-Gm-Gg: AfdE7cm2DCCqDYLAq7EvVV0YUzJ6Ujxvv43u8b91GHzJh6weOOJoGVtng4eCquHVtlY
- Pz3NZ++FbhslZDp58uLStjhFlzTie0Txg+lR0i/kTHVJt7m29gRN+kir3ZWpr+kuUMcpRyMMzpj
- n25lhWo5/xYqn8v1ZEoX6Fq2T/5LwcsKhCMFMkQO2Tcs9+E4t7MCOKa8rxzS+n+QSt/rLlgFhQ2
- aFZLLrvXUOdUo0phSezxUmifKUlVulcSB9wQ6HL7QjuKvmbMQEzqh/fzYIOFkKt8XVafmG5sw49
- UeK+8oy+O51gF2p5GxHxDw8MHAv9vdTtmleRghXfBjvBvqkEFoVCjKoG
-X-Received: by 2002:a05:690c:386:b0:7dc:1c56:2901 with SMTP id
- 00721157ae682-815ba02f022mr153648007b3.1.1783358956663; Mon, 06 Jul 2026
- 10:29:16 -0700 (PDT)
+ AHgh+RriivmJANh/lobLCd8cnwT6Qwe5KkVlLb3VKM7kYpnT5IvIkqO5lFnO7LB1vUZcR1IpHoOyuwsvQDHj@nongnu.org
+X-Gm-Message-State: AOJu0YwidxTS8Nd2SdS1ZriYLyi6Qu3vURBmRSSNUFZWIPyNC1ThAcV3
+ wXy0+cfJG+fz5Ynv35tSP32V45bpa4OqjB44kRX0PxEQSPeSR/LLuLzFFYkDluT/li0MRKirZBE
+ H3kR09Y2zSizUjaytwHxH2r3T51lURXyio46RUMXPM/9NpIU09gzuZNtWuw==
+X-Gm-Gg: AfdE7cn+9U3A5ARtVvfcNy+dkf0s70qQ7IcreJENCs1wljhiEZjmSZM208+WXz3kzaI
+ 25to62Qok5ZFJYXOJX01lie6DqcEt1MA4AqRyCHpExtZwQIPedqVyGKQoq9oidH42iCMIG3GwZK
+ QpFyRAtL5o7bI8GwgqSXjX8L2g2od/x2yNRm6sf1yEbvamEWvK8XQGrn4tZ+A3LyrgOIgiUK7xv
+ liLrosVHCiXCVx9PBhlGDboeFH3xhD4kg5R3/e0YtbskNfrSCysOWeKAfEIUrWk3PH+m0Yzvwbd
+ E6jPxK3lA+T++hCDAguKf4klZWOMY5qE/9KPw0eEygVY5ICXcWLRMqfsrIOEMagdORQkvHXZrZq
+ 0GoyAbsqtsQOhWW1sPlXAFC1P98+okK+JFN/cgC6oKMD++OhGslVLabvJrc+/uA==
+X-Received: by 2002:a05:620a:6014:b0:92e:603f:1f20 with SMTP id
+ af79cd13be357-92ebb4a958amr208456885a.2.1783358986949; 
+ Mon, 06 Jul 2026 10:29:46 -0700 (PDT)
+X-Received: by 2002:a05:620a:6014:b0:92e:603f:1f20 with SMTP id
+ af79cd13be357-92ebb4a958amr208451285a.2.1783358986321; 
+ Mon, 06 Jul 2026 10:29:46 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493bef23feasm350576855e9.2.2026.07.06.10.29.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Jul 2026 10:29:45 -0700 (PDT)
+Message-ID: <baf0b727-d53c-4717-b4e8-9c8603b2fa75@oss.qualcomm.com>
+Date: Mon, 6 Jul 2026 19:29:44 +0200
 MIME-Version: 1.0
-References: <20260702160640.3875666-1-clg@redhat.com>
- <20260706082023.7ee830b8@shazbot.org>
- <3f799ad7-08a5-44c7-b6bf-b143da038593@redhat.com>
- <CAFEAcA9wOZhn41Twz9zzCBD4MAET2+gbF71kUKnr7r6TXfhjuw@mail.gmail.com>
- <20260706094241.1457bbc6@shazbot.org>
- <CAFEAcA-d9CJhfJQ2B1h+mZTPphc7SKk8yjCuGH4RWYT9J=EATw@mail.gmail.com>
- <20260706111632.64266244@shazbot.org>
-In-Reply-To: <20260706111632.64266244@shazbot.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 6 Jul 2026 18:29:04 +0100
-X-Gm-Features: AVVi8CcJSeUECnvXAjs5-pAw_6n-fWNKrjVxx9Nfe5kiYTX4fIMTgiuUsCcIX2Q
-Message-ID: <CAFEAcA-Xcw0FJAgFJ2U7YXxS2cXEsgddAPH_0cajp5rAdjCy+g@mail.gmail.com>
-Subject: Re: [PATCH] vfio/listener: Only warn on misalignment for VFIO-owned
- regions
-To: Alex Williamson <alex@shazbot.org>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>, 
- Stefan Berger <stefanb@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/sparc64/sun4u: Mark unusable PCI busses as full to
+ ease device plugging
+Content-Language: en-US
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
+ QEMU Trivial <qemu-trivial@nongnu.org>, Michael Tokarev <mjt@tls.msk.ru>
+References: <20260309181452.83702-1-thuth@redhat.com>
+ <00c4ab4b-a58b-4de4-8e41-566b2cb7f920@redhat.com>
+ <124bd918-f2ab-43e2-bd2d-fc824de62c40@tls.msk.ru>
+ <fcbe3d7f-64d4-4b13-b930-a81e77db4784@ilande.co.uk>
+ <df7a091c-a8a1-416a-acf3-28a0cbd8dd2f@redhat.com>
+ <c7d6b801-449e-4f55-9c1d-ebec7a0e9595@redhat.com>
+ <c0cd50bd-e054-48b6-af54-1050e13bb720@ilande.co.uk>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <c0cd50bd-e054-48b6-af54-1050e13bb720@ilande.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: QIEADT_077OiEJfb319NGnoWRAWMD-MY
+X-Authority-Analysis: v=2.4 cv=Hv1G3UTS c=1 sm=1 tr=0 ts=6a4be60c cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=20KFwNOVAAAA:8 a=qaPWF_J4CJ_GKUZ_ancA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE3NSBTYWx0ZWRfX9fZ962G/sWqL
+ qx1HyVe8uznBCULZF3gOtxTUIv6Jt4wfqz9PgenM7EIOOf5U4sUcn7WFElTNhqj1bdj6Sowru/j
+ mOXYc/IJPyib8CJTXLIVGtnmDDMDlHs=
+X-Proofpoint-GUID: QIEADT_077OiEJfb319NGnoWRAWMD-MY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE3NSBTYWx0ZWRfX8SHHcTqNorvS
+ TcU5fYOPgdA0dJZ0y+SJmnmEwHxvYUaT/c/mZL2xevQncOfhjaeVvH6ZbG25hTWZMlDQbqweG06
+ /PA9SXtxzWF4aYkF2Mjnmgtyg8aEznPW4KiaGVFhFBVxJeo+qk1Y3kNfJNRVqWvTJed40Qe2fqJ
+ lXerLFlFlV7viZ5no4jjl6LeARGWzw14e76LQpNWTkwuJ0OgfgCJbNN663SgksBfzzHp8hkftw6
+ rcnvHXHpsRP1weomzCuUZlriYCo4fc23kfw2/lFblDnVCJTSB0gEB3QmNHEjVQKqRjMIztz9h2n
+ VAcHW0bbNuP08M2ID8sBwi9GwJpsokeh+IB0kPlvFtCCujdrD5WBySZ/Tg2kfygsVKy0y/0mory
+ rJZklhJGODzJ35VOcTFXsqdJ/ZDVUyKClvJNDTDX3zz7V9ze9gLv5QmnzkK9Q8O48edyYVSLQm2
+ TfWj7kry0eMcGcmmBlw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-06_02,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 malwarescore=0 adultscore=0 priorityscore=1501
+ spamscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060175
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,64 +163,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 6 Jul 2026 at 18:16, Alex Williamson <alex@shazbot.org> wrote:
->
-> On Mon, 6 Jul 2026 17:12:35 +0100
-> Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> > On Mon, 6 Jul 2026 at 16:42, Alex Williamson <alex@shazbot.org> wrote:
-> > >
-> > > On Mon, 6 Jul 2026 16:27:46 +0100
-> > > Peter Maydell <peter.maydell@linaro.org> wrote:
-> > > > It seems very unlikely that anything not page-aligned is going
-> > > > to be a sensible target for DMA ops from a device: the main
-> > > > reason to have a non-page-aligned or non-page-sized region is that
-> > > > it's the way we've chosen to implement a device, or it's some
-> > > > "RAM but not general-purpose RAM" thing. If there's a path to
-> > > > warn/error if it's actually used for a DMA op that would be worthwhile,
-> > >
-> > > But for a vfio-pci device there is no DMA op, it either gets mapped
-> > > into the IOMMU for direct access to the device or not.  This is the
-> > > point at which that decision is made.
-> >
-> > Why is small RAM different from MMIO register regions here?
-> > Those also you're not going to be able to have a device do
-> > direct memory access to.
->
-> There's a precedent for bare metal, peer-to-peer DMA is less reliable
-> and drivers don't typically have blind faith in it working.
-> Peer-to-peer DMA also has specific use cases, drivers don't arbitrarily
-> pick a peer device to DMA to, they have specific use cases and target
-> regions are inherently sized and aligned appropriately.
+Hi,
 
-Sure, but if a guest does try it then it's going to fall over.
-This is exactly the same as if it tries to do DMA to a small
-MemoryRegion that we happen to have implemented as backed by
-RAM rather than MMIO functions. In both cases the QEMU implementation
-of the device is fine, and the guest has done something silly.
+On 30/6/26 00:20, Mark Cave-Ayland wrote:
+> On 29/06/2026 14:43, Thomas Huth wrote:
+> 
+>> On 09/06/2026 08.02, Thomas Huth wrote:
+>>> On 08/06/2026 23.29, Mark Cave-Ayland wrote:
+>>>> On 08/06/2026 09:26, Michael Tokarev wrote:
+>>>>
+>>>>> On 30.04.2026 12:50, Thomas Huth wrote:
+>>>>>> On 09/03/2026 19.14, Thomas Huth wrote:
+>>>>>>> From: Thomas Huth <thuth@redhat.com>
+>>>>>>>
+>>>>>>> When trying to plug a PCI device to a Sparc64 machine, you currently
+>>>>>>> have to specify the right bus ("bus=pciB"), otherwise you get 
+>>>>>>> this error:
+>>>>>>>
+>>>>>>>   $ qemu-system-sparc64 -device virtio-scsi-pci
+>>>>>>>   qemu-system-sparc64: -device virtio-scsi-pci: PCI: no slot/ 
+>>>>>>> function
+>>>>>>>   available for virtio-scsi-pci, all in use or reserved
+>>>>>>>
+>>>>>>> This is quite annoying for the unexperienced users, and it also 
+>>>>>>> breaks
+>>>>>>> e.g. the iotests ("make check-block") when running with qemu- 
+>>>>>>> system- sparc64.
+>>>>>>>
+>>>>>>> Mark the non-usable PCI busses as full now, so that QEMU can 
+>>>>>>> automatically
+>>>>>>> plug new PCI devices to the right "pciB" bus.
+>>>>>>>
+>>>>>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>>>>>> ---
+>>>>>>>   v2: Do the change in the machine code, not in the sabre device
+>>>>>>>
+>>>>>>>   hw/sparc64/sun4u.c | 7 +++++++
+>>>>>>>   1 file changed, 7 insertions(+)
+>>>>>>>
+>>>>>>> diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+>>>>>>> index b8bda1eb816..37539535c6c 100644
+>>>>>>> --- a/hw/sparc64/sun4u.c
+>>>>>>> +++ b/hw/sparc64/sun4u.c
+>>>>>>> @@ -723,6 +723,13 @@ static void sun4uv_init(MemoryRegion 
+>>>>>>> *address_space_mem,
+>>>>>>>       fw_cfg_add_i16(fw_cfg, FW_CFG_SPARC64_DEPTH, graphic_depth);
+>>>>>>>       qemu_register_boot_set(fw_cfg_boot_set, fw_cfg);
+>>>>>>> +
+>>>>>>> +    /*
+>>>>>>> +     * Mark internal PCI busses as full so that the plugging of 
+>>>>>>> additional
+>>>>>>> +     * PCI devices happens on the right bus that still has free 
+>>>>>>> slots:
+>>>>>>> +     */
+>>>>>>> +    qbus_mark_full(&pci_bus->qbus);
+>>>>>>> +    qbus_mark_full(&pci_busA->qbus);
+>>>>>>>   }
+>>>>>>>   enum {
+>>>>>>
+>>>>>> Friendly ping!
+>>>>>
+>>>>> This, being a simple change, somehow has not been reviewed still, so
+>>>>> it's sitting in the queue...
+>>>>
+>>>> Yes, apologies - I've been absolutely flat out recently, and I've 
+>>>> got a note to take a look at this and Peter's patch as soon as I can.
+>>>>
+>>>> Is this fixing an urgent issue with "make check-block" or similar?
+>>>
+>>> It's not urgent since this has been broken forever, but yes, it fixes 
+>>> "make check- block" for the case where sparc64 is the only available 
+>>> target during "configure -- target-list=sparc64-softmmu" and thus the 
+>>> iotests run with qemu-system-sparc64.
+>> Ping!
+>>
+>> While it's not urgent, soft-freeze date is in a week, so it would be 
+>> nice to get this merged before it misses another release ... WDYT?
+> 
+> Hi Thomas,
+> 
+> I'm still playing catch-up a bit here, but I can't immediately find my 
+> notes on using pciA under QEMU. I think if it fixes the iotests then go 
+> ahead and merge it for now, which gives me time in freeze to investigate 
+> any reported issues.
 
-> Here we have RAM and we're trying to determine whether it's RAM that
-> could be allocated as a DMA buffer or expect a DMA access from a
-> device.
+I wasn't sure whether merging this patch now or wait for your update
+during the freeze so hold my PR for a bit; today I looked a bit at it.
 
-I think that there are no examples of memory-backed MemoryRegions
-that aren't page-aligned that are going to expect a DMA access.
-So a reasonable proxy test for "is this RAM that could expect
-a DMA access" is "is it page aligned and at least a page in size?".
-All blocks of real for-the-guest RAM will satisfy that.
+Some notes:
 
-> Commit 851d6d1a0ff2 spelled out that we could have declared these sorts
-> of regions as RAM device, solving the problem with a simple test, but
-> that wasn't well received (for reasons I don't remember), so we were
-> forced to create this mechanism and maintenance issue.
+- pci_bus_*_slot_reserved_mask() API isn't much used. I supposed it
+   worked for a pair of corner cases but doesn't scale (I expect it
+   to be called in more code paths).
 
-Isn't a RAM device for "this MemoryRegion is backed by memory from
-some actual host hardware device"? In this case it is not, so
-not a good fit. But either way, if the RAM-device MR is not page
-aligned then the guest can't DMA to it either. So "is this a RAM
-device or not" doesn't seem like the test you want for whether
-you want to flag a problem.
+- Bus capacity is odd. We have a generic Bus-class @max_dev field but
+   do not use it with PCI variants. If set, it limit the instances
+   capacity. The capacity is tracked in the instance state, and when
+   no @max_dev is set the only way to mark a bus full is using the
+   qbus_mark_full() helper. Then if we remove devices, the bus remains
+   full, and there is no helper to restore available slots.
 
-thanks
--- PMM
+
+Anyway, back to the problem here, the first part is indeed as noticed
+Thomas to use qbus_mark_full() for the root bus:
+
+-- >8 --
+diff --git a/hw/pci-host/sabre.c b/hw/pci-host/sabre.c
+index cd2328ad53f..6a8d0b6c6d2 100644
+--- a/hw/pci-host/sabre.c
++++ b/hw/pci-host/sabre.c
+@@ -400,6 +400,9 @@ static void sabre_realize(DeviceState *dev, Error 
+**errp)
+      s->bridgeA = PCI_BRIDGE(pci_dev);
+      pci_bridge_map_irq(s->bridgeA, "pciA", pci_simbaA_map_irq);
+      pci_realize_and_unref(pci_dev, phb->bus, &error_fatal);
++
++    /* Only in-built Simba APBs can exist on the root bus */
++    qbus_mark_full(&phb->bus->qbus);
+  }
+
+  static void sabre_init(Object *obj)
+diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+index d69ed9a81ac..b65f3d1a140 100644
+--- a/hw/sparc64/sun4u.c
++++ b/hw/sparc64/sun4u.c
+@@ -546,7 +546,7 @@ static void sun4uv_init(MemoryRegion *address_space_mem,
+      unsigned int i;
+      uint64_t initrd_addr, initrd_size, kernel_addr, kernel_size, 
+kernel_entry;
+      SabreState *sabre;
+-    PCIBus *pci_bus, *pci_busA, *pci_busB;
++    PCIBus *pci_busA, *pci_busB;
+      PCIDevice *ebus, *pci_dev;
+      SysBusDevice *s;
+      DeviceState *iommu, *dev;
+@@ -588,14 +588,13 @@ static void sun4uv_init(MemoryRegion 
+*address_space_mem,
+              qdev_get_gpio_in_named(DEVICE(cpu), "ivec-irq", i));
+      }
+
+-    pci_bus = PCI_HOST_BRIDGE(sabre)->bus;
+      pci_busA = pci_bridge_get_sec_bus(sabre->bridgeA);
+      pci_busB = pci_bridge_get_sec_bus(sabre->bridgeB);
+
+-    /* Only in-built Simba APBs can exist on the root bus, slot 0 on 
+busA is
+-       reserved (leaving no slots free after on-board devices) however 
+slots
+-       0-3 are free on busB */
+-    pci_bus_set_slot_reserved_mask(pci_bus, 0xfffffffc);
++    /*
++     * Slot 0 on busA is reserved (leaving no slots free after on-board
++     * devices) however slots 0-3 are free on busB
++     */
+      pci_bus_set_slot_reserved_mask(pci_busA, 0xfffffff1);
+      pci_bus_set_slot_reserved_mask(pci_busB, 0xfffffff0);
+
+---
+
+I'm still looking at the 2nd part, the reserved slots.
 
