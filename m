@@ -4,111 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73A9FC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:25:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93A8DC44500
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 08:25:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgeds-0004L7-8t; Mon, 06 Jul 2026 04:25:28 -0400
+	id 1wgedy-0004Mw-UM; Mon, 06 Jul 2026 04:25:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wgedd-0004H9-6c
+ id 1wgedV-00049a-V7
  for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:25:13 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wgeda-0007mY-IP
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:25:12 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1wgedS-0007Za-Rk
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 04:25:04 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 665MIQXk1515033
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 08:25:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=gInICDXBXwmPm2d50
- VqhDLSClwfWLLLRTdygjRwKm4w=; b=l1vE8uH55us/RYJefAvDPgQT9WdPXTgup
- RubWvzxt2Sfb0sHeJSj3k17ujJpc0ilQJYjT8q+CAMtnEzwF+mgJ4gdZP7UQKSaw
- HMGTNMTEtQ5o0k3y4kud6VC6oByFZx08xe3a+0saFQ+odAvq9BuqL8I9Yp2PETua
- OhrklMMOYxIB1RQxSyj6ZthTCkI5shqjopqSIUTOFwn3lFtnw156Kw+D2LytYrSz
- 1+dmwUMc9K9XSCU5yO9ld+y+oi2qkSbkD/MaQ4OQKDs4+L0kymlPbzDwGTt7+5Bh
- oLr2ZJK8pQDZIRUszjS5hNk0LxshS/qTueIa8lS8NvuZoxeu5GqzA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6rkdh3cm-1
+ 665MIFlS2197661
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 08:24:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=EjgdvmC28M4HJ/V4TBq0PaSmyS9p
+ hJWS1Hi9g1ZXT1U=; b=KC1g+adbu0jrsJHAORQRfjxuVkkne1r82jDdtJm0KHeC
+ N2AoHsFau/ZdqYoZrltQosoNzHr3i/fS6czEEN7qsTXBUAaHR4OBbJRn2wtnX5fs
+ Cci+YVsRmqQ4r79C8zPjtz+tZQR0PTwBY+mpeq34V9/cN47H0tvDz1ZdGwdz1yWr
+ I8OKmLhnW6Jonmi8faEvAHONtQgcoMdzj5gDjl0G3fJWzIx9YmSNIsX6qhCowVpn
+ PnQ73nRJ3+Hw+sh81N0/ad+BMV74r3aJJkKyEZfwEa0moJHdKvpFnpIx+yr0Ome6
+ a+GYpD9giaQ1LfefOrwU+xMjdGL3LI2FCbHsThxAoA==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6sw4gdyc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 08:25:09 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6668JcCa024141
- for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 08:25:09 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f7e0h4mnp-1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 08:24:58 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6668Jot2011546
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 08:24:58 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7cgpvxhj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 08:25:08 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 08:24:57 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6668P5qP52691370
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 6 Jul 2026 08:25:05 GMT
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6668OuPo50135546
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <qemu-devel@nongnu.org>; Mon, 6 Jul 2026 08:24:56 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1677C2004B;
- Mon,  6 Jul 2026 08:25:05 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 2B9642004B
+ for <qemu-devel@nongnu.org>; Mon,  6 Jul 2026 08:24:56 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1ADED20043;
- Mon,  6 Jul 2026 08:25:04 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 9C73A20040
+ for <qemu-devel@nongnu.org>; Mon,  6 Jul 2026 08:24:55 +0000 (GMT)
 Received: from mac.bl1-in.ibm.com (unknown [9.123.1.190])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  6 Jul 2026 08:25:03 +0000 (GMT)
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP
+ for <qemu-devel@nongnu.org>; Mon,  6 Jul 2026 08:24:55 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Aditya Gupta <adityag@linux.ibm.com>,
- Misbah Anjum N <misanjum@linux.ibm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>
-Subject: [PULL 5/8] ppc/pnv: Replace Power8E with Power11 for 'none' machine
- test
-Date: Mon,  6 Jul 2026 13:54:48 +0530
-Message-ID: <20260706082451.59299-6-harshpb@linux.ibm.com>
+Subject: [PULL 0/8] PPC PR for 11.1 Soft-freeze
+Date: Mon,  6 Jul 2026 13:54:43 +0530
+Message-ID: <20260706082451.59299-1-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260706082451.59299-1-harshpb@linux.ibm.com>
-References: <20260706082451.59299-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=M7J97Sws c=1 sm=1 tr=0 ts=6a4b6665 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=RAioF0-LDSMA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=4vOvNoFDifOwbC3DQlcA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA4MyBTYWx0ZWRfXwDBmj/k3/F1w
- ab9cHDsp535LzSnNROc5a4B30rzAPnD72lPd5e+FR33rWWqzc+3apU433Md3NlB71AfwiyQ/0ZG
- N1on/tcem/VGyWj9IsXGRH85P5wLpLbP3fanms1SHvkvcsyMcsVt+vSVfTnAnSE1ujzdqYgP+6v
- 13anUutrnob1p1ymuqBnOjX2nLxp7L5ciPaOu/3Np5pXoiPvrgmClBc+vXqNUSyYq1bTRvsjlCM
- TrU8uw0Q//A1Wjf8Z5UamdC0e2rh1VXt+CNplCRvVFUfjVz83qBybQsY5WJc2Hzmr9CtTsbaVoe
- w+Dg6HBgl7gnH7Ou35rp02Z9pG60QSM8N85lNVyOJJbWC46CIACWya3LGlBD3EYQS5nU2371fih
- SErvoZJCIY1GALg7y5myQnTf4/HNWt3mTBP4ynbElkZVAmgLqPHk+zkmnP47mka74CdPj6OV8sg
- WdBWJdOfT/PrWQcU93g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA4MyBTYWx0ZWRfX5412s+/ue5sJ
- 3OPgRrqGCyrBeNJJ56AhnfwCH4N+s/J5uwvi/5JyT/cCedcULM2goKBXYDLALnaVedE3QG96nUH
- yELI1RcbvT/J7KsettC5HLI42TUES7U=
-X-Proofpoint-GUID: PP-TpLHn6opeUex3hmAD6B0Q23y4XWV3
-X-Proofpoint-ORIG-GUID: PP-TpLHn6opeUex3hmAD6B0Q23y4XWV3
+X-Proofpoint-GUID: RplO_eApG-ZpLJ-zVvnLgvNADNU5qW88
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDA4MyBTYWx0ZWRfXzwg5VNNWFyoe
+ Ukl8tqHBZROBNlcAf6BHP98k5l7EW+2YV6IFpYs6fQ9kDGybTnhhnFTRgLUPCPbSXqOoQP87waJ
+ j8m7cWOoJ3tTFdkxky38jhAFdw59JMqKgwMBnptpnr5leV852SzFR9iTYzLwflqRrAG7ZdceQ3f
+ ij4QSffuPX4A7AyNQWQUVCcw24J8XuoR8Ln6LkpaRV88BRY2keBoh/5l5C0fbjgH1CpFX2FcHdP
+ Wr6W6U6pL78n2y/3rjxP7goUuXhBnxRLONyz8Qxq7mWhmhIy4djvknWhmI5opbei/bRn+wpCZ0e
+ IQNMGbm78IY0/919Af6bbvloz7pBNnBuaHVWcr7KEKstcq19uZnuUqLHcHhMDi1EsCJogObPbiK
+ xTRdcyD1CUh51hlh9hIeD/SeV/YR2vopCF0Lby+udAy+wElfEVg0PGjlekMYB4kxXUwmcWBC8cz
+ WnDPj8hTsDsxU7EOqCA==
+X-Proofpoint-ORIG-GUID: RplO_eApG-ZpLJ-zVvnLgvNADNU5qW88
+X-Authority-Analysis: v=2.4 cv=FqQ1OWrq c=1 sm=1 tr=0 ts=6a4b665a cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22
+ a=p0WdMEafAAAA:8 a=MdZrTe2ayghipT-8awEA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDA4MyBTYWx0ZWRfXytyPoQMqbOTO
+ ccgv0t4+dzDn3jVsM+o2+fqLCRgWY1bkobGO0Vd0hBDgDlBPSSMVBm2dK+zIj9FFhjRXEP5bkrd
+ QWPv7fOrbbYFvjxQM4wy8IVAS3yL8m4=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-05_02,2026-07-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 adultscore=0
- priorityscore=1501 bulkscore=0 spamscore=0 impostorscore=0 phishscore=0
+ adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 suspectscore=0 spamscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060083
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,38 +120,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+The following changes since commit 4ee536fac748b70e6f3d8568ddd20cfbaa9cf7bf:
 
-Power8E and Power8NVL were deprecated since QEMU 10.1, with
-commit 264a604e7163 ("target/ppc: Deprecate Power8E and Power8NVL")
+  Merge tag 'firmware-20260704-pull-request' of https://gitlab.com/kraxel/qemu into staging (2026-07-05 08:42:47 +0200)
 
-As Power8E chip is removed in future commits, remove the use of Power8E
-chip for use with the none machine test, and replace with Power11 for
-ppc64 test coverage for the test
+are available in the Git repository at:
 
-Tested-by: Misbah Anjum N <misanjum@linux.ibm.com>
-Reviewed-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260703085955.2318600-6-adityag@linux.ibm.com
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
----
- tests/qtest/machine-none-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+  https://gitlab.com/harshpb/qemu.git tags/pull-ppc-for-11.1-sf-20260706
 
-diff --git a/tests/qtest/machine-none-test.c b/tests/qtest/machine-none-test.c
-index bafd7d660e..3205df190f 100644
---- a/tests/qtest/machine-none-test.c
-+++ b/tests/qtest/machine-none-test.c
-@@ -38,7 +38,7 @@ static struct arch2cpu cpus_map[] = {
-     { "mips64el", "I6500" },
-     { "or1k", "or1200" },
-     { "ppc", "604" },
--    { "ppc64", "power8e_v2.1" },
-+    { "ppc64", "power11_v2.0" },
-     { "s390x", "qemu" },
-     { "sh4", "sh7750r" },
-     { "sh4eb", "sh7751r" },
--- 
-2.52.0
+for you to fetch changes up to b44a3c71f237eaf3cb28344598bc547a65f22ddf:
 
+  MAINTAINERS: Add self as maintainer for PowerNV (2026-07-06 12:06:47 +0530)
+
+----------------------------------------------------------------
+PPC PR for 11.1 Soft-freeze
+
+* Testcase improvements for PowerNV
+* Remove deprecated Power8E and 8NVL CPUs
+* MAINTAINERS: Aditya transitioning from PowerNV reviewer to maintainer.
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEa4EM1tK+EPOIPSFCRUTplPnWj7sFAmpLZTwACgkQRUTplPnW
+j7vb/w//XmleEwlL+p+YKndc4Su+qj9c3lApEFEiFi78biATrXpFTNbOxhOpWdv4
+jaI1kWyINrTPgnXgHEKNJuhhsSjy5/HURCgkivPnnvhK95mWMi/0f1SzICmc9DCo
+hjDeQfHw5zhF6hu6QknTfcworpsdA9uVtbx0+8s0lMMDmWze2WLg6f9OXioxhseN
+vJoRaJoEo1f/vwwDFOdGngz36p0xD+eUynPTRlOymMJfW271KtNlZqouCCryI92I
+ksaYa+jorE16l608SyG1Yhf/oDSlj9BufFHmgAngvlDwPFglhoJx0kPeKIrT7QE0
+oGzwnOwXJH0lGuwQwISvgrtquD8unY9gTZvrF6NPIPtpMJSE+TGluoNdf/Sr2c3l
+xMG/+yIwHehgXa/Lh4UN3G7yALaIjVdkcSdexuo1pfFemUCwLYPDMGoaksda+SZd
+m4Xd05ZCvp2RZHRNbWheu6TxZKEHKWO8UV8U0zNgKZTz7muVURrtLpoQJFLRq9V7
+krqyeLOePZtGC15a8unAbIVJVK2vOOnoqQPbuqZ57GTVqcmmcTSIEkRDcbMTADKo
+Qv8WEqOWo9OYQvGF/BMP+ed1UiNzGXY2WnVrF40D3K/I/wT11mHbuKZY3gbFZ5At
+1y2I59EvV/xYHdjBmDoT8smzuQwywSKZnzeKptbIVGFbuPPVFFs=
+=icWo
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------------
+Aditya Gupta (8):
+      tests/functional: Add remote interrupts test for PowerNV
+      tests/qtest/pnv_spi: Test Power11 PNV_SPI
+      tests/qtest: Add Power11 chip & machine to qtests
+      tests/functional: Use default powernv machine instead of power10
+      ppc/pnv: Replace Power8E with Power11 for 'none' machine test
+      ppc/pnv: Remove Power8E and Power8NVL pnv chips
+      ppc/pnv: Remove Power8E and Power8NVL CPUs
+      MAINTAINERS: Add self as maintainer for PowerNV
+
+ MAINTAINERS                            |  2 +-
+ docs/about/deprecated.rst              |  9 ----
+ docs/about/removed-features.rst        |  8 +++
+ docs/system/ppc/powernv.rst            |  2 +-
+ docs/system/ppc/pseries.rst            |  2 +-
+ include/hw/ppc/pnv.h                   |  8 ---
+ target/ppc/cpu-models.h                |  4 --
+ tests/qtest/pnv-xscom.h                | 38 +++++++++-----
+ hw/ppc/pnv.c                           | 62 ----------------------
+ hw/ppc/pnv_core.c                      |  2 -
+ hw/ppc/spapr_cpu_core.c                |  2 -
+ target/ppc/cpu-models.c                |  6 ---
+ target/ppc/cpu_init.c                  |  6 ---
+ target/ppc/kvm.c                       |  4 +-
+ tests/qtest/machine-none-test.c        |  2 +-
+ tests/qtest/pnv-host-i2c-test.c        | 10 ++--
+ tests/qtest/pnv-spi-seeprom-test.c     | 20 ++++---
+ tests/qtest/pnv-xive2-test.c           | 21 ++++++--
+ tests/qtest/pnv-xscom-test.c           | 22 ++------
+ tests/functional/ppc64/test_fadump.py  |  2 +-
+ tests/functional/ppc64/test_powernv.py | 95 ++++++++++++++++++++++++++++++++++
+ 21 files changed, 175 insertions(+), 152 deletions(-)
 
