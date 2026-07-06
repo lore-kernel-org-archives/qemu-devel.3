@@ -4,88 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05525C43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB5D1C43602
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 10:38:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgge9-0005Tj-Ku; Mon, 06 Jul 2026 06:33:53 -0400
+	id 1wggiI-0006zs-QT; Mon, 06 Jul 2026 06:38:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wggdy-0005SU-US
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:33:43 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wggi7-0006xC-Ld
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:38:00 -0400
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wggdx-0001vn-6k
- for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:33:42 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-493c83474ddso26318815e9.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:33:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wggi5-0003EV-M4
+ for qemu-devel@nongnu.org; Mon, 06 Jul 2026 06:37:59 -0400
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-493c83474ddso26354035e9.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 03:37:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783334019; x=1783938819; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=q0rqZ8DzQgMhw+yZoWl4RA7L9y8b3UQYzzJkK/9Xpog=;
- b=MbjssHVe/QCKJEUlshLOqFhYObhf0iDxyuYzHINXe7jH0RGYXGyF8WWPH+FdaqYvmg
- BKIN22PWlRVZ5U1XmIq/rpMOgQd6q8AG+qIigmV82G0WSuImur0t8DBuDX5W13OTTqlo
- UkeCty0r9JMF/HxARRL6KFh6QCGwnAs+kWMAuYp26/oWtcrv7fe0Bz9ZH9gry01hycQj
- 7Ymvr+VixvN4K+LxTnNBDsODxTcm4Lf/FJ36nH13L9Hngo4K8iuatHzYGYNm5gOafxIB
- UdR+cQq/Q9UTIQPG6SLVyQQ+oE419/7fPiCBUN3v5VfgA8MyVwhxMa53vvo7HbZx+27J
- 9Qsg==
+ d=linaro.org; s=google; t=1783334275; x=1783939075; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Uuv/Xq1+VXgJvtaRfjzAEoh8NWvGfR0T7UoX7olQwLs=;
+ b=KQzqjkbFQBmgjLtMVNnMAUXJRpu+wtdh86yEbNn9CSIDe35ycqSvudBErZw9pRrJy0
+ xyheE7DwJxzPuQM4PpzoEUtbICDUhZ7ItOdQJJ3bM3IuZgyRos7jiR2eSM96Mda3Xvdm
+ QLPAUSHUeXWPNyWiHsPLRzlZ61qloR3DUE07qbxoUjHi+W4BlII5IA2bC4H2d/rIItu/
+ Yi2Em9QrL9Bq0LBBkD6639DCTO9otfdyXLDOYQgwH6D8N1mQI/3RWdWOwTTPuvwQpdN/
+ 0Cd3tVeGCXJ03CTmW+5UkBrNgEmb4LSyo7Yq5MHEjGd8O3ouY98/1SELeFNeZ+VRE41K
+ oLlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783334019; x=1783938819;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=q0rqZ8DzQgMhw+yZoWl4RA7L9y8b3UQYzzJkK/9Xpog=;
- b=DpKYHHBhdLx7pqw4Uoz++wi/cv6ruJtLzc5KY8mAJsxqQ4+Tj6mk5yOLslVgo4utzQ
- NibXaoRoCmYWxRw5RaYE10RHMDxxYtKjf+N9eqJNZqobJ4P9QlXBIoDerVxpCMTK28GG
- Oae35BRe7MdVvXNXLlsSE/m/fOQp116P6+FrACk7E+EgOjMBo84AySNZ8scoC4V008hK
- obLf1WquGUJq6ONxR2W/sb7tj7Fa7KNSYFnlGn6wXxru0JHj3kfdMsLyXVj+AvAkw16d
- uighM0qbxJDoG9PdCDiQl8aOW8kjn4nUZhTRIJanlUo4WENpgnFLm0aV/mgTVgp/9T2i
- VqEg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rpr2VDQJeAGO+VZYpkTJVgu01Yws6zFKHJeFb7f2aG1eaTPccgpOk7LxYqlFnD1PE/O8Nhg3IJm8Qio@nongnu.org
-X-Gm-Message-State: AOJu0YxFVzoE+4dYLM1cXOTAjBcasRFlyQrkfw0MB2ALBo+10EHjipI5
- t4XlU/N4dq4HOWw6hED1NMDS9jJDdVTkL9LNy2AmBbm2gNVHvEUz8gxE9vjXwiHH6Ho=
-X-Gm-Gg: AfdE7ckG11xleOzcTQhEuQ8hwoCJSSAVC9Thp8bGLrFpfFpcWFr2hqaPbWmzsDqzvSw
- Rf0XkqM9SzP1CTiqdlLtg2Cz7HGXngkeLMwmW2CUK2e/w+WQ6KQ76u7wQdQnTnBAWcah2kBxm7N
- sXAVP7Fjl3mX1EwdfILNbUwlI9sJjWU9zlyDXNOCTMNe/Mkrke+k8NtuXgotP/JT7ujN6XjnjhH
- Fy2ZSGgLiPhck6JLjW9rByZvasq5MFCl9kit3eUNfNHKkTfMs+tIpUFyyM7hckx1+Zvf3USIvlg
- JdKVJ12Jz/oVcp17aZaL2jZ2SrKqLBQdniWtGljLVV4lroebvry1t3U8gvm4UnryBtjwe7GhqTt
- oUyBGj8Fi2VX8bBo8J4RU9zdvIt+N1jw+B86OZhgjL3f3q5xVLb4SXJNJ+VuzN24ivMOqkFlPl0
- uXT92EBFbpC4/W
-X-Received: by 2002:a05:600d:8654:20b0:493:bfea:2786 with SMTP id
- 5b1f17b1804b1-493d11f6d34mr81656625e9.32.1783334019166; 
- Mon, 06 Jul 2026 03:33:39 -0700 (PDT)
-Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493bef183e7sm436267335e9.2.2026.07.06.03.33.38
+ d=1e100.net; s=20251104; t=1783334275; x=1783939075;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Uuv/Xq1+VXgJvtaRfjzAEoh8NWvGfR0T7UoX7olQwLs=;
+ b=JectXZf1sjNsQAYmJZ1BKopq2VjTchXPyzdV+0kLVQ9L6D3oT7Bp1JlSjGEZFjWrUI
+ OfK4ryhcZYShHsYvwzojMhKk/56B7gHJ5FbSUPYesSDlxWatG4EvZ8KvfOx+TG1T5/2c
+ FxTaH4tWhluzg5v0uzJ0nWTK/MvloF4O+lArGiF3PB0mWvBmKoEComHwtwwG6FdirIFR
+ GIXQM/mHE7hEFYu2gZTDa4ASm34dy2py4rd2IcXdC4A6N1k4K5ESUy6lXOEYYtHjmqms
+ M9YkHPIJFCGtQr3C5JzBGgxfm0kQEO7OUH7ZCImkCHqBzMAxnPGUpxmR1Szev0GAKGD2
+ pLzw==
+X-Gm-Message-State: AOJu0Yw4ofwm6Twu/dHWq8cn6yg8Ov+ywHV8kGyAeSgWeLuOHlu1Pi7+
+ oyaAZtNCr0HATwak1EOJ2Na7G7phC/OmzhysAypqHVCxpbgEtqIRPgBrvOysaoaPF9hmN3fKRJo
+ I/TPBz8VyM+VK
+X-Gm-Gg: AfdE7clmBht1UitDkNuMKb+2yamQV3RLAaz9u/MUYZ2qTx0YChEVVrFt600kWN0pgr9
+ uzkt5vWHocqL7SU2ytb6QzN/L5tCTqQ/62eipRLf6ayUsW5i44kCTzVTO268ivOVda2nYebJWCh
+ HuRlqJGNd4NAhIsdRe6gTN70EhueX9vrC8IcWPgG7poPGxsGJzIUqlPT+ZL1G7d5dmHwoUy4zjd
+ 8K/1uOdBHB37DaZsyUfKqtsiAoI2ANRDSvE3ueHEDBcYOQ3UPLtAaExIKl8R1ut5GUhZJtRKHti
+ xInh2ugopIx7KBou9/ebWHYdg0kfWIq43EkpzkCMzzZIR3I3vOa5TSh7BeoT7j0F3+yQ80iZLK0
+ a1OD09gn+zmEZAfztTYGN5K1Gw/c739wN5obXaoz65h9LlocfX6j0aRNLAD2SN2C1FzsvW75k/t
+ jFAxQjt7X4eqWrLs6CmDoisGTIP2/5iMlanTUTD2Sdh46hM9Es5zmhE8nPeFootaqBtDDYkHHUK
+ rOoKFlLPvJ9B5zDwqpvcw==
+X-Received: by 2002:a05:600c:6792:b0:493:b4cf:d37f with SMTP id
+ 5b1f17b1804b1-493d11d7dd2mr109868445e9.16.1783334274725; 
+ Mon, 06 Jul 2026 03:37:54 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493c63b6f1bsm329501805e9.10.2026.07.06.03.37.53
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jul 2026 03:33:38 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4AA1D5F83B;
- Mon, 06 Jul 2026 11:33:37 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Gilles Grimaud <gilles.grimaud@univ-lille.fr>,  qemu-devel@nongnu.org,
- qemu-arm@nongnu.org,  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [RFC PATCH] target/arm: report M-profile BKPT to gdbstub when
- attached
-In-Reply-To: <CAFEAcA9Heev=ydTzO2u3EzeF_2q7dytOF8=67qF8ZMMY6Ky2Tw@mail.gmail.com>
- (Peter Maydell's message of "Mon, 6 Jul 2026 10:21:31 +0100")
-References: <20260705224407.32464-1-gilles.grimaud@univ-lille.fr>
- <CAFEAcA9Heev=ydTzO2u3EzeF_2q7dytOF8=67qF8ZMMY6Ky2Tw@mail.gmail.com>
-User-Agent: mu4e 1.14.2; emacs 30.1
-Date: Mon, 06 Jul 2026 11:33:37 +0100
-Message-ID: <877bn8wgou.fsf@draig.linaro.org>
+ Mon, 06 Jul 2026 03:37:54 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/49] target-arm queue
+Date: Mon,  6 Jul 2026 11:37:03 +0100
+Message-ID: <20260706103752.320511-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x341.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,97 +99,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+Hi; here's hopefully the last pullreq for arm before softfreeze.
+There's a mix here of bug fixes of various kinds plus support
+for emulation of a few new CPU features.
 
-> On Sun, 5 Jul 2026 at 23:44, Gilles Grimaud
-> <gilles.grimaud@univ-lille.fr> wrote:
->>
->> While working on Raspberry Pi Pico/RP2040 support, I noticed that Pico S=
-DK
->> programs deliberately execute BKPT from _exit(). On real hardware this is
->> useful when a debug probe is attached: returning from main() stops the
->> debugger at the program exit point.
->>
->> Under QEMU this currently does not behave like the debug-probe case. For
->> M-profile guests, the BKPT instruction is routed through the architectur=
-al
->> guest debug exception path. Without halting debug, that path should rema=
-in a
->> guest-visible DebugMonitor exception when DebugMonitor is enabled, or es=
-calate
->> towards HardFault otherwise. This patch deliberately leaves that no-debu=
-gger
->> architectural path unchanged.
->>
->> The problem addressed here is the case where GDB is connected to QEMU's
->> gdbstub. In that situation, firmware that uses BKPT as a debugger stop p=
-oint
->> should stop in the attached debugger. Instead, the M-profile guest curre=
-ntly
->> continues down the guest exception path and may end in HardFault/lockup =
-rather
->> than reporting a clean trap to GDB.
->>
->> This is not specific to the RP2040 machine model. It is a generic
->> Cortex-M/gdbstub interaction: firmware that uses BKPT as a debugger stop=
- point
->> should be reported to the attached debugger, while keeping the guest
->> architectural exception path when no debugger is attached.
->>
->> Expose a small gdbstub helper to test whether a CPU is visible to an att=
-ached
->> debugger. When an M-profile BKPT instruction is executed with such a deb=
-ugger
->> attached, leave the translated block with EXCP_DEBUG so the existing gdb=
-stub
->> stop path reports a trap to GDB.
->>
->> Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
->> ---
->>  gdbstub/gdbstub.c      | 13 ++++++++++++-
->>  include/exec/gdbstub.h |  6 ++++++
->>  target/arm/tcg/debug.c |  9 +++++++++
->>  3 files changed, 27 insertions(+), 1 deletion(-)
->>
->> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
->> index c3c944e965..9f259fc005 100644
->> --- a/gdbstub/gdbstub.c
->> +++ b/gdbstub/gdbstub.c
->> @@ -237,6 +237,18 @@ static GDBProcess *gdb_get_cpu_process(CPUState *cp=
-u)
->>      return gdb_get_process(gdb_get_cpu_pid(cpu));
->>  }
->>
->> +bool gdb_cpu_is_attached(CPUState *cpu)
->> +{
->> +    GDBProcess *process;
->> +
->> +    if (!gdbserver_state.init || !cpu) {
->> +        return false;
->> +    }
->> +
->> +    process =3D gdb_get_cpu_process(cpu);
->> +    return process && process->attached;
->> +}
->
-> No other architecture, CPU or board in QEMU needs to do this,
-> so my instinct is to say that M-profile should not be special here.
-> Richard, Alex: how do we usually handle breakpoint insns for the
-> gdbstub ?
+thanks
+-- PMM
 
-For TCG guests we never insert BKPT instructions and treat the system as
-having infinite hardware breakpoints.
 
-From what I can tell we should only route the debug event to an external
-monitor if the right DHCSR and DEMCR bits are set. Even then the spec
-has a lot of behaviour with is IMPDEF.
+The following changes since commit 4ee536fac748b70e6f3d8568ddd20cfbaa9cf7bf:
 
-I think the v7M rules are different to the v7a/v8a ones.
+  Merge tag 'firmware-20260704-pull-request' of https://gitlab.com/kraxel/qemu into staging (2026-07-05 08:42:47 +0200)
 
->
-> -- PMM
+are available in the Git repository at:
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260706
+
+for you to fetch changes up to 3455eac92d3e4b70bc222d98268f092efd4f1934:
+
+  target/arm: Define fields for NSACR (2026-07-06 11:32:01 +0100)
+
+----------------------------------------------------------------
+target-arm queue:
+ * hw/net/fsl_etsec: validate FCB offsets in process_tx_fcb()
+ * hw/arm/smmuv3-accel: Fix veventq read returning true on EAGAIN/EINTR
+ * target/arm: Only evaluate SCR_EL3.PIEN if ARM_FEATURE_EL3 is present
+ * hw/arm: use cortex-a9 mpcore base for CBAR on npcm7xx machines
+ * docs/specs/fw_cfg: Document all architecture register layouts
+ * hw/nvram/fw_cfg: Simplify functions so board models don't have
+   the opportunity to create non-standard fw_cfg register layouts
+ * hw/misc: use tracepoints rather than DPRINTF in imx ccm models
+ * hw/arm: add support for shim loading
+ * docs/system/arm: Document Zynq Buildroot boot
+ * target/arm: Report correct syndrome to AArch32 EL2 for trapped
+   Neon/VFP insns
+ * target/arm: implement WFET to not be a NOP
+ * target/arm: Emulate FEAT_SME_MOP4
+ * target/arm: Emulate FEAT_FPRCVT
+ * target/arm: Emulate FEAT_SSVE_FEXPA
+
+----------------------------------------------------------------
+Alex Bennée (7):
+      hw/arm: use cortex-a9 mpcore base for CBAR on npcm7xx machines
+      tests/functional: update anacapa-bmc image
+      target/arm: do not clear halting reason in has_work helper
+      target/arm: ensure we create the wxft_timer for all modes
+      target/arm: implements SEV/SEVL for all modes
+      target/arm: enable WFE sleeping for A-profile
+      target/arm: implement WFET
+
+Bin Meng (1):
+      docs/system/arm: Document Zynq Buildroot boot
+
+Feifan Qian (1):
+      hw/net/fsl_etsec: validate FCB offsets in process_tx_fcb()
+
+Gerd Hoffmann (3):
+      hw/nvram: add load_image_to_fw_cfg_file()
+      hw/i386: switch shim loading to load_image_to_fw_cfg_file
+      hw/arm: add support for shim loading
+
+Jason Wright (1):
+      target/arm/hvf: seed NO_RAW ID registers from isar.idregs[] on vCPU init
+
+Jim MacArthur (6):
+      target/arm/tcg: Implement new instructions for FPRCVT
+      target/arm/tcg: Allow vector FP conversions with FPRCVT
+      target/arm/tcg/cpu64.c: Add FEAT_FPRCVT to cpu_max
+      linux-user/aarch64/elfload.c: Add FPRCVT
+      docs/system/arm: Add FEAT_FPRCVT to A-profile support
+      tests/tcg/arm: Tests for new FPRCVT instructions
+
+Oliver Upton (1):
+      target/arm: Only evaluate SCR_EL3.PIEN if ARM_FEATURE_EL3 is present
+
+Peter Maydell (10):
+      docs/specs/fw_cfg: Document all architecture register layouts
+      hw/nvram/fw_cfg: Enforce standard layout for fw_cfg_init_mem_dma()
+      hw/nvram/fw_cfg: Enforce standard layout for x86 fw_cfg I/O ports
+      hw/nvram/fw_cfg: Remove support for I/O port fw_cfg without DMA
+      hw/nvram/fw_cfg: Document fw_cfg_init_mem_nodma()
+      hw/misc/imx31_ccm: Replace DPRINTF with trace events
+      target/arm: Separate out Neon from VFP access checks
+      target/arm: Separate syndrome functions for A32 and A64
+      target/arm: Report correct syndrome to AArch32 EL2 for trapped Neon/VFP insns
+      target/arm: Define fields for NSACR
+
+Richard Henderson (16):
+      target/arm: Implement and enable FEAT_SSVE_FEXPA for -cpu max
+      target/arm: Implement FMOP4 (non-widening) for float32
+      target/arm: Implement FMOP4 (non-widening) for float16
+      target/arm: Implement FMOP4 (non-widening) for float64
+      target/arm: Implement BFMOP4 (non-widening)
+      target/arm: Implement BFMOP4 (widening)
+      target/arm: Implement FMOP4 (widening, 2-way fp16 to fp32)
+      target/arm: Implement FMOP4 (widening, 4-way fp8 to fp32)
+      target/arm: Implement FMOP4A (widening, 2-way, FP8 to FP16)
+      target/arm: Implement SMOP4[AS] (2-way)
+      target/arm: Implement SMOP4[AS] (4-way)
+      target/arm: Implement SUMOP4[AS]
+      target/arm: Implement UMOP4[AS] (2-way)
+      target/arm: Implement UMOP4[AS] (4-way)
+      target/arm: Implement USMOP4[AS]
+      target/arm: Enable FEAT_SME_MOP4 for -cpu max
+
+Shameer Kolothum (1):
+      hw/arm/smmuv3-accel: Fix veventq read returning true on EAGAIN/EINTR
+
+jack wang (2):
+      hw/misc/imx_ccm: Replace DPRINTF with trace events
+      hw/misc/imx25_ccm: Replace DPRINTF with trace events
+
+ docs/specs/fw_cfg.rst                       |  28 +-
+ docs/system/arm/emulation.rst               |   3 +
+ docs/system/arm/xlnx-zynq.rst               |  54 +++-
+ hw/arm/boot.c                               |   6 +
+ hw/arm/npcm7xx.c                            |   2 +-
+ hw/arm/smmuv3-accel-stubs.c                 |   6 +-
+ hw/arm/smmuv3-accel.c                       |  30 ++-
+ hw/arm/smmuv3-accel.h                       |   4 +-
+ hw/arm/tegra241-cmdqv.c                     |  11 +-
+ hw/arm/virt.c                               |   2 +-
+ hw/i386/fw_cfg.c                            |   3 +-
+ hw/i386/microvm.c                           |   3 +-
+ hw/i386/pc.c                                |   3 +-
+ hw/i386/x86-common.c                        |  15 +-
+ hw/loongarch/fw_cfg.c                       |   3 +-
+ hw/misc/imx25_ccm.c                         |  32 +--
+ hw/misc/imx31_ccm.c                         |  33 +--
+ hw/misc/imx_ccm.c                           |  18 +-
+ hw/misc/trace-events                        |  23 ++
+ hw/net/fsl_etsec/rings.c                    |  27 +-
+ hw/nvram/fw_cfg.c                           |  44 +++-
+ hw/riscv/virt.c                             |   3 +-
+ include/hw/arm/boot.h                       |   1 +
+ include/hw/core/sysemu-cpu-ops.h            |   3 +
+ include/hw/nvram/fw_cfg.h                   |  73 +++++-
+ linux-user/aarch64/elfload.c                |   3 +
+ target/arm/cpu-features.h                   |  45 ++++
+ target/arm/cpu.c                            |  25 +-
+ target/arm/cpu.h                            |   2 +-
+ target/arm/helper.c                         |  10 +-
+ target/arm/hvf/hvf.c                        |  10 +-
+ target/arm/hvf/sysreg.c.inc                 |   2 +-
+ target/arm/internals.h                      |   8 +
+ target/arm/ptw.c                            |   9 +-
+ target/arm/syndrome.h                       |  28 +-
+ target/arm/tcg/a32.decode                   |   5 +-
+ target/arm/tcg/a64.decode                   |  20 +-
+ target/arm/tcg/cpu64.c                      |   3 +
+ target/arm/tcg/fp8_helper.c                 |  32 +++
+ target/arm/tcg/helper-defs.h                |   3 +-
+ target/arm/tcg/helper-fp8-defs.h            |   3 +
+ target/arm/tcg/helper-sme-defs.h            |  49 ++++
+ target/arm/tcg/op_helper.c                  | 258 ++++++++++++++++--
+ target/arm/tcg/sme.decode                   |  45 ++++
+ target/arm/tcg/sme_helper.c                 | 390 ++++++++++++++++++++++++++++
+ target/arm/tcg/t16.decode                   |   4 +-
+ target/arm/tcg/t32.decode                   |   4 +-
+ target/arm/tcg/translate-a32.h              |   1 +
+ target/arm/tcg/translate-a64.c              | 139 +++++++---
+ target/arm/tcg/translate-neon.c             |  74 +++---
+ target/arm/tcg/translate-sme.c              | 130 ++++++++++
+ target/arm/tcg/translate-sve.c              |  21 +-
+ target/arm/tcg/translate-vfp.c              |  60 +++--
+ target/arm/tcg/translate.c                  |  34 +--
+ target/arm/tcg/translate.h                  |  23 ++
+ target/arm/tcg/vec_internal.h               |   8 +
+ tests/functional/arm/test_aspeed_anacapa.py |   4 +-
+ tests/tcg/aarch64/Makefile.target           |  14 +-
+ tests/tcg/arm/fcvt.c                        |   7 +
+ 59 files changed, 1576 insertions(+), 327 deletions(-)
 
