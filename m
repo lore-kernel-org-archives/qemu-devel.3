@@ -4,79 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28F1EC43458
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 00:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C430C43602
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jul 2026 00:43:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgXKX-0004oy-Ft; Sun, 05 Jul 2026 20:37:01 -0400
+	id 1wgXQg-0005mB-T5; Sun, 05 Jul 2026 20:43:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wgXKV-0004oc-FH
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 20:36:59 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1wgXQb-0005li-TN
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 20:43:17 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wgXKT-0003r2-RG
- for qemu-devel@nongnu.org; Sun, 05 Jul 2026 20:36:59 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-383adaa461fso914908a91.3
- for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 17:36:57 -0700 (PDT)
+ id 1wgXQa-0004ky-CZ
+ for qemu-devel@nongnu.org; Sun, 05 Jul 2026 20:43:17 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-698aa7ba320so4285087a12.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Jul 2026 17:43:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783298595; cv=none;
+ d=google.com; s=arc-20260327;
+ b=gkdAJrXhz/cJju9An/q5Dxr+b0nDa6osEvx/AKhofsFlROaY81RL/mUM2jQ6U+rlXe
+ 3KUq5dfaB+WTIhnRfzqcaenwnfXSRhroP2I7Sx4mRP2Ua5nB81+SRHulr+62HwplTGWF
+ W92Yw3HaxfFpBxz7g7vXV/grYGWzDZ6GBAkfabLJ1kyQEY22OP9IzQr8dmWCCYNx5LWZ
+ gdxQFynfLZMyZxgrp1k2tqXdmMftnYMkchRV159VqZoYveFPdi0F0DzoSzXNkYaADgpD
+ Q+Xpeoy8iAWLTHsn+9ysDBv0wSXtg/l36RCRM1aKDhYV3pAhh6QIaRQJtegioetdugtG
+ sJyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Vip14HjtKGQOtuQkxEUIST0A0gAK0vfI2mPhzNy0LQA=;
+ fh=F2jHHLOhAUdxIpT/mOESKAzlhKPgUW33d0+z1UtXHTg=;
+ b=eAYe4u8cXmEqkksqMbh8ct9siDRO38v3i3oa1y72DkF96lyckhc0ykbSHsW68Q4LKL
+ 0qXmU2OQJZ/5Gb+cqTNHD2sId2daWHq5dqP8Q/zdehCPqAXatuXPTj5FIBPJxi1xx0jJ
+ a8GEZExavFnFIBj6dm9YulqnuYQYrAV+kMp4FoRtUpbk4RRSAz75dGztggUV/sa7dSeP
+ i09A+/3lPOhwzQ3HI1W5uDoo7vgsbYS9qfFr4JNMmilLfdEpBlw5g5vjDhnHMtL72irR
+ ws3a/oZO2rxBaF/lfZl46LniDGVGPOPUIldNKAdPXQjZeeodBFeEJdrRfBMBy3fVNN9P
+ Vogw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783298216; x=1783903016; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=z/Mrm/xAStmFh045e9yRYG+pscd+SFMM8U2/zFtcBpo=;
- b=QONlbMuVGNUOhIYQOZ6n55iGILfgzSrrR+5MWVzkmo5rV1l7bdY+JKuAnX5jCLZXTh
- X2Eyax+5AWZFJrfvUTmcAfPa5TyB1Beho7u3HY5zeNyfHXt7E+dxZoaYYG7KhJfuntNd
- 5cCWQiDE17pk7ega0sUbWrUowrTJXZv8cfsSjDf+ARbUlyOQxXMK06LWgxT2uGEn2G9r
- +VN1MoArsfIxEGzet/4qgYi6wf+1Rrf64HyDxCcxLIy0TMBKZlelgArBLrhJGpP8IkrR
- BbSBD30zbBqkC6IhVW5Xcg+if8uetLL1PX2jaDn2Ze6RHQ/lqKn8Ts/kzQY5TiDfmTU0
- JLGA==
+ d=gmail.com; s=20251104; t=1783298595; x=1783903395; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Vip14HjtKGQOtuQkxEUIST0A0gAK0vfI2mPhzNy0LQA=;
+ b=IxwU3+SyUWhl5xe8jFRfcdcbvye5NbkD8trsvgZ8zNZWZWApQ58AvDmWEKLOaepCph
+ P+6OcDHicZ+7VZ4xDbRHacvhkESPfNt1d9rMJDjKD4NGNpTvkfkmKDNDugj98gJyb2eO
+ 2ZpMaSwKl/6+PaRqB6XSFlW3cwH3ogUwqvhSpz29GHR6LCH+IurE7xMG024BxZuBFDK6
+ PQJoMqDpte5eiHm3rqJ9E2bat5s5xZv6sykWC/+f0EOP/W/fEWAmFa7izyGjo25WafLQ
+ aGcHlrHFSzcv6DdfqwLzGQ7+HkwH/Kk+KOmwF57iQE1q8UD0lIvFfI92+/3ze/O2YW0i
+ Ca7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783298216; x=1783903016;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=z/Mrm/xAStmFh045e9yRYG+pscd+SFMM8U2/zFtcBpo=;
- b=jEQrjcY4OXv8Di0xt+G9vPCo6Iw7OMrV2NyDY6n3//d7U4h05muDtjmsMouCH4Wk8p
- Zdv7crKVfk9vvu6Q3tckhP6iH4fPPgW9qAp5yOjihl7kUunfyZc0m4thNCoPn9oX988Y
- Zt9/fm9OzYq5b5aJvfsmLD/7B7VlVClcKKSWOS6+lYb1HUI7fIjzOV6Jbg6SjtmAIUIF
- WKdr9ZwyJCd5OdZrK1uuAWDqhpIzWiyWNHfbU1dzjx4gKgGq8LvLoGesYYZoFxPjeud7
- nqGdYQsF1ouxacbvbcaBrCaqMq2rNEdVWa5hQar6jyKzqggkXkRZCHKnr34uyJcK1nph
- VsXQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rr1VSZ3KsmVx65DUY9trv5xzOtUXyuFFWjoztGsspx0RrFAvU6UVWLJb1zRQZdj+mObcam/PmXE7B3u@nongnu.org
-X-Gm-Message-State: AOJu0YzJ8dz0on3oGryEzbzkNoeC+UomV6PxM6eGIAU16netnkfShVg5
- qh09EtD8Z/pfxgYsGFV119JFq29EcZ89ffDC55/baclCgvksU4rmWxEK
-X-Gm-Gg: AfdE7cmZpfzoHVyRSrVAg4oHTcoSJrkhZBkfB0BJ0haycI5Z+EwaVvc7ipKw4qnQX/W
- me1v+tDA5OPTb2wAFd27jdhHJYve6c6NmCJvme1kkr/dUq7Qlm3++tL6Fhe4Z4VfihYqXaxqSXI
- td9pdCqD+mgXP5ASJ4fGxJGEsPDr72eRAARz/AjW5P24LKaljis7dkf0CD5mB21eQXOjprXACvl
- 05+EgwrxkGBHn249of5UuaMnBYGBSlPl1Lw/0TFcYeZ3tN6BYFdy3OQNC3s9qG8AZ6/g2dHiRiT
- MtGVUPGUNMVhaaEabFO6qYgLKruKdb8t9hdhlLSdAAjNIJrPdAH2dxG5ju7JIa5lz7vnLL4CaWd
- h+YbtApLnVXzYzF1NSiLsk4A/Nnpp2LycDCMQPln960ylrck/v4TQPBeYUZQpftJFQc94UDnhBR
- N2ZC+nEZjwesR8rDNlLpG+8mWwdsmAoQ==
-X-Received: by 2002:a17:90b:4b90:b0:382:3dcc:1487 with SMTP id
- 98e67ed59e1d1-3829f00022amr7144799a91.25.1783298215737; 
- Sun, 05 Jul 2026 17:36:55 -0700 (PDT)
-Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30f3c8b19c7sm28844899eec.4.2026.07.05.17.36.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Jul 2026 17:36:55 -0700 (PDT)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: alistair.francis@wdc.com, tangtao1634@phytium.com.cn, mst@redhat.com,
- qemu-devel@nongnu.org
-Subject: [PATCH] hw/pci/pcie_doe: Check mailbox length for overflows
-Date: Mon,  6 Jul 2026 10:36:47 +1000
-Message-ID: <20260706003647.75945-1-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.54.0
+ d=1e100.net; s=20251104; t=1783298595; x=1783903395;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Vip14HjtKGQOtuQkxEUIST0A0gAK0vfI2mPhzNy0LQA=;
+ b=UBPrLt774DfpdDSc8YeS0VULOAPdzYB+Ft/UG9YO2XTpeX17rQIJ6ZJAvpCm2wqovT
+ +nlPnPlHPzfqjQR2JcdACUKh4+gMuCjveJGLhRtdokaI3gPaleLWeiK11PkikqOzXTXs
+ hUejR0pPyNwsMGO6efF8weJMTpTw9KJ+hKD5rE1lIQjhyBQeuf7Hm/f9hXki9CkN85Af
+ pC5NUw+1sqlKo2yqa2HiTG5fRDRzaZFLxZXIDapTJJ677GK0NCZ+a+5Kl0L0PoYUXjTK
+ HQk+ImV6ol+wmTMmQQtoxfihpDQrOA+voSMY7GH8JkiseoZUxONJBxnF8igFMlAcFk0W
+ 4ZdQ==
+X-Gm-Message-State: AOJu0YyI+EETTb0Lggi7HcUHg0cAuVTR7FYij2oSDWGcWCYGrXc+8OAo
+ O1Jy5VULSyKIHD7K7RPM0JcyziGWgI9Ob2aUe8GQowqSbuMgdDlLM3NsRX8UsPWwrCAbA1U5akI
+ whPhBc+tlNgZWSOCgkwJil4h0P3doaQQ=
+X-Gm-Gg: AfdE7cmid003Y3B7heYFTSCVvWrIYkuFVCDyxs4chBHS5/ElGeVEK6/k18TmAwJfHKc
+ C2Pq/TMlBiJsjEc3r3H54H/NBZmCnNANTPGUnFnzPOOpJCjb3MOy8oAw4lyscrdKaSP61nI83Aw
+ z93jcDnUPnhIPZp7FX6gHfuByZawS3h8SwCvm6TbeocCvrR7whdHdXD4RLiQpXC/ayu2Ye+bGYN
+ L7+zGxyitqTv94b/iy3pud39q2m47QPUZU/vbnpCg25dF6EALvvyAGhz4x3XKxIPXOAxvPxUEwr
+ aadnECNsvzmGnDMVVEeedWaE2v8=
+X-Received: by 2002:a05:6402:4345:b0:698:ec2f:d6c9 with SMTP id
+ 4fb4d7f45d1cf-69a1ab2a74bmr2664158a12.14.1783298594475; Sun, 05 Jul 2026
+ 17:43:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102d.google.com
+References: <20260702135128.1188021-1-daniel.barboza@oss.qualcomm.com>
+ <20260702135128.1188021-18-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260702135128.1188021-18-daniel.barboza@oss.qualcomm.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 6 Jul 2026 10:42:47 +1000
+X-Gm-Features: AVVi8Ce3wfHYya6HsvEyV6rXok7TBCKfr_5x-Wdy4fErHydDCSAacTXGzfakX2k
+Message-ID: <CAKmqyKPRQVBBwsPX_+m3K4o10UdRYAqv=de_VJAA1_SC4dW8NA@mail.gmail.com>
+Subject: Re: [PATCH v3 17/24] target/riscv/cpu.c: filter TCG only bits in
+ riscv_cpu_reset_hold()
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,43 +121,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+On Thu, Jul 2, 2026 at 11:53=E2=80=AFPM Daniel Henrique Barboza
+<daniel.barboza@oss.qualcomm.com> wrote:
+>
+> We have a lot of TCG only initialization in the common cpu_reset_hold
+> callback that prevents --disable-tcg to work.
+>
+> Put a CONFIG_TCG ifdef around those bits to make the build work.
+> Eventually we'll create a TCG specific reset function in tcg-cpu.c but
+> for now this suffices.
+>
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 
-It was possible that a guest could overflow the `doe_cap->write_mbox`
-buffer by writing more then PCI_DOE_DW_SIZE_MAX dwords.
-`doe_cap->write_mbox_len` would continue to increment and there were no
-bounds checks on the length when offsetting into doe_cap->write_mbox.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-This patch adds a check and reports a guest error if we would overflow.
+Alistair
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3679
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- hw/pci/pcie_doe.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/hw/pci/pcie_doe.c b/hw/pci/pcie_doe.c
-index 2210f86968..765ebea42c 100644
---- a/hw/pci/pcie_doe.c
-+++ b/hw/pci/pcie_doe.c
-@@ -356,8 +356,14 @@ void pcie_doe_write_config(DOECap *doe_cap,
-         if (size != DWORD_BYTE) {
-             return;
-         }
--        doe_cap->write_mbox[doe_cap->write_mbox_len] = val;
--        doe_cap->write_mbox_len++;
-+        if (doe_cap->write_mbox_len < PCI_DOE_DW_SIZE_MAX) {
-+            doe_cap->write_mbox[doe_cap->write_mbox_len] = val;
-+            doe_cap->write_mbox_len++;
-+        } else {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "Mailbox write length (%d) is overflowing\n",
-+                          doe_cap->write_mbox_len);
-+        }
-         break;
-     case PCI_EXP_DOE_CAP:
-         /* fallthrough */
--- 
-2.54.0
-
+> ---
+>  target/riscv/cpu.c | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 6b79dcc5ee..5a82e6563b 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -965,10 +965,6 @@ bool riscv_cpu_has_work(CPUState *cs)
+>
+>  static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+>  {
+> -#ifndef CONFIG_USER_ONLY
+> -    uint8_t iprio;
+> -    int i, irq, rdzero;
+> -#endif
+>      CPUState *cs =3D CPU(obj);
+>      RISCVCPU *cpu =3D RISCV_CPU(cs);
+>      RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(obj);
+> @@ -1020,6 +1016,10 @@ static void riscv_cpu_reset_hold(Object *obj, Rese=
+tType type)
+>                      MENVCFG_ADUE : 0);
+>      env->henvcfg =3D 0;
+>
+> +#ifdef CONFIG_TCG
+> +    uint8_t iprio;
+> +    int i, irq, rdzero;
+> +
+>      /* Initialized default priorities of local interrupts. */
+>      for (i =3D 0; i < ARRAY_SIZE(env->miprio); i++) {
+>          iprio =3D riscv_cpu_default_priority(i);
+> @@ -1057,11 +1057,12 @@ static void riscv_cpu_reset_hold(Object *obj, Res=
+etType type)
+>      }
+>
+>      pmp_unlock_entries(env);
+> +#endif /* ifdef CONFIG_TCG */
+>  #else
+>      env->priv =3D PRV_U;
+>      env->senvcfg =3D 0;
+>      env->menvcfg =3D 0;
+> -#endif
+> +#endif /* !CONFIG_USER_ONLY */
+>
+>      /* on reset elp is clear */
+>      env->elp =3D false;
+> --
+> 2.43.0
+>
+>
 
