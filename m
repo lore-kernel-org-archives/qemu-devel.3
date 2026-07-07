@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 230FBC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 12:45:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64734C44500
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 12:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh59r-0006kL-0y; Tue, 07 Jul 2026 08:44:15 -0400
+	id 1wh59q-0006Yy-0r; Tue, 07 Jul 2026 08:44:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh59i-0006X6-8D
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:44:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh59e-0006WK-Dv
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:44:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh59g-0005Dd-OD
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:44:05 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh59c-0005D2-Mz
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:44:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783428244;
+ s=mimecast20190719; t=1783428240;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8mWFIqi8bILGYzO4m3LD405SUESbjC9vfP9FQlaBjmw=;
- b=gRaXBEr4jllaAAXIZtjGEmSuAoVrdSA0XtLx2vJitkD9R+Xq55jH4ZSjGE2v2pOI2ZF462
- Ozdc60uEN4hazagG6rkWT1oSnsV0O1RlRk2XL9K8NjxILkdEXezUA9RFQWSsBIoLKMyJwq
- 8HGi9X9daI5ddrp3E/O8/An9qc5fTz8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Z7VbtoVtcB7Pklk2f0NaiOmxoo9lNE/C+tCZPnK01jY=;
+ b=J1OCVcjRboxPveBI6AKr+VGFiTbDnTruttpXDEFlP3lj33YgwoR/4KqEFUG2kIiDFnpf9U
+ flyZijHjflLwwhE3SCT0gZ5VfRN8J4a4HAk8KUQ63TF326Wlgg/ZmO+tKrY4UTRnAW3m9D
+ z3S3OiwoijX5ijM0KRgZAdUZvCyIlGA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-156-Jb2pndpwN3uLVg0BNdbx_Q-1; Tue,
- 07 Jul 2026 08:44:03 -0400
-X-MC-Unique: Jb2pndpwN3uLVg0BNdbx_Q-1
-X-Mimecast-MFC-AGG-ID: Jb2pndpwN3uLVg0BNdbx_Q_1783428240
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-_9od1ohVO-mwoTTYQmXtBw-1; Tue,
+ 07 Jul 2026 08:43:56 -0400
+X-MC-Unique: _9od1ohVO-mwoTTYQmXtBw-1
+X-Mimecast-MFC-AGG-ID: _9od1ohVO-mwoTTYQmXtBw_1783428235
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 39A72195422A; Tue,  7 Jul 2026 12:44:00 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5C2C61953994; Tue,  7 Jul 2026 12:43:55 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.33.253])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ED6BB36924; Tue,  7 Jul 2026 12:43:57 +0000 (UTC)
+ id 4CD1036924; Tue,  7 Jul 2026 12:43:52 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: yujun <yujun@kylinos.cn>, Peter Maydell <peter.maydell@linaro.org>,
- Glenn Miles <milesg@linux.ibm.com>,
+Cc: Jian Zhang <zhangjian.3032@bytedance.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 3/8] hw/gpio/pca9552: fix off-by-one in QOM led index validation
-Date: Tue,  7 Jul 2026 14:43:44 +0200
-Message-ID: <20260707124349.662198-4-clg@redhat.com>
+Subject: [PULL 1/8] hw/intc/aspeed: Drop stale pending interrupts
+Date: Tue,  7 Jul 2026 14:43:42 +0200
+Message-ID: <20260707124349.662198-2-clg@redhat.com>
 In-Reply-To: <20260707124349.662198-1-clg@redhat.com>
 References: <20260707124349.662198-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,52 +85,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: yujun <yujun@kylinos.cn>
+From: Jian Zhang <zhangjian.3032@bytedance.com>
 
-pca955x_get_led() and pca955x_set_led() accept led indices equal to
-pin_count, but valid indices are 0..pin_count-1.  For a 16-pin device,
-led16 passes the current check and then accesses an LS register past
-max_reg.
+The Aspeed INTC records an interrupt source in the pending bitmap when
+the source is masked or another status bit is still being handled.  When
+the guest later clears the status register, the model promotes all saved
+pending bits back to status unconditionally.
 
-Use the same >= pin_count bounds check as pca9554_set_pin() and the
-gpio input handler assert in this file.
+This is not correct for level-triggered sources.  A source can deassert
+while another source connected to the same OR gate keeps the aggregated
+INTC line asserted.  Promoting the stale bit later makes the guest demux
+a child interrupt whose device status has already been cleared.
 
-Fixes: a90d8f84674 ("misc/pca9552: Add qom set and get")
-Signed-off-by: yujun <yujun@kylinos.cn>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260629074133.187549-1-yujun@kylinos.cn
+This is visible on AST2700 I2C, where the I2C buses are aggregated
+through INTCIO GICINT194 before reaching the GIC.  A stale I2C source bit
+can be promoted back to the INTCIO status register, causing Linux to run
+the corresponding I2C ISR with an empty I2C interrupt status register.
+For example, the Linux aspeed-i2c debug ring shows a transfer that first
+receives a valid status interrupt, then receives a spurious ISR with both
+isr and raw status equal to zero.  The zero-status ISR clears the saved
+command error and the transfer completes with ret=0:
+
+  event=start isr=0x00000000 raw=0x00000000 cmd_err=0 msgs_idx=0
+  event=isr   isr=0x00010011 raw=0x00010011 cmd_err=0 msgs_idx=0
+  event=isr   isr=0x00000000 raw=0x00000000 cmd_err=1 msgs_idx=1
+  event=complete ret=0 cmd_err=0 msgs_idx=1
+
+A normal command can then be reported as zero transferred messages, which
+is converted to -EIO by Linux i2c_smbus_xfer_emulated().  The race is
+more likely when multiple I2C buses are accessed concurrently.
+
+Drop pending bits that no longer correspond to an asserted and enabled
+source before they can be promoted back to status.
+
+Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Link: https://lore.kernel.org/qemu-devel/20260612060857.1842819-1-zhangjian.3032@bytedance.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/gpio/pca9552.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/intc/aspeed_intc.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
-index 472d8ad95715..b13ac9fd9ce5 100644
---- a/hw/gpio/pca9552.c
-+++ b/hw/gpio/pca9552.c
-@@ -311,8 +311,8 @@ static void pca955x_get_led(Object *obj, Visitor *v, const char *name,
-         error_setg(errp, "%s: error reading %s", __func__, name);
-         return;
-     }
--    if (led < 0 || led > k->pin_count) {
--        error_setg(errp, "%s invalid led %s", __func__, name);
-+    if (led < 0 || led >= k->pin_count) {
-+        error_setg(errp, "%s: invalid led %s", __func__, name);
-         return;
-     }
-     /*
-@@ -352,8 +352,8 @@ static void pca955x_set_led(Object *obj, Visitor *v, const char *name,
-         error_setg(errp, "%s: error reading %s", __func__, name);
-         return;
-     }
--    if (led < 0 || led > k->pin_count) {
--        error_setg(errp, "%s invalid led %s", __func__, name);
-+    if (led < 0 || led >= k->pin_count) {
-+        error_setg(errp, "%s: invalid led %s", __func__, name);
-         return;
-     }
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index 5a36fff52040..ab80c239bc15 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -107,6 +107,27 @@ static const AspeedINTCIRQ *aspeed_intc_get_irq(AspeedINTCClass *aic,
+     g_assert_not_reached();
+ }
  
++static uint32_t aspeed_intc_orgate_levels(AspeedINTCState *s, int inpin_idx)
++{
++    AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
++    uint32_t levels = 0;
++    int i;
++
++    for (i = 0; i < aic->num_lines && i < 32; i++) {
++        if (s->orgates[inpin_idx].levels[i]) {
++            levels |= BIT(i);
++        }
++    }
++
++    return levels;
++}
++
++static void aspeed_intc_drop_stale_pending(AspeedINTCState *s, int inpin_idx)
++{
++    s->pending[inpin_idx] &= aspeed_intc_orgate_levels(s, inpin_idx) &
++                             s->enable[inpin_idx];
++}
++
+ /*
+  * Update the state of an interrupt controller pin by setting
+  * the specified output pin to the given level.
+@@ -231,6 +252,8 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+     trace_aspeed_intc_set_irq(name, inpin_idx, level);
+     enable = s->enable[inpin_idx];
+ 
++    aspeed_intc_drop_stale_pending(s, inpin_idx);
++
+     if (!level) {
+         return;
+     }
+@@ -343,6 +366,7 @@ static void aspeed_intc_status_handler(AspeedINTCState *s, hwaddr offset,
+     /* All source ISR execution are done */
+     if (!s->regs[reg]) {
+         trace_aspeed_intc_all_isr_done(name, inpin_idx);
++        aspeed_intc_drop_stale_pending(s, inpin_idx);
+         if (s->pending[inpin_idx]) {
+             /*
+              * handle pending source interrupt
+@@ -402,6 +426,7 @@ static void aspeed_intc_status_handler_multi_outpins(AspeedINTCState *s,
+         /* All source ISR executions are done from a specific bit */
+         if (data & BIT(i)) {
+             trace_aspeed_intc_all_isr_done_bit(name, inpin_idx, i);
++            aspeed_intc_drop_stale_pending(s, inpin_idx);
+             if (s->pending[inpin_idx] & BIT(i)) {
+                 /*
+                  * Handle pending source interrupt.
 -- 
 2.54.0
 
