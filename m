@@ -4,78 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0B5BC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 08:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CFD8C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 08:58:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh1Yj-00026r-8b; Tue, 07 Jul 2026 04:53:41 -0400
+	id 1wh1cR-0006HB-Vc; Tue, 07 Jul 2026 04:57:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh1Yi-00026e-2s
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 04:53:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wh1cQ-0006H1-Um
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 04:57:30 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh1Yg-0008Oq-45
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 04:53:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783414417;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BhNGQCm+o+d8ZWjqwWJYztnN576BWNu+O5IMRZSq/YM=;
- b=eka5E810wHwESDPTVDOlom4HU6XhOzAcqFnBLg5jih1Ildo3Ir4pD+0uOvE+1w6nGwxUmJ
- ME/fcbsiYruXXPKEmlg0M7CBAcgoSrtEY363tBWR8tc7M4gGG5tHs5Gp8xdRrYnwbN1EG9
- icXlbYJ3IOeNYRGclDuyYfM5KLYCFas=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-251-R8o8GEvEOzecx8WwED5HvQ-1; Tue,
- 07 Jul 2026 04:53:33 -0400
-X-MC-Unique: R8o8GEvEOzecx8WwED5HvQ-1
-X-Mimecast-MFC-AGG-ID: R8o8GEvEOzecx8WwED5HvQ_1783414413
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B37101954AEC; Tue,  7 Jul 2026 08:53:32 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BEB1A1800678; Tue,  7 Jul 2026 08:53:31 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 597F821E6920; Tue, 07 Jul 2026 10:53:29 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
-Cc: Roland Clobus <rclobus@rclobus.nl>,  Markus Armbruster
- <armbru@redhat.com>,  qemu-devel@nongnu.org
-Subject: Re: [PATCH] virtio-gpu: Support the configurable EDID fields
-In-Reply-To: <CAJ+F1C+9qTAO0ZLDypPhMdFdcxBc9a2sB87xRugCuuWP9qb4JA@mail.gmail.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Mon, 29 Jun 2026
- 23:29:38 +0400")
-References: <20260623163535.366104-2-rclobus@rclobus.nl>
- <CAJ+F1C+3RF9q3HMntDFeNj+WPv0whPi8-6Uj-_mwKEfDriBq+A@mail.gmail.com>
- <0ae2e095-9fa2-4322-962d-3e7ad20367e2@rclobus.nl>
- <CAJ+F1C+9qTAO0ZLDypPhMdFdcxBc9a2sB87xRugCuuWP9qb4JA@mail.gmail.com>
-Date: Tue, 07 Jul 2026 10:53:29 +0200
-Message-ID: <87echfgoza.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wh1cP-0000O6-9v
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 04:57:30 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6678Djgb3050550
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 08:57:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ nhBVdAn+jjEJpl9GGvSGXmJwci2BkcnJyb15MNbbGuU=; b=HPxXkU3dvM9i0GrF
+ YS8DpRFF87mzi5puTRT6EIwnU2YCcjL/IoIWVnFyH/SQAW3owwmKthnHjZXRbOZu
+ rS1EHi9So4OT4gmK639r0ly1MUHNhQJh+a62Gxp3WFIHJJNFx9K3VeCmWv5+Al9x
+ 2n0vLQBgWQUHeZ+eB2P3D69mRLbv+f384tcGoPdTg0gxHGTrqQf7r/o5rgVm6Fw8
+ zJ0LVqlzc1XPMXaoZqO6zjXD0AL/h3mjX0HZTTaerxyY5fGghn3abejTUeBNtVtp
+ Rn3KqUVYlepUAy6sUlKpVzQjgIi3zPMv0Y+ie2u1Rz0sQQxPV23SDAvqEWx0Uq/0
+ 33nFiA==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8w2u8bkc-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 08:57:27 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8fc6b670b4bso15189606d6.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 01:57:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783414647; x=1784019447; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=nhBVdAn+jjEJpl9GGvSGXmJwci2BkcnJyb15MNbbGuU=;
+ b=ajLEcdYKKoFZOulVjEcgE+YEZbQ3HgevBQGE7ug9z5alPweO+9ryMtCmhpCjwhHTh1
+ ow5Hqjplb1qvmoY+BoiRooLP0dGRSjOg5VyzvJpYg5mFYN2iKkhRT3q7wExsjzR7FJlj
+ wIAPol4ayQ69i1fc6Yl4/uLsicRvT50tVyQ5kNjpePpA3vYntxMiUyPekRHfHW38sD4C
+ FwHOaJF1713o2jtMrD6uNRh45Im9ykVyf79HrTHaqSvZXPGCk3TJ0BQHPJatNjFkTMG2
+ wC6ReU5nvQDynFMi420xSv87CNvamdcs4hwty9FTGG/8i7F2XdfUNZd6ntmeqMly6yhD
+ ySRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783414647; x=1784019447;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=nhBVdAn+jjEJpl9GGvSGXmJwci2BkcnJyb15MNbbGuU=;
+ b=L+GJ8mLF+VcLbrs89r0KzQT0wodtFUSZbKb+i47yv3eNgk+E1v/WzfNkKboZxY2SrW
+ civ2S0iK68hKJXeXSXq+cn6/MaVb4ajYCwfQwHi88oj7j4lY0xIdjsKMAJ/bSocKO+6S
+ O1178aYn2WtgooOKzhLyn4OcrvY4wG8wBCwQiRlWkb9t1odbjLJBjr63JD/ctLLCZ889
+ T988AI8qyRMoBKEHLOIet+aAQTl8Nq48IGyVCP8ZKQEB0mYxbhc3DrksH1/yhJNuJZUr
+ EB7tBE6Z+s111uEZbqXOMYF9vwhvXcfntc7o3A6FyyYoh745EMr1TIwT3bquIxFEaB9c
+ IbhQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpXxB8BPUhhLgk1vkbKLP4FYb0Z7SjOKCi7xiLfvuvZVLCKW4oj27Ch7zmHz0PD/DAdWgI9CEZz+Lif@nongnu.org
+X-Gm-Message-State: AOJu0YyWEHHqG6dn8b9TC+4m2VboAMB6Am4IZ9m1O/Kk9XNmOi0MYHkJ
+ QwtORwa6vGI/pR11gPTFsLT2zEACJHT+NbKaa/3JsV7A39td+hQLoeH5sjEX1OMU91LYRrMwHXn
+ CTx83Xbtnq4s9ZQ0wK1fAtaj9zLDtAufGWOz8fV2YJZqU/iQDTkSP5tlgAw==
+X-Gm-Gg: AfdE7cmF8P7oWIVulBjpR/jnF2+574Q/kSOF+91XtjG/w6TA2IYVD1Cekwc0Qa5r6ri
+ w52x9PTwAdClbJfIvp6uo0AkxhnXccVM02/XLFA4tiLQoI0rPb4n9u2eYc8c0SvX9/mUYRhqqVD
+ 9/1cUeLDBx6329Guis/0DhkcovXI5TOPJMKHXSH+Q03DB2kU3RIXWtr2RlGw1skApnkdthOyh6o
+ P++MYKo6ewPRWFO0d83NhKCinkHFU1Wfgm2zgnZq00EXLagZ8nQ0484x+LI5QaQL77ClB3U6nO3
+ iX4GzVnpE8Ucs+OB07QOa1SMGCmV2FOzPilZrvY009tn+69N4O4PhCauTYxKgTKUNHshNeEUehP
+ ygUjANASiubtcZYe+OAH+Un0RRsdZjqU3475icdB4NXE/Jm3pkX8PIXLeQUvTYA==
+X-Received: by 2002:ac8:7dd2:0:b0:50b:4491:a2cf with SMTP id
+ d75a77b69052e-51c747bc7admr46102411cf.27.1783414646676; 
+ Tue, 07 Jul 2026 01:57:26 -0700 (PDT)
+X-Received: by 2002:ac8:7dd2:0:b0:50b:4491:a2cf with SMTP id
+ d75a77b69052e-51c747bc7admr46102261cf.27.1783414646250; 
+ Tue, 07 Jul 2026 01:57:26 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-69a19ce4ad4sm5314074a12.12.2026.07.07.01.57.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jul 2026 01:57:25 -0700 (PDT)
+Message-ID: <2d2e2609-ff6d-448d-9a78-9e9b6b9a9ec2@oss.qualcomm.com>
+Date: Tue, 7 Jul 2026 10:57:24 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] qemu-options: Enable the -enable-kvm option for loongarch
+Content-Language: en-US
+To: shankerwangmiao@gmail.com, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20260705-add-loong64-kvm-v1-1-aa8b85ecfa32@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260705-add-loong64-kvm-v1-1-aa8b85ecfa32@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA4NSBTYWx0ZWRfX+OZL6dz+znry
+ agjDoCw7Ub4MMFJOzyig46mCPdAkTiZEGZkTf4V097u005LlDL1AZq4srZWD/lhp2CiRx2X8/ow
+ eYr+DDRCgzR7Ist6pGGlfsLG4NMlQxw=
+X-Proofpoint-GUID: h0peetrjKtvrINpM--YUoaF0CwWPg0-0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA4NSBTYWx0ZWRfX52HARE88ZKon
+ 8aAP11o4qNZxDdb/1So14gP2WIXgF9j6QvYOm1XX55/jVrmONvy1bD9x2HyWhAbdUWfKqpZPWGM
+ N3sKLngu3+EOGjHDpk1y9pLY+VxTAPdR/txunN3p8dvYAFKwpPbJj1mdBx0vlhOxplz+LFidARf
+ hFN62NQ135Ad8VEboI3jhrdsj8xTWauueTVu+pQsIhRqiFjeYm7DPhR5PdEmyQLixQw2M4HmKW9
+ 2aEShHs0iWRJVXmYE1DMIkPPq2+NYJFIXQdLd8mmc8nX0HFwAmFUSz4a33xaXELK/QxfwGSBSyN
+ kapK0yrF47dP46WCIkp358Fc1q8jB52clRGRW1JgyqZRYvJuZ9gSbpkjLbw7P3b+pOIDY3L67TG
+ GVKg0CIbRJZduBRLD0pJRXPR37eaYV2K63mr7UeNxOTXZCVrNB7BQ4ziwpinvj+fKnYlFlmF06D
+ i3xZaAKhgZhObL1AFPA==
+X-Proofpoint-ORIG-GUID: h0peetrjKtvrINpM--YUoaF0CwWPg0-0
+X-Authority-Analysis: v=2.4 cv=bPQm5v+Z c=1 sm=1 tr=0 ts=6a4cbf77 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=pGLkceISAAAA:8 a=NTFCwsDEUaYd9owm7-gA:9 a=QEXdDO2ut3YA:10
+ a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_02,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 spamscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070085
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,259 +154,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.com> writes:
+Hi,
 
-> Hi
->
-> On Mon, Jun 29, 2026 at 7:20=E2=80=AFPM Roland Clobus <rclobus@rclobus.nl=
-> wrote:
->>
->> Hello Marc-Andr=C3=A9,
->>
->> Thank you for the review. I will prepare changes based on the suggestion=
-s in your next answer.
->>
->> On 29/06/2026 13:14, Marc-Andr=C3=A9 Lureau wrote:
->> > On Tue, Jun 23, 2026 at 8:38=E2=80=AFPM Roland Clobus <rclobus@rclobus=
-.nl> wrote:
->> >>
->> >> This patch adds support for the fields that are currently configurable
->> >> in the function qemu_edid_generate.
->> >>
->> >> Signed-off-by: Roland Clobus <rclobus@rclobus.nl>
+On 4/7/26 21:50, Miao Wang via B4 Relay wrote:
+> From: Miao Wang <shankerwangmiao@gmail.com>
+> 
+> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+> ---
+>   qemu-options.hx | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index e44b47de68137120da9979fb081d0c108f13179c..c7dbbd01e73367380fcf653fa8d0d18795dde9a7 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -5164,7 +5164,7 @@ ERST
+>   DEF("enable-kvm", 0, QEMU_OPTION_enable_kvm, \
+>       "-enable-kvm     enable KVM full virtualization support\n",
+>       QEMU_ARCH_ARM | QEMU_ARCH_I386 | QEMU_ARCH_MIPS | QEMU_ARCH_PPC |
+> -    QEMU_ARCH_RISCV | QEMU_ARCH_S390X)
+> +    QEMU_ARCH_RISCV | QEMU_ARCH_S390X | QEMU_ARCH_LOONGARCH)
+>   SRST
+>   ``-enable-kvm``
+>       Enable KVM full virtualization support. This option is only
 
-[...]
-
->> >> diff --git a/qapi/virtio.json b/qapi/virtio.json
->> >> index 1fc4e38a44..e1cd5864fe 100644
->> >> --- a/qapi/virtio.json
->> >> +++ b/qapi/virtio.json
->> >> @@ -952,24 +952,54 @@
->> >>   ##
->> >>   # @VirtIOGPUOutput:
->> >>   #
->> >> -# Describes configuration of a VirtIO GPU output.  If both @xres and
->> >> -# @yres are set, they take precedence over root virtio-gpu resolution
->> >> -# configuration and enable the corresponding output.  If none of @xr=
-es
->> >> -# and @yres are set, root virtio-gpu resolution configuration takes
->> >> -# precedence and only the first output is enabled.  Only setting one
->> >> -# of @xres or @yres is an error.
->> >> +# Describes configuration of a VirtIO GPU output.  Matches the fields
->> >> +# of struct @qemu_edid_info.
-
-Blank lines between paragraphs, so they get actually rendered as
-separate paragraphs.
-
-If VirtIOGPUOutput matches qemu_edid_info, could it *replace*
-qemu_edid_info?
-
->> >> +# If both @xres and @yres are set, they take precedence over root
->> >> +# virtio-gpu resolution configuration and enable the corresponding
->> >> +# output.  If none of @xres and @yres are set, root
->> >> +# virtio-gpu resolution configuration takes precedence and only the
->> >> +# first output is enabled.  Only setting one of @xres or @yres is
->> >> +# an error.
->> >> +#
->> >> +# @vendor: a 3 letter code for the vendor (since xx.x TODO)
->> >>   #
->> >
->> > It should be uppercase. Validation is missing in qemu_edid_generate() =
-too
->>
->> Agreed. The code does (ch - '@') & 0x1f), so even lowercase will work.
->>
->> I've focussed on adding the missing fields that are consumed by qemu_edi=
-d_generate, irrespective whether they were validated or not.
->> I can widen the scope of this change request, to add the missing verific=
-ation of these fields.
->
-> thanks
->
->>
->> > We should also document the default values
->>
->> I can duplicate the default values from qemu_edid_generate. Should there=
- be a comment in both files which recommends to keep both in sync?
->
-> a comment in the source code could help, but in general any documented
-> default value as a counterpart in the code
-
-QAPI schema doc comments become the "QEMU QMP Reference Manual",
-documenting the external QMP interface.  Defaults should be documented,
-since they are part of the interface.
-
-Some types there aren't used only for QOM properties, which the QMP
-schema doesn't cover.  They end up in the manual anyway, just not
-properly connected to commands.  Defaults should be documented
-regardless.
-
-Some could be used only for other purposes, but that doesn't concern us
-here.
-
->> >>   # @name: the name of the output
->>
->> Historically name was the first field in the struct VirtIOGPUOutput. Sin=
-ce the scope of this change request is widening, can it now become an optio=
-nal field, given that every other field can be changed independently?
->>
->
-> I think this is backward compatible, so yes
->
->> >>   #
->> >> +# @serial: the serial number (since xx.x TODO)
->> >> +#          must be numerical
->> >
->> > Then why do we accept a string? We should also fix qemu_edid_info then
->>
->> I was also wondering about that (but I tried not to touch the existing c=
-ode too much). By using uint32, it will never change its data type (and the=
-re will be no need for atoi in the generator code).
->>
->
-> ok
-
-Using strings for numbers is heavily frowned upon in the QAPI schema.
-
->> >> +#
->> >> +# @widthmm: width of the display in mm (since xx.x TODO)
->> >> +#           If @widthmm is set, @heightmm must be set too
->> >> +#
->> >> +# @heightmm: height of the display in mm (since xx.x TODO)
->> >> +#           If @heightmm is set, @widthmm must be set too
-
-Please separate words with dashes in member names: width-mm, height-mm.
-
-We don't normally put the unit in the member name.  E.g.
-
-    ##
-    # @ChardevVC:
-    #
-    # Configuration info for virtual console chardevs.
-    #
-    # @width: console width, in pixels
-    #
-    # @height: console height, in pixels
-    #
-    # @cols: console width, in chars
-    #
-    # @rows: console height, in chars
-
-Perhaps an argument could be made that it's helpful here, because
-millimeters is unusual.
-
->> > Setting one without the other would be weird. Maybe we should have a
->> > struct with both fields mandatory?
-
-This way, the constraint "set both or none" is expressed syntactically,
-which is desirable.  However, we have quite a few coordinate pairs
-elsewhere, so this introduces inconsistency, which is undesirable.  Hmm.
-
->> That would make the JSON to set the values slightly more complex, but do=
-able. (I'm also working on a patch that does so, but that needs more work, =
-and would be independent of this change request)
->> But xres/yres will be an (the only?) exception to having a mandatory pai=
-r.
->
-> we can keep xres/yres for compatibility, but mark them as deprecated?
->
->> >> +#
->> >>   # @xres: horizontal resolution of the output in pixels (since 11.0)
->> >>   #
->> >>   # @yres: vertical resolution of the output in pixels (since 11.0)
->> >
->> > Same, but pre-existing.
->>
->> But here the situation is slightly more complex. If at least one of the =
-pair xres,yres is set to zero, the display is considered inactive. So it wo=
-uld be legal to only set one of them to zero or non-zero to turn the displa=
-y off or on (enabled_output_bitmask)
->
-> we could still mandate both xres/yres to be set in the new struct
->
->>
->> I have a local patch in preparation to allow modifications, but that nee=
-ds some more work. It is not a blocker for this change request.
->> If that patch is ready, one can modify all fields of this struct on-the-=
-fly, simulating the (dis)connect of a new display to the VM.
->>
->> FYI that would eventually allow something similar to:
->> ```
->> qom-set -j /machine/peripheral/vga001 outputs [ { "yres": 768, "name": "=
-AAA", "widthmm": 40, "serial": "42", "heightmm": 30, "vendor": "IVM", "xmax=
-": 2048, "ymax": 1536, "refreshrate": 50000, "xres": 1024 }, { "yres": 768,=
- "name": "DDD", "widthmm": 1000, "serial": "43", "heightmm": 750, "vendor":=
- "RHT", "xmax": 1024, "ymax": 768, "refreshrate": 60000, "xres": 0 } ]
->> ```
->>
->> But that's not in scope for this change request, where setting the width=
-mm/heightmm values will be able to trigger HiDPI scenarios.
->>
->
-> I see, well you could make this part of the same series imho
->
->> >>   #
->> >> +# @xmax: maximum horizontal resolution of the output in pixels
->> >> +#        (since xx.x TODO)
->> >> +#
->> >> +# @ymax: maximum vertical resolution of the output in pixels
->> >> +#        (since xx.x TODO)
->> >
->> > Same
->>
->> If you prefer a struct of two elements, the names for the value-pair-str=
-uct could become: `resolution`, `maxresolution`, `sizemm`. Please say your =
-preference.
->
-> wdyt Markus?
-
-Pros and cons, hard to decide.
-
-What are the existing coordinate pairs?
-
->> >> +#
->> >> +# @refreshrate: refreshrate in mHz (since xx.x TODO)
->> >> +#
->> >>   # Since: 10.1
->> >>   ##
->> >>
->> >>   { 'struct': 'VirtIOGPUOutput',
->> >> -  'data': { 'name': 'str', '*xres': 'uint16', '*yres': 'uint16' } }
->> >> +  'data': { '*vendor': 'str',
->> >> +            'name': 'str',
->> >> +            '*serial': 'str',
->> >> +            '*widthmm': 'uint16',
->> >> +            '*heightmm': 'uint16',
->> >> +            '*xres': 'uint32',
->> >> +            '*yres': 'uint32',
->> >> +            '*xmax': 'uint32',
->> >> +            '*ymax': 'uint32'
->> >
->> > It changes the existing xres/yres fields type.
->> > Is it necessary to accept uint32?
->>
->> g->req_state[0].width (and height) are uint32_t in virtio_gpu_requested_=
-state, and passed along in the generator code as uint32_t, so I updated the=
- struct to match that.
->>
->> But in the end only 16 bits are used in qemu_displayid_generate (`stw_le=
-_p(did + 12, 0xffff & (xres - 1));`)
->
-> I think we should stay u16, if that's what EDID is limited to
-
-The choice doesn't affect the external  interface.
-
-Changing integer types in the QAPI schema is invisible externally as
-long as the set of accepted values remains the same.
-
->> >> +            '*refreshrate': 'uint32' } }
->> >>
->> >>   ##
->> >>   # @DummyVirtioForceArrays:
->> >> --
->> >> 2.53.0
->>
->
-> thanks
-
+Isn't the legacy option for "-accel kvm"? (Apparently since commit
+303d4e865b7 which is from September 2010). Maybe we should get rid
+of the '-enable-kvm' use in examples / scripts...
 
