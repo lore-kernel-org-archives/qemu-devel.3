@@ -4,125 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FD22C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:12:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 349B4C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:13:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh5bI-0000Cc-Gp; Tue, 07 Jul 2026 09:12:36 -0400
+	id 1wh5bW-0000U0-UM; Tue, 07 Jul 2026 09:12:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5bH-0000CE-21
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:12:35 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wh5bV-0000OX-Jl
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:12:49 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5bF-0000PV-6o
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:12:34 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1wh5bT-0000QE-Ly
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:12:49 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667C8sZA3768510
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:12:31 GMT
+ 667C9c6D3619376
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:12:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=hglY9z9DhlMTsxuYr6Gngg
- mVMP2dwKzXDhwXE1ZoQjk=; b=KGn27sqGfHHuQmsT6M8xA+v3jAklNr0NIqvOvz
- ZPwHRbADf1pBt8x88Z+J3fHvAG6GEASHoF84KD4CmaCxRWCa2JUL2xAE23dt9V0U
- fiVIrU80hQYGmbLFCReaRlpxCsFJBpurjSzrGRWOq8JqdDQkQ4pR90RSmq/lPSGK
- VjFZgZQYe4GDKBkpbG0Mb7Nb+jsDHH2y7E2X91LzLXuKdVws5zlBPWbvd6yaSB1E
- 6cdY7/Q7WB4m08U8OolwoXEgi4VBby0QFjlbTXI6zXcpf8Gh6nuL1zPBQPpCt+y7
- aPovRkVXCUFNw2dHmEFqBUKGGqJWA04N2iwjwVFuOX4jLMTA==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8qj7ajrv-1
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 9iSCTsvy/zYaI+hiohs4sGwpOHbQL3Yw+cTcIjQawcQ=; b=lxE3zYXFYMAuTPe5
+ UXgGzxt3s7ovBadbSH/pVTH5FFEaOYv934aVyq+nVyZC44Ff53YOtlcdr2cEM2mA
+ nUR+cRHvwfPeQ2oLDpQSyxCDaMtv2YGpvy6UMoU0E2K0xei6DAw/1c4/sneQYUKd
+ QFDwRKjCxqojd86D0+LS9lLmAdTgVKYU6X004qkq2c5pmIlDP6VPDzpCZ85eCd/T
+ SO5myumtrd028BicPJKL/F5v/YgVceUZZ+xDSKQF2tAWYcMOtXaEjX2VODu2hF//
+ kev3RQWea7FqRxEpTyO7VzPY5nqaxHTGje7Q7ZnxgTthG+XTB4alJUIW9a2wOstB
+ MLgwPQ==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8vun1de9-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:12:31 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c1e6f602cso72729661cf.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:12:31 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:12:45 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-51c2af04aeeso8359221cf.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:12:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783429951; x=1784034751; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=hglY9z9DhlMTsxuYr6GnggmVMP2dwKzXDhwXE1ZoQjk=;
- b=kZj5xFGYi517vs9KqQtCXqEtNv0cFZ5T7dOE5oWrU+/qalM0HG+5SEqEYrrKPWGLwS
- Lg2LoVPvlDDfCjtmZNfqWTxTHA/4fzQ7X9+foWzKIdplrNbbO/yK0xhr8cFANlijQY/G
- LjOvgx9N76erYVZlE6YE3T0H5sEuVO+VEVdiSQfKpafsdQxAYQLCNcVybCZKtHufmD7w
- iyHyFnLf5Eqvi0ZpZsWX+uatqloZq3SGWi64triOtrjJlFREHcyN+rNBg3ZLKqidiAjr
- b/1zC3kcTy0uYTorUDVXk2vmIUJ3hyuf4WeaiTZpBKPL1MsIl8sCyXPB6Fa9B6wbQGqs
- E9QA==
+ d=oss.qualcomm.com; s=google; t=1783429965; x=1784034765; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=9iSCTsvy/zYaI+hiohs4sGwpOHbQL3Yw+cTcIjQawcQ=;
+ b=eGujGMQaTWzmI1XaPuvY4PomeqrWQYLnhGr4miuifx9s72Llg9E9UAWpsTuKHX3k39
+ TA3pLtrz4dWAXGgaNV+vIu3ZtW07GqIqNlMTBIk/Zji82MFnU8a0Lu9UIhdfSaOah199
+ S7TfgO3Hz4zWPuHe2oNz6FW079K4ABqajmx8yZcFsZcvLRvzLh9uPZnB0zwaIhdXpvef
+ /GxiQaw7odsUl696dibU6Cds6j+3lZ/SezyN4DD4u4pge0/3YZelfmWHsFhzuuYaf2Gt
+ XzOJka4FJqm81sltdTtUM3nR3HITGPuZ2g2pAkNQKCnLt+H/TG7lnF+NRaxJNpS6jP5f
+ XBrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783429951; x=1784034751;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=hglY9z9DhlMTsxuYr6GnggmVMP2dwKzXDhwXE1ZoQjk=;
- b=UzbM6yXazVR3/EUNG7AJNqv51s0/TZ/KC1EiU3I09J2PvSa4sm1N/4EEQLThBrBerm
- kPZLn4wfFc3JzYRIU7PQBmR8XgYqjYOMCxGDt77qV6bDgCyZd/bRZ0IRuEgIjUq/v2OT
- cvuWjDz+n4l7k22JIM8I+6wfsO7eKgsMmWakhpBU8f9ZdbiAilpf5/M90GZwa518caEi
- hZm5uUdTQcFRIeFlQ3nLxhh9s98+HTbV5rX/FmzUseg6+M4ff62ok+qra7Bqp7IwMBUH
- 9bTAE8+1s4w3vJwtdkrlm61wz7YMC6JMQPZ2IzxEftPXhYXfBiSSVHRZnJKU3U/pFQUF
- A9+Q==
-X-Gm-Message-State: AOJu0YyiAnFjiruT8xF0MRvIW/0+A6tJ+hQH+/hnwL7Jiz2fV2aEKjOn
- +WlbbMBqDI5jrE8Hfu+EnKKMJ56WTBYOFUL25DTG63Wxb141xhU6rX1S/D6vwm9C2HrcJg197cA
- A+mnKcCx9KUkbYs3qHeEKznGU3jH6RCpDZLQIiRgWTkD2VB42Ks3Rj/hNEq6hG9Gwjw==
-X-Gm-Gg: AfdE7clN6ipwsT6pGJFpmB77cJeJtV+P3T/T+HGif4NEIMvouu0yqXrp7vKQrgMVQFs
- DZMYkwQaJ9TsHN0Z7/8rAN0ZEJNYDTaO2gNcMVUF8gchN9+xjMSgtD4RBB/YedjjMcY/Fle6dXa
- 9xHump9WVKNJaSLo8h2Cw9vcwj53hN0w/DDufu0D4TwGqNI7T6Q3JG/FnGnyySBJ7SPCn6cy4Sw
- rZ6KDMrOIccbbFMg3xWjG6AIsNMuMbx/oN18qnKxbJYFO1eftvD2fD9cqYWFgARjV85dJ7Rrqs1
- 5filML28mSPGV2gk8QMw6A9EKhpLWmY0Ec6JNboeRUPiNTeHN2XCa6x+5EYlQdE7b6DZ31rpNXC
- fBejIHqWoyBNSCkbSD/vhGEr9R7nW5yLdBuHTbLYbsOaVw3oCdbAfe6iunnG1A1Cf6j1g
-X-Received: by 2002:ac8:5dd1:0:b0:51c:11ba:c51e with SMTP id
- d75a77b69052e-51c748b56famr53010401cf.56.1783429945618; 
- Tue, 07 Jul 2026 06:12:25 -0700 (PDT)
-X-Received: by 2002:ac8:5dd1:0:b0:51c:11ba:c51e with SMTP id
- d75a77b69052e-51c748b56famr53009821cf.56.1783429945038; 
- Tue, 07 Jul 2026 06:12:25 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783429965; x=1784034765;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=9iSCTsvy/zYaI+hiohs4sGwpOHbQL3Yw+cTcIjQawcQ=;
+ b=Q5JnsOo4367bhmHAxuYI5x4pWLao0+FV3TaiLKAeFgU/Aglni994QzvVTO6j6jDi4X
+ lQ4rMpU0/LPsNPd2Vg1PnesgAllM2iqeY6N+3MgFNUG0Ip2l7UykEn/YXml1WCn98u71
+ MF80lSVkidVEv2H09wugh412jhCl6zSMjF9W1AfbeDxJU3NY/zcjw/YoHplhAfQFzKFF
+ u2tphXGQYAJqqABetX6+IK4++ukbBElmVhIz7r3AIPDaYH+AYUw96BQMvWRDrs07V84O
+ qbfzeDYi+kTuRym2lJQ1pt4ZYSN42GcqUZ/OkqdqUJuZdmd7riBYkpfLKISeZWrxTxnb
+ ZGNg==
+X-Gm-Message-State: AOJu0YwqrjgDsmOb1ftFfIdCZexwRyKgRcBoCH+e1/51bWL5jMY21Fsw
+ Xb7EkNaL1rnTAyDdXlChceJ5rsAvpdMnMn0Wiiy7fCe6iAWcO3vZ6F0MWF0okWsOqZvK8NaFrYw
+ lCH2dM94lqzBX4RX0/NY5SL/M/FM7MPx7O2R8wkNOfRTonbeaTSlHsBNvb6keOpgC5A==
+X-Gm-Gg: AfdE7cl1fg6SI45/jqebZeUxlvmt3eehMDrlwSM5VdR2Rj884+DF+RfKwhj3kt7qA8m
+ aG8coLz3olN8c3xVBaNmMwObXlHM/Fv7cNjGsaWrPC79iXpkDL304aMTFit6PRPyNFUc4UPQJZJ
+ 59BXKAzAjy69X5eoAhSiYrfmZ7T4wa0Grm6zFsLwOub+dNmrjPrLPml/2mL6b0OgPx1k6W8Uo6U
+ vbDnOe8scOE9fWv9tVx284dm5n+XwxdbeEya+LXrERC7lFWq9nMqr9e0asmXk4ZjQAV+6ZvWV8R
+ jSKqxSkZrYjGZ55e+pZH2m8xX0W9Nc0s2sV2YW535aIyjFbr1d+k/O2B9xwPrnFMqv6gMqNx4Sd
+ XnHNXNHT5HcEhAUq5kl0uI97dcvpV0lmeYQXXioVeq3bdRtlrtNl5QLo3KAMuxk7M+nmb
+X-Received: by 2002:a05:622a:418a:b0:51c:86b:3487 with SMTP id
+ d75a77b69052e-51c7a773ec0mr27854491cf.33.1783429959854; 
+ Tue, 07 Jul 2026 06:12:39 -0700 (PDT)
+X-Received: by 2002:a05:622a:418a:b0:51c:86b:3487 with SMTP id
+ d75a77b69052e-51c7a773ec0mr27853891cf.33.1783429959217; 
+ Tue, 07 Jul 2026 06:12:39 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c15ad84a8absm136704666b.18.2026.07.07.06.12.24
+ 4fb4d7f45d1cf-69a3652a02asm5045158a12.11.2026.07.07.06.12.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Jul 2026 06:12:24 -0700 (PDT)
+ Tue, 07 Jul 2026 06:12:38 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/32] Misc HW patches for 2026-07-07
-Date: Tue,  7 Jul 2026 15:11:50 +0200
-Message-ID: <20260707131223.51505-1-philmd@oss.qualcomm.com>
+Subject: [PULL 02/32] hw/display/ati: reset host_data.next in write handler
+ after flush
+Date: Tue,  7 Jul 2026 15:11:52 +0200
+Message-ID: <20260707131223.51505-3-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260707131223.51505-1-philmd@oss.qualcomm.com>
+References: <20260707131223.51505-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: qWgnXobKv84LHtU58uFbxfuoLMc-hWSt
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOCBTYWx0ZWRfX1JX4RsZ8b7ov
- UsDkA9Ja8Rb6G2W6MMY/Svwj588XW5F5AHesGptHWNbVrkZ0Jf8nSlp8edNSsEG19uyzfRec3Jq
- aQJL0tlPrf7asmC85IqyOommTNXBTBwfWzUA31no2WgtulyUpzQ9M+EF832h0WQf35kbyIG4kIN
- 9FsQq+1Ymq0e6xD0WwntrTBtxnVbcA9uvXTdimsO0FE2x1PcWz/ck+uJtqL5hKv+hN7VpIcdbZg
- TBbqNyQUkK6fvINAYLCDIRFPuviqrTb78jpZate58kpubHunyb7PdJgFzJFZpUfsZS31A1CmkgX
- C4IhE+N4tk43ki4iav7XkBTrHRE/I01xUtWnstM4HQqDJvjHAbVzpaGS8D61WNxZhdj8Tei33lR
- cnmA7mp18NbvDFJI51xsLc14aB6MvTohiLlDf8Wa5SLqSwQMwcNBOzKrthqxBw9hxTWpDLsrDAh
- 6SA1xu6quHoEJPbphNw==
-X-Authority-Analysis: v=2.4 cv=PIM/P/qC c=1 sm=1 tr=0 ts=6a4cfb3f cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX0uFVYGLhVQ/g
+ zugVi+HTAKhdFcPuEKN6SSgW5HlS+r4rDRDw2ot82tMQRrWCJx5KO8cW9mU3Ef3wL8oDQ6M8fIJ
+ qD9FqJu7m6E7UB052yQQgbbEdlV8w8Q=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX3V/aYq4pXgqz
+ WC/L/aDt26myc0wIuZn7TmESVpERNpb4vSwYGYFku5BfaU95gkkg+ohbypou4t/VTRwyIab0jCX
+ Gecux7k/WCfs97Xbuu273xrw+56JYAQM8z1OvEMD1XpaVLyLxf+/Qi6Yk5GmtrzC0B54YXTcT5x
+ Y8GWhmL4Sj88ETLAwiZj13oPUB+CGPzTqHEdJ1KHV3Dc19oOBLqEQPy2Q8d4SA/g5brJuTb6RpC
+ 3ytz+VpbNZutbr++cPxxHvZ16zoY/e8MlCiSA/Ws42I0kHCadCht5+MAPUNZZaFC8vkIXbvu4OB
+ ckxVBrA7msihW8H3lZmsCd60FmaknUHU06IVGHOva/OohzMwlwe5S30jTBY2jTEKw/cMezpfQXP
+ 5DmYkdx3lCJnfcZkd3LqwJatUk/4i2X/l+TShGEviNrTAWLDJFcUKeQmgEgKnUGhXcgR/vVXsMM
+ hD+8pB/t4PoaR5BNqOQ==
+X-Proofpoint-GUID: ezzzceCfSzY0h1XUptzGCVISuj-OAuHQ
+X-Authority-Analysis: v=2.4 cv=N+IZ0W9B c=1 sm=1 tr=0 ts=6a4cfb4d cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=NEAV23lmAAAA:8 a=SFspyduigjFL_68jv5EA:9 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOCBTYWx0ZWRfX/jTzDWRriD9p
- 8/YYOKxfWrmHoSs5L/DnX8kDsAoDli7PxqwyhqcrzcfQS10FOMRAm1/Bjay4VOmdmaAOIdiqgXc
- 9sY3Y42dxq0ggMJNH325EHir/ybJXFI=
-X-Proofpoint-GUID: qWgnXobKv84LHtU58uFbxfuoLMc-hWSt
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=VwQbUJbxAAAA:8 a=QyXUC8HyAAAA:8 a=69wJf7TsAAAA:8 a=57R0qBCtAAAA:8
+ a=EUspDBNiAAAA:8 a=0hMSH2Hfg6KUgAemlSAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=mR_gFduoMj4eUoa7Ntlv:22
+X-Proofpoint-ORIG-GUID: ezzzceCfSzY0h1XUptzGCVISuj-OAuHQ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_03,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0
- phishscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ spamscore=0 phishscore=0 priorityscore=1501 clxscore=1015 adultscore=0
+ bulkscore=0 suspectscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070128
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070129
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -145,133 +150,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 94826ec1370328375c3b6d1e80fdc94c8f46c348:
+From: Junjie Cao <junjie.cao@intel.com>
 
-  Merge tag 'accel-20260706' of https://github.com/philmd/qemu into staging (2026-07-06 18:38:14 +0200)
+ati_host_data_flush() resets host_data.next only on its success path.
+When it returns early (unsupported bpp, direction, src_source, or
+src_datatype), next remains stale at >= 4. The next HOST_DATA write
+then stores a guest-controlled dword at acc[4+], overflowing the
+4-element accumulator array.
 
-are available in the Git repository at:
+Fix this by resetting next unconditionally in the write handler after
+calling ati_host_data_flush() or ati_host_data_finish(), and removing
+the reset from inside ati_host_data_flush(). This ensures the write
+handler owns the full lifecycle of the accumulator index regardless of
+flush success or failure.
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20260707
+Cc: qemu-stable@nongnu.org
+Reported-by: Feifan Qian <bea1e@proton.me>
+Resolves: https://lore.kernel.org/qemu-devel/Czyl6yVfL6sHl_o1kRk8N_LpwXMMRVhO9vgz1qCVJFagn9D4nHSKuiux39iOLty0Q3acxQq_FeovPhTQvSKus2htwjI9lTajLZmqovr0Wxs=@proton.me/
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
+Message-ID: <20260519023937.439077-2-junjie.cao@intel.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ hw/display/ati.c    | 2 ++
+ hw/display/ati_2d.c | 1 -
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-for you to fetch changes up to 04584a27dd59741bc20272c6faab96c08bcbb926:
-
-  Revert "aspeed/smc: snoop SPI transfers to fake dummy cycles" (2026-07-07 15:08:41 +0200)
-
-----------------------------------------------------------------
-Misc HW patches
-
-- Fix in few trace event formats
-- A pair of improvements in util/
-- FlexCAN3 to imx8mp-evk board
-- Various fixes in hw/
-  (EDU, ATI VGA, IDE AHCI, PCA9552, i8257 DMA,
-   e1000e/igb, MPT SAS, Hyper-V, QXL, M25P80)
-----------------------------------------------------------------
-
-BALATON Zoltan (1):
-  hw/display/ati: Include vga state in the blit context
-
-Bernhard Beschow (5):
-  hw/net/can/flexcan: Wire clock control module via link property
-  hw/net/can/flexcan: Subclass TYPE_CAN_FLEXCAN
-  hw/arm/imx8mp-evk: Open code DEFINE_MACHINE_AARCH64
-  hw/arm/imx8mp-evk: Introduce FslImx8mpEvkState
-  hw/arm: Add basic FlexCAN3 support to TYPE_FSL_IMX8MP and imx8mp-evk
-
-Bin Meng (8):
-  hw/block: m25p80: Fix dummy byte handling for Winbond flash
-  hw/block: m25p80: Fix dummy byte handling for Numonyx/Micron flash
-  hw/block: m25p80: Fix dummy byte handling for Macronix flash
-  hw/ssi: npcm7xx_fiu: Correct the dummy cycle emulation logic
-  hw/ssi: xilinx_spips: Fix dummy phase handling
-  hw/ssi: aspeed_smc: Fix direct-read dummy bytes
-  Revert "aspeed/smc: Fix number of dummy cycles for FAST_READ_4
-    command"
-  Revert "aspeed/smc: snoop SPI transfers to fake dummy cycles"
-
-Denis V. Lunev (1):
-  hw/ide/ahci: cancel in-flight buffered reads on command engine restart
-
-Dmitry Frolov (1):
-  utils/module: fix memleak in module_load()
-
-Evgeny Kolmakov (1):
-  util/filemonitor-inotify: Use QEMU_LOCK_GUARD()
-
-Junjie Cao (2):
-  hw/display/ati: reset host_data.next in write handler after flush
-  hw/display/ati: guard against zero bpp in ati_host_data_flush
-
-Mark Cave-Ayland (2):
-  hw/rtc/mc146818rtc: convert date from object prop to class prop
-  hw/acpi/ich9: move initial property values into
-    ich9_reset_properties()
-
-Peter Maydell (3):
-  hw/dma/i8257: Return zeroes for read_memory in verify mode
-  hw/scsi/mptsas: Reset doorbell state on reset
-  hw/hyperv: Avoid crash if hyperv_find_cpu() passed invalid vp_index
-
-Sanjeeva Yerrapureddy (1):
-  hw/net: fix e1000e/igb ip_len inflation by Ethernet minimum-frame
-    padding
-
-Shameer Kolothum (1):
-  backends/iommufd: Fix dev_id and type order in viommu trace
-
-Song Gao (1):
-  hw/intc/loongarch_dintc: Fix OOB access in DINT MMIO write handler
-
-Thomas Huth (1):
-  hw/display/qxl: Fix mono cursor validation that can read past a cursor
-    chunk
-
-Torin Carey (1):
-  hw/misc/edu: restrict dma access to dma buffer
-
-yujun (3):
-  hw/gpio/pca9552: fix off-by-one in QOM led index validation
-  ebpf: fix swapped toeplitz/indirection args in set_data trace
-  crypto/x509-utils: fix gnutls error code in crt_init failure path
-
- docs/system/arm/imx8m.rst     |   1 +
- include/hw/acpi/ich9.h        |   2 +
- include/hw/arm/fsl-imx8mp.h   |   8 ++
- include/hw/net/flexcan.h      |   4 +-
- include/hw/ssi/aspeed_smc.h   |   2 -
- include/hw/ssi/xilinx_spips.h |   2 +-
- crypto/x509-utils.c           |   3 +-
- ebpf/ebpf_rss.c               |   2 +-
- hw/acpi/ich9.c                |   8 +-
- hw/arm/fsl-imx6.c             |   5 +-
- hw/arm/fsl-imx8mp.c           |  38 ++++++++++
- hw/arm/imx8mp-evk.c           |  64 +++++++++++++---
- hw/block/m25p80.c             | 122 +++++++++++++++++++-----------
- hw/display/ati.c              |   2 +
- hw/display/ati_2d.c           |  44 +++++------
- hw/display/qxl-render.c       |   8 +-
- hw/dma/i8257.c                |  13 ++++
- hw/gpio/pca9552.c             |   8 +-
- hw/hyperv/hyperv.c            |   4 +-
- hw/ide/ahci.c                 |   3 +
- hw/intc/loongarch_dintc.c     |  13 ++++
- hw/isa/lpc_ich9.c             |   1 +
- hw/misc/edu.c                 |  24 +++---
- hw/misc/imx8mp_ccm.c          |   3 +
- hw/net/can/flexcan.c          |  90 ++++++++++++++++++-----
- hw/net/net_tx_pkt.c           |   7 +-
- hw/rtc/mc146818rtc.c          |   4 +-
- hw/scsi/mptsas.c              |   4 +
- hw/ssi/aspeed_smc.c           | 135 +++++-----------------------------
- hw/ssi/npcm7xx_fiu.c          |  25 ++-----
- hw/ssi/xilinx_spips.c         | 123 ++++++++++++++++++++++---------
- util/filemonitor-inotify.c    |  28 ++-----
- util/module.c                 |   2 +-
- backends/trace-events         |   2 +-
- hw/arm/Kconfig                |   1 +
- hw/ssi/trace-events           |   1 -
- 36 files changed, 488 insertions(+), 318 deletions(-)
-
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index d77589df67a..db7e08a462a 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -1034,8 +1034,10 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+         s->host_data.acc[s->host_data.next++] = data;
+         if (addr == HOST_DATA_LAST) {
+             ati_host_data_finish(s);
++            s->host_data.next = 0;
+         } else if (s->host_data.next >= 4) {
+             ati_host_data_flush(s);
++            s->host_data.next = 0;
+         }
+         break;
+     default:
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index 48498677c7e..8ef82bb87fd 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -452,7 +452,6 @@ bool ati_host_data_flush(ATIVGAState *s)
+     }
+ 
+     /* Track state of the overall blit for use by the next flush */
+-    s->host_data.next = 0;
+     s->host_data.row = row;
+     s->host_data.col = col;
+     if (s->host_data.row >= ctx.dst.height) {
 -- 
 2.53.0
 
