@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D07EDC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:00:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 255DCC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:00:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh5Oi-00076q-0m; Tue, 07 Jul 2026 08:59:36 -0400
+	id 1wh5OD-0006IH-Ve; Tue, 07 Jul 2026 08:59:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh5Oc-0006rH-O1
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:59:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh5OC-0006Hj-Iu
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:59:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh5Ob-0007Lt-6x
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:59:30 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh5OA-0006ge-V2
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:59:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783429168;
+ s=mimecast20190719; t=1783429142;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=p/x1Nrf+yaPiS52MQo6qAtWtDTqRczZlHJPxKq20iLU=;
- b=i3MAvrxjaoAl924QIGg/9e6fB51Hg7i29WOzIXGmtBS+LttKalJE4W2SCVdZzKzHdqDyOr
- YQooP67wiVJWcNwTy+B3XIGEXV/fznKBX21UcGKGDn8r7vFEUydjpbNtVjgOsvQbO1DtUW
- B137/WTCEPBW7GMFPMIZdKU7qsafb+0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=n4xVRaq7ITgerllM87BvkWcrkRyFsNsyeAyzIgdfC8E=;
+ b=jIQGV+qY8V5EsdtXatagek0nadjOkCkbSFDLGnSfMd1Sqwp54INbYs5tAnN9wtsLPb5Oau
+ tisTJWVX/eedXWwvaeP71e7cbQFKky18BkxnZFt9SwveFouw28FshwmHlldCt7rnEk+mov
+ 9UsPhz9vJI25CqA3YIoqsJdIQOwchH0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-124-0QA_DNsuOaO5PKGh8rrp3Q-1; Tue,
- 07 Jul 2026 08:59:26 -0400
-X-MC-Unique: 0QA_DNsuOaO5PKGh8rrp3Q-1
-X-Mimecast-MFC-AGG-ID: 0QA_DNsuOaO5PKGh8rrp3Q_1783429165
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-4o8kZqTsMGOYW-PKJlpzhw-1; Tue,
+ 07 Jul 2026 08:58:59 -0400
+X-MC-Unique: 4o8kZqTsMGOYW-PKJlpzhw-1
+X-Mimecast-MFC-AGG-ID: 4o8kZqTsMGOYW-PKJlpzhw_1783429138
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 457151801322; Tue,  7 Jul 2026 12:59:25 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ED0221954B39; Tue,  7 Jul 2026 12:58:57 +0000 (UTC)
 Received: from gondolin.fritz.box (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 584A81956040; Tue,  7 Jul 2026 12:59:23 +0000 (UTC)
+ id 0305D1956040; Tue,  7 Jul 2026 12:58:55 +0000 (UTC)
 From: Cornelia Huck <cohuck@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- qemu-stable@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>
-Subject: [PULL 14/15] s390x/css: limit number of CHPIDs in description
-Date: Tue,  7 Jul 2026 14:58:46 +0200
-Message-ID: <20260707125847.1785168-15-cohuck@redhat.com>
+Cc: qemu-s390x@nongnu.org, Jared Rossi <jrossi@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>
+Subject: [PULL 02/15] pc-bios/s390-ccw/virtio.c: Fix missing break for PCI
+ notifications
+Date: Tue,  7 Jul 2026 14:58:34 +0200
+Message-ID: <20260707125847.1785168-3-cohuck@redhat.com>
 In-Reply-To: <20260707125847.1785168-1-cohuck@redhat.com>
 References: <20260707125847.1785168-1-cohuck@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,65 +86,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-virtio-ccw uses a single virtual CHPID for all devices and
-device-types, but vfio-ccw (passthrough) shares real CHPID
-information with the guest. A sufficiently large passthrough
-configuration would exceed the defined response payload.
+Add a break after calling the PCI specific notification function instead of
+falling through to the default case.
 
-Fix this by limiting the number of CHPID descriptions that
-are returned based on the given response format.
-
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Message-ID: <20260707070728.147203-6-borntraeger@linux.ibm.com>
+Fixes: d72fb5e6b2 ("pc-bios/s390-ccw: Add support for virtio-blk-pci IPL")
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Message-ID: <20260630141917.673995-3-jrossi@linux.ibm.com>
 Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 ---
- hw/s390x/css.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ pc-bios/s390-ccw/virtio.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/s390x/css.c b/hw/s390x/css.c
-index 96d5378f3c18..29ba39f79ea1 100644
---- a/hw/s390x/css.c
-+++ b/hw/s390x/css.c
-@@ -1872,6 +1872,7 @@ int css_collect_chp_desc(int m, uint8_t cssid, uint8_t f_chpid, uint8_t l_chpid,
-     int i, desc_size;
-     uint32_t words[8];
-     uint32_t chpid_type_word;
-+    uint32_t max_chpids, chpid_count = 0;
-     CssImage *css;
- 
-     if (!m && !cssid) {
-@@ -1882,9 +1883,25 @@ int css_collect_chp_desc(int m, uint8_t cssid, uint8_t f_chpid, uint8_t l_chpid,
-     if (!css) {
-         return 0;
+diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
+index a448dc96e269..7883871033c4 100644
+--- a/pc-bios/s390-ccw/virtio.c
++++ b/pc-bios/s390-ccw/virtio.c
+@@ -115,6 +115,7 @@ bool vring_notify(VRing *vr)
+         break;
+     case S390_IPL_TYPE_PCI:
+         vr->cookie = virtio_pci_notify(vr->id);
++        break;
+     default:
+         return 1;
      }
-+
-+    if (rfmt == 0) {
-+        max_chpids = 256;
-+    } else if (rfmt == 1) {
-+        max_chpids = 127;
-+    } else {
-+        /* Should be rejected by caller */
-+        return 0;
-+    }
-+
-     desc_size = 0;
-     for (i = f_chpid; i <= l_chpid; i++) {
-         if (css->chpids[i].in_use) {
-+            /* Limit number of CHPIDs sent back */
-+            if (chpid_count == max_chpids) {
-+                break;
-+            }
-+
-+            chpid_count++;
-             chpid_type_word = 0x80000000 | (css->chpids[i].type << 8) | i;
-             if (rfmt == 0) {
-                 words[0] = cpu_to_be32(chpid_type_word);
 -- 
 2.54.0
 
