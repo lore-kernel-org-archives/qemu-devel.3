@@ -4,127 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1170DC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C80CC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:17:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh5eH-0003UW-Rv; Tue, 07 Jul 2026 09:15:42 -0400
+	id 1wh5eI-0003WB-Im; Tue, 07 Jul 2026 09:15:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5dj-00039u-21
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:15:11 -0400
+ id 1wh5dz-0003IA-8m
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:15:26 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5dh-0000dR-DO
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:15:06 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1wh5dx-0000ep-3Y
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:15:22 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667C8sZQ3768510
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:15:04 GMT
+ 667C9LcB3740882
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:15:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xW2W2CaLt5ue0nvSEVBxu64kgHg6gz2jW97XPN0ehCE=; b=C7CzVWqwqdHZZKVD
- sz7XblS1lIELGTQ2jfR7MZ4JP7kbHnO1tVH90aXbdLA7MHr4KCHQl2SRhBDZfCOo
- KigGbo0am0P9m17FADAzxGYuwxJXto5JXUC00vb2iWivthKFxprOfYjYPY/IbUlz
- E7kGrOSZWf00XoTPbLZ3WSyQVRQCG1FZ1NrCC4tWmau+mBUGPg5pJ1LgMMHiOgkl
- iOn5P32FUdVjk6pK1xZJuCq/hsxNCQsJjeNL1N8b2dNC9J+nHmBOuG+q855kK1/w
- B2Rzxgzuol+MNe/zu4mGzGO/EyNxc7mNFMvviCL/+91LxdF86eALJA2HEsSQ186d
- O5u4hg==
+ MO9yyG4iDSvkdyCCx+FcktxLSnSn72irxZUl2WAdbCI=; b=BgRwz7+RSZKWQbIT
+ N46grnt380qG9aGK6VawNyB31JJkT2Hc5wLHnti8cEYcG4KXX4pHWZvWSW6ulnRB
+ gXARWz5ROGn9ndr0eiLASVINDoqw4Zj0d2+1FQphrG3+pGSiJYm/ZeGv2Fe6j4Zt
+ HciZOVaWWjoNsJYO+Y6Met/Dfs5QkoyYTh44auZ+PyqP83RuRQKdvZb7UwMnc6Gd
+ BazWaEsmYOB0h8SxIiwTE4gjnLdrYQocTQ4aPoxJ7Gwci7H4/LDxCFp6pNnUhxDZ
+ 3wle9Zl9xuvJkj1yQwRSLyuwGw+iXBb3WTfRT3UguY9yNKV3ORKfk6LRed7+pXM8
+ pz3+dg==
 Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
  [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8qj7ak6k-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8v9a9m0v-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:15:04 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:15:19 +0000 (GMT)
 Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c01ff996dso56811661cf.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:15:04 -0700 (PDT)
+ d75a77b69052e-51c1d7886cdso87248661cf.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:15:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783430104; x=1784034904; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xW2W2CaLt5ue0nvSEVBxu64kgHg6gz2jW97XPN0ehCE=;
- b=AYAXn7SWyNIClTvcdh2NVp688/js0xoK7NxdAct+fr3Y5wFtow2Wx4fZZP859IPWi5
- gy4KRaE+c+FB1f8R5YqX/fCUycZxAqdF0YReOGMogX445NP37XkQxT1eetFk1yJJX2PJ
- 4+xciz/ogCI1O+H+hupd+u+tvgVinBYzJ9XbeRPxDhN72ZDxa/T8hNKONrqNXTKCxO5I
- 1Xpr5vvo2cBL8fM8T5OgTNhM4p6oNISpsdfMYfsJubQh+1ZfwfqXIk5zJSGCHUXp36nT
- H9VsVVd9xiCLB22z7eYzwH69aC14bzofcWyIQ48Tl02R6hA8o8YJY6dNbJIScCczY/Kx
- wruA==
+ d=oss.qualcomm.com; s=google; t=1783430119; x=1784034919; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=MO9yyG4iDSvkdyCCx+FcktxLSnSn72irxZUl2WAdbCI=;
+ b=hTJouJ3ByfTN8fyVQsKILtHa2PMKotKxJz7DZLsaPeV+LMv1yPBqT/0gMAnunQfEm3
+ kWOohYk8xdJk604zZh166vadg9iZOa+1/B0XzgzMw3xeZgAOzdU8kfd0gL8Wrqzx9lHb
+ hX2kVLevSKe6q0C65LU7ldaDFReQ/0Jd2JGsWSVAqccmlv65McBzNVQqCUMh0e4/btWM
+ XXJcZAb45fhrygmg4MtUa/xxAaVf3TNQtoXTX2S9I3ESc5d6At9VGd6gTwfY0vjn/B7y
+ 1f1+lwt8W+hEd7250kFupjZWOr6gWjFbNXeS+RhZ5H0mzwuwRDa4wMjBUTGZt+TTzagD
+ H1AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783430104; x=1784034904;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=xW2W2CaLt5ue0nvSEVBxu64kgHg6gz2jW97XPN0ehCE=;
- b=rgph5ECybwp/7+1m6h87jKqKDkywytjTtozaLUHZ1Lixr+gFbOT32EsI817zxOg+ft
- 5cNNf04FuYekVm5/JhdXh1rzRlFbgJ9/1jGTXogZat7hjR50kB57O/s4aDxKYq6ZfseL
- /V/dtkq8/VMRpCX9CVyXCB6PN5EIi8tBjV/0QmJJoj1tmwCPHRhdCR1j6nfN7IpkQYVM
- Pn7x3AhSL0y/WXjcZUqTPlsuIhGMvNOdX5yk2TurpiDOLFlusPnounOfvxOhwQwZQI3o
- QEOttYNYfg3Cy8tzX/kC2gabK0g11xJX0Ks4fGKHCXjIRWEsGHOoUk8qeFWQzQaN0LGm
- Cl0g==
-X-Gm-Message-State: AOJu0Yyc21R9QdXVQNpfCqOEb4LTNiQjjQuSW1Pldy+fO8Z9Ha424GKg
- JkxZfTckLrcXqrBP50LSzMnCS8MLdQrD4Tq/pUc5jQpKzrW07y7gb2bFM22NyupB34xdQ2lLNVp
- TVbdLezMlEwoQnD05ZKT14D9tBg/9bRcO4nSyQ6Dr9TGT9UK+MQE7uBq2pfNpRNp4wQ==
-X-Gm-Gg: AfdE7ck+kAAGpvaYijI7zpYo9+X/7k71KZh4mNZWdL0V3rsT0eSIxma3L4fYZ8NDhm+
- UO2dxqp3NmJhwErDhOKXzQteO3zDv+qBJcPsvBLglBQXgiecpiq2raK5zJS4HHYfZZSdjRzx0Tz
- Yo8Hz2O2JGqJ2/I7kR+pTHW2cuj/u6R5ZDenxwq2TpivINSNf9kRKOWZoc2+aEkahUVGvcxtTiB
- 0LaPumR59SJmZazvUs4RKykE3VrlGZK50KAT71KzfDTLTq0nrdQKB1qNXNHSvtqL6zE+fLgYLj6
- 7O8sZ/r6Wn/Khx+tnK6ucjb/xY/0uLB6DhW9eC96CG9sv3s8dyUuLjcnssPrxyzbXMvfj0ZEdbt
- ubwEF7AXrsF4CUA133ZXzFAQa4AFtGwG7YTkByJMWVv4msiNtEBIWTIw6agORUsIhLKru
-X-Received: by 2002:a05:622a:144b:b0:51a:8c99:1f11 with SMTP id
- d75a77b69052e-51c748af0d5mr53589591cf.64.1783430103490; 
- Tue, 07 Jul 2026 06:15:03 -0700 (PDT)
-X-Received: by 2002:a05:622a:144b:b0:51a:8c99:1f11 with SMTP id
- d75a77b69052e-51c748af0d5mr53589031cf.64.1783430102992; 
- Tue, 07 Jul 2026 06:15:02 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783430119; x=1784034919;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=MO9yyG4iDSvkdyCCx+FcktxLSnSn72irxZUl2WAdbCI=;
+ b=j2rmxzqsxxvLanzKQ7lWaN0EOW9UcG7Jmb2S3S2vOyZq9IEJ+LPR2egYao8RZWw/uZ
+ sy9zvLoiwbVibPP1EqE9a4vykHqVAqNi/NuDByhAq3h4FBe5H4OZwjrWw7o8QcXdPjI2
+ ikGrDrkOYngqLHN9Ypv4KNzlm+maAwHuTisXeB9BEL1rFeW+XN/tvMthFSCjzK+/HQ3c
+ 0ZcRaoDIVdPpA/3gWiNq+/tttQXjpNAciVRP7AJLYMg5CSVq+LTyREzluuake7yAAKfs
+ vMQ88UGOIFmly6ih6rUYPeiZIKVgszfEThbAyBcKTR6T0gQAPAekXC0dbAvF53Diiigo
+ yW9g==
+X-Gm-Message-State: AOJu0YzkiUG19BFhyv/7T243FyQlHhAbmRrwAPV35PI+722SMGEtNgVc
+ 3oBWuCgEI8aGRv1DztqNwo0E/66bxid39zwW6GvsAskbQONpX4HDNlpW7xnqs5fdYkORtZp9TU/
+ 4qgnnAPDwBqQ2n9sBP3Ka97xPvEo0E2LhNN0s1IveceVnotWT7leUVp24G1EaP39/LA==
+X-Gm-Gg: AfdE7cl+2Ulcuj0GJpQh5a7MkWjrr9dC5jOpKA38chcQrOsLZMOkES5RHOkQiiX4Fe7
+ 5App32q6BeEOh5f8T1hqKtt/cFGPCib71b/N3ATjquMcQDDvT0zLP5p9DHGMEEKnKoVPzJ2vCNW
+ P8uazbi1iRYgib3B24KKsGqlFJYX3+up11g1L0k+fvlQNmAp7m6ApCXys9u5e5mOVl08y0qXtnc
+ XsG4RE+/bdFn8PZqneYMDXZ36GJODxcdvGyrrVZAFBktwxfE9Qtca/JikkEz3JG2+Gyv5HxQo69
+ oGQeyZ0x7MyAhMxq5+sFo0YGZAbegtcsYV3gZc0+dLN5zxJFzK0iaroMkVrlLOLDfz0JDJtP6YT
+ yTC2OtS+/mRqr1kXVPB1saBUC3WsScmUhM+N944lxVCUJSkvR6Q21i9HaqIqIHqwSQ0xf
+X-Received: by 2002:a05:622a:110f:b0:51c:1c73:5945 with SMTP id
+ d75a77b69052e-51c747d0552mr54606241cf.24.1783430119285; 
+ Tue, 07 Jul 2026 06:15:19 -0700 (PDT)
+X-Received: by 2002:a05:622a:110f:b0:51c:1c73:5945 with SMTP id
+ d75a77b69052e-51c747d0552mr54603761cf.24.1783430117513; 
+ Tue, 07 Jul 2026 06:15:17 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c15ad9bcc26sm131739566b.34.2026.07.07.06.15.01
+ 4fb4d7f45d1cf-69a19ce4ad4sm5832193a12.12.2026.07.07.06.15.16
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Jul 2026 06:15:02 -0700 (PDT)
+ Tue, 07 Jul 2026 06:15:16 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 22/32] hw/rtc/mc146818rtc: convert date from object prop to
- class prop
-Date: Tue,  7 Jul 2026 15:12:12 +0200
-Message-ID: <20260707131223.51505-23-philmd@oss.qualcomm.com>
+Subject: [PULL 24/32] backends/iommufd: Fix dev_id and type order in viommu
+ trace
+Date: Tue,  7 Jul 2026 15:12:14 +0200
+Message-ID: <20260707131223.51505-25-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260707131223.51505-1-philmd@oss.qualcomm.com>
 References: <20260707131223.51505-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: fad-KFsJHIUKAsIfVXJ_cDY9WPQaedMp
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfXyJ4sXOUUkO+6
- JuyPP8fwHdTGseRyWxM5MUFXw8gPnYxuCQBYMW3CqZyDNtUxoS2pTqCu3uhCX3zELLtM0nPOmhP
- eMmDdAzKBBh0W7DNGvciq65/xrAezM53XsGwJhw4/S2xcoXbCtfRqjxGdrDa1pRkJeLmSFD+1mm
- qkA2uWXsmiHgWJPaMDVmPvKu9gLkeWX1DgFgpLk5UJTDKiD8h+r2s1kzbgX/9/7aaQuW6FoBuJk
- h+a06qZQW4cL+gTcAbD0wbJDf9w54WnmzaEZp6nUpm51S4MpJDAaDArJ5v2KgtPrHVRBxfl8NnX
- s9LqUucZXVe8VjQKcwaUYw9fTa/buTnm9O2m7rT0VfuMTh1eqqufpTig1YyG6mCqcxOPUI/qrqE
- TK1GfEqkZoHbkc5SARqW+Vw+LBSnlOBmtuopjRh+iqDujmAgXUlndIW2Kr5pkYG7oWvNpm4GJyp
- 2KEQvqX3M7WrnBHeL0A==
-X-Authority-Analysis: v=2.4 cv=PIM/P/qC c=1 sm=1 tr=0 ts=6a4cfbd8 cx=c_pps
+X-Proofpoint-GUID: 5MbIdNdGvLG7D-_7Ayrpn-vaptx4t4u-
+X-Proofpoint-ORIG-GUID: 5MbIdNdGvLG7D-_7Ayrpn-vaptx4t4u-
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX9Z/bflVhQ7/U
+ zGiCqsc2KDEl+m+V82oZhlg6ZqkcLl1LbF1R5JjjPLmmuhgQS2htC6CoRcZLaaK4hdlizQdTIRY
+ iVgHys9NnrS6IdbBDdkK7uGOOE3IckA=
+X-Authority-Analysis: v=2.4 cv=b9yCJNGx c=1 sm=1 tr=0 ts=6a4cfbe7 cx=c_pps
  a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=64Cc0HZtAAAA:8 a=EUspDBNiAAAA:8 a=jAp_HAs5kC137pZsH9gA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX/2U8Qv6sTHGo
- yq1qFA32u6gtncpw+x4fQrmH02m6K0P/vOyDbgtxvG0xGMz6EH4nuTn175VTCuYlN+fQvGd5sh7
- Wk0gFZ1D2y6kWeLuQBaWooc9mjhb+Nc=
-X-Proofpoint-GUID: fad-KFsJHIUKAsIfVXJ_cDY9WPQaedMp
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=Ikd4Dj_1AAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=UBPzl3ekHYB5lC0V6e0A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfXxzE1oFHN+xpf
+ v3G9hYsstpwSy49fQAIHfuNuEF66dTu/63Kl0t00lTxgK6zYlyiOCqeJl0/flpMJ6A5I9dxztn+
+ zkqwjMVYAN7iEIIh3ZSsjnVug8j8Q8Mny+2mMHklczx2zzzv0iiEcxMrCmb70Llx6AZ9ITeyKDz
+ 0MIV6GNLZWNpa1RfgH4/eClY2HdYyWahhViP8T1oW5plAx2C220HChICdqR5ycoyhrT6X1JDTmY
+ 8PUhDaVVIkWr/XE6S6DUVXd9LGqW3uHJYGHla9YaxZXukE3BjXyvA9qGIabEZphgtd/b/+Bime5
+ IdiHxgnxsMcMEblfsw/ChhPW5/26bXnldhItQaM/k+5qdQTGl2ZMv6+kAPJLXx5t6hlwGuHWz7G
+ 3kOwQGKtYv90z1+ahJd/O3fnNPah6nBO2kaVZo8bygKtwNgq5sUYJu8GJ/uHQgyWEauNj8fAn8+
+ JFvPKHa7cSjX9RwmI3Q==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_03,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0
- phishscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ impostorscore=0 suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0
+ bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070129
 Received-SPF: pass client-ip=205.220.180.131;
@@ -151,40 +149,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-This is to allow it to be the target of a class alias property.
+The trace event receives dev_id before type, but its format string prints
+them in the wrong order. Correct the order.
 
-Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260703090814.2993188-6-mark.caveayland@nutanix.com>
+Fixes: f2d31df0d925 ("backends/iommufd: Introduce iommufd_backend_alloc_viommu")
+Reported-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-ID: <20260706103653.84243-1-skolothumtho@nvidia.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/rtc/mc146818rtc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ backends/trace-events | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
-index bcab018c7cd..ba396435d1a 100644
---- a/hw/rtc/mc146818rtc.c
-+++ b/hw/rtc/mc146818rtc.c
-@@ -920,8 +920,6 @@ static void rtc_realizefn(DeviceState *dev, Error **errp)
-     memory_region_add_subregion(&s->io, 0, &s->coalesced_io);
-     memory_region_add_coalescing(&s->coalesced_io, 0, 1);
- 
--    object_property_add_tm(OBJECT(s), "date", rtc_get_date);
--
-     qdev_init_gpio_out(dev, &s->irq, 1);
- }
- 
-@@ -1020,6 +1018,8 @@ static void rtc_class_initfn(ObjectClass *klass, const void *data)
-     adevc->build_dev_aml = rtc_build_aml;
-     device_class_set_props(dc, mc146818rtc_properties);
-     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+
-+    object_class_property_add_tm(klass, "date", rtc_get_date);
- }
- 
- static const TypeInfo mc146818rtc_info = {
+diff --git a/backends/trace-events b/backends/trace-events
+index b63420b73ee..009a25b0be9 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -21,7 +21,7 @@ iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%
+ iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
+ iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t flags, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" flags=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+ iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint64_t data_ptr, int ret) " iommufd=%d id=%u data_type=%u entry_len=%u entry_num=%u done_num=%u data_ptr=0x%"PRIx64" (%d)"
+-iommufd_backend_alloc_viommu(int iommufd, uint32_t dev_id, uint32_t type, uint32_t hwpt_id, uint64_t data_ptr, uint32_t data_len, uint32_t viommu_id, int ret) " iommufd=%d type=%u dev_id=%u hwpt_id=%u data_ptr=0x%"PRIx64" data_len=0x%x viommu_id=%u (%d)"
++iommufd_backend_alloc_viommu(int iommufd, uint32_t dev_id, uint32_t type, uint32_t hwpt_id, uint64_t data_ptr, uint32_t data_len, uint32_t viommu_id, int ret) " iommufd=%d dev_id=%u type=%u hwpt_id=%u data_ptr=0x%"PRIx64" data_len=0x%x viommu_id=%u (%d)"
+ iommufd_backend_alloc_vdev(int iommufd, uint32_t dev_id, uint32_t viommu_id, uint64_t virt_id, uint32_t vdev_id, int ret) " iommufd=%d dev_id=%u viommu_id=%u virt_id=0x%"PRIx64" vdev_id=%u (%d)"
+ iommufd_viommu_alloc_eventq(int iommufd, uint32_t viommu_id, uint32_t type, uint32_t veventq_id, uint32_t veventq_fd, int ret) " iommufd=%d viommu_id=%u type=%u veventq_id=%u veventq_fd=%u (%d)"
+ iommufd_backend_alloc_hw_queue(int iommufd, uint32_t viommu_id, uint32_t queue_type, uint32_t index, uint64_t addr, uint64_t size, uint32_t queue_id, int ret) " iommufd=%d viommu_id=%u queue_type=%u index=%u addr=0x%"PRIx64" size=0x%"PRIx64" queue_id=%u (%d)"
 -- 
 2.53.0
 
