@@ -4,82 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3C8DC43602
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 07:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC909C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 07:22:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgzyp-0000ce-Ek; Tue, 07 Jul 2026 03:12:31 -0400
+	id 1wh07a-0003uj-Fe; Tue, 07 Jul 2026 03:21:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wgzyn-0000cJ-TY
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 03:12:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dengler@linux.ibm.com>)
+ id 1wh07Y-0003u8-Qm; Tue, 07 Jul 2026 03:21:33 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wgzym-0003vH-Fc
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 03:12:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783408346;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SN5wTYhI04TCqSFhI5MtU4n+JDLJ048AspDuvRNO7Y0=;
- b=MfPytc+Dw/I8dQxOY57MW2HS5uPn33uFCIRJCWktmkBRbG32zx18ARoRk81L3CSNoIgLmx
- ytDzPbA0kdumFRr8vB3p6L5XfPKz/e/MNjaUITqfg+10FpGEduwG0ULdxYWjk0z+9xeXOU
- ND6oJCpaaLH5KH2GPKXr9zj7s6x6roA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-155-_vpuBRi5Meej6j8Bh1cTLA-1; Tue,
- 07 Jul 2026 03:12:25 -0400
-X-MC-Unique: _vpuBRi5Meej6j8Bh1cTLA-1
-X-Mimecast-MFC-AGG-ID: _vpuBRi5Meej6j8Bh1cTLA_1783408343
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2E2831805A26; Tue,  7 Jul 2026 07:12:23 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5FC943000C01; Tue,  7 Jul 2026 07:12:22 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DF06221E6920; Tue, 07 Jul 2026 09:12:19 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Christian Brauner <brauner@kernel.org>,
- devel@lists.libvirt.org,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Peter Krempa <pkrempa@redhat.com>,  "Dr. David Alan Gilbert"
- <dave@treblig.org>
-Subject: Re: [PATCH v7 01/35] qom: replace 'can_be_deleted' with
- 'prepare_delete'
-In-Reply-To: <20260706135824.2623960-2-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Mon, 6 Jul 2026 14:57:49
- +0100")
-References: <20260706135824.2623960-1-berrange@redhat.com>
- <20260706135824.2623960-2-berrange@redhat.com>
-Date: Tue, 07 Jul 2026 09:12:19 +0200
-Message-ID: <8733xvjmss.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <dengler@linux.ibm.com>)
+ id 1wh07X-0005iY-1N; Tue, 07 Jul 2026 03:21:32 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6674IKLL2725891; Tue, 7 Jul 2026 07:21:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=k2n4Kz
+ cH3LKqlj6yMadwVpvSIYNdx2Gwzs3sRkYg4qA=; b=ZBiNRc1qTko+Ah4oEKT7UH
+ LQiIA2Ynd8P/atuT7kn0FPDP2qnHn7spTqp06sypcMZOKezeSE2ygxsVeiRa7oNY
+ aoHwollU5oMwMJYT3vHFyRgTlzmcfhHqgxnUEbJoWyPPAI4kdG1XxzAyzIo98oks
+ bUD9K7ewaZiUdnUh+OaPEmoNuPuiOLLOYirme7y9rGs6/de0GbujbOoTvKtDaoiV
+ zO6UoorMOy5G6NNgsTESVREuNMZP3EZku5WGNSdDVJXJVlUvwfZlfweJBOP9kEbT
+ OKm1PrLbaAygXG92xx9ooCRphlpQA3VxwjDYGSwo9Kt/mpNxbkufqRFy4Cwa9Q6w
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6suqngpt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 Jul 2026 07:21:26 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6677Jccf009129;
+ Tue, 7 Jul 2026 07:21:25 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f7cvw1nqn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 Jul 2026 07:21:24 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6677LKdQ13566252
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 7 Jul 2026 07:21:21 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BD5232004D;
+ Tue,  7 Jul 2026 07:21:20 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 503DF20049;
+ Tue,  7 Jul 2026 07:21:20 +0000 (GMT)
+Received: from [9.111.13.17] (unknown [9.111.13.17])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  7 Jul 2026 07:21:20 +0000 (GMT)
+Message-ID: <4ed5f841-f757-4ba2-80df-ba2d378a7c8c@linux.ibm.com>
+Date: Tue, 7 Jul 2026 09:21:20 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 08/21] target/s390x: Minimal AES XTS support for cpacf
+ pcc instruction
+To: Harald Freudenberger <freude@linux.ibm.com>
+Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ thuth@redhat.com, berrange@redhat.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, linux-s390@vger.kernel.org,
+ borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
+References: <20260706094317.17032-1-freude@linux.ibm.com>
+ <20260706094317.17032-9-freude@linux.ibm.com>
+From: Holger Dengler <dengler@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <20260706094317.17032-9-freude@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA2OSBTYWx0ZWRfX3jEp4hyOO3K/
+ uakz5Yh2g0xVQIX7PRyzejMwrGM7B899z373Tg93lcpJ4mrF2fA1jPzc77FVQ72NOZ+rXhe5wry
+ IQGDiLHY1B5oBydrFx7pQbUpd/lmYJw=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA2OSBTYWx0ZWRfX1bYzaNrJkwdn
+ BOktVwBm/YFhsDB4ToAQddQy1BQCtJrah09oEFTWRVMw8yeGCFa1O+M6NmpUgTj6Fdd4BahA+Ju
+ bXmWtj5Jh2dIYkWGNol901cwGaZKhh/HZGaVw/vWNJPbxGK4+SblDJ4d6nU4r0zsbZOKFY4AvIf
+ 3aU0ouelK8JtsZHhXbpkXVL5feRYDrmNdyByU6OpUeitpOUjDkg4xfmZdCAKKZX4FtpqmTd/LBd
+ ldMmbhvZCYTOTeHIovcQgqFBPnddP+UizBBtTjJ1FtCYsI8JZst624903WCWeUvsNUBxdVyU5t2
+ 0iFIoxtYGA5LGlCKe+CnwYVzvPPa5Pv2p5hNQ0BgJdUMwRA6eMELiLALRSNEMqgtyEotk0S3T4H
+ 5VOkb9YWycVEoFiSIVEDkniAvN67cSnxKTqk9BzOswTFQuZLgPRMcBTJ/JMnsDexXuN30Gi4Qxv
+ BtgvEW7bPGrOeoRrPYw==
+X-Proofpoint-GUID: foTcbI11_hLuhp7GahfjOZuJaqF0mUfk
+X-Authority-Analysis: v=2.4 cv=Oot/DS/t c=1 sm=1 tr=0 ts=6a4ca8f6 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=prY60AAtWssrYS-MNBsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: foTcbI11_hLuhp7GahfjOZuJaqF0mUfk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_01,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 phishscore=0
+ malwarescore=0 suspectscore=0 spamscore=0 adultscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070069
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=dengler@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,25 +127,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 7/6/26 11:43, Harald Freudenberger wrote:
+> Support CPACF pcc subfunctions PCC-Compute-XTS-Parameter-AES-128
+> and PCC-Compute-XTS-Parameter-AES-128 but only for the special
 
-> While most objects can perform all their cleanup in the finalizer
-> method, there can be interactions with other resources / subsystems
-> / threads which require that some cleanup be performed on an user
-> creatable object before unparenting it and entering finalization.
->
-> The current 'can_be_deleted' method runs in the deletion path and
-> is intended to be used to block deletion. While it could be used
-> to perform cleanup tasks, its name suggests it should be free of
-> side-effects.
->
-> Generalize this by renaming it to 'prepare_delete', explicitly
-> allowing for cleanup to be provided. Existing users of 'can_be_deleted'
-> are re-written, which provides them with more detailed/tailored error
-> messages.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+typo(?): --> PCC-Compute-XTS-Parameter-AES-256
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+> case block sequential number is 0. However, this covers the s390
+> AES XTS implementation in the Linux kernel and Libica and thus
+> also Opencryptoki clear key via Libica.
+> 
+> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+> Tested-by: Holger Dengler <dengler@linux.ibm.com>
+
+Ordering? (T-b first, then S-o-b). See my comment below.
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+
+> ---
+>   target/s390x/gen-features.c      |  2 +
+>   target/s390x/tcg/cpacf.h         |  2 +
+>   target/s390x/tcg/cpacf_aes.c     | 63 ++++++++++++++++++++++++++++++++
+>   target/s390x/tcg/crypto_helper.c | 20 ++++++++++
+>   4 files changed, 87 insertions(+)
+> 
+[...]
+> diff --git a/target/s390x/tcg/cpacf_aes.c b/target/s390x/tcg/cpacf_aes.c
+> index 3d6aa19df2..f41b7dc541 100644
+> --- a/target/s390x/tcg/cpacf_aes.c
+> +++ b/target/s390x/tcg/cpacf_aes.c
+> @@ -290,3 +290,66 @@ int cpacf_aes_ctr(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+>   
+>       return !len ? 0 : 3;
+>   }
+> +
+> +int cpacf_aes_pcc(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+> +                  uint64_t param_addr, uint8_t fc)
+> +{
+> +    uint8_t key[32], tweak[AES_BLOCK_SIZE], buf[AES_BLOCK_SIZE];
+> +    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
+> +    int keysize, i;
+> +    uint64_t addr;
+> +    AES_KEY exkey;
+> +
+> +    switch (fc) {
+> +    case CPACF_PCC_XTS_AES_128:
+> +        keysize = 16;
+> +        break;
+> +    case CPACF_PCC_XTS_AES_256:
+> +        keysize = 32;
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    /* fetch block sequence nr from param block into buf */
+> +    for (i = 0; i < AES_BLOCK_SIZE; i++) {
+> +        addr = wrap_address(env, param_addr + keysize + AES_BLOCK_SIZE + i);
+> +        buf[i] = cpu_ldb_mmu(env, addr, oi, ra);
+> +    }
+> +
+> +    /* is the block sequence nr 0 ? */
+> +    for (i = 0; i < AES_BLOCK_SIZE && !buf[i]; i++) {
+> +            ;
+> +    }
+> +    if (i < AES_BLOCK_SIZE) {
+> +        /* no, sorry handling of non zero block sequence is not implemented */
+> +        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+> +        return 1;
+> +    }
+
+Why not
+
+for (i = 0; i < AES_BLOCK_SIZE && !buf[i]; i++);
+if (i < AES_BLOCK_SIZE) {
+...
+
+Or would that be against the coding guidelines?
+
+I personally would prefer the following, because it is more obvious. But 
+your solution also works, so feel free to change it or leave it as is.
+
+for (i = 0; i < AES_BLOCK_SIZE; i++) {
+     if (buf[i]) {
+         /*
+          * no, sorry handling of non zero block sequence is not
+          * implemented
+          */
+         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+         return 1;
+     }
+}
+
+IMO, it is easier to read.
+
+[...]
+
+-- 
+Mit freundlichen Grüßen / Kind regards
+Holger Dengler
 
 
