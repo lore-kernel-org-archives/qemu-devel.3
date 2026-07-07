@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46709C44502
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 15:10:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1124C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 15:10:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh7Qc-0005QK-4b; Tue, 07 Jul 2026 11:09:42 -0400
+	id 1wh7Qe-0005RS-4d; Tue, 07 Jul 2026 11:09:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wh7Qa-0005Pb-31
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 11:09:40 -0400
-Received: from mail-wr2-x00.google.com ([2a00:1450:4864:30::])
+ id 1wh7Qb-0005Q3-Hc
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 11:09:41 -0400
+Received: from mail-wm2-x02.google.com ([2a00:1450:4864:31::2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wh7QY-0006OS-6t
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 11:09:39 -0400
-Received: by mail-wr2-x00.google.com with SMTP id
- ffacd0b85a97d-46e260f9e57so686709f8f.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 08:09:37 -0700 (PDT)
+ id 1wh7QZ-0006Od-60
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 11:09:41 -0400
+Received: by mail-wm2-x02.google.com with SMTP id
+ 5b1f17b1804b1-493b9643ab5so3479245e9.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 08:09:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783436977; x=1784041777; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783436978; x=1784041778; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=aqUPZZYFcVjX8PACbAJKRitHki4Sln9thZIkfpQ+s28=;
- b=n1xGn+v10YeEK7OthbDMPzwbhE+MsY6+WykaNbROoD5Ptrzj+VDkgwLu3MBCThe84S
- cJn8x2KLbF7RcCsaku6gLdYELPrzMrZ9xif7cryB/AGOMRKaJGdKHx8wd0xuNuGqrVOl
- JDB9oHqcJBN7ZmoqRj1KpTi16yJ2u5a37gx+tyz5Bkz53AdMMP+QZb54qLWZy4dYswOg
- NErLZ+WDr2Le5ft89bxvRVWvEhOjP12F57PTyavqUQY5winSTdoxx6/rOSzbxUT1mSo/
- HIeeOgQF7yUAjvSWnba6N1menVkf2V3Le8Dh/XPqFpQLPyx63fKB1N+MU603aE2T1g9C
- /NpQ==
+ :message-id:reply-to;
+ bh=xBb3xLV/5YedzzzrUj5U071p8Cemdeb+/y1/TOle2Oo=;
+ b=C3ufMsd8/CsRHuZeJD24vErkN8EMkimaBv3K3XZ+N2qC/zajwFcf+hpsEp2g7yDPQZ
+ gVtLPJ0KS+B5CgDmQakd8J4K9rcJOsGRhO6w2D+h5JuGlamoMBQ5kq16sxeD2oSTkruW
+ Io66Rw/HT1JRARDN8qaX+3L2Zxq4rhQhjL6IELPxBSwt+VUKw7IJlteLUIq2U/iJvqRT
+ anDcwI+V90LDEWAY0Wki9DjCRhSUv5oY5R6iPHSSDco7A986kY+KtbNb+1Jja2glgZAh
+ O6HzF4ZcVB4aaVUlGdaJAkn4sDyfV1fAbdPaS2P7K6tpDwSq9hHFJP4IlBRhlA2c8Tjg
+ 5x9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783436977; x=1784041777;
+ d=1e100.net; s=20251104; t=1783436978; x=1784041778;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=aqUPZZYFcVjX8PACbAJKRitHki4Sln9thZIkfpQ+s28=;
- b=NZgtk36rpOyiCXs2qmUDkIuhnU9zY2yI1M20SHw+reJT6wSB6uljkhZTpW/m1dx4Rg
- 2HaB9EV89WnZfwUbo7RJI5eKU4X8lC49D4AWj6p5ANJFNq64h/RQdGfYFqd1/QXARBwT
- 1yCZFy1dakhoH+QZhcD7ikolv9iTMZpriyMYKPAtsf+JHsLH4oLuA0GrgrcFZPE+zvrk
- 1pB+b4uvCpicpFoAtVYqNXkXuz8zDV1uWucPuLUtw//mX78GjfUG7grum+HDshh33ofe
- 43xQNjdoGo5YYEfWH9xmdsd9K/nQV65EwKBFxvjWLMmbmwVqWFFsyTwrVdITeHpjHe0T
- gaLA==
-X-Gm-Message-State: AOJu0YxTOBiuoKKdvSNILtjykp61IHKRb2GgPQBTgxs0xUCaWQ32pDVw
- GLsoZ7VupqUWUOX1Ab5Nd/3d/Z6Vr1ZVyvvoc9O4eKFj/iWO6FnfO84Wg2HUPsg6YFmnNPgaqB7
- OrZW1AWdFD/Xc
-X-Gm-Gg: AfdE7ckjYBZT4kLMeDYyft9a86ZjFgfjh5tnEiwdmn8fvDTK750Z+/uzWx6TujI+N73
- NqIza6zWuEgJII/akwxveVZQvXZKnEynmcJup3YgrGrgyzQoFQc8DDb1C+61I9RG/jngY6CX8lJ
- H4qIn0KN3/o1n2kpi3oov9+IKhmlH98fKUQIA8SLhI5hQcMOJT/dcOTvhDv1zrVAcc1T97cd5uq
- luExRrUNgGFmRjqxjEOQrUldNkTREBeHfbMm6rooJ32lo3WW0pDfGgWph1Zrelad55yl0x0TjM5
- K6OokwOSQ4DTVeCdTlGRor1HWHwv5oDT4LAeqSHkaToa8atS6yImgh4ViCtz31/A5K8a4NmthmI
- 6Y3DzaEy6EF4U4F4Thdrdr7UMDwtkHKF0D2bqwrnRCKqQkZWxPEoFccF+XMX3KrAxuJSy1yS/p7
- jcUmz/1SwKODvprg+omLcaMC0A6G1J0NJgh8XapjXnd9BgR6Uh8HGXWqdNrY6ASSZ8UR5xUud4s
- yCb/wqiO3vRUjpervpTxg==
-X-Received: by 2002:a5d:4289:0:b0:46d:d6c1:8383 with SMTP id
- ffacd0b85a97d-47de66dd473mr5105483f8f.44.1783436976654; 
- Tue, 07 Jul 2026 08:09:36 -0700 (PDT)
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xBb3xLV/5YedzzzrUj5U071p8Cemdeb+/y1/TOle2Oo=;
+ b=LsDh03XmX9AHyNwJCky/cLdKGqS2jzcwdG5/MyS2usX4shlMiioHxlBNjELDWI7uYW
+ yohsp8CGwyLsjQdvtkzdBpQy+o/KStXH2cmHy/FRDrUx0EqDhazG2eqx2S52I3Sb8bqN
+ rjar7SWKYmcCSBNLjEwZKwj8TXiE7kyKsgZEQfPR3mvzDyCdBVQyUb1iYXjZQDEcuY95
+ Lk/lyftu+8LAkbrDIBf81bS/R1IjvUxC2rgO1851JUcrYCvX4oJviJlGLd66lLeldlvO
+ TgwFecuZjawgIEU+lZM4fRiOJ8k2QIQ1BB8mkE2STFZQLJ6Erp3Pve2nykfzLUCYfWD7
+ tRPg==
+X-Gm-Message-State: AOJu0YyT/w+rMpCyuvjGmzFGZ4OGDM3gEeII6pRx/2Wj+Sr6CKzEI4cY
+ sQ+fQe1Ehl+lM4jHmIALcZ+d0vGlWdJbgm+OrsAKPh0Rv6b2pVCsHuwb38QeNIVhe7bxgqsbq7p
+ +mXwvNxdDKuJi
+X-Gm-Gg: AfdE7cl3f8qIhuuYmdJxOtcnE6k9QlYTA2OfRLhxmxJTK7ZNnV2m+FO0rdwTyQJoUxc
+ AlhVsncNmTWXHO+35px+HS7iDpPFK66zlbO7m2N2k3d1B/Qh5s5Z7MUTq/1tcUYU7ZcMtuFv0ov
+ WaeRJOPvR4TlYAaMOAPNt+LJXoptOW03r5ffJSeLAHqFOrjOf779o4b+Ysp4BTA6XOF2YUPYtWu
+ MrWVXgPOKslVIBlzRv6eGjaRysss+oNXwcRCM6/FXh4qZxzWA5ErLJysc0E4fhANesJ51JPs/ew
+ z7Ez02bG47aZeCB+Ur8aKEUEJywRyzfoaY6bW43I7gI8PvWk5JfZYtOrkyswyU/YcWHajrRwaTg
+ NBhSG6pQAGPBnAePWdu5qOLkhOegPerTdGlT3leAMFz8FSfaIQDOAjRe+Wze+h+UEFGCo8ksnXy
+ SSK+sYuCCLegfoaG6L2CjSM+iJjw89uFtwxpcotKzH0cLwjixcURGAWCU0yYPZCKws97hIOoaq1
+ 8RoeCuXHcmTC3NCMhOh/g==
+X-Received: by 2002:a5d:518b:0:b0:476:dd2b:611 with SMTP id
+ ffacd0b85a97d-47de668ef11mr5072409f8f.3.1783436977617; 
+ Tue, 07 Jul 2026 08:09:37 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47a9de1e785sm34181813f8f.8.2026.07.07.08.09.35
+ ffacd0b85a97d-47a9de1e785sm34181813f8f.8.2026.07.07.08.09.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jul 2026 08:09:35 -0700 (PDT)
+ Tue, 07 Jul 2026 08:09:36 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org,
 	BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 1/3] hw/display/sm501: Catch bad coordinates for RTL operations
-Date: Tue,  7 Jul 2026 16:09:31 +0100
-Message-ID: <20260707150933.1410507-2-peter.maydell@linaro.org>
+Subject: [PATCH 2/3] hw/display/sm501: Avoid overflow problems in bounds check
+ calculations
+Date: Tue,  7 Jul 2026 16:09:32 +0100
+Message-ID: <20260707150933.1410507-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260707150933.1410507-1-peter.maydell@linaro.org>
 References: <20260707150933.1410507-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:30::;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr2-x00.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::2;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x02.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,48 +103,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The sm501 code doesn't check whether a right-to-left operation has
-specified a width greater than the x-coordinate (which would make it
-extend off the left edge of the screen), or similarly a height
-greater than the y-coordinate.  This means the guest can misprogram
-the device so that we underflow when calculating the address of the
-top left pixel, which might result in accessing out of bounds
-memory.  Catch this as a guest error and ignore the operation.
+When we check that a 2D rectangle operation isn't going to run off
+the end of video RAM, we do the calculations as 32 bit arithmetic.
+This means that carefully chosen guest register values can cause an
+overflow so we don't detect that the operation is going to go outside
+video memory.
 
-Reported-by: Yannick Wang
+Abstract the check out into a function, do the calculations as
+64-bit arithmetic, and add assertions about the ranges of the
+inputs.
+
 Cc: qemu-stable@nongnu.org
 Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3920
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/display/sm501.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/display/sm501.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
 diff --git a/hw/display/sm501.c b/hw/display/sm501.c
-index af87004837..0da25477bc 100644
+index 0da25477bc..d5e165daef 100644
 --- a/hw/display/sm501.c
 +++ b/hw/display/sm501.c
-@@ -723,6 +723,10 @@ static void sm501_2d_operation(SM501State *s)
-     }
+@@ -682,6 +682,28 @@ static inline void hwc_invalidate(SM501State *s, int crt)
+                             get_fb_addr(s, crt) + start, end - start);
+ }
  
-     if (rtl) {
-+        if (dst_x < (width - 1) || dst_y < (height - 1)) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "sm501: RTL op out of bounds\n");
-+            return;
-+        }
-         dst_x -= width - 1;
++static bool sm501_rect_outside_vram(SM501State *s, uint32_t base,
++                                    uint32_t x, uint32_t y,
++                                    uint32_t width, uint32_t height,
++                                    uint32_t pitch, uint32_t bypp)
++{
++    /*
++     * Return true if the 2D area specified by the arguments is
++     * partially or completely outside the VRAM (a guest error)
++     *
++     * Limits on the input sizes mean we can't overflow as long as
++     * we do all the arithmetic at 64 bits.
++     */
++    uint64_t rect_size, last_addr;
++
++    assert(x <= UINT16_MAX && y <= UINT16_MAX && height <= UINT16_MAX &&
++           pitch <= UINT16_MAX && bypp <= 8);
++    rect_size = (((uint64_t)y + height) * pitch + x + width) * bypp;
++    last_addr = base + rect_size;
++
++    return last_addr >= get_local_mem_size(s);
++}
++
+ static void sm501_2d_operation(SM501State *s)
+ {
+     int cmd = (s->twoD_control >> 16) & 0x1F;
+@@ -731,9 +753,8 @@ static void sm501_2d_operation(SM501State *s)
          dst_y -= height - 1;
      }
-@@ -748,6 +752,10 @@ static void sm501_2d_operation(SM501State *s)
-         }
  
-         if (rtl) {
-+            if (src_x < (width - 1) || src_y < (height - 1)) {
-+                qemu_log_mask(LOG_GUEST_ERROR, "sm501: RTL op out of bounds\n");
-+                return;
-+            }
-             src_x -= width - 1;
+-    if (dst_base >= get_local_mem_size(s) ||
+-        dst_base + (dst_x + width + (dst_y + height) * dst_pitch) * bypp >=
+-        get_local_mem_size(s)) {
++    if (sm501_rect_outside_vram(s, dst_base, dst_x, dst_y, width, height,
++                                dst_pitch, bypp)) {
+         qemu_log_mask(LOG_GUEST_ERROR, "sm501: 2D op dest is outside vram.\n");
+         return;
+     }
+@@ -760,9 +781,8 @@ static void sm501_2d_operation(SM501State *s)
              src_y -= height - 1;
          }
+ 
+-        if (src_base >= get_local_mem_size(s) ||
+-            src_base + (src_x + width + (src_y + height) * src_pitch) * bypp >=
+-            get_local_mem_size(s)) {
++        if (sm501_rect_outside_vram(s, src_base, src_x, src_y, width, height,
++                                    src_pitch, bypp)) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+                           "sm501: 2D op src is outside vram.\n");
+             return;
 -- 
 2.43.0
 
