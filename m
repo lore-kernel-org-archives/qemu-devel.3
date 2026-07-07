@@ -4,82 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D0A9C43602
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 10:42:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 044C9C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 10:44:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh3GF-0005co-JL; Tue, 07 Jul 2026 06:42:43 -0400
+	id 1wh3HU-00066a-3B; Tue, 07 Jul 2026 06:44:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wh3GE-0005cg-MI
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:42:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wh3GD-0003zD-2F
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:42:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783420960;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=r98YB4C2BeOGwKQQkZ9qGnLeHSZfYdwIzU8oi3ChF1E=;
- b=W6v9TJI2fNpoclDfmQdvM0TYbKJVrNYcrgcwdaJz2hf4r3AycGDftl0BsctPX+eXyE2vGd
- KHbXiEso4Nt1WpJ+nbSgsKAA6Cr5x0imYmWPPkZpDcaByzBv0hU8INbZdAiGTCYtpAnbWe
- v/ZabzCOKexa4/N8WiWC2ZwDNlW+2g4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-407-JQ9mdBl9PKqNBaevoXaivg-1; Tue,
- 07 Jul 2026 06:42:35 -0400
-X-MC-Unique: JQ9mdBl9PKqNBaevoXaivg-1
-X-Mimecast-MFC-AGG-ID: JQ9mdBl9PKqNBaevoXaivg_1783420953
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5FF591954B2B; Tue,  7 Jul 2026 10:42:33 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.142])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8494019560A3; Tue,  7 Jul 2026 10:42:29 +0000 (UTC)
-Date: Tue, 7 Jul 2026 11:42:26 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Christian Brauner <brauner@kernel.org>,
- devel@lists.libvirt.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Krempa <pkrempa@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH v7 05/35] monitor: minimal conversion of monitors to QOM
-Message-ID: <akzYEnPnUQhiN1ZD@redhat.com>
-References: <20260706135824.2623960-1-berrange@redhat.com>
- <20260706135824.2623960-6-berrange@redhat.com>
- <87tsqbjnrb.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wh3HS-000668-EZ
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:43:58 -0400
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wh3HQ-000485-SF
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:43:58 -0400
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-6611669cd16so5569477d50.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 03:43:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783421035; cv=none;
+ d=google.com; s=arc-20260327;
+ b=eqBKjAp01tvpn4hxF+lSGlhVt8zUyf1NKS907x43rsSc+fnRd518y0UuApLFwdvosp
+ AJ4lPMbSL99Ni2gSEhJOQy3P62Bz82ovjwX0Xy4KFCL10o1dckUN3y0SPgAMAFahmDAY
+ /0VBu/9Nm4HKz8r7tWkaMiPpOwm06RggXshZU3AlNuQWcktQf0fTZmWFX1PbfJcfRDjl
+ CQ27ssZDt2+fVNweRt2vLyijfWAIGeMMrnNCMtQmJzbS3IgqRvJIisvz6Llgfk6/nWD+
+ RETv8wP9ak+oGsz652dXDcrtvcCfodZv4nYN8gnp9mrdQS/HiN/ByQEquVgi6mGhTuVF
+ GGdQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=a4Za2vOUCu9/1r75AG6k691yxycMkdWuYMeptLr85R8=;
+ fh=oF6yPMT/3eJ4kfb0aBzaMPpIr+MB4kS4kk98rDLBTM4=;
+ b=I7oDDI2zQjnweewf0CPko1T1bY6ezxrgyMwNJ58EmcNOVHcL7LNIkpEJG2Cf7mq2Jb
+ +Ke6RWMHxIm5Kxu+HIbwsg0OAbZ7IzHVhbskFLDVtAep6bi0f8rznJO6+K7C9FLw1GC9
+ cNbkZ4Jj98vyXioG93hbx/dRREecLfWqXIadYPUlAIlTInoq1hqCA5y+aQnfwxvcbRVY
+ Xmrsilpr+n/3Xq4oq6ZULWk1myFzpGOeZUo+rWb8ky5uHD4Yvge3eB9qC4Tp3sie9vs8
+ B3sq+P7RKQEZ/hj+IeCYMkC5SMCrqQU4Yph9kdQIXPX0QoVfe3yZ4iG+AxncOL9qr8L4
+ sz2A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783421035; x=1784025835; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=a4Za2vOUCu9/1r75AG6k691yxycMkdWuYMeptLr85R8=;
+ b=K96O6y85ackUjJVBCU6DQd89tZf3ihfGUPJfYiPYkbS7RIgY88oL8ibW0O3i/EQlX7
+ h5QQi2uc8APDtIqVRbwflUe7c0hXqU7uNHyK7gAGkuSQvy90gBFGLig960KgLIHxmNkY
+ ePNdwkanPzZ6y5K3vWrW0q8lldXOIRiEH3blBfvl5NdbPKwuz6h3y4WmC2JuwUV22B2R
+ 3su0k7heqwARBIwmxFs3CbEqSzAo4K4kjMktfL7zExqiQWusApMTX8kAY6hh/H5rHOnE
+ 17Px/UYP+6sUJA9wBtLp1JNe+tu1eyAcW1/wCOx9xy8KEIuf4zt0PYEOLoeKb5EAQ9xi
+ rLzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783421035; x=1784025835;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=a4Za2vOUCu9/1r75AG6k691yxycMkdWuYMeptLr85R8=;
+ b=a4Xhv0fhI6W/tG0UKiq9aAIZItnx3cLfZAlRtxWfP5YDxMn7606ZJ95A8rB3f/ASDE
+ 9sFgOoVHE6/9ccZbr7TGOxEXXdXui39LE0lJ0w+HV4uvn6KiQdfj8eNJpg7BvMvDPWqG
+ JohWRhPG/GF1+hhY+ZUxPdz8wEKKKKJGyWJN6YcnHCQvrHRaEp3FiVkFl59YdCQGe1FF
+ UJ7+MjjETvYpsBezfIRAo+V0okzqXGnocAMZFrjIbAi09lpWCpDp6v90lIRbYpFVC/n1
+ Onk4om0VLsl8c4oVl7p4fLbo5NhW0TQ9UJ4A39XXv0JDhnd5HEelkngipELwkUswsI/Z
+ rYjg==
+X-Gm-Message-State: AOJu0Yx4xj+U0nB2MM7T+7BG4KtT7OTCfjkZkNOl2q5KfdTLVEv+3GMP
+ bdR0sH9kU2mHGUBq6ZIejvvCheWZ0cnCLMgFbjz9jJIL4vKXveMwxkqwJ90IWhYve+XEnL47NLb
+ 0Q++zf1huv8/KmmV8NOveCF6zBbsXOQV5pbdWbv8erg==
+X-Gm-Gg: AfdE7cmQjYnbVAbaz1u8E3LgvQ4Yxt47GwKOsXHQgyt2hrbYTNDwkypE9SWQ382I9nm
+ bz/PYJtkKcKR5HQ5DlenM9791kT4cc4clnexrmQ6cTppDRvzE8//0j41uhUbub8zMrgIhLP4mdd
+ lkj4K2rJR0UeY9kGp6TKp50YjakUM5ipVbLH1gQlS5FoYoOjHOJR7hdw5QdJ4iPqUO7ef9atf4o
+ 7PzQQIXSfNPts0tt1KvOrIaWvfA1ab3R9hf/o21AOGrMfyPTvqOjjwo+tn/aSkyWig/kQNPgwUv
+ Dx9CZCfZGJaqrPg2g+h3JJ3CbOH/wSfDPkPV5Z39wwk+2hGVofoWoQ51
+X-Received: by 2002:a05:690e:4386:b0:667:6034:d273 with SMTP id
+ 956f58d0204a3-6677faedbb4mr2670410d50.5.1783421035511; Tue, 07 Jul 2026
+ 03:43:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87tsqbjnrb.fsf@pond.sub.org>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260702184038.178196-1-shentey@gmail.com>
+ <519f6e43-5273-4426-b673-71cff44daffa@oss.qualcomm.com>
+In-Reply-To: <519f6e43-5273-4426-b673-71cff44daffa@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 7 Jul 2026 11:43:43 +0100
+X-Gm-Features: AVVi8CehRy-VKWeD7SVF3oAyi4pbiJkeSstNGWL2B8a6GGaZpHUITZLEXLddr50
+Message-ID: <CAFEAcA8aR6GPZWDphbTgPhVf3G=eoNrAFdb9QcLCGh9hdavkAA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] hw/arm/fsl-imx8mp: Add inital FlexCAN support
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org, 
+ Matyas Bobek <matyas.bobek@gmail.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>, 
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>, Pavel Pisa <pisa@cmp.felk.cvut.cz>, 
+ Jason Wang <jasowang@redhat.com>, Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Francisco Iglesias <francisco.iglesias@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,73 +121,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 07, 2026 at 08:51:36AM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
-> > This introduces abstract QOM type "monitor", with concrete subtypes
-> > "monitor-hmp" and "monitor-qmp". This is the bare minimum conversion
-> > of just the type declarations and replacing g_new/g_free with
-> > object_new/object_unref.
+On Mon, 6 Jul 2026 at 14:25, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> On 2/7/26 20:40, Bernhard Beschow wrote:
+> > Now that FlexCAN emulation has landed in master, let's add it to imx8mp=
+-evk as
+> > well. While the real i.MX8M Plus supports CAN FD which isn't emulated y=
+et, the
+> > non-FD mode works well under Linux: It is possible to use `cangen` and =
+`candump`
+> > either way on the host and on the guest, as described in
+> > docs/system/devices/can.rst.
 > >
-> > Command line option "-monitor" now creates a "monitor-hmp" object
-> > "/objects/compat_monitorNNN" in addition to the character device
-> > "/chardevs/compat_monitorNNN". NNN counts up from zero.
+> > This series consists of five patches where the first four are preparati=
+ons.
+> > The last patch integrates FlexCAN into the i.MX8M Plus SoC and EVK boar=
+d. The
+> > first preparation addresses the review comment from [1], and could be a=
+pplied
+> > independently.
 > >
-> > Exception: "-monitor chardev:ID" creates a "monitor-hmp" object
-> > "/objects/ID", and does not create a character device.
+> > It would be nice if this series could make it into 11.1.
 > >
-> > "-qmp" and "-qmp-pretty" work the same, except they create a
-> > "monitor-qmp" object.
+> > Testing done:
+> > * Start imx8mp-evk and run `cangen can0` there. Observe on the host tha=
+t
+> > `candump vcan0` prints the traffic.
+> > * `make check`
 > >
-> > "-mon" now creates either a "monitor-hmp" or "monitor-qmp" object
-> > "/objects/ID" if the option argument provides an ID, else
-> > "/objects/compat_monitorNNN".
+> > v2:
+> > Thanks for the very helpful and super quick review, Phil! Here we go:
+> > * Add patch "hw/net/can/flexcan: Wire clock control module via link pro=
+perty"
+> > * Have separate MemoryRegionOps for 32 and 64 bit
 > >
-> > "-gdbstub" and "-serial mon:..." now create a "monitor-hmp" object
-> > "/objects/compat_monitorNNN".
+> > [1] https://lore.kernel.org/qemu-devel/77d5891c-de12-467e-8746-02fe4312=
+1e3e@oss.qualcomm.com/
+> > ---
+> > base-commit: a59157f98f0b69b0bbdb26bc15fbc4d6c8060799
 > >
-> > Note that the object's name in "/objects/" matches the QemuOpts ID when
-> > it exists.  The only cases where it doesn't exist are "-mon" without ID,
-> > "-gdbstub" and "-serial mon:".
-> >
-> > A future patch will make "monitor-hmp" and "monitor-qmp" work with
-> > "-object" and "object-add".
-> >
-> > Note: there is a slight change in the NNN values assigned. The old
-> > code would increment the counter for every monitor added, regardless
-> > of whether it needed a "compat_monitorNNN" ID assignment. Now it is
-> > only incremented when an automatic ID assigned is needed, from any
-> > of -mon, -gdbstub or -serial.
-> 
-> This isn't quite right.  The old code increments the counter for every
-> monitor added with monitor_parse(), i.e. the monitors added with
-> -monitor, -qmp, -qmp-pretty, and most default monitors.  -mon, -serial
-> mon:..., and -gdbstub don't use monitor_parse().
-> 
-> If we don't need a respin (which seems likely), I can amend this to
-> 
->   Note: there is a slight change in the NNN values assigned. The old
->   code would increment the counter for every monitor added (except for
->   -mon, -serial mon:..., -gdbstub), regardless of whether it needed a
->   "compat_monitorNNN" ID assignment. Now it is only incremented when an
->   automatic ID assigned is needed (but even for -mon, -serial mon:...,
->   -gdbstub).
+> > Bernhard Beschow (5):
+> >    hw/net/can/flexcan: Wire clock control module via link property
+> >    hw/net/can/flexcan: Subclass TYPE_CAN_FLEXCAN
+> >    hw/arm/imx8mp-evk: Open code DEFINE_MACHINE_AARCH64
+> >    hw/arm/imx8mp-evk: Introduce FslImx8mpEvkState
+> >    hw/arm: Add basic FlexCAN3 support to TYPE_FSL_IMX8MP and imx8mp-evk
+>
+> Peter, you just sent your (IIUC) last target-arm PR. I'm about
+> to post my hw-misc one, do you mind if you take this series which
+> is fully reviewed/tested?
 
-Yep, that works for me.
+As you note, I've already sent the last target-arm PR for pre-freeze
+yesterday; I'm not going to do another one. So from my POV this
+has just missed the deadline and will have to wait for 11.2.
 
-> 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+thanks
+-- PMM
 
