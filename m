@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D84BC44500
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 08:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 313C4C44500
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 08:36:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh1Gy-0003pe-FL; Tue, 07 Jul 2026 04:35:20 -0400
+	id 1wh1Gg-0003gW-4z; Tue, 07 Jul 2026 04:35:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wh1Gx-0003p1-6i; Tue, 07 Jul 2026 04:35:19 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ id 1wh1Ge-0003g8-Rs; Tue, 07 Jul 2026 04:35:00 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wh1Gv-0008Pe-FZ; Tue, 07 Jul 2026 04:35:18 -0400
+ id 1wh1Gc-0007zQ-N9; Tue, 07 Jul 2026 04:35:00 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=i7nGaf9nXILo7s6DApIjkOYwtKWLmTu+F1V13DgewEpsadJ+X33fGX6JUVcLbaIqxYNsDTA/Cli6XeC/gIATnqkESJ7KUWsDWR5bfpX7kV613QtGTHDn9mQDljxDyV5Um+6UdzC+HBOJJSKVd5DzvRaVaI+o+pem0XNiHAqFKFOpOw77IpYu4m0XOvgsVqiC+USBhbR8Skjpe+cHju6TOD3vVJ5iU3KSIfTaVTG5kot8jh3QcAC+IsFUK89YaEw9CNYcQQ9TpKbDhDnK5TL6hC1jfF7N/Y6UY+jjb1zDNPhl6c51/v4wPVeausOUB0VEeKLFg2wUZ/edLFIjNov3sA==
+ b=U6Oq6mSW1kDdipvW6bRNFAVGg+ihMNbGj4uzY5Gmd2O4BN0r4Xw8CneTdH9i2kPfHiqlk7ZPrfVmBPUyLwYW+YpJJiXZyB8Jlxq6KaWMg+WawLXw3Bs7GV+9AV+y0+F07OyRVwAjSwD/WyvDHxwe+25YihYo7goJHIdsXc/HJg+vex39IpNnANXGcyNTKhbnxgsmM5L3KrTFg3uLaepAqRqQd8MyKrK3682yfZNdYiCo2VhtsFSI6025sAWvVXM43rpTzkOtqMERGowuBccCtYHX5gh5nRBdcBb03/GJwwodCeihOnvVcAoMh2i2QCL/gjRGoXCPzDIa5EzGTGbXRg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dWvs9s7sq85L72uhb9L9+IWPYobQcvvEI2EZ/k5tnhA=;
- b=RbuyXkx/7dCaTG7byDQI1NeP9g0nXzYay1ClyA+ZQy6kwX6g8ZxkoW/y79Cc/8SwBQ5n1odcSPWqnUOaQ0Qzmg8do7PB4CTKIQlWx3JpwKYAaVUSrpY0rMRCJoqr1HkjllWjr7zDOuZs5tQI0SJ6FUgYixg/xab/nDpHXILP1ISOQdblWfbpQb70lFk0dzSmnzvLYnlajzA1zDFGs6FLg1J7j5zGxJwHcKP4LMHnDk7ijJiZPj4dErFSX1P2bgk64TAO2Gj9/UnSMfZGgsDfsnpHD3IVcIoqlR19G6fN9LTYT3IW3LR+cXTIOpWEbUi+sKfjPuEnHCyxNyvzszeqKQ==
+ bh=/jqjXNd9EP5faNlm5KnE0C4FK0vbcqJp74+zoED+jhs=;
+ b=lCXpMbowG9p9iEDcsL5MdZCOFOksJvSPzvgNCPLv6T8kd+kqBQunTkEq8h0MS7J1RC2EZdI8/8JMl1xgvQA9NnljgBp2siJVlEWO7o4uSUsbgocET+8mZ+zQ/YuHJRN55e5IOdWMkms2JDPF4K69GbiQi5d/TSSHUOWFnTp71JfIRm8lCRbRrXjxz2tcA8alhUkkKRY+UytxA0dYKEsl/OkOGCPLSIQI2bE1UT3xq4wNPYbM5lQJ4RyvncgSr3CQRReWRxSH8soEYVs39DAs4c1q0BWrMggBOI+8tWFV5MHJlEGZXXSeKG18++saiXUUQZeIA2xO89+GdA3f3bf7Bg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,37 +33,37 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dWvs9s7sq85L72uhb9L9+IWPYobQcvvEI2EZ/k5tnhA=;
- b=j8+gkCzGyhCGeDeoLWLUufwgofUrJIuXr0uJ8NLOOxKux7dGN6hWyXjWvT1rsYnMgGfdwjc1PWPCuVXd9jOFIwjzCktihTvHV7jO82oP73rUM4L5tXCFjp0kqFDUt8lB0R068ieawPoEazFGsbyBetl+xqv1ielSyzvQcWjEDrun4xzPlmLlkrfNbunvntUrdDmK0n+C0DtJjpShdskrLaUN7OeqmIY8fAd//VZGloipsu+9eK5z3JG6vaBxw/FrEcavPYUTF7yT0ZPbBk6Ansg9M9tzfDO5hGk/S3mx4P22eyLnI/N3CzdPf2qHe8rFK5pO/d7syoay46aZenj1TA==
+ bh=/jqjXNd9EP5faNlm5KnE0C4FK0vbcqJp74+zoED+jhs=;
+ b=AW9xNs8kSs57nssgY1FGXe60CwVs9fAq427avVDikVEGw6TTvtKudQVNn6GROn8U+Rno1TorOzrE70QBnERBLUbkPkLPMe7mG+jEk30XN1VBFoJqgR5keP7xBK5LHPkP2Z2lgOV/4w+9wGYTslii+wPgrxfahuP6tlXaMM/19lV3G4ZlFe+zEAYVWqKY8d7D76KXlUWQ2tw9decFtdqjD0WnGAiJgh0Q0Ya97ZLUVa/CAcPIQiAr6kz2wN/oX1aW+FN3xKg53IGc/nRUai6M1B03bsi9x3DId+chmm8X/RBcWqroIgUY9sV03BZ5d88zN9sOfHeXaSkLUnN5HcthRQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by TY1PPF1A8DB1DA4.apcprd02.prod.outlook.com (2603:1096:408::94b) with
+ by SEYPR02MB5558.apcprd02.prod.outlook.com (2603:1096:101:53::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.13; Tue, 7 Jul
- 2026 08:35:10 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.11; Tue, 7 Jul
+ 2026 08:34:51 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0181.012; Tue, 7 Jul 2026
- 08:35:10 +0000
-From: Bin Meng <bin.meng@processmission.com>
+ 08:34:50 +0000
 To: QEMU <qemu-devel@nongnu.org>
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
+Cc: Alistair Francis <alistair@alistair23.me>,
  Andrew Jeffery <andrew@codeconstruct.com.au>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Hanna Reitz <hreitz@redhat.com>, Hao Wu <wuhaotsh@google.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- Kane Chen <kane_chen@aspeedtech.com>,
+ Kane Chen <kane_chen@aspeedtech.com>, Kevin Wolf <kwolf@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- qemu-arm@nongnu.org
-Subject: [PATCH v2 08/10] Revert "aspeed/smc: Fix number of dummy cycles for
- FAST_READ_4 command"
-Date: Tue,  7 Jul 2026 16:34:27 +0800
-Message-ID: <20260707083431.219671-9-bin.meng@processmission.com>
+ Tyrone Ting <kfting@nuvoton.com>, qemu-arm@nongnu.org,
+ qemu-block@nongnu.org
+Subject: [PATCH v2 00/10] hw/{block,
+ ssi}: Fix spi-nor flash dummy byte handling
+Date: Tue,  7 Jul 2026 16:34:19 +0800
+Message-ID: <20260707083431.219671-1-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260707083431.219671-1-bin.meng@processmission.com>
-References: <20260707083431.219671-1-bin.meng@processmission.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: SE2P216CA0106.KORP216.PROD.OUTLOOK.COM
@@ -71,77 +71,77 @@ X-ClientProxiedBy: SE2P216CA0106.KORP216.PROD.OUTLOOK.COM
  (2603:1096:820:71::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TY1PPF1A8DB1DA4:EE_
-X-MS-Office365-Filtering-Correlation-Id: f30326d4-88b1-421e-7d33-08dedc02a809
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|SEYPR02MB5558:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8ad237cb-8470-4bda-fd76-08dedc029c15
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|34096008|7416014|376014|1800799024|23010399003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: fb01RylsLd0rXifIVbmkuacaLJ+0jQHfcg0MGasagM0Z/WJGXxlj99jfTodDDTxOXvcrBq/lb02Spk+1D+AoAt1a41o1GgzgJuulL6M/Skq5MC5azWrJBXTFNwd00MYFKemmrN5DfgG+gI3XJVdHJitEJGmXtoMb8Lx6FtxMIaMsYScvbCPLe4xPdJ1ysfGKDtw7atIEuhhGwitm6cuJSKruYDAKDhuQ1l7PXjRULPfFrS2XldAoXM/a5VCajWLhHDxAiFEYx7DBjdLA73KcewiaiY9ascXQa+3kAJxcSz6q3hgZievxriyqjxjHu+W8paU2gkYhMlnL5WkuFNCMCKTzrraZu5pAgAOArkc2IU5GD4KTuiSR8yDgWxqIQVajrI1KjlAk0v0GFD4Sa6nAeLmhsXDk0nDOyRp7ZLssJ6Il8UrauCVphMsgE2XszbRIgdvRC2+yw/320/pb+UsNCAP81eLM3ihwN804dRl17lQnAeqoOx/7Qj3XwyzOxTOUbScdzZFIY6EvOpmbVZFkEDrDnjc+Qal17sDvoTr4VgSOJUArprqfQUNLyNpez/3YQJ68Yc/iOJgI4AyFRsjf3OLImU+Eg5sxM45/A06SR4/za0kZhPzOUdPpzT7A/jcZMFBqwr14lqLXNm4UnRrL2P5QD9pQPh27X/cGynq79M0=
+ ARA:13230040|34096008|366016|376014|7416014|1800799024|23010399003|3023799007|56012099006|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info: 6Ex0NmaJ5+gj7VSTlKChD7vDC37YGqPPZ4+P2RsfcagD0EHmjoKvX+Oc7vOILEy0P/etfEmvaehV8Cqk35SI6aWQPTHvokMAAlMTDUN9FofU5Rjjrn8UpcMCUJKn4iHzYVp8+riP2iviLtrLucFHpK3utnB3lqmE1O9Gqyun3nv1e6CdwTtIQM0GG9copUdAcAwRNn3HbcFAvmqozldPHHv1eOzmNDJRl1V9r/k2JFi0QCsoTOA/Oo2TapDL67b80jY5QBBXOj1JbJGTm+AnH6R54doArwYebSQSwh/IW49vW78lulwIiQFHKh2Mp+SiNbYH/ImoVCpJ1CUTjGaNlB8u8REbCcL5sFRp0DX+pGJXSEXdYak2hglPt69z87j9tgqhH/inTUo5GwaScsLAtm5OpHsBEhYNJg47g5Dmx17jw6wIrW6JR3CTQwFeR5VGNZKy0isrPQsqiBxjKLJ2d25NBPF2XUgPXwK4fKDDlGY7leDnMx4dFUtPARGnYqI2J5i8u3iOdjv13n3gOHSK0MQkoI2E055bxxk2CUwwLYs4j4/pKYjFqiVqHwu6xbU144jliOUcmmQylZcTvYGNBmnPQpyCD7oJ6rw6Ua3qyT2C/MRKB5VOWNprTl3ddlLoe6G2N0B6o1V/IlKNtO137fOACAUJEWp3ywE6qCmmcOU=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(34096008)(7416014)(376014)(1800799024)(23010399003)(56012099006)(18002099003)(22082099003);
+ SFS:(13230040)(34096008)(366016)(376014)(7416014)(1800799024)(23010399003)(3023799007)(56012099006)(18002099003)(6133799003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WktIZU41SUdlMW4vOXcxOFdQaHp2bU9qTndXenF3MmUyVjZZVGY3aHRyUGNu?=
- =?utf-8?B?YVVaaEZMeUNzd0JrVENWQ2ZlUElJNnZqY2dhVUV6QTg3S0M5aElxeEpOTGRv?=
- =?utf-8?B?U1pET09iOXA5MDRmaFRudElId1dvNkFkNTk4RXNaRUxORDZGN3FLa0tibTRF?=
- =?utf-8?B?eERWdXRiU2doeWFlM0U1OHkySVRONkk5QXM4MDVHdk8vNUd3RVVqbnI1eHAy?=
- =?utf-8?B?T015bHpHNmNiQ2NraGVpSjdrWDlkMXdZMVFTSi9adkp4RzYzTUJNU0lqMVoz?=
- =?utf-8?B?Vk85SkxacEphMjgxSUhOSHhVSDFXVWdyZUQ2N01SQm5TRHRqTGRMejFtZU5U?=
- =?utf-8?B?eDB5NDFVSnNQNEdCQkZ1amU2NEJUNXRHMkdsYzd1Sk92QWo2V0J6aXZEN1Rx?=
- =?utf-8?B?NkExeXM0YnVxajQ5UmhYYi9lK25NV1o0dFR4Q3lJNmdCNHhpQUpJZUVvYndB?=
- =?utf-8?B?bTdXQS9ra0o4OThFTjkrTGxUVFhSU1F2aTJTWEFybGVWZzk2Nnk0cFJTWTNN?=
- =?utf-8?B?MCs0MUtGbTlkR0ZGaXI1STlaekNXN3BYM21jbDVyY2ozM0IyL2ZDQnBQaFlz?=
- =?utf-8?B?TW4xMTlvM1NZL1VSK05kM21LUnVKMVpSRXB1RHZ6QlBBUDZDUUtwbWdUSVcw?=
- =?utf-8?B?MHRVSm93cjNyZmRFZUNNUTNvaGZ0cWFIY1M5c3VzYWdlS3g0OE5ScHp5V1dQ?=
- =?utf-8?B?a0ZJcFF3T3lja2Y4L3FtY2ZNVkhoVHZSclpIOTRnZVVMckVKemQzY05oZ0ps?=
- =?utf-8?B?S2JUOG1CaHptQncxWi9Hc2JPWEdka0pBNjl0cTV0V0RuNUNaaWtxZm85Tll2?=
- =?utf-8?B?QWhLdXFIQVZDeFY2NGVzU1grZGxDR2hadW94YjVKcis5aGtoSDZEN2FEQ2JU?=
- =?utf-8?B?b2l1Yk9TU0xicmJlbnJ3S3A5emtWZlJCc29oK3ZnS3c2L2ZMOUlnN1V2MDdH?=
- =?utf-8?B?Z3pxSFNhckRUSEhhaVNnMnFsemJTeCsxKzh2VkVmdVIrSGYvV0UvMnN2RUwr?=
- =?utf-8?B?WGlMU1lpRVIxMnBZM1dDSWJqMmx5VlRhMU9jcjJjWEVMRSsxSDRyeUNKMWRD?=
- =?utf-8?B?Z1JUTzY4UUlmdXE1NTlPYU1FY0FPaXdCWGMrOG9YcEFBdTdBUkVOOTlsclJZ?=
- =?utf-8?B?b2k5VkV2cFZVZ3NlN2VyWHN5OU1ja01pQWlVUjRKelg1d0lucWNVRFdrUEFI?=
- =?utf-8?B?VVBybUhhLzNNR1V1OWZOaTAxNmJyMjhnQm1tbWhkUmxjeTRuODVUVzQ2S09u?=
- =?utf-8?B?eUtRL25TdlZnOEovWGljMWRnV3lkNWhWWXdvZTEyUjBXc2JMV21yZlpyV05z?=
- =?utf-8?B?ZWFnZktXaXlvK2lySjZpMEo4NlhURHpPVThrR2dOdWdQMnJxelhKbDduSHZ5?=
- =?utf-8?B?ZERCTmt6UXFxM3k0WGhuS095TVRmWmlaZ29vcmx4ZFh3UjZsdFBlRG41dTEz?=
- =?utf-8?B?UGZBYm9hSzdwekphOXJ0YkIyeTE5YnBSNFNvZ0xXQ0cxMUtYZVRiSS9ud0lq?=
- =?utf-8?B?T3pCaE1VVlltNTB2bU9jc2JKa1VBZ0VKMHIwVGN5ajFiRWs5UDlQR29PWXhX?=
- =?utf-8?B?L1ZKUS9mQ1ZOSy9BdHErQkdpK2NkRWFLL2orNGRiRllGNHkzYWl4eCtWYjV5?=
- =?utf-8?B?R240eis3MDFGdThuQ05BeTB5a2dWcVBJbW1ycXpiVytCM0RZNFgvMG4xSEVT?=
- =?utf-8?B?NGcwSG9mV1dFOWY1VWdaVnVDS1prbjVxdzU2amovclVqUExUQU1VU1lSelpQ?=
- =?utf-8?B?SmJEUUhyZHRZYzhpOHFVVHBEcjNiU3RjUmZ2YW93RVU0RGQra1RQZS9sVTBV?=
- =?utf-8?B?Q0pOWC9uUldsRktaMHhmdTRQZFBsT0J4N1Y4bmV5QWlpd2RBMS9UT1RvN0l6?=
- =?utf-8?B?NUZDc0ZFYlF4S0VTRWNiMVE5Z0FGL1o3eG1Ta1lTVHFLajBTVEdPRGYzNTA1?=
- =?utf-8?B?dVVkZkp4VWp2Z3JCRGRQMlFZZCtiMm5lNWlOWUZoOHg0elFUUFNIeTF2SnpR?=
- =?utf-8?B?WVoyUC9oakY0WlNTdG5Pa2JXOGg5a1o3MUdsR0ovYWQyUG9Odkl2aGloME1o?=
- =?utf-8?B?WVZaK1VtaHl2MU9DYWluUE5VcTZRc2toVE9ON05IbTZFR2Y2Wk85ek1jTUtJ?=
- =?utf-8?B?V25CUEI2eHpCRkxpN1ZXa1VYVWdaNC9udWlGbXk4LzdzNGhQdGFxeDVSeHFa?=
- =?utf-8?B?dERpaXRIcW5vbWxIS1ViS1ZPWHhUekdhTVVSdmVTZXRqQ1kzSjdUcTVkQ1Va?=
- =?utf-8?B?VlByMDVpTDFOeEcvMDVtTnhjQU81Z3FKazgzREJjVFZPVkVmWURSWjk2OWsv?=
- =?utf-8?B?bGwyUU9STUtaMER1bjcyTDc2SVBJdHY2dU5oQ3JqZkw4YytqNU5uNUt0S2Z3?=
- =?utf-8?Q?2jGNPO1gSoHL0pMU=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OHByWW1hbFd6TW16WUtIY3RPSU1ZOWVIOU5xaUVNWEN5RU1FdlQ5WGVKcW5J?=
+ =?utf-8?B?anZtZWt0ZFE5MTFoSjlVL0I5NVg2a1NCOXgxU3VnTzROUWRNcEQzeGE5aXdL?=
+ =?utf-8?B?YWE0MFlSZ3hhWE9XRU9lVmxkeXp2ZnNXZUpwWFdZS0VFVGVXYVBFZGE5S05t?=
+ =?utf-8?B?OTJGUTlDcTBENWpYdDRaNWNpU3dRcklnRERsWDV2MHpHZmpnV2hQazJ5UHZH?=
+ =?utf-8?B?V21JbFA0QUtUVXB5VTRxUWEwTjBoTDRVWUxINW80dTZUeFBIdExhSXgvVDNV?=
+ =?utf-8?B?R2JVd2ZvWCtNdDZKSmxGOWxhK1B2b2xUY0lIOUlXaUY1TmdxWWhsSFd2WXRy?=
+ =?utf-8?B?eGVvTEk0WElpWWN5N1ltb3dhTCtqVnFWdjdRRXN4ZXBkREdtUGdDL0xWQk1M?=
+ =?utf-8?B?TnI5Zm91Y2Nua1ZUSC9lSEp2NlY2SXZHTjVodnhxRGE3d2N0VXl3RWZyMDN4?=
+ =?utf-8?B?cnkxNTNnMTFlVTVSRENuWVgvUW9KbWlTbzBjQnViSHBKWFlLSmtIMXlCYnlO?=
+ =?utf-8?B?WlJhT3NrR1AwRlFUelFwS0xHNnR0eXZodldIeFBmc2JnNWsyM3U2RXFlanNw?=
+ =?utf-8?B?YjY0OGRsT2tnQ0RXSS94dkJsZXlXVGNDdFV5U2hvNUR3Yk9SOHkzSlM2NHJQ?=
+ =?utf-8?B?a0ZwRTY4WHZQL2NHRzZvN0R0NVljR2pSYzhqeWlSVWxVZDVLVFBBL3AvNERv?=
+ =?utf-8?B?N1JGTC9OSEg5R0FwSnlFMElRUDZ1djQ2SzYwYThoM2tpdTRvd0VEQW9VbDMv?=
+ =?utf-8?B?dytGWTJMZ2s2NjJjNGRXVGV2cmZpZEVMOUptM3I3QW82b0JWaU90UEFueUt6?=
+ =?utf-8?B?UGp5MThoR1VFK0M4T09XYVlhaTkrdG40VDFnM3phODNKNzdScmk0aVAwNkQ3?=
+ =?utf-8?B?UzBIOGNhSEt6Vnc3MEFqUFpOMzdma0N0L2pIeGZTU1VaVk1mZGhUV1BYd2Ji?=
+ =?utf-8?B?SFNsNE1JSHg1VklTRm1MejJVcXdMZUxic1orYlI0d2w4c2R6WXUydDV1Zm9B?=
+ =?utf-8?B?NTk1TEdLaXJURzVIYzRZVzJuMCtXSHRTSnUzajJUUEFoUU42Ujk5azRLYStK?=
+ =?utf-8?B?dVVuUGtmQ3QyY3FKdUI2bjZUT3hpWTExWlMybGhmanYvaWVCWDZhcmZ2Qjgr?=
+ =?utf-8?B?a3dpbGxVZG9YQ3g0ZDhxOVNmK3NBY1JLd21iTzk5OWNDMGU5UURPcHd2UlV5?=
+ =?utf-8?B?TCs2bnQ5cU9HcjN0dlRRMFdtOW92eVdVWm02bSt2bXhVV1JncDBJZ1hjMXMv?=
+ =?utf-8?B?MHJKeHI1OXlaRU5abHNRQTV3M2ptbjIvV0ppN1BlNVVWVE1GeW8wWFUybkR0?=
+ =?utf-8?B?Q1BtSzcySTZJbWRFV1Rwb1NLbVVaMy9RNjNLcTFVYkZoR2xRWG4weHN2VXFF?=
+ =?utf-8?B?ODRRRDYrbTMzRDgwUVh0S2VyaWVGTDFRbnNlWFhnQnJscjlQbkk3MnBxbGMv?=
+ =?utf-8?B?czZmUlJhejZNTWF5MVBlTzEyd0VzOVRESkJBdmdBUmh5cnV3UXZsSlJPdkU1?=
+ =?utf-8?B?b1JLZ0JHNENnVTJScms1OXpmcXMwUzRtYlhlVWNQZWNxVXhlby9lekIwR1ZX?=
+ =?utf-8?B?T1lmUzU3emdQTE5pT2g4cGVqWnk4OENRR25EdVJ5bk5heTRtMHZZMGRaQTBL?=
+ =?utf-8?B?QWwvRlA5VldXbDFLdFV1Zi82dzBCV2QrSUlVOXMwanN2VGpERjdlMDkyRkZt?=
+ =?utf-8?B?VC9wLzFvbytRM3c1YmsxZ1I2YUdYOXlmdTUzOFZUbEVaWCtMS2dvdzdFZDVG?=
+ =?utf-8?B?UlQvUFo0dU5TSWdtQ2xnVFUxVkc1ZVZEc1daWlcrY3dkQ3FkaDVRaEsxTk5V?=
+ =?utf-8?B?dkdXVytvMFJOQW85S0E5WCtTMGZJdGF3bGhsNzJNVXVCYzgwd1J3ZjVRMjVW?=
+ =?utf-8?B?S3A5MlMyR2QwYkhJVkRTTjY0Tm1KeDlrQ1hVYWpFSVRYQ3BVYnJxSUtpcGor?=
+ =?utf-8?B?SkU3VitoNnpoNFJ3SVU5VkV6RGZFeE01S2pUYXg0UzArUWdQb0NqbStoUDl5?=
+ =?utf-8?B?VUo1NHppeDg0N2JBaW5nWFZTVi9aMy9BK3dHbkxuQ1htZkZaWCtuWDFBQVZY?=
+ =?utf-8?B?YkFWL2N6ZkRja0oxM0NYelZESjkydTZIdjIrQlltaC9sV3oxUTZDUHZQdmgv?=
+ =?utf-8?B?RnVBNUZLWVR5TUxQWTJTQlRoa2NLVzVlSExFTXpxWVpmQmphTnFxbGdYazhp?=
+ =?utf-8?B?MG12SzIwU0E5cnhHZ0xwV1QxVFBmOHpZRmxFOERibEZERFh3ZEcwOFRXOXM1?=
+ =?utf-8?B?Y2lOMjFqWkpTeUpiWTk5djdYbEtrM3NjYnFSbm1JcGI0eURMa3VvSU1ZcGJY?=
+ =?utf-8?B?NDY5emtlRFRFUlgxSVkwdHQ0a0xCWHFON2JOSFFOU0lxYlgwY0FoMG5Na0Yz?=
+ =?utf-8?Q?fRcKjyCU1oJWp1f4=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f30326d4-88b1-421e-7d33-08dedc02a809
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8ad237cb-8470-4bda-fd76-08dedc029c15
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jul 2026 08:35:10.2119 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jul 2026 08:34:50.3303 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: QHVnG5SK+hNmXkQ09k7+wCVhApR248NVlVznPddZMmuY/YgAA1rLmpwKn+fJRsmKNeJKdYAQKZ1dLFb4Ozjo4U4d5GiOJ3pzoo2yo40TPFY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY1PPF1A8DB1DA4
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+X-MS-Exchange-CrossTenant-UserPrincipalName: eHMU3XB7fvtEBqXd2iw6S6+AdyT9sv7lhtMf2dqVO9CmvKwXyxvJb5msmPYU57nSgzfUrG+L586sTBgo3H0cMKcp/wUtvFUEmRHUZspbpJc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR02MB5558
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=bin.meng@processmission.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+ helo=TYPPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,41 +155,98 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Bin Meng <bin.meng@processmission.com>
+From:  Bin Meng via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 7faf6f1790dddf9f3acf6ddd95f7bbc1b4a755d0.
 
-The incorrect implementation of dummy cycles in m25p80 model is now
-corrected. Revert this commit.
+This series fixes dummy-cycle accounting for SPI NOR fast-read
+operations across the m25p80 flash model and several SSI controller
+models.
 
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
+The root problem is that the affected code paths mixed two different
+units. Flash datasheets and controller registers often describe
+fast-read dummy phases in clock cycles, while the SSI bus interface used
+by these models transfers byte-sized words to the flash. As a result,
+some paths treated cycle counts as byte counts directly, and other paths
+compensated in controller-specific ways that duplicated flash command
+semantics.
+
+The first four patches fix the flash side. They make m25p80 keep
+`needed_bytes` as a byte count and convert manufacturer-specific
+dummy-cycle requirements to dummy byte transfers for Winbond,
+Numonyx/Micron, Macronix, and Spansion flashes. The Numonyx/Micron
+change also handles the standard-mode case where the dummy phase follows
+the address bus width for output fast-read commands.
+
+The next patches fix controller-generated dummy phases. NPCM7xx FIU
+and Xilinx ZynqMP GQSPI now convert programmed dummy-cycle fields to
+SSI byte transfers using the bus width selected for the dummy phase.
+The ASPEED SMC direct-read path is updated the same way. The two ASPEED
+reverts then remove older workarounds that either hard-coded FAST_READ_4
+dummy behavior or snooped manual user-mode SPI streams to inject extra
+dummy cycles. With m25p80 accounting fixed, user-mode byte streams
+should be forwarded as supplied by the guest.
+
+The final patch documents the intended ownership boundary: flash models
+own command semantics and dummy-byte consumption, while controller
+models own hardware-generated dummy phases and cycle-to-byte conversion.
+
+Some background:
+
+While recently working on some device modeling, I hit this issue
+again. I then realized that I had sent a fix series for it more than
+five years ago, but it never made it upstream.
+
+This series picks up that old work, refreshes it against the current
+tree, and fixes several issues in the SPI controller models. The original
+series is available at [1]. I have tried to verify all the SPI controller
+changes by booting real-world guest software to ensure the change does
+not break anything.
+
+[1] https://lore.kernel.org/qemu-devel/20210114150902.11515-1-bmeng.cn@gmail.com/
+
+Changes in v2:
+- correct the typo in the commit message: instrunction => instruction
+- correct the typo in the commit message: genenic => generic
+- change numonyx_extract_cfg_num_dummies() to numonyx_extract_cfg_dummy_bytes()
+  to avoid confusion
+- change macronix_extract_cfg_num_dummies() to macronix_extract_cfg_dummy_bytes()
+  to avoid confusion
+- change spansion_extract_cfg_num_dummies() to spansion_extract_cfg_dummy_bytes()
+  to avoid confusion
+- use assert() when the dummy bit count is not byte-aligned
+
+Bin Meng (10):
+  hw/block: m25p80: Fix dummy byte handling for Winbond flash
+  hw/block: m25p80: Fix dummy byte handling for Numonyx/Micron flash
+  hw/block: m25p80: Fix dummy byte handling for Macronix flash
+  hw/block: m25p80: Fix dummy byte handling for Spansion flash
+  hw/ssi: npcm7xx_fiu: Correct the dummy cycle emulation logic
+  hw/ssi: xilinx_spips: Fix dummy phase handling
+  hw/ssi: aspeed_smc: Fix direct-read dummy bytes
+  Revert "aspeed/smc: Fix number of dummy cycles for FAST_READ_4
+    command"
+  Revert "aspeed/smc: snoop SPI transfers to fake dummy cycles"
+  docs/devel: Document SSI dummy-cycle ownership
+
+ docs/devel/index-internals.rst |   1 +
+ docs/devel/ssi.rst             | 132 ++++++++++++++++++++++++++++
+ hw/block/m25p80.c              | 154 +++++++++++++++++++++------------
+ hw/ssi/aspeed_smc.c            | 135 ++++-------------------------
+ hw/ssi/npcm7xx_fiu.c           |  25 ++----
+ hw/ssi/trace-events            |   1 -
+ hw/ssi/xilinx_spips.c          | 122 +++++++++++++++++++-------
+ include/hw/ssi/aspeed_smc.h    |   2 -
+ include/hw/ssi/xilinx_spips.h  |   2 +-
+ 9 files changed, 348 insertions(+), 226 deletions(-)
+ create mode 100644 docs/devel/ssi.rst
+
 ---
+base-commit: 94826ec1370328375c3b6d1e80fdc94c8f46c348
+branch: m25p80-v2
 
-(no changes since v1)
-
- hw/ssi/aspeed_smc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-index 3f957d153f..58e5087b57 100644
---- a/hw/ssi/aspeed_smc.c
-+++ b/hw/ssi/aspeed_smc.c
-@@ -568,11 +568,11 @@ static int aspeed_smc_num_dummies(uint8_t command)
-     case FAST_READ:
-     case DOR:
-     case QOR:
--    case FAST_READ_4:
-     case DOR_4:
-     case QOR_4:
-         return 1;
-     case DIOR:
-+    case FAST_READ_4:
-     case DIOR_4:
-         return 2;
-     case QIOR:
 -- 
 2.53.0
 
