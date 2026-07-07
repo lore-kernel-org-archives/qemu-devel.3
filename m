@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63913C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 17:17:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 608ECC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 17:19:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh9Qb-0003fA-S5; Tue, 07 Jul 2026 13:17:49 -0400
+	id 1wh9Rm-0004Yk-5Z; Tue, 07 Jul 2026 13:19:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wh9QY-0003VX-9i; Tue, 07 Jul 2026 13:17:46 -0400
+ id 1wh9Rg-0004YH-Or; Tue, 07 Jul 2026 13:18:56 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wh9QV-0006zj-VM; Tue, 07 Jul 2026 13:17:45 -0400
+ id 1wh9Rd-0007lz-3e; Tue, 07 Jul 2026 13:18:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
  Content-ID:Content-Description;
- bh=I403/UIDq8K1AkviJ2LEhkYONKX+kPYwH2uam2dinEo=; b=cElRKGu9OIPbQqr7wDZsLsjRAC
- sX+Nh6dFAQ4GFv5I8WfoWeZD1XBwQUwPbsZ2TSNUWO4C62UIRsf1oS7UdWG4/GDcFUF7x36e6Mnql
- cLu0XHO23c/MHR4kocMXK+/zP3nUEwcD/piFekEL60jLVDigyv8+U3P1sfl7EfWbo+3h/fHNaLlH4
- 1YjlSmxGNMxTMWmFq6sjtyoR0wuMat/7PLbgJTm7LzBWwTbh0gPMgvKhbwWGnlzzZrsWZ6JzdNzZC
- pmLnXRfOjiRX/Ry/IlKAM6+FUoYnG9boMQeL3kY0agAZ/T12UBaTlAWsuwbR6OcMnD9uqoI2h65ti
- OLYJoVh+kj8m7qvJnQWTgTYFmABQqm6gvsKaVeGFU6oL48azXtkuSrEP32QNunAOpkUsScIZAJt5K
- +vcucfreero008El4mdUH70TR87ejXNXKnaKV0S4Ug0ctYaVRE8HGgYUyVCkaPV0A+1+WMypyANAM
- 4RFO+tYPe98DOwwo+2kAIC6Gpko6ZGmpfi6Dfs2stu3zj44Z2QQe69NKtFaz/jVos5s6btfKK2yk1
- JcxAbClMx9V5OyBYTlJC2zfTm2lTct9iaG+3vchSDGtvrfT5W9VKOvKxxNd+jh+PfW2a3mST/rQN6
- /utR/BLuzg1aHNZLlzitrrAsgk+lP2GcGUehNERZQ=;
+ bh=cBCF1BTEc9yGf8jrHpE+Apg5YdNXY/5jhxo6Adq/MEs=; b=VHPNhPcxfJ0LgzshIEybkPfGJL
+ nuG+2VIIjiw/JAkzznByIkpm7jiNVjkESL8r5jknjPuuem7J2VGK7djFoVOu2T3D0ZcGxjDoLKi1n
+ mCDhIjHkiNYE8D36ZsZ+NRJvVk5qekrUMu5N7DWTirdjWvDDvzFbOmS3J4FSesvf0f8/2G1Oihzmx
+ 49TTMp+NCuwKSI4lQK6nPqisAFNjX/eWM2AZyZB4GHdHd7RRLdk2jM9BZiGFNvRQ3GZFxOPSW2Elf
+ AXk5gNdXcGuI9Db1zM7KwyfVmEsiSXOOIney2hmIfDiyg3zBLkGRzj6v4VXaJvkPgdEN+ZUkp6CXK
+ ogO0RUZ0ZN4xT3vMKe+X+Dgo10wDWW84JHafOBODcpWaQTVrGaY/yT/AC/9+4EQ8GvAE7C4FgR41L
+ wS+SWj70Tt7U1PixmgS0ZwdbA6AMlmqaP5LUAqr8Cosh6tPO5McxIWkyRxmWfwcpPE9B0iqkDK3pV
+ fZjZiRomfzUPorySVSU7ABFguNqrKPY/vp0cECDflqWdHkd0xlDK/CtrZzf8br5QoNyHPcP22aZZ1
+ u21gSFhxmqNQNYUciE1fg5g/nwF7VUzpTIAuff4uTl4/O6DRQQXZVn3lGGJRHVw1fgTAGGGy+q9GK
+ NnnzED9lJP56Z/YBNuptjbCHaQIuz40KeenBKy1X0=;
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>
-Subject: Re: [PATCH] tests/9p: prevent potential error in
- do_local_xattr_limit()
-Date: Tue, 07 Jul 2026 19:17:40 +0200
-Message-ID: <2416447.ElGaqSPkdT@weasel>
-In-Reply-To: <E1wfg2F-001Sfn-Rr@kylie.crudebyte.com>
-References: <E1wfg2F-001Sfn-Rr@kylie.crudebyte.com>
+Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH] tests/9p: reduce xattr size to 1k
+Date: Tue, 07 Jul 2026 19:18:49 +0200
+Message-ID: <1960804.tdWV9SEqCh@weasel>
+In-Reply-To: <E1wffqw-001Sc8-I9@kylie.crudebyte.com>
+References: <E1wffqw-001Sc8-I9@kylie.crudebyte.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="utf-8"
@@ -67,23 +67,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Friday, 3 July 2026 17:38:10 CEST Christian Schoenebeck wrote:
-> The local fs backend driver tests require that a dummy file is
-> created on the host side before running the xattr limit tests,
-> otherwise the test will fail because the file is expected to exist.
+On Friday, 3 July 2026 17:26:08 CEST Christian Schoenebeck wrote:
+> On host systems with ext4 and ea_inode capability not enabled, the max. size
+> for xattr values is slightly below 4k, which caused the new xattr tests to
+> fail on such host systems.
 > 
-> The original call of g_file_set_contents() didn't check its
-> return value, which might cause subsequent test checks to fail,
-> making it harder to identify the root cause.
+> Reduce the xattr size for our tests to 1k to prevent them to fail on such
+> host systems.
 > 
-> Fix this by simply wrapping the call into a g_assert().
-> 
-> Fixes: 04a62cdfe873 ("tests/9p: add 3 xattr FID limit test cases (local fs
-> driver)") CID: 1660926
-> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> Reported-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Fixes: 04a62cdfe8 ("tests/9p: add 3 xattr FID limit test cases (local fs
+> driver)") Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 > ---
->  tests/qtest/virtio-9p-test.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  tests/qtest/virtio-9p-test.c | 14 ++++++++++----
+>  1 file changed, 10 insertions(+), 4 deletions(-)
 
 Queued on 9p.next:
 https://github.com/cschoenebeck/qemu/commits/9p.next
