@@ -4,130 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F8E0C44501
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:16:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 078AFC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:16:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh5eC-0003RB-GW; Tue, 07 Jul 2026 09:15:38 -0400
+	id 1wh5eT-0004Jv-NZ; Tue, 07 Jul 2026 09:15:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5co-0002FG-EN
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:14:12 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wh5dc-00038Y-27
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:15:05 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5cl-0000W8-Lm
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:14:10 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1wh5dW-0000bJ-9V
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:14:57 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667C8fG83606097
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:14:06 GMT
+ 667C93uR3590163
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:14:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- VHOBO/F2WKbk0wb9mL8oQqnc2qCfM3ovTCmXWk4KFxU=; b=BZjBhTZEP4BUfALU
- FnWKwKrJF3Gn69jlwZBpcedmT+JLv6QZViK7liaVRec7NuPi7UN7YDOPy44AFgg5
- 94KanzW0/t0NODIKiaqhoenFATvi86xoNJb0GIqXQMW8+GZTtUgg15EPrgt9gL0N
- O1rBV4tMAkSAXfRHi59SGRYY6YR6tMcEDDbrjbEBo8COeC8/AWMy0HXjlr09u0L8
- z56R5KCY/8kBejUWJuh6KAYsof09FHyxNkK1TmXs0JKewjOytp0Cu7r7v2GAP8x8
- +YKIdgFJn1hKKnUWKMT4Zj/HHKWH5CI61bhprEtKD+gg2fuNe5nnuifkuoENHxaQ
- JvB1kg==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8sm8j4gy-1
+ MQ8cwo67B8kScl6kCnX4SGCllu3hPViC4NEXHKyhSy8=; b=XQy8beQsugV9pTMu
+ zHs9gMw+DQ50ez9+VTu5/0KidEV26rFy3p3IYhghdTWGRVddT6S/1yJm3LNLc3Ag
+ uYZ7BfrHjHSzI3SqG4zekVcQrH6hrmgkWB8Yogh/KuYV2gy8S9N4HLF8OakJmhZB
+ rXKfg1zwyJ4bLvoLL27PODd6/jr/y1Q+OYp/NA0pjJrUwJhVRH05GsOT9WhoVHPW
+ jY5asIXYWisuxrN6AqFUtezT2ab5p1j5g76T251eBLcrkzl9dnQ6HCY3MmIQ77O0
+ 6glhghMHWdIssB5TgTWsM7MGnrjTRxz34qKjQkyBx+fs5Hlz4tTEJFdp7IlehAFa
+ ZJwyag==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8w2u9bp6-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:14:06 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51a87ef9713so6690531cf.1
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:14:05 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:14:50 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-51c1e6f602cso72772091cf.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:14:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783430045; x=1784034845; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VHOBO/F2WKbk0wb9mL8oQqnc2qCfM3ovTCmXWk4KFxU=;
- b=NscONb6pYUDMsxy1RvfWXyi43m8cNWIHeNqfwi411SIEXwyVTtL+vxCailPw3ijLDk
- 1GEgCU5qQA3MbNLH7fwxxXc+KKS4HU21EYm1vz3yk2AX9kY0u41jTsbN6TpuQsfWb4zd
- 8Ns3GCc41kBDof+/SJGk+10TBrZaN8Xe63kK8/Zhb7FbDxWRGrAsuAl/cXVKRLw8agOB
- Z2RGRqWUxI8OWQsGJNkDDJjhom3rPUwtSxRJrHVuUulcCKb0JovyHbjNUhDyFR9mWAmJ
- x3jwECMXTuWXlfEZ0wJrYtR+CE+3rGRjH6LNUKZwftEkwZaRFdjHarCgzvLx0ZA/PoZ+
- /hLQ==
+ d=oss.qualcomm.com; s=google; t=1783430090; x=1784034890; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=MQ8cwo67B8kScl6kCnX4SGCllu3hPViC4NEXHKyhSy8=;
+ b=EUZI1KC+j56mzzQBZs7mdZq48uULEo11j2rNAt/aNpaFoUX7uNNBYEbBHsxyXiD65J
+ YwDokPtTBnx1JX1oLmtrTe9ElZ1BAt28WPn+1+xuaPoIEs+9Qm8XkkkC5+YoFHvKPjbn
+ J7Li6T8mqpBN5dF0/tk9wxUfgoxtKO46ZqbRWOEd+TsdUp6PMPNLqj0IO1rI1/O2mg7r
+ bS7F/mn7u8ADaPaxr5GexnFR6O7JhKkzr7NeI0hd1fNmLP0qkHbaH+qUWcgBlHyB14tJ
+ JbHmgVVJIAmkiyZekE1YjdE5e+PjxOwFshU1keLLvXZI3N8A5AbdScijACREEy3lIeVI
+ kx7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783430045; x=1784034845;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=VHOBO/F2WKbk0wb9mL8oQqnc2qCfM3ovTCmXWk4KFxU=;
- b=XSlstO1cOfusTv9ME0SU+jP4LUsJ1szhflu30m3V12jp+ZK7M79K2Mjzd+/mmAjWy+
- 2apZZETZgMxDIMWpRvYkirSeiYXd6SrorGaPTevCOQCI57aVwtU+i9BzvmXsFXgNH1wO
- A3Ek82VLgGdKkXN4sd8AlhJ5IAoHb4O24JQaUO/EUE74DtWxMNx1/xWzc4eInWTsXJp3
- Lqz4g5uhdp/4mwRq135zN6Sho2K/oT/ri5b2y7ewMqHMr8vduhLCvIoszApZSpJT17bY
- xleG6pozyPC+CR0B6o7thm2hHzpxTC+fsWmn4mjHCEhWi+MSYWVpv32rDzuhsTIe4ldr
- roaA==
-X-Gm-Message-State: AOJu0Yyu3iomKHQubhLVAT14rCUUHQT46zM5+wLnFdUVHcqDTUF6lWx0
- 00v5knrKQdOXrwsknqkZNPtD6Bb+zid0elJAZ1/vJyjwiNXTPQ1Y5lC+u2PFhTAODySjXQXQdio
- U2z2JXCY+j9wPyfPKi6OimVNfjc1L4vTHTGGqIGI6BxzZsojuZND8CzzL2uM5nqpXcA==
-X-Gm-Gg: AfdE7cn5tod92/yuMoruUe0Cuj+1ZCimcuYMhNZqJpMQPFX2G6Mmr3ki+EbWqa90I1f
- HibpyYy0WarvOv7gYRiYJ8MB3mE01pRaj7w9TmKEyXWDpUTmEgOlXgGLIzOO7SUfledLEfClLkx
- EqYdh3aFfcqmY3nG0padI1Ev8goDsmzZ3mCW7Ov9u7YChNaB6Xx4M9rtMkEIJitOZzwm5RlPko2
- qpLXMkvAJDT+dE3a31CtX/4XuTQsRgIPf2PZjaLUyHdch5kZ//1jJqoEk6OpdO5Ekq6nHW+4hYH
- 0o+QYigTCn/CsbbBdX00cPQdgt5AG5KLGd3J9qgNRZowV41vjsUgQiIKh+uvIY9290qUPpcV3J6
- c2PICeNAvqvqZ69efHyEWfGMiwmPpyYpNUiEyOOKA0Vwgy/nfnxSsMN0Sl7yKdYK7WRD0
-X-Received: by 2002:a05:622a:6f1a:20b0:51c:7aa7:e0f1 with SMTP id
- d75a77b69052e-51c7aa7e66dmr13275201cf.44.1783430045136; 
- Tue, 07 Jul 2026 06:14:05 -0700 (PDT)
-X-Received: by 2002:a05:622a:6f1a:20b0:51c:7aa7:e0f1 with SMTP id
- d75a77b69052e-51c7aa7e66dmr13274841cf.44.1783430044396; 
- Tue, 07 Jul 2026 06:14:04 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783430090; x=1784034890;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=MQ8cwo67B8kScl6kCnX4SGCllu3hPViC4NEXHKyhSy8=;
+ b=P2dlUiXRB8RdyN+s9ogk/q/qpibCe2bcvfgZzcq6rEeT0sjKIXPc/uvyO82UAjxfzZ
+ +jubhiCLRv6AA0hDceZJZBlPXi3fTUcSZQkLnrZ9o2uxZggXb6HTUsz4aIhmzMBBVZls
+ M6Bzb09tCAl5cCY+/iD7SRfNyV/YAK7payM8IBETdliGschRftgvpWBdSbArNGm61fL5
+ 7a2HvCUcJkUkUrj1wMnV8zYkW4qWfSOHF5CAM/Db/AGdcoSD2RzsiZjhNCU63ZTohXSz
+ TXaDcPCJFkLFJUy2EUcd/6C83rR/yLYZI3zSr5JvpvEb+A77nmwdWn1ZP2VdIOh5E2O7
+ tFrQ==
+X-Gm-Message-State: AOJu0YxjfTCfCzexHDogVAJU5ughFoOgaU0S0GY+cbvu8wMXp7McGsfi
+ 0iTXAnE5tn91h4gO3sd9ANUx1mzeecshjnLX381ANQNBAvNabgML4pPh03ySd0MA/IQ6S+RFr8D
+ 2fU6+ILoqNdJvHsRcGwi7/u5Mp0ARbYyBt/k73/8CMup22aLX5fv6rz2ONLkzNjAElQ==
+X-Gm-Gg: AfdE7clZvzIjjSTD3eJLGbpGwr9s7rNqzE1ApliDhQX6GcwF8M5ocbV/hUStM/+xW+r
+ Hr9XR1FMdOlXt8EORqpJcQYayB9KHF56WC3Snz2dh09FhmAruRhJJTAWaZlVNSxV/O1EJ9RZtli
+ 09Fk7IYJidZYDRbbpwnplYSIM5aQ8udrVyvLYu9gcap6dnJ+HEuKV+0xWVLnVUL7j/yY4lFvI1e
+ Ko3V/ZwNCKAmJyHdO5D9YW3DE+/PPYJlRxxD4uZLC+ptS7TcFBdeeGoBkzTb2h+zo56POWMPjRB
+ 3uyyN00zUR1jQoDqSGiXebosIlaENqiY1qkF+VfbRGjBJNs7Al63Nq1WEGU54tF5H+kpj0V4viT
+ kMmxfvO3AkezLrQrs1zXoZeC0CNtv2idA01TkK/lBzgO8eUaDK/o1ki8Vw1SuJQudaMkR
+X-Received: by 2002:ac8:5e4a:0:b0:51c:2685:2964 with SMTP id
+ d75a77b69052e-51c7487fd08mr50987411cf.43.1783430089407; 
+ Tue, 07 Jul 2026 06:14:49 -0700 (PDT)
+X-Received: by 2002:ac8:5e4a:0:b0:51c:2685:2964 with SMTP id
+ d75a77b69052e-51c7487fd08mr50986261cf.43.1783430088026; 
+ Tue, 07 Jul 2026 06:14:48 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c15ad9be41esm137252366b.39.2026.07.07.06.14.03
+ a640c23a62f3a-c15ad9be41esm137511466b.39.2026.07.07.06.14.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Jul 2026 06:14:03 -0700 (PDT)
+ Tue, 07 Jul 2026 06:14:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 14/32] hw/display/qxl: Fix mono cursor validation that can read
- past a cursor chunk
-Date: Tue,  7 Jul 2026 15:12:04 +0200
-Message-ID: <20260707131223.51505-15-philmd@oss.qualcomm.com>
+Subject: [PULL 20/32] hw/arm/imx8mp-evk: Introduce FslImx8mpEvkState
+Date: Tue,  7 Jul 2026 15:12:10 +0200
+Message-ID: <20260707131223.51505-21-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260707131223.51505-1-philmd@oss.qualcomm.com>
 References: <20260707131223.51505-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX/nr3H4mQEPN9
- eJrPJaeSl5OlDOT8CVv70gG/CXJ5Igx10E8VW15z6mMfT1+dosSBSN9nB/+ZOoR5OxbmdEuskvN
- Rw+sMpDhakXJ8VBf3CtNs+R32hFmHyc0paEiDF5jx0+PBs20HIojQB12nRFwBb+Z9+GiRg4QDb8
- UM8cby7VwV+rVqoYdsmp4qFTssMyf4EXu12QmadTPF+HfCNTpb8BbEqL0d0FPjs80++m+pEAYmm
- 2WY2VN/3vrJ7hBbKc00PGLIeKCgfv+YfcQgTQhPExv1tIBJh/m+e2YVFZYBjTKM/w5Rq57pprOm
- Vh3VxatEq8VxegB2JN92PeSfxFLlPffC3Y4YJOPmW/LlchD6fsoTrwTbNDENwNEPeWUvdN1JSgf
- HC/1iEu0Hw1BzajuuaNRbNzaktSmED8zvlurFHyPTiAXYybNF1WiAWu9lTea8LIozwRGMGkBRrc
- DMMpsP4rxzAoAGIsoLw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX4ffUcwuYtJVP
- /9UJtyf/vctcnDd/t/sh+LelFjBedmqQnuOxZX3XusPO07TjJW8Uuyrp8ijybhwJe0O8wSBXt9N
- 5mMsoPwsCEpaeZHUC+2ExoerGerKUGo=
-X-Proofpoint-GUID: 7jMpl-N8Pap92-H_gBLWEI9OGJlII8MS
-X-Authority-Analysis: v=2.4 cv=UvdT8ewB c=1 sm=1 tr=0 ts=6a4cfb9e cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX+Ldxdigasy7w
+ +iM0iYrdj5dCdxkghc+t7T2je7Zcsaic4J1BS+kN+VuKVPPBbu7EtTqUjCil/DsUSoFqLSXxB06
+ llYEYYzFMJHr0DrYA9VkZe31bIBgloI=
+X-Proofpoint-GUID: EU2WoTvIEHtkajqX4dzosktQ8CuOmgg-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX/gu5FXyi8fId
+ dm2R+QPLrqcUMkCNw1uJMj+nMfmFBaWFRa4VUMiYmhTI5HMCKAyzcPbvmilhku5evgOustp/Z5t
+ X9Ec9TXpfptVMEku5ZCgXMboY74Xx31eiHmvoS0DEh+7DceHE2ftV2sPhR9hqSu0fTDFfBU1zPA
+ 1gI4LyGSEEf9nZGjcwYwbmxbClYMKtoXUhG5jtlDVSVwNwBeJ6KXTM5kdMKqa9QYJUZ+dD5bn4l
+ dLFagWhnQmQRkufgsuLDLP2ZByxg4GvlrrtZWvgYswF3spxv8AtTjiewEGZw8IMcJE5qZ5mlR9+
+ quxAWEkYbnPzZh1uTc34p1PYYtEqEf7mK4XJQL7e1xdt8j3q0HkLLXGag3r4MW0Tcv8+wArdiF5
+ +ewXuDqfurzn16AfF+2ryBfNTUdJZGLy71+2DW2v5/ezGAmF7kLG2Pt6RzSdVhPzG/tHKaXTfBR
+ BVI6HsLVpVw/GBEUieQ==
+X-Proofpoint-ORIG-GUID: EU2WoTvIEHtkajqX4dzosktQ8CuOmgg-
+X-Authority-Analysis: v=2.4 cv=bPQm5v+Z c=1 sm=1 tr=0 ts=6a4cfbca cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=d5zUspqiiaHCGQx4iD8A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-ORIG-GUID: 7jMpl-N8Pap92-H_gBLWEI9OGJlII8MS
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=v0UstXECslOuxGkfbp0A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_03,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 impostorscore=0 adultscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607070129
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ phishscore=0 spamscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070129
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -150,53 +150,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-qxl_render_cursor() maps the guest-provided QXLCursor object using the
-guest-controlled cursor->chunk.data_size.
-For a mono cursor, qxl_cursor() then validates the expected bitmap size
-against cursor->data_size, but it does not validate that the first chunk
-actually contains that many bytes.
-A guest could set cursor->data_size to the correct full mono cursor size
-while setting cursor->chunk.data_size to zero. In that case, cursor_set_mono()
-reads the AND/XOR masks starting at cursor->chunk.data. If the cursor object
-is placed at the end of the QXL RAM BAR, those reads cross the mapped RAM
-region and could crash the QEMU process (e.g. under ASan).
+Introduce class FslImx8mpEvkState which will be needed for holding
+CanBusState attributes and associated properties.
 
-Fix it by double-checking cursor->chunk.data_size for the correct size.
-
-This patch is based on the suggested changes by the reporter in the bug
-ticket.
-
-Reported-by: huntr bubble
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3646
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260630101022.379057-1-thuth@redhat.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Acked-by: Pavel Pisa <pisa@fel.cvut.cz>
+Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
+Message-ID: <20260702184038.178196-5-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/display/qxl-render.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ hw/arm/imx8mp-evk.c | 30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
-index 7b692d5a854..3bf634ee059 100644
---- a/hw/display/qxl-render.c
-+++ b/hw/display/qxl-render.c
-@@ -272,9 +272,11 @@ static QEMUCursor *qxl_cursor(PCIQXLDevice *qxl, QXLCursor *cursor,
-     case SPICE_CURSOR_TYPE_MONO:
-         /* Assume that the full cursor is available in a single chunk. */
-         size = 2 * cursor_get_mono_bpl(c) * c->height;
--        if (size != cursor->data_size) {
--            fprintf(stderr, "%s: bad monochrome cursor %ux%u with size %u\n",
--                    __func__, c->width, c->height, cursor->data_size);
-+        if (size != cursor->data_size || cursor->chunk.data_size < size) {
-+            qxl_set_guest_bug(qxl, "%s: bad monochrome cursor %ux%u"
-+                              " data_size %u chunk_size %u",
-+                              __func__, c->width, c->height,
-+                              cursor->data_size, cursor->chunk.data_size);
-             goto fail;
+diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
+index 4a0c9df76b7..ca0ee2d3f2e 100644
+--- a/hw/arm/imx8mp-evk.c
++++ b/hw/arm/imx8mp-evk.c
+@@ -19,6 +19,17 @@
+ #include "qapi/error.h"
+ #include <libfdt.h>
+ 
++#define TYPE_IMX8MPEVK_MACHINE MACHINE_TYPE_NAME("imx8mp-evk")
++OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mpEvkState, IMX8MPEVK_MACHINE)
++
++struct FslImx8mpEvkState {
++    MachineState parent_obj;
++
++    FslImx8mpState soc;
++
++    struct arm_boot_info boot_info;
++};
++
+ static void imx8mp_evk_modify_dtb(const struct arm_boot_info *info, void *fdt)
+ {
+     int i, offset;
+@@ -57,8 +68,7 @@ static void imx8mp_evk_modify_dtb(const struct arm_boot_info *info, void *fdt)
+ 
+ static void imx8mp_evk_init(MachineState *machine)
+ {
+-    static struct arm_boot_info boot_info;
+-    FslImx8mpState *s;
++    FslImx8mpEvkState *s = IMX8MPEVK_MACHINE(machine);
+ 
+     if (machine->ram_size > FSL_IMX8MP_RAM_SIZE_MAX) {
+         error_report("RAM size " RAM_ADDR_FMT " above max supported (%08" PRIx64 ")",
+@@ -66,7 +76,7 @@ static void imx8mp_evk_init(MachineState *machine)
+         exit(1);
+     }
+ 
+-    boot_info = (struct arm_boot_info) {
++    s->boot_info = (struct arm_boot_info) {
+         .loader_start = FSL_IMX8MP_RAM_START,
+         .board_id = -1,
+         .ram_size = machine->ram_size,
+@@ -74,10 +84,9 @@ static void imx8mp_evk_init(MachineState *machine)
+         .modify_dtb = imx8mp_evk_modify_dtb,
+     };
+ 
+-    s = FSL_IMX8MP(object_new(TYPE_FSL_IMX8MP));
+-    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
+-    object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
++    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_FSL_IMX8MP);
++    object_property_set_uint(OBJECT(&s->soc), "fec1-phy-num", 1, &error_fatal);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(&s->soc), &error_fatal);
+ 
+     memory_region_add_subregion(get_system_memory(), FSL_IMX8MP_RAM_START,
+                                 machine->ram);
+@@ -93,14 +102,14 @@ static void imx8mp_evk_init(MachineState *machine)
          }
-         and_mask = cursor->chunk.data;
+ 
+         blk = blk_by_legacy_dinfo(di);
+-        bus = qdev_get_child_bus(DEVICE(&s->usdhc[i]), "sd-bus");
++        bus = qdev_get_child_bus(DEVICE(&s->soc.usdhc[i]), "sd-bus");
+         carddev = qdev_new(TYPE_SD_CARD);
+         qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
+         qdev_realize_and_unref(carddev, bus, &error_fatal);
+     }
+ 
+     if (!qtest_enabled()) {
+-        arm_load_kernel(&s->cpu[0], machine, &boot_info);
++        arm_load_kernel(&s->soc.cpu[0], machine, &s->boot_info);
+     }
+ }
+ 
+@@ -128,9 +137,10 @@ static void imx8mp_evk_machine_class_init(ObjectClass *oc, const void *data)
+ 
+ static const TypeInfo imx8mp_evk_machine_types[] = {
+     {
+-        .name = MACHINE_TYPE_NAME("imx8mp-evk"),
++        .name = TYPE_IMX8MPEVK_MACHINE,
+         .parent = TYPE_MACHINE,
+         .class_init = imx8mp_evk_machine_class_init,
++        .instance_size = sizeof(FslImx8mpEvkState),
+         .interfaces = aarch64_machine_interfaces,
+     },
+ };
 -- 
 2.53.0
 
