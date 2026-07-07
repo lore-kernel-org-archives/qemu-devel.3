@@ -4,175 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66B58C44501
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 21:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47F36C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 21:47:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whDUO-0000vy-Q2; Tue, 07 Jul 2026 17:38:00 -0400
+	id 1whDdK-0002H7-UW; Tue, 07 Jul 2026 17:47:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michal.winiarski@intel.com>)
- id 1whCzI-0000Kt-MC
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 17:05:55 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1whDdH-0002G7-Eb
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 17:47:11 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michal.winiarski@intel.com>)
- id 1whCzF-0007Pq-N7
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 17:05:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1783458350; x=1814994350;
- h=date:from:to:cc:subject:message-id:references:
- content-transfer-encoding:in-reply-to:mime-version;
- bh=u5cbyKgPHlNyxZxiXwnD/3Cq7y89pcrMab00OYvZa3U=;
- b=Kaqo0pRtSnz9p2KWOX+PHM0G46mCkQNmzz43qsRUBldd7yF0iesIB4u1
- T3bxtU1NlJRsNh5ZL+NTF7ZbxiKLv5JKCwk+Ia9FRRdda7osWD22sK0x6
- GQ6OHZPqwuoTq3rX1PI4As5lPruk/HXkHyIf23dIiGVw9ARslrIpHOQv2
- 6JFFkVN5N8oy23VeD/2O4VJGsk9pW7bVnjyv83C0StjesVGg5sMvCemng
- uxmu37JwLO+HvDJcUhdfIyR2feJ32a4ngn5vhPldpVO0VjwZKqGfS+gja
- 8vltsAAvqs5cBjF3FIqUg1zXZqYNJDZxL5vA/ra9rs4UF7J7fxxBG5mo0 A==;
-X-CSE-ConnectionGUID: sqsuE/zWRQq6zJL0v6Dhow==
-X-CSE-MsgGUID: j0Ukk6FBTr2wH7lKlQ0F/Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11840"; a="94470448"
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="94470448"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Jul 2026 14:05:45 -0700
-X-CSE-ConnectionGUID: nbf4yTl9TJ6NGbfRc2vWQg==
-X-CSE-MsgGUID: 47gzJbS6QFCyxQrGZ0Zl8g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="251436511"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
- by fmviesa008.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Jul 2026 14:05:44 -0700
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Tue, 7 Jul 2026 14:05:44 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43 via Frontend Transport; Tue, 7 Jul 2026 14:05:44 -0700
-Received: from BL2PR02CU003.outbound.protection.outlook.com (52.101.52.69) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Tue, 7 Jul 2026 14:05:43 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=B0ed6o5q03SCcLVeZzrA9gOtMOWBsoUD5lgl1OLMFYNGyt23QF4iTYAbDupXEGDJPL6Sx1aW8VoCHtAfkNk4M6qC0KbnzqO0ZicCPDhm0/qOBXuUbSh1/wqa8pPoQpenM9UMvv7sv1+FLkdNYfsT/qqTSR/9BAXwNor8DysUOQPv1WUyUXdIanu3B3YB6xDAWOUa+pYe7Z6rqbE3qAqOxXHcqBKMPTZA3kFGOC2Ldfm5alo55WVTsZkUFaRsDM4jcveWIvBRjvdjL7biH6IlXLfa4NvI8yOrxf6dYV2jM+bJXWm5O8KFJAS6DcRv+0xFgHUQx5pjtdk8Qqqi7FWtLA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=z3x6RrDPcRPS9Xk3TCdrIgJz8DdFpFptTuc9RndYIz4=;
- b=x+fq6dbgAlUiTpOrj6B37mXJEmAULwqXPS9PyBgkKUh5sv0xgzfKkZasmKdWvNXihtSWpi5hB8LmsyxW6Zot1vPUv/5IAWssKnBxRJITjDPNY4Psqn7LS7lamZ9hVg6rHVpH8j6l40gTFHXRbq9n9ZpCGP6/OAhoTf3GYS/yU9lyGqE+TzAqW+vsPNJmYIlvm/h2dou2HyYuyW+lDiYsHsV0uD9gL0M5JddztcTvERe9AIYib0z2Zc/4hkr8M4UVsyVjBmhuyDaWP81FL0UbH73qL0yl6Y2sUllcQ0Kp6pcs8WUTkE8+PqMhDiXEXCyjU8BzwO5RPJyLgwOVnAO6Nw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM4PR11MB8132.namprd11.prod.outlook.com (2603:10b6:8:17e::13)
- by PH8PR11MB7965.namprd11.prod.outlook.com (2603:10b6:510:25c::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Tue, 7 Jul 2026
- 21:05:36 +0000
-Received: from DM4PR11MB8132.namprd11.prod.outlook.com
- ([fe80::22f3:a01e:fb45:57ac]) by DM4PR11MB8132.namprd11.prod.outlook.com
- ([fe80::22f3:a01e:fb45:57ac%3]) with mapi id 15.21.0181.010; Tue, 7 Jul 2026
- 21:05:36 +0000
-Date: Tue, 7 Jul 2026 23:05:33 +0200
-From: =?utf-8?Q?Micha=C5=82?= Winiarski <michal.winiarski@intel.com>
-To: Alex Williamson <alex@shazbot.org>
-CC: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>,
- <qemu-devel@nongnu.org>, Michal Wajdeczko <michal.wajdeczko@intel.com>,
- Matthew Brost <matthew.brost@intel.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>
-Subject: Re: [RFC 0/1] Forward AER errors to guest
-Message-ID: <ak1oWDUvX49OfFmB@nostramo>
-References: <20260703111357.3206071-3-satyanarayana.k.v.p@intel.com>
- <3500e357-1a3e-4325-9259-28c2023860a1@app.fastmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3500e357-1a3e-4325-9259-28c2023860a1@app.fastmail.com>
-X-ClientProxiedBy: WA2P291CA0035.POLP291.PROD.OUTLOOK.COM
- (2603:10a6:1d0:1f::11) To DM4PR11MB8132.namprd11.prod.outlook.com
- (2603:10b6:8:17e::13)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1whDdE-0003KX-0S
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 17:47:11 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 667J5qLr496534
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 21:47:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=0CpwMOQYz+V
+ CqfvBm5xl0keC8nvP3TGW0RHIRo1ry+4=; b=hLuW+l2UB9sbXLzwdYI2lQwg3b6
+ eXV3pu+V1ORRtX1ilnStCfPIbtghlNpf5vMZnYRKRH1AIUxuFyDqFPLt/im8kCXW
+ X4QxSMrI2u0EyRzNKkE7qc8aL3wuMWfrfaKjmXWXqdkqfr0HSYHEJgHjFeZPKHlb
+ c5BJbiSwCeiNJITnlq4CmV1j2/fsayiaklcc++DeVFFvcaMkkewIjMY2Is1fAITC
+ ECsgPXzq3Ucn+jluckvwFpGKcjlAk0/GrxNS9zATRKA09fwxBqx9OoFQDQIPTSeh
+ DUL6oZrtWJXykutg/s6GIFs9dJDouEKEv19GHk9Z9DrDc6XzKTO140EzXxQ==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8ye0jwu2-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 21:47:04 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2cce02cb769so591295ad.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 14:47:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783460824; x=1784065624; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=0CpwMOQYz+VCqfvBm5xl0keC8nvP3TGW0RHIRo1ry+4=;
+ b=M+ZxWOJoFOaJm8c2+OPVt1GEtIgHa1BUfx8yhgwKQbnpc/VVpT73LH0sJgJbO18e1w
+ AE9GHbHs7M6lajgiPrXBfaE0TCwgVxGa+iO0qtQ3FQHtYk0APbUNgJSyMyWcfN0xwK/L
+ a4yxecbRWi72XRQnm8SBJDH6UB7suI7d8eiilyNSwZLQlL8NwuLHCAfzU31lgfxorF1I
+ az4DBAHnI7S/D14DHV7ZTF61Hpc76wLfehXklOR5KYRgejf8PYsJXoi3Z0TtjzHbNWXw
+ dBABpD6KmIXC1JqveRFeE12Khf5lpeUKfOLVJaM/6Jru25osorg/ctonHf/qlLgIqF55
+ ZzQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783460824; x=1784065624;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=0CpwMOQYz+VCqfvBm5xl0keC8nvP3TGW0RHIRo1ry+4=;
+ b=kWSvL3VCZ1Xlcet5WLjknBCGJthJQgv7Qmwh1zvBRJUOvZjonOdlffNgwiw7dcDZqo
+ zQXhBz7ejXxB1PTPRBMxbwl6Y48YqIon0Df1OVKwnv7H0oG8U6eSnVVymJ3vjjmXBXrc
+ w9Dmmytcv6kT/Zk/0nIrqiA3J62opL1r4ASnsIK4t1VhlaTByov0214+k+XZFjsBUkGl
+ ypGYOHx+fXygZU6p0fXCcyW6/rhLx3MgFfsLcs1d4HVgaE5sQ3tC/lgjIMb30yhwAfyt
+ ZhQ6Zs3xUyJmuZo9EQnGq0Jv0OdfjBFvh0cfEi9JXanoC/eqGGwTNrKoQ8+sy6R1lrz2
+ thww==
+X-Gm-Message-State: AOJu0YyGeWqdN1asRKuQ+Qm9piE6JXvfvFPBO4bfvSlEKjc7NNaquKWi
+ V0KaFbVtfT0IdYL+oHeRBgNrlKMJj42/PWFgyk/xJo5Hw7d8WZii2QtZt+deeR89SFY3pIxD0hE
+ 3+Hd7NUyuRhrqe6j8/ltilgndJAXs0j5iXrk8CzmLqo9bC4vefOe/JQdn0iZfn0fWLA==
+X-Gm-Gg: AfdE7ckrJ/Nf5P5s6MFhAkZHGM4GP4IoTB5PuX8Rrmib4Wp1oLZaIStX4lVHQvYfXd2
+ BfqcHmHD3Mh3zeM7VySA53gyllV1XL9kN/+fkCjgYkIi0fioXNvklXoohk0fRwv2WCByJSbH65y
+ iVli/3Dff5PWT3I2gJeXRDRmngjJyd3sFoLnRQqOyoRX/94KHUGP2QLYKpTzjD33+hsQhKg+whE
+ xxd2PujHDMZqlxYRoU4QJWao8oy6dkckquOQBvwjy2efebF1AwSKXZfR7ZTifGrWBmBg7DNDvPa
+ WDJIKboJltNYTfzJc4c97JG4+8f3sY81b8MCQGDEfqyF1nGqnN6XCDejKkgG4lNrl+RfevIWOyU
+ M3twJjaQJ2Sx+C+cF/RR92n+eDjZIWhrtkZZQtVJeCUfiRFb+9q2XTkh09PNRVJSJMA9pic7V
+X-Received: by 2002:a17:902:ec85:b0:2c6:a012:6241 with SMTP id
+ d9443c01a7336-2ccbe3f7d69mr69741665ad.6.1783460823527; 
+ Tue, 07 Jul 2026 14:47:03 -0700 (PDT)
+X-Received: by 2002:a17:902:ec85:b0:2c6:a012:6241 with SMTP id
+ d9443c01a7336-2ccbe3f7d69mr69741415ad.6.1783460822980; 
+ Tue, 07 Jul 2026 14:47:02 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ccc9bdcbe2sm18368045ad.9.2026.07.07.14.47.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Jul 2026 14:47:02 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: mark.cave-ayland@ilande.co.uk, richard.henderson@linaro.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ berrange@redhat.com, mjt@tls.msk.ru
+Subject: [PATCH 1/4] tests/lcitool/refresh: use raw string literal for trailers
+Date: Tue,  7 Jul 2026 14:46:52 -0700
+Message-ID: <20260707214655.1138626-2-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260707214655.1138626-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260707214655.1138626-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR11MB8132:EE_|PH8PR11MB7965:EE_
-X-MS-Office365-Filtering-Correlation-Id: f0abd2f3-8c7d-4a40-47d7-08dedc6b7dc6
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|1800799024|23010399003|18002099003|22082099003|11063799006|56012099006|4143699003|6133799003;
-X-Microsoft-Antispam-Message-Info: EAcNNGcJi8PSFmLElYCvocm2RSTHNw71AGXOe5XTV9VPwsgXzrW7yUxDt4mhwm7k8uf1fOqStlk7AeiLS837ZNtfiR/loZDkHbDMgKehhuQRO30D3H2pwajZ7J5XU6vhSx1lEQeVpUcqno32ka5OkpzKjtAG/zeQnqA6W17lw7BHxMwQa6T2RtWCVhnux3BMRodod678dbWOBHWZrrfPnfr9gNGlsnPX+p3Jc2QgvTugOa3m9z2GNVzSwAsNWxOE02psUeatq+HsiTUzlR/nhStCX1WdFjX3VY+OqJf3I3uMr/AwdDHFzC0DilUCZai6CM+k09JTrgVBDETboknEcqQGhP6c5Z0gqWDAYtV0P1pLrBYrcVRDDHZm2DjPKkSIXWLs9HqEr/mLu+Q7HH/g0dyMiCLtwdfzD6uz34XUu5EynWxSLbHFVjmgdp5TZLZpTx5K5GWBGVsgeM/51D8XV+NHHpblwPFdbsYIjTc8Lu5lJGZWHwpQr5q8B0+ZbPySIfGgjgUkjoVlxHrNE7xl2c6+kDrPV23FEzrS84H9mcsZ+1jG5xN1H7WR75oy8hPgSUcPte6rbgXdho1XqiPuWjOe80y5DwnOaqK8vInVJqoaHpoRtppw3SUNn4+nxZIf37+A39/FpI1d3dGALeepX3zdVoKcgTF5PxrCPB1urxU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM4PR11MB8132.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(18002099003)(22082099003)(11063799006)(56012099006)(4143699003)(6133799003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NDNZNWtENkNSSEwvRitRNkNjMlYwb1Zoa3ZicGdFd2hEYjVvdGdmQkVweE5K?=
- =?utf-8?B?dFBGbGxaelZLVXpYQkNEZUtOK0lhQlVjOURxOG9EdnZXOEZRd3pORUljNkF2?=
- =?utf-8?B?ZG5ib0hZblA5Ynhnd1cwZlZDV1hMYll6TENEdktBSmZtZXVKWUIwM3VPcUNy?=
- =?utf-8?B?ZU1Tcm9sc3RqNGc2TE1ncHloUzVxM01Wa1hlV2dZK1psOHZML1pJNFVIKzNF?=
- =?utf-8?B?RVZXQkxxWWVKK1crdHcyRzVQaTV5amtHRmlQcDM3dFhiS0lqZnY1cDhvVG04?=
- =?utf-8?B?K2pWQzlvOHVPQ04zNEJYRnRIU2pZQzczWG9nUFlBRUF2eGxmVnVYNS9hSGdw?=
- =?utf-8?B?WGpyekh2SmI5T09jQk9JUkpXcU9KN0hJTGloNDBMWVV4OG9WZ0FxLzFkZjJO?=
- =?utf-8?B?alZZVUtNL1p5RGpTcmI3YU1VSVF2cDZBc2dBYUlFNTF0YlhpR2VXdFJnbFda?=
- =?utf-8?B?czF3ZjhXN29LTHhXdmNRSUZOK3d5Ny9PZlZlRG9YWWpFLzRWTG5NWjBlTGpP?=
- =?utf-8?B?Q2NDRldVM0dadytLeFJlbGdpZVNMRFIvRUhBUnBCa0RpMk9tN1lPYzBZS0h4?=
- =?utf-8?B?UUtScE5aanZZWXVTQjRDYVF2NWMvaUI3bml3dGRXZTdHcks0QXA5djI5SXZy?=
- =?utf-8?B?OXpsaEw5eFFKNTVGdS9BeVNOTVphcXUvNmNzQk9ETkhoRjVQbk9icm01YXJY?=
- =?utf-8?B?NjdmUFUwaTJWbWFFVHZvV0FwT2lEZTQrUGQyNDhvS3NDQkFVNUlJcktLSGJm?=
- =?utf-8?B?MVZxakhHWkc4LytLUUFUUCtjWnh6Z3RUdWdtSVBlQmNVc3lOWnM0Z3BBTVBi?=
- =?utf-8?B?dW9DRFVzd0swUWVFZEJ6MXJrUFVXRmNRT0w1Q3o5a2lBYkZ1L3NXcVhLN0lz?=
- =?utf-8?B?MU00QU1wTGFKV0FZN1poQXV3TW1SUy85SUYvaUNuOFp3NVArNlhBTlQ5THVV?=
- =?utf-8?B?MU83TDVzWk9WTmZpcVNWVU5nRnBvWXVJalVDTVNqMi9QQW8wNG00aGxqVUlT?=
- =?utf-8?B?OERJVFZjMkFPZmRDWTExYzZmUzh6VTR0WmJwa1Zpa2piZHg5VzlWZm5FbklX?=
- =?utf-8?B?VnlQTkJadjlFM3dFNGU2L01zTzAyZE1zN3NCRWpobzNUZFBsVERpZ3l5V3JF?=
- =?utf-8?B?c2ZRR2pTLzhjVkxndVVUdkZvMFlUYnREeW8vOUdmc2FmRGxady94ejNFWUQ4?=
- =?utf-8?B?L0dob05XVE1kdGZiVTM0ci9mZlpFL0NsWThycnBqZXo2c3VScnBWam8yZnky?=
- =?utf-8?B?bU95REl2anlZSFRIMXdVbXdjV2NENXd0dW9VeU1pQmV5aEhsNDZ4UG4vbWxR?=
- =?utf-8?B?SzhGMHNCL2tFT2RUaW1EeEV4dHhmenZpS1BBeUtnMmc1Rm13MXFzTVRmZHgz?=
- =?utf-8?B?azdCaWJmSEhON3dPTm5UajlGdjN3WWVrNThnVjdKSG1xdlhEdlF1eEh3ME00?=
- =?utf-8?B?MlN1N2RmRkRnVloyUHZhR2xabk82UUlxTlE2S004WjlQR3FkOFdpRzRHZnIw?=
- =?utf-8?B?UDF4YkxDbjkxdFBNWXZPUUdyVEFpWGliMXoxV3pxejZOTlJBUFlzV2JYVDFm?=
- =?utf-8?B?bFRuZlMrNkVpc0d4TVBCc2N5bmtoemVGRGtHNjUzV0hFS2JlaXZiSlFFbFVx?=
- =?utf-8?B?UDJUTkYzckdVT0lJRjBiSDNhdlA5cEcrMk5RVTgwVFJldE16VG9aMjRTNHBP?=
- =?utf-8?B?WmUzWTJDcDBHb1IvUmRhWG1NN0dQcGdKSlM0ZkU4bGZUN2lKemhKSGlnMHB1?=
- =?utf-8?B?UHYrMzIxbUQ4T0NTSS9CRjFVVDFobGw0NGNGM0xMaFhvTThJRjFEdUJJTnMw?=
- =?utf-8?B?T1Ivb0xGREFPUE5za1NLQU5uR3VPOE1MOE10RkRUeUFQZ01HUDJpb0M2b3VC?=
- =?utf-8?B?Q3ZSc3dGRWhtSWIxam9nWFIzYk8xcjZibW1wMUFKN2hPcm16OWcxZ296L1A3?=
- =?utf-8?B?LzN2Zy9NUHV6N2d0eVlvaGVKbGZCNkF2M0cwUVZDR1FKWFpidHppZGRHRVho?=
- =?utf-8?B?S2dKWUtPT1V3R3JJemxYN09JQ1dtTnhDRDlPVmdxQTNCQkxiNm1EaHcxWi8y?=
- =?utf-8?B?dFErOFRHWUsxbUhKTlcyNW1MeFBDUHhhUzNxcjgwSVZJM0V0eHpiZTRvM1Qy?=
- =?utf-8?B?L1VGenRDcHFMRk5tbU1VdXkwdzhESVdBOFVReFpVQjVsWUZ3Q0NQZWY3a1l5?=
- =?utf-8?B?RjBHN3JMUjJvMDJqb1BLOTVlNHJKeFFkdTdCZDdNcjdpbEd5WEppR2VFa0tx?=
- =?utf-8?B?VGhHeXNIT0JibEQxbkVIVm9MRnhBNXg0amFqVlU4YngzSHN6TUpDQUJKNmpm?=
- =?utf-8?B?UWVJalpMM0xFVklBZUhrVlRINXBXSmtYcVNpRm9QVERVK3pSQklpMGQ4QjAr?=
- =?utf-8?Q?/E1tvMRkBjN6gS04=3D?=
-X-Exchange-RoutingPolicyChecked: lzcaqcaRREr+lnXqino+YA47CyuoeMn1JE+mlRHKxbmb6NqF4QfXPG5ILcJ8gJagFwxi2BwKTbNGr1mgJjNEOroTNTdm7uyZgIRWQH4B3/9/32n+mpvs0Ntpk/+GEVG8WNvhypiLKPla0zwD3fPefLo15UfrR59SJnAZu5NFgomIoX/xZMh624XOy33jzL5uR0aYx6r6orZ2TJfisue3px/X4igRu/SSRR7jlRU3BL/Mq1LUAD7o/t//2VbwNSLX3a0UP6MmGs5GraaTvq0h/HwHyYJH7qB83WCkJL5ns8+sumglnY58bOvNkfM3dulQDTykRmbDsTn8VIzOkjLzVg==
-X-MS-Exchange-CrossTenant-Network-Message-Id: f0abd2f3-8c7d-4a40-47d7-08dedc6b7dc6
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR11MB8132.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jul 2026 21:05:36.5293 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: +kom+em2ve743p9jkMn5tVnOGOMviv1aldmvI6JhpGAgxkNvLUMWITLsT/w3XYbhcJA7SHo7U8y+RT8HKk6GSxLWhKIGYuHprUkzP3kwg1E=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR11MB7965
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.11;
- envelope-from=michal.winiarski@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: CZqs2TtuQlUdsAXVDY2fNz-TpGgxY_Bd
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDIxMyBTYWx0ZWRfX3WkU4D0qAYtA
+ 0BYWquOFtnhy1wEkNf5VV8Qs7VaocsG2KCtK5gjAYOiEfeKkyDWLhHJMogxP2DMzfYUOF3TkRk0
+ RxC3E/i4IYe9WmkNpGrw0ui+jM8Hl9A=
+X-Authority-Analysis: v=2.4 cv=SZfHsPRu c=1 sm=1 tr=0 ts=6a4d73d8 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=kmYkUENqAAAA:8
+ a=NEAV23lmAAAA:8 a=ei4SEBeUAAAA:8 a=EUspDBNiAAAA:8 a=n6MYwUk4AAAA:8
+ a=htwMjFDFCaSGexkR5EAA:9 a=1OuFwYUASf3TG4hYMiVC:22 a=p9kz6gysRiz6SGr9lVkz:22
+ a=8zIOOLb7Ym0NljyPXbuS:22
+X-Proofpoint-GUID: CZqs2TtuQlUdsAXVDY2fNz-TpGgxY_Bd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDIxMyBTYWx0ZWRfX/HGRTFgg6ASc
+ /3/i1jwa9fS1dYs8oPw0lcaqSuvlfVLLduB2661z6XvJvmnmDiB+fq/ReaK6j2yXw3ir0UAL1Eb
+ h4G7uNPohsww1XDxgKr/P4P+QOhwFJffaV50GJDEmsvbEWnDa6BWL43Cwtl0FAnaQ6VzuoHXdrz
+ 6eSNxuQTv9W/qIe/Uk91DAIjLuHaQF3Rl6Bt5OvdkpmYItUjR2hu3IDMYOO56GSrTLi4rvBjMLg
+ ASFRN81bJvyPQa0PF3uKWIpzyrL0IKvWsIGbfGs1/BEJctaCOSxf5mLEnB01NPoYAxIID+KGTyA
+ 4A8S635T+E8+QdBNNV6/7PJKiseTC0EXDSvp9m/H38XfI0CzZJ5Ke8JxzzUNcKtSKEWSuSEaaOC
+ p/qzWt0gVFHMc+P5tV6fCwZGP3ZOOsEgl3538rsJeXHP1jmft3oE19EvdDDqaNm/KlDK27JfKX4
+ ys7a1+3T3EnJzfq2KeQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_05,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 bulkscore=0 spamscore=0
+ adultscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070213
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 07 Jul 2026 17:37:59 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -187,71 +152,275 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 03, 2026 at 07:59:46AM -0600, Alex Williamson wrote:
-> 
-> 
-> On Fri, Jul 3, 2026, at 5:13 AM, Satyanarayana K V P wrote:
-> > Today, vfio-pci unconditionally stops the VM when any error event is
-> > reported by device. This prevents guest-driven error handling and recovery
-> > for platforms that support PCIe AER.
-> >
-> > This series adds an optional vfio-pci extension parameter,
-> > "x-forward-aer=on", to forward AER errors to the guest instead of
-> > forcing an immediate VM stop. If the endpoint supports AER, the error is
-> > forwarded directly; otherwise, checks the upstream PCIe bridge and
-> > forwards the error there when supported.If neither device nor PCIe bridge
-> > supports AER, the VM is immediately stopped when the error is reported.
-> 
-> The error eventfd is signaled for err_detected in the host, this is the beginning of the host error handling and the point at which drivers should stop accessing the device until the resume callback.  Letting the VMM continue at this point does the opposite of that.  Thanks,
-> 
-> Alex
+Using a list of string is not convenient, as users need to escape it
+manually and handle end of lines. By using a raw string literal,
+what you see is what you get.
 
-Hi,
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ tests/lcitool/refresh | 209 +++++++++++++++++++++---------------------
+ 1 file changed, 105 insertions(+), 104 deletions(-)
 
-Today - the default error handler used by VFIO is not implementing the
-.resume() callback and just signals err_trigger and returns
-PCI_ERS_RESULT_CAN_RECOVER as part of .error_detected().
-Qemu registers a callback to be called upon err_trigger signal (using
-one of the poll/select syscall variants), the callback calls
-vm_stop(RUN_STATE_INTERNAL_ERROR) - this is a runstate that can't
-continue, the VM is effectively killed (qemu needs to trigger VM reset
-to recover).
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index e0da0d2de1d..1fdd37440c9 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -72,6 +72,7 @@ def generate_dockerfile(host, target, project="qemu", cross=None, trailer=None,
+     cmd.extend([target, project])
+ 
+     if trailer is not None:
++        trailer = trailer.strip() + "\n"
+         trailer += "\n".join(add_user_mapping)
+     else:
+         trailer = "\n".join(add_user_mapping)
+@@ -100,113 +101,113 @@ def generate_yaml(os, target, arch, trailer=None):
+     generate(filename, cmd, trailer)
+ 
+ 
+-alpine_extras = [
+-    "# https://gitlab.alpinelinux.org/alpine/aports/-/issues/17463\n",
+-    "RUN apk add clang19-libclang\n",
+-]
++alpine_extras = r"""
++# https://gitlab.alpinelinux.org/alpine/aports/-/issues/17463
++RUN apk add clang19-libclang
++"""
+ 
+ # Netmap still needs to be manually built as it is yet to be packaged
+ # into a distro. We also add cscope and gtags which are used in the CI
+ # test
+-debian13_extras = [
+-    "# netmap/cscope/global\n",
+-    "RUN DEBIAN_FRONTEND=noninteractive eatmydata \\\n",
+-    "  apt install -y --no-install-recommends \\\n",
+-    "  cscope\\\n",
+-    "  global\\\n",
+-    "  linux-headers-generic\n",
+-    "RUN git clone https://github.com/luigirizzo/netmap.git /usr/src/netmap\n",
+-    "RUN cd /usr/src/netmap && git checkout v11.3\n",
+-    "RUN cd /usr/src/netmap/LINUX && \\\n",
+-    "  ./configure --no-drivers --no-apps \\\n",
+-    "  --kernel-dir=$(ls -d /usr/src/linux-headers-*-$(dpkg --print-architecture)) \\\n",
+-    "  && make install\n",
+-    "ENV QEMU_CONFIGURE_OPTS=--enable-netmap\n"
+-]
++debian13_extras = r"""
++# netmap/cscope/global
++RUN DEBIAN_FRONTEND=noninteractive eatmydata \
++  apt install -y --no-install-recommends \
++  cscope\
++  global\
++  linux-headers-generic
++RUN git clone https://github.com/luigirizzo/netmap.git /usr/src/netmap
++RUN cd /usr/src/netmap && git checkout v11.3
++RUN cd /usr/src/netmap/LINUX && \
++  ./configure --no-drivers --no-apps \
++  --kernel-dir=$(ls -d /usr/src/linux-headers-*-$(dpkg --print-architecture)) \
++  && make install
++ENV QEMU_CONFIGURE_OPTS=--enable-netmap
++"""
+ 
+ # Based on the hub.docker.com/library/rust Dockerfiles
+-fedora_rustup_nightly_extras = [
+-    "RUN dnf install -y wget\n",
+-    "ENV RUSTUP_HOME=/usr/local/rustup CARGO_HOME=/usr/local/cargo\n",
+-    "ENV RUSTC=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc\n",
+-    "ENV RUSTDOC=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustdoc\n",
+-    "ENV CARGO=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/cargo\n",
+-    "RUN set -eux && \\\n",
+-    "  rustArch='x86_64-unknown-linux-gnu' && \\\n",
+-    "  rustupSha256='6aeece6993e902708983b209d04c0d1dbb14ebb405ddb87def578d41f920f56d' && \\\n",
+-    '  url="https://static.rust-lang.org/rustup/archive/1.27.1/${rustArch}/rustup-init" && \\\n',
+-    '  wget "$url" && \\\n',
+-    '  echo "${rustupSha256} *rustup-init" | sha256sum -c - && \\\n',
+-    "  chmod +x rustup-init && \\\n",
+-    "  ./rustup-init -y --no-modify-path --profile default --default-toolchain nightly --default-host ${rustArch} && \\\n",
+-    "  chmod -R a+w $RUSTUP_HOME $CARGO_HOME && \\\n",
+-    "  /usr/local/cargo/bin/rustup --version && \\\n",
+-    "  /usr/local/cargo/bin/rustup run nightly cargo --version && \\\n",
+-    "  /usr/local/cargo/bin/rustup run nightly rustc --version && \\\n",
+-    '  test "$CARGO" = "$(/usr/local/cargo/bin/rustup +nightly which cargo)" && \\\n',
+-    '  test "$RUSTDOC" = "$(/usr/local/cargo/bin/rustup +nightly which rustdoc)" && \\\n',
+-    '  test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"\n',
+-    'ENV PATH=$CARGO_HOME/bin:$PATH\n',
+-    'RUN /usr/local/cargo/bin/rustup run nightly cargo install --locked bindgen-cli\n',
+-    'RUN $CARGO --list\n',
+-]
++fedora_rustup_nightly_extras = r"""
++RUN dnf install -y wget
++ENV RUSTUP_HOME=/usr/local/rustup CARGO_HOME=/usr/local/cargo
++ENV RUSTC=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc
++ENV RUSTDOC=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustdoc
++ENV CARGO=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/cargo
++RUN set -eux && \
++  rustArch='x86_64-unknown-linux-gnu' && \
++  rustupSha256='6aeece6993e902708983b209d04c0d1dbb14ebb405ddb87def578d41f920f56d' && \
++  url="https://static.rust-lang.org/rustup/archive/1.27.1/${rustArch}/rustup-init" && \
++  wget "$url" && \
++  echo "${rustupSha256} *rustup-init" | sha256sum -c - && \
++  chmod +x rustup-init && \
++  ./rustup-init -y --no-modify-path --profile default --default-toolchain nightly --default-host ${rustArch} && \
++  chmod -R a+w $RUSTUP_HOME $CARGO_HOME && \
++  /usr/local/cargo/bin/rustup --version && \
++  /usr/local/cargo/bin/rustup run nightly cargo --version && \
++  /usr/local/cargo/bin/rustup run nightly rustc --version && \
++  test "$CARGO" = "$(/usr/local/cargo/bin/rustup +nightly which cargo)" && \
++  test "$RUSTDOC" = "$(/usr/local/cargo/bin/rustup +nightly which rustdoc)" && \
++  test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"
++ENV PATH=$CARGO_HOME/bin:$PATH
++RUN /usr/local/cargo/bin/rustup run nightly cargo install --locked bindgen-cli
++RUN $CARGO --list
++"""
+ 
+-ubuntu2404_rust_extras = [
+-    "ENV RUSTC=/usr/bin/rustc-1.83\n",
+-    "ENV RUSTDOC=/usr/bin/rustdoc-1.83\n",
+-    "ENV CARGO_HOME=/usr/local/cargo\n",
+-    'ENV PATH=$CARGO_HOME/bin:$PATH\n',
+-    "RUN DEBIAN_FRONTEND=noninteractive eatmydata \\\n",
+-    "  apt install -y --no-install-recommends cargo\n",
+-    'RUN cargo install --locked bindgen-cli\n',
+-]
++ubuntu2404_rust_extras = r"""
++ENV RUSTC=/usr/bin/rustc-1.83
++ENV RUSTDOC=/usr/bin/rustdoc-1.83
++ENV CARGO_HOME=/usr/local/cargo
++ENV PATH=$CARGO_HOME/bin:$PATH
++RUN DEBIAN_FRONTEND=noninteractive eatmydata \
++  apt install -y --no-install-recommends cargo
++RUN cargo install --locked bindgen-cli
++"""
+ 
+-debian_all_test_cross_compilers = [
+-    "# extras for cross and alternate toolchains\n",
+-    "RUN DEBIAN_FRONTEND=noninteractive eatmydata \\\n",
+-    "  apt install -y --no-install-recommends \\\n",
+-    "  clang\\\n",
+-    "  dpkg-dev\\\n",
+-    "  gdb-multiarch\\\n",
+-    "  libclang-rt-dev\n",
+-    "ENV AVAILABLE_COMPILERS=\"\\\n",
+-    "  gcc-aarch64-linux-gnu \\\n",
+-    "  libc6-dev-arm64-cross \\\n",
+-    "  gcc-arm-linux-gnueabihf \\\n",
+-    "  libc6-dev-armhf-cross \\\n",
+-    "  gcc-alpha-linux-gnu \\\n"
+-    "  libc6.1-dev-alpha-cross \\\n"
+-    "  gcc-mips-linux-gnu \\\n",
+-    "  libc6-dev-mips-cross \\\n",
+-    "  gcc-mips64-linux-gnuabi64 \\\n",
+-    "  libc6-dev-mips64-cross \\\n",
+-    "  gcc-mips64el-linux-gnuabi64 \\\n",
+-    "  libc6-dev-mips64el-cross \\\n",
+-    "  gcc-mipsel-linux-gnu \\\n",
+-    "  libc6-dev-mipsel-cross \\\n",
+-    "  gcc-powerpc64le-linux-gnu \\\n",
+-    "  libc6-dev-ppc64el-cross \\\n",
+-    "  gcc-riscv64-linux-gnu \\\n",
+-    "  libc6-dev-riscv64-cross \\\n",
+-    "  gcc-s390x-linux-gnu \\\n",
+-    "  libc6-dev-s390x-cross\\\n",
+-    "  gcc-sh4-linux-gnu \\\n",
+-    "  libc6-dev-sh4-cross \\\n",
+-    "  \"\n",
+-    "RUN if dpkg-architecture -e amd64; then \\\n",
+-    "  export AVAILABLE_COMPILERS=\"${AVAILABLE_COMPILERS} gcc-hppa-linux-gnu libc6-dev-hppa-cross\"; \\\n",
+-    "  export AVAILABLE_COMPILERS=\"${AVAILABLE_COMPILERS} gcc-m68k-linux-gnu libc6-dev-m68k-cross\"; \\\n",
+-    "  export AVAILABLE_COMPILERS=\"${AVAILABLE_COMPILERS} gcc-powerpc-linux-gnu libc6-dev-powerpc-cross\"; \\\n",
+-    "  export AVAILABLE_COMPILERS=\"${AVAILABLE_COMPILERS} gcc-powerpc64-linux-gnu libc6-dev-ppc64-cross\"; \\\n",
+-    "  export AVAILABLE_COMPILERS=\"${AVAILABLE_COMPILERS} gcc-sparc64-linux-gnu libc6-dev-sparc64-cross\"; \\\n",
+-    "fi && \\\n",
+-    "DEBIAN_FRONTEND=noninteractive eatmydata \\\n",
+-    "apt install -y --no-install-recommends \\\n",
+-    "${AVAILABLE_COMPILERS} && \\\n",
+-    "dpkg-query --showformat '${Package}_${Version}_${Architecture}' --show > /packages.txt\n",
+-    "ENV QEMU_CONFIGURE_OPTS=--disable-docs\n",
+-    "ENV DEF_TARGET_LIST=aarch64-linux-user,alpha-linux-user,arm-linux-user,hppa-linux-user,i386-linux-user,m68k-linux-user,mips-linux-user,mips64-linux-user,mips64el-linux-user,mipsel-linux-user,ppc-linux-user,ppc64-linux-user,ppc64le-linux-user,riscv64-linux-user,s390x-linux-user,sh4-linux-user,sparc64-linux-user\n",
+-]
++debian_all_test_cross_compilers = r"""
++# extras for cross and alternate toolchains
++RUN DEBIAN_FRONTEND=noninteractive eatmydata \
++  apt install -y --no-install-recommends \
++  clang\
++  dpkg-dev\
++  gdb-multiarch\
++  libclang-rt-dev
++ENV AVAILABLE_COMPILERS="\
++  gcc-aarch64-linux-gnu \
++  libc6-dev-arm64-cross \
++  gcc-arm-linux-gnueabihf \
++  libc6-dev-armhf-cross \
++  gcc-alpha-linux-gnu \
++  libc6.1-dev-alpha-cross \
++  gcc-mips-linux-gnu \
++  libc6-dev-mips-cross \
++  gcc-mips64-linux-gnuabi64 \
++  libc6-dev-mips64-cross \
++  gcc-mips64el-linux-gnuabi64 \
++  libc6-dev-mips64el-cross \
++  gcc-mipsel-linux-gnu \
++  libc6-dev-mipsel-cross \
++  gcc-powerpc64le-linux-gnu \
++  libc6-dev-ppc64el-cross \
++  gcc-riscv64-linux-gnu \
++  libc6-dev-riscv64-cross \
++  gcc-s390x-linux-gnu \
++  libc6-dev-s390x-cross\
++  gcc-sh4-linux-gnu \
++  libc6-dev-sh4-cross \
++  "
++RUN if dpkg-architecture -e amd64; then \
++  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-hppa-linux-gnu libc6-dev-hppa-cross"; \
++  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-m68k-linux-gnu libc6-dev-m68k-cross"; \
++  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-powerpc-linux-gnu libc6-dev-powerpc-cross"; \
++  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-powerpc64-linux-gnu libc6-dev-ppc64-cross"; \
++  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-sparc64-linux-gnu libc6-dev-sparc64-cross"; \
++fi && \
++DEBIAN_FRONTEND=noninteractive eatmydata \
++apt install -y --no-install-recommends \
++${AVAILABLE_COMPILERS} && \
++dpkg-query --showformat '${Package}_${Version}_${Architecture}' --show > /packages.txt
++ENV QEMU_CONFIGURE_OPTS=--disable-docs
++ENV DEF_TARGET_LIST=aarch64-linux-user,alpha-linux-user,arm-linux-user,hppa-linux-user,i386-linux-user,m68k-linux-user,mips-linux-user,mips64-linux-user,mips64el-linux-user,mipsel-linux-user,ppc-linux-user,ppc64-linux-user,ppc64le-linux-user,riscv64-linux-user,s390x-linux-user,sh4-linux-user,sparc64-linux-user
++"""
+ 
+ def cross_build(prefix, targets):
+     conf = "ENV QEMU_CONFIGURE_OPTS=--cross-prefix=%s\n" % (prefix)
+@@ -223,20 +224,20 @@ try:
+     # Standard native builds
+     #
+     generate_dockerfile("alpine", "alpine-323",
+-                        trailer="".join(alpine_extras))
++                        trailer=alpine_extras)
+     generate_dockerfile("centos9", "centos-stream-9")
+     generate_dockerfile("debian", "debian-13",
+-                        trailer="".join(debian13_extras))
++                        trailer=debian13_extras)
+     generate_dockerfile("fedora", "fedora-43")
+     generate_dockerfile("opensuse-leap", "opensuse-leap-16")
+     generate_dockerfile("ubuntu2404", "ubuntu-2404",
+-                        trailer="".join(ubuntu2404_rust_extras))
++                        trailer=ubuntu2404_rust_extras)
+ 
+     #
+     # Non-fatal Rust-enabled build
+     #
+     generate_dockerfile("fedora-rust-nightly", "fedora-43",
+-                        trailer="".join(fedora_rustup_nightly_extras))
++                        trailer=fedora_rustup_nightly_extras)
+ 
+     #
+     # Cross compiling builds
+@@ -293,7 +294,7 @@ try:
+     generate_dockerfile("debian-all-test-cross", "debian-13",
+                         project="qemu-minimal",
+                         enable_rust=False,
+-                        trailer="".join(debian_all_test_cross_compilers))
++                        trailer=debian_all_test_cross_compilers)
+ 
+     #
+     # GitLab packages lists
+-- 
+2.47.3
 
-The AER forward was proposed as a relatively simple opt-in mechanism to
-avoid hitting RUN_STATE_INTERNAL_ERROR and be able to handle errors for
-SR-IOV VFs using VFIO. For uncorrectable errors with SR-IOV, PF driver
-can be the entity that handles the device recovery. The VF driver needs
-to stop using the device until it is recovered by PF, and reinitialize
-any state that was lost as part of the recovery action.
-Forwarding AER would allow the VM to move forward without introducing
-any new uAPI.
-
-If we would want to build a generic error recovery mechanism, we would
-need to duplicate more of the err_handler_t callbacks as VFIO uAPI.
-
-If the recovery is handled by other entity running on the host (VFIO
-variant? Or for SR-IOV, the PF driver), we could also go into a
-different runstate (RUN_STATE_PAUSED? something that doesn't require
-full VM reset) and add a VFIO uAPI that can propagate the .resume() into
-userspace.
-
-If we would want the SW running inside the VM to handle the recovery...
-it becomes more involved, and it requires a more substantial solution
-that wasn't meant to be addressed here.
-
-So - we're letting the VMM continue but we're also informing it that
-something went wrong with the device, so that the SW running inside the
-VM can do its own action.
-If it's a virtual function, the driver can potentially fully recover
-after the host does its thing.
-If it's a regular native function, it will probably need to go into
-PCI_ERS_RESULT_DISCONNECT, which, for most usecases is still a better
-scenario then having to reset the entire VM.
-
-If we would want to absolutely make sure that the users are not able to
-issue any IO across error recovery, we can probably unmap (or zero-map)
-the BARs at VFIO driver level, similar to what's done during reset.
-
-Thanks,
--Michał
 
