@@ -4,108 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54234C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 12:18:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DAE2C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 12:20:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh4kU-0005FC-54; Tue, 07 Jul 2026 08:18:02 -0400
+	id 1wh4mz-0006ia-Mz; Tue, 07 Jul 2026 08:20:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh4kQ-00059v-Ji
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:18:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh4mx-0006hu-U0
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:20:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh4kO-0004gS-Tj
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:17:58 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh4mv-00054e-5T
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:20:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783426676;
+ s=mimecast20190719; t=1783426831;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ECDQsxluyho4egc8t6HHc4AFDsro4kisteGh+3jEU3I=;
- b=E9/IPB780aPBrbTf5Gr1QAcyEXyBHVEhuczZ+rGv9CrY8nxcj8Yl1TpXA+t6BZ+6vlCcD8
- wWT7tzr6KT+GsKX03AtX4UMZz61l6t7ybwC8gS1lWZQoLJhniicthUVMat/4jAgh9EKEKK
- 2J/kwN/cHY2oq9UM/FTdqQRvyPIGvUw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5MtvWsjBjErY3e9WbGbYw+B+rMvhKAh3aCkYbKMuC2E=;
+ b=S35Zx/dcQ72+HWZRhcLK1VRDJKYKAeCdDwUR/T0k6buMDUfv3OxKg/SKHinIVOxplv6FYl
+ RQMgzdfOwZ9qF8a+VedrYVAFcnAqIXSXUIaVnboNtiVLuvPMabqcOBrareB5JwqCLM7INh
+ 5/mTK7rIIM1aunQt5wPD8/wq9iKNIUM=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-61-2QvSBOkoPxyYUO1-uUQbSw-1; Tue, 07 Jul 2026 08:17:54 -0400
-X-MC-Unique: 2QvSBOkoPxyYUO1-uUQbSw-1
-X-Mimecast-MFC-AGG-ID: 2QvSBOkoPxyYUO1-uUQbSw_1783426674
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49244130073so28349235e9.1
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 05:17:54 -0700 (PDT)
+ us-mta-128-GcAr-DQhNyOkaIoVzb_t2g-1; Tue, 07 Jul 2026 08:20:30 -0400
+X-MC-Unique: GcAr-DQhNyOkaIoVzb_t2g-1
+X-Mimecast-MFC-AGG-ID: GcAr-DQhNyOkaIoVzb_t2g_1783426829
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-c126bfee5a0so307293166b.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 05:20:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783426674; x=1784031474; darn=nongnu.org;
+ d=redhat.com; s=google; t=1783426829; x=1784031629; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=ECDQsxluyho4egc8t6HHc4AFDsro4kisteGh+3jEU3I=;
- b=SITk4j30HVS+Ra8HxKDZTaad3ZDPf596qeRQxLq+KY87OxZ2mPbqGhIHux9U+Xjt0L
- oegU0NUUU+HqbHTNmXYZt+hBKer9YCZM0Oh2pvbbu8qY5H0Ubc59cjc9qXflsS+Coit5
- CY41V576sO0sHY1E74QUPyhVzBXCwJ3j+dmZqbpvnCeRg0XShVhg6y0JDLb/Dun0UkpD
- WAmOWoKFEhW8Z8qrxvX5pOFtv7pR53repqJJz1j/t8gV7ieImUGz5kXdq/97EjVhCfxg
- cq/uWcsH7F2n2UApg3V8qlNkZFseKT3sV76Kc5jixnQVk456BkBC0Un5AWi4Osg7CGe7
- xh8A==
+ bh=5MtvWsjBjErY3e9WbGbYw+B+rMvhKAh3aCkYbKMuC2E=;
+ b=fhlVZ9cSZ9pYELXi89DQEPrtihALuSUvY3TVY+wNV8XCTwlp72R+s696Kesq+iBwtS
+ ciPXn/nlTIBrxyceDyqr9XT6bdIdXD7mYFN903RkaOtze+z5aXpEIl72PIAYehEjAPSk
+ ljKhvdVQzreG/07o/cTOXX+By2FVoLvcxe+eoYD8tYTrQVyYoCvSioCKsnQGsn2cce5s
+ rh9+UJlT5z+Zr039/x2Qo9I+QkDZ3zhGAb8jmMXLo+yuNBbKN749SSkBXLaZ2VkCaLAB
+ ZN0PqtFUE2mttk0LGbAsIQAuGTDd/XXJXC4BsP85Si83bPA2+m8JIxpshbE2U2hShfUH
+ azOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783426674; x=1784031474;
+ d=1e100.net; s=20251104; t=1783426829; x=1784031629;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ECDQsxluyho4egc8t6HHc4AFDsro4kisteGh+3jEU3I=;
- b=PDVl9N86auVxUsvegAqfji3KexzbliBMzKNykYVqDVS3uFTIxMRLSUNS6DVx0DO1FM
- J++HbLDtLGqLtVqqPJ4TZT5POdYvDS9U/q3089ZlPZ/y7jtOndfNIefmmO1+WIzcyskT
- gcn61u7pYf08QvFXxrz4fSVyht9nABnmKi92DoHSt9X5nXRzMG9ZBLDfa+Vg2GyMfx3d
- ffISL/k16nb1zhf6oGeL1xb9nSXPPPDP1qB9LMzC0/Cc/Oi3eq4j1kX30tukClgyeuIe
- ZaVW2lPaQ6GF4OwFj09GcIEKBBM2TzNPaTWPh6J+EJtyn8L4bgpe/H8GPbGp0YBqbbYv
- V89w==
-X-Gm-Message-State: AOJu0YygUw5fobT7XLmus/0vEyfXpJ0XNcIFer7ZZAsrMSqp+sb3QESS
- 7MIVxnjsKKuHJAxcS6EHlSWMHtQK26fVD22A0AuHXSYACdjCXsvJWWoFmAeZ/oxOHASYu3OIEAa
- RNE0Bia5haDLMm+NuSW/LHaWbvRFYFE9tRJQMe92ZBsVIdSLUTLmf1YL7
-X-Gm-Gg: AfdE7cnVmmX32rFnEXKKxeiMGfqLltSTdrBtGHGBaeMkvyx29vPoDQX0xn4AVyOcA/+
- Kf/HoQAtwdSinwIB5WtqtgGJjpUJbiFvnsQARqigwNE7KGf2Ihmk8Tv+ZI0+j/gZFBK+lG7TBY2
- j2xpJ0aWryRSQBD0dnny3SkBRPv4+oq5TBhlTMRomEgDO5sQ8z9jUnBfc4gj+IwcsSQUwTD/LO0
- B2NAwYzNRm2cZvVk7Ock8RXMrCfcIEcV62N0jAUNUXLaD7lU0kocpzuNPw68owuJq5JeoCzFn/V
- pUp3ySefjS8N9T+cXgtOMhvSenj1FBytVGxPadkAy5WI7QECSlhLEk0CfsjT7znhu2ZY2gC4Yrx
- MRnk2BjR/iuqFIb7b8aYgeqfIoxmuQwi0SWrKPiJAPG64RsqQMA==
-X-Received: by 2002:a05:600c:190f:b0:493:bcba:46a4 with SMTP id
- 5b1f17b1804b1-493df0641e6mr58078065e9.20.1783426673655; 
- Tue, 07 Jul 2026 05:17:53 -0700 (PDT)
-X-Received: by 2002:a05:600c:190f:b0:493:bcba:46a4 with SMTP id
- 5b1f17b1804b1-493df0641e6mr58076805e9.20.1783426672816; 
- Tue, 07 Jul 2026 05:17:52 -0700 (PDT)
+ bh=5MtvWsjBjErY3e9WbGbYw+B+rMvhKAh3aCkYbKMuC2E=;
+ b=Wbxr3iiT2Bs3ABKWjhNRW+w1p0jgNfEtx/5grZMrcDRGyz+UqNzifos9AHf1nZMnJP
+ E41pfy5VpY8n3qYLnY/wOUSRixeH/XDCFHjEb2kUwvA6277T7DeduWGULE7cZUl1CDhj
+ gngRW61/J6SVPdZFdBVMtuT+S5JE35LcBR0anCgmB0dg3sKz2bYV2J+3QfcnH4fy9s2u
+ Yfdrsd32UjkqOl0FIj7jmRtE860cOC/FFVLtWTg7123gNGIanCzCoiXDVqKcTOZUxW7j
+ CXieq5HDTJy8FY3Cn70OwkrHwZzzCOR+2qdYOnG3fZzlqmPTmF06h9gzLy4vCuNVeuO/
+ qDKg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpWmeJxmKmvWFFvgjedkxArVKzoTEX95e6zu+UcTCa0e8zML9Cs3EfyjqLHp96hBPy/Ss2kfZsdcIm+@nongnu.org
+X-Gm-Message-State: AOJu0Yyb1sTehyA17NOhPnlJ0M/5/hVK+ybpi8eVIDyTEKUzZAXf0Xo9
+ ORcL35ZJfObFjwxpr+36ip6SmpkM4RKaSbiNlI7KxNf0gKcpnbpZyLltG5Mp7kfDWovi+HTiMmN
+ /nTevzBTXVUvQC/skxR/tdSi/Q6mBBCTswbnuJvSzbch9H92pepCxHi90
+X-Gm-Gg: AfdE7cmJvuB3yJgqcy6dEhRyHXhd8DaJjCr6CWMfMMaH+mwP+OZf8QzNVCgVKbzy4oq
+ 0XTKY0R1avcnf3IY7bXpen5xwD28sd5CqqtBsIWASi2Dq8o9jiXF5D4zIRZuEjE1uOXO0edt/0d
+ CwIVDTDAz+fGiBnNbNWcNIVJWMudp70Xlb59OaGQ5sJeyN5ZQjm5sHLICRqKjk96KbcSaCgtW8p
+ w/u/FKXwA+rWr3AYBASJnCUIvNi2+XjY15NHKc7Le+Wwv8GaQLnr3wPncCESSm14BfJiW8i+YYm
+ bBeYB843V8gmbBBo6jIiePhaiOjPziSUVS8Dnktd4UyVAHKnI8Yv5sCy3vubdHpsRztlbs5Dxb5
+ uGm4mo2UoQ0u1tIhU5QYoS5NqR/3ugE8FkJozfXfaW8z5u0MaCw==
+X-Received: by 2002:a17:906:1558:b0:bfd:6cf6:1952 with SMTP id
+ a640c23a62f3a-c15a683e7aemr198737566b.28.1783426828991; 
+ Tue, 07 Jul 2026 05:20:28 -0700 (PDT)
+X-Received: by 2002:a17:906:1558:b0:bfd:6cf6:1952 with SMTP id
+ a640c23a62f3a-c15a683e7aemr198735766b.28.1783426828479; 
+ Tue, 07 Jul 2026 05:20:28 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493e0f3677asm48059215e9.4.2026.07.07.05.17.51
+ a640c23a62f3a-c15ad9be41esm119489766b.39.2026.07.07.05.20.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jul 2026 05:17:52 -0700 (PDT)
-Message-ID: <3da451ff-f251-4504-bb71-b935ea3d3d54@redhat.com>
-Date: Tue, 7 Jul 2026 14:17:50 +0200
+ Tue, 07 Jul 2026 05:20:28 -0700 (PDT)
+Message-ID: <f858c0a7-bcac-4d50-b9f4-300be46428ac@redhat.com>
+Date: Tue, 7 Jul 2026 14:20:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 03/16] migration: Run final save_query_pending at
- switchover
-To: Lukas Straub <lukasstraub2@web.de>, Avihai Horon <avihaih@nvidia.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>
-References: <20260706085211.13905-1-avihaih@nvidia.com>
- <20260706085211.13905-4-avihaih@nvidia.com> <20260707121609.40bfdcf2@penguin>
+Subject: Re: [PATCH] docs: outline some guidelines for security classification
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Mauro Matteo Cascella <mcascell@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260707105927.2776822-1-berrange@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -151,17 +145,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260707121609.40bfdcf2@penguin>
+In-Reply-To: <20260707105927.2776822-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -178,40 +172,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/7/26 12:16, Lukas Straub wrote:
-> On Mon, 6 Jul 2026 11:51:58 +0300
-> Avihai Horon <avihaih@nvidia.com> wrote:
+On 7/7/26 12:59, Daniel P. Berrangé wrote:
+> Beyond the overall virt/non-virt use case classification, there are
+> a number of scenarios which we have decided will not be treated as
+> security issues. Start to document some of these to give consistency
+> in our treatemnt of incoming disclosures.
 > 
->> Before switchover, the source needs one last exact pending query so
->> modules can flush dirty state. This is currently done ad hoc in modules
->> handlers. For example, RAM syncs its dirty bitmap in its save_complete
->> handler.
->>
->> This should be a general concept relevant for any module, so extract it
->> to migration core instead by running a final save_query_pending before
->> switchover.
->>
->> The final query requires special handling by modules (e.g., it's called
->> with BQL locked, during VM stop), so extend save_query_pending
->> SaveVMHandlers callback and qemu_savevm_query_pending() with a "final"
->> flag so migration modules can tell the last pending query during
->> switchover from periodic iteration queries.
->>
->> Call final pending query also in COLO checkpoint, which needs to flush
->> dirty state before the checkpoint's live state is saved. Unlike a
->> regular switchover, COLO reaches completion repeatedly for every
->> checkpoint, so this must be done on each one.
->>
->> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
 > 
-> Reviewed-by: Lukas Straub <lukasstraub2@web.de>
-> Tested-by: Lukas Straub <lukasstraub2@web.de> (COLO parts)
+> Mauro / Michael: please suggest any other rules which we have applied
+> historically on qemu-security disclosures that we should capture here.
+> 
+> The vfio-user/vhost-user addition is a new one based on discussions
+> in some GitLab issues today/yesterday
+> 
+>   docs/system/security.rst | 63 ++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 63 insertions(+)
+> 
+> diff --git a/docs/system/security.rst b/docs/system/security.rst
+> index 53992048e6..fbbca50f95 100644
+> --- a/docs/system/security.rst
+> +++ b/docs/system/security.rst
+> @@ -75,6 +75,69 @@ Bugs affecting the non-virtualization use case are not considered security
+>   bugs at this time.  Users with non-virtualization use cases must not rely on
+>   QEMU to provide guest isolation or any security guarantees.
+>   
+> +Security boundary scope
+> +'''''''''''''''''''''''
+> +
+> +Even where a flaw affects the virtualization use case described above,
+> +not all scenarios will be considered in scope. The following guidelines
+> +are used to evaluate whether to apply the full security process, or treat
+> +an issue as a normal bug.
+> +
+> +* **assert** / **abort**. If triggering the code path requires kernel
+> +  privileges (or root account access) in the guest, asserts/aborts in
+> +  QEMU are a self inflicted denial of service. These will **not** be
+> +  treated as security flaws, at most hardening bugs. If triggering the
+> +  code path can be done by an unprivileged guest OS account, this
+> +  **may** justify handling as a security bug.
+> +
+> +* **vhost-user/vfio-user backends**. The backend processes have
+> +  shared memory regions co-mapped with the QEMU process. The intent
+> +  of the process separation is operational resilience & flexibility
+> +  and allowing for independent software suppliers. There is not
+> +  considered to be security boundary between QEMU and the vhost-user
+> +  & vfio-user backends. Thus flaws in the backends which can cause
+> +  crashes / undesirable behaviour in QEMU will **not** be treated as
+> +  security flaws, but should be fixed as hardening bugs.
+> +
+> +* **memory allocation bounds**. There are many ways in which a QEMU
+> +  process can legitimately consume an amount of memory that is
+> +  significantly larger than the assigned guest RAM. QEMU's worst
+> +  case memory usage should be considered effectively unbounded. As
+> +  such the QEMU deployment on the host should account for the
+> +  possibility of large memory peaks and apply countermeasures to
+> +  provide continuity of host operations. It is typical for the Linux
+> +  OOM killer to reap the process triggering host memory overcommit
+> +  in the case of exccessive usage, offering a degree of protection.
+> +  As such, bugs which can lead to excessive/unbounded memory allocations
+> +  will usually not be classified as security flaws, but should be
+> +  fixed as hardening bugs.
+> +
+> +* **degraded guest behaviour**. There are a set of bugs which can
+> +  lead guest hardware devices to misbehave. For example, a flawed
+> +  virtual IOMMU operation may not offer the guest device isolation
+> +  that would otherwise be expected. If a guest triggered exploit
+> +  requires kernel privileges (or root account access), and leads
+> +  to sub-optimal behaviour of the virtual device this is considered
+> +  a self inflicted service degradation. These will **not** be
+> +  treated as security flaws, at most hardening bugs. If triggernig
+> +  the code path can be done by an unprivileged guest OS account,
+> +  this may justify handling as a security bug.
+> +
+> +* **nested virtualization**. The scope for nested virtualization
+> +  is to prevent a level 2 guest from breaking out into a level
+> +  1 guest. As noted above, a number of scenarios exclude security
+> +  handling for flaws only exploitable by the guest kernel / root
+> +  account with affect the guest's own service/availability. In the
+> +  context of nested virtualization with PCI device assignment, it
+> +  may may be possible for a level 2 guest kernel to trigger flaws
+> +  that affect the level 0 QEMU process. While these bugs should be
+> +  fixed, they will not be triaged as security flaws at this time.
+> +
+> +* **low severity impact**. As a catch all rule, issues which
+> +  are judged to have a "low" severity impact on the system will
+> +  usually not justify handling as security bugs, nor assignment
+> +  of CVEs. They will be fixed as routine bugs when time allows.
+> +
+>   Architecture
+>   ------------
+>   
 
-Thanks for the review and for testing, Lukas. I sent the MR earlier
-this morning, so unfortunately your contribution won't be included.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-It's on the list !
+Thanks,
 
 C.
+
+
 
 
