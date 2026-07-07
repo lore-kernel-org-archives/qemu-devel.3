@@ -4,126 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C58CAC43602
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:17:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A265BC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:17:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh5ee-0004vy-Oh; Tue, 07 Jul 2026 09:16:08 -0400
+	id 1wh5eS-0004G5-Ka; Tue, 07 Jul 2026 09:15:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5eL-0003rI-VQ
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:15:46 -0400
+ id 1wh5dH-0002rn-Az
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:14:46 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5eJ-0000rs-Re
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:15:45 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wh5dD-0000a9-Va
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:14:38 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667C8vGt3676666
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:15:42 GMT
+ 667C9ML93740903
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:14:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- lN9MATFtm4EizLb/W1v/0rpJT6SEROwN4JCs2tgU2T0=; b=QQ9kaYZQUIzDVq/l
- pGMboN+n/oxcB3Pg4m7bTeg0KAk397Nb85AdGDTsttuYXY8iN9m4sGcnw/KeAtMY
- s7+pyo6MjBHIUo+eiqWKZYEEDia7kU1eYm959yRvMkSlpYxN5ahljlwVwts6DUAs
- idrfVRkFTuNUVfvwxItvtz31nM43cGtW4jUfRKIfXiZsN9jPUhFcmA0m/c2HFboa
- FcA4K9rPgx4P8eX/oNTCHKemaY4IC1/N/06H9EGLHh9lGwaO+Po/CDoVLIIwIXIj
- 2aVT6uyOnOOxNeii3lvgdNn9QrJDQy1NLLUbZfde1z/qXaR5yZNPxZ8v0fYRGWxD
- PesEig==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8t15a4r6-1
+ BccTxZKCA6gYkBziV/R59OR/YwezElAivEqozwYZ2Gc=; b=pfQ3lltMgZKQz0dN
+ YAr/LHuj8u7IlnQkHroPhevqkQeV0lDR3LnIpIz+rA7rwwcakp038K1BZt5B5ZJQ
+ x/q9NB4pkcPlI6+RkD1BV1EH562ZpFuvH9nJFJgnqYkreua0dLRy+NEvbxg/pjJq
+ pTgnekLB9D8vV6qh1vIEQblM5YpybjIo/la1aaejR0r0a7LxUYdP+PaKZAF8SdmO
+ yX2O/mTsq4xJ8eghfE+s5blpGJdehMYVMjbNrPO6y0KxEU4ShitB376VE5xwMhCZ
+ vuaXEaZvt05I5ZbpE8L3BUO5UIcpxnIB+J+dEYpmVHXmr/il6B7CYIESl0m7/Mv/
+ J5HiGA==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8v9a9kxa-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:15:42 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51c0d6a2f4cso46981621cf.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:15:42 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:14:34 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51c110a3b6aso59713211cf.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:14:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783430142; x=1784034942; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lN9MATFtm4EizLb/W1v/0rpJT6SEROwN4JCs2tgU2T0=;
- b=JYEAese38sOjyjkHzIeJm2EFYfZlX0edO6oi28ILxW42ICMUzTRvN4i50MVHnB75Uq
- yuU0W+YId6Ez9oTi9ScFasWymtOtU92hmEaoLuknfI1qCaDkM4Cf9QvlUJQhqRPBgDWM
- QNMKmODO7Q8gmAvR/WR+xwrDh0kPpODncZc1HUjzfM7sHtXYPY0lWoOGlqymbbbGMZSa
- uX+2wN1MjzgxIAlakQpJp3TLyTHJt6rhSjHw/4p3vYiC7kwGLqtEYlmOgXHoBDojYikL
- B2bOxMNvQW3msRfRSEKl/5zIGcXlZpPJlK8wTyZMfzK6kOnFHC/ClLBa4I+XnzYF13Sw
- As5w==
+ d=oss.qualcomm.com; s=google; t=1783430074; x=1784034874; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=BccTxZKCA6gYkBziV/R59OR/YwezElAivEqozwYZ2Gc=;
+ b=goZ7RBomDZEuQFr/cpp1gv3JTCpvtpRNGlI5LPQo1U9JzB98G4oJKpeeQficyQhNIt
+ kp4kERzUD6da2yBGe8z/lX1jTvPcLx75mNHn+1p/ICoshe8GqiERVhUDZd+ebWEu9SBK
+ uREd+ocTxGFNAG5EDP3rsrHlN8Fo5pwm3l6HyWRVs0A1yKbkqIGAwQ7aGGqXy1oQ4bBm
+ 0UMdIvx9CDRooP+HrYXhXqdAF4dsCLo1vShiBS/+yFDk8URa5fNHd1hycB9AMqtruC3+
+ XAkqVvi8GEG0aTesyPtdF083Bbuwijwn5OBd+rVKUkQ05qohSKP0DZQsNmDi4x1p+dDe
+ UKEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783430142; x=1784034942;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=lN9MATFtm4EizLb/W1v/0rpJT6SEROwN4JCs2tgU2T0=;
- b=MnLxJGyMbMNnJrZOhoJuGu8I7Fw8ipZcAN08Td00EqtHXgMqk5ZhHkIlumCsaVk4Hb
- iQE3qhGhAKqWL8Qx3Nnupx33ssRlvzhm7vKe6ivCdgdBxdTxJHBW4aS6/PlxugT9ULGU
- tntcyRrkRsNnaSHkKD0vh0zmYaLbC23vF9/2J/Qrv2c2ujLDxaHMF/fkKNx5P1RD3tag
- vIzTQfhGy5KC2Eu6hJMfkVx5OOSGNbxx3F6M3dqZvNelCM90nmLlxRaGZiXh+pEoKFQY
- f4DXdvcLUg075xdRjqoBA/gFL1tKbcaQKuI35mQnP2oPRzZYyxUZNMjf7NqOK1dwJrKY
- BF+g==
-X-Gm-Message-State: AOJu0YxYQu+Wu5LTkjyOofnadFoZJUkT9hOrtguev650D0avdFCSruDT
- zUQCCwqkZrZMwwAcL6waduxF77qURTSSOWHucUJbhl8PNgDyBxSkz+VLXqTWsepCL+fMzymmt8E
- dpDrKqs1Wu4tQxpCbbld3o/lQOvR7a5CEWa5JyA6YUD3U0jOIev6Dpfj/qsUyBLOBBw==
-X-Gm-Gg: AfdE7cke3aOgTog56ddN2QPaeagW6WpcfcDCanujlIiutz+Cbl3bHLvf4IFzFFR23jO
- aUqnPAWQLUFSApJ5QeHWw7UlzWiC/DR+MttHfS/aTPhIDHqH21HwT3h+8io54Qnu9J9Dpcqgu3m
- Wiw+3UTHo9oUmhYAnechVPNKhb3V59P9t7CefZHih27z2gBPzNzzrDXFIeKHSv1iX04IMyDlaVc
- FtZd4CV5jbvC8pK14OqYeQcXtbqDp2gAh4rlSLTcMWGafTZRfEVAPOy156ImGN5Tt+Sb3Sj3zhq
- 4EQOlc1BEkmHK4AU7ljdLy8+XZ613UDajpdhdG98eK07raUTk7rLOPBW56xq07bfTDCfKee8s43
- xRtEIEXbrFDYvnDfG9whssDiIzAB/iW44M97zXzP31mKq+DubBZsC/2aE0DWeLh+McI0p
-X-Received: by 2002:a05:622a:992:b0:51c:df0:1b34 with SMTP id
- d75a77b69052e-51c748844c0mr51481771cf.33.1783430141920; 
- Tue, 07 Jul 2026 06:15:41 -0700 (PDT)
-X-Received: by 2002:a05:622a:992:b0:51c:df0:1b34 with SMTP id
- d75a77b69052e-51c748844c0mr51480481cf.33.1783430140645; 
- Tue, 07 Jul 2026 06:15:40 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783430074; x=1784034874;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=BccTxZKCA6gYkBziV/R59OR/YwezElAivEqozwYZ2Gc=;
+ b=SU5wfxlyE+y282WEVd0GEO/W6DweS1COPBjipDXU8rGwVbpN2l22EuXYGX59Mz1qdq
+ MnDyCcu5N6r4YnuLXU6rOM0vt7OrlAKFQp86y1QEmF2/J7sH9FhQBpa8Ny8h1bZTaQMw
+ T3LHQDutc+kWY0bpHt9pKXdu28FDqTy0vSGRw+5Sx2BHpuabuYFPH4gP+cmu4Nao79Pf
+ nM7hSqeenF4zzh6w/p8WlgOO/2n2YAe/xH4U1Pk9EJ3kpbZF/5jRkppy0hj17MYFZNZX
+ zCV5yYYcNMssDIHUWbSvVxf88NabF5L7iCL6zlA6I1Axg6SIAFs46Jt69U3BwC3zhrm0
+ JP0g==
+X-Gm-Message-State: AOJu0YwxBh3kRWb1fZT5q41txcit7oz8bvcvTq+zeNW4PoT4KYnwfJXR
+ eJ/t/b8y2oxXPMrTuMD7X1h8jxoMhzl+75TvD3gG7fFhVSNjHiEUePWEg8Y+C1/q1F1BpsLThOg
+ vyHRNqveLYv7qvAcs0MhdgJ3v1b2LPq+J97m9yPEXiN51DtsmpI8F86kF4aqrqOE1vA==
+X-Gm-Gg: AfdE7cl8ySdsKIeiRKajKKiWri2qmfJHiruDC10sdbwYXa54A8IlPJ6U8an7D/KGyHK
+ DFtTaJAI9A5EVWgJJ4vSR0LhXmVfvThBqBnpj8EdA1JTE21IPbetVOmE1vKddy5rOkSF/f0w7Vc
+ JQWs3TgJYoKB2Sljv9NiifD5kzbinzq7fMEa/8IbW/J6Wrsjx0x7rvL3M3QMaI1XKSyZjxlftD5
+ jnVWiRdWCjbYwOh4XAfevpdnZkUeV1Cwuoh+P63lpO/LRuTt05F6t49tUVsZKe9QkuMzguSCZ4P
+ GurD3TF02BMsQm2WKyIZ3Iw6K6yVi203Ki8+RsO+Lcj1MfS/Ys8Q4zP3ff3npg75w58ZJusI2SE
+ H31nNE0t9fE4w41LKjjjZaV1/izhz5XBnxWAWJcob+oEAAxyjRmBP9BfPkWK9ArmeaYQ5
+X-Received: by 2002:a05:622a:1183:b0:51c:1361:fead with SMTP id
+ d75a77b69052e-51c7487fec7mr51708071cf.37.1783430074157; 
+ Tue, 07 Jul 2026 06:14:34 -0700 (PDT)
+X-Received: by 2002:a05:622a:1183:b0:51c:1361:fead with SMTP id
+ d75a77b69052e-51c7487fec7mr51707701cf.37.1783430073679; 
+ Tue, 07 Jul 2026 06:14:33 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c15ad820d33sm134878366b.3.2026.07.07.06.15.39
+ a640c23a62f3a-c15ad9bfdccsm141337966b.36.2026.07.07.06.14.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Jul 2026 06:15:39 -0700 (PDT)
+ Tue, 07 Jul 2026 06:14:32 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 27/32] hw/block: m25p80: Fix dummy byte handling for Macronix
- flash
-Date: Tue,  7 Jul 2026 15:12:17 +0200
-Message-ID: <20260707131223.51505-28-philmd@oss.qualcomm.com>
+Subject: [PULL 18/32] hw/net/can/flexcan: Subclass TYPE_CAN_FLEXCAN
+Date: Tue,  7 Jul 2026 15:12:08 +0200
+Message-ID: <20260707131223.51505-19-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260707131223.51505-1-philmd@oss.qualcomm.com>
 References: <20260707131223.51505-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: onZRSHd95I22fqWLNEvcDarE1KoMCtRq
-X-Authority-Analysis: v=2.4 cv=HstG3UTS c=1 sm=1 tr=0 ts=6a4cfbfe cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-GUID: uUexIbtyGzloorVbCwYCQ3QIuIfm2eH3
+X-Proofpoint-ORIG-GUID: uUexIbtyGzloorVbCwYCQ3QIuIfm2eH3
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX0r1Btc1V9DMT
+ k/V9Il9vXm2XTmx98ZaUMWVu/Tf5b5JArOqac/mL1zCCRfztd8eUnODnOpRL7TQVhiVO7kBGT/I
+ bBSJJFU8FGdsipfaLi9prJaPIZiiJck=
+X-Authority-Analysis: v=2.4 cv=b9yCJNGx c=1 sm=1 tr=0 ts=6a4cfbba cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=qudNOe3MAAAA:8 a=FRSEYCzRAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8
- a=eCjGLk0DLWPBDlXMaRQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22 a=icPJRyImjHd6_pBPa6HO:22 a=H4N_Y-AU75W7NKDNhZlT:22
-X-Proofpoint-ORIG-GUID: onZRSHd95I22fqWLNEvcDarE1KoMCtRq
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX96O3QNcF/Pl1
- CMmX0rfGUI8pnpJFnETDam6XYAI9pkECjLKFnYpoO8gB4ui3ptIod5w8mjbe4huvLkAka0wb6qq
- O0HUk2wRTc4iZNh3pfERQpQuIMRvX30=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX/6qliNvYqgmb
- sCeVjO2FlTfD9ZZFekj/MQN9h6BszUnjsmzSR/mlQJZIEQaZ04Zn8lyurHjIfLftDexeQduJQbT
- EXF+Rve6zvnJy+TEIyYVg1CSNmtVFcD48dtNYVmGlwYfholtfXi4Hf433eULF4C10RdIBHG/6Hf
- zwF/rL9OiqF9qAwb+lEvwSdEevv6IQU0JmAzMi/gJwt485ZCAN89UHs5jlCvIuJN4+BgEmBTgjn
- ABsjkVbn/SPkOf7m5wEtmBmg2dXbOwz/BOCbcViTiMwlGzICZz+7pWKkSxlt0CawPpcZibVxgBM
- xwRAezzt1lOxDYUdH6wf+aYFEO57mZ2IxD61KLpTC9Z+CTiE1Q3g58uwWTTujrykRmwylE5BYu9
- qLc3wFJD7g21S5/vn5poPvbPXBtb5x85Cnt0FlBZBnTEEFSgbn/hTaHmAiOK9fpboGQeDHSTiYS
- o/cFU65UM6RqkMrQ41w==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=ItCWRy2WlyBiaE_UJHsA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfXzypELb7Mo2xr
+ C94qzmMYXHxFxNWU/zCSzawgb8ZqiYRInzVXNGnUhmFYFJU+78M90+Q4eP0L0kceXLJSk1dQYWx
+ /TmN75fLG0p8F93PbE1G3DABcFQUh8LOgbNt3qM4oq0wu78vMN/EoJtQIU5H5DjEvTQYGP953Va
+ QWOEQrQRGTNKhPdInUIlLED0e4d33Ta8cBeWleP9c/im++7i2HXWbO6dj63kjOsVaJcio8DWrpu
+ s5Bj0k13EGfT0aYnEuHzMFLOoxrwKcG0ZX49WcdTRfF6Qrv5ZdScPUQOQca2GjJwNS+F1GGY1g8
+ 9pkwhO2ywmprFgcqaZ2Eox+aB/W2x3cF1Gnv5naheis+G3C+PiJ3x5oHjsdsEmb6KVp8xouhcee
+ edLfp93IFDiQKYIqTdh6zyZZV4iKiIvQiMuUjT/rZRKFj8ef9G7fJ6Zm1yTAiTnjbCoPelp4IXm
+ 5ra/Zb1nXAFaGhDF8SA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_03,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 suspectscore=0 malwarescore=0 bulkscore=0
- clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
+ impostorscore=0 suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0
+ bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070129
 Received-SPF: pass client-ip=205.220.180.131;
@@ -150,122 +150,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Meng <bin.meng@processmission.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-Macronix flashes expose DC[1:0] bits in the volatile configuration
-register [1]. These bits select the number of dummy clock cycles
-used by the fast-read command families.
+Subclass TYPE_CAN_FLEXCAN, yielding TYPE_CAN_FLEXCAN2 and
+TYPE_CAN_FLEXCAN3.
+Since TYPE_CAN_FLEXCAN is now abstract, TYPE_FSL_IMX6 needs to use
+TYPE_CAN_FLEXCAN2. TYPE_CAN_FLEXCAN3 will be used in TYPE_FSL_IMX8MP.
 
-Convert the Macronix dummy-cycle settings through per-command-family
-tables and round up the non-byte-aligned cases that the byte-oriented
-SSI model cannot represent exactly.
-
-[1] https://www.macronix.com/Lists/Datasheet/Attachments/8657/MX66L51235F,%203V,%20512Mb,%20v1.1.pdf
-
-Fixes: cf6f1efe0b57 ("m25p80: Fast read commands family changes")
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Message-ID: <20260707083431.219671-4-bin.meng@processmission.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Acked-by: Pavel Pisa <pisa@fel.cvut.cz>
+Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
+Message-ID: <20260702184038.178196-3-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/block/m25p80.c | 63 +++++++++++++++++++++++++++--------------------
- 1 file changed, 36 insertions(+), 27 deletions(-)
+ include/hw/net/flexcan.h |  4 +-
+ hw/arm/fsl-imx6.c        |  2 +-
+ hw/net/can/flexcan.c     | 80 ++++++++++++++++++++++++++++++++--------
+ 3 files changed, 69 insertions(+), 17 deletions(-)
 
-diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-index 83d1ce1f956..d7a9d793737 100644
---- a/hw/block/m25p80.c
-+++ b/hw/block/m25p80.c
-@@ -1024,6 +1024,39 @@ static uint8_t numonyx_extract_cfg_dummy_bytes(Flash *s)
-     return dummy_bits / 8;
+diff --git a/include/hw/net/flexcan.h b/include/hw/net/flexcan.h
+index 153afc1e03b..32de7b904af 100644
+--- a/include/hw/net/flexcan.h
++++ b/include/hw/net/flexcan.h
+@@ -139,7 +139,9 @@ typedef struct FlexcanState {
+ } FlexcanState;
+ 
+ #define TYPE_CAN_FLEXCAN "flexcan"
+-
+ OBJECT_DECLARE_SIMPLE_TYPE(FlexcanState, CAN_FLEXCAN);
+ 
++#define TYPE_CAN_FLEXCAN2 "flexcan2"
++#define TYPE_CAN_FLEXCAN3 "flexcan3"
++
+ #endif
+diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
+index 585c935b899..eec9673c6fb 100644
+--- a/hw/arm/fsl-imx6.c
++++ b/hw/arm/fsl-imx6.c
+@@ -92,7 +92,7 @@ static void fsl_imx6_init(Object *obj)
+     }
+     for (i = 0; i < FSL_IMX6_NUM_CANS; i++) {
+         snprintf(name, NAME_SIZE, "flexcan%d", i + 1);
+-        object_initialize_child(obj, name, &s->flexcan[i], TYPE_CAN_FLEXCAN);
++        object_initialize_child(obj, name, &s->flexcan[i], TYPE_CAN_FLEXCAN2);
+     }
+     for (i = 0; i < FSL_IMX6_NUM_WDTS; i++) {
+         snprintf(name, NAME_SIZE, "wdt%d", i);
+diff --git a/hw/net/can/flexcan.c b/hw/net/can/flexcan.c
+index 8f3f066ef50..da36d10bd33 100644
+--- a/hw/net/can/flexcan.c
++++ b/hw/net/can/flexcan.c
+@@ -1290,7 +1290,7 @@ static bool flexcan_mem_accepts(void *opaque, hwaddr addr,
+     return true;
  }
  
-+static uint8_t macronix_extract_cfg_dummy_bytes(Flash *s, uint8_t bus_width)
+-static const struct MemoryRegionOps flexcan_ops = {
++static const struct MemoryRegionOps flexcan2_ops = {
+     .read = flexcan_mem_read,
+     .write = flexcan_mem_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+@@ -1307,6 +1307,23 @@ static const struct MemoryRegionOps flexcan_ops = {
+     },
+ };
+ 
++static const struct MemoryRegionOps flexcan3_ops = {
++    .read = flexcan_mem_read,
++    .write = flexcan_mem_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++        .unaligned = true,
++        .accepts = flexcan_mem_accepts
++    },
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++        .unaligned = false
++    },
++};
++
+ static CanBusClientInfo flexcan_bus_client_info = {
+     .can_receive = flexcan_can_receive,
+     .receive = flexcan_receive,
+@@ -1322,16 +1339,26 @@ static int flexcan_connect_to_bus(FlexcanState *s, CanBusState *bus)
+     return 0;
+ }
+ 
+-static void flexcan_init(Object *obj)
++static void flexcan2_init(Object *obj)
+ {
+     FlexcanState *s = CAN_FLEXCAN(obj);
+ 
+     memory_region_init_io(
+-        &s->iomem, obj, &flexcan_ops, s, TYPE_CAN_FLEXCAN,
++        &s->iomem, obj, &flexcan2_ops, s, TYPE_CAN_FLEXCAN2,
+         offsetof(FlexcanRegs, _reserved6)
+     );
+ }
+ 
++static void flexcan3_init(Object *obj)
 +{
-+    static const uint8_t dummy_cycles_fast[4] = { 8, 6, 8, 10 };
-+    static const uint8_t dummy_cycles_dio[4] = { 4, 6, 8, 10 };
-+    static const uint8_t dummy_cycles_qio[4] = { 6, 4, 8, 10 };
-+    const uint8_t *dummy_cycles = dummy_cycles_fast;
-+    uint8_t dummy_bits;
++    FlexcanState *s = CAN_FLEXCAN(obj);
 +
-+    switch (s->cmd_in_progress) {
-+    case DIOR:
-+    case DIOR4:
-+        dummy_cycles = dummy_cycles_dio;
-+        break;
-+    case QIOR:
-+    case QIOR4:
-+        dummy_cycles = dummy_cycles_qio;
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    dummy_bits = dummy_cycles[extract32(s->volatile_cfg, 6, 2)];
-+    dummy_bits *= bus_width;
-+
-+    /*
-+     * Assert that the dummy bit count is byte-aligned
-+     * as SSI core can only consume whole dummy bytes.
-+     */
-+    assert(dummy_bits % 8 == 0);
-+
-+    return dummy_bits / 8;
++    memory_region_init_io(
++        &s->iomem, obj, &flexcan3_ops, s, TYPE_CAN_FLEXCAN3,
++        sizeof(FlexcanRegs)
++    );
 +}
 +
- static void decode_fast_read_cmd(Flash *s)
+ static void flexcan_realize(DeviceState *dev, Error **errp)
  {
-     s->needed_bytes = get_addr_length(s);
-@@ -1039,11 +1072,7 @@ static void decode_fast_read_cmd(Flash *s)
-         s->needed_bytes += numonyx_extract_cfg_dummy_bytes(s);
-         break;
-     case MAN_MACRONIX:
--        if (extract32(s->volatile_cfg, 6, 2) == 1) {
--            s->needed_bytes += 6;
--        } else {
--            s->needed_bytes += 8;
--        }
-+        s->needed_bytes += macronix_extract_cfg_dummy_bytes(s, 1);
-         break;
-     case MAN_SPANSION:
-         s->needed_bytes += extract32(s->spansion_cr2v,
-@@ -1091,17 +1120,7 @@ static void decode_dio_read_cmd(Flash *s)
-         s->needed_bytes += numonyx_extract_cfg_dummy_bytes(s);
-         break;
-     case MAN_MACRONIX:
--        switch (extract32(s->volatile_cfg, 6, 2)) {
--        case 1:
--            s->needed_bytes += 6;
--            break;
--        case 2:
--            s->needed_bytes += 8;
--            break;
--        default:
--            s->needed_bytes += 4;
--            break;
--        }
-+        s->needed_bytes += macronix_extract_cfg_dummy_bytes(s, 2);
-         break;
-     case MAN_ISSI:
-         /*
-@@ -1141,17 +1160,7 @@ static void decode_qio_read_cmd(Flash *s)
-         s->needed_bytes += numonyx_extract_cfg_dummy_bytes(s);
-         break;
-     case MAN_MACRONIX:
--        switch (extract32(s->volatile_cfg, 6, 2)) {
--        case 1:
--            s->needed_bytes += 4;
--            break;
--        case 2:
--            s->needed_bytes += 8;
--            break;
--        default:
--            s->needed_bytes += 6;
--            break;
--        }
-+        s->needed_bytes += macronix_extract_cfg_dummy_bytes(s, 4);
-         break;
-     case MAN_ISSI:
-         /*
+     FlexcanState *s = CAN_FLEXCAN(dev);
+@@ -1384,19 +1411,42 @@ static void flexcan_class_init(ObjectClass *klass, const void *data)
+     dc->realize = flexcan_realize;
+     device_class_set_props(dc, flexcan_properties);
+     dc->vmsd = &vmstate_can;
+-    dc->desc = "i.MX FLEXCAN Controller";
+ }
+ 
+-static const TypeInfo flexcan_info = {
+-    .name          = TYPE_CAN_FLEXCAN,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(FlexcanState),
+-    .class_init    = flexcan_class_init,
+-    .instance_init = flexcan_init,
++static void flexcan2_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->desc = "i.MX FlexCAN 2 Controller";
++}
++
++static void flexcan3_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->desc = "i.MX FlexCAN 3 Controller";
++}
++
++static const TypeInfo flexcan_types[] = {
++    {
++        .name          = TYPE_CAN_FLEXCAN,
++        .parent        = TYPE_SYS_BUS_DEVICE,
++        .instance_size = sizeof(FlexcanState),
++        .class_init    = flexcan_class_init,
++        .abstract      = true,
++    },
++    {
++        .name          = TYPE_CAN_FLEXCAN2,
++        .parent        = TYPE_CAN_FLEXCAN,
++        .class_init    = flexcan2_class_init,
++        .instance_init = flexcan2_init,
++    },
++    {
++        .name          = TYPE_CAN_FLEXCAN3,
++        .parent        = TYPE_CAN_FLEXCAN,
++        .class_init    = flexcan3_class_init,
++        .instance_init = flexcan3_init,
++    },
+ };
+ 
+-static void can_register_types(void)
+-{
+-    type_register_static(&flexcan_info);
+-}
+-type_init(can_register_types)
++DEFINE_TYPES(flexcan_types)
 -- 
 2.53.0
 
