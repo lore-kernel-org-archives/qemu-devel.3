@@ -4,135 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28CF3C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 06:11:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA742C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 06:12:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgz05-0003Dh-7P; Tue, 07 Jul 2026 02:09:45 -0400
+	id 1wgz2x-0007V0-Pg; Tue, 07 Jul 2026 02:12:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wgz03-000390-F1; Tue, 07 Jul 2026 02:09:43 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgz2o-0007Rf-Nx
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:12:36 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wgz01-00083P-W0; Tue, 07 Jul 2026 02:09:43 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PsVRqhTkC4elKjmXfQfY7eN2pvGnV0ydznWsBh5XS8/YmTSuaY9Gy7JbBq5DD7mfJx5wxlyrAIOsCibohl6iSCzpTk/cBB4BcThzsLdfZe+kuhk/34Pj6a07ajmXm7foAUaKYT4iISosW2VZPDQTYf0RA+FjZP4JSw1WBcFZVaR6mcQx6eOpgZllo9Rz70F+a3dOHC+5WcnDtAfeUZ35/yJZ7qJSVT8SQWOooexH9OSK1QfS4Ga2iXVFQ5yeJu9N0Fvg76jQNJ/ASbkNFQQ9PkPf1x5Cz1+1dIWZlH6KFUorQmQ/2eoNgYFJBFPLL71TDsbfwQDhqRV574R8oJPI7A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ngpXsUNKnu57ktrHgVcu8blVdNv30d/yd9pih9JUz9Y=;
- b=XFjGh2RTWKP2rhGC1GQ2IYfL/UNW+GWAmvNnRSFnp5RjcgooP6Yd+1fsFG9l03+X5M6JRPTvXKb2oViUPX4Y9+E8GEiqHduzhk45ZjnNeCzoUU3MrjgOmd49c8fn67bBByusrpmb6v+QZKDs/Sr0o5XWBNQjBxLeTpqpRvUOlPefOW+oUnq7NVzgMlJFRk19vc9KUG/vjIjLm9rmuKsuFt0/JDhj9Km55fOR4KMky4dbE3liUo6Eb6313xKwXtos0uS7CZk6DQ8Hp6u8EMkcVt2H6wdGwn+tQfVTGayrnu8rR9EsRAgJlrbRjoH/657TAVOiSnnjcK4qB9sSrErLlA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ngpXsUNKnu57ktrHgVcu8blVdNv30d/yd9pih9JUz9Y=;
- b=oiqufoX3gbbJKhlJNBP8pB3ScTEa0Ww7VqT+zVhoI4a4qkQr9bck+0mQVvYEtqOFLVAfuwctUa0g5k49ZXx4OeIoE9/wg/6+6BENxBf1OUrxapo1wki6K6+6UxV8earXsRcsrJj3C2dkUpI/NRAHWrEHi4KaXYcRFIN1Orb13ZgVR0L2ivUIbxb/oi1qvSarI9VACONiXklkh5HEjSitjB9+d4gr1lWyV/NbbIyMWjiHHQi0XVej/NettYJsgrczH58yO6YoW7JjmPfTkFAf9xqLhpMyw9S9GOm4rue/80VWzsxNXGVpVmvKGBv7PurM6B5UZFe+fjQAbXvxAxstJw==
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by SI3PR06MB8706.apcprd06.prod.outlook.com (2603:1096:4:2a3::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Tue, 7 Jul 2026
- 06:09:28 +0000
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0181.010; Tue, 7 Jul 2026
- 06:09:28 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Alistair
- Francis <alistair@alistair23.me>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v2 5/8] hw/arm/aspeed_ast27x0: Pass realized PSP SoC to
- SSP/TSP initialization
-Thread-Topic: [PATCH v2 5/8] hw/arm/aspeed_ast27x0: Pass realized PSP SoC to
- SSP/TSP initialization
-Thread-Index: AQHdDdcqufhJa3gxckGtq2Gm8MI3Gg==
-Date: Tue, 7 Jul 2026 06:09:27 +0000
-Message-ID: <20260707060919.350637-6-jamin_lin@aspeedtech.com>
-References: <20260707060919.350637-1-jamin_lin@aspeedtech.com>
-In-Reply-To: <20260707060919.350637-1-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|SI3PR06MB8706:EE_
-x-ms-office365-filtering-correlation-id: 28984265-7c18-4f7f-f2c0-08dedbee4d5f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|23010399003|366016|1800799024|376014|6133799003|18002099003|22082099003|56012099006|38070700021|921020;
-x-microsoft-antispam-message-info: vGlvZ5qaIXenurTu8ra/xsFRD6SV2cXpsD+71sE2OpW/t42+CwYq4uy034vd39H4HqZnlqIXxPjieeotJ/3pZ/yYIEIiv08yqSRrXHBB1Nm5CWznc2SDZvyGUKd1+0sqOl/f4NdaONq1f0OZi4Z2enHBLKCfNE3hD9OVCAUWOlK/l11JTO5Lz9wRKuebJzwLqznEM/ELNzYWxzOnQBd8BQzg6lYDLp7V64tL3JMnNGlCeGf+CUr8ZNeZboEGVAPW1fafTbRo5cH7m6KSrCdflP62MHyQ7Kafvo5WA1i5DzmnDJBEsWd1FFrONA47Cjl2wTMzovBVoOX1v95iDuyHOeBIsZWcnT9PMIxaCuYys/t6IQyxuPS5UKXItBYPJ3NtQB75KZJjrmuEqPVaztU+Qdni+d+efffEBnwpr6pJe2w35j+pXNZF35ln58ff9lIWV99D2LfAKbHxHMJTPboDBB1yMToemCyJydH+vFb49lO2vz43UCeu4QX6lS/ntVlDIPoWF1ChZY14KNr0iGEfcLZxjnZjuBxsgkFhzPZdoF+91smu+Z+tsiNC12jVebeyjfPWHSGAEBRzFmDzxpDCZj8Rd/KUEtjmtI0kE56M+5oB6p9Emim2fNzwFgKSp8cuxv4BcXDmj32eeBUoEwSh5N0K57HPYGxyINQtoxrDw7H3AQkoWYzNfHolQ9ZASwyGetoQSK/DMuNj+oWoRPDtrja9AfALV7WlKFwyHCue10gcxkauhW4XY6YeZWsPSpeX
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(6133799003)(18002099003)(22082099003)(56012099006)(38070700021)(921020);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?sCUoOa5S75V33eN8EPphulhrU7iClQ1RVInedXnDd1Yo+/VLYqVi9ycOjn?=
- =?iso-8859-1?Q?x7WDSfSxPXzfYFuqgx8ZGOwxtsGsJ8I4Es+qcdqx1/8FaAVJ054heZd531?=
- =?iso-8859-1?Q?O1f2rNPkZdZT19wBkj+LCQ4Cuo/xtjxiGSsT68VNDD67fNWK6v+4tPAvyA?=
- =?iso-8859-1?Q?7+VGq+XMXv4A0+ZfBLS6M6sEm/bq5ZWCZ9Pi4s2teHj/bfTYFEZqlJIyXu?=
- =?iso-8859-1?Q?mr+KvF44oMf/1LyK6b1elyeihQeiYp9EtXOqz3mQVORzoliyuultkatpTH?=
- =?iso-8859-1?Q?BCYgbnoddp25hVB56L35jy6UJPbZLlYh8v5mFkFrrc/+4NDpIR68WFeqR1?=
- =?iso-8859-1?Q?CUBZc40MzCITWa6f4J6TTV3P0DE+R+aBrBqdGlv52OcjT39D827UxEDN2L?=
- =?iso-8859-1?Q?eqIZ4hP4HAWB0y/mZwWQBdLvfmfB2gasrYhUI1zYujX3jzvQb0Sl29ZpRR?=
- =?iso-8859-1?Q?P6i20IuHm6kjPTpXzLhznRilj2IvQBij2k+IL5P5sNHJDUgk9A8gqEJAqV?=
- =?iso-8859-1?Q?ZMpsG0GWkLcaC8MEnyfjybtsjObB77kuI210M7pMfXRMVCXrVuqQT4rQ2M?=
- =?iso-8859-1?Q?JkugbOsGyp6XMYiZUEIbqtlAUnzk0PRas2Y/hln5fKm26l5m7JgwYO5b6H?=
- =?iso-8859-1?Q?S/4RLsE7dUsQC6+4GWx9MxM50azc5novCJ2DHKmQ+u6sezEO+SNxQVe5f9?=
- =?iso-8859-1?Q?myRFlV/6FrACTkHBFvlIQJlqF9TUFikBdhQUn+CScKA8DEhDVs0/q1aCMz?=
- =?iso-8859-1?Q?Az8N1aZPNcvB/Yqy/rGDeviq+BjlOAPHHHGU6ct7P+H6LBuDC7acIeaRQ8?=
- =?iso-8859-1?Q?EYvUDHkvFWgqfyGl7QX7SmyfpECUyUQ8MLr+3HKLegbXR9G2Z8eEGwpQq1?=
- =?iso-8859-1?Q?WSdfWXIfi/bNyvmL59YLmC6XJXJ8+ewQphJtAupGA8vGSHE3PL1C5ARM26?=
- =?iso-8859-1?Q?u4u5ZvQjwupoeu8MMKvpW3AxASj947XQh0ewffywQPk1pFouYRD4XKmS9j?=
- =?iso-8859-1?Q?pkkn8SSQ/GRJ4AFceMn5+LHDpfEKyfEBLOkRQj/9zrfo8kOWwGZ6cPS0Ur?=
- =?iso-8859-1?Q?+ngduiOQ/bFh8JCCkQie7ohc9i3pGE3eupHHJnTeF2mByijFj/UJLSpkF6?=
- =?iso-8859-1?Q?gZgbFwFmSDO9J9PVBmmcZDabq8THmuJOuoyxVbNPbYlTGbRU0Krblh2nSk?=
- =?iso-8859-1?Q?MXdOCrAWH8/dKKgj6qWVe0vI8P2gkZiwZWyyCkarR5JTULwoMHJvLfKOjH?=
- =?iso-8859-1?Q?upHa9S8YgY+BOoA4n3XrfyWGPuBQmf60IkRaF8dCZ39blN4WWDdJ9MefgD?=
- =?iso-8859-1?Q?zd1f9FJkSabli3+rL2wVVcwbAnzvZD8yQRgWgm55s+ZtnVMi20159qjXNX?=
- =?iso-8859-1?Q?f0Z5sJf0F8GkDuFNEdZQgbTc7TbTtvRe3orQBmzF3K2KUnMwXxXa27udc0?=
- =?iso-8859-1?Q?ooipOX0Faj0g8OhVCKNQALUXTAkzTtj8FqPUBdo5IAp0Cu3B4h1u9Toqy2?=
- =?iso-8859-1?Q?hdE3r8Rv7B4e+EpK+Ioz/gRuCzvDMrDuoL3eRiA0CdYOI5Lr7zxKDiqimc?=
- =?iso-8859-1?Q?UVSuydztL1NmvN25T1jVawWOfG2a6wcUCsYnZQv7g2RL+VtR3OZV/DE1qf?=
- =?iso-8859-1?Q?E2cVHQik0CWdT36FtcwD3k7kDDKB9+2TNy6nAZpcejYZf15aef6paY2eK7?=
- =?iso-8859-1?Q?L35/KqSlBVoc4fwZWDPKi/KuzmjVpj5dcnxkEvwNxaUj5N8y0cyTEcMIXx?=
- =?iso-8859-1?Q?DIMaJb30sas6bf0Sr0vkIJY2oDLCmNzuVoGynFid30wSVVO4SL0G4i4x4d?=
- =?iso-8859-1?Q?iq7OuVZt2g=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wgz2i-0000LZ-EK
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:12:31 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66748uvh2688424
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 06:12:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ mNeyEihWWNPA08Vf6WEHc2HLh/eJavkzjOUbK1igzI8=; b=nZ2Mobo+iUOwzD9o
+ RtTi/ZeYr4Ed0JWcLg6eChDaQBdOP5M8/wM3PU1uIpaaCHEKDi5GoQeI56u15tj1
+ uRXMvc+ADiI54ntKOparOt0zDkabHJvH+peoHu9FbwBG2jien9uN3TRENtGDzf9F
+ OlGc7rx5mvWePiV+xZ8N8okOHlQW+sF3ql/op5a2ZcZhkyQQ8UMnnAz/jLLGrSCM
+ nTdDu9V4qClEhOvRSqDq6p38q88s6Rmy1lPFHIZuaTz5orWGO2+a+LiEm/2YKb9p
+ BAeifn27CxPeLB/tJ13TtD+PTT5/+KpcXG7L2yPauppd6LwDa2vJaT3d3VjCFz2j
+ Gc+/oQ==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8a3gveu6-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:12:17 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8e97889ac8aso49716556d6.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 23:12:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783404737; x=1784009537; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mNeyEihWWNPA08Vf6WEHc2HLh/eJavkzjOUbK1igzI8=;
+ b=U/AofzrWRReuZ6Bi8aMQPi/t1b4xOpfiAYkpabaZzLjOOrVT8w8Mau54wVHsiV9ccw
+ pKtA9k9RW7ZUH38CvwpP1Jr0mb/sUGgSVTcL1jqZ5lJGUieZTN60kNiMacqHwVJxbqwC
+ ycNDLOCnkkLp0bukOEMbtX87mTS1ENR0Uyu4UHGyik+HIO+x7ykiLLOMnpiqLuuGMfHi
+ 2ZqVD0ZzbyRu938MI2zPqKkd8MrONy3ZRoYnii1sL5rlrAxCkaI0LwHPiJHT15dNf4GS
+ kBEscyLlwbo1nVHfpUs6TZ2oWmb/bMMRCiscDs3Omm7ar8F1lRj1WXSlwDkhyw+Kd0q/
+ YLjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783404737; x=1784009537;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mNeyEihWWNPA08Vf6WEHc2HLh/eJavkzjOUbK1igzI8=;
+ b=dorjt9GS+QwXjXRCQ+/n5IEVXPDakvZ+wUr9I9pXSiM7Wpr3SMyxHFbDRcmDYk8m/S
+ GLhNSwGsI9e+GYh6aVfghUzWH8FdRYqPcgLtdgBxtHEB9Dnrl5daMrAD34V71P/0Lx8p
+ NtpHMRobCcYAjJxwe14NzqSYFTJ5dlSff/TXISANhpV2qT5j7D+Uncdsy/p4BN6KeIcN
+ b/F2E/lPveykkrsO/QIwCrG6WrZdsd4KCguVPf54NHpA19pq/1ClD7bSRehtSgRthhnh
+ I46IA1AnlHX4xs/CwmGyTlwlWqjmoemvxqR6up7L4lLSTXX7eE9dxm76OK3h3pm6K5kE
+ QkRA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rosr0nOJO7jC6JW9nrdkhanOinDuXKF/Ges3O53sU5pgWO4DgKdEOLOC4T54j/K225yygKS53MqiOLb@nongnu.org
+X-Gm-Message-State: AOJu0YwEegJoi92zmMRzP2AVNnb1k7vvYM/49cGTxw4EMkn/9kCu9+bG
+ +4Tvfz24o/KLjmee3qgwN7TzEziXwyqgJGK9zHuT7bI7+CNHCmOkWIQJJdtyMnLqpGd3KAt3Sto
+ DzIekTgdGV/8kC4he3YThP2yjr9OGihbQxPM/TNHkDYmdR8SL51Xf8aWW4g==
+X-Gm-Gg: AfdE7cnpHYkzBMNTmiVSb5EK0eDjtYSGz7w/xXQbI0moB3Ye03ZY7ijsIEzonaHi4F/
+ qdIZiYRqAeXzOYS9tBWrRjW8tB/4zHbiIF+aZYHNMWXq2g/akHJO4Zr31S1bdJe3sJvUCFnEfOt
+ mCum2mL8lOk+XqNbaoVpyevKkqjujvlywFNzGwtr9EPyw+XVgXkT7mcFMvI0IbT0bO6H6hQgHfd
+ X148LS9X9iuaE7FTyqq7fIYStF38S2jqk+cDlIq0tBf2REDmCvsVTAKQM5VIe+WKe6UlhCjNf6n
+ bPJuGrtmyFy03VddNcBzc5K00wDyYAKE1dL0MGhewTFbpnntUFwR9nd5lnzM4qJWSID8/nLSTn5
+ nQc9Aj0kUXrThCc4oJRBtNGHqHya2/kxm7O6fCPDFLQGlKIGaejLVUn1XgpFjIQ==
+X-Received: by 2002:ac8:5989:0:b0:51c:7bd:2c6f with SMTP id
+ d75a77b69052e-51c7477d221mr49091571cf.8.1783404736924; 
+ Mon, 06 Jul 2026 23:12:16 -0700 (PDT)
+X-Received: by 2002:ac8:5989:0:b0:51c:7bd:2c6f with SMTP id
+ d75a77b69052e-51c7477d221mr49091361cf.8.1783404736562; 
+ Mon, 06 Jul 2026 23:12:16 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47a9e4d6e4csm28956777f8f.10.2026.07.06.23.12.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Jul 2026 23:12:15 -0700 (PDT)
+Message-ID: <d888bc60-34cd-43ff-812c-59107dc5e50e@oss.qualcomm.com>
+Date: Tue, 7 Jul 2026 08:12:14 +0200
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: MUtrIaIws2aI4xfNCHYIAIkOCsND37AeOcZ65WGQg/qFmyATg17R1TFZm9lF6jTLX358wALFFoaEzzWeu9FH0yQrjC508lsWsVoXdTDxu8sKxmkPaaAEs7PqfsiD0A2dXI7u2HuMQP9gUPrN0O9tBDkJqyk6jf01HOMymDzBxYBKyiCu5MDNIiO023MszmXwTZV2YGBNI4tuz5b7soll+QLL8Z+GNYfUh1+tl6W8HjkFEtCD5e0Ao+yfkizB9URqQPQx7b6MEzJH6mWRxNCwJpmJC9NtkWv+YTagpeiGNoc8X5Gh1yQKM04kBz4O+eNrX2tiVIl6i8BHZQOBv7F+LA==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 28984265-7c18-4f7f-f2c0-08dedbee4d5f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Jul 2026 06:09:27.9853 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: fvv65v8vnjCL8uB4Dlmkq/9jIbw1EinXv0BFQ23qF/Co1tgj4A+v6YKiWOy2hifhCJtJJxE+8WcFQnvsnuOj8SRIgodW06b/l29qvQ4j408=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI3PR06MB8706
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 66/91] plugins/api.c: identify or1k pc register and
+ mark it as read only
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260706223343.988769-67-pierrick.bouvier@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260706223343.988769-67-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: Zf2nZrmUx0aQ-d8t1qMeQNH8iZRQQ7Uq
+X-Proofpoint-ORIG-GUID: Zf2nZrmUx0aQ-d8t1qMeQNH8iZRQQ7Uq
+X-Authority-Analysis: v=2.4 cv=CPYamxrD c=1 sm=1 tr=0 ts=6a4c98c1 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA1NiBTYWx0ZWRfX6Ucll9E6AixI
+ pxMKn0vi2Uq5d3RGeEYpI47y4Poop8A3bEYjFcMJfLDatagF6Z2CYosgg7tv4p20uwpn0M1hWXJ
+ GzQN+AnOFL95CeT2fzpu+Pu7pRblv9iCNWQfbV6Yf5hoohwAJNQ8rqtmZpCNjdUtTOZkwFgyAPc
+ C/j5PdBYaqBDHJ7lo8A7HyAb0ciYWM6hTNVlKHDCsa8VAoRhC7C2JjUW8cgHPfuDaMnsx0A4y9a
+ DrgCbsjkXSpXyhTBBOGlVbi+QDrthx0jqpQraPa/whHn3SJoimJq0dLGAUGQidMv0Vn1GPU6qvf
+ 5OiE0Pie1CJ0pd7AvVrkA+WnODsAgbuvl8VYqnnYBvDdypc7v3KLuKMq9jg7w1VTo2Gst7rgzxu
+ TILGnKfP17MCeAWXuQS8GCQD0a/Qc1RogHI6bcFFTCwWfooj0GzTFlvqiwwUfyq8gkyJdpC0/26
+ YZTUF0gs4C+40EdmA8A==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA1NiBTYWx0ZWRfX/qoGbLuDe1xt
+ bayfb53moQma8E2NRPxofejVNQeDu6aeLcB41h9sA0G0jRS2RHIn8jGI7jzVXqG8mNXl8NuRuJH
+ gNUhp7Xf8YKe7eYaS1s/TUQIBqbpJ5E=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_01,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070056
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -149,78 +165,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass the realized PSP SoC to the SSP/TSP initialization helpers instead=0A=
-of retrieving it from the MachineState.=0A=
-=0A=
-This makes the dependency explicit, since the SSP and TSP coprocessors=0A=
-use resources owned by the PSP SoC, including the UARTs, SRAM, SCU and=0A=
-SCUIO. The PSP SoC must therefore be realized before the coprocessors=0A=
-are initialized.=0A=
-=0A=
-No functional change.=0A=
-=0A=
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
----=0A=
- hw/arm/aspeed_ast27x0-fc.c | 26 ++++++++++++++++----------=0A=
- 1 file changed, 16 insertions(+), 10 deletions(-)=0A=
-=0A=
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c=0A=
-index 8d49bb95d6..58d0b4d7cd 100644=0A=
---- a/hw/arm/aspeed_ast27x0-fc.c=0A=
-+++ b/hw/arm/aspeed_ast27x0-fc.c=0A=
-@@ -134,11 +134,9 @@ static bool ast2700fc_ca35_init(MachineState *machine,=
- Error **errp)=0A=
-     return true;=0A=
- }=0A=
- =0A=
--static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)=0A=
-+static bool ast2700fc_ssp_init(Ast2700FCState *s, AspeedSoCState *psp,=0A=
-+                               Error **errp)=0A=
- {=0A=
--    Ast2700FCState *s =3D AST2700FC(machine);=0A=
--    AspeedSoCState *psp =3D ASPEED_SOC(&s->ca35);=0A=
--=0A=
-     s->ssp_sysclk =3D clock_new(OBJECT(s), "SSP_SYSCLK");=0A=
-     clock_set_hz(s->ssp_sysclk, 200000000ULL);=0A=
- =0A=
-@@ -166,11 +164,9 @@ static bool ast2700fc_ssp_init(MachineState *machine, =
-Error **errp)=0A=
-     return true;=0A=
- }=0A=
- =0A=
--static bool ast2700fc_tsp_init(MachineState *machine, Error **errp)=0A=
-+static bool ast2700fc_tsp_init(Ast2700FCState *s, AspeedSoCState *psp,=0A=
-+                               Error **errp)=0A=
- {=0A=
--    Ast2700FCState *s =3D AST2700FC(machine);=0A=
--    AspeedSoCState *psp =3D ASPEED_SOC(&s->ca35);=0A=
--=0A=
-     s->tsp_sysclk =3D clock_new(OBJECT(s), "TSP_SYSCLK");=0A=
-     clock_set_hz(s->tsp_sysclk, 200000000ULL);=0A=
- =0A=
-@@ -200,9 +196,19 @@ static bool ast2700fc_tsp_init(MachineState *machine, =
-Error **errp)=0A=
- =0A=
- static void ast2700fc_init(MachineState *machine)=0A=
- {=0A=
-+    Ast2700FCState *s =3D AST2700FC(machine);=0A=
-+    AspeedSoCState *psp;=0A=
-+=0A=
-     ast2700fc_ca35_init(machine, &error_abort);=0A=
--    ast2700fc_ssp_init(machine, &error_abort);=0A=
--    ast2700fc_tsp_init(machine, &error_abort);=0A=
-+=0A=
-+    /*=0A=
-+     * SSP and TSP use resources owned by the PSP SoC, such as UART,=0A=
-+     * SRAM, SCU and SCUIO.  Therefore the PSP SoC must be realized=0A=
-+     * before the coprocessors are initialized.=0A=
-+     */=0A=
-+    psp =3D ASPEED_SOC(&s->ca35);=0A=
-+    ast2700fc_ssp_init(s, psp, &error_abort);=0A=
-+    ast2700fc_tsp_init(s, psp, &error_abort);=0A=
- }=0A=
- =0A=
- static void ast2700fc_class_init(ObjectClass *oc, const void *data)=0A=
--- =0A=
-2.43.0=0A=
+On 7/7/26 00:33, Pierrick Bouvier wrote:
+> plugin registers.c check if at least one register is read-only, which
+
+"checks"?
+
+> was missing for target or1k.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>   plugins/api.c | 2 ++
+>   1 file changed, 2 insertions(+)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
