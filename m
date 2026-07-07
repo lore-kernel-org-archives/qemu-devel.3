@@ -4,112 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B2D7C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 05:10:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3387FC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 05:16:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgy4N-0002J4-UA; Tue, 07 Jul 2026 01:10:07 -0400
+	id 1wgyAR-0003DC-MJ; Tue, 07 Jul 2026 01:16:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1wgy4G-0002Ia-7V
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 01:10:00 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1wgy4D-0005hP-An
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 01:09:59 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6674IITX1651246
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 05:09:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=2CqXHX
- n3CPxyJ8hrRAo8sAgeTwMW9XXEqYB79uTHMyk=; b=LP+wfMe6H2aF46BiXEsPe4
- wlOydQsg/akm5hhbTK8v2lwjdMK8b6Jqc+dpVwmTyua4+XzwvFPETLAS1PzdAAMz
- 14NfW85VVQ8VLwrcQXiznDWhAdmouIfApCcUQBaNpzKYBGOON/oc5I9jgYkKmyI4
- yYtBEy2D+UVOuFDsgENIu8xKDKQjtJhc3KCueUQy9KZXYr3htu3/yzkrFDfYmXFx
- qJbe3fc69yk+gF9gtX79HAmKkuuEpEITgeApT9qAJB9oq88z5AwI/W+MsQLU26LD
- JpfXfiZymMOC4Cr+XKuk7PW+r3pzwWGQ2AfUTvcEhC8acpFj+CLXehc1emn0hvuQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6rkdnr26-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 05:09:56 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66754dNf005857
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 05:09:55 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7eqg0rvn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 05:09:55 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66759roB27329006
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 05:09:53 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4F00820040
- for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 05:09:53 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 726F520049
- for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 05:09:52 +0000 (GMT)
-Received: from [9.67.174.189] (unknown [9.67.174.189])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP
- for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 05:09:52 +0000 (GMT)
-Message-ID: <7558650c-c813-4e88-bac7-4d7f5c9e9457@linux.ibm.com>
-Date: Tue, 7 Jul 2026 10:39:50 +0530
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1wgyAN-0003Cp-4p
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 01:16:19 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1wgyAK-0006Lo-JT
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 01:16:18 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-493bb510ce4so27662845e9.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jul 2026 22:16:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783401365; x=1784006165; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=w+IFLXJ6Rh2KW0UegRPvjJlrtOAlujmNmMT9+/Q/N30=;
+ b=lWAT7n9O09s5LWYx5XUzSC/xDXDhiT2LPYBqxWHkQ+MDOMZHmznifERgikXF4UlEDa
+ QRrFH+VsjJa6eV0/5JPOFRkWnBLCdpIPFl7shidmdFXCySinnd/+HK5ZuXlriOOsnOem
+ EhUP3v9jon4xY5Zfsn3YyaGfAkojMsHLaDA+N7RveXHUTmsdcTk+sJdDtDJAtQtOX5gS
+ LFPnho2/9QRpd9+lPLevEQlb73iIe11xUjrL14JTst6Dni+EirWv7RCx5RKNMzmtVHVG
+ VP04qd0iNxKTe26VpWoikH5ZhnPTFnfamHrevbMdAkL3cbfi9WnH805dfbodX5iAWtUT
+ gxzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783401365; x=1784006165;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=w+IFLXJ6Rh2KW0UegRPvjJlrtOAlujmNmMT9+/Q/N30=;
+ b=I/RYMe4L8ZU7GSJK7G76S2VrMAfQf7hWxmuxwYY4O9I6UEYczYM8xQLkV3gYescGV4
+ dkPRLn3xBB9CowMUStmNlkvkVfcd2c2F0LXQkmeKXHbve3Z0iuqpfcvVWJVk0anp2qGZ
+ du/SzEMTidSi9qwDQ6N7opJmsUPtLfLP48F/Nd1zz6xLnu1GjbBNq55hYsbI3LNDzbjN
+ N8zaUwIukXzB4oa5MooM5BuoTlYkJqyDPREBXlLR6qgx5EPYaOOdqfpLuJehyaR2S/+p
+ AlYYPt7rwMdp0LjxB0R2q8uJ+1N6GeRBypWaVAIK/zxB+NVCB5l/cwAQxmW6xjUvfUbD
+ hWWw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Ro5fPYbts0vHYKGadYcO3ODjaDTyvSiDPKqbLffZoiIdtOR2PKI1YwaTbTtiI2PeRXXbWu44PbYMP+G@nongnu.org
+X-Gm-Message-State: AOJu0Yxk7nX1qkPm3rk1vXh+w7qnlZ6XhpCBmfyyPWRkkMb0I5TMuFlh
+ +TEZiU6g0zTgyu8C79iGjVMTQw+wMJCo5388y8Z4HNHHzLYH5PekeCdkSLwzXw1onec=
+X-Gm-Gg: AfdE7clvUfce6zTljaMiyB19faC3LSdghfs83wIPaWdu9xdxaA+Y0MI2OW0bPSTzqxH
+ D5gAPn4RrjpEvfYqSm5yyEn9j9bJ7bkg4nan6fV2JZU/lBeMTIWPPvNYyNpQLspxfwmerng+B/Q
+ A1EjYruXcMQMAgomWndS2CthDjx5wIw80SSvir9WOR7TDseBtjEEnk/DkHE3a+IFlGl+P1geeoR
+ Luz+OqAWwBfPH48J18t2coRzCc3PVPyl6szIbh2sNPPqzRsTGJatEkWIvnDeG9BvmDtxfwakOQA
+ X4w2dUWSzJNd3tisnE2ltvGJJNTdzyx6FXcuUsy2hKj1sWIEPe2q7AMBpJwnozS9MIFcczBaDtg
+ h8/1SGIoURZo7sfijT2HZgncuLnC/VOMZs1fw+8WdOL7FLwgTDdz8Qu0Uhe/uyn/mxG8Hhki6P9
+ PD3J618GGbfERKksB97URamvrdRnxfvMHgR6Nso8kSuWCVEuw+jOG0e5f2FtHymUD1zEEVRYxlG
+ FewbQR9DhCYwaR4q1Stef0RC4cjhyD1LoCnlTTKUGCkg55QJKEMvhhojz5RV5HV5JO4IJvm9I/S
+ m+55VQKUlQErEH93FIAL+W08ZEMpJJIAoUcdIw05EA5EUED9a7RT1fA=
+X-Received: by 2002:a05:600c:37ce:b0:492:4363:e7d6 with SMTP id
+ 5b1f17b1804b1-493df0777bemr36671665e9.37.1783401364882; 
+ Mon, 06 Jul 2026 22:16:04 -0700 (PDT)
+Received: from meli-email.org (ppp-2-86-131-154.home.otenet.gr. [2.86.131.154])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493e0f3676dsm29382215e9.5.2026.07.06.22.16.04
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 06 Jul 2026 22:16:04 -0700 (PDT)
+Date: Tue, 07 Jul 2026 08:15:21 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Philippe Mathieu-Daud=?UTF-8?B?w6k=?= <philmd@oss.qualcomm.com>,
+ "Daniel P . Berrang=?UTF-8?B?w6k=?=" <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Brian Cain <brian.cain@oss.qualcomm.com>,
+ Alex Benn=?UTF-8?B?w6ll?= <alex.bennee@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, Laurent Vivier <laurent@vivier.eu>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Helge Deller <deller@gmx.de>, Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v3 16/91] tests/tcg/meson.build: introduce expected_output
+User-Agent: meli/0.8.13
+References: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260706223343.988769-17-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260706223343.988769-17-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <thshar.39p6by0xmpnw4@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 18/28] target/ppc: Move sleep & friends to decodetree
-To: qemu-devel@nongnu.org
-References: <20260520160728.2283628-1-rathc@linux.ibm.com>
- <20260520160728.2283628-19-rathc@linux.ibm.com>
- <8ae826c7-775c-4282-a734-9a18357f532c@linux.ibm.com>
-Content-Language: en-US
-From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-In-Reply-To: <8ae826c7-775c-4282-a734-9a18357f532c@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=M7J97Sws c=1 sm=1 tr=0 ts=6a4c8a24 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=VIO1ikxMzf-woBsiIOAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA0MyBTYWx0ZWRfX3MGI9CemB9ha
- jexXzkJ4dyZwY+Q4NkanMJ9lyr/Y0Kr108H+k35O2mJwt8SD4F2kwKDm1YscsbyJH0qnk3lz6cJ
- SvdoytRXeyVbKLp+OSa+Dd5KU5e9dllURHu5wLF1yT2bAu/ySCe153k8iMQVM6qnygMJmQJGSXl
- lEAVPqSPJ4lZRooLHwa5O2+PC//09PIUGY63h0Pjklme+z+cv5uTK9OAn9JyTMVfyQz2rlw5ggk
- WdLPci9Bu5uPlz7n90EiacYCIR6VdLrwcIzANXzUxpDn4gxVxeffZqtBFFntiSPkX7qY4gaWYym
- J9nuiGe1E5Egxg5HrkKGXLHfngQNv+A68a1+HOWpYs1FPoDEkFDJGHL5h+YJxKBkd6tlnT8Hwx0
- fnn3Zvw8iBN97mTrvGjVQvArHFetwaiovDhnKuK7z14FTMI3tIGRUoK2EdoIzMwt94bGYCt9YW/
- wsYZKRGcs6HL6mij5ow==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA0MyBTYWx0ZWRfXxgHL23tRbHNP
- Hq36DnjXVn5yt1Tt7Lhe2lafL1Ks+vqD37X8xgod/3J+0wAFt6vJaC4BAg1OG5tIFY9/aoq+umH
- 1yYtjqXkCAeMd0JrIzOciO+tp+pKV7w=
-X-Proofpoint-GUID: 36d_cH4chxsSm71e1EaSUEGtzYbTd8_T
-X-Proofpoint-ORIG-GUID: 36d_cH4chxsSm71e1EaSUEGtzYbTd8_T
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-07_01,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 adultscore=0
- priorityscore=1501 bulkscore=0 spamscore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070043
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=nikhilks@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,289 +114,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I guess in patch 19 Ojaswin has already refactored sleep, doze, nap, 
-rvwinkle and stop to use a common helper. I missed that part earlier 
-during my review.
+On Tue, 07 Jul 2026 01:32, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
+>A test can declare it expects a specific output on stdout. In this case,
+>we compare it to a reference file. We implement this instead of relying
+>on a wrapper because we need the flexibility to resolve name of
+>reference file per target.
+>
+>For instance, multiarch float tests expect different ref files for each
+>target, which is something we can't express with a test wrapper.
+>
+>Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>---
 
-Thanks,
-~Nikhil
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-On 06/07/26 23:18, Nikhil Kumar Singh wrote:
+> tests/tcg/meson.build             | 12 ++++++++++--
+> tests/tcg/scripts/run_and_diff.sh | 15 +++++++++++++++
+> 2 files changed, 25 insertions(+), 2 deletions(-)
+> create mode 100755 tests/tcg/scripts/run_and_diff.sh
 >
-> On 20/05/26 21:37, Chinmay Rath wrote:
->> From: Ojaswin Mujoo<ojaswin@linux.ibm.com>
->>
->> Convert the following instructions to decode tree specification:
->>
->> doze
->> nap
->> sleep
->> rvwinkle
->> stop
->>
->> The functionality was tested by comparing the qemu -D log -d op,in_asm
->> output as well as single stepping gdb to confirm behavior was not
->> changed for ISA3.x (stop) as well as ISA206 (doze, nap, sleep,
->> rvwinkle).
->>
->> Signed-off-by: Ojaswin Mujoo<ojaswin@linux.ibm.com>
->> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
->> ---
->>   target/ppc/insn32.decode                      |   8 ++
->>   target/ppc/translate.c                        |  85 ---------------
->>   .../ppc/translate/processor-ctrl-impl.c.inc   | 101 ++++++++++++++++++
->>   3 files changed, 109 insertions(+), 85 deletions(-)
->>
->> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
->> index 2c002f8513..a4454a2292 100644
->> --- a/target/ppc/insn32.decode
->> +++ b/target/ppc/insn32.decode
->> @@ -913,6 +913,14 @@ VPERMR          000100 ..... ..... ..... ..... 
->> 111011   @VA
->>     VSEL            000100 ..... ..... ..... ..... 101010   @VA
->>   +## Power Management Instructions
->> +
->> +DOZE            010011 ----- ----- ----- 0110010010 -
->> +NAP             010011 ----- ----- ----- 0110110010 -
->> +SLEEP           010011 ----- ----- ----- 0111010010 -
->> +RVWINKLE        010011 ----- ----- ----- 0111110010 -
->> +STOP            010011 ----- ----- ----- 0101110010 -
->> +
->>   ## Vector Integer Shift Instruction
->>     VSLB            000100 ..... ..... ..... 00100000100    @VX
->> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
->> index 4a7fa6a6a9..d1e9ab61e9 100644
->> --- a/target/ppc/translate.c
->> +++ b/target/ppc/translate.c
->> @@ -2728,86 +2728,6 @@ static inline void 
->> gen_check_tlb_flush(DisasContext *ctx, bool global) { }
->>   #endif
->>     #if defined(TARGET_PPC64)
->> -static void gen_doze(DisasContext *ctx)
->> -{
->> -#if defined(CONFIG_USER_ONLY)
->> -    GEN_PRIV(ctx);
->> -#else
->> -    TCGv_i32 t;
->> -
->> -    CHK_HV(ctx);
->> -    translator_io_start(&ctx->base);
->> -    t = tcg_constant_i32(PPC_PM_DOZE);
->> -    gen_helper_pminsn(tcg_env, t);
->> -    /* Stop translation, as the CPU is supposed to sleep from now */
->> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
->> -#endif /* defined(CONFIG_USER_ONLY) */
->> -}
->> -
->> -static void gen_nap(DisasContext *ctx)
->> -{
->> -#if defined(CONFIG_USER_ONLY)
->> -    GEN_PRIV(ctx);
->> -#else
->> -    TCGv_i32 t;
->> -
->> -    CHK_HV(ctx);
->> -    translator_io_start(&ctx->base);
->> -    t = tcg_constant_i32(PPC_PM_NAP);
->> -    gen_helper_pminsn(tcg_env, t);
->> -    /* Stop translation, as the CPU is supposed to sleep from now */
->> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
->> -#endif /* defined(CONFIG_USER_ONLY) */
->> -}
->> -
->> -static void gen_stop(DisasContext *ctx)
->> -{
->> -#if defined(CONFIG_USER_ONLY)
->> -    GEN_PRIV(ctx);
->> -#else
->> -    TCGv_i32 t;
->> -
->> -    CHK_HV(ctx);
->> -    translator_io_start(&ctx->base);
->> -    t = tcg_constant_i32(PPC_PM_STOP);
->> -    gen_helper_pminsn(tcg_env, t);
->> -    /* Stop translation, as the CPU is supposed to sleep from now */
->> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
->> -#endif /* defined(CONFIG_USER_ONLY) */
->> -}
->> -
->> -static void gen_sleep(DisasContext *ctx)
->> -{
->> -#if defined(CONFIG_USER_ONLY)
->> -    GEN_PRIV(ctx);
->> -#else
->> -    TCGv_i32 t;
->> -
->> -    CHK_HV(ctx);
->> -    translator_io_start(&ctx->base);
->> -    t = tcg_constant_i32(PPC_PM_SLEEP);
->> -    gen_helper_pminsn(tcg_env, t);
->> -    /* Stop translation, as the CPU is supposed to sleep from now */
->> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
->> -#endif /* defined(CONFIG_USER_ONLY) */
->> -}
->> -
->> -static void gen_rvwinkle(DisasContext *ctx)
->> -{
->> -#if defined(CONFIG_USER_ONLY)
->> -    GEN_PRIV(ctx);
->> -#else
->> -    TCGv_i32 t;
->> -
->> -    CHK_HV(ctx);
->> -    translator_io_start(&ctx->base);
->> -    t = tcg_constant_i32(PPC_PM_RVWINKLE);
->> -    gen_helper_pminsn(tcg_env, t);
->> -    /* Stop translation, as the CPU is supposed to sleep from now */
->> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
->> -#endif /* defined(CONFIG_USER_ONLY) */
->> -}
->> -
->>   static inline TCGv gen_write_bhrb(TCGv_ptr base, TCGv offset, TCGv 
->> mask, TCGv value)
->>   {
->>       TCGv_ptr tmp = tcg_temp_new_ptr();
->> @@ -5141,11 +5061,6 @@ GEN_HANDLER_E(scv, 0x11, 0x10, 0xFF, 
->> 0x03FFF01E, PPC_NONE, PPC2_ISA300),
->>   GEN_HANDLER_E(scv, 0x11, 0x00, 0xFF, 0x03FFF01E, PPC_NONE, 
->> PPC2_ISA300),
->>   GEN_HANDLER_E(rfscv, 0x13, 0x12, 0x02, 0x03FF8001, PPC_NONE, 
->> PPC2_ISA300),
->>   #endif
->> -GEN_HANDLER_E(stop, 0x13, 0x12, 0x0b, 0x03FFF801, PPC_NONE, 
->> PPC2_ISA300),
->> -GEN_HANDLER_E(doze, 0x13, 0x12, 0x0c, 0x03FFF801, PPC_NONE, 
->> PPC2_PM_ISA206),
->> -GEN_HANDLER_E(nap, 0x13, 0x12, 0x0d, 0x03FFF801, PPC_NONE, 
->> PPC2_PM_ISA206),
->> -GEN_HANDLER_E(sleep, 0x13, 0x12, 0x0e, 0x03FFF801, PPC_NONE, 
->> PPC2_PM_ISA206),
->> -GEN_HANDLER_E(rvwinkle, 0x13, 0x12, 0x0f, 0x03FFF801, PPC_NONE, 
->> PPC2_PM_ISA206),
->>   GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
->>   #endif
->>   /* Top bit of opc2 corresponds with low bit of LEV, so use two 
->> handlers */
->> diff --git a/target/ppc/translate/processor-ctrl-impl.c.inc 
->> b/target/ppc/translate/processor-ctrl-impl.c.inc
->> index 8abbb89630..bdbc195294 100644
->> --- a/target/ppc/translate/processor-ctrl-impl.c.inc
->> +++ b/target/ppc/translate/processor-ctrl-impl.c.inc
->> @@ -103,3 +103,104 @@ static bool trans_MSGSYNC(DisasContext *ctx, 
->> arg_MSGSYNC *a)
->>       /* interpreted as no-op */
->>       return true;
->>   }
->> +
->> +static bool do_doze(DisasContext *ctx, arg_DOZE *a)
->> +{
->> +    REQUIRE_64BIT(ctx);
->> +
->> +#if defined(CONFIG_USER_ONLY)
->> +    gen_priv_opc(ctx);
->> +#else
->> +    TCGv_i32 t;
->> +
->> +    REQUIRE_HV(ctx);
->> +    translator_io_start(&ctx->base);
->> +    t = tcg_constant_i32(PPC_PM_DOZE);
->> +    gen_helper_pminsn(tcg_env, t);
->> +    /* Stop translation, as the CPU is supposed to sleep from now */
->> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
->> +#endif /* defined(CONFIG_USER_ONLY) */
->> +
->> +    return true;
->> +}
->> +TRANS_FLAGS2(PM_ISA206, DOZE, do_doze);
->> +
->> +static bool do_nap(DisasContext *ctx, arg_NAP *a)
->> +{
->> +    REQUIRE_64BIT(ctx);
->> +
->> +#if defined(CONFIG_USER_ONLY)
->> +    gen_priv_opc(ctx);
->> +#else
->> +    TCGv_i32 t;
->> +
->> +    REQUIRE_HV(ctx);
->> +    translator_io_start(&ctx->base);
->> +    t = tcg_constant_i32(PPC_PM_NAP);
->> +    gen_helper_pminsn(tcg_env, t);
->> +    /* Stop translation, as the CPU is supposed to sleep from now */
->> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
->> +#endif /* defined(CONFIG_USER_ONLY) */
->> +    return true;
->> +}
->> +TRANS_FLAGS2(PM_ISA206, NAP, do_nap);
->> +
->> +static bool do_sleep(DisasContext *ctx, arg_SLEEP *a)
->> +{
->> +    REQUIRE_64BIT(ctx);
->> +
->> +#if defined(CONFIG_USER_ONLY)
->> +    gen_priv_opc(ctx);
->> +#else
->> +    TCGv_i32 t;
->> +
->> +    REQUIRE_HV(ctx);
->> +    translator_io_start(&ctx->base);
->> +    t = tcg_constant_i32(PPC_PM_SLEEP);
->> +    gen_helper_pminsn(tcg_env, t);
->> +    /* Stop translation, as the CPU is supposed to sleep from now */
->> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
->> +#endif /* defined(CONFIG_USER_ONLY) */
->> +    return true;
->> +}
->> +TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep);
->> +
->> +static bool do_rvwinkle(DisasContext *ctx, arg_RVWINKLE *a)
->> +{
->> +    REQUIRE_64BIT(ctx);
->> +
->> +#if defined(CONFIG_USER_ONLY)
->> +    gen_priv_opc(ctx);
->> +#else
->> +    TCGv_i32 t;
->> +
->> +    REQUIRE_HV(ctx);
->> +    translator_io_start(&ctx->base);
->> +    t = tcg_constant_i32(PPC_PM_RVWINKLE);
->> +    gen_helper_pminsn(tcg_env, t);
->> +    /* Stop translation, as the CPU is supposed to sleep from now */
->> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
->> +#endif /* defined(CONFIG_USER_ONLY) */
->> +    return true;
->> +}
->> +TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_rvwinkle);
->> +
->> +static bool do_stop(DisasContext *ctx, arg_STOP *a)
->> +{
->> +    REQUIRE_64BIT(ctx);
->> +
->> +#if defined(CONFIG_USER_ONLY)
->> +    gen_priv_opc(ctx);
->> +#else
->> +    TCGv_i32 t;
->> +
->> +    REQUIRE_HV(ctx);
->> +    translator_io_start(&ctx->base);
->> +    t = tcg_constant_i32(PPC_PM_STOP);
->> +    gen_helper_pminsn(tcg_env, t);
->> +    /* Stop translation, as the CPU is supposed to sleep from now */
->> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
->> +#endif
->> +    return true;
->> +}
->> +TRANS_FLAGS2(ISA300, STOP, do_stop);
->
-> To me all these functions do_doze, do_nap, do_sleep, do_rvwinkle and 
-> do_stop
-> seem to be identical except  for the PPC_PM_* constant passed to 
-> gen_helper_pminsn,
-> you can eliminate over 50-60 lines  of boilerplate by creating a 
-> single shared helper function.
->
-> Thanks,
-> ~ Nikhil
+>diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+>index 2106f5d979e..1dd0e492810 100644
+>--- a/tests/tcg/meson.build
+>+++ b/tests/tcg/meson.build
+>@@ -7,6 +7,7 @@ if config_host.has_key('GDB')
+> endif
+> gdb = find_program(gdb_progs, required: false)
+> prog_gdb_test = find_program('../guest-debug/run-test.py')
+>+prog_run_and_diff = find_program('./scripts/run_and_diff.sh')
+> 
+> tcg_tests = {}
+> # tcg_tests is a dictionary with following structure:
+>@@ -24,6 +25,7 @@ tcg_tests = {}
+> #           'test_name': ['provide an alternative test name'],
+> #           'cflags': ['additional cflags to compile test', ...],
+> #           'qemu_args': ['qemu command line flags', ...],
+>+#           'expected_output': 'file_to_compare_output',
+> #           'gdb_test': ['gdb test args'],
+> #           'env_var': ['VAR=value', ...],
+> #           'wrapper': [program_to_launch_test, 'args'...],
+>@@ -87,8 +89,9 @@ foreach target, plan: tcg_tests
+>     foreach src, setup: t
+>       # return a clear error if user misspell a setup entry
+>       foreach key, _ : setup
+>-        allowed = ['exe_name', 'env_var', 'cflags', 'gdb_test', 'plugin_test',
+>-                   'qemu_args', 'test_name', 'wrapper']
+>+        allowed = ['exe_name', 'env_var', 'expected_output', 'cflags',
+>+                   'gdb_test', 'plugin_test', 'qemu_args', 'test_name',
+>+                   'wrapper']
+>         if key not in allowed
+>           error('unknown tcg setup entry \'' + key + '\' for test ' + src +
+>                 ' (possible: [' + ', '.join(allowed) + '])')
+>@@ -202,6 +205,11 @@ foreach target, plan: tcg_tests
+>               ]
+>       endif
+> 
+>+      if 'expected_output' in setup
+>+        expected = files(folder / setup['expected_output'])
+>+        cmd = [prog_run_and_diff, expected, cmd]
+>+      endif
+>+
+>       if 'wrapper' in setup
+>         cmd = [setup['wrapper'], cmd]
+>       endif
+>diff --git a/tests/tcg/scripts/run_and_diff.sh b/tests/tcg/scripts/run_and_diff.sh
+>new file mode 100755
+>index 00000000000..3e51cdc9663
+>--- /dev/null
+>+++ b/tests/tcg/scripts/run_and_diff.sh
+>@@ -0,0 +1,15 @@
+>+#!/usr/bin/env bash
+>+# SPDX-License-Identifier: GPL-2.0-or-later
+>+
+>+set -euo pipefail
+>+
+>+if [ $# -lt 2 ]; then
+>+    echo "run_and_diff: expected_output_file cmd [args]..." 1>&2
+>+    exit 1
+>+fi
+>+expected="$1";shift
+>+output=$(mktemp)
+>+trap "rm -rf $output" EXIT
+>+set -x
+>+"$@" |& tee $output
+>+diff $output $expected
+>-- 
+>2.47.3
 >
 
