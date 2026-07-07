@@ -4,77 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7EF9C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 10:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD3ACC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:00:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh3Wf-0000OY-U3; Tue, 07 Jul 2026 06:59:41 -0400
+	id 1wh3Wv-0000jE-DX; Tue, 07 Jul 2026 06:59:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wh3Wd-0000JU-CR
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:59:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wh3Wb-0006vF-PO
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:59:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783421975;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=KnyxPNTz6eGdpMC/4dy7er6WkgfdQOFArSXY6YFeVd4=;
- b=RUEH56U5u9F2kPZyMQVBvvZ6uxnssS6g/S2/xSUALtFGFN9FUqrH4pGpcKCkaaNMpStPKv
- HqGlmo3O9Bj/7wkKULaBr24saoUJ3olpRNfFYYAHdaU8WV0ymw9PzIxRoyGQ0x6fSuC715
- 6UAgwGLPF2tw4OJtjED8HjIGPe+d//k=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-61-xeoxtJ5iNOWmExpEXGg2Fg-1; Tue,
- 07 Jul 2026 06:59:34 -0400
-X-MC-Unique: xeoxtJ5iNOWmExpEXGg2Fg-1
-X-Mimecast-MFC-AGG-ID: xeoxtJ5iNOWmExpEXGg2Fg_1783421973
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3EED619541A0; Tue,  7 Jul 2026 10:59:33 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.33.142])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2706E3000C00; Tue,  7 Jul 2026 10:59:28 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Mauro Matteo Cascella <mcascell@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] docs: outline some guidelines for security classification
-Date: Tue,  7 Jul 2026 11:59:27 +0100
-Message-ID: <20260707105927.2776822-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wh3Wt-0000iX-8y
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:59:55 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wh3Wr-00075i-9j
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:59:55 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-493b77b150aso36834535e9.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 03:59:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783421992; x=1784026792; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Ppw2tC4bwbMwGZqKVSQhlyH0n0RuWFwIRAnfv3sWAxo=;
+ b=E+BT9GVA+QkDi+0xg826LEt40xMdUr4WW2ZAbuFP84MleXW6gAnXTX/yNc6xR4IY+m
+ JNIQ3d3bCdJnMQpYuREP5pn2KgnWP8SU9fS+BUJ7K6tsBCp23CSC53QeZ6p91U/3OIa8
+ ELBwTv0ZAyqpGWUnsbM/ehJ3phQjybXxomAHMEeDvkJS4d81iu/6QPdyD5LWZMKQTK30
+ rf+hOI6e29CoQGx/aj3QC8WSKI4jqzsJZB/u1sQxx5eMaP1khoAwsU3maosYAPGErAli
+ 1m26gRorxbP7kqGnvnuXW06kq6L+0cNomJCAMDSFhLEQI5vH3hotx0sH5Xn+jWl818hm
+ X/8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783421992; x=1784026792;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Ppw2tC4bwbMwGZqKVSQhlyH0n0RuWFwIRAnfv3sWAxo=;
+ b=fWtk2gCnSqsvUgBMDVayXaoCW1uSvr4wymCksLgDPl0QyNOY4S1vgQwK9sjzJzxPxs
+ nKeZccl6f+EV1sC6la7I4rPoagOx8zzAL9rJjTtwoZxrG1sFKVFSBHA5xcVN0jOJDNFX
+ hAWf3xqIE/mW23b3dotiB3x3drBxkprGIa8RfEDENAIOwwJqd6QGYrrcjn312xx5VslZ
+ mPaHT2MMvtmukhHyypVXv+zz4IL+XD1JuEOsQP0yi4yGA5bM1AHlY/lDXoalFcVmKl9Z
+ AJVk4jKpICpw8zi8wD8NdYei2wWiKRI61FfJXeJdVerNlIyhF+S511Rgj7vLUcg5/FzI
+ fGBA==
+X-Gm-Message-State: AOJu0YzLCdmcZ/LvFLcAk9aJ4NknVpW9sSiCQyGMnLpdwV4mF0JrYqLS
+ SzbU7ikkwLjooPe501/hC3Rgj11jGPi4+KC0+mOCxAovB/BLz2RHtXdC
+X-Gm-Gg: AfdE7cnBidvJg40XrFp21+IndXX4t5doWvDo4qW6LcL4an12ldcrD1ntkP/DpDPOKEf
+ f8tGpsBZNINtn5c9wUeo3V+Pq/hj6iZOOMFWxX/8B7sZkhX8yn55pHFDas5zVypHHn9gotqIFd2
+ oc4VJtidfVFiGyzrRy7LIBh9ahxN2AX8KSpbxdzurNdReUPJM8asIIOYCWAnnxcKzh8IZwkk1t4
+ gAF06g09V4lXDN7cJNnII3Eoo9EUHTt1aVzW1puSwbM0f+XFlChJpTMpD0EEWJgp9VlrP+gGquI
+ Hr9Vnpg4kK/GI1FJW8VOu+6T/j58eZ4cLPd6AqxQzlbIMNMKJWAWIu6rgG6+tetBYpvreHcECWp
+ /7U3KJvaH5GPw/XdWd2wDCtkx3MaNPwm6PeerV9Xt9FFBZd6YBhWkS+XEHjAl88z0R/n/jcUkht
+ YzszUAQTwFKpYGjeiM2c0=
+X-Received: by 2002:a05:600c:638e:b0:493:dfc8:77d6 with SMTP id
+ 5b1f17b1804b1-493e3adbb04mr9935855e9.12.1783421991595; 
+ Tue, 07 Jul 2026 03:59:51 -0700 (PDT)
+Received: from ehlo.thunderbird.net ([185.238.219.17])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47a9e4d83bdsm33754645f8f.13.2026.07.07.03.59.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jul 2026 03:59:51 -0700 (PDT)
+Date: Tue, 07 Jul 2026 10:48:02 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Pavel Pisa <pisa@fel.cvut.cz>
+CC: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Matyas Bobek <matyas.bobek@gmail.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>, Jason Wang <jasowang@redhat.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Francisco Iglesias <francisco.iglesias@amd.com>
+Subject: Re: [PATCH v2 0/5] hw/arm/fsl-imx8mp: Add inital FlexCAN support
+In-Reply-To: <202607061344.14505.pisa@fel.cvut.cz>
+References: <20260702184038.178196-1-shentey@gmail.com>
+ <202607061344.14505.pisa@fel.cvut.cz>
+Message-ID: <341AB560-68B9-4965-917E-27E00E3A63DB@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,98 +108,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Beyond the overall virt/non-virt use case classification, there are
-a number of scenarios which we have decided will not be treated as
-security issues. Start to document some of these to give consistency
-in our treatemnt of incoming disclosures.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
 
-Mauro / Michael: please suggest any other rules which we have applied
-historically on qemu-security disclosures that we should capture here.
+Am 6=2E Juli 2026 11:44:14 UTC schrieb Pavel Pisa <pisa@fel=2Ecvut=2Ecz>:
+>Dear Bernhard,
+>
+>On Thursday 02 of July 2026 20:40:33 Bernhard Beschow wrote:
+>> Now that FlexCAN emulation has landed in master, let's add it to imx8mp=
+-evk
+>> as well=2E While the real i=2EMX8M Plus supports CAN FD which isn't emu=
+lated
+>> yet, the non-FD mode works well under Linux: It is possible to use `can=
+gen`
+>> and `candump` either way on the host and on the guest, as described in
+>> docs/system/devices/can=2Erst=2E
+>>
+>> This series consists of five patches where the first four are preparati=
+ons=2E
+>> The last patch integrates FlexCAN into the i=2EMX8M Plus SoC and EVK bo=
+ard=2E
+>> The first preparation addresses the review comment from [1], and could =
+be
+>> applied independently=2E
+>>
+>> It would be nice if this series could make it into 11=2E1=2E
+>>
+>> Testing done:
+>> * Start imx8mp-evk and run `cangen can0` there=2E Observe on the host t=
+hat
+>> `candump vcan0` prints the traffic=2E
+>> * `make check`
+>>
+>> v2:
+>> Thanks for the very helpful and super quick review, Phil! Here we go:
+>> * Add patch "hw/net/can/flexcan: Wire clock control module via link
+>> property" * Have separate MemoryRegionOps for 32 and 64 bit
+>>
+>> [1]
+>> https://lore=2Ekernel=2Eorg/qemu-devel/77d5891c-de12-467e-8746-02fe4312=
+1e3e@oss
+>>=2Equalcomm=2Ecom/ ---
+>> base-commit: a59157f98f0b69b0bbdb26bc15fbc4d6c8060799
+>>
+>> Bernhard Beschow (5):
+>>   hw/net/can/flexcan: Wire clock control module via link property
+>>   hw/net/can/flexcan: Subclass TYPE_CAN_FLEXCAN
+>>   hw/arm/imx8mp-evk: Open code DEFINE_MACHINE_AARCH64
+>>   hw/arm/imx8mp-evk: Introduce FslImx8mpEvkState
+>>   hw/arm: Add basic FlexCAN3 support to TYPE_FSL_IMX8MP and imx8mp-evk
+>>
+>>  docs/system/arm/imx8m=2Erst   |  1 +
+>>  include/hw/arm/fsl-imx8mp=2Eh |  8 ++++
+>>  include/hw/net/flexcan=2Eh    |  4 +-
+>>  hw/arm/fsl-imx6=2Ec           |  5 ++-
+>>  hw/arm/fsl-imx8mp=2Ec         | 38 ++++++++++++++++
+>>  hw/arm/imx8mp-evk=2Ec         | 64 ++++++++++++++++++++++-----
+>>  hw/misc/imx8mp_ccm=2Ec        |  3 ++
+>>  hw/net/can/flexcan=2Ec        | 88 ++++++++++++++++++++++++++++++-----=
+--
+>>  hw/arm/Kconfig              |  1 +
+>>  9 files changed, 182 insertions(+), 30 deletions(-)
+>
+>Thanks for the work=2E I have tested the series on the top
+>of your imx8mp-flexcan branch, commit
+>
+>  3b7289419cac5b712faeadf6b4a6203579d08f76
+>
+>with our test setup for iMX6
+>
+>  qemu-system-arm -m 1G -M sabrelite -smp 4 =2E=2E=2E
+>
+>and it worked as intended=2E I have looked at all patches
+>from your series and I do not see anything problematic=2E
+>
+>You can add my confirmation to the series and or individual
+>patches
+>
+>Acked-by: Pavel Pisa <pisa@fel=2Ecvut=2Ecz>
+>Tested-by: Pavel Pisa <pisa@fel=2Ecvut=2Ecz>
 
-The vfio-user/vhost-user addition is a new one based on discussions
-in some GitLab issues today/yesterday
+Thanks!
 
- docs/system/security.rst | 63 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 63 insertions(+)
+>
+>By the way, I have noticed your iMX53 branch=2E
 
-diff --git a/docs/system/security.rst b/docs/system/security.rst
-index 53992048e6..fbbca50f95 100644
---- a/docs/system/security.rst
-+++ b/docs/system/security.rst
-@@ -75,6 +75,69 @@ Bugs affecting the non-virtualization use case are not considered security
- bugs at this time.  Users with non-virtualization use cases must not rely on
- QEMU to provide guest isolation or any security guarantees.
- 
-+Security boundary scope
-+'''''''''''''''''''''''
-+
-+Even where a flaw affects the virtualization use case described above,
-+not all scenarios will be considered in scope. The following guidelines
-+are used to evaluate whether to apply the full security process, or treat
-+an issue as a normal bug.
-+
-+* **assert** / **abort**. If triggering the code path requires kernel
-+  privileges (or root account access) in the guest, asserts/aborts in
-+  QEMU are a self inflicted denial of service. These will **not** be
-+  treated as security flaws, at most hardening bugs. If triggering the
-+  code path can be done by an unprivileged guest OS account, this
-+  **may** justify handling as a security bug.
-+
-+* **vhost-user/vfio-user backends**. The backend processes have
-+  shared memory regions co-mapped with the QEMU process. The intent
-+  of the process separation is operational resilience & flexibility
-+  and allowing for independent software suppliers. There is not
-+  considered to be security boundary between QEMU and the vhost-user
-+  & vfio-user backends. Thus flaws in the backends which can cause
-+  crashes / undesirable behaviour in QEMU will **not** be treated as
-+  security flaws, but should be fixed as hardening bugs.
-+
-+* **memory allocation bounds**. There are many ways in which a QEMU
-+  process can legitimately consume an amount of memory that is
-+  significantly larger than the assigned guest RAM. QEMU's worst
-+  case memory usage should be considered effectively unbounded. As
-+  such the QEMU deployment on the host should account for the
-+  possibility of large memory peaks and apply countermeasures to
-+  provide continuity of host operations. It is typical for the Linux
-+  OOM killer to reap the process triggering host memory overcommit
-+  in the case of exccessive usage, offering a degree of protection.
-+  As such, bugs which can lead to excessive/unbounded memory allocations
-+  will usually not be classified as security flaws, but should be
-+  fixed as hardening bugs.
-+
-+* **degraded guest behaviour**. There are a set of bugs which can
-+  lead guest hardware devices to misbehave. For example, a flawed
-+  virtual IOMMU operation may not offer the guest device isolation
-+  that would otherwise be expected. If a guest triggered exploit
-+  requires kernel privileges (or root account access), and leads
-+  to sub-optimal behaviour of the virtual device this is considered
-+  a self inflicted service degradation. These will **not** be
-+  treated as security flaws, at most hardening bugs. If triggernig
-+  the code path can be done by an unprivileged guest OS account,
-+  this may justify handling as a security bug.
-+
-+* **nested virtualization**. The scope for nested virtualization
-+  is to prevent a level 2 guest from breaking out into a level
-+  1 guest. As noted above, a number of scenarios exclude security
-+  handling for flaws only exploitable by the guest kernel / root
-+  account with affect the guest's own service/availability. In the
-+  context of nested virtualization with PCI device assignment, it
-+  may may be possible for a level 2 guest kernel to trigger flaws
-+  that affect the level 0 QEMU process. While these bugs should be
-+  fixed, they will not be triaged as security flaws at this time.
-+
-+* **low severity impact**. As a catch all rule, issues which
-+  are judged to have a "low" severity impact on the system will
-+  usually not justify handling as security bugs, nor assignment
-+  of CVEs. They will be fixed as routine bugs when time allows.
-+
- Architecture
- ------------
- 
--- 
-2.55.0
+I haven't decided yet whether to upstream it because I wonder if anyone wo=
+uld be interested in this rather old but (IIUC) longterm SoC=2E For some re=
+ason I get file system corruption there which should be resolved before ups=
+treaming can be considered=2E
 
+Best regards,
+Bernhard
+
+> We have some
+>old kits for this because we used it for yet another generation
+>of medical infusion system prototypes/instruments fully
+>functional demonstrators but before final HW design with
+>safety=2E
+>
+>The fully realized and produced systems with iMX1 there
+>https://www=2Epikron=2Ecom/pages/devel/medinst=2Ehtml
+>
+>Functional demonstrators with iMX53 there
+>https://onimed=2Ecz/wp-content/uploads/2021/02/medicina=2Epng
+>
+>Best wishes,
+>
+>                Pavel
+>
+>                Pavel Pisa
+>    phone:      +420 603531357
+>    e-mail:     pisa@cmp=2Efelk=2Ecvut=2Ecz
+>    Department of Control Engineering FEE CVUT
+>    Karlovo namesti 13, 121 35, Prague 2
+>    university: http://control=2Efel=2Ecvut=2Ecz/
+>    personal:   http://cmp=2Efelk=2Ecvut=2Ecz/~pisa
+>    social:     https://social=2Ekernel=2Eorg/ppisa
+>    projects:   https://www=2Eopenhub=2Enet/accounts/ppisa
+>    CAN related:http://canbus=2Epages=2Efel=2Ecvut=2Ecz/
+>    RISC-V education: https://comparch=2Eedu=2Ecvut=2Ecz/
+>    Open Technologies Research Education and Exchange Services
+>    https://gitlab=2Efel=2Ecvut=2Ecz/otrees/org/-/wikis/home
 
