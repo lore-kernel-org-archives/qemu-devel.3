@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D25B9C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 22:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25610C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 22:44:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whEW0-0001Qc-Tr; Tue, 07 Jul 2026 18:43:44 -0400
+	id 1whEVm-0001KU-Ub; Tue, 07 Jul 2026 18:43:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1whEW0-0001Q0-2t
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:43:44 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1whEVl-0001Jq-IT
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:43:29 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1whEVy-0004CO-JH
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:43:43 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2cc8e87f29bso663195ad.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 15:43:42 -0700 (PDT)
+ id 1whEVj-00048w-ST
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:43:29 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-3856d6fbcb3so47203a91.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 15:43:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783464221; x=1784069021; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783464206; x=1784069006; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=2LOuBVMlOe80id4VIdSsW07pBBJsvlGWj514CqDOCv8=;
- b=fmbzBKKGITT425ms5pGGV0WXpFdXZFk/viZNFc2Pc8ms53apYidwrwMrMBpfa+S89n
- v1m2NLzxCM0o4GigvC7q8sGnaU3Z0VTshWNHxgDvH05QE82qKIHnv5aqLQIqQI9u2p9W
- V0dhM6CjzotRE2HrfjrXybbnaM5qDcQbTBrg+TpPxiQhCbl/5h0MTQZZNGIbeVWOERlq
- NY8heDnr/GZdL/t1T37vkJFdsHDWDJb2pNuWT9FeSN0UcHIaN/TH7g4u+rbFP4Ui5hfl
- M3c4M1/1+zfdIIXUxX/WGJ3Tb63IPtp0Cd2N04i41xXT7oMBzl5igfg7815lRCx1mRT0
- 9gLw==
+ bh=+Hja6qHGPQODpxQ8LqX3XJ4cmNcTjvVv4dMZ2DbbCzg=;
+ b=EzxeLIpzj3uV3ofwOWi+JVWrGYk2yqT2IpRGZBWsYEUExy42YdjJPkMji5pHJyICVE
+ 2VOTuT2F4SLRkT3dOgZtePM7CZ4jh5MLC1EMhmszeb5fjWxRAGirMaNAvEEEkNp0/oJj
+ hy5bBXXCdH+1ycXDp8Ol6y4KjsY7a+/UAgKTRpyqqRbC+2RZZ5hJo16zQprScMa47uo3
+ v00PnBQXT3ZAUfNKwZpN95fMV9IwmL4czN4RMixukhVATCvXqthyj7CwpBt3aBfBifah
+ BirLEFBsWRRLsZURUGirT1XBiWOlepxnO4o1CsE4IZfRJDRgyclwxmfTpbNwHSDIekvb
+ UPEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783464221; x=1784069021;
+ d=1e100.net; s=20251104; t=1783464206; x=1784069006;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=2LOuBVMlOe80id4VIdSsW07pBBJsvlGWj514CqDOCv8=;
- b=R1c0C+Q1ALgV1MOyRjhwRR/iDBDqC1XU6gGhEOC0BCD9hfvZey3JE8GG9nBNNIOfb9
- sIA95At11ytVyoBAc6zMDW8sOkpY2Z8+psKHWZR0ccL0qImNumQ9uUHNYYA0CkT3lKW6
- 3RdFrchlbx0nBRw2VcWbYh+Gv5kcsnXeMVjyD9aq2jw3PLwJQ4TnnnFOabqTiYLvh1oC
- 3+OzZrWzJmVAqEJwh2cWxhlhJpaV5lRP7im5N2j/l/izi8hPguA/ME+po4jn4fboboMN
- aXP16gP2DQlUld0iunuWT6vHqJ6DUfMf4/9wk5MPQ/uEysoC6KvqPSGKylAWMJmohJCw
- n5IQ==
-X-Gm-Message-State: AOJu0YwLJeEUiBrcjBIs8R9otUYaRBP3Vh8UAR/UmFoc5kcFSr5rUn6b
- 52Wf2sOb4besy7MAxFmknnSe76Oi6QINEDDk4XjRNxfNkfz/E/Sh66JFLebztmfKcKY=
-X-Gm-Gg: AfdE7clGq/CmFoI2VqvqPv244dhXGan+dxZUppl//fpvpiTnc6MrR5BIQwzmMAiLNyP
- 9LeGhohVVydxpcfj7WdTkSfU6S0w4wH4QGRRtaZ28C4mVZRwL4OFCq0kACZGbfoi9oRmRbJED0V
- cCAT2u0uRG3XMP4N+B2AqMACwTVeOaH4s9DS/yvZfbeYzGshSXjrYQTc3eQ4d/DLJL17Hu5+uUE
- TsCLckwus2Y1LriPh5PrOrrNMaZbxY0ky0EYakFRRnYNYarVpJ2H0QHv7dYsw/AHafiHr+7kFAX
- w7UBl+OOBML8F+NWfA+BzXwluZtP9qRsaKprSTg3zx4LTUwNm84QGJODjMegsY7t4i2xTASw+I+
- OG5+Vryd03WjhIN1YnNumLdjNqZtjNl7W+aCh7pmikz43eEhahgB6Mf/y5Q8TfpezFgTHpv/9WU
- jRdnsF32WejDRQ+o5/2duO4xebu8OkbaqitD4AyCOAx4qd6GyWZQ==
-X-Received: by 2002:a17:902:d486:b0:2cc:7759:ffac with SMTP id
- d9443c01a7336-2ccbee248d5mr67274915ad.30.1783464221115; 
- Tue, 07 Jul 2026 15:43:41 -0700 (PDT)
+ bh=+Hja6qHGPQODpxQ8LqX3XJ4cmNcTjvVv4dMZ2DbbCzg=;
+ b=qbR39iSnjmH+useRG3G8ko4dwFngaBY7HlBGsck/fgqUQMfeY2SbOMfk9ey6dO+A+h
+ tcznYFn+weFCSyIZrDzs+xG9l747cp+HA1D/Xe5YAtzOYGhmua5DjCtdN3pKP7qqoYCt
+ LYzkAAOXYqmVf4SYn1wt2M3EvzXzXI9IQw2hl7nM7704objEUZ169QpMOQZU2aIUiah2
+ 1TpMEtLLq7sdtEdK/uMESYSIIa7hHipBOqHRIr/7cXb7T7BLpGroypG8z+elTfpjkURl
+ 0j/qNvxxYb1ZvR8UKXYy5cLFF/E+Dvfl87O7nLZbrxQSTLc0WpbSUMipo4dbVHPmZFeT
+ hi4w==
+X-Gm-Message-State: AOJu0YyoKMXJKVJEcugBZkRXRqLp2OMjiaG3UVff2m82ipoknaOFIQxd
+ OfVQ1lx1BvQQbDEf/XdrjEUJUYTK+DIjSr8QlTwJVb+FE6PskLOcTJ73r/Gqws+044E=
+X-Gm-Gg: AfdE7ckDU0vWJNXMxFrVbE6zzlhNhSNhdjiN2LTxUk2p2HO6uktwzxtP0ZgSGR10cko
+ IW9LzAjJW1dsqiHOOmn/3fSQpbwhdH5BPq1fnbBrywSOje92FVEYsPLuYffZ1MvZtjKTNzOiz2v
+ fYsCRkw1bVy6eO//H0cG8JI6T4hyq0iki6J8lneg7J5PNQGgpe7WYxFof1CnWYgosuwSQnmg5HF
+ eYr3rOSkjuP3U1Vr+tSetNFkzTFMHOkGZHE49+jME61j5muu+hxDJMCErH5tdyxT+iBiVGMglnt
+ f3vjJ2KVtrRbO3iydLb8FQ0f4C4la7Zw6Ji+/AYveZ0zmXoB3FTJvnfaqUEYq7YJppHr+5xVzMQ
+ 3fG7xNOQ+zf3aJMOAlaScKCoTyUKLyAjhhbw70Hp7cp/JsMdmlOSy+qXPzI9Kx4bmceIbjICYK0
+ 1EyK9lNSm8bibYJiX9gUFqMoGB1IqDolmmhOg+06250uRgDb53rg==
+X-Received: by 2002:a17:90b:3808:b0:37f:9cdf:f037 with SMTP id
+ 98e67ed59e1d1-387572b3d9fmr6146459a91.26.1783464206246; 
+ Tue, 07 Jul 2026 15:43:26 -0700 (PDT)
 Received: from p14s.cg.shawcable.net
  ([2604:3d09:148c:c800:46c8:dda7:40fa:8958])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ccc9d3bbaesm18183805ad.57.2026.07.07.15.43.39
+ d9443c01a7336-2ccc9d3bbaesm18183805ad.57.2026.07.07.15.43.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jul 2026 15:43:40 -0700 (PDT)
+ Tue, 07 Jul 2026 15:43:25 -0700 (PDT)
 From: Mathieu Poirier <mathieu.poirier@linaro.org>
 To: berrange@redhat.com, kchamart@redhat.com,
  pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
@@ -73,16 +73,17 @@ To: berrange@redhat.com, kchamart@redhat.com,
 Cc: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org,
 	kvm@vger.kernel.org
-Subject: [RFC v1 15/25] target/arm/cpu: Don't read Realm registers
-Date: Tue,  7 Jul 2026 16:42:56 -0600
-Message-ID: <20260707224306.1202330-16-mathieu.poirier@linaro.org>
+Subject: [RFC v1 08/25] target/arm/kvm: Use kvm_vm_check_extension() where
+ necessary
+Date: Tue,  7 Jul 2026 16:42:49 -0600
+Message-ID: <20260707224306.1202330-9-mathieu.poirier@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
 References: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,32 +108,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-The host cannot access registers of a Realm. Instead of showing all
-registers as zero in "info registers", display a message about this
-restriction.
+The Arm KVM code can return different values from KVM_CHECK_EXTENSION
+depending on the VM type. Use kvm_vm_check_extension() where necessary
+to ensure we get the right response from KVM.
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 ---
- target/arm/cpu.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/arm/kvm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 787e4dc7ab23..7679b8758262 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -965,6 +965,11 @@ static void aarch64_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-     const char *ns_status;
-     bool sve;
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 6aa1cd04e484..c69b5310c184 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -328,7 +328,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+                              1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
+     }
  
-+    if (cpu->kvm_rme) {
-+        qemu_fprintf(f, "the CPU registers are confidential to the realm\n");
-+        return;
-+    }
-+
-     qemu_fprintf(f, " PC=%016" PRIx64 " ", env->pc);
-     for (i = 0; i < 32; i++) {
-         if (i == 31) {
+-    if (kvm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3)) {
++    if (kvm_vm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3)) {
+         init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
+         pmu_supported = true;
+         features |= 1ULL << ARM_FEATURE_PMU;
+@@ -654,11 +654,11 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+         }
+     }
+ 
+-    max_hw_wps = kvm_check_extension(s, KVM_CAP_GUEST_DEBUG_HW_WPS);
++    max_hw_wps = kvm_vm_check_extension(s, KVM_CAP_GUEST_DEBUG_HW_WPS);
+     hw_watchpoints = g_array_sized_new(true, true,
+                                        sizeof(HWWatchpoint), max_hw_wps);
+ 
+-    max_hw_bps = kvm_check_extension(s, KVM_CAP_GUEST_DEBUG_HW_BPS);
++    max_hw_bps = kvm_vm_check_extension(s, KVM_CAP_GUEST_DEBUG_HW_BPS);
+     hw_breakpoints = g_array_sized_new(true, true,
+                                        sizeof(HWBreakpoint), max_hw_bps);
+ 
+@@ -1905,7 +1905,7 @@ void kvm_arm_pvtime_init(ARMCPU *cpu, uint64_t ipa)
+ 
+ void kvm_arm_steal_time_finalize(ARMCPU *cpu, Error **errp)
+ {
+-    bool has_steal_time = kvm_check_extension(kvm_state, KVM_CAP_STEAL_TIME);
++    bool has_steal_time = kvm_vm_check_extension(kvm_state, KVM_CAP_STEAL_TIME);
+ 
+     if (cpu->kvm_steal_time == ON_OFF_AUTO_AUTO) {
+         if (!has_steal_time || !arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
 -- 
 2.43.0
 
