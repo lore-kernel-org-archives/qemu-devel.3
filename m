@@ -4,84 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17581C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:59:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63CEEC43602
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 12:00:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh4Sm-00081C-Jz; Tue, 07 Jul 2026 07:59:44 -0400
+	id 1wh4T5-0008Gg-Ns; Tue, 07 Jul 2026 08:00:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh4Sl-00080i-Ah
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:59:43 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh4T4-0008By-47
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:00:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh4Si-0001A8-Qe
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:59:42 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh4T2-0001FA-It
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:00:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783425579;
+ s=mimecast20190719; t=1783425600;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=vuq71xJ5asE4jVwi0HkVMtrKXwv7nVFrDDDac3COY+U=;
- b=aCPuDC+MDnlL0C6rc6/D+xPrP/YDmEDi7zY3dxACQEWXy7Pok5DMfS8DHzT89ZMAQVzpHG
- C6LADXvNsgiChDS35FULKnOclNaNHdZoFJlPjx8V6v77NiI5sXu+tmyFlCpBAMVYvj91a2
- MikrUzPBAQL21ovBMZXrfvMkWtaNJOU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=3vp6JP5buqCbzwuJ6Z5I5q+5DeTeXWRdFWPV04nHPQE=;
+ b=Tj/aF8wxsG43rug2qI2cQe2GI2aZauDJ4EqegPhN2BwOAkBI29cS18qJ+y4IsJyQJqcABU
+ DY6koDSWbBdPSBdAgOcCEHPZUOwNw7eDYT5DUlotUUbmszS73zh7dh6jOHY0A3tzna65LX
+ 3Zqg3J8jTftBxWs3XjV4zUwO/SzyJ30=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-166-c9TMWa3MOqqLmxGLhu1iMQ-1; Tue,
- 07 Jul 2026 07:59:34 -0400
-X-MC-Unique: c9TMWa3MOqqLmxGLhu1iMQ-1
-X-Mimecast-MFC-AGG-ID: c9TMWa3MOqqLmxGLhu1iMQ_1783425572
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-520-EmDX8edrNW6mt9mrjN5qlw-1; Tue,
+ 07 Jul 2026 07:59:54 -0400
+X-MC-Unique: EmDX8edrNW6mt9mrjN5qlw-1
+X-Mimecast-MFC-AGG-ID: EmDX8edrNW6mt9mrjN5qlw_1783425593
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44CC419540C9; Tue,  7 Jul 2026 11:59:32 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D1B131801327; Tue,  7 Jul 2026 11:59:52 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 46DEB3691B; Tue,  7 Jul 2026 11:59:31 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2894819560B2; Tue,  7 Jul 2026 11:59:51 +0000 (UTC)
 From: Cornelia Huck <cohuck@redhat.com>
-To: Christoph Schlameuss <schlameuss@linux.ibm.com>, qemu-s390x@nongnu.org
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>, David Hildenbrand
- <david@kernel.org>, Eric Farman <farman@linux.ibm.com>, Halil Pasic
- <pasic@linux.ibm.com>, Hendrik Brueckner <brueckner@linux.ibm.com>, Ilya
- Leoshkevich <iii@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Thomas Huth <thuth@redhat.com>,
- kvm@vger.kernel.org, qemu-devel@nongnu.org, Christoph Schlameuss
- <schlameuss@linux.ibm.com>, Nina Schoetterl-Glausch
- <oss@nina.schoetterlglausch.eu>
-Subject: Re: [PATCH v3 0/2] s390x/kvm: Add ASTFLE facility 2 for nested
- virtualization
-In-Reply-To: <20260701-astfleie2-v3-0-f692dc7f4f24@linux.ibm.com>
+To: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato
+ <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, Christian
+ Borntraeger <borntraeger@linux.ibm.com>, Jason Herne
+ <jjherne@linux.ibm.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand
+ <david@kernel.org>, Hendrik Brueckner <brueckner@linux.ibm.com>
+Subject: Re: [PATCH v2 0/5] interface hardening fixes
+In-Reply-To: <20260707070728.147203-1-borntraeger@linux.ibm.com>
 Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
  Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
  153243,
  =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
  Avril Crosse O'Flaherty"
-References: <20260701-astfleie2-v3-0-f692dc7f4f24@linux.ibm.com>
+References: <20260707070728.147203-1-borntraeger@linux.ibm.com>
 User-Agent: Notmuch/0.40 (https://notmuchmail.org)
-Date: Tue, 07 Jul 2026 13:59:28 +0200
-Message-ID: <875x2rj9i7.fsf@redhat.com>
+Date: Tue, 07 Jul 2026 13:59:49 +0200
+Message-ID: <8733xvj9hm.fsf@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,47 +92,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 01 2026, Christoph Schlameuss <schlameuss@linux.ibm.com> wrote:
+On Tue, Jul 07 2026, Christian Borntraeger <borntraeger@linux.ibm.com> wrote:
 
-> Update the kernel headers to get access to
-> KVM_S390_VM_CPU_FEAT_ASTFLEIE2 and allow passing the feature through to
-> guest on IBM z16 onwards.
+> Several fixes that improve the guest->host error handling.
 >
-> Signed-off-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
-> ---
-> Changes in v3:
-> - include linux v7.2-rc1 headers
+> v1->v2:
+> - add missing signoff
+> - add RBs
 >
-> Changes in v2:
-> - Isolate the linux-header update into its own commit (thanks Thomas)
-> - Correct naming of the feature (thanks Hendrik)
-> - Add S390_FEAT_SIE_ASTFLEIE2 to full_GEN16_GA1 only as it depends on
->   SIEF2 (thanks Christian)
+> Christian Borntraeger (1):
+>   s390x/sclp: reject invalid write event data headers
 >
-> ---
-> Christoph Schlameuss (2):
->       linux-headers: Update to Linux v7.2-rc1 with KVM_S390_VM_CPU_FEAT_ASTFLEIE2
->       s390x/kvm: Add ASTFLE facility 2 for nested virtualization
+> Eric Farman (1):
+>   s390x/css: limit number of CHPIDs in description
 >
->  hw/s390x/sclp.c                                 |  2 +
->  include/hw/s390x/sclp.h                         |  4 +-
->  include/standard-headers/drm/drm_fourcc.h       | 54 ++++++++++-------
->  include/standard-headers/linux/ethtool.h        |  3 +
->  include/standard-headers/linux/pci_regs.h       |  2 +
->  include/standard-headers/linux/virtio_can.h     | 78 +++++++++++++++++++++++++
->  include/standard-headers/linux/virtio_console.h |  2 +-
->  include/standard-headers/linux/virtio_gpu.h     |  9 +++
->  linux-headers/asm-s390/kvm.h                    |  1 +
->  linux-headers/asm-x86/kvm.h                     |  2 +
->  linux-headers/linux/iommufd.h                   | 12 ++--
->  linux-headers/linux/kvm.h                       |  1 +
->  target/s390x/cpu_features.c                     |  3 +
->  target/s390x/cpu_features.h                     |  1 +
->  target/s390x/cpu_features_def.h.inc             |  3 +
->  target/s390x/cpu_models.c                       |  2 +
->  target/s390x/gen-features.c                     |  1 +
->  target/s390x/kvm/kvm.c                          |  1 +
->  18 files changed, 153 insertions(+), 28 deletions(-)
+> Matthew Rosato (3):
+>   s390x/pci: Tighten region detection for BAR read/write
+>   s390x/pci: Shrink RPCIT ranges to registered window
+>   s390x/ioinst: Require strict length and format for SEI CHSC handler
+>
+>  hw/s390x/css.c            | 17 +++++++++++++++++
+>  hw/s390x/event-facility.c |  6 ++++++
+>  hw/s390x/s390-pci-inst.c  | 32 ++++++++++++++++++++++++++++++--
+>  target/s390x/ioinst.c     | 20 ++++++++++++++++++++
+>  4 files changed, 73 insertions(+), 2 deletions(-)
 
 Thanks, applied.
 
