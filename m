@@ -4,56 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B54A0C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 06:32:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA057C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 06:32:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgzK3-0002kD-6f; Tue, 07 Jul 2026 02:30:23 -0400
+	id 1wgzJn-0001cG-1r; Tue, 07 Jul 2026 02:30:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wgzK0-0002Zs-Ra
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:30:20 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wgzJi-0001Oa-W6
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:30:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wgzJz-0007EA-7S
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:30:20 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wgzJh-0006yK-A9
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:30:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783405818;
+ s=mimecast20190719; t=1783405800;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MGVEUHYyzKvvMHZO41oX4EZXrdu6aa4irYk8hISV9p0=;
- b=D7zpgIPb5yhRxFLX/g6Se+ctTJWLwNemNHE1KcOnHRslDXSAdeYPafEBG2tiVuYbH6/sN1
- E/5vB0BHSFYWsaOv7VvvgUPHxgEziD35h8Otyj6aLvCGJ5akx2aHRGb51xF1v1yIdmDWYv
- wVRRJXh5XHzHmablVV1PSeOwfR5bxws=
+ bh=qndrN4sGwm0dPF7ABTKsJ6BQ2sV1oYGYaptfwPQjKQU=;
+ b=bwIspAXxHUNGNFanRfbxN574/kbXskJcr2tKjjFRZj1ar6zfplTEf4ebrSGwb66a2Bo3vj
+ vBvmvHetBvn1sSphdHummS7kf70TTpR0LpeXo/yMgtWm6afmhbkhRJLGe4MZepxsz3qSyb
+ V1G/UXoiOrrzmugvi6O4DsxnJazFJzQ=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-47-6rBHt0u-MXOX4UnmVQ9vVg-1; Tue,
- 07 Jul 2026 02:30:17 -0400
-X-MC-Unique: 6rBHt0u-MXOX4UnmVQ9vVg-1
-X-Mimecast-MFC-AGG-ID: 6rBHt0u-MXOX4UnmVQ9vVg_1783405816
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-tH5B8fgNOIyu4EOf0iV3YA-1; Tue,
+ 07 Jul 2026 02:29:59 -0400
+X-MC-Unique: tH5B8fgNOIyu4EOf0iV3YA-1
+X-Mimecast-MFC-AGG-ID: tH5B8fgNOIyu4EOf0iV3YA_1783405798
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2D57C1954B39; Tue,  7 Jul 2026 06:30:16 +0000 (UTC)
+ id 5B17F1954B1E; Tue,  7 Jul 2026 06:29:58 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.49])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AA1851800678; Tue,  7 Jul 2026 06:30:14 +0000 (UTC)
+ id 90ADB180065F; Tue,  7 Jul 2026 06:29:56 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 25/27] vfio/listener: Fix translated_addr for
- non-identity-mapped RAM sections
-Date: Tue,  7 Jul 2026 08:29:18 +0200
-Message-ID: <20260707062920.317302-26-clg@redhat.com>
+Cc: Avihai Horon <avihaih@nvidia.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 16/27] vfio/migration: Add new switchover-ack mechanism
+Date: Tue,  7 Jul 2026 08:29:09 +0200
+Message-ID: <20260707062920.317302-17-clg@redhat.com>
 In-Reply-To: <20260707062920.317302-1-clg@redhat.com>
 References: <20260707062920.317302-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,63 +83,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In vfio_listener_region_del(), when dirty tracking is active and a
-writable RAM section is deleted, a synthetic IOMMUTLBEntry is built to
-flush dirty pages. Setting translated_addr to the IOVA (GPA) is only
-correct for identity-mapped regions where GPA == ram_addr_t.
+From: Avihai Horon <avihaih@nvidia.com>
 
-For RAM sections with GPA far above main RAM (e.g., nested VT-d interrupt
-remapping table at 58 TB), translated_addr is too large, causing a crash
-in physical_memory_set_dirty_lebitmap() when indexing beyond the allocated
-dirty memory blocks array :
+Add support for the new switchover-ack mechanism. This includes
+requesting a switchover ACK on the first save_query_pending call (with
+exact=false) if VFIO precopy is supported.
 
-  bitmap_set_atomic(map=NULL, start=1, nr=1)
-  physical_memory_set_dirty_range(start=0x380004040000, length=4096)
-  physical_memory_set_dirty_lebitmap(start=0x380004040000, pages=3)
-  vfio_container_query_dirty_bitmap(translated_addr=0x380004040000)
-  vfio_legacy_dma_unmap_one(iova=0x380004040000, size=12288)
-  vfio_listener_region_del()
+This achieves the same functionality of legacy switchover-ack but with
+the new switchover-ack mechanism.
 
-Fix this by setting translated_addr to the ram_addr_t of the section, which
-is consistent with other vfio dirty tracking code:
+Keep legacy switchover-ack functionality for backward compatibility.
 
-  translated_addr = memory_region_get_ram_addr(section->mr) +
-                    section->offset_within_region;
-
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Fixes: 6e360c06176c ("vfio/listener: Add missing dirty tracking in region_del")
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Tested-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20260625134352.3122572-1-clg@redhat.com
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+Link: https://lore.kernel.org/qemu-devel/20260706085211.13905-12-avihaih@nvidia.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/listener.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/vfio/vfio-migration-internal.h |  1 +
+ hw/vfio/migration.c               | 13 ++++++++++++-
+ hw/vfio/trace-events              |  2 +-
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-index 109b5d61af4a09cf22f0ebbb9f3fc4ca87295b38..c19600e980a8d02217b5d9df4aca8f879ab2c5d5 100644
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -731,7 +731,7 @@ static void vfio_listener_region_del(MemoryListener *listener,
-         }
+diff --git a/hw/vfio/vfio-migration-internal.h b/hw/vfio/vfio-migration-internal.h
+index a15fc74703998da1956a92c4fb8cfe9ff3a68867..dc741e51421eec6d4ad4d9ce0f9c0c2f6199788d 100644
+--- a/hw/vfio/vfio-migration-internal.h
++++ b/hw/vfio/vfio-migration-internal.h
+@@ -58,6 +58,7 @@ typedef struct VFIOMigration {
+     bool multifd_transfer;
+     VFIOMultifd *multifd;
+     bool initial_data_sent;
++    bool request_switchover_ack;
  
-         /*
--         * Fake an IOTLB entry for writable identity mapping which is needed
-+         * Fake an IOTLB entry for writable RAM sections which is needed
-          * by dirty tracking when switch out of PT domain. In fact, in
-          * unmap_bitmap, only translated_addr field is used to set dirty
-          * bitmap.
-@@ -746,7 +746,8 @@ static void vfio_listener_region_del(MemoryListener *listener,
-         if (global_dirty_tracking && memory_region_is_ram(section->mr) &&
-             !section->readonly) {
-             entry.iova = iova;
--            entry.translated_addr = iova;
-+            entry.translated_addr = memory_region_get_ram_addr(section->mr) +
-+                                    section->offset_within_region;
-             iotlb = &entry;
-         }
+     bool event_save_iterate_started;
+     bool event_precopy_empty_hit;
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 3ab6b7248fea34dec3b58e508f97c8be4c962ce4..ebe2eafded50cdc3c1518a2f1e768fdfe6722c5a 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -582,6 +582,9 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
+             }
  
+             vfio_query_precopy_size(migration);
++            if (migrate_switchover_ack() && !migrate_switchover_ack_legacy()) {
++                migration->request_switchover_ack = true;
++            }
+ 
+             break;
+         case VFIO_DEVICE_STATE_STOP:
+@@ -634,6 +637,7 @@ static void vfio_save_cleanup(void *opaque)
+     migration->precopy_init_size = 0;
+     migration->precopy_dirty_size = 0;
+     migration->initial_data_sent = false;
++    migration->request_switchover_ack = false;
+     vfio_migration_cleanup(vbasedev);
+     trace_vfio_save_cleanup(vbasedev->name);
+ }
+@@ -655,6 +659,7 @@ static void vfio_state_pending(void *opaque, MigPendingData *pending,
+     VFIODevice *vbasedev = opaque;
+     VFIOMigration *migration = vbasedev->migration;
+     uint64_t precopy_size, stopcopy_size;
++    bool request_switchover_ack = false;
+ 
+     /*
+      * The final pending query runs during switchover downtime. VFIO does not
+@@ -676,10 +681,16 @@ static void vfio_state_pending(void *opaque, MigPendingData *pending,
+ 
+     pending->precopy_bytes += precopy_size;
+     pending->stopcopy_bytes += stopcopy_size;
++    if (migration->request_switchover_ack) {
++        pending->switchover_ack_pending++;
++        request_switchover_ack = true;
++        migration->request_switchover_ack = false;
++    }
+ 
+     trace_vfio_state_pending(vbasedev->name, migration->stopcopy_size,
+                              migration->precopy_init_size,
+-                             migration->precopy_dirty_size, exact, final);
++                             migration->precopy_dirty_size,
++                             request_switchover_ack, exact, final);
+ }
+ 
+ static bool vfio_is_active_iterate(void *opaque)
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index fe0d2cc06f946b3f0db28d13994fbd0dfd854fbd..c9d143826d38d77048ecf179cbda19a7184989a4 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -176,7 +176,7 @@ vfio_save_device_config_state(const char *name) " (%s)"
+ vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+ vfio_save_iterate_start(const char *name) " (%s)"
+ vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer size %"PRIu64
+-vfio_state_pending(const char *name, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size, bool exact, bool final) " (%s) stopcopy size %"PRIu64", precopy initial size %"PRIu64", precopy dirty size %"PRIu64", exact %d, final %d"
++vfio_state_pending(const char *name, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size, bool request_switchover_ack, bool exact, bool final) " (%s) stopcopy size %"PRIu64", precopy initial size %"PRIu64", precopy dirty size %"PRIu64", request switchover ack %d, exact %d, final %d"
+ vfio_send_init_data_flag(const char *name) " (%s)"
+ vfio_vmstate_change(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+ vfio_vmstate_change_prepare(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
 -- 
 2.54.0
 
