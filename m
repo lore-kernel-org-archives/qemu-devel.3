@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEEB7C44501
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 20:59:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70874C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 20:59:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whCs1-0004Nj-6v; Tue, 07 Jul 2026 16:58:21 -0400
+	id 1whCs2-0004Oa-N7; Tue, 07 Jul 2026 16:58:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1whCrz-0004MU-Mr
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:58:19 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1whCs1-0004No-D7
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:58:21 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1whCrx-0003Tl-W2
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:58:19 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2cc891373e0so191555ad.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:58:17 -0700 (PDT)
+ id 1whCrz-0003Uz-R7
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:58:21 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2caed617615so204555ad.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:58:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783457897; x=1784062697; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783457898; x=1784062698; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ONeQxTX6zVeyaqgGj5YDAsOZioB0I+Oo3ukHN35N4cQ=;
- b=hMiNti7cVlPaXxco9S9DlWIkpQFa27fCOH4JnKP68+HFcfJJpwOG8XRESy8yo8M5ZD
- 9OeN+Q8zuVjRwwBrywiydx5wl0MJWabxGDW3uyMBmbPRAZfcUoa1S1mGJorzaon19Dm6
- J3cEBOIsYgTwJtOt1mgZWhmaovdUyXmcPr/IN9IpAoyQwR91SC5Asn8yxe2Zjly56NN7
- AomlJSwzGSzluQE7Esv+ewJbsJPHeMmcS0KmvYPsYR6K0DTerAKucg0B4qcjfYesliMh
- 69Buzs+ZbQ/dMww+hnUXj/sjUjDRk8ZworFSuT5xjWVztfmKwfdP/ZdxQtXu5fUXLBie
- EiFg==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=uewRDOC/H1Jp6765rXTUlsAYMglZskvHQznabA1q3mc=;
+ b=lKEixj3fvhF0cHL787A/dfIz2fy5aatW6vIBqDqsYXuXiFzyh55hzc7rwVBE+eJiKV
+ 870mZvtnbrcullKApIbcD2OXO+4YAV7YYcPG2BgnPA+h/oLexSt2Bnsin1iBb0cATg5d
+ R/4b04LhmAbQf9RQyXYxrErqDqxxrE007lwmey86MztHnIq64PPrXkQp/+t7WHc1Thrm
+ Gxqsl25EneyzIh4hoMddyV9EBVqIG7RVEOQ6N24uijeSvK4RsxY+pzSJgDjk0nmxxrJP
+ +woyzozhILGr4sGmX76mSaQgfvoPAEYOAU3z97CDKDO7LcbHxwdTiH7vuUTVWwAytRMH
+ /NhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783457897; x=1784062697;
+ d=1e100.net; s=20251104; t=1783457898; x=1784062698;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ONeQxTX6zVeyaqgGj5YDAsOZioB0I+Oo3ukHN35N4cQ=;
- b=Cah8LNnC09+8LY4yB1fc4DgCkQ5kOO3j2yscNuZ8GCAh/oVdqShhscE6TjEymNnq6O
- kUijqRTTOmZcoFKG8+sC6VB/wBod5OUe1mnZc0dX5Fk7hzvI6UQfO8o1vI+2ToeoyNQ0
- XNWVT1UoxPwATzdyJZr1EDnY+XcTzJM8gyp3S2z+M10BS3wQ9mUFlsAKw11jjj1G71YM
- YvawSXKqEzTLv3iwglXmNWG1ZhH6I/yb+SKkgWHROquIZ7Wmx8rVda5twsGh2iFxg5me
- e0dk6egNewp2NR/64ozMf8b0gpL0GSnr9RJky4xCjeXi6ec+4CpIHBL73lBOnQqe7OzH
- zoCA==
-X-Gm-Message-State: AOJu0Yyb3hCGztEIzDiNfKlXblqsfM5SzWCzk02btgdZE0+rfcG2Ceqj
- IRNu+6lrO6nD/kGPxEXCqRsI7c4VOJbdh2RDIEHFBQmIjm89BWcHhjLpRINazggYjBVD00lQ0h3
- LWJby
-X-Gm-Gg: AfdE7cmpmyoMQtT3nu4IodR+J+lDs/Sux/lhbMHo9LwpvKFx6yKPrz3AHLpGOgKCtAE
- TuHruFsAKQYq1R0o+d4EWFH4dQtV5rHrSeJhU0iaBG+vnpryqdqg1cT7YjsuaZ9uR1s2bKyJJ0t
- X/Ar7Ih6SOg5r1/DrkNk2jypl6+dT0bkH6yvzeQZ/O15sp6k0dYenNOYuOjn44P3jFhFOPKhBND
- KVMhdJCDiYvbOtEjhvqQ8Sp3++V/Prf2mpW458om8fKdtAVQJZ+NNmqIhRQrvn3JUQ0hwl9urNm
- a/E5QhgrFnCkTnYgoWelvgE+WHPmpyr2odlex9h4dZF2GB7JZywcvqfS22N0yyrV9lpJDzz4cuk
- aUDFatou+aa+3yvcfO8xfo5Ce+/PqO6nfJ08qp2pzIVdsuejjaJVzoPO1a+vuCKV9iekuQI9w99
- v/hPfsagGHVvhSf5hTcfYJI5qo01TfuW9raDUYnpopXJUGMeg=
-X-Received: by 2002:a17:903:2986:b0:2cc:ae2b:b6d2 with SMTP id
- d9443c01a7336-2ccbe615d32mr63129715ad.15.1783457896559; 
- Tue, 07 Jul 2026 13:58:16 -0700 (PDT)
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=uewRDOC/H1Jp6765rXTUlsAYMglZskvHQznabA1q3mc=;
+ b=ZpOPfN2oWp1CUysT8s8VQcOtKqFZa9ypJAeCkpwHioTasRNnQSM9bTzfo28TPxnx6Y
+ EjW+6GlJ6EFOWkKq6vuHXNlMK7hJPuc+1b+m9SxSpePgy3C2mz2nzgbxLtWvEP4GlL+P
+ 2XLXfCV8hwIKBrEQ2WH8HWjcD97UilSMyvW70fyqaU6OQzUboVvKo/uKldXQRmoE5/Dy
+ VPpf1cdsdIVBjen1Pf4I87EXabJ65bY27R0WfMzEGzM0aohaRudOfU8Fi2SWtiG2B8IA
+ U5s5itqaVWNrhrAvLMlQTrf+iiA8Q764W11Tg+Nq1E1oRCuAOQt1LbpMtf8S2nVEOyw2
+ 2Ecw==
+X-Gm-Message-State: AOJu0YxQrQKf4GDAOL0fK/rNgYhHog3tGP3ljUjnzIwDjmiqFIDbTuf8
+ 6+QI1lr7QmHASyc6RNJpPw4KrhX2dmeo35FdSG9IT5du4DT/EZqVe9fFwDZdPaUoD3wRViKWY5V
+ iDN/d
+X-Gm-Gg: AfdE7ckTwKhyUKaMP1E2Fal6HxV+DOcJTnJXJQhae4cVlisd7d9PBzPeecnd6GLpU9L
+ bUUWrrpmYqQs0xrwgnIP8GjBnpFFVp0OEcjQC8hZj0+M1Vh1L9bQfwCvLIV9+PvxmvsR8k4MFVX
+ zQC5K8pYpu0l+SfM54xr1822kO9cJJp4qoxYEd2FTipkr2Dka7xVySAByDL4J3LRW9xFITdUtr9
+ hMHEmtzijSBREkjQL9UbeJKDf8m6ODJTx2LIisYrODXHgzAVnG37Asnrx2rTWTJC/IxrqFju/KS
+ 4GuomPmoGHY+7F5Qa3zffRPY3eZWlAeID0yqHUFmCRtBAcaa3VioXs4mdqn1Q8sy/3Bu/od45+Q
+ xJqEkaoKL494qO8TRCd2o4AM4cTieJDjEfEunM2rppdBwk/3T9qKBXyuJ7KZryZgwnQkYEE49Gg
+ upRt6cHdmFdUv/TgE1h7WCoYDxnpWeTajHSYoc32iz7RkmOxw=
+X-Received: by 2002:a17:902:f607:b0:2ca:bf68:2a54 with SMTP id
+ d9443c01a7336-2ccbed285cdmr59370625ad.22.1783457898243; 
+ Tue, 07 Jul 2026 13:58:18 -0700 (PDT)
 Received: from stoup.. (71-212-39-188.tukw.qwest.net. [71.212.39.188])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ccc9d3bc2asm17980575ad.69.2026.07.07.13.58.16
+ d9443c01a7336-2ccc9d3bc2asm17980575ad.69.2026.07.07.13.58.17
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jul 2026 13:58:16 -0700 (PDT)
+ Tue, 07 Jul 2026 13:58:17 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 4/6] Revert "tests/tcg: skip the vma-pthread test on CI"
-Date: Tue,  7 Jul 2026 13:58:08 -0700
-Message-ID: <20260707205810.303376-5-richard.henderson@linaro.org>
+Subject: [PULL 6/6] tcg/loongarch64: Fix cmp_vec with TCG_COND_NE
+Date: Tue,  7 Jul 2026 13:58:10 -0700
+Message-ID: <20260707205810.303376-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260707205810.303376-1-richard.henderson@linaro.org>
 References: <20260707205810.303376-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,42 +100,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+For NE we need to invert EQ, not swap operands.
 
-Now that the page_check_range() race condition is fixed, let
-vma-pthread run on CI again.
-
-This reverts commit 5842de51573fdbd7299ab4b33d64b7446cc07649.
-
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3589
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260706165445.57418-4-iii@linux.ibm.com>
+Message-ID: <20260623140609.645445-1-richard.henderson@linaro.org>
 ---
- tests/tcg/multiarch/Makefile.target | 9 ---------
- 1 file changed, 9 deletions(-)
+ tcg/loongarch64/tcg-target.c.inc | 39 +++++++++++++++++++++++---------
+ 1 file changed, 28 insertions(+), 11 deletions(-)
 
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-index 508149d57b..ab4bf9c5d5 100644
---- a/tests/tcg/multiarch/Makefile.target
-+++ b/tests/tcg/multiarch/Makefile.target
-@@ -60,15 +60,6 @@ tb-link: LDFLAGS+=-lpthread
- # code to work around the compiler.
- sha1: CFLAGS+=-Wno-stringop-overread -Wno-unknown-warning-option
- 
--# The vma-pthread seems very sensitive on gitlab and we currently
--# don't know if its exposing a real bug or the test is flaky.
--ifneq ($(GITLAB_CI),)
--run-vma-pthread: vma-pthread
--	$(call skip-test, $<, "flaky on CI?")
--run-plugin-vma-pthread-with-%: vma-pthread
--	$(call skip-test, $<, "flaky on CI?")
--endif
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index c3350c90fc..182dcfd5eb 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -2371,19 +2371,36 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+                 default:
+                     g_assert_not_reached();
+                 }
+-                break;
+-            }
 -
- run-test-mmap: test-mmap
- 	$(call run-test, test-mmap, $(QEMU) $<, $< (default))
- 
+-            insn = cmp_vec_insn[cond][lasx][vece];
+-            if (insn == 0) {
+-                TCGArg t;
+-                t = a1, a1 = a2, a2 = t;
+-                cond = tcg_swap_cond(cond);
+-                insn = cmp_vec_insn[cond][lasx][vece];
+-                tcg_debug_assert(insn != 0);
++            } else {
++                switch (cond) {
++                case TCG_COND_EQ:
++                case TCG_COND_LE:
++                case TCG_COND_LEU:
++                case TCG_COND_LT:
++                case TCG_COND_LTU:
++                    insn = cmp_vec_insn[cond][lasx][vece];
++                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a1, a2));
++                    break;
++                case TCG_COND_GE:
++                case TCG_COND_GEU:
++                case TCG_COND_GT:
++                case TCG_COND_GTU:
++                    insn = cmp_vec_insn[tcg_swap_cond(cond)][lasx][vece];
++                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a2, a1));
++                    break;
++                case TCG_COND_NE:
++                    /* ne -> not(eq) */
++                    insn = cmp_vec_insn[TCG_COND_EQ][lasx][vece];
++                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a1, a2));
++                    insn = lasx ? OPC_XVNOR_V : OPC_VNOR_V;
++                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a0, a0));
++                    break;
++                default:
++                    g_assert_not_reached();
++                }
+             }
+         }
+-        goto vdvjvk;
++        break;
+     case INDEX_op_add_vec:
+         tcg_out_addsub_vec(s, lasx, vece, a0, a1, a2, const_args[2], true);
+         break;
 -- 
 2.43.0
 
