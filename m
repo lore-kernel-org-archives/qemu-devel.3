@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56BC5C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 07:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B26CC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 07:09:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgzuU-0005qU-0X; Tue, 07 Jul 2026 03:08:02 -0400
+	id 1wgzuU-0005qL-0U; Tue, 07 Jul 2026 03:08:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1wgzuM-0005nx-7i; Tue, 07 Jul 2026 03:07:56 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wgzuH-0005mi-6R; Tue, 07 Jul 2026 03:07:49 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1wgzuJ-00035w-00; Tue, 07 Jul 2026 03:07:53 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wgzuF-00035N-Az; Tue, 07 Jul 2026 03:07:48 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6674IM382286321; Tue, 7 Jul 2026 07:07:47 GMT
+ 6674IN9s1630176; Tue, 7 Jul 2026 07:07:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=szF7+mE2K02OxmaLp
- /mCwxJxwZ9PE/MDUnbYH8Ju7Eo=; b=r9zN8u+h9pyj87HNME5MDG7M3jYuvkD1H
- aC8LWBv4XAzTCOGX3i1/WL7QQIrreAKj9EL9TWxtSRMkbKWe12HhCxoPdTHBJC/Z
- zp4TZGyS9oEy3SREzxwKmw9p0iRGg4jVclb+mbYpSsFaUoaVnZtdHM63MC7vSIYO
- 7tIeLxKdLLnxud9XBj2WN9ufQKwrYols36KNd74JNmNU1dBwM2heAO7itz2T2vig
- eitclNjQASTTBeZv3M/Faciw7Oj4mNI/LTZDRPVHyUMe3wr624I0MoZ5OudT8rob
- UqB9FyTuUK4whI+oKuYWyUSuP7Vnc7xsY2CeE/WiTlyQYhh6ZLNmw==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6sw4nmr0-1
+ :mime-version:references:subject:to; s=pp1; bh=Gvf5up2rYOcM5IMrC
+ SMMJWwnrv6csRfNEoXe1bb9Qtg=; b=HdiNIpinQ5Xf8gR6+4Z3Rmwfp5DG69Ct1
+ Vaed9IlK+9TN3fBQRZTXGamLQ+aZIYFcN8z0ceq/iN9w+i85UHlcq3I2ZHh7+zoe
+ Ear91UewO1ESCUMWf1EWtA8w4VPUjeli0odV6ZEXbBLmBedQTzC34HsbQcd7Wz4v
+ 0fuXluYUGjImhfIK+I7BfCSYwzWGkljLog+RPJ+qcbdoKUPl2tDXW72oY/F4e+2w
+ wc5WDsN+tcjOEJXrxq/v8DYx+Jcf/FEdbqWk8VmFYjo/HLyZXczsY+6mYsQvPOdr
+ UJZ20WBViJtoD1+/Q/ZS79gZEpkLnM9l9VJL5EjW5+iWnlcsfzZCQ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6stsp2sw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 07 Jul 2026 07:07:47 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6676ngZb023410;
- Tue, 7 Jul 2026 07:07:46 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7cgq1n7y-1
+ Tue, 07 Jul 2026 07:07:42 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66774cIK014719;
+ Tue, 7 Jul 2026 07:07:41 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7f6y14dy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 07 Jul 2026 07:07:46 +0000 (GMT)
+ Tue, 07 Jul 2026 07:07:41 +0000 (GMT)
 Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
  [10.241.53.100])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66777iZv34931030
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66777dmB19333854
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 7 Jul 2026 07:07:45 GMT
+ Tue, 7 Jul 2026 07:07:40 GMT
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9972D58067;
- Tue,  7 Jul 2026 07:07:44 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D5E8858057;
+ Tue,  7 Jul 2026 07:07:39 +0000 (GMT)
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 934EE58059;
- Tue,  7 Jul 2026 07:07:42 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id AFA1158058;
+ Tue,  7 Jul 2026 07:07:37 +0000 (GMT)
 Received: from b35lp69.lnxne.boe (unknown [9.87.84.240])
  by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  7 Jul 2026 07:07:42 +0000 (GMT)
+ Tue,  7 Jul 2026 07:07:37 +0000 (GMT)
 From: Christian Borntraeger <borntraeger@linux.ibm.com>
 To: Cornelia Huck <cohuck@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
@@ -66,50 +66,52 @@ Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
  Jason Herne <jjherne@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Hendrik Brueckner <brueckner@linux.ibm.com>, qemu-stable@nongnu.org
-Subject: [PATCH v2 5/5] s390x/css: limit number of CHPIDs in description
-Date: Tue,  7 Jul 2026 09:07:28 +0200
-Message-ID: <20260707070728.147203-6-borntraeger@linux.ibm.com>
+ Hendrik Brueckner <brueckner@linux.ibm.com>, qemu-stable@nongnu.org,
+ Farhan Ali <alifm@linux.ibm.com>
+Subject: [PATCH v2 3/5] s390x/pci: Shrink RPCIT ranges to registered window
+Date: Tue,  7 Jul 2026 09:07:26 +0200
+Message-ID: <20260707070728.147203-4-borntraeger@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260707070728.147203-1-borntraeger@linux.ibm.com>
 References: <20260707070728.147203-1-borntraeger@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: bw1fs36K11gCNMeVrDh5rHV_QayoZx_R
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA2NCBTYWx0ZWRfX+unsccazNZ2q
- eFdrk/BaM3Bp8MPPv/s5Etj1hQG5JKluWMVQWl1FlApQ8FsfLRq2F+fDubqb/+rz+mOguSCne40
- TIExOm18RJt4ng/P4VbBx3ID+Nao+wyfD3IJzuHikU+aBOVs6mC7VfMfO5HLdqzCsSGOHKaTiAg
- 4n0++WEAc3qMmuEHOm1mb0w1Nq0N1VAFZ+x9RK/YqxlDhuMzEfrrOzT4RL/z8A2R5NeTPcvGzoR
- 81tO5JqzuYnSjOaz7v0Ww9aTi9QrkyAt1of+b7BuUS/nMHxp7sDr6BK2UvjX1SV50IKAp19ljAl
- 1Ihz9Fx6zcHhMd5fFPAeyVizXFQamSlDfJju5FHTGA7J5GpWZSIIe4yqo+oSjVBAdIokXgWLkF0
- mOIFip2zV1xvM+qu+e7w5kx6HzvrijRrPmVkpbyxV6xzTCnlQGZO8yPAGCGBRMS3fXMVD0o91mN
- r7M+yv2aUM6Ij0tLpjA==
-X-Proofpoint-ORIG-GUID: bw1fs36K11gCNMeVrDh5rHV_QayoZx_R
-X-Authority-Analysis: v=2.4 cv=FqQ1OWrq c=1 sm=1 tr=0 ts=6a4ca5c3 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-ORIG-GUID: aTClR1suHPujT_gVhEYEZQ9nczXXnwxa
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA2NCBTYWx0ZWRfXycBXi0UqBClg
+ RHxP8LlD/Ytb/5MYuw7Wz/2l8JxbOr1EKVG1KgB7MKIY7CjdKBik+K36zjNCsPjwAj5tHBDqSJj
+ KvZi19YBmUpwOtM/ak9zIsjUa784IOA=
+X-Authority-Analysis: v=2.4 cv=DKW/JSNb c=1 sm=1 tr=0 ts=6a4ca5be cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
- a=taQyAogG0pZaN8zP0A4A:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA2NCBTYWx0ZWRfX2dI0E8hNXT7r
- IL6i7k9x6tYvaViHK8TXl8sO2W/Zstc3wo9Pa/0MBqVkN0CbFD1xjskMQZ83kX8ZgkG/JlTqanG
- bh80FtKyOoP/Dyjb6kzUo/q+tVFBHrs=
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
+ a=-R_Z6E-YhPHALp1CgG0A:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-GUID: aTClR1suHPujT_gVhEYEZQ9nczXXnwxa
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA2NCBTYWx0ZWRfX1+aM9COZBeJ2
+ ugTNYhfvNwd2TiTfAPQFyn8hdzWHAlJqCJEMDemYin9RS4pQjaKjZNW0paFsD2f48z+KNthBGPz
+ o2eRmE2Ly6bjv/i/bQDCsVNAoGiE8qHSfKX86UETD8bt2wIcZBHRN7R9+bpXxPj2Lh+gdHkSU1l
+ 3o9wPHjCPfRFq9nYJoZWdu/6B5IQmerS23QmtRuKRbPeJ/GUZ9BPuAPC474FkKvb7cwr6c+Q+v0
+ bsk1+t5bNv/qhMn3brSVQd4PH1CX70eKhKi3aq+pegkWEBAJKf1rxtPIyXOCY6z4oXghvB1iifz
+ s9jWycd2hN6wN44/clI2Focz5h2eP/8EBV1AqgTWzVs+7xqRasQZpkDmDsy4ERKsJa4jjQZ3iIN
+ H5i4XOYof9D9RGVOrMN+4z8Cauw9KuvWbBRmvMtzCefbNHyUrRgDlDkNLjcd9rnrvrucHExRQwm
+ wxl/0QfMA+pMF+YjNdg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_01,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 spamscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070064
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=borntraeger@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+ spamscore=0 bulkscore=0 clxscore=1015 phishscore=0 impostorscore=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607070064
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,63 +128,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
 
-virtio-ccw uses a single virtual CHPID for all devices and
-device-types, but vfio-ccw (passthrough) shares real CHPID
-information with the guest. A sufficiently large passthrough
-configuration would exceed the defined response payload.
+Today, if a RPCIT instruction is presented from the guest whose range
+exceeds the previously-registered IOAT, QEMU will process the range
+so long as 1) the specified range at least partially overlaps with
+what was previously registered and 2) the guest has valid IOAT entries
+in its table.  If the entries are not present (invalid), then the
+RPCIT will unnecessarily spend time reporting the invalid
+region/segment entries.
 
-Fix this by limiting the number of CHPID descriptions that
-are returned based on the given response format.
+Optimize this path by exiting immediately if the requested range falls
+completely outside of the previously-registered range or if the
+requested range ends before it starts (which would only occur if the
+guest-specified address + length would overflow a u64).  Otherwise,
+clamp the request to only the portion of the range that overlaps with
+what was previously registered, effectively ignoring the portion
+outside of the registered range.
 
 Cc: qemu-stable@nongnu.org
+Fixes: 5d1abf2344 ("s390x/pci: enforce zPCI state checking")
 Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 ---
- hw/s390x/css.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ hw/s390x/s390-pci-inst.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/hw/s390x/css.c b/hw/s390x/css.c
-index 96d5378f3c..29ba39f79e 100644
---- a/hw/s390x/css.c
-+++ b/hw/s390x/css.c
-@@ -1872,6 +1872,7 @@ int css_collect_chp_desc(int m, uint8_t cssid, uint8_t f_chpid, uint8_t l_chpid,
-     int i, desc_size;
-     uint32_t words[8];
-     uint32_t chpid_type_word;
-+    uint32_t max_chpids, chpid_count = 0;
-     CssImage *css;
- 
-     if (!m && !cssid) {
-@@ -1882,9 +1883,25 @@ int css_collect_chp_desc(int m, uint8_t cssid, uint8_t f_chpid, uint8_t l_chpid,
-     if (!css) {
-         return 0;
+diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
+index ef20f7645e..b7de23c7d2 100644
+--- a/hw/s390x/s390-pci-inst.c
++++ b/hw/s390x/s390-pci-inst.c
+@@ -770,10 +770,16 @@ int rpcit_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
+         goto err;
      }
-+
-+    if (rfmt == 0) {
-+        max_chpids = 256;
-+    } else if (rfmt == 1) {
-+        max_chpids = 127;
-+    } else {
-+        /* Should be rejected by caller */
-+        return 0;
-+    }
-+
-     desc_size = 0;
-     for (i = f_chpid; i <= l_chpid; i++) {
-         if (css->chpids[i].in_use) {
-+            /* Limit number of CHPIDs sent back */
-+            if (chpid_count == max_chpids) {
-+                break;
-+            }
-+
-+            chpid_count++;
-             chpid_type_word = 0x80000000 | (css->chpids[i].type << 8) | i;
-             if (rfmt == 0) {
-                 words[0] = cpu_to_be32(chpid_type_word);
+ 
+-    if (end < iommu->pba || start > iommu->pal) {
++    if (end < start || end < iommu->pba || start > iommu->pal) {
+         error = ERR_EVENT_OORANGE;
+         goto err;
+     }
++    /*
++     * If the specified range at least partially overlaps the registered
++     * aperture, clamp the request to the aperture and ignore the rest.
++     */
++    sstart = MAX(start, iommu->pba);
++    end = MIN(end, iommu->pal + 1);
+ 
+  retry:
+     start = sstart;
 -- 
 2.53.0
 
