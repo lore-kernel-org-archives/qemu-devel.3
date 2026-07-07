@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51920C44501
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:04:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 590E2C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:04:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh3aK-0002YW-Tz; Tue, 07 Jul 2026 07:03:28 -0400
+	id 1wh3aJ-0002Tp-Ba; Tue, 07 Jul 2026 07:03:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3aB-0002OB-Cd
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:22 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3a8-0002Nk-JQ
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3a5-00086V-E5
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:19 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3a4-00085o-VS
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783422192;
+ s=mimecast20190719; t=1783422191;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VyBZcKnT65Qd+v/un/1xf/o/N1Us5geWU8aAZfNPSyw=;
- b=Xzr4Dv4NjUSaul1EwdgVe2lz8XDSOTH/NEOP3qKGA7ooUgQnKyVdnQPXXgKqMsv7uZuF0W
- zzC9CuDpWMExNnYrXX9p6rFTBZXxVkh7MvcSlj767ssNvJeuObO4Nd+xbiDjiL80Atx1ix
- YcYb+TAEAEtiSRZtakggDRmxKvZk4Lw=
+ bh=SnP0OjG1TUfvou1s1pdSnXAjEZZ8105l2EBnreA/QEw=;
+ b=K3P4mmXRJ4V5CitBgHfwVlOfODjG5gb5Xr5V8EWRUGnUYUAzpHJMF7YRlpnGV0HDCIwZM6
+ ZC0dV2+PszJqerPXdcpzI+ZZH0/iwDmzd1TRsUBh1guqF08iZanlpf51YPCj96yu3F6SQF
+ JvrrhpQdXGlaQ5622UmU9Vpaxxn5Oj0=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-503-5_7WFBW7NmGgj4zk1ZTJNA-1; Tue,
- 07 Jul 2026 07:03:11 -0400
-X-MC-Unique: 5_7WFBW7NmGgj4zk1ZTJNA-1
-X-Mimecast-MFC-AGG-ID: 5_7WFBW7NmGgj4zk1ZTJNA_1783422190
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-449-opXV4OhkNaG6JE7pP0FLfw-1; Tue,
+ 07 Jul 2026 07:03:10 -0400
+X-MC-Unique: opXV4OhkNaG6JE7pP0FLfw-1
+X-Mimecast-MFC-AGG-ID: opXV4OhkNaG6JE7pP0FLfw_1783422189
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 422A71955D9B
- for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 11:03:10 +0000 (UTC)
+ id A16F01954B1E; Tue,  7 Jul 2026 11:03:09 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B125119560B2
- for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 11:03:09 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5917618005BB; Tue,  7 Jul 2026 11:03:09 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2B14021E6150; Tue, 07 Jul 2026 13:03:01 +0200 (CEST)
+ id 024E421E61A9; Tue, 07 Jul 2026 13:03:01 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
+Cc: stefanha@redhat.com, Christian Brauner <brauner@kernel.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Krempa <pkrempa@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 34/35] qemu-options: document new monitor-hmp and monitor-qmp
- objects
-Date: Tue,  7 Jul 2026 13:02:59 +0200
-Message-ID: <20260707110300.1918153-35-armbru@redhat.com>
+Subject: [PULL 24/35] monitor: convert from oneshot BH to persistent BH
+Date: Tue,  7 Jul 2026 13:02:49 +0200
+Message-ID: <20260707110300.1918153-25-armbru@redhat.com>
 In-Reply-To: <20260707110300.1918153-1-armbru@redhat.com>
 References: <20260707110300.1918153-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -88,113 +87,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Christian Brauner <brauner@kernel.org>
 
-Add new docs for the `-object monitor-hmp` and `-object monitor-qmp`
-options, updating `-mon` to state that it is legacy syntax sugar
-for the new `-object` args.
+Convert monitor_accept_input from a oneshot BH (aio_bh_schedule_oneshot)
+to a persistent BH (aio_bh_new + qemu_bh_schedule).  Oneshot BHs cannot
+be cancelled, so monitor_resume() racing with destruction would schedule
+a callback against memory that monitor_qmp_destroy() is about to free.
+A persistent BH can be deleted during destruction, cancelling any
+pending schedule.
 
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[DB: extracted oneshot BH conversion from larger commit]
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Tested-by: Peter Krempa <pkrempa@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260706135824.2623960-35-berrange@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20260706135824.2623960-25-berrange@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qemu-options.hx | 61 ++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 58 insertions(+), 3 deletions(-)
+ monitor/monitor-internal.h |  2 +-
+ monitor/monitor.c          | 25 ++++++++++++++-----------
+ 2 files changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index e44b47de68..fe76c18c81 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4955,6 +4955,11 @@ SRST
-     port). The default device is ``vc`` in graphical mode and ``stdio``
-     in non graphical mode. Use ``-monitor none`` to disable the default
-     monitor.
-+
-+    The use of ``-monitor dev`` is syntactic sugar for creating a character
-+    device from ``dev`` and pairing it with ``-object monitor-hmp``.
-+    Both the character device and monitor object will be given an ID
-+    ``compat_monitorNNN`` where ``NNN`` is a counter starting from 0.
- ERST
- DEF("qmp", HAS_ARG, QEMU_OPTION_qmp, \
-     "-qmp dev        like -monitor but opens in 'control' mode\n",
-@@ -4966,9 +4971,10 @@ SRST
- 
-         -qmp tcp:localhost:4444,server=on,wait=off
- 
--    Not all options are configurable via this syntax; for maximum
--    flexibility use the ``-mon`` option and an accompanying ``-chardev``.
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index 012d442a20..a82e1aacb6 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -134,7 +134,7 @@ struct Monitor {
+     char *chardev_id;
+     CharFrontend chr;
+     int suspend_cnt;            /* Needs to be accessed atomically */
 -
-+    The use of ``-qmp dev`` is syntactic sugar for creating a character
-+    device from ``dev`` and pairing it with ``-object monitor-qmp``.
-+    Both the character device and monitor object will be given an ID
-+    ``compat_monitorNNN`` where ``NNN`` is a counter starting from 0.
- ERST
- DEF("qmp-pretty", HAS_ARG, QEMU_OPTION_qmp_pretty, \
-     "-qmp-pretty dev like -qmp but uses pretty JSON formatting\n",
-@@ -4997,6 +5003,16 @@ SRST
-       -mon chardev=mon1,mode=control,pretty=on
++    QEMUBH *accept_input_bh;    /* persistent BH for monitor_accept_input */
+     char *mon_cpu_path;
+     QTAILQ_ENTRY(Monitor) entry;
  
-     enables the QMP monitor on localhost port 4444 with pretty-printing.
-+
-+    The use of ``-mon mode=readline`` is syntactic sugar
-+    for the new ``-object monitor-hmp`` option, each use of which
-+    creates an object with the ID ``compat_monitorNNN`` where ``NNN`` is
-+    a counter starting from 0.
-+
-+    The use of ``-mon mode=control`` is syntactic sugar
-+    for the new ``-object monitor-qmp`` option, each use of which
-+    creates an object with the ID ``compat_monitorNNN`` where ``NNN`` is
-+    a counter starting from 0.
- ERST
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index f0ca6b04ed..de1f761041 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -83,6 +83,9 @@ static void monitor_finalize(Object *obj)
+ {
+     Monitor *mon = MONITOR(obj);
  
- DEF("debugcon", HAS_ARG, QEMU_OPTION_debugcon, \
-@@ -5747,6 +5763,45 @@ SRST
-     they are specified. Note that the 'id' property must be set. These
-     objects are placed in the '/objects' path.
++    if (mon->accept_input_bh) {
++        qemu_bh_delete(mon->accept_input_bh);
++    }
+     g_free(mon->chardev_id);
+     g_free(mon->mon_cpu_path);
+     qemu_chr_fe_deinit(&mon->chr, false);
+@@ -569,15 +572,7 @@ static void monitor_accept_input(void *opaque)
+ void monitor_resume(Monitor *mon)
+ {
+     if (qatomic_dec_fetch(&mon->suspend_cnt) == 0) {
+-        AioContext *ctx;
+-
+-        if (monitor_requires_iothread(mon)) {
+-            ctx = iothread_get_aio_context(mon_iothread);
+-        } else {
+-            ctx = qemu_get_aio_context();
+-        }
+-
+-        aio_bh_schedule_oneshot(ctx, monitor_accept_input, mon);
++        qemu_bh_schedule(mon->accept_input_bh);
+     }
  
-+    ``-object monitor-hmp,id=id,chardev=chardev_id,readline=on|off``
-+        Set up a monitor running the Human Monitor Protocol,
-+        connected to the chardev ``chardev_id``.
+     trace_monitor_suspend(mon, -1);
+@@ -700,6 +695,7 @@ char *monitor_compat_id(void)
+ static void monitor_complete(UserCreatable *uc, Error **errp)
+ {
+     Monitor *mon = MONITOR(uc);
++    AioContext *ctx;
+ 
+     if (mon->chardev_id) {
+         Chardev *chr = qemu_chr_find(mon->chardev_id);
+@@ -713,9 +709,16 @@ static void monitor_complete(UserCreatable *uc, Error **errp)
+         }
+     }
+ 
+-    if (monitor_requires_iothread(mon) && !mon_iothread) {
+-        mon_iothread = iothread_create("mon_iothread", &error_abort);
++    if (monitor_requires_iothread(mon)) {
++        if (!mon_iothread) {
++            mon_iothread = iothread_create("mon_iothread", &error_abort);
++        }
 +
-+        The ``id`` parameter is a unique ID that can be used
-+        to dynamically delete the monitor at runtime. Note
-+        that monitors created using the historical syntax
-+        will be allocated IDs following the pattern ``compat_monmitorNNN``.
-+        Mixing ``-object`` with ``-monitor`` and ``-mon`` syntax is
-+        discouraged.
-+
-+        The ``readline`` parameter, which defaults to ``on``,
-+        controls whether the monitor provides line editing.
-+
-+    ``-object monitor-qmp,id=id,chardev=chardev_id,pretty=on|off,close-action=none|delete``
-+        Set up a monitor running the QEMU Monitor Protocol,
-+        connected to the chardev ``chardev_id``.
-+
-+        The ``id`` parameter is a unique ID that can be used
-+        to dynamically delete the monitor at runtime. Note
-+        that monitors created using the historical syntax
-+        will be allocated IDs following the pattern ``compat_monitorNNN``.
-+        Mixing ``-object`` with ``-qmp``, ``-qmp-pretty`` and
-+        ``-mon`` syntax is discouraged.
-+
-+        The ``pretty`` parameter, which defaults to ``off``,
-+        controls whether the monitor responses are pretty
-+        printed as multi-line indented JSON, as opposed to
-+        constrained to a single line without extraneous
-+        whitespace.
-+
-+        The ``close-action`` parameter, which defaults to ``none``,
-+        controls what happens when the connection to the monitor
-+        is terminated by the user. If set to ``delete``, then the
-+        ``monitor-qmp`` object and its associated character
-+        device are both immediately deleted. This can be useful
-+        if an extra monitor was hotplugged for a specific task
-+        and should be unplugged when completed.
-+
-     ``-object memory-backend-file,id=id,size=size,mem-path=dir,share=on|off,discard-data=on|off,merge=on|off,dump=on|off,prealloc=on|off,host-nodes=host-nodes,policy=default|preferred|bind|interleave,align=align,offset=offset,readonly=on|off,rom=on|off|auto``
-         Creates a memory file backend object, which can be used to back
-         the guest RAM with huge pages.
++        ctx = iothread_get_aio_context(mon_iothread);
++    } else {
++        ctx = qemu_get_aio_context();
+     }
++    mon->accept_input_bh = aio_bh_new(ctx, monitor_accept_input, mon);
+ }
+ 
+ int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp)
 -- 
 2.54.0
 
