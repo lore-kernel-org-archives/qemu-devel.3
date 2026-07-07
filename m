@@ -4,66 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3566BC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 07:28:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2848C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 07:28:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh0Dv-000673-8j; Tue, 07 Jul 2026 03:28:07 -0400
+	id 1wh0EB-0006C9-F0; Tue, 07 Jul 2026 03:28:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wang.yechao255@zte.com.cn>)
- id 1wh0Dj-00066V-52; Tue, 07 Jul 2026 03:27:58 -0400
-Received: from mxct.zte.com.cn ([183.62.165.209])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wang.yechao255@zte.com.cn>)
- id 1wh0Dg-0006Af-Qp; Tue, 07 Jul 2026 03:27:54 -0400
-Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mxct.zte.com.cn (FangMail) with ESMTPS id 4gvXqz0jdNz52SGg;
- Tue, 07 Jul 2026 15:27:43 +0800 (CST)
-Received: from szxl2zmapp05.zte.com.cn ([10.1.32.37])
- by mse-fl1.zte.com.cn with SMTP id 6677RYDg065689;
- Tue, 7 Jul 2026 15:27:34 +0800 (+08)
- (envelope-from wang.yechao255@zte.com.cn)
-Received: from localhost.localdomain (unknown [10.234.74.162])
- by smtp (Zmail) with SMTP; Tue, 7 Jul 2026 15:27:36 +0800
-X-Zmail-TransId: 3e816a4caa68009-51e2f
-X-Zmail-LocalSMTP: 1
-X-ZMAIL-USEORIGINALEMLTOOUTBOUND: 1
-X-Zmail-RealSender: wang.yechao255@zte.com.cn
-From: Wang Yechao <wang.yechao255@zte.com.cn>
-To: Alistair Francis <alistair.francis@wdc.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- Wang Yechao <wang.yechao255@zte.com.cn>
-Subject: [PATCH v2 RESEND] target/riscv/kvm: add extensions after v7.1-rc4
- update
-Date: Tue,  7 Jul 2026 15:26:10 +0800
-Message-ID: <20260707072610.403595-1-wang.yechao255@zte.com.cn>
-X-Mailer: git-send-email 2.41.0
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1wh0E9-0006At-Ia
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 03:28:21 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1wh0E7-0006DN-Om
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 03:28:21 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-384930ca5e2so2589272a91.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 00:28:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783409297; x=1784014097; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xFYPyrOKlOOI8q1ON7eTlSHXPmZ33Hmg9/5mVXy8t68=;
+ b=UBOfVWQ2tguOz9HRWSzenfkoa6OI+F14mfBYDRuh3/t3lny8GpccJBLpLnmX7GHh4i
+ ASEec4s5WWzRuGPlIBAkVaiHJEkxsMIILPKGyC1GN0SIV/NdKKefLedlyEzIXPKYl4Q8
+ DjaZL5A2DrBe+ZIQxk/kW8ITnToEDnA/IsMGT3DN5FXFxBNtLznmtSmdsuckW0M+LWnG
+ 00pp7PH+gdFSS67U7rNsdBvX3CGg/4qak5GGntLFZwIovMiQs+fZDZJAZNau+Fi2h6Gl
+ Ai9Yn2/LzZzZoZ613E6Xyv+509rtGv6lrYVV3SM/iwFB64ow0/Zp+ApNR2vfG9A6UQE5
+ BBBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783409297; x=1784014097;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xFYPyrOKlOOI8q1ON7eTlSHXPmZ33Hmg9/5mVXy8t68=;
+ b=X3gn0e1b+P87brvDkUBCETAsRb/Yy0lIGOm45r3T56vxWv14/01odqGxz7ZHwq1Ish
+ zwbePC/y6/Cu1fcWFd8hk7Rb4QjCB/aj7DKBCfiyezzMkcOl4qBV2nebFJA99XgykBnq
+ 3Jh45JB08yuh7C9pTy05TbDjxXym9sDpGHvF6zcwztCXy9qmSjKTYsqv9PVo3WBFozS2
+ DhmNtgY93l46UJhEQXsk+lOkjogK0uZ/aluhGryOMnyUWODfcUEzuEfXLydmMIN/OePM
+ 5j4epdgh/u6Q0uaXcL88kcp5gc2dKhm4y5AV1GBrzs/1nmkZDuRy8etYuX5+np83edj4
+ et/g==
+X-Gm-Message-State: AOJu0Yy3NnanfFiX6MnYaL3uud1DpKK3ApcsowaGQ1dZAqvp/4oPx0/U
+ Hherv9RzmXtM8jjW7Kr/Gs1KctATddjbBRAIovztV78WPK3EmcZ1ydzEHz2q6g==
+X-Gm-Gg: AfdE7clqoCuYIVTfdCfshkv6CQkPemJwJBhiq0Z4yzjfiZlFK5WFt7NtZpaF1D8sW1L
+ dAU3xzXeVGmjSFyeUOI+DfazTF5NiccFDoAREyxZe6yxA4aZQZU+V9qaRMEBk9lBZxO2OiWydlg
+ zoIAWXmwoN10LhV5VQ1eQnSxn0AaUz4xvsUUMNCvbZNCBX4USLMxvQaUMnRcp9iT3y2iFGmQ5AE
+ VMg/5Oc9fZZBnQUM1FA6yN5mhLvOaFtvFm6yJ7TlmbfGmy9bv1ROxv/ZWG8o2S+1j1OIs3xNDzf
+ BqqnTN3r4Wiee1w+uU91LMxTWyTCkP3fUxGDcAfzDM4tL50AVlJii8zX301niIcZPsZanfE5i5w
+ +nij6tJIOZ8urVVKPUfdyPeSgG8TM1ly4NtcvpJfKPO45ds8YdhItJIRcZ2Yu30Hur5RaN8DODI
+ NtBPdNqsY2XIOCgVJBZPFu
+X-Received: by 2002:a17:90b:2dcb:b0:387:e0db:3d8e with SMTP id
+ 98e67ed59e1d1-387e0db436fmr1771691a91.41.1783409296973; 
+ Tue, 07 Jul 2026 00:28:16 -0700 (PDT)
+Received: from jeuk-MS-7D42.. ([211.226.54.223])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ccc9bf7678sm6927905ad.20.2026.07.07.00.28.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Jul 2026 00:28:16 -0700 (PDT)
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
+To: qemu-devel@nongnu.org
+Cc: physicalmtea@gmail.com, jeuk20.kim@samsung.com, qemu-stable@nongnu.org,
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
+ j-young.choi@samsung.com
+Subject: [PATCH v2] hw/ufs: avoid double unref of wrapped scsi-hd
+Date: Tue,  7 Jul 2026 16:28:05 +0900
+Message-ID: <490abae1212bebcf005624924783ed61d2eaea95.1783408494.git.jeuk20.kim@samsung.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <178019129273.471607.15668084929091826093@gmail.com>
+References: <178019129273.471607.15668084929091826093@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-MAIL: mse-fl1.zte.com.cn 6677RYDg065689
-X-TLS: YES
-X-ENVELOPE-SENDER: wang.yechao255@zte.com.cn
-X-SOURCE-IP: 10.5.228.132 unknown Tue, 07 Jul 2026 15:27:43 +0800
-X-CLEAN: YES
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6A4CAA6F.001/4gvXqz0jdNz52SGg
-Received-SPF: pass client-ip=183.62.165.209;
- envelope-from=wang.yechao255@zte.com.cn; helo=mxct.zte.com.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pj1-x1031.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,32 +102,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expose zilsd, zclsd and zalasr.
+From: Jia Jia <physicalmtea@gmail.com>
 
-Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>
+ufs_init_scsi_device() creates an internal scsi-hd and adds it as a
+child of lu->bus. qdev_realize_and_unref() then drops the construction
+reference, leaving the bus child ownership to tear it down.
+
+ufs_lu_unrealize() still unrefs lu->scsi_dev directly. If the UFS
+controller is ejected through ACPI PCI hotplug, the scsi-hd object can be
+finalized there and then the bus child removal RCU callback later unrefs
+the same object again.
+
+Keep lu->scsi_dev as a borrowed pointer and clear it during unrealize
+without unreffing it.
+
+Add a qtest that ejects the UFS controller through the x86 ACPI PCI
+hotplug eject register. On an ASAN build, the test reproduces the UAF
+before the fix.
+
+Fixes: 096434fea13a ("hw/ufs: Modify lu.c to share codes with SCSI subsystem")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
 ---
- target/riscv/kvm/kvm-cpu.c | 3 +++
- 1 file changed, 3 insertions(+)
+v2:
+- Respun by Jeuk Kim.
+- Run the acpi-eject qtest in a subprocess so it cannot leave the shared
+  qos-test QEMU instance without the UFS device for subsequent tests.
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index dcdaf7f2b3..e2c6a4b3aa 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -303,10 +303,13 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] = {
-     KVM_EXT_CFG("zihintntl", ext_zihintntl, KVM_RISCV_ISA_EXT_ZIHINTNTL),
-     KVM_EXT_CFG("zihintpause", ext_zihintpause, KVM_RISCV_ISA_EXT_ZIHINTPAUSE),
-     KVM_EXT_CFG("zihpm", ext_zihpm, KVM_RISCV_ISA_EXT_ZIHPM),
-+    KVM_EXT_CFG("zilsd", ext_zilsd, KVM_RISCV_ISA_EXT_ZILSD),
-     KVM_EXT_CFG("zimop", ext_zimop, KVM_RISCV_ISA_EXT_ZIMOP),
-     KVM_EXT_CFG("zcmop", ext_zcmop, KVM_RISCV_ISA_EXT_ZCMOP),
-+    KVM_EXT_CFG("zclsd", ext_zclsd, KVM_RISCV_ISA_EXT_ZCLSD),
-     KVM_EXT_CFG("zabha", ext_zabha, KVM_RISCV_ISA_EXT_ZABHA),
-     KVM_EXT_CFG("zacas", ext_zacas, KVM_RISCV_ISA_EXT_ZACAS),
-+    KVM_EXT_CFG("zalasr", ext_zalasr, KVM_RISCV_ISA_EXT_ZALASR),
-     KVM_EXT_CFG("zawrs", ext_zawrs, KVM_RISCV_ISA_EXT_ZAWRS),
-     KVM_EXT_CFG("zfa", ext_zfa, KVM_RISCV_ISA_EXT_ZFA),
-     KVM_EXT_CFG("zfbfmin", ext_zfbfmin, KVM_RISCV_ISA_EXT_ZFBFMIN),
+ hw/ufs/lu.c            |  5 +----
+ tests/qtest/ufs-test.c | 18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+), 4 deletions(-)
+
+diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
+index 1e75b1eb4d..13f4a90145 100644
+--- a/hw/ufs/lu.c
++++ b/hw/ufs/lu.c
+@@ -530,10 +530,7 @@ static void ufs_lu_unrealize(DeviceState *dev)
+ {
+     UfsLu *lu = DO_UPCAST(UfsLu, qdev, dev);
+ 
+-    if (lu->scsi_dev) {
+-        object_unref(OBJECT(lu->scsi_dev));
+-        lu->scsi_dev = NULL;
+-    }
++    lu->scsi_dev = NULL;
+ }
+ 
+ static void ufs_lu_class_init(ObjectClass *oc, const void *data)
+diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+index 3b85296a72..9a9c5ca834 100644
+--- a/tests/qtest/ufs-test.c
++++ b/tests/qtest/ufs-test.c
+@@ -34,6 +34,8 @@
+ #define TEST_QID 0
+ #define QUEUE_SIZE 32
+ #define UFS_MCQ_MAX_QNUM 32
++#define ACPI_PCIHP_ADDR 0xae00
++#define PCI_EJ_BASE 0x0008
+ 
+ typedef struct QUfs QUfs;
+ 
+@@ -635,6 +637,17 @@ static void ufstest_reg_read(void *obj, void *data, QGuestAllocator *alloc)
+     qpci_iounmap(&ufs->dev, ufs->bar);
+ }
+ 
++static void ufstest_acpi_eject(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    QTestState *qts = ufs->dev.bus->qts;
++
++    qtest_outl(qts, ACPI_PCIHP_ADDR + PCI_EJ_BASE, 1 << 4);
++    qtest_qmp_assert_success(qts, "{ 'execute': 'query-status' }");
++    g_usleep(3 * G_USEC_PER_SEC);
++    qtest_qmp_assert_success(qts, "{ 'execute': 'query-status' }");
++}
++
+ static void ufstest_init(void *obj, void *data, QGuestAllocator *alloc)
+ {
+     QUfs *ufs = obj;
+@@ -1682,6 +1695,7 @@ static void ufs_register_nodes(void)
+                                              "mcq=false,nutrs=32,nutmrs=8,"
+                                              "wb-max-size=1024,"
+                                              "wb-min-size=256" };
++    QOSGraphTestOptions acpi_eject_test_opts = { .subprocess = true };
+ 
+     add_qpci_address(&edge_opts, &(QPCIAddress){ .devfn = QPCI_DEVFN(4, 0) });
+ 
+@@ -1700,6 +1714,10 @@ static void ufs_register_nodes(void)
+         g_test_message("Skipping ufs io tests for ppc64");
+         return;
+     }
++    if (!strcmp(arch, "i386") || !strcmp(arch, "x86_64")) {
++        qos_add_test("acpi-eject", "ufs", ufstest_acpi_eject,
++                     &acpi_eject_test_opts);
++    }
+     qos_add_test("init", "ufs", ufstest_init, NULL);
+     qos_add_test("legacy-read-write", "ufs", ufstest_read_write, &io_test_opts);
+     qos_add_test("mcq-read-write", "ufs", ufstest_read_write, &mcq_test_opts);
 -- 
-2.27.0
-
+2.43.0
 
