@@ -4,57 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C08C3C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 22:18:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B184AC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 22:23:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whE6E-0003tc-HQ; Tue, 07 Jul 2026 18:17:06 -0400
+	id 1whECV-0007CI-Ly; Tue, 07 Jul 2026 18:23:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1whE6D-0003tU-4r
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:17:05 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1whE6B-0000LN-CU
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:17:04 -0400
-Received: from laptop.localdomain (unknown [86.121.140.206])
- by linux.microsoft.com (Postfix) with ESMTPSA id B5DD320B7167;
- Tue,  7 Jul 2026 15:16:55 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com B5DD320B7167
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1783462617;
- bh=P8sFzwZWvX+wmEgiICVzK3eIuMkwpPeF576/ijgWEzo=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Th0hzQM0C6WPcJlhxhoLuMO986CMxgygD4UNy06pmTxTWTODka8K30EjGew1L8FRB
- jes0uZGAnKMjZeFdYw8VWDkZ6IwFyLbchVZ174JhfYJ9zTBtguP1zuIC6tk3WvxL8a
- 2aSstwfmBfVmbeh4ZGrHtKD28HsE6fXLttr0y2OQ=
-From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Wei Liu <wei.liu@kernel.org>, Magnus Kulke <magnuskulke@microsoft.com>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@microsoft.com>,
- Wei Liu <liuwe@microsoft.com>
-Subject: [PATCH 3/5] target/i386/mshv: remove fallback for register page get
- registers
-Date: Wed,  8 Jul 2026 01:16:43 +0300
-Message-ID: <20260707221645.24557-4-dblanzeanu@linux.microsoft.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260707221645.24557-1-dblanzeanu@linux.microsoft.com>
-References: <20260707221645.24557-1-dblanzeanu@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1whECT-0007Bf-By; Tue, 07 Jul 2026 18:23:33 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1whECR-0001CL-NV; Tue, 07 Jul 2026 18:23:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=76Z81uhRLsrpjl8+/vnICIpAk5DzTqC8ctyUuSuZ1sE=; b=Y8telTnyeuJfTXLcCRKCouKdQY
+ W/3l0CgqT+Ggm4ozvbejUi2+tkedVmD1CC+gWLpbLSRo1v7Oo61xfrGfWnIKB3hGIzVzbh/hcW5V3
+ NGLSc+ePrJbEFrtXj8MRXh4EuR7434cn7VnDeiztA03jwZDB+2qZHPR4oNii126TLpmGQdhuJHXYP
+ /QO/2soPVkn/7Y6gh/geO2/DDMOA7y31j+GaGDxDqP+voIP0kVAvFkirSQLfkUf4fikenLKw1Y07I
+ fM593tQN0NKFY6iMaqAqPRC0SQzhmlp5oOc9gPKEQj18alnQEvtwS2i4nlW4v2yPgEA9sETTgcsWs
+ pwYYW8Pqyq8fHmVmzTWqH7Zj8edMRRPU4uOkssj+Diq5B/5ENYvDcsocgMaAzqY2vFIjJGM46fzVg
+ zTO6bSQtI3rGJHXx6GhrMXCGyRW4200wkKSsBS5ef5b9XkZ47YoyTsfHNeKgcTw3NuzTBRRt8fPbY
+ Qzyiq+tD2JRttIoZuydwLek0mF9cLT/WgzmfATJhgRjUdnn4Lxr01Ys5MLb13l6qclgW8q4FwsIJl
+ omHkiVyyOiNVeCSwdSAOnpoRURXGuzgPlCd1FRx1LuLEOWGuUs9wHhEjZHLqWvgaqbqV7poEVviHW
+ WeCoUIjA+FwMSfDuow8qGXW3zUDteupKmEc9sT4xU=;
+Received: from [2a02:8012:2f01:0:c7db:c036:80a0:714]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1whECG-001a7Z-RE; Tue, 07 Jul 2026 23:23:21 +0100
+Message-ID: <4e74e45a-f152-4d89-bb22-1591f431daad@ilande.co.uk>
+Date: Tue, 7 Jul 2026 23:23:23 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
+ QEMU Trivial <qemu-trivial@nongnu.org>, Michael Tokarev <mjt@tls.msk.ru>
+References: <20260309181452.83702-1-thuth@redhat.com>
+ <00c4ab4b-a58b-4de4-8e41-566b2cb7f920@redhat.com>
+ <124bd918-f2ab-43e2-bd2d-fc824de62c40@tls.msk.ru>
+ <fcbe3d7f-64d4-4b13-b930-a81e77db4784@ilande.co.uk>
+ <df7a091c-a8a1-416a-acf3-28a0cbd8dd2f@redhat.com>
+ <c7d6b801-449e-4f55-9c1d-ebec7a0e9595@redhat.com>
+ <c0cd50bd-e054-48b6-af54-1050e13bb720@ilande.co.uk>
+ <baf0b727-d53c-4717-b4e8-9c8603b2fa75@oss.qualcomm.com>
+ <a60309be-c514-4b22-8970-ecfcf2b4fde7@oss.qualcomm.com>
+ <c7b0d42c-4243-4f52-88ec-7f1deac160fc@ilande.co.uk>
+ <fdb45ef0-a709-413a-bc55-1bfcab648033@oss.qualcomm.com>
+ <e89903bb-d866-45ed-b5f5-fa0a6ef1a0c7@oss.qualcomm.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <e89903bb-d866-45ed-b5f5-fa0a6ef1a0c7@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:c7db:c036:80a0:714
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v2] hw/sparc64/sun4u: Mark unusable PCI busses as full to
+ ease device plugging
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,210 +117,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change `load_regs` to use the register page when it is mmapped
-and is valid.
-Eliminate the hypercall based logic and fail in case the register page
-is found in an unexpected state.
+On 07/07/2026 09:42, Philippe Mathieu-Daudé wrote:
 
-When retrieving the special registers, there are some registers that are
-not present in the register page: TR, LDTR, GDTR, IDTR, CR2, APIC_BASE.
-As this registers are not likely to be used in an MMIO/PIO operation,
-and to avoid a hypercall overhead we do not retrieve them.
+> On 6/7/26 23:19, Philippe Mathieu-DaudÃ© wrote:
+>> On 6/7/26 23:16, Mark Cave-Ayland wrote:
+>>> On 06/07/2026 21:29, Philippe Mathieu-Daudé wrote:
+>>>
+> 
+>>>>> -    pci_bus = PCI_HOST_BRIDGE(sabre)->bus;
+>>>>>       pci_busA = pci_bridge_get_sec_bus(sabre->bridgeA);
+>>>>>       pci_busB = pci_bridge_get_sec_bus(sabre->bridgeB);
+>>>>>
+>>>>> -    /* Only in-built Simba APBs can exist on the root bus, slot 0 on busA is
+>>>>> -       reserved (leaving no slots free after on-board devices) however slots
+>>>>> -       0-3 are free on busB */
+>>>>> -    pci_bus_set_slot_reserved_mask(pci_bus, 0xfffffffc);
+>>>>> +    /*
+>>>>> +     * Slot 0 on busA is reserved (leaving no slots free after on- board
+>>>>> +     * devices) however slots 0-3 are free on busB
+>>>>> +     */
+>>>>>       pci_bus_set_slot_reserved_mask(pci_busA, 0xfffffff1);
+>>>>>       pci_bus_set_slot_reserved_mask(pci_busB, 0xfffffff0);
+>>>>>
+>>>>> ---
+>>>>>
+>>>>> I'm still looking at the 2nd part, the reserved slots.
+>>>>
+>>>> (Because with this patch, the test passes as we can plug devices from
+>>>> the command line, but they end plugged on pciA instead of pciB -- thus
+>>>> the 2nd part missing).
+>>>
+>>> Thanks for taking a look, Phil. IIRC the reason I added slot_reserved_mask was so 
+>>> that it was possible to populate pciA programatically in sun4uv_init(), and then 
+>>> enable the mask so that specifying an additional PCI device using -device on the 
+>>> command line without an explict PCI bus would cause the automatic allocation to 
+>>> place the device on pciB.
+>>
+>> The slot_reserved_mask calls make sense, but AFAICT they don't work as
+>> expected, since CLI devices are added on pciA. If you want to have a
+>> look on top of this snippet, be my guest! Otherwise I'll continue
+>> debugging that tomorrow, long day and late here :\
+> 
+> Generic PCI fix posted here:
+> https://lore.kernel.org/qemu-devel/20260707084050.32137-1-philmd@oss.qualcomm.com/
 
-Local testing showed no regression when using this logic. To properly
-retrieve all the necessary registers for each decoded operation implies
-having a mechanism that tracks the state of each register, which is
-beyond the scope of this patch series.
+Thanks Phil! I can confirm that this solves the issue for me.
 
-Fixes: 40072a7391
-Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
----
- target/i386/mshv/mshv-cpu.c | 107 +++++++++++-------------------------
- 1 file changed, 31 insertions(+), 76 deletions(-)
 
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index c782715497..9ec5c19c67 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -270,15 +270,6 @@ static int get_xc_reg(CPUState *cpu)
-     return 0;
- }
- 
--static enum hv_register_name NON_VP_PAGE_REGISTER_NAMES[6] = {
--    HV_X64_REGISTER_TR,
--    HV_X64_REGISTER_LDTR,
--    HV_X64_REGISTER_GDTR,
--    HV_X64_REGISTER_IDTR,
--    HV_X64_REGISTER_CR2,
--    HV_X64_REGISTER_APIC_BASE,
--};
--
- static int translate_gva(const CPUState *cpu, uint64_t gva, uint64_t *gpa,
-                          uint64_t flags)
- {
-@@ -615,7 +606,7 @@ static void populate_special_regs(const hv_register_assoc *assocs,
-     cpu_set_apic_base(x86cpu->apic_state, assocs[16].value.reg64);
- }
- 
--static void mshv_get_standard_regs_vp_page(CPUState *cpu)
-+static void get_standard_regs_vp_page(CPUState *cpu)
- {
-     X86CPU *x86cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86cpu->env;
-@@ -643,13 +634,19 @@ static void mshv_get_standard_regs_vp_page(CPUState *cpu)
-     rflags_to_lflags(env);
- }
- 
--static int mshv_get_special_regs_vp_page(CPUState *cpu)
-+/*
-+ * This function synchronizes the special registers present in the
-+ * register vp page, which are not all the special registers.
-+ * The rest of the special registers (LD, TR, GDT, IDT, CR2, APIC_BASE)
-+ * are not synchronized to avoid the overhead of a hypercall.
-+ *
-+ * These special registers are not normally used by the guest,
-+ * and are only used in some specific cases.
-+ */
-+static void get_special_regs_vp_page(CPUState *cpu)
- {
-     X86CPU *x86cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86cpu->env;
--    struct hv_register_assoc assocs[ARRAY_SIZE(NON_VP_PAGE_REGISTER_NAMES)];
--    int ret;
--    size_t n_regs = ARRAY_SIZE(NON_VP_PAGE_REGISTER_NAMES);
-     hv_x64_segment_register seg;
- 
-     /* Populate special registers that are in the VP register page */
-@@ -672,46 +669,15 @@ static int mshv_get_special_regs_vp_page(CPUState *cpu)
-     populate_segment_reg(&seg, &env->segs[R_FS]);
-     memcpy(&seg, &env->regs_page->gs, sizeof(hv_x64_segment_register));
-     populate_segment_reg(&seg, &env->segs[R_GS]);
--
--    /* The rest of the special registers that are not in the VP register page */
--    for (size_t i = 0; i < n_regs; i++) {
--        assocs[i].name = NON_VP_PAGE_REGISTER_NAMES[i];
--    }
--
--    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
--    if (ret < 0) {
--        error_report("failed to get non-vp-page special registers");
--        return -1;
--    }
--
--    /* Non-VP page registers - TR, LDTR, GDTR, IDTR, CR2, APIC_BASE */
--    populate_segment_reg(&assocs[0].value.segment, &env->tr);
--    populate_segment_reg(&assocs[1].value.segment, &env->ldt);
--
--    populate_table_reg(&assocs[2].value.table, &env->gdt);
--    populate_table_reg(&assocs[3].value.table, &env->idt);
--    env->cr[2] = assocs[4].value.reg64;
--
--    cpu_set_apic_base(x86cpu->apic_state, assocs[5].value.reg64);
--
--    return ret;
- }
- 
--static int mshv_get_registers_vp_page(CPUState *cpu)
-+static void get_registers_vp_page(CPUState *cpu)
- {
--    int ret;
--
-     /* General Purpose Registers  */
--    mshv_get_standard_regs_vp_page(cpu);
-+    get_standard_regs_vp_page(cpu);
- 
--    /* Special Registers - makes a hypercall */
--    ret = mshv_get_special_regs_vp_page(cpu);
--    if (ret < 0) {
--        error_report("failed to get special registers for vp page");
--        return -1;
--    }
--
--    return 0;
-+    /* Special Registers */
-+    get_special_regs_vp_page(cpu);
- }
- 
- 
-@@ -735,29 +701,26 @@ static int get_special_regs(CPUState *cpu)
-     return 0;
- }
- 
--static int load_regs(CPUState *cpu)
-+static void load_regs(CPUState *cpu)
- {
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86_cpu->env;
--    int ret;
--
--    /* Use register vp page to optimize registers access */
--    if (env->regs_page && env->regs_page->isvalid != 0) {
--        ret = mshv_get_registers_vp_page(cpu);
--        return ret;
--    }
- 
--    ret = get_standard_regs(cpu);
--    if (ret < 0) {
--        return ret;
-+    /* Check register page pointer and abort if in unexpected state */
-+    if (!env->regs_page) {
-+        error_report(
-+                "load regs: register page not set for vcpu %d",
-+                cpu->cpu_index);
-+        abort();
-     }
--
--    ret = get_special_regs(cpu);
--    if (ret < 0) {
--        return ret;
-+    if (env->regs_page->isvalid == 0) {
-+        error_report(
-+                "load regs: register page invalid for vcpu %d",
-+                cpu->cpu_index);
-+        abort();
-     }
- 
--    return 0;
-+    get_registers_vp_page(cpu);
- }
- 
- static int get_vcpu_events(CPUState *cpu)
-@@ -1565,11 +1528,7 @@ static int emulate_instruction(CPUState *cpu,
-     int ret;
-     x86_insn_stream stream = { .bytes = insn_bytes, .len = insn_len };
- 
--    ret = load_regs(cpu);
--    if (ret < 0) {
--        error_report("Failed to load registers");
--        return -1;
--    }
-+    load_regs(cpu);
- 
-     decode_instruction_stream(env, &decode, &stream);
-     exec_instruction(env, &decode);
-@@ -1872,11 +1831,7 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86_cpu->env;
- 
--    ret = load_regs(cpu);
--    if (ret < 0) {
--        error_report("Failed to load registers");
--        return -1;
--    }
-+    load_regs(cpu);
- 
-     direction_flag = (env->eflags & DESC_E_MASK) != 0;
- 
-@@ -2013,7 +1968,7 @@ static void read_segment_descriptor(CPUState *cpu,
- 
-     /*
-      * SegmentCache stores the hypervisor-provided value verbatim (populated by
--     * mshv_load_regs). We need to convert it to format expected by the
-+     * load_regs). We need to convert it to format expected by the
-      * instruction emulator. We can have a limit value > 0xfffff with
-      * granularity of 0 (byte granularity), which is not representable
-      * in real x86_segment_descriptor. In this case we set granularity to 1
--- 
-2.53.0
+ATB,
+
+Mark.
 
 
