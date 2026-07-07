@@ -4,152 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E521C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 17:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24506C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 17:17:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh9LV-0002nf-TD; Tue, 07 Jul 2026 13:12:33 -0400
+	id 1wh9Pm-0002g1-2L; Tue, 07 Jul 2026 13:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wh9LU-0002mw-M7
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:12:32 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wh9LQ-0003ai-KT
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:12:32 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667GuuBO230679
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 17:12:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- tljcj8O4aY6UOdgpgGah/gGtX4hDRmjcYt6w81CXh90=; b=Dv06DnN7dcr3DZNu
- M/f3BGMLZ+Lv2c1V7a2WwB1Es7Y/ZtqSxwW/hGWt3B/BW5Ph8yny5KfQ1dfWdaqS
- VLm89hjyW3JqxLgVWFyZb6evgkrtSLrS1k3lNrZGtKsqEzN64pDYz5oRBEguoLMA
- PghwyRioBY5AGQhZCZMG12EeM4CvLbo325gGy+M47vMspITmelxIxbkaI+d6z5Kg
- tCC5ASn+TGlzT0mhujUWCAL5LLl6XKmYxfXvXNgeUqhGZDK35vY1CHex5ZXtBdNt
- MRaXwaIBY5Et4xYGJ//f3/FK998Dd+rRste/0CQhH8gNX4qDAQ6WhdB3e8IutKcL
- If4hHQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f95e5r2fv-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 17:12:27 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-92d1cae5939so457429285a.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 10:12:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wh9Pc-0002cx-9q
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:16:51 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wh9Pa-0006dG-5S
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:16:47 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-84830c774a0so955858b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 10:16:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783444346; x=1784049146; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783444604; x=1784049404; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=tljcj8O4aY6UOdgpgGah/gGtX4hDRmjcYt6w81CXh90=;
- b=Ow3BsTlLvVMH5Du40S0mjHB92MazAnHGtBXrKLupckG9YpikWIa01FkzCnYuM4v0NQ
- WbpLMzq8jDexgPH1Xmn/cTw+8fFGPRyIHKEBs16xNVnFeO7RdYZA/WEPMRtJN41FAi8v
- PtIJa6czHIOYy+lx+gCZ95jqwhkvDz+hyGZOZH4Oz2n7MVCH8zxF9qTvHw7Pu9fUjSKY
- duI3cVXf+VQlBuNbMt5VNpzJ5pTIURnbApGqcQNL2bJZ16G9sccSRUCiv4/II62EJruS
- XmdZ6KyASwlpZvUbMcWanBjL2v9TFXkkXZ5196PY9SYPLMy7DJ08ME+YFhrGIxNTxvfJ
- qgCg==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=g7yuDgj/3g4/vpl+J5M+UfjVI0/6p6dT18g0UbjtQuQ=;
+ b=sIEARYUD5CM976MUoiItvz8FXjucx3STjwD1HfpPKwCA6Cm6fYSlLUiTy5m3ZTXhko
+ SctNG9EG07JLb57plIEZe+F45XTyN7LOLtXONCkLupA1JiE5EIPCD9TBKFfz5AyYO899
+ x4WiEPx8/WvEwdKSMd8/MFR45pbNAx8w0oc9DIWZl7rN0tQAc53/iYfSrr8TVP36ngAM
+ sg+UQ3x5l/qDIDTnSbUmuKTIBDkZRQ+U3ThnB6tUAFqnw5rl7Ykg8d02eH62UCmpm85i
+ cfIODoBYOfqfyrYVRGDa4tMsaNRAR0prqBj0PMaJe7QMGhdehDnC8uBUbdGNdEmdt+Pc
+ JQMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783444346; x=1784049146;
+ d=1e100.net; s=20251104; t=1783444604; x=1784049404;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=tljcj8O4aY6UOdgpgGah/gGtX4hDRmjcYt6w81CXh90=;
- b=fH2brSY7XStGg7OT5jkg1zLEZKYMQz1KyJilPEqG12OjdFfEgn+leMOC/vc86YBKUD
- R+qfmVOQv4VqZghj9DyrUUVwpvIvPppM9KkoW2Q+D/YgNARi+XD+XTM7F+Qr4gxt3BmW
- HwumbRUv+oBTYiYHmCDZ1144a9AoO//dWWAptW0eNGMiwcZOQx9vX9LuL515L7lq5jjd
- GdgW+vDz+7zyLyw5ytXDhvut2Dl4mnPl891i5LF5cvnFpN7FWc4jsGrtUv2Mx4jE/qS3
- RgB8L+Aq0sgtMrRiavnoLpO25GCFYTrZqWY0754f+QCgVFmGTLQxi69A3cOcnDiQNwew
- gaQA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrT0aH/GE+XoFjXIWl6Tm56P6h8wGCd9vAsdOPSZ40H2EchM5rtBO4k88u8PQsoF7D2OOoAaqW1J2l+@nongnu.org
-X-Gm-Message-State: AOJu0YxmFAkjr5vqou8Q+KwtxiZIjVi2RpFlNeDXH+jzyqO1qdy91LFZ
- f624EO9PT67RvSeJhw6IMYj0UeEcAyCdEmn3ZNzKbVR+4x7tSiveKy3yNJVGn3aQ3c3FXTt/10U
- tMD2/GQ3Ma2iz+Jtj0+22JT5wsLcIsXbUhHBcLO4FKbpSqjSMjWAlI9BjAw==
-X-Gm-Gg: AfdE7cl/5OeIsNBoHLD2/e4MxsY7nu3iuPy8WJ1ZcKpiue3j7dMN//hykivuC0nifVh
- Si9s7XcflTCmKSO6iQ1v7maZlwBtJ1Wlqdxd4+MYYfrLvhw2CJFrVjCVUa/S8h1iuAfktFhXaUg
- wJnPqXGMVGAGFNnB/LFMqx5YzBLYLnp9Pu1d/oQZbtuQwcOGHgWgBmaVwoUrrm6fWKKWwjv/yZO
- GQ+J3KGi3CYUu6rgA/yVYAQEi5CVk5ezY0j08ES2eNQqgq/9GmBVgBOH++kM8pxd7HPKLvhPPWG
- g5oP+3a3Ei9PqnteFm207YC4KsXEwSAkw6w7KXgaZoc5vZYtY3YbkKn/c+3M2caRto/cUoK9Qic
- oOCgLyqX0sUVMqXG3cVOqhWCX6WzdMYCYkZWpEb/stx1A
-X-Received: by 2002:a05:620a:44c7:b0:92b:67e6:8ab4 with SMTP id
- af79cd13be357-92ebb5a3e07mr670879385a.62.1783444346434; 
- Tue, 07 Jul 2026 10:12:26 -0700 (PDT)
-X-Received: by 2002:a05:620a:44c7:b0:92b:67e6:8ab4 with SMTP id
- af79cd13be357-92ebb5a3e07mr670873285a.62.1783444345824; 
- Tue, 07 Jul 2026 10:12:25 -0700 (PDT)
-Received: from [192.168.68.105] ([189.79.21.40])
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=g7yuDgj/3g4/vpl+J5M+UfjVI0/6p6dT18g0UbjtQuQ=;
+ b=Y+aMRMfZ0IGLCLCq59o02zWHtEjZ+EM5SkW2SujKeOR6vLFVbrWACjCApety0N9yHd
+ ca5/JvrcHokJmjEMHonzFsAGA7WWs18rVAG/gx6cTvoeLoIZa+MaIOBGnCV5FeYUIE8O
+ rKqvkf9EhLNgRhUl7wQq329yx4msK3/b6cyYNV3rmgug/baYwnK8wOyZFy02Slt1Sb4H
+ MQfSsIS2m+NWYBXaiE83JlNDc8mRq5Jubopg8MLGnS7ovPfB1DA9zjagprJf/zmo708h
+ tUBXjLxTTGtc5ewcevmxLra4JJzXIpxxG3isWHa/2yN8OU8q8ODfDNhFo1srpOcIar0k
+ X3lQ==
+X-Gm-Message-State: AOJu0YxtP3sZw9vmUgl0qAv4izXU1zw5fUz2Yl2HQAd5Q7+73IW6cQ52
+ ISC2DhlUIrYLuh6bpK57KKYuSyBiS/+i56LirDNya+wHl0QsFvG/JSKc557N46+jJlmHusTHBNW
+ IMmPK
+X-Gm-Gg: AfdE7ck3chYcWQXvp5259WsR7Yx9llvybSJ26LXZND+XRDvg9yBhmZhnWtSnhXPRE+E
+ V8PQXKJGMVrTmDFJWtYSoJ6dEcN6hKzsocd/0eFwVPyae0D+JSqmDfsspIj17+oh+sHhnxNRtev
+ R4br9TiI7Y1iAXW5w0UyEOy7Ylv036Ik8V/htJGEP+RPa+wfL+SvicCGXKAtzcZo8Dbh0TNULRt
+ Ko+pFU5y/fVEs7rtXOM8BfYoAeeDSmaT1mvwe2hG4r+DPWy8H8mwd+i5PlsIyZ2C8Z6J6nHZ5dY
+ 7Yhb51IsA0aOjokmhA8kHfRrtZ/hzFTsNZlEkYLsJnvBtgl6rEXDoh5/dk5xlYzzO+l07S5l5y3
+ 4ekW5Mxd+0oeb3ZggetJRpUkMjJBnAe1yjsKPR0TrFjTuVExZmn74xDACOc208kFh35Gkwtvlq7
+ nWnMLfijDvyQFSQ3MWgRsKFbxQsSnZRlJhSLWhpj+pkSuexGxVvnAmE3W3vH+RtAfMmA==
+X-Received: by 2002:a05:6a00:a256:b0:848:2f74:d8d8 with SMTP id
+ d2e1a72fcca58-8482f74dc4bmr3419535b3a.73.1783444603548; 
+ Tue, 07 Jul 2026 10:16:43 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-39-188.tukw.qwest.net. [71.212.39.188])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8f471813d49sm162248616d6.27.2026.07.07.10.12.23
+ 41be03b00d2f7-ca5b3b25204sm1328495a12.28.2026.07.07.10.16.42
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jul 2026 10:12:25 -0700 (PDT)
-Message-ID: <f142d6f5-e01d-4ac7-970e-fbcd7b37cffc@oss.qualcomm.com>
-Date: Tue, 7 Jul 2026 14:12:20 -0300
+ Tue, 07 Jul 2026 10:16:43 -0700 (PDT)
+Message-ID: <c7227be9-7294-4dc9-a4ba-94f5bd7fc648@linaro.org>
+Date: Tue, 7 Jul 2026 10:16:41 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] contrib/gitdm: Update Qualcomm entries
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Marco Liebel <quic_mliebel@quicinc.com>,
- Matheus Tavares Bernardino <quic_mathbern@quicinc.com>,
- Sid Manning <sidneym@quicinc.com>,
- Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- Marco Liebel <marco.liebel@oss.qualcomm.com>,
- Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260707153003.58914-1-philmd@oss.qualcomm.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: Re: [RFC PATCH] target/sparc: remove unused helper_debug
+To: qemu-devel@nongnu.org
+References: <20260706105948.740881-1-alex.bennee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260707153003.58914-1-philmd@oss.qualcomm.com>
+In-Reply-To: <20260706105948.740881-1-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: suzcsmclfLoU2omkcSJ7JHuhZAlxFlS2
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDE2OCBTYWx0ZWRfX64kU+V2pk/bn
- jL25nItuMNmXV3pwVYzknpQ2B6LTfY0GER2F9eZQ/BjyE+zXP4uQ1stUmW5EDWhJbLj2Bvb4QmF
- KNHKqAxmdKBUUxJYHXX4Is1ooMncYiU=
-X-Authority-Analysis: v=2.4 cv=CNoamxrD c=1 sm=1 tr=0 ts=6a4d337b cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=j8RhgVXbAAAA:8 a=Ikd4Dj_1AAAA:8
- a=yPCof4ZbAAAA:8 a=Qm8iP6mkAAAA:8 a=20KFwNOVAAAA:8 a=h0uksLzaAAAA:8
- a=SsDAoxTRZLbaqr_YZkQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22 a=TjNXssC_j7lpFel5tvFf:22 a=3SzYsRL22XtqO3ZTpi69:22
- a=kDhhxE42lZnxL3pOKqYK:22 a=MSi_79tMYmZZG2gvAgS0:22
-X-Proofpoint-ORIG-GUID: suzcsmclfLoU2omkcSJ7JHuhZAlxFlS2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDE2OCBTYWx0ZWRfXzz72H5B62cz6
- 6Y6G2o+7qXlHwIFhHPfmoUe093UddfydMWUBhRjvblQRDFtBNEw4YvsiH6EjfJRG6yDT5CWMM9g
- R2Lwp6I9T3Tnjxw9nr9X9bbIQWm+85eRkx2Xx8PvXLRvc1tlWgkGbiwMQM8wdtZ5PqQPP/U4RGv
- rnIk4NSKb8MyXEoNwsbWb1IxqKQzRJ8j8TKBfvlFzJ+JY8Cf9JVxwBQNkp5UGfQMKMqMyrDJtUM
- STkubeglSSqV8J7MEw2vPyuZoIkjKcwpiNP83ofcovrYEShw1oWmiRONie5o4ZCHnWJscxZozYO
- injjxLlvQydofoo3hFvVmIT4agTqNu989ft+iaKi15GUy0CwEv6Hd05dIzdNR3aVZ0LvKAXaENz
- y+VTwoFwhwPD3wDXhGjORjAbxC5WyjDoVGJXxl8rdlK9LO2O01Cl1PkR3Ml1+E2pHasGcEQ/aqr
- f3Evd3nvKRzAoQMoiog==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-07_04,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 adultscore=0 phishscore=0 impostorscore=0
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070168
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -166,44 +103,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 7/7/2026 12:30 PM, Philippe Mathieu-Daudé wrote:
-> Add an entry for Qualcomm Technologies, Inc.,
-> include previous quicinc.com contributions.
+On 7/6/26 03:59, Alex Bennée wrote:
+> A long time ago we used to check for breakpoints within the target
+> loops. Since b5cf7428416 (accel/tcg: Remove
+> TranslatorOps.breakpoint_check) this is not longer required. Remove
+> the old helper.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Fixes: b5cf7428416 (accel/tcg: Remove TranslatorOps.breakpoint_check)
+> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
 > ---
+>   target/sparc/helper.h | 1 -
+>   target/sparc/helper.c | 8 --------
+>   2 files changed, 9 deletions(-)
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> Cc: Marco Liebel <quic_mliebel@quicinc.com>
-> Cc: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-> Cc: Sid Manning <sidneym@quicinc.com>
-> Cc: Andrew Jones <andrew.jones@oss.qualcomm.com>
-> Cc: Brian Cain <brian.cain@oss.qualcomm.com>
-> Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>
-> Cc: Marco Liebel <marco.liebel@oss.qualcomm.com>
-> Cc: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-> Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->   contrib/gitdm/domain-map | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/contrib/gitdm/domain-map b/contrib/gitdm/domain-map
-> index c07dffc51bd..aef20c4949c 100644
-> --- a/contrib/gitdm/domain-map
-> +++ b/contrib/gitdm/domain-map
-> @@ -40,7 +40,8 @@ nuviainc.com    NUVIA
->   nvidia.com      NVIDIA
->   oracle.com      Oracle
->   proxmox.com     Proxmox
-> -quicinc.com     Qualcomm Innovation Center
-> +oss.qualcomm.com Qualcomm Technologies, Inc.
-> +quicinc.com     Qualcomm Technologies, Inc.
->   redhat.com      Red Hat
->   rev.ng          rev.ng Labs
->   rivosinc.com    Rivos Inc
-
+r~
 
