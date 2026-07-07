@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C39CFC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 032AEC44500
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:04:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh3aS-0002hT-V8; Tue, 07 Jul 2026 07:03:36 -0400
+	id 1wh3aS-0002hO-28; Tue, 07 Jul 2026 07:03:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3a3-0002KJ-Tt
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3a3-0002KH-Pg
  for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3a2-00084M-Bl
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3a1-00084K-JJ
  for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783422189;
+ s=mimecast20190719; t=1783422188;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XtxFkPdruGIj7okKQPsnNdZVVTMz2xc0/J3sacM04mk=;
- b=EzJ3aVSe44vTV6KgKn4cud5lzdcmnCp23aSORYH0GgAzeM9RQT79Zb3RX/+rJ9+zBOPSj5
- pvztxGL5RoDtcy33cKAjBiWWABnDVvRoVllY/lqaPoJYXOp5tkkQYPyEEFySc30cPiWpR+
- uYMtJZYKnto4HpVixfCjhK9LV76LZAs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=7l0qxJl+3l4hatbmMLHuongOLfRhgIBNo71CXMyuJaE=;
+ b=IXtmPBlbHwpJcRnKCK48/4qSOXUfCg4yUKJF2eqt2E5SeDEFiX59a0mJn63MKI5kgXvYEk
+ gf7NDGoKbvyCd2Ya8d+b9LrXaYnnaUH6ASjY2xb6+MnL+feRHnZ31fBjFGuV7h0fAByf9J
+ KF52i4AqKeW56NtV/30WfcJNcoEc9m4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-311-js9O382tNx-MUcbg7zcUKQ-1; Tue,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-307-kj61ogxOM7qL19EZuYQQSg-1; Tue,
  07 Jul 2026 07:03:07 -0400
-X-MC-Unique: js9O382tNx-MUcbg7zcUKQ-1
-X-Mimecast-MFC-AGG-ID: js9O382tNx-MUcbg7zcUKQ_1783422187
+X-MC-Unique: kj61ogxOM7qL19EZuYQQSg-1
+X-Mimecast-MFC-AGG-ID: kj61ogxOM7qL19EZuYQQSg_1783422186
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D8FFB1806C8B; Tue,  7 Jul 2026 11:03:06 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C154D180AC51
+ for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 11:03:06 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 668F719560B2; Tue,  7 Jul 2026 11:03:06 +0000 (UTC)
+ id 822361956040
+ for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 11:03:06 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C583421E66B6; Tue, 07 Jul 2026 13:03:00 +0200 (CEST)
+ id BA8B221E66E3; Tue, 07 Jul 2026 13:03:00 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
  Peter Krempa <pkrempa@redhat.com>
-Subject: [PULL 12/35] monitor: use class methods for monitor_vprintf
-Date: Tue,  7 Jul 2026 13:02:37 +0200
-Message-ID: <20260707110300.1918153-13-armbru@redhat.com>
+Subject: [PULL 09/35] monitor: add 'pretty' property to QMP Monitor class
+Date: Tue,  7 Jul 2026 13:02:34 +0200
+Message-ID: <20260707110300.1918153-10-armbru@redhat.com>
 In-Reply-To: <20260707110300.1918153-1-armbru@redhat.com>
 References: <20260707110300.1918153-1-armbru@redhat.com>
 MIME-Version: 1.0
@@ -89,105 +90,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-This removes the need for using monitor_is_qmp() to check the
-subclass type, which is an anti-pattern.
+This determines whether the QMP JSON responses are pretty printed
+with newlines and indentation, or compact with no extra whitespace.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 Tested-by: Peter Krempa <pkrempa@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260706135824.2623960-13-berrange@redhat.com>
+Message-ID: <20260706135824.2623960-10-berrange@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- monitor/monitor-internal.h |  7 +++++++
- monitor/hmp.c              | 13 +++++++++++++
- monitor/monitor.c          | 11 ++++-------
- 3 files changed, 24 insertions(+), 7 deletions(-)
+ monitor/qmp.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index 6a4c3b0f37..23cef68153 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -104,6 +104,13 @@ typedef struct HMPCommand {
- 
- struct MonitorClass {
-     ObjectClass parent_class;
-+
-+    /*
-+     * If non-NULL, the monitor is able to print messages
-+     * for attention of the client user
-+     */
-+    int (*vprintf)(Monitor *mon, const char *fmt, va_list ap)
-+        G_GNUC_PRINTF(2, 0);
- };
- 
- struct Monitor {
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index c03b91782c..f9252387c4 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -68,11 +68,18 @@ static void monitor_hmp_set_readline(Object *obj, bool val, Error **errp)
-     mon->use_readline = val;
- }
- 
-+int monitor_hmp_vprintf(Monitor *mon, const char *fmt, va_list ap)
-+    G_GNUC_PRINTF(2, 0);
-+
- static void monitor_hmp_class_init(ObjectClass *cls, const void *data)
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index df35b530ed..d7adb9ba8b 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -77,8 +77,25 @@ static void monitor_qmp_finalize(Object *obj)
  {
-+    MonitorClass *moncls = MONITOR_CLASS(cls);
-+
-     object_class_property_add_bool(cls, "readline",
-                                    monitor_hmp_get_readline,
-                                    monitor_hmp_set_readline);
-+
-+    moncls->vprintf = monitor_hmp_vprintf;
  }
  
- static void monitor_hmp_init(Object *obj)
-@@ -87,6 +94,12 @@ static void monitor_hmp_init(Object *obj)
-     hmp->use_readline = true;
- }
- 
-+int monitor_hmp_vprintf(Monitor *mon, const char *fmt, va_list ap)
++static bool monitor_qmp_get_pretty(Object *obj, Error **errp)
 +{
-+    g_autofree char *buf = g_strdup_vprintf(fmt, ap);
-+    return monitor_puts(mon, buf);
++    MonitorQMP *mon = MONITOR_QMP(obj);
++
++    return mon->pretty;
 +}
 +
- static void monitor_command_cb(void *opaque, const char *cmdline,
-                                void *readline_opaque)
++static void monitor_qmp_set_pretty(Object *obj, bool val, Error **errp)
++{
++    MonitorQMP *mon = MONITOR_QMP(obj);
++
++    mon->pretty = val;
++}
++
+ static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
  {
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 9fe131983d..0cb0930bf4 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -264,21 +264,18 @@ int monitor_puts(Monitor *mon, const char *str)
- 
- int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
- {
--    char *buf;
--    int n;
-+    MonitorClass *moncls;
- 
-     if (!mon) {
-         return -1;
-     }
- 
--    if (monitor_is_qmp(mon)) {
-+    moncls = MONITOR_GET_CLASS(mon);
-+    if (!moncls->vprintf) {
-         return -1;
-     }
- 
--    buf = g_strdup_vprintf(fmt, ap);
--    n = monitor_puts(mon, buf);
--    g_free(buf);
--    return n;
-+    return moncls->vprintf(mon, fmt, ap);
++    object_class_property_add_bool(cls, "pretty",
++                                   monitor_qmp_get_pretty,
++                                   monitor_qmp_set_pretty);
  }
  
- int monitor_printf(Monitor *mon, const char *fmt, ...)
+ static void monitor_qmp_init(Object *obj)
+@@ -538,6 +555,7 @@ void monitor_new_qmp(const char *id, const char *chardev_id,
+                                         id ? id : autoid,
+                                         errp,
+                                         "chardev", chardev_id,
++                                        "pretty", pretty ? "yes" : "no",
+                                         NULL);
+ 
+     if (!obj) {
+@@ -558,8 +576,6 @@ void monitor_new_qmp(const char *id, const char *chardev_id,
+                       qemu_chr_has_feature(mon->parent_obj.chr.chr,
+                                            QEMU_CHAR_FEATURE_GCONTEXT));
+ 
+-    mon->pretty = pretty;
+-
+     qemu_mutex_init(&mon->qmp_queue_lock);
+     mon->qmp_requests = g_queue_new();
+ 
 -- 
 2.54.0
 
