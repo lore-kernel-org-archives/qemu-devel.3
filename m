@@ -4,41 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA767C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 12:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48DECC44501
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 12:53:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh5IE-0005gy-7h; Tue, 07 Jul 2026 08:52:55 -0400
+	id 1wh5ID-0005fE-Ht; Tue, 07 Jul 2026 08:52:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wh5Hx-0005WW-34
+ id 1wh5Hy-0005Wp-Ci
  for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:52:38 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wh5Ht-0002O8-81
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:52:36 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1wh5Hv-0002OI-GX
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:52:38 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxiuuL9kxqDu4AAA--.4103S3;
- Tue, 07 Jul 2026 20:52:27 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxJOqM9kxqFO4AAA--.2589S3;
+ Tue, 07 Jul 2026 20:52:28 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJAxX8eF9kxqpekDAA--.23644S7;
+ by front1 (Coremail) with SMTP id qMiowJAxX8eF9kxqpekDAA--.23644S8;
  Tue, 07 Jul 2026 20:52:27 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: maobibo@loongson.cn, lixianglai@loongson.cn,
- Miao Wang <shankerwangmiao@gmail.com>
-Subject: [PULL 5/8] target/loongarch: Enable TARGET_PAGE_BITS_VARY for
- loongarch64 user-only
-Date: Tue,  7 Jul 2026 20:32:23 +0800
-Message-Id: <20260707123226.25918-6-gaosong@loongson.cn>
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 6/8] hw/intc/loongarch_dintc: Fix OOB access in DINT MMIO write
+ handler
+Date: Tue,  7 Jul 2026 20:32:24 +0800
+Message-Id: <20260707123226.25918-7-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20260707123226.25918-1-gaosong@loongson.cn>
 References: <20260707123226.25918-1-gaosong@loongson.cn>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxX8eF9kxqpekDAA--.23644S7
+X-CM-TRANSID: qMiowJAxX8eF9kxqpekDAA--.23644S8
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,39 +67,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Miao Wang <shankerwangmiao@gmail.com>
+Validate guest-controlled cpu_num before using it to index the cpu[] array
+or pass to async_run_on_cpu(). Without this check, a malicious guest can
+trigger a NULL pointer dereference in async_run_on_cpu() and an
+out-of-bounds array access in qemu_set_irq(), causing host crash.
 
-Hard coding PAGE_SIZE to 4K will prevent user-only emulation from
-working on hosts with 16K page size.
-
-Fixes: 1d832c19db1e ("target/loongarch: Support 4K page size")
-Fixes: qemu-project/qemu#3651
-
-Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-ID: <20260630-loong64-vary-page-sz-v1-1-1d1a894674be@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3616
+Fixes: 0d148eaf5a3e ("hw/loongarch: Implement dintc set irq")
+Reported-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reported-by: huntr bubble
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260701065454.1976188-1-gaosong@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- target/loongarch/cpu-param.h | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ hw/intc/loongarch_dintc.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/target/loongarch/cpu-param.h b/target/loongarch/cpu-param.h
-index 3bcf77b375..6abe72ff5c 100644
---- a/target/loongarch/cpu-param.h
-+++ b/target/loongarch/cpu-param.h
-@@ -10,6 +10,11 @@
+diff --git a/hw/intc/loongarch_dintc.c b/hw/intc/loongarch_dintc.c
+index c877a8003b..e40292887c 100644
+--- a/hw/intc/loongarch_dintc.c
++++ b/hw/intc/loongarch_dintc.c
+@@ -19,6 +19,7 @@
+ #include "target/loongarch/cpu.h"
+ #include "qemu/error-report.h"
+ #include "system/hw_accel.h"
++#include "qemu/log.h"
  
- #define TARGET_VIRT_ADDR_SPACE_BITS 48
+ /* msg addr field */
+ FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
+@@ -52,7 +53,19 @@ static void loongarch_dintc_mem_write(void *opaque, hwaddr addr,
+     CPUState *cs;
  
--#define TARGET_PAGE_BITS 12
-+#ifdef CONFIG_USER_ONLY
-+/* Allow user-only to vary page size from 4k */
-+# define TARGET_PAGE_BITS_VARY
-+#else
-+# define TARGET_PAGE_BITS 12
-+#endif
+     cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
++
++    /* Validate cpu_num against the configured number of CPUs */
++    if (cpu_num >= s->num_cpu) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "loongarch-dintc: invalid cpu number%d\n", cpu_num);
++        return;
++    }
+     cs = cpu_by_arch_id(cpu_num);
++    if (!cs) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "loongarch-dintc: no CPU for arch_id %d\n", cpu_num);
++        return;
++    }
+     irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
  
- #endif
+     async_run_on_cpu(cs, do_set_vcpu_dintc_irq,
 -- 
 2.55.0
 
