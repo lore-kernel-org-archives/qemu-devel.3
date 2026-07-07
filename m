@@ -4,141 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F22A0C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 22:18:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60EDAC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 22:18:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whE71-0004aA-Oq; Tue, 07 Jul 2026 18:17:55 -0400
+	id 1whE6L-0003uk-8T; Tue, 07 Jul 2026 18:17:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alwilliamson@nvidia.com>)
- id 1whE6s-00044M-R4
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:17:50 -0400
-Received: from mail-northcentralusazon11013071.outbound.protection.outlook.com
- ([40.107.201.71] helo=CH4PR04CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alwilliamson@nvidia.com>)
- id 1whE6q-0000Nc-9F
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:17:46 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gtvKoo6NwG4YfU0bAMDHCfYzb1L3CoqCywvXPfi9anusYxtXFjCv8m36cDPDqTxUs7sKjuhi4b8Uh6EhO9TYzlWOlaiopJI0N/BzZsJVdmyKnFRjcysW7drqw8LM3nz/v+rqv1Gt3PcATuL5GBdCrM8RvEKP4VtMPfujb2ijfxzRkNh44sANp3xLyqJgQtS/2mKy2vLGcSInIoP7c40MzCdMqWLuBaVDclS3rBnW6eY2E2AlZMocriRDv8GsklLCNY4wJDjLWvDTye/PFUFOsHyMVVTH6pSBrcdM9MrhCD1evtYZDLxWcxI14fvs5brniE+wwEge+/RjOq3TdwCISw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ifllKCCmVSHOYjiGJOOt1GFJTXBGq3obsu7KiXT9gJs=;
- b=VO+jkebrCLsxq6Qw3Ee7MpUMF48KVfuDN5yLGVJO/BTLcvcDHRK93rz7MeQbnSV2OOqIOkXsWPY5UXyiLqfhyJtwcP5Bg5AiKntCKE6rKxEIH8IrydBHs8qdCjovbJVPUQZSZf6qS4DvEiDOmJvlSE1smmwcwFUYfndes2OUBboJmOYOirSVSgxRkP5TlOVvWQ5VJoGuVcQ8p0anrySxUPLDll8fggWNg/Lav71u+QNHmQNZS0q7bBZ7v/L9LHNK8fweTvJLonI6lkTtHLtZkbEY9m8CFU6AaA7GRyAFfw9PPVj/jYI1s9sYrdDjlBx0HaweFiudafQ49K7n9WzqAg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ifllKCCmVSHOYjiGJOOt1GFJTXBGq3obsu7KiXT9gJs=;
- b=qQ8iEZ/PdAWw+bdxBT81lHkWKJEsqwQq53qhhzWu5kEh933cRwSF6cCqtaQX2Hc1dVxdRQtCQ4UVuiuInSLsMFPzGQjqleBHkNvCK1ZR0RGN8Inwjr2XNKArpvUvtYVudhQuT1X1MdRQr3BpeoFMOmb5lCG+yGRKbx30m9SLYnuOSbdaTpIJc4J3VgQeJFKQ/QmT0E6R6aX9cDSid047bAMSs6VFMck1y+tT98s7xnq5e+U73Ks36BR8Shvvt1rtD/w9oUpIEe8trosPjXGRneMFSVC5niin6EWYxqfTiDheQh8M1HElWQ1sqydsqh6jjkc36t8N1RZB8Fl4gYQUVg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV3PR12MB9411.namprd12.prod.outlook.com (2603:10b6:408:215::20)
- by SN7PR12MB7881.namprd12.prod.outlook.com (2603:10b6:806:34a::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.11; Tue, 7 Jul
- 2026 22:12:37 +0000
-Received: from LV3PR12MB9411.namprd12.prod.outlook.com
- ([fe80::98b7:86de:b69:2a15]) by LV3PR12MB9411.namprd12.prod.outlook.com
- ([fe80::98b7:86de:b69:2a15%6]) with mapi id 15.21.0181.009; Tue, 7 Jul 2026
- 22:12:37 +0000
-Date: Tue, 7 Jul 2026 16:12:34 -0600
-From: Alex Williamson <alex.williamson@nvidia.com>
-To: =?UTF-8?B?TWljaGHFgg==?= Winiarski <michal.winiarski@intel.com>, Shameer
- Kolothum <skolothumtho@nvidia.com>
-Cc: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>,
- <qemu-devel@nongnu.org>, Michal Wajdeczko <michal.wajdeczko@intel.com>,
- Matthew Brost <matthew.brost@intel.com>, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater
- <clg@redhat.com>
-Subject: Re: [RFC 0/1] Forward AER errors to guest
-Message-ID: <20260707161234.23ed28db@nvidia.com>
-In-Reply-To: <ak1oWDUvX49OfFmB@nostramo>
-References: <20260703111357.3206071-3-satyanarayana.k.v.p@intel.com>
- <3500e357-1a3e-4325-9259-28c2023860a1@app.fastmail.com>
- <ak1oWDUvX49OfFmB@nostramo>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: SN6PR2101CA0017.namprd21.prod.outlook.com
- (2603:10b6:805:106::27) To LV3PR12MB9411.namprd12.prod.outlook.com
- (2603:10b6:408:215::20)
+ (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
+ id 1whE6I-0003uX-R5
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:17:10 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1whE6H-0000M8-4N
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:17:10 -0400
+Received: from laptop.localdomain (unknown [86.121.140.206])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 2F0DB20B7167;
+ Tue,  7 Jul 2026 15:17:01 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2F0DB20B7167
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1783462623;
+ bh=s3tJ+KAIDTg3lGQufzfBhUJka+0u7JQQUAk3SRLSGD8=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=qNj4PjEVLAXQk2+QfjXbvvmLOisw+w1LDmULqedldQY5AS9vsHji36XZbRovRbpLP
+ OkwjP8fD7kWdZwhSpYhaRSVg9ecTj6jac3Wqhg6r6017iUlZVFZPYX1PlAahd13O0+
+ micupI2KeUy8SEG6LU7DIbpxPJNlnJk++mI4by50=
+From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Magnus Kulke <magnuskulke@microsoft.com>,
+ =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@microsoft.com>,
+ Wei Liu <liuwe@microsoft.com>
+Subject: [PATCH 5/5] target/i386/mshv: fix pio handlers clobbering
+ device-modified registers
+Date: Wed,  8 Jul 2026 01:16:45 +0300
+Message-ID: <20260707221645.24557-6-dblanzeanu@linux.microsoft.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260707221645.24557-1-dblanzeanu@linux.microsoft.com>
+References: <20260707221645.24557-1-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV3PR12MB9411:EE_|SN7PR12MB7881:EE_
-X-MS-Office365-Filtering-Correlation-Id: d9be8c6e-7078-4ca8-5cbb-08dedc74da4e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|23010399003|376014|1800799024|6133799003|56012099006|4143699003|11063799006|5023799004|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: WiZnplQIElSq0x81ff1f3TFo+gLKTxsH6qliqIo9Gm7e7fGCPIJH23hc1/G2nhrezLJT8GHldt86B8UKYeJQVkmz2WxuToY59tgjR6Dz5K+56Qrf5vkAWxjqtknoC3/0r+R/KgpfPxFONclg+cBtiEDguNI0mAlsaKpmNqG08iRSVuxltLYEKXqD30z9yANNrxDMrH0NWTX5LyEW1iV2Zjc+88N5awz3CTXuTtAIB+XS8TOGKZdhyK8YwejMxoLNIaPCox75WRR7wWFDAuVKYdiK46GpYNIXYd1m8bR3goEBp7ArMXAXJgLg75RKtJgEGB+kAiCTw8ZOyTJ1xAzcwgxp9sCECMFIZ+M9Q6nda09m0XYSaggxNojkcLe0H7iPBYpt3+H0Jv6G1vB8XPgUYVYs6kv9PkEGzg5n3cKHkpIQZ1GlDlVpTnJftLp8d80++R7W0Wiw83fh5/rlkSJ0U6by/2du6L+7/zhJxDEY6iPB9uABTW0Ersgu2Bt3h0yWca+tY3jKQugfMbHpFjuQealRmtU/ACowB75qwOHpqvTHFEqRsWnfVEFGOLRy40WetC5uIaR0psabu1jbasJaeVLgRilgF03t9HrMmjopOaxScLH3PVNgwKq6jRKfS9Bb2NEofMYOo2Jgka0pVQbF7IcSAtTrCcR2BNOuPsjzXwU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:LV3PR12MB9411.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(6133799003)(56012099006)(4143699003)(11063799006)(5023799004)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VGhhbmtlc0hDWXRuQzZEcERXZ2JjbUx6V05DQzVaTnl2bTRZSDVHaGNqODNJ?=
- =?utf-8?B?UkFTbHhLRnB4MUNnYVM5bnFiSWFqS2pTOXFPU0t5NkVDbzRRaDUxYkhXOWt6?=
- =?utf-8?B?NHZiaUVoSU1pUjZLUEl6ZlZlbWloOGp0Y2Rud3JYa2hNM2ZxK1ZsT0g4eW5I?=
- =?utf-8?B?OHJYd25Fa01lbldJbHdEUkFjdkdPR2lzVW5URjdGOFFGampDNFBEVHpCVTVB?=
- =?utf-8?B?WFh1aXNRN3lTYWlycHRsUDc2WDlZVk9JblBPQ3FrT1NNdnl4WEFScWlZWGpP?=
- =?utf-8?B?UC9jNEhLSVFwVDh5aUNtV01MSTEvQ3NtK2hkcnlYSTVQMUdvYTVudmRid1pm?=
- =?utf-8?B?VWtOZFl6REVHdjlDRkl1RmN5V0VuL05YbDc1RTA2M2ZITmRSc0QveDJQeEwr?=
- =?utf-8?B?VmlLNHc3c1RDWkNrcmF4OVc5UDBKL2tsN3ZZTW5ncHN2cEwzRVNQeHdTWGd5?=
- =?utf-8?B?WHc1ZE1tVkhRT3NyNEZpUzdnWCtkSStDbncyY3BSclVsTkZsaG92cjdHbWJ1?=
- =?utf-8?B?Nm44dUNtSWlKSXdHTU5DUUNZMThCL2J6eDlHMWEyODRCMUxuUkpsRHJmNGZZ?=
- =?utf-8?B?Zzl6czFNL3drYnd3Z0h1c2M2WklEcTFnQ0ovVnh5UlNSeVhPS2QxY1JRZ2gx?=
- =?utf-8?B?dUI0UTduNHo4OTJoUmMydkRKd1hia0h0WXFzRDJENVBoK0MwWlM3M0VoOUJu?=
- =?utf-8?B?N3AzMGxPZCtrb1A1Z1FEMzkvdk5QWmFCZHg0QitwU2tXV1MxanVFVWpqNFU2?=
- =?utf-8?B?ay96anNTMGpJV1NQWEhXUEt1cjErRHJDQUttT3NDdlBnSnQ1ODhDeHE2Wm9T?=
- =?utf-8?B?MHA1UGJjaHhDSFM0NDZ0c1R6ZVFUaC9jSEdVcGZoeVdNVHl5MFZRTmFWTjJh?=
- =?utf-8?B?bHNpcjQ1RGZZbnBRdFArZlE0YUUyaGpnTU9kZS9XTkNkRTc3RkloT0lGRmlD?=
- =?utf-8?B?MURWeVRWYWY5UUZ5UWx4N3BIZ2hUM2pONUZqT2N6MkRSTmtJQS9KaUVIY1Y0?=
- =?utf-8?B?NHFPOVpSV1RuU0Z0TlpWQ2QrZm8vSzFjcXpxOEFwbWxYNmVMZy90YzJHVmNU?=
- =?utf-8?B?Wmg4cGFLc1NSdis0TjJlQmNiQmN1NUp4dW0xVm43VU5TMkZUQ0F0TGRWeDAw?=
- =?utf-8?B?MUZMTlphV3M2YWZFeE1CMWxaUEVXeGhBR005VHhtRWhyY0VlK0tXSGVEQ0Z2?=
- =?utf-8?B?d1M3RDBkQU9reUlUZ3VhMlNtbWkwVmUrWjFVcGpTSkpKSU9TOFFRMDZhc1JP?=
- =?utf-8?B?RVFwTWVqVEozSW5SbjJOQjl6VVJ5eDFocGtCR2FSWlVwcGhNYjVNMXZPanJI?=
- =?utf-8?B?dVVLSjhSU2NncjZvSnlpMjd3RnFnaE5vQTdIY1grd0ZxdVg3UTJRaVNzMUFS?=
- =?utf-8?B?U29sZTBEeU1heU9IL2JORUsrWEZUK2FVaEMwa0lZMm8zRG1yekU5WFQxRXBW?=
- =?utf-8?B?YzBwYitxam80VEpUT05CaGJNWXVHWEEyNk5UL1ZqOHNQc2ZaZitOMFNsQjJB?=
- =?utf-8?B?WVpvaWdNVlVkdCtXNkh5MThMZWhieFBHQStvZjhGNzlIc0UvYkY5cy9GWVBO?=
- =?utf-8?B?eERnRTc2eElTQ2NtNVNxYUczOFI5OVVzSEsvTk1EV0lQb01TcHUraGNtN3RC?=
- =?utf-8?B?bFRUeHdMUDloTXJNdThXTEYvb0U1R2JXNmVmOFBZM0pOMmhEeG0rVFdROE5Z?=
- =?utf-8?B?ZVBLWnRDSUw5SUx6TzRWNE9jWk16TWhmT2NQblp2V3ZNeEoyRUx3YlVDMEZv?=
- =?utf-8?B?YlNhNjZLa2xwSk1TRmpaRythc2d2UUxZYjFpMVN5dE9FemR6V0VkT2tJRjV3?=
- =?utf-8?B?cUxGRDBKMlBoYWo5Slk1L2RMMVF2ZHZrSkpjNitoMks4WmZWVnlOQndYdVhV?=
- =?utf-8?B?Rm50RXJzSkNtVG8vK25jMnpYMDEvMjdzc0I2NENDVkVldmlIS1pVaDIzdXZQ?=
- =?utf-8?B?M0VCa3FuSEJjRGFBUGMwSXZaOWU0YWdpWnhRUlhiN1FMQzZzRVhuMStmN0lO?=
- =?utf-8?B?d2dYN2RVdWNGdEZXUHZjTHJMenc1a2NVWjJ3VXR2YmlKOHhkbURrK2JmL24x?=
- =?utf-8?B?akN0UWNwMXFZNTZRTWlKQzM2MWlnbms2eXRPRUtOVXcwOHlPaHdHVVhHL1Zk?=
- =?utf-8?B?R1JDTERlQVFCdkROWlkwZmtiWGkzR1pWbTQxaXpCQ2JyK1pwNXBGTURCWDNI?=
- =?utf-8?B?MTRDaVJZdzJHWmlrbVdYZlA2a1QzNGFRVTE5Y2E3VFpydUt0UXRhVHJaVFhv?=
- =?utf-8?B?bHJyQ24zYndXbVB0VGNXQWxBbjlweFBpd2RzNnBVRXY4T3lGOG1vNWptTUd5?=
- =?utf-8?B?K1JGenordzRhUU9JcHlBcXUxMnVsSitaMSs2VGxCWWExQWdyQmVvZz09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d9be8c6e-7078-4ca8-5cbb-08dedc74da4e
-X-MS-Exchange-CrossTenant-AuthSource: LV3PR12MB9411.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jul 2026 22:12:37.1926 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: nQSYs8zWHkCg5ntZwqHqfKZNvNzRdRpd2qdmVRGV4E5HnOaFZCryQJD7KeJrINBqGvqpERs3bUfVw3rFXv3CQw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7881
-Received-SPF: permerror client-ip=40.107.201.71;
- envelope-from=alwilliamson@nvidia.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,127 +71,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 7 Jul 2026 23:05:33 +0200
-Micha=C5=82 Winiarski <michal.winiarski@intel.com> wrote:
+When a device handler (e.g. vmport) calls cpu_synchronize_state() during
+I/O port dispatch, it sets cpu->accel->dirty = true and may modify
+registers directly in env. The old PIO code ignored this: it
+unconditionally wrote the stale info->rax from the VM-exit intercept
+message back to the hypervisor and then cleared dirty, discarding any
+register changes made by the device.
 
-> On Fri, Jul 03, 2026 at 07:59:46AM -0600, Alex Williamson wrote:
-> >=20
-> >=20
-> > On Fri, Jul 3, 2026, at 5:13 AM, Satyanarayana K V P wrote: =20
-> > > Today, vfio-pci unconditionally stops the VM when any error event is
-> > > reported by device. This prevents guest-driven error handling and rec=
-overy
-> > > for platforms that support PCIe AER.
-> > >
-> > > This series adds an optional vfio-pci extension parameter,
-> > > "x-forward-aer=3Don", to forward AER errors to the guest instead of
-> > > forcing an immediate VM stop. If the endpoint supports AER, the error=
- is
-> > > forwarded directly; otherwise, checks the upstream PCIe bridge and
-> > > forwards the error there when supported.If neither device nor PCIe br=
-idge
-> > > supports AER, the VM is immediately stopped when the error is reporte=
-d. =20
-> >=20
-> > The error eventfd is signaled for err_detected in the host, this is
-> > the beginning of the host error handling and the point at which
-> > drivers should stop accessing the device until the resume callback.
-> >  Letting the VMM continue at this point does the opposite of that.
-> > Thanks,
-> >=20
-> > Alex =20
->=20
-> Hi,
->=20
-> Today - the default error handler used by VFIO is not implementing the
-> .resume() callback and just signals err_trigger and returns
-> PCI_ERS_RESULT_CAN_RECOVER as part of .error_detected().
-> Qemu registers a callback to be called upon err_trigger signal (using
-> one of the poll/select syscall variants), the callback calls
-> vm_stop(RUN_STATE_INTERNAL_ERROR) - this is a runstate that can't
-> continue, the VM is effectively killed (qemu needs to trigger VM reset
-> to recover).
+Bifurcate both handlers on cpu->accel->dirty:
 
-Yes, this is the extent of the implementation currently.
-=20
-> The AER forward was proposed as a relatively simple opt-in mechanism
-> to avoid hitting RUN_STATE_INTERNAL_ERROR and be able to handle
-> errors for SR-IOV VFs using VFIO. For uncorrectable errors with
-> SR-IOV, PF driver can be the entity that handles the device recovery.
-> The VF driver needs to stop using the device until it is recovered by
-> PF, and reinitialize any state that was lost as part of the recovery
-> action. Forwarding AER would allow the VM to move forward without
-> introducing any new uAPI.
+handle_pio_non_str:
+- dirty path: update env->eip directly. For reads (IN), merge the I/O
+  result into env->regs[R_EAX] (which may have been modified by the
+  device) rather than info->rax. For writes (OUT), leave RAX untouched.
+  Flush all registers via mshv_store_regs() and clear dirty.
+- non-dirty path: write RIP and RAX via set_x64_registers hypercall as
+  before.
 
-Interesting, nothing in the proposal suggested this was explicitly for
-SR-IOV VFs.
-=20
-> If we would want to build a generic error recovery mechanism, we would
-> need to duplicate more of the err_handler_t callbacks as VFIO uAPI.
->=20
-> If the recovery is handled by other entity running on the host (VFIO
-> variant? Or for SR-IOV, the PF driver), we could also go into a
-> different runstate (RUN_STATE_PAUSED? something that doesn't require
-> full VM reset) and add a VFIO uAPI that can propagate the .resume()
-> into userspace.
+handle_pio_str:
+- dirty path: update env->eip and the appropriate index register
+  (RSI for OUTS, RDI for INS) directly. Flush via mshv_store_regs()
+  and clear dirty.
+- non-dirty path: write the index register and RIP via
+  set_x64_registers. Drop the RAX assignment that was here before;
+  string I/O does not modify RAX, and set_x64_registers is hardcoded
+  to write only 2 registers so the third slot was silently ignored
+  anyway.
 
-And a .slot_reset() to actually restore state if PF is reset (we
-currently rely on that happening on .release()), and we'll also need to
-teardown things like interrupts (also currently reliant on release).
+Remove the unconditional "cpu->accel->dirty = false" at the end of both
+handlers. In the non-dirty fast path it was redundant (already false).
+In the dirty path it was actively harmful: it told the vcpu run loop
+that env was clean when it was not, losing the device's modifications.
 
-> If we would want the SW running inside the VM to handle the
-> recovery... it becomes more involved, and it requires a more
-> substantial solution that wasn't meant to be addressed here.
+Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+---
+ target/i386/mshv/mshv-cpu.c | 72 +++++++++++++++++++++++++------------
+ 1 file changed, 50 insertions(+), 22 deletions(-)
 
-Note that the current error eventfd is triggered on any uncorrected
-error, fatal or non-fatal.  How does the VM know which it is?  There
-are certainly hacks we can do to limp along a little further with the
-current limited implementation, but nothing that seems to actually get
-us closer to a general purpose, supportable feature.
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 8a59a0b40e..5e680351cd 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -1646,10 +1646,12 @@ static int handle_pio_non_str(CPUState *cpu,
+     uint32_t val, eax;
+     const uint32_t eax_mask =  0xffffffffu >> (32 - len * 8);
+     size_t insn_len;
+-    uint64_t rip, rax;
++    uint64_t rip;
+     uint32_t reg_names[2];
+     uint64_t reg_values[2];
+     uint16_t port = info->port_number;
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
+ 
+     if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
+         union {
+@@ -1680,21 +1682,36 @@ static int handle_pio_non_str(CPUState *cpu,
+ 
+     /* Advance RIP and update RAX */
+     rip = info->header.rip + insn_len;
+-    rax = info->rax;
+ 
+-    reg_names[0] = HV_X64_REGISTER_RIP;
+-    reg_values[0] = rip;
+-    reg_names[1] = HV_X64_REGISTER_RAX;
+-    reg_values[1] = rax;
++    if (cpu->vcpu_dirty) {
++        env->eip = rip;
++        if (access_type != HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
++            /*
++             * For reads, merge the I/O result into the current RAX.
++             * Use env->regs[R_EAX] as the base since a device handler
++             * (e.g. vmport) may have called cpu_synchronize_state()
++             * and modified registers.
++             */
++            eax = (((uint32_t)env->regs[R_EAX]) & ~eax_mask)
++                  | (val & eax_mask);
++            env->regs[R_EAX] = (uint64_t)eax;
++        }
++        /* Sync modified standard registers back and clear dirty. */
++        store_regs(cpu);
++        cpu->vcpu_dirty = false;
++    } else {
++        reg_names[0] = HV_X64_REGISTER_RIP;
++        reg_values[0] = rip;
++        reg_names[1] = HV_X64_REGISTER_RAX;
++        reg_values[1] = info->rax;
+ 
+-    ret = set_x64_registers(cpu, reg_names, reg_values);
+-    if (ret < 0) {
+-        error_report("Failed to set x64 registers");
+-        return -1;
++        ret = set_x64_registers(cpu, reg_names, reg_values);
++        if (ret < 0) {
++            error_report("Failed to set x64 registers");
++            return -1;
++        }
+     }
+ 
+-    cpu->vcpu_dirty = false;
+-
+     return 0;
+ }
+ 
+@@ -1810,6 +1827,7 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
+     bool repop = info->access_info.rep_prefix == 1;
+     size_t repeat = repop ? info->rcx : 1;
+     size_t insn_len = info->header.instruction_length;
++    uint64_t rip;
+     bool direction_flag;
+     uint32_t reg_names[3];
+     uint64_t reg_values[3];
+@@ -1839,18 +1857,28 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
+         reg_values[0] = info->rdi;
+     }
+ 
+-    reg_names[1] = HV_X64_REGISTER_RIP;
+-    reg_values[1] = info->header.rip + insn_len;
+-    reg_names[2] = HV_X64_REGISTER_RAX;
+-    reg_values[2] = info->rax;
++    rip = info->header.rip + insn_len;
+ 
+-    ret = set_x64_registers(cpu, reg_names, reg_values);
+-    if (ret < 0) {
+-        error_report("Failed to set RIP and RAX registers");
+-        return -1;
+-    }
++    if (cpu->vcpu_dirty) {
++        env->eip = rip;
++        if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
++            env->regs[R_ESI] = info->rsi;
++        } else {
++            env->regs[R_EDI] = info->rdi;
++        }
++        /* Sync modified standard registers back and clear dirty. */
++        store_regs(cpu);
++        cpu->vcpu_dirty = false;
++    } else {
++        reg_names[1] = HV_X64_REGISTER_RIP;
++        reg_values[1] = rip;
+ 
+-    cpu->vcpu_dirty = false;
++        ret = set_x64_registers(cpu, reg_names, reg_values);
++        if (ret < 0) {
++            error_report("Failed to set x64 registers");
++            return -1;
++        }
++    }
+ 
+     return 0;
+ }
+-- 
+2.53.0
 
-> So - we're letting the VMM continue but we're also informing it that
-> something went wrong with the device, so that the SW running inside
-> the VM can do its own action.
-> If it's a virtual function, the driver can potentially fully recover
-> after the host does its thing.
-> If it's a regular native function, it will probably need to go into
-> PCI_ERS_RESULT_DISCONNECT, which, for most usecases is still a better
-> scenario then having to reset the entire VM.
-
-We've been discussing this internally as well.  The VM can perform its
-own recovery, resetting and re-initializing devices from a VM
-perspective, but it can't "handle" the host recovery process.  In fact,
-I think at best it could pause and observe the host process, resuming
-and injecting an error after host recovery completes.
-
-> If we would want to absolutely make sure that the users are not able
-> to issue any IO across error recovery, we can probably unmap (or
-> zero-map) the BARs at VFIO driver level, similar to what's done
-> during reset.
-
-Yes, the shape I imagined would immediately block all access to the
-device on .err_detected(), zap BARs, fail access, and signal the
-existing error eventfd.  The VMM would need to handle the potential
-sigbus it might see before noticing the eventfd, determine whether it
-maps to the mmio space of a device and call a new device feature ioctl
-to test whether the device is in an error state (hand waving how QEMU
-gets from the trap handler to a point where the VM is paused and we can
-poll an ioctl).  Flag bits on the GET of that feature ioctl might
-indicate Fatal/Non-Fatal, InProgress, DeviceReset, and Failed.  Perhaps
-even a sequence number and/or SET on the feature ioctl might implement
-a W1C style acknowledgment - some mechanism by which the user can track
-whether they've missed an event.  QEMU could autonomously perform a
-surprise hot-unplug on Fatal or Failed, or otherwise pause the VM for
-InProgress to clear and inject an appropriate error when it does.
-APEI/GHES handling in the guest might be particularly useful to
-indicate to the VM whether a device reset has already been performed.
-In fact, the whole process doesn't seem too dissimilar to firmware
-first error handling that runs underneath the host OS on bare metal.
-
-If you have better ideas how to handle it properly, please share and
-correct.  I don't however see much use in nudging out a slightly
-improved use case with a narrowly focused, experimental flag that would
-never get picked up by tools like libvirt.  Thanks,
-
-Alex
 
