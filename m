@@ -4,136 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12D27C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C699C44501
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:18:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh5fQ-0005x0-TQ; Tue, 07 Jul 2026 09:16:54 -0400
+	id 1wh5gV-0003D0-0F; Tue, 07 Jul 2026 09:17:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5ex-0005TN-KQ
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:16:25 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1wh5gP-0002tq-N4; Tue, 07 Jul 2026 09:17:55 -0400
+Received: from mail-northeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c200::3] helo=DU2PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5eu-0000x7-Q8
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:16:22 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667C8cn93755355
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:16:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Q1kf1bQ6UevRdyXgo0b8Lt2RsNYvkZ5Sc/MeeDvIdg8=; b=FC3/wL0ft1AaZZMy
- yuHIEN6sagW8XSKisie5C9CD594ikr/vbHi9mltSSUgB9u9V09EOx41iduxtWcr9
- GcR0KMj8FsPxatMC9CfkuFtZhirqi8ax3Nb6FQH2eoUlfSErqAC+H/YkWzGccG9A
- 5OdcOxdDEysWD0pI4wTneOxMknnZW3FODfWcD7D3xdUudJVkre0yRpzrvAr43uCj
- EwTxAMFHDKlxiVnI9djAUXhMzS5PzMq3pRvyMB3kY9rK73AXkOh1h95wYVsoQ9d6
- su4xV1eOmolZN0A92ZLvv/r4wPeBg5LYXM8gyjLAW7oB3C7yORTVb1m/o7ux4Yg0
- MrqLrw==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8wep1972-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:16:19 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51c1a97644aso56536341cf.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:16:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783430178; x=1784034978; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Q1kf1bQ6UevRdyXgo0b8Lt2RsNYvkZ5Sc/MeeDvIdg8=;
- b=Z7EuxghyIuLVgBDJnekNtK9jWLByjXTuj2/KZZ9JldqT6T1wAIge2DJLoQKWhowGxI
- a7AGSnqG52H8ASlKuqVbWWb6ukgys2KrdzdeX4dfBNICL7B6r+BKu3Tb9sunDvDH5NoM
- HsoHOjKa5m34mnpoQIAv1ryyl5tPvt1JweKzUBLJyLtIqxIsBIcj2ZKfjc9WMkErVgRH
- oBAaSgLIJBoKq97euxDQJyshEZsltPA/NGOtX3H67xuak2mOYEBQKhJ2xcGijrsSGmJW
- RXRj47Oq1ScVfeSThADs0dhAhyjZRxGW/poLbf4FQiUOpyTT3x/m+nM1BThu4caJfQy2
- W/Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783430178; x=1784034978;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Q1kf1bQ6UevRdyXgo0b8Lt2RsNYvkZ5Sc/MeeDvIdg8=;
- b=MaRBmZoQ6QOU7Jqc95Y0kOG15fgFu0ZTUvxGAwMNT1VL841HJo2kvLNIH1UjbbPnG9
- hwtle63yMgDwJLIc/vHro3tPhnoZSeQmVHxkcX+I1dHk6rNt34psJAltT54fMXQ1RCvD
- V2JecpLaruKgVn8YNYsZHPTUWfdtzR1YovigI6ojc6hG7CwlGuIFTc7mTId7DY6+NHzm
- R/8kEhSc/rhfqwLpunpnEGVbsfBfqwCTYEhWovXYqpc5SymCOMfkrmltTExz7mx/UFJq
- JZBk9sn+05Jjd+9OFcNnAug4GynyZC68Xodv3G6AiR7WL6mD4MGbOUGWa2N+wvvi28cU
- Axcg==
-X-Gm-Message-State: AOJu0YyqgfDYDgUR/4WnVEvXW1xlfye5G6NaXJSZH6icVtaaSPe+t/Dl
- DcLSSBkwhTkxx640uml93NXXuw3FitMkWROe2uAeTYqkUhjWVjEwK87sMbAOHWi/2g+L/jkWHzN
- /CiFVhvPao6DOVWwwzFtDDokatPiV8dhheQpUtZidSAqFnMmHjh5AouyIr0rwsRdSaQ==
-X-Gm-Gg: AfdE7clwVk6McbMjaORBdFtBF8XJVl+09P+mEg6lhJibePKeZsQevM0RHwVKK6jIfVG
- bLKsLaYt2eTJk0GwhDyvbDT/Ndxjw4w0fSlXg8d20/ciyBZw9moATV6vYS5WLM2pBZPqGbsuSYV
- ahS4OulUDnFG4HEkDuulJehMB3e8zf9uZQNR/vzpd3Dip49/DFR+6oD/0ltFLgeZIwHmVTv2A7+
- LANiFkVGB5CQ20iq0VCF47zkVFQdHOVtbDAmZz4y3lUb2LayvNHCmjUd5wp42aDwcy/9gkOfsal
- DhhQyLqmTANgHNyDQyV6Pf30bzjSHlgmbHFSSrSGn+h5RrEcR3+I5WiaSh4j4AoSlrGr7Bk2fWI
- 5Iteycz76d2FlKMMs+oE8dQw6XQzi8x8YkqvJDald4qJGZsqGSHJqi+vvw2kdWqWp3V8B
-X-Received: by 2002:a05:622a:120c:b0:51a:8c9c:7f3e with SMTP id
- d75a77b69052e-51c74914fa7mr52117451cf.65.1783430178135; 
- Tue, 07 Jul 2026 06:16:18 -0700 (PDT)
-X-Received: by 2002:a05:622a:120c:b0:51a:8c9c:7f3e with SMTP id
- d75a77b69052e-51c74914fa7mr52117051cf.65.1783430177454; 
- Tue, 07 Jul 2026 06:16:17 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c15ada05d72sm136789566b.53.2026.07.07.06.16.16
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Jul 2026 06:16:16 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 32/32] Revert "aspeed/smc: snoop SPI transfers to fake dummy
- cycles"
-Date: Tue,  7 Jul 2026 15:12:22 +0200
-Message-ID: <20260707131223.51505-33-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260707131223.51505-1-philmd@oss.qualcomm.com>
-References: <20260707131223.51505-1-philmd@oss.qualcomm.com>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1wh5gN-00011w-Ay; Tue, 07 Jul 2026 09:17:53 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=TMHudKWp8Hrrx1m20omrReLsgzpV4P71Fe6j8X+Kn4cBR1S29+VRM8597bHFLf+IX50GRMUHoeB7Ep28MytlvNEBfS/GYRH3xIYa/Z1FtVfaNCEEDTWYQZ6mDEV5rjQH2w8Lkehet3y7HJXLfCtnwWPXfKou+uGP0dUEmty7ieism6nuI7ztIZ30azDeru63tnDZ1eiLxKBnen09B9r9a6o4PKARx/wwb5pnpA8NrTx7+minylj85JVyclauhDyhO8cI4EL3C8x8D+zSG/jAO3G7RH9+af12+J3KahW+ZHWYhZ8r+5fXS3NRMcpJNzEc917ZDX0xucU6XnzyRbTrAg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=s9lgVayDXh4iAAXnQh8bIx107SICTVus1qaOhP9VsCo=;
+ b=M5UKV7bvlQmjz+EyiMaPDTYDONRjJYz27ygnE5dVPqoTB5MvRs1rP0eSg0NzxktXqniHDhG0oeOY0UQnjiby/F94oTFZ0q2ZIEPALMp/MplCF4NoWVUWIjp5rByIhyzYDYP+oIjVyU5kZvY7Ve0Si2nE3egdWzvYsZI+XGECap6GsqmZoEridbFUkU5KVA6bpPVtiytOI8GBpay0dUe4Nojwiaj/Oz8csePnYTIcTY2mslfTUkpuMR/ukqqEX07ouyf4P1EXnzB7SFUd/8Np8KrO73MiY3A0HJDQX/35OveIHYEWdHXrQoj0LAr/IzA2OBp2UK1y1XcXpZLO7u8+nQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=s9lgVayDXh4iAAXnQh8bIx107SICTVus1qaOhP9VsCo=;
+ b=vUWkJp3hcGwOfkRo0RsfDIAFdAvzOXQEq8PHDRpfoMsyw/4eJTDZlIRjxH0pTqUy2jTlrpgQZ+HJur+k+1PHSRSfcoR8mu88We0dN7LvKZeViknCBuVC+lEguErXBOqtvCuNSxshZNnkhBnCj8LJ0iOqDrTKytr8G4HdsLN1h0DZXgL7c3GqPd6oLk7hTJCTxl5vaqT+7KQRY7Xn5CkmXjOmBAf5p75HVikwRl03scKg32tch/r9690gRYK4VKrQfy6daKRqNL0mRevBbqCLzoCpQkcJYGiU7M4OQoquMRLjf2DzIANKTU8hwFL5S6OKcAndQITog80vrtZuJQINtg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by DU5PR08MB10561.eurprd08.prod.outlook.com (2603:10a6:10:51f::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.11; Tue, 7 Jul
+ 2026 13:17:45 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0181.012; Tue, 7 Jul 2026
+ 13:17:45 +0000
+Message-ID: <44e4a0a0-66c4-433d-9bb6-4183e4f83378@virtuozzo.com>
+Date: Tue, 7 Jul 2026 15:17:44 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/9] hw/ide/ahci: cancel in-flight buffered reads on
+ command engine restart
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: jsnow@redhat.com, qemu-block@nongnu.org
+References: <20260619112158.304782-1-den@openvz.org>
+ <20260619112158.304782-2-den@openvz.org>
+ <ce8ebeb2-2509-48be-9ea1-afee614859a8@oss.qualcomm.com>
+ <70fa6511-acbf-4b9b-95d3-1670fdca80b5@virtuozzo.com>
+ <1f9dddf1-7d83-4365-996a-6cfd4a15ec46@oss.qualcomm.com>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <1f9dddf1-7d83-4365-996a-6cfd4a15ec46@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: Mopu1QOkr9jOzIEYmo6b3I2bg79_Rb_-
-X-Proofpoint-ORIG-GUID: Mopu1QOkr9jOzIEYmo6b3I2bg79_Rb_-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfXz+MfLtE8Izjt
- Hb/r0udY6xm2rK8dAeLy5PnqXfDgA/AK2VL8JSBuF4vFSWSKVBwM1Bz8rsQLxa5B71bHrabQyBM
- dohjVPCj5DfA51l95ENGee5bru8kao32YKzinvA6XJufjJOwLHoOpcqX5MWRqpRCDqidY+2jva3
- YWU6IrxCvHaxFrvzyw78PZZXpkD1wgb5eonkux+1jeFt7YgXlNpqGb51GNKHALb3HTda1zgRrdS
- iK8wxOStDJ2XwjwcbKUOyXPR5beh+49rEgcckHQqZnWyCSTfFPmYyMNyBGeJtKhqwVQbYe+SlXi
- MTGCDzJDnEKaZlYCLb6MC9kFVdpNtdEo53p8AuBOH+761KrNdvEjNdWVyfFwKKWC3JnBByZb+V9
- lF9zdrcs6AVe17rs/itge9dmsnbNw4FJzu3iHswZwn0DnAGe2whMdmWspdrh8DYN/1du8kR2T9Q
- 7gBrvbeRkyk7q9pMfJw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX1mlHrq6UtQHs
- vGmhURm4VO4i4JMQ4T9VXWUXdWmnB3n9lTWdHFyjnYifB+7p+M0B6jQGVLeICj/FqgoHMbe38tA
- 07slWBZLB1Gi+pR0PFWO2BhSjosWoyY=
-X-Authority-Analysis: v=2.4 cv=atSCzyZV c=1 sm=1 tr=0 ts=6a4cfc23 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=FRSEYCzRAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=aow-egSQAAAA:8
- a=T2d0spz66GM-GJdn4fkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22 a=H4N_Y-AU75W7NKDNhZlT:22 a=gFNbaldVC-z-bsjSTzMo:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-07_03,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 priorityscore=1501 spamscore=0
- suspectscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070129
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-ClientProxiedBy: VIXP296CA0032.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:36e::15) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|DU5PR08MB10561:EE_
+X-MS-Office365-Filtering-Correlation-Id: bf9769fb-6026-4be3-79a2-08dedc2a2261
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|376014|10070799003|366016|1800799024|56012099006|5023799004|4143699003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: WFaGO08hkuPzffU3UfQfjvmpX4+3k5AvFamKhiW8bB/m0BqFMlOoKGNt4gQfyhmtobPbeoq8LQs/ZBUu9CCQ7KWP4jjxJmGcUCHtDBqqqYTLwljR2nDrFFN4bLlTC2I9U7mVnZjayfsCqpyk5jQYRzWGDw/BER5HWaScPLYeOD6swK3ShsN6n1Fx9gghlyfqSl1H6IyYMU9Wie+ZAN9+/GM1QScFk8zaQd4Fj8RrVY8YX7c5+WtiXVuZssTzEXCezE8Q3B+GFlGubH1UEjR16OLMgUPb4x+aLwIAVA8ToFUR/clCAn1KSvDA7xbSQS8xzC2ofPOtv/hEHer7pZfc/jZrXt1M1ov4SNYWxF/Mw3dfZR5n6RdPWtN2YLHFWJBWAusYlVQvuOi0MREsvSuDah31zeZ55antL6koxzRxQe1ehj/iBz3EE7RW4AmLmds91f0ZnCeAx9+y3Gd5u2u7mS+l6pkpVu67ugOBeB0IKyfNd9Ku4NJjUiV8vXth7ngyG0BTqPZHbwaHNKJKSNTxlEJP79S2zJRvQEEIlATRpT/9ZOljP0k6biR+R6YJ5uHuyiPkvs0JXo1xMIo0XspVlnsIC1qiFlnkxNSoJeCKbFLJkT2HSMrbaWEo0LUAvDpShBsQD5i7Is2cdAli9BpWhIklRREDGhs0gj9t9qW3mXg=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(376014)(10070799003)(366016)(1800799024)(56012099006)(5023799004)(4143699003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aE1XWjJSaks1WVlJZkxBK2VRWTNid2hEWk5leEl1YXAxb2VHQlF4V2YzaGt2?=
+ =?utf-8?B?eEI5T0g1YUV4WjltdFNXMUZtLzFUcDZaSUhVam44Rk4vRzZvRlRJblJ0UWhF?=
+ =?utf-8?B?UUJKTDBJeUcyem1jdjVqOWY2Z2JJY2IwQkxpQ3dCUHdFSU1wMDF5cW9ISHN5?=
+ =?utf-8?B?SCtGbHAyUlc4amQrd200QWV0eHhoV2E2Tk01ZGxQUmViTDhBbVhrcEFiV1Js?=
+ =?utf-8?B?VFdXS1hCb0FkazdkSVVrL1JQOVJpNVNhaVFkQ0ZBdVZCT0RsZnhSc3ZzMnpK?=
+ =?utf-8?B?dWlOTUJYbW9HOExrMTNiVHBFMjlTV3FuVTFRMmlYVXNoN2M1WkxUbG4wdmxn?=
+ =?utf-8?B?MCs1RWhUcTVtaGs0RFhWSzF4R21VMVBUS0wxTDFCMDhMS01GRmxGNEdRTFBs?=
+ =?utf-8?B?SmFTa0xxZXQzU0lkc3RWODI4Uk5sanNCZ2F3eWlVN2toeWRPUWk4cTduT2JD?=
+ =?utf-8?B?RWMxMnFnNkcybmVBN0o4VW9EUENLNnkzNHBHYjRuLzR1eklBMFNqOUVNTkVF?=
+ =?utf-8?B?Q0hPWDhZWnBNZGZzMk1mbEt4ZzBjQTZXOE5MTCtSaW4yTHd4OGc5UjVTSGdF?=
+ =?utf-8?B?Y2ZPblpiZGFYYnN5ZDBoSUlFUDA1ZXVrMVRjVjN6dWgzbFM0SHVwZUtDQ1gy?=
+ =?utf-8?B?R0plTXFYNDJSZS84cFpITHhqK1ZuTXVQNk5Zc2FycnlmS2FsZ1BtSjhtS0R5?=
+ =?utf-8?B?eHVSMmF3T2FUZFovbW5aWFFUSW1mdEFuSnNQeHNRa2lJRU5uZE8vdnlMVVZn?=
+ =?utf-8?B?N0E1cFZZRkthbzg4NUFKQSt4YU5rTWdydm9WUjZ5QXkra3luZU51NkdDV1BC?=
+ =?utf-8?B?QVg0RWU1dXd3UWpCaUp4NnkvcFlqaTl5UUg1YjVOQlhaNzlYdlBYbHVNZERx?=
+ =?utf-8?B?OVJsTUlmQzBhekNTUWEwaU50blYrSVFGZS90WjRpU0h3T0VvYmsxRk9UMk1Z?=
+ =?utf-8?B?dW1BV2laSjRabzdpeXZZTk1zekdhNDdXRmFqOSs2dXpwbmQ3YnRUMTBSNVpk?=
+ =?utf-8?B?azlDTnY2NkxSTno5dWtBTXZMOGxFU3V0eDFEMzZlc2RqazhVVDVLVTNjcC9Y?=
+ =?utf-8?B?VmVhZWFKWEx3UldXMnc4TFl3S3gvUS8zRHoyamZUZENJamZNYzI4Q1FmU2FU?=
+ =?utf-8?B?V3hIOUp6ZXRPV2VYN3RidFN6VFcwWUZza0FDWlFsUlUxWkMrUGF5UWdvajJU?=
+ =?utf-8?B?MWNaZUZqRHdQb1N6L2VWZDZrUko2dUJNZzlQOVlGckhYWUdwbTlvYi9URTMw?=
+ =?utf-8?B?bkZOVmQvRmxJdGptK0ZHM2NMNW5KWW9ocWRkdFZWTlRrQmhaaUlGT21KSkFk?=
+ =?utf-8?B?N2k2SzNLNTdMakJPT0t0RkRuWXNOS3VkcGxDSmpWM0VvaUdqM25LeGxZZjk2?=
+ =?utf-8?B?ZDVCQ0poZ3dkQjN6SzQvek9ha0ZCcTN3SVJLNjF4VDNGQ1J6R2dKTkx5MjFv?=
+ =?utf-8?B?OFdvSDl4M25Dbm5MM1ZFL2ZOY0k0WXpsRk5YSitDdjlMbERHYXBSZ1NOWVJQ?=
+ =?utf-8?B?UTI1d0Y4Kzl0RWtXWjMydzNtK1kxcmhVSis0elgzcGVKMlNnaGhGNlppMmVW?=
+ =?utf-8?B?REdhTFRKTVROaVZ4VXlkcGx0M0FIODZHbkNRaEh3NmplLzJVSExtYlNTZk1m?=
+ =?utf-8?B?dHVLclhqeWRMZVJsN2tpNm01bk5lZXh4TktzOWpzY05NbDZYVENuMmhETzBp?=
+ =?utf-8?B?NnpTRlkycUxoc2UxUVJkVzhoa1hYRVNBWWpRcjFaYzdJQVV0bk5OK1EwQXdn?=
+ =?utf-8?B?V2Q4RnRINzYxSGE4VEVaTlFEYWExbmpoalhoZVNVWFFIU0hIVFJnREZSeXlU?=
+ =?utf-8?B?ZFhSYjlIWnpMNjJRU0NwUUVLeHphVkloRHE1bE1rbE5FZTlSTUF4S2dNbHh0?=
+ =?utf-8?B?TlpneWdSenJxdndrZDlwY2gwY2d3VThITzJtRWNDd2ZGRjBWQ2w4NHJLY1hj?=
+ =?utf-8?B?a3BzaXpOc1RkYWtDTGY2ajMyMTE3c3lZQld5ODJRZzRvOHZsdWttQXpCdFdB?=
+ =?utf-8?B?OFBTMGRuVzhjck1LdzVaQUFRd1FCWVJwQTRWTzVSZXFNOGoxU0Z6bG9QRk91?=
+ =?utf-8?B?bmtuZUI2YWg2TTBUbFBoUEk1ZU9qTTc0QW0rTlM2NzdwVjZUckVxN2podmVm?=
+ =?utf-8?B?RXdKRDUvYVpScmFtTXVsTXkwWWVkQ0NScHAvbWFPVlBlczZZVFlZU0tHZCtR?=
+ =?utf-8?B?Z1RtdkU1RDZoWjBQS3lMWEdvc3dtRkthVUdtNkZZZ2p0SmZxTE5KTGIxVi9q?=
+ =?utf-8?B?T2thR3k1Vlk4OVFMWm56UjVEdXNWeXlsRllrSURLTE44c1ZJN0tySGFUNWpF?=
+ =?utf-8?B?Yk9MOEh4U1JXQlZicHB0Z3UzTVpGOG1GQTFkSWVFTmFJZjduVk1vK2NTRFFm?=
+ =?utf-8?Q?dXe73JPf58AwMNrRPfvru7BiyEhYilJ0B8OUboVDoL7RH?=
+X-MS-Exchange-AntiSpam-MessageData-1: 2LVWkhFlYMwZaA==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bf9769fb-6026-4be3-79a2-08dedc2a2261
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jul 2026 13:17:45.7743 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3afpCLr9BJ/9g6VURfpolsgpIgzmdVMWUduYYQAPwtF+03O0GOntXTYmBOmvAI6gUGiTyaz5ZGGYKL4oR40ldg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU5PR08MB10561
+Received-SPF: pass client-ip=2a01:111:f403:c200::3;
+ envelope-from=den@virtuozzo.com;
+ helo=DU2PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,217 +156,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Meng <bin.meng@processmission.com>
+On 7/7/26 15:15, Philippe Mathieu-Daudé wrote:
+> Hi Denis,
+>
+> On 7/7/26 15:02, Denis V. Lunev wrote:
+>> On 7/6/26 09:21, Philippe Mathieu-Daudé wrote:
+>>> Hi Denis,
+>>>
+>>> On 19/6/26 13:21, Denis V. Lunev via qemu development wrote:
+>>>> ATAPI CD reads are issued through ide_buffered_readv()
+>>>> (cd_read_sector() and ide_atapi_cmd_read_dma_cb() in hw/ide/atapi.c).
+>>>> The PIO path discards the returned aiocb; the DMA path stores it in
+>>>> s->bus->dma->aiocb.
+>>>>
+>>>> A guest can stop and restart a port's command engine
+>>>> (PxCMD.ST 1 -> 0 -> 1) while such a read is still in flight. Stopping
+>>>> the engine unmaps the command list (ahci_unmap_clb_address()) and
+>>>> restarting it re-maps the list and clears AHCIDevice.cur_cmd to NULL,
+>>>> but nothing tears down the outstanding read. This path does not run
+>>>> ide_reset(), so the drive's transfer state is preserved and the read
+>>>> still completes. Its callbacks then dereference the stale or NULL
+>>>> cur_cmd in the AHCI transfer helpers:
+>>>>
+>>>>     PIO: cd_read_sector_cb() -> ide_atapi_cmd_reply_end() ->
+>>>>          ide_transfer_start_norecurse() -> ahci_pio_transfer()
+>>>>
+>>>>     DMA: ide_atapi_cmd_read_dma_cb() -> ahci_dma_rw_buf() ->
+>>>>          ahci_populate_sglist()
+>>>>
+>>>> Both crash with a NULL cur_cmd; the PIO variant has been seen in the
+>>>> field.
+>>>>
+>>>> Cancel the outstanding I/O when the command list is unmapped, reusing
+>>>> ide_cancel_dma_sync() as the ATAPI DEVICE RESET command does. It runs
+>>>> the completion callback with -ECANCELED (which tears down
+>>>> s->bus->dma->aiocb for the DMA case) and orphans the buffered request,
+>>>> so the eventual asynchronous completion is a no-op. Merely setting the
+>>>> orphaned flag is not enough: it would leave s->bus->dma->aiocb pointing
+>>>> at a freed aiocb that a later reset would cancel.
+>>>>
+>>>> Fixes: 1d8c11d63154 ("ide: add support for IDEBufferedRequest")
+>>>> Signed-off-by: Denis V. Lunev <den@openvz.org>
+>>>> ---
+>>>>    hw/ide/ahci.c | 3 +++
+>>>>    1 file changed, 3 insertions(+)
+>>>>
+>>>> diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+>>>> index c2b4432b94..8e3684cd3c 100644
+>>>> --- a/hw/ide/ahci.c
+>>>> +++ b/hw/ide/ahci.c
+>>>> @@ -740,6 +740,9 @@ static bool ahci_map_clb_address(AHCIDevice *ad)
+>>>>    
+>>>>    static void ahci_unmap_clb_address(AHCIDevice *ad)
+>>>>    {
+>>>> +    /* Cancel in-flight reads that would complete against a cleared cur_cmd. */
+>>>> +    ide_cancel_dma_sync(&ad->port.ifs[0]);
+>>> ide_bus_active_if(&ad->port.ifs) would be safer, otherwise the
+>>> patch looks reasonable.
+>> Anything else for the series?
+>>
+>> Should I respin or this change could be cooked at merge?
+> I took this patch via my hw-misc tree (using ide_bus_active_if) because
+> it I could understand it and it looked trivial enough to me; however I
+> don't have enough knowledge (don't feel confident at all) to look at the
+> rest, I'm sorry :|
+>
+> Regards,
+>
+> Phil.
+In that case you should also take next one - this is unit test
+for the fix.
 
-This reverts commit f95c4bffdc4c53b29f89762cab4adc5a43f95daf.
-
-The m25p80 model now accounts for fast-read dummy bytes in its
-command decoder. In ASPEED SMC model user mode, guest software
-already sends the complete byte stream, including any dummy
-bytes needed by the flash. Hence the model should just forward
-exactly the bytes supplied by the guest without the need of
-decoding guest-supplied flash op codes to inject extra dummy
-transfers.
-
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Message-ID: <20260707083431.219671-10-bin.meng@processmission.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- include/hw/ssi/aspeed_smc.h |   2 -
- hw/ssi/aspeed_smc.c         | 114 +-----------------------------------
- hw/ssi/trace-events         |   1 -
- 3 files changed, 2 insertions(+), 115 deletions(-)
-
-diff --git a/include/hw/ssi/aspeed_smc.h b/include/hw/ssi/aspeed_smc.h
-index 76831422c6f..a273365689e 100644
---- a/include/hw/ssi/aspeed_smc.h
-+++ b/include/hw/ssi/aspeed_smc.h
-@@ -80,8 +80,6 @@ struct AspeedSMCState {
- 
-     AspeedSMCFlash flashes[ASPEED_SMC_CS_MAX];
- 
--    uint8_t snoop_index;
--    uint8_t snoop_dummies;
-     bool unselect;
- };
- 
-diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-index 58e5087b570..c8cc6cfa56e 100644
---- a/hw/ssi/aspeed_smc.c
-+++ b/hw/ssi/aspeed_smc.c
-@@ -197,9 +197,6 @@
- /* Flash opcodes. */
- #define SPI_OP_READ       0x03    /* Read data bytes (low frequency) */
- 
--#define SNOOP_OFF         0xFF
--#define SNOOP_START       0x0
--
- /*
-  * Default segments mapping addresses and size for each peripheral per
-  * controller. These can be changed when board is initialized with the
-@@ -537,104 +534,6 @@ static MemTxResult aspeed_smc_flash_read(void *opaque, hwaddr addr,
-     return MEMTX_OK;
- }
- 
--/*
-- * TODO (clg@kaod.org): stolen from xilinx_spips.c. Should move to a
-- * common include header.
-- */
--typedef enum {
--    READ = 0x3,         READ_4 = 0x13,
--    FAST_READ = 0xb,    FAST_READ_4 = 0x0c,
--    DOR = 0x3b,         DOR_4 = 0x3c,
--    QOR = 0x6b,         QOR_4 = 0x6c,
--    DIOR = 0xbb,        DIOR_4 = 0xbc,
--    QIOR = 0xeb,        QIOR_4 = 0xec,
--
--    PP = 0x2,           PP_4 = 0x12,
--    DPP = 0xa2,
--    QPP = 0x32,         QPP_4 = 0x34,
--} FlashCMD;
--
--static int aspeed_smc_num_dummies(uint8_t command)
--{
--    switch (command) { /* check for dummies */
--    case READ: /* no dummy bytes/cycles */
--    case PP:
--    case DPP:
--    case QPP:
--    case READ_4:
--    case PP_4:
--    case QPP_4:
--        return 0;
--    case FAST_READ:
--    case DOR:
--    case QOR:
--    case DOR_4:
--    case QOR_4:
--        return 1;
--    case DIOR:
--    case FAST_READ_4:
--    case DIOR_4:
--        return 2;
--    case QIOR:
--    case QIOR_4:
--        return 4;
--    default:
--        return -1;
--    }
--}
--
--static bool aspeed_smc_do_snoop(AspeedSMCFlash *fl,  uint64_t data,
--                                unsigned size)
--{
--    AspeedSMCState *s = fl->controller;
--    uint8_t addr_width = aspeed_smc_flash_addr_width(fl);
--
--    trace_aspeed_smc_do_snoop(fl->cs, s->snoop_index, s->snoop_dummies,
--                              (uint8_t) data & 0xff);
--
--    if (s->snoop_index == SNOOP_OFF) {
--        return false; /* Do nothing */
--
--    } else if (s->snoop_index == SNOOP_START) {
--        uint8_t cmd = data & 0xff;
--        int ndummies = aspeed_smc_num_dummies(cmd);
--
--        /*
--         * No dummy cycles are expected with the current command. Turn
--         * off snooping and let the transfer proceed normally.
--         */
--        if (ndummies <= 0) {
--            s->snoop_index = SNOOP_OFF;
--            return false;
--        }
--
--        s->snoop_dummies = ndummies * 8;
--
--    } else if (s->snoop_index >= addr_width + 1) {
--
--        /* The SPI transfer has reached the dummy cycles sequence */
--        for (; s->snoop_dummies; s->snoop_dummies--) {
--            ssi_transfer(s->spi, s->regs[R_DUMMY_DATA] & 0xff);
--        }
--
--        /* If no more dummy cycles are expected, turn off snooping */
--        if (!s->snoop_dummies) {
--            s->snoop_index = SNOOP_OFF;
--        } else {
--            s->snoop_index += size;
--        }
--
--        /*
--         * Dummy cycles have been faked already. Ignore the current
--         * SPI transfer
--         */
--        return true;
--    }
--
--    s->snoop_index += size;
--    return false;
--}
--
- static MemTxResult aspeed_smc_flash_write(void *opaque, hwaddr addr,
-                                    uint64_t data, unsigned size, MemTxAttrs attrs)
- {
-@@ -652,10 +551,6 @@ static MemTxResult aspeed_smc_flash_write(void *opaque, hwaddr addr,
- 
-     switch (aspeed_smc_flash_mode(fl)) {
-     case CTRL_USERMODE:
--        if (aspeed_smc_do_snoop(fl, data, size)) {
--            break;
--        }
--
-         for (i = 0; i < size; i++) {
-             ssi_transfer(s->spi, (data >> (8 * i)) & 0xff);
-         }
-@@ -717,7 +612,6 @@ static void aspeed_smc_flash_update_ctrl(AspeedSMCFlash *fl, uint32_t value)
-     s->regs[s->r_ctrl0 + fl->cs] = value;
- 
-     if (unselect != s->unselect) {
--        s->snoop_index = unselect ? SNOOP_OFF : SNOOP_START;
-         aspeed_smc_flash_do_select(fl, unselect);
-     }
- }
-@@ -763,9 +657,6 @@ static void aspeed_smc_reset_hold(Object *obj, ResetType type)
-         aspeed_smc_flash_set_segment_region(s, i,
-                     asc->segment_to_reg(s, &asc->segments[i]));
-     }
--
--    s->snoop_index = SNOOP_OFF;
--    s->snoop_dummies = 0;
- }
- 
- static MemTxResult aspeed_smc_read(void *opaque, hwaddr addr, uint64_t *data,
-@@ -1293,11 +1184,10 @@ static void aspeed_smc_realize(DeviceState *dev, Error **errp)
- static const VMStateDescription vmstate_aspeed_smc = {
-     .name = "aspeed.smc",
-     .version_id = 3,
--    .minimum_version_id = 2,
-+    .minimum_version_id = 1,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32_ARRAY(regs, AspeedSMCState, ASPEED_SMC_R_MAX),
--        VMSTATE_UINT8(snoop_index, AspeedSMCState),
--        VMSTATE_UINT8(snoop_dummies, AspeedSMCState),
-+        VMSTATE_UNUSED_V(2, 2), /* was snoop_index/snoop_dummies */
-         VMSTATE_BOOL_V(unselect, AspeedSMCState, 3),
-         VMSTATE_END_OF_LIST()
-     }
-diff --git a/hw/ssi/trace-events b/hw/ssi/trace-events
-index 2f36cf96b8b..b9d86482974 100644
---- a/hw/ssi/trace-events
-+++ b/hw/ssi/trace-events
-@@ -2,7 +2,6 @@
- 
- aspeed_smc_flash_set_segment(int cs, uint64_t reg, uint64_t start, uint64_t end) "CS%d segreg=0x%"PRIx64" [ 0x%"PRIx64" - 0x%"PRIx64" ]"
- aspeed_smc_flash_read(int cs, uint64_t addr,  uint32_t size, uint64_t data, int mode) "CS%d @0x%" PRIx64 " size %u: 0x%" PRIx64" mode:%d"
--aspeed_smc_do_snoop(int cs, int index, int dummies, int data) "CS%d index:0x%x dummies:%d data:0x%x"
- aspeed_smc_flash_write(int cs, uint64_t addr,  uint32_t size, uint64_t data, int mode) "CS%d @0x%" PRIx64 " size %u: 0x%" PRIx64" mode:%d"
- aspeed_smc_read(uint64_t addr,  uint32_t size, uint64_t data) "@0x%" PRIx64 " size %u: 0x%" PRIx64
- aspeed_smc_dma_checksum(uint32_t addr, uint32_t data) "0x%08x: 0x%08x"
--- 
-2.53.0
-
+Den
 
