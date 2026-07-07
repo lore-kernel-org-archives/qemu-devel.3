@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EE5FC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 12:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D6BCC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 12:46:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh59r-0006nB-J8; Tue, 07 Jul 2026 08:44:15 -0400
+	id 1wh59r-0006n9-JX; Tue, 07 Jul 2026 08:44:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh59l-0006Xl-Bk
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:44:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh59p-0006eh-Ox
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:44:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh59j-0005Dv-4l
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:44:08 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh59n-0005FA-JN
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:44:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783428246;
+ s=mimecast20190719; t=1783428251;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y3b2T7WEIDgWP8GY/c6J+U2hpUT9aUDitswp4pmkeUU=;
- b=U0YlAd6SgUo6nh0lZpHLGwCYZp2URvAbrEEvCTtXUVtDSatQgxEVmKcM92iJ7yjNnwdMdp
- kR69ZaXZjEKckM2WlJzGN7wlaZHBYSahuGKa9FZdx+Aszc/5MfOp3nbOkvdu0TaiL7Tmle
- UZTeME4o2BxvRGeIpjT7sYq15sLJbX4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=/vgGS4zfIhnPOEzrFVbfajifZIrhK1AfwWDrqcb2kVg=;
+ b=KMz/v+LFtZqFhDOXaexk4YsAEsROVqxhpxhny7rThI56V43x2S+mo0Y8LRpj/AEiU8tKks
+ hlZwivPNfnMtZIMyUDKQFfJrBtmGUgYhiSZD7D8zrUwA9zj1Bq2eyRhvQwel6MjsWYoU/a
+ I/GnXCfKaM29TSoEV1ckDT6halhVvUg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-m8ljX0QUMviaXBeHKqlmow-1; Tue,
- 07 Jul 2026 08:44:03 -0400
-X-MC-Unique: m8ljX0QUMviaXBeHKqlmow-1
-X-Mimecast-MFC-AGG-ID: m8ljX0QUMviaXBeHKqlmow_1783428242
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-510-ziozEfoHOmyWBGTrqJKShg-1; Tue,
+ 07 Jul 2026 08:44:09 -0400
+X-MC-Unique: ziozEfoHOmyWBGTrqJKShg-1
+X-Mimecast-MFC-AGG-ID: ziozEfoHOmyWBGTrqJKShg_1783428248
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 405C61954185; Tue,  7 Jul 2026 12:44:02 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 73DAE1808970; Tue,  7 Jul 2026 12:44:08 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.33.253])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A87D436925; Tue,  7 Jul 2026 12:44:00 +0000 (UTC)
+ id AAB6A3691B; Tue,  7 Jul 2026 12:44:06 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 4/8] hw/arm/aspeed_ast27x0-fc: Fix hardware strap settings
-Date: Tue,  7 Jul 2026 14:43:45 +0200
-Message-ID: <20260707124349.662198-5-clg@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 7/8] hw/arm/aspeed_ast27x0: Add unimplemented Privilege
+ Controller MMIO regions for SSP/TSP
+Date: Tue,  7 Jul 2026 14:43:48 +0200
+Message-ID: <20260707124349.662198-8-clg@redhat.com>
 In-Reply-To: <20260707124349.662198-1-clg@redhat.com>
 References: <20260707124349.662198-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,37 +87,136 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-The hardware strap settings in the AST2700 FC machine model were incorrect.
+The AST2700 SSP/TSP firmware accesses Privilege Controller MMIO regions that
+are not yet implemented in QEMU.
 
-Update HW_STRAP1 and HW_STRAP2 to match the values observed from the
-real EVB dump. These values are also consistent with the current
-aspeed_ast27x0_evb.c machine setup.
+This change adds unimplemented MMIO devices for the Privilege Controller
+blocks and maps them to their corresponding physical addresses in the SSP/TSP
+address space. These stub devices allow QEMU to safely handle firmware
+accesses and prevent spurious exceptions, while accurately reflecting
+the hardware memory map.
+
+No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260706052701.1141740-2-jamin_lin@aspeedtech.com
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Link: https://lore.kernel.org/qemu-devel/20260706052701.1141740-5-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_ast27x0-fc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/hw/arm/aspeed_coprocessor.h |  1 +
+ include/hw/arm/aspeed_soc.h         |  2 ++
+ hw/arm/aspeed_ast27x0-ssp.c         | 12 ++++++++++++
+ hw/arm/aspeed_ast27x0-tsp.c         | 12 ++++++++++++
+ 4 files changed, 27 insertions(+)
 
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 5eb6680da99d..7d9fade68dab 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -50,8 +50,10 @@ struct Ast2700FCState {
+diff --git a/include/hw/arm/aspeed_coprocessor.h b/include/hw/arm/aspeed_coprocessor.h
+index 4a50f688ecdc..700cbfb4bb19 100644
+--- a/include/hw/arm/aspeed_coprocessor.h
++++ b/include/hw/arm/aspeed_coprocessor.h
+@@ -48,6 +48,7 @@ struct Aspeed27x0CoprocessorState {
+     AspeedINTCState intc[2];
+     UnimplementedDeviceState ipc[2];
+     UnimplementedDeviceState scuio;
++    UnimplementedDeviceState pric[2];
  
- #define AST2700FC_BMC_RAM_SIZE (2 * GiB)
+     ARMv7MState armv7m;
+ };
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 3aac144cd408..a0d2432620e0 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -295,6 +295,8 @@ enum {
+     ASPEED_DEV_IOEXP1_INTCIO,
+     ASPEED_DEV_IOEXP0_I3C,
+     ASPEED_DEV_IOEXP1_I3C,
++    ASPEED_DEV_PRIC0,
++    ASPEED_DEV_PRIC1,
+ };
  
--#define AST2700FC_HW_STRAP1 0x000000C0
--#define AST2700FC_HW_STRAP2 0x00000003
-+/* SCU HW Strap1 */
-+#define AST2700FC_HW_STRAP1 0x00000800
-+/* SCUIO HW Strap1 */
-+#define AST2700FC_HW_STRAP2 0x00000700
- #define AST2700FC_FMC_MODEL "w25q01jvq"
- #define AST2700FC_SPI_MODEL "w25q512jv"
+ const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types);
+diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
+index b3c4eb1915ed..e35c0c9a5a56 100644
+--- a/hw/arm/aspeed_ast27x0-ssp.c
++++ b/hw/arm/aspeed_ast27x0-ssp.c
+@@ -22,10 +22,12 @@ static const hwaddr aspeed_soc_ast27x0ssp_memmap[] = {
+     [ASPEED_DEV_SDRAM]     =  0x00000000,
+     [ASPEED_DEV_SRAM0]     =  0x70000000,
+     [ASPEED_DEV_INTC]      =  0x72100000,
++    [ASPEED_DEV_PRIC0]     =  0x72140000,
+     [ASPEED_DEV_SCU]       =  0x72C02000,
+     [ASPEED_DEV_TIMER1]    =  0x72C10000,
+     [ASPEED_DEV_UART4]     =  0x72C1A000,
+     [ASPEED_DEV_IPC0]      =  0x72C1C000,
++    [ASPEED_DEV_PRIC1]     =  0x74100000,
+     [ASPEED_DEV_SCUIO]     =  0x74C02000,
+     [ASPEED_DEV_INTCIO]    =  0x74C18000,
+     [ASPEED_DEV_UART0]     =  0x74C33000,
+@@ -141,6 +143,10 @@ static void aspeed_soc_ast27x0ssp_init(Object *obj)
+                             TYPE_UNIMPLEMENTED_DEVICE);
+     object_initialize_child(obj, "scuio", &a->scuio,
+                             TYPE_UNIMPLEMENTED_DEVICE);
++    object_initialize_child(obj, "pric0", &a->pric[0],
++                            TYPE_UNIMPLEMENTED_DEVICE);
++    object_initialize_child(obj, "pric1", &a->pric[1],
++                            TYPE_UNIMPLEMENTED_DEVICE);
+ }
  
+ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+@@ -255,6 +261,12 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->scuio),
+                                   "aspeed.scuio",
+                                   sc->memmap[ASPEED_DEV_SCUIO], 0x1000);
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[0]),
++                                  "aspeed.pric0",
++                                  sc->memmap[ASPEED_DEV_PRIC0], 0x1000);
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[1]),
++                                  "aspeed.pric1",
++                                  sc->memmap[ASPEED_DEV_PRIC1], 0x1000);
+ }
+ 
+ static void aspeed_soc_ast27x0ssp_class_init(ObjectClass *klass,
+diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
+index 6098d1aae32d..fdc279cbf654 100644
+--- a/hw/arm/aspeed_ast27x0-tsp.c
++++ b/hw/arm/aspeed_ast27x0-tsp.c
+@@ -22,10 +22,12 @@ static const hwaddr aspeed_soc_ast27x0tsp_memmap[] = {
+     [ASPEED_DEV_SDRAM]     =  0x00000000,
+     [ASPEED_DEV_SRAM0]     =  0x70000000,
+     [ASPEED_DEV_INTC]      =  0x72100000,
++    [ASPEED_DEV_PRIC0]     =  0x72140000,
+     [ASPEED_DEV_SCU]       =  0x72C02000,
+     [ASPEED_DEV_TIMER1]    =  0x72C10000,
+     [ASPEED_DEV_UART4]     =  0x72C1A000,
+     [ASPEED_DEV_IPC0]      =  0x72C1C000,
++    [ASPEED_DEV_PRIC1]     =  0x74100000,
+     [ASPEED_DEV_SCUIO]     =  0x74C02000,
+     [ASPEED_DEV_INTCIO]    =  0x74C18000,
+     [ASPEED_DEV_UART0]     =  0x74C33000,
+@@ -141,6 +143,10 @@ static void aspeed_soc_ast27x0tsp_init(Object *obj)
+                             TYPE_UNIMPLEMENTED_DEVICE);
+     object_initialize_child(obj, "scuio", &a->scuio,
+                             TYPE_UNIMPLEMENTED_DEVICE);
++    object_initialize_child(obj, "pric0", &a->pric[0],
++                            TYPE_UNIMPLEMENTED_DEVICE);
++    object_initialize_child(obj, "pric1", &a->pric[1],
++                            TYPE_UNIMPLEMENTED_DEVICE);
+ }
+ 
+ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+@@ -255,6 +261,12 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->scuio),
+                                   "aspeed.scuio",
+                                   sc->memmap[ASPEED_DEV_SCUIO], 0x1000);
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[0]),
++                                  "aspeed.pric0",
++                                  sc->memmap[ASPEED_DEV_PRIC0], 0x1000);
++    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[1]),
++                                  "aspeed.pric1",
++                                  sc->memmap[ASPEED_DEV_PRIC1], 0x1000);
+ }
+ 
+ static void aspeed_soc_ast27x0tsp_class_init(ObjectClass *klass,
 -- 
 2.54.0
 
