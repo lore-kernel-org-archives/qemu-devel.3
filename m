@@ -4,130 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9ED8C43602
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 18:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5B30C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 18:22:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whAN7-0007Ve-86; Tue, 07 Jul 2026 14:18:17 -0400
+	id 1whAOH-0008I7-A3; Tue, 07 Jul 2026 14:19:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whAMu-0006ue-Br
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 14:18:04 -0400
+ id 1whAMn-0006lE-4B
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 14:17:58 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whAMs-0006cQ-82
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 14:18:04 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1whAMl-0006ad-7a
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 14:17:56 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667FTGMY4059295
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 18:18:00 GMT
+ 667FTBli018008
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 18:17:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ZLpYZGBQM4c6BxYlWik9hnlxQknGdLKYWPVcWlRha3M=; b=Buv68Fpx9UGg4K5N
- NFWlPPe12aWhk6UV/kGX7JzSOUpMzTIBz7LK7V4qc8RrtfoL0keuHGV9kQJ7UUZN
- o6d3UIr2PO51d8rvJGuzf5MfcJ/S5QeLWeJmQkrrVH029MTijGlsS0bXHo8VboGE
- xnw7ilQqhManlkwytHyHe0vOr7cDMj9Eqei8y52RmeFJtaNAFoFQkkzKJP1zr7UI
- Oj4D2yWXjK02g3fgAIQiVzf0rWYyM4uLaXirwmHBAzjmEJF6CX8D4lBsFV88zZHp
- HeL5MCrbfCn5x3Dedw2W1lIPuSfkgf6nvy4Kww3s94VzSpGQ02/0yH4hPlUXLdy4
- guqM3w==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8sm8kgpg-1
+ 0oS8TlNqmKKtwABU+p3EM/iq+UpHviGBYQRG289kxeU=; b=WskoHASzqoaaPtKq
+ udKRne02Q93So8g2gUfhKNUgN8qN/SnT5xQaWA7a0vRcblHvBQ+urPG95W7f+Bck
+ aScdLighMDS6AxlCUzg1sU983zkAP7iFoEEFsYl5DwCQut9UyoS8JvoIj7biSsO7
+ 0ysOIO3oJ5BezOKgaT+qIlNaZ+jU2SHh0EhSSlVvHfKYbmfLgWzNILnR0LDcGKHr
+ Oc5IDf2OAEVHbn8dloynoHeyj9dn0KL3vBpJIMa/bS174+9yX37LDH1u3L/V/WUd
+ uMnASNmsF8w4m6yYFRRXHZ53UZV4Hl2V0w+jPYMV/9uU8Ji+Tx8fMy/tBMHTvMO0
+ CyDiVQ==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8wep2p4w-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 18:18:00 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c1a97644aso60843041cf.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 11:18:00 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 18:17:53 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51c1d137a68so104317451cf.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 11:17:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783448279; x=1784053079; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783448272; x=1784053072; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ZLpYZGBQM4c6BxYlWik9hnlxQknGdLKYWPVcWlRha3M=;
- b=H2URvW0JP+t4kkrmypKIomQ5+4Ns2aCew59D5ucu4KuAjLKGsVSPI7QTV7E3P7w5iU
- e5ZLj3We8YP3TVccYohXP/NEJPLD9NUqnREkXPGuiD8G1VzGUYsIsZ5TqPHViUD2awLe
- ERK/S5PYC0mu8XI1tgcZpoyM11/HnzW+9i2Et/hu+AmpaR9uepBUCRhSX26bFZ+X8/G9
- MGCvZHYVslmlN8RUJGzFIw4a47a+FbQtB651bImwGSkZ8peao9qk+NK42wGbt8NpxNAf
- nLFMp8AANxd606i89QELivrIMOfCL8zOEVQKtKViOkm65ZewB2o3BjDPmXM2PloQKpdI
- mDcQ==
+ bh=0oS8TlNqmKKtwABU+p3EM/iq+UpHviGBYQRG289kxeU=;
+ b=RT9F2XQY/iyYmR4EIZHR0DlqF+x8TouBDTGHupQMhR38VUvZoRtje0F8s62nMi13S+
+ 7hbQEh/wdSKPaMz53HjklqUHUQp1lVIFxvvBGJI+FCyIGj3IR/L6aEB08EyRcNnLsEMf
+ qku1bImIaRzVszLC1hXFfi/OoUwO/LBXosFveMwss3TaL6uqqVweHbin2k3QX97yZW0b
+ R9l8v0CYKqmVyBsh5gh1tV96B/XOSnadUjzmbValGH9HscLXoAGjlqx2yI6LBOB2B5RH
+ k22oPRaY6X80r8ji7lBVGoFXEQ5ah14gNEBPpDjZJrZ2UF3f97YR/wAaykwdkfTKOSsd
+ 5vmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783448279; x=1784053079;
+ d=1e100.net; s=20251104; t=1783448272; x=1784053072;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ZLpYZGBQM4c6BxYlWik9hnlxQknGdLKYWPVcWlRha3M=;
- b=p4XAqKK6jGRGAK6ZHNAxr+GIuMQ8ICoacmFe9cQWL4GHFXBugfWjMhZTtONaMqDGbg
- LpGQb9ymLPYcYJraHHnH32Gf856dHo/TDjUDEot+9dHJiQl6tSwAQecwCzWJOdbd41+M
- qshX9Q4f0YFXIxKREiWIIw/U0pHNXESyDDh2/29W/LNb2Tj9x3R2reyaTRvO3CsOmebC
- 18MsxoOnxkCqfrnlcvOp5j6YSZm3H2Zn5jiuNnrZrotph2ODwQ635pPDv8bgsUP2gxJ6
- oAx4CCDY9I8UaGpeHQ/8JudXuoFRL64uQDQ4GpjSmItZxxge4TYv2R4T9btbIEAUOF8S
- zkSQ==
-X-Gm-Message-State: AOJu0Yya5ncnsY9w6JQEUIFfAk54FDxyZ8Y6uLhkY5arB22GmQ9RaGWU
- df7NxFYJq12782SEivzmyiVzbwyk92h7h/vs5BWEmeLlqxioczyinW2tPVX4RaynYr5WiiWbrHi
- KTyl4/UJBQ8BKRgZczcPgQgNDAdkzngecYZlcSKqJjWV8yUYTrrQrafje4xjMtZFWJw==
-X-Gm-Gg: AfdE7clGFC5jOuidv6R0wzH2Tdeckjy42bZTs28D747WF5y09yrsvVp0KvMy1THukOG
- 3lkV4wxQyFTsgwwHi15d0lc0hvERxeWVIq2JF+VywGwNDVvo83+/tV6nnrii4I/LYoA/JAXwKrI
- lzkuz/+UhQp3qJYiaYVAmcA+dGW8bF3+b1GR1QHNfWTsiuu17s0eAkY+Cq600tRS/cHeTFF2mN4
- vVETqPb+1/gfdhUfqV8gj5ZsNfANUGqbKHCronoFKvVIelUv3rH4050+nYnyQPKbQwyeA8iu0Bk
- XiFoXoDDF7n8/NIwOSVdnvH5u9uRJrE1+HYB64SbD7XCzSCr7tyUsrhnAXxOLtSeD5v81ywDpat
- bibdq3/ciCmOfJxXAwttFSo+lTHIICs8q3Oo2yAtEmPzyhmYH9dMypjVrfa82nSUsBONU
-X-Received: by 2002:a05:622a:ce:b0:51b:8539:e8f7 with SMTP id
- d75a77b69052e-51c748bf8ccmr66431071cf.42.1783448279084; 
- Tue, 07 Jul 2026 11:17:59 -0700 (PDT)
-X-Received: by 2002:a05:622a:ce:b0:51b:8539:e8f7 with SMTP id
- d75a77b69052e-51c748bf8ccmr66430541cf.42.1783448278359; 
- Tue, 07 Jul 2026 11:17:58 -0700 (PDT)
+ bh=0oS8TlNqmKKtwABU+p3EM/iq+UpHviGBYQRG289kxeU=;
+ b=Y0PKrhhXgKlFrilf9NzSMu92TzXL3VUP2MsKFosljFcrCOp8hYoyT+iV6ICJhnz8Af
+ q5p7CThNUs55K+VS0pmzPHonyRt4nOhRfBuKRhsxsKNNhbwIDKp2aOB9Haxr4u9OPTL0
+ 4yaWpOJCPXCpUPDBtAFl8rCOqgjGTlATaIeP9O7sfQ3j7SjHrm9QD1L3sSA/LOcb59b9
+ lLm6VtS6qtmQtghvBqNbixvAs/ANwdUSd8XJuTYZ2/0a/4RbX3NzC7W4XzxEFGpndEia
+ sI1qQuAC3H0Fjd7NUhHB7qm3PzHhJeI4erd/mvB1qj2IiTlkul0T4JVFwMW55diYGfw3
+ m+vA==
+X-Gm-Message-State: AOJu0YyBetSYpPBY38sgM5aPiuSIgwfSX+L+F5CpmV3u7bsPF+yzF7F/
+ Sk6yrg0aYXvXtEHWEez14RmCeZCKvV2S3mHRvqoGTRyFH0foLNWXa+jnH0XOL3CplaGKY2mRt+o
+ YhjZaBdRoAf0uSYOJp5MliaiioSsl7P4l/rmYsnEu8IfT5kOgTe5I8gtsUHM6KjhMbA==
+X-Gm-Gg: AfdE7cn69IcdPXozjLdKFRU3deE6dub2F/C2kgaiKvmp0o3elAwsqiYHmfM2pi//QvF
+ wEnlpp0ntGtBQGBo23nwhpT2ixbctWm5MOydgsG6qcqAHTMDaYvXvmJVgwOa8rU3+Ml4PTuNlGG
+ iUuXpmrozhkQl/+buBu/q2GUATxGgIG9KXe7wWYXAQAc4tYxA0tvNad0QhSqijFnXQC6iiQPGe6
+ 7RGQt0eIPE2c8jgEDSwA7DFNTklA+RSQ5qwZ2iPgAWqcCcPNmPuP+e7yCC7LQd4B+g8fmGY3y0f
+ Sxh5kJq3+V/+KXGv8r4B05P/VmiEoPaTxat4URlumDH9P6h/dKqmHy3KME9ro4D3zGA7gkgS7kV
+ GzCdmtaEwq64qFcWr/uro9bWvrpWbu6I6ARnIWzK57srU/A7Jese7oqGvR5RCOhx4AgGW
+X-Received: by 2002:a05:622a:15cf:b0:51b:ec6c:766c with SMTP id
+ d75a77b69052e-51c747bb629mr72723151cf.12.1783448272075; 
+ Tue, 07 Jul 2026 11:17:52 -0700 (PDT)
+X-Received: by 2002:a05:622a:15cf:b0:51b:ec6c:766c with SMTP id
+ d75a77b69052e-51c747bb629mr72722841cf.12.1783448271497; 
+ Tue, 07 Jul 2026 11:17:51 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47a9de1e6ccsm36154564f8f.5.2026.07.07.11.17.57
+ ffacd0b85a97d-47aa0f2186bsm35237075f8f.36.2026.07.07.11.17.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Jul 2026 11:17:57 -0700 (PDT)
+ Tue, 07 Jul 2026 11:17:50 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/23] tests/tcg/mips: cover Octeon QMAC instructions
-Date: Tue,  7 Jul 2026 20:15:26 +0200
-Message-ID: <20260707181529.60191-22-philmd@oss.qualcomm.com>
+Subject: [PULL 20/23] target/mips: add Octeon CvmCount RDHWR support
+Date: Tue,  7 Jul 2026 20:15:25 +0200
+Message-ID: <20260707181529.60191-21-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260707181529.60191-1-philmd@oss.qualcomm.com>
 References: <20260707181529.60191-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDE3OSBTYWx0ZWRfX0DEY91mqq/Ds
- 0Ar4JMaHUcYEhLz8CSq468cwxxqQ4SxUfj7DUPTaijZEzVmhSNdFGoTVz79LCBbUXBu3vICFPR5
- YIGO6RPpo7r50oFgb0cVS1FaJRIjHyjj7XHO0Y7g5dK/d9tnVULjaLyYiofgnf4dY/04g+zLtwT
- eHhk8oZAL/xMF3clagfgOgwyuhDIMlFi+PbT2mH53Q73wU0lZ1lrI30voh5SjXrgAxhYsJBq0Vk
- +TchSbNz+f1Ku5OiQIGyKRb4beJKiZvMOhVC+vHVRfA8xkNK/kR2e3TuLaxxt6gUr10tD8InhOz
- RNXKLrL0VSys2zpuuW9waS7HBFNhdFOB66rDLTOmHFVdd0T4I81mAGi1vozEmJTkBALw8JPP0kr
- Nr1cMR/Wnk9uL5xah8zmuPKAeKA4BTKjcXaY7ZpIhtmwX0ul/zwjVg9PjK9HGO/LeEIAo87G2SB
- CfHeGNvYUc0LMBbt2kw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDE3OSBTYWx0ZWRfXzU4DcBZ98TtV
- edfF2zSuiNVGOfbzUhZSMaX4fyUrAMWYewdkAtjQeJ/SpDPZKzSBueZHn45+jR9XRYpiJC7dti2
- u0TsYL00IDcZO1+QmYyB9b3R/TYH6fA=
-X-Proofpoint-GUID: 5tIGlyK9DtXFy2yLpF5sxNVg6v9awF9n
-X-Authority-Analysis: v=2.4 cv=UvdT8ewB c=1 sm=1 tr=0 ts=6a4d42d8 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-GUID: MkV2UoxO2jdBPZwq-Nq2gv4VOrCiV5u7
+X-Proofpoint-ORIG-GUID: MkV2UoxO2jdBPZwq-Nq2gv4VOrCiV5u7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDE4MCBTYWx0ZWRfXxNsWC9i6oopV
+ 6r4Fk+akgoma47IR/JyJ0ANbyLgpl4pn2sBEpFneYb00ggRhr/z5MkfHYYK2z6qRVXF14OxIHV2
+ O2UekpaeaOzx79Pgezr2feVetmG9wQyycOIQQLLT0XGJmoNXqPpWN/AJ2SIdJ8rvQPso/DnM/bc
+ L41rNU8HNcpnHnCItQ9iPHAOfX0xNg3oyadMIGZZxXnqfnY8jsl5IR+xFaEaYOE26FSJ/qFPRhl
+ 8Q9LtKRYHpJhdtUJHEBMiQi+KHSAYmoIFFNdmpywGFnxBm+bVQ/87cu54Nq4s6Vh1F3vUpAB9jZ
+ 4L3MJcZ3Ba4ni8PedcNV9ysSHXRzoxopRzOzzRnbG14A0zMWI8t5aGTxHCzIQH9Sqo+zjwwEMXZ
+ 7x4fhU6qJDGSXdpxa8MoH3lklNyzX1TPDxLKo9rSOHY7S1vEBwm2P3hBQ9LGXLkBaB2AD+bRi2M
+ T231dbQr3EOyB8icx3A==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDE4MCBTYWx0ZWRfX00pCwxfJBac+
+ dRFuSyKhVvX8MZFJhj8XQ0aCvkGu+2Q7h1G4bvESqxw60Z/9ItfsYHon+/HR1RsNP1fkUDYRKXQ
+ 2RNls/aU/TZ877XyljJYQVkGhF9aAQI=
+X-Authority-Analysis: v=2.4 cv=atSCzyZV c=1 sm=1 tr=0 ts=6a4d42d1 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=8cCW5OL_3pmOQgKCisAA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=_IbzaBZH6cVti85KOtYA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
  a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: 5tIGlyK9DtXFy2yLpF5sxNVg6v9awF9n
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_04,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 impostorscore=0 adultscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607070179
+ malwarescore=0 phishscore=0 clxscore=1015 priorityscore=1501 spamscore=0
+ suspectscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070180
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -154,78 +153,145 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: James Hilliard <james.hilliard1@gmail.com>
 
-Add smoke coverage for Octeon QMAC and QMACS fixed-point accumulator
-instruction paths.
+Octeon exposes CvmCount through RDHWR register 31. Add the Octeon-only
+decode path, enable the corresponding HWREna bit for linux-user, and use
+an unsigned mask when checking HWREna so bit 31 is handled safely.
 
-The coverage exercises normal accumulation, saturating accumulation, and
-the sticky saturation flag.
+For user-mode emulation, return host ticks as a monotonic counter source
+suitable for existing Octeon userspace code. In system mode, fall back to
+the existing CP0 Count value.
 
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260608-mips-octeon-missing-insns-v2-v16-21-daef7a0d8b04@gmail.com>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Message-ID: <20260608-mips-octeon-missing-insns-v2-v16-20-daef7a0d8b04@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- tests/tcg/mips/user/isa/octeon/octeon-insns.c | 40 +++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ target/mips/helper.h                          |  1 +
+ target/mips/cpu.c                             |  1 +
+ target/mips/tcg/op_helper.c                   | 13 ++++++++++++-
+ target/mips/tcg/translate.c                   | 11 +++++++++++
+ tests/tcg/mips/user/isa/octeon/octeon-insns.c | 17 +++++++++++++++++
+ 5 files changed, 42 insertions(+), 1 deletion(-)
 
+diff --git a/target/mips/helper.h b/target/mips/helper.h
+index 141350e80ad..786117813ae 100644
+--- a/target/mips/helper.h
++++ b/target/mips/helper.h
+@@ -255,6 +255,7 @@ DEF_HELPER_1(rdhwr_ccres, tl, env)
+ DEF_HELPER_1(rdhwr_performance, tl, env)
+ DEF_HELPER_1(rdhwr_xnp, tl, env)
+ DEF_HELPER_1(rdhwr_chord, tl, env)
++DEF_HELPER_1(rdhwr_cvmcount, tl, env)
+ DEF_HELPER_2(pmon, void, env, int)
+ DEF_HELPER_1(wait, void, env)
+ 
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index b223b767c9c..d72044aef61 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -320,6 +320,7 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
+     env->CP0_HWREna |= 0x0000000F;
+     if (env->insn_flags & INSN_OCTEON) {
+         env->CP0_HWREna |= 0x40000000u;
++        env->CP0_HWREna |= 0x80000000u;
+     }
+     if (env->CP0_Config1 & (1 << CP0C1_FP)) {
+         env->CP0_Status |= (1 << CP0St_CU1);
+diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
+index 3e586e3049e..df1b5c37347 100644
+--- a/target/mips/tcg/op_helper.c
++++ b/target/mips/tcg/op_helper.c
+@@ -25,6 +25,7 @@
+ #include "exec/memop.h"
+ #include "fpu_helper.h"
+ #include "qemu/crc32c.h"
++#include "qemu/timer.h"
+ #include <zlib.h>
+ 
+ static inline target_ulong bitswap(target_ulong v)
+@@ -209,7 +210,7 @@ target_ulong helper_yield(CPUMIPSState *env, target_ulong arg)
+ 
+ static inline void check_hwrena(CPUMIPSState *env, int reg, uintptr_t pc)
+ {
+-    if ((env->hflags & MIPS_HFLAG_CP0) || (env->CP0_HWREna & (1 << reg))) {
++    if ((env->hflags & MIPS_HFLAG_CP0) || (env->CP0_HWREna & (1u << reg))) {
+         return;
+     }
+     do_raise_exception(env, EXCP_RI, pc);
+@@ -261,6 +262,16 @@ target_ulong helper_rdhwr_chord(CPUMIPSState *env)
+     return env->octeon_crypto.chord;
+ }
+ 
++target_ulong helper_rdhwr_cvmcount(CPUMIPSState *env)
++{
++    check_hwrena(env, 31, GETPC());
++#ifdef CONFIG_USER_ONLY
++    return cpu_get_host_ticks();
++#else
++    return (uint32_t)cpu_mips_get_count(env);
++#endif
++}
++
+ void helper_pmon(CPUMIPSState *env, int function)
+ {
+     function /= 2;
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index 1f449328825..e3467d15251 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -10933,6 +10933,17 @@ void gen_rdhwr(DisasContext *ctx, int rt, int rd, int sel)
+         gen_helper_rdhwr_chord(t0, tcg_env);
+         gen_store_gpr(t0, rt);
+         break;
++    case 31:
++        if (!(ctx->insn_flags & INSN_OCTEON)) {
++            gen_reserved_instruction(ctx);
++            break;
++        }
++        translator_io_start(&ctx->base);
++        gen_helper_rdhwr_cvmcount(t0, tcg_env);
++        gen_store_gpr(t0, rt);
++        gen_save_pc(ctx->base.pc_next + 4);
++        ctx->base.is_jmp = DISAS_EXIT;
++        break;
+     default:            /* Invalid */
+         MIPS_INVAL("rdhwr");
+         gen_reserved_instruction(ctx);
 diff --git a/tests/tcg/mips/user/isa/octeon/octeon-insns.c b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-index 6480c8532a1..6fffc820103 100644
+index f3c52d7829e..6480c8532a1 100644
 --- a/tests/tcg/mips/user/isa/octeon/octeon-insns.c
 +++ b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-@@ -129,6 +129,43 @@ static uint64_t octeon_vmm0(uint64_t mpl0, uint64_t p0,
+@@ -330,6 +330,22 @@ static uint64_t octeon_cop2_gfm_mul_reflect_readback(uint64_t value)
      return rd;
  }
  
-+static uint64_t octeon_qmac_lo(uint64_t rs, uint64_t rt, uint64_t lo)
++static uint64_t octeon_rdhwr31_non_decreasing(void)
 +{
-+    uint64_t rd;
++    uint64_t first, second;
 +
 +    asm volatile(
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        "mtlo %[lo]\n\t"
-+        "mthi $0\n\t"
-+        ".word 0x710904d2\n\t" /* qmac.03 $8, $9 */
-+        "mflo %[rd]\n\t"
-+        : [rd] "=r" (rd)
-+        : [rs] "r" (rs), [rt] "r" (rt), [lo] "r" (lo)
++        ".word 0x7c08f83b\n\t" /* rdhwr $8, $31 */
++        ".word 0x7c09f83b\n\t" /* rdhwr $9, $31 */
++        "move %[first], $8\n\t"
++        "move %[second], $9\n\t"
++        : [first] "=r" (first), [second] "=r" (second)
++        :
 +        : "$8", "$9");
 +
-+    return rd;
++    return second >= first;
 +}
 +
-+static uint64_t octeon_qmacs_state(uint64_t rs, uint64_t rt, uint64_t lo)
-+{
-+    uint64_t hi, rd;
-+
-+    asm volatile(
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        "mtlo %[lo]\n\t"
-+        "mthi $0\n\t"
-+        ".word 0x71090012\n\t" /* qmacs.00 $8, $9 */
-+        "mfhi %[hi]\n\t"
-+        "mflo %[rd]\n\t"
-+        : [hi] "=r" (hi), [rd] "=r" (rd)
-+        : [rs] "r" (rs), [rt] "r" (rt), [lo] "r" (lo)
-+        : "$8", "$9");
-+
-+    return ((hi & 1) << 32) | (rd & 0xffffffff);
-+}
-+
- static uint64_t octeon_vmm0_zeroes_mpl1(void)
+ int main(void)
  {
-     uint64_t rd;
-@@ -355,6 +392,9 @@ int main(void)
-     assert(octeon_seq(0xabc, 0xdef) == 0);
-     assert(octeon_sne(0xabc, 0xabc) == 0);
-     assert(octeon_sne(0xabc, 0xdef) == 1);
-+    assert(octeon_qmac_lo(0x0003000000000000ULL, 2, 1) == 13);
-+    assert(octeon_qmacs_state(1, 1, 0x7ffffffe) == 0x17fffffffULL);
-+    assert(octeon_qmacs_state(0x8000, 0x8000, 0) == 0x17fffffffULL);
-     assert(octeon_vmulu(5, 7, 11) == 46);
-     assert(octeon_vmm0(5, 13, 7, 11) == 59);
-     assert(octeon_vmm0_zeroes_mpl1() == 0);
+     assert(octeon_baddu(0x123, 0x0f0) == 0x13);
+@@ -358,6 +374,7 @@ int main(void)
+                0x0123456789abcdefULL) == 0xf7b3d591e6a2c480ULL);
+     assert(octeon_cop2_gfm_mul_reflect_readback(
+                0xfedcba9876543210ULL) == 0x084c2a6e195d3b7fULL);
++    assert(octeon_rdhwr31_non_decreasing());
+ 
+     return 0;
+ }
 -- 
 2.53.0
 
