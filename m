@@ -4,100 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2906FC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 09:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77A24C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 09:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh2NG-0000HV-86; Tue, 07 Jul 2026 05:45:54 -0400
+	id 1wh2Ro-00011T-WC; Tue, 07 Jul 2026 05:50:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wh2NE-0000H8-On
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 05:45:52 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wh2ND-0001pn-6V
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 05:45:52 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-698e5859a3cso967507a12.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 02:45:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783417549; cv=none;
- d=google.com; s=arc-20260327;
- b=WwDMmEP99tuIpW1YTMl9QzjowpvygAeg1ARd589ugCbQ4PDn7Hsm0xiSGz/m0H2iEo
- /NIlyQn6IZn1ktdwlJfQJZuSwUcA04VfHWecyJM9tqPjqGq0V7C1WoabcohDVJUVO+27
- 2SoWo7jV4DBdZUCXBmX69xDxPeGehHkVa2BI1oWb4vunGtGXfEgX1RxSlYAfvgfThcgP
- mIhXqPGmdFt22FcH6lJRXWq12x3USOPUmyBJh4AxXY7b6k+V/PqI7TApMxbd2FMQrokt
- 33x47C3FdfgmkKaiy3YpbM8ZSllHqYtKhhph7e04k3WOHkSWWhjzD1hEeUlLjHDhDKg4
- SVfw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=rYntU0dy4niKq7cyGjdJYtPd9ZiahQMZwLW2R3JNlgY=;
- fh=Lg6DYHnKMmHCVFaM97zdbaaapNtyHCw5bqWUTFlcFYc=;
- b=mcaR+rQWWZyOpyQRuZDM63uP+VIleBDmFplbFUOPLN92S4qikYD6NAnvy0KSNuniYJ
- ewAImkhi/8im95JYMAocLoxvIS7nM8lkR2n0ug7rdF/T7S0qUB7N00qFbIBFBubXHR42
- /qGOxbW0gL5CAVDA+dgSjjOzxUy38MZKLMJ/gXRhyC2caTDqDndp4hqwwtRxN6gw5NcD
- wQWHGjUK233nUUxCTVkOiAo+LEnomIguIj75TGgVVApVJRaP6tHhXIWZTe4DOFR+WCGy
- 5mdLfgp2usYzyw43KDOAxg9MsN7Y7ZcmdtgMG6mBVAUMhNshX7z4A1DQdFah0GnLYrqq
- Q51g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wh2Rn-000110-2K
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 05:50:35 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wh2Rk-0003EW-Hf
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 05:50:34 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6678E4Si3004578
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 09:50:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ nZj9VXEnWTmffYur+Fuun9fDxEdbNBQtuFbuYXkO0is=; b=SAUdudbphcJTOcle
+ VH1kI0EXYwRZ1N/eORteUnpOv8ERerKTqr7b87fnQOT4Epkl73zjPyt7t3Pugbpq
+ eCKSVZakhVOCBRzGsqH+4MlWVQLf0zIyDhnrks/vUMCnwa3rtN19BDh1S+5wL10h
+ 2B9q3+2pzcemgIhG7zILksb8chP3YbgS5qgh3gPvLdou9NfwncyDJru0Psa+3FJ+
+ xdKxy7UtSHpxRuKc76Kay0ogcPbA7TZhul0NQDPL84GRSblv+hfz6TmV7nVe60Va
+ OVcE3EUv88yyK1hAE1RG02oHROToUidE62W43Zi60jzsnBkgCJSY9BzKPP5CQ36u
+ CKtj6w==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8su71asb-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 09:50:29 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-51c1ada6c43so57529431cf.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 02:50:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783417549; x=1784022349; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rYntU0dy4niKq7cyGjdJYtPd9ZiahQMZwLW2R3JNlgY=;
- b=IZqXjRmiOIipuknNgfI0nOWxXAUyi4F35/GwlP310x8b/5FBHqRBKYBephrhIY2cSU
- EKV23h+pcAbXG+zc+msuZZLEIVjdd9ZmvugKcpCr27SZsman1M4XDOuT4fDkGzwOAile
- +asQjYOT/ElxM1KL4UP+Ah4LJLCv4a2L3OTrResr/LdLS49/SDMnCVnMfavgqmr0Ss1b
- fEUU5/vMuS6j/I+jo5g1UoGOEqFmshZaYzL2WUIgjhX9SKyx/UutLVFOZ6LtZmTWPmVF
- kljbt96bGSf/H224ADKzwuFTOo8OfPKFZIVq7AYOMMBC9zYCp4OH+w8ex2yRXKsZU8hc
- VriQ==
+ d=oss.qualcomm.com; s=google; t=1783417829; x=1784022629; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nZj9VXEnWTmffYur+Fuun9fDxEdbNBQtuFbuYXkO0is=;
+ b=LfENPea/2hqdv5f5QvH5lTdXTLTFzKwX3tHOXJTOrjV6RuJsFBfz8Tyzqkeuw3vBRm
+ LpC+0HpRT98Lvn09YsPzsBh7MZ/aLmD7gcBpC8JNEDKlH2f/gmIAgMHve5cndJBmgRpz
+ AnI50HU4pGC1vLbpwKskT96I/kDl9oSW4eUyqT2iR1dN+naiEJbJ1uga1q3fQv8DLeKr
+ 9D+tSSSlJWxRDmRIi7pni3tpTLZbl+7YsoPyZhx35XMX7Y8CjOBiPuusaIXEVEISAfHD
+ 2pOdx+SRKMU3AQ6EL3XujzL97jM8f9cqLHV1Dsyrv4KrSB+91kFvBuhRPZAW50F+WQDU
+ RbDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783417549; x=1784022349;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=rYntU0dy4niKq7cyGjdJYtPd9ZiahQMZwLW2R3JNlgY=;
- b=W3Juf3unT6X/eS1vWnLuMISogBQuylo9IvcWMhiAlIEpndTaLiNICGtpeK+1M9XYA1
- lkpo4jvEBmIs1jbsqTeGC2zEcaL8QK4JiiR9B8obND9rHToJVMulC+KM6g3oJep7MmRE
- cHc8h9x9gGfvxzwCUZRWw9obeYJ4onkdzpZFa4cEAI+VO8/cBimsbujYj+tn7LmoE5zK
- 7hKNMs8L+so+eEQdjGBEqad3GEDOMuH8jSisvHse5aq7bK778vvXKmFZ92OLErkGWp+R
- LuqzLyeqWp/RxHANSNbx+luwQQTroSlN3Gqo3v5JFOcMCvZOVv53bEpbcie9TrOFu9R/
- 4WeQ==
-X-Gm-Message-State: AOJu0YwAoBvMCZhpBx/zIurIUBUqoZTi5UuXvw1nzH98+rB+CXEAElve
- 7DaXaoDZpbQB+pq7Hv40pgOBAVSK2+yuHh+7nAkwHGVSapUmpN23tqVzRdWo/64Mdcremk+MnuF
- wWq0yumO2ba/0/R/9/v4yr9gRXvPFfrs=
-X-Gm-Gg: AfdE7ckMEBss2JDmEczL7tlzoeV246EBBusnmLBD+grzvN/RJmoU3L46+DYY/pp5Raw
- WdooqqL0V8FLiod6UHtrnLVCW39FgyQTfZoePXKQ/2B0zJs0vsX+RaKklGuTT9biSDgWYi8HNZU
- 93egSnpaUOdJLhKY5YZJsBJ0Xo/5HlNY6mppC3Foh/21eKeIJyH7aUo6RnOn8hJlS65ouP4DKgc
- bfHVoQkdE5AWXqlnKDUpWvI408k10pNxTTmT2V2Z5Mc9UBLc5B4XKKpdm2hxrUzq3ixTmgm
-X-Received: by 2002:a05:6402:234c:b0:698:485d:14d7 with SMTP id
- 4fb4d7f45d1cf-69a910ac7f7mr1057354a12.8.1783417548928; Tue, 07 Jul 2026
- 02:45:48 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783417829; x=1784022629;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nZj9VXEnWTmffYur+Fuun9fDxEdbNBQtuFbuYXkO0is=;
+ b=r8dKMsAsyaDhio/4e4k6EivazlUu7dK4RSioZx09zNhXcK52hSLDONBuhvAw7zsf1v
+ 3thJUzqb435+wpUdQCkJMzhX4qkZKnTFQRuaTaHBlii3tsvC1aPBfDPfjlBEUUhrvkxl
+ D1iEsqqT0dtrs+Mwc/iLFNtOENR7TIbQnjMJUI1XCoM6btxIqwKWsnPE9s2/blLF29nS
+ Nmsh9BTZsBGORBUl3LGmKrolCoWUE/1KuTQb3Ugxb2zmOsTclkJJQC+yDU8hxWRFUQmy
+ +U/tu6R9yl6mZHgYmNHG18197hkw8a4Qm8Z2mPtgFvBTcwSnZ6BEak28YJMi6ymdzT7E
+ VFWQ==
+X-Gm-Message-State: AOJu0Yy5jY1Hsfbl7TkEhpfxpjRwTDtaro7fI7MlyNtGiF0L4F3/iC8I
+ CAzGrk7kW8jKcGF5IB+Otnj0bHmDuwSBkGZuLLVyAkdq3wfQZP6DzdelBOrhfE9d40br1tKmPVK
+ 23sZBsuxcAgQdZuo4xf4+F/Z6ZavCfWIVftsfKyGwkTOhjjIrkhOnCqGf4BMNgnFIlw==
+X-Gm-Gg: AfdE7cmf1UI4aQnUQedCll79XLyYxJAgyeuz0Rsb2IjJhI96O9C0SOwuu4ZlYuOzU9e
+ W/zvzT3M1nsjGPkMBs3ECG/dPqFif3fJcRuOSR2cnN2AbYD7YekCWWcmxDQdEeHuDE1a8Fiqri0
+ I21CfQQN7wZXYATHQDvWcRL4FZ3PHMUbTtYolxUlNORfBisf3Nda2NYblWk0Zf1Ox7AsFcBeAbg
+ /gGaSMilE6RpMkgbSZHeRiVG8Nr+xx+uAoE9zpDkZA3ntFLpG/lVoK9kO5Nsmqv7++hrfc3DQNB
+ VGu5xKEJXE9RpIPq4zoIns3qvNkhsBT9LqUprZ9QP4rX1eeBkXoGBJdvTgIbHgEX4X3JdoPS9Ju
+ 6sK43d16RCN6xYNOgjHHKJtFtH9MZ3VgFi5ZxY0GFcuNaY6qvA1PjBDAg7UQN4g==
+X-Received: by 2002:a05:622a:cb:b0:51c:7b12:5fcf with SMTP id
+ d75a77b69052e-51c7b126511mr17750821cf.75.1783417828737; 
+ Tue, 07 Jul 2026 02:50:28 -0700 (PDT)
+X-Received: by 2002:a05:622a:cb:b0:51c:7b12:5fcf with SMTP id
+ d75a77b69052e-51c7b126511mr17750491cf.75.1783417828126; 
+ Tue, 07 Jul 2026 02:50:28 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c15ad844cacsm98510966b.19.2026.07.07.02.50.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jul 2026 02:50:27 -0700 (PDT)
+Message-ID: <693c31c8-a3f9-4cd2-8374-e4638ff34d92@oss.qualcomm.com>
+Date: Tue, 7 Jul 2026 11:50:26 +0200
 MIME-Version: 1.0
-References: <20260629015346.17653-1-jasowang@redhat.com>
-In-Reply-To: <20260629015346.17653-1-jasowang@redhat.com>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Tue, 7 Jul 2026 17:45:11 +0800
-X-Gm-Features: AVVi8CekSBI3K88mkQTyCB2jklQujbhvf-ZKZP2vGhYziF9STNQqrnUoF9FTwps
-Message-ID: <CAK3tnvLDS7cyef+N1m3JUyedXCS9dr1Ao96u57ML354=Q3R+Kw@mail.gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: update Jason Wang's email address
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowangio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] qemu-options: Enable the -enable-kvm option for loongarch
+Content-Language: en-US
+To: Miao Wang <shankerwangmiao@gmail.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20260705-add-loong64-kvm-v1-1-aa8b85ecfa32@gmail.com>
+ <2d2e2609-ff6d-448d-9a78-9e9b6b9a9ec2@oss.qualcomm.com>
+ <B737D5FB-43B3-478D-BD78-E5A2A8296B6A@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <B737D5FB-43B3-478D-BD78-E5A2A8296B6A@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA5NCBTYWx0ZWRfX5ntbJgSmom7I
+ ZYbx4MJ+nPMxt1J8+9tBta/gMyeU3DSXknc6m/a/2yQMnzqBY6aKYblXfsmgjPTrzzYoakj+BAo
+ nC6QwGxiB5ZSGQCdhA5G+CBgIrneayNpsKfYHE218/wYejrDC6VPcdX3aQ3CjcEbJ5I1EHWJpG+
+ 2BOCh5cTz4dtrTnX25z8s6S8zUdf4O+LrPDVUXfaJtawL+LXoBZmgw1YukHQuZs3rCdL8ofxkp/
+ vcYvZvCOrtnGFhKUofruYOcRULDi5nQV+al4xDt1HveMVyRv11BZlkyNSo88vRxGnYlMLWxdHcs
+ 6V7uS6UElAf2RBYc2u0fLx5XKEnifPvCxB8aF5EuqbyLftfNVVsB6c9lMRHVqNNf7APNhEpRddl
+ 2DYQRfr0GZLcdeHGYync6t7CD67HtDL0rH8+LkYkg/UBV0EV/tNxZaY6UREQGVW4qnaaV+0ID5+
+ Q0HAoYoIxggXx71G2Fg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA5NCBTYWx0ZWRfXxtvNU8EcrLWG
+ fTRYhvGNzL6XTUxcQlvinGeZYMvagTwDw1qSaKmyO8LYEI0/yYnDryvr/GOJdvsCgQf0Gi361Ew
+ nfcTKjpe6K4v7zhgD1ZZNT4aebsEW88=
+X-Proofpoint-GUID: obXlwHTcXDSrTX-dlOEoQ44tPo0_j7y_
+X-Proofpoint-ORIG-GUID: obXlwHTcXDSrTX-dlOEoQ44tPo0_j7y_
+X-Authority-Analysis: v=2.4 cv=HN7z0Itv c=1 sm=1 tr=0 ts=6a4ccbe5 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=RMmbFdJtd2CDAKUiIfgA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_02,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 malwarescore=0 adultscore=0 clxscore=1015
+ bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070094
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,83 +154,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 29, 2026 at 9:55=E2=80=AFAM Jason Wang <jasowang@redhat.com> wr=
-ote:
->
-> Update maintainer email from jasowang@redhat.com to
-> jasowangio@gmail.com and add corresponding .mailmap entries.
->
-> Signed-off-by: Jason Wang <jasowangio@gmail.com>
+On 7/7/26 11:01, Miao Wang wrote:
+> Hi,
+> 
+>> 2026年7月7日 16:57，Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> 写道：
+>>
+>> Hi,
+>>
+>> On 4/7/26 21:50, Miao Wang via B4 Relay wrote:
+>>> From: Miao Wang <shankerwangmiao@gmail.com>
+>>> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+>>> ---
+>>>   qemu-options.hx | 2 +-
+>>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>> diff --git a/qemu-options.hx b/qemu-options.hx
+>>> index e44b47de68137120da9979fb081d0c108f13179c..c7dbbd01e73367380fcf653fa8d0d18795dde9a7 100644
+>>> --- a/qemu-options.hx
+>>> +++ b/qemu-options.hx
+>>> @@ -5164,7 +5164,7 @@ ERST
+>>>   DEF("enable-kvm", 0, QEMU_OPTION_enable_kvm, \
+>>>       "-enable-kvm     enable KVM full virtualization support\n",
+>>>       QEMU_ARCH_ARM | QEMU_ARCH_I386 | QEMU_ARCH_MIPS | QEMU_ARCH_PPC |
+>>> -    QEMU_ARCH_RISCV | QEMU_ARCH_S390X)
+>>> +    QEMU_ARCH_RISCV | QEMU_ARCH_S390X | QEMU_ARCH_LOONGARCH)
+>>>   SRST
+>>>   ``-enable-kvm``
+>>>       Enable KVM full virtualization support. This option is only
+>>
+>> Isn't the legacy option for "-accel kvm"? (Apparently since commit
+>> 303d4e865b7 which is from September 2010). Maybe we should get rid
+>> of the '-enable-kvm' use in examples / scripts...
+> 
+> 
+> Yes, but I noticed that there are still users of it. I believe that
+> either we can fully remove this option or we should enable this
+> option for every architecture for which kvm is actually supported.
 
-Good luck, Jason~
-Reviewed-by: Zhang Chen <zhangckid@gmail.com>
+Why do you want to add this legacy option to an architecture which is
+newer than the new CLI option and don't even need it listed at all in
+the help message?
 
-> ---
->  .mailmap    | 3 ++-
->  MAINTAINERS | 8 ++++----
->  2 files changed, 6 insertions(+), 5 deletions(-)
->
-> diff --git a/.mailmap b/.mailmap
-> index 34c092714a..8ade2eed66 100644
-> --- a/.mailmap
-> +++ b/.mailmap
-> @@ -31,7 +31,8 @@ malc <av1474@comtv.ru> malc <malc@c046a42c-6fe2-441c-8c=
-8c-71466251a162>
->  Aaron Larson <alarson@ddci.com> alarson@ddci.com
->  Andreas F=C3=A4rber <andreas.faerber@web.de> Andreas F=C3=A4rber <andrea=
-s.faerber>
->  fanwenjie <fanwj@mail.ustc.edu.cn> fanwj@mail.ustc.edu.cn <fanwj@mail.us=
-tc.edu.cn>
-> -Jason Wang <jasowang@redhat.com> Jason Wang <jasowang>
-> +Jason Wang <jasowangio@gmail.com> Jason Wang <jasowang>
-> +Jason Wang <jasowangio@gmail.com> Jason Wang <jasowang@redhat.com>
->  Marek Dolata <mkdolata@us.ibm.com> mkdolata@us.ibm.com <mkdolata@us.ibm.=
-com>
->  Michael Ellerman <mpe@ellerman.id.au> michael@ozlabs.org <michael@ozlabs=
-.org>
->  Nick Hudson <hnick@vmware.com> hnick@vmware.com <hnick@vmware.com>
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 72357df7c4..6160d86825 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2275,7 +2275,7 @@ F: hw/char/
->  F: include/hw/char/
->
->  Network devices
-> -M: Jason Wang <jasowang@redhat.com>
-> +M: Jason Wang <jasowangio@gmail.com>
->  S: Odd Fixes
->  F: hw/net/
->  F: include/hw/net/
-> @@ -3448,7 +3448,7 @@ F: include/qemu/qemu-print.h
->  F: util/qemu-print.c
->
->  Network device backends
-> -M: Jason Wang <jasowang@redhat.com>
-> +M: Jason Wang <jasowangio@gmail.com>
->  S: Maintained
->  F: net/
->  F: include/net/
-> @@ -4045,7 +4045,7 @@ F: target/i386/igvm.c
->
->  VT-d Emulation
->  M: Michael S. Tsirkin <mst@redhat.com>
-> -R: Jason Wang <jasowang@redhat.com>
-> +R: Jason Wang <jasowangio@gmail.com>
->  R: Yi Liu <yi.l.liu@intel.com>
->  R: Cl=C3=A9ment Mathieu--Drif <clement.mathieu--drif@bull.com>
->  S: Supported
-> @@ -4480,7 +4480,7 @@ F: subprojects/libvfio-user.wrap
->  F: tests/functional/x86_64/test_vfio_user_client.py
->
->  EBPF
-> -M: Jason Wang <jasowang@redhat.com>
-> +M: Jason Wang <jasowangio@gmail.com>
->  R: Yuri Benditovich <ybendito@redhat.com>
->  S: Maintained
->  F: docs/devel/ebpf_rss.rst
-> --
-> 2.54.0
->
->
 
