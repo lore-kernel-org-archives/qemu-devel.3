@@ -4,92 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2845AC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 22:47:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C19BC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 23:13:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whEVx-0001O7-Ph; Tue, 07 Jul 2026 18:43:41 -0400
+	id 1whExQ-0006o7-Dg; Tue, 07 Jul 2026 19:12:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1whEVw-0001NT-Qr
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:43:40 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1whEVu-0004B0-WA
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:43:40 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2cad225673bso729055ad.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 15:43:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783464217; x=1784069017; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Hpv+v9qVvBs+eVXA8WG5n3FRwshlRky5Pwtj146tV58=;
- b=YPOAXKTrHF8nQsom1FRpnmaheZnm1fQHJJJLU0IPjTMuX/PTjw1C7JEdiCP87x7PMu
- cYPnmbaJMNAlylzjfcpbWuQIuZ81sp6Z3Hc15EflqHAKj2vM2nqfM/vrJ72LWvyKItLG
- m/ozxrAP7o/RfYSE0KSWhfdtOzajva7lcEvnuruuB7a2PYslLehWgpSDKenBkwtXyyIq
- E6/Q7gPBAJAzFXDx+9qS6p4ex6bAVJfjc4spq4quKwU41qm8jjI39F1XhFClrGfOHyip
- v2H6dKdZT2vlMP523Z4ctnxuLdeAdwYVR3EA6kpBK+m5YEjp+nGTLEoQ57YQumXEFObW
- TbcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783464217; x=1784069017;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Hpv+v9qVvBs+eVXA8WG5n3FRwshlRky5Pwtj146tV58=;
- b=lsf1Y6lHlUQ5mMZ6Zd7AlgIdKmrVH0r4IpW+/bUQj/ymwLCCfihYaBX8v2qk4DLJvk
- 2L667pTVCGbOx9QwMy40i9NQMVqwZzyYNsElBMH7AWIs5HuvKOQSGCdI0Y0d2kGymfLG
- JmHs3RLC9pC/yO5s8SEct5HstT0S7xOzVXiZFb34wXoA+vAZV6TypHm1nTwXeHflDDRT
- tH36pl3EJxqBxN168dlyTpvZvZjQon8iRDKmgwD9Uw8KYYWrkpD2lnD9iqWoWFW7m5V5
- vwpaCVXpKndIo+3vbNXccQip5+hP/KksoOiViXusmHlUHSuSPgw0nUYa4RWPzHr7DvQJ
- D28g==
-X-Gm-Message-State: AOJu0YzWA/OyIAw7xHFByDwz1NwawtBTzXawEPvgAbQlnwbQp4t9tXLK
- 1GgaXYjAvARur+Wynz0RkEtPqU2xD13ZArIcxohYuuIWRiMiUewb32rIYubfEKa0yCI=
-X-Gm-Gg: AfdE7ck2dNT57JWWupM03XVJl903wdNucrCWQqXyVaH9hYaKZx8Ynptww2U8Fk2l3Kl
- FuEwmDZQ4ztH9/6im+tJp9qPmFe0LKaaJxbXI+EFL1ahwZhKB7jWaBcOGrH2o1sbZYSJGNiPXLu
- xCuMTHu27ivr7ADTp4dL62Q9zqOlh++EzF0yF4ZXBSVh+HQIAqWBui1engUqGn7Q1td3hG0xAr8
- ccF+QhHgoq0kTFoeMtFrR8mafn8NW4jmoyiYphrCjr1kMyfl5+7BtIBoZjRzYlxIK+BPX1ly0gn
- jSR1OFDzGHm2QXdhUWjJDM2pUruja1urk+KrVLBVl81vWcIO58psZj9IZAx0JL/yOIqOmSfWpiY
- Ud8b3XAAbceeaZAJuL3UyouuoZq8rTrdhIjhZnd7eU7yUo32jKP/CWhikjr5SKPewYMrQXawtRw
- /wj92ugM8GA1m3L/hU4S8u9fhWFkzKpjXDt9DepXo=
-X-Received: by 2002:a17:903:110f:b0:2ca:6d87:cda0 with SMTP id
- d9443c01a7336-2ccea2a5ddemr100945ad.6.1783464217123; 
- Tue, 07 Jul 2026 15:43:37 -0700 (PDT)
-Received: from p14s.cg.shawcable.net
- ([2604:3d09:148c:c800:46c8:dda7:40fa:8958])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ccc9d3bbaesm18183805ad.57.2026.07.07.15.43.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jul 2026 15:43:36 -0700 (PDT)
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-To: berrange@redhat.com, kchamart@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
- mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com, eblake@redhat.com,
- armbru@redhat.com, jpb@kernel.org, lorenzo.pieralisi@linaro.org
-Cc: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org,
-	kvm@vger.kernel.org
-Subject: [RFC v1 13/25] target/arm/cpu: Set number of breakpoints and
- watchpoints in KVM
-Date: Tue,  7 Jul 2026 16:42:54 -0600
-Message-ID: <20260707224306.1202330-14-mathieu.poirier@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
-References: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1whExP-0006ns-BU; Tue, 07 Jul 2026 19:12:03 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1whExN-0008He-Uk; Tue, 07 Jul 2026 19:12:03 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 667MmS7t1572023; Tue, 7 Jul 2026 23:11:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=xCvCUjFhjTc/4nsM0
+ UMrFmtDUb+4Jcx8txYd3lpB6Uc=; b=I0SPVAgHgQsDvEr3KcHqFZHgpU/gM0bag
+ YloXzDGRSygDNCIUBo8VQNDwgRhhVpyoNmZ6aZy0w9+HAbOBTR23PAudLvj9w86f
+ mnLUloK9kyp3stfy/jDOkJ0fhoU5lKP6eUYHYTpttVHVspsSae5rL83nfLBaDI4c
+ jhaQ5H/sKk4nlcJXOlqJ2SqNm0D7AucC8pMTcZomJARFJxJARZRY24KbAsuiyjHj
+ yPyTaKCeIphV/sElr4qasgeJM4CeR0ExbO6jZRTLC+GZ+h3Nf8+wif1yiGg60iu6
+ zOlN6Z05dJbiFwbTreSTI7OtJeAC/JyxNqngb9MDbSgwZsuKs+mGg==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6qknhbpa-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 Jul 2026 23:11:58 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 667N4g27013814;
+ Tue, 7 Jul 2026 23:11:57 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7cgq597x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 Jul 2026 23:11:57 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 667NBu8j25035438
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 7 Jul 2026 23:11:56 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 50F4458050;
+ Tue,  7 Jul 2026 23:11:56 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 838F058045;
+ Tue,  7 Jul 2026 23:11:53 +0000 (GMT)
+Received: from fedora-workstation.ibmuc.com (unknown [9.61.32.2])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  7 Jul 2026 23:11:53 +0000 (GMT)
+From: Zhuoying Cai <zycai@linux.ibm.com>
+To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
+ jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
+ eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
+ alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+Subject: [PATCH v16 06/33] s390x/diag: Refactor address validation check from
+ diag308_parm_check
+Date: Tue,  7 Jul 2026 19:11:04 -0400
+Message-ID: <20260707231132.2492104-7-zycai@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260707231132.2492104-1-zycai@linux.ibm.com>
+References: <20260707231132.2492104-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Q/XiJY2a c=1 sm=1 tr=0 ts=6a4d87be cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=130TwiEZxdn8fhqcL5YA:9
+X-Proofpoint-GUID: KIhd6_XInkDUfztpc4QLT2Z-hqJWBeJS
+X-Proofpoint-ORIG-GUID: KIhd6_XInkDUfztpc4QLT2Z-hqJWBeJS
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDIyNCBTYWx0ZWRfX/iGvALS7IhYu
+ 6+IOywHR9a1jajfIBsr5fIcWQ78CyfjC1Y+wddjB5PDTMi1CLxglXlxX5cZJW0mCzd5P+nhZwd2
+ 6LFlwJdoIt+pqs6lznY8VrMREEgwifQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDIyNCBTYWx0ZWRfX8lgtcW1qX36K
+ 3OiCWLbI27Gx85z+gfqhN7J4HNJeNqyDk0JMEGPkheit/cu3XiPXWN+QJ39kXSi3l9deaH2hXLS
+ UInPVyZUhoZ9gXMQKZ4tk6R+oWdba1xLC6kAjF6okgW5OrVTsEjYt3umk94qEq40HEA3TB2zxjB
+ ueLQ1r/8eWBCbtZGaeVD17PRMCq6siTXx+YtF8Xmeiuw4b1llxT3Os3lgyF/8ChK9oVjyVbViML
+ Ptj1F9R7HKOQ5R+JxKkNda11Suz6Nwusa5XxnBB/kE/cEchIMY132TDF6vVkdIc+v3PhApwUtCU
+ SmuLhpgS6vRQ3Ipb5YGEnHjnsbNXMi7HCqvDpZYHCo4jSPYBU0qOpWe7vDcTwUtDsX/0QOgxmhN
+ Lnm1oG8FDLxFMAIocuNA68sLuzz9qIbzI3YZCQbT5bwCXzXpJCDxGqujYa8h75wh+9wOeIfB932
+ mTxyZAFFnnXPygwQtNQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_06,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501
+ bulkscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070224
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,225 +126,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Create a function to validate the address parameter of DIAGNOSE.
 
-Add "num-breakpoints" and "num-watchpoints" CPU parameters to configure
-the debug features that KVM presents to the guest. The KVM vCPU
-configuration is modified by calling SET_ONE_REG on the ID register.
+Refactor the function for reuse in the next patch, which allows address
+validation in read or write operation of DIAGNOSE.
 
-This is needed for Realm VMs, whose parameters include breakpoints and
-watchpoints, and influence the Realm Initial Measurement.
-
-Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
+Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- target/arm/arm-qmp-cmds.c |  1 +
- target/arm/cpu.h          |  4 ++
- target/arm/cpu64.c        | 81 +++++++++++++++++++++++++++++++++++++++
- target/arm/kvm.c          | 56 +++++++++++++++++++++++++++
- 4 files changed, 142 insertions(+)
+ target/s390x/diag.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
-index 83ec95c290f6..9ed65eb090d7 100644
---- a/target/arm/arm-qmp-cmds.c
-+++ b/target/arm/arm-qmp-cmds.c
-@@ -76,6 +76,7 @@ static const char *cpu_model_advertised_features[] = {
-     "sve1408", "sve1536", "sve1664", "sve1792", "sve1920", "sve2048",
-     "kvm-no-adjvtime", "kvm-steal-time",
-     "pauth", "pauth-impdef", "pauth-qarma3", "pauth-qarma5",
-+    "num-breakpoints", "num-watchpoints",
-     NULL
- };
+diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+index db0ceea09f..b42a5e769d 100644
+--- a/target/s390x/diag.c
++++ b/target/s390x/diag.c
+@@ -26,6 +26,12 @@
+ #include "qemu/error-report.h"
  
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index c7927036360c..d6f64daec2a3 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1174,6 +1174,10 @@ struct ArchCPU {
  
-     /* Generic timer counter frequency, in Hz */
-     uint64_t gt_cntfrq_hz;
-+
-+    /* Allows to override the default configuration */
-+    uint8_t num_bps;
-+    uint8_t num_wps;
- };
- 
- typedef struct ARMCPUInfo {
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 28167355773b..3f12009befa8 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -666,6 +666,86 @@ void aarch64_add_pauth_properties(Object *obj)
-     }
- }
- 
-+#if defined(CONFIG_KVM)
-+static void arm_cpu_get_num_wps(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
++static inline bool diag_parm_addr_valid(uint64_t addr, size_t size, bool write)
 +{
-+    uint8_t val;
-+    ARMCPU *cpu = ARM_CPU(obj);
-+
-+    val = cpu->num_wps;
-+    if (val == 0) {
-+        val = FIELD_EX64(cpu->isar.idregs[ID_AA64DFR0_EL1_IDX],
-+                         ID_AA64DFR0, WRPS) + 1;
-+    }
-+
-+    visit_type_uint8(v, name, &val, errp);
++    return address_space_access_valid(&address_space_memory, addr,
++                                      size, write, MEMTXATTRS_UNSPECIFIED);
 +}
 +
-+static void arm_cpu_set_num_wps(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
-+{
-+    uint8_t val;
-+    ARMCPU *cpu = ARM_CPU(obj);
-+    uint8_t max_wps = FIELD_EX64(cpu->isar.idregs[ID_AA64DFR0_EL1_IDX],
-+                                 ID_AA64DFR0, WRPS) + 1;
-+
-+    if (!visit_type_uint8(v, name, &val, errp)) {
-+        return;
-+    }
-+
-+    if (val < 2 || val > max_wps) {
-+        error_setg(errp, "invalid number of watchpoints");
-+        return;
-+   }
-+
-+    cpu->num_wps = val;
-+}
-+
-+static void arm_cpu_get_num_bps(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
-+{
-+    uint8_t val;
-+    ARMCPU *cpu = ARM_CPU(obj);
-+
-+    val = cpu->num_bps;
-+    if (val == 0) {
-+        val = FIELD_EX64(cpu->isar.idregs[ID_AA64DFR0_EL1_IDX],
-+                         ID_AA64DFR0, BRPS) + 1;
-+    }
-+
-+    visit_type_uint8(v, name, &val, errp);
-+}
-+
-+static void arm_cpu_set_num_bps(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
-+{
-+    uint8_t val;
-+    ARMCPU *cpu = ARM_CPU(obj);
-+    uint8_t max_bps = FIELD_EX64(cpu->isar.idregs[ID_AA64DFR0_EL1_IDX],
-+                                 ID_AA64DFR0, BRPS) + 1;
-+
-+    if (!visit_type_uint8(v, name, &val, errp)) {
-+        return;
-+    }
-+
-+    if (val < 2 || val > max_bps) {
-+        error_setg(errp, "invalid number of breakpoints");
-+       return;
-+    }
-+
-+    cpu->num_bps = val;
-+}
-+
-+static void aarch64_add_kvm_writable_properties(Object *obj)
-+{
-+    object_property_add(obj, "num-breakpoints", "uint8", arm_cpu_get_num_bps,
-+                        arm_cpu_set_num_bps, NULL, NULL);
-+    object_property_add(obj, "num-watchpoints", "uint8", arm_cpu_get_num_wps,
-+                        arm_cpu_set_num_wps, NULL, NULL);
-+}
-+#endif /* CONFIG_KVM */
-+
- void aarch64_cpu_lpa2_finalize(ARMCPU *cpu, Error **errp)
+ int handle_diag_288(CPUS390XState *env, uint64_t r1, uint64_t r3)
  {
-     uint64_t t;
-@@ -806,6 +886,7 @@ void aarch64_host_initfn(Object *obj)
-     kvm_arm_set_cpreg_mig_tolerances(cpu);
-     kvm_arm_set_cpu_features_from_host(cpu);
-     aarch64_add_sve_properties(obj);
-+    aarch64_add_kvm_writable_properties(obj);
- #elif defined(CONFIG_HVF)
-     hvf_arm_set_cpu_features_from_host(cpu);
- #elif defined(CONFIG_WHPX)
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index c69b5310c184..e4b4d5450c70 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -904,6 +904,56 @@ out:
-     return ret;
- }
- 
-+#define KVM_REG_ARM_ID_AA64DFR0_EL1     ARM64_SYS_REG(3, 0, 0, 5, 0)
-+
-+static void kvm_arm_configure_aa64dfr0(ARMCPU *cpu)
-+{
-+    int ret;
-+    uint64_t val, newval;
-+    CPUState *cs = CPU(cpu);
-+
-+    if (!cpu->num_bps && !cpu->num_wps) {
-+        return;
-+    }
-+
-+    newval = cpu->isar.idregs[ID_AA64DFR0_EL1_IDX];
-+    if (cpu->num_bps) {
-+        uint64_t ctx_cmps = FIELD_EX64(newval, ID_AA64DFR0, CTX_CMPS);
-+
-+        /* CTX_CMPs is never greater than BRPs */
-+        ctx_cmps = MIN(ctx_cmps, cpu->num_bps - 1);
-+        newval = FIELD_DP64(newval, ID_AA64DFR0, BRPS, cpu->num_bps - 1);
-+        newval = FIELD_DP64(newval, ID_AA64DFR0, CTX_CMPS, ctx_cmps);
-+    }
-+    if (cpu->num_wps) {
-+        newval = FIELD_DP64(newval, ID_AA64DFR0, WRPS, cpu->num_wps - 1);
-+    }
-+    ret = kvm_set_one_reg(cs, KVM_REG_ARM_ID_AA64DFR0_EL1, &newval);
-+    if (ret) {
-+        error_report("Failed to set KVM_REG_ARM_ID_AA64DFR0_EL1");
-+        return;
-+    }
-+
-+    /*
-+     * Check if the write succeeded. KVM does offer the writable mask for this
-+     * register, but this way we also check if the value we wrote was sane.
-+     */
-+    ret = kvm_get_one_reg(cs, KVM_REG_ARM_ID_AA64DFR0_EL1, &val);
-+    if (ret) {
-+        error_report("Failed to get KVM_REG_ARM_ID_AA64DFR0_EL1");
-+        return;
-+    }
-+
-+    if (val != newval) {
-+        error_report("Failed to update KVM_REG_ARM_ID_AA64DFR0_EL1");
-+    }
-+}
-+
-+static void kvm_arm_configure_vcpu_regs(ARMCPU *cpu)
-+{
-+    kvm_arm_configure_aa64dfr0(cpu);
-+}
-+
- /**
-  * kvm_arm_cpreg_level:
-  * @regidx: KVM register index
-@@ -1120,6 +1170,12 @@ void kvm_arm_reset_vcpu(ARMCPU *cpu)
-         fprintf(stderr, "kvm_arm_vcpu_init failed: %s\n", strerror(-ret));
-         abort();
+     uint64_t func = env->regs[r1];
+@@ -65,9 +71,7 @@ static int diag308_parm_check(CPUS390XState *env, uint64_t r1, uint64_t addr,
+         s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+         return -1;
      }
-+
-+    /*
-+     * Before loading the KVM values into CPUState, update the KVM configuration
-+     */
-+    kvm_arm_configure_vcpu_regs(cpu);
-+
-     if (!write_kvmstate_to_list(cpu)) {
-         fprintf(stderr, "write_kvmstate_to_list failed\n");
-         abort();
+-    if (!address_space_access_valid(&address_space_memory, addr,
+-                                    sizeof(IplParameterBlock), write,
+-                                    MEMTXATTRS_UNSPECIFIED)) {
++    if (!diag_parm_addr_valid(addr, sizeof(IplParameterBlock), write)) {
+         s390_program_interrupt(env, PGM_ADDRESSING, ra);
+         return -1;
+     }
 -- 
-2.43.0
+2.54.0
 
 
