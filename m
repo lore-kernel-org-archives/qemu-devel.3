@@ -4,154 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11DABC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 07:36:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE5EC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 07:42:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh0LX-0008RR-PA; Tue, 07 Jul 2026 03:35:59 -0400
+	id 1wh0RK-00017u-Ld; Tue, 07 Jul 2026 03:41:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh0LV-0008R0-P1
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 03:35:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wh0RJ-00017l-SW
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 03:41:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh0LT-00075U-9Z
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 03:35:56 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wh0RH-0007aX-JN
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 03:41:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783409754;
+ s=mimecast20190719; t=1783410113;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OFHW1cBmWJtrj0tPMdxE8hn8T5GG0TprzcllFMJSj4w=;
- b=BH4f1sczUD6bNOfyJaFlg4U4JhOgdj6gJixsmDeL8sSGkCrIVfqIbqLjWjNPwtCjHZdGFH
- 1zCTWw5SyJY3hXacSSTzrc4SsOykqjI8nsetFtUyOG2L7M2rlo6CbfI7vqwuBtw/Wscv2R
- k0VI1aOsvD1/b4NTgg9J0ggpcGvMdUU=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=6VTV6fFbVSyjDCvjLQiUKjqMZbjP1Skv3jmNCvXKNbY=;
+ b=jAiMbKOIJQv6vFlTEQP1I+ny5r7rGZpQ7jAr8N31dijL+jwXr80bUXvt0cctLCpkNXCFzv
+ ghOEKkRjGlzKA/1cgCaKCjdUVziPyXltTdPlNpSJFkvo4dfkXCfNe7tolB6VXsxwiFIKR2
+ Zj/rBsrHHlOQlc4yYjTk+UVLuq7Ho7Y=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-R_pvKSDWObmHOOS93uQZ_w-1; Tue, 07 Jul 2026 03:35:52 -0400
-X-MC-Unique: R_pvKSDWObmHOOS93uQZ_w-1
-X-Mimecast-MFC-AGG-ID: R_pvKSDWObmHOOS93uQZ_w_1783409752
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-476d52b13d7so2936039f8f.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 00:35:52 -0700 (PDT)
+ us-mta-45-2oDEejjqPDOYV3KLtcFG3A-1; Tue, 07 Jul 2026 03:41:52 -0400
+X-MC-Unique: 2oDEejjqPDOYV3KLtcFG3A-1
+X-Mimecast-MFC-AGG-ID: 2oDEejjqPDOYV3KLtcFG3A_1783410111
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2cca5e0a0c9so38615305ad.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 00:41:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783410111; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ajAGalgEDxaKqgtUrJGqrqQQa0JY03f3pyCM4phR+WOIZG7LfCXkhtaV95f06AJRdg
+ 1A7XbQjKju1p461fACNSeVXPrzyXRLDb2dnTwhJeoGqu23okVsYcg7yf9kYzGl3tnloH
+ xzuEy/ohWXQcf/haJSmE6lJXrmrgzr+2Yh0/z5yMqdZT9IZMWebgSKFWD7bSuItSi0it
+ XufzQKOBhdpOdONWbZ1rpYNZNKCWBViP7ceYKqoSGJvHvedgIcPeG5F85XrX8B3LoZtN
+ Q4ojPMKKPbHq8MPxAGN/sAyInq9DJOEBC3qx5FF0m4P1XvQE7dWSVKLZLSbjNhj9Lvhm
+ Iejg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=6VTV6fFbVSyjDCvjLQiUKjqMZbjP1Skv3jmNCvXKNbY=;
+ fh=BJV1XQpcPYVfj07oxpXym4PJB4wpZuxfU0BJwGhLHVo=;
+ b=L2FoDdUAI/2hBsCbYD3n736ZSlEkg9Dq2sgza4l4xmtkTfJd1yNJizp1YK0ALvDuTS
+ LYV6Ls+jHEyY10GDCBTfXdy83XWQxyqNhdmxBHC/uGXY1qXTb+Gea+Kaz+wrX4hfNWmc
+ RD2bsy7+DxpkoXVVVKVGXkDzooOLycLj+8HzUgUYWYyX6wjx2nVoE5+SqfR60rLde2PW
+ nDtUvelTA1d1Gv3xlIlEGF4LpVkyJHKFCd9IotPkj/GVNx1HKlEIa9bVAOIJSPDhmtKP
+ cq7gsDPuweaCgh6AfTg4HUBBJi5ohxl7Gp4lgP+Wmq3qdxGANGZUEpNAAzkLHL74lysS
+ +VEw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783409751; x=1784014551; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=OFHW1cBmWJtrj0tPMdxE8hn8T5GG0TprzcllFMJSj4w=;
- b=WJLQ9nwgoW4fhg/VqqCfR8VRoUk7jd4kCEcHCjv8r7kO/bMbZ+EWuw9SdCPITs7Mq4
- 7SUndUXjSp/uEeB0Wrp49Qs6xqZGtikfRR9PFjMDwtr0AfG81hIrsEQEBP8K2rKuFjTM
- /j9Ms84kpbwjqad4noPMHCPj15O7uNFHOkHPiWel00URkdJ0Dz2DWTnOvmhfAYQJb1rM
- z7exUwd2LIKduXVhEvY1p6s3uvk7p9VWCAj6eSJNvx1dkec2smI4HokOH3vjKSh0Oj3r
- Rb/CpH2vZBgbkRF6dHKQo/43u+hIvF/loha/FOARGDNvF+9AAuGkCGNTinAWMmwxHPg9
- Rzjg==
+ d=redhat.com; s=google; t=1783410111; x=1784014911; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=6VTV6fFbVSyjDCvjLQiUKjqMZbjP1Skv3jmNCvXKNbY=;
+ b=UI1+zja9rPtDTPlVqzRgsqKZrXzpkfhmMWZ781cx+YEnFy6zpVCPJRlej/IJ85I1/p
+ zjcYtkYuYvJfSsJZAuOgyzZiKoRXdHcVEPjfapQVmZaRIG9nMW8uTdgA/K1ZM2AqhAZN
+ x0OpZ4M8FvwO25mXs7E+KhquDPKJFRFnx5cZSGG4/4hOYye1zKhQ7jSvoaweJY8VkaXY
+ qqD9nyQMxlPd4UWvvBx0E8HNoriLCkFGZlox5urO52GpR0t/ku2xAYk3rtfupfFjr4gY
+ CGrSGTd0kLkd64Ml3FPej6g2N6RPQn4g0WDl2YYoIUrjn0ydwfvsknL9rmbPIRBWx7nK
+ 8PGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783409751; x=1784014551;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=OFHW1cBmWJtrj0tPMdxE8hn8T5GG0TprzcllFMJSj4w=;
- b=DUcbV3cnC1QzcjlvXyvVyLwHHjm0XcUNg1s2xkdPuLx1HKXAJHTMYL80c3OyuAHdOW
- DDjWXcVb6fwvQySfNS6XC2VIVR6f4Sh1a+bV6XeO7KSlyX13a3cOmUWViYN+hjppN39k
- wBWiZk7LHNPN9hxPydtOcD4okeYXa4+81mQhql3ojhXhxj27MkDbdOWCzs7J1ClbG51t
- K6p4imXOObgQq0bqOEQVDvrS+GnD5fwujjb1LNc2GA6UMvyMjTzuSIX3iI3NVm6akxE9
- CQKPl7iKqZs463h/oAoH0l24aVYVAa8LmQC1WwTU4edrKurZG60nOO3ufSfs04IAe/VZ
- 69TA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Ro2EnfZBKi2yjlbgmtE8Em8FYKD6miH8RkKKgYrV2/uc7eehj2Y/pNQFHS4kA9pYjHhnMFCVYBb0mnQ@nongnu.org
-X-Gm-Message-State: AOJu0YycgP7NrS3HqghN19fafs5VMCpYtA6dA3bfTU/vGDr9yVr8Ej0H
- wEgYf9LA/PkJXIlSm5mH34X8GKxAgW9d2Rb/sDP8laBN7odLRyqjzqD6FLBRz78m96yceQ1KsVw
- UW8W8Zd4Ftw8ppgwIUYbn+CvYVcik4osaoYmzH0eGMPNO4esa8SMLEC3h
-X-Gm-Gg: AfdE7cnDf93kUmC9AgL72M+mufb+jdFZt0G/v3YwZoLq8TOSypj0K0swqZwqllk+JPv
- IJKGZFzPoWQ1SF4KDRx5AdH6uagtbVzL4BmIHRu0U8dnc0d3K5a570N8B4KYKPIPHSf1hySWQKE
- UBZutgPwOEO8u+HywUCFNQ8fZ9BlzJYh6+/nbmSLLGZTAd6Z0U2OHhzc3uMhQY/69agdeho2VTF
- RqN1aeS7rsbbLmt9Xp5oilsAyYv3WUPLKRT766Md5cRi26hwuFsnUBcYXXIg2jtCz6ufE1cQFn/
- XOj9AWQIDaVE7G2Zj2NWFiNkLzSF5yIL4ovL30QUXsniRyycuIRUj0ha5iuaN7wM8y8Xz0UiTIQ
- MM50X8VsvNS8BFORD/2j7+jmSprEze3EuerrFZgdW6Rc+bCH2Ug==
-X-Received: by 2002:adf:e909:0:b0:475:f0d1:eb5d with SMTP id
- ffacd0b85a97d-47de66e3e5amr3351501f8f.56.1783409751563; 
- Tue, 07 Jul 2026 00:35:51 -0700 (PDT)
-X-Received: by 2002:adf:e909:0:b0:475:f0d1:eb5d with SMTP id
- ffacd0b85a97d-47de66e3e5amr3351441f8f.56.1783409750613; 
- Tue, 07 Jul 2026 00:35:50 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47a9b4d850dsm32772922f8f.0.2026.07.07.00.35.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jul 2026 00:35:50 -0700 (PDT)
-Message-ID: <e23912fe-bcfa-475a-803e-caa46797f92f@redhat.com>
-Date: Tue, 7 Jul 2026 09:35:49 +0200
+ d=1e100.net; s=20251104; t=1783410111; x=1784014911;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=6VTV6fFbVSyjDCvjLQiUKjqMZbjP1Skv3jmNCvXKNbY=;
+ b=HUDzzPbFYQet5+emIOw/HJGYS++tGoP1RtWvuXet2lwKs03Z7iyUkmDbKGPbf/f00b
+ kIA3M02D1BJcEJ10zIYGi/gZ9X4O4//y4Po1LuRpksicf5igoRiaogAyHynxul8WVh+E
+ gzcMKqFQv6JrWIT3zbO+6/sNyzGZsBei1A3L9yb/LBMR+DHc3gJjwTBKiR+zcql/4dXE
+ n+31iroUhgH7lbFGXJgzSIcoDhkmNa+5ygFIi8vGm7Y4aTM3J5044HTJ3pipDmDf2i9i
+ hGjyNLGTC9xZr9vPBsEGinYdsE1Cg80hBv2ZHFGFTuRjsXp4DRa3IP/uggFiXzhnHLU5
+ KBKg==
+X-Gm-Message-State: AOJu0YzwtgqfpgHlZGfm9yus456U5HnolRinDUZPG5Ekd6RVlMtn6ikN
+ gUzSn3ZHLPAuiI3MN/DHYTIZUbYoOr0qgt/bD/wyTz044iMPs4LxVh8cm3Y5GYLpSRQoBQUVHvF
+ NbMaX2xLmbyB8D28ZnJsw1+TkoTUQkgUCIM6e411fSkn+oDeJUDSLEbzZqLK2rHjafHY1/nvLQ7
+ cbpmafLCb+IWTgHYMyJF0nqYHij6QmDKU=
+X-Gm-Gg: AfdE7cm3kai3O2NNxphadtK6YkROqvrpOsWvCWLWYYjgHwc72nZz6+3Hj65fgS30Rjr
+ hOyuNpSonE1i8DD1Rrv4GLiS0DYdoHgI9NTcWqhjZMo3mkPNfOm3YhjvTZzYyLW8/V1Iqjdz8vH
+ M/decn3Ur77yYAlI4rgxfq/OkNarQuxTIf8q4ImSIx+bUC41+q4yUljl4yz+kT9qPJoAwtgIQ+b
+ Oi+5UAEwAZbVtai0sqhf5HakjA9VHe6u7VeGQxI05Toyg4k2kvVnW3zUpS/mGJzBaVwojHjJ91m
+ iVKjP9PJTv6p
+X-Received: by 2002:a17:903:37c3:b0:2cc:9473:97c8 with SMTP id
+ d9443c01a7336-2ccbe722810mr44862665ad.15.1783410111312; 
+ Tue, 07 Jul 2026 00:41:51 -0700 (PDT)
+X-Received: by 2002:a17:903:37c3:b0:2cc:9473:97c8 with SMTP id
+ d9443c01a7336-2ccbe722810mr44862435ad.15.1783410110812; Tue, 07 Jul 2026
+ 00:41:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 05/12] tests/data/vmstate-static-checker: Add dump files
- from QEMU 7.2.17
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Peter Xu <peterx@redhat.com>, cohuck@redhat.com
-References: <20250924063956.519792-1-thuth@redhat.com>
- <20250924063956.519792-6-thuth@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250924063956.519792-6-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+References: <20260706135824.2623960-1-berrange@redhat.com>
+ <20260706135824.2623960-7-berrange@redhat.com>
+In-Reply-To: <20260706135824.2623960-7-berrange@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 7 Jul 2026 11:41:39 +0400
+X-Gm-Features: AVVi8CcM5F4_lvyq5afqVWb87DF160gDRRceUjzfcpiawJ9Ejb0oHcZL2RhS5sE
+Message-ID: <CAMxuvayEWU6Nb7AS5cVXm6S=WGGAf40m2V2Ojhutr4+QMcWmdg@mail.gmail.com>
+Subject: Re: [PATCH v7 06/35] monitor: pass chardev ID into monitor
+ constructor instead of object
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Christian Brauner <brauner@kernel.org>,
+ devel@lists.libvirt.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Krempa <pkrempa@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -168,63 +144,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/24/25 08:39, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> For automatic tests, we need reference files from older QEMU versions.
-> QEMU 7.2 is a long term stable release, so it's a good candidate for
-> checking whether the migration could still work correctly. Let's add the
-> files from that version that have been taken with the "-dump-vmstate"
-> parameter of QEMU (compiled with single machines and the configure switch
-> "--without-default-devices" to keep the json files reasonable small).
-> 
-> Some devices also have been removed manually from the json files, e.g.
-> the "pci-bridge" (which can be disabled in later QEMU versions via Kconfig),
-> and some Linux-related devices like "scsi-block" and "scsi-generic" and
-> KVM-related devices. Without removing them, we might get errors otherwise
-> if these devices have not been compiled into the destination QEMU build.
-> 
-> Acked-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> Message-ID: <20250912100755.316518-4-thuth@redhat.com>
+On Mon, Jul 6, 2026 at 5:58=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> Current the monitor_new_hmp/monitor_new_qmp constructors accept
+> a Chardev object pointer. To facilitate the next commit which will
+> introduce a QOM property for the character device ID, switch to
+> accepting an chardev ID in the constructor.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+
+Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
 > ---
->   .../aarch64/virt-7.2.json                     | 2571 +++++++++++++
->   .../vmstate-static-checker/m68k/virt-7.2.json | 2936 +++++++++++++++
->   .../ppc64/pseries-7.2.json                    | 1068 ++++++
->   .../s390x/s390-ccw-virtio-7.2.json            |  475 +++
->   .../x86_64/pc-q35-7.2.json                    | 3297 +++++++++++++++++
->   5 files changed, 10347 insertions(+)
->   create mode 100644 tests/data/vmstate-static-checker/aarch64/virt-7.2.json
->   create mode 100644 tests/data/vmstate-static-checker/m68k/virt-7.2.json
->   create mode 100644 tests/data/vmstate-static-checker/ppc64/pseries-7.2.json
->   create mode 100644 tests/data/vmstate-static-checker/s390x/s390-ccw-virtio-7.2.json
->   create mode 100644 tests/data/vmstate-static-checker/x86_64/pc-q35-7.2.json
-
-On a s390x host, this test fails :
-
-▶ 108/658 test_vmstate.VmStateTest.test_vmstate_7_2                                   FAIL
-108/658 qemu:func-quick+func-s390x / func-s390x-vmstate                               ERROR            0.23s   exit status 1
->>> UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MALLOC_PERTURB_=8 MESON_TEST_ITERATION=1 QEMU_TEST_GDB=/usr/bin/gdb LD_LIBRARY_PATH=/home/legoater/work/qemu/qemu.git/build/tests/tcg/plugins:/home/legoater/work/qemu/qemu.git/build/contrib/plugins QEMU_TEST_QEMU_BINARY=/home/legoater/work/qemu/qemu.git/build/qemu-system-s390x PYTHONPATH=/home/legoater/work/qemu/qemu.git/python:/home/legoater/work/qemu/qemu.git/tests/functional QEMU_TEST_QEMU_IMG=/home/legoater/work/qemu/qemu.git/build/qemu-img RUST_BACKTRACE=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_BUILD_ROOT=/home/legoater/work/qemu/qemu.git/build /home/legoater/work/qemu/qemu.git/build/pyvenv/bin/python3 /home/legoater/work/qemu/qemu.git/tests/functional/generic/test_vmstate.py
-――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― ✀  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-stderr:
-Traceback (most recent call last):
-   File "/home/legoater/work/qemu/qemu.git/tests/functional/generic/test_vmstate.py", line 55, in test_vmstate_7_2
-     self.fail('Running vmstate-static-checker failed:\n' + cp.stdout +
-AssertionError: Running vmstate-static-checker failed:
-Section "s390-sclp-event-facility ", Description "vmstate-event-facility": expected field "receive_mask_pieces[1]", got "receive_mask_pieces[0]"; skipping rest
-Section "s390-sclp-event-facility", Description "vmstate-event-facility/mask64": expected field "receive_mask_pieces[0]", got "receive_mask_pieces[1]"; skipping rest
-
-
-The reason seems to be that the reference JSON s390-ccw-virtio-7.2.json
-file was generated on a little-endian host (x86_64), s390x is big-endian.
-
-The fix could be in vmstate-static-checker.py to treat
-receive_mask_pieces[0] and receive_mask_pieces[1] as interchangeable.
-Or regenerate the vmstate on s390x and skip the test on other
-platforms. What do you think ?
-
-Thanks,
-
-C.
+>  chardev/char.c            |  3 ++-
+>  gdbstub/system.c          |  2 +-
+>  include/monitor/monitor.h |  4 ++--
+>  monitor/hmp.c             | 22 ++++++++++++++++------
+>  monitor/monitor.c         | 11 ++---------
+>  monitor/qmp.c             | 21 +++++++++++++++------
+>  stubs/monitor-internal.c  |  2 +-
+>  7 files changed, 39 insertions(+), 26 deletions(-)
+>
+> diff --git a/chardev/char.c b/chardev/char.c
+> index c71ffa7963..22e5bae388 100644
+> --- a/chardev/char.c
+> +++ b/chardev/char.c
+> @@ -804,8 +804,9 @@ static Chardev *qemu_chr_new_from_name(const char *la=
+bel, const char *filename,
+>      }
+>
+>      if (qemu_opt_get_bool(opts, "mux", 0)) {
+> +        const char *chardev_id =3D qemu_opts_id(opts);
+>          assert(permit_mux_mon);
+> -        monitor_new_hmp(NULL, chr, true, &err);
+> +        monitor_new_hmp(NULL, chardev_id, true, &err);
+>          if (err) {
+>              error_report_err(err);
+>              object_unparent(OBJECT(chr));
+> diff --git a/gdbstub/system.c b/gdbstub/system.c
+> index fda8ef9352..fd754e5664 100644
+> --- a/gdbstub/system.c
+> +++ b/gdbstub/system.c
+> @@ -389,7 +389,7 @@ bool gdbserver_start(const char *device, Error **errp=
+)
+>          /* Initialize a monitor terminal for gdb */
+>          mon_chr =3D qemu_chardev_new(NULL, TYPE_CHARDEV_GDB,
+>                                     NULL, NULL, &error_abort);
+> -        monitor_new_hmp(NULL, mon_chr, false, &error_abort);
+> +        monitor_new_hmp(NULL, mon_chr->label, false, &error_abort);
+>      } else {
+>          qemu_chr_fe_deinit(&gdbserver_system_state.chr, true);
+>          mon_chr =3D gdbserver_system_state.mon_chr;
+> diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+> index 83723f705a..bfbeedec9b 100644
+> --- a/include/monitor/monitor.h
+> +++ b/include/monitor/monitor.h
+> @@ -29,9 +29,9 @@ bool monitor_cur_is_qmp(void);
+>  void monitor_init_globals(void);
+>  void monitor_init_globals_core(void);
+>  char *monitor_compat_id(void);
+> -void monitor_new_qmp(const char *id, Chardev *chr,
+> +void monitor_new_qmp(const char *id, const char *chardev_id,
+>                       bool pretty, Error **errp);
+> -void monitor_new_hmp(const char *id, Chardev *chr,
+> +void monitor_new_hmp(const char *id, const char *chardev_id,
+>                       bool use_readline, Error **errp);
+>  int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp);
+>  int monitor_new_opts(QemuOpts *opts, Error **errp);
+> diff --git a/monitor/hmp.c b/monitor/hmp.c
+> index da11e56854..1704166326 100644
+> --- a/monitor/hmp.c
+> +++ b/monitor/hmp.c
+> @@ -39,6 +39,7 @@
+>  #include "qemu/base-arch-defs.h"
+>  #include "qemu/target-info.h"
+>  #include "qemu/units.h"
+> +#include "qapi/error.h"
+>  #include "exec/gdbstub.h"
+>  #include "system/block-backend.h"
+>  #include "trace.h"
+> @@ -1538,16 +1539,25 @@ static void monitor_readline_flush(void *opaque)
+>      monitor_flush(&mon->parent_obj);
+>  }
+>
+> -void monitor_new_hmp(const char *id, Chardev *chr,
+> +void monitor_new_hmp(const char *id, const char *chardev_id,
+>                       bool use_readline, Error **errp)
+>  {
+>      MonitorHMP *mon;
+>      g_autofree char *autoid =3D id ? NULL : monitor_compat_id();
+> -    Object *obj =3D object_new_with_props(TYPE_MONITOR_HMP,
+> -                                        object_get_objects_root(),
+> -                                        id ? id : autoid,
+> -                                        errp,
+> -                                        NULL);
+> +    Chardev *chr;
+> +    Object *obj;
+> +
+> +    chr =3D qemu_chr_find(chardev_id);
+> +    if (chr =3D=3D NULL) {
+> +        error_setg(errp, "chardev \"%s\" not found", chardev_id);
+> +        return;
+> +    }
+> +
+> +    obj =3D object_new_with_props(TYPE_MONITOR_HMP,
+> +                                object_get_objects_root(),
+> +                                id ? id : autoid,
+> +                                errp,
+> +                                NULL);
+>      if (!obj) {
+>          return;
+>      }
+> diff --git a/monitor/monitor.c b/monitor/monitor.c
+> index 18a1d8ddde..cb0299a2f7 100644
+> --- a/monitor/monitor.c
+> +++ b/monitor/monitor.c
+> @@ -741,13 +741,6 @@ char *monitor_compat_id(void)
+>  int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp)
+>  {
+>      ERRP_GUARD();
+> -    Chardev *chr;
+> -
+> -    chr =3D qemu_chr_find(opts->chardev);
+> -    if (chr =3D=3D NULL) {
+> -        error_setg(errp, "chardev \"%s\" not found", opts->chardev);
+> -        return -1;
+> -    }
+>
+>      if (!opts->has_mode) {
+>          opts->mode =3D allow_hmp ? MONITOR_MODE_READLINE : MONITOR_MODE_=
+CONTROL;
+> @@ -755,7 +748,7 @@ int monitor_new(MonitorOptions *opts, bool allow_hmp,=
+ Error **errp)
+>
+>      switch (opts->mode) {
+>      case MONITOR_MODE_CONTROL:
+> -        monitor_new_qmp(opts->id, chr, opts->pretty, errp);
+> +        monitor_new_qmp(opts->id, opts->chardev, opts->pretty, errp);
+>          break;
+>      case MONITOR_MODE_READLINE:
+>          if (!allow_hmp) {
+> @@ -766,7 +759,7 @@ int monitor_new(MonitorOptions *opts, bool allow_hmp,=
+ Error **errp)
+>              error_setg(errp, "'pretty' is not compatible with HMP monito=
+rs");
+>              return -1;
+>          }
+> -        monitor_new_hmp(opts->id, chr, true, errp);
+> +        monitor_new_hmp(opts->id, opts->chardev, true, errp);
+>          break;
+>      default:
+>          g_assert_not_reached();
+> diff --git a/monitor/qmp.c b/monitor/qmp.c
+> index 1ef09352fc..e2f841212b 100644
+> --- a/monitor/qmp.c
+> +++ b/monitor/qmp.c
+> @@ -527,16 +527,25 @@ static void monitor_qmp_setup_handlers_bh(void *opa=
+que)
+>      monitor_list_append(&mon->parent_obj);
+>  }
+>
+> -void monitor_new_qmp(const char *id, Chardev *chr,
+> +void monitor_new_qmp(const char *id, const char *chardev_id,
+>                       bool pretty, Error **errp)
+>  {
+>      MonitorQMP *mon;
+>      g_autofree char *autoid =3D id ? NULL : monitor_compat_id();
+> -    Object *obj =3D object_new_with_props(TYPE_MONITOR_QMP,
+> -                                        object_get_objects_root(),
+> -                                        id ? id : autoid,
+> -                                        errp,
+> -                                        NULL);
+> +    Chardev *chr;
+> +    Object *obj;
+> +
+> +    chr =3D qemu_chr_find(chardev_id);
+> +    if (chr =3D=3D NULL) {
+> +        error_setg(errp, "chardev \"%s\" not found", chardev_id);
+> +        return;
+> +    }
+> +
+> +    obj =3D object_new_with_props(TYPE_MONITOR_QMP,
+> +                                object_get_objects_root(),
+> +                                id ? id : autoid,
+> +                                errp,
+> +                                NULL);
+>      if (!obj) {
+>          return;
+>      }
+> diff --git a/stubs/monitor-internal.c b/stubs/monitor-internal.c
+> index 20367b7e9a..f94b5e5c21 100644
+> --- a/stubs/monitor-internal.c
+> +++ b/stubs/monitor-internal.c
+> @@ -8,7 +8,7 @@ int monitor_get_fd(Monitor *mon, const char *name, Error =
+**errp)
+>      return -1;
+>  }
+>
+> -void monitor_new_hmp(const char *id, Chardev *chr,
+> +void monitor_new_hmp(const char *id, const char *chardev_id,
+>                       bool use_readline, Error **errp)
+>  {
+>  }
+> --
+> 2.55.0
+>
 
 
