@@ -4,28 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E594C44501
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 08:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2A96C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 08:36:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh1Go-0003jh-2x; Tue, 07 Jul 2026 04:35:10 -0400
+	id 1wh1H8-00045o-8D; Tue, 07 Jul 2026 04:35:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wh1Gm-0003iv-P0; Tue, 07 Jul 2026 04:35:08 -0400
+ id 1wh1H4-0003wz-FV
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 04:35:26 -0400
 Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wh1Gk-0008Pe-PO; Tue, 07 Jul 2026 04:35:08 -0400
+ id 1wh1H0-0008Pe-NK
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 04:35:25 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IAmrkEUsJvSPe22RGtJaxImmyEijxgiG+6Um7FNXyuE3aml3Apksp/m+gwquOKdtSvBEq+Bonv4mehaMW9jZMN9NZwrmDtbRR4MHNCKv/sfg90qUWqCzahSA8QcwmhIAtB0HgLSOYWw9yZrWOoD4R0OucNimC87hC6y2v/NlsNYKQOtXLKk+uBY8vEyB5cnmHIYQJx2FxAXDJhVXG3JwaqMpQD5djsKreEBZccfqFyICy1eT7o8btuhnCZw3DvXASkM1F7B+6oPlZpf/6BkZWGdoi3rbFYHDWKWOWwpQtVZ586WYBuzO316yEKdFZHHG1py1yWlkrkXd0xUnggaSgg==
+ b=IhMwSajFC+cMxE1InYp6krmpUD/pEbq8naeYpY6F8L+OgYwnH1LaVbtKh3+YzrvOhhodLQ23AA2XxQrGg5U70vSRjVVL6YbO3ScdXmy/R43fi84T2YydkAPXGpStH6SbPvc2dF1SwmLbE2SUEQcPeiFD3p59avwg6etqygeTnM0odoY5NZpAGODGoSa1OhBodklJ5Llin2H01PTdoaQHnteG90w1m2iQbcS75X49nFvXXMMiRwXwsMXMLR/hLT1acv/6FILJMW2Uhmp+gE0Dzr/B0IgBWjXvHHQd7fYSaAbm18WHdt6GGUpyT9377ugklHU/Cz+HImyjk4dLhOgHrA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Uixdf+oQtholaUuBQOUI5+39mHiezmBLYAbPZV2OZgs=;
- b=ffQcSRXgP65doATcKGH720UWgGuvghuIsRPQ3Agq2M3F5qIij7MqtC9PKT8jgIzMoAkX1bknaWamTjVH443Gz8NMYYm4M3zYOom0QP3c2QedHK7lspwiIxkY9iVRQ1WpuVBc1Xinwm7NUd6z0eL5XSDvi+4TTjo6bK5gGRaeIFP3TcywOmehYSnLOU5YcaXD0JpiDW23liJqH9BIhfmEXTRNR3flMOJzogKqX9oyc2Yeb2ICvHVwA2O7Xg/DkclSiX94H7OWaFwDjNaSRZ5aS7pmborU7RW+OBJth2z7H3/UmWXwcunbopDCisWdt/lOA5s0G2Mt5TvVRMurMAw0DA==
+ bh=86KgJ2qKJCxRSWCvwXT1qg8FQtRX7fmRFjYj1NIiPdE=;
+ b=nY6nms0bmbdosNS/SY4u5DCaaAhjLr9jEPuSpGFxR5jMMb0gzQauUa+htFGGOgSWie9Rx6L0lgnMH1hTNFDMT2ki9JP8irHXkpv/2AsT5RTB5OXnlnO0mNbNT6PDp8WnDq6TperQLjeEi2ivi9vLIs8QEqOgCCMsXFkNrwVfxcBIMAJlUA0iGqZCN3uJyTGjSCS3nP0D7XMlmXMvoNFMhXT0JvUqQNJFq9wUtz4VO3oSAg01+KBZpaVGTrxIGrrDTwR2p7bXJS4vwdQ3ZkKWEuu5H/vB2sF3QsrIljCWQVSsfl+X2PLyMRWO8uxdbmEmvkHq1pd705ViiOJx489ECw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,28 +35,26 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Uixdf+oQtholaUuBQOUI5+39mHiezmBLYAbPZV2OZgs=;
- b=n+Q2CPuSd5bLj6/enu5NRD2R3TsE7f/pQbbBnzqsIsTff/Sz5hTR1D43crkfutihYxs4HKMwVLpIh34SdlWObpChd2O6po75Ax5F0nRevcWDdrbG9ld/P9pZZ1CvPH+SS9cIRxagzLXAk8OvODmWZS7J2XQMrMyj1GGcxlcE71eY8ae0wEDB6bNB2IiRc0ivTxJfxSR8f+lzW/a1sXcN7uP3fQJSrnhgsnpBqoGdB9GSXnbGluHWfphfjMlM2g3C9r1jv8WkANKFVnqa+oJs+0gWueciV7Uds5BewvRiDRFmEqmFoJGoUBP8QEOXhO7biUkt92OGkCIi1nheRyLCuA==
+ bh=86KgJ2qKJCxRSWCvwXT1qg8FQtRX7fmRFjYj1NIiPdE=;
+ b=nPfIA51azPylMm4Lbvtg5LB8agTnBzhkYDseDS4zUewltSBVhrr6qCjlA9CeJNYbrVFAeCgJ6JnNeOTflR5C7RcEbFqQoKfHW2bZvpsMiZswEEuI9R+4+WiIE82/ln/8g4G7VYcA4bUpsdGkUyZ/BPcwaC6wMYv6AjLSIv6F8vSDtC8UOSR9sYLS4uB0+kbnXCddKxh6IfCjlgi8QCsd/xWYdjEa9P96jezNI/ijMzbflZfKF5kKHODZvOHboWjMXA8jQMO2xrJ0GUMOwOFWO6fn2kKksareUOsa9MrYRlFwQpkew18uCaiAg/vWRXK0nAF4ZqoCpau+zxo6q0Q1BQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
  by TY1PPF1A8DB1DA4.apcprd02.prod.outlook.com (2603:1096:408::94b) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.13; Tue, 7 Jul
- 2026 08:35:00 +0000
+ 2026 08:35:15 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0181.012; Tue, 7 Jul 2026
- 08:34:59 +0000
+ 08:35:15 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Alistair Francis <alistair@alistair23.me>, Hanna Reitz <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Subject: [PATCH v2 04/10] hw/block: m25p80: Fix dummy byte handling for
- Spansion flash
-Date: Tue,  7 Jul 2026 16:34:23 +0800
-Message-ID: <20260707083431.219671-5-bin.meng@processmission.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v2 10/10] docs/devel: Document SSI dummy-cycle ownership
+Date: Tue,  7 Jul 2026 16:34:29 +0800
+Message-ID: <20260707083431.219671-11-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260707083431.219671-1-bin.meng@processmission.com>
 References: <20260707083431.219671-1-bin.meng@processmission.com>
@@ -66,66 +66,66 @@ X-ClientProxiedBy: SE2P216CA0106.KORP216.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TY1PPF1A8DB1DA4:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3d70b290-702a-4393-9c8d-08dedc02a1a0
+X-MS-Office365-Filtering-Correlation-Id: de06abe0-490b-4ff2-e1e8-08dedc02ab0c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|366016|34096008|376014|1800799024|23010399003|6133799003|56012099006|3023799007|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: eDECXDqA8NGC0FQtCDfjx/P2mWL1FWVzFzcT/ChPDfO4pOPeFAre5DpcnG2XOyAyVbwW/3lLMF0rn0KmW4v8mTcNpzVPEzdgegnU+eqKU4LatJC/07ttl00IDagpdHOKXquN2n+gfQkU3pQ66y9rSSLTzGRQqmRT/362OiH6D5lekGfI2/PCDs3SHW1izkKyHlKTVhe+hdxQnT2v/q10Oj4qoHz15PXH+Z03WQjlkgoqwJZsBfQDwzSDDTTHm15v+ID+M3pk+wXyIunbLEn3lW2H3pMWIahJuIoRRSpztcmjjLbDTcZ95PbTwJvCu4HGKSu3taz1YIGB85M5hERCH8BJsC5AGdkJDlBtr+Dj91y/vuUhfZX4+SLrqixmJgIdSUklE4F5A3FcHJDPuf1HYpsQqSo4ON3td4G30lRxjpV0UskhBy+c0g+T1Trp0Uo2URVvkUBh2BXVxMW7OJoxa2wWIvuWqGY2Se7QAvNO2OKvpoI6/1FcA5PElpE6XhIZLxfr9qarpEQ6rarPK/hdW85VSzBpXBf+8ZHR1qOYD9cvXlZ4JSqP4IWg7UZBjrvfZqw6+UVJ9C/cGyh+u09vg4F7ClpTdjlMKD2pGVxhEQQ6pKy+htH8Agd1TT0jZ/OWh7YxN0e+ijC+3354xrswR86ypYhU1oqYDzibqMMX6cw=
+X-Microsoft-Antispam-Message-Info: hwoaNDyp9mnnyzB8F7qFGS5QE3EZ0PS2WncheeT4dzGAp+zUiLliO8qByx21Lf7J6XO1Q6HZhIRTgvDqR4Dwzjvov6Pb6bDcAAgYQ/DHHjeptj3/+woc5RX2I8A5yVjzjApbdDIVc1SZCepN1vY/v6P1E4hPVc/jYRcgLSmQi4aYLwOTyhr2f9temgl2yuzTam+aNUUocgfOwmBi6dPVXnkcaX5MVVKZvW9UmwF9JdxkPphUTxdARNIzeXuCtwt69e8lN6W7URkXwz86O724EkDAn4bpbRTnUkQPWrhWJIOuLgn1wSVputdvA5eQw519cmVbopg5IAefiISymkuVNch4GJiDzsb+V+ix3EqUfXeNDQvl0+baItmRwVTFCzcfXpPY31uhtZQ2UOLRKBcAbIVigtzyfmIPl7b9bR8nfZ5NCcs4+0kCFwQnx4jnUw7CYLtkpfJXrEoSQbD6HgcCNg9pwdKXEwtGuUWaK+wbCqcmapXcQpm+v2BoAACRP9CCwTJTDCRhWTo4QgAuWw8CfXfrqyCmsSJTvpt7NXUMBv3HtWsIhi17h33ZMm7MLmWUNNw+mTknJw7mSu+WR31zH0FIgd43rCnhkcqJVngNhL16xULiR4a/mQhLQ7+8gEtIKV/LYyx4WI0V/jhYrRmkJ/9zSKHRNeUsgtjzH4rAWKM=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(34096008)(376014)(1800799024)(23010399003)(6133799003)(56012099006)(3023799007)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WG90RFFTUmJHQ2tnWlZuOWs0MFNJSnJKQnNBMGJQQnE3am9OdEM3WHhZTDFw?=
- =?utf-8?B?TzNsUDRQQ0dhUEphSENzWGFTU0dTQVZ4R3hMN2FkdmZMbkdLNW9uakt3UWpE?=
- =?utf-8?B?RkM5dVVhcWluWmJxR1p0ajRmWUxTa0REcVRTWHY4cEVSKzhYSldKZVFTOGtS?=
- =?utf-8?B?QW9qVXBxWC92Y1NhaWYvRXl6WmxNSFFJeTBtTW1Md21vaWt1MEhFTTRIeWtl?=
- =?utf-8?B?VnRTQkRucFNFS0YyUXd5OW4zMFlLV2hIZGczVHRJeFk5TUovaWtyMTYyU2FC?=
- =?utf-8?B?WjBORVdKUWFlSXlURlY2N0IwVEZxVWxmcENMVzd1dEtTeUxxNjZybEp0N0Fa?=
- =?utf-8?B?Njh3c2tPWG10Vms2a2xGVmdiYUFrU2ZuN1l4NTRIS3FoVkJ2QndLS3NDUS9h?=
- =?utf-8?B?SUVmMDdDUCtEM09jTGdnREIrb285MHVYbXptdElOYm40emEvcFN1Z0hPV1M0?=
- =?utf-8?B?NG1PL01lUnI5elhEU3N2S3F0SUhBaXVKbGFpMG4wU0lGczByNng2RGEvbzY4?=
- =?utf-8?B?dGhPT1pTTDNzYUdUblpxekg1NWdFRVFSZ2t3NS9vb2J1UFloeHJrVGovYU9U?=
- =?utf-8?B?T1BEa0d6bmM5ejBvcFNoL0lZeVNiTDZ4bHhqc3I0NHlwaVlMQWxwbmhEQmM4?=
- =?utf-8?B?T0NBNjVTVklJSXJGdWk3U1pVWkZWaGhkOWdGQzlhdThOaXlqdGN1NXl3eHBU?=
- =?utf-8?B?WVFWdWsxaGNNMTJDL1VXclUyZUZQZWY4bjVYT1ZzL1FKWWorOFNjL2RiQkpp?=
- =?utf-8?B?YkJ3Q1M0RTU5Nnl6bWlva2Yzc2xCK25Kc3czUUdLN01TRmtLWWlMdFdPOVFY?=
- =?utf-8?B?aUZ2UCt6ZVMxNWgvMlpPd3J0MTM2MWRJcmorMEh6U1p1Qmxab3Brbk5aOHVp?=
- =?utf-8?B?aStTc3IrNXNBMms1NlRlN1cvT1dxSTYvQnF5ajVHZHUyY1paMThFNXAzRmZl?=
- =?utf-8?B?K1JMWFV5MjVWNWhNQjBNdGl4WGp0YUY5QStqNGJ6enlndmtxSHZic2VRaGlt?=
- =?utf-8?B?WUtWVG0ycXl5YTUyYmtWSGtnNDdEdTVjQ3hmRzcvbXFaN3d0UnRpTzQrWEZH?=
- =?utf-8?B?ZERXZDdpem5HczQxZ0FYVFhHSVBYNlByYlJqaTl1dU0yTnJlQk4xUXpNeEpP?=
- =?utf-8?B?cU13dHVXR2NObHI3dTRYRUYwc2Zpbk40OU5qSHdaTVpYZ2puSWZMOVdxNWNT?=
- =?utf-8?B?cnExblEvemNrSndPR01Ib1pKdkJiUHVhVWJMblhzbUVkS2tHVys4SzUxLzB3?=
- =?utf-8?B?Y3FUdnM1UklTeE9RQ2FqSnRIRUF2aGpsMEJEV3V2dVlyMXJubDMzL1lRZk92?=
- =?utf-8?B?dXI1cGplQ0g2UjcwYWJuRkprVi96bzJBeWpMVkExQkdra3F3TE83UXpYeHIx?=
- =?utf-8?B?cCtTSFh2cC8wNWFIY2RORnBUeFU5b1MrZXgyc2hNVzlCOGlUZzFudmplTFZ5?=
- =?utf-8?B?SjdKSkt4azN6aERLL0N1bWhwV0xPZkRKUGhhM3laRERwK2lScW9SY2o3Tk1I?=
- =?utf-8?B?eVp6RDJZb3hFYVowbm12cmovazZYbCt0Mk1qbk1iWWIybjlxdWtIakJYZDJy?=
- =?utf-8?B?UDd3c0JGbXBHUEdFQnpHVkZZZEFGTTVZdXo3Qi9TT1NRbE9kMW5EVVN3ZDBR?=
- =?utf-8?B?cE1qeHhmMHlXMFBTbDJnWmFERENndUk5Sis0SUZKdmhmVC9haFNYTUhGcGhS?=
- =?utf-8?B?WHZHeHFsM2x3MDhIREZjd1NzdVBiMjA2RmgrNVd4UVRQeVdrOG41VGZjc0to?=
- =?utf-8?B?UmlCYXJpTkN5WExncDZPclJSRWNHYzZtdTRPblBPV2kxb0tORXN3T1lZSkNt?=
- =?utf-8?B?Uy9TVGhZMUlLdVlhSFE2b1Jhc0pFcG1xYWhrT0dUcG1RZEhKRUhMU05TcS82?=
- =?utf-8?B?ckJPVjRUV3o3eTJ5WVFsdG1teE05dlkxT1dGbTAxcnhTSTZDbG0vQkh4MjBI?=
- =?utf-8?B?R0MxRE50L1ZuZWZLMk1wMW5MYmJTczRIQ0c2eUwwbGNiQ3B6em44VGFkMnU2?=
- =?utf-8?B?MXVGOUhrVEFXQU9XZlVNMTQ0OVo3ZlNOZEVvaXo2YW52NEM1cEtvUktMOWVn?=
- =?utf-8?B?OWw0RXRacFZDdm91cll4Zkc2eDNqNFgzSkNmWkdKckV1SHF4c3l6MmVaNjc5?=
- =?utf-8?B?YzV4eURmOFdrRWJXZXJjTzFGTDJDajZvSVBTQkU2aExFNHN4S0xsTmxvWSti?=
- =?utf-8?B?ZlBteFJKd3pmSWJ5OGM4aktOeUwzenVKRUZUK245YTFiaVI2cGJxV2I0Vkls?=
- =?utf-8?B?UzliaHJ0b3hQOGtWcVJNWGp0WjBpTnNBVzQrc3Q2eTY2elZyaGdYN04vakR2?=
- =?utf-8?B?dEx3TzJWZld3cU90L3lacnV0SW5NT3pEbFdTdTU1amJublhUU2FLdFllVlN0?=
- =?utf-8?Q?4WP0ucUbfLY5fNug=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NEtDL2ZWR053NE5rZjE5RWdmUHI3WjlyU09UbFRESVJVRGp2eC9oNEZ4SXpE?=
+ =?utf-8?B?SjNham1MdzhCRWFGV3ZQTlFFbXZSMzlUd0krcWZwZWxmTjNnb1Yxd1ROVTBC?=
+ =?utf-8?B?R2grcVl6U1ZDWTVZWkNqNFU5Ti90aU9iQ2hUUjU5NURVdndPVzlBWSs0Nllh?=
+ =?utf-8?B?cEM2TFdSWFF4TG1uSUNKb2d2MC9KZWxGamJUTnpMcXFQUFhpNlVwUC9DU2JZ?=
+ =?utf-8?B?eExYRkZQaTBDTEw1REpNLzJGNVBaRDFucklvOXRWMkFLeG9rRlNRaXpRSmhq?=
+ =?utf-8?B?M096Rit2cUxuRk9pOWJ3bVJTV01JZC90ZzVxak05WkRqL3kwTXQ2TFoyL3Vr?=
+ =?utf-8?B?QWZ4MmVhZXNMWXR5YTlDUmZlM1ZFVk9LZ2pTb0w1OUVFK29jTUd1UWxld2RT?=
+ =?utf-8?B?bjdRNEZlcUpSdzZ5KzR6WnNwcmFuM1kzRjhRWUNrbm9OcjAxMkNKaEN1eGJZ?=
+ =?utf-8?B?RGlFd3hkZjhLbFdhL1dVbGc3bGZJOWpmQlY4cFFSKzI4YnJRazRPdGxQZ2RB?=
+ =?utf-8?B?ekVURkNCUUZWN2Z5aGRPaEJEdkhZcHZBeVVmdE5YQVhrSlh0VEwySVo3QTJR?=
+ =?utf-8?B?YVpZMTFXajhJWThPZDl1S1JEQkdNSmt0U1BFSGpndXk5VzhhRFBNRTNYQnQ5?=
+ =?utf-8?B?OVBYNlhzdWFjYzdsb21QUHlEc1AzbVg1MkVDeDdCT3UxOHF2Ym52bGZGRDg3?=
+ =?utf-8?B?VWpLYzZUVnZqZEVxMmhDU0tJUzZXa2I4RkVtNUdMSEVpcHNQaHkzRjl0aTFs?=
+ =?utf-8?B?TEw5RCtUL0x0bnJjVGhQZG5KWmgzL1dFY3QvcFAzd1RUcFdlVVRsZzBVTUlH?=
+ =?utf-8?B?dC9JdzBQUHFUeEVKdjlOUmk4SzlvSytNMG9JbzJ6QktId2lXeUlpMWNWcTUy?=
+ =?utf-8?B?cVErUVdTbkd4NjFjbzdkVlZKQjZXVWhiMThnOEJqSUlWaW5wZzZuNk45Tlht?=
+ =?utf-8?B?WVdSalREYkpLRDNrVXFUL0IzNmlGd1JrYkdjVmdheHMxRnRTNkU4Qk5tV1Q2?=
+ =?utf-8?B?QXZ6Vk5TN2x0eDhZMGVuNFpQam1KSXBDRitvVWFpUExFRWNVVTB5UzdXS0x4?=
+ =?utf-8?B?emVGQWFYaVMzWTl1V0tlVXpacHJPR0puL2ZYbjBoZWFHNDh1QjlnOHJOeXM1?=
+ =?utf-8?B?L2hjWlJGYW5BSkJkTTlmajUyTC9QcHBtT3VDcFJJK0pqM3R5RFowN1ZGdXh6?=
+ =?utf-8?B?YzRtdzZCTFQrWmFKUktad2ZCOHU1d1ZuQ0F3U3QwUE92V3hsZUNIamx6VVJs?=
+ =?utf-8?B?YVJicWF4NUt5eXRhTUtSWlJ3Z0lYN24yQWJtcEVNUWU5TDdBaldEc3FTb1Vp?=
+ =?utf-8?B?VVhhMTd0UVdkcnEyL3phZjVabXNza2dqeHRaTWhxcjY0NUpHaTdPWGljU20v?=
+ =?utf-8?B?aUFJR0FkQStnTUtMOG80SFhMRElObnZ4Z2E2emFKTVdwcHZSQ0VSeUVieVMr?=
+ =?utf-8?B?TGo0SkRETnB1SmZ4RHN2bjY3Y2NkbHI2U2dTU2YySWVBQ0lzTlFNL2Jac3V5?=
+ =?utf-8?B?VFQ0VFVBWGZhMmg2UjF1MDlNcnduUW9aN1dJbXp4bGNVY1lxSFZBc01EM3lQ?=
+ =?utf-8?B?VXFyZ01sVlp5R1Jnb3dWamE4Zmp0aEJnUmppdnI0TXEwOWduSmR2S1Zkb2FO?=
+ =?utf-8?B?OTl2alBkWVc1WTVrLzlrYVhrS1Q2eWdRRzBSRlhOamhpUkJHKzN5OG1hT0h5?=
+ =?utf-8?B?ZDRMV1pRY1FUb0xRR3hzTlZtVWZ4K0xrSHNyNE9oc0g3YjhISmZSZzYwd2xl?=
+ =?utf-8?B?bDkwS01XQm52d1p2NksyR0NOTkJ0WVY4K2UwdEQvd01ZY1NPR2YvYU1aamVw?=
+ =?utf-8?B?ZzFac3BiTkdxcTEvVE9wT1hlVGRqMkF3S1lMQ3FVYUVsOWlXemsrMXcveW1v?=
+ =?utf-8?B?YkhjWVVjN0VJdGxGQURKcWdpM1dSZWlKeXRsYnJpbmtRa1NpVFRlQ1I0cmMy?=
+ =?utf-8?B?dEpya0kzMkpiQitlVzJsald1VEd0U1FRVXZReWhtK1VKaVk0WldwOWFhT2Vt?=
+ =?utf-8?B?SGxmOEtKR2w3UXBTNysyT0NFeGRUSVptb2xPQ0ZhYktodHVZa0xJKzAwQk5M?=
+ =?utf-8?B?bHlQRlZIeWtwTC9VVlJpOHpxSnV6RUcvY2R3NUVNWCtOWExVaEk1a1ZYeDMv?=
+ =?utf-8?B?dVR6R1pTb1JtVW80MFMxK0h2bm4vcGl0ZUF5S1l2Q0Y1aXYvZ1BDMThRSmtM?=
+ =?utf-8?B?bGNRUi9NbU13SnlldHpzSXo4Q1NBalBVZytzZTNtUkRONkdPWWtUeUV6bWlS?=
+ =?utf-8?B?WVNzRjBIaThORmtkMElPNC9nTzRHUEJMSkdtLzEvQmxWMWtyMzJDVGJKSkdv?=
+ =?utf-8?B?RXNoMnJOWURqM29UWDlzbms4Q0s5dC9sSFdnY3NjaTVBTzc0ZS9UdWR3TG5P?=
+ =?utf-8?Q?PONTT00f4QRo2KFk=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3d70b290-702a-4393-9c8d-08dedc02a1a0
+X-MS-Exchange-CrossTenant-Network-Message-Id: de06abe0-490b-4ff2-e1e8-08dedc02ab0c
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jul 2026 08:34:59.3725 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jul 2026 08:35:15.1709 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Y/vWV3eGvdqAzb7kJpRz95tA0O82h+Oglz418qk1zO865P26vDKHsnEzXyKWX12yFaOwfgeYU2PIp8ZcrT3dUfuZe060ZCw8EgzWHiBFVk8=
+X-MS-Exchange-CrossTenant-UserPrincipalName: 92bFCWM7ESHF7UX7HRyRYohBujCqy9JAzdVgc+t4gStJZtZ5ygIN6UG1W6DcZLBc567A2BawdbaIpc+N+j6feWqIsN9MaiqyPYUwIcmfQww=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY1PPF1A8DB1DA4
 Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=bin.meng@processmission.com;
@@ -152,96 +152,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Spansion flashes expose the number of dummy clock cycles through CR2V
-register [1]. The value is a cycle count, not a byte count, so the
-m25p80 model has to convert it to the number of whole SSI transfer
-bytes consumed while collecting read command data.
+Document the boundary between SPI/SSI controller models and SPI flash
+models when representing fast-read dummy cycles. It explains that
+flash models own command semantics, while controllers own
+hardware-generated dummy transfers and cycle-to-byte conversion.
 
-Add a helper that multiplies the CR2V dummy cycle count by the phase
-width and rounds up non-byte-aligned counts, matching the byte-oriented
-SSI model. The default eight-cycle configuration keeps the same byte
-counts as before.
-
-[1] https://www.infineon.com/assets/row/public/documents/10/49/infineon-s25fs128s-s25fs256s-1-datasheet-en.pdf
-
-Fixes: cf6f1efe0b57 ("m25p80: Fast read commands family changes")
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
 ---
 
-Changes in v2:
-- change spansion_extract_cfg_num_dummies() to spansion_extract_cfg_dummy_bytes()
-  to avoid confusion
-- use assert() when the dummy bit count is not byte-aligned
+(no changes since v1)
 
- hw/block/m25p80.c | 32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ docs/devel/index-internals.rst |   1 +
+ docs/devel/ssi.rst             | 132 +++++++++++++++++++++++++++++++++
+ 2 files changed, 133 insertions(+)
+ create mode 100644 docs/devel/ssi.rst
 
-diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-index d7a9d79373..545e0b5728 100644
---- a/hw/block/m25p80.c
-+++ b/hw/block/m25p80.c
-@@ -1057,6 +1057,23 @@ static uint8_t macronix_extract_cfg_dummy_bytes(Flash *s, uint8_t bus_width)
-     return dummy_bits / 8;
- }
- 
-+static uint8_t spansion_extract_cfg_dummy_bytes(Flash *s, uint8_t bus_width)
-+{
-+    uint8_t dummy_bits;
+diff --git a/docs/devel/index-internals.rst b/docs/devel/index-internals.rst
+index b89bab9b30..a8f5e310df 100644
+--- a/docs/devel/index-internals.rst
++++ b/docs/devel/index-internals.rst
+@@ -20,6 +20,7 @@ Details about QEMU's various subsystems including how to add features to them.
+    reset
+    s390-cpu-topology
+    s390-dasd-ipl
++   ssi
+    tracing
+    uefi-vars
+    vfio-iommufd
+diff --git a/docs/devel/ssi.rst b/docs/devel/ssi.rst
+new file mode 100644
+index 0000000000..864b5d9320
+--- /dev/null
++++ b/docs/devel/ssi.rst
+@@ -0,0 +1,132 @@
++================================
++SSI devices and SPI flash models
++================================
 +
-+    dummy_bits = extract32(s->spansion_cr2v, SPANSION_DUMMY_CLK_POS,
-+                            SPANSION_DUMMY_CLK_LEN);
-+    dummy_bits *= bus_width;
++QEMU's Synchronous Serial Interface (SSI) bus models the full-duplex transfer
++of words between a controller and one selected peripheral. Most SPI flash
++models, including ``m25p80``, are attached to controllers through this bus.
 +
-+    /*
-+     * Assert that the dummy bit count is byte-aligned
-+     * as SSI core can only consume whole dummy bytes.
-+     */
-+    assert(dummy_bits % 8 == 0);
++This page documents the expected boundary between a controller model and a
++flash model for SPI fast-read dummy cycles. The boundary is important because
++many real controllers expose dummy-cycle configuration in registers, while the
++flash model observes only the byte stream delivered through ``ssi_transfer()``.
 +
-+    return dummy_bits / 8;
-+}
++SSI transfer granularity
++------------------------
 +
- static void decode_fast_read_cmd(Flash *s)
- {
-     s->needed_bytes = get_addr_length(s);
-@@ -1075,10 +1092,7 @@ static void decode_fast_read_cmd(Flash *s)
-         s->needed_bytes += macronix_extract_cfg_dummy_bytes(s, 1);
-         break;
-     case MAN_SPANSION:
--        s->needed_bytes += extract32(s->spansion_cr2v,
--                                    SPANSION_DUMMY_CLK_POS,
--                                    SPANSION_DUMMY_CLK_LEN
--                                    );
-+        s->needed_bytes += spansion_extract_cfg_dummy_bytes(s, 1);
-         break;
-     case MAN_ISSI:
-         /*
-@@ -1111,10 +1125,7 @@ static void decode_dio_read_cmd(Flash *s)
-         break;
-     case MAN_SPANSION:
-         s->needed_bytes += SPANSION_CONTINUOUS_READ_MODE_CMD_LEN;
--        s->needed_bytes += extract32(s->spansion_cr2v,
--                                    SPANSION_DUMMY_CLK_POS,
--                                    SPANSION_DUMMY_CLK_LEN
--                                    );
-+        s->needed_bytes += spansion_extract_cfg_dummy_bytes(s, 2);
-         break;
-     case MAN_NUMONYX:
-         s->needed_bytes += numonyx_extract_cfg_dummy_bytes(s);
-@@ -1151,10 +1162,7 @@ static void decode_qio_read_cmd(Flash *s)
-         break;
-     case MAN_SPANSION:
-         s->needed_bytes += SPANSION_CONTINUOUS_READ_MODE_CMD_LEN;
--        s->needed_bytes += extract32(s->spansion_cr2v,
--                                    SPANSION_DUMMY_CLK_POS,
--                                    SPANSION_DUMMY_CLK_LEN
--                                    );
-+        s->needed_bytes += spansion_extract_cfg_dummy_bytes(s, 4);
-         break;
-     case MAN_NUMONYX:
-         s->needed_bytes += numonyx_extract_cfg_dummy_bytes(s);
++``ssi_transfer()`` transfers one SSI word. Flash models that implement common
++SPI NOR command streams usually consume one 8-bit word at a time:
++
++* command opcode;
++* address bytes;
++* optional mode or continuous-read bytes;
++* dummy bytes;
++* data bytes.
++
++The SSI core does not model individual clock edges or the number of active SPI
++data lines. If a real transaction has a dummy phase expressed in clock cycles,
++the device model that generates transfers on the SSI bus must represent that
++phase as a number of dummy byte transfers.
++
++Flash model responsibilities
++----------------------------
++
++A SPI flash model owns the command semantics for the flash device:
++
++* which opcodes are recognized;
++* how many address bytes are required;
++* whether a command has mode bytes;
++* how many dummy bytes must be consumed before data can be returned;
++* manufacturer-specific differences in fast-read command behavior.
++
++For the ``m25p80`` model, ``needed_bytes`` is a byte count. It must not store
++raw dummy cycles. When a flash datasheet describes the dummy phase in cycles,
++the flash model converts the cycles to bytes using the bus width used for the
++dummy phase::
++
++    dummy_bytes = DIV_ROUND_UP(dummy_cycles * dummy_bus_width, 8)
++
++For SPI NOR fast-read commands modeled by ``m25p80``, the dummy phase follows
++the address phase width. For example, output-only dual and quad read commands
++such as DOR and QOR use one line for command, address, and dummy phases, then
++use two or four lines only for the data phase. Dual I/O and Quad I/O commands
++such as DIOR and QIOR use the wider bus for both address and dummy phases.
++
++If the exact dummy phase cannot be represented as a whole number of SSI byte
++transfers, the model should round up and log the limitation instead of silently
++treating cycles as bytes.
++
++Controller model responsibilities
++---------------------------------
++
++A controller model owns the behavior of the controller hardware:
++
++* how guest-visible registers select command, address width, bus width, and
++  dummy-cycle count;
++* whether the guest supplies dummy bytes in a transmit FIFO;
++* whether the controller itself generates the dummy phase for a memory-mapped,
++  direct-read, or other automatic transfer mode;
++* how chip-select state changes around controller-generated transfers.
++
++When guest software writes dummy bytes into a transmit FIFO or manual transfer
++path, the controller should pass those bytes to ``ssi_transfer()`` like any
++other guest-provided byte. It should not add more dummy transfers on behalf of
++the flash.
++
++When hardware registers instruct the controller to generate a dummy phase, the
++controller must emit dummy byte transfers before data transfers reach the flash
++model. The controller should convert the configured cycle count using the bus
++width that the controller uses during the dummy phase. For example:
++
++* 8 dummy cycles on a single data line become 1 dummy byte;
++* 8 dummy cycles on two data lines become 2 dummy bytes;
++* 8 dummy cycles on four data lines become 4 dummy bytes.
++
++The controller should not duplicate flash-specific opcode tables merely to
++guess which commands need dummy cycles. In automatic modes the controller
++already has enough hardware configuration to know whether it must generate a
++dummy phase. In manual modes the guest-provided byte stream is authoritative.
++
++Avoiding double counting
++------------------------
++
++Exactly one side should generate each dummy byte transfer seen by the flash:
++
++* If the guest sends dummy bytes through the controller, the controller forwards
++  them and the flash consumes them.
++* If the guest programs a controller dummy-cycle register, the controller
++  converts those cycles to dummy byte transfers and the flash consumes them.
++* The flash may know that a command requires dummy bytes, but it does not create
++  transfers on the SSI bus.
++
++Do not implement controller-side snooping that watches manual-mode opcode
++streams and injects extra dummy transfers based on flash opcodes. That mixes
++flash command semantics into the controller and is fragile when flash models
++gain correct dummy-byte accounting.
++
++Examples in the tree
++--------------------
++
++The following models illustrate the boundary:
++
++* ``hw/block/m25p80.c`` keeps fast-read dummy requirements as byte counts in
++  ``needed_bytes``. Manufacturer-specific helpers convert datasheet dummy
++  cycles to the byte stream expected by the model.
++* ``hw/ssi/aspeed_smc.c`` generates dummy byte transfers for direct fast-read
++  mode from controller registers, but manual user-mode writes are forwarded as
++  guest-provided bytes.
++* ``hw/ssi/npcm7xx_fiu.c`` converts the direct-read dummy configuration to the
++  number of dummy byte transfers sent before reading data.
++
++Review checklist
++----------------
++
++When adding or changing a SPI flash controller or flash model, check:
++
++* Are dummy counts stored in byte units when they drive flash state machines?
++* If a hardware register stores cycles, is the conversion to bytes based on the
++  bus width of the dummy phase?
++* Are manual guest-provided dummy bytes forwarded without extra injection?
++* Are automatic controller-generated dummy phases modeled by the controller?
++* Is flash-specific opcode knowledge kept in the flash model rather than copied
++  into controller snooping paths?
 -- 
 2.53.0
 
