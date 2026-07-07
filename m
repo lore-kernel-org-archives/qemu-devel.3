@@ -4,130 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 349B4C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86311C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:13:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh5bW-0000U0-UM; Tue, 07 Jul 2026 09:12:50 -0400
+	id 1wh5bX-0000U9-9y; Tue, 07 Jul 2026 09:12:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5bV-0000OX-Jl
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:12:49 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wh5bW-0000RF-6T
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:12:50 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5bT-0000QE-Ly
+ id 1wh5bU-0000QI-Mq
  for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:12:49 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667C9c6D3619376
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:12:46 GMT
+ 667C8qKh3749245
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:12:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 9iSCTsvy/zYaI+hiohs4sGwpOHbQL3Yw+cTcIjQawcQ=; b=lxE3zYXFYMAuTPe5
- UXgGzxt3s7ovBadbSH/pVTH5FFEaOYv934aVyq+nVyZC44Ff53YOtlcdr2cEM2mA
- nUR+cRHvwfPeQ2oLDpQSyxCDaMtv2YGpvy6UMoU0E2K0xei6DAw/1c4/sneQYUKd
- QFDwRKjCxqojd86D0+LS9lLmAdTgVKYU6X004qkq2c5pmIlDP6VPDzpCZ85eCd/T
- SO5myumtrd028BicPJKL/F5v/YgVceUZZ+xDSKQF2tAWYcMOtXaEjX2VODu2hF//
- kev3RQWea7FqRxEpTyO7VzPY5nqaxHTGje7Q7ZnxgTthG+XTB4alJUIW9a2wOstB
- MLgwPQ==
+ pca0Z4WzBDeiCYBG+XEsZYICqDBGUaJK5JfZvXzY688=; b=EcSPvZrcFtA7kWbY
+ GM4hTaiXyTHNiTVD4Vzsi4iEFINrIwD+RbXS+ALV9xvmp3Kzv4mr+u6MLoovJS8h
+ VmQncpqsGeaIxl1SZ/cgX6BPAWTypNkTlqi0MqLJf8VUYfuAgaITpXFyGQRObAgf
+ lTml9TkWllvWk2DlSgeROVw5+74EbzDS/Lacd3xsSTHsKm2/m2aRDIku/yUqijS3
+ bfs/xYltQ9M7G98bbH3Q6HNiDPlCBXEmTi0JcKRoEcuK3BjvNMobHF25nyhyQpzH
+ Ul8doyuQ86I5QeUbX03yjBPV7HrybCDvgrtvtPIH9uKF64KU6P/Z5nCQCk9TU2RV
+ LmIooQ==
 Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
  [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8vun1de9-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8vdj9j6x-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:12:45 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:12:47 +0000 (GMT)
 Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c2af04aeeso8359221cf.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:12:45 -0700 (PDT)
+ d75a77b69052e-51c083f1818so45608011cf.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:12:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783429965; x=1784034765; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9iSCTsvy/zYaI+hiohs4sGwpOHbQL3Yw+cTcIjQawcQ=;
- b=eGujGMQaTWzmI1XaPuvY4PomeqrWQYLnhGr4miuifx9s72Llg9E9UAWpsTuKHX3k39
- TA3pLtrz4dWAXGgaNV+vIu3ZtW07GqIqNlMTBIk/Zji82MFnU8a0Lu9UIhdfSaOah199
- S7TfgO3Hz4zWPuHe2oNz6FW079K4ABqajmx8yZcFsZcvLRvzLh9uPZnB0zwaIhdXpvef
- /GxiQaw7odsUl696dibU6Cds6j+3lZ/SezyN4DD4u4pge0/3YZelfmWHsFhzuuYaf2Gt
- XzOJka4FJqm81sltdTtUM3nR3HITGPuZ2g2pAkNQKCnLt+H/TG7lnF+NRaxJNpS6jP5f
- XBrQ==
+ d=oss.qualcomm.com; s=google; t=1783429967; x=1784034767; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=pca0Z4WzBDeiCYBG+XEsZYICqDBGUaJK5JfZvXzY688=;
+ b=asx3V+8ZyicB3MXgXOYkn1igoXdEoo9Z0gYS5P+243rOueDvH5LxCf22kWYfWv1fwG
+ Arsd05DfW6mqhBaNxjQT5iucI1ENsOwKd8Nr68yOTUVwX4YHhMN/iJVskpxSX46IHmZ0
+ 2A7WHjPQcjZI+Ivi5osouzaNcBgRIe+w+wwF5OTsWm6E2NWESAHQOuFODxth+Z5xjno6
+ R0+D7Y8P0rJqHwsLHsHZfVs+lQE4KD+5KdhlGQ3sJ9hSvdkqKrsyNLz/GPx9MCSoJPDk
+ 2tWsacJaMos40OjVsZOvOzxxfUVhbS/KEOJswuhLzTEhvxtLVGrAPNAK1AIknCpE//Vp
+ X1tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783429965; x=1784034765;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=9iSCTsvy/zYaI+hiohs4sGwpOHbQL3Yw+cTcIjQawcQ=;
- b=Q5JnsOo4367bhmHAxuYI5x4pWLao0+FV3TaiLKAeFgU/Aglni994QzvVTO6j6jDi4X
- lQ4rMpU0/LPsNPd2Vg1PnesgAllM2iqeY6N+3MgFNUG0Ip2l7UykEn/YXml1WCn98u71
- MF80lSVkidVEv2H09wugh412jhCl6zSMjF9W1AfbeDxJU3NY/zcjw/YoHplhAfQFzKFF
- u2tphXGQYAJqqABetX6+IK4++ukbBElmVhIz7r3AIPDaYH+AYUw96BQMvWRDrs07V84O
- qbfzeDYi+kTuRym2lJQ1pt4ZYSN42GcqUZ/OkqdqUJuZdmd7riBYkpfLKISeZWrxTxnb
- ZGNg==
-X-Gm-Message-State: AOJu0YwqrjgDsmOb1ftFfIdCZexwRyKgRcBoCH+e1/51bWL5jMY21Fsw
- Xb7EkNaL1rnTAyDdXlChceJ5rsAvpdMnMn0Wiiy7fCe6iAWcO3vZ6F0MWF0okWsOqZvK8NaFrYw
- lCH2dM94lqzBX4RX0/NY5SL/M/FM7MPx7O2R8wkNOfRTonbeaTSlHsBNvb6keOpgC5A==
-X-Gm-Gg: AfdE7cl1fg6SI45/jqebZeUxlvmt3eehMDrlwSM5VdR2Rj884+DF+RfKwhj3kt7qA8m
- aG8coLz3olN8c3xVBaNmMwObXlHM/Fv7cNjGsaWrPC79iXpkDL304aMTFit6PRPyNFUc4UPQJZJ
- 59BXKAzAjy69X5eoAhSiYrfmZ7T4wa0Grm6zFsLwOub+dNmrjPrLPml/2mL6b0OgPx1k6W8Uo6U
- vbDnOe8scOE9fWv9tVx284dm5n+XwxdbeEya+LXrERC7lFWq9nMqr9e0asmXk4ZjQAV+6ZvWV8R
- jSKqxSkZrYjGZ55e+pZH2m8xX0W9Nc0s2sV2YW535aIyjFbr1d+k/O2B9xwPrnFMqv6gMqNx4Sd
- XnHNXNHT5HcEhAUq5kl0uI97dcvpV0lmeYQXXioVeq3bdRtlrtNl5QLo3KAMuxk7M+nmb
-X-Received: by 2002:a05:622a:418a:b0:51c:86b:3487 with SMTP id
- d75a77b69052e-51c7a773ec0mr27854491cf.33.1783429959854; 
- Tue, 07 Jul 2026 06:12:39 -0700 (PDT)
-X-Received: by 2002:a05:622a:418a:b0:51c:86b:3487 with SMTP id
- d75a77b69052e-51c7a773ec0mr27853891cf.33.1783429959217; 
- Tue, 07 Jul 2026 06:12:39 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783429967; x=1784034767;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=pca0Z4WzBDeiCYBG+XEsZYICqDBGUaJK5JfZvXzY688=;
+ b=d6sYrN0w1Nn5PiG35NGyt+1CbRaHLsoZzycz2FwwcbOTWcIYFnuGC6Dtz3twrYQ4W7
+ IlKOrTSTBGvao9KDYGtHyOE/OOHkikOCbos3SvHPzfA3SjaD9R6J81U7YG6IbEzR+C5U
+ Z7ejSu4Vc4Efww1nqpe4rpzEnPZH04lbSrBWh8tq8oA9Nb3s8lhdovpWnSIB/FO49F4v
+ EoSMndbhnXMUuqq0naFIwnOBwyMvXTXVAdqe0GqXFMzCK5jpQXhLH49uKFTQo0uzKi9w
+ UJm3TUlH78+Nbwgnu+JNBWkZBAXRvkmBmiqpGH0wdkHP8gpjP5xbIhGqUwcQzZJaJCO2
+ sakA==
+X-Gm-Message-State: AOJu0YyQFk9sLKXLqA3v0AD9vgvotiHwkFLxFE9pqr+e0KMbDH73MV5X
+ Hs2m3+eK/lZ7JsgVl+OdnlhUDntRyLa+YBtPXNc+9pHGrZbJ3qZATbcdDkdf56bDSYYWuHs2MJ9
+ Lkkzc9hV7FfYBk69IWXyCfUMDztYzsGiTdeZutY5+93WdiuWhTkXfk4uJoKY+2hsgSw==
+X-Gm-Gg: AfdE7ckdrtOVJ982gGszmwDMRdAbN01uJMFI0ai3Ql7m3AMT+DsYuF/LIJpRSqUdYrF
+ qvCnyMDn6rRC8Rpg0wVSk8qzliCv+g9XjtyA0vvaYQDdNgMyPdgs+K/nwOSNVjK80bqUVNKHCsP
+ 02y6EUwcAn5WH9Kw25SAiSzqMFL4AN6INjj7fCyj4T7YrOjMG6g89AjvWfbsT9BNLPAHb2WXNgQ
+ Bnb/GOx8Mvj5f5l8mJi4Wnw+u2mK4jRBz9bI7dH2rrbFh+Rc5KlN8jVvje3LNW8osQco7NwhLNU
+ zAQbAqCAVw721mfhSjxVNNK+8086i5HTV8xsakB8nwAl/Nk2n3Lwwa168dobTpRy2H4a7Pvewet
+ BtplFFwAArTgLJj4ZDZdoCMrYVqFad5wWoxCtmFzz4s6H5WYt62zZv2qJWRzPZKrDQrvY
+X-Received: by 2002:a05:622a:508:b0:51c:1bcd:5cc3 with SMTP id
+ d75a77b69052e-51c747a5403mr51318281cf.25.1783429966895; 
+ Tue, 07 Jul 2026 06:12:46 -0700 (PDT)
+X-Received: by 2002:a05:622a:508:b0:51c:1bcd:5cc3 with SMTP id
+ d75a77b69052e-51c747a5403mr51317751cf.25.1783429966175; 
+ Tue, 07 Jul 2026 06:12:46 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-69a3652a02asm5045158a12.11.2026.07.07.06.12.38
+ a640c23a62f3a-c15ad9bc41esm141059066b.37.2026.07.07.06.12.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Jul 2026 06:12:38 -0700 (PDT)
+ Tue, 07 Jul 2026 06:12:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/32] hw/display/ati: reset host_data.next in write handler
- after flush
-Date: Tue,  7 Jul 2026 15:11:52 +0200
-Message-ID: <20260707131223.51505-3-philmd@oss.qualcomm.com>
+Subject: [PULL 03/32] hw/display/ati: guard against zero bpp in
+ ati_host_data_flush
+Date: Tue,  7 Jul 2026 15:11:53 +0200
+Message-ID: <20260707131223.51505-4-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260707131223.51505-1-philmd@oss.qualcomm.com>
 References: <20260707131223.51505-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX0uFVYGLhVQ/g
- zugVi+HTAKhdFcPuEKN6SSgW5HlS+r4rDRDw2ot82tMQRrWCJx5KO8cW9mU3Ef3wL8oDQ6M8fIJ
- qD9FqJu7m6E7UB052yQQgbbEdlV8w8Q=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX3V/aYq4pXgqz
- WC/L/aDt26myc0wIuZn7TmESVpERNpb4vSwYGYFku5BfaU95gkkg+ohbypou4t/VTRwyIab0jCX
- Gecux7k/WCfs97Xbuu273xrw+56JYAQM8z1OvEMD1XpaVLyLxf+/Qi6Yk5GmtrzC0B54YXTcT5x
- Y8GWhmL4Sj88ETLAwiZj13oPUB+CGPzTqHEdJ1KHV3Dc19oOBLqEQPy2Q8d4SA/g5brJuTb6RpC
- 3ytz+VpbNZutbr++cPxxHvZ16zoY/e8MlCiSA/Ws42I0kHCadCht5+MAPUNZZaFC8vkIXbvu4OB
- ckxVBrA7msihW8H3lZmsCd60FmaknUHU06IVGHOva/OohzMwlwe5S30jTBY2jTEKw/cMezpfQXP
- 5DmYkdx3lCJnfcZkd3LqwJatUk/4i2X/l+TShGEviNrTAWLDJFcUKeQmgEgKnUGhXcgR/vVXsMM
- hD+8pB/t4PoaR5BNqOQ==
-X-Proofpoint-GUID: ezzzceCfSzY0h1XUptzGCVISuj-OAuHQ
-X-Authority-Analysis: v=2.4 cv=N+IZ0W9B c=1 sm=1 tr=0 ts=6a4cfb4d cx=c_pps
+X-Authority-Analysis: v=2.4 cv=R7cz39RX c=1 sm=1 tr=0 ts=6a4cfb4f cx=c_pps
  a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=VwQbUJbxAAAA:8 a=QyXUC8HyAAAA:8 a=69wJf7TsAAAA:8 a=57R0qBCtAAAA:8
- a=EUspDBNiAAAA:8 a=0hMSH2Hfg6KUgAemlSAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=QyXUC8HyAAAA:8 a=69wJf7TsAAAA:8 a=57R0qBCtAAAA:8 a=EUspDBNiAAAA:8
+ a=fAhWzQUUEP2HniuozqAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
  a=uxP6HrT_eTzRwkO_Te1X:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=mR_gFduoMj4eUoa7Ntlv:22
-X-Proofpoint-ORIG-GUID: ezzzceCfSzY0h1XUptzGCVISuj-OAuHQ
+X-Proofpoint-GUID: OFwuL1ZqQGPaoP1IgcGJR5Kf-VGJONcc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX/OAu0ZaIMWkT
+ n6kPCeJLCMTdjSX0DRjoJv4vadXTsMn9M0GuqQ9u5G+vp+oSr2BzusnMDQwWVWOpkvUbADH491I
+ /W7KKh5qBlvGIMCLWpzzDOzQaKK2zaWvx2HszqeooGk5ylTxvW2QAfVQcGGzllpR4cKfDnMojAG
+ D/Cdn50mwurKGwz3tIs67Co/4xiwZIXv2HowRqOl3/Tx7T17k03cwxb7cC8L8Pf5EAUnmlfWmAU
+ LD07dFRHqQjeg6StlUjFiR16sOPp/rIZoK8UIzV19wG5YcM5FCJjeBRiMbkHHzgzvhy0FiGjWj0
+ tXZ3B3jiKM3siXvjEgnpzKvxrlz3xRCd6Ci73szb/E2Zp3rYg44cUJSbQIIEbwn9SADJQwyc9Uz
+ S42bioQGTdqdu5zuhJzicjfrlkAFKZjBTbTCWD7IVXTfO6FXsab7+KGwgRiuvd+lKWNgf3w/0JU
+ zW1pBo73s0oNnQwuFVQ==
+X-Proofpoint-ORIG-GUID: OFwuL1ZqQGPaoP1IgcGJR5Kf-VGJONcc
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX5DmhIzHEDeSn
+ ovXJ6LEvmaqPxLIT3pGsQSCnNFP3uMiWMjxDc2pSHNcknoWzYiCHmk96LzDm+FxB+0YOAC5HwZx
+ nMj1Ad3XzA3I/jNRwS0Ca4LEYAEw7ks=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_03,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 priorityscore=1501 clxscore=1015 adultscore=0
- bulkscore=0 suspectscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0
+ adultscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015 malwarescore=0
+ bulkscore=0 spamscore=0 priorityscore=1501 phishscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070129
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -152,57 +154,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Junjie Cao <junjie.cao@intel.com>
 
-ati_host_data_flush() resets host_data.next only on its success path.
-When it returns early (unsupported bpp, direction, src_source, or
-src_datatype), next remains stale at >= 4. The next HOST_DATA write
-then stores a guest-controlled dword at acc[4+], overflowing the
-4-element accumulator array.
+ati_bpp_from_datatype() returns 0 for unrecognized dp_datatype nibble
+values (0, 1, or >= 7). ati_host_data_flush() only guards against the
+bpp == 24 case but not bpp == 0, leading to:
 
-Fix this by resetting next unconditionally in the write handler after
-calling ati_host_data_flush() or ati_host_data_finish(), and removing
-the reset from inside ati_host_data_flush(). This ensures the write
-handler owns the full lifecycle of the accumulator index regardless of
-flush success or failure.
+  1. Division by zero at "pix_count /= ctx.bpp" (SIGFPE) when
+     src_datatype is SRC_COLOR.
+  2. g_assert_not_reached() in stn_he_p() when bypp (= bpp/8 = 0)
+     hits the default case of the size switch.
+
+Both are guest-triggerable via MMIO writes to the dp_datatype register
+while a HOST_DATA blit is active.
+
+Add an explicit bpp == 0 check with LOG_GUEST_ERROR before proceeding
+with the blit, consistent with the existing check in ati_2d_do_blt().
 
 Cc: qemu-stable@nongnu.org
 Reported-by: Feifan Qian <bea1e@proton.me>
-Resolves: https://lore.kernel.org/qemu-devel/Czyl6yVfL6sHl_o1kRk8N_LpwXMMRVhO9vgz1qCVJFagn9D4nHSKuiux39iOLty0Q3acxQq_FeovPhTQvSKus2htwjI9lTajLZmqovr0Wxs=@proton.me/
 Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
-Message-ID: <20260519023937.439077-2-junjie.cao@intel.com>
+Message-ID: <20260519023937.439077-3-junjie.cao@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/display/ati.c    | 2 ++
- hw/display/ati_2d.c | 1 -
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ hw/display/ati_2d.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index d77589df67a..db7e08a462a 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -1034,8 +1034,10 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-         s->host_data.acc[s->host_data.next++] = data;
-         if (addr == HOST_DATA_LAST) {
-             ati_host_data_finish(s);
-+            s->host_data.next = 0;
-         } else if (s->host_data.next >= 4) {
-             ati_host_data_flush(s);
-+            s->host_data.next = 0;
-         }
-         break;
-     default:
 diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 48498677c7e..8ef82bb87fd 100644
+index 8ef82bb87fd..22dd811bd85 100644
 --- a/hw/display/ati_2d.c
 +++ b/hw/display/ati_2d.c
-@@ -452,7 +452,6 @@ bool ati_host_data_flush(ATIVGAState *s)
-     }
+@@ -377,6 +377,11 @@ bool ati_host_data_flush(ATIVGAState *s)
  
-     /* Track state of the overall blit for use by the next flush */
--    s->host_data.next = 0;
-     s->host_data.row = row;
-     s->host_data.col = col;
-     if (s->host_data.row >= ctx.dst.height) {
+     setup_2d_blt_ctx(s, &ctx);
+ 
++    if (!ctx.bpp) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "host_data_blt: invalid bpp from datatype\n");
++        return false;
++    }
+     if (ctx.bpp == 24) {
+         qemu_log_mask(LOG_UNIMP,
+                       "host_data_blt: unsupported in 24 bits mode\n");
 -- 
 2.53.0
 
