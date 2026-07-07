@@ -4,137 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A2E7C44500
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:17:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 527A3C43602
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:17:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh5eT-0004K6-Pb; Tue, 07 Jul 2026 09:15:53 -0400
+	id 1wh5eU-0004Qt-TC; Tue, 07 Jul 2026 09:15:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5eD-0003Tm-Er
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:15:38 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wh5dp-0003Ad-AQ
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:15:14 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5eB-0000r6-LO
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:15:37 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1wh5dn-0000e1-Oz
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:15:13 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667C8euJ3742025
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:15:33 GMT
+ 667C8tRK3676459
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:15:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- eswOgvsvmES6wANwXxIqB9K89YBMpWQmKqAkHprftcg=; b=EeKoBiFvpMll2RGo
- yUEeMoxufBbPV/UvmRTBR5P8KhlXTHyR0Tk53jS27yd/5SjHmpZYGDdV63xQqp12
- 5C8u3iwbN2A30RPlmjiMDlKEsdInEkCi5LY81z5TcPg1WjFqpKNS5YQ8mI3Q+BSS
- G+kIiih10uDaJCkjTuHTaUS41yO9VlWt/Nju4UcqwXwpVPPSd+xX0Co8piE19Po5
- nvjB3jNeM+IBPFPBDaYu9PXr9wpEkBiauV3lOAjjTmOgt0v26tYZesMEL1D6KhK+
- Glv/EnsSgHcAxmeoVel3JMHaB6kOQYUkfBhcG+H3S9mfDUKoqe3MAhE5N+YFt/7I
- CPxwRw==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8ye0gpx0-1
+ Uy1yK9JcNvaTHtIbF1Ximn50kLc7i5YB0NcNB0Jm0yw=; b=MHpMpeKJypCSSROx
+ 2aDZeF7qPgxbZ3GUIwqMhAh4BZardFwWmkysNHwLWuQWcpk5X4GP0IaoNIKPKl8l
+ B/1bJ+GzZ2jlvTGhZohdFTlH2+sO8ufZR9k97rN76gFoS+mOk92peya+LQXrihBs
+ hbCXIST0UUCju+gp8yg2/5QGxLjqGn2F0I9xh0z7KvwQyIQmharnKXAAUWZobRlE
+ eSUpR6OgoBCo0i1EzV1Q4RbioofBSDH3bVuTIKcp09nw0sKVmVV25DTHBFKj64yU
+ LXptT/ZX85wQ2BHbB9UYZ6YPYhviJvI/zsV+r4QIDC2WsazkDeejrmgJaieU1BMX
+ onS/Gg==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8t15a4nh-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:15:33 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51c0199faafso48110291cf.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:15:33 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:15:10 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8ee40bceb55so57852106d6.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:15:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783430132; x=1784034932; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=eswOgvsvmES6wANwXxIqB9K89YBMpWQmKqAkHprftcg=;
- b=Bvwqp59dy9uz111JE3oIJalwx858e4po8ftVbBC80c5vjV3bqLm9KMTAyZ3Gmb+x41
- VMBZfFDcfTyBCXaQ61zDKVfBPSv0VIoez182AQ4N61xeCFNiwz7nOoQI6F6hrnNU5N12
- BNUVqeImL0158BSGMyRzW5MkjGeJS50XR1WlpF6dDuLntY5XgwV8gH222EnIx98kmctp
- nAizFHo95so+Ry1x68FOiw5JFgsjFmvwmGTGS3EZYZQO6DYFmX2BBESHgj+fGRDT6GdV
- VrHXjlmqbpJd2J2S/hAXH+8+9d4SsnZHWbU1vRUX9KxHpzecuy4poqjGyQ3N0mPk+/yL
- iZzw==
+ d=oss.qualcomm.com; s=google; t=1783430110; x=1784034910; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Uy1yK9JcNvaTHtIbF1Ximn50kLc7i5YB0NcNB0Jm0yw=;
+ b=Z1arOs4pXBMHJQ4Uv+BjXcGoTje3ENb1U4NHpDeRGqPhEiccWzGEnExJKu+NK4ho5x
+ ITfZ6yxjo3D4urCCcwuRXDtYLDAmsePf8zsu7WqErsv5+TQGuW1eE4/9gY8N/RAR63uj
+ zGW5yS2A9Cc8U+QTGkYUsFSWETBfCIQMALU5rpE0ELec5ZzsftVrSY9hd2ovKBO1IIbD
+ 8PPRC7zP2CpZJz1eV7bi9tZgxafuV60ZMA+1Iha3yrQKBhiVgshjSKk2vsdyS+ErCNz4
+ JP/GXFFu21tue6/b0r1zOKXzR9KlHKAIPMvyet8EGQLcaI+efm/boJfFx+U//GqAfKL9
+ hkGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783430132; x=1784034932;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=eswOgvsvmES6wANwXxIqB9K89YBMpWQmKqAkHprftcg=;
- b=RgJfVE+vHeq3LMNCOFcX91nz7UAW+T61giMmUI7+5R7v5ytH5zC45QYeRvW/l7EB2i
- ujZp0R4oAL303ZmF9F3G5te9FeZ2eqKQ2dkxpeulmz2jtAknf3elILStQ9NL0ygzK4PH
- muoQDfAXbwfJaHu31jw5fY8BdV9q9cRbj4+5bmWqzCrdZfNDPI26d2uWo3oHq7lTkgvc
- o/ykmjEyECGFOUIJWxQh0kE0seWxESq0TnDjhq2Hcr993lyco3xbA1t7lnjT09Wbnr5T
- n3modgho/wixyE96dvfiOZxfD4gyaUI3BAqdyJVECwA8LCuqY8uOaAotTQ3cPzJ+NXnq
- lyfQ==
-X-Gm-Message-State: AOJu0YzNaENiUW0OcReLgi0REAzRfHiiubT3fVueaCbZW3zp2MWDzWGa
- BytCdWoPsPBujBOPgfwG4GAr6ARjWrlujmS8LtcxxUpk5pdi1Ot8ShTyt6ACwh2yggsbkwz6ScB
- pOf/6piXWCqWqn4IQxKADRS63Met9/TuxOhpt/emQ/ejiJgiPMW+ENTN4kbPxmkulBw==
-X-Gm-Gg: AfdE7cmJVei2sgFLijKd8Xm4TnEweBPWP79PMRhtf8KFuznUWdpmSgDge1RVYI7diM9
- meI1OirWb0fdt9fMpkAaUNElUir6zgziSmjdWDRlOo0msEB34h6orxtInYF/KCXAMQ/HSSYT/PO
- ftHfPvDDpnvslLJPEaO4Q2oDooAldCoeVpxMyd+Da9gEBj4KXpI1fwqJymAnPGL10VZdSLr3UVx
- rtWLL4S8dYxsK8ZU6pbUgYz7+5yx3IQF8eLxXalc7pjBBTylCTC81oNC16xzifwcFMJ0asCWLkS
- B37qxmI7o/ITopF/n7MR+9m+lOMePfjwFMGwhxvQ2SSDrayXG+xzNI4nkjIJq/ZVbMKjgcFj52F
- d9mDqdaDsA32sQeZnzGIiJO9G4+ASfTIJdCtM/EocpPaVgXnsPHtp2f6SBPVcCLhSl6AG
-X-Received: by 2002:ac8:5908:0:b0:517:7b6c:445b with SMTP id
- d75a77b69052e-51c747a371amr55043181cf.20.1783430129469; 
- Tue, 07 Jul 2026 06:15:29 -0700 (PDT)
-X-Received: by 2002:ac8:5908:0:b0:517:7b6c:445b with SMTP id
- d75a77b69052e-51c747a371amr55038571cf.20.1783430125415; 
- Tue, 07 Jul 2026 06:15:25 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20251104; t=1783430110; x=1784034910;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Uy1yK9JcNvaTHtIbF1Ximn50kLc7i5YB0NcNB0Jm0yw=;
+ b=arqTgb1KwQ3aEoy4NaO9Wyt5SN2nUpjj/ADKAp/Jx982zWtw/s6j6MVUXBYEYOSTZL
+ rD2BMgDWni48+PWdWyFvM9cZrdEmtXZnVmmHiK5RvDLDuXqWBwJF2qr5okyaiZcGPxp7
+ uWbMI7kPcP5Ps3lEhGLjbMAI2gWujeGVuifK5rtulMK21LdMDQLoVG957hbNcaaki7qM
+ PSIMNWtnGlOxOfQiLsTrEdAACG/osostf0GkW7aoU0pDOsyLgzEVQHpNgiM4J3GKv/L0
+ uzkO/afNUB+NyhOP6YKwxg6ZbWcQ8EWgNRDtIZ3ZkQyEPi+Ya7/CEtsZQYQSW4Uvwwt8
+ 1CPw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RovytFKQqxKuhNAAcEIUsACCkbkEmH5nYtKl6Z40oXsSH15XfMXSOnAXclSXJiUk70InKPycnZBxfo6@nongnu.org
+X-Gm-Message-State: AOJu0YyJ5BN/a6jv68TEMMvNDaijdET6g1uvN/67DZVpZkLkX6GH4cdy
+ YBc/b80lb3dFPpQ2ObkDvnOMzUuD6OoE8aTV22kkkVpDjpWknU+Law99XCnzymcERymPfZs/xZQ
+ T6QzfC1Xm1xTdXxKW66wWiTejzRwccA6LYKVy0khrSwhVHzPPAzoI8UfoHA==
+X-Gm-Gg: AfdE7cmfRCx2R1Lo2MY+267xSAhJCf6FveKQGOUkg97R8Xi1VwRj6bM17cR26ebCC47
+ vmU71k7GNfe4W/MLHvJCQi+cdx1jqaxlRnslVu04rVxsmD4TDo0NjBdRA/pMrUeN9VDVsQtJigP
+ kfw4g2K6Aeya/uoQKwqKrcBPwpW+1eSc7PZOs/iwziG1XkMQY3mmkcJyIKm11HZmofGl36BQ+iL
+ jVvNKbaV0W1Ac4FEdAwusXCxWu2UvxOCid0lu5HQQ7tDJX6K/0zUxH87uNOhZrAK03HfgvSnbcL
+ MT513pZcdCdyZ2s6Vt0R8+uIFIdfCOdq2tusAHXEAYtUe67I8W9KOyeI1aRMrAm751ByHnCCMS6
+ lQGTW1z8cjW3iiEJ6hdXPxuf3L/zKWYMcSfCbhjsVqKaChjIT/hmqOn68Kszsrg==
+X-Received: by 2002:ac8:5989:0:b0:51c:164b:b240 with SMTP id
+ d75a77b69052e-51c747a039fmr65186871cf.4.1783430109967; 
+ Tue, 07 Jul 2026 06:15:09 -0700 (PDT)
+X-Received: by 2002:ac8:5989:0:b0:51c:164b:b240 with SMTP id
+ d75a77b69052e-51c747a039fmr65185471cf.4.1783430109091; 
+ Tue, 07 Jul 2026 06:15:09 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c15bc428775sm36945266b.6.2026.07.07.06.15.23
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Jul 2026 06:15:24 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 25/32] hw/block: m25p80: Fix dummy byte handling for Winbond
- flash
-Date: Tue,  7 Jul 2026 15:12:15 +0200
-Message-ID: <20260707131223.51505-26-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260707131223.51505-1-philmd@oss.qualcomm.com>
-References: <20260707131223.51505-1-philmd@oss.qualcomm.com>
+ 4fb4d7f45d1cf-69a9c4a4027sm902222a12.29.2026.07.07.06.15.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jul 2026 06:15:08 -0700 (PDT)
+Message-ID: <1f9dddf1-7d83-4365-996a-6cfd4a15ec46@oss.qualcomm.com>
+Date: Tue, 7 Jul 2026 15:15:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/9] hw/ide/ahci: cancel in-flight buffered reads on
+ command engine restart
+Content-Language: en-US
+To: "Denis V. Lunev" <den@virtuozzo.com>, "Denis V. Lunev" <den@openvz.org>,
+ qemu-devel@nongnu.org
+Cc: jsnow@redhat.com, qemu-block@nongnu.org
+References: <20260619112158.304782-1-den@openvz.org>
+ <20260619112158.304782-2-den@openvz.org>
+ <ce8ebeb2-2509-48be-9ea1-afee614859a8@oss.qualcomm.com>
+ <70fa6511-acbf-4b9b-95d3-1670fdca80b5@virtuozzo.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <70fa6511-acbf-4b9b-95d3-1670fdca80b5@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: eg8x6eAKLJTYBwiCG5LwA5z3Ym027ZMA
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX0+aLt5+/N39E
- XA7SQVzSjRKHi3s5x6lPDvPbY+Is/ioecs8bd1CAQRzILRuXHgREIe/soumxmV5sd24mB3ZVT2o
- d1xiZogci7bAlRgvqwDA3R1G+A/68y4=
-X-Authority-Analysis: v=2.4 cv=SZfHsPRu c=1 sm=1 tr=0 ts=6a4cfbf5 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-GUID: d_1FoIhfDYYuqBjSic0iIV13U2Ynv6Pe
+X-Authority-Analysis: v=2.4 cv=HstG3UTS c=1 sm=1 tr=0 ts=6a4cfbde cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=-fCmXZ3jAAAA:8 a=FRSEYCzRAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8
- a=vuOm1Y_JtsB2s8HU6FEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22 a=NvoCvu5dULWom27q9pnt:22 a=H4N_Y-AU75W7NKDNhZlT:22
-X-Proofpoint-GUID: eg8x6eAKLJTYBwiCG5LwA5z3Ym027ZMA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX4j17rbTluP/P
- IwEEEIjhgkPDyjXSUWwpsWe8PfX/fTRBKtntaF3f57QjZfDM83Ds4xjEv08Ioicqtqjuz7vSUEb
- SaztiTctQq0jp0skF9GmXgGF7Ipmn9QMwA5tjwVtreK5rZuADUTJYpYa2n9CmAesnsbSUM3+OAH
- QjHuMzuiIychtlyD2WThfADC1JCxbMi5UoL2okLOYdt6fzD+iqpD9tY+2TlgSbXrQC2C+LCL4sT
- EHOcL+0EVEV5k+4CEeOScxTezyNeGK1BblxXr4gcbJUle/X4IiAbEhSJ/MD8RPc7KcB2mS1xCKZ
- u3IY1Y+Bf3EuTqhr/jg4VVPawIJbKOXuIoBJ/V9PYwNoxx7WJuWQLjbI56jLeYb+qTzdPG/3Cyk
- VLbtxr6ZaVOKC3XNdtJbVTTq5q5pq7QGVsQ8hqexX5hCCNxjZD137aQrfODWIR+PrNv4eCm+tkI
- TTc6pUY5X2nN4w5ZbsA==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=6rqHouBjAAAA:8 a=KKqn9cdbFrReuDu9NyMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=OIgjcC2v60KrkQgK7BGD:22 a=Hx1yvPaMooE3kwe23bt7:22
+X-Proofpoint-ORIG-GUID: d_1FoIhfDYYuqBjSic0iIV13U2Ynv6Pe
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX0oolRPE6idVZ
+ e9lRtOH3daNi+LJzkUX3O3OMD3WmYhkdgeS8VJXZcZNZk+CH2FidOeCf5mYNzmctwfTSB5X6dhS
+ 2STzyticfFCy7ty+e9rHWT+qidEHtwo=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX7hgiFwYxBMXA
+ qRkvyS9vXQ8jB8e//MDTBiI3uYqmGDluGkWgoIOuadq6ofmQguW+nyLiwbTErpaQFMufxMY/A3H
+ aYtB4gayxrm52fCYkku082DUj6owlPxsIYtGdvK8IVGsDFaE0G1plhzLv8/w1s3RHz6JZ9t3sdc
+ DYi13IiMMJYWrODTj0bmmjFoYr0q0B48PW9kIL2ikl2HJQnH8brEX1Pz2L48t0qGELwhT43494r
+ 3V0uAEGssC8OV3lEjC33gx4SD1Dk+YZslF5EvIwlArKYnaIj5AmaS2h7VMJpAbGGZRAgvVUcHDN
+ I7WVthg5qY6/rwaL/K4HTX4m+9MUiJokpR5G27GHXLvdeZnI2DjZGlg1SyRMkZ+Jvnu96r6+gWB
+ unCXGew5qj48x8sv3+SA7nSfapLjNJxiE/0RINuw7Xd4Q20nvRGOop2BteN2dV0PQrGIqXGNr2R
+ UNxnwx/XyBUZpkuanOA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_03,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 malwarescore=0 bulkscore=0 spamscore=0
- adultscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 suspectscore=0
+ phishscore=0 impostorscore=0 suspectscore=0 malwarescore=0 bulkscore=0
+ clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070129
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,68 +158,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Meng <bin.meng@processmission.com>
+Hi Denis,
 
-The m25p80 model uses s->needed_bytes to track how many bytes a
-controller must send after an opcode before the flash model can enter
-the data phase. For address-bearing commands this includes the address
-bytes. For fast-read commands it also includes the dummy phase.
+On 7/7/26 15:02, Denis V. Lunev wrote:
+> On 7/6/26 09:21, Philippe Mathieu-Daudé wrote:
+>> Hi Denis,
+>>
+>> On 19/6/26 13:21, Denis V. Lunev via qemu development wrote:
+>>> ATAPI CD reads are issued through ide_buffered_readv()
+>>> (cd_read_sector() and ide_atapi_cmd_read_dma_cb() in hw/ide/atapi.c).
+>>> The PIO path discards the returned aiocb; the DMA path stores it in
+>>> s->bus->dma->aiocb.
+>>>
+>>> A guest can stop and restart a port's command engine
+>>> (PxCMD.ST 1 -> 0 -> 1) while such a read is still in flight. Stopping
+>>> the engine unmaps the command list (ahci_unmap_clb_address()) and
+>>> restarting it re-maps the list and clears AHCIDevice.cur_cmd to NULL,
+>>> but nothing tears down the outstanding read. This path does not run
+>>> ide_reset(), so the drive's transfer state is preserved and the read
+>>> still completes. Its callbacks then dereference the stale or NULL
+>>> cur_cmd in the AHCI transfer helpers:
+>>>
+>>>     PIO: cd_read_sector_cb() -> ide_atapi_cmd_reply_end() ->
+>>>          ide_transfer_start_norecurse() -> ahci_pio_transfer()
+>>>
+>>>     DMA: ide_atapi_cmd_read_dma_cb() -> ahci_dma_rw_buf() ->
+>>>          ahci_populate_sglist()
+>>>
+>>> Both crash with a NULL cur_cmd; the PIO variant has been seen in the
+>>> field.
+>>>
+>>> Cancel the outstanding I/O when the command list is unmapped, reusing
+>>> ide_cancel_dma_sync() as the ATAPI DEVICE RESET command does. It runs
+>>> the completion callback with -ECANCELED (which tears down
+>>> s->bus->dma->aiocb for the DMA case) and orphans the buffered request,
+>>> so the eventual asynchronous completion is a no-op. Merely setting the
+>>> orphaned flag is not enough: it would leave s->bus->dma->aiocb pointing
+>>> at a freed aiocb that a later reset would cancel.
+>>>
+>>> Fixes: 1d8c11d63154 ("ide: add support for IDEBufferedRequest")
+>>> Signed-off-by: Denis V. Lunev <den@openvz.org>
+>>> ---
+>>>    hw/ide/ahci.c | 3 +++
+>>>    1 file changed, 3 insertions(+)
+>>>
+>>> diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+>>> index c2b4432b94..8e3684cd3c 100644
+>>> --- a/hw/ide/ahci.c
+>>> +++ b/hw/ide/ahci.c
+>>> @@ -740,6 +740,9 @@ static bool ahci_map_clb_address(AHCIDevice *ad)
+>>>    
+>>>    static void ahci_unmap_clb_address(AHCIDevice *ad)
+>>>    {
+>>> +    /* Cancel in-flight reads that would complete against a cleared cur_cmd. */
+>>> +    ide_cancel_dma_sync(&ad->port.ifs[0]);
+>> ide_bus_active_if(&ad->port.ifs) would be safer, otherwise the
+>> patch looks reasonable.
+> Anything else for the series?
+> 
+> Should I respin or this change could be cooked at merge?
 
-The tricky part is that flash datasheets describe the dummy phase in
-clock cycles, while the QEMU SSI interface advances the flash model one
-transferred byte at a time. The dummy clock count therefore has to be
-converted to the number of SSI bytes that the controller will actually
-emit.
+I took this patch via my hw-misc tree (using ide_bus_active_if) because
+it I could understand it and it looked trivial enough to me; however I
+don't have enough knowledge (don't feel confident at all) to look at the
+rest, I'm sorry :|
 
-Some controllers have drivers that push these dummy bytes into a FIFO.
-Other controllers are programmed with a dummy-cycle count and generate
-the clocks themselves. The flash model still has to use the same byte
-count that a FIFO-style controller or the Linux spi-mem layer would use,
-otherwise the model waits too long and drops the first data bytes.
+Regards,
 
-Let's fix the inconsistency from the flash side first. We start from an
-easy one, the Winbond flashes.
-
-Per the Windbond W25Q256JV datasheet [1] instruction set table
-(chapter 8.1.2, 8.1.3, 8.1.4, 8.1.5), fix the wrong number of
-dummy bytes needed for fast read commands.
-
-[1] https://www.winbond.com/resource-files/w25q256jv%20spi%20revb%2009202016.pdf
-
-Fixes: fe8477052831 ("m25p80: Fix QIOR/DIOR handling for Winbond")
-Fixes: 3830c7a460b8 ("m25p80: Fix WINBOND fast read command handling")
-Fixes: cf6f1efe0b57 ("m25p80: Fast read commands family changes")
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Message-ID: <20260707083431.219671-2-bin.meng@processmission.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- hw/block/m25p80.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-index 4a4cda66024..59ecb32c0a2 100644
---- a/hw/block/m25p80.c
-+++ b/hw/block/m25p80.c
-@@ -1004,7 +1004,7 @@ static void decode_fast_read_cmd(Flash *s)
-         s->needed_bytes += 1;
-         break;
-     case MAN_WINBOND:
--        s->needed_bytes += 8;
-+        s->needed_bytes += 1;
-         break;
-     case MAN_NUMONYX:
-         s->needed_bytes += numonyx_extract_cfg_num_dummies(s);
-@@ -1099,7 +1099,7 @@ static void decode_qio_read_cmd(Flash *s)
-     switch (get_man(s)) {
-     case MAN_WINBOND:
-         s->needed_bytes += WINBOND_CONTINUOUS_READ_MODE_CMD_LEN;
--        s->needed_bytes += 4;
-+        s->needed_bytes += 2;
-         break;
-     case MAN_SPANSION:
-         s->needed_bytes += SPANSION_CONTINUOUS_READ_MODE_CMD_LEN;
--- 
-2.53.0
-
+Phil.
 
