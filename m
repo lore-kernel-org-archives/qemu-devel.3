@@ -4,90 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08CD7C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 16:47:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34805C43602
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 16:49:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh8x3-00028k-Ef; Tue, 07 Jul 2026 12:47:17 -0400
+	id 1wh8yj-0002nS-Bn; Tue, 07 Jul 2026 12:49:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wh8wl-00024H-UC
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 12:47:01 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wh8wj-0007LC-Fm
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 12:46:59 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2cad4170e8eso53360025ad.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 09:46:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783442814; x=1784047614; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=RvaL0DDq39uCFSvYJsyZPoc1EYuojl4rkk8dCWR8msk=;
- b=v4zdd6yWlSOPR5etJgDBQMnSdbZyU5Rd+AbWRuLoeIAqYbwKVkR7PwNJ4ohfAxf+I4
- a6445nSw1nFBj7bbO8Ogex1EBdCnzw06iFvxmoM4CFB0ZfyVBm5JN4hNRO3qvn0gDDRU
- CJSbs11Q/5zec7KcWFjOATUN0Z2XgCtaN7D7k3SJbzQ3r1WHKf5ooCppKBP7FdjnRXhU
- C4gIRFFC+W6NYwOwLEPsWbfh2IHz3H4Ng7O5LGI0uRs0dgOBvKnzapWZeI7w8o1/Y88u
- G8n20gB9BkKKcFxsW1P8D+QzJPoy7JoZDeTJR5T916bFXPTpD7K76reunoGcHAUOY+Qr
- TxRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783442814; x=1784047614;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=RvaL0DDq39uCFSvYJsyZPoc1EYuojl4rkk8dCWR8msk=;
- b=i/4y72arqqtJba2L01I4gTM9YvaNoWHHJXJwG3JjeHZ6b5wXgAjUotM2s7s9Htxv0s
- 1zlVpekjjoVe32KyXhoYZKSUDtzVFwSi2KfCYIjisIWpPcJtXFHtF+7zb3AHBxrMwJ+o
- nnPDLC67YK0EdSVReKhoVNyX507J9asTKLQoWB4/w8gmQw8vcXXhEvuMYX0UUPiypH8Q
- YPciJe6QTFDGVA7MTZoj7GXrYfmfOrOw8aKQHS30B8xx9+5rSVDzuioi77Xu+D0nWR6b
- cB+P3ZQiLaqzM/KECJqDRI2bFewkNvoFJYH7jJjEl0B7h72zYcpHTgGr5JSxlPhtuvMi
- QcNQ==
-X-Gm-Message-State: AOJu0YyySRPHfEjJbwgwRbw9RoXVzHWnUe/3vnKZrfYi1LPtqCOqi26a
- U2gy61TV9C6x+zs2CpsPRhLfz9+vKSfzAxgjoi1W4+zzPukuDlxqlxWoj1PMtHyzFVZHpYkBPXH
- XMWOZ
-X-Gm-Gg: AfdE7cnqCGOwE7cvb8JLaUqEoRuDEU/fZ9xmx/mAbTUSfFFHM+sncXv/buBQwx2mNlt
- fqN61fIE4B11J97wYv8aI+zd/qPkNKEvquFEZ/xTGHcRQhQb0hBZd4jLDootzvURSyBKp5hTPD8
- +rXTO112NxCUHTVx0VSG7IED2CO/kU64R9FDS4M0o9YbT+v6eb1qyE4dPCcXoMvtwwXi9lkyoeJ
- +LCE1c0IeAgbGH5zTwGSplcdBnGMdX0aHeqHyDiwPeHUuhDpR5QptIYTaN17ZFVOawYpKpOX9Zg
- rX22cvRFkASozbTVRYXy9oPG9KVoPrXh10B6ogTMNPX/c8Alhp+VMGvHSIuXU4DIFnyRDqzdiLA
- SMwla0zO1eeVBtzQF99mzS/j8fiVS3V+gzd4BKXx9JPN6oEfUksv17S4EqnNl4UavZw2TnQflHd
- BCKIJ+bcG9JptysApzc4e1Vjm02sXqeKfvmafgvxt0VA1yF0UKwLuFoy4=
-X-Received: by 2002:a17:902:ea0a:b0:2c9:bd37:ae76 with SMTP id
- d9443c01a7336-2ccbf1a34demr58472385ad.47.1783442814251; 
- Tue, 07 Jul 2026 09:46:54 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-39-188.tukw.qwest.net. [71.212.39.188])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ccc9d3d952sm15055075ad.61.2026.07.07.09.46.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jul 2026 09:46:53 -0700 (PDT)
-Message-ID: <922b316d-961f-4747-832b-c5e28bdaefa0@linaro.org>
-Date: Tue, 7 Jul 2026 09:46:51 -0700
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wh8yc-0002kD-1z
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 12:48:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wh8ya-0007zg-41
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 12:48:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783442929;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LuWGucDEBMciz2sljJZ1+iI/feaTmVZtkIRcnsbDHaM=;
+ b=S05MmC4Jf3HODcOrzvLRco6dXgdlW6tkmf2NDLJI9K0h4OMuBBxhuRBJV22XlTE+l2PEzD
+ u7VBsmWfcg8zNXP2wb0pW1pJGshD3TSly5qONNc0rmaSB3j0UdnNOQ+SqCYAuHGtZAwij8
+ fvOfXKOqERDKb2DRgODEqO+nSqsIrCo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-9WWVZfmlOgeBz5MCztzPzw-1; Tue,
+ 07 Jul 2026 12:48:46 -0400
+X-MC-Unique: 9WWVZfmlOgeBz5MCztzPzw-1
+X-Mimecast-MFC-AGG-ID: 9WWVZfmlOgeBz5MCztzPzw_1783442925
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D01891954112; Tue,  7 Jul 2026 16:48:43 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.142])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5B67B3000C1C; Tue,  7 Jul 2026 16:48:41 +0000 (UTC)
+Date: Tue, 7 Jul 2026 17:48:37 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com,
+ mtosatti@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH 7/9] hw/i386/pc.c: convert PC_MACHINE_ACPI_DEVICE_PROP
+ from object prop to class prop
+Message-ID: <ak0t5ePqOdGj3EqN@redhat.com>
+References: <20260703090814.2993188-1-mark.caveayland@nutanix.com>
+ <20260703090814.2993188-8-mark.caveayland@nutanix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: Update cc_op for SAHF
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, qemu-stable@nongnu.org
-References: <20260609002802.729485-1-richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260609002802.729485-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260703090814.2993188-8-mark.caveayland@nutanix.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,43 +87,26 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping 3.
-
-On 6/8/26 17:28, Richard Henderson wrote:
-> Removing the call to gen_compute_eflags meant we no longer
-> updated cc_op after computing EFLAGS.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: da7649c6aeef ("target/i386/tcg: do not compute all flags for SAHF")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3537
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Fri, Jul 03, 2026 at 10:08:00AM +0100, Mark Cave-Ayland wrote:
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 > ---
->   target/i386/tcg/emit.c.inc | 9 ++++++---
->   1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-> index ce636b6c56..59948fe64d 100644
-> --- a/target/i386/tcg/emit.c.inc
-> +++ b/target/i386/tcg/emit.c.inc
-> @@ -3768,10 +3768,13 @@ static void gen_SAHF(DisasContext *s, X86DecodedInsn *decode)
->           return gen_illegal_opcode(s);
->       }
->       tcg_gen_shri_tl(s->T0, cpu_regs[R_EAX], 8);
-> -    gen_neg_setcc(s, JCC_O << 1, cpu_cc_src);
-> -    tcg_gen_andi_tl(cpu_cc_src, cpu_cc_src, CC_O);
-> +    gen_neg_setcc(s, JCC_O << 1, s->T1);
-> +    tcg_gen_andi_tl(s->T1, s->T1, CC_O);
->       tcg_gen_andi_tl(s->T0, s->T0, CC_S | CC_Z | CC_A | CC_P | CC_C);
-> -    tcg_gen_or_tl(cpu_cc_src, cpu_cc_src, s->T0);
-> +    tcg_gen_or_tl(s->T0, s->T0, s->T1);
-> +
-> +    decode->cc_src = s->T0;
-> +    decode->cc_op = CC_OP_EFLAGS;
->   }
->   
->   static void gen_SALC(DisasContext *s, X86DecodedInsn *decode)
+>  hw/i386/pc.c      | 5 +++++
+>  hw/i386/pc_piix.c | 5 -----
+>  hw/i386/pc_q35.c  | 5 -----
+>  3 files changed, 5 insertions(+), 10 deletions(-)
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
