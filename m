@@ -4,121 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFAF9C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 15:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44712C43602
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 15:14:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh7Un-0007NR-5c; Tue, 07 Jul 2026 11:14:01 -0400
+	id 1wh7Uz-0007Rq-Us; Tue, 07 Jul 2026 11:14:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh7Um-0007NH-14
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 11:14:00 -0400
+ id 1wh7Uy-0007QP-5X
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 11:14:12 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh7Uk-000781-0I
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 11:13:59 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1wh7Uw-00078s-MT
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 11:14:11 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667C9Lox3740874
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 15:13:56 GMT
+ 667C9FNZ3590494
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 15:14:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=zDxq1SLIn9cg/3FIJOvmmw
- KGaFU/hR+myBWOeDDalGs=; b=FgdcAr/RI1CMoDziS6CK3VnsU30MUI69C9xGDF
- ZhXunIkQR4hKNUXLJ3h4bqbaW9Z/vgStvoqci90H2aNhuX68zkNPwpPSpSTXgbtC
- cTs6WM/yDGIG70bHn8d/KYSGfvq5ygDxaSQVHZEaIcablo1WlamhWiBAaNk/zu6c
- 2UQtIeK3CIT54SRhz67JhISVAzouBhJ1ZpMj7klyr0Czr2/gLmQDUIiTLPYb4D32
- vXzs3SJ1Wika03VfW7ai+j4YTbFkQZ0TiJCVp3zmy8JYQxCr0NP8anzqj1+Is9LE
- sboPuKahdETDs/DhehekgnBtdQFRgnwWIK0Juo8KmGkrWzZA==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8v9aa51w-1
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ t19/MYRubPwTkKX5hCIB582+6b2Ad0WgAiE/WCw/+2c=; b=N1YdMfa3ofXs1FPN
+ 0wQH1Vu1e61w0oAgPWgDoJ+fNrjiPGPWW9ymPgX3tSGM+RzXhHm1UPsmFeEOPlZ4
+ w2W/iFslGunliSSV3WAESod7xGui8C33l0F7vn/vsHqpew0EljzI0byQptXBqsOA
+ Zxd+7sE2WICGucmW+fCwv/EaM8v5DPzILIrwBT1oPHGXeACBKgRkuHJ/QN2gRpef
+ Gg9iwf5vRZBgZm/472YEoQFYgA+v7SUO7sUCf9PtphJ6wC/eS6HMJWdl2RDTGiyr
+ 65IyR+hfbML0ff7oDln8w6SJGrPbZsAKXf6IpCA5fpST4o09xLVUj8KTaiTGDpaC
+ 3cOnXQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8w2u9wbw-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 15:13:55 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c0f0a0760so85776651cf.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 08:13:55 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 15:14:09 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-51c20762d21so52746291cf.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 08:14:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783437235; x=1784042035; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=zDxq1SLIn9cg/3FIJOvmmwKGaFU/hR+myBWOeDDalGs=;
- b=OJxYEeule1wFQ9omo5R5YL4nChmUgIJAL84skEoSpmO3bt2zC+WMC7FLEb9rIJwVhC
- Dz0RLbBxHSFZNkym72arl92GvZYbIbINL2G47PI6Wpm50O5IOGzS4NIKnmn9wDgVboSl
- Tx6nkDYVJTZVAXiwa2anTfnIwkoYJ9VLTr6wHyFYrtPiSyxUfwYc5XSvVu+7GQkjxP4O
- QmgdFDsvh2ouc4m7xPk17FBB+vIDpzJ0SPUMzZxoldRKxCSswevahp9MQuthl86jadDX
- qAM8KpsjLgQzmggUVnu06XqCd0vyECZ+xUlh7u6OwsRyN6laXU6WNEzNHQdyCdVknIPD
- osxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783437235; x=1784042035;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1783437249; x=1784042049; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=zDxq1SLIn9cg/3FIJOvmmwKGaFU/hR+myBWOeDDalGs=;
- b=Wwe/gecjRcfzSZ4028gu6GjKgVvwgRhcj5SECZUi9cEA+TeMgMh3BF9NbTJnf8Lk2q
- 1+Sso17sekAdkQ0sCXyXnSx5A554V33UGgseUG943T4c7NbmcDlG/k0wY0jLloaI0AVJ
- WnVHkpPBy2P9GGGOJBcvzs7W6UQWiifU0yn0QHcun297wbIOkjfDN2bOqfsrhc6gNJs+
- tY1z/fOH0+QiNjVsVpyzFcDxN5bO4LAhiWWscGrxU+Pu9SpuWK5SVPbDi+IAAqhnH9u5
- AUkvFrMuiEuxNPIT9WroogkFTgeF6+JLfwKVdkQluliEcknXedJaNtbojYWpjAC8SJny
- I+xQ==
-X-Gm-Message-State: AOJu0YwMrL7MM81sbI/9ogi2KwWMbcTTT3fVGB8n8uEytjPmUY9WI6OH
- ZI/2smbDr3svkhEdG9Pkj/QRf5dEKWLfBBDAHB/yhDA4kZgRenSAZ53OXRFr1h3sMhLnToo83uP
- RCsg7dReMKJE8/FFad0mSdmytz+5se5q2wbhsU7VHoSoB77E8LA40ZwqzQU/kBHQpxw==
-X-Gm-Gg: AfdE7ckJQzYCcfD9+ZEeMCa+PiGvbWY4o1UusZZlgXckpSuj6iTFZyMQUKvbBVTG5GS
- ks+tM7hj5vFpJLRFII40Eg429x32Wu39qgCtwfTKaHnU1AFr0iT8Hb9wCqnC+rIWPH8EgG5qe78
- iz+IirNgeKKKFyzzBY6PIWTDYNmInlbejP6oUKA7jcSPDr6VI2QS2OwkIj79i8cbwAjDSfxf9p6
- ixepC0u8CDYEqlyRCyA8P2cnC1MMi+1Cynmfl5tMY/Y2DbhBwQEliXcVoK/I3ukgY9pgCvKoDar
- vlezNIDgeS5wK8Azq+qNb6xsA1FtvBDBVJEFKpcWy8uoVHtB6koLQPDVL9fIBa768bSAAeYyAAl
- I2IgxsQj6ZucwzbObkP8PrxJFlwnMlkyEEnptZ+epzop/lsnmoJ0y4VbP9nkBjiCnixL7
-X-Received: by 2002:a05:622a:3c6:b0:51c:c67:2042 with SMTP id
- d75a77b69052e-51c748af0f5mr60381761cf.53.1783437234801; 
- Tue, 07 Jul 2026 08:13:54 -0700 (PDT)
-X-Received: by 2002:a05:622a:3c6:b0:51c:c67:2042 with SMTP id
- d75a77b69052e-51c748af0f5mr60381261cf.53.1783437234014; 
- Tue, 07 Jul 2026 08:13:54 -0700 (PDT)
+ bh=t19/MYRubPwTkKX5hCIB582+6b2Ad0WgAiE/WCw/+2c=;
+ b=Q6hog21NHp4yiQ61mcTxlR0cePBwBnfLBifoYhsi2tTlLfu0l9eyZup11hbO7tzdBY
+ My5XGq/xgEQr8Xif76yNq0o9RF5fyzgwCcoFmvmhQRJISRV2iea1EzfYJqgq0uiq73cn
+ dapl5j+HJwyqJnIcPPrBJ7GoIeMo1Z4EtNSOft8W3UuptimTB+eZy3qU1n5s/3vxWVNb
+ d7LiNtGdjWcPLTbg1u8DdIdwOYy+mpIb/4IB+MYRlvYzcQTX26vM+adHCnhlpHx6OPvm
+ ZDQK2DVudgyQ6IxbGZZOECLcQ33MFChyPtPOw6s9tgQC89q79xG8ZYq97wb+ccKPbFO1
+ WUdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783437249; x=1784042049;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=t19/MYRubPwTkKX5hCIB582+6b2Ad0WgAiE/WCw/+2c=;
+ b=UMQrxyWXSt7x397oy/2fD/Pv0O9LB2+98eC/KwNo8mXm18oisoTFDIo2DgD4ESAq+I
+ auf2RuXYyGkmC7kZcLLcgWbchORhhaYUvmPUMFEfiUIZwOw0nChfflFfLHtF/87y3jy4
+ y74ctyjG/UE9cg8RTyiCyfUSv/dZKWsvkUyM7iBpvwnBN31WJZEB2kwTfOmXsJDWpSbZ
+ OIf7MCoFSAKFYVkmCtLNsGJxc8a9sGdf4WpmjXd9iApwmUMRzT0nG+gdyzaORXYtlu96
+ 5Dg7NzZg4g6lb3UzTWbgIRtOo94SWmURlbNnxpbSYHCX7N2DafefLaocHmUOsrO/kAIE
+ wgJA==
+X-Gm-Message-State: AOJu0YzTsU9XyKFMuDJZEFvQ6OX20kMwdJCAGNruwzF/2WWK6drWsjTb
+ faP4bfiHjPliR8hHgGLEF8s7Jkb1vIberJiBQxTQFCuzSjS4OHBUHMoKAdaVDpaecFVlumstH5t
+ 1/DZZwpn46vRYBQ1rfGwADaPAoOxe4ukUo35qRWzzlH8TNS5efusQqj4iCn1whjAwkg==
+X-Gm-Gg: AfdE7ck3yEzihBSfXTVB07NbJ58aTjAmm/PeBBUuLeqHHAOkUuvVBl7zuWq8WaZ8Vaq
+ 2n3ZLI9MxFwnJPYZOuZ8lKUuedS0L0HPktCISvkrqpqfUtcYvdlxtfudBB11Ed40KP+L5v8cqHX
+ fbKhHOOMsfcYanHlo4wsS3RxXeKSThvk1mOzw6erBacTPWMkotKet79NelwyUN122WTOPFq5XeU
+ UUpoM9MtZpIBlZZqfECi+n8xtaE03D0EHkxMcRQea4RB6eYJkj21w91BDNK+Tu6eG/3rBsk4uSD
+ XG2sbmIc5erjhZydYdHjVvSzgqmJlAJLSDYMbBXEhIZtzOI9Jw7J/Do5Vtlw0gLtsBeXLUBLL0G
+ QZXTBtf7O7RNg7iwPp/AGzJtfvQMjTPvr9mby+XpKQd1JmWTVEJTRKObqesuFU5oULK5g
+X-Received: by 2002:a05:622a:241:b0:51c:7b12:1202 with SMTP id
+ d75a77b69052e-51c7b1216d1mr31306931cf.80.1783437248746; 
+ Tue, 07 Jul 2026 08:14:08 -0700 (PDT)
+X-Received: by 2002:a05:622a:241:b0:51c:7b12:1202 with SMTP id
+ d75a77b69052e-51c7b1216d1mr31306151cf.80.1783437248064; 
+ Tue, 07 Jul 2026 08:14:08 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493df7010aasm50163655e9.0.2026.07.07.08.13.52
+ ffacd0b85a97d-47a9e4d8410sm34980466f8f.15.2026.07.07.08.14.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Jul 2026 08:13:53 -0700 (PDT)
+ Tue, 07 Jul 2026 08:14:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL v2 00/36] Misc HW patches for 2026-07-07
-Date: Tue,  7 Jul 2026 17:13:47 +0200
-Message-ID: <20260707151351.57769-1-philmd@oss.qualcomm.com>
+Subject: [PULL v2 29/36] hw/arm/msf2-som: Fix spansion-cr2nv value for
+ S25FL128S
+Date: Tue,  7 Jul 2026 17:13:49 +0200
+Message-ID: <20260707151351.57769-3-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260707151351.57769-1-philmd@oss.qualcomm.com>
+References: <20260707151351.57769-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: sQUh1jQ9sR6gfDl5z_BOF7spTaAqjkXW
-X-Proofpoint-ORIG-GUID: sQUh1jQ9sR6gfDl5z_BOF7spTaAqjkXW
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDE0OCBTYWx0ZWRfX29lBEaVPxaMZ
- AAntjejAwiq8jLxmN9MDaogwBpWn3GMO0NQdAWK/vTgJpZJmjv3V6f2ZIgCUWYB6jqpIY0FbFec
- F+ExRX2O7+KvzspmqKES5jqg09OBAHs=
-X-Authority-Analysis: v=2.4 cv=b9yCJNGx c=1 sm=1 tr=0 ts=6a4d17b3 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDE0OCBTYWx0ZWRfX0qMz+96sPYYT
+ UmTPMwR/s7669xZ0RByNNsHIcFB0m3WypIIrQXd576ErGU2fFfAFbsOUDOP1zr8coXSW6nSHpSC
+ waKHv2NNp8dKPhVVIjerBtpcmYnJou0=
+X-Proofpoint-GUID: rKEi_09uF39RmG_MeAVwceXN7Py8miLN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDE0OCBTYWx0ZWRfX3DiDM7/kwBLu
+ 9yP+43XiCbF08bUKU7IxqUlNwZwFm1Vn6SrRMH29Fwinq79klqFMPiiya/secnmboJZ9MWDj6lP
+ G+dTqjUgKz8fxQX9rXQpwBDsiyOcv61sIdmA32INAHq5vkjv+buLxh4+G8HWtIkkjARdZhzWOWk
+ TV1kFV25QSBdOGs3V1ws07vBecCSomsOZUXV8TWhmn8BF6ZuEAj3S8oSx9YF4upF3WG/RxcYdaQ
+ XiME8I2+41zk2a6UCkxdr4Sfy8ukjoNy06IQZLV+ObC15zMfRwUKMEFbil5s9CUylvN7aOTD9VP
+ zcgN5i53IPBgf0Rmjec2dCiTIdQqWsh0IRdZhEC5Owr0NKJL6YlK4pUqjx/414Ljd4kCXNEkPS5
+ v/G3O/hvKoD3wiJxgaBJisgtl/V2KkcTUc4YfKNbUj2qNs1+0naA//CT14mVwA0NjMPtBAqtis/
+ 4bGnjuB/GFgqpOOAXPg==
+X-Proofpoint-ORIG-GUID: rKEi_09uF39RmG_MeAVwceXN7Py8miLN
+X-Authority-Analysis: v=2.4 cv=bPQm5v+Z c=1 sm=1 tr=0 ts=6a4d17c1 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=NEAV23lmAAAA:8 a=TXZ6irfhDgbKXUqdAp4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDE0OCBTYWx0ZWRfX3e2EztW8wXuK
- N8bkuEbRy2LzXx1riTogGKdHuJtaRum18eYIo4/5m8NBFUbn+PFOPFfuZKcNRPCigyvod1pmS6R
- Lg1osOfkPeDw3ToKGyQZsAXxr9sZnYHG73mqFZJ9jtL1ub5vzmKji3yZYSXHweM8CuyCpnft/9H
- wwqruGTFkevZmCccqvUrcTQbPJZcQa21CoXygITindiCIND5EyIleOCSg4ovBlrh4wT3G1pM/mr
- W16S8zOC40+UCKRgZL8Vt0x5V2TTJsghVN9Pv6lWSTmop2zRSeAFIC8a8/mi3Im1sd6ufngngQQ
- ulK/sw5J2MbQ1Y2IVHj1KcAo1gY3c5G/Q5smBs6Vnhk/32igveWbH0pYZOOi0lPfRZ1m0n5Kb6N
- 6PpNTO7wxj0QRAd55HAdWyJnybRAZifDwX51mz4U9sraNp4kupCM9IRG9P0dNBvZYonIQJPBeT4
- lx36HmkjH8CISkCv/Hw==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=20KFwNOVAAAA:8 a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8 a=9bFI_O7vVwkWIVXnD50A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+ a=H4N_Y-AU75W7NKDNhZlT:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_03,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0
- bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
+ phishscore=0 spamscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070148
 Received-SPF: pass client-ip=205.220.180.131;
@@ -145,150 +152,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 94826ec1370328375c3b6d1e80fdc94c8f46c348:
+From: Cédric Le Goater <clg@redhat.com>
 
-  Merge tag 'accel-20260706' of https://github.com/philmd/qemu into staging (2026-07-06 18:38:14 +0200)
+The emcraft-sf2 board set spansion-cr2nv to 1, which the old m25p80
+code treated as a byte count. With the dummy cycle to byte conversion
+fix, CR2V=1 at SPI x1 is 1 bit, not byte-aligned, and triggers an
+assertion. Use the S25FL128S default of 0x8 (8 cycles = 1 byte at
+SPI x1), preserving the same runtime behavior.
 
-are available in the Git repository at:
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-Id: <20d58663-a8d1-41ff-9348-cae4982c30f0@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ hw/arm/msf2-som.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20260707
-
-for you to fetch changes up to 01e53bea65945c483dbcfa02793f68463886fbe3:
-
-  MAINTAINERS: update Chao Liu's email address (2026-07-07 17:11:52 +0200)
-
-----------------------------------------------------------------
-Misc HW patches
-
-- MAINTAINERS update
-- Fix in few trace event formats
-- A pair of improvements in util/
-- FlexCAN3 to imx8mp-evk board
-- Various fixes in hw/
-  (EDU, ATI VGA, IDE AHCI, PCA9552, i8257 DMA,
-   e1000e/igb, MPT SAS, Hyper-V, QXL, M25P80)
-
-v2:
-- Missing IDE AHCI Qtest
-- MSF2 M25P80 fix from Cédric
-- Update Chao Liu email
-----------------------------------------------------------------
-
-BALATON Zoltan (1):
-  hw/display/ati: Include vga state in the blit context
-
-Bernhard Beschow (5):
-  hw/net/can/flexcan: Wire clock control module via link property
-  hw/net/can/flexcan: Subclass TYPE_CAN_FLEXCAN
-  hw/arm/imx8mp-evk: Open code DEFINE_MACHINE_AARCH64
-  hw/arm/imx8mp-evk: Introduce FslImx8mpEvkState
-  hw/arm: Add basic FlexCAN3 support to TYPE_FSL_IMX8MP and imx8mp-evk
-
-Bin Meng (9):
-  hw/block: m25p80: Fix dummy byte handling for Winbond flash
-  hw/block: m25p80: Fix dummy byte handling for Numonyx/Micron flash
-  hw/block: m25p80: Fix dummy byte handling for Macronix flash
-  hw/block: m25p80: Fix dummy byte handling for Spansion flash
-  hw/ssi: npcm7xx_fiu: Correct the dummy cycle emulation logic
-  hw/ssi: xilinx_spips: Fix dummy phase handling
-  hw/ssi: aspeed_smc: Fix direct-read dummy bytes
-  Revert "aspeed/smc: Fix number of dummy cycles for FAST_READ_4
-    command"
-  Revert "aspeed/smc: snoop SPI transfers to fake dummy cycles"
-
-Chao Liu (1):
-  MAINTAINERS: update Chao Liu's email address
-
-Cédric Le Goater (1):
-  hw/arm/msf2-som: Fix spansion-cr2nv value for S25FL128S
-
-Denis V. Lunev (2):
-  hw/ide/ahci: cancel in-flight buffered reads on command engine restart
-  tests/qtest/ahci: test ATAPI read completing after engine restart
-
-Dmitry Frolov (1):
-  utils/module: fix memleak in module_load()
-
-Evgeny Kolmakov (1):
-  util/filemonitor-inotify: Use QEMU_LOCK_GUARD()
-
-Junjie Cao (2):
-  hw/display/ati: reset host_data.next in write handler after flush
-  hw/display/ati: guard against zero bpp in ati_host_data_flush
-
-Mark Cave-Ayland (2):
-  hw/rtc/mc146818rtc: convert date from object prop to class prop
-  hw/acpi/ich9: move initial property values into
-    ich9_reset_properties()
-
-Peter Maydell (3):
-  hw/dma/i8257: Return zeroes for read_memory in verify mode
-  hw/scsi/mptsas: Reset doorbell state on reset
-  hw/hyperv: Avoid crash if hyperv_find_cpu() passed invalid vp_index
-
-Sanjeeva Yerrapureddy (1):
-  hw/net: fix e1000e/igb ip_len inflation by Ethernet minimum-frame
-    padding
-
-Shameer Kolothum (1):
-  backends/iommufd: Fix dev_id and type order in viommu trace
-
-Song Gao (1):
-  hw/intc/loongarch_dintc: Fix OOB access in DINT MMIO write handler
-
-Thomas Huth (1):
-  hw/display/qxl: Fix mono cursor validation that can read past a cursor
-    chunk
-
-Torin Carey (1):
-  hw/misc/edu: restrict dma access to dma buffer
-
-yujun (3):
-  hw/gpio/pca9552: fix off-by-one in QOM led index validation
-  ebpf: fix swapped toeplitz/indirection args in set_data trace
-  crypto/x509-utils: fix gnutls error code in crt_init failure path
-
- MAINTAINERS                   |   6 +-
- docs/system/arm/imx8m.rst     |   1 +
- include/hw/acpi/ich9.h        |   2 +
- include/hw/arm/fsl-imx8mp.h   |   8 ++
- include/hw/net/flexcan.h      |   4 +-
- include/hw/ssi/aspeed_smc.h   |   2 -
- include/hw/ssi/xilinx_spips.h |   2 +-
- crypto/x509-utils.c           |   3 +-
- ebpf/ebpf_rss.c               |   2 +-
- hw/acpi/ich9.c                |   8 +-
- hw/arm/fsl-imx6.c             |   5 +-
- hw/arm/fsl-imx8mp.c           |  38 +++++++++
- hw/arm/imx8mp-evk.c           |  64 +++++++++++---
- hw/arm/msf2-som.c             |   2 +-
- hw/block/m25p80.c             | 154 ++++++++++++++++++++++------------
- hw/display/ati.c              |   2 +
- hw/display/ati_2d.c           |  44 +++++-----
- hw/display/qxl-render.c       |   8 +-
- hw/dma/i8257.c                |  13 +++
- hw/gpio/pca9552.c             |   8 +-
- hw/hyperv/hyperv.c            |   4 +-
- hw/ide/ahci.c                 |   3 +
- hw/intc/loongarch_dintc.c     |  13 +++
- hw/isa/lpc_ich9.c             |   1 +
- hw/misc/edu.c                 |  24 +++---
- hw/misc/imx8mp_ccm.c          |   3 +
- hw/net/can/flexcan.c          |  90 ++++++++++++++++----
- hw/net/net_tx_pkt.c           |   7 +-
- hw/rtc/mc146818rtc.c          |   4 +-
- hw/scsi/mptsas.c              |   4 +
- hw/ssi/aspeed_smc.c           | 135 ++++-------------------------
- hw/ssi/npcm7xx_fiu.c          |  25 ++----
- hw/ssi/xilinx_spips.c         | 123 +++++++++++++++++++--------
- tests/qtest/ahci-test.c       |  67 +++++++++++++++
- util/filemonitor-inotify.c    |  28 ++-----
- util/module.c                 |   2 +-
- backends/trace-events         |   2 +-
- hw/arm/Kconfig                |   1 +
- hw/ssi/trace-events           |   1 -
- 39 files changed, 579 insertions(+), 334 deletions(-)
-
+diff --git a/hw/arm/msf2-som.c b/hw/arm/msf2-som.c
+index caf6e7e1ad7..1ada1a13613 100644
+--- a/hw/arm/msf2-som.c
++++ b/hw/arm/msf2-som.c
+@@ -84,7 +84,7 @@ static void emcraft_sf2_s2s010_init(MachineState *machine)
+     /* Attach SPI flash to SPI0 controller */
+     spi_bus = qdev_get_child_bus(dev, "spi0");
+     spi_flash = qdev_new("s25sl12801"); /* Spansion S25FL128SDPBHICO */
+-    qdev_prop_set_uint8(spi_flash, "spansion-cr2nv", 1);
++    qdev_prop_set_uint8(spi_flash, "spansion-cr2nv", 0x8);
+     if (dinfo) {
+         qdev_prop_set_drive_err(spi_flash, "drive",
+                                 blk_by_legacy_dinfo(dinfo), &error_fatal);
 -- 
 2.53.0
 
