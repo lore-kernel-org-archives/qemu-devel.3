@@ -4,96 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D11C43602
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 22:06:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB144C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 22:17:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whDvK-0000Cp-Fw; Tue, 07 Jul 2026 18:05:50 -0400
+	id 1whE6C-0003tB-Mz; Tue, 07 Jul 2026 18:17:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1whDvJ-0000Cb-An
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:05:49 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1whDvH-0006xg-Tn
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:05:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=a2EiM1Wec6rbLKgA1fxZwQnUxCYZCSwyihsK+rVMg6I=; b=Bxh8i/tLgkUWPjkGMB48Jm7czB
- vstVcKLSbvYOfDRL8Vzgyre12/f8y4L+0rUzaCXgM8CSebX+dJoXOexIxd3Nk5f5DtiFXzh/3rewg
- ERfpdi6PGJ7XsVbmTIOyD0/EZCjiLOKelqr23pVUf3EnPQTbmKVfggAdc/8z5C6zs9pk0fN+76s8d
- UoM5gx+//TATwCCFK7jyW/5El8eWXnHHDWHIiQ76Ngho3ZVksXs8nc75Lfop7nJ7ISDPmeA0QnY9o
- zVgULmZPdaVQR2qZZPBjx0pOM62PgcjXfE/ubRrO3zLgfVZOZOFn6pO8moZMeVspA6s0AujxNs4hq
- CBcykvdHrAntAdIT9biaxN+QWaqlWkXRAw3KcbNKrIsL3rczPF3NT5VA33YwZsjvma81OIxzWlGcp
- V13/MYQNLYB55ILuy+ylrwbD2ygr3eZnKrahBGOju7HF2UPTM5YFpCaUr4dRUVHQpEK2cLzTlvuNu
- nKTUCEezCgsz4D23438hviW68wLlcavh84EBGRFFRoyz7V+OokH/oP9Jq4fW25ASvw14o3p5zvVhq
- SgD8B0iyKHu1saiVvF+kTJlvIOpb4DfHtrw3sHGRReX6vMKoqlOArcJMOw0lD4El0+0nIU594lk2q
- RSmfotcj+wKQFRuvFUPR3XkrLTgyc9v0ecM6jFclc=;
-Received: from [2a02:8012:2f01:0:c7db:c036:80a0:714]
- by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1whDv1-001a26-Ui; Tue, 07 Jul 2026 23:05:38 +0100
-Message-ID: <7d56941a-0d40-4ea1-8719-983d04f4ecb8@ilande.co.uk>
-Date: Tue, 7 Jul 2026 23:05:32 +0100
+ (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
+ id 1whE6A-0003sa-IJ
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:17:02 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1whE69-0000KB-2f
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:17:02 -0400
+Received: from laptop.localdomain (unknown [86.121.140.206])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 0CC8820B7166;
+ Tue,  7 Jul 2026 15:16:52 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 0CC8820B7166
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1783462614;
+ bh=soNbHmugulup9sC/v+wVwnkS2OglUYxoHnlwOg/fARI=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=JMR8EwVS16wWPXClnXOPYpKbh8pj9fFPUINoJ2Sa1FhCjYfJKR5JELyqVX4MZxVCR
+ 2erq/fl0IzkJh4XicQX5PPZ8qUpP+1tsNqC86GssL4qrdngbDSuDNtVR22m1hApqNh
+ nVfpJCnXLayqNGz9udhCE2vbXLFUpHuUedC7zuSw=
+From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Magnus Kulke <magnuskulke@microsoft.com>,
+ =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@microsoft.com>,
+ Wei Liu <liuwe@microsoft.com>
+Subject: [PATCH 2/5] target/i386/mshv: abort when hv_vp_register_page setup
+ fails
+Date: Wed,  8 Jul 2026 01:16:42 +0300
+Message-ID: <20260707221645.24557-3-dblanzeanu@linux.microsoft.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260707221645.24557-1-dblanzeanu@linux.microsoft.com>
+References: <20260707221645.24557-1-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>, Artyom Tarasenko <atar4qemu@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, "Michael S. Tsirkin"
- <mst@redhat.com>
-References: <20260707084050.32137-1-philmd@oss.qualcomm.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20260707084050.32137-1-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:c7db:c036:80a0:714
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 0/3] hw/pci: Consider reserved slots mask when checking
- PCI bus is full
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,30 +71,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/07/2026 09:40, Philippe Mathieu-Daudé wrote:
+In case the call to mmap fails, we log an error and abort to signal
+there is something wrong with the system.
+Check the register page version and compare with the expected version and
+abort in case of a mismatch.
 
-> Generic fix for the SPARC/Sabre issue reported by Thomas:
-> https://lore.kernel.org/qemu-devel/20260309181452.83702-1-thuth@redhat.com/
-> "hw/sparc64/sun4u: Mark unusable PCI busses as full to ease device plugging"
-> 
-> Philippe Mathieu-Daudé (3):
->    hw/pci: Have various pci_bus*() methods take a const PCIBus argument
->    hw/qdev: Introduce BusClass::is_full() handler
->    hw/pci: Consider reserved slots mask when checking PCI bus is full
-> 
->   include/hw/core/qdev.h              |  5 +++++
->   include/hw/pci/pci.h                | 10 ++++-----
->   include/hw/pci/pci_bus.h            | 10 ++++-----
->   hw/pci-bridge/pci_expander_bridge.c |  4 ++--
->   hw/pci/pci.c                        | 35 +++++++++++++++++++++--------
->   system/qdev-monitor.c               |  3 +++
->   6 files changed, 46 insertions(+), 21 deletions(-)
+Fixes: a173f8f170
+Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+---
+ target/i386/mshv/mshv-cpu.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-
-
-ATB,
-
-Mark.
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 1c433c408c..c782715497 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -2049,6 +2049,7 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+     CPUX86State *env = &x86_cpu->env;
+     AccelCPUState *state = cpu->accel;
+     size_t page = HV_HYP_PAGE_SIZE, xsave_len;
++    void *regs_page;
+     void *mem = qemu_memalign(page, 2 * page);
+     int ret;
+     X86XSaveHeader *header;
+@@ -2060,15 +2061,20 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+                       > HV_HYP_PAGE_SIZE));
+ 
+     /* mmap the registers page */
+-    void *rp = mmap(NULL, page, PROT_READ | PROT_WRITE,
++    regs_page = mmap(NULL, page, PROT_READ | PROT_WRITE,
+                     MAP_SHARED, mshv_vcpufd(cpu),
+                     MSHV_VP_MMAP_OFFSET_REGISTERS * page);
+-    if (rp == MAP_FAILED) {
+-        warn_report("register page mmap failed, falling back to hypercalls: %s",
+-                    strerror(errno));
+-        env->regs_page = NULL;
+-    } else {
+-        env->regs_page = (struct hv_vp_register_page *) rp;
++    if (regs_page == MAP_FAILED) {
++        /* This shouldn't fail, so we treat it as a fatal error */
++        error_report("register page mmap failed: %s", strerror(errno));
++        abort();
++    }
++    env->regs_page = (struct hv_vp_register_page *) regs_page;
++
++    if (env->regs_page->version != HV_VP_REGISTER_PAGE_VERSION_1) {
++        error_report("register page version mismatch: got %u, expected %u",
++                     env->regs_page->version, HV_VP_REGISTER_PAGE_VERSION_1);
++        abort();
+     }
+ 
+     state->hvcall_args.base = mem;
+-- 
+2.53.0
 
 
