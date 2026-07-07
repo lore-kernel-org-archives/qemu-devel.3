@@ -4,62 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF25C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 14:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3794FC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 14:54:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh7BY-0006WC-Qe; Tue, 07 Jul 2026 10:54:08 -0400
+	id 1wh7Bf-0006Yc-Dc; Tue, 07 Jul 2026 10:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wh7BV-0006VN-J9; Tue, 07 Jul 2026 10:54:06 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wh7BT-0003sc-7k; Tue, 07 Jul 2026 10:54:05 -0400
-Received: from [192.168.25.24] (unknown [89.92.102.124])
- (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id CE2092003D0;
- Tue,  7 Jul 2026 16:53:49 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1783436040;
- bh=wxn+y3DLqkCnX2j25VWYeyaBXgKQq8fu8hu8ofdeaE4=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=oxY184kckb22CZ/IZCgWWhEWsUG9qLwt+E/XHji2rluS6TvFenje3IqoaT5lw7eNz
- wjGuRrMPxrFGpz8dR/GAuOGQgu9W+QGcypn46yfb+fj4Z2nU0EomM44klvyRnBDpTR
- CZkj/p0t3Fqbd10zomAbRME155z4w/RObnygA+QRevfMJx3iFh6o4EnCaRR9U5usfa
- 65ixdQ49liJXh1v6gI962cGT5jl2GSa8itPBHsRge4qGD8y+vH4VZjoGeeBE0sFvPj
- id1GpEh1n+V3O3efNbtnSsQJs27ZjuJ/8Y6j54juHUEBoFAWVyr+qmGhMefHPDlzil
- BVlVUJYGXVAFg==
-From: Emmanuel Blot <emmanuel.blot@free.fr>
-To: alexander.hansen@9elements.com
-Cc: qemu-devel@nongnu.org, eblot@meta.com, titusr@google.com, clg@kaod.org,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org
-Subject: Re: [PATCH v7 3/4] hw/sensor: MAX31790 support
-Date: Tue, 07 Jul 2026 16:53:47 +0200
-X-Mailer: MailMate (2.0r6290)
-Message-ID: <3A5D372A-26CD-49AD-99D1-395611E11ED4@free.fr>
-In-Reply-To: <20260619115533.5664-4-alexander.hansen@9elements.com>
-References: <20260619115533.5664-1-alexander.hansen@9elements.com>
- <20260619115533.5664-4-alexander.hansen@9elements.com>
+ (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
+ id 1wh7Bd-0006Xq-ET
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 10:54:13 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
+ id 1wh7Bb-0003sr-Sq
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 10:54:13 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-493b77b150aso39168165e9.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 07:54:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783436050; x=1784040850; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=fzFC75ogeT0IyP06gRR/9SRbSQoQZxiJHNniJnsTtWI=;
+ b=fl7anRUASCFs0HGYPshkFbbJ5pWglxl3F8CNB7ZROt1oE1R93XPl/Tlta847vZkVya
+ v9NIWvwfvf89sN7nDYIF+mobVChPWWqtplQ3MLCpCqG8Zsb1Ns1/FJYL3qkbrVxp10E8
+ KC3Fszk9vgumEFKHLx7qNOeSxjwiGvUadlgxJrI5cWHdossSD2m9KhbsdvjU9M31buSo
+ sw+DUE+cDSWSIY5u7ywzFKnBIqZwa2lR53mCP69n1VLcU7hMVTwG/iPJPpWFBG9gEjO2
+ osXq1WM+rnbLRjRrKIGEoxw7/OVaq2BDdifoMqmYPUdM7c4bpZejdHa539Ph10TqTKHD
+ uErw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783436050; x=1784040850;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=fzFC75ogeT0IyP06gRR/9SRbSQoQZxiJHNniJnsTtWI=;
+ b=KQbZ4doi+UBQBrMZOWOpnWD1ER9A/8UJ/LHciRSbfbQ0vS8H6TEhJDFOXTK9NdVNtO
+ wUN1BnyrMtD4aAmxDDk2G6GIJp7Yw0IuPm6OoLAh6zY/K3FT1R46sJPrCrnr4Dk1rlpf
+ RLgVmEJVdLtg19n0R/62mLPm3pEfbhlzLBDR3jOAz/Zb+MrW/nRWSl9KbZt92e66LVeQ
+ UDAifbFvz+tSswyDCQ3LVHQTZ4i7YovlnYjVJRvN9PL0RAEeT4i7mBTo5Ik0ZFgv097G
+ 3r283chYvPKuTHK0RHGoRkjVK6Q6F9MUyMP6IKfGR5WGNHQo2yrcT06llil9/T00maXy
+ J0AQ==
+X-Gm-Message-State: AOJu0YxyUhRhQ+bhh1AEi/q0jE352O3iAswD6SuJgGfkojFZprFybGf8
+ i8TjfzYg5kRC4oVuwEJrWb8ieIoNrsrViF3RLGfXXpzHRterEJFW2htINTB1jw==
+X-Gm-Gg: AfdE7cl/Pgq7beAcGelOUZh1ayT1xjrR7cfvOdjtTpXq8zeQQhXT+SHfJPg2ZdkwHDf
+ hE3JxI2A+pWbSU53LA/A//hb/shm53FqScYFpKebjd1keyHUyqq7pqtwoLbNwZP4POwG38PiXez
+ EYIdH+oNf4tvlykX0NGITWyRlbfTgByeatms3NnJIZFoOwbKWSJU/rH66MU94At3eBNhryvJwM8
+ V7U0xULE36+1Pk+z6/uBm4srI9GVh6s7JllRtjAcKPFw+rSay/JBd81T6SRdNvEzithbc3t8rVU
+ jWEYJVEAxkctBzL8IYxX+YjYNkRcEHKK99pKuJiWMqimv/8IUwVEGYLWwr58PDq7kN4OklxpcMT
+ 96831rjDHCiXJs/X4YPvi0pyovTJ9ebn/cWR5f4ncrPrekzEGZ6OjKq2B1/G1u8lwlbvrZ8ZgvN
+ aiUl9zB6RhZIK9J/3oPYEo67ogh7ZM7xwNW8c=
+X-Received: by 2002:a05:600c:6990:b0:493:915b:dc4a with SMTP id
+ 5b1f17b1804b1-493df055999mr64308325e9.8.1783436049526; 
+ Tue, 07 Jul 2026 07:54:09 -0700 (PDT)
+Received: from PC-DA2D10.beckhoff.com
+ ([2001:9e8:dc38:2781:b40a:d629:717b:1d8c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47aa039b0cesm34811367f8f.22.2026.07.07.07.54.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Jul 2026 07:54:08 -0700 (PDT)
+From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, YannickV <Y.Vossen@beckhoff.com>,
+ qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>
+Subject: [PATCH] hw/misc/zynq_slcr.c: drop duplicate reset value for
+ DDRIOB_DCI_CTRL
+Date: Tue,  7 Jul 2026 16:54:07 +0200
+Message-ID: <20260707145407.70287-1-corvin.koehne@gmail.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="=_MailMate_41D68B74-AC9B-4CA4-AC23-558CEA64B6F0_="
-Received-SPF: pass client-ip=212.27.42.2; envelope-from=emmanuel.blot@free.fr;
- helo=smtp2-g21.free.fr
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,90 +102,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Corvin Köhne <c.koehne@beckhoff.com>
 
---=_MailMate_41D68B74-AC9B-4CA4-AC23-558CEA64B6F0_=
-Content-Type: text/plain; markup=markdown
+When adding a reset value for DDRIOB_DCI_CTRL in c8ba862dbfdc, we haven't
+noticed that a reset value already exists. DDRIOB is a 32 bit register, so
+incrementing it by 12 will access the DDRIOB_DCI_CTRL register. According to
+the manual [1] the correct reset value is 0x00000020. Additionally,
+c8ba862dbfdc won't work with a reset value of 0x00000021 because it tries to
+detect a toggle of the reset bit (bit 0). Therefore, we drop the old reset
+value and keep the new one introduced in c8ba862dbfdc.
 
+[1] https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Register-slcr-DDRIOB_DCI_CTRL
 
+Fixes: c8ba862dbfdc ("hw/misc/zynq_slcr: Add logic for DCI configuration")
+Signed-off-by: Corvin Köhne <c.koehne@beckhoff.com>
+---
+ hw/misc/zynq_slcr.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-On 19 Jun 2026, at 13:55, alexander.hansen@9elements.com wrote:
+diff --git a/hw/misc/zynq_slcr.c b/hw/misc/zynq_slcr.c
+index 0ae5d607be9b..d0f899c3be4d 100644
+--- a/hw/misc/zynq_slcr.c
++++ b/hw/misc/zynq_slcr.c
+@@ -427,7 +427,6 @@ static void zynq_slcr_reset_init(Object *obj, ResetType type)
+                           = s->regs[R_DDRIOB + 3] = 0x00000e00;
+     s->regs[R_DDRIOB + 4] = s->regs[R_DDRIOB + 5] = s->regs[R_DDRIOB + 6]
+                           = 0x00000e00;
+-    s->regs[R_DDRIOB + 12] = 0x00000021;
+ 
+     s->regs[R_DDRIOB_DCI_CTRL] = 0x00000020;
+ }
+-- 
+2.47.3
 
-> From: Alexander Hansen <alexander.hansen@9elements.com>
-> diff --git a/hw/sensor/max31790.c b/hw/sensor/max31790.c
-> new file mode 100644
-> index 0000000000..af610376d1
-> --- /dev/null
-> +++ b/hw/sensor/max31790.c
-> @@ -0,0 +1,584 @@
-
-> +#include "qapi/error.h"
-> +#include "qapi/visitor.h"
-
-I do not think error.h nor visitor.h APIs are used in this file
-
-> +struct MAX31790Class {
-> +    I2CSlaveClass parent_class;
-> +};
-> +
-> +OBJECT_DECLARE_TYPE(MAX31790State, MAX31790Class, MAX31790)
-
-Maybe stick with the I2CSlaveClass as no feature is added here, with
-OBJECT_DECLARE_TYPED_SIMPLE(MAX31790State, MAX31790)
-
-
---=_MailMate_41D68B74-AC9B-4CA4-AC23-558CEA64B6F0_=
-Content-Type: text/html
-Content-Transfer-Encoding: quoted-printable
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/xhtml; charset=3Dutf-8"=
->
-</head>
-<body><div style=3D"font-family: sans-serif;"><div class=3D"markdown" sty=
-le=3D"white-space: normal;">
-<p dir=3D"auto">On 19 Jun 2026, at 13:55, <a href=3D"mailto:alexander.han=
-sen@9elements.com" style=3D"color: #3983C4;">alexander.hansen@9elements.c=
-om</a> wrote:</p>
-<blockquote style=3D"margin: 0 0 5px; padding-left: 5px; border-left: 2px=
- solid #777777; color: #777777;">
-<p dir=3D"auto">From: Alexander Hansen <a href=3D"mailto:alexander.hansen=
-@9elements.com" style=3D"color: #777777;">alexander.hansen@9elements.com<=
-/a><br>
-diff --git a/hw/sensor/max31790.c b/hw/sensor/max31790.c<br>
-new file mode 100644<br>
-index 0000000000..af610376d1<br>
---- /dev/null<br>
-+++ b/hw/sensor/max31790.c<br>
-@@ -0,0 +1,584 @@</p>
-</blockquote>
-<blockquote style=3D"margin: 0 0 5px; padding-left: 5px; border-left: 2px=
- solid #777777; color: #777777;">
-<p dir=3D"auto">+#include &quot;qapi/error.h&quot;<br>
-+#include &quot;qapi/visitor.h&quot;</p>
-</blockquote>
-<p dir=3D"auto">I do not think error.h nor visitor.h APIs are used in thi=
-s file</p>
-<blockquote style=3D"margin: 0 0 5px; padding-left: 5px; border-left: 2px=
- solid #777777; color: #777777;">
-<p dir=3D"auto">+struct MAX31790Class {</p>
-<ul>
-<li>I2CSlaveClass parent_class;</li>
-</ul>
-<p dir=3D"auto">+};<br>
-+<br>
-+OBJECT_DECLARE_TYPE(MAX31790State, MAX31790Class, MAX31790)</p>
-</blockquote>
-<p dir=3D"auto">Maybe stick with the I2CSlaveClass as no feature is added=
- here, with<br>
-OBJECT_DECLARE_TYPED_SIMPLE(MAX31790State, MAX31790)</p>
-
-</div>
-</div>
-</body>
-
-</html>
-
---=_MailMate_41D68B74-AC9B-4CA4-AC23-558CEA64B6F0_=--
 
