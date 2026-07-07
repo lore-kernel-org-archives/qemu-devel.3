@@ -4,125 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D18C44501
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:17:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C58CAC43602
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:17:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh5eS-0004F1-2W; Tue, 07 Jul 2026 09:15:52 -0400
+	id 1wh5ee-0004vy-Oh; Tue, 07 Jul 2026 09:16:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5dd-00038l-Q3
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:15:06 -0400
+ id 1wh5eL-0003rI-VQ
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:15:46 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5db-0000cE-N6
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:15:01 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1wh5eJ-0000rs-Re
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:15:45 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667C94Dm3720529
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:14:57 GMT
+ 667C8vGt3676666
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:15:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- lwy62xx5wzDGhRrxw2fAL5St5JaZiBKS1EskyvV1LtM=; b=UXoEVG3ugp7Ysitr
- ZhID93rcb8iV+eYBsFwhKa2O2jeUw3r+b2SxHtkAqCjVh7rzO/YoXtQ6+przP4pq
- Hf4gmaNozTt861cm0PH743jMoABCZ2XaDw2jFrm9USbuJGMC5aA6cMDPsC3ZD0Mf
- UkTIbod2YsBTgLWy4y2jH7rz4U84BGukeVLFJoOUUfLlisjUjDpmKb4zZ/7A+noT
- HrRtGkkaAydRQkwcfQtEWCUaNfZUd/qQKJeMUVKvYloJafvXOml2SUpVdAGU4B4C
- ELa7ctEXkrpZHwRIjhUdbA/NMNgOFmzYlbFsrF4BIkgqWC2Vups/9fyTcE97NFCO
- z1c1pw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8v3t9mw2-1
+ lN9MATFtm4EizLb/W1v/0rpJT6SEROwN4JCs2tgU2T0=; b=QQ9kaYZQUIzDVq/l
+ pGMboN+n/oxcB3Pg4m7bTeg0KAk397Nb85AdGDTsttuYXY8iN9m4sGcnw/KeAtMY
+ s7+pyo6MjBHIUo+eiqWKZYEEDia7kU1eYm959yRvMkSlpYxN5ahljlwVwts6DUAs
+ idrfVRkFTuNUVfvwxItvtz31nM43cGtW4jUfRKIfXiZsN9jPUhFcmA0m/c2HFboa
+ FcA4K9rPgx4P8eX/oNTCHKemaY4IC1/N/06H9EGLHh9lGwaO+Po/CDoVLIIwIXIj
+ 2aVT6uyOnOOxNeii3lvgdNn9QrJDQy1NLLUbZfde1z/qXaR5yZNPxZ8v0fYRGWxD
+ PesEig==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8t15a4r6-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:14:57 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c1a97644aso56514361cf.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:14:57 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:15:42 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-51c0d6a2f4cso46981621cf.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:15:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783430097; x=1784034897; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783430142; x=1784034942; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lwy62xx5wzDGhRrxw2fAL5St5JaZiBKS1EskyvV1LtM=;
- b=GG6h9ji/+/bKSVujrOxmojSX+FwDqpL3lqnJUAc5lG86mGYxAevV/ptSMfaSMXRPia
- okQx6xW37SfTzUAZRd4nzk0S1ZD6sZGALxGL/hKFNPtQrGdqyZvK+JnNVB+RFVRNILN9
- ZUOFZoz9gDAKb9rjRyJAfeZQ4atZbC/HxTsBeI7fWX5Ksa3dFYhoWkBk8MDeFBIQyb0X
- bC2jzto2Sr2IujD4reccdZtpZa600cvW3eayJXlviKTIfnOby5XDbsNEIVyH3hmgIo81
- ykQ6TN7Ro0IstigChjN8XktWNTV0RBvTFfykybsUabgZtVK67tzewKwZCEARxWpN4vo5
- b10w==
+ :reply-to; bh=lN9MATFtm4EizLb/W1v/0rpJT6SEROwN4JCs2tgU2T0=;
+ b=JYEAese38sOjyjkHzIeJm2EFYfZlX0edO6oi28ILxW42ICMUzTRvN4i50MVHnB75Uq
+ yuU0W+YId6Ez9oTi9ScFasWymtOtU92hmEaoLuknfI1qCaDkM4Cf9QvlUJQhqRPBgDWM
+ QNMKmODO7Q8gmAvR/WR+xwrDh0kPpODncZc1HUjzfM7sHtXYPY0lWoOGlqymbbbGMZSa
+ uX+2wN1MjzgxIAlakQpJp3TLyTHJt6rhSjHw/4p3vYiC7kwGLqtEYlmOgXHoBDojYikL
+ B2bOxMNvQW3msRfRSEKl/5zIGcXlZpPJlK8wTyZMfzK6kOnFHC/ClLBa4I+XnzYF13Sw
+ As5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783430097; x=1784034897;
+ d=1e100.net; s=20251104; t=1783430142; x=1784034942;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=lwy62xx5wzDGhRrxw2fAL5St5JaZiBKS1EskyvV1LtM=;
- b=Fw7RLsQj8SdMXpAT+THq0nhacGJ2bh3AXL6VPTWnZRQ8653YDWPBZUWweWxUl/fs7k
- WQ+ctpyR3wztYWakCdj/N6YjfMyCN0d1/0Yszngwj67zsxYfd6WAnTj9sKdjHZ4Utt4W
- NdYL6f0/qd0k0iKAQDXkfUO5j5k5GZ7oiLd9amTD8K7qcMg6BlNertxKQUR50hY2djJx
- 038+d8QtTaTEW0cJBwmpXwVgA+mpNb4JSp6dMMz8YvxcIy/6JVvf9jEw3eFW6GrDyg7Q
- bxKbeajQo9And4xb2VwT6AHr6Qp8e/VCbH92HF9yfylpq6K3aOZhv9BHJvt1GQede7FT
- IR6Q==
-X-Gm-Message-State: AOJu0YxFEhPvZvFrrf0ozSnbHBdlmZ46ofcfdKEDted8G/ZA7cM5cbPC
- edQIrZLq0jwj/+Y/mf25GEZWijF4FboIhJn3sq6qnov7QBa8opU5amjgDW7lXzmhXJ26YTzT8dn
- 3NrmGtaRMq9HDGeLB6IpP7s4gunS/BnNZNbEsgDD5lUZUFBBzO+8dcKwonIL8hc+iJA==
-X-Gm-Gg: AfdE7clZuxEJ+WOUOzfIBqGGxX/dm/UiCASdtHR60K3NFUwktIrX7KPyFGrUO2neqsk
- lNKtxh23JS5XJ1ENxUwzR2tG5YVZouMzWQ973ME9XGnxT2Wb2FT8yOEOjeo7QT9ZH+EPpA3VS1B
- HEFPDuyh+U6CU/ALFYylD3vln2ppjO/hNApC4cqmY+9unmEkAUjkwzhWoSCYPD4iIgMHcWMPRY/
- dLJzu2hGqGMfHOYJwqcHT1iSV2ELZ4xh5QjZxo4tuKR5ZdTVbw/oUck7ZS+CKBLWXeZVMKqwBXk
- ElNzDRIWPsCDxnvUF8ij12wayh+47vhcIbs50BYpFtr+z9F8FN+lsN2Bypyw4JJqwSvNFEbjzxW
- KSUyPLtTtlm3pPnDw+ZzcZq7mawTny1i55hMHxsDE2fWuErJhskqCiAq4mSX2YQ+E+ZEx
-X-Received: by 2002:a05:622a:c4:b0:51c:93b:4f1c with SMTP id
- d75a77b69052e-51c748bfcc9mr54043401cf.43.1783430096409; 
- Tue, 07 Jul 2026 06:14:56 -0700 (PDT)
-X-Received: by 2002:a05:622a:c4:b0:51c:93b:4f1c with SMTP id
- d75a77b69052e-51c748bfcc9mr54042821cf.43.1783430095730; 
- Tue, 07 Jul 2026 06:14:55 -0700 (PDT)
+ bh=lN9MATFtm4EizLb/W1v/0rpJT6SEROwN4JCs2tgU2T0=;
+ b=MnLxJGyMbMNnJrZOhoJuGu8I7Fw8ipZcAN08Td00EqtHXgMqk5ZhHkIlumCsaVk4Hb
+ iQE3qhGhAKqWL8Qx3Nnupx33ssRlvzhm7vKe6ivCdgdBxdTxJHBW4aS6/PlxugT9ULGU
+ tntcyRrkRsNnaSHkKD0vh0zmYaLbC23vF9/2J/Qrv2c2ujLDxaHMF/fkKNx5P1RD3tag
+ vIzTQfhGy5KC2Eu6hJMfkVx5OOSGNbxx3F6M3dqZvNelCM90nmLlxRaGZiXh+pEoKFQY
+ f4DXdvcLUg075xdRjqoBA/gFL1tKbcaQKuI35mQnP2oPRzZYyxUZNMjf7NqOK1dwJrKY
+ BF+g==
+X-Gm-Message-State: AOJu0YxYQu+Wu5LTkjyOofnadFoZJUkT9hOrtguev650D0avdFCSruDT
+ zUQCCwqkZrZMwwAcL6waduxF77qURTSSOWHucUJbhl8PNgDyBxSkz+VLXqTWsepCL+fMzymmt8E
+ dpDrKqs1Wu4tQxpCbbld3o/lQOvR7a5CEWa5JyA6YUD3U0jOIev6Dpfj/qsUyBLOBBw==
+X-Gm-Gg: AfdE7cke3aOgTog56ddN2QPaeagW6WpcfcDCanujlIiutz+Cbl3bHLvf4IFzFFR23jO
+ aUqnPAWQLUFSApJ5QeHWw7UlzWiC/DR+MttHfS/aTPhIDHqH21HwT3h+8io54Qnu9J9Dpcqgu3m
+ Wiw+3UTHo9oUmhYAnechVPNKhb3V59P9t7CefZHih27z2gBPzNzzrDXFIeKHSv1iX04IMyDlaVc
+ FtZd4CV5jbvC8pK14OqYeQcXtbqDp2gAh4rlSLTcMWGafTZRfEVAPOy156ImGN5Tt+Sb3Sj3zhq
+ 4EQOlc1BEkmHK4AU7ljdLy8+XZ613UDajpdhdG98eK07raUTk7rLOPBW56xq07bfTDCfKee8s43
+ xRtEIEXbrFDYvnDfG9whssDiIzAB/iW44M97zXzP31mKq+DubBZsC/2aE0DWeLh+McI0p
+X-Received: by 2002:a05:622a:992:b0:51c:df0:1b34 with SMTP id
+ d75a77b69052e-51c748844c0mr51481771cf.33.1783430141920; 
+ Tue, 07 Jul 2026 06:15:41 -0700 (PDT)
+X-Received: by 2002:a05:622a:992:b0:51c:df0:1b34 with SMTP id
+ d75a77b69052e-51c748844c0mr51480481cf.33.1783430140645; 
+ Tue, 07 Jul 2026 06:15:40 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c15b1a1011fsm114765766b.58.2026.07.07.06.14.54
+ a640c23a62f3a-c15ad820d33sm134878366b.3.2026.07.07.06.15.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Jul 2026 06:14:55 -0700 (PDT)
+ Tue, 07 Jul 2026 06:15:39 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/32] hw/arm: Add basic FlexCAN3 support to TYPE_FSL_IMX8MP
- and imx8mp-evk
-Date: Tue,  7 Jul 2026 15:12:11 +0200
-Message-ID: <20260707131223.51505-22-philmd@oss.qualcomm.com>
+Subject: [PULL 27/32] hw/block: m25p80: Fix dummy byte handling for Macronix
+ flash
+Date: Tue,  7 Jul 2026 15:12:17 +0200
+Message-ID: <20260707131223.51505-28-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260707131223.51505-1-philmd@oss.qualcomm.com>
 References: <20260707131223.51505-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: si5yioxpm1vOpxZnTfmfEMnGUceW23qo
-X-Proofpoint-ORIG-GUID: si5yioxpm1vOpxZnTfmfEMnGUceW23qo
-X-Authority-Analysis: v=2.4 cv=HqVG3UTS c=1 sm=1 tr=0 ts=6a4cfbd1 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-GUID: onZRSHd95I22fqWLNEvcDarE1KoMCtRq
+X-Authority-Analysis: v=2.4 cv=HstG3UTS c=1 sm=1 tr=0 ts=6a4cfbfe cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=NiCNghgGZ4kQcQUTIdUA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX8AOIksyppbJr
- azIEEw3+so/m9URSLQmFGPMoI+i0Nri3Y5Tlr5CReUhcDoj0hrCMQ6UeyE207dgEdAprqHvw+rS
- LomKMRViIuG+wY7DUTjoqQnB4tw2zhWA23hnSFxfhZoTAjdXxIPoR9Ht/tKLzMZ7GKPBo1vZKyU
- 8fn6PLlkhrqATvXRSthzB3RlAC0xQ79yxCz3wyFY0HWlSZQKuTgcT1fZLBEW4R4fGvSvGs7+d3P
- ZmjVb9xut5y4UeE0L6RWcIq9K+nUs4tvBUDVIVhZJLiG74CFi2Wven68LjIwYuI2reUd2Tt+KyP
- Goxl+zdkZTm7iUMznsG2YsXKJgCntBKYaS3aFm0cMqOPUExIlN+BtB467gKS4nbd6NCeZRTWF2z
- bDEO2eOi7kXe75hEV1WUb/xBxvfrFE3pW4zRMl3+ca1lFva7AisRX7CpUrzo+/LVW/kj6NxtmHD
- sb75E0bxlwBLrbyQ4GQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX1HT7Lk7os9Zg
- plYQqgNfv9xyDqOHB/DIpaZvz0rb/oc0skuRPYbbJWHYWYoxGxjb22i/Vh1ALzsSIFVYtvGJfLv
- h2XAvliyCArRs41ierbAklZCbbFUXCU=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=qudNOe3MAAAA:8 a=FRSEYCzRAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8
+ a=eCjGLk0DLWPBDlXMaRQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22 a=icPJRyImjHd6_pBPa6HO:22 a=H4N_Y-AU75W7NKDNhZlT:22
+X-Proofpoint-ORIG-GUID: onZRSHd95I22fqWLNEvcDarE1KoMCtRq
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX96O3QNcF/Pl1
+ CMmX0rfGUI8pnpJFnETDam6XYAI9pkECjLKFnYpoO8gB4ui3ptIod5w8mjbe4huvLkAka0wb6qq
+ O0HUk2wRTc4iZNh3pfERQpQuIMRvX30=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX/6qliNvYqgmb
+ sCeVjO2FlTfD9ZZFekj/MQN9h6BszUnjsmzSR/mlQJZIEQaZ04Zn8lyurHjIfLftDexeQduJQbT
+ EXF+Rve6zvnJy+TEIyYVg1CSNmtVFcD48dtNYVmGlwYfholtfXi4Hf433eULF4C10RdIBHG/6Hf
+ zwF/rL9OiqF9qAwb+lEvwSdEevv6IQU0JmAzMi/gJwt485ZCAN89UHs5jlCvIuJN4+BgEmBTgjn
+ ABsjkVbn/SPkOf7m5wEtmBmg2dXbOwz/BOCbcViTiMwlGzICZz+7pWKkSxlt0CawPpcZibVxgBM
+ xwRAezzt1lOxDYUdH6wf+aYFEO57mZ2IxD61KLpTC9Z+CTiE1Q3g58uwWTTujrykRmwylE5BYu9
+ qLc3wFJD7g21S5/vn5poPvbPXBtb5x85Cnt0FlBZBnTEEFSgbn/hTaHmAiOK9fpboGQeDHSTiYS
+ o/cFU65UM6RqkMrQ41w==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_03,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 adultscore=0 suspectscore=0 malwarescore=0
- bulkscore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501 spamscore=0
+ phishscore=0 impostorscore=0 suspectscore=0 malwarescore=0 bulkscore=0
+ clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070129
 Received-SPF: pass client-ip=205.220.180.131;
@@ -149,232 +150,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Bin Meng <bin.meng@processmission.com>
 
-Real hardware supports CAN FD which is missing in the emulation and is
-considered future work. Still, CAN communication already works under Linux.
+Macronix flashes expose DC[1:0] bits in the volatile configuration
+register [1]. These bits select the number of dummy clock cycles
+used by the fast-read command families.
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Acked-by: Pavel Pisa <pisa@fel.cvut.cz>
-Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
-Message-ID: <20260702184038.178196-6-shentey@gmail.com>
+Convert the Macronix dummy-cycle settings through per-command-family
+tables and round up the non-byte-aligned cases that the byte-oriented
+SSI model cannot represent exactly.
+
+[1] https://www.macronix.com/Lists/Datasheet/Attachments/8657/MX66L51235F,%203V,%20512Mb,%20v1.1.pdf
+
+Fixes: cf6f1efe0b57 ("m25p80: Fast read commands family changes")
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Message-ID: <20260707083431.219671-4-bin.meng@processmission.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- docs/system/arm/imx8m.rst   |  1 +
- include/hw/arm/fsl-imx8mp.h |  8 ++++++++
- hw/arm/fsl-imx8mp.c         | 38 +++++++++++++++++++++++++++++++++++++
- hw/arm/imx8mp-evk.c         | 21 ++++++++++++++++++++
- hw/misc/imx8mp_ccm.c        |  3 +++
- hw/arm/Kconfig              |  1 +
- 6 files changed, 72 insertions(+)
+ hw/block/m25p80.c | 63 +++++++++++++++++++++++++++--------------------
+ 1 file changed, 36 insertions(+), 27 deletions(-)
 
-diff --git a/docs/system/arm/imx8m.rst b/docs/system/arm/imx8m.rst
-index afbc33b2f40..1bcb8255be5 100644
---- a/docs/system/arm/imx8m.rst
-+++ b/docs/system/arm/imx8m.rst
-@@ -18,6 +18,7 @@ following devices:
-  * 1 Designware PCI Express Controller
-  * 1 Ethernet Controller
-  * 2 Designware USB 3 Controllers
-+ * 2 FlexCAN 3 CAN Controllers (``imx8mp-evk`` only)
-  * 5 GPIO Controllers
-  * 6 I2C Controllers
-  * 3 SPI Controllers
-diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
-index 3b6183ed1d6..2be3c51af56 100644
---- a/include/hw/arm/fsl-imx8mp.h
-+++ b/include/hw/arm/fsl-imx8mp.h
-@@ -17,6 +17,7 @@
- #include "hw/misc/imx7_snvs.h"
- #include "hw/misc/imx8mp_analog.h"
- #include "hw/misc/imx8mp_ccm.h"
-+#include "hw/net/flexcan.h"
- #include "hw/net/imx_fec.h"
- #include "hw/core/or-irq.h"
- #include "hw/pci-host/designware.h"
-@@ -37,6 +38,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mpState, FSL_IMX8MP)
- #define FSL_IMX8MP_RAM_SIZE_MAX     (8 * GiB)
- 
- enum FslImx8mpConfiguration {
-+    FSL_IMX8MP_NUM_CANS         = 2,
-     FSL_IMX8MP_NUM_CPUS         = 4,
-     FSL_IMX8MP_NUM_ECSPIS       = 3,
-     FSL_IMX8MP_NUM_GPIOS        = 5,
-@@ -68,11 +70,14 @@ struct FslImx8mpState {
-     USBDWC3            usb[FSL_IMX8MP_NUM_USBS];
-     DesignwarePCIEHost pcie;
-     FslImx8mPciePhyState   pcie_phy;
-+    FlexcanState       flexcan[FSL_IMX8MP_NUM_CANS];
-     OrIRQState         gpt5_gpt6_irq;
-     MemoryRegion       ocram;
- 
-     uint32_t           phy_num;
-     bool               phy_connected;
-+
-+    CanBusState       *canbus[FSL_IMX8MP_NUM_CANS];
- };
- 
- enum FslImx8mpMemoryRegions {
-@@ -279,6 +284,9 @@ enum FslImx8mpIrqs {
-     FSL_IMX8MP_PCI_INTC_IRQ = 124,
-     FSL_IMX8MP_PCI_INTD_IRQ = 123,
-     FSL_IMX8MP_PCI_MSI_IRQ  = 140,
-+
-+    FSL_IMX8MP_FLEXCAN1_IRQ  = 142,
-+    FSL_IMX8MP_FLEXCAN2_IRQ  = 144,
- };
- 
- #endif /* FSL_IMX8MP_H */
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index 7c03ed3c347..bcd91739d9b 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -246,6 +246,11 @@ static void fsl_imx8mp_init(Object *obj)
-         object_initialize_child(obj, name, &s->wdt[i], TYPE_IMX2_WDT);
-     }
- 
-+    for (i = 0; i < FSL_IMX8MP_NUM_CANS; i++) {
-+        g_autofree char *name = g_strdup_printf("flexcan%d", i);
-+        object_initialize_child(obj, name, &s->flexcan[i], TYPE_CAN_FLEXCAN3);
-+    }
-+
-     object_initialize_child(obj, "eth0", &s->enet, TYPE_IMX_ENET);
- 
-     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
-@@ -669,6 +674,34 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->pcie_phy), 0,
-                     fsl_imx8mp_memmap[FSL_IMX8MP_PCIE_PHY1].addr);
- 
-+    /* FlexCANs */
-+    for (i = 0; i < FSL_IMX8MP_NUM_CANS; i++) {
-+        static const struct {
-+            hwaddr addr;
-+            unsigned int irq;
-+        } flexcan_table[FSL_IMX8MP_NUM_CANS] = {
-+            {
-+                fsl_imx8mp_memmap[FSL_IMX8MP_FLEXCAN1].addr,
-+                FSL_IMX8MP_FLEXCAN1_IRQ
-+            }, {
-+                fsl_imx8mp_memmap[FSL_IMX8MP_FLEXCAN2].addr,
-+                FSL_IMX8MP_FLEXCAN2_IRQ
-+            },
-+        };
-+
-+        object_property_set_link(OBJECT(&s->flexcan[i]), "clock-control-module",
-+                                 OBJECT(&s->ccm), &error_abort);
-+        object_property_set_link(OBJECT(&s->flexcan[i]), "canbus",
-+                                 OBJECT(s->canbus[i]), &error_abort);
-+
-+        sysbus_realize(SYS_BUS_DEVICE(&s->flexcan[i]), &error_abort);
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->flexcan[i]), 0,
-+                        flexcan_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->flexcan[i]), 0,
-+                           qdev_get_gpio_in(gicdev, flexcan_table[i].irq));
-+    }
-+
-     /* On-Chip RAM */
-     if (!memory_region_init_ram(&s->ocram, OBJECT(dev), "imx8mp.ocram",
-                                 fsl_imx8mp_memmap[FSL_IMX8MP_OCRAM].size,
-@@ -684,6 +717,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-         switch (i) {
-         case FSL_IMX8MP_ANA_PLL:
-         case FSL_IMX8MP_CCM:
-+        case FSL_IMX8MP_FLEXCAN1 ... FSL_IMX8MP_FLEXCAN2:
-         case FSL_IMX8MP_GIC_DIST:
-         case FSL_IMX8MP_GIC_REDIST:
-         case FSL_IMX8MP_GPIO1 ... FSL_IMX8MP_GPIO5:
-@@ -715,6 +749,10 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
- static const Property fsl_imx8mp_properties[] = {
-     DEFINE_PROP_UINT32("fec1-phy-num", FslImx8mpState, phy_num, 0),
-     DEFINE_PROP_BOOL("fec1-phy-connected", FslImx8mpState, phy_connected, true),
-+    DEFINE_PROP_LINK("canbus0", FslImx8mpState, canbus[0], TYPE_CAN_BUS,
-+                     CanBusState *),
-+    DEFINE_PROP_LINK("canbus1", FslImx8mpState, canbus[1], TYPE_CAN_BUS,
-+                     CanBusState *),
- };
- 
- static void fsl_imx8mp_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-index ca0ee2d3f2e..16e9722d146 100644
---- a/hw/arm/imx8mp-evk.c
-+++ b/hw/arm/imx8mp-evk.c
-@@ -26,6 +26,7 @@ struct FslImx8mpEvkState {
-     MachineState parent_obj;
- 
-     FslImx8mpState soc;
-+    CanBusState *canbus[FSL_IMX8MP_NUM_CANS];
- 
-     struct arm_boot_info boot_info;
- };
-@@ -86,6 +87,12 @@ static void imx8mp_evk_init(MachineState *machine)
- 
-     object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_FSL_IMX8MP);
-     object_property_set_uint(OBJECT(&s->soc), "fec1-phy-num", 1, &error_fatal);
-+    for (int i = 0; i < FSL_IMX8MP_NUM_CANS; i++) {
-+        g_autofree char *bus_name = g_strdup_printf("canbus%d", i);
-+
-+        object_property_set_link(OBJECT(&s->soc), bus_name,
-+                                 OBJECT(s->canbus[i]), &error_fatal);
-+    }
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(&s->soc), &error_fatal);
- 
-     memory_region_add_subregion(get_system_memory(), FSL_IMX8MP_RAM_START,
-@@ -122,6 +129,19 @@ static const char *imx8mp_evk_get_default_cpu_type(const MachineState *ms)
-     return ARM_CPU_TYPE_NAME("cortex-a53");
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index 83d1ce1f956..d7a9d793737 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -1024,6 +1024,39 @@ static uint8_t numonyx_extract_cfg_dummy_bytes(Flash *s)
+     return dummy_bits / 8;
  }
  
-+static void imx8mp_evk_machine_init(Object *obj)
++static uint8_t macronix_extract_cfg_dummy_bytes(Flash *s, uint8_t bus_width)
 +{
-+    FslImx8mpEvkState *s = IMX8MPEVK_MACHINE(obj);
++    static const uint8_t dummy_cycles_fast[4] = { 8, 6, 8, 10 };
++    static const uint8_t dummy_cycles_dio[4] = { 4, 6, 8, 10 };
++    static const uint8_t dummy_cycles_qio[4] = { 6, 4, 8, 10 };
++    const uint8_t *dummy_cycles = dummy_cycles_fast;
++    uint8_t dummy_bits;
 +
-+    object_property_add_link(obj, "canbus0", TYPE_CAN_BUS,
-+                             (Object **)&s->canbus[0],
-+                             object_property_allow_set_link, 0);
++    switch (s->cmd_in_progress) {
++    case DIOR:
++    case DIOR4:
++        dummy_cycles = dummy_cycles_dio;
++        break;
++    case QIOR:
++    case QIOR4:
++        dummy_cycles = dummy_cycles_qio;
++        break;
++    default:
++        break;
++    }
 +
-+    object_property_add_link(obj, "canbus1", TYPE_CAN_BUS,
-+                             (Object **)&s->canbus[1],
-+                             object_property_allow_set_link, 0);
++    dummy_bits = dummy_cycles[extract32(s->volatile_cfg, 6, 2)];
++    dummy_bits *= bus_width;
++
++    /*
++     * Assert that the dummy bit count is byte-aligned
++     * as SSI core can only consume whole dummy bytes.
++     */
++    assert(dummy_bits % 8 == 0);
++
++    return dummy_bits / 8;
 +}
 +
- static void imx8mp_evk_machine_class_init(ObjectClass *oc, const void *data)
+ static void decode_fast_read_cmd(Flash *s)
  {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -140,6 +160,7 @@ static const TypeInfo imx8mp_evk_machine_types[] = {
-         .name = TYPE_IMX8MPEVK_MACHINE,
-         .parent = TYPE_MACHINE,
-         .class_init = imx8mp_evk_machine_class_init,
-+        .instance_init = imx8mp_evk_machine_init,
-         .instance_size = sizeof(FslImx8mpEvkState),
-         .interfaces = aarch64_machine_interfaces,
-     },
-diff --git a/hw/misc/imx8mp_ccm.c b/hw/misc/imx8mp_ccm.c
-index 911911ed865..97d363e79d8 100644
---- a/hw/misc/imx8mp_ccm.c
-+++ b/hw/misc/imx8mp_ccm.c
-@@ -129,6 +129,9 @@ static uint32_t imx8mp_ccm_get_clock_frequency(IMXCCMState *dev, IMXClk clock)
-     case CLK_HIGH:
-         freq = CKIH_FREQ;
+     s->needed_bytes = get_addr_length(s);
+@@ -1039,11 +1072,7 @@ static void decode_fast_read_cmd(Flash *s)
+         s->needed_bytes += numonyx_extract_cfg_dummy_bytes(s);
          break;
-+    case CLK_CAN:
-+        freq = 40000000; /* 40Mhz, taken from device tree */
-+        break;
-     case CLK_IPG:
-     case CLK_IPG_HIGH:
+     case MAN_MACRONIX:
+-        if (extract32(s->volatile_cfg, 6, 2) == 1) {
+-            s->needed_bytes += 6;
+-        } else {
+-            s->needed_bytes += 8;
+-        }
++        s->needed_bytes += macronix_extract_cfg_dummy_bytes(s, 1);
+         break;
+     case MAN_SPANSION:
+         s->needed_bytes += extract32(s->spansion_cr2v,
+@@ -1091,17 +1120,7 @@ static void decode_dio_read_cmd(Flash *s)
+         s->needed_bytes += numonyx_extract_cfg_dummy_bytes(s);
+         break;
+     case MAN_MACRONIX:
+-        switch (extract32(s->volatile_cfg, 6, 2)) {
+-        case 1:
+-            s->needed_bytes += 6;
+-            break;
+-        case 2:
+-            s->needed_bytes += 8;
+-            break;
+-        default:
+-            s->needed_bytes += 4;
+-            break;
+-        }
++        s->needed_bytes += macronix_extract_cfg_dummy_bytes(s, 2);
+         break;
+     case MAN_ISSI:
          /*
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index f9a225c19bc..82e0bc2e700 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -601,6 +601,7 @@ config FSL_IMX8MP
-     imply I2C_DEVICES
-     imply PCI_DEVICES
-     select ARM_GIC
-+    select CAN_FLEXCAN
-     select FSL_IMX8MP_ANALOG
-     select FSL_IMX8MP_CCM
-     select IMX
+@@ -1141,17 +1160,7 @@ static void decode_qio_read_cmd(Flash *s)
+         s->needed_bytes += numonyx_extract_cfg_dummy_bytes(s);
+         break;
+     case MAN_MACRONIX:
+-        switch (extract32(s->volatile_cfg, 6, 2)) {
+-        case 1:
+-            s->needed_bytes += 4;
+-            break;
+-        case 2:
+-            s->needed_bytes += 8;
+-            break;
+-        default:
+-            s->needed_bytes += 6;
+-            break;
+-        }
++        s->needed_bytes += macronix_extract_cfg_dummy_bytes(s, 4);
+         break;
+     case MAN_ISSI:
+         /*
 -- 
 2.53.0
 
