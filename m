@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 184C7C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:57:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 884A2C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh4Pz-0005mq-KT; Tue, 07 Jul 2026 07:56:51 -0400
+	id 1wh4Rl-00079V-Vh; Tue, 07 Jul 2026 07:58:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wh4Px-0005iZ-QY
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:56:49 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh4Rk-00079F-JB
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:58:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wh4Pw-0000sO-4H
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:56:49 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh4Rj-0000y4-24
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:58:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783425407;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1783425518;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uuTHZMpMl56vhaJGER1fAmFZQMXC3EmlXPWKBEqEz4Q=;
- b=bzUCGAAZ+VlMc+7+PH1J/Dtr76zovHUTk1fqOLoYM2G/ISzpeCXdFF5BBBtfJB922+SU9s
- Ao3eI2nnjJRZb1XpZiyYs2eiNadDhaSAGVsmXeZ+2HFG3fItqEo9IKYDT8EyIpML64U54A
- PNbFWvV60F8zmwOwHaM1Ph5nHyLueus=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Sx9ceVBIxTCChNgTGrKuGZRevVRYlusqsxzmiPTO8Us=;
+ b=hPXOZ84YJADTZsgwSa+HHxBtXOiPZDjIVVdIwbBWc2ZmMqcpzPAMuBsFYVlCwVUAFV9BRz
+ BK0/LqmBCalKNBBbfknQf4a7z1YROnmkfSRhwo6DSoSZQZjgQ4wfvOWHHZPYsbXRBrNBgO
+ NGT0aQ8KNi2NSmUz30lY0+l59ZI6JLo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-BHeSKG02OUOYZaMs_Co5CQ-1; Tue,
- 07 Jul 2026 07:56:43 -0400
-X-MC-Unique: BHeSKG02OUOYZaMs_Co5CQ-1
-X-Mimecast-MFC-AGG-ID: BHeSKG02OUOYZaMs_Co5CQ_1783425402
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-148-lAZwFgu9MkqGWxIg_eEijQ-1; Tue,
+ 07 Jul 2026 07:58:35 -0400
+X-MC-Unique: lAZwFgu9MkqGWxIg_eEijQ-1
+X-Mimecast-MFC-AGG-ID: lAZwFgu9MkqGWxIg_eEijQ_1783425513
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D8B6A1955DAF; Tue,  7 Jul 2026 11:56:41 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.142])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AB31236924; Tue,  7 Jul 2026 11:56:38 +0000 (UTC)
-Date: Tue, 7 Jul 2026 12:56:35 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: kfting@nuvoton.com, wuhaotsh@google.com, alistair@alistair23.me,
- peter.maydell@linaro.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 1/1] hw/adc/npcm7xx_adc.c: convert NPCM7XX_ADC object
- props to class props
-Message-ID: <akzpc-3Ko2UoL2y7@redhat.com>
-References: <20260703143408.3235231-1-mark.caveayland@nutanix.com>
- <20260703143408.3235231-2-mark.caveayland@nutanix.com>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 501361954212; Tue,  7 Jul 2026 11:58:33 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 66E353000C01; Tue,  7 Jul 2026 11:58:32 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Harald Freudenberger <freude@linux.ibm.com>,
+ richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ thuth@redhat.com, berrange@redhat.com
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ linux-s390@vger.kernel.org, dengler@linux.ibm.com,
+ borntraeger@linux.ibm.com, fcallies@linux.ibm.com
+Subject: Re: [PATCH v10 00/21] target/s390x: Extend qemu CPACF support
+In-Reply-To: <20260706094317.17032-1-freude@linux.ibm.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20260706094317.17032-1-freude@linux.ibm.com>
+User-Agent: Notmuch/0.40 (https://notmuchmail.org)
+Date: Tue, 07 Jul 2026 13:58:29 +0200
+Message-ID: <87bjcjj9ju.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260703143408.3235231-2-mark.caveayland@nutanix.com>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
 X-Spam_score: 0.8
@@ -87,24 +88,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 03, 2026 at 03:32:17PM +0100, Mark Cave-Ayland wrote:
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> ---
->  hw/adc/npcm7xx_adc.c | 19 ++++++++++++-------
->  1 file changed, 12 insertions(+), 7 deletions(-)
+On Mon, Jul 06 2026, Harald Freudenberger <freude@linux.ibm.com> wrote:
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Harald Freudenberger (21):
+>   target/s390x: Fix wrong address handling in address loops
 
+I've picked the first patch as a bugfix.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>   target/s390x: Rework s390 cpacf implementations
+>   target/s390x: Move cpacf sha512 code into a new file
+>   target/s390x: Support cpacf sha256
+>   target/s390x: Support AES ECB for cpacf km instruction
+>   target/s390x: Support AES CBC for cpacf kmc instruction
+>   target/s390x: Support AES CTR for cpacf kmctr instruction
+>   target/s390x: Minimal AES XTS support for cpacf pcc instruction
+>   target/s390x: Support AES XTS for cpacf km instruction
+>   target/s390x: Base support for cpacf protected keys
+>   target/s390x: Support pckmo encrypt AES subfunctions
+>   target/s390x: Support protected key AES ECB for cpacf km instruction
+>   target/s390x: Support protected key AES CBC for cpacf kmc instruction
+>   target/s390x: Support protected key AES CTR for cpacf kmctr
+>     instruction
+>   target/s390x: Minimal protected key AES XTS support for cpacf pcc
+>     instruction
+>   target/s390x: Support protected key AES XTS for cpacf km instruction
+>   docs/s390: Document CPACF instructions support
+>   crypto: Add aes-helpers file to support some AES modes
+>   target/s390x: Use generic AES helper functions
+>   target/s390x: Improve fetch and store mem from and to guest
+>   tests/tcg/s390x: Add tests for CPACF instructions
 
 
