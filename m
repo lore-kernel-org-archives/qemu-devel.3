@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44898C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 22:45:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B376C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 22:45:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whEVw-0001NU-Tb; Tue, 07 Jul 2026 18:43:40 -0400
+	id 1whEVl-0001Jv-P9; Tue, 07 Jul 2026 18:43:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1whEVv-0001MT-51
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:43:39 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1whEVk-0001IM-3T
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:43:28 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1whEVr-0004AU-Vm
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:43:38 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2cace91f112so824945ad.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 15:43:33 -0700 (PDT)
+ id 1whEVh-00048A-QG
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:43:27 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2cc891373e0so786935ad.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 15:43:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783464212; x=1784069012; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783464204; x=1784069004; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=tjTKQ+pNbBLpWy4623zrp+MUjeVCpuJZYWOZQR0J4OM=;
- b=m0WBBNAKr1JWrB1zQVh+30OdloAHGzePSIn8gQF+PIv0/Jn1P95lbechU4eOK+iMEz
- gTrIgBFEiyaqVy4etmnwIyj7kPnO/E3Mkm+NZi63PARRm4MXlyWksa9iqFq3l97TIloj
- nWfb9JgAYtuaNzSKqp10Ol3D82lX31xXIAN+YXB5tq/yYhKRJ5c5zRVZqhCK5ObbSbGA
- KiUCWhxOmHXoJP6RLgDXvWw0/jFJF3zZywI8QCLHPo+u86E9dZurRQc7D82QrEQP/PvO
- SBaXPfcCDxwAaa38pfx4r+z7PEJ3qvQ2fa8K9J0V35j5FIzWNpnZNBHdjhvUA+jnxl6c
- /7VQ==
+ bh=lBJ/QDAyECFxsw9vQUS2oMzovvSIiQI/RHhlqrlamsA=;
+ b=vwnX51fQI4FMc+cwwoW5Z+IUChh1Umk91yLOTqz3qXmt2QDnH9Jj6H2w9RxLNileIK
+ PYDiA8GHNxzpMJrLYOB5lbRLRcX/rzWswI9j0p5P+xVIqbqkotfXLtO4zUr2/whMwQda
+ G5ijXTFhGFtj6rpwML1GRB0Zh/NjoMHAkSfHgSJU3WmFl0bDeZfBDVzMj+qNRxdHnUgg
+ +nD0wt6Mj5HSK8n+GGUyOo4yvg2C3WCDHYlJ+WDcLEoHZHXvBK5EV6ApPadVPqdBu8zt
+ PeuOh+Zcs8YHUA3sllQTV+aKv4aGgWs5MZ8kWkMnGtZvgiP9eSbio1nB/5/2xBwHV5lX
+ VmYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783464212; x=1784069012;
+ d=1e100.net; s=20251104; t=1783464204; x=1784069004;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=tjTKQ+pNbBLpWy4623zrp+MUjeVCpuJZYWOZQR0J4OM=;
- b=mbtNcJn7lVdiN6/lydVSx0m1C5CEbvVGHdy8yYBCuO49JAEZnDwNAp1JT+SO+CB9EJ
- sEsoYZgpZbdx0cVaDLnBSTJLRb8MVQes9kCLdlnx4C6zb9vezl0E5FbHfYBi2Dh1nauf
- 5S3J3vMXnpm98M0vp+5iMGMVPJ9n+/oJBJSbw8lf8r68/1vuHAkJBOA2AXG1B/2myEXG
- W5KqcgcEthmUDZXo0B7tn48Y4HYdPy7+e5yLYN+aeMy3jYZrZiIU7dQlIlZOpNxa0Aod
- 6t1XQxmuS+AHvpcg+E4fPdKT2OhlJBRLpxN0zQMkvIOaoH4o1MTaf+0LvdNAzvufYMSe
- hsZA==
-X-Gm-Message-State: AOJu0YxY87FJmRoIKoOc9sM/SujJfpCxH/y7vPidFymWXw4JgzqrNnMu
- drgqrcH1Edwklhnkvup9Ff7JC09NHxMXFcBEmse5FTb5S37xWI42c+tHI0izAfFSm60kvOyS/Gl
- BVdGPAvU=
-X-Gm-Gg: AfdE7cm7Yr8a6PpDEjmfRt35LL9cWVj+MKWb0aoSbjFajhv1YrUOCZFolQhkkr06AhI
- Ms9f0xnLGcdI8nIiPHXWYHnj6qzDrxrbmB2sdALPZuS4ka9bb0KLamiqXVJPsGD3LOc0y83i/s1
- ofnHRAtc3wVAyClj1kIXWOlj980pLuZXNBatGY3Z3X0RS23FChxQQTrww6yj1eoGwW7SZe4DbDo
- sFSqQFuKFJ2DSmVdxzCc6CH7B4FjweyBNhY5ewv6Ltf7w1E7r+XbwBG3Ti0ThAhVMh2Qdo6GaG7
- +6SzQdjqJnI577ICXbQh1uY7npcvuXGRHgVwNLweOX6Xj6sbYcOPhs7fFxeegkCLPuXXmx+Arzn
- +LcUPyyjLpT0OkDtu/KtCnLPASEq6IWwBoe3OaXspv1I76ILWOEki67PnxtPXvBP0KtVLtYOsG0
- 2YLzXM4FHVoYBW2fEkTUCOx15w8jy8e4xXHuTkkS0=
-X-Received: by 2002:a17:903:3550:b0:2c9:d539:61e7 with SMTP id
- d9443c01a7336-2ccbe6267f4mr64613375ad.19.1783464212055; 
- Tue, 07 Jul 2026 15:43:32 -0700 (PDT)
+ bh=lBJ/QDAyECFxsw9vQUS2oMzovvSIiQI/RHhlqrlamsA=;
+ b=aebC/Rs1fmzxNxj8eH4Bo1gYtAiWh4S2MUYMeL6T9WXqq6rhlC8BUKM01oeX5/7XfL
+ +YoCUkC1aJ7CC5aRzXyUKjXHcv9hNwwSBE4763lvhZzYd++gjgcx8J7D8phQAJ4fp2hN
+ PVr+JYfBlfNfnuYfBic5ACitIOmVT7qfgXFD+4t5gU8BZa4SHUFWbdDRBReVr2riGLhY
+ 5tXgN/K9VdcY+qk9OByu/d7q3ki6o1FuoYI1noheQo4l45BFacAZbsKCl5R82I02TmGk
+ jeb244OtRat6pyQUq0yEInYcGHIIfKSzXUnJRCtax12+aByKB3H8dxpGSMdhA7zdm9Zv
+ dNpA==
+X-Gm-Message-State: AOJu0YzLgRUpLBOorHuOW3+OMXqRGRYlkBGmGaV/uCywKv5E5RRuZjJA
+ fj3JoVzQM4o6I8xQnYO5IhTJWBQogVXeTaL5GYl3F1gmmxLvCTTTsETHR7LdMghS/uM=
+X-Gm-Gg: AfdE7ck5zTg33CbPkuIWZYv8NwaLcBLk4CtWLnK3PDxdoBB4K9JQruIv9yCC+bF8j4g
+ MaOe4K4dOSBHak3rTIsKzh63+dWRKKzXGiaC3aolKc/VDHGut7wQw60Z6YzfGk+4QEAhkcpET42
+ ATh9BHWJhMS5bLeHiXCu5sKK3ZeYCsKlotW3MiIzvgmh0VfuyNY3kLJ5umrPOuy5WKMhXvDGd64
+ QMO43Tn7aI1TZDWWi/7K0lPJYDfICKKYRtMoBmCmRazeY19rN3SFQICYaQeIBmzk3GchzcWblT8
+ AT3+3MNjQxB/Il9Rc0536xGqXAU/QkVAYxwwc29PAQmBUw+VRd+lfOywrFuhKqW4Wj2zkjuokFE
+ 092TiMock5pyp/FyY1lKeb2sCbtlLMrmd+k9GjVoczAzGFhWlNzrcdTG5AeTWg3Ry0hTwGcq/jl
+ /ip4FNiMr180+XAgG0IDzIhV8FYTNYJ8m5GfHf/UI=
+X-Received: by 2002:a17:903:1a0f:b0:2c9:97a7:b1eb with SMTP id
+ d9443c01a7336-2ccbf06aea0mr62459205ad.42.1783464204248; 
+ Tue, 07 Jul 2026 15:43:24 -0700 (PDT)
 Received: from p14s.cg.shawcable.net
  ([2604:3d09:148c:c800:46c8:dda7:40fa:8958])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ccc9d3bbaesm18183805ad.57.2026.07.07.15.43.30
+ d9443c01a7336-2ccc9d3bbaesm18183805ad.57.2026.07.07.15.43.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jul 2026 15:43:31 -0700 (PDT)
+ Tue, 07 Jul 2026 15:43:23 -0700 (PDT)
 From: Mathieu Poirier <mathieu.poirier@linaro.org>
 To: berrange@redhat.com, kchamart@redhat.com,
  pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
@@ -74,17 +73,16 @@ To: berrange@redhat.com, kchamart@redhat.com,
 Cc: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org,
 	kvm@vger.kernel.org
-Subject: [RFC v1 11/25] target/arm/kvm-rme: Keep track of images loaded in
- Realm memory
-Date: Tue,  7 Jul 2026 16:42:52 -0600
-Message-ID: <20260707224306.1202330-12-mathieu.poirier@linaro.org>
+Subject: [RFC v1 07/25] target/arm/kvm: Create scratch Realm VM when requested
+Date: Tue,  7 Jul 2026 16:42:48 -0600
+Message-ID: <20260707224306.1202330-8-mathieu.poirier@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
 References: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,105 +107,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-Add a Rom notifier to keep track of binary blobs loaded in Realm memory.
-That way we can deterministically calculate the Realm Initial Measurement (RIM).
+When a Realm is requested, create a scratch Realm VM by setting bit 8
+of the argument given to the KVM_CREATE_VM ioctl().  Bit 7-0 are reserved
+for the guest PA size.
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 ---
- target/arm/kvm-rme.c | 46 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ target/arm/kvm-rme.c  | 8 ++++++++
+ target/arm/kvm-stub.c | 5 +++++
+ target/arm/kvm.c      | 4 +++-
+ target/arm/kvm_arm.h  | 8 ++++++++
+ 4 files changed, 24 insertions(+), 1 deletion(-)
 
 diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
-index 697e7d507f0d..97ec7c8934c9 100644
+index 90c1d30ba24c..f763d5ed6199 100644
 --- a/target/arm/kvm-rme.c
 +++ b/target/arm/kvm-rme.c
-@@ -10,6 +10,7 @@
+@@ -99,3 +99,11 @@ void kvm_arm_rme_vcpu_init(ARMCPU *cpu)
  
- #include "hw/core/boards.h"
- #include "hw/core/cpu.h"
-+#include "hw/core/loader.h"
- #include "kvm_arm.h"
- #include "migration/blocker.h"
- #include "qapi/error.h"
-@@ -27,11 +28,14 @@ OBJECT_DECLARE_SIMPLE_TYPE(RmeGuest, RME_GUEST)
- typedef struct {
-     hwaddr base;
-     hwaddr size;
-+    AddressSpace *as;
- } RmeRamRegion;
- 
- struct RmeGuest {
-     ConfidentialGuestSupport parent_obj;
-+    Notifier rom_load_notifier;
-     RmeRamRegion init_ram;
-+    GSList *ram_regions;
- };
- 
- OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
-@@ -66,6 +70,44 @@ static void rme_guest_finalize(Object *obj)
- {
+     cpu->kvm_rme = true;
  }
- 
-+static gint rme_compare_ram_regions(gconstpointer a, gconstpointer b)
++
++int kvm_arm_rme_vm_type(void)
 +{
-+    const RmeRamRegion *ra = a;
-+    const RmeRamRegion *rb = b;
-+
-+    g_assert(ra->base != rb->base);
-+    return ra->base < rb->base ? -1 : 1;
-+}
-+
-+static void rme_rom_load_notify(Notifier *notifier, void *data)
-+{
-+    RmeRamRegion *region;
-+    RomLoaderNotifyData *rom = data;
-+
-+    if (rom->addr == -1) {
-+        /*
-+         * These blobs (ACPI tables) are not loaded into guest RAM at reset.
-+         * Instead the firmware will load them via fw_cfg and measure them
-+         * itself.
-+         */
-+        return;
++    if (rme_guest) {
++        return KVM_VM_TYPE_ARM_REALM;
 +    }
-+
-+    region = g_new0(RmeRamRegion, 1);
-+    region->base = rom->addr;
-+    region->size = rom->len;
-+    region->as = rom->as;
-+
-+    /*
-+     * The Realm Initial Measurement (RIM) depends on the order in which we
-+     * initialize and populate the RAM regions. To help a verifier
-+     * independently calculate the RIM, sort regions by GPA.
-+     */
-+    rme_guest->ram_regions = g_slist_insert_sorted(rme_guest->ram_regions,
-+                                                   region,
-+                                                   rme_compare_ram_regions);
++    return 0;
 +}
-+
- int kvm_arm_rme_init(MachineState *ms, KVMState *s)
+diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
+index 4ab6f08637d1..6d52f172c5df 100644
+--- a/target/arm/kvm-stub.c
++++ b/target/arm/kvm-stub.c
+@@ -129,3 +129,8 @@ void kvm_arm_rme_vcpu_init(ARMCPU *cpu)
  {
-     static Error *rme_mig_blocker;
-@@ -88,6 +130,9 @@ int kvm_arm_rme_init(MachineState *ms, KVMState *s)
-     error_setg(&rme_mig_blocker, "RME: migration is not implemented");
-     migrate_add_blocker(&rme_mig_blocker, &error_fatal);
- 
-+    rme_guest->rom_load_notifier.notify = rme_rom_load_notify;
-+    rom_add_load_notifier(&rme_guest->rom_load_notifier);
-+
-     /*
-      * The realm activation is done last, when the VM starts, after all images
-      * have been loaded and all vcpus finalized.
-@@ -107,6 +152,7 @@ void kvm_arm_rme_init_guest_ram(hwaddr base, size_t size)
- 
-     rme_guest->init_ram.base = base;
-     rme_guest->init_ram.size = size;
-+    rme_guest->init_ram.as = NULL;
+     g_assert_not_reached();
  }
++
++int kvm_arm_rme_vm_type(void)
++{
++    g_assert_not_reached();
++}
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 4c212ed0c337..6aa1cd04e484 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -108,6 +108,7 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
+ {
+     int ret = 0, kvmfd = -1, vmfd = -1, cpufd = -1;
+     int max_vm_pa_size;
++    int vm_type;
  
- void kvm_arm_rme_vcpu_init(ARMCPU *cpu)
+     kvmfd = qemu_open_old("/dev/kvm", O_RDWR);
+     if (kvmfd < 0) {
+@@ -117,8 +118,9 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
+     if (max_vm_pa_size < 0) {
+         max_vm_pa_size = 0;
+     }
++    vm_type = kvm_arm_rme_vm_type();
+     do {
+-        vmfd = ioctl(kvmfd, KVM_CREATE_VM, max_vm_pa_size);
++        vmfd = ioctl(kvmfd, KVM_CREATE_VM, max_vm_pa_size | vm_type);
+     } while (vmfd == -1 && errno == EINTR);
+     if (vmfd < 0) {
+         goto err;
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index 12ed1eee18b4..65ec1b970606 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -259,4 +259,12 @@ int kvm_arm_rme_init(MachineState *ms, KVMState *s);
+  */
+ void kvm_arm_rme_vcpu_init(ARMCPU *cpu);
+ 
++/**
++ * kvm_arm_rme_vm_type
++ * @ms: the machine state
++ *
++ * Returns the Realm KVM VM type if the user requested a Realm, 0 otherwise.
++ */
++int kvm_arm_rme_vm_type(void);
++
+ #endif
 -- 
 2.43.0
 
