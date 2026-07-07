@@ -4,103 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CD2EC44501
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 07:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35BAFC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 07:51:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh0Xu-0002h0-2c; Tue, 07 Jul 2026 03:48:46 -0400
+	id 1wh0ah-0003yu-GK; Tue, 07 Jul 2026 03:51:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wh0Xr-0002gG-Ti
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 03:48:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1wh0ae-0003wt-Af
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 03:51:37 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wh0Xq-00009E-A3
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 03:48:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783410520;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kA8OjJ6WUzoAxYW6xLIYHtXWSlL/HNAKv1DBHBQUfbY=;
- b=iDX3OQpmtg+gRXMPPFSo9x3offTIUkUQKi0ynajRw97rR8nO1zSajYFT8lBpuC4Q4Skjpq
- tudN8uzXiTIbFZmST5sE2FrgYFFeXyrhZGma/qvRJ+N+YA+ieFJ01qwM/zVA8XOBLdQFL2
- ZFcYq0HsdLob2/PE9Dulf6Fuq6A0sJ8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-weDueJFdM9m3NH-u05FzYQ-1; Tue, 07 Jul 2026 03:48:39 -0400
-X-MC-Unique: weDueJFdM9m3NH-u05FzYQ-1
-X-Mimecast-MFC-AGG-ID: weDueJFdM9m3NH-u05FzYQ_1783410518
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-47499916233so473643f8f.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 00:48:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783410518; x=1784015318;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kA8OjJ6WUzoAxYW6xLIYHtXWSlL/HNAKv1DBHBQUfbY=;
- b=fuve9W6otqMzM3Q2lbkW1vviIdvHLUCoAtdtenToYwt0oiH7F2EqyPB9DHXD+tXp86
- xAFKd5Y8lHjq6pHdZoix1EpicxRfuQ4oqFIeQLOPyr457SoUQRzCTBGYObivgxGgJlzX
- 2bR15lpBiFrcnk6cyUZ9kJjOK9m2TMFSHLT19j4PFgb82sMPU0c3VmbjIIxAwS3zrutf
- ERq04601UeWx2bP1aQGH/MiSwWp2DkYyB29HZMtIJTnitBAQgRM4RDBXMXdup88V0pHL
- WN/E128Qte04Jc3EAVJb17cjcYq6FHrAPPdWUefwNn81xtZqGH0rX6gTM9UWJ6XDvJji
- y5/w==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rrh+1Nvb5TyEFDSM9UMXw0LwxegyJUmU70vAVyaWcC3yJx+VOpluOIdfVO7O0QVlbS7zi992CNVAacQ@nongnu.org
-X-Gm-Message-State: AOJu0Yz1UPghVp7vldH8UROObKQls77NpIZn9QQzmFq/P5WdeYEMrwi3
- 9k80t+YylMdQ1N5sip1Z+G8MOcjp5jOUtKk9ZKZdtbsgeY32WU1gwus9C8C4/1u0aPcTHYosqnB
- PkRz8sUHTiONv2yJ8xFHmxFaV/nOqt3BitijWSpTp0otHzndafEx3QG9Z
-X-Gm-Gg: AfdE7ckm2ER5STPbijX5LyLNB4FZG+E1zx+ifgXtiJchd0xdEVTexJzwwGLcBPinQ1z
- 6GtbmppASjOQyXhVpK+cv3GAi2BZu0V8khbqN2/VHwbdUb/l5k5g4gPdF9p1mwSOB79DUD/OVYH
- zunLEbFjAbdZy5BCb3PyqvoumIYJXbYR569LYzvbtI2uMcfTrUqOeVoR2uJCuTUwe5hx+cxZM3k
- KYg4A1r35X5mTpH3MebqTzLFLMZXvD3Wfta9GO2IxcoMdFUIdVCneBXMuJVkh7Y4Q73CLzpuaWx
- vRVwTaW3eKV2qtZ8q39ifBBrWag9EG18qsesmNsnwllWoTggydHtlO6zw/B0ICgWwJxVixH0sl5
- bOxoOrIW8uzN2iMb98Pv/IfLszKgqgROkEaSEeXZFQVas/L9xxzDFI4IZM0BgKw==
-X-Received: by 2002:adf:f04e:0:b0:472:8343:7f5e with SMTP id
- ffacd0b85a97d-47de660347emr3297077f8f.5.1783410518255; 
- Tue, 07 Jul 2026 00:48:38 -0700 (PDT)
-X-Received: by 2002:adf:f04e:0:b0:472:8343:7f5e with SMTP id
- ffacd0b85a97d-47de660347emr3297042f8f.5.1783410517764; 
- Tue, 07 Jul 2026 00:48:37 -0700 (PDT)
-Received: from ?IPV6:2a01:cb1c:263:8800:8714:9136:d3b4:25b3?
- ([2a01:cb1c:263:8800:8714:9136:d3b4:25b3])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47a9de1e785sm31313077f8f.8.2026.07.07.00.48.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jul 2026 00:48:37 -0700 (PDT)
-Message-ID: <07fad629-3ae4-446f-8227-9c45eada5023@redhat.com>
-Date: Tue, 7 Jul 2026 09:48:35 +0200
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1wh0aa-0000uM-9j
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 03:51:35 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id E8134618A6;
+ Tue,  7 Jul 2026 07:51:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E2A1F000E9;
+ Tue,  7 Jul 2026 07:51:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1783410686;
+ bh=SUkqFQHAChEnyb0j7i20Q/Ia/HvMxsq9XrMf3R1nvN0=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=fwYM/HfGGFIih7tJF7UcjNWX43LPfCn/iPDWojcN8HBlaTRKGE2C1aljSwCkGF704
+ mXCD3hPfg9y5n+vCOkbNZNqfpEJWoplVATVf0H1B8lKRU5aSnUN1e1ju9pcR7NEOLe
+ LHjwt1/XFarRiBwKhKPNA3GYRzKhuYUybqKwdpmAhLAQ1s4cn0JGpVe6eq+pT8Pbfm
+ n706p9QLwrblWCcZvYWtOhe6wN1t2GyGhZNF4+YnSV0y6n7Hv2+AKbTA7CGaa5QsAG
+ oYvkgFSxLzWYFVlpQBe5QncLFq5O3Avu8i1i3vgRksVnegfSe9kos6tHy7GJRc6YiL
+ 0FbEO607AecWQ==
+Date: Tue, 7 Jul 2026 09:51:19 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Borislav Petkov <bp@alien8.de>
+Cc: "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Markus
+ Armbruster <armbru@redhat.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
+ <philmd@linaro.org>, John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ linux-edac@vger.kernel.org, Alex Williamson <alex@shazbot.org>, Paolo
+ Bonzini <pbonzini@redhat.com>, zhenwei pi <zhenwei.pi@linux.dev>, "Gonglei
+ (Arei)" <arei.gonglei@huawei.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVk?=
+ =?UTF-8?B?w6k=?= <philmd@mailo.com>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, Alex =?UTF-8?B?QmVu?=
+ =?UTF-8?B?bsOpZQ==?= <alex.bennee@linaro.org>, Zhao Liu
+ <zhao1.liu@intel.com>, Lukas Straub <lukasstraub2@web.de>, Stefan Hajnoczi
+ <stefanha@redhat.com>
+Subject: Re: [PATCH] MAINTAINERS: Remove linux-edac
+Message-ID: <20260707095119.4d1107af@foz.lan>
+In-Reply-To: <20260703152529.GBakfUaQdmKSLZfqrt@fat_crate.local>
+References: <20260629213624.936258-1-jsnow@redhat.com>
+ <20260629230756.GCakL6zDDd_g8DIeGD@fat_crate.local>
+ <akN99Ov2ngf2BwbG@redhat.com>
+ <20260630192154.GBakQXUjMfaPrpc6-u@fat_crate.local>
+ <20260703152529.GBakfUaQdmKSLZfqrt@fat_crate.local>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] backends/iommufd: Fix dev_id and type order in viommu
- trace
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, nicolinc@nvidia.com,
- nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com
-References: <20260706103653.84243-1-skolothumtho@nvidia.com>
-Content-Language: en-US
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260706103653.84243-1-skolothumtho@nvidia.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,41 +82,106 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Boris,
 
+On Fri, 3 Jul 2026 08:25:29 -0700
+Borislav Petkov <bp@alien8.de> wrote:
 
-On 7/6/26 12:36 PM, Shameer Kolothum wrote:
-> The trace event receives dev_id before type, but its format string prints
-> them in the wrong order. Correct the order.
->
-> Fixes: f2d31df0d925 ("backends/iommufd: Introduce iommufd_backend_alloc_viommu")
-> Reported-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> On Tue, Jun 30, 2026 at 12:21:54PM -0700, Borislav Petkov wrote:
+> > On Tue, Jun 30, 2026 at 09:27:32AM +0100, Daniel P. Berrang=C3=A9 wrote=
+: =20
+> > > > Why is this thread CCing linux-edac?
+> > > >=20
+> > > > I don't see any relation here... =20
+> > >=20
+> > > The linux-edac list was recently added to the QEMU MAINTAINERS
+> > > file:
+> > >=20
+> > >   https://gitlab.com/qemu-project/qemu/-/commit/4c5e70b9a42744401fc10=
+b17cc61820586ba4a13
+> > >=20
+> > > and the entry matches the qapi/acpi-hest.json file that John has
+> > > modified, so gets auto-CC'd.
+> > >=20
+> > > Admittedly the content in this series is not especially relevant
+> > > to the liunux-edac list in this case, but the patch submission
+> > > tools are just following the declared MAINTAINERS file entry. =20
+> >=20
+> > Thanks for letting me know.
+> >=20
+> > @Mauro, please remove a linux-kernel mailing list from being CCed with =
+qemu
+> > patches. This is only going to cause a huuuge confusion as it is already
+> > showing.
 
-Thanks
+I was in vacations, so I only noticed this patch today.
 
-Eric
+We use linux-edac for userspace at least since Rasdaemon beginning,
+so it was never a kernel-only ML. What happened in practice on the
+recent times is that rasdaemon patches are usually pushed as PR
+requests at github. Yet, still today, it is recommended to also
+submit them to linux-edac ML:
 
+	https://github.com/mchehab/rasdaemon#submitting-patches
+
+Yet, I agree that having a separate ML for userspace RAS tools
+makes sense. I'll check on a separate thread if we can create
+one such list at vger.
+
+> >=20
+> > Please do a separate list only for qemu RAS stuff.=20
+
+Instead of adding a patch removing it, better to wait for the ML=20
+creation and then apply a QEMU patch changing it, and another one
+to rasdaemon.
+
+Regards,
+Mauro
+
+>=20
 > ---
->  backends/trace-events | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/backends/trace-events b/backends/trace-events
-> index b63420b73e..009a25b0be 100644
-> --- a/backends/trace-events
-> +++ b/backends/trace-events
-> @@ -21,7 +21,7 @@ iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%
->  iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
->  iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t flags, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" flags=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
->  iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint64_t data_ptr, int ret) " iommufd=%d id=%u data_type=%u entry_len=%u entry_num=%u done_num=%u data_ptr=0x%"PRIx64" (%d)"
-> -iommufd_backend_alloc_viommu(int iommufd, uint32_t dev_id, uint32_t type, uint32_t hwpt_id, uint64_t data_ptr, uint32_t data_len, uint32_t viommu_id, int ret) " iommufd=%d type=%u dev_id=%u hwpt_id=%u data_ptr=0x%"PRIx64" data_len=0x%x viommu_id=%u (%d)"
-> +iommufd_backend_alloc_viommu(int iommufd, uint32_t dev_id, uint32_t type, uint32_t hwpt_id, uint64_t data_ptr, uint32_t data_len, uint32_t viommu_id, int ret) " iommufd=%d dev_id=%u type=%u hwpt_id=%u data_ptr=0x%"PRIx64" data_len=0x%x viommu_id=%u (%d)"
->  iommufd_backend_alloc_vdev(int iommufd, uint32_t dev_id, uint32_t viommu_id, uint64_t virt_id, uint32_t vdev_id, int ret) " iommufd=%d dev_id=%u viommu_id=%u virt_id=0x%"PRIx64" vdev_id=%u (%d)"
->  iommufd_viommu_alloc_eventq(int iommufd, uint32_t viommu_id, uint32_t type, uint32_t veventq_id, uint32_t veventq_fd, int ret) " iommufd=%d viommu_id=%u type=%u veventq_id=%u veventq_fd=%u (%d)"
->  iommufd_backend_alloc_hw_queue(int iommufd, uint32_t viommu_id, uint32_t queue_type, uint32_t index, uint64_t addr, uint64_t size, uint32_t queue_id, int ret) " iommufd=%d viommu_id=%u queue_type=%u index=%u addr=0x%"PRIx64" size=0x%"PRIx64" queue_id=%u (%d)"
+>=20
+> From: "Borislav Petkov (AMD)" <bp@alien8.de>
+> Date: Fri, 3 Jul 2026 08:19:53 -0700
+> Subject: [PATCH] MAINTAINERS: Remove linux-edac
+>=20
+> The commit
+>=20
+>   4c5e70b9a427 ("MAINTAINERS: update HEST maintainership entries")
+>=20
+> added a linux kernel mailing list (linux-edac) which gets CCed
+> automatically with qemu patches. This is absolutely confusing and it
+> should not happen. Qemu should have its own ras mailing list where stuff
+> like that goes.
+>=20
+> Drop that list.
+>=20
+> Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Cc: Markus Armbruster <armbru@redhat.com>
+> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+> ---
+>  MAINTAINERS | 1 -
+>  1 file changed, 1 deletion(-)
+>=20
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 97dcc78ded61..3664c0d67677 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2274,7 +2274,6 @@ F: docs/devel/testing/acpi-bits.rst
+> =20
+>  ACPI/HEST/GHES
+>  M: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> -L: linux-edac@vger.kernel.org
+>  L: qemu-arm@nongnu.org
+>  S: Maintained
+>  F: hw/acpi/ghes.c
 
+
+
+Thanks,
+Mauro
 
