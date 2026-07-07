@@ -4,64 +4,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E582C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 14:05:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D00BC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 14:05:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh6Pf-00026U-LI; Tue, 07 Jul 2026 10:04:39 -0400
+	id 1wh6QF-0002gO-Sz; Tue, 07 Jul 2026 10:05:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wh6Pd-00025i-7l; Tue, 07 Jul 2026 10:04:37 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh6QE-0002fs-3V
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 10:05:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wh6PZ-0001VD-W4; Tue, 07 Jul 2026 10:04:36 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:39a2:0:640:ae2d:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 33585C0A01;
- Tue, 07 Jul 2026 17:04:27 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a91::1:28] (unknown
- [2a02:6bf:8080:a91::1:28])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id Q4JKPF0f3uQ0-LWYAxE6I; Tue, 07 Jul 2026 17:04:26 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1783433066;
- bh=M6SEakVKz8L466o4qaCKdXfwDep7F+SO8pk1wAw4eQM=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=khujGKONGm7cIHZEYU6S7xbD7qQ4tKDxwZq3tlVe0GnmhrGPYqqCJbyaJrPzoiH7N
- IUs6b2MPvL2CHtP6aWh4D2syrb1GPs+OR+d8xM0/FiqkPQgYLMAQtcfQxOmKZGKh+v
- xRs5foU56dmrzdwgW2MXLQ73k/4XnVsFiqmKMo8M=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <4dda6b28-d4e1-48c4-98f4-b574746fdc71@yandex-team.ru>
-Date: Tue, 7 Jul 2026 17:04:25 +0300
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wh6QC-0001y6-1F
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 10:05:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783433111;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=9ZpDvP9ORrYZ+gULk6fyKsTTX3L2zi+tlhvt2rwuV0E=;
+ b=i3NSCAAD6uSl8TkBwXk6C2Yhst31b5gS9oS1Mfe8l1O0j3K7bET4xavXPmsnirXeMNf/qQ
+ kmw3ggmuJsynna9L17wgJSL+iTaGRqngvKm3WpjJGgKWQwrnTl8qZhfnkEOxzp/+tKsgr+
+ RVflpn892lx101mQDSVtXW2trRNoHsA=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-70-CXTxxhsbNaOit4YcGS7A5Q-1; Tue, 07 Jul 2026 10:05:08 -0400
+X-MC-Unique: CXTxxhsbNaOit4YcGS7A5Q-1
+X-Mimecast-MFC-AGG-ID: CXTxxhsbNaOit4YcGS7A5Q_1783433108
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-493b0fe95b6so24669645e9.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 07:05:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783433107; x=1784037907; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:references:cc:to:from:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=9ZpDvP9ORrYZ+gULk6fyKsTTX3L2zi+tlhvt2rwuV0E=;
+ b=WwLD5nX3eCibID4oWmBupn3f0FAHXpIcxoTUlfUpdlPC7H2H35IlPrxniIRIfCGABT
+ 7iGtZjVdRPILf/+TezJyKYdNhl5kHC4MdMeJMSuzMjv6jdl3ay/GhJlL1q66ivr+s5Cz
+ goixPOn8xqPF3am00vFysCZSjDeoaqdTW2uIPBy87vL3pG/vG7xqY6IGaVRfZ1BV6GHX
+ YD0WUYsIGx8LX0+fv5+Ym7xvODLmOjxjTXY2O4I+Btf58Giw+zmsqDoqDylw8GpszZb6
+ gSiJAQJagj2XOUTCmUaWHCAwOg8Z0Ect3KX0GCWWK3NpUseYtHljug9vUe9P3HuBf+ii
+ 7ZJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783433107; x=1784037907;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:references:cc:to:from:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=9ZpDvP9ORrYZ+gULk6fyKsTTX3L2zi+tlhvt2rwuV0E=;
+ b=OHdIzdft9rvSx7HNTi4tly9clkmymxQBri3CNhhtiaHbXi29JSb/eKv8EPUqalpGKK
+ UOvuruD70dGp1jvOpAxmNln4BJQrwpKcuIMMG41pwDAxy07nl2ft5omaDJlI1SwMga0B
+ /ur3L6Q259jqm7Gcpb5/1xVR/Q7D9BkVcKRYGoJTpfwXWwLHvj5suvhxxalizxRgt66L
+ YFjnkmycNVyNPBpmSMYBxfEoKHAqPnlh5bliJ+LKh7jX9ZKREIgqAMSFPFRSK1ODt4o6
+ 8wn6SPrIiUUsRHW3Xg9B5iNXffVKeQZYiL9WITW5QSz8X1YXAgQRVuo70Lao78KHBgvm
+ s7Nw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rqh4DSvRCNbBnbcuAvo2L7ZULaaNk8HEbASb0mhYP0UQR46tD7RwbpO9MRizwHBDOJHkHQURBsiEbSB@nongnu.org
+X-Gm-Message-State: AOJu0Yylbqyk3fJ2YkqCd9OyePuZAdb/vFjWVJkJM8ABhyPaw78c38Oh
+ jQRPq588U4TRVwpYJIkaZmwL3CIYDDbDgqtUmZuDGWFT0PWHI659lRgIkTLuvdh5Eaztg1ugxPl
+ /SlqR3jGkinO1Umdsnn0Zzls+XtV5Yd1npLLf/kwT0S+wjNzpUkaGtUXV
+X-Gm-Gg: AfdE7clKpYRG0/rB3MHU5lO4ks/qjDq5iaSi6Y8hsRjpd2MFu2Rw8snMNtC5W1e2Npr
+ 3OMUDOcgrhV3G4+G4pUu8HmSA7InNIvmAg4rT2u4Nl8oS+lVyT+xrBrlBs3XEuMYA/LwU427Awa
+ +ltAVtk7gNeL1a9zMw9PnfVvOaGBAbNnGeppZkVJS6CfkrEvf/MrThJtO2+DzmDTFzMGvHYcVIX
+ +HsUZLjO/mlb7uS3sNO8kTMwGmJptsX9bwiEtZWlJQTArLgd6JaBRHR1mNm1bKbctm2niLasEUR
+ HRzOe5tmxAswsAwwaqdYK1Dv1bTtKJfu2ktqli67raoi+kvIJhk8NOUfbY6YeImsn+3tQyAOHeb
+ EVcBdC7EtCcaLgTrqwlQbZTTQoXAgXyNP869xX/883Z6wQLkZPw==
+X-Received: by 2002:a05:600c:350b:b0:493:c77c:108a with SMTP id
+ 5b1f17b1804b1-493df09d2f6mr60578665e9.36.1783433107329; 
+ Tue, 07 Jul 2026 07:05:07 -0700 (PDT)
+X-Received: by 2002:a05:600c:350b:b0:493:c77c:108a with SMTP id
+ 5b1f17b1804b1-493df09d2f6mr60578045e9.36.1783433106765; 
+ Tue, 07 Jul 2026 07:05:06 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47a9e4d7801sm34625902f8f.16.2026.07.07.07.05.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jul 2026 07:05:06 -0700 (PDT)
+Message-ID: <a13c292e-fa89-4953-9893-d09629ac9872@redhat.com>
+Date: Tue, 7 Jul 2026 16:05:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] block/monitor: force read-only on live-added
- persistent bitmap
-To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>, John Snow <jsnow@redhat.com>
-References: <20260706161645.515304-1-den@openvz.org>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260706161645.515304-1-den@openvz.org>
+Subject: Re: [PATCH v2 04/10] hw/block: m25p80: Fix dummy byte handling for
+ Spansion flash
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
+Cc: Alistair Francis <alistair@alistair23.me>, Hanna Reitz
+ <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+References: <20260707083431.219671-1-bin.meng@processmission.com>
+ <20260707083431.219671-5-bin.meng@processmission.com>
+ <92dd132e-e4d5-43f9-a207-c59697c87204@oss.qualcomm.com>
+ <1e79dc11-0df2-47ac-a1c5-819398303e48@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <1e79dc11-0df2-47ac-a1c5-819398303e48@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,159 +172,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06.07.26 19:16, Denis V. Lunev wrote:
-> qmp_block_dirty_bitmap_add() marks a new bitmap persistent without
-> checking write access to its node. bdrv_create_dirty_bitmap() always
-> creates bitmaps writable, so a persistent bitmap added live to an
-> already read-only node stays writable in memory on a node that can
-> never store it. The next global inactivation (migration completion,
-> save, or any other bdrv_inactivate_all() caller) then fails trying to
-> flush it back:
+
+>> This breaks the test_arm_emcraft_sf2 functional test:
+>>
+>> not ok 1 test_emcraft_sf2.EmcraftSf2Machine.test_arm_emcraft_sf2
+>>
 > 
->    Lost persistent bitmaps during inactivation of node '<node>': No write access
->    migration_block_inactivate: bdrv_inactivate_all() failed: -22
 > 
-> qcow2_load_dirty_bitmaps()
-
-
-Hm, but qcow2_load_dirty_bitmaps() and qmp_block_dirty_bitmap_add() are different:
-
-In qcow2_load_dirty_bitmaps(), we load bitmap from the image, so we are sure,
-that the bitmap is already stored. And if image is readonly, we mark bitmap
-readonly as well. So, on exit, we assume, that bitmap is already stored,
-and don't produce "Lost bitmaps" error.
-
-In qmp_block_dirty_bitmap_add(), we create a new bitmap, that not yet stored.
-So, even if we don't modify it, the error "Lost bitmap" would be correct on
-exit, as bitmap is not stored at all.
-
----
-
-Also, this patch breaks the scenario of create and than merge some bitmap
-into created one. That's a breaking change, and would need a deprecation
-period.
-
----
-
-Still. Maybe better be more strict, and simply forbid creating persistent
-bitmaps in read-only images at all? (this will need a deprecation period
-anyway).
-
-What is your scenario?
-
-
-> and qcow2_reopen_bitmaps_ro() already force
-> a persistent bitmap read-only when its node is read-only; do the same
-> right after the bitmap is marked persistent, whether it arrived
-> through a plain block-dirty-bitmap-add or the transaction action that
-> calls the same function. qcow2_reopen_bitmaps_rw() already promotes
-> any persistent, read-only bitmap back to writable once its node is
-> reopened read-write, so the reverse direction needs no changes.
+> No problem on my side.
 > 
-> Also check BDRV_O_INACTIVE, matching qcow2's private can_write()
-> helper, to cover adding a bitmap to a node that is already inactive.
-> Document the new behavior on BlockDirtyBitmapAdd.persistent.
-> 
-> Extend remove-bitmap-from-backing to cover this: add a persistent
-> bitmap live to the already read-only "base" node, then inactivate all
-> nodes the way migration completion, virsh save and qemu-update do, and
-> check the bitmap ends up as protected as one already on disk.
-> 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Eric Blake <eblake@redhat.com>
-> CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> CC: John Snow <jsnow@redhat.com>
-> ---
->   block/monitor/bitmap-qmp-cmds.c                  |  9 +++++++++
->   qapi/block-core.json                             |  4 +++-
->   .../tests/remove-bitmap-from-backing             | 16 ++++++++++++++++
->   .../tests/remove-bitmap-from-backing.out         | 11 +++++++++++
->   4 files changed, 39 insertions(+), 1 deletion(-)
-> 
-> diff --git a/block/monitor/bitmap-qmp-cmds.c b/block/monitor/bitmap-qmp-cmds.c
-> index a738e7bbf7..1f2c0c9cbc 100644
-> --- a/block/monitor/bitmap-qmp-cmds.c
-> +++ b/block/monitor/bitmap-qmp-cmds.c
-> @@ -141,6 +141,15 @@ void qmp_block_dirty_bitmap_add(const char *node, const char *name,
->       }
->   
->       bdrv_dirty_bitmap_set_persistence(bitmap, persistent);
-> +
-> +    /*
-> +     * A persistent bitmap on a node that can't be written must not be
-> +     * writable either, same as one loaded from or reopened onto it.
-> +     */
-> +    if (persistent &&
-> +        (bdrv_is_read_only(bs) || (bdrv_get_flags(bs) & BDRV_O_INACTIVE))) {
-> +        bdrv_dirty_bitmap_set_readonly(bitmap, true);
-> +    }
->   }
->   
->   BdrvDirtyBitmap *block_dirty_bitmap_remove(const char *node, const char *name,
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index 1f87b07850..a52397922b 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
-> @@ -2353,7 +2353,9 @@
->   # @persistent: the bitmap is persistent, i.e. it will be saved to the
->   #     corresponding block device image file on its close.  For now
->   #     only Qcow2 disks support persistent bitmaps.  Default is false
-> -#     for `block-dirty-bitmap-add`.  (Since: 2.10)
-> +#     for `block-dirty-bitmap-add`.  If the node is read-only, the
-> +#     bitmap is created read-only instead, the same as a persistent
-> +#     bitmap already stored on such a node.  (Since: 2.10)
->   #
->   # @disabled: the bitmap is created in the disabled state, which means
->   #     that it will not track drive changes.  The bitmap may be enabled
-> diff --git a/tests/qemu-iotests/tests/remove-bitmap-from-backing b/tests/qemu-iotests/tests/remove-bitmap-from-backing
-> index 15be32dcb9..61e1f3f10f 100755
-> --- a/tests/qemu-iotests/tests/remove-bitmap-from-backing
-> +++ b/tests/qemu-iotests/tests/remove-bitmap-from-backing
-> @@ -66,6 +66,22 @@ result = vm.qmp('blockdev-reopen', **new_base_opts)
->   if result != {'return': {}}:
->       log('Failed to reopen: ' + str(result))
->   
-> +# A bitmap added live (not loaded from disk) must be protected the same
-> +# way as bitmap0 above once its node is read-only.
-> +log('Adding a persistent bitmap live to the r-o base node:')
-> +vm.qmp_log('block-dirty-bitmap-add', node='base', name='bitmap1',
-> +          persistent=True)
-> +
-> +# Inactivate globally, like migration completion/save/qemu-update do;
-> +# inactivating "base" directly would hit an unrelated guard, since it is
-> +# a backing child of the still-active "top".
-> +log('Inactivating all nodes must not fail flushing bitmap1:')
-> +vm.qmp_log('blockdev-set-active', active=False)
-> +vm.qmp_log('blockdev-set-active', active=True)
-> +
-> +log('Trying to remove the live-added bitmap, should fail same as bitmap0:')
-> +vm.qmp_log('block-dirty-bitmap-remove', node='base', name='bitmap1')
-> +
->   vm.shutdown()
->   
->   if 'bitmaps' in qemu_img_info(base)['format-specific']['data']:
-> diff --git a/tests/qemu-iotests/tests/remove-bitmap-from-backing.out b/tests/qemu-iotests/tests/remove-bitmap-from-backing.out
-> index c28af82c75..ea492d167f 100644
-> --- a/tests/qemu-iotests/tests/remove-bitmap-from-backing.out
-> +++ b/tests/qemu-iotests/tests/remove-bitmap-from-backing.out
-> @@ -4,3 +4,14 @@ Trying to remove persistent bitmap from r-o base node, should fail:
->   Remove persistent bitmap from base node reopened to RW:
->   {"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "base"}}
->   {"return": {}}
-> +Adding a persistent bitmap live to the r-o base node:
-> +{"execute": "block-dirty-bitmap-add", "arguments": {"name": "bitmap1", "node": "base", "persistent": true}}
-> +{"return": {}}
-> +Inactivating all nodes must not fail flushing bitmap1:
-> +{"execute": "blockdev-set-active", "arguments": {"active": false}}
-> +{"return": {}}
-> +{"execute": "blockdev-set-active", "arguments": {"active": true}}
-> +{"return": {}}
-> +Trying to remove the live-added bitmap, should fail same as bitmap0:
-> +{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap1", "node": "base"}}
-> +{"error": {"class": "GenericError", "desc": "Bitmap 'bitmap1' is readonly and cannot be modified"}}
+Sorry. you are right ! It fails too.
+
+So we have a machine using a Spansion flash.
+
+     spi_flash = qdev_new("s25sl12801"); /* Spansion S25FL128SDPBHICO */
 
 
--- 
-Best regards,
-Vladimir
+C.
+
 
