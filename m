@@ -4,100 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9E5AC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 15:25:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 346A4C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 15:30:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh7fv-0004Bv-GX; Tue, 07 Jul 2026 11:25:31 -0400
+	id 1wh7kX-0007HK-JH; Tue, 07 Jul 2026 11:30:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wh7fu-0004B9-3U; Tue, 07 Jul 2026 11:25:30 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wh7kW-0007Gx-1q
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 11:30:16 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wh7fs-0000B3-HR; Tue, 07 Jul 2026 11:25:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783437924; bh=k95QfvU8HhHhCpnTaQ46v/TIj5c+hrw7BLAsc1XDVj4=;
- h=Date:From:Subject:To:Cc:References:In-Reply-To;
- b=MuyswEP8OAshdwJQLDbVHnRcmUpqrqRlSToxTebNpZSjF3JhdAgYnDZcqZsyAyAy9
- X68NyGD+yGo6W3ufL1csZ7euv4p03mt6pIy9AvUXw+ppNBR1d825DUYLGP9xiNfxyj
- IdKZSy1abGYqYgI25gHUX0SU9lBAdKxEaBwPRstt+CATNXUKpRDKIVq6dO4mhjxus9
- q9slt92Rysvy+t4SR0nNowr1gtscB4XUBv3jnnInVJN9q/Ll4mmOVArWZlP3+zRRO8
- 9kH7/3QdYJkLiqT9SakbNUAF0T4Kyt8vE4S9P6fMpW/p4WhKmPzN7vvGQpDfFz/CTj
- TOcpqUlW1g1ag==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 16AD51BEF9D;
- Tue, 07 Jul 2026 18:25:24 +0300 (MSK)
-Message-ID: <c8c320ce-af9f-47ee-b036-b408aa5d60be@tls.msk.ru>
-Date: Tue, 7 Jul 2026 18:25:25 +0300
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wh7kR-0000nY-On
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 11:30:15 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 667FTMAO011731
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 15:30:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=KwRdKpXWrykN1rEQl4l6jd
+ aLuwr32Ouz/id6MjT1Q38=; b=kDaFrktd5qKbEwf5ZLYtt4fOEEA68sWYFOuc3s
+ LiD+fyCpZTsPjPTL8hGiyrK3FtXTYWY7Ds3RzDX/j72FI8Y3+nJUfQKiSVTeJcH4
+ EV8sm42ILY0asmBvy9t3LErnDgPDjElJCA6KL6g5MGCDG4FUy/NQe/l8sT/hsd/3
+ qY43mwXJhv6srOPa+a8BqtiKSH0X2n2k25TUKTA5lbtTTvUr/+buACRmzV2NHpmx
+ C6hHMsIi1ViQXFu8PYFv7xcNVTMWowbFvOUqNArb1kswTjxEgRe732yTHTdquuc8
+ A6D2TXlQa8aUiQyZrMblFs0JaWfo/3uZ8oIRVd7ASvRRFTPQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8vdja58r-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 15:30:08 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-5174a236220so40843471cf.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 08:30:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783438208; x=1784043008; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=KwRdKpXWrykN1rEQl4l6jdaLuwr32Ouz/id6MjT1Q38=;
+ b=kUdAHen8kIeSdNv/vdVRirsnZiionOm3Gyk/YD1T2UfIVS8Q7Mdj3cE3y6J0d472o/
+ tBu2byic2WcmI4J2L4pbiyEr6b2kPQZbm2sxqb47YzV/bl17B+X0I/E7DaRVmnxRiufo
+ pNVyygFMTnEQnuZY57PIXD1AgS3AdjB1wpjK+wdCKGeHSB6CLubDVcuVf7k7W+CVrLH0
+ UxqHrnouv02HolWc8Ogq71NbYLw+aT0XjiIoZwgqhiA470QVQfq6bI0hWwxxZNd7sTir
+ nEZUBx/VD2mZKG6rVfUsV31RdPLBZFmH32VaL8dVS6Zrctnz6lZ1AoIvF9tIjyObMoyH
+ UUNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783438208; x=1784043008;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=KwRdKpXWrykN1rEQl4l6jdaLuwr32Ouz/id6MjT1Q38=;
+ b=QO6uqrwe2xfmIjBRI4K9PtX/2A6EHavrrh7RS1lR+syOhDLgpznfdQB5yNUMVQvw8x
+ JML5/ZtLleI1EuZ03iET6GHSPyoXNj/KXsqN0hwFB5yElD1NV5Kdg/T/RqjaHDKkUDwN
+ 7W6kEYP2YpM2FxCGIrWf/EAQT+bu/S53+xgA9r2EeaEsyTzfAxRz3+oOtNcpbLtMqALr
+ i58HBY+USRJfnCkgYpUKSzTwvdaItut+TAiItztBtGdz+bL0Q2Z079W+6PbrCH27DutS
+ 0xwsiQmL7aSMNMW1/J5PNXlsVsDy7KHAcy/LWUGwwyMFNoWSWXv+DNJrItTxHGRR464I
+ Ibaw==
+X-Gm-Message-State: AOJu0YxJn8NM664+IgDnRSmL9AXFKoAhX6yAEl3xS5i3nJSMJ2KTIx9h
+ uOA8qifPBwcL3os1FtIDkr9S5k2jNfd1CSfl0fhzZWQ7oQCIv71pMkR/IGz/+KNL3BNh/Iu+/uN
+ FUmO+32TuMEPs58WB4a0sUU5xFKs4tm9fWHEbn0fVo9rWCD0+NdzZIvfRrx4pBBzPBA==
+X-Gm-Gg: AfdE7ckIJYzN/N7B1MDW3ygGndEUaKDKI5CvXP1Maa5Smv2MY27epXkZvOXcwG/C846
+ sClyPOpJkSSbQps14CTfUwO5dZd5IygEKIIGqwYj4O1uLc0ioxbIbhP8IJbwR6a9PbYXTkHilaM
+ QIafd4MwBqoA+OeBSoaQOe9wgOdDV+PKYBy4dablwK3v+Q1syCqAbFkdyY3zjvY1dqzSIN2vT+r
+ 0BjrEA+KMLb6y1oNl95tZt6u+sQOongbDFsegHmtioV6ksokH4zkIgA6ZGByyuBeV0s3kUBCSm0
+ 28AYFiqdCgtgFqr+guKymdfk+gM8WWXl0dhTFA/S9e3LV3kgCtWFFnkgZh6uw2+XVy5LuS0YM+p
+ v8nqJcl+6Vwr0s96vmXLlIDAkg9oEDui5X+asdUy3i4V68oF635J8cF8Bb/Egt3XDmqzG
+X-Received: by 2002:a05:622a:120c:b0:517:6b31:8058 with SMTP id
+ d75a77b69052e-51c748534b4mr58280761cf.40.1783438207410; 
+ Tue, 07 Jul 2026 08:30:07 -0700 (PDT)
+X-Received: by 2002:a05:622a:120c:b0:517:6b31:8058 with SMTP id
+ d75a77b69052e-51c748534b4mr58280001cf.40.1783438206732; 
+ Tue, 07 Jul 2026 08:30:06 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47aa039ae44sm33542160f8f.23.2026.07.07.08.30.05
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 07 Jul 2026 08:30:06 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Marco Liebel <quic_mliebel@quicinc.com>,
+ Matheus Tavares Bernardino <quic_mathbern@quicinc.com>,
+ Sid Manning <sidneym@quicinc.com>,
+ Andrew Jones <andrew.jones@oss.qualcomm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
+ Marco Liebel <marco.liebel@oss.qualcomm.com>,
+ Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH] contrib/gitdm: Update Qualcomm entries
+Date: Tue,  7 Jul 2026 17:30:03 +0200
+Message-ID: <20260707153003.58914-1-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: Re: [PULL 44/44] virtio-net: validate RSS indirections_len in
- post_load
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Junjie Cao <junjie.cao@intel.com>, qemu-stable@nongnu.org,
- Jason Wang <jasowangio@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-References: <cover.1783261895.git.mst@redhat.com>
- <32a90850e1e4222091df07b4b46d5f46a8b90d24.1783261895.git.mst@redhat.com>
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <32a90850e1e4222091df07b4b46d5f46a8b90d24.1783261895.git.mst@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-Authority-Analysis: v=2.4 cv=R7cz39RX c=1 sm=1 tr=0 ts=6a4d1b80 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=j8RhgVXbAAAA:8 a=Ikd4Dj_1AAAA:8
+ a=yPCof4ZbAAAA:8 a=Qm8iP6mkAAAA:8 a=20KFwNOVAAAA:8 a=h0uksLzaAAAA:8
+ a=ZBl20LCrlLBNJFnrnc8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22 a=TjNXssC_j7lpFel5tvFf:22 a=3SzYsRL22XtqO3ZTpi69:22
+ a=kDhhxE42lZnxL3pOKqYK:22 a=MSi_79tMYmZZG2gvAgS0:22
+X-Proofpoint-GUID: 4EHe6C2sQKaWExNlcPuroW-h1VXcMnFD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDE1MSBTYWx0ZWRfX63/aTaqafIiC
+ WLYdJJtyyA8G+mQ7V241wF9dViJ+yZKEboCTrggW0TLrzvamt6PBI2MlMgI9WofkPdiZNbHRUis
+ 3iWUmPmUYHOV2d8+BfhCb7AIH7IfE9Pbxy74quTXtckE7GtOR/HQpCO5ucbGkrp6kt4/O0DMBFc
+ 8cVfdk2InF/olFWhekqj9jK/+LidK44brVcGlbDwZwl0BhDJwCU7vdQdtQdGFdH7rluSPhdFSwe
+ BHAbxQr0BH/RrWrXbvJDeCrRTTCfdidKEvz+/APTZ5+MMxT2f2tk4163KKfz5YS+3hUtUAebfwD
+ d8EvfuRcgCAwhTZIt2OM0qUpqVPOCrusr8SVuR0tf+GbH/dRjnjgyfdqk1L1+RuEmb043Y10jwS
+ QJkPUiiZKPazMIe2FaoSBW/rPqb22qRxPzLJ4AIXqKDMjfTT9n8pJHEhXGBTA1JDaF0f6iNReRE
+ zc8CQG4+8Q80KM5JfAA==
+X-Proofpoint-ORIG-GUID: 4EHe6C2sQKaWExNlcPuroW-h1VXcMnFD
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDE1MSBTYWx0ZWRfX3iKz4kodc+S+
+ iV/eNxzaJhlEcmgjIOhp7iGe96fBgtU6tVU/E5CdXEqJiqRdiculXGH6DTholkVaLU9AZTeoAyk
+ DXhPWpz3rpIEoGsp+AIGwq68dAItwrI=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_04,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015 malwarescore=0
+ bulkscore=0 spamscore=0 priorityscore=1501 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070151
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,89 +159,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(Resending with correct new address of Akihiko Odaki.
-  Please excuse me for double post).
+Add an entry for Qualcomm Technologies, Inc.,
+include previous quicinc.com contributions.
 
-On 05.07.2026 17:36, Michael S. Tsirkin wrote:
-> From: Junjie Cao <junjie.cao@intel.com>
-> 
-> virtio_net_handle_rss() enforces that indirections_len is a non-zero
-> power of two no larger than VIRTIO_NET_RSS_MAX_TABLE_LEN, but
-> virtio_net_rss_post_load() applies none of these checks to values
-> restored from the migration stream.
-> 
-> A corrupted save file or crafted migration stream can set
-> indirections_len to 0.  Even if it also clears redirect,
-> virtio_load() calls set_features_nocheck() after the device vmstate
-> (including the RSS subsection and its post_load) has already been
-> loaded, re-deriving redirect from the negotiated guest features.
-> When VIRTIO_NET_F_RSS was negotiated, redirect is set back to true
-> regardless of the migration stream value.  The receive path then
-> computes
-> 
->      hash & (indirections_len - 1)   /* wraps to 0xFFFFFFFF via int promotion */
-> 
-> and uses the result to index into indirections_table, which was not
-> allocated by the VMState loader when the element count is zero (see
-> vmstate_handle_alloc()), resulting in a NULL pointer dereference that
-> crashes QEMU:
-> 
->    #0  virtio_net_process_rss    ../hw/net/virtio-net.c:1901
->    #1  virtio_net_receive_rcu    ../hw/net/virtio-net.c:1921
->    #2  virtio_net_do_receive     ../hw/net/virtio-net.c:2061
->    #3  nc_sendv_compat           ../net/net.c:823
->    #4  qemu_deliver_packet_iov   ../net/net.c:870
-> 
-> The RSS subsection is only loaded when rss_data.enabled is true (via
-> virtio_net_rss_needed()), and the command path always produces
-> indirections_len in {1, 2, 4, …, 128}, so an unconditional check
-> cannot reject a legitimate migration stream.
-> 
-> Factor the validation into virtio_net_rss_indirections_len_valid()
-> and call it from both virtio_net_handle_rss() and
-> virtio_net_rss_post_load().
-> 
-> Fixes: e41b711485e5 ("virtio-net: add migration support for RSS and hash report")
-> Cc: qemu-stable@nongnu.org
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+Cc: Marco Liebel <quic_mliebel@quicinc.com>
+Cc: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+Cc: Sid Manning <sidneym@quicinc.com>
+Cc: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>
+Cc: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Cc: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ contrib/gitdm/domain-map | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-...> @@ -3427,6 +3427,13 @@ static int virtio_net_rss_post_load(void 
-*opaque, int version_id)
->           n->rss_data.supported_hash_types = VIRTIO_NET_RSS_SUPPORTED_HASHES;
->       }
->   
-> +    if (!virtio_net_rss_indirections_len_valid(n->rss_data.indirections_len)) {
-> +        error_report("virtio-net: saved image has invalid RSS "
-> +                     "indirections_len: %u",
-> +                     n->rss_data.indirections_len);
-> +        return -EINVAL;
-> +    }
-> +
->       return 0;
->   }
-
-Hi!
-
-I tried to pick this one up for 10.0.x stable qemu (LTS) series, and
-found out that this series lacks virtio_net_rss_post_load() function
-entirely, because it lacks commit 7b6e7e4990 "virtio-net: Retrieve peer
-hashing capability" (Cc'ing Akihiko Odaki), and 2 previous commits:
-
-7b6e7e4990 virtio-net: Retrieve peer hashing capability
-2deec9ab7d virtio-net: Move virtio_net_get_features() down
-14f521f491 net/vhost-vdpa: Report hashing capability
-
-I can introduce new virtio_net_rss_post_load() with just indirection
-verification from this patch.  But it looks like I can pick up that
-commit for 10.0.x too, and make whole thing closer to what we have in
-current master.
-
-It does not seem to change machine types/properties and migration
-stream.
-
-What do you think?
-
-Thanks,
-
-/mjt
+diff --git a/contrib/gitdm/domain-map b/contrib/gitdm/domain-map
+index c07dffc51bd..aef20c4949c 100644
+--- a/contrib/gitdm/domain-map
++++ b/contrib/gitdm/domain-map
+@@ -40,7 +40,8 @@ nuviainc.com    NUVIA
+ nvidia.com      NVIDIA
+ oracle.com      Oracle
+ proxmox.com     Proxmox
+-quicinc.com     Qualcomm Innovation Center
++oss.qualcomm.com Qualcomm Technologies, Inc.
++quicinc.com     Qualcomm Technologies, Inc.
+ redhat.com      Red Hat
+ rev.ng          rev.ng Labs
+ rivosinc.com    Rivos Inc
+-- 
+2.53.0
 
 
