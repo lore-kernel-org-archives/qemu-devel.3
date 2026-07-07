@@ -4,53 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 608ECC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 17:19:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08BDAC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 17:28:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh9Rm-0004Yk-5Z; Tue, 07 Jul 2026 13:19:02 -0400
+	id 1wh9Zw-00060x-8L; Tue, 07 Jul 2026 13:27:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wh9Rg-0004YH-Or; Tue, 07 Jul 2026 13:18:56 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wh9Rd-0007lz-3e; Tue, 07 Jul 2026 13:18:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=cBCF1BTEc9yGf8jrHpE+Apg5YdNXY/5jhxo6Adq/MEs=; b=VHPNhPcxfJ0LgzshIEybkPfGJL
- nuG+2VIIjiw/JAkzznByIkpm7jiNVjkESL8r5jknjPuuem7J2VGK7djFoVOu2T3D0ZcGxjDoLKi1n
- mCDhIjHkiNYE8D36ZsZ+NRJvVk5qekrUMu5N7DWTirdjWvDDvzFbOmS3J4FSesvf0f8/2G1Oihzmx
- 49TTMp+NCuwKSI4lQK6nPqisAFNjX/eWM2AZyZB4GHdHd7RRLdk2jM9BZiGFNvRQ3GZFxOPSW2Elf
- AXk5gNdXcGuI9Db1zM7KwyfVmEsiSXOOIney2hmIfDiyg3zBLkGRzj6v4VXaJvkPgdEN+ZUkp6CXK
- ogO0RUZ0ZN4xT3vMKe+X+Dgo10wDWW84JHafOBODcpWaQTVrGaY/yT/AC/9+4EQ8GvAE7C4FgR41L
- wS+SWj70Tt7U1PixmgS0ZwdbA6AMlmqaP5LUAqr8Cosh6tPO5McxIWkyRxmWfwcpPE9B0iqkDK3pV
- fZjZiRomfzUPorySVSU7ABFguNqrKPY/vp0cECDflqWdHkd0xlDK/CtrZzf8br5QoNyHPcP22aZZ1
- u21gSFhxmqNQNYUciE1fg5g/nwF7VUzpTIAuff4uTl4/O6DRQQXZVn3lGGJRHVw1fgTAGGGy+q9GK
- NnnzED9lJP56Z/YBNuptjbCHaQIuz40KeenBKy1X0=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PATCH] tests/9p: reduce xattr size to 1k
-Date: Tue, 07 Jul 2026 19:18:49 +0200
-Message-ID: <1960804.tdWV9SEqCh@weasel>
-In-Reply-To: <E1wffqw-001Sc8-I9@kylie.crudebyte.com>
-References: <E1wffqw-001Sc8-I9@kylie.crudebyte.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wh9Zs-00060M-7q
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:27:24 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wh9Zq-0004mc-GV
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:27:23 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2cad4170e8eso53849995ad.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 10:27:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783445240; x=1784050040; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=W/Mw86EMifOutr48fRw4pUqE6lub5eryXGF8aL5mZBA=;
+ b=f8OHsXxRUaga2nkd4bWBWm3zgjzG9fmQUrAFuqZItwZBR+m0hpgaXBnEIW0PjBOw4A
+ fCNFVtj8uJXxwMxNRMnYMbUXwuvtZt4ReUe2yJxaaO/Ko6AmdPmrX/59woDCrHECyQnN
+ be3OJKEdU5vkYTVUYfKnDABOh30zlxoehHccaEuPjeZD7XkcE3jL1n9Thqpd3tIwU+mN
+ uuyy9ILLSfu1m3s1AJijLJ2Mm0TO4LJ02yic9iNiwUucJEKwXhaQ7sne5rwpdCa8UEAq
+ pAzOXQhUSgl67tA0wNjZz6wkY2XPnAkzgsVuPvLpn6SGfUhOjH9z7Up9ipZADQOBT57z
+ ApAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783445240; x=1784050040;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=W/Mw86EMifOutr48fRw4pUqE6lub5eryXGF8aL5mZBA=;
+ b=PVcVmzTeTBpAIAqHautllNjMvHZhRIZgAq3ISM5Ypt1UcmcDuiSD1hLkHZ95Dd62Fi
+ 0AjeGrj2X+rEvGruWIVLuCM6O9xF1z9oHvYzw1K7G8oB4oB6pYcHNfYJuN6Ej5JiK7vQ
+ GkDl+4eJGriRIwZCnAfyBYtHngpXItwwKN3NWSNwIvSKO+2+NsROCU5wI9Tl+FxzZZD0
+ mfhGR2a4D0sFckC782BoEUnSrEt2WhQqzRwSOgPxkXaYsQAEJmYRpxN1lG6Ul9fJu1Ki
+ IxlhfTzfl8KKz0HH2Jw1lG8ca/0nlFjorVQpWyFKF500sf9VUlVsp7qpYrMgOvFInLd8
+ EZHg==
+X-Gm-Message-State: AOJu0Yw46dMYfrN7+Y7mEnH/X8qfegdqAO5RABo7AosKaJogdAjbPD8+
+ WoO291c9UTUsvxZ1d6K4JBJ2vYZ5128F6r2o3NjzE8zgGSyRvyb2VX+rZb7KWaPZP5w=
+X-Gm-Gg: AfdE7cnkTELMhP+nLA4u7GTraNMa6XzsmMp4nMeLz2P5k+DP2dUlTScYx0qZg2r8TE7
+ uARIVmz/1ytf+OmAVmO9sIOcoPJIkox7CdZfBaCOX5RYDIgRuAtWaEOJ4GxdeaGySGYq6WmmH/l
+ 1zLfd93AOdS/sqEwQhmTXYTpe2jgTXQ4rVzLAaTmys5d6vb0DzhF21QQiHLBT/b38U4yZS90voc
+ Ypn/ujrGkTBXvo9yyZ5TxEFcz9x++oBP8EFslvPEVlG628lms8yqeQvZjZod//BqtwHbKP/p/BN
+ Mj0/0ft2HkFcutTbj2Gm1ptNCocFG8UjKZXwcktcWQif+uFzpBYrdjxzcouBJOtVTu5QPweFG3t
+ 0sD4jMXOLUz7AcL7Djs/PgJETf//ZVL4WuHipZBQa6NeBOpvvCyCGrEVDD6W70w+CrPoIKDmBcr
+ 5mj8cFWfH2vr4mwd6YO1nciIMn1VlTO7EqOHukFnfzxWnPoilsq+CjAcPY4fiwiFLMyg==
+X-Received: by 2002:a17:902:c405:b0:2ca:c68:caba with SMTP id
+ d9443c01a7336-2ccbf051d6bmr57068345ad.34.1783445240144; 
+ Tue, 07 Jul 2026 10:27:20 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-39-188.tukw.qwest.net. [71.212.39.188])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ccc9bf737bsm15480685ad.19.2026.07.07.10.27.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jul 2026 10:27:19 -0700 (PDT)
+Message-ID: <a14481eb-9eed-43c0-a29c-187798f7f769@linaro.org>
+Date: Tue, 7 Jul 2026 10:27:17 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] target/arm: report M-profile BKPT to gdbstub when
+ attached
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260705224407.32464-1-gilles.grimaud@univ-lille.fr>
+ <CAFEAcA9Heev=ydTzO2u3EzeF_2q7dytOF8=67qF8ZMMY6Ky2Tw@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA9Heev=ydTzO2u3EzeF_2q7dytOF8=67qF8ZMMY6Ky2Tw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,27 +106,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Friday, 3 July 2026 17:26:08 CEST Christian Schoenebeck wrote:
-> On host systems with ext4 and ea_inode capability not enabled, the max. size
-> for xattr values is slightly below 4k, which caused the new xattr tests to
-> fail on such host systems.
+On 7/6/26 02:21, Peter Maydell wrote:
+> On Sun, 5 Jul 2026 at 23:44, Gilles Grimaud
+> <gilles.grimaud@univ-lille.fr> wrote:
+>>
+>> While working on Raspberry Pi Pico/RP2040 support, I noticed that Pico SDK
+>> programs deliberately execute BKPT from _exit(). On real hardware this is
+>> useful when a debug probe is attached: returning from main() stops the
+>> debugger at the program exit point.
+>>
+>> Under QEMU this currently does not behave like the debug-probe case. For
+>> M-profile guests, the BKPT instruction is routed through the architectural
+>> guest debug exception path. Without halting debug, that path should remain a
+>> guest-visible DebugMonitor exception when DebugMonitor is enabled, or escalate
+>> towards HardFault otherwise. This patch deliberately leaves that no-debugger
+>> architectural path unchanged.
+>>
+>> The problem addressed here is the case where GDB is connected to QEMU's
+>> gdbstub. In that situation, firmware that uses BKPT as a debugger stop point
+>> should stop in the attached debugger. Instead, the M-profile guest currently
+>> continues down the guest exception path and may end in HardFault/lockup rather
+>> than reporting a clean trap to GDB.
+>>
+>> This is not specific to the RP2040 machine model. It is a generic
+>> Cortex-M/gdbstub interaction: firmware that uses BKPT as a debugger stop point
+>> should be reported to the attached debugger, while keeping the guest
+>> architectural exception path when no debugger is attached.
+>>
+>> Expose a small gdbstub helper to test whether a CPU is visible to an attached
+>> debugger. When an M-profile BKPT instruction is executed with such a debugger
+>> attached, leave the translated block with EXCP_DEBUG so the existing gdbstub
+>> stop path reports a trap to GDB.
+>>
+>> Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+>> ---
+>>   gdbstub/gdbstub.c      | 13 ++++++++++++-
+>>   include/exec/gdbstub.h |  6 ++++++
+>>   target/arm/tcg/debug.c |  9 +++++++++
+>>   3 files changed, 27 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+>> index c3c944e965..9f259fc005 100644
+>> --- a/gdbstub/gdbstub.c
+>> +++ b/gdbstub/gdbstub.c
+>> @@ -237,6 +237,18 @@ static GDBProcess *gdb_get_cpu_process(CPUState *cpu)
+>>       return gdb_get_process(gdb_get_cpu_pid(cpu));
+>>   }
+>>
+>> +bool gdb_cpu_is_attached(CPUState *cpu)
+>> +{
+>> +    GDBProcess *process;
+>> +
+>> +    if (!gdbserver_state.init || !cpu) {
+>> +        return false;
+>> +    }
+>> +
+>> +    process = gdb_get_cpu_process(cpu);
+>> +    return process && process->attached;
+>> +}
 > 
-> Reduce the xattr size for our tests to 1k to prevent them to fail on such
-> host systems.
-> 
-> Reported-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> Fixes: 04a62cdfe8 ("tests/9p: add 3 xattr FID limit test cases (local fs
-> driver)") Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> ---
->  tests/qtest/virtio-9p-test.c | 14 ++++++++++----
->  1 file changed, 10 insertions(+), 4 deletions(-)
+> No other architecture, CPU or board in QEMU needs to do this,
+> so my instinct is to say that M-profile should not be special here.
+> Richard, Alex: how do we usually handle breakpoint insns for the
+> gdbstub ?
 
-Queued on 9p.next:
-https://github.com/cschoenebeck/qemu/commits/9p.next
+We handle them via CPUBreakpoint structures; we never inject code changes.
 
-Thanks!
+The patch description explains the confusion: this is attempting to replicate a feature of 
+the Raspberry Pi Pico SDK, wherein a guest BPKT really is trapped by an external debugger.
 
-/Christian
+The only question is whether we want to follow that, and I suspect the answer is no.
 
 
+r~
 
