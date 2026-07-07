@@ -4,135 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49719C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 20:10:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67359C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 20:13:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whC7U-0006AV-Dk; Tue, 07 Jul 2026 16:10:16 -0400
+	id 1whCA6-0007PZ-9m; Tue, 07 Jul 2026 16:12:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whC7S-0006AE-II
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:10:14 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1whCA4-0007PO-0F
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:12:56 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whC7Q-0005A3-4g
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:10:14 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1whCA2-00064N-DR
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:12:55 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667J5G4s542074
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 20:10:09 GMT
+ 667J5MFM341632
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 20:12:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- fFm+Ki9ljbW4FOcqVhQ7rsZOL+kTsGwe5C7BP7x33AA=; b=AdHxmmy5mxulF8FQ
- 8uHK2LVCIl8RxjOIQNfrQ/mixn5vsZTK+pGydI7ETRjt+Di61WPBx276gd7XgGOB
- mtOL5EYuSa8HV16vE4DsUqrI6IlrygI4RIlkeXHoItSk0L2IkFdRQEPnCelZbnQt
- dp4No8kQEcXDvRw11oMP6gEmZfFwdkAXBtk2vuARbXJNOH78W4OwfipVwxUfyrDK
- IAJJNRDX2k/kOi97MMQHFL8AOVnrJ6N1J+4oVtZuMXKZQZyZj/pIOpQU+k2OghNb
- uBsKbxmjyjvWFiExc0gmvQ9ItZ7IfYauOPcxOOayDOZjOhZ6b1kUNSfAuvkX5Qc5
- NBE/5g==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8w11u7cq-1
+ /q5w3m9Un9rKCETBOXhMDul9e9psvn4Vrpktu8gsOaw=; b=IGamNVQqcraqWuet
+ e5F90fF/Jr6ymn4pCVhjMFCDgqLFr9lsAGigmadzXnAx2RLE/m7NyOf+LkaMJ2ve
+ uLbwpTPZsU50nwPiE0sfqVftvLquoZ+TcgT2BiWSBWjFB0+Zmhdd18q60crU0J1H
+ BaL2056rnkNj2mWJSeye1m16hE3zx81n1hvGYy/ZInuOfZ7xV8yRW8oKKhcoLl33
+ CN92Kky8VPql8ossmbUZgHcQpHo/1bld7aedSNkoXOm8rWEnA1/zRisbRavVnAYt
+ TsN2H+6YJ/8bJpzPVBPLLw2D2uFCsRVAdR6ujgFjshNDnIa9r+4JyLBCruYmmGi4
+ RUFgYg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8w2ub9rk-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 20:10:08 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c1e6f602cso80354991cf.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:10:08 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 20:12:52 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51c2af04aeeso13491921cf.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:12:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783455008; x=1784059808; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783455172; x=1784059972; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=fFm+Ki9ljbW4FOcqVhQ7rsZOL+kTsGwe5C7BP7x33AA=;
- b=f6qH3p5v1QdMyZq6uimMH6iwTK7y41GC8cCqVe+zDvSwBq0nBWNYd8DLMGFenl417D
- yrmdKsW2lzOzpAswAFw3PjskkQIUtSKZcFpd9chP3hbYKbMDectjUTY4uI4x6Xf3Th73
- NNl8usDr3N5PcoQAcQ31cg3yhju0WcGiyy6+7U+O8ScIPZBx6MAPbY7KEmXlMCEbdPaC
- 3+HwyKL8s1rwPnc9QE/4vMlFPJ06tczXjAPCpVhByE4iCnottCino3HwL0fYI36G83GN
- EWxTtIo7rsCOzkp4Aw4vIEn47R4xcyWGddmU6xf/T3lVHSS/LzqzMr4yxh7IvLpzV5fb
- KbPw==
+ bh=/q5w3m9Un9rKCETBOXhMDul9e9psvn4Vrpktu8gsOaw=;
+ b=AwxIHZrjXKrADBqQAkEA7PMkhtAoFPr4aIMJpbNRByL2THrMeME7GXOWxlR/ZoRzu+
+ kwSGTvz7QePieXbY3KEejYMsYrNsr48lwG5XmTgoXohdV0eMF0LlxGiHLD8l1FzaUss/
+ 7qya59wlWPMepq2Gjy8j2y8bM/7bXRvQ/WqdXVGYhUrtruqzijdFAgxEwDJemOG1GQJC
+ tXX/SDd/bUf00UhCx6jjZfRxxJd2VkuFTr+uBF0Sas0qME2z9FzHzTmKg76KTl/BEgQs
+ TSihVC2iLv4Jt3FjgZb+/uYRBgsAzZT6n/FFieJHrL2AKF8NDxZqqCl37bCrW5kSGrqh
+ upPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783455008; x=1784059808;
+ d=1e100.net; s=20251104; t=1783455172; x=1784059972;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=fFm+Ki9ljbW4FOcqVhQ7rsZOL+kTsGwe5C7BP7x33AA=;
- b=PesJYSr5+vY7naQbKIId3buX1W4z00OuwKXniwTX6u6lU2TzOpnCQNeljo4m1v2YNx
- w+InfzZ2dN6C74u6GMJGLNANNEuhNuF+l8qWzSk1QdrsSTxVbFTKBlV7EpeHxW2WXww4
- PSkFzmVQmXuauQdYDIzeVmr+liyuFkKCacUBFk+9+H/DU13zsn3QBLgshwGSHs6Zsqx3
- wBfetETnSWITNdY0MlZXT3+rw5lYsElocB5SSSWoNvNZO8BiCKC5ZWjLbKEkjh3kjao7
- F5L9yNbN2uBq9OHqIeV8jzI6Su79YogypQ1XfBSMr4Oixlc1nuWqjZMJUgPuGX69kX63
- 4oFg==
-X-Gm-Message-State: AOJu0Yz2iWpa+8v9/gClc2GDohlIWUQ99aBvFsqGnJZbnSo+sbG5C95Z
- KA+Fk1B0YjdOiI5in/aj7Xw+Nm3l+/GAP5/cYh2q/zuXkNmzMxAht5cZ7BVHHHCzSRP/xSnxtYQ
- ilfobxH8zqwDTOD8zQqFAHoihDXxZnDLwVN9QT2LF8WWJwOQGjU7SoCcZTR4s9F+xWA==
-X-Gm-Gg: AfdE7clx5dooD1UBJFNs4v6Gen4lsT4P5lN7yQCStnMJQG67UQs80H5kpkvX9rQ77i1
- skfkif9RqbFJLEIUeiNOL0NhxLjaVPfO+QB5ppiYS/0gVB/jxsIk3YLHcBjlk1mKU/7bnlIZt7A
- QLzYVMoHyVBm9rdKL9cLo5sT/K+PpsSXgXAdK6Ub+20qC245fK3jOm7LSJAWoevIoRJn9LSdzLF
- 0d5o8Zq5eyKJ+h4W2kxqNIDpO14RRz5f5Oge7PVbn5ENUk5RDV07hB5/0u6jzPI2BbzRQ+zWCJJ
- iTBEAdt82HNhQicC/C0IA8CU2zfCc9tgJZW0fQiQuDVLjEYGaIWrFptgKL/bQy1xGOH8OEQqXgJ
- wkbegGWNVS3wkmaB4tL/8Tm4R6SlyuYRJbsrpQkSSgFYUbIUylpb/HmzOVQ1MEg==
-X-Received: by 2002:a05:622a:454:b0:51a:88f8:bef2 with SMTP id
- d75a77b69052e-51c747e1e65mr73911141cf.28.1783455007696; 
- Tue, 07 Jul 2026 13:10:07 -0700 (PDT)
-X-Received: by 2002:a05:622a:454:b0:51a:88f8:bef2 with SMTP id
- d75a77b69052e-51c747e1e65mr73910791cf.28.1783455007093; 
- Tue, 07 Jul 2026 13:10:07 -0700 (PDT)
+ bh=/q5w3m9Un9rKCETBOXhMDul9e9psvn4Vrpktu8gsOaw=;
+ b=f1IXlIdpOXYy7O4gKXzWrUD8WWorw+8wA4O7IuV+HVzoluVycJU2MrQeDYpVGwlDDr
+ G3Gl0oIOxsBE+EL2wCXyIVr6uYRyGudiVtokIzUie/1nyBUYnMCWi+9cqDrunZZXfJ1m
+ 6JGz9LcYQSqV2Jlpf2qiWnMolcUVJHZT1gYu7p6AGkWrS9bDhxrMr7sspzKMcZqj57tN
+ Ep+Bjs1FwGruWDq29UJ7UMI24+CC71TzSpfGuxOAIQV9N990Xiwxijea3mmsmHJ29o+l
+ 0tNy/JOJa86Cfp+cYg+u7L/52w7KU9dQuoQY694E4JfROsXYqfyUZvze+4pNXUi1O08V
+ KzVg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rqozxt4nItK3MJq+l4D1lqfJIUg22HknsQWBVp9lcgJhnuwYwsTd3Y+63f6NkqHTtTLH+WvbV8C36gm@nongnu.org
+X-Gm-Message-State: AOJu0YyxIyO60i4izPChc9Cy8j5xLJh5/tj+u7Cu+Q7tCbuoCiortetX
+ 7m8B6WBkXTmoxOzmh05xXKBMZDoRm/EGyX//cSVz56wQvyy+S3ZshE5ZO0pp7zlGX5PpEX3weZs
+ LOgHlvQ5bx7GJuo25biLPr4xoahzw5wRV5CaPRII1Bv0Ytky5jxnq1rv3kckPMD0+cA==
+X-Gm-Gg: AfdE7ckWJ42YAQbsXzjD3b5Z98Oj3oKOye+6C8wrL/Wk8Wl1ihbT1Wx9QUe+9BwTw09
+ G6iNY3QFLoSxpyhr89VYL7V8vg6EAqHib6b/iVjWedmIpoIE0rbfAYrXkvSJg+DnIn6CdkPTZMF
+ UWsiKiAA9cL83qdTWEeefoe7r6JtW8q0ru+vp90DNxMKrYaiN7aK7SNrsJxdNj4etqFtmsbes0L
+ XYj0g0irXdqcaXAhN+fX9RLNBjUFtZCFuhpPvPK8L5h/5P8l8nXatbOiK6su5iwH1u1O1ii+luL
+ dQoDDtf9PFMTHq0RTAQzsU29aCHD99iVXEU6CofJ3X4V+1+596JZMgoxhOxniqkylvFHwXvW1YK
+ oJ17ws2QNeC0RftQlK5+T2UJmg+prYp3CT+vrX0RVU6FRqPe1VSc4otZLYRH9ng==
+X-Received: by 2002:ac8:598e:0:b0:517:63df:91a5 with SMTP id
+ d75a77b69052e-51c7a7516ffmr43586271cf.19.1783455171918; 
+ Tue, 07 Jul 2026 13:12:51 -0700 (PDT)
+X-Received: by 2002:ac8:598e:0:b0:517:63df:91a5 with SMTP id
+ d75a77b69052e-51c7a7516ffmr43586081cf.19.1783455171502; 
+ Tue, 07 Jul 2026 13:12:51 -0700 (PDT)
 Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493e0f294b3sm71563875e9.3.2026.07.07.13.10.06
+ ffacd0b85a97d-47a9e4d8410sm36769999f8f.15.2026.07.07.13.12.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jul 2026 13:10:06 -0700 (PDT)
-Message-ID: <54b93d27-5223-4832-8dc4-26868b45c32e@oss.qualcomm.com>
-Date: Tue, 7 Jul 2026 22:10:05 +0200
+ Tue, 07 Jul 2026 13:12:50 -0700 (PDT)
+Message-ID: <1ecb1dd7-5d47-4304-a0f0-bfec305fb859@oss.qualcomm.com>
+Date: Tue, 7 Jul 2026 22:12:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 06/41] hw/sd/sd: Allow multi-byte read/write for generic
- paths
+Subject: Re: [PATCH 00/10] target/tricore: MPU, peripherals, tc39x SoC
 Content-Language: en-US
-To: Christian Speich <c.speich@avm.de>
-Cc: qemu-devel@nongnu.org
-References: <20260512062142.67998-1-philmd@linaro.org>
- <20260512062142.67998-7-philmd@linaro.org>
- <b1910325-bfd7-4f4c-a288-fb40f597ccc0@linaro.org>
- <dfirgzamckaztjht7becglrbcetfhnlj36ge737nowlansrjub@lftxjhzeuhi4>
+To: Parthiban <parthiban@linumiz.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ christoph.seitz@infineon.com, David Brenken <david.brenken@efs-auto.de>,
+ Andreas Konopik <andreas.konopik@efs-auto.de>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260531-dev-ifx-tricore-upstream-rebase-minimal-v1-0-1c39053e5e95@linumiz.com>
+ <9f3952f1-1794-414d-bf7b-db7a5094ed22@linumiz.com>
+ <cfdde0d6-77fa-4216-92ac-bdf9b9b26087@linumiz.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <dfirgzamckaztjht7becglrbcetfhnlj36ge737nowlansrjub@lftxjhzeuhi4>
+In-Reply-To: <cfdde0d6-77fa-4216-92ac-bdf9b9b26087@linumiz.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=DMe/JSNb c=1 sm=1 tr=0 ts=6a4d5d20 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDE5NyBTYWx0ZWRfX7g6/XJA9PPdl
+ qSncyyaHHruECllOeQLxqpyfI370FgELSzshy6yCYFo6c+XmUNsCEDmsQUcIdM/cccQ+rRRlGB9
+ o4H/gKWb5fc3GgsAsJVcPlteSPGjRhU=
+X-Proofpoint-GUID: -nLYkqlrHIUJDBDot_QQBynCrpyMOWRG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDE5NyBTYWx0ZWRfX1++xIc4E7rG/
+ 1v9f2NaJtAREz8YmGfFAgbaFxfLNfq4REkzbWDbggPlAtFh098meC1BbgTOuZAd2gQs8d6bSL34
+ 9ohm6wwBT5u1+fIP9rvl+MGSqYpWIiBJZQHPc+fVOKvSygbIfWezXmqDnBUiATLvQV8uHFLe3r0
+ s1cgOfvdhgOuGRXbZ6TwHWEc9jlEDe86Xkg48jAJdvkg5lbAyBAbOapnj2ZTYNrXd/l5c9icWlB
+ 8+E66tZc807gY3j3zKa+Qm5wu/lTbqcE7xOj6cSpQMtfoOgIhKLVVBe6ZTIWLXYZZvZcFJk3Psn
+ 6IMA3x80Ad82eXBAotMxzu9xR7i4CBqfvtMBgFSbUQ0Au2L6LIKF7IQfsgTnTDh6EMN/OsJmsdO
+ pHuBNSFnBfl+xoySwE13adMZvsl5itizWeF8wdHHNGYqXupyNmLaLJSVthKdrCWlk3OhM2A5JR7
+ yupGeikV+ciTqXsEQ7Q==
+X-Proofpoint-ORIG-GUID: -nLYkqlrHIUJDBDot_QQBynCrpyMOWRG
+X-Authority-Analysis: v=2.4 cv=bPQm5v+Z c=1 sm=1 tr=0 ts=6a4d5dc4 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=KKAkSRfTAAAA:8 a=I3iorzQmlbkT6uRqjqUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: Ip_AeV6dZ7ZO-C9ZhmAw_ahPRXxOefcO
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDE5NyBTYWx0ZWRfX5VZ6ZIs14sOm
- QcQ6FFloZAf6l8QY0izC+9rDl/YS0aA0B+YVCDpf2eRB7BzWHan2SCoqciPtfFtyf+p9kqvyxS1
- slKObA/SPPAVQ0zOCkLtK56fgiFCetI=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDE5NyBTYWx0ZWRfX6wlic7OZumFi
- 3Ifbm7TLwmuOMLcL8A5e+1NUuoW1U030JLXYuPjnXZuo8xqFo+E/SHjh5EWZhc71GaKjsjQMmay
- p0yqtCjJHpVRGW7Jyi6+ABecQKPfnCSX7KRhVk5sB6QFXpEF2Cdd1aSssPwEjrisK7qFP/YUACD
- N5QEZr0pwo+c3KbJypXlXG2Xt7LDKFtJSUYm7QNRXe8uFq90dik6EPwBwhw4rc+PsKRqyMdtsTd
- PrSr3HqIxGaAmtZhcV3rgTDZVVLjVM+Y/FDzbYk9knSYEgExs2JAIlB2rdv5hdDFQBh21AKZhj1
- Lf9q+KRDVYTyakO6bkF2PfK2puRuO3rJWDiN4lCmI62QJhnomrbrJL/gQDz3Nf/qBvphPatqX8H
- CnRVVV3rSICwnZx0XY6cdCSUrO9qwgJTJsORUjdd7URZrsTdcUZl6nHxrQpSZfl5o6QXTNZcIXW
- ptvJNvP6OiWU+kGQWDg==
-X-Proofpoint-ORIG-GUID: Ip_AeV6dZ7ZO-C9ZhmAw_ahPRXxOefcO
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=vU9dKmh3AAAA:8 a=bkFhEHBFzupQzs3BJtIA:9 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22 a=rsP06fVo5MYu2ilr0aT5:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_05,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015
- spamscore=0 priorityscore=1501 bulkscore=0 adultscore=0 lowpriorityscore=0
+ phishscore=0 spamscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070197
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -155,94 +159,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Christian,
+Hi Parthiban,
 
-On 19/5/26 10:58, Christian Speich wrote:
-> Hey Phil,
-> 
-> On Tue, May 12, 2026 at 10:37:34PM +0200, Philippe Mathieu-Daudé wrote:
->> On 12/5/26 08:21, Philippe Mathieu-Daudé wrote:
->>> From: Christian Speich <c.speich@avm.de>
->>>
->>> Paths that use sd_generic_write/read_data can now write/read multiple
->>> bytes with one call.
->>>
->>> Signed-off-by: Christian Speich <c.speich@avm.de>
->>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Message-ID: <20260417-sdcard-performance-b4-v4-2-119e66be10c2@avm.de>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 7/7/26 20:16, Parthiban wrote:
+> On 6/15/26 3:13 PM, Parthiban wrote:
+>> On 5/31/26 11:30 AM, Parthiban Nallathambi wrote:
+>>> Signed-off-by: Parthiban Nallathambi <parthiban@linumiz.com>
 >>> ---
->>>    hw/sd/sd.c | 62 ++++++++++++++++++++++++++++++------------------------
->>>    1 file changed, 35 insertions(+), 27 deletions(-)
-
-
->>> -static bool sd_generic_write_byte(SDState *sd, uint8_t value)
->>> +static bool sd_generic_write_data(SDState *sd, const void *buf, size_t *len)
->>>    {
->>> -    sd->data[sd->data_offset] = value;
->>> +    size_t to_write = MIN(sd->data_size - sd->data_offset, *len);
->>> -    if (++sd->data_offset >= sd->data_size) {
->>> +    memcpy(sd->data, buf, to_write);
+>>> Parthiban Nallathambi (10):
+>>>        target/tricore: replace legacy DPM/CPM CSFRs with CPXE/DPRE/DPWE
+>>>        target/tricore: implement memory protection in get_physical_address
+>>>        target/tricore: add tc39x CPU model
+>>>        hw/intc: add TriCore interrupt router
+>>>        hw/char: add TriCore ASCLIN UART controller
+>>>        hw/timer: add TriCore System Timer Module (STM)
+>>>        hw/tricore: add System Control Unit (SCU) device
+>>>        hw/tricore: wire peripherals into tc27x SoC
+>>>        MAINTAINERS: take over TriCore and add peripheral file paths
+>>>        hw/tricore: add tc39xb SoC and KIT_AURIX_TC397_TRB machine
 >>
->> Always writing beginning of buffer.
->>
->>> +    sd->data_offset += to_write;
->>> +    *len = to_write;
->>> +
->>> +    if (sd->data_offset >= sd->data_size) {
->>>            sd->state = sd_transfer_state;
->>>            return true;
->>>        }
->>> @@ -2627,11 +2631,15 @@ static bool sd_generic_write_byte(SDState *sd, uint8_t value)
->>>    }
->>>    /* Return true when buffer is consumed. Configured by sd_cmd_to_sendingdata() */
->>> -static bool sd_generic_read_byte(SDState *sd, uint8_t *value)
->>> +static bool sd_generic_read_data(SDState *sd, void *buf, size_t *len)
->>>    {
->>> -    *value = sd->data[sd->data_offset];
->>> +    size_t to_read = MIN(sd->data_size - sd->data_offset, *len);
->>> -    if (++sd->data_offset >= sd->data_size) {
->>> +    memcpy(buf, sd->data, to_read);
->>
->> Always reading beginning of buffer.
+>> Good evening, Ping for review. I know TriCore lags active maintainers.
+>> Looking forward to know how to handle it. I have few follow-up patch series
+>> which handles additional models and also newer cores.
 > 
-> Oh, good find! Thanks!
-> 
-> I see that only 3 of 7 patches from my series made it into this PULL, are there any
-> problems with the others I can help with?
+> Ping and looking forward for initial reviews for TriCore.
 
-This series is the last thing I wanted to get in for the next release
-but unfortunately I don't feel having having enough energy to do that
-in time tonight :/ Sigh.
-
-Per my notes from May 12, there is a problem in "hw/sd/sd: Use
-multi-byte/block writes for block path"
-
-      case 18:  /* CMD18:  READ_MULTIPLE_BLOCK */
-      ...
-+        else if (length >= io_len
-+                 && partition_access != EXT_CSD_PART_CONFIG_ACC_RPMB) {
-+            length = QEMU_ALIGN_DOWN(length, io_len);
-+
-+            /* For limited reads, only read the requested block count. */
-+            if (sd->multi_blk_cnt != 0) {
-+                length = MIN(length, sd->multi_blk_cnt * io_len);
-+            }
-+
-+            sd_blk_read(sd, buf, sd->data_start, length);
-
-              ^^^ at this line.
-
-Too long passed and I don't remember neither the problem or how I was
-testing your series, so I'll have to restart from scratch. (Maybe a
-short read from the host backend?) Nothing to be done on your side,
-I'm at fault here for not updating what happened (why I didn't merged
-the whole series) when it was time. I apologize for the delays...
+I have this series tagged for review, but I couldn't dedicate enough
+time / focus / energy to start reviewing it... :S Unfortunately it
+missed the next release, but it will likely be in the following one!
 
 Regards,
 
 Phil.
 
-> Greetings,
-> Christian
 
