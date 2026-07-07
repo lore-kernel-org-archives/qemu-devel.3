@@ -4,81 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E4CEC43602
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 06:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7817C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 07:09:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgzke-0003N6-SQ; Tue, 07 Jul 2026 02:57:52 -0400
+	id 1wgzuD-0005jM-3a; Tue, 07 Jul 2026 03:07:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wgzkc-0003Mi-Bp
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:57:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1wgzu9-0005io-MN; Tue, 07 Jul 2026 03:07:42 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wgzkb-0006Jv-2Z
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:57:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783407468;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lhqOOrM+OzVJWo1imQ7Wp+dIN/nNRdeCKtNsK3A+wh4=;
- b=PZjpIvIAABQN6bBqZziEgJDg/7ESaEFfM3npZBjNwBrvBoWzsk/gf2brBbz8NrLVsbcNGk
- WxM4eIBU+mvnkbVwbsQvlTN9ujNEWkaovkQATPa1cjNtvy4GyhNQL42YE2zvHDLizAWpSF
- 5bO+GXwWVDMILXqj9oVKonQSwByCsqQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-oiWg_wKoPxGORYJt6C3Isw-1; Tue,
- 07 Jul 2026 02:57:44 -0400
-X-MC-Unique: oiWg_wKoPxGORYJt6C3Isw-1
-X-Mimecast-MFC-AGG-ID: oiWg_wKoPxGORYJt6C3Isw_1783407463
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 519EF1954AEA; Tue,  7 Jul 2026 06:57:42 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC07B1955F71; Tue,  7 Jul 2026 06:57:41 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 53B1B21E6920; Tue, 07 Jul 2026 08:57:39 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Christian Brauner <brauner@kernel.org>,
- devel@lists.libvirt.org,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Peter Krempa <pkrempa@redhat.com>,  "Dr. David Alan Gilbert"
- <dave@treblig.org>
-Subject: Re: [PATCH v7 35/35] docs: mark '-mon' as deprecated in favour of
- -object
-In-Reply-To: <87qzlfjnna.fsf@pond.sub.org> (Markus Armbruster's message of
- "Tue, 07 Jul 2026 08:54:01 +0200")
-References: <20260706135824.2623960-1-berrange@redhat.com>
- <20260706135824.2623960-36-berrange@redhat.com>
- <87qzlfjnna.fsf@pond.sub.org>
-Date: Tue, 07 Jul 2026 08:57:39 +0200
-Message-ID: <877bn7jnh8.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1wgzu7-00034b-OY; Tue, 07 Jul 2026 03:07:41 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6674INQu2519198; Tue, 7 Jul 2026 07:07:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=vDqJ1Y4SqY/9yk9LHh1QeDpjjGqT
+ qkQ2soO0F+ZT2ho=; b=ArTgp6Hldu5d8lljMD/4ynrm7d9j5U+Gx1UkGqGzfyES
+ h8JZJhBDCOUEehsa/4XpyRWNIo+ADFl9wtOuKckK21dyCubJidLUIJzrdHFBWUy7
+ d+wH/ncXhJ12BAC0MZEpEweuDWZ4wnqIai10H5kV2+2fD/siOQZ2PGAMhftjCw6k
+ onmDsQm/zYVzj5wtP0AIQiNoAAP+7raJM9UGybxQV0CEB4tCOm8UXN11bH+1rwQs
+ oITDU2Nw2X7Kq75sEiPXTugF6A3joSVoKmdZrLDvomuIrJIdGJOGsX8d37ILJ7KL
+ uaYsYQfpBxv2Nxzcjbr15rRIR5o4bmSqWJFZEGM9Eg==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6qkndjge-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 Jul 2026 07:07:35 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6676njIk023434;
+ Tue, 7 Jul 2026 07:07:34 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7cgq1n6t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 Jul 2026 07:07:34 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66777WZG31719984
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 7 Jul 2026 07:07:32 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9266A58059;
+ Tue,  7 Jul 2026 07:07:32 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A14B45805D;
+ Tue,  7 Jul 2026 07:07:30 +0000 (GMT)
+Received: from b35lp69.lnxne.boe (unknown [9.87.84.240])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  7 Jul 2026 07:07:30 +0000 (GMT)
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>
+Subject: [PATCH v2 0/5] interface hardening fixes
+Date: Tue,  7 Jul 2026 09:07:23 +0200
+Message-ID: <20260707070728.147203-1-borntraeger@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Q/XiJY2a c=1 sm=1 tr=0 ts=6a4ca5b7 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=i4uJyk9pmyJJZAnwev0A:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: qWDhfWbVdnP0RPNJcHyy0cWLPaUsq_ES
+X-Proofpoint-ORIG-GUID: qWDhfWbVdnP0RPNJcHyy0cWLPaUsq_ES
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA2NCBTYWx0ZWRfX1pfBL65u8r8m
+ WYiNr1kmI3f6St5Gh/kkC5gYn3hMh76nGFAmjsTqPGN7anugCQkRAVTT+ahaNQDwaOUbpv8S/AB
+ e/P+GYyF3RhjSPn5+FPt+U4J53t4JDI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA2NCBTYWx0ZWRfXy+rEvo+zTGuv
+ c9k0IOIS7RgdYzeSv1eBGAzhsANIJSRi7tt0UTtOWvJGjdzA/qki5FlGuSd+atvBKJJ/x85CM6r
+ m//ZExvYR2cnLTZfmJytqmcZat2zdzGsUgD7jr725QWTZLah1J0iLf5GkY56FitoaqTxnGjLe+w
+ /Ht8utyuecui0uMHpYGEVj1lBfWCrEimIJkQFuDuyKicHSmR2bSIYR5LgD4NXBYllaWIabn90XN
+ gNd2p9tCINhOfrEDkRKM8Sh8HJEUzDbr/ybMuZFY6cf0KQ/N/l8nFVdatNKZ82WecNMCyPqRvp9
+ 0paprU7LgzOdxDGhYGDeNYbDiUNTEQEa/EQ/euIGfVXpXqqdYbjAHjX0oX06XKVzxvPiFdshXpX
+ kIHr+LBkHwyuLjLmb4C/g8Juyj+jVmNZ4RnD1UgD5AKcVHQoy6xUm/QBGDv+g5vm4sQFm2TyCFt
+ +X7Pj0jPf7y1yBkA3AA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_01,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501
+ bulkscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070064
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,7 +125,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the duplicated line deleted
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Several fixes that improve the guest->host error handling.
+
+v1->v2:
+- add missing signoff
+- add RBs
+
+Christian Borntraeger (1):
+  s390x/sclp: reject invalid write event data headers
+
+Eric Farman (1):
+  s390x/css: limit number of CHPIDs in description
+
+Matthew Rosato (3):
+  s390x/pci: Tighten region detection for BAR read/write
+  s390x/pci: Shrink RPCIT ranges to registered window
+  s390x/ioinst: Require strict length and format for SEI CHSC handler
+
+ hw/s390x/css.c            | 17 +++++++++++++++++
+ hw/s390x/event-facility.c |  6 ++++++
+ hw/s390x/s390-pci-inst.c  | 32 ++++++++++++++++++++++++++++++--
+ target/s390x/ioinst.c     | 20 ++++++++++++++++++++
+ 4 files changed, 73 insertions(+), 2 deletions(-)
+
+-- 
+2.53.0
 
 
