@@ -4,116 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 670D6C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 10:02:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BFA8C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 10:09:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh2ct-0004g8-JE; Tue, 07 Jul 2026 06:02:03 -0400
+	id 1wh2jR-0005ww-0N; Tue, 07 Jul 2026 06:08:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wh2cs-0004fc-1O
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:02:02 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wh2cq-0006l3-55
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:02:01 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-47debec234cso213777f8f.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 03:01:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wh2jP-0005wd-8o
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:08:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wh2jN-00009o-Ln
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:08:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783418924;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=EALeJ7ciJp4A4HhTfSbRQK0k7Zid7nuJPHOXi+PqNEU=;
+ b=TNzHQjsGK8YuBQBkhCCt2vE5vkglmsigI47VvBqFdgpMb5qm+Z73+sNWO+1jbPMcUTBLfF
+ PLIfPZUDCuGsrXZQPF7wa4m76vrxcSMHWwhEaeeS0Ggrtylq6PlesMlX76J/DVc5fL60mz
+ DM6eAFPFABW6jlMJhCeHZvzSjpKv9rQ=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-664-2ZkQ4Zu1O0uGHgx5A1oXAA-1; Tue, 07 Jul 2026 06:08:43 -0400
+X-MC-Unique: 2ZkQ4Zu1O0uGHgx5A1oXAA-1
+X-Mimecast-MFC-AGG-ID: 2ZkQ4Zu1O0uGHgx5A1oXAA_1783418922
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-473941177b0so3669202f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 03:08:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783418518; x=1784023318; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=S+HPsHZwUlVwmcsWdqytJo8Fzj7VfPGL++Cow9j8kfU=;
- b=t43Ea1UXrjwBrr1MQZ4XR6gmiF2X0DhRx5zaLODeMn5UVEvqsZieKNNosT5zUQ/W/p
- 7iHpHO+wbJe3lvwibzFGgUfPJiG7WSfkzqKZEbWaCQLvHR16XRf1Lda1mLcCgza3K+Sy
- MePtACeyEOYXHVR18SKaL/C6lGMs885seewKtjLOMAtqvp2r2aIGXNxTGaXoQn2zRZCh
- 5eOqvIaNVXj/DRqRQm49v5/niWbxOCZ8fIcsnZkv8Yvdijz+yBKN9bgEZra0oArGzInn
- yEPp1U0VsCm4yMClxQ8/b2rjPe31QuMerI2GAQzL+EsCUHwPqW7ahyefGbIdwZdju0bs
- Ggtg==
+ d=redhat.com; s=google; t=1783418922; x=1784023722; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=EALeJ7ciJp4A4HhTfSbRQK0k7Zid7nuJPHOXi+PqNEU=;
+ b=Sri1TtwASh56ykmul6773iUZBZQzw4LGwkE3mJ/yhOtv0fYmxMJ4KJ5/XVjU3hZ6wo
+ OQ3yV8Lqf7zt8wdo0lFUP8MfnWfQp584+qycpV2upe2rNYGQSZ+jxEYH+DXm9vmCBtiv
+ QpJl77B3p7D2fS8yP0fANi95+LjpQUdnJG3U5ocYXOJUNHxT8hIdF3i95MlzEkUXHL4m
+ pZtxdkpuvR0pKfLRjnHG3ukVMwb8yP8eH4BX2Pqoe0XFt53NbHvMe5OqtToIUY32FePY
+ 0IWrW5O05zGYVzX4s8pwyODsYoBO4Aed3oxEhBDBfyFMQ41tAhwUpOFKYbdjrz7aDJ0Y
+ qjQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783418518; x=1784023318;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1783418922; x=1784023722;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=S+HPsHZwUlVwmcsWdqytJo8Fzj7VfPGL++Cow9j8kfU=;
- b=R74sseTMD34QlKKabMVKvq6qRVH6p9S4N9yHLXJxx8esh24oZ086Ws0lFwz/aDSoM6
- f2Z/xqRBKcoOkGuXNYtJb/ld980vpQ5UerIZn1Gv2YVufVgM9UVKgH1aZh13glSDKTnJ
- MkFNhKm1beEz9MiDbGdQWeUgut3RuZC2Jm/i+BubXvjhoHWo3mVf1VgvYr3MUy6Xp6kc
- OBJw9cC0jcOsGruday6l640pRQ4hrpGlL+RG0bakESo3EizJOCgVvcbQAfvmRfTCxuaJ
- 6Veka3DfSWIqPUCwT4YgaVRRu7dunj9bU7AyiQvIWM8xh/ebUMjROE1l1LQJD1H0Ao+g
- +wqg==
+ bh=EALeJ7ciJp4A4HhTfSbRQK0k7Zid7nuJPHOXi+PqNEU=;
+ b=SdA10GLM9zdBu66XjUJInGDOfknAzOrS0yOXaYTiW+fVilYJRs3LOmhnHcfCN1Y3vs
+ Id7pcze880PVadt7+Wm+2Ng2bU8pOEMirXVpt7s1vYH/K0HUZ1fas8/TSkwFD8JpZMo/
+ IkPI6kpWPn0qyAqhCd2KPS5idtATIjNNehfkIgHHx72Elsp0cIjEJt34vKumvY6G41rP
+ TIZW6mkZHbRO3hQ5yXA4AzyIUZqVd1h00JpOdwY1ITJlyQxHkO6K9iVwJKZtAFmBh/t9
+ ZVWp1rDmF0Ajvg7WfxY9ykIFeCmv9VIx6OATbUCE/5z6zkwiPVQv65dyWxEVBuC+lxtH
+ Zelw==
 X-Forwarded-Encrypted: i=1;
- AHgh+Roy57Q5Um9uuYr2XaNhregImN3B2W2SpNxr+nCdK9QLMS209bi21OJlNC6EcXsYHoCl3ke/HpMwcCr/@nongnu.org
-X-Gm-Message-State: AOJu0YwXf0biawq+lRsek2bOUV7XMdRBwtArjzpQUEVuR6VCgYMSgAdC
- Shgb76cb1mXwWibGZjRGCalJ6EDoLSM8/HPwdRemaNknm7/Zj7OmQE6qjTBR+e+GG/w=
-X-Gm-Gg: AfdE7ckggbxzow3HswbtbclUhso3cZOEKGC0nLB8rm2uAutnnagnh7+NgIvudwAk8V4
- w/FhuUP0Ibg7SMvswq6L9+GIaxjm92fTIG2U7Ku8pu1AtPHrLQ0zgDaakabp6s0k+QZ3ZSy+14Y
- BNcE3PnHnYvAao5J+NdetWfe3/R3IoxrW77MC4t24qOySKqv5SfREBOgW35wymL8F0HhzFC/GK8
- AEwSLl2cHx0xEmJ4EYsBvmVdgMTY19gXfJDv4eGqn5d8p1ilQuihhwWetf9JdRAgbXTgwm4hQNT
- GazTqjKMQonKxURS4v++mTCI0Ych53VF4iA8+KUCNIr4tFtzpMjp09OgrKOx0ta86wdZKHwGlsw
- k8Pd2skJMR5Bkogivpv2d0LeP+4XD0JS61YJhHyqlCgNEBrOdgwEdjYYBAClw4V7AyCY7kUG94V
- 8uOSMuKxH5Q7yT
-X-Received: by 2002:a05:600c:8011:b0:492:6113:d4fc with SMTP id
- 5b1f17b1804b1-493df048928mr48452525e9.17.1783418517426; 
- Tue, 07 Jul 2026 03:01:57 -0700 (PDT)
-Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493e0f294a6sm90337865e9.1.2026.07.07.03.01.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jul 2026 03:01:56 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7B3CE5F7E4;
- Tue, 07 Jul 2026 11:01:55 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
- Alessandro Di Federico <ale@rev.ng>, Alistair Francis
- <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
- Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
- cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- cw@f00f.org, Demi
- Marie Obenour <demiobenour@gmail.com>, dhedde@kalrayinc.com, Eric Blake
- <eblake@redhat.com>, eblot@rivosinc.com, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Elena
- Ufimtseva <elena.ufimtseva@oracle.com>, Auger Eric
- <eric.auger@redhat.com>, felipe@nutanix.com, helge.deller@googlemail.com,
- Alyssa Ross <hi@alyssa.is>, iggy@theiggy.com, Warner Losh
- <imp@bsdimp.com>, jacob.oursland@gmail.com, Jan Kiszka
- <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
- jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>, Joao Martins
- <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@gmail.com>, matthieu@minio.io, Max Chou
- <max.chou@sifive.com>, Mark Burton <mburton@qti.qualcomm.com>, "Ho,
- Nelson" <nelson.ho@windriver.com>, Paul Walmsley
- <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
- Maydell <peter.maydell@linaro.org>, QEMU Developers
- <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>, Richard
- Henderson <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
- <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
- <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>, z.huo@139.com, LIU
- Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
-Subject: KVM/QEMU community call today @ 14:00 UTC agenda items?
-User-Agent: mu4e 1.14.2; emacs 30.1
-Date: Tue, 07 Jul 2026 11:01:55 +0100
-Message-ID: <87h5mbunho.fsf@draig.linaro.org>
+ AHgh+RohitWA1U2IFT8YY6xel7KCG5FrOaUKK/3vXCh1tDDK/wBBPjUI+tI3XsUCJb1yZhtyGp1YXYReDaja@nongnu.org
+X-Gm-Message-State: AOJu0YwP49JyjnPtxKwZcgUi+DFBgjxHB6Cj8/jj3JtSTe/bhrAa/VYE
+ WeNpQRPVSNAKOC0WiHePA4AwEn+A9MNRuD43UFtTwsf2U6FV4OHdZZsFLOsbQDzcDgc5jLd6IOP
+ XsZ3rc8bAoOYBIc6l+SPfbOEPZ8P7AMaIuuUF91/bVaszXo8FwJvktjWrBrWZ/ssQ
+X-Gm-Gg: AfdE7cnxkBkFtGv/Rykda/Vhs79FJb1oiyEYzWTPMPbA4lNPcuQnpneUmeOvBFZWGN4
+ BrPLmeYncPN5pTbapqdPFHSJPPNQJUXrUdSkP+UNvi5meiGcgiLHmSF8tncG8k1KdGS4DXowdwX
+ sX8q9Vyk6KMOxJ9v8N7hVXHotRr4UvBKZKxPB5gyuXwLyyyrzA4m0WK2yMPdfh4lMrDe3+Ex9E/
+ IOLDM/bO4Btx15kBwCIdDP0hppImOG2BK77GPjP38Zvf30pViX2uqZIN6vA4GF9SCqu/KogW8Nm
+ 2f8nC6hTKyTNauAOapl+1MSUNdD8FsBwmZlka4AO5JvwuVy2Ci+s+fivmIKswY0xqtCpoXT3UdQ
+ FPALBJw==
+X-Received: by 2002:a05:600c:46d0:b0:493:e034:a3b5 with SMTP id
+ 5b1f17b1804b1-493e034a3ecmr29828325e9.24.1783418921760; 
+ Tue, 07 Jul 2026 03:08:41 -0700 (PDT)
+X-Received: by 2002:a05:600c:46d0:b0:493:e034:a3b5 with SMTP id
+ 5b1f17b1804b1-493e034a3ecmr29828055e9.24.1783418921347; 
+ Tue, 07 Jul 2026 03:08:41 -0700 (PDT)
+Received: from [10.22.2.34] ([91.26.127.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47aa039b0cesm32942475f8f.22.2026.07.07.03.08.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jul 2026 03:08:40 -0700 (PDT)
+Message-ID: <44f185f0-0107-4a08-91b9-631981009f51@redhat.com>
+Date: Tue, 7 Jul 2026 12:08:38 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] qemu-options: Do not list -enable-kvm on MIPS binaries
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Miao Wang <shankerwangmiao@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+References: <20260707095723.36591-1-philmd@oss.qualcomm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260707095723.36591-1-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,18 +165,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 07/07/2026 11.57, Philippe Mathieu-Daudé wrote:
+> When removing KVM support in commit 630decdfccd we forgot
+> to remove MIPS of the '-enable-kvm' option help. Do it now.
+> 
+> Fixes: 630decdfccd ("buildsys: Remove MIPS KVM")
+> Inspired-by: Miao Wang <shankerwangmiao@gmail.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+>   qemu-options.hx | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index e44b47de681..ccb71743ee3 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -5163,7 +5163,7 @@ ERST
+>   
+>   DEF("enable-kvm", 0, QEMU_OPTION_enable_kvm, \
+>       "-enable-kvm     enable KVM full virtualization support\n",
+> -    QEMU_ARCH_ARM | QEMU_ARCH_I386 | QEMU_ARCH_MIPS | QEMU_ARCH_PPC |
+> +    QEMU_ARCH_ARM | QEMU_ARCH_I386 | QEMU_ARCH_PPC |
+>       QEMU_ARCH_RISCV | QEMU_ARCH_S390X)
+>   SRST
+>   ``-enable-kvm``
 
-Hi,
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-The KVM/QEMU community call is at:
-
-https://meet.jit.si/kvmcallmeeting
-@
-07/07/2026 14:00 UTC
-
-Are there any agenda items for the sync-up?
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
