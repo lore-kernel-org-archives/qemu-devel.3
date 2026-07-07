@@ -4,138 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A763C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 08:41:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5894DC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 08:43:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh1Mh-0002dd-65; Tue, 07 Jul 2026 04:41:15 -0400
+	id 1wh1OC-00051d-Jg; Tue, 07 Jul 2026 04:42:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh1Mg-0002d6-1J
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 04:41:14 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wh1O8-0004x9-Vo
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 04:42:46 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh1Me-0005Go-7e
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 04:41:13 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1wh1O7-0005lv-EM
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 04:42:44 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6678E4WK3070589
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 08:41:11 GMT
+ 6678EBlY3231398
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 08:42:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Y7TPvKirCeSdr16gVGRCvuSxdqN1Kg0Z8IRZ2/ELulM=; b=Leelg+yZna6f6H22
- hm1mJ68VMvDzqdl2xmg+STdtRsm/JAzx7+y4e3an+7eJIhnU5WIUPVgjy8ZaEv0q
- it5eeWe2hZc8xoQA6iSMcAZS7JJKyuxInci9EDMWd/rf7uQYtL5EBkg1ODdaR3Z7
- cY8+RS/oTo9Kd30Z0XbYkLAe18X1QBjbvllhhA7JET/xt8tcHsPyTda+QYxEkgon
- WgeG7O6Rjr+JJkBWexhtt82sFJBKB9pxAr0jiH47eIl5aB67Agni9A8fVd919TEX
- 4JlRhvpLZmXvha/bKyW3Hsz01bR8RAL2A7V+qYHObY9ROFZs4G1lChpxA5CeGEf/
- S/qhcw==
+ mDejdOdSbMeLqP/ap1e/QjSjKqGw81Mb0HAwhsn4krA=; b=Zk8ZnXD8wZpDtLYQ
+ 2xhp5ND/JebYdC+B04U8dAShgKHG0kJts0eCdyRfNnBQWTvdcqZ6RneQlOO85lMT
+ 5t5y8g70WrUQVDP+KQvnq6XmyvuRFpRHXMVK6XITr/1IYjl8+UVSjKRg7dnXek+m
+ 8ZTxa0gUYawz/4MQ6YqI1vf4DW7akDCYUHGyrF3lAfNCaDxQdTr8v20Qjhr3nIHb
+ T4GZ/NUzLS+hg/qNZxtiXjJkeocBH8IupSF6A8eu+6KmWK8Eg1LttKk+V5bA93OL
+ RcaMrJiGkih5BLTaJ7HKaU0lWKsfgYIU5t/B9dfxHhMqr5Tzwb5g1YJpRM/q5X+U
+ ZVJY6A==
 Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
  [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8sm8h38h-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8qj79h7n-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 08:41:10 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 08:42:41 +0000 (GMT)
 Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51c0f0a0760so78293091cf.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 01:41:10 -0700 (PDT)
+ d75a77b69052e-51c12e43b98so48509601cf.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 01:42:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783413670; x=1784018470; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Y7TPvKirCeSdr16gVGRCvuSxdqN1Kg0Z8IRZ2/ELulM=;
- b=YY11PTVkiRWUG5WcwCYqDCnTcF7z/2yHE6laBkaiZKgF9dZ/iW12vnTizX1mGZKNNU
- dJPPow1w6iGfATiYPA6HOYHWgU5ux1gqo0ZZb2roYKHegFE0taJcg6mPIFq0obMJbbLt
- fFxh7jgiqQ9DVCqz7BM976zmd4ofI514/WU5DNQ8fxIZt3EOEs84N/W2+splf76lFhUH
- HyU6QbBG0lleJWCBJwYvsR18+/ty2rM3cNyY4MwJvGOG6A6qvM8bHN9pJy+KMkDWlKiq
- DbmPzKel6JDi4VKBzb4eBwBgt4WYQVtlbFGF8dyF/mJUUVI3B+FZQIm9MXBk6XBlTsYO
- uI+A==
+ d=oss.qualcomm.com; s=google; t=1783413761; x=1784018561; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mDejdOdSbMeLqP/ap1e/QjSjKqGw81Mb0HAwhsn4krA=;
+ b=P5/EJAv14tYvclhrfqzkaEOQLECOwl6UK57LHSg6+sHNkrgQFPqzcD/XhZry1V7zTh
+ Zy/gQw1/L57a+GWkzy9YGYgBi5/DeH70SKz6Ft4yz4llKNW/Xuro7FM7V7c6gtuCCa84
+ bMkcfOOKz78POFdMP9XNs9jejU8BrjXehK5radUWm9hezwqajenAgDHplXzG03nnjhWF
+ toBEDx0DVqRvW10KEJuj/jUqVsagQBRxdNRbSzLGQjevHfdCXZMKmnZCyNjwdzXbo2uo
+ 56SCQPEkNVdBCV32ui4D9gBjZCrbHJlP4cfJaSnN5PDtslmscnMC0Gebj7s1t7Qxj/2a
+ vsLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783413670; x=1784018470;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Y7TPvKirCeSdr16gVGRCvuSxdqN1Kg0Z8IRZ2/ELulM=;
- b=RjWlN39HFzzxcdsvsn4E6G57rb3AT7IQW1miojbcJtsZKp8/aPdo5HYTFx1tSi5hfd
- ynUaGkaQ6SWxOSeCRdEnv+10OkH5GCUjAjMMtGxpTZnxi4iiZYNAYcEWcW4hz/u+Nn1/
- 2HwnzmOakVCHGhpzkXSI62ipt34U2mrSL1mkv/VPqwx+WD9Qhj8oUjQUzZpfCNN4Xo1b
- q/Lz0CZ68EJnV7YohGYKsGrTjIKSFaPOQjziF4z5r2CV8NETgh/D5ko9YgP7hBmxYJ5M
- 7lN1LseJk4KVjcMurrHcZsGrq/Nnq2nttljvToYKhPJPkDob/sdiWGE6hsYbQU9Uu/bX
- bZ0g==
-X-Gm-Message-State: AOJu0YwPYACS5WR88ccYvQUJcXgfR4G7cyQh4QISauv16Ggv6VRvIxnH
- Hp5uOFgsaUznEvhtNv62h3QxqTyhWqz0PLrGcAcL6fDzhRH20BTtxDt5BtAHSVv5n7P/1/JnRDE
- 6mog3i3aBGdit9QAxU7Ku9H2U2YZzep3pNfCPknqPbw9meheqW8gUysu9MX5wieIk9Q==
-X-Gm-Gg: AfdE7ckNt/lTu15b4n0MUZJI0oyNNyZfCKJyVSHFTwj8KD+0rDbczuSbfc9GHUhHYea
- vkL28+/vkZYLrnXiSYpkjq+UnGRqZALQlWDmO1FyEcY+zt7yll6kGOE+yTBF6lIOUrfYLoajedj
- zHf/gzdlp1lAym5IVNuJ7GbBIDftw5N5DW0Dmoww6tf0zeH1ir3Mshl7/+wgGy2JrYZ01bCw03u
- LiW28EXitAJSpXygE+W8SWAAQq2CNKtN4LGpAxbJGFdllbu3pYN/yO11zFlaJPhkiHo6aCd5kuI
- WTeXpV9yh7If88GGzpr0f7Cl+0trOB+Nmt0jH5b/44bI09sUu8tSYwta1126iFtpU4A53/0qpPU
- aKijCY9hmtvXW1V8zhayCuUJ9N3VSrFXgoxON9Aj+dIQiKQkiHQtLKyhKYWR/j5ZRebYx
-X-Received: by 2002:a05:622a:4899:b0:516:e249:e30f with SMTP id
- d75a77b69052e-51c7487d5a3mr47255131cf.42.1783413670051; 
- Tue, 07 Jul 2026 01:41:10 -0700 (PDT)
-X-Received: by 2002:a05:622a:4899:b0:516:e249:e30f with SMTP id
- d75a77b69052e-51c7487d5a3mr47254951cf.42.1783413669709; 
- Tue, 07 Jul 2026 01:41:09 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20251104; t=1783413761; x=1784018561;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mDejdOdSbMeLqP/ap1e/QjSjKqGw81Mb0HAwhsn4krA=;
+ b=KErYJ1tXy6mm9g9v7b2E+GLyVPkHsfZTARcgpqg683/UwjryaIvODHr0gPQSkafJV7
+ +fGRMQK9NgBYYrzBdnNVuVgi5vGqvTgqpyU9YCGmNzB/4Q+JswvXzUP4LzykwXMLX7qC
+ l8tAoNQWhgx3hNhKuU8+xs8tRFXYR+oLVLQgpxYG0VcV6Vii5Pnqy8mIZRFtTepleeeX
+ PAGIBnAbx3xlNcXMcUTzGNCr0ARGmJT7nKNA2JswKfmVdOlOsYiVPojaiswqLt7lvgRe
+ DM91sg/p72VtYx3IfNFyU4jgL9w1Vfm5l5wLGz6ZKb1dKhNCwXduVn86bEKIrsRMAByK
+ bL9A==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrCj96ZSAJ2FjsJx3Cqb8Wv1d5YZrmCMMvnEqD4xyOT68wbBtlmXErPG4XINnZwpLqIkX1tEhC1kA1I@nongnu.org
+X-Gm-Message-State: AOJu0YxEfDoiPmiI+3W91GkoghIv3/KLbus9nYJ8MyYnqg/uj/Z8/E5o
+ XIaYKHUq1GeH/TCRc71CdA8c7uwuFBEtt7+UejvGUKFwcwr3zqIwOlNaVsXSPQfcNR2IKqeXwZj
+ 9wxqqq18W55O8ow0zpxtcogQmAmYIzOKMjNNkKVlm0V/OXuyZZNKqHu6MNQ==
+X-Gm-Gg: AfdE7cnk2W15N3DGmVTxo/AO9f1s1ymjj1sE5nY/uZKzXH2F8Omv2dOwZ9uJI/0vLdr
+ /r/lh3dJ4Is51+FNjZ7vX5A02bZQpxZL8ZpXqQUG46x8x5Io402xqdFIIIm5cuaRHsoUK1wHBDc
+ X++CJxd/Gc+bQgyeSQsA9IOHelBJkDQkcq4eSSpugaOjsuK39GBA6eOtciUT+TgMV0WIzjwvxjB
+ m1znz5T7STpI9PUVqiDS/BjBY+WL60w6LDdKd+yTHLeh3uliUq1qw7dtOnh3EPtO0zvMW8HT8wQ
+ hrEN2xFAXS6Ik1gv2dm9d7tuJFX4aTFbwQsZtkU4KwekyIdNj70tvjDLRlex48x74iwQiZF8f2f
+ apd2Ra6+sCyPr2liYkOa7EgnJ0ZYjyvdx65klTVvgGPWv8HzJ+SUMgkRilC+i3A==
+X-Received: by 2002:a05:622a:34a:b0:509:3cd:b22f with SMTP id
+ d75a77b69052e-51c747beb3emr48443741cf.23.1783413761225; 
+ Tue, 07 Jul 2026 01:42:41 -0700 (PDT)
+X-Received: by 2002:a05:622a:34a:b0:509:3cd:b22f with SMTP id
+ d75a77b69052e-51c747beb3emr48443641cf.23.1783413760789; 
+ Tue, 07 Jul 2026 01:42:40 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493e0fbb410sm39721015e9.12.2026.07.07.01.41.08
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Jul 2026 01:41:08 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH 2/3] hw/qdev: Introduce BusClass::is_full() handler
-Date: Tue,  7 Jul 2026 10:40:49 +0200
-Message-ID: <20260707084050.32137-3-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260707084050.32137-1-philmd@oss.qualcomm.com>
-References: <20260707084050.32137-1-philmd@oss.qualcomm.com>
+ a640c23a62f3a-c15ada04d04sm82653366b.47.2026.07.07.01.42.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jul 2026 01:42:40 -0700 (PDT)
+Message-ID: <e89903bb-d866-45ed-b5f5-fa0a6ef1a0c7@oss.qualcomm.com>
+Date: Tue, 7 Jul 2026 10:42:39 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/sparc64/sun4u: Mark unusable PCI busses as full to
+ ease device plugging
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
+ QEMU Trivial <qemu-trivial@nongnu.org>, Michael Tokarev <mjt@tls.msk.ru>
+References: <20260309181452.83702-1-thuth@redhat.com>
+ <00c4ab4b-a58b-4de4-8e41-566b2cb7f920@redhat.com>
+ <124bd918-f2ab-43e2-bd2d-fc824de62c40@tls.msk.ru>
+ <fcbe3d7f-64d4-4b13-b930-a81e77db4784@ilande.co.uk>
+ <df7a091c-a8a1-416a-acf3-28a0cbd8dd2f@redhat.com>
+ <c7d6b801-449e-4f55-9c1d-ebec7a0e9595@redhat.com>
+ <c0cd50bd-e054-48b6-af54-1050e13bb720@ilande.co.uk>
+ <baf0b727-d53c-4717-b4e8-9c8603b2fa75@oss.qualcomm.com>
+ <a60309be-c514-4b22-8970-ecfcf2b4fde7@oss.qualcomm.com>
+ <c7b0d42c-4243-4f52-88ec-7f1deac160fc@ilande.co.uk>
+ <fdb45ef0-a709-413a-bc55-1bfcab648033@oss.qualcomm.com>
+In-Reply-To: <fdb45ef0-a709-413a-bc55-1bfcab648033@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA4MyBTYWx0ZWRfX8pFw3m7lck1n
- iMPuC7DwYgD7xWKeuYYmRurd7VJ9iMfCjZ7kng71iwd9sJnllu/831GEaXVmNtb3TlAgUzBsVEh
- NGvRzpTP8oC17lmnceKUxjMJyXFxrTld62bYya5Jz3j27wWKgT8RCRUcMF+vpsGb7rHgJ2HgRnC
- DOE6GgkhoZM/thjJUtqwOK/cLlB5EVEi0E27sZBEkzln7H5PofCRXxxB96ZtMAQOXkBAlikzE35
- mRj1tESqwsbjS92L+srMt1ZAqPY0LhzQ+LVIlA02cd0Cm9oTyjKwP+S+KTcdN2dxx5i7THmCRUC
- hvazICwLkyofyXg/nOj18dz+XuH362IU9rs9olF7kGlwbah0zTEUd0Y0KcVYX9H3AnyspGNiSij
- pfOWHXeJsmhpZkwtL2l2712PgXbbX0QHOQbTPuy1WdvW/fLphQ3iAP9NHjqgizD8t93Kdpq4dUF
- jqyJvjDTmtH+5oUuQJg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA4MyBTYWx0ZWRfX+QJHEV76h/hs
- JLspq1FcnKDo9/fpg6BkRHYQT9torl0+NSGwUj6N7vSWyXogHOQpTS+wt27o9gbamU5sJB1foU0
- JVEsAW6k5MSsmyoBQZ5yiVGQjPAjXg8=
-X-Proofpoint-GUID: gjGKFtLj3cCT3wm76630SWKowRl_r_AU
-X-Authority-Analysis: v=2.4 cv=UvdT8ewB c=1 sm=1 tr=0 ts=6a4cbba6 cx=c_pps
+X-Proofpoint-ORIG-GUID: T8ZP2kK9eMLFQzQYAkkcbNk49Ln460Kl
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA4MyBTYWx0ZWRfX8rGOg0WZb3/b
+ gLcxhWjWl863pbWFYISOxlKQ43xATt++hcMF7oIzqinT1vdQn1jT4UK9hrM5jjvBKG2EMA6f/Fb
+ /3+Kw8IJvL7a4PvC9LHdDE3jyNa6pL0MN+ZjD/SX+ZvvEQCHa440zlBYuCq+v9idY2phFkg0Krw
+ gvpb+fBY4NNZqt1LoVHxdQp6hGVX/9621aEPtubM17J1K6V3/XSyjZ0kIwsjcDMpk6JA/lUTqOV
+ L1r4jIpkNboSPjMrTA+T6bS8ErC4F90qruxL52xQl+xVR/HIawZKWtMfFoLjs5O8m1ndPK3xPq2
+ 0n3RFhu3LkHQwr9UFOlJ2zrH0583Q7VoPuvJZv3ecdkrJieoSuncASmyp2tuD9tQZ+Vw1FAVZt8
+ byk+qafy+nZ9jB5+eZzzpk/UNQ7ZV+rRujsgQqlpvpEktlAvJBumjcC8ap1DouiiL//pPcVVByS
+ WtRu7JU7cuzE7FV6F6g==
+X-Authority-Analysis: v=2.4 cv=PIM/P/qC c=1 sm=1 tr=0 ts=6a4cbc01 cx=c_pps
  a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=1aYBqpFfU4iLzEvhaNMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-ORIG-GUID: gjGKFtLj3cCT3wm76630SWKowRl_r_AU
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=6aw1dEGQIrAIlxKPOMMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA4MyBTYWx0ZWRfX5OL6Zk5mfCf0
+ HgcurQrfBCAsCx/rnTo2oYGgPxu77cE2ntwLrqejdLuqmgLilHslA1L+7dmwOo1vr6NwW6G1LX1
+ SEL01MyiVmCO4MInnG0yM7GpHDfn36c=
+X-Proofpoint-GUID: T8ZP2kK9eMLFQzQYAkkcbNk49Ln460Kl
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_02,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 impostorscore=0 adultscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607070083
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ priorityscore=1501 clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0
+ phishscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070083
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -158,46 +167,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow BusClass implementation to have their own is_full() handler.
-Use it in qbus_is_full().
+On 6/7/26 23:19, Philippe Mathieu-DaudÃ© wrote:
+> On 6/7/26 23:16, Mark Cave-Ayland wrote:
+>> On 06/07/2026 21:29, Philippe Mathieu-Daudé wrote:
+>>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- include/hw/core/qdev.h | 5 +++++
- system/qdev-monitor.c  | 3 +++
- 2 files changed, 8 insertions(+)
+>>>> -    pci_bus = PCI_HOST_BRIDGE(sabre)->bus;
+>>>>       pci_busA = pci_bridge_get_sec_bus(sabre->bridgeA);
+>>>>       pci_busB = pci_bridge_get_sec_bus(sabre->bridgeB);
+>>>>
+>>>> -    /* Only in-built Simba APBs can exist on the root bus, slot 0 
+>>>> on busA is
+>>>> -       reserved (leaving no slots free after on-board devices) 
+>>>> however slots
+>>>> -       0-3 are free on busB */
+>>>> -    pci_bus_set_slot_reserved_mask(pci_bus, 0xfffffffc);
+>>>> +    /*
+>>>> +     * Slot 0 on busA is reserved (leaving no slots free after on- 
+>>>> board
+>>>> +     * devices) however slots 0-3 are free on busB
+>>>> +     */
+>>>>       pci_bus_set_slot_reserved_mask(pci_busA, 0xfffffff1);
+>>>>       pci_bus_set_slot_reserved_mask(pci_busB, 0xfffffff0);
+>>>>
+>>>> ---
+>>>>
+>>>> I'm still looking at the 2nd part, the reserved slots.
+>>>
+>>> (Because with this patch, the test passes as we can plug devices from
+>>> the command line, but they end plugged on pciA instead of pciB -- thus
+>>> the 2nd part missing).
+>>
+>> Thanks for taking a look, Phil. IIRC the reason I added 
+>> slot_reserved_mask was so that it was possible to populate pciA 
+>> programatically in sun4uv_init(), and then enable the mask so that 
+>> specifying an additional PCI device using -device on the command line 
+>> without an explict PCI bus would cause the automatic allocation to 
+>> place the device on pciB.
+> 
+> The slot_reserved_mask calls make sense, but AFAICT they don't work as
+> expected, since CLI devices are added on pciA. If you want to have a
+> look on top of this snippet, be my guest! Otherwise I'll continue
+> debugging that tomorrow, long day and late here :\
 
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index e1476223411..c1c17bd6f2b 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -345,6 +345,11 @@ struct BusClass {
-      */
-     bool (*check_address)(BusState *bus, DeviceState *dev, Error **errp);
- 
-+    /*
-+     * Return whether more devices can be plugged into @bus.
-+     */
-+    bool (*is_full)(const BusState *bus);
-+
-     BusRealize realize;
-     BusUnrealize unrealize;
- 
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 00fed791cce..496850bd8ed 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -454,6 +454,9 @@ static inline bool qbus_is_full(BusState *bus)
-         return true;
-     }
-     bus_class = BUS_GET_CLASS(bus);
-+    if (bus_class->is_full && bus_class->is_full(bus)) {
-+        return true;
-+    }
-     return bus_class->max_dev && bus->num_children >= bus_class->max_dev;
- }
- 
--- 
-2.53.0
+Generic PCI fix posted here:
+https://lore.kernel.org/qemu-devel/20260707084050.32137-1-philmd@oss.qualcomm.com/
 
 
