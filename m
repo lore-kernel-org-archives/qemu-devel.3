@@ -4,136 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0700EC43602
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 18:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38FCDC44501
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 18:17:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whAM4-0005PB-Hy; Tue, 07 Jul 2026 14:17:19 -0400
+	id 1whALD-0004lz-DI; Tue, 07 Jul 2026 14:16:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whALB-0004jL-TH
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 14:16:18 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <parthiban@linumiz.com>)
+ id 1whALA-0004gg-8P
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 14:16:16 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whALA-0006Mh-1h
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 14:16:17 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667FTDK6018048
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 18:16:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- XCd3xNqLnYMXo9r61o2LBClIiGLnFLXqbbTtEGj6akw=; b=onGltfCBZ3mG0OLq
- Yn43K8VqTegJbx4eYOulVDtsFF2o5FifN1PgzpKE/kTck/jVCzAS4HfkZXkQaBKV
- vwee+PSbvxG2h+xZWC+oADQRXreFqxOP+N52xVNsiFjOkztLmpm75cdGjziVXmAI
- U/yVIN4q99cGB50cBeXQK5qU3uyhTCjLElv4XQXTvvbHqhfV7li9tNTfFerYj3pp
- Z+OVdCzvXIRNKjS/2C+h39iGGyjMplFQekPlenPgZTjjJ1h8e7dT6jG7RBASfPpd
- +Ap1lXuhM+7jwlQc/BbsgMu1Q3c+an2AQb845n44DLEZ6HP5qLPdu0YVq+/BPfET
- Mqt2AA==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8wep2nx4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 18:16:13 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51a87ef9713so9916281cf.1
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 11:16:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783448173; x=1784052973; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=XCd3xNqLnYMXo9r61o2LBClIiGLnFLXqbbTtEGj6akw=;
- b=ZThfiUajVr/0xV/DaIXq+2WRbkDDRx8d45RZs3TKpmnhz1WzaeT59pNrP7yWrt0ZKM
- oT8zIJ6DT5WEllQb5x48E7aKnm5ta+7g38B1Zy3nOrctGt83nTeWTD4cziOAB7Vs44Tu
- t/2Yr+l91Mab29Xyr0QU1FxDIzfv7ZKTBpSn/VItYf3eP5ynfeecrkd7jasui5jd1qgD
- UkYlLsjwQL57lhoXB9V8GW1XbsePlAlBILwZr1Qjqaaf1nQkvqi2IK8rP7RIXrrgcWuI
- nNapglq9D0AvTljcszLgJAm+diiarSOyo6watrB7A7XMRrIu2Jdp+gCVNpotvq/68DEM
- OO/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783448173; x=1784052973;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=XCd3xNqLnYMXo9r61o2LBClIiGLnFLXqbbTtEGj6akw=;
- b=iVPEnvEagU3KNfo5qJmkp1mZe80jannJqwL3lqu6ei6Pu3ka9dBNsNNoZoExGnnMt4
- vt6zPz5lD/xLpSmGV2qbaNjuUnygQRLtlqOMfNVeqPczruLQABX3JvKpRo/pkS3km2rP
- sL9QR4zRYqqEQSA/RJy+0iZczuJ6nUIOLOt2JErz+dbf9jaoAzMFkaJoRPPN+obuVvq0
- FBsoCznRXY8LXU51dRRR4LAEAZfr4kYRtRBdop8jbsAnN6ar2ZjqdEit7YiLThbMJOmw
- dAGcM61xifhO2kfT8cgDV4JbxLBXHVWds8T5ZmB0wTgeGmeBtEwlEhMXYwdVs7Q/T8Pg
- 979g==
-X-Gm-Message-State: AOJu0YwhnujGm7opz/QO/ypz9r4uyru1zC20PtTi6mjHZpUyW+sEHuOk
- pXUzF9EQwTGqM4B7bso+QGBr98CTeLjkROo4ongXNUtgCA1EnBYRClEv/jXbgTvmlyzxFSmUyf+
- FtvKJhhz1W1Kem9q/z34zd1R+cO48TZ1TPjzmW8pYsrUv6JacQCpTQR8nQHrifjRgNA==
-X-Gm-Gg: AfdE7cl5km2H8S+Kk8v65LJ5N2c6WkLK5yOw5/MzwoovRzPXqmmBultDBL24cexSF7u
- nFAKgMfcusL8Bi0WwJvpgZyEQxYb5yqMMwCX6N196TNI2Nb5L09AmcAYcuyolHTMf5FWTwCYNe2
- ethPsjc4tf7zqOMhGQh3mTPnoa3w87OD/lT10mug63B3ONQFSxqdGRFxKQAuRk+c07GWJwiU+Y8
- NjHWQEpGzzEUCQRKBaqNhzY7Kz0cJVgEPWmtSO43wVnhTn7ffEpLvVOkMPY6j7IQAd1uNsisR1c
- b0dDLloQSXNJdAEltdxkX4dZEmaZF5rcwF92QpaACTwtiswzbTfaRYMKdoVixvGRd6Qg86SyZ+w
- uaRHc4PMECpG32rxBrol74h/lQ1x5zlRWhBp9+Ut+ATa1XXwiqv7X1U40YNcGQEEIuAX6
-X-Received: by 2002:a05:622a:4a88:b0:51a:8691:4427 with SMTP id
- d75a77b69052e-51c7a0d95f4mr41810581cf.0.1783448167773; 
- Tue, 07 Jul 2026 11:16:07 -0700 (PDT)
-X-Received: by 2002:a05:622a:4a88:b0:51a:8691:4427 with SMTP id
- d75a77b69052e-51c7a0d95f4mr41809481cf.0.1783448166536; 
- Tue, 07 Jul 2026 11:16:06 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493e0fccf2dsm76535695e9.15.2026.07.07.11.16.05
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Jul 2026 11:16:05 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <parthiban@linumiz.com>)
+ id 1whAL8-0006MM-31
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 14:16:15 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=QzxOKYc2ouiLsJE/hMzGYC9CBfAJrtOJNImCvZ7Zaha7rZzDey7QJuD4brEcFt7INXsq9A2jXx+BkOa/BXsIvz4LBflnec5rw4+sH1vFDigBTsfoi2wsFCwAuPJPm1zxPs3lkSy2P4FBUeHa3zIpTWPoJSJfGxJTeA7oGvjIQKlWotdmclc9Hzedtm138TzJQ6nCHRd+gh37rl7fdvq60Np1hO/VbQoJhfVVZtkl+esAgB9iQhF8nApMfCxFo3b3CcTkmbR64LFP4g2er0EGzD8Q6L+bMbLwY9lHPtdstFY4gp8L4JFcIZ1/ggDjvxqnWRGw0zHaDFAo6C40YTKKDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=m5o55Cfke2fkwn0mOFlUIqpr6R0Slt3fcPhdt4K51nA=;
+ b=oZKSAj7Swyt8Tzhr974EgX2ZU+N+oxqRmxQfZQWvfGH5L/vP3+V19pcz6TLr6Ssqhrn/mm8abeQl0FxmeOJICSRsKGhJuePusIW8UtYdvwRooRo/cAOmENcNjPu5P/AGVGMbPUCIkyYosi4b1dPLfejN1igOZJCIOAcWpX7fiwQu/IwJhQQqvqh5JajbwEsXY9rurC4KkgqTZ/OdlJUfjz4YnxLqND2hww4OjPkiouEJui1FwCjFz1WB3HjQu+M3UQWtnocHBAZOpFBsRTQ5d8PEVlIrsE1tvQa0Qc3hqDcnHOdDnxcDlfpzzcX/xtVZFdmIH2jAQRjwU/ElJMs2ag==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=linumiz.com; dmarc=pass action=none header.from=linumiz.com;
+ dkim=pass header.d=linumiz.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=linumiz.com;
+Received: from TYZPR06MB6935.apcprd06.prod.outlook.com (2603:1096:405:3c::9)
+ by TYSPR06MB7048.apcprd06.prod.outlook.com (2603:1096:400:466::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.11; Tue, 7 Jul
+ 2026 18:16:06 +0000
+Received: from TYZPR06MB6935.apcprd06.prod.outlook.com
+ ([fe80::30b6:5b0d:1b00:5a01]) by TYZPR06MB6935.apcprd06.prod.outlook.com
+ ([fe80::30b6:5b0d:1b00:5a01%5]) with mapi id 15.21.0181.010; Tue, 7 Jul 2026
+ 18:16:06 +0000
+Message-ID: <cfdde0d6-77fa-4216-92ac-bdf9b9b26087@linumiz.com>
+Date: Tue, 7 Jul 2026 20:16:01 +0200
+User-Agent: Mozilla Thunderbird
+Cc: parthiban@linumiz.com, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ christoph.seitz@infineon.com, David Brenken <david.brenken@efs-auto.de>,
+ Andreas Konopik <andreas.konopik@efs-auto.de>
+Subject: Re: [PATCH 00/10] target/tricore: MPU, peripherals, tc39x SoC
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/23] target/mips: add Octeon SHA3 COP2 helpers
-Date: Tue,  7 Jul 2026 20:15:10 +0200
-Message-ID: <20260707181529.60191-6-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260707181529.60191-1-philmd@oss.qualcomm.com>
-References: <20260707181529.60191-1-philmd@oss.qualcomm.com>
-MIME-Version: 1.0
+References: <20260531-dev-ifx-tricore-upstream-rebase-minimal-v1-0-1c39053e5e95@linumiz.com>
+ <9f3952f1-1794-414d-bf7b-db7a5094ed22@linumiz.com>
+Content-Language: en-US
+From: Parthiban <parthiban@linumiz.com>
+Organization: Linumiz
+In-Reply-To: <9f3952f1-1794-414d-bf7b-db7a5094ed22@linumiz.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: AVrZ2LKebaXi2_meqGXGfgwq_UzawjlE
-X-Proofpoint-ORIG-GUID: AVrZ2LKebaXi2_meqGXGfgwq_UzawjlE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDE3OSBTYWx0ZWRfX5KmCYEEtNYOu
- RRrQY6dGwlmP9SJi/tKHCYOF7W84HbZuz2fcYe5AZJWY2mGR3M5S7nj5lkOZK7N9/B69MYlU+q6
- 9QCxyBvz4ifUYUWdi9DMlUoqnvcSchavDOf+vIef+NqoZXhXlko1R/6SjTqZPZiLyQogna/0l76
- 6HZusXb9C8IRUnrDGodJCf1Aofo4DOGAZCV2MNLfVufZieuzVXKHFjWK4fI+SG6X2eC5JXSa/N+
- P9IKKbXJjf3yPnH1rag+yVasJGtYLl7l4Jl7m/ODo2sLamj20GBmwO4C8G4KJHwjzHBqVBuwV2J
- nw3miEKCXqGlIx3w06vZD6GhabXVpvWH+cqFQktoP9lmwubgGZ28Ys5f5AcWSikksbh6ONul0Pe
- VxG639LUrecP/N1/JLPM3cjC/TKvaUV6P13NsE1A1QuGgAxTVC8f8hPHO0h3QS9U6Zx96VICdrY
- kmcfIJdPyFVcP6SSUbw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDE3OSBTYWx0ZWRfXw+GbdpFJnWAx
- OPW3IOUsrRCt7hplQV9EiQfUNYIt1m+TWKAX0BPE7E9SSOFnjKINS+wL+P3Gn9D58VWw+py1t9T
- XTBx2zPxKdL59lmwz4l6Rei0UBG8s58=
-X-Authority-Analysis: v=2.4 cv=atSCzyZV c=1 sm=1 tr=0 ts=6a4d426d cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=Y2HmZ-R4G0JYE2J3qnkA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-07_04,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 priorityscore=1501 spamscore=0
- suspectscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070179
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN4PR01CA0087.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:2ae::8) To TYZPR06MB6935.apcprd06.prod.outlook.com
+ (2603:1096:405:3c::9)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYZPR06MB6935:EE_|TYSPR06MB7048:EE_
+X-MS-Office365-Filtering-Correlation-Id: 03e8f7cd-2547-4e49-2a41-08dedc53d00d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|366016|23010399003|22082099003|18002099003|4143699003|56012099006;
+X-Microsoft-Antispam-Message-Info: RWKoEhvnHZMD7sgw0E7Jd7R0Nx/KpBJ6KxLY4JnXm34Fa2KIuWVE4uzI4V0t9QbBJ9aprjIrRPaCwvE9Ku9zQwXwGwk3Xl+BAr7WIPgQR1srlIPvczK55uaExYAD5M+s/+cM5Nx3zhziQ3ibTjiuOST8BKWz/7oJGGNYyGpHdVGkQJJj/3bDaAkbQ2aGvnRmUuNBZ7SUL1XHKJPuy+VMm+2vFzUoxO2Ltxtz7EBTcvVgmV+z73ovQ41cPhs+pyXW6129Xy0Vhzvw8AY6BMifuF9HkG2wgVAd6aMY19xBvDgf6mDAiVhSTK2TcEN92RXRfTl2/aE42qYbNtS14zTqYLKU7mOV/nnvkhib8NW6jpRMrXx003yH08Wcazsh8EZmT+vve28j0bXa+NPXWn2U2UJuPR3iobEmtU4zJytbhQYcLXQ/pGCfLse2754ggGtmMQK3ZcfwhCg4osnqgdfIhjHJzrR7+oNlOz4isDQdX/Bs1pRK5yhxlzqgvVeoJyYTEFt1mF7O4/BzkFI+X7iNgRBPQvKbse/ggfxu4BJuWvTtZAKFUwvSmUOzsHHa4Pf5FWrcsMiCLFJKlwviWU060RV4A95h4Ky6yz+ht7R6BSPyK/DZLoPQDvuFm1Kz0bnwT8zQh93OKEriQmsid+WS8nKAJOWAIEeQ7OhQtT2ycdE=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYZPR06MB6935.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(22082099003)(18002099003)(4143699003)(56012099006);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?THVja3dmSnRpR0RaZFNNSk14OVdUWk5FUi9WdXlyKzZQa1JRMEhOUUpJZW4w?=
+ =?utf-8?B?Uy9ZY0ZHV2VpOTdySHp1QlpjZFZDQm81UUd3N3BaNkNhOXhIRE9MYmlUbUZx?=
+ =?utf-8?B?VTgyVlZuQ29kSUR5eUxjQnhDVlhBbmFNd1RGZERmOXFNTU0reHJpYU9IdXcz?=
+ =?utf-8?B?K2ZSZnZyVWdzSFZSS0lOOVFlWmFDbUQrMXdwSHNBNno4OTMvbUR0UkdZQnIx?=
+ =?utf-8?B?Umx4WGJUZndBT2ExZ0N4cElUL09FL0JjQjBFY1p5TS9yN3hZL0hOcnQyZDE1?=
+ =?utf-8?B?YVI4ajVueHBVMXYwMU1TZWdxTlEyZisxdVZYQzhoenIrUTVPcFhWUWZibnZR?=
+ =?utf-8?B?b3RzbmlhQ1RyaFA3bnN0SU1TaWNwSXlIVFlQTERpQkVlU3dDcGQvYm51MlJi?=
+ =?utf-8?B?OUtxb1p0OXlRWjRMbXJNdGEveTZXQU1aNEN4cjlNazB0emFwNC9MU2JDT0Ur?=
+ =?utf-8?B?MmF5aXFkVVQwQXZWNHdkNTZOenRRWWUxQVd4OHEvbXROT1RDdFVjbUpWcjZP?=
+ =?utf-8?B?TzlkTUdsWlRBRmVLYVkzNEdPOUVzdGk0d1pzZExQcm1jQzNDWmN2TGdpZTgr?=
+ =?utf-8?B?RjFLb0QvTkZTa25sTmRNbUxYdnpXQklyV3Z3Zmx4RHplekxjODdMQm1MTXFp?=
+ =?utf-8?B?T3QwY01wYUd4c2U0aHFHNUJLR0dBZzVZTGR2S1RqdXNHNUtHNFkvSTdKOUlP?=
+ =?utf-8?B?bVBNdXZ0elRXZlhPNFNuSVE3T1RVRWtWdzFqRkRoWGE5WjMvK2J1OEVxaDJo?=
+ =?utf-8?B?SkpTeFFHODZ6VFlWQUJVemN4V045cytjN2ZkV3l0emlDb1FtNENXNzNmdEtC?=
+ =?utf-8?B?bUlORlZDV2NKRXlQMXhDcmtrQVB1OFoxazhmQVFjUUsyb3pGTTBPTW5wZWV4?=
+ =?utf-8?B?N3VIZUlOOGRaR2wxTXR4UE5KQlM0dUVlUWhwSHdmeXdEV01ZNDRZSjVBSC9W?=
+ =?utf-8?B?MXk1OE9vSnZaUGtxZEpYY2Z4K1RQYUVjZmNYdVo5a2svK1c0OExKWERBaXFo?=
+ =?utf-8?B?bGkyM2hxZThCelNYTk9tYURuWVVlL01HU3BBZjRHcVJSVHBvYlIwSHprZDVP?=
+ =?utf-8?B?QnVhbE9xU3JYT0xHNUlyanVTcFZkSEFvN2pKdUpoU1BYenJ6WXlrNWZlTjlz?=
+ =?utf-8?B?d1lQWjV3YktYazQxa1RSd0UzY1llQ2VIb1lsbnJRVjBLZUFXSlFSdTVrTHlN?=
+ =?utf-8?B?NmplQ2ZWK3JhcnZ2QlQva1ozS1BMT3pvY0YxZG10NEUxMDNtSmhmb2hIUG5n?=
+ =?utf-8?B?SmV1SzFFbHJxcHVzL0xoZkZLRi9zNlFuc0k2RHU1UmFCZ3RhVWl3eXNjSit0?=
+ =?utf-8?B?azNOUUhncDdyMndFQUZhN0tKc0FOaHZTUDdFUnhkUDlXSHNjenp2MkR0TU0r?=
+ =?utf-8?B?TmtmMmF6YkQ3TytQaDArelBYeTg0WXVJY01Ob3VBL0F0UG9lU3hVS3dNdG1G?=
+ =?utf-8?B?allkdGR5cHZrTzFLTEliZndTOU5VUUJHV2pZbyt2eFdFTGVFR3F4TTI3TWR4?=
+ =?utf-8?B?MURSWTZQQVBvR3ZhcXI5TUJHQlh2aUwvbnVGWVp5bnY2bDdFcUtaZkZKSUtY?=
+ =?utf-8?B?emdsUHM5V1VrNlRlazRLRzFXTTVzVmxuZjU2ZUZrRXRLT3RTV0JWYVFSeGVP?=
+ =?utf-8?B?K1VqUHNDN0hPUkJnZ0RFVjlVMWN3bzJOamhaRDM2Q0NvMjdtL1pnRWJjek5z?=
+ =?utf-8?B?RWdFU01RdVNLeXVZNXlZczc2UE9renAxVTdmVU1peUtoek4rbTcwWUVIaDJ3?=
+ =?utf-8?B?T1lvV2FlOTRSbFU5TW5iR1E1MjFuWFFlKzBDcGF3NFlDZ0xWbXh4eTNWZ2lo?=
+ =?utf-8?B?aVU5MVJVVG5Wb3RTZ09na0JyU2V5WDVwME5GZlB5RmlLcVo3bjZJNmJoaGFx?=
+ =?utf-8?B?blErN1hYM0ZubUdOK1J0TGwzTHR3Wlh0K3ZtNDBtY2wxdTdrV3FCMXh4VkZG?=
+ =?utf-8?B?akFBQ3FtOXMyQ2JLTVYvMXZ5alBqNUpJQURpbXFpbFBiNXdOM1l6VStrdDEw?=
+ =?utf-8?B?dStCNm9QSnFNZm5CcGZSMFhxOWpLWUY0SzBGSGNyUHNpVTFxaHAwdVRPWG5J?=
+ =?utf-8?B?NHVJOGhCNmVTMXlTL1ZPR2d4dDFhVG5RNDQyYi9hcVZtSWQ4Y1h1ZytCL2Vp?=
+ =?utf-8?B?Ny8ybDNuUUdtR2Q4QzNuUWlwajlyNC9ZVFF3dVM3UHg3N1BPL2tObDJwNG80?=
+ =?utf-8?B?eExnakJCUk5OMkJJT2oxUUhUWEJ0dzh6RzVuYzVNZFpDZ1RNZU1Udlg0d013?=
+ =?utf-8?B?cmMxWjZPTmk1YWIzWlF5UUtQM08xdGZxNlkwL0EwT2ZIQU1GOUlSWjNPbHpl?=
+ =?utf-8?B?RE5ZaWNkb05PaXlqRnhKMGpjZ2RrZzh2RGd3SUJ2OXFWWXdjN3VTdz09?=
+X-OriginatorOrg: linumiz.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 03e8f7cd-2547-4e49-2a41-08dedc53d00d
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB6935.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jul 2026 18:16:06.7093 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 808466aa-232a-41f4-ac23-289e3a6840d4
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 5FXdJ1RcB8gjgvHiDnv9bJpRdtgdip0kyDR7LYZYLitCsueg+65lPla5pJkl4Zs9EsqEXcbo0MUIMwale484uQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR06MB7048
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=parthiban@linumiz.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,148 +148,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: James Hilliard <james.hilliard1@gmail.com>
+On 6/15/26 3:13 PM, Parthiban wrote:
+> On 5/31/26 11:30 AM, Parthiban Nallathambi wrote:
+>> Signed-off-by: Parthiban Nallathambi <parthiban@linumiz.com>
+>> ---
+>> Parthiban Nallathambi (10):
+>>       target/tricore: replace legacy DPM/CPM CSFRs with CPXE/DPRE/DPWE
+>>       target/tricore: implement memory protection in get_physical_address
+>>       target/tricore: add tc39x CPU model
+>>       hw/intc: add TriCore interrupt router
+>>       hw/char: add TriCore ASCLIN UART controller
+>>       hw/timer: add TriCore System Timer Module (STM)
+>>       hw/tricore: add System Control Unit (SCU) device
+>>       hw/tricore: wire peripherals into tc27x SoC
+>>       MAINTAINERS: take over TriCore and add peripheral file paths
+>>       hw/tricore: add tc39xb SoC and KIT_AURIX_TC397_TRB machine
+> 
+> Good evening, Ping for review. I know TriCore lags active maintainers.
+> Looking forward to know how to handle it. I have few follow-up patch series
+> which handles additional models and also newer cores.
 
-Add the Octeon SHA3 helper operations for the architectural 25-lane
-Keccak state view and implement the Keccak-f[1600] permutation used by
-the STARTOP selector.
+Ping and looking forward for initial reviews for TriCore. 
 
-The simple SHA3 DAT register moves and XORDAT selectors are decoded as
-direct TCG transfers in the selector decode patch. This helper patch only
-keeps the side-effecting SHA3 operation support.
-
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Message-ID: <20260608-mips-octeon-missing-insns-v2-v16-5-daef7a0d8b04@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- target/mips/helper.h            |  1 +
- target/mips/tcg/octeon_crypto.c | 93 +++++++++++++++++++++++++++++++++
- 2 files changed, 94 insertions(+)
-
-diff --git a/target/mips/helper.h b/target/mips/helper.h
-index 20ffbfb7096..b887e05199a 100644
---- a/target/mips/helper.h
-+++ b/target/mips/helper.h
-@@ -47,6 +47,7 @@ DEF_HELPER_2(octeon_cp2_mt_gfm_mul_reflect1, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_gfm_xor0_reflect, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_gfm_xormul1_reflect, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_gfm_xormul1, void, env, i64)
-+DEF_HELPER_1(octeon_cp2_mt_sha3_startop, void, env)
- 
- /* microMIPS functions */
- DEF_HELPER_4(lwm, void, env, tl, tl, i32)
-diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
-index b417dcf53b6..cf718d64829 100644
---- a/target/mips/tcg/octeon_crypto.c
-+++ b/target/mips/tcg/octeon_crypto.c
-@@ -153,6 +153,94 @@ static void octeon_gfm_mul64_uia2(const uint64_t x[2], const uint64_t y[2],
-     out[1] = revbit64(res);
- }
- 
-+static const uint64_t octeon_sha3_round_constants[24] = {
-+    0x0000000000000001ULL, 0x0000000000008082ULL,
-+    0x800000000000808aULL, 0x8000000080008000ULL,
-+    0x000000000000808bULL, 0x0000000080000001ULL,
-+    0x8000000080008081ULL, 0x8000000000008009ULL,
-+    0x000000000000008aULL, 0x0000000000000088ULL,
-+    0x0000000080008009ULL, 0x000000008000000aULL,
-+    0x000000008000808bULL, 0x800000000000008bULL,
-+    0x8000000000008089ULL, 0x8000000000008003ULL,
-+    0x8000000000008002ULL, 0x8000000000000080ULL,
-+    0x000000000000800aULL, 0x800000008000000aULL,
-+    0x8000000080008081ULL, 0x8000000000008080ULL,
-+    0x0000000080000001ULL, 0x8000000080008008ULL,
-+};
-+
-+static const uint8_t octeon_sha3_rotation_constants[24] = {
-+     1,  3,  6, 10, 15, 21, 28, 36, 45, 55,  2, 14,
-+    27, 41, 56,  8, 25, 43, 62, 18, 39, 61, 20, 44,
-+};
-+
-+static const uint8_t octeon_sha3_pi_lanes[24] = {
-+    10,  7, 11, 17, 18,  3,  5, 16,  8, 21, 24,  4,
-+    15, 23, 19, 13, 12,  2, 20, 14, 22,  9,  6,  1,
-+};
-+
-+static uint64_t octeon_sha3_reg_to_lane(uint64_t value)
-+{
-+    /*
-+     * The COP2 register interface is consumed by big-endian MIPS code as
-+     * 64-bit register values, while Keccak lanes are byte-little-endian.
-+     */
-+    return bswap64(value);
-+}
-+
-+static uint64_t octeon_sha3_lane_to_reg(uint64_t value)
-+{
-+    return bswap64(value);
-+}
-+
-+static void octeon_sha3_permute(MIPSOcteonCryptoState *crypto)
-+{
-+    uint64_t state[25];
-+
-+    for (int i = 0; i < 25; i++) {
-+        state[i] = octeon_sha3_reg_to_lane(crypto->sha3_dat[i]);
-+    }
-+
-+    for (int round = 0; round < 24; round++) {
-+        uint64_t bc[5];
-+        uint64_t temp;
-+
-+        for (int x = 0; x < 5; x++) {
-+            bc[x] = state[x] ^ state[5 + x] ^ state[10 + x] ^
-+                    state[15 + x] ^ state[20 + x];
-+        }
-+        for (int x = 0; x < 5; x++) {
-+            temp = bc[(x + 4) % 5] ^ rol64(bc[(x + 1) % 5], 1);
-+            for (int y = 0; y < 25; y += 5) {
-+                state[y + x] ^= temp;
-+            }
-+        }
-+
-+        temp = state[1];
-+        for (int i = 0; i < 24; i++) {
-+            uint64_t next = state[octeon_sha3_pi_lanes[i]];
-+
-+            state[octeon_sha3_pi_lanes[i]] =
-+                rol64(temp, octeon_sha3_rotation_constants[i]);
-+            temp = next;
-+        }
-+
-+        for (int y = 0; y < 25; y += 5) {
-+            for (int x = 0; x < 5; x++) {
-+                bc[x] = state[y + x];
-+            }
-+            for (int x = 0; x < 5; x++) {
-+                state[y + x] = bc[x] ^ ((~bc[(x + 1) % 5]) & bc[(x + 2) % 5]);
-+            }
-+        }
-+
-+        state[0] ^= octeon_sha3_round_constants[round];
-+    }
-+
-+    for (int i = 0; i < 25; i++) {
-+        crypto->sha3_dat[i] = octeon_sha3_lane_to_reg(state[i]);
-+    }
-+}
-+
- uint64_t helper_octeon_cp2_mf_crc_iv_reflect(CPUMIPSState *env)
- {
-     return octeon_crc_reflect32_by_byte(env->octeon_crypto.crc_iv);
-@@ -222,6 +310,11 @@ void helper_octeon_cp2_mt_gfm_xormul1(CPUMIPSState *env, uint64_t value)
-     octeon_gfm_xormul1_common(crypto, value);
- }
- 
-+void helper_octeon_cp2_mt_sha3_startop(CPUMIPSState *env)
-+{
-+    octeon_sha3_permute(&env->octeon_crypto);
-+}
-+
- void helper_octeon_cp2_mt_crc_write_iv_reflect(CPUMIPSState *env,
-                                                uint64_t value)
- {
--- 
-2.53.0
+Thanks,
+Parthiban
+> 
+> Thanks,
+> Parthiban
 
 
