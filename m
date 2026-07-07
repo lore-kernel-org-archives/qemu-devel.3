@@ -4,76 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9301C43602
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 17:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4731DC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 17:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh9xF-0006xD-60; Tue, 07 Jul 2026 13:51:33 -0400
+	id 1wh9xH-00070O-GD; Tue, 07 Jul 2026 13:51:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wh9wV-000636-9H
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:50:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wh9wx-0006PM-JZ
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:51:17 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wh9wT-0001OV-Ij
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:50:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783446644;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XdVTva91bwLGqqzohpnP/TPz/kRPi9v0JlFPYmELZg0=;
- b=Hn4VpIJ5fJEgIlpr3iVzVmfRjYrwGsqU6VeZdCFPaXbthoxBJaNu8u/wzSwDfisaOAM0fg
- phApTHbVqVhDoZzr06sx7eSOtoyccTTn2w2LDPOjRiW8xWjgmcnPWCrXWw4W5RhbpUnqw4
- nnJ+fTT59EhzZNBCPWaIyGRJHsm2jJg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-ua2GnAByNE6leebZzbEniw-1; Tue,
- 07 Jul 2026 13:50:41 -0400
-X-MC-Unique: ua2GnAByNE6leebZzbEniw-1
-X-Mimecast-MFC-AGG-ID: ua2GnAByNE6leebZzbEniw_1783446640
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 88EE419540E5; Tue,  7 Jul 2026 17:50:40 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.33.142])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D61E33692F; Tue,  7 Jul 2026 17:50:37 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Mauro Matteo Cascella <mcascell@redhat.com>
-Subject: [PULL 4/4] docs: outline some guidelines for security classification
-Date: Tue,  7 Jul 2026 18:50:27 +0100
-Message-ID: <20260707175027.3029620-5-berrange@redhat.com>
-In-Reply-To: <20260707175027.3029620-1-berrange@redhat.com>
-References: <20260707175027.3029620-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wh9wt-0001WA-Uf
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:51:14 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 667FTM5K011715
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 17:51:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ z9aPUYJTS4TJs5K7/gx05W93/GuyQXbGt2SAjh/CY20=; b=SkthppefxIXehiBa
+ wCQmKFIUI2CcnKZawx/UXPEXpmW9aqBEzVda500MNEiEj/DKr4O+zK2j7aQNUX8U
+ rRR270m3H0xLXpBehJFZBtybq/7XBdCLXxoC3OeSx/f3haMPqGY8CIK3ox7nqGmI
+ Ydh0gKaMH5W43Ky/81vjBDgKtmKGNa4hA2BS80eik34pv8+fraq1bCatsUQLKj0v
+ wmObdppgCJyFRmZb+t9P7lctb1mT1Dt3tD9UA0qFj8yVwXcqahSAvW/joFLELIHG
+ 4FNnNdh3eJyUiyTfeV76plDO956pmG8hkOR150Z0vgSNi6p/CHQzbyQ6IAS5ZLD+
+ rQPlCg==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8vdjasjk-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 17:51:08 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2c8018f11fbso59203395ad.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 10:51:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783446668; x=1784051468; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=z9aPUYJTS4TJs5K7/gx05W93/GuyQXbGt2SAjh/CY20=;
+ b=O+0dJyfpLSAVUtAn36mdXhc6+Xg5k6XVgh6/GizaBOmsHJFh8p7ouSzhqp42Uteye4
+ KP1/9Zrx/2JITbdbnmUe5olo9KyurDlQI581A3sQ4to2ddQ/z7hzMsQ3YmUhsfmO1kOE
+ NTME48txspLKY0a2Eih9TGiw/OxuDRvcd3hXHDJS16uiF0vA7ZG6YfCC+8Pm5fQeiEAk
+ nVcXlkhsw8Uv2Bn3Nrqm0lOXxlj02UtO5tmJ/KY7fuW1o6fGrO6gdW23lifr7wjR/0iB
+ r2h9/D+m1PHRinl8YtZLfhqg0W3duIVm8+GTLBl51HYfR22Eih4VrrkiHRUkuizp2TYp
+ knEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783446668; x=1784051468;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=z9aPUYJTS4TJs5K7/gx05W93/GuyQXbGt2SAjh/CY20=;
+ b=eS3Sxw58jgAeKu355qgIX1Eg433WxDDtmddihBEHZ8gvqxIzUUlznFXez9aMK2MpT4
+ pmQHug6FZw75kDzrksecRxVi/2tx6SMWCAbfupgD8wyuH7ohaWJqksvR+wpxZEXDhy/t
+ CUHiWD3ILQhyZyE3PcC6nqa4j2c5sgok8zAv8bKpnay7j73zsOCbCORUvKuubOuJcYaI
+ 1PHe4wF+Evk5D5Yayl0BmB3znimMVif4ySegw+auEDysL/X/sSSn4t7maQn4t6BCMDXL
+ R3Kp14Z2L6W+MNrcnB6J672RypeYnvpNggJxR974z7UKr3nL7fiAN8ORpo+FVNqaa21t
+ T0YA==
+X-Gm-Message-State: AOJu0YwbmshO98Rm/zzo+96gHAWLBWncoqeTF5bOigSsDWZzLW359MPB
+ 8UKMOzv2yjSKOvlA9KWjdnvzE+UmamblpLICZ0nW5Oslg8/7ZlDhAmR5/rb+wyruxfH4IMOTk9b
+ 2sjnQ9McKTuNAQrChAhAlyqXEE6s0Zhipn7Yj0tOZeJWsmeoHJsXdn+olwKtQptGjNA==
+X-Gm-Gg: AfdE7cm7J5Jz6o0Dj5K/NbQNGc4n9+qf8/6FE16jWQFXxd8qxbLskEc6cUlHyWPXsA2
+ ver2yNyAxfMCz/dfXyU+GJVu5FLsmJrAJ5O2JJr+KKv36AFCOxHpIKmMnnLTCMVB7rGcfTL1hb2
+ TTWptFWPQNX3iHDcPdmNHBW3fchxGJrfnqfGr900pmYZaBDlgIJfwQMRxmnjW1vh4E6E5+BZxwo
+ pBYVchFPIBPuzhmjhwHFs5mG3Fw2ThrZ7g4b+k9nCMIzdZH9ARF9wdw69yO72WSG3QQdATME7LL
+ VrmTJFvO+Zu4/c/2VbUAiE5M73+GEKL0izNwFCiK+YB51PXxvGpvM+Ri0HBlh0b0mZyzVAUMtYq
+ FUcQVoXP0wIXjZ2r67M6YphyAlnS4bBKVthTvJeOB2LG3KXHwyXcA8W1fJ0246tVPOYuHQeRA2E
+ VG3a4=
+X-Received: by 2002:a17:90b:2d47:b0:381:9b7b:35e5 with SMTP id
+ 98e67ed59e1d1-38754ea7773mr6100694a91.4.1783446668017; 
+ Tue, 07 Jul 2026 10:51:08 -0700 (PDT)
+X-Received: by 2002:a17:90b:2d47:b0:381:9b7b:35e5 with SMTP id
+ 98e67ed59e1d1-38754ea7773mr6100668a91.4.1783446667534; 
+ Tue, 07 Jul 2026 10:51:07 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-31174accb0esm11769174eec.30.2026.07.07.10.51.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jul 2026 10:51:07 -0700 (PDT)
+Message-ID: <81e1e861-566e-4a58-8a72-405f5a79f90b@oss.qualcomm.com>
+Date: Tue, 7 Jul 2026 10:51:05 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] tests/tcg/multiarch: Improve mutator randomness
+To: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20260706165445.57418-1-iii@linux.ibm.com>
+ <20260706165445.57418-3-iii@linux.ibm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260706165445.57418-3-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=R7cz39RX c=1 sm=1 tr=0 ts=6a4d3c8c cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=VnNF1IyMAAAA:8 a=EUspDBNiAAAA:8 a=WjqLZ8Ns_Oi47TyG86QA:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-GUID: S5ClXkbV5B0IeeBDDa55i76p0S9KF474
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDE3NSBTYWx0ZWRfX0V0Y/jvz0Ah+
+ Ecl1kfqc2L/3usrKaGlzT+bBvmbpHKLOyBkoXcdSjt9Iidr2ZhLUqG2Dlp/BS/aLd4Bw5L6maE4
+ GHzY8BEGGhRCdrE7mFM1W3w8rqEv2w8giE1nh0hOFoTm2vLEniyOc/Nat9zJEu1tz9xKWldtPUZ
+ 4siXK8P6broY+pwG8gMWqfgcg7Zhhgr0rl1pznHRD4jFEdBSzS7+dBOTy3qwtnp4OMTGoDRpw4v
+ d4yTsFS1koidj09yNOKg1n/6ywCl8p8+KFMUY3gNlI631FcP9meca9e7g9n1AuUk9S7wOB81lRB
+ CsoZJHSEU2YdqyktWJXdDfFmAAvoVpASJWywLL0ZFAhWW1McqQvIN8+oYm39Yb7a19oxRfehcMv
+ p5JJxTWuKpB+PLTEi1Tx04oAgmjwJb2VCiJaDxpvuzKUlUjBzrtKJyKp0BbtnORDYm3aOCi0I+a
+ kaEtFwcf7hS5JJAQMdA==
+X-Proofpoint-ORIG-GUID: S5ClXkbV5B0IeeBDDa55i76p0S9KF474
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDE3NSBTYWx0ZWRfX8u8kAP2vWptd
+ HkF+/jlKDLlYCav9CGqZufRrAA68EOU79PBLq3OioD3HopusaM8HGTBqJ0jMoQEJdRE8TtU1s6g
+ ca260RqJQYBA6CZDGJsK6JDd3NmoLYc=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_04,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015 malwarescore=0
+ bulkscore=0 spamscore=0 priorityscore=1501 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070175
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,95 +156,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Beyond the overall virt/non-virt use case classification, there are
-a number of scenarios which we have decided will not be treated as
-security issues. Start to document some of these to give consistency
-in our treatment of incoming disclosures.
+On 7/6/2026 9:51 AM, Ilya Leoshkevich wrote:
+> Currently mutators perform the same actions, because the RNG seed is
+> derived from the current time in seconds. Mix in thread ID.
+> 
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> ---
+>  tests/tcg/multiarch/vma-pthread.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Mauro Matteo Cascella <mcascell@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- docs/system/security.rst | 63 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 63 insertions(+)
-
-diff --git a/docs/system/security.rst b/docs/system/security.rst
-index 53992048e6..52bbf0cc7a 100644
---- a/docs/system/security.rst
-+++ b/docs/system/security.rst
-@@ -75,6 +75,69 @@ Bugs affecting the non-virtualization use case are not considered security
- bugs at this time.  Users with non-virtualization use cases must not rely on
- QEMU to provide guest isolation or any security guarantees.
- 
-+Security boundary scope
-+'''''''''''''''''''''''
-+
-+Even where a flaw affects the virtualization use case described above,
-+not all scenarios will be considered in scope. The following guidelines
-+are used to evaluate whether to apply the full security process, or treat
-+an issue as a normal bug.
-+
-+* **assert** / **abort**. If triggering the code path requires kernel
-+  privileges (or root account access) in the guest, asserts/aborts in
-+  QEMU are a self inflicted denial of service. These will **not** be
-+  treated as security flaws, at most hardening bugs. If triggering the
-+  code path can be done by an unprivileged guest OS account, this
-+  **may** justify handling as a security bug.
-+
-+* **vhost-user/vfio-user backends**. The backend processes have
-+  shared memory regions co-mapped with the QEMU process. The intent
-+  of the process separation is operational resilience & flexibility
-+  and allowing for independent software suppliers. There is not
-+  considered to be security boundary between QEMU and the vhost-user
-+  & vfio-user backends. Thus flaws in the backends which can cause
-+  crashes / undesirable behaviour in QEMU will **not** be treated as
-+  security flaws, but should be fixed as hardening bugs.
-+
-+* **memory allocation bounds**. There are many ways in which a QEMU
-+  process can legitimately consume an amount of memory that is
-+  significantly larger than the assigned guest RAM. QEMU's worst
-+  case memory usage should be considered effectively unbounded. As
-+  such the QEMU deployment on the host should account for the
-+  possibility of large memory peaks and apply countermeasures to
-+  provide continuity of host operations. It is typical for the Linux
-+  OOM killer to reap the process triggering host memory overcommit
-+  in the case of exccessive usage, offering a degree of protection.
-+  As such, bugs which can lead to excessive/unbounded memory allocations
-+  will usually not be classified as security flaws, but should be
-+  fixed as hardening bugs.
-+
-+* **degraded guest behaviour**. There are a set of bugs which can
-+  lead guest hardware devices to misbehave. For example, a flawed
-+  virtual IOMMU operation may not offer the guest device isolation
-+  that would otherwise be expected. If a guest triggered exploit
-+  requires kernel privileges (or root account access), and leads
-+  to sub-optimal behaviour of the virtual device this is considered
-+  a self inflicted service degradation. These will **not** be
-+  treated as security flaws, at most hardening bugs. If triggering
-+  the code path can be done by an unprivileged guest OS account,
-+  this may justify handling as a security bug.
-+
-+* **nested virtualization**. The scope for nested virtualization
-+  is to prevent a level 2 guest from breaking out into a level
-+  1 guest. As noted above, a number of scenarios exclude security
-+  handling for flaws only exploitable by the guest kernel / root
-+  account with affect the guest's own service/availability. In the
-+  context of nested virtualization with PCI device assignment, it
-+  may may be possible for a level 2 guest kernel to trigger flaws
-+  that affect the level 0 QEMU process. While these bugs should be
-+  fixed, they will not be triaged as security flaws at this time.
-+
-+* **low severity impact**. As a catch all rule, issues which
-+  are judged to have a "low" severity impact on the system will
-+  usually not justify handling as security bugs, nor assignment
-+  of CVEs. They will be fixed as routine bugs when time allows.
-+
- Architecture
- ------------
- 
--- 
-2.55.0
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
