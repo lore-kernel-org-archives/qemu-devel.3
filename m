@@ -4,132 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A29CC44500
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:14:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE777C44501
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:14:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh5cw-0002IH-Ap; Tue, 07 Jul 2026 09:14:20 -0400
+	id 1wh5d0-0002Jz-2S; Tue, 07 Jul 2026 09:14:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5cQ-0001zt-Od
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:13:54 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wh5cX-00021n-Ef
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:14:01 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh5cJ-0000U8-7w
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:13:46 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1wh5cT-0000Uh-TB
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:13:52 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667C9Lc03740882
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:13:37 GMT
+ 667C8hlx3616652
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:13:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Nn0ZFvqwGfAjXlB7cNAQsa1JNM0B+5KYgoQ2c8C3Zhs=; b=KDGo2r/xNcbvncIb
- Eq70R20boAiTyuNWlt9agzyrwTBJmQHZDMVf5pEXMwcYHR7rcoGvgyNoPjf0djko
- pNh3EzDIzZ4/3jFmimNd0vZwqAqLLHifG9W2yDa2wgG9bRq7m2mvZ78UX7TnmXkI
- y8sw1USgqqrGH9t8b8FTFcBZc7lJEXVbf8Z5wDI1Hml6fon/butwnPoKRYAFrMe2
- 2FfNfTOEhJF7EqRb7Xj3SFNXE5MpN7u5XuzohnqLQcbcDBtlpJ/3hF1AiDHeL9Ug
- 5/fjmDEPoITuXuUJnljMdZz7ed7bIfh+/O5mlCfInMq2mUV+DcT0tQF0mMkCnGW7
- ronSiw==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8v9a9ks5-1
+ Gqx3pTa8d74O/aUOvJClkkM0PH73BWXonrGG6zGJlxI=; b=gtEDtG5+HUnEStNr
+ irjhGw0BG5FRfRDM0i32VgT6ziJScT/Br0q5BLLRcKMpDTcIFHc6zbBf+lareiu/
+ +j6NDQLcSeoEF6ozOpHFMV9NQBvG9cDPmIRAE7JAWnd5dfPwlWt/8Zu4VKBQNHk9
+ U+i/0lMNDsm1AZxXATBSDGEae3TlafNNT3HoaC98Pk3CHllfkElbXBm+xG73x3Hv
+ sf3ssu5EjU6/nzq16yejrN+5TLN1sRBHrtwG2xpOkvX0cQyts05JlqMxWzf7pwrR
+ Q8JPYI8k5EkdCM0cOkunbiC84Lf1REPjTEmxQXXyTea2T9202Uc8He/RFEWpbfNa
+ UYIEHQ==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8vun1dhm-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:13:37 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51c110a3b6aso59699731cf.1
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:13:37 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:13:45 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51c2af04aeeso8374021cf.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:13:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783430016; x=1784034816; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Nn0ZFvqwGfAjXlB7cNAQsa1JNM0B+5KYgoQ2c8C3Zhs=;
- b=S49GtZvfmM8lPp1gLlnZfsKBS29sVZXly8dK3v5xRGb09cPke7jnqUsb3UiQFcXsSM
- UOFjWa9R3ZHJ0d2FkWgfCcSVk20W0QCzD5NVEKihg9tI5JpAx9SEXvYVVn2JX1W0cBBh
- TaKZlSD14BoxWUuAX2F0pIdJNLgblwjmfN3jYmNKGCA4No0QiJTbnYWOXJGQOrauT77a
- uGrEZp+KHzSDWaKd0MgkBuXqEhand+SFy6rnK7PDDf3mQlRihUDGUAYo7jxKoBtGZMMu
- g52gUsmPlP2BEiI9MtCw9U9ZLGBGDyzL6w3jvhwzF8tyBdnAhbMbWitzdQBeBBDOUdJV
- sd0A==
+ d=oss.qualcomm.com; s=google; t=1783430025; x=1784034825; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=Gqx3pTa8d74O/aUOvJClkkM0PH73BWXonrGG6zGJlxI=;
+ b=K00aYpOMULEQPqvwwDiZm/RE00g9D01h3PkWYY4GaNeYWAz3hRu93wWxGYjUeeR6WC
+ Es+lUli8OKt8u9lRvlNFd1vJo7Kpn4huYbBxwIdCC+mooYpkUh1RMxkWFnmX+5AivULF
+ oVq1Y8Cqqi84lGRV5iBDm6QNmjqkloiBKj+DUYy/gKnfQOj32RUPL/j8A56AxDdsm6Mu
+ OSzamhv+dTqSTbjxlYijVn4h038lsTfEI7Zw2TtrieMjtRB2Wj+UmhgPyQUXiqFQfewl
+ Wo1X2wYNGUtKxJ23fIDrpmyVGnTZF7CL0qfUNIkQNDDhWs0p7Q/NQVQGgX2yHDUpNDk/
+ YMRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783430016; x=1784034816;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Nn0ZFvqwGfAjXlB7cNAQsa1JNM0B+5KYgoQ2c8C3Zhs=;
- b=K3glJYy0HPs+9SvOeMOLHCyNWWL3FZthxuJ6J5AMyI39C/4YceRTf1iZMWojNoZ9s6
- tOSojkMl+HH99AnSOhMFeCWsW19TDkU3kKzCjWXvtqwMYRkICmRVt3NbGqpNi1fyf/6v
- flupyA3J0PWZhA1gW7fOtNZH+/DYNRt1ElCJi5hLA4JnBSvDqB1OzsZdbIDqg9CQNzTw
- 412K5IskdLsvLt4ngKnyYW85rqdGQXe6Pk4VTMjFOg22hWbqZGVfOBgjLwNNSdJvjrUY
- mi8EaSvqveAJbNhumX4pRUJGZynnNkgylkn+hCMC1dEpn/Qgi2E9ASvUYKQvz/b898av
- nAtA==
-X-Gm-Message-State: AOJu0YwOgwKNXnGGjXOrukAtwr5i3agHXR52ioZFn6l69ff3Y28opNFl
- hRYHoMn40qtURZOl12qWg6TYbcw5rVySuczIoIh7v6wLqQ2jRy7aA0wNsZcNnejTedKf1OVIzhY
- OtUx19F0/dEjParkK5TXFcWEIPzrN5W0YvzCujQ/akd916gg0jAB/itesKdM5yGDfpA==
-X-Gm-Gg: AfdE7cmoJmSmkNUGqP7AbUqUxLQ4//vC6kx7U2q8OGZX5xqAmohHt0NIMKmK9F+nlMT
- Obkf4457D/nesdas6qhE8K+D6mBIJNY8R9AEByoT3TbqTdxkXBuhOFwAx+6WesMvsuCt7dKxxyK
- oAywsu3n/9/i3UjDGX9NcYdC12JpgCtaNsRa4ZSDnlyPm1Sfi17lqI2H5kdJn8Ujduj0WQfIFBo
- ze9pQIMGJGHvYSyj66r/NdE9uuMn0Hkxu6KthLbiVOkafMhWRHap4pLZCSnrMr2JTEtCdwt4qSS
- o8SI+ZnFTL5Rmv0WWH0+n9Hn/RSBzluItfw7iWtmuXVZ8L4G1QiuCNI9uXr1TybyiHjSLRnGpXI
- Kb9Qi/ayuyBruc2re8rLAPquQhZW1BXLBjSknRoh0kjsWBKlM+f8jucrtTxXI245FjZhp
-X-Received: by 2002:a05:622a:4c:b0:51c:7b12:1211 with SMTP id
- d75a77b69052e-51c7b1217femr22933631cf.79.1783430016403; 
- Tue, 07 Jul 2026 06:13:36 -0700 (PDT)
-X-Received: by 2002:a05:622a:4c:b0:51c:7b12:1211 with SMTP id
- d75a77b69052e-51c7b1217femr22933001cf.79.1783430015574; 
- Tue, 07 Jul 2026 06:13:35 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783430025; x=1784034825;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Gqx3pTa8d74O/aUOvJClkkM0PH73BWXonrGG6zGJlxI=;
+ b=B4/7kTpEyC5D6ozwutW8EnIlGZoUTUU0cpupOyFPr/hE84gMk/38ut1P9csMKWYRNu
+ MNQMPQ3m2gEMIDOf8MI9JG4K9eJarERm4DdVh4Unn9SlNgUyqlSJHAlY6qmCxWYlVARJ
+ fzYZA7D6pmBV3TRjDtPYm9EjpOmV26aoOe+HGhMQe7UY0g7oQk6ekobveKzcCSDKjOc1
+ 1I8WSqacL1sEeqVWMDHPrZ/OeZiGrZGLzYXLUV+nzwC6vq0WwD7gPgf23SrQ4fVTJZPR
+ Vsl8P/x6DWLZbkNLCC5oZVnMWZjmrvxiLBTvjsyB1v8heDSTqUOrwlQEuqQl/EgCb4v6
+ iQ5Q==
+X-Gm-Message-State: AOJu0YwWOpAD+bNFHWGHBBMKWhaogs5C/D7FuOlCMxpybLpaRE9tXlwY
+ u16quqhaVvyAmlWY+mQv/TYQepTJtWwK4PPhme7tA05NmKMH3PjEmgfeVm9zaNpxZEOmZGgDgY3
+ mD8yNTKDA54ZbI2RyuvhDIu3ik6l+CFG5D6s0sDqW7SWp/f4KSU1Kbv24VlP46YvENA==
+X-Gm-Gg: AfdE7cken4pjLmBZMjTwOuGeAgD8vKXufsTr8T7fCIgwPEqiwL7EvVk3QaU9JU+BGqJ
+ yxGyXo5+YErwq6RBTIp0efjsDTSZBmL4mm0EYlsb3S4NkcrpQ32OMT8JaK5+MnaT3g0ajzYClUS
+ 8XtGsegU4F8F0k5CdpcxZOEqg0UukkUk8Q+Te2n84WsYSNi1rx2t/8Tbg584PVxyQSfyxwvEnu7
+ P47EnfKTGLq9d0TwnT8yXvlUVoCAYkf2atnlngVnm7DyRgPn4oYM/jYHckLEYAdb0ZroMEyWqV/
+ ZtMAAJQ2d+b6koTLT84K5x69x4Kp3DD04VSyXS/xSG4oysknTtwXpEFHPnMCldogBfIaYqqQQbE
+ GTsDGQ6yunB0QxR5b9aAyniH8roQ8X0ZnWj6RbJz5rwAYGZmuKxrXhRBz4b6Ofm5HPreC
+X-Received: by 2002:a05:622a:1e1b:b0:517:c65c:4987 with SMTP id
+ d75a77b69052e-51c7a751ab6mr25609171cf.22.1783430023588; 
+ Tue, 07 Jul 2026 06:13:43 -0700 (PDT)
+X-Received: by 2002:a05:622a:1e1b:b0:517:c65c:4987 with SMTP id
+ d75a77b69052e-51c7a751ab6mr25608721cf.22.1783430023023; 
+ Tue, 07 Jul 2026 06:13:43 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c15adb488desm137294166b.63.2026.07.07.06.13.34
+ a640c23a62f3a-c15ad9b9ea4sm134603166b.38.2026.07.07.06.13.41
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Jul 2026 06:13:34 -0700 (PDT)
+ Tue, 07 Jul 2026 06:13:42 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/32] hw/dma/i8257: Return zeroes for read_memory in verify
- mode
-Date: Tue,  7 Jul 2026 15:12:00 +0200
-Message-ID: <20260707131223.51505-11-philmd@oss.qualcomm.com>
+Subject: [PULL 11/32] hw/net: fix e1000e/igb ip_len inflation by Ethernet
+ minimum-frame padding
+Date: Tue,  7 Jul 2026 15:12:01 +0200
+Message-ID: <20260707131223.51505-12-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260707131223.51505-1-philmd@oss.qualcomm.com>
 References: <20260707131223.51505-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: DGk9e0vwTCBAOUE4jxD_1yONULxkdYJe
-X-Proofpoint-ORIG-GUID: DGk9e0vwTCBAOUE4jxD_1yONULxkdYJe
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX4NhOUuiHDtq4
- Ql4eJalVXZecG/A5Js+BVUSxsNqhfVZf6kXFhRifC1TAjBrbVMZG+FMQJUzUh/JchEccNjrfRhi
- 2gTsfX7vA9myccPucJMjSceV0Ivbccc=
-X-Authority-Analysis: v=2.4 cv=b9yCJNGx c=1 sm=1 tr=0 ts=6a4cfb81 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX9yfjzSWc14Xv
+ pdON72LPGPIerZH9ILXKU95sDs6Ya0efIU5WL9NB8NdvKmVSmqClZMPIYmqloMlpYxYJmNf10Wu
+ IvVicyobL5OD7121Tefng4ti/m/tjqg=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX3FI68ZwfKK0w
+ kBGx1GYbE6ZHnQ7KMYAltvV6tMVOpfYLS81QyDL2TdVHdyLR/zucI7WD7foHhPa2wxfNNbjoRCG
+ N5BW+ETfOknlOrvsnDz/j12XZFN8tl57D0VLd8hMzNn/pHNuykm6AE++GGG/ygb4T9mDQA35xnA
+ mpz1+9mi1P1kVApSV2B/Q4jeeBEkxXw4fSyQV7LDVwdLd+05X28EWHriWlpuShvKL3yXLNiCA0S
+ pT3NfFnTN0k0XRV84KssjTEBbwCazb/OSikCbOyI0EfX9fu/ZeTc6vtR4ZbGQkSRzEBVuHgMdw8
+ NQqGuWy/AhUtx0Rno3yLFKHcrGWXix9+YjwpiCjAFauVFYHhouQQY/iqONK8hUR5JzBfSTW76SA
+ 8E43Fi1VVeWzPQrUWxjPlt5FxHzXStJ5q+1luY9zinApUtv1TuX5wCCmwsNImoD2U3mVC71EG4e
+ D8FtSeID5Z9DZGVjuSQ==
+X-Proofpoint-GUID: OHKF0dY1kibtlnJEfTUnHdzxPKVC8wCL
+X-Authority-Analysis: v=2.4 cv=N+IZ0W9B c=1 sm=1 tr=0 ts=6a4cfb89 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=p0WdMEafAAAA:8 a=KKAkSRfTAAAA:8 a=69wJf7TsAAAA:8 a=20KFwNOVAAAA:8
- a=EUspDBNiAAAA:8 a=JfxaGNaL9TNl3oK2404A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22 a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfXxVs0wbSK9MYH
- G9cFayS7UFSwb+oHrUBQW8X4KXIgGWzfSlArAsPh0OWe+nfyrF7k6EZl0MW0OMhKXrEfQAoqv8C
- iAtMjQqIJAh/e0kxTTGl26lCE4E0gUYTxD7fYJ5C8+foj536mRkntkkFNxXZWY6Xo8vPb8rgqlt
- Yd2AgaGNw+hHKt76sXN6SxoEGdpYtDbPDAAZm/l1dLPDdpf8LwbayYZVQqzuyjsu9MOwIFgvZPR
- tiNmXsqF5qApv388IMiG9ejTfBj+WzaTyGppftsM08BZLysIKwOWdUcX3/D0gIi1LjWuPYsqrUs
- TDDSqLCUcpsmm8vuRwuf4xueDyrMvNxh4YsldI8CiYTcM5ORcqzmLp9vYwxDbShFcs+qU0aaOWe
- 4yqG0FLRHciqwfhIws3AEm+owWu+Ab1u827imhM+qoUl5Bmy9Z7TQwDgv9wznruSD2NPeKSvb3W
- wFxIXHBcM0R7YVG+x1Q==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=-DT0iAkgnNDEg5C8mEQA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-ORIG-GUID: OHKF0dY1kibtlnJEfTUnHdzxPKVC8wCL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_03,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0
- bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
+ spamscore=0 phishscore=0 priorityscore=1501 clxscore=1015 adultscore=0
+ bulkscore=0 suspectscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070129
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -152,75 +149,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
 
-The i8257 DMA controller has a "verify" mode, which the datasheet
-describes like this:
+When a guest transmits a short Ethernet frame, iov_size() returns the
+padded wire length including any bytes added to reach the Ethernet
+minimum frame size of 60 bytes.  net_tx_pkt_rebuild_payload() uses
+this inflated size as payload_len.  net_tx_pkt_update_ip_hdr_checksum()
+then overwrites the IPv4 Total Length field with payload_len +
+l3_hdr_len, inflating it by the padding.  The receiver interprets
+Ethernet padding as IP payload, producing a malformed packet.
 
-> DMA verify, which does not actually involve the transfer of data.
-> When an 8257 channel is in the DMA verify mode, it will respond the
-> same as described for transfer operations, except that no memory or
-> I/O read/write control signals will be generated.  When an 8257
-> channel is in the DMA verify mode, it will respond the same as
-> described for transfer operations, except that no memory or I/O read
-> /write control signals will be generated, thus preventing the
-> transfer of data.  The 8257, however, will gain control of the system
-> bus and will acknowledge the peripheral's DMA request for each DMA
-> cycle.  The perihperal can use these acknowledge signals to enable an
-> internal access of each byte of a data block in order to execute some
-> verification procedure, such as the accumulation of a CRC check word.
+Fix by removing the ip_len write from net_tx_pkt_update_ip_hdr_checksum()
+so it only recomputes the checksum, and moving the ip_len assignment
+into net_tx_pkt_update_ip_checksums() where it is only performed for
+TSO (where ip_len must be derived from payload_len since the guest sets
+ip_len=0 per Intel 82574 datasheet §7.3.4 for super-packets the host
+will segment).
 
-In practice, for QEMU's purposes the only real user of this is the
-floppy controller, which can be made to perform a "read data from
-floppy disk and check the checksum" by telling the fdc to do a read
-and the DMA controller to do a verify.  This causes the fdc to do all
-the usual read actions including the checksum, but the data is never
-written to memory.  However, it is possible for a guest doing
-something silly to program the DMA controller to do a verify
-operation for a device that wants to read from memory.  Currently we
-simply return early from i8257_dma_read_memory() without writing to
-the buffer.  None of the callers (the GUS, sb16 and cs4231a sound
-cards, plus the fdc) expect this, so they will take the uninitialized
-data as if it were from the guest.  This can cause us to leak host
-data off the stack into the guest.
+Both e1000e and igb already call net_tx_pkt_update_ip_hdr_checksum()
+from their IXSM paths, so both are corrected by this single common-
+layer change.
 
-Make i8257_dma_read_memory() fill the buffer with zeroes rather
-than leaving it untouched for a verify operation.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3487
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260629140128.1900095-1-peter.maydell@linaro.org>
+Signed-off-by: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
+Reivewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260629-net-tx-pkt-ip-length-padding-v5-1-16760e30252e@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/dma/i8257.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ hw/net/net_tx_pkt.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/hw/dma/i8257.c b/hw/dma/i8257.c
-index 7d7e5434275..57715498895 100644
---- a/hw/dma/i8257.c
-+++ b/hw/dma/i8257.c
-@@ -408,6 +408,19 @@ static int i8257_dma_read_memory(IsaDma *obj, int nchan, void *buf, int pos,
-     hwaddr addr = ((r->pageh & 0x7f) << 24) | (r->page << 16) | r->now[ADDR];
+diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
+index 903238dca24..b134348fe80 100644
+--- a/hw/net/net_tx_pkt.c
++++ b/hw/net/net_tx_pkt.c
+@@ -93,9 +93,6 @@ void net_tx_pkt_update_ip_hdr_checksum(struct NetTxPkt *pkt)
+     uint16_t csum;
+     assert(pkt);
  
-     if (i8257_is_verify_transfer(r)) {
-+        /*
-+         * If the device is expecting this verify operation then
-+         * it won't care about the nonexistent data. But if it
-+         * is expecting a real read (i.e. the guest has misprogrammed
-+         * the DMA controller and the device) it's going to try to do
-+         * something with the buffer contents. Give it zeroes.
-+         * (It's not clear whether this is exactly what happens if
-+         * you do this on real hardware. In practice no device QEMU
-+         * emulates has a use for verify on a memory-read transfer,
-+         * so we don't care beyond avoiding the guest being able to
-+         * trigger the caller reading uninitialized data.)
-+         */
-+        memset(buf, 0, len);
-         return len;
-     }
+-    pkt->l3_hdr.ip.ip_len = cpu_to_be16(pkt->payload_len +
+-        pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len);
+-
+     pkt->l3_hdr.ip.ip_sum = 0;
+     csum = net_raw_checksum(pkt->l3_hdr.octets,
+         pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len);
+@@ -117,7 +114,9 @@ void net_tx_pkt_update_ip_checksums(struct NetTxPkt *pkt)
  
+     if (gso_type == VIRTIO_NET_HDR_GSO_TCPV4 ||
+         gso_type == VIRTIO_NET_HDR_GSO_UDP) {
+-        /* Calculate IP header checksum */
++        /* Set ip_len and calculate IP header checksum */
++        pkt->l3_hdr.ip.ip_len = cpu_to_be16(pkt->payload_len +
++            pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len);
+         net_tx_pkt_update_ip_hdr_checksum(pkt);
+ 
+         /* Calculate IP pseudo header checksum */
 -- 
 2.53.0
 
