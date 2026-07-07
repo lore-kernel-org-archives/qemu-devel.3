@@ -4,128 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3EBC44502
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 18:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24393C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 18:17:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whAKt-0004Ws-Fa; Tue, 07 Jul 2026 14:15:59 -0400
+	id 1whAMJ-0005jS-Um; Tue, 07 Jul 2026 14:17:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whAKq-0004Lk-AR
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 14:15:56 -0400
+ id 1whALo-0005K4-Jg
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 14:17:03 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whAKo-0006Ka-EV
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 14:15:56 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1whALj-0006Qz-Tv
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 14:16:54 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667GxYbI187936
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 18:15:53 GMT
+ 667Gv3o5230768
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 18:16:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- frYxSiaK3qJwcC0U9uDP6i2C7oqCrcJgFrCBCNGWUJI=; b=YdGV17huhschw1jV
- WbQO07oicJeOat9R/HuV+UGp2ejHG2n8aCTRyhtILA/qKXYbNUWqTFR3r/3mh799
- sQZqbnI7cbBMk8lDmmY+ngsdymTIxLVNkmuUryMkzzUMzyziy9gPR2wbIIAeT/cb
- ZO3TtXU2MRxH76qFolTfop6yGB5IIdXDxZ5M6YscSy5QdwB0FKor1rOwji1IZSf3
- waujanbGJadRc3dCm9LPtM3HeS5lwyKlllsSUF4UlDU3+qjcXl546qnBgpae4620
- cJdaLEl/hhrO+DLuhhgFN0sGbaYSmauTm5aNdBRD29DKadc1K7FIzTv4fpuAvl4R
- CZsCIQ==
+ JKq+yUGvjHZ4YQ1p6Re3a/4lZ2DhXCPE6UUMq60lqzA=; b=Abk+rjfAQ8JPZfNh
+ akyOqGFv1JYpaXZRnDJMvFU3V3QNIWIewSQYqmNL2zo+5bl4X0DJMr3MZl+RPpWl
+ GCZpvrmyQsBIwYZxLQVshQ+U7cTRsInYSFakqMABRJxX/VKF7+E9StsoWbs1//zm
+ 1N3uRADWUP4HWEs8llQ804iGURHfLVex+R6Z8/oYUfdcwvyAUAbD2iWAyHGLH5GG
+ avOe9C8JJ0jrXwgvI3FQ7InLtOhB0B1OfCvbVVo0fWWhN/7gAFhTIBcLSK5E/IE1
+ Ig5ZBQU0+lXhpmXX4DM2InFKxcKRKL8fNae7+CJUGgOFXm5RK07XMX7JV/Sf84t3
+ OTRZPA==
 Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
  [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f95fd0c6h-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f95e5rcpw-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 18:15:53 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 18:16:50 +0000 (GMT)
 Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c0e702df8so55419061cf.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 11:15:53 -0700 (PDT)
+ d75a77b69052e-51c0e702df8so55431571cf.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 11:16:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783448153; x=1784052953; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=frYxSiaK3qJwcC0U9uDP6i2C7oqCrcJgFrCBCNGWUJI=;
- b=eMYkqwcK07AB+LFMcXoUI6aBXeUslzmFO4/OF5mptnLHmQ0ePGEjq0K3KP1nXEmgku
- FpPqlfR8aPgw+K+TDr8OfMl67gxIUjgLqXPlBQ2DlP0y7KHZ18hs49zPU77dqqIZhjSG
- tUGVllzEKLaiwQitAbhbWOCIuy1U3cpp/tkNV/voThTs4N1HNUO23mRfEwZpOuP2KG1P
- 5fWJmmO1CeNSJCY6EBjWgLx/OhWYo2yVTY/PoW1xcu2OO0jHoy7AhiiVeoyhoT4wSfQ9
- fvZVzAMwm9/C5l9WsjfTcFHp6rcKSsGRkr1ZuaLNXowFhLuqnHLLB19le6j+b9BjSQF2
- 9sug==
+ d=oss.qualcomm.com; s=google; t=1783448210; x=1784053010; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=JKq+yUGvjHZ4YQ1p6Re3a/4lZ2DhXCPE6UUMq60lqzA=;
+ b=IEuFcCCMmotSl3Aij9UAumgyoSQErrfXdMVn7sD3yMkZXBDUFy/n9SsrLVerXCNCxO
+ HR8C+rlg1eetfl8yoBfSlSjkC7HeIzEXTXOaPRhFmzlGgldfymyeSfJ8+ZnaU1K4qiAd
+ U+UhMQDWQVIafLVmarvPI06jy92qrNDBzxiYiSd/5/XVqDF1LCzgsjmifvpAsfA7JSI3
+ rhIBqHmUpxs7I/DK6sC5hY34Ch+3Cw4/XiOUD4Qiq8q2QXUmkPzrL0XxjfXHR9XkijSM
+ UWkCVJaVa8iPrwN+ZNGaS1eWRbxere9KryR/z8e4FH9QWBqMzTbklbdYn/hGFFHLmIP7
+ 7g9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783448153; x=1784052953;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=frYxSiaK3qJwcC0U9uDP6i2C7oqCrcJgFrCBCNGWUJI=;
- b=j3y8DDAicl7Rbyd/AqTixmuRdRAvj+cwfI3lxXOWv7Nhovh61J9tgDcVOObr8xUDJ6
- 8rOdqZEX9qKUdDc+5pP2H3j7bQ4AVJqdyKHPfXofN2NFmYHsOz+gDQTyZSJlLlPu2Ifw
- CyTeoh5zJpqWWcJgfBtryJaVOkbVGe2k0gQbHWfpYmqr2glMJ06Fbn2zv/cGCWZ7ouus
- 7T1MziIODq/VcfIR9sAp+Womm8/Rzb6XXfRwARz5mV/8TjWokNag3q3yl8/wDMGM0DZT
- EPoyVb6ApMqq73HGvFAb5oYlcNZIDDX2hhEw/4PkUWloAQ0Laj7MHyTRrGSVzcX6N2RB
- ptdw==
-X-Gm-Message-State: AOJu0Ywbzsvn6nYQAAnF7Jletpfhmg2sr0fbeUsYMhLHGO48yi+kBCzT
- 1EYwcEgExiItShFZWdIlS+s/x6ToH2rSeDaNpfDy1FoX3EK7MJXIVERsPiuKfBC+PViYEfKTKVF
- jliB9LKnvXuokOhSupgYqwZKaJt3b4oUXSRQPiwNJtOgu8HiCPJgqOPvmtppXihKu6A==
-X-Gm-Gg: AfdE7cnl/0dW0xE8d5nkAqVbg5IuqFya/X1jtMaCm0e3JzHNCiS7XHWohv6/RUfhxvo
- 8x60B/z0KYCTjj8Wdp8QjPibBgnMW9DbffPVBNgxnLXO0+fWzyyG9sHkt+E3/fvfHtE4Ug0OlzJ
- pqDL8R07hcKaxUkYizY0fnwwJpH1twZvfzpgukemHED1vf+gKbwA6N/QsTvnkoBrWSZAt/ehjRP
- fd5cdXaX/FiK5tt73jw/yAJGUm/w6UljOWQ5DTvvD0CFI58uHDXHYXE9uDTS61R7RwkMRtOdibw
- ieStgtE3Wo4f1S2dEUebsHIrf4Yg3aVwi1/UrJIJHVedKd3flnOjC1AUYls6Xh9ijsf38n+5ZuD
- T7mmownGdhP0ZIwz9YPIshsmpkD4Bgc9p+ej6jEQWnZYWDa2EEC0dXL+NK88hEUi6XGX6
-X-Received: by 2002:a05:622a:1a88:b0:51c:1fa1:80d3 with SMTP id
- d75a77b69052e-51c74856e20mr67221831cf.49.1783448152668; 
- Tue, 07 Jul 2026 11:15:52 -0700 (PDT)
-X-Received: by 2002:a05:622a:1a88:b0:51c:1fa1:80d3 with SMTP id
- d75a77b69052e-51c74856e20mr67221281cf.49.1783448152016; 
- Tue, 07 Jul 2026 11:15:52 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783448210; x=1784053010;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=JKq+yUGvjHZ4YQ1p6Re3a/4lZ2DhXCPE6UUMq60lqzA=;
+ b=UQmhlYbuzk6wkG0kAjUV3BRjtA1HJKVQjcP04PXlAQU9vkA2LPCt5+1PpNSbva5/vF
+ PB++HusFJMkhjNwnY9FlIKLGL2/dmNvFehYToAI6CZ8fxVJp0NFNlX20MwHAFOePMUsF
+ TW2tm7oXrlZ598sT6MxpxS9vcWFOG0uN/QZrd2kUGyFkpmYkRm+6z4dTCsDKnDJvVSqX
+ I5oB7rV0dx5lh2+e5hTlih9xqXFA0COcZv8jhesmsrPDHoMEh3WdxL3oxRGbz8dHm1nH
+ 8QvzFmdEHZjCbYWe8iOGdLJyJXgVa67hXwhxEbtB3wRLJXAuaCTqpdwfLvQxiT0U5fwk
+ 1hmQ==
+X-Gm-Message-State: AOJu0YyJRlW5dup16PtedGxW12SSSti++MZRDqJnKnmDkq6zxcOzGBft
+ Zr8lk9bOPIV0FefsHQ2QkRNeNNxT67uPVgGk8fRFg6bGkvK/uZIBaP7CNOs/fffCY5+D6TWY1qt
+ PA9pxtzDHIaGNpzNL3JrK4xadm1vGiAU+7Cnw+2iI44IlSl0k8AYOAV9LhB3hV2NxQQ==
+X-Gm-Gg: AfdE7clNHBhDqgG3JlWRJGvxtZJ2Y3jc8cdpiDZcE+KL0WQgpcDGsVHDAw+Up3QGLUG
+ K/yeIplzufj7Af/8w9JZJDEZ7O0YGlcMojSlbZ50SVkc5XE2RiX53IRTWNTgHYb1VUicFpypYjU
+ 0GFrqBQjaPuwabVRulXORcoEk7jE5GnNEI2AsZPNhW0Ow7Ypfa/9PCwo2n5Ent+FKp1ZEriWtAu
+ uCa6XCRoj9E2MSOj7yFULLqE7+kOC6XbNS7bPq9y5ZAh/NU/p7GPq1ExBQjxtQ6n+58zvZ+7svv
+ +tPvUS4GTi8BNqaD6CADWuvrou4pklHuqhIcKKbY64hwnApLk74kKXsv4w2rynvL7/T03Lf+2j8
+ r4lBoD+8qVYN40RUhoz/q3+qw1pGSrQcE54iyFQM1+yDyvd7L82Jc7N0HjgdbQuzUluU6
+X-Received: by 2002:a05:622a:101:b0:51c:12bf:d4a7 with SMTP id
+ d75a77b69052e-51c74829b84mr70535791cf.45.1783448209026; 
+ Tue, 07 Jul 2026 11:16:49 -0700 (PDT)
+X-Received: by 2002:a05:622a:101:b0:51c:12bf:d4a7 with SMTP id
+ d75a77b69052e-51c74829b84mr70535231cf.45.1783448208309; 
+ Tue, 07 Jul 2026 11:16:48 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493e0f294a6sm144040435e9.1.2026.07.07.11.15.51
+ ffacd0b85a97d-47aa09608d4sm36792398f8f.25.2026.07.07.11.16.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Jul 2026 11:15:51 -0700 (PDT)
+ Tue, 07 Jul 2026 11:16:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/23] target/mips: add Octeon CRC COP2 helpers
-Date: Tue,  7 Jul 2026 20:15:08 +0200
-Message-ID: <20260707181529.60191-4-philmd@oss.qualcomm.com>
+Subject: [PULL 11/23] target/mips: add Octeon Camellia COP2 helpers
+Date: Tue,  7 Jul 2026 20:15:16 +0200
+Message-ID: <20260707181529.60191-12-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260707181529.60191-1-philmd@oss.qualcomm.com>
 References: <20260707181529.60191-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDE3OSBTYWx0ZWRfX4+7972wstHIv
- 7SxHeiRSTrRDCaKX7/OedSLOmW4+mDfUWUDXmsRZU8JMksPkMal13G1kD8hty0V8EEsRwk9AgK6
- I/s5g1XOo1CbdrYjSKmklwBf5Pq512Sqza7hTdrVaUJRfzGhpkKa8bU/gvBjcP4gVy2g4xSMlIZ
- ijjw9BSpu77NQGbVVx3uJhEBSoWbXEK5sDPIo9giH3s3MyKjf7JCdf6bXAjpoRG2k6QBH4dxBAQ
- K8C5w+X8a3o+VeFnLcUHA/DtIdJYWl3wdvofPYxnLCV+Z2RZGybCN20iK2ybxx99PUAWQ4qb5cu
- rjAuFslx91sdvRuOM/TapEXgfLIA+3TtJOuXJ5/Nc19rmGIBUYh+RCW3yn2zBY6y4YyVs6hurUj
- 35hlIDDBKu8Nw9Ux9iaKw9AZGH6VCwOyjh3dnwq6yhpOkJDIn5F9iMsfnYDSgJ025lDe1oV3DMg
- 4v6NbNRcc85xYld4DHg==
-X-Authority-Analysis: v=2.4 cv=VZLH+lp9 c=1 sm=1 tr=0 ts=6a4d4259 cx=c_pps
+X-Proofpoint-GUID: 7Qx4Hgr06gE91kA8WLVAPt0lOp-EoTD7
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDE3OSBTYWx0ZWRfX+bShQMbZRvyN
+ lOrICjXWxhoor6DdO5Y9MQbl1tjK7/0Go+ftDUX7mgx90V7LtjOfmR3up37ci21urgN17FNfj++
+ rcvFkn2v0r3td4XqeSI/fu/FXlQFdro=
+X-Authority-Analysis: v=2.4 cv=CNoamxrD c=1 sm=1 tr=0 ts=6a4d4292 cx=c_pps
  a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=PXyl_kNEWH3ax5_YoicA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: VW-Mz4N85-kPpkim0d8L8w445hM0MuFs
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDE3OSBTYWx0ZWRfX8oHc/M2EdQFV
- P2RP0mlhXC3Zze37kwFhhcvqDyARhJYfxKA6gdQFps8vM3AHQ5beb+9nxpTL84EsPWMqXiTuLca
- QgnNoRGrpdSmC/zsxpCkHnGLO/DJ0po=
-X-Proofpoint-GUID: VW-Mz4N85-kPpkim0d8L8w445hM0MuFs
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=pfeKYdQS9pwTd56Xz4kA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-ORIG-GUID: 7Qx4Hgr06gE91kA8WLVAPt0lOp-EoTD7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDE3OSBTYWx0ZWRfX8NxYTa6vGXQA
+ VAO30Kp0CrrKjsUT2Ep4vIOBrg14i7GLTOzY+VAvy0iDeURuM777YnrB2l/tQ/D0VpsoJiYGTQs
+ zxck1ldN2y9wvdwVWTCN5Gj1cYzrx7kaJLr9J3i1yQjoiCCWSuGFgnoW0/797QgmXvSmjj9SHh2
+ +QcIpDnWB1oBdFJYyB5/1w6UQYM/fHp35fQGQV6s3Q3qOfJk0Lad8wxyp85jswPcsFjGA0qkRtB
+ T2lb+BmqAsOklqmsXeibub+pGmsqNI96MFdJWvingAXIeC3q/PHucWsVUbpen1LSj/MSs6+lcvd
+ hb4Ruj7bUkO34PKloMcUtiNTLtOjHcBtERcvWJjdER+tVMMEm3CIUx9eNEZW3UBSN0xWoIWVqNz
+ 2/eJMWtqAZ9vLJRROSltffw+xgiAFit4Eqhsp9a9ZuRjk89dqBwSIWslLFLFowyx9ciXObfLckW
+ TViHft7yyTLch1AJNcw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_04,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
- lowpriorityscore=0 spamscore=0 malwarescore=0 adultscore=0 clxscore=1015
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607070179
+ clxscore=1015 malwarescore=0 adultscore=0 phishscore=0 impostorscore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070179
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -152,187 +152,172 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: James Hilliard <james.hilliard1@gmail.com>
 
-Add helper support for the Octeon COP2 CRC register interface. This
-covers normal and reflected CRC state handling, byte/halfword/word/
-doubleword/variable-width update selectors, and the reflected IV readback
-operation.
+Add helper support for the Octeon Camellia ROUND, FL, and FLINV
+selectors. The engine reuses the AES RESINP bank, and guest-managed key
+schedules drive the Camellia F-function and FL layers through these COP2
+operations.
 
-Register moves that can be represented as direct TCG loads/stores do not
-need helpers. Add only the side-effecting CRC helper implementation here.
+Implement the Camellia F-function and FL layers directly from RFC 3713.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260608-mips-octeon-missing-insns-v2-v16-3-daef7a0d8b04@gmail.com>
+Message-ID: <20260608-mips-octeon-missing-insns-v2-v16-11-daef7a0d8b04@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/mips/helper.h            |  14 ++++
- target/mips/tcg/octeon_crypto.c | 131 ++++++++++++++++++++++++++++++++
- 2 files changed, 145 insertions(+)
+ target/mips/helper.h            |   3 +
+ target/mips/tcg/octeon_crypto.c | 126 ++++++++++++++++++++++++++++++++
+ 2 files changed, 129 insertions(+)
 
 diff --git a/target/mips/helper.h b/target/mips/helper.h
-index e2b83a1d19d..e802f50fd6e 100644
+index c9332c5c522..71b7a2b30ec 100644
 --- a/target/mips/helper.h
 +++ b/target/mips/helper.h
-@@ -25,6 +25,20 @@ DEF_HELPER_3(crc32, tl, tl, tl, i32)
- DEF_HELPER_3(crc32c, tl, tl, tl, i32)
- DEF_HELPER_FLAGS_4(rotx, TCG_CALL_NO_RWG_SE, tl, tl, i32, i32, i32)
+@@ -66,6 +66,9 @@ DEF_HELPER_2(octeon_cp2_mt_des3_enc, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_kas_enc, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_des3_dec_cbc, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_des3_dec, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_camellia_fl, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_camellia_flinv, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_camellia_round, void, env, i64)
  
-+/* Octeon COP2 selector operation helpers. */
-+DEF_HELPER_1(octeon_cp2_mf_crc_iv_reflect, i64, env)
-+DEF_HELPER_2(octeon_cp2_mt_crc_write_iv_reflect, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_crc_write_byte, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_crc_write_half, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_crc_write_word, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_crc_write_byte_reflect, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_crc_write_half_reflect, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_crc_write_word_reflect, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_crc_write_dword, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_crc_write_var, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_crc_write_dword_reflect, void, env, i64)
-+DEF_HELPER_2(octeon_cp2_mt_crc_write_var_reflect, void, env, i64)
-+
  /* microMIPS functions */
  DEF_HELPER_4(lwm, void, env, tl, tl, i32)
- DEF_HELPER_4(swm, void, env, tl, tl, i32)
 diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
-index df5b0449aeb..c589077ea7c 100644
+index 8ea79e37568..430feaf5f4f 100644
 --- a/target/mips/tcg/octeon_crypto.c
 +++ b/target/mips/tcg/octeon_crypto.c
-@@ -14,3 +14,134 @@
- #include "crypto/sm4.h"
- #include "qemu/bitops.h"
- #include "qemu/host-utils.h"
+@@ -1566,6 +1566,132 @@ void helper_octeon_cp2_mt_des3_dec(CPUMIPSState *env, uint64_t value)
+     octeon_3des_crypt_common(&env->octeon_crypto, value, false, false);
+ }
+ 
++static const uint8_t camellia_sbox1[256] = {
++    112, 130,  44, 236, 179,  39, 192, 229, 228, 133,  87,  53, 234,  12,
++    174,  65,  35, 239, 107, 147,  69,  25, 165,  33, 237,  14,  79,  78,
++     29, 101, 146, 189, 134, 184, 175, 143, 124, 235,  31, 206,  62,  48,
++    220,  95,  94, 197,  11,  26, 166, 225,  57, 202, 213,  71,  93,  61,
++    217,   1,  90, 214,  81,  86, 108,  77, 139,  13, 154, 102, 251, 204,
++    176,  45, 116,  18,  43,  32, 240, 177, 132, 153, 223,  76, 203, 194,
++     52, 126, 118,   5, 109, 183, 169,  49, 209,  23,   4, 215,  20,  88,
++     58,  97, 222,  27,  17,  28,  50,  15, 156,  22,  83,  24, 242,  34,
++    254,  68, 207, 178, 195, 181, 122, 145,  36,   8, 232, 168,  96, 252,
++    105,  80, 170, 208, 160, 125, 161, 137,  98, 151,  84,  91,  30, 149,
++    224, 255, 100, 210,  16, 196,   0,  72, 163, 247, 117, 219, 138,   3,
++    230, 218,   9,  63, 221, 148, 135,  92, 131,   2, 205,  74, 144,  51,
++    115, 103, 246, 243, 157, 127, 191, 226,  82, 155, 216,  38, 200,  55,
++    198,  59, 129, 150, 111,  75,  19, 190,  99,  46, 233, 121, 167, 140,
++    159, 110, 188, 142,  41, 245, 249, 182,  47, 253, 180,  89, 120, 152,
++      6, 106, 231,  70, 113, 186, 212,  37, 171,  66, 136, 162, 141, 250,
++    114,   7, 185,  85, 248, 238, 172,  10,  54,  73,  42, 104,  60,  56,
++    241, 164,  64,  40, 211, 123, 187, 201,  67, 193,  21, 227, 173, 244,
++    119, 199, 128, 158,
++};
 +
-+static uint32_t octeon_crc_reflect32_by_byte(uint32_t v)
++static uint8_t camellia_rotl8(uint8_t v, unsigned int shift)
 +{
-+    return bswap32(revbit32(v));
++    return (v << shift) | (v >> (8 - shift));
 +}
 +
-+static uint32_t octeon_crc_state_reflect(const MIPSOcteonCryptoState *crypto)
++static uint8_t camellia_sbox2(uint8_t x)
 +{
-+    return octeon_crc_reflect32_by_byte(crypto->crc_iv);
++    return camellia_rotl8(camellia_sbox1[x], 1);
 +}
 +
-+static void octeon_crc_set_state_reflect(MIPSOcteonCryptoState *crypto,
-+                                         uint32_t state)
++static uint8_t camellia_sbox3(uint8_t x)
 +{
-+    crypto->crc_iv = octeon_crc_reflect32_by_byte(state);
++    return camellia_rotl8(camellia_sbox1[x], 7);
 +}
 +
-+static void octeon_crc_update_normal(MIPSOcteonCryptoState *crypto,
-+                                     uint64_t value, unsigned int bytes)
++static uint8_t camellia_sbox4(uint8_t x)
 +{
-+    uint32_t crc = crypto->crc_iv;
-+    uint32_t poly = crypto->crc_poly;
-+
-+    for (unsigned int i = 0; i < bytes; i++) {
-+        uint8_t byte = value >> ((bytes - 1 - i) * 8);
-+
-+        crc ^= (uint32_t)byte << 24;
-+        for (int bit = 0; bit < 8; bit++) {
-+            if (crc & 0x80000000U) {
-+                crc = (crc << 1) ^ poly;
-+            } else {
-+                crc <<= 1;
-+            }
-+        }
-+    }
-+
-+    crypto->crc_iv = crc;
++    return camellia_sbox1[camellia_rotl8(x, 1)];
 +}
 +
-+static void octeon_crc_update_reflect(MIPSOcteonCryptoState *crypto,
-+                                      uint64_t value, unsigned int bytes)
++static uint64_t camellia_f(uint64_t input, uint64_t key)
 +{
-+    uint32_t crc = octeon_crc_state_reflect(crypto);
-+    uint32_t poly = bswap32(crypto->crc_poly);
++    uint64_t x = input ^ key;
++    uint8_t t1 = camellia_sbox1[x >> 56];
++    uint8_t t2 = camellia_sbox2((x >> 48) & 0xff);
++    uint8_t t3 = camellia_sbox3((x >> 40) & 0xff);
++    uint8_t t4 = camellia_sbox4((x >> 32) & 0xff);
++    uint8_t t5 = camellia_sbox2((x >> 24) & 0xff);
++    uint8_t t6 = camellia_sbox3((x >> 16) & 0xff);
++    uint8_t t7 = camellia_sbox4((x >> 8) & 0xff);
++    uint8_t t8 = camellia_sbox1[x & 0xff];
++    uint8_t y1 = t1 ^ t3 ^ t4 ^ t6 ^ t7 ^ t8;
++    uint8_t y2 = t1 ^ t2 ^ t4 ^ t5 ^ t7 ^ t8;
++    uint8_t y3 = t1 ^ t2 ^ t3 ^ t5 ^ t6 ^ t8;
++    uint8_t y4 = t2 ^ t3 ^ t4 ^ t5 ^ t6 ^ t7;
++    uint8_t y5 = t1 ^ t2 ^ t6 ^ t7 ^ t8;
++    uint8_t y6 = t2 ^ t3 ^ t5 ^ t7 ^ t8;
++    uint8_t y7 = t3 ^ t4 ^ t5 ^ t6 ^ t8;
++    uint8_t y8 = t1 ^ t4 ^ t5 ^ t6 ^ t7;
 +
-+    for (unsigned int i = 0; i < bytes; i++) {
-+        uint8_t byte = value >> ((bytes - 1 - i) * 8);
-+
-+        crc ^= byte;
-+        for (int bit = 0; bit < 8; bit++) {
-+            if (crc & 1U) {
-+                crc = (crc >> 1) ^ poly;
-+            } else {
-+                crc >>= 1;
-+            }
-+        }
-+    }
-+
-+    octeon_crc_set_state_reflect(crypto, crc);
++    return ((uint64_t)y1 << 56) | ((uint64_t)y2 << 48) |
++           ((uint64_t)y3 << 40) | ((uint64_t)y4 << 32) |
++           ((uint64_t)y5 << 24) | ((uint64_t)y6 << 16) |
++           ((uint64_t)y7 << 8) | y8;
 +}
 +
-+uint64_t helper_octeon_cp2_mf_crc_iv_reflect(CPUMIPSState *env)
++static uint64_t camellia_fl(uint64_t input, uint64_t key)
 +{
-+    return octeon_crc_reflect32_by_byte(env->octeon_crypto.crc_iv);
++    uint32_t x1 = input >> 32;
++    uint32_t x2 = input;
++    uint32_t k1 = key >> 32;
++    uint32_t k2 = key;
++
++    x2 ^= rol32(x1 & k1, 1);
++    x1 ^= x2 | k2;
++    return ((uint64_t)x1 << 32) | x2;
 +}
 +
-+void helper_octeon_cp2_mt_crc_write_iv_reflect(CPUMIPSState *env,
-+                                               uint64_t value)
++static uint64_t camellia_flinv(uint64_t input, uint64_t key)
 +{
-+    env->octeon_crypto.crc_iv =
-+        octeon_crc_reflect32_by_byte((uint32_t)value);
++    uint32_t y1 = input >> 32;
++    uint32_t y2 = input;
++    uint32_t k1 = key >> 32;
++    uint32_t k2 = key;
++
++    y1 ^= y2 | k2;
++    y2 ^= rol32(y1 & k1, 1);
++    return ((uint64_t)y1 << 32) | y2;
 +}
 +
-+void helper_octeon_cp2_mt_crc_write_byte(CPUMIPSState *env, uint64_t value)
++static void octeon_camellia_round(MIPSOcteonCryptoState *crypto, uint64_t key)
 +{
-+    octeon_crc_update_normal(&env->octeon_crypto, value, 1);
++    uint64_t left = crypto->aes_resinp[0];
++    uint64_t right = crypto->aes_resinp[1];
++
++    crypto->aes_resinp[0] = right ^ camellia_f(left, key);
++    crypto->aes_resinp[1] = left;
 +}
 +
-+void helper_octeon_cp2_mt_crc_write_half(CPUMIPSState *env, uint64_t value)
++static void octeon_camellia_fl_layer(MIPSOcteonCryptoState *crypto,
++                                     uint64_t key, bool inverse)
 +{
-+    octeon_crc_update_normal(&env->octeon_crypto, value, 2);
++    uint64_t state = crypto->aes_resinp[inverse ? 1 : 0];
++
++    crypto->aes_resinp[inverse ? 1 : 0] = inverse ?
++        camellia_flinv(state, key) :
++        camellia_fl(state, key);
 +}
 +
-+void helper_octeon_cp2_mt_crc_write_word(CPUMIPSState *env, uint64_t value)
++void helper_octeon_cp2_mt_camellia_fl(CPUMIPSState *env, uint64_t value)
 +{
-+    octeon_crc_update_normal(&env->octeon_crypto, value, 4);
++    octeon_camellia_fl_layer(&env->octeon_crypto, value, false);
 +}
 +
-+void helper_octeon_cp2_mt_crc_write_dword(CPUMIPSState *env, uint64_t value)
++void helper_octeon_cp2_mt_camellia_flinv(CPUMIPSState *env, uint64_t value)
 +{
-+    octeon_crc_update_normal(&env->octeon_crypto, value, 8);
++    octeon_camellia_fl_layer(&env->octeon_crypto, value, true);
 +}
 +
-+void helper_octeon_cp2_mt_crc_write_var(CPUMIPSState *env, uint64_t value)
++void helper_octeon_cp2_mt_camellia_round(CPUMIPSState *env, uint64_t value)
 +{
-+    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
-+
-+    octeon_crc_update_normal(crypto, value, MIN(8U, crypto->crc_len & 0xf));
++    octeon_camellia_round(&env->octeon_crypto, value);
 +}
 +
-+void helper_octeon_cp2_mt_crc_write_byte_reflect(CPUMIPSState *env,
-+                                                 uint64_t value)
-+{
-+    octeon_crc_update_reflect(&env->octeon_crypto, value, 1);
-+}
-+
-+void helper_octeon_cp2_mt_crc_write_half_reflect(CPUMIPSState *env,
-+                                                 uint64_t value)
-+{
-+    octeon_crc_update_reflect(&env->octeon_crypto, value, 2);
-+}
-+
-+void helper_octeon_cp2_mt_crc_write_word_reflect(CPUMIPSState *env,
-+                                                 uint64_t value)
-+{
-+    octeon_crc_update_reflect(&env->octeon_crypto, value, 4);
-+}
-+
-+void helper_octeon_cp2_mt_crc_write_dword_reflect(CPUMIPSState *env,
-+                                                  uint64_t value)
-+{
-+    octeon_crc_update_reflect(&env->octeon_crypto, value, 8);
-+}
-+
-+void helper_octeon_cp2_mt_crc_write_var_reflect(CPUMIPSState *env,
-+                                                uint64_t value)
-+{
-+    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
-+
-+    octeon_crc_update_reflect(crypto, value, MIN(8U, crypto->crc_len & 0xf));
-+}
+ void helper_octeon_cp2_mt_snow3g_start(CPUMIPSState *env, uint64_t value)
+ {
+     octeon_snow3g_start(&env->octeon_crypto, value);
 -- 
 2.53.0
 
