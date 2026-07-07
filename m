@@ -4,83 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFD20C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 09:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52388C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 09:55:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh2Sj-0001K4-Nl; Tue, 07 Jul 2026 05:51:33 -0400
+	id 1wh2W0-00024s-J6; Tue, 07 Jul 2026 05:54:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh2SX-0001Bb-M7
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 05:51:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh2SW-0003Vp-73
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 05:51:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783417879;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7G4iVEHf0Yz9UwBfpYz5idImA09av36dcyFyO+OvueQ=;
- b=g3Vv2C0/g0EjR3wAr3cieN/gOliF5Lr6PNU6vx1cW7you09xjYXx1VW2PBtxrRWKma8HxX
- JFHn4EvhFMLiGn9yqCnUGMQ+1xGGgcfZleIXkCkGEkvX21tWv/tM4DAwQp5nm0rSq249kh
- r8z9QvaWYGRMbnU253k05SMqLAk5fm0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-524-E4a1BmXFOO6bo_4OKYb7lg-1; Tue,
- 07 Jul 2026 05:51:14 -0400
-X-MC-Unique: E4a1BmXFOO6bo_4OKYb7lg-1
-X-Mimecast-MFC-AGG-ID: E4a1BmXFOO6bo_4OKYb7lg_1783417872
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 967B6195419D; Tue,  7 Jul 2026 09:51:11 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B051B180067A; Tue,  7 Jul 2026 09:51:10 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: jrossi@linux.ibm.com, berrange@redhat.com, richard.henderson@linaro.org,
- david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, zycai@linux.ibm.com, alifm@linux.ibm.com,
- brueckner@linux.ibm.com, pierrick.bouvier@oss.qualcomm.com,
- jdaley@linux.ibm.com
-Subject: Re: [PATCH v15 05/33] s390x/diag: Introduce DIAG 320 for
- Certificate Store Facility
-In-Reply-To: <20260704213950.2118823-6-zycai@linux.ibm.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20260704213950.2118823-1-zycai@linux.ibm.com>
- <20260704213950.2118823-6-zycai@linux.ibm.com>
-User-Agent: Notmuch/0.40 (https://notmuchmail.org)
-Date: Tue, 07 Jul 2026 11:51:08 +0200
-Message-ID: <87echfjfg3.fsf@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <shankerwangmiao@gmail.com>)
+ id 1wh2Vz-00024e-GH
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 05:54:55 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shankerwangmiao@gmail.com>)
+ id 1wh2Vx-0004Mx-VB
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 05:54:55 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-84777f07641so252672b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 02:54:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783418092; x=1784022892; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=C1kuAWVFGPwzKIMEV/1OoK6MgcXBa4QWrCoPfDjdzTk=;
+ b=lFxLBh+O8EaR9FWQ/3gYBB+Aw6u5CgyuvU/C1mcMLXmzwK5lwDrj6q4kuehVwlFCWV
+ 4Ic1ITiOKCgZip43knJANqqQpWPYrMmr00T+Q/fwP46zseWu3WNX3+SAsMEGggdctH3e
+ AsXwdsf6VuueNShqayYxfqdTsR8VAIOYSwJ8HCjgxPj9uz4ap+GwlM2+Kwiz6N802cE8
+ g+YvzKKPHH00Q3awzIk2TqRZxh9X2uRt9PU91PZC8QjRm0m1JcZ+CvaiXiZphcNrl2W/
+ cUt+X0MpUgPYeGsNSsuoUBVysLVDiZyAmP7qxumUtBpR+0rKvCxSrqa9A/OaHmLvMaOl
+ 4gnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783418092; x=1784022892;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=C1kuAWVFGPwzKIMEV/1OoK6MgcXBa4QWrCoPfDjdzTk=;
+ b=Y8A0XiUhV/6OYlzT2A2So9uCUnvqehswDl6HX209GfkhZ9x9Vf3VksWZPawp50eaYm
+ Bsdevf8aR4O5khPET3WDIkJDyO1Hyox+ckVy7W1fHfhLkUYixnmKmg8TIQK1i6ZPcntk
+ SlHVDZTsrdNoJli+ipEAXgLotRaDCB6CPdUpqeuP2XSf0YBF/UqSx/CsQzylO1GsR7N/
+ aEuYfgqlwGXwnqIRnrWygQiZUvaA44nh3eeSNBiqpVPTi4iYtuwohYTRHiux2s8yk+0J
+ RIhnc9vcgoBBpNApCbQXmmtzRBKNQmFwRTxrQoXWnbxofPbzvIIomszm6wnKnQDw70pI
+ 9zGg==
+X-Gm-Message-State: AOJu0Yzz4T7IM74LlEqGpB6sonmVp8HB8Rtrd+eG1K0SabWMtbtvJ1P9
+ yKjpywNX47B5FDHFH/QiRRn/TnvleeVDljN63KBXBBy10t3d8rm6k/s9
+X-Gm-Gg: AfdE7cku7km6jNnDX0GQm3pmVdy6EhKERdNkeA9voMDCmFURN7pCtQsFKsqCSJqlff0
+ PUWkpunEoMv1Rqurk9GPKff1n2572+YkCxuilWR+7C8pUBcqQg687KGFhQUurFFtr0ZaCi1dn/k
+ leQRchLVhTMsfSMB33fb+3odFUfW9SN7bYjLFsPYvWalFLpA9J8/BWNptPVDrhwy20B1PmvkH5V
+ S7nDyAbGLlJBozEY3yswJUhU+UdOk5ivBubyVTq4FEz6EQtgA7URP8oZYkl01augGYiSXQdSiIp
+ M3QaB5BGQrhb5i0dGkUdyeB984lIqg3WUVoLyma+h2Ibo9M+MmXPhemlxqZfT0tCuUGjBwKSPWf
+ 4PdtbvnMxSrJFRsynMSNC4xVYwkNHCsg69Ns6Y56VGzNp7dWk6WoM6M4S7889bhjgqLDF5U11Dm
+ 5iPaNmNlcqJBBoLjgyCmNpPTM=
+X-Received: by 2002:a05:6a21:3383:b0:3bf:75c3:ff9b with SMTP id
+ adf61e73a8af0-3c03c43737cmr11853619637.1.1783418091937; 
+ Tue, 07 Jul 2026 02:54:51 -0700 (PDT)
+Received: from smtpclient.apple ([2406:4440:0:105::41:a])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-ca5afcb672fsm658600a12.11.2026.07.07.02.54.49
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 07 Jul 2026 02:54:51 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.8\))
+Subject: Re: [PATCH] qemu-options: Enable the -enable-kvm option for loongarch
+From: Miao Wang <shankerwangmiao@gmail.com>
+In-Reply-To: <693c31c8-a3f9-4cd2-8374-e4638ff34d92@oss.qualcomm.com>
+Date: Tue, 7 Jul 2026 17:54:36 +0800
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <7580A0A6-4937-470F-99F8-0B94163D7B54@gmail.com>
+References: <20260705-add-loong64-kvm-v1-1-aa8b85ecfa32@gmail.com>
+ <2d2e2609-ff6d-448d-9a78-9e9b6b9a9ec2@oss.qualcomm.com>
+ <B737D5FB-43B3-478D-BD78-E5A2A8296B6A@gmail.com>
+ <693c31c8-a3f9-4cd2-8374-e4638ff34d92@oss.qualcomm.com>
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+X-Mailer: Apple Mail (2.3826.700.81.1.8)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=shankerwangmiao@gmail.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,68 +106,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jul 04 2026, Zhuoying Cai <zycai@linux.ibm.com> wrote:
-
-> DIAGNOSE 320 is introduced to support Certificate Store (CS)
-> Facility, which includes operations such as query certificate
-> storage information and provide certificates in the certificate
-> store.
->
-> Currently, only subcode 0 is supported with this patch, which is
-> used to query the Installed Subcodes Mask (ISM).
->
-> This subcode is only supported when the CS facility is enabled.
->
-> Availability of CS facility is determined by byte 134 bit 5 of the
-> SCLP Read Info block. Byte 134's facilities cannot be represented
-> without the availability of the extended-length-SCCB, so add it as
-> a check for consistency.
->
-> Note: secure IPL is not available for Secure Execution (SE) guests,
-> as their images are already integrity protected, and an additional
-> protection of the kernel by secure IPL is not necessary.
->
-> This feature is available starting with the gen16 CPU model.
->
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> Reviewed-by: Collin Walling <walling@linux.ibm.com>
-> Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> ---
->  docs/specs/s390x-secure-ipl.rst     | 12 +++++++++
->  include/hw/s390x/ipl/diag320.h      | 20 ++++++++++++++
->  target/s390x/cpu_features.c         |  1 +
->  target/s390x/cpu_features_def.h.inc |  1 +
->  target/s390x/cpu_models.c           |  2 ++
->  target/s390x/diag.c                 | 41 +++++++++++++++++++++++++++++
->  target/s390x/gen-features.c         |  3 +++
->  target/s390x/kvm/kvm.c              | 16 +++++++++++
->  target/s390x/s390x-internal.h       |  2 ++
->  target/s390x/tcg/misc_helper.c      |  7 +++++
->  10 files changed, 105 insertions(+)
->  create mode 100644 include/hw/s390x/ipl/diag320.h
-
-(...)
-
-> +    switch (subcode) {
-> +    case DIAG_320_SUBC_QUERY_ISM:
-> +        /*
-> +         * The Installed Subcode Block (ISB) can be up 8 words in size,
-> +         * but the current set of subcodes can fit within a single word
-> +         * for now.
-> +         */
-> +        uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES);
-
 Hi,
 
-I'm afraid this breaks building with clang (as done by the ci; error
-messages are from a build of the whole series, which further changed
-this line):
+> 2026=E5=B9=B47=E6=9C=887=E6=97=A5 17:50=EF=BC=8CPhilippe =
+Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> =E5=86=99=E9=81=93=EF=BC=9A
+>=20
+> On 7/7/26 11:01, Miao Wang wrote:
+>> Hi,
+>>> 2026=E5=B9=B47=E6=9C=887=E6=97=A5 16:57=EF=BC=8CPhilippe =
+Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> =E5=86=99=E9=81=93=EF=BC=9A
+>>>=20
+>>> Hi,
+>>>=20
+>>> On 4/7/26 21:50, Miao Wang via B4 Relay wrote:
+>>>> From: Miao Wang <shankerwangmiao@gmail.com>
+>>>> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+>>>> ---
+>>>>  qemu-options.hx | 2 +-
+>>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>> diff --git a/qemu-options.hx b/qemu-options.hx
+>>>> index =
+e44b47de68137120da9979fb081d0c108f13179c..c7dbbd01e73367380fcf653fa8d0d187=
+95dde9a7 100644
+>>>> --- a/qemu-options.hx
+>>>> +++ b/qemu-options.hx
+>>>> @@ -5164,7 +5164,7 @@ ERST
+>>>>  DEF("enable-kvm", 0, QEMU_OPTION_enable_kvm, \
+>>>>      "-enable-kvm     enable KVM full virtualization support\n",
+>>>>      QEMU_ARCH_ARM | QEMU_ARCH_I386 | QEMU_ARCH_MIPS | =
+QEMU_ARCH_PPC |
+>>>> -    QEMU_ARCH_RISCV | QEMU_ARCH_S390X)
+>>>> +    QEMU_ARCH_RISCV | QEMU_ARCH_S390X | QEMU_ARCH_LOONGARCH)
+>>>>  SRST
+>>>>  ``-enable-kvm``
+>>>>      Enable KVM full virtualization support. This option is only
+>>>=20
+>>> Isn't the legacy option for "-accel kvm"? (Apparently since commit
+>>> 303d4e865b7 which is from September 2010). Maybe we should get rid
+>>> of the '-enable-kvm' use in examples / scripts...
+>> Yes, but I noticed that there are still users of it. I believe that
+>> either we can fully remove this option or we should enable this
+>> option for every architecture for which kvm is actually supported.
+>=20
+> Why do you want to add this legacy option to an architecture which is
+> newer than the new CLI option and don't even need it listed at all in
+> the help message?
 
-../target/s390x/diag.c:576:9: error: label followed by a declaration is a C23 extension [-Werror,-Wc23-extensions]
-  576 |         uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES |
-      |         ^
+That's because utilities and scripts may expect that there should be
+an unified option to enable kvm acceleration. "-enable-kvm" might be
+their choice. However, if "-enable-kvm" is considered legacy and new
+users should switch to "-accel kvm", I can accept it, not moving
+this patch forward.
 
-Cornelia
+Cheers,
+
+Miao Wang
 
 
