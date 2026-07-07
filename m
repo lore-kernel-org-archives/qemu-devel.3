@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70874C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 20:59:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 717E5C44501
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 20:59:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whCs2-0004Oa-N7; Tue, 07 Jul 2026 16:58:22 -0400
+	id 1whCs2-0004OU-Fo; Tue, 07 Jul 2026 16:58:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1whCs1-0004No-D7
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:58:21 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1whCry-0004MF-TW
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:58:18 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1whCrz-0003Uz-R7
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:58:21 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2caed617615so204555ad.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:58:19 -0700 (PDT)
+ id 1whCrx-0003Td-CR
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:58:18 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2c6b67d5fa1so177935ad.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:58:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783457898; x=1784062698; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783457896; x=1784062696; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=uewRDOC/H1Jp6765rXTUlsAYMglZskvHQznabA1q3mc=;
- b=lKEixj3fvhF0cHL787A/dfIz2fy5aatW6vIBqDqsYXuXiFzyh55hzc7rwVBE+eJiKV
- 870mZvtnbrcullKApIbcD2OXO+4YAV7YYcPG2BgnPA+h/oLexSt2Bnsin1iBb0cATg5d
- R/4b04LhmAbQf9RQyXYxrErqDqxxrE007lwmey86MztHnIq64PPrXkQp/+t7WHc1Thrm
- Gxqsl25EneyzIh4hoMddyV9EBVqIG7RVEOQ6N24uijeSvK4RsxY+pzSJgDjk0nmxxrJP
- +woyzozhILGr4sGmX76mSaQgfvoPAEYOAU3z97CDKDO7LcbHxwdTiH7vuUTVWwAytRMH
- /NhQ==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=yjtxehokH/ej11h4Z6W3EWTYi+9mWUSrSkuq/wcNtMg=;
+ b=hCmL4fGhQ3Uly84wXlpLRo0Je3qft9PZZ6Bf3nQL1tk9YilcH4qFc5umbt0dCrKBba
+ PDAni8Ca4/1rrXHjg20PV94LmhznnrwzFHghrq5wJYQY5U9XXdbgMi9HQdvR2SOXSISM
+ MGk9bxq/CvSTpUprZV0R0q67OTP4+VV07Nn+N6TB76p4NcBKW7hrg1R9xJFQpdQQ8XX6
+ EXwCpgUX/U9nyjpjja5Iddy3RKR7iv7voVHaFQrNVmW4PeoTYaenUQ535O7UGulJQIj7
+ Vbo+ZlTP1FXpEH15BviuLBqnO94Rzkjd4gYJJP4/Ne1JzzCn26Zc9ZS20LKKa7ycKbjW
+ mBLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783457898; x=1784062698;
+ d=1e100.net; s=20251104; t=1783457896; x=1784062696;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=uewRDOC/H1Jp6765rXTUlsAYMglZskvHQznabA1q3mc=;
- b=ZpOPfN2oWp1CUysT8s8VQcOtKqFZa9ypJAeCkpwHioTasRNnQSM9bTzfo28TPxnx6Y
- EjW+6GlJ6EFOWkKq6vuHXNlMK7hJPuc+1b+m9SxSpePgy3C2mz2nzgbxLtWvEP4GlL+P
- 2XLXfCV8hwIKBrEQ2WH8HWjcD97UilSMyvW70fyqaU6OQzUboVvKo/uKldXQRmoE5/Dy
- VPpf1cdsdIVBjen1Pf4I87EXabJ65bY27R0WfMzEGzM0aohaRudOfU8Fi2SWtiG2B8IA
- U5s5itqaVWNrhrAvLMlQTrf+iiA8Q764W11Tg+Nq1E1oRCuAOQt1LbpMtf8S2nVEOyw2
- 2Ecw==
-X-Gm-Message-State: AOJu0YxQrQKf4GDAOL0fK/rNgYhHog3tGP3ljUjnzIwDjmiqFIDbTuf8
- 6+QI1lr7QmHASyc6RNJpPw4KrhX2dmeo35FdSG9IT5du4DT/EZqVe9fFwDZdPaUoD3wRViKWY5V
- iDN/d
-X-Gm-Gg: AfdE7ckTwKhyUKaMP1E2Fal6HxV+DOcJTnJXJQhae4cVlisd7d9PBzPeecnd6GLpU9L
- bUUWrrpmYqQs0xrwgnIP8GjBnpFFVp0OEcjQC8hZj0+M1Vh1L9bQfwCvLIV9+PvxmvsR8k4MFVX
- zQC5K8pYpu0l+SfM54xr1822kO9cJJp4qoxYEd2FTipkr2Dka7xVySAByDL4J3LRW9xFITdUtr9
- hMHEmtzijSBREkjQL9UbeJKDf8m6ODJTx2LIisYrODXHgzAVnG37Asnrx2rTWTJC/IxrqFju/KS
- 4GuomPmoGHY+7F5Qa3zffRPY3eZWlAeID0yqHUFmCRtBAcaa3VioXs4mdqn1Q8sy/3Bu/od45+Q
- xJqEkaoKL494qO8TRCd2o4AM4cTieJDjEfEunM2rppdBwk/3T9qKBXyuJ7KZryZgwnQkYEE49Gg
- upRt6cHdmFdUv/TgE1h7WCoYDxnpWeTajHSYoc32iz7RkmOxw=
-X-Received: by 2002:a17:902:f607:b0:2ca:bf68:2a54 with SMTP id
- d9443c01a7336-2ccbed285cdmr59370625ad.22.1783457898243; 
- Tue, 07 Jul 2026 13:58:18 -0700 (PDT)
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=yjtxehokH/ej11h4Z6W3EWTYi+9mWUSrSkuq/wcNtMg=;
+ b=ZSbNGMiUKgzveL13HRhYLRnwf7zf4Sgxu+aYHPLPQjtyw2+BW5+zDXyqcdaYHbFJxE
+ 11MgsSCbJA/s796N33GGSYCGBIzbng0Jx0XtwsN4r5Gq0CTubWsUZu8lrWk5dmCNQdI6
+ QuSIm5ypeKpekkNbODFG/jywtk+EebBCNmrWg5YCc4U5KpIAdf3fQXopAc2xkK4TxUYU
+ Eq1JrBP3cANFjeaiaiOtkdYNjPXs30C2JftirzLwNahxEt6DJxRlxltMemK5Of1bNAhD
+ TKFSmWdecjoG9I/cemLMXWXajvG7YLQooeW7JWPa+/+LEU5IzlaQUsO7+2UnC56XTYYC
+ OCCg==
+X-Gm-Message-State: AOJu0YwwXqfPrqeZfO9ZxdBxJINSLlWmDpCJHzIXfNPR4uM3DxkDDbxn
+ e2GmggZsCHatF2oRyEHoH429chXHSNDcPqyL1Fz9EzLa5RXQkK2E5z4WdP0G8vYotEODMWCDkid
+ HGIVD
+X-Gm-Gg: AfdE7clkIM2IhcCtJ+JoPgDRM8FjWM38UxRHFR91Q8moKP8uYdJshNlyI5fMSZyHFwV
+ xmA4o7Qp8d26R1XOKOkuvSb7kz0FgzmWqWUyD/vzM2OCgrbW56yySy8kgLD1DE7NeGROk7U0kIs
+ l4q69d1Necz+g4Y1+54ZoluGI0t2TMsCKBl8m93VKXEDp7LqbM/X2u+olY3Dnzs5psModNe0X2F
+ 2AAF4FWfIK/yI8DYNGgudvjSZIXUyuXnMn67VUTJksAN59o3qPn+fYQTPOh8a5zswq3eRup/L2v
+ KtXkHCDck/TUUZnKDw3gar6Eh2JfLquGsf5u5zvqGNewWnZwh37NhJg1uYZBXyvZ0CgivF70mpa
+ 0b9NYgBSUXDugJFxro3rbrklaDlciy3DrHiE5EoaAy1a02gYa7ZT6mEdZQJ90n9lWDkxPNSQgNm
+ fxQKc9N4hAH1CqI82x13NjexRId+5EPosSkGFSAxPv0lM312I=
+X-Received: by 2002:a17:903:3d0d:b0:2ca:53e9:1277 with SMTP id
+ d9443c01a7336-2ccbe3fea24mr65683765ad.1.1783457895850; 
+ Tue, 07 Jul 2026 13:58:15 -0700 (PDT)
 Received: from stoup.. (71-212-39-188.tukw.qwest.net. [71.212.39.188])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ccc9d3bc2asm17980575ad.69.2026.07.07.13.58.17
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-2ccc9d3bc2asm17980575ad.69.2026.07.07.13.58.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jul 2026 13:58:17 -0700 (PDT)
+ Tue, 07 Jul 2026 13:58:14 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 6/6] tcg/loongarch64: Fix cmp_vec with TCG_COND_NE
-Date: Tue,  7 Jul 2026 13:58:10 -0700
-Message-ID: <20260707205810.303376-7-richard.henderson@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 3/6] tests/tcg/multiarch: Improve mutator randomness
+Date: Tue,  7 Jul 2026 13:58:07 -0700
+Message-ID: <20260707205810.303376-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260707205810.303376-1-richard.henderson@linaro.org>
 References: <20260707205810.303376-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,67 +101,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For NE we need to invert EQ, not swap operands.
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3589
+Currently mutators perform the same actions, because the RNG seed is
+derived from the current time in seconds. Mix in thread ID.
+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260623140609.645445-1-richard.henderson@linaro.org>
+Message-ID: <20260706165445.57418-3-iii@linux.ibm.com>
 ---
- tcg/loongarch64/tcg-target.c.inc | 39 +++++++++++++++++++++++---------
- 1 file changed, 28 insertions(+), 11 deletions(-)
+ tests/tcg/multiarch/vma-pthread.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index c3350c90fc..182dcfd5eb 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -2371,19 +2371,36 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-                 default:
-                     g_assert_not_reached();
-                 }
--                break;
--            }
--
--            insn = cmp_vec_insn[cond][lasx][vece];
--            if (insn == 0) {
--                TCGArg t;
--                t = a1, a1 = a2, a2 = t;
--                cond = tcg_swap_cond(cond);
--                insn = cmp_vec_insn[cond][lasx][vece];
--                tcg_debug_assert(insn != 0);
-+            } else {
-+                switch (cond) {
-+                case TCG_COND_EQ:
-+                case TCG_COND_LE:
-+                case TCG_COND_LEU:
-+                case TCG_COND_LT:
-+                case TCG_COND_LTU:
-+                    insn = cmp_vec_insn[cond][lasx][vece];
-+                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a1, a2));
-+                    break;
-+                case TCG_COND_GE:
-+                case TCG_COND_GEU:
-+                case TCG_COND_GT:
-+                case TCG_COND_GTU:
-+                    insn = cmp_vec_insn[tcg_swap_cond(cond)][lasx][vece];
-+                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a2, a1));
-+                    break;
-+                case TCG_COND_NE:
-+                    /* ne -> not(eq) */
-+                    insn = cmp_vec_insn[TCG_COND_EQ][lasx][vece];
-+                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a1, a2));
-+                    insn = lasx ? OPC_XVNOR_V : OPC_VNOR_V;
-+                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a0, a0));
-+                    break;
-+                default:
-+                    g_assert_not_reached();
-+                }
-             }
-         }
--        goto vdvjvk;
-+        break;
-     case INDEX_op_add_vec:
-         tcg_out_addsub_vec(s, lasx, vece, a0, a1, a2, const_args[2], true);
-         break;
+diff --git a/tests/tcg/multiarch/vma-pthread.c b/tests/tcg/multiarch/vma-pthread.c
+index 7045da08fc..0b8ce9751b 100644
+--- a/tests/tcg/multiarch/vma-pthread.c
++++ b/tests/tcg/multiarch/vma-pthread.c
+@@ -11,6 +11,7 @@
+  * pages, which are guaranteed to have the respective protection bit set.
+  * Two mutator threads change the non-fixed protection bits randomly.
+  */
++#define _GNU_SOURCE
+ #include <assert.h>
+ #include <fcntl.h>
+ #include <pthread.h>
+@@ -121,7 +122,7 @@ static void *thread_mutate(void *arg)
+     unsigned int seed;
+     int prot, ret;
+ 
+-    seed = (unsigned int)time(NULL);
++    seed = (unsigned int)time(NULL) + (unsigned int)gettid();
+     for (i = 0; i < 10000; i++) {
+         start_idx = rand_r(&seed) & PAGE_IDX_MASK;
+         end_idx = rand_r(&seed) & PAGE_IDX_MASK;
 -- 
 2.43.0
 
