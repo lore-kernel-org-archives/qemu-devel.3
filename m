@@ -4,67 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D2FEC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:59:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17581C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:59:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh4SG-0007Ss-6F; Tue, 07 Jul 2026 07:59:12 -0400
+	id 1wh4Sm-00081C-Jz; Tue, 07 Jul 2026 07:59:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh4SE-0007RU-2c
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:59:10 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh4Sl-00080i-Ah
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:59:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh4SB-0000zS-O6
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:59:08 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh4Si-0001A8-Qe
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:59:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783425546;
+ s=mimecast20190719; t=1783425579;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=qrC+lzQzR/+m2DAw9XY2/brsL3SihjepOMjfKVBtkv0=;
- b=GIoGCE/F+XP7429nQQLlE6mFYZL2xsnuZH5yvgCT9YUU5n0U3+47rGT0+tYB4qHsm9TUDq
- gBuIxSQyfHEYRNCF2ltSU9XDiTy7CwtBaBWK6vs6VQrfdapX3Cj0tp03ahVlcrTkeQA9lZ
- XSNLFttl336D08bOLsuAl1JvGH+KMjI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=vuq71xJ5asE4jVwi0HkVMtrKXwv7nVFrDDDac3COY+U=;
+ b=aCPuDC+MDnlL0C6rc6/D+xPrP/YDmEDi7zY3dxACQEWXy7Pok5DMfS8DHzT89ZMAQVzpHG
+ C6LADXvNsgiChDS35FULKnOclNaNHdZoFJlPjx8V6v77NiI5sXu+tmyFlCpBAMVYvj91a2
+ MikrUzPBAQL21ovBMZXrfvMkWtaNJOU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-338-pIVgnFLYNmC_CO4eNdHP8w-1; Tue,
- 07 Jul 2026 07:59:05 -0400
-X-MC-Unique: pIVgnFLYNmC_CO4eNdHP8w-1
-X-Mimecast-MFC-AGG-ID: pIVgnFLYNmC_CO4eNdHP8w_1783425543
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-166-c9TMWa3MOqqLmxGLhu1iMQ-1; Tue,
+ 07 Jul 2026 07:59:34 -0400
+X-MC-Unique: c9TMWa3MOqqLmxGLhu1iMQ-1
+X-Mimecast-MFC-AGG-ID: c9TMWa3MOqqLmxGLhu1iMQ_1783425572
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A48C91954AED; Tue,  7 Jul 2026 11:59:03 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44CC419540C9; Tue,  7 Jul 2026 11:59:32 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EF8B71955F76; Tue,  7 Jul 2026 11:59:02 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 46DEB3691B; Tue,  7 Jul 2026 11:59:31 +0000 (UTC)
 From: Cornelia Huck <cohuck@redhat.com>
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- mjrosato@linux.ibm.com
-Cc: jrossi@linux.ibm.com, zycai@linux.ibm.com, jdaley@linux.ibm.com,
- jjherne@linux.ibm.com, farman@linux.ibm.com, nrb@linux.ibm.com
-Subject: Re: [PATCH v2 0/6] s390x: Fix intermittent errors with IPL from PCI
- devices on s390x
-In-Reply-To: <20260630141917.673995-1-jrossi@linux.ibm.com>
+To: Christoph Schlameuss <schlameuss@linux.ibm.com>, qemu-s390x@nongnu.org
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>, David Hildenbrand
+ <david@kernel.org>, Eric Farman <farman@linux.ibm.com>, Halil Pasic
+ <pasic@linux.ibm.com>, Hendrik Brueckner <brueckner@linux.ibm.com>, Ilya
+ Leoshkevich <iii@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org, Christoph Schlameuss
+ <schlameuss@linux.ibm.com>, Nina Schoetterl-Glausch
+ <oss@nina.schoetterlglausch.eu>
+Subject: Re: [PATCH v3 0/2] s390x/kvm: Add ASTFLE facility 2 for nested
+ virtualization
+In-Reply-To: <20260701-astfleie2-v3-0-f692dc7f4f24@linux.ibm.com>
 Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
  Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
  153243,
  =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
  Avril Crosse O'Flaherty"
-References: <20260630141917.673995-1-jrossi@linux.ibm.com>
+References: <20260701-astfleie2-v3-0-f692dc7f4f24@linux.ibm.com>
 User-Agent: Notmuch/0.40 (https://notmuchmail.org)
-Date: Tue, 07 Jul 2026 13:59:00 +0200
-Message-ID: <878q7nj9iz.fsf@redhat.com>
+Date: Tue, 07 Jul 2026 13:59:28 +0200
+Message-ID: <875x2rj9i7.fsf@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -90,46 +97,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 30 2026, jrossi@linux.ibm.com wrote:
+On Wed, Jul 01 2026, Christoph Schlameuss <schlameuss@linux.ibm.com> wrote:
 
-> From: Jared Rossi <jrossi@linux.ibm.com>
+> Update the kernel headers to get access to
+> KVM_S390_VM_CPU_FEAT_ASTFLEIE2 and allow passing the feature through to
+> guest on IBM z16 onwards.
 >
-> When booting from a PCI device on s390x there may be intermittent failures
-> caused by mismatched byte swaps.  Refactor the byte swapping to ensure that
-> it is properly synchronized.
+> Signed-off-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
+> ---
+> Changes in v3:
+> - include linux v7.2-rc1 headers
 >
-> Correct how the queue notification offset is calculated so that it may be
-> used for multi-queue configurations in the future.
+> Changes in v2:
+> - Isolate the linux-header update into its own commit (thanks Thomas)
+> - Correct naming of the feature (thanks Hendrik)
+> - Add S390_FEAT_SIE_ASTFLEIE2 to full_GEN16_GA1 only as it depends on
+>   SIEF2 (thanks Christian)
 >
-> Handle some switch cases that were not caught for PCI devices.
+> ---
+> Christoph Schlameuss (2):
+>       linux-headers: Update to Linux v7.2-rc1 with KVM_S390_VM_CPU_FEAT_ASTFLEIE2
+>       s390x/kvm: Add ASTFLE facility 2 for nested virtualization
 >
-> Changes v1 -> v2:
->     - Split addition of missing break into its own patch
->     - Add PCI case to generic is_viritio_supported() wapper
->     - Switch the order of patches formerly 3 and 4
->     - Use virtio_is_supported() instead of checking cutype when writing IPLB
->         location to cover both CCW and PCI virtio devices
->
-> Jared Rossi (3):
->   pc-bios/s390-ccw/virtio.c: Fix missing break for PCI notifications
->   pc-bios/s390-ccw: Verify virtio support when booting from virtio PCI
->     device on s390x
->   pc-bios/s390-ccw: write IPLB location for non-net virtio devices
->
-> Zhuoying Cai (3):
->   pc-bios/s390-ccw: Refactor byte swapping
->   pc-bios/s390-ccw: Add per-queue notification offset for multi-queue
->     virtio configurations
->   s390x: Enable boot menu for virtio pci device
->
->  hw/s390x/ipl.c                |  1 +
->  pc-bios/s390-ccw/main.c       |  5 ++-
->  pc-bios/s390-ccw/virtio-pci.c | 57 ++++++++++++++++++++++++++---------
->  pc-bios/s390-ccw/virtio-pci.h |  5 ++-
->  pc-bios/s390-ccw/virtio.c     | 29 ++++++++++--------
->  pc-bios/s390-ccw/virtio.h     |  2 ++
->  6 files changed, 69 insertions(+), 30 deletions(-)
->
+>  hw/s390x/sclp.c                                 |  2 +
+>  include/hw/s390x/sclp.h                         |  4 +-
+>  include/standard-headers/drm/drm_fourcc.h       | 54 ++++++++++-------
+>  include/standard-headers/linux/ethtool.h        |  3 +
+>  include/standard-headers/linux/pci_regs.h       |  2 +
+>  include/standard-headers/linux/virtio_can.h     | 78 +++++++++++++++++++++++++
+>  include/standard-headers/linux/virtio_console.h |  2 +-
+>  include/standard-headers/linux/virtio_gpu.h     |  9 +++
+>  linux-headers/asm-s390/kvm.h                    |  1 +
+>  linux-headers/asm-x86/kvm.h                     |  2 +
+>  linux-headers/linux/iommufd.h                   | 12 ++--
+>  linux-headers/linux/kvm.h                       |  1 +
+>  target/s390x/cpu_features.c                     |  3 +
+>  target/s390x/cpu_features.h                     |  1 +
+>  target/s390x/cpu_features_def.h.inc             |  3 +
+>  target/s390x/cpu_models.c                       |  2 +
+>  target/s390x/gen-features.c                     |  1 +
+>  target/s390x/kvm/kvm.c                          |  1 +
+>  18 files changed, 153 insertions(+), 28 deletions(-)
 
 Thanks, applied.
 
