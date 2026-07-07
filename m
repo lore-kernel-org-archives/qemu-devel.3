@@ -4,91 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08BDAC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 17:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4E76C43602
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 17:31:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh9Zw-00060x-8L; Tue, 07 Jul 2026 13:27:28 -0400
+	id 1wh9dY-0008BE-Ix; Tue, 07 Jul 2026 13:31:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wh9Zs-00060M-7q
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:27:24 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wh9dW-00084a-Q8
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:31:10 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wh9Zq-0004mc-GV
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:27:23 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2cad4170e8eso53849995ad.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 10:27:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wh9dU-0005sW-9C
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:31:10 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-493c2c0b9a8so38931995e9.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 10:31:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783445240; x=1784050040; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=W/Mw86EMifOutr48fRw4pUqE6lub5eryXGF8aL5mZBA=;
- b=f8OHsXxRUaga2nkd4bWBWm3zgjzG9fmQUrAFuqZItwZBR+m0hpgaXBnEIW0PjBOw4A
- fCNFVtj8uJXxwMxNRMnYMbUXwuvtZt4ReUe2yJxaaO/Ko6AmdPmrX/59woDCrHECyQnN
- be3OJKEdU5vkYTVUYfKnDABOh30zlxoehHccaEuPjeZD7XkcE3jL1n9Thqpd3tIwU+mN
- uuyy9ILLSfu1m3s1AJijLJ2Mm0TO4LJ02yic9iNiwUucJEKwXhaQ7sne5rwpdCa8UEAq
- pAzOXQhUSgl67tA0wNjZz6wkY2XPnAkzgsVuPvLpn6SGfUhOjH9z7Up9ipZADQOBT57z
- ApAg==
+ d=gmail.com; s=20251104; t=1783445466; x=1784050266; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=+d0d8z5mwtfwDTuBj837GZ0g3RzJV41rwO3e9i2YeFw=;
+ b=WbfcFZDKdV5GVfSb8Xq/EhbHHHp1hF59/6LkADJMVUfW/PIiiEzc7pOV9rzR7xIlhQ
+ D3+HRrHZXlJiesxZb4ErLP7HiL2l7fSSwXTMIcjGQ6CUEhewXqnQDls8szU/9bWTiS5x
+ sCqTudZcIKp2n56ZLoHEMm0LFGYDC/o/yIjDQLSO0OAlY1k1u5lDPGofq12+o8gMqcqk
+ yECAInP1M63habdXR4LUN62ziF24iFgkJCJzGc4lWGAf/84QTdiBH50dKiPYkBdPCZ8Z
+ WcvKVm/30tInf56AHSrrhAFvVZFw9BVio95vjwmPPWcXpbqShiXICHbxL1ijXkyzSHUH
+ wlog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783445240; x=1784050040;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=W/Mw86EMifOutr48fRw4pUqE6lub5eryXGF8aL5mZBA=;
- b=PVcVmzTeTBpAIAqHautllNjMvHZhRIZgAq3ISM5Ypt1UcmcDuiSD1hLkHZ95Dd62Fi
- 0AjeGrj2X+rEvGruWIVLuCM6O9xF1z9oHvYzw1K7G8oB4oB6pYcHNfYJuN6Ej5JiK7vQ
- GkDl+4eJGriRIwZCnAfyBYtHngpXItwwKN3NWSNwIvSKO+2+NsROCU5wI9Tl+FxzZZD0
- mfhGR2a4D0sFckC782BoEUnSrEt2WhQqzRwSOgPxkXaYsQAEJmYRpxN1lG6Ul9fJu1Ki
- IxlhfTzfl8KKz0HH2Jw1lG8ca/0nlFjorVQpWyFKF500sf9VUlVsp7qpYrMgOvFInLd8
- EZHg==
-X-Gm-Message-State: AOJu0Yw46dMYfrN7+Y7mEnH/X8qfegdqAO5RABo7AosKaJogdAjbPD8+
- WoO291c9UTUsvxZ1d6K4JBJ2vYZ5128F6r2o3NjzE8zgGSyRvyb2VX+rZb7KWaPZP5w=
-X-Gm-Gg: AfdE7cnkTELMhP+nLA4u7GTraNMa6XzsmMp4nMeLz2P5k+DP2dUlTScYx0qZg2r8TE7
- uARIVmz/1ytf+OmAVmO9sIOcoPJIkox7CdZfBaCOX5RYDIgRuAtWaEOJ4GxdeaGySGYq6WmmH/l
- 1zLfd93AOdS/sqEwQhmTXYTpe2jgTXQ4rVzLAaTmys5d6vb0DzhF21QQiHLBT/b38U4yZS90voc
- Ypn/ujrGkTBXvo9yyZ5TxEFcz9x++oBP8EFslvPEVlG628lms8yqeQvZjZod//BqtwHbKP/p/BN
- Mj0/0ft2HkFcutTbj2Gm1ptNCocFG8UjKZXwcktcWQif+uFzpBYrdjxzcouBJOtVTu5QPweFG3t
- 0sD4jMXOLUz7AcL7Djs/PgJETf//ZVL4WuHipZBQa6NeBOpvvCyCGrEVDD6W70w+CrPoIKDmBcr
- 5mj8cFWfH2vr4mwd6YO1nciIMn1VlTO7EqOHukFnfzxWnPoilsq+CjAcPY4fiwiFLMyg==
-X-Received: by 2002:a17:902:c405:b0:2ca:c68:caba with SMTP id
- d9443c01a7336-2ccbf051d6bmr57068345ad.34.1783445240144; 
- Tue, 07 Jul 2026 10:27:20 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-39-188.tukw.qwest.net. [71.212.39.188])
+ d=1e100.net; s=20251104; t=1783445466; x=1784050266;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=+d0d8z5mwtfwDTuBj837GZ0g3RzJV41rwO3e9i2YeFw=;
+ b=nYxly1TH9edVimFg/ZNpwQtxXhpLWN6brJXuh86bQHb97yrW4cK4IlxVtKKMqTVDEA
+ NPj+3ouaV/fkztKOtqty44ydYPGjaKy70mfWtoQke9f2LxL31J8Hz1ugTRfuR78BpLaf
+ xwoB1JQoYA59GQhVwaJJf60GPk8RQmWE8IdZK+1MroZZm1EbjhhmypMKRNIXrbzr/qP/
+ RXqHr6m0Ci2ntNBPQnEpHxFGxglZMFzxfHU+xg7m3Uv04gZHjeFAi2TwZfZt/2ikW5nz
+ xk7uLntTz9mS74lr3tj3M4dLz5JQESKN3uzbLWU1wNIPxBNqORKwKtM0lRrGQ/4qtxPd
+ mx7g==
+X-Gm-Message-State: AOJu0YzmnO86oCG/6DCptOpmT0IieQO1dO8tD8poN4M0/poeuqR+Uzmd
+ 843PRX7fasHDwA75NGesjT5MzwxRV3tXBY588T4TXU9SKcOaqwdwXEOkb+zeUA==
+X-Gm-Gg: AfdE7clgLEhakvvvzABHZGpqfoQgUcjSA+VGh9cBPFwMCIn5sdkZOi4VfXz889oEaOQ
+ O0DnpQxVTj46EHKQC1vsxoxNUGAZGsoiehIlfZqj6EldBxpVa1J66dsms+NqdvzQ+e8pHo25eh9
+ S0VTTTeEAaX0FleC42M45OnVJKeDPdyadQq4A77B1GJAyzhUenrTjsIHscZ95nDU2mDb6GpZqZ5
+ vAYcGmvEaaFtC6A1+9M4nfSvBoJXR6DzFOUvZOXD+wwLIoL8RmfsG6Mo6ubg03DBCmFca++H9Y9
+ TNjGQPNqdy+p6FIxEuqrUW6bCFJhLyVO3eMVZyXPbtnBahISEF+i0riFIopee0yJv/QYe//z5m6
+ Ds7Kj9dNV/h2G8CJRY4rIWf3kIvVEmavmP0PQhFwa0ZCxW5CK3q/wr9HHfJEl2irMedw7CTBmwM
+ IjdgLwyu7a8hz9/1YhBw==
+X-Received: by 2002:a05:600c:3556:b0:493:b4cf:d37f with SMTP id
+ 5b1f17b1804b1-493df314e83mr65376675e9.16.1783445466211; 
+ Tue, 07 Jul 2026 10:31:06 -0700 (PDT)
+Received: from ehlo.thunderbird.net ([62.214.191.67])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ccc9bf737bsm15480685ad.19.2026.07.07.10.27.19
+ 5b1f17b1804b1-493e54a27cbsm3130235e9.1.2026.07.07.10.31.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jul 2026 10:27:19 -0700 (PDT)
-Message-ID: <a14481eb-9eed-43c0-a29c-187798f7f769@linaro.org>
-Date: Tue, 7 Jul 2026 10:27:17 -0700
+ Tue, 07 Jul 2026 10:31:05 -0700 (PDT)
+Date: Tue, 07 Jul 2026 17:27:17 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PULL 00/32] Misc HW patches for 2026-07-07
+In-Reply-To: <20260707131223.51505-1-philmd@oss.qualcomm.com>
+References: <20260707131223.51505-1-philmd@oss.qualcomm.com>
+Message-ID: <C892C8D2-9E0D-4F8E-8B97-BB315041C34E@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] target/arm: report M-profile BKPT to gdbstub when
- attached
-To: Peter Maydell <peter.maydell@linaro.org>,
- Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260705224407.32464-1-gilles.grimaud@univ-lille.fr>
- <CAFEAcA9Heev=ydTzO2u3EzeF_2q7dytOF8=67qF8ZMMY6Ky2Tw@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA9Heev=ydTzO2u3EzeF_2q7dytOF8=67qF8ZMMY6Ky2Tw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,77 +99,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/6/26 02:21, Peter Maydell wrote:
-> On Sun, 5 Jul 2026 at 23:44, Gilles Grimaud
-> <gilles.grimaud@univ-lille.fr> wrote:
->>
->> While working on Raspberry Pi Pico/RP2040 support, I noticed that Pico SDK
->> programs deliberately execute BKPT from _exit(). On real hardware this is
->> useful when a debug probe is attached: returning from main() stops the
->> debugger at the program exit point.
->>
->> Under QEMU this currently does not behave like the debug-probe case. For
->> M-profile guests, the BKPT instruction is routed through the architectural
->> guest debug exception path. Without halting debug, that path should remain a
->> guest-visible DebugMonitor exception when DebugMonitor is enabled, or escalate
->> towards HardFault otherwise. This patch deliberately leaves that no-debugger
->> architectural path unchanged.
->>
->> The problem addressed here is the case where GDB is connected to QEMU's
->> gdbstub. In that situation, firmware that uses BKPT as a debugger stop point
->> should stop in the attached debugger. Instead, the M-profile guest currently
->> continues down the guest exception path and may end in HardFault/lockup rather
->> than reporting a clean trap to GDB.
->>
->> This is not specific to the RP2040 machine model. It is a generic
->> Cortex-M/gdbstub interaction: firmware that uses BKPT as a debugger stop point
->> should be reported to the attached debugger, while keeping the guest
->> architectural exception path when no debugger is attached.
->>
->> Expose a small gdbstub helper to test whether a CPU is visible to an attached
->> debugger. When an M-profile BKPT instruction is executed with such a debugger
->> attached, leave the translated block with EXCP_DEBUG so the existing gdbstub
->> stop path reports a trap to GDB.
->>
->> Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
->> ---
->>   gdbstub/gdbstub.c      | 13 ++++++++++++-
->>   include/exec/gdbstub.h |  6 ++++++
->>   target/arm/tcg/debug.c |  9 +++++++++
->>   3 files changed, 27 insertions(+), 1 deletion(-)
->>
->> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
->> index c3c944e965..9f259fc005 100644
->> --- a/gdbstub/gdbstub.c
->> +++ b/gdbstub/gdbstub.c
->> @@ -237,6 +237,18 @@ static GDBProcess *gdb_get_cpu_process(CPUState *cpu)
->>       return gdb_get_process(gdb_get_cpu_pid(cpu));
->>   }
->>
->> +bool gdb_cpu_is_attached(CPUState *cpu)
->> +{
->> +    GDBProcess *process;
->> +
->> +    if (!gdbserver_state.init || !cpu) {
->> +        return false;
->> +    }
->> +
->> +    process = gdb_get_cpu_process(cpu);
->> +    return process && process->attached;
->> +}
-> 
-> No other architecture, CPU or board in QEMU needs to do this,
-> so my instinct is to say that M-profile should not be special here.
-> Richard, Alex: how do we usually handle breakpoint insns for the
-> gdbstub ?
-
-We handle them via CPUBreakpoint structures; we never inject code changes.
-
-The patch description explains the confusion: this is attempting to replicate a feature of 
-the Raspberry Pi Pico SDK, wherein a guest BPKT really is trapped by an external debugger.
-
-The only question is whether we want to follow that, and I suspect the answer is no.
 
 
-r~
+Am 7=2E Juli 2026 13:11:50 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <phil=
+md@oss=2Equalcomm=2Ecom>:
+>The following changes since commit 94826ec1370328375c3b6d1e80fdc94c8f46c3=
+48:
+>
+>  Merge tag 'accel-20260706' of https://github=2Ecom/philmd/qemu into sta=
+ging (2026-07-06 18:38:14 +0200)
+>
+>are available in the Git repository at:
+>
+>  https://github=2Ecom/philmd/qemu=2Egit tags/hw-misc-20260707
+>
+>for you to fetch changes up to 04584a27dd59741bc20272c6faab96c08bcbb926:
+>
+>  Revert "aspeed/smc: snoop SPI transfers to fake dummy cycles" (2026-07-=
+07 15:08:41 +0200)
+>
+>----------------------------------------------------------------
+>Misc HW patches
+>
+>- Fix in few trace event formats
+>- A pair of improvements in util/
+>- FlexCAN3 to imx8mp-evk board
+>- Various fixes in hw/
+>  (EDU, ATI VGA, IDE AHCI, PCA9552, i8257 DMA,
+>   e1000e/igb, MPT SAS, Hyper-V, QXL, M25P80)
+>----------------------------------------------------------------
+>
+>BALATON Zoltan (1):
+>  hw/display/ati: Include vga state in the blit context
+>
+>Bernhard Beschow (5):
+>  hw/net/can/flexcan: Wire clock control module via link property
+>  hw/net/can/flexcan: Subclass TYPE_CAN_FLEXCAN
+>  hw/arm/imx8mp-evk: Open code DEFINE_MACHINE_AARCH64
+>  hw/arm/imx8mp-evk: Introduce FslImx8mpEvkState
+>  hw/arm: Add basic FlexCAN3 support to TYPE_FSL_IMX8MP and imx8mp-evk
+
+Thanks Phil! I owe you two beer (another one for the rs5c372)=2E Or whatev=
+er liquid you like=2E
+
+Best,
+Bernhard
+
+>
+>Bin Meng (8):
+>  hw/block: m25p80: Fix dummy byte handling for Winbond flash
+>  hw/block: m25p80: Fix dummy byte handling for Numonyx/Micron flash
+>  hw/block: m25p80: Fix dummy byte handling for Macronix flash
+>  hw/ssi: npcm7xx_fiu: Correct the dummy cycle emulation logic
+>  hw/ssi: xilinx_spips: Fix dummy phase handling
+>  hw/ssi: aspeed_smc: Fix direct-read dummy bytes
+>  Revert "aspeed/smc: Fix number of dummy cycles for FAST_READ_4
+>    command"
+>  Revert "aspeed/smc: snoop SPI transfers to fake dummy cycles"
+>
+>Denis V=2E Lunev (1):
+>  hw/ide/ahci: cancel in-flight buffered reads on command engine restart
+>
+>Dmitry Frolov (1):
+>  utils/module: fix memleak in module_load()
+>
+>Evgeny Kolmakov (1):
+>  util/filemonitor-inotify: Use QEMU_LOCK_GUARD()
+>
+>Junjie Cao (2):
+>  hw/display/ati: reset host_data=2Enext in write handler after flush
+>  hw/display/ati: guard against zero bpp in ati_host_data_flush
+>
+>Mark Cave-Ayland (2):
+>  hw/rtc/mc146818rtc: convert date from object prop to class prop
+>  hw/acpi/ich9: move initial property values into
+>    ich9_reset_properties()
+>
+>Peter Maydell (3):
+>  hw/dma/i8257: Return zeroes for read_memory in verify mode
+>  hw/scsi/mptsas: Reset doorbell state on reset
+>  hw/hyperv: Avoid crash if hyperv_find_cpu() passed invalid vp_index
+>
+>Sanjeeva Yerrapureddy (1):
+>  hw/net: fix e1000e/igb ip_len inflation by Ethernet minimum-frame
+>    padding
+>
+>Shameer Kolothum (1):
+>  backends/iommufd: Fix dev_id and type order in viommu trace
+>
+>Song Gao (1):
+>  hw/intc/loongarch_dintc: Fix OOB access in DINT MMIO write handler
+>
+>Thomas Huth (1):
+>  hw/display/qxl: Fix mono cursor validation that can read past a cursor
+>    chunk
+>
+>Torin Carey (1):
+>  hw/misc/edu: restrict dma access to dma buffer
+>
+>yujun (3):
+>  hw/gpio/pca9552: fix off-by-one in QOM led index validation
+>  ebpf: fix swapped toeplitz/indirection args in set_data trace
+>  crypto/x509-utils: fix gnutls error code in crt_init failure path
+>
+> docs/system/arm/imx8m=2Erst     |   1 +
+> include/hw/acpi/ich9=2Eh        |   2 +
+> include/hw/arm/fsl-imx8mp=2Eh   |   8 ++
+> include/hw/net/flexcan=2Eh      |   4 +-
+> include/hw/ssi/aspeed_smc=2Eh   |   2 -
+> include/hw/ssi/xilinx_spips=2Eh |   2 +-
+> crypto/x509-utils=2Ec           |   3 +-
+> ebpf/ebpf_rss=2Ec               |   2 +-
+> hw/acpi/ich9=2Ec                |   8 +-
+> hw/arm/fsl-imx6=2Ec             |   5 +-
+> hw/arm/fsl-imx8mp=2Ec           |  38 ++++++++++
+> hw/arm/imx8mp-evk=2Ec           |  64 +++++++++++++---
+> hw/block/m25p80=2Ec             | 122 +++++++++++++++++++-----------
+> hw/display/ati=2Ec              |   2 +
+> hw/display/ati_2d=2Ec           |  44 +++++------
+> hw/display/qxl-render=2Ec       |   8 +-
+> hw/dma/i8257=2Ec                |  13 ++++
+> hw/gpio/pca9552=2Ec             |   8 +-
+> hw/hyperv/hyperv=2Ec            |   4 +-
+> hw/ide/ahci=2Ec                 |   3 +
+> hw/intc/loongarch_dintc=2Ec     |  13 ++++
+> hw/isa/lpc_ich9=2Ec             |   1 +
+> hw/misc/edu=2Ec                 |  24 +++---
+> hw/misc/imx8mp_ccm=2Ec          |   3 +
+> hw/net/can/flexcan=2Ec          |  90 ++++++++++++++++++-----
+> hw/net/net_tx_pkt=2Ec           |   7 +-
+> hw/rtc/mc146818rtc=2Ec          |   4 +-
+> hw/scsi/mptsas=2Ec              |   4 +
+> hw/ssi/aspeed_smc=2Ec           | 135 +++++-----------------------------
+> hw/ssi/npcm7xx_fiu=2Ec          |  25 ++-----
+> hw/ssi/xilinx_spips=2Ec         | 123 ++++++++++++++++++++++---------
+> util/filemonitor-inotify=2Ec    |  28 ++-----
+> util/module=2Ec                 |   2 +-
+> backends/trace-events         |   2 +-
+> hw/arm/Kconfig                |   1 +
+> hw/ssi/trace-events           |   1 -
+> 36 files changed, 488 insertions(+), 318 deletions(-)
+>
 
