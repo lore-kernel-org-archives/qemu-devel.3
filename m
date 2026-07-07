@@ -4,151 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8711FC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 16:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8526C44501
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 16:19:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh8KL-0005eE-Hf; Tue, 07 Jul 2026 12:07:17 -0400
+	id 1wh8VS-0007cN-LQ; Tue, 07 Jul 2026 12:18:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wh8K8-0005cx-7R
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 12:07:07 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1wh8VE-0007Tp-5f; Tue, 07 Jul 2026 12:18:34 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wh8K6-00063e-JT
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 12:07:03 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667FTDvU018048
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 16:06:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- msRIME6nGWnCo7DOyR438y2zmJoRfrOYe4zV2WW/KhY=; b=L5uKEKnUxKKtlase
- ILS2PUAqbmApup30E2wEpXfrTBoRPq6LgLSu2dcaYFa5WmNtSogFggYflvR8oYWq
- YUMfggZBhw/sYes8FNdqR70yFCoCu9J3pY8v7y86iTL2TdfE1sAnVw+sMJhO8Jjy
- GGYBern1Nkh+4l8isilnxuQ9BIRgmmel5D0SW5YfXFMoCQpefwW1UV4bb3JicrYj
- w6nB+VtmncryZp/x7KRKfLBVvm22iiAXyIlecaDJw43Is/Jw7Gf1aV+R52JM0cs1
- 5ArCASwN+b148r3YscATJC8d4YEs2PZjqWtPw/d2Xk7X5NoyA5wSBzjfIH+6dRM3
- oWv5Lw==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8wep21ps-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 16:06:57 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-c8894570b58so3282520a12.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 09:06:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783440417; x=1784045217; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=msRIME6nGWnCo7DOyR438y2zmJoRfrOYe4zV2WW/KhY=;
- b=i0s5CltV1qo2nwfutK84ZUcyW0WxHEL8yJfZsh7WdNu97WXky6zpNsLfc+9KLXEO09
- vRuc1pTmJbQggLD3qWQFV99cgUb7X1yrFokx/eSt1nZIAnbBhZxAACU5F2vAHv5dectn
- W2EH9tiEx0OZcVsDKay8MDXUNRbJvEKbdoYA3BeYle1M42MbDBAwGw/Be1G73Sy5M3dV
- TQpr5EmYlDviHRX3jUHvrJeRjZZBhTojlOLwpPsm4tiDYU4PBMoen35VRUpU3X6j/G8F
- aEpd7zFu6/o9zJOGwMXwek7ArK+RNLC9cssS5vD+DrT4L/9pAXvDNBFpLr1iK3iSmub2
- ArxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783440417; x=1784045217;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=msRIME6nGWnCo7DOyR438y2zmJoRfrOYe4zV2WW/KhY=;
- b=CZ8dgSObpQvqjVUA2osmSA811nyUnyWJ79RjcnsyZwluR8H5s8oYy87S0Fsc5EAcqh
- S3ZsKz6Cx1uVgNgZ0rcCDQQbeOMpzIbDUoqEwGOUfmTDo79pFG5t9gETlx25UISDOwJS
- nOOOiRsZ16Y2TpmaHFigGfarE9s2vSeKal6Y9CZHah/e7VbLoQmygmX07TpXNfAPItXb
- KCnfZpyrmVN/TWhhbAPfncQNG2HI78NSQKUNfEoBc8UaE/P4O7XWRiP6JueUXbQKqFFp
- lZWGwkvfRCTG0KnTSLFZWyWdVJGi6ZEgPOMnIEREWfFldq/aOdi7ET8uLiD4fxER0IQn
- CrQA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rr+CR5tt0hPqJm2FWix5yqXKH7zVZEmBZDt6+Nvz/OwgHrf627FcB+1UsUu8PFSKXXvrd+k6ih/zigU@nongnu.org
-X-Gm-Message-State: AOJu0Yy7mYZL8ljYakFjFFqJNSQYxBtADTfOZnFN9jJvadx/GgTWcuTN
- e++J6cKlKrtVRWS+Y4wDvNJoLzH9T7kuQIEFfAXdY61/K1uwJrKQw8Kt5dhUrYZOYMDW105At2+
- byEEiK+3Sy81tHGXjbkk6NAGbYxm9B2MMMjWGdw4IGZ7aEWqpXgZnV2Wmzw==
-X-Gm-Gg: AfdE7clIBYbenWN6h1GanNmJ9j2mz0gYuv9Qv7g6TttqW5IsRaVGyncA53ETmBURtZ9
- leWiSbmlWamT6slXJC1sJ9hvwvbcmqsboz0UxMcJ3vx5OMka6YCNLMLtSEtwpixp3QwT+VUvU51
- puUkGTb5xwzQCJcrzuJ4RN94pLHUBR14Yp5W2c1nXvKJg11Kw6rgqk8QKSrE6OmPY0mMIVgqGZv
- FbBwf+GJB3v9h36I6KLv12ObWPiuq1IqfEFl8luitOpMbf1EXvUQ8Ug1+7O6HKNwm1jaFBqpOUJ
- JKs+b62W5LN0IhoTVwXWF8pt+uf7JixFXmdCVXUzVFM7Gxvx34gxwsZQLaTkLiG/nnNvKXKwwpU
- RV+to7XLaztx6PSo4zxsTEFfBlzfBhoqD81qik7GdgBpUCqCrUMt48u+rjLCB1DGrWmhzOm3g/c
- HnS/M=
-X-Received: by 2002:a05:6a21:7a46:b0:3bf:d1f9:b1dd with SMTP id
- adf61e73a8af0-3c08eed69eamr6210113637.44.1783440416582; 
- Tue, 07 Jul 2026 09:06:56 -0700 (PDT)
-X-Received: by 2002:a05:6a21:7a46:b0:3bf:d1f9:b1dd with SMTP id
- adf61e73a8af0-3c08eed69eamr6210073637.44.1783440416125; 
- Tue, 07 Jul 2026 09:06:56 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b659666e7sm12045177c88.7.2026.07.07.09.06.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jul 2026 09:06:55 -0700 (PDT)
-Message-ID: <72faad3e-0f94-45d7-b16f-a8aa188112e5@oss.qualcomm.com>
-Date: Tue, 7 Jul 2026 09:06:53 -0700
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1wh8VA-0008BX-M9; Tue, 07 Jul 2026 12:18:31 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 667FmFqj309762; Tue, 7 Jul 2026 16:18:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=mHMOe1wv/V7nS6nef
+ WACMDUZ1Hs6h8Miul9/MEqKcbc=; b=q/yMlmfTYvRHYoHv8MmTcLxGdrr3GYZ2k
+ qcJyuYRLmjIsuX9F3dlhn1uWI7tVMZJzCE/tHaJcFKzAtVouchz5nEiGKShVzPDY
+ lJjkT2k3civ6yEU00UFrhx9NhYFnSKIgoRIS5fIk58pcW9oVC1g0EAIB4gUhfunQ
+ eMoWwxstumqXDSD5rFk2LU35EmcExT1JiRiGF66z5u7SppH8eMCw12IXwqGSU5A9
+ AIo9kwOuXBCp66qmMRdNldugACdoVmSy/XC4Fux2gcqmTbXEFeKY6j9ok0dcS3FU
+ rhWShwcbv4KqwMkyyDx7WnNCVkORoNPKFpnHvWNmij591wH4VtlKw==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6suqqw2v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 Jul 2026 16:18:21 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 667G4apI018708;
+ Tue, 7 Jul 2026 16:18:20 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7eqg3d07-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 Jul 2026 16:18:20 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 667GIHmf47645082
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 7 Jul 2026 16:18:17 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E2EC320043;
+ Tue,  7 Jul 2026 16:18:16 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BE6022004E;
+ Tue,  7 Jul 2026 16:18:16 +0000 (GMT)
+Received: from funtu2.ibm.com (unknown [9.111.140.5])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  7 Jul 2026 16:18:16 +0000 (GMT)
+From: Harald Freudenberger <freude@linux.ibm.com>
+To: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ thuth@redhat.com, berrange@redhat.com
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
+ dengler@linux.ibm.com, borntraeger@linux.ibm.com,
+ fcallies@linux.ibm.com, cohuck@redhat.com
+Subject: [PATCH v11 16/21] target/s390x: Support protected key AES XTS for
+ cpacf km instruction
+Date: Tue,  7 Jul 2026 18:18:03 +0200
+Message-ID: <20260707161815.40919-17-freude@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260707161815.40919-1-freude@linux.ibm.com>
+References: <20260707161815.40919-1-freude@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] contrib/gitdm: Update Qualcomm entries
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Marco Liebel <quic_mliebel@quicinc.com>,
- Matheus Tavares Bernardino <quic_mathbern@quicinc.com>,
- Sid Manning <sidneym@quicinc.com>,
- Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- Marco Liebel <marco.liebel@oss.qualcomm.com>,
- Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-References: <20260707153003.58914-1-philmd@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260707153003.58914-1-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: SWqBU8RjC5avs6sRa6fqNdIYKh0LYMd1
-X-Proofpoint-ORIG-GUID: SWqBU8RjC5avs6sRa6fqNdIYKh0LYMd1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDE1NyBTYWx0ZWRfX0B+n1GMRBfFm
- KJu3NvWRYtIZJxTJcBtK1bmTsPxvy+Rc1pONey53hos+5wEt//0C/QWD+ZViTxuhA/CE+GA0NCg
- Tgm7MNqzGT8nXxF7/gQYMPIs2jWF8j3b+XK+BQcJEZjvXqUo7WTDcbuFToVfYdkVexgdEIrCWO7
- IKQ5z2bzzkbGTyXTfh8KQvDbiTRzOLb+eeaPAis3UW17CoH1kRsT7/wsbp/3+iH6Ga0CK+wOb41
- uGIW2rbUCf7tdphvQl7QklE0kMHFcW/xyPxtQyHu2X/rAvXmttwbB3wuKWGCyaMJ8427tynKxDq
- 6jzTT43r2OEcJXkY9JLtGm5jaDbktEQpAq1YXe+cVBQz5DBHSIK/QQY5Wa8q8/v3JhSST4hI8o7
- 4wGKRrxMZcNWqZ1/yULfOXgML0Dc5hfsqhzbUC2HDMPm+sOLV1WeEoPSrh6WALqJByhb3rtaIWk
- t9aTxiRP776k1b6ol/g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDE1NyBTYWx0ZWRfX4/26r1tnVNWD
- UaviNsspDLQlc8MMgvFuwTkJJuq/8HxkiX73UL0vcjyMOlvI5CwRYZkmlJGKIQwqAD1/M1AU6w4
- V0c/yCtuu+Toc5oxEHKj/9lOuzRZvYE=
-X-Authority-Analysis: v=2.4 cv=atSCzyZV c=1 sm=1 tr=0 ts=6a4d2421 cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=qziLYJvLLT2B4hVKgaYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=x9snwWr2DeNwDh03kgHS:22 a=TjNXssC_j7lpFel5tvFf:22
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDE2MCBTYWx0ZWRfX/pJOYAmRgXZl
+ YXxFE8zaqaYpseU9W+jOQQMr0jYEYoyZB2qjruHUsCLoS1gKicTUxlqPTYBLzNRzNrS9owHQQ4s
+ 46ot3TdLZ3FnUT3H8xfNgVIv0WsC+fM=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDE2MCBTYWx0ZWRfX9u8u1plMsDb1
+ Jy66VlHXI/FJUjI+VoP+37VK2anFneVivtcBkh20GhgxZWXLIMmPhBzBL6kodwL4cZu22NNXxrf
+ n8NK1xxoo+SS2O7WgiMBWdS0WZo/9reeHCtr0JnaYG3obNbywgYZ2WbGt5/R4vm+2aNEMtEwtS7
+ dEgwwQk55NgtnS2c2ZK8+plO3CGv3d6sjJaPY2KKzaOTj0ENx9QH5PvuosaUVVF86pL9UdA90tv
+ mqGDJLI00136NQSOhhNB4AdRRIqSkfVdRTQXWxd89QNk/WBB9qS22KDOAn8QVqtkbC2V3JDbG64
+ r9WDf2Meg5QZTYEudjsQ6TyFdpbdK1l5pIVynLrqne3BnI9eC3WH4t8Nu5TkR0cI3q43/ovYFUK
+ xzJkDifXGY+6jgZQ2Xr6Cn78HEEkxiBLauI4wWRPyE+HMlH0rMDMy2G7XGQU3mDXNMNZIhRz0cF
+ SkaTHIsWRZ1onyuQW6g==
+X-Proofpoint-GUID: pz1OU8g6HXtDf1r5hAq5HCzYg5uiEOxi
+X-Authority-Analysis: v=2.4 cv=Oot/DS/t c=1 sm=1 tr=0 ts=6a4d26cd cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=_Jmc02WdQjUAVPbgbKgA:9
+X-Proofpoint-ORIG-GUID: pz1OU8g6HXtDf1r5hAq5HCzYg5uiEOxi
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_04,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 priorityscore=1501 spamscore=0
- suspectscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 adultscore=0
+ bulkscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 phishscore=0
+ malwarescore=0 suspectscore=0 spamscore=0 adultscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070157
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070160
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=freude@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -165,26 +122,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/7/2026 8:30 AM, Philippe Mathieu-Daudé wrote:
-> Add an entry for Qualcomm Technologies, Inc.,
-> include previous quicinc.com contributions.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> ---
-> Cc: Marco Liebel <quic_mliebel@quicinc.com>
-> Cc: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-> Cc: Sid Manning <sidneym@quicinc.com>
-> Cc: Andrew Jones <andrew.jones@oss.qualcomm.com>
-> Cc: Brian Cain <brian.cain@oss.qualcomm.com>
-> Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>
-> Cc: Marco Liebel <marco.liebel@oss.qualcomm.com>
-> Cc: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-> Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->  contrib/gitdm/domain-map | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
+Support the subfunctions CPACF_KM_PXTS_128 and CPACF_KM_PXTS_256
+for the cpacf km instruction.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Tested-by: Holger Dengler <dengler@linux.ibm.com>
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+---
+ target/s390x/gen-features.c      |   2 +
+ target/s390x/tcg/cpacf.h         |   4 ++
+ target/s390x/tcg/cpacf_aes.c     | 105 +++++++++++++++++++++++++++++++
+ target/s390x/tcg/crypto_helper.c |   6 ++
+ 4 files changed, 117 insertions(+)
+
+diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
+index 126bacb281..c4c59c3504 100644
+--- a/target/s390x/gen-features.c
++++ b/target/s390x/gen-features.c
+@@ -929,6 +929,8 @@ static uint16_t qemu_MAX[] = {
+     S390_FEAT_KM_EAES_256,
+     S390_FEAT_KM_XTS_AES_128,
+     S390_FEAT_KM_XTS_AES_256,
++    S390_FEAT_KM_XTS_EAES_128,
++    S390_FEAT_KM_XTS_EAES_256,
+     S390_FEAT_KMC_AES_128,
+     S390_FEAT_KMC_AES_192,
+     S390_FEAT_KMC_AES_256,
+diff --git a/target/s390x/tcg/cpacf.h b/target/s390x/tcg/cpacf.h
+index 1786a21f83..d86d3b58f9 100644
+--- a/target/s390x/tcg/cpacf.h
++++ b/target/s390x/tcg/cpacf.h
+@@ -297,5 +297,9 @@ int cpacf_paes_ctr(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+                    uint8_t fc, uint8_t mod);
+ int cpacf_paes_pcc(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+                    uint64_t param_addr, uint8_t fc);
++int cpacf_paes_xts(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
++                   uint64_t param_addr, uint64_t *dst_ptr_reg,
++                   uint64_t *src_ptr_reg, uint64_t *src_len_reg,
++                   uint32_t type, uint8_t fc, uint8_t mod);
+ 
+ #endif /* S390X_CPACF_H */
+diff --git a/target/s390x/tcg/cpacf_aes.c b/target/s390x/tcg/cpacf_aes.c
+index a8b789e62e..4449bbc0d2 100644
+--- a/target/s390x/tcg/cpacf_aes.c
++++ b/target/s390x/tcg/cpacf_aes.c
+@@ -904,3 +904,108 @@ int cpacf_paes_pcc(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+ 
+     return 0;
+ }
++
++int cpacf_paes_xts(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
++                   uint64_t param_addr, uint64_t *dst_ptr_reg,
++                   uint64_t *src_ptr_reg, uint64_t *src_len_reg,
++                   uint32_t type, uint8_t fc, uint8_t mod)
++{
++    enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
++    uint8_t buf1[AES_BLOCK_SIZE], buf2[AES_BLOCK_SIZE];
++    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
++    uint8_t key[32], wkvp[32], tweak[AES_BLOCK_SIZE];
++    uint64_t addr, len = *src_len_reg, done = 0;
++    int i, keysize, addr_reg_size = 64;
++    AES_KEY exkey;
++
++    g_assert(type == S390_FEAT_TYPE_KM);
++
++    switch (fc) {
++    case CPACF_KM_PXTS_128:
++        keysize = 16;
++        break;
++    case CPACF_KM_PXTS_256:
++        keysize = 32;
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    if (!(env->psw.mask & PSW_MASK_64)) {
++        len = (uint32_t)len;
++        addr_reg_size = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
++    }
++
++    /* length has to be properly aligned. */
++    if (!QEMU_IS_ALIGNED(len, AES_BLOCK_SIZE)) {
++        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
++    }
++
++    /* fetch and check wkvp from param block */
++    for (i = 0; i < sizeof(wkvp); i++) {
++        addr = wrap_address(env, param_addr + keysize + i);
++        wkvp[i] = cpu_ldb_mmu(env, addr, oi, ra);
++    }
++    if (memcmp(wkvp, protkey_wkvp, sizeof(wkvp))) {
++        /* wkvp mismatch -> return with cc 1 */
++        return 1;
++    }
++
++    /* fetch protected key from param block */
++    for (i = 0; i < keysize; i++) {
++        addr = wrap_address(env, param_addr + i);
++        key[i] = cpu_ldb_mmu(env, addr, oi, ra);
++    }
++    /* decrypt the protected key */
++    decrypt_protkey(key, keysize);
++
++    /* expand key */
++    if (mod) {
++        AES_set_decrypt_key(key, keysize * 8, &exkey);
++    } else {
++        AES_set_encrypt_key(key, keysize * 8, &exkey);
++    }
++
++    /* fetch tweak from param block */
++    for (i = 0; i < AES_BLOCK_SIZE; i++) {
++        addr = wrap_address(env, param_addr + keysize + sizeof(wkvp) + i);
++        tweak[i] = cpu_ldb_mmu(env, addr, oi, ra);
++    }
++
++    /* process up to MAX_BLOCKS_PER_RUN aes blocks */
++    for (i = 0; i < MAX_BLOCKS_PER_RUN && len >= AES_BLOCK_SIZE; i++) {
++        /* fetch one AES block into buf1  */
++        aes_read_block(env, mmu_idx, *src_ptr_reg + done, buf1, ra);
++        /* buf1 xor tweak => buf2 */
++        aes_xor(buf1, tweak, buf2);
++        if (mod) {
++            /* decrypt buf2 => buf1 */
++            AES_decrypt(buf2, buf1, &exkey);
++        } else {
++            /* encrypt buf2 => buf1 */
++            AES_encrypt(buf2, buf1, &exkey);
++        }
++        /* buf1 xor tweak => buf2 */
++        aes_xor(buf1, tweak, buf2);
++        /* prep tweak for next round */
++        aes_xts_prep_next_tweak(tweak);
++        /* write out this processed block from buf2 */
++        aes_write_block(env, mmu_idx, *dst_ptr_reg + done, buf2, ra);
++        len -= AES_BLOCK_SIZE;
++        done += AES_BLOCK_SIZE;
++    }
++
++    /* update tweak in param block */
++    for (i = 0; i < AES_BLOCK_SIZE; i++) {
++        addr = wrap_address(env, param_addr + keysize + sizeof(wkvp) + i);
++        cpu_stb_mmu(env, addr, tweak[i], oi, ra);
++    }
++
++    *src_ptr_reg = deposit64(*src_ptr_reg, 0, addr_reg_size,
++                             *src_ptr_reg + done);
++    *dst_ptr_reg = deposit64(*dst_ptr_reg, 0, addr_reg_size,
++                             *dst_ptr_reg + done);
++    *src_len_reg -= done;
++
++    return !len ? 0 : 3;
++}
+diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
+index 5e924b78f5..6172012979 100644
+--- a/target/s390x/tcg/crypto_helper.c
++++ b/target/s390x/tcg/crypto_helper.c
+@@ -116,6 +116,12 @@ static int cpacf_km(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+                            &env->regs[r1], &env->regs[r2], &env->regs[r2 + 1],
+                            S390_FEAT_TYPE_KM, fc, mod);
+         break;
++    case CPACF_KM_PXTS_128:
++    case CPACF_KM_PXTS_256:
++        rc = cpacf_paes_xts(env, mmu_idx, ra, env->regs[1],
++                            &env->regs[r1], &env->regs[r2], &env->regs[r2 + 1],
++                            S390_FEAT_TYPE_KM, fc, mod);
++        break;
+     default:
+         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+     }
+-- 
+2.43.0
+
 
