@@ -4,95 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD3ACC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:00:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3748C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:03:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh3Wv-0000jE-DX; Tue, 07 Jul 2026 06:59:57 -0400
+	id 1wh3a5-0002Jn-Ir; Tue, 07 Jul 2026 07:03:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wh3Wt-0000iX-8y
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:59:55 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wh3Wr-00075i-9j
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:59:55 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-493b77b150aso36834535e9.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 03:59:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783421992; x=1784026792; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Ppw2tC4bwbMwGZqKVSQhlyH0n0RuWFwIRAnfv3sWAxo=;
- b=E+BT9GVA+QkDi+0xg826LEt40xMdUr4WW2ZAbuFP84MleXW6gAnXTX/yNc6xR4IY+m
- JNIQ3d3bCdJnMQpYuREP5pn2KgnWP8SU9fS+BUJ7K6tsBCp23CSC53QeZ6p91U/3OIa8
- ELBwTv0ZAyqpGWUnsbM/ehJ3phQjybXxomAHMEeDvkJS4d81iu/6QPdyD5LWZMKQTK30
- rf+hOI6e29CoQGx/aj3QC8WSKI4jqzsJZB/u1sQxx5eMaP1khoAwsU3maosYAPGErAli
- 1m26gRorxbP7kqGnvnuXW06kq6L+0cNomJCAMDSFhLEQI5vH3hotx0sH5Xn+jWl818hm
- X/8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783421992; x=1784026792;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Ppw2tC4bwbMwGZqKVSQhlyH0n0RuWFwIRAnfv3sWAxo=;
- b=fWtk2gCnSqsvUgBMDVayXaoCW1uSvr4wymCksLgDPl0QyNOY4S1vgQwK9sjzJzxPxs
- nKeZccl6f+EV1sC6la7I4rPoagOx8zzAL9rJjTtwoZxrG1sFKVFSBHA5xcVN0jOJDNFX
- hAWf3xqIE/mW23b3dotiB3x3drBxkprGIa8RfEDENAIOwwJqd6QGYrrcjn312xx5VslZ
- mPaHT2MMvtmukhHyypVXv+zz4IL+XD1JuEOsQP0yi4yGA5bM1AHlY/lDXoalFcVmKl9Z
- AJVk4jKpICpw8zi8wD8NdYei2wWiKRI61FfJXeJdVerNlIyhF+S511Rgj7vLUcg5/FzI
- fGBA==
-X-Gm-Message-State: AOJu0YzLCdmcZ/LvFLcAk9aJ4NknVpW9sSiCQyGMnLpdwV4mF0JrYqLS
- SzbU7ikkwLjooPe501/hC3Rgj11jGPi4+KC0+mOCxAovB/BLz2RHtXdC
-X-Gm-Gg: AfdE7cnBidvJg40XrFp21+IndXX4t5doWvDo4qW6LcL4an12ldcrD1ntkP/DpDPOKEf
- f8tGpsBZNINtn5c9wUeo3V+Pq/hj6iZOOMFWxX/8B7sZkhX8yn55pHFDas5zVypHHn9gotqIFd2
- oc4VJtidfVFiGyzrRy7LIBh9ahxN2AX8KSpbxdzurNdReUPJM8asIIOYCWAnnxcKzh8IZwkk1t4
- gAF06g09V4lXDN7cJNnII3Eoo9EUHTt1aVzW1puSwbM0f+XFlChJpTMpD0EEWJgp9VlrP+gGquI
- Hr9Vnpg4kK/GI1FJW8VOu+6T/j58eZ4cLPd6AqxQzlbIMNMKJWAWIu6rgG6+tetBYpvreHcECWp
- /7U3KJvaH5GPw/XdWd2wDCtkx3MaNPwm6PeerV9Xt9FFBZd6YBhWkS+XEHjAl88z0R/n/jcUkht
- YzszUAQTwFKpYGjeiM2c0=
-X-Received: by 2002:a05:600c:638e:b0:493:dfc8:77d6 with SMTP id
- 5b1f17b1804b1-493e3adbb04mr9935855e9.12.1783421991595; 
- Tue, 07 Jul 2026 03:59:51 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([185.238.219.17])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47a9e4d83bdsm33754645f8f.13.2026.07.07.03.59.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jul 2026 03:59:51 -0700 (PDT)
-Date: Tue, 07 Jul 2026 10:48:02 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Pavel Pisa <pisa@fel.cvut.cz>
-CC: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Matyas Bobek <matyas.bobek@gmail.com>,
- Vikram Garhwal <vikram.garhwal@bytedance.com>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>, Jason Wang <jasowang@redhat.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Francisco Iglesias <francisco.iglesias@amd.com>
-Subject: Re: [PATCH v2 0/5] hw/arm/fsl-imx8mp: Add inital FlexCAN support
-In-Reply-To: <202607061344.14505.pisa@fel.cvut.cz>
-References: <20260702184038.178196-1-shentey@gmail.com>
- <202607061344.14505.pisa@fel.cvut.cz>
-Message-ID: <341AB560-68B9-4965-917E-27E00E3A63DB@gmail.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3a0-0002I2-Qd
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3Zz-0007zp-2T
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783422185;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Wlb2CbxwsdCOlzzK9WvfwVqg0kHJV0o/Wgs6oUuGkoI=;
+ b=RxRIul8DNSjZWH1UR96S50Wb1d323VGsdQfLp1mw6jfDjNIH7ZT2ZIyUT5gaV7aWCLgLEf
+ qcLxsa2XjfIPTi9A9BAdWaarRoK1u8Jmj+F/spg+vb9lsuASW1DS5DR5embgU5tr065shl
+ YIDHAI5k/6e5o/yVsFuAzuGFYHoRsKo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-ViEj8ApnOraD7InXefRNBQ-1; Tue,
+ 07 Jul 2026 07:03:04 -0400
+X-MC-Unique: ViEj8ApnOraD7InXefRNBQ-1
+X-Mimecast-MFC-AGG-ID: ViEj8ApnOraD7InXefRNBQ_1783422184
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A9068195411D
+ for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 11:03:03 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2068C1800749
+ for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 11:03:03 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 954A521E6920; Tue, 07 Jul 2026 13:03:00 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: stefanha@redhat.com
+Subject: [PULL 00/35] Monitor patches for 2026-07-07
+Date: Tue,  7 Jul 2026 13:02:25 +0200
+Message-ID: <20260707110300.1918153-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,125 +83,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The following changes since commit 94826ec1370328375c3b6d1e80fdc94c8f46c348:
 
+  Merge tag 'accel-20260706' of https://github.com/philmd/qemu into staging (2026-07-06 18:38:14 +0200)
 
-Am 6=2E Juli 2026 11:44:14 UTC schrieb Pavel Pisa <pisa@fel=2Ecvut=2Ecz>:
->Dear Bernhard,
->
->On Thursday 02 of July 2026 20:40:33 Bernhard Beschow wrote:
->> Now that FlexCAN emulation has landed in master, let's add it to imx8mp=
--evk
->> as well=2E While the real i=2EMX8M Plus supports CAN FD which isn't emu=
-lated
->> yet, the non-FD mode works well under Linux: It is possible to use `can=
-gen`
->> and `candump` either way on the host and on the guest, as described in
->> docs/system/devices/can=2Erst=2E
->>
->> This series consists of five patches where the first four are preparati=
-ons=2E
->> The last patch integrates FlexCAN into the i=2EMX8M Plus SoC and EVK bo=
-ard=2E
->> The first preparation addresses the review comment from [1], and could =
-be
->> applied independently=2E
->>
->> It would be nice if this series could make it into 11=2E1=2E
->>
->> Testing done:
->> * Start imx8mp-evk and run `cangen can0` there=2E Observe on the host t=
-hat
->> `candump vcan0` prints the traffic=2E
->> * `make check`
->>
->> v2:
->> Thanks for the very helpful and super quick review, Phil! Here we go:
->> * Add patch "hw/net/can/flexcan: Wire clock control module via link
->> property" * Have separate MemoryRegionOps for 32 and 64 bit
->>
->> [1]
->> https://lore=2Ekernel=2Eorg/qemu-devel/77d5891c-de12-467e-8746-02fe4312=
-1e3e@oss
->>=2Equalcomm=2Ecom/ ---
->> base-commit: a59157f98f0b69b0bbdb26bc15fbc4d6c8060799
->>
->> Bernhard Beschow (5):
->>   hw/net/can/flexcan: Wire clock control module via link property
->>   hw/net/can/flexcan: Subclass TYPE_CAN_FLEXCAN
->>   hw/arm/imx8mp-evk: Open code DEFINE_MACHINE_AARCH64
->>   hw/arm/imx8mp-evk: Introduce FslImx8mpEvkState
->>   hw/arm: Add basic FlexCAN3 support to TYPE_FSL_IMX8MP and imx8mp-evk
->>
->>  docs/system/arm/imx8m=2Erst   |  1 +
->>  include/hw/arm/fsl-imx8mp=2Eh |  8 ++++
->>  include/hw/net/flexcan=2Eh    |  4 +-
->>  hw/arm/fsl-imx6=2Ec           |  5 ++-
->>  hw/arm/fsl-imx8mp=2Ec         | 38 ++++++++++++++++
->>  hw/arm/imx8mp-evk=2Ec         | 64 ++++++++++++++++++++++-----
->>  hw/misc/imx8mp_ccm=2Ec        |  3 ++
->>  hw/net/can/flexcan=2Ec        | 88 ++++++++++++++++++++++++++++++-----=
---
->>  hw/arm/Kconfig              |  1 +
->>  9 files changed, 182 insertions(+), 30 deletions(-)
->
->Thanks for the work=2E I have tested the series on the top
->of your imx8mp-flexcan branch, commit
->
->  3b7289419cac5b712faeadf6b4a6203579d08f76
->
->with our test setup for iMX6
->
->  qemu-system-arm -m 1G -M sabrelite -smp 4 =2E=2E=2E
->
->and it worked as intended=2E I have looked at all patches
->from your series and I do not see anything problematic=2E
->
->You can add my confirmation to the series and or individual
->patches
->
->Acked-by: Pavel Pisa <pisa@fel=2Ecvut=2Ecz>
->Tested-by: Pavel Pisa <pisa@fel=2Ecvut=2Ecz>
+are available in the Git repository at:
 
-Thanks!
+  https://repo.or.cz/qemu/armbru.git tags/pull-monitor-2026-07-07
 
->
->By the way, I have noticed your iMX53 branch=2E
+for you to fetch changes up to 58b70f21ba6364be4f79d9f9c56b334341051bfd:
 
-I haven't decided yet whether to upstream it because I wonder if anyone wo=
-uld be interested in this rather old but (IIUC) longterm SoC=2E For some re=
-ason I get file system corruption there which should be resolved before ups=
-treaming can be considered=2E
+  docs: mark '-mon' as deprecated in favour of -object (2026-07-07 11:16:27 +0200)
 
-Best regards,
-Bernhard
+----------------------------------------------------------------
+Monitor patches for 2026-07-07
 
-> We have some
->old kits for this because we used it for yet another generation
->of medical infusion system prototypes/instruments fully
->functional demonstrators but before final HW design with
->safety=2E
->
->The fully realized and produced systems with iMX1 there
->https://www=2Epikron=2Ecom/pages/devel/medinst=2Ehtml
->
->Functional demonstrators with iMX53 there
->https://onimed=2Ecz/wp-content/uploads/2021/02/medicina=2Epng
->
->Best wishes,
->
->                Pavel
->
->                Pavel Pisa
->    phone:      +420 603531357
->    e-mail:     pisa@cmp=2Efelk=2Ecvut=2Ecz
->    Department of Control Engineering FEE CVUT
->    Karlovo namesti 13, 121 35, Prague 2
->    university: http://control=2Efel=2Ecvut=2Ecz/
->    personal:   http://cmp=2Efelk=2Ecvut=2Ecz/~pisa
->    social:     https://social=2Ekernel=2Eorg/ppisa
->    projects:   https://www=2Eopenhub=2Enet/accounts/ppisa
->    CAN related:http://canbus=2Epages=2Efel=2Ecvut=2Ecz/
->    RISC-V education: https://comparch=2Eedu=2Ecvut=2Ecz/
->    Open Technologies Research Education and Exchange Services
->    https://gitlab=2Efel=2Ecvut=2Ecz/otrees/org/-/wikis/home
+----------------------------------------------------------------
+Christian Brauner (6):
+      monitor: convert from oneshot BH to persistent BH
+      monitor: reject attempts to delete the current monitor
+      monitor: protect qemu_chr_fe_accept_input with monitor lock
+      monitor: implement support for deleting QMP objects
+      tests/qtest: add tests for dynamic monitor add/remove
+      tests/functional: add e2e test for dynamic QMP monitor hotplug
+
+Daniel P. Berrangé (29):
+      qom: replace 'can_be_deleted' with 'prepare_delete'
+      monitor: replace 'common' with 'parent_obj' in MonitorHMP
+      monitor: replace 'common' with 'parent_obj' in MonitorQMP
+      monitor: rename monitor_init* to monitor_new*
+      monitor: minimal conversion of monitors to QOM
+      monitor: pass chardev ID into monitor constructor instead of object
+      monitor: add 'chardev' property to Monitor base class
+      monitor: add 'readline' property to HMP Monitor class
+      monitor: add 'pretty' property to QMP Monitor class
+      monitor: remove 'skip_flush' field
+      monitor: move monitor_data_(init|destroy) into QOM init/finalize
+      monitor: use class methods for monitor_vprintf
+      monitor: use class methods for monitor_qapi_event_emit
+      monitor: use class methods for monitor_accept_input
+      monitor: use class method for I/O thread request
+      monitor: use dynamic cast in monitor_qmp_requests_pop_any_with_lock
+      util: use dynamic cast in error vreport
+      monitor: drop unused monitor_cur_is_qmp
+      monitor: use dynamic cast in QMP commands
+      monitor: use dynamic cast in monitor_is_hmp_non_interactive
+      monitor: drop unused monitor_is_qmp method
+      monitor: eliminate monitor_is_hmp_non_interactive method
+      monitor: implement "user creatable" interface for adding monitors
+      tests/functional: add a stress test for monitor hot unplug
+      qom: add trace events for user creatable create/delete APIs
+      monitor: add support for auto-deleting monitors upon close
+      tests: switch from -mon to -object monitor-qmp
+      qemu-options: document new monitor-hmp and monitor-qmp objects
+      docs: mark '-mon' as deprecated in favour of -object
+
+ MAINTAINERS                                      |   1 +
+ docs/about/deprecated.rst                        |  10 +
+ docs/devel/writing-monitor-commands.rst          |   4 +-
+ docs/system/arm/xenpvh.rst                       |   4 +-
+ docs/system/i386/xen.rst                         |   3 +-
+ docs/system/i386/xenpvh.rst                      |   4 +-
+ qapi/qom.json                                    |  63 +++++
+ include/monitor/monitor.h                        |  26 +-
+ include/qom/object_interfaces.h                  |  26 +-
+ include/system/event-loop-base.h                 |   2 +-
+ monitor/monitor-internal.h                       |  73 +++--
+ backends/cryptodev.c                             |  12 +-
+ backends/hostmem.c                               |   7 +-
+ backends/iommufd.c                               |  11 +-
+ block/throttle-groups.c                          |  12 +-
+ chardev/char.c                                   |   3 +-
+ event-loop-base.c                                |   8 +-
+ gdbstub/system.c                                 |   2 +-
+ migration/migration-hmp-cmds.c                   |   5 +-
+ monitor/hmp-cmds.c                               |   7 +-
+ monitor/hmp.c                                    | 181 ++++++++++---
+ monitor/monitor.c                                | 273 ++++++++++---------
+ monitor/qmp-cmds-control.c                       |  12 +-
+ monitor/qmp-cmds.c                               |  14 +-
+ monitor/qmp.c                                    | 323 ++++++++++++++++++++---
+ net/can/can_core.c                               |   6 +-
+ qom/object_interfaces.c                          |  20 +-
+ storage-daemon/qemu-storage-daemon.c             |   2 +-
+ stubs/monitor-core.c                             |   5 -
+ stubs/monitor-internal.c                         |   4 +-
+ system/vl.c                                      |  19 +-
+ tests/qtest/libqtest.c                           |   2 +-
+ tests/qtest/qmp-test.c                           | 174 ++++++++++++
+ tests/unit/test-util-sockets.c                   |   1 -
+ tools/qemu-vnc/stubs.c                           |   5 -
+ ui/ui-hmp-cmds.c                                 |   2 +-
+ util/error-report.c                              |  13 +-
+ util/main-loop.c                                 |   6 +-
+ python/qemu/machine/machine.py                   |   4 +-
+ qemu-options.hx                                  |  64 ++++-
+ qom/trace-events                                 |   5 +
+ tests/functional/generic/meson.build             |   1 +
+ tests/functional/generic/test_monitor_hotplug.py | 305 +++++++++++++++++++++
+ tests/qemu-iotests/245                           |   4 +-
+ 44 files changed, 1395 insertions(+), 333 deletions(-)
+ create mode 100755 tests/functional/generic/test_monitor_hotplug.py
+
+-- 
+2.54.0
+
 
