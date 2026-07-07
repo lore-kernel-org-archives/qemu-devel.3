@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E89AFC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 06:19:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16278C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 06:19:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgz9H-0003hY-Kp; Tue, 07 Jul 2026 02:19:15 -0400
+	id 1wgz9I-0003hk-2B; Tue, 07 Jul 2026 02:19:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@posteo.eu>) id 1wgz9B-0003es-Mz
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:19:11 -0400
+ (Exim 4.90_1) (envelope-from <th.huth@posteo.eu>) id 1wgz9D-0003fn-HE
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:19:13 -0400
 Received: from mout02.posteo.de ([185.67.36.66])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@posteo.eu>) id 1wgz99-0001H7-G4
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:19:09 -0400
+ (Exim 4.90_1) (envelope-from <th.huth@posteo.eu>) id 1wgz99-0001H6-Rs
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:19:11 -0400
 Received: from submission (posteo.de [185.67.36.169]) 
- by mout02.posteo.de (Postfix) with ESMTPS id 44F49240103
+ by mout02.posteo.de (Postfix) with ESMTPS id 8CE1D240101
  for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 08:19:04 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.eu;
  s=1984.8680eb; t=1783405144;
- bh=VKFM2IaRNN4DJdtb2GSgcTdTHhiZmoE3vAhb4sDdm2U=;
- h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
+ bh=7QgkWxDqsKGyeHGrlZEQIjZR/SmL5z10D2fm4AH3XoU=;
+ h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type:
  Content-Transfer-Encoding:From;
- b=SVjsD+99X1DWbB3N9Oj3Cw5u2lyYhScTMSdh/wJiccLGJAjEM9XOH4wEugd0pzoq6
- vgWaN5lSPCpLOyW/0Fi14tW+oI41FxQrrzcaqtl1rcgkhFHN+qhkSKyD9obXlIXuAD
- QNxU7LoYv34d2g36lRDGLGsWvRe9Hz6StZJ5eDDtR6xGN+yrSaZLYahg7ox+U31S6j
- ykRHJMiJBHTHSXwwK6e2PW2kxiq6PPNgl81kgeTrcaAkl7fSCKCyNuYwNby0ZkdsMq
- Fze0gHE9gn4buyW/OyKRkcsOHBzv7FWDWfgrf/FoTI0pTPrZo+6ejp8cY4epYycMKG
- 9wiXjtsMDaVWQ==
+ b=FWDtk92+IbQU3JIOy7uVnE1dHXzsaaijxMa4Ijkl6Wkv/umi2srmBpu7xGffm/fvA
+ TO7X8gLZZdNwc8jijK3G9SFNfMj3QNnTBGNYmtlTIwCMIxMxWrZgdsOyRK0n0QBoN8
+ 4jEjU72ASmwfvzIeQC/n2mNJydLkvM6YuHuJCQyNGu8M7iQ8+HREdh4s63EyCU+AdC
+ h2WRJiG1KWiQpoYQA7eWoYCuj2Ptxck4MrsHFplhjSU/TOI3tNd+ifkgDj4PSQ3MX6
+ 5DppaG9smLtQtf6VCg3lowJOzRaTjoYDmXUS7gBLdxO6DPdpeO5LeAg0E9DaRVY1mq
+ GaF24awAqhsrw==
 Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4gvWJl6B1Vz9rxG;
- Tue,  7 Jul 2026 08:19:03 +0200 (CEST)
+ by submission (posteo.de) with ESMTPSA id 4gvWJm10fGz9rxF;
+ Tue,  7 Jul 2026 08:19:04 +0200 (CEST)
 From: Thomas Huth <th.huth@posteo.eu>
 To: Stefan Hajnoczi <stefanha@redhat.com>
 Cc: qemu-devel@nongnu.org
-Subject: [PULL 1/3] tests/functional: Add hotplug_scsi test to hotplug
- virtio-scsi disk
+Subject: [PULL 2/3] tests/functional/aspeed: unify boot completion detection
+ on 'login:' prompt
 Date: Tue, 07 Jul 2026 06:19:04 +0000
-Message-ID: <20260707061851.8298-2-th.huth@posteo.eu>
+Message-ID: <20260707061851.8298-3-th.huth@posteo.eu>
 In-Reply-To: <20260707061851.8298-1-th.huth@posteo.eu>
 References: <20260707061851.8298-1-th.huth@posteo.eu>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=185.67.36.66; envelope-from=th.huth@posteo.eu;
  helo=mout02.posteo.de
@@ -70,135 +71,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Siddhi Katage <siddhi.katage@oracle.com>
+From: Cédric Le Goater <clg@redhat.com>
 
-Signed-off-by: Siddhi Katage <siddhi.katage@oracle.com>
-Message-ID: <20260210113135.771697-1-siddhi.katage@oracle.com>
-[thuth: Add the new .py file to the MAINTAINERS file]
+The boot completion check in AspeedTest waits for the systemd
+"Hostname set to" message, which occasionally causes intermittent test
+timeouts, e.g. on ast2500 SoC machines. The root cause seems to be
+console output interleaving of both systemd and the getty login
+process. This results in the expected pattern string being broken up.
+
+Unify and simplify all boot completion checks by looking for the
+generic 'login:' substring in AspeedTest.wait_for_boot_complete().
+With the override gone, remove the redundant FacebookAspeedTest class
+and update the Anacapa, Bletchley, and Catalina tests to inherit
+directly from AspeedTest. Also drop the now-dead image_hostname
+parameter from do_test_arm_aspeed_openbmc().
+
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3117
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260617042718.2883655-1-clg@redhat.com>
 Signed-off-by: Thomas Huth <th.huth@posteo.eu>
 ---
- MAINTAINERS                                  |  1 +
- tests/functional/x86_64/meson.build          |  1 +
- tests/functional/x86_64/test_hotplug_scsi.py | 86 ++++++++++++++++++++
- 3 files changed, 88 insertions(+)
- create mode 100755 tests/functional/x86_64/test_hotplug_scsi.py
+ tests/functional/arm/test_aspeed_anacapa.py   |  6 +++---
+ tests/functional/arm/test_aspeed_bletchley.py |  6 +++---
+ tests/functional/arm/test_aspeed_catalina.py  |  6 +++---
+ .../arm/test_aspeed_gb200nvl_bmc.py           |  3 +--
+ tests/functional/aspeed.py                    | 21 ++++---------------
+ 5 files changed, 14 insertions(+), 28 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 97dcc78ded..ed65654698 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2338,6 +2338,7 @@ F: tests/qtest/virtio-scsi-test.c
- F: tests/qtest/fuzz-virtio-scsi-test.c
- F: tests/qtest/am53c974-test.c
- F: tests/qtest/fuzz-lsi53c895a-test.c
-+F: tests/functional/x86_64/test_hotplug_scsi.py
- T: git https://github.com/bonzini/qemu.git scsi-next
+diff --git a/tests/functional/arm/test_aspeed_anacapa.py b/tests/functional/arm/test_aspeed_anacapa.py
+index 27f8bd8b56..809afeaeb8 100644
+--- a/tests/functional/arm/test_aspeed_anacapa.py
++++ b/tests/functional/arm/test_aspeed_anacapa.py
+@@ -5,10 +5,10 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
- SSI
-diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-index 1ed10ad6c2..d237ca156e 100644
---- a/tests/functional/x86_64/meson.build
-+++ b/tests/functional/x86_64/meson.build
-@@ -31,6 +31,7 @@ endif
- tests_x86_64_system_thorough = [
-   'acpi_bits',
-   'hotplug_blk',
-+  'hotplug_scsi',
-   'hotplug_cpu',
-   'intel_iommu',
-   'kvm_xen',
-diff --git a/tests/functional/x86_64/test_hotplug_scsi.py b/tests/functional/x86_64/test_hotplug_scsi.py
-new file mode 100755
-index 0000000000..10fd306616
---- /dev/null
-+++ b/tests/functional/x86_64/test_hotplug_scsi.py
-@@ -0,0 +1,86 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that hotplugs a virtio scsi disk and checks it on a Linux
-+# guest
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
-+
-+class HotPlugScsi(LinuxKernelTest):
-+    ASSET_KERNEL = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Server/x86_64/os/images/pxeboot/vmlinuz'),
-+        'd4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129')
-+
-+    ASSET_INITRD = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Server/x86_64/os/images/pxeboot/initrd.img'),
-+        '277cd6c7adf77c7e63d73bbb2cded8ef9e2d3a2f100000e92ff1f8396513cd8b')
-+
-+    def blockdev_add(self) -> None:
-+        self.vm.cmd('blockdev-add', **{
-+            'driver': 'null-co',
-+            'size': 1073741824,
-+            'node-name': 'disk0'
-+        })
-+
-+    def add_scsi_controller(self) -> None:
-+        self.vm.cmd('device_add', {
-+            'driver': 'virtio-scsi-pci',
-+            'id': 'scsi0',
-+            'bus': 'pci.1',
-+            'addr': '1',
-+        })
-+
-+    def assert_sda(self) -> None:
-+        exec_command_and_wait_for_pattern(self, 'while ! test -e /sys/block/sda ;'
-+                                                ' do sleep 0.2 ; done', '# ')
-+
-+    def assert_no_sda(self) -> None:
-+        exec_command_and_wait_for_pattern(self, 'while test -e /sys/block/sda ;'
-+                                                ' do sleep 0.2 ; done', '# ')
-+
-+    def plug(self) -> None:
-+        args = {
-+            'driver':'scsi-hd',
-+            'drive':'disk0',
-+            'bus':'scsi0.0',
-+            'id':'scsi-disk0',
-+        }
-+
-+        self.assert_no_sda()
-+        self.vm.cmd('device_add', args)
-+        self.wait_for_console_pattern('[sda] Attached SCSI disk')
-+        self.assert_sda()
-+
-+    def unplug(self) -> None:
-+        self.vm.cmd('device_del', id='scsi-disk0')
-+
-+        self.vm.event_wait('DEVICE_DELETED', 1.0,
-+                           match={'data': {'device': 'scsi-disk0'}})
-+
-+        self.assert_no_sda()
-+
-+    def test(self) -> None:
-+        self.require_accelerator('kvm')
-+        self.set_machine('q35')
-+        self.vm.add_args('-accel', 'kvm')
-+        self.vm.add_args('-device', 'pcie-pci-bridge,id=pci.1,bus=pcie.0')
-+        self.vm.add_args('-m', '1G')
-+        self.vm.add_args('-append', 'console=ttyS0 rd.rescue')
-+
-+        self.launch_kernel(self.ASSET_KERNEL.fetch(),
-+                           self.ASSET_INITRD.fetch(),
-+                           wait_for='Entering emergency mode.')
-+        self.wait_for_console_pattern('# ')
-+
-+        self.blockdev_add()
-+        self.add_scsi_controller()
-+        self.plug()
-+        self.unplug()
-+
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
-+
+ from qemu_test import Asset
+-from aspeed import FacebookAspeedTest
++from aspeed import AspeedTest
+ 
+ 
+-class AnacapaMachine(FacebookAspeedTest):
++class AnacapaMachine(AspeedTest):
+ 
+     ASSET_ANACAPA_FLASH = Asset(
+         'https://github.com/legoater/qemu-aspeed-boot/raw/3fa3212827b04be4034d43b5adeef57c27d6ab18/images/anacapa-bmc/openbmc-20260512025228/obmc-phosphor-image-anacapa-20260512025228.static.mtd.xz',
+@@ -22,4 +22,4 @@ def test_arm_ast2600_anacapa_openbmc(self):
+                                         soc='AST2600 rev A3')
+ 
+ if __name__ == '__main__':
+-    FacebookAspeedTest.main()
++    AspeedTest.main()
+diff --git a/tests/functional/arm/test_aspeed_bletchley.py b/tests/functional/arm/test_aspeed_bletchley.py
+index 3000d0c302..5a60b24b3d 100755
+--- a/tests/functional/arm/test_aspeed_bletchley.py
++++ b/tests/functional/arm/test_aspeed_bletchley.py
+@@ -5,10 +5,10 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ from qemu_test import Asset
+-from aspeed import FacebookAspeedTest
++from aspeed import AspeedTest
+ 
+ 
+-class BletchleyMachine(FacebookAspeedTest):
++class BletchleyMachine(AspeedTest):
+ 
+     ASSET_BLETCHLEY_FLASH = Asset(
+         'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/bletchley-bmc/openbmc-20250128071329/obmc-phosphor-image-bletchley-20250128071329.static.mtd.xz',
+@@ -22,4 +22,4 @@ def test_arm_ast2600_bletchley_openbmc(self):
+                                         soc='AST2600 rev A3')
+ 
+ if __name__ == '__main__':
+-    FacebookAspeedTest.main()
++    AspeedTest.main()
+diff --git a/tests/functional/arm/test_aspeed_catalina.py b/tests/functional/arm/test_aspeed_catalina.py
+index 2694e4b005..dc2f24e7b4 100755
+--- a/tests/functional/arm/test_aspeed_catalina.py
++++ b/tests/functional/arm/test_aspeed_catalina.py
+@@ -5,10 +5,10 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ from qemu_test import Asset
+-from aspeed import FacebookAspeedTest
++from aspeed import AspeedTest
+ 
+ 
+-class CatalinaMachine(FacebookAspeedTest):
++class CatalinaMachine(AspeedTest):
+ 
+     ASSET_CATALINA_FLASH = Asset(
+         'https://github.com/legoater/qemu-aspeed-boot/raw/a866feb5ef81245b4827a214584bf6bcc72939f6/images/catalina-bmc/obmc-phosphor-image-catalina-20250619123021.static.mtd.xz',
+@@ -22,4 +22,4 @@ def test_arm_ast2600_catalina_openbmc(self):
+                                         soc='AST2600 rev A3')
+ 
+ if __name__ == '__main__':
+-    FacebookAspeedTest.main()
++    AspeedTest.main()
+diff --git a/tests/functional/arm/test_aspeed_gb200nvl_bmc.py b/tests/functional/arm/test_aspeed_gb200nvl_bmc.py
+index e5f2dce0f5..f9e736d047 100755
+--- a/tests/functional/arm/test_aspeed_gb200nvl_bmc.py
++++ b/tests/functional/arm/test_aspeed_gb200nvl_bmc.py
+@@ -19,8 +19,7 @@ def test_arm_aspeed_gb200_openbmc(self):
+ 
+         self.do_test_arm_aspeed_openbmc('gb200nvl-bmc', image=image_path,
+                                         uboot='2019.04', cpu_id='0xf00',
+-                                        soc='AST2600 rev A3',
+-                                        image_hostname='gb200nvl-obmc')
++                                        soc='AST2600 rev A3')
+ 
+ if __name__ == '__main__':
+     AspeedTest.main()
+diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
+index 88b6590934..076da1036c 100644
+--- a/tests/functional/aspeed.py
++++ b/tests/functional/aspeed.py
+@@ -8,14 +8,7 @@
+ class AspeedTest(LinuxKernelTest):
+ 
+     def do_test_arm_aspeed_openbmc(self, machine, image, uboot='2019.04',
+-                                   cpu_id='0x0', soc='AST2500 rev A1',
+-                                   image_hostname=None):
+-        # Allow for the image hostname to not end in "-bmc"
+-        if image_hostname is not None:
+-            hostname = image_hostname
+-        else:
+-            hostname = machine.removesuffix('-bmc')
+-
++                                   cpu_id='0x0', soc='AST2500 rev A1'):
+         self.set_machine(machine)
+         self.vm.set_console()
+         self.vm.add_args('-drive', f'file={image},if=mtd,format=raw',
+@@ -28,10 +21,10 @@ def do_test_arm_aspeed_openbmc(self, machine, image, uboot='2019.04',
+         self.wait_for_console_pattern(f'Booting Linux on physical CPU {cpu_id}')
+         self.wait_for_console_pattern(f'ASPEED {soc}')
+         self.wait_for_console_pattern('/init as init process')
+-        self.wait_for_boot_complete(hostname)
++        self.wait_for_boot_complete()
+ 
+-    def wait_for_boot_complete(self, hostname):
+-        self.wait_for_console_pattern(f'systemd[1]: Hostname set to <{hostname}>.')
++    def wait_for_boot_complete(self):
++        self.wait_for_console_pattern('login:')
+ 
+     def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'):
+         self.require_netdev('user')
+@@ -71,9 +64,3 @@ def generate_otpmem_image(self):
+         with open(path, "wb") as f:
+             f.write(pattern)
+         return path
+-
+-
+-class FacebookAspeedTest(AspeedTest):
+-
+-    def wait_for_boot_complete(self, hostname):
+-        self.wait_for_console_pattern(f'{hostname} login:')
 -- 
 2.54.0
 
