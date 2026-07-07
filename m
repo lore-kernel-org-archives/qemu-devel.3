@@ -4,107 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 582BBC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 23:58:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0188C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 23:58:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whFeu-0001yH-RA; Tue, 07 Jul 2026 19:57:00 -0400
+	id 1whFew-0001z7-Ub; Tue, 07 Jul 2026 19:57:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1whFed-0001q8-Ml; Tue, 07 Jul 2026 19:56:43 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1whFee-0001ro-Qs; Tue, 07 Jul 2026 19:56:44 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1whFeZ-0002kA-1h; Tue, 07 Jul 2026 19:56:43 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1whFeZ-0002kQ-1s; Tue, 07 Jul 2026 19:56:44 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667Mmwxd1572415; Tue, 7 Jul 2026 23:56:20 GMT
+ 667MmVIo920726; Tue, 7 Jul 2026 23:56:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=shZ4UC
- a4LzVCmkJdUPp7yAI2PD79fS7KCSXvF1eYJ7s=; b=IkItm78+wByoFZUAcOx69W
- BPasPB5TmeqSNfLSeYzEgExmTxARwBL4blZOlPCSygD/li3GsmRjhPXY1G4G+arX
- Q9clx1vjh/cJStBUKXnJ6hfQhWngmS02LmOdGXH1/P+RlPYTIECx0r2vw91pdCy8
- mndw80W6TE15YPlSJWqcE86+dCggzOEhtCrPDfrMygmMqw6+TWGlRxasCXdrGZh5
- Xy4PjnxYOs4AaWS1WFfqve9XEm0UBQO/Li1+njvQzfUvhzbHj8iSzcEVcBvngATU
- 3h/ODqYOF9yE3SIGMsazgn7TO/ZlG7v/jpKL4/gN7MB5l7fybpnGMBHzr4X60LBg
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6qknhekg-1
+ content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=7DEsHgDQ8qYO/RbaH
+ 2jDxgq0RdhnuicsuS/DuVijqOE=; b=LFvWqCr/0VNdmwm8y/9PTwqRgurq1sdKy
+ ttRUQhGjb7oVcVReKiM5vYXWdUnAmetDjMwY9HjprxhbOsG9PI201clyotRdc4lX
+ TshxjQC6jI806GQ38Iuf2eu50fSB8hiZDA9hrt1dZVwjs8byL6dySHIXJJPzH9+Y
+ HXPzTpQeAhhNoxlv30d+9UDKyjj1SpZqALqxjSGNEwSfOsWzKY3tEkF2tcBqn++2
+ 1bbjS9cRF8+nTBTqlgA31f5S7zZeKImYuCihqZWjWhpG8TyuJBEalCK6losIOdNO
+ LqyrRDABZwg7SrVVacVxmH3+/bx12Id+nJk+T61MPexn4hx0MXaxw==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6sp3swc3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 07 Jul 2026 23:56:20 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 667Nnemx029466;
- Tue, 7 Jul 2026 23:56:19 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f7dgk56d9-1
+ Tue, 07 Jul 2026 23:56:22 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 667Nnc0B016098;
+ Tue, 7 Jul 2026 23:56:21 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f7cvw5bcb-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 07 Jul 2026 23:56:19 +0000 (GMT)
+ Tue, 07 Jul 2026 23:56:21 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
  [10.241.53.103])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 667NuIfv3277584
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 667NtkI928770846
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 7 Jul 2026 23:56:19 GMT
+ Tue, 7 Jul 2026 23:55:46 GMT
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BFC7E58052;
- Tue,  7 Jul 2026 23:56:18 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 79FF158052;
+ Tue,  7 Jul 2026 23:56:20 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 65CD158056;
- Tue,  7 Jul 2026 23:56:18 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 042D45805A;
+ Tue,  7 Jul 2026 23:56:20 +0000 (GMT)
 Received: from fedora-workstation.lan (unknown [9.61.116.2])
  by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  7 Jul 2026 23:56:18 +0000 (GMT)
+ Tue,  7 Jul 2026 23:56:19 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v16 25/33] s390x: Guest support for Secure-IPL Code Loading
- Attributes Facility (SCLAF)
-Date: Tue,  7 Jul 2026 19:55:59 -0400
-Message-ID: <20260707235615.2513487-5-zycai@linux.ibm.com>
+Subject: [PATCH v16 28/33] hw/s390x/ipl: Set IPIB flags for secure IPL
+Date: Tue,  7 Jul 2026 19:56:02 -0400
+Message-ID: <20260707235615.2513487-8-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260707231132.2492104-1-zycai@linux.ibm.com>
 References: <20260707231132.2492104-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Q/XiJY2a c=1 sm=1 tr=0 ts=6a4d9224 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=s2GHSiDfQs-ooOV4uGMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: i7yiiruyvIvf7IKy7BdPjSZlUcFU9Qi3
-X-Proofpoint-ORIG-GUID: i7yiiruyvIvf7IKy7BdPjSZlUcFU9Qi3
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDIzMyBTYWx0ZWRfXyTd4ZDqRUDBa
- d7KMi9xNj1E+bBXbx3h4RTHucVT4wSxJ3bZl9TX6FHAQ1LiPockGJHlLDNxt6HbSlq020FdCG97
- GMgIuLaMP8ogkhKwrY6AMwinXVtQgeg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDIzMyBTYWx0ZWRfX+11dTWy1+P/c
- MgAA1VqGmIxstIrgv8CWR+2bCUGuaGLIidKIjBM0gSXQtp/o/C+UDQg29UVmnjBrX5tcYAErSRe
- TDH13+OXbsCpRRo5rouMK8cALbJNCjJmZIRMFz2IczoFvKliLzT9F1AZeejUI54aRB1nt69ZHUQ
- F+JqcOHnbbPnmpvI1Epqqip+HidWjKkumaROA3g1zbW6QgV7T9ttRBbPqetLlqaHJ4u9xUJiWoG
- PS2jAEVJlZI7igNYIe3wAqgori0xWiw+g+3CP0CJ5MtEUtUlFt7us6xR9I8PgOsVFXLUxJCA1WE
- 9nBQ1GcoEllCVkRjaclQvW2r/fR8gVFgR//qAAymiM6k4dbRgTJxmaDDFyp+940NhwVQSNEyRwP
- mwaL8OvNN47G76AWk4R4Hi2yVrIp/Klyru/bBLjnnQ6z8kE8P0lbY68obLwohN+uu3uV073s7+h
- IAJvyYu9eyCG6mkBQZg==
+X-Authority-Analysis: v=2.4 cv=KsJ9H2WN c=1 sm=1 tr=0 ts=6a4d9226 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=MUQpW0jNMHjpGy_Q9scA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDIzMyBTYWx0ZWRfX8uR+ghAkScr+
+ XfK5aFrSzM0Ipb5Gl271QElxqvqMVtIriHPw3izj/5btlFBT3S0dFIjbUsp41ieXJaFzNJ3e+IT
+ 0GkAFEYULDvQ93miZ8zBf9N7H3R9uK8=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDIzMyBTYWx0ZWRfX39ErQWoZLQoN
+ JLws+Gxl193jqULL5cPewU1NO7Jv6/6WI1LfKRe9cG1JPmUmuJaY5yrU4w5TtSAO0N7FlNk1HQT
+ eefhl+EuJVGOdFpmiVTet+jn/85MOdCc5n/FR8OxARk2obOOoo8ztz1+drafE83oz4a5ANmMx3v
+ oR+yJFJp8jwXhuIjiDIVMykTFOkeOXcca6FfvQVuK4DBFRo/mXTJ6kJpiIT6pboSi4wtRk3sdb0
+ CodYToWqzHZVVESdUBZJgNKlZ+raFzDehTBWMdjbo92r6yQ+jNSkTrbC1ge1R40zzWf+2my0us+
+ eBK8BTuicpIfsjbdt4Bvm1LdDSWWiRBdDI7pN1m3Rauhl58gYaoFwcgqmG+CCDJx4UVo4tYPcCX
+ gLuwvX8wElh2gIE1wZjc1CmxhPmNoGN0Km3dmB7MCV2kKF2rpOW9Z2Ima6hwLVCAYpUnWaJR+Zo
+ UoVGnXDHryR7WOtdIXQ==
+X-Proofpoint-ORIG-GUID: 3CKYdNN9chYXFIyN3lSmhR7mKIXFqNAF
+X-Proofpoint-GUID: 3CKYdNN9chYXFIyN3lSmhR7mKIXFqNAF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_06,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501
- bulkscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ impostorscore=0 malwarescore=0 spamscore=0 adultscore=0 clxscore=1015
+ suspectscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070233
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,137 +118,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The secure-IPL-code-loading-attributes facility (SCLAF)
-provides additional security during secure IPL.
+If `-M secure-boot=on` is specified on the command line option, indicating
+true secure IPL enabled, set Secure-IPL bit and IPL-Information-Report
+bit on in IPIB Flags field, and trigger true secure IPL in the S390 BIOS.
 
-Availability of SCLAF is determined by byte 136 bit 3 of the
-SCLP Read SCP Info.
-
-This feature is available starting with the gen16 CPU model.
+Any error that occurs during true secure IPL will cause the IPL to
+terminate.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Collin Walling <walling@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 ---
- docs/specs/s390x-secure-ipl.rst     | 18 ++++++++++++++++++
- target/s390x/cpu_features.c         |  2 ++
- target/s390x/cpu_features_def.h.inc |  1 +
- target/s390x/cpu_models.c           |  3 +++
- target/s390x/gen-features.c         |  2 ++
- target/s390x/kvm/kvm.c              |  1 +
- 6 files changed, 27 insertions(+)
+ hw/s390x/ipl.c | 28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-index 113acbeda9..7a603eb956 100644
---- a/docs/specs/s390x-secure-ipl.rst
-+++ b/docs/specs/s390x-secure-ipl.rst
-@@ -122,3 +122,21 @@ The guest kernel uses the contents in the IIRB for:
- * Boot logging: reports which components were loaded and verified.
- * kexec operations: builds the next kernel’s IPL report from the existing one.
- * Keying: installs IPL certificates into the platform trusted keyring.
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index d0dbf47d74..08294af4d0 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -468,15 +468,30 @@ static bool s390_has_certificate(void)
+     return ipl->cert_store.count > 0;
+ }
+ 
++static bool s390_secure_boot_enabled(void)
++{
++    return S390_CCW_MACHINE(qdev_get_machine())->secure_boot;
++}
 +
-+Secure Code Loading Attributes Facility
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ static void s390_set_secure_boot_flags(IplParameterBlock *iplb,
+-                                       bool audit_mode)
++                                       bool secure_boot, bool audit_mode)
+ {
+-    if (!audit_mode) {
++    if (!secure_boot && !audit_mode) {
+         return;
+     }
+ 
+     /*
+-     * For audit mode, enable the IPL Information
++     * If secure-boot is enabled, then toggle the secure IPL flags (SIPL) to
++     * trigger secure boot in the s390 BIOS.
++     *
++     * Boot process will terminate if any error occurs during secure boot.
++     */
++    if (secure_boot) {
++        iplb->hdr_flags |= DIAG308_IPIB_FLAGS_SIPL;
++    }
 +
-+The Secure Code Loading Attributes Facility (SCLAF) enhances system security
-+during the IPL by enforcing additional verification rules.
-+
-+When SCLAF is available, its behavior depends on the IPL mode. It introduces
-+verification of both signed and unsigned components to help ensure that only
-+authorized code is loaded during the IPL process. Any errors detected by SCLAF
-+are reported in the IIRB.
-+
-+Unsigned components are restricted to load addresses at or above absolute
-+storage address ``0x2000``.
-+
-+Signed components must include a Secure Code Loading Attribute Block (SCLAB),
-+which is appended at the very end of the component. The SCLAB defines security
-+attributes for handling the signed code.
-diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
-index 27f38636a9..c634e74123 100644
---- a/target/s390x/cpu_features.c
-+++ b/target/s390x/cpu_features.c
-@@ -120,6 +120,7 @@ void s390_fill_feat_block(const S390FeatBitmap features, S390FeatType type,
-      * - All SIE facilities because SIE is not available
-      * - DIAG318
-      * - Secure IPL Facility
-+     * - Secure IPL Code Loading Attributes Facility
++    /*
++     * For both secure boot and audit mode, enable the IPL Information
+      * Report (IPLIR) flag so that the firmware generates an IPL
+      * Information Report Block (IIRB).
       *
-      * As VMs can move in and out of protected mode the CPU model
-      * doesn't protect us from that problem because it is only
-@@ -152,6 +153,7 @@ void s390_fill_feat_block(const S390FeatBitmap features, S390FeatType type,
-         break;
-     case S390_FEAT_TYPE_SCLP_FAC_IPL:
-         clear_be_bit(s390_feat_def(S390_FEAT_SIPL)->bit, data);
-+        clear_be_bit(s390_feat_def(S390_FEAT_SCLAF)->bit, data);
-         break;
-     case S390_FEAT_TYPE_SCLP_FAC139:
-         clear_be_bit(s390_feat_def(S390_FEAT_SIE_ASTFLEIE2)->bit, data);
-diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
-index 0153a6aa67..a5aa19112a 100644
---- a/target/s390x/cpu_features_def.h.inc
-+++ b/target/s390x/cpu_features_def.h.inc
-@@ -142,6 +142,7 @@ DEF_FEAT(CERT_STORE, "cstore", SCLP_FAC134, 5, "Certificate Store functions")
+@@ -545,7 +560,8 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+         s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
+         iplb->flags |= DIAG308_FLAGS_LP_VALID;
  
- /* Features exposed via SCLP SCCB Facilities byte 136 - 137 (bit numbers relative to byte-136) */
- DEF_FEAT(SIPL, "sipl", SCLP_FAC_IPL, 1, "Secure-IPL facility")
-+DEF_FEAT(SCLAF, "sclaf", SCLP_FAC_IPL, 3, "Secure-IPL-code-loading-attributes facility")
+-        s390_set_secure_boot_flags(iplb, s390_has_certificate());
++        s390_set_secure_boot_flags(iplb, s390_secure_boot_enabled(),
++                                   s390_has_certificate());
  
- /* Features exposed via SCLP SCCB Facilities byte 139 (bit numbers relative to byte-139) */
- DEF_FEAT(SIE_ASTFLEIE2, "astfleie2", SCLP_FAC139, 1, "SIE: ASTFLE interpretation execution facility 2")
-diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-index b22841c2bc..2e62559679 100644
---- a/target/s390x/cpu_models.c
-+++ b/target/s390x/cpu_models.c
-@@ -264,6 +264,7 @@ bool s390_has_feat(S390Feat feat)
-         case S390_FEAT_SIE_PFMFI:
-         case S390_FEAT_SIE_IBS:
-         case S390_FEAT_SIPL:
-+        case S390_FEAT_SCLAF:
-         case S390_FEAT_CONFIGURATION_TOPOLOGY:
-         case S390_FEAT_SIE_ASTFLEIE2:
-             return false;
-@@ -510,6 +511,8 @@ static void check_consistency(const S390CPUModel *model)
-         { S390_FEAT_DIAG_318, S390_FEAT_EXTENDED_LENGTH_SCCB },
-         { S390_FEAT_CERT_STORE, S390_FEAT_EXTENDED_LENGTH_SCCB },
-         { S390_FEAT_SIPL, S390_FEAT_EXTENDED_LENGTH_SCCB },
-+        { S390_FEAT_SCLAF, S390_FEAT_EXTENDED_LENGTH_SCCB },
-+        { S390_FEAT_SCLAF, S390_FEAT_SIPL },
-         { S390_FEAT_NNPA, S390_FEAT_VECTOR },
-         { S390_FEAT_RDP, S390_FEAT_LOCAL_TLB_CLEARING },
-         { S390_FEAT_UV_FEAT_AP, S390_FEAT_AP },
-diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-index 6bf61447de..a99a75d14e 100644
---- a/target/s390x/gen-features.c
-+++ b/target/s390x/gen-features.c
-@@ -723,6 +723,7 @@ static uint16_t full_GEN16_GA1[] = {
-     S390_FEAT_SIE_ASTFLEIE2,
-     S390_FEAT_CERT_STORE,
-     S390_FEAT_SIPL,
-+    S390_FEAT_SCLAF,
- };
+         return true;
+     }
+@@ -699,7 +715,9 @@ void s390_ipl_update_diag308(IplParameterBlock *iplb)
+          * The kernel does not preserve secure boot flags across a reboot.
+          * Re-apply them here based on the current machine configuration.
+          */
+-        s390_set_secure_boot_flags(&ipl->iplb, s390_has_certificate());
++        s390_set_secure_boot_flags(&ipl->iplb,
++                                   s390_secure_boot_enabled(),
++                                   s390_has_certificate());
+     }
  
- static uint16_t full_GEN17_GA1[] = {
-@@ -925,6 +926,7 @@ static uint16_t qemu_MAX[] = {
-     S390_FEAT_EXTENDED_LENGTH_SCCB,
-     S390_FEAT_CERT_STORE,
-     S390_FEAT_SIPL,
-+    S390_FEAT_SCLAF,
- };
- 
- /****** END FEATURE DEFS ******/
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index fb42d8c132..9c919575cd 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -2504,6 +2504,7 @@ bool kvm_s390_get_host_cpu_model(S390CPUModel *model, Error **errp)
- 
-     /* Some Secure IPL facilities are emulated by QEMU */
-     set_bit(S390_FEAT_SIPL, model->features);
-+    set_bit(S390_FEAT_SCLAF, model->features);
- 
-     /* Test for Ultravisor features that influence secure guest behavior */
-     query_uv_feat_guest(model->features);
+     update_machine_ipl_properties(iplb);
 -- 
 2.54.0
 
