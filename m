@@ -4,57 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC77C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9301C43602
 	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 17:52:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh9xG-0006ys-As; Tue, 07 Jul 2026 13:51:34 -0400
+	id 1wh9xF-0006xD-60; Tue, 07 Jul 2026 13:51:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wh9wX-00066D-3f
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:50:49 -0400
+ id 1wh9wV-000636-9H
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:50:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wh9wV-0001Px-8u
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:50:48 -0400
+ id 1wh9wT-0001OV-Ij
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 13:50:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783446646;
+ s=mimecast20190719; t=1783446644;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=23n61GrAfEGCfYIkBBlHO/krCWMAXXK+Kqwhuwne/cA=;
- b=eIVv+cID0tCLF7rtx1dVl3Rcbx8di1XBTlWmwcpToITCVSpLT7xcvQacc/HbdVA7O5bgZ/
- NC/LtdVwuzo+moj6UfOpNzP/oXZB4SBELlRIDTZRhVxytNd0Wc409X/C/gsB6wIlfNKLEA
- 9zfXoozBwJB27oZH69RTfCFgIDrx86o=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=XdVTva91bwLGqqzohpnP/TPz/kRPi9v0JlFPYmELZg0=;
+ b=Hn4VpIJ5fJEgIlpr3iVzVmfRjYrwGsqU6VeZdCFPaXbthoxBJaNu8u/wzSwDfisaOAM0fg
+ phApTHbVqVhDoZzr06sx7eSOtoyccTTn2w2LDPOjRiW8xWjgmcnPWCrXWw4W5RhbpUnqw4
+ nnJ+fTT59EhzZNBCPWaIyGRJHsm2jJg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-EV69eHGQMWGi34BRhqaLUw-1; Tue,
- 07 Jul 2026 13:50:36 -0400
-X-MC-Unique: EV69eHGQMWGi34BRhqaLUw-1
-X-Mimecast-MFC-AGG-ID: EV69eHGQMWGi34BRhqaLUw_1783446635
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-ua2GnAByNE6leebZzbEniw-1; Tue,
+ 07 Jul 2026 13:50:41 -0400
+X-MC-Unique: ua2GnAByNE6leebZzbEniw-1
+X-Mimecast-MFC-AGG-ID: ua2GnAByNE6leebZzbEniw_1783446640
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1C8011806CBE; Tue,  7 Jul 2026 17:50:35 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 88EE419540E5; Tue,  7 Jul 2026 17:50:40 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.33.142])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 73A363692B; Tue,  7 Jul 2026 17:50:33 +0000 (UTC)
+ id D61E33692F; Tue,  7 Jul 2026 17:50:37 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Evgeny Kolmakov <randomjack94dev@gmail.com>
-Subject: [PULL 2/4] util/filemonitor-inotify: Use QEMU_LOCK_GUARD()
-Date: Tue,  7 Jul 2026 18:50:25 +0100
-Message-ID: <20260707175027.3029620-3-berrange@redhat.com>
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Mauro Matteo Cascella <mcascell@redhat.com>
+Subject: [PULL 4/4] docs: outline some guidelines for security classification
+Date: Tue,  7 Jul 2026 18:50:27 +0100
+Message-ID: <20260707175027.3029620-5-berrange@redhat.com>
 In-Reply-To: <20260707175027.3029620-1-berrange@redhat.com>
 References: <20260707175027.3029620-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -63,13 +66,14 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,122 +89,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Evgeny Kolmakov <randomjack94dev@gmail.com>
+Beyond the overall virt/non-virt use case classification, there are
+a number of scenarios which we have decided will not be treated as
+security issues. Start to document some of these to give consistency
+in our treatment of incoming disclosures.
 
-Replace manual qemu_mutex_(un)lock() calls with
-QEMU_LOCK_GUARD() to remove 'goto cleanup' code
-
-Signed-off-by: Evgeny Kolmakov <randomjack94dev@gmail.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Mauro Matteo Cascella <mcascell@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- util/filemonitor-inotify.c | 28 ++++++++--------------------
- 1 file changed, 8 insertions(+), 20 deletions(-)
+ docs/system/security.rst | 63 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 63 insertions(+)
 
-diff --git a/util/filemonitor-inotify.c b/util/filemonitor-inotify.c
-index 7352b9fe53..fe2057f820 100644
---- a/util/filemonitor-inotify.c
-+++ b/util/filemonitor-inotify.c
-@@ -21,6 +21,7 @@
- #include "qemu/osdep.h"
- #include "qemu/filemonitor.h"
- #include "qemu/main-loop.h"
-+#include "qemu/lockable.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "trace.h"
-@@ -59,10 +60,9 @@ static void qemu_file_monitor_watch(void *arg)
-     int used = 0;
-     int len;
+diff --git a/docs/system/security.rst b/docs/system/security.rst
+index 53992048e6..52bbf0cc7a 100644
+--- a/docs/system/security.rst
++++ b/docs/system/security.rst
+@@ -75,6 +75,69 @@ Bugs affecting the non-virtualization use case are not considered security
+ bugs at this time.  Users with non-virtualization use cases must not rely on
+ QEMU to provide guest isolation or any security guarantees.
  
--    qemu_mutex_lock(&mon->lock);
-+    QEMU_LOCK_GUARD(&mon->lock);
++Security boundary scope
++'''''''''''''''''''''''
++
++Even where a flaw affects the virtualization use case described above,
++not all scenarios will be considered in scope. The following guidelines
++are used to evaluate whether to apply the full security process, or treat
++an issue as a normal bug.
++
++* **assert** / **abort**. If triggering the code path requires kernel
++  privileges (or root account access) in the guest, asserts/aborts in
++  QEMU are a self inflicted denial of service. These will **not** be
++  treated as security flaws, at most hardening bugs. If triggering the
++  code path can be done by an unprivileged guest OS account, this
++  **may** justify handling as a security bug.
++
++* **vhost-user/vfio-user backends**. The backend processes have
++  shared memory regions co-mapped with the QEMU process. The intent
++  of the process separation is operational resilience & flexibility
++  and allowing for independent software suppliers. There is not
++  considered to be security boundary between QEMU and the vhost-user
++  & vfio-user backends. Thus flaws in the backends which can cause
++  crashes / undesirable behaviour in QEMU will **not** be treated as
++  security flaws, but should be fixed as hardening bugs.
++
++* **memory allocation bounds**. There are many ways in which a QEMU
++  process can legitimately consume an amount of memory that is
++  significantly larger than the assigned guest RAM. QEMU's worst
++  case memory usage should be considered effectively unbounded. As
++  such the QEMU deployment on the host should account for the
++  possibility of large memory peaks and apply countermeasures to
++  provide continuity of host operations. It is typical for the Linux
++  OOM killer to reap the process triggering host memory overcommit
++  in the case of exccessive usage, offering a degree of protection.
++  As such, bugs which can lead to excessive/unbounded memory allocations
++  will usually not be classified as security flaws, but should be
++  fixed as hardening bugs.
++
++* **degraded guest behaviour**. There are a set of bugs which can
++  lead guest hardware devices to misbehave. For example, a flawed
++  virtual IOMMU operation may not offer the guest device isolation
++  that would otherwise be expected. If a guest triggered exploit
++  requires kernel privileges (or root account access), and leads
++  to sub-optimal behaviour of the virtual device this is considered
++  a self inflicted service degradation. These will **not** be
++  treated as security flaws, at most hardening bugs. If triggering
++  the code path can be done by an unprivileged guest OS account,
++  this may justify handling as a security bug.
++
++* **nested virtualization**. The scope for nested virtualization
++  is to prevent a level 2 guest from breaking out into a level
++  1 guest. As noted above, a number of scenarios exclude security
++  handling for flaws only exploitable by the guest kernel / root
++  account with affect the guest's own service/availability. In the
++  context of nested virtualization with PCI device assignment, it
++  may may be possible for a level 2 guest kernel to trigger flaws
++  that affect the level 0 QEMU process. While these bugs should be
++  fixed, they will not be triaged as security flaws at this time.
++
++* **low severity impact**. As a catch all rule, issues which
++  are judged to have a "low" severity impact on the system will
++  usually not justify handling as security bugs, nor assignment
++  of CVEs. They will be fixed as routine bugs when time allows.
++
+ Architecture
+ ------------
  
-     if (mon->fd == -1) {
--        qemu_mutex_unlock(&mon->lock);
-         return;
-     }
- 
-@@ -72,11 +72,10 @@ static void qemu_file_monitor_watch(void *arg)
-         if (errno != EAGAIN) {
-             error_report("Failure monitoring inotify FD '%s',"
-                          "disabling events", strerror(errno));
--            goto cleanup;
-         }
- 
-         /* no more events right now */
--        goto cleanup;
-+        return;
-     }
- 
-     /* Loop over all events in the buffer */
-@@ -151,9 +150,6 @@ static void qemu_file_monitor_watch(void *arg)
-             }
-         }
-     }
--
-- cleanup:
--    qemu_mutex_unlock(&mon->lock);
- }
- 
- 
-@@ -257,9 +253,8 @@ qemu_file_monitor_add_watch(QFileMonitor *mon,
- {
-     QFileMonitorDir *dir;
-     QFileMonitorWatch watch;
--    int64_t ret = -1;
- 
--    qemu_mutex_lock(&mon->lock);
-+    QEMU_LOCK_GUARD(&mon->lock);
-     dir = g_hash_table_lookup(mon->dirs, dirpath);
-     if (!dir) {
-         int rv = inotify_add_watch(mon->fd, dirpath,
-@@ -268,7 +263,7 @@ qemu_file_monitor_add_watch(QFileMonitor *mon,
- 
-         if (rv < 0) {
-             error_setg_errno(errp, errno, "Unable to watch '%s'", dirpath);
--            goto cleanup;
-+            return -1;
-         }
- 
-         trace_qemu_file_monitor_enable_watch(mon, dirpath, rv);
-@@ -297,11 +292,7 @@ qemu_file_monitor_add_watch(QFileMonitor *mon,
-                                       filename ? filename : "<none>",
-                                       cb, opaque, watch.id);
- 
--    ret = watch.id;
--
-- cleanup:
--    qemu_mutex_unlock(&mon->lock);
--    return ret;
-+    return watch.id;
- }
- 
- 
-@@ -312,13 +303,13 @@ void qemu_file_monitor_remove_watch(QFileMonitor *mon,
-     QFileMonitorDir *dir;
-     gsize i;
- 
--    qemu_mutex_lock(&mon->lock);
-+    QEMU_LOCK_GUARD(&mon->lock);
- 
-     trace_qemu_file_monitor_remove_watch(mon, dirpath, id);
- 
-     dir = g_hash_table_lookup(mon->dirs, dirpath);
-     if (!dir) {
--        goto cleanup;
-+        return;
-     }
- 
-     for (i = 0; i < dir->watches->len; i++) {
-@@ -342,7 +333,4 @@ void qemu_file_monitor_remove_watch(QFileMonitor *mon,
-             qemu_set_fd_handler(mon->fd, NULL, NULL, NULL);
-         }
-     }
--
-- cleanup:
--    qemu_mutex_unlock(&mon->lock);
- }
 -- 
 2.55.0
 
