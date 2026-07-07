@@ -4,103 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D0D9C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 10:59:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7EF9C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 10:59:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh3Vg-0008Pz-HG; Tue, 07 Jul 2026 06:58:40 -0400
+	id 1wh3Wf-0000OY-U3; Tue, 07 Jul 2026 06:59:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wh3Vf-0008Pn-F4
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:58:39 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wh3Vd-0006f1-Q7
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:58:39 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-664d78637f8so5750999d50.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 03:58:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783421916; cv=none;
- d=google.com; s=arc-20260327;
- b=JFNPtwlEJ5xL2IdkLxROCOtCUtAUZMdITV8oh/q0G4Esj0GSUo2GfyF4xkn/3L9uAr
- n4UQLg/kGCpueJup78PunvM9TS6qe5Vpj336xnV+7DcfdjoseIgsJU1EY39L8f3pKDO0
- XloifV+iJXZwPWnn7mFJGJltxsxA0eCxoPzCR2is8td2uCavRw1ffyYh9xCP7FHcDw+m
- yxKDl2K0Akwy2DTMUfK8DS7R3oYfy72+5rYwqlAyGA18FwL+Uq/coHBTODqjw6e3AWPa
- tEQHcKzyD2OtrXclNf7bGqKF+pWC3WThpqSPDXY0Wst+6KKiZavGzx1zJ30q84OdmqW2
- S93w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=OeIpX3egqQCX5DLLb2ibyZt0vKmgeZ5uXbzSvuOkrDw=;
- fh=CU4uMkahKDKs962uJQThoxWtEWeD5rfJeicmfFn1qfs=;
- b=b7Lt53L9Fh2pMuSDDdIJpltXpEJz1Nr+6xRwNmZ70hiWfI6E098ftzfrE+r8//RLS+
- L+n9jJguCnZ7zEWjqcgz1byG906QjmE4HjLFlROJmCUcZugsG95Axb+QRS/Jc8seF7ZX
- TEmbtGuxw6z6uWr0TvURtMKUbI1t1qLUoN4pg3MXa8kwSq1kWJd5kRjb7QsNf87k5y9Y
- gTbKkGyheOL31Z/7w+ZxZhmG9xxsTWg7xjTySsc15fAscsXVtOtLNVVfN5fTpWYyXKA3
- UTyihSuqTolC/BKAscSX2Yu+Uvul7bQzvLXh2dUIqQRri7pmbtRxuRbCd5qrzCjdPmoP
- 9cGA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783421916; x=1784026716; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=OeIpX3egqQCX5DLLb2ibyZt0vKmgeZ5uXbzSvuOkrDw=;
- b=EHD8fHMChtpi6gnk99aIFJIJoMEqJDm6vL3f5klWCV219RfG+151aH89T8XB/FLD8U
- RTR6y0drjOiBTHH1HvkHjzyUW+q+rV2oJmaMItafH0+pbwsBJTBuX+UE7Xa/cxssynoZ
- nR665Jclx2ORWr+5naLv2YUKtFIbNkFQLhF/8BOwjUWcYM7hC0DnaNMnEo1nW/6xTK3e
- IhgAXrA1q4cFEQkCL+nan09rKnLDyvLUd+lD17wO7to2ChRbbkwag+POnhjBmmHXGtbh
- vZi5+gXdd4VHqSU5UyOMPi3JcxhAZGZudkA9zFfnN7H28T9NWBLodMH9tJCa+NR3b4lG
- 6mNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783421916; x=1784026716;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OeIpX3egqQCX5DLLb2ibyZt0vKmgeZ5uXbzSvuOkrDw=;
- b=qpybLG6DxkEhkZRD4gwnGQCTpOxwSUclrW3HC2TEPXMDYK5z9P2zvG/h5tYfN97xUZ
- RwAeojv36qGxVWegsOrHTQOfagCAlDpPXOZ73WyBmlUPwJD66uy2yV5aHywQu/ahrVg6
- n/+4Tp9Sy/ZaB55NzJy1Wg/lgNmJpxqBp8EgItAFEJW5TgJa5Q5pVDULoZ17ZYhIrgn0
- cIsYotFFOYQzDr707jFIE1xPhIh/zylZi6DFpnkwypxz8Cltm3QVq09bg2D/wVYxFqaV
- kFpr9D/0kvIGg40ANu1uA1kxbf36gHb21y+WzwSRvJVTycLuQ+9CTpc3Neccr8Xemgz7
- pZEQ==
-X-Gm-Message-State: AOJu0Ywp8FZC0YiPMH35ouTSw9BZ2fByQJwds5PwD64fZoBBgvbg2IjJ
- OMcW8lpmRXW6bvXvs/df14YWzFJp2RCteqD9N7XzDd1dC/uYZC2T8O2Qmcg+J46uAW9TYevqyjC
- n8XCYfEUQG8zNAvF63/8+gVxsVAp/2B1JSPgDZvVIWmsKjfpchJRn
-X-Gm-Gg: AfdE7cmHxJHM+TKk1sjAzAk+WaDRZdhfKaFKmKwvQF5xC9BVVogzhGIN061uvOHiswZ
- bVylN0fgjBLmxwDPc2Qj7/PFQsX0HETzbhPawxST2mzS0U9aBqc/m0RxWbq1IVfWls4klDXsa2d
- IklhnJbRDacp6iCAIhtb0K5CD0C/3eaQXYey1F8VIvIgUzdoqibKKL3aTeSvjSUD5zp8P7dGtjc
- G8eWWIsFXXElU8IbLhz8uMnEUu59HDDt0HvSR9X2AMVIfgjZEFxwemxquev3pt2rod2rdpumaE+
- vdZoHgnODWMtxAWRPvx+BvCYw1wTzG1/z2pyXGMp2u/MiiIrXYZTilgETyyBf+kqk5k=
-X-Received: by 2002:a05:690e:4141:b0:664:d910:c72e with SMTP id
- 956f58d0204a3-6677fcd9501mr3700339d50.70.1783421915768; Tue, 07 Jul 2026
- 03:58:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260529114723.42040-1-peter.maydell@linaro.org>
- <20260529114723.42040-9-peter.maydell@linaro.org>
- <CAFEAcA-880g8FVk1SZ8eH7-cAkzh2oyH7OFV2LBG68=CcFE=JQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA-880g8FVk1SZ8eH7-cAkzh2oyH7OFV2LBG68=CcFE=JQ@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 7 Jul 2026 11:58:23 +0100
-X-Gm-Features: AVVi8Ceu3x4AYRigvFnJov5CsSrg_iLOJttT7s_BC9ybu7h84ieSHh_dlMCL1Gg
-Message-ID: <CAFEAcA_Lg3ebEiefKmf1K_RHY4NozezGese2rFf2w6af3oPccQ@mail.gmail.com>
-Subject: Re: [PULL 08/21] hw/misc/zynq_slcr: Add logic for DCI configuration
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wh3Wd-0000JU-CR
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:59:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wh3Wb-0006vF-PO
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 06:59:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783421975;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=KnyxPNTz6eGdpMC/4dy7er6WkgfdQOFArSXY6YFeVd4=;
+ b=RUEH56U5u9F2kPZyMQVBvvZ6uxnssS6g/S2/xSUALtFGFN9FUqrH4pGpcKCkaaNMpStPKv
+ HqGlmo3O9Bj/7wkKULaBr24saoUJ3olpRNfFYYAHdaU8WV0ymw9PzIxRoyGQ0x6fSuC715
+ 6UAgwGLPF2tw4OJtjED8HjIGPe+d//k=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-61-xeoxtJ5iNOWmExpEXGg2Fg-1; Tue,
+ 07 Jul 2026 06:59:34 -0400
+X-MC-Unique: xeoxtJ5iNOWmExpEXGg2Fg-1
+X-Mimecast-MFC-AGG-ID: xeoxtJ5iNOWmExpEXGg2Fg_1783421973
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3EED619541A0; Tue,  7 Jul 2026 10:59:33 +0000 (UTC)
+Received: from berrange.com (unknown [10.44.33.142])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2706E3000C00; Tue,  7 Jul 2026 10:59:28 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
- YannickV <Y.Vossen@beckhoff.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Mauro Matteo Cascella <mcascell@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] docs: outline some guidelines for security classification
+Date: Tue,  7 Jul 2026 11:59:27 +0100
+Message-ID: <20260707105927.2776822-1-berrange@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,55 +90,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping -- Corvin, Yannick, please could you suggest the right resolution
-for this bug?
+Beyond the overall virt/non-virt use case classification, there are
+a number of scenarios which we have decided will not be treated as
+security issues. Start to document some of these to give consistency
+in our treatemnt of incoming disclosures.
 
-thanks
--- PMM
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
 
+Mauro / Michael: please suggest any other rules which we have applied
+historically on qemu-security disclosures that we should capture here.
 
-On Mon, 22 Jun 2026 at 15:49, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Fri, 29 May 2026 at 12:47, Peter Maydell <peter.maydell@linaro.org> wrote:
-> >
-> > From: YannickV <Y.Vossen@beckhoff.com>
-> >
-> > The registers for the digitally controlled impedance (DCI) clock are
-> > part of the system level control registers (SLCR). The DONE bit in
-> > the status register indicates a successfull DCI calibration. An
-> > description of the calibration process can be found here:
-> > https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/DDR-IOB-Impedance-Calibration
-> >
-> > The DCI control register and status register have been added. As soon
-> > as the ENABLE and RESET bit are set, the RESET bit has also been toggled
-> > to 0 before and the UPDATE_CONTROL is not set, the DONE bit in the status
-> > register is set. If these bits change the DONE bit is reset. Note that the
-> > option bits are not taken into consideration.
->
-> Hi; we've just had a Coverity Scan run that went over this code,
-> and it points out an issue:
->
-> >  REG32(DDRIOB, 0xb40)
-> > +REG32(DDRIOB_DCI_CTRL, 0xb70)
->
-> These REG32() macros define R_DDRIOB as 0xb40 / 4 == 0x2d0,
-> and R_DDRIOB_DCI_CTRL as 0xb70 / 4 == 0x2dc...
->
-> > @@ -418,6 +428,8 @@ static void zynq_slcr_reset_init(Object *obj, ResetType type)
-> >      s->regs[R_DDRIOB + 4] = s->regs[R_DDRIOB + 5] = s->regs[R_DDRIOB + 6]
-> >                            = 0x00000e00;
-> >      s->regs[R_DDRIOB + 12] = 0x00000021;
-> > +
-> > +    s->regs[R_DDRIOB_DCI_CTRL] = 0x00000020;
->
-> ...and here in the reset function we are now initializing
-> both s->regs[R_DDRIOB + 12] and s->regs[R_DDRIOB_DCI_CTRL], but
-> those are the same array element (since 0x2d0 + 12 == 0x2dc).
->
-> What was the intention here? Which reset value is correct?
-> Should we be resetting some other register where we currently
-> are resetting s->regs[R_DDRIOB + 12] ?
->
-> thanks
-> -- PMM
+The vfio-user/vhost-user addition is a new one based on discussions
+in some GitLab issues today/yesterday
+
+ docs/system/security.rst | 63 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 63 insertions(+)
+
+diff --git a/docs/system/security.rst b/docs/system/security.rst
+index 53992048e6..fbbca50f95 100644
+--- a/docs/system/security.rst
++++ b/docs/system/security.rst
+@@ -75,6 +75,69 @@ Bugs affecting the non-virtualization use case are not considered security
+ bugs at this time.  Users with non-virtualization use cases must not rely on
+ QEMU to provide guest isolation or any security guarantees.
+ 
++Security boundary scope
++'''''''''''''''''''''''
++
++Even where a flaw affects the virtualization use case described above,
++not all scenarios will be considered in scope. The following guidelines
++are used to evaluate whether to apply the full security process, or treat
++an issue as a normal bug.
++
++* **assert** / **abort**. If triggering the code path requires kernel
++  privileges (or root account access) in the guest, asserts/aborts in
++  QEMU are a self inflicted denial of service. These will **not** be
++  treated as security flaws, at most hardening bugs. If triggering the
++  code path can be done by an unprivileged guest OS account, this
++  **may** justify handling as a security bug.
++
++* **vhost-user/vfio-user backends**. The backend processes have
++  shared memory regions co-mapped with the QEMU process. The intent
++  of the process separation is operational resilience & flexibility
++  and allowing for independent software suppliers. There is not
++  considered to be security boundary between QEMU and the vhost-user
++  & vfio-user backends. Thus flaws in the backends which can cause
++  crashes / undesirable behaviour in QEMU will **not** be treated as
++  security flaws, but should be fixed as hardening bugs.
++
++* **memory allocation bounds**. There are many ways in which a QEMU
++  process can legitimately consume an amount of memory that is
++  significantly larger than the assigned guest RAM. QEMU's worst
++  case memory usage should be considered effectively unbounded. As
++  such the QEMU deployment on the host should account for the
++  possibility of large memory peaks and apply countermeasures to
++  provide continuity of host operations. It is typical for the Linux
++  OOM killer to reap the process triggering host memory overcommit
++  in the case of exccessive usage, offering a degree of protection.
++  As such, bugs which can lead to excessive/unbounded memory allocations
++  will usually not be classified as security flaws, but should be
++  fixed as hardening bugs.
++
++* **degraded guest behaviour**. There are a set of bugs which can
++  lead guest hardware devices to misbehave. For example, a flawed
++  virtual IOMMU operation may not offer the guest device isolation
++  that would otherwise be expected. If a guest triggered exploit
++  requires kernel privileges (or root account access), and leads
++  to sub-optimal behaviour of the virtual device this is considered
++  a self inflicted service degradation. These will **not** be
++  treated as security flaws, at most hardening bugs. If triggernig
++  the code path can be done by an unprivileged guest OS account,
++  this may justify handling as a security bug.
++
++* **nested virtualization**. The scope for nested virtualization
++  is to prevent a level 2 guest from breaking out into a level
++  1 guest. As noted above, a number of scenarios exclude security
++  handling for flaws only exploitable by the guest kernel / root
++  account with affect the guest's own service/availability. In the
++  context of nested virtualization with PCI device assignment, it
++  may may be possible for a level 2 guest kernel to trigger flaws
++  that affect the level 0 QEMU process. While these bugs should be
++  fixed, they will not be triaged as security flaws at this time.
++
++* **low severity impact**. As a catch all rule, issues which
++  are judged to have a "low" severity impact on the system will
++  usually not justify handling as security bugs, nor assignment
++  of CVEs. They will be fixed as routine bugs when time allows.
++
+ Architecture
+ ------------
+ 
+-- 
+2.55.0
+
 
