@@ -4,108 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD583C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 09:16:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45042C44500
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 09:19:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh1uW-0007dy-Fw; Tue, 07 Jul 2026 05:16:12 -0400
+	id 1wh1xF-0000h6-4t; Tue, 07 Jul 2026 05:19:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1wh1uU-0007dX-D2
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 05:16:10 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1wh1uS-0003QU-JF
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 05:16:10 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-698aa8d4dafso3923512a12.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 02:16:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783415767; cv=none;
- d=google.com; s=arc-20260327;
- b=kE84uOotwD0ah9yPrGi+oCMJtkvMcp71dMVise4wgbyCifoVGRtLMPk6EDKo7M7o7m
- 05HDEhunNdVmWgQD19owJpE3mS0+izBh5zNUZB2oNXQSZV1Ptoc9YlEOqQDatWpymvPB
- DZGyD5DoYw6f4iBbsfwZCOuIyp0gOH69kELuScxU5qEn4oeOIOkH+bNniHluB8apEgvB
- UpHCymWxpF50UaDQgseiMscX1M0nLvoZbWERXs+0maw/ycNeDv3UPAXd0DTYWANjaUti
- 6B/GejLqJMnU/azY9ueOsqymgOXVPBXbABBquqJ+dhI91gQOePjNOqmiR2HmlJcz0DEw
- Bz9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Iuls+r+vnvH3ocSncfDxHGVzWK66Xi3I9dCDug/HkRs=;
- fh=7JIyXbSejVylgAatbe8mZ0w4pTm1O86UeNO7WPedyqA=;
- b=dV38exXzr0RxqmyqlaraP5OFbG8uIg+bQdGAPcVYzKe+zz+jUPgHjsqaSo0V2gmUo9
- eP9v3JPhNagvFzKmjjXslXA0iUP80eQDx7g/niZK/BrQNrLtanmwgkkiw46mBcdkfYFV
- 5vNWYrVIusc28/DOQMKSz83NYKFoBLTaw/VjZFro5DYXToaoZgljquGPPAF0Q0hJZNUs
- Vd31gUOWMi8z2NGFjkiQYfB0DrxJfKRd2SVNBmNHbiY1G1Mmg2qTOS1MT1WfBRfBLmnl
- tt3YYwraGWPyYMisUVVaxv1Y3neP7BaRwYk3QSn3HFJsyZfYqV+FSMWQ0dJ+XFVY8UaZ
- ZoNQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wh1xE-0000gq-Dw
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 05:19:00 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wh1xC-0004At-Nq
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 05:19:00 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6678Dlw83243280
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 09:18:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ FvzYHiO4VYNp2iZmxCAWw6qGGJbCSrTsYtPaxDi4QsI=; b=jfDHEYCcHh5pR9Ew
+ FtGfAdC89sAY+muUhKY4YGGU2u7Nd4BeZX/395mMn8se7aDSOdNG9Ipubxti5jut
+ 4Wxki4bMhWmOJfEPBo84E/38JW1cHXfD+ClOOv8PvEYm8VNSJOZSjQszqFIuIW3i
+ MCMd9YuczVmCqija8uJ31mPmtWyfen70J//jx5NzI1678eBqGxTmv7J9yGFEB84W
+ r8ImhYqzwoGx2wYTo+CugSHU5AEjGiW72qNqOsDx5dURxrnjd5/FW9WcOgZ1prto
+ Q7YtVjVX2iRV00U9Kl6mH7p4pLabOWE9Dj3GZZhxhPHGhQSMJz7D+F3TPNBg4QGJ
+ si08Ig==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8w11reqe-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 09:18:56 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8ef18406878so48391856d6.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 02:18:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1783415767; x=1784020567; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Iuls+r+vnvH3ocSncfDxHGVzWK66Xi3I9dCDug/HkRs=;
- b=LeuV+Pg459tP9Wg4MPv3FABQRIy/+sT1RTHnms6NICr4ZiM3ZEjnnUz9qiu0ArGlCl
- jz+BmQGm+9A2GVWnSMlD9t++hH9akUylp52DxKGHKoJKdg9LVJ3dVdKqa6rJ2U5phtEF
- wqSk1dKeiRdN30kYv/yIBTHIxdbcsk7yWfVVCdf6lB//PNZJYqUY+BJGP+0onS6jb7d1
- 5EmqVIoSCSFuNNEK5xH25A4loOirdLXWfFSN+mtl2K/4aV3xskSirMeINmOfeHB04H/y
- 08i8qsFeEVqaOurgZn1AVWuKv2u/b4Z89LRwkfqbiyuWG2JKAUKKzBHZmLLERSoBRcEc
- hfhA==
+ d=oss.qualcomm.com; s=google; t=1783415936; x=1784020736; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FvzYHiO4VYNp2iZmxCAWw6qGGJbCSrTsYtPaxDi4QsI=;
+ b=JO+K6GMIJlSo3wN2Ht309QlYUE1v1coh4yrH3HSJugNMn9YXtgMpj+ReAkvJBxKL5e
+ LJWnrJ2QQ0TYPdgrOp0dNcPKKNGe16BwRExxPWzJaJJadMmqOBbdr1TA87uOVyAtSX/0
+ xohxUwba/UKhkGzNEmaoQsOfhq3v9bzlHToBuYKqb57rAgHfjjixKz5/imKUXeyPJvhM
+ KagW/TKk4+MwijldXy6to4qBdIQ/DHQRljsanj7DFve4rdKVpqu+qPVS3Wrc7h1U95cJ
+ JdhipDJeSzFDgFFY9QAQLyvPQ8B8hlIiWBuId2w0jjAQnDgEo4j5ZgNnxgV49+JEXurm
+ FT9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783415767; x=1784020567;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Iuls+r+vnvH3ocSncfDxHGVzWK66Xi3I9dCDug/HkRs=;
- b=dYnBJZ1HlMQOZs3zGWNdN3ymNJt14XdkxThlI/snBr9aU+SRQg0sXz0XgCmKIx/Dhf
- B6rZ4nNHNypK6HzdkhrcW+m2Obp9ts/1BZ6n29v/KjrRP/t6rkKPshmoyXjVHsXlhrp7
- mP01xUdocfKwATWpNBeWPZlycWri2ZPknaETbaPwNr+lYzrL2uhrq+y1sFrYYxv22igw
- nEIgA/xSCR6m37dhFAIvi49ndXLep0mmgURNSwDDRQdmeHLNuVwKNb/IPduit/wfHPM6
- MlcTwlUMlC7pJ1IXFlyZNmxsnQtllPExY7jEHEqoc/JOp/au9nJpdd5rHvdl6x5jEak8
- JO/w==
-X-Gm-Message-State: AOJu0Yz7Vwb2NOBLL2Mj7vHSgyr3vpctPszLATiz/alTpXAPr67gDKvT
- Dce6EfrjIq16sXoALF6O2W48W2xjcuvFQlkjGNOLSD/9XGDv/gPv4kTfADaTFv6F2CrdzmCQ3W4
- IIEPtaj24So5sRFMYY96WLYNoREc/KEH41OttV6quzg==
-X-Gm-Gg: AfdE7ck4+ri7zoXikesvM3wR4vDFF88lcsq4spYJ0WY4G+/gzvFTMIUwAKbFW246sWR
- dd7/xc1ufyGWIsMzz6NucwbLJXKezUgIHZQcgAZNwvVMi0cCFAVkVlaiqnE9si/0m5dx0fhQtPU
- TXrAQV4HaBxcwqZu0CE5HJXHfuZszuWN47lXefTXPWEDsnxEGli9UwcnT9x2lCc5NEFsD7bMRWH
- QQs84jVJAfHuvBoV2rZlJVcqMs/oOoMsi/ikAQMYJCn5hGy3tMBTxlWl8sg8UnMJF6uX7H13og=
-X-Received: by 2002:a17:906:48cf:b0:c11:f4d6:48fc with SMTP id
- a640c23a62f3a-c15a693c9famr161887166b.45.1783415766847; Tue, 07 Jul 2026
- 02:16:06 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783415936; x=1784020736;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FvzYHiO4VYNp2iZmxCAWw6qGGJbCSrTsYtPaxDi4QsI=;
+ b=BUHx5FI+Pd40uNF/wZXb5ltcefqmPl+BhEBvEtFa77ETATEjzjHZcStIGwGZdKr+8p
+ CT6Hhha4MSE3Oi0lvI+r/6J+B+gmA7bzQwhzPY978v1IUrwL/3n1KfNdfTfH3XOuY3re
+ Ye8f2j/vgkXi7aYnYjmZ29ZEI3Inkunz2VgdrGY749CHD+i6mDWMurc8dffMgYpuPXrR
+ MJM+haXMmOjtmyXtMEXDz6D/xecwfBZcDJVHbSF+tMnI8Jxb0kaJMfUCg5tXGdfqa5Dp
+ eEBGq/rCo4Z+pOEspO08STfxy1WgvbccWg3HIHqSwmRLwn8ee9lmYnteBeaRQXHfwHYQ
+ er2g==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RosY4fBPeMll9AccCfnqyUr7xCr3odFqm3/cWSQZ5zYD1yIS4/8CeXm4ygRqkSk0dPr6j6toPCRGp4P@nongnu.org
+X-Gm-Message-State: AOJu0YyG6Wfz7+2QlIPAnETJi1nlA7IbInwVvAy0m75+Yhidq9qcft95
+ fofMYmjdQaK5xNY3Wvwrrqu5x6GXLtYQkNoQwZPUYt7FFGNUxuYePybLl1WXF72Gt/V0wRVGCQ+
+ pmNBDGRqDFmbt+5okXwIZoRRi2ntF8doZByoxltPVTO2V0WwIvHLCbG8XcA==
+X-Gm-Gg: AfdE7clZ0Wyz/9FurjLiifvpKZ0pL5VAp/dOBeQ0XZX1jBv/1Vp2LvF4Kcvem7S1vdC
+ vulHguE0x8AAVzpksXE3fZf8wEpz1n9PvXeW9O7qGrm9lrx7cSqTmWXpumJIITTt0we9HT/ABLR
+ Y7xIbdRm8uVvC8iO20aKUW9FjOBKwmOv2hnPxgL0dyQPIGgQ+ftyjAGTTfnRIPiT+6UBEvgqK2P
+ hJeTHCllaZ8YI9Oo7Ae0AyZlN3p+DjvDuwRMjc18WdvD8cWRl8liR8XTf18KKoKqotRCRCtNB2C
+ DXsiXaztWhOqeT+I9UxxjujCB5KHMuyCxQNw2xVSmodvSPKAmnUdN0hwUf24BvitNSHddxZWuqU
+ mNRgA0Vq6Q57j0Xoa6B/rjII6YqkBJoauAzsAPiWtXtVsCWwkmNIaZCSE3Kn4pg==
+X-Received: by 2002:ac8:6107:0:b0:51c:f3:34d9 with SMTP id
+ d75a77b69052e-51c74802e15mr46045511cf.27.1783415935619; 
+ Tue, 07 Jul 2026 02:18:55 -0700 (PDT)
+X-Received: by 2002:ac8:6107:0:b0:51c:f3:34d9 with SMTP id
+ d75a77b69052e-51c74802e15mr46045391cf.27.1783415935230; 
+ Tue, 07 Jul 2026 02:18:55 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47a9e4d8410sm32629544f8f.15.2026.07.07.02.18.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jul 2026 02:18:54 -0700 (PDT)
+Message-ID: <9f20ba93-0856-4058-9b2f-9eac79c028c6@oss.qualcomm.com>
+Date: Tue, 7 Jul 2026 11:18:53 +0200
 MIME-Version: 1.0
-References: <20260630104350.748267-1-frank.chang@sifive.com>
- <20260630104350.748267-3-frank.chang@sifive.com>
- <CAKmqyKPFV++zTuzWSWdMLbj1gb+VaLdrW6TEEo29+7jLz=0+ZA@mail.gmail.com>
-In-Reply-To: <CAKmqyKPFV++zTuzWSWdMLbj1gb+VaLdrW6TEEo29+7jLz=0+ZA@mail.gmail.com>
-From: Frank Chang <frank.chang@sifive.com>
-Date: Tue, 7 Jul 2026 17:15:55 +0800
-X-Gm-Features: AVVi8CdMSHDKSm-Iu5RWEsYe78p99HEOw-ArsvkDMF6w7g7ch2jcdqwl4GzhSM0
-Message-ID: <CAE_xrPi6qkqgZePKoH5UzrDYbtHcP9mLN7yvwRjANhDxPSoD8A@mail.gmail.com>
-Subject: Re: [PATCH v3 2/5] target/riscv: Support raising misaligned
- exceptions for scalar loads/stores
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>,
- Max Chou <max.chou@sifive.com>
-Content-Type: multipart/alternative; boundary="000000000000452b5f065601d74c"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=frank.chang@sifive.com; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] hw/i2c: smbus: increase MAX_DATA_LEN
+Content-Language: en-US
+To: Titus Rwantare <titusr@google.com>, peter.maydell@linaro.org
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com,
+ imaginos32@gmail.com, wuhaotsh@google.com, philmd@mailo.com
+References: <20260706230056.1888992-1-titusr@google.com>
+ <20260706230056.1888992-5-titusr@google.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260706230056.1888992-5-titusr@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=DMe/JSNb c=1 sm=1 tr=0 ts=6a4cc480 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=k-jolHMNAAAA:8 a=1XWaLZrsAAAA:8 a=EUspDBNiAAAA:8 a=r7jnlrndRL5-H-CgCs4A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
+ a=yeu0PtCsVa5VB5VCVbnF:22
+X-Proofpoint-GUID: 5SbUL1Z0EGh_Zc61lc8tgHU1R2A07Xq1
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA5MCBTYWx0ZWRfXwlZWFgDDTrqF
+ jz6E52p88poRDxqCEIsrDBIcqutib0K05IIS7zEfpLh4lhFdSpFlWX2dNCQslmUtRJEIOebZ9sa
+ 5HUUnZCi5UvWlAdF6GAjrmIwMDQXwXU=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA5MCBTYWx0ZWRfX1b9VNpgiutSm
+ NfVIVgPMB1dYM54Qhf6IkOLBczQHzwMChmwQGNAmuSND9GfaUnvnKLiXZWcsnbVsRNNlI3HlL4i
+ f23U8OeRnegzSefbhDKqd7Jz4j/ofv5TNFZ2ibAtKijIcQgLSM+72mbN8iMAwHZNFkd8j9RAAsf
+ /0AMNVEBd4mh3VVzHU9Y6Vyi3s9HDLuHfpQO0mygUfULdgTV8PXrB8+IhC83kdoOQGtftYriwde
+ zFOP4KitzgvEyvmIbvLvjP4+XiKkxuWhC1kyRzcbs0qggm7kvgPDHEzzmjbeCN65t4IJ0RCg+g4
+ LLPXXg6h9WWzsioS5lVsnKJb0iC/U9p+AljdC+XPG/fYxT7lBgKfzaZgtvF36+xaeem2T5B6Dzt
+ OcI70x5v6/NCCLm1YtXyeAXCc1nEvCuAOVYAjMy+B70gDWvpZzcilFAzOaQvmoEdh7MtKLK9+Zd
+ 0pysZxUxKwOcMgY3WJA==
+X-Proofpoint-ORIG-GUID: 5SbUL1Z0EGh_Zc61lc8tgHU1R2A07Xq1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_02,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015
+ spamscore=0 priorityscore=1501 bulkscore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070090
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_KAM_HTML_FONT_INVALID=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,160 +156,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000452b5f065601d74c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 7/7/26 01:00, Titus Rwantare wrote:
+> From: titusr <titusr@google.com>
+> 
+> The 32 byte payload was raised to 255 for block reads in the SMBus 3.0
+> specification. SMBus does not provide a way for devices to declare which
+> version of the spec they are designed to so we must allow newer devices
+> to return as much data as they allow.
+> 
+> Specification: https://smbus.org/specs/SMBus_3_3_20240512.pdf
+> 
+>> 6.5.7 Block Write/Read
+> The Block Write begins with a slave address and a write condition. After the command code the host issues a byte count which describes how many more bytes will follow in the message. If a slave has 20 bytes to send, the byte count field will have the value 20 (14h), followed by the 20 bytes of data. The byte count does not include the PEC byte. The byte count may be 0. A Block Read or Block Write is allowed to transfer a maximum of 255 data bytes.
+> 
+> Signed-off-by: Titus Rwantare <titusr@google.com>
+> ---
+>   hw/i2c/smbus_slave.c         | 4 ++--
+>   include/hw/i2c/smbus_slave.h | 2 +-
+>   2 files changed, 3 insertions(+), 3 deletions(-)
 
-On Mon, Jul 6, 2026 at 1:32=E2=80=AFPM Alistair Francis <alistair23@gmail.c=
-om>
-wrote:
-
-> On Tue, Jun 30, 2026 at 8:46=E2=80=AFPM <frank.chang@sifive.com> wrote:
-> >
-> > From: Frank Chang <frank.chang@sifive.com>
-> >
-> > When the Zicclsm extension is not enabled, raise misaligned load/store
-> > exceptions for misaligned accesses from scalar load/store instructions.
-> >
-> > Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> > Reviewed-by: Max Chou <max.chou@sifive.com>
-> > Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
->
-> This patch breaks the `func-riscv64-opensbi` test, which you can run
-> with `make check-functional-riscv64`
->
-
-Thanks Alistair,
-
-The issue is that we need to place the reset vector data at 8-byte-aligned
-offsets.
-Otherwise, QEMU would raise the misaligned load exception
-as SiFive U doesn't support hardware misaligned access.
-I've updated SiFive U's reset vector data and sent out the v6 patchset.
-
-Regards,
-Frank Chang
-
-
->
-> Alistair
->
-> > ---
-> >  target/riscv/insn_trans/trans_rvi.c.inc | 6 ++++++
-> >  1 file changed, 6 insertions(+)
-> >
-> > diff --git a/target/riscv/insn_trans/trans_rvi.c.inc
-> b/target/riscv/insn_trans/trans_rvi.c.inc
-> > index e47b16a7fa2..cc1b5dbbadc 100644
-> > --- a/target/riscv/insn_trans/trans_rvi.c.inc
-> > +++ b/target/riscv/insn_trans/trans_rvi.c.inc
-> > @@ -413,6 +413,9 @@ static bool gen_load(DisasContext *ctx, arg_lb *a,
-> MemOp memop)
-> >      if (ctx->cfg_ptr->ext_zama16b) {
-> >          memop |=3D MO_ATOM_WITHIN16;
-> >      }
-> > +    if (!ctx->cfg_ptr->ext_zicclsm) {
-> > +        memop |=3D MO_ALIGN;
-> > +    }
-> >      decode_save_opc(ctx, 0);
-> >      if (get_xl(ctx) =3D=3D MXL_RV128) {
-> >          out =3D gen_load_i128(ctx, a, memop);
-> > @@ -524,6 +527,9 @@ static bool gen_store(DisasContext *ctx, arg_sb *a,
-> MemOp memop)
-> >      if (ctx->cfg_ptr->ext_zama16b) {
-> >          memop |=3D MO_ATOM_WITHIN16;
-> >      }
-> > +    if (!ctx->cfg_ptr->ext_zicclsm) {
-> > +        memop |=3D MO_ALIGN;
-> > +    }
-> >      decode_save_opc(ctx, 0);
-> >      if (get_xl(ctx) =3D=3D MXL_RV128) {
-> >          return gen_store_i128(ctx, a, memop);
-> > --
-> > 2.43.0
-> >
-> >
->
-
---000000000000452b5f065601d74c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><span style=3D"background-color:transpare=
-nt">On Mon, Jul 6, 2026 at 1:32=E2=80=AFPM Alistair Francis &lt;<a href=3D"=
-mailto:alistair23@gmail.com">alistair23@gmail.com</a>&gt; wrote:</span></di=
-v><div class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">On Tue, Jun 30, 2026 at 8:46=E2=80=AFPM &lt;<a hr=
-ef=3D"mailto:frank.chang@sifive.com" target=3D"_blank">frank.chang@sifive.c=
-om</a>&gt; wrote:<br>
-&gt;<br>
-&gt; From: Frank Chang &lt;<a href=3D"mailto:frank.chang@sifive.com" target=
-=3D"_blank">frank.chang@sifive.com</a>&gt;<br>
-&gt;<br>
-&gt; When the Zicclsm extension is not enabled, raise misaligned load/store=
-<br>
-&gt; exceptions for misaligned accesses from scalar load/store instructions=
-.<br>
-&gt;<br>
-&gt; Signed-off-by: Frank Chang &lt;<a href=3D"mailto:frank.chang@sifive.co=
-m" target=3D"_blank">frank.chang@sifive.com</a>&gt;<br>
-&gt; Reviewed-by: Max Chou &lt;<a href=3D"mailto:max.chou@sifive.com" targe=
-t=3D"_blank">max.chou@sifive.com</a>&gt;<br>
-&gt; Reviewed-by: Alistair Francis &lt;<a href=3D"mailto:alistair.francis@w=
-dc.com" target=3D"_blank">alistair.francis@wdc.com</a>&gt;<br>
-<br>
-This patch breaks the `func-riscv64-opensbi` test, which you can run<br>
-with `make check-functional-riscv64`<br></blockquote><div><br></div><div>Th=
-anks Alistair,</div><div><br></div><div>The issue is that we need to place =
-the reset vector data at 8-byte-aligned offsets.</div><div>Otherwise, QEMU =
-would raise the misaligned=C2=A0load exception</div><div>as SiFive U doesn&=
-#39;t support hardware misaligned access.</div><div>I&#39;ve updated SiFive=
- U&#39;s reset vector data and sent out=C2=A0the v6 patchset.</div><div><br=
-></div><div>Regards,</div><div>Frank Chang</div><div>=C2=A0</div><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
-olid rgb(204,204,204);padding-left:1ex">
-<br>
-Alistair<br>
-<br>
-&gt; ---<br>
-&gt;=C2=A0 target/riscv/insn_trans/trans_rvi.c.inc | 6 ++++++<br>
-&gt;=C2=A0 1 file changed, 6 insertions(+)<br>
-&gt;<br>
-&gt; diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/in=
-sn_trans/trans_rvi.c.inc<br>
-&gt; index e47b16a7fa2..cc1b5dbbadc 100644<br>
-&gt; --- a/target/riscv/insn_trans/trans_rvi.c.inc<br>
-&gt; +++ b/target/riscv/insn_trans/trans_rvi.c.inc<br>
-&gt; @@ -413,6 +413,9 @@ static bool gen_load(DisasContext *ctx, arg_lb *a,=
- MemOp memop)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if (ctx-&gt;cfg_ptr-&gt;ext_zama16b) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memop |=3D MO_ATOM_WITHIN16;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 if (!ctx-&gt;cfg_ptr-&gt;ext_zicclsm) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 memop |=3D MO_ALIGN;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 decode_save_opc(ctx, 0);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if (get_xl(ctx) =3D=3D MXL_RV128) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 out =3D gen_load_i128(ctx, a, memop)=
-;<br>
-&gt; @@ -524,6 +527,9 @@ static bool gen_store(DisasContext *ctx, arg_sb *a=
-, MemOp memop)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if (ctx-&gt;cfg_ptr-&gt;ext_zama16b) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memop |=3D MO_ATOM_WITHIN16;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 if (!ctx-&gt;cfg_ptr-&gt;ext_zicclsm) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 memop |=3D MO_ALIGN;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 decode_save_opc(ctx, 0);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if (get_xl(ctx) =3D=3D MXL_RV128) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return gen_store_i128(ctx, a, memop)=
-;<br>
-&gt; --<br>
-&gt; 2.43.0<br>
-&gt;<br>
-&gt;<br>
-</blockquote></div></div>
-
---000000000000452b5f065601d74c--
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
