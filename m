@@ -4,69 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A228FC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 06:30:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10337C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 06:30:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgzJQ-00016i-5u; Tue, 07 Jul 2026 02:29:44 -0400
+	id 1wgzJH-00010d-2G; Tue, 07 Jul 2026 02:29:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wgzJO-00016I-LL
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:29:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wgzJF-0000zw-BC
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:29:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wgzJM-0006ae-PF
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:29:42 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wgzJD-0006Qv-80
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 02:29:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783405779;
+ s=mimecast20190719; t=1783405769;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8k+sRBfo2hWcFjuBWsB2P9BAWhZ3y8I90k3sIy8zXso=;
- b=XHhOZ2KVDnyoPEsc32Q2tnVMT8naVqMl60ixjfPIcLGcKMaGXu07crDkSAI6fPQrQMoBk3
- BNQ61KAKX7LER1seVmmlJvTw/8g6xvvHsE6KB7pjWqFIIxy8zNAHHbUzE4btfi+jloByXw
- 5G3JNWbfbCgbL47Shr2Be2GkOe/h8BU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=8euNicgZ15PRGSy1c6eqO33oQy5RZKnT6rfzELdr5R8=;
+ b=jJY3mo5W+J0pzs6LR1E2k97ti7CAqeXMU+UkgaB9RQ+YgEDjArwVaBAy+qPufmglsRqnBH
+ 5LQJ5BV4SXSBbTwwiImqWaKuCkeekbCStzX8wK1hmyHcPS8GUCV6z53sbU1wfOKqX+8sZe
+ NCXHFnS5+qe2rnjpUXNyYyeofoCRkNc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-80-Thn8r-kgNri3zXzxo6d3Tg-1; Tue,
- 07 Jul 2026 02:29:37 -0400
-X-MC-Unique: Thn8r-kgNri3zXzxo6d3Tg-1
-X-Mimecast-MFC-AGG-ID: Thn8r-kgNri3zXzxo6d3Tg_1783405776
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-381-HBt7RKcOMzKypqwGfw08gg-1; Tue,
+ 07 Jul 2026 02:29:27 -0400
+X-MC-Unique: HBt7RKcOMzKypqwGfw08gg-1
+X-Mimecast-MFC-AGG-ID: HBt7RKcOMzKypqwGfw08gg_1783405766
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A42B418011D1; Tue,  7 Jul 2026 06:29:36 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7E3261956096
+ for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 06:29:26 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.49])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 46FFA180065F; Tue,  7 Jul 2026 06:29:34 +0000 (UTC)
+ id 407AC1800678; Tue,  7 Jul 2026 06:29:24 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Alex Williamson <alex@shazbot.org>
-Subject: [PULL 05/27] vfio/iommufd: Merge .dma_map_file() into .dma_map()
-Date: Tue,  7 Jul 2026 08:28:58 +0200
-Message-ID: <20260707062920.317302-6-clg@redhat.com>
-In-Reply-To: <20260707062920.317302-1-clg@redhat.com>
-References: <20260707062920.317302-1-clg@redhat.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 00/27] vfio queue
+Date: Tue,  7 Jul 2026 08:28:53 +0200
+Message-ID: <20260707062920.317302-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,196 +80,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Simplify the VFIOIOMMUClass interface by removing the dma_map_file
-handler. Move the logic to decide between the standard virtual and
-file-backed mapping into the IOMMUFD backend, utilizing the
-MemoryRegion already passed to the dma_map handler.
+The following changes since commit 94826ec1370328375c3b6d1e80fdc94c8f46c348:
 
-This removes redundant dispatch logic from the generic container layer
-and let backends to manage their own mapping strategies. This is
-similar to the vfio-user implementation.
+  Merge tag 'accel-20260706' of https://github.com/philmd/qemu into staging (2026-07-06 18:38:14 +0200)
 
-Reviewed-by: Alex Williamson <alex@shazbot.org>
-Link: https://lore.kernel.org/qemu-devel/20260608055758.359002-1-clg@redhat.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/vfio/vfio-container.h | 15 ----------
- hw/vfio/container.c              | 38 ------------------------
- hw/vfio/iommufd.c                | 50 +++++++++++++++++++++++---------
- 3 files changed, 37 insertions(+), 66 deletions(-)
+are available in the Git repository at:
 
-diff --git a/include/hw/vfio/vfio-container.h b/include/hw/vfio/vfio-container.h
-index b2e7f4312c31ed4b776ddb195b021e84ebed556f..a15ee2df2b9c82d7c5004685aa91c3339587e06c 100644
---- a/include/hw/vfio/vfio-container.h
-+++ b/include/hw/vfio/vfio-container.h
-@@ -172,21 +172,6 @@ struct VFIOIOMMUClass {
-     int (*dma_map)(const VFIOContainer *bcontainer,
-                    hwaddr iova, uint64_t size,
-                    void *vaddr, bool readonly, MemoryRegion *mr);
--    /**
--     * @dma_map_file
--     *
--     * Map a file range for the container.
--     *
--     * @bcontainer: #VFIOContainer to use for map
--     * @iova: start address to map
--     * @size: size of the range to map
--     * @fd: descriptor of the file to map
--     * @start: starting file offset of the range to map
--     * @readonly: map read only if true
--     */
--    int (*dma_map_file)(const VFIOContainer *bcontainer,
--                        hwaddr iova, uint64_t size,
--                        int fd, unsigned long start, bool readonly);
-     /**
-      * @dma_unmap
-      *
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 56bd9ac0095df7b0f4da85f1d8dcb8d571fa9f2a..d09a6637324c6bf29b2fe22369082f87e280c98f 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -15,7 +15,6 @@
- #include <linux/vfio.h>
- 
- #include "system/tcg.h"
--#include "system/ramblock.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "hw/vfio/vfio-container.h"
-@@ -74,49 +73,12 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
-     bcontainer->space = space;
- }
- 
--static bool vfio_container_can_dma_map_file(VFIOContainer *bcontainer,
--                                            MemoryRegion *mr, int *fd)
--{
--    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
--    RAMBlock *rb = mr->ram_block;
--
--    if (!vioc->dma_map_file || !rb) {
--        return false;
--    }
--
--    *fd = qemu_ram_get_fd(rb);
--    if (*fd < 0) {
--        return false;
--    }
--
--    /*
--     * We can use IOMMU DMA mapping (IOMMU_IOAS_MAP_FILE) for :
--     *
--     * 1) Guest RAM blocks explicitly configured as shared (MAP_SHARED)
--     * 2) RAM device sub-regions (MMIO BARs)
--     *
--     * Private RAM mappings (MAP_PRIVATE) are strictly excluded. Because
--     * they are subject to copy-on-write (COW) anomalies, their underlying
--     * PFNs can permanently diverge from the backing file
--     */
--    return qemu_ram_is_shared(rb) || memory_region_is_ram_device(mr);
--}
--
- int vfio_container_dma_map(VFIOContainer *bcontainer,
-                            hwaddr iova, uint64_t size,
-                            void *vaddr, bool readonly, MemoryRegion *mr)
- {
-     VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
--    int mfd;
- 
--    if (vfio_container_can_dma_map_file(bcontainer, mr, &mfd)) {
--        RAMBlock *rb = mr->ram_block;
--        unsigned long start = vaddr - qemu_ram_get_host_addr(rb);
--        unsigned long offset = qemu_ram_get_fd_offset(rb);
--
--        return vioc->dma_map_file(bcontainer, iova, size, mfd, start + offset,
--                                  readonly);
--    }
-     g_assert(vioc->dma_map);
-     return vioc->dma_map(bcontainer, iova, size, vaddr, readonly, mr);
- }
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 68f2ae6f9f667bb05c20e452e8c5b43da6558098..6ff668d2597e07c6953cf0f1997514aec199642c 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -20,6 +20,7 @@
- #include "trace.h"
- #include "qapi/error.h"
- #include "system/iommufd.h"
-+#include "system/ramblock.h"
- #include "hw/core/iommu.h"
- #include "hw/core/qdev.h"
- #include "hw/vfio/vfio-cpr.h"
-@@ -35,26 +36,50 @@
- #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO             \
-             TYPE_HOST_IOMMU_DEVICE_IOMMUFD "-vfio"
- 
-+static bool iommufd_cdev_can_map_file_dma(MemoryRegion *mr, int *fd)
-+{
-+    RAMBlock *rb = mr ? mr->ram_block : NULL;
-+
-+    if (!rb) {
-+        return false;
-+    }
-+
-+    *fd = qemu_ram_get_fd(rb);
-+    if (*fd < 0) {
-+        return false;
-+    }
-+
-+    /*
-+     * Use iommufd_backend_map_file_dma() (IOMMU_IOAS_MAP_FILE) for:
-+     * 1) Guest RAM blocks explicitly configured as shared (MAP_SHARED)
-+     * 2) RAM device sub-regions (MMIO BARs)
-+     *
-+     * Private RAM mappings (MAP_PRIVATE) are excluded: copy-on-write
-+     * semantics can cause their underlying PFNs to permanently diverge
-+     * from the backing file.
-+     */
-+    return qemu_ram_is_shared(rb) || memory_region_is_ram_device(mr);
-+}
-+
- static int iommufd_cdev_map(const VFIOContainer *bcontainer, hwaddr iova,
-                             uint64_t size, void *vaddr, bool readonly,
-                             MemoryRegion *mr)
- {
-     const VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
-+    int fd;
- 
--    return iommufd_backend_map_dma(container->be,
--                                   container->ioas_id,
--                                   iova, size, vaddr, readonly);
--}
-+    if (iommufd_cdev_can_map_file_dma(mr, &fd)) {
-+        RAMBlock *rb = mr->ram_block;
-+        unsigned long start = vaddr - qemu_ram_get_host_addr(rb);
-+        unsigned long offset = qemu_ram_get_fd_offset(rb);
- 
--static int iommufd_cdev_map_file(const VFIOContainer *bcontainer,
--                                 hwaddr iova, uint64_t size,
--                                 int fd, unsigned long start, bool readonly)
--{
--    const VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
-+        return iommufd_backend_map_file_dma(container->be, container->ioas_id,
-+                                            iova, size, fd,
-+                                            start + offset, readonly);
-+    }
- 
--    return iommufd_backend_map_file_dma(container->be,
--                                        container->ioas_id,
--                                        iova, size, fd, start, readonly);
-+    return iommufd_backend_map_dma(container->be, container->ioas_id,
-+                                   iova, size, vaddr, readonly);
- }
- 
- static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
-@@ -929,7 +954,6 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, const void *data)
-     VFIOIOMMUClass *vioc = VFIO_IOMMU_CLASS(klass);
- 
-     vioc->dma_map = iommufd_cdev_map;
--    vioc->dma_map_file = iommufd_cdev_map_file;
-     vioc->dma_unmap = iommufd_cdev_unmap;
-     vioc->attach_device = iommufd_cdev_attach;
-     vioc->detach_device = iommufd_cdev_detach;
--- 
-2.54.0
+  https://github.com/legoater/qemu/ tags/pull-vfio-20260707
+
+for you to fetch changes up to 9daa7347ff2551038e0de055d309b420324b5a25:
+
+  vfio/pci: Reject invalid MSI-X Table and PBA BIR values (2026-07-07 07:12:46 +0200)
+
+----------------------------------------------------------------
+vfio queue:
+
+* Fixes ROM read issues in vfio/pci: information leak, error
+  propagation, and uninitialized state
+* Validates VERSION replies in vfio-user and updates the spec
+  for DMA access mode bits
+* Merges .dma_map_file() into .dma_map() in the iommufd backend
+* Reworks switchover-ack to be re-usable and implements the
+  VFIO_PRECOPY_INFO_REINIT feature for additional pre-copy
+  iterations before switchover
+* Adds ATS support for passthrough devices via iommufd
+* Fixes translated_addr for non-identity-mapped RAM sections in
+  the VFIO listener
+* Reject invalid MSI-X Table and PBA BIR values
+
+----------------------------------------------------------------
+Avihai Horon (16):
+      migration: Propagate errors in migration_completion_precopy()
+      migration/ram: Use migration_bitmap_sync_precopy() for postcopy discard
+      migration: Run final save_query_pending at switchover
+      migration: Log the approver in qemu_loadvm_approve_switchover()
+      migration: Replace switchover_ack_needed SaveVMHandler
+      migration: Rename switchover-ack code to legacy
+      migration: Make switchover-ack re-usable
+      migration: Fail migration if switchover-ack is requested after switchover decision
+      vfio/migration: Extract VFIO_MIG_FLAG_DEV_INIT_DATA_SENT sending to helper
+      vfio/migration: Add Error ** parameter to vfio_migration_init()
+      vfio/migration: Add new switchover-ack mechanism
+      vfio/migration: Implement VFIO_PRECOPY_INFO_REINIT feature
+      vfio/migration: Check VFIO_PRECOPY_INFO_REINIT during switchover
+      migration: Enable new switchover-ack
+      migration: Refactor migration_completion_precopy() to return bool
+      migration: Fix "switchover" used as a verb in comments and docs
+
+Cédric Le Goater (4):
+      vfio/pci: Fix information leak in vfio_rom_read()
+      vfio/iommufd: Merge .dma_map_file() into .dma_map()
+      vfio/listener: Fix translated_addr for non-identity-mapped RAM sections
+      vfio/pci: Reject invalid MSI-X Table and PBA BIR values
+
+GuoHan Zhao (1):
+      vfio-user: validate VERSION replies
+
+Mario Casquero (2):
+      vfio/pci: Initialize rom_read_failed in vfio_pci_load_rom()
+      vfio/pci: Propagate errors in vfio_pci_load_rom() using Error API
+
+Mattias Nissler (1):
+      docs: Update vfio-user spec to describe DMA access mode bits
+
+Nathan Chen (2):
+      iommufd: Introduce handler for device ATS support
+      vfio/pci: Add ats property
+
+Shameer Kolothum (1):
+      backends/iommufd: Fix dev_id and type order in viommu trace
+
+ docs/devel/migration/vfio.rst      |  17 +++-
+ docs/interop/vfio-user.rst         |  82 +++++++++------
+ qapi/migration.json                |  16 ++-
+ hw/vfio/pci.h                      |   1 +
+ hw/vfio/vfio-migration-internal.h  |   2 +
+ include/hw/vfio/vfio-container.h   |  15 ---
+ include/migration/client-options.h |   1 +
+ include/migration/misc.h           |   2 +
+ include/migration/register.h       |  56 +++++-----
+ include/system/host_iommu_device.h |   9 ++
+ migration/migration.h              |  34 ++++++-
+ migration/savevm.h                 |  11 +-
+ backends/iommufd.c                 |   8 ++
+ hw/core/machine.c                  |   1 +
+ hw/s390x/s390-stattrib.c           |   2 +-
+ hw/vfio-user/proxy.c               |  21 ++--
+ hw/vfio/container.c                |  38 -------
+ hw/vfio/iommufd.c                  |  50 ++++++---
+ hw/vfio/listener.c                 |   5 +-
+ hw/vfio/migration.c                | 204 +++++++++++++++++++++++++++++--------
+ hw/vfio/pci.c                      | 137 +++++++++++++++++++++----
+ migration/block-dirty-bitmap.c     |  11 +-
+ migration/colo.c                   |  14 +++
+ migration/migration.c              |  98 ++++++++++++------
+ migration/options.c                |   9 ++
+ migration/ram.c                    |  40 ++++----
+ migration/savevm.c                 | 195 ++++++++++++++++++++++-------------
+ backends/trace-events              |   2 +-
+ hw/vfio/trace-events               |   7 +-
+ migration/trace-events             |   9 +-
+ 30 files changed, 753 insertions(+), 344 deletions(-)
 
 
