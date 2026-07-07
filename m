@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53CF6C44501
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7212EC43602
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 13:57:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh6Hr-0003dm-4d; Tue, 07 Jul 2026 09:56:35 -0400
+	id 1wh6I7-0003he-7m; Tue, 07 Jul 2026 09:56:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh6Hq-0003d7-0G
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:56:34 -0400
+ id 1wh6I5-0003fc-1o
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:56:49 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wh6Ho-00008g-FT
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:56:33 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1wh6I3-0000D3-Gy
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 09:56:48 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667C8XMB3741931
- for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:56:31 GMT
+ 667C8qsV3541961
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 13:56:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 12ntz0riBx4+nic6fgWGFvlIIoRgNjt6n/klVAeq7qU=; b=fTsLOVdFOGMdH7dF
- TN/G4kyM5KTX3wdL+U7EFYP/HEFCvff2/qG40uxmQvXN4sjU5fP3gkByB9sZSq+e
- VOvcZm3lUPEEJ/m8+qGMZjZUMG6wHgkKHGQRS47deS0v2hL6+Hn+UFqiVXgpRIQu
- eF1BTgDRXovp/1E//rJMdpNX400w4P3gVLDqMNdcCk1wjjgDvClOdCaEU5ar2IeV
- 6uIcyJZRuFilHX5haC8GOp38vbdKvNOmW+xekpeU2Vza3iFy+1bWOGOtFOixaiTy
- f8L6K9TAJdpKCQEakAsm1rXnfpgU4udt5R2pjranWh6jK5tYwq1x6wccFcbD3UiG
- QV3SFA==
+ ibBuYm58xe2e6IjrbMmj336RR3FkZ4lwFHvOiyPJb4E=; b=eJjZOhkK3V5/hu5h
+ ZZSbWygK3aQAGJcKUDILYhyzcZWtsA3jfM/jPsQf+0PG8Eo7anO/vUvXi1DTXGTW
+ g3uqOrfYM1wAlj57rWVI+gNAJDkOFFAI464Dgnm/w1axHcQFz4l+vmH2I3sQLSOB
+ Y3EeDonl32qid16xPV9k2LPY6sFcgmac/meiSFFD+cGo6cuULcLXZkHeSAIDa9iC
+ W5wp5G3i2Bc7uySWxi0ZTjFWpqQG1a14L+YS4YCdIMqdW0k04awpSR4YkKMR7ikH
+ UCEIaY+mtTnVvuL8ckSL6dCgGrVLRdxKFn5RGRxvlvi/GVhYQcqc8COAloVydBAe
+ OTua9g==
 Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
  [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8ye0gv32-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8su728xx-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:56:31 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:56:46 +0000 (GMT)
 Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c0ab07320so38593171cf.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:56:30 -0700 (PDT)
+ d75a77b69052e-51c26012cd0so53543781cf.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 06:56:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783432590; x=1784037390; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=12ntz0riBx4+nic6fgWGFvlIIoRgNjt6n/klVAeq7qU=;
- b=Eaj7dSICcF5QXtuV0Lqfmudz0jkbdVN6D67VUcmZLZFWKG05VJldP8usKp5lCTZMSH
- Cti1Gpf8+M1fLMjJZQTgImw+sqa8z5G6sQeOdQX2X5fllzehwGpk0uyT5LLn7pI5/nlf
- lcFBPSGhNE/wKz5WnZShKzQyEc+pwmXSneHLflzjDHqXV5HOj8trJ5qDK9TUzuU5T7M7
- sG3EQ6eJM1HOibmD8RCPCMnNHVksNElYwd1VZg6sl1UTx4ZxvVkNFeNE87CnBy+fXQyk
- ZYL74C/RfISc8sEuXVtnc5+noIiPi0rnImEuLxebTwfY+lNjPRhDVTClrOE/vBctN11E
- di1A==
+ d=oss.qualcomm.com; s=google; t=1783432605; x=1784037405; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ibBuYm58xe2e6IjrbMmj336RR3FkZ4lwFHvOiyPJb4E=;
+ b=Nl2Gf59NOSAqc5QtxSWC7coOIAbEHgtlSOSuf9Peuyjxejz8U/IZDyEIfNJGzfRtkj
+ FJEVScm38mFU3wFc80X0FFYh1CnHKCDB0ENWrczARuDLXnsQAaT2oe8C+IDR5tv+98oS
+ HI5JE8ZvdgdoUBw/UiPAwwUighBVkTlBVlAJfGxtofGwU2xFJekoznvAy+89MGFMtiNW
+ GIOeVDFuO12RAEGpH/JpLqNSpzmHiNznFJO1xIpk7bx/nKxZZk09cL6IxAQEl2qswssj
+ pH4jd5P6a+STgYmQa66LCjHO6oiuzCGB8UyX/e8tIc5nX5e93J/mvQMQjGZRlPV70afi
+ qpEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783432590; x=1784037390;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=12ntz0riBx4+nic6fgWGFvlIIoRgNjt6n/klVAeq7qU=;
- b=YQ/fFFARYRVuNGf9B7xgxluzmylJ7zzSRbSjIJxaA91mIQLBgNW+W0z2soq+1KFVpr
- ofghlcersZGd8pAIzIogLXWyv7b6VEmvYVAAuAo4wIjs1Vx9Zk/G6Ztxw75I9/ylL/+0
- Oe/NjCRdbf4V9hKiLg93d/O7h46sHHYVROt6WsrG9U1P7mHLibLsIjWs3pEMiHaIFMob
- xH7328uLvlmNooq7x27hD5UfaG5ZrbKNNtPIBekb0cF6toGJG7UvM5EsxaUjIotwFf4L
- Mkrlo+kuXS+c7SGAXHhN+I7NX2vy3skfu10haK6CmTemjdu7ze+ZYugaJg65rD8GuRKe
- EMlg==
-X-Gm-Message-State: AOJu0YxdRWh8MwJMUcewJfJR+jFsESA9K4gcvRP3W/0AIol2LrDAjPWO
- eB8nMkloSnSoIpPZa76/G+CQq/dMdHKTO3qUdshYRzX/vrpYZVTVoqwQycctl0oM/K0tQcw3EJz
- lbm7rWKWQALwCLcCGul0miVrI533gc3oph9lNNV5PpwomgrtBld+OhFoNqNg3hNZo5A==
-X-Gm-Gg: AfdE7clOCfVQVnd5L1npNgOT77MY0dUTHUeFmvI2GF1QVHFeVXUzp6JufGNdAMTBUA5
- iEPX0yAzS3JD3dbkXApnnn564+g8el4l0p0FbqeM8XtST29EXCVG7Tqw1tuAeNFrtDxt6j9aWJm
- I+/eXezm1Ef705HxC6+94OPMjxEscpON1XlFYE/Kepanpf7mh6Ego+qdZbXLGsHVavLVCgTxxBo
- 6VzvfXyaY3MNTCy5E50DpbKDqWF26KjjjdyN7WWOlqHioOjH2KRjq+AVp7eidRdGhx0X+3174x1
- G3hKtIZhqxppcTV4NWMVhHSemgqvJ1IQoW7X6KXJmGfbMve3cLqCHeE/tG8s64AjwbbIdt4YFun
- nqzTYznGP+TfKIS0WSRYrsD3YhnhjtW86BFO4eG4tYChEp/3ZsAEec6HxUjT0b9UgLGus
-X-Received: by 2002:ac8:7c42:0:b0:51a:8c9b:649b with SMTP id
- d75a77b69052e-51c7487dfafmr56962731cf.63.1783432589996; 
- Tue, 07 Jul 2026 06:56:29 -0700 (PDT)
-X-Received: by 2002:ac8:7c42:0:b0:51a:8c9b:649b with SMTP id
- d75a77b69052e-51c7487dfafmr56962021cf.63.1783432589026; 
- Tue, 07 Jul 2026 06:56:29 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783432605; x=1784037405;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ibBuYm58xe2e6IjrbMmj336RR3FkZ4lwFHvOiyPJb4E=;
+ b=HfUs+ltQ347rgn5xtghsYbAia6z4PUwKDzmnEmZq7WgPsBMqRbL9G9TEq+nTpE51Hp
+ MuMcX/slvE8NclJOUe2QWHMnm7VWR+cXpkZUAIvCeo3C7YK0ZNqxYsgJ1YPUkGSQEMv8
+ 1gfR4jajWbWRbjk3Vzr6iIqm+BQMI9tD/i/9phX1S3dU6tF+JZ1BeKkugArfQEPOQQMr
+ XC7UC2pocB3G8oKVTNrO++im+JxSXzmNnE3odqhSSJo4y3wexZ7zNzK+FEJHeaEbWitp
+ AwVgakHSfAB4jPqXqC9sfRiwAQpcFLIpmRLj0aRc7eAL4uRhoh5sphG+8n/3f4xOySuf
+ Gw1Q==
+X-Gm-Message-State: AOJu0YxLvLrHe69zwkddVhFbp8tojUtYhW16IjKH/5qEjdQCsykWxOhm
+ utP2IHNezPUtYQ6cbrOnR9fAOf98Ggmtu9LT82NQZOUFypeYgug9x2EkbVSSrswBpJlJzqR/lAp
+ AfPzlV/MDY8ZMhLYnJJ5Z0d5oXiiCjlVySoO5g4rYUQjBHL/rQY4r/VQx5zLv8JE0MA==
+X-Gm-Gg: AfdE7cmynWjQfXviRGS7zzF3C9vIJstAMu6D/nv1I5gQoqz2b0jRj4lPt3ckPMC4F74
+ 5OKwd/2QH/LE6wh8L9UpJ2NxbtdbP//c9Ka6Phx7OORDPh4kXfTfVYiJbcR0dtSxrkgc7y0/+29
+ 5eHBdZyX9IFfZ7D6qvTFiJSL2HQRwjDEFgLI3GRCuJFrXnkJ8QQUoPpaYEBm2u89lPG3YH0tWyZ
+ 0rebkG3KuctlwKfUg66zzHeu5+v1rLkowZlgJDDASbD3r9QQCYVPyxwDZ7JF5iL8xCngDRVJHAW
+ RI8N/eGRDihyAmOIDaXNGZoH+cS3P7MDFfqSjpOm8L07kRuQWYjqzsRNIL+hc6/XfDZO0iQfYXz
+ HNwse0ae13aivi4MkSkQhSbTfoSIuxIJzmoYid0WPArSmg2ZQO6lUeGLxw+s+1bwW/7F9
+X-Received: by 2002:a05:622a:64a:b0:51a:8c97:938c with SMTP id
+ d75a77b69052e-51c748ed479mr56337461cf.67.1783432604734; 
+ Tue, 07 Jul 2026 06:56:44 -0700 (PDT)
+X-Received: by 2002:a05:622a:64a:b0:51a:8c97:938c with SMTP id
+ d75a77b69052e-51c748ed479mr56337081cf.67.1783432604246; 
+ Tue, 07 Jul 2026 06:56:44 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493e0f5b811sm90818245e9.13.2026.07.07.06.56.27
+ 5b1f17b1804b1-493e0aa7da9sm61030915e9.1.2026.07.07.06.56.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 07 Jul 2026 06:56:28 -0700 (PDT)
+ Tue, 07 Jul 2026 06:56:43 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>, 
@@ -97,41 +96,40 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
  Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-arm@nongnu.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH 1/4] system: Select WHPX by default when no other accelerator
- is available
-Date: Tue,  7 Jul 2026 15:56:15 +0200
-Message-ID: <20260707135618.53561-2-philmd@oss.qualcomm.com>
+Subject: [PATCH 3/4] meson: Simplify calling mkvenv.py
+Date: Tue,  7 Jul 2026 15:56:17 +0200
+Message-ID: <20260707135618.53561-4-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260707135618.53561-1-philmd@oss.qualcomm.com>
 References: <20260707135618.53561-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: __BGKTJgZ3sUEz98s_QwZajqJCl0jw7I
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEzNiBTYWx0ZWRfX4UV2uiOFWQyy
- 9VqfI124MTIJqxuiovivNrwx3ZGTdtk3CMHrJQT0cv9gxi1//znaX5urWd57v/w03IZ730nbvYE
- JhewhcBEaOUv6KuwFP9T4LgIhkxQW0Y=
-X-Authority-Analysis: v=2.4 cv=SZfHsPRu c=1 sm=1 tr=0 ts=6a4d058f cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEzNiBTYWx0ZWRfXw9f/1WH4OP2j
+ CkYMOCCD1TGL/bJbtp2M30oyzq8Anj39hy/4zv6aFtj7ZtLL1FN8IJ3/JytGVUfjdJ//VkWjKao
+ 6+unn9g7ZosMUEG25ARAlKpW1zq7y53F+f/9K7MGfRCOc0Qe0CB0Q1+Uytd14BOtpvkLFX/Ddp2
+ YcaSTx75vtmrWQpQG+qQrgymkWYLZZ+DLDY5BuDaM+x18FdiRZKZuRg9ZwrXmS40CEx8g+fJt/M
+ t+O/VaRtcO862XmcMdmwXLMpYsjVcCdBcezb+PsRYLwHu8ZLbI41B6bFWhvrJ3/O/oFRlDR+eVB
+ nSgkruRHgnCseRoQES+GZgKz6SfTc5Q3YP72VHJMmrFo/K7/IVPAZscP11vjfF5rFVB2divSUrY
+ ziXhYNxWTSdy10yCs+KOHNjRD3unbshaOb4JisZ0AiihVO/Z7hmJxT3A5Gp1C/LpeBrBd52tf3w
+ HUHBKYjpsuhP8IlK3fQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEzNiBTYWx0ZWRfXwg/sl93OB6SY
+ JOPP7SWZ9jCONNKH/X3WEMVSNHLopH7duwidJEARCiAtsUvL9YcRA9+Az/HEz3g+ip1B42gyYrm
+ WnnK7b3IDIL2M1wr1FcgnTtzx3iLeXM=
+X-Proofpoint-GUID: SxxHW8EiOm8p8PSURENFUIrYtUGHGRZ_
+X-Proofpoint-ORIG-GUID: SxxHW8EiOm8p8PSURENFUIrYtUGHGRZ_
+X-Authority-Analysis: v=2.4 cv=HN7z0Itv c=1 sm=1 tr=0 ts=6a4d059e cx=c_pps
  a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=m5lraNmIkCb9aVCCOlYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=vl9sPsrYKGekLG37FbEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
  a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-GUID: __BGKTJgZ3sUEz98s_QwZajqJCl0jw7I
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEzNiBTYWx0ZWRfXz1tKfIHSNvz7
- 0XwnGxTxzKS8w0g+iR37s5U6JyF78vH9dJo6SHgT5c1UyrXtP9DZTY0hAukjQUDHzNSdBQDN++P
- obq5n9+Nwee08K0Nz9LRHVR3+drlu5pM+U4H9xTlmQaeqjb5JDKlMjraQ33c4u29ONbk4F6wTP2
- hgrwwoXmTs7sr2bn0DEp8ue7gEQruFvIEIdG+wD5Aos56g+uuoyjX56PjsA7XuRAK2xOsk7WkeU
- HoEztxruoHwVFOc6kai4ALbbnz67VvjjmsoNq6O82oNbhnymBrZ+o2oQJELYDpTrDv1A/L4ltPT
- 3AKnalM9tluhg07HFedMfX0X6mdH9Qrg2efKWgb/dzEoVJWEtVLPvUpRv9Qzl3rnrvw30UHTwhf
- Lz0glFriO3BkWfkLtr+iGQYlMYsmVmX9WDrbnZ8KxKDkEroOQt2XHP1zjm8idP7wmNWWVIlF3VL
- yjT3NgvT4JDC+5tk5cg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_03,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 malwarescore=0 bulkscore=0 spamscore=0
- adultscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 suspectscore=0
+ spamscore=0 priorityscore=1501 malwarescore=0 adultscore=0 clxscore=1015
+ bulkscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070136
 Received-SPF: pass client-ip=205.220.168.131;
@@ -158,40 +156,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When testing with a WHPX-only binary, we get:
+We created the MKVENV_ENSUREGROUP variable in commit 913e47cb6b6
+("tests: respect --enable/--disable-download for Avocado") when
+the tests/ directory was still processed as Makefile. However
+later in commit 1aa22ffee20 ("meson, mkvenv: add functests custom
+target") we converted the rule to meson, and in commit 5abfe61b402
+("tests: replace check-venv with vm-venv target") we stopped using
+it in Makefiles. Since pyvenv/meson.build is included via meson
+'subdir()' function, we don't need to export the arguments in
+Makefile format ant re-import / parse them: directly re-use the
+'mkvenv' variable resolved in the main meson.build file.
 
-  qemu-system-aarch64.exe: No accelerator selected and no default accelerator available
+This is particularly helpful on Windows, otherwise the Makefile
+indirection triggers this error:
 
-Fix by checking for WHPX in configure_accelerators() and using
-it by default when no other accelerator is available, similarly
-to commit 964d2a0cf81 ("system: Select HVF by default ...").
+  $ ninja pyvenv/functests.group
+  [1/1] Generating pyvenv/pyvenv_functests_group with a custom command
+  FAILED: [code=2] pyvenv/functests.group
+  "C:/msys64/home/user/qemu/build/pyvenv/bin/python.exe" "-B" "/home/user/qemu/python/scripts/mkvenv.py" "ensuregroup" "--online" "--online" "--dir" "C:/msys64/home/user/qemu/python/wheels" "C:/msys64/home/user/qemu/pythondeps.toml" "functests"
+  C:/msys64/clangarm64/bin/python3.14.exe: can't open file 'C:/home/user/qemu/python/scripts/mkvenv.py': [Errno 2] No such file or directory
+  ninja: build stopped: subcommand failed.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- system/vl.c | 3 +++
- 1 file changed, 3 insertions(+)
+ configure          | 1 -
+ pyvenv/meson.build | 7 +++----
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/system/vl.c b/system/vl.c
-index 1d14e2e2076..4f6d1e1ca8b 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2444,6 +2444,7 @@ static void configure_accelerators(const char *progname)
-             bool have_tcg = accel_find("tcg");
-             bool have_kvm = accel_find("kvm");
-             bool have_hvf = accel_find("hvf");
-+            const bool have_whpx = accel_find("whpx");
+diff --git a/configure b/configure
+index d8bc10060e1..851b6ceeeb5 100755
+--- a/configure
++++ b/configure
+@@ -1745,7 +1745,6 @@ if test "$rust" != disabled; then
+   echo "RUST_TARGET_TRIPLE=$rust_target_triple" >> $config_host_mak
+ fi
+ echo "PYTHON=$python" >> $config_host_mak
+-echo "MKVENV_ENSUREGROUP=$mkvenv ensuregroup $mkvenv_online_flag" >> $config_host_mak
+ echo "GENISOIMAGE=$genisoimage" >> $config_host_mak
+ echo "MESON=$meson" >> $config_host_mak
+ echo "NINJA=$ninja" >> $config_host_mak
+diff --git a/pyvenv/meson.build b/pyvenv/meson.build
+index 4e7d8d9fcc4..c2a3411cf76 100644
+--- a/pyvenv/meson.build
++++ b/pyvenv/meson.build
+@@ -2,13 +2,12 @@
+ # unconditionally installed at configure time are handled in configure
+ # instead; namely: meson, sphinx, and the tooling groups.
  
-             if (have_tcg && have_kvm) {
-                 if (g_str_has_suffix(progname, "kvm")) {
-@@ -2458,6 +2459,8 @@ static void configure_accelerators(const char *progname)
-                 accelerators = "tcg";
-             } else if (have_hvf) {
-                 accelerators = "hvf";
-+            } else if (have_whpx) {
-+                accelerators = "whpx";
-             } else {
-                 error_report("No accelerator selected and"
-                              " no default accelerator available");
+-# Note that this command may or may not include the "--online" flag
+-# based on configuration.
+-ensuregroup_cmd = config_host['MKVENV_ENSUREGROUP'].split()
++mkvenv = meson.project_source_root() / 'python/scripts/mkvenv.py'
++ensuregroup_cmd = [python, mkvenv, 'ensuregroup']
+ 
+ pyvenv_common_deps = files(
+     meson.project_source_root() + '/pythondeps.toml',
+-    meson.project_source_root() + '/python/scripts/mkvenv.py'
++    mkvenv,
+ )
+ pyvenv_wheel_dir = meson.project_source_root() + '/python/wheels'
+ 
 -- 
 2.53.0
 
