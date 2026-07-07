@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 884A2C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:58:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D2FEC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:59:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh4Rl-00079V-Vh; Tue, 07 Jul 2026 07:58:42 -0400
+	id 1wh4SG-0007Ss-6F; Tue, 07 Jul 2026 07:59:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh4Rk-00079F-JB
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:58:40 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh4SE-0007RU-2c
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:59:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh4Rj-0000y4-24
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:58:40 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wh4SB-0000zS-O6
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:59:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783425518;
+ s=mimecast20190719; t=1783425546;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Sx9ceVBIxTCChNgTGrKuGZRevVRYlusqsxzmiPTO8Us=;
- b=hPXOZ84YJADTZsgwSa+HHxBtXOiPZDjIVVdIwbBWc2ZmMqcpzPAMuBsFYVlCwVUAFV9BRz
- BK0/LqmBCalKNBBbfknQf4a7z1YROnmkfSRhwo6DSoSZQZjgQ4wfvOWHHZPYsbXRBrNBgO
- NGT0aQ8KNi2NSmUz30lY0+l59ZI6JLo=
+ bh=qrC+lzQzR/+m2DAw9XY2/brsL3SihjepOMjfKVBtkv0=;
+ b=GIoGCE/F+XP7429nQQLlE6mFYZL2xsnuZH5yvgCT9YUU5n0U3+47rGT0+tYB4qHsm9TUDq
+ gBuIxSQyfHEYRNCF2ltSU9XDiTy7CwtBaBWK6vs6VQrfdapX3Cj0tp03ahVlcrTkeQA9lZ
+ XSNLFttl336D08bOLsuAl1JvGH+KMjI=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-148-lAZwFgu9MkqGWxIg_eEijQ-1; Tue,
- 07 Jul 2026 07:58:35 -0400
-X-MC-Unique: lAZwFgu9MkqGWxIg_eEijQ-1
-X-Mimecast-MFC-AGG-ID: lAZwFgu9MkqGWxIg_eEijQ_1783425513
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-338-pIVgnFLYNmC_CO4eNdHP8w-1; Tue,
+ 07 Jul 2026 07:59:05 -0400
+X-MC-Unique: pIVgnFLYNmC_CO4eNdHP8w-1
+X-Mimecast-MFC-AGG-ID: pIVgnFLYNmC_CO4eNdHP8w_1783425543
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 501361954212; Tue,  7 Jul 2026 11:58:33 +0000 (UTC)
+ id A48C91954AED; Tue,  7 Jul 2026 11:59:03 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 66E353000C01; Tue,  7 Jul 2026 11:58:32 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EF8B71955F76; Tue,  7 Jul 2026 11:59:02 +0000 (UTC)
 From: Cornelia Huck <cohuck@redhat.com>
-To: Harald Freudenberger <freude@linux.ibm.com>,
- richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- thuth@redhat.com, berrange@redhat.com
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com
-Subject: Re: [PATCH v10 00/21] target/s390x: Extend qemu CPACF support
-In-Reply-To: <20260706094317.17032-1-freude@linux.ibm.com>
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ mjrosato@linux.ibm.com
+Cc: jrossi@linux.ibm.com, zycai@linux.ibm.com, jdaley@linux.ibm.com,
+ jjherne@linux.ibm.com, farman@linux.ibm.com, nrb@linux.ibm.com
+Subject: Re: [PATCH v2 0/6] s390x: Fix intermittent errors with IPL from PCI
+ devices on s390x
+In-Reply-To: <20260630141917.673995-1-jrossi@linux.ibm.com>
 Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
  Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
  153243,
  =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
  Avril Crosse O'Flaherty"
-References: <20260706094317.17032-1-freude@linux.ibm.com>
+References: <20260630141917.673995-1-jrossi@linux.ibm.com>
 User-Agent: Notmuch/0.40 (https://notmuchmail.org)
-Date: Tue, 07 Jul 2026 13:58:29 +0200
-Message-ID: <87bjcjj9ju.fsf@redhat.com>
+Date: Tue, 07 Jul 2026 13:59:00 +0200
+Message-ID: <878q7nj9iz.fsf@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -91,34 +90,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 06 2026, Harald Freudenberger <freude@linux.ibm.com> wrote:
+On Tue, Jun 30 2026, jrossi@linux.ibm.com wrote:
 
-> Harald Freudenberger (21):
->   target/s390x: Fix wrong address handling in address loops
+> From: Jared Rossi <jrossi@linux.ibm.com>
+>
+> When booting from a PCI device on s390x there may be intermittent failures
+> caused by mismatched byte swaps.  Refactor the byte swapping to ensure that
+> it is properly synchronized.
+>
+> Correct how the queue notification offset is calculated so that it may be
+> used for multi-queue configurations in the future.
+>
+> Handle some switch cases that were not caught for PCI devices.
+>
+> Changes v1 -> v2:
+>     - Split addition of missing break into its own patch
+>     - Add PCI case to generic is_viritio_supported() wapper
+>     - Switch the order of patches formerly 3 and 4
+>     - Use virtio_is_supported() instead of checking cutype when writing IPLB
+>         location to cover both CCW and PCI virtio devices
+>
+> Jared Rossi (3):
+>   pc-bios/s390-ccw/virtio.c: Fix missing break for PCI notifications
+>   pc-bios/s390-ccw: Verify virtio support when booting from virtio PCI
+>     device on s390x
+>   pc-bios/s390-ccw: write IPLB location for non-net virtio devices
+>
+> Zhuoying Cai (3):
+>   pc-bios/s390-ccw: Refactor byte swapping
+>   pc-bios/s390-ccw: Add per-queue notification offset for multi-queue
+>     virtio configurations
+>   s390x: Enable boot menu for virtio pci device
+>
+>  hw/s390x/ipl.c                |  1 +
+>  pc-bios/s390-ccw/main.c       |  5 ++-
+>  pc-bios/s390-ccw/virtio-pci.c | 57 ++++++++++++++++++++++++++---------
+>  pc-bios/s390-ccw/virtio-pci.h |  5 ++-
+>  pc-bios/s390-ccw/virtio.c     | 29 ++++++++++--------
+>  pc-bios/s390-ccw/virtio.h     |  2 ++
+>  6 files changed, 69 insertions(+), 30 deletions(-)
+>
 
-I've picked the first patch as a bugfix.
-
->   target/s390x: Rework s390 cpacf implementations
->   target/s390x: Move cpacf sha512 code into a new file
->   target/s390x: Support cpacf sha256
->   target/s390x: Support AES ECB for cpacf km instruction
->   target/s390x: Support AES CBC for cpacf kmc instruction
->   target/s390x: Support AES CTR for cpacf kmctr instruction
->   target/s390x: Minimal AES XTS support for cpacf pcc instruction
->   target/s390x: Support AES XTS for cpacf km instruction
->   target/s390x: Base support for cpacf protected keys
->   target/s390x: Support pckmo encrypt AES subfunctions
->   target/s390x: Support protected key AES ECB for cpacf km instruction
->   target/s390x: Support protected key AES CBC for cpacf kmc instruction
->   target/s390x: Support protected key AES CTR for cpacf kmctr
->     instruction
->   target/s390x: Minimal protected key AES XTS support for cpacf pcc
->     instruction
->   target/s390x: Support protected key AES XTS for cpacf km instruction
->   docs/s390: Document CPACF instructions support
->   crypto: Add aes-helpers file to support some AES modes
->   target/s390x: Use generic AES helper functions
->   target/s390x: Improve fetch and store mem from and to guest
->   tests/tcg/s390x: Add tests for CPACF instructions
+Thanks, applied.
 
 
