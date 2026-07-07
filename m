@@ -4,134 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84C2BC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 05:05:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B2D7C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 05:10:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wgy04-0000zC-2J; Tue, 07 Jul 2026 01:05:40 -0400
+	id 1wgy4N-0002J4-UA; Tue, 07 Jul 2026 01:10:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wgxzy-0000hL-T4; Tue, 07 Jul 2026 01:05:34 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
+ id 1wgy4G-0002Ia-7V
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 01:10:00 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wgxzw-0004dn-N7; Tue, 07 Jul 2026 01:05:34 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bBBIzgD2GyFtdGLXl77Co0Wj0BG2mRfqjCeR9cdHbgZzb50Vl8XcG9DQ96rqJiO0XEgpqelWDhDCvQglB0yLLO5DXtEdJ0QuiWbGFwbYqILrErWOStgVjkd5Ka9KbJ+WzwRWdCc4324kOVLG/TZvhC54gyX1m5kb8LewhkLrXj5NGEPK4rP+DwG+qs8OnCNXqwt6jz29pcV4cGI0xKXqHxtLeK/YdrPrNogDfSmSQu+7rqpUV6q6xQ4Y1ZhrAzv682zmeZKU5lFOHxHOILI4W0/J6g1stJWwUh9qlxrpsyAxANtJA45I15pBYwF9Pxfrk6tNIy72n0N6lyLY/BbAjg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Drc3njokalu601GhTD8dM+mRqeCteuCt4jCEdDDl7e8=;
- b=AZ/WMqy4BRIxDayvhFNcn97PBVdItE2lfeDdgf+OU0ClF6XSJberN82YLbKwPz51pRVMoPehURj+DGKAvtbN3vWskmnUy1QWZxW1VuHPGmN/eFz6CioX9afOC6eK+JVte1jn/KT9I0xhLRuNZueLAaFf8HoNLTtk2R13ot0Je/24dO1NagI5/Is3hMeDpObmABrv5AApK46HEpwDPZserRKOb2oi6rp1Xxjiu9GMpsBDuu1tM1bbJf0Z6fKgWWPrgJTPzm0GQvPE6KfOiWe3sTbidXABtXaO9aHL15yqrqzOEdLkoHig/fbaczQrZsF2zKeSI4BLBl9MPRT9/V05kQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Drc3njokalu601GhTD8dM+mRqeCteuCt4jCEdDDl7e8=;
- b=EA/jCrrA8j8Vmj1j3CU7qS7qH59jOuxu4HFgWiOC4Zasq2rWhgWb3ECRL76JHCdgBCdMzfOhBCce5swq+DUoY4nnKSR7Jymewjlw11swf6pBOLquIz2BHQ4xmpDOgK6lTCpy1QBZ2TdnrJ2VdJJiu9e+1ztP2OUvGeT3p2tZpnRiu7QYauGDLWuwBJMxm9olqwMAP8ARyPJXALSs2nyQJzSsIq5p9hYmF19fxgHs6Ql7bDGk+z9uc3Yv49u3KGN+up6ts7pLW1LByxYq7jfAUJHFc6Q7m/shHKT7DflBWlA4amnkbIecCf8UJ77etGRZyyY1GHYF+rs3XBHrqBbpPA==
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by KL1PR06MB6259.apcprd06.prod.outlook.com (2603:1096:820:d9::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.11; Tue, 7 Jul
- 2026 05:05:23 +0000
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0181.010; Tue, 7 Jul 2026
- 05:05:23 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>
-Subject: RE: [PATCH v1 0/4] Refactor AST2700 SCU preparation for coprocessors
-Thread-Topic: [PATCH v1 0/4] Refactor AST2700 SCU preparation for coprocessors
-Thread-Index: AQHdDSPTNeWdLxD24kereOpLPDH1v7Zhge7A
-Date: Tue, 7 Jul 2026 05:05:23 +0000
-Message-ID: <TYZPR06MB498047BCB404D559805C79C7FCF02@TYZPR06MB4980.apcprd06.prod.outlook.com>
-References: <20260706084540.1988785-1-jamin_lin@aspeedtech.com>
-In-Reply-To: <20260706084540.1988785-1-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|KL1PR06MB6259:EE_
-x-ms-office365-filtering-correlation-id: f567b463-d62b-49ba-7be9-08dedbe559db
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|23010399003|1800799024|366016|38070700021|13003099007|22082099003|18002099003|56012099006;
-x-microsoft-antispam-message-info: 8iQ8Y2JnwY0habKrWiDY2AIgQO32tlUG7TEm5y+10fc2rXcxTGiYfAu0eS3cnu/IjNWyRhVPwnoqOHekCpr9TnuxZbTtApk1TGFHFsJ01GNmx11zswcG1Ja9OXxM4yFRkd1JRLnDq6+nN/e22lCYKKLs3TLSgrzBmbn6ri11iT/VltgHz6ShQhchT1idostcdvWFLwQdhJbU/Ei03QhBcHA5PzHa+3CWMCgnlxL3SbQXrnKqb41+HsKl0FOJbugyObqYgv06LbF7EgazSlpPV8d2cUgGqoDU51kX/aeENQlwRTy/n4UiP6exLrcIGLJjkLHip72AHSRXgbVLuRBV7uQ9oc4FXWxrsdu08YLKQuZK99nnaVlgYLKQYPK3frhLOawB3bHM2iUPDDt1OdW12/JrhYcmJQ51EEgSCCpypMupz4uOCRvdQttk96oDfoTQ4vlWloIJY5oS4U5e6Ro7fUYN0ZCVBjUeYloJ3Ek5nAAJhzI+QDdGTnGlWml4RzyPrqiVV70/O8dXfTWCJl6wrHfl5uroKaG/YPUYkGxwx03OWeuXbChZhMo5ueGIKVoRQAZzlW2sQGZqhYit47jLDeu2G8xIrofmUImk3qhXx7jCwWnqzgXJ2BPFJaXa0afGYKcMaL8QODFB6ARkNhO4h+ysGPJXuAnIPiRGq7iEk1SLYVHLh5AkbYcCNvUBfz47pKRyqmB6AyBhdoqAghryjhu4CBBfhg+1TD0yOV3pgvQ=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(38070700021)(13003099007)(22082099003)(18002099003)(56012099006);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?VGTWEMXCx97MaWcbnWmHzdLpvRcpAxtKwSK29vw52tuFmsV3SCISYp0lrs?=
- =?iso-8859-1?Q?WH1RGOJ9/pSLPWEZ2z7GdvsBE4OycZ+GdMiLKaIw4pCaMjOovh/2hcpVg9?=
- =?iso-8859-1?Q?X2qwTuiM4WOxRKZKSCbM++MrK/6y/zUV2f/eyj/PhpAtoUGKsHPZz5TEtA?=
- =?iso-8859-1?Q?lAyyiwB8BEA1bDm8kHQ/fqP1uRbUOgTF7otKf0FXnMu5AfBKfHBJ7Ij6f/?=
- =?iso-8859-1?Q?i6eYxoHZZvZ0Tn6ol/zBvHBLG5MojP+4wjFWWReZ7RDi0MKvI4aA2cB0zu?=
- =?iso-8859-1?Q?fh+ezjYBVJbuTH/0tI3vV5jixE5dpajnzxhQbc7JcPmyoedaxGCqRidGa7?=
- =?iso-8859-1?Q?1N3i0WTr824h92GWbjzdkBb6h1DH9bXfR2Y91NredTiJkK+7hvsflTEc79?=
- =?iso-8859-1?Q?EHD2qFy8nr89MyyP362aF0HZkkIjlbU6BljX9GznUcWLhwgPBXDxe56BCm?=
- =?iso-8859-1?Q?M/aDA5LNSoIG+E8DJF+4YASDa5WV1kQw/Cck7WOI8pniPNwQpcMnE1+8MB?=
- =?iso-8859-1?Q?GzncsK/Yw4QVcfoFH4V6ngMFEqf2eARFUNI6apwYtygakWB6qdYLtVVL6e?=
- =?iso-8859-1?Q?W+T2pHjaKrPY8UN9otENhPjKfoc9IGVGQYDAkkemjZq5R/AhMKtFQG8pfR?=
- =?iso-8859-1?Q?m0t18BYcuMRgVu7ZdlOEqEXlVnQkGq1k4RrUPKTSX9Gaml6SfZnMukj9+Q?=
- =?iso-8859-1?Q?ZPHfE5cOTyg1qb3ttLV3La+8ZrxvxPoSZo60gMZbqmloS6B6GV/vokn/Qj?=
- =?iso-8859-1?Q?dKQTNc6Esevp11igcXOHKyy/QjGI3EgLwpcretXIa36VJxlvNxiNJO5rX9?=
- =?iso-8859-1?Q?ar+IBDVFS9/SknmaVzbEs9Ixhr8BoMdRYTTu4k4L7ueGJSmW2b1ZmS8WHi?=
- =?iso-8859-1?Q?6Ost4PsQm4mng9YajXO2MGSk6OnVAIatbNLuPiVaAEg2Nf8fLte73NrCOo?=
- =?iso-8859-1?Q?prN0au/sFxsJBdJm5XU5oCt65odCZjBy7zQX6EpDOrq4pK8JuxauuoIsjd?=
- =?iso-8859-1?Q?5T0Via0DT/f2yD/l40mUHHklbGeg7N+3F/MqOsJYAyDkFLCVo8GJ+MPVr8?=
- =?iso-8859-1?Q?LCktJ8Sj2uIBBskaPj7UC6mevPdK9auFOyFvwx6rWabjSrMjCJfGRUQmUn?=
- =?iso-8859-1?Q?WhgYrEl/GB6RooN5WQoEneFJAi524qzhuTRrnfQ2X815zstx7P6QlLbL0B?=
- =?iso-8859-1?Q?njDEGNU3EBqkQDtBhcciTmdu59gK4Qp9cjxpp2TZl+XoTAsMBpZTfrPnGl?=
- =?iso-8859-1?Q?2cjeRTtLjt9XTqmKgWIu5tVff2lt9hu8dCLObykn+jFldqdFL+MKCIAvka?=
- =?iso-8859-1?Q?G/SfXHssLVfh2BH3pKN9TuHSjR11dzZgFKT0jx59ZFwTzklv6EA1I9G6eg?=
- =?iso-8859-1?Q?2Pq1+QqCycsMBfsFeSJchF2vVrsedIKBBVRUZftE45pb+WuxNj9U4AjBZf?=
- =?iso-8859-1?Q?za5F7YJ18iJ9BNbplPw6Y+bSnW/O+0qGtJxgfsieDj2OqwRZkCtsZErZQs?=
- =?iso-8859-1?Q?tcfIOzX36Pyprc5FqeVRrEqvw209xHutsOT/oOYGFKnwTa45tEUcXigXYM?=
- =?iso-8859-1?Q?2FOf29ZN4b2GlcnVxXjxFDL8g6/SvOdjOhhoI1dsrgaQadKJAoUf7ZKhAN?=
- =?iso-8859-1?Q?X66rO7wJb6HzehB8p6iB4QxzYq9Ac+wFdEYFJfJ9AMMOGNLXtNiBh1Ui0V?=
- =?iso-8859-1?Q?KnwUmBiqjK3/1KpZAtEbupqfQUvkuKdX1woAZeDotfzOrxsAoEEWWmD2cq?=
- =?iso-8859-1?Q?fuotd4BpNa+BHr577qeLHy7KmibKv2V7KoNiGxJY+sP6tCb34sRPekP4w4?=
- =?iso-8859-1?Q?qnQly+341Q=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
+ id 1wgy4D-0005hP-An
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 01:09:59 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6674IITX1651246
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 05:09:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=2CqXHX
+ n3CPxyJ8hrRAo8sAgeTwMW9XXEqYB79uTHMyk=; b=LP+wfMe6H2aF46BiXEsPe4
+ wlOydQsg/akm5hhbTK8v2lwjdMK8b6Jqc+dpVwmTyua4+XzwvFPETLAS1PzdAAMz
+ 14NfW85VVQ8VLwrcQXiznDWhAdmouIfApCcUQBaNpzKYBGOON/oc5I9jgYkKmyI4
+ yYtBEy2D+UVOuFDsgENIu8xKDKQjtJhc3KCueUQy9KZXYr3htu3/yzkrFDfYmXFx
+ qJbe3fc69yk+gF9gtX79HAmKkuuEpEITgeApT9qAJB9oq88z5AwI/W+MsQLU26LD
+ JpfXfiZymMOC4Cr+XKuk7PW+r3pzwWGQ2AfUTvcEhC8acpFj+CLXehc1emn0hvuQ
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6rkdnr26-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 05:09:56 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66754dNf005857
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 05:09:55 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7eqg0rvn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 05:09:55 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66759roB27329006
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <qemu-devel@nongnu.org>; Tue, 7 Jul 2026 05:09:53 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4F00820040
+ for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 05:09:53 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 726F520049
+ for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 05:09:52 +0000 (GMT)
+Received: from [9.67.174.189] (unknown [9.67.174.189])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP
+ for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 05:09:52 +0000 (GMT)
+Message-ID: <7558650c-c813-4e88-bac7-4d7f5c9e9457@linux.ibm.com>
+Date: Tue, 7 Jul 2026 10:39:50 +0530
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: cJ6DOrSOIikt2BRovixM6C9AKguEOGnXHdxlSynN3BTJPG1o9kHiJSKNYSv98P1SMHbGQs/uAk6i4zUaVecWgmkXHzJPXc24KhYO+tIHt4gG3Elet1dCw2Zkso1CeQ+5WbGnQtL09DNj5RaNO/kPMy15ZvQzQ8YO3X3xBUOlKidMCdKVjcK8fUwseb0IU0tmU4J/1dqGP8MfQ8EeyeNGeAmPW6Dox8j8TS/epXkkQ03A3esA242OHsBmwLyV/JSgtAKJcFGE76RXDqlA3AXwL5eU/JR0o+4dpCCUJxrTpmHRldlqQ2BqYGXM1z92IS4DJoAcg5aJL5DcVy1fudepzA==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f567b463-d62b-49ba-7be9-08dedbe559db
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Jul 2026 05:05:23.4136 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: fsai4yY1nV6a3JGQy2bF4QNFyxavlV+e8LXXJtJydEFIPDgWNa/9JETZs7Ks3oo8oOTd7YNZ93AfuOOB/zFpw5IuYJzeAEc/uoEME19OGsU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6259
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 18/28] target/ppc: Move sleep & friends to decodetree
+To: qemu-devel@nongnu.org
+References: <20260520160728.2283628-1-rathc@linux.ibm.com>
+ <20260520160728.2283628-19-rathc@linux.ibm.com>
+ <8ae826c7-775c-4282-a734-9a18357f532c@linux.ibm.com>
+Content-Language: en-US
+From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+In-Reply-To: <8ae826c7-775c-4282-a734-9a18357f532c@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=M7J97Sws c=1 sm=1 tr=0 ts=6a4c8a24 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=VIO1ikxMzf-woBsiIOAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA0MyBTYWx0ZWRfX3MGI9CemB9ha
+ jexXzkJ4dyZwY+Q4NkanMJ9lyr/Y0Kr108H+k35O2mJwt8SD4F2kwKDm1YscsbyJH0qnk3lz6cJ
+ SvdoytRXeyVbKLp+OSa+Dd5KU5e9dllURHu5wLF1yT2bAu/ySCe153k8iMQVM6qnygMJmQJGSXl
+ lEAVPqSPJ4lZRooLHwa5O2+PC//09PIUGY63h0Pjklme+z+cv5uTK9OAn9JyTMVfyQz2rlw5ggk
+ WdLPci9Bu5uPlz7n90EiacYCIR6VdLrwcIzANXzUxpDn4gxVxeffZqtBFFntiSPkX7qY4gaWYym
+ J9nuiGe1E5Egxg5HrkKGXLHfngQNv+A68a1+HOWpYs1FPoDEkFDJGHL5h+YJxKBkd6tlnT8Hwx0
+ fnn3Zvw8iBN97mTrvGjVQvArHFetwaiovDhnKuK7z14FTMI3tIGRUoK2EdoIzMwt94bGYCt9YW/
+ wsYZKRGcs6HL6mij5ow==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA0MyBTYWx0ZWRfXxgHL23tRbHNP
+ Hq36DnjXVn5yt1Tt7Lhe2lafL1Ks+vqD37X8xgod/3J+0wAFt6vJaC4BAg1OG5tIFY9/aoq+umH
+ 1yYtjqXkCAeMd0JrIzOciO+tp+pKV7w=
+X-Proofpoint-GUID: 36d_cH4chxsSm71e1EaSUEGtzYbTd8_T
+X-Proofpoint-ORIG-GUID: 36d_cH4chxsSm71e1EaSUEGtzYbTd8_T
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_01,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 adultscore=0
+ priorityscore=1501 bulkscore=0 spamscore=0 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070043
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=nikhilks@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,74 +126,289 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sorry
+I guess in patch 19 Ojaswin has already refactored sleep, doze, nap, 
+rvwinkle and stop to use a common helper. I missed that part earlier 
+during my review.
 
-I will resend v2 due to split [1] Original AST2700 FC support series
+Thanks,
+~Nikhil
 
-> Subject: [PATCH v1 0/4] Refactor AST2700 SCU preparation for coprocessors
->=20
-> The original AST2700 FC support series [1] is fairly large, making it dif=
-ficult to
-> review all changes together.
->=20
-> To help speed up the review process, this series extracts the SCU-related
-> refactoring into a standalone prerequisite series.
->=20
-> Compared with the original series, the SCU preparation patch has been spl=
-it
-> into three smaller patches:
->=20
-> Introduce Aspeed2700SCUState.
-> Convert AST1700/AST27x0 users to the new SCU subclass.
-> Move the SCU link property into the AST27x0-specific coprocessor
-> implementation.
->=20
-> In addition, the SCUIO reset handling has been separated into an independ=
-ent
-> patch.
->=20
-> This series contains no functional changes. It is purely a refactoring to=
- isolate
-> AST2700-specific SCU support from the generic implementation and prepare
-> for the subsequent AST2700 FC support.
->=20
-> This series depends on:
->=20
-> https://patchwork.ozlabs.org/project/qemu-devel/cover/20260706052701.114
-> 1740-1-jamin_lin@aspeedtech.com/
->=20
-> Supersedes the following patches from the original FC support series [1]:
->=20
-> Patch 1:
-> https://patchwork.ozlabs.org/project/qemu-devel/patch/20260417032837.266
-> 4122-2-jamin_lin@aspeedtech.com/
->=20
-> Patch 2:
-> https://patchwork.ozlabs.org/project/qemu-devel/patch/20260417032837.266
-> 4122-3-jamin_lin@aspeedtech.com/
->=20
-> [1] Original AST2700 FC support series:
-> https://patchwork.ozlabs.org/project/qemu-devel/cover/20260417032837.266
-> 4122-1-jamin_lin@aspeedtech.com/
->=20
-> Jamin Lin (4):
->   hw/misc/aspeed_scu: Introduce Aspeed2700SCUState
->   hw/arm/aspeed: Use Aspeed2700SCUState for AST2700 users
->   hw/arm/aspeed_ast27x0: Move SCU link into AST27x0 coprocessors
->   hw/misc/aspeed_scu: Add separate reset handler for AST2700 SCUIO
->=20
->  include/hw/arm/aspeed_ast1700.h     |  2 +-
->  include/hw/arm/aspeed_coprocessor.h |  5 +++--
->  include/hw/arm/aspeed_soc.h         |  1 +
->  include/hw/misc/aspeed_scu.h        |  5 +++++
->  hw/arm/aspeed_ast27x0-fc.c          |  4 ++--
->  hw/arm/aspeed_ast27x0-ssp.c         | 19 +++++++++++++++----
->  hw/arm/aspeed_ast27x0-tsp.c         | 19 +++++++++++++++----
->  hw/arm/aspeed_ast27x0.c             | 16 ++++++++--------
->  hw/arm/aspeed_coprocessor_common.c  |  2 --
->  hw/misc/aspeed_scu.c                | 20 ++++++++++++++++++--
->  10 files changed, 68 insertions(+), 25 deletions(-)
->=20
-> --
-> 2.43.0
+On 06/07/26 23:18, Nikhil Kumar Singh wrote:
+>
+> On 20/05/26 21:37, Chinmay Rath wrote:
+>> From: Ojaswin Mujoo<ojaswin@linux.ibm.com>
+>>
+>> Convert the following instructions to decode tree specification:
+>>
+>> doze
+>> nap
+>> sleep
+>> rvwinkle
+>> stop
+>>
+>> The functionality was tested by comparing the qemu -D log -d op,in_asm
+>> output as well as single stepping gdb to confirm behavior was not
+>> changed for ISA3.x (stop) as well as ISA206 (doze, nap, sleep,
+>> rvwinkle).
+>>
+>> Signed-off-by: Ojaswin Mujoo<ojaswin@linux.ibm.com>
+>> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
+>> ---
+>>   target/ppc/insn32.decode                      |   8 ++
+>>   target/ppc/translate.c                        |  85 ---------------
+>>   .../ppc/translate/processor-ctrl-impl.c.inc   | 101 ++++++++++++++++++
+>>   3 files changed, 109 insertions(+), 85 deletions(-)
+>>
+>> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+>> index 2c002f8513..a4454a2292 100644
+>> --- a/target/ppc/insn32.decode
+>> +++ b/target/ppc/insn32.decode
+>> @@ -913,6 +913,14 @@ VPERMR          000100 ..... ..... ..... ..... 
+>> 111011   @VA
+>>     VSEL            000100 ..... ..... ..... ..... 101010   @VA
+>>   +## Power Management Instructions
+>> +
+>> +DOZE            010011 ----- ----- ----- 0110010010 -
+>> +NAP             010011 ----- ----- ----- 0110110010 -
+>> +SLEEP           010011 ----- ----- ----- 0111010010 -
+>> +RVWINKLE        010011 ----- ----- ----- 0111110010 -
+>> +STOP            010011 ----- ----- ----- 0101110010 -
+>> +
+>>   ## Vector Integer Shift Instruction
+>>     VSLB            000100 ..... ..... ..... 00100000100    @VX
+>> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+>> index 4a7fa6a6a9..d1e9ab61e9 100644
+>> --- a/target/ppc/translate.c
+>> +++ b/target/ppc/translate.c
+>> @@ -2728,86 +2728,6 @@ static inline void 
+>> gen_check_tlb_flush(DisasContext *ctx, bool global) { }
+>>   #endif
+>>     #if defined(TARGET_PPC64)
+>> -static void gen_doze(DisasContext *ctx)
+>> -{
+>> -#if defined(CONFIG_USER_ONLY)
+>> -    GEN_PRIV(ctx);
+>> -#else
+>> -    TCGv_i32 t;
+>> -
+>> -    CHK_HV(ctx);
+>> -    translator_io_start(&ctx->base);
+>> -    t = tcg_constant_i32(PPC_PM_DOZE);
+>> -    gen_helper_pminsn(tcg_env, t);
+>> -    /* Stop translation, as the CPU is supposed to sleep from now */
+>> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+>> -#endif /* defined(CONFIG_USER_ONLY) */
+>> -}
+>> -
+>> -static void gen_nap(DisasContext *ctx)
+>> -{
+>> -#if defined(CONFIG_USER_ONLY)
+>> -    GEN_PRIV(ctx);
+>> -#else
+>> -    TCGv_i32 t;
+>> -
+>> -    CHK_HV(ctx);
+>> -    translator_io_start(&ctx->base);
+>> -    t = tcg_constant_i32(PPC_PM_NAP);
+>> -    gen_helper_pminsn(tcg_env, t);
+>> -    /* Stop translation, as the CPU is supposed to sleep from now */
+>> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+>> -#endif /* defined(CONFIG_USER_ONLY) */
+>> -}
+>> -
+>> -static void gen_stop(DisasContext *ctx)
+>> -{
+>> -#if defined(CONFIG_USER_ONLY)
+>> -    GEN_PRIV(ctx);
+>> -#else
+>> -    TCGv_i32 t;
+>> -
+>> -    CHK_HV(ctx);
+>> -    translator_io_start(&ctx->base);
+>> -    t = tcg_constant_i32(PPC_PM_STOP);
+>> -    gen_helper_pminsn(tcg_env, t);
+>> -    /* Stop translation, as the CPU is supposed to sleep from now */
+>> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+>> -#endif /* defined(CONFIG_USER_ONLY) */
+>> -}
+>> -
+>> -static void gen_sleep(DisasContext *ctx)
+>> -{
+>> -#if defined(CONFIG_USER_ONLY)
+>> -    GEN_PRIV(ctx);
+>> -#else
+>> -    TCGv_i32 t;
+>> -
+>> -    CHK_HV(ctx);
+>> -    translator_io_start(&ctx->base);
+>> -    t = tcg_constant_i32(PPC_PM_SLEEP);
+>> -    gen_helper_pminsn(tcg_env, t);
+>> -    /* Stop translation, as the CPU is supposed to sleep from now */
+>> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+>> -#endif /* defined(CONFIG_USER_ONLY) */
+>> -}
+>> -
+>> -static void gen_rvwinkle(DisasContext *ctx)
+>> -{
+>> -#if defined(CONFIG_USER_ONLY)
+>> -    GEN_PRIV(ctx);
+>> -#else
+>> -    TCGv_i32 t;
+>> -
+>> -    CHK_HV(ctx);
+>> -    translator_io_start(&ctx->base);
+>> -    t = tcg_constant_i32(PPC_PM_RVWINKLE);
+>> -    gen_helper_pminsn(tcg_env, t);
+>> -    /* Stop translation, as the CPU is supposed to sleep from now */
+>> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+>> -#endif /* defined(CONFIG_USER_ONLY) */
+>> -}
+>> -
+>>   static inline TCGv gen_write_bhrb(TCGv_ptr base, TCGv offset, TCGv 
+>> mask, TCGv value)
+>>   {
+>>       TCGv_ptr tmp = tcg_temp_new_ptr();
+>> @@ -5141,11 +5061,6 @@ GEN_HANDLER_E(scv, 0x11, 0x10, 0xFF, 
+>> 0x03FFF01E, PPC_NONE, PPC2_ISA300),
+>>   GEN_HANDLER_E(scv, 0x11, 0x00, 0xFF, 0x03FFF01E, PPC_NONE, 
+>> PPC2_ISA300),
+>>   GEN_HANDLER_E(rfscv, 0x13, 0x12, 0x02, 0x03FF8001, PPC_NONE, 
+>> PPC2_ISA300),
+>>   #endif
+>> -GEN_HANDLER_E(stop, 0x13, 0x12, 0x0b, 0x03FFF801, PPC_NONE, 
+>> PPC2_ISA300),
+>> -GEN_HANDLER_E(doze, 0x13, 0x12, 0x0c, 0x03FFF801, PPC_NONE, 
+>> PPC2_PM_ISA206),
+>> -GEN_HANDLER_E(nap, 0x13, 0x12, 0x0d, 0x03FFF801, PPC_NONE, 
+>> PPC2_PM_ISA206),
+>> -GEN_HANDLER_E(sleep, 0x13, 0x12, 0x0e, 0x03FFF801, PPC_NONE, 
+>> PPC2_PM_ISA206),
+>> -GEN_HANDLER_E(rvwinkle, 0x13, 0x12, 0x0f, 0x03FFF801, PPC_NONE, 
+>> PPC2_PM_ISA206),
+>>   GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
+>>   #endif
+>>   /* Top bit of opc2 corresponds with low bit of LEV, so use two 
+>> handlers */
+>> diff --git a/target/ppc/translate/processor-ctrl-impl.c.inc 
+>> b/target/ppc/translate/processor-ctrl-impl.c.inc
+>> index 8abbb89630..bdbc195294 100644
+>> --- a/target/ppc/translate/processor-ctrl-impl.c.inc
+>> +++ b/target/ppc/translate/processor-ctrl-impl.c.inc
+>> @@ -103,3 +103,104 @@ static bool trans_MSGSYNC(DisasContext *ctx, 
+>> arg_MSGSYNC *a)
+>>       /* interpreted as no-op */
+>>       return true;
+>>   }
+>> +
+>> +static bool do_doze(DisasContext *ctx, arg_DOZE *a)
+>> +{
+>> +    REQUIRE_64BIT(ctx);
+>> +
+>> +#if defined(CONFIG_USER_ONLY)
+>> +    gen_priv_opc(ctx);
+>> +#else
+>> +    TCGv_i32 t;
+>> +
+>> +    REQUIRE_HV(ctx);
+>> +    translator_io_start(&ctx->base);
+>> +    t = tcg_constant_i32(PPC_PM_DOZE);
+>> +    gen_helper_pminsn(tcg_env, t);
+>> +    /* Stop translation, as the CPU is supposed to sleep from now */
+>> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+>> +#endif /* defined(CONFIG_USER_ONLY) */
+>> +
+>> +    return true;
+>> +}
+>> +TRANS_FLAGS2(PM_ISA206, DOZE, do_doze);
+>> +
+>> +static bool do_nap(DisasContext *ctx, arg_NAP *a)
+>> +{
+>> +    REQUIRE_64BIT(ctx);
+>> +
+>> +#if defined(CONFIG_USER_ONLY)
+>> +    gen_priv_opc(ctx);
+>> +#else
+>> +    TCGv_i32 t;
+>> +
+>> +    REQUIRE_HV(ctx);
+>> +    translator_io_start(&ctx->base);
+>> +    t = tcg_constant_i32(PPC_PM_NAP);
+>> +    gen_helper_pminsn(tcg_env, t);
+>> +    /* Stop translation, as the CPU is supposed to sleep from now */
+>> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+>> +#endif /* defined(CONFIG_USER_ONLY) */
+>> +    return true;
+>> +}
+>> +TRANS_FLAGS2(PM_ISA206, NAP, do_nap);
+>> +
+>> +static bool do_sleep(DisasContext *ctx, arg_SLEEP *a)
+>> +{
+>> +    REQUIRE_64BIT(ctx);
+>> +
+>> +#if defined(CONFIG_USER_ONLY)
+>> +    gen_priv_opc(ctx);
+>> +#else
+>> +    TCGv_i32 t;
+>> +
+>> +    REQUIRE_HV(ctx);
+>> +    translator_io_start(&ctx->base);
+>> +    t = tcg_constant_i32(PPC_PM_SLEEP);
+>> +    gen_helper_pminsn(tcg_env, t);
+>> +    /* Stop translation, as the CPU is supposed to sleep from now */
+>> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+>> +#endif /* defined(CONFIG_USER_ONLY) */
+>> +    return true;
+>> +}
+>> +TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep);
+>> +
+>> +static bool do_rvwinkle(DisasContext *ctx, arg_RVWINKLE *a)
+>> +{
+>> +    REQUIRE_64BIT(ctx);
+>> +
+>> +#if defined(CONFIG_USER_ONLY)
+>> +    gen_priv_opc(ctx);
+>> +#else
+>> +    TCGv_i32 t;
+>> +
+>> +    REQUIRE_HV(ctx);
+>> +    translator_io_start(&ctx->base);
+>> +    t = tcg_constant_i32(PPC_PM_RVWINKLE);
+>> +    gen_helper_pminsn(tcg_env, t);
+>> +    /* Stop translation, as the CPU is supposed to sleep from now */
+>> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+>> +#endif /* defined(CONFIG_USER_ONLY) */
+>> +    return true;
+>> +}
+>> +TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_rvwinkle);
+>> +
+>> +static bool do_stop(DisasContext *ctx, arg_STOP *a)
+>> +{
+>> +    REQUIRE_64BIT(ctx);
+>> +
+>> +#if defined(CONFIG_USER_ONLY)
+>> +    gen_priv_opc(ctx);
+>> +#else
+>> +    TCGv_i32 t;
+>> +
+>> +    REQUIRE_HV(ctx);
+>> +    translator_io_start(&ctx->base);
+>> +    t = tcg_constant_i32(PPC_PM_STOP);
+>> +    gen_helper_pminsn(tcg_env, t);
+>> +    /* Stop translation, as the CPU is supposed to sleep from now */
+>> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+>> +#endif
+>> +    return true;
+>> +}
+>> +TRANS_FLAGS2(ISA300, STOP, do_stop);
+>
+> To me all these functions do_doze, do_nap, do_sleep, do_rvwinkle and 
+> do_stop
+> seem to be identical except  for the PPC_PM_* constant passed to 
+> gen_helper_pminsn,
+> you can eliminate over 50-60 lines  of boilerplate by creating a 
+> single shared helper function.
+>
+> Thanks,
+> ~ Nikhil
+>
 
