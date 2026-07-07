@@ -4,96 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68E31C44500
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 12:43:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E286FC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 12:44:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh58X-00067m-87; Tue, 07 Jul 2026 08:42:53 -0400
+	id 1wh59h-0006Wg-Rl; Tue, 07 Jul 2026 08:44:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1wh58W-00067X-1N
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:42:52 -0400
-Received: from mx07-0090a401.pphosted.com ([66.159.244.62])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wh59c-0006Vf-Qa
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:44:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1wh58T-0004fz-Mf
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:42:51 -0400
-Received: from pps.filterd (m0463074.ppops.net [127.0.0.1])
- by mx07-0090a401.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6674vEbf191614; Tue, 7 Jul 2026 12:42:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=beckhoff.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=mail2022r; bh=CAZsAfkiORhACbbOSS8Al4J8
- x1/zgu9fOpLttpTPoXQ=; b=gKaGcKScIsoUBQWprYl8AQGhw0u/NcdjRYsMATqk
- pajfeqoi1pq0whfR4Wuv5snOOGz6iofjXfa3eU3j+NbaVt5s3EOTwtr86xoNcHpf
- nzHlKF9IsxCpTibXvoVpeaJY9gdeAy5LCuy0ytKDE2VkaHJeqyiRv5VkC6GeL/rN
- GU9wvVRwIpRcNpy1RzTPeorVw1h6CfcSyIumY5qQspzBpIlvzBfas97YywsSQJAM
- GxVW0gyJtkEtI/rngvJJO8f6AakomCekRz8PaMoA+tk0FFAtcvjn06RA37aK6IHB
- i4nE77NUPbVCYb2mjib0mIo++56Wmuh5U6npp4dbuhnh5Q==
-Received: from ex10.beckhoff.com ([62.159.14.12])
- by mx07-0090a401.pphosted.com (PPS) with ESMTPS id 4f7fkt4ych-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 07 Jul 2026 12:42:43 +0000 (GMT)
-Received: from ex10.beckhoff.com (172.17.2.111) by ex10.beckhoff.com
- (172.17.2.111) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.43; Tue, 7 Jul
- 2026 14:42:41 +0200
-Received: from ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b]) by
- ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b%12]) with mapi id
- 15.02.2562.043; Tue, 7 Jul 2026 14:42:41 +0200
-From: =?utf-8?B?Q29ydmluIEvDtmhuZQ==?= <C.Koehne@beckhoff.com>
-To: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: =?utf-8?B?WWFubmljayBWb8OfZW4=?= <Y.Vossen@beckhoff.com>
-Subject: Re: [PULL 08/21] hw/misc/zynq_slcr: Add logic for DCI configuration
-Thread-Topic: [PULL 08/21] hw/misc/zynq_slcr: Add logic for DCI configuration
-Thread-Index: AQHdAlZYgQY+snQzDkeSwQPj2+oZmrZh2NqAgAAdIwA=
-Date: Tue, 7 Jul 2026 12:42:41 +0000
-Message-ID: <e6a5de30cd451e820007513b869a87bf5fe4890d.camel@beckhoff.com>
-References: <20260529114723.42040-1-peter.maydell@linaro.org>
- <20260529114723.42040-9-peter.maydell@linaro.org>
- <CAFEAcA-880g8FVk1SZ8eH7-cAkzh2oyH7OFV2LBG68=CcFE=JQ@mail.gmail.com>
- <CAFEAcA_Lg3ebEiefKmf1K_RHY4NozezGese2rFf2w6af3oPccQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA_Lg3ebEiefKmf1K_RHY4NozezGese2rFf2w6af3oPccQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.17.0.1]
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="=-+hOKFDcU7wpxfJSG9XA2"
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wh59a-0005Cg-IT
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 08:44:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783428237;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DpPymepMy447GmnlvRU9c3Yl/vG1WZSxeP4M47GU3p0=;
+ b=bhjjug/lIvXaknfAuu6Xtu022JmtwBNvEE0akPxGAnzUi/5o+HLQycWUJMalAKQ/Rhrg5F
+ uAbV51gCR9THOSCUIuw0H+4b2KH+UNBk1aAfNZVFsMimEP+pjeIIxh9LBlsf2di9tztzAg
+ UMFjm6K5IRpOQ5qin7zpafg7vWoIe0M=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-507-DYsin2icOdWb6JS4o8jUFQ-1; Tue, 07 Jul 2026 08:43:56 -0400
+X-MC-Unique: DYsin2icOdWb6JS4o8jUFQ-1
+X-Mimecast-MFC-AGG-ID: DYsin2icOdWb6JS4o8jUFQ_1783428235
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2caf4173b1cso83105405ad.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 05:43:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783428235; cv=none;
+ d=google.com; s=arc-20260327;
+ b=dJBOMV1TU+BlT90e+PYzGj60vZUAhJNYZAEWPaxH/RoA4hPE68YlqllzNYE5nxoByo
+ vmQB/lrFHipyWW/Ycr5ScsgOrHBFoJYbQeKHsUG5os41H6PjrXpJH45UFvMtDczi7O2G
+ ds7Q6NJN4HWLR9Gm2vXW6cwWIHlPgRerRF8NS5WLlHXT3cD+1Xup5XfDEg0S5u8QiuKu
+ kGe/c7c8XhZy1NzK0TV5OWJFf364jvPyxwmcq8cc+cTww0uCRNWGDJetZWKkhgPDZt9g
+ 0g2+qJzbUpqvqZiTQsDz3GcZru4DgUiJusO/gUaKpdEt0IeGHRo//JuOgHPgAWOYgDGT
+ 0mcA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=DpPymepMy447GmnlvRU9c3Yl/vG1WZSxeP4M47GU3p0=;
+ fh=NRCqC45ZfLgqv9MnUKNLzeqsdSlRhMXcHQL+qsXe7Ak=;
+ b=dmaiClwD+ca9g/lbZauXEqdOsBX+Ryw3A43Rnhd7M+NJtb25g1F+l/hk3ygtGWXNVf
+ 3AanKrYIwUjudVeHrTQL3ZkLFiB2v/td3N0rS2skEeXGM7xQtVvhqKCe1lwMiboXyU0q
+ JUdJuofZkPEwLKGF4wcproComBCt+vvcNjA4jGkzSDE/8HzJUSDdYu9UG4G9t4JoiRL8
+ VC4JezoH6Bn6HC5FSykeMO+i87/qUTr5+ic01IKPumQDPQurgjiFbp3RUWmRQpJX+Q5b
+ lfcX153qVaUIGNRE6zq65FsZGqtph8wl86HpI127pbW6tZ5gx6mehMLD/UxpJXKfQi3H
+ oSrg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783428235; x=1784033035; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=DpPymepMy447GmnlvRU9c3Yl/vG1WZSxeP4M47GU3p0=;
+ b=Ir3QtSDZFPVPgFQxWbcB9vbyQRCiNygVN1+ePnUuourV25SwiJrEzAl6Q3ThR+i1fZ
+ oBcgFddwoGi31XELkoxZPF31jCX2bw6uQu9JTViRcud2p/aqdYIeMVsjZkTzokxikdMD
+ eemIvtSCdPa8Wr1CX45m3yXvPUVLIF2UF8ZQtRc/4qDoZLk6S3AGWe9cudvaN6FeNF3U
+ wMj7TGAmk28S6JX3Vkcp5feigqqT4AtAgOMSi3zDe5LsvPXc+unQ0vp5Aj+5vf8hU3TA
+ lzkQyyhLkigMBWP88QWZZBGjVPsb9PlS/cz6uNWv4Kdnt2wlplZ5rVz63QkPMzW/0LMY
+ Tjtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783428235; x=1784033035;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=DpPymepMy447GmnlvRU9c3Yl/vG1WZSxeP4M47GU3p0=;
+ b=YVTkBuWsoBk1qW0qwvc/+y6SC6br1U1tQd9jWIXQOHecVE6ljTNZP2oNQ1R2UuCEQ2
+ OhByGzX1COEXJtHFOg6kjQZs/ucdyvUpb6goO8t3UdZSFmAvvZlTEeLLhthOBI1xt91w
+ rlKEtZV9vP6IO8slqJy11XijApR+wmPFUc0rYj1zQOOSKUOBZo6Y0QFp6qzbZpT7RYhH
+ JR3gtWwgxsCzkwGyQb/7ZAGtooPhHkWbF8N+LmkXebPXZJfAK79pdXbtfSXgDfe47hvR
+ QX8+CML4zJSSdMwEsKyyTBGCrcJbY4KqiX5fqlTpf6GmrRYdUcKCigmw8+K08NmLK0fj
+ hQAw==
+X-Gm-Message-State: AOJu0YzJpoNw+9LM4MVngdF2LRwTzhxNtxyYQAqIBj0lNk3r8f9c+4Id
+ 1bqkzDZHgncCQuRi6J2R9tXhmQfnknXH/kjbiUTSQZtaP/2IZMZZmYd+7qMJXUI14Iob8b2VdhX
+ 5Fb/Z7hycARGmKzC4M0A+XkdqcucUOfdMpx6bx53DmX88IM5OVbLOtpPd6SuWbK7057ag0nqKiY
+ yZSsn4/u9rIHOQmdU9Sdq0vlL1sGxcpAM=
+X-Gm-Gg: AfdE7cnBLqMqE5bqCiphK2iYQ0R8ImkAsS9m7AbvgShWKFFgUHY2uiChk36VxkEjTsb
+ ySOCy7NZhima/hEiEiSE/oXXCgLGRqKQOHL5DuYdmi0D67yiiRjnNvi+PzHgns3WzQeX4XAopQg
+ V60ILFV0+zQ98/6AGGEdhCGq6UFUsLGiNdZ71Kgtn8KbGToR9l/2Y9v3KG4ncHuyNgSO3Yb1bPV
+ +nkbL37qOcOg14ymQO1JX5qVg6iHJ5AMzOMRDY/nAFxwFqebslJovYxa8EFAzPJPvpFmwBpuYxp
+ sE6B3Sqx3H3s
+X-Received: by 2002:a17:902:dac8:b0:2ca:b89:7bcf with SMTP id
+ d9443c01a7336-2ccbf051466mr49859435ad.22.1783428235366; 
+ Tue, 07 Jul 2026 05:43:55 -0700 (PDT)
+X-Received: by 2002:a17:902:dac8:b0:2ca:b89:7bcf with SMTP id
+ d9443c01a7336-2ccbf051466mr49859145ad.22.1783428234849; Tue, 07 Jul 2026
+ 05:43:54 -0700 (PDT)
 MIME-Version: 1.0
-X-Authority-Analysis: v=2.4 cv=Vo4Txe2n c=1 sm=1 tr=0 ts=6a4cf443 cx=c_pps
- a=ZkhbYXbYXnnsONUOWLo3Bg==:117 a=ZkhbYXbYXnnsONUOWLo3Bg==:17
- a=xqWC_Br6kY4A:10 a=LK_TxX5vjfYA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=a9bgyBvlNMQzFU9Z5g25:22 a=PpDwSNkculO1Pa3iPHCZ:22
- a=zd2uoN0lAAAA:8 a=KKAkSRfTAAAA:8 a=Cmw_MBCVAAAA:8 a=LoRRrZhI9vVAXCTCaycA:9
- a=QEXdDO2ut3YA:10 a=WfFYhIbffbJ_wg4ibogA:9 a=FfaGCDsud1wA:10
- a=cvBusfyB2V15izCimMoJ:22 a=ZJSrCmYe3mwGoKZA4Vko:22
-X-Proofpoint-ORIG-GUID: HyUVYmZ2Vwt-YVCyjraospYL4fYyKj6x
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyMyBTYWx0ZWRfX+x/VEh6Fnvrv
- vxJKk1ZaOPC+asWlDJrLbVlU5Aa79sr9ViD2Pv2qRgF3RDZHkcqe9455Do60EeJw1dxhA3DIRMr
- uvSTeclKXOrNYsFsl/mZNy5HKHvfbCo=
-X-Proofpoint-GUID: HyUVYmZ2Vwt-YVCyjraospYL4fYyKj6x
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyMyBTYWx0ZWRfXwFXK7QUraLXr
- GOKJMjg7Rx0hGSGpHJqsGcg57TXCaFawOU+VNZMygJP6NdUKVBtIPF9/J+qkxtS1MDp27oCBUcE
- WASwMF/p403N6G63Gr8R7ZGlF40LowrwRsvyXBqD9+z5JLijtVo0iY9kVPUDPH5WlHB8/+TCILG
- 7XCQWNdHMm6af9wrBNsb8eCVfTCTu6DY8P4cunFU6I6uc0lP8LAmQqU62UdjNDNYWQDWXMv4ouo
- LpDMWlJdLU1CqkeWKUSrbTOT/tUOUOGSMo5bMauGTTUTmmZMF8CimaS73K4G7qyw6gjwSzep1ox
- NyMm/YqkNvPlHoymZgmvkVw2IieQPk9WfJQHPnVsZBIBgzRVjv4xGZS56mo/W2OxBiKAweefQnH
- uWtU8PZAvvOQS1uOngjygt3HXIY5tr2ARZX/C73G7S3OtwkPjKCd7IoWMUhtrLDFiGS1MCSts7i
- DWbWXwvWusigeHDkjwA==
-Received-SPF: pass client-ip=66.159.244.62; envelope-from=C.Koehne@beckhoff.com;
- helo=mx07-0090a401.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260707105927.2776822-1-berrange@redhat.com>
+In-Reply-To: <20260707105927.2776822-1-berrange@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 7 Jul 2026 16:43:43 +0400
+X-Gm-Features: AVVi8Cexu__l-4XSda8SdqoMZivVSr_1zS7kBe2SFcc9wgIRL67ugNifnss1XpE
+Message-ID: <CAMxuvazpNiy8iqu76wJwiF3aKEizjgZaQFgF3gtHDXqiGh9Fsw@mail.gmail.com>
+Subject: Re: [PATCH] docs: outline some guidelines for security classification
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Mauro Matteo Cascella <mcascell@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,135 +143,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-+hOKFDcU7wpxfJSG9XA2
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
+Hi
 
-Hi Peter,
+On Tue, Jul 7, 2026 at 2:59=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> Beyond the overall virt/non-virt use case classification, there are
+> a number of scenarios which we have decided will not be treated as
+> security issues. Start to document some of these to give consistency
+> in our treatemnt of incoming disclosures.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>
+> Mauro / Michael: please suggest any other rules which we have applied
+> historically on qemu-security disclosures that we should capture here.
+>
+> The vfio-user/vhost-user addition is a new one based on discussions
+> in some GitLab issues today/yesterday
+>
+>  docs/system/security.rst | 63 ++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 63 insertions(+)
+>
+> diff --git a/docs/system/security.rst b/docs/system/security.rst
+> index 53992048e6..fbbca50f95 100644
+> --- a/docs/system/security.rst
+> +++ b/docs/system/security.rst
+> @@ -75,6 +75,69 @@ Bugs affecting the non-virtualization use case are not=
+ considered security
+>  bugs at this time.  Users with non-virtualization use cases must not rel=
+y on
+>  QEMU to provide guest isolation or any security guarantees.
+>
+> +Security boundary scope
+> +'''''''''''''''''''''''
+> +
+> +Even where a flaw affects the virtualization use case described above,
+> +not all scenarios will be considered in scope. The following guidelines
+> +are used to evaluate whether to apply the full security process, or trea=
+t
+> +an issue as a normal bug.
+> +
+> +* **assert** / **abort**. If triggering the code path requires kernel
+> +  privileges (or root account access) in the guest, asserts/aborts in
+> +  QEMU are a self inflicted denial of service. These will **not** be
+> +  treated as security flaws, at most hardening bugs. If triggering the
+> +  code path can be done by an unprivileged guest OS account, this
+> +  **may** justify handling as a security bug.
+> +
+> +* **vhost-user/vfio-user backends**. The backend processes have
+> +  shared memory regions co-mapped with the QEMU process. The intent
+> +  of the process separation is operational resilience & flexibility
+> +  and allowing for independent software suppliers. There is not
+> +  considered to be security boundary between QEMU and the vhost-user
+> +  & vfio-user backends. Thus flaws in the backends which can cause
+> +  crashes / undesirable behaviour in QEMU will **not** be treated as
+> +  security flaws, but should be fixed as hardening bugs.
+> +
+> +* **memory allocation bounds**. There are many ways in which a QEMU
+> +  process can legitimately consume an amount of memory that is
+> +  significantly larger than the assigned guest RAM. QEMU's worst
+> +  case memory usage should be considered effectively unbounded. As
+> +  such the QEMU deployment on the host should account for the
+> +  possibility of large memory peaks and apply countermeasures to
+> +  provide continuity of host operations. It is typical for the Linux
+> +  OOM killer to reap the process triggering host memory overcommit
+> +  in the case of exccessive usage, offering a degree of protection.
+> +  As such, bugs which can lead to excessive/unbounded memory allocations
+> +  will usually not be classified as security flaws, but should be
+> +  fixed as hardening bugs.
+> +
+> +* **degraded guest behaviour**. There are a set of bugs which can
+> +  lead guest hardware devices to misbehave. For example, a flawed
+> +  virtual IOMMU operation may not offer the guest device isolation
+> +  that would otherwise be expected. If a guest triggered exploit
+> +  requires kernel privileges (or root account access), and leads
+> +  to sub-optimal behaviour of the virtual device this is considered
+> +  a self inflicted service degradation. These will **not** be
+> +  treated as security flaws, at most hardening bugs. If triggernig
+> +  the code path can be done by an unprivileged guest OS account,
+> +  this may justify handling as a security bug.
+> +
+> +* **nested virtualization**. The scope for nested virtualization
+> +  is to prevent a level 2 guest from breaking out into a level
+> +  1 guest. As noted above, a number of scenarios exclude security
+> +  handling for flaws only exploitable by the guest kernel / root
+> +  account with affect the guest's own service/availability. In the
+> +  context of nested virtualization with PCI device assignment, it
+> +  may may be possible for a level 2 guest kernel to trigger flaws
+> +  that affect the level 0 QEMU process. While these bugs should be
+> +  fixed, they will not be triaged as security flaws at this time.
+> +
+> +* **low severity impact**. As a catch all rule, issues which
+> +  are judged to have a "low" severity impact on the system will
+> +  usually not justify handling as security bugs, nor assignment
+> +  of CVEs. They will be fixed as routine bugs when time allows.
 
-sry, for the late response. I've checked the manual [1]. 0xb70 is the right
-offset for R_DDRIOB_DCI_CTRL. Additionally, the correct reset value is 0x20=
- not
-0x21. The commit also requires 0x20 as reset value because it tries to dete=
-ct a
-toggle of the reset bit (bit 0). Do you fix the commit or should we do it?
-Thanks for catching!
+Should we have a section about management-plane protocols? (migration,
+QMP, monitor), since they already require trusted network access?
 
-[1]
-https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Register-slcr-DDRIOB_D=
-CI_CTRL
+> +
+>  Architecture
+>  ------------
+>
+> --
+> 2.55.0
+>
 
-
---=20
-Best regards,
-Corvin
-
-On Tue, 2026-07-07 at 11:58 +0100, Peter Maydell wrote:
-> Ping -- Corvin, Yannick, please could you suggest the right resolution
-> for this bug?
->=20
-> thanks
-> -- PMM
->=20
->=20
-> On Mon, 22 Jun 2026 at 15:49, Peter Maydell <peter.maydell@linaro.org> wr=
-ote:
-> >=20
-> > On Fri, 29 May 2026 at 12:47, Peter Maydell <peter.maydell@linaro.org>
-> > wrote:
-> > >=20
-> > > From: YannickV <Y.Vossen@beckhoff.com>
-> > >=20
-> > > The registers for the digitally controlled impedance (DCI) clock are
-> > > part of the system level control registers (SLCR). The DONE bit in
-> > > the status register indicates a successfull DCI calibration. An
-> > > description of the calibration process can be found here:
-> > > https://urldefense.com/v3/__https://docs.amd.com/r/en-US/ug585-zynq-7=
-000-SoC-TRM/DDR-IOB-Impedance-Calibration__;!!PlYMe_wG1g!lthDLWtCQd7a8JMN8G=
-4iIPO8hmKqHg5ON9qsiI2YQGx5fTuThS3u5WwV6IeiZCeJf2gNSKMWSZ2wKu91Kb6gVFdpPQ$
-> > >=20
-> > > The DCI control register and status register have been added. As soon
-> > > as the ENABLE and RESET bit are set, the RESET bit has also been togg=
-led
-> > > to 0 before and the UPDATE_CONTROL is not set, the DONE bit in the st=
-atus
-> > > register is set. If these bits change the DONE bit is reset. Note tha=
-t the
-> > > option bits are not taken into consideration.
-> >=20
-> > Hi; we've just had a Coverity Scan run that went over this code,
-> > and it points out an issue:
-> >=20
-> > > =C2=A0REG32(DDRIOB, 0xb40)
-> > > +REG32(DDRIOB_DCI_CTRL, 0xb70)
-> >=20
-> > These REG32() macros define R_DDRIOB as 0xb40 / 4 =3D=3D 0x2d0,
-> > and R_DDRIOB_DCI_CTRL as 0xb70 / 4 =3D=3D 0x2dc...
-> >=20
-> > > @@ -418,6 +428,8 @@ static void zynq_slcr_reset_init(Object *obj,
-> > > ResetType type)
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0s->regs[R_DDRIOB + 4] =3D s->regs[R_DDR=
-IOB + 5] =3D s->regs[R_DDRIOB + 6]
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=3D 0x00000e00;
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0s->regs[R_DDRIOB + 12] =3D 0x00000021;
-> > > +
-> > > +    s->regs[R_DDRIOB_DCI_CTRL] =3D 0x00000020;
-> >=20
-> > ...and here in the reset function we are now initializing
-> > both s->regs[R_DDRIOB + 12] and s->regs[R_DDRIOB_DCI_CTRL], but
-> > those are the same array element (since 0x2d0 + 12 =3D=3D 0x2dc).
-> >=20
-> > What was the intention here? Which reset value is correct?
-> > Should we be resetting some other register where we currently
-> > are resetting s->regs[R_DDRIOB + 12] ?
-> >=20
-> > thanks
-> > -- PMM
-
-
-
-This email contains confidential information. If you have received it in er=
-ror, you must not read, use, copy or pass on this e-mail or its attachments.
-If you have received the e-mail in error, please inform me immediately by r=
-eply e-mail and then delete this e-mail from your system. Thank you
-
-Diese E-Mail enth=C3=A4lt vertrauliche Informationen. Sollten Sie sie irrt=
-=C3=BCmlich erhalten haben, d=C3=BCrfen Sie diese E-Mail oder ihre Anh=C3=
-=A4nge nicht lesen, verwenden, kopieren oder weitergeben.
-Sollten Sie die Mail versehentlich erhalten haben, teilen Sie mir dies bitt=
-e umgehend per Antwort-E-Mail mit und l=C3=B6schen Sie diese E-Mail dann au=
-s Ihrem System. Vielen Dank
-
-Beckhoff Automation GmbH & Co. KG=20
-Managing Director: Dipl. Phys. Hans Beckhoff
-Registered office: Verl, Germany=20
-Register court: Guetersloh HRA 7075
-
-DisclaimerID:x9d5u140
-
-
---=-+hOKFDcU7wpxfJSG9XA2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmpM9EAACgkQ2FTaVjFe
-Amq2/hAAhGhNhxGLGgn6MnrN4QW7DswJNnvFp4efyHjzODnWXiJjudtAHnDzoYbD
-43y9VldrkCnGDH1bBt8e1VpdxZmz23y7Dh+KqJKBP4lZu1KsUJ5nJnY4futCJvUs
-NkQv7TZ+J6IjkUxVcJFp7YZ9eZAgjnheICx3Lbqt5KoEQ1OEynL1PKnLaAgaZDXi
-ezX1YjGmoS18Z8UTxAZuj5oqnlPWm8v+nxOa1X93s6qbpT4UqnIQcLlnLnECIEtb
-yfNXuL6bXia48QiqFUXvtdH0UhTbyP1FCfIIapmQHfkVImYRHgoc6RuEM6jCCsDJ
-48OcSuERjEX/Q97MMKEyys2Yy/lINKe63CbMuktRa43aIVW7nRA152Sc3dI28s85
-VFND19miOF5Uq2neySbDuPdE/jUZzgknpnpabtsFVuW2616yXKC5Reh7LZLwUzJE
-uoXjsmG4aDEWNEmCiuSz3AHKtN+ictEnpEdHthnZabn2w8ZleCi3PRwzuzTfLQ1V
-x259mWya3hD6J2WNOEq0YmgdWO/DLxqygD5mqqsXLsh3HjdFFWJWU/K+yK6751oc
-zIB7+/lPVe5lQ5pDaRu+fK53e+KFziS8OHVLTtmIpAWejSp01dwDYIkgmqv5KdKP
-fpATlTu8viqlXUPpisPFGWzg1JZdOjQgYT1tZ2Amx7XUQOfxrck=
-=4pBs
------END PGP SIGNATURE-----
-
---=-+hOKFDcU7wpxfJSG9XA2--
 
