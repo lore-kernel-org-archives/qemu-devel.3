@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 978F2C43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35119C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:06:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh3aT-0002hY-2n; Tue, 07 Jul 2026 07:03:37 -0400
+	id 1wh3aT-0002i4-EA; Tue, 07 Jul 2026 07:03:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3aD-0002Or-MT
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:23 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3aC-0002OV-8u
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3a7-00088f-EG
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:21 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3a5-00086P-E8
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783422194;
+ s=mimecast20190719; t=1783422192;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M1DePmGvHRpFRILH0GPAvd7mNYuyam2hQmigwvRXN1o=;
- b=bMRzwfGUragD/PW3bTBRRSq03Jg26/h6rTdrH8j97MAv57XHZs2FjhLuBSlMoX88TttHTj
- iFVwu01ddpYspVYNHDfIp9PRB8qW3cYhmYwi8Y+zCBqOgAOFTmf5xHCvJad5cKy7svd2+9
- VKRuScf6Is8zfP5VMWaK9WFdAofg+yY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=fcZuxTtaz7V6gW+I5Pv2v+24VGBEb2cUEPe9BndI1bA=;
+ b=VYTfhi9CuaNTUDzEhMU5s20yyiyfIk0HK9JXBCZJgPCp0ulopSzVM+swd5nIsRRWy0GhOn
+ zSkwFzNVbx1RBg8x4xVjuwBy+X4LSIB02qZKERytv8bXjgI3iCsd4cj7a1mVLX4ichVPsE
+ na3uhC8OHM/UByY4/BsC0BB/5CtATsg=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-80-IB2vqLIgPKGkQbGyUDkwBg-1; Tue,
- 07 Jul 2026 07:03:13 -0400
-X-MC-Unique: IB2vqLIgPKGkQbGyUDkwBg-1
-X-Mimecast-MFC-AGG-ID: IB2vqLIgPKGkQbGyUDkwBg_1783422192
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-436-paP7pDfVMv6CQGacQHONTQ-1; Tue,
+ 07 Jul 2026 07:03:11 -0400
+X-MC-Unique: paP7pDfVMv6CQGacQHONTQ-1
+X-Mimecast-MFC-AGG-ID: paP7pDfVMv6CQGacQHONTQ_1783422190
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9DD0219540C1
- for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 11:03:12 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C27F1954AE6
+ for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 11:03:10 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 19FC01955F75
- for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 11:03:12 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B32871800749
+ for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 11:03:09 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2F2CB21E6152; Tue, 07 Jul 2026 13:03:01 +0200 (CEST)
+ id 2334B21E6147; Tue, 07 Jul 2026 13:03:01 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Krempa <pkrempa@redhat.com>
-Subject: [PULL 35/35] docs: mark '-mon' as deprecated in favour of -object
-Date: Tue,  7 Jul 2026 13:03:00 +0200
-Message-ID: <20260707110300.1918153-36-armbru@redhat.com>
+ Peter Krempa <pkrempa@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 32/35] monitor: add support for auto-deleting monitors upon
+ close
+Date: Tue,  7 Jul 2026 13:02:57 +0200
+Message-ID: <20260707110300.1918153-33-armbru@redhat.com>
 In-Reply-To: <20260707110300.1918153-1-armbru@redhat.com>
 References: <20260707110300.1918153-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -91,180 +92,362 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The high level `-qmp` and `-monitor` options can remain as convenience
-wrappers, but the low level `-mon` is completed obsoleted by the new
-`-object` support with 'monitor-qmp' and 'monitor-hmp' types.
+The default monitor is usually a long lived object that will exist for
+the entire lifetime of the VM. A monitor can only service a single
+client at a time though, and so it might be desirable to hotplug
+additional monitors at runtime for specific tasks. If doing that,
+however, there is a need to remove the monitor when it is no longer
+needed.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+A use case for hotplugging a monitor can involve a user wishing to
+spawn an ad hoc script that uses a temporary monitor. The script can
+ask the management application to hotplug a monitor and pass back a
+pre-opened FD using SCM_RIGHTS. In this case the lifetime of the
+script is not tied to the management application and thus it is
+desirable to have automatic cleanup when the script exits.
+
+Allowing a client to run "object-del" against its own monitor adds
+complex edge cases, as it would be desirable to send the QMP response
+despite the monitor sending it being deleted. Doing "object-del" alone
+will also result in orphaning a character device backend instance, as
+there is no opportunity to run the companion "chardev-del" command.
+
+A simpler way to ensure cleanup is to add the concept of auto-deleting
+monitor objects. Specifically when the "CHR_EVENT_CLOSED" event is
+emitted, the equivalent of "object-del" + "chardev-del" can be run
+internally. Since the transient client has already droppped its
+monitor connection, there is no synchronization to be concerned about
+with sending QMP replies. There is still some internal synchronization
+needed, however, between the character device event callback and the
+bottom-half that runs the delete. There is a chance that an incoming
+client connection may arise before the bottom-half runs, which has
+to be checked. Once the monitor object is deleted, the event callback
+is unregistered from the character device, eliminating any further
+races before the character device is fully deleted.
+
+This is implemented via a new "close-action=none|delete" property on
+the 'monitor-qmp' object. This concept could be extended with further
+actions in future, for example:
+
+ * close-action=shutdown - graceful guest shutdown
+ * close-action=terminate - immediate guest poweroff
+ * close-action=stop - pause guest CPUs while the monitor is not
+                       connected to any client
+
+This is left as an exercise for future interested contributors.
+
 Tested-by: Peter Krempa <pkrempa@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260706135824.2623960-36-berrange@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-[Editing accident fixed in qemu-options.hx]
+Message-ID: <20260706135824.2623960-33-berrange@redhat.com>
+[Commit message typos fixed]
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/about/deprecated.rst               | 10 ++++++++++
- docs/devel/writing-monitor-commands.rst |  4 ++--
- docs/system/arm/xenpvh.rst              |  4 ++--
- docs/system/i386/xen.rst                |  3 ++-
- docs/system/i386/xenpvh.rst             |  4 ++--
- system/vl.c                             |  2 ++
- qemu-options.hx                         | 15 +++++++--------
- 7 files changed, 27 insertions(+), 15 deletions(-)
+ qapi/qom.json                                 | 22 ++++-
+ monitor/monitor-internal.h                    |  3 +
+ monitor/qmp.c                                 | 80 ++++++++++++++++++
+ .../generic/test_monitor_hotplug.py           | 83 ++++++++++++++++++-
+ 4 files changed, 183 insertions(+), 5 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index ef1d7b9ea8..0c656a968f 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -61,6 +61,16 @@ The ``debug-threads`` option of the ``-name`` argument is now
- ignored. Thread naming is unconditionally enabled for all platforms
- where it is supported.
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 33a827b9fa..d96cc5aa21 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -1213,6 +1213,22 @@
+   'base': 'MonitorProperties',
+   'data': { '*readline': 'bool' } }
  
-+``-mon`` option (since 11.1)
-+''''''''''''''''''''''''''''
 +
-+The ``-mon`` option was the generic mechanism for creating monitor
-+objects if the convenience ``-qmp`` or ``-monitor`` options were not
-+flexible enough. The monitor objects have been converted to QOM, so
-+``-mon mode=readline`` is replaced by ``-object monitor-hmp`` and
-+``-mon mode=control`` is replaced by ``-object monitor-qmp``. The
-+short convenience options are not deprecated, only ``-mon``.
++##
++# @MonitorQMPCloseAction:
++#
++# Action to take when the character device backend is closed.
++#
++# @none: take no action
++#
++# @delete: delete both the 'monitor-qmp' object and its associated
++#     character device backend object
++#
++# Since: 11.1
++##
++{ 'enum': 'MonitorQMPCloseAction',
++  'data': ['none', 'delete'] }
 +
- QEMU Machine Protocol (QMP) commands
- ------------------------------------
+ ##
+ # @MonitorQMPProperties:
+ #
+@@ -1220,11 +1236,15 @@
+ #
+ # @pretty: whether to pretty print JSON responses (default: false)
+ #
++# @close-action: action to take when the character device backend is
++#     closed (default: none)
++#
+ # Since: 11.1
+ ##
+ { 'struct': 'MonitorQMPProperties',
+   'base': 'MonitorProperties',
+-  'data': { '*pretty': 'bool' } }
++  'data': { '*pretty': 'bool',
++            '*close-action': 'MonitorQMPCloseAction' } }
  
-diff --git a/docs/devel/writing-monitor-commands.rst b/docs/devel/writing-monitor-commands.rst
-index 930da5cd06..7ae7efe327 100644
---- a/docs/devel/writing-monitor-commands.rst
-+++ b/docs/devel/writing-monitor-commands.rst
-@@ -52,8 +52,8 @@ shown here.
- First, QEMU should be started like this::
+ ##
+ # @ObjectType:
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index 5522e05464..23829f32f9 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -28,6 +28,7 @@
+ #include "chardev/char-fe.h"
+ #include "monitor/monitor.h"
+ #include "qapi/qapi-types-control.h"
++#include "qapi/qapi-types-qom.h"
+ #include "qapi/qmp-registry.h"
+ #include "qobject/json-parser.h"
+ #include "qemu/readline.h"
+@@ -178,7 +179,9 @@ struct MonitorQMP {
+     Monitor parent_obj;
+     JSONMessageParser parser;
+     bool pretty;
++    MonitorQMPCloseAction close_action;
+     bool setup_pending; /* iothread BH has not yet set up chardev handlers */
++    bool delete_pending; /* close_action has started 'delete' process */
+     /*
+      * When a client connects, we're in capabilities negotiation mode.
+      * @commands is &qmp_cap_negotiation_commands then.  When command
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index 2bec0f3c96..223e0643c2 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -28,6 +28,7 @@
+ #include "monitor-internal.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-control.h"
++#include "qapi/qapi-commands-char.h"
+ #include "qobject/qdict.h"
+ #include "qobject/qjson.h"
+ #include "qobject/qlist.h"
+@@ -103,6 +104,20 @@ static void monitor_qmp_set_pretty(Object *obj, bool val, Error **errp)
+     mon->pretty = val;
+ }
  
-  # qemu-system-TARGET [...] \
--     -chardev socket,id=qmp,port=4444,host=localhost,server=on \
--     -mon chardev=qmp,mode=control,pretty=on
-+     -chardev socket,id=chrqmp0,port=4444,host=localhost,server=on \
-+     -object monitor-qmp,chardev=chrqmp0,pretty=on,id=qmp0
++static int monitor_qmp_get_close_action(Object *obj, Error **errp)
++{
++    MonitorQMP *mon = MONITOR_QMP(obj);
++
++    return mon->close_action;
++}
++
++static void monitor_qmp_set_close_action(Object *obj, int val, Error **errp)
++{
++    MonitorQMP *mon = MONITOR_QMP(obj);
++
++    mon->close_action = val;
++}
++
+ static void monitor_qmp_emit_event(Monitor *mon, QAPIEvent event, QDict *qdict);
+ static bool monitor_qmp_requires_iothread(const Monitor *mon);
+ static void monitor_qmp_complete(UserCreatable *uc, Error **errp);
+@@ -117,6 +132,11 @@ static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
+     object_class_property_add_bool(cls, "pretty",
+                                    monitor_qmp_get_pretty,
+                                    monitor_qmp_set_pretty);
++    object_class_property_add_enum(cls, "close-action",
++                                   "MonitorQMPCloseAction",
++                                   &MonitorQMPCloseAction_lookup,
++                                   monitor_qmp_get_close_action,
++                                   monitor_qmp_set_close_action);
  
- Then, in a different terminal::
+     moncls->emit_event = monitor_qmp_emit_event;
+     moncls->requires_iothread = monitor_qmp_requires_iothread;
+@@ -550,11 +570,49 @@ static QDict *qmp_greeting(MonitorQMP *mon)
+         ver, cap_list);
+ }
  
-diff --git a/docs/system/arm/xenpvh.rst b/docs/system/arm/xenpvh.rst
-index 430ac2c02e..511af63e3d 100644
---- a/docs/system/arm/xenpvh.rst
-+++ b/docs/system/arm/xenpvh.rst
-@@ -27,9 +27,9 @@ Sample QEMU xenpvh commands for running and connecting with Xen:
++static void monitor_qmp_self_delete_bh(void *opaque)
++{
++    MonitorQMP *mon = opaque;
++    const char *mon_id = object_get_canonical_path_component(
++        OBJECT(mon));
++    g_autofree char *chardev_id = g_strdup(mon->parent_obj.chardev_id);
++    Error *local_error = NULL;
++
++    if (!mon_id) {
++        /*
++         * Another monitor raced & ran 'object-del' on 'mon'
++         * before this BH got scheduled, so we have a ref on
++         * mon from monitor_qmp_event but it is already
++         * unparented.
++         */
++        object_unref(mon);
++        return;
++    }
++
++    user_creatable_del(mon_id, &local_error);
++    /* Pairs with ref from monitor_qmp_event */
++    object_unref(mon);
++    if (local_error != NULL) {
++        error_report_err(local_error);
++    } else {
++        qmp_chardev_remove(chardev_id, NULL);
++    }
++}
++
+ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+ {
+     QDict *data;
+     MonitorQMP *mon = opaque;
  
-     qemu-system-aarch64 -xen-domid 1 \
-       -chardev socket,id=libxl-cmd,path=qmp-libxl-1,server=on,wait=off \
--      -mon chardev=libxl-cmd,mode=control \
-+      -object monitor-qmp,id=qmp0,chardev=libxl-cmd \
-       -chardev socket,id=libxenstat-cmd,path=qmp-libxenstat-1,server=on,wait=off \
--      -mon chardev=libxenstat-cmd,mode=control \
-+      -object monitor-qmp,id=qmp1,chardev=libxenstat-cmd \
-       -xen-attach -name guest0 -vnc none -display none -nographic \
-       -machine xenpvh -m 1301 \
-       -chardev socket,id=chrtpm,path=tmp/vtpm2/swtpm-sock \
-diff --git a/docs/system/i386/xen.rst b/docs/system/i386/xen.rst
-index 46db5f34c1..6ff5cdb1e4 100644
---- a/docs/system/i386/xen.rst
-+++ b/docs/system/i386/xen.rst
-@@ -79,7 +79,8 @@ of type ``xen-console`` to connect to it. For the Xen console equivalent of
- the handy ``-serial mon:stdio`` option, for example:
++    /*
++     * Protect against race if a client drops & quickly
++     * reconnects - we'll have the delete BH scheduled
++     * so must not honour a new open request
++     */
++    if (mon->delete_pending) {
++        return;
++    }
++
+     switch (event) {
+     case CHR_EVENT_OPENED:
+         WITH_QEMU_LOCK_GUARD(&mon->parent_obj.mon_lock) {
+@@ -577,6 +635,28 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+         json_message_parser_init(&mon->parser, handle_qmp_command,
+                                  mon, NULL);
+         monitor_fdsets_cleanup();
++        switch (mon->close_action) {
++        case MONITOR_QMP_CLOSE_ACTION_NONE:
++            break;
++        case MONITOR_QMP_CLOSE_ACTION_DELETE:
++            mon->delete_pending = true;
++            /*
++             * Do NOT run in the AIO context associated with the
++             * monitor. We need to run in the default AIO context
++             * which is the same context in which 'qmp_object_del'
++             * will execute
++             *
++             * Hold an extra ref in case a separate monitor races
++             * with the BH by processing an explicit 'object-del'.
++             * Will be released by monitor_qmp_self_delete_bh
++             */
++            object_ref(mon);
++            aio_bh_schedule_oneshot(qemu_get_aio_context(),
++                                    monitor_qmp_self_delete_bh, mon);
++            break;
++        default:
++            g_assert_not_reached();
++        }
+         break;
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
+index 55af8a238f..86092e781c 100755
+--- a/tests/functional/generic/test_monitor_hotplug.py
++++ b/tests/functional/generic/test_monitor_hotplug.py
+@@ -25,7 +25,7 @@ def setUp(self):
+         sock_dir = self.socket_dir()
+         self._sock_path = os.path.join(sock_dir.name, 'hotplug.sock')
  
- .. parsed-literal::
--   -chardev stdio,mux=on,id=char0,signal=off -mon char0 \\
-+   -chardev stdio,mux=on,id=char0,signal=off \\
-+   -object monitor-hmp,chardev=char0,id=hmp0 \\
-    -device xen-console,chardev=char0
+-    def _add_monitor(self):
++    def _add_monitor(self, autodelete=False):
+         """Create a chardev + monitor and return the socket path."""
+         sock = self._sock_path
+         self.vm.cmd('chardev-add', id='hotplug-chr', backend={
+@@ -39,9 +39,15 @@ def _add_monitor(self):
+                 'wait': False,
+             }
+         })
+-        self.vm.cmd('object-add', id='hotplug-mon',
+-                    qom_type='monitor-qmp',
+-                    chardev='hotplug-chr')
++        if autodelete:
++            self.vm.cmd('object-add', id='hotplug-mon',
++                        qom_type='monitor-qmp',
++                        chardev='hotplug-chr',
++                        close_action='delete')
++        else:
++            self.vm.cmd('object-add', id='hotplug-mon',
++                        qom_type='monitor-qmp',
++                        chardev='hotplug-chr')
+         return sock
  
- The Xen network device is ``xen-net-device``, which becomes the default NIC
-diff --git a/docs/system/i386/xenpvh.rst b/docs/system/i386/xenpvh.rst
-index 354250f073..904778e3f5 100644
---- a/docs/system/i386/xenpvh.rst
-+++ b/docs/system/i386/xenpvh.rst
-@@ -33,9 +33,9 @@ case you need to construct one manually:
+     def _remove_monitor(self):
+@@ -118,6 +124,75 @@ def test_self_removal(self):
+         # Clean up the chardev
+         self.vm.cmd('chardev-remove', id='hotplug-chr')
  
-     qemu-system-i386 -xen-domid 3 -no-shutdown        \
-       -chardev socket,id=libxl-cmd,path=/var/run/xen/qmp-libxl-3,server=on,wait=off \
--      -mon chardev=libxl-cmd,mode=control             \
-+      -object monitor-qmp,id=qmp0,chardev=libxl-cmd   \
-       -chardev socket,id=libxenstat-cmd,path=/var/run/xen/qmp-libxenstat-3,server=on,wait=off \
--      -mon chardev=libxenstat-cmd,mode=control        \
-+      -object monitor-qmp,id=qmp1,chardev=libxenstat-cmd \
-       -nodefaults                                     \
-       -no-user-config                                 \
-       -xen-attach -name g0                            \
-diff --git a/system/vl.c b/system/vl.c
-index 63bdd06dfa..061cbdf860 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -3239,6 +3239,8 @@ void qemu_init(int argc, char **argv)
-                 default_monitor = 0;
-                 break;
-             case QEMU_OPTION_mon:
-+                warn_report_once("'-mon' is deprecated, use '-object' with "
-+                                 "'monitor-hmp' or 'monitor-qmp' types instead");
-                 if (!qemu_opts_parse_noisily(qemu_find_opts("mon"), optarg,
-                                              true)) {
-                     exit(1);
-diff --git a/qemu-options.hx b/qemu-options.hx
-index fe76c18c81..308864a185 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4154,7 +4154,7 @@ The general form of a character device option is:
-     ::
- 
-         -chardev stdio,mux=on,id=char0 \
--        -mon chardev=char0,mode=readline \
-+        -object monitor-hmp,id=hmp0,chardev=char0 \
-         -serial chardev:char0 \
-         -serial chardev:char0
- 
-@@ -4166,7 +4166,7 @@ The general form of a character device option is:
-     ::
- 
-         -chardev stdio,mux=on,id=char0 \
--        -mon chardev=char0,mode=readline \
-+        -object monitor-hmp,id=hmp0,chardev=char0 \
-         -parallel chardev:char0 \
-         -chardev tcp,...,mux=on,id=char1 \
-         -serial chardev:char1 \
-@@ -5004,12 +5004,12 @@ SRST
- 
-     enables the QMP monitor on localhost port 4444 with pretty-printing.
- 
--    The use of ``-mon mode=readline`` is syntactic sugar
-+    The use of ``-mon mode=readline`` is deprecated syntactic sugar
-     for the new ``-object monitor-hmp`` option, each use of which
-     creates an object with the ID ``compat_monitorNNN`` where ``NNN`` is
-     a counter starting from 0.
- 
--    The use of ``-mon mode=control`` is syntactic sugar
-+    The use of ``-mon mode=control`` is deprecated syntactic sugar
-     for the new ``-object monitor-qmp`` option, each use of which
-     creates an object with the ID ``compat_monitorNNN`` where ``NNN`` is
-     a counter starting from 0.
-@@ -5771,8 +5771,7 @@ SRST
-         to dynamically delete the monitor at runtime. Note
-         that monitors created using the historical syntax
-         will be allocated IDs following the pattern ``compat_monmitorNNN``.
--        Mixing ``-object`` with ``-monitor`` and ``-mon`` syntax is
--        discouraged.
-+        Mixing ``-object`` with ``-monitor`` syntax is discouraged.
- 
-         The ``readline`` parameter, which defaults to ``on``,
-         controls whether the monitor provides line editing.
-@@ -5785,8 +5784,8 @@ SRST
-         to dynamically delete the monitor at runtime. Note
-         that monitors created using the historical syntax
-         will be allocated IDs following the pattern ``compat_monitorNNN``.
--        Mixing ``-object`` with ``-qmp``, ``-qmp-pretty`` and
--        ``-mon`` syntax is discouraged.
-+        Mixing ``-object`` with ``-qmp`` and ``-qmp-pretty``
-+        syntax is discouraged.
- 
-         The ``pretty`` parameter, which defaults to ``off``,
-         controls whether the monitor responses are pretty
++    def test_auto_delete(self):
++        """
++        A dynamically-added monitor configured with 'close-action=delete'
++        should see itself deleted when the client is closed.
++        """
++        self.set_machine('none')
++        self.vm.add_args('-nodefaults')
++        self.vm.launch()
++
++        sock = self._add_monitor(autodelete=True)
++
++        cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
++        objs = [o["name"] for o in self.vm.cmd('qom-list', path='/objects')]
++        assert ('hotplug-chr' in cdevs)
++        assert ('hotplug-mon' in objs)
++
++        qmp = QEMUMonitorProtocol(sock)
++        greeting = qmp.connect(negotiate=True)
++        self.assertIn('QMP', greeting)
++
++        cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
++        objs = [o["name"] for o in self.vm.cmd('qom-list', path='/objects')]
++        assert ('hotplug-chr' in cdevs)
++        assert ('hotplug-mon' in objs)
++
++        qmp.close()
++
++        # Wait upto 10 seconds max for chardev to auto-delete, which
++        # is hopefully enough for reliability under high load
++        for i in range(int(10 / 0.2)):
++            cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
++            if 'hotplug-chr' not in cdevs:
++                break
++            # Wait a little more then try again
++            time.sleep(0.2)
++
++        cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
++        objs = [o["name"] for o in self.vm.cmd('qom-list', path='/objects')]
++        assert ('hotplug-chr' not in cdevs)
++        assert ('hotplug-mon' not in objs)
++
++    def test_reconnect(self):
++        """
++        A dynamically-added monitor configured without 'close-action'
++        should allow reconnects after the client is closed.
++        """
++        self.set_machine('none')
++        self.vm.add_args('-nodefaults')
++        self.vm.launch()
++
++        sock = self._add_monitor()
++
++        qmp = QEMUMonitorProtocol(sock)
++        qmp.connect(negotiate=True)
++
++        resp = qmp.cmd_obj({'execute': 'query-chardev'})
++        self.assertIn('return', resp)
++
++        qmp.close()
++
++        qmp = QEMUMonitorProtocol(sock)
++        qmp.connect(negotiate=True)
++
++        resp = qmp.cmd_obj({'execute': 'query-chardev'})
++        self.assertIn('return', resp)
++
++        qmp.close()
++        self._remove_monitor()
++
+     def test_large_response(self):
+         """
+         Send a command with a large response (query-qmp-schema) on a
 -- 
 2.54.0
 
