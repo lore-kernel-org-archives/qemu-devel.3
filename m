@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 717E5C44501
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 20:59:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0755AC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 20:59:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whCs2-0004OU-Fo; Tue, 07 Jul 2026 16:58:22 -0400
+	id 1whCry-0004LS-8j; Tue, 07 Jul 2026 16:58:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1whCry-0004MF-TW
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:58:18 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1whCrw-0004Km-9H
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:58:16 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1whCrx-0003Td-CR
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:58:18 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2c6b67d5fa1so177935ad.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:58:16 -0700 (PDT)
+ id 1whCru-0003Su-9R
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 16:58:16 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2caea3f742bso563195ad.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 13:58:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783457896; x=1784062696; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=yjtxehokH/ej11h4Z6W3EWTYi+9mWUSrSkuq/wcNtMg=;
- b=hCmL4fGhQ3Uly84wXlpLRo0Je3qft9PZZ6Bf3nQL1tk9YilcH4qFc5umbt0dCrKBba
- PDAni8Ca4/1rrXHjg20PV94LmhznnrwzFHghrq5wJYQY5U9XXdbgMi9HQdvR2SOXSISM
- MGk9bxq/CvSTpUprZV0R0q67OTP4+VV07Nn+N6TB76p4NcBKW7hrg1R9xJFQpdQQ8XX6
- EXwCpgUX/U9nyjpjja5Iddy3RKR7iv7voVHaFQrNVmW4PeoTYaenUQ535O7UGulJQIj7
- Vbo+ZlTP1FXpEH15BviuLBqnO94Rzkjd4gYJJP4/Ne1JzzCn26Zc9ZS20LKKa7ycKbjW
- mBLg==
+ d=linaro.org; s=google; t=1783457892; x=1784062692; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=TPnoIIQ77tGFpNtdPChFbA1LR5m7jgqx25r8AJyOYkM=;
+ b=PYHl4X3Wsyq3AXsTeF0M5UEt57otv8TQZRZILifkW7osrUQodHIoSCc99bCvNExSJJ
+ A+bNxLPxR9Q3QQmaJTyJL8nnu4GF+rAGt8l6RS68ThAqELeo7RXJucXW8B0Q9EQ9vK5w
+ GydeI/rCBwZ1Ea67A4lB9k24d+tlDOoN7cPygHYmBCUay/clzsQvq0JwQ05Rs6NiI7jT
+ GDtGkB4+s+/b23eydpa9Z6PUiZOLCIR38TiZTG8t47T+ZKmPWBbAA0U1tezp53l5nUpz
+ DgAiY0bN4UYwRJamk1ItuHVFfhQTtz1Nwf2c4Gx+kAjKhS+CsCdn62cn8yrAxMDAZGBv
+ YPSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783457896; x=1784062696;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=yjtxehokH/ej11h4Z6W3EWTYi+9mWUSrSkuq/wcNtMg=;
- b=ZSbNGMiUKgzveL13HRhYLRnwf7zf4Sgxu+aYHPLPQjtyw2+BW5+zDXyqcdaYHbFJxE
- 11MgsSCbJA/s796N33GGSYCGBIzbng0Jx0XtwsN4r5Gq0CTubWsUZu8lrWk5dmCNQdI6
- QuSIm5ypeKpekkNbODFG/jywtk+EebBCNmrWg5YCc4U5KpIAdf3fQXopAc2xkK4TxUYU
- Eq1JrBP3cANFjeaiaiOtkdYNjPXs30C2JftirzLwNahxEt6DJxRlxltMemK5Of1bNAhD
- TKFSmWdecjoG9I/cemLMXWXajvG7YLQooeW7JWPa+/+LEU5IzlaQUsO7+2UnC56XTYYC
- OCCg==
-X-Gm-Message-State: AOJu0YwwXqfPrqeZfO9ZxdBxJINSLlWmDpCJHzIXfNPR4uM3DxkDDbxn
- e2GmggZsCHatF2oRyEHoH429chXHSNDcPqyL1Fz9EzLa5RXQkK2E5z4WdP0G8vYotEODMWCDkid
- HGIVD
-X-Gm-Gg: AfdE7clkIM2IhcCtJ+JoPgDRM8FjWM38UxRHFR91Q8moKP8uYdJshNlyI5fMSZyHFwV
- xmA4o7Qp8d26R1XOKOkuvSb7kz0FgzmWqWUyD/vzM2OCgrbW56yySy8kgLD1DE7NeGROk7U0kIs
- l4q69d1Necz+g4Y1+54ZoluGI0t2TMsCKBl8m93VKXEDp7LqbM/X2u+olY3Dnzs5psModNe0X2F
- 2AAF4FWfIK/yI8DYNGgudvjSZIXUyuXnMn67VUTJksAN59o3qPn+fYQTPOh8a5zswq3eRup/L2v
- KtXkHCDck/TUUZnKDw3gar6Eh2JfLquGsf5u5zvqGNewWnZwh37NhJg1uYZBXyvZ0CgivF70mpa
- 0b9NYgBSUXDugJFxro3rbrklaDlciy3DrHiE5EoaAy1a02gYa7ZT6mEdZQJ90n9lWDkxPNSQgNm
- fxQKc9N4hAH1CqI82x13NjexRId+5EPosSkGFSAxPv0lM312I=
-X-Received: by 2002:a17:903:3d0d:b0:2ca:53e9:1277 with SMTP id
- d9443c01a7336-2ccbe3fea24mr65683765ad.1.1783457895850; 
- Tue, 07 Jul 2026 13:58:15 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783457892; x=1784062692;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=TPnoIIQ77tGFpNtdPChFbA1LR5m7jgqx25r8AJyOYkM=;
+ b=i5EAQGcNztBl1Ca2GwzsSF63W6gyyXrbsCT78kR20YiATqE9AphoaO/ob+dqaQhtwa
+ wwSg0iFACA67FYrlw2OKyC881lss4X8/Mq+ZPAhd3b0YHXmPwWjT1aKIkYvDHobdv6bM
+ 9FzWr8/IsGqE1jhkZ1vwRqP6QLvhTksRWuwn8BVw2mwXEgiQelYV1ttfrMbi1irHu2dj
+ TOzCDXcHdzlJ7stltKGSEmsNq5dq8re4A3G/kF6+l0zGNfCbLo/BR1WoBN+anJdYSFGe
+ 7dTTnE8mqGGzdtDI3/T5aTlvnTWOcIznT+P+1mgaUiZoEVZR55QgPV5eJdAR+klMtOlI
+ JAsg==
+X-Gm-Message-State: AOJu0YzUOBg6anrNMmDAcWs0ypAdh6+atVvVCBRl0lhxE08gxEg3O/4v
+ FjZM6bhfa4d2bFzlCKuT1tcdt3+RhG+DyFT62YKlO2A9o7a16XMktU1EzmRsQTJiuQiKWJFrp5X
+ L/0cu
+X-Gm-Gg: AfdE7cmQHZWiDcA0sfljEBtJk8Mpk73faEGGbUTuKroZSh8anwSlD6W6dR+/lsRNFi8
+ l8ong882Occtp0cBN2Fz7Vea0j6QLkG5eOVZslZsRZjYZTOWxyV+kq65XhEFBIgMun4MQnlH76/
+ vQpab0C1wR9M5bjxfel2i29RTwZFjLH35scpaYUKV0Out62wJiK39VAVxOGF6okcGKePACwjN/C
+ 7dzTh5tjjOruHcsILYOHvfEd/XQMrIXZWQ5Ngt2dU2+XHlDSgS7U81WsJK/oUUYHG4EMzsoJhSX
+ 3iFsLNQNIfsFzmqXbgKWWvOUfNIvCYDE1Sop6+MTltNdqK9HDc/ICYlkTEG6/jNraA6D8VmSqXq
+ ef6kCPSxUzLP4q3QTfiTg2R1i6KGiaZAn1zERdpSsDHcTC79q1VGJqIAU3BTct+VMzcPMRomR5n
+ u4vwwzlfi7qje1H+e+9jFLFVvRNIPEZj7uzncj/Cj1EEMGHaspxP9KU5VLgw==
+X-Received: by 2002:a17:903:32cd:b0:2c9:a247:171 with SMTP id
+ d9443c01a7336-2ccbe40de92mr63782275ad.1.1783457892201; 
+ Tue, 07 Jul 2026 13:58:12 -0700 (PDT)
 Received: from stoup.. (71-212-39-188.tukw.qwest.net. [71.212.39.188])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ccc9d3bc2asm17980575ad.69.2026.07.07.13.58.14
+ d9443c01a7336-2ccc9d3bc2asm17980575ad.69.2026.07.07.13.58.11
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jul 2026 13:58:14 -0700 (PDT)
+ Tue, 07 Jul 2026 13:58:11 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 3/6] tests/tcg/multiarch: Improve mutator randomness
-Date: Tue,  7 Jul 2026 13:58:07 -0700
-Message-ID: <20260707205810.303376-4-richard.henderson@linaro.org>
+Subject: [PULL 0/6] tcg patch queue
+Date: Tue,  7 Jul 2026 13:58:04 -0700
+Message-ID: <20260707205810.303376-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260707205810.303376-1-richard.henderson@linaro.org>
-References: <20260707205810.303376-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,42 +98,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+The following changes since commit 94826ec1370328375c3b6d1e80fdc94c8f46c348:
 
-Currently mutators perform the same actions, because the RNG seed is
-derived from the current time in seconds. Mix in thread ID.
+  Merge tag 'accel-20260706' of https://github.com/philmd/qemu into staging (2026-07-06 18:38:14 +0200)
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260706165445.57418-3-iii@linux.ibm.com>
----
- tests/tcg/multiarch/vma-pthread.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+are available in the Git repository at:
 
-diff --git a/tests/tcg/multiarch/vma-pthread.c b/tests/tcg/multiarch/vma-pthread.c
-index 7045da08fc..0b8ce9751b 100644
---- a/tests/tcg/multiarch/vma-pthread.c
-+++ b/tests/tcg/multiarch/vma-pthread.c
-@@ -11,6 +11,7 @@
-  * pages, which are guaranteed to have the respective protection bit set.
-  * Two mutator threads change the non-fixed protection bits randomly.
-  */
-+#define _GNU_SOURCE
- #include <assert.h>
- #include <fcntl.h>
- #include <pthread.h>
-@@ -121,7 +122,7 @@ static void *thread_mutate(void *arg)
-     unsigned int seed;
-     int prot, ret;
- 
--    seed = (unsigned int)time(NULL);
-+    seed = (unsigned int)time(NULL) + (unsigned int)gettid();
-     for (i = 0; i < 10000; i++) {
-         start_idx = rand_r(&seed) & PAGE_IDX_MASK;
-         end_idx = rand_r(&seed) & PAGE_IDX_MASK;
--- 
-2.43.0
+  https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20260707
 
+for you to fetch changes up to c56ebd64b82aa4d4a4e2144abbf9568ef593b836:
+
+  tcg/loongarch64: Fix cmp_vec with TCG_COND_NE (2026-07-07 11:16:05 -0700)
+
+----------------------------------------------------------------
+tcg/loongarch64: Fix cmp_vec with TCG_COND_NE
+tcg/x86_64: declare MO_ATOM_WITHIN16 host atomicity support
+accel/tcg: Make PageFlagsNodes' start and last immutable
+accel/tcg: Use TLB_FORCE_SLOW not TLB_MMIO for user-only plugins
+
+----------------------------------------------------------------
+Andrew Jones (1):
+      tcg/x86_64: declare MO_ATOM_WITHIN16 host atomicity support
+
+Ilya Leoshkevich (3):
+      accel/tcg: Make PageFlagsNodes' start and last immutable
+      tests/tcg/multiarch: Improve mutator randomness
+      Revert "tests/tcg: skip the vma-pthread test on CI"
+
+Richard Henderson (2):
+      accel/tcg: Use TLB_FORCE_SLOW not TLB_MMIO for user-only plugins
+      tcg/loongarch64: Fix cmp_vec with TCG_COND_NE
+
+ include/exec/tlb-flags.h            |  7 ++++---
+ accel/tcg/user-exec.c               | 41 +++++++++++++++++++++----------------
+ tests/tcg/multiarch/vma-pthread.c   |  3 ++-
+ tcg/loongarch64/tcg-target.c.inc    | 39 +++++++++++++++++++++++++----------
+ tcg/x86_64/tcg-target.c.inc         |  4 ++--
+ tests/tcg/multiarch/Makefile.target |  9 --------
+ 6 files changed, 59 insertions(+), 44 deletions(-)
 
