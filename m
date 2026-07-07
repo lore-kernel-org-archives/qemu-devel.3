@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3003EC43602
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 15:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9E5AC43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 15:25:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh7ci-0002oq-Sm; Tue, 07 Jul 2026 11:22:13 -0400
+	id 1wh7fv-0004Bv-GX; Tue, 07 Jul 2026 11:25:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wh7ch-0002oR-Lh; Tue, 07 Jul 2026 11:22:11 -0400
+ id 1wh7fu-0004B9-3U; Tue, 07 Jul 2026 11:25:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wh7cf-00089o-6k; Tue, 07 Jul 2026 11:22:11 -0400
+ id 1wh7fs-0000B3-HR; Tue, 07 Jul 2026 11:25:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783437716; bh=/RW4Rm+TsJJ5TgHfKSG6ZGoHlgvqKfFOWDxZaTR2sdg=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=qdW3em6JecqeEoCxGC1ZdkIVkzL/IX0LxAUZ4ddZfKjVPEfv9u1iKCKeCP7OSiBwO
- 141bFq4YYB8efG9jmTDj9oWEQN8/WL6H+dZ/mAmCmX1HBrDMgpFdVw3Rl20ZWR71th
- J9WoWiGX4O4dmjrBoLJFOfevclYizVFvj3C918HPrUOrZTx//wTt4UxcJGJZiqL858
- olswvfBcTcmbnsCXe1lDb5iUM7OyTyTCrXzniKHSPxXoGrwOf6Q1sH8KiSwYfjlp3g
- v+TFG5s5UTbafN+98BrT0Mws/OxaLUulpXRzlsdsYyX1c/SpNDhq3QfZT5tO+uIYuK
- dmljQvTQF6yxQ==
+ t=1783437924; bh=k95QfvU8HhHhCpnTaQ46v/TIj5c+hrw7BLAsc1XDVj4=;
+ h=Date:From:Subject:To:Cc:References:In-Reply-To;
+ b=MuyswEP8OAshdwJQLDbVHnRcmUpqrqRlSToxTebNpZSjF3JhdAgYnDZcqZsyAyAy9
+ X68NyGD+yGo6W3ufL1csZ7euv4p03mt6pIy9AvUXw+ppNBR1d825DUYLGP9xiNfxyj
+ IdKZSy1abGYqYgI25gHUX0SU9lBAdKxEaBwPRstt+CATNXUKpRDKIVq6dO4mhjxus9
+ q9slt92Rysvy+t4SR0nNowr1gtscB4XUBv3jnnInVJN9q/Ll4mmOVArWZlP3+zRRO8
+ 9kH7/3QdYJkLiqT9SakbNUAF0T4Kyt8vE4S9P6fMpW/p4WhKmPzN7vvGQpDfFz/CTj
+ TOcpqUlW1g1ag==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id D70C91BEF96;
- Tue, 07 Jul 2026 18:21:55 +0300 (MSK)
-Message-ID: <16c7efed-49ff-4d71-af28-9fe53c0e38a7@tls.msk.ru>
-Date: Tue, 7 Jul 2026 18:21:57 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 16AD51BEF9D;
+ Tue, 07 Jul 2026 18:25:24 +0300 (MSK)
+Message-ID: <c8c320ce-af9f-47ee-b036-b408aa5d60be@tls.msk.ru>
+Date: Tue, 7 Jul 2026 18:25:25 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+From: Michael Tokarev <mjt@tls.msk.ru>
 Subject: Re: [PULL 44/44] virtio-net: validate RSS indirections_len in
  post_load
 To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Junjie Cao <junjie.cao@intel.com>, qemu-stable@nongnu.org,
- Jason Wang <jasowangio@gmail.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
+ Jason Wang <jasowangio@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 References: <cover.1783261895.git.mst@redhat.com>
  <32a90850e1e4222091df07b4b46d5f46a8b90d24.1783261895.git.mst@redhat.com>
 Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -112,6 +113,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
+
+(Resending with correct new address of Akihiko Odaki.
+  Please excuse me for double post).
 
 On 05.07.2026 17:36, Michael S. Tsirkin wrote:
 > From: Junjie Cao <junjie.cao@intel.com>
@@ -194,4 +198,5 @@ What do you think?
 Thanks,
 
 /mjt
+
 
