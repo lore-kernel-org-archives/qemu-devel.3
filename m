@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1679BC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:03:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB8A7C43458
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 11:03:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wh3aU-0002jK-At; Tue, 07 Jul 2026 07:03:38 -0400
+	id 1wh3aI-0002SI-Qr; Tue, 07 Jul 2026 07:03:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3aA-0002Ny-To
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:19 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3a3-0002KI-Pk
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3a5-00086I-Bt
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:18 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wh3a2-00084J-Bl
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 07:03:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783422192;
+ s=mimecast20190719; t=1783422188;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Gtk+JnoEhKemGXuDtfWTfOQWG+XxG8XAFRfw+nylXwA=;
- b=RSW/u1BvM2XwYJckKqR80ZZDLUp8nExlUW4a11St6lhsD4UNtDqpH6J7tJNbeJlMdULB5c
- qOVff50T802t0TL8oLVOn+S8P/QcHSPBhKUr0QotmVYo3lyeU9f//ds5R5QDcJDaquNuYO
- 4obUxMweSIKW+MGy22sEYUGKBA4dlJc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=o0vsz1oL++u0YQvfkWjDECtDbWy7Q45p6EemFAOcrHo=;
+ b=J42rcTgDfWUaADxxJpijiA4ychkxJ2/ZTOnBWc2029j0PCkd5rrqjFs6JZ2wKahQesEHkC
+ 60btqqDqeEqnNuZOWLMHmsH/HE+LK4mDOYC4Fik5hHmZMBJU8sxGFO36p8m/ijQncI3+n5
+ 2mJarLQkt9YagBC2mVhU0VokwNCY4zo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-396-YM-PAxzpPle_dBQRVHmIog-1; Tue,
- 07 Jul 2026 07:03:11 -0400
-X-MC-Unique: YM-PAxzpPle_dBQRVHmIog-1
-X-Mimecast-MFC-AGG-ID: YM-PAxzpPle_dBQRVHmIog_1783422190
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-332-Y4CdWP5wPvGUo8A0r4WyGw-1; Tue,
+ 07 Jul 2026 07:03:07 -0400
+X-MC-Unique: Y4CdWP5wPvGUo8A0r4WyGw-1
+X-Mimecast-MFC-AGG-ID: Y4CdWP5wPvGUo8A0r4WyGw_1783422186
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 15E25195421A
- for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 11:03:10 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C70F41954B1E
+ for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 11:03:06 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C29FB3691B
- for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 11:03:09 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8736818005B6
+ for <qemu-devel@nongnu.org>; Tue,  7 Jul 2026 11:03:06 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1B01B21E61BF; Tue, 07 Jul 2026 13:03:01 +0200 (CEST)
+ id B4A7221E675A; Tue, 07 Jul 2026 13:03:00 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Peter Krempa <pkrempa@redhat.com>
-Subject: [PULL 30/35] tests/functional: add a stress test for monitor hot
- unplug
-Date: Tue,  7 Jul 2026 13:02:55 +0200
-Message-ID: <20260707110300.1918153-31-armbru@redhat.com>
+Subject: [PULL 08/35] monitor: add 'readline' property to HMP Monitor class
+Date: Tue,  7 Jul 2026 13:02:33 +0200
+Message-ID: <20260707110300.1918153-9-armbru@redhat.com>
 In-Reply-To: <20260707110300.1918153-1-armbru@redhat.com>
 References: <20260707110300.1918153-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -92,107 +91,77 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-When unplugging a monitor there is a careful synchronization dance
-between the monitor handling the "object-del" command and the
-command processing for the monitor being deleted.
-
-The stress test runs a busy loop of 'query-qmp-schema' on a second
-monitor, while the primary monitor requests its deletion.
+This determines whether a human monitor runs with readline for
+interactive use, or without readline for non-interactive use by
+the GDB stub.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Tested-by: Peter Krempa <pkrempa@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260706135824.2623960-31-berrange@redhat.com>
+Message-ID: <20260706135824.2623960-9-berrange@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- .../generic/test_monitor_hotplug.py           | 62 +++++++++++++++++++
- 1 file changed, 62 insertions(+)
+ monitor/hmp.c | 27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
-index 5d8a159eb0..55af8a238f 100755
---- a/tests/functional/generic/test_monitor_hotplug.py
-+++ b/tests/functional/generic/test_monitor_hotplug.py
-@@ -6,11 +6,16 @@
- #
- # Copyright (c) 2026 Christian Brauner
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 34a39b071c..54fd25f220 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -50,12 +50,37 @@ static void monitor_hmp_finalize(Object *obj)
+ {
+ }
  
-+import asyncio
- import os
-+import random
-+import threading
-+import time
- 
- from qemu_test import QemuSystemTest
- 
- from qemu.qmp.legacy import QEMUMonitorProtocol
-+from qemu.qmp import QMPClient
- 
- 
- class MonitorHotplug(QemuSystemTest):
-@@ -163,6 +168,63 @@ def test_events_after_negotiation(self):
-         qmp.close()
-         self._remove_monitor()
- 
-+    def stress_mon(self, sock):
-+        async def main():
-+            qmp = QMPClient('testvm')
-+            await qmp.connect(sock)
-+            # Run query-version in a tight loop so that the
-+            # monitor thread/dispatcher is very busy at the
-+            # time we try to delete the monitor
-+            while True:
-+                try:
-+                    # A command which returns a lot of data to make
-+                    # it more likely we're in the I/O reply path
-+                    # when deleting the monitor
-+                    res = await qmp.execute('query-qmp-schema')
-+                    # Some commands which generate async events
-+                    # as those can trigger different code paths
-+                    res = await qmp.execute('stop')
-+                    res = await qmp.execute('cont')
-+                except:
-+                    # we'll get here if the monitor is terminated
-+                    # by QEMU in which case we must disconnect
-+                    # out side, but....
-+                    try:
-+                        await qmp.disconnect()
-+                    except (ConnectionResetError, EOFError, BrokenPipeError):
-+                        # ... disconnect() will probably see
-+                        # errors too, but we must try to call it
-+                        # regardless to cleanup asyncio state
-+                        # and prevent python warnings at GC time
-+                        pass
-+                    return
-+        asyncio.run(main())
++static bool monitor_hmp_get_readline(Object *obj, Error **errp)
++{
++    MonitorHMP *mon = MONITOR_HMP(obj);
 +
-+    def test_hotplug_stress(self):
-+        """
-+        Repeatedly hotplug and unplug a monitor, while another thread
-+        concurrently issues commands on that monitor. This stresses
-+        the synchronization with the monitor thread during cleanup
-+        """
-+        self.set_machine('none')
-+        self.vm.add_args('-nodefaults')
-+        self.vm.launch()
++    return mon->use_readline;
++}
 +
-+        # Each loop sleeps at most 0.5 seconds, so this should
-+        # give an upper bound of approx 5 seconds execution
-+        # time which is reasonable to run by default
-+        repeat = 10
-+        for i in range(repeat):
-+            # First cycle
-+            sock = self._add_monitor()
-+            print ("# stress cycle %02d/%02d" % (i, repeat))
-+            stress = threading.Thread(target=self.stress_mon, args=[sock])
-+            stress.start()
-+            # Sleep upto 1/2 second to vary the races
-+            time.sleep(random.random() / 2)
-+            self._remove_monitor()
-+            stress.join()
++static void monitor_hmp_set_readline(Object *obj, bool val, Error **errp)
++{
++    MonitorHMP *mon = MONITOR_HMP(obj);
 +
++    mon->use_readline = val;
++}
++
+ static void monitor_hmp_class_init(ObjectClass *cls, const void *data)
+ {
++    object_class_property_add_bool(cls, "readline",
++                                   monitor_hmp_get_readline,
++                                   monitor_hmp_set_readline);
+ }
  
- if __name__ == '__main__':
-     QemuSystemTest.main()
+ static void monitor_hmp_init(Object *obj)
+ {
++    MonitorHMP *hmp = MONITOR_HMP(obj);
++
++    /*
++     * Default to common case for external HMP use,
++     * as opposed to non-interactive internal use
++     * from gdbstub
++     */
++    hmp->use_readline = true;
+ }
+ 
+ static void monitor_command_cb(void *opaque, const char *cmdline,
+@@ -1550,6 +1575,7 @@ void monitor_new_hmp(const char *id, const char *chardev_id,
+                                         id ? id : autoid,
+                                         errp,
+                                         "chardev", chardev_id,
++                                        "readline", use_readline ? "yes" : "no",
+                                         NULL);
+ 
+     if (!obj) {
+@@ -1566,7 +1592,6 @@ void monitor_new_hmp(const char *id, const char *chardev_id,
+ 
+     monitor_data_init(&mon->parent_obj, false, false, false);
+ 
+-    mon->use_readline = use_readline;
+     if (mon->use_readline) {
+         mon->rs = readline_init(monitor_readline_printf,
+                                 monitor_readline_flush,
 -- 
 2.54.0
 
