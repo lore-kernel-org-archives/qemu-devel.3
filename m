@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60EDAC43458
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 22:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54062C44503
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jul 2026 22:18:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whE6L-0003uk-8T; Tue, 07 Jul 2026 18:17:13 -0400
+	id 1whE67-0003qb-38; Tue, 07 Jul 2026 18:16:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1whE6I-0003uX-R5
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:17:10 -0400
+ id 1whE65-0003q5-Bh
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:16:57 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1whE6H-0000M8-4N
- for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:17:10 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1whE63-0000H6-6I
+ for qemu-devel@nongnu.org; Tue, 07 Jul 2026 18:16:57 -0400
 Received: from laptop.localdomain (unknown [86.121.140.206])
- by linux.microsoft.com (Postfix) with ESMTPSA id 2F0DB20B7167;
- Tue,  7 Jul 2026 15:17:01 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2F0DB20B7167
+ by linux.microsoft.com (Postfix) with ESMTPSA id 3F9A620B7166;
+ Tue,  7 Jul 2026 15:16:47 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3F9A620B7166
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1783462623;
- bh=s3tJ+KAIDTg3lGQufzfBhUJka+0u7JQQUAk3SRLSGD8=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=qNj4PjEVLAXQk2+QfjXbvvmLOisw+w1LDmULqedldQY5AS9vsHji36XZbRovRbpLP
- OkwjP8fD7kWdZwhSpYhaRSVg9ecTj6jac3Wqhg6r6017iUlZVFZPYX1PlAahd13O0+
- micupI2KeUy8SEG6LU7DIbpxPJNlnJk++mI4by50=
+ s=default; t=1783462609;
+ bh=Vlu+A9jt6G9UgvMqJ4oh+riENQgngWf2BNa+LZ2Xrc0=;
+ h=From:To:Cc:Subject:Date:From;
+ b=kTcOio8Yv59kdiEi9wgR97pJDRTopC9Mp6SXODr6wCUfsiwZzk+DGyx/O6NfiLDXI
+ 0OQUW6uFtcahTU7qc71iDuZNyxDi4oQ2GDGACc6xPUso4TfxOEbNSv6jZeoW8e+0VO
+ 8t0LXXJ12TBaQwDRaTfRgjyA6Sm78MPs8+STaLlk=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -38,15 +38,12 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Wei Liu <wei.liu@kernel.org>, Magnus Kulke <magnuskulke@microsoft.com>,
  =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@microsoft.com>,
  Wei Liu <liuwe@microsoft.com>
-Subject: [PATCH 5/5] target/i386/mshv: fix pio handlers clobbering
- device-modified registers
-Date: Wed,  8 Jul 2026 01:16:45 +0300
-Message-ID: <20260707221645.24557-6-dblanzeanu@linux.microsoft.com>
+Subject: [PATCH 0/5] Fix register page use for guests using mshv accel
+Date: Wed,  8 Jul 2026 01:16:40 +0300
+Message-ID: <20260707221645.24557-1-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260707221645.24557-1-dblanzeanu@linux.microsoft.com>
-References: <20260707221645.24557-1-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
@@ -71,156 +68,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a device handler (e.g. vmport) calls cpu_synchronize_state() during
-I/O port dispatch, it sets cpu->accel->dirty = true and may modify
-registers directly in env. The old PIO code ignored this: it
-unconditionally wrote the stale info->rax from the VM-exit intercept
-message back to the hypervisor and then cleared dirty, discarding any
-register changes made by the device.
+This patch series is a fix for the recent merge of the outdated patch series:
+https://lore.kernel.org/all/20260428135053.251200-1-dblanzeanu@linux.microsoft.com/
 
-Bifurcate both handlers on cpu->accel->dirty:
+The above patch series had some newer versions that fixed addressed feedback
+from reviewers.
 
-handle_pio_non_str:
-- dirty path: update env->eip directly. For reads (IN), merge the I/O
-  result into env->regs[R_EAX] (which may have been modified by the
-  device) rather than info->rax. For writes (OUT), leave RAX untouched.
-  Flush all registers via mshv_store_regs() and clear dirty.
-- non-dirty path: write RIP and RAX via set_x64_registers hypercall as
-  before.
+The commits do the following:
+1. Moves the definition for the `hv_vp_register_page` to `hvhdk.h`
+   Fixes: 8afb40b7fe
+2. Changes the register page setup to fail in case the mmap of the page fails.
+   This way it signals an issue early.
+   Fixes: a173f8f170
+3. Rename functions local to the `mshv-cpu.c` linked to register page get.
+   Use the register page to read registers on VM exit. General purpose
+   registers, RIP, RFLAGS, segment registers, and control registers
+   (CR0, CR4, CR4, CR8, EFER) are read directly from the page. Registers
+   not present on the page (TR, LDTR, GDTR, IDTR, CR2, APIC_BASE) are not
+   fetched anymore for performance reasons.
+   Removes the fallback to ioctls in case the register page is not correctly set
+   up and aborts.
+   Fixes: 40072a7391
+4. Changes the registers storing to only use the register page and not rely on
+   ioctls for perfomance improvements. From local tests, the special registers
+   that are not stored, do not get modified when emulating. However, if there's
+   an issue discovered, we'll fix later.
+   Fixes: 80c7f8e9cd
+5. When a device handler (e.g. vmport) calls cpu_synchronize_state() during
+   I/O port dispatch, it sets cpu->accel->dirty = true and may modify
+   registers directly in env. The old PIO code ignored this: it
+   unconditionally wrote the stale info->rax from the VM-exit intercept
+   message back to the hypervisor and then cleared dirty, discarding any
+   register changes made by the device.
+   Note: This was a change present in version 3 of the patch series but not
+   present in the version 1 of the patch series (the one merged)
 
-handle_pio_str:
-- dirty path: update env->eip and the appropriate index register
-  (RSI for OUTS, RDI for INS) directly. Flush via mshv_store_regs()
-  and clear dirty.
-- non-dirty path: write the index register and RIP via
-  set_x64_registers. Drop the RAX assignment that was here before;
-  string I/O does not modify RAX, and set_x64_registers is hardcoded
-  to write only 2 registers so the third slot was silently ignored
-  anyway.
+The register page is only used when it has been successfully mmapped and
+the hypervisor has marked it as valid (`isvalid != 0`). Otherwise, an error is
+returned and execution aborted to signal something faulty and unexpected.
 
-Remove the unconditional "cpu->accel->dirty = false" at the end of both
-handlers. In the non-dirty fast path it was redundant (already false).
-In the dirty path it was actively harmful: it told the vcpu run loop
-that env was clean when it was not, losing the device's modifications.
+Changes since v1:
+- Rebased on latest master to fix a merge conflict coming from the elimination
+  of the accel specific dirty field
 
-Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
----
- target/i386/mshv/mshv-cpu.c | 72 +++++++++++++++++++++++++------------
- 1 file changed, 50 insertions(+), 22 deletions(-)
+-----BEGIN SSH SIGNATURE-----
+U1NIU0lHAAAAAQAAAE0AAAAac2stc3NoLWVkMjU1MTlAb3BlbnNzaC5jb20AAAAgF4l9Pi
+ZyIMDy0ZI4SCYaMCvjXS3h6Dpo3xDFvSh0I7oAAAAHc3NoOmdpdAAAAANnaXQAAAAAAAAA
+BnNoYTUxMgAAAGcAAAAac2stc3NoLWVkMjU1MTlAb3BlbnNzaC5jb20AAABA4egRAbnGLI
+XkdzHMqxAMQj1wQNIw+Ja9we8xUkEiJW96FaummDyD2h2TxplwF93KnWYW/sUYZMX5b1C3
+3OOcBgUAACUF
+-----END SSH SIGNATURE-----
+-----BEGIN SSH SIGNATURE-----
+U1NIU0lHAAAAAQAAAE0AAAAac2stc3NoLWVkMjU1MTlAb3BlbnNzaC5jb20AAAAgF4l9Pi
+ZyIMDy0ZI4SCYaMCvjXS3h6Dpo3xDFvSh0I7oAAAAHc3NoOmdpdAAAAANnaXQAAAAAAAAA
+BnNoYTUxMgAAAGcAAAAac2stc3NoLWVkMjU1MTlAb3BlbnNzaC5jb20AAABAqkJRImazba
+3Xjj17Hi7FDcJ5XC7f+rFXUvDc58gax1GyCHtOu16ldDx3ldSi2Zl8iGFtauFsLHRAdPpK
+IoPyDAUAACUR
+-----END SSH SIGNATURE-----
+-----BEGIN SSH SIGNATURE-----
+U1NIU0lHAAAAAQAAAE0AAAAac2stc3NoLWVkMjU1MTlAb3BlbnNzaC5jb20AAAAgF4l9Pi
+ZyIMDy0ZI4SCYaMCvjXS3h6Dpo3xDFvSh0I7oAAAAHc3NoOmdpdAAAAANnaXQAAAAAAAAA
+BnNoYTUxMgAAAGcAAAAac2stc3NoLWVkMjU1MTlAb3BlbnNzaC5jb20AAABAJ1tI5FyxL+
+GZ8gHzwMy4Bvk3bYniUpXhdKF+Y41Ec6aSaK92zZEILSBmpioCBTjawsYF7/0Gqju5Ukjg
+Fai0CQUAACV5
+-----END SSH SIGNATURE-----
 
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 8a59a0b40e..5e680351cd 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -1646,10 +1646,12 @@ static int handle_pio_non_str(CPUState *cpu,
-     uint32_t val, eax;
-     const uint32_t eax_mask =  0xffffffffu >> (32 - len * 8);
-     size_t insn_len;
--    uint64_t rip, rax;
-+    uint64_t rip;
-     uint32_t reg_names[2];
-     uint64_t reg_values[2];
-     uint16_t port = info->port_number;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
- 
-     if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-         union {
-@@ -1680,21 +1682,36 @@ static int handle_pio_non_str(CPUState *cpu,
- 
-     /* Advance RIP and update RAX */
-     rip = info->header.rip + insn_len;
--    rax = info->rax;
- 
--    reg_names[0] = HV_X64_REGISTER_RIP;
--    reg_values[0] = rip;
--    reg_names[1] = HV_X64_REGISTER_RAX;
--    reg_values[1] = rax;
-+    if (cpu->vcpu_dirty) {
-+        env->eip = rip;
-+        if (access_type != HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-+            /*
-+             * For reads, merge the I/O result into the current RAX.
-+             * Use env->regs[R_EAX] as the base since a device handler
-+             * (e.g. vmport) may have called cpu_synchronize_state()
-+             * and modified registers.
-+             */
-+            eax = (((uint32_t)env->regs[R_EAX]) & ~eax_mask)
-+                  | (val & eax_mask);
-+            env->regs[R_EAX] = (uint64_t)eax;
-+        }
-+        /* Sync modified standard registers back and clear dirty. */
-+        store_regs(cpu);
-+        cpu->vcpu_dirty = false;
-+    } else {
-+        reg_names[0] = HV_X64_REGISTER_RIP;
-+        reg_values[0] = rip;
-+        reg_names[1] = HV_X64_REGISTER_RAX;
-+        reg_values[1] = info->rax;
- 
--    ret = set_x64_registers(cpu, reg_names, reg_values);
--    if (ret < 0) {
--        error_report("Failed to set x64 registers");
--        return -1;
-+        ret = set_x64_registers(cpu, reg_names, reg_values);
-+        if (ret < 0) {
-+            error_report("Failed to set x64 registers");
-+            return -1;
-+        }
-     }
- 
--    cpu->vcpu_dirty = false;
--
-     return 0;
- }
- 
-@@ -1810,6 +1827,7 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
-     bool repop = info->access_info.rep_prefix == 1;
-     size_t repeat = repop ? info->rcx : 1;
-     size_t insn_len = info->header.instruction_length;
-+    uint64_t rip;
-     bool direction_flag;
-     uint32_t reg_names[3];
-     uint64_t reg_values[3];
-@@ -1839,18 +1857,28 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
-         reg_values[0] = info->rdi;
-     }
- 
--    reg_names[1] = HV_X64_REGISTER_RIP;
--    reg_values[1] = info->header.rip + insn_len;
--    reg_names[2] = HV_X64_REGISTER_RAX;
--    reg_values[2] = info->rax;
-+    rip = info->header.rip + insn_len;
- 
--    ret = set_x64_registers(cpu, reg_names, reg_values);
--    if (ret < 0) {
--        error_report("Failed to set RIP and RAX registers");
--        return -1;
--    }
-+    if (cpu->vcpu_dirty) {
-+        env->eip = rip;
-+        if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-+            env->regs[R_ESI] = info->rsi;
-+        } else {
-+            env->regs[R_EDI] = info->rdi;
-+        }
-+        /* Sync modified standard registers back and clear dirty. */
-+        store_regs(cpu);
-+        cpu->vcpu_dirty = false;
-+    } else {
-+        reg_names[1] = HV_X64_REGISTER_RIP;
-+        reg_values[1] = rip;
- 
--    cpu->vcpu_dirty = false;
-+        ret = set_x64_registers(cpu, reg_names, reg_values);
-+        if (ret < 0) {
-+            error_report("Failed to set x64 registers");
-+            return -1;
-+        }
-+    }
- 
-     return 0;
- }
+Doru Blânzeanu (5):
+  include/hw/hyperv: move hv_vp_register_page struct definition
+  target/i386/mshv: abort when hv_vp_register_page setup fails
+  target/i386/mshv: remove fallback for register page get registers
+  target/i386/mshv: remove fallback for register page set registers
+  target/i386/mshv: fix pio handlers clobbering device-modified
+    registers
+
+ include/hw/hyperv/hvgdk.h      |   2 +
+ include/hw/hyperv/hvgdk_mini.h | 103 --------------
+ include/hw/hyperv/hvhdk.h      | 106 ++++++++++++++
+ target/i386/mshv/mshv-cpu.c    | 247 +++++++++++++++------------------
+ 4 files changed, 219 insertions(+), 239 deletions(-)
+
 -- 
 2.53.0
 
