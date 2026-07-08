@@ -4,63 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EC25C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 15:21:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3116EC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 15:29:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whU5Z-00064o-7Q; Wed, 08 Jul 2026 11:21:29 -0400
+	id 1whUDC-000162-5h; Wed, 08 Jul 2026 11:29:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1whU5Y-00064g-7A
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:21:28 -0400
-Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1whU5U-0007kw-8m
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:21:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
- s=default; t=1783524050;
- bh=JQNoImtzZFI1DJif8R/dIUH8/U36CaUAE24kYC9Sd94=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZeoMucWo1guHNMNwJXxo1g7/XL9F62PQ1ggIjXTiJSLS+QmOJokE+oERVJEYd3oB5
- 6tZhEy17DrVwFqjIjG+GPnXfvx+wPyusOKWTaP3qofgzBQl/wAHkigz/549a9aW3wM
- Fo9s5N6J7+XKfwCImkQ3qAOmYuf/w9S7ynUPfpXIMoTlgYX7huYheBRuyILYrMA02/
- s5zmmra2hvbL95ZfC7mpXIteyfwL/v9b/gZDQ+KYgz2TgcQwpaOhTDdHWCN2ezC4BT
- Q+9fTUhmB+CZVTVGJ7isCG1Qr0ib0rErVfuPzaAKLWhPGdVy13y4xAherW8QTbeBFd
- eqF0Ueam5xwhQ==
-Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id A84772FF3F9;
- Wed,  8 Jul 2026 15:20:50 +0000 (UTC)
-Received: from pc.. (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 25BFC37C951;
- Wed,  8 Jul 2026 23:20:50 +0800 (CST)
-From: Ziyang Zhang <functioner@sjtu.edu.cn>
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>,
- Ziyang Zhang <functioner@sjtu.edu.cn>
-Subject: [PATCH v7 1/2] contrib/plugins: add a minimal dlcall plugin
-Date: Wed,  8 Jul 2026 23:20:42 +0800
-Message-Id: <20260708152043.251537-2-functioner@sjtu.edu.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260708152043.251537-1-functioner@sjtu.edu.cn>
-References: <20260708152043.251537-1-functioner@sjtu.edu.cn>
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1whUDA-00015Z-9Q
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:29:20 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1whUD8-0001Yv-GB
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:29:20 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-47df440fcd5so240543f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 08:29:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783524556; cv=none;
+ d=google.com; s=arc-20260327;
+ b=D4E5j2fqUxoFUuwUZrWr97z2X6a+MbTeNzaVv0A2jiE524WnQv95+UJtvgx27uOTjc
+ U31pxamUQrXrDYwaO6XtugwXaNJn2nZtn5pcwlgV2YwCU22Y2MaLQn17TkHYNFYhdzgV
+ er/WVX/qRZZJKqoMTDEyQJBcDQtWPmouebcRjkcqqweomHOP28sywMNqadR/18J0nHaL
+ d+4l/KEe19e5tSr72X5tNEkNub4PSSw33fW3wYLap37MERpObTH0VMsC7cuKGx5eqSQy
+ K1PamDvykHpkIaB1+ubyWLWeMxfb7n/5A2TpBiF/yePUPQdW0gjLScvpxlEB+yCbbR7z
+ xBIA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=HoMQvPMP4ny+19fgg1l8RqVDO/Mokzld/gdT8zr+FvU=;
+ fh=PgvuDsSrN5tO339qb9tpnPzNGxQ+CWeig4WyWwbLr+Y=;
+ b=k3uXo8zf2w+Fm8OoDwKBJM/rFoFyuez/SOg0BXGMrjwnn8gAym8cYHCjjtCy6ZZNoa
+ TM/gw9gGKdCXHhVWkbU1OZEbw9V6PIgkp7BZ1+NQIZ9nbbAse7seVo2g3KZewzxP4z6Y
+ dNUNopObepKJ3WkoVacM3REZ2U9n/N8ShiJx+8YMFLDOPwrc66onX7DezF9Sl1SF+USY
+ Zk1eAF3lXrr5DR3vS3JI0ldAOStZ3MdmcY+wJCbZdl6CrgqJiv3xthmG0ijXt8RLXkGp
+ 3gph1FiQ914Dpg5NiJAy6OJd9NHB79eoLQfLXW7RHQjcjd1QdT3EUfq0eX+yP1kIzBGa
+ ICkg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783524556; x=1784129356; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=HoMQvPMP4ny+19fgg1l8RqVDO/Mokzld/gdT8zr+FvU=;
+ b=LSdQqt49hzHgwmgRWcSyWnh4uKOe6Zx0pFRFhbI18paaoInAGYNbTEs+/YTYlocryt
+ xW6P/fYzRbWao+fGzjol9Pjy6nvtxbCMBim9h5z4ejEcixFRKfn5XkGYtXmnHxxRXlUf
+ VEZ+Yeze/f7LH0XGm/ICQA7rL8BziTfOKmytNI/MwSxuWk8zjDhoAjsp+28fokFJ/Iwc
+ Yrm74GP6QIJ/jJmfCJi85I9Z9Eis0XANF1ktsLvtUJH3rS3xtkSMksc+JqvQY7GdjlXA
+ z9WoZT0JsvYijjhS+ivtrJdQiuPs5xAWUisRa96ospnnCtfpM2jQdGgKE9p3aFfrsxmG
+ vZyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783524556; x=1784129356;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=HoMQvPMP4ny+19fgg1l8RqVDO/Mokzld/gdT8zr+FvU=;
+ b=soi5eL/5ZCkCoykDh8DvAmwO4AChe+keU7t35bvWLI7hHLaWin5Abu294+W2pxfmOp
+ Y21WKKFVOUD3xAtHATuunN2dW1r32K1Ie52hvdIJOmiSY8KnMGklVyTq8ucPiD2P1V5k
+ XVD59J+7bdES1h3tttDxIT9yofqmCjxH3iMeljoVaG4sv716Q5nTdKX/wLAHW8vC8P2H
+ X8YwIe+HpEeuwnCAfEbMmE8dfMdxOfCXXO3LgtAgX2Ip+T9OwyUBvKCydtPPhn8c1prd
+ cLM0YubcvF5Lmk1pPT7KI3IyPyI6rDt/9hTqMMFrCmI6IeHW6VduTAH94eQM6ecujLY0
+ gtTw==
+X-Gm-Message-State: AOJu0YzfVQ7pqOU4hlcjlIWvnadqzzwx1fGTFcGIrjUwZ6IsCJv8g7fV
+ v7P8GZQgQY6clW6W4cyEQP/siIsUYKBSHRMhkuMg5mo34RW98d8jN5gXlgWZdjKYpKV0brGhxv+
+ ZPPQytuUCbwL056ytuW2//0k/vTKtTsI=
+X-Gm-Gg: AfdE7ckU2jELH0ybk4J8eJPRmi0b4Ayo1uBCo3Hh9L+F3iyAXOTuhzgelP5xBCgB0zq
+ J/HozYscOErOPe715ONOVLq0YTOL51vSZYk6hETKUh/yiJAqGl3Nh6kb7vxwtcraXzDgcDqv43R
+ UO7FDIGylA8FGXbQdWNBx4TRITFapZgBe2TYX7aV1kH81Qlvs6oJwS38oaOYgzdad0ExirwvxTb
+ ZTXUvl2PZpLmHTf0WthSP77qeyUkojpnEe+agQXcS1iExcmegXSQFRl+w+bRN3SLX5veDYfSAvl
+ VmHKZoIYig==
+X-Received: by 2002:a05:6000:2911:b0:46f:9d18:bd3c with SMTP id
+ ffacd0b85a97d-47df07a959bmr3655604f8f.12.1783524555660; Wed, 08 Jul 2026
+ 08:29:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.120.2.186;
- envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
+References: <20260708111544.1440761-1-clg@redhat.com>
+ <20260708111544.1440761-3-clg@redhat.com>
+In-Reply-To: <20260708111544.1440761-3-clg@redhat.com>
+From: Bin Meng <bmeng.cn@gmail.com>
+Date: Wed, 8 Jul 2026 23:29:03 +0800
+X-Gm-Features: AVVi8CeikI2FNQGUnCpq9U1LObkJgLcF5AXhFw6GOcBvGK0qomZmNccpaDR6djQ
+Message-ID: <CAEUhbmWWmX9BKwS2m12vPk=rN_DxzCKqsm=h9g26QdHcX3gHqw@mail.gmail.com>
+Subject: Re: [PATCH 2/4] tests/qtest: aspeed_smc: Add fast-read test coverage
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, 
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ Bin Meng <bin.meng@processmission.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,297 +127,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a minimal dlcall plugin that lets the guest invoke host functions
-through magic system calls. The plugin registers a vCPU syscall filter
-callback that intercepts a reserved syscall number and dispatches a set
-of pass-through operations: querying host attributes, loading and freeing
-shared libraries, resolving symbols, retrieving the last library error,
-and invoking a host function through a common interface.
+On Wed, Jul 8, 2026 at 7:17=E2=80=AFPM C=C3=A9dric Le Goater <clg@redhat.co=
+m> wrote:
+>
+> Add read_page_mem_fast_read (CTRL_FREADMODE with dummy byte) and
+> write_page_fast_read (user-mode FAST_READ) tests.
+>
+> Signed-off-by: Cedric Le Goater <clg@redhat.com>
+> ---
+>  tests/qtest/aspeed-smc-utils.h |  5 ++++
+>  tests/qtest/aspeed-smc-utils.c | 49 ++++++++++++++++++++++++++++++++++
+>  tests/qtest/aspeed_smc-test.c  | 21 +++++++++++++++
+>  tests/qtest/ast2700-smc-test.c |  4 +++
+>  4 files changed, 79 insertions(+)
+>
+> diff --git a/tests/qtest/aspeed-smc-utils.h b/tests/qtest/aspeed-smc-util=
+s.h
+> index e2fd8ff1bd16..5a86514caf35 100644
+> --- a/tests/qtest/aspeed-smc-utils.h
+> +++ b/tests/qtest/aspeed-smc-utils.h
+> @@ -44,6 +44,8 @@
+>  #define   CTRL_FREADMODE       0x1
+>  #define   CTRL_WRITEMODE       0x2
+>  #define   CTRL_USERMODE        0x3
+> +#define   CTRL_DUMMY_LOW_SHIFT   6
+> +#define   CTRL_DUMMY_HIGH_SHIFT  14
+>  #define SR_WEL BIT(1)
+>
+>  /*
+> @@ -55,6 +57,7 @@ enum {
+>      WRDI =3D 0x4,
+>      BULK_ERASE =3D 0xc7,
+>      READ =3D 0x03,
+> +    FAST_READ =3D 0x0b,
+>      PP =3D 0x02,
+>      WRSR =3D 0x1,
+>      WREN =3D 0x6,
+> @@ -90,5 +93,7 @@ void aspeed_smc_test_status_reg_write_protection(const =
+void *data);
+>  void aspeed_smc_test_write_block_protect(const void *data);
+>  void aspeed_smc_test_write_block_protect_bottom_bit(const void *data);
+>  void aspeed_smc_test_write_page_qpi(const void *data);
+> +void aspeed_smc_test_read_page_mem_fast_read(const void *data);
+> +void aspeed_smc_test_write_page_fast_read(const void *data);
+>
+>  #endif /* TESTS_ASPEED_SMC_UTILS_H */
+> diff --git a/tests/qtest/aspeed-smc-utils.c b/tests/qtest/aspeed-smc-util=
+s.c
+> index ed125741eb36..9883ade0815c 100644
+> --- a/tests/qtest/aspeed-smc-utils.c
+> +++ b/tests/qtest/aspeed-smc-utils.c
+> @@ -697,3 +697,52 @@ void aspeed_smc_test_write_page_qpi(const void *data=
+)
+>      flash_reset(test_data);
+>  }
+>
+> +static void read_page_mem_fast_read(const AspeedSMCTestData *data,
+> +                                uint32_t addr, uint32_t *page)
+> +{
+> +    uint32_t ctrl_reg =3D R_CTRL0 + data->cs * 4;
+> +    uint32_t ctrl =3D spi_readl(data, ctrl_reg);
+> +    int i;
+> +
+> +    /* Set FREADMODE with FAST_READ command and 1 dummy byte */
+> +    ctrl &=3D ~(CTRL_USERMODE | (0xff << 16) |
+> +              (0x3 << CTRL_DUMMY_LOW_SHIFT) |
+> +              (0x1 << CTRL_DUMMY_HIGH_SHIFT) |
+> +              CTRL_IO_MODE_MASK);
+> +    ctrl |=3D CTRL_FREADMODE | (FAST_READ << 16) |
+> +            (1 << CTRL_DUMMY_LOW_SHIFT);
+> +    spi_writel(data, ctrl_reg, ctrl);
 
-The magic syscall number defaults to 4096 and can be overridden at load
-time with the "syscall_num=N" argument; values low enough to clash with a
-real syscall are rejected.
+Could just call spi_ctrl_set_fast_read()?
 
-Co-authored-by: Kailiang Xu <xukl2019@sjtu.edu.cn>
-Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
-Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
----
- contrib/plugins/dlcall.c    | 248 ++++++++++++++++++++++++++++++++++++
- contrib/plugins/meson.build |   5 +
- 2 files changed, 253 insertions(+)
- create mode 100644 contrib/plugins/dlcall.c
+> +
+> +    for (i =3D 0; i < FLASH_PAGE_SIZE / 4; i++) {
+> +        page[i] =3D make_be32(flash_readl(data, addr + i * 4));
+> +    }
+> +}
+> +
+> +void aspeed_smc_test_read_page_mem_fast_read(const void *data)
+> +{
+> +    test_read_page_mem(data, read_page_mem_fast_read);
+> +}
+> +
+> +static void read_page_fast_read(const AspeedSMCTestData *data,
+> +                                uint32_t addr, uint32_t *page)
+> +{
+> +    int i;
+> +
+> +    spi_ctrl_start_user(data);
+> +
+> +    flash_writeb(data, 0, EN_4BYTE_ADDR);
+> +    flash_writeb(data, 0, FAST_READ);
+> +    flash_writel(data, 0, make_be32(addr));
+> +    /* 1 dummy byte for standard SPI fast-read */
+> +    flash_writeb(data, 0, 0x00);
+> +
+> +    for (i =3D 0; i < FLASH_PAGE_SIZE / 4; i++) {
+> +        page[i] =3D make_be32(flash_readl(data, 0));
+> +    }
+> +    spi_ctrl_stop_user(data);
+> +}
+> +
+> +void aspeed_smc_test_write_page_fast_read(const void *data)
+> +{
+> +    test_write_page(data, read_page_fast_read);
+> +}
+> diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.=
+c
+> index 39af1df0ed75..bbda15ad17ea 100644
+> --- a/tests/qtest/aspeed_smc-test.c
+> +++ b/tests/qtest/aspeed_smc-test.c
+> @@ -68,6 +68,15 @@ static void test_palmetto_bmc(AspeedSMCTestData *data)
+>                          data, aspeed_smc_test_read_status_reg);
+>      qtest_add_data_func("/ast2400/smc/status_reg_write_protection",
+>                          data, aspeed_smc_test_status_reg_write_protectio=
+n);
+> +    qtest_add_data_func("/ast2400/smc/read_page_mem_fast_read",
+> +                        data, aspeed_smc_test_read_page_mem_fast_read);
+> +    qtest_add_data_func("/ast2400/smc/write_page_fast_read",
+> +                        data, aspeed_smc_test_write_page_fast_read);
+> +    /*
+> +     * Block protect tests must be run last because the block protect
+> +     * state is not cleared by reset_memory() and silently prevents
+> +     * subsequent flash writes.
+> +     */
+>      qtest_add_data_func("/ast2400/smc/write_block_protect",
+>                          data, aspeed_smc_test_write_block_protect);
+>      qtest_add_data_func("/ast2400/smc/write_block_protect_bottom_bit",
+> @@ -115,6 +124,10 @@ static void test_ast2500_evb(AspeedSMCTestData *data=
+)
+>                          data, aspeed_smc_test_read_status_reg);
+>      qtest_add_data_func("/ast2500/smc/write_page_qpi",
+>                          data, aspeed_smc_test_write_page_qpi);
+> +    qtest_add_data_func("/ast2500/smc/read_page_mem_fast_read",
+> +                        data, aspeed_smc_test_read_page_mem_fast_read);
+> +    qtest_add_data_func("/ast2500/smc/write_page_fast_read",
+> +                        data, aspeed_smc_test_write_page_fast_read);
+>  }
+>
+>  static void test_ast2600_evb(AspeedSMCTestData *data)
+> @@ -158,6 +171,10 @@ static void test_ast2600_evb(AspeedSMCTestData *data=
+)
+>                          data, aspeed_smc_test_read_status_reg);
+>      qtest_add_data_func("/ast2600/smc/write_page_qpi",
+>                          data, aspeed_smc_test_write_page_qpi);
+> +    qtest_add_data_func("/ast2600/smc/read_page_mem_fast_read",
+> +                        data, aspeed_smc_test_read_page_mem_fast_read);
+> +    qtest_add_data_func("/ast2600/smc/write_page_fast_read",
+> +                        data, aspeed_smc_test_write_page_fast_read);
+>  }
+>
+>  static void test_ast1030_evb(AspeedSMCTestData *data)
+> @@ -201,6 +218,10 @@ static void test_ast1030_evb(AspeedSMCTestData *data=
+)
+>                          data, aspeed_smc_test_read_status_reg);
+>      qtest_add_data_func("/ast1030/smc/write_page_qpi",
+>                          data, aspeed_smc_test_write_page_qpi);
+> +    qtest_add_data_func("/ast1030/smc/read_page_mem_fast_read",
+> +                        data, aspeed_smc_test_read_page_mem_fast_read);
+> +    qtest_add_data_func("/ast1030/smc/write_page_fast_read",
+> +                        data, aspeed_smc_test_write_page_fast_read);
+>  }
+>
+>  int main(int argc, char **argv)
+> diff --git a/tests/qtest/ast2700-smc-test.c b/tests/qtest/ast2700-smc-tes=
+t.c
+> index 33fc47230ee5..9ad04b574c0d 100644
+> --- a/tests/qtest/ast2700-smc-test.c
+> +++ b/tests/qtest/ast2700-smc-test.c
+> @@ -52,6 +52,10 @@ static void test_ast2700_evb(AspeedSMCTestData *data)
+>                          data, aspeed_smc_test_read_status_reg);
+>      qtest_add_data_func("/ast2700/smc/write_page_qpi",
+>                          data, aspeed_smc_test_write_page_qpi);
+> +    qtest_add_data_func("/ast2700/smc/read_page_mem_fast_read",
+> +                        data, aspeed_smc_test_read_page_mem_fast_read);
+> +    qtest_add_data_func("/ast2700/smc/write_page_fast_read",
+> +                        data, aspeed_smc_test_write_page_fast_read);
+>  }
+>
+>  int main(int argc, char **argv)
 
-diff --git a/contrib/plugins/dlcall.c b/contrib/plugins/dlcall.c
-new file mode 100644
-index 0000000000..9d2230b2d1
---- /dev/null
-+++ b/contrib/plugins/dlcall.c
-@@ -0,0 +1,248 @@
-+/*
-+ * Copyright (C) 2026, Ziyang Zhang <functioner@sjtu.edu.cn>
-+ *
-+ * dlcall (Dynamic Linking Call) plugin: lets a linux-user guest invoke host
-+ * functions by issuing a magic system call. The guest can ask QEMU to dlopen()
-+ * a host shared library, dlsym() a symbol, and call it with guest-supplied
-+ * arguments.
-+ *
-+ * The plugin intentionally keeps the QEMU side lightweight and prescribes
-+ * nothing about how a library is thunked. Any toolchain can implement the
-+ * userspace side. Lorelei is one end-to-end implementation (guest/host
-+ * runtimes plus a thunk compiler that generates thunks from a library's
-+ * headers):
-+ * https://github.com/rover2024/lorelei
-+ *
-+ * See docs/about/emulation.rst|Dynamic Linking Call for details and examples.
-+ *
-+ * WARNING: trusted guests only. The guest can load arbitrary host libraries
-+ * and execute arbitrary host code with arbitrary arguments, i.e. full code
-+ * execution in the QEMU host process. It is NOT a sandbox and provides no
-+ * isolation; only load it for guests you fully trust.
-+ *
-+ * WARNING: requires guest_base == 0, which is qemu-user's default. Pointer
-+ * operands are dereferenced as host addresses directly, and the invoked host
-+ * functions dereference guest pointers with no address translation, so guest
-+ * and host must share a single address space. A non-zero guest_base (e.g. set
-+ * via -B/-R) would make every pointer off by guest_base and hit unrelated
-+ * host memory.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <assert.h>
-+#include <errno.h>
-+#include <string.h>
-+#include <stdio.h>
-+#include <glib.h>
-+#include <dlfcn.h>
-+
-+#include <qemu-plugin.h>
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-+
-+/*
-+ * The magic system call number for dlcall.
-+ *
-+ * It defaults to DLCALL_SYSCALL_DEFAULT and can be overridden at load time
-+ * with the "syscall_num=N" argument. To avoid hijacking a real syscall the
-+ * guest might issue, N must be at least DLCALL_SYSCALL_MIN: every Linux ABI
-+ * keeps its syscall numbers well below this; numbers from here up are free.
-+ */
-+enum {
-+    DLCALL_SYSCALL_DEFAULT = 4096,
-+    DLCALL_SYSCALL_MIN = 4096,
-+};
-+
-+static int64_t dlcall_syscall_num = DLCALL_SYSCALL_DEFAULT;
-+
-+/*
-+ * dlcall calling convention.
-+ *
-+ * The guest issues the magic system call (dlcall_syscall_num). The first
-+ * argument (a1) is one of the call IDs below; the remaining arguments (a2, a3,
-+ * a4, ...) are that ID's operands. All pointer operands are guest virtual
-+ * addresses that the plugin dereferences as host addresses directly (see the
-+ * guest_base requirement above). Results are written back through
-+ * caller-provided "out" pointers rather than returned in the syscall value.
-+ *
-+ * The syscall return value (*sysret) only reports dispatch status: 0 on a
-+ * recognised ID, -EINVAL for an unknown one. The actual success/failure of an
-+ * operation (e.g. a NULL handle from dlopen) is delivered through its out
-+ * pointer, exactly like the underlying libdl call.
-+ *
-+ * Operands per ID:
-+ *
-+ *   DLCALL_ID_GET_HOST_ATTRIBUTE
-+ *     a2  const char *key        in:  attribute name to query
-+ *     a3  const char **attr_ptr  out: matching value, or NULL if unknown
-+ *
-+ *   DLCALL_ID_LOAD_LIBRARY                            (wraps dlopen)
-+ *     a2  const char *path       in:  library path
-+ *     a3  int flags              in:  dlopen() flags (e.g. RTLD_NOW)
-+ *     a4  void **handle_ptr      out: library handle, or NULL on failure
-+ *
-+ *   DLCALL_ID_GET_PROC_ADDRESS                        (wraps dlsym)
-+ *     a2  void *handle           in:  library handle
-+ *     a3  const char *name       in:  symbol name
-+ *     a4  void **entry_ptr       out: symbol address, or NULL if not found
-+ *
-+ *   DLCALL_ID_FREE_LIBRARY                            (wraps dlclose)
-+ *     a2  void *handle           in:  library handle
-+ *     a3  int *ret_ptr           out: dlclose() return value (0 on success)
-+ *
-+ *   DLCALL_ID_GET_LIBRARY_ERROR                       (wraps dlerror)
-+ *     a2  const char **error_ptr out: last libdl error string, or NULL
-+ *
-+ *   DLCALL_ID_INVOKE_PROC                             (calls the symbol)
-+ *     a2  void *proc             in:  function pointer, signature
-+ *                                     void (*)(void *arg1, void *arg2)
-+ *     a3  void *arg1             in:  first argument forwarded to proc
-+ *     a4  void *arg2             in:  second argument forwarded to proc
-+ */
-+enum DlcallID {
-+    DLCALL_ID_GET_HOST_ATTRIBUTE,
-+    DLCALL_ID_LOAD_LIBRARY,
-+    DLCALL_ID_GET_PROC_ADDRESS,
-+    DLCALL_ID_FREE_LIBRARY,
-+    DLCALL_ID_GET_LIBRARY_ERROR,
-+    DLCALL_ID_INVOKE_PROC,
-+};
-+
-+static inline const char *query_host_attribute(const char *key)
-+{
-+    if (strcmp(key, "emu") == 0) {
-+        return "qemu";
-+    }
-+    return NULL;
-+}
-+
-+static inline void invoke_proc(void *proc, void *arg1, void *arg2)
-+{
-+    typedef void (*Func)(void * /*arg1*/, void * /*arg2*/);
-+    Func func = (Func) proc;
-+    func(arg1, arg2);
-+}
-+
-+static bool vcpu_syscall_filter(unsigned int vcpu_index,
-+                                int64_t num, uint64_t a1, uint64_t a2,
-+                                uint64_t a3, uint64_t a4, uint64_t a5,
-+                                uint64_t a6, uint64_t a7, uint64_t a8,
-+                                int64_t *sysret, void *userdata)
-+{
-+    if (num == dlcall_syscall_num) {
-+        switch (a1) {
-+        /* Query host attribute by a reserved key. */
-+        case DLCALL_ID_GET_HOST_ATTRIBUTE: {
-+            const char *key = (const char *) a2;
-+            const char **attr_ptr = (const char **) a3;
-+            assert(attr_ptr);
-+            *attr_ptr = query_host_attribute(key);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Load a shared library. */
-+        case DLCALL_ID_LOAD_LIBRARY: {
-+            const char *path = (const char *) a2;
-+            int flags = (int) a3;
-+            void **handle_ptr = (void **) a4;
-+            assert(handle_ptr);
-+            *handle_ptr = dlopen(path, flags);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Get the address of a function in a shared library. */
-+        case DLCALL_ID_GET_PROC_ADDRESS: {
-+            void *handle = (void *) a2;
-+            const char *name = (const char *) a3;
-+            void **entry_ptr = (void **) a4;
-+            assert(entry_ptr);
-+            *entry_ptr = dlsym(handle, name);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Free a shared library. */
-+        case DLCALL_ID_FREE_LIBRARY: {
-+            void *handle = (void *) a2;
-+            int *ret_ptr = (int *) a3;
-+            *ret_ptr = dlclose(handle);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Get the last error message for a library event. */
-+        case DLCALL_ID_GET_LIBRARY_ERROR: {
-+            const char **error_ptr = (const char **) a2;
-+            *error_ptr = dlerror();
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Invoke a function of a common interface. */
-+        case DLCALL_ID_INVOKE_PROC: {
-+            void *proc = (void *) a2;
-+            void *arg1 = (void *) a3;
-+            void *arg2 = (void *) a4;
-+            assert(proc);
-+            invoke_proc(proc, arg1, arg2);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        default:
-+            *sysret = -EINVAL;
-+            break;
-+        }
-+        return true;
-+    }
-+    return false;
-+}
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-+                                           const qemu_info_t *info,
-+                                           int argc, char **argv)
-+{
-+    if (info->system_emulation) {
-+        fprintf(stderr, "plugin dlcall: only useful for user emulation\n");
-+        return -1;
-+    }
-+
-+    for (int i = 0; i < argc; i++) {
-+        char *opt = argv[i];
-+        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-+        if (g_strcmp0(tokens[0], "syscall_num") == 0) {
-+            const char *val = tokens[1];
-+            char *endptr = NULL;
-+            guint64 num;
-+            if (!val || *val == '\0') {
-+                fprintf(stderr,
-+                        "plugin dlcall: missing value for syscall_num\n");
-+                return -1;
-+            }
-+            num = g_ascii_strtoull(val, &endptr, 0);
-+            if (*endptr != '\0' || g_strrstr(val, "-") != NULL) {
-+                fprintf(stderr,
-+                        "plugin dlcall: invalid syscall_num '%s'\n", val);
-+                return -1;
-+            }
-+            if (num < DLCALL_SYSCALL_MIN || num > G_MAXINT64) {
-+                fprintf(stderr,
-+                        "plugin dlcall: syscall_num %s is out of range; "
-+                        "it must be >= %d to avoid clashing with a real "
-+                        "syscall\n", val, DLCALL_SYSCALL_MIN);
-+                return -1;
-+            }
-+            dlcall_syscall_num = (int64_t) num;
-+        } else {
-+            fprintf(stderr, "plugin dlcall: unknown option '%s'\n", opt);
-+            return -1;
-+        }
-+    }
-+
-+    qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter, NULL);
-+
-+    return 0;
-+}
-diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-index 099319e7a1..e7fc4d6d8f 100644
---- a/contrib/plugins/meson.build
-+++ b/contrib/plugins/meson.build
-@@ -19,6 +19,11 @@ if host_os != 'windows'
-   contrib_plugins += 'lockstep.c'
- endif
- 
-+if host_os == 'linux'
-+  # dlcall passes guest calls through to host libraries; linux-user only
-+  contrib_plugins += 'dlcall.c'
-+endif
-+
- if 'cpp' in all_languages
-   contrib_plugins += 'cpp.cpp'
- endif
--- 
-2.34.1
-
+Regards,
+Bin
 
