@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C5CC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41445C43602
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:20:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whUzh-00016p-5z; Wed, 08 Jul 2026 12:19:29 -0400
+	id 1whUzk-000181-J3; Wed, 08 Jul 2026 12:19:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1whUzf-000163-RX
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:27 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1whUzi-000179-Ps
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:30 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1whUze-0006zt-8i
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:27 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-381507c9380so688190a91.0
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 09:19:25 -0700 (PDT)
+ id 1whUzh-00073W-7A
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:30 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2caf228a910so6508165ad.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 09:19:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1783527565; x=1784132365; darn=nongnu.org;
+ d=sifive.com; s=google; t=1783527568; x=1784132368; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=j8dr4FDMitUA0gEzk3TdSWqsLs8LF2XIAra9aUvAPMY=;
- b=csTIrrIFyCBn4Wab+H6Ju391qkVy4riXBRv1Pbxjvp4oxgJYL/vpPaQQawk2q7X0y6
- aVG9WG58SLaCxXhmmyy7U+nJhQNNnaNoV97Etgz1odKRQaueTgc/gKw5mCxM6H+4F6zP
- sOV+xNCq9GXxGybU+doH0vLBTDCgzBNIJMBNH7gk0saAKSXSwSW09Mdp0Lm3y5LGDmjG
- l9Q/vnSv9+o6fdI+EgCcGo9XK+a9Ks1DXfwfs4vECLu30uFp5mAZFiQKCpIe+bJh53OE
- 3uxKxxS6SgE5igVhvoHDwFIH0wkn1vd73XCVqRtjByMaHoWBvmnBL+S1Fn5vsUq4bmJO
- ceug==
+ bh=Ig97WpfeXz/888YzMr7xwpyDzcUHfi9CfPRuEEEpI08=;
+ b=XQ7cCFCr0Fsu32VuPi/A5f5rjAesY1ZZdmhlx6mosTlc9OwTQMaglVna5OsMeVMdrZ
+ dSQf8IDUj9oD0KECJrupslbyeKuz9+PuMCGQs+jJ+h4WbXqqN5Ivc8J653uOvRJMeeFq
+ PFA0GBRIx9I8wFEUkEmG2mAehndcSNQhAJJnnfI5xrWe2RSzPqCKtaoF4plZemnnzmuU
+ bI6gviWMNInDUN85Xw4SU9qFCrPok+u6Dsfetdfw6+4aIgGCIuWTX5G0D5ptffz/eSjV
+ 52Y1FMZ8urr5PFtZrqIPw4H2TP/FG2DNwuqzwQJLBMS1wWvl9vM95Cf5j4bEmFkI0jJV
+ yNIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783527565; x=1784132365;
+ d=1e100.net; s=20251104; t=1783527568; x=1784132368;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=j8dr4FDMitUA0gEzk3TdSWqsLs8LF2XIAra9aUvAPMY=;
- b=V9uI9qohdRHIw0R3PxLfwlUC+avzoG3KhsIiM0SrFvfJtkb5QO+nP1GonRhKBogTaT
- yt/zhwdBfIXiKVMbG35zkEDj1sknZoys0qFgbjoDZfs3z/gusw6XBLtXeLu72mVc8hU8
- NzcZtDFaYg7laZTLXOL/+0adocLvjMEi6/ID0KIVmEzWz6xzdqwiWxbAgTF4dozz+DJU
- QD19WEQnr2oRl8lROhh5xfvJgfdP6dXxRThbCYnzXEY1kxMtQ0efuVDcH0QXpBLr3y5k
- jELSvSybxfQOkYGEsHGxjJovWRznn5n8DYj6qB0uSDXZax70G8TDC/DzDTun7UW9bOIL
- O5Xg==
-X-Gm-Message-State: AOJu0YzdR8ojgV1349USOAoUPSHz5dznepKj7Evcu5LuL8H0u5bXu3Hw
- opSNYcOGU+mkgqq2B5HnbuBcbMvvmaxdhppChjP5EUXJ57U2b1lH5kw8ijuRnIWbWWgUWRdKeSn
- coThJKEzTT0tuV3nx5guzr6ofbthE70CwbcnbEBD0C+FKk/A8OXIUmupXZSRErBIXoDRvelBPXY
- VrIXZtGqDy3CwpX8MzHAK7QE3bQNLo+LB+2BW/xQY=
-X-Gm-Gg: AfdE7ck5Aoge9yYQ248H+xzklvJZlQHKNLv1H+3b12I0Bu4LQ6Xmvlx/WKAhEWMsAig
- B76UOdDVZAA0huExQPOnXls11P2FCmv2HdyqTHiqqtk27ioS8Hxtiinht+/DFslM58MBqwT0eUs
- qDs1FgOrJ1VRGLdYW0sgr1o5nVZ5PjlV8cquxFDsQ2bmsKZbIyyVBAaoaEvECOODxI3bL/iNE55
- N2l8jeNCAla2dis2oPHnGenwuWCLwmdXPqyuja5eTLIIpUHkI9EXk0bf1YgSKOF3g2qdXfzVOOT
- RRKulReAUl5mrNXaU/5+GBxRLVJb0QewldQPwHX8T+57d8LKJlf1sYwF08cR+E9L5VQlZnPeJk9
- ohX6nKI3hqhF2eS536v60zb3KSiRCc43Z8a0HXVRDECWBjlPXFNp4drLnif+AD4FLjnTiZqeuc0
- vEOR2MLLW6XrER0No5xZuUUdReefspY3cGLJ2N2ltmOhgOBu/E1iht3vTYN1VmUfc44Q8lNH95b
- M5KyicgX4hMDZP+
-X-Received: by 2002:a17:90a:e183:b0:381:25ce:bcc2 with SMTP id
- 98e67ed59e1d1-3893fb6b6ebmr3159659a91.6.1783527564581; 
- Wed, 08 Jul 2026 09:19:24 -0700 (PDT)
+ bh=Ig97WpfeXz/888YzMr7xwpyDzcUHfi9CfPRuEEEpI08=;
+ b=aCtMJAIJeTjsciD+2gYwcqGpbdCzoI15xQ6fHyIMI5f8sNSfGUFZY5/plsIyH873zx
+ W8Fzn+sQT5YTXzrNQVrDNuLrpdCvAAIuLZLtU1gN/pn8Fi8ikUytogHobbsmYDAOm4Bc
+ 5KLRfw+iXGQrakKAh4UouOXN6tZXJ/gWHyTJ+avJeImg/FjlIXc5+yeKwbckf2Mt3hVW
+ 5VFos3XkOal9Aiv7AEHVFRLn0U8p5EaJGFqo6meLvZNCXvHbblNWcCr046+d2fSAxf6D
+ nVqu3IHmUmCdkM8qoEKKLL81RQmNAkncM2fTBhC9JLKJ59v9eU1Qwy7sVMG9H2d06Vdk
+ Xv8Q==
+X-Gm-Message-State: AOJu0YxO1tp8oYKFkQiWxtxzqSXeOz0+xssEh/XA/ZBz2kTCpLTTLgyN
+ bN01m47mH0q9M6XDxgmryXPF6k7P5/CPPP28FzJOWP+mK4LnX0EUR60kG6GHPvIVW2hiPIkRkHJ
+ dFDqQpIuySfZ2QMVHZkkhGrGlK988KDsnYiTdvf0MwlaiiSOy037C26+LX/zN6y8MLBiz4lFZBp
+ oLT4qs+8B/2inL/tO9yohA0Qlj6MWKYxZP5p+5K9o=
+X-Gm-Gg: AfdE7ck9ptbyuStaduAewIUUaBlHMnhwg6IPYa93NqaGTNn4f4ur3mqWnClQfi+LCuC
+ 3Qhp8ULISKvYMgOPoGr4z7BM1KFnPQLiZCNakSmuqqsQbmcF79ELYxDYSVj9+STSTP9ES4YHTVm
+ +HR+wfOzMCQx7/f1/txEnb5Y+YIik5eJpjaGvmmUEoKNEdqetgwxeNYxRVWyP3xDxofihsy7nBf
+ SfuXS2xk9tYr/B1N/LcuLGGIEFmrEUgMXLACas67U4AZ+6Edci+RQNqcdPr/S0dmUAExNP3rVXR
+ 5ABeWfVT1kqx+HAc4cQbkvX3Dc7OS26zxXoeS6AwIVqdX4KHbIT0mYUGi/zWynwjQMCPoB/HlCD
+ vCW8R5hdBv2IuMUHjhJTVy0LRkVuMvrvdAmRrNVI1aBTTxXBiQOsAZFY04yrQbwbInsk8NRElQM
+ Yr21YR+linEL18vAoyxxYfZQygW+MXle4OQNZa3hlw65Qf9PLfvICLvRDKJvZSCiORKPEip+sd2
+ kHIbC5M92Oz44gT
+X-Received: by 2002:a17:902:db04:b0:2c9:97a7:3278 with SMTP id
+ d9443c01a7336-2ccea483c06mr32743835ad.41.1783527567651; 
+ Wed, 08 Jul 2026 09:19:27 -0700 (PDT)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ccc9bdb56fsm30789265ad.15.2026.07.08.09.19.21
+ d9443c01a7336-2ccc9bdb56fsm30789265ad.15.2026.07.08.09.19.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jul 2026 09:19:24 -0700 (PDT)
+ Wed, 08 Jul 2026 09:19:27 -0700 (PDT)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -79,17 +79,17 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v6 6/9] target/riscv: rvv: Make vfncvtbf16.f.f.w support BF16
- to OFP8 conversion for Zvfofp8min extension
-Date: Thu,  9 Jul 2026 00:18:56 +0800
-Message-ID: <20260708161859.1124848-7-max.chou@sifive.com>
+Subject: [PATCH v6 7/9] target/riscv: rvv: Add vfncvtbf16.sat.f.f.w
+ instruction for Zvfofp8min extension
+Date: Thu,  9 Jul 2026 00:18:57 +0800
+Message-ID: <20260708161859.1124848-8-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260708161859.1124848-1-max.chou@sifive.com>
 References: <20260708161859.1124848-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=max.chou@sifive.com; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,55 +112,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the Zvfofp8min extension, the vfncvtbf16.f.f.w instruction
-supports BF16 to OFP8 conversion without saturation when SEW is 8.
-And the VTYPE.altfmt field is used to select the OFP8 format.
+The vfncvtbf16.sat.f.f.w instruction converts a vector of 16-bit
+floating-point numbers to a vector of 8-bit floating-point numbers with
+saturation.
+The VTYPE.altfmt field is used to select the format of the 8-bit floating-point
+numbers.
 * altfmt = 0: BF16 to OFP8.e4m3
 * altfmt = 1: BF16 to OFP8.e5m2
 
 Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- target/riscv/tcg/insn_trans/trans_rvbf16.c.inc | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ target/riscv/insn32.decode                    |  3 ++
+ .../riscv/tcg/insn_trans/trans_rvofp8.c.inc   | 42 +++++++++++++++++++
+ target/riscv/tcg/translate.c                  |  1 +
+ 3 files changed, 46 insertions(+)
+ create mode 100644 target/riscv/tcg/insn_trans/trans_rvofp8.c.inc
 
-diff --git a/target/riscv/tcg/insn_trans/trans_rvbf16.c.inc b/target/riscv/tcg/insn_trans/trans_rvbf16.c.inc
-index 86eb86f615..7e9b0a53a4 100644
---- a/target/riscv/tcg/insn_trans/trans_rvbf16.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvbf16.c.inc
-@@ -67,11 +67,20 @@ static bool trans_fcvt_s_bf16(DisasContext *ctx, arg_fcvt_s_bf16 *a)
- static bool trans_vfncvtbf16_f_f_w(DisasContext *ctx, arg_vfncvtbf16_f_f_w *a)
- {
-     REQUIRE_FPU;
--    REQUIRE_ZVFBFMIN(ctx);
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index 21272fdb50..d690dc3bc1 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -973,6 +973,9 @@ vfwcvtbf16_f_f_v  010010 . ..... 01101 001 ..... 1010111 @r2_vm
+ vfwmaccbf16_vv    111011 . ..... ..... 001 ..... 1010111 @r_vm
+ vfwmaccbf16_vf    111011 . ..... ..... 101 ..... 1010111 @r_vm
  
--    if (opfv_narrow_check(ctx, a) && (ctx->sew == MO_16)) {
-+    if (opfv_narrow_check(ctx, a) &&
-+        ((ctx->sew == MO_16 && ctx->cfg_ptr->ext_zvfbfmin) ||
-+         (ctx->sew == MO_8 && ctx->cfg_ptr->ext_zvfofp8min))) {
-+        gen_helper_gvec_3_ptr *fn;
-         uint32_t data = 0;
- 
-+        if (ctx->sew == MO_16) {
-+            fn = gen_helper_vfncvtbf16_f_f_w;
-+        } else {
-+            fn = ctx->altfmt ? gen_helper_vfncvtbf16_f_f_w_ofp8e5m2 :
-+                               gen_helper_vfncvtbf16_f_f_w_ofp8e4m3;
-+        }
++# *** Zvfofp8min Extension ***
++vfncvtbf16_sat_f_f_w  010010 . ..... 11111 001 ..... 1010111 @r2_vm
 +
-         gen_set_rm_chkfrm(ctx, RISCV_FRM_DYN);
- 
-         data = FIELD_DP32(data, VDATA, VM, a->vm);
-@@ -81,8 +90,7 @@ static bool trans_vfncvtbf16_f_f_w(DisasContext *ctx, arg_vfncvtbf16_f_f_w *a)
-         tcg_gen_gvec_3_ptr(vreg_ofs(ctx, a->rd), vreg_ofs(ctx, 0),
-                            vreg_ofs(ctx, a->rs2), tcg_env,
-                            ctx->cfg_ptr->vlenb,
--                           ctx->cfg_ptr->vlenb, data,
--                           gen_helper_vfncvtbf16_f_f_w);
+ # *** Zvbc vector crypto extension ***
+ vclmul_vv   001100 . ..... ..... 010 ..... 1010111 @r_vm
+ vclmul_vx   001100 . ..... ..... 110 ..... 1010111 @r_vm
+diff --git a/target/riscv/tcg/insn_trans/trans_rvofp8.c.inc b/target/riscv/tcg/insn_trans/trans_rvofp8.c.inc
+new file mode 100644
+index 0000000000..d28f92e050
+--- /dev/null
++++ b/target/riscv/tcg/insn_trans/trans_rvofp8.c.inc
+@@ -0,0 +1,42 @@
++/*
++ * RISC-V translation routines for the OFP8 Standard Extensions.
++ *
++ * Copyright (C) 2025 SiFive, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#define REQUIRE_ZVFOFP8MIN(ctx) do {        \
++    if (!ctx->cfg_ptr->ext_zvfofp8min) {    \
++        return false;                       \
++    }                                       \
++} while (0)
++
++
++static bool trans_vfncvtbf16_sat_f_f_w(DisasContext *ctx, arg_rmr *a)
++{
++    REQUIRE_FPU;
++    REQUIRE_ZVFOFP8MIN(ctx);
++
++    if (opfv_narrow_check(ctx, a) && ctx->sew == MO_8) {
++        gen_helper_gvec_3_ptr *fn;
++        uint32_t data = 0;
++
++        fn = ctx->altfmt ? gen_helper_vfncvtbf16_sat_f_f_w_ofp8e5m2 :
++                           gen_helper_vfncvtbf16_sat_f_f_w_ofp8e4m3;
++
++        gen_set_rm_chkfrm(ctx, RISCV_FRM_DYN);
++
++        data = FIELD_DP32(data, VDATA, VM, a->vm);
++        data = FIELD_DP32(data, VDATA, LMUL, ctx->lmul);
++        data = FIELD_DP32(data, VDATA, VTA, ctx->vta);
++        data = FIELD_DP32(data, VDATA, VMA, ctx->vma);
++        tcg_gen_gvec_3_ptr(vreg_ofs(ctx, a->rd), vreg_ofs(ctx, 0),
++                           vreg_ofs(ctx, a->rs2), tcg_env,
++                           ctx->cfg_ptr->vlenb,
 +                           ctx->cfg_ptr->vlenb, data, fn);
-         finalize_rvv_inst(ctx);
-         return true;
-     }
++        finalize_rvv_inst(ctx);
++        return true;
++    }
++    return false;
++}
+diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/translate.c
+index 9684dbe752..aa96316a38 100644
+--- a/target/riscv/tcg/translate.c
++++ b/target/riscv/tcg/translate.c
+@@ -1213,6 +1213,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+ #include "insn_trans/trans_privileged.c.inc"
+ #include "insn_trans/trans_svinval.c.inc"
+ #include "insn_trans/trans_rvbf16.c.inc"
++#include "insn_trans/trans_rvofp8.c.inc"
+ #include "decode-xthead.c.inc"
+ #include "decode-xmips.c.inc"
+ #include "decode-xlrbr.c.inc"
 -- 
 2.55.0
 
