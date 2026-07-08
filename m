@@ -4,124 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0D2EC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 09:33:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF243C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 09:38:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whOf3-0003Xr-EE; Wed, 08 Jul 2026 05:33:45 -0400
+	id 1whOjQ-0004Vi-Va; Wed, 08 Jul 2026 05:38:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1whOer-0003XB-TB; Wed, 08 Jul 2026 05:33:35 -0400
-Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1whOeo-0003nR-TY; Wed, 08 Jul 2026 05:33:32 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [57.128.106.70])
- by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4gwCZZ0Jlxz6V3X;
- Wed,  8 Jul 2026 09:33:25 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alexander.hansen@9elements.com>; Wed,  8 Jul 2026 09:33:25 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.113.129])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4gwCZY4BQnz7tCG; Wed,  8 Jul 2026 09:33:25 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.2])
- (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id BA2E01B43D6B;
- Wed,  8 Jul 2026 09:33:22 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-107S001134b01e3-65ad-4bb5-aa85-6eb0320928cc,
- 2D223E717D9FA260C3726021AC4FE3AAA9F332FE) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <9338574e-f5e7-44aa-94d8-1f0d81a386aa@kaod.org>
-Date: Wed, 8 Jul 2026 11:33:21 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1whOjA-0004Uh-Gc
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 05:38:01 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1whOj8-0004iC-3y
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 05:38:00 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-664d78637f8so630654d50.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 02:37:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783503476; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Kez5gtNNF4bEba5ijtB1nF0W6PmO2UmM8nbeeVy4UgIFxNhvyEs+wHMouY+TO7I29P
+ 412pljCyJoMav206HiWr93/cBqL1nMQtOS5v7UlEn4fSSsivP+tXGAXD1DDfG183zAaE
+ HoOg0qtBG1LtT0qvORd/yQHjdUx+UQOtXgflt9g7l/JS3nA9sft9pTsToTTJSp9aw6gn
+ p70mjw8bYXIysRxMm9IHm1Y0X/V9u63AgpI0yDIrIJRibs5x5V1z0TVEBWpO1BuwSW3U
+ An1ihxkohutSly2/HoVTTtVlch+0egN20iYiQZx62E3eas0XcWrZolizy83PfEHMMnw2
+ 6uQg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=3ZosDczUsYDn9EnHnudkr5uhgqTzQvnYPXxjPGK2rnc=;
+ fh=AczoLcRjG3rzPwgtqapMl8UXTRUf6wkH5c/QZLmAzWg=;
+ b=rPaPM5pRgNeJz5dOq+dTsN1EjBy9XJA82ODYjiOa6hPC/9dxV3AfJ1wHKlZPWzDO9V
+ hrOS3UiWLT0bqKzHoJTDGUybu+3SDyJVE29Xr6eGRa50c0wkACKOPr5dkFSlsKaZiZz8
+ DSe34SLZCiXlCBGj4h+JjfUeHo6p8vlXkT0TrmfqJQz0MB+x+8IQfR5NeVDMZToA6t/Z
+ ypZEdB98wEF5NJ/AX8i70BMQVNrgfUHoptjeZpW3bVm1HJmQoxgSJoSszAkRdYZdjTc6
+ 4/PLWBpWSWgnTkHBdh2SDNEh6Y8GLgHWohaN0rTz8CoOSEd3Tv5aVTyBRMRVnq4XVED6
+ +k9Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783503476; x=1784108276; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=3ZosDczUsYDn9EnHnudkr5uhgqTzQvnYPXxjPGK2rnc=;
+ b=eOz3qw8ZFgxG7X9QwCfiw0q0oiRdLqw5dGkUxQGIzM4r6BMsjZ5ZS6TEVmgAtsEXEW
+ ug8b9iRBReP8wm8VizPLtUyaXxHpfH10prJR0Aw6Od8WwhkpLVBhs8fFfw+WTZRs43pZ
+ QqRsOb8038PHzFk74m4ksRpROfvSQE/O7K1LEaP4t7hMzy/8TYhFkWrm5tOileGR9cbS
+ 57ix2yxMT6PZQneJ8USMwTof/MccXuDxPsWpT+gUDZ13+5tuVoPJanXPsJrixoRhLUiN
+ /TZdux3zvcsmluHJY7kGYxPpPfpzzLyTQVN9362oDKnbl4r/ovEkWWjpUkJKIgm96sfW
+ 8r7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783503476; x=1784108276;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=3ZosDczUsYDn9EnHnudkr5uhgqTzQvnYPXxjPGK2rnc=;
+ b=O83GURjvbhYuyPt3B9tEOtlRNDugEnnOQvc+Sgrrtf+rEVM49dZGLIFS3ONHMzQE/c
+ dkw4tItD4lKCTbcf1rlQ/6OpzKquISwrgpsubBNnDolkvhL8ZF8czimLUxdQ+XuhyyZz
+ 6O3c9dZ6PKmhhFn/zLCiAJlnk6NF//Tq/CllpZpihuQY0vlofBrluYhw5qVWdbL0hrBs
+ jbqU4CRXK0g8FwVdve22rqMKyEalCqI05N50Eua+4HfMf+41E9Kb2OACfs+98frpEfU+
+ HUGBc5jEWbwqbeCjN+AG3ALyU2fDXaoRhbc9udogxT8Qf5mauP/TK+ah4XEQKBXMDHEZ
+ xY2g==
+X-Gm-Message-State: AOJu0YwK3YyFd5LiN/6hroRbAoQrR9ylgfymhJJe5oMbR5aO2HXSbcVo
+ R2oxeyi7Ohp1IiG8Id9vJqiNmvno3yQXTOvbellqjH7bDSzB9appXpBejPp6OUKoUD+3A5/gWdQ
+ PWbbEAt/D8xqKOHOxrvNe4qK9qCZFxa1IXE9wKYAJAw==
+X-Gm-Gg: AfdE7ckt3n8Bd3xlVPjYY5FfXKM9ZaV9Hk9OmgTro+B7+29xJxzSYiXpIsq4+oXI/Ht
+ v12uSlPs0nZWU8WFVBgvjHoG/W0wNPe6IeLZbtbOKWaVd6JzEyVgrRWIcd+b6pw3Ls22BePgSOt
+ +fp84srRgluv9q4FXQ7dgC1Ec+wIEGMcUMVJapkGLV7Z9NKXjAvPYueOZa3d5Sz0QF+SBtFClMb
+ HCzIPc3qeMBQ1VgPcDOib82Uz0sFUvhLEavSQP5qkvkOQolvUxb2fvk0bbC3xlDCUsfCX3lZ278
+ gYJ1NMxsYx6PeqIFPrxzH/3QqWOSmy8lj7AZcp5f7GtP42Swb8Rlvqrw
+X-Received: by 2002:a05:690e:440d:b0:664:ae6b:b48d with SMTP id
+ 956f58d0204a3-6679f1b3175mr890337d50.66.1783503476357; Wed, 08 Jul 2026
+ 02:37:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 9/9] test/functional: anacapa: test ADC128D818
-To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alexander Hansen <alexander.hansen@9elements.com>,
- William de Abreu Pinho <williampinho@meta.com>,
- Emmanuel Blot <eblot@meta.com>, qemu-arm@nongnu.org
-References: <20260707094413.17539-1-emmanuel.blot@free.fr>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260707094413.17539-1-emmanuel.blot@free.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 1829868827668687917
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGwcxf2ZuHRsUDmg9ITUuyrhUYAlV2g1EYBV2oDpt88FkivV/U6nLb6QbuER0aAH76Iw2n11T5a5aeZiC/yfk73iQYEb65ZYrjJ21aiek8y7hz55Y2T3XA1xi+hXAQ7aRVThvP1vWjBvkyOIAMgcK4zd03cMRMcdaOa2i6AhkgjWunBhyLDnE8YyNMdfMx+JTxTDwBFtQ9lcIJGv5g3kkv+CMlgUho4VVXDX3N4gOffKov8aCpnbiMWcIiw/ySWm9KRIORUP7STLB0l/3xBQg87efJJr2CzmL+1eeoi251u/WgE5lYCk8SJ9YJw5CStpQ4DOaqs9nak0P5XsHgDoSG7qEpg45AshHyWXxNjC9RglWZhUN0F1sRRMamsNHyeleSSlVsJ+3wpFf5RtfBfVp5jPVfsBnyp/eaR6vVi302BIe0DmLxo1ErIELoRrWOc6Fj5jUGH9Fb9NUKpL4NQ/uYjkuzM3atg99m40rQazQazHO9YuCRiHzbnnyW4HmKW5+amUahjrOQlKNeVysir/UUOQI/ItAL/KrJpUw8QLPhuTgpbF4ipRQpzCTY3BVP5tA/kidad3WtXytBflqyMu+8C20bLjBTF5HHOschZf9VD3LLWc2Iwcmf9p7BhnTvJ3Bbkz6G8uUYV02aGAOXB6jhDSVG0oy83+8XB9cCmZgEZ7w
-DKIM-Signature: a=rsa-sha256; bh=XYgVBuyYi9N94zM63IBowhoTyX0aUBn+eLSVrFzd4+o=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1783503208; v=1;
- b=TyIoHaKKidENo34RyLf+7Vy0jdBxFnj1FjK4jYM7sSsbtXhDEMn/HZUNmWK3PkUmHRnW9VX2
- 7hd2cBXXkSrUpSMpZB3YxjA952HIdW+wFNK+DCdaqgiEQ1PhRt/lrf+/F/2MXwBAAKGTzKbqZId
- fcWsUHICun1p1GfxfukLR1Xb+3KawKd8nr/J1hUSH+9zf3qZBNrXvsdYFCHlowp2GNbb1u+hyLN
- gYcJehGAeXKGRcmGlHCz5+u9vnPif0omH6u8SpzCChp/LgBw6TrAxK1LM/2SxkkG7EKUlcCED/L
- 2c4sOVQHd0M2M7/H+LFg6B/nuaLPzt9J2DMrVO5W9rDEg==
-Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
- helo=smtpout1.mo528.mail-out.ovh.net
+References: <20260706224426.14156-1-its@irrelevant.dk>
+ <20260706224426.14156-2-its@irrelevant.dk>
+In-Reply-To: <20260706224426.14156-2-its@irrelevant.dk>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 8 Jul 2026 10:37:44 +0100
+X-Gm-Features: AVVi8CfzBwd_Ewqb3Li2YKgJVBt-noDC0AQiLxaYYgZXkI47PiAlfrsmhsGUU5o
+Message-ID: <CAFEAcA_Z39ga7EZY8yW=k=hK6ytiAxS1zrSFFJKsdgD5S8YXVQ@mail.gmail.com>
+Subject: Re: [PULL 01/11] hw/nvme: fix FDP set FDP events
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, Jesper Wendel Devantier <j.devantier@samsung.com>,
+ qemu-stable@nongnu.org, 
+ jaeyeong <fin@spl.team>, Jesper Wendel Devantier <foss@defmacro.it>,
+ Klaus Jensen <k.jensen@samsung.com>, 
+ Keith Busch <kbusch@kernel.org>, qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,128 +118,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/7/26 11:44, Emmanuel Blot wrote:
-> Verify the ADC128D818 on the Anacapa R-PDB (i2c8 mux channel 0): two
-> channels are driven with distinct voltages and each is checked to be
-> reported back independently through the kernel hwmon interface, and the
-> channel 0 limit registers are validated.
-> 
-> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-> ---
->   tests/functional/arm/test_aspeed_anacapa.py | 68 +++++++++++++++++++--
->   1 file changed, 62 insertions(+), 6 deletions(-)
-> 
-> diff --git a/tests/functional/arm/test_aspeed_anacapa.py b/tests/functional/arm/test_aspeed_anacapa.py
-> index 27f8bd8b56..bc227baa22 100644
-> --- a/tests/functional/arm/test_aspeed_anacapa.py
-> +++ b/tests/functional/arm/test_aspeed_anacapa.py
-> @@ -2,24 +2,80 @@
->   #
->   # Functional test that boots the ASPEED machines
->   #
-> +# Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
-> +#
->   # SPDX-License-Identifier: GPL-2.0-or-later
->   
-> +import re
-> +import time
-> +
->   from qemu_test import Asset
-> +from qemu_test import exec_command_and_wait_for_pattern
->   from aspeed import FacebookAspeedTest
->   
->   
->   class AnacapaMachine(FacebookAspeedTest):
->   
->       ASSET_ANACAPA_FLASH = Asset(
-> -        'https://github.com/legoater/qemu-aspeed-boot/raw/3fa3212827b04be4034d43b5adeef57c27d6ab18/images/anacapa-bmc/openbmc-20260512025228/obmc-phosphor-image-anacapa-20260512025228.static.mtd.xz',
-> -        '2232e241abcfb6d4f6b82cb6c378ce5ce05e364aac6d118785c2b6cc33fe43f3')
-> +        "https://github.com/legoater/qemu-aspeed-boot/raw/c5f585f9f57843c0dc95e3865a57d92ec39cbb0b/images/anacapa-bmc/openbmc-20260616025349/obmc-phosphor-image-anacapa-20260616025349.static.mtd.xz",
-> +        "de3841fb6ed3085aec6424358ee6efc4b8ee85688361e5aa1987fd1acb7d3fb4",
-> +    )
-> +
-> +    ADC128D818_QOM_PATH = \
-> +        "/machine/soc/i2c/bus[8]/aspeed.i2c.bus.8/0x72/i2c.0/0x1f"
-> +    ADC128D818_MUX_CHANNEL = "/sys/bus/i2c/devices/8-0072/channel-0"
-> +    PROMPT = "root@anacapa:~#"
->   
->       def test_arm_ast2600_anacapa_openbmc(self):
->           image_path = self.uncompress(self.ASSET_ANACAPA_FLASH)
->   
-> -        self.do_test_arm_aspeed_openbmc('anacapa-bmc', image=image_path,
-> -                                        uboot='2019.04', cpu_id='0xf00',
-> -                                        soc='AST2600 rev A3')
-> +        self.do_test_arm_aspeed_openbmc(
-> +            "anacapa-bmc",
-> +            image=image_path,
-> +            uboot="2019.04",
-> +            cpu_id="0xf00",
-> +            soc="AST2600 rev A3",
-> +        )
->   
-> -if __name__ == '__main__':
-> +        exec_command_and_wait_for_pattern(self, "root", "Password:")
-> +        exec_command_and_wait_for_pattern(self, "0penBmc", "#")
-> +
-> +        self.adc_hwmon = self.resolve_adc128d818_hwmon()
-> +        self.assertIn(b"adc128d818", self.read_adc128d818("name"))
-> +
-> +        adc = self.ADC128D818_QOM_PATH
-> +        for ch0_mv, ch1_mv in ((108, 2000), (1280, 500)):
-> +            self.vm.cmd("qom-set", path=adc, property="ain0", value=ch0_mv)
-> +            self.vm.cmd("qom-set", path=adc, property="ain1", value=ch1_mv)
-> +            self.wait_adc128d818_value("in0_input", ch0_mv)
-> +            self.wait_adc128d818_value("in1_input", ch1_mv)
-> +
-> +        self.assertIn(b"2551", self.read_adc128d818("in0_max"))
-> +        self.assertRegex(self.read_adc128d818("in0_min"), rb"(?m)^0\r*$")
-> +
-> +    def resolve_adc128d818_hwmon(self):
-> +        out = self.read_adc128d818_console(
-> +            f"basename $(readlink {self.ADC128D818_MUX_CHANNEL})"
-> +        )
-> +        match = re.search(rb"i2c-(\d+)", out)
-> +        self.assertIsNotNone(match, "could not resolve ADC128D818 i2c bus")
-> +        bus = int(match.group(1))
-> +        return f"/sys/bus/i2c/devices/{bus}-001f/hwmon/hwmon*"
-> +
-> +    def read_adc128d818_console(self, command):
-> +        return exec_command_and_wait_for_pattern(self, command, self.PROMPT)
-> +
-> +    def read_adc128d818(self, attr):
-> +        return self.read_adc128d818_console(f"cat {self.adc_hwmon}/{attr}")
-> +
-> +    def wait_adc128d818_value(self, attr, expected):
-> +        needle = str(expected).encode()
-> +        if needle in self.read_adc128d818(attr):
-> +            return
-> +        time.sleep(2)
-> +        if needle not in self.read_adc128d818(attr):
-> +            self.fail(f"{attr} did not reach {expected}")
-> +
-> +
-> +if __name__ == "__main__":
->       FacebookAspeedTest.main()
+On Mon, 6 Jul 2026 at 23:44, Klaus Jensen <its@irrelevant.dk> wrote:
+>
+> From: Jesper Wendel Devantier <j.devantier@samsung.com>
+>
+> Addresses an issue reported whereby user-provided event type values
+> could trigger two issues:
+>
+>  1. if provided event_type == 0xff -> out-of-bounds access
+>
+>  2. if provided event_type > 7 -> generate a value too large for the
+>     u8 event mask.
+>
+> This patch fixes (1) by correctly adjusting the length of the look-up
+> array to be 256 values.
+> This patch fixes (2) by:
+>   a. changing the event_type mask to 64bit, matching
+>      NvmeRuHandle.event_filter
 
-Functional test fails :
+Hi; this change has caused Coverity to notice another
+pre-existing problem in this code (CID 1663674):
 
-   $ ./pyvenv/bin/meson test --suite thorough func-arm-aspeed_anacapa
-   ninja: Entering directory `/home/legoater/work/qemu/qemu-aspeed.git/build'
-   [1/6] Generating qemu-version.h with a custom command (wrapped by meson to capture output)
-   1/1 qemu:func-thorough+func-arm-thorough+thorough / func-arm-aspeed_anacapa        ERROR           99.49s   exit status 1
-   
-   $ cat  tests/functional/arm/test_aspeed_anacapa.AnacapaMachine.test_arm_ast2600_anacapa_openbmc/base.log
-   ...
-   2026-07-08 11:29:31,385 - DEBUG: qemu-test._console_interaction Console interaction: success_msg='root@anacapa:~#' failure_msg='None' send_string='basename $(readlink /sys/bus/i'c/devices/8-0072/channel-0)
-   ...
-   
-   $ tail  -3  tests/functional/arm/test_aspeed_anacapa.AnacapaMachine.test_arm_ast2600_anacapa_openbmc/console.log
-   2026-07-08 11:29:31,398: basename $(readlink /sys/bus/i2c/devices/8-0072/channel-0)
-   2026-07-08 11:29:31,431: i2c-32
-   2026-07-08 11:29:31,434: root@anacapa:~#
-   
+> @@ -6492,9 +6488,9 @@ static uint16_t nvme_set_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
+>      uint8_t noet = (cdw11 >> 16) & 0xff;
+>      uint16_t ret, ruhid;
+>      uint8_t enable = le32_to_cpu(cmd->cdw12) & 0x1;
+> -    uint8_t event_mask = 0;
+> +    uint64_t event_mask = 0;
 
-Thanks,
+event_mask is (now) 64 bits...
 
-C.
+>      for (i = 0; i < noet; i++) {
+> +        /*
+> +         * We ignore requests to enable tracking of unsupported FDP event types
+> +         */
+> +        uint8_t event_type = events[i];
+> +        uint8_t shift = nvme_fdp_evf_shifts[event_type];
+> +        if (!shift && event_type) {
+> +            continue;
+> +        }
+>          event_mask |= (1 << nvme_fdp_evf_shifts[events[i]]);
+
+...but the shift here is done with 32-bit arithmetic.
+So for the cases in the table where the shift count is
+32 or 33 we will shift the 1 bit off the top of the
+value and lose it.
+
+Using "1ULL << ..." fixes this.
+
+thanks
+-- PMM
 
