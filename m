@@ -4,95 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCE36C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 15:07:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C37CC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 15:09:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whTrX-0001gv-3j; Wed, 08 Jul 2026 11:06:59 -0400
+	id 1whTtZ-0002Q1-MT; Wed, 08 Jul 2026 11:09:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
- id 1whTrU-0001gE-Qa; Wed, 08 Jul 2026 11:06:56 -0400
-Received: from fhigh-b1-smtp.messagingengine.com ([202.12.124.152])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1whTtX-0002Ml-PL
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:09:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
- id 1whTrS-0004KV-Pk; Wed, 08 Jul 2026 11:06:56 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfhigh.stl.internal (Postfix) with ESMTP id DB2657A014A;
- Wed,  8 Jul 2026 11:06:52 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-01.internal (MEProxy); Wed, 08 Jul 2026 11:06:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm1; t=1783523212;
- x=1783609612; bh=fKMz4JzXRe8eCEYB+t1soX6iRvo05G++2pC9uMSQx94=; b=
- GldZtJcq+sDkGLXFcLVABdTVsGkY0lk8Dpv95rJ42svJ8AZ6mxe2V0VtGEDDi94/
- 5N5RIv2leCwUkbWGo5HxP/D/rBBBnLJLix+jjE5QCcoxI4I18itm7ADI6edvHUKO
- NWU87DYUGLT2KJhqEBCDnNhUwkSitCnJ5b7MxMfcI8EXTTm5g0B5KdH5N0Z9eyhr
- Toej8GXAHMHBfNiE/ZaEmUuh9Xh2SGb5BuWDW76RAC/hwTQjKI3x7vxUJD3x/3DM
- D6/wSFtAZCuyV0dFxK4H0d46od7E5dPnW5J6YVKZ8fRevnKnTvtqRVwbUhNcfpgQ
- JEMAdBLz34iyMcuu0vG34Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783523212; x=
- 1783609612; bh=fKMz4JzXRe8eCEYB+t1soX6iRvo05G++2pC9uMSQx94=; b=V
- EF/hj8HxpLk3DjAKXPKRbaaLFNPa3oHnYP2pKu/6sZbnISW3MkSx4zdlxI/1vBZ/
- 4taNdRvgmb7zI2pL3CqaxIQr4sSe+S4Bobto2mkP3MJYqasp0ZUR4GmD6ReCff9f
- ejIB6YNI88qk9JVVEy8c+bNYny/WNEbbLlnnvfTBv29MZusqlzCUt3pMkYNgD/TQ
- aggw8Pi4JJi/5CL/Mu36T4on1gp31JepL2OZIdDJmpLS95Eekh7M0SvjpL4KPQmN
- yJJYiJAkr7ZBnbhlW3enq5TCEsbEKYX1bqLd2VOZsfr4HuIE2BO9OA6BZVCLWNiF
- f1l8zD2WgSP+MxDukCObw==
-X-ME-Sender: <xms:jGdOar_u7kaSqAP6tjFpsGeHCSGyhhNbZBz6XDCha7Cnk24sBDbkqw>
- <xme:jGdOagqbS5xjE88Uc9vKPF3lx2QFZVMfINmkf9AuCePIsnn-8scEky0qMvf3Vrg44
- BhIo-Jkh1hw3THCqkl8nD_og2mVULq0uqMVZSnKmEr6eQK7pXq-Rw>
-X-ME-Received: <xmr:jGdOaklH7WguOkJnDIASErD7XA11i_nErzfnQIep2VIGoGYigOkY5mjwuHQ>
-X-ME-Proxy-Cause: dmFkZTEnwAxMd8cVVQO6EMd6fn/HIeIsU89+kh9BfzAUtpzw4T++sOnMSD0nWxn0Dgq3Lz
- id/JO1ITw5hjpFT9rOj4gidp38aleevUKyZT2QVjNNYCnVpSRJ90bHLrsQ8M8w+1edkpWm
- urZfG59/vZp98LNiT3hvQjz5bpbXFVj/tAgcM44g74idxvZI/KtvFSiUg4ds+EtUEtMArq
- oolQ8FVmg6Dk2nt2im7dx2gTHyF/T/kwchjZ13ZZ+XlM1WDC6UjYfmDaBTxq+igt3hnWBu
- k4a7SdEwB8hXoM43ZDkNf7fHGfoorYU3JD10qg1YB/ALaVLfjAXmY+rxrCVt1kkl3Bb/DL
- 9sXn6Ua/teDDOwvEl6iJTJVE30/TrmSkLSRhm9WZ7LTbNWCnOQNnzfqMeQDoF5wXUo3EqX
- 9azsiHWwqmSpf2P4MogQkPtUsb05Qi39yc6PDFGk+Ypxr2Ob7BF54Bc32T++tvHlEB5FwC
- v/0g7Zv+LuF9ATLTgpe1PWWjsUXHDtzqCmtXu1sCTu7b57wIFIJfZtXlU16DiqVbxTWo/6
- YCXboCeg2WcXHwy6zoscjWZdU+LUmZpUvaoWxuKfXDwGMbjMcO0881dVO+qEL/0WDWqSkw
- cjNsi1WvJszmrClST1wZO8vJQEdonSjCTv2S7pGGCB8xxXjlk7M12PbyfGbQ
-X-ME-Proxy: <xmx:jGdOangx0Nc7shM-tmoRPLR_U-PrAZJ-5oJqqQDovKyQnnZKK063mg>
- <xmx:jGdOasc6euN6HA_xxoQ0pcQexXOFX1u0d4zfaK1Y6oCi_NTD4ndn2g>
- <xmx:jGdOanhAO1EmMl79GQ0opRWhc2jvCrHJCl6KgdK0-JrziSyqH0mhNw>
- <xmx:jGdOakwSPLeoftZSYNuOi6UhgUCkUj3AUeaSVuMb0ZEOKvKO9A56dw>
- <xmx:jGdOaoAKo7ceDYtKyOg9niw0BhCZUTaoWOtQyoo5wY73_lOROFRtn-87>
-Feedback-ID: i03f14258:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jul 2026 11:06:51 -0400 (EDT)
-Date: Wed, 8 Jul 2026 09:06:50 -0600
-From: Alex Williamson <alex@shazbot.org>
-To: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Eric Auger
- <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- alex@shazbot.org
-Subject: Re: [PATCH v2] vfio/listener: Replace misalignment whitelist with
- DMA capability check
-Message-ID: <20260708090650.2247755c@shazbot.org>
-In-Reply-To: <20260708133604.1606448-1-clg@redhat.com>
-References: <20260708133604.1606448-1-clg@redhat.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1whTtV-0004fo-9a
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:09:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783523340;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=90eErB3YsYYPPI2uFajiveRQNuiwyUTM0X3Ml1l4pkc=;
+ b=HFLNiuGOWgy3PcJ6sCu7/0bkJlbcTiXkTuN6lix6e1uECX2VxycXzIlhfHoBtijsPVjhvP
+ r96PxivOjZVNt8tP6Xj4d/Zd1s7avEGrT69pjCiDf0S/w7kDv63a/cW2Bb+9yo3i2gckpK
+ znqg9Zud7DXYajOdQTIlKCyTMincJKo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-220-CKWD-KMNMwe-jZ9Qf7wNtQ-1; Wed,
+ 08 Jul 2026 11:08:58 -0400
+X-MC-Unique: CKWD-KMNMwe-jZ9Qf7wNtQ-1
+X-Mimecast-MFC-AGG-ID: CKWD-KMNMwe-jZ9Qf7wNtQ_1783523337
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 74BD21956069
+ for <qemu-devel@nongnu.org>; Wed,  8 Jul 2026 15:08:57 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.28])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0D9CF1800370; Wed,  8 Jul 2026 15:08:55 +0000 (UTC)
+Date: Wed, 8 Jul 2026 16:08:52 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
+Subject: Re: [PATCH] qom: Fix device-list-properties & friends to show
+ legacy-FOO props
+Message-ID: <ak5oBDQkpBCYwlkB@redhat.com>
+References: <20260708140948.2622814-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=202.12.124.152; envelope-from=alex@shazbot.org;
- helo=fhigh-b1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260708140948.2622814-1-armbru@redhat.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,44 +86,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed,  8 Jul 2026 15:36:04 +0200
-C=C3=A9dric Le Goater <clg@redhat.com> wrote:
+On Wed, Jul 08, 2026 at 04:09:48PM +0200, Markus Armbruster wrote:
+> qmp_device_list_properties() skips properties whose name starts with
+> "legacy-".  This is a flawed test for "is a legacy property".
+> 
+> The test is flawed because non-legacy properties can and do start with
+> "legacy-".  Back when it was added, no such properties existed.  Right
+> now, three such properties do: property "legacy-cmb" of device "nvme",
+> and properties "legacy-cache" and "legacy-multi-node" of devices
+> "x86_64-cpu", "i386-cpu", and its children.
+> 
+> This affects QMP command "device-list-properties", HMP command
+> "device_add T,help", and command line option "-device T,help".
+> 
+> Legacy properties are gone since commit a61383f7ab (qdev: Legacy
+> properties are now unused internally, drop, 2025-10-22).  This makes
+> the fix easy: delete the code that skips them.
+> 
+> Reproducer: -device nvme,help doesn't show legacy-cmb before the
+> patch, and does after.
+> 
+> Fixes: f4eb32b590 (qmp: show QOM properties in device-list-properties, 2014-05-20)
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>  qom/qom-qmp-cmds.c | 7 -------
+>  1 file changed, 7 deletions(-)
 
-> The vfio_known_safe_misalignment() whitelist (currently TPM CRB only)
-> requires a new entry every time a device exposes a non-page-aligned
-> region, which does not scale.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Arguable as we have exactly one class of device so far that's validated
-as safe.
 
-> Replace it with a DMA capability check: a region that is not
-> page-aligned or is smaller than a host page can never be a valid DMA
-> target, so a page-offset mismatch is harmless and only traced. Only
-> warn for page-aligned, page-sized regions where the mismatch could
-> indicate a real mapping problem.
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
-But it's the composition into the address space and how that address
-space is defined to the guest that matters.  Imagine a minimum counter
-example to the test presented here, a page-size range of RAM in the VM
-is composed by a device as two contiguous sub-page MemoryRegions.  We
-only see the individual MRs here, they're each sub-page, the shape
-suggests they're not DMA targets, but together they map contiguously
-into the VM address space.  KVM can trap and emulate them as normal
-RAM.  QEMU emulated devices can DMA to them as RAM.  VFIO cannot map
-them through the IOMMU.
-
-That is what this test is meant to validate.  The judgment that the
-control register range for a TPM device presented as a RAM MR is not a
-meaningful DMA target for a vfio device is the thing that cannot be
-determined based only on the shape of the MR.
-
-> This removes the TPM CRB dependency from the VFIO listener and
-> eliminates the need for per-device whitelisting entirely.
-
-And removes the diagnostic it provided.  Thanks,
-
-Alex
 
