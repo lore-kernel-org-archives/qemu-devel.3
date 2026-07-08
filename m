@@ -4,111 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE640C44501
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 10:33:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E53ADC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 10:38:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whPaJ-0007mp-Kn; Wed, 08 Jul 2026 06:32:55 -0400
+	id 1whPeu-0000K7-FW; Wed, 08 Jul 2026 06:37:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1whPaG-0007lx-I6
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:32:53 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1whPaE-0001PK-MF
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:32:52 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-6983f20a8bfso948699a12.1
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 03:32:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783506769; cv=none;
- d=google.com; s=arc-20260327;
- b=at2st/NjqohbZne00NSDmQ4UHF6KfmXoFEaJpuS/Prt+mu2xOiOIya39anuj1cEPLu
- VDJSlKSl0ebkLEeN6cFVYE7IJqXxvw4RbT6fIvpxNC2rUMTLZHYc9PgncqZi2Y+JeXt0
- AtO4Hbu+WF8IHXRgQieHtySynvYfcHA/l+ow8naFEFtGHh0BqTvu0K/b2PVq64YJLhZH
- wTQS7/2vBbkLpMwqqM9W+/Fiuak1zvbHzTwCDlKGXIvgzZXgvQOgkNnTG85ruKznatja
- QRZ7Ht4aOKFNnSVZTYnIl0IiCzSA2FD2FqRZlPPGnu1ANU4CfkV7jrt6TuqAAgZW36QQ
- DKEA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=eNVXL+JaRknDc0HvImFDwNcfU8artJh+cfFv4vMrtFQ=;
- fh=xA0dvkNCzq3wUh+50cH3n3rkqIUyItuZu48hg9SmUR0=;
- b=P0FJ8Y+Io3bcth3K4hgvQaBw2oiYHh1ScgknorwAige7/w/Q89osntj2K5dWzOVPew
- /Iazo1CKZKt+rAlDO7WIMhW+/NM/Z0gCuqJGzjTLlYKg8FYZNryhcVIrXeDoivIIwj/d
- hR3lKeaKNDfVxu4j2VPu2oDWHfunnQpDJ9QZ4dRmIMBtYLne7tmAVAR24dxJX4pohgFL
- MnbYr27EYfw10RSOpUGYE+rm/XsHTKq7ehVnU7pZXyEy1mdss/verqGHa7bU3yOiMi5+
- NhWmPhT7DwkxZYu1p5sn20BfdzS0Ft2FUSPp++GLDMymAjI6WbIsOKOUplkhCB05J2Ma
- uuCA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1783506769; x=1784111569; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=eNVXL+JaRknDc0HvImFDwNcfU8artJh+cfFv4vMrtFQ=;
- b=LBJKKhoCHaa1AMP/6HPqJsEBTChFsp0YwEfHwYmOfMm/2r1jP7GQoAGapIKGgG6TfT
- VoVRIV73kdTtuzTSuQvhlRPP3YgxMDDE3T/tGR8wu2e5b+Q0r6/QfNf6D1FasCX2A5hT
- I9VgrBmSi5jB4mhi5NgiFpRHst94DbSC6JQgs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783506769; x=1784111569;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=eNVXL+JaRknDc0HvImFDwNcfU8artJh+cfFv4vMrtFQ=;
- b=TqahjSLOFizhi6e6WZTIH944AoWfaCfT62+JiOPXw/3oTZNrJHjTAwi5bGGr0msTRW
- ERMEBISXZ0bYG8AepCkQbOgjNkBG6E+jgErJTRD+jApkx3+n5ad/4xOWXZykC7PZvHli
- ZXUvfTRx3w/UZltLILAxePAsBbXPkSdtc598Dh4zFtG1A3ffscyAd5BVeOdooTFdYka6
- O0LJslWtr5pVGvv6euS3e3nzFSWCDNupFARsHPvI7ml4QINbkIX83S+iR5j1xKDBefMK
- 4NiWbjvq38wZh0MuyHLZfuuTqidb267X5e94Y4pkr3jTvPgKtDsLxi81X5x51zacePjh
- +P8A==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rrxa0xkcJY/ivOEFsAEAQq55VUo+GfcZ3v28IsiW1Pqm9cKvx7oJEhm2t+CVmUfdjodpqVitt4ATjDT@nongnu.org
-X-Gm-Message-State: AOJu0Ywky8UT3DRHBlgcvIo5If9hUI600fZVSEJDCBI2fo0aCw6VASJr
- iQR8jF6cbA2OXssDGvPomGANObsEB3TajgJ5kHTEG/rwnDPquHDVF9lFlPRxJiwNrIC70+Cmxwl
- /UVf37XELRGGbV84db5rY/ZNuD+WHEc0wahm0+NielQ==
-X-Gm-Gg: AfdE7ckZ038J8Uli11O12mpNEtGFPe9PdGh0KyCHyeVqdA3jJNgh+YXrINvQ0utpIWc
- xu5bWbKV1I//jIVr6mZhU7Mcbg9pcpXdBS6EL1zDMx9QVKnD0w10Lt+JfeCJ6y+rgfO0JHSV4Af
- 92CW/T9WkflSiKFqtTgyrdG1G+66xKz/kvFbcmod5GVvGquFcxi6EkxepR9as2t3RO3qJ2dzMvg
- 56ySdw5OZG+odwr1AvRTxRMGOFI1QwkPUaYqXuEp9fvRdUr7EvHC7gGwU9QtylAqpcEDFcvrti2
- uBYUZERMG0bC6vCr7zYgRDr7EA3eHJx1YTioYAI=
-X-Received: by 2002:a17:906:2099:b0:c12:8bda:8d2e with SMTP id
- a640c23a62f3a-c15cdfe9b99mr57961166b.8.1783506768891; Wed, 08 Jul 2026
- 03:32:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1whPes-0000JJ-4y; Wed, 08 Jul 2026 06:37:38 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1whPeo-0002LJ-EV; Wed, 08 Jul 2026 06:37:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1783507048; bh=P575weruEuT/gpDM0T5gQo9v8qn6W2dx644Aq4PjQXw=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=Pv0MHOy0WLQdhzpHVk0SqZtUXZWVQCv/O2trjZ8llsR1lnpQDtgxKmfEdrDJpdBPZ
+ Nnr0GrCagQwIiGX9krp07/So5JT46wIBFgYklhnA4NGVPw1pSQ97EHOexFK0Go6+8i
+ a1n9Bcihme/zxksDWQ6uLkmwKGjltVZpT1CPlQ5H/Dkznf1S+vSGLVZOz5HQELvcfq
+ 3nFPrCy1e3mckBuLTa82Xkzu9hFQe4CerkhMZgpGDhOa7Avqzw+x2qhK4zh6NLnVav
+ LbgSVKQVUnm/OkHcEFeqv3Ni8uyCKgh1OnW8d6SaTEpAmud8i33LWIblqzwGWAr8MO
+ nKYHcXdsl8w3g==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4F7191BF461;
+ Wed, 08 Jul 2026 13:37:27 +0300 (MSK)
+Message-ID: <3e31b38c-0561-4f37-b2c4-97c10e6f232f@tls.msk.ru>
+Date: Wed, 8 Jul 2026 13:37:26 +0300
 MIME-Version: 1.0
-References: <20260706224426.14156-1-its@irrelevant.dk>
- <20260706224426.14156-5-its@irrelevant.dk>
- <CAFEAcA8ZQX01i9u0dUziRP0rAC1fSF=zbWcmQdLs=82D8ECg4Q@mail.gmail.com>
- <868d7628da027aff31851b82944c5d13f9448349.camel@mihalicyn.com>
- <dcd72ac6-aeeb-4309-a8cf-09656795cd0d@app.fastmail.com>
-In-Reply-To: <dcd72ac6-aeeb-4309-a8cf-09656795cd0d@app.fastmail.com>
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Date: Wed, 8 Jul 2026 12:32:34 +0200
-X-Gm-Features: AVVi8Cd4B9OIV1ye1c-gHAhsG0x3GpfCDlY1Zy4MfYQ5pn00JOp0NeljKnp5ihk
-Message-ID: <CAJqdLrrBXyg-L0hA5LBouQ5zb5-beFj1H3T42O8b9Tognhf1JA@mail.gmail.com>
-Subject: Re: [PULL 04/11] hw/nvme: add migration blockers for non-supported
- cases
-To: Klaus Jensen <its@irrelevant.dk>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- aleksandr.mikhalitsyn@futurfusion.io, 
- Jonathan Cameron via <qemu-devel@nongnu.org>,
- Klaus Jensen <k.jensen@samsung.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Keith Busch <kbusch@kernel.org>, 
- Jesper Devantier <foss@defmacro.it>, Fam Zheng <fam@euphon.net>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9_via?= <qemu-block@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alexander@mihalicyn.com; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 01/21] target/s390x: Fix wrong address handling in
+ address loops
+To: Harald Freudenberger <freude@linux.ibm.com>,
+ richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ thuth@redhat.com, berrange@redhat.com
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
+ dengler@linux.ibm.com, borntraeger@linux.ibm.com, fcallies@linux.ibm.com, 
+ cohuck@redhat.com, qemu-stable <qemu-stable@nongnu.org>
+References: <20260707161815.40919-1-freude@linux.ibm.com>
+ <20260707161815.40919-2-freude@linux.ibm.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260707161815.40919-2-freude@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,90 +115,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Mi., 8. Juli 2026 um 12:28 Uhr schrieb Klaus Jensen <its@irrelevant.dk>:
->
->
->
-> On Wed, Jul 8, 2026, at 12:23, Alexander Mikhalitsyn wrote:
-> > On Wed, 2026-07-08 at 11:11 +0100, Peter Maydell wrote:
-> >> On Mon, 6 Jul 2026 at 23:44, Klaus Jensen <its@irrelevant.dk> wrote:
-> >> >
-> >> > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-> >> >
-> >> > Let's block migration for cases we don't support:
-> >> > - SR-IOV
-> >> > - CMB
-> >> > - PMR
-> >> > - SPDM
-> >> >
-> >> > No functional changes here, because NVMe migration is
-> >> > not supported at all as of this commit.
-> >>
-> >> Hi; Coverity has a complaint about this commit (CID 1663673):
-> >
-> > Dear Peter,
-> >
-> >>
-> >> > +#define BLOCKER_FEATURES_MAX_LEN 256
-> >> > +
-> >> > +static inline void nvme_add_blocker_feature(char *blocker_features,
-> >> > +                                            const char *feature)
-> >> > +{
-> >> > +    if (strlen(blocker_features) > 0) {
-> >> > +        g_strlcat(blocker_features, ", ", BLOCKER_FEATURES_MAX_LEN);
-> >> > +    }
-> >> > +    g_strlcat(blocker_features, feature, BLOCKER_FEATURES_MAX_LEN);
-> >>
-> >> g_strlcat has a return value to tell us whether it managed to fit
-> >> all the text in, but we aren't checking it.
-> >>
-> >> In this case it looks like that's not a big deal (it does always NUL
-> >> terminate even if it truncates, and we're only using the string
-> >> to report migration blockers), but I think it would be nicer to
-> >> avoid using a fixed-size char array: they're usually a bit more
-> >> bug-prone.
-> >>
-> >> How about we use glib's GPtrArray and g_strjoinv() instead of
-> >> manually building the string? Something like:
-> >>
-> >>
-> >>     g_autoptr(GPtrArray) blocker_features = g_ptr_array_new();
-> >>
-> >>     if (...) {
-> >>         g_ptr_array_add(blocker_features, "SR-IOV");
-> >>     }
-> >>     [etc...]
-> >>
-> >>
-> >>     if (blocker_features->len > 0) {
-> >>         g_autofree blocker_list = NULL;
-> >>
-> >>         g_ptr_array_add(blocker_features, NULL);
-> >>         blocker_list = g_strjoinv(", ", (void *)blocker_features->pdata);
-> >>         error_setg(&n->migration_blocker,
-> >>                    "Migration is not supported for %s", blocker_list);
-> >>         if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
-> >>             return false;
-> >>         }
-> >>     }
-> >
-> > oh, thanks. My bad. :-( Would you like to submit your fix as a patch, or
-> > should I take your suggestions and send a fixup patch (or update my series)?
-> >
->
-> Alex,
+On 07.07.2026 19:17, Harald Freudenberger wrote:
+> The loop increments addr by the element stride (+= 4) before calling
+> wrap_address, but then overwrites the loop addr with the wrapped
+> value. On the next iteration the stride is applied to the wrapped
+> address of the previous element, not to the original unwrapped
+> address. This results in every element after the first is read from a
+> wrong (wrapped) address.
+> 
+> Fixes: 9f17bfdab4 ("target/s390x: support SHA-512 extensions")
+> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+> ---
+>   target/s390x/tcg/crypto_helper.c | 12 ++++--------
+>   1 file changed, 4 insertions(+), 8 deletions(-)
 
-Hi Klaus,
+This feels like qemu-stable material.
+I'm picking this change up for currently active stable qemu series.
+Please let me know if I shouldn't.
 
->
-> Please send as a patch for master, you can add Suggested-by for Peter :)
+Thanks,
 
-will do, thanks! ;-)
-
-Kind regards,
-Alex
-
->
-> Cheers,
-> Klaus
+/mjt
 
