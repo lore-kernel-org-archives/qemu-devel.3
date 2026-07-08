@@ -4,94 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C288BC44501
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11CA3C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:26:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whUzQ-00010l-Po; Wed, 08 Jul 2026 12:19:12 -0400
+	id 1whV5s-0005qd-08; Wed, 08 Jul 2026 12:25:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1whUzP-000108-PY
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:11 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1whUzM-0006st-B7
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:11 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2cace91f112so9695025ad.0
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 09:19:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1whV5q-0005qV-VT
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:25:51 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1whV5m-0000RU-MT
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:25:50 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 668GLN1b3337426
+ for <qemu-devel@nongnu.org>; Wed, 8 Jul 2026 16:25:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ rPMRC8bSTaFMJCdy/GA1WtAKwDzcgqRRRrASoj06YYk=; b=VD2d2afml3KaFk9c
+ IhxPM1JnPP6jsRmj7XolEOM7oiAsPUijLHxu5+DoZ/49bGLeXm6VTgS0cXswFVK0
+ HWIDYvPR3FPGnlwSNrdjwNJ2AU2l8a6j+LcNutp0Q036e+22pcOjbLE31LSr9cJ4
+ he3gUYpKqBYmZ3f/t5TGvaQ+ACOA3eZKzyDqZVb5cuV8opR/hcJkLh5izQuByaa0
+ IBtNrLPLtRz2Y7SVNtiCU3unBg5mQz34xWce3ku1kD0Cb0IYqMpy2mMm8MSID2EP
+ uvWieL49BPstNqV5TCD+fWw2zaWvptd8tLsTV6mS4PTRXhUFgXHn7giega22Zz9D
+ dGfQUQ==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9cssuen6-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 16:25:44 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-c88aab7c1d4so900286a12.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 09:25:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1783527546; x=1784132346; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=5fqipkyWSeoyAFF1Lx9OCugXn/sgrEYvlKLpBmqiR3s=;
- b=TkOfuS1QNBXGhhBOWAl5c88NyEpgnKD2ptNz1xbsrogvxaY3LUr1h951aoAxMVJqaD
- XUBCmtOO/aQPZ2PVePX2t55KJ0H08JnSt9F2IoSbhx+MHW22rRV0ckUkJcEzydrIcapp
- 0yx8rJrhx9xKQ0EzP0acr+19agseRes/TC4+cLJixVs8ki4X61/0TrQUJi8GXkd9ntdo
- f9wFoZlYG9ofkdlYOMoCidliGBrNf5IcwFtXzQ/dnl9qfQS6csQtBQlxUfVJBZco/u+m
- PW4d9wtBmNjc4QwgdgcrvLiF0OAgTjBqLeBdsTtrVZ9XzXyb+nfgQ9Ut01+Bptopa31O
- xq2A==
+ d=oss.qualcomm.com; s=google; t=1783527943; x=1784132743; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=rPMRC8bSTaFMJCdy/GA1WtAKwDzcgqRRRrASoj06YYk=;
+ b=SVJz5SrHhbcnMl0JV4ix4nfcDGonEL85q3YwAdgwYipvdWFE/I2k3yQZSA+j7u5wLB
+ Il8V/JM+sqzzZd+SX2N9efl8Vgnmkz3WCHwtbMULcqS7DIfQk2xADjzwZ7/Sz7cm6GzY
+ 1oKSki3N2KZa5a2lMOn74cq4y8AGfi757PwHwJpaY0OugwXfsQ+g/TojBovwBEmvECFU
+ aELbUZ7G1JdKTHKIn1jewM/j3tCu0p0NX/4+IQ9qPPz1adU0RPu/NXnI8HvtSji9ICZr
+ sEt2oq7CvfgP5ESPtPoUpa0lBmT1kdsUX2XDpEBxr0faVDqxVE7SDalG0/n7oUVmOrKO
+ 84Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783527546; x=1784132346;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1783527943; x=1784132743;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=5fqipkyWSeoyAFF1Lx9OCugXn/sgrEYvlKLpBmqiR3s=;
- b=b2YCACjy+US2o934F0vjwzEDa8eHAuNVqIYdzTeiIHKIBHNVDPhSnlXOcQCwO6p8Yy
- wSKe6XKEiqzX3MR/s9OOEZtblaHY8K8PCUWgO6yRViMXQhF6fTf36D67VE8tGAW44mDI
- PYQicwh7eFO1Ce7X3rfV3NYM0gjz6SYwsql8ofAEZfr0AsclN/yZqOMWRlAm0BL6Cgs5
- R6twzHjGtaGx4rLDm5cnhQshFRp99kY6EW0j73DKYKyXpwpOwdH4B0IzcG5ZWJUlMp8F
- Zfn9PXf8suVyiQ87RGoD3n4/Y1OZuaLJKuvE24nCeUYm3bh65hJQ77oT96hPs2yUnn9G
- GxCg==
-X-Gm-Message-State: AOJu0YwwOHRmZSNG1ZuCSlUjDznm5h45DAhr07lx8YNM6KVyxj9pTFvx
- xJyCvXxp5c/C2K/hhilS82ABG2CmUzVCG2PYBq4E4VOyuOBkeFmJiFTTAn+wOodecF+I8ej8/29
- 5N/sIlSMI12Zf5MAtLoclNxFkcaREvosM/qC1iFihC8/H9XNZBHG2arj3eDCcKMup3M5rv+v7uf
- ltLamiEJ35EF9xMaLUAtsA6UHRmFUSDLNbPdqzoYE=
-X-Gm-Gg: AfdE7cmDv6Mh4bKRD1WeGhKZZ1qvex6s0+xY1P74fHhDZmL+0Gi//0B02QkZMclSExh
- q95EPM/JXZ/T93DuCSIAWhfDfT1T97h4FZGjpLdjN3BjdIRK4mZHlIjAF5CpQTQsKw19MMaKSks
- KB54PTBhDT69U6FNqWZvz1V8/WQvf4HC2oQLsP55wQXZgq4GeCY2WZHyt5SD1Zw/gPIV2lXsChj
- vDK1y2DpJpCFa8QbTPhHKYqLUawuTMjWTM05FiOGhyA9F6kkii5InebEEb78t1chgs+KgFuWOkp
- ib0bXXN0OI4jU+C319uf0iFH0Ddk8o3MiJNiDCTFLj3p7+4ZnIa6AtSTI1RRnzIFPZmnJQBmMTB
- 06sn57+y68BRl4upseKbSmGscsCX2nxjdQHFJg9fWQy37wEXusUE98llRH3wJgFbuke8PC2zxRC
- XOgKU51swXXOeYOKJYSMllLVY8y21K6IDNyTVxYqHAJBTE9WdE+/nB/QJQv0qklKuCg05aTIzbG
- utExdcGBRwXHOCyfkGZiBSAauk=
-X-Received: by 2002:a17:902:db04:b0:2cc:ae2b:b6d2 with SMTP id
- d9443c01a7336-2ccea3c852dmr29581475ad.15.1783527546298; 
- Wed, 08 Jul 2026 09:19:06 -0700 (PDT)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ccc9bdb56fsm30789265ad.15.2026.07.08.09.19.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jul 2026 09:19:05 -0700 (PDT)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>
-Subject: [PATCH v6 0/9] target/riscv: Add RISC-V Zvfofp8min extension support
-Date: Thu,  9 Jul 2026 00:18:50 +0800
-Message-ID: <20260708161859.1124848-1-max.chou@sifive.com>
-X-Mailer: git-send-email 2.43.0
+ bh=rPMRC8bSTaFMJCdy/GA1WtAKwDzcgqRRRrASoj06YYk=;
+ b=SucDv+Kebt4/xI4TBziEJXPAN4X7Q4z0s/zVbd9PTVkaK5NQS5kiWsCkAOdFhDdPy+
+ YIAFDJyVn2XOka9Wd5yUdSZg6raUyZEE+GEJYCkPgxFMvRX4/eIpfEEk6Y0NmDQHoa/l
+ 4UE/zWWLy0B9liXcDSSYOo42yumo1LVSuyhB87H4NRuN0zvbJlsRX6hw1PX6WcV021rT
+ 6mnvAoWsMzdefqfkqivSF7AGj6ZG6FjXiDKULPYGcqs3Rvkz/NL4h4uu0cmr2EjuuXOj
+ 0ja25Wg0QmBa69xFeJ2MjdVxionH7ip/B2aiKI09jKIFonL0ICpS7xQq5zTbgqM6UW1M
+ Mr9w==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RptOYdon5qqEM4s/MO/kGNK3DLE97Q0KBeOIpbyxHvoC/H5NB1/2eBPsX5nDF5heNbrjNYWM4POCoBn@nongnu.org
+X-Gm-Message-State: AOJu0YxiH27s8tOTbn4d+h//jxiFnSjbFWczoodiMB0uF40Eix0wgvnO
+ ft/dUK9F03uSo3VNqsRN430pegqBNzhJHtnyIRl8IUFdWE5Qw3YjOHBdE1KcKx7Hdm+3gQdQOLs
+ UGjWlyAeb7Q1u6vksvALgHJWsS8RCKzyXHen2XQyBDlKjHRnVXpqpW2R3yg==
+X-Gm-Gg: AfdE7ckTEq5BGwqiygmENmM7XhB2HYPxG5oQbC832gA6J+scABWP2t274n4c5OwiHRg
+ Rp0xU4jv5kZKvEESwGtkbp85NeGYFEgP4g9mLXgkTz+eLCQP+PlALprYWKVzAaG6fZ8/GJv3wbX
+ /1xXUYHLxs1Vom+rl2k8Q4Gs7NG6mTB6ecNqzOzVK0Z4hps27FgToXA7VTtBgrux+3LaVlwrRe1
+ R4mEItV7dqvciwwpNGtNlxq39o64WKtggx6/4uzcAa+sJS5poek2UhfswXqsRmOX77flGIAEVu/
+ cnst2WDVKAIoHD5b4E44oXMKa3EBMr2ft12guf7Q67YCcV7580aneZbnbeW5MmCzMvr144kZbPJ
+ 1sL6wrozl5uE3Xt3FUOt3b7vOuoux4h0gZfbpWLlnsfMoHbw6k+XXE51ot18g8RSdUaJREtZhz9
+ 9nP8Y=
+X-Received: by 2002:a05:6a20:7288:b0:3b3:1c7b:ff7 with SMTP id
+ adf61e73a8af0-3c0bd0fa250mr3795208637.46.1783527943253; 
+ Wed, 08 Jul 2026 09:25:43 -0700 (PDT)
+X-Received: by 2002:a05:6a20:7288:b0:3b3:1c7b:ff7 with SMTP id
+ adf61e73a8af0-3c0bd0fa250mr3795163637.46.1783527942642; 
+ Wed, 08 Jul 2026 09:25:42 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3119c2a7bb5sm2121967eec.25.2026.07.08.09.25.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 Jul 2026 09:25:42 -0700 (PDT)
+Message-ID: <5e1aac59-63a8-4e5b-87f8-b9437dc44e61@oss.qualcomm.com>
+Date: Wed, 8 Jul 2026 09:25:40 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/91] tests/tcg: run tests with meson
+To: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
+ <ed40c4a1-3e15-4ca9-8287-602723cbf6a4@linux.ibm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <ed40c4a1-3e15-4ca9-8287-602723cbf6a4@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=max.chou@sifive.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Analysis: v=2.4 cv=EtziaycA c=1 sm=1 tr=0 ts=6a4e7a08 cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=OBoZ8qvZ9WMA9wKwbwoA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=x9snwWr2DeNwDh03kgHS:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDE2MCBTYWx0ZWRfX42Hri4RoKDlv
+ XMRJ+9yLsrvi0JcTH3H77QVqF84y3YGtGv60yQpcwuX5SgJQSqeEArIQc3GEvHcd6MD9nUKLHHk
+ NkI6bLSWAC3udlFVOA+1RNmBYSC4c6TKioMqmYNHK+M/CSwzUxMSEyCGU95vsKbdzDLeUqwsBfh
+ YgIpip24AZn55K4/snHTPOP70r8g1I3huu57/ikqVIk7zN6adfQHAtgON5p90yHp2PfC4Pa6Yt4
+ b8bK9bSMcb4YUp/fs8pL/JwYlH6iGHpMj1LmVgoweZMHAOAReHgJ2b5zZvslAiZnzCW+7u38QLj
+ woKirxoGdwj++D/JsubO3cJyNop1MZYV7EWnMVQbxOi/5WuUjzXlerWSwlN83bbx2vyipThCtro
+ djhwZT2tK3JlvzeAq/5vouVBzgaJ6CDB1dhPH29EFUol8MEUpQg560g1irlA1CmCDSWZhMiMEbx
+ nfURgqSbRj/5MfvY6XA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDE2MCBTYWx0ZWRfX8C5uezRD4UwK
+ fQpYjSPEpngyBRgjnmBZLT8h+uJXDJsYcVAdQHJm9ncz/kMA56nLof9Z7/omFWic/KbJjWT2mGD
+ 3HpNBNdwVgEhytHt68nC61HJSRRlbok=
+X-Proofpoint-GUID: Zw-gMvzYT4mBC_dmJBOeaD222JW-7gOO
+X-Proofpoint-ORIG-GUID: Zw-gMvzYT4mBC_dmJBOeaD222JW-7gOO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-08_03,2026-07-08_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0
+ priorityscore=1501 clxscore=1015 suspectscore=0 bulkscore=0 impostorscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607080160
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,136 +168,478 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset adds support for the RISC-V Zvfofp8min ISA extension that
-provides conversion operations for OCP FP8 formats which provide the
-foundation for the future vector matrix extensions.
+On 7/8/2026 5:09 AM, Ilya Leoshkevich wrote:
+> 
+> 
+> On 7/7/26 00:32, Pierrick Bouvier wrote:
+>> This series replaces TCG tests makefiles with meson, with the
+>> goal of having something more readable and maintainable in the long term.
+>> Also it closes the gap that tcg tests had with the rest of tests, by
+>> integrating
+>> them with meson directly.
+>>
+>> It covers all existing tests for all architectures, including
+>> user/system/multiarch-user/multiarch-system. It implements all
+>> requirements
+>> listed on original thread [1].
+>>
+>> [1] https://lore.kernel.org/qemu-devel/87wlwfsay4.fsf@draig.linaro.org/
+>>
+>> We also have for free:
+>> - correct and complete dependencies for any test, including:
+>>    scripts, c.inc, headers, reference files and binaries/plugins.
+>> - catch test declaration issues at configure time vs test time.
+>> - proper data types for variables instead of string expansion with make.
+>>
+>> Series first introduce the meson machinery needed in tests/tcg/
+>> meson.build, step
+>> by step. Then it adds support for all existing archs. Finally, we remove
+>> Makefiles and configure bits.
+>>
+>> Usage:
+>>
+>> ```
+>> make check-tcg
+>> make check-tcg-aarch64-linux-user
+>> make check-tcg-aarch64-softmmu
+>>
+>> make tcg-tests
+>>
+>> ninja clean
+>> ./pyvenv/bin/meson test aarch64-softmmu-asid2 --verbose
+>> ```
+>>
+>> A few items were left for further work (out of scope for this series):
+>> - xtensaeb: didn't find how to cross compile for this architecture
+>> with what we
+>>    have now in container debian-xtensa-cross. Tips are welcome.
+>> - tricore: implemented but reverted as all tests seem to hang. To be
+>>    investigated.
+>> - riscv64/interruptedmemory.S is hanging. To be investigated.
+>> - i386/test-i386-fprem.c is deactivated for now. It's broken (output
+>> does not
+>>    match bare metal result) and is the slowest test we have. To be
+>> refactored and
+>>    fixed.
+>>
+>> v3
+>> -- 
+>>
+>> - add all architectures
+>> - reduce number of plugins tests (only add one test for each plugin from
+>>    multiarch pool)
+>> - add depends for executable - allow to depend on a custom target for
+>> generated
+>>    headers (x86_64 mmx, avx)
+>> - add new tests added since last version for aarch64 (mte + gpc)
+>> - refactor series to keep all arch files at end
+>> - add docker host architecture selection
+>>
+>> v2
+>> -- 
+>>
+>> - s/mispell/misspell
+>> - moved comment about why we remove 'lib' prefix for plugins
+>> - if user declare a wrong entry in a dictionary, list possible keys
+>> - build tests by default (with 'all' target), as long as cross
+>> compiler is
+>>    natively installed, to avoid triggering a container build.
+>> - reword some comments based on reviewers feedback
+>> - always declare all tests and avoid "per config" errors (no 'if' in
+>> arch files)
+>> - move compiler feature and gdb version checks directly in tests/tcg/
+>> meson.build
+>> - add support for cross containers
+>> - add top target 'tcg-tests' to rebuild all tests
+>>
+>> Pierrick Bouvier (91):
+>>    tests/tcg/multiarch/system/memory.c: remove unused variable
+>>    tests/tcg/multiarch/plugin/check-plugin-output.sh: take test output as
+>>      input
+>>    tests/tcg/multiarch/plugin: rename check-plugin-output to
+>>      regex-compare
+>>    tests/tcg: introduce meson.build
+>>    tests/tcg/meson.build: introduce exe_name
+>>    tests/tcg/meson.build: introduce test_name
+>>    tests/tcg/meson.build: introduce cflags
+>>    tests/tcg/meson.build: introduce qemu_args
+>>    tests/tcg/meson.build: introduce env_var
+>>    tests/tcg/plugins: build list of test_plugins
+>>    tests/tcg/meson.build: introduce plugin_test
+>>    tests/tcg/meson.build: test gdb support and introduce gdb_arch
+>>    tests/tcg/meson.build: introduce gdb_test
+>>    tests/tcg/meson.build: add default flag for testing compiler support
+>>    tests/tcg/meson.build: introduce wrapper
+>>    tests/tcg/meson.build: introduce expected_output
+>>    tests/tcg/meson.build: add wrapper run_and_check_forbidden_output
+>>    tests/tcg/meson.build: add wrapper run_with_input
+>>    tests/tcg/meson.build: add wrapper record_replay
+>>    tests/tcg/meson.build: add wrapper check_plugin_output
+>>    tests/tcg/meson.build: add logic to skip tests
+>>    tests/tcg/meson.build: introduce cc_feat and cc_feat_cflags
+>>    tests/tcg/meson.build: introduce gdb_feat and gdb_feat_version
+>>    tests/tcg/meson.build: move gdb_arch support check
+>>    tests/tcg/meson.build: let test infrastructure detect compiler
+>>    tests/docker/docker.py: return error code if probe fails
+>>    tests/docker/docker.py: remove "Image is up to date" info
+>>    tests/tcg/meson.build: introduce cc_dockerfile and cc_docker_arch
+>>    tests/tcg/meson.build: introduce depends
+>>    tests/tcg/meson.build: add top-level 'tcg-tests' target
+>>    tests/tcg/multiarch: declare user tests
+>>    tests/tcg/multiarch: declare system tests
+>>    tests/tcg/meson.build: add generic plugin tests
+>>    tests/tcg/aarch64: user tests
+>>    tests/tcg/aarch64/system/gpc-test.c: remove unused variables
+>>    tests/tcg/aarch64: system tests
+>>    tests/tcg/aarch64_be: user tests
+>>    tests/tcg/alpha: add float reference files
+>>    tests/tcg/alpha: user tests
+>>    tests/tcg/alpha: system tests
+>>    tests/tcg/arm: user tests
+>>    tests/tcg/arm: system tests
+>>    tests/tcg/hexagon/overflow.c: add missing include
+>>    tests/tcg/hexagon: user tests
+>>    tests/tcg/multiarch/sha1.c: fix big endian implementation
+>>    tests/tcg/hppa: add float reference files
+>>    tests/tcg/hppa: user tests
+>>    tests/tcg/i386: add missing float reference files
+>>    tests/tcg/i386: user tests
+>>    tests/tcg/i386: system tests
+>>    tests/tcg/loongarch64: user tests
+>>    tests/tcg/loongarch64: system tests
+>>    tests/tcg/m68k: add float reference files
+>>    tests/tcg/m68k: user tests
+>>    scripts/probe-gdb-support.py: add mapping for mips architecture
+>>    tests/tcg/mips: add float reference files
+>>    test/tcg/mips: user tests
+>>    tests/tcg/mips64: add float reference files
+>>    tests/tcg/mips64: user tests
+>>    tests/tcg/mips64el: add float reference files
+>>    tests/tcg/mips64el: user tests
+>>    tests/docker/dockerfiles/debian-all-test-cross.docker: add or1k
+>>      toolchain
+>>    tests/tcg/or1k/test_addic.c: remove unused variables
+>>    tests/tcg/or1k/test_muli.c: remove set but unused variable
+>>    tests/tcg/or1k: add float reference files
+>>    plugins/api.c: identify or1k pc register and mark it as read only
+>>    tests/tcg/or1k: user tests
+>>    tests/tcg/ppc64: add float reference files
+>>    tests/tcg/ppc64: remove dependency on qemu/compiler.h
+>>    tests/tcg/ppc64: user tests
+>>    tests/tcg/ppc64le: add missing float reference file
+>>    tests/tcg/ppc64le: user tests
+>>    tests/tcg/riscv64: add float reference files
+>>    tests/tcg/riscv64: user tests
+>>    tests/tcg/riscv64: system tests
+>>    tests/tcg/s390x/head64.S: declare _exit symbol after main
+>>    tests/tcg/s390x: add float reference files
+>>    tests/tcg/s390x: user tests
+>>    tests/tcg/s390x: system tests
+>>    tests/tcg/sh4: add float reference files
+>>    tests/tcg/sh4: user tests
+>>    tests/tcg/tricore: system tests
+>>    Revert "tests/tcg/tricore: system tests"
+>>    tests/tcg/x86_64: add missing float reference file
+>>    tests/tcg/x86_64: user tests
+>>    tests/tcg/x86_64: system tests
+>>    tests/tcg/xtensa/crt.S: align .text section
+>>    tests/tcg/xtensa: system tests
+>>    tests: remove tcg tests machinery
+>>    tests/tcg: remove Makefiles
+>>    configure: remove --cross-cc* options
+>>
+>>   configure                                     | 473 ---------
+>>   docs/devel/testing/main.rst                   |  22 +-
+>>   plugins/api.c                                 |   2 +
+>>   scripts/probe-gdb-support.py                  |   1 +
+>>   tests/Makefile.include                        |  68 +-
+>>   tests/docker/docker.py                        |   4 +-
+>>   .../dockerfiles/debian-all-test-cross.docker  |  16 +-
+>>   tests/lcitool/refresh                         | 107 +-
+>>   tests/meson.build                             |   2 +-
+>>   tests/tcg/Makefile.target                     | 281 -----
+>>   tests/tcg/aarch64/Makefile.softmmu-target     | 147 ---
+>>   tests/tcg/aarch64/Makefile.target             | 198 ----
+>>   tests/tcg/aarch64/meson.build                 | 195 ++++
+>>   tests/tcg/aarch64/system/gpc-test.c           |   5 -
+>>   tests/tcg/aarch64/system/meson.build          | 108 ++
+>>   tests/tcg/aarch64_be/Makefile.target          |  17 -
+>>   tests/tcg/aarch64_be/meson.build              |  22 +
+>>   tests/tcg/alpha/Makefile.softmmu-target       |  34 -
+>>   tests/tcg/alpha/Makefile.target               |  18 -
+>>   tests/tcg/alpha/float_convd.ref               | 988 ++++++++++++++++++
+>>   tests/tcg/alpha/float_convs.ref               | 748 +++++++++++++
+>>   tests/tcg/alpha/float_madds.ref               | 768 ++++++++++++++
+>>   tests/tcg/alpha/meson.build                   |  55 +
+>>   tests/tcg/alpha/system/meson.build            |  46 +
+>>   tests/tcg/arm/Makefile.softmmu-target         |  80 --
+>>   tests/tcg/arm/Makefile.target                 |  87 --
+>>   tests/tcg/arm/meson.build                     |  80 ++
+>>   tests/tcg/arm/system/meson.build              |  66 ++
+>>   tests/tcg/hexagon/Makefile.target             | 146 ---
+>>   tests/tcg/hexagon/meson.build                 | 111 ++
+>>   tests/tcg/hexagon/overflow.c                  |   1 +
+>>   tests/tcg/hppa/Makefile.target                |  14 -
+>>   tests/tcg/hppa/float_convd.ref                | 988 ++++++++++++++++++
+>>   tests/tcg/hppa/float_convs.ref                | 748 +++++++++++++
+>>   tests/tcg/hppa/float_madds.ref                | 768 ++++++++++++++
+>>   tests/tcg/hppa/meson.build                    |  22 +
+>>   tests/tcg/i386/Makefile.softmmu-target        |  37 -
+>>   tests/tcg/i386/Makefile.target                | 102 --
+>>   tests/tcg/i386/float_convd.conf               | 988 ------------------
+>>   tests/tcg/i386/float_convd.ref                | 988 ++++++++++++++++++
+>>   tests/tcg/i386/float_madds.ref                | 768 ++++++++++++++
+>>   tests/tcg/i386/meson.build                    |  58 +
+>>   tests/tcg/i386/system/meson.build             |  48 +
+>>   tests/tcg/loongarch64/Makefile.softmmu-target |  33 -
+>>   tests/tcg/loongarch64/Makefile.target         |  20 -
+>>   tests/tcg/loongarch64/meson.build             |  32 +
+>>   tests/tcg/loongarch64/system/meson.build      |  47 +
+>>   tests/tcg/m68k/Makefile.target                |   7 -
+>>   tests/tcg/m68k/float_convd.ref                | 988 ++++++++++++++++++
+>>   tests/tcg/m68k/float_convs.ref                | 748 +++++++++++++
+>>   tests/tcg/m68k/float_madds.ref                | 768 ++++++++++++++
+>>   tests/tcg/m68k/meson.build                    |  23 +
+>>   tests/tcg/meson.build                         | 447 ++++++++
+>>   tests/tcg/minilib/Makefile.target             |  21 -
+>>   tests/tcg/mips/Makefile.target                |  19 -
+>>   tests/tcg/mips/float_convd.ref                | 988 ++++++++++++++++++
+>>   tests/tcg/mips/float_convs.ref                | 748 +++++++++++++
+>>   tests/tcg/mips/float_madds.ref                | 768 ++++++++++++++
+>>   tests/tcg/mips/meson.build                    |  25 +
+>>   tests/tcg/mips/user/ase/dsp/Makefile          | 184 ----
+>>   tests/tcg/mips/user/isa/mips64r6/crc/Makefile |  40 -
+>>   tests/tcg/mips/user/isa/r5900/Makefile        |  32 -
+>>   tests/tcg/mips64/Makefile.target              |  20 -
+>>   tests/tcg/mips64/float_convd.ref              | 988 ++++++++++++++++++
+>>   tests/tcg/mips64/float_convs.ref              | 748 +++++++++++++
+>>   tests/tcg/mips64/float_madds.ref              | 768 ++++++++++++++
+>>   tests/tcg/mips64/meson.build                  |  27 +
+>>   tests/tcg/mips64el/Makefile.target            |   8 -
+>>   tests/tcg/mips64el/float_convd.ref            | 988 ++++++++++++++++++
+>>   tests/tcg/mips64el/float_convs.ref            | 748 +++++++++++++
+>>   tests/tcg/mips64el/float_madds.ref            | 768 ++++++++++++++
+>>   tests/tcg/mips64el/meson.build                |  14 +
+>>   tests/tcg/multiarch/Makefile.target           | 233 -----
+>>   tests/tcg/multiarch/meson.build               | 149 +++
+>>   .../multiarch/plugin/check-plugin-output.sh   |  36 -
+>>   tests/tcg/multiarch/plugin/regex-compare.sh   |  28 +
+>>   tests/tcg/multiarch/sha1.c                    |   4 +-
+>>   tests/tcg/multiarch/sha1.ref                  |   1 +
+>>   .../multiarch/system/Makefile.softmmu-target  |  81 --
+>>   tests/tcg/multiarch/system/memory.c           |   3 +-
+>>   tests/tcg/multiarch/system/meson.build        |  53 +
+>>   tests/tcg/or1k/Makefile                       |  71 --
+>>   tests/tcg/or1k/float_convd.ref                | 247 +++++
+>>   tests/tcg/or1k/float_convs.ref                | 187 ++++
+>>   tests/tcg/or1k/float_madds.ref                | 192 ++++
+>>   tests/tcg/or1k/meson.build                    |  72 ++
+>>   tests/tcg/or1k/test_addic.c                   |   2 +-
+>>   tests/tcg/or1k/test_muli.c                    |   5 +-
+>>   tests/tcg/plugins/meson.build                 |  11 +-
+>>   tests/tcg/ppc64/Makefile.target               |  63 --
+>>   tests/tcg/ppc64/float_convd.ref               | 988 ++++++++++++++++++
+>>   tests/tcg/ppc64/float_convs.ref               | 748 +++++++++++++
+>>   tests/tcg/ppc64/float_madds.ref               | 768 ++++++++++++++
+>>   tests/tcg/ppc64/meson.build                   |  56 +
+>>   tests/tcg/ppc64/vector.c                      |  11 +-
+>>   tests/tcg/ppc64/vsx_f2i_nan.c                 |   7 +-
+>>   tests/tcg/ppc64le/Makefile.target             |   7 -
+>>   tests/tcg/ppc64le/float_convd.ref             | 988 ++++++++++++++++++
+>>   tests/tcg/ppc64le/meson.build                 |  14 +
+>>   tests/tcg/riscv64/Makefile.softmmu-target     |  45 -
+>>   tests/tcg/riscv64/Makefile.target             |  20 -
+>>   tests/tcg/riscv64/float_convd.ref             | 988 ++++++++++++++++++
+>>   tests/tcg/riscv64/float_convs.ref             | 748 +++++++++++++
+>>   tests/tcg/riscv64/float_madds.ref             | 768 ++++++++++++++
+>>   tests/tcg/riscv64/meson.build                 |  38 +
+>>   tests/tcg/riscv64/system/meson.build          |  38 +
+>>   tests/tcg/s390x/Makefile.softmmu-target       |  57 -
+>>   tests/tcg/s390x/Makefile.target               | 127 ---
+>>   tests/tcg/s390x/float_convd.ref               | 988 ++++++++++++++++++
+>>   tests/tcg/s390x/float_convs.ref               | 748 +++++++++++++
+>>   tests/tcg/s390x/float_madds.ref               | 768 ++++++++++++++
+>>   tests/tcg/s390x/head64.S                      |   2 +
+>>   tests/tcg/s390x/meson.build                   | 140 +++
+>>   tests/tcg/s390x/system/meson.build            |  92 ++
+>>   tests/tcg/scripts/check_plugin_output.sh      |  25 +
+>>   tests/tcg/scripts/record_replay.sh            |  16 +
+>>   .../scripts/run_and_check_forbidden_output.sh |  19 +
+>>   tests/tcg/scripts/run_and_diff.sh             |  15 +
+>>   tests/tcg/scripts/run_with_input.sh           |  12 +
+>>   tests/tcg/sh4/Makefile.target                 |  18 -
+>>   tests/tcg/sh4/float_convd.ref                 | 494 +++++++++
+>>   tests/tcg/sh4/float_convs.ref                 | 374 +++++++
+>>   tests/tcg/sh4/float_madds.ref                 | 384 +++++++
+>>   tests/tcg/sh4/meson.build                     |  25 +
+>>   tests/tcg/tricore/Makefile.softmmu-target     |  53 -
+>>   tests/tcg/x86_64/Makefile.softmmu-target      |  44 -
+>>   tests/tcg/x86_64/Makefile.target              |  40 -
+>>   tests/tcg/x86_64/float_madds.ref              | 768 ++++++++++++++
+>>   tests/tcg/x86_64/meson.build                  |  83 ++
+>>   tests/tcg/x86_64/system/meson.build           |  62 ++
+>>   tests/tcg/xtensa/Makefile.softmmu-target      |  46 -
+>>   tests/tcg/xtensa/crt.S                        |   1 +
+>>   tests/tcg/xtensa/meson.build                  |  89 ++
+>>   tests/tcg/xtensaeb/Makefile.softmmu-target    |   5 -
+>>   134 files changed, 30491 insertions(+), 4114 deletions(-)
+>>   delete mode 100644 tests/tcg/Makefile.target
+>>   delete mode 100644 tests/tcg/aarch64/Makefile.softmmu-target
+>>   delete mode 100644 tests/tcg/aarch64/Makefile.target
+>>   create mode 100644 tests/tcg/aarch64/meson.build
+>>   create mode 100644 tests/tcg/aarch64/system/meson.build
+>>   delete mode 100644 tests/tcg/aarch64_be/Makefile.target
+>>   create mode 100644 tests/tcg/aarch64_be/meson.build
+>>   delete mode 100644 tests/tcg/alpha/Makefile.softmmu-target
+>>   delete mode 100644 tests/tcg/alpha/Makefile.target
+>>   create mode 100644 tests/tcg/alpha/float_convd.ref
+>>   create mode 100644 tests/tcg/alpha/float_convs.ref
+>>   create mode 100644 tests/tcg/alpha/float_madds.ref
+>>   create mode 100644 tests/tcg/alpha/meson.build
+>>   create mode 100644 tests/tcg/alpha/system/meson.build
+>>   delete mode 100644 tests/tcg/arm/Makefile.softmmu-target
+>>   delete mode 100644 tests/tcg/arm/Makefile.target
+>>   create mode 100644 tests/tcg/arm/meson.build
+>>   create mode 100644 tests/tcg/arm/system/meson.build
+>>   delete mode 100644 tests/tcg/hexagon/Makefile.target
+>>   create mode 100644 tests/tcg/hexagon/meson.build
+>>   delete mode 100644 tests/tcg/hppa/Makefile.target
+>>   create mode 100644 tests/tcg/hppa/float_convd.ref
+>>   create mode 100644 tests/tcg/hppa/float_convs.ref
+>>   create mode 100644 tests/tcg/hppa/float_madds.ref
+>>   create mode 100644 tests/tcg/hppa/meson.build
+>>   delete mode 100644 tests/tcg/i386/Makefile.softmmu-target
+>>   delete mode 100644 tests/tcg/i386/Makefile.target
+>>   delete mode 100644 tests/tcg/i386/float_convd.conf
+>>   create mode 100644 tests/tcg/i386/float_convd.ref
+>>   create mode 100644 tests/tcg/i386/float_madds.ref
+>>   create mode 100644 tests/tcg/i386/meson.build
+>>   create mode 100644 tests/tcg/i386/system/meson.build
+>>   delete mode 100644 tests/tcg/loongarch64/Makefile.softmmu-target
+>>   delete mode 100644 tests/tcg/loongarch64/Makefile.target
+>>   create mode 100644 tests/tcg/loongarch64/meson.build
+>>   create mode 100644 tests/tcg/loongarch64/system/meson.build
+>>   delete mode 100644 tests/tcg/m68k/Makefile.target
+>>   create mode 100644 tests/tcg/m68k/float_convd.ref
+>>   create mode 100644 tests/tcg/m68k/float_convs.ref
+>>   create mode 100644 tests/tcg/m68k/float_madds.ref
+>>   create mode 100644 tests/tcg/m68k/meson.build
+>>   create mode 100644 tests/tcg/meson.build
+>>   delete mode 100644 tests/tcg/minilib/Makefile.target
+>>   delete mode 100644 tests/tcg/mips/Makefile.target
+>>   create mode 100644 tests/tcg/mips/float_convd.ref
+>>   create mode 100644 tests/tcg/mips/float_convs.ref
+>>   create mode 100644 tests/tcg/mips/float_madds.ref
+>>   create mode 100644 tests/tcg/mips/meson.build
+>>   delete mode 100644 tests/tcg/mips/user/ase/dsp/Makefile
+>>   delete mode 100644 tests/tcg/mips/user/isa/mips64r6/crc/Makefile
+>>   delete mode 100644 tests/tcg/mips/user/isa/r5900/Makefile
+>>   delete mode 100644 tests/tcg/mips64/Makefile.target
+>>   create mode 100644 tests/tcg/mips64/float_convd.ref
+>>   create mode 100644 tests/tcg/mips64/float_convs.ref
+>>   create mode 100644 tests/tcg/mips64/float_madds.ref
+>>   create mode 100644 tests/tcg/mips64/meson.build
+>>   delete mode 100644 tests/tcg/mips64el/Makefile.target
+>>   create mode 100644 tests/tcg/mips64el/float_convd.ref
+>>   create mode 100644 tests/tcg/mips64el/float_convs.ref
+>>   create mode 100644 tests/tcg/mips64el/float_madds.ref
+>>   create mode 100644 tests/tcg/mips64el/meson.build
+>>   delete mode 100644 tests/tcg/multiarch/Makefile.target
+>>   create mode 100644 tests/tcg/multiarch/meson.build
+>>   delete mode 100755 tests/tcg/multiarch/plugin/check-plugin-output.sh
+>>   create mode 100755 tests/tcg/multiarch/plugin/regex-compare.sh
+>>   create mode 100644 tests/tcg/multiarch/sha1.ref
+>>   delete mode 100644 tests/tcg/multiarch/system/Makefile.softmmu-target
+>>   create mode 100644 tests/tcg/multiarch/system/meson.build
+>>   delete mode 100644 tests/tcg/or1k/Makefile
+>>   create mode 100644 tests/tcg/or1k/float_convd.ref
+>>   create mode 100644 tests/tcg/or1k/float_convs.ref
+>>   create mode 100644 tests/tcg/or1k/float_madds.ref
+>>   create mode 100644 tests/tcg/or1k/meson.build
+>>   delete mode 100644 tests/tcg/ppc64/Makefile.target
+>>   create mode 100644 tests/tcg/ppc64/float_convd.ref
+>>   create mode 100644 tests/tcg/ppc64/float_convs.ref
+>>   create mode 100644 tests/tcg/ppc64/float_madds.ref
+>>   create mode 100644 tests/tcg/ppc64/meson.build
+>>   delete mode 100644 tests/tcg/ppc64le/Makefile.target
+>>   create mode 100644 tests/tcg/ppc64le/float_convd.ref
+>>   create mode 100644 tests/tcg/ppc64le/meson.build
+>>   delete mode 100644 tests/tcg/riscv64/Makefile.softmmu-target
+>>   delete mode 100644 tests/tcg/riscv64/Makefile.target
+>>   create mode 100644 tests/tcg/riscv64/float_convd.ref
+>>   create mode 100644 tests/tcg/riscv64/float_convs.ref
+>>   create mode 100644 tests/tcg/riscv64/float_madds.ref
+>>   create mode 100644 tests/tcg/riscv64/meson.build
+>>   create mode 100644 tests/tcg/riscv64/system/meson.build
+>>   delete mode 100644 tests/tcg/s390x/Makefile.softmmu-target
+>>   delete mode 100644 tests/tcg/s390x/Makefile.target
+>>   create mode 100644 tests/tcg/s390x/float_convd.ref
+>>   create mode 100644 tests/tcg/s390x/float_convs.ref
+>>   create mode 100644 tests/tcg/s390x/float_madds.ref
+>>   create mode 100644 tests/tcg/s390x/meson.build
+>>   create mode 100644 tests/tcg/s390x/system/meson.build
+>>   create mode 100755 tests/tcg/scripts/check_plugin_output.sh
+>>   create mode 100755 tests/tcg/scripts/record_replay.sh
+>>   create mode 100755 tests/tcg/scripts/run_and_check_forbidden_output.sh
+>>   create mode 100755 tests/tcg/scripts/run_and_diff.sh
+>>   create mode 100755 tests/tcg/scripts/run_with_input.sh
+>>   delete mode 100644 tests/tcg/sh4/Makefile.target
+>>   create mode 100644 tests/tcg/sh4/float_convd.ref
+>>   create mode 100644 tests/tcg/sh4/float_convs.ref
+>>   create mode 100644 tests/tcg/sh4/float_madds.ref
+>>   create mode 100644 tests/tcg/sh4/meson.build
+>>   delete mode 100644 tests/tcg/tricore/Makefile.softmmu-target
+>>   delete mode 100644 tests/tcg/x86_64/Makefile.softmmu-target
+>>   delete mode 100644 tests/tcg/x86_64/Makefile.target
+>>   create mode 100644 tests/tcg/x86_64/float_madds.ref
+>>   create mode 100644 tests/tcg/x86_64/meson.build
+>>   create mode 100644 tests/tcg/x86_64/system/meson.build
+>>   delete mode 100644 tests/tcg/xtensa/Makefile.softmmu-target
+>>   create mode 100644 tests/tcg/xtensa/meson.build
+>>   delete mode 100644 tests/tcg/xtensaeb/Makefile.softmmu-target
+>>
+> 
+> Seems like something is wrong with cross-compiler detection now.
+> On Fedora I get:
+> 
+> FAILED: tests/tcg/s390x-softmmu-memory.test
+> /usr/lib64/ccache/s390x-linux-gnu-gcc /mnt/root/home/iii/qemu-
+> worktrees/20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com/
+> tests/tcg/multiarch/system/memory.c -o tests/tcg/s390x-softmmu-
+> memory.test -static -MMD -MF tests/tcg/s390x-softmmu-memory.d -Wall -
+> Werror -O0 -g -fno-strict-aliasing -nostdlib -I /mnt/root/home/iii/qemu-
+> worktrees/20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com/
+> tests/tcg/s390x/system/../../minilib /mnt/root/home/iii/qemu-
+> worktrees/20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com/
+> tests/tcg/s390x/system/../../minilib/printf.c -I /mnt/root/home/iii/
+> qemu-worktrees/20260706223343.988769-1-
+> pierrick.bouvier@oss.qualcomm.com/include/hw/s390x/ipl -I /mnt/root/
+> home/iii/qemu-worktrees/20260706223343.988769-1-
+> pierrick.bouvier@oss.qualcomm.com/roms/SLOF/lib/libc/include -
+> march=z13 ../tests/tcg/s390x/system/../head64.S ../tests/tcg/s390x/
+> system/../console.c -DCHECK_UNALIGNED=0
+> In file included from /mnt/root/home/iii/qemu-
+> worktrees/20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com/
+> tests/tcg/multiarch/system/memory.c:15:
+> /usr/lib/gcc/s390x-linux-gnu/15/include/stdint.h:11:16: fatal error:
+> stdint.h: No such file or directory
+>    11 | # include_next <stdint.h>
+>       |                ^~~~~~~~~~
+> 
+> The cross-compiler situation on Fedora is that they ship the
+> cross-compiler itself, but no userspace headers, so it's usable
+> only for kernel builds. In this case QEMU should fall back to Docker,
+> which works for me on master, but not with this series.
 
-Ratification status:
-- Zvfofp8min is currently v0.9 and is going through the RVIA ratification
-  process. This series tracks the v0.9 isa-manual tag below.
-- riscv-isa-manual tag:
-  https://github.com/riscv/riscv-isa-manual/releases/tag/zvfofp8min-0.9
+Thanks for the report. I just tried that on debian for now.
 
-Zvfofp8min (v0.9):
-- The Zvfofp8min extension provides minimal vector conversion support for
-  the OFP8 formats. It requires the Zve32f extension and leverages the
-  altfmt field in the VTYPE CSR (introduced by Zvfbfa) to select between
-  E4M3 (altfmt=0) and E5M2 (altfmt=1) formats. Per the OCP FP8 spec and
-  the extension definition:
-  - Canonical NaN for both E4M3 and E5M2 is 0x7f.
-  - All NaNs are treated as quiet NaNs.
-  - Widening conversions are exact: no rounding and no exception flags.
-- These conversions are the data-movement primitives that feed and drain
-  the OFP8 vector/matrix compute pipeline.
-- The LLVM RISC-V backend emits these instructions as of LLVM 22.1.0:
-  https://releases.llvm.org/22.1.0/docs/ReleaseNotes.html#changes-to-the-risc-v-backend
+Also, for s390x, I noticed that some tests are relying on roms/SLOF/...
+headers, which are not available if submodules are not initialized.
+Probably another corner case to cover.
 
-Instructions:
-  Extended (existing instructions taught to handle OFP8):
-  - vfwcvtbf16.f.f.v   : OFP8 to BF16 widening conversion
-  - vfncvtbf16.f.f.w   : BF16 to OFP8 narrowing conversion
-  New:
-  - vfncvtbf16.sat.f.f.w : BF16 to OFP8 narrowing with saturation
-  - vfncvt.f.f.q         : FP32 to OFP8 quad-width (4x) narrowing conversion
-  - vfncvt.sat.f.f.q     : FP32 to OFP8 quad-width narrowing with saturation
+I'll take a look at how we detected all this before, and gracefully fall
+back to docker in this case.
 
-Verification:
-- riscv-tests (fork https://github.com/riscv-software-src/riscv-tests):
-  https://github.com/rnax/riscv-tests/tree/dev/rnax/support_zvfofp8min
-  - Require LLVM 22.1.0
-    https://releases.llvm.org/22.1.0/docs/ReleaseNotes.html#changes-to-the-risc-v-backend
-  - Zvfofp8min test target: rv64uzvfofp8min/rv32uzvfofp8min
-  - Both Spike and QEMU applied this patchset could pass the riscv-tests
-
-References:
-- OCP FP8 specification:
-  https://www.opencompute.org/documents/ocp-8-bit-floating-point-specification-ofp8-revision-1-0-2023-12-01-pdf-1
-
-
-Changes in v6
-- Add patch 1 to fix the biased exponent write bug in the
-  parts_float_to_e5m2() saturate path. FloatParts64.exp holds an
-  unbiased exponent, so exp_bias must be subtracted when storing
-  the max-normal biased exponent value.
-- Initialize float_e4m3_nan_is_snan to false in riscv_cpu_reset_hold()
-  to ensure consistent NaN handling for OFP8 E4M3 operations.
-- Merge "Expose Zvfofp8min property" into "Add cfg property for
-  Zvfofp8min extension" to keep the property registration together
-  with the cfg field definition.
-- Fix indentation of cbo.* opcode table entries in the disas patch.
-- Rebase on riscv-to-apply.next (commit 267b5a2)
-
-Changes in v5
-- Drop Zvfofp4min which is not going through the RVIA ratification
-  process yet.
-- Fix typos.
-- Rebase on riscv-to-apply.next (commit bf76a00)
-
-Changes in v4
-- Rebase on riscv-to-apply.next (commit 21101a7)
-- Remove the softfloat library related patches (Thanks for RH's help to
-  split this part)
-- Add missing illegal ALTFMT SEW pattern checking for Zvfofp8min in
-  patch 4 (target/riscv: rvv: Make vfwcvtbf16.f.f.v support OFP8 to BF16
-  conversion for Zvfofp8min extension)
-
-Changes in v3
-- Add floatN_nan_is_snan to simply the quiet/signaling NaN checking flow
-  in patch 2 & 3
-- Add patch 4 to fix pseudo-NaN handling in FPATAN/FYL2XP1/FYL2X helpers
-
-Changes in v2
-- Merged v1 patch 2 & 3 to v2 patch 3, v1 patch 4 & 5 to v2 patch 4
-- Added new v2 patch 2 to refactor the IEEE format NaN classification
-  functions (float16, bfloat16, float32, float64) to use internal helper
-  functions, reducing code duplication and improving maintainability.
-  The OCP FP8 NaN classification functions follow the same pattern.
-- Refactored softfloat implementation to use capability-based FloatFmt
-  flags (no_infinity, limited_nan, overflow_raises_invalid, normal_frac_max)
-  instead of monolithic flags
-- Removed ocp_fp8e5m2_no_signal_nan and ocp_fp8_same_canonical_nan flags
-  from float_status; now using local float_status with no_signaling_nans
-  and default_nan_pattern for RISC-V Zvfofp8min instructions
-- Rebased on latest riscv-to-apply.next with zvfbfa v3 patchset
-
-v5: 20260427060928.2322570-1-max.chou@sifive.com
-v4: 20260304134006.2908449-1-max.chou@sifive.com
-v3: 20260204051756.667397-1-max.chou@sifive.com
-v2: 20260127063723.442734-1-max.chou@sifive.com
-v1: 20260108151650.16329-1-max.chou@sifive.com
-
-
-Max Chou (9):
-  fpu: Fix biased exponent write in parts_float_to_e5m2 saturate path
-  target/riscv: rvv: Fix NOP_UU_B vs2 width
-  target/riscv: Add cfg property for Zvfofp8min extension
-  target/riscv: Add implied rules for Zvfofp8min extension
-  target/riscv: rvv: Make vfwcvtbf16.f.f.v support OFP8 to BF16
-    conversion for Zvfofp8min extension
-  target/riscv: rvv: Make vfncvtbf16.f.f.w support BF16 to OFP8
-    conversion for Zvfofp8min extension
-  target/riscv: rvv: Add vfncvtbf16.sat.f.f.w instruction for Zvfofp8min
-    extension
-  target/riscv: rvv: Add vfncvt.f.f.q and vfncvt.sat.f.f.q instructions
-    for Zvfofp8min extension
-  disas/riscv: Add support of Zvfofp8min extension
-
- disas/riscv.c                                 |  19 ++-
- fpu/softfloat.c                               |   3 +-
- target/riscv/cpu.c                            |  13 +-
- target/riscv/cpu_cfg_fields.h.inc             |   1 +
- target/riscv/helper.h                         |  12 ++
- target/riscv/insn32.decode                    |   5 +
- .../riscv/tcg/insn_trans/trans_rvbf16.c.inc   |  32 +++--
- .../riscv/tcg/insn_trans/trans_rvofp8.c.inc   | 105 +++++++++++++++
- target/riscv/tcg/insn_trans/trans_rvv.c.inc   |  40 ++++++
- target/riscv/tcg/tcg-cpu.c                    |   5 +
- target/riscv/tcg/translate.c                  |   1 +
- target/riscv/tcg/vector_helper.c              | 120 +++++++++++++++++-
- 12 files changed, 338 insertions(+), 18 deletions(-)
- create mode 100644 target/riscv/tcg/insn_trans/trans_rvofp8.c.inc
-
--- 
-2.55.0
-
+Regards,
+Pierrick
 
