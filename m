@@ -4,80 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50214C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 11:17:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B329C43602
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 11:18:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whQGL-0007Y5-EP; Wed, 08 Jul 2026 07:16:21 -0400
+	id 1whQIB-0001IU-4F; Wed, 08 Jul 2026 07:18:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1whQGK-0007Xq-30
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 07:16:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1whQI9-0001Ho-3k; Wed, 08 Jul 2026 07:18:13 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1whQGI-0003I3-Dr
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 07:16:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783509377;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/Fbn+VK0OtQnpi0tsE230Ytk7RdN1mqvznePHHzJSW4=;
- b=c9F2euLBApw6HM9ywxOMhRmBWgD100E/Y9/y7+IL/nJu73zny7epMYda4IGvflKzZK5iKq
- FOx+gn0XHQWZ3viAaVfsp+H2BHusXpGrfxPmuv5kptXr5BppJC7IM89aNxxp5+BaTJKqXI
- 7JH5iVFmMeq3agp5DNPq8ROJq96JVRg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-218-E13dc8oyOE2EusiDS5Ag_A-1; Wed,
- 08 Jul 2026 07:16:12 -0400
-X-MC-Unique: E13dc8oyOE2EusiDS5Ag_A-1
-X-Mimecast-MFC-AGG-ID: E13dc8oyOE2EusiDS5Ag_A_1783509370
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 209A01955DC2; Wed,  8 Jul 2026 11:16:10 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.33.253])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9A1FC1955F43; Wed,  8 Jul 2026 11:16:04 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
- Bin Meng <bin.meng@processmission.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH 3/4] tests/qtest: aspeed_smc: Add Dual Output Read (DOR) test
- coverage
-Date: Wed,  8 Jul 2026 13:15:43 +0200
-Message-ID: <20260708111544.1440761-4-clg@redhat.com>
-In-Reply-To: <20260708111544.1440761-1-clg@redhat.com>
-References: <20260708111544.1440761-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1whQI6-0003gt-8x; Wed, 08 Jul 2026 07:18:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1783509484; bh=SsnF0ToDDTy/Najw8PtiedcadSlyifCbU1Zokx9rizg=;
+ h=Date:Subject:From:To:Cc:References:In-Reply-To;
+ b=uuS4HLz1EbtcjiLRtH50cdvmEgmj1pf4rRWVIERfWQehePdoY0zuAhiV5P70LDrbH
+ fbi6u+rm4X3EhnG8t1/cSjNn9Iiwy/rB0clSRTDu3f3zZsx4W5F8qVmODtu2/XudRr
+ uUwAncvziiLmsHe+EO03LTaPsVe3uMp7w54dXdGFa54v0JpBTNYuQxX51mYXdQcE2A
+ n8vf9123zVys30H6IYnN9I8t94hY8YB539h2CBGJhiYLDyDrgvOyD3m3tj0eaCWLeK
+ c4ooFIMz+l+FixY/vQbHV2sgqt0A3Q4b0j3Vrvh1HzY0f7dhckl6qzSRcFFOWR24jR
+ 0Ua1dV+7Dssxw==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 134E01BF48D;
+ Wed, 08 Jul 2026 14:18:04 +0300 (MSK)
+Message-ID: <d5436f34-5489-4335-bf83-74b924e04140@tls.msk.ru>
+Date: Wed, 8 Jul 2026 14:18:06 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 01/21] target/s390x: Fix wrong address handling in
+ address loops
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: Harald Freudenberger <freude@linux.ibm.com>,
+ richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ thuth@redhat.com, berrange@redhat.com
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
+ dengler@linux.ibm.com, borntraeger@linux.ibm.com, fcallies@linux.ibm.com, 
+ cohuck@redhat.com, qemu-stable <qemu-stable@nongnu.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20260707161815.40919-1-freude@linux.ibm.com>
+ <20260707161815.40919-2-freude@linux.ibm.com>
+ <3e31b38c-0561-4f37-b2c4-97c10e6f232f@tls.msk.ru>
+Content-Language: en-US, ru-RU
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <3e31b38c-0561-4f37-b2c4-97c10e6f232f@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,167 +117,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add read_page_mem_dor (CTRL_FREADMODE with DOR command and dual data
-IO mode) and write_page_dor (user-mode DOR) tests.
+On 08.07.2026 13:37, Michael Tokarev wrote:
+> On 07.07.2026 19:17, Harald Freudenberger wrote:
+>> The loop increments addr by the element stride (+= 4) before calling
+>> wrap_address, but then overwrites the loop addr with the wrapped
+>> value. On the next iteration the stride is applied to the wrapped
+>> address of the previous element, not to the original unwrapped
+>> address. This results in every element after the first is read from a
+>> wrong (wrapped) address.
+>>
+>> Fixes: 9f17bfdab4 ("target/s390x: support SHA-512 extensions")
+>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+>> ---
+>>   target/s390x/tcg/crypto_helper.c | 12 ++++--------
+>>   1 file changed, 4 insertions(+), 8 deletions(-)
+> 
+> This feels like qemu-stable material.
+> I'm picking this change up for currently active stable qemu series.
+> Please let me know if I shouldn't.
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- tests/qtest/aspeed-smc-utils.h |  4 +++
- tests/qtest/aspeed-smc-utils.c | 50 ++++++++++++++++++++++++++++++++++
- tests/qtest/aspeed_smc-test.c  | 16 +++++++++++
- tests/qtest/ast2700-smc-test.c |  4 +++
- 4 files changed, 74 insertions(+)
+Um, this was a bit premature.
 
-diff --git a/tests/qtest/aspeed-smc-utils.h b/tests/qtest/aspeed-smc-utils.h
-index 5a86514caf35..fbfb94e831d8 100644
---- a/tests/qtest/aspeed-smc-utils.h
-+++ b/tests/qtest/aspeed-smc-utils.h
-@@ -44,6 +44,7 @@
- #define   CTRL_FREADMODE       0x1
- #define   CTRL_WRITEMODE       0x2
- #define   CTRL_USERMODE        0x3
-+#define   CTRL_IO_DUAL_DATA     BIT(29)
- #define   CTRL_DUMMY_LOW_SHIFT   6
- #define   CTRL_DUMMY_HIGH_SHIFT  14
- #define SR_WEL BIT(1)
-@@ -58,6 +59,7 @@ enum {
-     BULK_ERASE = 0xc7,
-     READ = 0x03,
-     FAST_READ = 0x0b,
-+    DOR = 0x3b,
-     PP = 0x02,
-     WRSR = 0x1,
-     WREN = 0x6,
-@@ -95,5 +97,7 @@ void aspeed_smc_test_write_block_protect_bottom_bit(const void *data);
- void aspeed_smc_test_write_page_qpi(const void *data);
- void aspeed_smc_test_read_page_mem_fast_read(const void *data);
- void aspeed_smc_test_write_page_fast_read(const void *data);
-+void aspeed_smc_test_read_page_mem_dor(const void *data);
-+void aspeed_smc_test_write_page_dor(const void *data);
- 
- #endif /* TESTS_ASPEED_SMC_UTILS_H */
-diff --git a/tests/qtest/aspeed-smc-utils.c b/tests/qtest/aspeed-smc-utils.c
-index 9883ade0815c..25e3d28ec646 100644
---- a/tests/qtest/aspeed-smc-utils.c
-+++ b/tests/qtest/aspeed-smc-utils.c
-@@ -746,3 +746,53 @@ void aspeed_smc_test_write_page_fast_read(const void *data)
- {
-     test_write_page(data, read_page_fast_read);
- }
-+
-+static void read_page_mem_dor(const AspeedSMCTestData *data,
-+                              uint32_t addr, uint32_t *page)
-+{
-+    uint32_t ctrl_reg = R_CTRL0 + data->cs * 4;
-+    uint32_t ctrl = spi_readl(data, ctrl_reg);
-+    int i;
-+
-+    ctrl &= ~(CTRL_USERMODE | (0xff << 16) |
-+              (0x3 << CTRL_DUMMY_LOW_SHIFT) |
-+              (0x1 << CTRL_DUMMY_HIGH_SHIFT) |
-+              CTRL_IO_MODE_MASK);
-+    ctrl |= CTRL_FREADMODE | (DOR << 16) |
-+            (1 << CTRL_DUMMY_LOW_SHIFT) |
-+            CTRL_IO_DUAL_DATA;
-+    spi_writel(data, ctrl_reg, ctrl);
-+
-+    for (i = 0; i < FLASH_PAGE_SIZE / 4; i++) {
-+        page[i] = make_be32(flash_readl(data, addr + i * 4));
-+    }
-+}
-+
-+void aspeed_smc_test_read_page_mem_dor(const void *data)
-+{
-+    test_read_page_mem(data, read_page_mem_dor);
-+}
-+
-+static void read_page_dor(const AspeedSMCTestData *data,
-+                          uint32_t addr, uint32_t *page)
-+{
-+    int i;
-+
-+    spi_ctrl_start_user(data);
-+
-+    flash_writeb(data, 0, EN_4BYTE_ADDR);
-+    flash_writeb(data, 0, DOR);
-+    flash_writel(data, 0, make_be32(addr));
-+    /* 1 dummy byte for standard SPI DOR */
-+    flash_writeb(data, 0, 0x00);
-+
-+    for (i = 0; i < FLASH_PAGE_SIZE / 4; i++) {
-+        page[i] = make_be32(flash_readl(data, 0));
-+    }
-+    spi_ctrl_stop_user(data);
-+}
-+
-+void aspeed_smc_test_write_page_dor(const void *data)
-+{
-+    test_write_page(data, read_page_dor);
-+}
-diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.c
-index bbda15ad17ea..6d48444fd71b 100644
---- a/tests/qtest/aspeed_smc-test.c
-+++ b/tests/qtest/aspeed_smc-test.c
-@@ -72,6 +72,10 @@ static void test_palmetto_bmc(AspeedSMCTestData *data)
-                         data, aspeed_smc_test_read_page_mem_fast_read);
-     qtest_add_data_func("/ast2400/smc/write_page_fast_read",
-                         data, aspeed_smc_test_write_page_fast_read);
-+    qtest_add_data_func("/ast2400/smc/read_page_mem_dor",
-+                        data, aspeed_smc_test_read_page_mem_dor);
-+    qtest_add_data_func("/ast2400/smc/write_page_dor",
-+                        data, aspeed_smc_test_write_page_dor);
-     /*
-      * Block protect tests must be run last because the block protect
-      * state is not cleared by reset_memory() and silently prevents
-@@ -128,6 +132,10 @@ static void test_ast2500_evb(AspeedSMCTestData *data)
-                         data, aspeed_smc_test_read_page_mem_fast_read);
-     qtest_add_data_func("/ast2500/smc/write_page_fast_read",
-                         data, aspeed_smc_test_write_page_fast_read);
-+    qtest_add_data_func("/ast2500/smc/read_page_mem_dor",
-+                        data, aspeed_smc_test_read_page_mem_dor);
-+    qtest_add_data_func("/ast2500/smc/write_page_dor",
-+                        data, aspeed_smc_test_write_page_dor);
- }
- 
- static void test_ast2600_evb(AspeedSMCTestData *data)
-@@ -175,6 +183,10 @@ static void test_ast2600_evb(AspeedSMCTestData *data)
-                         data, aspeed_smc_test_read_page_mem_fast_read);
-     qtest_add_data_func("/ast2600/smc/write_page_fast_read",
-                         data, aspeed_smc_test_write_page_fast_read);
-+    qtest_add_data_func("/ast2600/smc/read_page_mem_dor",
-+                        data, aspeed_smc_test_read_page_mem_dor);
-+    qtest_add_data_func("/ast2600/smc/write_page_dor",
-+                        data, aspeed_smc_test_write_page_dor);
- }
- 
- static void test_ast1030_evb(AspeedSMCTestData *data)
-@@ -222,6 +234,10 @@ static void test_ast1030_evb(AspeedSMCTestData *data)
-                         data, aspeed_smc_test_read_page_mem_fast_read);
-     qtest_add_data_func("/ast1030/smc/write_page_fast_read",
-                         data, aspeed_smc_test_write_page_fast_read);
-+    qtest_add_data_func("/ast1030/smc/read_page_mem_dor",
-+                        data, aspeed_smc_test_read_page_mem_dor);
-+    qtest_add_data_func("/ast1030/smc/write_page_dor",
-+                        data, aspeed_smc_test_write_page_dor);
- }
- 
- int main(int argc, char **argv)
-diff --git a/tests/qtest/ast2700-smc-test.c b/tests/qtest/ast2700-smc-test.c
-index 9ad04b574c0d..bd9d3f7905b3 100644
---- a/tests/qtest/ast2700-smc-test.c
-+++ b/tests/qtest/ast2700-smc-test.c
-@@ -56,6 +56,10 @@ static void test_ast2700_evb(AspeedSMCTestData *data)
-                         data, aspeed_smc_test_read_page_mem_fast_read);
-     qtest_add_data_func("/ast2700/smc/write_page_fast_read",
-                         data, aspeed_smc_test_write_page_fast_read);
-+    qtest_add_data_func("/ast2700/smc/read_page_mem_dor",
-+                        data, aspeed_smc_test_read_page_mem_dor);
-+    qtest_add_data_func("/ast2700/smc/write_page_dor",
-+                        data, aspeed_smc_test_write_page_dor);
- }
- 
- int main(int argc, char **argv)
--- 
-2.54.0
+This particular commit requires a previous commit in this area,
+de96db79 "target/s390x: Compile crypto_helper.c as common unit".
+It's easy to back-port across, but since this change ("Fix wrong
+address handling...") hasn't been marked as for-stable, I'm *not*
+doing that.  If this change is actually needed in -stable, please
+let me know.  Also, is it okay to pick up the previous change
+("compile as common unit") to -stable too, to avoid fixing up
+subsequent changes.
 
+Thanks,
+
+/mjt
 
