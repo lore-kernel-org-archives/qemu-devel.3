@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 356EDC44501
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B180C44503
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 07:45:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whMw0-00045u-QH; Wed, 08 Jul 2026 03:43:08 -0400
+	id 1whMwu-0006hk-Om; Wed, 08 Jul 2026 03:44:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1whMvc-0003vz-Ay; Wed, 08 Jul 2026 03:42:44 -0400
+ id 1whMwq-0006Lt-6l; Wed, 08 Jul 2026 03:44:01 -0400
 Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1whMva-0004UJ-HB; Wed, 08 Jul 2026 03:42:44 -0400
+ id 1whMwm-0005DU-Dt; Wed, 08 Jul 2026 03:43:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1783496563; x=1815032563;
+ t=1783496637; x=1815032637;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Jsi8FvArfNfBxUexmYWdVUJgF/P5++mc/LEsJa9uVDA=;
- b=XR+asfFWSB9qBHsyZrvfnxrkGyhy2SMXcJ9MNGpZxx6FLJqEMJ/gDtPF
- w9Nv3Pbn2uQcTSVy4a/W7GcqxOBg2l+SMNOQiAolIPViyjAQsnHU0JLIh
- k18BERxAER4CQPZPzWtjous3JpGikrwpso7jsNH58Bd0KGY9NjGDAPypC
- Mhj9SPgLiOjGNsdqwLw73U5Mqg/kussucVqW7arp+FSFVNSMGcjyEEaFs
- y6oDDmOs/QRfrEcxZmRj33yam9azqyWKGpmfH64B/OhsHH/FRcPU3qdnB
- DtqIKMRCAKL3lIIBFbZZy8GEX7gXb9S5YDKGoRWMAxRSIzLmRoq9VUPdR g==;
-X-CSE-ConnectionGUID: ldlMDgdCRuWhlZ7rNjmuew==
-X-CSE-MsgGUID: neY0j/Y+Rxy22xJJW4hKpA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11840"; a="84343223"
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="84343223"
+ bh=IkJHfJxKWBp8jmtuiaJL3EzwgLEqGklUHEndyr1MKuw=;
+ b=dyRdp8LKToC2hQsTj5EvzF5bnkUrztoKRsYaOQ68NudoVS1dvrvW3YAn
+ 4Ne8HKYJlVkXMDG1zI9ap+PzbLL5Kpw2sjiY1TqbKv8KOGHH91IcpdUgQ
+ VhGS2knNWmsEPTY94oV4rzQJP4CDQp1MR7TSScPJSf6dI41dx3QmJXrsc
+ G7CljAthIq+RX2tdvzGBbKlm9ypFwSHy6K0fp9RHqxLCXEvpc7zX+dcz+
+ K7LCbTnkJw3vMrICa5UYLRYk3L0/xcJJ//zz1/i2H0xozZTWYtAV8vO+r
+ Zn58nDZXPnsyCDxW1qGT15gtN810bz9XYhpVHDKfoTdYhFRlLNWAuI4Va Q==;
+X-CSE-ConnectionGUID: MI0DzOV+Q/6o4ANxBFBbDg==
+X-CSE-MsgGUID: fwdTyf4TTqawtVNSinnfVw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11840"; a="84343371"
+X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="84343371"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jul 2026 00:42:41 -0700
-X-CSE-ConnectionGUID: MKh0Uf5WQJSudpC4ltu5tQ==
-X-CSE-MsgGUID: njNOLkdjRwq5JNeWSCfxwQ==
+ 08 Jul 2026 00:43:35 -0700
+X-CSE-ConnectionGUID: hAQfwuKERLSDatD6Xu35kA==
+X-CSE-MsgGUID: og8XPJtdQceZHpvl6J5pkQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="251555923"
+X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="251556038"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 08 Jul 2026 00:42:37 -0700
+ by fmviesa008.fm.intel.com with ESMTP; 08 Jul 2026 00:43:30 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -57,9 +57,9 @@ Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
  Junjie Mao <junjie.mao@hotmail.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Chuanxiao Dong <chuanxiao.dong@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC v2 04/26] subprojects: Add thiserror crate
-Date: Wed,  8 Jul 2026 16:10:30 +0800
-Message-Id: <20260708081052.2276617-5-zhao1.liu@intel.com>
+Subject: [RFC v2 17/26] memory: Add store/load interfaces for Rust
+Date: Wed,  8 Jul 2026 16:10:43 +0800
+Message-Id: <20260708081052.2276617-18-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260708081052.2276617-1-zhao1.liu@intel.com>
 References: <20260708081052.2276617-1-zhao1.liu@intel.com>
@@ -89,101 +89,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use thiserror v1.0.65 for QEMU.
+Currently, there are many store/load variants defined in
+memory_ldst.c.inc.
+
+However, the vm-memory crate's Bytes::store() and Bytes::load() methods
+are bound by the AtomicAccess trait, making it almost impossible to
+select  the proper interface (e.g., for l, w, or q) based on a specific
+type.
+
+Therefore, it is necessary to provide interfaces that hide these type
+details as much as possible. Compared to the
+address_space_st{size}_{endian} and address_space_ld{size}_{endian}
+functions, the differences include:
+
+ * No address translation; they only perform memory access.
+
+ * They treat the byte array as raw bytes.  RAM accesses copy the bytes
+   unchanged.  For MMIO accesses, the Rust caller must use the correct
+   endian ordering for the target device (via LeNN/BeNN), just as the C
+   side must select the appropriate address_space_st{size}_le() or _be()
+   variants.
+
+ * They use byte arrays instead of a single uint64_t for the value
+   being written or read, eliminating the need for the Rust side to
+   convert generic types to u64.
+   - However, this incurs an extra cost for MMIO accesses, as it
+     requires conversion between byte arrays and uint64_t internally.
+
+ * They do not handle cross-region MMIO accesses. The Rust side will be
+   responsible for handling such edge cases.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- scripts/archive-source.sh                     |  1 +
- scripts/make-release                          |  2 +-
- subprojects/.gitignore                        |  1 +
- .../packagefiles/thiserror-1-rs/meson.build   | 23 +++++++++++++++++++
- subprojects/thiserror-1-rs.wrap               | 10 ++++++++
- 5 files changed, 36 insertions(+), 1 deletion(-)
- create mode 100644 subprojects/packagefiles/thiserror-1-rs/meson.build
- create mode 100644 subprojects/thiserror-1-rs.wrap
+Changes since v1:
+ * Drop the native endian assumption and require the caller to use the
+   target device's endianness.
+---
+ include/system/memory.h | 50 ++++++++++++++++++++++++++++
+ system/physmem.c        | 72 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 122 insertions(+)
 
-diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
-index b7f678872036..2f3987fc0fea 100755
---- a/scripts/archive-source.sh
-+++ b/scripts/archive-source.sh
-@@ -47,6 +47,7 @@ subprojects=(
-   proc-macro2-1-rs
-   quote-1-rs
-   syn-2-rs
-+  thiserror-1-rs
-   thiserror-impl-1-rs
-   unicode-ident-1-rs
- )
-diff --git a/scripts/make-release b/scripts/make-release
-index 0f33522f39ba..a5488e226298 100755
---- a/scripts/make-release
-+++ b/scripts/make-release
-@@ -44,7 +44,7 @@ SUBPROJECTS="libvfio-user keycodemapdb berkeley-softfloat-3
-   bilge-impl-0.2-rs either-1-rs foreign-0.3-rs itertools-0.11-rs
-   libc-0.2-rs probe-0.5-rs proc-macro2-1-rs
-   proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
--  syn-2-rs thiserror-impl-1-rs unicode-ident-1-rs"
-+  syn-2-rs thiserror-1-rs thiserror-impl-1-rs unicode-ident-1-rs"
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 87006ce79d47..32399c111f48 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -2970,6 +2970,56 @@ MemTxResult rust_section_write_continue_step(MemoryRegionSection *section,
+ MemTxResult rust_section_read_continue_step(MemoryRegionSection *section,
+     MemTxAttrs attrs, uint8_t *buf, hwaddr len, hwaddr mr_addr, hwaddr *l);
  
- src="$1"
- version="$2"
-diff --git a/subprojects/.gitignore b/subprojects/.gitignore
-index 816bc67111c9..d7cf421bff07 100644
---- a/subprojects/.gitignore
-+++ b/subprojects/.gitignore
-@@ -22,6 +22,7 @@
- /proc-macro*
- /quote-*
- /syn-*
-+/thiserror-*
- /thiserror-impl-*
- /unicode-ident-*
++/**
++ * rust_section_store: Store data to a #MemoryRegionSection.
++ *
++ * Note: This function should only be used by the Rust side, and callers
++ * should not invoke it directly!
++ *
++ * This function does a single-access store without translation. @buf provides
++ * raw bytes: RAM uses direct memory copy; MMIO expects data in device
++ * endianness.
++ *
++ * Must be called within an RCU critical section.
++ *
++ * @section: The #MemoryRegionSection to be accessed.
++ * @mr_offset: The address within that memory region.
++ * @buf: Buffer containing the data to be written.
++ * @attrs: Memory transaction attributes.
++ * @len: The number of bytes to write.
++ *
++ * Returns:
++ * A MemTxResult indicating whether the operation succeeded or failed.
++ */
++MemTxResult rust_section_store(MemoryRegionSection *section,
++                               hwaddr mr_offset, const uint8_t *buf,
++                               MemTxAttrs attrs, hwaddr len);
++
++/**
++ * rust_section_load: Load data from a #MemoryRegionSection.
++ *
++ * Note: This function should only be used by the Rust side, and callers
++ * should not invoke it directly!
++ *
++ * This function does a single-access load without translation. @buf receives
++ * raw bytes: RAM uses direct memory copy; MMIO returns data in device
++ * endianness.
++ *
++ * Must be called within an RCU critical section.
++ *
++ * @section: The #MemoryRegionSection to be accessed.
++ * @mr_offset: The address within that memory region.
++ * @buf: The output buffer to store the read data.
++ * @attrs: Memory transaction attributes.
++ * @len: The expected number of bytes to read.
++ *
++ * Returns:
++ * A MemTxResult indicating whether the operation succeeded or failed.
++ */
++MemTxResult rust_section_load(MemoryRegionSection *section,
++                              hwaddr mr_offset, uint8_t *buf,
++                              MemTxAttrs attrs, hwaddr len);
++
+ /* Coalesced MMIO regions are areas where write operations can be reordered.
+  * This usually implies that write operations are side-effect free.  This allows
+  * batching which can make a major impact on performance when using
+diff --git a/system/physmem.c b/system/physmem.c
+index f19709be59e5..51abb6865b96 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3518,6 +3518,78 @@ void physical_memory_read(hwaddr addr, void *buf, hwaddr len)
+                        MEMTXATTRS_UNSPECIFIED, buf, len);
+ }
  
-diff --git a/subprojects/packagefiles/thiserror-1-rs/meson.build b/subprojects/packagefiles/thiserror-1-rs/meson.build
-new file mode 100644
-index 000000000000..bfaf2f8d3eb8
---- /dev/null
-+++ b/subprojects/packagefiles/thiserror-1-rs/meson.build
-@@ -0,0 +1,23 @@
-+project('thiserror-1-rs', 'rust',
-+  meson_version: '>=1.5.0',
-+  version: '1.0.65',
-+  license: 'MIT OR Apache-2.0',
-+  default_options: [])
++MemTxResult rust_section_store(MemoryRegionSection *section,
++                               hwaddr mr_offset, const uint8_t *buf,
++                               MemTxAttrs attrs, hwaddr len)
++{
++    MemoryRegion *mr = section->mr;
++    MemTxResult r;
 +
-+subproject('thiserror-impl-1-rs', required: true)
-+thiserror_impl_rs = dependency('thiserror-impl-1-rs')
++    /*
++     * Rust encodes the requested endian order in @buf, via LeNN or BeNN.
++     *
++     * For RAM, store the bytes unchanged.
++     * For MMIO, @buf is read into a host-order temporary value, then
++     * adjust_endianness() converts it to the device's endianness later.
++     *
++     * Note that there is no guarantee that the endian order encoded by Rust
++     * will match the target device's endianness. Caller should use the right
++     * LeNN or BeNN.
++     */
++    if (!memory_access_is_direct(mr, true, attrs)) {
++        bool release_lock = false;
++        uint64_t val = ldn_he_p(buf, len);
 +
-+_thiserror_rs = static_library(
-+  'thiserror',
-+  files('src/lib.rs'),
-+  gnu_symbol_visibility: 'hidden',
-+  override_options: ['rust_std=2021', 'build.rust_std=2021'],
-+  rust_abi: 'rust',
-+  dependencies: [thiserror_impl_rs],
-+)
++        release_lock |= prepare_mmio_access(mr);
++        r = memory_region_dispatch_write(mr, mr_offset, val,
++                                         size_memop(len), attrs);
++        if (release_lock) {
++            bql_unlock();
++        }
++    } else {
++        uint8_t *ptr = qemu_map_ram_ptr(mr->ram_block, mr_offset);
 +
-+thiserror_dep = declare_dependency(
-+  link_with: _thiserror_rs,
-+)
++        memcpy(ptr, buf, len);
++        invalidate_and_set_dirty(mr, mr_offset, len);
++        r = MEMTX_OK;
++    }
 +
-+meson.override_dependency('thiserror-1-rs', thiserror_dep)
-diff --git a/subprojects/thiserror-1-rs.wrap b/subprojects/thiserror-1-rs.wrap
-new file mode 100644
-index 000000000000..0f9303bebf97
---- /dev/null
-+++ b/subprojects/thiserror-1-rs.wrap
-@@ -0,0 +1,10 @@
-+[wrap-file]
-+directory = thiserror-1.0.65
-+source_url = https://crates.io/api/v1/crates/thiserror/1.0.65/download
-+source_filename = thiserror-1.0.65.tar.gz
-+source_hash = 5d11abd9594d9b38965ef50805c5e469ca9cc6f197f883f717e0269a3057b3d5
-+#method = cargo
-+patch_directory = thiserror-1-rs
++    return r;
++}
 +
-+# bump this version number on every change to meson.build or the patches:
-+# v2
++MemTxResult rust_section_load(MemoryRegionSection *section,
++                              hwaddr mr_offset, uint8_t *buf,
++                              MemTxAttrs attrs, hwaddr len)
++{
++    MemoryRegion *mr = section->mr;
++    MemTxResult r;
++
++    /*
++     * Similar to rust_section_store():
++     * For RAM, load the bytes unchanged, but for MMIO, it uses a host-order
++     * temporary value to help with conversion.
++     */
++    if (!memory_access_is_direct(mr, false, attrs)) {
++        bool release_lock = false;
++        uint64_t val;
++
++        release_lock |= prepare_mmio_access(mr);
++        r = memory_region_dispatch_read(mr, mr_offset, &val,
++                                        size_memop(len), attrs);
++        stn_he_p(buf, len, val);
++        if (release_lock) {
++            bql_unlock();
++        }
++    } else {
++        uint8_t *ptr = qemu_map_ram_ptr(mr->ram_block, mr_offset);
++
++        memcpy(buf, ptr, len);
++        r = MEMTX_OK;
++    }
++
++    return r;
++}
++
+ void physical_memory_write(hwaddr addr, const void *buf, hwaddr len)
+ {
+     address_space_write(&address_space_memory, addr,
 -- 
 2.34.1
 
