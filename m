@@ -4,114 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33D72C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 05:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30ED2C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 06:08:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whL2B-0004LL-QH; Wed, 08 Jul 2026 01:41:23 -0400
+	id 1whLRe-0007tc-Q0; Wed, 08 Jul 2026 02:07:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1whL2A-0004L6-86; Wed, 08 Jul 2026 01:41:22 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1whL28-0005vG-Hr; Wed, 08 Jul 2026 01:41:22 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 667MmaYj184826; Wed, 8 Jul 2026 05:41:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=cCvr6Y
- B4ShNBB73LMyiQFfvMzXxaZWkpwDyMjya8Yj8=; b=YyskcwZy4S7rSqc1WTOH8u
- DrMMQFD3LS3QU4SGWUw4tdNzpy+5PQOWu7aajBVF2bBIUDD1s2M0Uj4YwHgaMG0+
- fK5b62Z1H2BtM4reFD3kNflWj8m2ALK6MMTqVQss98fuF/lhg4kNDmt+5wTbwd5f
- xDQ5py4muTo3flRBnh0X85T3pGmXfhvxtkbQo+zsDix+i7ed6b+ogZBVrDQJ3EMm
- 4u42hliVgx0TjvfG8Ra4nNrFvv432gB943QaeF3O04ECOritWJTI8gn015Q2qMrA
- kUsWVwklbs397g6cGozke9bO5eZxW+z1qvJ8dlvZndhAzIwEAgq6IkifqkTH5qFQ
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6rkdu94j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jul 2026 05:41:17 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6685Ybb3007217;
- Wed, 8 Jul 2026 05:41:16 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f7cvw6a8p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jul 2026 05:41:16 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6685fFj027918936
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 8 Jul 2026 05:41:15 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F33BD58059;
- Wed,  8 Jul 2026 05:41:14 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DA9C05805B;
- Wed,  8 Jul 2026 05:41:09 +0000 (GMT)
-Received: from [9.39.27.36] (unknown [9.39.27.36])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  8 Jul 2026 05:41:09 +0000 (GMT)
-Message-ID: <88ddf6a2-282f-4842-84e7-2f81cba257f8@linux.ibm.com>
-Date: Wed, 8 Jul 2026 11:11:07 +0530
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1whLRd-0007tS-Fm
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 02:07:41 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1whLRb-000448-M1
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 02:07:41 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-493bc8fda98so1565325e9.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jul 2026 23:07:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783490857; x=1784095657; darn=nongnu.org;
+ h=content-type:content-transfer-encoding:mime-version:message-id
+ :in-reply-to:references:user-agent:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=3TisMpFl/Syl8+nN9N6owQzKy767dHehgqqcUfkCHiI=;
+ b=eRN81zb9Iv/wUIn64AUufuelSxM2wa96X8qkedrn18Yqaml+XQch4+eedA5MUXvx03
+ uWL3PuaRWgLFaKYR2WcDXgW+b/JNUFUF06lDNPRc2PmQ/AwZYzhPkvVEg4gJuoRQyQJ9
+ nURpI0TJEAUlkBAjPZ5sUmxGZyilOXP7c3AIuI9KU52DjBcuwbVGKs/enzTqGqKCs01w
+ 8UCaDS+HIIcyLgO4Kaf9q/wPROgyPeIBERUV0fEjAeeGfS31P5d1mt4lXj//HegB+o9X
+ JOVyp1UU7hbXh5LwwO0HIUxRmRrJJd9jCevvSE3Qr+jLF4YOh2CR4yfhNoTAzaXhiYmz
+ wR7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783490857; x=1784095657;
+ h=content-type:content-transfer-encoding:mime-version:message-id
+ :in-reply-to:references:user-agent:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=3TisMpFl/Syl8+nN9N6owQzKy767dHehgqqcUfkCHiI=;
+ b=NS8X/7TNK0P5Z7gl86uQx/M7/Y7IeNyLR3D36w4dUkucdA4X46AsugSobtAdMVz/oy
+ J2BSr2Jz5VWYdAupvvAjVsv3UXvoyIDVWDtXtDH/vTZyyYmWX353IfMMNS/N2mn8fAgZ
+ WWAtw31f88mCnI/GMsrR7/mgay7Eqevikbg+ekxvhiWv6fVIOI9eo7nxyhZJE//kNObt
+ 4gt4M2YUS2kUJwqwIeeoLmXHeAxoV7oODXA8VXCsWkReEYTTtFMpobJo+c475KYA4l63
+ +N0CFOJFrlveyLr//zImAhJWprTIYICkXxL6QBSSmWsnxpcOQAUOVGSOY733u7gtgrAf
+ VznQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrflwOxy25do7h36CRvBE/Tf8EiOp9YPglfqF+ieOKJREenFIWdhxUYwo3MvqzYZLT/6XYeZe23dxm1@nongnu.org
+X-Gm-Message-State: AOJu0YykEPW+njRSZmKTG7vvkuwW1pzjfLqsyihxEqe+VpbehDIO42CT
+ stKX+fROEnazAcXSP80g5fNgkToJY1pTMhCwIf7enb0lvL78i16vCBJ72J/edEAsdl4=
+X-Gm-Gg: AfdE7clcgkt4nWeCd2DYizqGon7ecBqzqMX3sRg0WnB6VWL97J1kw/NPHdEsZHwLgJZ
+ sLq67jO03QeTwGSqFj9KHcBmc/Bgwp56e+EsEIYbJVpSzqWhj7/jsZ08kI+hgGXeJS/FOxCdPGt
+ tFpTIYuItr/mwhigiXj/q45iMDbHJZZ3DStGWpHZrAQMWigjKmdEa3KCcHSfXuwA5bXk4nRJ35S
+ q2JYMJGCXJUVWzWBtZWGt5oWIY1l0kJ1HoDXpugcvkwSQlxGneO6iZJfm3YcATsdM/QAiI4XLD8
+ uPtJxFwdYa9DI+y37R62l+6BMzj1Ahaa6uC0tL8NJol1MlV+EzqldBL9vV4Vhv3tpr5iqxEfKni
+ N4KG5VBalNLwK0Z2zJJQBDM2Ui3Atwi+d05MBWtSbANtDTm5ttShkhrQyiOnT7R5Ziso6G3iNtj
+ Yzkd+5pm4hOi/cUks9WsyU06CyhmzE7WMqMsGsgMkXJJUrrvlam6Gqt9mUexWnA+2MUMIx1YSe7
+ Z2XmBpTx2RbP+hMz1VytEL3PWn5jUUDKNOHYPnAvT12OvBgsPcjeY0/u25BJ4Qt2B8QNC5dmplw
+ rU1YjyRNE0d/ecymOPi/FyvgiEaLXapRIe53dV7jN+ic1WNeL/7qFo8=
+X-Received: by 2002:a05:600c:c3cd:10b0:493:e533:e220 with SMTP id
+ 5b1f17b1804b1-493e689c009mr6055765e9.9.1783490857193; 
+ Tue, 07 Jul 2026 23:07:37 -0700 (PDT)
+Received: from meli-email.org (ppp-2-86-131-154.home.otenet.gr. [2.86.131.154])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493e54a25cfsm43964315e9.0.2026.07.07.23.07.36
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 07 Jul 2026 23:07:36 -0700 (PDT)
+Date: Wed, 08 Jul 2026 09:07:23 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Philippe Mathieu-Daud=?UTF-8?B?w6k=?= <philmd@oss.qualcomm.com>,
+ "Daniel P . Berrang=?UTF-8?B?w6k=?=" <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Brian Cain <brian.cain@oss.qualcomm.com>,
+ Alex Benn=?UTF-8?B?w6ll?= <alex.bennee@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, Laurent Vivier <laurent@vivier.eu>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Helge Deller <deller@gmx.de>, Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v3 29/91] tests/tcg/meson.build: introduce depends
+User-Agent: meli/0.8.13
+References: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260706223343.988769-30-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260706223343.988769-30-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <thuecn.j82o3lid8j7j@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] ppc/spapr: refactor cpu hotplug code to separate file
-Content-Language: en-GB
-To: Vishal Chourasia <vishalc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, npiggin@gmail.com, rathc@linux.ibm.com,
- sbhat@linux.ibm.com, gautam@linux.ibm.com
-References: <20260704103617.632929-2-vishalc@linux.ibm.com>
- <20260704103617.632929-4-vishalc@linux.ibm.com>
- <20260707164428.5e4a4500-04-amachhiw@linux.ibm.com>
-Cc: mchauras@linux.ibm.com, mkchauras@gmail.com, sshegde@linux.ibm.com,
- srikar@linux.ibm.com
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20260707164428.5e4a4500-04-amachhiw@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=M7J97Sws c=1 sm=1 tr=0 ts=6a4de2fd cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22
- a=Rg27Hn24Qh5PSjqivGoA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDA0OCBTYWx0ZWRfXxVXAHwfIa/kV
- 5kTe6OqHnAKxGU0lewJvzB8ucwFMLYVgj9KyP0x8K4LxzR1dMESZzfEypTSLIJ3EQ52fw+ESo7t
- FZ5gpeBqJu3im4TrnApV2JsiLt/R/STyZmZtc9noDZd7KiAfnMkotjbVK6/t1oib4K5cC+L++VT
- xz6NA/lKRrInj7yKsMvPvXqm5zz09naAl0Y9GcS6xQN7t8U5yMvwzsj6CuZy5QvsK2gOj3itGXV
- x58n+U6BTKM9c2WWFPG2Ek+SaxeghZhb0NJJ88CFfqnM7k3vIvSHV4dwPcaYyl/7iaCZnkyzzjt
- nByWyL4/yXHObbsrzouNGEKO5VtbfdurFVM5utfmcanYR3In47sRoxFiPTKvH5zwCzNJqjRXnTL
- M8v4nNcgKCpnZvsKxlTdiTEmplzQwK3oJJ0L1TF6SlE2scQwIoBzWd+CP0WgqErUeb8aFimbZAH
- nSiGTGGohTS5pytm4dA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDA0OCBTYWx0ZWRfX/dS+6IrCw0eT
- pY8IUemlaqzSqOhXVaOei60xI0UuwavxsFBY8DELthpr22KA+6+FK1EVQPxHQW4jSkH5sSZJL0I
- hFmpUKXND0B/C7HzCowXWSI6wT9CcYA=
-X-Proofpoint-GUID: vqAbm0L_-IXhA0VRd9wR0mEE7Wmd1jGG
-X-Proofpoint-ORIG-GUID: QNj15X_hwiaYVNABdB8QsZgOiOhhs78R
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-07_06,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 adultscore=0
- priorityscore=1501 bulkscore=0 spamscore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607080048
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,40 +115,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+ Mukesh, Shrikant, Srikar
+On Tue, 07 Jul 2026 01:32, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
+>This can be used to declare dependencies for a given test executable.
+>Useful when generating headers (like x86_64 does).
+>
+>Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>---
 
-On 07/07/26 7:19 pm, Amit Machhiwal wrote:
-> The file name suggests it only contains hotplug code, but the majority of its
-> content is not on the hotplug path: spapr_init_cpus() and spapr_set_vsmt_mode()
-> are called only from spapr_machine_init() at boot; spapr_dt_cpu() /
-> spapr_dt_cpus() are driven by boot-time FDT construction and CAS;
-> spapr_cpu_exec_enter/exit() are TCG dispatch callbacks; and
-> spapr_get/set_vcpu_id(), spapr_find_cpu() are general CPU infrastructure used
-> across the subsystem.
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+
+> tests/tcg/meson.build | 16 +++++++++++-----
+> 1 file changed, 11 insertions(+), 5 deletions(-)
+>
+>diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+>index 57e7c3f8801..1f553a0aa8d 100644
+>--- a/tests/tcg/meson.build
+>+++ b/tests/tcg/meson.build
+>@@ -41,6 +41,7 @@ tcg_tests = {}
+> #           'exe_name': ['provide an alternative binary name'],
+> #           'test_name': ['provide an alternative test name'],
+> #           'cflags': ['additional cflags to compile test', ...],
+>+#           'depends': [meson_dependency, ...],
+> #           'cc_feat': 'feature name, must be present in cc_feat_cflags',
+> #           'qemu_args': ['qemu command line flags', ...],
+> #           'expected_output': 'file_to_compare_output',
+>@@ -164,7 +165,7 @@ foreach target, plan: tcg_tests
+>       # return a clear error if user misspell a setup entry
+>       foreach key, _ : setup
+>         allowed = ['exe_name', 'env_var', 'expected_output', 'cc_feat', 'cflags',
+>-                   'gdb_feat', 'gdb_test', 'plugin_test', 'qemu_args',
+>+                   'depends', 'gdb_feat', 'gdb_test', 'plugin_test', 'qemu_args',
+>                    'test_name', 'wrapper']
+>         if key not in allowed
+>           error('unknown tcg setup entry \'' + key + '\' for test ' + src +
+>@@ -262,6 +263,11 @@ foreach target, plan: tcg_tests
+>         built_tests += {exe_name: exe_name}
+>       endif
 > 
-> I think it'd be better to refactor cpu related functions not specific to hotplug
-> in a separate file with a more accurate name as spapr_cpu.c / spapr_cpu.h if you
-> want to also keep the spapr_cpu_hotplug.{c,h}.
-
-While we are at it, we may also want to consider cpu related files in 
-target/ppc:
-
-qemu % wc -l target/ppc/cpu*
-     7803 target/ppc/cpu_init.c
-       91 target/ppc/cpu_init.h
-      931 target/ppc/cpu-models.c
-      482 target/ppc/cpu-models.h
-       33 target/ppc/cpu-param.h
-       61 target/ppc/cpu-qom.h
-      256 target/ppc/cpu.c
-     3137 target/ppc/cpu.h
-    12794 total
-
-regards,
-Harsh
-
+>+      exe_depends = build_test_depends
+>+      if 'depends' in setup
+>+        exe_depends += setup['depends']
+>+      endif
+>+
+>       # build executable if needed
+>       if exe_name not in built_tests
+>         exe = custom_target(exe_name,
+>@@ -274,13 +280,13 @@ foreach target, plan: tcg_tests
+>                                       cflags],
+>                             depfile: exe_name + '.d',
+>                             output: exe_name + '.test',
+>-                            depends: build_test_depends,
+>+                            depends: exe_depends,
+>                             depend_files: build_test_depend_files,
+>                             build_by_default: false)
+>         built_tests += {exe_name: exe}
+>       endif
 > 
-> Thanks,
-> Amit
-
+>-      depends = []
+>+      test_depends = []
+>       qemu_args = []
+>       if 'qemu_args' in setup
+>         qemu_args = setup['qemu_args']
+>@@ -297,7 +303,7 @@ foreach target, plan: tcg_tests
+>         plugin_args = ','.join(plugin_args)
+> 
+>         # since we turn plugin into a string, add dependency explicitly
+>-        depends += plugin
+>+        test_depends += plugin
+>         qemu_args = ['-plugin', plugin.full_path() + plugin_args, qemu_args]
+>       endif
+> 
+>@@ -352,7 +358,7 @@ foreach target, plan: tcg_tests
+>       endif
+> 
+>       test(test_name, env, args: cmd,
+>-           depends: depends,
+>+           depends: test_depends,
+>            suite: ['tcg', 'tcg-' + target])
+>       added_tests += {test_name: true}
+>     endforeach
+>-- 
+>2.47.3
+>
 
