@@ -4,85 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6BBFC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 23:23:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76B02C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 23:30:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whbas-000139-Ue; Wed, 08 Jul 2026 19:22:18 -0400
+	id 1whbid-0005nT-AA; Wed, 08 Jul 2026 19:30:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1whbas-00010k-5Q
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 19:22:18 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1whbaq-0004ep-MD
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 19:22:17 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2c7cfa17fedso13967195ad.3
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 16:22:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783552935; x=1784157735; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=gaCR9whNkf3wxjnKoTXYYtGy2bKkbknm+RvdndRsphM=;
- b=h0ZTRdUC+Bt9kiz5MODDN3D6s+8kThZ+HXIyUJb9/BJfYudXIy6xGtBYwb+QYZYS52
- X6MS0epvCo60kT/w+dOFQpYmfijy6Vr6DfdoEE/4Ray8zNdixadHs7ppUTaZRdtCXMMo
- xuActAE9UKHEovsNrsF0UdsIKhbw+WPMCKRozm28iuTiEytxX1wahFhgyApxmYepepmL
- pJqtOc468cglzgdvBfDy47NXaiMTyh59KsKoTOQNaAkHmX695DlkRgwmIABdF8Hc7A0o
- LxMQhEyLK52eEE2Szvrp04kI/X3FWbTrmqTQbAsdvjZY4kBjl5PidvoiyajxnNoPSqG7
- MIfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783552935; x=1784157735;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=gaCR9whNkf3wxjnKoTXYYtGy2bKkbknm+RvdndRsphM=;
- b=LkpJYhzSpAaq2c88VojxAIRqRyZEGsOUUXKZxjdfNZT9Ye7Yqr8uEcBRyKGIo5ty3X
- 0dlHjsa3MVpohh8PW9bPs2q5w6pacRrxac25UDwePfY66R6/7y4rFLIUGyU219yHtwJE
- Na1rutS4Z9rvmc3jmg9ZgtULdrtHul4HH58TjUg/j+S04/3i1L2eo4CxtT61OOpuBXBd
- ukYErtbW9pxFA8bFx8e2ZxuwoU6xtgfk3xVEoLBlj+0e4yRj5RYnx3nphsK1D9ac+qq6
- m4of/0XnzUZS0/5wHifiULNYGrW14OTzcx/L+559BADVeF2RQR8xJXDwFj3R9FuRyE7x
- JySw==
-X-Gm-Message-State: AOJu0YxlK2A/Nzqq7m+fYRCCYeDDIOaP57sX6ZxtM0t56uNZnc8w5eBQ
- qg8FxDf+GJnBnwYu2ZpaFPwLvqSaKzcIU9MZyXQwnYr1pA3LEViuCMCT2AsAIg==
-X-Gm-Gg: AfdE7ckF1VGkQGT5MEvqXZ5nQZwywxMMTqUD8DdVkbJzTqp9ApwJ0cIG9Me+J10QPo4
- AiGrNmZQfPUCiERbj3yud/YP+ylYk7SjunRFB72YGjuMaySWOd074wf1cpbepYV2Qb+WVpcvDRG
- LvSvAPoSCGt6gyEYV4I+M3UmTd2VOyeGE+tEhAQ4avKJ0BxDSkUBb4bTRBVCJfiTOo9C1u4WGfu
- CsAtlf7GhDJn9H+ujXuVS22y56VvJgOETzVII000+n9Lk0bZSgXE1avkD4EefZ0jKxjmgW2oCbz
- SCRoEkP5jpo1ORM6nEDHe3KZClJiTU1Q1ljAMP86Z0h8a4phNUbE6ZN/waZr1t6dlzEvagBJWck
- cpL6a5DEVwf2ptEaJRVSlMYyVZdhDmE/ehiIoBkH5HkfqBE0H72koFP44TGBfJZzgBJ7A17bqHz
- BomUV4dsa8ju18KhuasOGogOIwJOGK
-X-Received: by 2002:a17:903:3890:b0:2cc:84e7:73bc with SMTP id
- d9443c01a7336-2ccea3a29f9mr48516965ad.32.1783552934579; 
- Wed, 08 Jul 2026 16:22:14 -0700 (PDT)
-Received: from jeuk-MS-7D42.. ([211.226.54.223])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ccc9bf74cbsm33961225ad.18.2026.07.08.16.22.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jul 2026 16:22:13 -0700 (PDT)
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-To: qemu-devel@nongnu.org,
-	qemu-stable@nongnu.org,
-	stefanha@redhat.com
-Cc: pbonzini@redhat.com, farosas@suse.de, lvivier@redhat.com,
- qemu-block@nongnu.org, jeuk20.kim@samsung.com, j-young.choi@samsung.com
-Subject: [PULL 0/1] ufs queue
-Date: Thu,  9 Jul 2026 08:22:02 +0900
-Message-ID: <cover.1783552661.git.jeuk20.kim@samsung.com>
-X-Mailer: git-send-email 2.43.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1whbib-0005nD-0Z
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 19:30:17 -0400
+Received: from p-east2-cluster5-host3-snip4-5.eps.apple.com ([57.103.79.48]
+ helo=outbound.st.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1whbiY-0006Kb-M5
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 19:30:16 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-20-percent-2 (Postfix) with ESMTPS id
+ 7AE5B1800116; Wed, 08 Jul 2026 23:30:11 +0000 (UTC)
+X-ICL-RepId: 019f4411-48a1-7e5e-8143-64ac01fa37f2
+X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0OWFsIWwQPH0wMUQJCBVZeSgwdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkQOQQdVAF4EXQlIBl8aXwMyfFUKXHFTHzULPQIvA15zRns+BS1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1783553413; x=1786145413;
+ bh=r8ko/PoKW3wJ76mqfLR4CwvjgcisfBuVZaRqvgKnuak=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=dDe298JlVMdvWGiDUcSJDAEyuYrXQx3p3Roepf4LsNq7foB54kHv857fP/Ie24Fc6rzopMzz50VpPEVWVFjzOjVpgKgFxKilDqaD5xDuDKCo+369RsZpUBP6vCFm2XOx9ZHuSfQxH3PCKFOTEqwHPkG2eQoiQYlSQJdaxQzznag5w2kk8uCoNHPt4BbRZuTTg9Nmp+BaAiYwiuLnj8CzcgMKPgXvvyHmjJRY70F8rl3xcnMKJTzvdeyFcENdAGk7VH9rG6lRL1JTIgcH5OTgrF4LSf9+YSjA0Qec4w1DvT/jUFTtqgtjvRlzB3lZavVRJyWNDc5GRy41LSEJKVUe/g==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-20-percent-2 (Postfix) with ESMTPSA id
+ EA156180040C; Wed, 08 Jul 2026 23:30:09 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3895.100.17\))
+Subject: Re: [PULL 28/38] target/arm/hvf: Keep calling hv_vcpu_run() in loop
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <51024f9c-2b0f-4a92-b512-1c79fda0338a@oss.qualcomm.com>
+Date: Thu, 9 Jul 2026 01:29:58 +0200
+Cc: Cameron Esfahani <dirty@apple.com>, Alexander Graf <agraf@csgraf.de>,
+ qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mads Ynddal <mads@ynddal.dk>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <47948756-0052-41BE-91F8-E2E1B45A6BF6@unpredictable.fr>
+References: <20251031183310.3778349-1-peter.maydell@linaro.org>
+ <20251031183310.3778349-29-peter.maydell@linaro.org>
+ <51024f9c-2b0f-4a92-b512-1c79fda0338a@oss.qualcomm.com>
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+X-Mailer: Apple Mail (2.3895.100.17)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDIzMSBTYWx0ZWRfXxxg360UttFz0
+ fdqjuivkosv6jCIzXJkZgiow4AAwG+DZYxQNjmWUyJIH9tL3TC4fd0wnrqd6ykaP06ousFoXzKA
+ dGzY/gOzryq6WA4TtwcqspC/xpzqXlslVU2Z5E2bet2G3/DIczmpZGp/fBL1kI3MbRnOeCGnGkK
+ r5iH+aa1myo3JWepcrajW7KFk/2RHUVnrJDkS4Rr1ArBr1JtldWwhQPhRAJF8pzjVLxlXgYjljz
+ c7dDlK2EL2oloUfJRa4ET3TXoyWaptqcEqQKXZenRAyJgRKilZoY6ocjVX43j4huYhhUC5i3NCI
+ dSKPex8+jlyAzdnHQpY
+X-Proofpoint-GUID: IebYeadmNW9YNj3R08Nnzu8AeSC6i4mM
+X-Proofpoint-ORIG-GUID: IebYeadmNW9YNj3R08Nnzu8AeSC6i4mM
+Received-SPF: pass client-ip=57.103.79.48;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,28 +85,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jeuk Kim <jeuk20.kim@samsung.com>
 
-The following changes since commit f893c46c3931b3684d235d221bf8b7844ddbf1d7:
 
-  Merge tag 'qemu-openbios-20260707' of https://github.com/mcayland/qemu into staging (2026-07-08 16:01:29 +0200)
+> On 9. Jul 2026, at 01:16, Philippe Mathieu-Daud=C3=A9 =
+<philmd@oss.qualcomm.com> wrote:
+>=20
+> 0xfae94004
 
-are available in the Git repository at:
 
-  https://gitlab.com/jeuk20.kim/qemu.git tags/pull-ufs-20260709
+Hi,
 
-for you to fetch changes up to 90aacd5bc405cb71f77472616093f9e5ad9afd2b:
+That corresponds to HV_ILLEGAL_GUEST_STATE
 
-  hw/ufs: avoid double unref of wrapped scsi-hd (2026-07-09 07:58:38 +0900)
 
-----------------------------------------------------------------
-hw/ufs: fix double unref of wrapped scsi-hd
-
-----------------------------------------------------------------
-Jia Jia (1):
-      hw/ufs: avoid double unref of wrapped scsi-hd
-
- hw/ufs/lu.c            |  5 +----
- tests/qtest/ufs-test.c | 18 ++++++++++++++++++
- 2 files changed, 19 insertions(+), 4 deletions(-)
 
