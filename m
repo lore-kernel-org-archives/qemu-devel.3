@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B4E4C43602
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 09:22:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 063BDC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 09:22:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whOSn-0004Jm-Ij; Wed, 08 Jul 2026 05:21:07 -0400
+	id 1whOSO-00046Z-41; Wed, 08 Jul 2026 05:20:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1whOSX-0004EC-Qe; Wed, 08 Jul 2026 05:20:49 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ id 1whOSL-00045r-UA; Wed, 08 Jul 2026 05:20:37 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1whOSW-0000QA-2m; Wed, 08 Jul 2026 05:20:49 -0400
+ id 1whOSJ-0000NV-K1; Wed, 08 Jul 2026 05:20:37 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EdSJ+lds9GCz1ZuqfB2gaJrlLgRL71ChaB8E/U9Nfar5g9oJ/aYVPe6FrODBNvfBvtXcBSITN5D6HRBfEVamgscYeCJiTcAXRqdPyooofDZx8iIXUXwEus899/2VUmDYe6CNNIZgkVSIlooZjM/ToyQtVE7zMqOe/5dY2GW60Hox6j02xIJ+U4gDFZEUhIyOFyBtA6Jxw8RCf88kHTLFSTVWqc8BEJ2Ify97UkalUqNUHySx3TvTMGyp668KEeIvHHqKNCwiXU7hgspO7IJNNZAp/w/2VY8y7/5viOHHrNMm2CMDUyca05k3nrIXcSbfx2F5dr3C5cTXiG2J838p2A==
+ b=QCUQrePchGRPq+MEDp4MFxIgA9djq31tJzpXCmqCnXGbUYxqYb/4zQyl50eUznnVpGtMSQGEvRC3vvrPK/N35mh8i+h4Ud8eIQxZTXb+2z9AyxerUq7uktG7tGaO4+H7q3i7/fQS28dNqQGux3ygOIq2Mqrj/is7ZdeC7xrH8pnKKglr2iTbLofY9bSyXHjhJQlF4fVNldhIP1OkZdgpXO4/2ojMaE0zgnQJNZew5whpa2QAuKFg74pk6OrekXd6eWl7uQzOfoi3KjOjL65qmD56HaEccmLy1OGbOgVLtbyYclfo4VAWmHb1IQjERoAAD8vgla74TAPJGPzOrbAZ5w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4eGrAplOW9/dRSu2NIlOoUmykCOwhi6A1wzM2wISqP4=;
- b=jldjECB6eEba9C+2D2Ltp8+G/6+WP7NPYMo6sPkCG7OMx0qbSnIsw4SRv18ggIhE+G/lIVMfSfZyvT7icGWNGhsJbjgYRRdQVHau+YoG9RhbinF1W2KgAqa2lPMNaPRYAp9izV6bo8I4qiDlxmDZN7v/33O3BKFYQbn/vk2YYtUxeD+OLETLLyp7Y01yrUcpl+8Ij8XXjTDuXOT7UnoSQqfhlsTNPuIu11UZo9aO/PKrjz2wjO0H448e54d0DnlBehxHWd/RzzYCmvK/5LCj9SV/eCOUozkyLc/O8vozxFV030TtPsx/VgamW+ud3Leo3Cr8ux6Sb7xF2pRRw37mwA==
+ bh=MwND2v++UX6pFyoywTK2r6sOR3992T7gH+shOWTbosE=;
+ b=vV9pCVrNMiNTH4hyHMboK4S3L0CDT9lHyiR9N1AJR13jsnqKi64upRgZiqXkp8ZCtJkp0XebFZdHakBjkSnDVYG9dCUXpZmIJLlSco0Zzmf3mPEs+48j4cmRQuvOj9Xr7WfeZefCG2Ww3vaV4pCPRCqL5OzmB4ETE7a+AAhEI7LwczVq9dc9l9u7NidNC5xA3y5EH1gjFDKXzp9xHBShS7OPbXcScAgI51B1+L4yF9Ut9pyw9a3j6ZYlvGcu9erjJ2CZAS0WKATXt1sxaffqMJJiYAQt065VoivHhoCNu+mhrvMsUL88D370rQav+GcgRABVmpUElwYZi7+sH0F4aw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4eGrAplOW9/dRSu2NIlOoUmykCOwhi6A1wzM2wISqP4=;
- b=EJpfI1EXxbgYDdmC401TZTbZbLT6V94qtfAXxrmj/e/n1Wj9n/oOSQjtAt7XhRCMdTZxk4BWV4Z0wSlmz4GkF4RqYJgbTVRChT5ZZpTAejS/8882Tl6QFMi9TgYhUezX1IdS9J0WM7/MBjmiTbno54ked9siyS7pSiboYf/8vXAmaCaomRe7kH/4gtPvFOSlFlfbgNACn9jliCbPmBmGTS2Ve1mBBKZMK5JFVIhKeXypPtGK8rllUBkUWC+nwh7E3DwNP6P0kMLaZVuEScy7HpX47Hh6TvajKd0v8AWX1ymOnRtl4JfTbydySP4G3ofEoLyC9ASvhsKi8Td146n8lw==
+ bh=MwND2v++UX6pFyoywTK2r6sOR3992T7gH+shOWTbosE=;
+ b=r7GmW/Y4GByvVIZo5y2rVeL/OUvU5SJ8p/gzS9q5eoGLLDCPJVAoRVrAdFzRCylssgCoPy9iDgnwjen6zSTQ9o1930aEXYBqgFZluuzcTEtbrle5fjYjjWnz9/VDFOrFO8wvO5xSYZHgVHFw4yTC7By9zfa0fRMZMOJodisswrnFDebsouLX6j8FsbtXcZrlEpzidqdeLCIN6d3maTr/21hDNrXz2OvnVPJFF//UMb4JGPWqp1otuS3gGkUn9t9e5iIfL4O41xNyz4Ezt57zGfgJdnZIMghYgb2w3LKL4j13raPy0anCFNtnn46j41U7R1MHJrj2l6WbckfbghsiZw==
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
  by PUZPR06MB5499.apcprd06.prod.outlook.com (2603:1096:301:100::13)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.11; Wed, 8 Jul
- 2026 09:20:37 +0000
+ 2026 09:20:29 +0000
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0181.010; Wed, 8 Jul 2026
- 09:20:37 +0000
+ 09:20:28 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -52,13 +52,12 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v5 09/10] tests/functional/aarch64/test_aspeed_ast2700fc: Boot
- SSP/TSP via PSP and load binaries from DRAM
-Thread-Topic: [PATCH v5 09/10] tests/functional/aarch64/test_aspeed_ast2700fc:
- Boot SSP/TSP via PSP and load binaries from DRAM
-Thread-Index: AQHdDrsJJNt023T1Z0OHExjbxtcFVg==
-Date: Wed, 8 Jul 2026 09:20:37 +0000
-Message-ID: <20260708092023.3826159-10-jamin_lin@aspeedtech.com>
+Subject: [PATCH v5 03/10] hw/arm/ast27x0: Add DRAM alias for SSP SDRAM remap
+Thread-Topic: [PATCH v5 03/10] hw/arm/ast27x0: Add DRAM alias for SSP SDRAM
+ remap
+Thread-Index: AQHdDrsEMBb+a3i3mUmZCyVNjM1MZw==
+Date: Wed, 8 Jul 2026 09:20:28 +0000
+Message-ID: <20260708092023.3826159-4-jamin_lin@aspeedtech.com>
 References: <20260708092023.3826159-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260708092023.3826159-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -69,71 +68,70 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|PUZPR06MB5499:EE_
-x-ms-office365-filtering-correlation-id: 73d52aaa-a706-4e1a-d452-08dedcd22c5a
+x-ms-office365-filtering-correlation-id: 798d5605-ff88-4051-b94e-08dedcd22708
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|23010399003|366016|1800799024|376014|22082099003|18002099003|3023799007|38070700021|56012099006|921020;
-x-microsoft-antispam-message-info: T1mB39QpQ1A0rQC7kNWzJhbAqtwWQIWC2pLzpTZgHXhN2uuXhZXjoNPu2o8OeWmViSlu/9YoFZAExJmXbQxIhxNf6naDjaIaU+TG1C9wubNL80BboY78C9RpVTPiuMmgIq1pU1BlGawTDV2tyMXF2APdnDzLjHUtxAE0GMjDk4+KRNfUkOVifc2z1du7W8JAnA9OgzyAIAJJXGduoonRTMfJo1d+srSvCdU5FlxD1/5T+G/S+XEXP//scbCMYx55+7pG3CUzq9dVnpJNfF/CSOGs9c8XHjRKjndVwU/vm4L8ito0SHzmOSvt529TII2kgBFNnb/9b3mKZRUPv8/koD4n7W2mN9+cfwNtQByaDnaInfPGKf8/ucbQblyu6VpNwUyA0gPFQpcJnhripmDTq4NS/3mCcPgx6zLQ20Rd+U9rwx8fTAVkLZmA4QYo8g0kSeKrmYVjTRqcgewINsuW+mEnoc1utx29e+7BkSvUmxg2dl5kR99zV5x/8FbiS/YSnrCiuKsNuAMEPWoaV51kn/ZB624QgbQ85f6xSSbm9Vw5axT1/rkBU2x1O8E0ritAQEUSW0ex3GEc8VbN8MfuhV5Z5CUIpa1fWrQrHlfP9dF1W8Z5bR1RI4xeloRaQYOZEifwMagkmBeQuaaJqV/I6YdWHdJI0K3ZRXU7IlGzZYBuOZZmxTGgHHxzeqslQypF
+ ARA:13230040|23010399003|366016|1800799024|376014|22082099003|18002099003|3023799007|38070700021|6133799003|56012099006|921020;
+x-microsoft-antispam-message-info: VeuL8W/JbQ1w3npxqwcNA9nrcuyQRNJWQBqBC4z/4grG4s9+GKWNO/ZNPgB/mR2zObNqIj5QQwzg1aZOn/L6n8Q0vwxFs954NNzsmYus6MigkQf5zU7IvSC3SNrJ7Wu6uZQTWDPUikEpQQQJbz8h6kjF0SI9cVlkk+WL8IsQ7kiIQUyC//OKE8GH9apP6f5E/A6UU7nThx2tt37jS1S8r8URVdVt/TF1boR7nldew9Srjd/QFh2Wn0+U46UVCUW2adZl7gEUyyOP3IJzKdVrVQQ5lQ+MBtslAJW3yAlCnWUWAUSuCSJ+S9pSGiEClTdVNPcVJoZcgGMkUkIiC0/T0B4LsUgjytwLOjyaCQRJYID9ccvqLyYptlXb63pa8JXLUkGbice++voLVMd2aLUIqrYMly+v3XgQXm3d944Ib5WC8nsj828ObQ4tkRN92Y95JIiIkemWLhfLYe35ipenJy6CJ8A5i4KsIKOaua3iJgWaQMvutNXF0XeE4X/frMr4UeSX1CNjnR4YAIywW4DUh4alBSDlgRLvbZq2hMGGqutpucPrj5tTMHKjStEzzWMHYvbeXXB8GhV1w6vRR9X8FRwZMZJCfrOGlv5rm/NtElGkKK4APIkJueL6qpH65+CMNz86sKighw8ueUKeEVraV/jF//rDheDfeBGkvlLDt7LJK0H2Ya1Hhh2QHaB8rXSSNKqL6e44cmyywbrQJ6dKiwD9h59mDH/N2r0JSuru8XN/NxbUj7AEkhm+XIGO3p/O
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(22082099003)(18002099003)(3023799007)(38070700021)(56012099006)(921020);
+ SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(22082099003)(18002099003)(3023799007)(38070700021)(6133799003)(56012099006)(921020);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?hFNXIT7wtn6n0RekzHwhNGH6jXSHERMInyRtOZBgVBgun+LNlYpPcAAI77?=
- =?iso-8859-1?Q?Q2Y45GDtqM2il8AM6F4BXg7VRhL35pHP3R3kwF9295smauZNHvJX61XfZA?=
- =?iso-8859-1?Q?Qv6EQUaQOsAnD/9/OU/r/GIT6gg5PD7HxfokUTDOg+UlmmCbBko023pehH?=
- =?iso-8859-1?Q?gswEPXwb1VRs9b8tT8jJ0fhhCJt3uSjlXBBW4KEksGC86qu+qiQthdbXBw?=
- =?iso-8859-1?Q?VoTgSRWcm5EaQXtfCLY4W2AWK0nUcQLvBFBfYqhi5PiaTtJNHhwWkdgveb?=
- =?iso-8859-1?Q?WJUyh/K5dGj8taKsKBX7pnxtY+j8D0axf4wxJGW/mCKp4vr3BTlitH2cWS?=
- =?iso-8859-1?Q?FGxGxfu980ZH8U7PVa9KWMNd5ttAWRq592+3xzS8y2dYoiqbBHRr53PqYc?=
- =?iso-8859-1?Q?W6lu/iarbwr06pHKf5rlyoQZwNzOBdvOnfuk0vhPLM9FukZRhYn1f3smfu?=
- =?iso-8859-1?Q?i82QnGfrXRhbJji8ChWTK1kInluWAofJVvaNdI0JTSEyO0TieFJjyV52XH?=
- =?iso-8859-1?Q?F6tMQTNqsERL7RohBzZ+PEg4wc5QkR21u6Qn/gwklX2YSIEaU0bEjLnarO?=
- =?iso-8859-1?Q?uP1m5JpHKUKQVEcXBZNgMwIpzhGeht2heFOqOcqqhllsXoK0NQC/7BC6ZG?=
- =?iso-8859-1?Q?lmWElBKeT1KKU+JZRmPghBLp1oZa4JPrPZtfQSqds5uciuXbZlonWmNq2Q?=
- =?iso-8859-1?Q?u3718tiyYXQv7+vRqlu16K303YlAPbEBUdV1BmPQJcT+PQ8qy0tFB1V9/8?=
- =?iso-8859-1?Q?77EmGpkDlcC/OEJAYGxoHijEVVaHveequYanYXsYsxZoxZwhlv3DXlsI2S?=
- =?iso-8859-1?Q?Y4klc7Y+OsFVKdqDdYkgVSKxKmiM4h2Cnxb74sZkw2xeY+TyIPNoFTJP8/?=
- =?iso-8859-1?Q?RtqzHgunYxlQieS2S+VRcALxzAKn016KJzeEZTFil3d0EVnkfYaxLw62gO?=
- =?iso-8859-1?Q?lm8sMZLvenObftHy9fWjp8XCZ2gVoOV4yu6m1sCzvsAU9XzieYYCvi3SB0?=
- =?iso-8859-1?Q?605WId7X1npyBaNGEfSOQwkV428RaNR0TAXkFWrcLdZ8w/Es7TeOvNhcn+?=
- =?iso-8859-1?Q?jzp7Qa93PjjucksIF6VXoyqc9XkGL9A4qDfAp8259XViFERy2pNr1786aE?=
- =?iso-8859-1?Q?q/PeFGLG6cJJwW+4RK3enMQx+HhoET5KfMtiW/KyBv/ntRku3TKpkJFjpR?=
- =?iso-8859-1?Q?tfUbTK2PZ9RVjm2don0C7PPhqH1WXnhHfSU5n+qxfDOlHmiG62e9/T6J1a?=
- =?iso-8859-1?Q?eNCF9WY8ryHx73uS4dnkAPfyHit+nblUEz0+EtDzkbnxii8eQl4ZZmSliG?=
- =?iso-8859-1?Q?4UsQObYzLEgL6EIXat5pzhwQZz6bsRkGh5EYiYRLXKxVko9RdVpDHOx3Wj?=
- =?iso-8859-1?Q?+n6O8voQ1MAw0g74Xvy88oir5eEJfPBX7IvpvyJkhbs7lpYO+HLDR2z7RY?=
- =?iso-8859-1?Q?l63vFLNEminfDkVGdVglb8itV20+DiOKLRf+34NPspD8xmah7CpitGbFDk?=
- =?iso-8859-1?Q?rfkcWfpGKQP1xmIX367uVaevlrEGMfl2fR3LFD4Yoh7SEZmefBabloq7Kf?=
- =?iso-8859-1?Q?iYH7Buuw+hD08kD27LUAaLzDthQzhlGcWpVZBvF5YSQLbJO5VGY2JzkMxl?=
- =?iso-8859-1?Q?+Q0eiFHDx4hf8xNSogEBI4EHd+OjTdRjb13LdjY/Vp8R+X/TApZx7jNRgu?=
- =?iso-8859-1?Q?nTLB1qgN6UbRPmARB6xC/eqwQ1ARiND7OxF7yiAfox4yQQa5ukXhQoSoA5?=
- =?iso-8859-1?Q?F+npYm3RbbfMAPnP5G9+Q8r6fVwbM0oyPGoZGMcZqzUniHdmj/qBYgV3s4?=
- =?iso-8859-1?Q?cnVCgfSzsg=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?W2VZ1s5qN0morv5Da3UAYfhT7NdfFPf+5MvVuZ/0DM/cyP8Az00+/mztfx?=
+ =?iso-8859-1?Q?ASfTl8fZgQw9sU530LZj9s5pV1WVkLUe/8HKdroxZu0WR5bCe0Wz2SSlFK?=
+ =?iso-8859-1?Q?D07DiCTCt8JZgXAeXD5Gsd7khCbHCapuugAC3ah76Fh+8CHllvVm+StlLD?=
+ =?iso-8859-1?Q?kxsiVjyA2BdA3/RaDOf0ywalRZH1QfiiBNvAwnW5jjbllOewbKxr86sK26?=
+ =?iso-8859-1?Q?805pIBFA7zGq1+ZZJrcQYi/9mrY1sMLbSHYnG/hjCJKv0WU40iN2JUdCq6?=
+ =?iso-8859-1?Q?ZZfjvMb5kVnM24L2+2b8r30WGJ/VoNmamirvVD55LSQivfWGP5pV0Vc3zq?=
+ =?iso-8859-1?Q?Lb+xgxtwbY76DK9cp5Uueg4BOUVFjpujiaTA7ZQW3c83zk0L9oWS7xYZuN?=
+ =?iso-8859-1?Q?SsR1p9uhyEmSgw5YR/xzBq8KCTOlDTIZvdq91llyLNnU0fYgFSTeNCK4fE?=
+ =?iso-8859-1?Q?XkFeXL3CJbSiXPuzejHcbG1Shgj8cTJE8+auUyjZxfbmakVIvRZt3dhZ2+?=
+ =?iso-8859-1?Q?7hVe612MYDqLekoiI+C0j0ZIJeIUdFKoV70mUgfZFSi2Jjzc7nrPI3HSl3?=
+ =?iso-8859-1?Q?6+AzDwOzrCBSPcvPwpsiIzsNvY1Uk3eI2P/gutYDolBKV3n2OEqLf3ehMR?=
+ =?iso-8859-1?Q?DF5A5DNau2qcuMXYHeFFXqwue9S58bqAYvIRYBhSiRKeMtxDcFBNY7jS6t?=
+ =?iso-8859-1?Q?A3/j2M+bNWuT7SGMNUzrFlEVTjh0AmzL/kflgTp4w/YYIMsatPfI5vzh8O?=
+ =?iso-8859-1?Q?srfsmIBh2JZFpc/DWTgq9Y0GJ/ph0mUx1VgpgybhQHlOTPKvQq1RzUunjR?=
+ =?iso-8859-1?Q?nwxZKqrotEO3SDdfbcD1GXu8U1/w0IZH4PXpTLSLWVOlGWp5grQt7P3xqq?=
+ =?iso-8859-1?Q?kVBMx2cj6tafneeDP+IJsyxU3StcZXVQZC5AGPLFx6jEaJnKwAoLiTO2m9?=
+ =?iso-8859-1?Q?vm/H01S1KAAHqfOSA+d57e9FXz24WnHeCcOLny+vssOELMv/s8zv6JTB2m?=
+ =?iso-8859-1?Q?DW3FUX1BCpJe9z5nH19cl58j3a+1/L3tCsm5lNUzkX7Lmb8eBtvyvHrKFc?=
+ =?iso-8859-1?Q?+yQv3kJpamx1ol5WEEn63Ny4eqL/aAa7aghYhpEimkXTa2sDqeDZfkl8u4?=
+ =?iso-8859-1?Q?z3PfNUNWunI3hKgGNm2gkJ8NZcBbnOtjq2ai4gWhhNHSu1pcHE6mzAiE0Y?=
+ =?iso-8859-1?Q?rDDveDnpY2K6Y7FU7TSKC7IXgU+u7h1KbNo0bmuWI+RoSEWEF+kS+J65BI?=
+ =?iso-8859-1?Q?i7gIgzlf42vkPXsWp7lEkHc6JHl1aRO8Q1HMCntaRHQ7hP08mYlWtQ0JoI?=
+ =?iso-8859-1?Q?ObyN2n6p1g2434YaN2iCixDJOVJcRnJ5jYwVI5FroEFOzZNMgKWrM/WmCi?=
+ =?iso-8859-1?Q?roKui4ZEo9VCfbdrSMDHI20bbv0IZAk/9jJ0sy2vaOYbfk1h0RftbEoIZv?=
+ =?iso-8859-1?Q?FL29xCmBL8nZTbmbIvf2etf24BZSckreXv7l8Xjogn2WUnEEXOr7/c/Lxm?=
+ =?iso-8859-1?Q?/d2MdKbwfU+PEKfSRJXHlWH3Rys+XyNIO03QI0o9IGM/fD6aEH5E3AiXt6?=
+ =?iso-8859-1?Q?U/KJV8/B564qn1XXihRY0+SHpsnNChfWcOd32psAsdGJtJuJYDbqzvlHHk?=
+ =?iso-8859-1?Q?G69oapDDWxsdGweSyE8xs/Ui6U3oA+K1m7xDlh/lYQm5VD1EsbVXfV5ja+?=
+ =?iso-8859-1?Q?TbzHRJ9WwPf7TDjQ81PSJnZfGkthoRoeBr0SLeapKZwTTm4dxA/IaZmlBp?=
+ =?iso-8859-1?Q?6a/Mcz75MhCUfaTUZhEF539JJmCX+pX8GzhUODwyTi8GRrQwt3beRtYRP7?=
+ =?iso-8859-1?Q?ZmiJSE4lIQ=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: OY1X4lxcHjSBZvzN0wt7ODR35sK7wdh8NaEavyX4lmbLcc40bDDO9vAxI+YPGsjt8b17qg+Zavjc1SnuzwIdzAP9w7niz+JN2Quj5qYTYFG5PwYA1u6YSiZw8bTZzvmsE6mso8vtIztxlYOyXDkBNYhaniyIdH50TMo2V2vgEGY3YaTKpgProUdRPCfPfMtjydk3M56gugii+6WYOGhCg0uY7SLcUYDav9kJfwvqSzpzotDY7xCD9mWkp0P73s/kH6CWnbX9ySHnqidpgSMYzaaI26ccfSV4L4FDslhWfP5wdeizscCdTWqOtBMUCXGPXgXCgtGxa7i3I8nyPBT3Lg==
+X-Exchange-RoutingPolicyChecked: oO6mgo4IwmJrwfL1YMOvkMw/aA7Ghz8j1AeIGlq0nI78AMUcL49/i/WY1rX7ZJ3e8BgNDh+6pnbFIgBVuz0wGRsNbkpNMyb+0Goa9nlugNK0bHfjLQCPBI/fQj5zFfGq+PzpGXUDfAYgrbRQQXq6jcbOr1TrvGlZc+DrlTzk1TUQxo52juZBL54OwQ5B4u84v/o//nD/7CjZMyzying5UHQIdkWv8LanygZQZaojNAX5gwtGu24OxI5WsRza4MC5/jC3P+akfX7/GvpchALA1ZPM3lZmepEAXp0yjfK+X5XXOaNdljB2gNjdU/6IIdmPhDHrMWtr/Boxg5hNm7vPdA==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 73d52aaa-a706-4e1a-d452-08dedcd22c5a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jul 2026 09:20:37.8434 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 798d5605-ff88-4051-b94e-08dedcd22708
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jul 2026 09:20:28.8790 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: uKsWbJSoBzJB9jRgOG9MPHjZvFJV9A7A0CZ2PXA+nPkJ1hrg37qj8vsbMMySZUu5meofC3vuBbS2TooVDTbdcDqDHFsVe6yFLOlpdGg7vxA=
+X-MS-Exchange-CrossTenant-userprincipalname: NoIuS1dTMnApiOyk0loc2pNFZ+kYfaNph2SXJ0oaZN7ASJxydxGO1iZSD+5Lw4No8ll+Fl+ftreO4Tk3dtXoiBPkKnhQA/WOOoN6kStZGy0=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB5499
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=jamin_lin@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,126 +148,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SSP and TSP now boot in a powered-off state by default. Enabling them requi=
-res=0A=
-the PSP (Cortex-A35) to explicitly set SCU control registers at runtime. Th=
-is=0A=
-behavior aligns with real hardware.=0A=
+This commit adds two MemoryRegion aliases to support PSP access to=0A=
+SSP SDRAM through shared memory remapping.=0A=
 =0A=
-Update the AST2700 FC functional test to reflect this behavior by enabling=
+The SSP exposes two DRAM aliases:=0A=
+  - remap1 maps PSP DRAM at 0x400000000 to SSP SDRAM offset 0x5880000=0A=
+  - remap2 maps PSP DRAM at 0x42C000000 to SSP SDRAM offset 0x0=0A=
 =0A=
-SSP and TSP from the U-Boot shell before booting OpenBMC. The test now=0A=
-programs the required SCU registers, saves the environment, and boots the=
+These mappings follow the default SCU register configuration used by=0A=
+the ASPEED SDK firmware, which defines the memory window mapping=0A=
+between PSP and the SSP.=0A=
 =0A=
-system so that SSP and TSP are powered on when the PSP starts.=0A=
-=0A=
-Additionally, switch SSP and TSP loading from ELF-based CPU loaders to=0A=
-binary images loaded into PSP DRAM at fixed addresses, and remove the use=
-=0A=
-of snapshot mode.=0A=
-=0A=
-Changes include:=0A=
-- Add enable_ast2700_ssp_tsp() to configure SCU registers via U-Boot=0A=
-- Remove snapshot option from QEMU command line=0A=
-- Load SSP binary at DRAM address 0x42C000000=0A=
-- Load TSP binary at DRAM address 0x42E000000=0A=
+Set SSP CPUID 4.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- .../aarch64/test_aspeed_ast2700fc.py          | 29 ++++++++++---------=0A=
- 1 file changed, 16 insertions(+), 13 deletions(-)=0A=
+ include/hw/misc/aspeed_scu.h |  4 ++++=0A=
+ hw/arm/aspeed_ast27x0-fc.c   |  2 ++=0A=
+ hw/arm/aspeed_ast27x0-ssp.c  |  6 ++++++=0A=
+ hw/arm/aspeed_ast27x0.c      |  4 ++++=0A=
+ hw/misc/aspeed_scu.c         | 32 ++++++++++++++++++++++++++++++++=0A=
+ 5 files changed, 48 insertions(+)=0A=
 =0A=
-diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/func=
-tional/aarch64/test_aspeed_ast2700fc.py=0A=
-index df889134ed..c0204ceb6c 100755=0A=
---- a/tests/functional/aarch64/test_aspeed_ast2700fc.py=0A=
-+++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py=0A=
-@@ -23,7 +23,7 @@ def do_test_aarch64_aspeed_sdk_start(self, image):=0A=
-         self.vm.add_args('-device', 'e1000e,netdev=3Dnet1,bus=3Dpcie.2')=
-=0A=
-         self.vm.add_args('-netdev', 'user,id=3Dnet1')=0A=
-         self.vm.add_args('-drive', 'file=3D' + image + ',if=3Dmtd,format=
-=3Draw',=0A=
--                         '-net', 'nic', '-net', 'user', '-snapshot')=0A=
-+                         '-net', 'nic', '-net', 'user')=0A=
+diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h=0A=
+index 904549465f..ae49f6ab9a 100644=0A=
+--- a/include/hw/misc/aspeed_scu.h=0A=
++++ b/include/hw/misc/aspeed_scu.h=0A=
+@@ -44,6 +44,10 @@ struct AspeedSCUState {=0A=
  =0A=
-         self.vm.launch()=0A=
- =0A=
-@@ -31,6 +31,12 @@ def disable_kernel_crypto_selftest(self):=0A=
-          exec_command_and_wait_for_pattern(self,=0A=
-             'setenv bootargs "${bootargs} cryptomgr.notests=3D1"', '=3D>')=
-=0A=
- =0A=
-+    def enable_ast2700_ssp_tsp(self):=0A=
-+        exec_command_and_wait_for_pattern(self,=0A=
-+            'setenv bootcmd "mw 12c02204 40000000; mw 12c02120 1; '=0A=
-+            'mw 12c02224 00000200; mw 12c02160 1; run bootspi"', '=3D>')=
-=0A=
-+        exec_command_and_wait_for_pattern(self, 'saveenv', 'OK')=0A=
+ struct Aspeed2700SCUState {=0A=
+     AspeedSCUState parent_obj;=0A=
 +=0A=
-     def enable_ast2700_pcie2(self):=0A=
-         exec_command_and_wait_for_pattern(self,=0A=
-             'cp 100420000 403000000 900000', '=3D>')=0A=
-@@ -48,6 +54,7 @@ def verify_openbmc_boot_and_login(self, name):=0A=
-         wait_for_console_pattern(self, 'Hit any key to stop autoboot')=0A=
-         exec_command_and_wait_for_pattern(self, '\012', '=3D>')=0A=
-         self.disable_kernel_crypto_selftest()=0A=
-+        self.enable_ast2700_ssp_tsp()=0A=
-         self.enable_ast2700_pcie2()=0A=
-         wait_for_console_pattern(self, 'Starting kernel ...')=0A=
++    MemoryRegion dram_remap_alias[3];=0A=
++    MemoryRegion *dram;=0A=
++    int ssp_cpuid;=0A=
+ };=0A=
  =0A=
-@@ -55,16 +62,6 @@ def verify_openbmc_boot_and_login(self, name):=0A=
-         exec_command_and_wait_for_pattern(self, 'root', 'Password:')=0A=
-         exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~=
-#')=0A=
- =0A=
--    def load_ast2700fc_coprocessor(self, name):=0A=
--        load_elf_list =3D {=0A=
--            'ssp': self.scratch_file(name, 'zephyr-aspeed-ssp.elf'),=0A=
--            'tsp': self.scratch_file(name, 'zephyr-aspeed-tsp.elf')=0A=
--        }=0A=
--=0A=
--        for cpu_num, key in enumerate(load_elf_list, start=3D4):=0A=
--            file =3D load_elf_list[key]=0A=
--            self.vm.add_args('-device',=0A=
--                             f'loader,file=3D{file},cpu-num=3D{cpu_num}')=
+ #define AST2400_A1_SILICON_REV   0x02010303U=0A=
+diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c=0A=
+index 058cea42ed..ce245118af 100644=0A=
+--- a/hw/arm/aspeed_ast27x0-fc.c=0A=
++++ b/hw/arm/aspeed_ast27x0-fc.c=0A=
+@@ -102,6 +102,8 @@ static bool ast2700fc_ca35_init(MachineState *machine, =
+Error **errp)=0A=
+                             sc->uarts_num, serial_hd(1));=0A=
+     aspeed_soc_uart_set_chr(soc->uart, ASPEED_DEV_UART7, sc->uarts_base,=
 =0A=
- =0A=
-     ASSET_SDK_V1101_AST2700 =3D Asset(=0A=
-             'https://github.com/AspeedTech-BMC/openbmc/releases/download/v=
-11.01/ast2700-default-image.tar.gz',=0A=
-@@ -123,6 +120,14 @@ def start_ast2700fc_test(self, name):=0A=
-                 'addr': '0x400000000',=0A=
-                 'file': self.scratch_file(name, 'u-boot.bin')=0A=
-             },=0A=
-+            {=0A=
-+                'addr': '0x42C000000',=0A=
-+                'file': self.scratch_file(name, 'zephyr-aspeed-ssp.bin')=
+                             sc->uarts_num, serial_hd(2));=0A=
++    object_property_set_int(OBJECT(&s->ca35), "ssp-cpuid", 4,=0A=
++                            &error_abort);=0A=
+     if (!qdev_realize(DEVICE(&s->ca35), NULL, errp)) {=0A=
+         return false;=0A=
+     }=0A=
+diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c=0A=
+index 9c984d23cd..778876a60e 100644=0A=
+--- a/hw/arm/aspeed_ast27x0-ssp.c=0A=
++++ b/hw/arm/aspeed_ast27x0-ssp.c=0A=
+@@ -232,6 +232,12 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState =
+*dev_soc, Error **errp)=0A=
+     memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SCUIO],=
 =0A=
-+            },=0A=
-+            {=0A=
-+                'addr': '0x42E000000',=0A=
-+                'file': self.scratch_file(name, 'zephyr-aspeed-tsp.bin')=
+                                 &a->scuio_alias);=0A=
+ =0A=
++    /* SDRAM remap alias used by PSP to access SSP SDRAM */=0A=
++    memory_region_add_subregion(&s->sdram, 0, &a->scu->dram_remap_alias[1]=
+);=0A=
++    memory_region_add_subregion(&s->sdram,=0A=
++            memory_region_size(&a->scu->dram_remap_alias[1]),=0A=
++            &a->scu->dram_remap_alias[0]);=0A=
++=0A=
+     /* INTC */=0A=
+     if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {=0A=
+         return;=0A=
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c=0A=
+index dd6dd0377c..10d3e35a9b 100644=0A=
+--- a/hw/arm/aspeed_ast27x0.c=0A=
++++ b/hw/arm/aspeed_ast27x0.c=0A=
+@@ -442,6 +442,8 @@ static void aspeed_soc_ast2700_init(Object *obj)=0A=
+                               "hw-strap1");=0A=
+     object_property_add_alias(obj, "hw-prot-key", OBJECT(&a->scu),=0A=
+                               "hw-prot-key");=0A=
++    object_property_add_alias(obj, "ssp-cpuid", OBJECT(&a->scu),=0A=
++                              "ssp-cpuid");=0A=
+ =0A=
+     object_initialize_child(obj, "scuio", &s->scuio, TYPE_ASPEED_2700_SCUI=
+O);=0A=
+     qdev_prop_set_uint32(DEVICE(&s->scuio), "silicon-rev",=0A=
+@@ -808,6 +810,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev=
+, Error **errp)=0A=
+                                 sc->memmap[ASPEED_DEV_VBOOTROM], &s->vboot=
+rom);=0A=
+ =0A=
+     /* SCU */=0A=
++    object_property_set_link(OBJECT(&a->scu), "dram", OBJECT(s->dram_mr),=
 =0A=
-+            },=0A=
-             {=0A=
-                 'addr': '0x430000000',=0A=
-                 'file': self.scratch_file(name, 'bl31.bin')=0A=
-@@ -143,13 +148,11 @@ def start_ast2700fc_test(self, name):=0A=
-             self.vm.add_args('-device',=0A=
-                              f'loader,addr=3D0x430000000,cpu-num=3D{i}')=
++                             &error_abort);=0A=
+     if (!sysbus_realize(SYS_BUS_DEVICE(&a->scu), errp)) {=0A=
+         return;=0A=
+     }=0A=
+diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c=0A=
+index ca93c3699d..cc0aa3234a 100644=0A=
+--- a/hw/misc/aspeed_scu.c=0A=
++++ b/hw/misc/aspeed_scu.c=0A=
+@@ -20,6 +20,7 @@=0A=
+ #include "qemu/guest-random.h"=0A=
+ #include "qemu/module.h"=0A=
+ #include "trace.h"=0A=
++#include "qemu/units.h"=0A=
+ =0A=
+ #define TO_REG(offset) ((offset) >> 2)=0A=
+ =0A=
+@@ -932,9 +933,39 @@ static void aspeed_ast2700_scu_reset_hold(Object *obj,=
+ ResetType type)=0A=
+ =0A=
+ static void aspeed_2700_scu_realize(DeviceState *dev, Error **errp)=0A=
+ {=0A=
++    Aspeed2700SCUState *a =3D ASPEED_2700_SCU(dev);=0A=
++=0A=
+     aspeed_scu_realize(dev, errp);=0A=
++=0A=
++    if (a->ssp_cpuid > 0) {=0A=
++        if (!a->dram) {=0A=
++            error_setg(errp, TYPE_ASPEED_2700_SCU ": 'dram' link not set")=
+;=0A=
++            return;=0A=
++        }=0A=
++        /*=0A=
++         * The SSP coprocessor uses two memory aliases (remap1 and remap2)=
 =0A=
++         * to access shared memory regions in the PSP DRAM:=0A=
++         *=0A=
++         * - remap1 maps PSP DRAM at 0x400000000 (size: 0x1A77E000) to=0A=
++         *   SSP SDRAM offset 0x5880000=0A=
++         * - remap2 maps PSP DRAM at 0x42C000000 (size: 0x05880000) to=0A=
++         *   SSP SDRAM offset 0x0=0A=
++         */=0A=
++        memory_region_init_alias(&a->dram_remap_alias[0], OBJECT(a),=0A=
++                                 "ssp.dram.remap1", a->dram,=0A=
++                                 0, 0x1a77e000);=0A=
++        memory_region_init_alias(&a->dram_remap_alias[1], OBJECT(a),=0A=
++                                 "ssp.dram.remap2", a->dram,=0A=
++                                 0x2c000000, 0x05880000);=0A=
++    }=0A=
+ }=0A=
  =0A=
--        self.load_ast2700fc_coprocessor(name)=0A=
-         self.do_test_aarch64_aspeed_sdk_start(=0A=
-                 self.scratch_file(name, 'image-bmc'))=0A=
- =0A=
-     def start_ast2700fc_test_vbootrom(self, name):=0A=
-         self.vm.add_args('-bios', 'ast27x0_bootrom.bin')=0A=
--        self.load_ast2700fc_coprocessor(name)=0A=
-         self.do_test_aarch64_aspeed_sdk_start(=0A=
-                 self.scratch_file(name, 'image-bmc'))=0A=
- =0A=
++static const Property aspeed_2700_scu_properties[] =3D {=0A=
++    DEFINE_PROP_INT32("ssp-cpuid", Aspeed2700SCUState, ssp_cpuid, -1),=0A=
++    DEFINE_PROP_LINK("dram", Aspeed2700SCUState, dram, TYPE_MEMORY_REGION,=
+=0A=
++                     MemoryRegion *),=0A=
++};=0A=
++=0A=
+ static void aspeed_2700_scu_class_init(ObjectClass *klass, const void *dat=
+a)=0A=
+ {=0A=
+     DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
+@@ -944,6 +975,7 @@ static void aspeed_2700_scu_class_init(ObjectClass *kla=
+ss, const void *data)=0A=
+     dc->desc =3D "ASPEED 2700 System Control Unit";=0A=
+     dc->realize =3D aspeed_2700_scu_realize;=0A=
+     rc->phases.hold =3D aspeed_ast2700_scu_reset_hold;=0A=
++    device_class_set_props(dc, aspeed_2700_scu_properties);=0A=
+     asc->resets =3D ast2700_a0_resets;=0A=
+     asc->calc_hpll =3D aspeed_2600_scu_calc_hpll;=0A=
+     asc->get_apb =3D aspeed_2700_scu_get_apb_freq;=0A=
 -- =0A=
 2.43.0=0A=
 
