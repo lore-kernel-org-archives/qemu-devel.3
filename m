@@ -4,97 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F336C44501
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A87BDC43458
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 10:24:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whPRi-0004fr-OS; Wed, 08 Jul 2026 06:24:02 -0400
+	id 1whPS2-0004kb-9H; Wed, 08 Jul 2026 06:24:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1whPRh-0004fb-M4
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:24:01 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1whPRf-0006sD-Rh
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:24:01 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-493e497643fso2533165e9.0
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 03:23:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1783506237; x=1784111037; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:content-type
- :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=PughpC3K/nANMFhuNox/JJWqLJSHqZSsQT5ddrTMVM8=;
- b=LRiVz2Ea/B4YPcqbc4TVC6Lg9PDtvV24vRZWnYb//9zhgKUd/u4UnPFUUzx8JS4g+M
- jkzo9sBUWeK7Jhixi9REhJ46xXqeASfNmEVB137xuDXtEh3uHS8F+fGb/eiRblqSyYdn
- JSxhG/NkTlxEAApX4au5Zu+Vk65RPtPzVU/oc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783506237; x=1784111037;
- h=mime-version:user-agent:content-transfer-encoding:content-type
- :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=PughpC3K/nANMFhuNox/JJWqLJSHqZSsQT5ddrTMVM8=;
- b=r4PqmT06XM4ZL3lWESzFzM5lkwT8zbwnJdI3iDcnhqsqM2EFz5AqHbgRtEA10sy8gq
- wSKkcjNOuO1y+Iv646HKMn7iHoR95B1l6wyJ2EUtQSbTkfEYOyj0LAFmP+WED6WK4hYL
- 3N4Ydi1hwEr3pz6sQ92b/FHgVXvL6ClA4MbQ+qQRj8Khhhs/YFliojqOhKcRYHZD5Amj
- vAybeOzFhXxq8WADVPZQmoLSc6bvUl3h0V7+aiRFmx2F/Les11MVnmkTNLMaJi0tW7w3
- qN2x2ztfVfNFMC4hkn+g2x2YAHC1vnzWb1KKlI/3DXjH7C5qUQJZoDCdwiqpHuI5iRkv
- XpzQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+Ro/jIRV7QZ3qh9a7CsvthuKjexH3Obb8MdYSZahowQDt9hx0AQXV0p1RFSyFw3UJpZM4XJe/jygCc72@nongnu.org
-X-Gm-Message-State: AOJu0YxxvnCtnIMD08f8AAEAThQQFKDSd6rRmD8IOMIEMLfEAOCbMeHZ
- FLKWIYL0MKK237yVSxeQipgX0vtuX4MDDizubG3+mE6zBWBwG62vrLUd+vkMWIJOmCE=
-X-Gm-Gg: AfdE7cn8PGQ5cTcrvbImzL/AX3MdxpRQYvdkS8NJZNS5QsktMJf92xj8iNBJHoBBxsc
- qTAnwy9b4RKgROJWZ2MB3Lq2fHawHFM6vzSNTQplpvffZGsnZrfJ+CWDJcBAXpAi15r9RPelbZ2
- 9p0gX0BG4zIvkOdDRb3STt+ZPfprKQBw94z+nXnVcG6Hp3aiE9gU8aYaxvF0iMvcom4j36Z09Ba
- Gp1xTB+w7KyUJFFiqoLwtC0NksBRhnV6fcbeAObPtl+agVB7R/BVxyT5Qujj46mmTC2shyqOwug
- pBlQqWOkFwlPeu68Syw8xG9IEj3Y3XdR1T1MzQmB3iW4HVtAAgighCPtiM2cVwlN2JRasoX/YII
- zOMrdfAnuBYb4I/RYSv4EOG3SX6HFblxVsHv5UY2bWuv970mneMzeoVrChkOd6rgVqSPaKKBvyf
- 0fh7mmwo63Ou/KRY2u8uAecIuDon/2s4U7mwFcxK5Pp77SwoJk876zX81o5urVEjMXtfNeEE+MC
- YzJg2O6MOQYfFCxipItyc4nCkU/iTZiuYC55m5agCd8gXWqu0Q=
-X-Received: by 2002:a05:600d:8497:20b0:493:b55f:bca4 with SMTP id
- 5b1f17b1804b1-493e68cec61mr14073125e9.29.1783506236297; 
- Wed, 08 Jul 2026 03:23:56 -0700 (PDT)
-Received: from ?IPv6:2003:cf:574a:7200:d0fd:b767:a004:b9aa?
- (p200300cf574a7200d0fdb767a004b9aa.dip0.t-ipconnect.de.
- [2003:cf:574a:7200:d0fd:b767:a004:b9aa])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa0f213e8sm39344930f8f.34.2026.07.08.03.23.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jul 2026 03:23:55 -0700 (PDT)
-Message-ID: <868d7628da027aff31851b82944c5d13f9448349.camel@mihalicyn.com>
-Subject: Re: [PULL 04/11] hw/nvme: add migration blockers for non-supported
- cases
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-To: Peter Maydell <peter.maydell@linaro.org>, Klaus Jensen <its@irrelevant.dk>
-Cc: aleksandr.mikhalitsyn@futurfusion.io, qemu-devel@nongnu.org, Klaus
- Jensen	 <k.jensen@samsung.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Keith Busch	 <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>, Fam
- Zheng	 <fam@euphon.net>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
- <hreitz@redhat.com>, 	qemu-block@nongnu.org
-Date: Wed, 08 Jul 2026 12:23:54 +0200
-In-Reply-To: <CAFEAcA8ZQX01i9u0dUziRP0rAC1fSF=zbWcmQdLs=82D8ECg4Q@mail.gmail.com>
-References: <20260706224426.14156-1-its@irrelevant.dk>
- <20260706224426.14156-5-its@irrelevant.dk>
- <CAFEAcA8ZQX01i9u0dUziRP0rAC1fSF=zbWcmQdLs=82D8ECg4Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-0+deb13u1 
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1whPS1-0004kP-74
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:24:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1whPRy-0006wY-3r
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:24:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783506256;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=pH1zfzZmMdnOfEs0PMTbJw38V0pEAhzXCziQt9fT2pc=;
+ b=IYXbMC5OPoBvLZukoh4bjwmVI1ejs3omXvAlckU6bHlYmSiwfdxYEZTAtgw3dbcqem28vi
+ +3eFUgX9ahlpzgW9f0Y3JGGHm9t+5brlEXf2YAyp86pkeOZulWHUHsNiPhhj9Sb6k9Kjp2
+ Jw69yJd0UsUGaTvrKfZCPeu4Zq2Ov+M=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-286-NIPQFKwYP7yCIYcW66qtrA-1; Wed,
+ 08 Jul 2026 06:24:12 -0400
+X-MC-Unique: NIPQFKwYP7yCIYcW66qtrA-1
+X-Mimecast-MFC-AGG-ID: NIPQFKwYP7yCIYcW66qtrA_1783506252
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8DB9C18052C4; Wed,  8 Jul 2026 10:24:11 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.28])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EB24931D2; Wed,  8 Jul 2026 10:24:08 +0000 (UTC)
+Date: Wed, 8 Jul 2026 11:24:05 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>, pbonzini@redhat.com,
+ richard.henderson@linaro.org, mst@redhat.com, mtosatti@redhat.com,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH 8/9] hw/i386/pc_sysfw.c: convert pflash0 and pflash1
+ object props to class props
+Message-ID: <ak4lRc9u5ol0DtCM@redhat.com>
+References: <20260703090814.2993188-1-mark.caveayland@nutanix.com>
+ <20260703090814.2993188-9-mark.caveayland@nutanix.com>
+ <CAFEAcA-Agr3jDYfM466UtqNywfxxX6Vv6H30B8QQDMykQ0ktOg@mail.gmail.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA-Agr3jDYfM466UtqNywfxxX6Vv6H30B8QQDMykQ0ktOg@mail.gmail.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,94 +85,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2026-07-08 at 11:11 +0100, Peter Maydell wrote:
-> On Mon, 6 Jul 2026 at 23:44, Klaus Jensen <its@irrelevant.dk> wrote:
-> >=20
-> > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-> >=20
-> > Let's block migration for cases we don't support:
-> > - SR-IOV
-> > - CMB
-> > - PMR
-> > - SPDM
-> >=20
-> > No functional changes here, because NVMe migration is
-> > not supported at all as of this commit.
->=20
-> Hi; Coverity has a complaint about this commit (CID 1663673):
+On Wed, Jul 08, 2026 at 11:16:30AM +0100, Peter Maydell wrote:
+> On Fri, 3 Jul 2026 at 10:09, Mark Cave-Ayland
+> <mark.caveayland@nutanix.com> wrote:
+> >
+> > Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> > ---
+> >  include/hw/i386/pc.h | 2 ++
+> >  hw/i386/pc.c         | 8 ++++++++
+> >  hw/i386/pc_sysfw.c   | 7 +------
+> >  3 files changed, 11 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> > index 309de2eda1..16cb0ec01f 100644
+> > --- a/include/hw/i386/pc.h
+> > +++ b/include/hw/i386/pc.h
+> > @@ -40,6 +40,8 @@ typedef struct PCMachineState {
+> >
+> >      Object *alias_pcspk;
+> >      Object *alias_rtc_time;
+> > +    Object *alias_pflash0;
+> > +    Object *alias_pflash1;
+> >
+> >      /* Configuration options: */
+> >      uint64_t max_ram_below_4g;
+> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> > index 13c9c1bfc8..11eef176f4 100644
+> > --- a/hw/i386/pc.c
+> > +++ b/hw/i386/pc.c
+> > @@ -1762,6 +1762,14 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
+> >                                     offsetof(X86MachineState, acpi_dev),
+> >                                     object_property_allow_set_link,
+> >                                     OBJ_PROP_LINK_STRONG);
+> > +    object_class_property_add_alias(oc, "pflash0",
+> > +                                    offsetof(PCMachineState, alias_pflash0),
+> > +                                    TYPE_PFLASH_CFI01,
+> > +                                    "drive");
+> > +    object_class_property_add_alias(oc, "pflash1",
+> > +                                    offsetof(PCMachineState, alias_pflash1),
+> > +                                    TYPE_PFLASH_CFI01,
+> > +                                    "drive");
+> 
+> Does making these class properties fix
+> https://gitlab.com/qemu-project/qemu/-/work_items/3254
+> (which is a report that "qemu-system-x86_64 -machine pc-q35,help"
+> doesn't list these properties) ?
 
-Dear Peter,
+Yes, it ought to, as that CLI logic iterates over class properties.
 
->=20
-> > +#define BLOCKER_FEATURES_MAX_LEN 256
-> > +
-> > +static inline void nvme_add_blocker_feature(char *blocker_features,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const char *feature)
-> > +{
-> > +=C2=A0=C2=A0=C2=A0 if (strlen(blocker_features) > 0) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_strlcat(blocker_features,=
- ", ", BLOCKER_FEATURES_MAX_LEN);
-> > +=C2=A0=C2=A0=C2=A0 }
-> > +=C2=A0=C2=A0=C2=A0 g_strlcat(blocker_features, feature, BLOCKER_FEATUR=
-ES_MAX_LEN);
->=20
-> g_strlcat has a return value to tell us whether it managed to fit
-> all the text in, but we aren't checking it.
->=20
-> In this case it looks like that's not a big deal (it does always NUL
-> terminate even if it truncates, and we're only using the string
-> to report migration blockers), but I think it would be nicer to
-> avoid using a fixed-size char array: they're usually a bit more
-> bug-prone.
->=20
-> How about we use glib's GPtrArray and g_strjoinv() instead of
-> manually building the string? Something like:
->=20
->=20
-> =C2=A0=C2=A0=C2=A0 g_autoptr(GPtrArray) blocker_features =3D g_ptr_array_=
-new();
->=20
-> =C2=A0=C2=A0=C2=A0 if (...) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_ptr_array_add(blocker_featur=
-es, "SR-IOV");
-> =C2=A0=C2=A0=C2=A0 }
-> =C2=A0=C2=A0=C2=A0 [etc...]
->=20
->=20
-> =C2=A0=C2=A0=C2=A0 if (blocker_features->len > 0) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_autofree blocker_list =3D NU=
-LL;
->=20
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_ptr_array_add(blocker_featur=
-es, NULL);
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 blocker_list =3D g_strjoinv(",=
- ", (void *)blocker_features->pdata);
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_setg(&n->migration_block=
-er,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Migration is not supported for %s", b=
-locker_list);
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (migrate_add_blocker(&n->mi=
-gration_blocker, errp) < 0) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return=
- false;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> =C2=A0=C2=A0=C2=A0 }
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
-oh, thanks. My bad. :-( Would you like to submit your fix as a patch, or
-should I take your suggestions and send a fixup patch (or update my series)=
-?
-
-Kind regards,
-Alex
-
->=20
-> thanks
-> -- PMM
 
