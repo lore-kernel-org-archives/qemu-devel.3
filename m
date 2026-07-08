@@ -4,57 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E4E2C44501
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:50:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80D24C43602
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:52:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whVTo-0001kz-GI; Wed, 08 Jul 2026 12:50:38 -0400
+	id 1whVW1-0003Hs-LQ; Wed, 08 Jul 2026 12:52:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1whVTa-0001TT-Hx
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:50:25 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1whVTY-00047w-BG
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:50:22 -0400
-Received: from example.com (unknown [167.220.208.42])
- by linux.microsoft.com (Postfix) with ESMTPSA id 3AF6420B7167;
- Wed,  8 Jul 2026 09:50:09 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3AF6420B7167
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1783529410;
- bh=0pIfadOQvxXtA+3ZGYojESFv7F1MkJ3RS1l5AgszPtI=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=amf05lPcmo6NWtinv0psq+5MCLN9kV86ocGqO+c49CX3cJ+jbFn3973BYjUcthtQ4
- lbchQD9RtBhLUvEQuLG/16cbPzc7sg+qaFW5ajIkowgJmsphvTSxs7PyV7DU0Qe5TA
- JcbHmHS9qgtWiKdrlwK6flYxwbCDQ4qPpRZxj5m4=
-Date: Wed, 8 Jul 2026 18:50:12 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Wei Liu <wei.liu@kernel.org>, Magnus Kulke <magnuskulke@microsoft.com>,
- Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@microsoft.com>,
- Wei Liu <liuwe@microsoft.com>
-Subject: Re: [PATCH 5/5] target/i386/mshv: fix pio handlers clobbering
- device-modified registers
-Message-ID: <ak5/xD2CApQeKiZL@example.com>
-References: <20260707221645.24557-1-dblanzeanu@linux.microsoft.com>
- <20260707221645.24557-6-dblanzeanu@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1whVVz-0003Hb-Mh
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:52:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1whVVx-0004bI-BD
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:52:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783529567;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qr24SCSavwO6J0edzXKNH3n6vlLoJ4F4B9pJaia4mh4=;
+ b=Jo8l97WES9k1oIENKp7Pgbb/VHrki1pkVhMLe2C7jkuTHQjLdBrc6Vhay3ml8oaQ8EX4FO
+ lfGSiNBa0OzZ+UTu4eDJG7cX54mZJQaJkJ+Bhdi6tu1elMUozGOUHP7tYs8N6v7UqkngWV
+ 8MxaUwHX4SsZpLOveE6OycQkTFzz+Eg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-oAUpjMjhOCaGlcPmPLBu-g-1; Wed,
+ 08 Jul 2026 12:52:45 -0400
+X-MC-Unique: oAUpjMjhOCaGlcPmPLBu-g-1
+X-Mimecast-MFC-AGG-ID: oAUpjMjhOCaGlcPmPLBu-g_1783529563
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 449EA19560B5; Wed,  8 Jul 2026 16:52:43 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.28])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B578D1956047; Wed,  8 Jul 2026 16:52:38 +0000 (UTC)
+Date: Wed, 8 Jul 2026 17:52:35 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Harald Freudenberger <freude@linux.ibm.com>
+Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ thuth@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ linux-s390@vger.kernel.org, dengler@linux.ibm.com,
+ borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
+Subject: Re: [PATCH v11 18/21] crypto: Add aes-helpers file to support some
+ AES modes
+Message-ID: <ak6AUxKNGquGyHoC@redhat.com>
+References: <20260707161815.40919-1-freude@linux.ibm.com>
+ <20260707161815.40919-19-freude@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260707221645.24557-6-dblanzeanu@linux.microsoft.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260707161815.40919-19-freude@linux.ibm.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,162 +89,191 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 08, 2026 at 01:16:45AM +0300, Doru Blânzeanu wrote:
-> When a device handler (e.g. vmport) calls cpu_synchronize_state() during
-> I/O port dispatch, it sets cpu->accel->dirty = true and may modify
-> registers directly in env. The old PIO code ignored this: it
-> unconditionally wrote the stale info->rax from the VM-exit intercept
-> message back to the hypervisor and then cleared dirty, discarding any
-> register changes made by the device.
+On Tue, Jul 07, 2026 at 06:18:05PM +0200, Harald Freudenberger wrote:
+> Add a new file crypto/aes-helpers.c with simple functions
+> to support some AES modes:
+> - AES cbc: AES_cbc_encrypt() AES_cbc_decrypt()
+> - AES ctr: AES_ctr_encrypt()
+> - AES xts: AES_xts_encrypt() AES_xts_decrypt()
+> and some AES related helpers:
+> - AES_xor()
+> - AES_xts_prep_next_tweak()
 > 
-> Bifurcate both handlers on cpu->accel->dirty:
-> 
-> handle_pio_non_str:
-> - dirty path: update env->eip directly. For reads (IN), merge the I/O
->   result into env->regs[R_EAX] (which may have been modified by the
->   device) rather than info->rax. For writes (OUT), leave RAX untouched.
->   Flush all registers via mshv_store_regs() and clear dirty.
-> - non-dirty path: write RIP and RAX via set_x64_registers hypercall as
->   before.
-> 
-> handle_pio_str:
-> - dirty path: update env->eip and the appropriate index register
->   (RSI for OUTS, RDI for INS) directly. Flush via mshv_store_regs()
->   and clear dirty.
-> - non-dirty path: write the index register and RIP via
->   set_x64_registers. Drop the RAX assignment that was here before;
->   string I/O does not modify RAX, and set_x64_registers is hardcoded
->   to write only 2 registers so the third slot was silently ignored
->   anyway.
-> 
-> Remove the unconditional "cpu->accel->dirty = false" at the end of both
-> handlers. In the non-dirty fast path it was redundant (already false).
-> In the dirty path it was actively harmful: it told the vcpu run loop
-> that env was clean when it was not, losing the device's modifications.
-> 
-> Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
 > ---
->  target/i386/mshv/mshv-cpu.c | 72 +++++++++++++++++++++++++------------
->  1 file changed, 50 insertions(+), 22 deletions(-)
-> 
-> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-> index 8a59a0b40e..5e680351cd 100644
-> --- a/target/i386/mshv/mshv-cpu.c
-> +++ b/target/i386/mshv/mshv-cpu.c
-> @@ -1646,10 +1646,12 @@ static int handle_pio_non_str(CPUState *cpu,
->      uint32_t val, eax;
->      const uint32_t eax_mask =  0xffffffffu >> (32 - len * 8);
->      size_t insn_len;
-> -    uint64_t rip, rax;
-> +    uint64_t rip;
->      uint32_t reg_names[2];
->      uint64_t reg_values[2];
->      uint16_t port = info->port_number;
-> +    X86CPU *x86_cpu = X86_CPU(cpu);
-> +    CPUX86State *env = &x86_cpu->env;
->  
->      if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
->          union {
-> @@ -1680,21 +1682,36 @@ static int handle_pio_non_str(CPUState *cpu,
->  
->      /* Advance RIP and update RAX */
->      rip = info->header.rip + insn_len;
-> -    rax = info->rax;
->  
-> -    reg_names[0] = HV_X64_REGISTER_RIP;
-> -    reg_values[0] = rip;
-> -    reg_names[1] = HV_X64_REGISTER_RAX;
-> -    reg_values[1] = rax;
-> +    if (cpu->vcpu_dirty) {
-> +        env->eip = rip;
-> +        if (access_type != HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-> +            /*
-> +             * For reads, merge the I/O result into the current RAX.
-> +             * Use env->regs[R_EAX] as the base since a device handler
-> +             * (e.g. vmport) may have called cpu_synchronize_state()
-> +             * and modified registers.
-> +             */
-> +            eax = (((uint32_t)env->regs[R_EAX]) & ~eax_mask)
-> +                  | (val & eax_mask);
-> +            env->regs[R_EAX] = (uint64_t)eax;
-> +        }
-> +        /* Sync modified standard registers back and clear dirty. */
-> +        store_regs(cpu);
-> +        cpu->vcpu_dirty = false;
-> +    } else {
-> +        reg_names[0] = HV_X64_REGISTER_RIP;
-> +        reg_values[0] = rip;
-> +        reg_names[1] = HV_X64_REGISTER_RAX;
-> +        reg_values[1] = info->rax;
->  
-> -    ret = set_x64_registers(cpu, reg_names, reg_values);
-> -    if (ret < 0) {
-> -        error_report("Failed to set x64 registers");
-> -        return -1;
-> +        ret = set_x64_registers(cpu, reg_names, reg_values);
-> +        if (ret < 0) {
-> +            error_report("Failed to set x64 registers");
-> +            return -1;
-> +        }
->      }
->  
-> -    cpu->vcpu_dirty = false;
-> -
->      return 0;
->  }
->  
-> @@ -1810,6 +1827,7 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
->      bool repop = info->access_info.rep_prefix == 1;
->      size_t repeat = repop ? info->rcx : 1;
->      size_t insn_len = info->header.instruction_length;
-> +    uint64_t rip;
->      bool direction_flag;
->      uint32_t reg_names[3];
->      uint64_t reg_values[3];
-> @@ -1839,18 +1857,28 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
->          reg_values[0] = info->rdi;
->      }
->  
-> -    reg_names[1] = HV_X64_REGISTER_RIP;
-> -    reg_values[1] = info->header.rip + insn_len;
-> -    reg_names[2] = HV_X64_REGISTER_RAX;
-> -    reg_values[2] = info->rax;
-> +    rip = info->header.rip + insn_len;
->  
-> -    ret = set_x64_registers(cpu, reg_names, reg_values);
-> -    if (ret < 0) {
-> -        error_report("Failed to set RIP and RAX registers");
-> -        return -1;
-> -    }
-> +    if (cpu->vcpu_dirty) {
-> +        env->eip = rip;
-> +        if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-> +            env->regs[R_ESI] = info->rsi;
-> +        } else {
-> +            env->regs[R_EDI] = info->rdi;
-> +        }
-> +        /* Sync modified standard registers back and clear dirty. */
-> +        store_regs(cpu);
-> +        cpu->vcpu_dirty = false;
-> +    } else {
-> +        reg_names[1] = HV_X64_REGISTER_RIP;
-> +        reg_values[1] = rip;
->  
-> -    cpu->vcpu_dirty = false;
-> +        ret = set_x64_registers(cpu, reg_names, reg_values);
-> +        if (ret < 0) {
-> +            error_report("Failed to set x64 registers");
-> +            return -1;
-> +        }
-> +    }
->  
->      return 0;
->  }
-> -- 
-> 2.53.0
+>  crypto/aes-helpers.c | 106 +++++++++++++++++++++++++++++++++++++++++++
+>  crypto/meson.build   |   1 +
+>  include/crypto/aes.h |  14 ++++++
 
-Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+This should be aes-helpers.h, to match the ases-helpers.c
+file naming.
+
+>  3 files changed, 121 insertions(+)
+>  create mode 100644 crypto/aes-helpers.c
+> 
+> diff --git a/crypto/aes-helpers.c b/crypto/aes-helpers.c
+> new file mode 100644
+> index 0000000000..39ca153737
+> --- /dev/null
+> +++ b/crypto/aes-helpers.c
+> @@ -0,0 +1,106 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * AES helper functions and mode implementations
+> + *
+> + * Authors:
+> + *   Harald Freudenberger <freude@linux.ibm.com>
+> + */
+> +
+> +#include <stdint.h>
+> +#include <string.h>
+
+Neither of these should be used, instead this should be
+including qemu/osdep.h
+
+> +#include "crypto/aes.h"
+> +
+> +void AES_xor(const unsigned char *src1, const unsigned char *src2,
+> +             unsigned char *dst)
+> +{
+> +    int i;
+> +
+> +    for (i = 0; i < AES_BLOCK_SIZE; i++) {
+> +        dst[i] = src1[i] ^ src2[i];
+> +    }
+> +}
+> +
+> +void AES_cbc_encrypt(const unsigned char *in, unsigned char *out,
+> +                     unsigned char *iv, const AES_KEY *key)
+> +{
+> +    unsigned char buf[AES_BLOCK_SIZE];
+> +
+> +    /* in xor iv => buf */
+> +    AES_xor(in, iv, buf);
+> +    /* encrypt buf => out */
+> +    AES_encrypt(buf, out, key);
+> +    /* prep iv for next round */
+> +    memcpy(iv, out, AES_BLOCK_SIZE);
+> +}
+> +
+> +void AES_cbc_decrypt(const unsigned char *in, unsigned char *out,
+> +                     unsigned char *iv, const AES_KEY *key)
+> +{
+> +    unsigned char buf[AES_BLOCK_SIZE];
+> +
+> +    /* decrypt in => buf */
+> +    AES_decrypt(in, buf, key);
+> +    /* buf xor iv => out */
+> +    AES_xor(buf, iv, out);
+> +    /* prep iv for next round */
+> +    memcpy(iv, in, AES_BLOCK_SIZE);
+> +}
+> +
+> +void AES_ctr_encrypt(const unsigned char *in, unsigned char *out,
+> +                     const unsigned char *ctr, const AES_KEY *key)
+> +{
+> +    unsigned char buf[AES_BLOCK_SIZE];
+> +
+> +    /* encrypt ctr => buf */
+> +    AES_encrypt(ctr, buf, key);
+> +    /* exor input data with encrypted ctr => out */
+> +    AES_xor(in, buf, out);
+> +}
+> +
+> +/*
+> + * Tweak calculation for AES XTS.
+> + * Multiply tweak by Î± (x) in GF(2^128) per IEEE 1619-2007. The tweak
+> + * is a 128-bit little-endian integer (tweak[0]=LSB, tweak[15]=MSB).
+> + * This implementation has been verified on litte and big endian.
+> + */
+> +void AES_xts_prep_next_tweak(unsigned char *tweak)
+> +{
+> +    unsigned char carry;
+> +    int i;
+> +
+> +    carry = tweak[AES_BLOCK_SIZE - 1] >> 7;
+> +
+> +    for (i = AES_BLOCK_SIZE - 1; i > 0; i--) {
+> +        tweak[i] = (unsigned char)((tweak[i] << 1) | (tweak[i - 1] >> 7));
+> +    }
+> +
+> +    tweak[i] = (unsigned char)(tweak[i] << 1);
+> +    tweak[i] ^= (unsigned char)(0x87 & (unsigned char)(-(unsigned char)carry));
+> +}
+> +
+> +void AES_xts_encrypt(const unsigned char *in, unsigned char *out,
+> +                     const unsigned char *tweak, const AES_KEY *key)
+> +{
+> +    unsigned char buf1[AES_BLOCK_SIZE], buf2[AES_BLOCK_SIZE];
+> +
+> +    /* in xor tweak => buf1 */
+> +    AES_xor(in, tweak, buf1);
+> +    /* encrypt buf1 => buf2 */
+> +    AES_encrypt(buf1, buf2, key);
+> +    /* buf2 xor tweak => out */
+> +    AES_xor(buf2, tweak, out);
+> +}
+> +
+> +void AES_xts_decrypt(const unsigned char *in, unsigned char *out,
+> +                     const unsigned char *tweak, const AES_KEY *key)
+> +{
+> +    unsigned char buf1[AES_BLOCK_SIZE], buf2[AES_BLOCK_SIZE];
+> +
+> +    /* in xor tweak => buf1 */
+> +    AES_xor(in, tweak, buf1);
+> +    /* encrypt buf1 => buf2 */
+> +    AES_decrypt(buf1, buf2, key);
+> +    /* buf2 xor tweak => out */
+> +    AES_xor(buf2, tweak, out);
+> +}
+> diff --git a/crypto/meson.build b/crypto/meson.build
+> index b51597a879..675f27311c 100644
+> --- a/crypto/meson.build
+> +++ b/crypto/meson.build
+> @@ -55,6 +55,7 @@ system_ss.add(when: gnutls, if_true: files('tls-cipher-suites.c'))
+>  
+>  util_ss.add(files(
+>    'aes.c',
+> +  'aes-helpers.c',
+>    'clmul.c',
+>    'init.c',
+>    'sm4.c',
+> diff --git a/include/crypto/aes.h b/include/crypto/aes.h
+> index 381f24c902..df6239cb9c 100644
+> --- a/include/crypto/aes.h
+> +++ b/include/crypto/aes.h
+> @@ -37,4 +37,18 @@ AES_Td0[x] = Si[x].[0e, 09, 0d, 0b];
+>  
+>  extern const uint32_t AES_Te0[256], AES_Td0[256];
+>  
+> +void AES_xor(const unsigned char *src1, const unsigned char *src2,
+> +             unsigned char *dst);
+> +void AES_cbc_encrypt(const unsigned char *in, unsigned char *out,
+> +                     unsigned char *iv, const AES_KEY *key);
+> +void AES_cbc_decrypt(const unsigned char *in, unsigned char *out,
+> +                     unsigned char *iv, const AES_KEY *key);
+> +void  AES_ctr_encrypt(const unsigned char *in, unsigned char *out,
+> +                      const unsigned char *ctr, const AES_KEY *key);
+> +void AES_xts_prep_next_tweak(unsigned char *tweak);
+> +void AES_xts_encrypt(const unsigned char *in, unsigned char *out,
+> +                     const unsigned char *tweak, const AES_KEY *key);
+> +void AES_xts_decrypt(const unsigned char *in, unsigned char *out,
+> +                     const unsigned char *tweak, const AES_KEY *key);
+
+Aside from putting them in aes-helpers.h can you also provide
+basic API docs for them inline in the header.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
