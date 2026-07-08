@@ -4,73 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E8BEC43602
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9769AC44503
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 10:11:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whPFK-0001lr-38; Wed, 08 Jul 2026 06:11:14 -0400
+	id 1whPFe-0001oB-Ra; Wed, 08 Jul 2026 06:11:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1whPFH-0001lI-Lr
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:11:11 -0400
-Received: from p-east2-cluster5-host12-snip4-10.eps.apple.com ([57.103.79.83]
- helo=outbound.st.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1whPFF-0003b2-Nv
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:11:11 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-20-percent-2 (Postfix) with ESMTPS id
- 585941800122; Wed, 08 Jul 2026 10:11:04 +0000 (UTC)
-X-ICL-RepId: 019f4135-abd2-711c-9498-473a7486c2d9
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQhICkMDWhxBCEsdXwdcEhVdRV4CXwpfFV04RgNHGVcUUBtHDFUHV15fChMLU1ZHHkkKVgleCEYRWxRWQ1EZEgJaRQVNXw5eHwQXRhlVBEceXVZAGRkCURxWDVdDVARfUEkMQVBsWgBHF0gdXRlZb1BdHA4YWRtAFV0RUBlWCV4VFx5BTVoCVk0FPgRUAC0HRA1VBC9yWB9EDU8LQHVYA0kUSHdZD18BQABNBF4GK0ceSQpWCV4IRhFbFFZDURkMUE0BQwgKCEcDTRdeMlMEXxFQFg==
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1783505468; x=1786097468;
- bh=CXFo8AMxA4e4gTlAGmPd0zHYOeaH2U4ywZ33vRhXN6I=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=fbxIOQ8t6BWftlx71lwMUY96UTTD2n/BeDc81B65WLswSbTquQwdk+r4lIq/SYYejjM+4ZagABmQEY6m23nBFz6PxJv9Iy70mfkPL0mFEQWv5YDWrKohRzwJhnVS6DpKPk9x+5PqOhnMmaoENH6rmGhBKm3ohwa8F4uVCltJq9RhmAy6aOAGOOmRsZAXO2fNDNfm9oi8+gy5S8czeI+pn9YIT2tR5YPUNXl+vJBZYZYbJP7hbLeMJFmEvTINrFiNYGBdJNBh+xM0e+ZImOq0ftmz8cFjk1tTMfdHqwWSH2b4V/crm+MUHdHMWtGT5Zy38poocRpJ/ZchPpuUVc2d6A==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-20-percent-2 (Postfix) with ESMTPSA id
- A59431800404; Wed, 08 Jul 2026 10:11:02 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3895.100.17\))
-Subject: Re: [RFC PATCH] target/arm: report M-profile BKPT to gdbstub when
- attached
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <CAFEAcA9x7tjW9xuT_XwNntdvoVtLrCL_PB+50tfhiW2XDvsCiw@mail.gmail.com>
-Date: Wed, 8 Jul 2026 12:10:12 +0200
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Gilles Grimaud <gilles.grimaud@univ-lille.fr>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <F797F544-7BE3-4478-B319-0D4843095731@unpredictable.fr>
-References: <20260705224407.32464-1-gilles.grimaud@univ-lille.fr>
- <CAFEAcA9Heev=ydTzO2u3EzeF_2q7dytOF8=67qF8ZMMY6Ky2Tw@mail.gmail.com>
- <a14481eb-9eed-43c0-a29c-187798f7f769@linaro.org>
- <CAFEAcA9x7tjW9xuT_XwNntdvoVtLrCL_PB+50tfhiW2XDvsCiw@mail.gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-X-Mailer: Apple Mail (2.3895.100.17)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDA5OCBTYWx0ZWRfX7IcM4sTMGXSq
- gDy/xs3YVqE+J1F8TcI0q1LYMM9OZkPk+huAXvTgkVYmDZ6Am6Q17u3862qXK4ojI0yFQJxjJ1u
- f83R1bhSx+oOLisPKeLBGyQNyMV52lpbg2UxjnGOT+5/G1vVBUgHnzxv/ZLDzEoDmLB3y48iT+v
- WZMEnhDOyxntxlePrnFJmi4fk1iGwjUXToXQKOFKhJnZ+6MePShAf1CFEWDRGIEhNz1yaE+hsTa
- HC2XMawTzzVARhYbEUMv6ARpzAg3K8fg9T95LBJLhQc/ZfqEDnI5VUuuZ8BvRgSp1Qj358/PrZH
- RcCqxPY3HuwAKvI3qln
-X-Proofpoint-ORIG-GUID: nr4MdOw9mhJ9Quj3CzJPdLGPVcEAm92n
-X-Proofpoint-GUID: nr4MdOw9mhJ9Quj3CzJPdLGPVcEAm92n
-Received-SPF: pass client-ip=57.103.79.83;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1whPFZ-0001nf-G7
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:11:29 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1whPFX-0004AI-8B
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:11:28 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-6679d88abdcso709914d50.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 03:11:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783505484; cv=none;
+ d=google.com; s=arc-20260327;
+ b=csFd2zQEjI7gY5OZnQ3oxX5Rb955qmnNbsZhij9MAzbPm5MFRsLgcrM7MlxhcxJ7gY
+ hAifJGH1pRuzDip9XxFMox9+fdWtETfBAkuPAjjZVrK8IAPDt57of0LSFfH7iDAaGDpz
+ lcmkyAm15iurvngYCkegfbpHsPTX8UDHZ6sxgU90ookeVV0eckcxiLj1ac2c8H+KcY5h
+ MbnA8R+fxhJkIMPHrU3KUnaYlals41wc4PdCPxdgind4KTF7eIcYHBckMmSjnvepqcmk
+ 5n/9RkV1exVIf4c8uhHb29xq+I7XSRsBNJ0csbFjxg1ZZ++2WbluGgeGEJFSaUx6EYD5
+ FNng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=GIyecIii8VEKjz7Xb04A8BTlCRTZO5FE8tkVBIVX8oc=;
+ fh=10RhduUL+W3qe6vLjqIRiE+Qmxow+4xQKKoTl/PCTPg=;
+ b=D79o4tfG3uYS3urNU0GndQkJCmtlXbD4NmwxQzzxGfpmq9JamQnClf14lC3mWM5jKJ
+ dMUHRQcyywygBX6b7v3ihPcjEhJXHrrClN8sUVJck17OM3Y7VMSLwTwxZ/XhBH33kefR
+ 7uqQxQHAN66DTnSnUTvpBSo6rmXVXAmnCasuhr23DiwL6bYPURKiFLfgRO7UI9Aug8qT
+ 2iECjb2d+bRTfEIjefiC1q57qkSLACZyBzBDJaJFUh2FupwCOuWliebQkQmkhKPYYagO
+ +QXStx3t8oHjCL7WsQM/xzk//NowphCG4xYi3EdUF24gTMmSLTBfzCs4xv7wrgD8+880
+ HZMw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783505484; x=1784110284; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=GIyecIii8VEKjz7Xb04A8BTlCRTZO5FE8tkVBIVX8oc=;
+ b=LMRYq9KCJ8g1+zg9NvB2s/Ea+lmh41HhIMIQ1vWYN80gyL2HpzrDWwH9OcrVP0aW8+
+ l/FDZzSl8MwXV5T4csD+1Q0d7F38E40OCPP4COHkY2T4/fjtUZso5AFIF0/H3tjIPYUN
+ 8emfHQ1AP8NOoS8nqRx5vlgoLe68kPvQJjPRE/po4DgRfW5za6RPloMPa1K3rRr12CCe
+ ZyAX1LLf+Py0xzoKuU36S5SwGxsdrdFPNa/rjdIXN0yOmYSXrKKcrPKiYdUpggSP+ZA6
+ 0tshA4ZT4HW5ZI6iuhIWoHLwDjo3GS1cFHhJlgbtio6PUCF/bwfemPtsGkKMmOO4S+fK
+ Ad4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783505484; x=1784110284;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=GIyecIii8VEKjz7Xb04A8BTlCRTZO5FE8tkVBIVX8oc=;
+ b=kxfAxDscuf1jCB2Z0mQVvTNPC7S5PmkJDwij7NtDxolyEyVGxnDUbOXTgAycxKb78w
+ 5tVZFoS2k2V7TF9OaGaHN7GYmtPMVOtDb0f9xvPm2NHaGaps+eEVw/Ob2RtkR6xxcqMf
+ Dvxkh8ROU0QIREz9j+UJGjAk5R+dFr33sUQNxygYla+AqJLhRpJmRZh4oevcPcV/W9sP
+ lqrWABZxLja5e2ZOk9NUXk6v4IpMSgySy8x8NrTbky3LYWwZbUIsTA8PT8ql+iju/Dwt
+ RaGcHN+gMhr0vpkAwDLYaRjC9mOPOaHqhLr6c9MO/ZNMXTTpkFBCi+kAR/4kv8FWK279
+ D01w==
+X-Gm-Message-State: AOJu0Yz5avKlzKXpb1HTL/KlQglifMDK1loNezFf6qGp/jNz278ihxe6
+ wREapwg+fkEHJuCZdbu2CTYUvbYsA/l4aqVg9xYN52v6IF7YJeMZRFGUzGx1r3VkmRZyqU4EEPj
+ Wwx3wESmb69wkURMmR18OKjbr86yqZqM+Xt/GtjXLXg==
+X-Gm-Gg: AfdE7cng+SrcKQZ9AuLkfb3kDuX1bDw8NOJW6MCVF8IKKTTI4hk/VoYLYmNv6o6aFig
+ RJtBDPNEKWtzt54XTo+1w0IKm/J/HihE7bsfnul8kWD0TxeTasZ3DCw6hu2BV8P0acD6lX88bxU
+ CC2aMQsl+nrue5XuHfhQ+h8BIzaGVdFCK8d2HJlNBYY8nFuqYs6AHhnSOZd7kLa1H53BTsKun77
+ HtnVFgAqk/rJo8nGPfPio7z55WjbjZIaLFbqFLI3VOR9/kyZgJ+BOotud59ZHHMTArdW1/cH4DK
+ 2pLer2lm5sfAtdEy//dRkZOhG/7qJb1trNCNMwOfdAG4jK1pu326HHfQ
+X-Received: by 2002:a05:690e:d44:b0:667:8ba0:f79c with SMTP id
+ 956f58d0204a3-6679f2fe908mr1239627d50.108.1783505484576; Wed, 08 Jul 2026
+ 03:11:24 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260706224426.14156-1-its@irrelevant.dk>
+ <20260706224426.14156-5-its@irrelevant.dk>
+In-Reply-To: <20260706224426.14156-5-its@irrelevant.dk>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 8 Jul 2026 11:11:13 +0100
+X-Gm-Features: AVVi8CeYmuBMIfJ6gJq-__MYYnbgxVd6jYaYuFEr1xevfgeA3KTbz9VFPb3cxWw
+Message-ID: <CAFEAcA8ZQX01i9u0dUziRP0rAC1fSF=zbWcmQdLs=82D8ECg4Q@mail.gmail.com>
+Subject: Re: [PULL 04/11] hw/nvme: add migration blockers for non-supported
+ cases
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
+ Klaus Jensen <k.jensen@samsung.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Keith Busch <kbusch@kernel.org>, 
+ Jesper Devantier <foss@defmacro.it>, Fam Zheng <fam@euphon.net>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,68 +121,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 6 Jul 2026 at 23:44, Klaus Jensen <its@irrelevant.dk> wrote:
+>
+> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+>
+> Let's block migration for cases we don't support:
+> - SR-IOV
+> - CMB
+> - PMR
+> - SPDM
+>
+> No functional changes here, because NVMe migration is
+> not supported at all as of this commit.
+
+Hi; Coverity has a complaint about this commit (CID 1663673):
+
+> +#define BLOCKER_FEATURES_MAX_LEN 256
+> +
+> +static inline void nvme_add_blocker_feature(char *blocker_features,
+> +                                            const char *feature)
+> +{
+> +    if (strlen(blocker_features) > 0) {
+> +        g_strlcat(blocker_features, ", ", BLOCKER_FEATURES_MAX_LEN);
+> +    }
+> +    g_strlcat(blocker_features, feature, BLOCKER_FEATURES_MAX_LEN);
+
+g_strlcat has a return value to tell us whether it managed to fit
+all the text in, but we aren't checking it.
+
+In this case it looks like that's not a big deal (it does always NUL
+terminate even if it truncates, and we're only using the string
+to report migration blockers), but I think it would be nicer to
+avoid using a fixed-size char array: they're usually a bit more
+bug-prone.
+
+How about we use glib's GPtrArray and g_strjoinv() instead of
+manually building the string? Something like:
 
 
-> On 8. Jul 2026, at 11:31, Peter Maydell <peter.maydell@linaro.org> =
-wrote:
->=20
-> On Tue, 7 Jul 2026 at 18:27, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>=20
->> On 7/6/26 02:21, Peter Maydell wrote:
->>> No other architecture, CPU or board in QEMU needs to do this,
->>> so my instinct is to say that M-profile should not be special here.
->>> Richard, Alex: how do we usually handle breakpoint insns for the
->>> gdbstub ?
->>=20
->> We handle them via CPUBreakpoint structures; we never inject code =
-changes.
->=20
-> I don't mean "breakpoints that the gdbstub requests", I mean
-> "breakpoint insns that are already in the guest code that get
-> executed".
->=20
->> The patch description explains the confusion: this is attempting to =
-replicate a feature of
->> the Raspberry Pi Pico SDK, wherein a guest BPKT really is trapped by =
-an external debugger.
->=20
-> But aren't breakpoint instructions of all kinds typically trapped
-> to the external jtag debugger, on any architecture ? I'm a bit
-> surprised that we don't do this already.
+    g_autoptr(GPtrArray) blocker_features = g_ptr_array_new();
 
-Some context on the gdbstub implementation from the x86 side:
-
-WHPX's gdbstub support is implemented with overriding the instruction
-instead of leveraging HW breakpoints - although a bit hackily.
-
-A big concern is still allowing self-hosted debug to work fine which
-makes things a bit harder.
-
-x86 makes things easier by having multiple different breakpoint =
-instructions.
-Linux uses int3 and we use int1*  for QEMU gdbstub-controlled =
-breakpoints so
-that things (mostly) work out for everyone.
-
-And then, QEMU traps all debug exceptions from the guest when gdb is =
-attached
-and is supposed to take action when it=E2=80=99s an int1 breakpoint and =
-not others.
-
-Although we currently have a bug there that the non int1s just get =
-ignored
-instead of being injected back.
-
-* on x86, the Intel manual says "Hardware vendors may use the INT1 =
-instruction for hardware debug"=20
-
-On Cortex-M self-hosted debug is far less used than for emulating bigger =
-chips.
-
-And then there=E2=80=99s emulating such a thing using hardware virt and =
-using HW breakpoints
-which quickly becomes quite complicated...
+    if (...) {
+        g_ptr_array_add(blocker_features, "SR-IOV");
+    }
+    [etc...]
 
 
+    if (blocker_features->len > 0) {
+        g_autofree blocker_list = NULL;
+
+        g_ptr_array_add(blocker_features, NULL);
+        blocker_list = g_strjoinv(", ", (void *)blocker_features->pdata);
+        error_setg(&n->migration_blocker,
+                   "Migration is not supported for %s", blocker_list);
+        if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
+            return false;
+        }
+    }
+
+thanks
+-- PMM
 
