@@ -4,146 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17660C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9D3CC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:19:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whUuX-0008PO-Kj; Wed, 08 Jul 2026 12:14:09 -0400
+	id 1whUzY-00014B-Jw; Wed, 08 Jul 2026 12:19:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1whUuV-0008P6-Ge
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:14:07 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1whUuT-0005Lr-F3
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:14:07 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 668Er9M13101286
- for <qemu-devel@nongnu.org>; Wed, 8 Jul 2026 16:14:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- TvDSfoTgarbwyjwzB//6b6MH2PRpXnMRAk6KmZq1CaU=; b=OA5UTGkByRJK92j7
- u3rv/2CvsySyMgrTvKbi+OqwkTWoszG1Yah087PLcH9oDsIQpV8kRYgQrTrj0xny
- LN6P9mMAJVgdOYbuxL9muahwBl7NBDWh4KFawNuoS/3qFopGNJBNjEfK/bQJ4p50
- MHDqn9/3yEL5oiL6lqMxJKgpKdOc+wONgxHE14Xzjr8bf3q5ReiC0cA4iHf3BUFg
- ezj9h31FeWQ82uyEYUwg/nDrUXkVxvm0YhSm9RkGaWlZMhmqUskoDfa1nC5vHdLf
- dp9ANooN4bHLqQ4athtzOeI3aEInciR72A3FgRHtSfmXG99jIxnRq8Zmj0tXhCWQ
- X6jAUA==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9rq30cws-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 16:14:03 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-c88cfe287e1so891922a12.1
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 09:14:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1whUzW-00012x-FE
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:18 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1whUzU-0006yB-Ry
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:18 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2ccdb73f0e1so8890915ad.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 09:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783527243; x=1784132043; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=TvDSfoTgarbwyjwzB//6b6MH2PRpXnMRAk6KmZq1CaU=;
- b=Zhp6wh43nW0FEp4iqC4phdwSxBfWone42Z6IQyyyHnjG1y4qxczTjQte3SZd4BsKnx
- 59L/C4a+rolEED7mEMBfrXK+lWc4YnKBQ5yCTu06FQorMtm/6RYRrrAipYBW6GJuudHl
- g+0sB4E/etxkdZB0aQ74Kyufct8y5ZGJPUmMMTsXSrIkwgfXcUGBqTG7303ZRq+xAsAd
- 0WDaT5NzHvwdpJMs36ZCHTB5QsB7v6vWdYIPWrAzWQxKvbu7Za1TO5Z5gCdIG5b2db2X
- gck9ef8b8hPlLEhSGpK3e1Bo/Cv8ID/IrQqihuykgmLitbSCHAhOBq+ySk9/IrT3261P
- WBTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783527243; x=1784132043;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=sifive.com; s=google; t=1783527555; x=1784132355; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=TvDSfoTgarbwyjwzB//6b6MH2PRpXnMRAk6KmZq1CaU=;
- b=JDoxp0Wj3cX1EmKCkqKWRiumQH4zrs1b/uZXVbjSSJS+ADRrhLVg4/TrLUbH1xYUwj
- FojtaxzznjSz9AuqasukuvGtIaQ+R9r5SIXf72/7WKJU5J5AuHXZ8iKq6Hp5jk0JRDWF
- D04zGL2p4ostgzyav+6D7jOMWKyfagAn6fn/dxnPqrz7ybQZ0CNpGkTNRPGKdOFD8kGc
- +6IMbJUZLuIyfSz/Rk9mAIt7B3xhRIoyQYQ/KZfbydJIFbOTxT+RgmXbmQsdV9i3m10P
- tsZLTOxNUZbOF38UHGPEQieK09FSgi9Yv9hHn9L912AAb0dt4jQGKitTLDhPFd0NeVzg
- 5PJg==
-X-Gm-Message-State: AOJu0YyqY71ubEXnaTFAhdClSfvjrmBxVk1P7eEuDFU8AT5pARzCVRsV
- 3t1Vw4YLAprUveZFnZvoMRkjmoziFuSsLWUpAFT8ezhpTc3w3kU60atTlC+KXYwZjJfKRWUpckd
- oK/6/DREgkD5OleiJ+UYdjF0R8BhANYnsltosX6EDPB2cnVv0wruntrAHPdjMAqqcYQ==
-X-Gm-Gg: AfdE7cnAUnt1s+cj9Hzv6vF/vM0Z7BWhUV4lw2VLhOSXoEHAdPKD2bwlzhohQ1QG+9L
- WniaE+d1mlkFR2iHW7PaZdveYgdaPz0gdjoaoCIvPYIPnSmig/wPpzrpfOTEn+CCuMFl0Sd0E3h
- DXyfetKoMWQxD8UgjA991b0gKBS+nO4x9QF2mpIhEFgtnAmxm0P0bTM8k0KGx00F0p/ML/zw018
- 7DANAsiFAleHTo3QZp/eOnz8QJnRQjnxiDb53bNZWRvAKyltXsd7C0La274CyvBlm5MjDve9eok
- a4sXwAeBKDRTyOh5hmHUmAipIyf3ju8raa7PHq3Q+33PK/6JgFPN5zpBievmDJXJGSIdUCARDYo
- UgChH7VixTNQLT+MoRgEKFOAjQkcYJwHbyGtmQMq6MltKjMv1RtJpXWDVbNZk5g7z2Js60YzZH9
- JB7AY=
-X-Received: by 2002:a05:6a20:c998:b0:3c0:9c19:b278 with SMTP id
- adf61e73a8af0-3c0bcc9d063mr3694631637.70.1783527242752; 
- Wed, 08 Jul 2026 09:14:02 -0700 (PDT)
-X-Received: by 2002:a05:6a20:c998:b0:3c0:9c19:b278 with SMTP id
- adf61e73a8af0-3c0bcc9d063mr3694591637.70.1783527242222; 
- Wed, 08 Jul 2026 09:14:02 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-311747f5982sm23603642eec.5.2026.07.08.09.14.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Jul 2026 09:14:01 -0700 (PDT)
-Message-ID: <253ec762-5325-4b11-bef3-07cc2b9eaea6@oss.qualcomm.com>
-Date: Wed, 8 Jul 2026 09:14:00 -0700
+ bh=xxHnlMV1JLQeffQVz+3d7Qr7bAg99XcAJ/gdYyuVnYk=;
+ b=f4HmxCy9f8Cmb4R53cXaCxLxtqZgJPDpwDxpnQvjzDybF7Q0l91VjGuVz5d7utF2U7
+ +te/9Edvd12YPPm6b0nGwgJFVWUZUVXMIyHLM2kzbQpbGPjLfQKxuqO6COOteCcgHP8e
+ E6j1U8IZ5Eb89j/urzCxWPO14jG5MF7hVnfEeWeMKfdwlOlaacUlGEz30Ucl2sAlSdo1
+ o2H5iTq0J3ovSJXl3SH+HUAL5YgL3pzEgRtxRSpOPdtJQCYOvptjpbteeAtPjd2G6ZIu
+ vIAaeaj3EJbBXSngfvlTvWe95owiURMtX2QtmweWP3u+G62zQLZWspEc6csKPH/DbL9x
+ dGTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783527555; x=1784132355;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=xxHnlMV1JLQeffQVz+3d7Qr7bAg99XcAJ/gdYyuVnYk=;
+ b=YF3L4RGstt31Nxcp/ipjNoyzJRjf8GOc35fvCvRbUJs451LqrU3Slmw6RAVoZLXOgo
+ nXYO7FU+zdvRisXOjE93wHud1SV7wzo2NeUfBHk+mTeHDb7ghjLcN8+uWu6HZUNlFzMs
+ JY58fDN7IoYD4ZfcVbmYTumZcnZs/XKbBk0EAep4d9D53TxJ1xasp+xly8hW9Cm+4D7Q
+ 1xxy3G74LyDJaZ13dT7pB5UxlRT1kowoKFaT0iKpoNtmkXJ3yPGrWFS7LunRg4J2Kp6x
+ G3+ePxVhyvJ8eOqLHu52iPkdLGdXbmqhv1GP34GxqQ2zvQ9vA2my2UEuAJNdNBxXRFUD
+ wLwQ==
+X-Gm-Message-State: AOJu0YyoBmQTWPMs09hsFgTJAwhUBT42oBIheu7BVMzRbV6RiZyhjS1+
+ LxN4t7gt67YX/ZmlHTgN7dTeFBRyj81XAEc7GLfNAlTnwV0kQ6FWtXV7ZHl0zsq3JknPXKYJCIN
+ qDNkenIs5RxiV+RqnL+h3iwwYxtBJmniBTvm/iwIMhJ1uaWws2Dt6LpTXWnPozig4vPPcgoRhUS
+ ggl4rWQBQbUC6Bgof7IH8nNXGeuDQnFKO5xJCOpRM=
+X-Gm-Gg: AfdE7clTk6csjgI37l0DklMZfpsyEvpiN4apMNZ6x02LJqSp1/EWCimvfMYkwyaQSJu
+ soSCY5SHTp/gr+TKAhDH+LgpTHuNEP6ssqHqPXsDVGumpjDhG3pDqr3i6+t/QbSufn2wLxa4GKt
+ LL7MEmXV78MxtReY8d+V/V7Vg0zohz/3mNoI6yk/plUKlUnSxHQiUZ2nMfIASPUqqbFTVXPwgdV
+ KFF8/d1mZ4i4H3yndz5lLZk5HVt5vwTsI6QcubAwew1BSPAdLOlTCCFnXf66aXa7PMwSXYgS21A
+ 71r7MwATHSWOYjLnqSB7FtociBW2MOTvFgEfZCh7nrUhB0Mfk1AqXSgM51u/I+b8AoHpifOz233
+ RTlxxaVo8l3ZUvY5oB+PHyEm2FvkyLwa60kE0/0NbHeaQH+oLpurKJQj4EIhqh2FREvBtFhkyn6
+ PA9V8PpAdqWukLSQrkTDTG737VoOf4TAo9vzaP72h/4px3FUsnczUrC7obxcz6GF2T8vDY0PSTT
+ muFt0G5Pqq/1lgV
+X-Received: by 2002:a17:903:3250:b0:2ca:2079:91cc with SMTP id
+ d9443c01a7336-2ccea371b35mr31671735ad.5.1783527555365; 
+ Wed, 08 Jul 2026 09:19:15 -0700 (PDT)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ccc9bdb56fsm30789265ad.15.2026.07.08.09.19.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Jul 2026 09:19:15 -0700 (PDT)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH v6 3/9] target/riscv: Add cfg property for Zvfofp8min extension
+Date: Thu,  9 Jul 2026 00:18:53 +0800
+Message-ID: <20260708161859.1124848-4-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260708161859.1124848-1-max.chou@sifive.com>
+References: <20260708161859.1124848-1-max.chou@sifive.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] tests/docker/dockerfiles/ubuntu2404.docker: add
- missing apt update
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, mark.cave-ayland@ilande.co.uk,
- richard.henderson@linaro.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, mjt@tls.msk.ru
-References: <20260707214655.1138626-1-pierrick.bouvier@oss.qualcomm.com>
- <20260707214655.1138626-3-pierrick.bouvier@oss.qualcomm.com>
- <ak4H9Tn-t5rRH3oJ@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <ak4H9Tn-t5rRH3oJ@redhat.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: qlrzsMOfMh_1eGcNdocUFfP1Sxv4DYD-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDE1OSBTYWx0ZWRfXxcd8cg0tdMO7
- +jS+fGK74pT4LPsXYPYDiL1yvObgnkwTDFtjNHxdYUu93rzyBYldDDJAcrG538w1Al5rPlWPq4L
- z82dpkmuYSQdDhGyf6TEIbqSxgmj0Nw5DinQJbtJ5WURvprFyF97u3fnnlDkW4kp5En4vgHA8Wz
- 7U63yBvwsVR8aZsyH3izR9qixYaPaXsZX1//Y2Hi1qOuU+sEl/2e9cfBW7lCqxQ9bziqInLdy/7
- clJRTDD9ZgKwlgCgu8RsxjuIz3d0kR6t5patXiF1L8r8MQTTF0AOb7FXD63twKG3oFNb6ZfIcNc
- F7pAwTfEZwtFnsKQXNP2XZwCaKak4i2wkwSG3yVLJHqLnhBQ1SNa7rzpq1QOMrOKpludPyUlqW2
- mvwwnKjuDjyNkf3tHUgnx96mGtiTqGkiPAFIKCvLSw5JH0S7NbDe40pNiCfgvNDUXlXhnDwluX3
- yaUytGMVz0x52yuZrlw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDE1OSBTYWx0ZWRfX2KZovwfW4tDR
- BlyXX81352S1Jrx7NXjAqdX18bsnqiol6uTwTZ2+DrfrhX5L+Nh+vUqZ6ta4BwOwL00OFm1MmLH
- QaL9mDL1ExougXnYgT/vs4/91cophSM=
-X-Authority-Analysis: v=2.4 cv=PYPPQChd c=1 sm=1 tr=0 ts=6a4e774b cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=n6MYwUk4AAAA:8 a=EUspDBNiAAAA:8 a=_EqNZgDTBKu0pThHyhkA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-GUID: qlrzsMOfMh_1eGcNdocUFfP1Sxv4DYD-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-08_02,2026-07-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 lowpriorityscore=0 impostorscore=0
- malwarescore=0 adultscore=0 clxscore=1015 bulkscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607080159
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,58 +111,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/2026 1:19 AM, Daniel P. Berrangé wrote:
-> On Tue, Jul 07, 2026 at 02:46:53PM -0700, Pierrick Bouvier wrote:
->> RUN statements should always use apt update && apt install together:
->> https://docs.docker.com/build/building/best-practices/#apt-get
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->> ---
->>  tests/docker/dockerfiles/ubuntu2404.docker | 3 ++-
->>  tests/lcitool/refresh                      | 3 ++-
->>  2 files changed, 4 insertions(+), 2 deletions(-)
->>
->> diff --git a/tests/docker/dockerfiles/ubuntu2404.docker b/tests/docker/dockerfiles/ubuntu2404.docker
->> index 26bc2dd94f4..27992e34fd9 100644
->> --- a/tests/docker/dockerfiles/ubuntu2404.docker
->> +++ b/tests/docker/dockerfiles/ubuntu2404.docker
->> @@ -160,7 +160,8 @@ ENV RUSTC=/usr/bin/rustc-1.83
->>  ENV RUSTDOC=/usr/bin/rustdoc-1.83
->>  ENV CARGO_HOME=/usr/local/cargo
->>  ENV PATH=$CARGO_HOME/bin:$PATH
->> -RUN DEBIAN_FRONTEND=noninteractive eatmydata \
->> +RUN apt update && \
->> +  DEBIAN_FRONTEND=noninteractive eatmydata \
->>    apt install -y --no-install-recommends cargo
->>  RUN cargo install --locked bindgen-cli
->>  # As a final step configure the user (if env is defined)
->> diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
->> index 1fdd37440c9..bbbc6d3c46a 100755
->> --- a/tests/lcitool/refresh
->> +++ b/tests/lcitool/refresh
->> @@ -157,7 +157,8 @@ ENV RUSTC=/usr/bin/rustc-1.83
->>  ENV RUSTDOC=/usr/bin/rustdoc-1.83
->>  ENV CARGO_HOME=/usr/local/cargo
->>  ENV PATH=$CARGO_HOME/bin:$PATH
->> -RUN DEBIAN_FRONTEND=noninteractive eatmydata \
->> +RUN apt update && \
->> +  DEBIAN_FRONTEND=noninteractive eatmydata \
->>    apt install -y --no-install-recommends cargo
->>  RUN cargo install --locked bindgen-cli
-> 
-> So lcitool already ran 'apt update' earlier, but if we're trying to
-> avoid caching issues, I guess running it again is needed. Should we
-> also run 'apt dist-upgrade' though, as already installed content in
-> the cached layer can be outdated.
->
+According to the ISA spec of Zvfofp8min extension,
 
-upgrade/dist-upgrade are not needed, we just address the packages
-listing issue, not the fact they are up to date or not.
-In fact, if you want an updated container, the good practice is to
-rebuild them from scratch. For our use case, it's definitely not needed
-as we don't have security concerns to address for local containers.
+"The Zvfofp8min extension requires on the Zve32f extension."
 
-> With regards,
-> Daniel
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+---
+ target/riscv/cpu.c                | 1 +
+ target/riscv/cpu_cfg_fields.h.inc | 1 +
+ target/riscv/tcg/tcg-cpu.c        | 5 +++++
+ target/riscv/tcg/vector_helper.c  | 3 ++-
+ 4 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 5a82e6563b..38c580a22a 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -231,6 +231,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zvfbfwma, PRIV_VERSION_1_12_0, ext_zvfbfwma),
+     ISA_EXT_DATA_ENTRY(zvfh, PRIV_VERSION_1_12_0, ext_zvfh),
+     ISA_EXT_DATA_ENTRY(zvfhmin, PRIV_VERSION_1_12_0, ext_zvfhmin),
++    ISA_EXT_DATA_ENTRY(zvfofp8min, PRIV_VERSION_1_12_0, ext_zvfofp8min),
+     ISA_EXT_DATA_ENTRY(zvkb, PRIV_VERSION_1_12_0, ext_zvkb),
+     ISA_EXT_DATA_ENTRY(zvkg, PRIV_VERSION_1_12_0, ext_zvkg),
+     ISA_EXT_DATA_ENTRY(zvkn, PRIV_VERSION_1_12_0, ext_zvkn),
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index 9eb47af0a7..af78c19a9d 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -105,6 +105,7 @@ BOOL_FIELD(ext_zvfbfmin)
+ BOOL_FIELD(ext_zvfbfwma)
+ BOOL_FIELD(ext_zvfh)
+ BOOL_FIELD(ext_zvfhmin)
++BOOL_FIELD(ext_zvfofp8min)
+ BOOL_FIELD(ext_smaia)
+ BOOL_FIELD(ext_ssaia)
+ BOOL_FIELD(ext_smctr)
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 4af5cd9c73..5c3f79fbd5 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -639,6 +639,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+         return;
+     }
+ 
++    if (cpu->cfg.ext_zvfofp8min && !cpu->cfg.ext_zve32f) {
++        error_setg(errp, "Zvfofp8min extension depends on Zve32f extension");
++        return;
++    }
++
+     if (cpu->cfg.ext_zvfh && !cpu->cfg.ext_zfhmin) {
+         error_setg(errp, "Zvfh extensions requires Zfhmin extension");
+         return;
+diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
+index 944f176b74..6b736948ff 100644
+--- a/target/riscv/tcg/vector_helper.c
++++ b/target/riscv/tcg/vector_helper.c
+@@ -38,7 +38,8 @@ static target_ulong vtype_reserved(CPURISCVState *env, target_ulong vtype)
+     int xlen = riscv_cpu_xlen(env);
+     target_ulong reserved = 0;
+ 
+-    if (riscv_cpu_cfg(env)->ext_zvfbfa) {
++    if (riscv_cpu_cfg(env)->ext_zvfbfa ||
++        riscv_cpu_cfg(env)->ext_zvfofp8min) {
+         reserved = vtype & MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
+                                            xlen - 1 - R_VTYPE_RESERVED_SHIFT);
+     } else {
+-- 
+2.55.0
 
 
