@@ -4,105 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE5A2C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 14:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49058C44501
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 14:42:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whTN6-0003OS-0h; Wed, 08 Jul 2026 10:35:32 -0400
+	id 1whTTT-000652-JX; Wed, 08 Jul 2026 10:42:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1whTN3-0003OB-NG
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 10:35:30 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1whTN2-0007Tk-Eg
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 10:35:29 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-39b349ae174so6451991fa.1
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 07:35:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783521326; cv=none;
- d=google.com; s=arc-20260327;
- b=MK1W7iXdND2Ou/oRolC63gu1+lzsq2pd+ea3vR8ydS3wC6lhAi1293dax0wCjMXqx7
- ku256ipzC1ykPl7bJYW5+1yMCQGTC1r8TMTgJlNgvqy3qKpuC+ok+iN6fnRq/dtxo7rM
- 5aW7RvjGdBIwAb9NWmBFtlo69fuJMpUUv+GyY2W3wGh/mEstN86eF71ArtpjwW7oKrXg
- RJX0u3k2q1ZUFcpC9CGzzVcurNrj0zgtrflf76SN1J/T3tWjJpHMvClhT31SWh61ACdZ
- OUewS2fLhKURrRmCoa/gMQtNhLnIsZNaIbIxSKYAIxx8aAIt0ajiwHqMROw345oJUlB3
- qoKg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=xAY9c/8KHTfT/vTbe93BCmKfVljr86M8LY8VDf0d6T4=;
- fh=NT0kq7NgLJ0wOp/qMyvn1NIPXsDSAQYGUZFkUZ2OApE=;
- b=HwuUH57ZMnfZW/gvyeH3tJfDvrJkYJNpm94TCb4e4hNugMqxsI784akwCPg/mLliQ1
- NmwxRCF14goHl7qK7tFdaRrKRi4zyEDrwizsP5JfjJkaF0AmFMkpArZN8nUAfJI8X4MM
- a4Gqiw3GI53jPblSN0X1nGNn/D0aGIdPvj6/8Sya4MtEMrg8rvWU9irI+iUVXYaoBZFs
- 1nHgzrHtucFSSZeLbO/kg7krRHGV4GuUutE14bqvUROfZM2y3kTesvDMtKhvDyhmvxWr
- Gym6rM1c38L5wRCOSw9p1EAdqR5QNmA92XOcT2F2t+i4s5fD696TlLm+yyascRzLPdGG
- xLqw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783521326; x=1784126126; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=xAY9c/8KHTfT/vTbe93BCmKfVljr86M8LY8VDf0d6T4=;
- b=l/iZUDaxjvT5GN69nY6F8CamLSv6J1WG4H9dCc59Ez7m+9s524yfQvVtkAlGc46X6g
- HE/JHNJtBtQzklqYhH5HKOxGEXBP7X2KvSDJ19Qvsn0Nz60X84TGFT8uy50OGS++s+mI
- hiCzvv5YF1Zi6bGklvGO+y1K5Tiz9hZESfzhMFlxs2wdtJGdSPsmdEaRdFI3q8dFnVUE
- MzdeQ38U+t8dfh9cXk9Z404epC+ZBwAirOSZD64+SY9mn/3poGofM2uGeBkM6WB02mQN
- En7w5YS5Aq8LO19wwvzGpcSR24b2C6PmmcNvApndMex+yKCY98NqESwb6tZTTdybffz+
- 2dTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783521326; x=1784126126;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=xAY9c/8KHTfT/vTbe93BCmKfVljr86M8LY8VDf0d6T4=;
- b=J9lXNJB1P0UXrz4GliecsuydVEiHjTNKaURPhoh2/uhI8yUm4V9uT0Otpeldd79Xd0
- cJWxD/MWkvJwO/9rIhCvPFxGks5mtICbl+mCHvDzYLdb0XIPtyLAXjWunQyBon67oUaE
- LnXflGJlWR3KehHZXxCwu2WiLtk8I1ZAU+EjUi3hVPWVbue2cGP0+waiNNPS4h12PFtq
- 0cx3uCML+lrEsKCJHIDepUhEncpFhzubw7fuL7q7kYHZwWird3tC0P7CWXfG2igsy66D
- OjgHFXFcfzN4Cx0EZTMy9t3grKH1XkqxMNbbzuPDemp/OmWUpyGBrDMArIt7p68rQddE
- r6Sw==
-X-Gm-Message-State: AOJu0YzUK6e9S5njKrx2Ka2GgXZ3Hlew8dCVlkRS0ZsN/3qw/3EMkJsm
- s+HotOFDeMsk7CT9YZBTyBBcw/t4pdSjTZNt3EWvgLU5mB1iU8Hau8c0kEbU8xFtn96526bPd8l
- n4scVXd6jxe91mWyPyVr3qMbqNfE/TwE4q/rj
-X-Gm-Gg: AfdE7cnJ9YClTR3sHzYWJTVbgSt+OV0j2TNvEEpQHUXN4rS0ARz2B+h8axRny7HVzd2
- Vsjs+nFnqAhWxBlt326c+DcXO2EG6ZSbkMH7B1TQ13CAy6seJFFTa0Bxzmm5z1/K0xfo+TTPQc8
- EfcuRiOfIsnw2qCOqEy1BubSi858W0FxROrmQoErRUCBnIXFb9ZBHqb6WItK/16opKCU0aruOSo
- UJhKpjXnmxzg5uDr1Qxn/aAjfJEs7uzahbVriwvhQY3SiVFSGT82S2ATVWD3Xhxb3HMV3mjHTSh
- LeKcOv1ShrSzbpWmYJkycyklwepfVEsf8tVi3YYoONtWMuOHqerwc6o92bV8
-X-Received: by 2002:a2e:9b08:0:b0:39b:37b9:50f4 with SMTP id
- 38308e7fff4ca-39c798db781mr4299041fa.8.1783521326160; Wed, 08 Jul 2026
- 07:35:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1whTSl-0005LV-4v
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 10:41:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1whTSi-0008T2-2H
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 10:41:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783521678;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=9+JHAz9fuOj7XQWf6UQrRtwG1Y4r659p6blOjuglpQM=;
+ b=MtH57XnGyKBJ6+xN3l14JVNGRh6rZVjhCvYVQN/l8br8rbUMQazvL2iMDnmv8C0xFVG6OI
+ ZRjP223lWoUhK6VTTTBW1UrBHwlRrpJLAA1WhD0QU0vPU0fdkX/N41AqgM94kXW319Qx1G
+ JT3cMtNfeIZU2BpojfXOIWhbBsA+oy0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-481-y2Zo1YJiPAGkxAIaGyt-Lg-1; Wed,
+ 08 Jul 2026 10:41:17 -0400
+X-MC-Unique: y2Zo1YJiPAGkxAIaGyt-Lg-1
+X-Mimecast-MFC-AGG-ID: y2Zo1YJiPAGkxAIaGyt-Lg_1783521676
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D065D1955EB2; Wed,  8 Jul 2026 14:41:15 +0000 (UTC)
+Received: from lenovo-t14s.redhat.corp
+ (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 90E4C1955F7B; Wed,  8 Jul 2026 14:41:13 +0000 (UTC)
+From: Laurent Vivier <lvivier@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Amit Shah <amit@kernel.org>, qemu-stable@nongnu.org
+Subject: [PATCH] hw/char/virtio-serial-bus: validate nr_active_ports from
+ migration stream
+Date: Wed,  8 Jul 2026 16:41:12 +0200
+Message-ID: <20260708144112.1830881-1-lvivier@redhat.com>
 MIME-Version: 1.0
-References: <20260630081940.611092-1-aadeshveer07@gmail.com>
- <akv_HvRFc_J7Pm-5@x1.local>
-In-Reply-To: <akv_HvRFc_J7Pm-5@x1.local>
-From: Aadeshveer Singh <aadeshveer07@gmail.com>
-Date: Wed, 8 Jul 2026 20:05:14 +0530
-X-Gm-Features: AVVi8CfSOhrxp0mkcKzjrBRT1Y9Mnko2C45P21yLrf39nPb0F5E5_cprpG5GaNw
-Message-ID: <CA++cPv+-+FR9tY=mCSS0tvcoPU=WfSwccF5j6GrThrA5YhbXvw@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 0/7] migration: fast snapshot load
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com, 
- philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=aadeshveer07@gmail.com; helo=mail-lj1-x235.google.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
 X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,39 +85,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+The migration restore path reads nr_active_ports from the incoming
+stream and passes it directly to fetch_active_ports_list(), which
+uses it to size a heap allocation. A crafted migration stream can set
+this field to a very large value, causing QEMU to attempt a
+multi-gigabyte allocation and abort.
 
-That makes sense. I will add a patch to check capabilities and fail
-gracefully before the testing changes in next verision.
-I agree with most of the suggested changes and will integrate them in
-next version. I replied to the comments on patches 3 and 6 with
-clarifications.
+Fix this by checking nr_active_ports against the configured
+max_virtserial_ports before calling fetch_active_ports_list().
 
-Thanks,
-Aadeshveer Singh
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3801
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+---
+ hw/char/virtio-serial-bus.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-On Tue, Jul 7, 2026 at 12:46=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
->
-> On Tue, Jun 30, 2026 at 01:49:33PM +0530, Aadeshveer Singh wrote:
-> > Future direction:
-> > - Add support for hugepages
-> > - Add support for multifd
-> > - Add support for vhost-user
->
-> When send the formal patchset, you can add one more patch before the
-> testing changes, but after the rest, to explicitly fail the migration whe=
-n
-> any of above was detected (e.g. update migrate_caps_check).
->
-> It's just to make sure when your feature enabled (but with some unsupport=
-ed
-> setup) it won't crash QEMU but instead gracefully fail migrate QMP comman=
-d
-> (or migrate-set-parameters / migrate-set-capabilities).
->
-> Thanks,
->
-> --
-> Peter Xu
->
+diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
+index c1973f0248fc..80f1b308aa53 100644
+--- a/hw/char/virtio-serial-bus.c
++++ b/hw/char/virtio-serial-bus.c
+@@ -804,6 +804,10 @@ static int virtio_serial_load_device(VirtIODevice *vdev, QEMUFile *f,
+ 
+     qemu_get_be32s(f, &nr_active_ports);
+ 
++    if (nr_active_ports > max_nr_ports) {
++        return -EINVAL;
++    }
++
+     if (nr_active_ports) {
+         ret = fetch_active_ports_list(f, s, nr_active_ports);
+         if (ret) {
+-- 
+2.54.0
+
 
