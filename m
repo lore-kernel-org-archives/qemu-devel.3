@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10D74C44501
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:20:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82039C44503
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:20:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whUzb-00014Z-2P; Wed, 08 Jul 2026 12:19:23 -0400
+	id 1whUzT-00011N-3H; Wed, 08 Jul 2026 12:19:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1whUzZ-00014G-HI
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:21 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1whUzQ-00010N-7p
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:12 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1whUzX-0006yj-VY
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:21 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2cca0c5799eso7798395ad.0
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 09:19:19 -0700 (PDT)
+ id 1whUzO-0006tI-Lx
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:12 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2ca64c3ce5fso11477105ad.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 09:19:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1783527559; x=1784132359; darn=nongnu.org;
+ d=sifive.com; s=google; t=1783527549; x=1784132349; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=562gT512wWfhkRLNgMwPwc9/wP2/605Q6dgoo/Dp1wo=;
- b=XS2OI+ZGwqr0x6a2pGrgg2zjr7u4Xp0Lux165/iefW5Ntqm3883F8Y/FX6p4SM/Ixr
- 7B2rvA2Apz8obbakUKsSj5SdNU1J5YOtHtSBhImEIBJfcc+2ZJfVrF51uvWSKZAvWzE8
- 4WIQcD8kyecsjY6xyiSCjuxP7Ifsrb+6xRadyG9VkSK1mIBqOQyTJEP5DHXqPy7P2SBC
- nKfCWtXHc9Ka4gSzI5fthT7PyuExvdEPCkcFOy1jRz+XjA8bwzBh2foNIZRvHflF9I0m
- ea4ONCYpL0FTRo8jf0bEvyxGFYHzWBnqpZrTs11MbryiTd8CsJQ67pQcdNG5I20TwhSU
- xBnw==
+ bh=GPyqv7yuW0jvs6N62tVXNbDMdQQXDeT3dx47BnKVjt8=;
+ b=cqGHtUwGKHTHjHhXw3YfWCPSXh+42VD+FACHGoTG6oqAaNjF0wtkauDM5hgedZMVrq
+ baf+F5zbH+YyaYy54x2HOd9bK6YwgcZmIxnw0X7h/CqC6FJcwveEqB+Mo1Mml3QdVyiK
+ BHk0t5lrDjnL1ggsaZSqIHJKBakU3xx8qK7cI0AJ4/YjcZHFQ/SzbVxQ5BBpXqXq0qSp
+ +hkkKuFpZUdj62ExL+TKikbKEa4KwETAcANAgE/DD8EhhNv1pG5bSDRUG6cm9WvCMVg7
+ zvQ1FXRf6zoLn7BynfNes8wRaBfPWFnCi8CUYGQCzfeBlSUwgk26vYGipRYFk64XWmpU
+ sf2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783527559; x=1784132359;
+ d=1e100.net; s=20251104; t=1783527549; x=1784132349;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=562gT512wWfhkRLNgMwPwc9/wP2/605Q6dgoo/Dp1wo=;
- b=A/fC3oB78Sx6/OQoT0l+bJZXnHksj0wFix2pJFvS1fgDXMhtexD2vtEbShQITAEvmz
- KVKne0MaI8nJzpVI7HAte9OwxN2+IHbXJsoFTbjjTes7NWu2kkIr/ohdXH7br6BnwEB0
- reYzk5zSrTqUEUbdWpzoPuXvw1KZmWFl4p9n+AynZwsj4dzN9z5JsBp9yy7tZmjM3qTf
- bM4YxJM2jxRKEFMmJCbR5+s/b6f4gcIOC6Y9q0PzbjgEmoNxxtIT1CUQ7Rj5Ylw+Wgqh
- /EP9zEM+WBIjlzU7fzTNzx31iIqut9WjpYzO1nxD4fkxcR5rTjxVfesBpU3lWtoBjxgZ
- MIlQ==
-X-Gm-Message-State: AOJu0YxUVWcMp7VBLoET5qkae8wrkqq3Knfpd4wDtjRghHVBNch9zP3e
- 9NE6gs3RTHxbybt38bugIVvpU2Hu6dbJngy4e4UECXTOCugE+UJK3qo7Rxy9/UMTlRpNIAbIT4L
- OL+vDpujt3t/s0v4KDYxCJTbGznouhs5ORwSkhxqZrq/rKciScCRcqlsF+me4EIEhKMjyH8yMHG
- Zt11nTLFNK/MIVPaNRylZnTA1J4R5p8FnlTZa5VUE=
-X-Gm-Gg: AfdE7clNej4ROufUl9ads/ZrGmkXxYT0ZEH6M+AOLIeRBE/cGpVh4dePwTeE8qQqrdJ
- eW0bJoS4CVHJzdjpWTUuTNnMFOtZyl4+vcb+ELk8FcAedNUgyFLKxlWh3iz/GcPtIrvS7SAL50q
- tNdoZMgtpRw7ql9khpTVJMIbWJ2PbPKFgKkivQ8PSs5h/lzGaAzgnKdw/bSABENf4/hetSGkxke
- VdXeFtPhMdI+gBLqsVZ3WZ2c2olIs/4o05cvYiZpEAFmgRs6mKZAUYDmPBxFdL0ibpywB7ARAhU
- e08PT3HZaO3CvN8+7nu6qiqrPUTKym0HWBCKs1HAHafNpqho9vLCIIY9V/qoGwilNwe5ZHlh5Xn
- 3eUe1A3j6nQeSqwuDwnvEM4wiw19NJxzF9qpi5Wr4ebhzJZKJny+wLkZc21QtEhyTIvKRuA35fI
- ypb8FSx8F9YHc8TdBb4zC9Q+mghoI0a14lSSclgaDEHoBlnTYFdU2TCRhvDiwBqKNrF7TJ710IG
- ywkFUV7eNTVPK1k
-X-Received: by 2002:a17:903:11c7:b0:2c9:b48c:fdde with SMTP id
- d9443c01a7336-2ccea45abeemr35104855ad.26.1783527558477; 
- Wed, 08 Jul 2026 09:19:18 -0700 (PDT)
+ bh=GPyqv7yuW0jvs6N62tVXNbDMdQQXDeT3dx47BnKVjt8=;
+ b=G8CDhjHHK4rrh86tKONxqpDWbkcx6ui4k2fBVvqkvMzAUWnwlrEovF+TgqrVAIHztP
+ 7qCX3ZlTuypl6TCrte+gFXuGUpjnFQxTGSBj6CSiwoRavZGAqZZJ7xvDqKFKGUgQxz9K
+ rNEBfD/tbiSVo6qv2ox+q4jyALVb65NC3cTd7uPEjwytdN9FNSJOAM/n8bRwFyjl84Pz
+ CdXMi7l9M7+twnFQDUmzlSr5uErswmYo8PrTzR+1FckD4H51B8NNoSVYFS1Mj+gzmROK
+ xjnkRQ1U2atSE1xihmwK3E7ST1gv3vUQ2iA2Ecwmc8zDFS6notd/tMSHmzd/NGF294Xo
+ T9AA==
+X-Gm-Message-State: AOJu0YzcncI73JeSWi9DplQ1d+Qt/BLuItT1JeFkmPfX/kc+5tn1SzHy
+ kZfV/pr4eBgnidxa61fi0besYvf4/8h+ni4n4fEossiv9UXBBo1D2ls1WACRuVCE4qLf/Oapee+
+ jgOxz75gpg/1C95Qo0/KM4gsctFOhQXLOkeNsNq/R/BDXgTaXqG6FGMhxaYClk6p3VghLWqTtEu
+ xNn445oIVQyBwN3IaZJ7bIGqExEqNhy0Yb+0c796s=
+X-Gm-Gg: AfdE7cmrTK9q1KIqiEjw/TQPQLA0hNYQoAHM5FBdjH7ULeiLweS10daUmcUp7Yu0G1D
+ mdK6WiCVGQANls9NIu9w6CbBovNpiW87MuAD3ys65aXg6uKVZGTkCUS5F1JSDv+jpaH0CLuC5NX
+ hj1rtuNLuYtJW+ikrxQ0zB61IWEJghk8SZ67H8+On+RgapG/ASsHohlh+ZodThfqgDGHR3GeEUB
+ DRtsePpsOJ2baR4ATig46MQ6hHW44dawupr21DF1v3J2m1FR9tIItN4QhsHgU8nfA/CAOoKEg2G
+ YYGbr4k94Cg1tE13uinvncMVwcT1I3SuVroEWlGIfnK66QulB70uPrVDOy7CwvOnnMkxsf6hdaY
+ nYe1LmKIGWbIwtkULlnA7WsdqlluLERCn7NqvLmtKeFR/zsrNYKD4kIT08goCc+RpBIXnu2L742
+ 7BCa4ua0sCOu0ma2mvebGWn4KwO+IF+GSCSsDFJmBQ2zbeUaiyKqFRPHTa/8jK5FOZoV5A94X9M
+ xP6MwHia/oGZu9r
+X-Received: by 2002:a17:902:e54e:b0:2c9:e86e:aa0a with SMTP id
+ d9443c01a7336-2ccea274c6amr32158255ad.0.1783527549141; 
+ Wed, 08 Jul 2026 09:19:09 -0700 (PDT)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ccc9bdb56fsm30789265ad.15.2026.07.08.09.19.15
+ d9443c01a7336-2ccc9bdb56fsm30789265ad.15.2026.07.08.09.19.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jul 2026 09:19:18 -0700 (PDT)
+ Wed, 08 Jul 2026 09:19:08 -0700 (PDT)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -77,19 +77,18 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v6 4/9] target/riscv: Add implied rules for Zvfofp8min
- extension
-Date: Thu,  9 Jul 2026 00:18:54 +0800
-Message-ID: <20260708161859.1124848-5-max.chou@sifive.com>
+ Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>
+Subject: [PATCH v6 1/9] fpu: Fix biased exponent write in parts_float_to_e5m2
+ saturate path
+Date: Thu,  9 Jul 2026 00:18:51 +0800
+Message-ID: <20260708161859.1124848-2-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260708161859.1124848-1-max.chou@sifive.com>
 References: <20260708161859.1124848-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=max.chou@sifive.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,45 +111,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add implied rules to enable the implied extensions of Zvfofp8min
-extension recursively.
+FloatParts64.exp holds an unbiased exponent. Subtract exp_bias to store
+the unbiased equivalent of the max-normal biased exponent.
 
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Fixes: d8be49537658 ("fpu: Add conversion routines for OCP FP8 E5M2")
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- target/riscv/cpu.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ fpu/softfloat.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 38c580a22a..8cd1a5e056 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2668,6 +2668,15 @@ static RISCVCPUImpliedExtsRule ZVFHMIN_IMPLIED = {
-     },
- };
- 
-+static RISCVCPUImpliedExtsRule ZVFOFP8MIN_IMPLIED = {
-+    .ext = CPU_CFG_OFFSET(ext_zvfofp8min),
-+    .implied_multi_exts = {
-+        CPU_CFG_OFFSET(ext_zve32f),
-+
-+        RISCV_IMPLIED_EXTS_RULE_END
-+    },
-+};
-+
- static RISCVCPUImpliedExtsRule ZVKN_IMPLIED = {
-     .ext = CPU_CFG_OFFSET(ext_zvkn),
-     .implied_multi_exts = {
-@@ -2826,7 +2835,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
-     &ZKS_IMPLIED, &ZVBB_IMPLIED, &ZVE32F_IMPLIED,
-     &ZVE32X_IMPLIED, &ZVE64D_IMPLIED, &ZVE64F_IMPLIED, &ZVE64X_IMPLIED,
-     &ZVFBFA_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
--    &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,
-+    &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVFOFP8MIN_IMPLIED, &ZVKN_IMPLIED,
-     &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
-     &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SHA_IMPLIED,
-     &SSCFG_IMPLIED, &SUPM_IMPLIED, &SSPM_IMPLIED, &SMCTR_IMPLIED,
+diff --git a/fpu/softfloat.c b/fpu/softfloat.c
+index bc244a44ff..e2e53c1d68 100644
+--- a/fpu/softfloat.c
++++ b/fpu/softfloat.c
+@@ -2435,7 +2435,8 @@ static void parts_float_to_e5m2(FloatParts64 *a, float_status *s, bool saturate)
+         /* Per OCP, conversion in SATURATE mode bounds Inf to MAX. */
+         if (saturate) {
+             a->cls = float_class_normal;
+-            a->exp = float8_e5m2_params.exp_max - 1;
++            a->exp = (float8_e5m2_params.exp_max - 1 -
++                float8_e5m2_params.exp_bias);
+             a->frac = MAKE_64BIT_MASK(float8_e5m2_params.frac_shift,
+                                       float8_e5m2_params.frac_size + 1);
+         }
 -- 
 2.55.0
 
