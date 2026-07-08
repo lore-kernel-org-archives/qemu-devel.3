@@ -4,126 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74E07C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:48:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16518C43602
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whVRs-0008EL-OR; Wed, 08 Jul 2026 12:48:36 -0400
+	id 1whVRu-0008EU-TS; Wed, 08 Jul 2026 12:48:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1whVRa-0008D3-VU
+ id 1whVRa-0008D2-Vv
  for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:48:19 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1whVRW-0003p7-9F
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:48:17 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1whVRY-0003pW-3S
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:48:18 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 668GLJc13347798
- for <qemu-devel@nongnu.org>; Wed, 8 Jul 2026 16:48:11 GMT
+ 668GLFBs3329919
+ for <qemu-devel@nongnu.org>; Wed, 8 Jul 2026 16:48:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=0TkTNK4eFSbph/Spc6nZu9
- I5xwYU7rHfiCzWvuu8/QA=; b=EtL1fUc9pVUaNJliyTmrcackiiZDlzrm7+m/4Z
- ZeJvPdXtvXxwBhIB2Zogcvq/pxbYRp82f6zef2psU/FD5m3QpjP24vyPRU6GrRFt
- WXER18TDwYNCUnKuvZBBzGXqcJSw7yqKjcLfBWzDFyFh7N4ZQwEY4wg3Ogy2GOdy
- xNP0JelwmGoJ/BGqWBK7FLmaAGWwDAkhD8RUmtzb3fFbnQOAcEK/ZvAJS1VdFnQI
- xG9YC9RtXc6XjXlolYVK3idUgHxKT9fMQMvppR3b3iyO1pKEIGYN5qS3c8vqvMlQ
- SJsf45jX30GUeeAV2XSNG+xoZRgBa9+Iey3Xlor9EmUE0KQA==
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=Vtku7rkGveb
+ IwtehmYO8HYcXlaF+Fo4u8kpZYxmwjY4=; b=RWHzNM5HbvbpI2kWobtX5SE1o3k
+ +NRJBBFu4dbNkHxi/QYFLPnCofdz+INWsXVfh4jPU2ftD4L3NB6BgZs7RogtZxW8
+ kSEZoYmI+ZJVF/9cIz2sO7Lv7bI6El9Qk/nejrSF4XB44hbr+sJtKA7sK8xn0H3d
+ +RbJzRPD7WNSaupuGBNdlPVjyaaa8A3oZw42XeWJO0RTeHBIijL8vZ+SxmTOl4p+
+ yVrybYckMoRB/FkX4goeov6DidB9uKfa9Vy0SfG2mmYqCyndTKtHvvOQZ8USPZRr
+ sCL/bMsxwT5QHTdSylamnyTm01SklWh7ejGfvtMg0E1q7HjhuoJR2xHCS+g==
 Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
  [209.85.216.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9g7hjv1a-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9hnv2ggg-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 16:48:11 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 16:48:13 +0000 (GMT)
 Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-37fc66ee6a4so1712033a91.3
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 09:48:11 -0700 (PDT)
+ 98e67ed59e1d1-388cfc4848dso35918a91.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 09:48:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783529290; x=1784134090; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=0TkTNK4eFSbph/Spc6nZu9I5xwYU7rHfiCzWvuu8/QA=;
- b=aeOcisukW8fdIBK6zTkSayGjQ0TgsEgXbtx77CCkH2dd9g95VtVny5OSujWMmGWs/Y
- K5sYUXNl5TqXhRwfU7gsHwYbpE5i5fzQTL0GphtuiDiZKdn7WqbW41pyPwLwKNsBLkev
- FuZa9ycWRzALH97Q0Piabmc/0bBpBnqCHAnTwHAi9ntQ4NjWDeVXN54IjALSnRj0aDiG
- knzzOsqI46foJtEPDdU/VrDnNm5zh/RadMl4PoK9dNvIrFSmCi70iuaUrAH6BFjeGCN3
- eiK+fFU8kKdIem31nWuvdnO0QMLRs/0Sj7JDJnISGDDyZILEmIzruiZqfaimA5g1/dRn
- vrlw==
+ d=oss.qualcomm.com; s=google; t=1783529293; x=1784134093; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Vtku7rkGvebIwtehmYO8HYcXlaF+Fo4u8kpZYxmwjY4=;
+ b=AOk8HhMzxs1dqcLcP+/N7BjYFU+WRPu8uFTcLoIpnVhF4ZcjfyVk4RvZzRi18UJdI9
+ SwYraDlLgyySiIPmWxXC+6QxDw/yQcMNp/BU+EtxABNiYRXYIoTiXJx4DgDoH2/EyR4X
+ IskwhqshHs2mvPA2x3U2zSKRLd8PaQn9ZFJdJj1iCcx7eeBK4jtNMz+ZSZVnXlI0mxah
+ uJq6HOYpGbPMmGOioZhL4v4nLH4StD+726XSv1FUVrPwL6j1lh5btGIT5buiyIdyQgbl
+ 8/RdFaOPpF8F7jcifn0EOGZcuqwOfh4YkNBk0iBqOlRLZzFcj1Muzl5Wdwndg5fH83Zm
+ 5+1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783529290; x=1784134090;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=0TkTNK4eFSbph/Spc6nZu9I5xwYU7rHfiCzWvuu8/QA=;
- b=oCum04Hu/kwmaQIKup5hDRBYDOISvjr7jjY9tTDpEG5Hp8YJxi1KfP2PGtS4HOV62A
- SAIgCjnK/O1msg0JBWXKmLA21gGWCVMF+GLPpesfR3bwja3+xBXJMFz+flh1Z6HCr6Jl
- r1UspKr2oGyZx8sB1HqzqoILC9q4yo9UIo+S5qbKE2OaNBvWG7R1A8rq9MweT2PJqc3f
- Jg0QD6Wavfqm8fiY4B6lMehBvoy9kRgSzzC2k3bBP7sQ5vtyTg1cLBSc37Kxmwse7/K8
- IEs59kLUDOc7bkIF6TvnQugkMzRV5e088pVpeVDw/hyOKI1/k0cvMXomQGzi46XvrQRf
- iYPg==
-X-Gm-Message-State: AOJu0YyCg6QSAPBd7TufjrY3e3DncBpT9txbdxPN6adShrDxVIc2ufGE
- ZMXFZljx3A0tJ2XTkPwRYRG4LxnIIsvGzXKuEWo6X4uvNUgsk8LG2f7x4RetTm1ysPOhPgXm+kg
- E3dRNpNWpRr+eh55yZhbtj4y58IN+RP/PCNO8Q831V9/u2PmRVoUqsDDSoPcH/BXqeQ==
-X-Gm-Gg: AfdE7cmtvmw7x307PifRcSW2iHteBlVUnyHsMYS+cobCxHwMzqPgHH3qVNEUrDH1ZDf
- RjDNox2DttaNSocy/CbbrkM4tDM/nirNDQkvKzy9K9TMDWJ3jCs9lq+MAIlY8xxQbtlV+3o7TGh
- v7l2PpMFglUbcs6rkJC41pbX+F7BxzRbaieF9k6xRJp1Mzr0MoTV72v6KuBRfINa6Em/4Hy8oN+
- qi/9ZILsMSdLYBPrFP/C5TzHKlEqYWTMK5DZfgcQEhc5nx26GHBXbDZW4ZIrMejr3c0KWwN3wPK
- AxQk2NVcpMvJk/IDeEB+nC6081VpDN6TQWT0sF29+4lWCvawn8xf0ZrOchAOwh3yHXLDHG0rdXa
- F/9+7/W+1r6PaNJ6ZadFVrZAXXgZku7072L7ZSDU1L27qQ3ZJwZqgM4+Hl5N57niMBPUrz4+mxH
- TN5iy+6w==
-X-Received: by 2002:a17:90b:45:b0:381:792d:f993 with SMTP id
- 98e67ed59e1d1-38940631bfcmr3299383a91.17.1783529290532; 
- Wed, 08 Jul 2026 09:48:10 -0700 (PDT)
-X-Received: by 2002:a17:90b:45:b0:381:792d:f993 with SMTP id
- 98e67ed59e1d1-38940631bfcmr3299349a91.17.1783529290112; 
- Wed, 08 Jul 2026 09:48:10 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783529293; x=1784134093;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Vtku7rkGvebIwtehmYO8HYcXlaF+Fo4u8kpZYxmwjY4=;
+ b=cU+f2ECYxbV0qyrbSaTUZdL/nuGZNjhLdt412m4vgGA/YjYf2c1FgE8jBTavMPHv6c
+ 4COz195yuA2T//yLWzGBaAf0OOTh0yGBlN43X5+1myiJrvk/7tfOxfunmAdWJepiMpZ0
+ gRgISHiMyg+Zscu6hwEoDOAArN9voNRrf2ICtNnSN0JllRNAI5427mJAX1h149PB8hRO
+ EHY4B+oKQRV1HlCbMH763TGqezgvvy9JjDQD1Z9Zm+r22MQmZoSSRm8n0g+z+ZuXVd+7
+ 4sJEKluyOXJaKL6pC5vy3JX932AHCAOTEcHNrekOaQ/HL4WcqqoiuP6qSINxikYTgC5S
+ opJg==
+X-Gm-Message-State: AOJu0YzMxTxRPGC0cfb7TiD0LN1wO6Tw/9FbT495ia+v2HochJCtCjjy
+ CNsCZ3sjqIir/fH+vUeEsA+CkmDGf/j2xfqujpxTGU+v0rnWaebWHtOn6eHSspIIEADySpRCssU
+ woCMRHrciBmin4DEoSdZrZ24LRGNwFtd/YWbnDxo0iDqrHkhTT7GFWN3gbyIn1IqzkQ==
+X-Gm-Gg: AfdE7ckGz0hZy2ZxiiIJr73rJ4h36yDOs15JqWXSzrPu8JiddxIsnv4aCuM3pAaoyia
+ azgKdkt3bI7LrrzSx+018Py/9rIECB0ytMOPxEctDEteXQ5x2jGgo+YjnCyHwytc/kA+XvvGu9p
+ AXfLZjX9T3zIf6sgcnHdvMEtYV8pFwFktWHdUDZyKvala83y7xYAqSJlmHD7r1++yQZ81oRNvhM
+ NVBUUkx3qjfZ2wwKFTTB9H9cQj1BNt9r8cqyU61ErfhC5XiMIzVKCeBj7VEXgsmJbuEDqtrovAC
+ h4+RUoppxuuoiTpFEBn40UhYm64TR0dyQTlVZzno0Hvt+b43/qdJaOLn7DwQeEmnI1bSZvRxDVj
+ HwV0IYV/JW03BNif++6eoKrA25ERNJwT/9bFrta+UL+t/emcje1CTcQwdtYOSc8eGNl8f00BURv
+ iVcYIr7w==
+X-Received: by 2002:a17:90b:1fc8:b0:380:7d9f:81f1 with SMTP id
+ 98e67ed59e1d1-3893f6937ecmr3420107a91.3.1783529293019; 
+ Wed, 08 Jul 2026 09:48:13 -0700 (PDT)
+X-Received: by 2002:a17:90b:1fc8:b0:380:7d9f:81f1 with SMTP id
+ 98e67ed59e1d1-3893f6937ecmr3420080a91.3.1783529292569; 
+ Wed, 08 Jul 2026 09:48:12 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-311747f5975sm20603290eec.4.2026.07.08.09.48.09
+ 5a478bee46e88-311747f5975sm20603290eec.4.2026.07.08.09.48.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jul 2026 09:48:09 -0700 (PDT)
+ Wed, 08 Jul 2026 09:48:11 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 0/4] Dockerfiles update for 2026-07-08
-Date: Wed,  8 Jul 2026 09:47:54 -0700
-Message-ID: <20260708164758.1168667-1-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 2/4] tests/docker/dockerfiles/ubuntu2404.docker: add missing
+ apt update
+Date: Wed,  8 Jul 2026 09:47:56 -0700
+Message-ID: <20260708164758.1168667-3-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260708164758.1168667-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260708164758.1168667-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDE2NSBTYWx0ZWRfX+5LXlnWzDrIM
- pSSdQGxjTLr4WAvjQuUZoVVw492LfiGvqEeZpLo6Etlw7/IGWZV18kHnXFpF2EM3UrH8IR9tOk9
- jGnOVnkezxQ8Wg8sC7jHTTPDNIJMQrLuGUb5AbudUt/eQSrOWRGeHtVuX1vlZqHqIdHGjH50CGo
- xrzLx9D+9dZsuaxslQQI2OD4DEonF1jCxdPLt1MfzvXWt0rt4Fa/xRJFfeu/CIYd2oECyNuizBc
- 0IsZm4ZiK/JafNdexGfYCUk6PHHilmbnp4c6HSzztomOfyqriO6UPYeNbqbs7VkoE2aS4EPqlgH
- yC8+Z6SAkzhncvjsi7qT6UgqsjU8pUX5uf9XGudsuG8BfITprv+WwdR6psmiSdLbM1t9Mgu6GQN
- C2TiKyz1QePqRJ0SjbIjYxsSwmyJHr2y68zRGwf01V0wO59FWX84BkEvzgZRzrT/csjQ5sjchzW
- qfuqWyUGE4bEejJ6kaw==
-X-Proofpoint-GUID: vm4QghMOI-w_waFydR9cR5dl33cwid-z
-X-Authority-Analysis: v=2.4 cv=TMp1jVla c=1 sm=1 tr=0 ts=6a4e7f4b cx=c_pps
+X-Authority-Analysis: v=2.4 cv=KNNqylFo c=1 sm=1 tr=0 ts=6a4e7f4d cx=c_pps
  a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=7cal0JwsSWQQglXgPZkA:9 a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDE2NSBTYWx0ZWRfXypsOZkJVMZeH
- YosOtaJgKYDv6/3VcltefOr2GOC5S+HJn1VBj7ghlqlexky+JD5TjFNjC8koRO0JlEgAQJSAe/p
- aJqWaQ/JRdJaWccZgKYqIfLRqt3dHmU=
-X-Proofpoint-ORIG-GUID: vm4QghMOI-w_waFydR9cR5dl33cwid-z
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=n6MYwUk4AAAA:8
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=WKaNRiMFEbhJKHKE1H0A:9
+ a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDE2NSBTYWx0ZWRfXwwWLj24KGTDF
+ eNauwd9BigIGUDlGOFSZohSjSuOMn/G3U59Bbuc8cm9fMZmpW3Qmim+yhHnvB7HMIXYJDBvCS50
+ YOmwqx9bHIi36kndhu6hm9M4LM0IVRw=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDE2NSBTYWx0ZWRfX6FTUfLhzpwk9
+ qpx7/eI6mH3DfsjGhRFJfJVcKy8M6XPz7OHF1Sec9SliIxpAtjWIZ2HFykgrLz0zK7tgNH4ZT1N
+ pVmfJ05SrAluiNmFqRHjBROiSKAqKCGOIcuGdt48b4ZCOZELIabs4KNHwjorpUfJK5TRZOaufD1
+ qzxtZ/+yVDUH3uJYBCmPg+YK+lAnnWiLCwewGjFZWrdsITJ36Nl83LJCHuH6+vZ0C+BUC+sYHoM
+ LNziEbuYRf2s4/oExrfgsJAygtf1dsXK9QQtYJ8nYhYwq31jLY6OgxYoOJ01PR+0vALgfpkLjAF
+ ERAhoTCOh1GOzskyDBFc4DAfb7xmAn9ZOzcPhy8YMl/WQNcIC0GH+ToaNSyJ7a8CMQoU6rb9Irb
+ YV+iItysKZc90eqbM7y97AhcLLbi0/Nebh47VvLyS/psmjlLcca3DO1YCtwj1NZWE/oyOvP+LIh
+ MP77UxW8O5P2/6XmT7A==
+X-Proofpoint-ORIG-GUID: wQ2yIMedUpmHzqprRDUYfKw0VLn1dXWF
+X-Proofpoint-GUID: wQ2yIMedUpmHzqprRDUYfKw0VLn1dXWF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-08_03,2026-07-08_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 suspectscore=0 adultscore=0
- lowpriorityscore=0 bulkscore=0 malwarescore=0 phishscore=0 spamscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607080165
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 suspectscore=0 spamscore=0
+ malwarescore=0 phishscore=0 clxscore=1015 priorityscore=1501 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607080165
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -149,33 +151,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit f893c46c3931b3684d235d221bf8b7844ddbf1d7:
+RUN statements should always use apt update && apt install together:
+https://docs.docker.com/build/building/best-practices/#apt-get
 
-  Merge tag 'qemu-openbios-20260707' of https://github.com/mcayland/qemu into staging (2026-07-08 16:01:29 +0200)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Link: https://lore.kernel.org/qemu-devel/20260707214655.1138626-3-pierrick.bouvier@oss.qualcomm.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ tests/docker/dockerfiles/ubuntu2404.docker | 3 ++-
+ tests/lcitool/refresh                      | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-are available in the Git repository at:
+diff --git a/tests/docker/dockerfiles/ubuntu2404.docker b/tests/docker/dockerfiles/ubuntu2404.docker
+index 26bc2dd94f4..27992e34fd9 100644
+--- a/tests/docker/dockerfiles/ubuntu2404.docker
++++ b/tests/docker/dockerfiles/ubuntu2404.docker
+@@ -160,7 +160,8 @@ ENV RUSTC=/usr/bin/rustc-1.83
+ ENV RUSTDOC=/usr/bin/rustdoc-1.83
+ ENV CARGO_HOME=/usr/local/cargo
+ ENV PATH=$CARGO_HOME/bin:$PATH
+-RUN DEBIAN_FRONTEND=noninteractive eatmydata \
++RUN apt update && \
++  DEBIAN_FRONTEND=noninteractive eatmydata \
+   apt install -y --no-install-recommends cargo
+ RUN cargo install --locked bindgen-cli
+ # As a final step configure the user (if env is defined)
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 1fdd37440c9..bbbc6d3c46a 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -157,7 +157,8 @@ ENV RUSTC=/usr/bin/rustc-1.83
+ ENV RUSTDOC=/usr/bin/rustdoc-1.83
+ ENV CARGO_HOME=/usr/local/cargo
+ ENV PATH=$CARGO_HOME/bin:$PATH
+-RUN DEBIAN_FRONTEND=noninteractive eatmydata \
++RUN apt update && \
++  DEBIAN_FRONTEND=noninteractive eatmydata \
+   apt install -y --no-install-recommends cargo
+ RUN cargo install --locked bindgen-cli
+ """
+-- 
+2.47.3
 
-  https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/dockerfiles-20260708
-
-for you to fetch changes up to 7d9493a331402f4037b52439370ffd6c0fe06aba:
-
-  tests/docker/dockerfiles/debian-all-test-cross.docker: add missing apt update (2026-07-08 09:40:43 -0700)
-
-----------------------------------------------------------------
-Changes:
-- [PATCH 0/4] tests/docker/dockerfiles: add missing apt update (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
-  Link: https://lore.kernel.org/qemu-devel/20260707214655.1138626-1-pierrick.bouvier@oss.qualcomm.com
-
-----------------------------------------------------------------
-Pierrick Bouvier (4):
-      tests/lcitool/refresh: use raw string literal for trailers
-      tests/docker/dockerfiles/ubuntu2404.docker: add missing apt update
-      tests/docker/dockerfiles/debian.docker: add missing apt update
-      tests/docker/dockerfiles/debian-all-test-cross.docker: add missing apt update
-
- .../dockerfiles/debian-all-test-cross.docker       |   4 +-
- tests/docker/dockerfiles/debian.docker             |   3 +-
- tests/docker/dockerfiles/ubuntu2404.docker         |   3 +-
- tests/lcitool/refresh                              | 213 +++++++++++----------
- 4 files changed, 116 insertions(+), 107 deletions(-)
 
