@@ -4,133 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7245BC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 13:55:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C2D0C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 14:04:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whSjk-0001dn-W0; Wed, 08 Jul 2026 09:54:53 -0400
+	id 1whSs1-0003eB-Se; Wed, 08 Jul 2026 10:03:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aleksandr.mikhalitsyn@futurfusion.io>)
- id 1whSji-0001df-5g
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 09:54:50 -0400
-Received: from mail-westusazon11022080.outbound.protection.outlook.com
- ([52.101.43.80] helo=SJ2PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1whSrz-0003dX-6I; Wed, 08 Jul 2026 10:03:23 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aleksandr.mikhalitsyn@futurfusion.io>)
- id 1whSjf-0002hN-JL
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 09:54:49 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=unRNpfYLsm0eLRqgBta79TV+jvKSZecLjrP7LgfGn993kN/fwiLEK9YIZKINJNODeaUs4AwuWMCTn1WmNxbJzDnilc/d/+odjd7uditF7DM4i8b4ZuobVHN92UveOhHEtiLhPz+Rv2ieOla3R2nStuPLphiYoUnYh5fhohm7+WT9q47QiI6Nbdx1ezlxBW0KgC8SzQkL3n2P9JHrwcX+tFAv+nvwaAAQz/D6PzCjhnbGCCT0v3pdCT8VHojMplcdvi+wvw1PFrcKDD83lkHGUSOdncxe2GfSzbuMZD/8vsnSmXszSzBZm+ODmPzZpDnEhX5Vt6HvjuS8esQ81jo/gQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=R16MLWdGWKdKq3nSekX8QBcOdFWxnQ/nyxcOzgVaRFw=;
- b=IVu2+/whH4RgqtC0VnyAwKUfgbst5ASPBrcAvTWPgFRM7KH2KbbeCeoRt21PMGXp9e3VN0NGTFoSJLltiYC/yRqeliFj8nMmmHrPAvhwrhNzv2OPMfbWB0q55og5LNXhECx4imaKzdQF2tBNbuw1wEhJ1wPx1XnljYRLTj6lbAZBpvTqmqdO5dgnXZc7rbR8Qk7D01Uh7XRmZJwTLsSIstcMWMUlDN5HfpGMX+RyuP74I2h9ddVwugy3Ss/JySkPZMkxb+uaX0UI01uSPOvoA9EDxcLdu3c8Tliv9b/dgLMp2NvYBIz1C1tbUTmJRC75ljS/wpkGdJJY9DfXZjCFvg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=futurfusion.io; dmarc=pass action=none
- header.from=futurfusion.io; dkim=pass header.d=futurfusion.io; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=futurfusion.io;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=R16MLWdGWKdKq3nSekX8QBcOdFWxnQ/nyxcOzgVaRFw=;
- b=IH3npzHbCGJ+9yFA4l2TLY9qHuLo6HEoHkABIX1Ts0i4BMqGbDZwjvZ2NeogSRNa916uU31cQowGqVr8RNc0CofYZA95YsKJ9fSOiKCopRqw7+2+BCHwymxvdX/CDjchs3FGkdsivs/u3gIRXzKio/efKV/iZqrwsy3TEMfo7hj+Y/p5U/Rxc4EaTtJv69gGOiHOXXAPPz0uneBZFU5VWfOiEQNvN50k9VVrPIkTjbZVyzONiC2D9iO/kS5G9rKrHYpMYhKTKM4LVav62E0R3U2Ci+RCJEama/a+/0oxStV64KD5gG6eCyNOxpFGqWN3cHy6n7PqJ6oETQkw/rXDrA==
-Received: from CH3PR12MB8481.namprd12.prod.outlook.com (2603:10b6:610:157::21)
- by CH3PR12MB8210.namprd12.prod.outlook.com (2603:10b6:610:129::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Wed, 8 Jul
- 2026 13:49:37 +0000
-Received: from CH3PR12MB8481.namprd12.prod.outlook.com
- ([fe80::62f6:fea6:9c81:a20e]) by CH3PR12MB8481.namprd12.prod.outlook.com
- ([fe80::62f6:fea6:9c81:a20e%6]) with mapi id 15.21.0181.009; Wed, 8 Jul 2026
- 13:49:36 +0000
-From: Aleksandr Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH] mailmap: add email mapping for Alexander Mikhalitsyn
-Thread-Topic: [PATCH] mailmap: add email mapping for Alexander Mikhalitsyn
-Thread-Index: AQHdDuBfrSNDzm8xWUaQW016EHjFA7Zjo0tv
-Date: Wed, 8 Jul 2026 13:49:36 +0000
-Message-ID: <CH3PR12MB8481537BF413F60CDF0DA5228EFF2@CH3PR12MB8481.namprd12.prod.outlook.com>
-References: <20260708134744.169452-1-alexander@mihalicyn.com>
-In-Reply-To: <20260708134744.169452-1-alexander@mihalicyn.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=futurfusion.io;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB8481:EE_|CH3PR12MB8210:EE_
-x-ms-office365-filtering-correlation-id: 0a5a1f4c-bece-46cf-94a6-08dedcf7bfe8
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|23010399003|10070799003|376014|366016|4133799003|13003099007|8096899003|18002099003|22082099003|38070700021|56012099006;
-x-microsoft-antispam-message-info: TpSziA2U9TPkjNmuVXFm/DKONYei+BkzO+Kcs1zB9zkv3A+jyZrj27Keknyl1c5xcwurSr0Yhl1+/k1RIWaIza4SAHf7e4LpEauRQbGcbFcnAATBuLQ9VrJXAcJqws/1tmYD79WgNZ5bRvhtibl3GTAazlqMZx/tQuSjZ/k0fE3HCWw9B9QmfkfH7wb86c4B4fHuY0DCSiaaTIxKG6S1Mny236Qa/sqGegdVsEljrDqcJujAXwCyG6KL5HRTRQe8Y6KbfE9SWTmRonlvphPJ6bd/mDE3DvEcygdXtAss7ygY6XfgXoWffCVUpd5/indbBlt84MEY1OKWUBqucAu76pHu0OXeQx0R+jfJZci0UHyUC6/vWeGLOMleZS8QsN8Tz9meqW9ee4F1EVtIDzsnjurMI7IP8UU4fnXKV3loqsnxMxTq8WR3c3lsiblzek8a5me0XZJqlmnbING5OEFLzhgw1l53Fbdjk7r2tuPyGxGB/fnh+MWhkMrvYUdueWeJtfN39wrMlh/TnMwCn8ug04IaL71Aj6WsEy2dlKKOBgg7cX0WelCyiU/3SNBkqKc8J4UpDSA1c4wv+gOvOXd+vxRqOmJ2gnSHn0pZSq/xP0jw2mEDzU7+MsowClWuaeWLd40EwSp3CRITYd7NXcJ6DkXX+0gpGXO/e66FzJuneBb1HW1KRF/atCuuxZTmkYXGjNzTgJ8gh2iUKjDQwjA1Vq/7b38bLOP8WbwA4W20/Ok=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB8481.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(23010399003)(10070799003)(376014)(366016)(4133799003)(13003099007)(8096899003)(18002099003)(22082099003)(38070700021)(56012099006);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 2
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?2zJ/o+5aWzhLocDERn7SpWcHm/SY7rqcwQzlWaFEnJ3zdvlp6L0L437Phv?=
- =?iso-8859-1?Q?onmFhy9apLQadFQVgk/kMGwZ75MAWKi7fL1c9L+7DTtZ5gjAuSSdZLmEum?=
- =?iso-8859-1?Q?y7bDYsQLlwXCLaJZ6agfq1lCRLqFscSeHEgKJaM+IZf7tKPg+AAD+yhvFg?=
- =?iso-8859-1?Q?ifoDKxqB9T2ivzkmRM6LldyVtciSN3TIUszZlQU7iOpkm9Mxt6euKeQeK2?=
- =?iso-8859-1?Q?DLPHS5ZLIOzpnj7xnBVxVnAZNxZKsQpqaY8PYE0Ny7abPnTQ/A7eAWCpLo?=
- =?iso-8859-1?Q?3XR4OIEsaJsUhiGri9WdvnbuC9NV8dUkasiSjGgO5ck+tl6pVUZpOjIeTx?=
- =?iso-8859-1?Q?vHshx0dKwNP1MflHz0xHk7kAwnzXwgPQ/wRNNQb8/6yB5yIvypDLEvTHd8?=
- =?iso-8859-1?Q?2ITsvX401BKO497yJqyPmISCRZ58w4VWU5QMERp+o9RNWksWex1djG81B9?=
- =?iso-8859-1?Q?DqRnwU0RweKv512Q+VtiW1eA0XFujOpm52Ngr8DvIxm04mXArxbbQrKMBi?=
- =?iso-8859-1?Q?oak7QPHBgMjyD55TRw3rdpRW2CU14hGCACrsTpdStiKSiekN8TPD5rTKyJ?=
- =?iso-8859-1?Q?N9n/iWYZummPj1J/jgtC5d2UxW1AMMRc5y3M/ohayOIa6EIVF8lz/WPjuf?=
- =?iso-8859-1?Q?4lw/aEf5llOCuKoYwknI40eJRl6R4Fmny4aKt+kueLtgT0N0nqVFCnOry/?=
- =?iso-8859-1?Q?T3MkvwCaQ6H4KtzV/err3z+oo2nBVnt/w5XsCbD6/52wp2Quweoksc2+4W?=
- =?iso-8859-1?Q?P3WIcBF4ccQfoLgpBeghXzOu09VD7X/FSZU6spfOcmOP0ik9wBhAzH3Lrc?=
- =?iso-8859-1?Q?3U6KdC9JACX3hOP6fnsCtb+Yixe4idquo9UEjSAR6Dpsz9iqnThdet9JgG?=
- =?iso-8859-1?Q?j7RV1Mu4WT2B/NZASJpKO/bbWBzRGgf/Kf1ARxvDfybA8VDWxlT5yfS5SU?=
- =?iso-8859-1?Q?hlsNQlgBHYasnSp0g7tLaxfNViGFmMKdvHdXtm8NC5npviRA7BgH/EAzm1?=
- =?iso-8859-1?Q?EcIZoCbOUL+LC/duyhlM6LDz0bUhT6gPBecmdL8Ajd5Z0PEzyqTpre4+sG?=
- =?iso-8859-1?Q?2aaOY7iK7kJh1zk16J5iJCzX79Pb9Wi13NBbnRZPLevR+g9hep30u8vF8q?=
- =?iso-8859-1?Q?OM+eF7La8ZS0IbfuE+lCNzzhbMXzdhENCUN3c6DhhI/Qa2QRSMaTmwNDhp?=
- =?iso-8859-1?Q?qguao+qfIvwZDDqlbBRw0GyFTBJ7bmvol3jrolodN7kBomOmwPxUthshed?=
- =?iso-8859-1?Q?FAGlIatj0H2+m7aTzvZJCO/y2HaWissih91u6lAC3smrE8BLWHRp+ZSt85?=
- =?iso-8859-1?Q?O25a5r4VM137ihsA2yAVlcrmwlWk1qnxEPzNqivkmOPMogQfC2365M2vSI?=
- =?iso-8859-1?Q?v9spIMRNNTjFqiJV85KPjuolLDsHe9f2GoA2YETYsT2Ue7pau7rEsMjsaO?=
- =?iso-8859-1?Q?5hE14HqSqHB/S2rjwWaLvn3e8fimREQvMOjzBOfeJpNHn1csgrSP0VLOZM?=
- =?iso-8859-1?Q?uLGOZy5qds49rHEsZvL5zDDJbxEfoKDOnvkcosuTLPLZdAtNoxtnJpWlK9?=
- =?iso-8859-1?Q?2uS9M6UQ6UtLyvCyAqLgOsuBMuNk1BR12LPjtpMGZzNcvYh7gGaLqbTAnW?=
- =?iso-8859-1?Q?U8xsmhfV8Ao4ZKkj+20djNh+O15xbtHuq/Qw1AFO5i8Ypk6NRVgrw7beEt?=
- =?iso-8859-1?Q?Fld+Wz1DSyTNpuF+MdsS+23yvEsYXxtx+REElnDOENGdW1ATKYCEa4wsVx?=
- =?iso-8859-1?Q?aDi1/NoPTFmJTS42Fa2miOTDsGSqVqoAwBryE3xTTPwEpSOaux1F94Q97y?=
- =?iso-8859-1?Q?7DskFfD1abiFAhNot9lked+n7LqbCs1tOdjVdyEq2K+Eo9R946MEdn26Mv?=
- =?iso-8859-1?Q?oG?=
-x-ms-exchange-antispam-messagedata-1: rn6BxmZ2++//zHpoC0NFL9fXrbboItAFnW8=
-Content-Type: multipart/alternative;
- boundary="_000_CH3PR12MB8481537BF413F60CDF0DA5228EFF2CH3PR12MB8481namp_"
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1whSrx-0003nJ-IL; Wed, 08 Jul 2026 10:03:22 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 668CJFa72337005; Wed, 8 Jul 2026 14:03:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=I4IxKfqA01T+234O01+LQi8/m6ecoOkJixZfwnuqWyY=; b=Y5frSsaeMDfs
+ bxZnbM2TxAP0U5hXI6rtxzyoYjx1ExifFopy6Ab91JTrCu5tGfOd+dLfTWuroPPJ
+ yPyxjUIDvpz8O5+YZV0/q1Ed8PEvR+AkKCtDR74SwJxp4ZWFZ/sA4Yq07qY9TsD+
+ 9t0xN0ckZpaj1hJjEWJ8Gm84FW+GTNexktPIyoWxVlqiK6v8Xb0elg/Uh7rlHfWn
+ QUmKCMMa17MDy7CN6r3Kv2Czy/hrM6tEIU1ayc0cfK30VgTFt1PNewaBdr8jh+uK
+ gLzIpQcgi32OR3PCwcNEodlNlEcrVL+9g/kUzpyfEl1AxKErCEPvCpV8mUAXg4XI
+ Y9KKwiyBTg==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6stsw2yr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 08 Jul 2026 14:03:15 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 668DnbcR005577;
+ Wed, 8 Jul 2026 14:03:14 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f7cvw8fac-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 08 Jul 2026 14:03:14 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 668E3DIX58392902
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 8 Jul 2026 14:03:13 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0161E5804B;
+ Wed,  8 Jul 2026 14:03:13 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6078E58066;
+ Wed,  8 Jul 2026 14:03:11 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  8 Jul 2026 14:03:11 +0000 (GMT)
 MIME-Version: 1.0
-X-OriginatorOrg: futurfusion.io
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8481.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0a5a1f4c-bece-46cf-94a6-08dedcf7bfe8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jul 2026 13:49:36.7715 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: a9a572ee-9e57-46ea-b37b-b020adfd669a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: al0fOwyc/tiYeDEYJdXrX+UUCEruGuPGtm1R7L6QOs5ADi6GscwJ/0rZU5pyCdDxl5NRlsb+vEZtsMjo1aq5i1wLxe8Ov8/qGng+zKF58LSPC+ecOVmQbWdkH++qh+A1
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8210
-Received-SPF: pass client-ip=52.101.43.80;
- envelope-from=aleksandr.mikhalitsyn@futurfusion.io;
- helo=SJ2PR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Date: Wed, 08 Jul 2026 16:03:10 +0200
+From: Harald Freudenberger <freude@linux.ibm.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ thuth@redhat.com, berrange@redhat.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, linux-s390@vger.kernel.org,
+ dengler@linux.ibm.com, borntraeger@linux.ibm.com,
+ fcallies@linux.ibm.com, cohuck@redhat.com,
+ qemu-stable <qemu-stable@nongnu.org>, =?UTF-8?Q?Philippe_Mathieu-Daud?=
+ =?UTF-8?Q?=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v11 01/21] target/s390x: Fix wrong address handling in
+ address loops
+Mail-Reply-To: freude@linux.ibm.com
+In-Reply-To: <d5436f34-5489-4335-bf83-74b924e04140@tls.msk.ru>
+References: <20260707161815.40919-1-freude@linux.ibm.com>
+ <20260707161815.40919-2-freude@linux.ibm.com>
+ <3e31b38c-0561-4f37-b2c4-97c10e6f232f@tls.msk.ru>
+ <d5436f34-5489-4335-bf83-74b924e04140@tls.msk.ru>
+Message-ID: <a38386d1eb7c0809e62a4e3399f8ea0e@linux.ibm.com>
+X-Sender: freude@linux.ibm.com
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: nS-CXDA6uRN6KE0nJe9hK-afP3wOClZO
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDEzNSBTYWx0ZWRfX7ShiCEucEmvr
+ wSsD5W9PkGQzl+hOd6EHPNmgg24qTAM1OkBY4QQEoADe1wvQRmR1hkdH/p1nHEO+qbramthoJg3
+ /m2oKdoXw+HOjYTUJNNafENmmG3GGms=
+X-Authority-Analysis: v=2.4 cv=DKW/JSNb c=1 sm=1 tr=0 ts=6a4e58a3 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=jEcIRefS23jSGVE7dd0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: nS-CXDA6uRN6KE0nJe9hK-afP3wOClZO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDEzNSBTYWx0ZWRfX+v+q7Q3jnjTL
+ O/zGQKu89ZTwR4J0xpyJIGFK5JTSlONx9CDgdKPQ9lzworChpkzqB6QHEb1Ap5xSJMkuNAL6Zyf
+ 4mBmKNco6gwjfyu0ZSXc7bfh9CrF/RpUOOK+Fy7kyZqtzSWD6w6inYSMGZrXOfvoMTddf1lX0bm
+ gDAflEX4i4KqIzuZ8GrPJ3gSj/Wj+lbP3kMhshPLUeir0Fl7dOHg2FM5dJV3lC3LQ4s7IsJGED0
+ MIcPFT7HLfaxAKF69NwDT+WW0QbnT1nHxtdhTSwkhVBnykDCxQE2+kzL8vQcwAJgRf+XrEpB3Dz
+ yD6sSmCP8wHObu0k7iB+KxQm8/1Rwtf/FEl5wFDxjJxrWjuDEsRKbrL83ryAaPhn3bAS6fyH68g
+ GVdFh6/pLbe1s3uCWzqTdTJ7Awfk/VWvfXKblTaaBVEGIZIqZoHGMltr+r+lzMWfu1JNZ9zTZ4i
+ JKU5zrN5onjEF8QcTdA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-08_02,2026-07-08_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 clxscore=1011 phishscore=0 impostorscore=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607080135
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=freude@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -144,172 +131,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_CH3PR12MB8481537BF413F60CDF0DA5228EFF2CH3PR12MB8481namp_
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+On 2026-07-08 13:18, Michael Tokarev wrote:
+> On 08.07.2026 13:37, Michael Tokarev wrote:
+>> On 07.07.2026 19:17, Harald Freudenberger wrote:
+>>> The loop increments addr by the element stride (+= 4) before calling
+>>> wrap_address, but then overwrites the loop addr with the wrapped
+>>> value. On the next iteration the stride is applied to the wrapped
+>>> address of the previous element, not to the original unwrapped
+>>> address. This results in every element after the first is read from a
+>>> wrong (wrapped) address.
+>>> 
+>>> Fixes: 9f17bfdab4 ("target/s390x: support SHA-512 extensions")
+>>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+>>> ---
+>>>   target/s390x/tcg/crypto_helper.c | 12 ++++--------
+>>>   1 file changed, 4 insertions(+), 8 deletions(-)
+>> 
+>> This feels like qemu-stable material.
+>> I'm picking this change up for currently active stable qemu series.
+>> Please let me know if I shouldn't.
+> 
+> Um, this was a bit premature.
+> 
+> This particular commit requires a previous commit in this area,
+> de96db79 "target/s390x: Compile crypto_helper.c as common unit".
+> It's easy to back-port across, but since this change ("Fix wrong
+> address handling...") hasn't been marked as for-stable, I'm *not*
+> doing that.  If this change is actually needed in -stable, please
+> let me know.  Also, is it okay to pick up the previous change
+> ("compile as common unit") to -stable too, to avoid fixing up
+> subsequent changes.
+> 
+> Thanks,
+> 
+> /mjt
 
-ACKed from aleksandr.mikhalitsyn@futurfusion.io
-
-
-________________________________
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Sent: Wednesday, July 8, 2026 15:47
-To: qemu-devel@nongnu.org <qemu-devel@nongnu.org>
-Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>; Aleksandr Mikhalitsyn =
-<aleksandr.mikhalitsyn@futurfusion.io>; Alex Benn=E9e <alex.bennee@linaro.o=
-rg>
-Subject: [PATCH] mailmap: add email mapping for Alexander Mikhalitsyn
-
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-
-I use my company's email to sign-off patches, but send them from my
-personal email cause it's Gmail hosted and works much better than Outlook.
-
-It causes some misunderstanding and inconvenience for maintainers sometimes=
- [1].
-So I would like to add this email mapping to clear out all possible confusi=
-on here.
-
-Link: https://lore.kernel.org/qemu-devel/CAAjaMXabXNmh1UZ5wnpX4wucnC+yWvMo2=
--jr2XBTby4zqf6CTA@mail.gmail.com/ [1]
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
----
- .mailmap              | 1 +
- contrib/gitdm/aliases | 1 +
- 2 files changed, 2 insertions(+)
-
-diff --git a/.mailmap b/.mailmap
-index 593b6c2c534..0663cd7bd0e 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -122,6 +122,7 @@ Stefan Weil <sw@weilnetz.de> Stefan Weil <stefan@weilne=
-tz.de>
- Song Gao <17746591750@163.com> <gaosong@loongson.cn>
- Taylor Simpson <ltaylorsimpson@gmail.com> <tsimpson@quicinc.com>
- Yongbok Kim <yongbok.kim@mips.com> <yongbok.kim@imgtec.com>
-+Alexander Mikhalitsyn <alexander@mihalicyn.com> <aleksandr.mikhalitsyn@fut=
-urfusion.io>
-
- # Also list preferred name forms where people have changed their
- # git author config, or had utf8/latin1 encoding issues.
-diff --git a/contrib/gitdm/aliases b/contrib/gitdm/aliases
-index e26b00a71d7..f838768792a 100644
---- a/contrib/gitdm/aliases
-+++ b/contrib/gitdm/aliases
-@@ -33,6 +33,7 @@ malc@c046a42c-6fe2-441c-8c8c-71466251a162 av1474@comtv.ru
-
- # canonical emails
- liq3ea@163.com liq3ea@gmail.com
-+aleksandr.mikhalitsyn@futurfusion.io alexander@mihalicyn.com
-
- # some broken DCO tags
- yuval.shaia.ml.gmail.com yuval.shaia.ml@gmail.com
---
-2.47.3
-
-
---_000_CH3PR12MB8481537BF413F60CDF0DA5228EFF2CH3PR12MB8481namp_
-Content-Type: text/html; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
-1">
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"ltr">
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-ACKed from aleksandr.mikhalitsyn@futurfusion.io</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
-Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<hr style=3D"display: inline-block; width: 98%;">
-<div id=3D"divRplyFwdMsg">
-<div style=3D"direction: ltr; font-family: Calibri, sans-serif; font-size: =
-11pt; color: rgb(0, 0, 0);">
-<b>From:</b>&nbsp;Alexander Mikhalitsyn &lt;alexander@mihalicyn.com&gt;<br>
-<b>Sent:</b>&nbsp;Wednesday, July 8, 2026 15:47<br>
-<b>To:</b>&nbsp;qemu-devel@nongnu.org &lt;qemu-devel@nongnu.org&gt;<br>
-<b>Cc:</b>&nbsp;Alexander Mikhalitsyn &lt;alexander@mihalicyn.com&gt;; Alek=
-sandr Mikhalitsyn &lt;aleksandr.mikhalitsyn@futurfusion.io&gt;; Alex Benn=
-=E9e &lt;alex.bennee@linaro.org&gt;<br>
-<b>Subject:</b>&nbsp;[PATCH] mailmap: add email mapping for Alexander Mikha=
-litsyn</div>
-<div style=3D"direction: ltr;">&nbsp;</div>
-</div>
-<div style=3D"font-size: 11pt;">From: Alexander Mikhalitsyn &lt;aleksandr.m=
-ikhalitsyn@futurfusion.io&gt;<br>
-<br>
-I use my company's email to sign-off patches, but send them from my<br>
-personal email cause it's Gmail hosted and works much better than Outlook.<=
-br>
-<br>
-It causes some misunderstanding and inconvenience for maintainers sometimes=
- [1].<br>
-So I would like to add this email mapping to clear out all possible confusi=
-on here.<br>
-<br>
-Link: <a href=3D"https://lore.kernel.org/qemu-devel/CAAjaMXabXNmh1UZ5wnpX4w=
-ucnC+yWvMo2-jr2XBTby4zqf6CTA@mail.gmail.com/" id=3D"OWAc453b9b3-9b40-b459-7=
-bc0-013b84db9465" class=3D"OWAAutoLink" data-auth=3D"NotApplicable">
-https://lore.kernel.org/qemu-devel/CAAjaMXabXNmh1UZ5wnpX4wucnC+yWvMo2-jr2XB=
-Tby4zqf6CTA@mail.gmail.com/</a>&nbsp;[1]<br>
-Signed-off-by: Alexander Mikhalitsyn &lt;aleksandr.mikhalitsyn@futurfusion.=
-io&gt;<br>
----<br>
-&nbsp;.mailmap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp; | 1 +<br>
-&nbsp;contrib/gitdm/aliases | 1 +<br>
-&nbsp;2 files changed, 2 insertions(+)<br>
-<br>
-diff --git a/.mailmap b/.mailmap<br>
-index 593b6c2c534..0663cd7bd0e 100644<br>
---- a/.mailmap<br>
-+++ b/.mailmap<br>
-@@ -122,6 +122,7 @@ Stefan Weil &lt;sw@weilnetz.de&gt; Stefan Weil &lt;stef=
-an@weilnetz.de&gt;<br>
-&nbsp;Song Gao &lt;17746591750@163.com&gt; &lt;gaosong@loongson.cn&gt;<br>
-&nbsp;Taylor Simpson &lt;ltaylorsimpson@gmail.com&gt; &lt;tsimpson@quicinc.=
-com&gt;<br>
-&nbsp;Yongbok Kim &lt;yongbok.kim@mips.com&gt; &lt;yongbok.kim@imgtec.com&g=
-t;<br>
-+Alexander Mikhalitsyn &lt;alexander@mihalicyn.com&gt; &lt;aleksandr.mikhal=
-itsyn@futurfusion.io&gt;<br>
-&nbsp;<br>
-&nbsp;# Also list preferred name forms where people have changed their<br>
-&nbsp;# git author config, or had utf8/latin1 encoding issues.<br>
-diff --git a/contrib/gitdm/aliases b/contrib/gitdm/aliases<br>
-index e26b00a71d7..f838768792a 100644<br>
---- a/contrib/gitdm/aliases<br>
-+++ b/contrib/gitdm/aliases<br>
-@@ -33,6 +33,7 @@ malc@c046a42c-6fe2-441c-8c8c-71466251a162 av1474@comtv.ru=
-<br>
-&nbsp;<br>
-&nbsp;# canonical emails<br>
-&nbsp;liq3ea@163.com liq3ea@gmail.com<br>
-+aleksandr.mikhalitsyn@futurfusion.io alexander@mihalicyn.com<br>
-&nbsp;<br>
-&nbsp;# some broken DCO tags<br>
-&nbsp;yuval.shaia.ml.gmail.com yuval.shaia.ml@gmail.com<br>
---<br>
-2.47.3<br>
-<br>
-</div>
-</body>
-</html>
-
---_000_CH3PR12MB8481537BF413F60CDF0DA5228EFF2CH3PR12MB8481namp_--
+Fine with me. However, Connie replied to my v10 series that she
+wants to pick this patch. However, it is yet not on the qemu
+master branch.
 
