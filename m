@@ -4,79 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DBC6C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 09:57:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E8BEC43602
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 10:11:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whP1B-0007si-B6; Wed, 08 Jul 2026 05:56:37 -0400
+	id 1whPFK-0001lr-38; Wed, 08 Jul 2026 06:11:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1whP1A-0007sL-19
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 05:56:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1whPFH-0001lI-Lr
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:11:11 -0400
+Received: from p-east2-cluster5-host12-snip4-10.eps.apple.com ([57.103.79.83]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1whP17-0003lA-Ux
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 05:56:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783504593;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DmMZgXEYyGW4mA63jMhuGAnp6TIKckS3MD+UjJgPQ7M=;
- b=cZMaoxFy8t07NCwpfaOzYvwCC6hfR7j0QMBZ367j4btX/AvbS3rD4/hNAHPHm1/UpQ0IVO
- s4+QJEma7SDPnjtFNVVp1+GDs7oNksGOeqURGjrruDM4/W6zFHtiNteBHBxmtNKXzSR0iE
- CVqu0cUtzrtYX2MwZ/xgtv5clBki9zA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-TuPPf9Q1Oiy2I6xpjZrUbA-1; Wed,
- 08 Jul 2026 05:56:29 -0400
-X-MC-Unique: TuPPf9Q1Oiy2I6xpjZrUbA-1
-X-Mimecast-MFC-AGG-ID: TuPPf9Q1Oiy2I6xpjZrUbA_1783504588
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 51F0E195604D; Wed,  8 Jul 2026 09:56:28 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.49.28])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CFBA01955F43; Wed,  8 Jul 2026 09:56:25 +0000 (UTC)
-Date: Wed, 8 Jul 2026 10:56:22 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com,
- mtosatti@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH 8/9] hw/i386/pc_sysfw.c: convert pflash0 and pflash1
- object props to class props
-Message-ID: <ak4exv1KUCIfKsuF@redhat.com>
-References: <20260703090814.2993188-1-mark.caveayland@nutanix.com>
- <20260703090814.2993188-9-mark.caveayland@nutanix.com>
- <ak0wHkWQpXX5H45e@redhat.com>
- <ebbec6f0-0866-414a-a31d-cf0f0e5d5924@nutanix.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ebbec6f0-0866-414a-a31d-cf0f0e5d5924@nutanix.com>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1whPFF-0003b2-Nv
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:11:11 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-20-percent-2 (Postfix) with ESMTPS id
+ 585941800122; Wed, 08 Jul 2026 10:11:04 +0000 (UTC)
+X-ICL-RepId: 019f4135-abd2-711c-9498-473a7486c2d9
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQhICkMDWhxBCEsdXwdcEhVdRV4CXwpfFV04RgNHGVcUUBtHDFUHV15fChMLU1ZHHkkKVgleCEYRWxRWQ1EZEgJaRQVNXw5eHwQXRhlVBEceXVZAGRkCURxWDVdDVARfUEkMQVBsWgBHF0gdXRlZb1BdHA4YWRtAFV0RUBlWCV4VFx5BTVoCVk0FPgRUAC0HRA1VBC9yWB9EDU8LQHVYA0kUSHdZD18BQABNBF4GK0ceSQpWCV4IRhFbFFZDURkMUE0BQwgKCEcDTRdeMlMEXxFQFg==
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1783505468; x=1786097468;
+ bh=CXFo8AMxA4e4gTlAGmPd0zHYOeaH2U4ywZ33vRhXN6I=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=fbxIOQ8t6BWftlx71lwMUY96UTTD2n/BeDc81B65WLswSbTquQwdk+r4lIq/SYYejjM+4ZagABmQEY6m23nBFz6PxJv9Iy70mfkPL0mFEQWv5YDWrKohRzwJhnVS6DpKPk9x+5PqOhnMmaoENH6rmGhBKm3ohwa8F4uVCltJq9RhmAy6aOAGOOmRsZAXO2fNDNfm9oi8+gy5S8czeI+pn9YIT2tR5YPUNXl+vJBZYZYbJP7hbLeMJFmEvTINrFiNYGBdJNBh+xM0e+ZImOq0ftmz8cFjk1tTMfdHqwWSH2b4V/crm+MUHdHMWtGT5Zy38poocRpJ/ZchPpuUVc2d6A==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-20-percent-2 (Postfix) with ESMTPSA id
+ A59431800404; Wed, 08 Jul 2026 10:11:02 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3895.100.17\))
+Subject: Re: [RFC PATCH] target/arm: report M-profile BKPT to gdbstub when
+ attached
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <CAFEAcA9x7tjW9xuT_XwNntdvoVtLrCL_PB+50tfhiW2XDvsCiw@mail.gmail.com>
+Date: Wed, 8 Jul 2026 12:10:12 +0200
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Gilles Grimaud <gilles.grimaud@univ-lille.fr>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <F797F544-7BE3-4478-B319-0D4843095731@unpredictable.fr>
+References: <20260705224407.32464-1-gilles.grimaud@univ-lille.fr>
+ <CAFEAcA9Heev=ydTzO2u3EzeF_2q7dytOF8=67qF8ZMMY6Ky2Tw@mail.gmail.com>
+ <a14481eb-9eed-43c0-a29c-187798f7f769@linaro.org>
+ <CAFEAcA9x7tjW9xuT_XwNntdvoVtLrCL_PB+50tfhiW2XDvsCiw@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+X-Mailer: Apple Mail (2.3895.100.17)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDA5OCBTYWx0ZWRfX7IcM4sTMGXSq
+ gDy/xs3YVqE+J1F8TcI0q1LYMM9OZkPk+huAXvTgkVYmDZ6Am6Q17u3862qXK4ojI0yFQJxjJ1u
+ f83R1bhSx+oOLisPKeLBGyQNyMV52lpbg2UxjnGOT+5/G1vVBUgHnzxv/ZLDzEoDmLB3y48iT+v
+ WZMEnhDOyxntxlePrnFJmi4fk1iGwjUXToXQKOFKhJnZ+6MePShAf1CFEWDRGIEhNz1yaE+hsTa
+ HC2XMawTzzVARhYbEUMv6ARpzAg3K8fg9T95LBJLhQc/ZfqEDnI5VUuuZ8BvRgSp1Qj358/PrZH
+ RcCqxPY3HuwAKvI3qln
+X-Proofpoint-ORIG-GUID: nr4MdOw9mhJ9Quj3CzJPdLGPVcEAm92n
+X-Proofpoint-GUID: nr4MdOw9mhJ9Quj3CzJPdLGPVcEAm92n
+Received-SPF: pass client-ip=57.103.79.83;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,120 +83,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 08, 2026 at 10:40:54AM +0100, Mark Cave-Ayland wrote:
-> On 07/07/2026 17:58, Daniel P. Berrangé wrote:
-> 
-> > On Fri, Jul 03, 2026 at 10:08:01AM +0100, Mark Cave-Ayland wrote:
-> > > Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> > > ---
-> > >   include/hw/i386/pc.h | 2 ++
-> > >   hw/i386/pc.c         | 8 ++++++++
-> > >   hw/i386/pc_sysfw.c   | 7 +------
-> > >   3 files changed, 11 insertions(+), 6 deletions(-)
-> > > 
-> > > diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> > > index 309de2eda1..16cb0ec01f 100644
-> > > --- a/include/hw/i386/pc.h
-> > > +++ b/include/hw/i386/pc.h
-> > > @@ -40,6 +40,8 @@ typedef struct PCMachineState {
-> > >       Object *alias_pcspk;
-> > >       Object *alias_rtc_time;
-> > > +    Object *alias_pflash0;
-> > > +    Object *alias_pflash1;
-> > >       /* Configuration options: */
-> > >       uint64_t max_ram_below_4g;
-> > > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> > > index 13c9c1bfc8..11eef176f4 100644
-> > > --- a/hw/i386/pc.c
-> > > +++ b/hw/i386/pc.c
-> > > @@ -1762,6 +1762,14 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
-> > >                                      offsetof(X86MachineState, acpi_dev),
-> > >                                      object_property_allow_set_link,
-> > >                                      OBJ_PROP_LINK_STRONG);
-> > > +    object_class_property_add_alias(oc, "pflash0",
-> > > +                                    offsetof(PCMachineState, alias_pflash0),
-> > > +                                    TYPE_PFLASH_CFI01,
-> > > +                                    "drive");
-> > > +    object_class_property_add_alias(oc, "pflash1",
-> > > +                                    offsetof(PCMachineState, alias_pflash1),
-> > > +                                    TYPE_PFLASH_CFI01,
-> > > +                                    "drive");
-> > >   }
-> > >   static const TypeInfo pc_machine_info = {
-> > > diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-> > > index 1a41a5972b..441e777191 100644
-> > > --- a/hw/i386/pc_sysfw.c
-> > > +++ b/hw/i386/pc_sysfw.c
-> > > @@ -85,8 +85,7 @@ static PFlashCFI01 *pc_pflash_create(PCMachineState *pcms,
-> > >       qdev_prop_set_uint8(dev, "width", 1);
-> > >       qdev_prop_set_string(dev, "name", name);
-> > >       object_property_add_child(OBJECT(pcms), name, OBJECT(dev));
-> > > -    object_property_add_alias(OBJECT(pcms), alias_prop_name,
-> > > -                              OBJECT(dev), "drive");
-> > > +    object_property_set_alias(OBJECT(pcms), alias_prop_name, OBJECT(dev));
-> > >       /*
-> > >        * The returned reference is tied to the child property and
-> > >        * will be removed with object_unparent.
-> > > @@ -109,16 +108,12 @@ void pc_system_flash_create(PCMachineState *pcms)
-> > >   void pc_system_flash_cleanup_unused(PCMachineState *pcms)
-> > >   {
-> > > -    char *prop_name;
-> > >       int i;
-> > >       assert(PC_MACHINE_GET_CLASS(pcms)->pci_enabled);
-> > >       for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
-> > >           if (!qdev_is_realized(DEVICE(pcms->flash[i]))) {
-> > > -            prop_name = g_strdup_printf("pflash%d", i);
-> > > -            object_property_del(OBJECT(pcms), prop_name);
-> > > -            g_free(prop_name);
-> > >               object_unparent(OBJECT(pcms->flash[i]));
-> > >               pcms->flash[i] = NULL;
-> > >           }
-> > 
-> > Does this externally change visible behaviour ?
-> > 
-> > The pc_system_flash_cleanup_unused method is run in the instance
-> > init method, and will purge the 'pflash0' and 'pflash1' properties
-> > if they were never set.
-> > 
-> > IIUC with the new code pflash0 and pflash1 will always be visible,
-> > but would be unset, as object_property_set_alias would not have
-> > been called.
-> > 
-> > THe new behaviour is arguably better - IMHO properties should
-> > always be present, and use "unset" as an explicit state.
-> 
-> Yes, it does change the behaviour to reflect the fact that the pflash0 and
-> pflash1 properties always exist:
-> 
-> Before this series:
-> 
-> $ ./build/qemu-system-x86_64 -M q35 -monitor stdio
-> QEMU 11.0.50 monitor - type 'help' for more information
-> (qemu) qom-get /machine pflash0
-> Error: Property 'pc-q35-11.1-machine.pflash0' not found
-> 
-> After this series:
-> 
-> $ ./build/qemu-system-x86_64 -M q35 -monitor stdio
-> QEMU 11.0.50 monitor - type 'help' for more information
-> (qemu) qom-get /machine pflash0
-> ""
-
-As a behaviour change, please call this out in the commit message,
-since this is an example situation that needs a subsystem maintainer
-review/ack rather than a general review/ack.
 
 
+> On 8. Jul 2026, at 11:31, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>=20
+> On Tue, 7 Jul 2026 at 18:27, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>=20
+>> On 7/6/26 02:21, Peter Maydell wrote:
+>>> No other architecture, CPU or board in QEMU needs to do this,
+>>> so my instinct is to say that M-profile should not be special here.
+>>> Richard, Alex: how do we usually handle breakpoint insns for the
+>>> gdbstub ?
+>>=20
+>> We handle them via CPUBreakpoint structures; we never inject code =
+changes.
+>=20
+> I don't mean "breakpoints that the gdbstub requests", I mean
+> "breakpoint insns that are already in the guest code that get
+> executed".
+>=20
+>> The patch description explains the confusion: this is attempting to =
+replicate a feature of
+>> the Raspberry Pi Pico SDK, wherein a guest BPKT really is trapped by =
+an external debugger.
+>=20
+> But aren't breakpoint instructions of all kinds typically trapped
+> to the external jtag debugger, on any architecture ? I'm a bit
+> surprised that we don't do this already.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Some context on the gdbstub implementation from the x86 side:
+
+WHPX's gdbstub support is implemented with overriding the instruction
+instead of leveraging HW breakpoints - although a bit hackily.
+
+A big concern is still allowing self-hosted debug to work fine which
+makes things a bit harder.
+
+x86 makes things easier by having multiple different breakpoint =
+instructions.
+Linux uses int3 and we use int1*  for QEMU gdbstub-controlled =
+breakpoints so
+that things (mostly) work out for everyone.
+
+And then, QEMU traps all debug exceptions from the guest when gdb is =
+attached
+and is supposed to take action when it=E2=80=99s an int1 breakpoint and =
+not others.
+
+Although we currently have a bug there that the non int1s just get =
+ignored
+instead of being injected back.
+
+* on x86, the Intel manual says "Hardware vendors may use the INT1 =
+instruction for hardware debug"=20
+
+On Cortex-M self-hosted debug is far less used than for emulating bigger =
+chips.
+
+And then there=E2=80=99s emulating such a thing using hardware virt and =
+using HW breakpoints
+which quickly becomes quite complicated...
+
 
 
