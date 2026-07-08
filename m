@@ -4,86 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13632C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 15:41:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44739C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 15:50:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whUOZ-0003jB-R3; Wed, 08 Jul 2026 11:41:07 -0400
+	id 1whUWn-0005r8-3r; Wed, 08 Jul 2026 11:49:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1whUOP-0003fJ-0D
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:40:57 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1whUWl-0005nJ-WE
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:49:36 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1whUOG-00067P-Bl
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:40:53 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-47defd0c1c5so470051f8f.3
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 08:40:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1whUWj-0003Wk-Jl
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:49:35 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-c124c3c876aso113799066b.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 08:49:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783525772; cv=none;
+ d=google.com; s=arc-20260327;
+ b=GucjDrIq22aiI7q9XITwsBCcGgY5mugTh5poKmpjD+XUdNf6Kkp1C+3EKu59kz9g/A
+ oz6dzGkF36F8HQ9hs1NBnycBlhiiyC6+kS2WsKV/7HZp961yAsiYs3gj/7Un33djAUMt
+ uhHVy93MHDfmYR0ggtxAz6w6/gg5262KGVLdqYA7OxAEymHXGKwu/3MDvJD8DNcaRc6K
+ p4+OwX0drNs0bZOY1zrDfsjGxlF71sTrIA5vwk2VNOh9PXEfwPlB8DFXHyNlNYudN3YF
+ peMcdmeCUfvXenIGM1/mUVHhJFXhR/BkVtj9GbEA2k231geTilflPlmSkGSNQqO6b2ze
+ OBFA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=EmfiO5RJPK2h+5fsERKLsblUR+UBqpkmNgc8gDU5DO8=;
+ fh=2ahwR7CLXGke5PPc/jgbc/HPTLmPGQsxx30u61mk6Fw=;
+ b=Bra1YuyDtlVC4+BHoSnC7HsaXcFxBM4ArZeTHBRw8ufAal/1yDcTbBzAxq80rIhTat
+ y/axPJcE6bxe939BsfaOHmM6vcNXFQN6iVyp9qDFtjHOD1kXo79CAUy3eDs+359i7BWx
+ Vee06qPapAjb0T5FmE4WMIo00PRC/xbyIRv+csjsyLoAJbIu+GI2UpWpsjk23pGeXmy1
+ 0wR+sniH7pTrTO21l45YdkrZc7iw1qvRz71gfY04g5a2W2iURtn3h7mp9IKgXNUO7TN8
+ CpjN+HcwcaxG7eB3GylRKOlsRUrDxyI96Fs85r9vkPY7xh6cUEr56XtxUXiaWeBy5hD7
+ NX5Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783525245; x=1784130045; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=HMuzRhZr1rzcFhcmTQTs52hr5q9k+KM2/VooJwERO78=;
- b=lsK3fDbDLV156JlXI2zQ4rJEN1fU/QjX6BVwc0xEwTpNREZyl9yoHG9719Bvmtl1dE
- lm7byxGNncJNvx9awttCxxBArFEmFccEKJ08ggyeDJqYMlYONOHNy5Sm2pgxW/LccInP
- qLbx4GAdEzRaHPXxKAcWSyve5HlduhZG5/RT4YTeWcfGeJ2pxvp4/aWcylcyFge63mee
- IyqmpCfJXmJztR7JA/zgBxrBUeNq4ON51ep23AesyG9QNM880DXR8Ksrn59obcmRcupL
- cYUia6D7w/LaJrrjirlSFUpIz4SJfD7N++W+lmpYz3Nma0qukEvVXiNjLFBNjh4ZDXe9
- Qw7Q==
+ d=mihalicyn.com; s=mihalicyn; t=1783525772; x=1784130572; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=EmfiO5RJPK2h+5fsERKLsblUR+UBqpkmNgc8gDU5DO8=;
+ b=dH3x0vf2E8mPVUgUfwzOufzpmpM/GgwBMwDEv6jCy5+jm6x1JwIeX0m3IyFsXjgmSS
+ 6SMg9Fv6+fyWcVc8wtQrJzzzokqqCt5dWUamXiNARw3QdB7oFvoSwaRMEkQ51M6vm+BA
+ AfevpmMnFf6aDIkooZeJJ9uQrAlATstVN8OJs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783525245; x=1784130045;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20251104; t=1783525772; x=1784130572;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=HMuzRhZr1rzcFhcmTQTs52hr5q9k+KM2/VooJwERO78=;
- b=EPhR3+5Bx+Jh8kQX5cQzZeqjR5mNOxX6wXDsXG/83HJX7hd6FjpBac8l/jcr7F2VDD
- g6ACgEMHPSVhMVKFOJ3RykfdEjChGF6AfDH0IPUrRBG2BLAlHzcmzzmeuP/88t7hWrPG
- aoIJRxiy9UzTi65aHbEZPzoIOnCbYmQ2cLohLOAT6R2tvsqEfducAmdv/5cheJUvOnjQ
- cG41fiREHe/ig7MENs8W6eLUa0fGk2G9oN/A6YgFNe5K6XZUlZni3yrSn7917YLbiqmh
- rHH39eewfnCxVxUFgCl5QDpf7p+VPZqAEQuZu4hwTckaw4DEMI9rTBym7IDV+BDa6xej
- 9zcA==
-X-Gm-Message-State: AOJu0YyudtU/OI+WOox9fZkiCqnVrG0fxAy2hDVjg1VYKUouZZEt3OWc
- m4WbqYNEl4nBipWAgvpcdD0fWZ/vqYooO5ERZtJRZ8LQqC6z4CwXQNABCl7p7tDpWPnB8pcBxFO
- Wv1u5kdE=
-X-Gm-Gg: AfdE7cnQrElyVX5ByhYEFTnuECaoNEOx8UWqc2c7D7+QU7AiKTuWskhXHlMQnZ4xV6l
- qn31Tne8dtzYemWccy8NLDiCLkvGBwb9ueYhSt54ATq+rAIKYA9/WYnxRgPd4T/l1iy8Cna+rGD
- ZpCW2gJUNuUMScdRo29JNxE4LOl3lpoTx9wZCu3LZQzillFVgBpWt1g0koS4nfB4w1o267kI+qE
- JPh0AWe+HiW29i/1FbldIxS3tr+TicpQV7q/8yzKKnwBTvtJ0ZYxz4AsTpgao6SRsGxybsNrBCo
- bukqkuY2AbngDdl9h1oGVLt2Fn4ZgNcBluV3BYJIYo0QJoMC/+V5jg881VV0oy8btFEhPOLJ2aE
- uvdZ5ufRH/2/mzjyLRrGqey3y97YMNUI7pypXK0VCMv+S/QrbH+ojUhl3d1VCt9fS70DZzmX+QL
- Q4OO3Ha9Gts81C
-X-Received: by 2002:a05:6000:1a8e:b0:45d:4a00:b927 with SMTP id
- ffacd0b85a97d-47df07ec6abmr3833499f8f.31.1783525245205; 
- Wed, 08 Jul 2026 08:40:45 -0700 (PDT)
-Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa0f21543sm40911720f8f.35.2026.07.08.08.40.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jul 2026 08:40:44 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 49B055F8F3;
- Wed, 08 Jul 2026 16:40:43 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Max Filippov <jcmvbkbc@gmail.com>
-Cc: qemu-devel@nongnu.org,  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: Re: [PATCH] tests/tcg: fix buffer overflow in
- multiarch/linux/linux-sigrtminmax
-In-Reply-To: <20260708150541.2137546-1-jcmvbkbc@gmail.com> (Max Filippov's
- message of "Wed, 8 Jul 2026 08:05:41 -0700")
-References: <20260708150541.2137546-1-jcmvbkbc@gmail.com>
-User-Agent: mu4e 1.14.2; emacs 30.1
-Date: Wed, 08 Jul 2026 16:40:43 +0100
-Message-ID: <87cxwxtrpg.fsf@draig.linaro.org>
+ bh=EmfiO5RJPK2h+5fsERKLsblUR+UBqpkmNgc8gDU5DO8=;
+ b=gVhCp160plRBGyQXuq6bwLQri7jibTb6lUCo4P+jjGpgn9ARAWMivXZDSHRXZfowFg
+ FTEc7rhAQZk3ej5s9pCJEKdhczbbIMvaJR24gnmW+3fZGHJBl9ZpzgpOJtWS+AkYZ6sA
+ RnGJjCoQhrgnYlVfpaVkDBSbEqJhsV64hkd1x28nlEDxvwcLTAbwYJz4RVi0Hr0x+EA/
+ JoDJ+98AZx0gDCkK4/S9rVilUEuo8m/NMBxH8gg1Xx6jZlLxrdZNY8pHSvKDgZ6JmlFT
+ jEDkvq6lOTDUH5zzoVB4hY6v5nizIsStQq8EvXdDXVeaz8BN1P6cHhbE5AiwOjQK46G/
+ Pr0g==
+X-Gm-Message-State: AOJu0Yxmo9J/oJZqSEBYKcR+6PjqggLDct9T+Y+ElJnR41FLWoHwTBbr
+ zEXYpqtApnthffi/MJ8WkpzlINUhc15/SRjEEFmUn35gou6xmzhDy3+bDa+f3cMtWtdv0cpGM2r
+ mnRgLPjQWLVyYTnbNHJ+1Hc4PQ38sOYRm139b4vmXTWRCies9m5XyWOI=
+X-Gm-Gg: AfdE7cnmePx0fE8cNDb+u5saU4C9YAARy4vraxPXpcRUlOBa563Nb7BbCuuGa0V/SZM
+ LRdHj7f2QPcgzNeeoSeSBnX2qg9LnmzHl2b/W5yYnYFadq8pPCiJeaPUDG2aUiFmhlAvsa3srzb
+ 6Md4UqV96lj4/1ymogUlzbOIlZq35upFHVmtrP2YJijkcB9OWuveRPvuJ+6aMtCuRaaPoZ0aExa
+ FQxJ7miyZ9VoaynTzV9mPqB1AA+fXEKqLfmsZSYZAe/FLOSoLwkYKrK5xtikFz4b0pxUXnVcco3
+ BZUNkNeLiydckDiJL6MD6YrFxnoX
+X-Received: by 2002:a17:907:9620:b0:c12:b277:c7de with SMTP id
+ a640c23a62f3a-c15ce15d571mr132063366b.61.1783525771285; Wed, 08 Jul 2026
+ 08:49:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260708134744.169452-1-alexander@mihalicyn.com>
+ <87ik6ptt2e.fsf@draig.linaro.org>
+In-Reply-To: <87ik6ptt2e.fsf@draig.linaro.org>
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Date: Wed, 8 Jul 2026 17:49:19 +0200
+X-Gm-Features: AVVi8CeF3SOv3l4HN48oJpFxckY7dFbRdL5qj-o1t4RJ3UnVnn5uIuNukBygHTE
+Message-ID: <CAJqdLrqrMb9FQ7jqiGwZgs49LaRiyyTveFKT0Y-MZ4ZwABsD5w@mail.gmail.com>
+Subject: Re: [PATCH] mailmap: add email mapping for Alexander Mikhalitsyn
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alexander@mihalicyn.com; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,40 +115,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Max Filippov <jcmvbkbc@gmail.com> writes:
-
-> Fix new_argv allocation size to be `(argc + 2) * sizeof(char *)` bytes,
-> which matches the way it's used to store `argc + 2` pointers.
+Am Mi., 8. Juli 2026 um 17:11 Uhr schrieb Alex Benn=C3=A9e <alex.bennee@lin=
+aro.org>:
 >
-> This fixes the test for me, which otherwise fails on xtensa with the
-> following message
+> Alexander Mikhalitsyn <alexander@mihalicyn.com> writes:
 >
->   linux-sigrtminmax.c: 59: main: Assertion `execve(new_argv[0], new_argv,=
- environ) =3D=3D 0' failed.'.
+> > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+> >
+> > I use my company's email to sign-off patches, but send them from my
+> > personal email cause it's Gmail hosted and works much better than Outlo=
+ok.
+> >
+> > It causes some misunderstanding and inconvenience for maintainers somet=
+imes [1].
+> > So I would like to add this email mapping to clear out all possible con=
+fusion here.
+> >
+> > Link: https://lore.kernel.org/qemu-devel/CAAjaMXabXNmh1UZ5wnpX4wucnC+yW=
+vMo2-jr2XBTby4zqf6CTA@mail.gmail.com/ [1]
+> > Signed-off-by: Alexander Mikhalitsyn
+> > <aleksandr.mikhalitsyn@futurfusion.io>
 >
-> Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+> Queued to gitdm/next, thanks.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Thank you ;)
 
-> ---
->  tests/tcg/multiarch/linux/linux-sigrtminmax.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Kind regards,
+Alex
+
 >
-> diff --git a/tests/tcg/multiarch/linux/linux-sigrtminmax.c b/tests/tcg/mu=
-ltiarch/linux/linux-sigrtminmax.c
-> index a7059aacd9cb..b5ea65f3d393 100644
-> --- a/tests/tcg/multiarch/linux/linux-sigrtminmax.c
-> +++ b/tests/tcg/multiarch/linux/linux-sigrtminmax.c
-> @@ -39,7 +39,7 @@ int main(int argc, char **argv)
->      assert(qemu);
->=20=20
->      if (!getenv("QEMU_RTSIG_MAP")) {
-> -        char **new_argv =3D malloc((argc + 2) + sizeof(char *));
-> +        char **new_argv =3D malloc((argc + 2) * sizeof(char *));
->          int tsig1, hsig1, count1, tsig2, hsig2, count2;
->          char rt_sigmap[64];
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> --
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
 
