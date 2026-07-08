@@ -4,105 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B53D4C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 10:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AA5BC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 10:19:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whPKg-0003As-K2; Wed, 08 Jul 2026 06:16:46 -0400
+	id 1whPMy-0003dK-QE; Wed, 08 Jul 2026 06:19:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1whPKf-0003Ak-1n
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:16:45 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ id 1whPMo-0003bI-89
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:18:58 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1whPKd-0005LR-3L
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:16:44 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-667971437d6so590702d50.2
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 03:16:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783505802; cv=none;
+ id 1whPMl-0005fN-GZ
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 06:18:57 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-66766d649fdso677546d50.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 03:18:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783505934; cv=none;
  d=google.com; s=arc-20260327;
- b=UF11CahtzkaBOgqq2S9dw034oIvSmCnBrHdFzsTFV89I6R9+67+swINR3HehgCqnK/
- Y19KR5MnWmE3ZuPuCsK8Br7shbrhYVSqVjzJlqXlY2I5+OkTWsMJD3016sEYRSw3XNzR
- Nq+vrd01V9V5mlUEot31XbUzQKRdkWR4ULSg9QDfDi0V3z/gnMBHA9ioDYrwtNZoOiuf
- 3zWqqVXMNSIFY7AiAJIoNtEr9FDG4BbDVQpxE3PIrr72fQCOnNdIdPyhbW2TPuH4Cu8S
- 8A0wMPcuf0xs7HOxF8x0TV4W3UNHGKXjhT1nXmRlXtR0/7Ok3Rx4+Sqs7owFyov3DSav
- T2FA==
+ b=KVv6+StZsOwCTRZBpazdQqgT9wIusKE4gT2K+29WP72ccMGRyoTNvD1oG2vfzB1G6G
+ zmX9vkqP2nj8ExK+Ny4SlR1CIAf5IDXUcE6cC/PfiJvJ5xDHtOiJCNFIJcCdE0bvrqS8
+ gx1DN1iEoldl3dImdxsetSnTF2zt0hl1UtVDJcp0LzrsWKXvvTebipjxsxpwiJ63aHN6
+ 6bEorxhQIFgq/ensIr6w8jLUMxogQQGUhhNH0aP4vMAWoxg3bx3nU/aiVbC7wKU9MctE
+ zChzwZIjvIHC6fUgK0+OwqBMXVnYnqJAeDHtbgjbiNC1fJ1pgzCtSA/PQXmQmF2okOyh
+ e82w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=s5nwdvirrnAsNSNwDihRp/f50OIkPb0exypcDdx1POQ=;
- fh=XOP2k3dE3jbE2PUeMUBXC1zAce5ySRZRtW2gPxyIHoI=;
- b=Qsf4TCxXuvN+3F93qLqVP3y6HUX1WpB6+HWBsj0jle8DQlr6brI9/YaZaURIz4saXR
- rIVXQ2TvS5d2r+9CoVlQgYMLJqdmte/y8it7czeo7GaaIiCjx9nKmfDO40npbBORjipn
- AZcZE3cSC5PSFMrUkZ+zkwmCDMtSkC1X4qWbYoFIG94gQApQuWJ9alcw97Wk4T4s64B8
- JXAAeMzyi+6rZg1witg7/z/IL2Qu+b7+CB00KXXi/2lmc7EDSpS+0FLtiShp76i21UR2
- 0C70o6j6gPbYcvXPOc2moZ2ZmiXCoCn+O4aSIft3DRoalL296JVegV6nYbGERRzQW/xS
- EgMw==; darn=nongnu.org
+ bh=7mOC5wIaMqqzEP03rzSVE6XFYBpSn1uEli06fXgZ5KU=;
+ fh=10RhduUL+W3qe6vLjqIRiE+Qmxow+4xQKKoTl/PCTPg=;
+ b=PLCt6Uv2Ot/2agdVyQi4AxXJqUf65RwwYJaCCddANTA/iX/qvVItjoXrj6pDXCyiX6
+ 3OYKL/0kPA4O7Be1QNmcwEjN3VRjIcGSv5RTyNwwy8ohh2DRBv7AN8g3yYl2UsHhv1+R
+ m5G70ureQgEANDOjPuM35pehCUMtcxqNluSKAdbQO8bvSh8fJ5ZYDBjuK1D9Vzr5R0Th
+ jpjYOj4H6qOnpOrdT6KlU1p4U8tClxqxhbU1fxTogCtdl9D/GzQlQ1fsuwa2rxQ4Ezln
+ 5fgBx71h48rTg0cL4W2SQubzpkOGtrwNCKkaGpqBgxCnzX5xMu0NoSz0paZuCcziWNCG
+ mWNA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783505802; x=1784110602; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783505934; x=1784110734; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=s5nwdvirrnAsNSNwDihRp/f50OIkPb0exypcDdx1POQ=;
- b=b4FHRReGIlQezceD43VxnmdnKFYBaGgXG6a5Ac11gNjg4OzjGUT19Vc7j5E468ZrVZ
- JzgR3YahdnwzMxsgQ9C5fh5moPYwsKeKBzXCjBbmZE2cRCGlnTSwGpf2iFBgSPUGDXgZ
- +O86jLoU2YYL1l61M9pcjxUO+7ZnEmg3YWTQTSyDES/lZY+meKiQoWnc9DrkS/EYxjE/
- m3cWAeS+Ypt1AABd0T5PNiHfmaR2YbqSDfCbzINANLFUJzNmI948UrddCfDTYVHVaLLh
- YxIYFmE86mWFsIAQA24taK+h1TXH8nZipqGzMc2cIkZATKkNmOlnwZ3JxzktRnPm2mr7
- 00Qw==
+ :content-type; bh=7mOC5wIaMqqzEP03rzSVE6XFYBpSn1uEli06fXgZ5KU=;
+ b=qZ/5QuL005FgjIUmhFycWiZH25mNrmmQQ8gctfzK3KDqU/vXK5pT6WVwkDm+qbi6Bo
+ Gic2wn3Npj7hLwyfQpOnvewVNv52XZK3PfrZXDq5SH2E18QYs673C00rcKwpH+SUo1Xh
+ ekBVNj1dEkUVs0DbqHXTEtEjxKl6CaPmC/eof8dHNU61yb8ZKbiN9X0z1oo4xhzVw0VU
+ h9SPQIo55pz9GzXWMajmHsiLcmNbt02zWL4VMtASo9JclSxbMMEJGt0IBlG4FkRUU0v+
+ T6HMY12rPWTVTD9FcRK+m4rRNtaiNEiMeoexXC5RzqRj+Fa7R6bwHhXe8h6Pe9wSH9ig
+ 32Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783505802; x=1784110602;
+ d=1e100.net; s=20251104; t=1783505934; x=1784110734;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=s5nwdvirrnAsNSNwDihRp/f50OIkPb0exypcDdx1POQ=;
- b=gWySpH02z+pK2PivyquqY1qUEdanSxJew9+eWOgK/pmP3eWf0K+/K83rgehGvv6SgO
- 0GUe640sYkdsKdQvbeqc/pdVULgVZxve4mwMV1fyVcsnQG2Tpbyr/3+h3sAxEpobE9PZ
- pa8Ut4uSN6aI84m1koe8G5tKwJDaQMuzvnZAObkBt4uohpES14uSK7Yz+KF3eeWJunP8
- T0gLyP7YnbskzjZ4OOJP2Ek2ICIAfm8fuWQ5Aij1p+oBZro3fq5HC6MB12afPzWK0oZP
- tPtGqr9WaFcIDE2Z4T0cE5KGMW8WXeFKJQ9IjXcUiQhi2ZJH5rWm6F6W83XDwcQrCS6q
- GtYA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Row5BZiHEu19C1F8NpSsveG8c1EukTQNHfXGrcBfu6c78V/528xMF4i0JvetRFx0dVSHpiobQt+322/@nongnu.org
-X-Gm-Message-State: AOJu0YyhRR4RokVJvC6xrwvJWLwIX48cFbkaf2QKvAQ4UmfzdXvDrNZP
- d98pAYotOOy+cnqNOlIF0HlRjMdg2PP7AB23QWu/ELaAI7obwz1Rom7y0JUjldwNMNK2IYC/+MG
- EpWa9CgEUxnMcX4AiJiqkmSKnFY2lz/g7BqBTdAr3xQ==
-X-Gm-Gg: AfdE7cncW13WK9PSwRNnxrqPynoJw4xuX9DqEzHuQkQpsUYNfwYQTi6LgmTg0//pZzO
- 3dRbHze3NlYdYct1gSoopBp+l5EociE/t86GEC5x5Fql6OtfULhAKWC9hlztPdpWD4uH/nNH0jp
- p4oRUeaykkXJnlcpF7CAC3x18p/55Y/iY5qM6Zjg8cG/54mX4Nx7evOtWaXC9P9iJzlKOEAZTsR
- VdcZUoyuIg9yDV0OmA8YlUF65efZDgrVuV5M93py4txTtFWFfXatRtNlbVYDK6GLP0aKyn3ZTRE
- Zf+IQkkuYCcycq5ViJiPjjQ9/2DwRyNp62GGXTRxxev1YQwKXZ/ZQMUV
-X-Received: by 2002:a05:690e:4186:b0:661:1307:3d4f with SMTP id
- 956f58d0204a3-6679f0dfb9cmr1289552d50.46.1783505801693; Wed, 08 Jul 2026
- 03:16:41 -0700 (PDT)
+ bh=7mOC5wIaMqqzEP03rzSVE6XFYBpSn1uEli06fXgZ5KU=;
+ b=GtIuaZTriV3j200sta59UoV97hR8maQX+N6rwi/g4fdLxgOqbNIaJ4X85erSJeD54x
+ z9OlhXZl9q5zBkd7ySpfECnIr0Bi5X07XzU2wdcIvIQJywSWRr4QxsTg0rkb48qf7Ruq
+ G0e1i9Q+9dVxu8nCJWfF8Z3E3AHqLoGFm0Ogkq5HPA3wA/UtCGsuGMOvIUqLucHjqKcS
+ /ufXgCQL2ffApDVKT+YWz+FeNik8+Otov2Ac1J92P9KAEiGdeRGvl4nuuEpLq5cXlHYx
+ bjmK0QMVhzPIERGE3Db3XDg98bs4jko9LUO2Hpdyvz6Agm2oTN4K1DTYK1K0mbby1FJA
+ y2XQ==
+X-Gm-Message-State: AOJu0YyDXmzBS8e5X3+lQrlAOJ2nSI4UR/dd/Epc49sgCAVDI5S2ovlM
+ fWlCoc1BK237hJ82Ff31YH7FJwdFZ4VQf+uWLXTRiyh5GeGrTi4t3rU01OPHfE8Hp5FWq9O8gbK
+ 9KDqyp6huD7nZdEzMYeiWykxJ+aGM8x7+uh1MspUpDQ==
+X-Gm-Gg: AfdE7cm7AzYuM9458Gk8NBpJJh1TPrzgj9GdPFTidX61ywGivX2e9XOqk1OTwrn+3vV
+ vCzdAyrSMseZWrucmhjkojBHy96ecFaWIrT58vykoR6f42kM2Bzd0z6/hDETk4WVNQmjdbIBPBD
+ A9ZsTPUbWN6+Phcd8aOqeEsRLpxiF/hIUsLuwN8rgpfNXgU6uJq/oSvkv90NDbrJDbsvyIz8Fyl
+ lOg0pyTaWE4jL+mF5CZqQ6hDAt08SOoicy/vIDFLfnbMrTGKvBg2YK6vH9PDpTjM5f3peqmSXPl
+ E9EpfMl6EoWpZNp/xquo7TJsLi+ggYE9h0fLChjDSvcgA1TbAPVx5Kyw
+X-Received: by 2002:a05:690e:4848:b0:664:f523:30c8 with SMTP id
+ 956f58d0204a3-6679f10163fmr1057261d50.30.1783505934248; Wed, 08 Jul 2026
+ 03:18:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260703090814.2993188-1-mark.caveayland@nutanix.com>
- <20260703090814.2993188-9-mark.caveayland@nutanix.com>
-In-Reply-To: <20260703090814.2993188-9-mark.caveayland@nutanix.com>
+References: <20260706224426.14156-1-its@irrelevant.dk>
+ <20260706224426.14156-5-its@irrelevant.dk>
+ <CAFEAcA8ZQX01i9u0dUziRP0rAC1fSF=zbWcmQdLs=82D8ECg4Q@mail.gmail.com>
+In-Reply-To: <CAFEAcA8ZQX01i9u0dUziRP0rAC1fSF=zbWcmQdLs=82D8ECg4Q@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 8 Jul 2026 11:16:30 +0100
-X-Gm-Features: AVVi8Cf_7jwsxvexNo7Ow4MGzpyYfWVNA64xLalO8emDB96bnkdaXYq1pAUk7Jg
-Message-ID: <CAFEAcA-Agr3jDYfM466UtqNywfxxX6Vv6H30B8QQDMykQ0ktOg@mail.gmail.com>
-Subject: Re: [PATCH 8/9] hw/i386/pc_sysfw.c: convert pflash0 and pflash1
- object props to class props
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com, 
- mtosatti@redhat.com, berrange@redhat.com, qemu-devel@nongnu.org
+Date: Wed, 8 Jul 2026 11:18:41 +0100
+X-Gm-Features: AVVi8Ce1FZPCPAgu6fTe6EYDkTrsdH3Eo4FsohH_hJ4jeIDx_FOH73vDX4PA9t8
+Message-ID: <CAFEAcA_v+BgV1u+-GR-jrCsanHbgfyLh4FcwiLJmnyWWzh2zFg@mail.gmail.com>
+Subject: Re: [PULL 04/11] hw/nvme: add migration blockers for non-supported
+ cases
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
+ Klaus Jensen <k.jensen@samsung.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Keith Busch <kbusch@kernel.org>, 
+ Jesper Devantier <foss@defmacro.it>, Fam Zheng <fam@euphon.net>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,51 +122,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 3 Jul 2026 at 10:09, Mark Cave-Ayland
-<mark.caveayland@nutanix.com> wrote:
+On Wed, 8 Jul 2026 at 11:11, Peter Maydell <peter.maydell@linaro.org> wrote:
+> How about we use glib's GPtrArray and g_strjoinv() instead of
+> manually building the string? Something like:
 >
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> ---
->  include/hw/i386/pc.h | 2 ++
->  hw/i386/pc.c         | 8 ++++++++
->  hw/i386/pc_sysfw.c   | 7 +------
->  3 files changed, 11 insertions(+), 6 deletions(-)
 >
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index 309de2eda1..16cb0ec01f 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -40,6 +40,8 @@ typedef struct PCMachineState {
+>     g_autoptr(GPtrArray) blocker_features = g_ptr_array_new();
 >
->      Object *alias_pcspk;
->      Object *alias_rtc_time;
-> +    Object *alias_pflash0;
-> +    Object *alias_pflash1;
+>     if (...) {
+>         g_ptr_array_add(blocker_features, "SR-IOV");
+>     }
+>     [etc...]
 >
->      /* Configuration options: */
->      uint64_t max_ram_below_4g;
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index 13c9c1bfc8..11eef176f4 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -1762,6 +1762,14 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
->                                     offsetof(X86MachineState, acpi_dev),
->                                     object_property_allow_set_link,
->                                     OBJ_PROP_LINK_STRONG);
-> +    object_class_property_add_alias(oc, "pflash0",
-> +                                    offsetof(PCMachineState, alias_pflash0),
-> +                                    TYPE_PFLASH_CFI01,
-> +                                    "drive");
-> +    object_class_property_add_alias(oc, "pflash1",
-> +                                    offsetof(PCMachineState, alias_pflash1),
-> +                                    TYPE_PFLASH_CFI01,
-> +                                    "drive");
+>
+>     if (blocker_features->len > 0) {
+>         g_autofree blocker_list = NULL;
 
-Does making these class properties fix
-https://gitlab.com/qemu-project/qemu/-/work_items/3254
-(which is a report that "qemu-system-x86_64 -machine pc-q35,help"
-doesn't list these properties) ?
+whoops, forgot to put the type in:
+         g_autofree char *blocker_list = NULL;
 
-thanks
+>
+>         g_ptr_array_add(blocker_features, NULL);
+>         blocker_list = g_strjoinv(", ", (void *)blocker_features->pdata);
+>         error_setg(&n->migration_blocker,
+>                    "Migration is not supported for %s", blocker_list);
+>         if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
+>             return false;
+>         }
+>     }
+
+
 -- PMM
 
